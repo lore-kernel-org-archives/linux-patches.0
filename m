@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034250;
-	b=s0oI0GdjmGPNk7V6TO4Tj1qyfNT+nppCaGxUsbHRoJdW4GtJzgioXa9kOi3jMRhi89/2
-	 rWmY8xf7gaprzfQHysdz9HC1Kb1vmd3wTuoUu482/JZi2uzrONJ+MPSyZ9uee29+Rz+ce
-	 L6FtXNpXkoW/WmckWq9fd26gYkxZijDBRTYdi4SHaFElwXNs/ttY0MnZ0AAtiPHtQvvZb
-	 3xz7CqlHJCpNLOG67EfeAYJEhD5unBPlFSposaDqFnBVS8NLoguLnLHoAhabITCXl90a5
-	 bFcLGGTqucc6zrXgzmiWlTEOJHbMiIKzzwAvJid3kpLuxJVQmYzM5aJgKUAyqwUIp7w==
+	t=1795034253;
+	b=XD5JX7Ur/lDcWzAM4SffSKHbqxKp+SBRbf2uUEfOQrjJrT6F29DGow4D0jAW9Y1okKn1
+	 tljxysL2mGnbovztDewQ9AnjegTTPybAci61DfvNOBHquvIX/nGvTSwhUpKar0quoxlsH
+	 WUnIjYbQw4EwVuK2biLbIuffIJ+wz3WT8U5sMscsnAQBbbDOL0S+XaHpDgiVhvF2ODsBQ
+	 sUw8KkXI3V3yQbxvzKOjlpiB0fzW4BAAIi7nATl/1gTIhtLwQy8FLrDBcRMU2QjrlGFqf
+	 RO7lV8J/xHbBTGZHMqccGR/tbf/ERZJZqDX4NJJdnsr5QbLwCx+/Dxq1965ZWgckRkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034250;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034253;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EDjvYYmWb7K85M6xKFs+pZ/J/FgfWMs1zyf7U1R/bvI=;
-	b=OaNAFLaDnKwFdwGQkuMWfsJnF5sgomAVMccYvykI07PJeDvY2A0stVQmr2rek1HnuY8S
-	 Zs2iQ94k9lj/RItGEKOLKLAPjGDj0pqFSCdmOvR6p+uzwu4hwcI0/fOTShZhsnZBlC8SF
-	 PEatvo7+BX9Ah5y9H/SWsLM4Ecvv7rE9XrDPa8DN4FvsdNmde/j3PScYS/TgJGJs2vCOa
-	 hmT+2AmArsmR1ZA1SjHXYui5xfDSLRTwmWwrBDicO2et03tojnIeC5Igi1eFWGT69EBbM
-	 Dze0uXcnSkDjtT/k7DPzH2XWNXW5wpH4V3cVubVHBxn16AkCIbuRR4FPvr7aeQ8+afA==
+	bh=e3UU5yUjfEKcwapCEWB84YtnPh6enruU4Yzv1uZy7Dc=;
+	b=wmwNVztnNGMW0P8aHx55WhPqY6t1Sc/8tYINlcY6eFVL1hNiPHIYT+/HNbgz8/u7BHiJ
+	 8OXLPQfkS0EBPm6dd9ptGS0spilsvNfFB10PVzi+6CgGptOikx9aXeM0A0e8TeZfmlyFX
+	 7c09/17GJAhL+BfewGpWmvPgt0kYlO1CuEMH358xGh1vQlxJnUaR/d1hICsthSZcHwQxc
+	 gUiL9lmT7Yg+nrP64uk41xPcGw5USmtwkw/X8sHG5ixjvRS+j23RuobXWuVrXuj9NAWmR
+	 GbwRtbx+JJTkqV/EAbjQcPAd5UPvVsJf/E1S2bf7IYgkDKx5TXX0MbSEHt0VB5Oy1Hg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kliZUCRM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QR0H2b7r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FFD6606A31C;
-	Wed, 18 Nov 2026 20:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34D8606A325;
+	Wed, 18 Nov 2026 20:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kliZUCRM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D016F1F000C4;
-	Wed, 18 Nov 2026 20:37:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QR0H2b7r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08D81F000C4;
+	Wed, 18 Nov 2026 20:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034250;
-	bh=EDjvYYmWb7K85M6xKFs+pZ/J/FgfWMs1zyf7U1R/bvI=;
+	s=korg; t=1795034253;
+	bh=e3UU5yUjfEKcwapCEWB84YtnPh6enruU4Yzv1uZy7Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kliZUCRM0rfQ/FZZQOG/J0FNxmQ6PReknpLiQjwMGfuxS/x2AdzbY7/O6oAa/sgUd
-	 QbI9N1DymGcKPAqhj+oOV4dh+tMGLGnysIe+MWr0FHdiww5qJbtoW4KeT35CgcaxCX
-	 XltnYx4t0r3hPSXFwd8CVXw0DrpOIqMOOH6INdfw=
+	b=QR0H2b7r3Z3QNCkPOtrZN8CWVOugoaHekuEvbpNl41RmSKJdPfVK8XTuSmllo7zCv
+	 QKUN7nZx8jxlY/4ytW+RF36F0IbrR7v7T790Ng9c6k06accaqNHnhi5wqeLWD6lZz3
+	 vVjO/5p+sM7FCfLy6nhNlODjw7HcaE2NcKI+ODdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0286/3318] ksmbd: preserve access denied status for copychunk
-Date: Wed, 18 Nov 2026 15:15:08 +0100
-Message-ID: <20261118150324.150660618@linuxfoundation.org>
+Subject: [PATCH 6.6 0304/3318] ASoC: codec: max98926: fixup invert setup mask
+Date: Wed, 18 Nov 2026 15:15:26 +0100
+Message-ID: <20261118150324.871342520@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,37 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit f7c0366e0a80bf8cd5eacc5479927abb50958b5e ]
+[ Upstream commit dd0ae9a2e19a24c532c9aa80a44f572b4907bcdf ]
 
-The copychunk error mapping handles -EACCES in an independent if
-statement. The following error chain therefore reaches its final else
-clause and overwrites STATUS_ACCESS_DENIED with
-STATUS_UNEXPECTED_IO_ERROR.
+invert might have both WCI/BCI mask, but regmap_update_bits() masks
+BCI only. It needs both mask. Fixup it.
 
-Join the -EACCES check to the remaining error chain so an access failure
-is returned as STATUS_ACCESS_DENIED.
+	static int max98926_dai_set_fmt(...)
+	{
+		...
+		switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
+		case SND_SOC_DAIFMT_NB_NF:
+			break;
+		case SND_SOC_DAIFMT_NB_IF:
+=>			invert = MAX98926_DAI_WCI_MASK;
+			break;   ^^^^^^^^^^^^^^^^^^^^^
+		case SND_SOC_DAIFMT_IB_NF:
+=>			invert = MAX98926_DAI_BCI_MASK;
+			break;   ^^^^^^^^^^^^^^^^^^^^^
+		case SND_SOC_DAIFMT_IB_IF:
+=>			invert = MAX98926_DAI_BCI_MASK | MAX98926_DAI_WCI_MASK;
+			break;   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		default:
+			...
+		}
+		...
+		regmap_update_bits(max98926->regmap, MAX98926_FORMAT,
+				MAX98926_DAI_BCI_MASK, invert);
+		...		^^^^^^^^^^^^^^^^^^^^^
+	}
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/87wltomc97.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 2 +-
+ sound/soc/codecs/max98926.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 63af3d2d139cf..503f3219382b6 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -8021,7 +8021,7 @@ static int fsctl_copychunk(struct ksmbd_work *work,
- 	if (ret < 0) {
- 		if (ret == -EACCES)
- 			rsp->hdr.Status = STATUS_ACCESS_DENIED;
--		if (ret == -EAGAIN)
-+		else if (ret == -EAGAIN)
- 			rsp->hdr.Status = STATUS_FILE_LOCK_CONFLICT;
- 		else if (ret == -EBADF)
- 			rsp->hdr.Status = STATUS_INVALID_HANDLE;
+diff --git a/sound/soc/codecs/max98926.c b/sound/soc/codecs/max98926.c
+index 922ce0dc4e609..d034e8d31be09 100644
+--- a/sound/soc/codecs/max98926.c
++++ b/sound/soc/codecs/max98926.c
+@@ -360,7 +360,7 @@ static int max98926_dai_set_fmt(struct snd_soc_dai *codec_dai,
+ 	regmap_write(max98926->regmap,
+ 			MAX98926_FORMAT, MAX98926_DAI_DLY_MASK);
+ 	regmap_update_bits(max98926->regmap, MAX98926_FORMAT,
+-			MAX98926_DAI_BCI_MASK, invert);
++			MAX98926_DAI_BCI_MASK | MAX98926_DAI_WCI_MASK, invert);
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
