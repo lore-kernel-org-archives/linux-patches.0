@@ -1,58 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018868;
-	b=DLJ14cqv19Jc9qif62JyYBpTMxB0Xcbuyr/iEE63GtQDlXSoUh8zpnXsXv3bxd4K+dOz
-	 Awy38WtjW/VZjUxSSt56P7rIteHNNzwCnAZ4xHnt1BHRzYjZ9zg2QYR+Pkzb+pC6946yL
-	 tEeAbQ3j1JMZ9pt1OSLSfJBEQa/zVWOVwHnQhDwqe3tK7i+t3jVrjq5KFCQH5Wd7xTGL2
-	 1xg/+1O8RwXS93XYbHzdx31PrHNiA5VQs0yY8ZORcvKZk7vjIUePoFcRJ1mhDdMr2bfVD
-	 WwWVCl6ol36ArDIkIGpt5jDG8fJ4ghGgE0kpueGuRBp+EjHMlQbPJBs1Iuaddzo1rtw==
+	t=1795018871;
+	b=bPXISY6LX0DvJYrbTFMPZDXjq6rJCClUHS41B6WLmheRIJUceEOHNFMKEVjk5wEFAVNR
+	 topHMidQ41rfU3+Y0X+5Lp+RKWx21vY2tBOsULIDuSUNGiOOgBCTJnn/C0AwI4WXXgFTN
+	 swGQo8FRNSE/pWNtmCXhgWxGjFl8VTvFQacX2ToKUoeik1T7JbiDn1BSFFX81R7GvA6fA
+	 cDOVz+xAeJH7BGQE/r1nkMFr8HrNAhpL0PoHoE5eZlwGjiZDckV3Y489++jXUHBr+b555
+	 ms6AADY9/qKPsvnyY+nzSRgNwzZahco8O7E8c6b74V+9NnLqUIAXCFZ6sG9NWcKQDRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018868;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018871;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=gQowqzhQWo66oi6XbOVaAUwmumK5A4dIH7b1HxjXzB8=;
-	b=H6lT7Nq8NjfR9Lk57SnIbDJ7web0bXoKzcq2iFheqzwJte1cXW4IjCYPNSlKNF/WrXuf
-	 CSEfol6V6BAHLFyH9LASFMcN7G2NYv73G4fsfp0wpVUbErPNo0Z6V7vGem0Azyg+vmi3R
-	 TJXFjlTmdrmCefYiPW6QuUVK/84IRbShO6RpZEw0WwrJ4K+JrEp/glIlQ+fQKCCgD3rjD
-	 1okHeN2C5IsaGl8uidj/1CSdnTwauG/MGezpErdm9OjgRLF3e/e6YllFawzGkATJw8JvN
-	 ObOP3Zgz5ITeTyspISsbUJmPHa0blXNvJsspHUV+vV5iKBLd5vyDqbC3rZzchO4cRWA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=ENeOoHUE2PebJZBW2Y3BJf13iSt2TwANH+JcqORsd0w=;
+	b=xh71xq9EGy3kw/WO1PS0YVvrsZ55U2oATS02IxC0dyqkeruhaVh6IYgKH3mRTgKdvpSN
+	 mZCGA7Eh4m0/S7ip9bg+yVFYkbPoh7aY8M0YDoKIrC3qEZ9buSTm/3CkOIoto1s9bgiLw
+	 Q0KvYAqhMnd9LxxCgU3RpGAzNknnLC3anQloRjx22K4ydoF+KPzHJWACrHgBZ8VrOZb4h
+	 Io4V6jkWuJhC17pNlBMjPOKUSXVWSSM1WoVdG7guQMNdVBX9QX8ETbrVwcni0InpjdHe0
+	 oytC8Hc2/eBX96qQ9vwq4ZBdSBiIScD7/yly3jUUlxyvV1Qx+8Vi9TlTDcWbDjtC8AQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t9gkJu25;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o6SWagvd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56451606A325;
-	Wed, 18 Nov 2026 16:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE2F606A320;
+	Wed, 18 Nov 2026 16:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t9gkJu25
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCFF1F000C4;
-	Wed, 18 Nov 2026 16:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o6SWagvd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6194D1F000C5;
+	Wed, 18 Nov 2026 16:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018868;
-	bh=gQowqzhQWo66oi6XbOVaAUwmumK5A4dIH7b1HxjXzB8=;
+	s=korg; t=1795018870;
+	bh=ENeOoHUE2PebJZBW2Y3BJf13iSt2TwANH+JcqORsd0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t9gkJu25xdA9UTFnWjUWPVx+vJAHB/SHkFsVYjp8mkEN78ge+3cfgIT1Ye0PcR4pa
-	 Dmk3fkw5kfXnlLi+k30RBWmMSOIF0iOph0TOu+3hXgKhdeP36gfbAmztbh+EIXL8Ny
-	 IxcwIVn8GcKnPjHS1egK1eI2//0Ic7uYy3f53epQ=
+	b=o6SWagvd6GRxm3Yu9jT6vzsmCgfykz4Bt2lWCRrw+fhjaOxa26xxvze8DhJFRHuPr
+	 RaQ3SGm0K1K+9NW+goshWxTgd0duWzUkVA4CegQQKStpsFUSVk7Vhr+rifppgq66Nj
+	 N1GrwCEodRALK2RiFmfYKHzjbyEPoPDfRFx0hEa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wilson Felipe Pereira <wfelipe@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Chengming Zhou <chengming.zhou@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
+	sashiko-bot@kernel.org,
+	Frank Li <Frank.Li@nxp.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1391/2651] selftests/cgroup: test_zswap: fix implicit unsigned promotion bug in test_no_kmem_bypass
-Date: Wed, 18 Nov 2026 15:43:51 +0100
-Message-ID: <20261118150338.095902389@linuxfoundation.org>
+Subject: [PATCH 7.3 1353/2651] dmaengine: ste_dma40: Validate fixed physical channel indexes
+Date: Wed, 18 Nov 2026 15:43:13 +0100
+Message-ID: <20261118150336.734241350@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,71 +64,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wilson Felipe Pereira <wfelipe@google.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 0567c7eaefd7ea1b26d76c46964f9a1d92120d7d ]
+[ Upstream commit 884e01160bc727509b4fdf04e763a86b936df464 ]
 
-In test_no_kmem_bypass(), delta (stored_pages * page_size - zswapped) is
-checked against stored_pages * page_size / 4 to verify that the pages
-pushed to zswap belong to the test memory cgroup.
+Fixed physical memcpy allocation uses dma_cfg.phy_channel directly as an
+index into phy_res when use_fixed_channel is set. d40_validate_conf()
+validates dev_type but not the fixed physical channel, allowing an invalid
+configuration to access memory outside the array.
 
-Due to slight stat update timing differences, delta can evaluate to a
-small negative number (e.g.  -5MB out of 1GB).  Because delta is declared
-as a signed int and stored_pages is an unsigned size_t, C's usual
-arithmetic conversions implicitly promote a negative delta to a large
-unsigned 64-bit integer, causing `delta < stored_pages * page_size / 4` to
-falsely evaluate to 0 and fail the test.
+Validate the fixed physical channel centrally before accepting the channel
+configuration.
 
-Fix this by declaring zswapped and delta as signed long long and comparing
-against a signed threshold, ensuring negative deltas correctly evaluate to
-true.
-
-Link: https://lore.kernel.org/20260828033741.2184560-3-wfelipe@google.com
-Fixes: a549f9f31561a ("selftests: cgroup: add test_zswap with no kmem bypass test")
-Signed-off-by: Wilson Felipe Pereira <wfelipe@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: Michal Koutný <mkoutny@suse.com>
-Cc: Chengming Zhou <chengming.zhou@linux.dev>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Tejun Heo <tj@kernel.org>
+Fixes: f000df8c5a0e ("dmaengine: ste_dma40: support fixed physical channel allocation")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
+Assisted-by: LLM
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-23-89f595e8851d@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/cgroup/test_zswap.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/dma/ste_dma40.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/tools/testing/selftests/cgroup/test_zswap.c b/tools/testing/selftests/cgroup/test_zswap.c
-index 8df54b59513a8..4e943e3d90adf 100644
---- a/tools/testing/selftests/cgroup/test_zswap.c
-+++ b/tools/testing/selftests/cgroup/test_zswap.c
-@@ -652,11 +652,14 @@ static int test_no_kmem_bypass(const char *root)
- 			break;
- 		/* If memory was pushed to zswap, verify it belongs to memcg */
- 		if (stored_pages > stored_pages_threshold) {
--			int zswapped = cg_read_key_long(test_group, "memory.stat", "zswapped ");
--			int delta = stored_pages * page_size - zswapped;
--			int result_ok = delta < stored_pages * page_size / 4;
--
--			ret = result_ok ? KSFT_PASS : KSFT_FAIL;
-+			long zswapped = cg_read_key_long(
-+				test_group, "memory.stat", "zswapped ");
-+			long long delta =
-+				(long long)stored_pages * page_size - zswapped;
-+			long long max_delta =
-+				(long long)stored_pages * page_size / 4;
-+
-+			ret = (delta < max_delta) ? KSFT_PASS : KSFT_FAIL;
- 			break;
- 		}
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index a5471a9157cd4..57868e5cd63e3 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -1916,6 +1916,14 @@ static int d40_validate_conf(struct d40_chan *d40c,
+ 		res = -EINVAL;
  	}
+ 
++	if (conf->use_fixed_channel &&
++	    (conf->phy_channel < 0 ||
++	     conf->phy_channel >= d40c->base->num_phy_chans)) {
++		chan_err(d40c, "Invalid physical channel (%d)\n",
++			 conf->phy_channel);
++		res = -EINVAL;
++	}
++
+ 	if (conf->dir == DMA_DEV_TO_DEV) {
+ 		/*
+ 		 * DMAC HW supports it. Will be added to this driver,
 -- 
 2.53.0
 
