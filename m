@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025437;
-	b=C8MddFFe4sc6GXRkoiChc9byz51GfIOBIFFhkIiyQ3gOJAi1UOw/U2KFZ8gyf5EJWGpW
-	 KmVELLs+CtnwuaedY5/JlRaYiTX+etd8U0RFiKyljZvSUvMUAUvP/6u7pKUmwWR1YLTJv
-	 UhQRCTpYkCGmimgtZ4RmrozlSbJTAyi/eaEduAhyz/kUV7fXb90387DvSlWbHHkd0IFph
-	 +n1Wp+/t+E2HxAeU4DwwfSnUZ+Gy4j/LRbhKiwm9NFzVZchwWLNc4akn17qIHI0emgg1k
-	 ekDlzGwoT4efixBlnHtnTeZ3cg8rJSB3pbPCRm6gy6/xXgnOfqi2nrTw9VMugNUBnRw==
+	t=1795025440;
+	b=j0OGLnWODU6zA4ZRgf7OOkJrrRqQADQqj9cOI+KA8STCktuFqn1G2kknZa7M8C7yWt56
+	 IU0hX3gRObbWR3GuFwdK2bjmSCsmsqK7SZzowkGem46WE1kmhPBT26h6b+oESTb9eLprJ
+	 //k4kyFp6d3tMYo6fkRT1EwhGizEzVfRF2g9LMJKd7DUGFkxKo4wYQ4GIrIRf+USfRnMu
+	 75w8ozDZ1E3dXukvD1ZVKHoyzno812zZNTBLnRY8uaRdNtlbocGKTlp4DcN219NY55b+y
+	 P09NSmAnscXwAaMdNvls1G/1nbunMyNJcrrDcslSx38NSkeviYZyf9Z1jR7ev1eet1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025437;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025440;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NutC/2zw9Ai2CXZrk9v0IwUMvL4bZxICK1QDFcveEwQ=;
-	b=RjmkzL9D6y+6zXWQOl1T9IJVap83Zu5cubPHCycMhtD3G3L4Mp9FBcwIoVuPmCzdMI31
-	 uKwnt22D0XpbprEW7Cu5X7SKJ02rrTLoQXwEubfIYjOostVLYXxTutS1TYColV8s3oAJB
-	 SyjKvfvtmuSpkDOHuUPEhQTYnJavawL2ChzXHZFCj1j8b5llt/KsVYGB0bGH/2zIaAIdl
-	 4VNXqoevmOAY2KD5RDBD1+jA1ZcHX689Cnis6pJQHgpcfwVV83DlVgm7yFvoSLlmspEtu
-	 +rGpF/KSt+37q3KY/+dXCi8xRR/oUDxx3qrRDgCuFOxAWpRVYXi1+bhFFSNISA4YTaw==
+	bh=9ywPM8zQEOIJPQ9bgg9V3zcK8fBjTSYk/x3xJmsRnUQ=;
+	b=IwBNj6gPAFaMQyIF69Aegcl5PHI+0KlnvgDDOy+Z5H8+s8hhfEEFWSyT6frf1+USF1PT
+	 BT9vvFmx8JTwtKXaTN4n022a5SaudvUQOiFLpFx2/vWMDJxbHTtf+TGAi5J3zTvOACOiK
+	 d4SipVFWZqGmSk1MlOld9KKXxy97kmglFbW3TOyBYza4jpWrJRBhAy6PfynwdTO8wIkjh
+	 QDOPjVQli+miPggevck0Tad/ppWrS4DiRdQ+FXEmCat/gDGkduVeV+N89hgrgQpNd8mdZ
+	 ppDc573XcOEKe5iasSJ/pLCjiaPzaHBgrrcoEH22jnsGtL0347KXnmu0nkzVptciXzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZkEK+TiV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pedgS6C3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6428606A32C;
-	Wed, 18 Nov 2026 18:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933BD606A320;
+	Wed, 18 Nov 2026 18:10:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZkEK+TiV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352421F000C5;
-	Wed, 18 Nov 2026 18:10:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pedgS6C3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA1AA1F000C7;
+	Wed, 18 Nov 2026 18:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025437;
-	bh=NutC/2zw9Ai2CXZrk9v0IwUMvL4bZxICK1QDFcveEwQ=;
+	s=korg; t=1795025440;
+	bh=9ywPM8zQEOIJPQ9bgg9V3zcK8fBjTSYk/x3xJmsRnUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZkEK+TiVN7lnOhV/J1+UO3EHnOKdAuk5Fao/5g8ZFYRccSI3z0zWn7D8Tz7P9Cdka
-	 WqvXBLyh6nuDMmm+UxmhUDDN/lM4Wdz9Vjq4oMYp+hNTK5SPNqxhvfA5ekwWT1Qh6Z
-	 6O5nGXraMfOXbxcaFeNNbsPI0jOy/VMneToqeSAM=
+	b=pedgS6C3CeD1/KLBguo9+7lm9cmG9T+g4gM+zn83sBSq8YJsi+3C2NIpou4FBaxGz
+	 KCArRWcexXeoQH9iE1gyAQUco5yK2CHVTJhBoAPrr3yI3HVn5nRrk3hmZZOX+aJcNU
+	 UME9c4hdJ0GsLaUDVSJXeOyhA5AjLic+XGA7c964=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joachim Eastwood <joachim.eastwood@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Tejun Heo <tj@kernel.org>,
+	Marco Crivellari <marco.crivellari@suse.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1080/2151] arm64: dts: rockchip: fix missing pcie rst pinctrl on rk3588s-nanopi-r6
-Date: Wed, 18 Nov 2026 15:46:55 +0100
-Message-ID: <20261118150201.616785193@linuxfoundation.org>
+Subject: [PATCH 6.18 1063/2151] ASoC: replace use of system_wq with system_dfl_wq
+Date: Wed, 18 Nov 2026 15:46:38 +0100
+Message-ID: <20261118150201.015955803@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,59 +69,265 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joachim Eastwood <joachim.eastwood@gmail.com>
+From: Marco Crivellari <marco.crivellari@suse.com>
 
-[ Upstream commit 1d974afb0ea4e1ffc03535a2b2ae5a84d35738d7 ]
+[ Upstream commit 0b0eb7702a9fa410755e86124b4b7cd36e7d1cb4 ]
 
-The pins are used as reset-gpios but not reserved through pinctrl.
+Currently if a user enqueue a work item using schedule_delayed_work() the
+used wq is "system_wq" (per-cpu wq) while queue_delayed_work() use
+WORK_CPU_UNBOUND (used when a cpu is not specified). The same applies to
+schedule_work() that is using system_wq and queue_work(), that makes use
+again of WORK_CPU_UNBOUND.
 
-Fixes: f3c6526d6fb2 ("arm64: dts: rockchip: Convert dts files used as parents to dtsi files")
-Signed-off-by: Joachim Eastwood <joachim.eastwood@gmail.com>
-Link: https://patch.msgid.link/20260903-nanopi-m6-v6-3-37416bbd6862@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+This lack of consistentcy cannot be addressed without refactoring the API.
+
+system_wq is a per-CPU worqueue, replaced by system_percpu_wq. Despite that,
+system_wq in this change has been replaced by system_dfl_wq, because there
+aren't per-cpu variables.
+
+The old wq will be kept for a few release cylces.
+
+Suggested-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
+Link: https://patch.msgid.link/20250929155053.400342-2-marco.crivellari@suse.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 664824782df6 ("ASoC: aw88399: skip BSTS check when boost converter is bypassed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ sound/soc/codecs/aw88081.c          |  2 +-
+ sound/soc/codecs/aw88166.c          |  2 +-
+ sound/soc/codecs/aw88261.c          |  2 +-
+ sound/soc/codecs/aw88395/aw88395.c  |  2 +-
+ sound/soc/codecs/aw88399.c          |  2 +-
+ sound/soc/codecs/cs42l43-jack.c     |  2 +-
+ sound/soc/codecs/cs42l43.c          |  4 ++--
+ sound/soc/codecs/es8326.c           | 12 ++++++------
+ sound/soc/codecs/rt5663.c           |  6 +++---
+ sound/soc/intel/boards/sof_es8336.c |  2 +-
+ sound/soc/sof/intel/cnl.c           |  2 +-
+ sound/soc/sof/intel/hda-ipc.c       |  2 +-
+ 12 files changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi b/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi
-index d5bd8bc2beff6..aec62b5a78094 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi
-@@ -356,12 +356,16 @@ rgmii_phy1: ethernet-phy@1 {
- };
+diff --git a/sound/soc/codecs/aw88081.c b/sound/soc/codecs/aw88081.c
+index d61a7b8c5470f..34316748bbd15 100644
+--- a/sound/soc/codecs/aw88081.c
++++ b/sound/soc/codecs/aw88081.c
+@@ -779,7 +779,7 @@ static void aw88081_start(struct aw88081 *aw88081, bool sync_start)
+ 	if (sync_start == AW88081_SYNC_START)
+ 		aw88081_start_pa(aw88081);
+ 	else
+-		queue_delayed_work(system_wq,
++		queue_delayed_work(system_dfl_wq,
+ 			&aw88081->start_work,
+ 			AW88081_START_WORK_DELAY_MS);
+ }
+diff --git a/sound/soc/codecs/aw88166.c b/sound/soc/codecs/aw88166.c
+index 28f62b991ef2b..86b9d0709e508 100644
+--- a/sound/soc/codecs/aw88166.c
++++ b/sound/soc/codecs/aw88166.c
+@@ -1310,7 +1310,7 @@ static void aw88166_start(struct aw88166 *aw88166, bool sync_start)
+ 	if (sync_start == AW88166_SYNC_START)
+ 		aw88166_start_pa(aw88166);
+ 	else
+-		queue_delayed_work(system_wq,
++		queue_delayed_work(system_dfl_wq,
+ 			&aw88166->start_work,
+ 			AW88166_START_WORK_DELAY_MS);
+ }
+diff --git a/sound/soc/codecs/aw88261.c b/sound/soc/codecs/aw88261.c
+index c0d62992701f6..50615d7f20676 100644
+--- a/sound/soc/codecs/aw88261.c
++++ b/sound/soc/codecs/aw88261.c
+@@ -710,7 +710,7 @@ static void aw88261_start(struct aw88261 *aw88261, bool sync_start)
+ 	if (sync_start == AW88261_SYNC_START)
+ 		aw88261_start_pa(aw88261);
+ 	else
+-		queue_delayed_work(system_wq,
++		queue_delayed_work(system_dfl_wq,
+ 			&aw88261->start_work,
+ 			AW88261_START_WORK_DELAY_MS);
+ }
+diff --git a/sound/soc/codecs/aw88395/aw88395.c b/sound/soc/codecs/aw88395/aw88395.c
+index fb563b4c69718..727aae2dd7276 100644
+--- a/sound/soc/codecs/aw88395/aw88395.c
++++ b/sound/soc/codecs/aw88395/aw88395.c
+@@ -75,7 +75,7 @@ static void aw88395_start(struct aw88395 *aw88395, bool sync_start)
+ 	if (sync_start == AW88395_SYNC_START)
+ 		aw88395_start_pa(aw88395);
+ 	else
+-		queue_delayed_work(system_wq,
++		queue_delayed_work(system_dfl_wq,
+ 			&aw88395->start_work,
+ 			AW88395_START_WORK_DELAY_MS);
+ }
+diff --git a/sound/soc/codecs/aw88399.c b/sound/soc/codecs/aw88399.c
+index 58846feb013d1..6a05dbe5ee71f 100644
+--- a/sound/soc/codecs/aw88399.c
++++ b/sound/soc/codecs/aw88399.c
+@@ -1340,7 +1340,7 @@ static void aw88399_start(struct aw88399 *aw88399, bool sync_start)
+ 	if (sync_start == AW88399_SYNC_START)
+ 		aw88399_start_pa(aw88399);
+ 	else
+-		queue_delayed_work(system_wq,
++		queue_delayed_work(system_dfl_wq,
+ 			&aw88399->start_work,
+ 			AW88399_START_WORK_DELAY_MS);
+ }
+diff --git a/sound/soc/codecs/cs42l43-jack.c b/sound/soc/codecs/cs42l43-jack.c
+index 36fb67059e065..cd13405e9c015 100644
+--- a/sound/soc/codecs/cs42l43-jack.c
++++ b/sound/soc/codecs/cs42l43-jack.c
+@@ -300,7 +300,7 @@ irqreturn_t cs42l43_bias_detect_clamp(int irq, void *data)
+ {
+ 	struct cs42l43_codec *priv = data;
  
- &pcie2x1l1 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie20x1_1_perstn_m2>;
- 	reset-gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_HIGH>;
- 	vpcie3v3-supply = <&vcc_3v3_pcie20>;
- 	status = "okay";
- };
+-	queue_delayed_work(system_wq, &priv->bias_sense_timeout,
++	queue_delayed_work(system_dfl_wq, &priv->bias_sense_timeout,
+ 			   msecs_to_jiffies(1000));
  
- &pcie2x1l2 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie20x1_2_perstn_m0>;
- 	reset-gpios = <&gpio3 RK_PD1 GPIO_ACTIVE_HIGH>;
- 	vpcie3v3-supply = <&vcc_3v3_pcie20>;
- 	status = "okay";
-@@ -410,6 +414,16 @@ rtc_int: rtc-int {
- 		};
- 	};
+ 	return IRQ_HANDLED;
+diff --git a/sound/soc/codecs/cs42l43.c b/sound/soc/codecs/cs42l43.c
+index b61df09f20cf4..a11d8ed8fa4e2 100644
+--- a/sound/soc/codecs/cs42l43.c
++++ b/sound/soc/codecs/cs42l43.c
+@@ -161,7 +161,7 @@ static void cs42l43_hp_ilimit_clear_work(struct work_struct *work)
+ 	priv->hp_ilimit_count--;
  
-+	pcie {
-+		pcie20x1_1_perstn_m2: pcie20x1-1-perstn-m2 {
-+			rockchip,pins = <1 RK_PA7 RK_FUNC_GPIO &pcfg_pull_none>;
-+		};
-+
-+		pcie20x1_2_perstn_m0: pcie20x1-2-perstn-m0 {
-+			rockchip,pins = <3 RK_PD1 RK_FUNC_GPIO &pcfg_pull_none>;
-+		};
-+	};
-+
- 	sdmmc {
- 		sdmmc_det_pin: sdmmc-det-pin {
- 			rockchip,pins = <0 RK_PA4 RK_FUNC_GPIO &pcfg_pull_up>;
+ 	if (priv->hp_ilimit_count)
+-		queue_delayed_work(system_wq, &priv->hp_ilimit_clear_work,
++		queue_delayed_work(system_dfl_wq, &priv->hp_ilimit_clear_work,
+ 				   msecs_to_jiffies(CS42L43_HP_ILIMIT_DECAY_MS));
+ 
+ 	snd_soc_dapm_mutex_unlock(dapm);
+@@ -179,7 +179,7 @@ static irqreturn_t cs42l43_hp_ilimit(int irq, void *data)
+ 
+ 	if (priv->hp_ilimit_count < CS42L43_HP_ILIMIT_MAX_COUNT) {
+ 		if (!priv->hp_ilimit_count)
+-			queue_delayed_work(system_wq, &priv->hp_ilimit_clear_work,
++			queue_delayed_work(system_dfl_wq, &priv->hp_ilimit_clear_work,
+ 					   msecs_to_jiffies(CS42L43_HP_ILIMIT_DECAY_MS));
+ 
+ 		priv->hp_ilimit_count++;
+diff --git a/sound/soc/codecs/es8326.c b/sound/soc/codecs/es8326.c
+index 4cefaa1f51d99..9d4cbccf7e298 100644
+--- a/sound/soc/codecs/es8326.c
++++ b/sound/soc/codecs/es8326.c
+@@ -812,12 +812,12 @@ static void es8326_jack_button_handler(struct work_struct *work)
+ 			press_count = 0;
+ 		}
+ 		button_to_report = cur_button;
+-		queue_delayed_work(system_wq, &es8326->button_press_work,
++		queue_delayed_work(system_dfl_wq, &es8326->button_press_work,
+ 				   msecs_to_jiffies(35));
+ 	} else if (prev_button != cur_button) {
+ 		/* mismatch, detect again */
+ 		prev_button = cur_button;
+-		queue_delayed_work(system_wq, &es8326->button_press_work,
++		queue_delayed_work(system_dfl_wq, &es8326->button_press_work,
+ 				   msecs_to_jiffies(35));
+ 	} else {
+ 		/* released or no pressed */
+@@ -912,7 +912,7 @@ static void es8326_jack_detect_handler(struct work_struct *work)
+ 					(ES8326_INT_SRC_PIN9 | ES8326_INT_SRC_BUTTON));
+ 			regmap_write(es8326->regmap, ES8326_SYS_BIAS, 0x1f);
+ 			regmap_update_bits(es8326->regmap, ES8326_HP_DRIVER_REF, 0x0f, 0x0d);
+-			queue_delayed_work(system_wq, &es8326->jack_detect_work,
++			queue_delayed_work(system_dfl_wq, &es8326->jack_detect_work,
+ 					msecs_to_jiffies(400));
+ 			es8326->hp = 1;
+ 			goto exit;
+@@ -923,7 +923,7 @@ static void es8326_jack_detect_handler(struct work_struct *work)
+ 			regmap_write(es8326->regmap, ES8326_INT_SOURCE,
+ 					(ES8326_INT_SRC_PIN9 | ES8326_INT_SRC_BUTTON));
+ 			es8326_enable_micbias(es8326->component);
+-			queue_delayed_work(system_wq, &es8326->button_press_work, 10);
++			queue_delayed_work(system_dfl_wq, &es8326->button_press_work, 10);
+ 			goto exit;
+ 		}
+ 		if ((iface & ES8326_HPBUTTON_FLAG) == 0x01) {
+@@ -958,10 +958,10 @@ static irqreturn_t es8326_irq(int irq, void *dev_id)
+ 		goto out;
+ 
+ 	if (es8326->jack->status & SND_JACK_HEADSET)
+-		queue_delayed_work(system_wq, &es8326->jack_detect_work,
++		queue_delayed_work(system_dfl_wq, &es8326->jack_detect_work,
+ 				   msecs_to_jiffies(10));
+ 	else
+-		queue_delayed_work(system_wq, &es8326->jack_detect_work,
++		queue_delayed_work(system_dfl_wq, &es8326->jack_detect_work,
+ 				   msecs_to_jiffies(300));
+ 
+ out:
+diff --git a/sound/soc/codecs/rt5663.c b/sound/soc/codecs/rt5663.c
+index 45057562c0c81..50fdeb8f06061 100644
+--- a/sound/soc/codecs/rt5663.c
++++ b/sound/soc/codecs/rt5663.c
+@@ -1859,7 +1859,7 @@ static irqreturn_t rt5663_irq(int irq, void *data)
+ 	dev_dbg(regmap_get_device(rt5663->regmap), "%s IRQ queue work\n",
+ 		__func__);
+ 
+-	queue_delayed_work(system_wq, &rt5663->jack_detect_work,
++	queue_delayed_work(system_dfl_wq, &rt5663->jack_detect_work,
+ 		msecs_to_jiffies(250));
+ 
+ 	return IRQ_HANDLED;
+@@ -1974,7 +1974,7 @@ static void rt5663_jack_detect_work(struct work_struct *work)
+ 				cancel_delayed_work_sync(
+ 					&rt5663->jd_unplug_work);
+ 			} else {
+-				queue_delayed_work(system_wq,
++				queue_delayed_work(system_dfl_wq,
+ 					&rt5663->jd_unplug_work,
+ 					msecs_to_jiffies(500));
+ 			}
+@@ -2024,7 +2024,7 @@ static void rt5663_jd_unplug_work(struct work_struct *work)
+ 				    SND_JACK_BTN_0 | SND_JACK_BTN_1 |
+ 				    SND_JACK_BTN_2 | SND_JACK_BTN_3);
+ 	} else {
+-		queue_delayed_work(system_wq, &rt5663->jd_unplug_work,
++		queue_delayed_work(system_dfl_wq, &rt5663->jd_unplug_work,
+ 			msecs_to_jiffies(500));
+ 	}
+ }
+diff --git a/sound/soc/intel/boards/sof_es8336.c b/sound/soc/intel/boards/sof_es8336.c
+index cf50de5c2edd8..30c0efb3917b1 100644
+--- a/sound/soc/intel/boards/sof_es8336.c
++++ b/sound/soc/intel/boards/sof_es8336.c
+@@ -163,7 +163,7 @@ static int sof_es8316_speaker_power_event(struct snd_soc_dapm_widget *w,
+ 
+ 	priv->speaker_en = !SND_SOC_DAPM_EVENT_ON(event);
+ 
+-	queue_delayed_work(system_wq, &priv->pcm_pop_work, msecs_to_jiffies(70));
++	queue_delayed_work(system_dfl_wq, &priv->pcm_pop_work, msecs_to_jiffies(70));
+ 	return 0;
+ }
+ 
+diff --git a/sound/soc/sof/intel/cnl.c b/sound/soc/sof/intel/cnl.c
+index 385e5339f0a4b..c4b58738d74b3 100644
+--- a/sound/soc/sof/intel/cnl.c
++++ b/sound/soc/sof/intel/cnl.c
+@@ -329,7 +329,7 @@ int cnl_ipc_send_msg(struct snd_sof_dev *sdev, struct snd_sof_ipc_msg *msg)
+ 	 * CTX_SAVE IPC, which is sent before the DSP enters D3.
+ 	 */
+ 	if (hdr->cmd != (SOF_IPC_GLB_PM_MSG | SOF_IPC_PM_CTX_SAVE))
+-		mod_delayed_work(system_wq, &hdev->d0i3_work,
++		mod_delayed_work(system_dfl_wq, &hdev->d0i3_work,
+ 				 msecs_to_jiffies(SOF_HDA_D0I3_WORK_DELAY_MS));
+ 
+ 	return 0;
+diff --git a/sound/soc/sof/intel/hda-ipc.c b/sound/soc/sof/intel/hda-ipc.c
+index f3fbf43a70c2b..94425c5108617 100644
+--- a/sound/soc/sof/intel/hda-ipc.c
++++ b/sound/soc/sof/intel/hda-ipc.c
+@@ -96,7 +96,7 @@ void hda_dsp_ipc4_schedule_d0i3_work(struct sof_intel_hda_dev *hdev,
+ 	if (hda_dsp_ipc4_pm_msg(msg_data->primary))
+ 		return;
+ 
+-	mod_delayed_work(system_wq, &hdev->d0i3_work,
++	mod_delayed_work(system_dfl_wq, &hdev->d0i3_work,
+ 			 msecs_to_jiffies(SOF_HDA_D0I3_WORK_DELAY_MS));
+ }
+ EXPORT_SYMBOL_NS(hda_dsp_ipc4_schedule_d0i3_work, "SND_SOC_SOF_INTEL_HDA_COMMON");
 -- 
 2.53.0
 
