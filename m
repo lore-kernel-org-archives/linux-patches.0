@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051733;
-	b=eirdc4Wq27M+qR1kgbcqJzya9Jq5peYkVivTWE0oxwy59RX6hz8ioWb9T3X1Kvgf9nAA
-	 rd4JtGTyIcfq3zkF5PQl7pmHF2fYvNKEVhWp0uJOppf8iJZhQynHQMGfe3i8n0pWtYh84
-	 XPiq3+cIkYaTa2PgOWuLn9T34IJRQhtnNFIagJZCs0XQpXh8VVKHlzL0q2Jzdgn+Q/vF1
-	 GbAUZwGFUdpWkGG4VO+i3GAp4jUwO7TddG+2+z+gLwZZ5sUhHznAgjii3htKKMlukgBeG
-	 CGb3Nj8iq4xgIiVN7D7YfVEq+mY5Zw7NhvQ26ASphFmJUs6VfCGhKJRf8Lvx8bhV4KA==
+	t=1795051736;
+	b=Y//n+868BLd5WBKOpF+vTtN821gyDJANzl6vUqJamCW2ka+oGGWTFkn0jzAfI+hYi7gy
+	 Ie+E8wuQ66lzSOkBhDrdMW67AhjDRrzc2UYdWT5BLtwqrYfA+B4Jy9KPWNspnEdMhUvxX
+	 7teTFjjzp4b3Fl4Y56wVP8TaNNqWsCv1VnGgXldbnEYBGDxW5GeRlbZUZrPeVP4kLOwY7
+	 C8XM2TzCqQdDtaxhAK4cHouu4N5D8pgq17Sn2gc0JCSwbpDG1ySG2Uu58Vz2fWUHc0t92
+	 laKx1PyJaA6bplxWYm8SrRVQX4mU0isVLYjKTaFFAKm1f8zCIjiS7Ngg8p1yASnog+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051733;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051736;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bvY6pklqHe10vTQqZYFoUj76VZc5E9CB3OqAwY1bxus=;
-	b=Lm/4gayMDzL7HGOgyrsE63aDF7jvSyzUpGfrUNxMGK44rkV2fzFk1SDrqtpB3hReAjDF
-	 lfRVnj9xGNsjRx285nBKqkgIItXgLAuKGlhlOcc2QfvTE2w1pfA7aQQXPDeodwjJZaBL0
-	 E1wsx1spu3DVr55uMJpYiToO0uHgbZ5P/w6XsKrTgg8cv5vNhaUuvmWZLFMxXYWpWlbNM
-	 roMvMsfRiS9NaVWO8NhW5mnuOxnq6eK5sGN7u+4POxCCoLpmHOKPQoxzlyty8E7/1DcDv
-	 SWrtb8NPaG6EGTS38hVK7hLMJI7tSV5wImtHnNTMNRlAayDxnw79CvDrSJ0RZFAayuQ==
+	bh=KkC9IJWD3jerm00SALOCTHaYlFcjXtzx/ykBh6v8IHQ=;
+	b=BMHJ+aExAcdqvZNybGKBeyeQll+UgQI594i3VouWV+h97ilVWGk3AvjFY7dxB1NkgmXX
+	 yT/vd8u8fdueWB9pSQ9FlII5Il5blwc5CyXYQ/pJG58LIMa1ZUawfDToxCGjq+FTPWKBo
+	 AfpEMFBNQ6ngBaRF5xEiNkmG2vE95H3xXGdHy7XDuHlIca8kNJl8M2s54wfLWIMGpIxT/
+	 VOl/fEeykeJWlmfJrN2nxXp8SXd++xdWdaWe0iQbS6rCQphDnL/tAJ+eDXW90ztEKB1Hh
+	 JoTcjWMnyL96KlJ+gdxtRjsJVieZkLXX/OUmN7stmwGBH/bwZEpnTvU1IsARsWsDpkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qL4z5xmV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="E/nr+Ifb";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE488606A325;
-	Thu, 19 Nov 2026 01:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E63606A325;
+	Thu, 19 Nov 2026 01:28:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qL4z5xmV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7441F000C4;
-	Thu, 19 Nov 2026 01:28:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E/nr+Ifb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E562B1F000C4;
+	Thu, 19 Nov 2026 01:28:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051733;
-	bh=bvY6pklqHe10vTQqZYFoUj76VZc5E9CB3OqAwY1bxus=;
+	s=korg; t=1795051736;
+	bh=KkC9IJWD3jerm00SALOCTHaYlFcjXtzx/ykBh6v8IHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qL4z5xmVfqsYF1dFq0VYH9fUgqmjwVQ7scKKiRyrTsh47yjBwNj2pSKyNzRK6TP0f
-	 /L79iUEBx1p/ELJqhuSgnkTgnUX7QBUSKVhjDBUrUohzf1IPjj7FGOl1IpAypTWT/J
-	 hf6VTKdh6t4NLGh5nP02rzGqqHTBcxoXZpBYmZVw=
+	b=E/nr+IfbeUSEf25JQXp0vjhFBHgBX1QdfhumJQlWaCdEyC+ulvFTp+F2cHU1cV8Cd
+	 XUKm4gwVCAYSMNmKLc88oTU0um8kc1jmwJtQXgwlajEi2q0UWjrJM4oYEVC/FEDniJ
+	 SCOWA92uJxVfLtXoF7Jd1Nhbc+fbOCLq5OrMVsgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Jie Law <law.wei.jie@gt.tech.gov.sg>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 0264/2214] net: usb: pegasus: do not advance rx_skb->data on dropped frames
-Date: Wed, 18 Nov 2026 15:32:20 +0100
-Message-ID: <20261118150020.658101369@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com
+Subject: [PATCH 5.15 0265/2214] ocfs2: drain quorum work before removing the cluster
+Date: Wed, 18 Nov 2026 15:32:21 +0100
+Message-ID: <20261118150020.698961714@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,86 +73,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Jie Law <law.wei.jie@gt.tech.gov.sg>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-commit bfa09dccf98cf78dd9282259b2140bd1472f5ae9 upstream.
+commit b584c45b6066fd9799c44ffb9badcb5db351c8a6 upstream.
 
-For the 0x8513 chip, read_bulk_callback() skips the 2-byte receive
-header by advancing pegasus->rx_skb->data in place. This is done before
-the pkt_len > PEGASUS_MTU check, and when that check drops the frame
-the good path resubmits the same skb with the advanced rx_skb->data as
-the transfer buffer, still PEGASUS_MTU bytes long.
+The configured cluster must remain available until an in-flight quorum
+decision has finished using its fencing method.  o2quo_make_decision()
+drops qs_lock before calling o2quo_fence_self(), which marks heartbeat
+regions for unclean stop and then reads
+o2nm_single_cluster->cl_fence_method.  Cluster removal clears the
+singleton without waiting for this independent system-workqueue item.
 
-Every frame with an oversized length field therefore moves the receive
-buffer two more bytes towards the end of the skb data area. A device
-that keeps sending such frames makes the host controller write received
-data over skb_shared_info and past the end of the allocation, and the
-corrupted skb_shared_info is used when the skb is eventually freed.
-With an emulated device sending frames filled with 0x5a on a KASAN
-kernel:
+When a failed-quorum decision overlaps removal of the heartbeat regions,
+nodes and cluster through configfs, the worker can be preempted after
+marking the regions and resume after the singleton has been cleared:
 
-  BUG: KASAN: slab-out-of-bounds in dummy_timer+0xade/0x3f00 [dummy_hcd]
-  Write of size 1536 at addr ffff888105821202 by task swapper/1/0
-  ...
-  Oops: general protection fault, probably for non-canonical address 0xeb4b474b4b4b4b4c: 0000 [#1] PREEMPT SMP KASAN NOPTI
-  KASAN: maybe wild-memory-access in range [0x5a5a5a5a5a5a5a60-0x5a5a5a5a5a5a5a67]
-  RIP: 0010:skb_release_data+0x36f/0x800
+  Quorum worker                     Configfs removal
+  select fence; drop qs_lock
+  o2hb_stop_all_regions()
+                                    remove regions; join heartbeat threads
+                                    remove nodes; stop o2net
+                                    clear singleton; release cluster
+  read cl_fence_method
 
-Only skip the header with skb_reserve() once the frame is going to be
-passed up, so the receive buffer always starts at the beginning of the
-skb data area. Unlike the old pointer adjustment, skb_reserve() also
-moves skb->tail, so the two header bytes now count against the buffer
-size: lower the length limit for the 0x8513 accordingly, otherwise a
-pkt_len of PEGASUS_MTU - 1 or PEGASUS_MTU would trip skb_over_panic().
+The resumed read dereferences NULL instead of applying the configured
+fencing method. The heartbeat thread's dependency protects the local
+node only until the thread exits, and draining o2net does not wait for
+qs_work.
 
-Found by code review with LLM assistance and reproduced with an
-emulated USB device (raw-gadget + dummy_hcd).
+Add o2quo_flush_work() to drain pending or running quorum decisions
+before clearing the singleton in o2nm_cluster_group_drop_item(). By
+this point the heartbeat regions and nodes have been removed, so their
+work publishers are stopped. The worker can finish while the cluster
+and its configured fencing method remain available. It does not acquire
+the configfs mutex held by the removal path.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wei Jie Law <law.wei.jie@gt.tech.gov.sg>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261021020310.34045-2-law.wei.jie@gt.tech.gov.sg
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Keep o2quo_exit() as the counterpart of o2quo_init() for module teardown
+and initialization failure, and have it call the same drain helper.
+Cluster removal uses only the explicitly named drain operation.
+
+KASAN report as below:
+
+    Oops: general protection fault, probably for non-canonical address 0xdffffc000000011b: 0000 [#1] SMP KASAN NOPTI
+    KASAN: null-ptr-deref in range [0x00000000000008d8-0x00000000000008df]
+    CPU: 0 UID: 0 PID: 72 Comm: kworker/0:2 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Workqueue: events o2quo_make_decision
+    RIP: 0010:o2quo_fence_self+0x65/0x200
+
+Register dump omitted.
+
+    Call Trace:
+     <TASK>
+     o2quo_make_decision+0x345/0x3a0
+     ? __pfx_o2quo_make_decision+0x10/0x10
+     ? process_one_work+0x834/0x1b40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x290
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     process_one_work+0x9a8/0x1b40
+     ? __pfx_process_one_work+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? lock_is_held_type+0x8f/0x100
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     worker_thread+0x65c/0xe40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __kthread_parkme+0x177/0x220
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_worker_thread+0x10/0x10
+     kthread+0x351/0x460
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork+0x659/0x940
+     ? __pfx_ret_from_fork+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __switch_to+0x74f/0xf70
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork_asm+0x1a/0x30
+     </TASK>
+    Modules linked in:
+    ---[ end trace 0000000000000000 ]---
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0064-v5-e3870bf6571b80b07b52@gmail.com
+Fixes: f6656d26d17b ("ocfs2/cluster: Make fence method configurable - v2")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/pegasus.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/ocfs2/cluster/nodemanager.c |    3 +++
+ fs/ocfs2/cluster/quorum.c      |    7 ++++++-
+ fs/ocfs2/cluster/quorum.h      |    1 +
+ 3 files changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/net/usb/pegasus.c
-+++ b/drivers/net/usb/pegasus.c
-@@ -472,6 +472,7 @@ static void read_bulk_callback(struct ur
- 	u8 *buf = urb->transfer_buffer;
- 	int rx_status, count = urb->actual_length;
- 	int status = urb->status;
-+	int rx_offset = 0;
- 	__u16 pkt_len;
+--- a/fs/ocfs2/cluster/nodemanager.c
++++ b/fs/ocfs2/cluster/nodemanager.c
+@@ -11,6 +11,7 @@
+ #include "tcp.h"
+ #include "nodemanager.h"
+ #include "heartbeat.h"
++#include "quorum.h"
+ #include "masklog.h"
+ #include "sys.h"
  
- 	if (!pegasus)
-@@ -521,7 +522,7 @@ static void read_bulk_callback(struct ur
- 	if (pegasus->chip == 0x8513) {
- 		pkt_len = le32_to_cpu(*(__le32 *)urb->transfer_buffer);
- 		pkt_len &= 0x0fff;
--		pegasus->rx_skb->data += 2;
-+		rx_offset = 2;
- 	} else {
- 		pkt_len = buf[count - 3] << 8;
- 		pkt_len += buf[count - 4];
-@@ -533,13 +534,14 @@ static void read_bulk_callback(struct ur
- 	 * If the packet is unreasonably long, quietly drop it rather than
- 	 * kernel panicing by calling skb_put.
- 	 */
--	if (pkt_len > PEGASUS_MTU)
-+	if (pkt_len > PEGASUS_MTU - rx_offset)
- 		goto goon;
+@@ -738,6 +739,8 @@ static void o2nm_cluster_group_drop_item
+ 	struct o2nm_cluster *cluster = to_o2nm_cluster(item);
  
- 	/*
- 	 * at this point we are sure pegasus->rx_skb != NULL
- 	 * so we go ahead and pass up the packet.
- 	 */
-+	skb_reserve(pegasus->rx_skb, rx_offset);
- 	skb_put(pegasus->rx_skb, pkt_len);
- 	pegasus->rx_skb->protocol = eth_type_trans(pegasus->rx_skb, net);
- 	netif_rx(pegasus->rx_skb);
+ 	BUG_ON(o2nm_single_cluster != cluster);
++	/* Drain quorum work before it loses access to the cluster. */
++	o2quo_flush_work();
+ 	o2nm_single_cluster = NULL;
+ 
+ 	configfs_remove_default_groups(&cluster->cl_group);
+--- a/fs/ocfs2/cluster/quorum.c
++++ b/fs/ocfs2/cluster/quorum.c
+@@ -318,9 +318,14 @@ void o2quo_init(void)
+ 	INIT_WORK(&qs->qs_work, o2quo_make_decision);
+ }
+ 
+-void o2quo_exit(void)
++void o2quo_flush_work(void)
+ {
+ 	struct o2quo_state *qs = &o2quo_state;
+ 
+ 	flush_work(&qs->qs_work);
+ }
++
++void o2quo_exit(void)
++{
++	o2quo_flush_work();
++}
+--- a/fs/ocfs2/cluster/quorum.h
++++ b/fs/ocfs2/cluster/quorum.h
+@@ -8,6 +8,7 @@
+ 
+ void o2quo_init(void);
+ void o2quo_exit(void);
++void o2quo_flush_work(void);
+ 
+ void o2quo_hb_up(u8 node);
+ void o2quo_hb_down(u8 node);
 
 
