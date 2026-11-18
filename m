@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033431;
-	b=gvr0WYce/SSrFM+dM06qRfrXTbRyrfiGqUbNqWydDdCrjo+tESs7DB/ivOWqpVoPfuKr
-	 nceYE5KHuPPisA/OHb38bHUjFRYj3XNGpYFpTOrWV210IxgdwExKuHsQ9zwWn4B+92gus
-	 yvs9dcVRNhNaNJ003Re02weu+bts65RiLpjTqwLAv5mAoqyvjT+pobVgWdO/1ethFLpLf
-	 UB1WaSvgBtqzga5zQ4c5biZGEBShv4aNfaD2bJwhBsZMTTY1mXW0l3TTpRCbQqoV3mOBV
-	 sEQVmck9JyBpOgAC7lRzbiDArVNe8dQypQemgW/mLpvmwxd9MumAKF7Md/K1BpqZV3A==
+	t=1795033434;
+	b=aNLGajv8U4hR5n4WEp7obBPwKJzxcStFhOOCJc2F7oGcm2yhXAVyIylFvu1LdHLTLWtL
+	 uSkR39mR1kK7j3X96WrUOwD5qSXRXBvcKG+6G/v8kiObsG5L6/wZ7wLJUSsDPUhhmDOAZ
+	 00jdPTnWykeH8loT4bIcvc+4kIIpHHjIK2cWHEq7rD01NoTLKD1ixTdv+kwVczsfVtoqx
+	 9qQ0PeuHH/x+fkgeGU3B+99MONOimxx1th2yn+p2IOCAW5SGgq/Oh+wgyda9JSXwqt+do
+	 XmsUxS63o1RJdC3m/au6ZVJxNpSQdYQFs6E50HuKpbn87VHKjc1f+f+qbIZ4mriV4nw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033431;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033434;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=G1YNHqlnkqicRd0Y0/0ibrvMEgYTwbohGvCl35618Vs=;
-	b=pf6eXlIhlaqC3hdYhYaHO0AxNSVJSkLdEW6quOUSVVfohkEZmboS1d0nQJncIKLm+MEh
-	 qNNr0zxaNS/UNuZGXzTOpy13NaLiFzZ9gDjgwLaCezgZj6WaYjbREiEMwzvdM69qmTbI/
-	 X6zi9DklSpFdOZWmmFn6BPwiB4IfcABKKv08W4BnQbHQ1/SDDoZpKvcoMiSONNnBQsZCM
-	 0HPldY5lXBnqXsG/wrXfip9cNifOoff8ggEd5K7rEsiWLMx/fEo3sWuzUebl0oSgajN3x
-	 ao16EMIppk9cyaFHY6TqE7+YajXq4EbGqZW2BpPQnlsA7c8TRMNs4BQITimlkFLyCuw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=a/qi/MwU5QsZdHLeOSYCEPudvcV1LG5qd8qH9hQX9YE=;
+	b=OIxTKzjyJv7RqPKXdDKtaGYgDGDaH7C7wvKzVAOqxQT/AzfwnRJoYBqfFUAdN39+yymI
+	 xiQVg8PGbzup8WNaUnC9Mmq6f81BbI0svOraQ8MYFrW7YKmbjICZWaovTb1y85dUbxWfA
+	 vPohnqXO8+syDxYFwZBLKoJJWLYf6fdwbOEj74/8t/gxCpaKAYFC+IqoCFwQPhMSxCuJQ
+	 N/9R7UduvYSiqhuHKM1GdnN1yLjJwxK13j6R+elCjZryYcn9hwzOR0mufk8bvWNeTLPSF
+	 i7sDdhWM6Lbe3qphWEl32WwH4iv88rQDcHW57k/YsoqvX/6j/HwvhX35oh7uV3fU82g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vhqjNVVW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MVyrUfM5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1ED606A31C;
-	Wed, 18 Nov 2026 20:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 017F0606A320;
+	Wed, 18 Nov 2026 20:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vhqjNVVW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC8B1F000C4;
-	Wed, 18 Nov 2026 20:23:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MVyrUfM5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61C8D1F000C4;
+	Wed, 18 Nov 2026 20:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033431;
-	bh=G1YNHqlnkqicRd0Y0/0ibrvMEgYTwbohGvCl35618Vs=;
+	s=korg; t=1795033433;
+	bh=a/qi/MwU5QsZdHLeOSYCEPudvcV1LG5qd8qH9hQX9YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vhqjNVVWz4G3Q7INiRJD1vi62qxy1RiiSkNqs1SD6pH3cYoY11BDxwbyCtErRYCvL
-	 Mb88OtfvvQG7TGHnhZbgJIRxKgrU1CQ/Em4yGJQ2eLigvrFQoP5cj5YmUc04wFzAd9
-	 ocbzBXvH4MtCMVjOpoAY9KuupP2Rfxpl4fb6k1Zc=
+	b=MVyrUfM5SnY5/yLio84nbZYC7ujYlBrIWJqYtg5+b3dSV4VuT0Isuxl9Yg+58m2tO
+	 Ue30Yl1vlrMoOpLwgsQIwqTX3HxDfMd00uyjkM/j1VLz3qIS7K0tQ3X0KLbs3LafgF
+	 9PxY9UzcLO/Wd5WlM5NTpgO9M5rYBh9HwXAPfm2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.6 0013/3318] lib/crypto: arm64: Fix lost Poly1305 carry when resuming NEON state
-Date: Wed, 18 Nov 2026 15:10:35 +0100
-Message-ID: <20261118150314.070870588@linuxfoundation.org>
+	Wei Xu <weixugc@google.com>,
+	Zeng Jingxiang <linuszeng@tencent.com>,
+	Kairui Song <kasong@tencent.com>,
+	Chris Li <chrisl@kernel.org>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Leno Hou <lenohou@gmail.com>
+Subject: [PATCH 6.6 0014/3318] mm/vmscan: wake up flushers conditionally to avoid cgroup OOM
+Date: Wed, 18 Nov 2026 15:10:36 +0100
+Message-ID: <20261118150314.106433328@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,87 +67,169 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Zeng Jingxiang <linuszeng@tencent.com>
 
-commit 24f07e8c07a0c0dd275331cbb41c79a78741eef9 upstream.
+commit 1bc542c6a0d1444559ab75823a89a94d244bf933 upstream.
 
-When poly1305_blocks_neon() resumes from a base 2^26 accumulator and the
-next update contains an odd number of full 16-byte blocks, it processes
-one leading block through poly1305_mult() so that the remaining NEON
-work has an even block count.  That requires converting the accumulator
-to the base 2^64 form used by poly1305_mult().  The final ADC of that
-conversion stores the carry into d2, but the following accumulation and
-poly1305_mult() use h2.  If the conversion carries across bit 128, the
-carry is dropped and the emitted tag is wrong.
+Commit 14aa8b2d5c2e ("mm/mglru: don't sync disk for each aging cycle")
+removed the opportunity to wake up flushers during the MGLRU page
+reclamation process can lead to an increased likelihood of triggering OOM
+when encountering many dirty pages during reclamation on MGLRU.
 
-This was introduced by Cryptogams commit 03dc4adf91c8
-("arm/poly1305-armv*.pl: optimize branches."), which removed the
-reduction that consumed d2 shortly before Linux imported the code.
-OpenSSL's copy did not take that change.
+This leads to premature OOM if there are too many dirty pages in cgroup:
+Killed
 
-The carry is possible because the NEON code stores the accumulator [h0,
-h1, h2, h3, h4] in a lazily reduced, redundant base 2^26 form: its final
-carry chain leaves h0, h2, h3 < 2^26, but h1 and h4 may slightly exceed
-2^26 - 1.  For example, the reachable state
+dd invoked oom-killer: gfp_mask=0x101cca(GFP_HIGHUSER_MOVABLE|__GFP_WRITE),
+order=0, oom_score_adj=0
 
-  h0 = 4
-  h1 = 2^26
-  h2 = 2^26 - 1
-  h3 = 2^26 - 1
-  h4 = 2^24 - 1
+Call Trace:
+  <TASK>
+  dump_stack_lvl+0x5f/0x80
+  dump_stack+0x14/0x20
+  dump_header+0x46/0x1b0
+  oom_kill_process+0x104/0x220
+  out_of_memory+0x112/0x5a0
+  mem_cgroup_out_of_memory+0x13b/0x150
+  try_charge_memcg+0x44f/0x5c0
+  charge_memcg+0x34/0x50
+  __mem_cgroup_charge+0x31/0x90
+  filemap_add_folio+0x4b/0xf0
+  __filemap_get_folio+0x1a4/0x5b0
+  ? srso_return_thunk+0x5/0x5f
+  ? __block_commit_write+0x82/0xb0
+  ext4_da_write_begin+0xe5/0x270
+  generic_perform_write+0x134/0x2b0
+  ext4_buffered_write_iter+0x57/0xd0
+  ext4_file_write_iter+0x76/0x7d0
+  ? selinux_file_permission+0x119/0x150
+  ? srso_return_thunk+0x5/0x5f
+  ? srso_return_thunk+0x5/0x5f
+  vfs_write+0x30c/0x440
+  ksys_write+0x65/0xe0
+  __x64_sys_write+0x1e/0x30
+  x64_sys_call+0x11c2/0x1d50
+  do_syscall_64+0x47/0x110
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-represents 4 + 2^26*2^26 + (2^26-1)*2^52 + (2^26-1)*2^78 +
-(2^24-1)*2^104 = 2^128 + 4, despite the bit representing the 2^128 term
-(bit 24 of h4) not being set; the extra comes from the h1 limb being
-above the normal base 2^26 range.  When this value is converted into the
-non-redundant base 2^64 form, a carry into the new 2^128 bit (in bit 0
-of h2) is necessary to preserve the value.
+ memory: usage 308224kB, limit 308224kB, failcnt 2589
+ swap: usage 0kB, limit 9007199254740988kB, failcnt 0
 
-Given the above bounds, a carry into bit 128 happens exactly when
-h1 >= 2^26, h2 = h3 = 2^26 - 1, and h4 mod 2^24 = 2^24 - 1.
+  ...
+  file_dirty 303247360
+  file_writeback 0
+  ...
 
-Store the carry into h2, matching the other base 2^26 to base 2^64
-conversions in poly1305_blocks() and poly1305_emit().
+oom-kill:constraint=CONSTRAINT_MEMCG,nodemask=(null),cpuset=test,
+mems_allowed=0,oom_memcg=/test,task_memcg=/test,task=dd,pid=4404,uid=0
+Memory cgroup out of memory: Killed process 4404 (dd) total-vm:10512kB,
+anon-rss:1152kB, file-rss:1824kB, shmem-rss:0kB, UID:0 pgtables:76kB
+oom_score_adj:0
 
-This bug causes an incorrect tag to be emitted.  However, this is
-unlikely to happen in practice where Poly1305 is used with a random key,
-since the random key tends to distribute the accumulator values
-throughout their valid range.  There isn't an obvious way for an
-attacker without knowledge of the r_key to cause [h0, h1, h2, h3, h4] to
-land on the precise values where this bug occurs.
+The flusher wake up was removed to decrease SSD wearing, but if we are
+seeing all dirty folios at the tail of an LRU, not waking up the flusher
+could lead to thrashing easily.  So wake it up when a memcg is about to
+OOM due to dirty caches.
 
-[EB: Rewrote the commit message to more clearly describe the bug and
- its impact, and simplified explanation about why there's a carry bit.]
+I did run the build kernel test[1] on V6, with -j16 1G memcg on my local
+branch:
 
-Fixes: f569ca164751 ("crypto: arm64/poly1305 - incorporate OpenSSL/CRYPTOGAMS NEON implementation")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Link: https://patch.msgid.link/20261009125354.315476-2-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Without the patch(10 times):
+user 1449.394
+system 368.78 372.58 363.03 362.31 360.84 372.70 368.72 364.94 373.51
+366.58 (avg 367.399)
+real 164.883
+
+With the V6 patch(10 times):
+user 1447.525
+system 360.87 360.63 372.39 364.09 368.49 365.15 359.93 362.04 359.72
+354.60 (avg 362.79)
+real 164.514
+
+Test results show that this patch has about 1% performance improvement,
+which should be caused by noise.
+
+Link: https://lkml.kernel.org/r/20241026115714.1437435-1-jingxiangzeng.cas@gmail.com
+Link: https://lore.kernel.org/all/CACePvbV4L-gRN9UKKuUnksfVJjOTq_5Sti2-e=pb_w51kucLKQ@mail.gmail.com/ [1]
+Fixes: 14aa8b2d5c2e ("mm/mglru: don't sync disk for each aging cycle")
+Suggested-by: Wei Xu <weixugc@google.com>
+Signed-off-by: Zeng Jingxiang <linuszeng@tencent.com>
+Signed-off-by: Kairui Song <kasong@tencent.com>
+Reviewed-by: Wei Xu <weixugc@google.com>
+Tested-by: Chris Li <chrisl@kernel.org>
+Cc: T.J. Mercier <tjmercier@google.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Leno Hou <lenohou@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/crypto/poly1305-armv8.pl |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/vmscan.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/crypto/poly1305-armv8.pl
-+++ b/arch/arm64/crypto/poly1305-armv8.pl
-@@ -372,7 +372,7 @@ poly1305_blocks_neon:
- 	adc	$h1,$h1,xzr
- 	lsr	$h2,x14,#24
- 	adds	$h1,$h1,x14,lsl#40
--	adc	$d2,$h2,xzr		// can be partially reduced...
-+	adc	$h2,$h2,xzr		// preserve carry into top limb
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4913,6 +4913,7 @@ static bool sort_folio(struct lruvec *lr
+ 		       int tier_idx)
+ {
+ 	bool success;
++	bool dirty, writeback;
+ 	int gen = folio_lru_gen(folio);
+ 	int type = folio_is_file_lru(folio);
+ 	int zone = folio_zonenum(folio);
+@@ -4961,9 +4962,17 @@ static bool sort_folio(struct lruvec *lr
+ 		return true;
+ 	}
  
- 	ldp	$d0,$d1,[$inp],#16	// load input
- 	sub	$len,$len,#16
++	dirty = folio_test_dirty(folio);
++	writeback = folio_test_writeback(folio);
++	if (type == LRU_GEN_FILE && dirty) {
++		sc->nr.file_taken += delta;
++		if (!writeback)
++			sc->nr.unqueued_dirty += delta;
++	}
++
+ 	/* waiting for writeback */
+-	if (folio_test_locked(folio) || folio_test_writeback(folio) ||
+-	    (type == LRU_GEN_FILE && folio_test_dirty(folio))) {
++	if (folio_test_locked(folio) || writeback ||
++	    (type == LRU_GEN_FILE && dirty)) {
+ 		gen = folio_inc_gen(lruvec, folio, true);
+ 		list_move(&folio->lru, &lrugen->folios[gen][type][zone]);
+ 		return true;
+@@ -5075,6 +5084,8 @@ static int scan_folios(struct lruvec *lr
+ 	__count_memcg_events(memcg, PGREFILL, sorted);
+ 	__count_vm_events(PGSCAN_ANON + type, isolated);
+ 
++	if (type == LRU_GEN_FILE)
++		sc->nr.file_taken += isolated;
+ 	/*
+ 	 * There might not be eligible folios due to reclaim_idx. Check the
+ 	 * remaining to prevent livelock if it's not making progress.
+@@ -5203,6 +5214,7 @@ static int evict_folios(struct lruvec *l
+ 		return scanned;
+ retry:
+ 	reclaimed = shrink_folio_list(&list, pgdat, sc, &stat, false);
++	sc->nr.unqueued_dirty += stat.nr_unqueued_dirty;
+ 	sc->nr_reclaimed += reclaimed;
+ 
+ 	list_for_each_entry_safe_reverse(folio, next, &list, lru) {
+@@ -5415,6 +5427,12 @@ static bool try_to_shrink_lruvec(struct
+ 		cond_resched();
+ 	}
+ 
++	/*
++	 *  If too many file cache in the coldest generation can't be evicted
++	 *  due to being dirty, wake up the flusher.
++	 */
++	if (sc->nr.unqueued_dirty && sc->nr.unqueued_dirty == sc->nr.file_taken)
++		wakeup_flusher_threads(WB_REASON_VMSCAN);
+ 	/* whether this lruvec should be rotated */
+ 	return nr_to_scan < 0;
+ }
 
 
