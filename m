@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034758;
-	b=seQiT+zi9PP27uVy2RLUNWha2ohP4/CBmszOLwaYWE4CF+tCGbLWxuLlJ9G5MkFB0UnM
-	 zRj3AQ/0datQ9LuubBqkpb0LqOiEoSBhBiMToftEnlmRt/BOwyDTGHBjYJtWbqxY7mzda
-	 E+fqL73nXT1WEBtGGb/rj2f4L3+V/r3kmp6pqr4ROFGlD26DWGEmYwIqiOJMxTnwItPAk
-	 eqNHiwnTranPSK6K9SYanX6+Im3QxnQZ7e4PsG4kIAKFDJ4x4pmMXrZRG1PuQK/X4c6t+
-	 1G/5fzZK8/603uXORM2P7aaK5osYBzcXVBU4AXHEkWS20efT8NQy7rqVVHiMBR8Z3zA==
+	t=1795034761;
+	b=KJXO6ujj21diF3ei6ysCnMyttFeakBu3FunCunICoOptGGBpBDQwYRLqE6AbcX2ReGOA
+	 wW21vjVeNUoECa9/csDDE1dPOb7513Gu8p2zWZvzagZqTc81zgUq1cSXev0S8gOp9PpMC
+	 l0cgCOzRwbka9WADHLFc3Ib0bB6IRc5yghUA5NlMlhhtcLcsla7c0JsvHrurb3n5Z9dqG
+	 ri5dFv3lKuh6Q7qqB3BfGu1JLDNWcnU8p6/Lc0qRMClED3kKF2dHSsI3QvwLxY7+PooU5
+	 RIoI0tiVCkab1pR9w3jOw5/n2mtlA4m0DhNF9Dq1klNLfaxruJKcJKYfGmvzXGnVrCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034758;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034761;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oSssbNyvmf5Uplu7YK820sH8p7q+Mo7PI/LoeR+uZSE=;
-	b=pdiDRTFAhN/DzD16iGAdG3O7yDK74QPxuLv8Ogbvt2PR4kbqCkHUdCq5USuYi7HNQjeN
-	 PU/366A9OIZpBUej7DnvxOK1yzcmmy28Z/gob4JYd85D97Lm8+mUUgR/r/xJaPu++dDa+
-	 eV5e4BVODNQH01TW6ZZH4ckbN1+2DtCnlxOP1Voj4+TqbRFO2zwciNyvWdvpfHRU80isn
-	 VeSy9YWG1YbyTnbOLCxDwqGaLxJYfuo9rLE/AKYGHQ0jjgeTJboHCrKA8lkezGNbXFf4+
-	 SP9r5ffrf9OwotpbwkUBnhYSpQ58/BTKXrcTKZQ8e0qYSeXJH9gp/BbUqWQYgj5JZVQ==
+	bh=Dm2IC2W524526You2ofgjjIEWLXqDgWX+0ckkGL9chU=;
+	b=3zWENAL2mV2m6c7Q2mGMxVU1Bhm8z7ZU+QbkiOkSKCOr4EZ8ZRIfSx4OOTDWSMxG2vY3
+	 we5epCeDlG7mJ8DPvTNRzLz5MJ+3aQw5g6NM6F93UgtzDF6ffbWh1soH48ZbU8Q41qVnx
+	 g0UmezeZNtOeSwYQK9jiBTOVsvcVrlofjhd70y+pMqZz65hV4dzLy9tMuSy+f1HZQE7tb
+	 b7LvB0C2u8k8shTtGHwhlh9q7itm+botjdoFfcFB4iV3c6OD/KQLc/sN5Dmsd/y85JsfK
+	 HpkiWr8/6LaRCfzEPE7aVN2kZUfoUV33XJxbk9MarpOHg+AtlJcToKuTFoJt069VWPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="YJBiq/dR";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McR5D8cw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60408606A320;
-	Wed, 18 Nov 2026 20:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143E6606A31C;
+	Wed, 18 Nov 2026 20:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YJBiq/dR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF7D1F000C4;
-	Wed, 18 Nov 2026 20:45:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McR5D8cw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915E41F000C4;
+	Wed, 18 Nov 2026 20:46:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034758;
-	bh=oSssbNyvmf5Uplu7YK820sH8p7q+Mo7PI/LoeR+uZSE=;
+	s=korg; t=1795034760;
+	bh=Dm2IC2W524526You2ofgjjIEWLXqDgWX+0ckkGL9chU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YJBiq/dReTQpoWpNWG2impOLFx4CNyRr/Ujhd3EpGrBWV0+h0VgxDB4fPiT4AJmBo
-	 a0PDQ1WGdEuvms3VIzkupGcjTVFJchaxUTprJvV27Jo1rw/d1PJkxnbOAFho17iaZU
-	 wskVVcS5HdH+/sFLwBh1GbxQn/3unfWHuoMQuArk=
+	b=McR5D8cw/rhSHp6jkRL33fgP9jlQgxhZPjFo2cf8Dml39SE+JFkgeb4fZAAd6DImt
+	 ZG1xdBSl5TU3/BZH5gZULQYbPAZ7R0QaDXhFE6vzNGVDzlM1aIw9+Mg8fm1GUzbK0r
+	 qPIlXaELfTUIAmWEyQjYwz0GDIAnSz/syOAUuYnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	Tom Talpey <tom@talpey.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Bharath SM <bharathsm@microsoft.com>,
+	Ahmed Naseef <naseefkm@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0480/3318] smb: client: fix fattr leaking on wsl_to_fattr() failure
-Date: Wed, 18 Nov 2026 15:18:22 +0100
-Message-ID: <20261118150331.352562853@linuxfoundation.org>
+Subject: [PATCH 6.6 0481/3318] net: phy: mediatek: do not report link and per-speed LED rules together
+Date: Wed, 18 Nov 2026 15:18:23 +0100
+Message-ID: <20261118150331.385962965@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -73,114 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Ahmed Naseef <naseefkm@gmail.com>
 
-[ Upstream commit e1253a82bb4c0fed6706a5839fc8b6e01be1abe2 ]
+[ Upstream commit bde5212360bd44506edec073ebbd6d0c72f75820 ]
 
-wsl_to_fattr() mutates fattr fields as it parses each WSL EA.  If
-validation later fails, the function returns false with partially
-mutated fattr fields that callers do not reset.
+mtk_phy_led_hw_ctrl_get() reports TRIGGER_NETDEV_LINK whenever any of the
+speed bits in on_set is on, and in addition reports every individual
+TRIGGER_NETDEV_LINK_* bit that is set. The netdev trigger refuses that
+combination: netdev_led_attr_store() rejects TRIGGER_NETDEV_LINK together
+with any per-speed rule, and it validates the whole resulting mode rather
+than just the bit being written. Once the hardware has any link bit
+programmed, every write to the trigger attributes of that LED therefore
+fails with -EINVAL and the LED can no longer be configured.
 
-Fix this by parsing into local variables and only committing them to
-fattr on success.
+The rules are also fed back into the hardware: the trigger stores what is
+read back, and a later write of device_name programs it again, expanding
+TRIGGER_NETDEV_LINK to every speed in on_set. An LED configured for a
+single speed is thereby silently widened to "on at any link speed".
 
-Closes: https://sashiko.dev/#/patchset/20260906200517.725015-1-pc%40manguebit.org
-Fixes: 78e26bec4d6d ("smb: client: parse uid, gid, mode and dev from WSL reparse points")
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
+Both are easy to see on the EcoNet EN7528, whose four PHYs share one LED
+block. The first LED programs the block correctly, the second reads those
+rules back and rewrites them widened, and the remaining two then read the
+widened value, so an LED configured for "link_10 link_100" ends up lit on a
+1000 Mbps link.
+
+on_set holds every speed the LED can indicate and is exactly what
+mtk_phy_led_hw_ctrl_set() programs for TRIGGER_NETDEV_LINK, so report the
+speed independent rule only when all of them are on, and the individual
+speeds otherwise. The mapping is then the inverse of the one used when
+programming the LED and round trips without changing the register.
+
+Fixes: c66937b0f8db ("net: phy: mediatek-ge-soc: support PHY LEDs")
 Cc: stable@vger.kernel.org
-[ sashal: Kept cifs_sb->mnt_cifs_flags instead of cifs_sb_flags() for sbflags, and adjusted context because the old uid/gid/mode setup lines sit in a different order. ]
+Signed-off-by: Ahmed Naseef <naseefkm@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260912134306.3544329-1-naseefkm@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Ported the fix to the single-file MediaTek driver and its LED get function, using the local link mask in place of on_set and dropping the 2500M branch. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/reparse.c | 34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ drivers/net/phy/mediatek-ge-soc.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index ceddb4ec10ba1..bdc1322199026 100644
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -680,29 +680,30 @@ static bool wsl_to_fattr(struct cifs_open_info_data *data,
- 			 u32 tag, struct cifs_fattr *fattr)
- {
- 	unsigned int sbflags = cifs_sb->mnt_cifs_flags;
-+	kuid_t uid = cifs_sb->ctx->linux_uid;
-+	kgid_t gid = cifs_sb->ctx->linux_gid;
- 	struct smb2_file_full_ea_info *ea;
- 	bool have_xattr_dev = false;
-+	dev_t rdev = 0;
-+	umode_t mode;
- 	u32 next = 0;
+diff --git a/drivers/net/phy/mediatek-ge-soc.c b/drivers/net/phy/mediatek-ge-soc.c
+index 4b2a9a5444c57..5a1dda88a80c6 100644
+--- a/drivers/net/phy/mediatek-ge-soc.c
++++ b/drivers/net/phy/mediatek-ge-soc.c
+@@ -1276,17 +1276,25 @@ static int mt798x_phy_led_hw_control_get(struct phy_device *phydev, u8 index,
+ 	if (!rules)
+ 		return 0;
  
--	fattr->cf_mode &= ~S_IFMT;
--	fattr->cf_uid = cifs_sb->ctx->linux_uid;
--	fattr->cf_gid = cifs_sb->ctx->linux_gid;
+-	if (on & MTK_PHY_LED_ON_LINK)
++	/* TRIGGER_NETDEV_LINK must not be reported together with any of the
++	 * per-speed rules, the netdev trigger rejects that combination.
++	 * MTK_PHY_LED_ON_LINK holds every speed this LED can indicate and is
++	 * what mt798x_phy_led_hw_control_set() programs for
++	 * TRIGGER_NETDEV_LINK, so report the speed independent rule only when
++	 * they are all on.
++	 */
++	if ((on & MTK_PHY_LED_ON_LINK) == MTK_PHY_LED_ON_LINK) {
+ 		*rules |= BIT(TRIGGER_NETDEV_LINK);
++	} else {
++		if (on & MTK_PHY_LED_ON_LINK10)
++			*rules |= BIT(TRIGGER_NETDEV_LINK_10);
+ 
+-	if (on & MTK_PHY_LED_ON_LINK10)
+-		*rules |= BIT(TRIGGER_NETDEV_LINK_10);
 -
-+	mode = fattr->cf_mode & ~S_IFMT;
- 	switch (tag) {
- 	case IO_REPARSE_TAG_LX_SYMLINK:
--		fattr->cf_mode |= S_IFLNK;
-+		mode |= S_IFLNK;
- 		break;
- 	case IO_REPARSE_TAG_LX_FIFO:
--		fattr->cf_mode |= S_IFIFO;
-+		mode |= S_IFIFO;
- 		break;
- 	case IO_REPARSE_TAG_AF_UNIX:
--		fattr->cf_mode |= S_IFSOCK;
-+		mode |= S_IFSOCK;
- 		break;
- 	case IO_REPARSE_TAG_LX_CHR:
--		fattr->cf_mode |= S_IFCHR;
-+		mode |= S_IFCHR;
- 		break;
- 	case IO_REPARSE_TAG_LX_BLK:
--		fattr->cf_mode |= S_IFBLK;
-+		mode |= S_IFBLK;
- 		break;
- 	}
+-	if (on & MTK_PHY_LED_ON_LINK100)
+-		*rules |= BIT(TRIGGER_NETDEV_LINK_100);
++		if (on & MTK_PHY_LED_ON_LINK100)
++			*rules |= BIT(TRIGGER_NETDEV_LINK_100);
  
-@@ -726,26 +727,29 @@ static bool wsl_to_fattr(struct cifs_open_info_data *data,
+-	if (on & MTK_PHY_LED_ON_LINK1000)
+-		*rules |= BIT(TRIGGER_NETDEV_LINK_1000);
++		if (on & MTK_PHY_LED_ON_LINK1000)
++			*rules |= BIT(TRIGGER_NETDEV_LINK_1000);
++	}
  
- 		if (!strncmp(name, SMB2_WSL_XATTR_UID, nlen)) {
- 			if (!(sbflags & CIFS_MOUNT_OVERR_UID))
--				fattr->cf_uid = wsl_make_kuid(cifs_sb, v);
-+				uid = wsl_make_kuid(cifs_sb, v);
- 		} else if (!strncmp(name, SMB2_WSL_XATTR_GID, nlen)) {
- 			if (!(sbflags & CIFS_MOUNT_OVERR_GID))
--				fattr->cf_gid = wsl_make_kgid(cifs_sb, v);
-+				gid = wsl_make_kgid(cifs_sb, v);
- 		} else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen)) {
- 			/* File type in reparse point tag and in xattr mode must match. */
--			if (S_DT(fattr->cf_mode) != S_DT(get_unaligned_le32(v)))
-+			if (S_DT(mode) != S_DT(get_unaligned_le32(v)))
- 				return false;
--			fattr->cf_mode = (umode_t)get_unaligned_le32(v);
-+			mode = get_unaligned_le32(v);
- 		} else if (!strncmp(name, SMB2_WSL_XATTR_DEV, nlen)) {
--			fattr->cf_rdev = reparse_mkdev(v);
-+			rdev = reparse_mkdev(v);
- 			have_xattr_dev = true;
- 		}
- 	} while (next);
- out:
--
- 	/* Major and minor numbers for char and block devices are mandatory. */
- 	if (!have_xattr_dev && (tag == IO_REPARSE_TAG_LX_CHR || tag == IO_REPARSE_TAG_LX_BLK))
- 		return false;
- 
-+	fattr->cf_uid = uid;
-+	fattr->cf_gid = gid;
-+	fattr->cf_mode = mode;
-+	fattr->cf_rdev = rdev;
- 	return true;
- }
- 
+ 	if (on & MTK_PHY_LED_ON_FDX)
+ 		*rules |= BIT(TRIGGER_NETDEV_FULL_DUPLEX);
 -- 
 2.53.0
 
