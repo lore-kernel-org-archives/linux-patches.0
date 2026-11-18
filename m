@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023034;
-	b=GIr16QIN+1yvJ95Kd+JCsMDQLLhgzI+6jIvtQuUwH7W1GHUR52xohTcTtw4z3XXB0NCh
-	 8dL6duXjdthIYnv61ZMXXyhMs7RR/pm7iTprK7kiDrD1QkGdc3b1u9wUMI3VO25uuPon5
-	 /a4FRZxfdFYM1MT1fdd24S0ixgKsExYChM0xS2NyOUIUFJyfbyzwXlKHELsdATIEecwPn
-	 92opDcjwlnWMKAcIbdHzR6GrKKnZjuME4rXY/P/0DJDkH0zn83v304C3f1gkla7R5W8AW
-	 pSkswYFELHLVfSpmVJAMrbpm0fHn1oFwkEMCsu8D9Nk4oSWdqOt4PgiyPOC41UcmFDg==
+	t=1795023037;
+	b=E6hOovG9CATFO7yGL507UUQl4DVj4Y/nypnhAlFC+/nSjuZoDYDoUqhdmmQWT8CfJqmx
+	 dOxTMLzN+V2pgw/MrbXUb0FzDH0RW2Sj3h3hO29LelsyZefgBU950t27KBetnIIbLzdki
+	 Qp/69i/7b+PMbxnQPcMax6UIUB0/gRpmsXqwS1X97eNqkjbEGpj6oPRff62hzh05Yu+kW
+	 Nrh45K5TsV7bj5X5uU1/hhQlZu0+cIgjeShKQ7W0r9PDjvkQigF1fP+sCuou1EWloFPno
+	 0M0QR+Rlc51oLN4S9PeGyrU3FQSXxz3v/OdvcQM9TXrZ1BROZuj/qp2x4nH2kvovH7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023034;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023037;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yaeP5g4Vn3S7kot/iznclTL+8BOBPrln2Ocn4knQWXQ=;
-	b=oqAwZ1td91uCocdZX8HUFQEFDtPf1ySbN/6KsWjExg7RctQ5xMTTE1jzYu2M8JJLbLmi
-	 wYjGN7oinuXafB/ymyj3CON0qhV9foii8eyZcd6+TcCQ5JSohqey0gub5z/b9zS9xrxR2
-	 R1W1jNsY7IXS3isIIYoS4jxVIiioFdikpRpoFsv/9MUEBn8pSMjg96N0RezU/lyLeG2Q/
-	 3sZT4sO0bCfVRqRqopagiid0tiBLvU8gqQ93Mo4vnuyrYYfVBir1v4A/ioI+QqwvcWKMU
-	 /QtLnA3qP1Sxu5n4BKmvvVZHkZg8NHkfOuiH4KRdTq3bIedey1jwZ2MdNJ+rFOBo8rA==
+	bh=2GixX8cgLoNZHxG+jKC+OiJPSB/aSQ2mzMftEnMymmw=;
+	b=NZyeiiqWq1fpNw2z1oUH/+mXUoQwmb9rFW/M0BwpeZSTSjr/6MK8a5zmbOycJaMTZiNL
+	 vv4fXvGBltQdKWPPCRlDCtmMoy3qSEAudCcbrhYnUhMWe9hss0Mv7nuPNPdlvmGTjUkLc
+	 Phu3cVC/gotV7I6YKKMvItz88ryJ7RVkmaHbHIV48qyo9QTlUY48973y4webP2vubk4Jv
+	 +uFG25iHjeWo2zRmL3/rzvq4BgiOyCbN71TtgH9tEnnNE79oA9fqIprzHga9eisKBpmog
+	 HtyOxwNJp1uvuAcPQOOtsBVDqZKu5sM/j+NppI70eao4jtrToSgjc0twA+9bLbQiBWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wujzTugk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1jXP2QNX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A9B606A331;
-	Wed, 18 Nov 2026 17:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845A6606A336;
+	Wed, 18 Nov 2026 17:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wujzTugk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFF61F000C4;
-	Wed, 18 Nov 2026 17:30:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1jXP2QNX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1A81F000C4;
+	Wed, 18 Nov 2026 17:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023034;
-	bh=yaeP5g4Vn3S7kot/iznclTL+8BOBPrln2Ocn4knQWXQ=;
+	s=korg; t=1795023037;
+	bh=2GixX8cgLoNZHxG+jKC+OiJPSB/aSQ2mzMftEnMymmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wujzTugkqTF1FCoMJkKr+4KkD9MX/65XK7K2MCzvHlVGZPl1B9k/myxYCio9z6oU5
-	 e9syRceFjIPXLAsb3vf0dNjJFbxUlkA5FprdIsyXKoqJm7j1N/f0gGea7CFmOeNHLy
-	 F7RfeB418FhjHRMuX5jKk+HwQU2vMtrLV7hm58Ko=
+	b=1jXP2QNXqP3XZbde9dcGGQqsVHCo13a908+Ywfjj5ZUq3f8w+zaTTtj+APbCrPR3N
+	 ORGOAb9CDXdLGwRonqRhjfXnjzc2lNz8DABJ9LXjbNr/QnN6nPrlyHa1y06yx+nZMX
+	 hqDFLjjlYWn835QMmAbrNLpBfKFgneXIuvAoaT4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0224/2151] wifi: mac80211: dont seed an S1G stas last_rate
-Date: Wed, 18 Nov 2026 15:32:39 +0100
-Message-ID: <20261118150129.941453656@linuxfoundation.org>
+Subject: [PATCH 6.18 0189/2151] clk: fix self-consuming provider module pinning
+Date: Wed, 18 Nov 2026 15:32:04 +0100
+Message-ID: <20261118150128.672351167@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,179 +68,254 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 00f623647c331d31df8629af958f7582a7fc874c ]
+[ Upstream commit a1c8d531c694e193dc48ef2428877d5ea2e35134 ]
 
-When initialising the rate control system, ieee80211_s1g_sta_rate_init()
-is called for S1G stations during association where it initialises a
-last rate of type STA_STATS_RATE_TYPE_S1G but does not initialise
-nss, mcs bw etc. Since the last_rate no longer has a value equivalent
-to STA_STATS_RATE_INVALID, the invalid rate will be decoded and
-the NL80211_STA_INFO_RX_BITRATE flag will be set.
+clk_hw_get_clk() lets a provider get a struct clk for one of its own
+struct clk_hw.
 
-As a result, there is a period during association before the first
-data frame is rx'ed where the seeded value is overwritten by
-ieee80211_rx_h_sta_process() while this invalid last_rate lives. If
-the sta is desroyed during this process, nl80211_put_sta_rate() will
-call into cfg80211_calculate_bitrate() and attempt to calculate
-the bitrate using the invalid last_rate leading to a WARN:
+When a struct clk is created, the module usage count of the provider
+is unconditionally increased. For a self-consuming provider, this means
+it pins itself and the module can never be unloaded.
 
-4,336,675067400,-;------------[ cut here ]------------
-4,337,675067524,-;WARNING: net/wireless/util.c:1960 at cfg80211_calculate_bitrate+0x4d8/0x8b0 [cfg80211], CPU#3: kworker/u16:3/874
-4,338,675068176,-;invalid rate bw=0, mcs=0, nss=0
-[snip loaded modules]
-4,341,675068954,-;Hardware name: BCM2711
-4,342,675068961,-;Workqueue: events_unbound cfg80211_wiphy_work [cfg80211]
-4,343,675069386,-;Call trace:
-4,344,675069392,-; unwind_backtrace from show_stack+0x10/0x14
-4,345,675069440,-; show_stack from dump_stack_lvl+0xa8/0xb8
-4,346,675069475,-; dump_stack_lvl from __warn+0x90/0x224
-4,347,675069517,-; __warn from warn_slowpath_fmt+0x130/0x1a8
-4,348,675069559,-; warn_slowpath_fmt from cfg80211_calculate_bitrate+0x4d8/0x8b0 [cfg80211]
-4,349,675070005,-; cfg80211_calculate_bitrate [cfg80211] from nl80211_put_sta_rate+0x48/0x590 [cfg80211]
-4,350,675070819,-; nl80211_put_sta_rate [cfg80211] from nl80211_put_sta_info_common+0x4f4/0xd50 [cfg80211]
-4,351,675071616,-; nl80211_put_sta_info_common [cfg80211] from nl80211_send_station.constprop.0+0x114/0x424 [cfg80211]
-4,352,675072427,-; nl80211_send_station.constprop.0 [cfg80211] from cfg80211_del_sta_sinfo+0xc4/0x368 [cfg80211]
-4,353,675073222,-; cfg80211_del_sta_sinfo [cfg80211] from __sta_info_destroy_part2+0x108/0x2c0 [mac80211]
-4,354,675074178,-; __sta_info_destroy_part2 [mac80211] from sta_info_destroy_addr+0x4c/0x88 [mac80211]
-4,355,675075243,-; sta_info_destroy_addr [mac80211] from ieee80211_destroy_assoc_data+0x194/0x2d8 [mac80211]
-4,356,675075920,-; ieee80211_destroy_assoc_data [mac80211] from ieee80211_rx_mgmt_assoc_resp+0x220/0x1d4c [mac80211]
-4,357,675076558,-; ieee80211_rx_mgmt_assoc_resp [mac80211] from ieee80211_iface_work+0x1c0/0x5d0 [mac80211]
-4,358,675077187,-; ieee80211_iface_work [mac80211] from cfg80211_wiphy_work+0x110/0x368 [cfg80211]
-4,359,675077763,-; cfg80211_wiphy_work [cfg80211] from process_one_work+0x260/0x868
-4,360,675078022,-; process_one_work from worker_thread+0x1bc/0x3ec
-4,361,675078042,-; worker_thread from kthread+0x120/0x154
-4,362,675078060,-; kthread from ret_from_fork+0x14/0x20
-4,363,675078074,-;Exception stack(0xf0ac1fb0 to 0xf0ac1ff8)
-4,364,675078081,-;1fa0:                                     00000000 00000000 00000000 00000000
-4,365,675078088,-;1fc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
-4,366,675078093,-;1fe0: 00000000 00000000 00000000 00000000 00000013 00000000
-4,367,675080226,-;irq event stamp: 15780967
-4,368,675080287,-;hardirqs last  enabled at (15780975): [<c050c154>] __up_console_sem+0x50/0x60
-4,369,675080395,-;hardirqs last disabled at (15780982): [<c050c140>] __up_console_sem+0x3c/0x60
-4,370,675080497,-;softirqs last  enabled at (15780966): [<c0476f14>] handle_softirqs+0x398/0x650
-4,371,675080608,-;softirqs last disabled at (15780939): [<c0477388>] __irq_exit_rcu+0x150/0x1f0
-4,372,675080715,-;---[ end trace 0000000000000000 ]---
+Increasing the module usage count should only be done when the consumer
+lives in a different module from the provider. Use THIS_MODULE to
+capture caller's module and increase the module usage count accordingly.
 
-To fix, we can simply not seed this psuedo rate. It was originally
-implemented to avoid errornous paths that S1G shouldn't take, but those
-have since been fixed / cleaned up. While we are here, we also don't
-need to initialise the tx side's last rate with
-IEEE80211_TX_RC_S1G_MCS (which is equivalent to
-IEEE80211_TX_RC_VHT_MCS). The entire tx reporting side does not
-support S1G widths and is assumed to be handled by the driver so
-we can just remove the entire function.
+It is OK for consumer-only APIs such as clk_get() or of_clk_get() to
+pass a NULL owner. As a result, any provider module will get pinned,
+same as before.
 
-Fixes: 12bf8fad4ca3 ("mac80211: initialize last_rate for S1G STAs")
-Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
-Link: https://patch.msgid.link/20260827054456.254573-1-lachlan.hodges@morsemicro.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 30d6f8c15d2c ("clk: add api to get clk consumer from clk_hw")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ieee80211_i.h |  1 -
- net/mac80211/mlme.c        | 14 +++++---------
- net/mac80211/rate.c        |  1 -
- net/mac80211/s1g.c         |  8 --------
- 4 files changed, 5 insertions(+), 19 deletions(-)
+ drivers/clk/clk.c            | 46 ++++++++++++++++++++----------------
+ drivers/clk/clk.h            |  5 ++--
+ drivers/clk/clkdev.c         |  4 ++--
+ include/linux/clk-provider.h | 22 ++++++++++++++---
+ 4 files changed, 50 insertions(+), 27 deletions(-)
 
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 43ae7200875c5..a0b0eb4b2f2ae 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -2326,7 +2326,6 @@ ieee80211_he_op_ie_to_bss_conf(struct ieee80211_vif *vif,
- 			const struct ieee80211_he_operation *he_op_ie_elem);
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index 85d2f2481acf3..e00b36f5a6cfd 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -115,6 +115,7 @@ struct clk {
+ 	unsigned long max_rate;
+ 	unsigned int exclusive_count;
+ 	struct hlist_node clks_node;
++	bool pinning;
+ };
  
- /* S1G */
--void ieee80211_s1g_sta_rate_init(struct sta_info *sta);
- bool ieee80211_s1g_is_twt_setup(struct sk_buff *skb);
- void ieee80211_s1g_rx_twt_action(struct ieee80211_sub_if_data *sdata,
- 				 struct sk_buff *skb);
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 4f42108aafd4f..2ca905b9da224 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -5637,7 +5637,6 @@ static bool ieee80211_assoc_config_link(struct ieee80211_link_data *link,
+ /***           runtime pm          ***/
+@@ -4153,13 +4154,15 @@ static void free_clk(struct clk *clk)
+  * @hw: clk_hw associated with the clk being consumed
+  * @dev_id: string describing device name
+  * @con_id: connection ID string on device
++ * @owner: reference to the module creating the clock
+  *
+  * This is the main function used to create a clk pointer for use by clk
+  * consumers. It connects a consumer to the clk_core and clk_hw structures
+  * used by the framework and clk provider respectively.
+  */
+ struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
+-			      const char *dev_id, const char *con_id)
++			      const char *dev_id, const char *con_id,
++			      struct module *owner)
+ {
+ 	struct clk *clk;
+ 	struct clk_core *core;
+@@ -4174,7 +4177,13 @@ struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
+ 		return clk;
+ 	clk->dev = dev;
+ 
+-	if (!try_module_get(core->owner)) {
++	/*
++	 * Pin the provider module only when the consumer lives in a different
++	 * module. A provider getting a clk from its own clk_hw would otherwise
++	 * pin itself and could never be unloaded.
++	 */
++	clk->pinning = owner != core->owner;
++	if (clk->pinning && !try_module_get(core->owner)) {
+ 		free_clk(clk);
+ 		return ERR_PTR(-ENOENT);
+ 	}
+@@ -4185,24 +4194,19 @@ struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
+ 	return clk;
  }
  
- static int ieee80211_mgd_setup_link_sta(struct ieee80211_link_data *link,
--					struct sta_info *sta,
- 					struct link_sta_info *link_sta,
- 					struct cfg80211_bss *cbss)
+-/**
+- * clk_hw_get_clk - get clk consumer given an clk_hw
+- * @hw: clk_hw associated with the clk being consumed
+- * @con_id: connection ID string on device
+- *
+- * Returns: new clk consumer
+- * This is the function to be used by providers which need
+- * to get a consumer clk and act on the clock element
+- * Calls to this function must be balanced with calls clk_put()
++/*
++ * Internal helper backing the clk_hw_get_clk() macro, which passes the caller's
++ * module via THIS_MODULE.
+  */
+-struct clk *clk_hw_get_clk(struct clk_hw *hw, const char *con_id)
++struct clk *__clk_hw_get_clk(struct clk_hw *hw, const char *con_id,
++			     struct module *owner)
  {
-@@ -5652,11 +5651,9 @@ static int ieee80211_mgd_setup_link_sta(struct ieee80211_link_data *link,
- 	memcpy(link_sta->addr, cbss->bssid, ETH_ALEN);
- 	memcpy(link_sta->pub->addr, cbss->bssid, ETH_ALEN);
+ 	struct device *dev = hw->core->dev;
+ 	const char *name = dev ? dev_name(dev) : NULL;
  
--	/* TODO: S1G Basic Rate Set is expressed elsewhere */
--	if (cbss->channel->band == NL80211_BAND_S1GHZ) {
--		ieee80211_s1g_sta_rate_init(sta);
-+	/* S1G does not use basic rates */
-+	if (cbss->channel->band == NL80211_BAND_S1GHZ)
- 		return 0;
--	}
+-	return clk_hw_create_clk(dev, hw, name, con_id);
++	return clk_hw_create_clk(dev, hw, name, con_id, owner);
+ }
+-EXPORT_SYMBOL(clk_hw_get_clk);
++EXPORT_SYMBOL(__clk_hw_get_clk);
  
- 	sband = local->hw.wiphy->bands[cbss->channel->band];
+ static int clk_cpy_name(const char **dst_p, const char *src, bool must_exist)
+ {
+@@ -4366,8 +4370,9 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
+ 	INIT_HLIST_HEAD(&core->clks);
  
-@@ -6394,7 +6391,7 @@ static bool ieee80211_assoc_success(struct ieee80211_sub_if_data *sdata,
- 			}
- 		}
+ 	/*
+-	 * Don't call clk_hw_create_clk() here because that would pin the
+-	 * provider module to itself and prevent it from ever being removed.
++	 * Don't call clk_hw_create_clk() here because it would systematically
++	 * add a consumer to the hw clock and all clocks would appear to have
++	 * consumer in the clock summary.
+ 	 */
+ 	hw->clk = alloc_clk(core, NULL, NULL);
+ 	if (IS_ERR(hw->clk)) {
+@@ -4724,7 +4729,7 @@ struct clk *devm_clk_hw_get_clk(struct device *dev, struct clk_hw *hw,
+ 	if (!clkp)
+ 		return ERR_PTR(-ENOMEM);
  
--		err = ieee80211_mgd_setup_link_sta(link, sta, link_sta,
-+		err = ieee80211_mgd_setup_link_sta(link, link_sta,
- 						   assoc_data->link[link_id].bss);
- 		if (err)
- 			goto out_err;
-@@ -9070,8 +9067,7 @@ static int ieee80211_prep_connection(struct ieee80211_sub_if_data *sdata,
- 			goto out_err;
- 		}
+-	clk = clk_hw_get_clk(hw, con_id);
++	clk = __clk_hw_get_clk(hw, con_id, dev->driver->owner);
+ 	if (!IS_ERR(clk)) {
+ 		*clkp = clk;
+ 		devres_add(dev, clkp);
+@@ -4771,7 +4776,8 @@ void __clk_put(struct clk *clk)
  
--		err = ieee80211_mgd_setup_link_sta(link, new_sta,
--						   link_sta, cbss);
-+		err = ieee80211_mgd_setup_link_sta(link, link_sta, cbss);
- 		if (err) {
- 			rcu_read_unlock();
- 			sta_info_free(local, new_sta);
-@@ -10424,7 +10420,7 @@ void ieee80211_process_ml_reconf_resp(struct ieee80211_sub_if_data *sdata,
- 			goto disconnect;
- 		}
+ 	owner = clk->core->owner;
+ 	kref_put(&clk->core->ref, __clk_release);
+-	module_put(owner);
++	if (clk->pinning)
++		module_put(owner);
+ 	free_clk(clk);
+ }
  
--		if (ieee80211_mgd_setup_link_sta(link, sta, link_sta,
-+		if (ieee80211_mgd_setup_link_sta(link, link_sta,
- 						 add_links_data->link[link_id].bss))
- 			goto disconnect;
+@@ -5292,7 +5298,7 @@ struct clk *of_clk_get_from_provider(struct of_phandle_args *clkspec)
+ {
+ 	struct clk_hw *hw = of_clk_get_hw_from_clkspec(clkspec);
  
-diff --git a/net/mac80211/rate.c b/net/mac80211/rate.c
-index e441f85416037..4880d1e63e984 100644
---- a/net/mac80211/rate.c
-+++ b/net/mac80211/rate.c
-@@ -59,7 +59,6 @@ void rate_control_rate_init(struct link_sta_info *link_sta)
+-	return clk_hw_create_clk(NULL, hw, NULL, __func__);
++	return clk_hw_create_clk(NULL, hw, NULL, __func__, NULL);
+ }
+ EXPORT_SYMBOL_GPL(of_clk_get_from_provider);
  
- 	/* TODO: check for minstrel_s1g ? */
- 	if (sband->band == NL80211_BAND_S1GHZ) {
--		ieee80211_s1g_sta_rate_init(sta);
- 		rcu_read_unlock();
- 		return;
+@@ -5319,7 +5325,7 @@ static struct clk *__of_clk_get(struct device_node *np,
+ {
+ 	struct clk_hw *hw = of_clk_get_hw(np, index, con_id);
+ 
+-	return clk_hw_create_clk(NULL, hw, dev_id, con_id);
++	return clk_hw_create_clk(NULL, hw, dev_id, con_id, NULL);
+ }
+ 
+ struct clk *of_clk_get(struct device_node *np, int index)
+diff --git a/drivers/clk/clk.h b/drivers/clk/clk.h
+index 2d801900cad59..5009380863a9d 100644
+--- a/drivers/clk/clk.h
++++ b/drivers/clk/clk.h
+@@ -23,13 +23,14 @@ struct clk_hw *clk_find_hw(const char *dev_id, const char *con_id);
+ 
+ #ifdef CONFIG_COMMON_CLK
+ struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
+-			      const char *dev_id, const char *con_id);
++			      const char *dev_id, const char *con_id,
++			      struct module *owner);
+ void __clk_put(struct clk *clk);
+ #else
+ /* All these casts to avoid ifdefs in clkdev... */
+ static inline struct clk *
+ clk_hw_create_clk(struct device *dev, struct clk_hw *hw, const char *dev_id,
+-		  const char *con_id)
++		  const char *con_id, struct module *owner)
+ {
+ 	return (struct clk *)hw;
+ }
+diff --git a/drivers/clk/clkdev.c b/drivers/clk/clkdev.c
+index e0bede6350e11..717e079899d90 100644
+--- a/drivers/clk/clkdev.c
++++ b/drivers/clk/clkdev.c
+@@ -88,7 +88,7 @@ static struct clk *__clk_get_sys(struct device *dev, const char *dev_id,
+ {
+ 	struct clk_hw *hw = clk_find_hw(dev_id, con_id);
+ 
+-	return clk_hw_create_clk(dev, hw, dev_id, con_id);
++	return clk_hw_create_clk(dev, hw, dev_id, con_id, NULL);
+ }
+ 
+ struct clk *clk_get_sys(const char *dev_id, const char *con_id)
+@@ -105,7 +105,7 @@ struct clk *clk_get(struct device *dev, const char *con_id)
+ 	if (dev && dev->of_node) {
+ 		hw = of_clk_get_hw(dev->of_node, 0, con_id);
+ 		if (!IS_ERR(hw) || PTR_ERR(hw) == -EPROBE_DEFER)
+-			return clk_hw_create_clk(dev, hw, dev_id, con_id);
++			return clk_hw_create_clk(dev, hw, dev_id, con_id, NULL);
  	}
-diff --git a/net/mac80211/s1g.c b/net/mac80211/s1g.c
-index 1e2f07090a436..f5fe8a982a4c5 100644
---- a/net/mac80211/s1g.c
-+++ b/net/mac80211/s1g.c
-@@ -9,14 +9,6 @@
- #include "ieee80211_i.h"
- #include "driver-ops.h"
  
--void ieee80211_s1g_sta_rate_init(struct sta_info *sta)
--{
--	/* avoid indicating legacy bitrates for S1G STAs */
--	sta->deflink.tx_stats.last_rate.flags |= IEEE80211_TX_RC_S1G_MCS;
--	sta->deflink.rx_stats.last_rate =
--			STA_STATS_FIELD(TYPE, STA_STATS_RATE_TYPE_S1G);
--}
--
- bool ieee80211_s1g_is_twt_setup(struct sk_buff *skb)
- {
- 	struct ieee80211_mgmt *mgmt = (struct ieee80211_mgmt *)skb->data;
+ 	return __clk_get_sys(dev, dev_id, con_id);
+diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
+index 630705a471294..d95cb8624fb4b 100644
+--- a/include/linux/clk-provider.h
++++ b/include/linux/clk-provider.h
+@@ -37,6 +37,7 @@ struct clk;
+ struct clk_hw;
+ struct clk_core;
+ struct dentry;
++struct module;
+ 
+ /**
+  * struct clk_rate_request - Structure encoding the clk constraints that
+@@ -316,8 +317,9 @@ struct clk_init_data {
+  * @core: pointer to the struct clk_core instance that points back to this
+  * struct clk_hw instance
+  *
+- * @clk: pointer to the per-user struct clk instance that can be used to call
+- * into the clk API
++ * @clk: pointer to the per-user struct clk instance. This will be removed at
++ * some point in the future, Please consider the field obsolete and do not use
++ * it. Use clk_hw_get_clk() to get a per-user struct clk from a struct clk_hw.
+  *
+  * @init: pointer to struct clk_init_data that contains the init data shared
+  * with the common clock framework. This pointer will be set to NULL once
+@@ -1395,10 +1397,24 @@ static inline struct clk_hw *__clk_get_hw(struct clk *clk)
+ }
+ #endif
+ 
+-struct clk *clk_hw_get_clk(struct clk_hw *hw, const char *con_id);
++struct clk *__clk_hw_get_clk(struct clk_hw *hw, const char *con_id,
++			     struct module *owner);
+ struct clk *devm_clk_hw_get_clk(struct device *dev, struct clk_hw *hw,
+ 				const char *con_id);
+ 
++/**
++ * clk_hw_get_clk - get clk consumer given a clk_hw
++ * @hw: clk_hw associated with the clk being consumed
++ * @con_id: connection ID string on device
++ *
++ * Return: new clk consumer
++ * This is the function to be used by providers which need
++ * to get a consumer clk and act on the clock element
++ * Calls to this function must be balanced with calls to clk_put()
++ */
++#define clk_hw_get_clk(hw, con_id) \
++	__clk_hw_get_clk((hw), (con_id), THIS_MODULE)
++
+ unsigned int clk_hw_get_num_parents(const struct clk_hw *hw);
+ struct clk_hw *clk_hw_get_parent(const struct clk_hw *hw);
+ struct clk_hw *clk_hw_get_parent_by_index(const struct clk_hw *hw,
 -- 
 2.53.0
 
