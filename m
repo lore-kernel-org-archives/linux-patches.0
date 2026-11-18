@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060181;
-	b=EVj4BWw+q2UCMvxUSCztce6QH1OigBi5bZ3xWhlUDaI7UI9C6e3J6i4I36Ugkf0gYw0F
-	 QQXnus8Xt0Q7ObjDqtMeEGNIT+HHfm32dX9U29n4g1z/OVmRFIWnpeWvM/YwQ2GmEoBMe
-	 M7z3vUU0dkOW7HsJdbjkUoN6lVSezVwvlfn0C5q3LygWGuXxAFtklNXYFg5vlLnQeDeff
-	 Bg7aEgS2A4f3USoewcH5gX1jnxIgemTv8D7XcDVRXkGe4XOu3DBPL8KHj0cY3lxDfLSBK
-	 esUw/6HAg52HkYYGnwRiZC4bsX/ewiuGR3ABDncVv3j5r8b2h1lW3LOg+kp/7WWHy5Q==
+	t=1795060184;
+	b=RZtOdPTvSI9n556pDNdiQA6nVJ4lVwtU6Ied4/ZyYtAclyNB4IHBU24//eN+cgOFVNJE
+	 VMkPuvwoMPN+0/4GhHUbkfEUfwrNieXcXHoKeIt3ww+DL4g9TEnELKwnuBej7nTQiG4hF
+	 7uiw2+1w8KaUCgxgcjX5QaGFH3Atfj3JrHiwDbK4g+oKwlezW205Qh20vj+xqVGEKc1jp
+	 OmxrmHAT1IkcyAbraaBVSrDWw0kgn99S0blvigxGm/gZYeBu584jOCKplcAdpixRB/alo
+	 UpuvmWwZXeqcNdMLqs/fkq8N/T3afCZy6AYeFYK5Q0xghRRUZ500Ole78odMsVu1a4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060181;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060184;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nq+fwK6lzbu8VI3tGmVjq7h5//oZFl3kVHYjXaFYVF8=;
-	b=yj/4EYjR60TFjxC0pL+sdTV5m5dOXLsA41zJG+A+vwFOsZL4mr5L7ZKJmnEGzAjYfKpr
-	 vlubxdBkgNDhXhX6GjV4DL7dbtaSb5n9BsuIgRR9Y2kX8bpKgHLLg2kyQBFjyLuZ0XAHE
-	 DZB+puZgDEuNMqkNp7mu7lcLPZwrGkyMoYGTH36H9+yHhaZpsdZZ1bJ3G0++G794js51e
-	 UXDhGRUnakoNrjs6ZAOyuWFrAuhJoBWpe39YRtn5sUW1hfs0A4hOsB+/REaF9dkyc5ZEL
-	 Q0HnGtRttWRiPDdW//xpMimzQn2L3ccMI7ghKEW6EcAO5L3WFUwE6n06EgdHT+YQsCw==
+	bh=SAaHTknQLoRV5AlwxkEPDVTZTNY3ggLzk/2oZV1ql1A=;
+	b=ln4GkB+OeFFu6CFjOlcjWDUjTu9TVKNjYkv/ugf+xDuA6Mj07jLcKsmy9olIAnAa78g1
+	 OLrDQuyeMUTUz0lMvslnQ+vOkpFNm3XeSE+agbIxKhtDjh/keGP39MHO4xXvzMrEMG6uo
+	 FJPhZe0M+TW25EkoI46msyR8MEPKINgX0t1IQk005kZHIuQNHS660YJpSdmMtB9GHzu8K
+	 V/R5FMv4/zcoQhAWRLk4wYZAGZeL5+t0F+ss265MiZoS7nc8pTbXMxbV2zlALi6QXZjzs
+	 o4A/IPcvQhGugHMtjQpwksI10aAvu/iJafh2uEQwBLE3FnmE6oulAiuPht92IRhuqcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yey6Binb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xjVj+W+y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11244606A320;
-	Thu, 19 Nov 2026 03:49:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BDF606A326;
+	Thu, 19 Nov 2026 03:49:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yey6Binb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2FE1F000C4;
-	Thu, 19 Nov 2026 03:49:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xjVj+W+y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7362B1F000C4;
+	Thu, 19 Nov 2026 03:49:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060180;
-	bh=nq+fwK6lzbu8VI3tGmVjq7h5//oZFl3kVHYjXaFYVF8=;
+	s=korg; t=1795060184;
+	bh=SAaHTknQLoRV5AlwxkEPDVTZTNY3ggLzk/2oZV1ql1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yey6BinbBHqcBSDxkP2yHi4JY8l+Ob6qb9voEyBjiEziW/Hf5pCr+hFu6OhvMUgah
-	 LaUm8yShKN9O8hSOP02iJlRSMhFveLqXcXDcfAPJCvZm0ataTMrTkzW+iE9fQjP+zu
-	 ecImGgkQqaJ1ikamYEmSqUOkHbqwrjChb5kmwBSQ=
+	b=xjVj+W+yhfGuHdLoPBZ5FVTOhlu8D/ndkE2w+TjHr+54Fbl8YxmiUTPkVbEnsD0Rz
+	 A25m8jIPF54OVJBsRzVYppYUIr2u8c8UaVKAQF8V3fYaxgP9kNNGcQ38gBkt+YzpAw
+	 haIh/AqZvws3tN9wwHfam17pLmP1K3ciCKW6PFDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Daejun Park <daejun7.park@samsung.com>,
-	Carlos Maiolino <cem@kernel.org>,
+	Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1105/1848] xfs: cap the block count of xfs_iomap_write_direct() at one extent
-Date: Wed, 18 Nov 2026 15:52:23 +0100
-Message-ID: <20261118150005.569885099@linuxfoundation.org>
+Subject: [PATCH 5.10 1066/1848] fbdev: kyro: Use devm_ioremap_wc() for screen mem
+Date: Wed, 18 Nov 2026 15:51:44 +0100
+Message-ID: <20261118150002.309128724@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,51 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daejun Park <daejun7.park@samsung.com>
+From: Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>
 
-[ Upstream commit 66d1ce09ebd72709f8d739630c39f440445173fd ]
+[ Upstream commit 32dfb6112ea3ca143636832cd34234f2be4830bb ]
 
-xfs_iomap_write_direct() reserves blocks for the whole count in an
-unsigned int. For a pNFS layout the client chooses that count, and an
-RW LAYOUTGET for 16 TiB wraps the reservation and shuts XFS down.
+Replace the manual pci_ioremap_wc() call for mapping screen memory with the
+device-managed devm_ioremap_wc() variant.
 
-xfs_bmapi_write() maps at most XFS_MAX_BMBT_EXTLEN blocks here, so cap
-the count at that. nfsd asks again for the rest. The other callers get
-the same mapping as before.
+This simplifies the driver's resource management by ensuring the memory is
+automatically unmapped when the driver detaches from the device.
 
-Suggested-by: Darrick J. Wong <djwong@kernel.org>
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Suggested-by: Pankaj Raghav <p.raghav@samsung.com>
-Fixes: 527851124d10 ("xfs: implement pNFS export operations")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: Replaced XFS_MAX_BMBT_EXTLEN with the equivalent MAXEXTLEN constant in the expression and comment. ]
+Signed-off-by: Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Stable-dep-of: d3bc005a6294 ("fbdev: kyro: Release WC setup on registration failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_iomap.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/video/fbdev/kyro/fbdev.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/fs/xfs/xfs_iomap.c b/fs/xfs/xfs_iomap.c
-index bd5a25f4952d0..2f7cce023c0e8 100644
---- a/fs/xfs/xfs_iomap.c
-+++ b/fs/xfs/xfs_iomap.c
-@@ -203,6 +203,14 @@ xfs_iomap_write_direct(
+diff --git a/drivers/video/fbdev/kyro/fbdev.c b/drivers/video/fbdev/kyro/fbdev.c
+index 7441d48faea77..b298e9a1b4510 100644
+--- a/drivers/video/fbdev/kyro/fbdev.c
++++ b/drivers/video/fbdev/kyro/fbdev.c
+@@ -718,7 +718,8 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	if (!currentpar->regbase)
+ 		goto out_free_fb;
  
- 	ASSERT(count_fsb > 0);
+-	info->screen_base = pci_ioremap_wc_bar(pdev, 0);
++	info->screen_base = devm_ioremap_wc(&pdev->dev, kyro_fix.smem_start,
++					    kyro_fix.smem_len);
+ 	if (!info->screen_base)
+ 		goto out_free_fb;
  
-+	/*
-+	 * xfs_bmapi_write() maps at most MAXEXTLEN blocks in one
-+	 * mapping, so don't reserve blocks for more. A pNFS layout range
-+	 * comes from a client, and its block count may not even fit the
-+	 * 32-bit reservation. The caller maps the rest with a later call.
-+	 */
-+	count_fsb = min_t(xfs_filblks_t, count_fsb, MAXEXTLEN);
-+
- 	resaligned = xfs_aligned_fsb_count(offset_fsb, count_fsb,
- 					   xfs_get_extsz_hint(ip));
- 	if (unlikely(XFS_IS_REALTIME_INODE(ip))) {
+@@ -756,7 +757,7 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	fb_memset(info->screen_base, 0, size);
+ 
+ 	if (register_framebuffer(info) < 0)
+-		goto out_unmap;
++		goto out_free_fb;
+ 
+ 	fb_info(info, "%s frame buffer device, at %dx%d@%d using %ldk/%ldk of VRAM\n",
+ 		info->fix.id,
+@@ -767,8 +768,6 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 
+ 	return 0;
+ 
+-out_unmap:
+-	iounmap(info->screen_base);
+ out_free_fb:
+ 	framebuffer_release(info);
+ 
+@@ -790,8 +789,6 @@ static void kyrofb_remove(struct pci_dev *pdev)
+ 	deviceInfo.ulNextFreeVidMem = 0;
+ 	deviceInfo.ulOverlayOffset = 0;
+ 
+-	iounmap(info->screen_base);
+-
+ 	arch_phys_wc_del(par->wc_cookie);
+ 
+ 	unregister_framebuffer(info);
 -- 
 2.53.0
 
