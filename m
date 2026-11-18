@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032467;
-	b=3tk/BELNYr/8sLx06LtfJf8WHFHltQJn32ZAS1C93/xq2JcwpJ8+3O45mNCMY2QeGvGE
-	 qQGEE+npuqF4AgQPo5jwzlJhNLbKAJY/I4dALhy2pT5LB+kkbltB61Ka9Tid/0Z4gk1GS
-	 nZBHQh9eJKG4++shzHy4Lb4SdA/mRkaWAaIE6Y+F7nXHZTt/g+Lr59NAg2fWOfHfF1Agc
-	 VR3Vwt2GuHQiDuQ2FDO53wuLudqistw7gtB+4vkD6RqE/5/NVjz13kHD07a+525+VaJb4
-	 AwCjMI05Fi7A4q2mukK7QMR05DJj/ZapG8jI7A2EvA1JfRCyFg/u2MXPrmpq058myjQ==
+	t=1795032469;
+	b=ngP0OOSl/fYKX7tiEyqxlCZPeXIjRnXTGBewl5KZvh2PyirVILjF0N96ATAZowtxPkT9
+	 r3tOHXpvdS/grDkG7E3Ypo48RB/rDy27FZzRw1RlwV5yUh91dPQ+d5vqIkVFnzThPHyDo
+	 AIBg5kxZep9l/yqQ7mK1RX6TXKfHlch+c3CqHIElk08VEwa9hP0KBIGmQ0wo7YCUucUAH
+	 xFgvKHwobNwcdImgds/6dYtcwwLU2FB17Fa+66ZR9ZKNCtEjzz8PVDuFuXSJKZfzWQ8cL
+	 dFxgTF4en6WkfeV774UY5scVQ73Sl8nvrBpY1H4oHYcmOrO8pTfK+ALfSg6001P5oVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032467;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032469;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YHjX4Ly/SY3dIy0wElg3eGoWXO9CPxdRMPl9gaaa9bM=;
-	b=r40CTikglxdAOW8J+p3/Vk+27Ixs0gu235e/rEEa6j6bD8KL56GLLDFdU5EP91DOfev7
-	 P2aHChuONzClmkvvp1IHckiTmgXB3ROL6B340ub6HjoFBMK1Y/Ix1sISB2FVFXevrSNxP
-	 471HlWSUzrSnRYKLxahn3yoNx4hueAnHVhhC4zWdmjEBJLP/J/RbhhruuCPfFaSHTrH6t
-	 EdMCroNSJSahFQIJJGd7G5nYkjfmgj9NvdH1w+BuDkcuM6KMJOIAtzJORZaUv+G9bd+iD
-	 HF+1kdlR9o2GzwFT3fcGaNqvAegNxVMLH7meWEmh+pYGWyljAOhAy+MkwdmkguuGC7g==
+	bh=oxZcM3pOQyC5+ao2+7N5zrXRkE292uQppRqgtnhlXe8=;
+	b=1RPbf7zkq2VZBfr976cxengMVP8aeIO0k15LqZkKhm3erqLxdta4lAO3ijsNr/R5ecWw
+	 g5q29RrbgzGw15gktei4bmy8NjeFYFsfQElM2VZFx9YsjsLNmp0rjn0QRo3IS0vSKvuBw
+	 y9jERgMHYHpOVt3GTpcYxtslEdQrCzsDlbu/pRsjO7apzsrl2Z3A/vp3CedJZtGFCHs9z
+	 qca748zn9zvRFXkHc4pm7XaNw1qwdpo5IAsqEdifRzgZjhs8gKju01BXdGq/Oe0co8z6u
+	 kiPo0goWNcAxKFoEn4bYDHNursp+DPipLMfYAf3RxiEftBjfsBGZpLbmWkTwJrWmiLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZcZkt0p0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YvWJXQn2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F28C606CB2C;
-	Wed, 18 Nov 2026 20:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF58E606A33B;
+	Wed, 18 Nov 2026 20:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZcZkt0p0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D58E1F000C4;
-	Wed, 18 Nov 2026 20:07:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YvWJXQn2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B99F1F000C4;
+	Wed, 18 Nov 2026 20:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032466;
-	bh=YHjX4Ly/SY3dIy0wElg3eGoWXO9CPxdRMPl9gaaa9bM=;
+	s=korg; t=1795032469;
+	bh=oxZcM3pOQyC5+ao2+7N5zrXRkE292uQppRqgtnhlXe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZcZkt0p02oTMmCtz5wkM6h7ukmlKpRkyNp1bsy3MTkhRXbH0w//sR5VgGw9HwBfPl
-	 DkbHqb3VAo42TJbaD2Na5f5ZY6aHSEpPjRq6wY3NUYP+Tsv0A5aJEZlbBhcLTqlqA/
-	 E7PFBLMu8xyraKLzHqDuh38m91yLj9PmppWAoFho=
+	b=YvWJXQn2X6A/HYgfd1729R279uCJT0ZLwkyYI7hKgoK4b9Z4OBlGBViHiD0Nq9OWO
+	 fzw0j+PqLzGGSkrMfDXi3hXKWzzY36mEmTqxfFz4OZiLJWoqm/Ldr4A1GR9y2c7EtQ
+	 dAQUG418Et06WavhBcXekIQEsjP10qoBlBk0+wRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1415/1756] ALSA: pcm: Protect channel-map reads against runtime detach
-Date: Wed, 18 Nov 2026 15:59:02 +0100
-Message-ID: <20261118150105.525034589@linuxfoundation.org>
+Subject: [PATCH 6.12 1424/1756] RDMA/mlx5: Fix CQ resize destination index mask
+Date: Wed, 18 Nov 2026 15:59:11 +0100
+Message-ID: <20261118150105.851443050@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,90 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit bb4834d5242c4829c0d8467ee68eb25a9bafc38d ]
+[ Upstream commit 0fe31052d948a3a993bb2f58cd5886f7ec279ea7 ]
 
-Channel-map controls remain accessible between PCM opens. In-tree HDA
-code publishes the generic controls through add_std_chmaps(), so a
-SNDRV_CTL_IOCTL_ELEM_READ can overlap the final close of the same PCM
-substream.
+In copy_resize_cqes, the destination CQE index is computed as
+(i + 1) & cq->resize_buf->nent, but resize_buf->nent is produced by
+roundup_pow_of_two(), so it is a power of two with exactly one bit set.
+Masking with a single-bit value can only yield 0 or nent itself. The
+buffer has nent entries, so valid indices are 0 .. nent - 1 and nent is
+one past the last slot; whenever the masked result is nent the following
+memcpy writes one entry out of bounds.
 
-pcm_chmap_ctl_get() checks substream->runtime and later reads its channel
-count. Final close clears and frees that runtime under pcm->open_mutex,
-while the control callback holds only controls_rwsem:
+Use (nent - 1) as the wrap mask instead. For a power-of-two nent,
+(i + 1) & (nent - 1) is the correct modulo-nent reduction, keeping the
+index within [0, nent - 1]. This matches get_sw_cqe(), which addresses
+the CQ buffer via n & cq->ibcq.cqe, where cq->ibcq.cqe == entries - 1 is
+exactly the nent - 1 wrap mask.
 
-  Control GET                         Final PCM close
-  -----------                         ---------------
-  snd_ctl_elem_read()
-    down_read(controls_rwsem)
-    pcm_chmap_ctl_get()
-      check substream->runtime
-                                      lock(pcm->open_mutex)
-                                      snd_pcm_release_substream()
-                                        snd_pcm_detach_substream()
-                                          substream->runtime = NULL
-                                          kfree(runtime)
-                                      unlock(pcm->open_mutex)
-      substream->runtime->channels
-        NULL or freed-pointer access
-    up_read(controls_rwsem)
-
-Reloading the cleared field can fault through NULL, while retaining the
-old pointer can access freed storage. controls_rwsem keeps the control
-alive, but does not serialize the matching PCM close.
-
-Copy the channel count under open_mutex and use that scalar for the map
-lookup. Use trylock with -EBUSY because snd_pcm_dev_disconnect() takes
-open_mutex before removing controls under controls_rwsem; blocking in
-the reverse order from GET could deadlock.
-
-Fixes: 2d3391ec0ecc ("ALSA: PCM: channel mapping API implementation")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-0b5d6bc7124d0b921f2c-v4-b9738bdeab8823999181@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: bde51583f49b ("IB/mlx5: Add support for resize CQ")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20261019050503.2313-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_lib.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/mlx5/cq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/core/pcm_lib.c b/sound/core/pcm_lib.c
-index 932b9337c93ee..fc9cb30f1189b 100644
---- a/sound/core/pcm_lib.c
-+++ b/sound/core/pcm_lib.c
-@@ -2496,6 +2496,7 @@ static int pcm_chmap_ctl_get(struct snd_kcontrol *kcontrol,
- 	unsigned int idx = snd_ctl_get_ioffidx(kcontrol, &ucontrol->id);
- 	struct snd_pcm_substream *substream;
- 	const struct snd_pcm_chmap_elem *map;
-+	unsigned int channels;
+diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
+index 4f25aa8c72fd6..8e8983e6099bd 100644
+--- a/drivers/infiniband/hw/mlx5/cq.c
++++ b/drivers/infiniband/hw/mlx5/cq.c
+@@ -1262,7 +1262,7 @@ static int copy_resize_cqes(struct mlx5_ib_cq *cq)
  
- 	if (!info->chmap)
- 		return -EINVAL;
-@@ -2504,11 +2505,20 @@ static int pcm_chmap_ctl_get(struct snd_kcontrol *kcontrol,
- 		return -ENODEV;
- 	memset(ucontrol->value.integer.value, 0,
- 	       sizeof(long) * info->max_channels);
--	if (!substream->runtime)
--		return 0; /* no channels set */
-+	/*
-+	 * PCM disconnect takes open_mutex before removing controls.
-+	 * Use trylock to avoid a deadlock with controls_rwsem.
-+	 */
-+	scoped_cond_guard(mutex_try, return -EBUSY,
-+			  &info->pcm->open_mutex) {
-+		if (!substream->runtime)
-+			return 0; /* no channels set */
-+		channels = substream->runtime->channels;
-+	}
- 	for (map = info->chmap; map->channels; map++) {
- 		int i;
--		if (map->channels == substream->runtime->channels &&
-+
-+		if (map->channels == channels &&
- 		    valid_chmap_channels(info, map->channels)) {
- 			for (i = 0; i < map->channels; i++)
- 				ucontrol->value.integer.value[i] = map->map[i];
+ 	while (get_cqe_opcode(scqe64) != MLX5_CQE_RESIZE_CQ) {
+ 		dcqe = mlx5_frag_buf_get_wqe(&cq->resize_buf->fbc,
+-					     (i + 1) & cq->resize_buf->nent);
++					     (i + 1) & (cq->resize_buf->nent - 1));
+ 		dcqe64 = dsize == 64 ? dcqe : dcqe + 64;
+ 		sw_own = sw_ownership_bit(i + 1, cq->resize_buf->nent);
+ 		memcpy(dcqe, scqe, dsize);
 -- 
 2.53.0
 
