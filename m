@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048677;
-	b=f5AYGslfd2h4mvLOMTY1vT0EdRTeIJ1mxeEKach5ytuwLngIHlx3i10T0Eiw6RtqC+SE
-	 W3cj7vkL3OvyuWp1cqfBsmsKeDfOLC089wSqF3MxDR9BHyYa7o11MoDac6LzEvJH5kenb
-	 G1lCk8lqBc0rNGTMeLL34s5Z+7+0/HahpqVL/cbWcNlDYN7H8ruGZwLDb3UzU7Ebat83y
-	 lNbKPrYGydGlbGuRBOuDqoAuRsa2UNyG8RdsdNMUtia+W8MEhMM7WRBvbH26t7HlSuosD
-	 WmeSnOZARNq1jbLim0Wbzo1Zp+AvuWrzEWe8e6ekBmsgbDQ20IjIhuYjkMeUKiTwl1w==
+	t=1795048680;
+	b=rK+nZQ9jVXyoXUh+MKV/TCm5fdqJmu8wex2D3KAeJhpI69JiKrQyW0hArKrokDxClPyx
+	 rE/iIpomul+LZ61vmIr/UYE0+mGSPZH7pFYwLn1E6lOW4EoLsOfSWPX4JxSR+bUoomdXM
+	 8haOTI4JJ8PIs/33Uawgi6vw84AJtdWihDSnEsHTSB4v1L4e5xnlJG1xJeLMOX8kRQ2w2
+	 eqk1AH7VQidEElCS0kibwbbXldb2lnRG6zAv9YQhwDWeVgWgGbji2kXxzmEjkckSIUykL
+	 cqRd5rq6Y6+6LCfhygpj/chJfPNLQaXe+zKP6boX0LyJTAnYF/wthWgtfGMVYe70Wrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048677;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048680;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TSGJ4PJujFQeypeB0CZf72ukj98dyMqnSOK4V//8j4A=;
-	b=XFUpIRfvjJWKBxIOGKEftUP9/zSNqpHXTFv6T1b2go+krCsuS7KlcubYAq0R7fMKia6P
-	 QJE4hnXCTvPSfnzBvflEUaBH0DkY/8U89mL3hi7rLnxwIE8E4dos7Iro5cuYMOI3jvkkJ
-	 F02ABYJmaIZ9hc2sdCKfIARPYg92CSUzrbwMOZTdPqJhii4uwB8rtBDOLAdPmMDgvuR0p
-	 Rpt9OnqQiT58scqhWPHOJ748K4gW4hKJ4QiqqWkgjqZSXtxDrB+w5PgTDLxpbUzxfWcex
-	 t012GkX9IvFYxvlAZYGmb7skVO5CrnZlQP7DSoNqv93Xed3X9rqfpvBH49W0oI16j0w==
+	bh=CudNG2zR5gJDFw6i03oTqwv4wB+EcTyGQpb1KL2H93g=;
+	b=u/bX64rU4KBGwRRg4huTDVeolQNK+FWjYpzz1NougfvAZStBbWyYlZz8p/nBhRIarcrF
+	 AqXAbLOv3GYF2cAtYusEhm3j6d+Bvr9rwmQQLpsIKNx8ezMJwKB6wtVCMJqav+VZ1MudV
+	 2Li2F6lBrJAI2qYJTsS4t58bi4etWH7Z+krp9vrQBtulUgcH1HI13uuskWghiO+NvGaS4
+	 xU96AZeQJc4TxjMgo4lwBcEJMg3EyzO4PJxq9p9L3Ynh/zi1k7ijH3Ajj91o0m86OrUz2
+	 rpPh5B5B6UmzDHsjIWkWEBEXjoy0wkwMuDzPlMM4AnYE6KTT5v/b8T6eMaXLO/AjVow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kJo9EMke;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l+7VskQg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54F0606A320;
-	Thu, 19 Nov 2026 00:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0DF606A320;
+	Thu, 19 Nov 2026 00:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kJo9EMke
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C937E1F000C4;
-	Thu, 19 Nov 2026 00:37:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l+7VskQg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAAD91F000C4;
+	Thu, 19 Nov 2026 00:37:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048677;
-	bh=TSGJ4PJujFQeypeB0CZf72ukj98dyMqnSOK4V//8j4A=;
+	s=korg; t=1795048680;
+	bh=CudNG2zR5gJDFw6i03oTqwv4wB+EcTyGQpb1KL2H93g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kJo9EMket9R7Med723RJ9Z3btyhQ06d6fWQplHQQyD2VXFM/wHIi9AW4+nnIyo1ht
-	 C2MaQhLtk4Tlha1dnKCcPpLHOGir4GMDVfGtJkzq2g3SWtRJEGG9sgrOJhqeB5BWBj
-	 3M6Rz06Y6ffRrNcKKO8K3yM7T7WPAx2uNJIrRzlA=
+	b=l+7VskQgbT26bfspjo3RTLuZWgnv9oguk3SBKjQvGh5d0rHfiOMswvmUSQRT/B92e
+	 vjR872FjFLLloHPNGcqjgDdO+DBPa03gxBWnCkCRmVR7eaxBL2FEMZL+sJujfUmxH0
+	 RA11KUhNw33fP4up4bfLwAfihGlxAS0lKA0+KVAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Chancel Liu <chancel.liu@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zongmin Zhou <zhouzongmin@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2040/2857] ASoC: fsl_asrc: use regmap_write_bits to update clock source registers
-Date: Wed, 18 Nov 2026 15:51:14 +0100
-Message-ID: <20261118150314.865190376@linuxfoundation.org>
+Subject: [PATCH 6.1 2031/2857] serial: sifive: fix off-by-one in console port bounds check
+Date: Wed, 18 Nov 2026 15:51:05 +0100
+Message-ID: <20261118150314.536539432@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,48 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Zongmin Zhou <zhouzongmin@kylinos.cn>
 
-[ Upstream commit 92871abc1302b852b88d86114115f8fd6b50b9b9 ]
+[ Upstream commit bf961847813d9edcb5a9c089714069428d141fa9 ]
 
-After a warm reboot the REG_ASRCSR register may not be in its hardware
-reset state. regmap caches the register value as 0 (the assumed default),
-so when the desired clock source index is also 0, regmap_update_bits()
-skips the actual hardware write because it believes the register already
-holds the correct value. This leaves a stale clock source in the hardware.
+sifive_serial_console_ports[] is sized SIFIVE_SERIAL_MAX_PORTS (8), so
+valid indices are 0..7. The bounds check in sifive_serial_probe() uses
+"id > SIFIVE_SERIAL_MAX_PORTS", which lets id == 8 pass and causes an
+out-of-bounds write in __ssp_add_console_port() through
+sifive_serial_console_ports[ssp->port.line].
 
-Replace regmap_update_bits() with regmap_write_bits() so that the masked
-fields are always written to hardware regardless of the cached value.
+Fix the check to use >= instead, matching the check already used in
+sifive_serial_console_setup().
 
-Fixes: 3117bb3109dc ("ASoC: fsl_asrc: Add ASRC ASoC CPU DAI and platform drivers")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Chancel Liu <chancel.liu@nxp.com>
-Link: https://patch.msgid.link/20260916094043.1496709-1-shengjiu.wang@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 45c054d0815b ("tty: serial: add driver for the SiFive UART")
+Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
+Link: https://patch.msgid.link/20260827014524.19375-1-min_halo@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_asrc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/tty/serial/sifive.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/fsl_asrc.c b/sound/soc/fsl/fsl_asrc.c
-index 3ec5b88bd9a29..4a1229c29b2e2 100644
---- a/sound/soc/fsl/fsl_asrc.c
-+++ b/sound/soc/fsl/fsl_asrc.c
-@@ -521,10 +521,10 @@ static int fsl_asrc_config_pair(struct fsl_asrc_pair *pair, bool use_ideal_rate)
- 			   ASRCTR_USR(index));
+diff --git a/drivers/tty/serial/sifive.c b/drivers/tty/serial/sifive.c
+index 4d7825c4d769b..cc041a642ed45 100644
+--- a/drivers/tty/serial/sifive.c
++++ b/drivers/tty/serial/sifive.c
+@@ -964,7 +964,7 @@ static int sifive_serial_probe(struct platform_device *pdev)
+ 	}
  
- 	/* Set the input and output clock sources */
--	regmap_update_bits(asrc->regmap, REG_ASRCSR,
--			   ASRCSR_AICSi_MASK(index) | ASRCSR_AOCSi_MASK(index),
--			   ASRCSR_AICS(index, clk_index[IN]) |
--			   ASRCSR_AOCS(index, clk_index[OUT]));
-+	regmap_write_bits(asrc->regmap, REG_ASRCSR,
-+			  ASRCSR_AICSi_MASK(index) | ASRCSR_AOCSi_MASK(index),
-+			  ASRCSR_AICS(index, clk_index[IN]) |
-+			  ASRCSR_AOCS(index, clk_index[OUT]));
- 
- 	/* Calculate the input clock divisors */
- 	indiv = fsl_asrc_cal_asrck_divisor(pair, div[IN]);
+ #ifdef CONFIG_SERIAL_SIFIVE_CONSOLE
+-	if (id > SIFIVE_SERIAL_MAX_PORTS) {
++	if (id >= SIFIVE_SERIAL_MAX_PORTS) {
+ 		dev_err(&pdev->dev, "too many UARTs (%d)\n", id);
+ 		return -EINVAL;
+ 	}
 -- 
 2.53.0
 
