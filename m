@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048669;
-	b=oq+7+sIs46ZTn0qbFkQhRW25xi9Ex7MR589bCKYm6yVjFbm78z5kBukJxjYeGn3ADljx
-	 /frx6kRqGrbptndgFRxPkcxewtd1CnHm8r4uoQy8HsjqPEjIG4JHkOHgpyvkClyxxcgH1
-	 x9GvwenuxzLwqrKzKdJEgwKkUtOh93YkGdzppyvtJ4J3BQDMFohY57aV/T4rRoF308xHw
-	 i1QDgTUIHL8u3vOpvB8M/Z9EagIJDNwpT/sgZIUBfGyNLMcLpZwQGqtlVhWXUUT+FEPpw
-	 I91JDQBCY5c6xETfEKsG85+qYCmfiWeY5bKUFCGp49I2Y/QFQuVcqQmUbhAZJXjo72w==
+	t=1795048671;
+	b=esPcbr3OorlAak+C/QGbpKJAUATOcNVTJJ/1PnJia/4TdLU5Df0cloHVELaCaN1usSak
+	 GrRIz1xl5ACe0q9U32WoRpbbgwIs++RyvC8qmi9V8hV6zCcrTN7h+I8Opx1bYxv6E5vQY
+	 W/F6R16MSTs31zocJPyJq0cevxEX96HLQtZb1PTcKzIhsU8mpU1cjxP9ua0Jl5BhIEOAL
+	 epfhBLl0gr2h5G3LUdnQflmDXKSWzYYYTUtDZZaolVVTK37xsGmeNzeYO6zh/I7NS+tod
+	 6OwtJZMp5qk4vU9hcwKF7Fzdbzt5bI4efcz7dtbEqEHcRS+pq5xE5UNxeDN+oYoAwXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048669;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048671;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m2PIOPkDnj/C5ITQStJSa3clKz9FjTbH56rwqNcDfNY=;
-	b=kLoyWBoaGA1UyiDyAFJQrzAtVrqQbcA+E1k7IuwgHCcBcas/GNwmbhKggB48EDL3LGbw
-	 lCeGlSkts7MY5YCSF+W9M74Ozn8m9xhNeD3Md2Nll44ZNFeqLEnVROO2T0VNKIXbvK0pU
-	 6WpfOMg7PUZwCYFmF8JlFIakw5XzE6E1lZISAiCtRnQir/ybSK2wzYone9Vj7o4mWyyEX
-	 y6HULOihwvYZ9qv7ufWCF9gzJXQi39rS5v4q1o8PfLHlN7pY1TShaWbVwoA7Bog2iu8T/
-	 IYWjvYEZSPiBu3lKUhbsr+MfgDq4+RawKhE/2LQq+SlnW3z0xKcx9TfHNjO4Zm5PF3w==
+	bh=Zff6q0FpDulVsSR5OGgLE9pAlE9JeC4ZyOdyOFwgT+E=;
+	b=S6Cxd6l0oiaxg29wwqwR6TsVRZHXRXb/PM4/nt0PgSugqcznO+ps5aAz0zSq1FBOAaOB
+	 bPOZ38kXjR3YmqnzrCzDdIEACq3+l8cKMtvAgcePeUKik80gxUXcfGWPRQC5yirSFc6Gg
+	 LxA8ZHu7YBbpjCOT/xCFZrXM5TbgKQp23d6Pmcr8wob91EsQZZ8cXaU/MGsU4oGjKNC7G
+	 eFknpjKbmsgQfXVoi+A+tA9TT4LmdwpKcwhal2nLAUgo9ACPzBGfyB5jMFTkG1uNRXnHL
+	 dfCufJkNX/yzhgJWn+ZR5VMDRULZsZjsr/6tAV5cJN777bai9z6vF10SGkOjtiDOaZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HEvgIoH0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l37h6XxR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291F1606A31C;
-	Thu, 19 Nov 2026 00:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C214F606A32C;
+	Thu, 19 Nov 2026 00:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HEvgIoH0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A56A1F000C5;
-	Thu, 19 Nov 2026 00:37:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l37h6XxR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD801F000C4;
+	Thu, 19 Nov 2026 00:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048668;
-	bh=m2PIOPkDnj/C5ITQStJSa3clKz9FjTbH56rwqNcDfNY=;
+	s=korg; t=1795048671;
+	bh=Zff6q0FpDulVsSR5OGgLE9pAlE9JeC4ZyOdyOFwgT+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HEvgIoH0WQjvqXrK+7S2GW06/3w+kORYTFjrAuo5hCkL5Y3RaqT8MENsG4p+373/f
-	 yqw+51Fxc+/u7h/gPvCn/iAybh4EmC9UnNgE9ZaDQHTFMfdeiqNg6l+dDluokJaeu8
-	 brdntRkwMxoSm3nIfu/CaZT0cIjKRoAa7aaa33Ec=
+	b=l37h6XxRCG/VAKkJVG/FVZ982x2nVh1/x8ubA3Aq5xw4F4r7B0jzg3/bmYeIZZ2gK
+	 tzw7BsvVDbaYqM8r37wIQHx7WEEyuaRJh1W5KrTLU4+ecws4loo5bbRKLALQ7VMyjM
+	 +xJ+ilJOF5am/MPRRLjqDtWpVL/A+X4SI5LlpDPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Myeonghun Pak <mhun512@gmail.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2037/2857] mfd: intel_quark_i2c_gpio: Manage the fixed-rate clock
-Date: Wed, 18 Nov 2026 15:51:11 +0100
-Message-ID: <20261118150314.754350790@linuxfoundation.org>
+Subject: [PATCH 6.1 2038/2857] mfd: da9150: Balance IRQ wake on teardown
+Date: Wed, 18 Nov 2026 15:51:12 +0100
+Message-ID: <20261118150314.791378775@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,138 +71,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 14a7cf1a3730c7c2393ef5a226e90baf61aa8a9f ]
+[ Upstream commit ef464f82f3aecad4071af71074b2ceb77ffbb609 ]
 
-The I2C clock is allocated by clk_register_fixed_rate(), but cleanup uses
-clk_unregister(), leaving the fixed-rate provider allocation behind.
+DA9150 enables IRQ wake after registering its regmap IRQ chip, but does not
+disable it on a later probe failure or driver removal. This leaves the wake
+depth elevated after the handler is removed, and repeated bind attempts can
+accumulate the imbalance.
 
-Manage the provider with devm_clk_hw_register_fixed_rate() and its lookup
-with devm_clk_hw_register_clkdev(). Managed resources release the lookup
-before the provider, after the MFD children have been removed.
+Remember whether enabling IRQ wake succeeded and balance only a successful
+call. Remove MFD children first so their nested IRQ users are gone, then
+disable wake before removing the regmap IRQ chip. Preserve the existing
+non-fatal behavior when IRQ wake cannot be enabled.
 
-Remove the manual clock cleanup and the private structure that only
-stored the clock and lookup pointers.
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: 60ae5b9f5cdd ("mfd: intel_quark_i2c_gpio: Add Intel Quark X1000 I2C-GPIO MFD Driver")
-Assisted-by: OpenAI:GPT-5.6
+Fixes: b8fce55c09d3 ("mfd: Add support for DA9150 combined charger & fuel-gauge device")
+Assisted-by: LLM
 Co-developed-by: Ijae Kim <ae878000@gmail.com>
 Signed-off-by: Ijae Kim <ae878000@gmail.com>
 Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260912191223.46136-1-mhun512@gmail.com
+Link: https://patch.msgid.link/20260923021936.957065-1-mhun512@gmail.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/intel_quark_i2c_gpio.c | 52 ++++--------------------------
- 1 file changed, 6 insertions(+), 46 deletions(-)
+ drivers/mfd/da9150-core.c       | 8 ++++++--
+ include/linux/mfd/da9150/core.h | 1 +
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mfd/intel_quark_i2c_gpio.c b/drivers/mfd/intel_quark_i2c_gpio.c
-index 9b9c76bd067b8..443a1a0cf7778 100644
---- a/drivers/mfd/intel_quark_i2c_gpio.c
-+++ b/drivers/mfd/intel_quark_i2c_gpio.c
-@@ -35,11 +35,6 @@
- /* The Quark I2C controller source clock */
- #define INTEL_QUARK_I2C_CLK_HZ	33000000
+diff --git a/drivers/mfd/da9150-core.c b/drivers/mfd/da9150-core.c
+index 6ae56e46d24e6..838e3dd06f848 100644
+--- a/drivers/mfd/da9150-core.c
++++ b/drivers/mfd/da9150-core.c
+@@ -451,7 +451,7 @@ static int da9150_probe(struct i2c_client *client,
  
--struct intel_quark_mfd {
--	struct clk		*i2c_clk;
--	struct clk_lookup	*i2c_clk_lookup;
--};
--
- static const struct property_entry intel_quark_i2c_controller_standard_properties[] = {
- 	PROPERTY_ENTRY_U32("clock-frequency", I2C_MAX_STANDARD_MODE_FREQ),
- 	{ }
-@@ -160,37 +155,12 @@ MODULE_DEVICE_TABLE(pci, intel_quark_mfd_ids);
+ 	da9150->irq_base = regmap_irq_chip_get_base(da9150->regmap_irq_data);
  
- static int intel_quark_register_i2c_clk(struct device *dev)
+-	enable_irq_wake(da9150->irq);
++	da9150->irq_wake_enabled = !enable_irq_wake(da9150->irq);
+ 
+ 	ret = mfd_add_devices(da9150->dev, -1, da9150_devs,
+ 			      ARRAY_SIZE(da9150_devs), NULL,
+@@ -464,6 +464,8 @@ static int da9150_probe(struct i2c_client *client,
+ 	return 0;
+ 
+ mfd_fail:
++	if (da9150->irq_wake_enabled)
++		disable_irq_wake(da9150->irq);
+ 	regmap_del_irq_chip(da9150->irq, da9150->regmap_irq_data);
+ regmap_irq_fail:
+ 	i2c_unregister_device(da9150->core_qif);
+@@ -475,8 +477,10 @@ static void da9150_remove(struct i2c_client *client)
  {
--	struct intel_quark_mfd *quark_mfd = dev_get_drvdata(dev);
--	struct clk *i2c_clk;
--
--	i2c_clk = clk_register_fixed_rate(dev,
--					  INTEL_QUARK_I2C_CONTROLLER_CLK, NULL,
--					  0, INTEL_QUARK_I2C_CLK_HZ);
--	if (IS_ERR(i2c_clk))
--		return PTR_ERR(i2c_clk);
--
--	quark_mfd->i2c_clk = i2c_clk;
--	quark_mfd->i2c_clk_lookup = clkdev_create(i2c_clk, NULL,
--						INTEL_QUARK_I2C_CONTROLLER_CLK);
--
--	if (!quark_mfd->i2c_clk_lookup) {
--		clk_unregister(quark_mfd->i2c_clk);
--		dev_err(dev, "Fixed clk register failed\n");
--		return -ENOMEM;
--	}
--
--	return 0;
--}
--
--static void intel_quark_unregister_i2c_clk(struct device *dev)
--{
--	struct intel_quark_mfd *quark_mfd = dev_get_drvdata(dev);
--
--	if (!quark_mfd->i2c_clk_lookup)
--		return;
-+	struct clk_hw *hw;
+ 	struct da9150 *da9150 = i2c_get_clientdata(client);
  
--	clkdev_drop(quark_mfd->i2c_clk_lookup);
--	clk_unregister(quark_mfd->i2c_clk);
-+	hw = devm_clk_hw_register_fixed_rate(dev, INTEL_QUARK_I2C_CONTROLLER_CLK,
-+					     NULL, 0, INTEL_QUARK_I2C_CLK_HZ);
-+	return devm_clk_hw_register_clkdev(dev, hw, NULL,
-+					 INTEL_QUARK_I2C_CONTROLLER_CLK);
+-	regmap_del_irq_chip(da9150->irq, da9150->regmap_irq_data);
+ 	mfd_remove_devices(da9150->dev);
++	if (da9150->irq_wake_enabled)
++		disable_irq_wake(da9150->irq);
++	regmap_del_irq_chip(da9150->irq, da9150->regmap_irq_data);
+ 	i2c_unregister_device(da9150->core_qif);
  }
  
- static int intel_quark_i2c_setup(struct pci_dev *pdev)
-@@ -238,19 +208,12 @@ static int intel_quark_gpio_setup(struct pci_dev *pdev)
- static int intel_quark_mfd_probe(struct pci_dev *pdev,
- 				 const struct pci_device_id *id)
- {
--	struct intel_quark_mfd *quark_mfd;
- 	int ret;
+diff --git a/include/linux/mfd/da9150/core.h b/include/linux/mfd/da9150/core.h
+index d116d5f3ef561..369698036d1aa 100644
+--- a/include/linux/mfd/da9150/core.h
++++ b/include/linux/mfd/da9150/core.h
+@@ -65,6 +65,7 @@ struct da9150 {
+ 	struct regmap_irq_chip_data *regmap_irq_data;
+ 	int irq;
+ 	int irq_base;
++	bool irq_wake_enabled;
+ };
  
- 	ret = pcim_enable_device(pdev);
- 	if (ret)
- 		return ret;
- 
--	quark_mfd = devm_kzalloc(&pdev->dev, sizeof(*quark_mfd), GFP_KERNEL);
--	if (!quark_mfd)
--		return -ENOMEM;
--
--	dev_set_drvdata(&pdev->dev, quark_mfd);
--
- 	ret = intel_quark_register_i2c_clk(&pdev->dev);
- 	if (ret)
- 		return ret;
-@@ -260,7 +223,7 @@ static int intel_quark_mfd_probe(struct pci_dev *pdev,
- 	/* This driver only requires 1 IRQ vector */
- 	ret = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES);
- 	if (ret < 0)
--		goto err_unregister_i2c_clk;
-+		return ret;
- 
- 	ret = intel_quark_i2c_setup(pdev);
- 	if (ret)
-@@ -282,8 +245,6 @@ static int intel_quark_mfd_probe(struct pci_dev *pdev,
- 	software_node_unregister_node_group(intel_quark_gpio_node_group);
- err_free_irq_vectors:
- 	pci_free_irq_vectors(pdev);
--err_unregister_i2c_clk:
--	intel_quark_unregister_i2c_clk(&pdev->dev);
- 	return ret;
- }
- 
-@@ -292,7 +253,6 @@ static void intel_quark_mfd_remove(struct pci_dev *pdev)
- 	mfd_remove_devices(&pdev->dev);
- 	software_node_unregister_node_group(intel_quark_gpio_node_group);
- 	pci_free_irq_vectors(pdev);
--	intel_quark_unregister_i2c_clk(&pdev->dev);
- }
- 
- static struct pci_driver intel_quark_mfd_driver = {
+ /* Device I/O - Query Interface for FG and standard register access */
 -- 
 2.53.0
 
