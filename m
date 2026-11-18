@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045156;
-	b=3m7yQeZowCv6JYSD33+ctklcgLCdyvcrs9a2v+LLPuX58BBtxXQ/FbSlFrxtm+TPCNzz
-	 pOp56InOSpz0AM6DEhAJpTP1TokgCCmiJigmq/M6hzf3H7D8sX5SiGzSQfYg51AzgHmJJ
-	 spFNyADFDHdLqS4SHketecrG72Ng1B70lYheOK0rFFAmUPMtJygmTm3dTu3Lhvy/lzS2L
-	 r/L5iDzWfPj07JqjBUCXN9KRW1OZaPQM9r7Q9k9RgGP6aqRwTDokV6zgbpgi/g4O8UqCb
-	 coJuKUMpgPsyqMUCwyJfCTSKPRLi8Xd8uSYeCtgPBxq+Ga0hyilsEYRPsi3lLtcKbkw==
+	t=1795045160;
+	b=BBJb1BT46zczd7qaz7JDmm3X3WlSkSeIB2ydQ4ZzgvD9Rhi5Sp2EykiC+askgoxU39Bt
+	 I36OS3E4DtJ6S7yLmuAyDF8prCEBrfQsRRCHxbQ5KF1PfuBLeU/MQBJ9ZNuPg34ECcdsP
+	 V0dzPCMX44uQ8IkINtOsA+uN+FwN2ZhiGyF0tI1+y1Is0NTjq+IopvV/HbjVntWYcypce
+	 Px6Xo9kdIIxFB9ZZMckDJCG4eStpvDieeoH7GeHXOSUZCh/P5miI8+vSQ7CbOVp1tocK4
+	 QoduW2m3EfBW+7hwcspAnsHns9Bu40v2Ff+kikHDmPRwyXRHoExeuGIZnaokgfOms/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045156;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045160;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XJjnhXp7n8fQzNkIQZorh4uPAdqH/FNqzCU1I+EQi+8=;
-	b=iFc6nqdFVSGZG3VUhXd7Sv0dnSDh246znA9sa8nCFZu4QBkYdpTJtUCSJVnSlUHdlFbV
-	 li4/Ggj0pg/MwhMwFec/w0TLe9kKZR9DCRVgH8XWVvx71wqfk81wpyVyHsmj/c/KxOKjK
-	 EwNfnELC8t0TSEBHPXr6a3kYXfz8j29/SzEExIOk3oPKwyGQffi8mcAg1upGmwyStFz6d
-	 Xxpnt+6oNFjgLjwticUVpvFoMmOTrYWBwoEKsriD9Qfj3AvUMmNVAdGaur1XrdyZmF08N
-	 NI0mKp+0mqCiN9P61FDQ9KySRVEnbzb3/D0r7Blr1r3sYy01wyfbe3QNyFaxTIy9fhQ==
+	bh=EJx6tp1VUWsjsW2/hbaD7CZzQNGwlM+iGPxpIzgJtxc=;
+	b=Jc0uzZZBl38qJo2KQAAz/96zV+7yb7V6bCkjWO6EG+gdhcE/WjkTvFnvdqYIQ+QJ3TEh
+	 n1vYXFWysomeKngTPWVEWDbXXStSlABmQ/uu+N2JbIMJnqmmoii/XDQP6wt3ajMNkZpMa
+	 9Kv4uCs6QSW66lRqwMPT/QZUnwMla2L5+xTsU3oosOWAExr2F7bBgen1QSd4jwXo0Z/zf
+	 p1DIm0fRq9WucCI/IKU+EHyLh6wZ/r22nk0Oho3C8oS4eZgr2ss5/DIHC7hS8ktp2iMq2
+	 OrCfrdlvBbMLHHwtkjT8/8m+mR6ibh/fQWzVcTRkpyqM5a035eZIJFEHzkighEVDI7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xUkA2q6X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tSRhHOU6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A98F606A31C;
-	Wed, 18 Nov 2026 23:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6D9606A325;
+	Wed, 18 Nov 2026 23:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xUkA2q6X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A701F000C4;
-	Wed, 18 Nov 2026 23:39:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tSRhHOU6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 716141F000C4;
+	Wed, 18 Nov 2026 23:39:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045156;
-	bh=XJjnhXp7n8fQzNkIQZorh4uPAdqH/FNqzCU1I+EQi+8=;
+	s=korg; t=1795045160;
+	bh=EJx6tp1VUWsjsW2/hbaD7CZzQNGwlM+iGPxpIzgJtxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xUkA2q6XqOZADJGqQjFb/GeskpBtkEypccoVo7pZLqxhlJ5NVvSyQhEaza35XFLYD
-	 RBVVeo6WwsgWoPxGSoP3LOa2gP/WbT3pdACFUS5eD2T+UT4/xw4jc/9Wzi6bpUnmwM
-	 HJ7bgoO5LjEZdxXER25yzS8FlVCqloyZqSL68N1o=
+	b=tSRhHOU6C79iyvgJI94YkhAe4B6A98WYPwi6UKFP6UlUrbQ4krsL9114q2S9WmiYC
+	 ICn2E4+GwdvFRj7MFGufYXpOjISkvLvFXAJmKkyT7ZlY9DFpnTHaRVovn7IrFi1oRF
+	 cFNO8pEMSRLL7CUM+YwBhhvQo6KmRt0Yw0gXov58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0786/2857] ASoC: codecs: wm8994: Fix runtime PM leak in wm8994_mic_detect()
-Date: Wed, 18 Nov 2026 15:30:20 +0100
-Message-ID: <20261118150229.868342495@linuxfoundation.org>
+Subject: [PATCH 6.1 0822/2857] mtd: maps: pci: balance PCI enable on cleanup
+Date: Wed, 18 Nov 2026 15:30:56 +0100
+Message-ID: <20261118150231.170133606@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,40 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit b2c0e5bf750e33b0e1dcdfbb2df8103a06c7caab ]
+[ Upstream commit 3be16e5d4990bf96309ac5ba35cb369c6015bce7 ]
 
-wm8994_mic_detect() resumes the component before configuring the MICBIAS
-pins, but the default case of the micbias switch returns -EINVAL right
-after taking that reference, skipping the pm_runtime_put() on the
-success path. This leaks a runtime PM reference on every call with an
-invalid micbias.
+mtd_pci_probe() leaves the PCI device enabled on later probe failure and
+mtd_pci_remove() does not disable it either. Use pcim_enable_device() to
+release the enable reference after the existing map and region cleanup.
 
-Release the reference before returning -EINVAL.
+The imbalance is already present in the initial Git import.
 
-Fixes: f5a2cda4f1db ("ASoC: wm8994: Ensure the device is resumed in wm89xx_mic_detect functions")
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260917165130.2163278-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mtd/maps/pci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index 09e6a2ad506f2..bb8e311f33d2f 100644
---- a/sound/soc/codecs/wm8994.c
-+++ b/sound/soc/codecs/wm8994.c
-@@ -3533,6 +3533,7 @@ int wm8994_mic_detect(struct snd_soc_component *component, struct snd_soc_jack *
- 		break;
- 	default:
- 		dev_warn(component->dev, "Invalid MICBIAS %d\n", micbias);
-+		pm_runtime_put(component->dev);
- 		return -EINVAL;
- 	}
+diff --git a/drivers/mtd/maps/pci.c b/drivers/mtd/maps/pci.c
+index ca00d211e73e4..c6bbce6aed417 100644
+--- a/drivers/mtd/maps/pci.c
++++ b/drivers/mtd/maps/pci.c
+@@ -256,7 +256,7 @@ static int mtd_pci_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ 	struct mtd_info *mtd = NULL;
+ 	int err;
+ 
+-	err = pci_enable_device(dev);
++	err = pcim_enable_device(dev);
+ 	if (err)
+ 		goto out;
  
 -- 
 2.53.0
