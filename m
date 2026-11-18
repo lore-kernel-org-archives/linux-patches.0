@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058756;
-	b=4RoTiWQvcu2SciKphI6iKE+ftp9H0BMoKltckjC0MmzVdk3K7K5Tva31OoBm2IUseqi0
-	 f3fOd1RgXpDDTo9khNmumrADM1oD2AKwt7XvSbqrohMA6IOdUegb4ywmAg0BkYP7cNTkW
-	 81LMkbmw7A298sDjldFRX+7Q+fsn/tl8tZaSWMoGjO1ebScxWXZ0hbIWDDyRRvy151eAo
-	 qT6smFoEvIGTxdSFCgbc8CXFznEVyL9TMRB6T0HaijW9FvtEs1h15Se6HWxe0kiQ1SyXZ
-	 VSe131Dqov/HNv3ImLumAU9IFoyIsH/0B/kwL71HnIzbzLXEg0N8fwx8fhvPY2wiELw==
+	t=1795058758;
+	b=ejf1lHpgEgKA5/br9DdtePBCS5T40UIJr2FWxRW6wOqUe1GrdzhT1DMglw9+gkoW2+kJ
+	 g0IsYIGOlr5FVCc4b/dccLE10NTAJEGtnfE6phi6nA0p+ubzffOhW5nCk6y+gYh5AL1nO
+	 e+GAFERBYde2xINHZEQGpzSqAOX9YpBDpnkkzGV/o9nffEDk3S98qwx/KtkQvIJ/N2ys7
+	 rs5sfPO9Lyi0favK0BKxU3X9UOGDR9RPHB5cKl7ec4X3JhJa6fvrxz3E3rcbCsnp7XHXQ
+	 kOeEdtRHeiGsROEhQwRYdBoo5BWW2wm6PV3eCJZd2LUjEDHFxu7wppct/oBVoXtu2QQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058756;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058758;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U5zSxwFTjV86E/zG+l3lk/GKM3YpUJBomLryQMf7I+Y=;
-	b=UbK/oHdteNTklsC0dTzlTx2sjtANO77Z5QOl4dbTPCYHfMXMRBffhRn95c3zDo+ctEVj
-	 uaGmu7o/EYshoZ6n4aWZeag2CJ4jVbk4PYPw/HNdH9iBnW5FF8SUQcfsv23BRQjLr9mpN
-	 xR0SkRsChVugoK0a3/yCEXzQJZu8mo24Yl3LzDwejnoPdc2JKDk1CLVo+zVcJE+RgMSvM
-	 sefUe/2Bo2G6WOffA3FbTtrIzq7ycvT0f87IdOcu4X7mqHd1RCTfOHGv4VVI+9vTUGP3R
-	 0ZS5AkVm0hf7UYc5okWIwEBjxoMbkKV3JINfvXLcLhOuIyJIITCxQoFe/hpMBouwk1g==
+	bh=Fz/Ub5/fXU+BnFEdRV3GtGUglN1GZc47w4Yi9rNHp3U=;
+	b=tQcg7CB9iS3mFJ/WAJt6ctfCZ8621OUlpNWMn3+0ApFoI79FZvxHZNRiLLN3vaZ2Nh3c
+	 w35rzGmR0jOe45NsOgHD2nhlaPSBLzJYhL+j8odTwTZtiZsg6nyAvWMwUBuwHISdlove5
+	 VWSYheND3yZg4Oubjh19TVUNBogTs+GsrV/IUfjyg9+NfTfwkPblxeU5jQFF3oNpU173+
+	 jpL3j1Efx5vCApzppJSvD/QkC0esPIVjoMWh360RLgGFFuD5fvx6X9jQVu0siaWTR+7WI
+	 95cLEwc2R/q5cNEj0zKEyLB6z3O45zcg2Q6xxLItg6bdLVtFU1ABgmXWa8t6sBMUMZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="F9zg/Ejx";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZDx5h90;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28BA606A33B;
-	Thu, 19 Nov 2026 03:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E90E606A325;
+	Thu, 19 Nov 2026 03:25:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F9zg/Ejx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484EC1F000C5;
-	Thu, 19 Nov 2026 03:25:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZDx5h90
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059671F000C6;
+	Thu, 19 Nov 2026 03:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058755;
-	bh=U5zSxwFTjV86E/zG+l3lk/GKM3YpUJBomLryQMf7I+Y=;
+	s=korg; t=1795058758;
+	bh=Fz/Ub5/fXU+BnFEdRV3GtGUglN1GZc47w4Yi9rNHp3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F9zg/EjxmsRIIfuY7N3Aaz5LEMomRmlzUtXxGVqZ+7kQKlz5S5SCQQYUOPUlnS6Bm
-	 CaaM84t0Xkw7WAkXH6bkHNc7h6iPmakcTtKlc9QkNM0izJy2T6xDNqUczXiuf0uwiq
-	 r8CnpCSsGbEe/VhokrkqF7Cty46GKl1DZgKirw/M=
+	b=iZDx5h90wy/aDHbqNPJTcUtHzdDVB2sgYWczMhg9afdraYWNd5YmZ3sSwsK1bU4nH
+	 AOsBsmvcFwD6/Qud6s+E6yBS9MYcmlXfzqHJmnq65JM8btY7ORTtXEC4/YevMY8/Bz
+	 lr6H/Ujla2JfdMxbhcxIto3zqcZp31ZAlAW5VqAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hannes Reinecke <hare@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
-	Andrea Parri <parri.andrea@gmail.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0599/1848] nvmet-fc: only send read data for successful commands
-Date: Wed, 18 Nov 2026 15:43:57 +0100
-Message-ID: <20261118145940.425117063@linuxfoundation.org>
+Subject: [PATCH 5.10 0600/1848] nvmet: Finish the blk plug when integrity allocation fails
+Date: Wed, 18 Nov 2026 15:43:58 +0100
+Message-ID: <20261118145940.459428562@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,60 +71,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 94f93c61b1a5dd08d011be58172ce4392b849008 ]
+[ Upstream commit 18fc5f6f1ca945630dae5404265de55d65194e22 ]
 
-When a read command completes with an error,
-__nvmet_fc_fcp_nvme_cmd_done() still pushes the whole data buffer to
-the host before the response. nvmet_fc_alloc_tgt_pgs() allocates that
-buffer with sgl_alloc() and no __GFP_ZERO, and a command rejected by
-nvmet_check_transfer_len() leaves it untouched, so the host receives
-stale target memory.
+nvmet_bdev_execute_rw() starts a plug before building the bios, but
+the two error exits taken when nvmet_bdev_alloc_bip() fails return
+without calling blk_finish_plug().  current->plug is left pointing
+at the stack frame of the returned function, so the next
+blk_flush_plug() walks a stale list.
 
-The buffer is as large as the data length in the command IU, so the
-amount of stale memory returned is up to the host.
+Route both failures through a common exit that finishes the plug.
 
-The tcp and rdma targets send data only when cqe->status is zero (see
-nvmet_tcp_need_data_out() and nvmet_rdma_need_data_out()), so no nvmet
-command can rely on returning data with an error status. Do the same
-for fc. The ERSP then reports a transferred length of fod->offset,
-which is 0, matching what nvme_fc_fcpio_done() checks on the host.
-
-Tested over nvme-fcloop: a failed read command no longer transfers
-data and still completes with its error status, and successful reads
-are unaffected.
-
-Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
+Fixes: c6e3f13398123 ("nvmet: add metadata support for block devices")
 Cc: stable@vger.kernel.org
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/nvme/target/io-cmd-bdev.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
-index 34402de61cad5..57ad6031cde91 100644
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -2451,11 +2451,11 @@ __nvmet_fc_fcp_nvme_cmd_done(struct nvmet_fc_tgtport *tgtport,
- 	} else {
+diff --git a/drivers/nvme/target/io-cmd-bdev.c b/drivers/nvme/target/io-cmd-bdev.c
+index 58dd91d2d71c8..7e39f47ef04e7 100644
+--- a/drivers/nvme/target/io-cmd-bdev.c
++++ b/drivers/nvme/target/io-cmd-bdev.c
+@@ -285,7 +285,7 @@ static void nvmet_bdev_execute_rw(struct nvmet_req *req)
+ 							  &prot_miter);
+ 				if (unlikely(rc)) {
+ 					bio_io_error(bio);
+-					return;
++					goto out_plug;
+ 				}
+ 			}
  
- 		/*
--		 * try to push the data even if the SQE status is non-zero.
--		 * There may be a status where data still was intended to
--		 * be moved
-+		 * A failed command may not have filled its read buffer, so
-+		 * only push data for success, as the tcp and rdma targets do.
- 		 */
--		if ((fod->io_dir == NVMET_FCP_READ) && (fod->data_sg_cnt)) {
-+		if (fod->io_dir == NVMET_FCP_READ && fod->data_sg_cnt &&
-+		    !cqe->status) {
- 			/* push the data over before sending rsp */
- 			nvmet_fc_transfer_fcp_data(tgtport, fod,
- 						NVMET_FCOP_READDATA);
+@@ -306,11 +306,12 @@ static void nvmet_bdev_execute_rw(struct nvmet_req *req)
+ 		rc = nvmet_bdev_alloc_bip(req, bio, &prot_miter);
+ 		if (unlikely(rc)) {
+ 			bio_io_error(bio);
+-			return;
++			goto out_plug;
+ 		}
+ 	}
+ 
+ 	submit_bio(bio);
++out_plug:
+ 	blk_finish_plug(&plug);
+ }
+ 
 -- 
 2.53.0
 
