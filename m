@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030756;
-	b=LGM3zE9lLMePNKydaNmrAiriUptZLlpM4VLMchsygbypQ1L6lgbFj8XSD0UwiJ3agDsg
-	 q74+1OYTMKTpxMxdk3zT5GpbgEQqZd14bQEOjKS6lH5f0mzOU8Rl4NZOjn+SQKDBFHXZn
-	 bgj1qOwY9OAnTvP/MVGdwAaSmJhBs0w7KEy1iMj1ds5b0lEftfnC5tOI1/jxRHeD8QCoV
-	 BjF/aszuWsXLWCM5jf2ARZt8/paNFoT0rJInII+4Bg3rJW0SHkYXlbYjtm4iTgQKbJ14d
-	 E7EF5JKqCy7am6llTFoyffESWhJI9BWRyblXXASC4pQIYYvNLd9f1700PyCobLxqx2w==
+	t=1795030759;
+	b=kf36UIVYGpD2P72SU2mEjwBw71I6BllmLm6kfEoNGlTXJgwtyK7l4ckyGjkcO1MbivSh
+	 lIIBRyE3mPVVpOq140U5dQ21tEDoqFww7fzB3TDTO66eFBmGKIW25S4L7nAYC5njybPY1
+	 Ce8BKSCIh9ChMOA6eZJq+4o/zz6lCbqxofHVwSL/A36lGH5Sqmv6hQG64wRIBHMzSSs9v
+	 gvAlvFPe0RLLxIie7iIxYMUNcA0dU1S48LaAQExB0EM/FU4WwBR2Mq0OLSse+dOK+au4u
+	 /V8Ev0sSy9+pV9ZT/qgCFf2emOLtAfvsMsj/eX2IRgiPk200rtBPkoGpU7A8VEY62LQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030756;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030759;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QYoIVkGnPPClvQU0k8W6zGhP0wYsBvhS0xCnZAimhOE=;
-	b=a491D9G7hcLdEakn8TuoXwMqoZvFw5oH+PcrdEjp574wBAq2OshgJEmOpaLbo7Ost9iS
-	 lPdZzTM/cnCu1Aj0bWiCPXvu5SL57LFhB0AaYKKgz+y2yTf8Wa2+EKBVaz8er87T7lJDC
-	 4snm9rh4yS0CDGgb5HqwtfSFy7L/PC3AJgK1DCRuyMwwffWNoby5M4O/xUaO3Iqv1xj6X
-	 JEpvfFKpfTxxKXM4zj80S04eiTCcGQf4bMntgf0qPR+S7pl2DNLfww1ZL88hst5VG4BGZ
-	 cqCi5BzHrw4r2hGD1JFBa+SCzIoLlfZJBffSjyS+rN9t00Vn0cuiHqXHVwV/SFUnBNg==
+	bh=jMRU7oPOxy4ivrGgli6y8LBXW/es5174137UFghcRhQ=;
+	b=zDIZ1MgXPFnJ+9CNA0h/q938ByGrD88a1BhfIZTUZJBWf2+L+Gmnkvlz7uHVq3V9LeDI
+	 BBKfpGZ2PN+rmjuuOrRDz7xJYc28NHQ8lgUx2hJ7yWWaG1Dy4v7cu7ieqEgnhFncKng4r
+	 Qa7S9s8gtZKykPLoY4iMrkkU9XhC7bmZ8CsrcIgyVnjPQxyucY6iiREwx5WAZE/ZPOxvJ
+	 VR06GE2SE4zZK4cwFOoRYCdOGKLqUQgEnvN9tUIO5LsVCRLwFtq4BwMdCWQTFcl2QsxYM
+	 UXfTTCDldPmzkTC1VybW5PQMEhMF497XWTiSQLa56fU7osVBkBIk0UT+2txy6yFIwcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NP3PJq5p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OdVCjvgR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A329606A918;
-	Wed, 18 Nov 2026 19:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085FA606A918;
+	Wed, 18 Nov 2026 19:39:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NP3PJq5p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DE81F000C4;
-	Wed, 18 Nov 2026 19:39:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OdVCjvgR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 177EE1F000C4;
+	Wed, 18 Nov 2026 19:39:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030755;
-	bh=QYoIVkGnPPClvQU0k8W6zGhP0wYsBvhS0xCnZAimhOE=;
+	s=korg; t=1795030758;
+	bh=jMRU7oPOxy4ivrGgli6y8LBXW/es5174137UFghcRhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NP3PJq5pbrAgLGmCtUtPGoKnS3TLKO00p9SD9Gr3XLZkSDCTVSFc2CYX+h/5Am8cg
-	 01+ehv8h70ag1YXrsKUC5sam28ayMILqgSh0JjAeyeaGToQsZHI1UH4/rPt6j6myOM
-	 RsOH8JbXWkMk4f2i9R7nfyKpfK6aT1zNv9bD3SjI=
+	b=OdVCjvgRBK8zQCQX2iuJWVQdla8PJgZydSSQkmBRJIL9OYqaRO1MP1qywLEc7Xbag
+	 8AbD2kUMdfxvHQLYKrXV39Yk2O2HQghEt+M58YGwREnjNEsZpZ1SjWSbW/9wzXNGwt
+	 QO/f3Psx+FlXb7BoJdLK29NzP52EaQuz5cuoT4Es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Igor Paunovic <royalnet026@gmail.com>
-Subject: [PATCH 6.12 0790/1756] phy: rockchip: usbdp: Avoid xHCI SErrors
-Date: Wed, 18 Nov 2026 15:48:37 +0100
-Message-ID: <20261118150041.162071197@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Will Deacon <will@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0817/1756] perf/cxl: Fix the counter overflow delta fixup
+Date: Wed, 18 Nov 2026 15:49:04 +0100
+Message-ID: <20261118150042.110596900@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,65 +70,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit cf3aa34e6f0798544c26ad93a6c3c2231ab09738 ]
+[ Upstream commit 0326269ed73529cdf821664b6176814cde9ca374 ]
 
-The USBDP PHY provides the PIPE clock to the USB3 controller, which
-means the PHY must be fully running when anything tries to access
-the xHCI registers.
+The counter is masked to counter_width, so the subtraction in
+__cxl_pmu_read() throws away the bit that records the wrap. A delta of one
+whole period reads back as 0, the same as no events at all, and only the
+overflow status tells the two apart - which is why __cxl_pmu_read() takes
+an overflow argument.
 
-When switching between USB3-only, USB3 + DP and DP-only mode, the
-PHY must be re-initialized resulting in a short period of the PHY
-being disabled. If the DWC3 driver decides to access the xHCI at
-this point the system will fail with an SError.
+The fixup keys off the delta rather than the operands:
 
-This patch avoids the problems by disabling the USB3 port before
-re-initializing it. This does a couple of things:
+	delta = (new_cnt - prev_cnt) & GENMASK_ULL(counter_width - 1, 0);
+	if (overflow && delta < GENMASK_ULL(counter_width - 1, 0))
+		delta += (1UL << counter_width);
 
-- forces phystatus to 0 from GRF (not from PHY)
-- switches PIPE clock source from PHY to UTMI (safe fallback clock)
-- num_u3_port=0
+so it cannot tell which of these it is looking at:
 
-The last part will be ignored, as DWC3 already probed, but the
-clock re-routing will avoid the SError. There is a small delay
-afterwards to make sure the mux happened. The datasheet gives
-no hints how long it takes, so delay time is a guess.
+  event_start         polled read          wrap
+  ctr = 0 ..........  ctr = P/2 .........  mask -> 0 (+r)
+  prev = 0            prev = P/2                 IRQ reads new = r
 
-Fixes: 2f70bbddeb45 ("phy: rockchip: add usbdp combo phy driver")
-Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-part2-v15-9-8d507cb1174f@collabora.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+  prev = 0    (no read yet):  new >= prev, fell short -> add period
+  prev = P/2  (polled):       new <  prev, spans wrap -> add nothing
+
+Both rows are the same interrupt and the old guard adds a period in both,
+so a mid-period read makes the event over-count. 'perf stat -I' hits that.
+
+Condition the fixup on new_cnt >= prev_cnt, the one case the subtraction
+cannot express. Dropping it outright would break the first row. It stays
+exact whatever the residual r is, which matters because some events
+increment by more than 1 per cycle (CXL r4.0 8.2.7.2.1, Threshold) and can
+step past 0 as they wrap.
+
+Use mask + 1 for the period rather than a shift. It is 0 for a 64-bit
+counter, and avoids the old 1UL << counter_width - undefined for width 64,
+and for >= 32 on 32-bit kernels.
+
+Fixes: 5d7107c72796 ("perf: CXL Performance Monitoring Unit driver")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://sashiko.dev/#/patchset/20260715191454.459673-1-dave@stgolabs.net?part=1
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-usbdp.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/perf/cxl_pmu.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-index b256672b3405b..ce39a2d828716 100644
---- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
-+++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-@@ -965,13 +965,16 @@ static int rk_udphy_power_on(struct rk_udphy *udphy, u8 mode)
- 			rk_udphy_u3_port_disable(udphy, false);
- 		udphy->phy_needs_reinit = false;
- 	} else if (udphy->phy_needs_reinit) {
--		if (udphy->mode == UDPHY_MODE_DP)
--			rk_udphy_u3_port_disable(udphy, true);
-+		rk_udphy_u3_port_disable(udphy, true);
-+		udelay(10);
+diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
+index 401c7ba3efbd9..5fc4799d1ec14 100644
+--- a/drivers/perf/cxl_pmu.c
++++ b/drivers/perf/cxl_pmu.c
+@@ -686,7 +686,7 @@ static void __cxl_pmu_read(struct perf_event *event, bool overflow)
+ {
+ 	struct cxl_pmu_info *info = pmu_to_cxl_pmu_info(event->pmu);
+ 	struct hw_perf_event *hwc = &event->hw;
+-	u64 new_cnt, prev_cnt, delta;
++	u64 new_cnt, prev_cnt, delta, mask;
  
- 		rk_udphy_disable(udphy);
- 		ret = rk_udphy_setup(udphy);
- 		if (ret)
- 			return ret;
-+
-+		if (!udphy->hs && udphy->mode & UDPHY_MODE_USB)
-+			rk_udphy_u3_port_disable(udphy, false);
- 		udphy->phy_needs_reinit = false;
- 	}
+ 	do {
+ 		prev_cnt = local64_read(&hwc->prev_count);
+@@ -694,12 +694,16 @@ static void __cxl_pmu_read(struct perf_event *event, bool overflow)
+ 	} while (local64_cmpxchg(&hwc->prev_count, prev_cnt, new_cnt) != prev_cnt);
  
+ 	/*
+-	 * If we know an overflow occur then take that into account.
+-	 * Note counter is not reset as that would lose events
++	 * The mask discards the bit that says the counter wrapped, so a delta of
++	 * one whole period reads back as 0 - the same as no events at all. Only
++	 * the overflow status separates them, and new_cnt >= prev_cnt is that
++	 * case, so add the period back. mask + 1 is 2^counter_width, which comes
++	 * out as 0 for a 64-bit counter and avoids an undefined 1 << 64.
+ 	 */
+-	delta = (new_cnt - prev_cnt) & GENMASK_ULL(info->counter_width - 1, 0);
+-	if (overflow && delta < GENMASK_ULL(info->counter_width - 1, 0))
+-		delta += (1UL << info->counter_width);
++	mask = GENMASK_ULL(info->counter_width - 1, 0);
++	delta = (new_cnt - prev_cnt) & mask;
++	if (overflow && new_cnt >= prev_cnt)
++		delta += mask + 1;
+ 
+ 	local64_add(delta, &event->count);
+ }
 -- 
 2.53.0
 
