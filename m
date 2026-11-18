@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029607;
-	b=dbTLb/h1zvzXNtGJIuVM978XxOJyjjl8AkWClaJ/UPD54USP7gaSybURBoUO1Kb1Vcuh
-	 ExuKPEES/F/3VdckVsRRFyV54s/bs1W9DkuGOo89EgJBo4poWAeWg8WK0mLtW7Wj2Oyr/
-	 ttZq4VcBKJAVlKWqZocvG/3orU+Upcgq2cSRxyB4XRh25t4lu9kJnIufMNl1j3m8qP8bf
-	 X0QlMMj0i0pWZb/T5Z0rY9K47NK55qVXkjQZO+EGz8RF8BGn/c0dhwt3vi0b1h5vbpPkQ
-	 WIz1640vwid0FK4pFxkUy6Cwvta9ejGb/5fIsnTIMxMC1WMwY7ztNzEF48F7+BMnEUw==
+	t=1795029610;
+	b=X8Mwo09Ddsj/wBQmck5vvbtVV+N9LduT+1B3lH3IRrsZOhVcueZKjDK5sbv1b4/PHU97
+	 wyhVcRxT9L/q59zvvJ8JISXG0lDXMOvwYPiYa7pe0xKAso8NHi9Aj4GhZ7S+onsjKWE2F
+	 QsjL2qe9DKJVgfC9jnOyFeK/8kyJxBcg5+JtkZtdEnwrpePg+OytM5kIeRc3g6goIbm84
+	 sZymhpVsceUPsqT1HP2wQ2Q7SXqO8Zx+t0zapW3yQAG5zdYITvYFb/P0/N5JEKBpw3HOz
+	 IM3D3bfMMt9QmOlULISnMTwuAl/fc6cwSAXlDzYqe43bNsDE/8sC9G079K89PNPP0IA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029607;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029610;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pBfy7hAkjrntvGmFmITzqUdPJEidijlpzwmKCqyuGWs=;
-	b=TwG5TwTQ0lC8pWxwxG/q5cdjnbRzo9Y9Q1ALA1ELuZSHMKHxBiZRaj+QuZPE1ZlvaTh2
-	 qGsmZ+WjUfV+AG30Ol6x3tLaeR+UoP2eAAn0RvPsS2HWVfaSX/uhhmH8uhGRoirWdudcH
-	 Kj059ysKefVtKcAYdQcgmoAyzvOz1cUineHxj5WvnIwCqjZZZp+xqirAs8aR2NuO14UgK
-	 EPYLskA1xU5DSXGli98iJuonPV09Bd7zxr2fYOE0LEqvlQPscvW8PBeaT6zYJDRF5UF1P
-	 49WpIuNsJoQrYjpHXz7UP3QDsSHpHV7GbQcMXA9jRAwJwar5iF67ymuY3tvOKaimBnw==
+	bh=wx34g9xmkoZVAES26cuUxzmupDtiE9l5SukhV81siE0=;
+	b=hrJGQlLQLKNApy0jRzIjYPGZbGxzI+nCXcewyyzR9NGKAPHXOcuAR6IhZDeZT2mCl7B2
+	 l7lD8khJ5hmaPPm58xSYx0Vl7bBbdVV3NH2z0JOUFWbj3/itrEYq/tuFRjk9m1vP+qJRS
+	 2bbC7rOTI66S6rsnXgseGyJOEOMQkcBWF3t36RlEab3wdmAUYkKKejXBdGh7uTgXTOAP3
+	 U6rwCffA8SSs9lpw2MVUHy88tyCkCMKLfT3TVOWcZ6TqnRT8k7dSZVWxm/SYgO6xXcPpq
+	 KLZBYsbdILb0uQNbw2jpc5QtwDROkqoZn8DchTtcDkGqzrb5qfYmbv3lllA6c/zl7HA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="JQZV/ha6";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G5wZzqPx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A70D606A338;
-	Wed, 18 Nov 2026 19:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DDE60A2609;
+	Wed, 18 Nov 2026 19:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQZV/ha6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A631F000C4;
-	Wed, 18 Nov 2026 19:20:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G5wZzqPx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749A71F000C4;
+	Wed, 18 Nov 2026 19:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029607;
-	bh=pBfy7hAkjrntvGmFmITzqUdPJEidijlpzwmKCqyuGWs=;
+	s=korg; t=1795029610;
+	bh=wx34g9xmkoZVAES26cuUxzmupDtiE9l5SukhV81siE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JQZV/ha6RhL26kTBDyqe3fhu8ZCNd3bY+o4SD5zB23b8/uozxKvmXHNeOVKSWVVKT
-	 Q3vm+6uf4l2d5qIpIa2zfrgUvgJE2Llf9QqTLmZ6vHgI4dDWPOkUpOXYRQg5asWSTP
-	 AgKjH6u25MlrP443EyH2a3btoQuGpGiQ6TO8Hskk=
+	b=G5wZzqPx308u3xNYQcI7bzpqV/a12OzUD28vERf3PO6a6eu4dItNT5ZX4cr050QK+
+	 tWA5WhkQi+aUxIyMnFVyJ2+cdeGA184RjtwwH5daJiQ5OZ2YGPQIqlWwBnU3No9LH7
+	 JPXCEvmVw7/NO0mYyGFcDg9218N0foBAWcD61H44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Miles Krause <mileskrause5200@gmail.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0409/1756] phy: cadence: Sierra: Do not modify register when getting parent clock
-Date: Wed, 18 Nov 2026 15:42:16 +0100
-Message-ID: <20261118150025.034939497@linuxfoundation.org>
+Subject: [PATCH 6.12 0410/1756] memory: emif: fix device_node reference leak on np_ddr
+Date: Wed, 18 Nov 2026 15:42:17 +0100
+Message-ID: <20261118150025.068822720@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,60 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory CLEMENT <gregory.clement@bootlin.com>
+From: Miles Krause <mileskrause5200@gmail.com>
 
-[ Upstream commit 955e68eb3067842067b7b5395a3f8c278428802a ]
+[ Upstream commit 314ef67d673284d4c070455bd62d332f6d0f8634 ]
 
-The get_parent() callback for the PLL_CMNLC1 clock was incorrectly
-writing to the register while determining the parent clock index. This
-unintended register access forces the PHY back into training mode. If
-the PHY is already configured, this unexpected change prevents it from
-exiting training mode.
+of_get_memory_device_details() takes a reference on the DDR device
+node via of_parse_phandle() and stores it in emif->np_ddr for later
+use, but drops that reference without calling of_node_put() on two
+error paths: the devm_kzalloc() allocation-failure check and the
+is_dev_data_valid() check. Both return NULL immediately, leaking the
+node reference each time either failure triggers.
 
-Remove the register write operation to ensure the PHY remains stable
-during the get_parent() callback.
+The same reference is also never released on the success path: it is
+kept for the life of the bound device (compared against a later
+instance's np_ddr in the duplicate-DDR-geometry check) but
+emif_remove() never calls of_node_put() on it, leaking it every time
+an EMIF device unbinds. of_node_put() on a NULL pointer is a no-op, so
+this is also safe for the non-DT get_device_details() path, where
+np_ddr is left NULL by devm_kzalloc().
 
-Fixes: da08aab940092 ("phy: cadence: Sierra: Fix to get correct parent for mux clocks")
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260306-fix_sierra_get_parent-v2-1-cafe89ee5382@bootlin.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: e6b42eb6a66c ("memory: emif: add device tree support to emif driver")
+Signed-off-by: Miles Krause <mileskrause5200@gmail.com>
+Link: https://patch.msgid.link/20260909-master-v1-1-8800f5647ab2@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/cadence/phy-cadence-sierra.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ drivers/memory/emif.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/phy/cadence/phy-cadence-sierra.c b/drivers/phy/cadence/phy-cadence-sierra.c
-index dfc4f55d112e1..eac6819be8380 100644
---- a/drivers/phy/cadence/phy-cadence-sierra.c
-+++ b/drivers/phy/cadence/phy-cadence-sierra.c
-@@ -695,23 +695,16 @@ static const struct phy_ops noop_ops = {
- static u8 cdns_sierra_pll_mux_get_parent(struct clk_hw *hw)
- {
- 	struct cdns_sierra_pll_mux *mux = to_cdns_sierra_pll_mux(hw);
--	struct regmap_field *plllc1en_field = mux->plllc1en_field;
--	struct regmap_field *termen_field = mux->termen_field;
- 	struct regmap_field *field = mux->pfdclk_sel_preg;
- 	unsigned int val;
- 	int index;
+diff --git a/drivers/memory/emif.c b/drivers/memory/emif.c
+index 99eb7d1baa5ff..e4f0f39b2a03b 100644
+--- a/drivers/memory/emif.c
++++ b/drivers/memory/emif.c
+@@ -921,6 +921,7 @@ static struct emif_data *of_get_memory_device_details(
+ 	if (!emif || !pd || !dev_info) {
+ 		dev_err(dev, "%s: Out of memory!!\n",
+ 			__func__);
++		of_node_put(np_ddr);
+ 		goto error;
+ 	}
  
- 	regmap_field_read(field, &val);
+@@ -945,6 +946,7 @@ static struct emif_data *of_get_memory_device_details(
+ 			pd->device_info->io_width, pd->phy_type, pd->ip_rev,
+ 			emif->dev)) {
+ 		dev_err(dev, "%s: invalid device data!!\n", __func__);
++		of_node_put(np_ddr);
+ 		goto error;
+ 	}
+ 	/*
+@@ -1139,6 +1141,7 @@ static void emif_remove(struct platform_device *pdev)
+ 	struct emif_data *emif = platform_get_drvdata(pdev);
  
--	if (strstr(clk_hw_get_name(hw), clk_names[CDNS_SIERRA_PLL_CMNLC1])) {
-+	if (strstr(clk_hw_get_name(hw), clk_names[CDNS_SIERRA_PLL_CMNLC1]))
- 		index = clk_mux_val_to_index(hw, cdns_sierra_pll_mux_table[CMN_PLLLC1], 0, val);
--		if (index == 1) {
--			regmap_field_write(plllc1en_field, 1);
--			regmap_field_write(termen_field, 1);
--		}
--	} else {
-+	else
- 		index = clk_mux_val_to_index(hw, cdns_sierra_pll_mux_table[CMN_PLLLC], 0, val);
--	}
- 
- 	return index;
+ 	emif_debugfs_exit(emif);
++	of_node_put(emif->np_ddr);
  }
+ 
+ static void emif_shutdown(struct platform_device *pdev)
 -- 
 2.53.0
 
