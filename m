@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035121;
-	b=J6Z8K7W0AB5CD92fOLdr25up3xJMcirLRM/QeVssB/FkHsOfmtK93rGigy+dN/foQBYh
-	 3fp6JGvPKHU1jTS+hNiciU6HcSHlZqabuqY0lsQdWc6ZZazDaX57x5demJszGMkS5fS6W
-	 pAKL7ckrz4h57T93vFCcXDqKN2lGrgUfPP7uL84dlNtfjYlqWWoPOwV95HuWaeFiTjQiv
-	 bHxvsaL3H6udFwOgyOTFjoSgwsCHaiC4zIqBmiIx4WC0n5ovJE/hBJWYBLrxzkiekm/k0
-	 URikMBBkiPDFWZnEVpLxkhBYipfJCFdjzA/HzyHoLZkEtvKz6mRlS52Xb2utI0lc+WA==
+	t=1795035124;
+	b=HKopxgoRMdtoKOUKXRiGcV5IqcvxmszRt69ZQ1qEq9oJp1AQLYVXwR80mIGlp/EXzsxI
+	 +fv74KsdAO2cvIMg3BvcXfYhF/b0eJNFDPh739uyIFAgfRh09I0tIlH8m+0aYXMpDnUAq
+	 Ztsb8VnDsVlVaD9u88kzXRJswjqA9hPf9kJkT4+MzEn2bUTKwxn1YkvULXh5GMzgsWKQu
+	 A+VW9sU3QrjrztDygkaLofqSOyMsjr6ZsX/4RdqfNZtYGdhOmP7lNxR0IZGDyiO5g20DE
+	 y8G01lvzJjkLUKSW1tmYiy55aFGGfWSlMqcStvl6/o+Sd5kls/uQLCQ90Sc4ZlSzXHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035121;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035124;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VXx7rL+idSHIC1SBR9MfqnSsNJZbqbUiLm33szDuiIA=;
-	b=E6MJl77t0C0IWnlvyDXGB7nwUYOSqc/jj2cz/d7BhUVR91Xhvw89/K7/n3CZJFspdaTS
-	 dmeXdoykOLA+wE0oznwuNYj3dASW0sxHYSSi04hWRsco1pv4204MDJfheuxGwtvPwjUst
-	 IXcwm9GpvaGEn8RzA0zaYzMdhA8C5Dd4uLhoHlUtU70GCnZzkpsahpvjjo8TptNPBaPc2
-	 G38RznT91PJBByTei+EqLrhZ5r4QIc4bGPa0e7tFwDXcyrk8KerdMtWQTcDZST2RGUAWN
-	 ooiSOIHkDP5dYGd07tt22f4hKr1scMoXFEAMX/6nBRlNhXZOD7RDWZuAVdTuy2vsXzw==
+	bh=/PPmzaKvRnvKJ2/qtYcwSutKVYsm7o/PPcsWNbP16B0=;
+	b=OnoDZ9cWIQdBakE1ZoUgwH5IN14C+g/hOzNwiZH4OAMK5U1VZq+hJPterz3jryl7UtGC
+	 5HRlCGjxm/sm8KoDy/l6eGA9kPEC/bYmdznmWgyzuDr0YnbLbEMc0LmfknWNG/7mnEsPQ
+	 iQlaKHugGbu4KSxveuoR2evsBnHvf1wL3d68hl6m3wvgSyPKuB/PPjsqjuJUy+B4sLVXs
+	 S6nhqWMutkMfo/5eFIJ78QuVvONKmNqwgkCjITlFJWkoP/EeO2y7TDw4bvdw3Z29bo5Ce
+	 VJ/pHMk7nXXoIwfgoaRKmCCluFWoDwqjHSSAT+ctucrHBWyrq9vGALM533aMjxuPqCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SwawhkD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Esd5tI5Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB54606A31C;
-	Wed, 18 Nov 2026 20:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E27E606A31C;
+	Wed, 18 Nov 2026 20:52:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SwawhkD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39431F000C4;
-	Wed, 18 Nov 2026 20:52:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Esd5tI5Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B181F000C4;
+	Wed, 18 Nov 2026 20:52:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035121;
-	bh=VXx7rL+idSHIC1SBR9MfqnSsNJZbqbUiLm33szDuiIA=;
+	s=korg; t=1795035124;
+	bh=/PPmzaKvRnvKJ2/qtYcwSutKVYsm7o/PPcsWNbP16B0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2SwawhkDI4noW9wrt+w2k0l5jqjIFrKGP7Baj2bzZ6XqcY1Hj7n3pTJDemRWKaotZ
-	 5Xz9XRlG9katipllaoAH0G58bqJGhWab/whBf/yoGK6etYENdpEzoWgdkYzKZxJDOh
-	 3lx/py/no8YlGRoTUEIa6zNEEl4FY9LgnAlg8UBU=
+	b=Esd5tI5ZLInu2zsy9ykwCWJbAnuwvetCLby4VoDnBLq1V/tuDsr0FeNgnlWrzgrem
+	 u14bK72sycZ3UJztZYEdiyqhAHsoMd6qUlqZBWUkXVjnIsJdC7sP6g2k3ZxdvtWH5a
+	 OeC3S1gcAo/1fCYooJ8EVHo7RjVOxT36DBL6fW/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+ed9902f2e44184d9@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 0613/3318] fbdev: udlfb: dont rebuild the mode list while the framebuffer is in use
-Date: Wed, 18 Nov 2026 15:20:35 +0100
-Message-ID: <20261118150336.161070340@linuxfoundation.org>
+	Richard Patel <ripatel@wii.dev>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.6 0614/3318] genirq: Defer kfree(irqaction) until irq_thread_dtor() finishes
+Date: Wed, 18 Nov 2026 15:20:36 +0100
+Message-ID: <20261118150336.203232310@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,71 +67,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Richard Patel <ripatel@wii.dev>
 
-commit ac9cfa552102b8e80e88c2872e80dc9cb5f07dda upstream.
+commit d04adff6860587e843948b0c31174f8ae11b8dfe upstream.
 
-dlfb_setup_modes() frees info->modelist with fb_destroy_modelist() and
-rebuilds it, but fbcon holds raw pointers into that list in
-fb_display[i].mode and nothing un-publishes them the way
-do_unregister_framebuffer() and store_modes() do with
-fbcon_delete_modelist(). The function does refuse to install a new mode
-while the framebuffer has users (dlfb->fb_count != 0), but only after the
-list is already destroyed. Reached from the 0666 "edid" sysfs attribute,
-an unprivileged write to /sys/class/graphics/fb0/edid therefore fails with
--EINVAL and still leaves every fb_display[i].mode dangling; the next
-console switch reads the freed fb_videomode in fb_videomode_to_var().
+When an interrupt thread exits abnormally via do_exit() (e.g. the interrupt
+handler oopses) without returning from irq_thread(), a concurrent call to
+free_irq() could free the irqaction before the irq_thread_dtor() exit task
+work runs.
 
-Test fb_count before touching the list. fbcon takes a reference through
-fbcon_open(), so that condition covers exactly the states in which
-fb_display[] points into the list, and the errno returned to userspace is
-unchanged.
+  irq thread (oopsed)                 free_irq()
+  -------------------                 ----------
+  do_exit()
+    exit_mm()
+      complete_vfork_done()  -------> kthread_stop() returns
+    exit_files() ...                  kfree(action)
+    exit_task_work()
+      irq_thread_dtor()
+        action->...                   <- use-after-free
 
-  BUG: KASAN: slab-use-after-free in fb_videomode_to_var (drivers/video/fbdev/core/modedb.c:905)
-  Read of size 4 at addr ffff8880107b449c by task kworker/1:1/47
-  Workqueue: events console_callback
-  Call Trace:
-   fb_videomode_to_var (drivers/video/fbdev/core/modedb.c:905)
-   display_to_var (drivers/video/fbdev/core/fbcon.c:998)
-   fbcon_switch (drivers/video/fbdev/core/fbcon.c:2182)
-   redraw_screen (drivers/tty/vt/vt.c:994)
-   complete_change_console (drivers/tty/vt/vt_ioctl.c:1141)
-   console_callback (drivers/tty/vt/vt.c:3358)
-   process_one_work (kernel/workqueue.c:3396)
-   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-  ...
-  The buggy address is located 28 bytes inside of
-   freed 96-byte region [ffff8880107b4480, ffff8880107b44e0)
+Track the pending exit work with the IRQTF_EXIT_WORK thread flag, and have
+__free_irq() wait for the bit to clear before kfree().
 
+irq_thread_dtor() only runs on irq_thread abnormal exit. If that dtor also
+faults, free_irq() will hang indefinitely, but double IRQ thread faults
+require a reboot anyways.
+
+[ tglx: Add missing include ]
+
+Fixes: ed3e694d78cc ("move exit_task_work() past exit_files() et.al.")
+Signed-off-by: Richard Patel <ripatel@wii.dev>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: 7d9485e2c53c ("Staging: udlfb: Add functions to expose sysfs metrics and controls")
-Reported-by: co+ed9902f2e44184d9@bugs.sh
-Closes: https://lore.kernel.org/all/1jSCSNaDKmuUG7h40rTsSl1rMaSwdlJef4rp%40bugs.sh/
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://lore.kernel.org/all/1jSCSNaDKmuUG7h40rTsSl1rMaSwdlJef4rp%40bugs.sh/
-Signed-off-by: Helge Deller <deller@gmx.de>
+Link: https://patch.msgid.link/20261009145842.1616117-2-ripatel@wii.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/udlfb.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/irq/internals.h |    2 ++
+ kernel/irq/manage.c    |   26 ++++++++++++++++++++------
+ 2 files changed, 22 insertions(+), 6 deletions(-)
 
---- a/drivers/video/fbdev/udlfb.c
-+++ b/drivers/video/fbdev/udlfb.c
-@@ -1336,6 +1336,11 @@ static int dlfb_setup_modes(struct dlfb_
- 		goto error;
+--- a/kernel/irq/internals.h
++++ b/kernel/irq/internals.h
+@@ -30,6 +30,7 @@ extern struct irqaction chained_action;
+  * IRQTF_AFFINITY  - irq thread is requested to adjust affinity
+  * IRQTF_FORCED_THREAD  - irq action is force threaded
+  * IRQTF_READY     - signals that irq thread is ready
++ * IRQTF_EXIT_WORK - irq thread exit task_work is pending
+  */
+ enum {
+ 	IRQTF_RUNTHREAD,
+@@ -37,6 +38,7 @@ enum {
+ 	IRQTF_AFFINITY,
+ 	IRQTF_FORCED_THREAD,
+ 	IRQTF_READY,
++	IRQTF_EXIT_WORK,
+ };
+ 
+ /*
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -21,6 +21,7 @@
+ #include <linux/sched/isolation.h>
+ #include <uapi/linux/sched/types.h>
+ #include <linux/task_work.h>
++#include <linux/wait_bit.h>
+ 
+ #include "internals.h"
+ 
+@@ -1228,17 +1229,14 @@ void wake_threads_waitq(struct irq_desc
+ 		wake_up(&desc->wait_for_threads);
+ }
+ 
+-static void irq_thread_dtor(struct callback_head *unused)
++static void __irq_thread_dtor(struct irqaction *action)
+ {
+ 	struct task_struct *tsk = current;
+ 	struct irq_desc *desc;
+-	struct irqaction *action;
+ 
+ 	if (WARN_ON_ONCE(!(current->flags & PF_EXITING)))
+ 		return;
+ 
+-	action = kthread_data(tsk);
+-
+ 	pr_err("exiting task \"%s\" (%d) is an active IRQ thread (irq %d)\n",
+ 	       tsk->comm, tsk->pid, action->irq);
+ 
+@@ -1255,6 +1253,14 @@ static void irq_thread_dtor(struct callb
+ 	irq_finalize_oneshot(desc, action);
+ }
+ 
++static void irq_thread_dtor(struct callback_head *unused)
++{
++	struct irqaction *action = kthread_data(current);
++
++	__irq_thread_dtor(action);
++	clear_and_wake_up_bit(IRQTF_EXIT_WORK, &action->thread_flags);
++}
++
+ static void irq_wake_secondary(struct irq_desc *desc, struct irqaction *action)
+ {
+ 	struct irqaction *secondary = action->secondary;
+@@ -1313,6 +1319,7 @@ static int irq_thread(void *data)
+ 	else
+ 		handler_fn = irq_thread_fn;
+ 
++	set_bit(IRQTF_EXIT_WORK, &action->thread_flags);
+ 	init_task_work(&on_exit_work, irq_thread_dtor);
+ 	task_work_add(current, &on_exit_work, TWA_NONE);
+ 
+@@ -1337,6 +1344,7 @@ static int irq_thread(void *data)
+ 	 * oneshot mask bit can be set.
+ 	 */
+ 	task_work_cancel_func(current, irq_thread_dtor);
++	clear_and_wake_up_bit(IRQTF_EXIT_WORK, &action->thread_flags);
+ 	return 0;
+ }
+ 
+@@ -1869,6 +1877,12 @@ out_mput:
+ 	return ret;
+ }
+ 
++static void irq_stop_thread(struct irqaction *action)
++{
++	kthread_stop_put(action->thread);
++	wait_on_bit(&action->thread_flags, IRQTF_EXIT_WORK, TASK_UNINTERRUPTIBLE);
++}
++
+ /*
+  * Internal function to unregister an irqaction - used to free
+  * regular and special interrupts that are part of the architecture.
+@@ -1973,9 +1987,9 @@ static struct irqaction *__free_irq(stru
+ 	 * the same bit to a newly requested action.
+ 	 */
+ 	if (action->thread) {
+-		kthread_stop_put(action->thread);
++		irq_stop_thread(action);
+ 		if (action->secondary && action->secondary->thread)
+-			kthread_stop_put(action->secondary->thread);
++			irq_stop_thread(action->secondary);
  	}
  
-+	if (dlfb->fb_count) {
-+		result = -EINVAL;
-+		goto error;
-+	}
-+
- 	fb_destroy_modelist(&info->modelist);
- 	memset(&info->monspecs, 0, sizeof(info->monspecs));
- 
+ 	/* Last action releases resources */
 
 
