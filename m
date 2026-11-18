@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053465;
-	b=gA0cah3Tet1gWprPifHRbNlxfpN8f4OJLVYHCXbabXoH092/l8go3NyGpCOOdWDTkKB6
-	 UFJoyBM4VmRJVeRx52LOXkme95mYHw7Dyv4IY+mqvmqae34VBl5P8bRncWp2TK9rM7/UV
-	 XzpYXIvdJVb/Kv287FSLJZNwwNJNwKwMYH+pWiorffr+uXpiKTQ6doAVdPxVrSSwsl5qr
-	 Ic9ulToBBCTAhHla6qiGjHbtQ7F7PQwtUGWGUEAnpC1uxt3KhFGE321IBPWJdmiLA0HQt
-	 j0zuAdsJeEJ7/NHFL3OFXoFk/ZhPqBiqFKNgY3q1odrFYwn59TSN/eHosfrNVrOeikw==
+	t=1795053468;
+	b=AwnYA/YRMh7QUWR5glhAcbf0WkQHLx3b/djbfyao6/AwV971JJxzIysM652LCXVxCepi
+	 WAPXF62XOlpL9TJ2Tj9ksMhZvmi6T+fRjE5Qu7zIItVdojjE+7vvSNq8zIt6GR/lkmWx9
+	 E1FFQsNLFbI2rs7cqV20eWLtS743wQ9eM12t1ecibmvkq3i7bSrEWOCmGavQerb9yuKqE
+	 Y4aDIxzyMwb8p7ppz0nR+jLWRYX1b/Zga7sKByw/hlWXZSXVNDTrLihr1+VWTDg3/qGfk
+	 nLDSjsXfSPaQoHH9hub+LjjovNRBzw3HDhDu9kCoa9APGwDfGlzWy29T5dvTq/PQMRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053465;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053468;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2g33p4N75ekJoyalUOTumb2ksM0/19JPcMS2mk+HUb8=;
-	b=p5VFMaxotqWJFiNrb57q9GtUWG7ICOBVDIbQ69JRH9iuicDsh3XRFoxiKtgxy2haGkoD
-	 caHNK32O4Sbb1mKw2znvzawuiGvgNNZ8y+rkKoLsTvc0H6roztNAiQMxqbhs8fRB4wDLL
-	 5t0BuLxJPu/Rgv9I6o90XCU26d9Cx7cqowO6U8u4b2eBJXo7IGngrZDsZ1BKK+BoXyaY2
-	 lMWSTw1NxonlPj2YVcY7PiUd04yO2bLZ9Tg/DPsFox4qDB7+7CmIYvNhAfNEeqVDDX/cx
-	 6WnrpYct52qRd2KC2kRhA9vwNkX2GmMPm8rIwcevBtjkcUnOuXbE9ouwuntYAYnzNzg==
+	bh=988qUJzD4lKSzSuhqa7hiOhW24LxiHBUacc9LidhWCU=;
+	b=ckvFRP+6njYzTGysiryNmRArpmfHNP2S2tbB/ZSSFvDeEHMKDDKwk3nmMKMxAHA4uk9+
+	 po/Rghy+aEl0s7O6c2X2iaUMeIrxWX2ECwa+JI9H7V9r/w+Rq6US85wlNMDhU8rEdzMxE
+	 qPKc/NuIqvRxK+aMC81+ZeM4d1yslyMe7cr8dx/MRTlclAE4R99yAb3euhzw1KDllqPjr
+	 /xwh+hnR8Oe9eGQGYxhzpBm+zLPInNGa8tqWimOkhbKpg6XyxHw/pP/B16hblKdkWZKO6
+	 YeFQaZKMFpmhsgLApP5RYaBYIadsL29MhepOVTYanmtIrrHgqTyUGFhT51Y2jYcdcfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W9mecRAn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gdv+2738;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9DF606A31C;
-	Thu, 19 Nov 2026 01:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F04606A31C;
+	Thu, 19 Nov 2026 01:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W9mecRAn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F321F000C4;
-	Thu, 19 Nov 2026 01:57:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gdv+2738
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842301F000C4;
+	Thu, 19 Nov 2026 01:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053465;
-	bh=2g33p4N75ekJoyalUOTumb2ksM0/19JPcMS2mk+HUb8=;
+	s=korg; t=1795053468;
+	bh=988qUJzD4lKSzSuhqa7hiOhW24LxiHBUacc9LidhWCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W9mecRAnf2Qs5VbUn9R7kJVJB5OwxsmMYMnj0WAocJOQt5HiLW7i4xULwSeh6KQ6k
-	 qMQrWdGCNvecQIRDXBtEQyNdLZJUu7Ed6ruK4E+xos7k6JNDnkhdnXAKMizvSPx93e
-	 Y0uKVe5EFH/QNw910h+gOHfpDUkwyiRTEwiotuqk=
+	b=gdv+2738hi0EsQ3Yv5MwFipsgXfDxxMvqkNkTfDaHRAlBmQvzbcs0R/L4C8iPvgTC
+	 YzRgX8szbsqPkAOR2G3eiQbvBmFk/DgMpSa65H9+ykqxxljC711gXajMSRyW7Ag6T4
+	 9n1lDVbpRTnaxwfLGmebY8WOl0H9x6pJYR3sTL3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Will Deacon <will@kernel.org>,
+	Thomas Huth <thuth@redhat.com>,
 	Breno Leitao <leitao@debian.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Baoquan He <bhe@redhat.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0928/2214] x86/nmi: Ignore negative NMI handler durations
-Date: Wed, 18 Nov 2026 15:43:24 +0100
-Message-ID: <20261118150049.479818210@linuxfoundation.org>
+Subject: [PATCH 5.15 0929/2214] arm64: kexec_file: Fix elf_headers memory leak in retry loop
+Date: Wed, 18 Nov 2026 15:43:25 +0100
+Message-ID: <20261118150049.521120505@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,72 +74,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit ade63af6cfb7b3ca19ced28730fd6461e8d1d410 ]
+[ Upstream commit ac302aea3d824ccc99f29b8e499c365cb9a684a9 ]
 
-I am seeing NMI handlers in the Meta fleet reported as running for
-about 584 years. Over 30 days, 11 AMD and Intel machines logged 637
-such lines, for example:
+A retry allocates new elf headers and overwrites image->elf_headers,
+leaking the previous buffer.
 
-  AMD EPYC 9D25 (family 0x1a, model 0x11, stepping 0x0):
-  [ 1650.616627] INFO: NMI handler (nmi_cpu_backtrace_handler.llvm.9643156322683129580) took too long to run: 18446744073709.551 msecs
+Free it before assigning.
 
-  Intel Xeon Platinum 8321HC (family 0x6, model 0x55, stepping 0xb):
-  [360448.230129] INFO: NMI handler (perf_event_nmi_handler) took too long to run: 18446744071018.936 msecs
-
-  Intel Xeon D-2191A (family 0x6, model 0x55, stepping 0x4):
-  [81787.188959] INFO: NMI handler (ghes_notify_nmi) took too long to run: 18446744073709.545 msecs
-
-nmi_handle() times each handler with two sched_clock() reads. When the
-second read is lower than the first, the u64 subtraction wraps, and
-nmi_check_duration() treats the result as a duration. In the three
-examples, the clock went back by less than 1 us, by 2.7 s and by about
-6 us.
-
-The wrapped value is also stored in action->max_duration. Every later
-real duration is smaller, so the handler is never reported again until
-the next boot.
-
-Whatever makes the clock read lower, a negative difference is not a
-duration, so return before it is stored or reported. A clock that steps
-forward is not covered, since that cannot be told from a real stall.
-
-A backwards clock is still worth knowing about, so print the size of
-the step once per boot. This uses pr_warn_once() rather than WARN, as a
-stack trace says nothing about the clock and panic_on_warn machines
-should not go down for it.
-
-Fixes: 2ab00456ea8a ("x86: Warn when NMI handlers take large amounts of time")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Thomas Huth <thuth@redhat.com>
+Cc: Breno Leitao <leitao@debian.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Yeoreum Yun <yeoreum.yun@arm.com>
+Cc: Baoquan He <bhe@redhat.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261027-nmi_negative-v1-1-b436a005eb8a@debian.org
+Fixes: 108aa503657e ("arm64: kexec_file: try more regions if loading segments fails")
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+[catalin.marinas@arm.com: drop the redundant NULL check before vfree()]
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/nmi.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm64/kernel/machine_kexec_file.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/x86/kernel/nmi.c b/arch/x86/kernel/nmi.c
-index a858d8e5d6104..57656085fede8 100644
---- a/arch/x86/kernel/nmi.c
-+++ b/arch/x86/kernel/nmi.c
-@@ -109,6 +109,14 @@ static void nmi_check_duration(struct nmiaction *action, u64 duration)
- {
- 	int remainder_ns, decimal_msecs;
- 
-+	/* sched_clock() went backwards? */
-+	if ((s64)duration < 0) {
-+		pr_warn_once("NMI handler (%ps): sched_clock() went backwards by %lld ns on CPU%d\n",
-+			     action->handler, -(s64)duration,
-+			     smp_processor_id());
-+		return;
-+	}
+diff --git a/arch/arm64/kernel/machine_kexec_file.c b/arch/arm64/kernel/machine_kexec_file.c
+index 59c648d518488..ea0314523669f 100644
+--- a/arch/arm64/kernel/machine_kexec_file.c
++++ b/arch/arm64/kernel/machine_kexec_file.c
+@@ -115,6 +115,8 @@ int load_other_segments(struct kimage *image,
+ 			vfree(headers);
+ 			goto out_err;
+ 		}
 +
- 	if (duration < nmi_longest_ns || duration < action->max_duration)
- 		return;
- 
++		vfree(image->elf_headers);
+ 		image->elf_headers = headers;
+ 		image->elf_load_addr = kbuf.mem;
+ 		image->elf_headers_sz = headers_sz;
 -- 
 2.53.0
 
