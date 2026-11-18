@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042291;
-	b=XulKLePjUCtRFj/HncSkA5Z9Pwy5+WSesWxNvvUZxV/ejo6btW67mOA6XmQppGDZgAzt
-	 I3nt1Mc7WPBw2uenjLJbFs4aaP+z9eN6bNZr3RLwdR0J3LJl8E2MX/8HDao3xvdTqW/Cq
-	 cIyGptsLohaF13qLGtDop6ameIMJqZeP0GMF3RlrHw4kUG0l3j9cEfK090p/Q8G1piQtg
-	 q1sVVzSzUMoE+jZUaMIKaP7JISZguJDAsSJ1nsd2327pIdP8eWoYU9wwKZYkv7+xTCFdB
-	 1WpBdvsigGKrliDcWAxk9Mkh47HsYlaHnuhvzlV71S0IVj97hH5LOj/cXApIj0L/D1Q==
+	t=1795042293;
+	b=4rDzPIMh3xDW0olsjwt6IhXoOIhxApN/qVWkbiyDKXcL7cJq8XK7aIINW3GnNiXDOyQF
+	 9zSaM6ar0zL7w5UF1uMQNhkbOjWQXS0B/gUTyUiyxuMQQHVRKG29RGqg34MyFMIbayUhy
+	 ftaEsMmWKKuWILp7lW3BWmdS2Sd5PsvIgkwUtlxJQX3TzdNlOk9ryqNFLnnKRqyAS2HCz
+	 KYSh6IZYYtavoLghH7IUvBmlGalXjRMxAHfrAMZUHp8IyYGx48s1JrHhSI8W4HoHgA2OQ
+	 Fe24VbInB+ATX+HBKb2OK7uTqIxH1kpwP1mF0iUXnpzyadDEQYRyOSPK9Yl2OzE3lSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042291;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042293;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4dRa0w10bA4QdwyWCNv1g0XCcp67WtCwW8bz0C3XEqU=;
-	b=raxq7kcQw3idihDEDfO8aQPm3r109NYq62K6fNr8dGnX0l8bk7Ptabl9YT7iu3LYEPSj
-	 +z5ocDzW6cp5Vo8ID5tHErayZZk++SqZinExZf0ZQ7fSaYYPzGAEG6RSyjhwBY2ja008i
-	 fKx4+mVXrsz9S5QBbv6GDsKFb8f1iEQNryM/d+tNgkg2PUQjBeeniASvwI8YS80k2ii8C
-	 6EIt9EH1RVVn6LCJZvNzEZ8IystKC9P+WV4CmpLcc1YMXdYlPkYaAaBUf/n9MC3t10uJj
-	 BcuL8TS8ZCOLZPPIq+rlxDrWRAhZSOT1+qSJM1DkAL+8LhwmgPKs+X3lTiG1LK13iXg==
+	bh=1uY+lIfiYyd5DsTrSsjUhZGRIeHDcMIOvRmDHjQAifo=;
+	b=PKwpSJ2BkFWfi1euOr+DswiN69X4F3xsoCmlAfVte5hgGiceU8ji9Pibi4cx56Z5LBCl
+	 iA0cZiM1erl3aEqtFJPLNeitqGlb8nn8T42mnRwXgYv0A+19eyA18I8GB8KQhEkQMz592
+	 WhlhiBx4Xk53L/FYmRNdw5C0ht+Epewcx6H2r14nlKaIi++qVqLrvE0LTAYC/2IiNoDLy
+	 t149HW7f2wlsOrIT971IlB1Uh2I+/bhpRExHho2kGstQ3v/eCm+4l+I03YsKvKjUbMYje
+	 Gdk+dvc8zY0ScrSkjS+PED8SgapsRpUhrYYmUsTzXSz8/OzjXbGZh7mMyrVFRgLVKHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5soP4PK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Af85NqHK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E610606A32C;
-	Wed, 18 Nov 2026 22:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69FF606A320;
+	Wed, 18 Nov 2026 22:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5soP4PK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1281F000C6;
-	Wed, 18 Nov 2026 22:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Af85NqHK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367021F000CD;
+	Wed, 18 Nov 2026 22:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042291;
-	bh=4dRa0w10bA4QdwyWCNv1g0XCcp67WtCwW8bz0C3XEqU=;
+	s=korg; t=1795042293;
+	bh=1uY+lIfiYyd5DsTrSsjUhZGRIeHDcMIOvRmDHjQAifo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F5soP4PKKIYjjeAugJMXJolMLL0ktNQZ9AYFM3+QU82I0S3jDYRbBeWAeJeOr9nvK
-	 2hflZwqHr/YMKtXQ1QM3B4dVb+cxO5KFaTK4dcoO7diqx0x3l+cMFfaJmf/fyXVYs1
-	 XlrbJA1HzR7AgnOEx/ma8aHaVUXM1nfoKoy6WMeM=
+	b=Af85NqHKb4KIWCzWWDuOE87rOS1zIUXlYKM7jt2jpVDjCn3UIIwGpnFN2Xun4Qc0O
+	 JM66ICY67H6WdTsdTxu2xQ5/sLKF8HnF3Bg9OrcHKmaiqZ61eOL5BfhOZjrBECZwWr
+	 WDytme9SFTQDZ8XKmhBiVf4RxP3DfqkFKuHTrNbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.6 3067/3318] vhost: vringh: use get_user()/put_user() for IOTLB 16-bit accesses
-Date: Wed, 18 Nov 2026 16:01:29 +0100
-Message-ID: <20261118150452.128296927@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 3112/3318] ASoC: wm8994: fix MCLK gating for AIF clocks sourced from MCLK2
+Date: Wed, 18 Nov 2026 16:02:14 +0100
+Message-ID: <20261118150453.324760111@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,52 +70,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 95a214f31a3b1ef40034f1e1cb3b9d758a374f01 ]
+[ Upstream commit 872215109fc880de7a03fa30437346f9212649e8 ]
 
-getu16_iotlb() and putu16_iotlb() use __get_user() and __put_user() when
-the IOTLB maps to user virtual addresses.  Nothing nearby checks the
-translated address: that relies on the mapping having been validated
-against the user's VMAs when it was set up.
+aif_mclk_set() masks the AIFnCLK_SRC field of the AIFn clocking
+register, but compares the result with unshifted field values. The
+MCLK2 source (0x08) therefore never matches, so MCLK2 is never enabled
+for an AIF clocked from it, and the AIF relies on other users of that
+clock to keep it running.
 
-Use get_user() and put_user(), which do the same single, untorn access
-and also check the address.  The only atomic-context use, the vdpa
-simulators' notification check, now disables page faults around it, so
-the might_fault() in the checked accessors stays quiet there.
+On the Exynos4412 Trats2 board, AIF1 and SYSCLK run from MCLK2, the
+32768Hz PMIC clock, while the codec is idle. That clock is shared with
+the WLAN and Bluetooth chips, which enable it only once their drivers
+are loaded. Until then the codec runs from a stopped clock: FLL1 fails
+to lock when configured from that state, and the codec floods the
+kernel log with FIFO error interrupts once a digital path is powered
+up:
 
-This is part of getting rid of __get_user() and __put_user() entirely.
+ wm8994-codec wm8994-codec: Timed out waiting for FLL lock
+ wm8994-codec wm8994-codec: FIFO error
 
-Tested-and-acked-by: Michael S. Tsirkin <mst@redhat.com>
-Fixes: 42823a871fd4 ("vringh: support VA with iotlb")
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Booting with clk_ignore_unused, which keeps that clock running from
+the bootloader, makes both issues disappear.
+
+Fixing just the comparison is not enough. The AIF clock source can
+be changed while the AIF clock is running, for example the Midas
+machine driver switches AIF1 between MCLK2 and FLL1 while AIF1CLK is
+kept enabled for jack detection. Looking up the clock again on disable
+can then release a different MCLK than the one enabled, leaking the
+enable count of one clock and underflowing the other.
+
+Shift the field value before decoding it, and remember which MCLK has
+been enabled for each AIF, so that the same clock is released on
+disable. While at it, report the MCLK number 1-based in the error
+message.
+
+Fixes: 001b83d395ab ("ASoC: wm8994: Add support for MCLKn clock gating")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Link: https://patch.msgid.link/20261021101750.3297770-2-m.szyprowski@samsung.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vringh.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/wm8994.c | 28 ++++++++++++++++++----------
+ sound/soc/codecs/wm8994.h |  1 +
+ 2 files changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/vhost/vringh.c b/drivers/vhost/vringh.c
-index 9fc522489106b..88c683f4b5a14 100644
---- a/drivers/vhost/vringh.c
-+++ b/drivers/vhost/vringh.c
-@@ -1290,7 +1290,7 @@ static inline int getu16_iotlb(const struct vringh *vrh,
- 		return ret;
+diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
+index 008cb460bcb00..7c3b29464af1f 100644
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -1062,13 +1062,24 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
+ 	unsigned int offset, val, clk_idx;
+ 	int ret;
  
- 	if (vrh->use_va) {
--		ret = __get_user(tmp, (__virtio16 __user *)ivec.iov.iovec[0].iov_base);
-+		ret = get_user(tmp, (__virtio16 __user *)ivec.iov.iovec[0].iov_base);
- 		if (ret)
- 			return ret;
- 	} else {
-@@ -1329,7 +1329,7 @@ static inline int putu16_iotlb(const struct vringh *vrh,
- 	tmp = cpu_to_vringh16(vrh, val);
++	/*
++	 * The AIF clock source may be changed while the AIF clock is
++	 * running, so release the MCLK which has been enabled for it
++	 * instead of the one currently selected.
++	 */
++	if (!enable) {
++		clk_disable_unprepare(wm8994->aif_mclk[aif]);
++		wm8994->aif_mclk[aif] = NULL;
++		return 0;
++	}
++
+ 	if (aif)
+ 		offset = 4;
+ 	else
+ 		offset = 0;
  
- 	if (vrh->use_va) {
--		ret = __put_user(tmp, (__virtio16 __user *)ivec.iov.iovec[0].iov_base);
-+		ret = put_user(tmp, (__virtio16 __user *)ivec.iov.iovec[0].iov_base);
- 		if (ret)
- 			return ret;
- 	} else {
+ 	val = snd_soc_component_read(component, WM8994_AIF1_CLOCKING_1 + offset);
+-	val &= WM8994_AIF1CLK_SRC_MASK;
++	val = (val & WM8994_AIF1CLK_SRC_MASK) >> WM8994_AIF1CLK_SRC_SHIFT;
+ 
+ 	switch (val) {
+ 	case 0:
+@@ -1081,16 +1092,13 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
+ 		return 0;
+ 	}
+ 
+-	if (enable) {
+-		ret = clk_prepare_enable(wm8994->mclk[clk_idx].clk);
+-		if (ret < 0) {
+-			dev_err(component->dev,	"Failed to enable MCLK%d\n",
+-				clk_idx);
+-			return ret;
+-		}
+-	} else {
+-		clk_disable_unprepare(wm8994->mclk[clk_idx].clk);
++	ret = clk_prepare_enable(wm8994->mclk[clk_idx].clk);
++	if (ret < 0) {
++		dev_err(component->dev,	"Failed to enable MCLK%d\n",
++			clk_idx + 1);
++		return ret;
+ 	}
++	wm8994->aif_mclk[aif] = wm8994->mclk[clk_idx].clk;
+ 
+ 	return 0;
+ }
+diff --git a/sound/soc/codecs/wm8994.h b/sound/soc/codecs/wm8994.h
+index bc584b17bf283..28a54007302f9 100644
+--- a/sound/soc/codecs/wm8994.h
++++ b/sound/soc/codecs/wm8994.h
+@@ -81,6 +81,7 @@ struct wm8994_priv {
+ 	struct wm_hubs_data hubs;
+ 	struct wm8994 *wm8994;
+ 	struct clk_bulk_data mclk[WM8994_NUM_MCLK];
++	struct clk *aif_mclk[2];
+ 	int sysclk[2];
+ 	int sysclk_rate[2];
+ 	int mclk_rate[2];
 -- 
 2.53.0
 
