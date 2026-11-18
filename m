@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048367;
-	b=LcIqOPhifRxC6mFU3XOWBtloKi+zz4pTjGjF/QLzyByqdgRNNnEProF1aWPD9X+5md7T
-	 e+Fj8s/AoikQ9aIxR0Q8+j1UKJ6UrBQF69Z9Yr2d7Jt5Iu/lub3swOe6yGSAaj4rEXa3m
-	 5BgW9oHhEpkTg2gU3/Tq84o1k6WFXu2MWLLHS+0OhBF47AkpXbrmFMquZfDmyzlXRQuYp
-	 xV5KCQyzMyyxbu/5Rs8fBwhIB8v2c0CcJoMR9i1eaMbKkLT1EIdtyhrgwN5zQepeOsDqn
-	 4+AyVRj/gjfJGAac+XLCIyk7jr6xzo8yOCpaxNTHhroldO42koQbn4ZCwC3VFv2Bhlw==
+	t=1795048370;
+	b=0sNRXa/nRvdqsEdX1+a1TaBvek1NLq9YjOWvFf8dLagmkDgah8k65UBez2ay9Fg70pop
+	 JV5gKwy5v52zOSDwAA2qJ0oYP90sXHqqtx508XBr5kTKAcDqBEQeocp72/j6l++wRZ9An
+	 C5/J+uTP+i6wnI6L6Wn0kmLde3IQlGqO1iwsUEp1HHhmxpneOr1G368A/nyJc+thks2s3
+	 sAgGC5Eg8S+W1kqvBU73VT5oFmvA9RT9Py7GWgsNjlIsMpdeLrst5+6A4Nh+qs7blU0MF
+	 ipofjKSS8u2w/MI7/JrYQyYVMx9PnEFqaSiDt3UyGQimvU8yP6/REyn0p8Qj72npBrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048367;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048370;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NGqqdcMHf9KDBzQ/VoqpYl5lzhcR1xSOhc3T7euuiAM=;
-	b=QrS+qz5vxkdoJAiKmD7ftxj2zVVQmvbLB4gmeOx2gPm5Um3nq6ntB/1Y+eduqlp38Pux
-	 KzfIYnlzcQzhKlg2x3vrjQfQECljU7iDe/ShI251SJo4EIkzdmK8g1YdKBlTZuHNcyiW7
-	 jLTQ7+z08V6DuqtQ7ZTvqMc2VyLoCbI2M1WtTBm09NhI4LUYj/QMdsElH5w6+Y9zjluli
-	 JQ3krkGqDjZqMTRAMKaww5yGXEe/HAJZUbFXovMIiThCxLLWNmy/adqkuP44b4WwWJnL9
-	 /FPYGrqnglnJ2WIWEd/NjIBojy2qnAjZuYaqp7Lj44XHamt2sxgCA6gVE1A0RxuewPA==
+	bh=lKrKvQfi4Mh+hPYEXHZv87SuVGzAeeNPPoqfjwo28Bk=;
+	b=aJD4DjIJP02lvb/hwB3AgF+nu1wJE4lBU9Y495eHOFKLPYJf+ixXYEPN74QTdME9oraZ
+	 wHPywAmTFwL3TCW0qvEEx0unKNq6tY6caXn8BqoUrLOzy+cCsmqaMtTfzUIyAKxrd1++y
+	 PPFB1L19UlLtvNkhXVddqCdc/VETKGB1gk8dJZnLVxIWlkhtUKTwpotqbM3LUNcYT2BEi
+	 fHbyNHBW06+w0q3mv+NyxIYyjyVD+wIMZLrB6FZokdO1bFHWZqBptd8HyVnI+QuH1JCsD
+	 RAaW+MfoBjHshDpVa9zAu/AjMA2TF58yS2BrzkkZ3PjoY1+HvHYGk32u+raNgZ8Htbg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VPctnIYs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HNyg0OBD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E8D606A320;
-	Thu, 19 Nov 2026 00:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A2E606A31C;
+	Thu, 19 Nov 2026 00:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VPctnIYs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5671F000C4;
-	Thu, 19 Nov 2026 00:32:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HNyg0OBD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB7331F000C4;
+	Thu, 19 Nov 2026 00:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048367;
-	bh=NGqqdcMHf9KDBzQ/VoqpYl5lzhcR1xSOhc3T7euuiAM=;
+	s=korg; t=1795048370;
+	bh=lKrKvQfi4Mh+hPYEXHZv87SuVGzAeeNPPoqfjwo28Bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VPctnIYsaqYZwbaCcWki6Uf6yvaw3ZWWT95T3dPPIL6PvX1ElFUbPSdjZx8rJV26B
-	 4a15DHr+V8xUC2ulY8U2yCYj5tnocmOQ7IbRL71PirnzcCmHZuByKreHZRI+vfC08m
-	 nRWO8Zvhcy3Z0W850pWAyzoy3i3bYyzTWa8xI0ws=
+	b=HNyg0OBDM+YOI/BKwWalvi6wUsEaYa8jMUtk7DGW3kF58Q1cx9aBnSRsKM29a7QRF
+	 pe/DHy36ZbzatFC7K0naHH7RIBK8NkBqCtRhB1GJ+bYrk31hmmfceLDkLxOMGUfB1G
+	 e3pvJKNTQh7MX3AcvyI38w4GhBIbG6AzJ/bS8/RE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Georgi Djakov <djakov@kernel.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1969/2857] interconnect: exynos: Remove the PM QoS request on unbind
-Date: Wed, 18 Nov 2026 15:50:03 +0100
-Message-ID: <20261118150312.297152701@linuxfoundation.org>
+Subject: [PATCH 6.1 1970/2857] RDMA/restrack: Dont set RESTRACK_DD mark after a failed xa_insert()
+Date: Wed, 18 Nov 2026 15:50:04 +0100
+Message-ID: <20261118150312.328663060@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,49 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 601a54f00723b0b653d76caf26a2a78482d95f00 ]
+[ Upstream commit 391c5d826fd0a5dacad54613dbef74c50e966f5c ]
 
-The Exynos interconnect provider adds a minimum-frequency PM QoS request
-to its parent devfreq device. The request is embedded in the provider's
-device-managed private data.
+When adding a QP to the restrack xarray, rdma_restrack_add() does:
 
-The probe error path removes the request, but the remove callback does
-not. Unbinding the provider while the parent device remains registered
-therefore frees the private data with the request still on the parent's
-QoS list. The child's device cleanup does not remove requests registered
-against its parent.
+	ret = xa_insert(&rt->xa, res->id, res, GFP_KERNEL);
+	if (ret)
+		res->id = 0;
 
-Remove the request after deregistering the provider, before the private
-data is released.
+	if (qp->qp_type >= IB_QPT_DRIVER)
+		xa_set_mark(&rt->xa, res->id, RESTRACK_DD);
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+The xa_set_mark() call is not guarded by "!ret".  When xa_insert() fails
+(possible on a qp_num collision or memory pressure), res->id is reset to
+0, yet the mark is still applied to index 0.  If a legitimate QP whose
+qp_num is 0 already occupies that slot - e.g. a normal QP or the SMI QP
+- it is spuriously tagged as driver-private (RESTRACK_DD), and the
+netlink dump path res_get_common_dumpit() then hides it from "rdma res"
+output whenever the caller does not request driver details.
 
-Fixes: 2f95b9d5cf0b ("interconnect: Add generic interconnect driver for Exynos SoCs")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260911031750.8182-1-mhun512@gmail.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Only set the mark when the insertion actually succeeded by folding the
+mark into the non-failure branch.
+
+Fixes: e18fa0bbcedf8 ("RDMA/core: Add an option to display driver-specific QPs in the rdmatool")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260916073042.1746-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/samsung/exynos.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/core/restrack.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/interconnect/samsung/exynos.c b/drivers/interconnect/samsung/exynos.c
-index ebf09bbf725bd..25d6317af3d05 100644
---- a/drivers/interconnect/samsung/exynos.c
-+++ b/drivers/interconnect/samsung/exynos.c
-@@ -98,6 +98,7 @@ static int exynos_generic_icc_remove(struct platform_device *pdev)
- 	struct exynos_icc_priv *priv = platform_get_drvdata(pdev);
- 
- 	icc_provider_deregister(&priv->provider);
-+	dev_pm_qos_remove_request(&priv->qos_req);
- 	icc_nodes_remove(&priv->provider);
- 
- 	return 0;
+diff --git a/drivers/infiniband/core/restrack.c b/drivers/infiniband/core/restrack.c
+index c03042dc1ca5a..c6ecc0d6628d4 100644
+--- a/drivers/infiniband/core/restrack.c
++++ b/drivers/infiniband/core/restrack.c
+@@ -246,8 +246,7 @@ void rdma_restrack_add(struct rdma_restrack_entry *res)
+ 		ret = xa_insert(&rt->xa, res->id, res, GFP_KERNEL);
+ 		if (ret)
+ 			res->id = 0;
+-
+-		if (qp->qp_type >= IB_QPT_DRIVER)
++		else if (qp->qp_type >= IB_QPT_DRIVER)
+ 			xa_set_mark(&rt->xa, res->id, RESTRACK_DD);
+ 	} else if (res->type == RDMA_RESTRACK_COUNTER) {
+ 		/* Special case to ensure that cntn points to right counter */
 -- 
 2.53.0
 
