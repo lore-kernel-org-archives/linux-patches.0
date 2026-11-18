@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061962;
-	b=3j5z1+HlArDBuDvLx6/agwtiolx5SkDZCEda7bGkB/Zh3w4HIiOG88vZhqguUuaZ7xLy
-	 Iz0N3zlulnh4yZU2ZY99E+9JozI0FWPEZcjihKLdUsE0aHyVsy7lE9Z4LOO9gmu+k7QKG
-	 bSdAObpxF6cs9eT+CSCNsdirHH9Gxfr3y0rMf/OhkYBRDAdr97CMHbj73s+2SAVWAsBg5
-	 xGV70SDo4NcOzfGb3r4OMR4nvacapz254/e+H/mKVxwNQ4VpMPCwb+JMahn41+NxmNUss
-	 PJAnwSvdulYjyLjOVDn9J/AHLgeq3+dLzbXdBXLbMcubq1DVutIrG05I81KnP+5TZjw==
+	t=1795061964;
+	b=URRbuzSrAG5x1A4YQClx3T5EKOUfG9dSYlMf4K788byA/0DWjwnwXLfEX3aajFtXgimx
+	 nGB3ig4aFJe5TgZLr1xFjIKdjBtbk7cSFPAOOMoDOGjHmD1swLVOB4FX2K5xQ+6XlH7ez
+	 i9qXiPHUhayIOkFZEj2Yk+ykupKFyOPAUe73wZUvB0b7z+VRtYgimdO5smzCf/pIElNhe
+	 3t6Ys58Ed06VN1l17Y8BT5LCerldcb+8kuPdvVf1dxDSz6v1DhoP2BrEwOpMbaoNddagl
+	 jKwEZ5Dz4s7mMoHHPvrxILKamXWHy89tWuE6Gq9J00semtxGoZA7Is68vC1rE0wNz1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061964;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zqCCqofFdbQ+2KEozGM8geYzgWTHYpsTs1qFpYfNBjs=;
-	b=Z5MU0iPMfu1dRPMhIQtKGCcH3nYcwquktbdrcGQs7eqnkHyfAWcXOsXKGjQf+kZV54Y9
-	 xJP0pF9Zr6nYt7yVW1AWovVnRr+I9tbcBKs5OekvW8SYSn41DL5A1+rQyqQty47Y2AQMM
-	 BNvMdAzgWxYeKaz6q+n9DiSrjT19fdiWR8MJ4Hg219gwPD/Epyp2khYJ6265bR6vq7Igr
-	 LsIz0QQA/nSo49VWauyYmyKf1GL4aqr4/UpzcKzpQzIHuHFoRNZoKIeqEcvID0QgmCAjD
-	 PZQvo+Ppye5Cj2k0bndZOrnfHc9AWGiwpzQc5ZrnRPDLFBTTxEon92V4SXl2gunp1DQ==
+	bh=P271iULdrm/+NSnmqfv54khHfiktDw0+x2wf199RHUE=;
+	b=t9nZ/bRHpxX8vBFrd8CURE+GjHLmxE8c4Id6ztqu4qhN0WoLmMNyoQiWKiICxoJIxDJl
+	 7dz96ESltnKriMqYlwLGk03GoZgPipOlvsGI4gTlLq6+HPnXJgR594bGLH7qtt01rJ0GB
+	 7SS1a6fRvJSoUp6yR2R+hEgSv8ROEJ+Dhl4ODYhs1iVymWwEP5qofzZr1oO4pAD9C5eE4
+	 lQuqjzOn7wkdi4KEuBE+oVc6R9uaNgYn54h10mIFGMpTT+Oy4/EVmQ/gjb9l16AV+Zq0z
+	 NtMa37HPh2xmwq4XKODcnb5OQ5gXOBQoXJEB8r7m/m7FiF8KuBdjWf+GTHjkEZ32n+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x04fQSCe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sva3HeG1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04DC606A326;
-	Thu, 19 Nov 2026 04:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EEB606A320;
+	Thu, 19 Nov 2026 04:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x04fQSCe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C62E1F000C4;
-	Thu, 19 Nov 2026 04:19:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sva3HeG1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23CE61F000C4;
+	Thu, 19 Nov 2026 04:19:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061961;
-	bh=zqCCqofFdbQ+2KEozGM8geYzgWTHYpsTs1qFpYfNBjs=;
+	s=korg; t=1795061964;
+	bh=P271iULdrm/+NSnmqfv54khHfiktDw0+x2wf199RHUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x04fQSCeBL95PqAWs4vc3AxAMSBY7vAQL2rYcx0UhzN0KefcIymU7fP4lZc5HEvx3
-	 9R5m96Kf3d2hJSJsNnmRJzlkQD9j9GYx2nsg0QZlfMusHDrL017MN48Z/Ep8prE4P7
-	 KjezBhTKRO/E4dObKfXyFUBrQGosxr9zd4/vy2C4=
+	b=Sva3HeG1ZODPbkX4gnIfBoNPw6nqC868RvzjhhLlS4JaHIKyr9ThSYx4XlLCSj3NG
+	 ovKdqIGisx/mnbpbeunl8nFYRi34+fVzOROkSx+j61myyNDvG4LrKHZBGmgC/qbv7Z
+	 4c9IzuJ8v5WVhtEJ8fSJhpeXj/amjhLbLFTvPIYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mingming Cao <mmc@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1741/1848] ibmveth: fix netpoll races with RX replenish
-Date: Wed, 18 Nov 2026 16:02:59 +0100
-Message-ID: <20261118150032.419597322@linuxfoundation.org>
+Subject: [PATCH 5.10 1742/1848] ibmveth: wait for the RX poll to return before freeing the RX queue
+Date: Wed, 18 Nov 2026 16:03:00 +0100
+Message-ID: <20261118150032.455516915@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,127 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Mingming Cao <mmc@linux.ibm.com>
 
-[ Upstream commit 8d9ecac6b96e61d0e6d126c60644829fd9f66952 ]
+[ Upstream commit 3f872b34368c7c1d2a8900950e0fee4cb4dd9a34 ]
 
-ibmveth_poll_controller() runs RX replenish outside NAPI and without
-a lock, racing NAPI's replenish on another CPU. Both can fill the
-same slot, so an skb and its DMA mapping leak and PHYP can write
-into an unmapped buffer. netpoll calls it from netconsole and from
-netpoll-enabled bonds.
+napi_disable() returns once ibmveth_poll() has called
+napi_complete_done(), but the poll is not finished: it then re-enables
+the interrupt and calls ibmveth_rxq_pending_buffer(), which reads the
+RX queue. ibmveth_close() can free that queue in the meantime, and the
+late enable can leave the interrupt unmasked after close() masked it.
+The request_irq() failure path in ibmveth_open() frees the same memory
+after napi_disable() too.
 
-ibmveth_open() also enables NAPI before the RX resources exist.
-ibmveth_change_mtu(), veth_pool_store(), ibmveth_set_csum_offload()
-and ibmveth_set_tso() call close() and open() directly, so while
-open() is still setting up, netpoll and the direct ibmveth_interrupt()
-calls can replenish NULL pools and read freed memory.
-
-Remove the callback, as Eric Dumazet did for many drivers after
-commit ac3d9dd034e5 ("netpoll: make ndo_poll_controller() optional"),
-including ibmvnic in commit 0c3b9d1b37df ("ibmvnic: remove
-ndo_poll_controller"). netpoll then polls NAPI itself with budget 0.
-napi->poll_owner serializes that with NAPI, but not with a NAPI poll
-that was already running when netpoll was set up, so skip RX
-replenish at budget 0, which netpoll uses for TX only. TX completes
-synchronously, so ibmveth_poll() has nothing else to do for netpoll.
-
-Enable NAPI just before request_irq(), once everything
-ibmveth_poll() touches exists.
+Call synchronize_net() after napi_disable() on both paths. Every
+caller of ibmveth_poll() runs it with bottom halves or interrupts
+disabled, so this waits for the poll to return.
 
 Found in review of the ibmveth multi-queue RX series and confirmed by
-code inspection of poll_one_napi() and the direct close()/open()
-callers; neither race was reproduced. Tested on a POWER10 LPAR with
-netconsole over ibmveth: a ping flood (678,470 packets, no loss) during
-a printk flood, and MTU changes and buffer pool toggles under traffic,
-with no warnings. No kernel selftests cover ibmveth.
+code inspection; also raised by the Sashiko review of the first version
+of this series. The race was not reproduced. Tested on a POWER10 LPAR
+under an incoming ping flood with 30 rapid link down/up cycles and 30
+rapid MTU cycles (1500 <-> 9000); ran cleanly with no warnings or
+faults. No kernel selftests cover ibmveth.
 
-Fixes: 6b4223748895 ("[PATCH] ibmveth: Add netpoll function")
 Fixes: bea3348eef27 ("[NET]: Make NAPI polling independent of struct net_device objects.")
 Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
-Link: https://patch.msgid.link/20261013182926.30417-2-mmc@linux.ibm.com
+Link: https://patch.msgid.link/20261013182926.30417-9-mmc@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c | 28 +++++++++++++---------------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ drivers/net/ethernet/ibm/ibmveth.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
-index 7affd94c18ab6..2a3e515f3edfe 100644
+index 2a3e515f3edfe..ebd14562cd551 100644
 --- a/drivers/net/ethernet/ibm/ibmveth.c
 +++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -507,8 +507,6 @@ static int ibmveth_open(struct net_device *netdev)
- 
- 	netdev_dbg(netdev, "open starting\n");
- 
--	napi_enable(&adapter->napi);
--
- 	for(i = 0; i < IBMVETH_NUM_BUFF_POOLS; i++)
- 		rxq_entries += adapter->rx_buff_pool[i].size;
- 
-@@ -591,10 +589,18 @@ static int ibmveth_open(struct net_device *netdev)
- 		}
- 	}
- 
-+	/* NAPI can run as soon as it is enabled, from netpoll during the
-+	 * direct close()/open() pairs or from a direct ibmveth_interrupt()
-+	 * call, so enable it only once everything ibmveth_poll() touches
-+	 * exists.
-+	 */
-+	napi_enable(&adapter->napi);
-+
- 	netdev_dbg(netdev, "registering irq 0x%x\n", netdev->irq);
- 	rc = request_irq(netdev->irq, ibmveth_interrupt, 0, netdev->name,
+@@ -601,6 +601,7 @@ static int ibmveth_open(struct net_device *netdev)
  			 netdev);
  	if (rc != 0) {
-+		napi_disable(&adapter->napi);
+ 		napi_disable(&adapter->napi);
++		synchronize_net();
  		netdev_err(netdev, "unable to request irq 0x%x, rc %d\n",
  			   netdev->irq, rc);
  		goto out_free_buffer_pools;
-@@ -651,7 +657,6 @@ static int ibmveth_open(struct net_device *netdev)
- out_free_buffer_list:
- 	free_page((unsigned long)adapter->buffer_list_addr);
- out:
--	napi_disable(&adapter->napi);
- 	return rc;
- }
+@@ -670,6 +671,11 @@ static int ibmveth_close(struct net_device *netdev)
+ 	netdev_dbg(netdev, "close starting\n");
  
-@@ -1407,7 +1412,11 @@ static int ibmveth_poll(struct napi_struct *napi, int budget)
- 		}
- 	}
- 
--	ibmveth_replenish_task(adapter);
-+	/* netpoll polls with budget 0 for TX only, and is not serialized
-+	 * with a NAPI poll that was already running when it was set up
+ 	napi_disable(&adapter->napi);
++	/* napi_disable() returns once ibmveth_poll() has called
++	 * napi_complete_done(), but the poll still re-enables the
++	 * interrupt and reads the RX queue after that.
 +	 */
-+	if (budget)
-+		ibmveth_replenish_task(adapter);
++	synchronize_net();
  
- 	if (frames_processed < budget) {
- 		napi_complete_done(napi, frames_processed);
-@@ -1545,14 +1554,6 @@ static int ibmveth_change_mtu(struct net_device *dev, int new_mtu)
- 	return -EINVAL;
- }
- 
--#ifdef CONFIG_NET_POLL_CONTROLLER
--static void ibmveth_poll_controller(struct net_device *dev)
--{
--	ibmveth_replenish_task(netdev_priv(dev));
--	ibmveth_interrupt(dev->irq, dev);
--}
--#endif
--
- /**
-  * ibmveth_get_desired_dma - Calculate IO memory desired by the driver
-  *
-@@ -1652,9 +1653,6 @@ static const struct net_device_ops ibmveth_netdev_ops = {
- 	.ndo_validate_addr	= eth_validate_addr,
- 	.ndo_set_mac_address    = ibmveth_set_mac_addr,
- 	.ndo_features_check	= ibmveth_features_check,
--#ifdef CONFIG_NET_POLL_CONTROLLER
--	.ndo_poll_controller	= ibmveth_poll_controller,
--#endif
- };
- 
- static int ibmveth_probe(struct vio_dev *dev, const struct vio_device_id *id)
+ 	if (!adapter->pool_config)
+ 		netif_stop_queue(netdev);
 -- 
 2.53.0
 
