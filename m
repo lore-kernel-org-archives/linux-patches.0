@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043944;
-	b=AxpD0QodSuKOGrhGwQa1TP/yVPan8FW9l4q30vFfq2/ft4gA5gKR3wcioI/rRxPU/Bu7
-	 eKd5aBmVu/kUSynCyKSveeo/iGoXtyFYdRYqMjgFzh8EO6//WCiwsU5d9JR8z8rneH4ZX
-	 ZiSkjqZ+a7bcDIIzIB+3WYAFYT/CaOiHG4ggTr69hAL6ikg/wpX4IsmRSbmtNx859/nd6
-	 VRy46KZ5W8qd0xXQ/dnV07Fl0fy5Im2qJiBdALRf/U83RY9fSjlnGBZQSHJL9eq53rmw+
-	 C+OfMiMYKTDWl/wqA3q5K/Dvk8tnfihxRUYpd8jPL2j9Tgs+jffJRkl7vb2JHdBLSlg==
+	t=1795043947;
+	b=DbmmDaoqhSnfi561BvhNgh35hPCnXugB6Y85SLqiXR/3Eh6FV+0iqVROBZd1uXseqUYS
+	 ZNpQXU/fJqR74cGkPk9LZc5bm70k1txeMBcwhbO3jASeUwKu+D0bkQC6dGHTMd3yAIUSI
+	 DBpsI3i8cAMSC+Kl7ZQs91Iw4RmyA5dtkzWsXEqnRPogL3zBwJBv98kvF3/0NBTJY3vwI
+	 iceoNUhVawegrLvshlzKmUnpKE05Mb6EkuBUaDyGdvXM8LEpYilI3feAiM6tJRmBOi7Uf
+	 BLiZ6srt/7pcbc1XfZrk6/Ow9ymV5u/Ek7Qc3JYmrk65NXKfN6dtkVZa1yxNMAduk8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043944;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043947;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HF860mGzU7TKbFTTL6Jy017iLxAEcIwyL8TNFdpPGCI=;
-	b=ZwYd8wF4DDn0UuO90zQno0QycxUk7knx0fCr7RSgfMs60QCZ8MMfKPAqGs9+6E1wRvvx
-	 PEa+BFrZi1qAQyI1/3CKrNoW/frs592PE9B3cG2DEflboEDSE1QJLObxyK68PBBMVmih/
-	 vaML3ap83Vh8nuBFwz7DlFOvgH8e8OVaCCs7zepdhY93hFmzv8VHsVPpDHo/NA9HlZotu
-	 e7xaBBa9eXDbJMocW8uXAgZMefJd6YisAjHbEyMtXZxM4dxe4HLb2gDIa3TZXmNhpiz3L
-	 z7g4SRYqkN2x/ALHlMhGz0xd/TINK03YHjk40jGKVXgDxq2b2QtdHC2loJqWcW9i32g==
+	bh=yPtQcg03727RqXGTxTgOrMj7zFH4oM13p2cfBWb0iBg=;
+	b=QbNGDqm3hasevxcpaIfL8bROyXC1dfDm63R+BlOkxI5qNsfscDjUlOGJJW+8RYVTrAPw
+	 lq2ALZnp+ePQ8RB9oJ1xippa7BhDAEnF4jXyMpPyrEeFu70420vjiaDp5GtEYmSPwnAB8
+	 nEnd9oWXmgC+cGZF47RTGGC3WLAkTh33NbSZNKW9m6xoUFbmSahqRRKoMwsLN/OktqC/P
+	 jmfJNxBt1CXXoXKFWddHYVQCwtP0Pqh5F7/p/E1OlaHImqgOFIzUnN6C/qqBfAgYEoNZy
+	 w7NynKxAhE39HkZqzlkP2d1e0MxebFNy9YPXCKOdpoSAjRtjh0NyB+3g2VT/4tKFERQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sb+4w3f+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1IK8raOR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9222F606A325;
-	Wed, 18 Nov 2026 23:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B14606A32C;
+	Wed, 18 Nov 2026 23:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sb+4w3f+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8CE41F000C4;
-	Wed, 18 Nov 2026 23:19:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1IK8raOR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993901F000C4;
+	Wed, 18 Nov 2026 23:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043944;
-	bh=HF860mGzU7TKbFTTL6Jy017iLxAEcIwyL8TNFdpPGCI=;
+	s=korg; t=1795043947;
+	bh=yPtQcg03727RqXGTxTgOrMj7zFH4oM13p2cfBWb0iBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sb+4w3f+aKum1pBZ8sbNry6ZHBedHWOLqhHEW93wzEM7aRSLZLpAO901HOADMu1cv
-	 Kka9/j2LR1VzC32DTp8cAu9G4mKo1ICL5uRj3PisGPWZp3xXPVy0cqCdRB3SvGrWUb
-	 Z749ijRQ9z6TPojqRaR2nXKwoWa40Tj1xUpjWU80=
+	b=1IK8raORdZMtJ4BXHcWowsjiIbT9p+yuRmYSB26pUuUp+Lt7YulW9jgD7FU4HxV4/
+	 MYty+d4z+B73ZpM+z1e8R6EBQWVovJU8FuulZywYFBV6g1Fto/DvVJgxaFvuOp0M7t
+	 qKKhHnRAqtCsal1/FCxE7aZZ6ImYP5O8Bw8Fdmfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuhei Takeshita <jyohuku.alterego@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	stable <stable@kernel.org>,
+	Pawel Laszczak <pawell@cadence.com>,
+	Peter Chen <peter.chen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0391/2857] IB/hfi1: Fix the PIO_CRED credit-return mmap
-Date: Wed, 18 Nov 2026 15:23:45 +0100
-Message-ID: <20261118150215.474955927@linuxfoundation.org>
+Subject: [PATCH 6.1 0392/2857] usb: cdnsp: fix wakeup from S3 after controller context loss
+Date: Wed, 18 Nov 2026 15:23:46 +0100
+Message-ID: <20261118150215.510699507@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,121 +69,401 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuhei Takeshita <jyohuku.alterego@gmail.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-[ Upstream commit 62f0f34fbd2b2d5653d33d3b9d42fdcabb1c0101 ]
+[ Upstream commit eae6460f617382044c5afe5ef202f4d8b2c099b5 ]
 
-hfi1_file_mmap()'s PIO_CRED case must hand user space the single
-credit-return page that holds this context's entry.  That page is the
-second or third page of the per-node credit-return allocation once the
-hardware send context index reaches 64 or 128, so the failure below is
-intermittent: when the entry lands on the first page the offset is zero
-and everything works.
+CDNSP controller may lose its runtime register programming across S3
+suspend/resume, depending on SoC power domain configuration. After
+resume the operational and interrupter registers may contain reset
+values, which prevents the gadget side from recovering correctly and
+breaks wakeup from S3.
 
-Two things are wrong.
+Fix this by detecting whether the controller lost its register context
+after resume and handling both cases:
+- If context was lost (CFG_3XPORT_U1_PIPE_CLK_GATE_EN set or power
+  lost): reset the controller and reprogram the state required for
+  normal operation, including the command ring, DCBAA pointer, doorbell
+  base, event ring, ERST base/size and event ring dequeue pointer.
+- If context was retained: restart the controller directly without
+  reprogramming registers. Issue a wakeup if the link was in U3 before
+  suspend.
 
-First, cr_page_offset is a byte offset but .va is a struct
-credit_return *, so adding it is pointer arithmetic and scales the offset
-by sizeof(struct credit_return) == 64.  memvirt then lands 256 KiB or
-512 KiB past a 10240-byte allocation.  With an IOMMU translating, that
-address is inside the vmalloc range but in no vm_area, so
-dma_mmap_coherent() -> iommu_dma_mmap() finds no pages, vmalloc_to_pfn()
-returns page_to_pfn(NULL), and remap_pfn_range() installs a frame above
-MAXPHYADDR.  The first user read then takes:
+Move the basic controller register programming out of the one-time memory
+initialization path and make it reusable from the resume path. Also
+separate ring allocation from ring initialization so that rings can be
+reinitialized without reallocating DMA memory.
 
-  psm2_ep_open_pr: Corrupted page table at address 7a14d007e000
-  PGD 800000013886a067 P4D 800000013886a067 PUD 13886b067 PMD 13886c067
-                                            PTE 800049168e911235
-  Oops: Bad pagetable: 000d [#1] SMP PTI
+Always perform the full suspend sequence regardless of the current link
+state. Previously, if the device was already in U3, the suspend callback
+returned early without stopping the controller, which could lead to
+commands being issued on a disabled slot during resume.
 
-Second, and still wrong once the arithmetic is corrected,
-dma_mmap_coherent() describes a whole coherent buffer and selects the
-page within it with vma->vm_pgoff.  Offsetting cpu_addr has no effect:
-for a vmap'd allocation iommu_dma_mmap() uses cpu_addr only to locate the
-vm_area and then maps pages[vm_pgoff], which hfi1_file_mmap() has just
-set to 0.  User space therefore always receives the first credit-return
-page, every credit read is for the wrong context, and send PIO stalls
-forever.
-
-Use the DMA API as intended: pass the base of the allocation with its
-full length and select the page with vm_pgoff.  A separate length is
-needed because memlen must keep describing the VMA for the existing size
-check.  The dma-direct path stays correct as well, since dma_direct_mmap()
-adds the same vm_pgoff to the base pfn.
-
-Tested on a Dell T7610 (Xeon E5-2650 v2, Intel IOMMU in DMA-FQ mode)
-against a Threadripper PRO 3995WX peer, both Omni-Path 100.  Before this
-change psm2_ep_open() Oopses the kernel; with only the arithmetic
-corrected psm2_ep_open() succeeds but any transfer that uses send PIO
-hangs, PSM2_SDMA=2 (send PIO disabled) completing normally while
-PSM2_SDMA=0 (send PIO only) hangs every time.  With this change send PIO,
-send DMA and the default mixed mode all work.
-
-Fixes: 1ec82317a1da ("IB/hfi1: Use dma_mmap_coherent for matching buffers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shuhei Takeshita <jyohuku.alterego@gmail.com>
-Link: https://patch.msgid.link/20260809032743.2671579-3-jyohuku.alterego@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260820-suspend_resume_fix-v3-1-5a713098b977@cadence.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: Added a pdev->active_port check to the resume condition to avoid a NULL dereference, and used hibernated in place of lost_power; one cosmetic hunk in cdnsp_run() was dropped for context. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/file_ops.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ drivers/usb/cdns3/cdnsp-gadget.c | 111 +++++++++++++++++++++++++++++--
+ drivers/usb/cdns3/cdnsp-gadget.h |   1 +
+ drivers/usb/cdns3/cdnsp-mem.c    |  98 ++++++++++-----------------
+ 3 files changed, 143 insertions(+), 67 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/file_ops.c b/drivers/infiniband/hw/hfi1/file_ops.c
-index 1bc59d71c1d0b..bcdd7ac138ef3 100644
---- a/drivers/infiniband/hw/hfi1/file_ops.c
-+++ b/drivers/infiniband/hw/hfi1/file_ops.c
-@@ -328,6 +328,7 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
- 	void *memvirt = NULL;
- 	dma_addr_t memdma = 0;
- 	u8 subctxt, mapio = 0, vmf = 0, type;
-+	size_t memdmalen = 0;
- 	ssize_t memlen = 0;
- 	int ret = 0;
- 	u16 ctxt;
-@@ -373,7 +374,9 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
- 		mapio = 1;
- 		break;
- 	case PIO_CRED: {
-+		struct credit_return_base *cr = &dd->cr_base[uctxt->sc->node];
- 		u64 cr_page_offset;
+diff --git a/drivers/usb/cdns3/cdnsp-gadget.c b/drivers/usb/cdns3/cdnsp-gadget.c
+index 01bfa58a3cc72..ea04888ffdef5 100644
+--- a/drivers/usb/cdns3/cdnsp-gadget.c
++++ b/drivers/usb/cdns3/cdnsp-gadget.c
+@@ -1819,6 +1819,82 @@ static void cdnsp_get_rev_cap(struct cdnsp_device *pdev)
+ 		 readl(&pdev->rev_cap->tx_buff_size));
+ }
+ 
++static void cdnsp_set_event_deq(struct cdnsp_device *pdev)
++{
++	dma_addr_t deq;
++	u64 temp;
 +
- 		if (flags & VM_WRITE) {
- 			ret = -EPERM;
- 			goto done;
-@@ -383,11 +386,18 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
- 		 * second or third page allocated for credit returns (if number
- 		 * of enabled contexts > 64 and 128 respectively).
- 		 */
--		cr_page_offset = ((u64)uctxt->sc->hw_free -
--				  (u64)dd->cr_base[uctxt->sc->node].va) &
-+		cr_page_offset = ((u64)uctxt->sc->hw_free - (u64)cr->va) &
- 				 PAGE_MASK;
--		memvirt = dd->cr_base[uctxt->sc->node].va + cr_page_offset;
--		memdma = dd->cr_base[uctxt->sc->node].dma + cr_page_offset;
-+		/*
-+		 * dma_mmap_coherent() describes the whole coherent buffer and
-+		 * selects the page within it with vma->vm_pgoff, so pass the
-+		 * base of the allocation and its length and let vm_pgoff pick
-+		 * the page.
-+		 */
-+		vma->vm_pgoff = cr_page_offset >> PAGE_SHIFT;
-+		memvirt = cr->va;
-+		memdma = cr->dma;
-+		memdmalen = TXE_NUM_CONTEXTS * sizeof(struct credit_return);
- 		memlen = PAGE_SIZE;
- 		flags &= ~VM_MAYWRITE;
- 		flags |= VM_DONTCOPY | VM_DONTEXPAND;
-@@ -569,7 +579,8 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
- 		ret = 0;
- 	} else if (memdma) {
- 		ret = dma_mmap_coherent(&dd->pcidev->dev, vma,
--					memvirt, memdma, memlen);
-+					memvirt, memdma,
-+					memdmalen ? memdmalen : memlen);
- 	} else if (mapio) {
- 		ret = io_remap_pfn_range(vma, vma->vm_start,
- 					 PFN_DOWN(memaddr),
++	deq = cdnsp_trb_virt_to_dma(pdev->event_ring->deq_seg,
++				    pdev->event_ring->dequeue);
++
++	/* Update controller event ring dequeue pointer */
++	temp = cdnsp_read_64(&pdev->ir_set->erst_dequeue);
++	temp &= ERST_PTR_MASK;
++
++	/*
++	 * Don't clear the EHB bit (which is RW1C) because
++	 * there might be more events to service.
++	 */
++	temp &= ~ERST_EHB;
++
++	cdnsp_write_64(((u64)deq & (u64)~ERST_PTR_MASK) | temp,
++		       &pdev->ir_set->erst_dequeue);
++}
++
++static void cdnsp_add_interrupter(struct cdnsp_device *pdev)
++{
++	u64 erst_base;
++	u32 erst_size;
++
++	/* Set ERST count with the number of entries in the segment table. */
++	erst_size = readl(&pdev->ir_set->erst_size);
++	erst_size &= ERST_SIZE_MASK;
++	erst_size |= ERST_NUM_SEGS;
++	writel(erst_size, &pdev->ir_set->erst_size);
++
++	/* Set the segment table base address. */
++	erst_base = cdnsp_read_64(&pdev->ir_set->erst_base);
++	erst_base &= ERST_PTR_MASK;
++	erst_base |= (pdev->erst.erst_dma_addr & (u64)~ERST_PTR_MASK);
++	cdnsp_write_64(erst_base, &pdev->ir_set->erst_base);
++
++	/* Set the event ring dequeue address. */
++	cdnsp_set_event_deq(pdev);
++}
++
++/* Set up basic CDNSP registers */
++static void cdnsp_init(struct cdnsp_device *pdev)
++{
++	unsigned int val;
++	u64 val_64;
++
++	val = readl(&pdev->op_regs->config_reg);
++	val |= ((val & ~MAX_DEVS) | CDNSP_DEV_MAX_SLOTS) | CONFIG_U3E;
++	writel(val, &pdev->op_regs->config_reg);
++
++	/* Initialize the Command ring */
++	cdnsp_ring_init(pdev, pdev->cmd_ring);
++
++	/* Set the address in the Command Ring Control register */
++	val_64 = cdnsp_read_64(&pdev->op_regs->cmd_ring);
++	val_64 = (val_64 & (u64)CMD_RING_RSVD_BITS) |
++		 (pdev->cmd_ring->first_seg->dma & (u64)~CMD_RING_RSVD_BITS) |
++		 pdev->cmd_ring->cycle_state;
++	cdnsp_write_64(val_64, &pdev->op_regs->cmd_ring);
++
++	/* Set Device Context Base Address Array pointer */
++	cdnsp_write_64(pdev->dcbaa->dma, &pdev->op_regs->dcbaa_ptr);
++
++	/* Set Doorbell array pointer */
++	val = readl(&pdev->cap_regs->db_off);
++	val &= DBOFF_MASK;
++	pdev->dba = (void __iomem *)pdev->cap_regs + val;
++
++	/* Initialize the Primary interrupter */
++	cdnsp_ring_init(pdev, pdev->event_ring);
++	cdnsp_add_interrupter(pdev);
++}
++
+ static int cdnsp_gen_setup(struct cdnsp_device *pdev)
+ {
+ 	int ret;
+@@ -1884,6 +1960,8 @@ static int cdnsp_gen_setup(struct cdnsp_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
++	cdnsp_init(pdev);
++
+ 	/*
+ 	 * Software workaround for U1: after transition
+ 	 * to U1 the controller starts gating clock, and in some cases,
+@@ -2014,9 +2092,6 @@ static int cdnsp_gadget_suspend(struct cdns *cdns, bool do_wakeup)
+ 	struct cdnsp_device *pdev = cdns->gadget_dev;
+ 	unsigned long flags;
+ 
+-	if (pdev->link_state == XDEV_U3)
+-		return 0;
+-
+ 	spin_lock_irqsave(&pdev->lock, flags);
+ 	cdnsp_disconnect_gadget(pdev);
+ 	cdnsp_stop(pdev);
+@@ -2030,12 +2105,38 @@ static int cdnsp_gadget_resume(struct cdns *cdns, bool hibernated)
+ 	struct cdnsp_device *pdev = cdns->gadget_dev;
+ 	enum usb_device_speed max_speed;
+ 	unsigned long flags;
++	bool context_lost;
++	u32 val;
+ 	int ret;
+ 
+ 	if (!pdev->gadget_driver)
+ 		return 0;
+ 
+ 	spin_lock_irqsave(&pdev->lock, flags);
++	val = readl(&pdev->port3x_regs->mode_2);
++	context_lost = !!(val & CFG_3XPORT_U1_PIPE_CLK_GATE_EN) || hibernated;
++
++	if (context_lost) {
++		cdnsp_halt(pdev);
++		cdnsp_set_apb_timeout_value(pdev);
++
++		/* Reset the internal controller memory state and registers. */
++		ret = cdnsp_reset(pdev);
++		if (ret)
++			goto unlock;
++
++		val = readl(&pdev->port3x_regs->mode_2);
++		val &= ~CFG_3XPORT_U1_PIPE_CLK_GATE_EN;
++		writel(val, &pdev->port3x_regs->mode_2);
++
++		cdnsp_clear_cmd_ring(pdev);
++
++		memset(pdev->event_ring->first_seg->trbs, 0,
++		       sizeof(union cdnsp_trb) * (TRBS_PER_SEGMENT));
++
++		cdnsp_init(pdev);
++	}
++
+ 	max_speed = pdev->gadget_driver->max_speed;
+ 
+ 	/* Limit speed if necessary. */
+@@ -2043,9 +2144,11 @@ static int cdnsp_gadget_resume(struct cdns *cdns, bool hibernated)
+ 
+ 	ret = cdnsp_run(pdev, max_speed);
+ 
+-	if (pdev->link_state == XDEV_U3)
++	if (!context_lost && pdev->active_port &&
++	    pdev->link_state == XDEV_U3)
+ 		__cdnsp_gadget_wakeup(pdev);
+ 
++unlock:
+ 	spin_unlock_irqrestore(&pdev->lock, flags);
+ 
+ 	return ret;
+diff --git a/drivers/usb/cdns3/cdnsp-gadget.h b/drivers/usb/cdns3/cdnsp-gadget.h
+index 155fd770a8cd9..d8032d0ebd5d7 100644
+--- a/drivers/usb/cdns3/cdnsp-gadget.h
++++ b/drivers/usb/cdns3/cdnsp-gadget.h
+@@ -1509,6 +1509,7 @@ int cdnsp_endpoint_init(struct cdnsp_device *pdev,
+ int cdnsp_ring_expansion(struct cdnsp_device *pdev,
+ 			 struct cdnsp_ring *ring,
+ 			 unsigned int num_trbs, gfp_t flags);
++void cdnsp_ring_init(struct cdnsp_device *pdev, struct cdnsp_ring *ring);
+ struct cdnsp_ring *cdnsp_dma_to_transfer_ring(struct cdnsp_ep *ep, u64 address);
+ int cdnsp_alloc_stream_info(struct cdnsp_device *pdev,
+ 			    struct cdnsp_ep *pep,
+diff --git a/drivers/usb/cdns3/cdnsp-mem.c b/drivers/usb/cdns3/cdnsp-mem.c
+index 3f35c8af271e0..4b66307baaeb5 100644
+--- a/drivers/usb/cdns3/cdnsp-mem.c
++++ b/drivers/usb/cdns3/cdnsp-mem.c
+@@ -394,13 +394,6 @@ static struct cdnsp_ring *cdnsp_ring_alloc(struct cdnsp_device *pdev,
+ 	if (ret)
+ 		goto fail;
+ 
+-	/* Only event ring does not use link TRB. */
+-	if (type != TYPE_EVENT)
+-		ring->last_seg->trbs[TRBS_PER_SEGMENT - 1].link.control |=
+-			cpu_to_le32(LINK_TOGGLE);
+-
+-	cdnsp_initialize_ring_info(ring);
+-	trace_cdnsp_ring_alloc(ring);
+ 	return ring;
+ fail:
+ 	kfree(ring);
+@@ -604,6 +597,7 @@ int cdnsp_alloc_stream_info(struct cdnsp_device *pdev,
+ 		if (!cur_ring)
+ 			goto cleanup_rings;
+ 
++		cdnsp_ring_init(pdev, cur_ring);
+ 		cur_ring->stream_id = cur_stream;
+ 		cur_ring->trb_address_map = &stream_info->trb_address_map;
+ 
+@@ -699,6 +693,8 @@ static int cdnsp_alloc_priv_device(struct cdnsp_device *pdev)
+ 	if (!pdev->eps[0].ring)
+ 		goto fail;
+ 
++	cdnsp_ring_init(pdev, pdev->eps[0].ring);
++
+ 	/* Point to output device context in dcbaa. */
+ 	pdev->dcbaa->dev_context_ptrs[1] = cpu_to_le64(pdev->out_ctx.dma);
+ 	pdev->cmd.in_ctx = &pdev->in_ctx;
+@@ -992,6 +988,8 @@ int cdnsp_endpoint_init(struct cdnsp_device *pdev,
+ 	if (!pep->ring)
+ 		return -ENOMEM;
+ 
++	cdnsp_ring_init(pdev, pep->ring);
++
+ 	pep->skip = false;
+ 
+ 	/* Fill the endpoint context */
+@@ -1099,28 +1097,6 @@ void cdnsp_mem_cleanup(struct cdnsp_device *pdev)
+ 	pdev->active_port = NULL;
+ }
+ 
+-static void cdnsp_set_event_deq(struct cdnsp_device *pdev)
+-{
+-	dma_addr_t deq;
+-	u64 temp;
+-
+-	deq = cdnsp_trb_virt_to_dma(pdev->event_ring->deq_seg,
+-				    pdev->event_ring->dequeue);
+-
+-	/* Update controller event ring dequeue pointer */
+-	temp = cdnsp_read_64(&pdev->ir_set->erst_dequeue);
+-	temp &= ERST_PTR_MASK;
+-
+-	/*
+-	 * Don't clear the EHB bit (which is RW1C) because
+-	 * there might be more events to service.
+-	 */
+-	temp &= ~ERST_EHB;
+-
+-	cdnsp_write_64(((u64)deq & (u64)~ERST_PTR_MASK) | temp,
+-		       &pdev->ir_set->erst_dequeue);
+-}
+-
+ static void cdnsp_add_in_port(struct cdnsp_device *pdev,
+ 			      struct cdnsp_port *port,
+ 			      __le32 __iomem *addr)
+@@ -1200,6 +1176,36 @@ static int cdnsp_setup_port_arrays(struct cdnsp_device *pdev)
+ 	return 0;
+ }
+ 
++static void cdnsp_initialize_ring_segments(struct cdnsp_device *pdev, struct cdnsp_ring *ring)
++{
++	struct cdnsp_segment *seg;
++
++	/* Only event ring does not use link TRB. */
++	if (ring->type == TYPE_EVENT)
++		return;
++
++	seg = ring->first_seg;
++
++	while (seg) {
++		struct cdnsp_segment *next = seg->next;
++
++		cdnsp_link_segments(pdev, seg, next, ring->type);
++		if (next == ring->first_seg)
++			break;
++
++		seg = next;
++	}
++
++	ring->last_seg->trbs[TRBS_PER_SEGMENT - 1].link.control |= cpu_to_le32(LINK_TOGGLE);
++}
++
++void cdnsp_ring_init(struct cdnsp_device *pdev, struct cdnsp_ring *ring)
++{
++	cdnsp_initialize_ring_segments(pdev, ring);
++	cdnsp_initialize_ring_info(ring);
++	trace_cdnsp_ring_alloc(ring);
++}
++
+ /*
+  * Initialize memory for CDNSP (one-time init).
+  *
+@@ -1211,10 +1217,8 @@ int cdnsp_mem_init(struct cdnsp_device *pdev)
+ {
+ 	struct device *dev = pdev->dev;
+ 	int ret = -ENOMEM;
+-	unsigned int val;
+ 	dma_addr_t dma;
+ 	u32 page_size;
+-	u64 val_64;
+ 
+ 	/*
+ 	 * Use 4K pages, since that's common and the minimum the
+@@ -1222,10 +1226,6 @@ int cdnsp_mem_init(struct cdnsp_device *pdev)
+ 	 */
+ 	page_size = 1 << 12;
+ 
+-	val = readl(&pdev->op_regs->config_reg);
+-	val |= ((val & ~MAX_DEVS) | CDNSP_DEV_MAX_SLOTS) | CONFIG_U3E;
+-	writel(val, &pdev->op_regs->config_reg);
+-
+ 	/*
+ 	 * Doorbell array must be physically contiguous
+ 	 * and 64-byte (cache line) aligned.
+@@ -1237,8 +1237,6 @@ int cdnsp_mem_init(struct cdnsp_device *pdev)
+ 
+ 	pdev->dcbaa->dma = dma;
+ 
+-	cdnsp_write_64(dma, &pdev->op_regs->dcbaa_ptr);
+-
+ 	/*
+ 	 * Initialize the ring segment pool.  The ring must be a contiguous
+ 	 * structure comprised of TRBs. The TRBs must be 16 byte aligned,
+@@ -1264,17 +1262,6 @@ int cdnsp_mem_init(struct cdnsp_device *pdev)
+ 	if (!pdev->cmd_ring)
+ 		goto destroy_device_pool;
+ 
+-	/* Set the address in the Command Ring Control register */
+-	val_64 = cdnsp_read_64(&pdev->op_regs->cmd_ring);
+-	val_64 = (val_64 & (u64)CMD_RING_RSVD_BITS) |
+-		 (pdev->cmd_ring->first_seg->dma & (u64)~CMD_RING_RSVD_BITS) |
+-		 pdev->cmd_ring->cycle_state;
+-	cdnsp_write_64(val_64, &pdev->op_regs->cmd_ring);
+-
+-	val = readl(&pdev->cap_regs->db_off);
+-	val &= DBOFF_MASK;
+-	pdev->dba = (void __iomem *)pdev->cap_regs + val;
+-
+ 	/* Set ir_set to interrupt register set 0 */
+ 	pdev->ir_set = &pdev->run_regs->ir_set[0];
+ 
+@@ -1291,21 +1278,6 @@ int cdnsp_mem_init(struct cdnsp_device *pdev)
+ 	if (ret)
+ 		goto free_event_ring;
+ 
+-	/* Set ERST count with the number of entries in the segment table. */
+-	val = readl(&pdev->ir_set->erst_size);
+-	val &= ERST_SIZE_MASK;
+-	val |= ERST_NUM_SEGS;
+-	writel(val, &pdev->ir_set->erst_size);
+-
+-	/* Set the segment table base address. */
+-	val_64 = cdnsp_read_64(&pdev->ir_set->erst_base);
+-	val_64 &= ERST_PTR_MASK;
+-	val_64 |= (pdev->erst.erst_dma_addr & (u64)~ERST_PTR_MASK);
+-	cdnsp_write_64(val_64, &pdev->ir_set->erst_base);
+-
+-	/* Set the event ring dequeue address. */
+-	cdnsp_set_event_deq(pdev);
+-
+ 	ret = cdnsp_setup_port_arrays(pdev);
+ 	if (ret)
+ 		goto free_erst;
 -- 
 2.53.0
 
