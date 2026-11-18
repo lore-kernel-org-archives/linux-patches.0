@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046536;
-	b=GmTJ+Y2dqtIC10+ks3PAWr3W2jaa55qvOdadwRklX5f60zRNbhdSSOPQytlK46LPnOEE
-	 GlxgtI6sbhdEYBFu1D3WmQnfzNThfJb/nQ3tdvpnxktm8XzSRuiZqOiZJ+pPzpWpfPmdh
-	 cKUS3ohK1O7v+HoLGIsQYNuDKpbvUoK743158vJh/Byx5wYCIFbra9HgR5Vvm/oswi7iH
-	 rzRlLZu3kVwBDsXJkP3L0aabYutaCeCGiFakX5lNC+y81uYBGLRTBrOktiVc2+/QHPC4m
-	 VmNp+DzM0D99zEzQDcv19GOXFjpXXP989oSUvZMXrp73YPrsap+vz4nMIxbTLydNSLw==
+	t=1795046539;
+	b=k0RoFyleCYQRbuJjw5bEJKKedjcbIhWSEWfSqttoULVd5JH+Ku8iR6WBPlOtUIbGkfrC
+	 p2jqVupHHcyjQyvDspDJt2svDOk/6IVYzdx7OrUxgg4MXWTgIylplOh+hazeKbzkqXl+Y
+	 3JyO0AR/IbNxjJMYJvfEI6WLAplS+Bvo9Mts37s+CSu3B5WODNrZ8TDD1eju8kgI8I8vZ
+	 ZrKTKGhH2RcjXqrMi3/P0G7usWQNWTZ8BByYGP5nw0ZtlbpIaV0ghoSJet7Lt7wVf9MwI
+	 t6v54JhKUvWHQeElxuScPEgXENUyE5VobNigEXMSf4zpLRtGgBxBA+VVyJUPt+baJ+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046536;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046539;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K2Lfta8/3weexPRbWhXpyVpfyQhY5jzZ0qH0W56qqmU=;
-	b=l+P8IqgRJrMBsruQBteH4DGOFa5dEJoPI/iOtwFS8eMRIgUJNPm0fvuIR2cWIlV9NOtI
-	 1AKzh+GzpE22f6YyrwQW93GLpUev9RHHLvPq+uz+pZt2BVXNNwx1T0iZyti0OnRQ6P9Wj
-	 DFj2VnkTVhTBrCAKZURs7WsvVwU/3gbE5ltYIleJsoDQ7D+Q5wNW55OvtkNaK3jBdqSHe
-	 IxBt6P+WEGh8B3NXcDNy+2ft6Stc/XPNREjRieR+br8t5KqvjDtFNj1Zhj/ICmVAh3jYi
-	 YtL7Rpaakq5eI4N75RhFcdBb0dOoiGjbrrMPsC9TmA2pTMYF4b2VFmOM6v/hNttE3kw==
+	bh=qvz5i3p6LZdCK+sMUiRQPFpy6KD+wKBJVep44bhkxWE=;
+	b=BkFoulgdp0MxVTHl4C3iRk9XN/qW7pvluQmguysmzso59OIeWW11/2tZMaaFrFWXt4Xn
+	 jbutwI45kQRDH0hXi9GvOnyn+5udqad24g6WpgshEPccN+ZCwWngq9bEPI8WfRQXUuaKd
+	 dgI1LIAvioO/CI5fCJt4+GVRnDrb9aqiTgpTtWfEEiTS1+vPW0evNn+IFl7c8WzoutwkI
+	 boEvOlnHHBSekLBEfMuBwOp8+Y617Ue7WA+j/S39sHnIZ+kNYiqlitIGTGIg5LNuoVQY0
+	 CmNzJ41IYrhMywGg1T0NaJ/W+qiaa/Sx7672VLQSx87tjPNHIFFcHQZRf8cbaTBSEvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1n0TxpIs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E2yJDUew;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E47606A334;
-	Thu, 19 Nov 2026 00:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F7F606A334;
+	Thu, 19 Nov 2026 00:02:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1n0TxpIs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACCA01F000C4;
-	Thu, 19 Nov 2026 00:02:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E2yJDUew
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832A51F000C4;
+	Thu, 19 Nov 2026 00:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046536;
-	bh=K2Lfta8/3weexPRbWhXpyVpfyQhY5jzZ0qH0W56qqmU=;
+	s=korg; t=1795046539;
+	bh=qvz5i3p6LZdCK+sMUiRQPFpy6KD+wKBJVep44bhkxWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1n0TxpIsUwhQBB7xf5g8nQvaTjs1dVCEuRrT0RHO0x2AP/vRLiM2yJVe9qKA1t05q
-	 BpxvCykHbeg8Etrpb2eHEVAUDoxjR313HuM57yQy8/PQqogN8yy7V56J/9MoC+T46L
-	 +YKu4zXrEU1yZvMre11Gvlk/+OHl/BkkEnQtBKz0=
+	b=E2yJDUewojCoJZ53AEqIYvzvPaBIR5+9Jl0milWL0cdXtl8zciZzcfw0nIZkvAfBY
+	 qAlBwS6vG2TEynuWkmWLYS7AN1PAKSQXmNTUdnEG91ATMYsaBn/aAVM9a25R0yf/T/
+	 jCFa3SLrBDmn8yEGRbfW3molZX9leASUYlET9ZZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akshay Jindal <Akshay.Jindal@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Will Deacon <will@kernel.org>,
+	Thomas Huth <thuth@redhat.com>,
+	Breno Leitao <leitao@debian.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Baoquan He <bhe@redhat.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1316/2857] iommu/amd: Skip non-IVMD entries when parsing IVRS memory definitions
-Date: Wed, 18 Nov 2026 15:39:10 +0100
-Message-ID: <20261118150248.836023266@linuxfoundation.org>
+Subject: [PATCH 6.1 1317/2857] arm64: kexec_file: Fix elf_headers memory leak in retry loop
+Date: Wed, 18 Nov 2026 15:39:11 +0100
+Message-ID: <20261118150248.870309535@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,74 +74,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akshay Jindal <Akshay.Jindal@amd.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit e62df37e0eff4d670e78bbd415be2c1675883c15 ]
+[ Upstream commit ac302aea3d824ccc99f29b8e499c365cb9a684a9 ]
 
-init_memory_definitions() walks every top-level subtable including the
-IVHD blocks (type 0x10/0x11/0x40) in the IVRS ACPI table. It interprets
-each one as a 'struct ivmd_header', solely on m->flags, without first
-checking that the subtable's type actually is one of the IVMD types
-(ACPI_IVMD_TYPE, ACPI_IVMD_TYPE_ALL, ACPI_IVMD_TYPE_RANGE).
+A retry allocates new elf headers and overwrites image->elf_headers,
+leaking the previous buffer.
 
-    if (m->flags & (IVMD_FLAG_UNITY_MAP | IVMD_FLAG_EXCL_RANGE))
-            init_unity_map_range(m, table);
+Free it before assigning.
 
-IVMD_FLAG_UNITY_MAP (0x01) occupies the same bit position as the IVHD
-flags field's HtTunEn bit. Unlike real hardware, QEMU's AMD IOMMU
-emulation sets HtTunEn unconditionally (flags=0xD1 for type 0x10,
-0x11 for type 0x11), so every QEMU-emitted IVHD block is misidentified
-as a unity-map/exclusion-range IVMD entry, which subsequently results
-in the creation of a bogus pci segment. Eg:
-
-    AMD-Vi: PCI segment : 0x4000, last bdf : 0x0000
-
-Fix by checking the subtable's type before treating it as IVMD.
-
-Fixes: be2a022c0dd0 ("x86, AMD IOMMU: add functions to parse IOMMU memory mapping requirements for devices")
+Cc: Will Deacon <will@kernel.org>
+Cc: Thomas Huth <thuth@redhat.com>
+Cc: Breno Leitao <leitao@debian.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Yeoreum Yun <yeoreum.yun@arm.com>
+Cc: Baoquan He <bhe@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Akshay Jindal <Akshay.Jindal@amd.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: 108aa503657e ("arm64: kexec_file: try more regions if loading segments fails")
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+[catalin.marinas@arm.com: drop the redundant NULL check before vfree()]
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ arch/arm64/kernel/machine_kexec_file.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 22f596957146d..39d260ae6ff39 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -2572,6 +2572,15 @@ static int __init init_unity_map_range(struct ivmd_header *m,
- 	return 0;
- }
- 
-+static bool ivrs_block_type_ivmd(u8 type)
-+{
-+	if (type == ACPI_IVMD_TYPE ||
-+	    type == ACPI_IVMD_TYPE_ALL ||
-+	    type == ACPI_IVMD_TYPE_RANGE)
-+		return true;
-+	return false;
-+}
+diff --git a/arch/arm64/kernel/machine_kexec_file.c b/arch/arm64/kernel/machine_kexec_file.c
+index a11a6e14ba89f..c3883808270e2 100644
+--- a/arch/arm64/kernel/machine_kexec_file.c
++++ b/arch/arm64/kernel/machine_kexec_file.c
+@@ -123,6 +123,8 @@ int load_other_segments(struct kimage *image,
+ 			vfree(headers);
+ 			goto out_err;
+ 		}
 +
- /* iterates over all memory definitions we find in the ACPI table */
- static int __init init_memory_definitions(struct acpi_table_header *table)
- {
-@@ -2583,10 +2592,11 @@ static int __init init_memory_definitions(struct acpi_table_header *table)
- 
- 	while (p < end) {
- 		m = (struct ivmd_header *)p;
-+		p += m->length;
-+		if (!ivrs_block_type_ivmd(m->type))
-+			continue;
- 		if (m->flags & (IVMD_FLAG_UNITY_MAP | IVMD_FLAG_EXCL_RANGE))
- 			init_unity_map_range(m, table);
--
--		p += m->length;
- 	}
- 
- 	return 0;
++		vfree(image->elf_headers);
+ 		image->elf_headers = headers;
+ 		image->elf_load_addr = kbuf.mem;
+ 		image->elf_headers_sz = headers_sz;
 -- 
 2.53.0
 
