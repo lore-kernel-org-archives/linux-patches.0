@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043608;
-	b=eUJbvNNfPNxsh79AK/KR/X/hGdHFRl/N3OUYv/aZJMwHiJFc2BpVvGtyctlOyvz5m24m
-	 nEDKc3/7svgdbBUPMnNk9aHgTc00yhFMxnfmBHNV1L/uQhQgXrptou3emHe68VSUUYSCg
-	 3pNkSpK5tEVL6oT3z6IVFRtgi0Sy5D+zhVuC4CFhm/3R/0O6iN4MZfBdTntr2OiYkP5mn
-	 uX5P88wAv4Q/fg4E2n2QLSu0o3B7wrh0mXAsoOVEXHBFwyuzOFRfuBWZtKgHast/8FwCE
-	 a9IlXwDS+jzbjEKLgHownpiAyS1e3GYBtAUzy+w157irllr1oF28wD15i1PWnUnEI2g==
+	t=1795043611;
+	b=1TkdASwylVReQ6umg1LNoz0FAGanqCXQJbDNMfq3glmlHp0XRkwvMQ5GviTuuODoxq2t
+	 /ZUyqPkuCy6t2dLugk7M7RF5vp1fghV7f3wr49rxYlLwR07vE6toS2DpoEkQTxMgFAmMb
+	 sbI5+vMaCTc3EDBhpedXnbk2OCAUTyu56li5mFLUtSJD7mn6gixbJrHho8oCnwQ7rmU+Z
+	 w6dzmbNnFGJjqnzbP/SlILqZc95Soz/oJCr9RtYbKmo+edZVXlrVLf2bMivY7wJYKyo71
+	 q9Cxz4d1EYoN8zzXRFP2jkkY71IHHS1I0m+CpijCYK0w6eTIx5ZHcVycQ72ViVHKxOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043608;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043611;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tEK26QYKSk5ESMjfw2sJBh/ulJD1+W1whX7BYa2ktn8=;
-	b=Pq8QNSzZRtCfa7oJQsmBeDKsSTpRI5UuHpYqypqbvyZhCnQJoStmQ/+hYH80G/Y/pJsN
-	 iBPCCmj+iDNhf3YFHxdkphODsiWRJ2be0mapxNvWU26Um9+i0G86pvG3UFkjakrD9mwvB
-	 v6zLYPXwvrwIOkkevRP+jWWJdRPSdX55kHPJVvyXOaD/q2ctIBLMlhGAcPpBHqEP2Kbmd
-	 46pf+YWxc+10ZKUTfOfT8JZiMrg0nZizqCD+2q0OWxjBa4zr3lH+ZUqIuAGgJdtHpFoxa
-	 44Pv4UcKWLm8hYoaUDhe4Vtm7FBSI84Nk0jPH99GTOBOHrLLN/gbX9Wysfauv5AG9ng==
+	bh=NNFTFhqeYYfM4c8RZTa+5v11Q6Z+4mQuTo+DRI9TVA8=;
+	b=o6l56q0ExJLv+kZUTYmRNTMMpE/cKhiZ3daS5qfCfrCQ811o1Rxozn8ivneSOkLW+l/1
+	 kF4E8qvY6DHP06sUOO1QUWQNcnSIz/8XjmiXOmd+petA1TUQJpHZ+lEnMmtNEJPy2Cnk0
+	 WV2drt4lw8lu1tcO9rWYGBZYBuCsl/2luLPKlV6nnU4DOlCsIj69sIWoaDtgUtW1tU2dN
+	 Sj3jAP8C5FwKPFZo6s0A4Q4SytlptfGo9MbnNtaazO4Gw4b5Yw5j+4jmzLZ0vFDwUGa0+
+	 dJu103B71fHpXoewcrQGsjdS0453/GAJoCfHBRb1phTZGUv5OYFy9CM3YG+c7fvLsOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YrKr3IyF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cDu9TlRl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E89606A325;
-	Wed, 18 Nov 2026 23:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0565D606A32A;
+	Wed, 18 Nov 2026 23:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YrKr3IyF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9B01F000C4;
-	Wed, 18 Nov 2026 23:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cDu9TlRl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB361F000C4;
+	Wed, 18 Nov 2026 23:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043608;
-	bh=tEK26QYKSk5ESMjfw2sJBh/ulJD1+W1whX7BYa2ktn8=;
+	s=korg; t=1795043610;
+	bh=NNFTFhqeYYfM4c8RZTa+5v11Q6Z+4mQuTo+DRI9TVA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YrKr3IyFc3AfxvzVjSPw0MeicO06FmOZ4NyjFhOSxbODVgLr2mNfgX7i3ForF0BL0
-	 Bf8AcWilapNB8MZFT7QP7VjZsQSXauDnrM8KGY/OSWAfa4NTCgTgJaraKxyPHtkeBn
-	 6xlLrXq82BqNFMhrtRsDvwEA+3gPDlOAhLsyWl5M=
+	b=cDu9TlRlQYKpgrDp8uDQ62n6lLr+1NLi3zFx4sD3mOFpuq5nTZbKbT3GydFuhGJWq
+	 nHUHhv+ZMPzIbrmXYuL2GmjeydKqhK2T6kUgwR5SyZMrLZuQOLPjtFGlmGy0+dlaqQ
+	 JNJev1fAomdo9EtWRvI9Uhdu1sqwqDe5YH8DvFqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Porter <mrwillporter@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jiaming Zhang <r772577952@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0270/2857] ALSA: usb-audio: Add iD14 MkI to monitor-mix volume quirk
-Date: Wed, 18 Nov 2026 15:21:44 +0100
-Message-ID: <20261118150211.150531817@linuxfoundation.org>
+Subject: [PATCH 6.1 0235/2857] hfsplus: validate extent record length before writing it back
+Date: Wed, 18 Nov 2026 15:21:09 +0100
+Message-ID: <20261118150209.914475091@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,78 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Porter <mrwillporter@gmail.com>
+From: Jiaming Zhang <r772577952@gmail.com>
 
-[ Upstream commit 17056a36d276a740f09dca723de1bc6aa3eb4ef9 ]
+[ Upstream commit 627b7865c062ff642c0000f3a4775f1a44b986a4 ]
 
-Add the iD14 MkI USB ID to the existing audient_id14_map. This
-names feature unit 12 Monitor Mix Playback Volume.
+__hfsplus_ext_write_extent() writes the cached extent record back into a
+B-tree node using fd->entrylength as the length, and fd->entrylength is
+derived in __hfs_brec_find() from two on-disk values:
 
-Live meter A/B testing on MkI USB ID 2708:0002 reproduced the same
-asymmetric attenuation seen on MkII. At ALSA value 104, the right
-channel was 23.07 dB below the left. At 127, both channels were equal.
+	fd->entrylength = len - keylen;
 
-The misleading Speaker Playback Volume name causes PipeWire to adopt
-FU12 as the stream master. Reuse the existing map to keep the control
-available while preventing that selection.
+A crafted image can keep both len and keylen valid but make fd->entrylength
+negative (keylen > len). __hfsplus_ext_write_extent() doesn't check
+fd->entrylength before consuming it, and hfs_bnode_write() takes the length
+as u32, so the negative value turns into a huge one. The copy then reads
+data past the end of hip->cached_extents, which is only
+sizeof(hfsplus_extent_rec) bytes long, and leaks kernel memory into the
+image.
 
-Hardware-tested on Bazzite 7.2.0-ogc4.1.fc44.x86_64 with this change
-backported. ALSA exposed Monitor Mix Playback Volume after module load
-and USB reconnect. PipeWire volume changes from 100% to 35% and back
-left all four FU12 values at 127. Channel-isolated left/right playback
-remained balanced after reconnect.
+Reject an fd->entrylength that does not match sizeof(hfsplus_extent_rec) in
+__hfsplus_ext_write_extent(), mirroring the check already performed in
+__hfsplus_ext_read_extent().
 
-Build-tested with CONFIG_SND_USB_AUDIO=m using the focused sound/usb
-target.
-
-Assisted-by: Codex:gpt-5
-Signed-off-by: Will Porter <mrwillporter@gmail.com>
-Link: https://patch.msgid.link/20260823015353.686080-1-mrwillporter@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/lkml/cbd7003314c530d4f910eacf019ff80adad6687e.camel@dubeyko.com/
+Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20260810092422.1691377-1-r772577952@gmail.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_maps.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ fs/hfsplus/extents.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
-index 8046d5987d5b1..ace4ccad8f51c 100644
---- a/sound/usb/mixer_maps.c
-+++ b/sound/usb/mixer_maps.c
-@@ -505,13 +505,13 @@ static const struct usbmix_connector_map gigabyte_b450_connector_map[] = {
- 	{}
- };
- 
--/* Audient iD14: FU 12 advertises Volume on only 4 of its 6 logical channels
-- * and sits on the monitor mixer branch, but it is traced through to the
-- * Speaker output terminal and gets named "Speaker Playback Volume".  Userspace
-- * then adopts it as the stream's hardware volume, and any setting below 0 dB
-- * attenuates some channels but not others (20 dB imbalance at 80%).  Give it a
-- * non-standard name so that it is no longer taken for the stream's master
-- * volume, while remaining reachable for anyone who wants the monitor gain.
-+/* Audient iD14 MkI and MkII: FU 12 sits on the monitor mixer branch but is
-+ * traced through to the Speaker output terminal, so it is named "Speaker
-+ * Playback Volume".  On MkII it controls only 4 of 6 playback channels.  MkI
-+ * testing found asymmetric attenuation within the main stereo pair.  Userspace
-+ * adopts this control as the stream's hardware volume, causing imbalance below
-+ * 0 dB.  Give it a non-standard name so that userspace no longer treats it as
-+ * the stream master, while keeping the monitor gain reachable.
-  */
- static const struct usbmix_name_map audient_id14_map[] = {
- 	{ 12, "Monitor Mix Playback" },	/* FU, partial coverage */
-@@ -602,7 +602,12 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
- 		.map = maya44_map,
- 	},
- 	{
--		/* Audient iD14 */
-+		/* Audient iD14 MkI */
-+		.id = USB_ID(0x2708, 0x0002),
-+		.map = audient_id14_map,
-+	},
-+	{
-+		/* Audient iD14 MkII */
- 		.id = USB_ID(0x2708, 0x0008),
- 		.map = audient_id14_map,
- 	},
+diff --git a/fs/hfsplus/extents.c b/fs/hfsplus/extents.c
+index 839bf83448c34..548e3d3eafc57 100644
+--- a/fs/hfsplus/extents.c
++++ b/fs/hfsplus/extents.c
+@@ -110,6 +110,8 @@ static int __hfsplus_ext_write_extent(struct inode *inode,
+ 	} else {
+ 		if (res)
+ 			return res;
++		if (fd->entrylength != sizeof(hfsplus_extent_rec))
++			return -EIO;
+ 		hfs_bnode_write(fd->bnode, hip->cached_extents,
+ 				fd->entryoffset, fd->entrylength);
+ 		hip->extent_state &= ~HFSPLUS_EXT_DIRTY;
 -- 
 2.53.0
 
