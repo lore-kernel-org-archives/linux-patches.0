@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028059;
-	b=4PSS+tL51P07JvPRJgOUpq87R34OYIYCES+PhkkRtrfqpt0xcf/93U6UxMONpUQMvXiA
-	 ycBCKU+r94z5TMqtRmYRop1+1izacwVNCMokjPbTjDUh0NWu7Iiolf1pSLuiSCIhl5Fso
-	 NhthoJ7d+QW3QYjnhYkzBk3+axL/h9YndhpqkDqWo2fxbto/+V5BMJnB7tYDa0C2l7PSx
-	 VzreOZEBGeghmHZDY+eg3KL5QUohSLMybK34GpHt+ykxIsfjWuu6TOPCHbtROD3JFQCix
-	 RsUYNfdKdJPoECfMBQeQwrEAOUOZX0Edm9ztmkqfWYDy22NcpaB1qBLdmsdDQk33Q0g==
+	t=1795028062;
+	b=J8FfP6BcH7eHWEqRmzH9ftqDVkf9ecQm7mSqvOTa/zD80RXQrIv+caWqy5wywy4Jezif
+	 TRxv48XdgSpEcDFfXZ8HoJ8nhWQ8FkdKe1bw1u68RDr9lZbnJdrxvuKzn26Ahr2qwO2ju
+	 J7TM5jeRvpfe6TSbUg6r3Pl6BB0kmoxKQQqeAGc7pAS1VxTaCez6P3JZboLsAC4JCbYn/
+	 8bHLyT5kXz7gxIom9DABNttkQLkXzDLvPo34nKHKW4Br2Zh1CAgazBTVlcWTsx13eVWme
+	 FAYjPmDsWp6yb8APlzfBc4xqtu7ksd280gd+gJv+wp5JpFl+Mqv+QVe9y9v935g/u2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028059;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028062;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fAD27VbfWVm1Nm648ne395oSIZy8wC5g3r3WR5v4wfo=;
-	b=hzd4+vYYQA/aEtRDe336rYWJsEefSFmFXTjzztGmA5IH/T+lBxH/6LA1M657iyqJEj48
-	 +zr6TVeAXkgMEfDNl5TEhXcR0a0zcsDqw2CKBxKh2l7ecis2Ry4hCu7Fx2+/wbRXij+Ga
-	 V4/cwjpDPT6aPf9/sjIgoYihBxEVHk0+XZaaE2quPdb6aW9XEGFbZCG2retEK+YXUAJZj
-	 xWtRxZb1UolF4aBUwhwZNTj80djWmC64pmA3ksAclkZn8BZvppkZTgEX1J4ZgawBcAK0S
-	 zqmNKpHN7K3sUtUVAjGKG7BQecMxPyyt9AXTA4RhXuOWTPK2t+d/qrifx1HLAxqPleA==
+	bh=VppMdgD1MegW7ESs4PrYqI1Iah0dCRlTbE5FYUEWp8g=;
+	b=1kyqFy6qmbdYWiDDSS1oHXqdmZoD1RD7+pJ3mv8oIRxGBs6MMyFNGw3sl535x7pPFbug
+	 V2AYDgKXjiDQJa7nOoilpq0gdgLF8NswgT3jXNC/T3nW3EAaq4XSSQXBy+ZoOiUISYmC4
+	 jYZ3BmhH+eedJxFUU+eHQ61s6r+sqTlsepSfwFQBhG4n4eunD0i+6uhQ0iFForoEDSn7s
+	 l487a0YuwIoXwf3L/T4QPS0tZ1puTDZrdPEAJsc77Vwl/XjjqYeeE+kYAeXiDXZA9g8iI
+	 S0thtDGmM3dA2MiwbSFOjAPNxq4MwLn5kDNH+vdn9UImDb63pS+6NzBLLWiiuz7toPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yYy97t2N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jfdV21Lv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65FA1606A31C;
-	Wed, 18 Nov 2026 18:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650A860A2607;
+	Wed, 18 Nov 2026 18:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yYy97t2N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D5D1F000C5;
-	Wed, 18 Nov 2026 18:54:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jfdV21Lv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEFC1F000C4;
+	Wed, 18 Nov 2026 18:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028059;
-	bh=fAD27VbfWVm1Nm648ne395oSIZy8wC5g3r3WR5v4wfo=;
+	s=korg; t=1795028062;
+	bh=VppMdgD1MegW7ESs4PrYqI1Iah0dCRlTbE5FYUEWp8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yYy97t2N8f9nj6QyWeLt6nfnG1qcrBIuxVhaYsc2OY6LjkrBdKojfgSRr/raD1P/+
-	 VeQKnrwC+mZf/XPzsbb4Kq6FyBREdWU32OimAQIPRL9X4SQiPStSora+8HGNmeuHAP
-	 Pef8ZmKjAiMQHyI/ZK90gA9sFWP6EkgAA2X5smq8=
+	b=jfdV21Lvd/6tVyiVwFDpDsPsrBncG4rQ5FLoNp5wDhuMvoTuKPVksMMNx3s5ONmNQ
+	 mBK7mnzyYorjt2t7yfF7ak97PpstIhEv0Frl1SZvIu4q0NsZNPDyzJLMqf97Cgzq9N
+	 PcmV939apkANjgpKbfBSSGorClnL/aOB/RLm3zzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Zhewei Yuan <yzwlhm@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2011/2151] tcp: Fix fastreuse cache initialization on first bind
-Date: Wed, 18 Nov 2026 16:02:26 +0100
-Message-ID: <20261118150234.981632091@linuxfoundation.org>
+Subject: [PATCH 6.18 2012/2151] net: lan966x: dont disable hardirqs in fdma tx clear path
+Date: Wed, 18 Nov 2026 16:02:27 +0100
+Message-ID: <20261118150235.017160727@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,54 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhewei Yuan <yzwlhm@gmail.com>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit 947ccedf683ed6cc53c1f88ac9eb8747e4567ed6 ]
+[ Upstream commit b2e17432e7ee75997657f99862eb83be0c78a6c1 ]
 
-inet_csk_update_fastreuse() initializes the reuse caches only when
-tb->bhash2 is empty, but both inet_csk_get_port() and
-__inet_inherit_port() link tb2 before calling it, so the first-bind
-branch is never taken.
+lan966x_fdma_tx_clear_buf() runs from the NAPI poll and frees the
+buffers of completed tx DCBs with napi_consume_skb(),
+page_pool_recycle_direct() and xdp_return_frame_bulk(), under
+lan966x->tx_lock.
 
-As a result, SO_REUSEADDR binds never get fastreuse=1 and keep
-scanning existing owners, and SO_REUSEPORT starts in STRICT instead
-of ANY.
+Before this patch, the lock is taken with spin_lock_irqsave(), so the
+buffers are freed with hardirqs disabled. RX skbs are marked for
+page_pool recycling, so when such an skb is forwarded back out and its
+tx completion frees it here, the free path reaches __page_pool_put_page(),
+which warns via lockdep_assert_no_hardirq().
 
-Initialize the caches when tb2 is the only entry in tb->bhash2 and has
-no owners. Timewait sockets are also linked on tb2->owners, so this is
-equivalent to the old hlist_empty(&tb->owners) test.
+Take tx_lock with a plain spin_lock(), as the other tx_lock users,
+lan966x_port_xmit() and lan966x_fdma_xmit_xdpf(), already do.
+tx_clear_buf() runs from the NAPI poll, so disabling hardirqs there is
+not needed.
 
-Found by manual code inspection and confirmed with GDB. Binding 16000
-SO_REUSEADDR sockets to one address/port in a KVM guest takes 4.18 s
-before and 19.4 ms after this patch. Existing bind/reuse selftests
-pass. Analysis and testing were assisted by an AI tool (Codex).
+Found with lockdep enabled (CONFIG_PROVE_LOCKING), which the assert
+depends on. Reproduced on a lan9668 board by redirecting received frames
+out of another port with tc mirred.
 
-Fixes: 8002d44fe84d ("tcp: Check hlist_empty(&tb->bhash2) instead of hlist_empty(&tb->owners).")
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Signed-off-by: Zhewei Yuan <yzwlhm@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Link: https://patch.msgid.link/20261026095208.58504-1-yzwlhm@gmail.com
+Fixes: 11871aba1974 ("net: lan96x: Use page_pool API")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261026-lan966x-fdma-tx-clear-hardirq-v1-1-5f70f026a2e4@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_connection_sock.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 543a6f2d12dfc..2db9ceda0456a 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -447,7 +447,8 @@ void inet_csk_update_fastreuse(const struct sock *sk,
- {
- 	bool reuse = sk->sk_reuse && sk->sk_state != TCP_LISTEN;
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
+index e6638cf4f805b..11a341fc45779 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
+@@ -337,14 +337,13 @@ static void lan966x_fdma_tx_clear_buf(struct lan966x *lan966x, int weight)
+ 	struct lan966x_tx_dcb_buf *dcb_buf;
+ 	struct fdma *fdma = &tx->fdma;
+ 	struct xdp_frame_bulk bq;
+-	unsigned long flags;
+ 	bool clear = false;
+ 	struct fdma_db *db;
+ 	int i;
  
--	if (hlist_empty(&tb->bhash2)) {
-+	if (hlist_is_singular_node(&tb2->bhash_node, &tb->bhash2) &&
-+	    hlist_empty(&tb2->owners)) {
- 		tb->fastreuse = reuse;
- 		if (sk->sk_reuseport) {
- 			tb->fastreuseport = FASTREUSEPORT_ANY;
+ 	xdp_frame_bulk_init(&bq);
+ 
+-	spin_lock_irqsave(&lan966x->tx_lock, flags);
++	spin_lock(&lan966x->tx_lock);
+ 	for (i = 0; i < fdma->n_dcbs; ++i) {
+ 		dcb_buf = &tx->dcbs_buf[i];
+ 
+@@ -389,7 +388,7 @@ static void lan966x_fdma_tx_clear_buf(struct lan966x *lan966x, int weight)
+ 	if (clear)
+ 		lan966x_fdma_wakeup_netdev(lan966x);
+ 
+-	spin_unlock_irqrestore(&lan966x->tx_lock, flags);
++	spin_unlock(&lan966x->tx_lock);
+ }
+ 
+ static int lan966x_fdma_rx_check_frame(struct lan966x_rx *rx, u64 *src_port)
 -- 
 2.53.0
 
