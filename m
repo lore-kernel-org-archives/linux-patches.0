@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033735;
-	b=YwE8RxhYVqpl9BwZqDJKFWlYBdR91VwHygGSg+jblnkg66xB99bhQyLImqDINsP2LYU5
-	 sqBRQniFK1+neU2c+uRME4qE3g5Gc+3i8pvT2504UJ8yrFh5cQ5xonK0BpnbGL7FcUmgR
-	 m30ppClcZJjZni9jfK3oMlPySebWW5CtyzN1fzIiGtLUVze8UcCUCeBgc+GKWqDOKX7CC
-	 36db2Cu+YSfFkZk8krHSwml5rs3S4/k16oGHGpq6Fz8h4N3XySIuTRth1RgXJjB0HKi6Q
-	 JSQ0pskn3HI+UZZwMp4QLkGw4Vqwpuk+BdOG88HKvakf6OFVydnaXnbr4rHnkwan7RQ==
+	t=1795033738;
+	b=KneJ281qyvDQoBe0mZmPu4RP1jVcVaDEiExTjHIMYfstdqiZrIEDD+sJdfsxr0FsX1XC
+	 +oq8iIZWWjCY6pBv6+sfSLKmfvMMIeFI8P1HwHbFa/2GHv1KSovNZ42cEKwEqisAlJvw8
+	 m8RAWihJkT9dTCi1UwuRihuDXZGst+1t8zDpu64e5JQmDMmfrCvjRwjcBIK4rQBPHGQbm
+	 WxDRXFaMAzrSVkek3ffZtXyQoJnD6a77MWJ/Dn/J4O7G4OOTYxbnWmhy4J8syo4BSuZaA
+	 EWFFLtppmZT7mfKvzX65WWP2jqNSuTmvC2oa7OptR5ifwCuqLPiTQrkSschXcWscKbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033735;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033738;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tEKeqNYijATcrITpPqho4yWKzkNtGhhEsqxn4rWkPy8=;
-	b=LVT0EXwoH0X8jITqlZqH0LJoOQjmxPNPR193XMxqxY+BhGHCsyd4I6WLlkrATf3HkQYO
-	 XUM7nnuvbWABLZJeHj6snx/VH7qUX4YCo4XI9kH1+b0H7hhG++FJFShYta1d9cviT4S0g
-	 GCYh9cHCikYr0UUAZmbNn42TIHLoA2uQmhfnx7sr9tSepQU95470r0ogElUJcvszrSDwi
-	 1zXUnDAaARZMuqq0Yt2q0MgSLj8WRE9l/Gx5weYk2e0GvL/PL/OsTflanBKJ45zWYSMW6
-	 t2L9+LTsBq8HJSx+df3TIDfRdmNwfmOZ97WqFLylKPYBV6gfWOoNLJJLzXNUKA6nniw==
+	bh=d/WZZUI1jz4gtzv0s7/QgKK7LbUBMrSqxm60qdtazqw=;
+	b=UxOvUYe6ndeb8XKpifvLPh4ExMpGdAFAygm2Lqehdwnmc6Hi3LzUZXsqyTjND1sewstD
+	 JgYBfRrYFM3sZYWobCLpFsTief/IJXSESwVdsFt7ZNoBH6HApO9zwwRFtfON7bnyCAkC+
+	 jYugpm4j6uR9UId7+cDHMZwuwRTRKmnqTItg0ho4nkSniB4NzpSNByw9+YudpO7rVa6XU
+	 +loLL7ma4JSu/W3ZmUf0xwmIzCqTVLOKQwwnuvcncL7pBFZS9b8u9SQKCjex7RWuU3zSf
+	 XL3+HXF2VLyJO8Z1uI/I2/QsdBVivywlggtRnwi91RigFD0KMx8P42t9V3e8oMuHKbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ByA+1oej;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Amy1t+nt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CA9606A31C;
-	Wed, 18 Nov 2026 20:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5B2606A332;
+	Wed, 18 Nov 2026 20:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ByA+1oej
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0131F000C4;
-	Wed, 18 Nov 2026 20:28:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Amy1t+nt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 848821F000C5;
+	Wed, 18 Nov 2026 20:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033735;
-	bh=tEKeqNYijATcrITpPqho4yWKzkNtGhhEsqxn4rWkPy8=;
+	s=korg; t=1795033738;
+	bh=d/WZZUI1jz4gtzv0s7/QgKK7LbUBMrSqxm60qdtazqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ByA+1oejBRGp0MZoM8CpdvKBXIeNZn0HOJbHmo6pYkpnwJ74Bec3iV0/E6M88ExYd
-	 GxnYUNlmk+nqbhMR8IWEPrEPop5AphDItJzLIcnxfvNButeCM3q/yel/RSS2n+F8Yg
-	 ITpFwSiWlFqsWIvdHXHEmaa/CM4fBobiapHqq7IU=
+	b=Amy1t+ntjXxWVqEOetUlvxIGZGiopR1+ghqUYx+/kYH0M3uVzGimbB9dhl6W4widv
+	 pJ//g5ceCX2+rdl3dGPumhonexAvdmK5c+raWqgorK0CEoeTH9tkLsQgLo3a6VTx2j
+	 5pv1OGo1TdbM3F5NOWO++QcH+c/iT0eBuTK+9rHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Jan Kara <jack@suse.cz>,
+	David Heidelberg <david@ixit.cz>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0078/3318] udf: validate extent partition references in udf_current_aext()
-Date: Wed, 18 Nov 2026 15:11:40 +0100
-Message-ID: <20261118150316.418342173@linuxfoundation.org>
+Subject: [PATCH 6.6 0069/3318] dt-bindings: arm: qcom,ids: Add SoC ID for Snapdragon SDM 850
+Date: Wed, 18 Nov 2026 15:11:31 +0100
+Message-ID: <20261118150316.091022953@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,51 +70,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit 120ec50984b8645232c2c004310dd94ceff5520e ]
+[ Upstream commit d529495c991a2b7d07c01622e8b3cb5ec066acee ]
 
-Long allocation descriptors carry an on-disk
-extLocation.partitionReferenceNum. udf_current_aext() copies that value
-into a kernel_lb_addr and returns it to several consumers.
+Add SoC ID for Qualcomm Snapdragon SDM850.
 
-If the partition reference is outside s_partitions, callers can later
-index s_partmaps out of bounds. The truncate/free path can pass such an
-extent to udf_free_blocks(), where the invalid partition reference
-causes a slab out-of-bounds read.
-
-Validate eloc->partitionReferenceNum in udf_current_aext() before
-returning a decoded extent. This rejects invalid file extents and
-indirect allocation descriptor extents in the common parser, so callers
-do not need to duplicate the partition-map bounds check.
-
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Link: https://patch.msgid.link/20260612225846.97678-1-kylebot@openai.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260627-sda850-v2-1-44bf46ade42e@ixit.cz
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/inode.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ include/dt-bindings/arm/qcom,ids.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/udf/inode.c b/fs/udf/inode.c
-index d1bed7927c2f9..55c55239f5e35 100644
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -2304,6 +2304,13 @@ int udf_current_aext(struct inode *inode, struct extent_position *epos,
- 		return -EINVAL;
- 	}
- 
-+	if (eloc->partitionReferenceNum >= UDF_SB(inode->i_sb)->s_partitions) {
-+		udf_debug("invalid partition reference %u (partitions %u)\n",
-+			  eloc->partitionReferenceNum,
-+			  UDF_SB(inode->i_sb)->s_partitions);
-+		return -EFSCORRUPTED;
-+	}
-+
- 	return 1;
- }
- 
+diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
+index be12e1dd1f38f..32dc6fc24d412 100644
+--- a/include/dt-bindings/arm/qcom,ids.h
++++ b/include/dt-bindings/arm/qcom,ids.h
+@@ -183,6 +183,7 @@
+ #define QCOM_ID_IPQ8078			344
+ #define QCOM_ID_SDM636			345
+ #define QCOM_ID_SDA636			346
++#define QCOM_ID_SDM850			348
+ #define QCOM_ID_SDM632			349
+ #define QCOM_ID_SDA632			350
+ #define QCOM_ID_SDA450			351
 -- 
 2.53.0
 
