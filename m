@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031811;
-	b=0VWsIyVjl65yljR718PYGm/E75WoqAupt5yevbWKHfTUmO7YcOgIj265CqjY0NjN7fw8
-	 MwoKAIqzekyOhHLK9OwNX35W/DAlLNR1yeSYJN8hQYmOeBBJQEvNXj1nnega6cJPU/1Yw
-	 CnRPahFekXXeNLuoi9uFqAvMDrp9Eedyirx1VQ86S9BcB8en2IS3HjvZnvlurCJfGaqMl
-	 un8zH4U5h+kB2WGxPkD4/B2VwP2UJ5KXWlsyelX4MRFwY0/BWueHIVeGePpKQYeu4194V
-	 92ywlN5KPzGy9mkpz/VifbiKRQNEBewC5IlTQOB8zaDy0LDbDDNsnaFsVQsMG9xsPkg==
+	t=1795031814;
+	b=keCm0PqaaX3I+pSQFWeeaVufhfF4MVz2aO5eVE3TfkbxOGKEkenUK6g9Zvq/JkGGOpbs
+	 qaCNRGjvm3uufgIxhqL06jM/kfc9DxYDwLfdAZ0BK6CV7JLwmmqxNif0SLiiZM7oTYq7b
+	 kAmvc17qxgpcdNcB64XSxpe3RIBN6LvVk0u8qouImz9WuxevxBeUrvqMBVftBYHijzgqX
+	 uNzLIL2+lSN4ba30XFV/4CghhnPcczxGik1s1tLcU3Y6hOcFNrJPJKrDpS6ZMEHcCCS2G
+	 WFXwMQ9c/kTmcfrEm5tgCG1CkPhjTmJSQDVLWFdDsWLk3Rg9GidqilajUKXXZN39Y8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031811;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031814;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VUuMaIgDBYyEBdffS4FzyTKcSjf9fT/GzxlM+G2PrAc=;
-	b=KLMGUmBGynwwuigRDblPfGJBj5dNMeucoKez+blDTloD8jAQvabFQ8jb8jI6BRKn+ZLk
-	 DzZO+ROeOYieGh5cc8BTGuUkHqSZSjHDk6PP1dJBqAgu5oGyOmqEeDocAgzcgjiYtyBWO
-	 UQ3lLKsPuSYe7rtQ8PUsM5t/PvsF5O1+/IaBKfJNIqS5LCl3ONgmvQridiBl3dJ+Hb37o
-	 bYBNlgM1EM5q9Hn2kxINcpFea4yYxTI22CC7PxbQRRLUEIDtGfxQTrSZSJUmPib6Vtz5d
-	 v3q/+rUmYjp0/to8tbOybWccwOl0kX3aydG6mccerP1zBGIKRwZqlPf8P+3BE31MoZA==
+	bh=0I3P59syiooh87/7Si8+vPLw/u/WAC1poSnjFVj4hNo=;
+	b=L+3xy+6MHAiZiFKgVQKVgBvTXjeU/vztUE/2ifgDF9IC9fR2ML4DjM10SLZtzZmOUKMF
+	 VHwvKaAOc99rWOdIUo42tDthWAFuwQ0TD9JW1grrUWp42/vvob+fi+QvmglhZj3e1z1u9
+	 n9HM0MBONE7AGhUY2H10bO/FW9jwM6RzMD31tjo4xo65GwY4CoVgfHJgPQWz6+Nl9zzPM
+	 ONgTRGEJhJ7xm2EAtf6xyCKdjlOnXSfcyUzciYMIqrpLxy6IjdM30hEuN2sIlIkCekMDm
+	 DN9WxnseR1kt0igesUxSllchRbc5VM6jOfS1BukC/m5NZvxea0awcbtubDpsFz608TA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NWem4fxf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=01z72V36;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE6A606A32A;
-	Wed, 18 Nov 2026 19:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93DE606A332;
+	Wed, 18 Nov 2026 19:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NWem4fxf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11CE21F000C5;
-	Wed, 18 Nov 2026 19:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=01z72V36
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78B41F000C4;
+	Wed, 18 Nov 2026 19:56:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031811;
-	bh=VUuMaIgDBYyEBdffS4FzyTKcSjf9fT/GzxlM+G2PrAc=;
+	s=korg; t=1795031814;
+	bh=0I3P59syiooh87/7Si8+vPLw/u/WAC1poSnjFVj4hNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NWem4fxfrMG8pN3tdWYsQUW2C8j1ZmTO00RGjTiOANtWMfwN7vxiQzSXIZR7TUAaW
-	 TPFTkIie4SyQSTGjNwdOvGy2oTg3kxgIWSAj2cTCeyqXNiLYWN11kvZMOr7kAG2wuT
-	 IwJwsS5XFG9nN/0b4IgE/tVqUPmVqrwWuYw/PUtc=
+	b=01z72V36xxqvTNhyYw2bEt7sKl8O9wfmOLtCUjPCClOFJhPq4aFxGigE42WI7x2cX
+	 SaI3np1Qh3G0f8S9JSWERFyebZR3Zk7AFBK8kRyW0T0e81gXPg1YvZo0g7GODBt4DO
+	 xOcQW/iKRuJWULpskUZtmSFIP5q1fYnnPJ7iTJrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1188/1756] wifi: cfg80211: track SSID regardless of country data
-Date: Wed, 18 Nov 2026 15:55:15 +0100
-Message-ID: <20261118150057.186806063@linuxfoundation.org>
+Subject: [PATCH 6.12 1189/1756] ALSA: pcm: Unlink substreams before releasing them
+Date: Wed, 18 Nov 2026 15:55:16 +0100
+Message-ID: <20261118150057.223461630@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,78 +68,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 577f690ce5dc641d9d8646d15bb8e99ff4a8280e ]
+[ Upstream commit d1e57f8fb7a6b6d32a4aaa31fd6fc4c77339608f ]
 
-If the country data cannot be found, the function exits
-and then doesn't track the SSID. Move the SSID tracking
-up to fix that.
+A closing PCM substream can remain in its linked group after the
+driver close callback has freed its private data. With two configured
+dummy capture substreams on the same PCM device, linked with LINK,
+PREPARE on the surviving substream can still visit the closing member:
 
-Fixes: c38c70185101 ("wifi: cfg80211: Set SSID if it is not already set")
-Link: https://patch.msgid.link/20261013151258.7fbca481c328.I7beb03fb4309698bdcfade57c6804573f96eeb18@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+  Final close of A                   PREPARE on linked B
+  ----------------                   -------------------
+  snd_pcm_drop(): group -> SETUP
+  do_hw_free(A)
+  dummy_pcm_close(A): free dpcm
+                                     Take snd_pcm_link_rwsem for reading
+                                     Walk the group, including A
+                                     dummy_pcm_prepare(A)
+                                       Read freed timer_ops
+  pcm_release_private(A)
+    snd_pcm_unlink(A)
+
+Unlink at the start of final substream release, before dropping the
+stream or releasing driver resources. The link write lock waits for
+an existing group PREPARE, and unlink removes the closing member from
+later group actions. Keep the existing stop synchronization in
+do_hw_free() before the driver resources are freed.
+
+Make unlink independent of the pcm_release callback so OSS substreams
+are covered too. Remove the native-only unlink callback and its
+registration, while retaining the callback hook for OSS cleanup.
+
+The existing KASAN report below records the freed timer_ops read in
+dummy_pcm_prepare().
+
+KASAN report as below:
+
+    BUG: KASAN: slab-use-after-free in dummy_pcm_prepare+0xb7/0xc0
+    Read of size 8 at addr ffff888106b35f00 by task alsa_pcm_fixtur/491
+
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? dummy_pcm_prepare+0xb7/0xc0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20d/0x410
+     ? dummy_pcm_prepare+0xb7/0xc0
+     kasan_report+0xe0/0x110
+     ? dummy_pcm_prepare+0xb7/0xc0
+     dummy_pcm_prepare+0xb7/0xc0
+     snd_pcm_do_prepare+0x71/0xb0
+     snd_pcm_action_group+0x505/0xb30
+     snd_pcm_action_nonatomic+0xab/0x150
+     snd_pcm_common_ioctl+0x1bf5/0x3a50
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? do_vfs_ioctl+0x1f5/0x1280
+     ? __pfx_do_vfs_ioctl+0x10/0x10
+     ? ioctl_has_perm.constprop.0.isra.0+0x34f/0x500
+     ? __pfx_snd_pcm_common_ioctl+0x10/0x10
+     ? __fput+0x5ba/0xa60
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     snd_pcm_ioctl+0x76/0xb0
+     ? __pfx_snd_pcm_ioctl+0x10/0x10
+     __x64_sys_ioctl+0x163/0x1d0
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    RIP: 0033:0x41ee8d
+    Code: 04 25 28 00 00 00 48 89 45 c8 31 c0 48 8d 45 10 c7 45 b0 10 00 00 00 48 89 45 b8 48 8d 45 d0 48 89 45 c0 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1a 48 8b 45 c8 64 48 2b 04 25 28 00 00 00
+    RSP: 002b:00007ffcfa72fb60 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+    RAX: ffffffffffffffda RBX: 0000000000000004 RCX: 000000000041ee8d
+    RDX: 0000000000000000 RSI: 0000000000004140 RDI: 0000000000000004
+    RBP: 00007ffcfa72fbb0 R08: 00007ffcfa72fb98 R09: 0000000000000110
+    R10: 0000000000000001 R11: 0000000000000246 R12: 00007ffcfa72fcd8
+    R13: 00007ffcfa72fcf0 R14: 00000000004a8f28 R15: 0000000000000001
+     </TASK>
+
+    Allocated by task 488:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_cache_noprof+0x251/0x610
+     dummy_hrtimer_create+0x4a/0x170
+     dummy_pcm_open+0xe7/0x730
+     snd_pcm_open_substream+0x926/0x1580
+     snd_pcm_open+0x28d/0x6d0
+     snd_pcm_capture_open+0x82/0xe0
+     snd_open+0x1ec/0x3e0
+     chrdev_open+0x21f/0x660
+     do_dentry_open+0x5c8/0x1300
+     vfs_open+0x87/0x390
+     path_openat+0x2460/0x3cd0
+     do_file_open+0x21e/0x470
+     do_sys_openat2+0xf4/0x1b0
+     __x64_sys_openat+0x136/0x1e0
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    Freed by task 490:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kfree+0x307/0x580
+     dummy_hrtimer_free+0x72/0xe0
+     dummy_pcm_close+0x9f/0xd0
+     snd_pcm_release_substream.part.0+0x104/0x310
+     snd_pcm_release+0x106/0x240
+     __fput+0x39f/0xa60
+     fput_close_sync+0xff/0x200
+     __x64_sys_close+0x8c/0xf0
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    ==================================================================
+
+Fixes: 1576274d3028 ("[ALSA] Fix Oops of PCM OSS emulation")
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-pmb-9c80f858ccc13b3de84d-v7-fcd8c7aa0e837bf0b036@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/sme.c | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ sound/core/pcm_native.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/net/wireless/sme.c b/net/wireless/sme.c
-index 059b01bdb630b..0044fba0fb58a 100644
---- a/net/wireless/sme.c
-+++ b/net/wireless/sme.c
-@@ -873,6 +873,25 @@ void __cfg80211_connect_result(struct net_device *dev,
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index 55ce00a41ca53..3f977f4d62600 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -2753,18 +2753,14 @@ static int snd_pcm_hw_constraints_complete(struct snd_pcm_substream *substream)
+ 	return 0;
+ }
  
- 	cfg80211_upload_connect_keys(wdev);
+-static void pcm_release_private(struct snd_pcm_substream *substream)
+-{
+-	if (snd_pcm_stream_linked(substream))
+-		snd_pcm_unlink(substream);
+-}
+-
+ void snd_pcm_release_substream(struct snd_pcm_substream *substream)
+ {
+ 	substream->ref_count--;
+ 	if (substream->ref_count > 0)
+ 		return;
  
-+	if (!wdev->u.client.ssid_len) {
-+		rcu_read_lock();
-+		for_each_valid_link(cr, link) {
-+			u32 ssid_len;
++	snd_pcm_unlink(substream);
 +
-+			ssid = ieee80211_bss_get_elem(cr->links[link].bss,
-+						      WLAN_EID_SSID);
-+
-+			if (!ssid || !ssid->datalen)
-+				continue;
-+
-+			ssid_len = min(ssid->datalen, IEEE80211_MAX_SSID_LEN);
-+			memcpy(wdev->u.client.ssid, ssid->data, ssid_len);
-+			wdev->u.client.ssid_len = ssid_len;
-+			break;
-+		}
-+		rcu_read_unlock();
-+	}
-+
- 	rcu_read_lock();
- 	for_each_valid_link(cr, link) {
- 		country_elem =
-@@ -898,25 +917,6 @@ void __cfg80211_connect_result(struct net_device *dev,
- 				   country_data, country_datalen);
- 	kfree(country_data);
+ 	snd_pcm_drop(substream);
+ 	if (substream->hw_opened) {
+ 		if (substream->runtime->state != SNDRV_PCM_STATE_OPEN)
+@@ -2848,8 +2844,6 @@ static int snd_pcm_open_file(struct file *file,
+ 		return -ENOMEM;
+ 	}
+ 	pcm_file->substream = substream;
+-	if (substream->ref_count == 1)
+-		substream->pcm_release = pcm_release_private;
+ 	file->private_data = pcm_file;
  
--	if (!wdev->u.client.ssid_len) {
--		rcu_read_lock();
--		for_each_valid_link(cr, link) {
--			u32 ssid_len;
--
--			ssid = ieee80211_bss_get_elem(cr->links[link].bss,
--						      WLAN_EID_SSID);
--
--			if (!ssid || !ssid->datalen)
--				continue;
--
--			ssid_len = min(ssid->datalen, IEEE80211_MAX_SSID_LEN);
--			memcpy(wdev->u.client.ssid, ssid->data, ssid_len);
--			wdev->u.client.ssid_len = ssid_len;
--			break;
--		}
--		rcu_read_unlock();
--	}
--
- 	return;
- out:
- 	for_each_valid_link(cr, link)
+ 	return 0;
 -- 
 2.53.0
 
