@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028423;
-	b=z0OIjSfGtxofwH1J7ZNQJ/2PYisnrox/yHcZYsuv5Ydj5H8S8kGJALRdjjCn0MMJopFG
-	 kySkZYraYs9ZmjG1wJM1VuDJMnLVkmcEP3qmheDrMgV08kinYNq84CTe25/cJI1ZpS1L2
-	 hQwgHNJzwXyFuIgbZwA34f/FFntrgvHYXlHdk1nxSulrYF+FyHfzje4hfhpC0V/esvxui
-	 HuBhIzt4B+jzSSXW2tM+rl7drAfsfLVFMLs833N7O1MfUAkCA3ChIF+BkyMCQvTz0WqXY
-	 cmFcs+uiYIwstS8Rn0OotErPNB1VBc+fdIx+6Lxl7R5oqjvz5mZVfwDuIv0P/rRKr3A==
+	t=1795028426;
+	b=3Yuiz5TS7qdO6nDOkXvXYPH/UfORvoYmRQUI4Gxwyd8UltbzyQPu0aNGuoogHb9KIKbq
+	 o4vvUHIZb28MWhhnHC22F//Ex3xr06jkYlbzpbvHt1xeMDlI2g3WtsjVUGwQBwuvtwGCU
+	 g1ccJSDBW5Rb0K8dBceKA6DU0uHQR2XlFSoKSkp/uHB3hCrK1t+iI9LEW6yyQYMrLeVt0
+	 v8eKKJNMxfSl7aqWfeAcLxeRDbJd+215rCpU1UaXboBt5UwpqieCSN3yt4Q22F5byHpNm
+	 nopYxqPhrAw67rDGw2FswzjtSW78NTtkQYp9DrdpV3lkP216mHZmmcZmgxDDmg5AMvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028423;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028426;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ZXlZNPuRKKAGRBFS3UCQrviIC++51yUhQj5p1mz4e98=;
-	b=VOJfDlwrz/MyAdptaE+BI4UNC7Z+1K5iFUuWn07Ar2utvC2327wo4vJxYivRYDtPdQy9
-	 9D1Wa2Daa7c0IHknSCnggWmSOIG5ZcP0LoByeFlwTnJOHEcDuBwWjL3SBXOa294dehqWn
-	 2FQRn2PAqNlHSh6nCqX59srptlMLeBKL0ws8jvh+8FQeLXwisL9Vld2abT+WR5VtyDMUa
-	 SXn0IBhFoEGp2EoCPUohsU8+W4xdO91Jsm9TCyNSu79DpWPYtTJ/k2dQW8XLcuedqZtbs
-	 mbqdZcQWEGdHBNasY79FtOfiwvZvrrhI/WYrfVqIuB712r5/3GBF4DAmaph0IqBT4nw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=idyWzYQeBkVX/HpgG2AOryIQzGLXbPJ0yCgFYkfiRvI=;
+	b=ujofRRE8HchhEDsD1sgUeUHPU+z5BnVMbLNsKl+uqyyM5lWPAy3TAOAOzRcCJtiNbutN
+	 6wuTuE7UK0QH5uvrajo/kyyHZwTk9ewas188qFBQxubGub/SXk2zsXL+zoYz3hCRPcQ+a
+	 MJFOtWX5PHtuuQy79sb048mulc5p1BlyyboQG0qzdHxaVz9QTtejXcgkND7OwS1M6tpYA
+	 +ykM/x5Sgbna2sD9dkXwOb+BY72VJKqz1ajitw/NHihhBmhVtI6rpNn0L7RNcOA6szGzf
+	 bkZoyjKeIAxQpx3ugBdoBL+XP7JL38ZM2rkGwXbh9Y4a8krc98hppNw6U8yS+5+7YwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CWrY/HSp";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nT2YVMIg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0CD606A337;
-	Wed, 18 Nov 2026 19:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D647606A334;
+	Wed, 18 Nov 2026 19:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CWrY/HSp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21501F000C9;
-	Wed, 18 Nov 2026 19:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nT2YVMIg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C1021F000C9;
+	Wed, 18 Nov 2026 19:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028423;
-	bh=ZXlZNPuRKKAGRBFS3UCQrviIC++51yUhQj5p1mz4e98=;
+	s=korg; t=1795028426;
+	bh=idyWzYQeBkVX/HpgG2AOryIQzGLXbPJ0yCgFYkfiRvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CWrY/HSpCEJcxzjyC+G12ht4MP53Ee7ODKNmh8uqMZduIEBolVEmVNsjeu1sMNLeo
-	 LHF3e3kCDtd+vAhIuntpeVNAuhLzzG+RoVPSWrWgD8DzcBfktDyAIUTZz4Ay+UZ7b5
-	 URI5FGSB8+k6HpsUx2z5wZ8Snn7+23QUnPVp5kcA=
+	b=nT2YVMIglTcwCCjCRadYL+Elbq/oGrw5gPeBX5YfoDl9iMs17Arg4ncV6164vnQYy
+	 COkAEG1GL9WSP8va4R097OvK7wFxnF4Z8oKFMW2X+B8uwU/gvCs4gzikRCR3CLu2z2
+	 ziVFSyF8oOYVpl8V4uHU8SXgPED7k4L6nvZaf4Vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2132/2151] PCI/sysfs: Decouple acpi_index from the optional device name element
-Date: Wed, 18 Nov 2026 16:04:27 +0100
-Message-ID: <20261118150239.344612451@linuxfoundation.org>
+	syzbot+5af33dd272b913b65880@syzkaller.appspotmail.com,
+	Szymon Wilczek <swilczek.lx@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.18 2141/2151] fs/ntfs3: fix deadlock in ni_read_folio_cmpr
+Date: Wed, 18 Nov 2026 16:04:36 +0100
+Message-ID: <20261118150239.663137426@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,126 +62,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Szymon Wilczek <swilczek.lx@gmail.com>
 
-[ Upstream commit 337bdf853101a0ee66eadf668f0fef21f8276b52 ]
+commit e37a75bb866c29da954b51d0dd7670406246d9ee upstream.
 
-The "_DSM for Naming a PCI or PCI Express Device Under Operating Systems"
-(PCI Firmware r3.3, sec 4.6.7) returns a package of two elements:
+Syzbot reported a task hung in ni_readpage_cmpr (now ni_read_folio_cmpr).
+This is caused by a lock inversion deadlock involving the inode mutex
+(ni_lock) and page locks.
 
-  1) Instance number (mandatory Integer)
-  2) String name (optional String, null string if not populated)
+Scenario:
+1. Task A enters ntfs_read_folio() for page X. It acquires ni_lock.
+2. Task A calls ni_read_folio_cmpr(), which attempts to lock all pages in
+   the compressed frame (including page Y).
+3. Concurrently, Task B (e.g., via readahead) has locked page Y and
+   calls ntfs_read_folio().
+4. Task B waits for ni_lock (held by A).
+5. Task A waits for page Y lock (held by B).
+   -> DEADLOCK.
 
-These are exposed as sysfs 'acpi_index' and 'label'. Previously, if
-the name was malformed, reads of 'acpi_index' failed unnecessarily.
+The fix is to restructure locking: do not take ni_lock in ntfs_read_folio().
+Instead, acquire ni_lock inside ni_read_folio_cmpr() ONLY AFTER all required
+page locks for the frame have been successfully acquired. This restores the
+correct lock ordering (Page Lock -> ni_lock) consistent with VFS.
 
-Validate each element only for the attribute that exports it.  So
-"acpi_index" now depends on the instance number alone, and "label" reads
-fail with -EIO when the name element is neither a string nor a buffer.  The
-package elements pointer is read only after the object type has been
-checked.
-
-On platforms with a valid instance number and a malformed name element the
-"acpi_index" attribute starts returning data.  Because udev derives the
-onboard interface name from "acpi_index", an interface on such a platform
-may be renamed once, on the first boot after this change.  That is the
-attribute assuming the value the firmware always provided.
-
-Link: https://github.com/pciutils/pciutils/issues/175
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260814070522.2327975-3-kwilczynski@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+5af33dd272b913b65880@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5af33dd272b913b65880
+Fixes: f35590ee26f5 ("fs/ntfs3: remove ntfs_bio_pages and use page cache for compressed I/O")
+Signed-off-by: Szymon Wilczek <swilczek.lx@gmail.com>
+[almaz.alexandrovich@paragon-software.com: ni_readpage_cmpr was renamed to ni_read_folio_cmpr]
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-label.c | 53 +++++++++++++++++++++++++----------------
- 1 file changed, 33 insertions(+), 20 deletions(-)
+ fs/ntfs3/frecord.c |    2 ++
+ fs/ntfs3/inode.c   |    3 +--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/pci-label.c b/drivers/pci/pci-label.c
-index f81248a11a18e..08c461f1142d7 100644
---- a/drivers/pci/pci-label.c
-+++ b/drivers/pci/pci-label.c
-@@ -157,7 +157,7 @@ static int dsm_get_label(struct device *dev, char *buf,
- {
- 	acpi_handle handle = ACPI_HANDLE(dev);
- 	union acpi_object *obj, *tmp;
--	int len = 0;
-+	int len;
- 
- 	if (!handle)
- 		return -ENODEV;
-@@ -167,30 +167,43 @@ static int dsm_get_label(struct device *dev, char *buf,
- 	if (!obj)
- 		return -EIO;
- 
-+	if (obj->type != ACPI_TYPE_PACKAGE || obj->package.count != 2) {
-+		len = -EIO;
-+		goto out;
-+	}
-+
- 	tmp = obj->package.elements;
--	if (obj->type == ACPI_TYPE_PACKAGE && obj->package.count == 2 &&
--	    tmp[0].type == ACPI_TYPE_INTEGER &&
--	    (tmp[1].type == ACPI_TYPE_STRING ||
--	     tmp[1].type == ACPI_TYPE_BUFFER)) {
--		/*
--		 * The second string element is optional even when
--		 * this _DSM is implemented; when not implemented,
--		 * this entry must return a null string.
--		 */
--		if (attr == ACPI_ATTR_INDEX_SHOW) {
--			len = sysfs_emit(buf, "%llu\n", tmp->integer.value);
--		} else if (attr == ACPI_ATTR_LABEL_SHOW) {
--			if (tmp[1].type == ACPI_TYPE_STRING)
--				len = sysfs_emit(buf, "%s\n",
--						 tmp[1].string.pointer);
--			else if (tmp[1].type == ACPI_TYPE_BUFFER)
--				len = dsm_label_utf16s_to_utf8s(tmp + 1, buf);
--		}
-+	if (tmp[0].type != ACPI_TYPE_INTEGER) {
-+		len = -EIO;
-+		goto out;
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -2119,7 +2119,9 @@ int ni_read_folio_cmpr(struct ntfs_inode
+ 		pages[i] = pg;
  	}
  
-+	if (attr == ACPI_ATTR_INDEX_SHOW) {
-+		len = sysfs_emit(buf, "%llu\n", tmp[0].integer.value);
-+		goto out;
-+	}
-+
-+	/*
-+	 * Per PCI Firmware r3.3, sec 4.6.7, the device name is optional
-+	 * even when this _DSM is implemented. When not implemented, this
-+	 * entry must return a NULL string.
-+	 */
-+	switch (tmp[1].type) {
-+	case ACPI_TYPE_STRING:
-+		len = sysfs_emit(buf, "%s\n", tmp[1].string.pointer);
-+		break;
-+	case ACPI_TYPE_BUFFER:
-+		len = dsm_label_utf16s_to_utf8s(&tmp[1], buf);
-+		break;
-+	default:
-+		len = -EIO;
-+		break;
-+	}
-+
-+out:
- 	ACPI_FREE(obj);
++	ni_lock(ni);
+ 	err = ni_read_frame(ni, frame_vbo, pages, pages_per_frame, 0);
++	ni_unlock(ni);
  
--	return len > 0 ? len : -EIO;
-+	return len;
- }
+ out1:
+ 	for (i = 0; i < pages_per_frame; i++) {
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -761,9 +761,8 @@ static int ntfs_read_folio(struct file *
+ 	}
  
- static ssize_t label_show(struct device *dev, struct device_attribute *attr,
--- 
-2.53.0
-
+ 	if (is_compressed(ni)) {
+-		ni_lock(ni);
++		/* ni_lock is taken inside ni_read_folio_cmpr after page locks */
+ 		err = ni_read_folio_cmpr(ni, folio);
+-		ni_unlock(ni);
+ 		return err;
+ 	}
+ 
 
 
