@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025815;
-	b=K/f8H3K0gUbFJJKe05Yc41Yfxb+PccUPI2YLsS20iKS2PmQt2gyVEIUtCMhNX1JFwQsE
-	 hiasnkvQiiP9asbPpKih/wQP3EbEKkEEHKxCVv4Laoxn1d4VQh+pcFtFtBat03cOlGxfy
-	 YGCOaddIovnsmoDK+RqPt9diUNxzZ1tnaFXlUWZVCqrg7fieg5ccwKlNRxeVFpIy7yg/Y
-	 0IV2nklAVRzBoqnJnxWuIr3fYiP27bBoUfJd2slNg8as1odEEGki5b679nzqK+4sGis4l
-	 +YE1XlsPD9y5ErdQTYiQyMvYRSI+9C62gPLLif+XVaMmbg01N7wgOOhoaGLkONyc9gA==
+	t=1795025818;
+	b=Teisztj3j8khTgv+LQPhWB1E4Nf7vF1RN0c2sfFwYqCoJI3PorD7MGRc5ilZMVgvrkU+
+	 g1XwZvJs9vLE+iElrCjnAiP6UtwHbwQXkuZ6JJWJm96ojnmu16Jm8mR80LAYsX1iPtx/3
+	 76cYk42ANgZlLD4n6ELNI6rnZWSA2JGb26BWFXW0CF+jgoITcNstyvBMxk5qvPJXDuhZC
+	 o6i0iTSVx+/KDx6BG4ZLBqNMzOtCEpaNhwZjHoEbXTevw128GZ5FXFt5qf9Ww1APu7WHL
+	 4Au+6EkREjzTuIaUOqxZzHi+ufSSFcZzsWgoIng/BFeAMnz/g7JeVYx4YfWdjuy8lOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025815;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025818;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UQifX8yyhLNyxk15Y8fbsqTw95DZujcfBBMvEECusdc=;
-	b=sGY0CAo1iccSoOxdGxeySAPQWH7BvETh5NvV+VHoTIlPYoUbz1sL4YEY4MG3USFbYJjt
-	 PpubKrUwDBXQ0zH6ftxziK19jTnOVuyBPJYAk3LI/3RXQOjnq4uhQvvq+EvNCcVPZuEF0
-	 t3IzRH2WmUs+TZMd8AleV9Usblc8hSzM2ndf2Q7W1sNr0rozzOw8OY9YyUIle/+XCnpNc
-	 LSBcrRx8YBB7rk65LhSildz3ASx/Pt7X4H0DHsoaESpZsgjLMST1BL0TIlH1CmczGz3wS
-	 OfCcGr4xlh9wJeQxoQhDuhBlSAtNCaBAG0DNOVZ7EbLLROy+PwDD8tQY0+GhIBfKoAQ==
+	bh=X3+6CWYTTEf7ZEg/LxphvAQnUS7EF66AIaF/VIcsJnE=;
+	b=ektKMO1QajrEkBlP/D6UBtp8QaGd0O153j3viN+RvuAj+bbQ34yZ4xE7ydvBgK2/fbJN
+	 XM3ywBpw32w9s8qQNmo3nbnxZVa4sli+3r5hvDz86jGiwOrehxW9QCMmp4Nj9hqzd2LIc
+	 DkJ/BRieBPP8Rdk7Jm6jM80RMSdnEZg6oLcmmOZknQpqSG7wbzf6OaDInlRPE6DTFiN/O
+	 oJchd4Ud34QfJKcDRJirq5wWoZXxaheESy6N9BrefXW9V/9JFvb1UpfMohWctZYINO2eZ
+	 AYiHC5I4iw5DnMsI6NdsxFnD7B3NSBNXlS33oB8K4u9SE/+2lU0eEVZWVPWEuGRAIWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UBftnoXM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Nab/+scb";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E6D606A33B;
-	Wed, 18 Nov 2026 18:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4806A606A31C;
+	Wed, 18 Nov 2026 18:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UBftnoXM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75A11F000C4;
-	Wed, 18 Nov 2026 18:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nab/+scb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C2D91F000C4;
+	Wed, 18 Nov 2026 18:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025815;
-	bh=UQifX8yyhLNyxk15Y8fbsqTw95DZujcfBBMvEECusdc=;
+	s=korg; t=1795025818;
+	bh=X3+6CWYTTEf7ZEg/LxphvAQnUS7EF66AIaF/VIcsJnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UBftnoXM/ttZOMi4aPtZP7TDew4iFy7NAv8I4cHhI/SQRY1t8YXXuKvmZbliwi1Q2
-	 Z5Q7wke2EKy2VRTSqE6EkQFMsiWBdpi4ielz05/pTMaoBFWu3fbsdLW1dcnzQMu7O5
-	 X03eSiLuKjjUm0ZsJZ/uaAoKIiAdqTvSMrLcCsyE=
+	b=Nab/+scbPlw6YaWLPH8G2qYVPVTLzKH4GeaIFUIAmeAxZsmiwTp1gcIJ4v5rBxn1P
+	 1bF1Tc9ZZM3jTQfJga2l68PoxRR+ehI6qnZyUivNeodJX58PkQtKaS7r6miJQSGxZX
+	 e9E28993mEkB0kLqZLOrkghxRtGofeCmBhqTrU0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Junker <fubar-coder@live.de>,
-	Mark Anthony Agarro <markanthonyagarro@gmail.com>,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Jiale Yao <yaojiale02@163.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1214/2151] wifi: mt76: mt7925: keep the join ROC until the station is authorized
-Date: Wed, 18 Nov 2026 15:49:09 +0100
-Message-ID: <20261118150206.424355124@linuxfoundation.org>
+Subject: [PATCH 6.18 1215/2151] wifi: mt76: usb: fix source overread in mt76u_copy
+Date: Wed, 18 Nov 2026 15:49:10 +0100
+Message-ID: <20261118150206.459729350@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,109 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Anthony Agarro <markanthonyagarro@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit ac22c8c723c62013dd45b74e32249fc877c86fe0 ]
+[ Upstream commit d435130cdd064b901d8ce5ada0322298e6a86a49 ]
 
-When a non-MLO station associates, mgd_complete_tx() aborts the join ROC
-as soon as the association succeeds, which is right before the supplicant
-sends message 2 of the 4-way handshake. With the abort that close to
-message 2, the adapter acknowledges nothing the AP sends for the next
-several ms: the AP sends message 3 and its seven retries within about
-5 ms, none is acknowledged, and the handshake ends with reason 15
-(4WAY_HANDSHAKE_TIMEOUT).
+mt76u_copy() rounds up len to a multiple of four and uses the rounded
+length as the bound for memcpy() from the source buffer. When the
+caller's length is not four-byte aligned, the final copy reads up to
+three bytes past the source buffer.
 
-Keep the ROC after a successful (re)association on a non-MLD station
-interface and release it when the station is authorized, on
-disassociation, or when the station is removed. The ROC timer still ends
-it if none of that happens. MLD interfaces keep the old behaviour: there
-the ROC that is active at this point is the MLO ROC set up by
-mt7925_mac_set_links(), and holding it makes mt7925_set_mlo_roc() fail
-with -EBUSY in the link activation work, which leaves one link instead of
-two.
+Keep the original length for the source copy and zero the remaining
+bytes in the transmit buffer so that the hardware access width remains
+four-byte aligned.
 
-Tested by a reporter on an MT7925U (USB) against a FRITZ!Box 5690 Pro on
-a 6 GHz-only, non-MLO SSID, kernel 7.2.3, from traces and monitor
-captures taken in separate runs:
-
-                       handshakes   first M3 acked   abort before M2
-  unpatched               8 of 84         0 of 83           84 of 84
-  this patch             30 of 30        31 of 31            0 of 30
-
-With the patch the AP sends message 3 once and the adapter acknowledges
-it straight away; the ROC is released right after the station is
-authorized. A 20 ms delay after the abort instead of this change gave
-15 of 15, which points at the abort timing and not at the delay.
-
-Tested here on an MT7925 and an MT7927 (PCIe), kernel 7.3.0-rc4: on a
-non-MLO SSID neither build showed the failure (1 stalled handshake in 110
-unpatched, none patched), so no effect could be measured there. On an MLO
-connection the change is inert: 16 of 16 link activations succeeded in
-two rounds per build, with two active links and the same ROC order as
-before.
-
-Not tested: other APs, other USB parts, MT7927 over USB, MLO connections
-beyond the check above.
-
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Reported-by: Mark Junker <fubar-coder@live.de>
-Closes: https://github.com/morrownr/mt76/issues/106
-Tested-by: Mark Junker <fubar-coder@live.de>
-Signed-off-by: Mark Anthony Agarro <markanthonyagarro@gmail.com>
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20261006031425.20922-1-lucid_duck@justthetip.ca
+Fixes: 9446248669968 ("mt76: speed up usb bulk copy")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260925150556.2304003-2-yaojiale02@163.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7925/main.c  | 21 +++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/net/wireless/mediatek/mt76/usb.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index aab70b030c747..d84d7180fe608 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -1084,6 +1084,13 @@ int mt7925_mac_sta_event(struct mt76_dev *mdev, struct ieee80211_vif *vif,
- 			 struct ieee80211_sta *sta, enum mt76_sta_event ev)
+diff --git a/drivers/net/wireless/mediatek/mt76/usb.c b/drivers/net/wireless/mediatek/mt76/usb.c
+index b39dbf22dfc1d..317b3ee648ea8 100644
+--- a/drivers/net/wireless/mediatek/mt76/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/usb.c
+@@ -160,8 +160,10 @@ static void mt76u_copy(struct mt76_dev *dev, u32 offset,
  {
- 	struct ieee80211_link_sta *link_sta = &sta->deflink;
-+	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
-+
-+	if (mvif->roc_join_held && !sta->tdls &&
-+	    (ev == MT76_STA_EVENT_AUTHORIZE || ev == MT76_STA_EVENT_DISASSOC)) {
-+		mvif->roc_join_held = false;
-+		mt7925_abort_roc(mvif->phy, &mvif->bss_conf);
-+	}
+ 	struct mt76_usb *usb = &dev->usb;
+ 	const u8 *val = data;
+-	int ret;
+ 	int current_batch_size;
++	int len_aligned;
++	int copy_len;
++	int ret;
+ 	int i = 0;
  
- 	if (ev != MT76_STA_EVENT_ASSOC)
- 		return 0;
-@@ -1235,6 +1242,7 @@ void mt7925_mac_sta_remove(struct mt76_dev *mdev, struct ieee80211_vif *vif,
+ 	/* Assure that always a multiple of 4 bytes are copied,
+@@ -169,12 +171,16 @@ static void mt76u_copy(struct mt76_dev *dev, u32 offset,
+ 	 * See: "mt76: round up length on mt76_wr_copy"
+ 	 * Commit 850e8f6fbd5d0003b0
+ 	 */
+-	len = round_up(len, 4);
++	len_aligned = round_up(len, 4);
  
- 	if (vif->type == NL80211_IFTYPE_STATION) {
- 		mvif->wep_sta = NULL;
-+		mvif->roc_join_held = false;
- 		ewma_rssi_init(&mvif->bss_conf.rssi);
- 	}
- 
-@@ -1890,6 +1898,19 @@ static void mt7925_mgd_complete_tx(struct ieee80211_hw *hw,
- {
- 	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
- 
-+	/* Keep the join ROC until the station is authorized, so that it
-+	 * covers the 4-way handshake. mt7925_mac_sta_event() releases it.
-+	 * On MLD, the active ROC is the MLO ROC, which must be released
-+	 * before the link activation work sets its own.
-+	 */
-+	if (vif->type == NL80211_IFTYPE_STATION && !ieee80211_vif_is_mld(vif) &&
-+	    info->success &&
-+	    (info->subtype == IEEE80211_STYPE_ASSOC_REQ ||
-+	     info->subtype == IEEE80211_STYPE_REASSOC_REQ)) {
-+		mvif->roc_join_held = true;
-+		return;
-+	}
-+
- 	mt7925_abort_roc(mvif->phy, &mvif->bss_conf);
- }
- 
+ 	mutex_lock(&usb->usb_ctrl_mtx);
+-	while (i < len) {
+-		current_batch_size = min_t(int, usb->data_len, len - i);
+-		memcpy(usb->data, val + i, current_batch_size);
++	while (i < len_aligned) {
++		current_batch_size = min_t(int, usb->data_len, len_aligned - i);
++		copy_len = min_t(int, current_batch_size, len - i);
++		memcpy(usb->data, val + i, copy_len);
++		if (copy_len < current_batch_size)
++			memset(usb->data + copy_len, 0,
++			       current_batch_size - copy_len);
+ 		ret = __mt76u_vendor_request(dev, MT_VEND_MULTI_WRITE,
+ 					     USB_DIR_OUT | USB_TYPE_VENDOR,
+ 					     0, offset + i, usb->data,
 -- 
 2.53.0
 
