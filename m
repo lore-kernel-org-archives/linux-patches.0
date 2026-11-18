@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022738;
-	b=DQIjywpP03auN3ivFQMUfGZevRVfl93l9NPUfpfjn8/5IIwLi7MRo2gnJUOIdzYEbTgg
-	 6G7ZKx2rg4iLxcZgE2uObhF1tuKz53/h04+mxyUJKk+1AcNPgmvT+p8HnHoYYevMpgOWH
-	 G26vRq1jsJJSkL+Sipy6rMD5OD90NMNcubgkMfgaSugeW3eLoXSF/W0k6iB5tiST1zttH
-	 uvYykE0l/acDmtxhX4KSr2OGcdadIpf0kyBntkPCLNbaCeT3a6l4ohAO+OcW624Co4AlT
-	 BeNUSNRXGmQAdSsAVPc840+yuAO6bIISf1exWOwGVLfL6g4s96dBV7PWUdecptjRlYA==
+	t=1795022741;
+	b=u67PlB7gVPt2YlZTJoH/gN+4u7DbO1l6wZ7i50adwYRtByQmJUMihJG+lV6gQE/oc2Zx
+	 WTXPMuFKbVaZrXvhf3+ywuiFCKCOodG58hVEHwm1kgp4uywJBWvmp8EJVJPqTV8o6+4jC
+	 4ox9OBj4n7d5zvI6f04W4rvqoj9S8ad0Gvg04llSWwxUzCffseSBaUrPKSlpjORG+bUpK
+	 fJkWL3erz/JUwSSumYTTJSp8FhkvvkxB6dd04QXCvssdFo8yKTwp6zReA1qhYV3eQWvxu
+	 thhR/+crC+bhdRF7fIU9tTPOh3/SBuHEKDpko2VfHrMKrl3/iivdrx6HpzdjBjVa4oQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022738;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022741;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wFN4w31tHXinTAR43ukLsU0ieuH6FCXec528C7b9sI0=;
-	b=a16DIMzammfVDOKr/Mybl92Nmf9U0WCFy8v0nyfunADIVMCioQFtUwKZ21x3HS5KwtwT
-	 AXc3U4IyJauiKr4e4uz2MhrlEIE7f+RJvkI/ZtHxM8VQdmgnWhvYMui4/B01E3mQqmCc0
-	 g5i/wr9jUZ0VcTUfvrEMesu/Spc/zbN0uX7T0s/8bHkTenTUU3WcBbDTgNEW9/nWqDhOD
-	 1odRJkc4/vnUFUq7F4oMXJ6B4mNYiuFuPfIoEe+liMgMASyry9jDG9ZGk8CMYUGbuNPLC
-	 rPduQm+MxPil+ejmW9lETbphGyu0ZfjY56heJxJaetctUARi6LblA6+zMIc3H8VlBxg==
+	bh=WZnwfLo34mKNUZFow3UKwzGjynordBkFOGp8b80rjtU=;
+	b=aF+1DMaP6rQy38Ex+KXBMv0pbQ2vhgsa8rw4l+fleTRwIh1Bmh0pykBQBzeHhLemsuyf
+	 k9lZ735hW8USgyY9IEGXssmsuBNYSZzJoCjl5cWtBbmbWaMMotNQwKk4PSmD0n9XHpB6X
+	 yxhgujn3JnNTkOkvu02pNaJrInymKwrgGk/dSGLKbpXpran5FfsFhzqwPUOdqXXj9LnKI
+	 OymhCwKGvkQQViwT2IC58kEKGwVlb75PXQ2CWdwUNr9OjG3KY5wqhRrq3AMwEafOJyBEb
+	 zyf20xc/bL1qcJiWHl16DKLOQyfSa5eNervN92ZKg8sL3CIOAl7MH0gNF5R1C7sibZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MFb908Xs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pgwPW+Ss;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8115960A2604;
-	Wed, 18 Nov 2026 17:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3CD606A320;
+	Wed, 18 Nov 2026 17:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MFb908Xs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0B21F000C7;
-	Wed, 18 Nov 2026 17:25:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pgwPW+Ss
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44EE1F000C4;
+	Wed, 18 Nov 2026 17:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022738;
-	bh=wFN4w31tHXinTAR43ukLsU0ieuH6FCXec528C7b9sI0=;
+	s=korg; t=1795022741;
+	bh=WZnwfLo34mKNUZFow3UKwzGjynordBkFOGp8b80rjtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MFb908XsJcjTU/1bBIiVhLx23wJU/HD9VAa8wA591lu+PhTxPPA8mZJKgPBexBVkj
-	 rG5Yu+Bu7mBoOvmik1s6hCo9ZnT5/5d34ftEE+MSJx/Rt8NSoQsjUHzwVggF/R2flR
-	 zl4HgTsUM28Jjau1JJ0sD7sg8DbkmX/Mii5Y15Ks=
+	b=pgwPW+SsgDULrLdCDN29D0h04XqYB4jMjiSycoeaKhTQD+h5LQXQ7jjzba7oeTDRD
+	 W++v5ep3U5uDXJxAP07N2kV60sGrLofmWeuxMok2TCxquMVJG7iJBu1rFyssuGPQ+G
+	 QMQR+v4z3lJhQ3owU1j+6GaMAhVsx7bUQUdiBOMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edvard Conrad <edvard@tuta.io>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Ian Bridges <icb@fastmail.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0120/2151] ovl: inherit FMODE_NONOTIFY when reading directory layers
-Date: Wed, 18 Nov 2026 15:30:55 +0100
-Message-ID: <20261118150126.161633012@linuxfoundation.org>
+Subject: [PATCH 6.18 0094/2151] ksmbd: let the owner read and change the DACL when no ACE names it
+Date: Wed, 18 Nov 2026 15:30:29 +0100
+Message-ID: <20261118150125.228608866@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,174 +68,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Ian Bridges <icb@fastmail.org>
 
-[ Upstream commit 9ff338af0e002fe217cfa16b1289b76f6b21fc72 ]
+[ Upstream commit ffc855fe16afe02b22305111aa68cd8d07360941 ]
 
-Listing a merged or impure overlay directory opens the real layer
-directories from ovl_dir_read(), when the readdir cache is filled.
-Those opens use plain ovl_path_open(), so when the directory fd is
-one that fanotify created for a permission event, they can still raise
-FS_OPEN_PERM.  A listener that also marks the backing filesystem and
-calls getdents() on the event fd before answering then deadlocks the
-same way as with the directory open fixed by the previous commit.
+smb_check_perm_dacl() refuses the owner when neither its DACL lookup nor
+the POSIX ACL fallback matches. The owner then cannot read or replace
+the DACL over SMB. MS-DTYP 2.5.3.2 grants the owner READ_CONTROL and
+WRITE_DAC unless an OWNER RIGHTS ACE applies.
 
-Store the overlay user file in struct ovl_readdir_data and pass it to
-ovl_path_open_realfile() from ovl_dir_read(), for both the merged and
-the impure cache.  Internal readers such as ovl_check_empty_dir() and
-the mount-time workdir cleanup still pass no user file.
+An empty DACL allows the owner's explicit requests for these rights but
+refuses MAXIMUM_ALLOWED. smb2_open() uses that check for the maximal
+access reply (MS-SMB2 3.3.5.9.5), so even a READ_CONTROL open fails when
+it asks for that reply.
 
-A note about severity and real world impact: The FAN_OPEN_PERM event is
-traditionally used by anti-malware protection agents and security/audit
-agents. The scope that is often used in those use cases is FAN_MARK_MOUNT
-and agents typically monitor multiple mounts in a mount namespace.
-FAN_OPEN_PERM from directory open requires user opt-in with FAN_ONDIR.
-It is often not the case that anti-malware agents monitor open of
-directories. Security/audit engines are more likely to opt-into
-FAN_OPEN_PERM on directories, but are less likely to list the content
-of a directory within the scope of FAN_OPEN_PERM event, so the real
-world impact of this bug is likely not significant.
+Grant the owner's implicit rights on both paths, for explicit requests
+and MAXIMUM_ALLOWED, unless an OWNER RIGHTS ACE applies.
 
-Reported-by: Edvard Conrad <edvard@tuta.io>
-Closes: https://lore.kernel.org/all/P5Qu3co--N-9@tuta.io/
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Tested-by: Edvard Conrad <edvard@tuta.io>
-Link: https://lore.kernel.org/ltp/P5WKBbq--F-9@tuta.io/
-Co-developed-by: Edvard Conrad <edvard@tuta.io>
-Signed-off-by: Edvard Conrad <edvard@tuta.io>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[ sashal: Retained the dentry declaration still required by ovl_iterate(). ]
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: added the missing sid_owner_rights definition required by the upstream patch ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/readdir.c | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ fs/smb/server/smbacl.c | 37 +++++++++++++++++++++++++++++++++----
+ 1 file changed, 33 insertions(+), 4 deletions(-)
 
-diff --git a/fs/overlayfs/readdir.c b/fs/overlayfs/readdir.c
-index 3c8fe45b06f12..efa3964041932 100644
---- a/fs/overlayfs/readdir.c
-+++ b/fs/overlayfs/readdir.c
-@@ -41,6 +41,7 @@ struct ovl_dir_cache {
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index d8c01e775d941..42a638d1d2b97 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -27,6 +27,9 @@ static const struct smb_sid creator_owner = {
+ /* security id for everyone/world system group */
+ static const struct smb_sid creator_group = {
+ 	1, 1, {0, 0, 0, 0, 0, 3}, {cpu_to_le32(1)} };
++/* security id for owner rights */
++static const struct smb_sid sid_owner_rights = {
++	1, 1, {0, 0, 0, 0, 0, 3}, {cpu_to_le32(4)} };
  
- struct ovl_readdir_data {
- 	struct dir_context ctx;
-+	const struct file *user_file;
- 	struct dentry *dentry;
- 	bool is_lowest;
- 	struct rb_root *root;
-@@ -380,7 +381,8 @@ static inline int ovl_dir_read(const struct path *realpath,
- 	struct file *realfile;
- 	int err;
+ /* security id for everyone/world system group */
+ static const struct smb_sid sid_everyone = {
+@@ -1466,6 +1469,7 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 	int i, found = 0;
+ 	unsigned int access_bits = 0, denied = 0;
+ 	struct smb_ace *others_ace = NULL;
++	bool or_ace = false;
+ 	struct posix_acl_entry *pa_entry;
+ 	unsigned int sid_type = SIDOWNER;
+ 	unsigned short ace_size;
+@@ -1498,6 +1502,8 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 	is_owner = uid == from_kuid(&init_user_ns, vfsuid_into_kuid(vfsuid));
  
--	realfile = ovl_path_open(realpath, O_RDONLY | O_LARGEFILE);
-+	realfile = ovl_path_open_realfile(rdd->user_file, realpath,
-+					  O_RDONLY | O_LARGEFILE);
- 	if (IS_ERR(realfile))
- 		return PTR_ERR(realfile);
- 
-@@ -424,13 +426,14 @@ static void ovl_dir_reset(struct file *file)
- }
- 
- static int ovl_dir_read_merged(struct dentry *dentry, struct list_head *list,
--	struct rb_root *root)
-+	struct rb_root *root, const struct file *user_file)
- {
- 	int err;
- 	struct path realpath;
- 	struct ovl_readdir_data rdd = {
- 		.ctx.actor = ovl_fill_merge,
- 		.ctx.count = INT_MAX,
-+		.user_file = user_file,
- 		.dentry = dentry,
- 		.list = list,
- 		.root = root,
-@@ -483,9 +486,10 @@ static void ovl_seek_cursor(struct ovl_dir_file *od, loff_t pos)
- 	od->cursor = p;
- }
- 
--static struct ovl_dir_cache *ovl_cache_get(struct dentry *dentry)
-+static struct ovl_dir_cache *ovl_dir_cache_get(struct file *file)
- {
- 	int res;
-+	struct dentry *dentry = file->f_path.dentry;
- 	struct ovl_dir_cache *cache;
- 	struct inode *inode = d_inode(dentry);
- 
-@@ -505,7 +509,7 @@ static struct ovl_dir_cache *ovl_cache_get(struct dentry *dentry)
- 	INIT_LIST_HEAD(&cache->entries);
- 	cache->root = RB_ROOT;
- 
--	res = ovl_dir_read_merged(dentry, &cache->entries, &cache->root);
-+	res = ovl_dir_read_merged(dentry, &cache->entries, &cache->root, file);
- 	if (res) {
- 		ovl_cache_free(&cache->entries);
- 		kfree(cache);
-@@ -649,8 +653,8 @@ static bool ovl_fill_plain(struct dir_context *ctx, const char *name,
- 	return true;
- }
- 
--static int ovl_dir_read_impure(const struct path *path,  struct list_head *list,
--			       struct rb_root *root)
-+static int ovl_dir_read_impure(const struct path *path, struct list_head *list,
-+			       struct rb_root *root, const struct file *user_file)
- {
- 	int err;
- 	struct path realpath;
-@@ -658,6 +662,7 @@ static int ovl_dir_read_impure(const struct path *path,  struct list_head *list,
- 	struct ovl_readdir_data rdd = {
- 		.ctx.actor = ovl_fill_plain,
- 		.ctx.count = INT_MAX,
-+		.user_file = user_file,
- 		.list = list,
- 		.root = root,
- 	};
-@@ -695,9 +700,10 @@ static int ovl_dir_read_impure(const struct path *path,  struct list_head *list,
- 	return 0;
- }
- 
--static struct ovl_dir_cache *ovl_cache_get_impure(const struct path *path)
-+static struct ovl_dir_cache *ovl_cache_get_impure(struct file *file)
- {
- 	int res;
-+	const struct path *path = &file->f_path;
- 	struct dentry *dentry = path->dentry;
- 	struct inode *inode = d_inode(dentry);
- 	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
-@@ -715,7 +721,7 @@ static struct ovl_dir_cache *ovl_cache_get_impure(const struct path *path)
- 	if (!cache)
- 		return ERR_PTR(-ENOMEM);
- 
--	res = ovl_dir_read_impure(path, &cache->entries, &cache->root);
-+	res = ovl_dir_read_impure(path, &cache->entries, &cache->root, file);
- 	if (res) {
- 		ovl_cache_free(&cache->entries);
- 		kfree(cache);
-@@ -836,7 +842,7 @@ static int ovl_iterate_real(struct file *file, struct dir_context *ctx)
- 	dput(parent);
- 
- 	if (ovl_is_impure_dir(file)) {
--		rdt.cache = ovl_cache_get_impure(&file->f_path);
-+		rdt.cache = ovl_cache_get_impure(file);
- 		if (IS_ERR(rdt.cache))
- 			return PTR_ERR(rdt.cache);
+ 	if (!pdacl->num_aces) {
++		unsigned int allowed = 0;
++
+ 		/*
+ 		 * An empty (present, zero-ACE) DACL grants no access to
+ 		 * anyone except the object owner's implicit READ_CONTROL
+@@ -1506,9 +1512,14 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 		 * not let trailing bytes after a zero-ACE DACL become an
+ 		 * implicit grant.
+ 		 */
+-		if (!is_owner ||
+-		    (*pdaccess & ~(FILE_READ_CONTROL_LE | FILE_WRITE_DAC_LE)))
++		if (is_owner)
++			allowed = READ_CONTROL | WRITE_DAC;
++		if (*pdaccess & FILE_MAXIMAL_ACCESS_LE)
++			requested |= allowed;
++		if (!allowed || requested & ~allowed)
+ 			rc = -EACCES;
++		else
++			*pdaccess = cpu_to_le32(requested);
+ 		goto err_out;
  	}
-@@ -884,7 +890,7 @@ static int ovl_iterate(struct file *file, struct dir_context *ctx)
- 	if (!od->cache) {
- 		struct ovl_dir_cache *cache;
  
--		cache = ovl_cache_get(dentry);
-+		cache = ovl_dir_cache_get(file);
- 		err = PTR_ERR(cache);
- 		if (IS_ERR(cache))
- 			goto out;
-@@ -1086,7 +1092,7 @@ int ovl_check_empty_dir(struct dentry *dentry, struct list_head *list)
- 	const struct cred *old_cred;
- 
- 	old_cred = ovl_override_creds(dentry->d_sb);
--	err = ovl_dir_read_merged(dentry, list, &root);
-+	err = ovl_dir_read_merged(dentry, list, &root, NULL);
- 	ovl_revert_creds(old_cred);
- 	if (err)
- 		return err;
+@@ -1585,6 +1596,9 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 			found = 1;
+ 			break;
+ 		}
++		if (!compare_sids(&sid_owner_rights, &ace->sid) &&
++		    !(ace->flags & INHERIT_ONLY_ACE))
++			or_ace = true;
+ 		if (!compare_sids(&sid_everyone, &ace->sid) ||
+ 		    !compare_sids(&sid_authusers, &ace->sid))
+ 			others_ace = ace;
+@@ -1629,8 +1643,23 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 		if (others_ace) {
+ 			ace = others_ace;
+ 		} else {
+-			ksmbd_debug(SMB, "Can't find corresponding sid\n");
+-			rc = -EACCES;
++			unsigned int allowed = 0;
++
++			/*
++			 * No ACE names the owner, who may still read and
++			 * change the DACL unless OWNER RIGHTS applies
++			 * (MS-DTYP 2.5.3.2).
++			 */
++			if (is_owner && !or_ace)
++				allowed = READ_CONTROL | WRITE_DAC;
++			if (*pdaccess & FILE_MAXIMAL_ACCESS_LE)
++				requested |= allowed;
++			if (!allowed || requested & ~allowed) {
++				ksmbd_debug(SMB, "Can't find corresponding sid\n");
++				rc = -EACCES;
++				goto err_out;
++			}
++			*pdaccess = cpu_to_le32(requested);
+ 			goto err_out;
+ 		}
+ 	}
 -- 
 2.53.0
 
