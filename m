@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039459;
-	b=c3VFABuWFjlZhPT8z2wep66eOCggecRwD6ptUI2ye+R/H7pU7xSc2RffCW3T3IydyRAv
-	 5r2kzLuiUx/rhqxX2SyDyPjbPCiKccbhzbhKpoGGWx0ycD7PUo3nOspNpcR+VZWE1Av7o
-	 hZyofeI6r2sMcxIkJEEHII6lNdWdnZQa38ANbNlrW9kFbNKsWf1jfpapY4GtELevNVWwR
-	 LZduhQXb21L/ZPqrCqXyQx6oD9ofRsyKEvir18glw2lR7HdOUBWR08bv2wk805KuKTR94
-	 B88gxip1X1y6SCPx3agWoQk7MqkwscsNJnOVa7CK0RvSXM6GXi06QIMF9BeL3iDMbXA==
+	t=1795039462;
+	b=ppoqToo4zuXUk5L98GYKDYw7jVh5XxW2flgsVt+CdzyjbR95AbPysrPahAFo31htC08c
+	 t1WGmY8avNhpOCVC+lCU7cA6HvuDTYr8ELeRigx8vwidDd0Bq8S5lj6cHn0/4eJbvHPY3
+	 sArnhx0woxpQm79KG98MR54dlPxhf6QVRcBzOaz05QOckvxT1xX8d5n3Qk1FXwQVjPFYF
+	 YUdzrBby6f7gTECV/2bkFRlAy5TCXQEM++wvDI2oSDXnzUaYg518fpJAPOXTRrap5GpLQ
+	 T6s2RCV0HI1tdcU7SqNZ6KSborjXXW85c2PG1id/934ekkDbjsFfA9ig46o0Luywbhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039459;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039462;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b6tYahDvILr8l4Hbub0uOvJTtgwI/yNUzvHib1ND2k4=;
-	b=befdAvn6FnCCq4aU6ZWFTu3khqjlJqFnhJLn/c1DeorQpmAW6c1FGj5TzR/xZUPb+ROR
-	 fz0tE1La6njqZGEpg7+s4yphQMtyP2r+ct/T4uQjOnaPHdqslo42RLVkvZHt5wJU0XaJK
-	 wZ51iVgZ+k6/xN2SzsuJraQQnpDaYGAlewgSgqitFSR1U/9pR7ZDE79yOCutM5EafYTZb
-	 d/jdWgqFO0hyrfjs5g2D2HbLwshqCTVoIa/Ud9BxLPqNUH8SWjNw7r/HSDRZiDug+S3ni
-	 ia/w4W/Hup2/wD5oCd7w8tjEKAY2BjswHCbPilNikYRCwe9tdVcsn1ssCKI+ypiqonA==
+	bh=8QJN1kmjcHRRoRG9zMhoTK21Yzn4LD/r4AKxeYl/oow=;
+	b=ZJud7FOMSnxrSYnPCuxl4b0bfnoBB1Bop4ezHL0gUl2mwKP40cKhnNkT4qo9e1tsK3Ag
+	 VBN7K8vGzItrbXSxm2k4zWNg8W2ArWQi5GN+SbhWKb2ahat4I6GTrTornHeMOv3a9rYsZ
+	 EVmk+e/0qDwNq9uX8EwwSC//QauJphSYV+vNP0DiJ2zf/VXuqxKMeDLOna1HAe8PvT4Io
+	 SwI/wHnwljDBhAL24zGGu32qaCI7YkYDMwLIDONSCHp/gNXp7j5JWjvayCedYvvkTaW3K
+	 TJP2QKb/oebz2mWNgoItqzwwNJDcZ3rYJrnNNtgy4CNtAHF4VyrWAa8ugY+euFHy0sQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T4y237Ay;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f10f000l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1708606A320;
-	Wed, 18 Nov 2026 22:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85484606A337;
+	Wed, 18 Nov 2026 22:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T4y237Ay
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B7801F000C5;
-	Wed, 18 Nov 2026 22:04:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f10f000l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75531F000C4;
+	Wed, 18 Nov 2026 22:04:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039459;
-	bh=b6tYahDvILr8l4Hbub0uOvJTtgwI/yNUzvHib1ND2k4=;
+	s=korg; t=1795039462;
+	bh=8QJN1kmjcHRRoRG9zMhoTK21Yzn4LD/r4AKxeYl/oow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T4y237AyX0Ph333UvTkGRhviwSx5fuRPHAXSPfRrZAEFGYyqbqF0ZfYlwOcIUDPTR
-	 bVorAASHXbze1r9NJheYuMGIqqLYfxxhEzePI14qmgeJP3IGb4VhhZ7oZg3HYy43M5
-	 WHx2eEsJB0E/Va9ZITQ4wn+3oWo93OaZk3a834M0=
+	b=f10f000lV1Sp/bAaPROUi2he8Ge6Pnu5V0l0dqJUcxMbIO6VFNtf0CEKuGghjgStE
+	 5Da3CGzltoZLTeCOY9fFlYsLRWgnbDs6+ATanbR6fNe0+2L/DdG4samCw49NYT0U0M
+	 TSiBnRUl5QcYrQE1BOL2sPEr8OfehkUVIbmmUNSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2109/3318] wifi: ath12k: allocate dummy net_device dynamically
-Date: Wed, 18 Nov 2026 15:45:31 +0100
-Message-ID: <20261118150425.343287996@linuxfoundation.org>
+Subject: [PATCH 6.6 2110/3318] wifi: ath12k: Free allocated external IRQs on request_irq() failure
+Date: Wed, 18 Nov 2026 15:45:32 +0100
+Message-ID: <20261118150425.371825884@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,114 +70,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
 
-[ Upstream commit 4f9206e8c2c15a3770e3eb0b9755a05d559fecea ]
+[ Upstream commit 9a78703ec4a895bd2e99bf43bd18d76683126c19 ]
 
-Embedding net_device into structures prohibits the usage of flexible
-arrays in the net_device structure. For more details, see the discussion
-at [1].
+When external IRQ configuration fails, the driver does not release all
+IRQs that were successfully requested before the failure. This can leak
+IRQ resources during probe failure.
 
-Un-embed the net_device from struct ath12k_ext_irq_grp by converting it
-into a pointer. Then use the leverage alloc_netdev_dummy() to allocate
-the net_device object at ath12k_pci_ext_irq_config().
+Free previously requested external IRQs when external IRQ configuration
+fails.
 
-The free of the device occurs at ath12k_pci_free_ext_irq().
+Also remove the NAPI instance with netif_napi_del() before freeing the
+associated netdev to properly clean up the NAPI resources.
 
-Link: https://lore.kernel.org/all/20240229225910.79e224cf@kernel.org/ [1]
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240508095410.1923198-1-leitao@debian.org
-Stable-dep-of: 9a78703ec4a8 ("wifi: ath12k: Free allocated external IRQs on request_irq() failure")
+Store the IRQ number only after request_irq() succeeds to avoid recording
+an IRQ that was not successfully requested.
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01243-QCAHKSWPL_SILICONZ-1
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260819110215.2485514-3-aaradhana.sahu@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/core.h |  2 +-
- drivers/net/wireless/ath/ath12k/pci.c  | 27 +++++++++++++++++++++-----
- 2 files changed, 23 insertions(+), 6 deletions(-)
+ drivers/net/wireless/ath/ath12k/pci.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/core.h b/drivers/net/wireless/ath/ath12k/core.h
-index 18dfd7aab610c..8f26d8ec789a8 100644
---- a/drivers/net/wireless/ath/ath12k/core.h
-+++ b/drivers/net/wireless/ath/ath12k/core.h
-@@ -127,7 +127,7 @@ struct ath12k_ext_irq_grp {
- 	u64 timestamp;
- 	bool napi_enabled;
- 	struct napi_struct napi;
--	struct net_device napi_ndev;
-+	struct net_device *napi_ndev;
- };
- 
- #define HEHANDLE_CAP_PHYINFO_SIZE       3
 diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
-index df5469ce498f3..3121c67ee16d2 100644
+index 3121c67ee16d2..0600e83a4b0cc 100644
 --- a/drivers/net/wireless/ath/ath12k/pci.c
 +++ b/drivers/net/wireless/ath/ath12k/pci.c
-@@ -353,6 +353,7 @@ static void ath12k_pci_free_ext_irq(struct ath12k_base *ab)
- 			free_irq(ab->irq_num[irq_grp->irqs[j]], irq_grp);
- 
- 		netif_napi_del(&irq_grp->napi);
-+		free_netdev(irq_grp->napi_ndev);
+@@ -342,11 +342,11 @@ static void ath12k_pci_free_ce_irq(struct ath12k_base *ab, int num_ce)
  	}
  }
  
-@@ -552,8 +553,9 @@ static irqreturn_t ath12k_pci_ext_interrupt_handler(int irq, void *arg)
- static int ath12k_pci_ext_irq_config(struct ath12k_base *ab)
+-static void ath12k_pci_free_ext_irq(struct ath12k_base *ab)
++static void ath12k_pci_free_ext_irq(struct ath12k_base *ab, int num_ext_irq_grp)
  {
- 	struct ath12k_pci *ab_pci = ath12k_pci_priv(ab);
--	int i, j, ret, num_vectors = 0;
-+	int i, j, n, ret, num_vectors = 0;
- 	u32 user_base_data = 0, base_vector = 0, base_idx;
-+	struct ath12k_ext_irq_grp *irq_grp;
+ 	int i, j;
  
- 	base_idx = ATH12K_PCI_IRQ_CE0_OFFSET + CE_COUNT_MAX;
- 	ret = ath12k_pci_get_user_msi_assignment(ab, "DP",
-@@ -564,13 +566,18 @@ static int ath12k_pci_ext_irq_config(struct ath12k_base *ab)
- 		return ret;
+-	for (i = 0; i < ATH12K_EXT_IRQ_GRP_NUM_MAX; i++) {
++	for (i = 0; i < num_ext_irq_grp; i++) {
+ 		struct ath12k_ext_irq_grp *irq_grp = &ab->ext_irq_grp[i];
  
- 	for (i = 0; i < ATH12K_EXT_IRQ_GRP_NUM_MAX; i++) {
--		struct ath12k_ext_irq_grp *irq_grp = &ab->ext_irq_grp[i];
-+		irq_grp = &ab->ext_irq_grp[i];
- 		u32 num_irq = 0;
+ 		for (j = 0; j < irq_grp->num_irq; j++)
+@@ -360,7 +360,7 @@ static void ath12k_pci_free_ext_irq(struct ath12k_base *ab)
+ static void ath12k_pci_free_irq(struct ath12k_base *ab)
+ {
+ 	ath12k_pci_free_ce_irq(ab, ab->hw_params->ce_count);
+-	ath12k_pci_free_ext_irq(ab);
++	ath12k_pci_free_ext_irq(ab, ATH12K_EXT_IRQ_GRP_NUM_MAX);
+ }
  
- 		irq_grp->ab = ab;
- 		irq_grp->grp_id = i;
--		init_dummy_netdev(&irq_grp->napi_ndev);
--		netif_napi_add(&irq_grp->napi_ndev, &irq_grp->napi,
-+		irq_grp->napi_ndev = alloc_netdev_dummy(0);
-+		if (!irq_grp->napi_ndev) {
-+			ret = -ENOMEM;
-+			goto fail_allocate;
-+		}
-+
-+		netif_napi_add(irq_grp->napi_ndev, &irq_grp->napi,
- 			       ath12k_pci_ext_grp_napi_poll);
+ static void ath12k_pci_ce_irq_enable(struct ath12k_base *ab, u16 ce_id)
+@@ -598,8 +598,6 @@ static int ath12k_pci_ext_irq_config(struct ath12k_base *ab)
+ 			int vector = (i % num_vectors) + base_vector;
+ 			int irq = ath12k_pci_get_msi_irq(ab->dev, vector);
  
- 		if (ab->hw_params->ring_mask->tx[i] ||
-@@ -603,13 +610,23 @@ static int ath12k_pci_ext_irq_config(struct ath12k_base *ab)
+-			ab->irq_num[irq_idx] = irq;
+-
+ 			ath12k_dbg(ab, ATH12K_DBG_PCI,
+ 				   "irq:%d group:%d\n", irq, i);
+ 
+@@ -610,22 +608,24 @@ static int ath12k_pci_ext_irq_config(struct ath12k_base *ab)
  			if (ret) {
  				ath12k_err(ab, "failed request irq %d: %d\n",
  					   vector, ret);
--				return ret;
-+				goto fail_request;
+-				goto fail_request;
++
++				for (n = 0; n < j; n++)
++					free_irq(ab->irq_num[irq_grp->irqs[n]], irq_grp);
++
++				netif_napi_del(&ab->ext_irq_grp[i].napi);
++				free_netdev(ab->ext_irq_grp[i].napi_ndev);
++				goto fail_allocate;
  			}
++
++			ab->irq_num[irq_idx] = irq;
  		}
  		ath12k_pci_ext_grp_disable(irq_grp);
  	}
  
  	return 0;
-+
-+fail_request:
-+	/* i ->napi_ndev was properly allocated. Free it also */
-+	i += 1;
-+fail_allocate:
-+	for (n = 0; n < i; n++) {
-+		irq_grp = &ab->ext_irq_grp[n];
-+		free_netdev(irq_grp->napi_ndev);
-+	}
-+	return ret;
+ 
+-fail_request:
+-	/* i ->napi_ndev was properly allocated. Free it also */
+-	i += 1;
+ fail_allocate:
+-	for (n = 0; n < i; n++) {
+-		irq_grp = &ab->ext_irq_grp[n];
+-		free_netdev(irq_grp->napi_ndev);
+-	}
++	ath12k_pci_free_ext_irq(ab, i);
+ 	return ret;
  }
  
- static int ath12k_pci_config_irq(struct ath12k_base *ab)
 -- 
 2.53.0
 
