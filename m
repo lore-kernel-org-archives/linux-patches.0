@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027199;
-	b=r2EpJqwfdQLNQqqpc0TQAabR5v4YYKipGY0MbXn9CKV1+Y33KyICFiKjEuoa+WRR6xvs
-	 Co/9q+2D+BGydiYHLsAWbR5UABhDjGlBryKXRn1GNWMm2KFACLbwZHiPeLGN69ajxm3I7
-	 Y7vLkgKVvirsRTEwXnvk051I3tmjCvYskDhDoERoKrvKhpaAyuh482G+9WYuVF8BTghEa
-	 KymTkJKWO2fnVKt0HD8XwwADtT70UeMFkVtMxRPAcGLKu17aMBzteE12kc5pN8iT4fPb+
-	 GsUigzGuj6zSbmm5OS8UAoDCXe0lJJgBNe5y9O/ZtX3Bm4TFp9BB6xWmUsJT11UWqEQ==
+	t=1795027202;
+	b=XfYEdPyWPeqcsc3F6Bfss+3mTOyb/jXABG3PdovsNcQNgFZj307sd4K9sTWO0MM4aziF
+	 NISOpp4lwk7KCOEEpi7t8fsgHunbK+fFo1lg/UflaTeJ7KyLdWYZQIzCFhEo0FXADFOKZ
+	 ZX7FLfTYxzim37so2UASTHbR6hWoFzUI+PTPZXi4VKnIgLEFnNsigOt016ptwNFutdPGa
+	 UMnzzUD6sMBdoSwZbxwqlGc6KqkLPakzTzqzo1SqBbckyuyxBp91WQ0HQovFJDXPb0sPM
+	 mHCxjHgy/QaoRCYKbB/Ol9fqshc9ROxwxSk7+4l9wI7EwtgXbFItkVFl9kpZ+/Cv45A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027202;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JYZhh14MXzujALtE0BkbPMZPqJhncGvqon8zg2G9jSM=;
-	b=PtINEiDg1cmD3jb+SEmcoswDSTEnbVU8MnKY/s3875Cmv+HB6ePv7mx6iuc9kJBbua57
-	 CSQh8wnNDUkIDIBxMOHWbAmHRA//FjLpdlIQYhreO2ha/pU4a/fkB4owGSM1/uzGoUfHG
-	 vfkqDncnqMvAxRSmrW/B9f5g42baDYKfTybQQ5sTsuF6pKHrJWOisaGHd4budvwbNh7xY
-	 IGP+FWrs0lFDCTD5xLF89j8GPjjdoMd9Ik8e4oXHBhXpvmBiJf0C19u9m82rgTc607wCo
-	 BBBofY4uDlt/eFmYGCqTBiw612t8u8eNzfvNgNVlym69VZNh4THQVhp3l8eG1lP7qtA==
+	bh=AwPEb48Ldv5fejljZxCMpqrZd3VTp+YLXXb0pm0IY3k=;
+	b=fvx+xirKBN+0Pf8xJ0tQVmehUSrBoPmZIkfgFW++MOXb19IPLI0H8KQmEiW+nHI2RYQt
+	 EXqXCiqmOkQmTdrVbdWLpMTjwDQ+7bQRmwGHxeM48sobV02XJJAKNsTD0ea0/tUUlROdg
+	 wuTWqz2FZ95V9qvJodJiMJGm63seQpcCC+NypHD+sF9SITxR9O1Rf/KtM89ei0QsquxgZ
+	 uE/1OBPNd9UH7/0qSAHkO066HE6jlUVDUiglIh6f6UdJ1anYm2XgaqR9vE7YKxWeREeDi
+	 QXIzDv8vK10gNpbW8CvDxZ1oUG9hdIX21Q20g3OQG0Q6MuT8fSBhocxfHgKplP+rV8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MkMyPLGC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CvLmrLd5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B410606A31C;
-	Wed, 18 Nov 2026 18:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0519606A31C;
+	Wed, 18 Nov 2026 18:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MkMyPLGC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA1B1F000C4;
-	Wed, 18 Nov 2026 18:39:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CvLmrLd5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54BC11F000C6;
+	Wed, 18 Nov 2026 18:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027199;
-	bh=JYZhh14MXzujALtE0BkbPMZPqJhncGvqon8zg2G9jSM=;
+	s=korg; t=1795027201;
+	bh=AwPEb48Ldv5fejljZxCMpqrZd3VTp+YLXXb0pm0IY3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MkMyPLGCGgZPklnvl52BX5xPHTvjlRFn7oXNYlTtReVWf6c9XUhrR5C9e/CexicgG
-	 Jza8R24S1tOHlg6wvuGkFZ8vKWjAdD1lmbDIPcwW/F1wMOAG2Ona/yCumrDahy/nhe
-	 GX5PGKL5l5EyvpQj6iSBGgKGoVbuJX/1j5kLPgds=
+	b=CvLmrLd5PBYoujgGbi6IE8eRCVehC0G0MxN358mSLe5KMCEvmFFy3CPhLPD2KdeXr
+	 7tHnI5O2lg2rBKDXZdgRbt0cUsMopunpOzbou+QGGsRMCmq52bOA1SCZGuh4ESA4AI
+	 rk0idBUqV/KJEjRwOBuDlEKr9UNecxBYXjk/pgYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Oros <poros@redhat.com>,
-	Ivan Vecera <ivecera@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Vincent Jardin <vjardin@free.fr>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1706/2151] dpll: zl3073x: reject output frequencies with too small divisor
-Date: Wed, 18 Nov 2026 15:57:21 +0100
-Message-ID: <20261118150223.963042527@linuxfoundation.org>
+Subject: [PATCH 6.18 1707/2151] dpaa2-ptp: fix support for PTP_EXTTS_REQUEST2 ioctl
+Date: Wed, 18 Nov 2026 15:57:22 +0100
+Message-ID: <20261118150224.003295238@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,92 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Vincent Jardin <vjardin@free.fr>
 
-[ Upstream commit 456027325c9cd2be94229687f2c412ae6f351bd8 ]
+[ Upstream commit 86a30c4348497bcddcf2796258955bbaaf58c9a3 ]
 
-The output divisor has to be at least 2: a divisor of 1 bypasses the
-divider and the hardware then ignores the pulse width and eSync
-registers. For the N-pin of an N-divided output the N divider (>= 2)
-applies on top, so its effective divisor has to be at least 4.
+Commit 7c571ac57d9d ("net: ptp: introduce .supported_extts_flags to
+ptp_clock_info") moved the validation of the external timestamp request
+flags into the PTP core. A driver that does not set
+.supported_extts_flags still accepts the legacy PTP_EXTTS_REQUEST ioctl,
+but every PTP_EXTTS_REQUEST2 request is rejected with -EOPNOTSUPP.
 
-zl3073x_pin_check_freq() only checked that the frequency divides the
-synth frequency. Require also the minimum divisor. For N-divided
-outputs this is necessary but not sufficient, the rest is checked by
-the frequency set callback.
+On an LX2160A board, linuxptp ts2phc arms the external timestamp channel
+of the 1588 timer with PTP_EXTTS_REQUEST2, gets -EOPNOTSUPP and exits,
+so the PHC cannot be disciplined from an external 1PPS.
 
-Hit during development: an N-pin frequency that needs an N divider of 1
-was accepted, and with esync_n_period = 1 the N-pin produced no output
-on an oscilloscope.
+ptp_qoriq_init() programs TMR_CTRL with ETEP1 and ETEP2 cleared, so the
+timer timestamps the rising edge of its external trigger inputs. Declare
+that, with PTP_STRICT_FLAGS, so that a falling edge request is rejected
+instead of being timestamped on the rising edge.
 
-Fixes: a99a9f0ebdaa ("dpll: zl3073x: Read DPLL types and pin properties from system firmware")
-Reviewed-by: Petr Oros <poros@redhat.com>
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Link: https://patch.msgid.link/20261011061211.448373-4-ivecera@redhat.com
+This also makes the legacy PTP_EXTTS_REQUEST ioctl strict: a request for
+the falling edge, or for both edges, now fails with -EOPNOTSUPP instead
+of being timestamped on the rising edge. That cannot be avoided: the core
+adds PTP_STRICT_FLAGS to every PTP_EXTTS_REQUEST2 request, so a driver
+has to declare it to accept them, and once declared it applies to both
+ioctls. Commit 3200fdd4021d ("broadcom: fix support for
+PTP_EXTTS_REQUEST2 ioctl") made the same change for bcm-phy-ptp.
+
+Fixes: 7c571ac57d9d ("net: ptp: introduce .supported_extts_flags to ptp_clock_info")
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
+Signed-off-by: Vincent Jardin <vjardin@free.fr>
+Link: https://patch.msgid.link/20261009-for-upstream-qoriq-ptp-extts-flags-v2-1-0f4eeff2295d@free.fr
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/zl3073x/prop.c | 33 +++++++++++++++++++++++++++------
- 1 file changed, 27 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-ptp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dpll/zl3073x/prop.c b/drivers/dpll/zl3073x/prop.c
-index 9a1911427eb7e..d80f62a500bc9 100644
---- a/drivers/dpll/zl3073x/prop.c
-+++ b/drivers/dpll/zl3073x/prop.c
-@@ -22,7 +22,8 @@
-  * The function checks the given frequency is valid for the device. For input
-  * pins it checks that the frequency can be factorized using supported base
-  * frequencies. For output pins it checks that the frequency divides connected
-- * synth frequency without remainder.
-+ * synth frequency without remainder and that the resulting divisor is not
-+ * below the minimum the driver supports.
-  *
-  * Return: true if the frequency is valid, false if not.
-  */
-@@ -41,18 +42,38 @@ zl3073x_pin_check_freq(struct zl3073x_dev *zldev, enum dpll_pin_direction dir,
- 		if (rc)
- 			goto err_inv_freq;
- 	} else {
--		u32 synth_freq;
--		u8 out, synth;
-+		u32 synth_freq, div, min_div, rem;
-+		const struct zl3073x_out *out;
-+		u8 out_id, synth;
- 
- 		/* Get output pin synthesizer */
--		out = zl3073x_output_pin_out_get(id);
--		synth = zl3073x_dev_out_synth_get(zldev, out);
-+		out_id = zl3073x_output_pin_out_get(id);
-+		synth = zl3073x_dev_out_synth_get(zldev, out_id);
- 
- 		/* Get synth frequency */
- 		synth_freq = zl3073x_dev_synth_freq_get(zldev, synth);
- 
- 		/* Check the frequency divides synth frequency */
--		if (synth_freq % (u32)freq)
-+		div = div_u64_rem(synth_freq, freq, &rem);
-+		if (rem)
-+			goto err_inv_freq;
-+
-+		/* The driver requires an output divisor of at least 2 -
-+		 * below that the hardware bypasses the divider and ignores
-+		 * the pulse width and eSync registers the driver programs.
-+		 * For the N-pin of an N-divided output the effective divisor
-+		 * also includes the N divider (>= 2), so the minimum is 4.
-+		 * For N-divided outputs this is only a necessary condition -
-+		 * whether the frequency can be set also depends on the output
-+		 * divisor shared by both pins, which is checked when the
-+		 * frequency is set.
-+		 */
-+		out = zl3073x_out_state_get(zldev, out_id);
-+		if (zl3073x_out_is_ndiv(out) && zl3073x_is_n_pin(id))
-+			min_div = 4;
-+		else
-+			min_div = 2;
-+		if (div < min_div)
- 			goto err_inv_freq;
- 	}
- 
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-ptp.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-ptp.c
+index 4497e3c0456d1..ac2b873dcf8e6 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-ptp.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-ptp.c
+@@ -78,6 +78,7 @@ static const struct ptp_clock_info dpaa2_ptp_caps = {
+ 	.n_per_out	= 3,
+ 	.n_pins		= 0,
+ 	.pps		= 1,
++	.supported_extts_flags = PTP_RISING_EDGE | PTP_STRICT_FLAGS,
+ 	.adjfine	= ptp_qoriq_adjfine,
+ 	.adjtime	= ptp_qoriq_adjtime,
+ 	.gettime64	= ptp_qoriq_gettime,
 -- 
 2.53.0
 
