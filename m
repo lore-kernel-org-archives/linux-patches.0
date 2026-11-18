@@ -1,57 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038776;
-	b=crpr81bG8OY90W6SkeQLcMoBmtGerJTKsnERqUw8hrWEsxv9Df6zftphwOT3RhbQoY2d
-	 vw1uNfHiXZ90cEj5I7QoBKymeVRoV6YK1Nfrkn9d/hjAnYwQph3D2TYZW9HglmmMe8ucC
-	 UoAIVnbMGkL9b+ALO/oHj++Z/YGgDwnEyBlfnGQUrfcu8CuMQdNttNRQGg9nPDNagwCPF
-	 1OrnFpIkJmUTPfPzCfcYj35N+hsbzdTAy3ZrW4VKKYJnv/7t+jnXMZH6jiOX2k6GqDwMe
-	 pla1Zl+BC5qpQ0+TlrOJw56ITVPJkc6yPjDtvYZGQCz6akr44eGjkgSdoQ5xRKuwVDQ==
+	t=1795038779;
+	b=gz4K4xyDmHCmMgY2Y+z3yQMP4b65ihSaGT9nTXaCZdQroHUVuCr+aNvifrMLXpmOlK8g
+	 Z9hKoTaq+xbu/2US0gS5/Nr6fR+/+sCA24wqw61viDJl7bjBhyuaNxsdiE1g3AyxAcGD7
+	 NB+meQbqJ7VexYaSPl1c+2oc0to1RK6e0IJZon6Xnt9kuVEIqTp/uo1rIvHKPv5ToFr8u
+	 3BUvpkjaWEG9jWSNZdK1CTeyC+1puItQl1t7nFcfLz8fdIbdl5s0S/c94lUxC4UsKEj7W
+	 vvpH4nQXWZU6tRp85TdR9Krj6DL0clqlpxZauNc9EYQnFz4c/AAbJmy9cFz1Y2eS4Qg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038776;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038779;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JUJyXUYXBFUwfTaqdNByhH3/PIGicCor0OOPLVD9NHM=;
-	b=W/xK7zcfIZYcC91zr9kH84puW1+STMXd2B9muKN4/fRPyrrtj65qef0sLQewyBdyaBrV
-	 AUfVrFHe/J6ZjHWt0aaac7GU5ipPO/USvR4VK9CPOMVUzMFcnMfhmlP9B+4zZgBwsyUWC
-	 0wc55Ya7L8ffdUOtg1oknkSDtW+++l/lR8zfTtjVN/VofnvB/Li62X/uzViWZFTIDHueN
-	 3gfUJPGkEIYCFbzrj/spPtRlF5G9SGf6hSd6ex/pjKwKYhlJoF5ASZNA+Pi7fVXYqQLJx
-	 Q5RJGQUtGz9pyczVx2FaIfB1CsBiKvmXgcF6vOJl5a3zLsVSofRXQU/w2THGUrvHUlw==
+	bh=GVOdyMWfrphCiIH9Rl1xwDYUT2Rk6OQHay+/jhMn/ys=;
+	b=QwyIPKQZzmvzFYhSzBJvzHYwH//ksSDzJ/HYOTJdRVj1d5Zx2nVQOQxqmwpp0KGoa0q/
+	 4aiXZN9IQ5CycBhEBC7hPXDrwxAE7T8I0+xdCU0hdLU1HkCAr6JsmQfXdeswMPgz5buP0
+	 zg1oxcNp497SHHa2YD42HTNilR6r9v5JhsabfCkkH2gbRvRgZaSGuolVi7M7P2MdhKsjs
+	 GfKpThBv0t/X6H7gexNlIixevEvKzJXPqJMhdYJB7LQiciftZafnUKxxFM6VxeqOYZeIe
+	 HQdywznscx+zXNSBkCulw349FbLtEbjHSWBR+QOGj6nh64GATLl81nhB/47IeW/gJSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BbhT7cBm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AM0P9ad8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649EE606A31C;
-	Wed, 18 Nov 2026 21:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C0D606A31C;
+	Wed, 18 Nov 2026 21:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BbhT7cBm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A281F000C4;
-	Wed, 18 Nov 2026 21:52:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AM0P9ad8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD1E1F000C4;
+	Wed, 18 Nov 2026 21:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038776;
-	bh=JUJyXUYXBFUwfTaqdNByhH3/PIGicCor0OOPLVD9NHM=;
+	s=korg; t=1795038779;
+	bh=GVOdyMWfrphCiIH9Rl1xwDYUT2Rk6OQHay+/jhMn/ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BbhT7cBmcffSE9sGqTy4GerRO0YDrUnh5lrYUvydKBxL8dDZAaYJxZGrcPOoSq9G7
-	 lubXV99ncgBH1qBEGDAuU+Nz12i9EF5l0pw+hIvNC2pai22G/4Q0zJKzGeCZP9svJ5
-	 w6y4zhmkgnqkzjGyUBIjd76Remj25WROFRPcKqQc=
+	b=AM0P9ad8b9J6T/2ktVxyC3PrcuEcbRtErFx3Eig2UnZE9mmLncESs+YRgG/QSTWxt
+	 LP+lECHUdVuwRoMply0eeM8rvwR63lVmKBFB2Ge2zC2C/NrwALCNVZN6szogYuaQsT
+	 ync37/DQTBZcn6KIgav2RZs32oXnhyvrAxJ/UdUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Ian Bridges <icb@fastmail.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1862/3318] 9p/xen: drain response work after unbinding IRQ
-Date: Wed, 18 Nov 2026 15:41:24 +0100
-Message-ID: <20261118150417.773478068@linuxfoundation.org>
+Subject: [PATCH 6.6 1863/3318] ksmbd: revert fsids on durable reconnect and replay failure
+Date: Wed, 18 Nov 2026 15:41:25 +0100
+Message-ID: <20261118150417.809193143@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -73,64 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Ian Bridges <icb@fastmail.org>
 
-[ Upstream commit 7b6f2e3c29fb4d76f1e4973280792eabbd526602 ]
+[ Upstream commit 539223f18026448f67d33d09719c355b91db7fd0 ]
 
-commit ea4f1009408e ("9p/xen : Fix use after free bug in
-xen_9pfs_front_remove due to race condition") added cancel_work_sync()
-to keep xen_9pfs_front_free() from freeing a ring while
-p9_xen_response() is still running.
+On a durable handle reconnect or a request replay, smb2_open() switches
+to the SMB user's fsids before calling ksmbd_vfs_getattr(). If that call
+fails, the code jumps to err_out2 and skips ksmbd_revert_fsids() at
+err_out1. The user's credentials then stay installed on the shared ksmbd
+worker. Later work on that worker, including other users' requests, runs
+with the first user's fsuid, fsgid and supplementary groups.
+ksmbd_free_work_struct() also warns, because work->saved_cred is still
+set.
 
-The work is currently drained before the event channel IRQ is unbound.
-That leaves a race window where xen_9pfs_front_event_handler() can run
-after cancel_work_sync() returns and queue p9_xen_response() again.  The
-following unbind_from_irqhandler() synchronizes with the IRQ handler, but
-it does not cancel work that the handler already queued.  The teardown
-can then free the ring and private data while the response work remains
-pending, and the worker later dereferences ring->priv and priv->client.
+Jump to err_out1 instead. No path is held at this point, so skipping the
+path_put() at err_out is correct.
 
-Unbind the event channel IRQ before draining the work.  Once the IRQ is
-unbound, no new response work can be queued by the backend event channel,
-and cancel_work_sync() waits for any work that was queued before or
-during the unbind.  It is then safe to release the ring resources.
-
-Fixes: ea4f1009408e ("9p/xen : Fix use after free bug in xen_9pfs_front_remove due to race condition")
+Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
+Fixes: bb8bf7eb13b5 ("ksmbd: add SMB3 request replay support")
 Cc: stable@vger.kernel.org
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: GLM:GLM-5.1
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Message-ID: <20260609155202.1706-1-zhaoyz24@mails.tsinghua.edu.cn>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: omitted the durable reconnect error-path hunk in smb2_open() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_xen.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
-index ee5bbdf7dec25..fbf8e6598f273 100644
---- a/net/9p/trans_xen.c
-+++ b/net/9p/trans_xen.c
-@@ -289,12 +289,12 @@ static void xen_9pfs_front_free(struct xen_9pfs_front_priv *priv)
- 		for (i = 0; i < priv->num_rings; i++) {
- 			struct xen_9pfs_dataring *ring = &priv->rings[i];
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index b05774050e096..984e194d83f85 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3101,7 +3101,7 @@ int smb2_open(struct ksmbd_work *work)
  
--			cancel_work_sync(&ring->work);
--
- 			if (!priv->rings[i].intf)
- 				break;
- 			if (priv->rings[i].irq > 0)
- 				unbind_from_irqhandler(priv->rings[i].irq, ring);
-+			cancel_work_sync(&ring->work);
-+
- 			if (priv->rings[i].data.in) {
- 				for (j = 0;
- 				     j < (1 << priv->rings[i].intf->ring_order);
+ 			rc = ksmbd_vfs_getattr(&fp->filp->f_path, &stat);
+ 			if (rc)
+-				goto err_out2;
++				goto err_out1;
+ 
+ 			goto reconnected_fp;
+ 		}
 -- 
 2.53.0
 
