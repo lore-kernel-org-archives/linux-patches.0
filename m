@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029416;
-	b=Hq1wTZuI+rdhjX331q4ReLXZJa2FulXNGjBlIVcBRmS50kmi6XG6Ay8Y1RNPvnFDszvH
-	 qPS4zXPK+peBhAin82fqeiLh/e/dMG52jMWckA37lmImYUufXj9DvpZuBXV/bTRuv9/v9
-	 yRr2gKhciT2YDHw8LPXaIxEwKb/+EEo4qJuNLQlo3SCpFcrQI7hnB1Utu5ytC1RRy2xk3
-	 9F6/rjK02n8y9NgGu9pLwJqLBY6b7XsxORcY453GJGAnNF7W/CcMmetQV118/QVrtQN3V
-	 P7TLtgm6sntXzmemKz0BJSSH1TV8e4R+2XprVPW43JgqEWMhOkkPAgqxwaXUyvz0/eA==
+	t=1795029419;
+	b=zK7KITixv9aTks40ovzcaxgXwW1StptNBKk4B3NtTbGjQ3zj5fdLD4bO6dQ35Br0yOHb
+	 2jEvPZNUNPbfF/AOvyl4QoDNrFhZ39R4uNIcpuYCwUdXflpR+z34fsxHBurGbkLfpEhpa
+	 1oHowdWKECaGLGvj2HwrFOds1UsWdmULqSZq25xEEk34583EkgzDDRi3La81ykUMNC8xh
+	 lPFWJadTJQpZM5tSVzC8T5TsLHBlRZGKiZbSVpaO77/ZegMTS8BziZp2ntkHw67usjgJL
+	 9MAqIidnX+6s+czi4fstHcDOWZW3QboGMbN5fvDiDjZidOa5ZJcUsPLE3faiRDg4kkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029416;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029419;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SlIHixiFT8RodQgzus0n5eUePq39MuSVWqiKUhYA4XU=;
-	b=uDgM1E0/vii++Vk1NDNKtykx8nVPuvCcgHkaBUMh1VjJfbGQNE2dWjZ2t9qlA0IathuH
-	 cLG5T7GcRq5l3gyMs5cLZBFpCjpy8zoQ3a2VMPC3pOjZSorkcjHYMMfqYbx8dRvvY2THb
-	 0mpAjlT4ejEGKD0p6psMoNQFwsKtpMvv3An0Y/jsUuo6CXB2Kr3+qghNWRItf4Ey1m+7h
-	 ea+DSf8keLleN8/OKLvvSRCu+7zry/XdDjFT/1UH3VarWmox28tlMgrVjsA7E88bKyBuF
-	 KKQwZis8LOqGbN0/kvdfElZ5CJnoTDNpdLzxfNx1dCkq3h9rWiZDBdvP+ywBIBTeBHA==
+	bh=Qzd4SmTk8eNd2ZvB3UQqKfpjcoy2EmMSiNygfRLGrYE=;
+	b=v5IgPxz+KZAzyndss3PNsflMTC1ZsL8FWMxXFcYzXkENU17FkE8zOeXbMPnc7v2SAtqo
+	 Jd0YX+NbakJXFbg2DiJRq7Edv5UlOdkNXIFE8H3+bZ9WfarIKvG7Io77jqV7B6VWzw81n
+	 Ja6tlaLtm5mYwcMSeYC1/otPES34RcI51ToBxhCQN9ICEXdu+ENTmzz95nyuCZ/yVa30D
+	 NzKIQDuzwT1+wJRRBvx8l8Fz3P4DdigG63+4q0saV2Ty1w9P+Pfo0NQ4gthPCWErjrmyM
+	 VxMjuEDDhePKrc+Ywi6WzXEBgH9D/fX+F0XPKgrGJoIyr6tiF/JzeRCMLTN2vuhUgXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Z8CL77/W";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ep7AdeB0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8211F606A325;
-	Wed, 18 Nov 2026 19:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B46E606A325;
+	Wed, 18 Nov 2026 19:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z8CL77/W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0B11F000C6;
-	Wed, 18 Nov 2026 19:16:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ep7AdeB0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945F11F000C4;
+	Wed, 18 Nov 2026 19:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029416;
-	bh=SlIHixiFT8RodQgzus0n5eUePq39MuSVWqiKUhYA4XU=;
+	s=korg; t=1795029419;
+	bh=Qzd4SmTk8eNd2ZvB3UQqKfpjcoy2EmMSiNygfRLGrYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z8CL77/WZ4jOhK9BB/CE+d5jCPna5UtBoI6xxmZRHM5f0UIfPZCSS2dcC7+cBn3g/
-	 ECRAXXZHa41GtC4NWGHihorGZXtn+fJ8E8YGeblNJ6iJoUCO5Zdb6y7kPc7ibbswGZ
-	 Rfe53AZeLrxP6v7P2tG+bkZqXDRSo7MOnR3/bUYc=
+	b=ep7AdeB0rHASS0lUKDutejf5CLhIyE5XOwKmNBiCXKVz2w41cRUKKEykm57iyWwun
+	 AhetQxwiagHUo/sbrCfNNjzIBJQyVuBmTo5UX1m9vPJU9dffr0oPo1fFT7gRoKoXEi
+	 o7vMjzK77GeZKLRoK+0RTBJkimg4pT6kdwyTWjbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0342/1756] PCI: endpoint: pci-epf-vntb: Serialize virtual PCI bus scan
-Date: Wed, 18 Nov 2026 15:41:09 +0100
-Message-ID: <20261118150021.961455092@linuxfoundation.org>
+Subject: [PATCH 6.12 0343/1756] regulator: ab8500: Fix AB8505 VANA voltage selectors
+Date: Wed, 18 Nov 2026 15:41:10 +0100
+Message-ID: <20261118150022.021434784@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,51 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 84c3520c9e8c14b09a5cf645cc4fa7c6d9d61127 ]
+[ Upstream commit dfdfda2a95843706428a9d95ab546cb10983e684 ]
 
-The virtual PCI bus is scanned without holding the PCI rescan/remove
-lock. This can race with other PCI topology changes.
+The AB8505 VANA voltage table assumes selector 0 represents 1.05 V
+and all eight selectors increase linearly. Selector 0 actually
+represents 1.2 V. Selectors 1 through 6 cover 1.05 V through
+1.175 V, and selector 7 represents 1.225 V.
 
-Hold the lock across the bus scan and device addition.
+Correct the table so each selector reports and programs the documented
+voltage.
 
-Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
-Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/3tgrcel5fl55ulf3zjya4fkz4t2ms7iwwjif5rnzn2rafsydd6@i4e5etm7uqvz/
-Link: https://patch.msgid.link/20260901063238.631166-2-den@valinux.co.jp
+Reference: AB8505 User Manual, DM00046744 Rev 3, p. 257
+
+Fixes: 8a3b1b8703fe ("regulator: ab8500: Add voltage selection for AUDIO and ANA on AB8505")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260901-ux500-dts-snowball-regulator-v2-1-fe88b01829bf@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-vntb.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/regulator/ab8500.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-index ea96174cc5110..e5fd2bc04c23f 100644
---- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-@@ -1008,15 +1008,20 @@ static int vpci_scan_bus(void *sysdata)
- 	struct pci_bus *vpci_bus;
- 	struct epf_ntb *ndev = sysdata;
+diff --git a/drivers/regulator/ab8500.c b/drivers/regulator/ab8500.c
+index 6b4a3a3d83851..26accd604c395 100644
+--- a/drivers/regulator/ab8500.c
++++ b/drivers/regulator/ab8500.c
+@@ -265,13 +265,13 @@ static const unsigned int fixed_2050000_voltage[] = {
+ };
  
-+	pci_lock_rescan_remove();
-+
- 	vpci_bus = pci_scan_bus(ndev->vbus_number, &vpci_ops, sysdata);
- 	if (!vpci_bus) {
- 		pr_err("create pci bus failed\n");
-+		pci_unlock_rescan_remove();
- 		return -EINVAL;
- 	}
- 	ndev->vpci_bus = vpci_bus;
- 
- 	pci_bus_add_devices(vpci_bus);
- 
-+	pci_unlock_rescan_remove();
-+
- 	return 0;
- }
+ static const unsigned int ldo_vana_voltages[] = {
++	1200000,
+ 	1050000,
+ 	1075000,
+ 	1100000,
+ 	1125000,
+ 	1150000,
+ 	1175000,
+-	1200000,
+ 	1225000,
+ };
  
 -- 
 2.53.0
