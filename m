@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051480;
-	b=mMPR8By23mu+vff6VANzWD14h++N9dFuegb4z9L56l72+pLtqNFDN7QbJKspBSS2aES/
-	 hUnZhRcOVVdYv94B15JVhFuvMzooZGt2OWlHp4FUiWtfgkdr8Sx63dNOShHkB9tCRMgp7
-	 CXS7zurT7lqBXvAv38QQiA3i3kTBj+0/WewRQ5dsOchuWc87kFdksVQFhdNPGgG8hWlWg
-	 vB8Tp6ZYiSL4lImfUsYcMpg/X7C1agiyF047UO3dOjnZeGPSC9MRfrMl6Ijba/pLkLQcL
-	 I4gRintuOx6B1+lry4UOA8XRpsYbsuCzy8sxWemCQwononDTq4p/JiD2s6tuicxpoSw==
+	t=1795051483;
+	b=i8ObQ3e03tNmO6XVqa+GpoOFrqoX78hmIVVmOZvrGLjfUlFy92uzcv+Z3LGPE6VdEmLv
+	 6W73XRJRQ3JFcbuK+ID/TKsrfY8mTS3H7p5EkeyXJFaEn08AV1ab4rXo7LMGMOvZvndbl
+	 Wq4kSdwh2hYXwgG0H0NDU3K+xSCo5potoYOiEs4SXRWpA8y9qynvavWcg0GkYfyYpOaWq
+	 tI1cIh8uAMz2WpWgqxb/Xi190gURsQ7cSkmZBvdHOVVg5qCJ5IlMMnZVdYtt98z0B+ZKi
+	 ajNlqbEM6UH9wLN4Zms3u28cfyZzicnyTPdiu9/CJ7GvtdnMZ320ynD14+1hCd1TYyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051480;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051483;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yUswpztDkaBbhQ/EozdUHv96yYip1zuxj8RcOwuAi3g=;
-	b=sDKKo1V1bUJluiMGxmCTHdjLR9W1ouER7AhrOc4qdqcUppH8Md2a0C3q4dZMFJO1hU3t
-	 oRKRVEFOqus45bMl1C4ANwqjXkZ+RG2yMdGxPNQNA6g36yJFKv0Xp1brqX2NYUPKvllfw
-	 w/Z8BbeXaEq6J1WOO+meEUuCqQGZ5AZhoFdaqyOo9tbhyfmBzlVcQV7AORSBnbKaeJYCy
-	 nh0ujnInGDKnsuXQE0zOwcDPYNiHghqSFlANpYUHDltVCWKDmNc/ps0ev17UOLUeDsFeM
-	 etXQBbt3TDeMbiIG1LSuJglszQ5a8Sq+ZeH1Zkh7PbVPH37c4AGS/fy6G5zD34i85YQ==
+	bh=bfLXt/t2W20b7Os3uGtVQuy3551pqdDuQyx0ANPHC8U=;
+	b=c/F31IETuge/bPKUxvXJcwZg+1dUwEGZlwlmx9B3A02uKdiqJb61XH1rUWq0rsx3ak+3
+	 Uaa1wdxEnfmXkScJpCbDZDhM8MSL+oTYMqMwpMibtWzydUQM4V2vQeOZOgtbWVIruLIWQ
+	 jY3XcFd1G8dnwbbvsh6PBSmEPACE7EXIsJwDZX80Jz3w4nthAqtODBPSz5mK1FmAxiHKD
+	 vOWtOnuvqwrKXdlDDsbTPfTQnNqb+lKs1E5TcSybV5JhBn3V+SA3sorasI95zT0X/nNhk
+	 3TjJMMNxivYNTIiqID/W506b0xLD8xto9qxSQWjp8wHL6mgR6iLpGRA/w2dJcCaCqUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iu/IF/iW";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OKP29QMS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F5B606A31C;
-	Thu, 19 Nov 2026 01:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1672D606A31C;
+	Thu, 19 Nov 2026 01:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iu/IF/iW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9BB1F000C5;
-	Thu, 19 Nov 2026 01:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OKP29QMS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B16B1F000C4;
+	Thu, 19 Nov 2026 01:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051480;
-	bh=yUswpztDkaBbhQ/EozdUHv96yYip1zuxj8RcOwuAi3g=;
+	s=korg; t=1795051482;
+	bh=bfLXt/t2W20b7Os3uGtVQuy3551pqdDuQyx0ANPHC8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iu/IF/iWlMQfe6OEraLY9rMgOwuVaIrQvuorf6YgWGXanYA0V35Mbk1PWW4grkpLZ
-	 JZe+wJ/cUJYD4mdwdtFNavF8WsavfDvlt/0kLK69jT6bT20iO3gngozWslouIPGcHq
-	 Gt8p1Kl0sNyyYtxxd+OF1DFsp2lWQ/3zlvTm0Hq4=
+	b=OKP29QMSQXPKeF5PD6YycNBaxXJ4dfPBtZKoKSRa1XmW9GV9EQSh9u0Rw0mK7e5Oo
+	 j4ZW5t4PJPR2rfzTGlW7vMPXB0Xp7oGzKwtACCiOvprVpb5ALaiG9umNwT2voIhXvY
+	 VQU7/DDDWEn2s5AFElFoqRyh/0CqbK2IDAZYKCJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Leussler <robert.leussler@leica-geosystems.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0224/2214] rtc: ds1307: fix RX8130 wakeup alarm WADA bit for day-of-month mode
-Date: Wed, 18 Nov 2026 15:31:40 +0100
-Message-ID: <20261118150019.207669680@linuxfoundation.org>
+Subject: [PATCH 5.15 0225/2214] rtc: brcmstb-waketimer: add missing MODULE_DEVICE_TABLE()
+Date: Wed, 18 Nov 2026 15:31:41 +0100
+Message-ID: <20261118150019.242918782@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,52 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Leussler <robert.leussler@leica-geosystems.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 878d93aaa596a861dbc8d71f7c38e62a2e805f01 ]
+[ Upstream commit 402c89d28fecd28652a4bfe997f08f6544836381 ]
 
-The RX8130 wakeup alarm never fired when set via
-/sys/class/rtc/rtc0/wakealarm. The root cause is that the WADA bit
-(bit 3) in the Extension register (0x1c) was never set before
-programming the alarm registers.
+The driver has an OF match table wired to .of_match_table, but does
+not export the table with MODULE_DEVICE_TABLE().
 
-Per the RX8130 datasheet:
-WADA=0 - Week alarm: register 0x19 is compared against day-of-week
-WADA=1 - Day alarm:  register 0x19 is compared against day-of-month
+Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
+information is generated for OF based module autoloading.
 
-rx8130_set_alarm() always writes a BCD day-of-month value to alarm
-register 0x19, so WADA must be 1. With WADA=0 the hardware matched the
-day-of-month value (e.g. 15) as a day-of-week index, which is always
-out of range (valid weekdays are 0-6), so the alarm interrupt was never
-asserted.
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the platform driver, and the missing module alias publication.
 
-Fix by setting the WADA bit in rx8130_set_alarm() before writing the
-Extension register back to the device.
-
-This is consistent with rx8130_read_alarm(), which decodes the same
-register under the same assumption (24-hour and day-of-month mode).
-
-Signed-off-by: Robert Leussler <robert.leussler@leica-geosystems.com>
-Link: https://patch.msgid.link/20260721081907.3518648-1-robert.leussler@leica-geosystems.com
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260704121734.54941-1-pengpeng@iscas.ac.cn
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ds1307.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-brcmstb-waketimer.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
-index 03aa3f5ccdf5c..40fd2dbc273ec 100644
---- a/drivers/rtc/rtc-ds1307.c
-+++ b/drivers/rtc/rtc-ds1307.c
-@@ -656,7 +656,7 @@ static int rx8130_set_alarm(struct device *dev, struct rtc_wkalrm *t)
- 	if (ret < 0)
- 		return ret;
+diff --git a/drivers/rtc/rtc-brcmstb-waketimer.c b/drivers/rtc/rtc-brcmstb-waketimer.c
+index c74130e8f496d..6e865b33de7a1 100644
+--- a/drivers/rtc/rtc-brcmstb-waketimer.c
++++ b/drivers/rtc/rtc-brcmstb-waketimer.c
+@@ -310,6 +310,7 @@ static const __maybe_unused struct of_device_id brcmstb_waketmr_of_match[] = {
+ 	{ .compatible = "brcm,brcmstb-waketimer" },
+ 	{ /* sentinel */ },
+ };
++MODULE_DEVICE_TABLE(of, brcmstb_waketmr_of_match);
  
--	ctl[0] &= RX8130_REG_EXTENSION_WADA;
-+	ctl[0] |= RX8130_REG_EXTENSION_WADA;
- 	ctl[1] &= ~RX8130_REG_FLAG_AF;
- 	ctl[2] &= ~RX8130_REG_CONTROL0_AIE;
- 
+ static struct platform_driver brcmstb_waketmr_driver = {
+ 	.probe			= brcmstb_waketmr_probe,
 -- 
 2.53.0
 
