@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035229;
-	b=aPJ1A7vuBVimxNq3ZY1snhHIevkpLnsHH0s3h5ic6F7i416N3Kb5cqKIbQ9Hd1fe9kEl
-	 xID/lA5OvYoNecZJ7stp/O98g+XZkyufDYCZgsNnukkGt3st317rNnZbp/g7xr69yn2rA
-	 3pjfQWFt/tUEHd6pw2IB0VIXeXxDaux/mtshIHoxsic5CAyL2XZLGsVPUxiPu/8+4Ji+D
-	 7UgUzUeYXWaJIO06Bj9qjyjjCBhGO/gPlHFsiq1f8dLhGPAz3EWazalGIopUlZUVO1mgW
-	 uHKLBVZQ4xH/z+GpXAs0whJ1Qj2INVFzY3roR4sRkN+EjCeIp5/Q/P9tftoVeOC2ayg==
+	t=1795035232;
+	b=SQTXvVm69TRMYU0b60S2juzF+7vOVdtmmu/crG7lJzJbEDr6VnykpZkcsTKZv6NVmCE9
+	 HKHyjhzy/15RTj4HS2Cv149oZuVvgXBvq8xFs4yoc4CXySXnNzyQchMthAUxfUkvhP6Eq
+	 VIl/dfKSWc0qZqCvxiKHSTP+pGZsIt+XLj/6yy4QHEztUyTPHXy/MqQdQsbrCpnFC/cJ8
+	 i3job6j6dWkKF5DWp4SwR3hGgvQDwxnPpEoc2YVmHvISNUtjc6STu5s9kCA5fe9Uq40iE
+	 cmTQqFPShNFN5kfYv34CJWV2BAlzvF/0Ycdw5/pVCqL4JRyfiKXddB1SrOsruw1l/sg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035229;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035232;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xSDcJDnrQL4NH8Y2xBvm8LmBiFRqB33T/KFJgkSRqEI=;
-	b=0/Zw5/R8hT+yRUvBRLkI1ttezTpp325LDrxnSf8LENo6G2BhD0+BokvDSHfaFyeyvxAW
-	 gcSzQ9i/4X0+Two8JKOjEMn0c863BNwWEYjC9IGvW3L9A6QGfevtcq4SkzTB3o64kyVy+
-	 Ufwba1LzY9qt5fYnCpJQ7ohyg2dW8/QfQ4SAXqEHApiYTiCGtNEL3bFN5vGC4e4ek6log
-	 ph8TIpmW9PDbpDe/4RTqlFyzMdMrgrPblVMWIPdGjSGUuh+JqZ8LdB69mf6ht8dLnVijg
-	 yJtwR1OW5g4BCauTuA106LdWHgrYSBqrVWTdS+mzFA6vEz1UdNrsD9C3ROIqmrFC5aA==
+	bh=kBknCfaXG7ze9xzx/+D2J+aWrK8SS/DckSIhRfflnXs=;
+	b=qFBhSchYSW9awc16DUGd/pcXYrbXjwUD91B9uRT/uarl88Lj/u2gN3nMfiOuevnxN2sw
+	 +ec6gCZSCi8br50fpaGqyj5VkQDcjJJSCJlmAj+SBGMFWJdZRxfT2tgw5C14Bxyue2aC6
+	 N6v3mS4qH4ME3R9BY5PFSGhQgbA9vFwkB8p4Uzyn9an+yeJ/tSSdxxvjwuP6pZSCQndsR
+	 mKoGiFeEnxd/kve23RP1RImd6r6OcZ+ArLPBH4Jrna+uxi0IW1jqyaiBWtP9ui7Q0bODt
+	 vUCn4qXSBDNon84k3o7rxz3JgFgfPKT+vWx/a4hauviBNQ6J32rt/DygceVeB40nLVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=upHOe42W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GtKfjuxz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB308606A32A;
-	Wed, 18 Nov 2026 20:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9138860A260E;
+	Wed, 18 Nov 2026 20:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=upHOe42W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC24A1F000C7;
-	Wed, 18 Nov 2026 20:53:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GtKfjuxz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AACE31F000C9;
+	Wed, 18 Nov 2026 20:53:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035229;
-	bh=xSDcJDnrQL4NH8Y2xBvm8LmBiFRqB33T/KFJgkSRqEI=;
+	s=korg; t=1795035232;
+	bh=kBknCfaXG7ze9xzx/+D2J+aWrK8SS/DckSIhRfflnXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=upHOe42Wa4WcjyRUfEsWoig3efDNxXmm+NLlpOsVRz3XCODjFdGTH6dIGUlJL2VuY
-	 FKHoMyAl/Z/hHACih0PdXaFI/2ohfLHzzumUeXQV1lXQQduqxqCW6/n7AQwx6kSKrE
-	 ZBR52olh9c4mCsZzQKbd3OOUQcMd6CQZ40n9HNrs=
+	b=GtKfjuxzAWcqwjc5uenQs1EB36h6AyGLgn3A55dy0veKrJ/T2J568T2gF3aXdNkDm
+	 9sqJqBW6No/5eup7JMp3j6W1P17DUoHWhLZbXsg7VQcqskkbQYF9VfO8SDgRVLPV1h
+	 Y2QRa+odTiUnbf82XwanV9b4IEQVYzRB78Dzd2wQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.6 0652/3318] ovl: set the revalidate flags after d_instantiate()
-Date: Wed, 18 Nov 2026 15:21:14 +0100
-Message-ID: <20261118150337.582562228@linuxfoundation.org>
+Subject: [PATCH 6.6 0653/3318] ovl: skip copy up of empty security.capability
+Date: Wed, 18 Nov 2026 15:21:15 +0100
+Message-ID: <20261118150337.616401576@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,79 +67,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit 75e89c0055c1d7f7eeb462995f11253ca5864f79 upstream.
+commit 50912a1715b8a7c614b654011a0db750e372b43e upstream.
 
-stat() of a file on an overlayfs mount triggers a kernel warning and
-fails with ECHILD if another task is creating that file at the same
-time. This happens on an overlay with a FUSE upper layer, which is the
-layer where overlayfs creates new files. Write access to a directory on
-such an overlay is all a user needs to run the two tasks.
+ovl_copy_xattr() gives up if it can't read an attribute that
+listxattr() has named.  An empty security.capability, which anybody has
+been able to store on any file for a long time, is such a case: it is
+listed, and getxattr() has nothing to return for it.  A file in a lower
+layer that carries one can't be copied up: it can't be written to,
+renamed or have its mode changed.
 
-The revalidate flags are DCACHE_OP_REVALIDATE and
-DCACHE_OP_WEAK_REVALIDATE. They tell path walk to call ->d_revalidate()
-or ->d_weak_revalidate() on a dentry, so that the filesystem can check
-that the cached dentry is still valid. An overlay dentry only has one of
-these flags if a dentry in one of its layers has it. FUSE dentries have
-the first one.
+There is nothing to copy if there are no data.  Go on with the next
+one.
 
-When a flag is set on an overlay dentry, path walk calls
-ovl_dentry_revalidate_common(). That function only expects a dentry
-without an inode in RCU walk, while the dentry is being destroyed. For
-such a dentry outside of RCU walk, it hits a WARN_ON() and
-returns -ECHILD. So a negative overlay dentry must never have the flags
-set.
-
-ovl_instantiate() breaks this rule. When a task creates a file, the
-overlay dentry for the new name is hashed but still negative.
-ovl_instantiate() then works in this order:
-
-- It copies the flags from the new upper dentry to the overlay dentry.
-- It calls ovl_get_inode(), which can sleep in a getxattr request to the
-  FUSE server.
-- Only then does it call d_instantiate().
-
-A second task that looks up the name between the first step and the last
-finds a negative dentry with the flags set and revalidates it.
-
-Reproduced with a FUSE server that delays its getxattr reply: stat() of
-a name that was being created hit the WARN_ON() and failed with ECHILD.
-
-Fix this by setting the flags after d_instantiate().
-
-Fixes: bccece1ead36 ("ovl: allow remote upper")
+Fixes: 8db6c34f1dbc ("Introduce v3 namespaced file capabilities")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[amir: treat -EINVAL as no capability too, and do the same in
+ ovl_copy_up_meta_inode_data()]
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/dir.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/overlayfs/copy_up.c |   17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
---- a/fs/overlayfs/dir.c
-+++ b/fs/overlayfs/dir.c
-@@ -269,7 +269,6 @@ static int ovl_instantiate(struct dentry
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -76,6 +76,15 @@ static int ovl_copy_acl(struct ovl_fs *o
+ static ssize_t ovl_getxattr_value(const struct path *path, char *name,
+ 				  char **value, ssize_t *value_size);
  
- 	ovl_dir_modified(dentry->d_parent, false);
- 	ovl_dentry_set_upper_alias(dentry);
--	ovl_dentry_init_reval(dentry, newdentry, NULL);
++/*
++ * Any user can store an empty security.capability, which fails to read with
++ * -EINVAL.  It grants no capability, so treat it as none, like no xattr.
++ */
++static bool ovl_no_fscap(ssize_t err)
++{
++	return err == -ENODATA || err == -EOPNOTSUPP || err == -EINVAL;
++}
++
+ int ovl_copy_xattr(struct super_block *sb, const struct path *oldpath, struct dentry *new)
+ {
+ 	struct dentry *old = oldpath->dentry;
+@@ -135,6 +144,10 @@ int ovl_copy_xattr(struct super_block *s
  
- 	if (!hardlink) {
- 		/*
-@@ -296,6 +295,13 @@ static int ovl_instantiate(struct dentry
+ 		size = ovl_getxattr_value(oldpath, name, &value, &value_size);
+ 		if (size < 0) {
++			if (!strcmp(name, XATTR_NAME_CAPS) && ovl_no_fscap(size)) {
++				error = 0;
++				continue;
++			}
+ 			error = size;
+ 			break;
+ 		}
+@@ -1005,9 +1018,9 @@ static int ovl_copy_up_meta_inode_data(s
+ 	if (c->stat.size) {
+ 		err = cap_size = ovl_getxattr_value(&upperpath, XATTR_NAME_CAPS,
+ 						    &capability, &cap_size);
+-		if (cap_size == -ENODATA || cap_size == -EOPNOTSUPP)
++		if (ovl_no_fscap(cap_size))
+ 			cap_size = 0;
+-		if (cap_size < 0)
++		else if (cap_size < 0)
+ 			goto out;
  	}
  
- 	d_instantiate(dentry, inode);
-+	/*
-+	 * Unless it is a tmpfile, the dentry is hashed and a path walk can find
-+	 * it at any time.  Set the revalidate flags only now, because
-+	 * ovl_dentry_revalidate_common() does not expect them on a negative
-+	 * dentry.
-+	 */
-+	ovl_dentry_init_reval(dentry, ovl_dentry_upper(dentry), NULL);
- 	if (inode != oip.newinode) {
- 		pr_warn_ratelimited("newly created inode found in cache (%pd2)\n",
- 				    dentry);
 
 
