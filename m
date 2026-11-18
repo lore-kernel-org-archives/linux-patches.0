@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024839;
-	b=cL+av0niWW9oEXYQlGy6ZY4ryMeSCEzfYQ4Twu7hya1gNrVYU2wLbJGvX22ilcSjvYaV
-	 IUKWR4YV3iL0QS2aXQifBJqB9zqLTJnQboSEH5+I+SCWSbZ3XtTpUJ5vYYBw/RzI0mgKs
-	 6YWcEqZ0MtuyZuAwiktiuyK2y4aYpsQfxbaCzQQyWd01RMhb+6Ula+GexnWrhljek2ECe
-	 T8xXcs5C2eY60plSWM8eV9Q/C4l/UXwU7Cz2Ue4OEOExEsEmNEdOEGBOjTb7/4vUySjj/
-	 TiCVxNhMRnbNVwXg0L6zNIN53CF9ZSZCUSnJOHrMey8PdvHUVt0+sKL8dW0NmqiXF3g==
+	t=1795024842;
+	b=iCSk6Zf3fbWowzVuhERxMzd6ekFVJZ0OHSKE1o795wxE0jmxHkPR8oXT1oxYERE7BpC/
+	 mqcqvLcBJVtZ+M93PdbZf1o/H1hIx+VlxBI6lz4VtZLONiadwJKfZY8TdT25D7o5W3snu
+	 4nW0eKkhjYXS37R9YjYwWtOIdcCs3hShAvRNX4INnH/ZiN7uX5LYOpXJINsX9NUzM9msQ
+	 jDoTQX1Ep9sdJPKcESWGVAXvLruJ/bQVHgXzsFW9KwWEd7554KFhAaSiULJmp8MdAKE37
+	 fwDHc4SalBG04Wf8KC6TaOGcQX85RrS00iBUA/D+Ro62BclJ7S04qXeDFptmFWJqF0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024839;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024842;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wBnV5keoNB8uHTAspcgSkACVaRXInuc3vhctzU1NGRg=;
-	b=rMxy1hVFuFi0UMssRBOfgdTPhVsj8W2sF8za3Njir/Sq2xjiOL1Wg0kC1Sv0fJG1cRfl
-	 jOWRlNZf0K4JivUEUQDrRonIxeQN3dkkFf8IiMtQ/bLQustO+jTGBPMzfZ91VkC8usHUZ
-	 AxUFHU6tgLDCrF5Ld3/F98YMvSgMKVEm2zrfciGqDi20lBcpZmFWMM2IHxQNhrW94zgw/
-	 uVUn9U43kYgQf2qfUKtwSMaEBDDmpimqSVd2DwJip1w406R/DrlhRWZYldmmaq6jtG85A
-	 kDvrQzdQ87k+QlCdaxjfdBpnmWpcoRFcikoPJl8ICoGbd9qqqe+idR9BK1/OSW//xUg==
+	bh=J32R8+oGBvxCfrq62+p8PWTPNUXuw4R49g9EGreCGSY=;
+	b=LVyPt39x78n28NSYN4F1YuXwzr1Seapm7pMiO+r5GwqXO5ZOAnhQH0zpm5idOqLHD1ht
+	 ynBQhZhp9eQMT87LeP4prrU5e373dPjS3UYLFA3iM7oUenp0wqI//R6yj0Ll8T/NigeRt
+	 5VjtVmuH6QWyBoQLy91Bdls7GN4ep8Ia+ybsdvez11pk9JjZvX2sZZh/6TxMDximeeUdZ
+	 gJsANZ+UOECCVSNOKd5MyT/D2dekg2dUlLRJ8wSplmyp7/W0ir8SXgecNhGanTZ1oiqTr
+	 1s0v2l4t0L9N5gNmknHmEHqm9cza8xZ+fT2qovkTztXK7j+B4PWZHMvzV+LukQP3e0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pdi1H5xt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V2fcGvTU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB90606A320;
-	Wed, 18 Nov 2026 18:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67614606A320;
+	Wed, 18 Nov 2026 18:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pdi1H5xt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88B61F000C4;
-	Wed, 18 Nov 2026 18:00:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V2fcGvTU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6BD41F000C4;
+	Wed, 18 Nov 2026 18:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024839;
-	bh=wBnV5keoNB8uHTAspcgSkACVaRXInuc3vhctzU1NGRg=;
+	s=korg; t=1795024842;
+	bh=J32R8+oGBvxCfrq62+p8PWTPNUXuw4R49g9EGreCGSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pdi1H5xtxcwMOGwVGeub7O4SonsLyliMkP9DZI5PgTaQuBdjoHHHO/SQ4IgYF/tkl
-	 kWYCEnbyu5F7vOSmHBsVCb2CUecbbZLcj6Udor5c4JgtxHyS4pLew5oDaR+l+dAQNr
-	 b9uvKkeHKM49u40JLkjCP9qbtpRCqsj/avtqQt2c=
+	b=V2fcGvTU548Somi5y7VeHfkzGK2alwN4kJ2hv2FV+b9XvMaoJH1/Q2HJzV+qwusgK
+	 atAU0Gd7oZTvoPjjQIbp2PXSlL84LXMlff7DWACltwWfKsUCEk1BI1CuFU6/udhA0S
+	 WNtp3jvEGa5DsvGGliMP8/dUxLGuBTDoBRY3KGEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Malte Wechter <maltewechter@gmail.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0865/2151] rnull: configfs: add power to configfs features
-Date: Wed, 18 Nov 2026 15:43:20 +0100
-Message-ID: <20261118150153.724051116@linuxfoundation.org>
+Subject: [PATCH 6.18 0826/2151] ASoC: mediatek: mt8192: check return values in mt8192_afe_gpio_init()
+Date: Wed, 18 Nov 2026 15:42:41 +0100
+Message-ID: <20261118150152.225096339@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,39 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Malte Wechter <maltewechter@gmail.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 0cd698e89375d0dfc257f9ae978420aa7fe5359d ]
+[ Upstream commit 7cca184ad434436e8f4648f71756bab0c3593ed9 ]
 
-features displayed by configfs for rnull was inconsistent with the
-actual features available. This correctly exposes `power` as a feature,
-which is also consistent with the C null_blk driver.
+Currently, mt8192_afe_gpio_init() ignores the return values of
+mt8192_afe_gpio_select() and mt8192_afe_gpio_request(). If configuring
+GPIO states or requesting GPIOs fails during initialization, the function
+still proceeds and returns 0, masking the initialization failure.
 
-Fixes: d969d504bc13 ("rnull: enable configuration via `configfs`")
+Fix this by checking and propagating the return values properly.
 
-Signed-off-by: Malte Wechter <maltewechter@gmail.com>
-Link: https://msgid.link/20260924-upstream-v7-3-rc3-v2-1-ca56ae7a73e9@gmail.com
-Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
-Link: https://patch.msgid.link/20260929-rust-block-for-v7-4-rc1-b4-v1-8-642a4c1aebd7@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 125ab5d588b0 ("ASoC: mediatek: mt8192: add platform driver")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260918133912.133799-10-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rnull/configfs.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/mediatek/mt8192/mt8192-afe-gpio.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/block/rnull/configfs.rs b/drivers/block/rnull/configfs.rs
-index 8498e9bae6fd1..5c08edc7f2840 100644
---- a/drivers/block/rnull/configfs.rs
-+++ b/drivers/block/rnull/configfs.rs
-@@ -36,7 +36,7 @@ impl AttributeOperations<0> for Config {
+diff --git a/sound/soc/mediatek/mt8192/mt8192-afe-gpio.c b/sound/soc/mediatek/mt8192/mt8192-afe-gpio.c
+index ed6dfdf2589bb..f2d5e61fbb639 100644
+--- a/sound/soc/mediatek/mt8192/mt8192-afe-gpio.c
++++ b/sound/soc/mediatek/mt8192/mt8192-afe-gpio.c
+@@ -151,13 +151,17 @@ int mt8192_afe_gpio_init(struct device *dev)
+ 		}
+ 	}
  
-     fn show(_this: &Config, page: &mut [u8; PAGE_SIZE]) -> Result<usize> {
-         let mut writer = kernel::str::Formatter::new(page);
--        writer.write_str("blocksize,size,rotational,irqmode\n")?;
-+        writer.write_str("blocksize,size,rotational,irqmode,power\n")?;
-         Ok(writer.bytes_written())
-     }
+-	mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_CLK_MOSI_ON);
++	ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_CLK_MOSI_ON);
++	if (ret)
++		return ret;
+ 
+ 	/* gpio status init */
+-	mt8192_afe_gpio_request(dev, false, MT8192_DAI_ADDA, 0);
+-	mt8192_afe_gpio_request(dev, false, MT8192_DAI_ADDA, 1);
++	ret = mt8192_afe_gpio_request(dev, false, MT8192_DAI_ADDA, 0);
++	if (ret)
++		return ret;
++	ret = mt8192_afe_gpio_request(dev, false, MT8192_DAI_ADDA, 1);
+ 
+-	return 0;
++	return ret;
  }
+ EXPORT_SYMBOL(mt8192_afe_gpio_init);
+ 
 -- 
 2.53.0
 
