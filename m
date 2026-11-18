@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040400;
-	b=ZcPx/ehWg7kcEmxKGIwVCbimcpjJQCD80I7GsXGs/soEy+w1SvBbN57vUVhcTOYE+ZUN
-	 3BcAfH9n4u8RLSRQQgNzX/fTnTieYUBsP2b9B4EFBRENsoRPGAJpszxwGheIUK0sML//H
-	 UnZ6ERAkbc7wYsWxYusfS7sFkIk0eSptQG7Wjzgts8esvWG1Ssepj5jmLedrPz9WnRPVV
-	 0WtJ4eWScpqS/dki7blZV6FS0uAHeBgYlYKJE2gBudp5g3umg3RRmd26lMs2HC5ZSVbsX
-	 TMXExYp360puqUjOstD5oXb1cadwTBkRahcXH92V8KU6N6f55IHP9XIqXRrP/TowoBg==
+	t=1795040403;
+	b=CVEFzM2Zz/FkxQZ24TDXhLjHJGwZrMDe3iH8sOBkQx20WiRxxM1EKdhnFLnND26Lx/mR
+	 ce68r3ZwvifsmIaamBA+uS5duF15FkuZBGf4TFXAayaYpBINN46nK+a5VwDe3YHZdAKMv
+	 AFyuP21OVEqz+VlmD6Utq1kNKnZwmQVVDglLevSQegFbTXEI6Mxr60jlACp/qkGQo7eN0
+	 d1eRsSHmHNn2idUYU01MHxVzVxHVoA9UPMAy1TiStWWGlbSRmp/MJLpeVKcK9VxHF4TuE
+	 Q5YjTNoax4lv6me3uNVYCRVN8klCwgegCcVG8GlRYQ67AcYDguo8EAZ2ZlRQbSBYf6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040400;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040403;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J9r8O6ZUPDOdNkQ0qLvbfj/qmdEcLyXrq1oXmSHDRig=;
-	b=gu06K9mGHJoQNzp1A39QVOdMdYS6sXfgEx5kIXA+2FfrsEn+ynGRMbPGkp3BwpCuaG59
-	 zvYcPNy30qCbtBFlijO2IrbvbkbZwKa+E1XdIHEW5G0cctaniZDxfpNsfxlEC+/iWwLkq
-	 80JCX1YMDxEwWwLFPTNPI+ymszQy0oL1rYAvkYxHp9P/ZpNUbyceVt3alpp4oEs6LhCpW
-	 jpqEYzxNv1AOsRNWqsCITK+X2dYB+nN1kqdFJOeoW8/k+7GGekek1/x7pa14ofV3cjOC5
-	 Do9ADU7pgFepxBLgolVA+D9M/eqNM+3GNDi2asgywrX1+Bi05MLUM8jQekLS2QbQnRw==
+	bh=6HkxP3wnB4IrlWy52JXMf7oijYTA/54U7i3Jmw8RC9Y=;
+	b=ydPtbcz1+mWPiWSj/jXkGaPsX2R7vqxdlWmw16FP5s1FMShHrPIrshX1txtfUKPPHl6U
+	 jZYOfNTFMvW9kDhOYNfj8t2Pcye7OHjrwQftZBYIU1wd3nvuu5ST7B3j3vuVREbScWh86
+	 ZHogB7xdVOVPSxIax4DxvaDeR+ckSMCrrxaL/aMwPQfGY/YXHvUP6dbiAYaAlLMvvDJm3
+	 MQAFXELVg4AkZtHG8FVSJNPz7CHCgwAOEu6x/BaWZ8/YEestxbj3Zt/lNRF2aJel6pqLp
+	 0xwmWC7GZ5uLvLM1sMfv/R/4xYAtChdJZs6OTCrrKytWC4G6k6O3l3wkddwiP9w+biw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tGxgEJEH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="D/Y+T0sa";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F98606A31C;
-	Wed, 18 Nov 2026 22:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D80606A320;
+	Wed, 18 Nov 2026 22:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tGxgEJEH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38EFA1F000C5;
-	Wed, 18 Nov 2026 22:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D/Y+T0sa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7591F000C5;
+	Wed, 18 Nov 2026 22:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040399;
-	bh=J9r8O6ZUPDOdNkQ0qLvbfj/qmdEcLyXrq1oXmSHDRig=;
+	s=korg; t=1795040402;
+	bh=6HkxP3wnB4IrlWy52JXMf7oijYTA/54U7i3Jmw8RC9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tGxgEJEHUzOwPdkHCNMDDwp7fOEDic6D+MoNoYXdFPQwbvIopO+j5I27dmpOW21VI
-	 mnkM2ynmEudhv4/Yq1PaDTaratapaFLaHYTXlhzLkpA+EY349WY1bprJSsSsd+XslT
-	 cwU+NyDG31B7KlM+M8vPY787Jk5C1O8n3RsgbR94=
+	b=D/Y+T0sa0rJZ8EelJwy52BgTZuT43md0gi6b0zdOx57h1vn4KBHoSgAPsDro7OA61
+	 Ex+aOT9d516X15Z0sKKYnNXVUqUYneIXhWSGSsMtkO0i9zHBTHzT2RPoP18yRpkzDG
+	 hGrfHOdJnMhE5LqIjgMMqOvHbSb70Lq3bq1U96+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Logan Odell <loganodell@google.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2406/3318] ALSA: oxygen: Use guard() for mutex locks
-Date: Wed, 18 Nov 2026 15:50:28 +0100
-Message-ID: <20261118150433.675918817@linuxfoundation.org>
+Subject: [PATCH 6.6 2442/3318] PCI/IOV: Read VF config values that need not match PF
+Date: Wed, 18 Nov 2026 15:51:04 +0100
+Message-ID: <20261118150434.708644335@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,938 +68,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Logan Odell <loganodell@google.com>
 
-[ Upstream commit 8ecafe5dacc2d98312315b83902ce7b7dbcdfa86 ]
+[ Upstream commit ae43799529c480510dcc14bd0ed141a1d85b9259 ]
 
-Replace the manual mutex lock/unlock pairs with guard() for code
-simplification.
+Per PCIe r7.0, sec 7.5.1.1.5 and 7.5.1.2.3, VF Revision IDs and Subsystem
+IDs may differ from the PF's.  Read these values from VF config space
+instead of using cached values from VF 0.
 
-Only code refactoring, and no behavior change.
+Per 7.5.1.1.6 and 7.5.1.2.3, VF Class Codes and Subsystem Vendor IDs must
+be the same as the PF's.  Use the PF's value instead of reading from VF
+config space.
 
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250829144342.4290-47-tiwai@suse.de
-Stable-dep-of: 5bdc232c3094 ("ALSA: oxygen: use helper to activate the SPDIF PCM control")
+Per 7.5.1.1.9, the Header Type for a VF must be 0, so hardcode that
+assignment.
+
+Fixes: cf0921bea66c ("PCI/IOV: Use VF0 cached config registers for other VFs")
+Signed-off-by: Logan Odell <loganodell@google.com>
+[bhelgaas: commit log, move "rev" decl inside block that uses it]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260910173648.1304517-1-loganodell@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/oxygen/oxygen.c         | 12 +++----
- sound/pci/oxygen/oxygen_mixer.c   | 60 +++++++++++--------------------
- sound/pci/oxygen/oxygen_pcm.c     | 21 ++++-------
- sound/pci/oxygen/xonar_cs43xx.c   |  3 +-
- sound/pci/oxygen/xonar_dg_mixer.c | 33 ++++++-----------
- sound/pci/oxygen/xonar_pcm179x.c  | 18 ++++------
- sound/pci/oxygen/xonar_wm87x6.c   | 31 ++++++----------
- 7 files changed, 59 insertions(+), 119 deletions(-)
+ drivers/pci/iov.c   | 25 -------------------------
+ drivers/pci/pci.h   |  4 ----
+ drivers/pci/probe.c | 15 ++++++++++-----
+ 3 files changed, 10 insertions(+), 34 deletions(-)
 
-diff --git a/sound/pci/oxygen/oxygen.c b/sound/pci/oxygen/oxygen.c
-index c346f42befc27..ed4d0ec3abe2d 100644
---- a/sound/pci/oxygen/oxygen.c
-+++ b/sound/pci/oxygen/oxygen.c
-@@ -450,7 +450,7 @@ static int rolloff_put(struct snd_kcontrol *ctl,
- 	int changed;
- 	u8 reg;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	reg = data->ak4396_regs[0][AK4396_CONTROL_2];
- 	if (value->value.enumerated.item[0])
- 		reg |= AK4396_SLOW;
-@@ -461,7 +461,6 @@ static int rolloff_put(struct snd_kcontrol *ctl,
- 		for (i = 0; i < data->dacs; ++i)
- 			ak4396_write(chip, i, AK4396_CONTROL_2, reg);
- 	}
--	mutex_unlock(&chip->mutex);
- 	return changed;
+diff --git a/drivers/pci/iov.c b/drivers/pci/iov.c
+index d595a345a7d47..829c2be7ba956 100644
+--- a/drivers/pci/iov.c
++++ b/drivers/pci/iov.c
+@@ -153,29 +153,6 @@ resource_size_t pci_iov_resource_size(struct pci_dev *dev, int resno)
+ 	return dev->sriov->barsz[resno - PCI_IOV_RESOURCES];
  }
  
-@@ -499,14 +498,13 @@ static int hpf_put(struct snd_kcontrol *ctl, struct snd_ctl_elem_value *value)
- 	unsigned int reg;
- 	int changed;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	reg = data->wm8785_regs[WM8785_R2] & ~(WM8785_HPFR | WM8785_HPFL);
- 	if (value->value.enumerated.item[0])
- 		reg |= WM8785_HPFR | WM8785_HPFL;
- 	changed = reg != data->wm8785_regs[WM8785_R2];
- 	if (changed)
- 		wm8785_write(chip, WM8785_R2, reg);
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -563,7 +561,7 @@ static int meridian_dig_source_put(struct snd_kcontrol *ctl,
- 	u16 old_reg, new_reg;
- 	int changed;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	old_reg = oxygen_read16(chip, OXYGEN_GPIO_DATA);
- 	new_reg = old_reg & ~GPIO_MERIDIAN_DIG_MASK;
- 	if (value->value.enumerated.item[0] == 0)
-@@ -573,7 +571,6 @@ static int meridian_dig_source_put(struct snd_kcontrol *ctl,
- 	changed = new_reg != old_reg;
- 	if (changed)
- 		oxygen_write16(chip, OXYGEN_GPIO_DATA, new_reg);
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -584,7 +581,7 @@ static int claro_dig_source_put(struct snd_kcontrol *ctl,
- 	u16 old_reg, new_reg;
- 	int changed;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	old_reg = oxygen_read16(chip, OXYGEN_GPIO_DATA);
- 	new_reg = old_reg & ~GPIO_CLARO_DIG_COAX;
- 	if (value->value.enumerated.item[0])
-@@ -592,7 +589,6 @@ static int claro_dig_source_put(struct snd_kcontrol *ctl,
- 	changed = new_reg != old_reg;
- 	if (changed)
- 		oxygen_write16(chip, OXYGEN_GPIO_DATA, new_reg);
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-diff --git a/sound/pci/oxygen/oxygen_mixer.c b/sound/pci/oxygen/oxygen_mixer.c
-index eb3aca16359c5..be35f5582485c 100644
---- a/sound/pci/oxygen/oxygen_mixer.c
-+++ b/sound/pci/oxygen/oxygen_mixer.c
-@@ -31,10 +31,9 @@ static int dac_volume_get(struct snd_kcontrol *ctl,
- 	struct oxygen *chip = ctl->private_data;
- 	unsigned int i;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	for (i = 0; i < chip->model.dac_channels_mixer; ++i)
- 		value->value.integer.value[i] = chip->dac_volume[i];
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -46,7 +45,7 @@ static int dac_volume_put(struct snd_kcontrol *ctl,
- 	int changed;
- 
- 	changed = 0;
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	for (i = 0; i < chip->model.dac_channels_mixer; ++i)
- 		if (value->value.integer.value[i] != chip->dac_volume[i]) {
- 			chip->dac_volume[i] = value->value.integer.value[i];
-@@ -54,7 +53,6 @@ static int dac_volume_put(struct snd_kcontrol *ctl,
- 		}
- 	if (changed)
- 		chip->model.update_dac_volume(chip);
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -63,9 +61,8 @@ static int dac_mute_get(struct snd_kcontrol *ctl,
- {
- 	struct oxygen *chip = ctl->private_data;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	value->value.integer.value[0] = !chip->dac_mute;
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -75,13 +72,12 @@ static int dac_mute_put(struct snd_kcontrol *ctl,
- 	struct oxygen *chip = ctl->private_data;
- 	int changed;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	changed = (!value->value.integer.value[0]) != chip->dac_mute;
- 	if (changed) {
- 		chip->dac_mute = !value->value.integer.value[0];
- 		chip->model.update_dac_mute(chip);
- 	}
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -114,9 +110,8 @@ static int upmix_get(struct snd_kcontrol *ctl, struct snd_ctl_elem_value *value)
- {
- 	struct oxygen *chip = ctl->private_data;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	value->value.enumerated.item[0] = chip->dac_routing;
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -188,13 +183,12 @@ static int upmix_put(struct snd_kcontrol *ctl, struct snd_ctl_elem_value *value)
- 
- 	if (value->value.enumerated.item[0] >= count)
- 		return -EINVAL;
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	changed = value->value.enumerated.item[0] != chip->dac_routing;
- 	if (changed) {
- 		chip->dac_routing = value->value.enumerated.item[0];
- 		oxygen_update_dac_routing(chip);
- 	}
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -203,9 +197,8 @@ static int spdif_switch_get(struct snd_kcontrol *ctl,
- {
- 	struct oxygen *chip = ctl->private_data;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	value->value.integer.value[0] = chip->spdif_playback_enable;
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -279,7 +272,7 @@ static int spdif_switch_put(struct snd_kcontrol *ctl,
- 	struct oxygen *chip = ctl->private_data;
- 	int changed;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	changed = value->value.integer.value[0] != chip->spdif_playback_enable;
- 	if (changed) {
- 		chip->spdif_playback_enable = !!value->value.integer.value[0];
-@@ -287,7 +280,6 @@ static int spdif_switch_put(struct snd_kcontrol *ctl,
- 		oxygen_update_spdif_source(chip);
- 		spin_unlock_irq(&chip->reg_lock);
- 	}
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -336,9 +328,8 @@ static int spdif_default_get(struct snd_kcontrol *ctl,
- {
- 	struct oxygen *chip = ctl->private_data;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	oxygen_to_iec958(chip->spdif_bits, value);
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -350,14 +341,13 @@ static int spdif_default_put(struct snd_kcontrol *ctl,
- 	int changed;
- 
- 	new_bits = iec958_to_oxygen(value);
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	changed = new_bits != chip->spdif_bits;
- 	if (changed) {
- 		chip->spdif_bits = new_bits;
- 		if (!(chip->pcm_active & (1 << PCM_SPDIF)))
- 			write_spdif_bits(chip, new_bits);
- 	}
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -376,9 +366,8 @@ static int spdif_pcm_get(struct snd_kcontrol *ctl,
- {
- 	struct oxygen *chip = ctl->private_data;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	oxygen_to_iec958(chip->spdif_pcm_bits, value);
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -390,14 +379,13 @@ static int spdif_pcm_put(struct snd_kcontrol *ctl,
- 	int changed;
- 
- 	new_bits = iec958_to_oxygen(value);
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	changed = new_bits != chip->spdif_pcm_bits;
- 	if (changed) {
- 		chip->spdif_pcm_bits = new_bits;
- 		if (chip->pcm_active & (1 << PCM_SPDIF))
- 			write_spdif_bits(chip, new_bits);
- 	}
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -511,9 +499,8 @@ static int ac97_switch_get(struct snd_kcontrol *ctl,
- 	int invert = ctl->private_value & (1 << 16);
- 	u16 reg;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	reg = oxygen_read_ac97(chip, codec, index);
--	mutex_unlock(&chip->mutex);
- 	if (!(reg & (1 << bitnr)) ^ !invert)
- 		value->value.integer.value[0] = 1;
- 	else
-@@ -550,7 +537,7 @@ static int ac97_switch_put(struct snd_kcontrol *ctl,
- 	u16 oldreg, newreg;
- 	int change;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	oldreg = oxygen_read_ac97(chip, codec, index);
- 	newreg = oldreg;
- 	if (!value->value.integer.value[0] ^ !invert)
-@@ -579,7 +566,6 @@ static int ac97_switch_put(struct snd_kcontrol *ctl,
- 						 CM9780_GPO0, CM9780_GPO0);
- 		}
- 	}
--	mutex_unlock(&chip->mutex);
- 	return change;
- }
- 
-@@ -604,9 +590,8 @@ static int ac97_volume_get(struct snd_kcontrol *ctl,
- 	unsigned int index = ctl->private_value & 0xff;
- 	u16 reg;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	reg = oxygen_read_ac97(chip, codec, index);
--	mutex_unlock(&chip->mutex);
- 	if (!stereo) {
- 		value->value.integer.value[0] = 31 - (reg & 0x1f);
- 	} else {
-@@ -626,7 +611,7 @@ static int ac97_volume_put(struct snd_kcontrol *ctl,
- 	u16 oldreg, newreg;
- 	int change;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	oldreg = oxygen_read_ac97(chip, codec, index);
- 	if (!stereo) {
- 		newreg = oldreg & ~0x1f;
-@@ -639,7 +624,6 @@ static int ac97_volume_put(struct snd_kcontrol *ctl,
- 	change = newreg != oldreg;
- 	if (change)
- 		oxygen_write_ac97(chip, codec, index, newreg);
--	mutex_unlock(&chip->mutex);
- 	return change;
- }
- 
-@@ -656,10 +640,9 @@ static int mic_fmic_source_get(struct snd_kcontrol *ctl,
- {
- 	struct oxygen *chip = ctl->private_data;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	value->value.enumerated.item[0] =
- 		!!(oxygen_read_ac97(chip, 0, CM9780_JACK) & CM9780_FMIC2MIC);
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -670,7 +653,7 @@ static int mic_fmic_source_put(struct snd_kcontrol *ctl,
- 	u16 oldreg, newreg;
- 	int change;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	oldreg = oxygen_read_ac97(chip, 0, CM9780_JACK);
- 	if (value->value.enumerated.item[0])
- 		newreg = oldreg | CM9780_FMIC2MIC;
-@@ -679,7 +662,6 @@ static int mic_fmic_source_put(struct snd_kcontrol *ctl,
- 	change = newreg != oldreg;
- 	if (change)
- 		oxygen_write_ac97(chip, 0, CM9780_JACK, newreg);
--	mutex_unlock(&chip->mutex);
- 	return change;
- }
- 
-@@ -699,9 +681,8 @@ static int ac97_fp_rec_volume_get(struct snd_kcontrol *ctl,
- 	struct oxygen *chip = ctl->private_data;
- 	u16 reg;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	reg = oxygen_read_ac97(chip, 1, AC97_REC_GAIN);
--	mutex_unlock(&chip->mutex);
- 	value->value.integer.value[0] = reg & 7;
- 	value->value.integer.value[1] = (reg >> 8) & 7;
- 	return 0;
-@@ -714,7 +695,7 @@ static int ac97_fp_rec_volume_put(struct snd_kcontrol *ctl,
- 	u16 oldreg, newreg;
- 	int change;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	oldreg = oxygen_read_ac97(chip, 1, AC97_REC_GAIN);
- 	newreg = oldreg & ~0x0707;
- 	newreg = newreg | (value->value.integer.value[0] & 7);
-@@ -722,7 +703,6 @@ static int ac97_fp_rec_volume_put(struct snd_kcontrol *ctl,
- 	change = newreg != oldreg;
- 	if (change)
- 		oxygen_write_ac97(chip, 1, AC97_REC_GAIN, newreg);
--	mutex_unlock(&chip->mutex);
- 	return change;
- }
- 
-diff --git a/sound/pci/oxygen/oxygen_pcm.c b/sound/pci/oxygen/oxygen_pcm.c
-index b2a3fcfe31d44..8b4f7269753ad 100644
---- a/sound/pci/oxygen/oxygen_pcm.c
-+++ b/sound/pci/oxygen/oxygen_pcm.c
-@@ -171,7 +171,7 @@ static int oxygen_open(struct snd_pcm_substream *substream,
- 	snd_pcm_set_sync(substream);
- 	chip->streams[channel] = substream;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	chip->pcm_active |= 1 << channel;
- 	if (channel == PCM_SPDIF) {
- 		chip->spdif_pcm_bits = chip->spdif_bits;
-@@ -181,7 +181,6 @@ static int oxygen_open(struct snd_pcm_substream *substream,
- 			       SNDRV_CTL_EVENT_MASK_INFO,
- 			       &chip->controls[CONTROL_SPDIF_PCM]->id);
- 	}
--	mutex_unlock(&chip->mutex);
- 
- 	return 0;
- }
-@@ -221,7 +220,7 @@ static int oxygen_close(struct snd_pcm_substream *substream)
- 	struct oxygen *chip = snd_pcm_substream_chip(substream);
- 	unsigned int channel = oxygen_substream_channel(substream);
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	chip->pcm_active &= ~(1 << channel);
- 	if (channel == PCM_SPDIF) {
- 		chip->controls[CONTROL_SPDIF_PCM]->vd[0].access |=
-@@ -232,7 +231,6 @@ static int oxygen_close(struct snd_pcm_substream *substream)
- 	}
- 	if (channel == PCM_SPDIF || channel == PCM_MULTICH)
- 		oxygen_update_spdif_source(chip);
--	mutex_unlock(&chip->mutex);
- 
- 	chip->streams[channel] = NULL;
- 	return 0;
-@@ -366,9 +364,8 @@ static int oxygen_rec_a_hw_params(struct snd_pcm_substream *substream,
- 			      OXYGEN_I2S_BITS_MASK);
- 	spin_unlock_irq(&chip->reg_lock);
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	chip->model.set_adc_params(chip, hw_params);
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -403,9 +400,8 @@ static int oxygen_rec_b_hw_params(struct snd_pcm_substream *substream,
- 	spin_unlock_irq(&chip->reg_lock);
- 
- 	if (!is_ac97) {
--		mutex_lock(&chip->mutex);
-+		guard(mutex)(&chip->mutex);
- 		chip->model.set_adc_params(chip, hw_params);
--		mutex_unlock(&chip->mutex);
- 	}
- 	return 0;
- }
-@@ -440,9 +436,8 @@ static int oxygen_rec_c_hw_params(struct snd_pcm_substream *substream,
- 	spin_unlock_irq(&chip->reg_lock);
- 
- 	if (!is_spdif) {
--		mutex_lock(&chip->mutex);
-+		guard(mutex)(&chip->mutex);
- 		chip->model.set_adc_params(chip, hw_params);
--		mutex_unlock(&chip->mutex);
- 	}
- 	return 0;
- }
-@@ -457,7 +452,7 @@ static int oxygen_spdif_hw_params(struct snd_pcm_substream *substream,
- 	if (err < 0)
- 		return err;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	spin_lock_irq(&chip->reg_lock);
- 	oxygen_clear_bits32(chip, OXYGEN_SPDIF_CONTROL,
- 			    OXYGEN_SPDIF_OUT_ENABLE);
-@@ -469,7 +464,6 @@ static int oxygen_spdif_hw_params(struct snd_pcm_substream *substream,
- 			      OXYGEN_SPDIF_OUT_RATE_MASK);
- 	oxygen_update_spdif_source(chip);
- 	spin_unlock_irq(&chip->reg_lock);
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -483,7 +477,7 @@ static int oxygen_multich_hw_params(struct snd_pcm_substream *substream,
- 	if (err < 0)
- 		return err;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	spin_lock_irq(&chip->reg_lock);
- 	oxygen_write8_masked(chip, OXYGEN_PLAY_CHANNELS,
- 			     oxygen_play_channels(hw_params),
-@@ -505,7 +499,6 @@ static int oxygen_multich_hw_params(struct snd_pcm_substream *substream,
- 
- 	chip->model.set_dac_params(chip, hw_params);
- 	oxygen_update_dac_routing(chip);
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-diff --git a/sound/pci/oxygen/xonar_cs43xx.c b/sound/pci/oxygen/xonar_cs43xx.c
-index 664b7759dd628..d608803fd8747 100644
---- a/sound/pci/oxygen/xonar_cs43xx.c
-+++ b/sound/pci/oxygen/xonar_cs43xx.c
-@@ -309,7 +309,7 @@ static int rolloff_put(struct snd_kcontrol *ctl,
- 	int changed;
- 	u8 reg;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	reg = data->cs4398_regs[7];
- 	if (value->value.enumerated.item[0])
- 		reg |= CS4398_FILT_SEL;
-@@ -324,7 +324,6 @@ static int rolloff_put(struct snd_kcontrol *ctl,
- 			reg = data->cs4362a_regs[0x04] & ~CS4362A_FILT_SEL;
- 		cs4362a_write(chip, 0x04, reg);
- 	}
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-diff --git a/sound/pci/oxygen/xonar_dg_mixer.c b/sound/pci/oxygen/xonar_dg_mixer.c
-index 198588562880b..2179ff8e4d864 100644
---- a/sound/pci/oxygen/xonar_dg_mixer.c
-+++ b/sound/pci/oxygen/xonar_dg_mixer.c
-@@ -62,9 +62,8 @@ static int output_select_get(struct snd_kcontrol *ctl,
- 	struct oxygen *chip = ctl->private_data;
- 	struct dg *data = chip->model_data;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	value->value.enumerated.item[0] = data->output_sel;
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -77,14 +76,13 @@ static int output_select_put(struct snd_kcontrol *ctl,
- 	int changed = 0;
- 	int ret;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	if (data->output_sel != new) {
- 		data->output_sel = new;
- 		ret = output_select_apply(chip);
- 		changed = ret >= 0 ? 1 : ret;
- 		oxygen_update_dac_routing(chip);
- 	}
--	mutex_unlock(&chip->mutex);
- 
- 	return changed;
- }
-@@ -108,12 +106,11 @@ static int hp_stereo_volume_get(struct snd_kcontrol *ctl,
- 	struct dg *data = chip->model_data;
- 	unsigned int tmp;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	tmp = (~data->cs4245_shadow[CS4245_DAC_A_CTRL]) & 255;
- 	val->value.integer.value[0] = tmp;
- 	tmp = (~data->cs4245_shadow[CS4245_DAC_B_CTRL]) & 255;
- 	val->value.integer.value[1] = tmp;
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -130,7 +127,7 @@ static int hp_stereo_volume_put(struct snd_kcontrol *ctl,
- 	if ((new1 > 255) || (new1 < 0) || (new2 > 255) || (new2 < 0))
- 		return -EINVAL;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	if ((data->cs4245_shadow[CS4245_DAC_A_CTRL] != ~new1) ||
- 	    (data->cs4245_shadow[CS4245_DAC_B_CTRL] != ~new2)) {
- 		data->cs4245_shadow[CS4245_DAC_A_CTRL] = ~new1;
-@@ -140,7 +137,6 @@ static int hp_stereo_volume_put(struct snd_kcontrol *ctl,
- 			ret = cs4245_write_spi(chip, CS4245_DAC_B_CTRL);
- 		changed = ret >= 0 ? 1 : ret;
- 	}
--	mutex_unlock(&chip->mutex);
- 
- 	return changed;
- }
-@@ -153,10 +149,9 @@ static int hp_mute_get(struct snd_kcontrol *ctl,
- 	struct oxygen *chip = ctl->private_data;
- 	struct dg *data = chip->model_data;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	val->value.integer.value[0] =
- 		!(data->cs4245_shadow[CS4245_DAC_CTRL_1] & CS4245_MUTE_DAC);
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -170,13 +165,12 @@ static int hp_mute_put(struct snd_kcontrol *ctl,
- 
- 	if (val->value.integer.value[0] > 1)
- 		return -EINVAL;
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	data->cs4245_shadow[CS4245_DAC_CTRL_1] &= ~CS4245_MUTE_DAC;
- 	data->cs4245_shadow[CS4245_DAC_CTRL_1] |=
- 		(~val->value.integer.value[0] << 2) & CS4245_MUTE_DAC;
- 	ret = cs4245_write_spi(chip, CS4245_DAC_CTRL_1);
- 	changed = ret >= 0 ? 1 : ret;
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -212,10 +206,9 @@ static int input_vol_get(struct snd_kcontrol *ctl,
- 	struct dg *data = chip->model_data;
- 	unsigned int idx = ctl->private_value;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	value->value.integer.value[0] = data->input_vol[idx][0];
- 	value->value.integer.value[1] = data->input_vol[idx][1];
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -233,7 +226,7 @@ static int input_vol_put(struct snd_kcontrol *ctl,
- 	    value->value.integer.value[1] < 2 * -12 ||
- 	    value->value.integer.value[1] > 2 * 12)
- 		return -EINVAL;
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	changed = data->input_vol[idx][0] != value->value.integer.value[0] ||
- 		  data->input_vol[idx][1] != value->value.integer.value[1];
- 	if (changed) {
-@@ -246,7 +239,6 @@ static int input_vol_put(struct snd_kcontrol *ctl,
- 		}
- 		changed = ret >= 0 ? 1 : ret;
- 	}
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -282,9 +274,8 @@ static int input_sel_get(struct snd_kcontrol *ctl,
- 	struct oxygen *chip = ctl->private_data;
- 	struct dg *data = chip->model_data;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	value->value.enumerated.item[0] = data->input_sel;
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -299,7 +290,7 @@ static int input_sel_put(struct snd_kcontrol *ctl,
- 	if (value->value.enumerated.item[0] > 3)
- 		return -EINVAL;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	changed = value->value.enumerated.item[0] != data->input_sel;
- 	if (changed) {
- 		data->input_sel = value->value.enumerated.item[0];
-@@ -311,7 +302,6 @@ static int input_sel_put(struct snd_kcontrol *ctl,
- 				data->input_vol[data->input_sel][1]);
- 		changed = ret >= 0 ? 1 : ret;
- 	}
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -341,7 +331,7 @@ static int hpf_put(struct snd_kcontrol *ctl, struct snd_ctl_elem_value *value)
- 	u8 reg;
- 	int changed;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	reg = data->cs4245_shadow[CS4245_ADC_CTRL] & ~CS4245_HPF_FREEZE;
- 	if (value->value.enumerated.item[0])
- 		reg |= CS4245_HPF_FREEZE;
-@@ -350,7 +340,6 @@ static int hpf_put(struct snd_kcontrol *ctl, struct snd_ctl_elem_value *value)
- 		data->cs4245_shadow[CS4245_ADC_CTRL] = reg;
- 		cs4245_write_spi(chip, CS4245_ADC_CTRL);
- 	}
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-diff --git a/sound/pci/oxygen/xonar_pcm179x.c b/sound/pci/oxygen/xonar_pcm179x.c
-index cf801a235df92..a491c9c92989e 100644
---- a/sound/pci/oxygen/xonar_pcm179x.c
-+++ b/sound/pci/oxygen/xonar_pcm179x.c
-@@ -762,7 +762,7 @@ static int rolloff_put(struct snd_kcontrol *ctl,
- 	int changed;
- 	u8 reg;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	reg = data->pcm1796_regs[0][19 - PCM1796_REG_BASE];
- 	reg &= ~PCM1796_FLT_MASK;
- 	if (!value->value.enumerated.item[0])
-@@ -774,7 +774,6 @@ static int rolloff_put(struct snd_kcontrol *ctl,
- 		for (i = 0; i < data->dacs; ++i)
- 			pcm1796_write(chip, i, 19, reg);
- 	}
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -806,7 +805,7 @@ static int deemph_put(struct snd_kcontrol *ctl,
- 	int changed;
- 	u8 reg;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	reg = data->pcm1796_regs[0][18 - PCM1796_REG_BASE];
- 	if (!value->value.integer.value[0])
- 		reg &= ~PCM1796_DME;
-@@ -817,7 +816,6 @@ static int deemph_put(struct snd_kcontrol *ctl,
- 		for (i = 0; i < data->dacs; ++i)
- 			pcm1796_write(chip, i, 18, reg);
- 	}
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -872,7 +870,7 @@ static int st_output_switch_put(struct snd_kcontrol *ctl,
- 	struct xonar_pcm179x *data = chip->model_data;
- 	u16 gpio_old, gpio;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	gpio_old = oxygen_read16(chip, OXYGEN_GPIO_DATA);
- 	gpio = gpio_old;
- 	switch (value->value.enumerated.item[0]) {
-@@ -889,7 +887,6 @@ static int st_output_switch_put(struct snd_kcontrol *ctl,
- 	oxygen_write16(chip, OXYGEN_GPIO_DATA, gpio);
- 	data->hp_active = gpio & GPIO_ST_HP;
- 	update_pcm1796_volume(chip);
--	mutex_unlock(&chip->mutex);
- 	return gpio != gpio_old;
- }
- 
-@@ -909,7 +906,7 @@ static int st_hp_volume_offset_get(struct snd_kcontrol *ctl,
- 	struct oxygen *chip = ctl->private_data;
- 	struct xonar_pcm179x *data = chip->model_data;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	if (data->hp_gain_offset < 2*-12)
- 		value->value.enumerated.item[0] = 0;
- 	else if (data->hp_gain_offset < 2*-6)
-@@ -918,7 +915,6 @@ static int st_hp_volume_offset_get(struct snd_kcontrol *ctl,
- 		value->value.enumerated.item[0] = 2;
- 	else
- 		value->value.enumerated.item[0] = 3;
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -935,13 +931,12 @@ static int st_hp_volume_offset_put(struct snd_kcontrol *ctl,
- 	if (value->value.enumerated.item[0] > 3)
- 		return -EINVAL;
- 	offset = offsets[value->value.enumerated.item[0]];
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	changed = offset != data->hp_gain_offset;
- 	if (changed) {
- 		data->hp_gain_offset = offset;
- 		update_pcm1796_volume(chip);
- 	}
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -985,7 +980,7 @@ static int xense_output_switch_put(struct snd_kcontrol *ctl,
- 	struct xonar_pcm179x *data = chip->model_data;
- 	u16 gpio_old, gpio;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	gpio_old = oxygen_read16(chip, OXYGEN_GPIO_DATA);
- 	gpio = gpio_old;
- 	switch (value->value.enumerated.item[0]) {
-@@ -1002,7 +997,6 @@ static int xense_output_switch_put(struct snd_kcontrol *ctl,
- 	oxygen_write16(chip, OXYGEN_GPIO_DATA, gpio);
- 	data->hp_active = !(gpio & GPIO_XENSE_SPEAKERS);
- 	update_pcm1796_volume(chip);
--	mutex_unlock(&chip->mutex);
- 	return gpio != gpio_old;
- }
- 
-diff --git a/sound/pci/oxygen/xonar_wm87x6.c b/sound/pci/oxygen/xonar_wm87x6.c
-index 8aa92f3e5ee88..7d92e6e20c395 100644
---- a/sound/pci/oxygen/xonar_wm87x6.c
-+++ b/sound/pci/oxygen/xonar_wm87x6.c
-@@ -237,7 +237,7 @@ static void xonar_ds_handle_hp_jack(struct oxygen *chip)
- 	bool hp_plugged;
- 	unsigned int reg;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 
- 	hp_plugged = !(oxygen_read16(chip, OXYGEN_GPIO_DATA) &
- 		       GPIO_DS_HP_DETECT);
-@@ -252,8 +252,6 @@ static void xonar_ds_handle_hp_jack(struct oxygen *chip)
- 	wm8766_write_cached(chip, WM8766_DAC_CTRL, reg);
- 
- 	snd_jack_report(data->hp_jack, hp_plugged ? SND_JACK_HEADPHONE : 0);
+-static void pci_read_vf_config_common(struct pci_dev *virtfn)
+-{
+-	struct pci_dev *physfn = virtfn->physfn;
 -
--	mutex_unlock(&chip->mutex);
- }
+-	/*
+-	 * Some config registers are the same across all associated VFs.
+-	 * Read them once from VF0 so we can skip reading them from the
+-	 * other VFs.
+-	 *
+-	 * PCIe r4.0, sec 9.3.4.1, technically doesn't require all VFs to
+-	 * have the same Revision ID and Subsystem ID, but we assume they
+-	 * do.
+-	 */
+-	pci_read_config_dword(virtfn, PCI_CLASS_REVISION,
+-			      &physfn->sriov->class);
+-	pci_read_config_byte(virtfn, PCI_HEADER_TYPE,
+-			     &physfn->sriov->hdr_type);
+-	pci_read_config_word(virtfn, PCI_SUBSYSTEM_VENDOR_ID,
+-			     &physfn->sriov->subsystem_vendor);
+-	pci_read_config_word(virtfn, PCI_SUBSYSTEM_ID,
+-			     &physfn->sriov->subsystem_device);
+-}
+-
+ int pci_iov_sysfs_link(struct pci_dev *dev,
+ 		struct pci_dev *virtfn, int id)
+ {
+@@ -310,8 +287,6 @@ int pci_iov_add_virtfn(struct pci_dev *dev, int id)
+ 	virtfn->physfn = pci_dev_get(dev);
+ 	virtfn->no_command_memory = 1;
  
- static void xonar_ds_init(struct oxygen *chip)
-@@ -521,14 +519,13 @@ static int wm8776_bit_switch_put(struct snd_kcontrol *ctl,
- 	bool invert = (ctl->private_value >> 24) & 1;
- 	int changed;
+-	if (id == 0)
+-		pci_read_vf_config_common(virtfn);
  
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	reg_value = data->wm8776_regs[reg_index] & ~bit;
- 	if (value->value.integer.value[0] ^ invert)
- 		reg_value |= bit;
- 	changed = reg_value != data->wm8776_regs[reg_index];
- 	if (changed)
- 		wm8776_write(chip, reg_index, reg_value);
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
+ 	rc = pci_setup_device(virtfn);
+ 	if (rc)
+diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+index c2ab22a353011..cde67b956f441 100644
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -357,10 +357,6 @@ struct pci_sriov {
+ 	u16		driver_max_VFs;	/* Max num VFs driver supports */
+ 	struct pci_dev	*dev;		/* Lowest numbered PF */
+ 	struct pci_dev	*self;		/* This PF */
+-	u32		class;		/* VF device */
+-	u8		hdr_type;	/* VF header type */
+-	u16		subsystem_vendor; /* VF subsystem vendor */
+-	u16		subsystem_device; /* VF subsystem device */
+ 	resource_size_t	barsz[PCI_SRIOV_NUM_BARS];	/* VF BAR size */
+ 	bool		drivers_autoprobe; /* Auto probing of VFs by driver */
+ };
+diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+index 9701917ce8380..1738dd06578b1 100644
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -1778,8 +1778,13 @@ static u32 pci_class(struct pci_dev *dev)
+ 	u32 class;
  
-@@ -648,13 +645,12 @@ static int wm8776_field_set(struct snd_kcontrol *ctl, unsigned int value)
- 	max = (ctl->private_value >> 12) & 0xf;
- 	if (value < min || value > max)
- 		return -EINVAL;
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	changed = value != (ctl->private_value & 0xf);
- 	if (changed) {
- 		ctl->private_value = (ctl->private_value & ~0xf) | value;
- 		wm8776_field_set_from_ctl(ctl);
+ #ifdef CONFIG_PCI_IOV
+-	if (dev->is_virtfn)
+-		return dev->physfn->sriov->class;
++	if (dev->is_virtfn) {
++		u8 rev;
++
++		if (pci_read_config_byte(dev, PCI_REVISION_ID, &rev))
++			rev = 0;
++		return (dev->physfn->class << 8) | rev;
++	}
+ #endif
+ 	pci_read_config_dword(dev, PCI_CLASS_REVISION, &class);
+ 	return class;
+@@ -1789,8 +1794,8 @@ static void pci_subsystem_ids(struct pci_dev *dev, u16 *vendor, u16 *device)
+ {
+ #ifdef CONFIG_PCI_IOV
+ 	if (dev->is_virtfn) {
+-		*vendor = dev->physfn->sriov->subsystem_vendor;
+-		*device = dev->physfn->sriov->subsystem_device;
++		*vendor = dev->physfn->subsystem_vendor;
++		pci_read_config_word(dev, PCI_SUBSYSTEM_ID, device);
+ 		return;
  	}
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
+ #endif
+@@ -1804,7 +1809,7 @@ static u8 pci_hdr_type(struct pci_dev *dev)
  
-@@ -700,12 +696,11 @@ static int wm8776_hp_vol_get(struct snd_kcontrol *ctl,
- 	struct oxygen *chip = ctl->private_data;
- 	struct xonar_wm87x6 *data = chip->model_data;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	value->value.integer.value[0] =
- 		data->wm8776_regs[WM8776_HPLVOL] & WM8776_HPATT_MASK;
- 	value->value.integer.value[1] =
- 		data->wm8776_regs[WM8776_HPRVOL] & WM8776_HPATT_MASK;
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -716,7 +711,7 @@ static int wm8776_hp_vol_put(struct snd_kcontrol *ctl,
- 	struct xonar_wm87x6 *data = chip->model_data;
- 	u8 to_update;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	to_update = (value->value.integer.value[0] !=
- 		     (data->wm8776_regs[WM8776_HPLVOL] & WM8776_HPATT_MASK))
- 		<< 0;
-@@ -744,7 +739,6 @@ static int wm8776_hp_vol_put(struct snd_kcontrol *ctl,
- 				     value->value.integer.value[1] |
- 				     WM8776_HPZCEN | WM8776_UPDATE);
- 	}
--	mutex_unlock(&chip->mutex);
- 	return to_update != 0;
- }
- 
-@@ -770,7 +764,7 @@ static int wm8776_input_mux_put(struct snd_kcontrol *ctl,
- 	u16 reg;
- 	int changed;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	reg = data->wm8776_regs[WM8776_ADCMUX];
- 	if (value->value.integer.value[0]) {
- 		reg |= mux_bit;
-@@ -794,7 +788,6 @@ static int wm8776_input_mux_put(struct snd_kcontrol *ctl,
- 				      GPIO_DS_INPUT_ROUTE);
- 		wm8776_write(chip, WM8776_ADCMUX, reg);
- 	}
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -814,12 +807,11 @@ static int wm8776_input_vol_get(struct snd_kcontrol *ctl,
- 	struct oxygen *chip = ctl->private_data;
- 	struct xonar_wm87x6 *data = chip->model_data;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	value->value.integer.value[0] =
- 		data->wm8776_regs[WM8776_ADCLVOL] & WM8776_AGMASK;
- 	value->value.integer.value[1] =
- 		data->wm8776_regs[WM8776_ADCRVOL] & WM8776_AGMASK;
--	mutex_unlock(&chip->mutex);
- 	return 0;
- }
- 
-@@ -830,7 +822,7 @@ static int wm8776_input_vol_put(struct snd_kcontrol *ctl,
- 	struct xonar_wm87x6 *data = chip->model_data;
- 	int changed = 0;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	changed = (value->value.integer.value[0] !=
- 		   (data->wm8776_regs[WM8776_ADCLVOL] & WM8776_AGMASK)) ||
- 		  (value->value.integer.value[1] !=
-@@ -839,7 +831,6 @@ static int wm8776_input_vol_put(struct snd_kcontrol *ctl,
- 			    value->value.integer.value[0] | WM8776_ZCA);
- 	wm8776_write_cached(chip, WM8776_ADCRVOL,
- 			    value->value.integer.value[1] | WM8776_ZCA);
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -895,7 +886,7 @@ static int wm8776_level_control_put(struct snd_kcontrol *ctl,
- 
- 	if (value->value.enumerated.item[0] >= 3)
- 		return -EINVAL;
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	changed = value->value.enumerated.item[0] != ctl->private_value;
- 	if (changed) {
- 		ctl->private_value = value->value.enumerated.item[0];
-@@ -926,7 +917,6 @@ static int wm8776_level_control_put(struct snd_kcontrol *ctl,
- 		for (i = 0; i < ARRAY_SIZE(data->lc_controls); ++i)
- 			activate_control(chip, data->lc_controls[i], mode);
- 	}
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
-@@ -956,14 +946,13 @@ static int hpf_put(struct snd_kcontrol *ctl, struct snd_ctl_elem_value *value)
- 	unsigned int reg;
- 	int changed;
- 
--	mutex_lock(&chip->mutex);
-+	guard(mutex)(&chip->mutex);
- 	reg = data->wm8776_regs[WM8776_ADCIFCTRL] & ~WM8776_ADCHPD;
- 	if (!value->value.enumerated.item[0])
- 		reg |= WM8776_ADCHPD;
- 	changed = reg != data->wm8776_regs[WM8776_ADCIFCTRL];
- 	if (changed)
- 		wm8776_write(chip, WM8776_ADCIFCTRL, reg);
--	mutex_unlock(&chip->mutex);
- 	return changed;
- }
- 
+ #ifdef CONFIG_PCI_IOV
+ 	if (dev->is_virtfn)
+-		return dev->physfn->sriov->hdr_type;
++		return 0;
+ #endif
+ 	pci_read_config_byte(dev, PCI_HEADER_TYPE, &hdr_type);
+ 	return hdr_type;
 -- 
 2.53.0
 
