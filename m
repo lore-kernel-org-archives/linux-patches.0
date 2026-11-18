@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024462;
-	b=z5F58NShAZ9pLYz+kxEaN08VOfZpki0cxoeboVc9rPR/eXSaCq58Bc4tTkXJ9HWLgYba
-	 wQJ181LNkeF5GLAFagjVW0LvOduSvT6czWJ4AtN9eAJRNpQuj1C1MKSV5se8tJ640gIa/
-	 NS3zshxbWdSdSTdm10X5R3MKW0sVLKxo6dWF1ZZpJl7qOdPUsjTs0G5uY2oCKBIGteBZI
-	 qEKzjdfMoERj1Tg17PkffN2fW7un6+b04BmAoLVDaHi1p0v9dkEXorFS/ZXMLt5OUes1H
-	 5z1lL/AqXKilMW7iHlPMyPwPXCc+O+pd7QZglGFgy/OvLtGCa4U4XbOuedmuVu5ra8w==
+	t=1795024464;
+	b=q+Lsa4wwiur8RYMdLfSuPFfu8FOSqcpUXRrOOOqbrqMdEhAj9jI/fIl3uhF9Q8Px9fMM
+	 BsQmCymum4GeTnhsjN0eiAe08F9d2EQlhfgAdxZUq7306wzEXo6qW/Dj7fMfbx8d+VbEa
+	 RvJPl96lQTKg5s2/NVT4Ce5X9/nk6jE0x4sU6XPysleYLBWHOGDTdf4DS9XjMFgVQeFy8
+	 KsyjwNFW2fl9QL5FbX8AorLMTZWzsFG55yaR5t1rIqat3xhX7buANk+8jpY/4sv21gZuJ
+	 En47cKYQialrln0pAf+AQY1qZakrh78OtbMm7GpQAYMqQ25t8mgl2OicDFPjC1Sw7fg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024462;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024464;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UAAohKH92SxHRvG/sCRdQpuHwgkqtwM8aqQjDIOxOLs=;
-	b=o3MiL8+9Rme50wOF0qoSAbjRypDdhYeo3YOjFjRlT1dgsxGyiRiCLQJW22/2f/YItavs
-	 uKsjOOh2hGkY4V07x8KTz67MJ/tRGbfK5ielaDFP7ohmr9hn/aDFrWDGeSthSWybT3LUU
-	 t92N5ukvhfyI1ZTSRuYAGkpuruyIMMy33kNP86+ajwg4Tv9yIRoDdFcKE+BFKy1XdnS62
-	 E6fRiTM91rWpbT1anquYn5EuXJOjRnMsvq4twiLlEGEGUEQHQfLA1nIjmcRRHMwBICrQw
-	 ltDt5UDCoT+O3M6pV32MzWnebwNlC81lSCQhBm9d1guFZr01KrFhv3V9dxzIb130Vvw==
+	bh=i+npqw580IjmZ1Yg91QawyZLkCiG+Xw42Z7W1Ke9Nto=;
+	b=3vxOJKSCn0xuVtC7IbMzD+2cOQV47PK7aJW4dNP6g5EjSpq98rt6C/LSJnIGM7G6IKkP
+	 p7biUrsJFBoIgg76PXRarG88kNV09wnoKFJXnNIpYf8nijuWuau9/TscQFGuK/uqmHY+B
+	 Rni0G3HUCa7JACFM6rsN4LBu8uRFnKa5L+pyaIkt6/A4GooU9brkOd0wMQTSt8YY/Vp5S
+	 kBmzu/jgbKRi8tktSiM0SmRFsWQgqdewu14ac3cdSHDX/F0SQ8dCSqPTYzEzb7HSNRxO8
+	 8JWO3E5qY2jdNV6Zb3Dg6JqSTRJIqe76cnTsnoTerqynX2qkM7Uh/F+zi763CgksXTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bqkZD3Kd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=imPYEnN3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E836606A320;
-	Wed, 18 Nov 2026 17:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4ABC606A32F;
+	Wed, 18 Nov 2026 17:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bqkZD3Kd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28DC61F000C4;
-	Wed, 18 Nov 2026 17:54:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=imPYEnN3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDFA1F000C4;
+	Wed, 18 Nov 2026 17:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024461;
-	bh=UAAohKH92SxHRvG/sCRdQpuHwgkqtwM8aqQjDIOxOLs=;
+	s=korg; t=1795024464;
+	bh=i+npqw580IjmZ1Yg91QawyZLkCiG+Xw42Z7W1Ke9Nto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bqkZD3KdHzN4ezVlStG0I18AucOSB+tcCeGNA50ywfstVCS8eTy1XJwfSTuU0gnnj
-	 WUMz0LMrNzLSu4J+bODFH6Gjf0omrV9dCvmRx5DjGEa8ygFlw4cPryfYVz/R144ZaS
-	 mtbVC1/Fedq3chBaFrIbye5OIUcoBOxoMpsnqMug=
+	b=imPYEnN3/G8/0P4gcTGPUpVBkWVnnhYZl9BG77Bw+K+zFbO6wJIykRN36YIoxo25E
+	 RNA+UhTtgMgqGx7yIv2LzHF+1lf/ZWOw4LnLmkla10gyTAaPwtVVLYp3I5XplRCKv7
+	 JCACj7wSYbh6oEVcYwHLdlJJjQWp4GVnpv8OZTIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0732/2151] arm64: dts: qcom: x1p42100-thinkbook-16: Mark the EC reset gpio as reserved
-Date: Wed, 18 Nov 2026 15:41:07 +0100
-Message-ID: <20261118150148.685953959@linuxfoundation.org>
+Subject: [PATCH 6.18 0695/2151] ASoC: adau17x1: return cache sync errors from resume
+Date: Wed, 18 Nov 2026 15:40:30 +0100
+Message-ID: <20261118150147.098648763@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,39 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit d15d83967b113e43a4811164ada19909d99c93a7 ]
+[ Upstream commit 8ca84987c11d11e0ba60f202e3199b3b80c87721 ]
 
-GPIO 65 from TLMM is used by the embedded controller as its reset line.
+adau17x1_resume() restores cached registers during component resume but
+discards the regcache_sync() result and returns success. A failed replay
+can therefore leave the hardware register state stale without reaching
+the component error reporting path.
 
-On some devices, toggling the embedded controller reset line makes the
-device not power up at all, unless the battery is unplugged.
+Return the cache synchronization result. The ASoC component wrapper
+reports a negative callback result and retains the established
+best-effort resume state, so this adds observability without introducing
+rollback or retry semantics.
 
-So reserve it in order to prevent Linux from requesting or
-reconfiguring it.
+The optional switch-mode callback remains ordered before the cache
+replay.
 
-Fixes: d3f600dc452d ("arm64: dts: qcom: Add Lenovo ThinkBook 16 G7 QOY device tree")
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260922-dts-qcom-hamoa-reserve-ec-reset-gpio-v3-13-fde7f8a53382@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+The issue was found by a tool we developed.
+
+Fixes: 4101866c743a ("ASoC: Add ADAU1X61 and ADAU1X81 CODECs common code")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260902013256.93072-2-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/adau17x1.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts b/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts
-index 3186e79e862de..af0bebb1711b0 100644
---- a/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts
-+++ b/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts
-@@ -1275,6 +1275,7 @@ wcd_tx: codec@0,3 {
+diff --git a/sound/soc/codecs/adau17x1.c b/sound/soc/codecs/adau17x1.c
+index 0b6b0d2115eb0..002baa7f31635 100644
+--- a/sound/soc/codecs/adau17x1.c
++++ b/sound/soc/codecs/adau17x1.c
+@@ -989,9 +989,7 @@ int adau17x1_resume(struct snd_soc_component *component)
+ 	if (adau->switch_mode)
+ 		adau->switch_mode(component->dev);
  
- &tlmm {
- 	gpio-reserved-ranges = <34 2>, /* Unused */
-+			       <65 1>, /* EC reset */
- 			       <72 2>; /* Secure EC I2C connection (?) */
+-	regcache_sync(adau->regmap);
+-
+-	return 0;
++	return regcache_sync(adau->regmap);
+ }
+ EXPORT_SYMBOL_GPL(adau17x1_resume);
  
- 	edp_hpd_default: edp-hpd-default-state {
 -- 
 2.53.0
 
