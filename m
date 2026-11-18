@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040964;
-	b=rDc37zS53HiAmxMuuu1j5EOMsxIvTYo+lWUwKJAMTQelRDldS3kUBBKdMxi8+YUI9o9N
-	 ZcjvBmGgn5VVO1ix3DBps0E53teS6H2n2L1BQeBDDbPBhBEX2Q3lkrvEeuP7TP0sG+JEs
-	 JNi5ivdONN9KSKepPv1gvvumdK7strF8VQTrJsk5r4SAxDrFfwWwsEN+Ij4fczIEbq5pz
-	 0JkcZyDKlFtN+rluAJgcqwdhL31zopSSK8IghJQtZGj+C/bhm9rxhokiCbKbkLsWsbBur
-	 4kQQLLNUrknf2epOhx1uzypYqTZtOsgOneoIrkesjJYUkgpd9UAhN/s9110auyDlVeA==
+	t=1795040967;
+	b=Ixnh5vO8dWI9TI3fBgDEp9p88ZpIjnxknkQjmceeTq4iTLMa16yTTfDzgZdAPxvYWMrW
+	 Ba4ko0NVI367FNn/PeYcBQZ8O/2nYXcbHfAUI+WuxxYBf4CaiUtrYh8Z8dvNmvCaA2lvE
+	 c7qVCfCB/5ggQXIf0BfuPh1nHJnuWmX/iyUWarBCpzwb8o0MYlR4VT2BdkaWraO8nFQAY
+	 paJMIPEvIG3CXTXKULA78lYE9cmoyuvkOc/H45EZ9dlih1fFcC99VDv7nX/42Qwm3vPXd
+	 VtgWN1z9znUkRQztsc/O2hGcxj2GLue16yXeYXZ/BwLhul986gsfwY/OU4HMq20HDxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040964;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040967;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JHP+Ahb8ET5/AVICDrASi4Mqem47HwznVLIymczcur8=;
-	b=Z8A88hMEz+k/9tMg3xoHaYwhHxPpC0eyHTgm0RkDVhriOj5NM/SeCky+gTEDoI078lNh
-	 bFBnW2RseMA/LVf15dE/SWvYDBmLJCl5xoGVJXur1HJuL8Sxz2ZoLEnP74VVuzeJr9Hm0
-	 BuYTFvAG+XnZHaFgQc0bFsF0GuktG3ImcOW2t+zN/mrZYhUhP+2kCfnKpflJrQExTb5oy
-	 YUKGF/5q5cPf2hL91DCVuOxXuhY1rc0pEeHNpi0BQWJey5Vzl0lIHoOxTuseVnWCJzTrd
-	 J0MBYtTq7i7Tq1zAsjfEB1YiutO4KnSqBbbazn8O2w1aAUe3urCmU9IclKB8DfB0bEg==
+	bh=Rb2vzloLHOpxHTMcb2uhUEfJZF/u+aPIc5Ro7zFmfKw=;
+	b=p5gPRQa36i8XWNQcx8mDxMECeN74R4BGO0D1CVppUrkTqMVUnOlNDIcbH1HfcPFulXTJ
+	 BNNIMVLmxIk7OBHOCgT0QPI2GJPSEKsSoFloOMaA40R8PaKFPBItWm4HWncDeOrIAPpSB
+	 SnmAjjmwlg+7vLWLlgDbSoOpeyQ5fx1o4kjZucFVJDeoF0dTzpuuKqjQprTOt1h1XQk9j
+	 n17fGc9OUlSoRYfh2cUReTX4WieqmxxScBRz6Q/yUJc88XSjgsycP7aHcMOs8NsEmfa3X
+	 J0CGUg/K01QCs+VYzquWBJMU1bDziwtNHEcQZLt7K4cs5ZIdzPELtcKIkE2J+38SzNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c3GLKnD8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t0j9zT9y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B89606A31C;
-	Wed, 18 Nov 2026 22:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0D2606A320;
+	Wed, 18 Nov 2026 22:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c3GLKnD8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E8F1F000C4;
-	Wed, 18 Nov 2026 22:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t0j9zT9y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62581F000C4;
+	Wed, 18 Nov 2026 22:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040964;
-	bh=JHP+Ahb8ET5/AVICDrASi4Mqem47HwznVLIymczcur8=;
+	s=korg; t=1795040967;
+	bh=Rb2vzloLHOpxHTMcb2uhUEfJZF/u+aPIc5Ro7zFmfKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c3GLKnD8+DA5hBI7cBNw9rxQvirKGAgoPHn9nDwnljQwb4vE8fUejNVdrtiCbwqWY
-	 I+dR5VHO1tnPl5nTnjYzasnm4fab6Ei8kR4o55FIU9hVcmPrzku2qnWE+yiB0BX0cf
-	 yyVxbDpAmgUnv/09EbqEe87U8+uX4oxPQRKU/tv0=
+	b=t0j9zT9ya1e0RmlWDwFf31QmUH/AQneTYOeY21Apc4aUp5scEdOdSAg3jXzRrMydg
+	 YUvq1Dzkx7f3vH37xeZmdxkp7w0CZOa7GtskQnKeOjtmyUAyA3/uYJZ+BQkjH6iulg
+	 slFrN7BzlLK/l2b4lVIGYRdaVig/g34oCGNhPyxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wilson Felipe Pereira <wfelipe@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2645/3318] init/main: fix off-by-one in argv_init cleanup
-Date: Wed, 18 Nov 2026 15:54:27 +0100
-Message-ID: <20261118150440.411403753@linuxfoundation.org>
+Subject: [PATCH 6.6 2628/3318] inet: implement lockless IP_MTU_DISCOVER
+Date: Wed, 18 Nov 2026 15:54:10 +0100
+Message-ID: <20261118150439.936812541@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,89 +69,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wilson Felipe Pereira <wfelipe@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b82ed0e3a1dafe41577b095318a3ea6c0eec6f46 ]
+[ Upstream commit ceaa714138a372ac63cc2c5c19ee0882d22827f9 ]
 
-Patch series "init: fix array boundary bugs in boot parameter parsing".
+inet->pmtudisc can be read locklessly.
 
-This series fixes two distinct boundary logic edge-case bugs in
-`init/main.c` related to parsing boot command-line arguments and
-environment variables.  Both bugs have been present since the early git
-history (Linux-2.6.12-rc2).
+Implement proper lockless reads and writes to inet->pmtudisc
 
-1. The first patch fixes an off-by-one error in `init_setup()` where
-   the final slot of the `argv_init` array was left uncleared. This
-   allowed a stale kernel parameter to leak into the `init` process's
-   user-space command line if exactly `MAX_INIT_ARGS` unknown
-   parameters were passed.
+ip_sock_set_mtu_discover() can now be called from arbitrary
+contexts.
 
-2. The second patch fixes a false-positive kernel panic in
-   `unknown_bootoption()`. If a user filled the environment variable
-   array up to its exact limit (32) and then attempted to overwrite
-   the final variable, the kernel would panic before evaluating
-   whether it was a harmless duplicate.
-
-Exact QEMU reproduction steps for both edge cases are documented inside
-their respective commit descriptions.
-
-This patch (of 2):
-
-When cleaning up argv_init in init_setup() and rdinit_setup(), the loop
-terminates one element early due to using '<' instead of '<='.  Since
-argv_init is sized MAX_INIT_ARGS+2, index MAX_INIT_ARGS is a valid element
-that should be cleared to NULL.
-
-If exactly MAX_INIT_ARGS unknown arguments are passed before 'init=', the
-uncleared argv_init[MAX_INIT_ARGS] can act as a ghost argument to
-/sbin/init or cause a spurious kernel panic when later appended to.
-
-To verify the argument leak, boot a VM into a shell with 32 unknown kernel
-arguments, the init parameter, and 31 user arguments:
-
-  STALE_ARGS=$(for i in {1..32}; do echo -n "stale$i "; done)
-  USER_ARGS=$(for i in {1..31}; do echo -n "user$i "; done)
-  qemu-system-x86_64 -kernel bzImage \
-      -append "$STALE_ARGS init=/bin/sh $USER_ARGS"
-
-Running `cat /proc/1/cmdline` inside the shell reveals that the 32nd
-kernel argument ('stale32') incorrectly leaked into the init process's
-command line.  This patch zeroes the final slot, cleanly terminating the
-array.
-
-Link: https://lore.kernel.org/20260818045357.4123784-1-wfelipe@google.com
-Link: https://lore.kernel.org/20260818045357.4123784-2-wfelipe@google.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Fixes: ffdfc40976dd ("[PATCH] Add rdinit parameter to pick early userspace init")
-Signed-off-by: Wilson Felipe Pereira <wfelipe@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 852c08d6a991 ("ipv4: reserve one IP ID per segment for UDP GSO packets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/ip.h                | 13 ++++++++-----
+ net/ipv4/ip_output.c            |  7 ++++---
+ net/ipv4/ip_sockglue.c          | 17 ++++++-----------
+ net/ipv4/ping.c                 |  2 +-
+ net/ipv4/raw.c                  |  2 +-
+ net/ipv4/udp.c                  |  2 +-
+ net/netfilter/ipvs/ip_vs_sync.c |  2 +-
+ 7 files changed, 22 insertions(+), 23 deletions(-)
 
-diff --git a/init/main.c b/init/main.c
-index e7b171527a1c8..968c93ea14fdd 100644
---- a/init/main.c
-+++ b/init/main.c
-@@ -563,7 +563,7 @@ static int __init init_setup(char *str)
- 	 * the shell think it should execute a script with such name.
- 	 * So we ignore all arguments entered _before_ init=... [MJ]
- 	 */
--	for (i = 1; i < MAX_INIT_ARGS; i++)
-+	for (i = 1; i <= MAX_INIT_ARGS; i++)
- 		argv_init[i] = NULL;
- 	return 1;
- }
-@@ -575,7 +575,7 @@ static int __init rdinit_setup(char *str)
+diff --git a/include/net/ip.h b/include/net/ip.h
+index 4bfa2b1fc4850..33243bf5c46ff 100644
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -446,19 +446,22 @@ int ip_dont_fragment(const struct sock *sk, const struct dst_entry *dst)
  
- 	ramdisk_execute_command = str;
- 	/* See "auto" comment in init_setup */
--	for (i = 1; i < MAX_INIT_ARGS; i++)
-+	for (i = 1; i <= MAX_INIT_ARGS; i++)
- 		argv_init[i] = NULL;
- 	return 1;
+ static inline bool ip_sk_accept_pmtu(const struct sock *sk)
+ {
+-	return inet_sk(sk)->pmtudisc != IP_PMTUDISC_INTERFACE &&
+-	       inet_sk(sk)->pmtudisc != IP_PMTUDISC_OMIT;
++	u8 pmtudisc = READ_ONCE(inet_sk(sk)->pmtudisc);
++
++	return pmtudisc != IP_PMTUDISC_INTERFACE &&
++	       pmtudisc != IP_PMTUDISC_OMIT;
  }
+ 
+ static inline bool ip_sk_use_pmtu(const struct sock *sk)
+ {
+-	return inet_sk(sk)->pmtudisc < IP_PMTUDISC_PROBE;
++	return READ_ONCE(inet_sk(sk)->pmtudisc) < IP_PMTUDISC_PROBE;
+ }
+ 
+ static inline bool ip_sk_ignore_df(const struct sock *sk)
+ {
+-	return inet_sk(sk)->pmtudisc < IP_PMTUDISC_DO ||
+-	       inet_sk(sk)->pmtudisc == IP_PMTUDISC_OMIT;
++	u8 pmtudisc = READ_ONCE(inet_sk(sk)->pmtudisc);
++
++	return pmtudisc < IP_PMTUDISC_DO || pmtudisc == IP_PMTUDISC_OMIT;
+ }
+ 
+ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
+diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
+index 6b29d1caa9223..edf92678ba043 100644
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -1409,8 +1409,8 @@ struct sk_buff *__ip_make_skb(struct sock *sk,
+ 	struct ip_options *opt = NULL;
+ 	struct rtable *rt = (struct rtable *)cork->dst;
+ 	struct iphdr *iph;
++	u8 pmtudisc, ttl;
+ 	__be16 df = 0;
+-	__u8 ttl;
+ 
+ 	skb = __skb_dequeue(queue);
+ 	if (!skb)
+@@ -1440,8 +1440,9 @@ struct sk_buff *__ip_make_skb(struct sock *sk,
+ 	/* DF bit is set when we want to see DF on outgoing frames.
+ 	 * If ignore_df is set too, we still allow to fragment this frame
+ 	 * locally. */
+-	if (inet->pmtudisc == IP_PMTUDISC_DO ||
+-	    inet->pmtudisc == IP_PMTUDISC_PROBE ||
++	pmtudisc = READ_ONCE(inet->pmtudisc);
++	if (pmtudisc == IP_PMTUDISC_DO ||
++	    pmtudisc == IP_PMTUDISC_PROBE ||
+ 	    (skb->len <= dst_mtu(&rt->dst) &&
+ 	     ip_dont_fragment(sk, &rt->dst)))
+ 		df = htons(IP_DF);
+diff --git a/net/ipv4/ip_sockglue.c b/net/ipv4/ip_sockglue.c
+index 86ea9cee33af5..52fed3cdc127b 100644
+--- a/net/ipv4/ip_sockglue.c
++++ b/net/ipv4/ip_sockglue.c
+@@ -622,9 +622,7 @@ int ip_sock_set_mtu_discover(struct sock *sk, int val)
+ {
+ 	if (val < IP_PMTUDISC_DONT || val > IP_PMTUDISC_OMIT)
+ 		return -EINVAL;
+-	lock_sock(sk);
+-	inet_sk(sk)->pmtudisc = val;
+-	release_sock(sk);
++	WRITE_ONCE(inet_sk(sk)->pmtudisc, val);
+ 	return 0;
+ }
+ EXPORT_SYMBOL(ip_sock_set_mtu_discover);
+@@ -1050,6 +1048,8 @@ int do_ip_setsockopt(struct sock *sk, int level, int optname,
+ 			return -EINVAL;
+ 		WRITE_ONCE(inet->mc_ttl, val);
+ 		return 0;
++	case IP_MTU_DISCOVER:
++		return ip_sock_set_mtu_discover(sk, val);
+ 	}
+ 
+ 	err = 0;
+@@ -1107,11 +1107,6 @@ int do_ip_setsockopt(struct sock *sk, int level, int optname,
+ 	case IP_TOS:	/* This sets both TOS and Precedence */
+ 		__ip_sock_set_tos(sk, val);
+ 		break;
+-	case IP_MTU_DISCOVER:
+-		if (val < IP_PMTUDISC_DONT || val > IP_PMTUDISC_OMIT)
+-			goto e_inval;
+-		inet->pmtudisc = val;
+-		break;
+ 	case IP_UNICAST_IF:
+ 	{
+ 		struct net_device *dev = NULL;
+@@ -1597,6 +1592,9 @@ int do_ip_getsockopt(struct sock *sk, int level, int optname,
+ 	case IP_MULTICAST_TTL:
+ 		val = READ_ONCE(inet->mc_ttl);
+ 		goto copyval;
++	case IP_MTU_DISCOVER:
++		val = READ_ONCE(inet->pmtudisc);
++		goto copyval;
+ 	}
+ 
+ 	if (needs_rtnl)
+@@ -1636,9 +1634,6 @@ int do_ip_getsockopt(struct sock *sk, int level, int optname,
+ 	case IP_TOS:
+ 		val = inet->tos;
+ 		break;
+-	case IP_MTU_DISCOVER:
+-		val = inet->pmtudisc;
+-		break;
+ 	case IP_MTU:
+ 	{
+ 		struct dst_entry *dst;
+diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
+index fa13cfa2fa00f..6c5a692195e83 100644
+--- a/net/ipv4/ping.c
++++ b/net/ipv4/ping.c
+@@ -563,7 +563,7 @@ void ping_err(struct sk_buff *skb, int offset, u32 info)
+ 		case ICMP_DEST_UNREACH:
+ 			if (code == ICMP_FRAG_NEEDED) { /* Path MTU discovery */
+ 				ipv4_sk_update_pmtu(skb, sk, info);
+-				if (inet_sock->pmtudisc != IP_PMTUDISC_DONT) {
++				if (READ_ONCE(inet_sock->pmtudisc) != IP_PMTUDISC_DONT) {
+ 					err = EMSGSIZE;
+ 					harderr = 1;
+ 					break;
+diff --git a/net/ipv4/raw.c b/net/ipv4/raw.c
+index ac49dac9b4fdb..d5ef8f64c9c50 100644
+--- a/net/ipv4/raw.c
++++ b/net/ipv4/raw.c
+@@ -239,7 +239,7 @@ static void raw_err(struct sock *sk, struct sk_buff *skb, u32 info)
+ 		if (code > NR_ICMP_UNREACH)
+ 			break;
+ 		if (code == ICMP_FRAG_NEEDED) {
+-			harderr = inet->pmtudisc != IP_PMTUDISC_DONT;
++			harderr = READ_ONCE(inet->pmtudisc) != IP_PMTUDISC_DONT;
+ 			err = EMSGSIZE;
+ 		} else {
+ 			err = icmp_err_convert[code].errno;
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 8ceaeef5c184c..025ff82addd68 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -827,7 +827,7 @@ int __udp4_lib_err(struct sk_buff *skb, u32 info, struct udp_table *udptable)
+ 	case ICMP_DEST_UNREACH:
+ 		if (code == ICMP_FRAG_NEEDED) { /* Path MTU discovery */
+ 			ipv4_sk_update_pmtu(skb, sk, info);
+-			if (inet->pmtudisc != IP_PMTUDISC_DONT) {
++			if (READ_ONCE(inet->pmtudisc) != IP_PMTUDISC_DONT) {
+ 				err = EMSGSIZE;
+ 				harderr = 1;
+ 				break;
+diff --git a/net/netfilter/ipvs/ip_vs_sync.c b/net/netfilter/ipvs/ip_vs_sync.c
+index 5a626841b07a3..c6c712180c612 100644
+--- a/net/netfilter/ipvs/ip_vs_sync.c
++++ b/net/netfilter/ipvs/ip_vs_sync.c
+@@ -1359,7 +1359,7 @@ static void set_mcast_pmtudisc(struct sock *sk, int val)
+ 
+ 	/* setsockopt(sock, SOL_IP, IP_MTU_DISCOVER, &val, sizeof(val)); */
+ 	lock_sock(sk);
+-	inet->pmtudisc = val;
++	WRITE_ONCE(inet->pmtudisc, val);
+ #ifdef CONFIG_IP_VS_IPV6
+ 	if (sk->sk_family == AF_INET6) {
+ 		struct ipv6_pinfo *np = inet6_sk(sk);
 -- 
 2.53.0
 
