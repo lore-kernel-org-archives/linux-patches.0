@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021927;
-	b=NJPIKa43qOJDvoiKiTfzeqaJ7GJJ7kk22JWPCX6lg6PZPVjF87haG7N1uJxdRQfh0uCQ
-	 l8A5ttd5HM3VZTLZVDpMUxZ4eeidwFjjxpEYCN2TWgA2QWQL5V4UCmOQ4Ttgzxj6LIfX7
-	 PD8bufhMdcicsJZVaqtYYQG6ScPtIzvz+V4mkhMQ/OU4VWRcUzB8XuSGHWnCRJ0x7u00Z
-	 i/Dg4DFEXpJRU6jqoAGCBVzUusKdIKiypWTk9IzMcF/A/b6npOy4/QVnf5/KBOxm6T6Ug
-	 F8piDggDaTi+PcCIcSSSwi8b8BXcjZ1xBiQvLXrZCSTFIowB6tafYwONG/mZchyQxZw==
+	t=1795021930;
+	b=xYBO+AhILNITiI7QfCKvQdN1E8RpZhC+aYukSV15XeylZ515UBykJeF4Ya8fbgopZ6MC
+	 TYmt6mjseG3jW2zTh2xIfWo2jwPCeER5KO6+XCjGJmCGXXNRW694a0xfaVoKYGailnQgY
+	 fPOyAn8LHUiM+XgJF9/R8hLWsRZCwsiWj85XSqwKIzAZ2nZZCfi/0Q7Pofk4OwTvkWt3W
+	 nGXRT8HB0o0SG1FKQM9LZbZ7TakxB/a8qLnornjWrt96m0rFd1PWoOMsC4w+a9uwHxjl6
+	 s2d1Kf1usEixBMiTyeO3DQQ29TDI2NUVrbn4V7fOCwUlguPPK1sgZOdprUcGajOso0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021927;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021930;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JA1bJ9scwIIgS87onS3ag0epklH4/j6lzOyVB34ZT5s=;
-	b=TeMhp6ft/0TYR6BXUY6vIyEFdsfUWv1phbP+mWC0+iV1ZnFh9kDDBceq2Whpk6BJ4Ynw
-	 CEegqUjNAuoSbMusEkZoVZ4XhvL6vGlc0dVfvHwZRwZ5j869Tx55TiGOqhGkCplOMLiVP
-	 bxSdwCUwnks9ogAiNHHXYCK6HnyBZ0yLgx0BjsFLtb6MWvEWE+9INC08O0vYwqr5arBnX
-	 HNVuIzIVJEktK/I6ltMyP9dTqLWYjgJb9QPI3QXEp5dzF70Z7ejwLjfGXYp/jodeFk5mN
-	 V84c5lnsGFCuajmHpido0QLMFQx6ZeNMlNyiMmuY20kO7nw2J8Fm+oftuBdAh6/jFvg==
+	bh=dSpWa+RkIUfwbqyxTa01ITElHaTz/7QQ3ikUljjdJvM=;
+	b=2yjy/wnMr3jVtXZYNZAweIzmaH1vN3mt5ZOA2o33MPhKaI4z4+XSp0SVJr5el56Zaq+m
+	 CyIVhe+HDQuNIrtK2hvb2d5kJghyb6xZSsJYB0xDuJAiTjH45Ws8xH3iUFFiIRgILtwLg
+	 kHhjPGxTdpPf1/OnNjGwgFcltMWYxrS+mDPUpRz1Ay1K3wGWyHs+dETcWczd/uKgizGyT
+	 GNTMdaHcXkD0Nm9mc+DHzqNScKOwbXif0VhXnkFKwj5YPLtr97QNLWs55g+Bl+GXcYksQ
+	 qUOnp2h7gHQTagw/6NVfBTmy4NHmkUA34HUDeKK7Ysx8LE/dg8BICo0Wmrye2M5h0Vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kUxgto4i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FtlUdXWd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84F2606A320;
-	Wed, 18 Nov 2026 17:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FBE606A320;
+	Wed, 18 Nov 2026 17:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kUxgto4i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E4111F000C4;
-	Wed, 18 Nov 2026 17:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FtlUdXWd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5611F000C4;
+	Wed, 18 Nov 2026 17:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021927;
-	bh=JA1bJ9scwIIgS87onS3ag0epklH4/j6lzOyVB34ZT5s=;
+	s=korg; t=1795021930;
+	bh=dSpWa+RkIUfwbqyxTa01ITElHaTz/7QQ3ikUljjdJvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kUxgto4i0NXyXY9SvqWTnNgSWFifk3PD+NC+xk9lWmMJzY2Qkv8tXZ0TpYbikplhz
-	 yoaQSJAYmi4MWTTAuWRaJmaVIlI2a321FPkzu8pPC/aFajKsasvLFMlNt/n5lRqyy0
-	 iJ5jwjxoTvPkfWZTC5lacnGz4CjBtsMgX/Kz3lmQ=
+	b=FtlUdXWdYFXL5CZcwhRqFDJSagxWerNKqxwpDDxCzQ3KkkWdPFSe0zFaGvo9uwIbk
+	 zpm/RsYciDDHlTtnDSOMAxw88hXcRZE7hkTmk0jbI6CB8zyZH7XA1YLNgiPT1OFcBH
+	 j0Q7dHNJOom0RPBkGh/QFnPfZ9znCuqCHXzanqBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mani Tofigh <mt4022@columbia.edu>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Mahe Tardy <mahe.tardy@gmail.com>,
+	Tejun Heo <tj@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2480/2651] bpf: Fix bpf_timer callback running on a freed map
-Date: Wed, 18 Nov 2026 16:02:00 +0100
-Message-ID: <20261118150414.209989228@linuxfoundation.org>
+Subject: [PATCH 7.3 2481/2651] sched_ext: Fix bypassed tasks looping on a host without SCX_CAP_ENQ
+Date: Wed, 18 Nov 2026 16:02:01 +0100
+Message-ID: <20261118150414.239982764@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,121 +68,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mani Tofigh <mt4022@columbia.edu>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 815a0a2a40d6c5985a153041231731651bc4024b ]
+[ Upstream commit a676ada0d6544928c0ceb032fb991a9abe0977db ]
 
-A bpf_timer in an inner map can fire after the map has been freed, and
-bpf_timer_cb() then reads the freed map:
+Bypass exists so that runnable tasks make progress without trusting the BPF
+scheduler. A host with SCX_CAP_ENQ_IMMED (BASE) but not SCX_CAP_ENQ on a cpu
+cannot run a single bypassed task there. The task loops instead:
 
-  [   50.709520] BUG: KASAN: slab-use-after-free in bpf_timer_cb+0x249/0x290
-  [   50.709540] Read of size 4 at addr ff11000003bc1030 by task bpftimer/72
-  ...
-  [   50.710783] Freed by task 12:
-  ...
-  [   50.710826]  bpf_map_free+0x1a2/0x380
+ 1. a bypassed task lands on the host's bypass DSQ for the cpu
+ 2. the cpu's dispatch descends into the host, which holds BASE there
+ 3. the host consumes the task into the local DSQ as a plain insert
+ 4. the insert needs ENQ and the host lacks it, so the task is rejected
+ 5. the reject drain reenqueues the task and it is back at step 1
 
-When user space closes the map, its timers are cancelled and their
-callbacks are cleared.  Since commit 1bfbc267ec91 ("bpf: Enable
-bpf_timer and bpf_wq in any context"), bpf_timer_set_callback() and
-bpf_timer_start() run without a lock, so a program that found the timer
-just before the close can still use it afterwards:
+A bypass consume puts a task on the cpu being dispatched for, to run right
+away. That is the IMMED contract, and BASE is the cap it needs. Consume with
+SCX_ENQ_IMMED. BASE is then the one cap a bypassed task ever needs. Dispatch
+descends into a host only on a cpu where the host holds BASE, so a consume
+never lacks it.
 
-  Task A                  Task B                  Task C
-  ------                  ------                  ------
-  bpf_timer_start()
-    finds the timer
-                          bpf_timer_set_callback()
-                            finds the timer
-                                                  close(map_fd)
-                                                    clears the callback
-                                                    cancels the timer
-                            sets the callback
-    arms the timer
-                                                  deletes the map from
-                                                  the outer map
-                                                    map is freed
-  the timer fires
-    bpf_timer_cb() reads the freed map
+A consumed task is first on the local DSQ when dispatch enters the host with
+the DSQ empty. That is always the case for the root and normally for a
+parent dispatching into a child.
 
-The timer is cancelled once more when it is finally freed, but that
-happens well after the inner map is freed, so a timer started this way
-can still fire on the freed map.
+A consumed task that cannot run right away is reenqueued like any IMMED task
+and goes back to the bypass DSQ. Waiting on the local DSQ would need ENQ.
+The task cannot run right away when a higher class or a HEAD insert took the
+cpu meanwhile, or when the parent queued its own task before dispatching
+into the host.
 
-Clear the timer's map pointer in bpf_async_cancel_and_free() before the
-map can be freed, and make the bpf_timer and bpf_wq callbacks return
-early when it is NULL.  The map is not freed until callbacks that are
-already running have finished, so a callback either sees the map while
-it is still valid or sees NULL.
+Each such task waits on the bypass DSQ for the next dispatch. The reenqueue
+is not counted against the reenqueue limit, as the task's scheduler is
+bypassing.
 
-The reproducer below calls the two helpers in a loop on two CPUs while a
-third CPU keeps creating an inner map with a timer, closing it and
-removing it from the outer map.  This bug was identified and confirmed
-with the help of a deterministic hypervisor currently under development,
-but the non-deterministic C reproducer can typically trigger it in the
-1-50s time range.  With the fix, nothing is triggered after 600 seconds.
+v2: The description says that the reenqueue of a consumed task is not
+counted against the reenqueue limit (sashiko).
 
-Fixes: 1bfbc267ec91 ("bpf: Enable bpf_timer and bpf_wq in any context")
-Signed-off-by: Mani Tofigh <mt4022@columbia.edu>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Tested-by: Mahe Tardy <mahe.tardy@gmail.com>
-Link: https://patch.msgid.link/20261027-bpf-timer-freed-map-v1-1-30402b0ee99b@columbia.edu
+Fixes: 701b7bcad868 ("sched_ext: Add the SCX_CAP_ENQ cap")
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ kernel/sched/ext/inlines.h | 15 ++++++++++++---
+ kernel/sched/ext/sub.c     |  6 ++++++
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 44dce0730476d..7c2e6f0e74091 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -1183,7 +1183,7 @@ static void bpf_async_refcount_put(struct bpf_async_cb *cb);
- static enum hrtimer_restart bpf_timer_cb(struct hrtimer *hrtimer)
- {
- 	struct bpf_hrtimer *t = container_of(hrtimer, struct bpf_hrtimer, timer);
--	struct bpf_map *map = t->cb.map;
-+	struct bpf_map *map = READ_ONCE(t->cb.map);
- 	void *value = t->cb.value;
- 	bpf_callback_t callback_fn;
- 	void *key;
-@@ -1191,7 +1191,7 @@ static enum hrtimer_restart bpf_timer_cb(struct hrtimer *hrtimer)
+diff --git a/kernel/sched/ext/inlines.h b/kernel/sched/ext/inlines.h
+index 8de9d8fb4b25f..1e39d12678c4d 100644
+--- a/kernel/sched/ext/inlines.h
++++ b/kernel/sched/ext/inlines.h
+@@ -39,10 +39,18 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
+ 	if (scx_consume_global_dsq(sch, rq))
+ 		return SCX_DSP_LOCAL;
  
- 	BTF_TYPE_EMIT(struct bpf_timer);
- 	callback_fn = rcu_dereference_check(t->cb.callback_fn, rcu_read_lock_bh_held());
--	if (!callback_fn)
-+	if (!callback_fn || !map)
- 		goto out;
++	/*
++	 * A bypass consume puts a task on the cpu being dispatched for, to run
++	 * right away. That is an IMMED insert and needs only
++	 * %SCX_CAP_ENQ_IMMED, the base cap. Dispatch descends into @sch only on
++	 * a cpu where @sch holds the base cap, so @sch holds it here. The same
++	 * holds for the consume at the end of this function.
++	 */
+ 	if (scx_bypass_dsp_enabled(sch)) {
+ 		/* if @sch is bypassing, only the bypass DSQs are active */
+ 		if (scx_bypassing(sch, cpu)) {
+-			if (scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0))
++			if (scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu),
++						   SCX_ENQ_IMMED))
+ 				return SCX_DSP_LOCAL;
+ 			return SCX_DSP_NONE;
+ 		}
+@@ -63,7 +71,8 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
+ 		struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
  
- 	/* bpf_timer_cb() runs in hrtimer_run_softirq. It doesn't migrate and
-@@ -1216,7 +1216,7 @@ static void bpf_wq_work(struct work_struct *work)
- {
- 	struct bpf_work *w = container_of(work, struct bpf_work, work);
- 	struct bpf_async_cb *cb = &w->cb;
--	struct bpf_map *map = cb->map;
-+	struct bpf_map *map;
- 	bpf_callback_t callback_fn;
- 	void *value = cb->value;
- 	void *key;
-@@ -1227,8 +1227,9 @@ static void bpf_wq_work(struct work_struct *work)
- 	/* keeps the program that callback_fn belongs to */
- 	rcu_read_lock_trace();
- 
-+	map = READ_ONCE(cb->map);
- 	callback_fn = READ_ONCE(cb->callback_fn);
--	if (!callback_fn)
-+	if (!callback_fn || !map)
- 		goto out;
- 
- 	key = map_key_from_value(map, value, &idx);
-@@ -1694,6 +1695,8 @@ static void bpf_async_cancel_and_free(struct bpf_async_kern *async)
- 	if (!cb)
- 		return;
- 
-+	/* Callbacks that run after this see NULL and return. */
-+	WRITE_ONCE(cb->map, NULL);
- 	bpf_async_update_prog_callback(cb, NULL, NULL);
- 	/*
- 	 * No refcount_inc_not_zero(&cb->refcnt) here. Dropping the last
+ 		if (!(pcpu->bypass_host_seq++ % SCX_BYPASS_HOST_NTH) &&
+-		    scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0)) {
++		    scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu),
++					   SCX_ENQ_IMMED)) {
+ 			__scx_add_event(sch, SCX_EV_SUB_BYPASS_DISPATCH, 1);
+ 			return SCX_DSP_LOCAL;
+ 		}
+@@ -135,7 +144,7 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
+ 	 * scheduler's ops.dispatch() doesn't yield any tasks.
+ 	 */
+ 	if (scx_bypass_dsp_enabled(sch) &&
+-	    scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0)) {
++	    scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), SCX_ENQ_IMMED)) {
+ 		__scx_add_event(sch, SCX_EV_SUB_BYPASS_DISPATCH, 1);
+ 		return SCX_DSP_LOCAL;
+ 	}
+diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+index eb345df340f59..f1707d93bc004 100644
+--- a/kernel/sched/ext/sub.c
++++ b/kernel/sched/ext/sub.c
+@@ -2257,6 +2257,12 @@ __bpf_kfunc_start_defs();
+  * child schedulers. The child scheduler runs its dispatch operation to
+  * move tasks from dispatch queues to the local runqueue.
+  *
++ * Dispatch into a child while the local DSQ is empty, when the cpu needs a
++ * task. A child holding only %SCX_CAP_ENQ_IMMED can insert only IMMED tasks,
++ * and the consume of its bypassing descendants' bypass DSQs is one such insert.
++ * With a task already queued on the local DSQ, such an insert fails and the
++ * task is reenqueued.
++ *
+  * Returns: true on success, false if cgroup_id is invalid, not a direct
+  * child, or caller lacks dispatch permission.
+  */
 -- 
 2.53.0
 
