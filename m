@@ -1,49 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043799;
-	b=ObP+yd+bPH8d5GHS3rxfquALKatZjvshv2lz6Yizv6SxEY9SRq9/IuLLkjHCQIU9/98G
-	 YJvEfYVSS7JUHSXMkAcPBGDHZx3uNszHG5+1c9LIFquiqAWbCcvSnHHrmpXzRUwqzNj/+
-	 U4zxFvSSvVjm5UyugxNqmEnD4NSuPcXt8otCmFtYLjtdDrkPSPpTGMx92t/bA81tWoNru
-	 wJhXLH9TuRLe1C8amvKUmXAOfw1cGznDeatjoeU7o4ESX5lZ2Sas/VRWiesZhH+OCUTx2
-	 huuvYZlSfmlQji8cBq611nU+NsN0HCW9EqyPncMV9JP809FQRyzZd9EmbYFvHZjJDsg==
+	t=1795043801;
+	b=LAPUsKArfjsh22yyirZshGGQyWZlrfGUB/QPvwkuD7vwzK9CgcjmApp72h9ccwDAsKO0
+	 Pjuz2dh8h2T3rPRqU4COhhPd6EyzYWtfU7JTW5GijdeBIrjfbrYFb/Db7lzlMEhZZsjOo
+	 F2SonXTrtkf25eqagYknjtuRZ3t+0g94NDGCZWEiRTEsNzM2GJbK74MLQuC1tOSsG+o05
+	 vcPdGQHakx4Ez+qKWZKprsSU5IWppARyRTwv/JuPO8Im4HC6L2zuQuQVSYu8050cQZhF1
+	 meO9d+NRV1TOxpmAzQlxvjBrMQkRn7puRYozdanzJoqzLdsMW8VoxlFU3tPBtG+1SwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043799;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043801;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o3mvsj9hWoJ/3qWcIEAbl6G6TSIzPkesnSICDFSMn8E=;
-	b=IDsIxSLt7JNLXcYrnkdXUnctQc6+It3nGLu3hVnfC+IpGP0azShyEqOTTWLlNNhOZMip
-	 Y/0yj2z4VOAMwDVvAuPzTXMArTMM8MwYq4z+n7ZhD4HUIdBk7Fv5Ojpk9WYO1BOpa8bQx
-	 GTIeqObA/0rB9bCb47+5TVjCXm7Bwh+Cw+a/LG2ejWbhY5jOjQG8iCQYMz0gjIc0mXkhV
-	 1+VsvCD5Vq6AzRFrvr6k+uRZ4ElwLTlTqixuhRSOq/kmTejnxaJUflb6lFTlVx7YEV38h
-	 rMiL6WQdAfZLxuBKJd6N8SFTFMFNYSpQ5RY33s8CdIaqCfw2RQUrKcb6yHUy9P5ytnw==
+	bh=j+442icMM79vTz24CpCnjToqKyTMIme05hFIYFt6Xr4=;
+	b=CfInyWUYp493n6WWIibVcpvGiEQZfUVKuAUZZTA48agarOg5wAkdcq/Kkz0W/l7IwOIB
+	 EZ5Y3rKz00fh6YVPsit4yKraIFIPw4GedMOOx4a4Czaa3CZ0Iy4yu+U91Cutc2F/XCsRZ
+	 TkqsyPaWZXNmgOZzVXNHZL9qjQrxrZsYOe9vYBDd8Vhij6V11xUIoGC5WWRBKfnD4UXiv
+	 HKEJ8L7NV5T76kVGDnauefvis9jupnQnNZl4jRn1DKxKS2OG0d4lrLt93E2oFAq+S6XfJ
+	 QpIqzb3kIB8lk2MYLa5BYsMoSSY70BgQ3YSi5Uj2GPrP5jOVi0H2ihOVNjch2QhCEZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2aUtq13M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=do9FyhX4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091CC606A325;
-	Wed, 18 Nov 2026 23:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8480606A32F;
+	Wed, 18 Nov 2026 23:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2aUtq13M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40AEF1F000C4;
-	Wed, 18 Nov 2026 23:16:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=do9FyhX4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B6E1F000C4;
+	Wed, 18 Nov 2026 23:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043798;
-	bh=o3mvsj9hWoJ/3qWcIEAbl6G6TSIzPkesnSICDFSMn8E=;
+	s=korg; t=1795043801;
+	bh=j+442icMM79vTz24CpCnjToqKyTMIme05hFIYFt6Xr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2aUtq13MJuzP7nrmkl8uRr+NHkukWlnistdzlR50W+Fkylb/noGmIo/z67AYmzVJo
-	 8PxRIr/kYNwi+x7n89UGtBwlvFz6QjN6KWIhG2Q8maExk2RQRF+KPjh0kZSU1xxJog
-	 iio3Qr//sGLrBxFlyRVYDbQ3efhj5CM6D2PslwZk=
+	b=do9FyhX4Hs1IVRITdZDpURcbvkjJn400XBtVaYHvxnU9TBVVMTmYhmtVrDHvqSvBX
+	 g6BDCvPPXwFm97USMZ586iCWDVpSaVlKpsZNHvbCC4pIsvCyrfECFf067E7/Wf5vTZ
+	 8HwrgZMauf8SqgQd8qa13ExZB+uTJVdgPa+QreDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dev Jain <dev.jain@arm.com>,
-	Muchun Song <muchun.song@linux.dev>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
 	Alistair Popple <apopple@nvidia.com>,
 	Andi Kleen <ak@linux.intel.com>,
 	Anshuman Khandual <anshuman.khandual@arm.com>,
@@ -75,9 +75,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0339/2857] mm/rmap: use huge_ptep_get() in try_to_migrate_one()
-Date: Wed, 18 Nov 2026 15:22:53 +0100
-Message-ID: <20261118150213.646765759@linuxfoundation.org>
+Subject: [PATCH 6.1 0340/2857] mm/page_vma_mapped: use huge_ptep_get() for hugetlb
+Date: Wed, 18 Nov 2026 15:22:54 +0100
+Message-ID: <20261118150213.683698295@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -101,12 +101,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Dev Jain <dev.jain@arm.com>
 
-[ Upstream commit 9be12ffa78cd087d41086f937a156435d4e588e9 ]
+[ Upstream commit e87df0d5d6962bde50f55f6d02b779daa394f894 ]
 
-try_to_migrate_one() is used by folio migration to replace a present
-mapping with a migration entry. For hugetlb folios, page_vma_mapped_walk()
-returns the pte pointer to the hugetlb folio in pvmw.pte, but the code
-reads the huge pte entry with ptep_get().
+check_pte() is the final validation step in page_vma_mapped_walk().  It
+reads pvmw->pte with ptep_get() to decide whether the entry maps the PFN
+range being walked.  For hugetlb VMAs, that pointer refers to a hugetlb
+entry.
 
 On arches which provide their own huge_ptep_get() to dereference a huge
 pte pointer, accessing via ptep_get() would cause pte_pfn(), pte_present()
@@ -116,15 +116,11 @@ It is not clear whether this has a trivially visible effect to userspace.
 
 Use huge_ptep_get() to dereference a huge pte pointer.
 
-Commit a98a2f0c8ce1 copied the bug from try_to_unmap_one into
-try_to_migrate_one.
-
-[akpm@linux-foundation.org: coding-style cleanups]
-Link: https://lore.kernel.org/20260703114202.365553-4-dev.jain@arm.com
-Fixes: a98a2f0c8ce1 ("mm/rmap: split migration into its own function")
+Link: https://lore.kernel.org/20260703114202.365553-6-dev.jain@arm.com
+Fixes: ace71a19cec5 ("mm: introduce page_vma_mapped_walk()")
 Signed-off-by: Dev Jain <dev.jain@arm.com>
-Acked-by: Muchun Song <muchun.song@linux.dev>
 Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
 Cc: Alistair Popple <apopple@nvidia.com>
 Cc: Andi Kleen <ak@linux.intel.com>
 Cc: Anshuman Khandual <anshuman.khandual@arm.com>
@@ -156,33 +152,62 @@ Cc: Will Deacon <will@kernel.org>
 Cc: Zi Yan <ziy@nvidia.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-
-[ sashal: Reworked the hugetlb pte read to fit the older code, using huge_ptep_get()/ptep_get() into pteval for subpage and declaring huge_ptep_get(ptep) with one argument. ]
-
+[ sashal: Adapted check_pte() to read the pte once via huge_ptep_get(ptep) (one-argument form) for hugetlb VMAs, and replaced the older *pvmw->pte dereferences with that value. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/rmap.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ mm/page_vma_mapped.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/mm/rmap.c b/mm/rmap.c
-index 7c89abdabad50..dffd859bdeb96 100644
---- a/mm/rmap.c
-+++ b/mm/rmap.c
-@@ -1929,8 +1929,13 @@ static bool try_to_migrate_one(struct folio *folio, struct vm_area_struct *vma,
- 			VM_BUG_ON_FOLIO(folio_nr_pages(folio) > 1, folio);
- 			subpage = &folio->page;
- 		} else {
-+			if (folio_test_hugetlb(folio))
-+				pteval = huge_ptep_get(pvmw.pte);
-+			else
-+				pteval = ptep_get(pvmw.pte);
+diff --git a/mm/page_vma_mapped.c b/mm/page_vma_mapped.c
+index 93e13fc17d3cb..6dfbb975b3e6a 100644
+--- a/mm/page_vma_mapped.c
++++ b/mm/page_vma_mapped.c
+@@ -75,33 +75,39 @@ static bool map_pte(struct page_vma_mapped_walk *pvmw)
+ static bool check_pte(struct page_vma_mapped_walk *pvmw)
+ {
+ 	unsigned long pfn;
++	pte_t ptent;
 +
- 			subpage = folio_page(folio,
--					pte_pfn(*pvmw.pte) - folio_pfn(folio));
-+					pte_pfn(pteval) - folio_pfn(folio));
- 		}
- 		address = pvmw.address;
- 		anon_exclusive = folio_test_anon(folio) &&
++	if (is_vm_hugetlb_page(pvmw->vma))
++		ptent = huge_ptep_get(pvmw->pte);
++	else
++		ptent = ptep_get(pvmw->pte);
+ 
+ 	if (pvmw->flags & PVMW_MIGRATION) {
+ 		swp_entry_t entry;
+-		if (!is_swap_pte(*pvmw->pte))
++		if (!is_swap_pte(ptent))
+ 			return false;
+-		entry = pte_to_swp_entry(*pvmw->pte);
++		entry = pte_to_swp_entry(ptent);
+ 
+ 		if (!is_migration_entry(entry) &&
+ 		    !is_device_exclusive_entry(entry))
+ 			return false;
+ 
+ 		pfn = swp_offset_pfn(entry);
+-	} else if (is_swap_pte(*pvmw->pte)) {
++	} else if (is_swap_pte(ptent)) {
+ 		swp_entry_t entry;
+ 
+ 		/* Handle un-addressable ZONE_DEVICE memory */
+-		entry = pte_to_swp_entry(*pvmw->pte);
++		entry = pte_to_swp_entry(ptent);
+ 		if (!is_device_private_entry(entry) &&
+ 		    !is_device_exclusive_entry(entry))
+ 			return false;
+ 
+ 		pfn = swp_offset_pfn(entry);
+ 	} else {
+-		if (!pte_present(*pvmw->pte))
++		if (!pte_present(ptent))
+ 			return false;
+ 
+-		pfn = pte_pfn(*pvmw->pte);
++		pfn = pte_pfn(ptent);
+ 	}
+ 
+ 	return (pfn - pvmw->pfn) < pvmw->nr_pages;
 -- 
 2.53.0
 
