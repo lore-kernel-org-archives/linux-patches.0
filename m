@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026504;
-	b=JiFttggS6YkpgsEWIrYRLatqtKXkl8kUYeHXgRx2l2RieK7FlXj4vCjIt0dFn7qBPaWt
-	 mAPWOok9x3JWM2Ik05ROT5HfwYazM3n7wDXbq4n/7fhbZyYKHP//PRjPJ9PbKDbGRzDTt
-	 X8Sge5ilufGzJY5W/+eFwdq6qalKLCWYkvWmzsY2QJqFOPmVAEwZAqOWpPpAM295HGckj
-	 8nTvpUrff1OpJJ+UiYAusYTg0dAG/cgMk3okLQztVwyo7bXubvFPmMhp8nhAJ5horinJa
-	 pyOnpdVJqWEbgEF9207Q+RxGuX+O93yrR8GxG+PjMkZpQXuMe9prMFssRk2yx38XyAQ==
+	t=1795026507;
+	b=ygWHJ63y0rdSNP3jzInrIMvGv1SGaNclqUlPVpip3T/JnF2CyCqKuNmrisF0ijt/T9yt
+	 Onx/OXdKEtXaGwYuWRLKXMS8rnhyiR3Zzs02fu4o5YaLIXgrVuR9nmT4BkNdIk4dqHV4M
+	 MAUyWoo0675YVyzO1Q+slyzmMIGOCTcQOMQoEjNHyo9FgzoIFFmNMETp6r2MZQtwtZQd5
+	 psMQVduPYbcIqV4KkS1uzwCXdJHjj2ZQg3Y2JmMQyqApOQttAlBCsu9QbMNgHkCsKYoAp
+	 VkNMO0MBHBndL1NcqbRgf+8/k1ZAJ6hmz5OGaikoO5d+dmC8WMvDq35PCW1Yc8A2ZWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026504;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026507;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hwzd6PgtIALY7zUx9omxeHZ8BUFKL40/k255AAGQUy4=;
-	b=Z31gtlqdyhRwJ+LgGT9FOfJFqxOlxXE44lljVbeQIquwBIpQ67Em7y0virl0h4hXWTUD
-	 j8ej4Lpq3vWe1dV7aRgnv3XBANge9Vwecl52I/282dpeZe4U7OMv/l6exyLaRgYGBCJKS
-	 eQxm+d8D/JYgi8cOrNW88ebC0y0IR8fjB8odlCc5sA/wSDKIs+gAWmUppcnRxH4bWTMRd
-	 vacK8NyA6hDmVmrSgWmiJwQMUza6WS6lAHAnqFZB1nEkCiee59PwnwI+ineTpny3O7827
-	 jhtXB0RXQuvuFKHHDLopdksYCcaYMWmoU9JHf1GU/X4RiKxl3Mip48afioZbUyzCKiA==
+	bh=EttsXjKUGEV5TJPvunoMEDHUvqG2bunvvO04NikA534=;
+	b=NWTDyxZvYupyyaRm+PNashuxmJnHhYdk4FOg1iLq2OnKgiDvAiez8nUibO9yPnA5Y4cE
+	 V/yYrdbDegdn8jiOsXZdgp/FGYCdrMwpD7RHJoD0W0syLEPp1NUU0U6C0zd1QGn33hsEn
+	 tMlhVFKB7dXHV+OCoCi/c7HDZpppiG56ZHiAOZmGqaeO/sh1O4qsorN/hcN3w/S+U1+tl
+	 oxHG8E6ZlIpDqXC893EEoCvlmyP2T4rDupKRPuE9YG/6ei2bOY88qRU6HhKnAOY4QytXg
+	 7E7utb2bJV2UO0Tb3pzSzN0UGyIdRz9z4IkePi18Wux7z81+VBR2T5q/hpriNNQAxFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MdQGef2U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qk97htrn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2717606A320;
-	Wed, 18 Nov 2026 18:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A6F606A320;
+	Wed, 18 Nov 2026 18:28:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MdQGef2U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 355261F000C4;
-	Wed, 18 Nov 2026 18:28:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qk97htrn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2351F000C4;
+	Wed, 18 Nov 2026 18:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026504;
-	bh=hwzd6PgtIALY7zUx9omxeHZ8BUFKL40/k255AAGQUy4=;
+	s=korg; t=1795026507;
+	bh=EttsXjKUGEV5TJPvunoMEDHUvqG2bunvvO04NikA534=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MdQGef2UQD5RRKHeUCNmmS2CxXVmJNJmEn1uxrBabZj1OEfV2WQ/W40JJSfWs0qSM
-	 l0q5nx2NK5oiZhDQOP36uhJ/s/BIpqrIBBbIDtcytaNDE2pSbfCQyUKjeHSoIU/mRu
-	 +YUTzxju8vDl2/AImUpap0mqjM5/CnqDjlGyf5Ps=
+	b=qk97htrn8kduXsBALsujcg/tj69/mVnSWvxf/E0swHfguY+VUd+aPsqJbN6K47XUq
+	 bOQKDFa7SB//wd58KrMQArT967p7uaOVCLrrKyWtmqpOMfweYhOeLsmpu6fn6yermD
+	 c8gZNSPIEAqaYobKdOqyqfzajitzHKpb62/bhDRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1458/2151] ASoC: renesas: msiof: Fix msiof_close() being skipped on rollback
-Date: Wed, 18 Nov 2026 15:53:13 +0100
-Message-ID: <20261118150215.021990377@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>
+Subject: [PATCH 6.18 1423/2151] tools: hv: remove unused rte_smp_mb()
+Date: Wed, 18 Nov 2026 15:52:38 +0100
+Message-ID: <20261118150213.791854457@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,44 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+[ Upstream commit b67eeae485e22893b678229169024a73b87cf113 ]
 
-[ Upstream commit b7c58a55fd9b71c0b11b0365fdf53f49702c39b5 ]
+rte_smp_mb() has never been used, and its "static inline __always_inline"
+declares inline twice, so clang warns:
 
-snd_pcm_hw_constraint_integer() may return 1, which is then returned
-from msiof_open(). ASoC only marks the component as opened
-when .open() returns 0, so .close() can be skipped on rollback.
+  vmbus_bufring.c:61:15: warning: duplicate 'inline' declaration specifier [-Wduplicate-decl-specifier]
+  vmbus_bufring.c:62:1: warning: unused function 'rte_smp_mb' [-Wunused-function]
 
-Return 0 explicitly on success.
+Remove it.
 
-Fixes: c61caec22820 ("ASoC: renesas: add MSIOF sound support")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261008103831.542533-22-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 45bab4d746510 ("tools: hv: Add vmbus_bufring")
+Assisted-by: LLM
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Acked-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Link: https://patch.msgid.link/20261011223358.2327625-12-sashal@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/renesas/rcar/msiof.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ tools/hv/vmbus_bufring.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/sound/soc/renesas/rcar/msiof.c b/sound/soc/renesas/rcar/msiof.c
-index f2addfbac9237..8699914c8a71b 100644
---- a/sound/soc/renesas/rcar/msiof.c
-+++ b/sound/soc/renesas/rcar/msiof.c
-@@ -432,10 +432,12 @@ static int msiof_open(struct snd_soc_component *component,
- 	ret = snd_pcm_hw_constraint_integer(substream->runtime, SNDRV_PCM_HW_PARAM_PERIODS);
- 
- open_err_dma:
--	if (ret < 0)
-+	if (ret < 0) {
- 		dma_release_channel(chan);
-+		return ret;
-+	}
- 
--	return ret;
-+	return 0;
+diff --git a/tools/hv/vmbus_bufring.c b/tools/hv/vmbus_bufring.c
+index bac32c1109df8..23542e59a2ee9 100644
+--- a/tools/hv/vmbus_bufring.c
++++ b/tools/hv/vmbus_bufring.c
+@@ -58,12 +58,6 @@ void vmbus_br_setup(struct vmbus_br *br, void *buf, unsigned int blen)
+ 	br->dsize = blen - sizeof(struct vmbus_bufring);
  }
  
- static int msiof_close(struct snd_soc_component *component,
+-static inline __always_inline void
+-rte_smp_mb(void)
+-{
+-	asm volatile("lock addl $0, -128(%%rsp); " ::: "memory");
+-}
+-
+ static inline int
+ rte_atomic32_cmpset(volatile uint32_t *dst, uint32_t exp, uint32_t src)
+ {
 -- 
 2.53.0
 
