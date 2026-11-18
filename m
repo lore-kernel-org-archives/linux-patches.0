@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050717;
-	b=NMn11ED8dfYiQPtBLGACoAalEhGHdMH/n6+NF/mYinmajH/RFnSsbtF4UHklW3UiyFWh
-	 ygEF6Obdo6VvdOkRY8FbBazw2Xjwjs9EvdtROrqYGqQWjUtD1S7HsNYO9X3GtQLBsBl4G
-	 4GtH24kCbWzToHmGFy1QTpSAnhpSAR/tai0dzZbQW4aromq0PW4IdDKtRmPrioCnYN9zK
-	 muFU/BTt9ePh+LVygiYbb4b4wSjb+VDSX2KuZPxQu9ksRxDa2Pri0/gnRMLXv9CT5YovL
-	 cOlQLK7epl6FVM3I5aaDAPrwQ4uIk1YXgqGYu/obkvZVf8M0gxpI3+5t/e7zZtttH7Q==
+	t=1795050720;
+	b=y4B2T+mQTg4c6Q9ZClqR2eKE591Z3atxtDK3GfuefQ+NqdXh+uxROkBnA72I2cXF7qos
+	 f6mp0EKqsnqKYxDRKroKR7Nt26wWnwnxpDXgw/zjN0xn8yXzOXp+C9rWtkvEcYxoMJH+Q
+	 0Kk/wBUEO/RW5+Xz2rrYRvOH2XTc3CSAth1UYIEOwB0Gmtfjpr3bpSkl+2RymxkOWy79k
+	 1MKpO1KPcJfGR+IWZuZjoqkun5NVYeWiAltXokaERdZvSPfi1DHiIdmNWFYAi09OqKcz1
+	 XVd/ZGvZr1S13aA8/Ia+D57IWAfENBkzRw46wG1TUSllNryzioeqmoWjq6eQxtpFYTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050717;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050720;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ryIBuhJKd375HnPYQxfrRcVb6MHARpwoU17MSfYVvkE=;
-	b=ggqclEfRD6kshOHUrVPhIkZeUWOLzOCjI0AFF0UGKAI2mK9jFtlm3dYDX+rt7oPs2ncO
-	 Uk/Saa56Z3ttYuEd3457d7kUVGC2w7W2fwzUyhkWGbGBWGW1NtLI9Y0vHfsBF2615IpBz
-	 DfijZhCtIhCeFBxVKZTV4XCPK926T0JX/5WG4upqr2P56sQxWyFSHGf8l3i3L74SmQTrp
-	 FMjgFb2hztmH2wg0/nsB/RuEDTWNW7mUxL3uGVC+c4S1cKhJim5u50y0rU123s2PsdEVz
-	 PYWYsb4mqcjW/XSZcFR/3XaUTq/65KTDDQl0ujsHgKp9j8gT39KT8uH2pfziq8bmfgQ==
+	bh=Bci27fR/d7rD2lCHSsY/9FIXKlx5+07+bbZj8hmCWWs=;
+	b=ob8Uq+iDrjMHIi11rTSNhhUC/n5d0g2KfJboigpYS7UuAMgYT9uE3oHxeL5IN8Oasrf7
+	 6QeB8tn3Pw+AzvBBY0YXuM5oa+C0cCbfHPlub9sskt2zS9Ubgn8kFoBj2vdL0jDd8ysO0
+	 tEJ4m5QS36egT5x+pf8+E7A6bHwWBcBZg4q/PI04k2xKZdGA9cpuncdY05RCqKBPCMn3r
+	 yUtqexsbuDGkSIhJJlDBrulSGJDtVQ3xpaN6SGLEDKXEVt4NaBRrO6XTI8wnolms7hJnn
+	 Di5RErtk3by/NHZXHtszJd0CJpB9HC2vH3zEFe7CTq3G2Am5UDVRcf4Ew+QRyXsH0MQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a4iz1TS0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rKNFm2KD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645FA606A32C;
-	Thu, 19 Nov 2026 01:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69957606A331;
+	Thu, 19 Nov 2026 01:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a4iz1TS0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21371F000C4;
-	Thu, 19 Nov 2026 01:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rKNFm2KD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4021F000C6;
+	Thu, 19 Nov 2026 01:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050717;
-	bh=ryIBuhJKd375HnPYQxfrRcVb6MHARpwoU17MSfYVvkE=;
+	s=korg; t=1795050720;
+	bh=Bci27fR/d7rD2lCHSsY/9FIXKlx5+07+bbZj8hmCWWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a4iz1TS0gepOWdEZfXqySFitTs7aGZWZNCOtw0Hdqim3RrOJjOWpMGcAwblZeHQdq
-	 iksTclrHssvLWSCeXtO1ssaXHageeofLGWDlzJp3Kk9K1pi6gUufg21qob8nTtT1mk
-	 gIfkuWbRiq5dXHFU6PmRb2m3uFPduDIONQQFAsNw=
+	b=rKNFm2KDVJo8IpAbbDHU7JOZgw7STNfsYizL1s9Q56l9WibhOG0XCJtn45CiaYTM2
+	 Nz4cJMSxCuvr5d0LZuQEE5npEbu795kZiU0qSL0/s5AZZbuDWuzJccIyUQQH+Wp5p9
+	 YWK4Cuu+o8oJXrC9IqE8ByR6dKWRgCN2/ytWIs7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Md. Haris Iqbal" <haris.iqbal@ionos.com>,
 	Jack Wang <jinpu.wang@ionos.com>,
-	Chris Mason <mason@kernel.org>,
+	Guoqing Jiang <guoqing.jiang@linux.dev>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2808/2857] rnbd-srv: fix use-after-free on two CLOSE messages
-Date: Wed, 18 Nov 2026 16:04:02 +0100
-Message-ID: <20261118150342.705835899@linuxfoundation.org>
+Subject: [PATCH 6.1 2809/2857] block/rnbd-srv: rename one member in rnbd_srv_dev
+Date: Wed, 18 Nov 2026 16:04:03 +0100
+Message-ID: <20261118150342.744235082@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,58 +69,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Guoqing Jiang <guoqing.jiang@linux.dev>
 
-[ Upstream commit 4912dab88baa5f7034dc9e38807804d470ae5438 ]
+[ Upstream commit 3ecdbf91513511fae49eb0cfa9f39f690eb4fe11 ]
 
-process_msg_close() looks the sess_dev up with a kref, drops it right
-away, and only then takes the session mutex for the teardown. A session
-has several connections handled by different workers, so two CLOSE
-messages for the same ID both finish the lookup before either one tears
-the sess_dev down, and the second one works on freed memory. Any host
-that can open a device on the server can do that.
+It actually represents the name of rnbd_srv_dev.
 
-Take the mutex first and look the ID up with xa_load() under it. The
-second CLOSE then finds nothing.
-
-Fixes: 2de6c8de192b ("block/rnbd: server: main functionality")
-Cc: "Md. Haris Iqbal" <haris.iqbal@ionos.com>
-Cc: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Chris Mason <mason@kernel.org>
-Link: https://patch.msgid.link/20261028164415.1262013-40-axboe@kernel.dk
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
+Link: https://lore.kernel.org/r/20230524070026.2932-6-guoqing.jiang@linux.dev
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 08ebf69c78a0 ("rnbd-srv: publish the sess_dev at the end of OPEN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rnbd/rnbd-srv.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/block/rnbd/rnbd-srv.c | 14 +++++++-------
+ drivers/block/rnbd/rnbd-srv.h |  2 +-
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/block/rnbd/rnbd-srv.c b/drivers/block/rnbd/rnbd-srv.c
-index 67108aeda467d..94e37655e7a53 100644
+index 94e37655e7a53..7874d60e07bfb 100644
 --- a/drivers/block/rnbd/rnbd-srv.c
 +++ b/drivers/block/rnbd/rnbd-srv.c
-@@ -344,14 +344,15 @@ static void process_msg_close(struct rnbd_srv_session *srv_sess,
+@@ -180,7 +180,7 @@ static void destroy_device(struct kref *kref)
  
- 	trace_process_msg_close(srv_sess, close_msg);
+ 	WARN_ONCE(!list_empty(&dev->sess_dev_list),
+ 		  "Device %s is being destroyed but still in use!\n",
+-		  dev->id);
++		  dev->name);
  
--	sess_dev = rnbd_get_sess_dev(le32_to_cpu(close_msg->device_id),
--				      srv_sess);
--	if (IS_ERR(sess_dev))
--		return;
--
--	rnbd_put_sess_dev(sess_dev);
-+	/*
-+	 * Each teardown of a sess_dev runs under srv_sess->lock and erases the
-+	 * ID, so an entry that is found under the lock is alive.
-+	 */
- 	mutex_lock(&srv_sess->lock);
--	rnbd_srv_destroy_dev_session_sysfs(sess_dev);
-+	sess_dev = xa_load(&srv_sess->index_idr,
-+			   le32_to_cpu(close_msg->device_id));
-+	if (sess_dev)
-+		rnbd_srv_destroy_dev_session_sysfs(sess_dev);
- 	mutex_unlock(&srv_sess->lock);
- }
+ 	spin_lock(&dev_lock);
+ 	list_del(&dev->list);
+@@ -435,7 +435,7 @@ static struct rnbd_srv_dev *rnbd_srv_init_srv_dev(struct block_device *bdev)
+ 	if (!dev)
+ 		return ERR_PTR(-ENOMEM);
  
+-	snprintf(dev->id, sizeof(dev->id), "%pg", bdev);
++	snprintf(dev->name, sizeof(dev->name), "%pg", bdev);
+ 	kref_init(&dev->kref);
+ 	INIT_LIST_HEAD(&dev->sess_dev_list);
+ 	mutex_init(&dev->lock);
+@@ -450,7 +450,7 @@ rnbd_srv_find_or_add_srv_dev(struct rnbd_srv_dev *new_dev)
+ 
+ 	spin_lock(&dev_lock);
+ 	list_for_each_entry(dev, &dev_list, list) {
+-		if (!strncmp(dev->id, new_dev->id, sizeof(dev->id))) {
++		if (!strncmp(dev->name, new_dev->name, sizeof(dev->name))) {
+ 			if (!kref_get_unless_zero(&dev->kref))
+ 				/*
+ 				 * We lost the race, device is almost dead.
+@@ -485,7 +485,7 @@ static int rnbd_srv_check_update_open_perm(struct rnbd_srv_dev *srv_dev,
+ 			ret = 0;
+ 		} else {
+ 			pr_err("Mapping device '%s' for session %s with RW permissions failed. Device already opened as 'RW' by %d client(s), access mode %s.\n",
+-			       srv_dev->id, srv_sess->sessname,
++			       srv_dev->name, srv_sess->sessname,
+ 			       srv_dev->open_write_cnt,
+ 			       rnbd_access_mode_str(access_mode));
+ 		}
+@@ -496,14 +496,14 @@ static int rnbd_srv_check_update_open_perm(struct rnbd_srv_dev *srv_dev,
+ 			ret = 0;
+ 		} else {
+ 			pr_err("Mapping device '%s' for session %s with migration permissions failed. Device already opened as 'RW' by %d client(s), access mode %s.\n",
+-			       srv_dev->id, srv_sess->sessname,
++			       srv_dev->name, srv_sess->sessname,
+ 			       srv_dev->open_write_cnt,
+ 			       rnbd_access_mode_str(access_mode));
+ 		}
+ 		break;
+ 	default:
+ 		pr_err("Received mapping request for device '%s' on session %s with invalid access mode: %d\n",
+-		       srv_dev->id, srv_sess->sessname, access_mode);
++		       srv_dev->name, srv_sess->sessname, access_mode);
+ 		ret = -EINVAL;
+ 	}
+ 
+@@ -788,7 +788,7 @@ static int process_msg_open(struct rnbd_srv_session *srv_sess,
+ 	list_add(&srv_sess_dev->dev_list, &srv_dev->sess_dev_list);
+ 	mutex_unlock(&srv_dev->lock);
+ 
+-	rnbd_srv_info(srv_sess_dev, "Opened device '%s'\n", srv_dev->id);
++	rnbd_srv_info(srv_sess_dev, "Opened device '%s'\n", srv_dev->name);
+ 
+ 	kfree(full_path);
+ 
+diff --git a/drivers/block/rnbd/rnbd-srv.h b/drivers/block/rnbd/rnbd-srv.h
+index f5962fd31d62e..6b5e5ade18ae0 100644
+--- a/drivers/block/rnbd/rnbd-srv.h
++++ b/drivers/block/rnbd/rnbd-srv.h
+@@ -35,7 +35,7 @@ struct rnbd_srv_dev {
+ 	struct kobject                  dev_kobj;
+ 	struct kobject                  *dev_sessions_kobj;
+ 	struct kref                     kref;
+-	char				id[NAME_MAX];
++	char				name[NAME_MAX];
+ 	/* List of rnbd_srv_sess_dev structs */
+ 	struct list_head		sess_dev_list;
+ 	struct mutex			lock;
 -- 
 2.53.0
 
