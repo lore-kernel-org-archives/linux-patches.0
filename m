@@ -1,70 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028524;
-	b=xm1geSId6zcEOMeCl7RKQn5e6pfdujkvUmx63LkVeOVpuvOkfZwuOYUSQyU2UbsG3Xx6
-	 Q1uru6ZmN8wP83fx+BMvNhes0xVcbJ08eSrz3eUHptxoXqEw7YMhYMZN9ffJNx+2otc+/
-	 +Ghx49uHro/KB8HrnJ0V8fsom1vi3jji9X61uZ8yd+XNPmMC5Gv3qcqXaEXrzyc5wD25X
-	 jpJ5hn/WNqK/6w8GeCTTsXu3ZjyNABIQxuyvGs83F3IMutKGk6KsZvuT6iHgbIDkDdNd0
-	 kPKhxjCuW/wiawKYq02j2lKSD5eyJXFdH90mf1cpAI2OoX0gZco3ZnriJbHB8vgoHCw==
+	t=1795028527;
+	b=LjKI7dNoqQL+N+LEN+loRtJiOkPyzeCjtMCPOGPD8oiBylx67rNi/8HMSJS/ViJKZrqy
+	 uBH/tvcTn/kZgOVQsCH1yDU3BZYZlJPE4rLVfBWv3NOq5maIInKlb5Joi9Xi3KyMNqoQK
+	 DngG2WTAoUWZPZTgThQQmq4UzC5+H1zRof8M2MQ6wVsYElPpux+4Aovnd+jlTz0OC+oZX
+	 ZlUghtI4lcgbibWuGqnQjnPBfFPTiOP6hwZNr+hunsFfjUWNEo/DSt7I2/KY4nZQvfiax
+	 Co59/2tJ9ZBHxxK1zQWPkgqv0RMgfoS94YPfgvDLGRDQKETi04ntLc7r2UKlrImbTDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028524;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028527;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sfF/1YTYnVMlQHBWYm+5+VhpOEWjSEvvrVy1UDXzNRM=;
-	b=HnU7p0Eyz6JdrdWH12WsJUZ8hXnLL72wAwzWzMmivp6o+uXfDN15t52ea/nkTksTQfyt
-	 lvhVroBsKbvQlRYjGUMuQq+/7FoQLd/x18ZsFJoUJw2h+zlAvOVktJB6ZzIFKZLGfXkml
-	 r23fqcr4l7Sq5HiuKhxFyQ30Rzm0BYxHR2XDb60YC/ZlVneZ9fCDwf9roWCH3zUaKkaiQ
-	 zpGn9ccCGZxV//K278xyf6gxyclKUzQd3HZvbiYhQL1Tjk9D0gq5lUpa2GoefvEptVenD
-	 dHKS6dTkaVTVZc7/Y0wJ2ocS8A3nA652d1mHbkXthPQcjowcnx/opGlrW1U5pbET75w==
+	bh=qYSqP5+QOHTAVBJ2Sjk6847AJN2kqdDX+LtYMtxD9ns=;
+	b=ENo7I8WLoonKigjNuzSpDfcwc4Ur/DvgMc/nuKJ4k1Tjk7xItdkKiOqhT802Ys8GkOpi
+	 13Dh/mlnbnc6nyHLM+wxDTZWotY8u0iXi2x1QGNsWfsf5NOOajSTH3C+o0RaxncqodFDl
+	 YOnRXg8GIbC7yNOJ2p1i07VfhTufGDiCiEAUbgnlw2oos6GMSpzAykUSRbyaLNz1JFdMD
+	 jb/h9dkpgd7g3j6ak6FgiKi1FDcq6BtlqvAEKEOqSPq2dExZSvMgtiNDVLpAtN7KjwJEB
+	 tTJkgd/2yPfFXBepALoy3sUb7Lyz2fmhrXjHDy6pBNCe14yFL3BMvR+5lgpmlHiwADQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=miOUfu8G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kk4lmLEB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FF0606A31C;
-	Wed, 18 Nov 2026 19:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2B3606A31C;
+	Wed, 18 Nov 2026 19:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=miOUfu8G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80FBC1F000C9;
-	Wed, 18 Nov 2026 19:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kk4lmLEB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FFBA1F000C4;
+	Wed, 18 Nov 2026 19:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028524;
-	bh=sfF/1YTYnVMlQHBWYm+5+VhpOEWjSEvvrVy1UDXzNRM=;
+	s=korg; t=1795028527;
+	bh=qYSqP5+QOHTAVBJ2Sjk6847AJN2kqdDX+LtYMtxD9ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=miOUfu8G/OGRWTHv2xl5557a5Kpwd01BbsaRhcwPFTYY9ZQCySHCUUj2YQ08NmCLv
-	 RW2oGyt/nOE6pAep94bcJN00aExUoJQlRG9+3yJImXQUv41qXOXQ2IKY0tvVi8qFqo
-	 HkDKyozUTlCV2B4hv/yZFupsrPlYOa63T6QU494M=
+	b=kk4lmLEBygrZ0J6pqKKjpPg+UC3KxCB82z9Yzc+LVh5Gb3Q9LlVT8icbnf8YJ8k9Q
+	 CzMGPRWIfgk4Ptfa2dN+FUjQy1VDCu0me9xeIZoXv0LFGfrdTy+d5TD+ErhgaZuAmz
+	 Xe0+fYmR3C2r/M2bVrH4f3ufwKdh2aHlFdmmSdZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
 	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Chris Mason <mason@kernel.org>,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Adam Litke <agl@us.ibm.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Rik van Riel <riel@surriel.com>,
-	Peter Xu <peterx@redhat.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0003/1756] mm/hugetlb: fix endless write fault on a leftover uffd bit
-Date: Wed, 18 Nov 2026 15:35:30 +0100
-Message-ID: <20261118150008.124142327@linuxfoundation.org>
+Subject: [PATCH 6.12 0020/1756] mm/userfaultfd: write-lock the VMA before waking waiters when unregistering
+Date: Wed, 18 Nov 2026 15:35:47 +0100
+Message-ID: <20261118150008.721687162@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -86,91 +72,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit f61e1cf15fb44f9cf89d43d8ef01f926322bb1c4 ]
+[ Upstream commit 35f7ecd55ce7e51cb6d5ef49e6dd51f3c80f61e4 ]
 
-hugetlb_fault() resolves the uffd bit on a write fault only if the VMA is
-registered for userfaultfd write protection, and hugetlb_wp() bails out
-for any entry with the uffd bit set assuming hugetlb_fault() has already
-resolved it.
+userfaultfd_unregister() wakes pending missing faults before clearing the
+VMA's userfaultfd registration. With per-VMA fault locking, holding
+mmap_lock for write does not prevent another fault from queuing after
+the wakeup but before userfaultfd_clear_vma() write-locks the VMA. That
+waiter can then remain asleep indefinitely.
 
-When a read-only hugetlb entry with the uffd bit set is mapped in a VMA
-that is not registered for uffd-wp, a write fault to it never makes
-progress. If the access comes from the kernel, e.g. read(2) from
-/dev/zero into such page, the task spins in the page fault handler,
-ignores SIGKILL and keeps holding the locks taken by the system call.
+Call vma_start_write() before waking waiters. Existing fault handlers
+queue themselves before dropping the VMA read lock, and new readers are
+excluded until mmap_write_unlock().
 
-Such entries should not exist, but an unprivileged user can create them,
-for example with MADV_DONTNEED of a page protected with UFFDIO_RWPROTECT
-or with UFFDIO_COPY in MODE_WP racing with UFFDIO_UNREGISTER.
-
-Clear the uffd bit when the VMA is not registered for uffd-wp and let the
-fault proceed to hugetlb_wp(), like do_wp_page() does for regular pages.
-
-Note that a FOLL_FORCE write to a page protected with UFFDIO_RWPROTECT in
-a private VMA that was made PROT_NONE now drops the RWP protection of
-that page.
-
-Original fix generated by an LLM and sent in private by Josef.
-
-[rppt@kernel.org: massage commit message]
-[david@kernel.org: convert comment into a TODO]
-Link: https://lore.kernel.org/20261015-urgent_fixes-v1-6-42796911043b@kernel.org
-Fixes: 60d5b473d61b ("mm/hugetlb: fix uffd wr-protection for CoW optimization path")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Fixes: 29a22b9e08d7 ("mm: handle userfaults under VMA lock")
+Cc: stable@vger.kernel.org
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-23-d6437171ecc3@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Chris Mason <mason@kernel.org>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Adam Litke <agl@us.ibm.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: adapted to the existing huge_pte_uffd_wp() and huge_pte_clear_uffd_wp() helper names ]
+[ sashal: adjusted the patch target to the older file location of userfaultfd_unregister() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/userfaultfd.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 1dd80a5b72b07..e6f913f227e6c 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -6516,15 +6516,19 @@ vm_fault_t hugetlb_fault(struct mm_struct *mm, struct vm_area_struct *vma,
- 		goto out_ptl;
+diff --git a/fs/userfaultfd.c b/fs/userfaultfd.c
+index cbd9d610c54bf..59f01cc7c5ace 100644
+--- a/fs/userfaultfd.c
++++ b/fs/userfaultfd.c
+@@ -1513,6 +1513,9 @@ static int userfaultfd_unregister(struct userfaultfd_ctx *ctx,
+ 			start = vma->vm_start;
+ 		vma_end = min(end, vma->vm_end);
  
- 	/* Handle userfault-wp first, before trying to lock more pages */
--	if (userfaultfd_wp(vma) && huge_pte_uffd_wp(huge_ptep_get(mm, vmf.address, vmf.pte)) &&
-+	if (huge_pte_uffd_wp(huge_ptep_get(mm, vmf.address, vmf.pte)) &&
- 	    (flags & FAULT_FLAG_WRITE) && !huge_pte_write(vmf.orig_pte)) {
--		if (!userfaultfd_wp_async(vma)) {
-+		if (userfaultfd_wp(vma) && !userfaultfd_wp_async(vma)) {
- 			spin_unlock(vmf.ptl);
- 			hugetlb_vma_unlock_read(vma);
- 			mutex_unlock(&hugetlb_fault_mutex_table[hash]);
- 			return handle_userfault(&vmf, VM_UFFD_WP);
- 		}
- 
-+		/*
-+		 * TODO: fix all cases where uffd PTE bits remain in VMAs that
-+		 * are no longer registered with uffd.
-+		 */
- 		vmf.orig_pte = huge_pte_clear_uffd_wp(vmf.orig_pte);
- 		set_huge_pte_at(mm, vmf.address, vmf.pte, vmf.orig_pte,
- 				huge_page_size(hstate_vma(vma)));
++		/* Prevent new userfaults from being queued after the wakeup. */
++		vma_start_write(vma);
++
+ 		if (userfaultfd_missing(vma)) {
+ 			/*
+ 			 * Wake any concurrent pending userfault while
 -- 
 2.53.0
 
