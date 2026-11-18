@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061657;
-	b=cMNMxs2jjvNKgDL7jdB6qzLwpPEuxbcRkmZtezJJ1pHbR+Nch93HqR7TlGIYVQbSl2LN
-	 ZK4FsmzpZJ1eMtz76//HYkgMXqlYnt5nMauWkSuVHnLYAoV9Uhb+1Ca5gKZzwIIOAWidO
-	 1VUwAkInVCKZUF4wwL70fCQo0s2yv9RHn+ZOihCmJAQN+y2wnitM9rxLK9o86Dnq1Bl9z
-	 dNlHclzS4EKdKnV9icJfWVSLIZ3rn49YL5tHxy1WvFhq5M/XeGeL+hG/N3USTr2qrbmxj
-	 3T89D/2v+A4OkZrMx4sHigLBUxtQChKw8hMp2FjHEgngE5A69ipBG5MKd+SNUBewC6w==
+	t=1795061660;
+	b=pMFqaIU1ZkLA7Vn3mrRHyjzGmjW4G9nxWJqM2PNRxVs684H9s5cYMp2+9W5+RDhD+sii
+	 v0NuPX1rL33hz7VrjXFxagVOZi5IxcXdzoU7yd9AxSAZ+JM3vo4Ykqzbsx3xefSgrL6aW
+	 PO8OYwzCS/WJKAdHtVayoLnlciPYYe9gligtQYBwC+4xBz+JDWOIAnoovAih4kBfvyh9o
+	 epV6IW4ApccpcrU8tsZX5lOq2/ltKA8VETFVEs1tVlCNBqtQI82pcXFILDGOxjZ0HbIM/
+	 b6dlQKuTjEkLOEzP+76Vuy0tcxS7t3OV6zSIr/96XfIBn0wtz7+lE7rOKy2ZT+KwZ2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061657;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061660;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zpMy/B0SK1vbj7y/qAg+Mna5FFZlwjviLbGfPiMZcuw=;
-	b=DFToKcFd4Pgzxmp9OeSamhvSksEUZQJXLsHek4fYTLwYBD/AakDqvz3eNj2KbytGFTme
-	 KI76jOKGc6mthuFkTKU9hJ4slCR4JvmZ250oFcYzNbxCIKVHONhujIC9loQO3GlOMmLNE
-	 SQNn8W3slT4OmJF3IosQNhNBN7DdwAH6oYS3a9zv/ieVnnjD1qdZCWt9vff2S92+qHvc8
-	 mODPVrJZgSK31SRqa8A5JnOZV+1UQfYTbOfJzO+thyYlFTUnquqchcu+aGCQ/FF8s2Kzz
-	 D1gVI6zkZS4SeuQCYs9aKzw4eQoUSad+23CGJGv93fgPfvL95jGO1sAURTVsSfO9Q/Q==
+	bh=HCWdo826hMeF9wBWNYZD9xABRUinnvzi38E7+qPAZTo=;
+	b=Fp77oSncjbu0S/dfEHudP1wHJ1EcOld0KyDYeckt6/gecJeczapMMj7r02H3s6woPj5B
+	 ZmyZXvDt+IroLcPhg39hkGYs6jw9hf3Zxzr0aCF+UcgQxZwQXLQLWwd+xy5U73n2FoZTh
+	 BLdGqDbZ85WEuBblPKpeTDa0JlFubM195BIZNoGlzrvqBPc6Q5AQJiAtcidDlj2j105M4
+	 6soSuSoA7MuLagBuWuga8+oT4uKooMCyx+GwnX6Q4bOdo3+FDtxPotoyvM8KpjH9ApoTb
+	 xGVzLD5vP+r77AQ3pVjQ0q6eo3Q7LGTkLwO8E3bgQ9BgmEAly67Y7TPbHrvoVcc8jDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lXeBRP2M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0sAZFo3I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59665606A336;
-	Thu, 19 Nov 2026 04:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD34606A325;
+	Thu, 19 Nov 2026 04:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lXeBRP2M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD861F000C5;
-	Thu, 19 Nov 2026 04:14:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0sAZFo3I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63BBE1F000C4;
+	Thu, 19 Nov 2026 04:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061657;
-	bh=zpMy/B0SK1vbj7y/qAg+Mna5FFZlwjviLbGfPiMZcuw=;
+	s=korg; t=1795061659;
+	bh=HCWdo826hMeF9wBWNYZD9xABRUinnvzi38E7+qPAZTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lXeBRP2M09ALk4wpTx2otERZmaGVlNMzLkXG/p3CnO19CUnjKkK1bBEMPkjwsxC3y
-	 9VFNZwpSWXD63GddMgGfWMtyPCal7Kl0k2qVnmx7yAcqSf1B9n73qfihdKd1kcHrMD
-	 DgJxioh1LTxi3t/vYeKGUyD3KBykfKJYy5lcgi/s=
+	b=0sAZFo3I/rq0LLDJVMorxd+WrCQghEqvm/65nnUHcPMCtkglMqvukY/HuT+Qhaf3J
+	 +H5lfs+Aq6L83ztLeP7Hh+9ghXseO6XEe587IQ1lYYmaaQgaKEphrYRSu5wDp6ROz0
+	 WrfhcfT1M0ccDeymNtrWWBrat9wTt9LHztddm/jI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Tim Douglas <me@timdoug.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1630/1848] ALSA: pcm: Unlink substreams before releasing them
-Date: Wed, 18 Nov 2026 16:01:08 +0100
-Message-ID: <20261118150027.815531136@linuxfoundation.org>
+Subject: [PATCH 5.10 1631/1848] serial: pmac_zilog: report received breaks
+Date: Wed, 18 Nov 2026 16:01:09 +0100
+Message-ID: <20261118150027.861319709@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,164 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Tim Douglas <me@timdoug.com>
 
-[ Upstream commit d1e57f8fb7a6b6d32a4aaa31fd6fc4c77339608f ]
+[ Upstream commit 8db79ea07a67b126c773da6efdc00066000daeb8 ]
 
-A closing PCM substream can remain in its linked group after the
-driver close callback has freed its private data. With two configured
-dummy capture substreams on the same PCM device, linked with LINK,
-PREPARE on the surviving substream can still visit the closing member:
+pmz_status_handle() sets PMACZILOG_FLAG_BREAK from RR0, and
+pmz_receive_chars() clears it on the null character that ends the
+break without marking that character, then tests BRK_ABRT in RR1,
+where the SCC does not set it in asynchronous mode. Breaks therefore
+arrive as plain NULs: brk is never counted and BRKINT, PARMRK and SysRq
+never see them.
 
-  Final close of A                   PREPARE on linked B
-  ----------------                   -------------------
-  snd_pcm_drop(): group -> SETUP
-  do_hw_free(A)
-  dummy_pcm_close(A): free dpcm
-                                     Take snd_pcm_link_rwsem for reading
-                                     Walk the group, including A
-                                     dummy_pcm_prepare(A)
-                                       Read freed timer_ops
-  pcm_release_private(A)
-    snd_pcm_unlink(A)
+Set BRK_ABRT in r1 for that character, as sunzilog does.
 
-Unlink at the start of final substream release, before dropping the
-stream or releasing driver resources. The link write lock waits for
-an existing group PREPARE, and unlink removes the closing member from
-later group actions. Keep the existing stop synchronization in
-do_hw_free() before the driver resources are freed.
-
-Make unlink independent of the pcm_release callback so OSS substreams
-are covered too. Remove the native-only unlink callback and its
-registration, while retaining the callback hook for OSS cleanup.
-
-The existing KASAN report below records the freed timer_ops read in
-dummy_pcm_prepare().
-
-KASAN report as below:
-
-    BUG: KASAN: slab-use-after-free in dummy_pcm_prepare+0xb7/0xc0
-    Read of size 8 at addr ffff888106b35f00 by task alsa_pcm_fixtur/491
-
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? dummy_pcm_prepare+0xb7/0xc0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? dummy_pcm_prepare+0xb7/0xc0
-     kasan_report+0xe0/0x110
-     ? dummy_pcm_prepare+0xb7/0xc0
-     dummy_pcm_prepare+0xb7/0xc0
-     snd_pcm_do_prepare+0x71/0xb0
-     snd_pcm_action_group+0x505/0xb30
-     snd_pcm_action_nonatomic+0xab/0x150
-     snd_pcm_common_ioctl+0x1bf5/0x3a50
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_vfs_ioctl+0x1f5/0x1280
-     ? __pfx_do_vfs_ioctl+0x10/0x10
-     ? ioctl_has_perm.constprop.0.isra.0+0x34f/0x500
-     ? __pfx_snd_pcm_common_ioctl+0x10/0x10
-     ? __fput+0x5ba/0xa60
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     snd_pcm_ioctl+0x76/0xb0
-     ? __pfx_snd_pcm_ioctl+0x10/0x10
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x41ee8d
-    Code: 04 25 28 00 00 00 48 89 45 c8 31 c0 48 8d 45 10 c7 45 b0 10 00 00 00 48 89 45 b8 48 8d 45 d0 48 89 45 c0 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1a 48 8b 45 c8 64 48 2b 04 25 28 00 00 00
-    RSP: 002b:00007ffcfa72fb60 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-    RAX: ffffffffffffffda RBX: 0000000000000004 RCX: 000000000041ee8d
-    RDX: 0000000000000000 RSI: 0000000000004140 RDI: 0000000000000004
-    RBP: 00007ffcfa72fbb0 R08: 00007ffcfa72fb98 R09: 0000000000000110
-    R10: 0000000000000001 R11: 0000000000000246 R12: 00007ffcfa72fcd8
-    R13: 00007ffcfa72fcf0 R14: 00000000004a8f28 R15: 0000000000000001
-     </TASK>
-
-    Allocated by task 488:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x251/0x610
-     dummy_hrtimer_create+0x4a/0x170
-     dummy_pcm_open+0xe7/0x730
-     snd_pcm_open_substream+0x926/0x1580
-     snd_pcm_open+0x28d/0x6d0
-     snd_pcm_capture_open+0x82/0xe0
-     snd_open+0x1ec/0x3e0
-     chrdev_open+0x21f/0x660
-     do_dentry_open+0x5c8/0x1300
-     vfs_open+0x87/0x390
-     path_openat+0x2460/0x3cd0
-     do_file_open+0x21e/0x470
-     do_sys_openat2+0xf4/0x1b0
-     __x64_sys_openat+0x136/0x1e0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 490:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x307/0x580
-     dummy_hrtimer_free+0x72/0xe0
-     dummy_pcm_close+0x9f/0xd0
-     snd_pcm_release_substream.part.0+0x104/0x310
-     snd_pcm_release+0x106/0x240
-     __fput+0x39f/0xa60
-     fput_close_sync+0xff/0x200
-     __x64_sys_close+0x8c/0xf0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    ==================================================================
-
-Fixes: 1576274d3028 ("[ALSA] Fix Oops of PCM OSS emulation")
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-9c80f858ccc13b3de84d-v7-fcd8c7aa0e837bf0b036@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Assisted-by: LLM
+Signed-off-by: Tim Douglas <me@timdoug.com>
+Link: https://patch.msgid.link/20261013013541.4535-3-me@timdoug.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_native.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/tty/serial/pmac_zilog.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 322dd71b60e9a..874c13a69022c 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -2706,18 +2706,14 @@ static int snd_pcm_hw_constraints_complete(struct snd_pcm_substream *substream)
- 	return 0;
- }
+diff --git a/drivers/tty/serial/pmac_zilog.c b/drivers/tty/serial/pmac_zilog.c
+index a0857b911cdf8..5db257b8e0674 100644
+--- a/drivers/tty/serial/pmac_zilog.c
++++ b/drivers/tty/serial/pmac_zilog.c
+@@ -240,6 +240,7 @@ static bool pmz_receive_chars(struct uart_pmac_port *uap)
+ 		ch &= uap->parity_mask;
+ 		if (ch == 0 && uap->flags & PMACZILOG_FLAG_BREAK) {
+ 			uap->flags &= ~PMACZILOG_FLAG_BREAK;
++			r1 |= BRK_ABRT;
+ 		}
  
--static void pcm_release_private(struct snd_pcm_substream *substream)
--{
--	if (snd_pcm_stream_linked(substream))
--		snd_pcm_unlink(substream);
--}
--
- void snd_pcm_release_substream(struct snd_pcm_substream *substream)
- {
- 	substream->ref_count--;
- 	if (substream->ref_count > 0)
- 		return;
- 
-+	snd_pcm_unlink(substream);
-+
- 	snd_pcm_drop(substream);
- 	if (substream->hw_opened) {
- 		if (substream->runtime->status->state != SNDRV_PCM_STATE_OPEN)
-@@ -2794,8 +2790,6 @@ static int snd_pcm_open_file(struct file *file,
- 		return -ENOMEM;
- 	}
- 	pcm_file->substream = substream;
--	if (substream->ref_count == 1)
--		substream->pcm_release = pcm_release_private;
- 	file->private_data = pcm_file;
- 
- 	return 0;
+ #if defined(CONFIG_MAGIC_SYSRQ) && defined(CONFIG_SERIAL_CORE_CONSOLE)
 -- 
 2.53.0
 
