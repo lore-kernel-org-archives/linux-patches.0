@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017019;
-	b=mPRL+DxuPVbBWvqcyj4Cg1KzNmANXS9So3qHskXGNrtwsREHI4eJh5+P/BSDvUwNSEtx
-	 5cbjpelnthshCRDXxiffbok1af2laxCBWvQZ2PjQXkVBOLhNonenTOF4fSpmjuT7KQp0W
-	 y5Jof5H/t72Oag+qiOc8EkWpHPpqnbfwenET/2H0USpXZZ8NvkbSuebKCUBJvOeQ4YNsO
-	 fWg9xtq6xeN4qHEa7hxPQieMQJ7nzoEeARFs4DHfx9GETmmK4svFKLB5z59rrCylzyXSD
-	 3UW6+EqTe4qzOt3QEVH7swH0lzYhROym+Poh2fu5CT776jDYxFBIgnZGhPMgF1VCx5A==
+	t=1795017022;
+	b=TluoTIDSVj+gi2zpxQzljTbDVyIKnQroX6xN1X9mUCk1hTHsSv/aMHy8+WP5Ak9oF9b2
+	 Dd9GxbAPVXojVG+PsgPM5fCzTwtuJftzYC028c5xSOaH9+2Fq7Vc+mXYmr0R3yCtYsWcu
+	 qhJHLzEr4zU3H631TMhrPeKh7NtE3dMXBsBZ/sEhBBKhx07VitK8OrVZLsnKg3iOQ230B
+	 AX9dVfQT76Topzno3x9jXj8rQ+cg4Xm8VI/mseRKWLQVjtbCJyPN70YHzmK+Y4WfnL5XT
+	 qdAALA9OWsHjUYpNprUaHzXx7w3P3XUWyypTH/NGedSHsUDx9+mN302lU8D5WPS+fxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017019;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017022;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N61i34l2TV8RsmNECL9V8jTS8t8LxLwy8BVY/oZxIIg=;
-	b=rcBQd7IpfQXIvr0e12lG1JM98ypRpQpdprMcQ+82lSms/7bWt9WvBpuciGFpS3XvoiS0
-	 P807hh0prgI2Yco4UVz662Ad8z7hWc3sh6w6kScQzBwXOMXaB+S8h2Q/X/dV/8U24VORL
-	 xDaguqIJ3hmQSKvXER0TICM6uOZwVmN49TZtvk1JfChMCOkkDmdNsVTUY34S+9gzxbMbA
-	 uEdgITevaqdZmDQK1s2ai4l0jFt8dDsp+qo9FfFjVhSzMBFCcOwlE20si2MkAddk5vWJY
-	 OIubyZfjbkVBG5Qm6825Oca1Z/SOOyjwnh5o7Dx8ztXomuCnw6B0ybkNNVxDJ19WouQ==
+	bh=gILbcr+tmhFkLmVzgNfCSVuwuToXgFStfMnZ7EvS8zw=;
+	b=kven/2sI5ziQ5TroQo2H+SKfCK3Die93AzR4e8h6uPk8sXqtqHx/JWip2FqG31rc1b+S
+	 OlRugrRjCyKX3WCb2Qt3UomyQCYWBbwn8QwkTfjUsEIh6vUEvxj16ETtEIU7C9wTEVz3P
+	 BWDaHkV9+W/HClSBLWF2aQh+JxdxP2sR+0o/XBQtOrL46JvPbHTDVHCgiLXvou0ffMG21
+	 kdFp9l96UR3axIotE1HopdAhxfl3s2rLRl0sJeVWFaZilYBzkaBmh4DuKhDj7gP98QAN8
+	 ksPiumSp113qRF9fTRA7f6g9hMc5LVnVoxJsnjjDOhZfpLQNT1Yvwyvu2TAOYeiVWGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Yz5yfH+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1U93bmL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88FF606A325;
-	Wed, 18 Nov 2026 15:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556E4606A320;
+	Wed, 18 Nov 2026 15:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Yz5yfH+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3501F000C4;
-	Wed, 18 Nov 2026 15:50:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1U93bmL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B00281F000C4;
+	Wed, 18 Nov 2026 15:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017019;
-	bh=N61i34l2TV8RsmNECL9V8jTS8t8LxLwy8BVY/oZxIIg=;
+	s=korg; t=1795017022;
+	bh=gILbcr+tmhFkLmVzgNfCSVuwuToXgFStfMnZ7EvS8zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Yz5yfH+AXEKVmGQ93hrj6DFsbt6320GxYBDBuiZbDDvNOsHv3B0lVhp8OgeUmOma
-	 tRwgPOvuBxVJ/BSUSFohsIkt43w69qZ9aSV/beLiNfwVG9nFSUUdKJgcvIWwFfFpn/
-	 FbPOHW3i7xWuifmPtmY1c3fzVweaSyIHZt+eSBYs=
+	b=z1U93bmLsNsZbj/tie7Sp9xp3mpZ792gA35Y/X9jBfPz4IHMfxl9qqgDKa+O+xy5p
+	 QRr1z8ecOuzZDH25acKKb2Zn6Cewc8N8M4UbfKw5q4UNF6oeosAmjC8snzcI3hyxzO
+	 DfReSDeIN/CvOmeYYkm2JsLjHwQB3lWCBb5gtVp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Crescent Hsieh <crescentcy.hsieh@moxa.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Muhammad Bilal <meatuni001@gmail.com>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Thomas Huth <thuth@redhat.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0733/2651] serial: 8250_mxpcie: take the line settings from the new termios
-Date: Wed, 18 Nov 2026 15:32:53 +0100
-Message-ID: <20261118150314.258539711@linuxfoundation.org>
+Subject: [PATCH 7.3 0696/2651] crypto: ccp - fix SFS ioctl race against device teardown
+Date: Wed, 18 Nov 2026 15:32:16 +0100
+Message-ID: <20261118150312.900781594@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,83 +70,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit dda3502cf1838f806b90405a127ec2e66c885c9d ]
+[ Upstream commit de4929b47683ed22d8c05f68d2d0f0cfd95b90a1 ]
 
-mxpcie8250_set_termios() reads the line settings out of
-port->state->port.tty, which is only set once the port has been opened.
+sfs_ioctl() reads psp_master->sfs_data and caches it in sfs_dev before
+taking sfs_ioctl_mutex, while sfs_dev_destroy() frees sfs_dev->page
+and sfs_dev->command_buf with no locking at all and only clears
+psp->sfs_data afterwards. A call to sfs_ioctl() that reads sfs_data
+just before sfs_dev_destroy() runs will still acquire the mutex and
+go on to use the now-freed command buffer in send_sfs_cmd().
 
-uart_set_options() builds a termios of its own and calls ->set_termios()
-with no tty behind it, so using such a board as the console
-(console=ttyS<n>) dereferences a NULL tty during console setup, as does
-attaching kgdboc to it and resuming a suspended console from
-uart_resume_port().
+Have both functions take sfs_ioctl_mutex before touching
+psp->sfs_data, so a call that is already using sfs_dev completes
+before teardown can free it, and a call arriving after teardown sees
+sfs_data cleared and returns -ENODEV instead of racing it.
 
-Read the settings from the termios the serial core passes in instead.
-It holds the same values on the normal path - uart_change_line_settings()
-passes &tty->termios - and it is what serial8250_do_set_termios() right
-above already uses.
-
-Fixes: 55edf8511f47 ("serial: 8250_mxpcie: enable automatic RTS/CTS flow control")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Tested-by: Crescent Hsieh <crescentcy.hsieh@moxa.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Crescent Hsieh <crescentcy.hsieh@moxa.com>
-Link: https://patch.msgid.link/20260901041519.114737-4-lilinmao@kylinos.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 648dbccc03a0 ("crypto: ccp - Add AMD Seamless Firmware Servicing (SFS) driver")
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Reviewed-by: Ashish Kalra <ashish.kalra@amd.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_mxpcie.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/crypto/ccp/sfs.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_mxpcie.c b/drivers/tty/serial/8250/8250_mxpcie.c
-index ef2516ec16da0..19f1f51eec477 100644
---- a/drivers/tty/serial/8250/8250_mxpcie.c
-+++ b/drivers/tty/serial/8250/8250_mxpcie.c
-@@ -218,8 +218,6 @@ static void mxpcie8250_set_termios(struct uart_port *port,
- 				   const struct ktermios *old)
+diff --git a/drivers/crypto/ccp/sfs.c b/drivers/crypto/ccp/sfs.c
+index a4777839790b4..530141f8bc743 100644
+--- a/drivers/crypto/ccp/sfs.c
++++ b/drivers/crypto/ccp/sfs.c
+@@ -111,13 +111,13 @@ static long sfs_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+ 	struct sfs_device *sfs_dev;
+ 	int ret = 0;
+ 
++	guard(mutex)(&sfs_ioctl_mutex);
++
+ 	if (!psp_master || !psp_master->sfs_data)
+ 		return -ENODEV;
+ 
+ 	sfs_dev = psp_master->sfs_data;
+ 
+-	guard(mutex)(&sfs_ioctl_mutex);
+-
+ 	switch (cmd) {
+ 	case SFSIOCFWVERS:
+ 		dev_dbg(sfs_dev->dev, "in SFSIOCFWVERS\n");
+@@ -191,8 +191,11 @@ static void sfs_exit(struct kref *ref)
+ 
+ void sfs_dev_destroy(struct psp_device *psp)
  {
- 	struct uart_8250_port *up = up_to_u8250p(port);
--	struct tty_struct *tty = port->state->port.tty;
--	unsigned int cflag = tty->termios.c_cflag;
- 	u8 efr, val;
+-	struct sfs_device *sfs_dev = psp->sfs_data;
++	struct sfs_device *sfs_dev;
++
++	guard(mutex)(&sfs_ioctl_mutex);
  
- 	serial8250_do_set_termios(port, new, old);
-@@ -229,23 +227,25 @@ static void mxpcie8250_set_termios(struct uart_port *port,
- 	efr = serial_in(up, MOXA_PUART_EFR);
- 	efr &= ~(MOXA_PUART_EFR_AUTO_RTS | MOXA_PUART_EFR_AUTO_CTS);
++	sfs_dev = psp->sfs_data;
+ 	if (!sfs_dev)
+ 		return;
  
--	if (cflag & CRTSCTS) {
-+	if (new->c_cflag & CRTSCTS) {
- 		efr |= (MOXA_PUART_EFR_AUTO_RTS | MOXA_PUART_EFR_AUTO_CTS);
- 		up->port.status |= (UPSTAT_AUTORTS | UPSTAT_AUTOCTS);
- 	}
- 	/* Set on-chip software flow control character */
--	serial_out(up, MOXA_PUART_XON1, START_CHAR(tty));
--	serial_out(up, MOXA_PUART_XON2, START_CHAR(tty));
--	serial_out(up, MOXA_PUART_XOFF1, STOP_CHAR(tty));
--	serial_out(up, MOXA_PUART_XOFF2, STOP_CHAR(tty));
-+	serial_out(up, MOXA_PUART_XON1, new->c_cc[VSTART]);
-+	serial_out(up, MOXA_PUART_XON2, new->c_cc[VSTART]);
-+	serial_out(up, MOXA_PUART_XOFF1, new->c_cc[VSTOP]);
-+	serial_out(up, MOXA_PUART_XOFF2, new->c_cc[VSTOP]);
- 
--	val = I_IXON(tty) ? MOXA_PUART_EFR_RX_FLOW_XON1_XOFF1 : MOXA_PUART_EFR_RX_FLOW_DISABLED;
-+	val = (new->c_iflag & IXON) ? MOXA_PUART_EFR_RX_FLOW_XON1_XOFF1 :
-+				      MOXA_PUART_EFR_RX_FLOW_DISABLED;
- 	FIELD_MODIFY(MOXA_PUART_EFR_RX_FLOW_MASK, &efr, val);
- 
--	val = I_IXOFF(tty) ? MOXA_PUART_EFR_TX_FLOW_XON1_XOFF1 : MOXA_PUART_EFR_TX_FLOW_DISABLED;
-+	val = (new->c_iflag & IXOFF) ? MOXA_PUART_EFR_TX_FLOW_XON1_XOFF1 :
-+				       MOXA_PUART_EFR_TX_FLOW_DISABLED;
- 	FIELD_MODIFY(MOXA_PUART_EFR_TX_FLOW_MASK, &efr, val);
- 
--	if (I_IXOFF(tty))
-+	if (new->c_iflag & IXOFF)
- 		up->port.status |= UPSTAT_AUTOXOFF;
- 
- 	serial_out(up, MOXA_PUART_EFR, efr);
 -- 
 2.53.0
 
