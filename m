@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046982;
-	b=G4M98T26tcg0dNM729aSuww/cTdGjrX8qlFqTj+80QXGoEQkIIUWRRUxpJoGD+S0oKP+
-	 gAp/HcidnQQS9IKd7PRJyMT+FHf4v0PGwCHyQV9RmH63lN7WOyDbJf5N5s+0UAg3a5VOw
-	 Q46Fa4g3VIxelq8sLbQkIU082Zyg5XU6DXTPLRG9Kdo+yAvkasohxgIOs79E6VniU6rCA
-	 Os5LHwgQ2NmOSwnBB/kjFzJM14Cw4XO/gbqQzmiDTufgu8zknxu+oXy4LlTbMgCJfUUNK
-	 Eq50EbCFa07XAur+dBRThvkItC8ix2bquKT1DXNZYFxSJVLYSG6DZsMizv4Z4bWamCA==
+	t=1795046985;
+	b=OIy7xnejlL90ndMERX9YwlOWSub2LwHFy3SLS3IJD6Xq96BN73VhFflkzvSnxdUjKbqf
+	 krmyfiQq0jXKcHt6GuIBVD6wgPz6fyiL2w+JLvovUDypDPsUjsdLsB5ou2uuoSUJOXQRm
+	 N7Qh6HSoMdDFsXGFszjROwlSLkSXit2TOipgWWwsF/JJ1HfkgIjBTEsTVrAJRbLt6/AZW
+	 GaQ0lv9wQQxaX+FLRd5z5j5KXjPdcbB/qk5Du1ANrixdsDypqxBSSaVRVartJd1oIt6V9
+	 /aKqNOcW7cwPpOudrjVhSrShoC1nyJca4vHx1VCrrG5XifPy27DJJLQDvBtrlNO0sbQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046982;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046985;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DgtDhHzwknjD9AD44ppqdauFPrW+VabpGySmcFiZD/8=;
-	b=RjufFK8CF66zgI/FE9xYhfigyC7kE4tunQqQAqZu9ox1W5x0wH/q6alwLamYnqlDZWoa
-	 ESMk0Pa9cO3cHdAW5PMhBGJawXzEcQZQtpO9/bmg82w3BzW9S2tURbaFB7rUAWIsUAts1
-	 lcFyUe5WyIf1XmxyxUbAqjxz9E17LFu3rNVloDeJ1rNuO5etoxcR6srNby/qEVajusc1l
-	 7REYw5gNm9AtaF69J1pZa1yVsiealXURmpKE6Tpu/Me7XZxgJdVOeM8OdfKo1ebvzXPss
-	 337NqtYE/0irG+1VEjCpUvhKblwLbVdkJlTXVrZeIDeE4hAcakQdkh0ZJYHvy/x7Fvw==
+	bh=6xwKJtk1yXn9TbRme+cLZ7hCSswhjyX3iaVw5Hdz0s4=;
+	b=MmIKrTbKb5cXzl2/fupRFwJx9qfr30QXBCshvgn5durvKT4c5pwzlkSuoAKkgTA4ESIr
+	 tev8Q4vrjYNF3Tq4Mu+mOP6uyu5BQpVXoNMO62MPuIPcRGL1+28QdXOTbrFHPns1g/+TS
+	 5bSefhArL1OMy3lATaCJfh11pDf9w6sCBjYBa1eBt8qMSdhn/c4EQRNYDS3R5EGVpIwDf
+	 SWCB3REJWzn1fUVAhtUtlNI5TZ0px7EKrO0z7fi1fmTUDnFYITvhn46owP66k4r8GAviv
+	 c5xqKzhsDzm4H2VjEDBj9Sd26bhol5iN2h7ECFPz6zX8jX9wjNgrJiuFXKDnxR8g00A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=02Ru+Gsi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ae4q9rvZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5A3606A325;
-	Thu, 19 Nov 2026 00:09:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849A4606A325;
+	Thu, 19 Nov 2026 00:09:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=02Ru+Gsi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186521F000C4;
-	Thu, 19 Nov 2026 00:09:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ae4q9rvZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17191F000C4;
+	Thu, 19 Nov 2026 00:09:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046982;
-	bh=DgtDhHzwknjD9AD44ppqdauFPrW+VabpGySmcFiZD/8=;
+	s=korg; t=1795046985;
+	bh=6xwKJtk1yXn9TbRme+cLZ7hCSswhjyX3iaVw5Hdz0s4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=02Ru+Gsib+713ydQIEj8lgQypDpGYUfKvO/6UVUoIeTQpo0kWoX+IvovKA5yvafHg
-	 g3pr/qMCB65c4OljfU9SdT0vyY/a4YiLKU5bsSbXNhzRvy8wtXaj9nWJZS1ZLLYU6N
-	 NeQskGPG011vOqW1tRbcL+PwTjJlWNOzn9BQ/nh4=
+	b=ae4q9rvZNfTPDmXofKLYWLdZqVHCdSUczzgL+gy/5/AGm6XSScHZ/M4HnKJlaWwRr
+	 lqvtHaF69lrzYnoZTyHN2RqaXMzBCPIlDAweNFTec7bs48NErmtdNYHvzuoWBNOrGI
+	 ZB4ktmC5NCRs0bX5BQ0Dc/N73AcJus44xq+Y3f9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Leon Romanovsky <leon@kernel.org>,
+	Janne Grunau <j@jannau.net>,
+	Neal Gompa <neal@gompa.dev>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1477/2857] IB/hfi1: Shutdown self-rearming timers before freeing
-Date: Wed, 18 Nov 2026 15:41:51 +0100
-Message-ID: <20261118150254.491587887@linuxfoundation.org>
+Subject: [PATCH 6.1 1478/2857] wifi: brcmfmac: cfg80211: Report port_authorized for 4-way HS offload
+Date: Wed, 18 Nov 2026 15:41:52 +0100
+Message-ID: <20261118150254.530145620@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,56 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Janne Grunau <j@jannau.net>
 
-[ Upstream commit 9d3259e41ccd5016cd2c6d013232b89df6d73011 ]
+[ Upstream commit 6fff9de5c5b425817588eeed42bd56d665751c13 ]
 
-The HFI1 receive error and synthetic counter timers rearm themselves from
-their callbacks. Their cleanup paths use timer_delete_sync(), which only
-waits for a running callback and does not prevent a concurrent or
-subsequent rearm.
+Since commit 416386060 ("Mark authorization completed on driver
+indication during 4-way HS offload") [0] wpa_supplicant expects
+NL80211_CMD_PORT_AUTHORIZED to complete the authentication when the
+driver supports 4-way handshake offload.
+This was apparently never tested with the upstream brcmfmac driver as it
+does not report this. This broke authentication on Apple silicon devices
+(BRCM4378, BRMC4387, BRMC4388) and other devices when wpa_supplicant
+2.11 was released [1]. This was initially dealt with by reverting the
+commit in Fedora [2] and other Linux distributions.
+Instead of carrying the revert over to wpa_supplicant 2.12 add the
+expected NL80211_CMD_PORT_AUTHORIZED when the connection is established.
 
-Use timer_shutdown_sync() when releasing these timers. This prevents a
-callback from enqueueing either timer after cleanup begins, before the
-containing hfi1_devdata is freed.
+The "Fixes:" tag is not fully accurate as this has only became an issue
+after userspace changes years after the change. Since the change is
+expected to be required in all active stable branches for wpa_supplicant
+2.11 / 2.12 compatibility it is helpful even though
+BRCMF_PROFILE_FWSUP_SAE did not exists then.
 
-Preserve the existing work cancellation and workqueue destruction ordering
-for synthetic counters.
-
-Fixes: 7724105686e7 ("IB/hfi1: add driver files")
+Link: https://github.com/zephyrproject-rtos/hostap/commit/41638606054a09867fe3f9a2b5523aa4678cbfa5 [0]
+Link: https://lists.infradead.org/pipermail/hostap/2024-August/042893.html [1]
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2302577 [2]
+Link: https://lore.kernel.org/linux-wireless/20260911065656.1269623-5-Jason.Huang2@infineon.com/ [3]
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260930070455.2934286-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-[ sashal: adjusted context for existing del_timer_sync() calls instead of timer_delete_sync() ]
+Fixes: b8a64f0e96c2 ("brcmfmac: support 4-way handshake offloading for WPA/WPA2-PSK")
+Signed-off-by: Janne Grunau <j@jannau.net>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260915-brcmfmac-4way-handshake-offload-authenticated-event-v2-1-fbb9cc7ac177@jannau.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ sashal: inlined SAE/PSK authorization checks because the existing PMKID-based authorization logic is absent ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/chip.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c    | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hfi1/chip.c b/drivers/infiniband/hw/hfi1/chip.c
-index 3ef47ffd3859f..8d9a64637f2cf 100644
---- a/drivers/infiniband/hw/hfi1/chip.c
-+++ b/drivers/infiniband/hw/hfi1/chip.c
-@@ -5575,7 +5575,7 @@ static int init_rcverr(struct hfi1_devdata *dd)
- static void free_rcverr(struct hfi1_devdata *dd)
- {
- 	if (dd->rcverr_timer.function)
--		del_timer_sync(&dd->rcverr_timer);
-+		timer_shutdown_sync(&dd->rcverr_timer);
- }
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 66c139bf49283..e985297919936 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -6027,6 +6027,7 @@ brcmf_bss_connect_done(struct brcmf_cfg80211_info *cfg,
+ 	struct brcmf_cfg80211_profile *profile = &ifp->vif->profile;
+ 	struct brcmf_cfg80211_connect_info *conn_info = cfg_to_conn(cfg);
+ 	struct cfg80211_connect_resp_params conn_params;
++	bool authorized;
  
- static void handle_rxe_err(struct hfi1_devdata *dd, u32 unused, u64 reg)
-@@ -12306,7 +12306,7 @@ static void free_cntrs(struct hfi1_devdata *dd)
- 	int i;
+ 	brcmf_dbg(TRACE, "Enter\n");
  
- 	if (dd->synth_stats_timer.function)
--		del_timer_sync(&dd->synth_stats_timer);
-+		timer_shutdown_sync(&dd->synth_stats_timer);
- 	cancel_work_sync(&dd->update_cntr_work);
- 	ppd = (struct hfi1_pportdata *)(dd + 1);
- 	for (i = 0; i < dd->num_pports; i++, ppd++) {
+@@ -6047,7 +6048,13 @@ brcmf_bss_connect_done(struct brcmf_cfg80211_info *cfg,
+ 		conn_params.req_ie_len = conn_info->req_ie_len;
+ 		conn_params.resp_ie = conn_info->resp_ie;
+ 		conn_params.resp_ie_len = conn_info->resp_ie_len;
++		authorized = completed &&
++			     (profile->use_fwsup == BRCMF_PROFILE_FWSUP_SAE ||
++			      profile->use_fwsup == BRCMF_PROFILE_FWSUP_PSK);
+ 		cfg80211_connect_done(ndev, &conn_params, GFP_KERNEL);
++		if (authorized)
++			cfg80211_port_authorized(ndev, profile->bssid, NULL, 0,
++						 GFP_KERNEL);
+ 		brcmf_dbg(CONN, "Report connect result - connection %s\n",
+ 			  completed ? "succeeded" : "failed");
+ 	}
 -- 
 2.53.0
 
