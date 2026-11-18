@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044570;
-	b=In8n+TAUq3v6NYmjj+Lz2YqchBpstDeFxjckFAecDvN6NPa9OCa1mukjyNQy6wI1umzY
-	 gq2bSUCOUC0+jqFgSIjzNdUZ4Ayb49hTpUobnW+bIbJNQAaLkSgeX/eUQMErSFNbBcpz/
-	 8ZrFhoSjW61HRKc2jvtsGFEmMPtqPWMRevDJmo7nm9AbBcPiP+ZYSUcC/d0RUS8mKzNG4
-	 bTOh2bbgwDflTFxQpiltapX7EQN50FSgCEurPyRmnxmU/qBqys8NKnYqYthtn/Snd6jCR
-	 8Ovn2q1uIVWYlmhC/TkfVbnRjlIqqZiTBtAHd+2941qkjoylKiGmOV9t4+q7CxNHlFw==
+	t=1795044572;
+	b=nomNyV/l4mDv5RNe2z/PpbEgx94BzWW8EC3JiM422cXRNhZpUrZPycsH55ejEY58LrL6
+	 Y+HIPGnDaQk4snLsdTK0hzaXzBxuSaaB8GTed6SL2VQNaIiZw2MBM2dNBjmj8TUjP56cy
+	 EW55MxHu/3en391u/F+fkcvpBh2JP6IPpXSd9CEBaYrfYHqoyzoV59iTuHzBneXJ5bpX2
+	 FrkP/mug1HUCxXNOgcJq5s0gkz+dv+tTlNya/saPoLCidOWZZSGxybH0f5WT7cDIDqCbZ
+	 6cBwLPD94iDVV42b4q6WtJb2eam44zCMrf1c/o1UlISCS0JZRTHGqZkkEXxcAhed9/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044570;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044572;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=g1IQBaa9WkKgDW55Ddt99RVKsUEUAGexbjTKPX8JwWk=;
-	b=cg4JVKgfQyXoKx3Dj7KpjzUrahD6kvcBCLxhfAxrty5uELdPxHdsVFkjOrpGcXVNL0fn
-	 Ag0oAuyrJv3qu0v0m9q43r8g2MnfBHRB/Gv9D8/QnpexcRoGvifIvp91fXSwe8c2TBl+m
-	 fgeaRP4rNrwBipQ2Pfa1M7B3rChtKB88zMKLXPRN2O67VR6/SYsLMRCq54F4Esrm85jcP
-	 BYyxHZJroVYgRg1c89SNGx4mgwHvIwCmcBwqCV6cZ118mgLBUE+7P8Mxx7QLBhUEBOgz1
-	 mHdQBj8Qwsz9kOJ3xOrTGpRGReTOnR5b02fXeFrEIZQUYir0z4VUmtTTnRaCtvWZ79w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=lYvByjyrMo0d/WZ7xlrkYe2+PkG//067kZQsRhNcyh8=;
+	b=0OBZ+1DkVnPLBGqqDR1rD/6HO6vvDJbywI6q9M73sqHasNYXiXD7YAFWB/N4Wu960sCC
+	 4JgeKHbtLFx9cpGrL9GqleJCF+hpSzfeBskQBudsqnhkXo0XStzRokPH8IvwsbW2bZMH7
+	 e7nI47J90/jiAjbdCmlyKvbn/TsXqH5KzWlFD7mkxzeMmT4UEHuF7sA0inOEmzqspm6Ug
+	 WtTmjJDRK22mpEKSKDxSK03+dDLFGyDIQ/G1ctWGAt1h8gFrdymOIdMvRwfqNFzDQRKno
+	 qlYGf5OHAyi/IPJRVcv527sLBXPFmi0/0DQS/SaR+oEMebvtGrJGbhaOX55Ha54szCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W993vF1A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cDG2rH3k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED489606A320;
-	Wed, 18 Nov 2026 23:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC374606A320;
+	Wed, 18 Nov 2026 23:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W993vF1A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 493CB1F000C4;
-	Wed, 18 Nov 2026 23:29:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cDG2rH3k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4901F000C4;
+	Wed, 18 Nov 2026 23:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044569;
-	bh=g1IQBaa9WkKgDW55Ddt99RVKsUEUAGexbjTKPX8JwWk=;
+	s=korg; t=1795044572;
+	bh=lYvByjyrMo0d/WZ7xlrkYe2+PkG//067kZQsRhNcyh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W993vF1A1aOfpVhO3iGTHYmpISlx3+6w/CgZsv6GSUzrEzcSDSdvBp1aEwVfjBiMI
-	 gu9Ks9Y1/p0ZLoDlI5/8Fuuh45JmF/Om+iTO5+WuuXUKmD09wvT8P7zzWO+ieHK4tt
-	 mKZtyCphJForcEthDG/mhl/V5wJ5spOoTWF2oogc=
+	b=cDG2rH3knf/HGh8l1IRMIHLOdae3/QqpcN953hxLvBRd0cH3/DgEi46IB4hDjSFvk
+	 NwUbBv2P6BY6eqCQnw64BnizXUUCK5pqfWxsqAL0KRqrAh4hf2Ado7RnWENEsi8Xd1
+	 Ob6y6DcCbOsmkOq+q278YCS8PGhHhKweW+L5QPCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	"Mayank Jangid (OpenSec Intelligence)" <mayank.jangid.moon@gmail.com>,
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.1 0612/2857] nfsd: preflight SEQUENCE replies before accepting a slot
-Date: Wed, 18 Nov 2026 15:27:26 +0100
-Message-ID: <20261118150223.526171145@linuxfoundation.org>
+Subject: [PATCH 6.1 0613/2857] nfsd: propagate SETXATTR value decode errors
+Date: Wed, 18 Nov 2026 15:27:27 +0100
+Message-ID: <20261118150223.563167722@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,101 +62,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit 35ff1a7a7e3835c3e974bc5c45d335897564ceae upstream.
+commit cfcfe0b38a66bbc4122c78a2b75e1b97b3534761 upstream.
 
-nfsd4_sequence() narrows the reply buffer to the session's cached
-reply limit before it accepts the slot seqid. A client may negotiate
-ca_maxresponsesize_cached down to NFSD_MIN_HDR_SEQ_SZ, and
-nfsd4_alloc_slot() then gives every slot a zero-length sl_data[]. A
-COMPOUND tag can fill that narrowed buffer until it holds the
-SEQUENCE opcode but not the status word that follows.
-nfsd4_encode_operation() returns without running
-nfsd4_encode_sequence(), so cstate.data_offset stays zero. It leaves
-op->status at nfs_ok as well, so the COMPOUND is treated as having
-succeeded.
+nfsd4_decode_setxattr() stores the status returned while assembling a
+non-empty attribute value, but then unconditionally returns nfs_ok. An
+allocation failure can therefore leave a NULL value buffer paired with a
+non-zero length and allow compound processing to continue.
 
-nfsd4_store_cache_entry() declines to cache a lone SEQUENCE that
-returned an error. That test reads the status the operation
-reported, so it passes here. The copy starts at offset zero and
-takes the whole reply, RPC and COMPOUND headers included, into the
-zero-length sl_data[]. The COMPOUND tag is copied along with it, so
-the client picks most of the bytes written past the end of the slot:
+Return the decoder status so that the operation stops on the original
+error.
 
-  BUG: KASAN: slab-out-of-bounds in read_bytes_from_xdr_buf+0x1bc/0x390
-  Write of size 80 at addr ffff888003a549cd by task kunit_try_catch/24
-   __asan_memcpy+0x38/0x60
-   read_bytes_from_xdr_buf+0x1bc/0x390
-   nfsd4_sequence_done+0x5b0/0x810
-   nfs4svc_encode_compoundres+0x1bf/0x240
-
-Check that the fixed-size SEQUENCE result, plus room for a following
-operation's error status, fits the negotiated limit before narrowing
-the buffer and consuming the slot seqid. The slot and its reply
-cache are left unchanged, as RFC 8881 Section 2.10.6.1.2 requires of
-an error returned from SEQUENCE.
-
-Fixes: 47ee52986472 ("nfsd4: adjust buflen to session channel limit")
+Fixes: 23e50fe3a5e6 ("nfsd: implement the xattr functions and en/decode logic")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Tested-by: Mayank Jangid (OpenSec Intelligence) <mayank.jangid.moon@gmail.com>
-Link: https://patch.msgid.link/20260817-jean-v1-1-9e356596ab85@kernel.org
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260915125636.2849626-1-qwe.aldo@gmail.com
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4xdr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -4070,6 +4070,7 @@ __be32
- nfsd4_sequence(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 		union nfsd4_op_u *u)
- {
-+	struct nfsd4_compoundargs *args = rqstp->rq_argp;
- 	struct nfsd4_sequence *seq = &u->sequence;
- 	struct nfsd4_compoundres *resp = rqstp->rq_resp;
- 	struct xdr_stream *xdr = resp->xdr;
-@@ -4079,6 +4080,7 @@ nfsd4_sequence(struct svc_rqst *rqstp, s
- 	struct nfsd4_conn *conn;
- 	__be32 status;
- 	int buflen;
-+	u32 maxlen, respsize;
- 	struct net *net = SVC_NET(rqstp);
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -2251,7 +2251,7 @@ nfsd4_decode_setxattr(struct nfsd4_compo
+ 						&setxattr->setxa_buf, size);
+ 	}
  
-@@ -4150,7 +4152,22 @@ nfsd4_sequence(struct svc_rqst *rqstp, s
- 			session->se_fchannel.maxresp_sz;
- 	status = (seq->cachethis) ? nfserr_rep_too_big_to_cache :
- 				    nfserr_rep_too_big;
--	if (xdr_restrict_buflen(xdr, buflen - rqstp->rq_auth_slack))
-+	if (buflen < rqstp->rq_auth_slack)
-+		goto out_put_session;
-+	maxlen = buflen - rqstp->rq_auth_slack;
-+
-+	/*
-+	 * A SEQUENCE result too large for maxlen never reaches
-+	 * nfsd4_encode_sequence(), so cstate.data_offset stays zero and
-+	 * the reply cache overruns the slot.
-+	 */
-+	respsize = nfsd4_max_reply(rqstp, &args->ops[0]);
-+	if (!nfsd4_last_compound_op(rqstp))
-+		respsize += COMPOUND_ERR_SLACK_SPACE;
-+	if (xdr->buf->len + respsize > maxlen)
-+		goto out_put_session;
-+
-+	if (xdr_restrict_buflen(xdr, maxlen))
- 		goto out_put_session;
- 	svc_reserve(rqstp, buflen);
+-	return nfs_ok;
++	return status;
+ }
  
+ static __be32
 
 
