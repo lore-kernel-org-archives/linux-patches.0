@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024637;
-	b=U0kd2dQ4AQ5HMt0Fx6/wyA1pPG6WpGbv7vNJzcNkB7onz2PHH37AHhWTq5k+mqTs2RiM
-	 75NXHfxNEjm/eBj9BoAUNi44lq+klUs1bCJWVDxV2OPP9rDEXTDsLuupVgy7VlLzOTCTd
-	 QZ4Y8nihmSjqQD2u7GYuy1gr2SlAVeGJrocPDTopmg2Z4F0Na6+MA0RIqS2IrBpbfm5r1
-	 RGA39OXWFfZXnwGLVYYV5MvDrlPdDD52dWTCOoEXhBtzERU7NWTQw3vGhK4/TCdNQPMew
-	 iIK+Kb8StGlJpiPiOqw14V/Oz/Zhatg9150TS1SVKSO+8UoMvj7D3ze4B1JVmx8hbZw==
+	t=1795024640;
+	b=0v7DZ4Pqh0rm632dYqxG08ECGnglIxT2Hs0CYNjc/OPmmDy/WoRJo2anrk0/86sXRPi2
+	 LjOOMUmfVMFkQuoEVzTqI2EDIqlYnJ0w6Of2/RLtWEFyisJVHwev428fggUzFvipRYrqq
+	 wrpOriMK6eOkhkGDUQZBr6NwoeClSzAOOhp+dByvcVREOlBRazthX4gxVvJ1IJsPMaJVT
+	 2keKUjwu1baNPZ/1GJKKMKtTBrK3ziKgf9ry82U0x3Wn/k00BcIV5kSHo8Jwz+ymF9Dfe
+	 d0N+4yuewdZVEELOzryHkZput3xhWmH3hN0XLAyDGynjoqbWMXIiJahAass3IN+zMhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024637;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024640;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TMU2hjD4t1cYOV2EOpnTWO38tfC0nhUVFL2SB2cHXic=;
-	b=XLhuY/OykTFrg3DXI5+QWH2Zb07lYAVtxVu0n5kev+fRJFPSgcC09Kwm9dTAkmLZMZF3
-	 XkISPlDKQ4ozoMD/7cZKi4ENr4KtLYpJWV/HQ51a83X4aB17Ws4nKhQhUlILhomKGoLZ6
-	 Ohj2gZM/xGxVmvRe7ryDc6uhcEDbbSuvWy94Z3WaMXNbRk3iOsJqe5SEwrsPHcAcV/aMf
-	 LDHZnNG8Q+8E0kTFdYpjzyxoBeyPeCStQny88X/iiBfw4svESxTvxqaXBS/1Nm1jPzavt
-	 cITtzCFMKYzA/XPRM9Umr2EA6KtLitZegFDoewIfpUY2TpuWmzQG/heHEDQKYncJx+g==
+	bh=6WHZtk9AnAX3qAnTlc161sE6jH16z9iL/J0k26egZ0Q=;
+	b=FhhPtSh5usDDHwclt1Jb34UTjiHZRCTN86P9bITXqnkq/NUkOmGflP0INHoIN2nMDB4z
+	 0gcX5UNHdGjQH0hHkqeidB2E8K2JHd40WOymgukS0ZnqG7kyBbbEW5FkcaqqTCg9ZUlUy
+	 nIeOJ8vlgLrm9wT/ME7J5UjlaTA9r4+wyCkvz/SjYWfvRrLPO6uVDxrFDOYnspWoxKJ4X
+	 an2LQVWx4952QX1BsJLv9V5oKvRFRS8CRJYUAN12KWPHKxv0WOxIhKUuHKmDGZSHCYK9l
+	 /5rUzZQNmyOKz6pThQIa4cqInca+2hpvw0IwoPCILSjWahWzoFAHsy81NtiXHm/25tw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OIAQvOWw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i2CXKL1D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7291E606A320;
-	Wed, 18 Nov 2026 17:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B0E606A325;
+	Wed, 18 Nov 2026 17:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OIAQvOWw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC54B1F000C4;
-	Wed, 18 Nov 2026 17:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i2CXKL1D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B025B1F000C4;
+	Wed, 18 Nov 2026 17:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024637;
-	bh=TMU2hjD4t1cYOV2EOpnTWO38tfC0nhUVFL2SB2cHXic=;
+	s=korg; t=1795024640;
+	bh=6WHZtk9AnAX3qAnTlc161sE6jH16z9iL/J0k26egZ0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OIAQvOWwjxllNO0fmy9SC2g7eVXenw8uYETEzoV4mvEEb099FCavFqfaGxxEAcxDT
-	 uUrhIQ01rN7dMiRXTkwvF6jeQARJwmvURy2xDPuExtoOQD72dNeD/YAznupYARDZsL
-	 myqQX29NgPE0U+2KmwwtliSn07QGIPFVkSU037Io=
+	b=i2CXKL1DqTscZSRlekOihNfwKA1nYLji6AgjXbeYqkYfAV/kiO0O3bd1nAYrkFp78
+	 Gl40IQl3TOUSszpVNrT3NOBHOZVzO6FMGwDpXbtwnPotxm2eIBoKeBRHGycXht2wQK
+	 sMFsxMchNghd+oToWq4qW61mnCMZWnxGUZ5aSR1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Yongxing Mou <yongxing.mou@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0779/2151] arm64: dts: qcom: hamoa-iot-evk: Add backlight support for eDP panel
-Date: Wed, 18 Nov 2026 15:41:54 +0100
-Message-ID: <20261118150150.496819679@linuxfoundation.org>
+Subject: [PATCH 6.18 0797/2151] RDMA/hns: Pin CQ buffer writable to match device DMA write access
+Date: Wed, 18 Nov 2026 15:42:12 +0100
+Message-ID: <20261118150151.116089440@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,122 +68,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+From: Yishai Hadas <yishaih@nvidia.com>
 
-[ Upstream commit 512716f69610d81db958b781132370731c69e874 ]
+[ Upstream commit ce29f6e741844a78ad1977f2a550ede27ecf95f8 ]
 
-The backlight on the Hamoa IoT EVK is controlled through a PWM signal.
-Aligned with other x1e80100-based platforms: the PWM signal is controlled
-by PMK8550, and the backlight enable signal is handled by PMC8380.
+alloc_cq_buf() leaves user_access zero-initialized, but the device
+writes CQEs into the CQ buffer. Set IB_ACCESS_LOCAL_WRITE so the buffer
+is pinned writable, matching the device's write access.
 
-Describe the backlight device and connect it to the eDP panel to allow
-for brightness control.
-
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251112-hamoa_dvt_backlight-v3-1-f35b44af7fc4@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 723ce02feb13 ("arm64: dts: qcom: hamoa-iot-evk: use on-board crystal for PS8830 retimers")
+Fixes: 744b7bdfa79e ("RDMA/hns: Support 0 hop addressing for CQE buffer")
+Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://patch.msgid.link/20260915140933.40580-3-yishaih@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 54 ++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+ drivers/infiniband/hw/hns/hns_roce_cq.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-index df8d6e5c1f45e..1cb4a51f5d508 100644
---- a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-+++ b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-@@ -17,6 +17,16 @@ aliases {
- 		serial1 = &uart14;
- 	};
+diff --git a/drivers/infiniband/hw/hns/hns_roce_cq.c b/drivers/infiniband/hw/hns/hns_roce_cq.c
+index 150f5052d0b01..59c88b418c511 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_cq.c
++++ b/drivers/infiniband/hw/hns/hns_roce_cq.c
+@@ -258,6 +258,7 @@ static int alloc_cq_buf(struct hns_roce_dev *hr_dev, struct hns_roce_cq *hr_cq,
+ 	buf_attr.region[0].size = hr_cq->cq_depth * hr_cq->cqe_size;
+ 	buf_attr.region[0].hopnum = hr_dev->caps.cqe_hop_num;
+ 	buf_attr.region_count = 1;
++	buf_attr.user_access = IB_ACCESS_LOCAL_WRITE;
  
-+	backlight: backlight {
-+		compatible = "pwm-backlight";
-+		pwms = <&pmk8550_pwm 0 5000000>;
-+		enable-gpios = <&pmc8380_3_gpios 4 GPIO_ACTIVE_HIGH>;
-+		power-supply = <&vreg_edp_bl>;
-+
-+		pinctrl-0 = <&edp_bl_en>, <&edp_bl_pwm>;
-+		pinctrl-names = "default";
-+	};
-+
- 	wcd938x: audio-codec {
- 		compatible = "qcom,wcd9385-codec";
- 
-@@ -183,6 +193,22 @@ vreg_edp_3p3: regulator-edp-3p3 {
- 		regulator-boot-on;
- 	};
- 
-+	vreg_edp_bl: regulator-edp-bl {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VBL9";
-+		regulator-min-microvolt = <3600000>;
-+		regulator-max-microvolt = <3600000>;
-+
-+		gpio = <&pmc8380_3_gpios 10 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&edp_bl_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
- 	vreg_nvme: regulator-nvme {
- 		compatible = "regulator-fixed";
- 
-@@ -807,6 +833,8 @@ &mdss_dp3 {
- 	aux-bus {
- 		panel {
- 			compatible = "edp-panel";
-+
-+			backlight = <&backlight>;
- 			power-supply = <&vreg_edp_3p3>;
- 
- 			port {
-@@ -867,6 +895,21 @@ usb0_1p8_reg_en: usb0-1p8-reg-en-state {
- 	};
- };
- 
-+&pmc8380_3_gpios {
-+	edp_bl_en: edp-bl-en-state {
-+		pins = "gpio4";
-+		function = "normal";
-+		power-source = <1>;
-+		input-disable;
-+		output-enable;
-+	};
-+
-+	edp_bl_reg_en: edp-bl-reg-en-state {
-+		pins = "gpio10";
-+		function = "normal";
-+	};
-+};
-+
- &pmc8380_5_gpios {
- 	usb0_pwr_1p15_reg_en: usb0-pwr-1p15-reg-en-state {
- 		pins = "gpio8";
-@@ -878,6 +921,17 @@ usb0_pwr_1p15_reg_en: usb0-pwr-1p15-reg-en-state {
- 	};
- };
- 
-+&pmk8550_gpios {
-+	edp_bl_pwm: edp-bl-pwm-state {
-+		pins = "gpio5";
-+		function = "func3";
-+	};
-+};
-+
-+&pmk8550_pwm {
-+	status = "okay";
-+};
-+
- &smb2360_0 {
- 	status = "okay";
- };
+ 	ret = hns_roce_mtr_create(hr_dev, &hr_cq->mtr, &buf_attr,
+ 				  hr_dev->caps.cqe_ba_pg_sz + PAGE_SHIFT,
 -- 
 2.53.0
 
