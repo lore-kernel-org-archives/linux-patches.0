@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020856;
-	b=T/av2zyzgxSUC+EH3GiBDF1gu2kq58z4s3NMgIt6c5FpLSoekYGkcLDRhrjED4zoprP4
-	 vD3LgzANTxIxIBV5pMYiyC2NWikLT0uICgznt2nfumyfzhu6lZ/2dqzjWSAQq25e3f6Bd
-	 gvTX3DuAgv9o7K5nELUAAhh6BA9lxpcQK4bcL1JAcAqIxGMrJLFzd6hRTbmQgvob0dx27
-	 UeMHNlmd3iRqt26xkIytvvh6drHF4r45m2592nih6/9o3GZ8aJiDMLZCz6cIio/EmsDyw
-	 wmM1F5HwVYrhOR8P4s1pMsfVnbaJQR0e4ZTD+AHTBOQVykjaQHu2i2JT4LM2OZlmn9g==
+	t=1795020858;
+	b=a81Y5MqVQo/FGjrMDZKwaay2OwNANL/pj40rDykW692rm8trt8Fr4LnXsksg+33iYW2B
+	 wZFTMT9c8Ybk3h66Bi6gxHye8jg+DGUTDP147Sc68uis26xiMDOjx+yO8P4RjcMifC9Cc
+	 LbGfhz0BgqtvKvVekOqZ0Vx5+HUJqwPeKVJl1Q9Deh2puEckADtaSAAyqppUlYLt4fWpB
+	 3Pp9NmEdfhxaZA8wwGSuygMnGR1tcAHBxOxH2G/Nc6rgW6nutXwIZry64oRBcxxwxfC4x
+	 tUh3/ibMYBSpw6CCwtoPJ3f3Lw1fQo4MfveXArlK155v8og+E3ovMCEA4UBuXhzA1Pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020856;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020858;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TPWTtlD2bL8e+5dB0PEYcBLdgmhu3P5F89SbrVcX6WQ=;
-	b=F2fXf+TyiMvvyHzqTIS39/ncYKiYLf7p14dA/D/T5ATOTeOqjWAvrqrdmK9eOdaGqtze
-	 Jj+4/I62UVDulkE+8P/tThDm6G1iR2BzzuQQ1XIPlcoXp/38iDWmHrhDIelDZ1wHA5Cvl
-	 K+5lHwbtkdMb/ZIQEBR/pMg8gv1D9TDrXO/yH2vhNp70A3PAuIMKMjRiSrz7jxvOeL4l9
-	 fJ/GSA0kKLyUDiBFdIH9ZtyY9d5/jbEwLuOcoSByJhXAGPhS9lg9LtHDUvUYzlUxit4BS
-	 hUTfpdEVjAAsqicpK7Pd1T+wejXYJW2RLzwkOXDPgXBNuy3sgtUYHtKxvd41TcqL0bw==
+	bh=adt8Bhe01AGNlAAerc0khQdqX+nXpvbq57eVSKJL/HY=;
+	b=QGWCfOaNwDiwsZBIZ+VUZ7WVDcJLttqGiP/d8F1HGHmvXmgBd8zYvcnGqFZYaQOIk9Gz
+	 cMxLIC2zMzT3y7YrLb2X1DfpD8EOYDajzrkzx6Gx0fjqjoO8zPCJCuFguJ6IglIfoReg1
+	 V/dTYv08dGI+WP4xBEvbtD0C2PEJEBr871abo0XS7cLxI4JbIqKUFk6F+kxKBJCsv1ZPv
+	 KpuGQSZ+bQWbupBuaILKIyoHlrH+/YPXfb+3nFCpi7JPul9qATXxUr9/7f2quXdLAbrgZ
+	 IuYtakJCXZ537ujsrMB6kfeff6u2TZquXwzR8bjVgAxQgfto6F7ey8vnJlkm2oHBW5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y2H+Rwtk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BtIVJ7l3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3DF8606B591;
-	Wed, 18 Nov 2026 16:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76FA606B587;
+	Wed, 18 Nov 2026 16:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y2H+Rwtk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E421F000C4;
-	Wed, 18 Nov 2026 16:54:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BtIVJ7l3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3253B1F000C4;
+	Wed, 18 Nov 2026 16:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020855;
-	bh=TPWTtlD2bL8e+5dB0PEYcBLdgmhu3P5F89SbrVcX6WQ=;
+	s=korg; t=1795020858;
+	bh=adt8Bhe01AGNlAAerc0khQdqX+nXpvbq57eVSKJL/HY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y2H+RwtkWeGAScedyok7qM5Wo7LsuEBWs++hYt+N+8zQS8mJ8ymkeUldbJMN8CQkn
-	 EbydTz+DgN/5I1w4KPUtgxTMKE1w2MmnNRUCmvADa6h6Kzk32m93ggHeeAdNPNhE22
-	 SF2a6vzTEmtD8bR8iww4gwI7KsW5IVPYJgNXvIWA=
+	b=BtIVJ7l3XA6imR3rB+F+S9rPRwLU4Q85JSP8PblujnBD6S1hdpLLHFo2VkFTD10Ma
+	 4eWYbaOD1Cda925rhBEcACL9y2RfxgNOhag3WHTTbna8eamTkXHLBpQ92J5xvqpra0
+	 W+6Li86lAxACP+4a0nO2vueBfLAxNKQYYm0/nKC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
+	Yuan Chen <chenyuan@kylinos.cn>,
 	Alexei Starovoitov <ast@kernel.org>,
-	"Alan Maguire (Oracle)" <almagui@kernel.org>
-Subject: [PATCH 7.3 2058/2651] ARC: Strip libgcc debug information when generating BTF
-Date: Wed, 18 Nov 2026 15:54:58 +0100
-Message-ID: <20261118150400.151475710@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 2059/2651] bpf: Claim the per-CPU send_signal irq_work before filling it
+Date: Wed, 18 Nov 2026 15:54:59 +0100
+Message-ID: <20261118150400.188030235@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,88 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit ca201ad6e92a1924138e83ff966f7a091e3bbe6e ]
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-ARC links against the compiler's libgcc archive. The ARC GNU 2023.03
-toolchain ships this library with debug information, including complex
-floating-point types in integer arithmetic helpers such as __udivdi3.
-These types reach vmlinux even though the kernel does not use complex
-floating-point arithmetic.
+[ Upstream commit 2d1f101ee619435873ed8a23fcb3bd09204a5024 ]
 
-When floating-point BTF encoding is enabled, pahole rejects those types:
+irq_work_is_busy() cannot see the per-CPU send_signal_work while
+it is being filled: the check only matches after irq_work_queue()
+has claimed the work. A concurrent caller therefore passes it, both
+callers race for the same irq_work, and the loser's signal is
+silently lost along with its task reference while the queued work
+runs with a mix of both callers' fields.
 
-  Complex, interval and imaginary float types are not supported
-  Error while encoding BTF.
-  FAILED: load BTF from .tmp_vmlinux1.BTF.1: No such file or directory
+kprobe, tracepoint and perf_event programs exclude each other on
+the same CPU through bpf_prog_active, so for two callers to meet,
+one of the programs has to be a raw tracepoint or an fentry one.
+And since commit 87c544108b61 ("bpf: Send signals asynchronously
+if !preemptible") this path runs with IRQs enabled too, so a hard
+IRQ can interrupt the fill as well, not only an NMI. Found by code
+inspection and reproduced with a perf_event NMI program racing an
+fentry one.
 
-KernelCI's upgrade to pahole 1.31 exposed this long-standing problem as
-failed ARC builds. As of 1.32, pahole still rejects these types, and
-older versions will stay in use, so the kernel build has to keep them
-out of vmlinux. Commit f122668ddcce ("ARC: Add eBPF JIT support")
-documented the same failure along with a workaround of disabling
-floating-point BTF encoding, but that also discards supported
-floating-point types from kernel BTF.
+Claim the work through work->task itself: cmpxchg() it from NULL
+to the target task before touching the other fields, and set it
+back to NULL once the callback has consumed them. A context
+finding the work claimed returns the documented -EBUSY.
 
-For CONFIG_DEBUG_INFO_BTF, generate a debug-stripped copy of the selected
-libgcc archive in the output tree and link that copy. Preserve the archive
-structure so that only needed helpers are linked, and use the normal
-Kbuild objcopy rule to track input and command changes. The trade-off is
-that vmlinux in BTF-enabled builds no longer carries DWARF for the libgcc
-helpers. Debug information for kernel code, the installed toolchain and
-non-BTF builds stay unchanged.
-
-Reproduced and tested with ARC GCC 12.2.1 and pahole 1.31 and 1.32 using
-an ARCv2 tinyconfig with BPF_SYSCALL and DWARF4/BTF enabled. Before and
-after vmlinux.o files are identical after stripping debug information.
-
-Fixes: db16c1fe92d7 ("bpf: Generate BTF_KIND_FLOAT when linking vmlinux")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1bc7896e9ef4 ("bpf: Fix deadlock with rq_lock in bpf_send_signal()")
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Alan Maguire (Oracle) <almagui@kernel.org>
-Link: https://github.com/kernelci/kernelci-core/commit/e71b8c9f42253180596e734c18965a5aad80c8c5
-Link: https://patch.msgid.link/20261015154044.4058618-1-sashal@kernel.org
+Link: https://patch.msgid.link/20261009022427.968304-1-chenyuan@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arc/Makefile     | 9 ++++++++-
- arch/arc/lib/Makefile | 8 ++++++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ kernel/trace/bpf_trace.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arc/Makefile b/arch/arc/Makefile
-index 868805ffcfeab..4ea705a331c7c 100644
---- a/arch/arc/Makefile
-+++ b/arch/arc/Makefile
-@@ -86,7 +86,14 @@ core-$(CONFIG_ARC_PLAT_TB10X)	+= arch/arc/plat-tb10x/
- core-$(CONFIG_ARC_PLAT_AXS10X)	+= arch/arc/plat-axs10x/
- core-$(CONFIG_ARC_SOC_HSDK)	+= arch/arc/plat-hsdk/
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 29260951aa871..568b9ada61daf 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -823,6 +823,7 @@ const struct bpf_func_proto bpf_task_pt_regs_proto = {
  
--libs-y		+= arch/arc/lib/ $(LIBGCC)
-+libs-y		+= arch/arc/lib/
-+
-+ifdef CONFIG_DEBUG_INFO_BTF
-+export LIBGCC := $(LIBGCC)
-+libs-y		+= arch/arc/lib/libgcc.a
-+else
-+libs-y		+= $(LIBGCC)
-+endif
+ struct send_signal_irq_work {
+ 	struct irq_work irq_work;
++	/* The claim: NULL marks the slot free for the next caller. */
+ 	struct task_struct *task;
+ 	u32 sig;
+ 	enum pid_type type;
+@@ -842,6 +843,8 @@ static void do_bpf_send_signal(struct irq_work *entry)
  
- boot		:= arch/arc/boot
+ 	group_send_sig_info(work->sig, siginfo, work->task, work->type);
+ 	put_task_struct(work->task);
++	/* Release once the fields are consumed. */
++	smp_store_release(&work->task, NULL);
+ }
  
-diff --git a/arch/arc/lib/Makefile b/arch/arc/lib/Makefile
-index 30158ae69fd4a..2807ee24f27e6 100644
---- a/arch/arc/lib/Makefile
-+++ b/arch/arc/lib/Makefile
-@@ -13,3 +13,11 @@ lib-$(CONFIG_ISA_ARCV2)		+=memcpy-archs-unaligned.o
- else
- lib-$(CONFIG_ISA_ARCV2)		+=memcpy-archs.o
- endif
-+
-+# libgcc can contain complex floating-point debug types unsupported by BTF.
-+# Strip only the debug information from a local copy of the selected archive.
-+always-$(CONFIG_DEBUG_INFO_BTF) += libgcc.a
-+OBJCOPYFLAGS_libgcc.a := --strip-debug
-+
-+$(obj)/libgcc.a: $(LIBGCC) FORCE
-+	$(call if_changed,objcopy)
+ static int bpf_send_signal_common(u32 sig, enum pid_type type, struct task_struct *task, u64 value)
+@@ -885,14 +888,14 @@ static int bpf_send_signal_common(u32 sig, enum pid_type type, struct task_struc
+ 			return -EINVAL;
+ 
+ 		work = this_cpu_ptr(&send_signal_work);
+-		if (irq_work_is_busy(&work->irq_work))
++		if (cmpxchg(&work->task, NULL, task))
+ 			return -EBUSY;
+ 
+ 		/* Add the current task, which is the target of sending signal,
+ 		 * to the irq_work. The current task may change when queued
+ 		 * irq works get executed.
+ 		 */
+-		work->task = get_task_struct(task);
++		get_task_struct(task);
+ 		work->has_siginfo = siginfo == &info;
+ 		if (work->has_siginfo)
+ 			copy_siginfo(&work->info, &info);
 -- 
 2.53.0
 
