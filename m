@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046448;
-	b=pxxj1QyP3+PT9y5t+ElA8iaEJWRbQ3uovW5NSa/JQU7rmnOREloHARgj9t406Dar1miH
-	 lnNlgX6Oo2Ankm37CXzpv6DIa+h2wOUqhrorJlin2LfAnMpi6JRz1z52R+Wpa4GgO5kSF
-	 ar9yIpf3tvZrUl0uL+jqREcnyrQt7NL3SZeG1PYU+3nDtddezn7VYax9x2/PSG8nPRkpw
-	 XelDB/7u8/289hmYrr7tzVzHiCE9EKe0HZ75RlUPiUSSLMC8x6eVZFye5ScaKDLjdo9U/
-	 NhJeT1WmaM5kCFBkXDOzEvQ54I4wCCRksEQ/bKC5DSQRC7UACJOF6+S0mQIRc7snKZw==
+	t=1795046450;
+	b=lo4z8sBEBpyHPz9HVyO9cheJU5KpQYoEMmWes4li2s02AYsmeehporr3gv/TpLDdQb3x
+	 qlVorANa5Od2ggShVF5v9J2j+DSjlIbBbpj4YqggYxWQ5/M+XN8nLatXD18W3LxJJlG1W
+	 rvVjnNL9FNhpFyYMHMy2MF2Up+HXkKKY+0prWyGUiHTF3qu3mzVsHIIYFRasfuybSmL6R
+	 bsGJXesqL4PsXV8MLyaP5xp/DlnT5OLmb2ux5HZ6fguD+bnfO/PBeYbvf+BVqgiYCzgi4
+	 boh83vswsOjWH25fJhODHqu0EQRrsN17vwOr8qGEB1XmG0Q75CAmoQqJHPJ/NwxdHSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046448;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046450;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ZmLioS5by7oI1K2Y29r8igVJwZOYrcAu7jkznVVqluw=;
-	b=x/X1xlR9V1eXGJDZGGDI+61GsCttuxMNKNUsFyfLmPlF+73Si1odoJYMaxroOU8UdXnS
-	 ft3lYbZA4IgJiArvcsnFOiYE7qWDWiwvTJ/DR98RBP43IyCwiVSXhPmx3phIH8UsjyTvL
-	 5Vj1lQU0CIG+VrrAMl9Nj8smYeo19mtYZInqm5XBBYUcqoQdb4ghEkzM/AlY3NA8FVf4C
-	 nycxr9xS4RESEpqdwiLqjd522cfumOwuW8IaGq+KiTJ41LtZ+oiaPJskAx/SK2aggbkqf
-	 JyjjPzZ/6lNj6UPB2KbPjIGdd4K6p6gLtJ9rs3suil/EKyC3SLyKIK/SI4wqnIeS+6w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=uuwGen6MBmll7Z76/tIaGYVEnK/jqlR6Kvm2QI3MalM=;
+	b=yDzy7kT/TcKmKUX5vtEZKPaapqxZpQP7LNkGD9/qR0G/Ujb8vyDtHYfeWkvMeniPjazh
+	 nTIQeplIEElXts8WL1PnA20T3R5VH0OsWnLKAywjMtDA5lPdVD67HIXxOv+Iamrv5B7KA
+	 +4SAN6IesZ3dVBvUa2Vo5KgDzxL7zRfeupqTaRWV5nqatICw+0aQV9a2+vg4CwMEWNKmF
+	 65Ma+0D+gPLdek2SUcoJ1IExwwCFAeeHyTzN5aT2LY1XGqyr733LbpW/wXgyODyzewza7
+	 I79BFeDRYaPAgTg1URTPRwbNZ7xFPQn/cd7hPTOJX338gxP/42ZZZjSG2KjLZoJyHTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y9l6NtU5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EdTphLWK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B34606A325;
-	Thu, 19 Nov 2026 00:00:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A9C606A325;
+	Thu, 19 Nov 2026 00:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y9l6NtU5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C171F000C4;
-	Thu, 19 Nov 2026 00:00:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EdTphLWK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2069E1F000C4;
+	Thu, 19 Nov 2026 00:00:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046447;
-	bh=ZmLioS5by7oI1K2Y29r8igVJwZOYrcAu7jkznVVqluw=;
+	s=korg; t=1795046450;
+	bh=uuwGen6MBmll7Z76/tIaGYVEnK/jqlR6Kvm2QI3MalM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y9l6NtU5Jm5HglMjjiaXxGPWGkCM8qAmekPHiC6vIb3B+wTJtfhYTc2PsEBdRB01W
-	 WKIyS9sHsjHbtOTXqUh5KEsAzBU1GceGfc+geIMlsDkeTKTLp4ME+OLuHzEWSecGHi
-	 wFKiIEm7K9/KoJnCl/SfkallMsHq4j/r0wsEauLY=
+	b=EdTphLWKnOCWQ+BULFpbp28ssLZhoLgXUgq/vGyV31sh/SKjmeWuvYkk0MtUcu13Y
+	 mFV9ZdTMkmBSRy+I3jLIeBAHEtFVNAyt0tpg+Po9gyU8uxMsvYAgdIpzj7Rga5u+7/
+	 RNsL12cAW3j9bo18qN8WzA50kRARmOgnPL1dYzPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Changjie <liucj1228@outlook.com>,
-	=?UTF-8?q?St=C3=A9phane=20Grosjean?= <s.grosjean@peak-system.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Chris Mason <mason@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1283/2857] can: peak_usb: pcan_usb_fd_decode_buf(): accept short uCAN end-of-list records
-Date: Wed, 18 Nov 2026 15:38:37 +0100
-Message-ID: <20261118150247.696323124@linuxfoundation.org>
+Subject: [PATCH 6.1 1284/2857] mm/gup: fix out-of-bounds write for nr_pages == 0 in GUP-fast
+Date: Wed, 18 Nov 2026 15:38:38 +0100
+Message-ID: <20261118150247.730125653@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,96 +65,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liu Changjie <liucj1228@outlook.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 2d4c272e816a5b784f1fc7899256f8826df34edb ]
+[ Upstream commit 1dfe4b276c23189394afb42d114ee8a54cc3aff2 ]
 
-A PCAN-USB FD v2 running firmware 3.2.0 sends a 16-byte status record
-followed by a four-byte zero-size end marker.
+With nr_pages == 0, GUP-fast still enters its page table walk and can
+write past the caller's page array. The old end <= start check caught
+empty ranges, but was replaced with an overflow check.
 
-Since commit 93fcab2c6968 ("can: peak_usb: validate uCAN receive record
-lengths") these transfers cause repeated receive-buffer dumps while the
-interface is up.
+Users such as OrangeFS can pass a zero page count derived from a
+userspace-supplied length. So let's return zero for nr_pages == 0 before
+starting the walk, just like GUP-slow.
 
-This has been observed on Linux 7.2.11-arch1-1 with matching kernel
-headers:
-- Classic CAN, 500 kbit/s: 25 decoder errors in 5 s before the fix; none in
-  15 s after.
-- CAN FD, 500 kbit/s nominal and 2 Mbit/s data: 26 decoder errors in 5 s
-  before the fix; none in 60 s after.
-- Three additional down/up cycles: no decoder errors.
+Fix generated by an LLM and sent by Chris Mason in private.
 
-pcan_usb_fd_decode_buf() requires a complete 12-byte struct pucan_msg
-before checking the size field, so it rejects the end marker with -EBADMSG.
-
-Check that the size field is present before testing for an end marker.
-Require the full header for nonzero-size records and keep the remaining
-record and payload length checks.
-
-This patch was created with LLM assistance.
-
-Fixes: 93fcab2c6968 ("can: peak_usb: validate uCAN receive record lengths")
-Signed-off-by: Liu Changjie <liucj1228@outlook.com>
-Reviewed-by: Stéphane Grosjean <s.grosjean@peak-system.fr>
-Link: https://patch.msgid.link/CH5PR19MB997156AB3BE253C3BE445223B0AC992@CH5PR19MB997156.namprd19.prod.outlook.com
+Fixes: c28b1fc70390 ("mm/gup: reorganize internal_get_user_pages_fast()")
 Cc: stable@vger.kernel.org
-[mkl: copy additional info to commit message]
-[mkl: convert Assisted-by: tag to prose]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
----
-Built and tested the original and patched peak_usb modules on Arch
-Linux 7.2.11-arch1-1 with matching kernel headers.
-
-  - Classic CAN, 500 kbit/s: 25 decoder errors in 5 s before the fix;
-    none in 15 s after.
-  - CAN FD, 500 kbit/s nominal and 2 Mbit/s data: 26 decoder errors
-    in 5 s before the fix; none in 60 s after.
-  - Three additional down/up cycles: no decoder errors.
-
-USB captures during the patched tests contained 406 packets with
-short end markers. Neither receive-buffer dump recurred.
-
-The CAN bus was disconnected; external TX/RX was not tested.
-One startup "can_change_state: oops, state did not change" message and
-an RX dropped count reaching 2 were observed during the patched tests.
-Their causes remain undetermined.
-
+Signed-off-by: Chris Mason <mason@kernel.org>
+[ david: simplify description ]
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-21-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/peak_usb/pcan_usb_fd.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ mm/gup.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
-index f42084e44caae..70a15b3e9c3d1 100644
---- a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
-+++ b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
-@@ -708,7 +708,7 @@ static int pcan_usb_fd_decode_buf(struct peak_usb_device *dev, struct urb *urb)
- 		u16 rx_msg_type, rx_msg_size;
- 		size_t rx_msg_min_size;
+diff --git a/mm/gup.c b/mm/gup.c
+index 2c20548a0c46e..b3b6de2c37c12 100644
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -3055,6 +3055,9 @@ static int internal_get_user_pages_fast(unsigned long start,
+ 				       FOLL_FAST_ONLY | FOLL_NOFAULT)))
+ 		return -EINVAL;
  
--		if (msg_end - msg_ptr < sizeof(*rx_msg)) {
-+		if (msg_end - msg_ptr < sizeof(rx_msg->size)) {
- 			err = -EBADMSG;
- 			break;
- 		}
-@@ -719,6 +719,11 @@ static int pcan_usb_fd_decode_buf(struct peak_usb_device *dev, struct urb *urb)
- 			break;
- 		}
- 
-+		if (msg_end - msg_ptr < sizeof(*rx_msg)) {
-+			err = -EBADMSG;
-+			break;
-+		}
++	if (unlikely(!nr_pages))
++		return 0;
 +
- 		rx_msg_size = le16_to_cpu(rx_msg->size);
- 		rx_msg_type = le16_to_cpu(rx_msg->type);
+ 	if (gup_flags & FOLL_PIN)
+ 		mm_set_has_pinned_flag(&current->mm->flags);
  
 -- 
 2.53.0
