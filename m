@@ -1,61 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058972;
-	b=lUbuJ5nRc66ntuSOKN1AizOe/gEpJHyKEHRS6T0mVWqNWoZxyU1JirOPP1vWPA6cdEcS
-	 r595YTiy1IE1Z/DXPqj4Y5IJego5DJ0UFhz+b3iCr/7dpWV7tNQByN7toq22kfcQ6VfC6
-	 mnF/IFucjNbkcyFZ+jUzd3La4D3ODfigWsAQBTlcEJQlXs9ECu5ba1AzbApwodNuDWjHL
-	 Y/Ayum7pwRg6Rj/BxpIbs3lUSmfD8Qyg2E92gigcE9JPjp3Y0e0tRj/H3Gf4tjS0wPJZ8
-	 FMkSj74TAdHPeXn5tZtCNK8wYS/51HNjMTmOT3kWphdhge2fXMZ1dkorD7hReQUSeWQ==
+	t=1795058975;
+	b=D6sIfkyLD5RYAfXSz4M5V0DANreXhTOfG94JlzqzLHY37DwFnHOPK72m5lLt640mm8un
+	 RTa1LuBlWiA+Dn1vLM6gE1FHHSvS0yiBTxzraC38JO9PCy+MJwG/WU5awZT2oRify6Ivs
+	 IsreqVYBwtf0r9oEdLonUR1r6+o9qG418cqV2N0kLZWKoB8IKyEeVcI+26SLnm2A4EPX/
+	 hoTCS76iANG+Vv1/yJAwHHBMeAvJOebukXZGefQp4/sOzWBQGm2S1fYBv/nRiFyR/ZBY/
+	 nSjElLFJnlllg6kKGgocvXPN03BZhNb27A8kvxqemnu3PEpo1Q4DW2DqQFJe1KHgBIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058972;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058975;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=g7qUltljiPo+F2ru09crKPF1bOUC9kCo0TOjeYFw6PE=;
-	b=b4ub7YJ41Nw0bEEcmSmc67xvWpTcIVA2sFjbBMDjFi21ThFRMrTZh6v97U/yXGqjP78H
-	 dIz5OdbU8MIwL0/hznshd0Sh1TZTmocRunbHj54HMiP+3PJibrOzmUD88vkLlVqsb5npZ
-	 gGFX9uzHB8Ean8O5nPne0ztLyZOb/ZYkN02FsOdbMIW8q8nIpA+CUoUb71WTguFbOZlmF
-	 dZG7KTLmP7UD8UK8uGgul8p6H7viZkGUBYCIELW09F4JtPKjvrByp/UCORTlML/ZlHWgX
-	 IMZJZaTxm2+OUMQFEh3rho8Cnne0F60dK02J21eNPrxlcIMeLO2TET9rtrMOwBWOmdA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=68MN2Hxf/2muT9DEahFbnPDqj+SfUw1kj60nuGyyihg=;
+	b=4J02g/vds71aixI4KtxVB+f4CjYlZpIchR3JD4iuFe4qwo56tR4QUu7SCZoU9IWhzAiy
+	 2ELQsGRMjidkrcL7wwhjdtFBchJHZqtuPgZMDCfxVwk9H0NJuaox4id+hMAsB7hf8TEUX
+	 nXhD9jvDJuML6IHIo2Igl+8JeupHTGKsaDVlX8X+mVs35vWUKJWq8jUtsKSfrSYXgIkpp
+	 hZaPkqssKGRi3SPwgz2a2gP3L4hwG7eW+5+T3bnRBGkHR8TqoEpAaxOCNyA3Zkv8sIgY9
+	 FdHai17AFLFr9+6nAKEhUZWgPU29K3Yk+BbszmvAZjJ7mKU/nRM8KVjJud1aKhrWA/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BJbROV82;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LKIfBMs+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABA160A2617;
-	Thu, 19 Nov 2026 03:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7328F606A332;
+	Thu, 19 Nov 2026 03:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BJbROV82
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E429A1F000C9;
-	Thu, 19 Nov 2026 03:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LKIfBMs+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72AC1F000C5;
+	Thu, 19 Nov 2026 03:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058972;
-	bh=g7qUltljiPo+F2ru09crKPF1bOUC9kCo0TOjeYFw6PE=;
+	s=korg; t=1795058975;
+	bh=68MN2Hxf/2muT9DEahFbnPDqj+SfUw1kj60nuGyyihg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BJbROV82mR6DkhTMYMCvhOvwfigN84K0ojg2exb/Z2KieVG3zpp2AHlOb9VEJsRRw
-	 GKgxlQ8O/wak9SnEEXxG6V1mmGLs7T7xDk/RKT9bYt5nxI/bg/R2gievM2QyDIwLVw
-	 AOEtXpYeIq7FdICrWhYnGFat52w4vhAvR7SEOvSw=
+	b=LKIfBMs+c+5xWMqEj4k4j2P0DuSdrT7XVnvndYvn29+oVHLqzypmk2CHTRGWYnu4f
+	 XVdan8uklgOi6h3RnZQfDlA10guAkP2OWYZ8enncX9xdt32i5sIROpToyfvczkmz/F
+	 32xt1id4YfiEhRX+RTTwazBino4uugb3wd8tsZc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Peihan Liu <ronbogo@outlook.com>,
-	Yilin Zhu <zylzyl2333@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Eulgyu Kim <eulgyukim@snu.ac.kr>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Philipp Stanner <phasta@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0677/1848] xfrm: espintcp: reorder operations within espintcp_init_sk
-Date: Wed, 18 Nov 2026 15:45:15 +0100
-Message-ID: <20261118145944.196476917@linuxfoundation.org>
+Subject: [PATCH 5.10 0678/1848] drm/drm_crtc: ensure dma_fence_ops remain valid during device unbind
+Date: Wed, 18 Nov 2026 15:45:16 +0100
+Message-ID: <20261118145944.274910315@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,132 +63,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: André Draszik <andre.draszik@linaro.org>
 
-[ Upstream commit f9a11716c8445b496e9fafeec7e8412d384d02e2 ]
+[ Upstream commit 3be436cbd3d265fe4fcfbb5b650edad7b2108443 ]
 
-When enabled on a socket, espintcp sets the socket callbacks to its
-own before it has finished setting up its context and published it as
-icsk_ulp_data. Any one of those callbacks that gets called before will
-dereference a NULL icsk_ulp_data.
+In [1], sashiko reported the following issue:
 
-Fix this by reording the operations, and add memory barriers to ensure
-callers will have a struct espintcp_ctx available. Add a few
-WRITE_ONCE/READ_ONCE too while we're there.
+=== snip ===
+Looking at how these fences are managed, drm_crtc_create_fence()
+creates a dma_fence without taking a reference to the drm_device or
+drm_crtc. Because the sync_file framework exposes this fence to
+userspace, the fence can outlive the CRTC.
 
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+The dma_fence contract requires that data accessed by dma_fence_ops
+(like get_driver_name) must remain valid for an RCU grace period after
+the fence is signaled. However, drm_crtc_cleanup() and the subsequent
+freeing of the device do not wait for an RCU grace period via
+synchronize_rcu().
+
+If userspace calls ioctl(SYNC_IOC_FILE_INFO) concurrently with a device
+hot-unplug:
+
+CPU1 (Userspace)
+sync_file_get_name()
+  ops = rcu_dereference(fence->ops);
+  if (!dma_fence_test_signaled_flag())
+    // Preempted or delayed here
+
+CPU2 (Driver Teardown)
+Signals the fence (setting fence->ops = NULL)
+Destroys and frees the CRTC without waiting for an RCU grace period
+
+CPU1 (Resumes)
+  ops->get_driver_name(fence) -> drm_crtc_fence_get_driver_name()
+  crtc = fence_to_crtc(fence); // Casts to the freed CRTC
+  return crtc->dev->driver->name; // Use-after-free
+
+...
+
+Does the CRTC or DRM device need to be kept alive for the RCU grace
+period, or should the fence hold a proper reference to prevent the
+use-after-free when get_driver_name() and get_timeline_name() access
+the freed CRTC structure?
+=== snap ===
+
+I believe this to be a correct observation and this patch implements
+the suggestion of waiting for an RCU grace period before proceeding
+with destruction of the drm_crtc, so that get_driver_name() and
+get_timeline_name() can still work.
+
+Link: https://sashiko.dev/#/patchset/20260618-linux-drm_crtc_fix2-v1-1-c03e77b36f34@linaro.org?part=1
+Fixes: 6d6003c4b613 ("drm/fence: add fence timeline to drm_crtc")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Reported-by: Peihan Liu <ronbogo@outlook.com>
-Reported-by: Yilin Zhu <zylzyl2333@gmail.com>
-Reported-by: Ren Wei <n05ec@lzu.edu.cn>
-Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://lore.kernel.org/all/c30b645074a1b379e0f7fe297f917c66137d9964.1778464688.git.zylzyl2333@gmail.com/
-Link: https://lore.kernel.org/all/20260819155349.3555804-1-jjy600901@snu.ac.kr
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Reviewed-by: Philipp Stanner <phasta@kernel.org>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20260721-linux-drm_crtc_fix2-v3-1-afa8c71506e6@linaro.org
+Signed-off-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/espintcp.h |  5 +++--
- net/xfrm/espintcp.c    | 41 +++++++++++++++++++++++++----------------
- 2 files changed, 28 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/drm_crtc.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/espintcp.h b/include/net/espintcp.h
-index 0335bbd76552a..d8fb608ec6ea1 100644
---- a/include/net/espintcp.h
-+++ b/include/net/espintcp.h
-@@ -34,7 +34,8 @@ static inline struct espintcp_ctx *espintcp_getctx(const struct sock *sk)
+diff --git a/drivers/gpu/drm/drm_crtc.c b/drivers/gpu/drm/drm_crtc.c
+index 5d2cbff02df12..e833a52e33693 100644
+--- a/drivers/gpu/drm/drm_crtc.c
++++ b/drivers/gpu/drm/drm_crtc.c
+@@ -336,14 +336,23 @@ EXPORT_SYMBOL(drm_crtc_init_with_planes);
+  * drm_crtc_cleanup - Clean up the core crtc usage
+  * @crtc: CRTC to cleanup
+  *
+- * This function cleans up @crtc and removes it from the DRM mode setting
+- * core. Note that the function does *not* free the crtc structure itself,
+- * this is the responsibility of the caller.
++ * This function cleans up @crtc and removes it from the DRM mode setting core,
++ * after first waiting an RCU grace period to ensure @crtc->dev can safely be
++ * dereferenced by our dma_fence_ops.
++ *
++ * Note that the function does *not* free the crtc structure itself, this is the
++ * responsibility of the caller.
+  */
+ void drm_crtc_cleanup(struct drm_crtc *crtc)
  {
- 	struct inet_connection_sock *icsk = inet_csk(sk);
+ 	struct drm_device *dev = crtc->dev;
  
--	/* RCU is only needed for diag */
--	return (__force void *)icsk->icsk_ulp_data;
-+	/* pairs with smp_wmb() in espintcp_init_sk() */
-+	smp_rmb();
-+	return (__force void *)READ_ONCE(icsk->icsk_ulp_data);
- }
- #endif
-diff --git a/net/xfrm/espintcp.c b/net/xfrm/espintcp.c
-index ce97c28dd5797..aa0924287317e 100644
---- a/net/xfrm/espintcp.c
-+++ b/net/xfrm/espintcp.c
-@@ -426,7 +426,9 @@ static void espintcp_destruct(struct sock *sk)
- 
- bool tcp_is_ulp_esp(struct sock *sk)
- {
--	return sk->sk_prot == &espintcp_prot || sk->sk_prot == &espintcp6_prot;
-+	const struct proto *prot = READ_ONCE(sk->sk_prot);
++	/* Ensure our dma_fence_ops remain valid for an RCU grace period after
++	 * the fence is signaled. This is necessary because our dma_fence_ops
++	 * dereference crtc->dev.
++	 */
++	synchronize_rcu();
 +
-+	return prot == &espintcp_prot || prot == &espintcp6_prot;
- }
- EXPORT_SYMBOL_GPL(tcp_is_ulp_esp);
- 
-@@ -458,33 +460,40 @@ static int espintcp_init_sk(struct sock *sk)
- 
- 	__sk_dst_reset(sk);
- 
--	strp_check_rcv(&ctx->strp);
- 	skb_queue_head_init(&ctx->ike_queue);
- 	skb_queue_head_init(&ctx->out_queue);
-+	INIT_WORK(&ctx->work, espintcp_tx_work);
-+
-+	ctx->saved_data_ready = sk->sk_data_ready;
-+	ctx->saved_write_space = sk->sk_write_space;
-+	ctx->saved_destruct = sk->sk_destruct;
-+
-+	/* avoid using task_frag */
-+	sk->sk_allocation = GFP_ATOMIC;
-+
-+	rcu_assign_pointer(icsk->icsk_ulp_data, ctx);
-+
-+	/* pairs with smp_rmb() in espintcp_getctx() */
-+	smp_wmb();
-+
-+	WRITE_ONCE(sk->sk_data_ready, espintcp_data_ready);
-+	WRITE_ONCE(sk->sk_write_space, espintcp_write_space);
-+	sk->sk_destruct = espintcp_destruct;
- 
- 	if (sk->sk_family == AF_INET) {
--		sk->sk_prot = &espintcp_prot;
--		sk->sk_socket->ops = &espintcp_ops;
-+		WRITE_ONCE(sk->sk_prot, &espintcp_prot);
-+		WRITE_ONCE(sk->sk_socket->ops, &espintcp_ops);
- 	} else {
- 		mutex_lock(&tcpv6_prot_mutex);
- 		if (!espintcp6_prot.recvmsg)
- 			build_protos(&espintcp6_prot, &espintcp6_ops, sk->sk_prot, sk->sk_socket->ops);
- 		mutex_unlock(&tcpv6_prot_mutex);
- 
--		sk->sk_prot = &espintcp6_prot;
--		sk->sk_socket->ops = &espintcp6_ops;
-+		WRITE_ONCE(sk->sk_prot, &espintcp6_prot);
-+		WRITE_ONCE(sk->sk_socket->ops, &espintcp6_ops);
- 	}
--	ctx->saved_data_ready = sk->sk_data_ready;
--	ctx->saved_write_space = sk->sk_write_space;
--	ctx->saved_destruct = sk->sk_destruct;
--	sk->sk_data_ready = espintcp_data_ready;
--	sk->sk_write_space = espintcp_write_space;
--	sk->sk_destruct = espintcp_destruct;
--	rcu_assign_pointer(icsk->icsk_ulp_data, ctx);
--	INIT_WORK(&ctx->work, espintcp_tx_work);
- 
--	/* avoid using task_frag */
--	sk->sk_allocation = GFP_ATOMIC;
-+	strp_check_rcv(&ctx->strp);
- 
- 	return 0;
- 
+ 	/* Note that the crtc_list is considered to be static; should we
+ 	 * remove the drm_crtc at runtime we would have to decrement all
+ 	 * the indices on the drm_crtc after us in the crtc_list.
 -- 
 2.53.0
 
