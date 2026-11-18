@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025551;
-	b=5SG/lyZDNBI6EUhcNAlcHssfBweo6FcQa21iqee4IQI+6Df6g2ew6ncZuO2CsKF5T/9f
-	 lzsJBPkyNDmE20zuOJj/xRW2eopQoEe8LmuHCv6r3JnAfTLbmMv0APkOQmN0f7HolH5sY
-	 tuQI1XglZpauMQan1FKYFIEMWBAcX7zXrd7Z4nXcd9VqLS65lyIYSM/IfZaZj4pKbdAlB
-	 3/Sj8MzmxRKkeLt01O9WXQnSWELOkyit7pxbClRNCvl9ZQTdedHv369Zs0ML2bor/4vET
-	 cc86ddOhJYe/HtbSxrHFKDV0N09NJdacgejOkw2FyEXxoL8njnAKtSlGyV3Xt01QEeQ==
+	t=1795025554;
+	b=3h9gLEqxCuCeCmi/HPojrrXUvDMOnRXmWFrYmZm67FUT1409jSBAZs6qPSjRoQ4+Qxuw
+	 mDbDrFKfCSLd53J3PkSH5cB2T3khjCGdOczJlYSHWNU2wxbPqjpMGrMKm9uzDjPrxoHGt
+	 rJzvq8w5ZE2ArgNKyuH2nc3kuVihWxtolGizHS+7EhR8meVlbE046PqZFsKvoDFR3KZza
+	 FMfw+uiZ5tcL2/LSWs9U0WcJzHE5LW34jytw2g7fpEr3MKgTPka6xyvLQB1BnVgPvGO9a
+	 3onjgYV4q5aW6/S7NRH3HqhvY27SMIVE+B4taPmKdVzxYAr5OK55uc8i2iLdUbMfVKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025551;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025554;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vK5oi/a1kEPv1laRq4JStqnFcQiDKsiQKU/nZ/Mhq1E=;
-	b=HPxy9zt6SF1FyQhbgcdWDD+RYf+WH+lo3Xp51jC/bhG5rI+o+pwHvg50YBAEotokKb/h
-	 NCuib49sM7QQDzvXhDrsxRqlLyNBewERXqLgAixMOhBdTdKqTGLYKhalVB35Bmp+e5cES
-	 sUgGMOLEffKnBfc6ft2Gj0icdCrqowarYLmbGZZ8zXmrRPscNjRG+eIkuZjdp68EFx9uW
-	 Lnc+McrUFzWCkSxfJ/TSn+Jj9D9sr6x49w+INKzfNFQ/TJMtGTd/ygEAuVq9GiiWmCpN9
-	 6veOK9Fo5mM/YsF/2gZUL87hKXp2NdkuzllbRjT80dAXZ4TgXN6vRd5hAZk2+4Oy7EQ==
+	bh=e5gk8QLJVzc4QOE2uMJ7Dey5TjYfS1YxmSR81xt4DtM=;
+	b=Y4I8Wq7dBeJ8w/uxJAjWGQAD4Q1R3baH7gcyDW2Gli5mCqxRtSol1fot8jzHdV95FrNG
+	 dj5vMuXTrMox/gxNjEce27UjtBJP/LCWaVMwqy7abvJ7Bkwdzn4YvnOKLKINCsokigR4w
+	 r7DcaZeYTTauznyimVq6z6iHZYEs+StRi/BhgPTHDiNkGgR3EphzlRxaZ8/Hal2NM30hl
+	 oA7eqDfE9Fo+3LvDQ52OJN9PtxychP4fGmyN923HJVOBcjZiLOaodpWpnS19+MJDvkJhq
+	 SFABCbHnGqdpXWeOqV/1I4a0oySTAb+UdtFbvt8FvEkVmI9B08UUFMVKi08II9pmQsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AqaLWv0y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TDIYeekF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B72606A31C;
-	Wed, 18 Nov 2026 18:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2AE7606A31C;
+	Wed, 18 Nov 2026 18:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AqaLWv0y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDE71F000C4;
-	Wed, 18 Nov 2026 18:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TDIYeekF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44E661F000C5;
+	Wed, 18 Nov 2026 18:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025550;
-	bh=vK5oi/a1kEPv1laRq4JStqnFcQiDKsiQKU/nZ/Mhq1E=;
+	s=korg; t=1795025553;
+	bh=e5gk8QLJVzc4QOE2uMJ7Dey5TjYfS1YxmSR81xt4DtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AqaLWv0ycH57k3alvVcTrSfBy2Ja92IRKs3QlS0njcOM6MYJGlc7MUsFVnlIUH1Lg
-	 tyCCBNYQD2/1e7p/d5B4GbS0CUs+/n6qjLXbppEfde0RCd0Tcs+HFMZs5uNkOFPkFt
-	 39cpTmvixGnBYxrFBSqPrlIHS9YBnisLf6XA/H/g=
+	b=TDIYeekFjSA2hTv+5rwX7q0XAOOheFEOvIZPfp9VujE3RXWWZ5+WcNV9+jpxJw8JQ
+	 rpwa8CyULvYtDia1Lc1kGLZOIAbvMZNVzmWbVRX0A3qDo9C7U8xC1tP02CQanrfl5p
+	 kIjFdEEM8QYCknu4qfSkRroFm2quE0OJRyZvkhcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1120/2151] dmaengine: ste_dma40: Init hardware before registration
-Date: Wed, 18 Nov 2026 15:47:35 +0100
-Message-ID: <20261118150203.013504699@linuxfoundation.org>
+Subject: [PATCH 6.18 1121/2151] dmaengine: ste_dma40: Fix probe IRQ leak
+Date: Wed, 18 Nov 2026 15:47:36 +0100
+Message-ID: <20261118150203.044830472@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,65 +72,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit ffd583a734dc4bdafb9e18d9aa48b6efafd1a628 ]
+[ Upstream commit 7ca608cf6b842685bbbe131d4f7d638f7cdc2b5d ]
 
-d40_probe() enables the interrupt handler and registers DMAengine devices
-before calling d40_hw_init(). An interrupt pending from the bootloader can
-therefore reach the handler while the hardware interrupt state is not
-initialized and channel lookup entries are empty. The handler deliberately
-does not acknowledge an interrupt for an unknown channel, so a level IRQ
-can retrigger continuously.
+d40_probe() registers the hardware interrupt before several later probe
+steps that can fail. Those error paths jump to destroy_cache without
+freeing the IRQ, leaving the handler registered after probe resources have
+been released.
 
-Initialize the hardware and set the DMA segment limit before requesting
-the IRQ or registering DMAengine devices. d40_hw_init() clears pending
-logical and physical interrupt status, so request_irq() can enable the
-line normally after the hardware state is initialized.
-
-This ensures that the handler and clients only observe initialized
-hardware.
+Route failures after a successful IRQ request through a dedicated cleanup
+label. Keep the request before DMAengine registration because that
+registration publishes channels to clients.
 
 Fixes: 8d318a50b3d7 ("DMAENGINE: Support for ST-Ericssons DMA40 block v3")
 Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225215.5EA2F1F000E9@smtp.kernel.org/
+Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-9-89f595e8851d@kernel.org
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-10-89f595e8851d@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/dma/ste_dma40.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 4e5907f6840fd..c88de0dc7c6eb 100644
+index c88de0dc7c6eb..1b833fa77fba9 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -3670,20 +3670,19 @@ static int __init d40_probe(struct platform_device *pdev)
+@@ -3681,18 +3681,20 @@ static int __init d40_probe(struct platform_device *pdev)
  	}
- 	pm_runtime_use_autosuspend(base->dev);
- 
-+	dma_set_max_seg_size(base->dev, STEDMA40_MAX_SEG_SIZE);
-+
-+	d40_hw_init(base);
-+
- 	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
- 	if (ret) {
- 		d40_err(dev, "No IRQ defined\n");
- 		goto destroy_cache;
- 	}
--
  	ret = d40_dmaengine_init(base, num_reserved_chans);
  	if (ret)
- 		goto destroy_cache;
+-		goto destroy_cache;
++		goto release_irq;
  
--	dma_set_max_seg_size(base->dev, STEDMA40_MAX_SEG_SIZE);
--
--	d40_hw_init(base);
--
  	ret = of_dma_controller_register(np, d40_xlate, NULL);
  	if (ret) {
  		dev_err(dev,
+ 			"could not register of_dma_controller\n");
+-		goto destroy_cache;
++		goto release_irq;
+ 	}
+ 
+ 	dev_info(base->dev, "initialized\n");
+ 	return 0;
+ 
++ release_irq:
++	free_irq(base->irq, base);
+  destroy_cache:
+ 	if (base->lcla_pool.dma_addr)
+ 		dma_unmap_single(base->dev, base->lcla_pool.dma_addr,
 -- 
 2.53.0
 
