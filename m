@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032334;
-	b=clgT5X7LWx69WkHwMG1Sh4HSFFbcDvDa6Miz1/V/sIBO7Osc21Hhrg0PvrBQg+/4xSYY
-	 AZH/WOlmlfavHO8SWslUzxP21kE/aCqyW6QD//Kln8qzqiE+9Qy6A1JCBHNyaeZLkfaBM
-	 VPuO6CZNR5IswI9os/QrRtWCGkN9hR6Zi/X1V/NckbZBGPECkVBydilq+2I+dfyEZKCR3
-	 fhTh/y/R+dQl9OkUGSg2LoSKd9tvwgRL5/RoA9Qg8Epd0VLLo9re2ranccPC4rycMJj6y
-	 yUq/is4Ui/yGk9KV7egFnmvwbpNmZJ5Ums00erPalhEznYxJ+0aS5NkhsMvGxB8rW+Q==
+	t=1795032336;
+	b=Mi8eBbjnMWFAE6/x+K65PUG6VKsHIZOVjFGKlzIh6aLqb3E/XZQwm7Qh6i3m6uxM4anV
+	 tu2ajJcPfu3KruYGoLNrMzi3cVqu+dGnuRoJvbI767NyXw76/xIhaw0Ik1hxL3b7cODk5
+	 w1BLyVTTEEU4ecl5h1tO4r7XQtnNO+WfBwp4IP8jKDVNxFc6a5tX4k1cdtBONhQhvmHwo
+	 uAgWmez0DGGO0/h7hr8fDFdUl93kfofdP5o//96p1fT+ZWcSJ2syY0OxrPAYGWVdM690j
+	 /qHrJJJ+o3gcOrxLIYfGH9OjpX+ZqidqaESfRCPtMDz7cCVYyEDCyeD6p/4g97TE/hA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032334;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032336;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I8LeeXhtpv6oBs+iavPL4yqYwrpEIrzgV+n5f2BfUwg=;
-	b=TFF3V5wm2OCUoqXxpJ0mMA1hIRbO7t+HZyy2kauQeZGGYdjuBsAJGHtwLOE4RPf8aDRj
-	 WYbE2rLN49d0l2PCeQ7x/lQBiFloKWtWEz12lRzkCgt+3LzrYEkUfQMO0tkGbswE9w5rw
-	 efciQoH8kFh8l5PwRyBI8OJZWhirknzDXT8h51yM9TQk+Yk5z67+EvNdQTXJVTjKpLeJV
-	 TOjyAGPWU+OQptJ+xNP8xqmfi+QDqqUpoHcPyBrIlB9mXYPe4auJcg4ldyV+j3EWwvzqM
-	 DIoSPnJgLq4HqkZlOv+BStE6AHxh0UKsd7pte/u8Zl1F05H1jO1DEf/bPPTyIS5XaEg==
+	bh=xjkplVVaEpvwvGUvBmNzikYvKG6AbZQtm4nL7ZbTf48=;
+	b=fDchrcNHWITlWja2LShE/SJcBJzKsZqcqqrqPQTFMgm4bZ5lRK8o+tUo4fIKDRmyXb7C
+	 +sWjQVSqVM/5vacWZhqx7liohTUkkKy8GMWV1cvq1S2+ygaEsIe4ILmCGcZAmM0+mkJGj
+	 wKxHfAhiphLxxF/2rYNLygd7pDZbWSEqS8mhsGnRbTc7cSrA3DVvDkUYE1FOMciHAeJPc
+	 fsU6/ugj6G/wt9RNYqIKSmR98ej0ukwv0wDcK5kjLWha9N1zhLz2CLa0MC2BuK/lW7p+i
+	 VnMSNMfouDT93BaG6Uz/CBn5BLRU3Q6MSkvdkZ8/luHHb+Uee80yS3KPDmWGxPzxHsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="aPl/5X2D";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1q7M3WvB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34237606A330;
-	Wed, 18 Nov 2026 20:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0746606A336;
+	Wed, 18 Nov 2026 20:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aPl/5X2D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3101B1F000C5;
-	Wed, 18 Nov 2026 20:05:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1q7M3WvB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109651F000CA;
+	Wed, 18 Nov 2026 20:05:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032333;
-	bh=I8LeeXhtpv6oBs+iavPL4yqYwrpEIrzgV+n5f2BfUwg=;
+	s=korg; t=1795032336;
+	bh=xjkplVVaEpvwvGUvBmNzikYvKG6AbZQtm4nL7ZbTf48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aPl/5X2D1BUJKymZ7GhNt9LKH7jFt+yVaQUBJoxp59sHaMa+ETNWA7TKQWgi4yIl2
-	 CiGTtLqIZlp7eqRqotnGQwFvI0L52mqhLhmkY2iiLXU1Wnc+Q1VOfXnzLVsDL5U2D0
-	 QnRNNDtRxd4D6RFmJi5nW99g6V9DQwpJlQxqhI3U=
+	b=1q7M3WvB01KmmCZsYftfbvxb85eFkgek8x6usX78NAE5OyZjwjkeqoAzxw8OJpJti
+	 e2XUcnlgTnqHx77AbVeriXRrN9+IaCBXDAxLBA7q7ogXr8I2XAnrctqvtoWUIxG4eX
+	 s+SRtPRX63yd7Hij+/apq28TJ9uKbhXj3TMYYKZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b5a7cd83622c747977de@syzkaller.appspotmail.com,
-	Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Stefano Munari <stefanomunari.sm@gmail.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1333/1756] HID: wacom: fix wacom_intuos_irq NULL pen_input deref
-Date: Wed, 18 Nov 2026 15:57:40 +0100
-Message-ID: <20261118150102.442095266@linuxfoundation.org>
+Subject: [PATCH 6.12 1324/1756] net: usb: lan78xx: reject invalid EEPROM write requests
+Date: Wed, 18 Nov 2026 15:57:31 +0100
+Message-ID: <20261118150102.132644677@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,74 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
+From: Stefano Munari <stefanomunari.sm@gmail.com>
 
-[ Upstream commit 2f985de0afbe9366af9d322ea20589712c1dc8fe ]
+[ Upstream commit 9272297df14124fe603c81e40b52ff0c5dd88652 ]
 
-Currently, wacom_intuos_irq() passes the parent of wacom_wac's
-pen_input to the dev_dbg() in the unknown report path. However,
-pen_input can be NULL on interfaces without a pen, causing a
-NULL pointer dereference.
+The runtime PM handling removed the -EINVAL return for invalid
+EEPROM/OTP write requests. These requests now return zero from a
+successful usb_autopm_get_interface() call, even though no data is
+written.
 
-Get the HID device from the enclosing struct wacom and use hid_dbg()
-instead.
+Set ret to -EINVAL for invalid requests while preserving the runtime
+PM reference release.
 
-Fixes: eb71d1bb270e ("Input: wacom - use dev_xxx() instead of naked printk()s and dbg()s")
-Reported-by: syzbot+b5a7cd83622c747977de@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b5a7cd83622c747977de
-Signed-off-by: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
-Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 8a7ffeb795f8 ("lan78xx: Fix for eeprom read/write when device auto suspend")
+Signed-off-by: Stefano Munari <stefanomunari.sm@gmail.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Tested-by: Nicolai Buchwitz <nb@tipi-net.de> # Raspberry Pi 3B+ (LAN7515)
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261010213248.15938-1-stefanomunari.sm@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/wacom_wac.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/usb/lan78xx.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
-index 8574dd843d0d5..207a25e82c494 100644
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -1027,10 +1027,10 @@ static int wacom_intuos_general(struct wacom_wac *wacom)
- 	return 2;
- }
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index 69960d564a974..430a47ed64a20 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -1740,13 +1740,16 @@ static int lan78xx_ethtool_set_eeprom(struct net_device *netdev,
+ 	/* Invalid EEPROM_INDICATOR at offset zero will result in a failure
+ 	 * to load data from EEPROM
+ 	 */
+-	if (ee->magic == LAN78XX_EEPROM_MAGIC)
++	if (ee->magic == LAN78XX_EEPROM_MAGIC) {
+ 		ret = lan78xx_write_raw_eeprom(dev, ee->offset, ee->len, data);
+-	else if ((ee->magic == LAN78XX_OTP_MAGIC) &&
++	} else if ((ee->magic == LAN78XX_OTP_MAGIC) &&
+ 		 (ee->offset == 0) &&
+ 		 (ee->len == 512) &&
+-		 (data[0] == OTP_INDICATOR_1))
++		 (data[0] == OTP_INDICATOR_1)) {
+ 		ret = lan78xx_write_raw_otp(dev, ee->offset, ee->len, data);
++	} else {
++		ret = -EINVAL;
++	}
  
--static int wacom_intuos_irq(struct wacom_wac *wacom)
-+static int wacom_intuos_irq(struct wacom_wac *wacom_wac)
- {
--	unsigned char *data = wacom->data;
--	struct input_dev *input = wacom->pen_input;
-+	unsigned char *data = wacom_wac->data;
-+	struct wacom *wacom = container_of(wacom_wac, struct wacom, wacom_wac);
- 	int result;
- 
- 	if (data[0] != WACOM_REPORT_PENABLED &&
-@@ -1041,23 +1041,23 @@ static int wacom_intuos_irq(struct wacom_wac *wacom)
- 	    data[0] != WACOM_REPORT_CINTIQ &&
- 	    data[0] != WACOM_REPORT_CINTIQPAD &&
- 	    data[0] != WACOM_REPORT_INTUOS5PAD) {
--		dev_dbg(input->dev.parent,
-+		hid_dbg(wacom->hdev,
- 			"%s: received unknown report #%d\n", __func__, data[0]);
-                 return 0;
- 	}
- 
- 	/* process pad events */
--	result = wacom_intuos_pad(wacom);
-+	result = wacom_intuos_pad(wacom_wac);
- 	if (result)
- 		return result;
- 
- 	/* process in/out prox events */
--	result = wacom_intuos_inout(wacom);
-+	result = wacom_intuos_inout(wacom_wac);
- 	if (result)
- 		return result - 1;
- 
- 	/* process general packets */
--	result = wacom_intuos_general(wacom);
-+	result = wacom_intuos_general(wacom_wac);
- 	if (result)
- 		return result - 1;
+ 	usb_autopm_put_interface(dev->intf);
  
 -- 
 2.53.0
