@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026742;
-	b=jXbbqxHgyamHJlmJKJ1XBmqkHIhkK2fI9Yz6msL18s3Ba0qOCUXT8CqUWiNuGOc7h5TT
-	 ibPvX7nXc2bTifFa81R6GExCX9ksv5ULshDvJh3WvKver6y0uhDpNrUJGZytzfFN3509o
-	 K/FEQk8z0ZHFjv8rilP6sNA+4BplYZ3AC9SGkaQMXSPUQIuKw0oFjQohITyLu+QR9E/jx
-	 PZ5Km8NJKl7aNIWON8vbXcQfkerNsnzTwmmsj7yMKUhTNrcMx6CQgL5ARAXvuM4hOGBJS
-	 j9zbc5l3zEyuTF0izXt7GcKCVAyw1y51IwSbZx8J6UApHt9HVRzuVqeyeiWAcBvlxbQ==
+	t=1795026745;
+	b=UGnHRr5y9LGOx8ThQMNTjMVxlFVHInvcDQUJnBaXs++MNspYHDuWb7V0gjSTkc4wI/tN
+	 ZsH95r79ABKxR/NPk6b/i5tRz1nUCidlN4f3VwbHduJ77nWGkKtJpG51CvWsCZXJwwHpd
+	 KQ+fNgsRKd5rfTzyQetsWxi3eYvkNJVafm8Ofnjt+O9UahwBWVz9z9hCHIvo8mkDzY3aN
+	 gEctrusNCcSv2be9OuLOp5jb9xIplsIwKDHYCnPoDf6itg1xukYobPBbNJj+6PncR6HxP
+	 JxetAD96dhQhaTNb8ojTVRl2T2lKLXfp3SY9/QW6zqPBZPAEMgYZx/vmh7LlnT/yH/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026742;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026745;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XY54kvMCqz/ArX/mpuJoof7kRtcviLvnFyfRJeISt8I=;
-	b=EAaq/sK/agYYB4vRgiZbs3gCphfGZYfEB8fjMVQx3uy1SLjxIe+TMFhNVrEsUIwB8j45
-	 DgAm2xP4/nrgTkE14CeV1p7IsR+q4IP3NgF/QJnsaQBkbRwWvmKum8jOFJMgPWuTwwX9I
-	 5AcbgJ69E45WzNMsAafhit5FH/Q/o2WApgykTnV/Y3wxQmeOhT80VNGVV0GV2hp0iKVvc
-	 kBIRz7eU67Tq6dvAWIhBS/CivddEbGhzOnru4C+P3ImwLQASZvFiMqeYx1ONOAJNJN+VS
-	 Ku7aCdJQD1B7JMMuBYATtq4+/2j2wQrQV3lkVNbFZQHMRmWKe6cddOWDNuNDnv50Vow==
+	bh=frqyMQLvalnnxit4gP+jShQ1DmCi1BTO6trt3vdPLJg=;
+	b=4y6ErypCrtxJZAV9+mLZFOmuMJsCpjAap30OFPolE3dkQB9SRVa/24QBzXk2lOZbJgLW
+	 O0rJkxq75Rt55gzsIeLi+/h1alzqUk9PeqvAaVHTpy+TZ5b3CLu7lrpSqVp5DuuhMEd3H
+	 gJkMbfbO8zLB1EXheCKsQfoWeJNuRQww8QTP/obHcfB8+V7UlsAfJssOY/2n2d1a6F4pE
+	 eTKevLAS9YiP8rvi3dnlWTbU53CDnYl6yiN7P04f2M+H/zfOckrZ8OQ/TpW1hJ0Fk1H08
+	 d49XcOd10hFxx/viV4AAX9oN5nh5xmfb5uWj+cg41f33AH1tqhJ16r+088uSSo6RXaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=08GBJB9t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n5TZO5+T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F50606A31C;
-	Wed, 18 Nov 2026 18:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB76606A31C;
+	Wed, 18 Nov 2026 18:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=08GBJB9t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81721F000C4;
-	Wed, 18 Nov 2026 18:32:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n5TZO5+T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEAA71F000C4;
+	Wed, 18 Nov 2026 18:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026742;
-	bh=XY54kvMCqz/ArX/mpuJoof7kRtcviLvnFyfRJeISt8I=;
+	s=korg; t=1795026745;
+	bh=frqyMQLvalnnxit4gP+jShQ1DmCi1BTO6trt3vdPLJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=08GBJB9tCd0qEWMU/KggnwcGbBT+ivv6pNyGbX50L7Cj5IBN5fmFDQv/kmAPjgK8j
-	 DWA5PYUfLryfebfH+S9Rfa6eeZl+BF12U4sOlTepzwk66K4c8MGONeGB6RfopUfxxO
-	 eJek0qjOhkZb1hkBBDERvebOqRgB99+2dRHMYH6s=
+	b=n5TZO5+TkQRswTTlxDdjMVq3orvpF2YIowKaykUfv3t+kczxhHhORqHEGHnHOZetG
+	 vUDpTfp2CRO8tZyOlrc20yV1a3yXtanL+gM6fC8RGBuzqRf6apmKCwK+58XGl2mQ49
+	 mESDZt7HXBcCGaUZo9izdOJKZnSNoGnxCqVYiYUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cen Zhang <zzzccc427@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1542/2151] Bluetooth: MGMT: Reject quality report requests during unregister
-Date: Wed, 18 Nov 2026 15:54:37 +0100
-Message-ID: <20261118150218.040215998@linuxfoundation.org>
+Subject: [PATCH 6.18 1543/2151] Bluetooth: msft: Lock failed probe cleanup against feature readers
+Date: Wed, 18 Nov 2026 15:54:38 +0100
+Message-ID: <20261118150218.112417472@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,149 +70,186 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 213e7a99bea19e2f29f394321b86c792eec73a24 ]
+[ Upstream commit 21895f20fedc4504474bcb1022850b532ea4358e ]
 
-A quality report request must not call a driver callback after its
-module text has been released. hci_mgmt_cmd() holds an hci_dev reference
-through set_exp_feature(), but that reference only preserves the device
-allocation. set_quality_report_func() takes req_lock and invokes
-hdev->set_quality_report without checking HCI_UNREGISTER.
+The MSFT data must remain allocated while msft_get_features() reads
+its features. read_adv_mon_features() protects that access with
+hdev->lock, but msft_do_open() clears hdev->msft_data and frees the
+object without that lock when read_supported_features() fails.
 
-This is unsafe when a SET_EXP_FEATURE request for an Intel controller
-would change HCI_QUALITY_REPORT and is delayed before taking req_lock
-while the controller is removed. With btintel_pcie and btintel built as
-modules and no other btintel dependents, the following order is
-possible:
+After a successful probe, the data survives a normal close. A later
+open can fail the probe while a management feature request is running.
+hci_mgmt_cmd() permits requests during HCI_INIT, and the opener's
+hdev->req_lock does not serialize the management reader:
 
-  Management request                Removal and module unload
-  ------------------                -------------------------
-  hci_mgmt_cmd(): retain hdev
-                                    hci_unregister_dev():
-                                      set HCI_UNREGISTER
-                                      remove hdev from lookup
-                                      close under req_lock
-                                      release req_lock
-                                    btintel_pcie_remove(): return
-                                    unload btintel_pcie, then btintel
-  set_quality_report_func():
-    take req_lock
-    call hdev->set_quality_report
+  Management feature request            HCI open
+                                        hold hdev->req_lock
+                                        msft_do_open()
+  hold hdev->lock
+  msft_get_features(): save msft
+                                        read_supported_features() fails
+                                        hdev->msft_data = NULL
+                                        kfree(msft)
+  read msft->features
+  release hdev->lock                     release hdev->req_lock
 
-When the request resumes after btintel unload, the indirect call targets
-released module text and can cause an instruction-fetch page fault. The
-close operation serializes with a running callback but does not prevent
-a delayed management handler from invoking it afterwards.
+The saved pointer then refers to freed memory, causing a use-after-free
+read. Advertisement reporting through mgmt_device_found() also reads
+the features with hdev->lock held.
 
-Check HCI_UNREGISTER immediately after acquiring the existing req_lock
-and return MGMT_STATUS_INVALID_INDEX via the common unlock path. If
-unregister passed its close section first, the request now rejects the
-removed controller before accessing the callback. If the request passes
-the check first, hci_dev_do_close() must wait for req_lock until the
-callback has returned, so unregister cannot finish before the use.
+Take hdev->lock around clearing and freeing msft_data in the failure
+branch. An existing feature reader finishes before the free, while a
+reader starting after cleanup sees NULL. Keep the synchronous probe
+outside this critical section, following the existing req_lock to
+hdev->lock ordering.
 
-Oops report as below:
+KASAN report as below:
 
-    BUG: unable to handle page fault for address: ffffffffc0408e10
-    #PF: supervisor instruction fetch in kernel mode
-    #PF: error_code(0x0010) - not-present page
-    PGD 80a9067 P4D 80a9067 PUD 80ab067 PMD 0
-    Oops: Oops: 0010 [#1] SMP KASAN NOPTI
-    CPU: 1 UID: 0 PID: 439 Comm: btmgmt Tainted: G           O        7.2.0-rc6-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
-    Tainted: [O]=OOT_MODULE
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    RIP: 0010:0xffffffffc0408e10
-    Code: Unable to access opcode bytes at 0xffffffffc0408de6.
-    RSP: 0018:ffff888110927838 EFLAGS: 00010293
-    RAX: 0000000000000000 RBX: 1ffff11022124f0c RCX: ffffffff85b1a1b6
-    RDX: ffff888117511d00 RSI: 0000000000000001 RDI: ffff888117598000
-    RBP: ffff888110927950 R08: 0000000000000001 R09: 0000000000000001
-    R10: ffffffff893d3057 R11: ffff888117511d00 R12: ffff888117598000
-    R13: 0000000000000001 R14: ffffffffc0408e10 R15: ffff888117599970
-    FS:  00007f15453f2040(0000) GS:ffff8881fd852000(0000) knlGS:0000000000000000
-    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    CR2: ffffffffc0408de6 CR3: 000000010b832005 CR4: 0000000000770ef0
-    PKRU: 55555554
+    ==================================================================
+    BUG: KASAN: slab-use-after-free in msft_monitor_supported+0xa9/0xb0
+    Read of size 8 at addr ffff88811573ee00 by task mgmt-read-adv-m/532
+
+        CPU: 2 UID: 0 PID: 532 Comm: mgmt-read-adv-m Not tainted
+    7.2.0-rc6-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
+        Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps
+    fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
     Call Trace:
      <TASK>
-     ? set_quality_report_func+0x232/0x660
-     ? __pfx_set_quality_report_func+0x10/0x10
-     ? pmbd_gate_maybe+0x47/0x60
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? msft_monitor_supported+0xa9/0xb0
      ? srso_alias_return_thunk+0x5/0xfbef5
-     ? pmbd_probe_hit_cookie+0xe7/0x1c0
+     ? __virt_addr_valid+0x20d/0x410
+     ? msft_monitor_supported+0xa9/0xb0
+     kasan_report+0xe0/0x110
+     ? msft_monitor_supported+0xa9/0xb0
+     msft_monitor_supported+0xa9/0xb0
+     read_adv_mon_features+0xdf/0x640
+     ? trace_hardirqs_on+0x18/0x160
      ? srso_alias_return_thunk+0x5/0xfbef5
-     ? pmbd_probe_hit_cookie+0xee/0x1c0
-     set_exp_feature+0xf7/0x260
-     ? set_exp_feature+0xf7/0x260
-     ? hci_sock_sendmsg+0x12b2/0x2400
+     ? __pfx_read_adv_mon_features+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? do_raw_read_unlock+0x49/0xe0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? _raw_read_unlock+0x23/0x40
+     hci_sock_sendmsg+0x12b5/0x2270
      ? __pfx_hci_sock_sendmsg+0x10/0x10
      ? srso_alias_return_thunk+0x5/0xfbef5
      ? selinux_socket_sendmsg+0x160/0x280
-     ? sock_write_iter+0x4c0/0x550
+     __sys_sendto+0x425/0x470
      ? __pfx_hci_sock_sendmsg+0x10/0x10
-     ? __pfx_sock_write_iter+0x10/0x10
-     ? __file_has_perm+0x25e/0x420
-     ? __pfx___file_has_perm+0x10/0x10
-     ? do_iter_readv_writev+0x59c/0x860
-     ? __pfx_do_iter_readv_writev+0x10/0x10
+     ? __pfx___sys_sendto+0x10/0x10
      ? srso_alias_return_thunk+0x5/0xfbef5
-     ? security_file_permission+0x26/0x80
-     ? vfs_writev+0x30e/0xc10
-     ? __pfx_vfs_writev+0x10/0x10
-     ? __pfx_do_epoll_wait+0x10/0x10
-     ? __pfx_do_epoll_ctl+0x10/0x10
-     ? do_writev+0x241/0x2f0
      ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_writev+0x241/0x2f0
-     ? __pfx_do_writev+0x10/0x10
-     ? irqentry_exit+0xbe/0x820
-     ? do_syscall_64+0x115/0x6a0
-     ? entry_SYSCALL_64_after_hwframe+0x77/0x7f
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __sys_setsockopt+0x119/0x180
+     __x64_sys_sendto+0xe5/0x1c0
+     ? lockdep_hardirqs_on_prepare+0xea/0x1a0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? trace_hardirqs_on+0x18/0x160
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    RIP: 0033:0x7f9ceb04a687
+        Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48
+    83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b>
+    c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
+    RSP: 002b:00007ffe6ab96a70 EFLAGS: 00000202 ORIG_RAX: 000000000000002c
+    RAX: ffffffffffffffda RBX: 00007f9ceafb8780 RCX: 00007f9ceb04a687
+    RDX: 0000000000000006 RSI: 00007ffe6ab96aea RDI: 0000000000000003
+    RBP: 0000000000000002 R08: 0000000000000000 R09: 0000000000000000
+    R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000003
+    R13: 00007ffe6ab96d50 R14: 00007f9ceb1f6000 R15: 00005625e427dd68
      </TASK>
-    Modules linked in: [last unloaded: btintel(O)]
-    CR2: ffffffffc0408e10
-    ---[ end trace 0000000000000000 ]---
-    RIP: 0010:0xffffffffc0408e10
-    Code: Unable to access opcode bytes at 0xffffffffc0408de6.
-    RSP: 0018:ffff888110927838 EFLAGS: 00010293
-    RAX: 0000000000000000 RBX: 1ffff11022124f0c RCX: ffffffff85b1a1b6
-    RDX: ffff888117511d00 RSI: 0000000000000001 RDI: ffff888117598000
-    RBP: ffff888110927950 R08: 0000000000000001 R09: 0000000000000001
-    R10: ffffffff893d3057 R11: ffff888117511d00 R12: ffff888117598000
-    R13: 0000000000000001 R14: ffffffffc0408e10 R15: ffff888117599970
-    FS:  00007f15453f2040(0000) GS:ffff8881fd852000(0000) knlGS:0000000000000000
-    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    CR2: ffffffffc0408de6 CR3: 000000010b832005 CR4: 0000000000770ef0
-    PKRU: 55555554
-    Kernel panic - not syncing: Fatal exception
-    Kernel Offset: disabled
-    Rebooting in 1 seconds..
 
-Fixes: ae7d925b5c04 ("Bluetooth: Support the quality report events")
+    Allocated by task 506:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_cache_noprof+0x251/0x610
+     msft_register+0x54/0x260
+     hci_register_dev+0x6b7/0xc80
+     __vhci_create_device+0x330/0x840
+     vhci_write+0x287/0x440
+     vfs_write+0x637/0x1010
+     ksys_write+0x111/0x200
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    Freed by task 529:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kfree+0x307/0x580
+     msft_do_open+0x604/0x9e0
+     hci_dev_open_sync+0x94a/0x2110
+     hci_dev_do_open+0x2f/0xb0
+     hci_dev_open+0x17d/0x300
+     hci_sock_ioctl+0x3c6/0x710
+     sock_do_ioctl+0x120/0x2b0
+     sock_ioctl+0x41b/0x670
+     __x64_sys_ioctl+0x163/0x1d0
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    The buggy address belongs to the object at ffff88811573ee00
+     which belongs to the cache kmalloc-256 of size 256
+    The buggy address is located 0 bytes inside of
+     freed 256-byte region [ffff88811573ee00, ffff88811573ef00)
+
+    The buggy address belongs to the physical page:
+        page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0
+    pfn:0x11573e
+    head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+    flags: 0x200000000000040(head|node=0|zone=2)
+    page_type: f5(slab)
+        raw: 0200000000000040 ffff888100042b40 dead000000000100
+    dead000000000122
+        raw: 0000000000000000 0000000000100010 00000000f5000000
+    0000000000000000
+        head: 0200000000000040 ffff888100042b40 dead000000000100
+    dead000000000122
+        head: 0000000000000000 0000000000100010 00000000f5000000
+    0000000000000000
+        head: 0200000000000001 ffffffffffffff81 00000000ffffffff
+    00000000ffffffff
+        head: 0000000000000000 0000000000000000 00000000ffffffff
+    0000000000000000
+    page dumped because: kasan: bad access detected
+
+    Memory state around the buggy address:
+     ffff88811573ed00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+     ffff88811573ed80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+    >ffff88811573ee00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                       ^
+     ffff88811573ee80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+     ffff88811573ef00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+    ==================================================================
+
+Fixes: 5031ffcc79b8 ("Bluetooth: Keep MSFT ext info throughout a hci_dev's life cycle")
 Assisted-by: LLM
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/bluetooth/msft.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index d6cc5092534c6..5058fa2ed9a9b 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -4901,6 +4901,13 @@ static int set_quality_report_func(struct sock *sk, struct hci_dev *hdev,
+diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
+index e1b779014dde9..1879a6771b7c6 100644
+--- a/net/bluetooth/msft.c
++++ b/net/bluetooth/msft.c
+@@ -654,8 +654,10 @@ void msft_do_open(struct hci_dev *hdev)
+ 	msft->features = 0;
  
- 	hci_req_sync_lock(hdev);
- 
-+	if (hci_dev_test_flag(hdev, HCI_UNREGISTER)) {
-+		err = mgmt_cmd_status(sk, hdev->id,
-+				      MGMT_OP_SET_EXP_FEATURE,
-+				      MGMT_STATUS_INVALID_INDEX);
-+		goto unlock_quality_report;
-+	}
-+
- 	val = !!cp->param[0];
- 	changed = (val != hci_dev_test_flag(hdev, HCI_QUALITY_REPORT));
+ 	if (!read_supported_features(hdev, msft)) {
++		hci_dev_lock(hdev);
+ 		hdev->msft_data = NULL;
+ 		kfree(msft);
++		hci_dev_unlock(hdev);
+ 		return;
+ 	}
  
 -- 
 2.53.0
