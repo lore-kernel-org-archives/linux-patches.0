@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026518;
-	b=g3nWzuTLrH7z+Hdou44Po6NTOQ+sDRwuLBczpoKJqhQd0uM7B3YpiV9h+IMJDsXMdbI6
-	 W27FroXNdg7wUqijow90fiP1ddX4Yr1gSnmaXXskvvH2Thdy1bwcwtaYy1Hjzp0v966dk
-	 1CFFlX1Z2hUP5bGDAYwAk9GVbt7JleXjm3hnxL/kuUNJP7ntchEMZyujxo8RSWJVOk+bf
-	 T2N64W3jlrpDsREh/E4roDb2jkEbzslcVSPYGP2YH4587BlaJw15n7iqyhwE3eaG/fQYO
-	 EX+neBE4dxsPIrFmk+ooPAud3hAMu6PT1+Fjj4wyOLSfhzoK3ZNdA8K4elGcAzrhnkQ==
+	t=1795026521;
+	b=FPtn6bvgJsINiYDPC3U4AbsVwgGN7KxYO/jP7NF34NTeq9aMDpp4fykrVKaLjOAsIrS4
+	 03K4etCq35vTHd5ezlJHdFsR3Zb803aM6UjT8yGUFmVTGODDFnHIc1J1+WkvuTnxv8q8C
+	 WzaKp/q7usbnAYEPwx15WC1qZkshjt+FABbaDsBeE2fQDPJ/YiEi1w305zgbuwYwti7/F
+	 duSp7o1/rDrY6QTv/nYxe3Yb7ZmV7/D+H2Fc+E7UobuJu978L+Z8OM40ODUdcLbiC3y+X
+	 7v4qnQhUMhu0TF9rGZOiQFzEwrjKsXOvk9/LeTr+czJceH4QGZkP7Jpxd7cUrdvuqqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026518;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026521;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tF9eW1uUIpLfDBmoIsW9wVB8EOICxoHTR0HUqscSF1k=;
-	b=ok0hS9ULBL1bxKuyASNQHpNc1EqAXa3zFvuleEfFkq7RGIBmfRCRaxJnidye9Z6YxviD
-	 ZgES/8IUx/lDXzQRRRBjZ80S0b4g4I4G7sFJcheUkVfb2lj+cpmEpZerSnJElBUhd+4Jg
-	 W+VIPBNr62pGdVsGy9Y4AtvJlEsBJBi1hrrfz7cKPcBG662K0SOeUO9X8419aDp46j2PT
-	 sMApzwpG2O1NaUeI0Wn+KQ1nceVJuRr94pqwJpMvHhKeYmTbp+yFH34Y88GZGmoFJ/Po5
-	 71IajJInIGgv+tVMOGHkd6rtW5qCpFtnCDXzZn32xb7O1fcbN9F9BmsmvaZN+PhYDqg==
+	bh=HzOuP1lutZIK1ReEOnlpJQYBFX5yAG1uqBJHNEma1QY=;
+	b=PsKVRHgX7oDEUxVULFenQRVUmwNsf0/mZ9bdaKJHZ8v7G6r8As7D9lcYRQlv0jUbA/QU
+	 yw5ZSTdkYLeLZFwQt0Jkp0j6UybnLOBEGK6cJ33b/00AgLknAaf+j3rskpisrb6W89Ptc
+	 m14raT2J1K9nQ7kWAwrw7cRlQvJc2yWgqGAQlS8uG7flEXf5rSNDRP/O5z86+H8hC5tNd
+	 v/jMh4WIGtlQFYiZJnXfAmZgqiQynn2k82DqsfQDxRi3a+eMKz4XwgNO30Tfx2rAjDHmP
+	 uYTJ+nds2nCFjF0Sa2DL5PPNk/U1R5KhvntT5CIvNwueIT8Deao1fNuRLcgpV5F52cQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LOMswJTO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gMezlPdD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5905606A320;
-	Wed, 18 Nov 2026 18:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACE2606A31C;
+	Wed, 18 Nov 2026 18:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LOMswJTO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0708C1F000C4;
-	Wed, 18 Nov 2026 18:28:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gMezlPdD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89561F000C4;
+	Wed, 18 Nov 2026 18:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026518;
-	bh=tF9eW1uUIpLfDBmoIsW9wVB8EOICxoHTR0HUqscSF1k=;
+	s=korg; t=1795026521;
+	bh=HzOuP1lutZIK1ReEOnlpJQYBFX5yAG1uqBJHNEma1QY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LOMswJTOmEcOi6CjZF1t0wraJyrPVei3Dax6Xvl02y/HIx/0ARyhrMjRx7N01WWlH
-	 N3k3osa14jMPKXc0WJka3niHPiRaTjdEZRA4R6tPWFKXBp3z8rIqlb/knrDxWArNwo
-	 B/2MR9KFc4dvtEPwC0gHx/wW2Fjo0ZFMOc7BoAtQ=
+	b=gMezlPdD/iNX3d+SPx5xkuz4ea91f/eIIkg0c0JvT4YOaLoFHI7k8OCNN292Ggf9g
+	 cJniuxeBSZC6xT052QtoRLU65pZ/K9bof6pilOHeLTYWduYotv0aYoQIiybuhL5Oki
+	 aQlHZYyBj3E6u56P/jClWT6FJoRJ6TVXkVF/kIgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1462/2151] sh: sh7785lcr: Register the PCA9564 controller as I2C bus 0
-Date: Wed, 18 Nov 2026 15:53:17 +0100
-Message-ID: <20261118150215.162814104@linuxfoundation.org>
+Subject: [PATCH 6.18 1463/2151] spi: spi-qpic-snand: skip BBM copy on regular raw reads
+Date: Wed, 18 Nov 2026 15:53:18 +0100
+Message-ID: <20261118150215.196842849@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,49 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 3b8386ffc0c33b6b5a6a8e64e1487c1adec57dc9 ]
+[ Upstream commit 2da46f1e9b980a38bc6afd417322ca4963725e16 ]
 
-Before commit 44454baa7ca7 ("i2c: Dynamically assign adapter id if it
-wasn't explictly specified"), a negative ID was replaced by zero, and
-I2C bus zero was instantiated. Since that commit, a negative ID is passed
-verbatim, instantiating an I2C bus with a dynamic number. As SH boards
-still use i2c_register_board_info(0, ...) to register I2C devices, they
-rely on the I2C bus being bus zero.
+Trying to read the raw flash contents with nanddump, the second byte
+of the OOB area contains 0xff instead of the real data in the flash.
+This happens because the qcom_spi_read_last_cw() function unconditionally
+copies the bad block marker into the second byte of the output buffer.
 
-The SH7785LCR is the only SH board whose I2C adapter has a negative ID
-and its PCA9564 controller becomes i2c-1, causing registration of the
-R2025S/D RTC to fail and hwclock not detecting /dev/rtc0.
+Add a new flag to the controller's private data structure, and set it
+when only the first two bytes of the OOB area being read in raw mode.
+Also change the bad block copying code to run only when the flag is set.
 
-Set the platform device ID to 0 so that the adapter is registered as
-bus zero again.
+This ensures that the SPI NAND framework still can read the BBM bytes,
+but on regular raw read, the output does not contain the duplicated
+marker byte.
 
-Fixes: 44454baa7ca7 ("i2c: Dynamically assign adapter id if it wasn't explictly specified")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Assisted-by: LLM
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Fixes: 7304d1909080 ("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://patch.msgid.link/20261005-qpic-snand-skip-bbm-copy-v1-1-04f6aeda4044@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/boards/board-sh7785lcr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-qpic-snand.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/arch/sh/boards/board-sh7785lcr.c b/arch/sh/boards/board-sh7785lcr.c
-index 25c4968f0d8b0..b93423df582f7 100644
---- a/arch/sh/boards/board-sh7785lcr.c
-+++ b/arch/sh/boards/board-sh7785lcr.c
-@@ -256,7 +256,7 @@ static struct i2c_pca9564_pf_platform_data i2c_platform_data = {
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index 9ac01f53c83b8..4b2e192457938 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -111,6 +111,7 @@ struct qpic_spi_nand {
+ 	__le32 addr2;
+ 	__le32 cmd;
+ 	u32 num_cw;
++	bool bbm_read;
+ 	bool oob_rw;
+ 	bool page_rw;
+ 	bool raw_rw;
+@@ -433,6 +434,16 @@ static int qcom_spi_ecc_prepare_io_req_pipelined(struct nand_device *nand,
+ 	if (req->mode == MTD_OPS_RAW)
+ 		snandc->qspi->raw_rw = true;
  
- static struct platform_device i2c_device = {
- 	.name		= "i2c-pca-platform",
--	.id		= -1,
-+	.id		= 0,
- 	.dev		= {
- 		.platform_data	= &i2c_platform_data,
- 	},
++	/*
++	 * Try to detect when the SPI NAND framework reads the first
++	 * two bytes of the OOB area searching for bad block marker
++	 * bytes.
++	 */
++	snandc->qspi->bbm_read = req->mode == MTD_OPS_RAW &&
++				 req->type == NAND_PAGE_READ &&
++				 req->dataoffs == 0 && req->datalen == 0 &&
++				 req->ooboffs == 0 && req->ooblen == 2;
++
+ 	return 0;
+ }
+ 
+@@ -637,7 +648,8 @@ static int qcom_spi_read_last_cw(struct qcom_nand_controller *snandc,
+ 	 * This can be removed once single-byte bad block marker support
+ 	 * gets implemented in the SPINAND code.
+ 	 */
+-	snandc->data_buffer[bbpos + 1] = snandc->data_buffer[bbpos];
++	if (snandc->qspi->bbm_read)
++		snandc->data_buffer[bbpos + 1] = snandc->data_buffer[bbpos];
+ 
+ 	memcpy(op->data.buf.in, snandc->data_buffer + bbpos, op->data.nbytes);
+ 
 -- 
 2.53.0
 
