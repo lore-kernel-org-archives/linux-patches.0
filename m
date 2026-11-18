@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057171;
-	b=G59g5/L4apJ3tpedprDJN1RRIxXMNDYK64n/aOyoAz93YnymoZeLChBnfRQ3ICuT7PHV
-	 UcMYcyFxV0zAriT15KzeGHBoI5pbylTPoA8/tAJ2BEEKlv+/6WycHRV4TgW+7tnULI/ls
-	 Nm5p56vmzCDcB5QVvxlpimwrUh0MQ3taGa/+xgv00cR/ojdgTxL8Dcsa0CQs9zZa0Gkg6
-	 rnzP/GWvXcEd4/MlWNSH5tePXHH1Pbcy+6aoMZTjk9Ua5aEnieNHxzNhC7hoVOOFXFsGF
-	 NA5RhIozwItUVxhAHlk+B6/rFWBn9h0PLANEwa5+cd1yEkeaJzvVOdgNuuPPYThlK5Q==
+	t=1795057173;
+	b=WXuTiUPpCB0/JnEuKsnG+Us15pFpmJJLGE4RIAF9gKwM2O3GtLwPjYgK/gwVnpiu/GcM
+	 DISpYZvoCLICogN696RRjZVUVqSHL/chrIkFctlwpXRhQ66+Syo9AlbvTRYU96DQyW6Gc
+	 DbxOugiNiEYSj1y/sv55qiapJhfVfm6Ec2Qz+6S90p62XOl4oHQAzkYKjSKd1BoiMdmlo
+	 Z+dQLB/BkhG9/BMG0h8SMaHjdV/ALyqaCUSuTrvgXXZ6OQGuuAtwZHnOq/0/I4hRAciUH
+	 IZktlQUb2hw7GOSR0XaY8HqNSxCzhLn4xE0QzL7pztRIM1A1XA9ZvLBzzyzNOIn+iWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057171;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057173;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qRAkSu4SILTKXOExc7CKd9f6r3YmumwozV5KXLpT78M=;
-	b=TGg87/wJVTjn35eka09D584k7clGatzbaOjH7iwgkNI2uExVw+ikU3tdJocGZKgllrQq
-	 J+sKvmboQVB4XcPu3Fks2mUWGW82y822tBUJa5WJF19dn4RDvVL2Rvh+OgaBfYJwSf8RV
-	 /uE5y7S5q+EoOuuYc45aNjbuCRGc0eJpygfAOpQC7X/AJgecgEbIevbyed7yuoEhtHlkT
-	 qJd3w7Vc58POnrynMC2v9FyV6Qa2znKwMIT4X6DM3N/+6RSc6v1UympujeqsedXFzQ7DC
-	 XZ8Ly35PtTyHyGCt1EdLXacXror2eNh6C5aubYMtU6Brx44lUgZxHAO+jriwSg6Pk0A==
+	bh=YfiYv0Xv166F3b8QAGLXFM2Xg1uFOTTSvqywLQWaXEo=;
+	b=IS/GtGkwkATfTlwZa5XUx/G5cgYMyJRIIzG7HC2nMaKHLOL5TqrK9XOQ8jFdh0pdpGbJ
+	 1JqPkqjl0S+upyFEU5cwEW/QJYEBwtBMFZbdy1bHrTUBNEebZqcyFByQfym+U6SsNgGnW
+	 r/4mejD//CTy1ouExT1D2h2bzBA/4AI5U6Cz2bc/MYdBCe0mX23oZw21xaZ02745bvJa9
+	 n+2gztrQddQ5KF8L5PYr/JCUR1rti43eBusFbcQfy24DP53Mg++dAzv18lgMgXdmqBLRS
+	 jPkiHrKbYvWQRRk4nniX7SEJwZVzwN+uAhZnfgxIsHT9lmkVATOPcOR+2aW1J5W6pWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X4g3LmXu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HAuh56mP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBE4606A333;
-	Thu, 19 Nov 2026 02:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE248606A31C;
+	Thu, 19 Nov 2026 02:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X4g3LmXu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F5CC1F000C6;
-	Thu, 19 Nov 2026 02:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HAuh56mP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F56A1F000C5;
+	Thu, 19 Nov 2026 02:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057171;
-	bh=qRAkSu4SILTKXOExc7CKd9f6r3YmumwozV5KXLpT78M=;
+	s=korg; t=1795057173;
+	bh=YfiYv0Xv166F3b8QAGLXFM2Xg1uFOTTSvqywLQWaXEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X4g3LmXuBGi6psvLQ3mvfmqFfvJGRSaiHaJeOu6X9mYbh0xx5scwa/ysJ6TFnE80U
-	 KVEqDaHKu1ZWcOAf7qRUZmK1V61EJeSwe1bvYQw/swoqqylOwD6SQGka73QMsa3hd9
-	 xjo4iyajVFj68VaOON74Zv3dF5Yh72kly2aF9H3c=
+	b=HAuh56mPaAoY6mAl6BqM5aXHjJuqWy1MFuAKrJmU7mmHdeq0JFsHRWYCzRvXkJES8
+	 q6nwfLE3E40834aEoho93f6ZSPSKcBV5LlLdI4JQ9aQkZq7YI1f3hdfwabtFR0dfKr
+	 gmoVD0PQe3WnBay1w3rFVQ+bPR7JF7BILsO1cBHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zizhi Wo <wozizhi@huawei.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0035/1848] ASoC: hdac_hdmi: Fix resource cleanup on probe failure
-Date: Wed, 18 Nov 2026 15:34:33 +0100
-Message-ID: <20261118145912.619054373@linuxfoundation.org>
+Subject: [PATCH 5.10 0036/1848] fat: reject name longer than NAME_MAX in msdos_format_name()
+Date: Wed, 18 Nov 2026 15:34:34 +0100
+Message-ID: <20261118145912.647090190@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,69 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 785903b7770f19ea05b8a76081dff691c56fa771 ]
+[ Upstream commit 9d7ed813ee5ff0d469bd99630828ed6fdef4e8da ]
 
-hdac_hdmi_dev_probe() gets the HDA link before allocating and
-initializing the HDMI codec private data. Several later error
-paths return directly without dropping the link reference,
-leaving the hlink refcount unbalanced.
+msdos_format_name() performs no upper-bound check on the input name length.
+It silently truncates an arbitrarily long name into the 8.3 form (11 bytes)
+and returns success. The subsequent fat_scan() then matches only against
+these 11 truncated bytes, so it returns an inode as long as any entry with
+the same 8.3 name exists on disk.
 
-Release the link reference on probe failures. Also turn display
-power off if the failure happens after it has been enabled.
+For example, passing a 300-byte name of all 'A's returns 0 with res set to
+"AAAAAAAA" (8 'A's + 3 padding spaces), reporting success for a name far
+longer than NAME_MAX.
 
-This issue was dicussed in:
-https://lore.kernel.org/all/s5h1s0esk8o.wl-tiwai@suse.de/
-I think the paths fixed here are probe failure paths: the device
-has not been fully initialized or bound, and runtime PM suspend
-cannot be relied on to balance the reference taken during probe.
+As a result, when a user calls open() on a path component longer than
+NAME_MAX (255) bytes, the VFS only enforces PATH_MAX, not the length of an
+individual component. The dentry keeps the original long name but gets an
+inode attached and becomes positive. Later in vfs_open() -> fsnotify_open()
+-> fanotify_info_copy_name() triggers WARN_ON_ONCE(), and the event is
+reported to userspace with an empty name.
 
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20260622151127.1198196-1-haoxiang_li2024@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+vfat is not affected, as create goes through xlate_to_uni() which refuses
+names longer than FAT_LFN_LEN.
+
+Fix this by checking 'len > NAME_MAX' at the entry of msdos_format_name(),
+the single entry point for all msdos name handling, aligning with the
+NAME_MAX check that xfs/9p/ceph/simple_lookup() perform at lookup.
+
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Link: https://patch.msgid.link/20260629130943.3671939-1-wozizhi@huaweicloud.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hdmi.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/fat/namei_msdos.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
-index 76e06c88f2796..8ee569f015883 100644
---- a/sound/soc/codecs/hdac_hdmi.c
-+++ b/sound/soc/codecs/hdac_hdmi.c
-@@ -2161,8 +2161,10 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
- 	snd_hdac_ext_bus_link_get(hdev->bus, hlink);
+diff --git a/fs/fat/namei_msdos.c b/fs/fat/namei_msdos.c
+index 63a323be9179d..966386b01da15 100644
+--- a/fs/fat/namei_msdos.c
++++ b/fs/fat/namei_msdos.c
+@@ -29,6 +29,9 @@ static int msdos_format_name(const unsigned char *name, int len,
+ 	unsigned char c;
+ 	int space;
  
- 	hdmi_priv = devm_kzalloc(&hdev->dev, sizeof(*hdmi_priv), GFP_KERNEL);
--	if (hdmi_priv == NULL)
-+	if (hdmi_priv == NULL) {
-+		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
- 		return -ENOMEM;
-+	}
- 
- 	snd_hdac_register_chmap_ops(hdev, &hdmi_priv->chmap);
- 	hdmi_priv->chmap.ops.get_chmap = hdac_hdmi_get_chmap;
-@@ -2171,8 +2173,10 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
- 	hdmi_priv->chmap.ops.get_spk_alloc = hdac_hdmi_get_spk_alloc;
- 	hdmi_priv->hdev = hdev;
- 
--	if (!hdac_id)
-+	if (!hdac_id) {
-+		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
- 		return -ENODEV;
-+	}
- 
- 	if (hdac_id->driver_data)
- 		hdmi_priv->drv_data =
-@@ -2197,6 +2201,8 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
- 	if (ret < 0) {
- 		dev_err(&hdev->dev,
- 			"Failed in parse and map nid with err: %d\n", ret);
-+		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
-+		snd_hdac_display_power(hdev->bus, hdev->addr, false);
- 		return ret;
- 	}
- 	snd_hdac_refresh_widgets(hdev);
++	if (len > NAME_MAX)
++		return -ENAMETOOLONG;
++
+ 	if (name[0] == '.') {	/* dotfile because . and .. already done */
+ 		if (opts->dotsOK) {
+ 			/* Get rid of dot - test for it elsewhere */
 -- 
 2.53.0
 
