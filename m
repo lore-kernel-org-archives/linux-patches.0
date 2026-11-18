@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033155;
-	b=fgG6grFZT2y3EUgAzSWYwTvj5xD2FFjQpLOTz1cqX1ecsX2HBNtvBEfzjIhpgMkaPszb
-	 zcyZQrETgR1u9JKStI/xA31ZP2F4Q371rHLpOprq/VCbNgSB9z8l1IAh9PK05ld7tihkh
-	 ThnIPrRH2o7Ykp+vD9Eu05RB0Yp+GiPcej/4wiHhCQz/ScJ+pwjKHzLCEtKx9vgovfp6b
-	 vkLWsl5GkdZhOzFBlOsV8oR8d4/SdexeRA5waMEucYtjiBam8k8NmOAcYEMO2P2KGZofI
-	 WcZh6yBnjExykEeKQ+Xyb96gJVEzX77ebZ7yWundwJETVrwLS1ht7GcO1z2/4RD363g==
+	t=1795033158;
+	b=rARjaau1tpJn8ajj64NkJjriD9J0Zgr3HOzibrNW5jy6qY9UpJzfG8KxduC8dqhKY7yg
+	 Eu3zFN1p9rBUlSZGup8myM0Tw1/eKmnlFUJu2ZSYNB0Zobb2SlNovCIOb6+0oNDIimsoH
+	 Sa7avDkC+fqMbH2/zkM5OgFS0ZIYxtOP7C0eALrb6fqUqXFx7WWjeY1ULxptWQIuv0MjQ
+	 JGe2slLAT/2Re/ArQtPnrP9JwAgVGn4vPNHbB7pwN5coGXGkmzQ/JxMT2r+pmO7uR50ZY
+	 r7n97ZRpJ7iDHnp2Q62R3j/MKgrsboQDgvv4abOHbJi4F/mPPOSXVcDTVETKyFBjFrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033155;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033158;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hUugiSjmVccuk8SEKvqtwDiA5MZ9wCJQxOXlfsuwRSQ=;
-	b=X6T3oCz3lAQEqKHXTyMAUXWWA0eBp4CAffOyqhNEapUX7wV9fJXZa4kvVQgZhV72wczh
-	 ns3e8H8Ou9em6e+oUWrbx9XDmbWQGzcU1Df8odEcCkEKTrH/dqZNSpBOyTyk4yaHt5TxY
-	 mBH8J2h8dCKRpYbsggCTVA1HBWE7nwDWMLpGhDcb0di69s90KQCHJcsET1qViUwKHBkBp
-	 h+nhrm4FdiYiX4R49s+F3zQLQrZh8iDkHtKm33kZ5eQ0lk/SqNJgvEJFi42c7HefiQu4O
-	 dW9Uk3H75ePsCZqJJVtONgwxDNBaG/CO2uMutZ6xfvoLEJngu2jkeN10SiSRizV/txQ==
+	bh=6woVAOQQq6l2eVGdtvEVwb/GXyJHigmpl3TiVK7Lixg=;
+	b=F/FLdUki7nYk5jwMF0xN82nkIsJg7nxDmzMQbKG5z9wJJT0NUk7gyyiyy4h6q73GRGE+
+	 1sPtmOK3XU8cvd0sUXHF3EOHbg2vU4T39vk5v4RmoA1iJMiMNCBRbHR4DwKKOX+7WNRYT
+	 YHEpV30aeg73GkTluXhsZbw4FW7AAgXQLo0iaZ4zV9E04rU7SbeF3obdNQgqW5t1WMnRD
+	 t1gutxg1H9TCtvk3vy0PvZZXN40lJO46Xa3QX2nX7MYODnOAtjXFwMm7HZK1zRKQK+272
+	 nQGoMiDU/XPICSrAlamAGEYPwhJ0Xm8na3ALtkh+repE0p71txiqpMEJ0jCe/79/7hQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K8fK6a3s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nifhVqnu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B41606A31C;
-	Wed, 18 Nov 2026 20:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5FE606A334;
+	Wed, 18 Nov 2026 20:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K8fK6a3s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785661F000C9;
-	Wed, 18 Nov 2026 20:19:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nifhVqnu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D211F000C8;
+	Wed, 18 Nov 2026 20:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033155;
-	bh=hUugiSjmVccuk8SEKvqtwDiA5MZ9wCJQxOXlfsuwRSQ=;
+	s=korg; t=1795033157;
+	bh=6woVAOQQq6l2eVGdtvEVwb/GXyJHigmpl3TiVK7Lixg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K8fK6a3stBFerxyoq2qAZj25MxrV19gHSfdulXF/0PMhT/3RW3X61DVLsllF55hyj
-	 jYgulQoNRoWDSjuotsr8eE3ZmCTACxg0mIIc/FKan5tuymQl2DS0e3HBzETEMPrmc7
-	 SyW6MblMiJg7ajMYwM237V/xLSmLK4TQxi/GIxMU=
+	b=nifhVqnuk2bvusBSIPvNuAo6yXp3ec/m+H2BlxOpC2kvKfZRRgyqr9eTqTPvXs3GM
+	 7/Ern3JAzDrLbUToAGk2G+wMvX8FTDBx+mgaGaTs9yNHtxn5Qnv/T2oATtmVtha5RD
+	 a3dmKNVIw3/DzhJfFAPR8jSr6m3Ponj8fSGMOd94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
+	Dominik Maier <dmnk@google.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1667/1756] fork: Let nobody keep a task that may not come to life
-Date: Wed, 18 Nov 2026 16:03:14 +0100
-Message-ID: <20261118150116.072285175@linuxfoundation.org>
+Subject: [PATCH 6.12 1668/1756] xattr: always invoke cap_convert_nscap() for security.capability writes
+Date: Wed, 18 Nov 2026 16:03:15 +0100
+Message-ID: <20261118150116.107692975@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,70 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Dominik Maier <dmnk@google.com>
 
-[ Upstream commit 5cf0881344cfa0a3b558107741884d8f43269d7b ]
+[ Upstream commit 0f4a9e682f7fa5becc3af7204606d9bf4780e425 ]
 
-dup_task_struct() sets rcu_users to 2.  From then on bpf_task_acquire()
-hands out references to the new task, which BPF programs see as a trusted
-pointer long before it is sure to live: in the task_alloc LSM hook and in
-ops.init_task() of sched_ext.
+Commit 8db6c34f1dbc ("Introduce v3 namespaced file capabilities") changed
+cap_inode_setxattr() to return 0 unconditionally for XATTR_NAME_CAPS
+("security.capability") and moved capability validation into
+cap_convert_nscap(), but placed the call inside the "if (size)" block in
+setxattr(). Commit 7c03e2cda4a5 ("vfs: move cap_convert_nscap() call into
+vfs_setxattr()") preserved that "size &&" condition in vfs_setxattr():
 
-If copy_process() fails later on, it undoes what it has done and frees
-the task without a look at the count.  A program that has stored its
-reference in a map is left with a pointer to freed memory:
+	if (size && strcmp(name, XATTR_NAME_CAPS) == 0) {
+		error = cap_convert_nscap(idmap, dentry, &value, size);
+		...
+	}
 
-  BUG: KASAN: slab-use-after-free in put_task_struct_rcu_user+0x22/0x90
+For security.* extended attributes, xattr_permission() skips
+inode_permission(MAY_WRITE) and leaves permission checks to the security
+module, while cap_inode_setxattr() returns 0 for XATTR_NAME_CAPS assuming
+cap_convert_nscap() has already validated the write. Because
+__vfs_setxattr() treats size == 0 as an empty attribute write (setting
+value = "") rather than a removal, calling setxattr(2) on
+"security.capability" with size == 0 bypasses cap_convert_nscap() and
+allows an unprivileged caller without CAP_SETFCAP or write permission on
+the target inode to write a 0-byte security.capability xattr (or
+overwrite an existing one).
 
-The program is loaded by the administrator, but any user can make a fork
-fail, for example at the pids.max of a cgroup.
+When that binary is subsequently executed, get_vfs_caps_from_disk() reads
+the 0-byte security.capability xattr and fails the
+size < sizeof(magic_etc) check with -EINVAL, causing execve(2) to fail
+with -EINVAL.
 
-Honouring the count would not do: the task would stay behind with its mm,
-files and credentials freed.  Leave rcu_users at zero until copy_process()
-cannot fail any more.  bpf_task_acquire() returns NULL until then, which
-its callers have to be prepared for, and which they get for init_task,
-whose count has always been zero.  The other users of rcu_users deal with
-tasks that have run.
+Always invoke cap_convert_nscap() when strcmp(name, XATTR_NAME_CAPS) == 0
+regardless of size, so that 0-byte writes hit the existing !*ivalue /
+!validheader() checks in cap_convert_nscap() and are rejected with
+-EINVAL.
 
-Fixes: 90660309b0c7 ("bpf: Add kfuncs for storing struct task_struct * as a kptr")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Fixes: 8db6c34f1dbc ("Introduce v3 namespaced file capabilities")
+Signed-off-by: Dominik Maier <dmnk@google.com>
+Link: https://patch.msgid.link/20261022232119.2537209-1-dmnk@google.com
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/fork.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/xattr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/fork.c b/kernel/fork.c
-index f3ba045debeda..1f1bb6e341f07 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -1162,10 +1162,10 @@ static struct task_struct *dup_task_struct(struct task_struct *orig, int node)
- 	dup_user_cpus_ptr(tsk, orig, node);
+diff --git a/fs/xattr.c b/fs/xattr.c
+index 23b9e4b1f3dd8..72a49e0a2ec1e 100644
+--- a/fs/xattr.c
++++ b/fs/xattr.c
+@@ -309,7 +309,7 @@ vfs_setxattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	const void  *orig_value = value;
+ 	int error;
  
- 	/*
--	 * One for the user space visible state that goes away when reaped.
--	 * One for the scheduler.
-+	 * Nobody can keep the task while copy_process() may still fail, which
-+	 * frees it no matter what.
- 	 */
--	refcount_set(&tsk->rcu_users, 2);
-+	refcount_set(&tsk->rcu_users, 0);
- 	/* One for the rcu users */
- 	refcount_set(&tsk->usage, 1);
- #ifdef CONFIG_BLK_DEV_IO_TRACE
-@@ -2584,6 +2584,12 @@ __latent_entropy struct task_struct *copy_process(
- 
- 	/* No more failure paths after this point. */
- 
-+	/*
-+	 * One for the user space visible state that goes away when reaped.
-+	 * One for the scheduler.
-+	 */
-+	refcount_set(&p->rcu_users, 2);
-+
- 	/*
- 	 * Copy seccomp details explicitly here, in case they were changed
- 	 * before holding sighand lock.
+-	if (size && strcmp(name, XATTR_NAME_CAPS) == 0) {
++	if (strcmp(name, XATTR_NAME_CAPS) == 0) {
+ 		error = cap_convert_nscap(idmap, dentry, &value, size);
+ 		if (error < 0)
+ 			return error;
 -- 
 2.53.0
 
