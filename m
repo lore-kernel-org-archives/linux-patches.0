@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051834;
-	b=dPaJ3LERUr8y9ZmV1OZX+3hA0bsqc2VoVbUm3jrMTSIqI9P7KzU8PNSz3QoANnwE5U4+
-	 Ms/vHNm8/9xlH+TiGYRENUEScDLxncqHzyjYwd7H0/sWiDxRvMVRanMWAGhepQF5PVo3p
-	 T6YOcxkqNMOjy2rWUbUYkVJedbIuzw3cHLV2CbIbJz6uW4ryE2XJIuXanWk9Jf+MSyU0B
-	 ZaRH7aSTpdmIgsEjKh5CEiUksHQ5xXqpXg29TCjyDUUtgExHl/Ws8+mCnogLOX/g3poAG
-	 pFkpdpsVW8HlND+IVbwG9PxzmuUaIjh4YNpi3LcBsWfAHx68+HiO0NiRXHXTAP2NdLA==
+	t=1795051836;
+	b=V6Y5ii7Dqhijb0K9tl3TgAX2g4xAZJyhUKNanBBG5htjHKnjaLLojX3s3+bvjexmNGGC
+	 YZm9LJTTu9HTiT42sbB/A3JSaTM9mWN5FwE52BNNqm15bNn081d1JaVd84INKjEdcSaUf
+	 FVkj9ehbQ/2BFQxUY5mm9t9mU69qxV5teTjGeyX0sKc0O0mNjyLstRHJX2unzrX1F1N4m
+	 6s4QPKolkSYM1eyeILnVoHW8zFN5+6ACkADiudhtExLayEKq1ToLlvBD8ckVRgOgP59po
+	 pGdFQjAO2+0IbC7pqQFMkC9FyxfHPHmbDThaYN3zpj9z1IhAVdP/7tJZr1+xlMvi9nQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051834;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051836;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SyFUSRnYL0Opoyidoo/v4pODsgaeH2aYPEjYmbzZJAs=;
-	b=OqOcKg9mvw1+LCGyf8gJCwdjVuRSs8jlwQ/bHqX2vNCTWJD9g/53vQ2HGXN/Ig2DdqZf
-	 NOZN8SGSCrU8cQDek10BrBO93USssftq5wBJmkdW+xrAzLFlfFaJDX9wbMpywXwAtR6+m
-	 pDTLQUQLbMALXXnm7WM5iucLIPb5+lLwPf6AM/u04IhdRTyGpHn2wrFom7TQKDI+wJ47f
-	 9sgTmnbNqI+k1CmGoKDlKXe5URtmiGOuT+wF3uWi6fs/lEmu1WkziauyVozZ+EdFQW03D
-	 11uVAXe8iVyexLN6xtqQ02PBeGmRcRlMOgiUjMIzc5S/B5WkHtfWVW59NOke+2mQ1Gg==
+	bh=rans7TCY7RiHbly9aZyFWNVkXkFL2AMwfQ5boG7vXMc=;
+	b=QXRXjuUC/kSfu412kT6X2B+xf4XAJGNrDR++9g48jDuuy3UPAAXNozlPZLq4egvF11/I
+	 MHH1kXbU+yDAPWME4fv3mopbLKXS1Fc5ry4g7QWtKotv0hKoo4EfVTBax8LACFOGjIQ9z
+	 mFaUXX6mpxRuc4ABtDCZret1II16xI6ZcU0lEIPsyLos10rU3kSGnPkWvRXOMrKYUtkvX
+	 xmwFtB2sercB6N0av1uUh92bnozW3+XRiGMoaovqdsSwbYLcl6OgiHRJP67AFRzhXab5a
+	 rAkPv3CcKUzFyWKhHTuQ5vSPneI1u9cB0Vu0VpeqMXbW2pWRPpqJPiLKc+D1A1L1kBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d0IOGTox;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XEID6peD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E413D606A31C;
-	Thu, 19 Nov 2026 01:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED6B606A31C;
+	Thu, 19 Nov 2026 01:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d0IOGTox
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 046F81F000C4;
-	Thu, 19 Nov 2026 01:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XEID6peD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13F41F000C4;
+	Thu, 19 Nov 2026 01:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051833;
-	bh=SyFUSRnYL0Opoyidoo/v4pODsgaeH2aYPEjYmbzZJAs=;
+	s=korg; t=1795051836;
+	bh=rans7TCY7RiHbly9aZyFWNVkXkFL2AMwfQ5boG7vXMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d0IOGToxAfKZqWeHKBgaRPAPfutui12UJhT+ZelR6aklWeNi/AnmpghpsepVe0/2M
-	 JsxUCQ3BvX89UTqKyiivdLeNT++URhsaMkvUTPgjoeRPoog8wUuOpHCbAPiZx7X9kI
-	 hGQARmJVkBS1yuhsHCr8xUcswMyMTkwpyeJS/BDc=
+	b=XEID6peDlmQrkR/QVG0oblObLy6HTzKAjg/WbNT/qlhPWD6/2uWgxjbZ+ksTGg1uK
+	 jlX5t0feOkhxEwLb5p0+WVyTcPUh6DWH7n6Oha7C8WZN5n0WIy8DtfHI7q0UzLg7EN
+	 6N7iXZ2WqT83kFO3ujZ/2xv93yGGHtK2HSrepjNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 5.15 0348/2214] NFSD: copy SETXATTR data from all XDR buffer segments
-Date: Wed, 18 Nov 2026 15:33:44 +0100
-Message-ID: <20261118150024.628385115@linuxfoundation.org>
+	syzbot+302b9b575a06733ff60c@syzkaller.appspotmail.com,
+	Rik van Riel <riel@surriel.com>,
+	Sean Young <sean@mess.org>
+Subject: [PATCH 5.15 0313/2214] media: redrat3: fix UAF in probe error path leaving rc device registered
+Date: Wed, 18 Nov 2026 15:33:09 +0100
+Message-ID: <20261118150022.665647152@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,70 +68,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Rik van Riel <riel@surriel.com>
 
-commit b01319947c69b0e3ea0fcd4b675eb892f9cad8a0 upstream.
+commit af452b9e01331b5338a1e5141624f17607239207 upstream.
 
-nfsd4_vbuf_from_vector() manually copies the head followed by whole
-pages starting at offset zero. This assumes that all remaining data
-starts at the beginning of the page array and that no data is stored
-in the tail.
+redrat3 stores its device name and phys path inside the main rr3
+structure, and the rc device's device_name and input_phys point into
+rr3. When the RC device is registered, it keeps those pointers.
 
-However, nfsd4_decode_setxattr() passes an xdr_buf returned by
-xdr_stream_subsegment(). Such a sub-buffer can have a nonzero
-page_base and can span its page and tail segments. Ignoring that
-layout can copy the wrong bytes into the value passed to
-vfs_setxattr().
+  KASAN: slab-use-after-free in string_nocheck lib/vsprintf.c:648
+  Read of size 1 at addr ffff888051fda758 by task udevd/7464
+  Call Trace:
+   string_nocheck lib/vsprintf.c:648 [inline]
+   string+0x216/0x2d0 lib/vsprintf.c:730
+   vsnprintf+0x74a/0xef0 lib/vsprintf.c:2945
+   vscnprintf+0x41/0x90 lib/vsprintf.c:3014
+   sysfs_emit+0x10e/0x180 fs/sysfs/file.c:761
+   input_dev_show_name+0x58/0x70 drivers/input/input.c:1282
 
-Use read_bytes_from_xdr_buf(), which observes the complete xdr_buf
-layout.
+  Allocated by task 10:
+   redrat3_dev_probe+0x477/0x2570 drivers/media/rc/redrat3.c:1023
+  Freed by task 10:
+   redrat3_delete drivers/media/rc/redrat3.c:466 [inline]
+   redrat3_dev_probe+0x1bf4/0x2570 drivers/media/rc/redrat3.c:1124
 
-Fixes: c1346a1216ab ("NFSD: Replace the internals of the READ_BUF() macro")
+Syzkaller triggers this via usb probing. It probes the RedRat3 USB
+interface, which calls redrat3_dev_probe() in redrat3.c. That function
+allocates rr3, then builds an rc device whose name points into rr3 via
+redrat3_init_rc_dev() in redrat3.c, and registers it with
+rc_register_device().
+
+When the detector enable fails after the RC device is registered, the
+probe jumps to the led_free path. That path unregisters the LED but does
+not unregister the RC device before freeing rr3 via redrat3_delete() in
+redrat3.c. The RC device still holds device_name = rr3->name which is now
+freed.
+
+Later udevd reads /sys/.../input device name via sysfs_emit() in file.c,
+which calls input_dev_show_name() in input.c, which emits dev->name which
+is the freed rr3->name.
+
+When the detector enable fails after the RC device is registered, the
+error path must not leave the RC device registered. Make the probe error
+path clean up the same way redrat3_dev_disconnect() does.
+
+This change should be safe because the RC device is fully registered at
+this point and its teardown via rc_unregister_device() is protected by
+the input device mutex, and rr3 is still alive during unregister so
+device_name remains valid until after unregister. The URBs are killed
+before rc_free, so no completion can run after rc is freed. No new lock
+ordering is introduced.
+
+Reported-by: syzbot+302b9b575a06733ff60c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=302b9b575a06733ff60c
+Link: https://lore.kernel.org/all/6a74a76d.ec7c9571.3ac9bb.0056.GAE@google.com/
+Fixes: 2154be651b90 ("[media] redrat3: new rc-core IR transceiver device driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260915160022.3105295-1-qwe.aldo@gmail.com
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Assisted-by: Hermes:muse-spark-1.2 syzkaller
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |   19 +++----------------
- 1 file changed, 3 insertions(+), 16 deletions(-)
+ drivers/media/rc/redrat3.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -2117,10 +2117,8 @@ static __be32
- nfsd4_vbuf_from_vector(struct nfsd4_compoundargs *argp, struct xdr_buf *xdr,
- 		       char **bufp, u32 buflen)
- {
--	struct page **pages = xdr->pages;
- 	struct kvec *head = xdr->head;
--	char *tmp, *dp;
--	u32 len;
-+	char *tmp;
- 
- 	if (buflen <= head->iov_len) {
- 		/*
-@@ -2135,19 +2133,8 @@ nfsd4_vbuf_from_vector(struct nfsd4_comp
- 	if (tmp == NULL)
- 		return nfserr_jukebox;
- 
--	dp = tmp;
--	memcpy(dp, head->iov_base, head->iov_len);
--	buflen -= head->iov_len;
--	dp += head->iov_len;
--
--	while (buflen > 0) {
--		len = min_t(u32, buflen, PAGE_SIZE);
--		memcpy(dp, page_address(*pages), len);
--
--		buflen -= len;
--		dp += len;
--		pages++;
--	}
-+	if (read_bytes_from_xdr_buf(xdr, 0, tmp, buflen))
-+		return nfserr_bad_xdr;
- 
- 	*bufp = tmp;
+--- a/drivers/media/rc/redrat3.c
++++ b/drivers/media/rc/redrat3.c
+@@ -977,6 +977,7 @@ static int redrat3_dev_probe(struct usb_
+ 	struct device *dev = &intf->dev;
+ 	struct usb_host_interface *uhi;
+ 	struct redrat3_dev *rr3;
++	struct rc_dev *rc;
+ 	struct usb_endpoint_descriptor *ep;
+ 	struct usb_endpoint_descriptor *ep_narrow = NULL;
+ 	struct usb_endpoint_descriptor *ep_wide = NULL;
+@@ -1121,9 +1122,12 @@ static int redrat3_dev_probe(struct usb_
  	return 0;
+ 
+ led_free:
++	rc_unregister_device(rr3->rc);
+ 	led_classdev_unregister(&rr3->led);
+ redrat_free:
++	rc = rr3->rc;
+ 	redrat3_delete(rr3, rr3->udev);
++	rc_free_device(rc);
+ 
+ no_endpoints:
+ 	return retval;
 
 
