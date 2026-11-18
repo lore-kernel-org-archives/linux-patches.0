@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055851;
-	b=LY2qYJO18oLSWoQwNZaY9grScbof6szvAq6BJyYxen2sKHiOAIWe53vTfiK9HPlx1Ayv
-	 DEg/IJ+rn6oYpjVTjnzE4Nl8zE2kek4bpHv9pHU5IrDsbl/kye3TrgU+QLEZtBeO0WrLo
-	 g/BlkPVfOpFcozXeJF4LQEFtP/CYZF+J6luwVxTST4jJkYIbaY7bLRRJE1EDDMKD1SmLx
-	 MNuLeW5wYVzBjT6zrzJbS1ZJo95ncuQIPdxBuqA3x9G0DorL2Hk+qbca2eWqGPbwvuHTo
-	 moJdJanNZFYaT6tkpgM7WdaV+b2INV+fN0PKbTPbGb0GKT+FJsTPeG6ewHir/GOdO3g==
+	t=1795055854;
+	b=Kj1UtRIiwOdFSQJZpBCD8vfXU/yqIVmmFARmcFNN2W/vfQL9naAWJtIvFAmgASWLAko1
+	 zib2RGQClUmzHrUIzdtZFHP9JdO1tSU5tjk77bz/JLAN7JX8iRsbQbz4TfKbjZL35FW19
+	 gRVfe/kLqXsBprauRxcuNqo7oqYFslDKZ5H45FMHP1IeT8KXu1u+sovzY+Tm0I+C6wVAz
+	 zhdIV7bsSgS7JkY0rBMdpfaM0XdbQ05xGMaodFHu1jHp5mY119xz1H88G76IdC8rujFFD
+	 ZDzAw5gOabefxpjiBQUGbpXlgzGwQwOseas+0iLU/eXKwpfPh0Yqo6FIX2naa0hl6xg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055851;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055854;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uEgPenXdRavSEw7/ViFZ39l5QqlBNxVHwppjwFcDaWI=;
-	b=Z+5dit6WFQ1oof7GDIj/1WgjKvnzD/NXrsO8ihcUSycr3DNwNBHjHJaEyDTRu4SEQjYi
-	 tGtGy9Z3bK8vPlIsDiXQmzDTvzQyIgaafXAlQVO0UFWnXfM3xBXo0xwPZWIF/yb1pZcpx
-	 BbW2/e63giVIOxvy4Ogwi54TeuKPqMu0IUAxx14u7Dn8mqszeIeCjZD8LAr4mdl3ii2Ig
-	 nHbrB7ockTVMNGNQAlIveQ2994E8sN2IWTOO6EZuY4LJtexkaDvq0W+1Gl2huyeOth78O
-	 kngCWYxJvJBksAhQCyIWcN8cnRsvuxCLOBY0RiKqfMTMVQkKeY+vxX8b9t+vmoDxDWQ==
+	bh=mlJdfo70KyG6B/qyQOoeeXyHwbjYQQG+sf8A6Vk/6+g=;
+	b=kyUzULGdZvgj0+T/mYBvFoQBFOhaxij51lOvouBCvm5nSw1LaUmxoHDBzCquIh5uRr6O
+	 SlX1Crkw4guEJiE3zNb7fYe346XwWajuoBC3KR07QcS2+7wQs/zKaDjBhF61eYE1YjFWB
+	 KxmYZtCCxKHnBhypLrs+8NaObRFg0WmufeAff+V0OZ4LSCRM2P71JjhGRLBEPUidofdSk
+	 iL19iKAhhGnuCraTru3Hmtn0O4UylNWzwI0pYA6BTROgECDWefr1YGOLC3Bn1HcpmPL/U
+	 +rgqPCXgJyRXMcse5W6nrAEmkp3bh6Hd4fnBeGw7S5j0uv5TDY7L1UK2sMEl0MadHPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jSb0Z7Fr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RsToACy3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16E2606A335;
-	Thu, 19 Nov 2026 02:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71CCE606A31C;
+	Thu, 19 Nov 2026 02:37:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jSb0Z7Fr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 233761F000C7;
-	Thu, 19 Nov 2026 02:37:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RsToACy3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7831F000C5;
+	Thu, 19 Nov 2026 02:37:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055851;
-	bh=uEgPenXdRavSEw7/ViFZ39l5QqlBNxVHwppjwFcDaWI=;
+	s=korg; t=1795055854;
+	bh=mlJdfo70KyG6B/qyQOoeeXyHwbjYQQG+sf8A6Vk/6+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jSb0Z7Fr6cZRskEek8psgmE45hO+18owckNDwsUng+3kWnJT0sKfApKuGQ2F5NSQA
-	 7kMn4rJ+lgscQIMaSCb2wMK8GOGhTrz7YPd/FM/MfD2pzHzkVuclnffKvWevmHB33I
-	 Puo6pnubDfKYxeWaNKVJFYnemFHmcea/zOBhqiCg=
+	b=RsToACy3Nkoki+wNevIiKceaDCuG1029AP7IezR79+PwOD3EJHFKTgAEjjjPsYBa1
+	 p9S/kHhvC+5tjmhU3UjsOj/kGrQ5ETTPTKFCR0Vm5mjW35JS9EdtenifzP7ViXFwC8
+	 sV+4owSf51icfgLo65lDBdfKmbmPs+KYrBCCcc8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Jonas Rebmann <jre@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+c388db0347b7fc88fa7a@syzkaller.appspotmail.com,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1780/2214] spi: spi-sun4i: sun4i_spi_fill_fifo(): always apply A10 FIFO fill level workaround
-Date: Wed, 18 Nov 2026 15:57:36 +0100
-Message-ID: <20261118150122.698876418@linuxfoundation.org>
+Subject: [PATCH 5.15 1781/2214] nilfs2: fix link count underflow when removing corrupted directory
+Date: Wed, 18 Nov 2026 15:57:37 +0100
+Message-ID: <20261118150122.736489214@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,93 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit ee109e2bbea0986f6ad34bfbcba90fce36f17538 ]
+[ Upstream commit 814f5a53b4724798795b15690ff3d1c1d9ac1eb6 ]
 
-In commit 6d9fe44bd73d ("spi: sun4i: fix FIFO limit"), the TX FIFO is
-filled max to SUN4I_FIFO_DEPTH - 1 (= 63) bytes to work around
-timeouts observed on A10s SoCs.
+When removing an empty directory with a corrupted link count (e.g.,
+i_nlink is 1 due to filesystem corruption), nilfs_rmdir() calls
+drop_nlink() via nilfs_do_unlink() and then calls drop_nlink() again
+on the directory inode.  This second call causes an underflow of
+i_nlink, triggering a kernel WARNING in drop_nlink().
 
-Commit 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO
-size") added support for transfers larger than the FIFO size. This
-commit did not consider the A10 workaround (limit the TX FIFO fill
-size to SUN4I_FIFO_DEPTH - 1 (= 63) bytes) for refilling the TX FIFO
-in the IRQ handler.
+Fix this issue by using clear_nlink() instead of drop_nlink() to
+finalize the link count reset for the target directory in nilfs_rmdir().
+Additionally, log a warning message when i_nlink is not 2 before
+removing an empty directory to notify about the link count inconsistency.
 
-To apply the workaround independent from where sun4i_spi_fill_fifo()
-is called, remove the length argument from the function and directly
-take the max fill level of SUN4I_FIFO_DEPTH - 1 into account when
-calculating the free space in the FIFO.
-
-Due to the lack of HW this patch has not been tested on an A10 SoC,
-but on an A20 SoC. It was not possible to reproduce the timeout on the
-A20.
-
-Fixes: 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO size")
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
-Link: https://patch.msgid.link/20260914-spi-sun4i-fixes-v3-2-9fe919d5cecf@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: syzbot+c388db0347b7fc88fa7a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c388db0347b7fc88fa7a
+Fixes: d25006523d0b ("nilfs2: pathname operations")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sun4i.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ fs/nilfs2/namei.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
-index 3e2ed10510398..de7155928ad8d 100644
---- a/drivers/spi/spi-sun4i.c
-+++ b/drivers/spi/spi-sun4i.c
-@@ -142,15 +142,21 @@ static inline void sun4i_spi_drain_fifo(struct sun4i_spi *sspi, int len)
- 	}
- }
+diff --git a/fs/nilfs2/namei.c b/fs/nilfs2/namei.c
+index a81c24630e263..6f181e1780e07 100644
+--- a/fs/nilfs2/namei.c
++++ b/fs/nilfs2/namei.c
+@@ -341,10 +341,16 @@ static int nilfs_rmdir(struct inode *dir, struct dentry *dentry)
  
--static inline void sun4i_spi_fill_fifo(struct sun4i_spi *sspi, int len)
-+static inline void sun4i_spi_fill_fifo(struct sun4i_spi *sspi)
- {
- 	u32 cnt;
-+	int len;
- 	u8 byte;
- 
--	/* See how much data we can fit */
--	cnt = SUN4I_FIFO_DEPTH - sun4i_spi_get_tx_fifo_count(sspi);
-+	/*
-+	 * See how much data we can fit
-+	 *
-+	 * Filling the FIFO fully causes timeout for some reason
-+	 * at least on spi2 on A10s
-+	 */
-+	cnt = SUN4I_FIFO_DEPTH - 1 - sun4i_spi_get_tx_fifo_count(sspi);
- 
--	len = min3(len, (int)cnt, sspi->len);
-+	len = min_t(int, cnt, sspi->len);
- 
- 	while (len--) {
- 		byte = sspi->tx_buf ? *sspi->tx_buf++ : 0;
-@@ -310,12 +316,8 @@ static int sun4i_spi_transfer_one(struct spi_master *master,
- 	sun4i_spi_write(sspi, SUN4I_BURST_CNT_REG, SUN4I_BURST_CNT(tfr->len));
- 	sun4i_spi_write(sspi, SUN4I_XMIT_CNT_REG, SUN4I_XMIT_CNT(tx_len));
- 
--	/*
--	 * Fill the TX FIFO
--	 * Filling the FIFO fully causes timeout for some reason
--	 * at least on spi2 on A10s
--	 */
--	sun4i_spi_fill_fifo(sspi, SUN4I_FIFO_DEPTH - 1);
-+	/* Fill the TX FIFO */
-+	sun4i_spi_fill_fifo(sspi);
- 
- 	/* Enable the interrupts */
- 	sun4i_spi_enable_interrupt(sspi, SUN4I_INT_CTL_TC |
-@@ -372,7 +374,7 @@ static irqreturn_t sun4i_spi_handler(int irq, void *dev_id)
- 
- 	/* Transmit FIFO 3/4 empty */
- 	if (status & SUN4I_INT_CTL_TF_E34) {
--		sun4i_spi_fill_fifo(sspi, SUN4I_FIFO_DEPTH);
-+		sun4i_spi_fill_fifo(sspi);
- 
- 		if (!sspi->len)
- 			/* nothing left to transmit */
+ 	err = -ENOTEMPTY;
+ 	if (nilfs_empty_dir(inode)) {
++		if (unlikely(inode->i_nlink != 2))
++			nilfs_warn(dir->i_sb,
++				"inconsistent empty directory link count %u (ino=%llu)",
++				inode->i_nlink,
++				(unsigned long long)inode->i_ino);
++
+ 		err = nilfs_do_unlink(dir, dentry);
+ 		if (!err) {
+ 			inode->i_size = 0;
+-			drop_nlink(inode);
++			clear_nlink(inode);
+ 			nilfs_mark_inode_dirty(inode);
+ 			drop_nlink(dir);
+ 			nilfs_mark_inode_dirty(dir);
 -- 
 2.53.0
 
