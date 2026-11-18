@@ -1,53 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037574;
-	b=nucu84AkXx5ptyVkKIEWiNf1Lz7FHeIeug+Rg5/1SUQ5c5hnc6DbT9K9gopekHZhIUql
-	 dsAAt1rGENd+TEhHceimnVNUbaRWQbDbRiEaBn+i/FPHG7c6Lx3YNpHex7KUReiJbhEMz
-	 JbIMOGXye+GOA6QHZhIU9Rm8aoQi891ZV3upBDrVDI2u7fhNNhQcJCoP2y9eg6wanOeQj
-	 dENtJLNLKtB+fqwGOseWuzPzfFA/ru/DnvHo4PvksK0gipht/mMGjj4dq7hp5/tlwAwjm
-	 OnQ5Esh1mQQipr/d7zQWRX/Q0ntbHrCQQs6fMd6NVGT6cqgiefEIQm/kd0xkm9ag2fQ==
+	t=1795037577;
+	b=ryMNBctDjWkEagmlT4C6oA5xF90JMBPvx2oaoJd4Knf/geXGJ7au/lMYk8NU260cDy/S
+	 ao/N39PCI/N1jG8vkDWn7mrja4IaVqv43D2/Un2uyliNc9CSqYaZCuvq3NCbtKecwgV8A
+	 G2Owp3LKHekhCFfSe9vSwkQ1j6RCxOCeRINewhNeeD7QLgXHizYXvjKizJIx5rqnRkc3i
+	 tjptrIQduerhrP7hTVd3YENKjmT9mk6hyIWfEb2fBeS/rKViDseQ8E/7KmIIvHKXWSVMt
+	 WvAQ2xHVVKfw8rKV7FdtMV1mgxSV9heH5lpBc2fBRqW+dp7/U5dxvuMO58Asp3JZKWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037574;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037577;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TWNtV43ShBZJ0dtn6N2Ix1+i0LoJ4nEzb0Iu6hM1Mhc=;
-	b=kYPTWkQ11DAxaAf+1pRK6uYB70kt0NKEBKYf+bF8E4PnoG2kWiGU2cH624qAuUvBpJak
-	 d11YGP447viJ++KA7eOatDAJDVrtGf8EQPgxyXTu1S0/b40DImzD0BfJLd6r+zSEnNVq5
-	 jV48R8zJEVYNFxRG+eVxkvTdkkqY3CBs+OLOom82Vlqd9nkrDNQLqInAzGqkTEIilAyHa
-	 tZBrN/4Pg7lojjapIt1rOoIovlCi5b3aUv1LrDYdv8j7qU8h5fj7dX5/oHjqKtcEvvlUM
-	 fpqReSf1fstv/5BE+CFi7/nNv/Mb/DflrQwqyz/ZdFxZx+FGtBcFouLY9GLCriDjanQ==
+	bh=pZIu/Qwfrf5XwUWkyTWEzosbonzDp3PRu0Zl8XTtyGo=;
+	b=ghYMo2tfVSpWUsNa5rxqdu6pqLy4wVZhHyquk0dKUDnMZaYZxLSwUt/X+90FMnPbGfMw
+	 vyEI2+DGECbc4wyhLt+VgpgD9ZB1nwbmGWx2oDI6cwhlIrHw+9p8x1farXJnk8yZ4Uuu2
+	 yuNEclQavfyulDw2lQyNnq2OwAZW9IEFxFhe8lvg2dBJ+y5Bb2VJnCpJo4RQVgHKnB01n
+	 yvUHgHq3ZfFhzx+nOWCkVM0o1+/3oFrQI/PBJ1WwJNFq6//MLVYqeKT18selcELnNcU3F
+	 YLD3piuyEwQVlBYgH8Q38F8SCe8Dv7ybR5S170UhAIrrJt7Bo6KCgB8ZKZswEKiOpig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IpfvaEIv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OnCnv4Wo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D606E606A31C;
-	Wed, 18 Nov 2026 21:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA4C8606A320;
+	Wed, 18 Nov 2026 21:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IpfvaEIv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 061531F000C4;
-	Wed, 18 Nov 2026 21:32:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OnCnv4Wo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBAD1F000C4;
+	Wed, 18 Nov 2026 21:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037574;
-	bh=TWNtV43ShBZJ0dtn6N2Ix1+i0LoJ4nEzb0Iu6hM1Mhc=;
+	s=korg; t=1795037577;
+	bh=pZIu/Qwfrf5XwUWkyTWEzosbonzDp3PRu0Zl8XTtyGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IpfvaEIvaZHF4VFEEfsIWdd9q1enWrvv0kHBzMJ77oB6aTRj7lG2elBGKI9XyMK9G
-	 8c8TrjmaC63R+S/AOSIGsBX08Wz8l3107y+V+fS1LpaQcv5SJMf11dsVBgGuufgXbh
-	 CceN11UQl3CWQIz/mPyGi7YJrlKy/0oQQKf51KK0=
+	b=OnCnv4Wop3CZ+eQ+QMspIXLZDt+2bIzLz64w2QpuGQF/+kF9iKyutvEIFf2YK9pLu
+	 58W46kXnZSg1PIzxeHz+TOGBHOuZCcZFVn8y44AxhU+pqDl3zqTzGlAcfZopL+dIqd
+	 ctyFSH9n+YRO2gsHOS+EI/ScUuXp1OX478BTUU1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Rik van Riel <riel@surriel.com>,
+	Qi Zheng <qi.zheng@linux.dev>,
+	Dev Jain <dev.jain@arm.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	Barry Song <baohua@kernel.org>,
 	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	SJ Park <sj@kernel.org>,
+	Baoquan He <baoquan.he@linux.dev>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1445/3318] mm/shmem: fix truncation of files containing only swapin-error markers
-Date: Wed, 18 Nov 2026 15:34:27 +0100
-Message-ID: <20261118150404.189341765@linuxfoundation.org>
+Subject: [PATCH 6.6 1446/3318] mm/mglru: dont use stack pointers when walking PUD and PMD tables
+Date: Wed, 18 Nov 2026 15:34:28 +0100
+Message-ID: <20261118150404.224943808@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,51 +81,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 59511d630a6942356ac4b6984797998a8f3a9017 ]
+[ Upstream commit 65a9bf08a3e4d6e58df211ed900c16bafb79b267 ]
 
-It might not be very common, but we can end up with shmem files that are
-composed only of swapin-error/poison markers.
+MGLRU passes stack copies of page-table entries in walk_pud_range() and
+walk_pmd_range() when walking to the next level. These copies can become
+stale when khugepaged or MADV_DONTNEED (CONFIG_PT_RECLAIM) removes a PTE
+table concurrently.
 
-Such markers are not counted in info->alloced. Consequently,
-shmem_setattr() can skip shmem_truncate_range(), leaving the markers
-behind.
+This pattern dates back to commit bd74fdaea146 ("mm: multi-gen LRU:
+support page table walks"). Likely, earlier locking masked the latent
+bug. Later changes exposed it: commit 1d65b771bc08 ("mm/khugepaged:
+retract_page_tables() without mmap or vma lock") allowed concurrent
+retraction, and commit cf4a65539c13 ("memcg-v1: no need for memcg locking
+for MGLRU") dropped the walker's outer RCU protection.
 
-Truncating the file to zero and growing it again will result in reads
-failing with -EIO instead of returning zeroes.
+The fix is simple, so just fix the original commit so we don't have to
+speculate. To fix it, pass the actual PMD/PUD pointers. This restores the
+RCU-protected lookup and validation against the live PMD. Note that the PUD
+handling is required as well to handle folded page tables correctly in all
+cases.
 
-Check whether the mapping contains entries, in addition to
-info->alloced, before skipping the truncation. Keep the info->alloced
-check so that shmem_recalc_inode(), called at the end of
-shmem_undo_range(), can fix up accounting after reclaim has emptied the
-mapping.
+Fix generated by an LLM and sent by Josef Bacik in private.
 
-Fixes: 6cec2b95dadf ("mm/shmem: fix infinite loop when swap in shmem error at swapoff time")
+[ david: handle walk_pud_range() as well, clarify+simplify description,
+         adjust Fixes: ]
+
+Fixes: bd74fdaea146 ("mm: multi-gen LRU: support page table walks")
 Cc: stable@vger.kernel.org
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Reviewed-by: Qi Zheng <qi.zheng@linux.dev>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Kairui Song <kasong@tencent.com>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
+Reviewed-by: Barry Song <baohua@kernel.org>
 Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-15-392fc715d8f6@kernel.org
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: SJ Park <sj@kernel.org>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-1-d6437171ecc3@kernel.org
+Reviewed-by: Baoquan He <baoquan.he@linux.dev>
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/vmscan.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 96c36c3d4a0f5..3a6192f5cc7d6 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -1232,7 +1232,8 @@ static int shmem_setattr(struct mnt_idmap *idmap,
- 			if (oldsize > holebegin)
- 				unmap_mapping_range(inode->i_mapping,
- 							holebegin, 0, 1);
--			if (info->alloced)
-+			/* Swapin-error markers are not counted in alloced. */
-+			if (info->alloced || !mapping_empty(inode->i_mapping))
- 				shmem_truncate_range(inode,
- 							newsize, (loff_t)-1);
- 			/* unmap again to remove racily COWed private pages */
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index d5ab35610ecdb..cbc2de77db3ed 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4212,7 +4212,7 @@ static void walk_pmd_range(pud_t *pud, unsigned long start, unsigned long end,
+ 
+ 		walk->mm_stats[MM_NONLEAF_FOUND]++;
+ 
+-		if (!walk_pte_range(&val, addr, next, args))
++		if (!walk_pte_range(pmd + i, addr, next, args))
+ 			continue;
+ 
+ 		walk->mm_stats[MM_NONLEAF_ADDED]++;
+@@ -4248,7 +4248,7 @@ static int walk_pud_range(p4d_t *p4d, unsigned long start, unsigned long end,
+ 		if (!pud_present(val) || WARN_ON_ONCE(pud_leaf(val)))
+ 			continue;
+ 
+-		walk_pmd_range(&val, addr, next, args);
++		walk_pmd_range(pud + i, addr, next, args);
+ 
+ 		if (need_resched() || walk->batched >= MAX_LRU_BATCH) {
+ 			end = (addr | ~PUD_MASK) + 1;
 -- 
 2.53.0
 
