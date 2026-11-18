@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016014;
-	b=c7RqoxAGzoX/rWjFCTrdWx4dx4KLKE7zUXFq600jK/uq6Z6H8Au1zaJc0WgAcIAh+27d
-	 DW4FnM9qA0OPBhRjr2enY8lY45Xi0nqmg4VIe85BaDvuUcS6xKtEFH7xEYolWZJh4Z8JC
-	 60AWFADLeCmjhuiofN/Im7Y9AgkqucSmrQRqcbQ0olZGXKOuZZkXBhqhxGRb+bGV+uDBS
-	 T7g62rxJw+Vi+AekbKNJ72NxkHC6nQ7zRBsGSTV+GgVfTLR8+vqt5kWfUVTtC4gOiNVvg
-	 fGlQ0onhWpBQVTBiWxYiS8i8dOObSLlToaPoluTp6gO7OQWmbBdl/kaP4DW82Zw6+Ow==
+	t=1795016016;
+	b=B3S/BX3MTX+TkMyc4r/70lqD0Pc87z5YIFVIXA4uae8S/vOvqS90ekCBz2btdtCDvWk7
+	 hEjCd+lI5x9seVmcubz4Cm9nXNYuCgzL7aEAgiOzG0WmwtHjSo6zdznr+IbrWUEe9S3SR
+	 uP08KbzAKPQ8jhtCUKMzmVfthcH2WEW4iljlwnuGbUsFXVzGCdp9KbvvmovzgyK6b1jVg
+	 0EwWmVSu3AJXaF/8zqpoVHx4wxjJTFXygxmffxCjdQY51c1Oz3jq/yFvSsY43BVAfcb7g
+	 Fi4OKsC+08+NogmXwizO0OSTOvq7fRVTu053HePw+5DparqWTTMLPayvF5ry64yMneQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016014;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016016;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9eeGA/+J5pAYZwjMQPMKku7RA3/RcvhUKWw7gbYxHgE=;
-	b=xqcZ+C2mipSpVfMEV57xlPQh+b9bzOLAajmD54SWGVr6pvNPR4+VgCdXkj28G2mjslbU
-	 SXpwB5yW4mBpYTr+ZCYLdICeRuvy2bs3l1wuKKm5z+LriBjHoqTCISOGXSf1zbpr0cVBD
-	 jNwIfeTu9U39n32qab00ug0VFmjbZnWMYOr+ImfctomG/8b68kF5Fhdy/QekUjq/z+c/+
-	 V93iNBRq4U5fTrkt6AueCzPWcGljQntBiwmlM3T9y7VAclBirMqYurm381lmFWY0vpTdt
-	 6B0g4oAfJy2MfvTq59f/tRJMehiscWg/v0Hdr9eUXIcfzkxtErqbVYoxAl2y0cHMiYw==
+	bh=Or620Ee53uqkti/03lYfQ1CES8tiP8mf1ZrVU8gTW8U=;
+	b=02X41nznFH7dqwD++i4VN4a4lTbOqyd6AQiP1C02CoF3X+FINA5YpnvzzWOrwtUZ44dc
+	 1rXuN9brYJNeCiGjn0GYx4mBo3uUCVFNWEwUIOhRooYBWMPsbR5Z2xHi1xUNuZ5EBwGTr
+	 p6/BD93El90mbFsGqh6z0FnpA60JW1LKerxe8BQQjhB1bIpqhVHkjS0OPvYoGabs/AULW
+	 5qcOc4IeqSwvD93bzfEqqU+KrRCc57q6b0nnyZ+dX8v61RlJlKAqU1vhcr5QQY1NvNWAW
+	 9ZZbe3R82hF6LatWyIflUryr6ePy3WnmHd5iQae1HYqrZgscp3I04PdmYqcoIqaCDBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q7ZDVZ72;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="g5/i/vqu";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23791606A32A;
-	Wed, 18 Nov 2026 15:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF05606A334;
+	Wed, 18 Nov 2026 15:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q7ZDVZ72
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC2B1F000C4;
-	Wed, 18 Nov 2026 15:33:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g5/i/vqu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1877A1F000C8;
+	Wed, 18 Nov 2026 15:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016013;
-	bh=9eeGA/+J5pAYZwjMQPMKku7RA3/RcvhUKWw7gbYxHgE=;
+	s=korg; t=1795016016;
+	bh=Or620Ee53uqkti/03lYfQ1CES8tiP8mf1ZrVU8gTW8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q7ZDVZ72dhPi2TN4p5vnU4n8FG9JRXRSXqszkqZvuach/mC2TZVqK7cY33AHvJEXq
-	 +zZ+36hknhjiyqUJ+2dI5KCbKXA09QqJYA1i2tnrZwy1fXvNrIwOWm8FJfOfFH1aPL
-	 Wvq7gSZHZ1GgOE/JNRfw0RR3dPqfK/skZnGhLcCc=
+	b=g5/i/vquEr2hJMhSIJdTHx0TXlX64DQmyVT6iBY9I3dZ4Ui/GQ8JrtwTiRONJ2Qr3
+	 fO6WW+PGGOY4mmu7VBaknQFkBFgyP/gnO3+dcRRbrrzlf2UcikaL8s6an+B4u71nqz
+	 ezZ1sHNOFOJ00SOpaJm/kbSflikZfkkWCG5BrH9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Li <roman.li@amd.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0376/2651] drm/amd/display: Exit IPS before connector detection on resume
-Date: Wed, 18 Nov 2026 15:26:56 +0100
-Message-ID: <20261118150301.372975853@linuxfoundation.org>
+Subject: [PATCH 7.3 0377/2651] regulator: ab8500: Fix AB8505 VANA voltage selectors
+Date: Wed, 18 Nov 2026 15:26:57 +0100
+Message-ID: <20261118150301.408473801@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,60 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fangzhi Zuo <jerry.zuo@amd.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 86420fe3093161971b4064e05be11ffff1df76aa ]
+[ Upstream commit dfdfda2a95843706428a9d95ab546cb10983e684 ]
 
-[Why & How]
-On resume, dm_resume() walks the connector list and, for each connector,
-calls dc_link_detect_connection_type() at the top of the loop iteration
-before the per-connector dc_exit_ips_for_hw_access() that sits in the
-detection branch. There is no dc_exit_ips_for_hw_access() before the loop,
-so the very first HW access relies on an earlier connector having already
-taken the display out of IPS.
+The AB8505 VANA voltage table assumes selector 0 represents 1.05 V
+and all eight selectors increase linearly. Selector 0 actually
+represents 1.2 V. Selectors 1 through 6 cover 1.05 V through
+1.175 V, and selector 7 represents 1.225 V.
 
-Commit d1d51519bc3b ("drm/amd/display: Skip eDP detection when no sink")
-skips the eDP connector when no panel is present. On a DCN3.5 APU whose
-eDP link has no sink, the eDP iteration - which used to bring the HW out
-of IPS first - is now skipped, so a downstream DP connector becomes the
-first one processed. Its initial DDC/AUX access then runs while the HW is
-still idle, the AUX transfers time out (-ETIMEDOUT), and the EDID read
-fails:
+Correct the table so each selector reports and programs the documented
+voltage.
 
-  [drm:dm_helpers_read_local_edid [amdgpu]] *ERROR* EDID err: 2, on connector: DP-1
-  amdgpu: [drm] *ERROR* No EDID read.
+Reference: AB8505 User Manual, DM00046744 Rev 3, p. 257
 
-Take the display out of IPS once before the detection loop so the first
-connector processed no longer touches the AUX/DDC engine while the HW is
-still in idle power state. This keeps the eDP-skip boot/resume
-optimization while fixing the DP EDID read failure.
-
-Fixes: d1d51519bc3b ("drm/amd/display: Skip eDP detection when no sink")
-Reviewed-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 8a3b1b8703fe ("regulator: ab8500: Add voltage selection for AUDIO and ANA on AB8505")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260901-ux500-dts-snowball-regulator-v2-1-fe88b01829bf@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/regulator/ab8500.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index f3551bd0b0a4f..0c92f9c5d5825 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -1979,6 +1979,10 @@ static int dm_resume(struct amdgpu_ip_block *ip_block)
- 	/* On resume we need to rewrite the MSTM control bits to enable MST*/
- 	s3_handle_mst(ddev, false);
+diff --git a/drivers/regulator/ab8500.c b/drivers/regulator/ab8500.c
+index 3705c98b07139..ca59406d42a85 100644
+--- a/drivers/regulator/ab8500.c
++++ b/drivers/regulator/ab8500.c
+@@ -264,13 +264,13 @@ static const unsigned int fixed_2050000_voltage[] = {
+ };
  
-+	/* Exit IPS before the detection loop's first AUX/DDC access. */
-+	scoped_guard(mutex, &dm->dc_lock)
-+		dc_exit_ips_for_hw_access(dm->dc);
-+
- 	/* Do detection*/
- 	drm_connector_list_iter_begin(ddev, &iter);
- 	drm_for_each_connector_iter(connector, &iter) {
+ static const unsigned int ldo_vana_voltages[] = {
++	1200000,
+ 	1050000,
+ 	1075000,
+ 	1100000,
+ 	1125000,
+ 	1150000,
+ 	1175000,
+-	1200000,
+ 	1225000,
+ };
+ 
 -- 
 2.53.0
 
