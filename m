@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025879;
-	b=X+VyNO8x9j5HZbzJZwRflTHQ0mnjGGZ9X2tJGtT0/opZnUyDLFc4wapVUlz2nJcCgVE3
-	 Ki00dmEiSX7bkfzWq1y+K/MCoHcJeS25y9tLc1bs1vcmp6JOCWSkkij8pZU1R9mOI6vrW
-	 OpFSYGgVPGpm279q5UJBigJd+pN8avZKkIhA4mFnPlGpZ+27SY7QL8lrcq6i1PpSgri26
-	 w4mnpGvRp9OVzbXOkt+/ERexO+3jxu40mEYcC08eqZdqrOoFPXx6xCVeQXYpGSrx3w2EI
-	 uBs8kOSFm+Miy/geIxsRl7cAm2iTcBgBJa+UtgoFUBl7d44SmCfmyEFxQXs4xQzTSSA==
+	t=1795025882;
+	b=V/CRzDtNlRgQzCSS/xfWvE5E924R1DtI4xg8yGotbNmGTvaPG9uA8YL49N2vy5XFFHzU
+	 D8lq3lfBh9ayN9oq/fvYfizEK1mLdYOSUPU1fKqcrwSWWywsBEojxkSobOBEkAbM74GtL
+	 oCvyjvLxwTHyqYzdjjaFvSPDvrmBQI48Wk9e4f1mYq2rNWat2CZZ3N4dr0LaS9KW5S5gS
+	 TTYZf28sC7QSW7dsOX2BJYp/jOey29nF3Ms7qVz6NF3Fr4uPkyErBNReDrUKHK8X8Taw/
+	 OHZfakk0iP91dIqBAjId935WD4xXBp49Q8e3exbf7I3zTvCQwR9Nft4ZkHEnuIj4bGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025879;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025882;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y9DOp7XzhLxJyp9SC8mFY2a9/7a+tQ2jpzL8iF3J7hI=;
-	b=RYVt0kIyv/RYaBs+SFxkXK7JtoyAxsdhdiVXxmb+9mQldnZhYT+8zrUgO6gRqxgF7vAt
-	 8DaGWUToMp7Xol7gb/KN7BDdUD6Sd8+wn93bk6ulwXCMtKwppeJCgyH051+vUv63+TfF+
-	 DC+qzRexW4DDD2Qi+zPMB3OEACDdSCjzik7y6EMhBLqYa1sF4nqVV48okLvo0Zx5SzGyx
-	 oTjnVbiGa3VDMC8WfJThOeBE5pVd9YQU56DzSa4rIA8RU3CGpATP9GQi5DjPeq9SFqlnE
-	 IVU8R5pELUtjMnaeYLd7GkP/GB1Odpti/ugs7AgsPLuZ6qWV0gVNOKV42cuqisJG0gA==
+	bh=veyBZYByrmaLCKdf/3QWV7E3A/qTJNPHq/RajG51boI=;
+	b=mcZKktMcY4fJkli5ZsJM/++Xget5svDM2/A4gQ5NnqlgLTOqXqEGrG/Wdm02w8GLB+kG
+	 xXmhSMDksHmly8p3wgNiy1db31/+k3fRF4hU6jnrV46T7uwbJIFfkut8eSsw1Y1bKQD4o
+	 12nbtb722nRE6o9QhALBXd0JYEf7XGt9FXFhRQtmsVKcLaqCW54SoEcsQ3WoMuXF9iYxm
+	 ZgRtDR46O0eIRQfLwPSYI6eGNQBMbdSjsI9ViG4lnDkl9z9QpCdsiGTg0WVYygfwoF+hx
+	 cOxEylViOIeoMFyT9ksReVsxvZiUEUaZ52W1GLDkM/83SoIUV3NlJg3q0EwEA/VD76A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L9CBlF3x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Dp0nG7s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6D6606A332;
-	Wed, 18 Nov 2026 18:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94235606A31C;
+	Wed, 18 Nov 2026 18:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L9CBlF3x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3245D1F000C4;
-	Wed, 18 Nov 2026 18:17:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Dp0nG7s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97A81F000C4;
+	Wed, 18 Nov 2026 18:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025879;
-	bh=y9DOp7XzhLxJyp9SC8mFY2a9/7a+tQ2jpzL8iF3J7hI=;
+	s=korg; t=1795025882;
+	bh=veyBZYByrmaLCKdf/3QWV7E3A/qTJNPHq/RajG51boI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L9CBlF3xPtuc4V/kB2kkU0BBQz7kOZZ7rfVfw/DgzBlEqc+4EkyAJfmSwHbfztJ3A
-	 vhurCA36L+26+P3/ywp4TCJ2uGx/cjZnue+Z/cHclXTdAOSwliFOZQWZGr3tu9Atge
-	 ikrmqkZY4gGpIxmSBYkoInQjsWQD6xBJIZgYJrFg=
+	b=0Dp0nG7sdqZ9WVJVkZPYj/0Hp7iySlrRz6ppYV4L93gHgVuJzImvjRkB76VMcS4Nk
+	 G2WXTeRqtsyOVZY5HeCBOTXB3yQSSR7Ay51fr3MmIDR3GE7pxV3hPnxqj3+7dCt+v6
+	 arRrEvPBYB6S+Lien2VMAsnAuGyxf7X7aIxYn06g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1235/2151] ASoC: rockchip: rockchip_sai: Handle runtime PM resume failures in set_fmt
-Date: Wed, 18 Nov 2026 15:49:30 +0100
-Message-ID: <20261118150207.167228815@linuxfoundation.org>
+Subject: [PATCH 6.18 1200/2151] wifi: mt76: mt7921: fix lock inversion between dev->mutex and iflist_mtx
+Date: Wed, 18 Nov 2026 15:48:55 +0100
+Message-ID: <20261118150205.920786647@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,41 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit 39205bb7ed4fe74f0b5df58d9b6529ac2690303f ]
+[ Upstream commit 3dcb98c5cb51a70750ae8dc006d6d787ca09f425 ]
 
-rockchip_sai_set_fmt() calls pm_runtime_get_sync() before accessing
-hardware registers, but ignores its return value.
-If the runtime resume fails, the function continues to perform register
-accesses while the device state is undefined.
-Replace pm_runtime_get_sync() with pm_runtime_resume_and_get() and
-return early on failure to avoid unpowered register accesses.
+mt7921_config() holds dev->mutex across
+ieee80211_iterate_active_interfaces(), which takes local->iflist_mtx.
+mac80211 uses the opposite order: ieee80211_del_virtual_monitor() holds
+iflist_mtx while calling drv_unassign_vif_chanctx(), and
+mt792x_unassign_vif_chanctx() takes dev->mutex.
 
-Fixes: cc78d1eaabad ("ASoC: rockchip: add Serial Audio Interface (SAI) driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260903112739.373621-1-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Deleting a monitor interface that has a channel assigned reaches the
+second order and lockdep reports the cycle. The driver side of it:
+
+  -> #1 (&local->iflist_mtx){+.+.}-{4:4}:
+         __mutex_lock+0xda/0x1070
+         ieee80211_iterate_interfaces+0x34/0x70 [mac80211]
+         mt7921_config+0xb8/0xe0 [mt7921_common]
+         drv_config+0x63/0x1d0 [mac80211]
+
+.config is only reached through drv_config(), which asserts the wiphy
+mutex, so ieee80211_iterate_active_interfaces_mtx() can be used. It walks
+the same list under the wiphy mutex and never takes iflist_mtx, which
+drops the driver's dev->mutex -> iflist_mtx edge.
+
+Fixes: cbaa0a404f8d ("mt76: mt7921: fix up the monitor mode")
+Link: https://lore.kernel.org/linux-wireless/20260730053916.109426-1-lucid_duck@justthetip.ca/
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260810045338.118923-2-lucid_duck@justthetip.ca
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/rockchip/rockchip_sai.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/rockchip/rockchip_sai.c b/sound/soc/rockchip/rockchip_sai.c
-index b38c2cb81f807..02a99a7279984 100644
---- a/sound/soc/rockchip/rockchip_sai.c
-+++ b/sound/soc/rockchip/rockchip_sai.c
-@@ -486,7 +486,9 @@ static int rockchip_sai_set_fmt(struct snd_soc_dai *dai, unsigned int fmt)
- 	unsigned long flags;
- 	int ret = 0;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+index 26595de275bff..1bc596db5af85 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -651,9 +651,9 @@ static int mt7921_config(struct ieee80211_hw *hw, int radio_idx, u32 changed)
+ 	}
  
--	pm_runtime_get_sync(dai->dev);
-+	ret = pm_runtime_resume_and_get(dai->dev);
-+	if (ret)
-+		return ret;
+ 	if (changed & IEEE80211_CONF_CHANGE_MONITOR) {
+-		ieee80211_iterate_active_interfaces(hw,
+-						    IEEE80211_IFACE_ITER_RESUME_ALL,
+-						    mt7921_sniffer_interface_iter, dev);
++		ieee80211_iterate_active_interfaces_mtx(hw,
++							IEEE80211_IFACE_ITER_RESUME_ALL,
++							mt7921_sniffer_interface_iter, dev);
+ 	}
  
- 	mask = SAI_CKR_MSS_MASK;
- 	switch (fmt & SND_SOC_DAIFMT_CLOCK_PROVIDER_MASK) {
+ out:
 -- 
 2.53.0
 
