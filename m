@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044258;
-	b=jLgy6sxjVL/GB20pD00hgCIiOJODvinPm/5YYMsXIqODEGr+ERCA86QyoRbPmGXpnwtT
-	 av02i5hFyRbKz+IRGvVEAHy3CRUrrl9XU7EQj0E+4ayQ6QaV0TdGm0zsgin08eBJem0Vw
-	 eRVV8scf+SoKoNEBmXS/edu0Scwd9iKUZKC0zAeYEb7W9sg7/osDUUmHmvS+rTZ3NZRCy
-	 ztQ5YBKAf528nVnaPapE35wy0t9bMQuF9ZtrGb4WGZLLXQMfNc1/xzp7YrcckwQfWb7AQ
-	 +s93yW85G/L5hz9EbNl9zi9vniWrEV0ChSK1WO2qflZHBFAMz46cOA90TtID9/cGI/g==
+	t=1795044261;
+	b=ewfvtW6FzWIrmdGsiDpaVXfz2vbTRI6JmlDpVXqDFSE8DXseGxfs/b7rAZG7vU8JbBgm
+	 H8qFX/e6zOvJbtEkTXgbhRu9Mv4fed8hQE4hQ6HmXoOdXDaFsMZoOO7D0hBePdMh4yGnI
+	 l9fxBWLvXRzKBBmpySVZSyN68uyAxPySAoU59JiLaFa98BzlfS1T0bgxmqM3y7TgR81Af
+	 39lVzSp89K2dYQZlr03HdWFZiIb8s9GwtkXya4SOAiKyu0VRE0pmEfy7iZlkjYeEcISV3
+	 CCV12VryZs1plHKkIppnSqNX9mhq2AAg8CTSuQeiIPI1zG847mlEZTntai75v1mA4cQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044258;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044261;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q9QtA7PIbf1/UiHNPt+ABfdaVVR2AGUKLt0K0i5I9Q8=;
-	b=DnKw95Kfok/LNHjmqZIcsR/7QLGeKdFHMt/21oJrWTiNeWcqU4A2mw6f7ZAOK9pjR0ru
-	 adwVtj19OxGdhxZa0YOyUwT6tcYXM7hLDpCgPd31uCSqZUaXRBnzmwfJ+Wf3GZ6NRBjTp
-	 +lBbTu85gMpFPEiS+IcnkypRbf2YRGjDJ3kga4NcaVKgYm5AXaAg3YCw3IfU9n7gl45tp
-	 bT7lOq7VAs8i8ARX0jDWcMA0DJlwqIsbJdW/HzCKvwNHg75OUifmuACBtUMKpyD9y7tkp
-	 WL1M3dZop2StewG0nI6RzN9pArbzf9v3bFFVrpleR6H4VEyWZITEVHN6Fk3D9jpmhYA==
+	bh=u1wSsgqc3nsZerNnZYngAIburH9qGHoJHLp3etM2snA=;
+	b=MrJYZyJJt4NmxDANENjEDH1b1pFfNSl4tgXLBRl3yVuKI54tJQ8sAtoBTtA9RlNcMVvx
+	 eF4oD/LIKDlHAl4BbQ1asM5v6yqw4e+DkHvMM3L2F+zgtKBUvJsSs+FSleCuUYHHLwDRA
+	 ya5OJBtLSHv7pV4q2/LN6x6SFAvcCbgT7l+oZNMC5VtzU9U3jvin58ji8T11hDVQ+uVZF
+	 DCy9kJb0xekhv0OFdQkBt1Ihzz2U8L25XQXnu8DLjk2TodqjHWwNROSZywc6bVKQHgvg5
+	 972vtvm7yBrVkcpS2UoT57haBkXMI4Vjf3RkE6Q20dJKIVhX023z8PSmFggzxNHD+tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FHt9S3Fy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q2UWrXX3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355B2606A31C;
-	Wed, 18 Nov 2026 23:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC249606A320;
+	Wed, 18 Nov 2026 23:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FHt9S3Fy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A6C1F000C7;
-	Wed, 18 Nov 2026 23:24:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q2UWrXX3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD901F000C5;
+	Wed, 18 Nov 2026 23:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044258;
-	bh=Q9QtA7PIbf1/UiHNPt+ABfdaVVR2AGUKLt0K0i5I9Q8=;
+	s=korg; t=1795044260;
+	bh=u1wSsgqc3nsZerNnZYngAIburH9qGHoJHLp3etM2snA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FHt9S3FyYS/n1lGv9DOxFp5oPTzAdYaVLJgnlfRNgQmvNClw+f5GL8iEkBqyg+glF
-	 KZljkNy67UbsN8KYqddMcKKZJzBupiUY2S6CY+lwLLNmob2KEaC8twvL9Zyi5HGe4j
-	 Rb9x6lXqfTgOH9NwCxH2j3AFj2JpR40w4YlB3uH0=
+	b=Q2UWrXX3F9MtTt5iHk3nwrZOB3K7BJMGRM8t5hVx2VFjtEq/Xf1PuGX4cIde0KDnk
+	 8LOPK5JWMjvAMG3v/ocvsZg9thtTmixw3ArT6MBdMSSaAGM3Noa0OzvYqAwNrDkmc4
+	 5Y/ultigsFD8dmbWTc9kJBVTXkpirq4lkpC90qY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonio Quartulli <antonio@mandelbit.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 0502/2857] net/sched: fix packet reordering on requeue
-Date: Wed, 18 Nov 2026 15:25:36 +0100
-Message-ID: <20261118150219.529694222@linuxfoundation.org>
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0467/2857] KVM: nVMX: Force MSR bitmap refresh if runtime eVMCS controls are modified
+Date: Wed, 18 Nov 2026 15:25:01 +0100
+Message-ID: <20261118150218.251930254@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,71 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antonio Quartulli <antonio@mandelbit.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 14368b9aa1017fee35d2589be7b17e0485c0f93e upstream.
+[ Upstream commit 2abb25273c82061dd4670690c81c319c03740bf6 ]
 
-dev_requeue_skb() appends requeued skbs to the tail of q->gso_skb, while
-dequeue_skb() takes them back one at a time from the head. If the driver
-returns NETDEV_TX_BUSY again for the first of them, it moves behind the
-skbs still parked there and is sent after them.
+Force a refresh of the vmcs02 MSR bitmap during nested VM-Enter if the
+runtime eVMCS controls (pin, primary, secondary, etc.) are being updated.
+If L1 isn't intercepting TPR writes, runs L2 with TPR virtualization, and
+then runs the same L2 with TPR virtualization disabled, KVM will fail to
+refresh msr_bitmap02 and leave TPR in passthrough mode even though TPR
+virtualization is disabled.  I.e. failure to refresh the bitmap lets L2 (or
+L1 by proxy) read and write L0's TPR.
 
-This showed up as heavy TCP reordering while benchmarking over veth,
-which returns NETDEV_TX_BUSY whenever its ring is full since
-commit dc82a33297fc ("veth: apply qdisc backpressure on full ptr_ring to reduce TX drops").
-
-Requeue the skbs at the head of gso_skb, keeping their order. With 4 TCP
-streams over a veth pair with a pfifo qdisc, this removes about 1.3M
-out-of-order segments and 15-37k retransmits per 15 seconds, and raises
-throughput from about 40 to 76 Gbit/s.
-
-Fixes: a53851e2c321 ("net: sched: explicit locking in gso_cpu fallback")
-Fixes: 9540d977618c ("net: sched: fix skb leak in dev_requeue_skb()")
+Fixes: 502d2bf5f2fd ("KVM: nVMX: Implement Enlightened MSR Bitmap feature")
 Cc: stable@vger.kernel.org
-Signed-off-by: Antonio Quartulli <antonio@mandelbit.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Link: https://patch.msgid.link/20261026153113.3275494-1-antonio@mandelbit.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[ sashal: Dropped the CONFIG_KVM_HYPERV #ifdef context and placed the runtime_controls declaration at the top of copy_enlightened_to_vmcs12(), since this tree lacks that option. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_generic.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ arch/x86/kvm/vmx/nested.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/sched/sch_generic.c
-+++ b/net/sched/sch_generic.c
-@@ -141,8 +141,11 @@ static inline void qdisc_enqueue_skb_bad
+diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
+index 38649d769b416..fdca4b97ab9a6 100644
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -1569,6 +1569,9 @@ static void copy_vmcs12_to_shadow(struct vcpu_vmx *vmx)
  
- static inline void dev_requeue_skb(struct sk_buff *skb, struct Qdisc *q)
+ static void copy_enlightened_to_vmcs12(struct vcpu_vmx *vmx, u32 hv_clean_fields)
  {
-+	struct sk_buff_head requeue;
- 	spinlock_t *lock = NULL;
++	const u64 runtime_controls = HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_GRP1 |
++				     HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_GRP2 |
++				     HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_PROC;
+ 	struct vmcs12 *vmcs12 = vmx->nested.cached_vmcs12;
+ 	struct hv_enlightened_vmcs *evmcs = vmx->nested.hv_evmcs;
  
-+	__skb_queue_head_init(&requeue);
+@@ -1576,6 +1579,9 @@ static void copy_enlightened_to_vmcs12(struct vcpu_vmx *vmx, u32 hv_clean_fields
+ 	vmcs12->tpr_threshold = evmcs->tpr_threshold;
+ 	vmcs12->guest_rip = evmcs->guest_rip;
+ 
++	if ((hv_clean_fields & runtime_controls) != runtime_controls)
++		vmx->nested.force_msr_bitmap_recalc = true;
 +
- 	if (q->flags & TCQ_F_NOLOCK) {
- 		lock = qdisc_lock(q);
- 		spin_lock(lock);
-@@ -151,7 +154,7 @@ static inline void dev_requeue_skb(struc
- 	while (skb) {
- 		struct sk_buff *next = skb->next;
- 
--		__skb_queue_tail(&q->gso_skb, skb);
-+		__skb_queue_tail(&requeue, skb);
- 
- 		/* it's still part of the queue */
- 		if (qdisc_is_percpu_stats(q)) {
-@@ -167,6 +170,11 @@ static inline void dev_requeue_skb(struc
- 		skb = next;
- 	}
- 
-+	/* the skbs may come from the head of gso_skb, so put them back there:
-+	 * appending them would let the ones still parked overtake them
-+	 */
-+	skb_queue_splice(&requeue, &q->gso_skb);
-+
- 	if (lock) {
- 		spin_unlock(lock);
- 		set_bit(__QDISC_STATE_MISSED, &q->state);
+ 	if (unlikely(!(hv_clean_fields &
+ 		       HV_VMX_ENLIGHTENED_CLEAN_FIELD_GUEST_BASIC))) {
+ 		vmcs12->guest_rsp = evmcs->guest_rsp;
+-- 
+2.53.0
+
 
 
