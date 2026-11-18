@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043372;
-	b=R/nlaa6E1v06GB19Ca5ci/weQsJBZc4ClgtSB7PnddGr4UyGGVsJ9mc+K3TeBy8oNqcK
-	 F33vDJNirDY9iW+k11T3MyTdj5ODuJekn6kROnibogAGUASvyoCe073N5OO79HyKnPreA
-	 X+PrXCjpWWNlcmbkM+/5Q+TS4CfFdZAWgW6PZMq+K42N+IOn4GcFYwfk2P6Oy04SSdXeO
-	 kxSb2xDh1YF0F6pLHd2DFEQbb4zmcc2fOExg+iwlxu5BSXFP0d5+Bo+eB+30SpHhEGfYz
-	 Ll0KcbekRlwGs9pllwfio6sjro9yLFQQ7YcQO8tYPgV4njKJ5Pk/WOZvZ56iCCxy/VQ==
+	t=1795043375;
+	b=K8uOvd3gEoc8P0HJzfH6X1nAU8h696uSRyW3N9h1ZNFcq0TTDUkQVS6cSYRfdIKEzshj
+	 0fJ61IuUH08673hK+ntuvQCz9cH/oT3rGAN0gLT/3PAgbzBObjLf2aHym4WeadefmRPgT
+	 +CkT18tLjRT4Fp/kIz4D9OmXN9tUAIBy90tiHOjhndR5w98m8TF2pvQO0aaJx4HdmdL1l
+	 6ptiEV4RvwZi9M9MHIUCzLjlzXUxd/7WzXGDL1jdSc6Jiokc86nFt7kDzoXwCzphgsw70
+	 ApKkJTKusRIjd+PprQFcJfvbfQtvZvBuN3peaXZVuc85fD9onGaf6AOo6UGyBo1aAzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043372;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043375;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ojkwr24EvnJjepz8ClCoh861LaCD35xZhHZaiPzid7A=;
-	b=EamLw0CKczmPBSigFb0J1nQjoBV7DeUMcIxr11npob3b0KaWynT4xlmNzbOXbGeGhEFw
-	 OqSfphe19bQ6KG5xXtwSlR2y0fQQDLLxvdebhhq18Qr3JbcuyrkxN++esuvx9V7pBmnTw
-	 Z2w1xo3aewdaYQixQv6Qiw1ZxjT3duRMJm3KCZKGHZqLO9fV+Lrkfz5OXaTgXR3H6zC6S
-	 F+S43otXkMlA5JUGvV2WSAKZfzbUS73nmyTUT7ZgQ45yI0mr2DYW4fbN2OLsg0xxZRc1K
-	 ycuukzjpoJfx0Mg9nnSSALTgtRglsUqBzpXOO+NdKv5uxpfpLsBk1kO18AWxsMqJ0lg==
+	bh=jNCedxcKklL6hghn7fgvh+Sn00wKaAFpxnjvgJBoiz8=;
+	b=nparnv+nxnxCuqfTkM//OOUxcwryP2n3B3+Dj8MvfL+bh6Tz0oENi/2r4MGa6TUnPPs0
+	 sQQheRIGfaf6nw1EppjRuOQvP7lE5yvPzsXiEsB3jstoyGTzLsAbAHLTc/mrD0MY4YYik
+	 ThNUREmMUCRuFYIXrecTJM9PXhHXFE+0xgcWC+OhHr8/fHV/m8cef99+3gZawx0Vgtqw9
+	 JNW60us42ha4M3iLU0YzYNbANFNXAxf2/zUzsQuS/ueHCbd11aVG5bovlxHTeFb+GtAOp
+	 xYO+8yd55XKLiO0CkFwk9t34tWScQLrTUc4TzAmn8Zf+DSqvluBybBdMOQ8q8YnMLPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BEJ0+z5a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2cepD47x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C7C606A31C;
-	Wed, 18 Nov 2026 23:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2EA606A31C;
+	Wed, 18 Nov 2026 23:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BEJ0+z5a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871F61F000C4;
-	Wed, 18 Nov 2026 23:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2cepD47x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA0D1F000C4;
+	Wed, 18 Nov 2026 23:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043372;
-	bh=Ojkwr24EvnJjepz8ClCoh861LaCD35xZhHZaiPzid7A=;
+	s=korg; t=1795043374;
+	bh=jNCedxcKklL6hghn7fgvh+Sn00wKaAFpxnjvgJBoiz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BEJ0+z5ampJjcP390nEfeyrrgTPcoSJxZ2FxFfn7FSDjyDxqKAZacRQsj8YBlHjec
-	 H74OS5eQaYtw7QY3Ck020LsswC2TBRdmNZSwO5HTbTUyTDebPmy9o7vxdCEh2pCU83
-	 pzG3uVu8U+8o8svojW3F6tFHw5wXSdiCZ4PeTvxo=
+	b=2cepD47xfzf3VzP0cHqrP3ti+nvG3HcQ+Y1zmesjeInXAFxH/arYZTA/VVjWduKl7
+	 PEkmHzOdeVCS/fBrHqEXdOxqNed9bd70SnnszP0Fj/OgbPBzJ6VNgX/nuYBJvDJrEa
+	 vGsWm9l45C3nG88AYI573agsS3pb0wWsLn8HIRYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Peng <pengcan@kylinos.cn>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Senjin <senjin@hatchling.org>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0186/2857] wifi: brcmfmac: validate msgbuf flowring IDs before use
-Date: Wed, 18 Nov 2026 15:20:20 +0100
-Message-ID: <20261118150208.045329259@linuxfoundation.org>
+Subject: [PATCH 6.1 0151/2857] fs/ntfs3: fix lseek EINVAL on sparse/compressed files with 64-bit clusters
+Date: Wed, 18 Nov 2026 15:19:45 +0100
+Message-ID: <20261118150206.779950498@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,130 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Can Peng <pengcan@kylinos.cn>
+From: Senjin <senjin@hatchling.org>
 
-[ Upstream commit 32856f39fefdc75bd253cab999f996750628648e ]
+[ Upstream commit 789af83e41aef54c1ff1cee16adc27822e0a0d71 ]
 
-Firmware messages carry flow_ring_id values which brcmfmac converts
-to an internal flowid by subtracting
-BRCMF_H2D_MSGRING_FLOWRING_IDSTART. The resulting value is used as
-a bit index in txstatus_done_map and as an array index into
-msgbuf->flowrings and the flowring state.
+When CONFIG_NTFS3_64BIT_CLUSTER is enabled, sbi->maxbytes_sparse is set
+to -1. As a signed loff_t this is -1LL, the most negative value. Any
+lseek on a sparse or compressed file passes this as maxsize to
+vfs_setpos(), which returns -EINVAL whenever offset > maxsize, and
+since -1LL is less than any non-negative offset, every seek fails,
+including lseek(fd, 0, SEEK_SET).
 
-Validate the firmware supplied flow_ring_id before using it. This
-prevents flow_ring_id values below BRCMF_H2D_MSGRING_FLOWRING_IDSTART
-from underflowing and rejects values outside msgbuf->max_flowrings.
+The intent of -1 here appears to be "no limit" (matching the spirit of
+MAX_LFS_FILESIZE assigned to sbi->maxbytes and sb->s_maxbytes in the
+same block), but the signed type makes it the minimum instead of the
+maximum.
 
-In the tx status path, complete the packet with an error after
-removing a valid packet id so the skb is not leaked when the flow
-ring id is invalid.
+Fix by assigning MAX_LFS_FILESIZE to sbi->maxbytes_sparse in the
+64-bit cluster path, consistent with the other two limits set there.
 
-Signed-off-by: Can Peng <pengcan@kylinos.cn>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260723055618.550834-1-pengcan@kylinos.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Observed on a 16 TB NTFS volume with 0xFFFFFEFF total clusters compiled
+with CONFIG_NTFS3_64BIT_CLUSTER=y. Sequential reads via dd/cp worked
+correctly; any lseek call on sparse files returned EINVAL, preventing
+archive managers and other tools from random-accessing files on the
+volume. The non-64-bit-cluster path correctly sets maxbytes_sparse to
+(1ull << (cluster_bits + 32)) - 1, a large positive value.
+
+Signed-off-by: Senjin <senjin@hatchling.org>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../broadcom/brcm80211/brcmfmac/msgbuf.c      | 46 ++++++++++++++++---
- 1 file changed, 40 insertions(+), 6 deletions(-)
+ fs/ntfs3/super.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-index de47d6b7e02b2..f850e64108c41 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-@@ -561,6 +561,28 @@ brcmf_msgbuf_remove_flowring(struct brcmf_msgbuf *msgbuf, u16 flowid)
- 	brcmf_flowring_delete(msgbuf->flow, flowid);
- }
- 
-+static bool brcmf_msgbuf_get_flowid(struct brcmf_msgbuf *msgbuf,
-+				    u16 flow_ring_id, u16 *flowid)
-+{
-+	u32 id = flow_ring_id;
-+
-+	if (id < BRCMF_H2D_MSGRING_FLOWRING_IDSTART) {
-+		bphy_err(msgbuf->drvr, "invalid flowring id %u\n",
-+			 flow_ring_id);
-+		return false;
-+	}
-+
-+	id -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
-+	if (id >= msgbuf->max_flowrings) {
-+		bphy_err(msgbuf->drvr, "invalid flowring id %u\n",
-+			 flow_ring_id);
-+		return false;
-+	}
-+
-+	*flowid = id;
-+	return true;
-+}
-+
- 
- static struct brcmf_msgbuf_work_item *
- brcmf_msgbuf_dequeue_work(struct brcmf_msgbuf *msgbuf)
-@@ -881,17 +903,23 @@ brcmf_msgbuf_process_txstatus(struct brcmf_msgbuf *msgbuf, void *buf)
- 	struct msgbuf_tx_status *tx_status;
- 	u32 idx;
- 	struct sk_buff *skb;
-+	u16 flow_ring_id;
- 	u16 flowid;
- 
- 	tx_status = (struct msgbuf_tx_status *)buf;
- 	idx = le32_to_cpu(tx_status->msg.request_id) - 1;
--	flowid = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
--	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
-+	flow_ring_id = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
- 	skb = brcmf_msgbuf_get_pktid(msgbuf->drvr->bus_if->dev,
- 				     msgbuf->tx_pktids, idx);
- 	if (!skb)
- 		return;
- 
-+	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid)) {
-+		brcmf_txfinalize(brcmf_get_ifp(msgbuf->drvr, tx_status->msg.ifidx),
-+				 skb, false);
-+		return;
-+	}
-+
- 	set_bit(flowid, msgbuf->txstatus_done_map);
- 	commonring = msgbuf->flowrings[flowid];
- 	atomic_dec(&commonring->outstanding_tx);
-@@ -1238,13 +1266,16 @@ brcmf_msgbuf_process_flow_ring_create_response(struct brcmf_msgbuf *msgbuf,
- 	struct msgbuf_flowring_create_resp *flowring_create_resp;
- 	u16 status;
- 	u16 flowid;
-+	u16 flow_ring_id;
- 
- 	flowring_create_resp = (struct msgbuf_flowring_create_resp *)buf;
- 
--	flowid = le16_to_cpu(flowring_create_resp->compl_hdr.flow_ring_id);
--	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
-+	flow_ring_id = le16_to_cpu(flowring_create_resp->compl_hdr.flow_ring_id);
- 	status =  le16_to_cpu(flowring_create_resp->compl_hdr.status);
- 
-+	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid))
-+		return;
-+
- 	if (status) {
- 		bphy_err(drvr, "Flowring creation failed, code %d\n", status);
- 		brcmf_msgbuf_remove_flowring(msgbuf, flowid);
-@@ -1267,13 +1298,16 @@ brcmf_msgbuf_process_flow_ring_delete_response(struct brcmf_msgbuf *msgbuf,
- 	struct msgbuf_flowring_delete_resp *flowring_delete_resp;
- 	u16 status;
- 	u16 flowid;
-+	u16 flow_ring_id;
- 
- 	flowring_delete_resp = (struct msgbuf_flowring_delete_resp *)buf;
- 
--	flowid = le16_to_cpu(flowring_delete_resp->compl_hdr.flow_ring_id);
--	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
-+	flow_ring_id = le16_to_cpu(flowring_delete_resp->compl_hdr.flow_ring_id);
- 	status =  le16_to_cpu(flowring_delete_resp->compl_hdr.status);
- 
-+	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid))
-+		return;
-+
- 	if (status) {
- 		bphy_err(drvr, "Flowring deletion failed, code %d\n", status);
- 		brcmf_flowring_delete(msgbuf->flow, flowid);
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index 9bf327a7cc7b9..dcc71541f207f 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -905,7 +905,7 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
+ #ifdef CONFIG_NTFS3_64BIT_CLUSTER
+ 	if (clusters >= (1ull << (64 - sbi->cluster_bits)))
+ 		sbi->maxbytes = -1;
+-	sbi->maxbytes_sparse = -1;
++	sbi->maxbytes_sparse = MAX_LFS_FILESIZE;
+ 	sb->s_maxbytes = MAX_LFS_FILESIZE;
+ #else
+ 	/* Maximum size for sparse file. */
 -- 
 2.53.0
 
