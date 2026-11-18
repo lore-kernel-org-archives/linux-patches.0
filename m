@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061573;
-	b=lbiSOf4d/sUPbHDo744kC/fdEvpXKe1PUplovmPJEiB4Jvi9Wkj83NKL/KU8anUiqE8O
-	 JDPxatCE8WWzLgfno/P9EZrKH2RtOrEDjm6NIrT9vZzzl5KvaOrXg849lwC3/bXDBMjmY
-	 5eNmQWjiZDZwRyLnaDMZ68s/9DQJ+Soe5z1356V6cySQ9Qv78wH191gMT7dFi669fXh0r
-	 k2cYo3qqOgsZ1izN8nHF3Vd6Z0OHUDe5+NxDmCeCfNAz8Di6ogtOts0RSxVgznhDwvek/
-	 MzB1TU8GsKzIkhFCyj7aPyF3gJOU2JsYxTy3SuDCzCgABB5YcNQC0tmhxJogg8lGUbQ==
+	t=1795061576;
+	b=Fpe9R6Tf0AtNar0n6MDLhq+1ORz5GsSbfe/iEDpkJB1P4/RMGolw7ECMXKvGeEDHKWYL
+	 pCBUzb+a+v4HQeznUEmjTgr65x9Dx4jgmva/sJ6iE2Dv7T6eyUCbCfHo9AVYF+5QMWqbD
+	 t/Sfd4x2XEoSHjIT9++Eiiz9bV5KjpJtY0lSeAH7nPdt0v+RX5uisTmMYGEErNk6Y6Qsw
+	 8vTfpKi7ISsi1lHsZ/ykTqfih5pgd4sMzxaldgBjyhoVY/hq94CGveIDBPSGFUyoeuyOf
+	 Z6FgJ8vbxpeL6y10+COAUrUYeO8XkhZH+LYiQEgYLzmFU2WQQm/gelPOCY92diudc1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061573;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061576;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zvFpo7lUwq5Rn/1I4V31+Uj1rq+Q7fDFe5acR79OI9k=;
-	b=1LPo4J404mI/OSHtFCbXjnqP0/K4GXXaYYxqOmSHajNu8Jx2NQLnyx93yrXkzHB9lyO7
-	 fZMoyYov7E73OjJOn5bz1KoAdFwYqQaXSys1bCwyadLVVxW7gDkDt3xsiCh+jh5qFIQOx
-	 edcAWO08CsjtJotTub6e2uMYi/BUYIkopv81FwVVgMrtTjo6Hw7pOdpvk5WV+3LBhkgUq
-	 FiqkbNfpqzcJhHvP4wZsai138/Qw8ovgq3E7VIdc4NFGMUv8WSDuZJB3RlgiCTv4wyKn2
-	 Ze+mb1av8sYjV2PL63kZWmzWGPNVd4vQy2STLHYvjx5lc5x9LQUiwTqLIQxBleZ2VuA==
+	bh=QeX6X1hhI3H7BFhusOQtTtUdB/y7wKBogjI/GttPOPA=;
+	b=tvrwks9RfT+yYw6JQFq+/S4wi7wsUPznse4DBNgjaDW3kVfZ74HbH10USwpRypOWLe3v
+	 N3T3np5WI/53zv5OeGJyg9o9EcYjXlRJZr8OWZ1p2PmlJzfuceb0F6m/VPKIXw/cBHkCb
+	 ABxMSUvxph1w19ZWFH2S7dTLW3SwLEVE5HSy08uOtHAOcCz3vRuRPwUSFEMBXd/3gw5ER
+	 OS2p6n768xPr8qqcmDqq0sIWLtNqWzZw8iV9X3M6Rn5qGG/E4mow649IDOAHjxNdsnlwb
+	 6V3CcUuvzhumshpS1j6TCnhB2SV/GkElQtBrP3ubF978npFlMvm+LsJn54AEtM3OMyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5hLWiUL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ojvNOKDN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3FB60A2609;
-	Thu, 19 Nov 2026 04:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549A2606A332;
+	Thu, 19 Nov 2026 04:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5hLWiUL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC6DC1F000CC;
-	Thu, 19 Nov 2026 04:12:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ojvNOKDN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC491F000C7;
+	Thu, 19 Nov 2026 04:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061573;
-	bh=zvFpo7lUwq5Rn/1I4V31+Uj1rq+Q7fDFe5acR79OI9k=;
+	s=korg; t=1795061576;
+	bh=QeX6X1hhI3H7BFhusOQtTtUdB/y7wKBogjI/GttPOPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A5hLWiULyrDKcFBimUQfNfSCeZcwhimZkIE9A7CBtXIHUCbEhZj5dPLlVQDChbqI2
-	 VXx0m9oGOzaUfTYOGNl4cVlD8y5jKXrluTTf6X+NXjiWAcG4U8wgTnTwP0+TDdHZ/R
-	 cavhyetS9gMUSQZaj20+0XcVP+whutW9MbcenjPg=
+	b=ojvNOKDN4SMY0LWf5yjT8KbvhyIkGZjGzY1/G2I1Lyie/88LxC8BLYrFwDa64Ajb1
+	 y+4Y09rK9JAzMBnxc45Dg5Y67tUBVY4DvO3MTqOifqBA9+jv89M9VX1chcaSNzqW86
+	 OylkwvP5yURmZgJkCNN3kpQlKavH8HOX1IFMLQAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoni Pokusinski <apokusinski01@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1559/1848] rtc: abx80x: properly handle shared IRQs
-Date: Wed, 18 Nov 2026 15:59:57 +0100
-Message-ID: <20261118150024.875164864@linuxfoundation.org>
+Subject: [PATCH 5.10 1550/1848] ALSA: line6: Fix potential OOB write in line6_capture_copy()
+Date: Wed, 18 Nov 2026 15:59:48 +0100
+Message-ID: <20261118150024.513017968@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,122 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoni Pokusinski <apokusinski01@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 632916c7bde35495f2f6776d8e335c3ec6e306ec ]
+[ Upstream commit d69798357b5d562bcda1af488cda3ead4d039f8f ]
 
-The abx80x RTC driver registers its interrupt handler with IRQF_SHARED,
-but the handler always returned IRQ_HANDLED and cleared the status
-register even when no interrupt source from the RTC was active.
+line6_capture_copy() copies the data for the original byte size, but
+the buffer overwrap is checked against the frame size.  Because of it,
+when the data size isn't aligned in frames, the remaining bytes might
+be still copied above the buffer size.
 
-This could cause the driver to claim interrupts belonging to other
-devices sharing the same IRQ line and could also clear unrelated status
-bits in the RTC status register.
+For avoiding the potential OOB write, correct the copied data size in
+line6_capture_copy() to be aligned with frames.
 
-Only handle the interrupt when the alarm or watchdog flags are set, and
-clear only those interrupt status bits that were handled. Return
-IRQ_NONE when the interrupt was not generated by the RTC.
-
-Fixes: 718a820a303c ("rtc: abx80x: add alarm support")
-Signed-off-by: Antoni Pokusinski <apokusinski01@gmail.com>
-Link: https://patch.msgid.link/20260916205138.16771-5-apokusinski01@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 1027f476f507 ("staging: line6: sync with upstream")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://patch.msgid.link/20261008192553.300025-11-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-abx80x.c | 52 ++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 50 insertions(+), 2 deletions(-)
+ sound/usb/line6/capture.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
-index c95fdbadbcca7..439b5a76ec2f7 100644
---- a/drivers/rtc/rtc-abx80x.c
-+++ b/drivers/rtc/rtc-abx80x.c
-@@ -48,12 +48,18 @@
- #define ABX8XX_CTRL2_RSVD	BIT(5)
+diff --git a/sound/usb/line6/capture.c b/sound/usb/line6/capture.c
+index 2f7490c8693fa..5d63a329b3b10 100644
+--- a/sound/usb/line6/capture.c
++++ b/sound/usb/line6/capture.c
+@@ -129,7 +129,8 @@ void line6_capture_copy(struct snd_line6_pcm *line6pcm, char *fbuf, int fsize)
+ 	} else {
+ 		/* copy single chunk */
+ 		memcpy(runtime->dma_area +
+-		       line6pcm->in.pos_done * bytes_per_frame, fbuf, fsize);
++		       line6pcm->in.pos_done * bytes_per_frame, fbuf,
++		       frames * bytes_per_frame);
+ 	}
  
- #define ABX8XX_REG_IRQ		0x12
-+#define ABX8XX_IRQ_EX1E		BIT(0)
-+#define ABX8XX_IRQ_EX2E		BIT(1)
- #define ABX8XX_IRQ_AIE		BIT(2)
-+#define ABX8XX_IRQ_TIE		BIT(3)
-+#define ABX8XX_IRQ_BLIE		BIT(4)
- #define ABX8XX_IRQ_IM_1_4	(0x3 << 5)
- 
- #define ABX8XX_REG_CD_TIMER_CTL	0x18
- 
- #define ABX8XX_REG_OSC		0x1c
-+#define ABX8XX_OSC_ACIE		BIT(0)
-+#define ABX8XX_OSC_OFIE		BIT(1)
- #define ABX8XX_OSC_FOS		BIT(3)
- #define ABX8XX_OSC_BOS		BIT(4)
- #define ABX8XX_OSC_ACAL_512	BIT(5)
-@@ -249,6 +255,7 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
- 	struct i2c_client *client = dev_id;
- 	struct abx80x_priv *priv = i2c_get_clientdata(client);
- 	struct rtc_device *rtc = priv->rtc;
-+	unsigned int status_flags_clear;
- 	int status;
- 
- 	status = i2c_smbus_read_byte_data(client, ABX8XX_REG_STATUS);
-@@ -265,9 +272,15 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
- 	if (status & ABX8XX_STATUS_WDT)
- 		dev_alert(&client->dev, "watchdog timeout interrupt.\n");
- 
--	i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS, 0);
-+	status_flags_clear = status & (ABX8XX_STATUS_AF | ABX8XX_STATUS_WDT);
- 
--	return IRQ_HANDLED;
-+	if (status_flags_clear) {
-+		i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS,
-+					  status & ~status_flags_clear);
-+		return IRQ_HANDLED;
-+	}
-+
-+	return IRQ_NONE;
- }
- 
- static int abx80x_read_alarm(struct device *dev, struct rtc_wkalrm *t)
-@@ -821,6 +834,41 @@ static int abx80x_probe(struct i2c_client *client,
- 
- 	i2c_set_clientdata(client, priv);
- 
-+	/* Disable unused interrupts */
-+	data = i2c_smbus_read_byte_data(client, ABX8XX_REG_IRQ);
-+	if (data < 0) {
-+		dev_err(&client->dev, "Unable to read irq register\n");
-+		return -EIO;
-+	}
-+
-+	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_IRQ,
-+					data & ~(ABX8XX_IRQ_EX1E |
-+						 ABX8XX_IRQ_EX2E |
-+						 ABX8XX_IRQ_TIE |
-+						 ABX8XX_IRQ_BLIE));
-+	if (err < 0) {
-+		dev_err(&client->dev, "Unable to write irq register\n");
-+		return -EIO;
-+	}
-+
-+	data = i2c_smbus_read_byte_data(client, ABX8XX_REG_OSC);
-+	if (data < 0) {
-+		dev_err(&client->dev, "Unable to read Oscillator Control register\n");
-+		return -EIO;
-+	}
-+
-+	/* Unlock write access to Oscillator Control Register */
-+	if (abx80x_write_config_key(client, ABX8XX_CFG_KEY_OSC) < 0)
-+		return -EIO;
-+
-+	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_OSC,
-+					data & ~(ABX8XX_OSC_ACIE |
-+						 ABX8XX_OSC_OFIE));
-+	if (err < 0) {
-+		dev_err(&client->dev, "Unable to write Oscillator Control register\n");
-+		return -EIO;
-+	}
-+
- 	if (abx80x_caps[part].has_wdog) {
- 		err = abx80x_setup_watchdog(priv);
- 		if (err)
+ 	line6pcm->in.pos_done += frames;
 -- 
 2.53.0
 
