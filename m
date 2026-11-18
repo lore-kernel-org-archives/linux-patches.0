@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040491;
-	b=kVzcwEuoT1tXQhZt0tFlZoY++Tg1OavWYCq/F02mqN0bTyUmxibN0Ker/ox7C51exUHT
-	 H6MGHbybXGh9Gdi0aAbJKuQH9lhcSaiXnr8ErrIbFvbARx/eTEzmjzByVo4ACNgWbEySP
-	 ICPvAszkLrFL0VEDjOUaQvqGxpBTxdf56dxUEbzRVOo8r5UQNFyguvb4wXC2yIIc0TOj1
-	 wNl78TMd2HdlXoW4q50UqGFsDsL0s5qkp+vpU2gIMfhogweP24zMRup93dCOY+QpY5qrX
-	 tUKTAcn05WkRA8k13hTXthZ6ZuycigaAl8TOFOl9Ko/eHA5oTl+PF+NfPAlNQcg3Abg==
+	t=1795040494;
+	b=shFKwMzuO0ZoV2eKjymxq9zKnx2HaLJQv6+g9sjrrMDPJKHryywp1d8/Gdbr0E3ZE2nQ
+	 rY2Ty6pSvHToLabwg4w70suAt3MJov/b/GOns9VeLqwt6v5Hvm57tu1XyIza8FOhluUZ3
+	 neDjAtO4i6YycsAq7RbjF0UzwVyGzcvNM6KChGNV8ItRH5MjzB78/Sl1E5m5jLwYnn2v2
+	 sRNfeoG9H0B1ax9aWmDJJkrPGZurUUmigZx5Rif90WpNXkM3gZwWbKE72g4VY/jsuYcjX
+	 1cCe6PE1s72HaPDobVYo67+z78GEfOD9DaDFdDmSV+EyTR9YPVsEcu+U0lsz1cmeW1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040491;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040494;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=b1QJgYTn0mxChRLl2w+jpc8SF5a8cYenpA/G6FAnNQY=;
-	b=33JS+Vwm9zJRfCgTVsu9sTH2V9uqZiY8e+mAVXiBA+GpzBjnnlQISa3qIuwH85rtpIkW
-	 8NBzCMGo58YKDZlZO03TqGRZMsfQTYnT9NQi88QhwTYaxNhkq8X59nmfK6Lk2GACewGdQ
-	 EnAsfVrvKV999W+kRzeBsY21eM1j3zXCWvaMDDy1pcku9baDzaHAK2Gb1gqkAYiof9XHD
-	 hmjKVzjxeA1T0kpOseESW35nZOSQUKwxrlH115uxhu4UE3p/gSSNO0BuU4pkr54tOh9yN
-	 yFahb5PEF2u0XWJGucFhZyJk/vEniMNzU8gfRpqgDTwvTAj614KwsvU0oddVIbdh73A==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=nQNZ7ePYHLoLH00WvC5XLeJlbqHJBS1jz19zNtMYkm4=;
+	b=5DR0Uu2TV1KSYMLZASviGpPhhzJzrstsvpmkjESliuwlvbHWA8Hgb/BXCSAk94d+0yWH
+	 9a8vagWF9SfjGo36OSLLepoEdsGPe93/6iq0YcwSS7YiFQrDMRJZeVpleBhZIH8HTPN2N
+	 oO/TkZ+K6+whDGgyje2Q7bgHF2mbjzYuQK4czr7rxeXKU5CUt/zsnrPU0hXjFuFpeoFGE
+	 8M8Bxo0pwVCAg8oLm7jL8bBXzEUiJ6XuFBSFzX/mSvyTL9TbzuPhiD8JwZFtiFBGDaY9n
+	 rC3PG5IMLcXHpXwBnWSCXfaxD6mF6xEkbAoErgWgRJdhx9a2njVqYMRLh97XvHl9aBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LHdoBZ6T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XCk/Fo3s";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77405606A320;
-	Wed, 18 Nov 2026 22:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFDB606A325;
+	Wed, 18 Nov 2026 22:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LHdoBZ6T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00FB1F000C4;
-	Wed, 18 Nov 2026 22:21:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XCk/Fo3s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E2451F000C4;
+	Wed, 18 Nov 2026 22:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040491;
-	bh=b1QJgYTn0mxChRLl2w+jpc8SF5a8cYenpA/G6FAnNQY=;
+	s=korg; t=1795040494;
+	bh=nQNZ7ePYHLoLH00WvC5XLeJlbqHJBS1jz19zNtMYkm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LHdoBZ6TEWsMAMej+5/But2yCczx7kNuxW6HKMMTpwVILBpuUIw/vQc9FLUYGs7qx
-	 J1WzBWgj5XY1ZL3HdMCOYZ4dKrEuCYP5Dy+pZyHH+8dNmtypkgRa722wBJqrdUZcju
-	 w/U1hjH8S/AtMM1ka8ADl5/P5QJByW/PNOHY8PEo=
+	b=XCk/Fo3seSP4FHAsbbQamfujyM+d9z7EPbpXLP3zLLh9lrod53KbJeRFLT8UZRHfP
+	 oK2DEfINwm8oV3PXkxApYq/5rBM0dnXJBaJ97N3DDvp9suTzr/BbtPIFhEPgibiiEx
+	 zPpMXHkl683hBeLoFUgTBAR8JbrI0qVFkYpWJpKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Danish Khateeb <danishkhateeb03@gmail.com>,
+	Willy Tarreau <w@1wt.eu>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2449/3318] RDMA/bnxt_re: Initialize wqe.flags in bnxt_re_post_srq_recv()
-Date: Wed, 18 Nov 2026 15:51:11 +0100
-Message-ID: <20261118150434.912660947@linuxfoundation.org>
+Subject: [PATCH 6.6 2476/3318] tools/nolibc: stop rounding malloc() sizes up to 4096 bytes
+Date: Wed, 18 Nov 2026 15:51:38 +0100
+Message-ID: <20261118150435.685216820@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,44 +63,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Danish Khateeb <danishkhateeb03@gmail.com>
 
-[ Upstream commit 4d8168a3b7c93385c11dc836df569d337089b218 ]
+[ Upstream commit b7db3ba9434cbad3d15f62500104525bfa28a304 ]
 
-wqe is declared once above the WR loop and never zeroed, so
-wqe.flags holds indeterminate stack contents on the first WR and the
-previous WR's stale value thereafter. This propagates straight into
-the hardware-visible srqe->flags in bnxt_qplib_post_srq_recv().
+malloc() rounds the size of each mapping up to a multiple of 4096,
+presumably to align it to a page boundary. But the page size is not 4096
+on all architectures, and mmap() and munmap() round the length up to the
+page size themselves.
 
-Most values of the wqe struct is set except flags. So initialize
-flags also.
+Drop the rounding. As heap->len is no longer rounded up, growing a block
+with realloc() now always creates a new mapping.
 
-Fixes: 37cb11acf1f7 ("RDMA/bnxt_re: Add SRQ support for Broadcom adapters")
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
+Reviewed-by: Willy Tarreau <w@1wt.eu>
+Link: https://patch.msgid.link/20260926152414.251214-2-danishkhateeb03@gmail.com
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Stable-dep-of: 2111eb4273e7 ("tools/nolibc: check for overflow in malloc()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/include/nolibc/stdlib.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index 3007733e6036d..536f8beb1fc07 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -1892,6 +1892,7 @@ int bnxt_re_post_srq_recv(struct ib_srq *ib_srq, const struct ib_recv_wr *wr,
- 	spin_lock_irqsave(&srq->lock, flags);
- 	while (wr) {
- 		/* Transcribe each ib_recv_wr to qplib_swqe */
-+		wqe.flags = 0;
- 		wqe.num_sge = wr->num_sge;
- 		bnxt_re_build_sgl(wr->sg_list, wqe.sg_list, wr->num_sge);
- 		wqe.wr_id = wr->wr_id;
+diff --git a/tools/include/nolibc/stdlib.h b/tools/include/nolibc/stdlib.h
+index 5be9d3c7435a8..5393f001267dc 100644
+--- a/tools/include/nolibc/stdlib.h
++++ b/tools/include/nolibc/stdlib.h
+@@ -132,9 +132,7 @@ void *malloc(size_t len)
+ {
+ 	struct nolibc_heap *heap;
+ 
+-	/* Always allocate memory with size multiple of 4096. */
+ 	len  = sizeof(*heap) + len;
+-	len  = (len + 4095UL) & -4096UL;
+ 	heap = mmap(NULL, len, PROT_READ|PROT_WRITE, MAP_ANONYMOUS|MAP_PRIVATE,
+ 		    -1, 0);
+ 	if (__builtin_expect(heap == MAP_FAILED, 0))
 -- 
 2.53.0
 
