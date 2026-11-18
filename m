@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048865;
-	b=w4LE69e4wnSzQz4UtLmXH+EgGrJLfo1/UWbzVlfkOQAd7RNoLqRzuptUNTtSEx0c/SoS
-	 Fz6vQ2Gk+KhB1R5DbfNuBoxmAAp9yVNAuOtICtiE5451U/R6e1zoN1wg8RKrQ1BtQAzs9
-	 dK2b2LQQdkkJrp4KPNuHR/adFkNuL0C5FSIAzK43mgKiQrq4kLVfwAGoNbNmC4yKkZ/Zo
-	 Oola32nfd2IZfG9Czb7Csbdvub0KtfP9j9ND0IgRMxqgYMbUZHleBpfdz41Vr5TKaMW0M
-	 LvDlflEw/k1tDGuj9/ME1TD4jTnhIhjhA/+85QbA1d+tivrdpvs8dGVn3gxLMivN78w==
+	t=1795048868;
+	b=QlzMAeSf3zlq9DgNbu2MQl9n1tH25qyyc0kfUkmVT+QDi9+I9FJGr6BxmVELjgWCGqfd
+	 qk/RRGiocZkw4TIj9C2edHMQFE7rnfa3o3yKA3OGUJqG1Wfh8AbKUYpe2uMqkoID8IoJw
+	 WQsw/B+qCeOsVzEk76hlV2frMQjNip7QcSLDj7p0nxqTbhaKgYUBaReIxhaAPWkpaDhtg
+	 Jap5+yrkHKjeerLqkO7SExnV3TVvAtDgwZqU16l34y+IBSRfdveuLe1REHz0rqS+9KlgF
+	 qlW2oLd8OcthME1Aj7heD2SN90RK/J89N8Cy5WXq9hRJ44/3N1BYPXDSHA2QRtvi8Wg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048865;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048868;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=UK8r3qfxlmR5Qf13ZbeeQM2kKpNfbuxtLtf/cO+kwoE=;
-	b=DSqth7MUJ80o+zCxCQITm0w1PzrozoaTwqKxGSYZZ6Rj4Ri4uZmqVAUXAvuIuABG7KeJ
-	 ndYAW+7wmMKqTPVvNQbwSjqG/WbCgz3giymtB1x3GAnYP7gvQADmfBebQeIjiMSUXfrfR
-	 nt+InXdms4bd5iMnf3aNxtNuKGD3jCXRvnH73+GihPz8oXikFw+yhMaU8WWQdTopoFe4a
-	 /I9le2KyhjvTMDfsSVizBk0NwERYNG/GZzJXc724LDW8h2T14CNvYunI5HT44UnsLJdGb
-	 vC8YFEhZisbAyztvvd1wXt7CPUel0m+9yy5Teim7dGxRr/1bMi3VeyI/0vFG9zUM+mw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=v0rhIBE3WmTY/O/9ToaHq5tKpgy/W38TfkBmrxgBbQ8=;
+	b=IvtTQGVX8TB76544I+zGGbs+6jd7+v702z9muxVvwTMNvIRcnoIfG32fXGxCxMTGFZKi
+	 5y4KRibFJ5tROYqBwi1Jz/nXoy7WdVNuQQiC5r5gOZeunbZY119dF6Hgk12X1mQ3+t+p+
+	 EBYomsA6zzKL5AKw9tfV3q8l+seUueXlC1NXgQh2AwoAhrUfg0uw/s4OTlJ+51MNFLr6g
+	 FyyRR1GJZI/DfxxlzaKG4phPJZnCMtarOqZTSKdpitCmyo+QzNL6qo17ioZWPHMs6Lo8h
+	 6q9kSrXHiPG59ztQ/lJqTQ4/aSc1hCtfPUW3XKbC96U7QB7gESsOzdSzziu2TLIhYqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FPKgNl6P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rtZrBj6g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B290F606A320;
-	Thu, 19 Nov 2026 00:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D53606A32A;
+	Thu, 19 Nov 2026 00:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FPKgNl6P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9941F000C4;
-	Thu, 19 Nov 2026 00:41:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rtZrBj6g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E471A1F000C4;
+	Thu, 19 Nov 2026 00:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048865;
-	bh=UK8r3qfxlmR5Qf13ZbeeQM2kKpNfbuxtLtf/cO+kwoE=;
+	s=korg; t=1795048868;
+	bh=v0rhIBE3WmTY/O/9ToaHq5tKpgy/W38TfkBmrxgBbQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FPKgNl6PiImNoGxzBQRSQva/4YPH/KfO33a562Hm3cuWGYvgHCtGQtGS5gK0MYzHi
-	 TjYG6ky7YfbHPfxFTLd3Ym+avAYubADu0O89oHL0o6rmCE0gbDeLxpM5VTpxhbF3rc
-	 m/MHTYSI557FSUWTT/L5nQkMteOrKqZWu6gS5CbA=
+	b=rtZrBj6g6O0EPmFDb01YgSAidP1cdOlpnuREVrWEGROUwRrAGxk2Zwp4SGrVvw+iV
+	 jKAPEW/USNCv8TcBGV0gQTSeS6A/fCZe/hEa2W9jdZRnp3TBNZyCawInY0DluLqDCS
+	 +lK3Li+KxCIF0r1cUPvWhG3FbxuJ3fKRjnqky8rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danish Khateeb <danishkhateeb03@gmail.com>,
-	Willy Tarreau <w@1wt.eu>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2147/2857] tools/nolibc: stop rounding malloc() sizes up to 4096 bytes
-Date: Wed, 18 Nov 2026 15:53:01 +0100
-Message-ID: <20261118150318.701995489@linuxfoundation.org>
+Subject: [PATCH 6.1 2121/2857] IB/isert: Dont share drop_cmd_list across concurrent connection teardowns
+Date: Wed, 18 Nov 2026 15:52:35 +0100
+Message-ID: <20261118150317.772057085@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,50 +62,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danish Khateeb <danishkhateeb03@gmail.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit b7db3ba9434cbad3d15f62500104525bfa28a304 ]
+[ Upstream commit d30e9b1bc47bd9be4b2fc97b0e4074bc02c4203a ]
 
-malloc() rounds the size of each mapping up to a multiple of 4096,
-presumably to align it to a page boundary. But the page size is not 4096
-on all architectures, and mmap() and munmap() round the length up to the
-page size themselves.
+isert_put_unsol_pending_cmds() declares drop_cmd_list as a static
+LIST_HEAD, so the list is shared across all invocations of the function.
+It is called from isert_wait_conn(), the per-connection .iscsit_wait_conn
+transport callback, which runs independently for each connection during
+teardown.
 
-Drop the rounding. As heap->len is no longer rounded up, growing a block
-with realloc() now always creates a new mapping.
+conn->cmd_lock only protects each connection's own conn_cmd_list, not the
+shared drop_cmd_list.  If two connections tear down at the same time, both
+threads list_move_tail() commands into the same drop_cmd_list without any
+mutual exclusion, and then both iterate and list_del/put it concurrently.
+This corrupts the linked list and can double-free iscsit_cmd structures.
 
-Assisted-by: LLM
-Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
-Reviewed-by: Willy Tarreau <w@1wt.eu>
-Link: https://patch.msgid.link/20260926152414.251214-2-danishkhateeb03@gmail.com
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Stable-dep-of: 2111eb4273e7 ("tools/nolibc: check for overflow in malloc()")
+Make drop_cmd_list a stack-local list, matching the pattern already used
+in isert_free_np().
+
+Fixes: 3e03c4b01da3 ("iser-target: Put the reference on commands waiting for unsol data")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260921031100.2199-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/stdlib.h | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/infiniband/ulp/isert/ib_isert.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/include/nolibc/stdlib.h b/tools/include/nolibc/stdlib.h
-index c0c3854b3f35b..059af4207c93c 100644
---- a/tools/include/nolibc/stdlib.h
-+++ b/tools/include/nolibc/stdlib.h
-@@ -113,9 +113,7 @@ void *malloc(size_t len)
+diff --git a/drivers/infiniband/ulp/isert/ib_isert.c b/drivers/infiniband/ulp/isert/ib_isert.c
+index 2e474a5d30ff5..a9cde4db403ba 100644
+--- a/drivers/infiniband/ulp/isert/ib_isert.c
++++ b/drivers/infiniband/ulp/isert/ib_isert.c
+@@ -2590,7 +2590,7 @@ static void
+ isert_put_unsol_pending_cmds(struct iscsit_conn *conn)
  {
- 	struct nolibc_heap *heap;
+ 	struct iscsit_cmd *cmd, *tmp;
+-	static LIST_HEAD(drop_cmd_list);
++	LIST_HEAD(drop_cmd_list);
  
--	/* Always allocate memory with size multiple of 4096. */
- 	len  = sizeof(*heap) + len;
--	len  = (len + 4095UL) & -4096UL;
- 	heap = mmap(NULL, len, PROT_READ|PROT_WRITE, MAP_ANONYMOUS|MAP_PRIVATE,
- 		    -1, 0);
- 	if (__builtin_expect(heap == MAP_FAILED, 0))
+ 	spin_lock_bh(&conn->cmd_lock);
+ 	list_for_each_entry_safe(cmd, tmp, &conn->conn_cmd_list, i_conn_node) {
 -- 
 2.53.0
 
