@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032698;
-	b=gc3os0x2xosQtR/nbSwA0A3MnoP0kKYDD6VkcRwHijnhadSUc/27kBXLHZAKksbLCa7Y
-	 Ik+dRrEdFLdfWuOnGqmXwO6iRAE0rJCkt7GuVmxoZPNRNPzSIcGXGV56rldlOEuHG7/wO
-	 xB1f/eU3luLlfkJc+HNg2FmVbTRikJEjoP6459Pj82HT7M7lG9Y+mcf5RvlfJLGW9MZku
-	 bB73BtXp8TOOEJ/fQSS1PTBdut22t4bfaA5kjVyRy9TnB7/VvZB2MW8JWsrihI2BJ3Ma0
-	 p8vLL6nmLf2lJbOPiabhe85a6cMkL3uLexsdTZyZu+XNJMIpxWHSdPiHIMAlFgwW2IQ==
+	t=1795032701;
+	b=nHEBd28TXDD0AyEwBBU3XBAMQrTcg9wdTeGUtA8KIOtGUFmf4pBdMuxjXpQidllcZr1h
+	 ggFbvF9Kuifg3sV/OJZulCD3n7/BqRapMpCmORZpB9UfBfKpHRL7JbaxRSEWgXQKJpgfU
+	 laV1hFeXf6Nvxjbu4ZZJEHCQYqSROFZcVXVsi1TKqfQgiGzeFWIL4WBxTPluPhWdPIcTX
+	 2gSQhb2GD3G1VBC1MBeOLNyc+xa5JwgwPBM2lGelMdmD2Naqt05Ft9UoYHibyH3dIejpr
+	 xeGHazrfcuhGBcFn0bm9qaqHw00Y449RQy8MDFm1vdbpKA2vM3zXEM7Ge+QS6wBCSTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032698;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032701;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=zDQkOqwZcZPjH6WbQkoltsJfW1MwiuG5T+fRLmBSECc=;
-	b=bGyKsGkoVPBzwsDoBaYTxXsXWNp27xkyh8HoBFnaC6pUH64rGhfA9y69gUpJhammNQzQ
-	 5lKuTwR5MFCl6CWtTcNW8q9+4g6hYl51MzZAgLJ8hY8QTPDQLaL9TWqldZyFe9Lc9IM1M
-	 NbrAmXnSpBj0MAEc6qNXDbserqB4Z+fnFhPm/NMBxfP4rUigaXSXYsXX8NQGO23m8g7Iv
-	 7OiLmz3v1XEvgvCNYYs1zUv4IjkfPk3foyXoPl8yKwe3xXFUx/eax+IXg979s6r4h8ixp
-	 fhZpsHNsrkjZonDl+jlGmKXfDeVAppuU5yEtNDh1oncp8jtMnl+VpZE0Dzus7dLVMHA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=tvsCxDyPnzE+eyc7s5F35ldRfUWHw4ZjorhQ4PgEkrY=;
+	b=YgJ/H+Xg6mo9X3uLjFnNlNpO87tQxw1RfofAlga8peK+j/FNYNJab0yriX7l/1pSxsMG
+	 0TZYbCVresOVNucSx4VCiNByIalZxIJkA73NkEdcCdOM6i9Oen28V/T8XEPpP0blx3Prj
+	 11+d8EpgxF8YoMB4UD3hVbux9XZFUtMUOcrXxDK2cIY38nf00Ssvd5rq55P4JuzSwTFt0
+	 5E/rhUHeinI33RDgGMBHz1SL1k5IN50mhB+txMbGVqIwOD6iKLWhPrSke0qgIFtIfXv2u
+	 NuhuM0UyM4pn270b0TsC8R2NOx2tGXMNwKPJuCRx2WT2/SmjUfpWfI4oPOQ5z8fP5gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=seOkzpya;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QMIMOJbC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC82606A337;
-	Wed, 18 Nov 2026 20:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604A2606A320;
+	Wed, 18 Nov 2026 20:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=seOkzpya
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4A11F000C4;
-	Wed, 18 Nov 2026 20:11:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QMIMOJbC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E45F1F000C4;
+	Wed, 18 Nov 2026 20:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032698;
-	bh=zDQkOqwZcZPjH6WbQkoltsJfW1MwiuG5T+fRLmBSECc=;
+	s=korg; t=1795032701;
+	bh=tvsCxDyPnzE+eyc7s5F35ldRfUWHw4ZjorhQ4PgEkrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=seOkzpya74UISMiZOLETRiT7AZej78C7K15UF11SW07SD5yc7pEGMh8Sa+XTOQwhx
-	 p5hQdmlFL+g3ZzdAIjAc21uixf5nJrhEBMpvycqd53CM3yZR2N9Ps+qeJouooHBCFA
-	 U9RNzd28rMyW4DRlpKXBU02VMlW7/mE3i9G9NpPg=
+	b=QMIMOJbCAOph02uMg+w0Icf//BFEkJ8SJqFos5GGHEUrEPZ0D7eBjeN2nfhwBwUI/
+	 +0iyKPNAyBxavRDm/NpkPAo5fcqmBC0Ef7qvIloBUglX9xrwllq8gA71BprvII4AWf
+	 Ro16xksUp/3FxRPURNxqJViz1yaJEZarmQdjCgnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	James Clark <james.clark@arm.com>,
-	Leo Yan <leo.yan@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	James Clark <james.clark@linaro.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1502/1756] perf cs-etm: Bounds-check CPU in cs_etm__get_queue()
-Date: Wed, 18 Nov 2026 16:00:29 +0100
-Message-ID: <20261118150108.717506662@linuxfoundation.org>
+Subject: [PATCH 6.12 1503/1756] perf cs-etm: Dont add global v0 HW_IDs to unformatted queues
+Date: Wed, 18 Nov 2026 16:00:30 +0100
+Message-ID: <20261118150108.754616383@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -65,125 +63,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 9a989e60cc6e29d98aed2087425cba53bf4b392d ]
+[ Upstream commit 31627cfb63ae4af5a233dc6ced04e5172789aa92 ]
 
-cs_etm__get_queue() indexes etm->queues.queue_array[cpu] without
-validating that cpu is within nr_queues.  When processing
-AUX_OUTPUT_HW_ID events, the cpu value comes from untrusted perf.data
-trace payload and flows through cs_etm__process_trace_id_v0_1() and
-cs_etm__queue_aux_fragment() without bounds checking, allowing an
-out-of-bounds read with a crafted file.
+In the case of mixed formatted and unformatted trace with v0 HW_IDs, or
+no HW_IDs at all resulting in the cs_etm__map_trace_ids_metadata()
+fallback, formatted queues will write their HW_IDs to unformatted
+queues. This will result in an assert because of multiple decoders on an
+unformatted queue.
 
-Add a bounds check in cs_etm__get_queue() and NULL checks in all
-callers.
+Fix it by not inserting trace ID nodes on other unformatted queues. This
+isn't an issue for v0.1 HW_IDs because they aren't global so will only
+add to their own queue.
 
-Also add NULL checks for queue_array[i].priv in the queue iteration
-loops in cs_etm__map_trace_id_v0() and cs_etm__process_trace_id_v0_1()
-— after auxtrace_queues__grow() new entries are zero-initialized so
-.priv can be NULL.  Add a get_cpu_data() NULL check in
-cs_etm__process_trace_id_v0_1(), matching the existing check in
-cs_etm__process_trace_id_v0().
-
-Fixes: 77c123f53e97ad4b ("perf: cs-etm: Move traceid_list to each queue")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Leo Yan <leo.yan@linaro.org>
-Assisted-by: Claude:claude-opus-4.6
+Fixes: 19c3e4db38c5bf30 ("perf: cs-etm: Create decoders based on the trace ID mappings")
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: James Clark <james.clark@linaro.org>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 31627cfb63ae ("perf cs-etm: Don't add global v0 HW_IDs to unformatted queues")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+ tools/perf/util/cs-etm.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index 46a34f8279ddd..e8eac34911032 100644
+index e8eac34911032..f1939ce68627a 100644
 --- a/tools/perf/util/cs-etm.c
 +++ b/tools/perf/util/cs-etm.c
-@@ -292,8 +292,11 @@ static struct cs_etm_queue *cs_etm__get_queue(struct cs_etm_auxtrace *etm, int c
+@@ -304,27 +304,27 @@ static int cs_etm__map_trace_id_v0(struct cs_etm_auxtrace *etm, u8 trace_chan_id
  {
- 	if (etm->per_thread_decoding)
- 		return etm->queues.queue_array[0].priv;
--	else
--		return etm->queues.queue_array[cpu].priv;
-+
-+	if (cpu < 0 || cpu >= (int)etm->queues.nr_queues)
-+		return NULL;
-+
-+	return etm->queues.queue_array[cpu].priv;
- }
+ 	struct cs_etm_queue *etmq;
  
- static int cs_etm__map_trace_id_v0(struct cs_etm_auxtrace *etm, u8 trace_chan_id,
-@@ -306,6 +309,9 @@ static int cs_etm__map_trace_id_v0(struct cs_etm_auxtrace *etm, u8 trace_chan_id
- 	 * queue associated with that CPU so only one decoder is made.
- 	 */
+-	/*
+-	 * If the queue is unformatted then only save one mapping in the
+-	 * queue associated with that CPU so only one decoder is made.
+-	 */
  	etmq = cs_etm__get_queue(etm, cpu_metadata[CS_ETM_CPU]);
-+	if (!etmq)
-+		return -EINVAL;
-+
+ 	if (!etmq)
+ 		return -EINVAL;
+ 
++	/*
++	 * If the queue is unformatted then only save one mapping in the
++	 * queue associated with that CPU so only one decoder is made.
++	 */
  	if (etmq->format == UNFORMATTED)
  		return cs_etm__insert_trace_id_node(etmq, trace_chan_id,
  						    cpu_metadata);
-@@ -318,6 +324,9 @@ static int cs_etm__map_trace_id_v0(struct cs_etm_auxtrace *etm, u8 trace_chan_id
+ 
+ 	/*
+ 	 * Otherwise, version 0 trace IDs are global so save them into every
+-	 * queue.
++	 * formatted queue.
+ 	 */
+ 	for (unsigned int i = 0; i < etm->queues.nr_queues; ++i) {
  		int ret;
  
  		etmq = etm->queues.queue_array[i].priv;
-+		if (!etmq)
-+			continue;
-+
- 		ret = cs_etm__insert_trace_id_node(etmq, trace_chan_id,
- 						   cpu_metadata);
- 		if (ret)
-@@ -358,6 +367,9 @@ static int cs_etm__process_trace_id_v0_1(struct cs_etm_auxtrace *etm, int cpu,
- 	u32 sink_id = FIELD_GET(CS_AUX_HW_ID_SINK_ID_MASK, hw_id);
- 	u8 trace_id = FIELD_GET(CS_AUX_HW_ID_TRACE_ID_MASK, hw_id);
- 
-+	if (!etmq)
-+		return -EINVAL;
-+
- 	/*
- 	 * Check sink id hasn't changed in per-cpu mode. In per-thread mode,
- 	 * let it pass for now until an actual overlapping trace ID is hit. In
-@@ -375,6 +387,9 @@ static int cs_etm__process_trace_id_v0_1(struct cs_etm_auxtrace *etm, int cpu,
- 	for (unsigned int i = 0; i < etm->queues.nr_queues; ++i) {
- 		struct cs_etm_queue *other_etmq = etm->queues.queue_array[i].priv;
- 
-+		if (!other_etmq)
-+			continue;
-+
- 		/* Different sinks, skip */
- 		if (other_etmq->sink_id != etmq->sink_id)
+-		if (!etmq)
++		if (!etmq || etmq->format == UNFORMATTED)
  			continue;
-@@ -396,6 +411,9 @@ static int cs_etm__process_trace_id_v0_1(struct cs_etm_auxtrace *etm, int cpu,
- 	}
  
- 	cpu_data = get_cpu_data(etm, cpu);
-+	if (!cpu_data)
-+		return -EINVAL;
-+
- 	ret = cs_etm__insert_trace_id_node(etmq, trace_id, cpu_data);
- 	if (ret)
- 		return ret;
-@@ -3192,6 +3210,9 @@ static int cs_etm__queue_aux_fragment(struct perf_session *session, off_t file_o
- 	    aux_offset + aux_size <= auxtrace_event->offset + auxtrace_event->size) {
- 		struct cs_etm_queue *etmq = etm->queues.queue_array[auxtrace_event->idx].priv;
- 
-+		if (!etmq)
-+			return -EINVAL;
-+
- 		/*
- 		 * If this AUX event was inside this buffer somewhere, create a new auxtrace event
- 		 * based on the sizes of the aux event, and queue that fragment.
+ 		ret = cs_etm__insert_trace_id_node(etmq, trace_chan_id,
 -- 
 2.53.0
 
