@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044485;
-	b=yqQ9sCBluq1iL/BAdzusigixiy95Z5+7QzG5rvf6R5qk3/wdgf8aM8/m+6+oAqRO7bLY
-	 qAFXZivu0ZVpVrkYhKJxHHP0kkcKussNZ49L7qeOcJntK1/K5banCumEZe0fhRiDqNExt
-	 GC/LMfgOh+vvSzpZ1pr4Ey15gYS+WnOiR3XMOfJoSMe7eT3lV2sb1jsSEWNg5JuVQcb0j
-	 HrQdxmvtSA81BCPzB9cEijKo5y71M1fOVweot8jOpBxv7KeXI+by+yQL0vtoo6k7v2jIE
-	 63ysec+eped7HtdZmNvwKfvcCUJMcQOPaRY+4Qft7bwQIi0GbyYwAyLY5k9zlRnzNLw==
+	t=1795044488;
+	b=qKOb2nv1EfdaXtShuI0kugXoAqbnTwIqk+CgD36WopA74ao0omIkOwkC/Ct+NUk1JOGw
+	 2c3D04F+7+PnuH5M1IT9ymFZTUGMSNt38RySPlkqCyCpaBxhz4BlafV+z4KRDkCRcw0Wt
+	 6LN7PdkNVIDX+W0MeLCuSTW17EuGA/fTG6C5vIpMwzIHXQcuGrGwrBr2gC0ibxoC4M+2C
+	 eMlHqnS7jWvR4PuHgIUYfh22Ha96+BmiZsWl7YP0qULFUjNHR2VcixongG9kXaqWzrmtk
+	 rxtEIuVqbM57fAuuHnFMNFq7eJ3Cp53B4ewkBj6S3IZ0gsB+YUQzR5CRt13MXY4IkVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044485;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044488;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h1+1yi41pBu3snOVnoztPnf88U3h77P1g0th/Rh2j5A=;
-	b=FfLhwMlFEhwc3OljIymlHpFADddpzeInu8v2FdkMc/hRsVQiGKUxephhhlKg7IHsfL6m
-	 4pMuncx/WMMa5IcMgj3qk1Q/gtVISIOb2rbDBma+Omd2fCBg1Ytvu5aBlACaaEJzBE1mh
-	 NcXelFyROSS79FHjU3GU5yntsdOUMpYY5A2YkZ6tSXQKP1wsGATenmeiQ6g0MkHI7ZwPr
-	 YHXRMgjxDweSBLx7MzlNjbd4jgoXuFMudDVAyPwFj0Qg4VO7+4E71peEQA5cz2qJFcSmQ
-	 ieunvNGPFzaeSM0Zd46EQl19cpFGdh3NQfm8OpEjM9lFf2bFGdeFDPywD1Sx+pVpO6g==
+	bh=Cs0siXlyENCqeSgUig8BILzIyj+dKYPcwmAEAu8SyOM=;
+	b=kCekVAIcMEx7niQC/hIQt7bm3A8QF/Dzrj/AZIXzMpmqe4w/BRudnCKGLfxm1i5xJuwC
+	 rCZ11fBS4lxGIEzm7vM0y+9sFiFweUam/kP5mTR1Y3++7iAJPyor26rAF7VwMatxz7c+t
+	 LVhdGNbH/IWx6ypRYDj5UlTqemwzURHaJEOYJCYW0GuOAwgFp2gbMRrBgtSB8urT74cUM
+	 0LvSSBuLX7UY2ECy06KvTy36AyX7NKotGU//1h5HFGI18C97jiIkD0GnL7qFZU99qfnWO
+	 uoHzjLleqmgDRZXFHQ66kBc0XPLEy5hrPHyIQcVFfEyuUmLt9xzGclzxDAYIsdWcrwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tjmTRjzA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hs9p01Eg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183C5606A31C;
-	Wed, 18 Nov 2026 23:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D34606A31C;
+	Wed, 18 Nov 2026 23:28:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tjmTRjzA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB371F000C4;
-	Wed, 18 Nov 2026 23:28:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hs9p01Eg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E65D1F000C4;
+	Wed, 18 Nov 2026 23:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044485;
-	bh=h1+1yi41pBu3snOVnoztPnf88U3h77P1g0th/Rh2j5A=;
+	s=korg; t=1795044487;
+	bh=Cs0siXlyENCqeSgUig8BILzIyj+dKYPcwmAEAu8SyOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tjmTRjzAMHXTCYOTyyvFCAv6zF5xGJmnkrzq+FSD8FUTvel1MnFS5DV9DYKuKYHRx
-	 VGHrXyc5v3CDjbTR5Moq/xlHW1buXmCBXgCtVkRzVPfYn2EulVBtR4/syad2S6jhIL
-	 4U+OH06paFkwdWwzv2kVRn3DX2PAFXbgI5kjBiDo=
+	b=Hs9p01EgsCcO0Aj9B+ZlhDSGm7TA0Q2iPOCBL5pMwtd8kzsg+FJDL5cViW0FxPlcw
+	 aSs9jJFMBY0hwoxB0L5mN9btgbsCzFCJ94yB67P3hO4sri4LpkPGdGXfW6Z4LPlUrl
+	 VqDV2uO3NNFIJGW8m+MdI72ahjR4QuOV06DF4bCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Johan Hovold <johan@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0585/2857] ufs: fix ufs_read_cylinder() failure handling
-Date: Wed, 18 Nov 2026 15:26:59 +0100
-Message-ID: <20261118150222.546881006@linuxfoundation.org>
+Subject: [PATCH 6.1 0586/2857] media: usbtv: drop redundant device reference
+Date: Wed, 18 Nov 2026 15:27:00 +0100
+Message-ID: <20261118150222.584250023@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,103 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Johan Hovold <johan@kernel.org>
 
-commit 0bfd3e1078c537cd66a8addb1c01835de4234a4c upstream.
+[ Upstream commit dbc6798b80481a20f9aff671bc4d529eae63c9e8 ]
 
-1) ufs_load_cylinder() should return NULL on ufs_read_cylinder() failures.
-ufs_error() is not enough.  As it is, IO failure on attempt to read a part
-of cylinder group metadata is likely to end up with an oops.
+Driver core holds a reference to the USB interface and its parent USB
+device while the interface is bound to a driver and there is no need to
+take additional references unless the structures are needed after
+disconnect.
 
-2) we drop the wrong buffer heads when undoing sb_bread() on IO failure
-halfway through the read - we need to brelse() what we've got from
-sb_bread(), TYVM...
+Drop the redundant device reference to reduce cargo culting, make it
+easier to spot drivers where an extra reference is needed, and reduce
+the risk of memory leaks when drivers fail to release it.
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Stable-dep-of: cb705f75d03e ("media: usbtv: fix null-pointer dereference on disconnect")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ufs/cylinder.c | 31 ++++++++++++++++++-------------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+ drivers/media/usb/usbtv/usbtv-core.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/fs/ufs/cylinder.c b/fs/ufs/cylinder.c
-index 5781c7db97276..b930ee1cf8530 100644
---- a/fs/ufs/cylinder.c
-+++ b/fs/ufs/cylinder.c
-@@ -26,7 +26,7 @@
-  * Read cylinder group into cache. The memory space for ufs_cg_private_info
-  * structure is already allocated during ufs_read_super.
-  */
--static void ufs_read_cylinder (struct super_block * sb,
-+static bool ufs_read_cylinder(struct super_block *sb,
- 	unsigned cgno, unsigned bitmap_nr)
- {
- 	struct ufs_sb_info * sbi = UFS_SB(sb);
-@@ -46,9 +46,11 @@ static void ufs_read_cylinder (struct super_block * sb,
- 	 * We have already the first fragment of cylinder group block in buffer
- 	 */
- 	UCPI_UBH(ucpi)->bh[0] = sbi->s_ucg[cgno];
--	for (i = 1; i < UCPI_UBH(ucpi)->count; i++)
--		if (!(UCPI_UBH(ucpi)->bh[i] = sb_bread(sb, UCPI_UBH(ucpi)->fragment + i)))
-+	for (i = 1; i < UCPI_UBH(ucpi)->count; i++) {
-+		UCPI_UBH(ucpi)->bh[i] = sb_bread(sb, UCPI_UBH(ucpi)->fragment + i);
-+		if (!UCPI_UBH(ucpi)->bh[i])
- 			goto failed;
-+	}
- 	sbi->s_cgno[bitmap_nr] = cgno;
- 			
- 	ucpi->c_cgx	= fs32_to_cpu(sb, ucg->cg_cgx);
-@@ -77,13 +79,14 @@ static void ufs_read_cylinder (struct super_block * sb,
- 		goto failed;
- 	}
- 	UFSD("EXIT\n");
--	return;	
-+	return true;
- 	
- failed:
- 	for (j = 1; j < i; j++)
--		brelse (sbi->s_ucg[j]);
-+		brelse(UCPI_UBH(ucpi)->bh[j]);
- 	sbi->s_cgno[bitmap_nr] = UFS_CGNO_EMPTY;
- 	ufs_error (sb, "ufs_read_cylinder", "can't read cylinder group block %u", cgno);
-+	return false;
- }
+diff --git a/drivers/media/usb/usbtv/usbtv-core.c b/drivers/media/usb/usbtv/usbtv-core.c
+index 2308c0b4f5e7e..275b21404dd22 100644
+--- a/drivers/media/usb/usbtv/usbtv-core.c
++++ b/drivers/media/usb/usbtv/usbtv-core.c
+@@ -91,7 +91,7 @@ static int usbtv_probe(struct usb_interface *intf,
+ 	if (usbtv == NULL)
+ 		return -ENOMEM;
+ 	usbtv->dev = dev;
+-	usbtv->udev = usb_get_dev(interface_to_usbdev(intf));
++	usbtv->udev = interface_to_usbdev(intf);
  
- /*
-@@ -166,15 +169,14 @@ struct ufs_cg_private_info * ufs_load_cylinder (
- 				UFSD("EXIT (FAILED)\n");
- 				return NULL;
- 			}
--			else {
--				UFSD("EXIT\n");
--				return sbi->s_ucpi[cgno];
--			}
- 		} else {
--			ufs_read_cylinder (sb, cgno, cgno);
--			UFSD("EXIT\n");
--			return sbi->s_ucpi[cgno];
-+			if (unlikely(!ufs_read_cylinder (sb, cgno, cgno))) {
-+				UFSD("EXIT (FAILED)\n");
-+				return NULL;
-+			}
- 		}
-+		UFSD("EXIT\n");
-+		return sbi->s_ucpi[cgno];
- 	}
- 	/*
- 	 * Cylinder group number cg is in cache but it was not last used, 
-@@ -205,7 +207,10 @@ struct ufs_cg_private_info * ufs_load_cylinder (
- 			sbi->s_ucpi[j] = sbi->s_ucpi[j-1];
- 		}
- 		sbi->s_ucpi[0] = ucpi;
--		ufs_read_cylinder (sb, cgno, 0);
-+		if (unlikely(!ufs_read_cylinder (sb, cgno, 0))) {
-+			UFSD("EXIT (FAILED)\n");
-+			return NULL;
-+		}
- 	}
- 	UFSD("EXIT\n");
- 	return sbi->s_ucpi[0];
+ 	usbtv->iso_size = size;
+ 
+@@ -119,7 +119,6 @@ static int usbtv_probe(struct usb_interface *intf,
+ 
+ usbtv_video_fail:
+ 	usb_set_intfdata(intf, NULL);
+-	usb_put_dev(usbtv->udev);
+ 	kfree(usbtv);
+ 
+ 	return ret;
+@@ -137,7 +136,6 @@ static void usbtv_disconnect(struct usb_interface *intf)
+ 	usbtv_audio_free(usbtv);
+ 	usbtv_video_free(usbtv);
+ 
+-	usb_put_dev(usbtv->udev);
+ 	usbtv->udev = NULL;
+ 
+ 	/* the usbtv structure will be deallocated when v4l2 will be
 -- 
 2.53.0
 
