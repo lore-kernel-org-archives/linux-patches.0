@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061975;
-	b=STzkLYHk+VWuFH/fqk9cTZFlEPFWP/nocjSeompZFaA49hUFklFH9YR5XvBlrCUrsqY2
-	 a14i7Hp1/pEFVIavXuxqkgONTSwtJrONxt55MhiabkATatBnKMoizmOctQQnU8bUWqQZI
-	 WjS49z4iIgVSK09I0MmpMUHA/J6PSE+Lv2jEFAsMqfgD0oOGLTSsDA89RJBFHpS3wrtAa
-	 CeccRTXw+k0Xpk7YXtQpoCjHCiTayQfIUjR01Ctj+2hIiD8JeyfMvGzeUvblxI9s3KfEg
-	 +N4g+wtJe59u/od5iruOe/dgqvHbb5Rtic1XoEifeUAGmO0f+GYB3hmXNi6s1gKWdcQ==
+	t=1795061978;
+	b=TwDBN8lkvRd+/rqkHUCdnSzYu+dlHQyJuVrFdLR6Y7LI5LsnpopHUb/CA8+TL62o/Yf2
+	 mBneRa4iBuCZXBZJyn4RfS5V04w35dUAGpg7LIJ9ETkbGA0h8WPvCSc1P/Lw1VDhYmpPq
+	 mnF62ZSox8XSeVvXRofLbJnhUhTX1/Pb6Nppp9awQwkI7Xt2B8GaldnYZQzbGDVuePGEU
+	 Rl7FF8vhemUgnyzlx7JgytIcm2zUHo/mJcUzIK7zM/ZzQJN2AKtn76upccTcErJxzMDA/
+	 okFMDEMLHuxuLOOoGV+1eduIs4p/Z94ETXn8CDJFjA2D3kBoW7hFkV8gCglNjti5ORA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061975;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061978;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SMieMC1DNueFGhcuuzHkPZrHzIvfdn3yMWyGezZhGiA=;
-	b=s4rru3Kv8G8I6BlCFdpx/bRPodsZXi+7C33y7U3JJF7UXgBIsiQUXhLCimLIzgKJ2KIR
-	 TqppmzEnKWRElygtKYwfwwWHVxyfZXVsp6xSYDDH0kY1im4Sa9Y43+CshauEiaKyBes06
-	 /z7Bc2VzyJHosZqrrmCiqTOugdeI/KJKsVTNFwCiDcoBZ5IKg1WGhLT4StA50UHab81Mi
-	 nIBckCGXQrL1l/6KlGusz9KYXkcvtPbyKvDPil++GyscW0yBeDPVHIzqzVFrQazIILVWE
-	 s5RJyczGHsBj8S6tlwD4mZmU7c6qpmiH6EIy8WXPxr27SD2/TGytbF4pYodbSKJj4Zw==
+	bh=lJQ8g6TJ73BfBs0VOc7eZwDWa4kkb8XTafWfbHJ5PMY=;
+	b=uv+SfYj2BUgCIvdboWhpKFPOtYPmvyMMTMq9u0lH3BxWB1S+5IXuE1uVQoaQCVin1+GH
+	 NcqX1LqDXj0UD3iHLyhhm0d47umtWWUl3UpB6Hr9aKvgPbAFfnnEDJPgQ/5qPtcb0HcNC
+	 cNN6WvqZPZtqDu15fRs75W5oQF7gl49yMUvpPtVIob639v5Wjjr/g7AawoFR6BKaid2j2
+	 rf87+vxg3m7DksCjBA38So5j5ZEytgf4uU2YjgyCfs4qCDC3GbbX4qrLvPwhu79CM/blh
+	 GH2Yt2CxJYlFU6x/50jbEfA7j7YE7R8Spyk7wAvJINq7gIXyDT4nLmAgtwM7oFjs/Rw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1CDOYUXD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hvSj3je2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A46606A320;
-	Thu, 19 Nov 2026 04:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB4C606A32C;
+	Thu, 19 Nov 2026 04:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1CDOYUXD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06BC51F000C4;
-	Thu, 19 Nov 2026 04:19:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hvSj3je2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC581F000C4;
+	Thu, 19 Nov 2026 04:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061975;
-	bh=SMieMC1DNueFGhcuuzHkPZrHzIvfdn3yMWyGezZhGiA=;
+	s=korg; t=1795061978;
+	bh=lJQ8g6TJ73BfBs0VOc7eZwDWa4kkb8XTafWfbHJ5PMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1CDOYUXDUCYI4i9Z2pdS/fijRIey//Eryv7Yr7iNM3wVbeqS0iMRZ+ixOMJYAvp/5
-	 6ThC5QHWK0Jo9nwIrmv/pBbw/6WwlYi+1NzmSifU3YCX+YE10FL6s/WZdWMjW/rGTC
-	 uIQhVG+0Lau3m0UNiTnDoKJA1gXgqN2aO6Pgb5z0=
+	b=hvSj3je2JM9gtbB2ZBRqJyhpS05wwIB9BM/eSAKgRLVGEtOU1j5gWWavCgFgaCE8K
+	 psLsbBKW5p+gEQxYmm6y/TMQXOj7Qpg8+PPxXyd3oHgA912PEglG3EeBGUvGz89yVa
+	 LQa7Fk0U5SjPiNpwdNQVw0aIh9834qVHAAGWqmC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Anil Kaushik <anilkaushikwireless@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1746/1848] gtp: set a valid genl command in PDP context get and dump replies
-Date: Wed, 18 Nov 2026 16:03:04 +0100
-Message-ID: <20261118150032.599523973@linuxfoundation.org>
+Subject: [PATCH 5.10 1747/1848] gtp: hold RCU for the device lookup when adding a PDP context
+Date: Wed, 18 Nov 2026 16:03:05 +0100
+Message-ID: <20261118150032.634670702@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,50 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Anil Kaushik <anilkaushikwireless@gmail.com>
 
-[ Upstream commit 758d8928d2c5d6703da827577cef86d643155236 ]
+[ Upstream commit fe3e1a42fb7eb18d8c55d714b50a3d51f8cd6ffe ]
 
-gtp_genl_fill_info() stamps the reply with the command its callers pass
-in. gtp_genl_get_pdp() and gtp_genl_dump_pdp() pass nlmsg_type, which in
-a genl message is the dynamically assigned family id rather than a
-GTP_CMD_* value, so replies to a PDP context get or dump carry a
-meaningless command number.
+gtp_genl_new_pdp() calls gtp_find_dev(), which looks the device up with
+dev_get_by_index_rcu(). Since commit e2d1baca2b33 ("gtp: remove useless
+rcu_read_lock()"), this only runs under the rtnl lock, and kernels with
+CONFIG_PROVE_RCU_LIST warn:
 
-libgtpnl ignores the command and is unaffected, but parsers that check
-it (for example the ynl tooling) treat the reply as an unknown command
-and discard it. Pass GTP_CMD_GETPDP, as gtp_tunnel_notify() already
-passes a real command on the notification path. No uapi change.
+  WARNING: suspicious RCU usage
+  net/core/dev.c:1047 RCU-list traversed in non-reader section!!
+  ...
+   dev_get_by_index_rcu
+   gtp_find_dev
+   gtp_genl_new_pdp
 
-Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
+Hold the RCU read lock around the lookup only: gtp_pdp_add() allocates
+with GFP_KERNEL, and the rtnl lock keeps the device alive afterwards.
+
+Found with the gtp selftest on a debug kernel.
+
+Fixes: e2d1baca2b33 ("gtp: remove useless rcu_read_lock()")
 Signed-off-by: Anil Kaushik <anilkaushikwireless@gmail.com>
-Link: https://patch.msgid.link/20261016093225.1036375-2-anilkaushikwireless@gmail.com
+Link: https://patch.msgid.link/20261016093225.1036375-3-anilkaushikwireless@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/gtp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index 89f46e50d817b..4112bec371024 100644
+index 4112bec371024..b5297bf6df96f 100644
 --- a/drivers/net/gtp.c
 +++ b/drivers/net/gtp.c
-@@ -1283,7 +1283,7 @@ static int gtp_genl_get_pdp(struct sk_buff *skb, struct genl_info *info)
- 	}
+@@ -1085,7 +1085,10 @@ static int gtp_genl_new_pdp(struct sk_buff *skb, struct genl_info *info)
  
- 	err = gtp_genl_fill_info(skb2, NETLINK_CB(skb).portid, info->snd_seq,
--				 0, info->nlhdr->nlmsg_type, pctx);
-+				 0, GTP_CMD_GETPDP, pctx);
- 	if (err < 0)
- 		goto err_unlock_free;
+ 	rtnl_lock();
  
-@@ -1330,7 +1330,7 @@ static int gtp_genl_dump_pdp(struct sk_buff *skb,
- 					    NETLINK_CB(cb->skb).portid,
- 					    cb->nlh->nlmsg_seq,
- 					    NLM_F_MULTI,
--					    cb->nlh->nlmsg_type, pctx)) {
-+					    GTP_CMD_GETPDP, pctx)) {
- 					cb->args[0] = i;
- 					cb->args[1] = j;
- 					cb->args[2] = (unsigned long)gtp;
++	/* the rtnl lock keeps the device alive once found */
++	rcu_read_lock();
+ 	gtp = gtp_find_dev(sock_net(skb->sk), info->attrs);
++	rcu_read_unlock();
+ 	if (!gtp) {
+ 		err = -ENODEV;
+ 		goto out_unlock;
 -- 
 2.53.0
 
