@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030273;
-	b=rhMeQ9Isls7fPJx08qRDWvYyyYdUwrrJBuJYSdu7AnnsExmkfdIcXf7rYJ/ZGy1LPvvi
-	 PCzonRrj4L7873WxMh488d9A3NTg585mq1JUFfxz25Nin07HRHqplF7rAEeYQiIqN0tPC
-	 hfq0Ul0HTaWccnfqc353654msM7Et0+Gc9dR43Mm66qosPDl71MdVUUWy40f1B+gd6B0W
-	 P088bxSI2t8wp5bHO/jPBrdiCyTq4aezyvlePgXM/vGehtkPhZRzmIx9t0Wx8+ZJP9/G/
-	 TjeNrAzE7HYLsC8rJyM2AW/f+ptAU1a6uz/ZnUmIUA+lMVSgesA2IpkRfD8R4LBH19g==
+	t=1795030275;
+	b=bKzuza3kHDPogezxx/Mitf+d1ulgue2ysqVRWc8DVup8NLtPAFsrBlI2+sBHdTfFK8mb
+	 9h+U3Ouv5gOs7vRHf2UUmNay02TWVN3Uro+l/H640GBfMEoB7uBTKoZAnFH6FIJOa2GOG
+	 NepKyWSPZ6bWmf1TV6YuDRECpbAjEK0XTMGSOHh/M42wXtWBLC4sMh/IpsEVQ9XuC6SCr
+	 OK8ZP4Tc+szTAQdOy3BPYkV0OkqGDVMHkHz9aOJQRPN0nGXum/gczvEKw+OEPdg5u72fk
+	 mLlgqmjtXSR3xAIZQV4c9Wmw5p+7TL5eis3iHqR2oDYXlMzAvU8yaXI79fIjuzxGT1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030273;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030275;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L16soS5l2TTo7nSj8OQ17gMuSIBKyt/zqlRRBSjZAow=;
-	b=0nMT2kzt1s7hLuU5zSmcQ4LFKptDxMNnF6Hi2EAV6VxhL7HEgVKbOM8mPC3ImDfmsWo4
-	 8ixPXDAP1cEUakvqP4fhJyYePto94yUL9bhIaX6p95TdEt2uk/ptBfwuota+ordwewfuu
-	 xO39unvOh04DBqDSxT4lDlxwkMTdnF4HD8IpfupD2AbIrlQjn8OrVpQLPPyr6KB3kkD7R
-	 74+SBmWABFe3TgSXwnf+q0wPM+lwrvxMhpp/WJs9uswBnl/FcO0Tjai8FbtKiOHF8r0OD
-	 4F5xNfaH+aEl3hKxRB+MXb5LoD1zEbNM96M+iUny/14KsBj8Swj0mn5HWD3+pNox9nA==
+	bh=5DIETrX015Jkresk/YHn1nxBHc68WNdSj+VwfjK8Lf8=;
+	b=QsRh7uUewgdTTTCNYc30DBCp5SkfsRD69UBsdAplks+EWSVjAfj2fq7ghdgOeC0O/qH/
+	 RYIHQPsmAXRK4BK1V1AYiz1+qasxk1Pcljh9vLLqh0er8TMoDbPm7hqtFDLLb0I6J7iWG
+	 1DshJKTxul99yI4dogohlIMVZ9FssEfsfo+HELTeG70laRqCA4Q+fylwgdSHA2dSNMNKc
+	 UE7hWLoZhQoVi0o6Mm4ZYQBpuLRIczr2N7mvor6WsFanzaYvsa3nn5dRwMNdGi6EI8Yoj
+	 +IdMEdF41VEwIEx7ebwPc3E78d4NYR893yIhIrXoHvgxykr50uEHX9qLJw7kSn4/G8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h9VVHCpr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZguEAShz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B733606A7C3;
-	Wed, 18 Nov 2026 19:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAD2606FF6C;
+	Wed, 18 Nov 2026 19:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h9VVHCpr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6368B1F000C6;
-	Wed, 18 Nov 2026 19:31:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZguEAShz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 308EC1F000C4;
+	Wed, 18 Nov 2026 19:31:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030272;
-	bh=L16soS5l2TTo7nSj8OQ17gMuSIBKyt/zqlRRBSjZAow=;
+	s=korg; t=1795030275;
+	bh=5DIETrX015Jkresk/YHn1nxBHc68WNdSj+VwfjK8Lf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h9VVHCpr4LlEBtiaHs7iDmU7JIQR34G8wmNHBWRQJXX64oqAD0s2Eu7qsVl1K7KmX
-	 FbgudpC02ccTnhFtdogA/FHmjetAkzDawYqc/lIeM9EWsQqEtlZymCAklWu0+8F/R5
-	 te+uFW8zNSHCvUtsVPd8uJV7QELx7YND6YleCgH8=
+	b=ZguEAShzrwgMMDcocGItYkzdejhLAgAR1ptC5QJ9aq73wgM8t8h3CRWO3aPFtXNLw
+	 8Xogvke2nyQ+Q19JUmQy1c7b8trIlAvRsQhOllCAtwvPqMIz5E5yQxXdN5sKuzpvy2
+	 bQVfkTItjjyv1irfZt1SrdBcW6hMSTAan9MTZBHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Adam Skladowski <a39.skl@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0644/1756] spi: rspi: Fix DMA mode when the DMA controller is built as a module
-Date: Wed, 18 Nov 2026 15:46:11 +0100
-Message-ID: <20261118150034.468255655@linuxfoundation.org>
+Subject: [PATCH 6.12 0606/1756] dt-bindings: vendor-prefixes: Add LeEco
+Date: Wed, 18 Nov 2026 15:45:33 +0100
+Message-ID: <20261118150033.085019937@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,137 +69,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Adam Skladowski <a39.skl@gmail.com>
 
-[ Upstream commit 7b85114d47f693b709b2e8e22e44cdf58c04b111 ]
+[ Upstream commit 1658af4d25bd3133d1b3403ccdda6214d40c0ebb ]
 
-On the Renesas RZ/G2L platform, the RSPI driver falls back to PIO mode
-instead of using DMA when the DMA controller driver is built as a module
-(CONFIG_RZ_DMAC=m):
+Add vendor prefix for now dead ecosystem company LeEco
 
-    renesas_spi 1004b000.spi: dma_request_slave_channel_compat failed
-    renesas_spi 1004b000.spi: DMA not available, using PIO
-
-The driver requests DMA channels through dma_request_slave_channel_compat()
-which returns either a valid pointer or NULL and cannot handle
--EPROBE_DEFER. If the DMA controller has not probed yet, the driver falls
-back to PIO directly.
-
-Fix this by replacing the dma_request_slave_channel_compat() call with a
-regular dma_request_chan() call. dma_request_slave_channel_compat() is
-always passed a NULL fn_param in all code paths, so it actually behaves
-like a plain dma_request_chan() call.
-
-Fixes: e825b8dd2b36 ("spi: rspi: Add DT support to DMA setup")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Link: https://patch.msgid.link/20260921195943.107247-1-ovidiu.panait.rb@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260821-next-patches-v5-1-ec81cee63e09@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-rspi.c | 49 ++++++++++++++++--------------------------
- 1 file changed, 19 insertions(+), 30 deletions(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/spi/spi-rspi.c b/drivers/spi/spi-rspi.c
-index 77809e3a5dba7..81323671a7e99 100644
---- a/drivers/spi/spi-rspi.c
-+++ b/drivers/spi/spi-rspi.c
-@@ -22,7 +22,6 @@
- #include <linux/of.h>
- #include <linux/pm_runtime.h>
- #include <linux/reset.h>
--#include <linux/sh_dma.h>
- #include <linux/spi/spi.h>
- #include <linux/spinlock.h>
- 
-@@ -1091,24 +1090,15 @@ static irqreturn_t rspi_irq_tx(int irq, void *_sr)
- 
- static struct dma_chan *rspi_request_dma_chan(struct device *dev,
- 					      enum dma_transfer_direction dir,
--					      unsigned int id,
- 					      dma_addr_t port_addr)
- {
--	dma_cap_mask_t mask;
- 	struct dma_chan *chan;
- 	struct dma_slave_config cfg;
- 	int ret;
- 
--	dma_cap_zero(mask);
--	dma_cap_set(DMA_SLAVE, mask);
--
--	chan = dma_request_slave_channel_compat(mask, shdma_chan_filter,
--				(void *)(unsigned long)id, dev,
--				dir == DMA_MEM_TO_DEV ? "tx" : "rx");
--	if (!chan) {
--		dev_warn(dev, "dma_request_slave_channel_compat failed\n");
--		return NULL;
--	}
-+	chan = dma_request_chan(dev, dir == DMA_MEM_TO_DEV ? "tx" : "rx");
-+	if (IS_ERR(chan))
-+		return chan;
- 
- 	memset(&cfg, 0, sizeof(cfg));
- 	cfg.dst_addr = port_addr + RSPI_SPDR;
-@@ -1121,7 +1111,7 @@ static struct dma_chan *rspi_request_dma_chan(struct device *dev,
- 	if (ret) {
- 		dev_warn(dev, "dmaengine_slave_config failed %d\n", ret);
- 		dma_release_channel(chan);
--		return NULL;
-+		return ERR_PTR(ret);
- 	}
- 
- 	return chan;
-@@ -1130,29 +1120,23 @@ static struct dma_chan *rspi_request_dma_chan(struct device *dev,
- static int rspi_request_dma(struct device *dev, struct spi_controller *ctlr,
- 			    const struct resource *res)
- {
--	unsigned int dma_tx_id, dma_rx_id;
-+	struct dma_chan *chan;
- 
--	if (dev->of_node) {
--		/* In the OF case we will get the slave IDs from the DT */
--		dma_tx_id = 0;
--		dma_rx_id = 0;
--	} else {
--		/* The driver assumes no error. */
-+	if (!dev->of_node)
- 		return 0;
--	}
- 
--	ctlr->dma_tx = rspi_request_dma_chan(dev, DMA_MEM_TO_DEV, dma_tx_id,
--					     res->start);
--	if (!ctlr->dma_tx)
--		return -ENODEV;
-+	chan = rspi_request_dma_chan(dev, DMA_MEM_TO_DEV, res->start);
-+	if (IS_ERR(chan))
-+		return PTR_ERR(chan);
-+	ctlr->dma_tx = chan;
- 
--	ctlr->dma_rx = rspi_request_dma_chan(dev, DMA_DEV_TO_MEM, dma_rx_id,
--					     res->start);
--	if (!ctlr->dma_rx) {
-+	chan = rspi_request_dma_chan(dev, DMA_DEV_TO_MEM, res->start);
-+	if (IS_ERR(chan)) {
- 		dma_release_channel(ctlr->dma_tx);
- 		ctlr->dma_tx = NULL;
--		return -ENODEV;
-+		return PTR_ERR(chan);
- 	}
-+	ctlr->dma_rx = chan;
- 
- 	ctlr->can_dma = rspi_can_dma;
- 	dev_info(dev, "DMA available");
-@@ -1380,6 +1364,11 @@ static int rspi_probe(struct platform_device *pdev)
- 	}
- 
- 	ret = rspi_request_dma(&pdev->dev, ctlr, res);
-+	if (ret == -EPROBE_DEFER) {
-+		dev_err_probe(&pdev->dev, ret,
-+			      "failed to request DMA channels\n");
-+		goto error2;
-+	}
- 	if (ret < 0)
- 		dev_warn(&pdev->dev, "DMA not available, using PIO\n");
- 
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 3db3503567422..10038744243b2 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -822,6 +822,8 @@ patternProperties:
+     description: Shenzen LC Technology Co., Ltd.
+   "^leadtek,.*":
+     description: Shenzhen Leadtek Technology Co., Ltd.
++  "^leeco,.*":
++    description: Leshi Holding Beijing.
+   "^leez,.*":
+     description: Leez
+   "^lego,.*":
 -- 
 2.53.0
 
