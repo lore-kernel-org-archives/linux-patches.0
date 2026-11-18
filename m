@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051558;
-	b=4CweMRzvB1Ngx0zacRDq3e0x6wJ9oY6C9ggWptZkJZQbIg/IswD+iWunbCD7PeGSP86B
-	 rHx8JAHz+uTatBMFdd+tOErJZTxN/fbVYZ83FpDU5XI9r3GmK2axL8kx1Nz0AJEReAmRE
-	 qFhep6PV551t6BUppYquzE7KzuEge4qVqAyJUC+NAIXj+oJBHgrRt8V53YFMtTNlhImmP
-	 J668AtO9raO72b2GplG6G7YqfFsfZXQcsEovc/i5NHywJAI76oZMOjnOdwZp1/EtfMAkf
-	 P72dA/eP8sjv4jpi2lPHeCHoUMezMpco/PEeVIdl6bpSSZ+7zIKn6NalsXZo/awckWQ==
+	t=1795051561;
+	b=vrSq9I8f7fMrtvWG5o6zdpRyc3P+4Cz1nXPB94yV0OrMw8nukgghfHRigYBe/Vmhc8Ui
+	 RT6MrtxV9f5Q4TYlbHg6kes+kdqhyT5HkANsQfbRsaebvo8qUpcRh+rPETXJ47eKxAPNK
+	 S7u8NgNc7HmuVVXNE8BYhq5H/iIfxDR7pL9rx1R0ygTERRPvKemaP/hBJNYF0VOubbvg4
+	 oGEMTcMJv4pQXKksVvqP+2hwUApvnUuyPG4lOHpkmKKfuIXED6gkGj8l1Z6GRy6IybH+M
+	 aQqch3d5z6OR55oNdLKZQvahqgcXYuUn3NQBDAlOe156MEDgBMMsYbmF32QYY+of3Yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051558;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051561;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YyTAHO7PiFOulGjoZIzT105xEbKKzQPvw9cMtPJT2zA=;
-	b=nVzYeDoI5YoMgxZHdw6RymmCICuhnQI5DfOGSpcz0z9CuDpSd228H5J5Nf6kpmlss5cl
-	 Q7RNAtDif6n+QxtjU8syWM7Z87ck4tBS30y610j3Dz3PfnEu+v9cuuAU3CNNuuXShoCX2
-	 SFxm6cc7ypXGhmMAeF8gT4IxpABUriRpfhFxC8O9gVLFceh/izT92gNQZjEr/mYYE9SY/
-	 TpIGMX2GrSqZvZMtGH6MsS0YcANTB/omR4rFG/Cqp7BZH6T0xbCWjvg32VRfpPfYP6krG
-	 0l/xN+zp2BszpQBwHrc3vO7i3PtlJ4bjNDw3TE+ZwbdBNjUFM12dO80Hox4yG3ebcHg==
+	bh=GeYIlaIiteytlZf5K/ZsV8INgEWaN0ow/5zgPpsgGCA=;
+	b=Pwt2UD870oWNV0awz1BT0ZKJkyHFUQlTGsJNqubHf2n+a3IOqFJAYulGR3g+uk4zzjdt
+	 s4fTqd7GnwYAdt1DypFDs4Yo7RrcRBV//nQvz8l5zEJNGOZwKO4OpvoR8Qh3BzEtJms90
+	 syrIdIOX97wsUGyl4oyBosWP4icNZbJeLqMM5YCTTOmKyVAwSXx/9ktgLahNX3Ov/sr+M
+	 o+zyc+tPs8iZa+RN7ifmq5eyr728SEdmsmeifBcTjN/tN8MbAPVOFfSFEjlcUZaVig1nE
+	 VRjkeD8uTx60h7fhNqXdKbe65V9WqocqHpMcdoTlhR47nHjRc0nKPFetoapFpOwN4Zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McRiUMG1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rxCMWjJL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD58606A320;
-	Thu, 19 Nov 2026 01:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D085606A31C;
+	Thu, 19 Nov 2026 01:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McRiUMG1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54B21F000C5;
-	Thu, 19 Nov 2026 01:25:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rxCMWjJL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30791F000C4;
+	Thu, 19 Nov 2026 01:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051558;
-	bh=YyTAHO7PiFOulGjoZIzT105xEbKKzQPvw9cMtPJT2zA=;
+	s=korg; t=1795051561;
+	bh=GeYIlaIiteytlZf5K/ZsV8INgEWaN0ow/5zgPpsgGCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=McRiUMG1XLH/yZldYwNtP83QAMWdy+nNOzy7GEgq3yoeTtEGWnUpQWS+J+qGmCvgq
-	 E2Re2NIruHgITR4HHhrlhIYRozWagz+i5TGGh+pX2mZCqOhjBXm/yYqSNRhbIxW48C
-	 Apn8FPDsOpN4cSzP8d5Drls4eP1o1eAW6FDPgbc4=
+	b=rxCMWjJL4YEO55YfRDJ89y4NYG7/IaJLlhuM8/bZcvbVPFp6FE2z5ytHWq0HJqwHD
+	 dCQQEaiBD8LLkGOa2zdihcPyA38TnEa9+dsU/FbV2Qez0iCj7LktPKgY2D4/UBgF6H
+	 kAmIcvAZrL0BDpgcfnUX6sGX9zxXLbEBrkIM8xJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinhard Speyerer <rspmn@arcor.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eckhart Mohr <e.mohr@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0249/2214] net: usb: qmi_wwan: add Rolling Wireless RN947R
-Date: Wed, 18 Nov 2026 15:32:05 +0100
-Message-ID: <20261118150020.116501500@linuxfoundation.org>
+Subject: [PATCH 5.15 0250/2214] ALSA: hda/realtek: Add quirk for ASRock NUC BOX-358H
+Date: Wed, 18 Nov 2026 15:32:06 +0100
+Message-ID: <20261118150020.155459768@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,64 +69,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Reinhard Speyerer <rspmn@arcor.de>
+From: Eckhart Mohr <e.mohr@tuxedocomputers.com>
 
-[ Upstream commit 7375d38364a9aa66fb31716bcefef38aecad75d8 ]
+[ Upstream commit 9a44b828dd7c0be1d0d6d6cf178d9727ceb6da6e ]
 
-Add Rolling Wireless RN947R 0x9300 composition:
+Fix headphone jack detection for some devices
 
-DIAG + ADB + NMEA + MODEM + RMNET + QDSS + ADPL
-
-T:  Bus=01 Lev=01 Prnt=01 Port=02 Cnt=02 Dev#=  6 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=33f8 ProdID=9300 Rev= 0.00
-S:  Manufacturer=Rolling Wireless
-S:  Product=RN947R
-S:  SerialNumber=xxxxxxxxxxx
-C:* #Ifs= 7 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 8 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#=21 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#=22 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=8a(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
-Link: https://patch.msgid.link/arZzuOOvLUZtdOlv@arcor.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Eckhart Mohr <e.mohr@tuxedocomputers.com>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Link: https://patch.msgid.link/20261001183403.103990-1-wse@tuxedocomputers.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
+ sound/pci/hda/patch_realtek.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index 3675f4f5db13e..a6b220488ec0c 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1445,6 +1445,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_FIXED_INTF(0x2692, 0x9025, 4)},    /* Cellient MPL200 (rebranded Qualcomm 05c6:9025) */
- 	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
- 	{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
-+	{QMI_QUIRK_SET_DTR(0x33f8, 0x9300, 8)}, /* Rolling RN947R RMNET */
- 	{QMI_FIXED_INTF(0x2dee, 0x4d22, 5)},    /* MeiG Smart SRM825L */
- 	{QMI_QUIRK_SET_DTR(0x2dee, 0x4d63, 0)}, /* MeiG SRM813Q w/ Modem(PPP) */
- 	{QMI_QUIRK_SET_DTR(0x2dee, 0x4d64, 0)}, /* MeiG SRM813Q w/ NMEA */
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 4e403d3696f3d..68c1db02894b4 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9688,6 +9688,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x9e56, "Lenovo ZhaoYang CF4620Z", ALC286_FIXUP_SONY_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1849, 0x0269, "Positivo Master C6400", ALC269VB_FIXUP_ASUS_ZENBOOK),
+ 	SND_PCI_QUIRK(0x1849, 0x1233, "ASRock NUC Box 1100", ALC233_FIXUP_NO_AUDIO_JACK),
++	SND_PCI_QUIRK(0x1849, 0x6256, "ASRock NUC Box 358H", ALC233_FIXUP_NO_AUDIO_JACK),
+ 	SND_PCI_QUIRK(0x1849, 0xa233, "Positivo Master C6300", ALC269_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x19e5, 0x3204, "Huawei MACH-WX9", ALC256_FIXUP_HUAWEI_MACH_WX9_PINS),
+ 	SND_PCI_QUIRK(0x19e5, 0x320f, "Huawei WRT-WX9 ", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
 -- 
 2.53.0
 
