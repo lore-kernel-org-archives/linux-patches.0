@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026597;
-	b=4zir04ZdZYoyFlEueCR+iZyb3oXWh/QcoENV9eTtO6BDEr6WQQI+nuvAbCsAHLtNfKG5
-	 hCAoY/GYlLrJUE8V4C6F9olJcolh/mgEtNd//oar1gGbxXSPrgZY4GP8j4CGfBMXGA6qS
-	 A0YCHBTiwpS0o6h4xS3gmmKKMJcnfPNw8KpNgHvJ1VQEEkvWG+FLNI3hAg3Del4Cc/DvF
-	 2QXeCmOs1MGIqEw3IYR6Q7fgaRD7MDRFFUB3Fy+9cnDGh09NzRN3LUGBvkg+xgGr4TfL+
-	 D3VBg4t11W1VMHuAdwytZmuo4DFtO+kj+qCnC4fnBTHbmncTcq3vHewo+espgMxw+bw==
+	t=1795026600;
+	b=JHt+yOr9UMwxsqfYYOz4gfGVPHqirZsFqlKgHZLGjgerLkZSpMjo6oEmL2QXcfvgZqBe
+	 vuempIE8397Q4DHtIAo1/WCYC1UfD+PgqWu0g/byneMNMxQGX47FH+x3yYLCfp+Rcs/mN
+	 byWBrJCRoSOSO+2NFAHdOSGue0FUgHErszFp3tMANzpa5BMe111J0ZKK4a1Gpacx6TW3f
+	 GcC4jnBMPMD2q8TBkGLz+0HiklsdGWrpDS8+GYuYzRryizzp3dO6IsPbnofEkOYdhLPnp
+	 v9gv/w003RMWCCt5kv51Z0J3XnlfZ12dUBSGGHgk5PHEMTYqoKwLSyt7On7D1LPl9gA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026597;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026600;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RR8Ase3I9bj4ZCPTGGavuqTq7dz+6HsqDvW/xgWL0kI=;
-	b=G2zaUGw27PKA+7RC3UU3wyMYEm2ITN1lAetm2HtygHIcwcD7zL1AF9SmIlFEByxRSRi9
-	 STBvBM5WS70XQFUcitgKXZnuNQmcZk2axiZao4AbquzFpPlNCCF5etHKhlwUinxS898O7
-	 kcpcCUcCgKK0GG6y4tmD3BJevd6yLZoQQiuUl+8bpdxR9RkxEwk+sVGmLmtRRpr0dlRna
-	 +uZuId0nrdfbYDdpdhZqCsb+afkXGif52PaP5e2Y4yftsMYRfZpYlohMmStQjwNZwhdio
-	 IuAKVFmhFiCAm9O6LoT+vmEe3pHLosOS1Uw1VO948pyd5fvoj1pjaotRAC4ehTBb5nw==
+	bh=en0UV0sPCXNI01df+65K/Jw1rbBapkwydHEdvIJ+pX0=;
+	b=jEzEa0Es4dBbmNpoyhK/2QMa0Z07MFAfBg7/xEp4RrpdvY6MM1bh/D2GxZRAmSTPdC5m
+	 ovn+Iq2T6boJ3kkX/P2Z2TLipLls1+na55tSkFKUuRWP4uHru3ZZdTS9keTrqVU4YdHsf
+	 L6iHKnmflUyP5VU+tmlxXI64tMzSA/QnBXz2VOQK57d/yK2orG5QzyWC/0MYbSU2X9jBQ
+	 KQmFk3w8pj4jxEXB9J+Y54dWd/IdJACCH+iEZZtOMEEhv7sYDG5UM4eqYPO1ulhuCZkpZ
+	 VtA2X5iXRg0/dCHhTh5SLW3QIIRaZ8tfyBhBMR81mdsTggGbzuHSelmzIGZJn7hPAXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eg1cliOo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AxNMxgeD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C0B606A31C;
-	Wed, 18 Nov 2026 18:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED874606A31C;
+	Wed, 18 Nov 2026 18:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eg1cliOo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BDB1F000C4;
-	Wed, 18 Nov 2026 18:29:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AxNMxgeD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F1A51F000C4;
+	Wed, 18 Nov 2026 18:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026597;
-	bh=RR8Ase3I9bj4ZCPTGGavuqTq7dz+6HsqDvW/xgWL0kI=;
+	s=korg; t=1795026599;
+	bh=en0UV0sPCXNI01df+65K/Jw1rbBapkwydHEdvIJ+pX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eg1cliOoO5VpUCmZNbR1TLqiiX7ZPIrDzNt6Ryb7hZESeqwZe9w/VHekbbuyXsVhK
-	 Kc6+IRq8WjljFG2HX4T5mi5OsarOP6r/fT4LKn5HXSmQ7kC/DR9iENWBnkpZWZAwh2
-	 dKKBx2COnB1wbuPn20Gk1GYTLwD6iI9IG+yYNfbo=
+	b=AxNMxgeDeBGPPdveQH9VeHlY7bbAMPAtZOGqAx6jZISVjTTdnjymsNPWjd8cYNynp
+	 AgqSq5CFzRgM9crvwtOLlXWKX24rYaK/SnjNu4Y0piIwyYsfk6nrYTZED8nqkrpHQG
+	 ZLBfpVN0FoLD/Od8xdKyaN4QI13UaR0HzVZovBng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Endrik Einberg <git@endrik.dev>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1492/2151] wifi: iwlwifi: mvm: fix the VHT MCS sent to a v1 firmware
-Date: Wed, 18 Nov 2026 15:53:47 +0100
-Message-ID: <20261118150216.224532983@linuxfoundation.org>
+Subject: [PATCH 6.18 1493/2151] wifi: iwlwifi: mld: include VI packets in low latency detection
+Date: Wed, 18 Nov 2026 15:53:48 +0100
+Message-ID: <20261118150216.261808504@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,40 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Endrik Einberg <git@endrik.dev>
 
-[ Upstream commit a2f60db1c1514c7d083b5c0c8b9510b1adf0cc2c ]
+[ Upstream commit 3627924ed81fd7783394fb2555ea179c6606a231 ]
 
-When converting a v3 rate to the v1 format, the MCS index was read
-from the mask of the NSS field and written into the mask of the MCS
-field. This is obviously wrong, we must not mix the NSS and the MCS.
+iwl_mld_is_vo_vi_pkt() checks whether the mapped access category
+is less than IEEE80211_AC_VI.
+Since mac80211 defines IEEE80211_AC_VO as 0 and IEEE80211_AC_VI as 1,
+this only matches voice traffic and excludes video traffic.
 
-Fixes: 3592c0083fb2 ("wifi: iwlwifi: mvm: fix beacon template/fixed rate")
-Assisted-by: LLM
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20261011140453.dfca0c8b560a.I7a3e1f0e91f0d0c6f4c5f1e6a33dc7c0c5e9ad11@changeid
+Synthetic video-priority UDP traffic does not automatically
+activate low-latency mode, whereas voice-priority traffic does
+
+Include IEEE80211_AC_VI as intended.
+
+Fixes: d1e879ec600f ("wifi: iwlwifi: add iwlmld sub-driver")
+Signed-off-by: Endrik Einberg <git@endrik.dev>
+Link: https://patch.msgid.link/20261005144225.170280-1-git@endrik.dev
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/utils.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mld/low_latency.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/utils.c b/drivers/net/wireless/intel/iwlwifi/mvm/utils.c
-index 2931a8d5ccc96..557c16d4e609d 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/utils.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/utils.c
-@@ -1372,8 +1372,8 @@ __le32 iwl_mvm_v3_rate_to_fw(u32 rate, u8 rate_ver)
- 	case RATE_MCS_MOD_TYPE_VHT:
- 		result = RATE_MCS_VHT_MSK_V1;
- 		result |= u32_encode_bits(u32_get_bits(rate,
--						       RATE_VHT_MCS_NSS_MSK),
--					  RATE_MCS_CODE_MSK);
-+						       RATE_MCS_CODE_MSK),
-+					  RATE_VHT_MCS_RATE_CODE_MSK);
- 		result |= u32_encode_bits(u32_get_bits(rate, RATE_MCS_NSS_MSK),
- 					  RATE_VHT_MCS_NSS_MSK);
- 		break;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/low_latency.c b/drivers/net/wireless/intel/iwlwifi/mld/low_latency.c
+index 23362867b4006..780ca5a8bcc82 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/low_latency.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/low_latency.c
+@@ -254,7 +254,8 @@ static bool iwl_mld_is_vo_vi_pkt(struct ieee80211_hdr *hdr)
+ 	if (tid >= IWL_MAX_TID_COUNT)
+ 		return false;
+ 
+-	return tid_to_mac80211_ac[tid] < IEEE80211_AC_VI;
++	return tid_to_mac80211_ac[tid] == IEEE80211_AC_VI ||
++	       tid_to_mac80211_ac[tid] == IEEE80211_AC_VO;
+ }
+ 
+ void iwl_mld_low_latency_update_counters(struct iwl_mld *mld,
 -- 
 2.53.0
 
