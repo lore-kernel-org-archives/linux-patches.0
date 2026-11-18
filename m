@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021628;
-	b=2XbyGO3RQeKZWYv/j/wHzsZthZ/xlpRoivN6rexKiHYPcmRR0+7IiNIyM2IZ6jKrjHjZ
-	 h+DPOYtKbw0vordG/VLlqQuErV3Bo7b685ai5mN//aJi3mhltkLEyD8dLgDekGTDxvLNY
-	 N8GS34Ez/kBy19V4ajALlsdaAPYTerJZRWXLa9LnSGES2LIfz1UxJ77pMZtISJ7UKbOGT
-	 snIi+JWYVx9wZ7Y+OARl8eyiN47YX+dwPVMbcgsswwlcRKDvB4x1fEsVzgyXGX0Gp2y4z
-	 KZUqNoxdYFuB45F3wTh4nNej2W49r0p3Yv29fWHtJI0X9Nexeb0ua5C8AMvjxfG13Eg==
+	t=1795021631;
+	b=Xln/bmGJKZP7w6XMb5BWVoDTRgJcesjhizrXRR84yol9d8dyausKkLhJIq7HB46DRsbc
+	 5d1lMMVs8QvmhJ9St9gROvuAFJnWwK0VCsCNk4wFK3kwCYjFusRamaY1VoUbwi5fdiqbz
+	 2yTC6+0J6YDtkFxU0nvxkWEt1VVCxyLgyJUpJ06qHtIGKEAeh7YaMF0u1GvIT1ChWMJNq
+	 +X29K1H1/gHYynzhYVs53MlSHQE+b0BEgu8fa4+mRRhtls6ZrHqfbbdidLh+ss6jPLCHF
+	 70mCl7YRwer1rqKIieb+3YSwLX3IzQ83lhOamr4w9xU73T0UzmQ/zjZMQ0AAdykid8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021628;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021631;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vvdrgGHa/bdabSGnkONfZyQKR1EtZVwUFnYG7pB03cU=;
-	b=fpUFi3cqkhgMbrSzQVxVhVrrQ2eMSCdSX8cGGJI7LpwWbL91rgABlCUk8DPG7pHJBU5l
-	 AKkS3Qtmr9qTcRY23hW30FFLZifysHIr49zwSTFeOmSrglOA0ECSUlYQELBkJ7BD5rub1
-	 lsrrs+RB4ONPp4epjQOVTuGkCMLYXFm6lCrAwdhzj9JBSOp/Ibb83d7073wcJ+yxx8aru
-	 tANzMbrOF0ePRGnnn4nknVGm50pW+yd5KR7YDKA3bPFFoH23s+dAi8HFgT6xBp2XEqZFk
-	 o6ZLrfJBoneuqvvCU3Ukevfv203qiRp3M1LfMCxWnbNSbAfXINK5H4u1mFptbPPsC+g==
+	bh=yz+KQdXZpUBTZ4aDwixfpyxtAMtr1lpxYDAHfHmWN0Q=;
+	b=SjUwpynf6swXeccRhOVpTfe7WQSijpCsI3J1Y7HGyA0gdOnzwjp8GGV/74HftAMG6SVy
+	 S5C8nFCsTozglJASYwdLR9a/z7PVH8fKkZoz4lhxZZ5J03rd0bz7U1kywmaFvl0ZThFq4
+	 4BMv819WxBTkx9VUHlORZIxcEGeUJHuuKIBpxP7gKfPhc82fnAcYmKcmoJVOmiyQIYIVd
+	 7fUdx2u6ZuP2WoiqIdRfOgj2UG5pZ5XdCHM8VoEM9xjcLQdPhb698MJCQJe/IpPMtqNGT
+	 JBG/9I7KTFjne9dZekUb4SsT45GnOaJR+xvyVn2PvQHKZz7SUkL+uxR7b2KYknoW6gA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="twCYH/1B";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MUhhIQG9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C528D606A331;
-	Wed, 18 Nov 2026 17:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9C1606A32A;
+	Wed, 18 Nov 2026 17:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=twCYH/1B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211261F000C4;
-	Wed, 18 Nov 2026 17:07:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MUhhIQG9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA591F000C4;
+	Wed, 18 Nov 2026 17:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021628;
-	bh=vvdrgGHa/bdabSGnkONfZyQKR1EtZVwUFnYG7pB03cU=;
+	s=korg; t=1795021631;
+	bh=yz+KQdXZpUBTZ4aDwixfpyxtAMtr1lpxYDAHfHmWN0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=twCYH/1BNIc9OxIpksofN79VKe4Wv1GeX43kzuTr3fySEAO5E7QYbXJvXf0JhJ3Qd
-	 ryTlnLCQgPfFx3ylSgUxir38EEpm/sjpb1iw6mm8CUWtljvjRrFY/yexCK7PFw6aK+
-	 bVhHu9v6BN8cmDxfXFCA/4OYch4Ld9ABNmOVw8E0=
+	b=MUhhIQG9JUbNtz5cx4AOex6V0t2pIhRDkve51iPlhEBE/f0IwllHp3yTZkshVzOO8
+	 ou32JAYwdnAXqxB6NfDsO6q8cHxiO8oxjK07BtbtXTEJABCwOniyVZU+nEFz0oRpRn
+	 Uzo7tCAlaqfNi/FvQc9EEF+0HMzwG4THcZ2pRAxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Simon Horman <horms@kernel.org>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Antoine Tenart <atenart@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2376/2651] net: sparx5: fix tx DCB index drift in fdma xmit
-Date: Wed, 18 Nov 2026 16:00:16 +0100
-Message-ID: <20261118150411.022229282@linuxfoundation.org>
+Subject: [PATCH 7.3 2377/2651] selftests: gro: remove unused variable total_data
+Date: Wed, 18 Nov 2026 16:00:17 +0100
+Message-ID: <20261118150411.051359704@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,64 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Hangbin Liu <liuhangbin@kylinos.cn>
 
-[ Upstream commit 1df26063ab9ba64f5fb11049fa4be686b7fc309e ]
+[ Upstream commit 86537a8fb24750fc25a96a27ff29400054d052b5 ]
 
-sparx5_fdma_xmit() advances dcb_index before checking that the FDMA is
-done with the DCB, and does not undo the advance when the check fails.
-Before commit f4aa7e361ae2 ("net: sparx5: use FDMA library for adding
-DCB's in the tx path") the next DCB was always the one after last_dcb.
-Since then dcb_index drifts one DCB further away from last_dcb on every
-failed transmit.
+I hit a build warning when building the net selftests.
 
-While the ring is full, this drops frames even though completed DCBs
-sit behind dcb_index. After a run of failures, dcb_index can also land
-on last_dcb itself. Re-adding last_dcb loses the frame, because the
-FDMA has already passed the tail of the chain, and that DCB is never
-completed again.
+  gro.c: In function 'check_capacity_pkts':                                                                                                                                                                                     gro.c:1249:13: warning: variable 'total_data' set but not used [-Wunused-but-set-variable=]
+   1249 |         int total_data = 0;
+        |             ^~~~~~~~~~
 
-Fix this by making dcb_index the next DCB to use, and advancing it only
-after the DCB has been added, as the rx path does. dcb_index and
-last_dcb now only move together, so dcb_index always points at the DCB
-after last_dcb.
+Remove the total_data variable, as it is no longer used.
 
-The issue was found by an AI code review agent. It was reproduced on a
-sparx5 PCB135 board with a modified kernel that forces 63 consecutive
-transmit failures. Afterwards, about 1 in 64 frames is lost for good.
-With the fix, the same test loses no frames.
-
-Fixes: f4aa7e361ae2 ("net: sparx5: use FDMA library for adding DCB's in the tx path")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261021-sparx5-fdma-last-dcb-v2-1-7b8fabdb9239@microchip.com
+Fixes: d97348474708 ("selftests: drv-net: gro: always wait for FIN in the capacity test")
+Signed-off-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Reviewed-by: Antoine Tenart <atenart@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261022-self_unused_var-v1-1-8ab10a6b7f44@kylinos.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/lib/gro.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c b/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c
-index dbe86f937b210..15ec9b053824f 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c
-@@ -217,7 +217,6 @@ int sparx5_fdma_xmit(struct sparx5 *sparx5, u32 *ifh, struct sk_buff *skb,
- 	struct fdma *fdma = &tx->fdma;
- 	void *virt_addr;
+diff --git a/tools/testing/selftests/net/lib/gro.c b/tools/testing/selftests/net/lib/gro.c
+index 7a333155de1ab..1bc92e7a625f3 100644
+--- a/tools/testing/selftests/net/lib/gro.c
++++ b/tools/testing/selftests/net/lib/gro.c
+@@ -1246,7 +1246,6 @@ static void check_capacity_pkts(int fd)
+ 	int coalesced[num_flows];
+ 	struct tcphdr *tcph;
+ 	int ip_ext_len = 0;
+-	int total_data = 0;
+ 	int pkt_size = -1;
+ 	int data_len = 0;
+ 	int flow_id;
+@@ -1309,7 +1308,6 @@ static void check_capacity_pkts(int fd)
+ 		}
  
--	fdma_dcb_advance(fdma);
- 	if (!fdma_db_is_done(fdma_db_get(fdma, fdma->dcb_index, 0)))
- 		return -EINVAL;
+ 		num_pkt++;
+-		total_data += data_len;
+ 	}
  
-@@ -235,6 +234,8 @@ int sparx5_fdma_xmit(struct sparx5 *sparx5, u32 *ifh, struct sk_buff *skb,
- 		     FDMA_DCB_STATUS_BLOCKO(0) |
- 		     FDMA_DCB_STATUS_BLOCKL(skb->len + IFH_LEN * 4 + 4));
- 
-+	fdma_dcb_advance(fdma);
-+
- 	sparx5_fdma_reload(sparx5, fdma);
- 
- 	return NETDEV_TX_OK;
+ 	/* Check flow ordering. We expect to see all non-coalesced first segs
 -- 
 2.53.0
 
