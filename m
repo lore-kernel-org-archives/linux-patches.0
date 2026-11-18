@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054854;
-	b=XfkT00ke/699+IrdDZRkoacWJShuPrtIiZNx1lta0GfSHgVkRwo8XgnpB1PL+cBUduY8
-	 eNLi0nEnMkxA0+KjRc9gjbcS2JMCau6+QjD9VZ+MeMeTyu8tio+SRoai8x+j85R1YS0yE
-	 c1BqzEnfcbXUx2nG+StPl17WMiAuY1TH5NZRmZAg4CeHYlcCwouIUMBizxLPOwMCpiaV5
-	 ACmVRtrJYmPOb58D0VDtv5pnTnh/Uzx2zsHCXNybsv5YCe2u2fvrM6pV6QXFeiebwViDA
-	 XLdjTmGmEaz048Fy+Y/vMWgrR3U7+lSx360UApJduAPf6nuvNRgZpHE4BVwrjaRLe6w==
+	t=1795054857;
+	b=AWhhQoW72MauYkgxSDV2pqxOv6k1mkehKkpMN9oUp27jlDxANDdkq7YCocQGQI2msdD8
+	 K0h3oregdsRBqz3dsGOPqdY9lZmFBz68327qAopxMbeIBLJIGxWKzeLvyFTogyLZyt4dB
+	 tVhcqQMnZYY6HMXfzYnd/1eyl4l7gnJ07PhagOq0uB4288Zfu6zVfEzsBa1QAYlgMgmSU
+	 18wS8IgQa+P5vILReNlkLw2L4di3eXilOlptkgFO4rDHPpw2J73qh8sdeRvqPi6GrR/sF
+	 eHAsHfMJv9CMY3gbnyVGm5QrNZtPyquIkWHFLe8ZyQbC3L70uNAcjfVRcH5lWgL2q5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054854;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054857;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UykeX/7A2OVjQ9t4j1prrFPUiwq5aGuEm5E4C9jJffI=;
-	b=pO4z1B7p8IqOdYEa7GiuXrJoqsZmjt25RBe30oe8VDcGMZ3eDJlSScrRbef3SRYRWB37
-	 BjYa0ffmhFBkpUKJ/2bSfUuOXoH3/jrb4clJwj80DCOPpUgPqSttTr7b3ml95kCheopeH
-	 feQyeFbt4N0hiJITJxl5ZJkgSnB9EBlBKWip5f3SkGnt3tXgfihB1A5Ml4b0V9HiI0t2q
-	 qfYSx2lQ5AMhUcMOVdEt6mmmow6CNpM7ieCGdQUIBHUbnJD1i1nM6JiyjpchjEeUnxkMa
-	 R26oVE789hHFLph2HwcSw5jmERuzUc5OyRyZu0imOs5/MP1n1JOK18Eqd/oVzq94Qgg==
+	bh=tKTFfOFAKrsphx8TfBFg3qXrjICmI+C6C6BZGpTNWlI=;
+	b=0xuBmFwPr4o49wHCIJIILGLHOTw/GEJLa493KCW8KtwF+Tvkgwyw5SWp/KRVm7WMiYMk
+	 jYGlnvL/bJ6BhYY4orbe6xtcJCAYcPIpSKd8woIOXdSDadfX5xfxGx8SAnz2ZQ8R+jfbx
+	 lxKL6FQB0lLo04uBJNzdTuma54q3QII3hHD0pmqmq8v6LqvADGq87NoY913GjzX+Vfy7t
+	 eQRmkYUYsRnEtWfht876z9QFVdlXH9p3aV70SnwhJMGHEUOzxWxE6MGS7S9Au8DdNtHFy
+	 +S38ar8hMySfGcYUfsFPpDSMMFFUBQUbUDyCYAHNoXI8XCAH4WapsKF9VvEobryY+Qg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VlYBQqu2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UlS4KH8Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C05606A31C;
-	Thu, 19 Nov 2026 02:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4CF606A31C;
+	Thu, 19 Nov 2026 02:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VlYBQqu2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9791F000C5;
-	Thu, 19 Nov 2026 02:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UlS4KH8Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7232F1F000C4;
+	Thu, 19 Nov 2026 02:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054854;
-	bh=UykeX/7A2OVjQ9t4j1prrFPUiwq5aGuEm5E4C9jJffI=;
+	s=korg; t=1795054857;
+	bh=tKTFfOFAKrsphx8TfBFg3qXrjICmI+C6C6BZGpTNWlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VlYBQqu2s2lDLeZr3NkmNEOKwU4kc90gIg66aHPlCJM3epDq48BEgr9lX/lm0Axm+
-	 TLCbFYx0YFEE7bl7Y/hCJFBxWi+s4oHIH1/ZHRGSv2sha4FaFcUkENSmjH8kfgAvVI
-	 S2D+sfCcbQFHEY/nvoXyfoB7nABmUf+ElS45AiwE=
+	b=UlS4KH8Y3fud/w9WgRSPwICxqob1UOY0ecpNFTYR3BGMwDQxtmQqbunOO+c8d+CpU
+	 3IeoORB3OjDyiUyVp5cC/exi77vldHk5/nYcGvcS4cC4Jx0gl0S67D95J8QsYx0CM8
+	 rlPJItBi9HPXrI3YLNrLxtFK187RSbOQ54VrnqFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Dolan <paul.dolan.dev@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1382/2214] selftests/clone3: tighten CLONE_CLEAR_SIGHAND conflict test
-Date: Wed, 18 Nov 2026 15:50:58 +0100
-Message-ID: <20261118150106.652208400@linuxfoundation.org>
+Subject: [PATCH 5.15 1383/2214] hwrng: cctrng - Fix runtime PM usage counter leak
+Date: Wed, 18 Nov 2026 15:50:59 +0100
+Message-ID: <20261118150106.687333257@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,48 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Dolan <paul.dolan.dev@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit aeebb4884f0e8feb9929f013067488b7f2081f33 ]
+[ Upstream commit 58d27c41542be6c40edac4f91f35a1dd8bf0d2c2 ]
 
-The CLONE_CLEAR_SIGHAND test intends to verify that
-CLONE_CLEAR_SIGHAND and CLONE_SIGHAND are mutually exclusive. However,
-CLONE_SIGHAND without CLONE_VM is independently invalid, so the test
-input has another reason to fail with EINVAL.
+pm_runtime_get_sync() increments the device usage counter even when
+runtime resume fails. cctrng_read() propagates errors from
+cc_trng_pm_get() without scheduling the work that later drops the
+counter, so a clock or reset-completion failure in cctrng_resume()
+leaves the counter elevated.
 
-Add CLONE_VM so that CLONE_SIGHAND is otherwise valid, and require
-clone3() to fail with EINVAL. This ensures the test exercises the
-intended flag conflict and does not accept an unrelated failure.
+Use pm_runtime_resume_and_get(), which drops the usage counter when
+resume fails and returns zero on success. This preserves the existing
+success path while balancing the error path.
 
-Fixes: de5287235631 ("tests: test CLONE_CLEAR_SIGHAND")
-Signed-off-by: Paul Dolan <paul.dolan.dev@gmail.com>
-Link: https://patch.msgid.link/20260902174939.15135-1-paul.dolan.dev@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: a583ed310bb6 ("hwrng: cctrng - introduce Arm CryptoCell driver")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/clone3/clone3_clear_sighand.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/char/hw_random/cctrng.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/clone3/clone3_clear_sighand.c b/tools/testing/selftests/clone3/clone3_clear_sighand.c
-index 47a8c0fc3676b..dca5f617beb24 100644
---- a/tools/testing/selftests/clone3/clone3_clear_sighand.c
-+++ b/tools/testing/selftests/clone3/clone3_clear_sighand.c
-@@ -54,12 +54,12 @@ static void test_clone3_clear_sighand(void)
- 	 * Check that CLONE_CLEAR_SIGHAND and CLONE_SIGHAND are mutually
- 	 * exclusive.
- 	 */
--	args.flags |= CLONE_CLEAR_SIGHAND | CLONE_SIGHAND;
-+	args.flags |= CLONE_VM | CLONE_CLEAR_SIGHAND | CLONE_SIGHAND;
- 	args.exit_signal = SIGCHLD;
- 	pid = sys_clone3(&args, sizeof(args));
--	if (pid > 0)
-+	if (pid != -1 || errno != EINVAL)
- 		ksft_exit_fail_msg(
--			"clone3(CLONE_CLEAR_SIGHAND | CLONE_SIGHAND) succeeded\n");
-+			"clone3(CLONE_CLEAR_SIGHAND | CLONE_SIGHAND) did not fail with EINVAL\n");
+diff --git a/drivers/char/hw_random/cctrng.c b/drivers/char/hw_random/cctrng.c
+index 2ab38a92778de..d24c384097dc4 100644
+--- a/drivers/char/hw_random/cctrng.c
++++ b/drivers/char/hw_random/cctrng.c
+@@ -86,12 +86,7 @@ static inline u32 cc_ioread(struct cctrng_drvdata *drvdata, u32 reg)
  
- 	act.sa_handler = nop_handler;
- 	ret = sigemptyset(&act.sa_mask);
+ static int cc_trng_pm_get(struct device *dev)
+ {
+-	int rc = 0;
+-
+-	rc = pm_runtime_get_sync(dev);
+-
+-	/* pm_runtime_get_sync() can return 1 as a valid return code */
+-	return (rc == 1 ? 0 : rc);
++	return pm_runtime_resume_and_get(dev);
+ }
+ 
+ static void cc_trng_pm_put_suspend(struct device *dev)
 -- 
 2.53.0
 
