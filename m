@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033628;
-	b=Az79CmPWWxyGMu5kbH9ornsSqp/P6O6iIG3uzgZODPHUimoauRt/EnKpM7vtJHeSrv76
-	 5QXPEzdAv6OARg/RCqoGdpY+JeTmjXQkWFXMOJmy5IejRQhN8KUm5782Y6sYa8+oO4w70
-	 JYSnCyn8CN6JM5RJxYG7vhwTeb+TZyyzJjx3oYy88NUCjgjd/js7B7/zkat28lgFWRo+E
-	 mePWbIlUkTW0KJLQC/Y4bZThao0EQNperkzHxNF5bNghcA5sNk/8wHBpepseryv2ZXijw
-	 XWFEI7QKGarA5xuFywGlJKS00zTDfHwZEgUF8fn225P06lKJssbiaUuvwktOdfVna0g==
+	t=1795033630;
+	b=ss6rUUU/Bh0JpdqMB2+VSh1nqNIBmh8XclZ29ts8yBAxpKqw1j6/ir00/Tpqdnt6A5gR
+	 IKBtB/XZaWsCKKjtWGstV5Y85gKGFZ0kr91FhOMmLI6q2M411AGPf2V/u7qDnkBdw5dhr
+	 GnEe/2ILhanry3H41bg9ydq7/06fJ2pWr1MGYgVof8KZRSVQm6gd/VQs6OUJz4oQgXN4a
+	 1aZZ6Y38Dx1DiQYALKWKiivEOJrviQpFgtWM1JUZBSQ0nd28XjLzCY8X21RGE1jRjBWFW
+	 MBO0UONq6Tz6+dy7a7BKjtyF5SweMQb/VzYX5B9t4vyAdaGkODAOR4L5XJRa7tFvkWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033628;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033630;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PWYYjNalMDZxUD14naz8I30ilUiPRsDr14YF15E0bQ0=;
-	b=3hlUVb+Ksbpk/LVJEXr+1dZFGe8cohE+0mESG0KAodvdivoCUrttBaPcyNkY1rsz1sPN
-	 XhaUxvspOO/2UmF2MCGnGuzN1UL2htRD8cxG2j3n18WFd87C7Ir7Nncp+BMFO9f7oM3HR
-	 Z4l7TK5x/8Tv0TGe3Afv6UqJUPv46Z7qcqy7srwbtft4VadR31b1HMk+/zTTUfHl4cYI1
-	 A/BPY1Fh61lJ+u7E7UMi6dKF+OFpyvotkv8G0Nqja3hwEKFeCmIn2x4jZpkY47LEJDiEL
-	 /18/MGlDFe9FSIduUfzm7YSwOStvtCHwztXZmlFld+869u0Q2kSikXCjkHfr/iMJVLA==
+	bh=aZcYcecsfyjxjWMCGXIKRZCczG0A3BPpABpPonc0/n4=;
+	b=utVnEkVF0gb6EaUQGgXKgBPBXa1BfEsJHHknI6LVtgy11Cx0Qfr/XOV7TlrnhNZdQNE6
+	 aDDJ7hwHKWgobcrrsZbrxfLLVDks2ZzmmFmuDIy7Zc8U8n1Dbt9tDblG2R53wkDSa7xH8
+	 ux8W1b7PCwsbZdjGwmOPoYVuW+6JFkRAgkQjS1CuyFdDIgTp/su0Z+OfE9+U9+H6yHvQQ
+	 oO4B0Oj97RD6B7g/uGZcOqJdLZYRF8To5wslNXpcqXxEj7b7TXbdzea7jigt1jsfpj+l4
+	 Uy1JH+Tr8FG0IdklOKCQ8rztPFDPdGJfZq4EU1PgeUQdPjGnsIsMB5dVNFdYNi/cDVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IkDwgMDc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U4spiJTw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C38606A325;
-	Wed, 18 Nov 2026 20:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35970606A325;
+	Wed, 18 Nov 2026 20:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IkDwgMDc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD14A1F000C4;
-	Wed, 18 Nov 2026 20:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U4spiJTw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934581F000C4;
+	Wed, 18 Nov 2026 20:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033627;
-	bh=PWYYjNalMDZxUD14naz8I30ilUiPRsDr14YF15E0bQ0=;
+	s=korg; t=1795033630;
+	bh=aZcYcecsfyjxjWMCGXIKRZCczG0A3BPpABpPonc0/n4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IkDwgMDctbEWJR8p+a3dyEkp3tC73tccEAihs0PIy5ORsqkqm3MpamPHfB7YeeM9e
-	 tf3A9gpZD2spyMHmp4DotsfFQBzd6X2DyHHXZCTTCUp+HbR9Ff1MIZ1+kmJNttp8mO
-	 LSsBhi6cXHaM3iXwP9lLnclvC4A7mePWNUkfonB4=
+	b=U4spiJTwyGTlf3yT6bEw7qIAX2okErp3dAtheh0dHU/rsbW882rD3yS4IPkzj0wPh
+	 +23Bho69mp4p97BMs+lePTLKBbJq4CwmXSqoxC3EfkDRPk4n0yZ/UsYk7cHUDjaiT+
+	 mT5eH90WJxST4PY6FV33AJ22eJdzb1av6YyQXjmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0083/3318] ASoC: codecs: max98396: Unwind supplies on resume failure
-Date: Wed, 18 Nov 2026 15:11:45 +0100
-Message-ID: <20261118150316.592909476@linuxfoundation.org>
+Subject: [PATCH 6.6 0084/3318] PCI/ATS: Ensure pci_ats_supported() is PF-aware for VFs
+Date: Wed, 18 Nov 2026 15:11:46 +0100
+Message-ID: <20261118150316.628192810@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,73 +74,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Pranjal Shrivastava <praan@google.com>
 
-[ Upstream commit d20de7409dfa8e3341af7f157cd42130bd4ba3a7 ]
+[ Upstream commit 4f2cd6091ac41566a7300f5a4590d20a99aaa8bc ]
 
-max98396_resume() enables the core, pvdd, and vbat supplies before
-leaving cache-only mode, resetting the device, and replaying cached
-register state. The function currently ignores regcache_sync() failures,
-and the optional pvdd/vbat enable failures return without unwinding
-supplies that were already enabled in this resume attempt.
+Update pci_ats_supported() to additionally check the associated PF's
+status when called on a VF. This ensures that PF-level quirks and
+untrusted status are correctly propagated to VFs, providing a robust
+support check that aligns with the kernel's PF-centric ATS configuration
+model and is immune to the timing of VF-specific fixups.
 
-Rework the function to use common error labels. This propagates sync
-failures, restores cache-only/dirty state on failed cache replay, and
-disables each supply acquired by this resume path before returning the
-error.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704040651.47558-1-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Pranjal Shrivastava <praan@google.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/max98396.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/pci/ats.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/max98396.c b/sound/soc/codecs/max98396.c
-index 3a1d8c211f3c7..ac61df2549646 100644
---- a/sound/soc/codecs/max98396.c
-+++ b/sound/soc/codecs/max98396.c
-@@ -1603,19 +1603,37 @@ static int max98396_resume(struct device *dev)
- 	if (max98396->pvdd) {
- 		ret = regulator_enable(max98396->pvdd);
- 		if (ret < 0)
--			return ret;
-+			goto err_core_supplies;
- 	}
+diff --git a/drivers/pci/ats.c b/drivers/pci/ats.c
+index f9cc2e10b676a..b9edb2239c2e7 100644
+--- a/drivers/pci/ats.c
++++ b/drivers/pci/ats.c
+@@ -39,10 +39,13 @@ void pci_ats_init(struct pci_dev *dev)
+  */
+ bool pci_ats_supported(struct pci_dev *dev)
+ {
+-	if (!dev->ats_cap)
++	if (!dev->ats_cap || dev->untrusted)
+ 		return false;
  
- 	if (max98396->vbat) {
- 		ret = regulator_enable(max98396->vbat);
- 		if (ret < 0)
--			return ret;
-+			goto err_pvdd;
- 	}
- 
- 	regcache_cache_only(max98396->regmap, false);
- 	max98396_reset(max98396, dev);
--	regcache_sync(max98396->regmap);
-+	ret = regcache_sync(max98396->regmap);
-+	if (ret < 0) {
-+		regcache_cache_only(max98396->regmap, true);
-+		regcache_mark_dirty(max98396->regmap);
-+		goto err_vbat;
-+	}
+-	return (dev->untrusted == 0);
++	if (dev->is_virtfn)
++		return pci_ats_supported(pci_physfn(dev));
 +
- 	return 0;
-+
-+err_vbat:
-+	if (max98396->vbat)
-+		regulator_disable(max98396->vbat);
-+err_pvdd:
-+	if (max98396->pvdd)
-+		regulator_disable(max98396->pvdd);
-+err_core_supplies:
-+	regulator_bulk_disable(MAX98396_NUM_CORE_SUPPLIES,
-+			       max98396->core_supplies);
-+
-+	return ret;
++	return true;
  }
- #endif
+ EXPORT_SYMBOL_GPL(pci_ats_supported);
  
 -- 
 2.53.0
