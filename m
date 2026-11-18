@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047115;
-	b=0q5PaJmOirTQGwSNkQAxyE7zg1QAGNreoeL9GnY4B2XNCiBu35LMGjRDQD006+hogKm0
-	 kY+Z5FbUA0HaXkuLUos9SDRr212sFZjX8CLHR9eslsLlbIs7qYH9twu+j+HqOResl1VPK
-	 HPsSNPhMXH2Alq5IpiKeqy2Uq5JZL05clEFREqHmiSkHITOBSsL3K7ng9/+bsTiSnb2Jz
-	 dKfu63ZWIA9QzKrmJXWTqnlhJhdVK1K2Lqs02JLaTrfFZwl33LEb4FkO+PUyUR4m3xwu3
-	 WAFBEJIS0Gv8v0CctlfjTZbWrN1Az4Yk7ifFhZvZ8O01cbba2vzmJJjuEZq2Um9YTMw==
+	t=1795047118;
+	b=qq7UJ0+I0Mdvm7U19d75dT+T3zaZMPeQJETHqYEpiuthmDESzRHN6Bc9SkAj59B20zL/
+	 ZvHEwW77BUKUW6AuOkB22pszJ35i5K6iO52xjDpIS79gtlx+3Ios4GpmrzFrdFjm1QAtI
+	 JL+ugEfpR6TKvPP+gaKAXmR8hFIc5wkZkOmTQd3qBkFZsfvDL2siLjbOLprxJ2mm35PVz
+	 KFPJ1GVJ8HlR/4N8lq+FLsVYUdiyDo+iVcKl7q8jI8VZTO3+uvWrQsI27hTShHa1zH29r
+	 LBfVF/k1KY9Ng+/3Tp+IohJ5aFvjB4B5m8L2OVFR3AwXCqBEJ37F445QKD26L0QvYDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047115;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047118;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wJ7O8mKx9ho+9CEu3XI4IZqDFmSclIv2+Ih53Hdw00E=;
-	b=brh+9PwgLFngtElHjCm0OsTM8nEso0QgqWRHat20Zg4RMNmxmW4Ya8v8IAezfkBvY53D
-	 uspCR5oRhvguzanlYUUov0VAiF9o0Iyemp55NWf4Vw8G/haakg1Ddrr8aEVbM5Uf0+oWL
-	 OJLxSvJOH+bYRgHL3wT7FSbCd5JsKoO6PjJKLvsBSbj88dyzUi+sU6IAGH9GvYF4Zz6Iu
-	 L65oBm/js6kgzKFqCCS9PVSm6GNvhRqBy5hd8Qe+j93IaW0+5gIRoOlx0ZpLNy1BPuKDN
-	 JsLur2faScKbU+0Hi3Qy3JNqqSCmPpJatoeRj6alXvz92C8kA+gfCBaQiqbTN6hi5Lw==
+	bh=7L3rAHDu7+gOTU8TrlFYL8r8o9R1OsWFQiBlfeWD13M=;
+	b=g6rZ5RgpEFVzSpYi8tRsXvdvBgjBWqqc1j4o3KK9ptmtf5qbQfmcTqCfOfuwbZqE5XCk
+	 siCTQ7stDmhG9MpHDfclfe2pPqbGiPNdkg/otoY47uZwi/kFL2t8lzU16AyTZLvqAWE6r
+	 BOMnkXFmNcEzrz+OkALr5uBCgMauCtFEjw/XcrgnJduvXgPWPBupOTYzdO/1mW+7+d4fi
+	 NbIpJOr80vvRsGa4UupdSyp4a9XB2ggU30+91KFOmyXb1FfWPkTpeJ3YpSb+Yil76/tna
+	 JjUmbqVGo79dRoffI8CEYj54vFv7W1oeTdxEgGzbavBgXl8H3yWS4K+xJBMGc+cDvnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lnkAKsuK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZzIkUcix;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4078C606A320;
-	Thu, 19 Nov 2026 00:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E9F606A320;
+	Thu, 19 Nov 2026 00:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lnkAKsuK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57AF71F000C4;
-	Thu, 19 Nov 2026 00:11:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZzIkUcix
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2795D1F000C4;
+	Thu, 19 Nov 2026 00:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047114;
-	bh=wJ7O8mKx9ho+9CEu3XI4IZqDFmSclIv2+Ih53Hdw00E=;
+	s=korg; t=1795047117;
+	bh=7L3rAHDu7+gOTU8TrlFYL8r8o9R1OsWFQiBlfeWD13M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lnkAKsuKFJE859ZcA6wc4Xfh6nmhXc2kRnRcX6XCGGsvWRn0sLvsKYRD/Bf6Jyy8G
-	 /lsvDh8pmtOpZl/474o7JDTlGR2i7fB3eh5RvdLOiFF/+1/6Ma9WQtGok0of4mCh9e
-	 kw/33vbLjIHnSEbvU10GEsX+pyrFmXItY4Qqi9UM=
+	b=ZzIkUcixWcWGhfaXah/eSVvQBkbReGPwHWU6Gadzq2HhxzcAaIqMHHGncruovu3/T
+	 mvB98QdrQKSvt+LrSi95VAX6KrpndodXmk+5DP3nTlTeihlE1xpehO/Sp/Mgf+Of6/
+	 JYqigSOlp5tRgBfe6SdU1nwVRhYfux0e5MVxO0+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Naman Gulati <namangulati@google.com>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1524/2857] ipmr: drop packets with unknown ingress VIF
-Date: Wed, 18 Nov 2026 15:42:38 +0100
-Message-ID: <20261118150256.195679793@linuxfoundation.org>
+Subject: [PATCH 6.1 1525/2857] media: qcom: camss: Move vfe_disable into a common routine where applicable
+Date: Wed, 18 Nov 2026 15:42:39 +0100
+Message-ID: <20261118150256.233765007@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,72 +69,231 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-[ Upstream commit 09280680f2ea060514be2a39ea84209fb6d721d4 ]
+[ Upstream commit 90cc4555730bfd0fc6af5c8a5a81d80bfce4cff7 ]
 
-A packet can race with VIF publication and make ipmr_find_vif() return
--1 even though the VIF device pointer is already visible. The parent VIF
-device check can then pass with an invalid ingress VIF. For (*,G)
-entries, this can also let the packet be forwarded back out its ingress
-VIF.
+We can move vfe_disable() into a common routine in the core VFE file
+provided we make wm_stop() a VFE specific callback.
 
-Drop packets whose ingress VIF lookup fails in both IPv4 and IPv6
-forwarding, before checking the MFC parent device. This prevents
-forwarding with an unknown ingress VIF and avoids the (*,G) hairpin.
+The callback is required to capture the case where VFE 17x currently isn't
+VC enabled where as VFE 480 is.
 
-Without the early check, the negative index can reach the IPv4 offload
-lookup only for an skb marked for L3 forwarding offload, currently done
-by mlxsw. The race is rare; the supplied PoC reports only the UBSAN
-negative-index diagnostic.
-
-Fixes: 4eadb88244d1 ("ipmr: do not acquire mrt_lock while calling ip_mr_forward()")
-Fixes: 9b1c21d898fd ("ip6mr: do not acquire mrt_lock while calling ip6_mr_forward()")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Link: https://lore.kernel.org/netdev/b966eb102e98f299e45be59ada033a8766e4c6df.1791899747.git.zhilinz@nebusec.ai/
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Suggested-by: Naman Gulati <namangulati@google.com>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Naman Gulati <namangulati@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/5271fcb94a4d9e697ed64a348e92ea9e74faab1c.1792608753.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Adjusted IPv6 context to preserve wrong_if++ for the unsigned long counter instead of atomic_long_inc(). ]
+Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: e5d4b0e69a40 ("media: qcom: camss: vfe: Fix VFE reset while another line is streaming")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c  | 3 ++-
- net/ipv6/ip6mr.c | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ .../media/platform/qcom/camss/camss-vfe-170.c | 40 +------------------
+ .../media/platform/qcom/camss/camss-vfe-480.c | 40 +------------------
+ drivers/media/platform/qcom/camss/camss-vfe.c | 39 ++++++++++++++++++
+ drivers/media/platform/qcom/camss/camss-vfe.h |  9 +++++
+ 4 files changed, 50 insertions(+), 78 deletions(-)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index 623c41514d4c3..c79267abadb85 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -1992,7 +1992,8 @@ static void ip_mr_forward(struct net *net, struct mr_table *mrt,
- 	}
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-170.c b/drivers/media/platform/qcom/camss/camss-vfe-170.c
+index a6625aa050b66..47049a1fe5787 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-170.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-170.c
+@@ -492,22 +492,6 @@ static int vfe_enable_output(struct vfe_line *line)
+ 	return 0;
+ }
  
- 	/* Wrong interface: drop packet and (maybe) send PIM assert. */
--	if (rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
-+	if (true_vifi < 0 ||
-+	    rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
- 		if (rt_is_output_route(skb_rtable(skb))) {
- 			/* It is our own packet, looped back.
- 			 * Very complicated situation...
-diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
-index 362e670fe7f7e..45120e9c750d9 100644
---- a/net/ipv6/ip6mr.c
-+++ b/net/ipv6/ip6mr.c
-@@ -2159,7 +2159,8 @@ static void ip6_mr_forward(struct net *net, struct mr_table *mrt,
- 	/*
- 	 * Wrong interface: drop packet and (maybe) send PIM assert.
- 	 */
--	if (rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
-+	if (true_vifi < 0 ||
-+	    rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
- 		c->_c.mfc_un.res.wrong_if++;
+-static void vfe_disable_output(struct vfe_line *line)
+-{
+-	struct vfe_device *vfe = to_vfe(line);
+-	struct vfe_output *output = &line->output;
+-	unsigned long flags;
+-	unsigned int i;
+-
+-	spin_lock_irqsave(&vfe->output_lock, flags);
+-	for (i = 0; i < output->wm_num; i++)
+-		vfe_wm_stop(vfe, output->wm_idx[i]);
+-	output->gen2.active_num = 0;
+-	spin_unlock_irqrestore(&vfe->output_lock, flags);
+-
+-	vfe_reset(vfe);
+-}
+-
+ /*
+  * vfe_enable - Enable streaming on VFE line
+  * @line: VFE line
+@@ -553,29 +537,6 @@ static int vfe_enable(struct vfe_line *line)
+ 	return ret;
+ }
  
- 		if (true_vifi >= 0 && mrt->mroute_do_assert &&
+-/*
+- * vfe_disable - Disable streaming on VFE line
+- * @line: VFE line
+- *
+- * Return 0 on success or a negative error code otherwise
+- */
+-static int vfe_disable(struct vfe_line *line)
+-{
+-	struct vfe_device *vfe = to_vfe(line);
+-
+-	vfe_disable_output(line);
+-
+-	vfe_put_output(line);
+-
+-	mutex_lock(&vfe->stream_lock);
+-
+-	vfe->stream_count--;
+-
+-	mutex_unlock(&vfe->stream_lock);
+-
+-	return 0;
+-}
+-
+ /*
+  * vfe_isr_sof - Process start of frame interrupt
+  * @vfe: VFE Device
+@@ -770,4 +731,5 @@ const struct vfe_hw_ops vfe_ops_170 = {
+ 	.vfe_enable = vfe_enable,
+ 	.vfe_halt = vfe_halt,
+ 	.violation_read = vfe_violation_read,
++	.vfe_wm_stop = vfe_wm_stop,
+ };
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-480.c b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+index fa818517ab0da..784013a4e035d 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-480.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+@@ -329,22 +329,6 @@ static int vfe_enable_output(struct vfe_line *line)
+ 	return 0;
+ }
+ 
+-static void vfe_disable_output(struct vfe_line *line)
+-{
+-	struct vfe_device *vfe = to_vfe(line);
+-	struct vfe_output *output = &line->output;
+-	unsigned long flags;
+-	unsigned int i;
+-
+-	spin_lock_irqsave(&vfe->output_lock, flags);
+-	for (i = 0; i < output->wm_num; i++)
+-		vfe_wm_stop(vfe, output->wm_idx[i]);
+-	output->gen2.active_num = 0;
+-	spin_unlock_irqrestore(&vfe->output_lock, flags);
+-
+-	vfe_reset(vfe);
+-}
+-
+ /*
+  * vfe_enable - Enable streaming on VFE line
+  * @line: VFE line
+@@ -392,29 +376,6 @@ static int vfe_enable(struct vfe_line *line)
+ 	return ret;
+ }
+ 
+-/*
+- * vfe_disable - Disable streaming on VFE line
+- * @line: VFE line
+- *
+- * Return 0 on success or a negative error code otherwise
+- */
+-static int vfe_disable(struct vfe_line *line)
+-{
+-	struct vfe_device *vfe = to_vfe(line);
+-
+-	vfe_disable_output(line);
+-
+-	vfe_put_output(line);
+-
+-	mutex_lock(&vfe->stream_lock);
+-
+-	vfe->stream_count--;
+-
+-	mutex_unlock(&vfe->stream_lock);
+-
+-	return 0;
+-}
+-
+ /*
+  * vfe_isr_reg_update - Process reg update interrupt
+  * @vfe: VFE Device
+@@ -584,4 +545,5 @@ const struct vfe_hw_ops vfe_ops_480 = {
+ 	.vfe_disable = vfe_disable,
+ 	.vfe_enable = vfe_enable,
+ 	.vfe_halt = vfe_halt,
++	.vfe_wm_stop = vfe_wm_stop,
+ };
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index ee4d7dccefe16..3597788cc02fd 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -407,6 +407,45 @@ int vfe_put_output(struct vfe_line *line)
+ 	return 0;
+ }
+ 
++static int vfe_disable_output(struct vfe_line *line)
++{
++	struct vfe_device *vfe = to_vfe(line);
++	struct vfe_output *output = &line->output;
++	unsigned long flags;
++	unsigned int i;
++
++	spin_lock_irqsave(&vfe->output_lock, flags);
++	for (i = 0; i < output->wm_num; i++)
++		vfe->ops->vfe_wm_stop(vfe, output->wm_idx[i]);
++	output->gen2.active_num = 0;
++	spin_unlock_irqrestore(&vfe->output_lock, flags);
++
++	return vfe_reset(vfe);
++}
++
++/*
++ * vfe_disable - Disable streaming on VFE line
++ * @line: VFE line
++ *
++ * Return 0 on success or a negative error code otherwise
++ */
++int vfe_disable(struct vfe_line *line)
++{
++	struct vfe_device *vfe = to_vfe(line);
++
++	vfe_disable_output(line);
++
++	vfe_put_output(line);
++
++	mutex_lock(&vfe->stream_lock);
++
++	vfe->stream_count--;
++
++	mutex_unlock(&vfe->stream_lock);
++
++	return 0;
++}
++
+ /**
+  * vfe_isr_comp_done() - Process composite image done interrupt
+  * @vfe: VFE Device
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
+index cbc314c4e244b..e8dad209207f1 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.h
++++ b/drivers/media/platform/qcom/camss/camss-vfe.h
+@@ -116,6 +116,7 @@ struct vfe_hw_ops {
+ 	int (*vfe_enable)(struct vfe_line *line);
+ 	int (*vfe_halt)(struct vfe_device *vfe);
+ 	void (*violation_read)(struct vfe_device *vfe);
++	void (*vfe_wm_stop)(struct vfe_device *vfe, u8 wm);
+ };
+ 
+ struct vfe_isr_ops {
+@@ -194,6 +195,14 @@ int vfe_reserve_wm(struct vfe_device *vfe, enum vfe_line_id line_id);
+  */
+ int vfe_reset(struct vfe_device *vfe);
+ 
++/*
++ * vfe_disable - Disable streaming on VFE line
++ * @line: VFE line
++ *
++ * Return 0 on success or a negative error code otherwise
++ */
++int vfe_disable(struct vfe_line *line);
++
+ extern const struct vfe_hw_ops vfe_ops_4_1;
+ extern const struct vfe_hw_ops vfe_ops_4_7;
+ extern const struct vfe_hw_ops vfe_ops_4_8;
 -- 
 2.53.0
 
