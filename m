@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029115;
-	b=mFFXtkUFMI3H46ZPxf4HNE/1se9wco0/oE2B55j0yEbzIYCDHNN2Qvsij562JxRwX6+f
-	 Ev1JkoGvYZuvUgmVb9pawYjEWjYDVZeVo3ZYbiukVqBkYDO06cjpmLX7ku/r7Lo6CijZU
-	 v3K5r+aevfDDjO0lHF1krT3SzTZftUqPeXgOUXk2O92UCquqLSYmx6+0QOVMNVjwmhHL+
-	 BBxnY5WS/FBDLvyVvzKLxuueTDooEbjABFafTdFkPhJNtV93UezSDCND6Gc4/JGPhYhdO
-	 WPwhiZGUjnMnoOT3Sw9abGR+YPxgSZvMoi26FgYUXGpp0Ql69xUZZNl3xkJT+92eeGQ==
+	t=1795029117;
+	b=HLi1PwJ7p0dWawYZgMv7NsyW7zUElYoa4xqIfOQmakzouX9yYTm7ZlR87sx+F7qQduSN
+	 j8J0P6yO2DCmNsvAHlGU5+/MHoJVQB81lP36omTSQq59pvaEtMl2qT6t+01A2RVYdY7Gn
+	 GWon8KCx34IFBf+ktTCgkaV6a6xgsZt5GdP6IB2kTxIY/XYkrPzVlCum5apikKS1EZiMA
+	 c+x0wXkVOwaxh7bfJ0hBMRlomtnMUSYMDZYm6VA0ijX2BiyC7csKdX9D3j78yWogftkCy
+	 Npc9sXx0/xUArZGP5Y13772lX9mFPiIl1K2+VYdl/Cmhxe8v3pVArU7P/FGaTmXJ3kQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029115;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029117;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3G70saNtQpor2KPLGsA/6rwzK+cNNTn/R+KMmS6YY4U=;
-	b=2+h0fX8+D30OxTYZ3Si0ZRK6CKYVtDdp6MKeJ5nBDwdkyurr0YmCZU4Zbmh7opWmUVVu
-	 28h8zq9z17guxKXLu84iTbUVwjfKf6SJSR5Ej2D0AgpTB4Du8MqmvvyLEdgZ4tq1Mc7uk
-	 NMHe6tWM7fL/EvdeEdsVxCSoN1c+EJqgDyiFWjrRCPK4klf4fYQ4vVXT4wJJxcFQJM64L
-	 81ox02dO00r+Cwi2yQvnQFRSvLyxetFPMkOTI/1PYPwqpn08PUTRDU6TiGQtyNykx/Qz+
-	 cCAS6lg3/AxWrjbKOkUTSwFFpiIH3e684O1N6vhLvynN8riQSCUU4GcLP5c1M0qUO7Q==
+	bh=ONeDDHoczyICk2H2G+ntG6ZTLZ0GdMQhWp/EbL5vvYM=;
+	b=oZkPKwimoKd3cIHCnREMaPVWLtu78ga8ivEdvq2qixndlPNM+KDDGoucfrUn8oV1vpTg
+	 TF7/WDoazKW9FGSmjyS4NVwcutbLEYm3QWsF7eJxMLLH6ed9TlrDQeN32QXben3W92JxD
+	 PisC7HotcvI+yN4f3jaG2LYvNcFcEELlz5t4lzuGsJGbC8UHOvSP0AtsRsE2PR5HctB5l
+	 HcQBnRF5acyEMn5MGCnnQxMwNKvT0nGvJXGIPBtJG8DMSU1Zm5C1onSXgh6m348Sq89os
+	 LNhbcAGbVn+5COfxdg9xqmH4e6/D/fvcsqFL5rP4YJ9mQBM24/y/rgRtf9sSwnJAfpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qrrcmjwg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a/DjS4tP";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F63606A31C;
-	Wed, 18 Nov 2026 19:11:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C40606A31C;
+	Wed, 18 Nov 2026 19:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qrrcmjwg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 520CD1F000C4;
-	Wed, 18 Nov 2026 19:11:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a/DjS4tP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1685F1F000C4;
+	Wed, 18 Nov 2026 19:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029114;
-	bh=3G70saNtQpor2KPLGsA/6rwzK+cNNTn/R+KMmS6YY4U=;
+	s=korg; t=1795029117;
+	bh=ONeDDHoczyICk2H2G+ntG6ZTLZ0GdMQhWp/EbL5vvYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qrrcmjwgmNZxolK/0m4Q6s9LgwdxYh5ChrRtLHlhAjLVysX1YQd0B1RDBKpMOV78f
-	 sMCtxRnlaBnqPyXgMCOBg0Hmwn3lpmhaMUJBFaHmLSqiGCiI6wmOqSFh3sKCmcwaOP
-	 pdE0oF0xKmx5h2sKQl9oeSAaDUn5u2Zk8invnlnE=
+	b=a/DjS4tPW4q3o1q4tR4v1BLHFRNA/H7QOQYXDM/B0YOe9Ru1pS7saZhnYc1zuqp45
+	 MI8gMvfzEAbjFwgDyz/+uJXdD2KYEnBwPGY8KFKOopA06MxYCd9zJdoLTIkfGpdG9q
+	 9bZ6aW57F/1GgjwUq+UKddEYdMwWOrYzGNZoa+3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jared McArthur <j-mcarthur@ti.com>,
-	Moteen Shah <m-shah@ti.com>,
-	Sen Wang <sen@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0235/1756] arm64: dts: ti: k3-j722s-evm: Switch audio codec clock from audio_refclk1 to external clock
-Date: Wed, 18 Nov 2026 15:39:22 +0100
-Message-ID: <20261118150017.607366052@linuxfoundation.org>
+Subject: [PATCH 6.12 0236/1756] selftests/bpf: More precise cpu_mitigations state detection
+Date: Wed, 18 Nov 2026 15:39:23 +0100
+Message-ID: <20261118150017.655806072@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,88 +69,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jared McArthur <j-mcarthur@ti.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 432bfc86fe62b654c74d9376b03cbe4d3513ac5f ]
+[ Upstream commit fc2915bb8bfcfdc6e5ea2cfc8d13fbaefe77c2c8 ]
 
-In revision PROC170E1 of the J722SXH01EVM [0], the audio codec's
-(TLV320AIC3106IRGZT [1]) MCLK was provided by the AUDIO_EXT_REFCLK1
-(96MHz). Revisions PROC170E2 and later switched the MCLK's source
-to an external LMK6CE012288CDLFT [2] oscillator (12.288MHz). The
-PROC170E1 revision of the board is not publicly available.
+test_progs and test_verifier binaries execute unpriv tests under the
+following conditions:
+- unpriv BPF is enabled;
+- CPU mitigations are enabled (see [1] for details).
 
-Fix the audio codec's clock by creating a new fixed clock node with
-a frequency of 12.288MHz, and switch the audio codec's clock from
-the audio_refclk1 to the new fixed clock. Remove pinmuxing and clock
-muxing for the audio_refclk1.
+The detection of the "mitigations enabled" state is performed by
+unpriv_helpers.c:get_mitigations_off() via inspecting kernel boot
+command line, looking for a parameter "mitigations=off".
 
-[0] https://www.ti.com/lit/zip/SPRR495
-[1] https://www.ti.com/lit/gpn/TLV320AIC3106
-[2] https://www.ti.com/lit/gpn/lmk6c
+Such detection scheme won't work for certain configurations,
+e.g. when CONFIG_CPU_MITIGATIONS is disabled and boot parameter is
+not supplied.
 
-Fixes: 3a36c535dfd2 ("arm64: dts: ti: k3-j722s-evm: Enable analog audio support")
-Signed-off-by: Jared McArthur <j-mcarthur@ti.com>
-Tested-by: Moteen Shah <m-shah@ti.com>
-Tested-by: Sen Wang <sen@ti.com>
-Link: https://patch.msgid.link/20260804210558.1455777-1-j-mcarthur@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Miss-detection leads to test_progs executing tests meant to be run
+only with mitigations enabled, e.g.
+verifier_and.c:known_subreg_with_unknown_reg(), and reporting false
+failures.
+
+Internally, verifier sets bpf_verifier_env->bypass_spec_{v1,v4}
+basing on the value returned by kernel/cpu.c:cpu_mitigations_off().
+This function is backed by a variable kernel/cpu.c:cpu_mitigations.
+
+This state is not fully introspect-able via sysfs. The closest proxy
+is /sys/devices/system/cpu/vulnerabilities/spectre_v1, but it reports
+"vulnerable" state only if mitigations are disabled *and* current cpu
+is vulnerable, while verifier does not check cpu state.
+
+There are only two ways the kernel/cpu.c:cpu_mitigations can be set:
+- via boot parameter;
+- via CONFIG_CPU_MITIGATIONS option.
+
+This commit updates unpriv_helpers.c:get_mitigations_off() to scan
+/boot/config-$(uname -r) and /proc/config.gz for
+CONFIG_CPU_MITIGATIONS value in addition to boot command line check.
+
+Tested using the following configurations:
+- mitigations enabled (unpriv tests are enabled)
+- mitigations disabled via boot cmdline (unpriv tests skipped)
+- mitigations disabled via CONFIG_CPU_MITIGATIONS
+  (unpriv tests skipped)
+
+[1] https://lore.kernel.org/bpf/20231025031144.5508-1-laoar.shao@gmail.com/
+
+Reported-by: Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250617005710.1066165-2-eddyz87@gmail.com
+Stable-dep-of: 040ef1f8b02e ("selftests/bpf: make cmdline_contains stricter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j722s-evm.dts | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ tools/testing/selftests/bpf/unpriv_helpers.c | 93 +++++++++++++++++++-
+ 1 file changed, 90 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j722s-evm.dts b/arch/arm64/boot/dts/ti/k3-j722s-evm.dts
-index ccc04548d3b9a..8286ce75a5744 100644
---- a/arch/arm64/boot/dts/ti/k3-j722s-evm.dts
-+++ b/arch/arm64/boot/dts/ti/k3-j722s-evm.dts
-@@ -194,6 +194,12 @@ vsys_io_1v2: regulator-vsys-io-1v2 {
- 		regulator-boot-on;
- 	};
+diff --git a/tools/testing/selftests/bpf/unpriv_helpers.c b/tools/testing/selftests/bpf/unpriv_helpers.c
+index 220f6a9638134..3aa9ee80a55e4 100644
+--- a/tools/testing/selftests/bpf/unpriv_helpers.c
++++ b/tools/testing/selftests/bpf/unpriv_helpers.c
+@@ -1,15 +1,75 @@
+ // SPDX-License-Identifier: GPL-2.0-only
  
-+	tlv320_mclk: clock-12288000 {
-+		compatible = "fixed-clock";
-+		clock-frequency = <12288000>;
-+		#clock-cells = <0>;
-+	};
++#include <errno.h>
+ #include <stdbool.h>
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <string.h>
++#include <sys/utsname.h>
+ #include <unistd.h>
+ #include <fcntl.h>
++#include <zlib.h>
+ 
+ #include "unpriv_helpers.h"
+ 
+-static bool get_mitigations_off(void)
++static gzFile open_config(void)
++{
++	struct utsname uts;
++	char buf[PATH_MAX];
++	gzFile config;
 +
- 	codec_audio: sound {
- 		compatible = "simple-audio-card";
- 		simple-audio-card,name = "J722S-EVM";
-@@ -219,7 +225,7 @@ simple-audio-card,cpu {
++	if (uname(&uts)) {
++		perror("uname");
++		goto config_gz;
++	}
++
++	snprintf(buf, sizeof(buf), "/boot/config-%s", uts.release);
++	config = gzopen(buf, "rb");
++	if (config)
++		return config;
++	fprintf(stderr, "gzopen %s: %s\n", buf, strerror(errno));
++
++config_gz:
++	config = gzopen("/proc/config.gz", "rb");
++	if (!config)
++		perror("gzopen /proc/config.gz");
++	return config;
++}
++
++static int config_contains(const char *pat)
++{
++	const char *msg;
++	char buf[1024];
++	gzFile config;
++	int n, err;
++
++	config = open_config();
++	if (!config)
++		return -1;
++
++	for (;;) {
++		if (!gzgets(config, buf, sizeof(buf))) {
++			msg = gzerror(config, &err);
++			if (err == Z_ERRNO)
++				perror("gzgets /proc/config.gz");
++			else if (err != Z_OK)
++				fprintf(stderr, "gzgets /proc/config.gz: %s", msg);
++			gzclose(config);
++			return -1;
++		}
++		n = strlen(buf);
++		if (buf[n - 1] == '\n')
++			buf[n - 1] = 0;
++		if (strcmp(buf, pat) == 0) {
++			gzclose(config);
++			return 1;
++		}
++	}
++	gzclose(config);
++	return 0;
++}
++
++static bool cmdline_contains(const char *pat)
+ {
+ 	char cmdline[4096], *c;
+ 	int fd, ret = false;
+@@ -27,7 +87,7 @@ static bool get_mitigations_off(void)
  
- 		sound_master: simple-audio-card,codec {
- 			sound-dai = <&tlv320aic3106>;
--			clocks = <&audio_refclk1>;
-+			clocks = <&tlv320_mclk>;
- 		};
- 	};
+ 	cmdline[sizeof(cmdline) - 1] = '\0';
+ 	for (c = strtok(cmdline, " \n"); c; c = strtok(NULL, " \n")) {
+-		if (strncmp(c, "mitigations=off", strlen(c)))
++		if (strncmp(c, pat, strlen(c)))
+ 			continue;
+ 		ret = true;
+ 		break;
+@@ -37,8 +97,21 @@ static bool get_mitigations_off(void)
+ 	return ret;
+ }
  
-@@ -378,12 +384,6 @@ J722S_IOPAD(0x0084, PIN_INPUT, 2) /* (N21) GPMC0_ADVn_ALE.MCASP1_AXR2 */
- 		>;
- 	};
++static int get_mitigations_off(void)
++{
++	int enabled_in_config;
++
++	if (cmdline_contains("mitigations=off"))
++		return 1;
++	enabled_in_config = config_contains("CONFIG_CPU_MITIGATIONS=y");
++	if (enabled_in_config < 0)
++		return -1;
++	return !enabled_in_config;
++}
++
+ bool get_unpriv_disabled(void)
+ {
++	int mitigations_off;
+ 	bool disabled;
+ 	char buf[2];
+ 	FILE *fd;
+@@ -52,5 +125,19 @@ bool get_unpriv_disabled(void)
+ 		disabled = true;
+ 	}
  
--	audio_ext_refclk1_pins_default: audio-ext-refclk1-default-pins {
--		pinctrl-single,pins = <
--			J722S_IOPAD(0x00a0, PIN_OUTPUT, 1) /* (N24) GPMC0_WPn.AUDIO_EXT_REFCLK1 */
--		>;
--	};
--
- 	pmic_irq_pins_default: pmic-irq-default-pins {
- 		pinctrl-single,pins = <
- 			J722S_IOPAD(0x030, PIN_INPUT, 7) /* (K23) GPIO0_12 */
-@@ -575,12 +575,6 @@ ldo3: ldo3 {
- 	};
- };
- 
--&k3_clks {
--	/* Configure AUDIO_EXT_REFCLK1 pin as output */
--	pinctrl-names = "default";
--	pinctrl-0 = <&audio_ext_refclk1_pins_default>;
--};
--
- &main_i2c0 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&main_i2c0_pins_default>;
+-	return disabled ? true : get_mitigations_off();
++	if (disabled)
++		return true;
++
++	/*
++	 * Some unpriv tests rely on spectre mitigations being on.
++	 * If mitigations are off or status can't be determined
++	 * assume that unpriv tests are disabled.
++	 */
++	mitigations_off = get_mitigations_off();
++	if (mitigations_off < 0) {
++		fprintf(stderr,
++			"Can't determine if mitigations are enabled, disabling unpriv tests.");
++		return true;
++	}
++	return mitigations_off;
+ }
 -- 
 2.53.0
 
