@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048115;
-	b=MKNLYn9HNNt+bgaQceF1L+epVXiN5crS1hlb3XEhIlI/+YdRfho85Vplv+WbsbcyLIY5
-	 HMo8lo6ia3fD8DUleV8vzJsuZEcwPOnRgF/DeZdeeWNANIW9HhBqhlzNhD86VjGKEd/Q2
-	 LlPlpio2sqbculZeTYrKWEKqidsqKuJpXTxi02uwHIopNgD1BfKeUS/vtLUOKy231tSZ5
-	 MSUY7PKQM00X0TTsRudF+IQjQdlDl725oQH/D1q9AIyFlJ3ugxRvZ9c6WQhylG0qsi+K3
-	 UxSPRBkiFHid5cyVOllNZOk187IP7/bGsa3qaepJmgtf0cUoSQ6OI7LXmXVs8NhOppA==
+	t=1795048118;
+	b=M8pl3FhylU23ZSQtu+Q2paVqZZkfeIT5J+BSxJAAGSeUP7G80+GJggRGIegnbB+BPyt/
+	 OGPu285U0CxANQjUEDCSOdHO8bCM/EhXNiiFyG172wD21t/yAHHaTyU7eqsUb6+MhevgB
+	 8xQbMoAZbkeyUPe8lF6kLuQNqkZV5zKrgZMarE4FPHWSAR2acQgYlBprKtMxLlFwq3pbK
+	 C5LCz1A4Xep19x2SxudAxBywiEG1daBcjz95MY/SqMNFcA5qY+d1SbubjSIHaANJuCcMa
+	 yxi9Q3uZQpmIo7S3TyWen9hBsvTn80l/c3jcHTsEhtQi11jC+mXBgMmCYZLtzqHPpPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048115;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048118;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cuWBOQOueqt4b+Fw7vJRDMx1KiHyQ19zpApbSUiJnaU=;
-	b=lMoMJVsUvhPwlad3xoczN3NABvlP/T2ThazQhHDuI70ylYVxvsexnuzGz4y9L9Nf63re
-	 4KYqL9ZjCRNBSnxLU7+F1o2JQViO5vsvZFhqbLVPAYXPWYLfKb3FOHnQ7kG3HEfDwhHkX
-	 OfAtTKsrygyPBpdzXZ6m7+l+g+fGpuPkYcGmVZKAr/irkkBKxIP7wMkGbAsIN7Mq3S9Ht
-	 xbF2VE3muarYll+5Ef0sw3sGQGBVHdkOOJ0BeDUuKgQIk+jqGRaiU5h2hm+GTOGbC0ZQS
-	 v5XCZOu46l52EauKcQ+crBOAbW3vTR26vLsG+MnZbE4ATmz4WOna2rzlEW4beBdXlPg==
+	bh=hqopx9IjjMS71nK/L6zTOKXJxdImr59BHMagstdfZW8=;
+	b=tFvCmRt7dAqS2zGITQ8U6I5HU2K/+pjjHtfP+g5gWGqvw67jGllXmnFzQBNQ/b70YmJI
+	 tyOBUyZmrprd9sxJbKGNO4bHWzdh2mq1s4VqkGKxYETPh6PIjaiVQrSeqSFjPfJNu9sYW
+	 ZNf5UtHPwyRlDnlwTF9en8zbJ+a/U/2neyd6U6o9NmhfEJTDmJOPLqRbZoXQDIXixfLTN
+	 R8J8riiJu7LW6vWaPr96hR4KWwJmTY0ndnjemNyAzWkudpkBzm54A+584Pwv6PjlShC1G
+	 nrHbz0DqrH/0zv20Cx01fwGVVpTxCK9rt9Qzz+1SKJA0raDFVQvKNn1Fo8RrrJfGnTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XcCE5GFW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v6OAdHUK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1221606A33A;
-	Thu, 19 Nov 2026 00:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13F0606A31C;
+	Thu, 19 Nov 2026 00:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XcCE5GFW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7DDA1F000C4;
-	Thu, 19 Nov 2026 00:28:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v6OAdHUK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B491F000C6;
+	Thu, 19 Nov 2026 00:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048115;
-	bh=cuWBOQOueqt4b+Fw7vJRDMx1KiHyQ19zpApbSUiJnaU=;
+	s=korg; t=1795048118;
+	bh=hqopx9IjjMS71nK/L6zTOKXJxdImr59BHMagstdfZW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XcCE5GFWXhWb+gKXIM2wZ9V2d9ias0s0lAt4oNnUwwCcMxxuzxGuNNwm8XtAj0hCZ
-	 tqYQeS68w48n5IwYood6yoUM9TXUO0mNXgq5QidUDxZ1zUzYS7ErGVLphSlj9PFCp/
-	 sJgZw5fqFPxV1Bc3cRVTvmtpYTtZNdeToHRCLidI=
+	b=v6OAdHUKnmLiJNLJ/r5LKlR/AryWxDemEj4hr5ZUyQIT19jMXxdrVfeNXceSpY216
+	 wfsboG5nNxDC2JYJpEg71NHVhEEIvz/ttWbUDCS37ar9B6kFlOIr6gdCEpVlw1c34x
+	 PBUVxZnpIZUuDaOYT3K4Nw1ybUaW4nOb1Wg7F9SM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
+	Jia Wang <wangjia@ultrarisc.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1880/2857] dmaengine: fsl_raid: zero CF descriptor pool allocations
-Date: Wed, 18 Nov 2026 15:48:34 +0100
-Message-ID: <20261118150308.926487402@linuxfoundation.org>
+Subject: [PATCH 6.1 1881/2857] dmaengine: dw-axi-dmac: Fix AXI burst length encoding
+Date: Wed, 18 Nov 2026 15:48:35 +0100
+Message-ID: <20261118150308.960995819@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,60 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Jia Wang <wangjia@ultrarisc.com>
 
-[ Upstream commit 26d48e9fb6997f4026dd86daecf8d2c12258f698 ]
+[ Upstream commit 0d59891c42e11c3840276d8a632dbc355d6ddc4f ]
 
-The compound frame descriptors and embedded CDBs are allocated from the
-cf_desc_pool with dma_pool_alloc(), which does not zero the memory. Only
-cdb32, the gfm coefficients and the frame address/length fields are
-programmed; the dpi_dest_spec/dpi_src_spec fields in the CDBs and the
-rbro32 field of each frame are left uninitialized. The hardware reads
-the whole block (frame 0 length is sizeof(struct fsl_re_xor_cdb) or
-sizeof(struct fsl_re_pq_cdb)), so uninitialized heap contents are
-exposed to the device on each new descriptor.
+The snps,axi-max-burst-len property describes the number of beats in an
+AXI burst, while the ARLEN and AWLEN fields encode that value minus one.
 
-Use dma_pool_zalloc() in both fsl_re_chan_alloc_desc() and
-fsl_re_alloc_chan_resources() so the descriptor and CDB memory is
-zeroed before it is handed to the RAID engine.
+The driver keeps axi_rw_burst_len as the actual burst length so that
+dma_device.max_burst reports the correct value. However, it also programs
+that unencoded value directly into the hardware fields. A value of 256
+therefore overflows the 8-bit fields and can cause AXI decode errors.
 
-Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
-Assisted-by: opencode:deepseek-v4-flash-free
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Subtract one only when constructing hardware descriptors, while keeping
+the actual value for dma_device.max_burst.
+
+Fixes: c454d16a7d5a ("dmaengine: dw-axi-dmac: Burst length settings")
+Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260820031654.28450-1-rosenp@gmail.com
+Link: https://patch.msgid.link/20260902-dma-fix-v3-1-414c6449fbcc@ultrarisc.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/fsl_raid.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-index facd8b0f48f47..d8914ddbedf7c 100644
---- a/drivers/dma/fsl_raid.c
-+++ b/drivers/dma/fsl_raid.c
-@@ -304,8 +304,8 @@ static struct fsl_re_desc *fsl_re_chan_alloc_desc(struct fsl_re_chan *re_chan,
- 		if (!desc)
- 			return NULL;
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index c9571c248f4a6..73e8754342a08 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -661,7 +661,7 @@ static int dw_axi_dma_set_hw_desc(struct axi_dma_chan *chan,
+ 	ctlhi = CH_CTL_H_LLI_VALID;
  
--		cf = dma_pool_alloc(re_chan->re_dev->cf_desc_pool, GFP_NOWAIT,
--				    &paddr);
-+		cf = dma_pool_zalloc(re_chan->re_dev->cf_desc_pool, GFP_NOWAIT,
-+				     &paddr);
- 		if (!cf) {
- 			kfree(desc);
- 			return NULL;
-@@ -593,8 +593,8 @@ static int fsl_re_alloc_chan_resources(struct dma_chan *chan)
- 		if (!desc)
- 			break;
+ 	if (chan->chip->dw->hdata->restrict_axi_burst_len) {
+-		burst_len = chan->chip->dw->hdata->axi_rw_burst_len;
++		burst_len = chan->chip->dw->hdata->axi_rw_burst_len - 1;
+ 		ctlhi |= CH_CTL_H_ARLEN_EN | CH_CTL_H_AWLEN_EN |
+ 			 burst_len << CH_CTL_H_ARLEN_POS |
+ 			 burst_len << CH_CTL_H_AWLEN_POS;
+@@ -932,7 +932,7 @@ dma_chan_prep_dma_memcpy(struct dma_chan *dchan, dma_addr_t dst_adr,
  
--		cf = dma_pool_alloc(re_chan->re_dev->cf_desc_pool, GFP_KERNEL,
--				    &paddr);
-+		cf = dma_pool_zalloc(re_chan->re_dev->cf_desc_pool, GFP_KERNEL,
-+				     &paddr);
- 		if (!cf) {
- 			kfree(desc);
- 			break;
+ 		reg = CH_CTL_H_LLI_VALID;
+ 		if (chan->chip->dw->hdata->restrict_axi_burst_len) {
+-			u32 burst_len = chan->chip->dw->hdata->axi_rw_burst_len;
++			u32 burst_len = chan->chip->dw->hdata->axi_rw_burst_len - 1;
+ 
+ 			reg |= (CH_CTL_H_ARLEN_EN |
+ 				burst_len << CH_CTL_H_ARLEN_POS |
 -- 
 2.53.0
 
