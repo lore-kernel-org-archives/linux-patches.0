@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028429;
-	b=WSe2zpoSsKMhaNT+KQM7fwPT9lPSW8/HTofH8NUx78cYstKikR2epyk4im5NAJTE3znb
-	 hvmnUH6PxipJTqIrWb0hPF7716X6KXB3IZ+jqTMh4Wey/ixKDum6Y9j4P/ejP50b3iaXn
-	 A4+iLh/XoLWtxkpbNtB+PBTMMx65YUulZ3PkAJ6NKfrSmk5HTKVF5b9NocdYdRfZ1v/0p
-	 2vl0d646oYJmkK/UYEHJH1oJV+Nt+4xrkFudOH9nwPYzvb8FsjGnQZ7qiMc4JysHUnluP
-	 mTPZqVbACKLWzeAnKaFcTONd72FRNxVx7LQU7X02/GRwVo50nggg5hUEmaAXwJmYrZw==
+	t=1795028431;
+	b=g1ip+Da4Tjbd3gyGzwoCXQbHKAgDuCM/cqfRGrbzagv5q7E9CNOzZCzKyT7M9OQrNM2b
+	 plKNdFI6w41Eo66PJo9pCi3UaJOgUt0E/9S0pNqC8CqivCNap6/xiW8WwXdloh4NTgr7u
+	 ES0jCufbQSv36D7lh5nukrqdmmfS9J5HdxnKyC8G9AKKGkTQnqMY6BV3PfSm5ZSB1WMOb
+	 LWLhxGtP99EXlBjjpSpkCfChVfSoND4biPYn3fwX61+U7ojmsgTVupYVA+WtTfwf1QQ6c
+	 Sfn4JIk5WLS1AHqnmmVTTVZRUzGLmumG9NATbeypS2LSkwtCgEgD9Hk8QwZ8gEquhbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028429;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028431;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=VxGny6YSfQyuKpXHI2B63ov+YYnn7imtX2IZOlurPVc=;
-	b=meMZ+kkJa+IBehBAlaQ+nXezGFiGD0G7CufRnuKDaSY7MBHAU4Lppp7VVEAckpBpkz9p
-	 Mix+YFUHIoXALi3LmGdrPQcFRWqp5atfZjJmFWekyswuDpJvvOl0EEYzieOm3Cw6hpTrM
-	 co3Ana0B0al7oGQOa4WY32+TulZSCENX9tWPY5d6q3pIu4I4YZ9bM7VaOhEvlCt+jKtjk
-	 ic/J97Gilk2I5XhD77MpBlJT8zPtZVeV4dU5BgvTsDjfVXInYtygwdMUrgeKzP/8tjIk2
-	 1i3LNSw+UNXijnly+h/OhMNJnXKEhfrccsAyvHHnCw+cg+WT0Nt9kbliU1u1807XQEg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=jugPDBlpI56zHwSPyX5ugsCwKzKwuBivpprSM9P87h0=;
+	b=qlaCEKi0X6cepYNUpOyKcVCcuD4P8yUtK+hhscLNlZthlvSvCHSybpWfV1N/WjDHxmyA
+	 JVQWlWJTN5/Mv49iC/oit1GY2SxtbrJCDA5dcfDieIVE0IlbK+tCurJwYai6TjxMKZVRB
+	 dr/PzEVNG3JJl5DrQWed1MYcnwbRkVpBRTpH2rOlfyzM03iDntHWT90WhRXf5Bb7+vTld
+	 qj/mKQ7Cl0I2Tdj75oubmFTDAJSdz4N2N5Ob6vWD67Ya7Hdy+nK3L8RE6ZH84kIlmBVUD
+	 k38KYvNsnzVqvOhpe+93eFdZ/1iXeLT/kjD22Kf+U5uCy4/G22NcrRwspazI1nDxL8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="r5/QQvyv";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nCLByiiZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18728606A31C;
-	Wed, 18 Nov 2026 19:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB854606A31C;
+	Wed, 18 Nov 2026 19:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5/QQvyv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B1B1F000C8;
-	Wed, 18 Nov 2026 19:00:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nCLByiiZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203EA1F000C8;
+	Wed, 18 Nov 2026 19:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028429;
-	bh=VxGny6YSfQyuKpXHI2B63ov+YYnn7imtX2IZOlurPVc=;
+	s=korg; t=1795028431;
+	bh=jugPDBlpI56zHwSPyX5ugsCwKzKwuBivpprSM9P87h0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r5/QQvyvAkxhoXyaDRLB3o9i9B4bavhy/eZ2nYUhELM8SN+r4DOqpNby0xBjtx91w
-	 J68EwCK6KRgXF9FLZBOT/12NJ+XZtnIAGjh+zRviRGHQthROCrAkJHnIHYX3Q2ATeu
-	 KYlSYwGCo8BuIL19+h1qGARkp/Se0NSZa5hCVJDo=
+	b=nCLByiiZB87AmkSgBZSl/Y5kWXFTWDbdmkbA9Mq8uF4+u/Jfbxq9sl3cylVqdEgXu
+	 DnRN3Uu+hW+0Y5+TEZUGw7FIYZdGeRbQTSpJcrKpvr/oEpMszvw69b3SGaqjioLlDM
+	 MS0ntmrBxJjJIMHDI5kFIPKB67lx0NdAuhUhJHlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <helgaas@kernel.org>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Logan Gunthorpe <logang@deltatee.com>
-Subject: [PATCH 6.18 2142/2151] PCI/P2PDMA: Add missing struct p2pdma_provider documentation
-Date: Wed, 18 Nov 2026 16:04:37 +0100
-Message-ID: <20261118150239.696405291@linuxfoundation.org>
+	=?UTF-8?q?Jaron=20Vi=C3=ABtor?= <jaron@vietors.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.18 2143/2151] btrfs: do not reject a valid running dev-replace
+Date: Wed, 18 Nov 2026 16:04:38 +0100
+Message-ID: <20261118150239.733851743@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,48 +62,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 80d9411c00e805488b631c91034e9b6c14a6dbdc upstream.
+commit 3c0c45a4dff73845ba93d41365fc14e45ee32bd7 upstream.
 
-Two fields in struct p2pdma_provider were not documented, which resulted
-in the following kernel-doc warning:
+[BUG]
+There is a bug report that a btrfs with running dev-replace got rejected
+with the following messages:
 
-  Warning: include/linux/pci-p2pdma.h:26 struct member 'owner' not described in 'p2pdma_provider'
-  Warning: include/linux/pci-p2pdma.h:26 struct member 'bus_offset' not described in 'p2pdma_provider'
+  BTRFS error (device sdk1): devid 0 path /dev/sdk1 is registered but not found in chunk tree
+  BTRFS error (device sdk1): remove the above devices or use 'btrfs device scan --forget <dev>' to unregister them before mount
+  BTRFS error (device sdk1): open_ctree failed: -117
 
-Repro:
+[CAUSE]
+The tree and super block dumps show the fs is completely sane, except
+one thing, there is no dev item for devid 0 in chunk tree.
 
-  $ scripts/kernel-doc -none include/linux/pci-p2pdma.h
+However this is not a bug, as we do not insert dev item for devid 0 in
+the first place.
+Since the devid 0 is only there temporarily we do not really need to
+insert a dev item for it and then later remove it again.
 
-Fixes: f58ef9d1d135 ("PCI/P2PDMA: Separate the mmap() support from the core logic")
-Reported-by: Bjorn Helgaas <helgaas@kernel.org>
-Closes: https://lore.kernel.org/all/20260102234033.GA246107@bhelgaas
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
-Link: https://patch.msgid.link/20260104-fix-p2p-kdoc-v1-1-6d181233f8bc@nvidia.com
+It is the commit 34308187395f ("btrfs: add extra device item checks at
+mount") adding a overly strict check that triggers a false alert and
+rejected the valid filesystem.
+
+[FIX]
+Add a special handling for devid 0, and doesn't require devid 0 to
+have a device item in chunk tree.
+
+Reported-by: Jaron Viëtor <jaron@vietors.com>
+Link: https://lore.kernel.org/linux-btrfs/CAF1bhLVYLZvD=j2XyuxXDKD-NWNJAwDnpVN+UYeQW-HbzNRn1A@mail.gmail.com/
+Fixes: 34308187395f ("btrfs: add extra device item checks at mount")
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/pci-p2pdma.h |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/btrfs/volumes.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/include/linux/pci-p2pdma.h
-+++ b/include/linux/pci-p2pdma.h
-@@ -20,6 +20,8 @@ struct scatterlist;
-  * struct p2pdma_provider
-  *
-  * A p2pdma provider is a range of MMIO address space available to the CPU.
-+ * @owner: Device to which this provider belongs.
-+ * @bus_offset: Bus offset for p2p communication.
-  */
- struct p2pdma_provider {
- 	struct device *owner;
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -8462,7 +8462,12 @@ bool btrfs_verify_dev_items(const struct
+ 
+ 	mutex_lock(&uuid_mutex);
+ 	list_for_each_entry(dev, &fs_info->fs_devices->devices, dev_list) {
+-		if (!test_bit(BTRFS_DEV_STATE_ITEM_FOUND, &dev->dev_state)) {
++		/*
++		 * Replace target dev item (devid 0) is not inserted into chunk tree.
++		 * So skip the DEV_STATE_ITEM check.
++		 */
++		if (dev->devid != BTRFS_DEV_REPLACE_DEVID &&
++		    !test_bit(BTRFS_DEV_STATE_ITEM_FOUND, &dev->dev_state)) {
+ 			btrfs_err(fs_info,
+ 			"devid %llu path %s is registered but not found in chunk tree",
+ 				  dev->devid, btrfs_dev_name(dev));
 
 
