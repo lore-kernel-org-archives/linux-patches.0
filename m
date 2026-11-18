@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036224;
-	b=vHH7U/S+ipvXCrntMKuhDgz67zDvinryWs3Wq5CU7yMisxSSznHVxn/bRTD2DjehGyAs
-	 TooFeCMLK9lBbXZJS8Z8y7OnMQEUSu673ijdhlJSwqQzh5hNPIXaMI0xaXMOTOafq0zWg
-	 Wt1Q3n+vzyRLZ2+bgoPCbbgsO/iVuB1SYli6SaWNjpwGCAgUj+5BhbxeGdwylg3LgQW2I
-	 Q8r5eT8hUdmXTtxzTuBWUK5/GV3E/5Kwb/5rmVQuEtslLpG5oiyD1JbskfsjXmzPXN1gz
-	 lI1hUWsXKcabQagvBG3GZ5TNKJpg2hj3V5/T4zjwVD4p+bF15pN+9U/i9gN2dVcEPsg==
+	t=1795036227;
+	b=nWdOF8CRJFai/MYa02RMIUZ4twyLxqdOuEc/N7AfJTCyh+kxkrqPAdT5ynEpNItfZLmd
+	 6W78TK70/UljAk+k6NXoUj3RB2WnqIdx3GsqcmzY7WYfr86VowR0yUhIj9CNNsYkuiWdU
+	 GhETxm1uXWUz1ZdORTaXczDCBGjjXHUSPEzCosYivCk9G+n+/ANoVzthDL+rLeRwb+u8L
+	 1853a1bsG/V6cxdx4IvE4zfnasV0Ay964py/nQGdXL1jP9KtTkxjREXFxlf7gl+qPK+kV
+	 7+dEO/GLWvAucUkEykjHIwRefFg4Yw7MbAqgJfMWPotYJr2G0RALje5/DUVtOm4INGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036224;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036227;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2Amm1UgoQECYBd51Bs78KFxnuK/yAdsLYPkhFBgwQh8=;
-	b=LqRZi9KF39OGfee/Bq02Zu/7xBQU5oAul13G05H+6Q7NwCKm1k/SW1WFm602aoAwECVl
-	 eSiCSM5X2c/rtFkwFm4psu+jWVDT/GfovqageTeCa6OXqOEJNCLzUzpx6Dh6RsnEZ66/u
-	 /4uNd6WtS22BvgJJ4bjWEe1iX7AHQFKJHkqBCZQ3fQE93YJXDoLdem2kXlRkuOhxbAYFI
-	 V9LEa26vwsaA0L+vDz4n2oyarfpbhx/t5oJBwoIBrSzesjCdBL81Yq+6a+HapSjAsmGSd
-	 a+NOITEb5t7azLDqkoneBMadEiupojd2BBziseT3FXE4zkdRUtZV/+NI6dliGg3VpIw==
+	bh=Rt6BJjJ8wuKDHQXkNC+SVZWN3wpkFophw5ad/8aa/SU=;
+	b=Ea9Tw5nvMxMNzn9xCnVtYaGJNZJtKlLQsYjMF1VzgMUQYlFF3+C/vH4/GJGUWIkvQROb
+	 7RNrfUpDDHoa7gf2WKIQ+z1yF84oTUPFt+57t2r3MLwH+VrCnFYJ2JN+Rx7DoCS7IrP60
+	 kIhDCZBIJbbahba8k6BGDuBDdCM8+Bk3eUk6PSosQwOWe3rbRnc5aYCZgY9wHIXgyUo+y
+	 J36JYLR94r1tuMpwRzgWxoePdKbcwK2c/DKBj9w9hASDVq1300TTmQVlyW1sA9IUYalhF
+	 ulAoVABmC4eAyWWXLKReeEn24Sqb6piR/hAmm2/oBPOVIOmGfemqDtr64H4XHGiKsLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AB3qmHnu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ap48yCQA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66259606A320;
-	Wed, 18 Nov 2026 21:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13921606A32A;
+	Wed, 18 Nov 2026 21:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AB3qmHnu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EABA1F000C4;
-	Wed, 18 Nov 2026 21:10:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ap48yCQA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F1011F000C5;
+	Wed, 18 Nov 2026 21:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036224;
-	bh=2Amm1UgoQECYBd51Bs78KFxnuK/yAdsLYPkhFBgwQh8=;
+	s=korg; t=1795036226;
+	bh=Rt6BJjJ8wuKDHQXkNC+SVZWN3wpkFophw5ad/8aa/SU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AB3qmHnugGfvu+EjfWma70hHt5ZkyJNIzYQ3PmxhxiwoeHbl+Hk1wlfUEkKGY9JBd
-	 iGVX1o247AYKm/0a0u4Eafaj004jI83ym7cE+l9RS9WVhonFmLgR4Z/IRk2G9P5wZj
-	 URrMLNaFHeXeRLjnxw/XYnacgTxtJRG5/yb761/A=
+	b=ap48yCQAnuHy2XV1grotdffJGWeY5tUYKRV/9xSvRdPrwDibgMkFd0d4C2BUCk5B9
+	 wbUSEhxyT3EuH22BojrKnw4gZXFI7KNfYjObG0RNebo2Fx57JTPTB72tqm8zFnypse
+	 rEsJdaDfsDB3F5qa6/diZD9DPJwm/tVl7b7Y/htM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Wei Jie Law <98lawweijie@gmail.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0984/3318] PCI: Disable MSI for ULi M1575 EHCI controller
-Date: Wed, 18 Nov 2026 15:26:46 +0100
-Message-ID: <20261118150349.283319756@linuxfoundation.org>
+Subject: [PATCH 6.6 0985/3318] media: uvcvideo: Fix NULL deref on events for uninitialized controls
+Date: Wed, 18 Nov 2026 15:26:47 +0100
+Message-ID: <20261118150349.319541195@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,60 +71,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Wei Jie Law <98lawweijie@gmail.com>
 
-[ Upstream commit 5f30217ec296fb5742f6fd306586dbca5b81b4eb ]
+[ Upstream commit daa379e2b74d6c10ba4e3b56eeca5aa8c8704fca ]
 
-With MSI, the ULi M1575 EHCI controller (10b9:5239) intermittently stops
-executing its asynchronous schedule. Control transfers time out ("device
-not accepting address", "device descriptor read/64"), the port is handed to
-the companion OHCI controller, and the device ends up at full speed. On a
-configured hub the stall shows up as hub descriptor and status read
-failures. Only re-initializing the controller recovers it.
+A null-ptr-deref exists in v6.12.105 and upstream. KASAN crash log:
 
-On a Sun Ultra 45, 65 of 800 controller initializations stalled with MSI
-and none of 200 with INTx. Each initialization is an unbind and bind of
-ehci-pci on the EHCI function, with MSI or INTx selected through its
-msi_bus attribute; with this quirk, 0 of 100 cycles of the same loop
-stalled. The stall reproduces on a kernel that already contains commit
-0b60557230ad ("usb: ehci: Prevent missed ehci interrupts with
-edge-triggered MSI").
+  KASAN: null-ptr-deref in range [0x0000000000000080-0x0000000000000087]
+  Workqueue: events uvc_ctrl_status_event_work
+  RIP: 0010:uvc_ctrl_status_event+0x105/0x280
+   uvc_ctrl_status_event_work+0x82/0x240
+   process_one_work+0x66f/0x10b0
 
-The OHCI functions (10b9:5237) keep MSI. They showed no stall, and the hub
-enumerated through them on MSI during the EHCI failures, so only the EHCI
-function is quirked.
+XU controls are initialized lazily, on the first UVCIOC_CTRL_MAP or
+UVCIOC_CTRL_QUERY.  Until then ctrl->info is all zeroes, so
+info.mappings is not a valid list head, list_empty() returns false, and
+uvc_ctrl_status_event() walks it from a NULL next pointer.
 
-The illumos EHCI driver also disables MSI on this chip, in
-ehci_register_intrs_and_init_mutex() in
-usr/src/uts/common/io/usb/hcd/ehci/ehci_util.c.
-
-Until USB HCDs started trying MSI first in v5.9, the controller always used
-INTx. Disable MSI so it uses INTx again on this chipset.
-
-Fixes: 306c54d0edb6 ("usb: hcd: Try MSI interrupts on PCI devices")
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Fixes: e5225c820c05 ("media: uvcvideo: Send a control event when a Control Change interrupt arrives")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260930191100.6127-1-kaloz@kernel.org
+Signed-off-by: Wei Jie Law <98lawweijie@gmail.com>
+Assisted-by: LLM
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://patch.msgid.link/20260907121844.2592492-1-98lawweijie@gmail.com
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/usb/uvc/uvc_ctrl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 6fd425ef7f8cd..6bef92be41f91 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -1934,6 +1934,8 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x4388, quirk_no_msi);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x4389, quirk_no_msi);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x438a, quirk_no_msi);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x438b, quirk_no_msi);
-+/* ULi M1575 EHCI (10b9:5239): MSI stalls the async schedule */
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AL, 0x5239, quirk_no_msi);
+diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
+index bd90d8bacd5ef..20702609003e7 100644
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -1615,7 +1615,7 @@ bool uvc_ctrl_status_event_async(struct urb *urb, struct uvc_video_chain *chain,
+ 	struct uvc_device *dev = chain->dev;
+ 	struct uvc_ctrl_work *w = &dev->async_ctrl;
  
- static void quirk_pcie_mch(struct pci_dev *pdev)
- {
+-	if (list_empty(&ctrl->info.mappings))
++	if (!ctrl->initialized || list_empty(&ctrl->info.mappings))
+ 		return false;
+ 
+ 	w->data = data;
 -- 
 2.53.0
 
