@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027081;
-	b=I/4OTEB1t1f06Thb0OYtAgGIWyKym/PDFl/yNB8R2gWM636gfHzcOSFRUQwhU3gaqb8e
-	 /yFikTi3kyBVY5B0VWA22A7JdMdu5KshMapiaZRTPkaKqvnQjVWsHPP/uFlZ8x5boroAf
-	 09ju0IY3WAXv+PnC21JT5YmVP4ac4NREk5BddvOxCIMTrQ5QkXsCTVLDDDZKefZwOaTZ/
-	 jiyZe+gRm5juAnUGNkUPbpTe51hWBUEVIPGAfypy7e9YRtw/ySy5fRPWHEAWkm/+42NL9
-	 8MXCJNlzRODcmDnRPAZKDBxmbN0me1zjp0bxqll/WZ1IDIlSMy7bx/3rgN/DdghzQtw==
+	t=1795027084;
+	b=4BHA9sRpGlwa5aKoWWTrRikCSUtHMr+Vw9UbcDYdxMm9kHDGaGS1kJTOGcuOV3GoVRUL
+	 Coz3m9GZx+dpkW4BnHPLB08EUFa96/Pxfcf487VhF32Xn+t6LOIA0GgyXm8j1DgIKd9Zj
+	 vQnNoPSOeIgGO68wRAZCws6MASSSZn4EYi1OIt8pL/Y7VuY2KMvG9bRwwDm09WV+TSjsB
+	 FqTE2+P/sBa88p76FIWIKKBDEIZqw9gD0vazMcvc8h8l01G68UeKAqENo6/GsTGpyBdeQ
+	 vx9SZTuqdfBHbQoXsoEqewKEmfXd5GM49QvtJfbOluKR6VgWh5FjNkeFzxgwaDQm21A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027081;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027084;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0RxuNXTEgqybIIKarM+LUVK890k/V9tw6VFEF7Qmc1A=;
-	b=ZVpx58WVS6bnY4twyIu/AGHD+h1jBuKyAhC1hmgfwd6uBj/IakGcZg9n47+ywWcETzHi
-	 ovdQ6Z/fokbIt2n+z/4Ncp6x7MLgs6pYZYQZ8YyV9MWIM04ISsCwIY+eefuTIF0rpnpSz
-	 NkGlMQBIrMyIzKDT6jz1IA884M7Qh5iGPdmUOML878ebQyjWdDrYFZeZq5FV/jupC8USk
-	 JGUy1vlemZVQed/SffKu5wp/y5u41mNipYLBhdgLMhKuNW09j46aZhdsgL3krAC4W6A4d
-	 1FpP/RhzNmHvEV89qZdzhJt+C2dwyaRrp1yk7IFBtaaFwjn2T/e0L90lx6ssFBPCcxg==
+	bh=fcubPuZVnndk+Gf9UhwAb3zHKkac86nDNatqdB+LEGw=;
+	b=gwRVdtwmjtQaQrAwcahax6Cdqf+6H3FB8Ea+L1kRFM+VOiPQlu83EzG7MnAdJdnuPpoq
+	 /ZBVeL0Ii7vIL8fzXZ6cTAlLax5xJa0kOEr+u1fqP7bZo5jQFbiPsbutEdUFxwfrc5B5A
+	 34am77UiDj6oEnHvcv/D9e9Xldiedp0UOkRaDjwwthXT2i5iTG+K7QR88xawdKpAau6mt
+	 HsLfN6edq0V6nCTo1X00PgjUkd42zdJTPuM6A8ZIoIcCXXARY0pEMUy5VZ3Ar1b1gTJ6o
+	 E4qLQsByJpHBJpmMfBJ+pKQ1WRFUDFkfwUXB2hZYHiWQVT3Dy04FrFTvp7EsOlzIYAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XkE4pl3s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bXaSsSgC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADC7606A31C;
-	Wed, 18 Nov 2026 18:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6B0606A31C;
+	Wed, 18 Nov 2026 18:38:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XkE4pl3s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8749E1F000C4;
-	Wed, 18 Nov 2026 18:38:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bXaSsSgC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460A81F000C4;
+	Wed, 18 Nov 2026 18:38:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027080;
-	bh=0RxuNXTEgqybIIKarM+LUVK890k/V9tw6VFEF7Qmc1A=;
+	s=korg; t=1795027083;
+	bh=fcubPuZVnndk+Gf9UhwAb3zHKkac86nDNatqdB+LEGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XkE4pl3sJU7yvz76h6zAmFNF1FuQOtD1aS4mFyObSR+AkGt0bRZS7OJNfNVo/v87b
-	 Qwcf+FL38A43DzzosV8jT+EoiRNRRZnpmjcRe1NQsjrgepxrBEz1G3ch34IeilchCw
-	 sH73Ns8zxzTlHjMfgnphQGgJmi0tJVDL8pqTXSUA=
+	b=bXaSsSgC8QT8Fp3mvgbR376qgmqEd6e1Zz/Rr8IvHhyzuS6+b5ApHiqCJpysS2sgH
+	 YOTtgdB5pAV5ibq6e4ls+bUEuD4HbscGy8vJL0jCUUXp5w8mnZ797sndoC/Kve4K4R
+	 VR8bAn/rj6MOqipzAOslzeeynrRySCrli28aPkh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Melikov <mail@gmelikov.ru>,
-	Simon Horman <horms@kernel.org>,
+	Baul Lee <baul.lee@xbow.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1663/2151] bnx2x: fix header length calculation for encapsulated TSO
-Date: Wed, 18 Nov 2026 15:56:38 +0100
-Message-ID: <20261118150222.419646335@linuxfoundation.org>
+Subject: [PATCH 6.18 1664/2151] ipv4: use RCU protection in inet_netconf_get_devconf()
+Date: Wed, 18 Nov 2026 15:56:39 +0100
+Message-ID: <20261118150222.454816397@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,53 +72,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Melikov <mail@gmelikov.ru>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 4fc1d5bb448dfab391a96f949d02ad03ad8cda5c ]
+[ Upstream commit b2039a6dd36b5c89142bfb95bc0205be8abcc600 ]
 
-Commit 80bfab79b835 ("net: adopt skb_network_offset() and similar helpers")
-replaced the difference between the inner transport header and the outer
-network header with skb_inner_transport_offset().
-The helper is relative to skb->data, so the new calculation incorrectly
-includes the outer Ethernet header in fw_ip_hdr_to_payload_w.
+inet_netconf_get_devconf() runs without RTNL. It uses dev_get_by_index()
+and in_dev_get() to pin the device and its in_device while the reply is
+allocated and filled.
 
-On a BCM57810 transmitting TCP over VXLAN with an outer MTU of 1500,
-hardware segmentation emits packets declaring an outer IPv4 total length
-of 1514 while the actual IP packet is only 1500 bytes long. The receiver
-drops these malformed packets, severely degrading TCP connectivity.
+in_dev_get() is not safe for a lockless caller. Since commit 9d40c84cf5bc
+("net: devinet: Reduce refcount before grace period"), inetdev_destroy()
+drops the final reference before the RCU grace period. A reader can load
+dev->ip_ptr, then call refcount_inc() on a zero refcount after
+in_dev_free_rcu() has been queued, and keep using the in_device once it
+has been freed.
 
-Subtract skb_network_offset() to restore the original calculation of the
-length from the outer network header to the inner TCP payload.
+None of these references are needed. An in_device is freed after an RCU
+grace period, ipv4_devconf is embedded in it, and
+inet_netconf_fill_devconf() does not sleep.
 
-Reproduced with plain kernel VXLAN and one TCP flow on kernel
-7.0.0-31-generic: 50 of 200 captured packets had an invalid outer IP length
-with the original driver, versus none with this fix. Disabling TSO/GSO on
-the test VXLAN device also eliminated the error with the original driver.
+Allocate the skb first, then perform the lookup and the fill under
+rcu_read_lock(), using dev_get_by_index_rcu() and __in_dev_get_rcu(),
+like inet_netconf_dump_devconf() already does.
 
-Fixes: 80bfab79b835 ("net: adopt skb_network_offset() and similar helpers")
-Signed-off-by: George Melikov <mail@gmelikov.ru>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261009-bnx2x-tso-fix-v1-1-1ebea422422d@gmelikov.ru
+Fixes: bbcf91053bb6 ("inet: do not use RTNL in inet_netconf_get_devconf()")
+Reported-by: Baul Lee <baul.lee@xbow.com>
+Closes: https://lore.kernel.org/netdev/20260815172032.79740-1-baul.lee@xbow.com/
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Tested-by: Cen Zhang <zzzccc427@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/CAAVpQUA5FEMWV1R4vy2+uzQc+_iLDaz4m-D6kfKYngGf2sE0Eg@mail.gmail.com
+Link: https://patch.msgid.link/20261009074906.729877-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv4/devinet.c | 35 +++++++++++++++++------------------
+ 1 file changed, 17 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-index 445e80a681fe6..4920b4b37f5a8 100644
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-@@ -3666,7 +3666,8 @@ static void bnx2x_update_pbds_gso_enc(struct sk_buff *skb,
- 	u8 outerip_off, outerip_len = 0;
+diff --git a/net/ipv4/devinet.c b/net/ipv4/devinet.c
+index 942a887bf0893..5374aa7e1ffa1 100644
+--- a/net/ipv4/devinet.c
++++ b/net/ipv4/devinet.c
+@@ -2278,8 +2278,8 @@ static int inet_netconf_get_devconf(struct sk_buff *in_skb,
+ 	struct net *net = sock_net(in_skb->sk);
+ 	struct nlattr *tb[NETCONFA_MAX + 1];
+ 	const struct ipv4_devconf *devconf;
+-	struct in_device *in_dev = NULL;
+-	struct net_device *dev = NULL;
++	struct in_device *in_dev;
++	struct net_device *dev;
+ 	struct sk_buff *skb;
+ 	int ifindex;
+ 	int err;
+@@ -2291,7 +2291,13 @@ static int inet_netconf_get_devconf(struct sk_buff *in_skb,
+ 	if (!tb[NETCONFA_IFINDEX])
+ 		return -EINVAL;
  
- 	/* from outer IP to transport */
--	hlen_w = skb_inner_transport_offset(skb) >> 1;
-+	hlen_w = (skb_inner_transport_offset(skb) -
-+		  skb_network_offset(skb)) >> 1;
++	skb = nlmsg_new(inet_netconf_msgsize_devconf(NETCONFA_ALL), GFP_KERNEL);
++	if (!skb)
++		return -ENOBUFS;
++
+ 	ifindex = nla_get_s32(tb[NETCONFA_IFINDEX]);
++
++	rcu_read_lock();
+ 	switch (ifindex) {
+ 	case NETCONFA_IFINDEX_ALL:
+ 		devconf = net->ipv4.devconf_all;
+@@ -2301,36 +2307,29 @@ static int inet_netconf_get_devconf(struct sk_buff *in_skb,
+ 		break;
+ 	default:
+ 		err = -ENODEV;
+-		dev = dev_get_by_index(net, ifindex);
+-		if (dev)
+-			in_dev = in_dev_get(dev);
++		dev = dev_get_by_index_rcu(net, ifindex);
++		if (!dev)
++			goto out_unlock;
++		in_dev = __in_dev_get_rcu(dev);
+ 		if (!in_dev)
+-			goto errout;
++			goto out_unlock;
+ 		devconf = &in_dev->cnf;
+ 		break;
+ 	}
  
- 	/* transport len */
- 	hlen_w += inner_tcp_hdrlen(skb) >> 1;
+-	err = -ENOBUFS;
+-	skb = nlmsg_new(inet_netconf_msgsize_devconf(NETCONFA_ALL), GFP_KERNEL);
+-	if (!skb)
+-		goto errout;
+-
+ 	err = inet_netconf_fill_devconf(skb, ifindex, devconf,
+ 					NETLINK_CB(in_skb).portid,
+ 					nlh->nlmsg_seq, RTM_NEWNETCONF, 0,
+ 					NETCONFA_ALL);
++out_unlock:
++	rcu_read_unlock();
+ 	if (err < 0) {
+ 		/* -EMSGSIZE implies BUG in inet_netconf_msgsize_devconf() */
+ 		WARN_ON(err == -EMSGSIZE);
+ 		kfree_skb(skb);
+-		goto errout;
++		return err;
+ 	}
+-	err = rtnl_unicast(skb, net, NETLINK_CB(in_skb).portid);
+-errout:
+-	if (in_dev)
+-		in_dev_put(in_dev);
+-	dev_put(dev);
+-	return err;
++	return rtnl_unicast(skb, net, NETLINK_CB(in_skb).portid);
+ }
+ 
+ static int inet_netconf_dump_devconf(struct sk_buff *skb,
 -- 
 2.53.0
 
