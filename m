@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037790;
-	b=ulrN38ZQtQoUCis+9k3VXXoCK2llqHTZlYwHiaK9NwXd/PMF8JF8ksfvV6F5yPwF/rHF
-	 0KVMSK8MimlPVOwSIGWD/uYKe21u3t/pFLnUAUFjj97Yox07rD0+q4jeUUYXSJrx+47d2
-	 4QChB/9HuepjXz7a4Et+qws44Pxp6NCWn3myoMEj0iItktcOvGytlny89hJgwd0nHh4QS
-	 vdSQrwPUkOQgbP2+P7xzOcnQNu7GA2sBWAJsZVa7qDSfSso/UcF+dFeMOio+1ZJ3wTE68
-	 usIf0S5L9pA3KWpzS9LPyJkPs4+CZsr3XcwHb6Jgv37mNTgtafU/OfCa3gW06nzvznQ==
+	t=1795037792;
+	b=toAbQb/NnVIASA+w9vlrk6f4GdUySzlg/yY+mV56zN6PF60RaM2hwLtO+f/qqQm1dE7R
+	 2pZKSY8bhNMYI1GOcCWtooBCAZtFdRfMzOFRndaZGI8LouIZo+hopd5OT320ddJK1IF8k
+	 RJbdd42mqcW2KoZKnmuMHF/+jwH2oCyHVpNWE0y/gH0yMLLWhQC9HqKAB/CT8Zeq/6bPy
+	 X5y1XTiYdBez4XDXRr5jBcTYqmYV84gkl0kuqd8U3IDoEtuJBu6tBE84NaE2PkKkkYKio
+	 eMKwd5WcINrbt+w8Sk6ic4xU1FpEVq73vI352tFfPB3mS8IFG6Z02RjvwedubpFcR3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037792;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lyqeBaXvDfu9imz2qKj09eEL+mrBX3s5JeeDq9WhepY=;
-	b=Jp/hbLv3vkIJbcudyjz6H5ID0+SuFt09zoZ+Zry7YU8Qsgh0Gjr4c65UBlCPOG/7PnqU
-	 jrv4k6vFtIdpP0qYEpYdMPut5N3RwQlGgLpsnk60JMtiRvTiz3PbECU0XwO64Kp6hTPbW
-	 GoHeb6mbxHhz7etIZ0+ktxgNlrOj8gSWrmSLJ7Pelud5mhstzVwJwcB/DdnVFsG3mnQBt
-	 2lY7+rX28mFIs3eXxFUyRQ2a2DvpdDPfxdLQ132khe1jtlAJdVqnXipIOgXh82tTayY2Z
-	 DT5v49bsJtKcdJVa9mhuGp4FyptqPF9IkibLSfdsbiNk0smwrswxwKYWn/Nocpwbsjw==
+	bh=+vuJ12nWTsJbPQooivbiFdQV8WOxOpCfltmYtKODR1I=;
+	b=Ich1SishabtMv9unCoYk521Z8ukPKS0u/BH7gompkuMiCRFqnsr2HmLdXUZYquM+Qhhg
+	 kkFyyUIX1wFMifgUEO8Z6LWnW7H+k0dh61vRw4o+Yj4QlaS5+ZEACqKuNEeO6kcVwRVnw
+	 /g+LcVCsKMuEiYKPu7+MnXD5dbQ434khTrkt4huiFNmOhgod6//BmIzVygmo4M0qHZ7XW
+	 XIL+ZqidRogdY8kka9DTUB2jaIk5HuqOK5xhkCqVnrPpfJUC2UVNDssou9jnPFF/NpMa/
+	 VnYJw35tc4koXd11PM3UzEjrefMUEKB0qdCXc+Op5fVSHig9hDEZVLnqUFSgJ1iWwnQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0f+bg4QF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r0Gf3kQH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CD1606A31C;
-	Wed, 18 Nov 2026 21:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87C1606A325;
+	Wed, 18 Nov 2026 21:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0f+bg4QF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E908A1F000C4;
-	Wed, 18 Nov 2026 21:36:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r0Gf3kQH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92661F000C4;
+	Wed, 18 Nov 2026 21:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037789;
-	bh=lyqeBaXvDfu9imz2qKj09eEL+mrBX3s5JeeDq9WhepY=;
+	s=korg; t=1795037792;
+	bh=+vuJ12nWTsJbPQooivbiFdQV8WOxOpCfltmYtKODR1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0f+bg4QFcWmRpLDUp4PWRA1CQ93uzhsEVQhiH6QN08VrpffhQJCaPGTSh8DFCb0yV
-	 eYfbsvDlVgz76ZfgyZ752HLecuD54ZdF0FmX5gpfPduM/ElxkrHlMHULBLzlFbPm93
-	 iThhuW2ABRSJk5IhHkrqgX8Oy+mAMAOHh14N8Yjg=
+	b=r0Gf3kQHZjSbpoWCMjLIdWk3C/IjEfYRqkd7X1iRJq1bSEgUCNhsAlaWi69qXE7Pe
+	 VgEXxtcUCxsOhFLZayEHrQOu0FR+CKMLsxe7qsv0S/K0rN0AJnHie0zNBpEm27KCeq
+	 m6pZXh4mPf5svkgvfdg9CpWQUEr+UHEKAbxg7RhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Xu Xin <xu.xin@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1512/3318] can: proc: reset pkg_stats atomics individually
-Date: Wed, 18 Nov 2026 15:35:34 +0100
-Message-ID: <20261118150406.300838096@linuxfoundation.org>
+Subject: [PATCH 6.6 1521/3318] mm/ksm: reset the unstable trees of all nodes
+Date: Wed, 18 Nov 2026 15:35:43 +0100
+Message-ID: <20261118150406.587876700@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,136 +72,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 12297f855bbd943847cb8893a3614caef5a9c2a8 ]
+[ Upstream commit 890e118e95bfc2aae4432ec2a95192d6f9193211 ]
 
-Commit 80b5f90158d1 ("can: statistics: use atomic access in hot path")
-converted several members of struct can_pkg_stats to atomic_long_t and
-updated the hot TX/RX and procfs read paths to use atomic_long_*()
-helpers. However, can_init_stats() still clears the whole struct with
-memset().
+Each full scan resets ksm_nr_node_ids unstable tree roots. Enabling
+merge_across_nodes resets this count to 1, even if per-node roots were
+previously allocated.
 
-can_init_stats() is reached from can_stat_update() in timer context and
-also from the procfs reset path. Those paths can run while the TX/RX hot
-paths are concurrently updating rx_frames, tx_frames, matches and their
-*_delta counters. Hitting the whole-struct memset() in that window
-performs plain writes to fields that otherwise follow an atomic_long_t
-access contract, which can lose or mix live statistics updates.
+So when toggling "merge_across_nodes" 0 -> 1 -> 0, a scan that starts
+while the setting is 1 and continues after switching back to 0 can
+encounter stale unstable tree roots, resulting in UAF.
 
-This issue was found by source-level API-misuse analysis looking for
-whole-object resets left behind after atomic_long_t conversions, then
-manually audited on Linux v6.18.21.
+Only root is allowed to change "merge_across_nodes", and the documented
+sequence is: "merge_across_nodes setting can be changed only when there
+are no ksm shared pages in the system: set run 2 to unmerge pages first,
+then to 1 after changing merge_across_nodes, to remerge according to the
+new setting."
 
-Replace the whole-struct memset() with a helper that resets the
-atomic_long_t counters via atomic_long_set() and clears the derived
-scalar statistics explicitly. This preserves the existing reset
-semantics for scalar fields while restoring atomic access discipline for
-the live counters.
+Let's fix it by tracking in ksm_nr_node_ids the actual number of
+allocated tree roots.
 
-Build-tested by compiling net/can/proc.o on x86_64 netdev/main.
-Runtime-tested with a QEMU + vcan setup on Linux v6.18.21 by driving
-concurrent traffic and reset_stats reads, which reproduced inconsistent
-exported statistics before the fix.
+remove_all_stable_nodes() and ksm_check_stable_tree() will now scan
+more tree roots (skipping the empty ones), which is harmless.
 
-[Hartkopp] can_stat_update() also read the *_delta counters at the
-beginning and cleared them with atomic_long_set() at the end. Increments
-from the hot path in between were lost for both the current and the next
-interval. Use atomic_long_xchg() to fetch and clear the *_delta counters
-in one atomic step instead.
-
-On x86_64 atomic_long_set() is a plain store like memset(), so the
-memset() is an actual problem only on architectures with lock-based
-atomics (e.g. parisc). The inconsistencies seen on x86_64 come from the
-*_delta handling and from the stale snapshots, which are fixed in "can:
-proc: skip stats calculation after reset in can_stat_update()". As
-before, the counters are reset one at a time and the derived scalar
-statistics use plain stores.
-
-Fixes: 80b5f90158d1 ("can: statistics: use atomic access in hot path")
+Fixes: ef53d16cded7 ("ksm: allocate roots when needed")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20261027-can-rx-lock-v12-5-eb5afc2d8b9b@hartkopp.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-39-d6437171ecc3@kernel.org
+Reviewed-by: Xu Xin <xu.xin@linux.dev>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/proc.c | 39 +++++++++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 10 deletions(-)
+ mm/ksm.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/can/proc.c b/net/can/proc.c
-index 2f78ea8ac30b0..0f2cbc5816831 100644
---- a/net/can/proc.c
-+++ b/net/can/proc.c
-@@ -76,16 +76,39 @@ static const char rx_list_name[][8] = {
-  * af_can statistics stuff
-  */
+diff --git a/mm/ksm.c b/mm/ksm.c
+index 4ca7e4511297b..fa4229a224060 100644
+--- a/mm/ksm.c
++++ b/mm/ksm.c
+@@ -287,6 +287,7 @@ atomic_long_t ksm_zero_pages = ATOMIC_LONG_INIT(0);
+ #ifdef CONFIG_NUMA
+ /* Zeroed when merging across nodes is not allowed */
+ static unsigned int ksm_merge_across_nodes = 1;
++/* Number of allocated stable and unstable tree roots. */
+ static int ksm_nr_node_ids = 1;
+ #else
+ #define ksm_merge_across_nodes	1U
+@@ -3374,14 +3375,13 @@ static ssize_t merge_across_nodes_store(struct kobject *kobj,
+ 			else {
+ 				root_stable_tree = buf;
+ 				root_unstable_tree = buf + nr_node_ids;
++				ksm_nr_node_ids = nr_node_ids;
+ 				/* Stable tree is empty but not the unstable */
+ 				root_unstable_tree[0] = one_unstable_tree[0];
+ 			}
+ 		}
+-		if (!err) {
++		if (!err)
+ 			ksm_merge_across_nodes = knob;
+-			ksm_nr_node_ids = knob ? 1 : nr_node_ids;
+-		}
+ 	}
+ 	mutex_unlock(&ksm_thread_mutex);
  
-+static void can_reset_pkg_stats(struct can_pkg_stats *pkg_stats)
-+{
-+	atomic_long_set(&pkg_stats->rx_frames, 0);
-+	atomic_long_set(&pkg_stats->tx_frames, 0);
-+	atomic_long_set(&pkg_stats->matches, 0);
-+
-+	pkg_stats->total_rx_rate = 0;
-+	pkg_stats->total_tx_rate = 0;
-+	pkg_stats->total_rx_match_ratio = 0;
-+
-+	pkg_stats->current_rx_rate = 0;
-+	pkg_stats->current_tx_rate = 0;
-+	pkg_stats->current_rx_match_ratio = 0;
-+
-+	pkg_stats->max_rx_rate = 0;
-+	pkg_stats->max_tx_rate = 0;
-+	pkg_stats->max_rx_match_ratio = 0;
-+
-+	atomic_long_set(&pkg_stats->rx_frames_delta, 0);
-+	atomic_long_set(&pkg_stats->tx_frames_delta, 0);
-+	atomic_long_set(&pkg_stats->matches_delta, 0);
-+}
-+
- static void can_init_stats(struct net *net)
- {
- 	struct can_pkg_stats *pkg_stats = net->can.pkg_stats;
- 	struct can_rcv_lists_stats *rcv_lists_stats = net->can.rcv_lists_stats;
- 	/*
--	 * This memset function is called from a timer context (when
-+	 * This stats reset is called from a timer context (when
- 	 * can_stattimer is active which is the default) OR in a process
- 	 * context (reading the proc_fs when can_stattimer is disabled).
- 	 */
--	memset(pkg_stats, 0, sizeof(struct can_pkg_stats));
-+	can_reset_pkg_stats(pkg_stats);
- 	pkg_stats->jiffies_init = jiffies;
- 
- 	rcv_lists_stats->stats_reset++;
-@@ -121,9 +144,10 @@ void can_stat_update(struct timer_list *t)
- 	long rx_frames = atomic_long_read(&pkg_stats->rx_frames);
- 	long tx_frames = atomic_long_read(&pkg_stats->tx_frames);
- 	long matches = atomic_long_read(&pkg_stats->matches);
--	long rx_frames_delta = atomic_long_read(&pkg_stats->rx_frames_delta);
--	long tx_frames_delta = atomic_long_read(&pkg_stats->tx_frames_delta);
--	long matches_delta = atomic_long_read(&pkg_stats->matches_delta);
-+	/* fetch and clear values for 'current rate' calculation */
-+	long rx_frames_delta = atomic_long_xchg(&pkg_stats->rx_frames_delta, 0);
-+	long tx_frames_delta = atomic_long_xchg(&pkg_stats->tx_frames_delta, 0);
-+	long matches_delta = atomic_long_xchg(&pkg_stats->matches_delta, 0);
- 
- 	/* restart counting in timer context on user request */
- 	if (user_reset)
-@@ -172,11 +196,6 @@ void can_stat_update(struct timer_list *t)
- 	if (pkg_stats->max_rx_match_ratio < pkg_stats->current_rx_match_ratio)
- 		pkg_stats->max_rx_match_ratio = pkg_stats->current_rx_match_ratio;
- 
--	/* clear values for 'current rate' calculation */
--	atomic_long_set(&pkg_stats->tx_frames_delta, 0);
--	atomic_long_set(&pkg_stats->rx_frames_delta, 0);
--	atomic_long_set(&pkg_stats->matches_delta, 0);
--
- 	/* restart timer (one second) */
- 	mod_timer(&net->can.stattimer, round_jiffies(jiffies + HZ));
- }
 -- 
 2.53.0
 
