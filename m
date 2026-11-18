@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039418;
-	b=WqsAbsSGC5oed0+JG+2kvccZo5U2F0aapuCIpna23pQgycUMvGuJcGkgR8vET0ubUngd
-	 YkHh3PUDYwH+KIYj1MCsffMEkc4BNvWeiZey936lKgyyo9amO3MK+K7cFP/d2fCoi4lqa
-	 8GkPFO357Ft4ISkhnbRwSl/R5W+KG4/IMQSvkkDmWioZdF9AYivWVF+IG1LK8Y2UnMEl3
-	 gC/5EhDXR8/S6oDTvseJKhpgeijx+9ZHXNV73tTyyxKkSnBli23rOV4eqXLUbx9Q4vcgM
-	 Pl9+KAxlIfur8j+pZwca9mI+5RBhyu12Lpp5XvonqtcCu1nDgufvwureE+rMPoRafkw==
+	t=1795039421;
+	b=i19zD7HPIJeE6F2FOgil1GCPrpelqEJjY4VWlQOby/7DDmnyMdI6898norPY7GrgpIQ1
+	 Qd3YF0o0QY1tVQ6LiEDqOSzgFyJzaBjviHuX5/Or821159wwndItwImum6XCQLqXbQSI3
+	 j4/4OJghPNAyMEqkEM9skLNMe1rHegVjijrpDYbNgeADsEpslVOFYFPA7SwnhIzn0fWk9
+	 jaZvW/MgRQHN2N022zC3jzF39nBC5VT8oqKJhtOWnm8FpUW61Zm+CEtPDeZ8FEDQtpZWt
+	 GuGwQtIc2AGQu3/NmVZrqeB+wscUP0o3d2urwQUJLbhwJrkduWn7jfLI2/oRH+qiO7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039418;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039421;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=gBk27G6Ws9TFzlrnEMoOpl9xzucAwoAGO1toPgQX5y4=;
-	b=DNx+xUe1twUi7nFRWkbctotbBMK1ZFOvlwfNPxRpgX5+yjLyoNLNOLeMtHq4A6w0jhoB
-	 aQHeoLTfhTa/ggs8XQonhD+szMBMQyk1EqiDglUY1E09iaX0TTM+f5DZiE7ZzSDNA5z9y
-	 0YhJWNg9RjOC20NmIO2gwTNiStDj3rzTOvgM25am69FJk10SL07yZDGV9JjujaF7PHNDt
-	 X1ymQ+IyrBr92s0gB4IyOrbbnxhMfJKK8b1Y1ynLapE3+HnDeYJtYcsz/Uv6GZasTFIU5
-	 iecXMW4YjgCAyv+DakcJrhNuiubMS7xiWAvQJZ82yTv71AE2HRx2M5XQ3GnxF/MNHHA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=x+lSpuq9uKxKiA9hXQkWpbS8mfrFhcCjRsGVN4+Co1k=;
+	b=NphFHZRp5nY1GBxH8kOBuFL033tEwZnielNHxa0xvnxEuZ800hGjLD/qAjx+UEFqA22Y
+	 1ymvLLPmy2YzrNhAHzdEmPcHgNfKm8Y2adFrx+M8KNqKBl1L0L2DpvqO0eMXujb5luZtW
+	 L82MACXAV8/HqdCiu8QrRxTjH8bdulCmaN4m7REQZ96KP39CtU00N2BBe4dXRQMLtE4oj
+	 AVkuqkVT7Z1Y/+TYZkGvoFn8XB65KmS6jahcirxGJr3ozFW4OAzqqwaloImOk1D1nzX8h
+	 G0XEbXCyy6CNqe++p8f4VtodE0mO181FC6lv3ESV0WSZvZN16eEj85cmcB+dO1uKrmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zJI5MO9i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=muN2b6cQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3A4606A320;
-	Wed, 18 Nov 2026 22:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A35606A338;
+	Wed, 18 Nov 2026 22:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zJI5MO9i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAAC81F000C4;
-	Wed, 18 Nov 2026 22:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=muN2b6cQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923051F000C7;
+	Wed, 18 Nov 2026 22:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039418;
-	bh=gBk27G6Ws9TFzlrnEMoOpl9xzucAwoAGO1toPgQX5y4=;
+	s=korg; t=1795039421;
+	bh=x+lSpuq9uKxKiA9hXQkWpbS8mfrFhcCjRsGVN4+Co1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zJI5MO9ic06RmvCWal83cI1renopv+NdmOZ0aOmufnuPwBauX1ugy8wXhmReZvYsq
-	 2XR3gjpWZ8PJj4vGXe1Yt9Lsgj3xo3ehcPkDDNrS03q/XhhbulBYqXnvSdZ5idh/Ei
-	 /g6B/oJISCoEQuZbVNyWtURKjeOm+Hwg/Pu5F8LQ=
+	b=muN2b6cQ4U3jfI9KJ2PZ+RhdO0aM+RUo9gytvnMq2nUHHSgl2kTgQ0bwycvt7C2HT
+	 8zUyljkEa+qps9FOyoEws7933ithjhiHRDRT9wKaOy6PT9I5CZJJ4UFSv7YqnZcJjK
+	 5/EJrF4PlXiObD3i3Z9AUNC4l/YUeF2Plqa/GXWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Hongling Zeng <zenghongling@kylinos.cn>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2091/3318] dmaengine: at_hdmac: Fix use-after-free by proper tasklet cleanup
-Date: Wed, 18 Nov 2026 15:45:13 +0100
-Message-ID: <20261118150424.829636154@linuxfoundation.org>
+Subject: [PATCH 6.6 2092/3318] dmaengine: mediatek: hsdma: fix runtime PM leak on init failure
+Date: Wed, 18 Nov 2026 15:45:14 +0100
+Message-ID: <20261118150424.857308384@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -64,103 +64,117 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 13f2d32a09609d083ace2d589fbdc68e970ae34c ]
+[ Upstream commit f10d96b1c549a2f43506e9bf847196839808b8dc ]
 
-Current cleanup paths have a use-after-free vulnerability:
-- vchan_init() creates tasklets that access at_dma_chan memory
-- free_irq() only waits for IRQ handler, NOT tasklets
-- atdma is devm-managed and freed after probe/remove
-- Running tasklets accessing freed memory → Use-After-Free!
+mtk_hsdma_hw_init() enables runtime PM and gets a runtime PM reference
+before enabling the HSDMA clock. It currently ignores failures from
+pm_runtime_get_sync(); if runtime resume fails, the usage count remains
+held. If clk_prepare_enable() then fails, the usage count remains held.
 
-The fix requires careful ordering:
-- free_irq() FIRST to synchronize with running IRQ handlers and prevent
-  them from scheduling new tasklets
-- Then kill tasklets to wait for already-scheduled ones to complete
-- Only then free other resources
+Use devm_pm_runtime_enable() to manage runtime PM enablement, and use
+pm_runtime_resume_and_get() so resume failures do not leak the usage count.
+If clk_prepare_enable() fails after a successful runtime resume, drop the
+runtime PM reference before returning.
 
-Fixes: ac803b56860f ("dmaengine: at_hdmac: Convert driver to use virt-dma")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260604073945.54B311F00898@smtp.kernel.org/
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Suggested-by: Frank Li <Frank.Li@nxp.com>
+The probe path also ignores the return value from mtk_hsdma_hw_init(), so a
+failed hardware init can continue as a successful probe. Propagate
+mtk_hsdma_hw_init() failures from probe, while keeping a separate unwind
+label so mtk_hsdma_hw_deinit() is only called after hardware init succeeds.
+
+Fixes: 548c4597e984 ("dmaengine: mediatek: Add MediaTek High-Speed DMA controller for MT7622 and MT7623 SoC")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260727061705.45169-1-zenghongling@kylinos.cn
+Link: https://patch.msgid.link/20260804153924.49627-1-mhun512@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/at_hdmac.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ drivers/dma/mediatek/mtk-hsdma.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
-index ce9b707e8ac1c..3258d2b14eb14 100644
---- a/drivers/dma/at_hdmac.c
-+++ b/drivers/dma/at_hdmac.c
-@@ -1930,6 +1930,20 @@ static void at_dma_off(struct at_dma *atdma)
- 		cpu_relax();
+diff --git a/drivers/dma/mediatek/mtk-hsdma.c b/drivers/dma/mediatek/mtk-hsdma.c
+index 64120767d9838..c18d7cc783380 100644
+--- a/drivers/dma/mediatek/mtk-hsdma.c
++++ b/drivers/dma/mediatek/mtk-hsdma.c
+@@ -848,17 +848,27 @@ static int mtk_hsdma_hw_init(struct mtk_hsdma_device *hsdma)
+ {
+ 	int err;
+ 
+-	pm_runtime_enable(hsdma2dev(hsdma));
+-	pm_runtime_get_sync(hsdma2dev(hsdma));
++	err = devm_pm_runtime_enable(hsdma2dev(hsdma));
++	if (err)
++		return err;
++
++	err = pm_runtime_resume_and_get(hsdma2dev(hsdma));
++	if (err < 0)
++		return err;
+ 
+ 	err = clk_prepare_enable(hsdma->clk);
+ 	if (err)
+-		return err;
++		goto err_put_pm;
+ 
+ 	mtk_dma_write(hsdma, MTK_HSDMA_INT_ENABLE, 0);
+ 	mtk_dma_write(hsdma, MTK_HSDMA_GLO, MTK_HSDMA_GLO_DEFAULT);
+ 
+ 	return 0;
++
++err_put_pm:
++	pm_runtime_put_sync(hsdma2dev(hsdma));
++
++	return err;
  }
  
-+static void at_dma_cleanup_channels(struct at_dma *atdma)
-+{
-+	struct dma_chan *chan, *_chan;
-+	int i = 0;
-+
-+	list_for_each_entry_safe(chan, _chan, &atdma->dma_device.channels,
-+			device_node) {
-+		/* Disable interrupts */
-+		atc_disable_chan_irq(atdma, i++);
-+		tasklet_kill(&to_at_dma_chan(chan)->vc.task);
-+		list_del(&chan->device_node);
-+	}
-+}
-+
- static int __init at_dma_probe(struct platform_device *pdev)
- {
- 	struct at_dma		*atdma;
-@@ -2095,6 +2109,8 @@ static int __init at_dma_probe(struct platform_device *pdev)
- err_of_dma_controller_register:
- 	dma_async_device_unregister(&atdma->dma_device);
- err_dma_async_device_register:
-+	disable_irq(platform_get_irq(pdev, 0));
-+	at_dma_cleanup_channels(atdma);
- 	dma_pool_destroy(atdma->memset_pool);
- err_memset_pool_create:
- 	dma_pool_destroy(atdma->lli_pool);
-@@ -2108,23 +2124,17 @@ static int __init at_dma_probe(struct platform_device *pdev)
- static int at_dma_remove(struct platform_device *pdev)
- {
- 	struct at_dma		*atdma = platform_get_drvdata(pdev);
--	struct dma_chan		*chan, *_chan;
+ static int mtk_hsdma_hw_deinit(struct mtk_hsdma_device *hsdma)
+@@ -868,7 +878,6 @@ static int mtk_hsdma_hw_deinit(struct mtk_hsdma_device *hsdma)
+ 	clk_disable_unprepare(hsdma->clk);
  
- 	at_dma_off(atdma);
- 	if (pdev->dev.of_node)
- 		of_dma_controller_free(pdev->dev.of_node);
- 	dma_async_device_unregister(&atdma->dma_device);
+ 	pm_runtime_put_sync(hsdma2dev(hsdma));
+-	pm_runtime_disable(hsdma2dev(hsdma));
  
--	dma_pool_destroy(atdma->memset_pool);
--	dma_pool_destroy(atdma->lli_pool);
- 	free_irq(platform_get_irq(pdev, 0), atdma);
+ 	return 0;
+ }
+@@ -983,7 +992,9 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
+ 		goto err_unregister;
+ 	}
  
--	list_for_each_entry_safe(chan, _chan, &atdma->dma_device.channels,
--			device_node) {
--		/* Disable interrupts */
--		atc_disable_chan_irq(atdma, chan->chan_id);
--		list_del(&chan->device_node);
--	}
-+	at_dma_cleanup_channels(atdma);
-+	dma_pool_destroy(atdma->memset_pool);
-+	dma_pool_destroy(atdma->lli_pool);
+-	mtk_hsdma_hw_init(hsdma);
++	err = mtk_hsdma_hw_init(hsdma);
++	if (err)
++		goto err_free;
  
- 	clk_disable_unprepare(atdma->clk);
+ 	err = devm_request_irq(&pdev->dev, hsdma->irq,
+ 			       mtk_hsdma_irq, 0,
+@@ -991,7 +1002,7 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
+ 	if (err) {
+ 		dev_err(&pdev->dev,
+ 			"request_irq failed with err %d\n", err);
+-		goto err_free;
++		goto err_deinit;
+ 	}
  
+ 	platform_set_drvdata(pdev, hsdma);
+@@ -1000,8 +1011,9 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
+ 
+ 	return 0;
+ 
+-err_free:
++err_deinit:
+ 	mtk_hsdma_hw_deinit(hsdma);
++err_free:
+ 	of_dma_controller_free(pdev->dev.of_node);
+ err_unregister:
+ 	dma_async_device_unregister(dd);
 -- 
 2.53.0
 
