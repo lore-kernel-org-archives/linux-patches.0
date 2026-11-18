@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052121;
-	b=qtr36YfxA/hK3k5+hq41rAQT7SfDy6em9kd1VpDVXhwe63i6tTGrlRy6F7n1qSS8i1QZ
-	 8wOReUCfjJCOGiYac3uZSb7nzwIscu6CAAiLXUIC5mIQe/1dWm3c1+vZMHC/Jg0RXBjsI
-	 GXyOxhlmZPhGLHU+AM/WGTcdvz4HGLxoFDjSzAwHmmdYksoWFnshU5oOaN41+TOz7V6p+
-	 WxhIPjQ7FpKn2yJzBYlOuY0AitNvuap5FCzGqVMPavkZzg4X94sqtOaO5HUkzQRKu9qbH
-	 l/nuONUUs8pUxHfFbk6TdvtTSQJzl9/f6nZNSY9oxlSRWAS1qe6OX/r7gkbP3r6cfYQ==
+	t=1795052124;
+	b=vy0JCaCVIT9KUou45wlqYwdmIh9SarwJYtnStO7FuAqThdy02NG1z/uwE1eQFtX7pgcR
+	 2gDGbPhioItQ3GzdiWPAPXlHetwYY7ndLh8v5vGNjjjQ1kNKHHSihlRNLzDSQQkaJfrsl
+	 1Q2tLx98bTTqvLiRDX8J2+029hFxzAaLT5X4ZYQR88w9OujVKSxBFV3rmsYFD2SgK01LV
+	 XM4OJ2vjDgCIrlL45IhLrXqftSF4hVpf30qAR24Vte8auDoq7wQhgnsC2///SpOYjdXEn
+	 xtj41xtAHIZb5OPjYPmrkDSA4atu+4HaH5ZggW+UqhjukxkIoGwSgGNw4s8+l7jweFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052121;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052124;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=gl4gcGfqwcz0RLPdeYcRuag+yQ07Aqs2ZWzSjkGr6qU=;
-	b=cXg5kuxrpXLRK6TNRPSziLyjwxELimivuzn76TwENTGS2u9hSu+3QINcq4vdHqbWQJje
-	 1SC6dDnlotei6gP7D3EAJOUBszCeHwP8JR2PPxitwQVy3Wx+gncYjnRSTsMomfwdTkjjN
-	 z60a8p6nK/jt54ohHnH95RyOJUDwNmzr2veLZ+zsmDsbj6Qhp7rBMvuZGOj6ConpsyZKC
-	 CcQfipzW0/OORXiSgn8FpJPcO1X9e39HAMjBxQKKO2JiGUVfiRpfNLKozNszv6rD+LiCh
-	 BoG2CEEcc7fNmtVcEVaHg4pBuc7cxtXOSHhFAnbrUTgoi5J5MVmEoZzBvzrx0SsXOfg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=yr17g8jONA2W0w9uCGWQS522YVKDBL48vw4y6hjgx0o=;
+	b=jdTxy5tEu0H+rkSYp/jHJERrXq74z/CkcbrzFgzO67/AQGcAPrK4SUC8FUIfmly+QKkN
+	 x3vQYpyd3/vvrgGFv9g7TZMck/Sf6LqPOVzPZ3hbi5H2M2QhmvOxQtgsr9JX3q142x5cb
+	 JVuAkUqNTzyAIvNaCMXHQKYXLLq7+2FcCu0zbcNVRtFABa3LBfoGKL/Q+kgXqwvOiBcK8
+	 xpvNanKm/eM41IBMGSLXHt77FDGY53GC0X9TA0uto2A4QJtxjKklHC8dMMhpOxK9IvKXY
+	 b+UuZ8n3CxPGIMhBeak/g1ODFvkvtb8P2jRGd/ylD+2IoTb2MaM/TMUkO0ZxRmtMofg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Qa8aPqv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mf8rzHnu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1949A606A320;
-	Thu, 19 Nov 2026 01:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0026C606A320;
+	Thu, 19 Nov 2026 01:35:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Qa8aPqv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7042E1F000C5;
-	Thu, 19 Nov 2026 01:35:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mf8rzHnu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45EBB1F000C4;
+	Thu, 19 Nov 2026 01:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052121;
-	bh=gl4gcGfqwcz0RLPdeYcRuag+yQ07Aqs2ZWzSjkGr6qU=;
+	s=korg; t=1795052123;
+	bh=yr17g8jONA2W0w9uCGWQS522YVKDBL48vw4y6hjgx0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Qa8aPqvTPSkyiGb1fdaGVVSo7juWQZLXFAhPEkWIT63kqHv2pvxNveaqSggGTYbR
-	 TGBeQjaKgRnHcRHl6wmIoJHCAzW01n+GOGDD2Qe51JTGehDX6Qb4tq1M1Th+nILv/L
-	 Hl7TOQpNwa0hCTNgiNGhs4v7YRuGl12c6r6mjvpU=
+	b=mf8rzHnuCVwghdgrx5pn89642HSoaclpte6l8QLYOzmkhJoXekzrFloatk7HiT74X
+	 I/5wksVNWXZ/o8ilCD90fNDlWPJQbbwzoDGhtBek5CN/NZPwq96LDC8Eb3JbApTU4A
+	 CuQl/y99MDkqKjiZ8qPoOaz/Ee9xMuFyGXm0mBLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E3=82=A4=E3=83=A0=E3=83=86=E3=82=A3=E3=83=A4=E3=82=BA?= <reza1234khan1234@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	hanzhijian <hanzhijian1991@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0450/2214] wifi: rtw88: fix out-of-bounds CAM write when key table is full
-Date: Wed, 18 Nov 2026 15:35:26 +0100
-Message-ID: <20261118150029.066905710@linuxfoundation.org>
+Subject: [PATCH 5.15 0451/2214] clk: mstar: msc313-mpll: fix off-by-one in clock array allocation
+Date: Wed, 18 Nov 2026 15:35:27 +0100
+Message-ID: <20261118150029.117899913@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,65 +62,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: イムティヤズ <reza1234khan1234@gmail.com>
+From: hanzhijian <hanzhijian1991@gmail.com>
 
-[ Upstream commit 10d58823cb44681466c022054030b8e68d94ce2f ]
+[ Upstream commit 712b75152c00a8ab0c56dbfe34caf88e3870ddde ]
 
-In rtw_ops_set_key(), when the CAM table is full,
-rtw_sec_get_free_cam() returns RTW_MAX_SEC_CAM_NUM (32) because
-find_next_zero_bit()/find_first_zero_bit() return the bitmap size
-when no free slot exists. The bounds check compares the returned
-index with ">" against total_cam_num (32), so the invalid index 32
-passes the check.
+The hws array of mpll->clk_data is allocated with struct_size() using
+ARRAY_SIZE(output_dividers) as the element count, giving it 7 elements.
+But the probe function stores the MPLL clock at hws[0] and one
+fixed-factor clock for each output divider at hws[i + 1] for i in
+[0, ARRAY_SIZE(output_dividers)), writing 8 elements in total.  The
+final write to hws[7] is past the end of the allocation.
 
-rtw_sec_write_cam() then indexes cam_table[32], an array declared
-with RTW_MAX_SEC_CAM_NUM (32) entries, causing an out-of-bounds
-write that corrupts the cam_map allocation bitmap. The write also
-sets bit 32 of cam_map, which overruns the bitmap as well.
+clk_data->num is also set to NUMOUTPUTS (8), so the clock framework
+reads hws[0..7], again accessing hws[7] out of bounds.
 
-Fix the off-by-one by rejecting indices >= total_cam_num.
+Use NUMOUTPUTS as the element count so the allocation matches the
+number of clocks actually stored and exposed.
 
-Tested on: RTL8821CE (PCIe) on kernel
-7.2.0-rc6-rtw88test-00059-g0d8395707651. The patched module loaded
-and associated to a WPA2 network; ping traffic passed with 0% packet
-loss. Reassociation and disconnect/reconnect cycles completed
-without errors, and the CAM table (debugfs dump_cam) showed valid
-key entries. The CAM-full boundary (28+ pairwise keys) requires an
-access point with 28+ clients and is not reachable in a
-single-client setup, so that path was verified by code inspection.
+Found by smatch:
+  drivers/clk/mstar/clk-msc313-mpll.c:134 msc313_mpll_probe()
+  error: buffer overflow 'mpll->clk_data->hws' 7 <= 7
 
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Fixes: bef7a78da716 ("clk: mstar: MStar/SigmaStar MPLL driver")
 Cc: stable@vger.kernel.org
-Tested-by: イムティヤズ <reza1234khan1234@gmail.com>
-Signed-off-by: イムティヤズ <reza1234khan1234@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260805210941.75136-1-reza1234khan1234@gmail.com
+Signed-off-by: hanzhijian <hanzhijian1991@gmail.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/mac80211.c | 2 +-
+ drivers/clk/mstar/clk-msc313-mpll.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/mac80211.c b/drivers/net/wireless/realtek/rtw88/mac80211.c
-index 942bb2ab8b50f..29244e58161a8 100644
---- a/drivers/net/wireless/realtek/rtw88/mac80211.c
-+++ b/drivers/net/wireless/realtek/rtw88/mac80211.c
-@@ -512,7 +512,7 @@ static int rtw_ops_set_key(struct ieee80211_hw *hw, enum set_key_cmd cmd,
- 		hw_key_idx = key->keyidx;
- 	}
+diff --git a/drivers/clk/mstar/clk-msc313-mpll.c b/drivers/clk/mstar/clk-msc313-mpll.c
+index 61beb4e875250..bd45aa0aec011 100644
+--- a/drivers/clk/mstar/clk-msc313-mpll.c
++++ b/drivers/clk/mstar/clk-msc313-mpll.c
+@@ -105,7 +105,7 @@ static int msc313_mpll_probe(struct platform_device *pdev)
+ 		return PTR_ERR(mpll->loop_div_second);
  
--	if (hw_key_idx > sec->total_cam_num) {
-+	if (hw_key_idx >= sec->total_cam_num) {
- 		ret = -ENOSPC;
- 		goto out;
- 	}
+ 	mpll->clk_data = devm_kzalloc(dev, struct_size(mpll->clk_data, hws,
+-			ARRAY_SIZE(output_dividers)), GFP_KERNEL);
++				NUMOUTPUTS), GFP_KERNEL);
+ 	if (!mpll->clk_data)
+ 		return -ENOMEM;
+ 
 -- 
 2.53.0
 
