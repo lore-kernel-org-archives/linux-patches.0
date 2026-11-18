@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051486;
-	b=TQKvQqOK2jtoCq4kq3IPqQo2vRcCCeo1pcUjHEckjDwbHWY5FZ7z9ttSW6CuZeNmqGhY
-	 3y/obGJlBKgfXz/EZOCrSxyqH6QSqYpATQ7JR3xyDrL2YR23dV7jLiiUQbFTRzSd8wbXk
-	 D/KV2Hd+s9nZ2qNWatEygyTl98vIYMfseDEiap+04vXPfDi8+1FdTRnifSQbTTIcDgDDM
-	 lJw/fkdPQo2X7i+b4Bs/OOOYzqeIkd/YKqbP71HphpmNQSUhGeuAWzzjH98Zu3pydI5gd
-	 o7ueM1AcuuYHaJaixQS37tMiELvI3UB7lNMdigxVcK4emR/JG8F5i+byRV4oSjTrzLg==
+	t=1795051488;
+	b=vblffr9Pp/S5hEQRF0f/aDsFeQe216FSus6ni/ohQ6iS4FJWSg49NnvMw4QL46V2DM/5
+	 V99oxZj16BMS8hRWpqy10mgrkdGDp1OYQ9bzqrU/3QTqgiO/L6DkJuQ1tUkKoGltyi0y5
+	 g9XG6pZURHfSvFPdSX4lP5VtRmWbI/nvLJeqpHzyyiZ+EpOsrW4bFnmF+XpAfDkyEyY8F
+	 izprSLFuREmIGti6QU2t/XS83gPqncAux2jExwBSDu9oWOKw8n/CcRTdx4M0GmKYAWOCk
+	 vCfoLbyQNsHUValKecP4Wr6mp1dhoKVYCCBQVcxnTw1ZfF8JJ0COYP6Sx79dVHR5h4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051486;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051488;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dfLGol9foJ9iVDV3NZw94B8CBAzjsplqObUkd+XRTdY=;
-	b=w/qBPOpJwJNj91eqIfn4CgZTrRgVskbe5Dpzy1wvz9A5VkNLDuU/rjGEHKQbmKuc5AUu
-	 6luze2IFRjLV5VzD8tSY5Lb2pR18GHYc/kihrAeA9ahogf/ihYpiY5W/fAex+erj5JXr3
-	 /mA7Ti4NAmTnbTfpQHYmM6kwuzcjqALPs4hLsTjg7UISvqZDWTi3Wi7bom8uLH3s2bSfc
-	 QWOxWtcRCOjawfFBKq3bJM9NNVyVuUALKI9fDgMBuOlivu6hn8OoUvrDH4pbkEYnFO+XT
-	 M6MfZQaXqPEY2VizoR+mDgeQ5GlWgP86/UBQDvrsaf0W2/8GU9QLSQvPyXxOBfOvEXA==
+	bh=RFxyPv7bI2/i9WnwbzGVd1YvPwmGAu/Po3PBFr/2y0Q=;
+	b=2Nx/pLM8gzsEtGVTED364to8of+pWW0h3uNugru8jws9am9KpwlMZP337ru8s9lsMBeF
+	 eH3ZHnCJ3jF8Qdbo0qMu6SFGvWpX3guQrXWHjV3/1sSRhDWjgDDV8x15U91jE8UMTgUUK
+	 57eIlLZv4kqYQU0OXvGkKqNEGK3XOM+UCpqZ8ielbW5cwt+uldizcbMNhLQEFTtwF1Hki
+	 zI7YrTjsLMqu7ft0nBv8GFMbxksSxS9DhXDE+nvVL3JlgsMUCElk+N0QgHb1AzkB0EFt3
+	 CHVlFMMSwZBASWh8XgtCVunttxK5XBdxlBebeEn14v0yq3JBXM8PHacGkr8eTQLmtwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1rAYs5Su;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OwKc3nC5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10F6606A325;
-	Thu, 19 Nov 2026 01:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82E0606A32C;
+	Thu, 19 Nov 2026 01:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1rAYs5Su
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49D631F000C5;
-	Thu, 19 Nov 2026 01:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OwKc3nC5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326121F000C4;
+	Thu, 19 Nov 2026 01:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051485;
-	bh=dfLGol9foJ9iVDV3NZw94B8CBAzjsplqObUkd+XRTdY=;
+	s=korg; t=1795051488;
+	bh=RFxyPv7bI2/i9WnwbzGVd1YvPwmGAu/Po3PBFr/2y0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1rAYs5SuFia1FYWBxBqWcYUs5Tnq3vlX8DQtsND/kl0A3awZ0iwENWdqhF3QQRhGs
-	 /rFI7S68iYpH3hTQVSNp0mWy9LxjDGWaPD+rTklAxEcHx9vaLfb1Ve78SK/ezbv85A
-	 /LqVYUbRgMZlqJ0TpU02/oie3C47dxroQp2JyKRw=
+	b=OwKc3nC54xuGapOI3d5yKk1egBLV1tt/0Mt0YCDmV0kEfZ7ghz2zskYwutPaYbCrI
+	 544SDYr6op2N6wCEqi3hIAHXD0TNUZHihDr2uiuEIm3ZbhoR0Bk542I0n6Yj+oQADC
+	 ZVSBk5rZKDfnJaO6nVF4fMxXky9mXe31OuaIHlpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Helge Deller <deller@gmx.de>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0226/2214] fbdev: maxine: fix 64-bit build error
-Date: Wed, 18 Nov 2026 15:31:42 +0100
-Message-ID: <20261118150019.278368251@linuxfoundation.org>
+Subject: [PATCH 5.15 0209/2214] ksmbd: preserve access denied status for copychunk
+Date: Wed, 18 Nov 2026 15:31:25 +0100
+Message-ID: <20261118150018.553036884@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,50 +67,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 3adec5c640dc09dca5605043e138412fd5a0629d ]
+[ Upstream commit f7c0366e0a80bf8cd5eacc5479927abb50958b5e ]
 
-The KSEG1ADDR() macro is only defined for non-64BIT builds.
-Use the CKSEG1ADDR() macro instead.
+The copychunk error mapping handles -EACCES in an independent if
+statement. The following error chain therefore reaches its final else
+clause and overwrites STATUS_ACCESS_DENIED with
+STATUS_UNEXPECTED_IO_ERROR.
 
-In file included from ../drivers/video/fbdev/maxinefb.c:34:
-../drivers/video/fbdev/maxinefb.c: In function 'maxinefb_ims332_write_register':
-../include/video/maxinefb.h:16:41: error: implicit declaration of function 'KSEG1ADDR'; did you mean 'CKSEG1ADDR'? [-Wimplicit-function-declaration]
-   16 | #define MAXINEFB_IMS332_ADDRESS         KSEG1ADDR(0x1c140000)
-../drivers/video/fbdev/maxinefb.c:66:49: note: in expansion of macro 'MAXINEFB_IMS332_ADDRESS'
-   66 |         register unsigned char *regs = (char *) MAXINEFB_IMS332_ADDRESS;
-../drivers/video/fbdev/maxinefb.c:66:40: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-   66 |         register unsigned char *regs = (char *) MAXINEFB_IMS332_ADDRESS;
+Join the -EACCES check to the remaining error chain so an access failure
+is returned as STATUS_ACCESS_DENIED.
 
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Acked-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/video/maxinefb.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ksmbd/smb2pdu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/video/maxinefb.h b/include/video/maxinefb.h
-index 6aeb4acca2bdb..2b66b32f355cf 100644
---- a/include/video/maxinefb.h
-+++ b/include/video/maxinefb.h
-@@ -13,13 +13,13 @@
- /*
-  * IMS332 video controller register base address
-  */
--#define MAXINEFB_IMS332_ADDRESS		KSEG1ADDR(0x1c140000)
-+#define MAXINEFB_IMS332_ADDRESS		CKSEG1ADDR(0x1c140000)
- 
- /*
-  * Begin of DECstation 5000/xx onboard framebuffer memory, default resolution
-  * is 1024x768x8
-  */
--#define DS5000_xx_ONBOARD_FBMEM_START	KSEG1ADDR(0x0a000000)
-+#define DS5000_xx_ONBOARD_FBMEM_START	CKSEG1ADDR(0x0a000000)
- 
- /*
-  *      The IMS 332 video controller used in the DECstation 5000/xx series
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index e1aab1b256575..bd51c02c24ca7 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -7423,7 +7423,7 @@ static int fsctl_copychunk(struct ksmbd_work *work,
+ 	if (ret < 0) {
+ 		if (ret == -EACCES)
+ 			rsp->hdr.Status = STATUS_ACCESS_DENIED;
+-		if (ret == -EAGAIN)
++		else if (ret == -EAGAIN)
+ 			rsp->hdr.Status = STATUS_FILE_LOCK_CONFLICT;
+ 		else if (ret == -EBADF)
+ 			rsp->hdr.Status = STATUS_INVALID_HANDLE;
 -- 
 2.53.0
 
