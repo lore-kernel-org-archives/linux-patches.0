@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017038;
-	b=H4ZWYH84hqCh9ZUNRppPedOhiRRdfQEPjgTj5zkc/9tTO1bFQaLskicHsLiHsqwr40B8
-	 c/JIHBWBsAzfsyZWJoc88DQEpBaYRzISayVqh7+lYGkCNVWSRt0OzGKR2MORHJ1a3aeeo
-	 +cauBeSkFqlYho1tTi4YIP2fZZGq7SejZe3SVv9D9F/9mrJR0R8yOKJFQMrbNfo1SgLdF
-	 ooFYsU+PV3452lsu3i6ynYweVEWJI4DCnvwTWVk3vEnCngEARw4AKEODfslQtrOujXoSM
-	 ELf23a18WG/+c5Egh9ca1s2r+8E3U6vVCBLOxh8Czdx6LoskDNly3zGZbZgRoET51Hg==
+	t=1795017041;
+	b=xqwMyD1NAnRyY9bgCtmblIYZPw6nDA3zYqnHyCbUBr/AeDR07SjcKnOKZh86gdmsCQbL
+	 RPserOtPCV+RLhHM0niCyDTclRXYkFJHCpjsGfhjjLApy9i3Ol664mrI0LvGpIj4xXb0c
+	 LtEEWv+SM7tRNyYowPOO9zDNKp+VXLAXtVn4uFfB2v8zz1lQ/WG6aEhnlu06VX5iGzSm7
+	 NOxjrhTQUuV1Mvr6LWcxOzzEJyQb724sEYd5l8Czd+mQWiJAojC9D3qkBXwV2tas77aSK
+	 uJLO/MXXHYSTUhKp3u101MdiNPfEfnZNA9xnnsGsyYKVrLRTu7eDu3fSyQbIasACOpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017038;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017041;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BJA1m9lPEBwv0cmPkpCgK7uEtsk0e010sJdHgP0dKug=;
-	b=ZATr5I7gT3XbErKquVQ+5nLxDPuhE97G1boWlhmShZue7GCh1N3EhthbMhts1UA0viHw
-	 3kkc7EdTSWfYHeGhZEy3wUgkZhEN3q3+STncIm/TGQ9fAKlZaCmMdR+EadAAjh/qu1I6r
-	 BrL+JgE3a4L8txIC9qo1Oq4glsfCl1drlSjZK+2zJ+fow/LZ3bweD5y31iVTJ9Nf3vkeq
-	 zuKZ14lhcubNdMr/bQ+uG9tkYYOP4ScgF+Dkx5EmpmcGO7lsu9NcNmvlxWrwYV/T7x6BQ
-	 5m5us25ne80tckzBC4H/Asa1LhOugYBeYN8RNevpLH+h/y73r1GbUCd8RQ9htTkBK5g==
+	bh=kmJJo+3oaxNIqJN5WRo6kgOIVmzMMgvZu/xldZmoVyI=;
+	b=KQoffhRj0bqTYt0e0UXhr00bKK49PUydoGg6qEbqRBcqINhuxyHwc/6ScD1CJoVZ9JNI
+	 zHTfRNEB4kzIQXU/QDzd0KkUXhOp62auKnGW3MD+x7gqodvPFErLYaGcSuc/VdW7XFAqa
+	 jAZylqYbhmB154aa8T4+s7XyqdD5opA2wrOImUcyecwThQ7xycwOpkuHVqSTt+vg1L4WO
+	 oqzOZQas0EDTzmrCsFpyLF+cI5+dn9I+7oJXRSFwVtyf+y4iDxf53TLgqZ3wkRs5TUzSJ
+	 BsCEGCB0IVOXP0CnnxtVh6NDX02nySg7iXyrwXruLxbWpmGz5od9anwu9nJxIFz+CDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FQQSTTKw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LZWukfTS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB467606A32A;
-	Wed, 18 Nov 2026 15:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C69606A325;
+	Wed, 18 Nov 2026 15:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FQQSTTKw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312F81F000C4;
-	Wed, 18 Nov 2026 15:50:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LZWukfTS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D9D1F000C4;
+	Wed, 18 Nov 2026 15:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017038;
-	bh=BJA1m9lPEBwv0cmPkpCgK7uEtsk0e010sJdHgP0dKug=;
+	s=korg; t=1795017041;
+	bh=kmJJo+3oaxNIqJN5WRo6kgOIVmzMMgvZu/xldZmoVyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FQQSTTKwU8U2rKYTA4OaQGMsk1WeOz3K5h2RJBMwf3IdI1OZhy+KMUQ5XmcKbks70
-	 0bU89qd8xgkw9nCIuEfgtU02SmV8RCZTgp/bZgqaDQ1geldbhvG3bUxfeh6DwFefef
-	 51kgHHQzT5oYbOzYIrRm7peddW8O2yp9YiFsN6b4=
+	b=LZWukfTSOUO+ktLKZfd6Rn51mE8Qo5+qPs6BJJy3ezeptQd702WEvOgeeLTPjuht/
+	 E30aSczS/1+HxgtuABuDkjVyg1utpdo/zQ1YWGtqM7oOFhdiEt8VCVV0hdRlf8Vzpj
+	 mgwoyCYe6ojOt0dGGENGIh3ITqRYja+guDVI9rZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0735/2651] dt-bindings: phy: ti,tcan104x-can: Fix property constrains
-Date: Wed, 18 Nov 2026 15:32:55 +0100
-Message-ID: <20261118150314.331859067@linuxfoundation.org>
+Subject: [PATCH 7.3 0744/2651] drm/amdgpu: Move GC v12.1 spm vmid init to hw init
+Date: Wed, 18 Nov 2026 15:33:04 +0100
+Message-ID: <20261118150314.665317293@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,48 +69,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit c7f2322431cb6d108b18fb4154606b49e2bc50f7 ]
+[ Upstream commit 52a484f3ef5b36c063d8fca7b8763c1a9676c625 ]
 
-Microchip ATA6561 is compatible to TI TCAN1042, so the same property
-constrains should apply. But they use a strict scalar enum match, which
-makes Microchip ATA6561 fallthrough. So add a "contains" to cover also all
-compatibles ones.
+GC reset is not released during sw init and hence it shouldn't be
+accessed. Move spm vmid programming to hw init phase. This programming
+may later be overridden with the job's vmid.
 
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/linux-devicetree/20260902133525.E22DE1F000E9@smtp.kernel.org/
-Fixes: 05ace63d0bcf ("dt-bindings: phy: ti,tcan104x-can: Document NXP TJA105X/1048")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-Link: https://patch.msgid.link/20260907150420.18787-2-wahrenst@gmx.net
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: ad5f1ee0a9b0 ("drm/amdgpu: Add initial support for gfx v12_1")
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/phy/ti,tcan104x-can.yaml         | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/phy/ti,tcan104x-can.yaml b/Documentation/devicetree/bindings/phy/ti,tcan104x-can.yaml
-index 9f5c37ca6496a..0cf5fa21106b6 100644
---- a/Documentation/devicetree/bindings/phy/ti,tcan104x-can.yaml
-+++ b/Documentation/devicetree/bindings/phy/ti,tcan104x-can.yaml
-@@ -71,10 +71,11 @@ allOf:
-   - if:
-       properties:
-         compatible:
--          enum:
--            - nxp,tjr1443
--            - ti,tcan1042
--            - ti,tcan1043
-+          contains:
-+            enum:
-+              - nxp,tjr1443
-+              - ti,tcan1042
-+              - ti,tcan1043
-     then:
-       properties:
-         '#phy-cells':
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
+index 61f89fcc3407b..0213df54b33a9 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
+@@ -216,6 +216,8 @@ static void gfx_v12_1_xcc_update_perf_clk(struct amdgpu_device *adev,
+ static int gfx_v12_1_init_cp_compute_microcode_bo(struct amdgpu_device *adev);
+ static void gfx_v12_1_xcc_update_medium_grain_clock_gating(
+ 	struct amdgpu_device *adev, bool enable, int xcc_id, bool force);
++static void gfx_v12_1_update_spm_vmid(struct amdgpu_device *adev, int xcc_id,
++				      struct amdgpu_ring *ring, unsigned vmid);
+ 
+ static void gfx_v12_1_kiq_set_resources(struct amdgpu_ring *kiq_ring,
+ 					uint64_t queue_mask)
+@@ -682,7 +684,7 @@ static void gfx_v12_1_init_rlcg_reg_access_ctrl(struct amdgpu_device *adev)
+ static int gfx_v12_1_rlc_init(struct amdgpu_device *adev)
+ {
+ 	const struct cs_section_def *cs_data;
+-	int r, i, num_xcc;
++	int r;
+ 
+ 	adev->gfx.rlc.cs_data = gfx12_cs_data;
+ 
+@@ -695,13 +697,6 @@ static int gfx_v12_1_rlc_init(struct amdgpu_device *adev)
+ 			return r;
+ 	}
+ 
+-	/* init spm vmid with 0xf */
+-	num_xcc = NUM_XCC(adev->gfx.xcc_mask);
+-	for (i = 0; i < num_xcc; i++) {
+-		if (adev->gfx.rlc.funcs->update_spm_vmid)
+-			adev->gfx.rlc.funcs->update_spm_vmid(adev, i, NULL, 0xf);
+-	}
+-
+ 	return 0;
+ }
+ 
+@@ -2054,6 +2049,9 @@ static int gfx_v12_1_xcc_rlc_resume(struct amdgpu_device *adev,
+ {
+ 	int r;
+ 
++	/* init spm vmid with 0xf */
++	gfx_v12_1_update_spm_vmid(adev, xcc_id, NULL, 0xf);
++
+ 	if (adev->firmware.load_type == AMDGPU_FW_LOAD_PSP) {
+ 		gfx_v12_1_xcc_init_csb(adev, xcc_id);
+ 
 -- 
 2.53.0
 
