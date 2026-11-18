@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051783;
-	b=Kb6c7M0broRXBoEOyOYKP/bgyKoP4xvRdRQW2bA/uL3sMicEr7e8y7fOMpGetRH/swhb
-	 ShLt3Sx564BX8N2G2U3Fg1carCyX6Xe0IMymMYSQhgz05tisxPI0l6C3rJRpFtyLEaQxV
-	 0gRWY4R9rnfnDva58dmiPLpgV/r6v3uYvgJKVc4fXKoH3sF21CFSc6ElNlHH6sgT3QMx6
-	 xPzpoYmkQZ5siZoWtUNyPY+LWHOGRblFU9E5ZbZdTy5B7flnEdkcRXgNJ6qblAgPnxB5/
-	 lmMneR2iMN/Af7mEloCVo8xkxuruNVmpAhc1+GecmkxV63NDHR5OncTshCKxfXEwmrA==
+	t=1795051786;
+	b=sFbmESs1xq2QExaWAtDgZ5U26eB7Se0HfCmFj4+YFwWDw9T4IfX1q3zhZZbsODOgk+lC
+	 7a0uB4ErtYBwjQU2r5CwFot4Dz9chJASAAEcgUTgAVu6mLINkUeoWGkb5fsIW9AUSKqI6
+	 Tw9JDulaqvkoFKx+AgnIZYGb8uVKAqvRUvGKdG8YmQMdMWeGlli3I8fBIJJLzb7sZEFT3
+	 qVVpEeNCywMUbX9nxgpfCkDj7aUE6OWSvbkyZTkJYGcYiEGUXYEshGphFUyVGjqQgGaYO
+	 lZSNdqQUGotlU+svhVAgUiXx4fQPyiHmwMoihJBb/UmT09odIIAYhrHmR4Wd1vPWQlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051783;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051786;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Sld7Kn3W28YC49ppOhdJF9mFYO1cNPvt+YyH/HwJX4c=;
-	b=mblI3WTNE7Ds9TV2phQa6VIVIZQOyBTMDCzOqWic+TIOeQShSI19MlohEJBEt6g9cZhc
-	 mNM5TcuNrZU9TZcnuOd+s76XcQe7k+3b7+A/KEcm7yQM67HpFHrj2VnuoXmpHaie8vlHV
-	 lFV+ZnnCWBKCmhnnM7goVmjJp8IqTu9XXlCki91wjHezaPA9Lmyqr26XqsB3/6erUaPMV
-	 TvP6/kLkaOoIh6bRnL0dzpgm/KF2MRbd0aPpcEpcxOTqSfYJsemvQz3yMCP3QvVt0NdJH
-	 K59EGpyUjS/r4y/srwxUvNwsgz/KayOkO67s9ocM9F1Q1Go9Ap3j8HRudyGCbJnHhmQ==
+	bh=jwEVUREMSsav6r+9/5U6Fk0SPiebIqr+RXaZmBuKV0M=;
+	b=xLnzW+DIgzKvx6+BMi/6Ur1hfKrK9zPZMz3NGIayhh5zFMOMGAiEZDW8iFWWJso0/JJ0
+	 kqIX1HXAdKgSQJ3Iqod1CiqlhK4YoU5HYdV7Xi32DH86H5AoKD26LFaLmsaY60WFQQiyC
+	 TeNG5zEX9r6cik/N3jICwp4ZQZWAvDLmAhY1Rxv39afoV/8k1BNe3ySn8m6HxWajJpuN2
+	 +rPwGo6GS/TZCZITEjFOnjsB/2FJZNRv2VNMcuK6TDFw98a+ZdjoRfzLiI1/S9+3SOtTh
+	 sGF1HrQzwa3f0JLpSihkWyksDIj+vZZ2kNAIZKkpRO6xywEGvg5L5lyMBT0PnQNcu4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="H/k1Spvb";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rQuygl9Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C7F606A320;
-	Thu, 19 Nov 2026 01:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7B3606A320;
+	Thu, 19 Nov 2026 01:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H/k1Spvb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06001F000C4;
-	Thu, 19 Nov 2026 01:29:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rQuygl9Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 951501F000C4;
+	Thu, 19 Nov 2026 01:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051783;
-	bh=Sld7Kn3W28YC49ppOhdJF9mFYO1cNPvt+YyH/HwJX4c=;
+	s=korg; t=1795051786;
+	bh=jwEVUREMSsav6r+9/5U6Fk0SPiebIqr+RXaZmBuKV0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H/k1SpvbDY78EA7xfPGvfpTIpR7tomCO8/uYOOb9iKaEfQCuBn6E5TvxkvHfy9+21
-	 kmHMJrZ5admvGENXfvTwebiMwoGXlQm4RMlLjvEj9dsHqw5Etn4v2qwT2xe5gw9WRF
-	 PZC9YNTyNCy5jMJFSxeDtuv1x9uncqQaHnXGpvek=
+	b=rQuygl9ZfkjqcLaa7QUtEDbqWvIDWq6sO1xh0dZ5LQmDYLqzjHbxegc68rUg+dgdA
+	 1XvjfkoNTLvadczpCIIQK6O5g9ibzzC+YEGmdHVhM7cRnB6In4oXGaDz6kF+TPGG6H
+	 jLW8iN7yb5Ex3iJMZ97heDWctTYHI0NxrNs1lwPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 5.15 0331/2214] xfs: jump out of xchk_bmap_check_rmap if fatal signals
-Date: Wed, 18 Nov 2026 15:33:27 +0100
-Message-ID: <20261118150023.679663216@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>,
+	Shun Ota <shun.ota@miraclelinux.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 0332/2214] net/sched: flower: Fix chain template offload
+Date: Wed, 18 Nov 2026 15:33:28 +0100
+Message-ID: <20261118150023.795895851@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,47 +71,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 49d300a51442bd64b627645b7b0b1cd66e492905 upstream.
+[ Upstream commit 32f2a0afa95fae0d1ceec2ff06e0e816939964b8 ]
 
-LOLLM observes that we never check for fatal signals inside the loop
-that checks file fork mappings against the rmapbt.  This can lead to
-lengthy delays in responding to a ^C, so add some bailout checks.
+When a qdisc is deleted from a net device the stack instructs the
+underlying driver to remove its flow offload callback from the
+associated filter block using the 'FLOW_BLOCK_UNBIND' command. The stack
+then continues to replay the removal of the filters in the block for
+this driver by iterating over the chains in the block and invoking the
+'reoffload' operation of the classifier being used. In turn, the
+classifier in its 'reoffload' operation prepares and emits a
+'FLOW_CLS_DESTROY' command for each filter.
 
-Cc: stable@vger.kernel.org # v4.17
-Fixes: 5e777b62b0bcb6 ("xfs: bmap scrubber should do rmap xref with bmap for sparse files")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+However, the stack does not do the same for chain templates and the
+underlying driver never receives a 'FLOW_CLS_TMPLT_DESTROY' command when
+a qdisc is deleted. This results in a memory leak [1] which can be
+reproduced using [2].
+
+Fix by introducing a 'tmplt_reoffload' operation and have the stack
+invoke it with the appropriate arguments as part of the replay.
+Implement the operation in the sole classifier that supports chain
+templates (flower) by emitting the 'FLOW_CLS_TMPLT_{CREATE,DESTROY}'
+command based on whether a flow offload callback is being bound to a
+filter block or being unbound from one.
+
+As far as I can tell, the issue happens since cited commit which
+reordered tcf_block_offload_unbind() before tcf_block_flush_all_chains()
+in __tcf_block_put(). The order cannot be reversed as the filter block
+is expected to be freed after flushing all the chains.
+
+[1]
+unreferenced object 0xffff888107e28800 (size 2048):
+  comm "tc", pid 1079, jiffies 4294958525 (age 3074.287s)
+  hex dump (first 32 bytes):
+    b1 a6 7c 11 81 88 ff ff e0 5b b3 10 81 88 ff ff  ..|......[......
+    01 00 00 00 00 00 00 00 e0 aa b0 84 ff ff ff ff  ................
+  backtrace:
+    [<ffffffff81c06a68>] __kmem_cache_alloc_node+0x1e8/0x320
+    [<ffffffff81ab374e>] __kmalloc+0x4e/0x90
+    [<ffffffff832aec6d>] mlxsw_sp_acl_ruleset_get+0x34d/0x7a0
+    [<ffffffff832bc195>] mlxsw_sp_flower_tmplt_create+0x145/0x180
+    [<ffffffff832b2e1a>] mlxsw_sp_flow_block_cb+0x1ea/0x280
+    [<ffffffff83a10613>] tc_setup_cb_call+0x183/0x340
+    [<ffffffff83a9f85a>] fl_tmplt_create+0x3da/0x4c0
+    [<ffffffff83a22435>] tc_ctl_chain+0xa15/0x1170
+    [<ffffffff838a863c>] rtnetlink_rcv_msg+0x3cc/0xed0
+    [<ffffffff83ac87f0>] netlink_rcv_skb+0x170/0x440
+    [<ffffffff83ac6270>] netlink_unicast+0x540/0x820
+    [<ffffffff83ac6e28>] netlink_sendmsg+0x8d8/0xda0
+    [<ffffffff83793def>] ____sys_sendmsg+0x30f/0xa80
+    [<ffffffff8379d29a>] ___sys_sendmsg+0x13a/0x1e0
+    [<ffffffff8379d50c>] __sys_sendmsg+0x11c/0x1f0
+    [<ffffffff843b9ce0>] do_syscall_64+0x40/0xe0
+unreferenced object 0xffff88816d2c0400 (size 1024):
+  comm "tc", pid 1079, jiffies 4294958525 (age 3074.287s)
+  hex dump (first 32 bytes):
+    40 00 00 00 00 00 00 00 57 f6 38 be 00 00 00 00  @.......W.8.....
+    10 04 2c 6d 81 88 ff ff 10 04 2c 6d 81 88 ff ff  ..,m......,m....
+  backtrace:
+    [<ffffffff81c06a68>] __kmem_cache_alloc_node+0x1e8/0x320
+    [<ffffffff81ab36c1>] __kmalloc_node+0x51/0x90
+    [<ffffffff81a8ed96>] kvmalloc_node+0xa6/0x1f0
+    [<ffffffff82827d03>] bucket_table_alloc.isra.0+0x83/0x460
+    [<ffffffff82828d2b>] rhashtable_init+0x43b/0x7c0
+    [<ffffffff832aed48>] mlxsw_sp_acl_ruleset_get+0x428/0x7a0
+    [<ffffffff832bc195>] mlxsw_sp_flower_tmplt_create+0x145/0x180
+    [<ffffffff832b2e1a>] mlxsw_sp_flow_block_cb+0x1ea/0x280
+    [<ffffffff83a10613>] tc_setup_cb_call+0x183/0x340
+    [<ffffffff83a9f85a>] fl_tmplt_create+0x3da/0x4c0
+    [<ffffffff83a22435>] tc_ctl_chain+0xa15/0x1170
+    [<ffffffff838a863c>] rtnetlink_rcv_msg+0x3cc/0xed0
+    [<ffffffff83ac87f0>] netlink_rcv_skb+0x170/0x440
+    [<ffffffff83ac6270>] netlink_unicast+0x540/0x820
+    [<ffffffff83ac6e28>] netlink_sendmsg+0x8d8/0xda0
+    [<ffffffff83793def>] ____sys_sendmsg+0x30f/0xa80
+
+[2]
+ # tc qdisc add dev swp1 clsact
+ # tc chain add dev swp1 ingress proto ip chain 1 flower dst_ip 0.0.0.0/32
+ # tc qdisc del dev swp1 clsact
+ # devlink dev reload pci/0000:06:00.0
+
+Fixes: bbf73830cd48 ("net: sched: traverse chains in block with tcf_get_next_chain()")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+[Minor conflict resolved due to code context change.]
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
+Signed-off-by: Shun Ota <shun.ota@miraclelinux.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/bmap.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ include/net/sch_generic.h |  4 ++++
+ net/sched/cls_api.c       |  9 ++++++++-
+ net/sched/cls_flower.c    | 23 +++++++++++++++++++++++
+ 3 files changed, 35 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/bmap.c
-+++ b/fs/xfs/scrub/bmap.c
-@@ -483,6 +483,10 @@ xchk_bmap_check_rmap(
- 	struct xfs_ifork		*ifp;
- 	struct xfs_scrub		*sc = sbcri->sc;
- 	bool				have_map;
-+	int				error = 0;
-+
-+	if (xchk_should_terminate(sc, &error))
-+		return error;
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index 16b077576c929..06f7a1b34eab7 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -368,6 +368,10 @@ struct tcf_proto_ops {
+ 						struct nlattr **tca,
+ 						struct netlink_ext_ack *extack);
+ 	void			(*tmplt_destroy)(void *tmplt_priv);
++	void			(*tmplt_reoffload)(struct tcf_chain *chain,
++						   bool add,
++						   flow_setup_cb_t *cb,
++						   void *cb_priv);
  
- 	/* Is this even the right fork? */
- 	if (rec->rm_owner != sc->ip->i_ino)
-@@ -514,6 +518,9 @@ xchk_bmap_check_rmap(
- 	 */
- 	check_rec = *rec;
- 	while (have_map) {
-+		if (xchk_should_terminate(sc, &error))
-+			return error;
+ 	/* rtnetlink specific */
+ 	int			(*dump)(struct net*, struct tcf_proto*, void *,
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index abe45d7a6c13f..b60bdd903bdfc 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -1412,6 +1412,9 @@ tcf_block_playback_offloads(struct tcf_block *block, flow_setup_cb_t *cb,
+ 	     chain_prev = chain,
+ 		     chain = __tcf_get_next_chain(block, chain),
+ 		     tcf_chain_put(chain_prev)) {
++		if (chain->tmplt_ops && add)
++			chain->tmplt_ops->tmplt_reoffload(chain, true, cb,
++							  cb_priv);
+ 		for (tp = __tcf_get_next_proto(chain, NULL); tp;
+ 		     tp_prev = tp,
+ 			     tp = __tcf_get_next_proto(chain, tp),
+@@ -1427,6 +1430,9 @@ tcf_block_playback_offloads(struct tcf_block *block, flow_setup_cb_t *cb,
+ 				goto err_playback_remove;
+ 			}
+ 		}
++		if (chain->tmplt_ops && !add)
++			chain->tmplt_ops->tmplt_reoffload(chain, false, cb,
++							  cb_priv);
+ 	}
+ 
+ 	return 0;
+@@ -2795,7 +2801,8 @@ static int tc_chain_tmplt_add(struct tcf_chain *chain, struct net *net,
+ 	ops = tcf_proto_lookup_ops(name, true, extack);
+ 	if (IS_ERR(ops))
+ 		return PTR_ERR(ops);
+-	if (!ops->tmplt_create || !ops->tmplt_destroy || !ops->tmplt_dump) {
++	if (!ops->tmplt_create || !ops->tmplt_destroy || !ops->tmplt_dump ||
++	    !ops->tmplt_reoffload) {
+ 		NL_SET_ERR_MSG(extack, "Chain templates are not supported with specified classifier");
+ 		module_put(ops->owner);
+ 		return -EOPNOTSUPP;
+diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
+index d4fa6fe2560f3..a369a426f90f2 100644
+--- a/net/sched/cls_flower.c
++++ b/net/sched/cls_flower.c
+@@ -2435,6 +2435,28 @@ static void fl_tmplt_destroy(void *tmplt_priv)
+ 	kfree(tmplt);
+ }
+ 
++static void fl_tmplt_reoffload(struct tcf_chain *chain, bool add,
++			       flow_setup_cb_t *cb, void *cb_priv)
++{
++	struct fl_flow_tmplt *tmplt = chain->tmplt_priv;
++	struct flow_cls_offload cls_flower = {};
 +
- 		if (irec.br_startoff != check_rec.rm_offset)
- 			xchk_fblock_set_corrupt(sc, sbcri->whichfork,
- 					check_rec.rm_offset);
++	cls_flower.rule = flow_rule_alloc(0);
++	if (!cls_flower.rule)
++		return;
++
++	cls_flower.common.chain_index = chain->index;
++	cls_flower.command = add ? FLOW_CLS_TMPLT_CREATE :
++				   FLOW_CLS_TMPLT_DESTROY;
++	cls_flower.cookie = (unsigned long) tmplt;
++	cls_flower.rule->match.dissector = &tmplt->dissector;
++	cls_flower.rule->match.mask = &tmplt->mask;
++	cls_flower.rule->match.key = &tmplt->dummy_key;
++
++	cb(TC_SETUP_CLSFLOWER, &cls_flower, cb_priv);
++	kfree(cls_flower.rule);
++}
++
+ static int fl_dump_key_val(struct sk_buff *skb,
+ 			   void *val, int val_type,
+ 			   void *mask, int mask_type, int len)
+@@ -3240,6 +3262,7 @@ static struct tcf_proto_ops cls_fl_ops __read_mostly = {
+ 	.bind_class	= fl_bind_class,
+ 	.tmplt_create	= fl_tmplt_create,
+ 	.tmplt_destroy	= fl_tmplt_destroy,
++	.tmplt_reoffload = fl_tmplt_reoffload,
+ 	.tmplt_dump	= fl_tmplt_dump,
+ 	.owner		= THIS_MODULE,
+ 	.flags		= TCF_PROTO_OPS_DOIT_UNLOCKED,
+-- 
+2.53.0
+
 
 
