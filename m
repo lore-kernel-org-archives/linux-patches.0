@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046952;
-	b=J/27E8zNafFcYrvx79ZnIrFiVxdK3fMgzfW78L5b3L0dVQ2E+mbeszI2nXmZjVirhrzZ
-	 f5xO/y8OSLIQlx3cseleExi4RP3zWEGHq1LfxvVDMbwZjirkbpZRGEGl3YkQn1yQlISoZ
-	 erqp1P+aT6Ixbm/hd+Ig6ppsqM++L1F8X/XwtzfMav3ik/EFo6uod3hxtoWBMOPxagI9M
-	 kttRcQbGK+LJAHd79dvkzVMjM6lpaFrmUQWZxVngu2JuTfOQpwqR0DTlpCP6E6oq/rt8Q
-	 ZiWJN1Bi8GIt6E5NdbIShEf+GPzHl0dNbWBtz7u1oWj2RPfLbMY653EXSSZrgY8FDoA==
+	t=1795046955;
+	b=tRFxNYsWGBzzLDcm3AK4UB4dLl/EsEX+Q8DyG2iLEdL2EFOSlZ/ERKyuIK5J6XiruGxF
+	 rdlSx9HI1GQTrtCnYAGVGYhjNnj84vxlX4Q4JlLk4HyPWMG9t4Cu84DINA2QoJkt0UFQ1
+	 Vr1HV0zhKdpFpwKqkJVkB8rIL0tv57TE2cYfoGDwTzIaz3jslOIr83zCTz6dJj72fIaaH
+	 7PrJISBOqAVsgbIF4drI/7ArQbsEMDDgbpbHS86IaIn/GZcLy5WDiXOCFCjOaA/SoCxIp
+	 TbWOyQqFijLejQbsa0DoyRU4b11eNXIE8CvgA1g3TcVVU0iL9KNXouOVnaH4B6LH22Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046952;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046955;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7Ihd6DxFfE7q3nJUTVtG17ZRjTmtGTWf4UKVx4gBw0I=;
-	b=LKEbhwKIW9GyVB9hmI9Xdt6JKgw2Y2gGTsu/MW3iN/3DH5EY965DMcJ+DYqtrEJmZGl0
-	 AFEK7bBbiWMlmcA6OjfYzN7SNx/IRNVKMgusrdUfpk7nQuoSYnMT9BhDaZPM1LeO7nIQX
-	 jCNj9kpHw58n7xRjUjgG8djNlmhrN8OjvdmBM44OeAOkXpMhPCpw2oGejfF61EmJ4lp8w
-	 sk1zXGT+Wcb+k3lUZ9mWbYguDhuAAVnmgyHP2nwDc5oxXmZfLCdXeBHjOIiJzxW6GeJKS
-	 IaBLr5m1gb3HK85CWgUJZGGHr2PcmbuZeXoUEtmhiXVYv1BwuInGz6i3a2aFrZqxp6Q==
+	bh=f76TQGSSAhDSFdJ+xNg/VcKhPBlSWm1DB3nRBt/cXo0=;
+	b=wX7HKjOV9MojsbBG6uBsOMapQ4wADYOE1cEdMVdubtl4DegI7WIIYFUNsT4buTjyubtp
+	 825afIsMKklwTA5hVpuXyjqMTZjfs1OGe/58Fd+E1smin8iyg82Kwzr6wBUcPKm5CiaG1
+	 XJCZWZzTdtv5snGmbNwUpMfF613arF4jkpbjVqCABvzFqPaRd3xc2+7pqk+9TgfWOQHZK
+	 kGMLCtBNlliX1ftNpw4YNJjMci6oBnogJOUQHsKgpWZmO2aFI5malwEaaYso8Ec2hQqQp
+	 bCm5N/i3MJJVoFQrGq4J0BG0ylKKWVaB88dF8Q5guy0afFp6Go3A0rCoIDK2OXmA7Mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mMPZR0My;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x5ambWzq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8D5606A320;
-	Thu, 19 Nov 2026 00:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A61606A31C;
+	Thu, 19 Nov 2026 00:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mMPZR0My
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F451F000C6;
-	Thu, 19 Nov 2026 00:09:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x5ambWzq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 909701F000C8;
+	Thu, 19 Nov 2026 00:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046952;
-	bh=7Ihd6DxFfE7q3nJUTVtG17ZRjTmtGTWf4UKVx4gBw0I=;
+	s=korg; t=1795046955;
+	bh=f76TQGSSAhDSFdJ+xNg/VcKhPBlSWm1DB3nRBt/cXo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mMPZR0MyB0MovPraiJPt/nx/DaWgh9tXNl2sUNhTjupDouVDxl9cUTE447XJbxzX9
-	 5leDoiKL4XtTjztSatw+WQu3hPOaKXn4EXx5zm2kV4NT+nqPlCedgR1hAWB1i2/AaU
-	 wvWFIqlrZvaMxeaNsyyGEHeOVPVQcoxclq14ybQg=
+	b=x5ambWzqWWcm4FD696sVoOxhFjm7gZL5seOSj8dwnqcUu9iVCfU4JBRXLbQzzuPln
+	 ItGlWsR7jo0u3sUUa0o7acAk4+oN9nHl26iPCb5L/H7Pz3SpT3vK+VBsgvBZiYHaW1
+	 cl8niDQ1foQ3zIUD+P6UVj6o4ElT6+p+6pgn8MDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>,
-	Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1424/2857] dmaengine: qcom: bam_dma: Defer IRQ trigger type to device tree
-Date: Wed, 18 Nov 2026 15:40:58 +0100
-Message-ID: <20261118150252.592451357@linuxfoundation.org>
+Subject: [PATCH 6.1 1425/2857] dmaengine: qcom: bam_dma: free interrupt before the clock in error path
+Date: Wed, 18 Nov 2026 15:40:59 +0100
+Message-ID: <20261118150252.628646476@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,47 +70,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-[ Upstream commit 3cee6f79553202d7d3954555560ac38d719344b8 ]
+[ Upstream commit 82eed160cfa7a296ae4eb5acb8dd8f493323eea7 ]
 
-The driver hardcodes IRQF_TRIGGER_HIGH when registering the BAM
-interrupt, which overrides the trigger type specified in the device
-tree. On Qualcomm Shikra SoC, the A2 BAM signals an edge interrupt
-to the apps processor; registering it as level-high causes the
-interrupt to not fire, resulting in missed DMA completions.
+The BAM interrupt is requested with a devres helper and so on error it's
+freed after probe() returns. We disable the clock before freeing or
+masking it so it may still fire and we may end up reading BAM registers
+with clock disabled.
 
-Use IRQF_TRIGGER_NONE instead, which causes the kernel to use the
-trigger type already configured by platform_get_irq() when it parsed
-the device tree interrupts property. This makes the driver
-platform-agnostic.
+Stop using devres for interrupts as we free it in remove() manually
+anyway. Add an appropriate label and free the interrupt before disabling
+the clock in error path and in remove().
 
+Cc: stable@vger.kernel.org
 Fixes: e7c0fe2a5c84 ("dmaengine: add Qualcomm BAM dma driver")
-Co-developed-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
-Signed-off-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
-Signed-off-by: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260717-qcom-bam-dma-irq-trigger-v1-1-6405eac86f00@oss.qualcomm.com
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260427-qcom-qce-cmd-descr-v16-0-945fd1cafbbc%40oss.qualcomm.com?part=2
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261008-bam-dma-free-irq-v28-1-5e5b10de441e@oss.qualcomm.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 82eed160cfa7 ("dmaengine: qcom: bam_dma: free interrupt before the clock in error path")
+[ sashal: also free the IRQ when dma_set_max_seg_size() fails, a check upstream no longer has ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/qcom/bam_dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/qcom/bam_dma.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index 68295eed43d8e..a8cf834867353 100644
+index a8cf834867353..d2fc5a6f8c6aa 100644
 --- a/drivers/dma/qcom/bam_dma.c
 +++ b/drivers/dma/qcom/bam_dma.c
-@@ -1325,7 +1325,7 @@ static int bam_dma_probe(struct platform_device *pdev)
+@@ -1324,8 +1324,8 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 	for (i = 0; i < bdev->num_channels; i++)
  		bam_channel_init(bdev, &bdev->channels[i], i);
  
- 	ret = devm_request_irq(bdev->dev, bdev->irq, bam_dma_irq,
--			IRQF_TRIGGER_HIGH, "bam_dma", bdev);
-+			IRQF_TRIGGER_NONE, "bam_dma", bdev);
+-	ret = devm_request_irq(bdev->dev, bdev->irq, bam_dma_irq,
+-			IRQF_TRIGGER_NONE, "bam_dma", bdev);
++	ret = request_irq(bdev->irq, bam_dma_irq, IRQF_TRIGGER_NONE,
++			  "bam_dma", bdev);
  	if (ret)
  		goto err_bam_channel_exit;
  
+@@ -1334,7 +1334,7 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 	ret = dma_set_max_seg_size(bdev->common.dev, BAM_FIFO_SIZE);
+ 	if (ret) {
+ 		dev_err(bdev->dev, "cannot set maximum segment size\n");
+-		goto err_bam_channel_exit;
++		goto err_free_irq;
+ 	}
+ 
+ 	platform_set_drvdata(pdev, bdev);
+@@ -1362,7 +1362,7 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 	ret = dma_async_device_register(&bdev->common);
+ 	if (ret) {
+ 		dev_err(bdev->dev, "failed to register dma async device\n");
+-		goto err_bam_channel_exit;
++		goto err_free_irq;
+ 	}
+ 
+ 	ret = of_dma_controller_register(pdev->dev.of_node, bam_dma_xlate,
+@@ -1381,6 +1381,8 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 
+ err_unregister_dma:
+ 	dma_async_device_unregister(&bdev->common);
++err_free_irq:
++	free_irq(bdev->irq, bdev);
+ err_bam_channel_exit:
+ 	for (i = 0; i < bdev->num_channels; i++)
+ 		tasklet_kill(&bdev->channels[i].vc.task);
+@@ -1406,7 +1408,7 @@ static int bam_dma_remove(struct platform_device *pdev)
+ 	/* mask all interrupts for this execution environment */
+ 	writel_relaxed(0, bam_addr(bdev, 0,  BAM_IRQ_SRCS_MSK_EE));
+ 
+-	devm_free_irq(bdev->dev, bdev->irq, bdev);
++	free_irq(bdev->irq, bdev);
+ 
+ 	for (i = 0; i < bdev->num_channels; i++) {
+ 		bam_dma_terminate_all(&bdev->channels[i].vc.chan);
 -- 
 2.53.0
 
