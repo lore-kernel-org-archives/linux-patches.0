@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057802;
-	b=Y+JU9SowtrmZCEmWw3KHvkkwUngR3ZrA9foLIQtZV+i6ecqLlXdaWGEH1cDV1X9GcQiV
-	 r6ctZf4WoM85StoiMEKIipKCJUw9mHriZkjDAP6jwO9Cp/4fN1kIKgxW1xDy1Wz31io/Y
-	 jh9Bcdfx+xGGtV73TuvCyk59QKt60NnCDIhReMJ0o0p5hjG/4sJm6OwnXY7qA3131DQcu
-	 89ZzE6ZvaYRwc5O0MF525BFuG3MsNdavm6xJ25G4WRDtRBTZol3xp8wtYUJz7XnvmariB
-	 dOi2uItXkoQIbnFLmW8aSPV8Xwzulu/27KucIxZzoytMAKxVgJcUGH2rLZ78K7MXdmw==
+	t=1795057805;
+	b=pLtwJGRVSfuFHkhOqwdHknspgp7ENAukLkYfnUmhPGTXx8/sZIFqWMzb2M4nDGgkAOCl
+	 blV3GyCsL8ho7xSkJB3d2sz5KQg4kUMXMxArODR2UoUqIOtt7HEwJ25FhOrk7P67mHLIX
+	 Vp6ZxviUFBAFSTBeB67WIaFOzsuvy3CYoWDaj937ktoa1xDnULdxXUwXM/3pXT/jwLVEs
+	 aVQNDxBaPV8uK9wpQcmNuCKe+XhUbCB1Sn0Km8opydjVFJE0nXVG0ORbZXtJ9wc9xreBv
+	 6VhIL1VJpfYzULsdVtV5wE/mE421vPRtGkReI6vFlpjysgdf7QEnZFKEMvjWQPAyfvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057802;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057805;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MeMSGS4W+wxslU1/AFx4kaLn1aH4qU1gB5ND5xjpoEo=;
-	b=3ffIWk9ngHJ+zlqozjXNrJ4V4pZLgSiUj9qvKdaUIc/QiWNoctfmCN53N8qMwUuSD9sR
-	 sTJl5X3E0Tzt5aO4ZD34CtjlA+FH6+Bsni91GWBSlH8JrlfwLd3yRXLhsk8fL2AB/27W+
-	 yMFOYEgFWhETI2SsEGQQSlTSvRca5Mn3EcokZT5EKztzhmHkwIvkDzHVcQnzhbmsrQ2vq
-	 mV/5pByFqxY5VZtZVxV+I6c8DfpcKtlAwTDkHTUe1pOXZSsEEbfZ9l2/8ujVyCed4ElCS
-	 LQWSKLsYjaXoHfmURHE8QqYM6L+EBg6Zwi/KN+2iIABWlhB2BrgUAuNEqFX+39QBONQ==
+	bh=qanrFm4F8zpDrjZsMcy+ISaeZClW6SBngj/06NmWWWs=;
+	b=K3sGPCzfNLfYe/tQM8C1fVnPAsJ5Q4hsRi22Dp+jGyc5qyt1QedAyL3UQBMSEagTDE++
+	 rx4fv1RkzQ9V5Zqru6z/s0Ng1KvLwxvMB64ZZpiG2FkCJdGSTiSHzsj7q7bMz0NITiZDC
+	 G/8Ls3x59D78ziCqot8NmtgljxIgq4BwwCwmHJzAT9+8w2XnOQyYJF3TE++bD60a7JzO8
+	 lazyY/kDT7eUd+bGKwftXcHyjMLErTHb6JAkNLLdSDgZI1Bz8gddIEEpQAsX0yiECtXtn
+	 qGpSTs2KKhun6xLfqPmvb/oj5ecZmldA1wXpakpwCEnUUSp05vp4tD3nsMSHRvcBYsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pLu/nNL6";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q7GI51Er;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0667606A320;
-	Thu, 19 Nov 2026 03:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D41606A31C;
+	Thu, 19 Nov 2026 03:10:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pLu/nNL6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DE811F000C4;
-	Thu, 19 Nov 2026 03:10:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q7GI51Er
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8DE91F000C4;
+	Thu, 19 Nov 2026 03:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057802;
-	bh=MeMSGS4W+wxslU1/AFx4kaLn1aH4qU1gB5ND5xjpoEo=;
+	s=korg; t=1795057805;
+	bh=qanrFm4F8zpDrjZsMcy+ISaeZClW6SBngj/06NmWWWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pLu/nNL6QHdUAEZxP6GSONalGjkbQvyVCTNB6ajJLRhDru1ilKN3n/vmXQj4/8HLw
-	 lf0R/DxvyuBXPbc+C98CeZWxoTYX0mpfG24tH/+cETL2hEB8TbntAE9txsXpybp7wh
-	 2w1SnX/cJK9W5zkOwXIilpBC8MbeJa9HeFClq+iw=
+	b=q7GI51EryxAQNhNO/J4n+XH0K9J87vKlbFj7PThj89nhgRfzycp1MqD51YhXkVhJp
+	 17I4BrFs8bfGnAGYufL+ePQpEtuMkfUG5oM84KQjelJYnpoEL06UBKhPaUfIO/2uBZ
+	 Yluv191kmMTMcux6MJ/3Lu9ZYWPUIpDdMxSe8JDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0222/1848] openvswitch: vport: fix self-deadlock on release of tunnel ports
-Date: Wed, 18 Nov 2026 15:37:40 +0100
-Message-ID: <20261118145921.264000895@linuxfoundation.org>
+	YANXIN LI <fadouse@pm.me>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 5.10 0258/1848] ufs: use u64 for directory size in ufs_last_byte
+Date: Wed, 18 Nov 2026 15:38:16 +0100
+Message-ID: <20261118145923.053678803@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,67 +68,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: YANXIN LI <fadouse@pm.me>
 
-[ Upstream commit aa69918bd418e700309fdd08509dba324fb24296 ]
+commit 1eff23433e73d7da4f9e3529d2701e34962b161f upstream.
 
-vports are used concurrently and protected by RCU, so netdev_put()
-must happen after the RCU grace period.  So, either in an RCU call or
-after the synchronize_net().  The rtnl_delete_link() must happen under
-RTNL and so can't be executed in RCU context.  Calling synchronize_net()
-while holding RTNL is not a good idea for performance and system
-stability under load in general, so calling netdev_put() in RCU call
-is the right solution here.
+ufs1_read_inode() and ufs2_read_inode() copy the untrusted 64-bit
+on-disk size into inode->i_size.  ufs_last_byte() then truncates that
+value to an unsigned int before calculating the valid extent of a
+directory folio.
 
-However,
-when the device is deleted, rtnl_unlock() will call netdev_run_todo()
-and block until all the references are gone.  In the current code this
-means that we never reach the call_rcu() and the vport is never freed
-and the reference is never released, causing a self-deadlock on device
-removal.
+A directory size of exactly 4 GiB is truncated to zero.  In
+ufs_find_entry(), subtracting the requested record length from that zero
+forms an endpoint almost 4 GiB beyond the mapped folio.  A crafted UFS2
+image produces:
 
-Fix that by moving the rcu_call() before the rtnl_unlock(), so the
-scheduled RCU callback will be executed when synchronize_net() is
-called from the rtnl_unlock()->netdev_run_todo() while the RTNL itself
-is already released.
+  BUG: KASAN: use-after-free in ufs_find_entry+0x583/0x6e0 [ufs]
+  Read of size 1
+  ...
+  ufs_find_entry
+  ufs_inode_by_name
+  ufs_lookup
+  __lookup_slow
+  path_lookupat
 
-Fixes: 6931d21f87bc ("openvswitch: defer tunnel netdev_put to RCU release")
+The KASAN classification reflects that the adjacent physical page was
+free; the source-level operation is an out-of-folio read.  A controlled
+UFS1 test with CONFIG_UFS_FS_WRITE enabled also made ufs_find_entry()
+return a directory entry from an adjacent anonymous page.  unlink() then
+passed that pointer to ufs_delete_entry(), which cleared the adjacent
+page's 3
+2-bit d_ino.  This write result reproduced three out of three
+times.
+
+UFS normally requires a privileged mount path.  A relevant boundary is
+a privileged automounter or image-processing service handling an
+attacker-supplied filesystem.  The write primitive additionally requires
+UFS1 to be mounted read-write with CONFIG_UFS_FS_WRITE enabled; the read
+is reachable with read-only UFS2.
+
+Keep the intermediate size arithmetic at 64 bits so non-final pages are
+bounded at PAGE_SIZE.  With this change, the same controlled tests reach
+the real on-disk directory entry and produce no adjacent-page write or
+KASAN report.  A reproducer and full validation logs are available on
+request.
+
+The vulnerable helper is present in v7.2-rc3, v7.1, v6.18.38, v6.12.95,
+v6.6.111, and upstream master at 1229e2e57a5c.  Runtime reproduction and
+fix validation were performed in an x86-64 QEMU guest running v7.2-rc3
+with generic KASAN.
+
+Fixes: b71034e5e67d ("[PATCH] ufs: directory and page cache:  from blocks to pages")
 Cc: stable@vger.kernel.org
-Acked-by: Eelco Chaudron <echaudro@redhat.com>
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260430233848.440994-2-i.maximets@ovn.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-(cherry picked from commit aa69918bd418e700309fdd08509dba324fb24296)
-[Harshit: Resolved minor conflicts because 5.10.y has one-argument
-rtnl_delete_link() call.]
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: YANXIN LI <fadouse@pm.me>
+Link: https://patch.msgid.link/20260718190300.867109-1-fadouse@pm.me
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/vport-netdev.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/ufs/dir.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/openvswitch/vport-netdev.c b/net/openvswitch/vport-netdev.c
-index 8cbf787d1fcb6..ab8e4ebedd332 100644
---- a/net/openvswitch/vport-netdev.c
-+++ b/net/openvswitch/vport-netdev.c
-@@ -191,9 +191,13 @@ void ovs_netdev_tunnel_destroy(struct vport *vport)
- 	 */
- 	if (vport->dev->reg_state == NETREG_REGISTERED)
- 		rtnl_delete_link(vport->dev);
--	rtnl_unlock();
+--- a/fs/ufs/dir.c
++++ b/fs/ufs/dir.c
+@@ -211,7 +211,7 @@ fail:
+ static unsigned
+ ufs_last_byte(struct inode *inode, unsigned long page_nr)
+ {
+-	unsigned last_byte = inode->i_size;
++	u64 last_byte = inode->i_size;
  
-+	/* We can't put the device reference yet, since it can still be in
-+	 * use, but rtnl_unlock()->netdev_run_todo() will block until all
-+	 * the references are released, so the RCU call must be before it.
-+	 */
- 	call_rcu(&vport->rcu, vport_netdev_free);
-+	rtnl_unlock();
- }
- EXPORT_SYMBOL_GPL(ovs_netdev_tunnel_destroy);
- 
--- 
-2.53.0
-
+ 	last_byte -= page_nr << PAGE_SHIFT;
+ 	if (last_byte > PAGE_SIZE)
 
 
