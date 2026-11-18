@@ -1,56 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018918;
-	b=NPTKFmXlIxvanNCQ65aKa+iqYiWsH/hqDl0BHKKemZDVIbMpZK25gK2p5TGVZUCIujgf
-	 Q8VkyqTwO+7AAN5sX/v2s6Xvp9JIeu2y91HWsT9sB7A2aAt72Sr4la3RjnV/ba37X5XWc
-	 MoU7E/S3ZzDA36VRMMpltmf+2cQos12Vsv0kN4W0VQWYfFy0DLwOuKdtnmw977pqbUTYN
-	 jkiWdI5n4CEm6w1AKkioMAiBG4HwZ8T8G3dBDmBymIRD5NQSgAz8cqFuE6bSaIKPIro7w
-	 xZ3OKy7JifKIiR+R0PzYKW7InvPs0J5COvH4IfqOuFFW3ztljWMFOG76tYsl/vT23ZQ==
+	t=1795018921;
+	b=06r4cMhbmLqJMToOuPdYIsAoZ4A+VifdiW0D6wsobB0cppHkReA8xeJa3S1joLYJHiUr
+	 sOKsxo4ftG6qz+9ZBEdoRSoFWi1R+bkJUP9tnF5LW2lyHQrHUd1FqoW/6HIqrl3ViSzMw
+	 qEI5aJO5HeuOX/1AldlOvuuj695GsufqJya5cJRLbd10uU8Za+tmtDqJGUZ8AS/u1nGSn
+	 SPtcJPEK90wNxAYGEe+onf36B3NPbPn9WCuCOlDRnbvhhL+G3MoO3i2FHMvZJzcmz4w0b
+	 VP8c4QFODN0YU2ywT+AbABheDDB+Z/+0r2ZMP4lFkahUFO0p8RuZ5l4qkm+Jd+YnD4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018918;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018921;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iabsM0CU8+2Li+2My1TCqV2zqvk7EdnW+hM0jmPzGg0=;
-	b=C+8oagopviTmg0OKgXL3VzLKOryqA5YYt96MwiCrkwuYV+q+tspqNM+YiP3WNTRXY/ng
-	 t3Sd4UrnSCUii2TdB6sXET8yisGWu4T9upB9TjnXCh0ec58f1rNLWtV9THR5LWQVYENR1
-	 QcC5uSKNBrASoAgH1B8sBjYo3J9IOCwudsQ8dTpK4wP+ryVUv50N/0VV+Fh6CBceXSrz1
-	 O2CzYvRr5+wkEs5TtjYquS41foTMlpJ2O7n9Glfi3ZxAgpLKBWS55IUy6VRkgLEDAWH5s
-	 9vEyfVizLw52dwFO5i8kgVnw07OFL1K0z0wkvnBGJ57Yl8gFe+3YPOiPv7YQD45/7pg==
+	bh=TBGsmDG/zlg4vdoa0F6NKed9jrcqOftBQxUxptSBbZo=;
+	b=nxN4PiCWqYWkCwlEuLb1/ej3NwlaChzGO70y7N6UOSNT1rdB7ivwxJgeHhnnp39CyGZu
+	 qgMr7La4p6V+caOf8uc9rud+Yv/sKTFbTtWPY41DURBXOsGvqig4olki0QdVAWjfQZJPt
+	 mTR5SdKUKnQDK6sVKscUHOxbVmOnAFjwZKJqq4ef+wpB2ghfYjagT5FvHQBozFOdPb3RR
+	 kDnhlOJfss5EXPCuPTvXOWjH9CfjjujtsqstSZRPP7WbM5gR52EuOlrXwtZpYPEQijU0o
+	 S/BSzVtOXOYJHy5bQI5rXfSOrgs0kzRoPLNAKMWvpCFLY36vq+uxZnqZIn67LuOnuLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ga+io9jq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gm62ah4V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA194606A320;
-	Wed, 18 Nov 2026 16:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1C3606A330;
+	Wed, 18 Nov 2026 16:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ga+io9jq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128811F000C4;
-	Wed, 18 Nov 2026 16:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gm62ah4V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1DDF1F000C6;
+	Wed, 18 Nov 2026 16:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018918;
-	bh=iabsM0CU8+2Li+2My1TCqV2zqvk7EdnW+hM0jmPzGg0=;
+	s=korg; t=1795018921;
+	bh=TBGsmDG/zlg4vdoa0F6NKed9jrcqOftBQxUxptSBbZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ga+io9jqZcXCy+Mze8e9beJ3AdEq8GAu37LH0fzlMQ+nL5ynW3L2my6NmKgYlP+n4
-	 n90oLY4JvAdU4jV66N/gwyxWms+6bqelELvyLI3gPObVBCd4bgDXGeUCdT/nZX4xr0
-	 cycNzSC/PW824bGDBg5etyrkDWJ0C46KEnX6WG4w=
+	b=gm62ah4VBO7EdZQaIaR3y1cl8W4sZcip6MWqo3EcdFh5YxUJFwBe4TGO5HlZWYsWb
+	 RbVKnJ0G0tinhMUz5H8TEiuBYeo5Ook6gz5BVK0BR08HZ5Z9N6usMGSwhPIR67viwe
+	 0+r30ExjNEifReRseroaK2zcTIA7tZWXzIBdIUak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Schmaus <florian.schmaus@codasip.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Heiher <r@hev.cc>,
-	Roman Penyaev <rpenyaev@suse.de>,
-	Shuah Khan <shuah@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1394/2651] selftests/epoll: fix race condition in multi-waiter wakeup tests
-Date: Wed, 18 Nov 2026 15:43:54 +0100
-Message-ID: <20261118150338.203519244@linuxfoundation.org>
+Subject: [PATCH 7.3 1412/2651] wifi: mt76: clear offchannel state if a scan has no channel to restore
+Date: Wed, 18 Nov 2026 15:44:12 +0100
+Message-ID: <20261118150338.837253017@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,141 +67,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Schmaus <florian.schmaus@codasip.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 4238e66c82b6ee888a768cb298c85083b4566726 ]
+[ Upstream commit 3aaa4871006d2abb3a597028c45042311acbc640 ]
 
-In tests with multiple concurrent waiters on edge-triggered epoll
-instances where an emitter writes to multiple sockets (epoll16, epoll56,
-epoll58):
+mt76_scan_complete() restores the operating channel only if the phy has one.
+__mt76_set_channel() is the only function that clears phy->offchannel.
+A phy can run a scan while it has no operating channel. A 6 GHz radio with
+no configured interface is one example. After such a scan, the flag stays
+set.
 
-When the emitter performs its first write(), ep_poll_callback() fires and
-wakes up both waiters because one waiter uses epoll_wait() and the other
-one uses poll().  This translates to different wait queues, ep->wq for
-epoll and ep->poll_wait for poll/select, which are both awoken by the
-kernel because of that single write.  Next, both waiter threads invoke
-epoll_wait(), but since there is only one event, only one epoll_wait()
-will return non-zero because of the edge-triggered mode being used (in
-level-triggered mode, the kernel would re-queue the event because of
-remaining unread data).
+mt76_txq_schedule_list() skips each TXQ whose wcid points to a phy in this
+state. All traffic for the stations on that band stops. The frames stay in
+the mac80211 queues. They do not reach the hardware, and no counter shows
+them. Only an unrelated channel set clears the flag.
 
-Since the second waiter sees an empty ready list, it does not increment
-ctx.count and the test fails spuriously with ctx.count == 1 instead of 2.
-
-  Emitter (CPU 0)      Thread 0 (CPU 1)        Thread 1 (CPU 2)
-  ===============      ================        ================
-                       epoll_wait(e0, -1)      poll(e0, -1)
-                       [on e0->wq]             [on e0->poll_wait]
-
-  write(sfd[1])
-       |
-       +--(Kernel wakes BOTH e0->wq and e0->poll_wait via callback)--+
-       |                                                             |
-       |               wakes up                wakes up              |
-       |               epoll_wait() reaps e1   poll() returns 1      |
-       |               (e1 removed via ET)     (wants event)         |
-       |               e0->rdllist is EMPTY          |               |
-       |               count++ (count = 1)           v               |
-       |                                       epoll_wait(e0, 0)     |
-       |                                       sees EMPTY list!      |
-       |                                       returns 0!            |
-       |                                       thread exits          |
-       v                                                             |
-  write(sfd[3])                                                      |
-  (event arrives too late!)                                          v
-                           EXPECT_EQ(count, 2)  <-- SPURIOUS FAILURE!
-
-Introduce waiter_entry1ap_loop() to retry poll() if the initial
-epoll_wait(..., 0) yielded no events.  This ensures the thread waits for
-the subsequent write rather than failing immediately.  Apply this helper
-in epoll16, epoll56, and for both waiter threads in epoll58.
-
-Link: https://lore.kernel.org/20260828-selftest-epoll-fix-race-v2-1-953ab57fd60a@codasip.com
-Fixes: f2728fe80cef ("selftests: add epoll selftests")
-Signed-off-by: Florian Schmaus <florian.schmaus@codasip.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Heiher <r@hev.cc>
-Cc: Roman Penyaev <rpenyaev@suse.de>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Christian Brauner <brauner@kernel.org>
+Fixes: 31083e38548f ("wifi: mt76: add code for emulating hardware scanning")
+Fixes: a8f424c1287c ("wifi: mt76: add multi-radio remain_on_channel functions")
+Link: https://patch.msgid.link/20260818125825.395538-4-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../filesystems/epoll/epoll_wakeup_test.c     | 32 +++++++++++++------
- 1 file changed, 22 insertions(+), 10 deletions(-)
+ drivers/net/wireless/mediatek/mt76/channel.c | 2 ++
+ drivers/net/wireless/mediatek/mt76/scan.c    | 7 +++++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/tools/testing/selftests/filesystems/epoll/epoll_wakeup_test.c b/tools/testing/selftests/filesystems/epoll/epoll_wakeup_test.c
-index 81a994943e121..b4dcbcd79773a 100644
---- a/tools/testing/selftests/filesystems/epoll/epoll_wakeup_test.c
-+++ b/tools/testing/selftests/filesystems/epoll/epoll_wakeup_test.c
-@@ -74,6 +74,24 @@ static void *waiter_entry1ap(void *data)
- 	return NULL;
- }
- 
-+static void *waiter_entry1ap_loop(void *data)
-+{
-+	struct pollfd pfd;
-+	struct epoll_event e;
-+	struct epoll_mtcontext *ctx = data;
-+
-+	pfd.fd = ctx->efd[0];
-+	pfd.events = POLLIN;
-+	while (poll(&pfd, 1, 2000) > 0) {
-+		if (epoll_wait(ctx->efd[0], &e, 1, 0) > 0) {
-+			__sync_fetch_and_add(&ctx->count, 1);
-+			break;
-+		}
-+	}
-+
-+	return NULL;
-+}
-+
- static void *waiter_entry1o(void *data)
- {
- 	struct epoll_event e;
-@@ -809,7 +827,7 @@ TEST(epoll16)
- 	ASSERT_EQ(epoll_ctl(ctx.efd[0], EPOLL_CTL_ADD, ctx.sfd[2], events), 0);
- 
- 	ctx.main = pthread_self();
--	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap, &ctx), 0);
-+	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap_loop, &ctx), 0);
- 	ASSERT_EQ(pthread_create(&emitter, NULL, emitter_entry2, &ctx), 0);
- 
- 	if (epoll_wait(ctx.efd[0], events, 1, -1) > 0)
-@@ -2925,7 +2943,7 @@ TEST(epoll56)
- 	ASSERT_EQ(epoll_ctl(ctx.efd[0], EPOLL_CTL_ADD, ctx.efd[2], &e), 0);
- 
- 	ctx.main = pthread_self();
--	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap, &ctx), 0);
-+	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap_loop, &ctx), 0);
- 	ASSERT_EQ(pthread_create(&emitter, NULL, emitter_entry2, &ctx), 0);
- 
- 	if (epoll_wait(ctx.efd[0], &e, 1, -1) > 0)
-@@ -3030,7 +3048,6 @@ TEST(epoll57)
- TEST(epoll58)
- {
- 	pthread_t emitter;
--	struct pollfd pfd;
- 	struct epoll_event e;
- 	struct epoll_mtcontext ctx = { 0 };
- 
-@@ -3061,15 +3078,10 @@ TEST(epoll58)
- 	ASSERT_EQ(epoll_ctl(ctx.efd[0], EPOLL_CTL_ADD, ctx.efd[2], &e), 0);
- 
- 	ctx.main = pthread_self();
--	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap, &ctx), 0);
-+	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap_loop, &ctx), 0);
- 	ASSERT_EQ(pthread_create(&emitter, NULL, emitter_entry2, &ctx), 0);
- 
--	pfd.fd = ctx.efd[0];
--	pfd.events = POLLIN;
--	if (poll(&pfd, 1, -1) > 0) {
--		if (epoll_wait(ctx.efd[0], &e, 1, 0) > 0)
--			__sync_fetch_and_add(&ctx.count, 1);
--	}
-+	waiter_entry1ap_loop(&ctx);
- 
- 	ASSERT_EQ(pthread_join(ctx.waiter, NULL), 0);
- 	EXPECT_EQ(ctx.count, 2);
+diff --git a/drivers/net/wireless/mediatek/mt76/channel.c b/drivers/net/wireless/mediatek/mt76/channel.c
+index 1d2635672ac3d..903f3a420e4ca 100644
+--- a/drivers/net/wireless/mediatek/mt76/channel.c
++++ b/drivers/net/wireless/mediatek/mt76/channel.c
+@@ -330,6 +330,8 @@ void mt76_roc_complete(struct mt76_phy *phy)
+ 	    !test_bit(MT76_MCU_RESET, &dev->phy.state)) {
+ 		__mt76_set_channel(phy, &phy->main_chandef, false);
+ 		mt76_offchannel_notify(phy, false);
++	} else {
++		phy->offchannel = false;
+ 	}
+ 	mt76_put_vif_phy_link(phy, phy->roc_vif, phy->roc_link);
+ 	phy->roc_vif = NULL;
+diff --git a/drivers/net/wireless/mediatek/mt76/scan.c b/drivers/net/wireless/mediatek/mt76/scan.c
+index 3594b599662d6..c8c4d096c809d 100644
+--- a/drivers/net/wireless/mediatek/mt76/scan.c
++++ b/drivers/net/wireless/mediatek/mt76/scan.c
+@@ -29,6 +29,13 @@ static void mt76_scan_complete(struct mt76_dev *dev, bool abort)
+ 		__mt76_set_channel(phy, &phy->main_chandef, false);
+ 		if (offchannel)
+ 			mt76_offchannel_notify(phy, false);
++	} else {
++		/* A phy that has no operating channel has nothing to restore,
++		 * but the flag also gates the TX queues of every station whose
++		 * wcid points at this band, so leaving it set stalls them until
++		 * something else happens to set a channel.
++		 */
++		phy->offchannel = false;
+ 	}
+ 	mt76_put_vif_phy_link(phy, dev->scan.vif, dev->scan.mlink);
+ 	memset(&dev->scan, 0, sizeof(dev->scan));
 -- 
 2.53.0
 
