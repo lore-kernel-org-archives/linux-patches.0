@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017138;
-	b=OjtS6D/LK0qFNwhQqW+Vx8lmDnTvYdXr6tbK6I99GtY75MTSLUocdb7Gy4u/CSI62QmT
-	 5L9hyznW1ilDHHa7hcBVCgd5gf3bpq9hWohDskGPt7FbgQM27R9QWLXLioYXoufO8fCVG
-	 UvCc84SNYRaVt15jyPYDMQ6UvgMk+hTU4gqP61FgNtKuluV/II3+MJlpDFh4yrRcRkicr
-	 Xez0a3aF0lJvTwQUAx6d3SQVEjUvAkmWx9D8htn9Ea/8Ils7d0/rVDXTR2DOZ/ZGjYQ/o
-	 blpMQk+9qao0joeq4ftJzi8ix0t515AYB2xzlZcWRknnx1Uav+WjKLlf9T1LfzjkSnQ==
+	t=1795017140;
+	b=fLYSQ8LJo0bfhrODZHOv5E+7rBEHz/zybF3gJ7oopaBz0Q+zmowrnssKKxoMJlDBFEgf
+	 pDXo+QzVblN9Y2mUcF8S9lVTIWxWTOFwLLQvrOFce9ctvFkxIVgrPpd5AtXxRbyap2sy0
+	 ttV95Yby5VVWYeNvvnxk7V4XRj4mrKQeCk2hXZshBlZdyOR+uVFY5Iu63ogVHqLpO2cDs
+	 56SYleqJoCNqq99cSZSTs7TZu8074eOfZpN7ig5w4/rMeF52wuY5a9HLXA9rJkxMPF9Bi
+	 PVjazAhfc2rFXVUDdjOsZDe3kOIR1TVPMgenIg38sc2iq+26udYmXTG5AISfINuHbEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017138;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017140;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SuRjaTEew78QWcZ+PVMrGojUzRRgvEwxEOSqmeVn0Gw=;
-	b=kQ5uD2zoMPH57p9GIp/5AEBJ4+dKQ2tTBZR8uzkAnGnMa9rIAvAMY6brnewUE3MjaITI
-	 e8HhPCtWyyvb7Uq6OFwdwQJ5JZRswUuieGARO0hny3/FCm+3cAf79Iwmqzas2qd/QNxyV
-	 i7oSgOVl/aITjmR+4LMVmEY92N2rgslD4uorwE+nManE7tE/CQxLsTrPOk2pjud+y6wB3
-	 ThIdaHS4xZcb/QrJAjpeU00edh0pKp3YpgGYSXwcdv8jkW9WFXhUHmXeYTv98c8DWOWnh
-	 yDNMapv1YBSwrF7XRImlA9TB45fDoXRku1R0qs1G0LPck5y58lA7FPgPACMPPMRft1w==
+	bh=QGwYKEODoeZ/Vn3UlndMNV6dMz5aEC8kKA6o50++hag=;
+	b=CJQ4ZyHa9L9mxKUgxPQf1q8FyQ5eN3DIJWh24jql/zDTL1uZLzqGzmvP6PLYMtLcBr2Y
+	 +bCuGe5uTGjftA7b9f8PhEIjfq91k8FzwbIwtqk5DMxmJK8wLTFi+XIoovYz5FaW9+4/t
+	 laVT8DcRJZMYbgRqdYshsAf7hv03k9AltzG7wbObhH+0OjSqTWsltZTv+PD/fuNNEnQvz
+	 /hDCMe/ovYXRAvK9gH8EQekvJZBjmSlt8VCBeoZxXK9T//b/WA8sGlCoqJ8blyY+krnRn
+	 6fa96PRGDdNZqtkTJ2WCaauYBS7/vl5pI3m8OJwE51PXmYcbtewOjRIaabbIRfJGwKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rm6i89P8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Fn5eI/YO";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92AA606A31C;
-	Wed, 18 Nov 2026 15:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B388A606A31C;
+	Wed, 18 Nov 2026 15:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rm6i89P8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490241F000C4;
-	Wed, 18 Nov 2026 15:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fn5eI/YO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F2F1F000C4;
+	Wed, 18 Nov 2026 15:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017137;
-	bh=SuRjaTEew78QWcZ+PVMrGojUzRRgvEwxEOSqmeVn0Gw=;
+	s=korg; t=1795017140;
+	bh=QGwYKEODoeZ/Vn3UlndMNV6dMz5aEC8kKA6o50++hag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rm6i89P85wAtp3TX+fWiqnc0mr0eVlO63rztP5DUTPs+96TiLPpapzVNuGqWtM5jD
-	 ucSGaxUNIZYZcdTHzZqq6fqsQv21j3a7+2p6HqvE/BpnVU49JEGodOX4NQtHN3B4wM
-	 X1YS/KekBxl2La6vyxHQuj/TZqmyW9u5sQP2R3+Y=
+	b=Fn5eI/YOBugl4rJy1Ap9Uv7cQuikcfgaF9tFoG8p4J96x1VrA5CFPw9awpXtLiId+
+	 klsA9Z7UK/z4umeM5UAIUw74SM+RtEzCVYGnK6MS8v1iFVlSCnunfWQM/kdc+3Cn6m
+	 Y/juxUy6tqJALAbMFIKe5oG3cUzovB+2JIyPIPq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0775/2651] mfd: da9150: Balance IRQ wake on teardown
-Date: Wed, 18 Nov 2026 15:33:35 +0100
-Message-ID: <20261118150315.790288207@linuxfoundation.org>
+Subject: [PATCH 7.3 0776/2651] um: Add definition of __NR_close_range for older host OSs
+Date: Wed, 18 Nov 2026 15:33:36 +0100
+Message-ID: <20261118150315.824854753@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,82 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit ef464f82f3aecad4071af71074b2ceb77ffbb609 ]
+[ Upstream commit 03dcf7bd302c9bae0c75a21a3004a44b4940317e ]
 
-DA9150 enables IRQ wake after registering its regmap IRQ chip, but does not
-disable it on a later probe failure or driver removal. This leaves the wake
-depth elevated after the handler is removed, and repeated bind attempts can
-accumulate the imbalance.
+__NR_close_range was introduced with
+278a5fbaed89dacd04e9d052f4594ffd0e0585de ("open: add close_range()")
+which is present in Linux >= 5.9. Older hosts running a kernel version
+prior to that range currently fail to build due to that missing system
+call number definition.
 
-Remember whether enabling IRQ wake succeeded and balance only a successful
-call. Remove MFD children first so their nested IRQ users are gone, then
-disable wake before removing the regmap IRQ chip. Preserve the existing
-non-fatal behavior when IRQ wake cannot be enabled.
-
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
-
-Fixes: b8fce55c09d3 ("mfd: Add support for DA9150 combined charger & fuel-gauge device")
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260923021936.957065-1-mhun512@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: f82a9e7b9fa9 ("um: fix execve stub execution on old host OSs")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260812173249.98435-1-florian.fainelli@broadcom.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/da9150-core.c       | 8 ++++++--
- include/linux/mfd/da9150/core.h | 1 +
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ arch/um/include/shared/skas/stub-data.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/mfd/da9150-core.c b/drivers/mfd/da9150-core.c
-index 5c59cc869fb3e..19325d72a27e7 100644
---- a/drivers/mfd/da9150-core.c
-+++ b/drivers/mfd/da9150-core.c
-@@ -450,7 +450,7 @@ static int da9150_probe(struct i2c_client *client)
+diff --git a/arch/um/include/shared/skas/stub-data.h b/arch/um/include/shared/skas/stub-data.h
+index 27db38e95df91..1230a325debcd 100644
+--- a/arch/um/include/shared/skas/stub-data.h
++++ b/arch/um/include/shared/skas/stub-data.h
+@@ -9,11 +9,20 @@
+ #define __STUB_DATA_H
  
- 	da9150->irq_base = regmap_irq_chip_get_base(da9150->regmap_irq_data);
+ #include <linux/compiler_types.h>
++#include <asm/unistd.h>
+ #include <as-layout.h>
+ #include <sysdep/tls.h>
+ #include <sysdep/stub-data.h>
+ #include <mm_id.h>
  
--	enable_irq_wake(da9150->irq);
-+	da9150->irq_wake_enabled = !enable_irq_wake(da9150->irq);
++#ifndef __NR_close_range
++# if defined(__alpha__)
++#  define __NR_close_range 546
++# else
++#  define __NR_close_range 436
++# endif
++#endif
++
+ #define FUTEX_IN_CHILD 0
+ #define FUTEX_IN_KERN 1
  
- 	ret = mfd_add_devices(da9150->dev, -1, da9150_devs,
- 			      ARRAY_SIZE(da9150_devs), NULL,
-@@ -463,6 +463,8 @@ static int da9150_probe(struct i2c_client *client)
- 	return 0;
- 
- mfd_fail:
-+	if (da9150->irq_wake_enabled)
-+		disable_irq_wake(da9150->irq);
- 	regmap_del_irq_chip(da9150->irq, da9150->regmap_irq_data);
- regmap_irq_fail:
- 	i2c_unregister_device(da9150->core_qif);
-@@ -474,8 +476,10 @@ static void da9150_remove(struct i2c_client *client)
- {
- 	struct da9150 *da9150 = i2c_get_clientdata(client);
- 
--	regmap_del_irq_chip(da9150->irq, da9150->regmap_irq_data);
- 	mfd_remove_devices(da9150->dev);
-+	if (da9150->irq_wake_enabled)
-+		disable_irq_wake(da9150->irq);
-+	regmap_del_irq_chip(da9150->irq, da9150->regmap_irq_data);
- 	i2c_unregister_device(da9150->core_qif);
- }
- 
-diff --git a/include/linux/mfd/da9150/core.h b/include/linux/mfd/da9150/core.h
-index d116d5f3ef561..369698036d1aa 100644
---- a/include/linux/mfd/da9150/core.h
-+++ b/include/linux/mfd/da9150/core.h
-@@ -65,6 +65,7 @@ struct da9150 {
- 	struct regmap_irq_chip_data *regmap_irq_data;
- 	int irq;
- 	int irq_base;
-+	bool irq_wake_enabled;
- };
- 
- /* Device I/O - Query Interface for FG and standard register access */
 -- 
 2.53.0
 
