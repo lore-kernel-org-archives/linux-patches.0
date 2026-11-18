@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020124;
-	b=gtAkWVrtWeks8mSTk+Yhgvf6f2GOfPM2iwVRp5WQL5iT5D6dZf/rTrN9RVnIO9A7mBTZ
-	 unulHyoW7lMya0s+GjfZZLedZK95eBXAKq39eRY+FPY0daD+uPnHDWhqrWs0ZuL4piePH
-	 kWNSc/q4h60yUqVQxwZxGHeV+2s5/An9hS0ICOMHc6Qvx9wECuyX33tHEDxKYt4fQeoLK
-	 sijLtx2VGk+2nm2DWWWgLWiXtaJBsBy4XkFaFvpZ3ogOZdcJiVZljeh7IWsdDkdTZCmY/
-	 +hxsi3YTqFkDRRiciYnpCjImHr/ZDUszo/W9r+9Dynean+rSH1+JquycdEOJCiq8RRQ==
+	t=1795020127;
+	b=qNOqE4A26w23xkwSKo2Dq38Kbf0XPwjbTV2bP78b8g16cQtb6DJvszTDe9DYkJbpXv+0
+	 m/wb3+o0wlhCD7Bn9yyDALljkCEmJPjpHlVEHcA3EOKNe/6B7R38O1qv/BGhc5MG7imNI
+	 yZOSNvl6/e1OD6hj/c8EC8c9RFwKM6WwLPhL/ikBbkn5J1cpqS8Kp0o/kTAr9/t9QbpoL
+	 qt50x8gyRLrzAyIVPZtdmQBnu1oNGOTcYOvaPwiWj5XdeEufepqvrEMkSaQ5wH1ZOdRVb
+	 Bri+zKSiRLClYv3tfAwVpF0W1YUdB8kJBqzFUKT9HKZTtFmRIEzIye49h5n4/Ers5ag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020124;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020127;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=vgo88AKPLhIKUvSqGh9tbCBYOUKFtE4z81PxKapZ1kw=;
-	b=kjlVgMxzTQjkWTjVXXUMc8RzpdD2i1GR2r2G0bTNgPktRxHyTO4mURDzKypVUo8g0uPM
-	 IJmwAFCmGyBJyk3R8CXD142SSUz5x5HXePixyYXRmiVSRCiLq1X8yzGBVZ30G94lR1zFx
-	 U8C8awLQdCm8pVhntU/8BLDvnBIPluvHDUeiW6CPH2u9V6w+IyLft0jdCGhQhiqZ97ujy
-	 abAq9TR634IMwzostfLvMElgtuNKGSEU3VWtBL29cYJAUmBrSKKhDd+MOxExxFH+5ydq3
-	 7u4vqnu3loikcnHyIeMyDyNRUhAgBUqnVQnCvsUG1hEMbvEJOySKtHG+nJi6naI9q2g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=MDZuV11p0p5pAwrIMECMzOUoMQ6drAnINhqLSt+bqtE=;
+	b=gG4ghYsqBaZm6oEK0SPfPGaPnJgo+QkxmYlaGcicBsPbrPPuy6HorhplP6IW/F9C/5Mc
+	 d7msDmScGcU7oDNDL11CEOeOGRmS2UCc3MCoDdtzUycnc7C67Ycyn5wx/XsFq/gIJfDoi
+	 4LpWNeARBt2opBqyzJLP4Z53dC6Ulsffs569JIphsl9W7wJNYmK8wIBWfeDucO4LUrqYa
+	 pSAhX516+E3/Xcgv1wdDe22GiuOza3InG+kfqG/knT5LV3qWwcSX8jfsGANtuKuBAQrZl
+	 hQ/HxbPihhStc37tUqVazBAfGP4BQADSLlfASkA0HAdnkWpIK8+eOtk/bbEhVmjIlPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WCQzKJ3c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eD0NAZE7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6698060A2602;
-	Wed, 18 Nov 2026 16:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE0B606A32A;
+	Wed, 18 Nov 2026 16:42:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WCQzKJ3c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C8E1F000C4;
-	Wed, 18 Nov 2026 16:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eD0NAZE7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328571F000C4;
+	Wed, 18 Nov 2026 16:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020123;
-	bh=vgo88AKPLhIKUvSqGh9tbCBYOUKFtE4z81PxKapZ1kw=;
+	s=korg; t=1795020126;
+	bh=MDZuV11p0p5pAwrIMECMzOUoMQ6drAnINhqLSt+bqtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WCQzKJ3c6lQwIT814iVk7nHnYpMbynXOGj/oaLNoJgLEjhH/uNS7biptAYzZcevvf
-	 7hQ8V7NBGXpP3LMd4PQt+am26JDFaln6oQwJHDP6+4c46x4ASx4wvLTDcEmHNDVdkd
-	 9X61VhCIcrGRfld/72Xo62tNkLlHvK6Tg/NDzuDU=
+	b=eD0NAZE7RfVTee/cEj4t2/D/GUmaqzXdi4t2XDlelmQFgshYnv+3bm6Lux38/WZah
+	 F9Ca4npjDNDzqxorP+nLKYF4uiypCecmpcjPZ+150BTrRmzJSuBCeX1vNvtnE8o/KR
+	 liqSAHB86ek1CJonRNRJm4U842P/qQZBV1lFTNIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binbin Deng <18983559317@163.com>,
-	Petr Pavlu <petr.pavlu@suse.com>,
+	Muhammad Bilal <meatuni001@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1833/2651] module: Fix uninitialized count read of unloaded taint tracking record
-Date: Wed, 18 Nov 2026 15:51:13 +0100
-Message-ID: <20261118150353.103886207@linuxfoundation.org>
+Subject: [PATCH 7.3 1842/2651] platform/x86: hp-bioscfg: fix off-by-one in password length check
+Date: Wed, 18 Nov 2026 15:51:22 +0100
+Message-ID: <20261118150353.386307560@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,71 +62,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Binbin Deng <18983559317@163.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit 7a5c13cfdfcb1871050fdbe00ac223993f8925fa ]
+[ Upstream commit 0c22178524864af85ea380be4b2d36078c0edc9c ]
 
-try_add_tainted_module() allocates the tracking record without zeroing
-it and initializes the fields in this order:
+current_password and new_password hold MAX_PASSWD_SIZE bytes including
+the NUL, but validate_password_input() accepts a password of exactly
+MAX_PASSWD_SIZE characters when the firmware limits allow it.
+strscpy() then truncates it and fails with -E2BIG, which
+store_password_instance() ignores, so the write reports success with a
+truncated password stored.
 
-	mod_taint = kmalloc_obj(*mod_taint);
-	strscpy(mod_taint->name, mod->name, MODULE_NAME_LEN);
-	mod_taint->taints = mod->taints;
-	list_add_rcu(&mod_taint->list, &unloaded_tainted_modules);
-	mod_taint->count = 1;
+For example, with a max_password_length of 64 or more, writing 64
+characters succeeds but only 63 are stored.
 
-The record is published by list_add_rcu() before the count field is
-written.  The readers, unloaded_tainted_modules_seq_show() (debugfs,
-under rcu_read_lock()) and print_unloaded_tainted_modules() (panic
-path, under guard(rcu)), traverse the list under RCU and read
-mod_taint->count.  module_mutex, which the writer holds, does not
-exclude RCU readers.
+Reject lengths of MAX_PASSWD_SIZE or more.
 
-A reader that observes the new node between the list_add_rcu() and
-the count store reads an uninitialized u64 left over from previous
-slab use.  This is a data race and leaks kernel heap residue through
-the debugfs file and the panic message.
+Compile tested only.
 
-The race window is two adjacent instructions; it is reachable when a
-tainted module is unloaded (rmmod) concurrently with a read of
-/sys/kernel/debug/module/unloaded_tainted, or with the module list
-printout of an oops on another CPU.
-
-Fix this by initializing count before the record is published.
-
-Found during a static-analysis-assisted audit: candidate sites were
-surfaced by a Coccinelle rule, and the reader/writer paths were
-confirmed by LLM-assisted (GLM-5.3) code inspection.  The issue was
-not observed at runtime; it is identified by code inspection only.
-
-Fixes: 99bd9956551b ("module: Introduce module unload taint tracking")
-Signed-off-by: Binbin Deng <18983559317@163.com>
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://lore.kernel.org/all/20261007134711.473857-1-meatuni001@gmail.com/
+Link: https://patch.msgid.link/20261007134711.473857-6-meatuni001@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/tracking.c | 2 +-
+ drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/module/tracking.c b/kernel/module/tracking.c
-index 9033ff54c4e27..9e8902600c326 100644
---- a/kernel/module/tracking.c
-+++ b/kernel/module/tracking.c
-@@ -38,8 +38,8 @@ int try_add_tainted_module(struct module *mod)
- 		return -ENOMEM;
- 	strscpy(mod_taint->name, mod->name, MODULE_NAME_LEN);
- 	mod_taint->taints = mod->taints;
--	list_add_rcu(&mod_taint->list, &unloaded_tainted_modules);
- 	mod_taint->count = 1;
-+	list_add_rcu(&mod_taint->list, &unloaded_tainted_modules);
- out:
- 	return 0;
- }
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+index f0551b4553794..a2f50ecbecab8 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+@@ -74,7 +74,7 @@ static int validate_password_input(int instance_id, const char *buf,
+ 	if (is_current && !length)
+ 		return 0;
+ 
+-	if (length > MAX_PASSWD_SIZE)
++	if (length >= MAX_PASSWD_SIZE)
+ 		return -E2BIG;
+ 
+ 	if (password_data->min_password_length > length ||
 -- 
 2.53.0
 
