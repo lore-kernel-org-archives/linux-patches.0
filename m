@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020614;
-	b=W2Ees2qvahNHkNHHgT5Zks+3tgiMTlTocknrUjIam9o8znKusgLjSL9vp9YDQ9ENWhrF
-	 JGI+ZrO1N0oV37EA2flncm5FbZN+FpXXTKUd0kNJDUXhMU7N457VEhalCxBxCUEpQPDt/
-	 GgR1esoZUiOGutiACGu9lANOzaZU6TWyMK3rFqfF8QzGiyi+ZDvxbZ60fSf43+3+klq8z
-	 lzlsCVR+/mXsXG2Q4E7A0CFgYLlEKTH80y1u/rvYih6MdDRANhhfuFZRj7JFmxQUDJD56
-	 ykDagPGPmij4dEvS1ae53KloEvTKXJuj2r72gNKgs+08L2rUDSK7bt0NZ0hizuMunyA==
+	t=1795020617;
+	b=SU09d/0RUzqIrsqgK57ecFEeP2euBWWl0wuGVfOkzT2kdVKoXkyV3koVexTrMVsZeHqZ
+	 50eNpsj11qoxM/hyR9WLH81sf80UOnpHlyTAG35jW/LHugEiHxvTMBj43uW91ADiq/wNv
+	 u0YaDMkiYuWMuIuzAJ9tUsuhZiIY+wFeKXJS+v4j1iB+l5qZxOnvsMZzf9PbOfyWDdjtP
+	 jlroI8u17Voo6c2tDXifIx0iBbv/p5kPf55J5gzZ8XNTP/TUPgPC07NPodRlm1su32SXw
+	 Kq63JQ0mLT6bsdvx7prgrvJfFy7He+mnueRBh4xF+93Q45yxMEqkTN3sV25idylRVtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020614;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020617;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EMc39RJQrDFdSysBAz05aVOqOImVMHmuM7+F5H/lMQI=;
-	b=kT36jrS7FkTukL55atx014NiM0sbKy1wosAs4hYAStFedO3/S3qOvMzBukXtuNIb3wpb
-	 SaEvDrjR+ttwBeZXWLzVkJmKqMrB4DVZrN+YNm41EA3UTYf+cxR5PUuq+xpDZF7NUyobf
-	 Zt4avNZAxX7A52tg7k0nupj6QGVDWaD8SQ9xZx2el+aSg/LSNzCAbkpybnOBFpsBFuT56
-	 IJx8jrGccQ54YrBj3tJvaldH64OkLmFlNI52OVq8cGN8MN/0jeoGkbLs3uIarw80+46Uk
-	 QmcbqX3F5G8qq4tAEpFOxOkBbNyxY+TE0p4gWMSLu0DdA2fskgaRYYI/w0qxnMQSkcw==
+	bh=YYVYDNU4RmeSbvMdpYtJZnXgHvcdlkD8w3tebLzp7uE=;
+	b=k9uP7XPHi4ophGTYLyMY1LSxSoMqTng4ey4383QBBs3L+1wcErs1T6qBa2LFgy0tBzJt
+	 gxEGge05qKoDWwu6uPl7JHZZR187GE8UhBxEe9nycVsdy8ORqMlwXu1EC2b/AX83NchF/
+	 Ps/nq1atnhw12kUQfw5wYzZ0TbabmhjGiFUsVTo0q18lAHm2GyvpJb9mC7UvdTl2yqJJs
+	 zEUMn24uyiofrmEzUQoWPR1q0HdaPY2vMP1cnovBxs3TaoMTzPBzYKrGsy7IYmIaNsYTr
+	 3bIXgmRfLE1Q5EKXYFU3WidNKsVI5th7e28k7Eq6cx0CCXTut/TSXO8uOnUDUU7EepA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="lJOY/N/m";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TEKh8NlD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2851260A2601;
-	Wed, 18 Nov 2026 16:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AC1606A31C;
+	Wed, 18 Nov 2026 16:50:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lJOY/N/m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1411F000CE;
-	Wed, 18 Nov 2026 16:50:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TEKh8NlD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E0A1F000CA;
+	Wed, 18 Nov 2026 16:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020614;
-	bh=EMc39RJQrDFdSysBAz05aVOqOImVMHmuM7+F5H/lMQI=;
+	s=korg; t=1795020616;
+	bh=YYVYDNU4RmeSbvMdpYtJZnXgHvcdlkD8w3tebLzp7uE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lJOY/N/mhHbIKGRWlyh8DgEK/oplx7AOwJBLaF9s8zq0yttv0CJUofU2Jl6FyghJr
-	 dXIOfVMOh4vjF+xCoWGWLGfz7xaslM340NSORQxJ5hXfn/S7yoY/IhM2VaKLAiBfZ7
-	 /hew5h6HMyFO56fJPzFBBRnltl96MjykyXxU1do8=
+	b=TEKh8NlDx0SCZyM5bjtfZYDXNovduDBvKLEq7SO11ed1sL57oBQ931x2BPugFm74y
+	 TVw2LfTz7MT5Y5za1vde92+Hx3jQnjIIT022saS8eRWVFfoT0KmbkRsidO9trAwWUf
+	 SVYcV8uTwbOMI/jnu6GiqiOoLdt0N8DTUBRlD08w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Akash Goel <akash.goel@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1974/2651] ALSA: core: Serialize snd_refcount put and sync
-Date: Wed, 18 Nov 2026 15:53:34 +0100
-Message-ID: <20261118150357.507566059@linuxfoundation.org>
+Subject: [PATCH 7.3 1965/2651] drm/panthor: Fix handling of NO_MMAP BOs
+Date: Wed, 18 Nov 2026 15:53:25 +0100
+Message-ID: <20261118150357.243800441@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,73 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Akash Goel <akash.goel@arm.com>
 
-[ Upstream commit 6904743ab77e0684dff319f3806ef982e5eea6cf ]
+[ Upstream commit 9a07b36a511fe998f46372331758ef355273bdfb ]
 
-When a thread tries to sync-and-destroy the resource with
-snd_refcount_sync(), it might lead to a UAF in a very slight time
-window.  Namely, snd_refount_put() calls wake_up() after
-atomic_dec_and_test(), but wait_event() in snd_refcount_sync() checks
-the condition via atomic_test() without serialization, hence the
-thread that called snd_refcount_sync() can continue immediately to
-release the resource before another thread calls wake_up().
+The BOs created with DRM_PANTHOR_BO_NO_MMAP flag are not supposed to be
+mmappable by the Userspace. But after the rework to support shrinker,
+it became possible to mmap NO_MMAP BOs. Userspace could second guess
+the file offset range, allocated unconditionally at the BO creation
+time, and create a CPU mapping. There may not be any adverse effect of
+such a CPU mapping though.
+This commit adds a check in the mmap callback of Panthor driver to
+fail the mmap() attempts on BOs created with NO_MMAP flag. The check
+covers private BOs as well as the prime exported BOs that are mmapped
+using prime fd.
 
-For avoiding the race above, introduce the spinlock and take it at
-snd_refcount_put() and snd_refcount_sync() in order to serialize the
-operations.
+v2:
+ - Fix breakage of mmap() on exported BOs that didn't have
+   BO_MMAP_OFFSET ioctl invoked for them.
 
-Fixes: dcca9b6064c3 ("ALSA: Add simple refcount helper functions")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20261015071838.31082-1-tiwai%40suse.de
-Reviewed-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/20261015112256.3902-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 68cbf96b1e9b ("drm/panthor: Part ways with drm_gem_shmem_object")
+Suggested-by: Boris Brezillon <boris.brezillon@collabora.com>
+Signed-off-by: Akash Goel <akash.goel@arm.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20261013125433.26432-1-akash.goel@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/core.h | 1 +
- sound/core/misc.c    | 5 ++++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panthor/panthor_gem.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/sound/core.h b/include/sound/core.h
-index 15be947a730ef..bea596f36f58e 100644
---- a/include/sound/core.h
-+++ b/include/sound/core.h
-@@ -84,6 +84,7 @@ struct snd_device {
- struct snd_refcount {
- 	atomic_t count;
- 	wait_queue_head_t waiter;
-+	spinlock_t lock;
- };
+diff --git a/drivers/gpu/drm/panthor/panthor_gem.c b/drivers/gpu/drm/panthor/panthor_gem.c
+index 72908be5e144f..75d462f20b6c8 100644
+--- a/drivers/gpu/drm/panthor/panthor_gem.c
++++ b/drivers/gpu/drm/panthor/panthor_gem.c
+@@ -744,6 +744,9 @@ static int panthor_gem_mmap(struct drm_gem_object *obj, struct vm_area_struct *v
+ 	struct panthor_gem_object *bo = to_panthor_bo(obj);
+ 	int ret;
  
- void snd_refcount_init(struct snd_refcount *ref);
-diff --git a/sound/core/misc.c b/sound/core/misc.c
-index 066fb9ecdcdc3..6fe199e76e837 100644
---- a/sound/core/misc.c
-+++ b/sound/core/misc.c
-@@ -183,11 +183,13 @@ void snd_refcount_init(struct snd_refcount *ref)
- {
- 	atomic_set(&ref->count, 0);
- 	init_waitqueue_head(&ref->waiter);
-+	spin_lock_init(&ref->lock);
- }
- EXPORT_SYMBOL_GPL(snd_refcount_init);
- 
- void snd_refcount_put(struct snd_refcount *ref)
- {
-+	guard(spinlock_irqsave)(&ref->lock);
- 	if (atomic_dec_and_test(&ref->count))
- 		wake_up(&ref->waiter);
- }
-@@ -195,6 +197,7 @@ EXPORT_SYMBOL_GPL(snd_refcount_put);
- 
- void snd_refcount_sync(struct snd_refcount *ref)
- {
--	wait_event(ref->waiter, !atomic_read(&ref->count));
-+	guard(spinlock_irq)(&ref->lock);
-+	wait_event_lock_irq(ref->waiter, !atomic_read(&ref->count), ref->lock);
- }
- EXPORT_SYMBOL_GPL(snd_refcount_sync);
++	if (bo->flags & DRM_PANTHOR_BO_NO_MMAP)
++		return -EINVAL;
++
+ 	if (drm_gem_is_imported(obj)) {
+ 		/* Reset both vm_ops and vm_private_data, so we don't end up with
+ 		 * vm_ops pointing to our implementation if the dma-buf backend
 -- 
 2.53.0
 
