@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025531;
-	b=0cwjeHR7XzqeYrae5m0HpOpp/S9C2Wwjhaeok1NKzyqZgroWV9oiuUsJUDqNKTbtC2Xs
-	 gJ5WS057deAIAR17Ne05kfAgLf6iXlGjIOUM2+MtyBYZWY4vfomrjl9lG0zTsow40wHvn
-	 MECt8IuGid0QBJStPtViBTbqPrF5+RVd3aZxdOhKRr/30E0Bph/+spBkjCy3xAHMWKTkb
-	 U9exMfJ/+g4jB38/cCjwl1dIfJuL8G7S27wIYiKLsvM1keTJwfwlhToCQRKMza4CESXi9
-	 hJpdhYLHwK+ZEit1dVFJHERnMknnSXrKRMfa0FPpJhkicTb8QOZQKYz9E1m5f63CeTw==
+	t=1795025535;
+	b=YvmG92llb34AcJBfnqiLhT4zmfcTOtRj3h9P6FEDEMhDDsjaOg5+GlK6kGTsq8eK3yA4
+	 SBHLi879adCHvJfnCtK0rOQK+2wlcasJb3gDXBkVvNAJmyHkYYKgsKQJ2A/VdTyN5z06W
+	 1BqrKGWnqeaKkzaZl7JHmxosMkReH7b+E10K4IhqGtIqXi6PHRcc55bWbd1ja+j9mA4Is
+	 g1iGsc4319SYFdy3IbwKGBm3huBFkgWZzeR8VrgkBZ8W19+pftakmMOMa5dn1OjDojtri
+	 NCE7TSBk6c8ENs0t1WT7e7dZ8U+Awz5L/ziwxyZq6Jo/2absHAhrS1qO3Y+Rjh0evZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025531;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025535;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uXwkgfoQ2xco+R8mijyu8z+PHB8r9ACCPb9SykWHyPk=;
-	b=1oADxsaFioFSqJJU6VfLSS+k01fNYk3u/zko8zaNkSpHrgsNRdFei2H2GmfDyksBZqfM
-	 swk/gXk/IlMRwRFzsMYsOSOLGSO0SBVMfL9fvetNr7cAKopLwgggEFHJO1uIDr/zhJDyB
-	 R9eRW3i3qw2SL7+qG3cu99I1yI6Bs13/FkHxyHnNPGP8SjiWKDu4l5TmCVHAfnRlgomAg
-	 TcI1E2ksh3i8wbleXRLub8hXcxTJ2zWiXhudDB/hVQJwnu3Y2X4e39P8jycFsvn8+/a5K
-	 qe5ePnIJ4EvMMj62DBR/FZWbzk8pt4g9RQ/Qd3Uqk1bUsr1vtd8asOgNEQw3iImkWaw==
+	bh=VTOpVzS27yGb/VfhBIjK1JynEnCPED8kLlyEXZyvinw=;
+	b=Bz1jymZ0ZOVDCMwlOGOpNiSiJ720ZKnv6iiS2fzAHs8hT1mtJfwcKIhYqlzLoZBR9/vs
+	 UKBGvXMEQyze5PiJg/bwk3h5OkGL9VGLFgoXoGESi+X3vDn5nS9Pu3VzYHc0kxz4LdKCq
+	 /ZcLKXaT0fG60wIrOioO/GFXphK63bHsjvA8vW9K+4XiXp2u2IZoulsYK5ktwwG3pa9EJ
+	 xp1Pnx5i5gLdY+0xnwu7aTswd4EfzqnKtROcTlbBGkmrlnjwQU+aAOTRyLceRrBffsBYF
+	 XHlHh6/rDRWqh3KatxU3/REC29L5/HmVZtf5+UyeDPn0NluWaHFhqUjo9oNE2wtXw7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lAB1aM5Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SfMW6T2i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED3B606A31C;
-	Wed, 18 Nov 2026 18:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B234606A31C;
+	Wed, 18 Nov 2026 18:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lAB1aM5Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C6F61F000C4;
-	Wed, 18 Nov 2026 18:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SfMW6T2i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4DE1F000C4;
+	Wed, 18 Nov 2026 18:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025531;
-	bh=uXwkgfoQ2xco+R8mijyu8z+PHB8r9ACCPb9SykWHyPk=;
+	s=korg; t=1795025533;
+	bh=VTOpVzS27yGb/VfhBIjK1JynEnCPED8kLlyEXZyvinw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lAB1aM5ZhFExDW27jLZuWihtLVRU+DX2+CGI1T5SIVKfzcBIrBVc2KF5Na+SO272R
-	 YBO5J+edY0lx7KOGjS+M2tDPurBGBua/P0SF45ypGmsSrD4LifCtz8ehz00NiGO6hL
-	 FNRcy0JUfr6130OBihd45CUqTX89m5LPne4ntllM=
+	b=SfMW6T2ilq7y0/eOWe3O3C+Wp9PSvGQmOwD3R0rk+BThPU4U8T4PnqYBSJ+VHdEZZ
+	 CYzPaNYGocWGznndj7XKN1qjsF2f/qyk4y2sL5Kr61oUlF0xxPcqMXwL5YONEHG5pM
+	 CVsX0S3NvPJGTO/T1bP+CDhW1+ypjzvmsFqkGGTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Mark Brown <broonie@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1070/2151] ASoC: rt711-sdca: always cancel jack work on remove
-Date: Wed, 18 Nov 2026 15:46:45 +0100
-Message-ID: <20261118150201.265762158@linuxfoundation.org>
+Subject: [PATCH 6.18 1061/2151] power: supply: ab8500_fg: Finalize current measurements
+Date: Wed, 18 Nov 2026 15:46:36 +0100
+Message-ID: <20261118150200.949710440@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,47 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit ecc2fca6decefe27d8cf40a4c9815798eec24d30 ]
+[ Upstream commit 9a0461fb5e7cc64ed303bee3661452879ee139a1 ]
 
-rt711_sdca_sdw_remove() cancels the jack work only when hw_init is true.
-rt711_sdca_update_status() clears hw_init when the SoundWire slave
-becomes unattached, but jack work may already have been queued by
-rt711_sdca_interrupt_callback() or the jack initialization path.
+ab8500_fg_inst_curr_start() returns with cc_lock held and the CCEOC
+IRQ enabled. The bounded sampling loop in the load-compensated voltage
+path returns without calling ab8500_fg_inst_curr_finalize() when it
+expires, leaving both resources active. The next fuel-gauge work item
+then blocks on cc_lock and all cached power-supply values stop updating.
 
-A remove after that status update can therefore skip the cancellation and
-leave delayed work pending after the codec private data has been freed.
+The Samsung-GT-I8530-Gavini, Samsung-GT-S7710-Skomer,
+Samsung-SGH-I407-Kyle and Samsung-SGH-T599-Codina-TMO product trees use
+a bounded sampling loop in drivers/battery/abb_fuelgauge.c but still
+call the finalizer. Follow that pattern so the normal completion timeout
+also performs the required cleanup.
 
-The work objects are initialized during probe, so cancel them
-unconditionally instead of relying on the mutable hw_init state.
+Check the start result as well and return an uncompensated voltage if
+the instantaneous current transaction cannot be started or completed.
 
-Fixes: ac63716da307 ("ASoC: Realtek/Maxim SoundWire codecs: disable pm_runtime on remove")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260925145019.2290367-4-yaojiale02@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: edc400e1632f ("power: supply: ab8500_fg: Break loop for measurement")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-14-e986ed321cc6@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt711-sdca-sdw.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/power/supply/ab8500_fg.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/rt711-sdca-sdw.c b/sound/soc/codecs/rt711-sdca-sdw.c
-index 6eb05871db379..240a4cb0a2a3b 100644
---- a/sound/soc/codecs/rt711-sdca-sdw.c
-+++ b/sound/soc/codecs/rt711-sdca-sdw.c
-@@ -369,10 +369,8 @@ static int rt711_sdca_sdw_remove(struct sdw_slave *slave)
- {
- 	struct rt711_sdca_priv *rt711 = dev_get_drvdata(&slave->dev);
+diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
+index 3b0a5bdd352b5..04c12ebdfebfa 100644
+--- a/drivers/power/supply/ab8500_fg.c
++++ b/drivers/power/supply/ab8500_fg.c
+@@ -934,9 +934,15 @@ static int ab8500_load_comp_fg_bat_voltage(struct ab8500_fg *di, bool always)
+ 	int i = 0;
+ 	int vbat_uv = 0;
+ 	int rcomp;
++	int ret;
  
--	if (rt711->hw_init) {
--		cancel_delayed_work_sync(&rt711->jack_detect_work);
--		cancel_delayed_work_sync(&rt711->jack_btn_check_work);
--	}
-+	cancel_delayed_work_sync(&rt711->jack_detect_work);
-+	cancel_delayed_work_sync(&rt711->jack_btn_check_work);
+ 	/* Average the instant current to get a stable current measurement */
+-	ab8500_fg_inst_curr_start(di);
++	ret = ab8500_fg_inst_curr_start(di);
++	if (ret) {
++		dev_err(di->dev, "failed to start instantaneous current measurement\n");
++		di->vbat_uv = ab8500_fg_bat_voltage(di);
++		return di->vbat_uv;
++	}
  
- 	pm_runtime_disable(&slave->dev);
+ 	do {
+ 		vbat_uv += ab8500_fg_bat_voltage(di);
+@@ -945,15 +951,14 @@ static int ab8500_load_comp_fg_bat_voltage(struct ab8500_fg *di, bool always)
+ 	} while (!ab8500_fg_inst_curr_done(di) &&
+ 		 i <= WAIT_FOR_INST_CURRENT_MAX);
  
+-	if (i > WAIT_FOR_INST_CURRENT_MAX) {
++	ret = ab8500_fg_inst_curr_finalize(di, &di->inst_curr_ua);
++	if (ret) {
+ 		dev_err(di->dev,
+ 			"TIMEOUT: return uncompensated measurement of VBAT\n");
+ 		di->vbat_uv = vbat_uv / i;
+ 		return di->vbat_uv;
+ 	}
+ 
+-	ab8500_fg_inst_curr_finalize(di, &di->inst_curr_ua);
+-
+ 	/*
+ 	 * If there is too high current dissipation, the compensation cannot be
+ 	 * trusted so return an error unless we must return something here, as
 -- 
 2.53.0
 
