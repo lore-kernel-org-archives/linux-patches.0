@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060396;
-	b=1z4LCLlh+8vb3Mu3dqOPUn5DNEMKb4lM9uyPLz23YU+OvirmlK4Jfiq6z9rJr8VoA9xS
-	 0d+UkESFM6v8aIdvWHbnhG8uH8Z5X34PCIGltkZXuy3JZvnS6+JSdw0XZrA/myUAjHFr1
-	 gK1z/f+OM3gm79HyBgDf1MlFp9WQ1I04EknBvSz4ezSrr9xu3u8X8ZwJd/+sm7DzfVVi4
-	 yg+o2NH0O/0DaSVX8Aoe7RbgzXUOsY/+v+Mb+QxTOXZvVEPvj/8HOTrqxNn60uRW6ZvFq
-	 tXWvHNEHCZc85dVVU2/fK1Le7K67MDKtSirL96nx/bML6QYTf0BilRUGTy82JkVZEcw==
+	t=1795060399;
+	b=Ji1ZhOBz/ThKcR/I4FTLv7KRoVBZprtSIdNRnsYjKyiHUES+AirtB8JhaAjxxlA24FPe
+	 pffGjCfG7dJhv/DVXBtkiw2lcZONUL7jo7mStYxbAQazxDieE+BIOix2lYC4rBiYDy+Da
+	 IUxp/ETm1qYOh2JX2daVMlGMdS+iWxSOA4JTGKLJuMLPA8XFgd6L41rTIH1AP4Z6I+l+s
+	 21ezQxgqeYe2R6lzrLTtwSzIOkRj0RtDEoF1pFqYWRcld6tLl4/NPNZB/fUmiQodIPYva
+	 XRd+nv8JMIKjdweu3+0TWN8xfRj1rIcooyLZKrqpKB6eOuYZ2k8CUX/RM+pFrUGittw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060396;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060399;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8y6TkBLUmagVweaGCjFQ4aG+W2uYyvFxRhdv9b+M5dA=;
-	b=SC7NAn7b/cnrhsrSFxXy8JPiJ6IJIIrowgrYCci6fCQbGEFZJz5bS3opsQm3qnRDfqgU
-	 znNXHBfl2d0JbU5m8WHlZ1OvO0kgcXcEtul4Tsi6BB1Het476rtoc6S8YW9vSKY+4tSa/
-	 bOCx+OCnxIHRzmsBsP1nAKwW1HaYaIu/ibTdBXzTJ+o6e+thoQta6+QDTiPwkojrrZTu9
-	 yNZzNn9VgFxzcEDKQBY7VJeJsyd10XxXW4lZcy9tNZJTXlv6KrYniaCCqyH4eX1d++fw8
-	 NnP0DRPLu/AGgAbIESu3wrk9nZFXKrsYNwNF27pHYDkvOxDYfa3hY4T9HBsutO6pYvQ==
+	bh=vHNIui7vfjhnLj5EMO+4uwAr5M+KDU0YRu5Fr34PT/M=;
+	b=Y/rX9mE1mAa1btxpBLFyUyTOPOtoPEW07nhT7+eWgobTuBe8EkCr7FH0bEcSjB4n8neh
+	 F4THhe7VV7xbiE8pjRSlKdYGqciAmp0xsiQXjJCXtsy9iRLI4kejG6aBowqNUb5RTPNlr
+	 BEvyPBdlDU8B+S5zo+To0vRFMGBmw8roAZvHPuKzDtWrL02hHrPnI1BDNG6XvXcRTITNo
+	 /ZwgWJzyq2Ii3uNnEKDKb88aFLc6t66S04s3KYM3woEMpA1lnRgG8feQDkumRIoTKDNyL
+	 YrsxdneCeoFL0z7bgP6d5bdjCgkipjb84NMlk4EWp3bIjbNRmaDZYlZy7alkth9SNRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=syKEbmm9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cx6lQir3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA415606A326;
-	Thu, 19 Nov 2026 03:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A97606A325;
+	Thu, 19 Nov 2026 03:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=syKEbmm9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1DEB1F000C4;
-	Thu, 19 Nov 2026 03:53:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cx6lQir3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F961F000C4;
+	Thu, 19 Nov 2026 03:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060396;
-	bh=8y6TkBLUmagVweaGCjFQ4aG+W2uYyvFxRhdv9b+M5dA=;
+	s=korg; t=1795060399;
+	bh=vHNIui7vfjhnLj5EMO+4uwAr5M+KDU0YRu5Fr34PT/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=syKEbmm9eX9ktzyPCFoaCbydEmxTuRpxstIOeEwEOk/ac4iSOflF4JwX+kdDtaZbE
-	 H2UYdPF0r7JWIs5ywiiR4A55AU9y0rc2bZ/Nzj0A3zej2XUy21pMDRpSPNEY4uWyjn
-	 F7DDiqxA9EF98SNKjxqZYqlGJ0gR/B9B6y//G+5E=
+	b=cx6lQir3TtAuniAtnQ+pN5wbFTFpD7vybfcdzebMtwXo5zCNNos3e0OcFfsN3DP43
+	 bkn/skzc7JprHWs0+lcw//v/Eqnw3yrncQpgXCbqzz+Ebnbn7R8Vuhb95cI5iygfsp
+	 mo030E/Kk47wFMxGI6vAx1tig1P+lI7kZKZfVXZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1183/1848] dmaengine: sun6i-dma: Fix use-after-free in error handling paths
-Date: Wed, 18 Nov 2026 15:53:41 +0100
-Message-ID: <20261118150009.064580922@linuxfoundation.org>
+Subject: [PATCH 5.10 1184/1848] dmaengine: mediatek: hsdma: fix runtime PM leak on init failure
+Date: Wed, 18 Nov 2026 15:53:42 +0100
+Message-ID: <20261118150009.100340614@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,104 +70,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit f472919f4c0650d7fb22bb230eacaada0c6ee951 ]
+[ Upstream commit f10d96b1c549a2f43506e9bf847196839808b8dc ]
 
-In error handling paths, the for loop frees v_lli in the loop body,
-then accesses v_lli->v_lli_next and v_lli->p_lli_next in the
-increment expression, which is use-after-free.
+mtk_hsdma_hw_init() enables runtime PM and gets a runtime PM reference
+before enabling the HSDMA clock. It currently ignores failures from
+pm_runtime_get_sync(); if runtime resume fails, the usage count remains
+held. If clk_prepare_enable() then fails, the usage count remains held.
 
-Fix by refactoring the cleanup into a helper function sun6i_dma_free_desc()
-that saves both the next virtual and physical pointers before freeing the
-current node, preventing the use-after-free.
+Use devm_pm_runtime_enable() to manage runtime PM enablement, and use
+pm_runtime_resume_and_get() so resume failures do not leak the usage count.
+If clk_prepare_enable() fails after a successful runtime resume, drop the
+runtime PM reference before returning.
 
-Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Suggested-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+The probe path also ignores the return value from mtk_hsdma_hw_init(), so a
+failed hardware init can continue as a successful probe. Propagate
+mtk_hsdma_hw_init() failures from probe, while keeping a separate unwind
+label so mtk_hsdma_hw_deinit() is only called after hardware init succeeds.
+
+Fixes: 548c4597e984 ("dmaengine: mediatek: Add MediaTek High-Speed DMA controller for MT7622 and MT7623 SoC")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260727061142.44195-1-zenghongling@kylinos.cn
+Link: https://patch.msgid.link/20260804153924.49627-1-mhun512@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sun6i-dma.c | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ drivers/dma/mediatek/mtk-hsdma.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
-index dd358971f9506..21e0d0db8cd66 100644
---- a/drivers/dma/sun6i-dma.c
-+++ b/drivers/dma/sun6i-dma.c
-@@ -397,16 +397,12 @@ static inline void sun6i_dma_dump_lli(struct sun6i_vchan *vchan,
- 		v_lli->len, v_lli->para, v_lli->p_lli_next);
- }
- 
--static void sun6i_dma_free_desc(struct virt_dma_desc *vd)
-+static void sun6i_dma_free_desc(struct sun6i_dma_dev *sdev,
-+				struct sun6i_desc *txd)
+diff --git a/drivers/dma/mediatek/mtk-hsdma.c b/drivers/dma/mediatek/mtk-hsdma.c
+index 6ad8afbb95f2b..1a65302219189 100644
+--- a/drivers/dma/mediatek/mtk-hsdma.c
++++ b/drivers/dma/mediatek/mtk-hsdma.c
+@@ -849,17 +849,27 @@ static int mtk_hsdma_hw_init(struct mtk_hsdma_device *hsdma)
  {
--	struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
--	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(vd->tx.chan->device);
- 	struct sun6i_dma_lli *v_lli, *v_next;
- 	dma_addr_t p_lli, p_next;
+ 	int err;
  
--	if (unlikely(!txd))
--		return;
--
- 	p_lli = txd->p_lli;
- 	v_lli = txd->v_lli;
+-	pm_runtime_enable(hsdma2dev(hsdma));
+-	pm_runtime_get_sync(hsdma2dev(hsdma));
++	err = devm_pm_runtime_enable(hsdma2dev(hsdma));
++	if (err)
++		return err;
++
++	err = pm_runtime_resume_and_get(hsdma2dev(hsdma));
++	if (err < 0)
++		return err;
  
-@@ -423,6 +419,17 @@ static void sun6i_dma_free_desc(struct virt_dma_desc *vd)
- 	kfree(txd);
+ 	err = clk_prepare_enable(hsdma->clk);
+ 	if (err)
+-		return err;
++		goto err_put_pm;
+ 
+ 	mtk_dma_write(hsdma, MTK_HSDMA_INT_ENABLE, 0);
+ 	mtk_dma_write(hsdma, MTK_HSDMA_GLO, MTK_HSDMA_GLO_DEFAULT);
+ 
+ 	return 0;
++
++err_put_pm:
++	pm_runtime_put_sync(hsdma2dev(hsdma));
++
++	return err;
  }
  
-+static void sun6i_dma_free_desc_virt(struct virt_dma_desc *vd)
-+{
-+	struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
-+	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(vd->tx.chan->device);
-+
-+	if (unlikely(!txd))
-+		return;
-+
-+	sun6i_dma_free_desc(sdev, txd);
-+}
-+
- static int sun6i_dma_start_desc(struct sun6i_vchan *vchan)
- {
- 	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(vchan->vc.chan.device);
-@@ -752,10 +759,7 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_slave_sg(
- 	return vchan_tx_prep(&vchan->vc, &txd->vd, flags);
+ static int mtk_hsdma_hw_deinit(struct mtk_hsdma_device *hsdma)
+@@ -869,7 +879,6 @@ static int mtk_hsdma_hw_deinit(struct mtk_hsdma_device *hsdma)
+ 	clk_disable_unprepare(hsdma->clk);
  
- err_lli_free:
--	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
--	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
--		dma_pool_free(sdev->pool, v_lli, p_lli);
--	kfree(txd);
-+	sun6i_dma_free_desc(sdev, txd);
- 	return NULL;
+ 	pm_runtime_put_sync(hsdma2dev(hsdma));
+-	pm_runtime_disable(hsdma2dev(hsdma));
+ 
+ 	return 0;
  }
- 
-@@ -821,10 +825,7 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_dma_cyclic(
- 	return vchan_tx_prep(&vchan->vc, &txd->vd, flags);
- 
- err_lli_free:
--	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
--	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
--		dma_pool_free(sdev->pool, v_lli, p_lli);
--	kfree(txd);
-+	sun6i_dma_free_desc(sdev, txd);
- 	return NULL;
- }
- 
-@@ -1354,7 +1355,7 @@ static int sun6i_dma_probe(struct platform_device *pdev)
- 		struct sun6i_vchan *vchan = &sdc->vchans[i];
- 
- 		INIT_LIST_HEAD(&vchan->node);
--		vchan->vc.desc_free = sun6i_dma_free_desc;
-+		vchan->vc.desc_free = sun6i_dma_free_desc_virt;
- 		vchan_init(&vchan->vc, &sdc->slave);
+@@ -989,7 +998,9 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
+ 		goto err_unregister;
  	}
  
+-	mtk_hsdma_hw_init(hsdma);
++	err = mtk_hsdma_hw_init(hsdma);
++	if (err)
++		goto err_free;
+ 
+ 	err = devm_request_irq(&pdev->dev, hsdma->irq,
+ 			       mtk_hsdma_irq, 0,
+@@ -997,7 +1008,7 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
+ 	if (err) {
+ 		dev_err(&pdev->dev,
+ 			"request_irq failed with err %d\n", err);
+-		goto err_free;
++		goto err_deinit;
+ 	}
+ 
+ 	platform_set_drvdata(pdev, hsdma);
+@@ -1006,8 +1017,9 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
+ 
+ 	return 0;
+ 
+-err_free:
++err_deinit:
+ 	mtk_hsdma_hw_deinit(hsdma);
++err_free:
+ 	of_dma_controller_free(pdev->dev.of_node);
+ err_unregister:
+ 	dma_async_device_unregister(dd);
 -- 
 2.53.0
 
