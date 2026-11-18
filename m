@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045904;
-	b=Omr4JST5GUHC7bK9NpPywpGdTUZ6RY64ZjmtSzPo8OFhtZxyQ1K28dh9L1U4ZhQjKaNr
-	 BX123vvsD2p2b7DtPE1Wd0h+fPww573MPAHJJ4zYxdV3pb3B1aED7DOGYrL+rnSD4gEVy
-	 uy0hwu59spunsC8DqMZnWO/bWPxTBMvoy1ZoSHhREV4QBEABH0BjMOwCuLxfPCWH3ofX/
-	 8pXkMAmdHFZTvevysBgHYGQ6JP5shOXjBJbpuEqN3ZFtgHLa2UPQIDEVBzFIIumwzZv8J
-	 HLrKA8Rzv8wL8nGQsa7Gipa2/3kL8bqe1naKVZt1IZPtazr5E2Gz2V6X0xCJxiVPOIA==
+	t=1795045907;
+	b=D+wFjF6ns4N+/mClfJOH0YVwl2gebApbnPpjKVhXAcoYD9W+/kkunKTot2OpYoxvP1VN
+	 N0C6YHMe6g7yuRnU9VB16DL6Sq5Bikk4iYTVxbFrva7UT5hTpuUV7YsIK/N5GXUi/FNRW
+	 9Xve4XSE9ec+qz78nHpQObaiNhoz2wP2E6tq3z4vptBk97bzSTGaLoIVIOw1he40hrNSe
+	 zDxPQPkjy6ctiOLv420GKrT4xJRfJ5NQXEgyHCJElyzTr3j8YoHiJMdOE319RbkdizNgX
+	 oYwyCQcsTHpj07DayuKnf0y7VPUpBvHO2mol8+iXhGLVMxfsD8DOnF23KLb2T8VKb/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045904;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045907;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nKOmEFpSFKQCGYdfOVvHrs21t7qsYngxwI2/YR6Unpg=;
-	b=DS8xUYrRDVGee3gkZlFvFyhqgu5mQMjRysIhO63xBcEWbD6NN8jvR64hk6XFKnf33Uxm
-	 D+W+UJkZrFGco5EoMEXqSivVvfIZ0390OH7zvSwvsHcP093rl6C1ry9YtT54LvUS1+sQw
-	 e2quDD9zAdK8ddofJquPlmLXmjF0ilUsslKn6Z+4yAKEP9g4dRhTw4ED9Lb3iJZxzSe65
-	 8uUd1O0Horv8d8WFSfPSkCv/7csOqpIAqXs5nv2cOHyzFLIMsUdxQGOvU53CVVlFyV+3Y
-	 F7RY+MhbZ2EE2RBIZEpnwX6zWxFepQIZcO5MbreqmPswHSOvemHPkAWu8pbURL2zFpQ==
+	bh=SLGuC3peLJ5yxcDpjebiBB5iB5Qr6nxdfz+6sA6M5AM=;
+	b=0+/F+08x7d4YsFW/8Ly8ukc1jSV/bviD8zj9QW1f76cJIMCIhkvdlBr6+2nu3hDZbj3S
+	 9uIrvyI7PW2rRZLsA7tqMlAP0/L6RmPnFy8FG01wAmzGX8sI+/QtiKd7FLKukqocESrHY
+	 92zbEZHuxYNZ2jnASTCBTP4hNHrR7X1WOYtqnWRXTGUHry645Bk4ZYYC82RbccfPQ0wA/
+	 R5Zo1V8AijZ+7M456oi+I4XOKttQPuBZ32cvh/pSiI9TWdXWzRMErbiZ8DUDNfJVvyWxK
+	 /TuZMBI/mpYQHF2j3EAIvRef9Mtc0v2DxwULliuI3PyTIxvK07zA9s7fXix5Uhba8Jg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXlJCr1e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K2wh2NRP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39524606A32A;
-	Wed, 18 Nov 2026 23:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCD2606A325;
+	Wed, 18 Nov 2026 23:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXlJCr1e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9035B1F000C4;
-	Wed, 18 Nov 2026 23:51:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K2wh2NRP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D28A1F000C4;
+	Wed, 18 Nov 2026 23:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045904;
-	bh=nKOmEFpSFKQCGYdfOVvHrs21t7qsYngxwI2/YR6Unpg=;
+	s=korg; t=1795045906;
+	bh=SLGuC3peLJ5yxcDpjebiBB5iB5Qr6nxdfz+6sA6M5AM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LXlJCr1eyQrMjVEfa2BMtQgwYhFkRlzXk48GzL/mlWN37OUKU8pWf5+CUAmackJtW
-	 0gq//PhSNXbxcrraadsMWkjLbBAIeonOr3zcXU4fdyuLARwZnCHV6IqjjaN63Gn/9d
-	 qE2mp3ZXfn6Op5TgwAtqXrO/H91lxkOmi/uVuEMg=
+	b=K2wh2NRPmD54gVf4KUNSOTva/AQ+mmj+PoR1yByi68b547DTMKKUmM7ZLEpvzXoVB
+	 fhWamJPcWn12CxXxRtM16H/MeAVedRIA3Vkepn6duLJMyi5YM3yetXMVJqDhSSVYsX
+	 5CEvxIU7OL/y0Ar5MCB+Pf5Cdmfo9foFRq2YfSvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1073/2857] drm/amdkfd: evict the queues only once for CRIU PROCESS_INFO
-Date: Wed, 18 Nov 2026 15:35:07 +0100
-Message-ID: <20261118150240.243751622@linuxfoundation.org>
+Subject: [PATCH 6.1 1091/2857] mount: refuse setns() with a shared fs_struct again
+Date: Wed, 18 Nov 2026 15:35:25 +0100
+Message-ID: <20261118150240.905803151@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,77 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 8f3ecda0ab42fb5ba7310fe848013d3eff31b416 ]
+[ Upstream commit 948e604aca8af30490accf7d46d44814ffa26f80 ]
 
-criu_process_info() evicts the queues of the process on every call, and
-each kfd_process_evict_queues() increments qpd->evicted, but CRIU UNPAUSE
-restores them only once. After PROCESS_INFO twice and UNPAUSE the queues
-stay evicted for good. On navi31, a barrier-AND packet on an HSA queue
-completes after PROCESS_INFO + UNPAUSE, but times out after
-PROCESS_INFO, PROCESS_INFO, UNPAUSE.
+mntns_install() refuses to switch the mount namespace of a task that
+shares its fs_struct, since root and cwd of the others would move to a
+namespace they are not in.  It looks at nsset->fs for that.  If more
+than the mount namespace is asked for, that is a private copy made by
+prepare_nsset(), which has one user by definition; commit_nsset() then
+writes root and cwd of the copy to the fs_struct of the task.
 
-The error path has a related problem: when kfd_process_evict_queues()
-itself fails, it has already rolled back its partial eviction, and the
-kfd_process_restore_queues() in the error path restores once more.
+A thread of a process with two threads, pidfd of a task in another
+mount namespace:
 
-Evict only when the queues are not paused yet, and on errors only undo
-an eviction done by this call. The barrier now completes after any
-number of PROCESS_INFO calls followed by UNPAUSE.
+	setns(pidfd, CLONE_NEWNS)			-EINVAL
+	setns(pidfd, CLONE_NEWNS | CLONE_NEWUTS)	0
 
-Fixes: cd9f79103003 ("drm/amdkfd: CRIU Implement KFD unpause operation")
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4d79c9e3c32c677fcadf5ca10ab81ee0a4b81f99)
-Cc: stable@vger.kernel.org
+and after the second call the other thread, still in the old mount
+namespace, has lost its cwd (/tmp became /) and sees the mounts of the
+other namespace under /.
+
+Look at the fs_struct that is going to be changed.  The second call then
+fails with -EINVAL like the first one.
+
+Fixes: 303cc571d107 ("nsproxy: attach to namespaces via pidfds")
+Cc: stable@vger.kernel.org # v5.8+
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ fs/namespace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index 0bcbf4ac458ef..43bfd668c5480 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -2611,6 +2611,7 @@ static int criu_process_info(struct file *filep,
- 				struct kfd_process *p,
- 				struct kfd_ioctl_criu_args *args)
- {
-+	bool paused_here = false;
- 	int ret = 0;
+diff --git a/fs/namespace.c b/fs/namespace.c
+index cb3b702de4447..211c2f1fa5e9a 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -4775,7 +4775,7 @@ static int mntns_install(struct nsset *nsset, struct ns_common *ns)
+ 	if (is_anon_ns(mnt_ns))
+ 		return -EINVAL;
  
- 	mutex_lock(&p->mutex);
-@@ -2621,11 +2622,15 @@ static int criu_process_info(struct file *filep,
- 		goto err_unlock;
- 	}
+-	if (fs->users != 1)
++	if (current->fs->users != 1)
+ 		return -EINVAL;
  
--	ret = kfd_process_evict_queues(p, KFD_QUEUE_EVICTION_CRIU_CHECKPOINT);
--	if (ret)
--		goto err_unlock;
-+	/* UNPAUSE restores the queues once, so evict them only once */
-+	if (!p->queues_paused) {
-+		ret = kfd_process_evict_queues(p, KFD_QUEUE_EVICTION_CRIU_CHECKPOINT);
-+		if (ret)
-+			goto err_unlock;
- 
--	p->queues_paused = true;
-+		p->queues_paused = true;
-+		paused_here = true;
-+	}
- 
- 	args->pid = task_pid_nr_ns(p->lead_thread,
- 					task_active_pid_ns(p->lead_thread));
-@@ -2640,7 +2645,7 @@ static int criu_process_info(struct file *filep,
- 				args->priv_data_size);
- 
- err_unlock:
--	if (ret) {
-+	if (ret && paused_here) {
- 		kfd_process_restore_queues(p);
- 		p->queues_paused = false;
- 	}
+ 	get_mnt_ns(mnt_ns);
 -- 
 2.53.0
 
