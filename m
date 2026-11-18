@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056583;
-	b=S6IaK9ZIhCAD7i12CEWtLzpedMeMH1ib1/kTw239QYhP9MxETdj8OpW7ezZd+AfIjPdu
-	 FUDPpMR0586JS9+ajiCjieCiIDPVcjK1QA/h8UnKKbjo9i7N/bBI9UEz8SQWA7QU00xb1
-	 3EFTEUtgenDv8fx6zUc7OFvM8YcxyekKN22sXQOc7RGvpM6NZOCXYmx33JSuCwq+820QK
-	 z23FaAiNece9dMbj/sKNnW/bzWoeDUHcIiaWW5MnFej4l0Kf0zIA9aJwswXQ+KyA0ZWPc
-	 Bfa6mABeawrypR4fR60Z+/456tFgFsW9FnfsDwhwDpx8M0nP1naN5slg92Qu2ayAQ7A==
+	t=1795056586;
+	b=yFnfJ6E+TIAn+s5RvL7A/5FDazH3ZsaEuGTPbSr+ovUHLdLyXJGVnsic6KjOLVhz2gO6
+	 OOF9vUDoLqchvH6gNMssOaZ7ruCKO4TN0VxO743FbEiBJtuIBmP/tf24x7wL6tvGZD2g5
+	 La0MwWaz7PoWnf3PhookGi4Mb9929AetiiaYQ70DO5B8gUmQ7d0nFGE5YWtcsKIQBHkey
+	 mXkinBlTOlS+QXuGn8FEfTuNElKywYbMKx1VoaBcA/zTzllos3meciG/2xt9XWtHihYOU
+	 n/GB3WNMJP/KXoCeBVDsafEFXZkITMeOfgqxgSxXte2+Q3ZTWRbYJ7uUoxKWPPWAyFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056583;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056586;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3H4mV3qvBJ7Pnuc2NeUValQO0WNO+CU+QwFiHSfzDDg=;
-	b=HB394IN7/yRpYlV9HdJTAvJzcMOetBMFaKYccusc7e+oIG00zMcjbZpZAmUVxAU8613q
-	 +dl/mUojPuVfd79FPbhjfZYatUcd+/oy41M8wVsVYNNXQKwmEJsh2MW6dYLeuuUOB86aJ
-	 MPMdVtwv8w/yJTH57qLdDfxSYO1E1b4zmdAXNgGvc6kYdpZzLJg/8nbpDLFBrDpQ646GC
-	 OLkuTlPgDHxWclBY+FmBayf3jXpoEiBL93fKEXyNaDRH7enJohQzzUE09m3AYygZdpzSn
-	 1p0wjl1i53WSL5cm6TpCBs30xM2KfO/0+qZTZP9QsxImPENCt1NKEFlAO0al0spSDjg==
+	bh=AX79/L5rFlL2n7Nhno7fYZnGjq+13vQrMjFWjPXUru8=;
+	b=0U1eEXS0Epg+JJkoulKLMoAR+mxxZv8dIBI4vluLTofI/VYQ8qjejoafWo6H0LmgPj9T
+	 Vtrey6V4AeOm56jAGAMYJe3gLvuB/vtMq9svPKAwJzWSTICX9brrPLHs+F/7eY7U3JXAj
+	 xCRUZhqtUIqSjzqBr5nb5q/ryvQ3shyKzWfP1uMmzTv6BLlJJtXWl5MqGoaowBtBKw/40
+	 tlXysQbANLgZG8JxwXDwJYFzxrQ7Zw/VeJglXPCtOiflwniT95GpEk1IrFKKEw0csVZUE
+	 USoS7fGkiq8fzxiHoPFKxs8A7v+83dJorBoiL0xy3L8MlvcSM2CvdkvOggxVJS0Fg6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YKlkyiHr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Przx2Ylq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFA8606A32A;
-	Thu, 19 Nov 2026 02:49:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B441606A31C;
+	Thu, 19 Nov 2026 02:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YKlkyiHr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29BC1F000C4;
-	Thu, 19 Nov 2026 02:49:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Przx2Ylq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747881F000C5;
+	Thu, 19 Nov 2026 02:49:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056583;
-	bh=3H4mV3qvBJ7Pnuc2NeUValQO0WNO+CU+QwFiHSfzDDg=;
+	s=korg; t=1795056586;
+	bh=AX79/L5rFlL2n7Nhno7fYZnGjq+13vQrMjFWjPXUru8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YKlkyiHrgzcZ8wDa/dNJ5nkHiOu178LS4FinNN4yROdDYFrcWEwKJVjYUqLVvWpfs
-	 pk0UGA7hWcA7iQttAPqV03MmGt5i0ynFuqHuJAa6QrKcUdD17lUs1+Bfj4BxBi0Cxn
-	 aOy2YKZkYEfLT/yjkBHgNvux02arAQW2DDeNS918=
+	b=Przx2YlqkwYY8uSdby96w5h+VDq+sKfc1m7eJ1ONa/VOuMotcg7XyyImARlLc4SpW
+	 V3vj8vZsyxoTXHBCBHlR+Ds/wfdRaNL33UyHLKSBDZvjkGcZob5jnvBU2eUluc6QT8
+	 0+HKMORjeKupzfeHxRc3ei8XuBHen8gIc2P3gc8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1998/2214] tracing: Print the bucket size as unsigned
-Date: Wed, 18 Nov 2026 16:01:14 +0100
-Message-ID: <20261118150130.721255625@linuxfoundation.org>
+Subject: [PATCH 5.15 1989/2214] ASoC: mediatek: mt8195: Check paired MEMIF clock enable in FE trigger
+Date: Wed, 18 Nov 2026 16:01:05 +0100
+Message-ID: <20261118150130.405322398@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,45 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 387945e8d2f29fa8a28d219af5416e6d3bedc314 ]
+[ Upstream commit a2ae972c75a18ecbdcbf331ddaab21e1a08333fb ]
 
-A key's bucket size reads back negative once it exceeds LONG_MAX:
+Check the return value of mt8195_afe_paired_memif_clk_enable() on
+START/RESUME. On failure, stop the MEMIF and disable the channel
+merge before returning the error.
 
-  # echo 'hist:keys=next_pid.buckets=18446744073709551615' > trigger
-  # cat trigger
-  hist:keys=next_pid.buckets=-1:vals=hitcount:...
+Also skip enabling the paired clock if mtk_afe_fe_trigger() fails.
 
-parse_field() takes the size with kstrtoul() and rejects only zero, so the
-whole unsigned long range is accepted and stored, but hist_field_print()
-renders it with %ld.
-
-Print it with %lu.
-
-Link: https://patch.msgid.link/20260914053443.981201-2-donggeunyoo.kernel@gmail.com
-Fixes: de9a48a360b7 ("tracing: Add linear buckets to histogram logic")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 6746cc858259 ("ASoC: mediatek: mt8195: add platform driver")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20261014112752.683032-9-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/mediatek/mt8195/mt8195-afe-pcm.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index c8e57b6e28fdb..78e53d5ccc868 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -5269,7 +5269,7 @@ static void hist_field_print(struct seq_file *m, struct hist_field *hist_field)
- 		}
- 	}
- 	if (hist_field->buckets)
--		seq_printf(m, "=%ld", hist_field->buckets);
-+		seq_printf(m, "=%lu", hist_field->buckets);
- }
- 
- static int event_hist_trigger_print(struct seq_file *m,
+diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
+index 6dbecae658748..432a14683c5fd 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
++++ b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
+@@ -464,7 +464,14 @@ static int mt8195_afe_fe_trigger(struct snd_pcm_substream *substream, int cmd,
+ 	switch (cmd) {
+ 	case SNDRV_PCM_TRIGGER_START:
+ 	case SNDRV_PCM_TRIGGER_RESUME:
+-		mt8195_afe_paired_memif_clk_enable(substream, dai, 1);
++		if (ret)
++			break;
++
++		ret = mt8195_afe_paired_memif_clk_enable(substream, dai, 1);
++		if (ret) {
++			mtk_afe_fe_trigger(substream, SNDRV_PCM_TRIGGER_STOP, dai);
++			mt8195_afe_enable_cm(afe, cm, false);
++		}
+ 		break;
+ 	case SNDRV_PCM_TRIGGER_STOP:
+ 	case SNDRV_PCM_TRIGGER_SUSPEND:
 -- 
 2.53.0
 
