@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057469;
-	b=Q7y9/IKEOoL9FO8mHME3MQXoILlqiuKgYoom/lzGwmFfZbbzDpd9lppkyRuLhZFO6fWI
-	 sSCGBj8KBPofRbR9vA6pPM8EEejYdYNgnepccbz+FB7+nRV1jtZ/tzfAh9DkmUN2hx1Zd
-	 /Ljx/J2hDpzbkiMsBc+rk0bzDdKngqzn30TuX9d1Z2vZey9f30eJlsStmCeu3KRFGHTDk
-	 9vwM0rX9bGz3fVz+bJsdtzrRPzVoPaETCldGIvGr3vdD9Cjro0xihgg5mDx6WDJPIJyGd
-	 k8H9Hf5AV2DsckAETic/Ukw/6/Kjh+UW3pVcGOBXLruTLcwwc3hahuxPzs9KJ4qyYzQ==
+	t=1795057472;
+	b=pEPdfZp2zRzhXi1WGwJRdNTR94OPHzmoEe/5QHxzb+5qLpHtmtA9rAACHK9NZl+PYcgQ
+	 9C2qQWAYSuOfCsdhOEO4+wKxawmyoVmoNCCPKM5iz+7BcJblmFrJLLBtxJsdJb/XJKUun
+	 +jnL21Olw6vSA8jNrNdwMOTZKqAtEgp4zxchl1BxBlC8xBez/D9DYh+Wrp3kop9Kl2we2
+	 FoJx3aoBQuOc+EBcIqTWp/QsO4QR7bgWBguvn6c5kkdv+mw86QF0ZcZ2rJ7Pa5PUC433T
+	 0frCaAGjEbHIQW8WuEe9vrijz8vW2dS4GjSLzRS9F+2f+qmYo5pg27ZyjehGM8BzA8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057469;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057472;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cpEIAc5RT83pvxhi0GP/Pd2TDOU5ZzmWTM3BirDjqWs=;
-	b=erxaS1vwb8FOqz+z+E9nZFAabg2r1IqynYde+qvR84dtEkipie27CFus8CMGN2tMM7Hc
-	 hBjwua7UmrpydTuXehLub4tNB1sdwCgjmW1QqRYQMVCoAWdxuB4UXeuF60HoDP75W124d
-	 YYLm73VFnOBM4YW9icuBqt44xlidYfsfG1PP2cA/PaJpEjJ6zexZUgmN8ICME7UYC4Czq
-	 RHO+T+wijOWfEiasa0flLPScrfuPspW8bX4KuDYGz6G39DgNKMwHMtF9JIt0icP34f8F4
-	 h/D999of8VefPyTgHEC9FhM6DbXkB5f7P80uilPylC9zg8qkTZekVMiNsSkp5cLgMgg==
+	bh=3fOR1SSpZDEkDzcUui9LoqOQCb+dORjYzOAulKQUssc=;
+	b=czFvCkU/53nopCTaQzel7S9M62oazD2Lw5n0hdKD43cFFgmudpLfHd671EDrv+e+cm6G
+	 42jc8eTmQ3O+aj0xT0AGiLjpelRudQTET4Yf4IyUOgWgPEYZPBNytp4+9oTsU04m1hzly
+	 tvA39VXDibccp56O3YwnusPwcATWTjJc7bYjqqqQGvygEAWOHt343dKZR5Oj44Tu027u2
+	 wffODv7xz98AtKVsewqVNYcZAw0xE3lUcSTG0xbe6+DFrNKStF6Z2X1Nn6q8R9QcBfYFP
+	 uuCQX+HDHpGFCUascz6wt3jNBJkUqoLSqCoW+hKqIi/SYSMIRGrO6QVOwvSC1FMXbxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UKu2XNBq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HsJV8+sK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82570606A33E;
-	Thu, 19 Nov 2026 03:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A2360A261C;
+	Thu, 19 Nov 2026 03:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UKu2XNBq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20D21F000C9;
-	Thu, 19 Nov 2026 03:04:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HsJV8+sK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E661F000C5;
+	Thu, 19 Nov 2026 03:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057469;
-	bh=cpEIAc5RT83pvxhi0GP/Pd2TDOU5ZzmWTM3BirDjqWs=;
+	s=korg; t=1795057471;
+	bh=3fOR1SSpZDEkDzcUui9LoqOQCb+dORjYzOAulKQUssc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UKu2XNBqX9VnYiuxIJ8NXhKcwWiGO8Es0C3SgyWfffDThUXEfoBnIzBxEPt+jhwCK
-	 kWAUNzjneyzkLDhy4zfOEH8/JE853tqDkETCkw7QrgMP7EyDoXOmZZdpHw4exP/LJB
-	 MVyM3yyKOxjWE8YDU1UeOyl5nyAhmuBOl7Ehf05E=
+	b=HsJV8+sKLFkMvDYrhXMSRWNCTcvMUJ0RpKM80duY7Qf4Ue49xftKlGznwqvBaM4Hz
+	 OoppFV+e74fjBz1Ur5NOBHcV8kI7wUxPGaqfz9ivhqLuJPp9CUlXsUdmAUOGdS3iwI
+	 hLYlQgS4ANqsj8qmR04j5+UoXBD2co6scTYvrXKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Andreas Dilger <adilger@dilger.ca>,
-	Theodore Tso <tytso@mit.edu>,
+	Lin Mohan <linmhwork@outlook.com>,
+	Ali Alaei <ali.alaei.tabatabaei@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0100/1848] ext4: reduce max cluster size to match documented 256MB limit
-Date: Wed, 18 Nov 2026 15:35:38 +0100
-Message-ID: <20261118145915.257188551@linuxfoundation.org>
+Subject: [PATCH 5.10 0101/1848] PCI: vmd: Handle BUS_RESTRICT_CFG value 3 for Arrow Lake-HX
+Date: Wed, 18 Nov 2026 15:35:39 +0100
+Message-ID: <20261118145915.289005099@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,58 +70,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Ali Alaei <ali.alaei.tabatabaei@gmail.com>
 
-[ Upstream commit afa3caf2fbc417f755f36e271c4b3c2d45ccda9d ]
+[ Upstream commit 72b32eccbcd591b9606edacf3bd7c455176d7660 ]
 
-The mke2fs man page documents:
+On Intel Arrow Lake-HX systems (e.g. Core Ultra 9 275HX on Acer Predator
+PH16-73), the VMD controller reports BUS_RESTRICT_CFG = 3 in the VMCONFIG
+register. The existing switch statement only handled values 0, 1, and 2,
+causing vmd_get_bus_number_start() to return -ENODEV and aborting the
+entire VMD probe. This leaves NVMe drives behind the VMD controller
+invisible to the kernel.
 
-  Valid cluster-size values are from 2048 to 256M bytes per cluster.
+Hardware registers (VMCAP/VMCONFIG at offsets 0x40/0x44):
 
-but EXT4_MAX_CLUSTER_LOG_SIZE was set to 30 (1GB), allowing crafted
-filesystem images to specify cluster sizes up to 1GB.
+  VMD 0000:00:0e.0 (8086:ad0b): VMCAP=0x000f, VMCONFIG=0x03b8
+  BUS_RESTRICT_CFG(0x03b8) = (0x03b8 >> 8) & 0x3 = 3
 
-On 32-bit systems with bigalloc enabled, the consistency check in
-ext4_handle_clustersize():
+Add cfg=3 as a fallthrough to cfg=2, setting busn_start=224, which is
+the correct bus number base for this hardware.
 
-  s_blocks_per_group == s_clusters_per_group * (clustersize / blocksize)
+Also add a PCI_POSSIBLE_ERROR() guard after reading VMCONFIG: a failed
+config space read returns 0xFFFF, and BUS_RESTRICT_CFG(0xFFFF) = 3,
+so without this guard a removed or errored device would falsely match
+the new case 3 instead of being caught as an error.
 
-can overflow when the cluster ratio is large enough. Since
-s_blocks_per_group is not range-checked in the bigalloc path, the
-wrapped product can pass the consistency check, leading to inconsistent
-group geometry and potential out-of-bounds block allocation.
-
-Reduce EXT4_MAX_CLUSTER_LOG_SIZE to 28 to match the documented 256MB
-limit. With this cap, the maximum product is:
-
-  (blocksize * 8) * (256M / blocksize) = 2^31
-
-which fits safely in a 32-bit unsigned long for all block sizes.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260608061112.392391-1-libaokun%40linux.alibaba.com
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Reviewed-by: Andreas Dilger <adilger@dilger.ca>
-Link: https://patch.msgid.link/20260608111150.827117-3-libaokun@linux.alibaba.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reported-by: Lin Mohan <linmhwork@outlook.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221137 # Arrow-Lake-S
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221136 # Arrow-Lake-S
+Signed-off-by: Ali Alaei <ali.alaei.tabatabaei@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260628143450.92492-1-ali.alaei.tabatabaei@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ext4.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/vmd.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
-index 4adaf97d74354..a2fb616b0bd62 100644
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -264,7 +264,7 @@ struct ext4_io_submit {
- #define	EXT4_MAX_BLOCK_SIZE		65536
- #define EXT4_MIN_BLOCK_LOG_SIZE		10
- #define EXT4_MAX_BLOCK_LOG_SIZE		16
--#define EXT4_MAX_CLUSTER_LOG_SIZE	30
-+#define EXT4_MAX_CLUSTER_LOG_SIZE	28
- #ifdef __KERNEL__
- # define EXT4_BLOCK_SIZE(s)		((s)->s_blocksize)
- #else
+diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
+index f375c21ceeb16..ed0e0ddce3f83 100644
+--- a/drivers/pci/controller/vmd.c
++++ b/drivers/pci/controller/vmd.c
+@@ -506,6 +506,8 @@ static int vmd_get_bus_number_start(struct vmd_dev *vmd)
+ 	pci_read_config_word(dev, PCI_REG_VMCAP, &reg);
+ 	if (BUS_RESTRICT_CAP(reg)) {
+ 		pci_read_config_word(dev, PCI_REG_VMCONFIG, &reg);
++		if (PCI_POSSIBLE_ERROR(reg))
++			return -ENODEV;
+ 
+ 		switch (BUS_RESTRICT_CFG(reg)) {
+ 		case 0:
+@@ -514,6 +516,7 @@ static int vmd_get_bus_number_start(struct vmd_dev *vmd)
+ 		case 1:
+ 			vmd->busn_start = 128;
+ 			break;
++		case 3:
+ 		case 2:
+ 			vmd->busn_start = 224;
+ 			break;
 -- 
 2.53.0
 
