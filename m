@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053229;
-	b=rO86qIQLVyebwjM80SpBFcyU1DZsvqzb8rFUBL1+igCxC/gwxmSayGeWg5QH5V/ahXlM
-	 Ozn/5izoFEJUwSJjsqvpJNhmjVKKcrFFqvBOrJ9+DNQgVDBmsISy59EbE+LZVwP6yn+7e
-	 yaM029U5yHNdwCywmYBifQR7FrS6/n36zflois+SF2z4uqFQcBhnr4VsJx+sb/ZybJIE5
-	 bEDq2qGBkV0l9e1VyXDnhDnOGKwy3JjUrhN4LukDKZnVPzXJ+sP+0G22Zw9w+lQ6BGaJD
-	 ADcSw+FrXAip833gRX6nDXicQfLT0KG4DWhXPfMCK8tnvrKQww0p+/YdXMMfgovybOA==
+	t=1795053232;
+	b=XiC+miKOiSCdp08kPAS9yY72V2o5KloP6nj6p4sFFwk5unc15xATagz5pKZvR04xbvft
+	 lrX8CK2eM0DVheLkDOuvqYv9lAH0aRtjy0V1Hg2cuswjXr//7UUfh4pGfmqNcK0iLOWNk
+	 Uo4gPlNc+S1Z/4cuB2wUambEH9ko6kM6TdV0QPZZ9u2wsgRJMiFK4zOkhYMpYC+7XUMp4
+	 D4waMGZgxUBkE8/um0ljDRepiNTRBsyaCNdzKgW6gkKhS/0dPIpb7n1yz4c9TcJzNtuQa
+	 aArxfXrbQnt6dnadNKfVhXsmjdIyVnyroTjCqQAkB9gLvtSGQy+is57VFFYJvIUlWRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053229;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053232;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=/uU/Dy0BzOQm2aeWOthenheTzSsGN6Pz6cuhLtPgnWA=;
-	b=ldQFQdCr+l/EzVxXiNzEwj/9KGRFVJxHGyqQe2ViDmiOi3ZtqTgo5Xi07fL1MCrToGbh
-	 ryHXlXFAc89dRW26OJ0xOwGgJKa+ofvZP3Le5CUAcSk7vRNLwChyjMJEe00lDrI9xekpm
-	 pCkUD8QHCY/JV4AxSsxmPH2Z+grdJ2jL7B7Egh9qvCTyscZJEubjuxB8INN+9ZOEwV31z
-	 CWDay6yHxVdBDi+i9gPu3rtV/N96JlecpNj0s/XnCWEdjhAMgXFptEEI1XDKWiTqoOt2Y
-	 IsDdij97yBVR4PjO+S820O9qfAKOFa7iogl080JgngrsCoYbybjL5s7SIAgF0w2y54w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=TwhdiWvIAGx9qSfIP9PCNVsMvErYNx0WWW/bzyxx828=;
+	b=4+enHXUU0noi1K8bDbRsBm35Fn8FDXu76gIpcHXrlUC+kSUXxEEmWB8lcsSBGCtvPxjB
+	 izctsUIcza/M/mOgRjFRaUfcFfcsrCy5nz2fIIlzph1oQR2D55MiQ03MqqLVearoJ2pDS
+	 7Iaq+y3L7U3puaMtfhDlMhyyhFIc16BvV7zLTxSuG6e2yQs/tsBEjuQLHfriNCPliWAjK
+	 y5/tXl0Tw0uZ8H0QUEFFuNBVItFqTOd/ytP7aTbuDJXbcQS07wha9K6rolNhj9xer0MF5
+	 gYQVbu12HeUSiUwQdWy/+xuZV+ndFaiwDNjvGQTeBmQZa2CCbpAdIbUuO23kNgv7Lew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xyOBMq2y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wZtR2t8E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94525606A325;
-	Thu, 19 Nov 2026 01:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A219D606A337;
+	Thu, 19 Nov 2026 01:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xyOBMq2y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22DC1F000C4;
-	Thu, 19 Nov 2026 01:53:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wZtR2t8E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD3F1F000C5;
+	Thu, 19 Nov 2026 01:53:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053229;
-	bh=/uU/Dy0BzOQm2aeWOthenheTzSsGN6Pz6cuhLtPgnWA=;
+	s=korg; t=1795053232;
+	bh=TwhdiWvIAGx9qSfIP9PCNVsMvErYNx0WWW/bzyxx828=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xyOBMq2yxnB1D/kqcuoGGdybMe1nblzuOU0mT/DhuX8GEjSi4YtETk9mHqiL4FaA5
-	 aqhOrz8Uu3CE1/lL4eSGmJkmayRIYDOfKr4Ulse+Jx1bSRhOL/rspfGV+IDmVmwP/J
-	 1Cu6F3R5x4uTryARqh6Vo6s3tu08F6ozBRlXBwiM=
+	b=wZtR2t8ENSUjlAak7TYtj2eTkWTFAKKb0deYy+vLUoEgf5mlTihIfjg64ozjjcGoe
+	 gGOasgMc1izq6QSgEMmHVhqktmcNbB9TISQnoBliRRZ8aBlvXpGoXsuOwc/3A0D9gb
+	 4+Plq/W+rao2O3GYVaQDzJ1kSubiHC8JBC/5ptBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Philipp Stanner <phasta@kernel.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0838/2214] drm/drm_crtc: ensure dma_fence_ops remain valid during device unbind
-Date: Wed, 18 Nov 2026 15:41:54 +0100
-Message-ID: <20261118150045.739011186@linuxfoundation.org>
+Subject: [PATCH 5.15 0847/2214] batman-adv: fix skb leak when hard_iface is being released
+Date: Wed, 18 Nov 2026 15:42:03 +0100
+Message-ID: <20261118150046.061482374@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,106 +61,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 3be436cbd3d265fe4fcfbb5b650edad7b2108443 ]
+[ Upstream commit 522e4aece2e96cacbb8a6ae1eec0d4c0dd6f4fed ]
 
-In [1], sashiko reported the following issue:
+batadv_batman_skb_recv() owns the skb it is given. When the hard_iface
+refcount already dropped to zero, the function jumped to err_out, which
+only returned NET_RX_DROP and skipped the kfree_skb() under err_free.
 
-=== snip ===
-Looking at how these fences are managed, drm_crtc_create_fence()
-creates a dma_fence without taking a reference to the drm_device or
-drm_crtc. Because the sync_file framework exposes this fence to
-userspace, the fence can outlive the CRTC.
+To avoid a leak, free the skb before returning in this case.
 
-The dma_fence contract requires that data accessed by dma_fence_ops
-(like get_driver_name) must remain valid for an RCU grace period after
-the fence is signaled. However, drm_crtc_cleanup() and the subsequent
-freeing of the device do not wait for an RCU grace period via
-synchronize_rcu().
-
-If userspace calls ioctl(SYNC_IOC_FILE_INFO) concurrently with a device
-hot-unplug:
-
-CPU1 (Userspace)
-sync_file_get_name()
-  ops = rcu_dereference(fence->ops);
-  if (!dma_fence_test_signaled_flag())
-    // Preempted or delayed here
-
-CPU2 (Driver Teardown)
-Signals the fence (setting fence->ops = NULL)
-Destroys and frees the CRTC without waiting for an RCU grace period
-
-CPU1 (Resumes)
-  ops->get_driver_name(fence) -> drm_crtc_fence_get_driver_name()
-  crtc = fence_to_crtc(fence); // Casts to the freed CRTC
-  return crtc->dev->driver->name; // Use-after-free
-
-...
-
-Does the CRTC or DRM device need to be kept alive for the RCU grace
-period, or should the fence hold a proper reference to prevent the
-use-after-free when get_driver_name() and get_timeline_name() access
-the freed CRTC structure?
-=== snap ===
-
-I believe this to be a correct observation and this patch implements
-the suggestion of waiting for an RCU grace period before proceeding
-with destruction of the drm_crtc, so that get_driver_name() and
-get_timeline_name() can still work.
-
-Link: https://sashiko.dev/#/patchset/20260618-linux-drm_crtc_fix2-v1-1-c03e77b36f34@linaro.org?part=1
-Fixes: 6d6003c4b613 ("drm/fence: add fence timeline to drm_crtc")
 Cc: stable@vger.kernel.org
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Reviewed-by: Philipp Stanner <phasta@kernel.org>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/r/20260721-linux-drm_crtc_fix2-v3-1-afa8c71506e6@linaro.org
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: 4fe56e60ac1b ("batman-adv: Check hard_iface refcnt when receiving skb")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_crtc.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ net/batman-adv/main.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_crtc.c b/drivers/gpu/drm/drm_crtc.c
-index e8cee1891fd60..f3038e28a1d54 100644
---- a/drivers/gpu/drm/drm_crtc.c
-+++ b/drivers/gpu/drm/drm_crtc.c
-@@ -417,14 +417,23 @@ EXPORT_SYMBOL(__drmm_crtc_alloc_with_planes);
-  * drm_crtc_cleanup - Clean up the core crtc usage
-  * @crtc: CRTC to cleanup
-  *
-- * This function cleans up @crtc and removes it from the DRM mode setting
-- * core. Note that the function does *not* free the crtc structure itself,
-- * this is the responsibility of the caller.
-+ * This function cleans up @crtc and removes it from the DRM mode setting core,
-+ * after first waiting an RCU grace period to ensure @crtc->dev can safely be
-+ * dereferenced by our dma_fence_ops.
-+ *
-+ * Note that the function does *not* free the crtc structure itself, this is the
-+ * responsibility of the caller.
-  */
- void drm_crtc_cleanup(struct drm_crtc *crtc)
- {
- 	struct drm_device *dev = crtc->dev;
+diff --git a/net/batman-adv/main.c b/net/batman-adv/main.c
+index 78c63e61f41e8..6d3d15332ff9e 100644
+--- a/net/batman-adv/main.c
++++ b/net/batman-adv/main.c
+@@ -448,8 +448,10 @@ int batadv_batman_skb_recv(struct sk_buff *skb, struct net_device *dev,
+ 	 * shut down otherwise the packet may trigger de-reference errors
+ 	 * further down in the receive path.
+ 	 */
+-	if (!kref_get_unless_zero(&hard_iface->refcount))
+-		goto err_out;
++	if (!kref_get_unless_zero(&hard_iface->refcount)) {
++		kfree_skb(skb);
++		return NET_RX_DROP;
++	}
  
-+	/* Ensure our dma_fence_ops remain valid for an RCU grace period after
-+	 * the fence is signaled. This is necessary because our dma_fence_ops
-+	 * dereference crtc->dev.
-+	 */
-+	synchronize_rcu();
-+
- 	/* Note that the crtc_list is considered to be static; should we
- 	 * remove the drm_crtc at runtime we would have to decrement all
- 	 * the indices on the drm_crtc after us in the crtc_list.
+ 	skb = skb_share_check(skb, GFP_ATOMIC);
+ 
+@@ -508,7 +510,6 @@ int batadv_batman_skb_recv(struct sk_buff *skb, struct net_device *dev,
+ 	kfree_skb(skb);
+ err_put:
+ 	batadv_hardif_put(hard_iface);
+-err_out:
+ 	return NET_RX_DROP;
+ }
+ 
 -- 
 2.53.0
 
