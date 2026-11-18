@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020219;
-	b=E7X8K40NSR7d43SNOerMtvsgYoap14Vv95WVAqBiTdRdFGMxw3iTT3I3bWjyWKiyQwwx
-	 9H8C46+Ff4wtn9vX+RD4eFDHebMHQuzf0LXcrGLGKLwQb46ByylYLPMGA/tjBuWb6IcNG
-	 3VPbGvfrG3QKmt5T27wK0LendDNUlmq6AHPpjCLlIvFEF+l2MJZ/Y+Iusadn4THwHT+Nr
-	 wD2FBzSy6m+v2IS4E2UHK1WwcEkQMcHHc01R8qlGFMfjM38vMonuc7R28+E4hMJ1am9EO
-	 lYXc5nQp9m2mrL+tPFvataKGF8fqB5CXfaIQUNRYteW2JSK1UXy6ay1gM/VSBFDx4ww==
+	t=1795020221;
+	b=swlZJ4X1Q6eY1moAk589hAUsQYdY4ng9AMpV0dh6GqrQFxL9/H+RGDPA5ZAOO30stuSj
+	 tF8GiL+p+apq1Vu3j8GltoqYfumv9KOyJ+qJ+m9BRjqWQYezK8W+fiCKe8oOfNCCGtwBu
+	 D7VoyMYCoYf8md/mGtzxdSCYbpN/BxD5nuqvZYHWNxdt8Hm0oCmzh8sm02tM2z3KlSm/e
+	 0dB5zrC7hKcaI5oLocCfelZoYnzcvDSRL2+AemPFSE01sHMDn4F+tvsDphqNJjlYzZ0fE
+	 OknJp1Z9KujTsN9X2WjSSVV6MyoX242gHfIt3n15clU/PJLxVS1SJIHn6BRqDnZ4cYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020219;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020221;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R3wKlibmqELGl/ssqS2oFK1Q94fahFk0Y91Bj1B6kiA=;
-	b=iofv9IUwISjoEVZemv5MhXEHInqvNNycE7I9iPtGIbFECZ7buqsUh+JiXexDiMAGU71l
-	 iroJ76iiuGNqdQl5zuGLl5+ji9Yq3gkptgVHMmX3v1s5DRoC9hfMJMPjJgxNPYjOYg6rW
-	 /C/tnrSap/HXmcKWpZ3ukQX6JfLkz0Ij7SPL1krSfSp9zPKlazFlFAMHTf4hi4CeVnHOf
-	 gxfPCEztYGxQVCQc4HEO67FfFfQZmJbejfS+957FDRFJ0WQV/GkcDwU1mgnOlzCmpC/cv
-	 hjSvoW8I8R7uuutdxpoFUz+HJmNn74DXQgkkzRk2kVLbet9Pf6kOaozikiAuuUba7Kw==
+	bh=UUCmqI/uInJLKjZKdLa/UxgShfWjZYLiW7ceE+RqTe8=;
+	b=Vk/aVyqUTKBHWgSAScdCBYFQG/DGm17dEvY2v6Bx07G0QIIkH56hN5fQM/Re4oWyxcSN
+	 uN6giiqtnYYTAX4r+idUl43+BqzMSGR6g1SWgFwbvX/Ju+R22y678PXxoKwqMswE9FtSH
+	 Bz94CkeVegA7doIaBiy6yV3QZSQJZJGEYmIEX/tH2D91TVYsYJKjeWa95E3cV5LPEFJCX
+	 AM0DwczVptfWBhN5taqgsCK81qWT0AwOvhQN6nMvBL+dqlvoyFjZuDWXMdNL9B9Nd/HQJ
+	 5qKM8tkQC3PxswjdOiTHlukqYWnl8cRvjViDwJtMBGzW9YQXXfrG2ck5DFoUFyj+dIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h5Pi+JMx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=19GZsgOr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E8C606A31C;
-	Wed, 18 Nov 2026 16:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB74860A2600;
+	Wed, 18 Nov 2026 16:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h5Pi+JMx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD621F000C5;
-	Wed, 18 Nov 2026 16:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=19GZsgOr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29CD21F000C7;
+	Wed, 18 Nov 2026 16:43:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020218;
-	bh=R3wKlibmqELGl/ssqS2oFK1Q94fahFk0Y91Bj1B6kiA=;
+	s=korg; t=1795020221;
+	bh=UUCmqI/uInJLKjZKdLa/UxgShfWjZYLiW7ceE+RqTe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h5Pi+JMx4F1LgORCtOqo0QyXxtLoPemLnMAoPdvslk+BxCjMNEUR02KcBYw+dDHD3
-	 kcxVOHLuNUim6EnHDBbhjqjorOnv83OzJLoXDwSOo0g/adOomKONtb9o+a1IEr1o3T
-	 2iVuAJlJOHucOtLJN7KTqxHGhHw6GFrr04GQpGSo=
+	b=19GZsgOrp+rdgrk1c0gL/Ss3X2BuguMFD5At0l4WhSls940VQBuuanV6MiEZc7dHh
+	 +mBD0GUUdCTNNmX3e7Qszt8dn7rrpPX5dYR49Z23sBQmQ3ErCdFiZtU8JFAtuPqG9a
+	 8vzcBntuC3xY77EOt3s3Ebd6RdtQOiZXH1I++l5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Eulgyu Kim <eulgyukim@snu.ac.kr>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1836/2651] ipvs: fix buffer overflow when sending sync messages
-Date: Wed, 18 Nov 2026 15:51:16 +0100
-Message-ID: <20261118150353.202411434@linuxfoundation.org>
+Subject: [PATCH 7.3 1872/2651] Bluetooth: L2CAP: fix race condition in l2cap_sock_shutdown()
+Date: Wed, 18 Nov 2026 15:51:52 +0100
+Message-ID: <20261118150354.353843320@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,120 +70,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 3e3fe49e8678c1a3d535ed02f32a9a6e80674263 ]
+[ Upstream commit 79ff49a72c06abdf76872dccc687e2a83c4f407f ]
 
-Sashiko reports for possible heap buffer overflow when
-generating sync message for the v0 and v1 message formats.
-We should read the cp->flags only once because another
-CPU can concurrently set the SEQ_MASK between the two
-reads.
+l2cap_sock_shutdown() has the race condition
 
-Note that IPVS does not set the SEQ_MASK anymore for the
-ip_vs_ftp.c helper starting from commit 7f1c40757951
-("IPVS: make FTP work with full NAT support") (2.6.36+),
-so the problem should not be reproducible.
+    [Task 1]                      [Task 2]
+    l2cap_sock_shutdown           l2cap_sock_connect
+      l2cap_chan_lock               l2cap_chan_connect
+      conn = ... /* == NULL*/
+      l2cap_chan_unlock ------------> l2cap_chan_lock
+      if (conn) /* false */
+                                      __l2cap_chan_add(conn, chan)
+      l2cap_chan_lock <-------------- l2cap_chan_unlock
+      l2cap_chan_close /* chan->conn->lock not held! */
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://sashiko.dev/#/patchset/20260903004149.1037028-1-pablo%40netfilter.org
-Link: https://sashiko.dev/#/patchset/20260909111338.44357-1-ja%40ssi.bg
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+conn->lock protects conn->chan_l and is not properly held here.
+
+Use the l2cap_chan_close_unlocked() helper that ensures conn->lock is
+held for l2cap_chan_close().
+
+Fixes: ab4eedb790ca ("Bluetooth: L2CAP: Fix corrupted list in hci_chan_del")
+Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Link: https://lore.kernel.org/linux-bluetooth/20260824153908.2327306-1-jjy600901@snu.ac.kr/
+Link: https://syzkaller.appspot.com/bug?extid=0e4ebcc970728e056324
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_sync.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ net/bluetooth/l2cap_sock.c | 19 +------------------
+ 1 file changed, 1 insertion(+), 18 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_sync.c b/net/netfilter/ipvs/ip_vs_sync.c
-index 69dc28153ec12..1a30817fbbafe 100644
---- a/net/netfilter/ipvs/ip_vs_sync.c
-+++ b/net/netfilter/ipvs/ip_vs_sync.c
-@@ -543,13 +543,15 @@ static void ip_vs_sync_conn_v0(struct netns_ipvs *ipvs, struct ip_vs_conn *cp,
- 	struct ip_vs_sync_conn_v0 *s;
- 	struct ip_vs_sync_buff *buff;
- 	struct ipvs_master_sync_state *ms;
--	int id;
-+	u32 flags, seq_mask;
- 	unsigned int len;
-+	int id;
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 1eab4478abf4a..fed7c0967da28 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1412,7 +1412,6 @@ static int l2cap_sock_shutdown(struct socket *sock, int how)
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct l2cap_chan *chan;
+-	struct l2cap_conn *conn;
+ 	int err = 0;
  
- 	if (unlikely(cp->af != AF_INET))
- 		return;
-+	flags = READ_ONCE(cp->flags);
- 	/* Do not sync ONE PACKET */
--	if (cp->flags & IP_VS_CONN_F_ONE_PACKET)
-+	if (flags & IP_VS_CONN_F_ONE_PACKET)
- 		return;
+ 	BT_DBG("sock %p, sk %p, how %d", sock, sk, how);
+@@ -1469,23 +1468,7 @@ static int l2cap_sock_shutdown(struct socket *sock, int how)
+ 	sk->sk_shutdown |= SEND_SHUTDOWN;
+ 	release_sock(sk);
  
- 	if (!ip_vs_sync_conn_needed(ipvs, cp, pkts))
-@@ -564,8 +566,8 @@ static void ip_vs_sync_conn_v0(struct netns_ipvs *ipvs, struct ip_vs_conn *cp,
- 	id = select_master_thread_id(ipvs, cp);
- 	ms = &ipvs->ms[id];
- 	buff = ms->sync_buff;
--	len = (cp->flags & IP_VS_CONN_F_SEQ_MASK) ? FULL_CONN_SIZE :
--		SIMPLE_CONN_SIZE;
-+	seq_mask = flags & IP_VS_CONN_F_SEQ_MASK;
-+	len = seq_mask ? FULL_CONN_SIZE : SIMPLE_CONN_SIZE;
- 	if (buff) {
- 		m = (struct ip_vs_sync_mesg_v0 *) buff->mesg;
- 		/* Send buffer if it is for v1 */
-@@ -597,9 +599,9 @@ static void ip_vs_sync_conn_v0(struct netns_ipvs *ipvs, struct ip_vs_conn *cp,
- 	s->caddr = cp->caddr.ip;
- 	s->vaddr = cp->vaddr.ip;
- 	s->daddr = cp->daddr.ip;
--	s->flags = htons(cp->flags & ~IP_VS_CONN_F_HASHED);
-+	s->flags = htons(flags & ~IP_VS_CONN_F_HASHED);
- 	s->state = htons(cp->state);
--	if (cp->flags & IP_VS_CONN_F_SEQ_MASK) {
-+	if (seq_mask) {
- 		struct ip_vs_sync_conn_options *opt =
- 			(struct ip_vs_sync_conn_options *)&s[1];
- 		memcpy(opt, &cp->sync_conn_opt, sizeof(*opt));
-@@ -635,6 +637,7 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
- 	int id;
- 	__u8 *p;
- 	unsigned int len, pe_name_len, pad;
-+	u32 flags, seq_mask;
+-	l2cap_chan_lock(chan);
+-	/* prevent conn structure from being freed */
+-	conn = l2cap_conn_hold_unless_zero(chan->conn);
+-	l2cap_chan_unlock(chan);
+-
+-	if (conn)
+-		/* mutex lock must be taken before l2cap_chan_lock() */
+-		mutex_lock(&conn->lock);
+-
+-	l2cap_chan_lock(chan);
+-	l2cap_chan_close(chan, 0);
+-	l2cap_chan_unlock(chan);
+-
+-	if (conn) {
+-		mutex_unlock(&conn->lock);
+-		l2cap_conn_put(conn);
+-	}
++	l2cap_chan_close_unlocked(chan, 0);
  
- 	/* Handle old version of the protocol */
- 	if (sysctl_sync_ver(ipvs) == 0) {
-@@ -647,6 +650,7 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
- sloop:
- 	if (!ip_vs_sync_conn_needed(ipvs, cp, pkts))
- 		goto control;
-+	flags = READ_ONCE(cp->flags);
+ 	lock_sock(sk);
  
- 	/* Sanity checks */
- 	pe_name_len = 0;
-@@ -674,7 +678,8 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
- #endif
- 		len = sizeof(struct ip_vs_sync_v4);
- 
--	if (cp->flags & IP_VS_CONN_F_SEQ_MASK)
-+	seq_mask = flags & IP_VS_CONN_F_SEQ_MASK;
-+	if (seq_mask)
- 		len += sizeof(struct ip_vs_sync_conn_options) + 2;
- 
- 	if (cp->pe_data_len)
-@@ -720,7 +725,7 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
- 	/* Set message type  & copy members */
- 	s->v4.type = (cp->af == AF_INET6 ? STYPE_F_INET6 : 0);
- 	s->v4.ver_size = htons(len & SVER_MASK);	/* Version 0 */
--	s->v4.flags = htonl(cp->flags & ~IP_VS_CONN_F_HASHED);
-+	s->v4.flags = htonl(flags & ~IP_VS_CONN_F_HASHED);
- 	s->v4.state = htons(cp->state);
- 	s->v4.protocol = cp->protocol;
- 	s->v4.cport = cp->cport;
-@@ -744,7 +749,7 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
- 		s->v4.vaddr = cp->vaddr.ip;
- 		s->v4.daddr = cp->daddr.ip;
- 	}
--	if (cp->flags & IP_VS_CONN_F_SEQ_MASK) {
-+	if (seq_mask) {
- 		*(p++) = IPVS_OPT_SEQ_DATA;
- 		*(p++) = sizeof(struct ip_vs_sync_conn_options);
- 		hton_seq(&cp->in_seq, (struct ip_vs_seq *)p);
 -- 
 2.53.0
 
