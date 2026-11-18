@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043006;
-	b=yxB8F6Plfhk5HbgPUerVtkBpwpqS/YjjeAEUa/s53H6Ao9EX/BRYz/j4tCvhP63fBWwL
-	 iC9EQPv43ILdSXUFSEHV7GAsHNpc0RCLf8s5ZIKMHf8ltXduywYfYzwsHbRcE74BGXDx7
-	 vzbtCbnLTImeTCI/atUXyjwEyw1bPq4mBp1HWAESDdZhX8EclZp+Z9uUvIIoZ03BTe8li
-	 T2x/goml0xgCmnmOk9NwltbXawlk553ZDi4Lhsrac2MW65+r3TUSIBcmeOadFKBdcMClN
-	 yJWpTcBy46o8ff8UwHmKosjP5GRefIeuibsrST2ifrKkYIS1MKjxqd4MANnnKrQDTGQ==
+	t=1795043010;
+	b=oxcay1VbW2qyfSgvjT+NJmwPyJDZMKqEwo9hY19TjBsF4+4OtKB5rmCMaYFNU45E+OQM
+	 i8VGN7MuLnPrZgLwecWD2Fc2k9NN+pvQuODvqtI0RmGFYqxusZsjgm2nN8tHnCJxUxivR
+	 azyMn7fyRCdJdN1m2p40s4IZQhw0RCnq00+Pqr4l1r+MWyazr8++jfNCrx45EfqQhki+g
+	 H/KJVxeGeh7ghdYt+2SbJlGMiEQ8ELugXGYXzVmLodV80N5XabF1050nOyPFTXnPT1xAj
+	 Q2mo7RfwkIaobHoQluQMqXAqwXefxUR0M67jJ19hB17YRAzhrDr65A2W3BeQkhBwd6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043006;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043010;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ISvAPnJ2bcnM5xVukRZShH+MZcKjs/cKKNrSdriKF18=;
-	b=bv8h9y1Ja1rgOdCPTfryD+ncYImfvljY51EeUE/MhVo7S7hyHSQjwIEe+fSDB6FHW0HA
-	 z3TDWUePadl/l3Pw0pCSu/5RvfscfGoKZtGOdUtu9VqhH/dvCtIxspRD911jJOSEWerap
-	 yWQAG4hxq+eRLE4HwDdzek0RwbXVltmHv87mR4unRen1N84LxwJfHFgUowuKPBkD9AnhX
-	 aaI/N/E2p71reySR4/41FRFBP0QmPQ+H4syD1dLyWLN27MTryPOmMjfKhqfJr1F1OlsX8
-	 6dbtOiupypI0oXw0jI//WhPxOOrTDlJd/cL9hcCh2/auMximlSVauaN07ZDxVShpD4w==
+	bh=zrHXwyZCV7AgYOr2icst0bZlN18bYZ1vMrXUJX+POhU=;
+	b=uNcobxQp/XzMC7ffP6kawD7vIHEJGnM/AJ6TQBBOR0TKQXya5VEpccxI2/jYC/2mL+jg
+	 eJKPmLM7mGCVv6csYCcQhPC5QtkB2CG4TECYRlDG15xeC4Vq6kSezmWazf/crHdvoL+Cd
+	 ELcbP7rmo/+3JWT+VUtt5BGo4oMm/hnYE3cC/T1tWo+8zVlp2Cp07f147byiQX/OcCf/m
+	 pSoc951MgyI1v/I8d5Od70kuiHGqZwBn0tZKQjExcCm4cApYIsnGk3hF15vZxCVAX+c1b
+	 qS+lQDleWeV/mLQ0rJbn7N2aPJidZtb0kAFpj0N5aqvHR0sVTKOmOOOyr3DsF8aVV8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A9xpxvj7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bLBQd4OL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4955606A31C;
-	Wed, 18 Nov 2026 23:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06685606A320;
+	Wed, 18 Nov 2026 23:03:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A9xpxvj7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB6ED1F000C5;
-	Wed, 18 Nov 2026 23:03:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bLBQd4OL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E565A1F000C4;
+	Wed, 18 Nov 2026 23:03:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043006;
-	bh=ISvAPnJ2bcnM5xVukRZShH+MZcKjs/cKKNrSdriKF18=;
+	s=korg; t=1795043009;
+	bh=zrHXwyZCV7AgYOr2icst0bZlN18bYZ1vMrXUJX+POhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A9xpxvj7BQYw/MEMCbmttc8mcGxSFH7PNUOXGM9REN/7ugquqGbLo2jBxudTmXu9m
-	 QS8goXeUyzjwJOghUHOA/ocAnOeRHb6wm39S9VEJhpFBtM0vFeyzxJSY3OQDwtI4EZ
-	 GmJL0LZUyH4Cd5sIfTD1qp8xpD9V5CG/oS+6oN1I=
+	b=bLBQd4OLrtgNCdWTbj+HjPPs6vO2YI4bnnR2LJFZAwvSfRc5Bs46XjUbxAd6WR1Pu
+	 Pph5/GR01dz6WkT7rlrtyJI2LaY9WLcY1hKbHMM8XfvtD5sJ9uk1Cq01hHvxATDXcL
+	 Xo2Wvv3PYg7KFlL1+aapnbKytfOsY4/tFl1iBlCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Zhiwei Zhang <202275009@qq.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0055/2857] iio: adc: max1241: add missing MODULE_DEVICE_TABLE()
-Date: Wed, 18 Nov 2026 15:18:09 +0100
-Message-ID: <20261118150203.290443038@linuxfoundation.org>
+Subject: [PATCH 6.1 0056/2857] RDMA/rxe: Check PDs for memory window binds
+Date: Wed, 18 Nov 2026 15:18:10 +0100
+Message-ID: <20261118150203.324983066@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,41 +69,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Zhiwei Zhang <202275009@qq.com>
 
-[ Upstream commit 790a2080e0c9eabefea3561dec301172043de236 ]
+[ Upstream commit fbbe1d5cd7d400a98afcf337969cfdb808cb198f ]
 
-The driver has a match table for the spi bus wired into its driver
-structure, but the table is not exported with MODULE_DEVICE_TABLE().
+The IBTA Software Transport Verbs specification requires the QP,
+Memory Window and Memory Region for a Bind Memory Window operation
+to belong to the same HCA and protection domain.
 
-Add the missing MODULE_DEVICE_TABLE() entry so module alias information
-is generated for automatic module loading.
+rxe only checked the QP and MW protection domain for type 2 MWs.
+Move the QP/MW PD check to the common bind path and also reject
+binding an MW to an MR from a different PD.
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the driver registration structure, and the missing module alias
-publication.
+Invalid bind requests continue to fail with IB_WC_MW_BIND_ERR.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Zhiwei Zhang <202275009@qq.com>
+Link: https://patch.msgid.link/tencent_FD4FB25AA4FFA845E63F5AC36CF4A46CDC0A@qq.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/max1241.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/sw/rxe/rxe_mw.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/iio/adc/max1241.c b/drivers/iio/adc/max1241.c
-index a815ad1f6913b..4520f9b48eaac 100644
---- a/drivers/iio/adc/max1241.c
-+++ b/drivers/iio/adc/max1241.c
-@@ -201,6 +201,7 @@ static const struct spi_device_id max1241_id[] = {
- 	{ "max1241", max1241 },
- 	{}
- };
-+MODULE_DEVICE_TABLE(spi, max1241_id);
+diff --git a/drivers/infiniband/sw/rxe/rxe_mw.c b/drivers/infiniband/sw/rxe/rxe_mw.c
+index cebc9f0f428d8..9ed6647f156d5 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mw.c
++++ b/drivers/infiniband/sw/rxe/rxe_mw.c
+@@ -72,13 +72,6 @@ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
+ 			return -EINVAL;
+ 		}
  
- static const struct of_device_id max1241_dt_ids[] = {
- 	{ .compatible = "maxim,max1241" },
+-		/* C10-72 */
+-		if (unlikely(qp->pd != to_rpd(mw->ibmw.pd))) {
+-			rxe_dbg_mw(mw,
+-				"attempt to bind type 2 MW with qp with different PD\n");
+-			return -EINVAL;
+-		}
+-
+ 		/* o10-37.2.40 */
+ 		if (unlikely(!mr || wqe->wr.wr.mw.length == 0)) {
+ 			rxe_dbg_mw(mw,
+@@ -87,10 +80,21 @@ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
+ 		}
+ 	}
+ 
+-	/* remaining checks only apply to a nonzero MR */
++	/* C10-72 */
++	if (unlikely(qp->pd != rxe_mw_pd(mw))) {
++		rxe_dbg_mw(mw, "attempt to bind MW with qp with different PD\n");
++		return -EINVAL;
++	}
++
+ 	if (!mr)
+ 		return 0;
+ 
++	/* remaining checks only apply to a nonzero MR */
++	if (unlikely(qp->pd != mr_pd(mr))) {
++		rxe_dbg_mw(mw, "attempt to bind MW/QP to MR with different PD\n");
++		return -EINVAL;
++	}
++
+ 	if (unlikely(mr->access & IB_ZERO_BASED)) {
+ 		rxe_dbg_mw(mw, "attempt to bind MW to zero based MR\n");
+ 		return -EINVAL;
 -- 
 2.53.0
 
