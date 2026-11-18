@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045692;
-	b=VAi3aaVr6iuTX+8a8NC1FUWfs6pjT46dXFfuUU/c5lqzanJxguYPdiOx9bCqsxRYQKfK
-	 sDuRHMES3Swj1J3WL3o9BJcBT5KR9oYsdyvvheFN/WnZXAD/WLtKoly8D499X49ZKQsap
-	 r3XZ+W5ZsmuSS82WHyQ+VqZwdzN5XvoUYLAFN8HP5mNdwQtCBflNcuAS1xvvT+TbrGioM
-	 KvDGhdz30iB6XOMGLGQjvdd/IrewP4TLcd0Adx171/ULcVkn23Q6rzSRyCRNQH9pzmrIb
-	 je45JkCBW8RY3vjYH3Uw9Lw3XbO5VGa7PE1neksTYYHHxNvXH+4pmI4EWTTrMHhr2lg==
+	t=1795045694;
+	b=W32Vz7XV+jm6+TQ9edEI4zCs9kJpg9ee6BhCMZ2ryfob3MV794LrKnwccbxFZb0WZe/C
+	 XhLpIl3Kz6uGrtXuf+BkhQkCEWrZuwm6i4HGDHF0VVUMpXjIWFj0te/lyHir8FiDARyEE
+	 YmjCybl+v8MvTBio/yz2A7+6lhVf38xdUSCVHui0pqzK0RG2be/Hvs65Efoo6dPEonjZX
+	 W1XaFycuWwTDVdUN8kfBxIsC+R8Ty22qGrA1RbG1flHLX4tQt+Eln4AbqkwZg9NUAYrUo
+	 3SOpqZn3FcmH8MY1DPJ+LYESU7559+ha+3gG5Si9EMRjyiygbjLioQ8WGCXc7R6flsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045692;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045694;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=52wEDVJ8jylAHLSNFwJr8wjR0efOBAaBHD18BteykeY=;
-	b=ETR9+x6UJeWfTiDMe4QEKcIA0Ydj+DhO820LYfA/mdr4xJl4vIo40oAONwaUZEdSzI2m
-	 JuYlfgJmSJbJ6jxFqFVpYb0JecQHQHof5ukjRTwvEPYcZBhmvzIrE4REmTNGKYsAk0BIY
-	 WS2rgltOUacNCnw3VtAaUgjdJqrKti023X6O45dCpZN5K71soWGvzjyLGZLE+gnD31CWa
-	 SdldBiFi+oHapdzs+erUsERjcPlhl9RkNmsKMuq8RhvO1kj6kHVSmgULPRusg9vzhrAW6
-	 BNlkVJtB7U57+UH+gWElZDnKwc7GgcWksnImJU6IzFspew129O+6DDA9QlHwP4JkVig==
+	bh=rBr+0y1F3jUiewghbdpOiTndlD9GF2snnsA1cbsVSVo=;
+	b=B0x/a6cmt8d/m6VGYK09ComfAqFm59R5QqSgImN/wPlAxhEksYMtGURwE1xnq6d0T8sr
+	 WU/Xd2c0jOaH3lFDE0QICaumlU/Y63BFOHlAEr86/I0zZ5h3fhPk6sS7RrSCQi3YcYE3Y
+	 us9bmLfrbUl2omL51UWMWNlt8Pb0Euk1zJNJZRJ5Ue5FDZg8T7D1ELOHz+YYXJr5yo/sy
+	 mPZk/d7LAFcWcPrMXSlirRYOtcaykqYzCRNiHXeXjUEGhjfOkMWDiKZbR4Y6qtPaHe0Lf
+	 h185fNzRAEPHCLcWe9hYqUuWpIjQ2ffGkx7HhBZfzplhx5TqFVSlzdlH8ndPandT3RA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dm7oI8nW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2S9qNgrE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35376606A320;
-	Wed, 18 Nov 2026 23:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD79D606A320;
+	Wed, 18 Nov 2026 23:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dm7oI8nW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEB81F000C4;
-	Wed, 18 Nov 2026 23:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2S9qNgrE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15D41F000C4;
+	Wed, 18 Nov 2026 23:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045691;
-	bh=52wEDVJ8jylAHLSNFwJr8wjR0efOBAaBHD18BteykeY=;
+	s=korg; t=1795045694;
+	bh=rBr+0y1F3jUiewghbdpOiTndlD9GF2snnsA1cbsVSVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dm7oI8nW8ik6Nxdiikri1bwQrWgAOfAMJ3JDAR3KjDbQdgaXR/6V4OXCv+QS6lPsm
-	 z0G69USumryDZ8rbJQ4kEQa/7l3oIA8BtgbNs4qGqgvzH0E8NRsLeV/omJ3LgYG1G1
-	 iV7N38mwg+BP5hWA6wxwriAqV39w3EevL08TiaIw=
+	b=2S9qNgrE1dqk8cLlHMWZi6WxskZn/Q29VQM4UnhsoLwk6qIIRIXjAyVyXyFwkxeUS
+	 MTTOIJM4Ho+jaZYG+3aaGNiPLVQSlzGoXG14LM3UB4I3TqTt7SPoYiii4ZDXunS3nj
+	 /7ou4JVBvMbJNG61oa+MIRwPuSiUcG4flCKqCe2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0987/2857] f2fs: flush SIT journal during filesystem resize
-Date: Wed, 18 Nov 2026 15:33:41 +0100
-Message-ID: <20261118150237.141018393@linuxfoundation.org>
+Subject: [PATCH 6.1 1014/2857] ocfs2: reserve value tree metadata when moving an xattr into the inode
+Date: Wed, 18 Nov 2026 15:34:08 +0100
+Message-ID: <20261118150238.106489390@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,47 +71,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit a6ede405455106bf42164ec96fd84008c5aabdd9 ]
+[ Upstream commit f5aee8ae5f85f8dfa78160e5c4963494319cdd64 ]
 
-During a filesystem resize, SBI_IS_RESIZEFS prevents new SIT entries
-from being added to the journal and forces existing entries to the SIT
-area. However, f2fs_flush_sit_entries() returns early when there are no
-new dirty sentries, leaving existing journal entries behind.
+ocfs2_calc_xattr_set_need() charges no metadata for the case where an
+xattr living in an xattr block or bucket moves back into the inode:
 
-After the main area shrinks, a later checkpoint can access a journal
-entry whose segment number is outside the new geometry and trigger
-f2fs_bug_on().
+        if (old_in_xb) {
+                if (ocfs2_xattr_can_be_in_inode(inode, xi, xis)) {
+                        clusters_add += new_clusters;
+                        credits += ...;
+                        if (!ocfs2_xattr_is_local(xe))
+                                credits += ocfs2_calc_extend_credits(...);
+                        goto out;
+                }
+        }
 
-Only take the zero-dirty fast path when entries may be written back to
-the journal. This lets resize drain existing entries through
-remove_sits_in_journal() even when there are no new dirty sentries.
+The credits for extending a value tree are there but the matching blocks
+are not, so meta_add stays 0, ocfs2_init_xattr_set_ctxt() skips
+ocfs2_reserve_new_metadata_blocks() and ctxt->meta_ac is left NULL.
 
-Cc: stable@kernel.org
-Fixes: 04f0b2eaa3b3 ("f2fs: ioctl for removing a range from F2FS")
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
-Reviewed-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+This is the shape commit 0cdc7dde00ec ("ocfs2: fix missing metadata
+reservation for large xattrs") fixed for the xattr block case, and it is
+reached the same way: namevalue_size() charges a value larger than
+OCFS2_XATTR_INLINE_SIZE as only OCFS2_XATTR_ROOT_SIZE, so
+ocfs2_xattr_can_be_in_inode() accepts a new value that will be stored
+outside.  ocfs2_xa_prepare_entry() installs a value root from def_xv and
+grows it, and once the cluster allocator is fragmented enough to need a
+second extent ocfs2_add_clusters_in_btree() finds the root full with no
+meta_ac at all and answers RESTART_META.  ocfs2_xattr_extend_allocation()
+turns that into -ENOSPC, or into a BUG_ON() without that commit, and
+ocfs2_xa_cleanup_value_truncate() takes its !orig_clusters arm, dropping
+the entry and leaking the clusters already handed out until fsck.ocfs2
+reclaims them.
+
+Reserve for the value tree here too.  The entry moves back into the inode
+rather than into a new xattr block, so unlike the create side of
+meta_guess this needs no block of its own.
+
+Link: https://lore.kernel.org/20261010113454.1420939-3-joseph.qi@linux.alibaba.com
+Fixes: 78f30c314a74 ("ocfs2/xattr: Reserve meta/data at the beginning of ocfs2_xattr_set.")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/xattr.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index bf52ba8a32c04..0d002abbec3e7 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -4082,7 +4082,7 @@ void f2fs_flush_sit_entries(struct f2fs_sb_info *sbi, struct cp_control *cpc)
- 
- 	down_write(&sit_i->sentry_lock);
- 
--	if (!sit_i->dirty_sentries)
-+	if (!sit_i->dirty_sentries && to_journal)
- 		goto out;
- 
- 	/*
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index bf4265e754a5b..dc6afdb669f18 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -3147,6 +3147,14 @@ static int ocfs2_calc_xattr_set_need(struct inode *inode,
+ 				credits += ocfs2_calc_extend_credits(
+ 							inode->i_sb,
+ 							&def_xv.xv.xr_list);
++			/*
++			 * A value too big to stay inline is only charged as
++			 * OCFS2_XATTR_ROOT_SIZE above, so it can still need a
++			 * value tree of its own.  No xattr block is allocated
++			 * on this path, so the tree is all we reserve for.
++			 */
++			if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE)
++				meta_add += ocfs2_extend_meta_needed(&def_xv.xv.xr_list);
+ 			goto out;
+ 		}
+ 	}
 -- 
 2.53.0
 
