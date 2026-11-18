@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038585;
-	b=dk5g5zQYeXjVfkFracrQF0PuclkSVHMxgneIPNVfzxQsBuKTc8Va1cZf7fjUzJcugjoZ
-	 vx6B1/T3ubphIeG4KfLgqIr0CZkjy5gcceGEHNaO6uM1WgfQ7BNzBekFSOjZgAUO2Q72c
-	 ooZpzrExEiv4dw8UeYEIzNNZ2Ltah3okOB1t6fniRyLxU3ddJ1wPyp9rDAkEvtZKASByZ
-	 QrxLRgczenJQOzPi/z2Dg2t6g6Bn+gH7NyaVWCbsCRATQMk8YzptjKEntpSx5ekRuae/+
-	 UzMDeGmyvY1GS8aG1/fqHFq5kSQi28tRY7wrwKgZpqoZeylzGnP5BWB8vGkiovf5rAA==
+	t=1795038587;
+	b=IFIVcmXDLSxArQEvDY1lXYtrpBI7vVmtYZwktYuGJoPzq0/iBb/0+Uds+UJYmCZJTLwP
+	 Y3ELbKaa9fQ+d7zuqbEUlfs2dRX9Y/C4AjHEwN4hpqPlv97yFUWcluAbtTAnbGOlM5R9U
+	 vaTsBRu6c2y2Aic1p8wg4iufV9kzAmPTGlh42zunxt1aMQAelE7kv+alcGiihvGKyh+eT
+	 kC+02iQrv2wDJmPxx3zRtEiFb8a1UOhX6XrvVP7uUiJGOtzGGEASRWrnH6Ovmub8nc1Bf
+	 hwK1tS/XS4Nf+5vV6W+52opCALBZALUON325LsXESn4bkyQPzpelcMikecCgSIJwZrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038585;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038587;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qfcrsC+v+eJPGGnRn3BtIy3mKObltfi/baKt6yieNyQ=;
-	b=Se4xn94PzjpTBjiCk2b3Gz8kuqdE0l7KSoU09/Uqg3rfo4k9cjUMm1KxcoXDj+nU5SoR
-	 wMkh0K8lpH3D/vRe8Vo4Wf6JbNBzVf0IFoZVghy7xLzi9XjxTDN7jzaVEaJ7Vy2PAhYNo
-	 Mif2PRyqj/76WlHw/NQc5pd/B8t8GEcYIlDF3HuIOBL3tAQRRk1wNlr67MHyoeqCv1Wec
-	 d1SxU9rcgQ9saH2bkuA9W05KJj5Xmpfw14h2gXLqLJiI7oP95j+XfKSZUZip6edrAqcfy
-	 5dnc41MT7Sj4lxf4ipl0HEa3B0Vw6Lh1k6lRGdqiSyTKohofgsVm1pRPKb5HVSkD3+g==
+	bh=tOxGIw8YNZ1UOFv1ccUKjVG5k36wjCgJ41RUGjdf3wg=;
+	b=SOzLXqeQf2/lJaJKKcISSHjWIEV5eWCLqg/HAwUtOzPFFmIsRaMIsLlQEvJxF31ktFwk
+	 0g4w2tf8+0DRjCdq7JvQ2oBX6LlV8ElDAe5ztDaZqSnD+t+Bqo/POFNB1L2giX+/Eui4B
+	 HSZfUu2IXqtppHivSxgGWhCOyUev7B/MUJpiTONCtnC/lQNnx/p0i8LR4cJ7AU445MK8O
+	 yx0SZOM3M0rGzHoY1dLeZrLzqnsERz5r413PhfkGzpPVXE7Xlwbio6lR1o9j5r0ClX+pv
+	 0V3BGjVLxa4RiTycy7sq2QKWksSYlSAZ8/KI+5G+W28tS+NzdsH0Vrmr6csnV5+L9XQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gbvntwEv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D1Stwu6w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC16606A320;
-	Wed, 18 Nov 2026 21:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C1E606A325;
+	Wed, 18 Nov 2026 21:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gbvntwEv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61E051F000C4;
-	Wed, 18 Nov 2026 21:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D1Stwu6w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2117B1F000CA;
+	Wed, 18 Nov 2026 21:49:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038584;
-	bh=qfcrsC+v+eJPGGnRn3BtIy3mKObltfi/baKt6yieNyQ=;
+	s=korg; t=1795038587;
+	bh=tOxGIw8YNZ1UOFv1ccUKjVG5k36wjCgJ41RUGjdf3wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gbvntwEvUsHzozPsA4ssSnO/PFm2QsDZ4t5yCPH9yUUMt/uyoBpngfBUU0rVXfNq4
-	 udZLqC4BwNpwRSeUXh7HurJ9LJJ9KNzqFTmEsMVFxJajOMTafQzaAjPA7U0DP7gNMj
-	 6v0RntfnThfbTAswBq4n0yvLqe4UW5Xg1lYM+Vqk=
+	b=D1Stwu6wvccf7qopBm6iCAZIyqhGPBVFrFglIZ68b+GRTjHuU7K/losn0m/bk5FSE
+	 RbCNLoowrl8Qw0UjPOi1TGaqZatt0qOM98+dRm/qzLdbJ/s65ms2/nYSWih4jJQm7M
+	 hmQPdWFFs9us0QDQdJ1CKlqgLZ0toFD5BLyFrOTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	stable@kernel.org,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1796/3318] f2fs: fix to adjust appropirate defragment pg_end
-Date: Wed, 18 Nov 2026 15:40:18 +0100
-Message-ID: <20261118150415.736950839@linuxfoundation.org>
+Subject: [PATCH 6.6 1797/3318] f2fs: fix defragment writeback range truncation on 32-bit
+Date: Wed, 18 Nov 2026 15:40:19 +0100
+Message-ID: <20261118150415.768120767@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,54 +70,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-[ Upstream commit 197080156f27b6bf8cf198e9313dfbb94769c736 ]
+[ Upstream commit 92154fe28c3701bebf75176dc5522bec62519a8f ]
 
-A length that exceeds the real size of the inode may be
-specified from user, although these out-of-range areas
-are not mapped, but they still need to be check in
-while loop, which is unnecessary.
+f2fs_defragment_range() flushes the range it is about to defragment:
 
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+	filemap_write_and_wait_range(inode->i_mapping,
+				pg_start << PAGE_SHIFT,
+				(pg_end << PAGE_SHIFT) - 1);
+
+pg_start and pg_end are pgoff_t, 32 bits on 32-bit kernels, so both
+shifts are evaluated in 32 bits and truncated before they are widened to
+the loff_t parameters.  pg_end is only capped by the file's page count,
+so for a file larger than 4 GiB the shift wraps.
+
+For a 5 GiB file pg_end is 1310720 and the range collapses from
+[0, 5 GiB) to [0, 1 GiB), leaving the rest of the dirty pages unwritten
+before the blocks are moved.  For 8 GiB the shift yields 0, the minus one
+makes it (loff_t)-1, and the range becomes [0, LLONG_MAX].
+
+The matching call in f2fs_collapse_range() already casts:
+
+	filemap_write_and_wait_range(inode->i_mapping,
+				(loff_t)index << PAGE_SHIFT,
+				((loff_t)pg_end << PAGE_SHIFT) - 1);
+
+Do the same here.  On i386 the shift changes from "shl $0xc,%ecx" to
+"shld", i.e. from a 32-bit shift to a double-precision one.
+
+Cc: stable@kernel.org
+Fixes: d323d005ac4a ("f2fs: support file defragment")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 92154fe28c37 ("f2fs: fix defragment writeback range truncation on 32-bit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ fs/f2fs/file.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 6f948f743db18..d92426073aecc 100644
+index d92426073aecc..8561db9bd58d1 100644
 --- a/fs/f2fs/file.c
 +++ b/fs/f2fs/file.c
-@@ -2874,12 +2874,13 @@ static int f2fs_defragment_range(struct f2fs_sb_info *sbi,
- 	bool fragmented = false;
- 	int err;
- 
--	pg_start = range->start >> PAGE_SHIFT;
--	pg_end = (range->start + range->len) >> PAGE_SHIFT;
--
- 	f2fs_balance_fs(sbi, true);
- 
- 	inode_lock(inode);
-+	pg_start = range->start >> PAGE_SHIFT;
-+	pg_end = min_t(pgoff_t,
-+				(range->start + range->len) >> PAGE_SHIFT,
-+				DIV_ROUND_UP(i_size_read(inode), PAGE_SIZE));
- 
- 	if (is_inode_flag_set(inode, FI_COMPRESS_RELEASED) ||
- 		f2fs_is_atomic_file(inode)) {
-@@ -2895,8 +2896,9 @@ static int f2fs_defragment_range(struct f2fs_sb_info *sbi,
- 	}
+@@ -2897,8 +2897,8 @@ static int f2fs_defragment_range(struct f2fs_sb_info *sbi,
  
  	/* writeback all dirty pages in the range */
--	err = filemap_write_and_wait_range(inode->i_mapping, range->start,
--						range->start + range->len - 1);
-+	err = filemap_write_and_wait_range(inode->i_mapping,
-+						pg_start << PAGE_SHIFT,
-+						(pg_end << PAGE_SHIFT) - 1);
+ 	err = filemap_write_and_wait_range(inode->i_mapping,
+-						pg_start << PAGE_SHIFT,
+-						(pg_end << PAGE_SHIFT) - 1);
++						(loff_t)pg_start << PAGE_SHIFT,
++						((loff_t)pg_end << PAGE_SHIFT) - 1);
  	if (err)
  		goto out;
  
