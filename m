@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022953;
-	b=buaxktJaoZHbtxui1kL/pOoQG8w6efESFsxNuqS76QF0Jkn4b+rRqVgr4udN8wyBRSCD
-	 uo2uUsYc0GYKXv1nueV0OVF0CWt+xUDA2VPkNdQeDZEmBKjNzJLlLPvImDXhOin+8ucjt
-	 4k/RRkoAm5lXqM3G4MUzGkvhsaqZ3FxSN9SsfqfXiHOiFiVuzLqnL/4XZngHEr8HdmrK5
-	 rF01N/UwOYlqrKy4Nygz+EIgIIbydRqDUpieiX7DCxJ1WeDwR9UvQCEvbSRGsV/CC9sNB
-	 h6VOOWzt5ox4VbnQ13urP5XDxsRqB6QBCAnKQeEVmJ37cgBQQKYeUTGgl/gH9A32GrA==
+	t=1795022956;
+	b=TPLxHqCvd0jpap3mTf6P2FvkHyJFpzWZe8ZppCafXqa2jxCHhzDUVeDPH1phLT1d4e9V
+	 8I374ICnhnCraBrTPT7WC4fvGAtH2YSyyfSYgO/SvXJCrdpmkMxLXvUBRslTQkRahoG/C
+	 s5ks5rr6+yeAxXPX5CH25vkajYy5KP5clmkRLAS/yVxLxLLBDNZsgXd2w4dJ62/y+emw1
+	 XsjntjPdCegP1emGgOj4iRYE8UtfdoPs3h+BftCk9smcz7NH8OtCNPJQASDLDj4lV84kZ
+	 GfInd6i2RT+7/S6pk0KmtguEiB85dzLOciaqk9l5Wtm8eb1mwBkRepVeH9ioj/lrMPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022953;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022956;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2C+eN8oqcu/VfAcrHj1aQyLpWZfhb59j5ypzZM1NunM=;
-	b=cz4CO1myhKhJZYrrJ0bBxEPOgqWkREG3AtlUPKZgz1pmirhWaptSb2SEfBFAXNAVYIFP
-	 DDYABl5it5GIk1b2PucvtepV+a2ocbtfZnuHF0GskApfHABnzqwj3o2UEduqhBTVZIPpG
-	 5PVD+aRCe9We1kFPzWV4ye+2+trGkGu3lQIOU5yNuHsdfR5zEeNvTGa8xFkIwG9kLhcws
-	 EnjNcjSTjGHiGagBVNefarFo2mGLXPk9aCnL3JhpiPyJy0oVCVbtVAiQmjWI5G48npVIk
-	 OCM86sqRIT4eSv/n7bup/o9GT1LNrntsjaOmZd8ePdIGvhu342r8zy1/L5h0ibhPIng==
+	bh=T3VLoKkp4VLl7Di+Beux93VttZ+ZyddUnIHB3Rb6aYw=;
+	b=p8nkVOuH8k5iIHzHRBImu+9DBCcVGggj0NhRXuj7rGnW+ZVN/GnOp3qwAgKnEE55Aqg6
+	 oqBU7WvEYhW2FK0Fh+dZcXa4Tzi1mMtinNoQc6G1n4OxWawdAvPsnYGAtQ0OWPeb0M9ty
+	 z0HJ7qh26eOqh9o0EP7g3okj3pb+6KnOlSoBcAwj6R/go7mXW9UjdV8K0vKFDDK8gAhhM
+	 8Q4hvBX3lF63KXS8S1XE5T9aHke4mCtUO53DcnKSAgFSk0QuvOU2y4WRvrhUTAlvbz/fu
+	 2GnsUXgDVZGrth7BuprgQf7qCL0SX6jbABxvxRu/bUU9J1OEAhmiBP9qD6t/2kLSXkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lfnNnxGA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2WyOugrr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A07606A32C;
-	Wed, 18 Nov 2026 17:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B63606A32C;
+	Wed, 18 Nov 2026 17:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lfnNnxGA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949A31F000C5;
-	Wed, 18 Nov 2026 17:29:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2WyOugrr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596AD1F000C5;
+	Wed, 18 Nov 2026 17:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022953;
-	bh=2C+eN8oqcu/VfAcrHj1aQyLpWZfhb59j5ypzZM1NunM=;
+	s=korg; t=1795022955;
+	bh=T3VLoKkp4VLl7Di+Beux93VttZ+ZyddUnIHB3Rb6aYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lfnNnxGAoBRg/FP9UtQ9S/gIDIJuB34uzr8cmH4TI0rQ+kUrHTN0o+qGp8TfFNlbH
-	 BcQdqDhX1UNp2sgo2RxSPcmDWAA4vc6OnjEoYUGIB77mgX8V+wN2XgBfySgVtZPGSM
-	 9psjPD0+3mg5Vs0jWQCVwz6vyQ4h3jTPz2e1A2g8=
+	b=2WyOugrrTE28Zkbyh2QKIidWJJV4xra8LZoP84b2IVRtnS/tUUXssXALH7B3IdYdl
+	 ynp6eiESugUo4JRBqqBQMVFxaWNQQpsHOhN0dOMzo69V8VwssczJk/mR9t7O+HenVT
+	 dbnOHhJvgKFldT2cnxs3Fao1mCCfKGvyVZx3cuGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Changyuan Lyu <changyuanl@google.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	John Stultz <jstultz@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0197/2151] fuse: fall back to copy_splice_read() on FOPEN_DIRECT_IO
-Date: Wed, 18 Nov 2026 15:32:12 +0100
-Message-ID: <20261118150128.963310097@linuxfoundation.org>
+Subject: [PATCH 6.18 0198/2151] sched/core: Dont steal a proxy-exec donor
+Date: Wed, 18 Nov 2026 15:32:13 +0100
+Message-ID: <20261118150128.996542796@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,56 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-[ Upstream commit 10bd6b32965265688fa277d166ab224de8e86eb2 ]
+[ Upstream commit 3dd95f077371f5def65a91c4bb13bd574a62bc3a ]
 
-Yafang Shao reports:
+try_steal_cookie() avoids stealing src->core_pick and src->curr before
+moving a task with the same cookie via move_queued_task_locked().
 
-  "After upgrading the kernel from 6.1.y to 6.18.y on production servers,
-  some containers failed to read lxcfs data. The root cause is that our
-  lxcfs is still at the old v3.0.4, which does not include commit 25982f5
-  ("Set the file size to 4k") [0].
+With proxy-exec, src->donor is the current scheduling context and may
+differ from src->curr. Stealing it migrates a task that the source rq
+still treats as current, leaving src's scheduler state for that task
+stale. For CFS this means cfs_rq->curr points at the stolen entity,
+and the next pick on the source rq hits the WARN_ON_ONCE in
+put_prev_entity().
 
-  Between 6.1.y and 6.18.y, the FUSE splice_read path was converted from
-  generic_file_splice_read() to filemap_splice_read() by commit
-  2cb1e08985e3 ("splice: Use filemap_splice_read() instead of
-  generic_file_splice_read()"). Unlike generic_file_splice_read(),
-  filemap_splice_read() strictly checks i_size and refuses to read from
-  zero-size files, which breaks virtual FUSE filesystems like the old
-  lxcfs."
+Commit 7de9d4f94638 ("sched: Start blocked_on chain processing in
+find_proxy_task()") tweaked the fair class logic so that the donor task
+isn't migrated away while we're running the proxy. Do it similarly for
+try_steal_cookie() and skip src->donor as well.
 
-Fix by using copy_splice_read() for the FOPEN_DIRECT_IO case, just like the
-VFS does for DAX and O_DIRECT files.
-
-Reported-by: Yafang Shao <laoar.shao@gmail.com>
-Closes: https://lore.kernel.org/all/20260706025705.58301-1-laoar.shao@gmail.com/
-Reported-by: Changyuan Lyu <changyuanl@google.com>
-Closes: https://lore.kernel.org/all/20260901213412.1763253-1-changyuanl@google.com/
-Fixes: 2cb1e08985e3 ("splice: Use filemap_splice_read() instead of generic_file_splice_read()")
-Tested-and-acked-by: Yafang Shao <laoar.shao@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Fixes: 7de9d4f94638 ("sched: Start blocked_on chain processing in find_proxy_task()")
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260807035232.1881495-3-jstultz@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/sched/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/fuse/file.c b/fs/fuse/file.c
-index f72d74e3c5f03..dc61efd829cc2 100644
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -1828,7 +1828,10 @@ static ssize_t fuse_splice_read(struct file *in, loff_t *ppos,
- 	struct fuse_file *ff = in->private_data;
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 57ba5fcff1339..824888693c414 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -6292,7 +6292,7 @@ static bool try_steal_cookie(int this, int that)
+ 		return false;
  
- 	/* FOPEN_DIRECT_IO overrides FOPEN_PASSTHROUGH */
--	if (fuse_file_passthrough(ff) && !(ff->open_flags & FOPEN_DIRECT_IO))
-+
-+	if (ff->open_flags & FOPEN_DIRECT_IO)
-+		return copy_splice_read(in, ppos, pipe, len, flags);
-+	else if (fuse_file_passthrough(ff))
- 		return fuse_passthrough_splice_read(in, ppos, pipe, len, flags);
- 	else
- 		return filemap_splice_read(in, ppos, pipe, len, flags);
+ 	do {
+-		if (p == src->core_pick || p == src->curr)
++		if (p == src->core_pick || p == src->curr || p == src->donor)
+ 			goto next;
+ 
+ 		if (!is_cpu_allowed(p, this))
 -- 
 2.53.0
 
