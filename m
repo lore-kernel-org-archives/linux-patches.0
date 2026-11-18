@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029120;
-	b=3cjJ+CELNscPJkbTNhI6XActImckIk8b7H+j1pxAkYR9K+brFRoj6NWTtafAvscDczsE
-	 cHGJ4GOy1zHc2A16R3RDfNoRt9Pj+cxs4uCDzhsQLEDMcIo4d3A8tOF6sFv7AGqChqvW2
-	 KYV+g0aefE9sWJkPtjhNC/XoJhxgo+hlySi9pJUvUir5gPwhMVPfeXG+p9kS2BxWmlpTp
-	 cp5LXqdeUt2FH1Nkrspsya6cwV/VfLgfX9DPkMb5IZCZRqRXadtaIHZxQ/5foMIO8hYne
-	 JhrXG/MYFd+4EopoK1XDgpHZScC2Uo6ogWALTQLsn1DMIF5vVeaUEEGk/cf1uRLODXA==
+	t=1795029123;
+	b=uLeQf0VXf2p8AOafzozoAiZOiLlKVJ8QNxH0R3Bu9vmvlJGpfVb6X+82DsJ2jvmVuONA
+	 AiAkhR6x2XdaKrUPZUWuxtCkkURbE5PYABoomZlIFvZQBoOemT7M0NL2Dsx1ISajNiAIB
+	 4Wu5XHgjdfdiy3rOmV2xMjGicdafORYlAsEdEI+VY/2reEB7+h6Ds4MpjMWtzBzjy1dwj
+	 kAy4b8aXWGELtV5sd0SOMDHBffMoGeXxe/Y47XNb0wXKx/ZukrwCJLBvtpUMrEax9opZG
+	 tfpVYv8hrluBI8typtOWfEXyMlvH8ETPhXkIbOu2mfrFokWFN1j1CdLpF6cLtptu6RA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029120;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029123;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=1y6P/1kngmiSlonOWiYpxTlGhqN51u35kkQ5qOQCC2o=;
-	b=hO3TX6NtQCRc8XWRiRivoEtx1fkh0Xi6rblv2fxhLgMmi0gAvvJIzDBAkZ8OQ7/qwnY3
-	 cP1h0UILWQ70ORQbA4YtEsb0mt2TDM7c/Sf3LdUnn7UwDxZWDvLy6OLCWmCXnBz0RFN0H
-	 U+DFMZtv+5A3cJNT6X2bs8Hu9K1jkK+rxRhvXLVoLGKK4YhY6jydA+CJj+dgEodaqxsG4
-	 KmgfYbHvCN07GHmeTadLurPltyUMuAxc8vLACqY3WeDP9RqJNz0UWM7ILLc8MgjMd3LfP
-	 OAeDNuTjgkqnLnfLEPWHUjXrF1TnF+F0XQTrxxTekORSjCu2KE3tH/ue9CGUubPvHpA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=HmOETWd/wzMY5KqDFEOpxgf+ajXjLVNNVXccsJQ5064=;
+	b=qt/+/cERZHD50qyLoMllu+1v2hfTlaVjzmJvZJG9YCImyrkzds19KYCTfGXv0jTMt84H
+	 N2lw+Mf8OLZ4XLqsVKCPJ+xKqXbNv3zVqwsyO+qsuTy+hun5QePKDrSgTNgW7GyT3F/lp
+	 /P6RJ0pWqlOyffCrFxvTq1a6CxyMLGUVQ9qFwehSNR/zi6fG+kx5tjRp9ZZmWkAfK7jnB
+	 c6xHuBbMsSoLun5iNkyK1L378Rp/CaAlYRFsrvRE54257B9eER2s2SO10F7bndDfx1pkT
+	 tJzIMhcfFWcfeO7MTpYQm1vTKQL6Pxr6XPsDwvo6cUaUKjslRGF0kcGKagn7wHbE9ZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NvQQHurJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zbo2YIdq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856FC606A31C;
-	Wed, 18 Nov 2026 19:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59363606A31C;
+	Wed, 18 Nov 2026 19:12:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NvQQHurJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E201F000C4;
-	Wed, 18 Nov 2026 19:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zbo2YIdq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0FB81F000C4;
+	Wed, 18 Nov 2026 19:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029120;
-	bh=1y6P/1kngmiSlonOWiYpxTlGhqN51u35kkQ5qOQCC2o=;
+	s=korg; t=1795029123;
+	bh=HmOETWd/wzMY5KqDFEOpxgf+ajXjLVNNVXccsJQ5064=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NvQQHurJz/hBL77H4EiERHn/P3PrlSHRYgQMVoJOcYtqtTDIu0eL9WZ8GyGYJqAoz
-	 GpauNkxBR+znabwukdsmMNzUsrWnItBKfDa2gsPoHYXafRodDy+AyhJCf17v5jZwhb
-	 Nb77AoX+DuBNZcPSBT0h2doa9IPkgUr9kzxE1uYg=
+	b=Zbo2YIdq93mQL0WSPLfejhDriMB4MIp2SsEHvQ/5YhJ7+GS3GmV+emNOZYI9+a1tg
+	 CSSPWpO3FKlMgP8MZJISw83JwJFQVoq9Ox3u9AZzYfi0Qu3ka0Mqc/inJT8dq+hn21
+	 SCHR2STl+xpEjCUzoDGIrV1MAkhytmVGN/yBfbY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9=20 ?= <alexis.lothore@bootlin.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0237/1756] selftests/bpf: make cmdline_contains stricter
-Date: Wed, 18 Nov 2026 15:39:24 +0100
-Message-ID: <20261118150017.701514715@linuxfoundation.org>
+Subject: [PATCH 6.12 0238/1756] regulator: mp886x: fix vsel_mask
+Date: Wed, 18 Nov 2026 15:39:25 +0100
+Message-ID: <20261118150017.755473062@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,71 +62,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit 040ef1f8b02e57b78081581d490ceec04ef5f7c0 ]
+[ Upstream commit 24fa0eadc2e3c7e9397924197dca7777ec08b8d7 ]
 
-cmdline_contains is used by BPF selftests to check the presence of
-specific kernel commandline parameters, but it currently suffers from
-two issues:
-- the read commandline isn't NULL terminated right after the read data
-  but only at the end of the buffer, leaving uninitialized bytes that
-  are then possibly tokenized
-- the comparison of found tokens is done based on the size of found
-  token. This could lead to too-short-but-matching tokens to wrongly
-  match the search pattern.
+The MP886X vsel is 7bits, fix the vsel_mask.
 
-Enforce stricter checks in cmdline_contains to avoid accidental matches.
-
-Fixes: 399f6185a1c0 ("selftests/bpf: Fix selftests broken by mitigations=off")
-Signed-off-by: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
-Link: https://lore.kernel.org/r/20260903-kasan-v9-6-2407fe99255a@bootlin.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 97be82880b61 ("regulator: add support for MP8869 regulator")
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Link: https://patch.msgid.link/20260901043123.5401-2-jszhang@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/unpriv_helpers.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/regulator/mp886x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/unpriv_helpers.c b/tools/testing/selftests/bpf/unpriv_helpers.c
-index 3aa9ee80a55e4..2b97d40660867 100644
---- a/tools/testing/selftests/bpf/unpriv_helpers.c
-+++ b/tools/testing/selftests/bpf/unpriv_helpers.c
-@@ -71,8 +71,8 @@ static int config_contains(const char *pat)
- 
- static bool cmdline_contains(const char *pat)
- {
-+	int fd, cnt, ret = false;
- 	char cmdline[4096], *c;
--	int fd, ret = false;
- 
- 	fd = open("/proc/cmdline", O_RDONLY);
- 	if (fd < 0) {
-@@ -80,14 +80,15 @@ static bool cmdline_contains(const char *pat)
- 		return false;
- 	}
- 
--	if (read(fd, cmdline, sizeof(cmdline) - 1) < 0) {
-+	cnt = read(fd, cmdline, sizeof(cmdline) - 1);
-+	if (cnt < 0) {
- 		perror("read /proc/cmdline");
- 		goto out;
- 	}
- 
--	cmdline[sizeof(cmdline) - 1] = '\0';
-+	cmdline[cnt] = '\0';
- 	for (c = strtok(cmdline, " \n"); c; c = strtok(NULL, " \n")) {
--		if (strncmp(c, pat, strlen(c)))
-+		if (strcmp(c, pat))
- 			continue;
- 		ret = true;
- 		break;
+diff --git a/drivers/regulator/mp886x.c b/drivers/regulator/mp886x.c
+index 48dcee5287f3d..451bd7c0abe24 100644
+--- a/drivers/regulator/mp886x.c
++++ b/drivers/regulator/mp886x.c
+@@ -267,7 +267,7 @@ static int mp886x_regulator_register(struct mp886x_device_info *di,
+ 	rdesc->min_uV = 600000;
+ 	rdesc->uV_step = 10000;
+ 	rdesc->vsel_reg = MP886X_VSEL;
+-	rdesc->vsel_mask = 0x3f;
++	rdesc->vsel_mask = 0x7f;
+ 	rdesc->ramp_reg = MP886X_SYSCNTLREG1;
+ 	rdesc->ramp_mask = MP886X_SLEW_MASK;
+ 	rdesc->ramp_delay_table = di->ci->slew_rates;
 -- 
 2.53.0
 
