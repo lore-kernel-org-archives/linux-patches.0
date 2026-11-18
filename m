@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028477;
-	b=macUjXlVspaxWgRmZbj90n2bPC5NkGQhStc4TRAFOIrK0dnXjmaNZlnTiGdFcITA8GBx
-	 dcjB3mCp9Re4ERmI+eCl0R6lyYDESDMG/i53IFw+cK5MyCfEfhSafaD/rZUxLm1nMMHMC
-	 xG48jwo/wJuflc097h3+YL2Mpahcxry/55NBa8qLHAT2ZZNl+0leR1A9wGXwoALYRa2b0
-	 FfkXcZvaLyCtTmakFJCSiVH2Z+UnSGbiIrFFyE4o214qfdXbx+f+koIfz7o7H46vULG5r
-	 Yv2E1ytRXZLBcxNky7WBVTHcjWN6GZnschz7qbfcLM7ly0M2xogIib/TkRfDH9ps29Q==
+	t=1795028480;
+	b=vRszjOk9qALctJg3y0zFtQxOaI6JbIGhxpcb+tbkngqCbiGmuzakbA+A2NiPVlbYVsuf
+	 mAp1Zp6QBhQncTYroB7MGGMvJJTLwDPPcqQuJ//fmBo+CGVUI+CNaq4clB/SA6713XMyw
+	 s/ErPSoiJr8+lxksLbTZAyXXOh6TItKrWqS+5v7YTK2EP49ucyDEblGk+3NBhIJBombRH
+	 caozTZnp8NWvMdWzxrp8D0q7T9jT73pMRK5j2sI1Q7mDXdUHOLPLvf9cTU4Ud0c6NN/dF
+	 lK336wivbj5IZ17b9C/5IN4x7InDxb6I8m3uVRG193O5FCmo59Lunvt18EKxnkvihtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028477;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028480;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uQmWqV6iaAE8QqIw5NqkIEINoOWqk8IAGtlxm8Q6WOY=;
-	b=Dywe/N53lX921U1a2Gd0kBg9ARCiA6g9Adezrv77Q02/oIQSfthh+eOQV9hOwtADurGw
-	 cB0VCUoA0ecVnpSbldopyeXpmO4iGRxR4bFCq9QSP3DRYPOVmIS1THo5vaAOglmL3yVOT
-	 PgeDHo5dcKN7h38NR8NemPw7n0To/ZfnpjzFpNvFIYX1k8y/rNNLiKlUlTCTPSgwWZYkR
-	 xwIcK8k7FxjBjGDRjWXv/t5iyG6KQHk9P18lPRALxQrlw7eZGNWVO7bVCFiZe3xs8TAVb
-	 UsUmwBzFJjuGadhb8vn0vFV/j+W16o3Cfgx3ZeIbGy/fyarcAhS2IIEQEN0XQrjzMVQ==
+	bh=4O4lt0ChGx1z+GBwCokBHKtdxpqKSVFWFhYRs2WzLjY=;
+	b=EzuPCnyA64qOD9zh8XJBOavNFdr+Vqwo1u0UFX9msyANcTE3gqDjakUfg7zSembqDl3f
+	 rkMJd0no0yFXiRRbelwIyQlAujnGYGxHPg2WB+HNcJjQJ+AVjh9Y3/Jzvssmc1jE+qL+9
+	 6e8gDUfv9dCGkTtvgH8xHX0ZOviTA9jvV2lwi11cNDCLElCJKXhtcVID/h9XidIFwwy9U
+	 YG9GpIawa5ALlEJNNWjA8RZ7fx4P4LiMqcAgbcjlNkP7ox06ZeYBMlDS0Hh5MzSsYMARa
+	 ZJIaJbIb2Z076EoKDp9HcDHMRU0j7BojMHJwTptjlrBnPcKc/guVuDxQa1hfIxl/gZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F1exeMWv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bvlm5RC9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A2E606A32C;
-	Wed, 18 Nov 2026 19:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96354606A32C;
+	Wed, 18 Nov 2026 19:01:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F1exeMWv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8541F000C4;
-	Wed, 18 Nov 2026 19:01:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bvlm5RC9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E56161F000C5;
+	Wed, 18 Nov 2026 19:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028477;
-	bh=uQmWqV6iaAE8QqIw5NqkIEINoOWqk8IAGtlxm8Q6WOY=;
+	s=korg; t=1795028480;
+	bh=4O4lt0ChGx1z+GBwCokBHKtdxpqKSVFWFhYRs2WzLjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F1exeMWvTQa4seVFLKR2qmpp7sXEER1uVQpvDa1r9Wpw5xg1g2dCtnuyWpaKCCS1d
-	 DDDzOovCwlxAG7ywd1ef5AR32ipSykPq+2kj+/jmlHXLHcMzNTSCzhw0Pi7dAlvs3K
-	 XgW/pBcoR+8AK0fxK7d62JsBwBV29r1h/Xa+ZfBM=
+	b=bvlm5RC9J4/pHICW1LuPHPmbOG+WkSRQKIl0a/jZncxTtIJHMFRDUloHKAwSAE/Gd
+	 ssE+cRCxElSnU+OtPYeVP7716w0xAMaPSQg6G0bUQopaRUtklNgqR4OSDVG9jZGyrY
+	 BhmKgjkp5vxUqv8i3iYwqH54HbNllezNlhqZZBW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>
-Subject: [PATCH 6.18 2140/2151] perf auxtrace: Include sys/types.h for pid_t
-Date: Wed, 18 Nov 2026 16:04:35 +0100
-Message-ID: <20261118150239.628202066@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.18 2131/2151] vdpa_sim: disable page faults around vringh_need_notify_iotlb()
+Date: Wed, 18 Nov 2026 16:04:26 +0100
+Message-ID: <20261118150239.309339076@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,32 +68,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@kernel.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit e28f834f57131be2cfd60a1c9c580f0a71995dc9 upstream.
+[ Upstream commit 05fb07c40e0013ba5ae373c6ea1bcc622eaea7f0 ]
 
-In 754187ad73b73bcb ("perf build: Remove NO_AUXTRACE build option")
-sys/types.h was removed, which broke the build in all Alpine Linux
-releases, as musl libc has pid_t defined via sys/types.h, add it back.
+When vdpa_sim runs with use_va (the default), its rings live in user
+memory, and vringh reads the ring's flags and event index with
+__get_user() through the user address.  The net and block simulators
+call vringh_need_notify_iotlb() with bottom halves disabled, so those
+reads happen in atomic context.
 
-Fixes: 754187ad73b73bcb ("perf build: Remove NO_AUXTRACE build option")
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+That only works today because __get_user() has no might_fault() check: a
+fault is not handled in atomic context and simply comes back as -EFAULT.
+Make that explicit with pagefault_disable() around the call, so vringh
+can use the normal user accessors without complaint.  Only the
+notification check needs this: the rest of the ring processing runs in
+the same kthread without bottom halves disabled, and can fault normally.
+
+Tested-and-acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/auxtrace.h |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/vdpa/vdpa_sim/vdpa_sim_blk.c | 9 ++++++++-
+ drivers/vdpa/vdpa_sim/vdpa_sim_net.c | 9 ++++++++-
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
---- a/tools/perf/util/auxtrace.h
-+++ b/tools/perf/util/auxtrace.h
-@@ -7,6 +7,7 @@
- #ifndef __PERF_AUXTRACE_H
- #define __PERF_AUXTRACE_H
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
+index 770a40a20be9d..0d5922ba05bcb 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
+@@ -11,6 +11,7 @@
+ #include <linux/module.h>
+ #include <linux/device.h>
+ #include <linux/kernel.h>
++#include <linux/uaccess.h>
+ #include <linux/blkdev.h>
+ #include <linux/vringh.h>
+ #include <linux/vdpa.h>
+@@ -343,11 +344,17 @@ static void vdpasim_blk_work(struct vdpasim *vdpasim)
+ 			continue;
  
-+#include <sys/types.h>
- #include <stdio.h> // FILE
- #include <linux/perf_event.h>
- #include <linux/types.h>
+ 		while (vdpasim_blk_handle_req(vdpasim, vq)) {
++			bool notify;
++
+ 			/* Make sure used is visible before rasing the interrupt. */
+ 			smp_wmb();
+ 
+ 			local_bh_disable();
+-			if (vringh_need_notify_iotlb(&vq->vring) > 0)
++			/* The ring may be in user memory, and we can't take faults here */
++			pagefault_disable();
++			notify = vringh_need_notify_iotlb(&vq->vring) > 0;
++			pagefault_enable();
++			if (notify)
+ 				vringh_notify(&vq->vring);
+ 			local_bh_enable();
+ 
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
+index b596d4a532d01..2271dd26da127 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
+@@ -11,6 +11,7 @@
+ #include <linux/module.h>
+ #include <linux/device.h>
+ #include <linux/kernel.h>
++#include <linux/uaccess.h>
+ #include <linux/etherdevice.h>
+ #include <linux/vringh.h>
+ #include <linux/vdpa.h>
+@@ -68,6 +69,8 @@ static struct vdpasim_net *sim_to_net(struct vdpasim *vdpasim)
+ 
+ static void vdpasim_net_complete(struct vdpasim_virtqueue *vq, size_t len)
+ {
++	bool notify;
++
+ 	/* Make sure data is wrote before advancing index */
+ 	smp_wmb();
+ 
+@@ -77,7 +80,11 @@ static void vdpasim_net_complete(struct vdpasim_virtqueue *vq, size_t len)
+ 	smp_wmb();
+ 
+ 	local_bh_disable();
+-	if (vringh_need_notify_iotlb(&vq->vring) > 0)
++	/* The ring may be in user memory, and we can't take faults here */
++	pagefault_disable();
++	notify = vringh_need_notify_iotlb(&vq->vring) > 0;
++	pagefault_enable();
++	if (notify)
+ 		vringh_notify(&vq->vring);
+ 	local_bh_enable();
+ }
+-- 
+2.53.0
+
 
 
