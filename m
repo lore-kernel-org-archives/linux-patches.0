@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050072;
-	b=u3f/8+sLGo6jvDimAPK9MVOha0zcHImIfoGyBSEpE2psehK5LIvA0YEsEgPbsO80atV/
-	 v4GRiwQy388QTseVzoR8EKyzUxwhS7UhvLgyonDbpZhtUlsMjkyAWsMFGTtrr7n0YL05W
-	 UIeQBgRnBUdnWvN7G8GSuOAoAtXCU2/C0zn7dJ/FbqGiwI/N7xmmIErjDAzwVuhbH+0zs
-	 mFAkTc42T+UXfRzr93r2KCyOWiYsICORXJQ9RLAjaISSO7yKe79JfPjqofouGw2vlcrrk
-	 +vmzfNmD7/y2MU/kEaK0EXWWkJ6xr0yvzwjVP6KfWxLQFBrhMl36dn4gnEW4JyeIdfg==
+	t=1795050074;
+	b=JoA9vFXirbxdM5LNXZ3UwzcyZ5Bgf+dlJeo5bOz5zVE73BUklezIqSJkw9wkEpmxHc5j
+	 4KsLcHhMs8KuxpBG9+zelTMlH+qMEIiyymRG1+8XuYGZAfqCB9aOF3XGhjY8wRlZo4O9x
+	 mopFYcxDsib0yccXQ609Vpzrpk/QEiBcC/qWUxUx1xs7q4d1CB7MDbj2GfUmVDPHvbvC7
+	 q0h3pHa+/CeTIOpqD1vvxcR1/4pJNIB6EBg0Hfklw2Upf0ZdhjIRavIiw3rrarEIP8Bhj
+	 HlXrXxTM5Nrp1ROlKEVGueqY8T11oL+4dENh+BE/zxesAGfu60opEqvo9z5/r9nv34g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050072;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050074;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=0Z3Rxg6D3VXbTvOwq95hcXZKAocJ1jhYS3MyxicMHCM=;
-	b=1NG35oYKH9Vc1BH9UG9SvNbR6aW21NJhP2DZYpD9eoBNjLXJcbp591CSwYAVZ2BTzFxq
-	 INXVQ/nRoDV+/9z7azLBK+Evgu+z0I0stSYm8cyFZJS3eWg5BQ+MCJFNAe+V2JXEOBFwI
-	 ElZrfaNtrxl8bbLzVOnK2rd49CX2Q2bj6cNPOJBiDBtImm680Y5fiflSSUXN6V0ZmBeSf
-	 kcPYEcxwfhspO9ot2QF4P8TW2A5UXkOqARhppsgBoQl7tzaohfgiKazRGyMJLJFHIyY91
-	 1mEw/pVkIeGU2tJQm8jfFaU3H5fqyo/JFzpzHphT8og3q22WUobR9XmHmvz3iH/O/rQ==
+	bh=X6zYF3aXRBoaZgXHOpiAxu/hfRXKg13pIpGhun7pDF0=;
+	b=Rg6/FWUemyrcy3+WP5PwTTqLDi6NFpzjRfof0x+X9YmTtE0Z3nvd5mspENj+/PAnJDCF
+	 /sRuAxRB4hqavt6gjQH32HhbY2D0jK0chIdgVIXuwBNfO9yFdGOfLnqbUXWbkpyl1yTMO
+	 VspQIem6xWCaFv988jjX6xV18zs93qHgeoe460L8+HrPmLwIhFE0ZqNnNUuZQHTcc7sFK
+	 Nrojqp++WaqsyIolACCn8e/3PzJUejrKrS55MPZRHTd8e4e6/Ulg37Sl8LZJEjbLYCOO9
+	 A45S4PYfuqy2teW5PJv/1Ell9WeXYY1M8xVfkDwrHRc22oGjuQJQVPpM6Nyfd4CAo4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T1WaFAW4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VyedvB1U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4F7606A337;
-	Thu, 19 Nov 2026 01:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FD1606A332;
+	Thu, 19 Nov 2026 01:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T1WaFAW4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D7321F000C9;
-	Thu, 19 Nov 2026 01:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VyedvB1U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED1221F000CB;
+	Thu, 19 Nov 2026 01:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050071;
-	bh=0Z3Rxg6D3VXbTvOwq95hcXZKAocJ1jhYS3MyxicMHCM=;
+	s=korg; t=1795050074;
+	bh=X6zYF3aXRBoaZgXHOpiAxu/hfRXKg13pIpGhun7pDF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T1WaFAW4D/lxrMAEgatatTvokfOc/WnUfjMb4jFPoS3AIQuxnoJDDiVfXIbvlnUXL
-	 na9oDpxDWkLFcD+QL/mcZT73JnYMeSU8RV5NKEzBa/RY6zwHqnKULIAAiQfBhyISXR
-	 QxwozFtOBPC2Aw+CjCBZrz+3uTVA3J+03GWqVd48=
+	b=VyedvB1U3uBdkZXaXXwv1WWzZEVGMP1IdXaG2FVK83/yXP5zD56NrMB9kniMvOHG1
+	 IYfn9S378sOv8pphVstatT0xGQ2umfY4Ao0J0Cp5itKYwld0e4lzAUw2QXhUEUoRNf
+	 omZ1kNGShvKSDiqF8LscIW6Galc1KVgZq0ViCjFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
-	syzbot+04cd90bb99c6ef81a65d@syzkaller.appspotmail.com,
-	=?UTF-8?q?=C3=96mer=20Mete=20Kaya?= <omermetekaya0@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Piotr=20Gli=C5=BAniewicz?= <p.glizniewicz@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2575/2857] usbnet: fix smp_processor_id() use in preemptible context
-Date: Wed, 18 Nov 2026 16:00:09 +0100
-Message-ID: <20261118150334.209476027@linuxfoundation.org>
+Subject: [PATCH 6.1 2576/2857] ALSA: 6fire: take stream_mutex in the Digital Thru control
+Date: Wed, 18 Nov 2026 16:00:10 +0100
+Message-ID: <20261118150334.244907139@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,75 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ömer Mete Kaya <omermetekaya0@gmail.com>
+From: Piotr Gliźniewicz <p.glizniewicz@gmail.com>
 
-[ Upstream commit 95a5c641fc7becab441bf244baa73b0b0f8b7dea ]
+[ Upstream commit d030561d53cb272bb55ba2dd11aaa609e8240b7e ]
 
-tx_complete() calls this_cpu_ptr() before disabling preemption, which
-triggers a BUG when running with CONFIG_DEBUG_PREEMPT:
+usb6fire_control_digital_thru_put() calls
+usb6fire_control_streaming_update(), which on an idle card with Digital
+Thru on selects altsetting 2 and writes the clock register for 96 kHz
+through usb6fire_control_set_rate(). usb6fire_pcm_prepare() calls both
+functions through usb6fire_pcm_set_rate() under rt->stream_mutex. The
+put does not take stream_mutex, so the two can run at the same time.
 
-  BUG: using smp_processor_id() in preemptible code in tx_complete
+500 runs of a 0.2 s aplay at 48 kHz while a second loop toggled
+"Digital Thru Playback Route" with amixer (12693 on/off cycles, kernel
+7.2.9): in 216 cases the two usb_set_interface() calls ran at the same
+time and the kernel logged "sysfs: cannot create duplicate filename
+'.../3-2:1.1/ep_82'" with a stack dump. 27 of the aplay runs failed,
+and for each of them the kernel logged "could not start pcm stream".
 
-Fix by using get_cpu_ptr()/put_cpu_ptr() which disable preemption and
-return the per-CPU pointer atomically. The usbnet_skb_return() hunk
-is a hardening change: that path runs in softirq context so no warning
-fires there, but the same fix is applied for consistency.
+Take stream_mutex in the put. The pcm runtime is created before the
+controls and freed with the card, so chip->pcm is valid whenever the
+put runs. The put waits for a running prepare, which makes synchronous
+USB transfers under stream_mutex; on a card that responds late the wait
+can reach about 12 s, or 24 s with Digital Thru on, and during the wait
+the other controls of the card can be neither read nor written, because
+snd_ctl_elem_write() holds controls_rwsem around the put. Before this
+patch the put already made transfers of the same kind under
+controls_rwsem. No code that holds stream_mutex takes controls_rwsem.
 
-Fixes: ed194d136769 ("usb: core: remove local_irq_save() around ->complete() handler")
-Suggested-by: David Laight <david.laight.linux@gmail.com>
-Reported-by: syzbot+04cd90bb99c6ef81a65d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=04cd90bb99c6ef81a65d
-Signed-off-by: Ömer Mete Kaya <omermetekaya0@gmail.com>
-Link: https://patch.msgid.link/20261004215937.302247-1-omermetekaya0@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The same test on kernel 7.2.10 with this patch (12863 cycles) gave no
+failed aplay run and no "duplicate filename" message.
+
+Fixes: 2475b0d40761 ("ALSA: 6fire - Add support of digital-thru mixer")
+Assisted-by: LLM
+Signed-off-by: Piotr Gliźniewicz <p.glizniewicz@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261016073132.109288-2-p.glizniewicz@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/usbnet.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/usb/6fire/control.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index f9a1b2a441d57..ba8f02b115f34 100644
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -328,7 +328,7 @@ static void __usbnet_status_stop_force(struct usbnet *dev)
-  */
- void usbnet_skb_return (struct usbnet *dev, struct sk_buff *skb)
- {
--	struct pcpu_sw_netstats *stats64 = this_cpu_ptr(dev->net->tstats);
-+	struct pcpu_sw_netstats *stats64;
- 	unsigned long flags;
- 	int	status;
+diff --git a/sound/usb/6fire/control.c b/sound/usb/6fire/control.c
+index 7c2274120c765..4474bdc78e535 100644
+--- a/sound/usb/6fire/control.c
++++ b/sound/usb/6fire/control.c
+@@ -20,6 +20,7 @@
+ #include "control.h"
+ #include "comm.h"
+ #include "chip.h"
++#include "pcm.h"
  
-@@ -341,10 +341,12 @@ void usbnet_skb_return (struct usbnet *dev, struct sk_buff *skb)
- 	if (skb->protocol == 0)
- 		skb->protocol = eth_type_trans (skb, dev->net);
+ static const char * const opt_coax_texts[2] = { "Optical", "Coax" };
+ static const char * const line_phono_texts[2] = { "Line", "Phono" };
+@@ -383,6 +384,12 @@ static int usb6fire_control_digital_thru_put(struct snd_kcontrol *kcontrol,
+ 	struct control_runtime *rt = snd_kcontrol_chip(kcontrol);
+ 	int changed = 0;
  
-+	stats64 = get_cpu_ptr(dev->net->tstats);
- 	flags = u64_stats_update_begin_irqsave(&stats64->syncp);
- 	u64_stats_inc(&stats64->rx_packets);
- 	u64_stats_add(&stats64->rx_bytes, skb->len);
- 	u64_stats_update_end_irqrestore(&stats64->syncp, flags);
-+	put_cpu_ptr(dev->net->tstats);
- 
- 	netif_dbg(dev, rx_status, dev->net, "< rx, len %zu, type 0x%x\n",
- 		  skb->len + sizeof (struct ethhdr), skb->protocol);
-@@ -1279,13 +1281,15 @@ static void tx_complete (struct urb *urb)
- 	struct usbnet		*dev = entry->dev;
- 
- 	if (urb->status == 0) {
--		struct pcpu_sw_netstats *stats64 = this_cpu_ptr(dev->net->tstats);
-+		struct pcpu_sw_netstats *stats64;
- 		unsigned long flags;
- 
-+		stats64 = get_cpu_ptr(dev->net->tstats);
- 		flags = u64_stats_update_begin_irqsave(&stats64->syncp);
- 		u64_stats_add(&stats64->tx_packets, entry->packets);
- 		u64_stats_add(&stats64->tx_bytes, entry->length);
- 		u64_stats_update_end_irqrestore(&stats64->syncp, flags);
-+		put_cpu_ptr(dev->net->tstats);
- 	} else {
- 		dev->net->stats.tx_errors++;
- 
++	/*
++	 * with Digital Thru on, streaming_update() selects the altsetting and
++	 * writes the clock register of an idle card; prepare does the same
++	 * under stream_mutex
++	 */
++	guard(mutex)(&rt->chip->pcm->stream_mutex);
+ 	if (rt->digital_thru_switch != ucontrol->value.integer.value[0]) {
+ 		rt->digital_thru_switch = ucontrol->value.integer.value[0];
+ 		usb6fire_control_streaming_update(rt);
 -- 
 2.53.0
 
