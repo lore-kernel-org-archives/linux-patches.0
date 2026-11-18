@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045403;
-	b=4x4hNXJRkDmcOQwy1eltmuPBj9LLSXSMC4qtZyYtd5wtD4kJXcAGJ4voJy8+IN0B0Jqo
-	 tD2Rkn3xmyYaDLpmGhS7SELq97pjhVr+Tr6AZizZqG2lA/t9gHk9xo47bbj5XcO0zM2di
-	 +rmQC5dbSSnYLAAVqMUijCS5y2N6FQtG4/RgXdOSQj8drvJ07MeyWyDbqOoXQS1mmj1Bb
-	 28vl4g8A/mKYmAWlu1EzKERAhPoa7tWDgW7uzDRxQzpf8E/BCFiqWBvesDIW5uN0HuoqM
-	 RlRsI9anWF/sf9tyigWF/nUU3ErQutVgJL1ngUk0h1wOg2XY91LZfnIKiu9oILZWUIg==
+	t=1795045406;
+	b=LlFPpHfJTeNVq+VU4mp4uF2s6JdyEXAXsXyvGhPeas+pNVNNawNqHNlrTg73c0Wo0i0R
+	 2Wcel9+XedhV54eL9AC1/WJlg0uYuIEahpjo0VTBspEJX27EWdH52u4mG8wkxGbbPN2MP
+	 mTWSZ51XUMXmBa+mkH9vf74F5n6seVPMyWt2fOyQheAYlIXmvvdxFPVCPDrtMrEQ3J9jY
+	 LZv/Vj+EDpZYYNxja4eS4OvhyH3s5B5rMW7bUIqrHlbaTAE8s7GMum+jmyd6ca/JVzqPa
+	 FNIvrD17TBNPOPcuhsnpyDgD4P9mFX2rmB8329oH8pEE7hs9D3IovtZ2+dWJvqS+cnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045403;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045406;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VEwd8ih6wRepOHBADnovviHsY0cCvu9KIuF7PyR1CtA=;
-	b=M93N51/aHdkcK6oabPAW7boTiqeyBsLx0P3NfLqC7y8wyMKuvVy40DXTDlGAHA2tZlsg
-	 S96l2cp/ck0C4vGLEBf1Bguec5bNHF01siSvP63rszVJyYH+WITiqtgy5YTrrxZUQv7BS
-	 8uyPaX8NQr3UgXmzFePDVa5iyPSHFa/oJdfgAcBIJhsdLCS5fGVDckHoU8WhqCJrJeZmd
-	 mbKyI3QO0qB+7qNac0HQxhB0VPBXT2p6Z6aJLk/VEp79R/KHJztt6hohozayYkEKQHtyg
-	 PvJ2I3UCFmmugW4dTG77wFpTObD70WRLJWVtAhwbyINURo4qmyNcXNMUk29heF8L4Aw==
+	bh=+gbqTTqCz55HF9aO/Lq4k9aBPT61MdynERcYOH4gNS0=;
+	b=BYjSRYL/Thj6VU7Ma9QfYKHaqWr3DNVUNVAyighiywALn5cbh5epGHSx6IgXGyma4VQ9
+	 W3vTi9B7TXQ9+jh+1RWKbGOqwjDy9tqvWqxtYNk2iJxdsWUxbBkF1lvumDpdaLzn4l4zx
+	 z0xZKXZ9ZvliUPKuNA0MQFogsyCpe5IWGYtDxt3x1IM+kb0Adb/oZe26seEd2E3QWYqUI
+	 Tc/eLwGLiQqtxSmRcKTy8EZruvw0dAEwcrul7Wdp/gTlaZhtXMTbC9ki4M3+7lxDVHVXZ
+	 VmtfnSLCnznZFhMqbZ/8nrfReHR2Uxd5VvLeElY2GuZYJ4oCAL9RuGxma7vqRqLy8yQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IsLnnMet;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vfJpXhKP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84DA606A320;
-	Wed, 18 Nov 2026 23:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EDF606A31C;
+	Wed, 18 Nov 2026 23:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IsLnnMet
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3523A1F000C4;
-	Wed, 18 Nov 2026 23:43:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vfJpXhKP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F841F000C4;
+	Wed, 18 Nov 2026 23:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045403;
-	bh=VEwd8ih6wRepOHBADnovviHsY0cCvu9KIuF7PyR1CtA=;
+	s=korg; t=1795045406;
+	bh=+gbqTTqCz55HF9aO/Lq4k9aBPT61MdynERcYOH4gNS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IsLnnMetZnGxZ6k5tsdeSkQqALA0whGOuVwj2o67UkdOmUd2Fbmi4rgsK+M3ujF4v
-	 gKQC7Woy+suftr83dxh41tfso6+NAP6r3NtqyyDblpkcmyYHnwPCcf97xNL+E7UQgr
-	 Bv/ldmU/e+NsQ7JkmsKHXHjoGRVVponr4tentTvM=
+	b=vfJpXhKP8pkprQ7g8/Ajk9B8MCd9d5Ivr1r65nGQqhvdrpvMlAxIBacWTTCDmG0Xw
+	 tKmaKwt8QJKhW85VPtdwNoaBPtxn/dQ4l4s82dxbYTNSo+GHZx3pcpMijtPkDNL/bP
+	 LMEGBajLSjY8HhFtzvCZWb7QeK/4uBtop/8gOnNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Juergen Gross <jgross@suse.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0911/2857] xen/pcifront: check that an AER callback exists before calling it
-Date: Wed, 18 Nov 2026 15:32:25 +0100
-Message-ID: <20261118150234.382340640@linuxfoundation.org>
+Subject: [PATCH 6.1 0912/2857] USB: cdc-acm: fix urb leak on disconnect
+Date: Wed, 18 Nov 2026 15:32:26 +0100
+Message-ID: <20261118150234.416430419@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,65 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 3b4854b69ee70fffb2fa7acac09e715a7efcbae1 ]
+[ Upstream commit 648b08aa37c1b24a61662ad78964f2bca659ca26 ]
 
-pcifront_common_process() handles an AER request from the backend by
-dispatching on aer_op.cmd to the bound driver's PCI error handler.  It
-only checks that err_handler and err_handler->error_detected are present,
-then for the mmio_enabled, slot_reset and resume commands it calls the
-corresponding callback unconditionally.  Those three callbacks are
-optional -- the PCI core NULL-checks each of them individually before
-use -- and many drivers (for example igb, igc, ice and ixgbevf) install
-error_detected without all of them.
+Make sure to drop the reference taken by usb_anchor_urb() when removing
+URBs from the delayed URB anchor to prevent them from leaking when the
+device is later disconnected.
 
-aer_op.cmd comes from the shared ring, so a malicious or buggy backend
-can send XEN_PCI_OP_aer_mmio (or _slotreset/_resume) for a device whose
-driver leaves that callback NULL and make the frontend call through a
-NULL pointer, crashing the guest.
-
-Check each callback before calling it.  When mmio_enabled or slot_reset is
-absent, return PCI_ERS_RESULT_RECOVERED so recovery proceeds, as the PCI
-core does for a missing callback; returning PCI_ERS_RESULT_NONE would
-instead make xen-pciback tear the guest domain down.
-
-Fixes: 956a9202cd12 ("xen-pcifront: Xen PCI frontend driver.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20261006023443.338194-1-yhlee@isslab.korea.ac.kr>
+Fixes: 140cb81ac8c6 ("USB: cdc-acm: fix broken runtime suspend")
+Reported-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://lore.kernel.org/20260917161217.2161883-1-vulab@iscas.ac.cn/
+Cc: stable@vger.kernel.org	# 3.16
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20261009122934.464142-1-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/xen-pcifront.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/usb/class/cdc-acm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/xen-pcifront.c b/drivers/pci/xen-pcifront.c
-index 83c0ab50676df..2c289b89cb8a2 100644
---- a/drivers/pci/xen-pcifront.c
-+++ b/drivers/pci/xen-pcifront.c
-@@ -600,11 +600,16 @@ static pci_ers_result_t pcifront_common_process(int cmd,
- 		case XEN_PCI_OP_aer_detected:
- 			return pdrv->err_handler->error_detected(pcidev, state);
- 		case XEN_PCI_OP_aer_mmio:
--			return pdrv->err_handler->mmio_enabled(pcidev);
-+			if (pdrv->err_handler->mmio_enabled)
-+				return pdrv->err_handler->mmio_enabled(pcidev);
-+			return PCI_ERS_RESULT_RECOVERED;
- 		case XEN_PCI_OP_aer_slotreset:
--			return pdrv->err_handler->slot_reset(pcidev);
-+			if (pdrv->err_handler->slot_reset)
-+				return pdrv->err_handler->slot_reset(pcidev);
-+			return PCI_ERS_RESULT_RECOVERED;
- 		case XEN_PCI_OP_aer_resume:
--			pdrv->err_handler->resume(pcidev);
-+			if (pdrv->err_handler->resume)
-+				pdrv->err_handler->resume(pcidev);
- 			return PCI_ERS_RESULT_NONE;
- 		default:
- 			dev_err(&pdev->xdev->dev,
+diff --git a/drivers/usb/class/cdc-acm.c b/drivers/usb/class/cdc-acm.c
+index 80e86fa38eabe..a699a00a503af 100644
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -771,6 +771,7 @@ static void acm_port_shutdown(struct tty_port *port)
+ 		urb = usb_get_from_anchor(&acm->delayed);
+ 		if (!urb)
+ 			break;
++		usb_put_urb(urb);
+ 		wb = urb->context;
+ 		wb->use = false;
+ 		usb_autopm_put_interface_async(acm->control);
+@@ -1685,7 +1686,7 @@ static int acm_resume(struct usb_interface *intf)
+ 			urb = usb_get_from_anchor(&acm->delayed);
+ 			if (!urb)
+ 				break;
+-
++			usb_put_urb(urb);
+ 			acm_start_wb(acm, urb->context);
+ 		}
+ 
 -- 
 2.53.0
 
