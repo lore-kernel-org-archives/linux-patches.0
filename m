@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015317;
-	b=rjAybnIR1B+vDez/lLpjsVoAlNHXDfa+brV2HOVPiwLX8qREcLDAvK5FATNxUEbKlkYq
-	 sMfBMNMW8VeBFIA6J0hrD+DZmcf6hY83O9Pq9diK5IscwwdjFjAmWE4eEL7IxCvmT/1wN
-	 SeqLzR512c/0QdSRDBl32tl/Jnc/kKsbpJ7nBthao5kelNILosyyW9ukvSN7eSBv8+Zl2
-	 dIyS6eolzQ1TRatsRPCbm5j2QWfzn8lFfDd44MVFuU3NzHYh1S0ei5je4sqGpHNUvbf12
-	 81ceqT8HPf/c1LZzW01rNrQFuo9/ERbdZcl3lypXzZohtkOE6F9kWDMrPOwmTzRd+dA==
+	t=1795015320;
+	b=1GrkwbomlMq75oivxVX6OpgZenSOYp0ZoH3XfLa6zDlKuAfDg1u7dof6ld5PzGcMk+bq
+	 hDfiV4tZDVVIL8KT5P6sKbvZHMv6XVEpm582eG9wBuRfqd9REeUVm/IVKfuXup/LtAUkv
+	 rTDjgZJQ1xC/f5TV+BLOCz2TLX0IJMkLiGcxHfqbFnG5h5scmsFC0YDbxAXA9cenKW1Iz
+	 0XFOXBm+p5sp/aI8LCXVhSNzXzJnv36DWkChuUQc5YEIVquu32rdevZNlobPhwxx/vA79
+	 KGwsFxco2/I+ebGAgRTybCvBVRmpqp0OzOLEGhS84+9khJeA1A9w5NlLMviCKisMQXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015317;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015320;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6YK7K94zKeGDdUyNPh4kfd3uR9QkqWhbxxC4XfA+yn0=;
-	b=0nN2MFj9i4aJ1bsw1n5Bltey+bzgpxvEzDBIGGlVH7BXWb59kZaOwU+Hb79rnc20U/jz
-	 q9nAlb5l95Cc+zujEq6jQ4f/MESOVitCWNAqyQKtOrEJSYsPxd4aEJtUY5UtrqG+fqqoD
-	 5XSoco1raD8/28gc7RTqW2QfT4Nmf8CQZ9wAhF75zT+NOj1icgrWDPYm/sxDXlU6Vy31q
-	 5HmSGGAYMO8+DVK8wuaLmnRe7SxBK+Fp/DzXqkQflzCA3Cd5Xlt4Ds+itj7cxUZZwOzdj
-	 Au1QStTWV7PXMyZYoHRfhv6ICQX6gqG0+wydyCpzuLYUsff2EwpvDvDVB8C0bgHyOsQ==
+	bh=t2ju/u9R4tlNlBxIbs+5UHiScK9mGr34MvwXjPdYg9Y=;
+	b=k++hXJBfu/mk1A+izEGQDDGoCWRHfW6RS8MtostVvtNWMHWlpkoFX97lhlPd/lrxQbHI
+	 Say03kQ8sQh9ksw7PHeJe3R6tNNwzcjNvUgtlUjfE+dC0PKq+/xmy7j1FZ4OGpABV6vwW
+	 Vi/0GCM7vlUmvAwMT+THkrbq3pbr3DA+W2v6qw8GiBJzrbOPYUFT6l6mD9KMyFRsVgsUA
+	 0U2v7aWDrb6BqlpdvaeyE0IC2mLHBODFCv9r9bcR3f2xk0x637cYeSWRUJW+flQSeaeOi
+	 +2EkA9SBVKU9MO0GLSG+EwjocrgtJM2MDtJ5fLcl9dwlP5rLe/9y98C7KAgmQL87sVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xLqSvN7z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1BLkgXlb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405F0606A32F;
-	Wed, 18 Nov 2026 15:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12226606A331;
+	Wed, 18 Nov 2026 15:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xLqSvN7z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FFC1F000C4;
-	Wed, 18 Nov 2026 15:21:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1BLkgXlb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 635F31F000C4;
+	Wed, 18 Nov 2026 15:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015317;
-	bh=6YK7K94zKeGDdUyNPh4kfd3uR9QkqWhbxxC4XfA+yn0=;
+	s=korg; t=1795015319;
+	bh=t2ju/u9R4tlNlBxIbs+5UHiScK9mGr34MvwXjPdYg9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xLqSvN7z7fjc02bF7QOEimljHR7WMJF9v8zEMpSLcaTQiAKxw/p2uXaXOjmGhJEua
-	 MuYjs/YMPKbxzyjFEV7A+l1zGZ1AtqcO/JvZub0JhGC2Oj4qIF2JKSZEiyjqrw+Evq
-	 MuGJlTxAAW72UrE+EfcEcNkNvkL2CAajCdalsjEw=
+	b=1BLkgXlbYFlW/yoIkgtQ9AHJZsXqxR7sci+4ZcVeY/vd4dOIwblRyM14NVdSIYUiS
+	 kczd4Jb0AVmc3rlPRbmJJiC+dw3q1QXKAiD6kAEqJaF7HIAN1o5QDv55zJaU3gMs8d
+	 UdP72LI0nZJ7bBkuf10JhTcYrx0ZHXEoAEDSlYc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Taniya Das <taniya.das@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0131/2651] dt-bindings: clock: qcom,milos-camcc: Add missing power-domains support
-Date: Wed, 18 Nov 2026 15:22:51 +0100
-Message-ID: <20261118150252.572962776@linuxfoundation.org>
+Subject: [PATCH 7.3 0132/2651] dt-bindings: clock: qcom,milos-videocc: Add missing power-domains support
+Date: Wed, 18 Nov 2026 15:22:52 +0100
+Message-ID: <20261118150252.608101989@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,35 +71,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Taniya Das <taniya.das@oss.qualcomm.com>
 
-[ Upstream commit e0f335a4e17f5c80b24b8bd2060802bac072775c ]
+[ Upstream commit 3da90acddd2f211549032e9fdad40a5879803442 ]
 
-The Milos camera clock controller requires the CX and MX power
+The Milos video clock controller requires the CX and MX power
 domains, along with their performance state votes, to be enabled
 before the clock controller can be accessed.
 
 Document the 'power-domains' and 'required-opps' properties and add
 them to the required properties list and example. Since these
-properties become required for the already-documented qcom,milos-camcc
-compatible, this is an ABI break for any devicetree using this binding
-without specifying them.
+properties become required for the already-documented
+qcom,milos-videocc compatible, this is an ABI break for any devicetree
+using this binding without specifying them.
 
-Fixes: dbb9d53b7197 ("dt-bindings: clock: qcom: document the Milos Camera Clock Controller")
+Fixes: a4937e974186 ("dt-bindings: clock: qcom: document the Milos Video Clock Controller")
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260806-eliza-mm-cc-v9-v10-1-6ba52dd14343@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260806-eliza-mm-cc-v9-v10-2-6ba52dd14343@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/clock/qcom,milos-camcc.yaml      | 19 +++++++++++++++++++
+ .../bindings/clock/qcom,milos-videocc.yaml    | 19 +++++++++++++++++++
  1 file changed, 19 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,milos-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,milos-camcc.yaml
-index 707b25d2c11e6..c4aba40e316ca 100644
---- a/Documentation/devicetree/bindings/clock/qcom,milos-camcc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,milos-camcc.yaml
-@@ -29,9 +29,21 @@ properties:
-     items:
-       - description: Interconnect path to enable the MultiMedia NoC
+diff --git a/Documentation/devicetree/bindings/clock/qcom,milos-videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,milos-videocc.yaml
+index 14c31efe1308a..4d8d109cd304e 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,milos-videocc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,milos-videocc.yaml
+@@ -26,9 +26,21 @@ properties:
+       - description: Sleep clock source
+       - description: Video AHB clock from GCC
  
 +  power-domains:
 +    items:
@@ -119,18 +119,18 @@ index 707b25d2c11e6..c4aba40e316ca 100644
  
  allOf:
    - $ref: qcom,gcc.yaml#
-@@ -43,6 +55,7 @@ examples:
+@@ -38,6 +50,7 @@ unevaluatedProperties: false
+ examples:
+   - |
      #include <dt-bindings/clock/qcom,milos-gcc.h>
-     #include <dt-bindings/interconnect/qcom,icc.h>
-     #include <dt-bindings/interconnect/qcom,milos-rpmh.h>
 +    #include <dt-bindings/power/qcom,rpmhpd.h>
-     clock-controller@adb0000 {
-         compatible = "qcom,milos-camcc";
-         reg = <0x0adb0000 0x40000>;
-@@ -51,6 +64,12 @@ examples:
-                  <&gcc GCC_CAMERA_AHB_CLK>;
-         interconnects = <&mmss_noc MASTER_CAMNOC_HF QCOM_ICC_TAG_ALWAYS
-                          &mmss_noc SLAVE_MNOC_HF_MEM_NOC QCOM_ICC_TAG_ALWAYS>;
+     clock-controller@aaf0000 {
+         compatible = "qcom,milos-videocc";
+         reg = <0x0aaf0000 0x10000>;
+@@ -45,6 +58,12 @@ examples:
+                  <&bi_tcxo_ao_div2>,
+                  <&sleep_clk>,
+                  <&gcc GCC_VIDEO_AHB_CLK>;
 +
 +        power-domains = <&rpmhpd RPMHPD_CX>,
 +                        <&rpmhpd RPMHPD_MX>;
