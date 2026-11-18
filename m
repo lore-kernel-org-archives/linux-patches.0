@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042285;
-	b=J+60o1itvoGHAQ8B4Jafai81KNjBxfMOjnbL54SR/N5ZKqogXiuBk/F574ujlms6Pz/X
-	 RQA0PRi5MciUZ4cbzGjo8AS4j68hnSEhcfLqIw5EuW2/OjkfVNe1IK9CnFymSgXKYimQ3
-	 TWHLtkMJTDoWafoR8nuUtfXC9qK2AloXuRnh2xPAWl4Prk0gNmANsO0HSDV6A4zupR0hr
-	 WiWE9mDlKZiXxH6EEpkkGLjMBLWbGfj0+szxUkDt/sADt4X4eGhadXrjuIzy02zRPQ95/
-	 s7nQAxA+GL+2ij2U4V4F+1NIt+9RNkCVpjJCTAeh/N4rJ0Q9ESEgmWO1vm3T96MS4YA==
+	t=1795042288;
+	b=W7HUkze/nzciytlQi6fVtp0NMRxVD7btl0fZ+Kh1TXVETRdS9zdyRTasw0K8bjvhKJjR
+	 MD+VumLWdeul443/XdUHt+WNOg0ceab4Aj40HqWli6fadThciSOB86rRqA5zt8qcIw8ss
+	 BP42dMahnwFQAI8ir/pLB/vcM0dtMM3f4WciQgA1W2wJnJHYbrQvmu32Yurp7oyQyDDQz
+	 /yNUU9PJrzgeN458NYLwYo0i5i55OM/5VxdPKVil42lgktb3ugaVDKMBnn+5Vfpy9gnKF
+	 ufWZQZR+f+OJodLD1/CbOxIy3SogL0UaUFbSNiSqUD5TtXOknd/7RV7WeYe6O22ekvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042285;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042288;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pea2sGk60nZxKBvNA/qXJwgZuZ5bbjJ+Q+fO+3wIQ1Y=;
-	b=y+LElabVruPbFTDtI86TGm7L/qWoBR5ISsWufYm+t+jx+ur3NZSiWE1jExC9+6mxvJmm
-	 cPovCd3jvZly5B8tBdjv6JRWa34chfSGWEPfJTpxHCzpv3KE4e96g+KJ03LKmY6EgQh/4
-	 fjZkx3gD/MQSSCB+k7fHyBFpSF73jUWFCxYVVXLtRQlb2FkxmcGkGMyOk94BaAxEOF5+F
-	 HGF2SAupa0IirkHR9b2ZDqnoZamt5eCyYnZyXFOJ1xdoFQYdsd+D7XIdqj2sz+ZVtq4d/
-	 Pg6XBHtUuObRi58nPs+x2AY6zCSw7oW1jvLJC9/lgdRa4brZb6LOneXTCieaVnXscxw==
+	bh=388b0s1QVUrDfL1SxWIiJ7fjnPAir1i10yE0exde5VU=;
+	b=QcCSGWtKSrbGN8YOPzXAF83XwTw4ygk9sEick94mqIfhVzWpa2wvqq5ewnYOndaQnaFy
+	 TRLS2E5grNoQCZzt5jyxTVr/o109hymKknHEgyLNiTO8VPFX6rB2LR1IooX33DgsRROEZ
+	 FSDnU8NrBCa75xV8Xk/sHHLRVrX4mVROfnsgYc/sc937Vlv/3N8B2CprX/vQDodmJ5a03
+	 lNUHUo5LNjcuqcPc4fx/zBjNSBITa6VYsCyC8R2l76niQCCwDnb0PBcD0q0Ms0IvNse4B
+	 TwoKBEwEKJp6VocHHQ+v8tFSvCoYOpqay8swZtmTa/fO3SKg7Slhgvpqpx3PXMeZ+eA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dSbp7Y+3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="T0/DG1v4";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86210606A320;
-	Wed, 18 Nov 2026 22:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BAC606A325;
+	Wed, 18 Nov 2026 22:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dSbp7Y+3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C079A1F000C5;
-	Wed, 18 Nov 2026 22:51:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T0/DG1v4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7461F000C4;
+	Wed, 18 Nov 2026 22:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042285;
-	bh=pea2sGk60nZxKBvNA/qXJwgZuZ5bbjJ+Q+fO+3wIQ1Y=;
+	s=korg; t=1795042288;
+	bh=388b0s1QVUrDfL1SxWIiJ7fjnPAir1i10yE0exde5VU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dSbp7Y+3hvVWIyUxgZqg3E8p2Dm8X2MBxu91uDdMFCzxtCfKOQWKZG+e+jjbgUW2O
-	 ZNqyaeuEpMSdBoKUdmHS1/6eQLJVQcaHbdtteaBRiJo/6zo8a+EoBHrTUe/ujO4m2g
-	 DFu31HETHfYLgjLPD5oJ641tMgdiSTjJkOkFvrfs=
+	b=T0/DG1v4Mhr7zs70rmbesJATrGo+jw+jOvlf3LC59MopeyxSY09WWebmAhdXdfTHB
+	 KWHndbjvF6QyY+hZQn8Q3nEeXZl8cKRUwnm7Qr/MlokE614FsaUxQ/7xoKOumiEsw1
+	 mHYaUCsqvimBcqrx5gMh61F5Udsx0U5CEldxva3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Nicolai Buchwitz <nb@tipi-net.de>,
 	Justin Chen <justin.chen@broadcom.com>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3075/3318] net: bcmasp: validate minimum RX packet size in bcmasp_rx_poll()
-Date: Wed, 18 Nov 2026 16:01:37 +0100
-Message-ID: <20261118150452.340250731@linuxfoundation.org>
+Subject: [PATCH 6.6 3076/3318] net: bcmasp: fix OF node reference leak for phy_dn
+Date: Wed, 18 Nov 2026 16:01:38 +0100
+Message-ID: <20261118150452.366341735@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,49 +72,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit 07b624d2f5a4517d7d0022fbd4aef17e884b5686 ]
+[ Upstream commit a31623d91c6e48b08c74dc95567aeb62f1f35938 ]
 
-In bcmasp_rx_poll(), the driver removes a 2-byte alignment pad and
-optionally strips the ETH_FCS_LEN CRC from received packets before
-passing them to eth_type_trans().
+In bcmasp_interface_create(), intf->phy_dn is obtained via
+of_parse_phandle() or assigned ndev_dn. of_parse_phandle() returns a
+node reference with its refcount incremented, but of_node_put() was
+never called on intf->phy_dn in bcmasp_interface_destroy() or the
+error unwind path in bcmasp_interface_create().
 
-If the hardware reports a descriptor size smaller than the sum of the
-2-byte pad, the Ethernet header (ETH_HLEN), and optional CRC
-(ETH_FCS_LEN), subtracting the pad and CRC lengths underflows u32 len.
-This adds ~4 GiB to rx_bytes statistics, while the undersized frame
-reaches eth_type_trans(), which reads past skb->len into stale buffer
-data.
-
-Check that desc->size is at least (2 + ETH_HLEN + (crc_fwd ? ETH_FCS_LEN
-: 0)) before proceeding to process the descriptor.
+Acquire a reference on ndev_dn for the fixed-link case as well so that
+intf->phy_dn consistently holds a reference, and release it with
+of_node_put() on teardown and error.
 
 Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
 Reviewed-by: Justin Chen <justin.chen@broadcom.com>
 Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20261013204439.3494046-4-florian.fainelli@broadcom.com
+Link: https://patch.msgid.link/20261013204439.3494046-5-florian.fainelli@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-index 2b6b66ee63978..4a795ffc7f00f 100644
+index 4a795ffc7f00f..4e9fa6463831a 100644
 --- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
 +++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-@@ -559,6 +559,12 @@ static int bcmasp_rx_poll(struct napi_struct *napi, int budget)
- 					DMA_FROM_DEVICE);
+@@ -1272,7 +1272,7 @@ struct bcmasp_intf *bcmasp_interface_create(struct bcmasp_priv *priv,
+ 				 ndev_dn->name);
+ 			goto err_free_netdev;
+ 		}
+-		intf->phy_dn = ndev_dn;
++		intf->phy_dn = of_node_get(ndev_dn);
+ 	}
  
- 		len = desc->size;
-+		if (unlikely(len < 2 + ETH_HLEN + (intf->crc_fwd ? ETH_FCS_LEN : 0))) {
-+			u64_stats_update_begin(&stats->syncp);
-+			u64_stats_inc(&stats->rx_dropped);
-+			u64_stats_update_end(&stats->syncp);
-+			goto next;
-+		}
+ 	/* Map resource */
+@@ -1311,6 +1311,7 @@ struct bcmasp_intf *bcmasp_interface_create(struct bcmasp_priv *priv,
+ err_deregister_fixed_link:
+ 	if (of_phy_is_fixed_link(ndev_dn))
+ 		of_phy_deregister_fixed_link(ndev_dn);
++	of_node_put(intf->phy_dn);
+ err_free_netdev:
+ 	free_netdev(ndev);
+ err:
+@@ -1323,6 +1324,7 @@ void bcmasp_interface_destroy(struct bcmasp_intf *intf)
+ 		unregister_netdev(intf->ndev);
+ 	if (of_phy_is_fixed_link(intf->ndev_dn))
+ 		of_phy_deregister_fixed_link(intf->ndev_dn);
++	of_node_put(intf->phy_dn);
+ 	free_netdev(intf->ndev);
+ }
  
- 		skb = napi_alloc_skb(napi, len);
- 		if (!skb) {
 -- 
 2.53.0
 
