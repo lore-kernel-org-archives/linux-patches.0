@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029411;
-	b=UHkl4VoU5f1rvMWLpgZPS3JMEADu6wCvYuoTK/qNVB4GL+q65DsJV97Vd+3bFRKfSjPd
-	 Z3doztO/Ova0xVyrzko1uEKA2pB73/YNFZbBGfiOlFDxK1+dEND8n1fvTwduG3dbwaplD
-	 GQlgsnm2RLTP4ADnLZ9tFVEaiNHE11RGz4UrgAO6Sjzc7wbb0xJTnHo0efMrMsZn7ukiJ
-	 dWD4LVHNNt52yJ/YytQDGrdbLuTk12f8jgVBn4KLuBcDkGRhK6eTymcC/YnjtaJWlWMEi
-	 RmOktxvYqUDImxnsX5UibNAWjdRhz4cLfAaRVRJ1YSiRQRo/osQN5W5gI0VehKKv6Yg==
+	t=1795029413;
+	b=RFmgzdX49LImZCBRYBzBCLrcBO9Ckm25J0iBcH4CjkHwlInbja06Zv1oUgfE5eyLUizE
+	 AnJX8J7ylSwMhluwflPoeJ11Ua1wTrP3dgAnosP7hhCDfTs75ZnJyznTfRgJZXypJjvZ1
+	 88A6Y9loPTVsgRMSTGeDrUQ33vhoxNfyB3xdJ+tnHEnvOIiR7+bFwX902CJ77IHwiv3ls
+	 qOtEFe2PA+JLdmrfJt1pMnMXcaCnEzqiYMy47SKTHsb/75b+JKacPQLAfrO3DlmNbmcCK
+	 QbEJM6aDiL/TNTryn29yDVNN4iC2F/vQTYvkkwNneL2ouLy0kC6sF781Ybv7Ru5Y0uQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029411;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029413;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DTSwyu8Iuw6jOwv83MjANLCq17UrZihrwVjihAGclHc=;
-	b=wMtKk5yVevHDJ8r2y7iyzm4iFRc76L5dod81C389IyiZpcNFmbJuV5rrQ7SoDXnsHqw8
-	 dAbx7/YPNfETTHA4fid/LgKQhCH2purQbbi7We9a4IlR8r4+HKjCvlEpDBAK+pzYioDr/
-	 zRuWCjOAt5zRb99ATbt+GMgjaG7XHbIf4FeNeUT8faxx/UkhC6aDKwGN3Pb7v+xj8sYHT
-	 4pTs3SwHcxg2e0vaMNXo9urQbfaZwWPHxTA5mfM+2O2PRKm/sGOpeX6p27TrxseX7/x9h
-	 /7kEwKT7OIR/RCnsRgH2QedSfwnVXnEjhejaTzeQyUsa1uh7+tPkHh4a6cvX/fthC1A==
+	bh=8DG/Sa+d0bBsE9jBwfxJl9Bh6TNtr5PK7fOum5lx60M=;
+	b=t5iYpSVWI9MdWhV9w6HhEzk+FmK+6uwWZL2rq+aDx/gNV1MygUdo5LpAmZasaf7Otw/f
+	 kvjVZUSXHRdMkMXnXprebKisa1SxpZc0TqTV6thGZ+/uv0cWQ+eqM5Az4FPeIXiUHY3Gh
+	 Gq2mz3nCEltun3pP5JRmwb3cG6CBoIAFSlzJH21il6HUoCMbY4LiX7R+YJsK+uCtBgMpd
+	 GNnSGas+65T97c6f53e9xixy5jqUxa6KT1K5nLixe8EM77WX0X7wwf6/xN1LoJLYXGCAE
+	 4C9rH3+53+wyVOFa7fNVoUYAXoquVZOhk2Jp6oczIYooJBndIvF++fD+yOI8FR/gQ9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XR6P0r2k;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c3niEjMh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58379606A32F;
-	Wed, 18 Nov 2026 19:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D155B606A31C;
+	Wed, 18 Nov 2026 19:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XR6P0r2k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619D71F000C5;
-	Wed, 18 Nov 2026 19:16:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c3niEjMh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325301F000C7;
+	Wed, 18 Nov 2026 19:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029410;
-	bh=DTSwyu8Iuw6jOwv83MjANLCq17UrZihrwVjihAGclHc=;
+	s=korg; t=1795029413;
+	bh=8DG/Sa+d0bBsE9jBwfxJl9Bh6TNtr5PK7fOum5lx60M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XR6P0r2ktn/XE3X70LMLLZIMSbd2EyAZm4U52lsBCLn4zP3MW4M9TSH+LY/Ei+BB7
-	 piTja3VwSVANy+NKiGn0dz1sgqoEyw7DHGmMQBqo3OOq/ae9IUfkLx3OyWdSHsMj1/
-	 78klp5UEkC3NwQvW3VQjqRrNbyiLzhx5V08j+2+M=
+	b=c3niEjMhKdVJ+eUUYGb3jHoJGTS4vbW40HSrdu5/UF3QHwyBGqgIEx5uxDEluTI6r
+	 Kbf6A8UcmiQmtZKMujvn4tF6ESOF6qmDVGwcAWzLorT138/q/+uDHFbaBQyYV5rKn1
+	 NpoelEisrdjLF40394q/aCJ6vxdRScMAEryhZ5U8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0340/1756] dmaengine: dw-axi-dmac: Fix LLI dump out-of-bounds access
-Date: Wed, 18 Nov 2026 15:41:07 +0100
-Message-ID: <20261118150021.796542978@linuxfoundation.org>
+Subject: [PATCH 6.12 0341/1756] dmaengine: dw-axi-dmac: Fix CH_CFG2 channel priority position
+Date: Wed, 18 Nov 2026 15:41:08 +0100
+Message-ID: <20261118150021.850644815@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,42 +71,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Jia Wang <wangjia@ultrarisc.com>
 
-[ Upstream commit e6b49f8016ee8b642e8e495d1704342ee0b35d72 ]
+[ Upstream commit 2a9013c20c46216b92ff09e2283b5244a91c59da ]
 
-axi_chan_list_dump_lli() uses the channel-wide descs_allocated count to
-walk the hw_desc[] array of a single transaction. If multiple
-transactions have allocated LLIs, the channel count can exceed the
-transaction-local nr_hw_descs and make the DMA error path read past the
-end of hw_desc[].
+The CH_CFG2 channel priority field occupies bits 51:47 of the 64-bit
+channel configuration register, corresponding to bits 19:15 of CH_CFG2_H.
 
-Use the descriptor-local nr_hw_descs count when dumping LLIs.
+The driver currently shifts the priority value by 20, programming the
+wrong bits. Use bit 15 as the field position.
 
-Fixes: ef6fb2d6f1ab ("dmaengine: dw-axi-dmac: simplify descriptor management")
+Fixes: 824351668a41 ("dmaengine: dw-axi-dmac: support DMAX_NUM_CHANNELS > 8")
 Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260902-dma-fix-v3-2-414c6449fbcc@ultrarisc.com
+Link: https://patch.msgid.link/20260902-dma-fix-v3-3-414c6449fbcc@ultrarisc.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 4d4052845534c..b6d4798068ffc 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -1054,10 +1054,7 @@ static void axi_chan_dump_lli(struct axi_dma_chan *chan,
- static void axi_chan_list_dump_lli(struct axi_dma_chan *chan,
- 				   struct axi_dma_desc *desc_head)
- {
--	int count = atomic_read(&chan->descs_allocated);
--	int i;
--
--	for (i = 0; i < count; i++)
-+	for (unsigned int i = 0; i < desc_head->nr_hw_descs; i++)
- 		axi_chan_dump_lli(chan, &desc_head->hw_desc[i]);
- }
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+index d6e53f400af25..21adc030a7109 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+@@ -325,7 +325,7 @@ enum {
+ #define CH_CFG2_H_TT_FC_POS		0
+ #define CH_CFG2_H_HS_SEL_SRC_POS	3
+ #define CH_CFG2_H_HS_SEL_DST_POS	4
+-#define CH_CFG2_H_PRIORITY_POS		20
++#define CH_CFG2_H_PRIORITY_POS		15
  
+ /**
+  * DW AXI DMA channel interrupts
 -- 
 2.53.0
 
