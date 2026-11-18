@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046639;
-	b=GlCWAqAsVt0L6eChg0GH0WjK+Wjv1ZCYSGgCBapGAkn1fTyRRpGZUuNfxL7c7p926f7d
-	 hcfGV2gHHl+IyIu5Mnn54HqIg7MRJzgZXtoOEh1R3I7GdbnCYSIAO6vgzQJix30vWjMdR
-	 DqeBgDMvDP1fXz5t5FDjurQAJESxFGYiUvr/fm84O93bJSZGMCYKDX5vj7+CY6GusBjQo
-	 cQ+S06InRpNkyrQ/IfnzNQlxTG2R+5F2irKoms61/YwDjNtRQMfcG+CnoWKyTnnL6ijg2
-	 WeAbEl0uOXnLExzvZrViinWHUBMbI/SyfIP13E54O3MXBI5v5/w6tebBn32FW3tn8ug==
+	t=1795046642;
+	b=bzLq4fknZpSQPtMIlokIGpcHWVAIqoNAq+8DsDzi3qIIATa5ajtKswoLaOA5IPGkc4f2
+	 NygfJ6SfK94Ybq2hcFLzw7zriJxZQZ8zKXdvSWUtTo/mYR8z2FjohyHyamRLMi1KewjTX
+	 C1/mCEDjh2LahUUJVjmRuH4JfGRPb3YloDen7wm0gO0fRLtMul3XnYjcghZ/dizwWGTdD
+	 u4/UmVbBe4Dyiv+QnkE6fMVKWB9OtZ73gC0+MXiQOKvUZuUFCpvSy10TnSYeQ2QhHeVSi
+	 tuZCmkDq//8bPwuBiVYTcuzjzrUqPqWljmFDe9O59al+BuhO+/mwB8F7bWYh03M+NAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046639;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046642;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WsUYkHgYMgExe2T2bCcVM3vw/+xjj5mDw85mFJxq48w=;
-	b=MHHNqeCuyJ4qQt4aqJChHv7IIYia2hCcKP+CI8qsw1J0BFuvGLR/ig4rMFkJh/4qJJrJ
-	 ATdmCC4pVnxdj3678UIo6r6fe0iFwEjo/ZNk6hl0yg+YL+TNxPbbRHoNeF9pjoxQz99pK
-	 UBnTlV3cxvj6C5l7WclIIYQrbnvXBSXea6jcN2lm88pR2gaQ3FX3kyZjM+3dp8reKJmEZ
-	 nL2h1CKffwaSQ3G6LmXEHvs7SSXYvbAEiZ7HSDnekqajwE6qwyIrQHl5qNEIpvpMn1Mn5
-	 Z6aPAGrvh9IBOzWLMHBcC2TsRhOsY0Cqa7M4I8fpoQbSgSG+QVuc2ya+uLZ5lAixXOQ==
+	bh=yoS8J/Muoik7FeOzI1f/H970B08jIuG70tv49jq2Elw=;
+	b=hi2vgJNuMlC0po2dY//Ofnw57jGBRM3c/zUN3zxJBjOu9zK+I+BKnPnFEm1lTyJyifgH
+	 mntjtpLi0saw9tRFFebRPOr7mqgpjWbacnFjKnWVVLju9nYC+Z2QYHX+WSHQ49c4kp4Ic
+	 h1hvXE/0DCOYKfkE84VXL6cTG3U9WX9sHKX55cygioh/a1GetvXd2ReNSG97FVDnMwvua
+	 n0fL6gmdOCUworv+9FnnBb7+0lWMA6HSxBheXIhFYRpVofNbHQ/aHp7tY19xaJ2jiyhtM
+	 t0Z9YMHqbQ5u5+TAd4KOM0Q+6OIYcgw3u2ceiHWiMc/OBJeiqEWiHsYk3JTinFJz1fA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mJ5BYyH6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbhHuXFZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EE5606A320;
-	Thu, 19 Nov 2026 00:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289D1606A320;
+	Thu, 19 Nov 2026 00:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mJ5BYyH6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA3D41F000C4;
-	Thu, 19 Nov 2026 00:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbhHuXFZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 816A51F000C4;
+	Thu, 19 Nov 2026 00:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046639;
-	bh=WsUYkHgYMgExe2T2bCcVM3vw/+xjj5mDw85mFJxq48w=;
+	s=korg; t=1795046642;
+	bh=yoS8J/Muoik7FeOzI1f/H970B08jIuG70tv49jq2Elw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mJ5BYyH6VTBPrq6V0j1q8S8d4a7KsSuQrMH5W7/xGUd8Kqad17EMwkpEkOT0a7eWd
-	 ICqbwk+Az7cxO0D44Y/XR4QeVJpus5XIZLb1BwpiGP5GqhDxBu6cjRyuBSDjV8aqaK
-	 3ycY4M2Xc3u9BOB8nOGbJfIgJqVd5zxnRAg7aK48=
+	b=tbhHuXFZlFcRWVj6WsIK6wkzhYcxHvOsOndeZNseuU9nyjzvToMB0TBeYbGzToyKo
+	 JlmWdNeMHNRXxedBxi9WsuOsIM+TfiY4Ts+Ax0X01Kg8hx9hEVGGPuqDVeV/ZNFI9O
+	 y9H19AxVDGURGvqcIxXi9PnHs8vla3suCfUeoLyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valentin Kindschi <valentin.kindschi@fiveco.ch>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Eugen Hristev <ehristev@kernel.org>,
+	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1353/2857] Bluetooth: hci_sync: pause advertising for the scan address update
-Date: Wed, 18 Nov 2026 15:39:47 +0100
-Message-ID: <20261118150250.129146920@linuxfoundation.org>
+Subject: [PATCH 6.1 1354/2857] media: microchip-isc: fix awb_mutex and lock lifecycle
+Date: Wed, 18 Nov 2026 15:39:48 +0100
+Message-ID: <20261118150250.162330776@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,154 +69,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valentin Kindschi <valentin.kindschi@fiveco.ch>
+From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
 
-[ Upstream commit 56ed6b127a27c418dc2daa3fd076539d8fe69c4c ]
+[ Upstream commit 5540b48c0702f6a1389db3d473d7fd0db930422a ]
 
-hci_active_scan_sync() programs a non-resolvable private address with LE
-Set Random Address on every active scan start.
+isc->lock and awb_mutex were initialised in isc_async_complete() and
+destroyed in isc_async_unbind(), tying their lifetime to the subdev
+bind/unbind cycle instead of the device:
 
-BLUETOOTH CORE SPECIFICATION Vol 4, Part E, 7.8.4 says the controller
-shall return Command Disallowed (0x0C) for that command while legacy
-advertising or scanning is enabled. hci_pause_addr_resolution(), called
-just above, only stops advertising when LL privacy is in use, so on a
-controller without it the command is issued while advertising is still
-on:
+ - isc_async_unbind() destroyed awb_mutex before cancel_work_sync(),
+   which takes it;
+ - a failed .complete() left them initialised, and isc->lock was
+   destroyed only on the .complete() error path, so the normal unbind
+   path leaked it;
+ - a rebind runs .complete() again and reinitialises a live mutex.
 
-  Bluetooth: hci0: Opcode 0x2005 failed: -16
+Initialise both with devm_mutex_init() at probe so they live for the
+whole device lifetime and are freed at remove, and drop the init and
+destroy from the .complete()/.unbind() callbacks.
 
-It does not converge either. hdev->random_addr is only set on a
-successful command complete, so it stays BDADDR_ANY, and the deferral
-added by commit c2994b008492 ("Bluetooth: hci_sync: Fix not setting
-Random Address when required") requires it to be set. Unlike the
-resolvable address a few lines above, which is reused while rpa_valid(),
-the non-resolvable one is regenerated and rewritten on every call, so a
-controller that refuses the write is asked again at the scan restart
-period of about 10 s, for as long as discovery keeps restarting.
-Observed on a BCM43455, which has no LL privacy and no extended
-advertising, 190 rejections in one capture, every one retrying the same
-address:
+isc_async_complete_err then only returned ret, so drop the label and
+return directly at each error site.
 
-  < LE Set Random Address  Address: 02:16:91:90:F1:D4 (Non-Resolvable)
-  > Command Complete       LE Set Random Address, Command Disallowed
-  < LE Set Random Address  Address: 26:90:57:96:9A:3E (Non-Resolvable)
-  > Command Complete       LE Set Random Address, Command Disallowed
-
-Pause advertising for the address update, and resume it once the update
-is done and before the scan is started. The pause does not outlive the
-function: it is taken only when nothing else holds it, and every exit
-resumes advertising, which also releases the pause taken by
-hci_pause_addr_resolution(). A failed pause returns before marking
-anything paused, so the error path is a no-op.
-
-The resume in the error path is no longer guarded by ll_privacy_capable().
-That guard matched a pause taken only under LL privacy; the pause added
-here is unconditional, and hci_resume_advertising_sync() returns early
-when nothing was paused.
-
-One caveat this widens, raised on the previous posting. When
-HCI_ADVERTISING is set, hci_pause_advertising_sync() also clears
-HCI_DISCOVERABLE and HCI_LIMITED_DISCOVERABLE and zeroes discov_timeout,
-and hci_resume_advertising_sync() restores only HCI_ADVERTISING, so the
-discoverable state is lost. It reproduces today on an LL privacy
-controller through hci_pause_addr_resolution(); the unconditional pause
-makes it reachable without LL privacy as well. hci_suspend_sync() also
-pauses unconditionally, so a device that suspends loses the same state
-on any controller today. That asymmetry is pre-existing and is left
-alone here rather than folded into a scan path fix.
-
-Legacy controllers have one random address register, shared by the
-scanner and the advertiser. Restoring the advertiser here can reprogram
-it when the advertiser is non-connectable, so the scan then uses that
-address rather than the one generated for it. Both are non-resolvable
-and neither is linkable to the identity address. With privacy enabled
-both roles already share one resolvable address the same way.
-
-With the patch, on the same hardware:
-
-  < LE Set Advertising Enable    Enable: 0x00              Success
-  < LE Set Random Address                                  Success
-  < LE Set Advertising Parameters                          Success
-  < LE Set Advertising Enable    Enable: 0x01              Success
-  < LE Set Scan Parameters                                 Success
-  < LE Set Scan Enable           Enable: 0x01              Success
-
-The address write is accepted, and advertising is restored before the
-scan is started.
-
-Over 119369 btmon records and about 12 minutes of the normal workload of
-that device, alternating active and passive scanning with ten outgoing
-connection attempts, every LE Set Random Address succeeded and there were
-no Command Disallowed responses of any opcode, against one per scan
-restart before.
-
-Patch 1 is required: without it the resume added here returns -EPERM on
-the controllers this fixes and leaves advertising disabled.
-
-Fixes: 3c44a431d62b ("Bluetooth: hci_sync: Resume adv with no RPA when active scan")
+Fixes: 314c96e5203d ("media: atmel: atmel-isc-base: use mutex to lock awb workq from streaming")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5.5 btmon
-Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ Valentin: Adjusted for 6.1.y: the privacy guard removed in the failed: label
-  reads use_ll_privacy(hdev) in this tree, and the line after the added
-  resume is only if (hci_is_adv_monitoring(hdev)) {, without the
-  HCI_QUIRK_STRICT_DUPLICATE_FILTER term. The added lines are unchanged.
-  Requires commit 737139f4157d ("Bluetooth: hci_sync: re-enable legacy
-  advertising on resume"). ]
-Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
+Reviewed-by: Eugen Hristev <ehristev@kernel.org>
+Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ sashal: Changed the additional isc_formats_init() failure path to return directly after removal of the obsolete mutex cleanup label. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/media/platform/atmel/atmel-isc-base.c  | 18 +++++-------------
+ .../media/platform/atmel/atmel-sama5d2-isc.c   |  9 +++++++++
+ .../media/platform/atmel/atmel-sama7g5-isc.c   |  9 +++++++++
+ 3 files changed, 23 insertions(+), 13 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 453ed84d3e242..12f4c737e4c75 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -5913,6 +5913,7 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
- 	u8 filter_policy = 0x00;
- 	/* Default is to enable duplicates filter */
- 	u8 filter_dup = LE_SCAN_FILTER_DUP_ENABLE;
-+	bool paused;
- 	int err;
+diff --git a/drivers/media/platform/atmel/atmel-isc-base.c b/drivers/media/platform/atmel/atmel-isc-base.c
+index 9e91e4d948a24..a2e5030f0d597 100644
+--- a/drivers/media/platform/atmel/atmel-isc-base.c
++++ b/drivers/media/platform/atmel/atmel-isc-base.c
+@@ -1754,7 +1754,6 @@ static void isc_async_unbind(struct v4l2_async_notifier *notifier,
+ {
+ 	struct isc_device *isc = container_of(notifier->v4l2_dev,
+ 					      struct isc_device, v4l2_dev);
+-	mutex_destroy(&isc->awb_mutex);
+ 	cancel_work_sync(&isc->awb_work);
+ 	video_unregister_device(&isc->video_dev);
+ 	v4l2_ctrl_handler_free(&isc->ctrls.handler);
+@@ -1863,8 +1862,6 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
  
- 	bt_dev_dbg(hdev, "");
-@@ -5936,6 +5937,12 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
- 	if (err)
- 		goto failed;
+ 	isc->current_subdev = container_of(notifier,
+ 					   struct isc_subdev_entity, notifier);
+-	mutex_init(&isc->lock);
+-	mutex_init(&isc->awb_mutex);
  
-+	/* LE Set Random Address is disallowed while advertising is enabled. */
-+	paused = !hdev->advertising_paused;
-+	err = hci_pause_advertising_sync(hdev);
-+	if (err)
-+		goto failed;
+ 	init_completion(&isc->comp);
+ 
+@@ -1884,7 +1881,7 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
+ 	if (ret < 0) {
+ 		v4l2_err(&isc->v4l2_dev,
+ 			 "vb2_queue_init() failed: %d\n", ret);
+-		goto isc_async_complete_err;
++		return ret;
+ 	}
+ 
+ 	/* Init video dma queues */
+@@ -1896,19 +1893,19 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
+ 	if (ret < 0) {
+ 		v4l2_err(&isc->v4l2_dev,
+ 			 "Init format failed: %d\n", ret);
+-		goto isc_async_complete_err;
++		return ret;
+ 	}
+ 
+ 	ret = isc_set_default_fmt(isc);
+ 	if (ret) {
+ 		v4l2_err(&isc->v4l2_dev, "Could not set default format\n");
+-		goto isc_async_complete_err;
++		return ret;
+ 	}
+ 
+ 	ret = isc_ctrl_init(isc);
+ 	if (ret) {
+ 		v4l2_err(&isc->v4l2_dev, "Init isc ctrols failed: %d\n", ret);
+-		goto isc_async_complete_err;
++		return ret;
+ 	}
+ 
+ 	/* Register video device */
+@@ -1928,15 +1925,10 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
+ 	if (ret < 0) {
+ 		v4l2_err(&isc->v4l2_dev,
+ 			 "video_register_device failed: %d\n", ret);
+-		goto isc_async_complete_err;
++		return ret;
+ 	}
+ 
+ 	return 0;
+-
+-isc_async_complete_err:
+-	mutex_destroy(&isc->awb_mutex);
+-	mutex_destroy(&isc->lock);
+-	return ret;
+ }
+ 
+ const struct v4l2_async_notifier_operations isc_async_ops = {
+diff --git a/drivers/media/platform/atmel/atmel-sama5d2-isc.c b/drivers/media/platform/atmel/atmel-sama5d2-isc.c
+index ea3e8b86a7f31..629bb9ada4698 100644
+--- a/drivers/media/platform/atmel/atmel-sama5d2-isc.c
++++ b/drivers/media/platform/atmel/atmel-sama5d2-isc.c
+@@ -30,6 +30,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/math64.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/of.h>
+ #include <linux/of_graph.h>
+ #include <linux/platform_device.h>
+@@ -405,6 +406,14 @@ static int atmel_isc_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, isc);
+ 	isc->dev = dev;
+ 
++	ret = devm_mutex_init(dev, &isc->lock);
++	if (ret)
++		return ret;
 +
- 	/* All active scans will be done with either a resolvable private
- 	 * address (when privacy feature has been enabled) or non-resolvable
- 	 * private address.
-@@ -5945,6 +5952,9 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
- 	if (err < 0)
- 		own_addr_type = ADDR_LE_DEV_PUBLIC;
- 
-+	if (paused)
-+		hci_resume_advertising_sync(hdev);
++	ret = devm_mutex_init(dev, &isc->awb_mutex);
++	if (ret)
++		return ret;
 +
- 	if (hci_is_adv_monitoring(hdev)) {
- 		/* Duplicate filter should be disabled when some advertisement
- 		 * monitor is activated, otherwise AdvMon can only receive one
-@@ -5969,9 +5979,8 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
- 		return err;
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	io_base = devm_ioremap_resource(dev, res);
+ 	if (IS_ERR(io_base))
+diff --git a/drivers/media/platform/atmel/atmel-sama7g5-isc.c b/drivers/media/platform/atmel/atmel-sama7g5-isc.c
+index 4bc2f5c7f2f7d..2da0f7282d015 100644
+--- a/drivers/media/platform/atmel/atmel-sama7g5-isc.c
++++ b/drivers/media/platform/atmel/atmel-sama7g5-isc.c
+@@ -33,6 +33,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/math64.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/of.h>
+ #include <linux/of_graph.h>
+ #include <linux/platform_device.h>
+@@ -394,6 +395,14 @@ static int microchip_xisc_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, isc);
+ 	isc->dev = dev;
  
- failed:
--	/* Resume advertising if it was paused */
--	if (use_ll_privacy(hdev))
--		hci_resume_advertising_sync(hdev);
-+	/* No-op when advertising was not paused. */
-+	hci_resume_advertising_sync(hdev);
- 
- 	/* Resume passive scanning */
- 	hci_update_passive_scan_sync(hdev);
++	ret = devm_mutex_init(dev, &isc->lock);
++	if (ret)
++		return ret;
++
++	ret = devm_mutex_init(dev, &isc->awb_mutex);
++	if (ret)
++		return ret;
++
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	io_base = devm_ioremap_resource(dev, res);
+ 	if (IS_ERR(io_base))
 -- 
 2.53.0
 
