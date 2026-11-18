@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051073;
-	b=OBfioKOki/czaC/8gRUz+3i7MUh1WZxTtEwoYG+1Men672Bm0ZfTLAkKO2HREY9Se5C/
-	 Gz2baQUP+gpYTSpM+up2y3ehS1duD4oZI+V4TCOI7LyJPXA1qH38GewCUIr4tu+eDRqxn
-	 sH2PN32biGCToUBDHeXXZcEd2KLO4Ii19RbzfczhOaH3ttkuXXNPSQhUwIEnkxPTL/s3c
-	 f0cllJ+0HIl4HJsqCL77+XumPhQ3VWC6zJ0+8qELagO6pWRBbicDN7ZFfenCMiga2NBhA
-	 UbgdCFxOamNbCBK0oRkMNj42Cw9Xh8TtYE5VGPPjg1uEGcU+TUs0rkAOsVT9B4Urnvg==
+	t=1795051075;
+	b=E5vuhWksINGq9NeKw7BFVv0n1XQZpO4vat4KkoJHWy4fVjc2X7yIemGKnZoiT2Y6k2bk
+	 JjsULAft6PUnhqs1P9725OWIPlx4T1283S2v9yccTsPzpNO+ESY1uQxO374C7IsLIKz/4
+	 CBm7/B5UUwNJaQdj7X4hljb7rvG0mAhRlpu7d54/73DqwzVBww5E0VshkCv4sBU/b6gCN
+	 gETgTWHkaQxFvzJygJy8/+3x1nL9jPDktdDB+CN6CkY4fSpYLuyutqrjl/rh8ZYPzO+7v
+	 fNjzj7MuH7dHNGBNTpH8qcY24fXzVPcGaxDR1zzDBb1Pm4Eu2zoUaUMTk74zoGtaX0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051073;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051075;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cfEqmVn6cBEse0ObIAqWp3WUbI0imHOisBKmvcbLwkE=;
-	b=f/SA/O1yy5pSZcjF92yS015Rpa2Z1O3R9UWREpXT2q+TH6PzLgbA47jAEhaliVO4ScqK
-	 x/DlP21H9rOHqBedfIYgFODyf3b0wGwGlzuGnzcTLcN1/Fr8U05CVaK5kWe121tFrQYeb
-	 KdJUsAZwlScmUS0HomELO3KAMWDiNLrB2NB4nZXjDAY8Z0TGVqjvLVjWoU7y486fzW1eG
-	 HidEjxTYo/pOpAdGHhqeOxaluY5/QtUDIQzYETW3lVPbi0kRQ7LiUylAZtq/VQGOph3X5
-	 1AUq7FIVX12FU5zH/t6hibvW62HCSPmcN7FYcSD03GbRin9HFhZTB62MMcPX0XMicPw==
+	bh=HU6WVE0x5i5YOS74X/LNgWVc7LGoXpPnHuYRKl7jJi0=;
+	b=2cnxbTqyjkJIs7byRUMVgQadbVoJWKV9v6NL8LNgK9hok8rNFIq2Ro6n3UuYL/GIFSYI
+	 pHOkXTvUHh40kLVYK9Ug18xt5Aft9n7FHFXKXSyqUPb7fNwifvZwhbxsQpXd/LLKB/IuF
+	 ovFOccZBfNScosOfZuSZQht7ZPBEo1zcdAsbJk9K+8l9USmcmwT6YW2DSU8pe1xnOsP4k
+	 hUkoh4WdyfOGMXl3Pb0TF7gRN+2QKpcjoHLzMnzgWLy0BSp7BrIkzBl+KjPxEnRHrily+
+	 RK6MY3n7p0hV0tXlf3nDHfHLMyWtoNNlxXtsYPC3eSSeNxEeIJ801wprfNEVy9r3r/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HDxJJSQ8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YTHNPnJb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16483606A320;
-	Thu, 19 Nov 2026 01:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA43D606A320;
+	Thu, 19 Nov 2026 01:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HDxJJSQ8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE791F000C4;
-	Thu, 19 Nov 2026 01:17:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YTHNPnJb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD851F000C4;
+	Thu, 19 Nov 2026 01:17:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051072;
-	bh=cfEqmVn6cBEse0ObIAqWp3WUbI0imHOisBKmvcbLwkE=;
+	s=korg; t=1795051075;
+	bh=HU6WVE0x5i5YOS74X/LNgWVc7LGoXpPnHuYRKl7jJi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HDxJJSQ8S9HrSEsBaMfHnPYK9+pPgr8m7d2le63uoeCYw41LeFQTqwD7QbfGUdxde
-	 fJmCRHFJFKNLT5cEisJ9wqdnXvDpR8c23rBpyAMpt2nbwLm4lbPQJe+9qONUA7CnQc
-	 MTvqb4kn7LGB3LgFdDhV1YJpmS0IzA0twi/VlKpk=
+	b=YTHNPnJbBwIJHCIILzO7HoYAtjiVPvAGF8zxZubN8FACcbIUc1Gyzjw+Fzusqbpgj
+	 Uy4hMWtkY/cKhky0p4BQafAqD5TFp7ooa1d1p6MEID5jHlYf2A/rc+qh8/CgbTKAFT
+	 V46AsnBwNLiCRFAiXl4FnELNx+Cy7yIKftkkeV/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Jacob <mjacob@feralsw.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Christian Gmeiner <cgmeiner@igalia.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0042/2214] drm/amdgpu: Support some Barco AMD based graphics adapters
-Date: Wed, 18 Nov 2026 15:28:38 +0100
-Message-ID: <20261118150011.740522234@linuxfoundation.org>
+Subject: [PATCH 5.15 0078/2214] drm/etnaviv: check all modules for idle after reset
+Date: Wed, 18 Nov 2026 15:29:14 +0100
+Message-ID: <20261118150013.096030858@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,57 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Jacob <mjacob@feralsw.com>
+From: Lucas Stach <l.stach@pengutronix.de>
 
-[ Upstream commit 3dc4d68ee26a7ac12069ff0562ad8935106c79b6 ]
+[ Upstream commit 1006d1f7c03d92b28c252333836635df8e165401 ]
 
-These adapters typically are only supported by Barco on the
-Windows platform. However, with these changes in the linux
-driver, multiple monitor support should work correctly.
+While the FE is an important part of the GPU, which needs to be idle
+after reset, all other modules should be idle after a proper reset.
+Check all present modules for being idle to determine whether the
+reset was successful.
 
-Signed-off-by: Matthew Jacob <mjacob@feralsw.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
+Link: https://patch.msgid.link/20260511085148.652256-1-l.stach@pengutronix.de
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/etnaviv/etnaviv_gpu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-index 58292a296875b..308bfb7feb39c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -1707,6 +1707,7 @@ static const struct pci_device_id pciidlist[] = {
- 	{0x1002, 0x6646, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE|AMD_IS_MOBILITY},
- 	{0x1002, 0x6647, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE|AMD_IS_MOBILITY},
- 	{0x1002, 0x6649, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
-+	{0x1002, 0x664D, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
- 	{0x1002, 0x6650, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
- 	{0x1002, 0x6651, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
- 	{0x1002, 0x6658, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
-@@ -1777,6 +1778,7 @@ static const struct pci_device_id pciidlist[] = {
- 	{0x1002, 0x6930, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
- 	{0x1002, 0x6938, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
- 	{0x1002, 0x6939, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
-+	{0x1002, 0x693B, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
- 	/* fiji */
- 	{0x1002, 0x7300, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_FIJI},
- 	{0x1002, 0x730F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_FIJI},
-@@ -1805,6 +1807,7 @@ static const struct pci_device_id pciidlist[] = {
- 	{0x1002, 0x67C4, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
- 	{0x1002, 0x67C7, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
- 	{0x1002, 0x67D0, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
-+	{0x1002, 0x67D4, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
- 	{0x1002, 0x67DF, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
- 	{0x1002, 0x67C8, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
- 	{0x1002, 0x67C9, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
-@@ -1818,6 +1821,7 @@ static const struct pci_device_id pciidlist[] = {
- 	{0x1002, 0x6985, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
- 	{0x1002, 0x6986, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
- 	{0x1002, 0x6987, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
-+	{0x1002, 0x698F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
- 	{0x1002, 0x6995, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
- 	{0x1002, 0x6997, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
- 	{0x1002, 0x699F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
+index 0fff51dc97755..ed8f5f8439f78 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
+@@ -537,9 +537,9 @@ static int etnaviv_hw_reset(struct etnaviv_gpu *gpu)
+ 		/* read idle register. */
+ 		idle = gpu_read(gpu, VIVS_HI_IDLE_STATE);
+ 
+-		/* try resetting again if FE is not idle */
+-		if ((idle & VIVS_HI_IDLE_STATE_FE) == 0) {
+-			dev_dbg(gpu->dev, "FE is not idle\n");
++		/* try resetting again if any module is not idle */
++		if ((idle & gpu->idle_mask) != gpu->idle_mask) {
++			dev_dbg(gpu->dev, "GPU modules not idle\n");
+ 			continue;
+ 		}
+ 
 -- 
 2.53.0
 
