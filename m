@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047534;
-	b=auxGznFmbkJXtuMTHcGSjrNWL/7yPN1LRHtcpaywMBsVyuEOo60et9gjwxMZT6ofRTzH
-	 MN1LSDOXftnj/bRqyTITX1vnqQuOTkoziNgfpxF0ehqOco1qBife4WtR63ZViBoIIW7eX
-	 TCXLu5PkAOCVAVo/0m0I/AwdJfCnUB1GfV3jHNmReoze6GjfsRyCuIWsiTJyQBVgDUDvR
-	 uw6k2yhTJS3qCFeoKnyN+qaXEjsLd9UaHNlaW0bOK6OW5Uya0HeHP3VxkTotVY+lP5VWI
-	 FriJFWj6pVfFtG6iDECeGo3jL6wyXYx6RIPj5esUMQtes1sjYp+peCRmqg4z7by3eAQ==
+	t=1795047536;
+	b=eMvTurmX2VBbSI3xEdXDt19JumUM1eheJBefgWqMkSUMfuWMZKj5xgZefppL0gwLX+G0
+	 3LVNcZ2GRWfgyiiZXBaRcRO2rxUo2VK9SZWClvmqhiGC01Xn6NAHZqekGQx1Z/3Mi1+P9
+	 iVpSIUQI8urSM/yvPaRaTSlLsinkCJZbyNhbWJBpF1en41jmtqGPAEoCiMKYkTEVWJ7cj
+	 4CaoLykHj/atLAA+tkYy2HfsB8l1wC0Jv2S5/n6oYEOsWV52aO2qRmZwSp5suq/CuRuqa
+	 BO7w1muAmrnvyW8QyC7vpPF0lpYm48aZR/gq/fiVY8TN7c+3rE6hp+JtrHz2DkE9yVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047534;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047536;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OME0u0ewg0TMDnX+e1ElQg1XwGmHftu7zlNPtdcaGfQ=;
-	b=sLvRLj2GEaffe+RYQ78ypT3/yP/o+RFw6KQWOfAshN4fNn5TWTQgGQN7ST3pv0pZSIu7
-	 u75EwkfpDbdhE6DhOhtRyE229ecKs01QzXgMmfCfTY8pP4fmeZbTL5l6R0L9Xhicjteu8
-	 DYaI2hE8pf3Hyq7VnUyG0q6YN0RWHDkSxJYjsu9G1OsIugQ+ZzPUuT9Svb1bk89gasPuO
-	 UMJDKUYXa+cxjgq2Miri5phPsIB08t5SqlCIqfnztHXsHH2i33png/nAQImXkbsHuujQt
-	 UGiyuRb8SDbE4XOGjTT7CZGLYB2JNS3g+Y+RLqAaXv4PZSY6QY3MCJtG/9H5WJpRPXg==
+	bh=3lFOrEWulP9ZwT57BXJIpke4tKuMVk9IpE59t1TCMY8=;
+	b=w83XQWmixy/R3CF+icm1DvFv2tQvzd/V5wLJJ8lt8uTCVEyQcXDxg/bpaF5R5UgyoIq5
+	 DH5ueGLd8FPHBXSSUndo5XZ49Ks8p8SCofVy9ff9P27YSyhmOnxk/umlIXEZQMYIX3h+F
+	 vV0mDEAOOhK9hiT53mlww2B6n6mWnrdbhm+rnMx/nYrBTekOKBIZXDbgzk4dzVcyU7sJz
+	 lr312cOzpBh4PotvUJBwJPm4okrjJ5eUVOsbDx6+S805IQF874dU8XVEvVPoUcyKLOTLn
+	 tRKQjuhEY3bmo1pPWRRMHfiTg9ROj0eoqnFPozlujDMxqh6rFeWpjfyJDExq2mf5osw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="op/ETZwH";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bd9wKOIq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF16606A320;
-	Thu, 19 Nov 2026 00:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0074606A31C;
+	Thu, 19 Nov 2026 00:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=op/ETZwH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CACC1F000C4;
-	Thu, 19 Nov 2026 00:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bd9wKOIq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 344821F000C4;
+	Thu, 19 Nov 2026 00:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047533;
-	bh=OME0u0ewg0TMDnX+e1ElQg1XwGmHftu7zlNPtdcaGfQ=;
+	s=korg; t=1795047536;
+	bh=3lFOrEWulP9ZwT57BXJIpke4tKuMVk9IpE59t1TCMY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=op/ETZwHGOualECfAvjqkLOKxti+tPdXgJtf9dwePoOmpS8uMWICW2u7/qMMW6U9P
-	 BMBGE2/CzUcEyBGKWjT3nPnsq1SZdO8v0whW7bMFO/SMirzJ8s6bopmJT23c5MbP45
-	 PRotVoj75FgLAug+36UsKAA9bGLBrpkVJtxScIcc=
+	b=Bd9wKOIqNvIulZTzS5j1MoLk5kehHLEEV8Du8n+LL7g48NDgaGS5d4yRY/xwM4BBH
+	 Fh9j90kLEsaRDYlio7EmPTM+H6lVJBTjfU3RhDlVzz0XhmRBtEDfoXOEwuG7lDUaII
+	 tu+R6YWcunvjvuZdUJnXXPkmPfXCmNKJFs0MnJMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Daejun Park <daejun7.park@samsung.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1672/2857] nvme: unregister when pr_register() is given a zero new key
-Date: Wed, 18 Nov 2026 15:45:06 +0100
-Message-ID: <20261118150301.529796182@linuxfoundation.org>
+Subject: [PATCH 6.1 1673/2857] mm/vma: dont leak the charge for stack growth
+Date: Wed, 18 Nov 2026 15:45:07 +0100
+Message-ID: <20261118150301.564596017@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,50 +72,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daejun Park <daejun7.park@samsung.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit a9d431124fb2e58215daf0299d6fcf47bbc2d6b1 ]
+[ Upstream commit b1ee87802111156e27557e82acc31fa7dfc76e2a ]
 
-The block layer PR API defines a zero new_key in pr_register() as
-unregistering old_key. nvme_pr_register() sends Replace Reservation
-Key with a zero NRKEY instead. The host stays registered with key 0,
-and its next registration with another key fails with Reservation
-Conflict.
+acct_stack_growth() charges stack expansion even without VM_ACCOUNT.
+This can happen for read-only or MAP_NORESERVE mappings created with
+MAP_GROWSDOWN. Unmapping these VMAs does not release the charge, leaking
+Committed_AS.
 
-The pNFS SCSI layout client unregisters this way at umount. A later
-mount cannot register and sends all I/O through the metadata server.
+Only check and charge growth for VM_ACCOUNT VMAs, matching mremap().
+Unaccounted growth skips the overcommit check while remaining subject
+to the other stack-growth limits.
 
-Send Unregister Reservation Key when new_key is zero.
-
-Fixes: 1d277a637a71 ("NVMe: Add persistent reservation ops")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-[ sashal: adapted the change to the existing nvme_pr_register() implementation using numeric values for unavailable reservation-action constants ]
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-44-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: Replaced vma_test(vma, VMA_ACCOUNT_BIT) with a direct vma->vm_flags & VM_ACCOUNT check. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ mm/mmap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 61a34581ca70a..d3f4fd67a0ec7 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2236,7 +2236,12 @@ static int nvme_pr_register(struct block_device *bdev, u64 old,
- 	if (flags & ~PR_FL_IGNORE_KEY)
- 		return -EOPNOTSUPP;
+diff --git a/mm/mmap.c b/mm/mmap.c
+index 471dbff3e11de..4138cc91827c2 100644
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -1974,7 +1974,8 @@ static int acct_stack_growth(struct vm_area_struct *vma,
+ 	 * Overcommit..  This must be the final test, as it will
+ 	 * update security statistics.
+ 	 */
+-	if (security_vm_enough_memory_mm(mm, grow))
++	if ((vma->vm_flags & VM_ACCOUNT) &&
++	    security_vm_enough_memory_mm(mm, grow))
+ 		return -ENOMEM;
  
--	cdw10 = old ? 2 : 0;
-+	if (!new)
-+		cdw10 = 1;
-+	else if (old)
-+		cdw10 = 2;
-+	else
-+		cdw10 = 0;
- 	cdw10 |= (flags & PR_FL_IGNORE_KEY) ? 1 << 3 : 0;
- 	cdw10 |= (1 << 30) | (1 << 31); /* PTPL=1 */
- 	return nvme_pr_command(bdev, cdw10, old, new, nvme_cmd_resv_register);
+ 	return 0;
 -- 
 2.53.0
 
