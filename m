@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023835;
-	b=DGH7bRABa7Fd0RPD/9CR3j7no3fF20qzjCNTDw9PDcOai/MUtxpPknbe8QTW8BrWj02Z
-	 36cokp0jLxwuFggkfuRfXt2PoOBdHaCShz9H5zmJ9uEHC7uXzCkBOwOt86zB8Uy0Ybg/U
-	 aSJ48g7qPlZVzl+sSYZ2lZINTIeee8N57RLO4g8PrZskS809+uLFYseKUk6ZtrVbnSDLp
-	 FnCNAh5/YDv+VzqbHNxTWWTR7Dq+FtTOkA08Z6yky3uV9PU+Ei6K1mzKEX98ZhU4TnGTL
-	 exVg4hLtIDn8R/NxPCv4UczrftfR6VF6ojYp5/MJh8r/SqRSsBUve6fTXpetnD0nHgg==
+	t=1795023838;
+	b=Jo3Wz3w/FHZf6KKqbcsZJpiFPmsvKNt0zEqkSQiSpqkDHhuT+vKwLgNcmLjrBTs/pmZ0
+	 g70QTbbYIRwYLI1FIH0qjOb3zsj9mTDsAoNhe2wtF0dpgU7Tmj53j7j/9ilSV75qQYRX0
+	 jSoaFaXhNixDj7atbH5dolsc6jdbNbcl3e3K4epcv7g7hEZPOwjVdPDtuZAfkiddVMu6l
+	 UQ8FmB5qM9pGWuYtI4vyK4Yns7+eer+jCzbtmhiA5DMp5H021Np3VneVttnbTMJVs3Lsx
+	 cv4XTthdUzmklNmcF4GhsT/IFIrLheiywmA623VYer2iqNZtJWBXS9sSV8PqlFrj0cg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023835;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023838;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=hP1NEHKbyDBtY4rYRHC1Np1aO8iG404vKUBeDAIcKmo=;
-	b=Y2LCcd7UYxfZh4yXMiXEgJ+HGvY7b2gchiSk9HMOn5Fg7qG4KzRCs/blWukApNHGeeja
-	 HCjLrzI/WcwY01vS4o1KIlQAvVtGanA+Kcv4kMo3NZBn26mSA42dFELQI12Nq50u7hhTO
-	 r8MlOZnOwkUujAkWw5P5RyOZ4nPe3MEZZx95sp4Hjlef+w0pzaHvB8LnwKV52/50HBwOS
-	 oSXAQ9AD6cphJvt0JWRtR4QoFacxtQazZpi5I/R2L1yAATl0KwPzYZ/L0G0U9pW3lThas
-	 Xi9FixDZrR1KiScVvVqW0TJAa+FBMdNkFlIICbxikbvQLjvCY9VmS7i8hjZt1vs1CJQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=NzYgi4a2ETds4vU6CwMbQ2GqOvmoJ9CSsXie/ZlzMcE=;
+	b=fO96pNyis0OYMaX37Aykx4WbTp3ST65Ewj45SBhP4bXne2FZGTGSO5PjOUuNmZ9y0Fcq
+	 V4T2khc7P4d4uRTLb2jtrA97I/ZmIpE+EfgcUDvnmiTGNcOyhoW0XNYLF7wLK0Tfphq6G
+	 /A3y+BuW6dfd/gXtVb6uXBbtPV9l9hHX1mNyFpkOEx1hOxDNZ9Yv7ExpJq7LadqqVXXyB
+	 ZwEnaDgeUxb9FB9+ELrydV5qHul5A8uQk8bKZY1Cjp8FHRmc6+8vKojZOL/TuHO1sjuue
+	 MtOsAEYr3FHOCLhZqqZFQ7523WfkbX7TfBPbSDo1l5GJRVopbgoU3ZkUDOMN73EMFAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w9NvHkTv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s5AEE2O6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA386606A320;
-	Wed, 18 Nov 2026 17:43:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCBD606A31C;
+	Wed, 18 Nov 2026 17:43:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w9NvHkTv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 039821F000C5;
-	Wed, 18 Nov 2026 17:43:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s5AEE2O6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D921F000C5;
+	Wed, 18 Nov 2026 17:43:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023835;
-	bh=hP1NEHKbyDBtY4rYRHC1Np1aO8iG404vKUBeDAIcKmo=;
+	s=korg; t=1795023838;
+	bh=NzYgi4a2ETds4vU6CwMbQ2GqOvmoJ9CSsXie/ZlzMcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w9NvHkTvkVsSXYoW4nWY978ZDjGJJHYIMUxnQtK2vpR1/uEEOn6IhVa682DFnCI/5
-	 UPXrP6RXot+/JzTJ4uUNTwSthrcpVclHJ1L0KE5fmhXQLcP5YbWfgAHi3ArhpMJygo
-	 MM0gFb5tEE2iWhoL5LJe4xN+tGpJdiu43t0vYJtM=
+	b=s5AEE2O6Fu3zZM0Pf5aflyemDpAmPwpJV9CKFoSrM0MUFOAaenHAlOywaJw1DX95j
+	 qaeLoxWPRBTRpfzcNQ6BLvdWcS9vGsErVwe9Jvkd10C7hDpPCPfbSggdxmOKo+DuPt
+	 QcxhUA5kRkeTLAR3FBqiFOxk7xWst1FZ8mDWSM20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C8=98tefan=20Ghe=C8=9Bu?= <stefanghetu9@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0474/2151] ASoC: SOF: imx: Prevent stack OOB read in DSP panic dump
-Date: Wed, 18 Nov 2026 15:36:49 +0100
-Message-ID: <20261118150139.282463444@linuxfoundation.org>
+Subject: [PATCH 6.18 0510/2151] cxl/pci: Skip reset detection for DVSEC emulated decoders
+Date: Wed, 18 Nov 2026 15:37:25 +0100
+Message-ID: <20261118150140.629480548@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,51 +63,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ștefan Ghețu <stefanghetu9@gmail.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 48ed992bfbe53537ad1cbc8ad68f7031e7ac0af3 ]
+[ Upstream commit 17ff3a9fd8669ea53fe83a7013871f30214d5537 ]
 
-Commit 58bb5081cba1 ("ASoC: SOF: Xtensa: dump ar registers to restore
-call stack") added a shared Xtensa helper that iterates over a flexible
-array of AR registers (`ar[]`) controlled by `plat_hdr.numaregs`.
+HDM decoders are emulated from the DVSEC range registers in two cases:
+(a) the component registers expose no HDM decoder capability, or (b) the
+capability is present but the DVSEC ranges were the ones in use at driver
+load.
 
-While Intel IPC4 allocates dynamic storage for the AR block, the i.MX
-IPC3 path reads the oops message into a stack-allocated struct without
-backing storage for `ar[]`, while leaving `numaregs` unvalidated. This
-causes a stack out-of-bounds read when printing a DSP panic.
+After an FLR or SBR, __cxl_endpoint_decoder_reset_detected() reads the HDM
+decoder Committed bit for every decoder marked enabled, emulated ones
+included. In case (a) regs.hdm_decoder is NULL and the read oopses. In case
+(b) the Committed bit was never set, so a reset gets reported that never
+happened.
 
-Clear `numaregs` to 0 on i.MX since the AR block is not fetched or
-supported on this platform, preventing unsafe out-of-bounds memory
-accesses in the shared Xtensa helper.
+Use the absence of cxld->commit to elide the check for emulated decoders.
 
-Fixes: 58bb5081cba1 ("ASoC: SOF: Xtensa: dump ar registers to restore call stack")
-Signed-off-by: Ștefan Ghețu <stefanghetu9@gmail.com>
-Link: https://patch.msgid.link/20260908170740.276800-1-stefanghetu9@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Case (b) tested under QEMU: a reset on an endpoint driven down the DVSEC
+emulation path no longer reports a reset or strips the decoder flags.
+
+Fixes: 934edcd436dc ("cxl: Add post-reset warning if reset results in loss of previously committed HDM decoders")
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Link: https://lore.kernel.org/linux-cxl/20260811113608.2815625-1-kanie@linux.alibaba.com/
+Link: https://patch.msgid.link/20260831110449.719086-1-kanie@linux.alibaba.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/imx/imx-common.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/cxl/core/pci.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/sound/soc/sof/imx/imx-common.c b/sound/soc/sof/imx/imx-common.c
-index e787d3932fbbf..1f506e606b012 100644
---- a/sound/soc/sof/imx/imx-common.c
-+++ b/sound/soc/sof/imx/imx-common.c
-@@ -34,6 +34,7 @@ void imx8_get_registers(struct snd_sof_dev *sdev,
+diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
+index d2ee7d853f1fd..e1c2e30069fcc 100644
+--- a/drivers/cxl/core/pci.c
++++ b/drivers/cxl/core/pci.c
+@@ -761,6 +761,15 @@ static int __cxl_endpoint_decoder_reset_detected(struct device *dev, void *data)
+ 	if ((cxld->flags & CXL_DECODER_F_ENABLE) == 0)
+ 		return 0;
  
- 	/* first read registers */
- 	sof_mailbox_read(sdev, offset, xoops, sizeof(*xoops));
-+	xoops->plat_hdr.numaregs = 0;
- 
- 	/* then get panic info */
- 	if (xoops->arch_hdr.totalsize > EXCEPT_MAX_HDR_SIZE) {
++	/*
++	 * Decoders emulated from the DVSEC range registers have no commit
++	 * callback and no HDM decoder registers to consult.
++	 */
++	if (!cxld->commit) {
++		dev_warn(dev, "DVSEC emulated decode may have been cleared by reset\n");
++		return 0;
++	}
++
+ 	cxlhdm = dev_get_drvdata(&port->dev);
+ 	hdm = cxlhdm->regs.hdm_decoder;
+ 	ctrl = readl(hdm + CXL_HDM_DECODER0_CTRL_OFFSET(cxld->id));
 -- 
 2.53.0
 
