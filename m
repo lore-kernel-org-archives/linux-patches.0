@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060789;
-	b=DxqFc6Ug8PLyZfPEUHRc14wb13rxmYIj5ytOHb6U1dcp+Vy/e6USoGKl++MkJFKRUeF5
-	 T81ZsQxwz1JSi6r9R8QCSB58POt6PYxha4YCCF8aEXcw0hTCerBofzmaqx8BdSKSzZ6uC
-	 17BmnM1nWE6jHHM4jDABPBLZJ+jXgJs7NvKisM6dxmx92ibPmql+VWXOO9j+Ybkw08TeS
-	 Ai1FFZZ8LgBPez723at2qq4YZC+8fEow89h0O/03Zca214TMa1CMPRKM24VJoWdM3pkB3
-	 VLgvvZ3Ws74wT8zEIzkjHH9TIJjfFQ3nvWj4wH75Ke/DfzFBgbVXPM3oYXcHB3NwHCA==
+	t=1795060792;
+	b=1/bpI7F52BWBmpdI6Fjh9kn0FEDvYtK0MS9M+E6itucimD6qJe7+icVkpu4K7fIqvcuB
+	 MNs0Df7LNybvuezE/1QMio2yY9YCJctNuUyKfqoCLK+U3TihV3AqGVly3ue1Mc9dKAdTd
+	 znXBdGtC1dYga1YpjmgaoizKByKMqqyCUsk+Jm3lyPIq3tI6ASJgFkUWFbt+KI2c+XRto
+	 Y2tkz/cZ8ixnoGy42Zs1EPN9Q+GYmuMVQB1J1JpATa1xJz/1LJtH+oBiMXRXDK7hwtp/8
+	 qMbsCvJC6tJJkIDKVsV4tydpZUW3PKOoUi660Gt9x+tK7VIRoo6UmbCHdb+4YsIN1Tg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060789;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060792;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gyTb8qW/PRPI1UtdJ83zhJxKmkEdy7n45VEvMbw6JWE=;
-	b=mhCNsAoMhvCBeV4qBYMUkYPVvWwKyBBvSM3HDYs0B/akzB+77S8OlGoUFNnAEdkwg4FO
-	 kcxzl1ueQEk6EvaeNsMWNgr9VqhVl4lLabVUwCS+VlYTlUhQYblL0P8U1UOZTwCh9fo6H
-	 B9qcQ1XIRtSTEd8ZMvTvwqAovWa2uLrdsNf2O6diKlu+Q8ZXYe59zubHAQo2Vo9qkv8dw
-	 HRS23PEY3pyGEzsSsjq4dJHPBpTfgIcqVgUCgpA0HuFw/Ygf2tbC9BwRj+rVvbkEtZBMk
-	 N5CZveapOdGpCqFLZoRm6x4ZckT0XE7TGYaEjzpsSQoFbM0H+ySZy/2c4ZjIm7uLVTQ==
+	bh=9NyZI65CWSGPytX8GeNHARLD21JermIPOhxbnl+VpOc=;
+	b=bbkcS+pXG607tzP2HBRh1CBZR/cXbPVf4iwSKHS0YLU+zJeizPlNhGgK6yBpEM7N0siy
+	 knBPOWf0gjDW8AbT92Hm4DribhvmA1e11pCcFQsYkoxK4f1gmozBZBoQEPY1M+bItsYfB
+	 66rvRJ0B6A7KTO1mEk/SHAMYMsE+2fSEuUQgeooGuk9cSTjZgdsiYRtO/GnztDxYWH27g
+	 M3RN647Ol3KmS31sH2/nhY0QwQ/xuXFDhar4ezjjTwGsP+mgXgGT08oXDfSdb2+BP1YJi
+	 wBUdGd0ayq/rbFB4Mly8e/rl+lXK7jtDtbf5R0UdCrT7iVGyqK0lO3CCM5lYJ9YkOaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zO5fcDAJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1kFF96yl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400F0606A32C;
-	Thu, 19 Nov 2026 03:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00537606A320;
+	Thu, 19 Nov 2026 03:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zO5fcDAJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 956EC1F000C4;
-	Thu, 19 Nov 2026 03:59:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1kFF96yl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553D51F000C4;
+	Thu, 19 Nov 2026 03:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060789;
-	bh=gyTb8qW/PRPI1UtdJ83zhJxKmkEdy7n45VEvMbw6JWE=;
+	s=korg; t=1795060791;
+	bh=9NyZI65CWSGPytX8GeNHARLD21JermIPOhxbnl+VpOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zO5fcDAJQvHf6W0jd3OSPY47Hr1BSGa65wpJzqgnmRS9TifbQo8f2JO7ruaQDWQTH
-	 Trg87W4M8lR4/4ORn8OyHlfXH7L0EFyDYlkrauAgvDOlfFS5U0E7k8RSWFfim4b/k1
-	 BUU0br3d8ITG4cxP7VwvAFdJnSt2e5uTUeAUhuYs=
+	b=1kFF96yl4M8wXfNSuX9li8zmwA5/QIZiCluNOiqci6tm7oUrBckWxL8OkffjKWWvj
+	 eBHGNLz61WDB2nOcfpYSB6Utzk/BSJCFJ1mJwkjiATFztV552nnqkhe7FpV4r+JxrK
+	 yebvaBPycLzUQqzhW/rRm0f/vOnuSvhfN8k16oA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Kees Cook <kees@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Vincent Jardin <vjardin@free.fr>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1288/1848] pstore: reject persistent RAM zones too small for the buffer header
-Date: Wed, 18 Nov 2026 15:55:26 +0100
-Message-ID: <20261118150013.496623961@linuxfoundation.org>
+Subject: [PATCH 5.10 1324/1848] dt-bindings: vendor-prefixes: add Free Mobile
+Date: Wed, 18 Nov 2026 15:56:02 +0100
+Message-ID: <20261118150015.144529866@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,50 +69,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Vincent Jardin <vjardin@free.fr>
 
-[ Upstream commit 1b30df8662ac85a6759be4332f3bec7e3cb28efc ]
+[ Upstream commit aa906abf611c7f37c0fe9171c1d33c40270aa5fe ]
 
-persistent_ram_buffer_map() computes
+Free Mobile is a French mobile network operator. Add its vendor
+prefix, used by the Nodebox v3 CPU Module (freemobile,nbxv3).
 
-	prz->buffer_size = size - sizeof(struct persistent_ram_buffer);
-
-without checking that size is large enough to hold the header.  A
-ramoops zone configured with a tiny size (e.g. ramoops.pmsg_size=1)
-underflows buffer_size to a huge value, which defeats every bounds
-check in persistent_ram_write() and persistent_ram_write_user(); a
-write to /dev/pmsg0 then copies user data far past the end of the zone
-and corrupts kernel memory.
-
-Reject zones that are not larger than the buffer header.
-
-Fixes: 404a6043385de ("staging: android: persistent_ram: handle reserving and mapping memory")
-Assisted-by: LLM
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/20260921202317.70595-3-parri.andrea@gmail.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Vincent Jardin <vjardin@free.fr>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram_core.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
-index 80bf449a695a7..b2c81e4a749f0 100644
---- a/fs/pstore/ram_core.c
-+++ b/fs/pstore/ram_core.c
-@@ -493,6 +493,12 @@ static int persistent_ram_buffer_map(phys_addr_t start, phys_addr_t size,
- 	prz->paddr = start;
- 	prz->size = size;
- 
-+	if (size <= sizeof(struct persistent_ram_buffer)) {
-+		pr_err("%s: persistent ram zone too small (%#llx bytes)\n",
-+		       prz->label, (unsigned long long)size);
-+		return -EINVAL;
-+	}
-+
- 	if (pfn_valid(start >> PAGE_SHIFT))
- 		prz->vaddr = persistent_ram_vmap(start, size, memtype);
- 	else
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 487b4e9d42542..632c92ac6d0f7 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -391,6 +391,8 @@ patternProperties:
+     description: Baoding Forlinx Embedded Technology Co., Ltd.
+   "^freecom,.*":
+     description: Freecom Gmbh
++  "^freemobile,.*":
++    description: Free Mobile
+   "^frida,.*":
+     description: Shenzhen Frida LCD Co., Ltd.
+   "^friendlyarm,.*":
 -- 
 2.53.0
 
