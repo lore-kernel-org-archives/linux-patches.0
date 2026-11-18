@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046841;
-	b=yvZiEe7imIvOYAgMbRpkkOg5AZG+ouvXE7DZsuSfX6MJJ6pUzyNZgNh2RZMBL8lOX7HA
-	 zZtBva0MuD9kA/JrnYjzXPrWdOVkc9gjxr/4sP5bgz03+aZS4Cfhj/7ypeUJ+ObWkbNSx
-	 hFLmKF+GJ68xgo3Px/h3HDkbbq5peecWozpqEyoWtIcM9GlMZsyiAigFF5pRblJ8L/fUA
-	 6INt4vRKuakTmaiy3EIqkYzKbnYVsfykTMjISPXK6/qwjMHRppQgAK2XqMVHj3KP55FJB
-	 +ADTm2Iv47I3LB85/7adVW5w3BLtC+vwAyqQYRhIi0yjfTdxnehSNAdAFx7JI0a9Ong==
+	t=1795046844;
+	b=fji51TG3xhjtREdsw+sEIOPc/abXTMw+koEjzKZM7pXwPSt75Rot16g7Ee4pIEemZ88C
+	 xwx2z2rau+bgQuNcu7QEyoj52gX2XeX/8arxY5gQFvfQ1P/ySR5I+85Oi8QKaF++ahYBL
+	 sh2gGk0UHh4U8GPbMpy2RMK/v9L28G4wSgJBE9LVMMpfWnYCUoEKgQQbVP9SHVvkQbMNk
+	 AcRxISOaLg++Xui2IE2sc7Iu/zE1FBCLH28v38ugnyQs0xNAO6zu/EkB7Bihbz/klGkMk
+	 fDlcyoT0gdQ8LmwRQLmU5uBTG0dnkITNOidpPPqLA91htimvvgeyaVvtMxw/kRdVfZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046841;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046844;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HDEdIyNJIOjShAIK/VnkLgHhw+OolfWcFCyLDYZrxT8=;
-	b=nXhn4HGxOA1RcJ4Fnc6QFauy1E/JUK4pPFqQxS1Q0JguiVwY9sPQT/wbhZRZd+xVzxlY
-	 nkgfRhI6AoEjss3DDF04SnBAb18EyEhf9I7kY6NuXFdHQiEdqYeQO1fvsCcLqcimnQspw
-	 f7cubcnB2HSBhtoZ+TylExagCt+ELGUTg4KPCMIywpSzYnS8h7VRxX2KsRFooxMV2Dc90
-	 hu5VqeCRjmsb2yYSHsvzC6dFJpeGQvXb9deprk0jXNh5zx98xBSfVu/V9tmS6bs7xaJIK
-	 4ELrhUvqAUKVOsEfqR9A+JUS9+ewzI+/oAcLp6hqFPrUe1sNv1B01DERIThWz1Ab0jw==
+	bh=xtrs5b5V95LU7IeI3aQslXQsFbLHWuZY0EdO0U/BOvY=;
+	b=iHtnjLqwdKJO++mCfUmyUq2M+HOS8p+QdOE3Zp9ZNhlCT95cGo0ttItIvz7xKhJNZtuR
+	 XqJzm8Nfbn87opygs0kIvjKYQOgdNQVlKCx5vXpV8NN9oWoNaxvATfcpUXSJEep5jygn4
+	 abXyEVidye/UCLCNpV+gAU0+LfExB/GwVR2YZ3xP7kiIeIRw8HRoDpUQVbESosGMbb6iM
+	 RyX+cwyJNVFuVHaG1F1wziJ5sOrgjkHNNYu2txTFEEMm5EshmINbkABYMr5Q0LL968FMR
+	 2TGXda1jzc8c66Myq2CSi57L0Rw8mTP1XaAt6694fDPszkNV3z7MNDG3mysX0uEAeYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u7Axh5ZP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TWWfrCOr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A54E606A325;
-	Thu, 19 Nov 2026 00:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A32F606A32A;
+	Thu, 19 Nov 2026 00:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u7Axh5ZP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AB71F000C4;
-	Thu, 19 Nov 2026 00:07:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TWWfrCOr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABD41F000C4;
+	Thu, 19 Nov 2026 00:07:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046841;
-	bh=HDEdIyNJIOjShAIK/VnkLgHhw+OolfWcFCyLDYZrxT8=;
+	s=korg; t=1795046843;
+	bh=xtrs5b5V95LU7IeI3aQslXQsFbLHWuZY0EdO0U/BOvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u7Axh5ZPX+nvtO30PGpjD5C3LR1c61cmeNqng9tVigRx6R/9htcKCg6pOIbGoQbdF
-	 37TGzrk64WUtskqP2zpNrCINb4kLPFTwzU7r8sa+M/+x5NmiB0yP43dvC/sPXy2uUh
-	 bU7hH6zfwZd9BBBwR3lncx3deShwLgQmw3IjdzFI=
+	b=TWWfrCOrjwp4yVGyiB8DTE4oZLleGLNS2MBYOQmemGJ7Ei1LIMKy9l4xh0un28qbg
+	 35FuA/h0/eDX9Pt5InFpNPMZ6YODj8zV0ilTpEDCmphhIXXCZdeB4B3pEmiAcKL9Tq
+	 vlh3ArWw9Eo1eRNwHjPUpZwYdNQum1csDTE0T2nA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Dipen Patel <dipenp@nvidia.com>,
+	Tharit Tangkijwanichakul <tharitt97@gmail.com>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1385/2857] hte: tegra194-test: shut down timer before GPIO release
-Date: Wed, 18 Nov 2026 15:40:19 +0100
-Message-ID: <20261118150251.236992635@linuxfoundation.org>
+Subject: [PATCH 6.1 1376/2857] media: hantro: disable runtime PM before hardware teardown
+Date: Wed, 18 Nov 2026 15:40:10 +0100
+Message-ID: <20261118150250.925060941@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,47 +70,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Tharit Tangkijwanichakul <tharitt97@gmail.com>
 
-[ Upstream commit 30167fadbf87fa901a2fee49c30a5c5a506a43e8 ]
+[ Upstream commit 8e26d4c20ed218db6c3123480a4a4e2545680566 ]
 
-tegra_hte_test_remove() releases GPIO descriptors before stopping
-hte.timer. gpio_timer_cb() accesses hte.gpio_out and rearms the timer, so
-a callback concurrent with remove can use a released descriptor and rearm
-after teardown.
+Removing the Hantro driver may trigger an SError on RK3588:
+	SError Interrupt on CPU6, code 0x00000000be000011 -- SError
+	...
+	do_serror+0x5c/0x74
+	el1h_64_error_handler+0x34/0x50
+	el1h_64_error+0x6c/0x70
+	regmap_mmio_read32le+0x10/0x20 (P)
+	_regmap_bus_reg_read+0x6c/0xb4
+	_regmap_read+0x60/0xdc
+	regmap_read+0x4c/0x80
+	rockchip_pd_power+0xe4/0x600
+	rockchip_pd_power_off+0x1c/0x60
+	_genpd_power_off+0x98/0x198
+	genpd_power_off.part.0+0x178/0x288
+	genpd_runtime_suspend+0x210/0x300
+	__rpm_callback+0x48/0x1e0
+	rpm_callback+0x74/0x80
+	rpm_suspend+0x10c/0x580
+	rpm_idle+0x134/0x1b8
+	update_autosuspend+0x30/0xc4
+	__pm_runtime_use_autosuspend+0x48/0x64
+	hantro_remove+0x8c/0xa8 [hantro_vpu]
+	...
 
-Shut down the timer before releasing the GPIO descriptors.
-timer_shutdown_sync() waits for a running callback and prevents it from
-being rearmed.
+hantro_remove() currently asserts the device resets before disabling
+runtime PM.
 
-Fixes: 9a75a7cd03c9 ("hte: Add Tegra HTE test driver")
+Calling pm_runtime_dont_use_autosuspend() causes an idle device to be
+runtime-suspended immediately. At that point the Hantro hardware has
+already been torn down, while the generic power-domain genpd code
+still performs the power-off sequence. genpd regmap_mmio_read causes panic
+subsequently because the reset lines were asserted.
+
+Disable runtime PM before asserting the reset lines so that no runtime-PM
+transition can race with hardware teardown.
+
+Apply the same ordering to the probe error paths as well.
+
+Fixes: ea71631b7129 ("media: hantro: add support for reset lines")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Acked-by: Dipen Patel <dipenp@nvidia.com>
-Signed-off-by: Dipen Patel <dipenp@nvidia.com>
-[ sashal: adjusted context around del_timer_sync() in the int-returning remove callback ]
+Signed-off-by: Tharit Tangkijwanichakul <tharitt97@gmail.com>
+Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hte/hte-tegra194-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/verisilicon/hantro_drv.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hte/hte-tegra194-test.c b/drivers/hte/hte-tegra194-test.c
-index 60f0ef2cb324f..d15f358aa4e4b 100644
---- a/drivers/hte/hte-tegra194-test.c
-+++ b/drivers/hte/hte-tegra194-test.c
-@@ -219,10 +219,10 @@ static int tegra_hte_test_remove(struct platform_device *pdev)
- {
- 	(void)pdev;
+diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
+index df81ca3903ca5..d0ae492e51e6e 100644
+--- a/drivers/media/platform/verisilicon/hantro_drv.c
++++ b/drivers/media/platform/verisilicon/hantro_drv.c
+@@ -1119,7 +1119,7 @@ static int hantro_probe(struct platform_device *pdev)
+ 	ret = clk_bulk_prepare(vpu->variant->num_clocks, vpu->clocks);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Failed to prepare clocks\n");
+-		goto err_rst_assert;
++		goto err_pm_disable_assert_reset;
+ 	}
  
-+	timer_shutdown_sync(&hte.timer);
- 	free_irq(hte.gpio_in_irq, &hte);
- 	gpiod_put(hte.gpio_in);
- 	gpiod_put(hte.gpio_out);
--	del_timer_sync(&hte.timer);
- 
- 	return 0;
+ 	ret = v4l2_device_register(&pdev->dev, &vpu->v4l2_dev);
+@@ -1175,8 +1175,11 @@ static int hantro_probe(struct platform_device *pdev)
+ 	v4l2_device_unregister(&vpu->v4l2_dev);
+ err_clk_unprepare:
+ 	clk_bulk_unprepare(vpu->variant->num_clocks, vpu->clocks);
+-err_rst_assert:
++err_pm_disable_assert_reset:
++	pm_runtime_dont_use_autosuspend(vpu->dev);
++	pm_runtime_disable(vpu->dev);
+ 	reset_control_assert(vpu->resets);
++	return ret;
+ err_pm_disable:
+ 	pm_runtime_dont_use_autosuspend(vpu->dev);
+ 	pm_runtime_disable(vpu->dev);
+@@ -1196,9 +1199,9 @@ static void hantro_remove(struct platform_device *pdev)
+ 	v4l2_m2m_put(vpu->m2m_dev);
+ 	v4l2_device_unregister(&vpu->v4l2_dev);
+ 	clk_bulk_unprepare(vpu->variant->num_clocks, vpu->clocks);
+-	reset_control_assert(vpu->resets);
+ 	pm_runtime_dont_use_autosuspend(vpu->dev);
+ 	pm_runtime_disable(vpu->dev);
++	reset_control_assert(vpu->resets);
  }
+ 
+ #ifdef CONFIG_PM
 -- 
 2.53.0
 
