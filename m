@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019666;
-	b=DNjQ05GcWJo+n5X/yCT8Gmc3w+AJ5npIX8UZF32nqpQ1C42p0zmGLHilrhxcXNa+KLCU
-	 Tt3MjNjeE9Uyr1dojDp7jikeubtMAb540SpL4va+T5zyDxHjdpLC2TucArZZxO5iyVHyr
-	 m8YouGpeneCn9qNjHZamfLh0QE9SiVZJkJfTqjGXDJamswhH8LWW2AyFvP32v4lb/C6H4
-	 1fFobSEzgvs8bZP1/pSohZCddei8zLXhHhrb2azGTNvMy9Dpf+q318sFAKW054Lo/lx3w
-	 bZBdWf8qEomfRZ1YHBB0kMmCBp5NVXhP/KqB3unbiTY+D0uaympZOOU04SupEElVWOA==
+	t=1795019669;
+	b=32wK7JMDu1hzawcD6PIYvojN0rJRks3D1803/Ck6SKSuqDIDvxt6BwwSXDLrrrC9aTC/
+	 GZaZ+COeQjVOkj4Jwl+5GfqrA276iA3taZVeUho55GqCHduizk2+x0akYqP1cEsijdrc3
+	 bki94Bbym2ZMotrQktiBkCUeLBsHd53y1aWohgLk9oJyMB3JjfCGZrUHogqwtUNNNYcAJ
+	 xG8XmKtOSixcbSD+sRHq7RfePpBIzWg+O+WocDGz61GhXbYKuaKYtFqedwErXu5WBzJaX
+	 a3jiISs0mLiQi1Gl2JmRJ8X0GwqynHht3mOqb88kyg/g+yjs6YnMTGZoWDy2/zZA3/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019666;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019669;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dOwBA4Yl0lqVdHsgljNg2Dil+FUEckFHX7r8mikNr/A=;
-	b=z4eOQJUgBtjzFrvvTV/S3YONNn5Vrt9k3ITqMf0UG0T+QBCd7gg8sODmhyt8WkDqJKAk
-	 COIJZCsoai0FTyaUBnNBsBXxesLNAV0HaaPcUk2KvxizEB8R5JtmCYTarPtHfBWyqPji8
-	 Pd0v5FsZFQEi68oh3rfm++yOgT6BmugwwhhiyF9l+1RMoQ67zXOuasAcdyGDdXhEgxkDR
-	 ovl4zjtgSyyxBE6QrBk9NWPr27jwIJErThPB7u0ez6SMRSE0ZJtqCiR7DKMCnX0ugqXtY
-	 iN/jBXchy596dtMvDoRgg45y3M1ntyg5CXEIrDMH8FxrKujj4t3D1uBgc3oBUGPHhsA==
+	bh=UFLNg4VIA5VXALpM8w3abM8roQw5Bo9Qai8/DGOqDoE=;
+	b=ClcwZlObk7WpS8LA5chFgwj4h3niPJReGKMeKLq7KLnCXMrgOjBrPHCSFpb5ze47AocO
+	 DrlnPL2SOalglflGdj4jJ6Hz0ZchWFwmcoQOmW/XMKyDzQ+ZfgVyfy61oJmJx0HNHhZ07
+	 kU6N3Ugp59kZa90LhZvHnedJMjzBpltt5dZ790/UktQF3yPJqiKX3XEGA1z9gHqnF09ox
+	 vDTokXB/ILRlgXBK2uuxQ8orsq1M/OMbnPh4O98shlyjSqyMatTLKEiYu/Vg5TkjoFMZy
+	 jxRj2u9/7Zki4wR+tW/ycbUijpUoHlIrFQ3whe6VsOImDxZGdWtYAt6wQDhCIgU9c4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p4Y6kUqc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SPjw3aoy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526FB60A2600;
-	Wed, 18 Nov 2026 16:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E64606A33E;
+	Wed, 18 Nov 2026 16:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p4Y6kUqc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A407B1F000C5;
-	Wed, 18 Nov 2026 16:34:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SPjw3aoy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A6B1F000C4;
+	Wed, 18 Nov 2026 16:34:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019666;
-	bh=dOwBA4Yl0lqVdHsgljNg2Dil+FUEckFHX7r8mikNr/A=;
+	s=korg; t=1795019669;
+	bh=UFLNg4VIA5VXALpM8w3abM8roQw5Bo9Qai8/DGOqDoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p4Y6kUqcznixAEXMx19jc/8WCCxw7EowYavDo6jFc8YGU+GUoIDcvpzSeJmt2QYKI
-	 9u4sPMpHEzbZoIP9/6Z64Fno6C2VvMXa+GwnzLgMw/E646pS03lLUCYMdGNUUvNUBt
-	 ST1EqniFGI6B8Uzvr4+oI5ckg/d7rDfZcUFyMxRQ=
+	b=SPjw3aoyrMsB6FFGq5zyJ77pC6xADkmJNpms8NmreHYzc8oDWCq/BGgbwhu8A2ZBZ
+	 7cAedOHKwWmMfqG2qC8Iu1bv1uNaRvv/B7i35ivtP1fW1DA2w3oxD21SJDUjMVGezM
+	 y3xfkUnqmz9lVb951tPBc7jJAcY9bSQka7jDUglc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1677/2651] wifi: ath12k: avoid IDR mutation during vif mgmt TX cleanup
-Date: Wed, 18 Nov 2026 15:48:37 +0100
-Message-ID: <20261118150348.062793319@linuxfoundation.org>
+Subject: [PATCH 7.3 1678/2651] smb: client: log the selected security type on session setup failure
+Date: Wed, 18 Nov 2026 15:48:38 +0100
+Message-ID: <20261118150348.093580568@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,72 +73,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit 4aa45334eb23d40bf31c43405daea9b73469f2a6 ]
+[ Upstream commit a4111beeade900346726acb2746f22a6313aeaf0 ]
 
-ath12k_mac_vdev_delete() walks txmgmt_idr with idr_for_each(), and its
-callback removes each entry belonging to the interface. Removing the
-current entry can invalidate the radix-tree iterator retained by
-idr_for_each().
+When mounting without an explicit sec= option, ses->sectype stays
+Unspecified while the real mechanism is chosen later through
+->select_sectype(), so a failed session setup logs a useless name:
 
-Move the walk into a helper that uses idr_for_each_entry(). It performs a
-fresh lookup for every iteration, so each matching entry can be removed
-through the locked removal helper without retaining iterator state across
-the removal.
+  CIFS: VFS: \\server failed to create a new SMB session with Unknown: -13
 
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261003092104.520135-6-yaojiale02@163.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Resolve the mechanism through ->select_sectype() before formatting it, as
+cifs_debug.c already does, so the message names the actual security type.
+
+Fixes: a8fce7c807b1 ("smb: client: improve error message when creating SMB session")
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ fs/smb/client/connect.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 3e4039612fb5a..56578321e88c6 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -9203,16 +9203,18 @@ void ath12k_mac_tx_mgmt_pending_free(struct ath12k *ar)
- 		ath12k_mac_tx_mgmt_free(ar, buf_id);
- }
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index 9795aa0661d55..230b7a4a500e5 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -4184,8 +4184,12 @@ cifs_setup_session(const unsigned int xid, struct cifs_ses *ses,
  
--static int ath12k_mac_vif_txmgmt_idr_remove(int buf_id, void *skb, void *ctx)
-+static void ath12k_mac_vif_txmgmt_cleanup(struct ath12k *ar,
-+					  struct ieee80211_vif *vif)
- {
--	struct ieee80211_vif *vif = ctx;
--	struct ath12k_skb_cb *skb_cb = ATH12K_SKB_CB(skb);
--	struct ath12k *ar = skb_cb->ar;
--
--	if (skb_cb->vif == vif)
--		ath12k_mac_tx_mgmt_free(ar, buf_id);
-+	struct ath12k_skb_cb *skb_cb;
-+	struct sk_buff *skb;
-+	int buf_id;
- 
--	return 0;
-+	idr_for_each_entry(&ar->txmgmt_idr, skb, buf_id) {
-+		skb_cb = ATH12K_SKB_CB(skb);
-+		if (skb_cb->vif == vif)
-+			ath12k_mac_tx_mgmt_free(ar, buf_id);
-+	}
- }
- 
- static int ath12k_mac_mgmt_tx_wmi(struct ath12k *ar, struct ath12k_link_vif *arvif,
-@@ -10977,8 +10979,7 @@ static int ath12k_mac_vdev_delete(struct ath12k *ar, struct ath12k_link_vif *arv
- 	ath12k_peer_cleanup(ar, arvif->vdev_id);
- 	ath12k_ahvif_put_link_cache(ahvif, arvif->link_id);
- 
--	idr_for_each(&ar->txmgmt_idr,
--		     ath12k_mac_vif_txmgmt_idr_remove, vif);
-+	ath12k_mac_vif_txmgmt_cleanup(ar, vif);
- 
- 	ath12k_mac_vif_unref(ath12k_ab_to_dp(ab), vif);
- 
+ 	if (rc) {
+ 		if (new_ses) {
++			enum securityEnum sectype;
++
++			sectype = server->ops->select_sectype(server,
++							      ses->sectype);
+ 			cifs_server_dbg(VFS, "failed to create a new SMB session with %s: %d\n",
+-					get_security_type_str(ses->sectype), rc);
++					get_security_type_str(sectype), rc);
+ 		}
+ 		spin_lock(&ses->ses_lock);
+ 		if (ses->ses_status == SES_IN_SETUP)
 -- 
 2.53.0
 
