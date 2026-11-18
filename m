@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022241;
-	b=Gx1o3FsUnEUKb73J0jQoL4gsaoBISnwpPC0QrLV6peqyifBq3KOeskib+RL9+tDnv8GH
-	 BJMTphxy6uS7cNIsnUtcEKFEi7LuxhlmDo6gUz6LeJoX9uQQ6WzqnQBwvCB9KFp1Z2IlR
-	 Qyt4LVhqqlu6Upu0dc5Gv18vMQsrgiijP0H0Gz6edvr5r2toJOh35ufwsvIB+qCITj6S4
-	 kdWeh1or1u+aY8ZBKozwS0QT6w8uxJgQefK158sDsrMadpXxYpciVZ8ule8K27QnLfxTq
-	 f0h5Marzyng9SUifhgm8e6iKNweby7f/HFFikM2sb+43S90q2cKp4DMK/pAOcvbcC2Q==
+	t=1795022244;
+	b=vuyjiDCEwwc66AJFAOUuJ37MRDk02Rd464VJSSruMBU60Kitm+gSZ1auxkSKXfV+KcCp
+	 J1kmhM1hCGV+DPMOW6pdth0xK+PhC6Dtgho7L7Gf0s9rExZvb0VAcyKuTdMrREh4SKh4J
+	 5cdM97IPM2GfbadVEbbP8U/y0GYwcmf0EXD/ELQIHsF5tseLJ60eVb7bH6qfOWKzLqd0L
+	 Lw6vCAUQZUOD018Vktf9x6F8VdMdUeN93aL5UVBTE6fm2oN7a1vZU/Y1zML+ftf0GUHbi
+	 aR+guhx5Z0utCaCc8IOdVvfSmdP59Tt/yyzIJmosTC/R1bRYb1A6LVWDRzVLYJdNczQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022241;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022244;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=vcpGagi84JJhzbwvmOrz+n65Xt8fecPVPUKr3oypDOA=;
-	b=r7v2k1oyGLBT1YX4b6nCsho9maQol6PE6iJpdwhtNwWcmX7VIbIMFoEdk8sVHtJT9fh7
-	 ptskNTk6a5Z9ZDAU9tHEE6PtJxYQhp5h+u8zMTMCSSgbGkjcHsXzMJWObcS0DAak4ED99
-	 hfHV2QePM2PtwQAI3K75CzqYsQTe1jj8YyUgXtJKaQWa2R1deyHiHe1jkppuXfhqoU60F
-	 c6WeWua5NGkjRg0K4MGfv06txIt92XnXDmLXX6nH+943CD2oOFAGsr5F1RIf8b4fStHdA
-	 ePhAIXhsEyCVp/+uvIcSkFHvbs7QTnFKOFQccg+r/fHXvERDHrqyb9YiEgbJjKb+tAA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=t0wuJ3y7ZmdEH1onqsv1fLhCOvoaXDg6EmqdxpVF69k=;
+	b=IZspHq87gt/feGs/krdXuTlhOUjeH0nH/9TYL/fFzpd2AHvONhb0oWHJLJzq0Ao9nTuL
+	 25CzVdnCMblEhrK2oHGWlerkHiPVg4u0ELA5PfhMT4lfExt7TegN+vQVozzzNu75KPnKh
+	 +Tuw/wUwGE9WWZMW8X7zogZfWMqfblkXtJfK7M6zyVuOmO6dAxUzTP/RLobn7/+qdWCz0
+	 xYrvng/sSEXUbI6/Gn5gsPw/kN2V82tRkp1Aaojia1lwlOOqwYykYP6FMbvaU5LjMO4EQ
+	 woa6l9S4vnmrLfYzNItmr2IOwimHfB3qCF4C2YQqRnNpsvbx2nDg5CPTZyo3JbMQkpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tBZ+DsRT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nHD+2MfD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB768606A320;
-	Wed, 18 Nov 2026 17:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBBE2606A32F;
+	Wed, 18 Nov 2026 17:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tBZ+DsRT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2363C1F000C4;
-	Wed, 18 Nov 2026 17:17:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nHD+2MfD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8AD11F000C4;
+	Wed, 18 Nov 2026 17:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022241;
-	bh=vcpGagi84JJhzbwvmOrz+n65Xt8fecPVPUKr3oypDOA=;
+	s=korg; t=1795022244;
+	bh=t0wuJ3y7ZmdEH1onqsv1fLhCOvoaXDg6EmqdxpVF69k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tBZ+DsRTCoZ/lnLlVqOTzIHXcbcKMMw7v19S3L7/4nrCzICmEjmrdEKDNSzu2Bj4g
-	 3Ed7tv67xLuaC5zJUkfCVMyfWYX4PO7EHgxk9jB4jZRPMvTciLnxrTmCNeDY1OvT0t
-	 zz4lVYPnQNRDaqupyVB4hF1LBdXQ8jDqqUL7kkWs=
+	b=nHD+2MfDtNp1NbAtZcz9n1uXjBdIJd90QYVvwPSmOheFrOpSkL8VEB5jvPPqew0jQ
+	 so59bcMvVP+Rbaflg7mB/BD8Y5MojbmUPf4JBg2e98y2EnK/Ppg5ng7z0299b2MDUq
+	 RvVnHpdLEexSz679uZYcmwzkd/MfVxjPTQkMzcqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Reisner <philipp.reisner@linbit.com>,
-	Lars Ellenberg <lars.ellenberg@linbit.com>,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	"Md. Haris Iqbal" <haris.iqbal@ionos.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2593/2651] drbd: take req_lock to skip the initial sync as peer
-Date: Wed, 18 Nov 2026 16:03:53 +0100
-Message-ID: <20261118150417.605183904@linuxfoundation.org>
+Subject: [PATCH 7.3 2594/2651] block/rnbd-srv: dont free the device on a sysfs error
+Date: Wed, 18 Nov 2026 16:03:54 +0100
+Message-ID: <20261118150417.635464880@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -65,7 +64,6 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
@@ -74,40 +72,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit bf7fff620c890a7ee0b444f1c7e9f0d1263a30ac ]
+[ Upstream commit d9667ade40f986c565769a900ced6ee95edd33c6 ]
 
-_drbd_set_state() must be called with req_lock held. drbd_adm_new_c_uuid()
-does, receive_uuids() on the peer doesn't, so a concurrent state change
-gets lost: the device is Secondary again, or its failed disk UpToDate,
-while the work for the lost change is already queued.
+rnbd_srv_create_dev_sysfs() drops the only kobject reference on its
+error paths, and the release function frees the rnbd_srv_dev.
+process_msg_open() keeps using it and ends in destroy_device() with a
+list_del() and a second kfree(). This doesn't need memory pressure: a
+client opening a device while its last mapping goes away gets -EEXIST
+from kobject_add() against the old directory.
 
-Fixes: b411b3637fa7 ("The DRBD driver")
-Cc: Philipp Reisner <philipp.reisner@linbit.com>
-Cc: Lars Ellenberg <lars.ellenberg@linbit.com>
-Cc: "Christoph Böhmwalder" <christoph.boehmwalder@linbit.com>
+Only undo kobject_add() on failure and leave the reference to
+destroy_device(). Initialise the kobject once, the next open retries.
+
+Fixes: 8cee532f469b ("block/rnbd: server: sysfs interface functions")
+Fixes: d3a95ccaaf4d ("block/rnbd: call kobject_put in the failure path")
+Cc: "Md. Haris Iqbal" <haris.iqbal@ionos.com>
+Cc: Jack Wang <jinpu.wang@ionos.com>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261028164415.1262013-15-axboe@kernel.dk
+Link: https://patch.msgid.link/20261028164415.1262013-17-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/drbd/drbd_receiver.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/block/rnbd/rnbd-srv-sysfs.c | 16 ++++++++++------
+ drivers/block/rnbd/rnbd-srv.c       |  3 +++
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/block/drbd/drbd_receiver.c b/drivers/block/drbd/drbd_receiver.c
-index 2135c14354a85..a405ccdf919e4 100644
---- a/drivers/block/drbd/drbd_receiver.c
-+++ b/drivers/block/drbd/drbd_receiver.c
-@@ -4096,8 +4096,10 @@ static int receive_uuids(struct drbd_connection *connection, struct packet_info
- 					BM_LOCKED_TEST_ALLOWED, NULL);
- 			_drbd_uuid_set(device, UI_CURRENT, p_uuid[UI_CURRENT]);
- 			_drbd_uuid_set(device, UI_BITMAP, 0);
-+			spin_lock_irq(&device->resource->req_lock);
- 			_drbd_set_state(_NS2(device, disk, D_UP_TO_DATE, pdsk, D_UP_TO_DATE),
- 					CS_VERBOSE, NULL);
-+			spin_unlock_irq(&device->resource->req_lock);
- 			drbd_md_sync(device);
- 			updated_uuids = 1;
- 		}
+diff --git a/drivers/block/rnbd/rnbd-srv-sysfs.c b/drivers/block/rnbd/rnbd-srv-sysfs.c
+index 64780094442ce..33d5d1738be5a 100644
+--- a/drivers/block/rnbd/rnbd-srv-sysfs.c
++++ b/drivers/block/rnbd/rnbd-srv-sysfs.c
+@@ -44,12 +44,17 @@ int rnbd_srv_create_dev_sysfs(struct rnbd_srv_dev *dev,
+ 	struct kobject *bdev_kobj;
+ 	int ret;
+ 
+-	ret = kobject_init_and_add(&dev->dev_kobj, &dev_ktype,
+-				   rnbd_devs_kobj, "%pg", bdev);
+-	if (ret) {
+-		kobject_put(&dev->dev_kobj);
++	/*
++	 * The release function frees the device, which the caller goes on
++	 * using and which others may share: never drop the reference of the
++	 * kobject here. That is for destroy_device().
++	 */
++	if (!dev->dev_kobj.state_initialized)
++		kobject_init(&dev->dev_kobj, &dev_ktype);
++
++	ret = kobject_add(&dev->dev_kobj, rnbd_devs_kobj, "%pg", bdev);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	dev->dev_sessions_kobj = kobject_create_and_add("sessions",
+ 							&dev->dev_kobj);
+@@ -69,7 +74,6 @@ int rnbd_srv_create_dev_sysfs(struct rnbd_srv_dev *dev,
+ 	kobject_put(dev->dev_sessions_kobj);
+ free_dev_kobj:
+ 	kobject_del(&dev->dev_kobj);
+-	kobject_put(&dev->dev_kobj);
+ 	return ret;
+ }
+ 
+diff --git a/drivers/block/rnbd/rnbd-srv.c b/drivers/block/rnbd/rnbd-srv.c
+index 79c9a5fb418f2..2b0619389fc9b 100644
+--- a/drivers/block/rnbd/rnbd-srv.c
++++ b/drivers/block/rnbd/rnbd-srv.c
+@@ -208,6 +208,9 @@ static void destroy_device(struct kref *kref)
+ 		 * Destroy kobj only if it was really created.
+ 		 */
+ 		rnbd_srv_destroy_dev_sysfs(dev);
++	else if (dev->dev_kobj.state_initialized)
++		/* The files could not be created. Frees the name, too. */
++		kobject_put(&dev->dev_kobj);
+ 	else
+ 		kfree(dev);
+ }
 -- 
 2.53.0
 
