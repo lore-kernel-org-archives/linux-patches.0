@@ -1,52 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033102;
-	b=Nuwm4tY4Z8q+bF+2yy6YX3wR3Rh4oAGKRBmp6SeQplnkr38UBhsVjKPPdmQGKR3ARm4L
-	 NwIoo1aP6PwwDB2MqwK50gJzRw7xot/044vIiheIhN/Vhxq86Jpz7fw8n9x1ruv5rZA4D
-	 HldvQkIX0YoU1S/zqCtLBoXUOTV6bvrdsimbgxefKdGhcu5GW095VtoArlERKAvzd4zCO
-	 3U+TCyoilGwTsAZDnWYZLD0/t3IBQ36WG/7zPw1NBmUTZzFYyl6JTC9tbZcMxpuu8q8Mi
-	 gwlfvKvzHgSSScja8RcZVcj80P5UmUo2mYOrzn9R1JtlYr4kq2aEyPuRPygOnZiY/qg==
+	t=1795033105;
+	b=nvCrzuI4ERmNBJCrbs2bqUgr8kUFPf1hbzXw5R8jQw6/RI33z1uN9TYIB9kgmxrMUbsN
+	 j8CdUTaygFKCa/7wXkdVMth04U5cPfBXPzJAQyiyvHeAu4sTXkzza29r6kxLrVlFNw1Z1
+	 rjNBxdWUk2DXdGFlBgTy8fPsW7gzqq4yiph17sk1/PDBjdiHOfr6R3ry8swuiI5l/Ldbz
+	 6t0yLHrLkreJhYRMEcSehtAEU8QX4KClkRxx1oTuMAmNkYI10NrB5OwrEHO+irdpb+H7S
+	 lq8d88i8fKyXi9ol2ZIToXcPat6XMXMwlUDT2KJQp1cYysasGuZBFQenpxfZaSxCiTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033102;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033105;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=++3aIgIXsOiR4E8JC/uwN1Mod/vuKqy7edGGGQpRobc=;
-	b=zbgf7F31UZ+tAJzI+z/6o4Ch1SZ24MQhndB3Tnyvcsnr67lBOR8FV2kHtpisJA6acaH2
-	 aTNDjjcjVy629ZLWKATNTB0/wG9DlnJFUVimy7FY0nkMk5NFJ23eoGsCwExk0EgUOmHNi
-	 pffScFqIX3HXLO/rxs7sVtyB1P8uUauMXeahh3abDYClBhXy6BNAgsPiDvh3pXJ9Qggq9
-	 wydcvdBs0OMGEjlgJ1QnzRUIXnM9i+W7NHgySMoTlMPHaUWfbMuiQdfe+LZC/nVD1c5Kh
-	 cisU7I6jXH169ZOuZq0cN07QrfOQBmVV5ETAfIA7CvBFbnnCdw/1wYXdXkj6t0WQlQQ==
+	bh=DNBw4UKzGHzw0uVOkENKJVcX+SA1Gz8wtpzwsNgDINU=;
+	b=Fhib+E4PkRP4QHOyGdVsShM8+jsnZKO+b4rCPCj7KB1cldmxx5Ye32kxmMJmoulQZmeA
+	 rs7i1vADub9AL7+ZLeOegI3R2WJMc9i3uLogLWvSQXZ++MrhgCxhkLVVxpUL6Nog10rja
+	 mf+jLwuaxtLRklwBRJkfwMg0KPSWOg7vZa6NiZTfxmX5rS9oQs3XdvcBHHMDHUmyXEkxc
+	 YtjQNbmtcpo4c2EK3+rH1pba1oEnoZYNqe/dAh/UIlUjpDbrNrT1NUGUEV22T+p0m5wAc
+	 35KVAOnkAQmrf8JzVxKfb96acfrO32ZVUtgwaf1fvQkbGlqqY8aPkvfO1HeqsmEWszA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bzwlaqco;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dueyaLvq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3E3606A31C;
-	Wed, 18 Nov 2026 20:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE80606A31C;
+	Wed, 18 Nov 2026 20:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bzwlaqco
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F8F1F000C4;
-	Wed, 18 Nov 2026 20:18:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dueyaLvq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BCEB1F000C4;
+	Wed, 18 Nov 2026 20:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033102;
-	bh=++3aIgIXsOiR4E8JC/uwN1Mod/vuKqy7edGGGQpRobc=;
+	s=korg; t=1795033105;
+	bh=DNBw4UKzGHzw0uVOkENKJVcX+SA1Gz8wtpzwsNgDINU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bzwlaqcoy23ng0Aq36RSJ5/Ya2H14TJW+sCekjBYYXYpuZ6G4EfjtRGfO6ENG15XX
-	 nM20TRW25OmpzMUztM8plNgrQw1BehkxB4MuCJHJRGz6J4zhuohH9xYop9Wwuvcrqt
-	 6oxk8tEtqBrf52Ork7wxGgCOJ+YgiG/oGvm/hTSQ=
+	b=dueyaLvqHxSS8FOOWXfU+D/xlBTMJoS9aqP2dfNb8TuIxp8bGTvgaU4ydUTUNqir6
+	 /P4TlU0ksrHfGNkoWc8oNfau4180sWjlASD19X4LvXzIA1vfi1vbDur5fuEezbl/PM
+	 AL7n7Hv5pG/ePGwuFrMXZfCzBk1C0HVjs6lZww0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Len Brown <len.brown@intel.com>,
+	Paul Moses <p@1g4.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1606/1756] x86_energy_perf_policy: Cleanup: Check fseek() in VM path
-Date: Wed, 18 Nov 2026 16:02:13 +0100
-Message-ID: <20261118150113.811903243@linuxfoundation.org>
+Subject: [PATCH 6.12 1607/1756] perf mmap: Use the head selected by read_init
+Date: Wed, 18 Nov 2026 16:02:14 +0100
+Message-ID: <20261118150113.847407995@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,39 +79,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Len Brown <len.brown@intel.com>
+From: Paul Moses <p@1g4.org>
 
-[ Upstream commit 2778dc35d40e7e84c134ca4cab1376fa58208f80 ]
+[ Upstream commit 022c64992af554cfd8c564bff86100fb5ed98678 ]
 
-Add return value validation for fseek() and ensure consistent
-resource cleanup on all error paths in err_on_hypervisor().
+perf_mmap__push() reads the producer head before calling
+perf_mmap__read_init(), which reads it again to select the range to
+copy.
 
-Fixes: 0936cdfbb527 ("tools/power x86_energy_perf_policy: Input/output error in a VM")
-Assisted-by: GitHub-Copilot:Claude-Sonnet-4.6
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
+If the producer advances between those reads, push() copies through the
+newer head but stores the earlier head in prev. The next drain starts at
+that earlier position and can write the same records to perf.data again.
+
+Use the head selected by read_init(): end for forward buffers and start
+for overwrite buffers. Save it before the copy loop advances start so
+prev matches the range that was copied.
+
+Fixes: 8872481bd04850b1 ("perf mmap: Introduce perf_mmap__read_init()")
+Signed-off-by: Paul Moses <p@1g4.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@intel.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../x86/x86_energy_perf_policy/x86_energy_perf_policy.c     | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ tools/perf/util/mmap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-index 2545f64d5f43b..f26c6dd0d6c14 100644
---- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-+++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-@@ -661,7 +661,11 @@ void err_on_hypervisor(void)
+diff --git a/tools/perf/util/mmap.c b/tools/perf/util/mmap.c
+index 43b02293f1d2d..3033b454643b4 100644
+--- a/tools/perf/util/mmap.c
++++ b/tools/perf/util/mmap.c
+@@ -319,7 +319,7 @@ int mmap__mmap(struct mmap *map, struct mmap_params *mp, int fd, struct perf_cpu
+ int perf_mmap__push(struct mmap *md, void *to,
+ 		    int push(struct mmap *map, void *to, void *buf, size_t size))
+ {
+-	u64 head = perf_mmap__read_head(&md->core);
++	u64 head;
+ 	unsigned char *data = md->core.base + page_size;
+ 	unsigned long size;
+ 	void *buf;
+@@ -329,6 +329,7 @@ int perf_mmap__push(struct mmap *md, void *to,
+ 	if (rc < 0)
+ 		return (rc == -EAGAIN) ? 1 : -1;
  
- 	flags = strstr(buffer, "flags");
- 	rewind(cpuinfo);
--	fseek(cpuinfo, flags - buffer, SEEK_SET);
-+	if (fseek(cpuinfo, flags - buffer, SEEK_SET) != 0) {
-+		fclose(cpuinfo);
-+		free(buffer);
-+		err(1, "Failed to seek in /proc/cpuinfo");
-+	}
- 	if (!fgets(buffer, 4096, cpuinfo)) {
- 		fclose(cpuinfo);
- 		free(buffer);
++	head = md->core.overwrite ? md->core.start : md->core.end;
+ 	size = md->core.end - md->core.start;
+ 
+ 	if ((md->core.start & md->core.mask) + size != (md->core.end & md->core.mask)) {
 -- 
 2.53.0
 
