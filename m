@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026667;
-	b=GJwR6t2QCWvVm+SxvS5xAxe15HsTp8rJfVlethNXaqxe/uPeCwQivplVgq5mnnQdLumd
-	 vMhFvWgAjF4kLMCS5VG4h1ZAA83yweGgAuIJcqSe9dRF2Nu/6T2A2nilmVHe8AnTvq4SA
-	 DNztFQXMlnnmFSqQxJ0GcBcT3RyNxdly7sGF3pFYVbcaxD5uFolu4ovuh3H8hoAYQwDKo
-	 JtUS2Hpxrbg0DC0ztIIETTBD2IVzFnMifxIEqaEmA+M/cuIlwS34gJzXiKuWJFamzaduR
-	 DsW3YeuH7TBPlguLHShmMidGhBBWZsWdztLIyb/My2m1ugdKZ2V2S+9Gj1u8sbOZ3qA==
+	t=1795026670;
+	b=o3Q4AajO5dpxXD0pcRubFbHHlCciTzbTb1DFAoGu76rtWk6sFmdmDMqWxNfttpyZVIny
+	 C1IaxrGGTw0L2shE5+dAGgzOrXgBQLqAquC0o4YqhXN68dI42RIx//naMGepffM+0+/K5
+	 yaBqUPOIOnNukHviZ8iiQGee3zGEvRKXsvkmQsUzreYi66ZubB0EZE8czZIubLixWphQP
+	 IArQt8TuqeF/mq78ThxeuoyxtesqSqEWtc0Wx1K9AqItrQ/NWkkSB/ifHK069k3fZ8nnW
+	 rld9Nc4s5qv43qhu5AiJ2Wa/uxVZxPNsUaeUrQOY8i4KkmrN82zNcQDj3fZ5B6nTb+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026667;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026670;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j0lHqOpTuc3r9dj9enNAei3GHj89wXDGLjVxpfbp5y8=;
-	b=1QC74NvJ0OLLTjlreMI1QVaQE0B8p6V9CO6ElozEkj4N7/oawHpY/XY6vGmPGM30jgXI
-	 qCVRH+WlpobMYbeXokndObj3/xN/whBM6RH5NnRBHmnFrstuojN2d7Np7KC2q41b4zbT9
-	 dFOhslZINMc5tNPjOf5UobVzCk/BN1QpG8hbQfj4/h7Ygb6D+ARd/Wv5U0ONbKDGGz+IT
-	 NfAwlW98KtS3hXlZlgs23tAO+nXcvtB+/zPJc+QKXU1VxJh0DkJzvhqHPRrtnX/UHOECQ
-	 zZQAREi32Q4YUZguLu9gayjn+KBYd3be93TWEiNkairGgaOq+lo3JbqKicnZ+CnEzuQ==
+	bh=9QaYR5sb/blJBs3ZQEBTferhCTNf8IGGicjGwL8+6lw=;
+	b=DGAeLNSKPgUUJBibUPDAucf3SbcgA9piGVj3ya67i5YFBKJn290Dtfh4sEEu8oSd89hI
+	 mOIFyaHx6oCd+71/YfHsrpQAWFCGzWbTwbEMBNKu5BQu5G97lV1dXsZpMI/O3FxE71L42
+	 O/X0v3m+b2q5W7Trdd/rcWNX1a+CxJp17LYgMkxV8ttVRiDSkxVYpC3S0beZ1pSFLVsGl
+	 KM3Sju0f3BmqRZa8rBHRWnyyCYpg1EJToi8Wms1GEErpN8wjBBlFSuBk7f5nXPYK3bQSx
+	 UkXOq6d6f2DIwsLzlx6hVeIJ1SzGMGSsA/4Sx3alimEvSJUQqtdcMn6rxfv0UzexGeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0UT580FV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d3YlwG4w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A830C606A320;
-	Wed, 18 Nov 2026 18:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B34B606A32C;
+	Wed, 18 Nov 2026 18:31:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0UT580FV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDC771F000C4;
-	Wed, 18 Nov 2026 18:31:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d3YlwG4w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728C11F000C4;
+	Wed, 18 Nov 2026 18:31:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026667;
-	bh=j0lHqOpTuc3r9dj9enNAei3GHj89wXDGLjVxpfbp5y8=;
+	s=korg; t=1795026670;
+	bh=9QaYR5sb/blJBs3ZQEBTferhCTNf8IGGicjGwL8+6lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0UT580FVWiOJ3Qy2UaIP+pvRMAPZyr8vMKYGZDux8fSC3OcxUTmUJqQVRAYodVYFZ
-	 Ehhz4zZbLyK1PGnD+uaY8UTg+sCiAn57XhWk9bGnXrk23RidfNpTXsSjWVLB+qEpJY
-	 hb6qoNjgH43BZdPlkngZTiGQ51eMDaKK34y4YOnA=
+	b=d3YlwG4wzXft0G7PAQn0B7aMY4VGJdsaWkn1Av8OuJIh7GnEr5+LwX68MlbAJoyYt
+	 StRT5xM4gYVqhe8g8V2b07tukvh1vaEYHev/Il5ooo14iO673X4XqlqXYKDLfVMKzI
+	 hS4KFw0glDXJ6ktuUBLPdEj7J7+mX8PwaFFotc7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Remi Bernon <rbernon@codeweavers.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1464/2151] perf symbol: Fix symbol loading from libbfd
-Date: Wed, 18 Nov 2026 15:53:19 +0100
-Message-ID: <20261118150215.230467254@linuxfoundation.org>
+Subject: [PATCH 6.18 1510/2151] ASoC: codecs: wm8955: Fix definition of Treble Cutoff control
+Date: Wed, 18 Nov 2026 15:54:05 +0100
+Message-ID: <20261118150216.861195018@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,71 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit f814d9e6cdbef6413a72d6dd6d5e4e79e815cf44 ]
+[ Upstream commit 71911bf5bb3fe97da2124d17fc1dd3dbb9379e03 ]
 
-The dso__load() should return a positive number (number of symbols
-loaded) when it succeded to load symbols.  But dso__load_bfd_symbols()
-only returns 0 and it's hard to check if it actually loaded symbols or
-not.  Let's return the value of dso__has_symbol() and check it in
-dso__load() so that it can return 1 for success.
+Treble cutoff (TC) is at bit 6 of Treble Control, not at bit 2, which
+is part of the treble volume (TRBL[3:0]).
 
-Closes: https://lore.kernel.org/r/sashiko-outbox-162540@kernel.org
-Fixes: eac9a4342e5447ca ("perf symbols: Try reading the symbol table with libbfd")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Remi Bernon <rbernon@codeweavers.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 54db41c116c3 ("ASoC: wm8955: Use SOC_ENUM_SINGLE_DECL()")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/b398bc6dcf8dc2b93504608cdf952823ca238cd5.1791959026.git.sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/pe-file-parsing.c | 2 +-
- tools/perf/util/libbfd.c           | 2 +-
- tools/perf/util/symbol.c           | 4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/codecs/wm8955.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/tests/pe-file-parsing.c b/tools/perf/tests/pe-file-parsing.c
-index 30c7da79e109b..3979f38bf127c 100644
---- a/tools/perf/tests/pe-file-parsing.c
-+++ b/tools/perf/tests/pe-file-parsing.c
-@@ -59,7 +59,7 @@ static int run_dir(const char *d)
- 	TEST_ASSERT_VAL("Failed to get dso", dso);
+diff --git a/sound/soc/codecs/wm8955.c b/sound/soc/codecs/wm8955.c
+index bca83410b4327..c03fc48c6f6b5 100644
+--- a/sound/soc/codecs/wm8955.c
++++ b/sound/soc/codecs/wm8955.c
+@@ -426,7 +426,7 @@ static const char *treble_cutoff_text[] = {
+ 	"High", "Low"
+ };
  
- 	ret = dso__load_bfd_symbols(dso, debugfile);
--	TEST_ASSERT_VAL("Failed to load symbols", ret == 0);
-+	TEST_ASSERT_VAL("Failed to load symbols", ret > 0);
+-static SOC_ENUM_SINGLE_DECL(treble_cutoff, WM8955_TREBLE_CONTROL, 2,
++static SOC_ENUM_SINGLE_DECL(treble_cutoff, WM8955_TREBLE_CONTROL, 6,
+ 			    treble_cutoff_text);
  
- 	dso__sort_by_name(dso);
- 	sym = dso__find_symbol_by_name(dso, "main", &idx);
-diff --git a/tools/perf/util/libbfd.c b/tools/perf/util/libbfd.c
-index 04e6e96f716d8..47d691e4af323 100644
---- a/tools/perf/util/libbfd.c
-+++ b/tools/perf/util/libbfd.c
-@@ -428,7 +428,7 @@ int dso__load_bfd_symbols(struct dso *dso, const char *debugfile)
- 	symbols__fixup_duplicate(dso__symbols(dso));
- 	dso__set_adjust_symbols(dso, true);
- 
--	err = 0;
-+	err = dso__has_symbols(dso);
- out_free:
- 	free(symbols);
- out_close:
-diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
-index e64668cca6b29..756b318bf6290 100644
---- a/tools/perf/util/symbol.c
-+++ b/tools/perf/util/symbol.c
-@@ -1811,8 +1811,8 @@ int dso__load(struct dso *dso, struct map *map)
- 		if (nsexit)
- 			nsinfo__mountns_enter(dso__nsinfo(dso), &nsc);
- 
--		if (bfdrc == 0) {
--			ret = 0;
-+		if (bfdrc > 0) {
-+			ret = 1;
- 			break;
- 		}
- 
+ static const DECLARE_TLV_DB_SCALE(digital_tlv, -12750, 50, 1);
 -- 
 2.53.0
 
