@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031400;
-	b=lKKm79yUtQ0U3xLv0GOP//0jijEbo8TCmprMMR6JZebaXpmfxAUORGe9GTLtkAjksyuL
-	 KdT1ESZi8XWcyqFmo9Z4dnkG2xmtPC1tlc9XDzOrtSIjW+tg0ee0ok8iqPQWs19KRjtrb
-	 YI1ILxK5HscLbuq8kcwWC2Jl9qZXZ6s+MjP/gWYMbvFtK8WuRtFA8NMTf5yot0oV0tF02
-	 ZAZatBiVJBeEWMeyK4UgKe6K9z6+ipyiDRJsasSuhF4CUFOlcy/q8Z79g4CrX3jOps/gW
-	 w0v4FowysddWhTWW+Pnomz99GmiM3vAYlPFxD1mi9EaFRPd9URorPIkjJwR5BLnJD/g==
+	t=1795031402;
+	b=tLTgJA48v3CKP2pEZE4gtiMBYgeXjhwRzYyvDuBUjcx2P5ZsUTMueuXTVIMI4YHQ+kXu
+	 gwpe+Cm/tnB5aCvM1zLW+VfYhjx1MoGu/0kau3egt2lqXfmF64PoAwjiRJ0Kg674Baj6f
+	 l20sLOiZI37ykVHuACvpo2W8auyx7pAzzPfEgkSSlZxpG/Z46rMiyucujxcNdXUAI2mFZ
+	 wxbkDDF47d9Bkc/Aoxb/yrwkHnmrCoBvQY92jmIfVmSUTdIC/dAY53Pw4u1y3TTqmM1AZ
+	 ZdbcVtq+S8fsrvrQYZBayFHRZ64PFNiMia/3mua0SwPnWmgvcivawHsPuzU2G6jSkVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031400;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031402;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MbRRfDh5SbGs/+na7uo1oJ8pIkgNu3aFnROnVUwzY8M=;
-	b=j9XJAD2AxCyZypfhI9Mix4koXPNpYz9PSdtjgBRnnvOkexXfimMjMtDsa4I3d/ImVka6
-	 VfHf1cXrTa4BzUKA7OPwIguRcjavKJj31Bbjo5Yk8LHfLz01z/Tk3SkkfvhFbP85XOE+0
-	 VoMqmvLslUklg4jKSsk/vs2T8ptqhoUL7xLSPRBH5BXEe7/KtxPE8Z5PzFCSLqc6Nq6V6
-	 2rL+P37Wr7412qsWpfXlQd1ltQlF77fjlbvkk+gNT6xCb5Gxn29FgFsmQwVstx6FTxWrk
-	 t9bWNW2AG1OeOmiuNzS2Plu6zO7UjM114h87lSLDs+IFc52Y18RbXhhIeGoC5GsKZDQ==
+	bh=noCHafHo3CrE3eTmK2UweY1Xvxc+9muoM9DQ76cii1Y=;
+	b=jEN64hJzCVY2muOdxu87Z38BaVPwX4sKPJcZPV/IlDjbrth46YXTPzzjg9bCtjOlEbeN
+	 M4EjGkX6IddMdbNR2QhB3Sgf5tkjNIR/5puC+GTQaxmqHIRKvdUj9BDMz0LGdQmmFFcKL
+	 CiT8rA4Ozz14nFh1F/UoekhgVbpMxsi4IKzLVsY/Y2Au9PBk/bao8x9QhoDrz1PPEMH0Q
+	 CwVdhuDmj+R8cF2eUAcCo1Ai4sqwzamWIQXuJL8rZPZuuAof/GsAIUbRlr5m6kRCdrEP/
+	 Hcqsb4HaGxvYocUPqxcShPEdu1X94wi/F0GEwgflAgm7ZiytIIWDSFMNkavy0VKwnsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kO9kfL0w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gODx8JqE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1EF606A320;
-	Wed, 18 Nov 2026 19:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E2A606A31C;
+	Wed, 18 Nov 2026 19:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kO9kfL0w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E351F000C9;
-	Wed, 18 Nov 2026 19:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gODx8JqE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0710F1F000C9;
+	Wed, 18 Nov 2026 19:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031399;
-	bh=MbRRfDh5SbGs/+na7uo1oJ8pIkgNu3aFnROnVUwzY8M=;
+	s=korg; t=1795031402;
+	bh=noCHafHo3CrE3eTmK2UweY1Xvxc+9muoM9DQ76cii1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kO9kfL0woavH0qBJ9t3lWZCrI0mCJmDZJa0xfml5CQPWYyh/vfgTMdw70u9IIIKrw
-	 sBZXwQBwNXoOtPk/YSj1Sf5PV38hXtx66QRTWMc4FisHnEMUxdtqzXFR+we8oT8+FE
-	 FR6bQhvyKZ/hxdkq0GcSsZbyFSJYMnjN+m2A5Xyc=
+	b=gODx8JqEqIFTFiyVFnvM+8tc+5gIKUkJJDNP8dhtZdNoxAtqklSHuvgEUK6jyEVHl
+	 cJ9Y1S48jlz6324l94irbRcbxmbkW8st9ER0ZBehf1yhWSpdkJTvJRD1lMcMNt2Lgs
+	 NBNn2tSsFxa8+7FvYA7CTUBWhRtZ8cIJioyMCO+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Schier <n.schier@fritz.com>,
-	Kees Cook <kees@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Pu Lehui <pulehui@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1044/1756] kbuild: Mark the initcall ordering recipe as recursive
-Date: Wed, 18 Nov 2026 15:52:51 +0100
-Message-ID: <20261118150051.618892182@linuxfoundation.org>
+Subject: [PATCH 6.12 1045/1756] bpf, riscv: Fix stack-passed arguments for indirect trampolines
+Date: Wed, 18 Nov 2026 15:52:52 +0100
+Message-ID: <20261118150051.662621401@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,64 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit ae5f6044c4cdffe2b3361b15c1d6fc67b339f2a4 ]
+[ Upstream commit b4a1ecae94ae803fcd75fb16a7653ff86b64ed8b ]
 
-generate_initcall_order.pl, which orders initcalls for Clang LTO, forks
-a child per input file, up to the job count scripts/jobserver-exec
-passes it in PARALLELISM. It used to run from link-vmlinux.sh, which
-the top-level Makefile invokes as a recursive recipe, but
-commit 5d45950dfbb15 ("kbuild: move vmlinux.o link to
-scripts/Makefile.vmlinux_o") moved it into a recipe without "+".
+store_args() reads stack-passed arguments relative to FP assuming the
+trampoline was entered through the fentry call from a traced function. In
+that path, the trampoline pushes the parent frame before establishing its
+final FP, so the incoming stack arguments start at FP + 16.
 
-GNU Make passes the jobserver pipe only to recipes it treats as
-recursive, and the make 4.3 in CentOS Stream 9 also hides it in
-sub-makes (a backport of the fix for GNU Make bug 58232), so
-jobserver-exec cannot open it and prints:
+An indirect trampoline for a struct_ops callback is called through a
+function pointer. Its prologue allocates only the trampoline frame and sets
+FP to the incoming SP. The RISC-V ABI places the first stack argument at
+that incoming SP, so the arguments start at FP, not FP + 16. Every
+stack-passed argument of a callback with more than eight argument slots is
+therefore read two slots late.
 
-  WARNING: Unable to reopen jobserver read-side pipe: FileNotFoundError(2, 'No such file or directory')
+Pass the prologue-dependent offset to store_args(), using zero for a direct
+struct_ops trampoline and 16 for the fentry path.
 
-PARALLELISM is then left unset, and the script caps its children at the
-number of online CPUs instead of the free job slots.
-
-Mark the recipe as recursive again (this makes "make -n" runs the script
-again too, as it did from link-vmlinux.sh). Masahiro posted the same
-change and withdrew it because the script was given only vmlinux.a, and
-so never ran more than one child [1]. But on arm64, LoongArch, and RISC-V
-with CONFIG_EFI_STUB, KBUILD_VMLINUX_LIBS also gives it the EFI stub's
-lib.a. Either way, the warning is silenced.
-
-Tested ARCH=x86_64 defconfig with CONFIG_LTO_CLANG_THIN=y, LLVM=1
-(Clang 24.0.0git), and GNU Make 4.3 plus CentOS Stream 9's
-make-4.3-cloexec.patch.
-
-Fixes: 5d45950dfbb15 ("kbuild: move vmlinux.o link to scripts/Makefile.vmlinux_o")
-Link: https://lore.kernel.org/all/CAK7LNARCM=rUm8mA8GRQ7ufeyfneGf4OEvHmESKt=zuxs2KrHw@mail.gmail.com/ [1]
-Assisted-by: LLM
-Reviewed-by: Nicolas Schier <n.schier@fritz.com>
-Signed-off-by: Kees Cook <kees@kernel.org>
-Tested-by: Paul E. McKenney <paulmck@kernel.org>
-Link: https://patch.msgid.link/20261010081914.540611-2-kees@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 6801b0aef79d ("riscv, bpf: Add 12-argument support for RV64 bpf trampoline")
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20260930083522.1914145-2-pulehui@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Makefile.vmlinux_o | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/net/bpf_jit_comp64.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/scripts/Makefile.vmlinux_o b/scripts/Makefile.vmlinux_o
-index 0b6e2ebf60dc1..020ca994d149f 100644
---- a/scripts/Makefile.vmlinux_o
-+++ b/scripts/Makefile.vmlinux_o
-@@ -19,7 +19,7 @@ quiet_cmd_gen_initcalls_lds = GEN     $@
+diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
+index 55c2f85090d45..07e60330b2a96 100644
+--- a/arch/riscv/net/bpf_jit_comp64.c
++++ b/arch/riscv/net/bpf_jit_comp64.c
+@@ -729,7 +729,8 @@ int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type poke_type,
+ 	return ret;
+ }
  
- .tmp_initcalls.lds: $(srctree)/scripts/generate_initcall_order.pl \
- 		vmlinux.a $(KBUILD_VMLINUX_LIBS) FORCE
--	$(call if_changed,gen_initcalls_lds)
-+	+$(call if_changed,gen_initcalls_lds)
+-static void store_args(int nr_arg_slots, int args_off, struct rv_jit_context *ctx)
++static void store_args(int nr_arg_slots, int args_off, int stack_args_off,
++		       struct rv_jit_context *ctx)
+ {
+ 	int i;
  
- targets := .tmp_initcalls.lds
+@@ -737,8 +738,8 @@ static void store_args(int nr_arg_slots, int args_off, struct rv_jit_context *ct
+ 		if (i < RV_MAX_REG_ARGS) {
+ 			emit_sd(RV_REG_FP, -args_off, RV_REG_A0 + i, ctx);
+ 		} else {
+-			/* skip slots for T0 and FP of traced function */
+-			emit_ld(RV_REG_T1, 16 + (i - RV_MAX_REG_ARGS) * 8, RV_REG_FP, ctx);
++			emit_ld(RV_REG_T1, stack_args_off +
++				(i - RV_MAX_REG_ARGS) * 8, RV_REG_FP, ctx);
+ 			emit_sd(RV_REG_FP, -args_off, RV_REG_T1, ctx);
+ 		}
+ 		args_off -= 8;
+@@ -973,7 +974,12 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im,
+ 	emit_li(RV_REG_T1, nr_arg_slots, ctx);
+ 	emit_sd(RV_REG_FP, -nregs_off, RV_REG_T1, ctx);
  
+-	store_args(nr_arg_slots, args_off, ctx);
++	/*
++	 * A direct struct_ops call has its first stack argument at the incoming
++	 * SP, which the trampoline keeps as FP. The fentry path pushes the
++	 * parent frame first, so its incoming stack arguments start at FP + 16.
++	 */
++	store_args(nr_arg_slots, args_off, is_struct_ops ? 0 : 16, ctx);
+ 
+ 	/* skip to actual body of traced function */
+ 	if (flags & BPF_TRAMP_F_SKIP_FRAME)
 -- 
 2.53.0
 
