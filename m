@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047622;
-	b=FHC6XBSg638fAkKxbrupEK0lGTalR4LgksNVFK18n3VcfVVw62MmZIRigz1g70dWMUI1
-	 jfZn9EoqAmmfabKSPt4YP7hVzXdbLQ31QkbXsOkwlxP0Dvm77ZL8TjlLa4tlUaBvhsaeh
-	 NJUDRWhrOly0MZPO3o8tLcgy9oJKJ4U+Ik4+q8twxq0/PFJY7SeD715gZtyfqnL0DKbgk
-	 9MdzpC0mpcTGdDl/qHl7hkA1rTLUnqwcVqDxZUQhLufbpW/fXwD2m3v3Lq/bAKiLVkcGh
-	 onKLWuUOPB9iLHxOsqKhNJiImtkA0nOl6DG4Uczp0kzwyIRUV7KuCV0BWBy+n5YJREg==
+	t=1795047625;
+	b=hPItxIQdBTGFaE8oC/nVZY9KSGUzCYsZ0zXjo2TJCGsz9hokiQuFg/BB5OAZMaD3BGtI
+	 gws63eVFMD/x3lwoHPYqfU2ciNkdfuJLOKjQrCaMro5blfAR7LlSloZH/piFATUNz2R8X
+	 Swxayrau/mIjw5xVmrig1JDNrLc2jsrFNSuV2E1sGBnx35gPscUzC+Vnq1CjKFzkf5Vqg
+	 YJmNlnHOMlAL8LDNbXjqkzkIvio7ESUTJtC75uaPB5SbPWdByXa0dmLn24zYWGNUyquyp
+	 zZkJ/FdVlOiT2xmt71izwVxDkVsfNqNvI3onAnnbcjWLcLia5nMqABgkykMDOlvbJrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047622;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047625;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tWSAqsTBro0/JWuHWPKvYPDAN7pu6IExOi5fMgcfH/A=;
-	b=P5J8kayvDrBbyMyQzqcs1HmNtdsgFCsbVcsyfMSY3M9f73u57XUIYXdyAl1+j6aq7/wz
-	 XQYrwH1m81pJeber25pd/aodY/yDPJzx8isMDlwC5jA5FERyWJD3yqGjM/pODOSaCJOLa
-	 wsbxMgiXko62cZSQZiImcBKSl/2/dcKIY1x5p+mGdUDESOrYZf0i7dq2H7GpGoGjHs75L
-	 GZzdGH5DbBgslLrbnA30Co+b8V5JKQ6zMjqcd2K1GsXuYegpfMuL6zfCGpfxTcJOpDG0o
-	 2G67u9ZcrCvPsK7NVfDctJPYQqc4W8w0iKRkQ/CqwcPZWDd3bt00SMFsB+V7UR9IRhw==
+	bh=tpqkz/y9h2dupSahLde0iT07rNs9eJJvU8JScVf5p/s=;
+	b=UfNxuBtsSk5W5P4gDh6kPgltpV0Y2ER5opCVCZ3LITKDb+tmMSu4wz/tVVoZdvLCqPkM
+	 XBS9L00/ugha6G5hknOS8CxhyMRLTj/PzMmdgnpK+cCT5u7VVXyCUTfnjSM6/NpmnWTpR
+	 USv2EGZAzGcVfrtPf7iw4wpdnEeiJouIE1yzmDsB3TfSPcs8BkdRjl3g/rfelVGHTMFqW
+	 LhCoQHs+uTF2/4FQn4PJPlW8p2F+xx7nof+sRXrN4/S8bo85k5WZ807wJx2d8g0o/vASk
+	 BOx3A1pJihcnF++vgRnxKq47XC13FjCNlmV07JSRBCOmbWp6Vl4NSLcuchDa9Kbwrhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ig5OYrhC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tqpVqEuj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3153606A320;
-	Thu, 19 Nov 2026 00:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86436606A31C;
+	Thu, 19 Nov 2026 00:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ig5OYrhC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE751F000C4;
-	Thu, 19 Nov 2026 00:20:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tqpVqEuj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57B31F000C4;
+	Thu, 19 Nov 2026 00:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047622;
-	bh=tWSAqsTBro0/JWuHWPKvYPDAN7pu6IExOi5fMgcfH/A=;
+	s=korg; t=1795047625;
+	bh=tpqkz/y9h2dupSahLde0iT07rNs9eJJvU8JScVf5p/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ig5OYrhCRwPxKefwveLOql1UpM1sVTW3j9BJ74/VpvGdYBGy1aLlQD/ipw7P2mIwK
-	 u4nA6MEEgO/l8E2JjrgfIaX48kcu2BSod69DnG2/VzuYCC5/aex1Ttrc0+MrtV0Ocp
-	 ytHHuKvM8HoJD7TYGp26GtkmXYOYOZFRBGFVUAzw=
+	b=tqpVqEujyDN7FwSILLGYD1oN2wsyZx62f0YLvpcBXTRNHSfVo8OnBF+ZHBOuB/BrV
+	 6qL7pqsTXmiIL6Jn1f/KRzEppJZdHl9B8sDE/WtU8gGYVJ2/EIrSuP53wH5/PtJfzQ
+	 hmt7QWWOVYq5EpmPJZjiwJg82KbUt8Se4LIkbt3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chris Mason <mason@kernel.org>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1704/2857] drm/amdkfd: use the queues process info for the WPTR BO eviction fence
-Date: Wed, 18 Nov 2026 15:45:38 +0100
-Message-ID: <20261118150302.686763132@linuxfoundation.org>
+Subject: [PATCH 6.1 1705/2857] mm/filemap: finish fault cleanup before dropping the fault lock
+Date: Wed, 18 Nov 2026 15:45:39 +0100
+Message-ID: <20261118150302.722942612@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,100 +70,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit da2897ee8b811945fd40ecc4aaf03291c14ce61c ]
+[ Upstream commit 97156a6c355c21f7122421915f05461bd11699a4 ]
 
-amdgpu_amdkfd_map_gtt_bo_to_gart() removes the eviction fence of
-bo->vm_bo->vm->process_info from the WPTR BO of a new queue. bo->vm_bo
-is the VM which opened the BO last, not necessarily the KFD process' VM,
-and a render node VM has no process info.
+On a retried fault, a fatal signal interrupting the folio lock wait
+makes lock_folio_maybe_drop_mmap() drop the fault lock without pinning
+the file. However, filemap_fault() may still need to release
+mapping->invalidate_lock. A concurrent munmap() can release the last
+file reference and free the mapping before that unlock.
 
-On navi31, an unprivileged process which exports its WPTR BO with
-AMDKFD_IOC_EXPORT_DMABUF and imports it on a second render node fd
-oopses in AMDKFD_IOC_CREATE_QUEUE:
+Defer dropping the fault lock to filemap_fault()'s retry cleanup, after
+releasing invalidate_lock. If the fault lock was already dropped for
+I/O, release the existing file reference instead. Keep the fault lock
+held for FAULT_FLAG_RETRY_NOWAIT as before.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000060
-  RIP: 0010:amdgpu_amdkfd_map_gtt_bo_to_gart+0x86/0x1a0 [amdgpu]
-   init_user_queue.part.0+0x180/0x250 [amdgpu]
-   pqm_create_queue+0x32d/0x730 [amdgpu]
-   kfd_ioctl_create_queue+0x583/0x9f0 [amdgpu]
-
-Pass the process info of the queue instead. With the fix, the queue is
-created and destroyed normally.
-
-Fixes: 7f347e3f8217 ("drm/amdkfd: Fix NULL pointer error for GC 11.0.1 on mGPU")
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6b4157498a176bd1c6083f6bb5aaf8a257a2027e)
+Fixes: 730633f0b7f9 ("mm: Protect operations adding pages to page cache with invalidate_lock")
 Cc: stable@vger.kernel.org
-[ sashal: adapted the process_info argument to the existing adev-based mapping API in kfd_ioctl_create_queue() ]
+Reported-by: Chris Mason <mason@kernel.org>
+Reviewed-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-8-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: Replaced release_fault_lock(vmf) with mmap_read_unlock(vmf->vma->vm_mm) for mmap-only fault locking. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h       | 3 ++-
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 8 +++++---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c         | 3 ++-
- 3 files changed, 9 insertions(+), 5 deletions(-)
+ mm/filemap.c | 36 +++++++++++++-----------------------
+ 1 file changed, 13 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-index ba065f7887aad..ed0f5e76324e0 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-@@ -294,7 +294,8 @@ int amdgpu_amdkfd_gpuvm_map_gtt_bo_to_kernel(struct kgd_mem *mem,
- 					     void **kptr, uint64_t *size);
- void amdgpu_amdkfd_gpuvm_unmap_gtt_bo_from_kernel(struct kgd_mem *mem);
- 
--int amdgpu_amdkfd_map_gtt_bo_to_gart(struct amdgpu_device *adev, struct amdgpu_bo *bo);
-+int amdgpu_amdkfd_map_gtt_bo_to_gart(struct amdgpu_device *adev, struct amdgpu_bo *bo,
-+				     struct amdkfd_process_info *process_info);
- 
- int amdgpu_amdkfd_gpuvm_restore_process_bos(void *process_info,
- 					    struct dma_fence **ef);
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-index eb4d652afbb60..49b9e0033be9e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -2163,11 +2163,13 @@ int amdgpu_amdkfd_gpuvm_sync_memory(
-  * amdgpu_amdkfd_map_gtt_bo_to_gart - Map BO to GART and increment reference count
-  * @adev: Device to which allocated BO belongs
-  * @bo: Buffer object to be mapped
-+ * @process_info: KFD process info of the queue the BO is for
+diff --git a/mm/filemap.c b/mm/filemap.c
+index 61581b59d0ff3..08bdf85a97c09 100644
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -3078,11 +3078,11 @@ loff_t mapping_seek_hole_data(struct address_space *mapping, loff_t start,
+  * @folio - the folio to lock.
+  * @fpin - the pointer to the file we may pin (or is already pinned).
   *
-  * Before return, bo reference count is incremented. To release the reference and unpin/
-  * unmap the BO, call amdgpu_amdkfd_free_gtt_mem.
+- * This works similar to lock_folio_or_retry in that it can drop the
+- * mmap_lock.  It differs in that it actually returns the folio locked
+- * if it returns 1 and 0 if it couldn't lock the folio.  If we did have
+- * to drop the mmap_lock then fpin will point to the pinned file and
+- * needs to be fput()'ed at a later point.
++ * Returns 1 with the folio locked, or 0 if locking failed.
++ *
++ * On both entry and return, a non-NULL *fpin means the fault lock has
++ * already been dropped and the caller must eventually fput() the file.
++ * Otherwise the fault lock is still held, including on failure.
   */
--int amdgpu_amdkfd_map_gtt_bo_to_gart(struct amdgpu_device *adev, struct amdgpu_bo *bo)
-+int amdgpu_amdkfd_map_gtt_bo_to_gart(struct amdgpu_device *adev, struct amdgpu_bo *bo,
-+				     struct amdkfd_process_info *process_info)
- {
- 	int ret;
+ static int lock_folio_maybe_drop_mmap(struct vm_fault *vmf, struct folio *folio,
+ 				     struct file **fpin)
+@@ -3099,20 +3099,9 @@ static int lock_folio_maybe_drop_mmap(struct vm_fault *vmf, struct folio *folio,
+ 		return 0;
  
-@@ -2189,8 +2191,8 @@ int amdgpu_amdkfd_map_gtt_bo_to_gart(struct amdgpu_device *adev, struct amdgpu_b
- 		goto err_map_bo_gart_failed;
- 	}
+ 	*fpin = maybe_unlock_mmap_for_io(vmf, *fpin);
+-	if (vmf->flags & FAULT_FLAG_KILLABLE) {
+-		if (__folio_lock_killable(folio)) {
+-			/*
+-			 * We didn't have the right flags to drop the mmap_lock,
+-			 * but all fault_handlers only check for fatal signals
+-			 * if we return VM_FAULT_RETRY, so we need to drop the
+-			 * mmap_lock here and return 0 if we don't have a fpin.
+-			 */
+-			if (*fpin == NULL)
+-				mmap_read_unlock(vmf->vma->vm_mm);
+-			return 0;
+-		}
+-	} else
+-		__folio_lock(folio);
++	if (vmf->flags & FAULT_FLAG_KILLABLE)
++		return !__folio_lock_killable(folio);
++	__folio_lock(folio);
  
--	amdgpu_amdkfd_remove_eviction_fence(
--		bo, bo->vm_bo->vm->process_info->eviction_fence);
-+	/* bo->vm_bo can be the VM of any file which opened the BO */
-+	amdgpu_amdkfd_remove_eviction_fence(bo, process_info->eviction_fence);
+ 	return 1;
+ }
+@@ -3231,7 +3220,7 @@ static struct file *do_async_mmap_readahead(struct vm_fault *vmf,
+  * vma->vm_mm->mmap_lock must be held on entry.
+  *
+  * If our return value has VM_FAULT_RETRY set, it's because the mmap_lock
+- * may be dropped before doing I/O or by lock_folio_maybe_drop_mmap().
++ * may be dropped before doing I/O or when aborting an interrupted wait.
+  *
+  * If our return value does not have VM_FAULT_RETRY set, the mmap_lock
+  * has not been released.
+@@ -3374,9 +3363,8 @@ vm_fault_t filemap_fault(struct vm_fault *vmf)
  
- 	amdgpu_bo_unreserve(bo);
- 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index a08c84556ace4..4212d8c77de3b 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -368,7 +368,8 @@ static int kfd_ioctl_create_queue(struct file *filep, struct kfd_process *p,
- 			goto err_wptr_map_gart;
- 		}
- 
--		err = amdgpu_amdkfd_map_gtt_bo_to_gart(dev->adev, wptr_bo);
-+		err = amdgpu_amdkfd_map_gtt_bo_to_gart(dev->adev, wptr_bo,
-+						    p->kgd_process_info);
- 		if (err) {
- 			pr_err("Failed to map wptr bo to GART\n");
- 			goto err_wptr_map_gart;
+ out_retry:
+ 	/*
+-	 * We dropped the mmap_lock, we need to return to the fault handler to
+-	 * re-find the vma and come back and find our hopefully still populated
+-	 * page.
++	 * With fpin set, the fault lock was already dropped. Otherwise it is
++	 * still held. Release invalidate_lock before dropping either protection.
+ 	 */
+ 	if (folio)
+ 		folio_put(folio);
+@@ -3384,6 +3372,8 @@ vm_fault_t filemap_fault(struct vm_fault *vmf)
+ 		filemap_invalidate_unlock_shared(mapping);
+ 	if (fpin)
+ 		fput(fpin);
++	else if (!(vmf->flags & FAULT_FLAG_RETRY_NOWAIT))
++		mmap_read_unlock(vmf->vma->vm_mm);
+ 	return ret | VM_FAULT_RETRY;
+ }
+ EXPORT_SYMBOL(filemap_fault);
 -- 
 2.53.0
 
