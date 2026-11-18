@@ -1,70 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022433;
-	b=emuGhJbtsy/PboeYfwKJ1ah71nvlbZG24diiv/LoogtF7dtmzgiC0e7fikGFfFBuXXwX
-	 1v/ea+xFvzaaFYGh9F7ov/MGVd4Gn+LojwzJhdlPI/5vYaj+LSKZFg2ba3n5DlU1mWIM/
-	 4WUILzFKKFZ7I6e8Ckr8u72wvheCrE2bXC/TzorF1bKzbY80LSzUgYb/7Kg/qIwyXVpyz
-	 CSz4wOgU3VEjYkS4ie5W2/rixDZcg4ywHRMseUG8K7lRhr8KgCfcUg5EYUknYfOfvFwTh
-	 GOe1Y7BwdxlAQWsSv/Tmp+fL2QdVoWGVysW78hchS7H6cBEIdeQKavVeY1BoD51qZiQ==
+	t=1795022436;
+	b=DwzRVmM1Juk3pfqmlKG8+PgXlsjJvKSOl8RCdSPWBXsR+JFjEKUZIgDsXoLGhBwb9pzV
+	 ayYzueokLrsrl/f3oeMLV5/gNqlCvM73rYmpnREB1bw+dvftZn5+0/Goha5QrpSeBWsMA
+	 95dy0Cm6Yg5byC+LGGQUa6UUzxf0OVY4xMzOwnGBv7ZvK+25Pg4K96CFRrWFvLtDxMKux
+	 ORSzq180Z46FQu6UjDDDU/P1Lu9FFFZRtamzNLWbfC8E/9d5r92Ae7hiUP7ena+ekC1Xv
+	 4MODpfFCP9VIESF509x/3XYFOJPl4U8M7ouAeEA0fKbuJhWJS1v1D7bAdonzGH9CCBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022433;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022436;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U7VyXgEY+5p6QR64NoiA5ggvq2g+6QDnvCZSNAEsgXM=;
-	b=sVpe+3LsTbyuvAXgPCy/C/RUPwPcBo9Qptrht1jyJoW8Q1Dyg8+wNfeZTWSg736fE4fB
-	 6sIELML5Syj13fDgzvYaFXGq6416GmKdXKXOZ4NiAatlo4qUB/j5SfBA66TdRi4jbPGsg
-	 ValmZXGu5ZdW9qRbixs5M0kuj83gydOp9sArKkpqi43WnYJnm1A/zudd4YLa0f24eiujb
-	 Oaj1XIHQje3+NhKDGOXTLev13Zf9m1hBHeTvllf8rTE8ReCe95sr1CYHo0ImGmUD/5q1k
-	 UO4CqrxCShhBamQ+21ddNleDJixT9oj+nC1aEA9+PWRgSjDDhJkYad9YJWkt9lCKaxA==
+	bh=sunzh/+mB1xuCqI463xnIyvOz2vgDDK0AH1piXJb/t0=;
+	b=sI0Qy5Dg2RtS/+YHEihcYaO9up/4NQMhEU7Tpibz8WXj2l8U/TMMHE9TrT/+VvXT3CW+
+	 hPHe5NJf5ji7qvOU59W4l2aSXj+oAGlKcD7RM9jf81MDzOREO01MNpBms/V72iPwLZDSC
+	 CmhFhtl+tvTAh4YN4h2+LjKmNSxmRWQWlWjPYppTg5Z6Ns88n1T++HkMtX6q3jSPHsk7R
+	 FcaNDnneegHvTVbyk/VtIFVhY0pRXpc2OSkeo1i2NR9S9qkY9RbMQ5ZNRTlnhN7MCETst
+	 3a1WuPWb/cFif+FISbxBoehwxSz2c5hhIcAVZwKWo2I0ewuJ1C6EsdTud/breBOcINA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a/ApDFVz";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MWxtmPya;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3A1606A31C;
-	Wed, 18 Nov 2026 17:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88666606A32A;
+	Wed, 18 Nov 2026 17:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a/ApDFVz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D2B1F000C4;
-	Wed, 18 Nov 2026 17:20:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MWxtmPya
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF06B1F000C5;
+	Wed, 18 Nov 2026 17:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022433;
-	bh=U7VyXgEY+5p6QR64NoiA5ggvq2g+6QDnvCZSNAEsgXM=;
+	s=korg; t=1795022436;
+	bh=sunzh/+mB1xuCqI463xnIyvOz2vgDDK0AH1piXJb/t0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a/ApDFVzJdaTSPEu6P5SottSoccLA0nk72QxI6ZGJHX/EO0E1GKgnMpNxE7pe1Llh
-	 xGER+mIz9tROtfkiJPIGxg9aavmlzMM4sEvbVArlcrT28kfuDU01nYfp+HDDmxH5st
-	 zz5fUeclotCasT/yMUbxJnoqcbi/xWOR0xIq3pSo=
+	b=MWxtmPyaoo2ERMySn9/gveic4xosTOnMFnTw2FXsAm5RpNSV2iGTMokAd95XeXOHV
+	 GD9fcy9csA1TWQ814ZX0PSicbZOsgEyBGWxI/HIUzgDxDCA72Z1j7rZYvbNsxfOuIi
+	 vtL6wzL7c7M26uN7vuufXCDax0OffI3Rb2JHyfU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Chris Mason <mason@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Adam Litke <agl@us.ibm.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Rik van Riel <riel@surriel.com>,
-	Peter Xu <peterx@redhat.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0004/2151] mm/hugetlb: fix endless write fault on a leftover uffd bit
-Date: Wed, 18 Nov 2026 15:28:59 +0100
-Message-ID: <20261118150121.795360355@linuxfoundation.org>
+Subject: [PATCH 6.18 0013/2151] ASoC: SOF: Intel: hda-sdw-bpt: Stop active DMA before closing BPT streams
+Date: Wed, 18 Nov 2026 15:29:08 +0100
+Message-ID: <20261118150122.124669889@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -86,91 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit f61e1cf15fb44f9cf89d43d8ef01f926322bb1c4 ]
+[ Upstream commit 348bc756d912dd8f47fd36c167075717951a515e ]
 
-hugetlb_fault() resolves the uffd bit on a write fault only if the VMA is
-registered for userfaultfd write protection, and hugetlb_wp() bails out
-for any entry with the uffd bit set assuming hugetlb_fault() has already
-resolved it.
+When sdw_enable_stream() fails in intel_ace2x_bpt_send_async() after
+hda_sdw_bpt_send_async() has already started the TX and RX DMA streams,
+intel_ace2x_bpt_close_stream() invokes hda_sdw_bpt_close() directly
+without calling hda_sdw_bpt_wait().  As a result,
+hda_sdw_bpt_dma_deprepare() tears down the DMA buffers and BDL while
+the DMA hardware is still running.
 
-When a read-only hugetlb entry with the uffd bit set is mapped in a VMA
-that is not registered for uffd-wp, a write fault to it never makes
-progress. If the access comes from the kernel, e.g. read(2) from
-/dev/zero into such page, the task spins in the page fault handler,
-ignores SIGKILL and keeps holding the locks taken by the system call.
+Disable any running TX or RX BPT DMA stream at the start of
+hda_sdw_bpt_close() before unmapping channels and depreparing DMA
+resources.
 
-Such entries should not exist, but an unprivileged user can create them,
-for example with MADV_DONTNEED of a page protected with UFFDIO_RWPROTECT
-or with UFFDIO_COPY in MODE_WP racing with UFFDIO_UNREGISTER.
-
-Clear the uffd bit when the VMA is not registered for uffd-wp and let the
-fault proceed to hugetlb_wp(), like do_wp_page() does for regular pages.
-
-Note that a FOLL_FORCE write to a page protected with UFFDIO_RWPROTECT in
-a private VMA that was made PROT_NONE now drops the RWP protection of
-that page.
-
-Original fix generated by an LLM and sent in private by Josef.
-
-[rppt@kernel.org: massage commit message]
-[david@kernel.org: convert comment into a TODO]
-Link: https://lore.kernel.org/20261015-urgent_fixes-v1-6-42796911043b@kernel.org
-Fixes: 60d5b473d61b ("mm/hugetlb: fix uffd wr-protection for CoW optimization path")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Chris Mason <mason@kernel.org>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Adam Litke <agl@us.ibm.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: retained the older huge_pte_uffd_wp() and huge_pte_clear_uffd_wp() helper names. ]
+Fixes: 4c1ce9f37d8a ("soundwire: intel_ace2x: add BPT send_async/wait callbacks")
+Closes: https://sashiko.dev/#/bug/linux-ff0012de-abdd-4796-875e-b1fbbf47235f
+Cc: stable@vger.kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20261030104840.3361217-6-lee@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/soc/sof/intel/hda-sdw-bpt.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index a8da4cb7ad10f..32daea7b157fa 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -6860,15 +6860,19 @@ vm_fault_t hugetlb_fault(struct mm_struct *mm, struct vm_area_struct *vma,
- 		goto out_ptl;
+diff --git a/sound/soc/sof/intel/hda-sdw-bpt.c b/sound/soc/sof/intel/hda-sdw-bpt.c
+index 4e5c99413c750..5eaa2e0563c16 100644
+--- a/sound/soc/sof/intel/hda-sdw-bpt.c
++++ b/sound/soc/sof/intel/hda-sdw-bpt.c
+@@ -431,6 +431,12 @@ int hda_sdw_bpt_close(struct device *dev, int link_id, struct hdac_ext_stream *b
+ 	int ret;
+ 	int ret1;
  
- 	/* Handle userfault-wp first, before trying to lock more pages */
--	if (userfaultfd_wp(vma) && huge_pte_uffd_wp(huge_ptep_get(mm, vmf.address, vmf.pte)) &&
-+	if (huge_pte_uffd_wp(huge_ptep_get(mm, vmf.address, vmf.pte)) &&
- 	    (flags & FAULT_FLAG_WRITE) && !huge_pte_write(vmf.orig_pte)) {
--		if (!userfaultfd_wp_async(vma)) {
-+		if (userfaultfd_wp(vma) && !userfaultfd_wp_async(vma)) {
- 			spin_unlock(vmf.ptl);
- 			hugetlb_vma_unlock_read(vma);
- 			mutex_unlock(&hugetlb_fault_mutex_table[hash]);
- 			return handle_userfault(&vmf, VM_UFFD_WP);
- 		}
- 
-+		/*
-+		 * TODO: fix all cases where uffd PTE bits remain in VMAs that
-+		 * are no longer registered with uffd.
-+		 */
- 		vmf.orig_pte = huge_pte_clear_uffd_wp(vmf.orig_pte);
- 		set_huge_pte_at(mm, vmf.address, vmf.pte, vmf.orig_pte,
- 				huge_page_size(hstate_vma(vma)));
++	if (bpt_rx_stream && hdac_stream(bpt_rx_stream)->running)
++		hda_sdw_bpt_dma_disable(dev, bpt_rx_stream);
++
++	if (bpt_tx_stream && hdac_stream(bpt_tx_stream)->running)
++		hda_sdw_bpt_dma_disable(dev, bpt_tx_stream);
++
+ 	/*
+ 	 * In the case of SoundWire we need to reset the PCMSyCM registers.
+ 	 * Need to continue depreparing the DMA buffers even if this fails.
 -- 
 2.53.0
 
