@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025147;
-	b=XYjHNVQL9E//ozt2aN492jQ8g5L4LmAEmpPKAmTbhEe51J/1xXzFQDGeOo/5wrvbHd6C
-	 jIiqhpbyRskVcHSMaRTUByErouuz3qGWpPBRATSH61WFs8hALfuKGg+fjA5il1bTe1m0D
-	 ULj+S45a5/wpQyLlSqHfqLe+sqWvkSHz9YzNMYqK2S9Ik43hEav4oVtiWFHbCbfKYjC3s
-	 BTK2x/tdIn/sWUw6bUHG3AsWdvsaB65jmpY+gPgMIsygUPgRmcnyofHmRFwbVufMo137s
-	 JyGGye64lp/fn4oK40qMIKftj5krAaN8P5rPtTWas4b3ziQy/CZpEXzoxJfd63wIlVA==
+	t=1795025149;
+	b=gq9IMUrB3s8icgkFXlKArTW2X5lsk4V/eN9iS9GZmrNer/rMjngc85T4OHZAAYNIyK6H
+	 UU5WwKGCGcXzMlLj6pU27v4TtSZe2cuwWF4P+S1QPrydE62iIzKkYyKKyRWqcCfIJtCAG
+	 P5/Eez59ia6/vraTOF8j6csKs73bOxOIV/Fv2ZYu4zYNhE1Vn6uVgrqQARJtMGjmKBvBI
+	 injpW3FoG6EUoJnXdfIAZneFKgWUu4gummDJO8z9xL20ftKLmpkbfIH3a6EINmrge8DY6
+	 XSXglhgYVdNi+0XbpwsNg33MQkiMD0FER0OT3a8zIY/KHk9bC9uVLf/7pjoCCKy3zRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025147;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025149;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IV4L8m/fjW6is5LyZjmaGXIUH8HCOOhKxwh3B0vZJx8=;
-	b=MMKPF8TBJHMHkLUXOYMJEwH39woWiG4jDP8YL1f99wA3o7S+lX7XZHx5rWYyoETeJ75T
-	 9Z8i1XzsGArO6FNf2KYp5b5BXodY2XY0XrQPdMsSXW4VmwK3xnvQ2U5WWFzZpsFWaTaRJ
-	 0C890KhnRRWkMlCj+E9/BXPTQttDCSCHdY6JWoHPzX7ttzcXEDR53r+DW2kWORFjTuLFw
-	 RGwQFJNerwMmaLCLnHdvyFZqTc0s2U34I/tgQ901FYWCJWb59Jgsl5U+Y0Rw+vS8vxtXD
-	 BokWk1CvcoyoxrEPtXbGxGh3vkfRwZ5ah0x3oX/U+UqEgRijt0F0hMnAAJJwOHKUrIA==
+	bh=2egiUJi81iniPFV3foy++gDQGuf8TsdolsJu9lgR57I=;
+	b=fX529u5heXaWCx895b/tLvw+nX1Sl28vkAavSJXG28TeA07/BNsl6lnubZgMaW0tn7fs
+	 HAuD13WF1MMEihJqVJ511wRT0RaTMUFNSzLYbSB/L/1bvYIsJsuL8soe6gum7B+0c0CEa
+	 zbUcyoZt2WMrFWg9hk2U0F5UqL+QrM4YJ+3O1RI4Ovqm7qkp0cNouyKxICMbJ3knCOtks
+	 Etne06dEoLJjwOq3xQU+1X3z3Pgd7w5Y/nuTW5ZojusCJRGKrWoaR4rqt0RnE1XA5xgPS
+	 H+7V/92QOOsOfJzCKCX0fiSL3ZFD3GrAWoq+/tnQmp81ZGHeDXmLeXBk+nVPDeHnxlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JkZoRdgu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZhiaDy3Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126CD606A325;
-	Wed, 18 Nov 2026 18:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D0A606A339;
+	Wed, 18 Nov 2026 18:05:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JkZoRdgu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C3FC1F000CB;
-	Wed, 18 Nov 2026 18:05:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZhiaDy3Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E499D1F000C6;
+	Wed, 18 Nov 2026 18:05:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025146;
-	bh=IV4L8m/fjW6is5LyZjmaGXIUH8HCOOhKxwh3B0vZJx8=;
+	s=korg; t=1795025149;
+	bh=2egiUJi81iniPFV3foy++gDQGuf8TsdolsJu9lgR57I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JkZoRdguzVQaT9fxGy5TCVvHLRjvTs/GfDmP0+dL1XKWFy7DA9zCMfaOoeSNhNYXR
-	 R9RDRCKFvLRXug0AHnkbI2NO8xxKpUcAwyVadOjVLgmiuB8cPu+X+rfAGFCK/CzLVs
-	 YTB2Sl/R87uiOd0U7kFI3kEk0CNQWWzfnfbzVGgA=
+	b=ZhiaDy3ZHt38wz//eVXQOW9inRow1WCQM5WMgU0a2S/UoFTWGj6ebyvUZzt16GXjW
+	 Fi0TeUUrJaA6bHnteOROphlvkJEyufoEsVRm8eYnw/zq0thG4Dbp4faor++IwZ3fF+
+	 YObt3Tr75UVYYjm4kfVqPMxIVjOJ9dPWT42ua7zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuming Fan <shumingf@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	Rodolfo Giometti <giometti@enneenne.com>,
+	Danish Khateeb <danishkhateeb03@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0935/2151] ASoC: rt712: avoid duplicate reset in io_init
-Date: Wed, 18 Nov 2026 15:44:30 +0100
-Message-ID: <20261118150156.549357718@linuxfoundation.org>
+Subject: [PATCH 6.18 0936/2151] pps: generators: wake up PPS_GEN_FETCHEVENT readers on unregister
+Date: Wed, 18 Nov 2026 15:44:31 +0100
+Message-ID: <20261118150156.582675357@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,45 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuming Fan <shumingf@realtek.com>
+From: Danish Khateeb <danishkhateeb03@gmail.com>
 
-[ Upstream commit 923ff8155ef6e83b73b852300d50f2053b969552 ]
+[ Upstream commit 5b864f8db0bd33216895f3fe0bb1ec245c596c8e ]
 
-The codec should be reset only once during io_init, regardless of
-whether the system performs a warm or cold reboot.
+A reader sleeping in PPS_GEN_FETCHEVENT waits for the next event, but
+no event comes after pps_gen_unregister_source(), so the reader sleeps
+until it gets a signal. A PPS_GEN_FETCHEVENT issued after the
+unregister sleeps the same way.
 
-Fixes: 4c9854ad3cdc ("ASoC: rt712-sdca: reset codec at io_init to fix silent headphone")
-Signed-off-by: Shuming Fan <shumingf@realtek.com>
-Link: https://patch.msgid.link/20261001090219.797880-1-shumingf@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Wake up the readers on unregister, and make PPS_GEN_FETCHEVENT fail
+with -ENODEV once the generator is gone, like the other ioctls. The
+wait checks info without info_lock, so clear it with WRITE_ONCE().
+
+Fixes: 86b525bed275 ("drivers pps: add PPS generators support")
+Suggested-by: Rodolfo Giometti <giometti@enneenne.com>
+Assisted-by: LLM
+Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
+Acked-by: Rodolfo Giometti <giometti@enneenne.com>
+Link: https://patch.msgid.link/20260929124937.51114-5-danishkhateeb03@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt712-sdca.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/pps/generators/pps_gen.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/rt712-sdca.c b/sound/soc/codecs/rt712-sdca.c
-index a799b8aab73aa..37845a454a000 100644
---- a/sound/soc/codecs/rt712-sdca.c
-+++ b/sound/soc/codecs/rt712-sdca.c
-@@ -1886,7 +1886,8 @@ int rt712_sdca_io_init(struct device *dev, struct sdw_slave *slave)
+diff --git a/drivers/pps/generators/pps_gen.c b/drivers/pps/generators/pps_gen.c
+index eda7fd933bec7..8b6aff42c050d 100644
+--- a/drivers/pps/generators/pps_gen.c
++++ b/drivers/pps/generators/pps_gen.c
+@@ -103,11 +103,14 @@ static long pps_gen_cdev_ioctl(struct file *file,
+ 		dev_dbg(&pps_gen->dev, "PPS_GEN_FETCHEVENT\n");
  
- 	pm_runtime_get_noresume(&slave->dev);
+ 		ret = wait_event_interruptible(pps_gen->queue,
+-				ev != pps_gen->last_ev);
++				ev != pps_gen->last_ev ||
++				!READ_ONCE(pps_gen->info));
+ 		if (ret == -ERESTARTSYS) {
+ 			dev_dbg(&pps_gen->dev, "pending signal caught\n");
+ 			return -EINTR;
+ 		}
++		if (!READ_ONCE(pps_gen->info))
++			return -ENODEV;
  
--	rt712_sdca_reset(rt712);
-+	if (!rt712->first_hw_init)
-+		rt712_sdca_reset(rt712);
+ 		spin_lock_irq(&pps_gen->lock);
+ 		info.sequence = pps_gen->sequence;
+@@ -238,9 +241,12 @@ static void pps_gen_unregister_cdev(struct pps_gen_device *pps_gen)
+ 			pps_gen->info->enable(pps_gen, false);
+ 			pps_gen->enabled = false;
+ 		}
+-		pps_gen->info = NULL;
++		WRITE_ONCE(pps_gen->info, NULL);
+ 	}
  
- 	rt712_sdca_index_read(rt712, RT712_VENDOR_REG, RT712_JD_PRODUCT_NUM, &val);
- 	rt712->hw_id = (val & 0xf000) >> 12;
-@@ -1915,7 +1916,7 @@ int rt712_sdca_io_init(struct device *dev, struct sdw_slave *slave)
- 	 * if set_jack callback occurred early than io_init,
- 	 * we set up the jack detection function now
- 	 */
--	if (rt712->hs_jack)
-+	if (rt712->hs_jack && (!rt712->first_hw_init))
- 		rt712_sdca_jack_init(rt712);
++	/* Wake up the readers in PPS_GEN_FETCHEVENT, they fail now as well */
++	wake_up_interruptible_all(&pps_gen->queue);
++
+ 	put_device(&pps_gen->dev);
+ }
  
- 	rt712_sdca_index_write(rt712, RT712_VENDOR_REG, RT712_SW_CONFIG1, 0x0001);
 -- 
 2.53.0
 
