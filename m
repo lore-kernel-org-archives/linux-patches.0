@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058116;
-	b=emmSkYP40KtK+BONOMXmvHkjIRguBrNiKFm7MhMNNreHOBQn7lLfA+KeM+6oApfxZ83K
-	 cdXiuBzdBgUgSQOZLcJTJNLxoNs8wyNg64Ob4rEdWIkfViOlht0KQ7lurIJgzDsi94p/5
-	 uFLorEldvD0QnmdtaOQNsI9gItjJm8PzbgJggPalD/jxWtSrjvhozkNtGIh9OvT1jpAuJ
-	 dYbplrKy7CvdhDZBNmmrosweLpox6wuWxKu3xBugHIDGQK/THlRVMlEB9a0HCux2+vwrm
-	 9sgiM4afUP23U05PaO1Xb8AyXi1Igieqj/0jNu0CyzN9C/NRQ43jmEQUvO3lw1ifaxA==
+	t=1795058119;
+	b=G10V5gJiG3iyekrQ1SWslv+ie9VQhtbdPVGHgV1dqpj214P/UyAGrAyJ4a65MN67mVKt
+	 JIbbzKqcEsCNzNiyJOVBJXDopcAyI+KwgfQjMjWptqosiQQtFjCbcs9S2HPqGp1XXDMBc
+	 qS+Bsk45widMc+/raOxFX2IGTDvdwyCz2kFXOnbPOh2GKAxUiKX0FA8sCrl1mMIdMDHQs
+	 +i1FAlYUtbZQRFxNI5qZ6dfZHPEFd+e9MAlkJnAvEH0D49bCbRmvPTDgjBbRc5SHN2LE5
+	 SwrjyJD/zMAphNl8NVj7Zxeavd0Jf0ROfseUZ7PqgNBsRzkMgS09EZCOfBCzIrqhP/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058116;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058119;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kc6Fsbs76acl5tjmE+fOV1UkMhh+r0zUZ0MjXx6WrbQ=;
-	b=nnlQFnM1w54Ig4Meh9GJwLjg2oKQWx06JgoqH5rEUBMu4s/wg9fWJ+o5PnKnw/ExmkaL
-	 plt/ZvVCJjRSQG0jWKgfzLRSFF21/9sR5iPHh9dpK1Up1mq2elptea75er5fsZWlxj824
-	 OBbnV/Ek/t8EGGBBbEd4ekf4ceg2Ew6knLS8LTIoXrr8wkdY/JTQ1wGUGMiMvRRbLWQp/
-	 rjwebNsffrrT7HfdNN7FhJuLKPrf4iDmAWhI39caGkOyALqx0O96flZp7FC0PSfH0QtAu
-	 hO5yFLItyb/IF1+7w5aFBpOdJBE5w2EQKR/UB4TSE00/GfKcsUzqXqNltUSvFmf4IJg==
+	bh=c1es2o3ujkYE/9bCHhJvmOOxalWuw17o2P0R1kGfRvA=;
+	b=JkOG/IRQTkYS1s/NhLh4PhfP9qzQhV1vCph0JXIuDiXQMbBDCHE2uNRInu2F3+61EgYi
+	 JBW8qoCwdVfw2CP8R/klUcHVHIRsIiJWRnflT3RPPKvFCc66btDF/lBF8J85rDH/Odyy5
+	 Jl8ELsX9DhP3Lz2BJo/xIVAzwnGbH+XEsH2rNTrqT5ZDUr1/D4AutrxzvsO/JcZRTVybb
+	 5j7YvMFEVt4XCUrsDtDXio1nLSKXUglOSsjbErzdAKrCuUvvhKP/H7RRJOrmtB/xPFUnm
+	 dbsdPPQeoyNKECxnTd7C1usJn+WCHfWqQ7kBFqgcDkJWjYaIB6fjquPJpV8LW0r3GLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zq09xr0R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q9xe+qoS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E15F606A31C;
-	Thu, 19 Nov 2026 03:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D79B606A325;
+	Thu, 19 Nov 2026 03:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zq09xr0R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02BBF1F000C4;
-	Thu, 19 Nov 2026 03:15:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q9xe+qoS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43201F000C5;
+	Thu, 19 Nov 2026 03:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058116;
-	bh=kc6Fsbs76acl5tjmE+fOV1UkMhh+r0zUZ0MjXx6WrbQ=;
+	s=korg; t=1795058119;
+	bh=c1es2o3ujkYE/9bCHhJvmOOxalWuw17o2P0R1kGfRvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zq09xr0RMMCe8yMLjl6QHqzMqw6IwNJTFbHedm3GO2CmHS6AZPg3wCSCxWLoJvKyB
-	 lbUloT25SKMle/pXg7rP63r5bXJsj5aFHyOHMHRc6n9In5/apnqTs/WfK5yB3b5Qhn
-	 UMlXd3OqlE3T6S1Bsp2y52nuCm1GhLcTRSoHiI/I=
+	b=q9xe+qoSERbbpi0f1hByvBLcKiwRViRE82Mk/fPrtTfcp9+UdTjgqQEwa0a2DUIYv
+	 xlsWo0J+MSG4JRdmT1Amx/DctrkE34P80/QVjlEdlVdBRn2AiNkXSI7Y3AcyFsb5v/
+	 pFsuz1yv7AbpfMJOHAZ/zvC4vapgvozrYZtcQhc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
+	syzbot+32f018fd65e799f79ae0@syzkaller.appspotmail.com,
+	Piyush Patle <piyushpatle228@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0371/1848] media: vicodec: make encoder CAPTURE dimensions read-only
-Date: Wed, 18 Nov 2026 15:40:09 +0100
-Message-ID: <20261118145928.955614808@linuxfoundation.org>
+Subject: [PATCH 5.10 0372/1848] media: vidtv: fix frontend reference leak on unbind
+Date: Wed, 18 Nov 2026 15:40:10 +0100
+Message-ID: <20261118145928.986186754@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,72 +69,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Piyush Patle <piyushpatle228@gmail.com>
 
-[ Upstream commit 2532e9d2f8ccb330a9c924b1ee34c5629240d352 ]
+[ Upstream commit 6f412f9fe6a1f3ce9694757f50353bbec221d832 ]
 
-Setting the encoder's compressed CAPTURE format to a smaller resolution
-than the raw OUTPUT format makes the encoder write past the end of the
-CAPTURE buffer.
+dvb_register_frontend() keeps two references to the frontend. One is
+released by dvb_unregister_frontend(), and the other by
+dvb_frontend_detach(). vidtv only called dvb_unregister_frontend(), so
+the second reference was never released. As a result,
+__dvb_frontend_free() was never called, leaking the frontend private
+data and its struct dvb_device.
 
-For a stateful encoder the CAPTURE width and height are not
-client-settable; Documentation/userspace-api/media/v4l/dev-encoder.rst
-specifies them as "ignored (read-only)" on VIDIOC_S_FMT. vicodec only
-implements half of that: vidioc_s_fmt_vid_out() derives the CAPTURE coded
-size and sizeimage from the OUTPUT format, but S_FMT on the CAPTURE queue
-overwrites them. The encoder then takes its geometry from the OUTPUT
-queue alone, and v4l2_fwht_encode() gets no destination length.
+The detach call was removed by commit 63101b756893 ("media: vidtv: fix
+driver unbind/remove") because it caused an OOPS. The demod .release
+callback freed vidtv_demod_state, and the I2C remove callbacks then
+accessed the freed state.
 
-Overwrite the requested width and height with the OUTPUT queue's coded
-dimensions in vidioc_try_fmt_vid_cap(), making them read-only as the
-interface requires.
+That commit also removed those accesses from the I2C remove callbacks.
+Restore the detach call, but remove the demod .release callback.
+vidtv_demod_state is owned by the I2C client and is already freed by
+vidtv_demod_i2c_remove(), so the frontend detach path should not free
+it.
 
-Fixes: efec9c815e5d ("media: vicodec: pass on enc output format to capture side")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Assisted-by: Claude:claude-opus-5
+Tested with kmemleak and KASAN over 10 bind/unbind cycles. The reported
+frontend and dvb_device leaks were present before the fix and were gone
+after it, with no KASAN reports.
+
+Reported-by: syzbot+32f018fd65e799f79ae0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=32f018fd65e799f79ae0
+Fixes: 63101b756893 ("media: vidtv: fix driver unbind/remove")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Tested-by: syzbot+32f018fd65e799f79ae0@syzkaller.appspotmail.com
+Signed-off-by: Piyush Patle <piyushpatle228@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vicodec/vicodec-core.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/media/test-drivers/vidtv/vidtv_bridge.c | 2 ++
+ drivers/media/test-drivers/vidtv/vidtv_demod.c  | 9 ---------
+ 2 files changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/media/test-drivers/vicodec/vicodec-core.c b/drivers/media/test-drivers/vicodec/vicodec-core.c
-index 81fd6ed949517..8a24ee814ff32 100644
---- a/drivers/media/test-drivers/vicodec/vicodec-core.c
-+++ b/drivers/media/test-drivers/vicodec/vicodec-core.c
-@@ -900,6 +900,8 @@ static int vidioc_try_fmt_vid_cap(struct file *file, void *priv,
- 				  struct v4l2_format *f)
- {
- 	struct vicodec_ctx *ctx = file2ctx(file);
-+	struct vicodec_q_data *q_data_out =
-+		get_q_data(ctx, V4L2_BUF_TYPE_VIDEO_OUTPUT);
- 	struct v4l2_pix_format_mplane *pix_mp;
- 	struct v4l2_pix_format *pix;
+diff --git a/drivers/media/test-drivers/vidtv/vidtv_bridge.c b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
+index 5e0daac89fe1b..e216526db35a7 100644
+--- a/drivers/media/test-drivers/vidtv/vidtv_bridge.c
++++ b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
+@@ -471,6 +471,7 @@ static int vidtv_bridge_dvb_init(struct vidtv_dvb *dvb)
+ fail_demod_probe:
+ 	for (i = i - 1; i >= 0; --i) {
+ 		dvb_unregister_frontend(dvb->fe[i]);
++		dvb_frontend_detach(dvb->fe[i]);
+ fail_fe:
+ 		dvb_module_release(dvb->i2c_client_tuner[i]);
+ fail_tuner_probe:
+@@ -522,6 +523,7 @@ static int vidtv_bridge_remove(struct platform_device *pdev)
  
-@@ -910,6 +912,10 @@ static int vidioc_try_fmt_vid_cap(struct file *file, void *priv,
- 		pix = &f->fmt.pix;
- 		pix->pixelformat = ctx->is_enc ? V4L2_PIX_FMT_FWHT :
- 				   find_fmt(f->fmt.pix.pixelformat)->id;
-+		if (ctx->is_enc) {
-+			pix->width = q_data_out->coded_width;
-+			pix->height = q_data_out->coded_height;
-+		}
- 		pix->colorspace = ctx->state.colorspace;
- 		pix->xfer_func = ctx->state.xfer_func;
- 		pix->ycbcr_enc = ctx->state.ycbcr_enc;
-@@ -921,6 +927,10 @@ static int vidioc_try_fmt_vid_cap(struct file *file, void *priv,
- 		pix_mp = &f->fmt.pix_mp;
- 		pix_mp->pixelformat = ctx->is_enc ? V4L2_PIX_FMT_FWHT :
- 				      find_fmt(pix_mp->pixelformat)->id;
-+		if (ctx->is_enc) {
-+			pix_mp->width = q_data_out->coded_width;
-+			pix_mp->height = q_data_out->coded_height;
-+		}
- 		pix_mp->colorspace = ctx->state.colorspace;
- 		pix_mp->xfer_func = ctx->state.xfer_func;
- 		pix_mp->ycbcr_enc = ctx->state.ycbcr_enc;
+ 	for (i = 0; i < NUM_FE; ++i) {
+ 		dvb_unregister_frontend(dvb->fe[i]);
++		dvb_frontend_detach(dvb->fe[i]);
+ 		dvb_module_release(dvb->i2c_client_tuner[i]);
+ 		dvb_module_release(dvb->i2c_client_demod[i]);
+ 	}
+diff --git a/drivers/media/test-drivers/vidtv/vidtv_demod.c b/drivers/media/test-drivers/vidtv/vidtv_demod.c
+index b7823d97b30d5..4edad5d9e1709 100644
+--- a/drivers/media/test-drivers/vidtv/vidtv_demod.c
++++ b/drivers/media/test-drivers/vidtv/vidtv_demod.c
+@@ -343,13 +343,6 @@ static int vidtv_diseqc_send_burst(struct dvb_frontend *fe,
+ 	return 0;
+ }
+ 
+-static void vidtv_demod_release(struct dvb_frontend *fe)
+-{
+-	struct vidtv_demod_state *state = fe->demodulator_priv;
+-
+-	kfree(state);
+-}
+-
+ static const struct dvb_frontend_ops vidtv_demod_ops = {
+ 	.delsys = {
+ 		SYS_DVBT,
+@@ -390,8 +383,6 @@ static const struct dvb_frontend_ops vidtv_demod_ops = {
+ 			FE_CAN_HIERARCHY_AUTO,
+ 	},
+ 
+-	.release = vidtv_demod_release,
+-
+ 	.set_frontend = vidtv_demod_set_frontend,
+ 	.get_frontend = vidtv_demod_get_frontend,
+ 
 -- 
 2.53.0
 
