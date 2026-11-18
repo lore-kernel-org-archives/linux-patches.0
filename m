@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052419;
-	b=5Mr/Iop74kZWSja209+biER4UvS0lthbvzBWp67ov/fWgmdmRE0SucvMp9YMJJ41PQ2Y
-	 6m6ilDlr8O7ZFfXlQjRFPEhtPFNZIAcWRTfVSM1znSnhnV1TkuGmzav/SwhhujWhkq2kF
-	 QQpn1Bl1c33jpYrPtpb9UslX6YX1uke1th5ivSOra+TuFJDfyiOe8ZForG9PZSlWopVn0
-	 T/9cry2ql5OtJkkzbdhyX0g6W+YUN4ELFSsyRs9G2zcIsf0oPhKFtYylETeR3KG9KePMs
-	 7m3W1ptJIMOJ3K5S/UAVpUelWEemKCOa8G8HYKtYLsk4U77EoIoc7rflXZfbJmijlew==
+	t=1795052422;
+	b=WA2WOPSuUbAg7nsCoMhtWcumy7NdGRuYUf713D3eS8G/NYeWMzFjBc99afn2HLlxbCRC
+	 jOwWpf7obN1BmzNIW/71T6e8MdktdKVKBhvd1ytzuJGPI+OR7r0iciNxzpjQZ5q0895vB
+	 YdfqLgiap9jRo9jHWUDb25n8o9d/33aOK+WAxMALjyC/ULaI/L4wd4LaROUDkWJFqVZ6R
+	 mGLv1FB951tv/TJdO4vhr1oFgHRmGI1TL731kPobtGGLqv2ZrG/qs4fKTx74T4VS7gmlF
+	 ujCSGNryFDIqTNkAXbMrP/CUMbXvHyImweEgAo6MPphbC3ab7Y0lsxWjmmHUZqhYX6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052419;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052422;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vbj6P5O5IWH0B4F/OedoesNnRN6PSvBMtzhHQFAaGd4=;
-	b=JtBqoV654caNTye9ILbVAlDP5b5oAalMGcWI6LHjYBjoDpK6JhJ1/hutJHYc7RPUsJ2m
-	 If8Oy2Ya2sdJqqdDGV+8SITzAqAz92qwAmXcNr4ETc/d7/+WMDWrrDqOWOiWan5nrrpT/
-	 11YMugmwM5jBGDjPRynKZQ0TQueGo5+kgcbM+jm7mIlxsMvGCFasBdYjd4UMI1HaRgUVO
-	 ui5+KpNaO4uYTbpRsIWc13qOzY+25BFxd7gsfd+jvSqwIlXPskyhwysgivzgILEEnZ1JP
-	 YNeMWxpxpTatmYxJ3iUmOkJmjXAODg1DJFDuECTLEixrDcSP5uQw7/8g/6FfmKR2F+g==
+	bh=dy9h/+iSqLYMuyzDqUw0wMxZmcMUuNZmg3Z1w8tIgl0=;
+	b=J+csGnvHCOtG7p9j+1pgF1OvX+lLA8S6FSW2UzEw1Y0G/qbm9+S6JwV0LUQ49TfSuFUS
+	 lXNxQh8aWwAZHMvEWitCt4+NuO8jh1F2Dda5EWst6N7m1B7vRexlvTs8tEmDujrzRNidO
+	 rl4QRUKIG8UFRyOP8q0HnPn6C/2+C8RO14vfoRtLdtbLdnHvcLKYYUgi27qopEeUwGZi+
+	 82HZdSDRwc/o1mxCrlo5j5QEg+SpFXKPVdTVFkZuck8gZ/DZ+0/l1LxnDtLtEpl0+8M3c
+	 OyYuQVL4LjpA6G27zZQz03bLSDqc356J7Aviz+ZsJJKFexCU5/Lz6IDdOhrFHiPLRnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e5IbruDV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xC9bp8nl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F99B606A325;
-	Thu, 19 Nov 2026 01:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F06C606A31C;
+	Thu, 19 Nov 2026 01:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e5IbruDV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61451F000C4;
-	Thu, 19 Nov 2026 01:40:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xC9bp8nl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7811F000C4;
+	Thu, 19 Nov 2026 01:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052419;
-	bh=vbj6P5O5IWH0B4F/OedoesNnRN6PSvBMtzhHQFAaGd4=;
+	s=korg; t=1795052422;
+	bh=dy9h/+iSqLYMuyzDqUw0wMxZmcMUuNZmg3Z1w8tIgl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e5IbruDVhGoKWZ1Zgg/piz1EVCjCU42POo2SBA21xQyn4jmyQU3dpM6y7IlvM3SRm
-	 NRAaWQ39CEIeIpjpjhAmBU8BN5SgKHmGKU9GH+hXly6Qp63PoTDP3qmfuVXnsikJdf
-	 KlI2snte6VXmbEwFMwYnq5floR0sio3Z1PPRXfUA=
+	b=xC9bp8nlTn1TI1kHIllJpFmqR2K04fzP+rOsiL/aM8CX13GVuBTGhBvad/WnGmRUY
+	 bYcBm1wcP0HTfAcD3nloMJnVHne0RBGrGDS1CM/XaakfePOBza5R4IwSj0+znNhTEE
+	 guvdwoMVNSrMckvEs2/gmUyRbXglTiMWcmrYxdGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Ginger Li <ginger.jzllee@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0556/2214] media: rtl28xxu: fix SDR platform device leak
-Date: Wed, 18 Nov 2026 15:37:12 +0100
-Message-ID: <20261118150033.257339161@linuxfoundation.org>
+Subject: [PATCH 5.15 0557/2214] media: exynos4-is: Fix a race between s_stream(0) and the interrupt handler
+Date: Wed, 18 Nov 2026 15:37:13 +0100
+Message-ID: <20261118150033.295936570@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,64 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Ginger Li <ginger.jzllee@gmail.com>
 
-[ Upstream commit 083a92996598a5080965f1baa84175082e14a45b ]
+[ Upstream commit c65eb69f8170975802ddbede84420553eb681d62 ]
 
-rtl2832u_tuner_attach() registers an rtl2832_sdr platform device, but
-does not unregister it if no driver is bound. It also does not take a
-reference on the bound driver module.
+fimc_lite_subdev_s_stream(on = 0) sets ST_FLITE_OFF outside of the
+fimc->slock protected region, and only then stops the capture in the
+hardware.  flite_irq_handler() runs under fimc->slock and clears
+ST_FLITE_OFF, so an interrupt can be handled in between: the handler finds
+ST_FLITE_OFF already set, clears it and wakes up fimc->irq_queue before the
+capture has actually been stopped.  The wait_event_timeout() right after it
+then returns immediately and the driver continues as if the capture had
+stopped.
 
-Unregister the platform device when no driver is bound or the module
-reference cannot be acquired. Drop the module reference in
-rtl28xxu_tuner_detach() before unregistering the device.
+Set ST_FLITE_OFF in the same critical section that stops the capture, as
+fimc_lite_stop_capture() already does.
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
-
-Fixes: a2f7f220df5e ("[media] rtl28xxu: switch SDR module to platform driver")
+Fixes: 6319d6a002be ("[media] fimc-lite: Add ISP FIFO output support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb-v2/rtl28xxu.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/media/platform/exynos4-is/fimc-lite.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/media/usb/dvb-usb-v2/rtl28xxu.c b/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
-index f7884bb56fccf..5a1e2a38d8154 100644
---- a/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
-+++ b/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
-@@ -1391,8 +1391,16 @@ static int rtl2832u_tuner_attach(struct dvb_usb_adapter *adap)
- 						     "rtl2832_sdr",
- 						     PLATFORM_DEVID_AUTO,
- 						     &pdata, sizeof(pdata));
--		if (IS_ERR(pdev) || pdev->dev.driver == NULL)
-+		if (IS_ERR(pdev))
- 			break;
-+		if (!pdev->dev.driver) {
-+			platform_device_unregister(pdev);
-+			break;
-+		}
-+		if (!try_module_get(pdev->dev.driver->owner)) {
-+			platform_device_unregister(pdev);
-+			break;
-+		}
- 		dev->platform_device_sdr = pdev;
- 		break;
- 	default:
-@@ -1426,8 +1434,10 @@ static int rtl28xxu_tuner_detach(struct dvb_usb_adapter *adap)
+diff --git a/drivers/media/platform/exynos4-is/fimc-lite.c b/drivers/media/platform/exynos4-is/fimc-lite.c
+index aaa3af0493cee..7d94b539eff54 100644
+--- a/drivers/media/platform/exynos4-is/fimc-lite.c
++++ b/drivers/media/platform/exynos4-is/fimc-lite.c
+@@ -1215,9 +1215,8 @@ static int fimc_lite_subdev_s_stream(struct v4l2_subdev *sd, int on)
+ 			spin_unlock_irqrestore(&fimc->slock, flags);
+ 		}
+ 	} else {
+-		set_bit(ST_FLITE_OFF, &fimc->state);
+-
+ 		spin_lock_irqsave(&fimc->slock, flags);
++		set_bit(ST_FLITE_OFF, &fimc->state);
+ 		flite_hw_capture_stop(fimc);
+ 		spin_unlock_irqrestore(&fimc->slock, flags);
  
- 	/* remove platform SDR */
- 	pdev = dev->platform_device_sdr;
--	if (pdev)
-+	if (pdev) {
-+		module_put(pdev->dev.driver->owner);
- 		platform_device_unregister(pdev);
-+	}
- 
- 	/* remove I2C tuner */
- 	client = dev->i2c_client_tuner;
 -- 
 2.53.0
 
