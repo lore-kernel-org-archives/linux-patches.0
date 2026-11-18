@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050744;
-	b=DaRCafXxa28+tx9orXd75y5xI5Clmx6i5rE66rRV1aCt2ZdqFInmDFW1/4j4IXc2cJDh
-	 xo1qujwO9rFS92UnLpMP1mR4ExL3khgslBjh10CB85+ZjDyTfX+nCJ7eQMqq47uFdsHUI
-	 sO7fL2TfPiNpLF0yIhZIi9yGZs4Q8XXDfx1vCR1vcNLKIRo86nCu8QGnt2FWlok86FJva
-	 eRPpLYLI7dfR9J4YYWorFNuRBCymssmBGZPf0RkCxOCj9wJtcc18It//yDSoz5bZ/mX2t
-	 k15iuYCrgsCx4dp+F5CW3RD5FA9vTN0jRSg1Llli0zF87nlq8rx18nBaAIOWe7IT2hw==
+	t=1795050747;
+	b=ORE5uTABAaXY+CXpek8CbqXg1KhFESe7y/mEG/iGeDk5zvVLO+o+Ada31YNzQbxkEPOM
+	 0XnxMUgd4kOqNP0zl8ZSfNmKftS0hVMIkUFdOSrDD44aMNwMyZpXDqYABNjMMOCGdebs0
+	 vPh91jxvBqocrTzL6kqJz34F7nw0FSQZA5F7pTMSmXqIIIb8UsUPbZC2e9eXy82AzOntn
+	 KARUT0Rw6W0sPq8US2mH8Z5kp7q8ZGSd+PK8FkMvQ9OBXjYI8izcbpi8kgTvSNOBQuYuy
+	 sgQEGXueM0SalkBn5dz4p4sR+ARtW1kXXPL3Iw/LMgozGx8rWv4VL909xRfvI8eZfXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050744;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050747;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sBiIgbcOkL/6ccX0/M5NRtbug6Jr3/Gh4dY9pF8SwzI=;
-	b=l1UGznHNde1CBlKOX1JmcPgJ0reyBhv1weF1PZClDA6KP/ceokh3OF9ypFqxXOpI8/AX
-	 rb7VytKQVX/qvh55klxtlexjRgP6yv8/m3OjER607APiSZj8GomNW1OP1Z0C2ipiOfbmq
-	 jz6TQa+LPlC0Z2EM/UnzJdHcgcJqer0HcuDRLO7981C/cLDUoSzpol0tmwcakgBC0ZdSN
-	 fJ2ADFVq+J1jPpcXlpXYDLGGOxxTOlLwl0ydve/c/i+036qWJy9BqOqmoS3xz4U6Q3Mtd
-	 bL7HNr4vi62octsqK9Vj3F2ThsIG86EiFe1PQwTTpE6TVdgSp7yjCdqiTfBRkqxuGHA==
+	bh=TMbCeml0T4jZn6WefA0AL8XggZeJfw88cM7GxwlkWp8=;
+	b=TgwGe7viQUVgRD2RFt7ZufvspKNhMRoY9HJh7jfwREbaIXozC5ucCxBybeI1dYAtgr2y
+	 PWzqpNn0qz/qv3nwdWoqPbGGwo0wW1YZl9migRn9xJ5ZFjaE8WuAqSCKHCuMZUhpJPlMi
+	 bz8kewhM5gqNQdJ2QHNrXaC9CSbx2fnPyqkSHNTwoU4opIMB22VNLAYfqmGjADtk35Ztg
+	 68WkRyBOYYyaAzBa0JSkdrsBRhdAkz93fDAKIydw5SL4yfsHEnacWCvGU+BiiPNOUgMSk
+	 UuCEnBLrf9cWI1PZrqoqOg9kQtlsGxhp+0ZlbLF1NRXEa/tbzs6zaesECQgohKeTjbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qgoicUEL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BOUK7KJm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F6B606A330;
-	Thu, 19 Nov 2026 01:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1EC0606A335;
+	Thu, 19 Nov 2026 01:12:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qgoicUEL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4D01F000C7;
-	Thu, 19 Nov 2026 01:12:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BOUK7KJm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1651F000C7;
+	Thu, 19 Nov 2026 01:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050744;
-	bh=sBiIgbcOkL/6ccX0/M5NRtbug6Jr3/Gh4dY9pF8SwzI=;
+	s=korg; t=1795050747;
+	bh=TMbCeml0T4jZn6WefA0AL8XggZeJfw88cM7GxwlkWp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qgoicUELE4GQO1t0/LMxdTtKrqOARFH3Cu+vmoehdTdVZeN1Jw/4SatatSLKVsK4t
-	 5fZYw8K0eTxH0fNpE5T8jlAm+nQotOMkhMAA4XgTZCeE+EotFD1Y03RcamTVeBmgsh
-	 21T8eI1QQVpbOnWW7DIgcFJBmWvd/ivVezmuQYLU=
+	b=BOUK7KJmLMAZ6PtccaxrvNf9XooQX+MrQcEvySfFp0ruZcAxj66nwglQzb0/x8GY3
+	 nE4LCs20ZWFujPNGop0enq1xvh/S5xW+1bpRA1YEQko+Y7oroLWm0dHw/eTJuHGSeL
+	 p2IUz+1dUQZBok+E55de9mII09vDYPGmMSAhWTXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Chan <michael.chan@broadcom.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2817/2857] eth: bnxt: hand XDP frags over to the copybreak skb
-Date: Wed, 18 Nov 2026 16:04:11 +0100
-Message-ID: <20261118150343.027584140@linuxfoundation.org>
+Subject: [PATCH 6.1 2818/2857] gro: do not GRO GSO packets with inconsistent payload
+Date: Wed, 18 Nov 2026 16:04:12 +0100
+Message-ID: <20261118150343.062888153@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,67 +70,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 364b88b54fc260d22ee318bae862c2d7d8c31dc6 ]
+[ Upstream commit de788d8a7032475f900c16e9cc0c1417f4f719eb ]
 
-With a multi-buffer XDP program attached, a packet only has agg
-buffers if it filled its head buffer, which in page mode holds most
-of a page. The program can still move the start of the packet forward
-with bpf_xdp_adjust_head() and leave at most rx_copybreak bytes in the
-head. bnxt_rx_pkt() then copies the head into a new skb, puts the head
-page back on the ring, and calls bnxt_xdp_build_skb() on the copy.
-bnxt_xdp_build_skb() only sets nr_frags and the skb's length
-accounting, because it expects an skb built around the head page,
-sharing its shinfo with the xdp_buff. The copy ends up with nr_frags
-set but no frag descriptors, and the stack later reads and releases
-whatever its frags array happens to contain. The real frags leak.
+tcp_gro_receive() excludes empty non-GSO packets with the unsigned
+len - 1 check, but its GSO branch only checks that gso_size matches
+the held packet's MSS. A trusted TCP GSO skb can reach GRO again with
+no payload after TC pedit increases its TCP data offset.
 
-Copy the frag descriptors to the new skb in bnxt_copy_xdp(), so that
-bnxt_xdp_build_skb() finds the frags where it expects them. The frags
-now belong to the skb, and the head page goes back on the ring as
-before.
+If the skb is fully linear, skb_gro_receive() then enters its fragment
+transfer path with nr_frags == 0. The do-while loop copies skb_frag_t
+entries backwards beyond both fragment arrays. An unprivileged process
+using its own user and network namespaces can trigger a KASAN
+slab-out-of-bounds write and panic through veth, pedit and GRE.
 
-Pointed out in LLM review of the first patch of the series.
-Confirmed by reading the code, the unfixed kernel was not run with
-the reproducer below.
-Tested on a BCM57504 at MTU 9000 with rx-copybreak raised to 1024
-and a frags-capable XDP program moving the start of multi-buffer
-frames 3000B forward with bpf_xdp_adjust_head(), receiving 8000B
-ICMPv6 echo requests (a head and two agg buffers each). All 60k
-frames took the copybreak path with frags attached, the sampled skbs
-reached GRO with len=4998 data_len=4492 nr_frags=2, and were freed by
-the stack with the page pools' inflight count staying flat, no KASAN
-or DEBUG_PAGEALLOC splats.
+More generally, the payload of such a packet can be shrunk to any
+value, making it inconsistent with its gso_segs, and a GSO packet
+with gso_segs == 0 contributes no segment to the GRO packet.
 
-Fixes: 1dc4c557bfed ("bnxt: adding bnxt_xdp_build_skb to build skb from multibuffer xdp_buff")
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20261027234940.1267225-6-kuba@kernel.org
+Do not aggregate GSO packets with gso_segs == 0, and require the
+payload of GSO packets to be consistent with gso_segs and gso_size,
+the last segment being allowed to be short. This rejects the empty
+skb before either TCP merge helper, and covers both IPv4 and IPv6.
+
+Fixes: 5eddb24901ee ("gro: add support of (hw)gro packets to gro stack")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+[edumazet: check payload against gso_segs, refuse gso_segs == 0]
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261028171350.2205175-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/core/gro.c         |  5 +++--
+ net/ipv4/tcp_offload.c | 12 +++++++++---
+ 2 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index bbb7b77a6b753..3519dd4c3d911 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -1304,6 +1304,14 @@ static struct sk_buff *bnxt_copy_xdp(struct bnxt_napi *bnapi,
- 		__skb_pull(skb, metasize);
+diff --git a/net/core/gro.c b/net/core/gro.c
+index bb0e87fb569c5..ae5bf8698b9e8 100644
+--- a/net/core/gro.c
++++ b/net/core/gro.c
+@@ -558,9 +558,10 @@ static enum gro_result dev_gro_receive(struct napi_struct *napi, struct sk_buff
+ 	NAPI_GRO_CB(skb)->count = 1;
+ 	if (unlikely(skb_is_gso(skb))) {
+ 		NAPI_GRO_CB(skb)->count = skb_shinfo(skb)->gso_segs;
+-		/* Only support TCP and non DODGY users. */
++		/* Only support TCP and non DODGY users, with a sane gso_segs. */
+ 		if (!skb_is_gso_tcp(skb) ||
+-		    (skb_shinfo(skb)->gso_type & SKB_GSO_DODGY))
++		    (skb_shinfo(skb)->gso_type & SKB_GSO_DODGY) ||
++		    !NAPI_GRO_CB(skb)->count)
+ 			NAPI_GRO_CB(skb)->flush = 1;
  	}
  
-+	if (unlikely(xdp_buff_has_frags(xdp))) {
-+		struct skb_shared_info *sinfo;
-+
-+		sinfo = xdp_get_shared_info_from_buff(xdp);
-+		memcpy(skb_shinfo(skb)->frags, sinfo->frags,
-+		       sinfo->nr_frags * sizeof(skb_frag_t));
-+	}
-+
- 	return skb;
- }
+diff --git a/net/ipv4/tcp_offload.c b/net/ipv4/tcp_offload.c
+index b0e62c0819980..35d3920be6199 100644
+--- a/net/ipv4/tcp_offload.c
++++ b/net/ipv4/tcp_offload.c
+@@ -334,14 +334,20 @@ struct sk_buff *tcp_gro_receive(struct list_head *head, struct sk_buff *skb)
  
+ 	mss = skb_shinfo(p)->gso_size;
+ 
+-	/* If skb is a GRO packet, make sure its gso_size matches prior packet mss.
++	/* If skb is a GRO packet, make sure its gso_size matches prior packet
++	 * mss, and that its payload is consistent with its gso_segs
++	 * (the last segment can be short).
+ 	 * If it is a single frame, do not aggregate it if its length
+ 	 * is bigger than our mss.
+ 	 */
+-	if (unlikely(skb_is_gso(skb)))
++	if (unlikely(skb_is_gso(skb))) {
++		unsigned int segs = NAPI_GRO_CB(skb)->count;
++
+ 		flush |= (mss != skb_shinfo(skb)->gso_size);
+-	else
++		flush |= len <= (segs - 1) * mss || len > segs * mss;
++	} else {
+ 		flush |= (len - 1) >= mss;
++	}
+ 
+ 	flush |= (ntohl(th2->seq) + skb_gro_len(p)) ^ ntohl(th->seq);
+ #ifdef CONFIG_TLS_DEVICE
 -- 
 2.53.0
 
