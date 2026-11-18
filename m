@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038106;
-	b=GVixvx/ZU6NCy9stYN8B4tQ0iZuVETCh0pgmJ6/RArdQ+NJ046gEDLrUZ3eT6ZBztIWu
-	 okP5/MM4+Le208w5MCF6WTsk/QAt9/OBjiOB0/bs7MnWiazfWYNnGomJryvvXscjlJe+o
-	 vBVoZynsbjtxYtJ2lBCuviaqDo1dgXaYCtpFfYbKpC3MmubVzgrbf/5KcQ+5n3wQC6h/d
-	 G55BD+cVvGAKbgRaS3u4xygsEKdaulbZZqdrd/JOUWNZrFW1yPGRBvK+cQe1JUpNrlslE
-	 ohvY+3AGtixZTV7B2e60DMNwwS2KEgNrFAJoK4JZ+cx/wSkEEaSjuu8PpbTbTVDVaLA==
+	t=1795038110;
+	b=q869XYM+/Vzomm1ZFf1SLGOD+CiQmFjs3o2/i8pCeFlQUddztjYfzDr/L2+thEbtEG0A
+	 Qqu1zWgY2ZlyqiN7Jw0yyOY5jUM9axKU1+DUeKO+J9yPWWdB1XRBYKuOy9GjH2TaynNix
+	 dW5LoduSEhj86FwFZcjDHO52DmqQbFirHWpiXmaTj7dE/RaPW5M2oitsYqDRYdlkkfMXW
+	 iUbgGSv7oXvhVXsgSFqoEN2c1LnRi6MZKQCeVwbXzIupwIbc5OWyx+Bw6ELREuZbj1Kcl
+	 FZbhRF3NR0026UqJWpKAvRFPkVNGnK5tDTkeBHOACijyCI71lj8DjHVPLr5PkAL9DwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038106;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038110;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mhY9JmQsnuXkSjxy9fVkDf+fkHAJxskgUUaCK5PF8rk=;
-	b=tF/bjKilT6Yzou8w/W3ZIymgTKQYCZNl+6sJCRthVhIPPBhsojn3DNDkOjLFeBM+t/vN
-	 cxzo4xMlRDNFYWhy1UlextBtTW6biC5+E9U0jNYWhNE8bA3Ny20b9Nyn3Q3thKOA3A7uy
-	 K24hFIjcXERXNcklcO9C7biroibxHcGaYsnFFj0TVD0YvA+EzmXjiFawBctZC50Qjg+Mw
-	 aFUZmy+0hv9aOAUkoyVwmdOKzPNrYTHZLXKGYIxxv+Asy65emv7n3gP4heIuzZvaoQ+jL
-	 x4n3asqiHYeD36hEmOZ7tJtOKEeyQWxAd+8S9aFx6X8LQ/CBy677d+NfvWHMpPK93tA==
+	bh=gvX8Hp8v9aaIDcP0sX1+/8z0pthvKGbUb7f2nlyxf6Q=;
+	b=s7NE4vC3Tl3luWUx2R1DhxhujxLbwnLWysItVbcVDaR/WUEIEwECl2csq215eChDO69i
+	 lKoUjtzb2znRVxhJkEyyB7j+hqP8U/7z+omorN8KFdGyRgJKtOko+qg71NIwi3/DzqpES
+	 1NoBM609+yKlyR767XawqzX2GFqJK/i6N2HvJCVbtcXVdJ16VlJbD3QyPZ/f36qq+XSWM
+	 ACSW2MBdvixFmvEIU/t13lLHthBzMWwPRVTQccBxI43OL872n5dd0jznOwevA0AOD3kUc
+	 td+mDVYORuzTisoO43ix6E4pOiBQv8RliWmBtbW0kCCD2apXpBVeIq4wuydEi/sdUvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XRhQTsnE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AiBb8MLl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDE1606A320;
-	Wed, 18 Nov 2026 21:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13719606A31C;
+	Wed, 18 Nov 2026 21:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XRhQTsnE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8831F000C4;
-	Wed, 18 Nov 2026 21:41:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AiBb8MLl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FCD71F000C4;
+	Wed, 18 Nov 2026 21:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038106;
-	bh=mhY9JmQsnuXkSjxy9fVkDf+fkHAJxskgUUaCK5PF8rk=;
+	s=korg; t=1795038109;
+	bh=gvX8Hp8v9aaIDcP0sX1+/8z0pthvKGbUb7f2nlyxf6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XRhQTsnEXnEx6cugW7Cnu3+lCpxPGHEp2OzHRi9oKFZSoLhEWIONo9DCv8WuRft+v
-	 f/0cxtFUP5Jd4xNCudcN2/yAzoDrOhPU+CHf5hChJVSdEWS6JzI8s+gMMu6N6IaxbU
-	 /MGYTK5KkrlT9waZJVWrEkva8UAcxtiKbjlMu6q4=
+	b=AiBb8MLlUcn/hQ9Qhq34ENXbBotLYJIHlRMtmVBsc4Bwx9qKe/FkNz1VRYr+B2scy
+	 GiJLC4WI1UwGjtADfkAbQTyXxgCx3EOhmfxsgzdRT/YNU8dLnwAIIkPLF17VCrVKvD
+	 qarZSOSME8NE+mmiIpBJyXuwX6obZCIQWTBhsLHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Christoph Plattner <christoph.plattner@gmx.at>,
+	Daniel Palmer <daniel@0x0f.com>,
+	Greg Ungerer <gerg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1628/3318] gfs2: reject invalid inode sizes
-Date: Wed, 18 Nov 2026 15:37:30 +0100
-Message-ID: <20261118150410.580076820@linuxfoundation.org>
+Subject: [PATCH 6.6 1629/3318] m68k: Fix task info flags handling for 68000
+Date: Wed, 18 Nov 2026 15:37:31 +0100
+Message-ID: <20261118150410.612742862@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,74 +69,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaming Zhang <r772577952@gmail.com>
+From: Daniel Palmer <daniel@0x0f.com>
 
-[ Upstream commit 33ed0a0567e0abe66ea65e89dad2e35082890fbe ]
+[ Upstream commit 2c6805145e1605cef39459f78979f7edee251b41 ]
 
-A corrupted GFS2 image can store a dinode size that is larger than what VFS
-i_size can represent. gfs2_dinode_in() reads the on-disk di_size as a u64 and
-writes it directly into inode->i_size. If the value is larger than S64_MAX, the
-incore i_size becomes negative. That negative value can bypass the existing
-stuffed inode size check:
+The logic for deciding what to do after a syscall should be checking
+if any of the lower byte bits are set and then checking if the reschedule
+bit is set.
 
-inode->i_size > gfs2_max_stuffed_size(ip)
+Currently we are loading the top word, checking if any bits are set
+(which never seems to be true) and thus jumping over loading the
+whole long and checking if the reschedule bit is set.
 
-Later, gfs2_quotad may try to sync the quota file and unstuff the quota inode.
-gfs2_unstuffer_folio() reads the negative i_size into an unsigned length and
-passes it to memcpy(), turning it into a huge copy size and triggering a
-out-of-bound issue.
+We get the thread info in two places so split that logic out in
+a macro and then fix the code so that it loads the byte of the flags
+we need to check, checks if anything is set and then checks if
+the reschedule bit in particular is set.
 
-Reject dinodes whose size exceeds sb->s_maxbytes before storing the value in
-inode->i_size. Also make the stuffed inode check use the raw on-disk size while
-it is still unsigned.
-
-Fixes: 70376c7ff312 ("gfs2: Always check inode size of inline inodes")
-Closes: https://lore.kernel.org/lkml/CANypQFaF6bvORKKbRALvEL0k_epFaneFiOQqco4gjdmKVbdURg@mail.gmail.com/
-Assisted-by: Codex:gpt-5.5-xhigh
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-[ sashal: adjusted context for direct inode->i_state access instead of inode_state_read_once() ]
+Reported-by: Christoph Plattner <christoph.plattner@gmx.at>
+Signed-off-by: Daniel Palmer <daniel@0x0f.com>
+Signed-off-by: Greg Ungerer <gerg@kernel.org>
+Stable-dep-of: 48859f8018d9 ("m68k: Fix seccomp filtering on ColdFire and 68000")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glops.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/m68k/68000/entry.S | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
-index f575cd8ff47c1..0be93498e3308 100644
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -412,6 +412,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	umode_t mode = be32_to_cpu(str->di_mode);
- 	struct inode *inode = &ip->i_inode;
- 	bool is_new = inode->i_state & I_NEW;
-+	u64 size;
+diff --git a/arch/m68k/68000/entry.S b/arch/m68k/68000/entry.S
+index 7d63e2f1555a0..37926b4b205af 100644
+--- a/arch/m68k/68000/entry.S
++++ b/arch/m68k/68000/entry.S
+@@ -21,6 +21,13 @@
  
- 	if (unlikely(ip->i_no_addr != be64_to_cpu(str->di_num.no_addr))) {
- 		gfs2_consist_inode(ip);
-@@ -437,7 +438,12 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	i_uid_write(inode, be32_to_cpu(str->di_uid));
- 	i_gid_write(inode, be32_to_cpu(str->di_gid));
- 	set_nlink(inode, be32_to_cpu(str->di_nlink));
--	i_size_write(inode, be64_to_cpu(str->di_size));
-+	size = be64_to_cpu(str->di_size);
-+	if (unlikely(size > inode->i_sb->s_maxbytes)) {
-+		gfs2_consist_inode(ip);
-+		return -EIO;
-+	}
-+	i_size_write(inode, size);
- 	gfs2_set_inode_blocks(inode, be64_to_cpu(str->di_blocks));
- 	atime.tv_sec = be64_to_cpu(str->di_atime);
- 	atime.tv_nsec = be32_to_cpu(str->di_atime_nsec);
-@@ -475,7 +481,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	ip->i_depth = (u8)depth;
- 	ip->i_entries = be32_to_cpu(str->di_entries);
+ .text
  
--	if (gfs2_is_stuffed(ip) && inode->i_size > gfs2_max_stuffed_size(ip)) {
-+	if (gfs2_is_stuffed(ip) && size > gfs2_max_stuffed_size(ip)) {
- 		gfs2_consist_inode(ip);
- 		return -EIO;
- 	}
++/* get thread_info pointer into a2 */
++ .macro getthreadinfo
++	movel	%sp,%d1
++	andl	#-THREAD_SIZE,%d1
++	movel	%d1,%a2
++ .endm
++
+ .globl system_call
+ .globl resume
+ .globl ret_from_exception
+@@ -73,9 +80,8 @@ ENTRY(system_call)
+ 
+ 	movel	%sp@(PT_OFF_ORIG_D0),%d0
+ 
+-	movel	%sp,%d1			/* get thread_info pointer */
+-	andl	#-THREAD_SIZE,%d1
+-	movel	%d1,%a2
++	/* Doing a trace ? */
++	getthreadinfo
+ 	btst	#(TIF_SYSCALL_TRACE%8),%a2@(TINFO_FLAGS+(31-TIF_SYSCALL_TRACE)/8)
+ 	jne	do_trace
+ 	cmpl	#NR_syscalls,%d0
+@@ -99,16 +105,15 @@ Luser_return:
+ 	/* heavy interrupt load*/
+ 	andw	#ALLOWINT,%sr
+ 
+-	movel	%sp,%d1			/* get thread_info pointer */
+-	andl	#-THREAD_SIZE,%d1
+-	movel	%d1,%a2
++	getthreadinfo
+ 1:
+-	move	%a2@(TINFO_FLAGS),%d1	/* thread_info->flags */
++	/* check if any of the flags are set */
++	moveb	%a2@(TINFO_FLAGS + 3),%d1	/* thread_info->flags (low 8 bits) */
+ 	jne	Lwork_to_do
+ 	RESTORE_ALL
+ 
+ Lwork_to_do:
+-	movel	%a2@(TINFO_FLAGS),%d1	/* thread_info->flags */
++	/* check if reschedule needs to be called */
+ 	btst	#TIF_NEED_RESCHED,%d1
+ 	jne	reschedule
+ 
 -- 
 2.53.0
 
