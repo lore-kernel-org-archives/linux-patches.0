@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041414;
-	b=tae5cLoBnxttsnmxPV52vURcyPajHlx9UUgnaoc6WhVFTMdIE/iI+1SeYLwNmK9V0Mos
-	 gY2X0ai6SCXFbXECiEczgH56eKAbQnaLMAJz02OWqpKTVdDYC8T4jwpto+6QGBTXb3UkW
-	 bEbAJgnnqCWw/irMtojB9my3DQNM35P4kQRD1uGp9BkBovM0cZ+YrqJWUM3vPCRlJzMiW
-	 LnJvvKPBXwRevahPemu/iytEMPTwLqo69F2RMxJOzSMyiG+x8PcFg299T+UZtdgNsYcxy
-	 LgbA1rgWZHJ12SARWlcatcr92nU2TQdiKrjn6w6dkLjZIfTd4PKw11NOGDFQcTRBbkQ==
+	t=1795041416;
+	b=D38MdIF6YHeS0eWMq8jBZixBowCDUpsIIGoDBDmeyII/DrGoePkI6x337HPqT97I9lcg
+	 K1mqtB4fS+O/ztax7E5kJXlaS+LDOBxoDupbw3j2ek04l+4nSDEGpm8ZpWgoXCCnYAI+Q
+	 rFF0yqO+Gp2WaE0LiiAJa9pWlxtjm23zg8uymlNqE49skYrHlIAn/2mxhOTTZ+gQVon04
+	 zzoP3Df/7bAWz8jcywKw+3AfLj0sTR5X60MfFl4dPp21XfOYeUZgE8fUfBr1udQEp5aDy
+	 Qcic2w9YUbp7RTj/ysLYIbFoKurVYhBUN/XW6YJ99NVB/AOZEOi/dofloUaHveN8Tgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041414;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041416;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=90ldM8L7dZvVbpVxEqTeDvxWm0hJPg9SjfoKByUSHzA=;
-	b=103ljUwY9Pf8kOj0KcMenLlL0+CYqpRBCWNLuAa23v/27CtgvenfZouEgTVs1BLQQRGf
-	 6uxMpIeLTxRE66FqtmEMnqWTEQ9Cf8UrT0f4lwkwG69KAF/dGn/tLAYxg86JVkMkhJSy0
-	 zkQxiYiDGp4nzcwbMnoWM0PEAEW8O5h9VUe3mCBRLMiG2a+LDr9Cr/JJrMTjIt9kiHuUT
-	 lsXCy8fFLBSllpcaeD9pD8b2S/lvmyFogFXkZqJ+TBg+llggmqVfdtyoJVSCnVwLG4Veu
-	 uI/BEDXdLn00gU2YSH03l3PvOCb0D+vkbFoMZRwc4JqzAmRyWrRub+51mmVfN8CrBzQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=BzZTS43cGZ9P34kMRMgj9c9g9bQZi33FU6TeN8aGTO8=;
+	b=Laq/xxbM7+aJEeXADVP0qcFfT3eEUp6BNxQNv1eDGuZGKIH2RorXJ4NoalbCiVgILIqu
+	 VxDQvozZgfvHgyDKP8FxxzamWreRTw4XGW1TC0+7IgeC+nLYULIZSU5HJYLiSCESBkgyJ
+	 qqy9RSDQdASBQAreQYIq74OMNV+DKnS6+DIDI9HRO3kaFtA9BNxvd5OwD/Pt7Z6oru7ib
+	 T8U82TpgBOtCHzh8ZNZBkxYcZoBfF2N+PjdyCOZ89dJUuSXCmKtNvdkLwC4ek1RNMEsc3
+	 nHWXAwIMG+pVZNGCJDTrUT56DnUetsM0+SM6vrKlfVMjWKGSABKZqkk1d1Wowlji4kA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Puf5siLF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TfS9Il7c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF7F606A325;
-	Wed, 18 Nov 2026 22:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF75606A320;
+	Wed, 18 Nov 2026 22:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Puf5siLF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A861F000C4;
-	Wed, 18 Nov 2026 22:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TfS9Il7c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C18CB1F000C4;
+	Wed, 18 Nov 2026 22:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041413;
-	bh=90ldM8L7dZvVbpVxEqTeDvxWm0hJPg9SjfoKByUSHzA=;
+	s=korg; t=1795041416;
+	bh=BzZTS43cGZ9P34kMRMgj9c9g9bQZi33FU6TeN8aGTO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Puf5siLF+ZPIwBUronI8N2X6iMZH/4dMx5jniQW/mfT6lQo7i/G+T5hD0kLjOtUbi
-	 8LCjjggQcEBDUQ1rLTwD2im5RxFd0eVL3iPyQUB/xVC2HRs20Fna5Pb0wJM2o8LICJ
-	 R/pSAXOpJaxSHk8aNuN5odqKYQ4lciFq+8JnfD40=
+	b=TfS9Il7c6Ckivg5nD4fnS/eB5nuN/SecWEiR5Ojp6RkPU8LtdyR0QJZSTmLbN0FdZ
+	 0tVeOAaqxrfiLUTL+0tCL1GWMdyNOCfk39067teQv6PraOKRNrQdedXla1xQcdKuMV
+	 pOk+Gk4NJanKdE7bgz5wNtpSTMXSlM/qmDBAWni0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Nir Yehoshua <nir@ciphersecuritylabs.com>,
+	Ahmed Yaseen <yaseen@ghoul.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2764/3318] ALSA: jack: Remove debugfs before freeing unregistered jacks
-Date: Wed, 18 Nov 2026 15:56:26 +0100
-Message-ID: <20261118150443.649909446@linuxfoundation.org>
+Subject: [PATCH 6.6 2765/3318] platform/x86: asus-wmi: validate custom fan curves on enable
+Date: Wed, 18 Nov 2026 15:56:27 +0100
+Message-ID: <20261118150443.680764871@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,193 +63,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Ahmed Yaseen <yaseen@ghoul.dev>
 
-[ Upstream commit d3b59d50e1ff206aa519ed5c13bf6907f97dd6a6 ]
+[ Upstream commit bcbdfe03566ad0d01c6af3b5476e8cadffe4d3df ]
 
-Jack debugfs files store a raw snd_jack_kctl pointer, so their
-callbacks must be drained before the attachment is freed.
-snd_jack_dev_free() unlinks and frees the attachments before calling
-snd_jack_dev_disconnect(). Its late snd_jack_remove_debugfs() call
-then has no entries left to traverse.
+Custom fan curves reach firmware unchecked, so a curve whose temperature
+or PWM decreases from one point to the next is accepted. The firmware
+does not respect such a curve: a first point of 100% followed by 50%
+leaves every point running at 100%. The kernel keeps reporting the
+points that were written, so sysfs stops describing what the fans are
+actually doing.
 
-With CONFIG_SND_JACK_INJECTION_DEBUG and input support enabled, an
-HDA codec rebind on a live card can publish a non-phantom jack's type
-file while its component is still in SNDRV_DEV_BUILD. A later
-jack-control allocation failure permits the following order:
+Check the curve when enabling and reject it if it is invalid. Validation
+is done on enable rather than on write because fan curves are written
+one point at a time and are inconsistent mid-write.
 
-  1. hda_codec_driver_probe() creates a jack and publishes its debugfs
-     files before reaching snd_card_register().
-  2. A later control-build failure calls
-     snd_hda_codec_cleanup_for_unbind(), then snd_hda_jack_tbl_clear()
-     and snd_device_free(). __snd_device_disconnect() skips BUILD
-     components. snd_jack_dev_free() frees the attachment before its
-     late disconnect, leaving the debugfs files published.
-  3. After cleanup, a reader opens the surviving type file and
-     jack_type_read() dereferences the freed attachment's jack pointer.
-
-The card's debugfs root remains live throughout this sequence. The
-result is a use-after-free even without an overlapping read. An
-already admitted callback is also not drained by this cleanup.
-
-Call snd_jack_remove_debugfs() before unlinking any controls in the
-free callback. The existing debugfs_remove() rundown blocks new
-accesses and waits for active callbacks while the attachment, control
-and jack remain valid. Roots cleared by an earlier disconnect are
-NULL, so repeating the removal is harmless.
-
-KASAN report as below:
-
-    ==================================================================
-    BUG: KASAN: slab-use-after-free in jack_type_read+0x1da/0x1f0
-    Read of size 8 at addr ffff8881085f9da0 by task python3/429
-
-    CPU: 2 UID: 0 PID: 429 Comm: python3 Not tainted 7.2.0-rc6-pmb-alsa-functional-v2+ #1 PREEMPT(lazy)
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? jack_type_read+0x1da/0x1f0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? jack_type_read+0x1da/0x1f0
-     kasan_report+0xe0/0x110
-     ? jack_type_read+0x1da/0x1f0
-     jack_type_read+0x1da/0x1f0
-     ? __pfx_jack_type_read+0x10/0x10
-     ? __pfx___debugfs_file_get+0x10/0x10
-     ? __pfx_cp_new_stat+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? selinux_file_permission+0x122/0x570
-     full_proxy_read+0x11f/0x180
-     ? __pfx_full_proxy_read+0x10/0x10
-     vfs_read+0x1a0/0xc20
-     ? __pfx_vfs_read+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __do_sys_newfstat+0xa6/0x100
-     ? find_held_lock+0x2b/0x80
-     ? __pfx___do_sys_newfstat+0x10/0x10
-     ksys_read+0x111/0x200
-     ? __pfx_ksys_read+0x10/0x10
-     ? full_proxy_llseek+0x11e/0x170
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x7f7e392e7687
-    Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
-    RSP: 002b:00007fff5f7b9180 EFLAGS: 00000202 ORIG_RAX: 0000000000000000
-    RAX: ffffffffffffffda RBX: 00007f7e39253780 RCX: 00007f7e392e7687
-    RDX: 0000000000002000 RSI: 000000003d2e9b00 RDI: 0000000000000003
-    RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-    R10: 0000000000000000 R11: 0000000000000202 R12: 00007f7e39253700
-    R13: 0000000000002000 R14: 00007f7e38d7e2c0 R15: 0000000000a55b98
-     </TASK>
-
-    Allocated by task 425:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x251/0x610
-     snd_jack_kctl_new+0x80/0x180
-     snd_jack_new+0x4b/0x490
-     snd_hda_jack_add_kctl_mst+0x19b/0x610
-     add_jack_kctl+0x204/0x320
-     snd_hda_jack_add_kctls+0x212/0x910
-     snd_hda_gen_build_controls+0x233/0x600
-     snd_hda_codec_build_controls+0x2e4/0x9f0
-     hda_codec_driver_probe+0x26e/0x590
-     really_probe+0x21f/0xa90
-     __driver_probe_device+0x1ec/0x490
-     device_driver_attach+0xdc/0x210
-     bind_store+0xec/0x180
-     drv_attr_store+0x79/0xb0
-     sysfs_kf_write+0xed/0x140
-     kernfs_fop_write_iter+0x34b/0x500
-     vfs_write+0x637/0x1010
-     ksys_write+0x111/0x200
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 425:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x307/0x580
-     snd_jack_kctl_private_free+0x153/0x200
-     __snd_ctl_remove+0x29f/0x3b0
-     snd_ctl_remove+0x46/0x70
-     snd_jack_dev_free+0x1b1/0x370
-     __snd_device_free+0x193/0x3f0
-     snd_device_free+0xcf/0x190
-     snd_hda_jack_tbl_clear+0x159/0x2e0
-     snd_hda_codec_cleanup_for_unbind+0x37e/0x9c0
-     hda_codec_driver_probe+0x3ae/0x590
-     really_probe+0x21f/0xa90
-     __driver_probe_device+0x1ec/0x490
-     device_driver_attach+0xdc/0x210
-     bind_store+0xec/0x180
-     drv_attr_store+0x79/0xb0
-     sysfs_kf_write+0xed/0x140
-     kernfs_fop_write_iter+0x34b/0x500
-     vfs_write+0x637/0x1010
-     ksys_write+0x111/0x200
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    The buggy address belongs to the object at ffff8881085f9d80
-     which belongs to the cache kmalloc-64 of size 64
-    The buggy address is located 32 bytes inside of
-     freed 64-byte region [ffff8881085f9d80, ffff8881085f9dc0)
-
-    The buggy address belongs to the physical page:
-    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1085f9
-    flags: 0x200000000000000(node=0|zone=2)
-    page_type: f5(slab)
-    raw: 0200000000000000 ffff8881000428c0 dead000000000100 dead000000000122
-    raw: 0000000000000000 0000000000200020 00000000f5000000 0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff8881085f9c80: 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc
-     ffff8881085f9d00: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    >ffff8881085f9d80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-                                   ^
-     ffff8881085f9e00: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff8881085f9e80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    ==================================================================
-
-Fixes: 495000a38634 ("ALSA: core: Remove debugfs at disconnection")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-e1e7490bbe7ba1b3c44a-v2-3e3b6315a18c02ced60d@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 0f0ac158d28f ("platform/x86: asus-wmi: Add support for custom fan curves")
+Reported-by: Nir Yehoshua <nir@ciphersecuritylabs.com>
+Signed-off-by: Ahmed Yaseen <yaseen@ghoul.dev>
+Link: https://patch.msgid.link/20260831-fan-curve-validation-v2-1-7274ca16c8fe@ghoul.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/jack.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/platform/x86/asus-wmi.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/sound/core/jack.c b/sound/core/jack.c
-index e4bcecdf89b7e..174571e130823 100644
---- a/sound/core/jack.c
-+++ b/sound/core/jack.c
-@@ -67,6 +67,9 @@ static int snd_jack_dev_free(struct snd_device *device)
- 	struct snd_card *card = device->card;
- 	struct snd_jack_kctl *jack_kctl, *tmp_jack_kctl;
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index 5c12b50f2f6cc..acfab8a6558e9 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -3025,6 +3025,33 @@ static int fan_curve_write(struct asus_wmi *asus,
+ 					 arg1, arg2, arg3, arg4, &ret);
+ }
  
-+	/* Remove debugfs while the controls are still linked. */
-+	snd_jack_remove_debugfs(jack);
++/*
++ * A fan curve is a set of points the firmware interpolates between, so it
++ * only makes sense if neither temperature nor PWM ever decreases along it.
++ */
++static int fan_curve_validate(struct device *dev, struct fan_curve_data *data)
++{
++	u8 *percents = data->percents;
++	u8 *temps = data->temps;
++	int i;
 +
- 	list_for_each_entry_safe(jack_kctl, tmp_jack_kctl, &jack->kctl_list, list) {
- 		list_del_init(&jack_kctl->list);
- 		snd_ctl_remove(card, jack_kctl->kctl);
++	for (i = 1; i < FAN_CURVE_POINTS; i++) {
++		if (temps[i] < temps[i - 1]) {
++			dev_warn(dev, "fan curve: temperature decreases at point %d (%u < %u)\n",
++				 i, temps[i], temps[i - 1]);
++			return -EINVAL;
++		}
++
++		if (percents[i] < percents[i - 1]) {
++			dev_warn(dev, "fan curve: pwm decreases at point %d (%u < %u)\n",
++				 i, percents[i], percents[i - 1]);
++			return -EINVAL;
++		}
++	}
++
++	return 0;
++}
++
+ static ssize_t fan_curve_store(struct device *dev,
+ 			       struct device_attribute *attr, const char *buf,
+ 			       size_t count)
+@@ -3109,6 +3136,11 @@ static ssize_t fan_curve_enable_store(struct device *dev,
+ 	}
+ 
+ 	if (data->enabled) {
++		err = fan_curve_validate(dev, data);
++		if (err) {
++			data->enabled = false;
++			return err;
++		}
+ 		err = fan_curve_write(asus, data);
+ 		if (err)
+ 			return err;
 -- 
 2.53.0
 
