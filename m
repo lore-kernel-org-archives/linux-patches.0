@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047514;
-	b=bDgg4Xzt/Q5lfUSOgcJjAiDltsJIpnFyfxaH5q400VnRFKezRmQb1YpYd0WEzGypDU0K
-	 FEtGQma2fMl/itQOmXR7fIw2hLr+D/WWc+ia/lm2junnrS2qiGBmXMl1FNbZJjggDtaSc
-	 ekTnaHnrgqzK/TcFEmbJ/gLG9AdCnOy7rPjTZ8Q5QxK0IH56717R2GyHXYeATFOQmRG9U
-	 ujtrKzCbKx1YS06M5UbqsjSyQjTKv05bpGpGoo4vCUq3iCCMQhOq+PjS7ZR4T+X9x84Qo
-	 iwgEaAe3UtoFDldi/sCLllVWXiLsRFCD8Tr6PP/7INX7SyNyKTibGTiVS1JPZTR7QEw==
+	t=1795047517;
+	b=SI1tCmywzbqWGUj2GBQSFM0o+QDnUfaNf5LtZWbXMUim7f50rCSHj1iCaaVvqTKXyRPx
+	 oqtrOP1theiWFFuYlMykoZ1teDww5+KYFIcGf5FkWrVbAkJKKxXLxt/5LH5am1c452DJ/
+	 lLV5ey7W0iyXrAEaeZCJJgtGoJeVlTLqDr+wWvJYEgiBpioIpV6G3iB2UQR8iF9c910SC
+	 bJkzo0dFBTVsSD3viuDHZ32Dx6CyTqfZcheQYo+q3MfcpPokUoT6L6hujktcTjGmNiI95
+	 8mpWTJW9sv7Ch5381rLPSmgRUCAKKsNhQDNuWgCvGhPC45MlWXmIRbOZzC/JLdo0rRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047514;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047517;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MMu08xVCyYutlmEKYZLbUIfjvO3n6q4irU/j19fraKw=;
-	b=tvCDbttZTQ3Ik6LlxPsc7F3ng56P6c36eL+LWQ1mVqO5nHLoyLwWttLe6oHfbDXRhiSt
-	 xSOzBawSIBlXvffgTfKCDVO/Sn8nTT2kfBd0Rv531QPy11YI0cJbcwI+hLVpbSMFBWHoH
-	 Zlsi2xLTgEKcNqR/p1RLy8X0EA6QuYC47mV51oVwNA7UbU4LW5HBR1qd3X1ERQwB4uqGh
-	 i/0rDDCAZHsHviOTKeUGGrYyrnoBDGA+x5fp57q5WAV75rrrju2eDcsguIofND576dA3d
-	 8IzlI4WO2WD/zERB2uSjyuINR8xLiFMyxTakKlv9TUkzFvm8xEnCs4OzYfG0I5yVizw==
+	bh=A6lEUMNTobe1Skqhi6XesubyLfciey1YsZYfkH6r5rI=;
+	b=WqdUt6DciQoW4CkH8nvwqjDYUc/Z83yINr7VudR1/7VkkbZ/Dl7ozgu1rvvtYYOm4gB3
+	 ogDiv4g/z8MznWGIms1Dkt7GifOOTiy63yIc0YUMOaY6ZTsoEYRDbrReI7MBSz0ThY9uj
+	 aBtYbjkjT4NLR9fLl+LCdwFsZHaOgjAMnxqH9NDf+qwRd4eo+YQzLMr+L6dfVxG19iZtt
+	 1VKkP4MGixDjLjv+J2+vTR5lV2X/DAVsazgKS4DElp3X+tvEgyz9S5nSUT6//001CIKr4
+	 +ksQgkWvfd2307yg622n2NIUG7pquSQ0pmLs3KxjDebeWTfLQec83ZJP1CGr8+Ywl8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ap8ycSeK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uh3CqPIw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841F3606A32F;
-	Thu, 19 Nov 2026 00:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDA1606A32A;
+	Thu, 19 Nov 2026 00:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ap8ycSeK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35F41F000C4;
-	Thu, 19 Nov 2026 00:18:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uh3CqPIw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8F81F000C4;
+	Thu, 19 Nov 2026 00:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047514;
-	bh=MMu08xVCyYutlmEKYZLbUIfjvO3n6q4irU/j19fraKw=;
+	s=korg; t=1795047517;
+	bh=A6lEUMNTobe1Skqhi6XesubyLfciey1YsZYfkH6r5rI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ap8ycSeK9KGsY/SbjbR3fPB1F+rzAmGqX7sbxOnlHATa988P1+4dt10Ujvn6RXrIz
-	 tt5wwyu3jACAiYXKfJQX0e5gqs7Hjd2dwWn0d0a0nyIuGvbGFP/0hu/Sh4GirSzLuP
-	 TIO0Wjg0/fzOpank1tXhX/KNNvKy+JC+nHvZr0VU=
+	b=uh3CqPIwaWV6k6A7WK6gbL19d8mb6nd7jBqLts6BXTcKbKNURVo22/B6/dWd/yNr3
+	 3TDCAt8zofRttX5bXAfzNhowF25YV3/sdqDG0KfiwyaM7fnSYa1neUXwX0KzvKF5tJ
+	 gt88dmo3945+ex+YwnJh0cmmND1LLPe5gH+dr6gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1666/2857] fbdev: kyro: Use devm_ioremap() for mmio registers
-Date: Wed, 18 Nov 2026 15:45:00 +0100
-Message-ID: <20261118150301.316124247@linuxfoundation.org>
+Subject: [PATCH 6.1 1640/2857] can: dev: can_dropped_invalid_skb: drop CAN XL frames on non-CAN XL devices
+Date: Wed, 18 Nov 2026 15:44:34 +0100
+Message-ID: <20261118150300.385551286@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,61 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>
+From: Vincent Mailhol <mailhol@kernel.org>
 
-[ Upstream commit e0bf12a43243e6afc5a03fc55c58ec48aba48088 ]
+[ Upstream commit 0fce44e29fce4b07642491b098afb41bd571e4f2 ]
 
-Replace the manual ioremap() call for the MMIO registers with the
-device-managed devm_ioremap() variant.
+Sending a PF_PACKET bypasses the CAN framework logic and can directly
+reach a CAN driver's xmit() function. The PF_PACKET framework only
+checks that skb->len does not exceed the net_device MTU.
 
-This simplifies the driver's resource management by ensuring the memory is
-automatically unmapped when the driver detaches from the device.
+For a CAN device that is not CAN XL capable, anything above CANFD_MTU
+(72 bytes) is therefore dropped before it reaches the driver. However,
+CAN XL frames are variable length. can_is_canxl_skb() accepts lengths in
+the range CANXL_HDR_SIZE + CANXL_MIN_DLEN up to CANXL_MTU, i.e. 13 to
+2060 bytes.
 
-Signed-off-by: Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Stable-dep-of: d3bc005a6294 ("fbdev: kyro: Release WC setup on registration failure")
+As a result, an ETH_P_CANXL skb with a length between 13 and 72 bytes
+can pass both the MTU and the can_dropped_invalid_skb() checks.
+
+A driver that does not support CAN XL will interpret canxl_frame->flags
+as a length because of the overlap with can_frame->len. And because
+CANXL_XLF is set, the resulting length is between 128 and 255. For
+drivers that do not check can_frame->len before copying can_frame->data,
+as most drivers do, this results in a buffer overflow of up to 247
+bytes.
+
+Drop ETH_P_CANXL skbs if the device does not have the CAN_CAP_XL
+capability. Keep can_is_canxl_skb() for the validation of CAN XL skbs.
+
+Closes: https://sashiko.dev/#/patchset/20260731-master-v5-0-5b27029dee20@qq.com?part=1
+Fixes: fb08cba12b52 ("can: canxl: update CAN infrastructure for CAN XL frames")
+Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
+Link: https://patch.msgid.link/20260731-drop_canxl_frames-v1-1-7387b70353b3@kernel.org
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+[ sashal: replaced the unavailable can_cap_enabled() capability check with can_is_canxl_dev_mtu(dev->mtu) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/kyro/fbdev.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/can/dev/skb.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/kyro/fbdev.c b/drivers/video/fbdev/kyro/fbdev.c
-index f3e214397ea95..38c78956b7375 100644
---- a/drivers/video/fbdev/kyro/fbdev.c
-+++ b/drivers/video/fbdev/kyro/fbdev.c
-@@ -720,13 +720,14 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	kyro_fix.mmio_len   = pci_resource_len(pdev, 1);
+diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
+index 6fb1f9b2a9e20..4f5eec05db220 100644
+--- a/drivers/net/can/dev/skb.c
++++ b/drivers/net/can/dev/skb.c
+@@ -354,7 +354,8 @@ bool can_dropped_invalid_skb(struct net_device *dev, struct sk_buff *skb)
+ 		break;
  
- 	currentpar->regbase = deviceInfo.pSTGReg =
--		ioremap(kyro_fix.mmio_start, kyro_fix.mmio_len);
-+		devm_ioremap(&pdev->dev, kyro_fix.mmio_start,
-+			     kyro_fix.mmio_len);
- 	if (!currentpar->regbase)
- 		goto out_free_fb;
- 
- 	info->screen_base = pci_ioremap_wc_bar(pdev, 0);
- 	if (!info->screen_base)
--		goto out_unmap_regs;
-+		goto out_free_fb;
- 
- 	if (!nomtrr)
- 		currentpar->wc_cookie = arch_phys_wc_add(kyro_fix.smem_start,
-@@ -775,8 +776,6 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 
- out_unmap:
- 	iounmap(info->screen_base);
--out_unmap_regs:
--	iounmap(currentpar->regbase);
- out_free_fb:
- 	framebuffer_release(info);
- 
-@@ -799,7 +798,6 @@ static void kyrofb_remove(struct pci_dev *pdev)
- 	deviceInfo.ulOverlayOffset = 0;
- 
- 	iounmap(info->screen_base);
--	iounmap(par->regbase);
- 
- 	arch_phys_wc_del(par->wc_cookie);
+ 	case ETH_P_CANXL:
+-		if (!can_is_canxl_skb(skb))
++		if (!can_is_canxl_dev_mtu(dev->mtu) ||
++		    !can_is_canxl_skb(skb))
+ 			goto inval_skb;
+ 		break;
  
 -- 
 2.53.0
