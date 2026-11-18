@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036980;
-	b=rjht834qOw+bN8J3Iu28lcPnlK+glRUjU4XNpc9m7AdFgHOaXN7Fm9bgOSwvdgH4nuDH
-	 B1rLgl27AHRajOpqBR/R2Eon3eaNbyWEczqXcFP6wbcsvCDsz9hNRTeW+pmwYjsFK1eTn
-	 SN7pTwAw+O/elPCMzY0lhwV4JIBXWV7rq7D6p6hlswdNVC+C+Ygcu9trkr3/12hGYn7sP
-	 lkvG1aPadyb175zq2lkvY49r3lGaoCeQVvzJLCc9ZuNWuFz88X5QBC1S+K1NeTDhPZm+i
-	 IOeFUZf0GBRa/5JjfZRNdQa2j2ojD0U84P85LanTpkAC/cgdYrqwmdhfO5ts1oiNsNw==
+	t=1795036982;
+	b=PZ1QLNam1HpdcCRsq3J2+OW/qz1Dd7XN4Yfa21TrDoEZSzNmYhQCjlQQyhEPDPbDRIzy
+	 81An6gc69wAxDasZLluyszO5XCtUOBWc0Rby8tn608LQsQTE/U1fhXo9gelPGQF3J/Bcb
+	 uxpVFLeZAIB95BIDqbOhhdST+lfLis+fSLKt91UZHSiGbL0G5CW71+2rcy/UKSirsvd1y
+	 GyxtTxggB0vHzhNKXihuARRsEAteprse8gCPyoCHu72wPrbCwlO6To/qMe1yqWEnJDCko
+	 CCJg1zwi9ObvSaUMefZKOvaLFC252EresrXh1C5mwcH3vYWUGO3duUar/MyCul32E7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036980;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036982;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ycKkH0bIgG64JFEGTfkBr8P/quLuEzwmmepbfYoE7LY=;
-	b=NylMc4ONYsihkGGM4AxZFczrvGljz3ueMd8dtixEuE1l2aHhXAS36XrYa4d5b+NmOhMD
-	 7H9qUceLDp9JhRGcIfqUv0Fb4JCPLQ2SXNfetFop3EklpCHsksgTCQJjIqxM5DItkM8ZV
-	 CheC8vMvTDrAm5Rf6auBeUbsQRBIoa6qFhggxhYT1cw5IgeEpUCSAnkInZwSigOoO9Fyt
-	 N5MnOfIMyvRgtKHjPSIuQKrQ+1YtJggAf5gPvyrJb/QyC3besrphAla/TUybjJXxcJUK4
-	 FO4S4GfV6EQ7yiK0/q/7jQ9TMny1a4mepF+B8weOiAY3H5o3m6Be4jaxGHVDczHQ8tQ==
+	bh=WZKVb5b+JzEbY0m+SUs1Xn/J/JEBbXPDFdod8eLEsQE=;
+	b=EHGu2/paghXWfL73iNmvQ10QU4Pz1HFL7tKZTQzk+HsOPnQnu+pt+4TnkYAHKeIoWslc
+	 wgWuBiD5G5xy+9NfNY/saza59x+3lTGHuH+1K3pZWM7PmfNRGthk0g4fTRXi/w6dPkIit
+	 uDOCm3CUBCK79lHJ8gmjAuX1ws6rHUr9mN6efZou3BKwOfhh7Eb4hjartsfzgX8Gl5xrw
+	 nG+spRjnjuba3VcNSKlVdITEOuvCduM3LAYTBdUgba/MAfUi7FR1JEcdkuSPvEc98034Z
+	 0I2+aYNkR2cqPR+WRwxSfu7Hc+4lrFmhTxjpqTYl7pmrDTPrlLriR9ZJnVJBusPGfbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u4vN5yDo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L+SZVoeW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BAB606A32C;
-	Wed, 18 Nov 2026 21:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C6F606A31C;
+	Wed, 18 Nov 2026 21:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u4vN5yDo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD701F000C5;
-	Wed, 18 Nov 2026 21:22:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L+SZVoeW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B2B01F000C6;
+	Wed, 18 Nov 2026 21:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036979;
-	bh=ycKkH0bIgG64JFEGTfkBr8P/quLuEzwmmepbfYoE7LY=;
+	s=korg; t=1795036982;
+	bh=WZKVb5b+JzEbY0m+SUs1Xn/J/JEBbXPDFdod8eLEsQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u4vN5yDoiYVtFNgoJNoaMcoDPcTCAkWz+bTZ4nWRKKeTra8Ocy5h3KzrmbbWvIEHh
-	 NjSQhrlB6lG7XCXDX3H8UDWAoUA6OC6HzDAUXexCLdThL5VC5OGTcWKFEr9mqkSw8O
-	 SVikQX3nZdiBsqDYrJJBT5CZZF5E7769dFM/456E=
+	b=L+SZVoeWtJ03gyOXqkKUkI9HTz02G4h7Qn+NhxkcXOkimqbccgrsIR2N9DOb1HPbc
+	 fyEzUbqKeg+18ye+f5n+YDCNzAP7p03P6LvHoOw9S3DgsvLCCNyWY2KCeUoWqCavmo
+	 3HK6oqLB79ZfROl6/RzILdKla6ALyTuF9u09QVls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sung byeongchan <tjdqudcks0424@naver.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1244/3318] ceph: validate encoded xattr name lengths
-Date: Wed, 18 Nov 2026 15:31:06 +0100
-Message-ID: <20261118150357.510753013@linuxfoundation.org>
+Subject: [PATCH 6.6 1253/3318] ALSA: hda: Reject codec reset on ASoC (ext_ops) buses
+Date: Wed, 18 Nov 2026 15:31:15 +0100
+Message-ID: <20261118150357.791324997@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,70 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: sung byeongchan <tjdqudcks0424@naver.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 166375898d29fea050a9abec855da6075050d5c9 ]
+[ Upstream commit a4311e9447bbb219044db38897f95be112f46a8a ]
 
-__build_xattrs() advances over an MDS-provided name length before checking
-that the name remains in the encoded xattr blob.  On 32-bit clients,
-UINT_MAX wraps the cursor and is stored as a negative internal name
-length.  A later ordinary listxattr() converts it back to a UINT_MAX memcpy
-size and corrupts kernel memory.
+Writing to the reconfig or clear sysfs nodes of a codec handled by ASoC
+(SOF via hdac_hda, AVS via codecs/hda) hangs the writer.
 
-Check the name range before advancing and reject name, value, or aggregate
-sizes that overflow the signed internal accounting.
+snd_hda_codec_reset() sets card->shutdown and calls
+device_release_driver(). With ext_ops the driver unbind unregisters the
+ASoC component, which unbinds and frees the whole ASoC card:
+- snd_card_disconnect() returns early as card->shutdown is already set,
+  so the card's child devices are not removed and snd_card_free() waits
+  for the card release forever.
+- Even without that, freeing the card removes the codec's hwdep device,
+  which owns the sysfs node the reset was issued from, deadlocking in
+  kernfs while waiting for the active write to finish.
 
-The malformed blob corrupted kernel state in two baseline boots.  It was
-rejected cleanly twice with this change, while normal and length-only
-controls remained safe.
+The legacy HDA driver keeps the card across a driver rebind, ASoC does
+not, so the reset cannot be supported there. Return -EOPNOTSUPP and skip
+the misleading "codec is being used" messages in the callers.
 
+Fixes: 6bae5ea94989 ("ASoC: hdac_hda: add asoc extension for legacy HDA codec drivers")
 Cc: stable@vger.kernel.org
-Fixes: 355da1eb7a1f ("ceph: inode operations")
-Assisted-by: LLM
-Signed-off-by: sung byeongchan <tjdqudcks0424@naver.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=222182
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20261027072835.4796-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/xattr.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ sound/pci/hda/hda_codec.c | 6 ++++++
+ sound/pci/hda/hda_sysfs.c | 4 ++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/fs/ceph/xattr.c b/fs/ceph/xattr.c
-index 17da8be8423fe..bdffadfa62387 100644
---- a/fs/ceph/xattr.c
-+++ b/fs/ceph/xattr.c
-@@ -11,6 +11,7 @@
- #include <linux/security.h>
- #include <linux/posix_acl_xattr.h>
- #include <linux/slab.h>
-+#include <linux/overflow.h>
+diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
+index c6630dd0ced3b..70bbcdcf0f5c5 100644
+--- a/sound/pci/hda/hda_codec.c
++++ b/sound/pci/hda/hda_codec.c
+@@ -1847,6 +1847,12 @@ int snd_hda_codec_reset(struct hda_codec *codec)
+ {
+ 	struct hda_bus *bus = codec->bus;
  
- #define XATTR_CEPH_PREFIX "ceph."
- #define XATTR_CEPH_PREFIX_LEN (sizeof (XATTR_CEPH_PREFIX) - 1)
-@@ -845,14 +846,23 @@ static int __build_xattrs(struct inode *inode)
- 		}
- 		err = -EIO;
- 		while (numattr--) {
-+			int names_size, vals_size;
++	/* ASoC: driver unbind frees the card, incl. the hwdep issuing the reset */
++	if (bus->core.ext_ops) {
++		codec_err(codec, "Codec reset is not supported with ASoC\n");
++		return -EOPNOTSUPP;
++	}
 +
- 			ceph_decode_32_safe(&p, end, len, bad);
- 			namelen = len;
- 			name = p;
-+			ceph_decode_need(&p, end, namelen, bad);
- 			p += len;
- 			ceph_decode_32_safe(&p, end, len, bad);
- 			ceph_decode_need(&p, end, len, bad);
- 			val = p;
- 			p += len;
-+			if (namelen > INT_MAX || len > INT_MAX ||
-+			    check_add_overflow(ci->i_xattrs.names_size,
-+					       (int)namelen, &names_size) ||
-+			    check_add_overflow(ci->i_xattrs.vals_size,
-+					       (int)len, &vals_size))
-+				goto bad;
+ 	if (snd_hda_lock_devices(bus) < 0)
+ 		return -EBUSY;
  
- 			err = __set_xattr(ci, name, namelen, val, len,
- 					  0, 0, &xattrs[numattr]);
+diff --git a/sound/pci/hda/hda_sysfs.c b/sound/pci/hda/hda_sysfs.c
+index 5d95f24135dc1..bd3686d60555e 100644
+--- a/sound/pci/hda/hda_sysfs.c
++++ b/sound/pci/hda/hda_sysfs.c
+@@ -119,6 +119,8 @@ static int clear_codec(struct hda_codec *codec)
+ 	int err;
+ 
+ 	err = snd_hda_codec_reset(codec);
++	if (err == -EOPNOTSUPP)
++		return err;
+ 	if (err < 0) {
+ 		codec_err(codec, "The codec is being used, can't free.\n");
+ 		return err;
+@@ -134,6 +136,8 @@ static int reconfig_codec(struct hda_codec *codec)
+ 	CLASS(snd_hda_power, pm)(codec);
+ 	codec_info(codec, "hda-codec: reconfiguring\n");
+ 	err = snd_hda_codec_reset(codec);
++	if (err == -EOPNOTSUPP)
++		return err;
+ 	if (err < 0) {
+ 		codec_err(codec,
+ 			   "The codec is being used, can't reconfigure.\n");
 -- 
 2.53.0
 
