@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015113;
-	b=fm0Y3mCIFSYz9LD/ILm0P9tYa6GPwFKDCYDc785Eyojk6qisfd9I9PmPiDNgaaLFqG3B
-	 4k3oECkGnY6rsqEG04rMeRGDCCxFyZSg6iRRe8tpl0xf+xhBLl9BaNh76/66Tyc4CrbwN
-	 xQ4iz+Ttpyjwp7PpK2tquKrPu5UppBiAFrQxdxql7XDle5Dqfv38B6w3I2Do4Gbvp69S1
-	 bo4HthCEEjxPWR8n/4y/e30TxuZ4qVxx/mH4kLCjS6gVuH1k4hX/+EzGBJGGwCj/bJn3i
-	 zx3/FLcTex3TJg1DDrlw+sDr4Sx3qCZp9Wj3zj7OaZgO7AYLT2IqP0SU/hjZSFBxc8w==
+	t=1795015116;
+	b=0LpEVtOF+OecejUvgSlw5ZrNkDWX6hOr7C3lOPbpKIRYYCroLpOjliiQ6XibMCFD1mEL
+	 mjOJ30NBmfbpQI2VpeazSyzUgnClWb8/YQ8pvMGxnlqZkvvu9qaveMhvFFLSEfckdmSTK
+	 /X8JjZmF0xDEkhjvwYKlN9RxdGjX//ka22X3Alt96E1upDcXXP5m5M5xZy+NtlWesV58Q
+	 m83xLVZDtkJFjM3WG4s/Nm1rOGsflQ0ZzJwjb9ktdGqymL3APfeIvXNYDrzkO2S3CzpQT
+	 qYmEG/NZB3rmoivjQEHscfgLFWaapcr0TnAb/bf+PE0sVoFaLFppHY0G2XBt7aR+Cag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015113;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015116;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/Q0EhKKapcHhpTpahE+E1No47tUBGrpGXlq7WaxR4wI=;
-	b=BxDVYec+oZUvrICzqLw1lMgnaBkR5zOUCfK6u1+GN24Gjj6e8zgAHFc0gZApUsxQbwX1
-	 sOMRN7b0MTb2ZBuNIyjhD8RzBgNcayuXSY+wxxit9usC3OUbH9ARf3lxd65wBwOk8mxFN
-	 U12QHjTUgiYy+D6TGx1m0k90YuGkq1Q/hdeiRg0Ua4W8WmgpnQBcP38vZmE8fgSxm14Fl
-	 UOqUT5n1iiKo61DfxczLkSeBwo3pKIn+I4bwB8q9/TKHZkz/D9G7fpEYDWnaIsewMlFMC
-	 0ssGYDdacrz7Aa9PJ6B6KrSyex2/uppEk1U1IFoVbPUpc3Qka18H4Bjw2gAPzNOYGXg==
+	bh=7Y2ictk0g65m0Ave1kEba8qmk6lzLWOvEefFB0gy7Pc=;
+	b=gHlovSk6Vy5Sc/aPPImFfVZPfztJdEYzNOwdJO3N0w5186w2Iol+DfFiFzLg9TVv2R9o
+	 aGvSDDdKx2Lg2QNt2SPOV3GYxE42K/khDXSWkwUTcbcqdSV/mCqIcdELwCa4KWbyPYfRh
+	 tl9jRlCZIgoBzMLCWeVpwuqS/ggsQz2MfnXSv8unwDSrg7WPSEkcGhS0JiBZ1ylgFArXu
+	 SJOSazq5HbFJlcb7TB92xnmezGE6nsO+8dQdb0EXvt8DUBm1N++dXT8jsYyhHHtu7BRgT
+	 aBmIMLEFfdmE22ioIHlVFB72uqB9mGPMAZR//fZ8FzSRpRGEiGgnPLSdDbOyWzokiEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B5QCd8tL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=egGLi1SR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A24E60A2631;
-	Wed, 18 Nov 2026 15:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406FA60A2631;
+	Wed, 18 Nov 2026 15:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B5QCd8tL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 870AA1F000C9;
-	Wed, 18 Nov 2026 15:18:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=egGLi1SR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE851F000C9;
+	Wed, 18 Nov 2026 15:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015113;
-	bh=/Q0EhKKapcHhpTpahE+E1No47tUBGrpGXlq7WaxR4wI=;
+	s=korg; t=1795015115;
+	bh=7Y2ictk0g65m0Ave1kEba8qmk6lzLWOvEefFB0gy7Pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B5QCd8tLsZMg5x8JS+hmOEnwB8saZbR9Wxv0GLRLbrhZnbTv3eKp7VqXX6iKoXaBk
-	 BS6PuYsULzrjDpYn1FEHvMOK43+bvuyDbCbu5gd/I4Mz1LrUM1DBP0m1mWaMWMpSjt
-	 MYsD17+LBOoCYD81sHubgm0fLvrocRaVUJRnjI4k=
+	b=egGLi1SRoYo9OeAwS/Nz318vKi2vxWFkfBrk5+Zc11WVqaJ1PBhyPDdr0etADfI3Q
+	 1PKPfykyFiA8IFWF4K5Y+fadGtALcD9/LeA7cBvA8FHbsw+HmkZRmOI8crUx9XZKwH
+	 rtulJ/gRfrPYZCKL1Ye6zpUWXpLNz65CoasKXxuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
 	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0056/2651] accel/qaic: Add <linux/device-id/mhi.h> to qaic_drv.c
-Date: Wed, 18 Nov 2026 15:21:36 +0100
-Message-ID: <20261118150249.965354879@linuxfoundation.org>
+Subject: [PATCH 7.3 0057/2651] accel/qaic: Add <linux/device-id/mhi.h> to qaic_debugfs.c
+Date: Wed, 18 Nov 2026 15:21:37 +0100
+Message-ID: <20261118150250.002447937@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,32 +70,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
 
-[ Upstream commit c8e6229a81d0400a8347c70b89ff363ec08c816f ]
+[ Upstream commit cef139aa5394844f61fdb81d9fb07e71ba4e2407 ]
 
-qaic_drv.c uses mhi_device_id implicitly. Include <linux/device-id/mhi.h>.
+qaic_debugfs.c uses mhi_device_id implicitly. Include
+<linux/device-id/mhi.h>.
 
-Fixes: c501ca23a6a3 ("accel/qaic: Add uapi and core driver file")
+Fixes: 5f8df5c6def6 ("accel/qaic: Add bootlog debugfs")
 Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
 Reviewd-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
 Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260727173326.2219191-3-youssef.abdulrahman@oss.qualcomm.com
+Link: https://patch.msgid.link/20260727173326.2219191-4-youssef.abdulrahman@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/qaic/qaic_drv.c | 1 +
+ drivers/accel/qaic/qaic_debugfs.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
-index 0acf6cdd44f81..c1bb6db78d129 100644
---- a/drivers/accel/qaic/qaic_drv.c
-+++ b/drivers/accel/qaic/qaic_drv.c
-@@ -4,6 +4,7 @@
- /* Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries. */
+diff --git a/drivers/accel/qaic/qaic_debugfs.c b/drivers/accel/qaic/qaic_debugfs.c
+index 95c78e12dd61b..909a4d774d906 100644
+--- a/drivers/accel/qaic/qaic_debugfs.c
++++ b/drivers/accel/qaic/qaic_debugfs.c
+@@ -5,6 +5,7 @@
  
- #include <linux/delay.h>
+ #include <linux/debugfs.h>
+ #include <linux/device.h>
 +#include <linux/device-id/mhi.h>
- #include <linux/dma-mapping.h>
- #include <linux/idr.h>
- #include <linux/interrupt.h>
+ #include <linux/fs.h>
+ #include <linux/list.h>
+ #include <linux/mhi.h>
 -- 
 2.53.0
 
