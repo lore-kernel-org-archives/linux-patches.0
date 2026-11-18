@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054905;
-	b=jk+kaGTc9XgHfctoqEi1Jdw1JQcBynAcazfNuCwZu/86BQCncSD+qm9emWbLh9KU7Mqk
-	 DTOvCMFTV5Dcl5n1IBLofE4i4cx0y8J+bQYp7agYFluBLiGJlAWRaVIa848gDbKXZcKei
-	 XEkLOwH0buzsaXZOFISKIj0Zki672YA6S9sllBWNCS76PSMo89zArg8oHQ+kMnWQ29YES
-	 sUG178KTUZFh1inWZN5z1uj7zcD71TENVFjPXGRF8E3kHikllG3ldvF6H9yVpiYyhwOBY
-	 1kk0JxmIOqTgW4u90Ey3MbCRjRyddM72XCutYpKqsn5oQcWlR3b/9by9rrbJx6WYTyg==
+	t=1795054907;
+	b=uvnM/9yjVC7srzFTVu+juLg8dX8rnCvPvIy0N2teLcwsZXq1kBhRbMlDqvZA/eL1hiZI
+	 2pNXQfV7uXJDamWLFczORmfPS9eVVCuJqADtDmxMJpJFogZ/hw/cAcJRBgYZdltFXmS4Y
+	 58NngniG4wT21t4HHZ4irAZEaKmW6+dlFcdeEinMK/M2dKwGoR8He8XxGs1OJ2ti60lAB
+	 /be2GFMVChtHyHJ/7R/SFxM8adJRE/AqlFIasZ8wLMR7LdffPe+BA400Ub3UMRDDrgY5H
+	 a4Tmw0m3oZ3Wsqb97Of8gQGU/MLpPpoDm/YHIWQYKSzg99qyf7uU76AWagtbw+ulyXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054905;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054907;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E50hegVyVY0qXnOpHbQzyaHyg9nkUE5kIw451BhpS/U=;
-	b=I+Ecaspmc+lo73NdGZ6NRUJRKRaQVJqPiiLyC8lAoMarRmSDOb5+vhjkxak4MyAg3UBt
-	 C1myuXtdYmMdeNMt8LH01SGrnoTYVpjS4pQRJvPNdOtu+wPt8kfNioysYq7Uu1+nzHtYf
-	 b9TnHce0ASOzQlgKlx0oO6C6heBFZr7F+dtcaCSKNW7zxUcEpL1GXvsiyBJt8nfaWyRGK
-	 IhNg47hCR3cf/6lWlgxfKVSPpxIWui6SDbGlkoe2XIlotgfZKgTX1EjY9NW5g1yt7orWM
-	 KAKgBccZ6OviX//HtIzej15oZrPSapGUTPU55E/YLB9Ga/LsvnB5vjOtx4FNW25jSMA==
+	bh=yaHKwhVX7KLHip1V1704FBxpt6LqfQZaPDVvXExPCvw=;
+	b=MDcUCFQmBcMU/MqYyTveqKfvlOIwy+dVoGS+fMx0bSxaIyTiWypgHlDZM5VCsWI1Vmp7
+	 eskbqCElFXJjwHaON+9InfJ+aaYoy0YR1hQ308w6vvx8Xn93psdkTSRraLyAXegIYDNu1
+	 Q1qAkhVU9DcsaXSHTpqAyuqJEPhbpRUdSUzhEmGUIoCPnOiTyAzq6K370k2YF+zuv7H1w
+	 rU6npZd0QgGwt5n3e5UldH6ih1RzkDyQWWxO9UVlRK5bRHH9rykRUfzr69VEpBVq7zFj3
+	 iEx+SN+GKNBnTAjUVNBggo2/Y6RPcx7mxa6+QQlFhVJK/70D6kFZiBKiJxvpBFnoPjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hw5Kjy4f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zX0UKbfI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92EA606A325;
-	Thu, 19 Nov 2026 02:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99512606A31C;
+	Thu, 19 Nov 2026 02:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hw5Kjy4f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D0531F000C5;
-	Thu, 19 Nov 2026 02:21:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zX0UKbfI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F27261F000C5;
+	Thu, 19 Nov 2026 02:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054904;
-	bh=E50hegVyVY0qXnOpHbQzyaHyg9nkUE5kIw451BhpS/U=;
+	s=korg; t=1795054907;
+	bh=yaHKwhVX7KLHip1V1704FBxpt6LqfQZaPDVvXExPCvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hw5Kjy4fwlJp4V7u6Eccn5dOJYEK5rPY/U3uITdQ56m3+RfRR7HbHEvMt0+qYWJXh
-	 +SlSTLtPL2gx9dV5AoCFFLi6PGRsSfKTA+FLi1vQdDF/fm7idlbJGqkNg3jpcyrWx8
-	 /wGHTXDGXId7FdRhnTR5i5LGFX3/k0bADIKLRZuo=
+	b=zX0UKbfIdeEc61WF9dnEXCk4+gCP1KsUnHgepEChZCTlAidYeCwQcqjdN4cxJIYTi
+	 0AYPBe1eGPFCNpB8vS200FHuNBuvbPe4gRAqd467KBfBMF7wXTvTtA/n8OZ5oIhZ82
+	 TCta+IHmQbTUpJCuiAa5Kb1KiBKWH2P9ly+L3RsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Salah Triki <salah.triki@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1441/2214] scsi: mpi3mr: Fix use-after-free of the firmware event workqueue
-Date: Wed, 18 Nov 2026 15:51:57 +0100
-Message-ID: <20261118150108.784491437@linuxfoundation.org>
+Subject: [PATCH 5.15 1442/2214] iio: imu: adis16400: Check return value of spi_setup()
+Date: Wed, 18 Nov 2026 15:51:58 +0100
+Message-ID: <20261118150108.818939672@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,45 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-[ Upstream commit c94c746e6c80439a4a9a0e1e20f2dae62a4d57ef ]
+[ Upstream commit a7c07602e00596a45de8a4a700af96392953ed38 ]
 
-The enqueue path reads the workqueue pointer before taking the event lock,
-while the remove path clears that pointer and destroys the workqueue while
-holding it. The enqueue can therefore reach queue_work() after the
-workqueue is gone.
+In adis16400_initial_setup(), the return value of spi_setup() was ignored.
+If SPI configuration fails, the driver would proceed with the
+initialization anyway, leading to undefined behavior or silent failures
+during device setup.
 
-Move the check inside the lock.
+Check the return value of spi_setup() and return the error code immediately
+if it fails.
 
-Fixes: 13ef29ea4aa0 ("scsi: mpi3mr: Add support for device add/remove event handling")
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-17-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: cd888a17f95f ("staging:iio:adis16400: Use adis library")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/iio/imu/adis16400.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index d5a3ddd3b2b83..669f943b4f02f 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -211,10 +211,11 @@ static void mpi3mr_fwevt_add_to_list(struct mpi3mr_ioc *mrioc,
- {
- 	unsigned long flags;
+diff --git a/drivers/iio/imu/adis16400.c b/drivers/iio/imu/adis16400.c
+index 5b5eca0663c87..253acc39656bf 100644
+--- a/drivers/iio/imu/adis16400.c
++++ b/drivers/iio/imu/adis16400.c
+@@ -443,7 +443,10 @@ static int adis16400_initial_setup(struct iio_dev *indio_dev)
+ 	else
+ 		st->adis.spi->max_speed_hz = ADIS16400_SPI_FAST;
+ 	st->adis.spi->mode = SPI_MODE_3;
+-	spi_setup(st->adis.spi);
++
++	ret = spi_setup(st->adis.spi);
++	if (ret)
++		return ret;
  
--	if (!mrioc->fwevt_worker_thread)
--		return;
--
- 	spin_lock_irqsave(&mrioc->fwevt_lock, flags);
-+	if (!mrioc->fwevt_worker_thread) {
-+		spin_unlock_irqrestore(&mrioc->fwevt_lock, flags);
-+		return;
-+	}
- 	/* get fwevt reference count while adding it to fwevt_list */
- 	mpi3mr_fwevt_get(fwevt);
- 	INIT_LIST_HEAD(&fwevt->list);
+ 	ret = adis_initial_startup(&st->adis);
+ 	if (ret)
 -- 
 2.53.0
 
