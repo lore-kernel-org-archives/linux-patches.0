@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054281;
-	b=tdMMKk4d3UH6oMAne0wCLsuEXAtpYAhvXLwIKrlyp0emYRjOMgM++mrIOwuebLfVfB79
-	 LJcBxuPf5n5p9zCrA5H/4HehXM1gg81KTpBfvMSls4S64jrrkbIZ/TUmk83Hu63vG0HnU
-	 N3ywGnGCod+vX2RKNoo0/qXVg7R8hpsIW5nTAkxIH5WsCFvYIAJlhTgRLeot23rXmLKCb
-	 e3oqLN2jLPkaVhSLpELyIl+VYITEtr6Qr+qqxd37kMxVSolkjGBZnKLRtWuYAWgYDOoIS
-	 pc4eDSL/M4XUZTEqZEhKYX5sRyH0x7NuJRgO4jI594m6KSzypDBJ1e9pFos0bvEcbaw==
+	t=1795054283;
+	b=4TbPQ98Flim6wd/NI/krFfzDAkUSC6XTt1H8RsfzTn5kq24LJ4o/XtBsnBnsitTKRdor
+	 HtqJxsx+UF9+6hhTeGQgDgWlpbd06hQ0uy6RunetHaW7OZH3YNU3N92leHhec0Tnf/K56
+	 VPABt0jCGqgwCHUnG6aXCLxXV4/OHzVVZogKfu0c03NqYbcuFlpFtfQHEFQON+Om2RV98
+	 uR+lLpAHiJBHHbf9LikWhRAudmd31vyrbnHrUgc7lv7CvVUxC5mmOSo6dJ5FNQHYhufxe
+	 4MHVPy5dlp8Ebjuzq/4MvaVAx0NqK+IvILV1R3m+U2eamje9c6bl3YvuDXqpH9b9cVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054281;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054283;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kXslL8kKWKPuXNTfXPevCu3FpgkRcxZWu7nFUWXenSg=;
-	b=RHbLU3vlPyrQfoC7RzMS5lDzr5QQ9ZIggu5c2t2SamsRH7LrB3qJ+3kEbZKAVn5dQLTC
-	 emYa6ej46hEWCRbtp3yn/cdfUZ1oA3iVDzIZHfMwgBHPCzbJKpqMWwoMuJfAf9sxpiqk4
-	 t8ZgeOxMH2omrMoFjBbec9PLbeKUPNT9dibznRviZWAjKpafQDeVO0pX0WmB+OgU9jCtm
-	 6lnR5AVnNg1yOLf2uMU/k4fWYBT4+xeT0RJtbQYwMzCcrCNnDLuC08g3d0JQNohPMG2KR
-	 EVOw6qhGwh67rZhSEgHhSGCZgYCKD3XhOK3YMbZbaVdLc++C+1H01H2UuSBulAPVe8A==
+	bh=ZphQ3j6tDNJUFxc/OIpY6cI23R3rhttnD5zee5w2t+Y=;
+	b=43cRnnoLZV2Z59c4yqEfITTLlE0YuS7NxSTsOvfCWfEkwE7+utkCoV2a8TE4zmeijOyV
+	 F/dBAS4YLh6fb48tsBv/bbykcb6DqEHXXkjYS1tuHe4gRcdREESkKEf/ky09B5T6wG+vm
+	 yYeNSET9steNlPCe70WnKsT3ugqpRuoeWPL4HTVr8pYwpVdlqnLW9qjOcfyDKIX0oPfhn
+	 EiyoMD8WTOiXOLTROhlnBTHQQjxawC8ntFs3m9HdmVelF8LUI89qqm6X9KEoNnQcm00yn
+	 1ppVbSywO+O9ZjPihjmvpxr5TNnJ4rPwyEwB5CJM9/nEUlHDU4W4snswoUyDFoss6+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbqieP0y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PbItYwcZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038F3606A325;
-	Thu, 19 Nov 2026 02:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B92606A320;
+	Thu, 19 Nov 2026 02:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbqieP0y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A771F000C4;
-	Thu, 19 Nov 2026 02:11:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PbItYwcZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0A71F000C4;
+	Thu, 19 Nov 2026 02:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054280;
-	bh=kXslL8kKWKPuXNTfXPevCu3FpgkRcxZWu7nFUWXenSg=;
+	s=korg; t=1795054283;
+	bh=ZphQ3j6tDNJUFxc/OIpY6cI23R3rhttnD5zee5w2t+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tbqieP0yh0ok+epKSUG2Ciw7U/X1UYEmHg9I/TqG3SeYTQ283CDq+pDsKPAX0qoS3
-	 2i6CKVJyIJG5nullFjDWIYLJmh1OEOcHQrZURo3MWfM0FED7gCc4cgTt+u79z9IGFP
-	 Ia2OZbIritxVqDGpJ4cst13/odIPhXImZJCapH7I=
+	b=PbItYwcZV7zPxht+D9sGV43nSjt5WasszBxKGm80aCxa2F3A7iaELodCIGLC9pU09
+	 vZBMbyp0XTV9/cQqsTfhnPSOoKdBezWgrC8P4WwUfh7CQiNSZjYLHwlW3/yh6UfC0G
+	 5a2M25AwNg3MyRfr6qVlX66SRkL6jxrUDsSiDmho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	David Howells <dhowells@redhat.com>,
+	Cheng Yongkang <teel4res@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1202/2214] assoc_array: dont lose objects when a shortcut is split on a word boundary
-Date: Wed, 18 Nov 2026 15:47:58 +0100
-Message-ID: <20261118150059.946261722@linuxfoundation.org>
+Subject: [PATCH 5.15 1220/2214] io_uring/timeout: count cancelled timeouts in cq_timeouts
+Date: Wed, 18 Nov 2026 15:48:16 +0100
+Message-ID: <20261118150100.583896321@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,66 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Cheng Yongkang <teel4res@gmail.com>
 
-[ Upstream commit 2a62c32760a8fbf464a7388853d19bc62c5cc423 ]
+[ Upstream commit 1c8b49851543f41fc8bb18bcd1f15cc93d14b530 ]
 
-When assoc_array_insert_mid_shortcut() splits a shortcut at level diff,
-the new shortcut in front of the split, new_s0, gets the first
-round_up(diff, ASSOC_ARRAY_KEY_CHUNK_SIZE) bits of the old shortcut's
-index key, and the bits from diff onwards are then cleared from its
-last word:
+io_timeout_cancel() posts the cancelled timeout's -ECANCELED CQE without
+advancing ctx->cq_timeouts.  io_timeout_fn() and io_kill_timeout()
+advance it for every timeout CQE they post, and io_flush_timeouts()
+computes the number of non-timeout completions as
 
-	blank = ULONG_MAX << (diff & ASSOC_ARRAY_KEY_CHUNK_MASK);
-	new_s0->index_key[keylen - 1] &= ~blank;
+    seq = cached_cq_tail - cq_timeouts
 
-When diff is a multiple of ASSOC_ARRAY_KEY_CHUNK_SIZE, the shift is 0,
-blank is all ones, and the whole last word is cleared, although all of
-it lies below diff.  A walk then compares the key it is looking for
-against that zeroed word, takes the shortcut to point elsewhere, and
-every object below it can no longer be found.
+to compare against each off timeout's target_seq.  The cancelled
+timeout's CQE is therefore counted as a regular completion, so every
+cancellation makes an already armed off timeout fire one completion
+early.
 
-assoc_array_insert_into_terminal_node() trims a new shortcut's key the
-same way, and only when the level is not a multiple of the chunk size.
-Do the same here.
+A ring with a keep-alive timeout of off=4 completes it after two NOPs
+when one off=100 victim is cancelled through IORING_OP_ASYNC_CANCEL, and
+before any NOP when two victims are cancelled.  The cancel CQE should
+count, but the cancelled timeouts' -ECANCELED CQEs must not: the
+expected counts are three and two NOPs respectively.
 
-Found by a userspace build of the array with a test that inserts, in
-order, string keys whose first word is their length and the rest their
-bytes.  The 102nd key split a shortcut at bit 256, and 76 of the keys
-already in the array could no longer be found; AddressSanitizer also
-reported assoc_array_walk() reading a word past the end of a shortcut's
-index key.  With this change the test passes, and AddressSanitizer and
-UndefinedBehaviorSanitizer report nothing.
+Advance cq_timeouts when io_timeout_extract() succeeds, under
+timeout_lock and before the -ECANCELED completion is queued, matching
+io_timeout_fn() and io_kill_timeout().  The -ENOENT and -EALREADY paths
+post no new timeout CQE and keep their accounting.  Both the
+ASYNC_CANCEL and the TIMEOUT_REMOVE path go through io_timeout_cancel().
 
-Fixes: 3cb989501c26 ("Add a generic associative array implementation.")
+Fixes: bfe68a221905 ("io_uring: off timeouts based only on completions")
+Cc: stable@vger.kernel.org
 Assisted-by: LLM
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Tested-by: David Howells <dhowells@redhat.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
+Link: https://patch.msgid.link/179328314078.648427.13761781546953594668@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ sashal: Placed the cq_timeouts increment after the existing error return instead of adding an explicit success conditional. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/assoc_array.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ io_uring/io_uring.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/lib/assoc_array.c b/lib/assoc_array.c
-index 65409f0d2e0e5..62e35116db19c 100644
---- a/lib/assoc_array.c
-+++ b/lib/assoc_array.c
-@@ -866,9 +866,11 @@ static bool assoc_array_insert_mid_shortcut(struct assoc_array_edit *edit,
- 		memcpy(new_s0->index_key, shortcut->index_key,
- 		       flex_array_size(new_s0, index_key, keylen));
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index a87b24c77c0ee..f0b55c6e2d2fb 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -6264,6 +6264,8 @@ static int io_timeout_cancel(struct io_ring_ctx *ctx, __u64 user_data)
+ 	if (IS_ERR(req))
+ 		return PTR_ERR(req);
  
--		blank = ULONG_MAX << (diff & ASSOC_ARRAY_KEY_CHUNK_MASK);
--		pr_devel("blank off [%zu] %d: %lx\n", keylen - 1, diff, blank);
--		new_s0->index_key[keylen - 1] &= ~blank;
-+		if (diff & ASSOC_ARRAY_KEY_CHUNK_MASK) {
-+			blank = ULONG_MAX << (diff & ASSOC_ARRAY_KEY_CHUNK_MASK);
-+			pr_devel("blank off [%zu] %d: %lx\n", keylen - 1, diff, blank);
-+			new_s0->index_key[keylen - 1] &= ~blank;
-+		}
- 	} else {
- 		pr_devel("no pre-shortcut\n");
- 		edit->set[0].to = assoc_array_node_to_ptr(new_n0);
++	atomic_set(&ctx->cq_timeouts,
++		   atomic_read(&ctx->cq_timeouts) + 1);
+ 	req_set_fail(req);
+ 	io_fill_cqe_req(req, -ECANCELED, 0);
+ 	io_put_req_deferred(req);
 -- 
 2.53.0
 
