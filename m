@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039984;
-	b=XMa4CCxtKZRS5xz+ElESywGkWEBdutahnGrGPL5RyKWJ5MDv6Z3eOhzaA+yqV+ws8ELC
-	 3EKxJ//BoWUQ0fLucVfELmQ69OxUYKuywzFAmVQY1SmPZYHzfEYf1xtQBB9i+7Nw+Nva0
-	 iUdpMqooApMyQiFwvmlJhrprII1eiwmgtl6naEA1Bsf7atzMt1b08h76O7s0c9ahl3tvc
-	 qwCb1SuKziMDHpYFzUTBSDozlHVV0czSByMMQQDJn7rxA9ALfTF024F9l5lDzlktrk7vM
-	 Lfum3o6AHwKmFr+uD8vMFT1DsW1Nk/5uumBcQzhyqQpDlmn9rltzce5J61vCgpkuTdQ==
+	t=1795039987;
+	b=v/PUJDXA9tLYY5FjQ/vnymuSCdp2CpbcmqR431/std+Pt3wEjkq2jyy2FpylB5rCVBWs
+	 raT9AZen+IRc7WKyURWt06Pd1FxnqH/5Z+uxqKCKGajEpyALXjQxZqdPJ1Kl0I7cmkZMZ
+	 Z8t3jdKWux/FW54OaDCTwYQFKgoRiCAgHTjGC7CX1tnoOQ+WEPkjHXJBpYpbu0jUyvZzX
+	 olUI5BXuGjq5f1WImI//7eQJI7DocdLlAoff3N5lwnHTCEGGBwN2X1z0/sz+PjyrcCnvo
+	 bikhVmQaqB636Dnhv5XuPjBwF4FO3eooIWvnaV8iA+0fmb4bXh6pB5g4U5UR4fRiHig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039984;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039987;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3nJwlCNe4Gt0BBhx4X5/wJE9i/N5znnIJeNi0sSI35Y=;
-	b=XMoUJf4PFt5uDMMGBXcCoc6ie0S6Myj12STXMamF3RMBbHfj5idS8GYKki3J1AhusUso
-	 HcHo+4aYre41D40Up3DcrWaYMNuAcmNmha57kLgsoycI41ZUA51sBcLJsBLvhtr2/PZ6G
-	 BdO4W7ACGXOCizG19uW3L1wKBxx0MKs6SJfLV3Y4BvCJ0e9wA+tHbsJgSKSCE97H4NoBF
-	 b5T/NIfK1SY+P2R1kWqb3ZQU05lTfnoHOagCxrVRW0G3odJy4lrlH3505LWElJWmiFbPP
-	 whsxLHSbUu3omctiKLfZ0UudR0BxEnZ5XgZtm5Q5Hstzt60Nt/g4SeoParhvm9eR9QA==
+	bh=v+hxf3SgFw34cCQtgHxm8zJqqqaXS4ea7cAnzxu0o9I=;
+	b=tlfV/uWCfNV6sBOu0ij3R865Ii+UZ0k8jWNY+d3ddEbQKONjr51rIY7B3OgTYV+Ugxao
+	 zp2C/bVv1S/1GoSijeXrNlALHeMbOm7LiZp+zWtmsxUHSP5UsvkeFK3P/DFGPVs9wmK/z
+	 37Q2wZyVp0+7jjjRcl9xQJYJcRFKU6RYlUI0C+wGDUR+SOtnP7SO6SGvXbB0ItmPZrKSw
+	 GQSoWhY394LU6AAWJaTGm+ZhjT5yNsmANbvNaoAqXeDTJI1oeZb2nFFIQqIy4xTVSI+0o
+	 jqgSq3mQ7pXedHaF4QTx/Jca+dZI1eJPxTNEpSoINSpGQOZYWncg6ycd/pv/b8IfV6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZlHd9HJy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wd436VMN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA03606A31C;
-	Wed, 18 Nov 2026 22:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198FC606A320;
+	Wed, 18 Nov 2026 22:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZlHd9HJy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15C91F000C4;
-	Wed, 18 Nov 2026 22:13:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wd436VMN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701FD1F000C4;
+	Wed, 18 Nov 2026 22:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039984;
-	bh=3nJwlCNe4Gt0BBhx4X5/wJE9i/N5znnIJeNi0sSI35Y=;
+	s=korg; t=1795039987;
+	bh=v+hxf3SgFw34cCQtgHxm8zJqqqaXS4ea7cAnzxu0o9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZlHd9HJyHdKdytVgxTxZ3ixbUU0dYPLez3rwG3Z68kQmKz1vmJA01DQjyNUGcR9mm
-	 URvqHpUA7xVumyvNfOPEJ3aNa6Ch9X7XNf4w+cHvxSqUHK4uYlGnIw8adeDI/xkfR2
-	 9a+uzGu2wIOghWbcQYC6BdXwJIEyo31FvVmy6ka4=
+	b=Wd436VMNSY1rMBokuvCRtox5huJQe+eOwb1eRlkaBarEGgQmcfP4HyXlSpUOlWrxY
+	 /9YW+z9BlUXsepk7v+6FfBBwv+ugIoOC1UkRZw3vYqJYS65xbOdax0UVk8ZQD88YbN
+	 F1Q1O2RiCMWr6Dc61Z/M491RyOeCMcXWn6jjWgOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Niklas Cassel <cassel@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Mark Brown <broonie@kerenl.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2295/3318] ata: pata_parport: fix parport attach idr_alloc for
-Date: Wed, 18 Nov 2026 15:48:37 +0100
-Message-ID: <20261118150430.580581594@linuxfoundation.org>
+Subject: [PATCH 6.6 2296/3318] ASoC: amd: acp-es8336: Switch to use acpi_bus_get_primary_device()
+Date: Wed, 18 Nov 2026 15:48:38 +0100
+Message-ID: <20261118150430.608202748@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,43 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 193f5b84a95c02456f51fe5067750ecf73d213d5 ]
+[ Upstream commit 6f50ab7ab1f93e874fa75d18bf98bbca4ce0204f ]
 
-idr_alloc() expects an inclusive start and an exclusive end, so passing
-port->number as both arguments produces an empty range. Because
-idr_alloc() only falls back to INT_MAX when end <= 0, the allocation
-succeeds solely for parport0 and returns -ENOSPC for every other port,
-which pata_parport_attach() silently ignores. As a result only
-parport0 gets probed and any higher-numbered parports are never
-attached.
+Replace acpi_get_first_physical_node() that is slated for removal
+with acpi_bus_get_primary_device() that takes a reference to the
+device it is about to return.
 
-Use port->number + 1 as the end so the range [port->number,
-port->number + 1) contains exactly the desired ID.
+This addresses a potential use-after-free that may occur if the
+device returned by acpi_get_first_physical_node() is removed right
+after dropping its ACPI companion's physical_node_lock in that
+function.
 
-Fixes: 246a1c4c6b7f ("ata: pata_parport: add driver (PARIDE replacement)")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Link: https://lore.kernel.org/r/cee1a15d98cd0d55f41fd65ca9d222b68a74e7d3.1790047457.git.xiaopei01@kylinos.cn
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+It also fixes a device reference counting issue that may lead to
+a premature device release if gpiod_get_optional() fails in
+st_es8336_late_probe().
+
+Fixes: 02527c3f2300 ("ASoC: amd: add Machine driver for Jadeite platform")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Acked-by: Mark Brown <broonie@kerenl.org>
+Link: https://patch.msgid.link/2063881.yKVeVyVuyW@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_parport/pata_parport.c | 2 +-
+ sound/soc/amd/acp-es8336.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/pata_parport/pata_parport.c b/drivers/ata/pata_parport/pata_parport.c
-index dd0936b5e332d..14662679375e1 100644
---- a/drivers/ata/pata_parport/pata_parport.c
-+++ b/drivers/ata/pata_parport/pata_parport.c
-@@ -731,7 +731,7 @@ static void pata_parport_attach(struct parport *port)
- 	int pr_num, id;
+diff --git a/sound/soc/amd/acp-es8336.c b/sound/soc/amd/acp-es8336.c
+index 49bffc567e68d..0800c50bc9df3 100644
+--- a/sound/soc/amd/acp-es8336.c
++++ b/sound/soc/amd/acp-es8336.c
+@@ -201,7 +201,7 @@ static int st_es8336_late_probe(struct snd_soc_card *card)
+ 	if (!adev)
+ 		return -ENODEV;
  
- 	mutex_lock(&pi_mutex);
--	id = idr_alloc(&parport_list, port, port->number, port->number,
-+	id = idr_alloc(&parport_list, port, port->number, port->number + 1,
- 		       GFP_KERNEL);
- 	if (id < 0) {
- 		mutex_unlock(&pi_mutex);
+-	codec_dev = acpi_get_first_physical_node(adev);
++	codec_dev = acpi_bus_get_primary_device(adev);
+ 	acpi_dev_put(adev);
+ 	if (!codec_dev) {
+ 		dev_err(card->dev, "can not find codec dev\n");
 -- 
 2.53.0
 
