@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049103;
-	b=je8IOqF8D6Pi9S6BsZMwqPCwjathhylzq8jeTN2jo9SdBcoQIV5yeR+/IepdeX25qTug
-	 JPWtnD7tQSvi5omgRcIchTvxtah7Dww1+lDljCEEWNlDSKLKUFDJmnStrrkj2Oo7m/p+0
-	 PDebNFQH8PJv612xRZe1u5ictA19eoGjmeB6sjtNIPTbJb70ozgyefdRCyYGfpFbDwnvf
-	 ZRWKnvk7QRwdKPCAQ2YaTqEsP4sBbcxI3tiZgad58Oc4uZAjFAegEDez78HdwvIbUwmfR
-	 6OfufKjTkXrEMGiagKjkU8q4mE8kjVud2Zg2CU1x8xM3NfFihG6qedHmXTEdqqpM8Qg==
+	t=1795049106;
+	b=Txd4PyTGupKvOZ/GPWrevPvpJX4rgIxmjrX9ZXqZRI5MBhV/kblhpYLRP2q6gl6aoxWG
+	 Zu3J+k4Q8Xs2DKp234KrNUcPwMIt3JWI/qoGRUYpsahmTox8OsaWlyGm/a1vYKw/CSGTP
+	 lFQelyMEkn6/+mP5tDWy/Lm9Ysp+XDw9kcAy4jdEdKl3Z5KTvy6N9O3qqyCj/ioqYnlL5
+	 Bx8RGNUiPDcZNLGuiqSaOFR6YS9zxW/J0zcgrPm4k0PgP4KYy6hlz+Bh8bci4b7lJ0CCi
+	 hB5zqf+6DYrEi+3SxP4ZmNsy/0i28uwBeWhhb/TqJCGePnKKQi3yxx0Nkv6EbzQwf5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049103;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049106;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T8DXdFdO5anc+DJZaZVybl39ZUvv8N7YfMIcnjdvLZE=;
-	b=Gsu66wCeba8tWAsg5WEyA8BWsfeemWvyBQuJSV6RNrNARNaHf31jAeEJG/0FiHR0/1Dq
-	 1IRpp8Ty/jotNX65QGMtDpNkS1BzE65Yv1K09278q/ruA1vk+xKpMADZAQcZV9reQ00e3
-	 CJgBrABJIQd0/bHSl7vnctBViuL/QL/amXzyIwKDMqtvC1u8HeBAfMEoeSJNu+K0Eohaw
-	 guawlI0f8QTyezvhmT4zMc0XsJJnUeXh20bS3CJYlqXBdCxYbQ6sOCtderGVkr9AVuBMU
-	 /MCEQKDyI9fCODkBiFKHVOTAN8HU8nTbjMeJLPNKRJ3nQUubOktscBllPyc8qf+951w==
+	bh=w/vYkBGfM8Fiz+i0e1XPExHJvn3j1prxcVctgt+lOlQ=;
+	b=yhUxKA7eCY7+4NHxeytPzCxuG+sWkQ3EQLDhvkL4NNAvJ9msuv3A3LMySDmIfxmCDjJp
+	 yvR880qcv4KDZOfVpWF0hZw/k6snmI6i8NyLd03zd42f52GUc9USfEz8ECnfRSu86ofSP
+	 B9u1hqW1OZXFgQUAbdg/Uj0N3ryZNFT1knAJsY1FSfCjmd84pqmftiFCQObk3fCgCQc87
+	 Pu1ZhZcbQIGDUO5R+HVH12AJeNTFqhJHsRqLWlJjyKNJ7G+sh5SWHu/rApxKHuye9zkIH
+	 qo1fxKw29fBFxEuzdLNjtb6G38myNyYfcr/vP8xKEk9dPEuZb2eP7wFfCD8+AAy0tCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2gDyF3r3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=INfP6RIx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A210606A320;
-	Thu, 19 Nov 2026 00:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D98606A331;
+	Thu, 19 Nov 2026 00:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2gDyF3r3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5E71F000C4;
-	Thu, 19 Nov 2026 00:45:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=INfP6RIx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE0E1F000C4;
+	Thu, 19 Nov 2026 00:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049103;
-	bh=T8DXdFdO5anc+DJZaZVybl39ZUvv8N7YfMIcnjdvLZE=;
+	s=korg; t=1795049105;
+	bh=w/vYkBGfM8Fiz+i0e1XPExHJvn3j1prxcVctgt+lOlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2gDyF3r3KGWucy3wmb+kz/wIGprHOkJWZAkwaL0GtR/yAU77iSFFztCVgNKt2P/Nv
-	 /z5eqh3NLliOtV1nBa385FsPS+zaK72InHW5USgwSDVaxHR2TvanZSDf0zkhTAwHTV
-	 NioIMyhGiiEmzk4FTRszkF4UqcCttYUz3qhzIEqo=
+	b=INfP6RIxBkHoS0M66MoRf6kmjUcZwCJI/JButfILp0qkmhLz6OrSW1P1YKPxJCvSV
+	 qxOvrT/o6c+pnHmjjhwSeE6qLzKzy0gFaHSFulGEK6z2rbCOBl6czXayH6D39PC1bB
+	 1ezIOp/sR8HCfs8BbCW1c86//8UaQzyuOpPd4yMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2190/2857] drm/msm/dpu: change ib values to u32
-Date: Wed, 18 Nov 2026 15:53:44 +0100
-Message-ID: <20261118150320.267552303@linuxfoundation.org>
+Subject: [PATCH 6.1 2191/2857] drm/msm/dpu: make fix_core_ab_vote consistent with fix_core_ib_vote
+Date: Wed, 18 Nov 2026 15:53:45 +0100
+Message-ID: <20261118150320.302031254@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,90 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit c54b61102f468cef440423a57341a95763a287a3 ]
+[ Upstream commit 879a7f8c8c2d727bc4c8ae3238f0dbf52eada6db ]
 
-The IB values in core_perf calculations (max_per_pipe_ib,
-fix_core_ib_vote) are expressed in KBps and are passed to icc_set_bw
-without additional division. Change type of those values to u32.
+The fix_core_ab_vote is an average bandwidth value, used for bandwidth
+overrides in several cases. However there is an internal inconsistency:
+fix_core_ib_vote is defined in KBps, while fix_core_ab_vote is defined
+in Bps.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fix that by changing the type of the variable to u32 and using * 1000ULL
+multiplier when setting up the dpu_core_perf_params::bw_ctl value.
+
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/636061/
-Link: https://lore.kernel.org/r/20250209-dpu-perf-rework-v5-3-87e936cf3004@linaro.org
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/636064/
+Link: https://lore.kernel.org/r/20250209-dpu-perf-rework-v5-4-87e936cf3004@linaro.org
 Stable-dep-of: 480ba24aa340 ("drm/msm/dpu: compute the CRTC bandwidth from the state being checked")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 4 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h | 6 +++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      | 2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index d144111530086..377722d16d408 100644
+index 377722d16d408..3464f1e3162fe 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -135,7 +135,7 @@ static void _dpu_core_perf_calc_crtc(const struct dpu_core_perf *core_perf,
- 	}
- 
- 	DRM_DEBUG_ATOMIC(
--		"crtc=%d clk_rate=%llu core_ib=%llu core_ab=%llu\n",
-+		"crtc=%d clk_rate=%llu core_ib=%u core_ab=%llu\n",
- 			crtc->base.id, perf->core_clk_rate,
- 			perf->max_per_pipe_ib, perf->bw_ctl);
- }
-@@ -485,7 +485,7 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
- 			(u32 *)perf, &dpu_core_perf_mode_fops);
- 	debugfs_create_u64("fix_core_clk_rate", 0600, entry,
+@@ -125,7 +125,7 @@ static void _dpu_core_perf_calc_crtc(const struct dpu_core_perf *core_perf,
+ 		perf->max_per_pipe_ib = 0;
+ 		perf->core_clk_rate = 0;
+ 	} else if (core_perf->perf_tune.mode == DPU_PERF_MODE_FIXED) {
+-		perf->bw_ctl = core_perf->fix_core_ab_vote;
++		perf->bw_ctl = core_perf->fix_core_ab_vote * 1000ULL;
+ 		perf->max_per_pipe_ib = core_perf->fix_core_ib_vote;
+ 		perf->core_clk_rate = core_perf->fix_core_clk_rate;
+ 	} else {
+@@ -487,7 +487,7 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
  			&perf->fix_core_clk_rate);
--	debugfs_create_u64("fix_core_ib_vote", 0600, entry,
-+	debugfs_create_u32("fix_core_ib_vote", 0600, entry,
+ 	debugfs_create_u32("fix_core_ib_vote", 0600, entry,
  			&perf->fix_core_ib_vote);
- 	debugfs_create_u64("fix_core_ab_vote", 0600, entry,
+-	debugfs_create_u64("fix_core_ab_vote", 0600, entry,
++	debugfs_create_u32("fix_core_ab_vote", 0600, entry,
  			&perf->fix_core_ab_vote);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-index cc59ab92555f5..fa7de17defec0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-@@ -21,7 +21,7 @@
-  * @core_clk_rate: core clock rate request
-  */
- struct dpu_core_perf_params {
--	u64 max_per_pipe_ib;
-+	u32 max_per_pipe_ib;
- 	u64 bw_ctl;
- 	u64 core_clk_rate;
- };
-@@ -45,7 +45,7 @@ struct dpu_core_perf_tune {
-  * @perf_tune: debug control for performance tuning
-  * @enable_bw_release: debug control for bandwidth release
-  * @fix_core_clk_rate: fixed core clock request in Hz used in mode 2
-- * @fix_core_ib_vote: fixed core ib vote in bps used in mode 2
-+ * @fix_core_ib_vote: fixed core ib vote in KBps used in mode 2
-  * @fix_core_ab_vote: fixed core ab vote in bps used in mode 2
-  */
- struct dpu_core_perf {
-@@ -58,7 +58,7 @@ struct dpu_core_perf {
- 	struct dpu_core_perf_tune perf_tune;
- 	u32 enable_bw_release;
- 	u64 fix_core_clk_rate;
--	u64 fix_core_ib_vote;
-+	u32 fix_core_ib_vote;
- 	u64 fix_core_ab_vote;
- };
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 5a5821e59dc15..553dd024460c6 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -1512,7 +1512,7 @@ static int dpu_crtc_debugfs_state_show(struct seq_file *s, void *v)
- 	seq_printf(s, "core_clk_rate: %llu\n",
- 			dpu_crtc->cur_perf.core_clk_rate);
- 	seq_printf(s, "bw_ctl: %llu\n", dpu_crtc->cur_perf.bw_ctl);
--	seq_printf(s, "max_per_pipe_ib: %llu\n",
-+	seq_printf(s, "max_per_pipe_ib: %u\n",
- 				dpu_crtc->cur_perf.max_per_pipe_ib);
  
  	return 0;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+index fa7de17defec0..e71d2a6175ab3 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+@@ -46,7 +46,7 @@ struct dpu_core_perf_tune {
+  * @enable_bw_release: debug control for bandwidth release
+  * @fix_core_clk_rate: fixed core clock request in Hz used in mode 2
+  * @fix_core_ib_vote: fixed core ib vote in KBps used in mode 2
+- * @fix_core_ab_vote: fixed core ab vote in bps used in mode 2
++ * @fix_core_ab_vote: fixed core ab vote in KBps used in mode 2
+  */
+ struct dpu_core_perf {
+ 	struct drm_device *dev;
+@@ -59,7 +59,7 @@ struct dpu_core_perf {
+ 	u32 enable_bw_release;
+ 	u64 fix_core_clk_rate;
+ 	u32 fix_core_ib_vote;
+-	u64 fix_core_ab_vote;
++	u32 fix_core_ab_vote;
+ };
+ 
+ /**
 -- 
 2.53.0
 
