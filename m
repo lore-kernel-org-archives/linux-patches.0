@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024836;
-	b=UiUnThbTY/DWseA7/XVZOs3X/YwPLd8nZCF63cwj+M/HaYmbmgBe2UHoEm9N/T5zMNrL
-	 JnUU1ebBfbKKpCKAbvf5yZeUebOra8eZv91o/l7VL/RzyNuSVhUdvxnUGnq7qB5CV2Ele
-	 fSrM2fXdBSPuCmPir1hsbUNBK8q2oBE1+MNvWHh379Ss1u2CvDPpwCuy7JNdhdGn3bTgP
-	 S0DtZQOgab2s9tB/Tb4T/OXR5iMglpx0g1jQotGE+dfP3KE8gH/6GoAVZTTL9b+fvbYIq
-	 XZstvOKNmzADH8wyLJkKFcP4OCj39nbvBjH+rE1OTep0S1n0UAOnheOgrGURh8rnRUw==
+	t=1795024839;
+	b=cL+av0niWW9oEXYQlGy6ZY4ryMeSCEzfYQ4Twu7hya1gNrVYU2wLbJGvX22ilcSjvYaV
+	 IUKWR4YV3iL0QS2aXQifBJqB9zqLTJnQboSEH5+I+SCWSbZ3XtTpUJ5vYYBw/RzI0mgKs
+	 6YWcEqZ0MtuyZuAwiktiuyK2y4aYpsQfxbaCzQQyWd01RMhb+6Ula+GexnWrhljek2ECe
+	 T8xXcs5C2eY60plSWM8eV9Q/C4l/UXwU7Cz2Ue4OEOExEsEmNEdOEGBOjTb7/4vUySjj/
+	 TiCVxNhMRnbNVwXg0L6zNIN53CF9ZSZCUSnJOHrMey8PdvHUVt0+sKL8dW0NmqiXF3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024836;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024839;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lBNZoj/Nb4585t5pqodZu2HHUwiqM9dRBILB5ze4BFE=;
-	b=a7iLuK8t5fwj7P0507Qch5yrQz6Ar/56/n5NXosmk9+53xbNTBq4G4ewjhYIJDRFzjGP
-	 qkUMUYO1nOVqZrbeD2e8tnM6OLRiXCeu7W3eKZfruVCEk/5pXjM+1YxQeszDgtY4M3ugt
-	 IR0XcT7oz9LKbKGcLebt9LxV3Cje2JiAzIcn9Vw4X4oSHIHPpWl5gjb9FUXXsGvYreB9s
-	 C6IMx0/B86AN+cTN9/oQ+MsaMkdXkzgSLn6stxQnJtt+WIkwQe0I+kVpTwWoFhF9oA3ak
-	 G13T6JZhxgy90EB9Qxpht/cOA0Vxoe5WsPNHEYu0XO48YLEXwenchg002qQcjJL8XNA==
+	bh=wBnV5keoNB8uHTAspcgSkACVaRXInuc3vhctzU1NGRg=;
+	b=rMxy1hVFuFi0UMssRBOfgdTPhVsj8W2sF8za3Njir/Sq2xjiOL1Wg0kC1Sv0fJG1cRfl
+	 jOWRlNZf0K4JivUEUQDrRonIxeQN3dkkFf8IiMtQ/bLQustO+jTGBPMzfZ91VkC8usHUZ
+	 AxUFHU6tgLDCrF5Ld3/F98YMvSgMKVEm2zrfciGqDi20lBcpZmFWMM2IHxQNhrW94zgw/
+	 uVUn9U43kYgQf2qfUKtwSMaEBDDmpimqSVd2DwJip1w406R/DrlhRWZYldmmaq6jtG85A
+	 kDvrQzdQ87k+QlCdaxjfdBpnmWpcoRFcikoPJl8ICoGbd9qqqe+idR9BK1/OSW//xUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iKI+KDHN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pdi1H5xt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7335606A31C;
-	Wed, 18 Nov 2026 18:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB90606A320;
+	Wed, 18 Nov 2026 18:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iKI+KDHN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06D381F000C6;
-	Wed, 18 Nov 2026 18:00:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pdi1H5xt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88B61F000C4;
+	Wed, 18 Nov 2026 18:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024836;
-	bh=lBNZoj/Nb4585t5pqodZu2HHUwiqM9dRBILB5ze4BFE=;
+	s=korg; t=1795024839;
+	bh=wBnV5keoNB8uHTAspcgSkACVaRXInuc3vhctzU1NGRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iKI+KDHNhYLcWLkDzObncwe0Hy9cghzwWfT8bdSQ/UBGRYftCK7usabKfU7cF0h2J
-	 whk2Idwn78wEanSgXJmEAdCLwW7ulCPeMkAyUPEHjeLvNAhW8wj9RfjxOXxOB8NKs7
-	 3+/Sbb4rRmQ+Y8wjOmNR37RUsF8snNX3lGIF/r1o=
+	b=pdi1H5xtxcwMOGwVGeub7O4SonsLyliMkP9DZI5PgTaQuBdjoHHHO/SQ4IgYF/tkl
+	 kWYCEnbyu5F7vOSmHBsVCb2CUecbbZLcj6Udor5c4JgtxHyS4pLew5oDaR+l+dAQNr
+	 b9uvKkeHKM49u40JLkjCP9qbtpRCqsj/avtqQt2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Malte Wechter <maltewechter@gmail.com>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0864/2151] media: iris: cancel sys error work on driver removal
-Date: Wed, 18 Nov 2026 15:43:19 +0100
-Message-ID: <20261118150153.691578727@linuxfoundation.org>
+Subject: [PATCH 6.18 0865/2151] rnull: configfs: add power to configfs features
+Date: Wed, 18 Nov 2026 15:43:20 +0100
+Message-ID: <20261118150153.724051116@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,41 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Malte Wechter <maltewechter@gmail.com>
 
-[ Upstream commit 4524809316482b64ff092afb7e7b0525ce137c75 ]
+[ Upstream commit 0cd698e89375d0dfc257f9ae978420aa7fe5359d ]
 
-Cancel sys_error_handler before tearing down the driver.
+features displayed by configfs for rnull was inconsistent with the
+actual features available. This correctly exposes `power` as a feature,
+which is also consistent with the C null_blk driver.
 
-The delayed work may still be pending when iris_remove()
-runs. Since iris_core is allocated with devm_kzalloc(),
-allowing the work to execute after driver removal could
-result in accessing freed memory.
+Fixes: d969d504bc13 ("rnull: enable configuration via `configfs`")
 
-Fixes: fb583a214337 ("media: iris: introduce host firmware interface with necessary hooks")
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Reviewed-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-[bod: Fixed patch title]
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Malte Wechter <maltewechter@gmail.com>
+Link: https://msgid.link/20260924-upstream-v7-3-rc3-v2-1-ca56ae7a73e9@gmail.com
+Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
+Link: https://patch.msgid.link/20260929-rust-block-for-v7-4-rc1-b4-v1-8-642a4c1aebd7@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/iris/iris_probe.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/block/rnull/configfs.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
-index b6251493bd9cc..e9f30093afa2d 100644
---- a/drivers/media/platform/qcom/iris/iris_probe.c
-+++ b/drivers/media/platform/qcom/iris/iris_probe.c
-@@ -254,6 +254,8 @@ static void iris_remove(struct platform_device *pdev)
- 	if (!core)
- 		return;
+diff --git a/drivers/block/rnull/configfs.rs b/drivers/block/rnull/configfs.rs
+index 8498e9bae6fd1..5c08edc7f2840 100644
+--- a/drivers/block/rnull/configfs.rs
++++ b/drivers/block/rnull/configfs.rs
+@@ -36,7 +36,7 @@ impl AttributeOperations<0> for Config {
  
-+	cancel_delayed_work_sync(&core->sys_error_handler);
-+
- 	iris_core_deinit(core);
- 
- 	video_unregister_device(core->vdev_dec);
+     fn show(_this: &Config, page: &mut [u8; PAGE_SIZE]) -> Result<usize> {
+         let mut writer = kernel::str::Formatter::new(page);
+-        writer.write_str("blocksize,size,rotational,irqmode\n")?;
++        writer.write_str("blocksize,size,rotational,irqmode,power\n")?;
+         Ok(writer.bytes_written())
+     }
+ }
 -- 
 2.53.0
 
