@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018390;
-	b=LLwWQ+Tdl1gPP6e6Sn3WtjgTTOIzsB3wvdiBJ6e0POvNb48D7dTyXNzPs5btVEr3LbiE
-	 IF594w9GisTA02QHBUsfjqMiG5T4A3zL/Mx3Ympz5YB7exUTJY4s1vdX4Fd4zCBz5FrQ+
-	 cLpFb2ivr27nvjRMBgx0QcoWBohSTyBpH4UyOUwdB5i6B0dc/txaTuKFzVYSOtopKC+jA
-	 oORo58ansvi/tC5yPFz8VfQDOV1jzREV92rzj96qm7JNGuOKJztdJYi+UQmS0VEA0SZ37
-	 +YtKbZ/1auf7RrV3XTlejQXlglTszXMT9tbthaoOJ6JsW9O+UlXDzRpzv2EvUXI04dQ==
+	t=1795018393;
+	b=CC7claaJirFCVYAR4XfvjRxdc8W6WqTh65p+1z4bQfd4BIpTbXx+X/KX8jqxAsB8CjHf
+	 ifDJbR0SnmBygRchsEJIsUvpJXfe0Z0SZ6b6G1YzTYDjYFbhhup6n4un0WGBdGYix/XjC
+	 a5Gts4Scvnqg7LfDMDBJwZ2NzK1Z+T9CyDtWeXoNCLPNKKBOctS6hqDJICh1PZgLBVDtg
+	 F+f96QXIqWq61en60ejz755SDl288b/aHNJcZxOTMw0GtmazL8ZOHMDUIjsU3fpDx/TU4
+	 n4ncmcQtlZmEZZ/mzGxCpRL7QJ6GjFf5YxwfYVYAibTxARK05fbCxmXTUWamVAxURXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018390;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018393;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EoJA23CXPFsnrwb7TEJPc3mMLQTANlDRCJ354oeu3nQ=;
-	b=EHY5sUTK4idJgvGJJbbfWFxhdeTQmnotj08+zhpA5MWHOYSZrLNsjbwnMIzDxrEgrYki
-	 GukT3m9B0qZDOWDC62IbE+J/v6m8VuUTiKA2MKGdGCoQ3ibCRdFYU1WPJ/vGcL0xp0tgS
-	 HrhBbmra5BR6T9yTSH86wqzhTGn1hpnq/jwndynTC6E/SgNemfTp0mWlpOT9aUe3zsZur
-	 EoaBlPX4PIIOrJ+BZPm0EQ+A9mBhTuoAIEbUzgqJrABdfCTr9DCm0FObU7uMcwzGFJtGH
-	 8D3F/uB5HDgZLORYNPN5Xjn0GQ/LNELFtQZq36wYKdjkXoa0okDzMfvv/EnQepWSdFA==
+	bh=qTBqNFsBICW7hp4mpg1P55dAcWvV7k91Ya5KrDFuskA=;
+	b=fRTdN3/ELb67GYiNBZFb6v3sDQiiA2gALiTW3ZPLAfBX3Kme4qgqqLMjRIkH6JYSeatZ
+	 IlKAc8pt0xMJFS03jt0HAWisji8S7o9RLfpHm35cKMMfRDtgUS/2zwDpoV0igrTGGAKya
+	 ND2VPWe8Ki0/qozsgHruOipflrdFEAxtJnLKgrSLM03CvVTViSrUYZYibD7pCEFqsWW3J
+	 MUP2BpmSPkt/RLd3+OJLjS8LbDONhTVCRHuzOOUI+p33qahLq7FqMK6ZLUktp7Pn+DHl4
+	 J4syfMsXSs3pOBfcHZmtKsmaGAUj+XMc6/fN10ygTyDy31sX0Gvqf4tZ7qa0VB02v7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ptvSY+in;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xp4KnqCT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE4D606A325;
-	Wed, 18 Nov 2026 16:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D0A606A331;
+	Wed, 18 Nov 2026 16:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ptvSY+in
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 233CC1F000C4;
-	Wed, 18 Nov 2026 16:13:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xp4KnqCT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E327E1F000C4;
+	Wed, 18 Nov 2026 16:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018390;
-	bh=EoJA23CXPFsnrwb7TEJPc3mMLQTANlDRCJ354oeu3nQ=;
+	s=korg; t=1795018393;
+	bh=qTBqNFsBICW7hp4mpg1P55dAcWvV7k91Ya5KrDFuskA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ptvSY+inAMjGNFiFZijLbH+2OraVDJL0coBSuBbrS9/wfG56WN0S0oMtY0+sVZNOJ
-	 UFcqliOflM79pyoM9yH+qkn9/CoAwbP/+F0C1WUOdclGv3Yb8SuRYU+tOfYXh5O99t
-	 soyCx2E6NywjIaQ3qd54u1hKNFkfQghfWyIAx+lU=
+	b=xp4KnqCT71oBYBmADxYanPkjWknDWkCpLh9S9qsjH0kbbvW4na/4CtQhKLUR+Y7Jc
+	 aGTN3FZU14rgyfRHbuxWurMus6aFEcq+A1AuEIdbowrSYTRPGkZkOsRLT0uR/z+pOY
+	 y13w36ddFOU1HNpfJea9cJjdLnO9HVP4+mIViJbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1173/2651] iommu/arm-smmu-v3: Ensure L2 tables are visible before L1 ptrs
-Date: Wed, 18 Nov 2026 15:40:13 +0100
-Message-ID: <20261118150330.241565562@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Igor Paunovic <royalnet026@gmail.com>
+Subject: [PATCH 7.3 1217/2651] phy: rockchip: usbdp: Only enable USB3 when not in high-speed mode
+Date: Wed, 18 Nov 2026 15:40:57 +0100
+Message-ID: <20261118150331.816336459@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,63 +71,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mostafa Saleh <smostafa@google.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 84366fb547ed987c4857311da0e5127d95bf97e6 ]
+[ Upstream commit fbbf6c85b08008bf68ef49931175edeaa36ba82f ]
 
-Commit 6fabce53f6b9 ("iommu/arm-smmu-v3: Add a missing dma_wmb() for hitless STE update")
-adds a dma_wmb() to arm_smmu_write_entry() to make sure stream tables
-and context descriptors are observed first.
+Ensure that USB3 mode is not accidently enabled during PHY re-init
+for systems that are configured as high-speed only via DT.
 
-However, STE L1 table descriptors are configured directly
-via WRITE_ONCE(), where before that they were zeroed with memset()
-inside dma_direct_alloc() then written to abort in via memset() also
-in arm_smmu_init_initial_stes() without a barrier in both cases which
-means that the SMMUv3 can observe the allocated table before the
-written descriptors causing it to fetch random data.
-
-Similarly in arm_smmu_write_cd_l1_desc() where the L1 CD is written
-after dma_alloc_coherent() with no barriers.
-
-Add dma_wmb() in both cases.
-
-Fixes: 48ec83bcbcf5 ("iommu/arm-smmu: Add initial driver support for ARM SMMUv3 devices")
-Reported-by: Sashiko <>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Mostafa Saleh <smostafa@google.com>
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 2f70bbddeb45 ("phy: rockchip: add usbdp combo phy driver")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/message/20260626212424.C215E1F000E9%40smtp.kernel.org
+Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-part2-v15-11-8d507cb1174f@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/phy/rockchip/phy-rockchip-usbdp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index b510dd47f2315..c6176394fc890 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -1515,6 +1515,9 @@ static void arm_smmu_write_cd_l1_desc(struct arm_smmu_cdtab_l1 *dst,
- {
- 	u64 val = (l2ptr_dma & CTXDESC_L1_DESC_L2PTR_MASK) | CTXDESC_L1_DESC_V;
+diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+index 80a2ea46c650a..1d6ea291dbfed 100644
+--- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
++++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+@@ -973,7 +973,7 @@ static int rk_udphy_power_on(struct rk_udphy *udphy, u8 mode)
+ 		if (ret)
+ 			return ret;
  
-+	/* Ensure the zero-cleared L2 table is fully visible. */
-+	dma_wmb();
-+
- 	/* The HW has 64 bit atomicity with stores to the L2 CD table */
- 	WRITE_ONCE(dst->l2ptr, cpu_to_le64(val));
- }
-@@ -1804,6 +1807,9 @@ static void arm_smmu_write_strtab_l1_desc(struct arm_smmu_strtab_l1 *dst,
- 	val |= FIELD_PREP(STRTAB_L1_DESC_SPAN, STRTAB_SPLIT + 1);
- 	val |= l2ptr_dma & STRTAB_L1_DESC_L2PTR_MASK;
- 
-+	/* Ensure the new L2 table is fully visible. */
-+	dma_wmb();
-+
- 	/* The HW has 64 bit atomicity with stores to the L2 STE table */
- 	WRITE_ONCE(dst->l2ptr, cpu_to_le64(val));
- }
+-		if (udphy->mode & UDPHY_MODE_USB)
++		if (!udphy->hs && udphy->mode & UDPHY_MODE_USB)
+ 			rk_udphy_u3_port_disable(udphy, false);
+ 		udphy->phy_needs_reinit = false;
+ 	} else if (udphy->phy_needs_reinit) {
 -- 
 2.53.0
 
