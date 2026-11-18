@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032249;
-	b=hHgvStlAeVpfIxmAiCf4N28dAqd1u2lNu+pQznI5Y3dg+FQaRUm7y9EwBi6TPmSC9bFS
-	 KvWj03niKodg28W0OEHTmcdx/ZT+hIcTXu9YoARiTJMyrQZ/WnB8YK97rnS5croU6BiDL
-	 FFlNoTQQhhLtytxnrOrTgV3fDxcyaBGw/RXzkiXHAqADELi+NIvzjxdPeSO+hUYqjblS+
-	 vePhyZrnMX++r3mpMvLceBcrBCsrO9dncaVZgEBxEsmp6AgkhChgPi0kAJp9t6ixUty29
-	 YmWgHzPSGrGZUQ+afAfM2BeI0LmA2y/UkI5/8ZAl9O5lzB9/HHhkLPHbDBd0o50XTtg==
+	t=1795032252;
+	b=zpn10cKkbjq4WzxMzfJcA6654p8p9Xu7wk1KmP+M57yZicQ3Rm7X1PwSB8ODUObWXNZf
+	 8oViFNDOiEj8vHkAuOVavIt8nSfglnpXlzu0bOLsrppnYD/14+a9YRkKWJA02KJzl9va4
+	 5eoU//PwrDmo7VRtmdu2DVs2Wwrofyb4BOfheyDB6wb6DuLnlmUCwBcH3grC/aW6rtvtO
+	 J6UXAal8E5uRLHarBZFcR2Tjp/Y+igHCGH+AODdTr5FAmngAZWnw9a5SEPPlYU0k0EXft
+	 QQgbgdJY8IOeLA4pgIlzs70Pb6nlR74Rh+OasREu9LCaJ4L3DTHR3dwQsIH0Fa2+tvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032249;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032252;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U8exOlNTn0pEeZCCXVfPqr+I5rBW4Hz8/UNq0Yg3IxM=;
-	b=ziSmnVh043irSOqnUV/oXgeVUtjq9GOFfJVJFLIp7Zv/Jj6cbrqB837Koy9+aMDHx5oJ
-	 aroJrmo25v+2XfnUIzqpORO6iH93oVAsorkeIwR0BXFer4PoMZze7S3cVoTbm3afOrZYR
-	 oi7RDYlQGrGkjUL9VXqw4ubOXBGGq3/Z5DouJeGdUZMfkpHT8+PlvBVrv6/cLbdsNtiim
-	 jgRNdFC1OsvoPWlaN66d7o4uPrOxISoH9vlMXI5v8GA7ntYibxnjxeLPMN6jr7J0imLmg
-	 JG7GPsgo8iExwDb2WJbp7gcNwArirKHc9dHy0i1Gca2viwtER+C+TUnScKnhH5tmJMA==
+	bh=HGfa2NTJo+9tn0fntQThKQkIL/r8jsvRUimsalzGif8=;
+	b=jhER/ic96guRat3WYaasP4mwuSJJquEMIMA6Vepv7ZkeV/2fxH0WLWzpIfsVWBa34Yq/
+	 OMxq5RV6w3ygcm3Q8aZulJnSBgHIoQ/BUYRtVDE2NxBbbqCZfak1akNMYDptM1vbknuIv
+	 Z2P7aMDg6B3QjIMP9cC1zNQBmkII4LHhsxnv0XcnTUy+sCiz0GSKLwMkiXq4SfwT/fo0G
+	 SVuxHpBs5IuGyhDGerdB6ooTGVub3F82r28f/ZTmIi8NTlcTtDGxm5o9xqatfA8wHCSxL
+	 fqCgIfqy8jBqGEIRUKvivwvdooMiCbwlK4w4otSpW1IUPkkY1R6lv9ZkYl77brO627Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fp8AV+Ov;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YK5eI7h7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6F2606A320;
-	Wed, 18 Nov 2026 20:04:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A24F606A32A;
+	Wed, 18 Nov 2026 20:04:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fp8AV+Ov
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20331F000C4;
-	Wed, 18 Nov 2026 20:04:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YK5eI7h7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B9491F000C4;
+	Wed, 18 Nov 2026 20:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032249;
-	bh=U8exOlNTn0pEeZCCXVfPqr+I5rBW4Hz8/UNq0Yg3IxM=;
+	s=korg; t=1795032252;
+	bh=HGfa2NTJo+9tn0fntQThKQkIL/r8jsvRUimsalzGif8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fp8AV+OvRmsxYWJ9LEnbOA3BNo2yV0CMAqlRNcQLu4IVZoejmBpX2rCS/e3cL4f2h
-	 KEJ25DbNXziLzwc+UUjMVzORDpDI3svrfUZmjKWjtpooXD65HMspWW4Lo/U50mwm+Y
-	 eKGF751ODJtwjpD/4bX0zxHF4Or6LvC2sneM2FQo=
+	b=YK5eI7h72kZT2vS2KjeaKv3u4rxQXKTfo8L9V2jvy9M//QJOPtLrySzEoYk5OR7Yn
+	 GKOiPv53TK+KhrVStacBuOXShRbWoaGuFTsAEyLjzRJiUKfRkND7Ina6tmr0hb0625
+	 9kCqLCr2mkgawS2iSiavPrWlPGO8uRYTeQChxFxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tal Zussman <tz2294@columbia.edu>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1345/1756] btrfs: update the inode item when removing a free space inode
-Date: Wed, 18 Nov 2026 15:57:52 +0100
-Message-ID: <20261118150102.881764190@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	"Alan Maguire (Oracle)" <almagui@kernel.org>
+Subject: [PATCH 6.12 1346/1756] ARC: Strip libgcc debug information when generating BTF
+Date: Wed, 18 Nov 2026 15:57:53 +0100
+Message-ID: <20261118150102.920707349@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,87 +68,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tal Zussman <tz2294@columbia.edu>
+[ Upstream commit ca201ad6e92a1924138e83ff966f7a091e3bbe6e ]
 
-[ Upstream commit 4e89aff9ad6fcbec555c38169807c4023f93450f ]
+ARC links against the compiler's libgcc archive. The ARC GNU 2023.03
+toolchain ships this library with debug information, including complex
+floating-point types in integer arithmetic helpers such as __udivdi3.
+These types reach vmlinux even though the kernel does not use complex
+floating-point arithmetic.
 
-btrfs_remove_free_space_inode() adds an orphan item for the free space
-inode and clears its link count in memory, but never writes the inode
-item. The item is only removed once the delayed iput evicts the inode,
-which happens in a later transaction, from the cleaner thread or a
-throttled transaction end.
+When floating-point BTF encoding is enabled, pahole rejects those types:
 
-If we crash in between, or if evict can't reserve space for the
-truncation and leaves the orphan item for the next mount, the on-disk
-inode still has a link count of 1. btrfs_orphan_cleanup() then treats it
-as an inode with links and only deletes the orphan item. The free space
-header item is already gone at that point, so nothing ever finds the
-inode again, and its data extents are leaked.
+  Complex, interval and imaginary float types are not supported
+  Error while encoding BTF.
+  FAILED: load BTF from .tmp_vmlinux1.BTF.1: No such file or directory
 
-Write the zero link count to the inode item in the same transaction as
-the orphan item, so the orphan cleanup evicts the inode instead. Account
-for the extra tree root item update when removing a block group.
+KernelCI's upgrade to pahole 1.31 exposed this long-standing problem as
+failed ARC builds. As of 1.32, pahole still rejects these types, and
+older versions will stay in use, so the kernel build has to keep them
+out of vmlinux. Commit f122668ddcce ("ARC: Add eBPF JIT support")
+documented the same failure along with a workaround of disabling
+floating-point BTF encoding, but that also discards supported
+floating-point types from kernel BTF.
 
-Fixes: 455757c322cc ("Btrfs: delay iput when deleting a block group")
-Assisted-by: LLM
-Signed-off-by: Tal Zussman <tz2294@columbia.edu>
-Signed-off-by: David Sterba <dsterba@suse.com>
+For CONFIG_DEBUG_INFO_BTF, generate a debug-stripped copy of the selected
+libgcc archive in the output tree and link that copy. Preserve the archive
+structure so that only needed helpers are linked, and use the normal
+Kbuild objcopy rule to track input and command changes. The trade-off is
+that vmlinux in BTF-enabled builds no longer carries DWARF for the libgcc
+helpers. Debug information for kernel code, the installed toolchain and
+non-BTF builds stay unchanged.
+
+Reproduced and tested with ARC GCC 12.2.1 and pahole 1.31 and 1.32 using
+an ARCv2 tinyconfig with BPF_SYSCALL and DWARF4/BTF enabled. Before and
+after vmlinux.o files are identical after stripping debug information.
+
+Fixes: db16c1fe92d7 ("bpf: Generate BTF_KIND_FLOAT when linking vmlinux")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Acked-by: Alan Maguire (Oracle) <almagui@kernel.org>
+Link: https://github.com/kernelci/kernelci-core/commit/e71b8c9f42253180596e734c18965a5aad80c8c5
+Link: https://patch.msgid.link/20261015154044.4058618-1-sashal@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-group.c      |  6 ++++--
- fs/btrfs/free-space-cache.c | 10 ++++++++++
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ arch/arc/Makefile     | 9 ++++++++-
+ arch/arc/lib/Makefile | 8 ++++++++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index a01c4a5b95db7..20df0965316df 100644
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -1326,12 +1326,14 @@ struct btrfs_trans_handle *btrfs_start_trans_remove_block_group(
- 	ASSERT(map->start == chunk_offset);
+diff --git a/arch/arc/Makefile b/arch/arc/Makefile
+index fb98478ed1ab0..aa75d96e82b80 100644
+--- a/arch/arc/Makefile
++++ b/arch/arc/Makefile
+@@ -90,7 +90,14 @@ core-$(CONFIG_ARC_PLAT_TB10X)	+= arch/arc/plat-tb10x/
+ core-$(CONFIG_ARC_PLAT_AXS10X)	+= arch/arc/plat-axs10x/
+ core-$(CONFIG_ARC_SOC_HSDK)	+= arch/arc/plat-hsdk/
  
- 	/*
--	 * We need to reserve 3 + N units from the metadata space info in order
-+	 * We need to reserve 4 + N units from the metadata space info in order
- 	 * to remove a block group (done at btrfs_remove_chunk() and at
- 	 * btrfs_remove_block_group()), which are used for:
- 	 *
- 	 * 1 unit for adding the free space inode's orphan (located in the tree
- 	 * of tree roots).
-+	 * 1 unit for updating the free space inode's item (located in the tree
-+	 * of tree roots).
- 	 * 1 unit for deleting the block group item (located in the extent
- 	 * tree).
- 	 * 1 unit for deleting the free space item (located in tree of tree
-@@ -1344,7 +1346,7 @@ struct btrfs_trans_handle *btrfs_start_trans_remove_block_group(
- 	 * more device items and remove one chunk item), but this is done at
- 	 * btrfs_remove_chunk() through a call to check_system_chunk().
- 	 */
--	num_items = 3 + map->num_stripes;
-+	num_items = 4 + map->num_stripes;
- 	btrfs_free_chunk_map(map);
+-libs-y		+= arch/arc/lib/ $(LIBGCC)
++libs-y		+= arch/arc/lib/
++
++ifdef CONFIG_DEBUG_INFO_BTF
++export LIBGCC := $(LIBGCC)
++libs-y		+= arch/arc/lib/libgcc.a
++else
++libs-y		+= $(LIBGCC)
++endif
  
- 	return btrfs_start_transaction_fallback_global_rsv(root, num_items);
-diff --git a/fs/btrfs/free-space-cache.c b/fs/btrfs/free-space-cache.c
-index effc8895516a5..ca16a8ccab545 100644
---- a/fs/btrfs/free-space-cache.c
-+++ b/fs/btrfs/free-space-cache.c
-@@ -266,6 +266,16 @@ int btrfs_remove_free_space_inode(struct btrfs_trans_handle *trans,
- 		goto out;
- 	}
- 	clear_nlink(inode);
-+	/*
-+	 * Persist the zero link count, so that if the delayed iput below
-+	 * doesn't get to evict the inode, the orphan cleanup on the next mount
-+	 * evicts it instead of only deleting the orphan item.
-+	 */
-+	ret = btrfs_update_inode(trans, BTRFS_I(inode));
-+	if (ret) {
-+		btrfs_add_delayed_iput(BTRFS_I(inode));
-+		return ret;
-+	}
- 	/* One for the block groups ref */
- 	spin_lock(&block_group->lock);
- 	if (test_and_clear_bit(BLOCK_GROUP_FLAG_IREF, &block_group->runtime_flags)) {
+ boot		:= arch/arc/boot
+ 
+diff --git a/arch/arc/lib/Makefile b/arch/arc/lib/Makefile
+index 30158ae69fd4a..2807ee24f27e6 100644
+--- a/arch/arc/lib/Makefile
++++ b/arch/arc/lib/Makefile
+@@ -13,3 +13,11 @@ lib-$(CONFIG_ISA_ARCV2)		+=memcpy-archs-unaligned.o
+ else
+ lib-$(CONFIG_ISA_ARCV2)		+=memcpy-archs.o
+ endif
++
++# libgcc can contain complex floating-point debug types unsupported by BTF.
++# Strip only the debug information from a local copy of the selected archive.
++always-$(CONFIG_DEBUG_INFO_BTF) += libgcc.a
++OBJCOPYFLAGS_libgcc.a := --strip-debug
++
++$(obj)/libgcc.a: $(LIBGCC) FORCE
++	$(call if_changed,objcopy)
 -- 
 2.53.0
 
