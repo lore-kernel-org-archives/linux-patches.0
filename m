@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024586;
-	b=N8kRsVv5rzWgECW/Yy/UirxscUg7kAKDBqMUTiCmUV9dNM1z1CX4IsNISzE6b+5UO/f7
-	 jkAoPR7HYvA/7qQ1yZoIr3jLIYqxfnN1szv4R+DS7qi9x+34wUhJrtwBcgSeDEiW5qJ3N
-	 rlY4GcjiFqs2W2jv8p9MRk5UUBo9SVNo9rTRxDnfHlRroD4O3qkunqqTXlnu9VpcJL/BP
-	 1mfaUqrMRXGP/XSp04HGxfJWgXXLPB2MDdc2rdIplQdoD4xVyZexNKW49R+oPkinpwm/i
-	 C8H6tdsYTe5YL3U+BV0n4SRZstElj/siwQsWEcz/i9hTedj9mCYozAs6gtLrLu0CdWg==
+	t=1795024589;
+	b=i/yHrBF71Y1RKO4702tQ3C2nsGtJ70S9+629zSuCrHWqidl+adURT9RA245po5kBWKR1
+	 OS7g8/N7zrUoZnEeSesQoEw5hj6hihJO18VifIbqp+m6kk7ic3vIuOtu3SnDCam8Hj9c6
+	 /7FbrSuI+a4A223QgdYUwvOOMbS4XckjIKDo2qzAfQMksnxMsq4h5aSVHQyA1C8sRNwes
+	 3mfYa/QKjbTLCUCBWk62SjhTyo5pqo+CSLj3kwfHTbCYXLsWa8xYvXuQITh8+/krbXkJ7
+	 z8oMDukzLo6eLGLhYOH4In3tLsTogQePm30nQkvzzBUFCqg9QnfszEiXCODBhPeiFng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024586;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024589;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MjsbPnYeIx+a3klWyhZieummBXCGp+5dAaVw26gZS6k=;
-	b=OO7SGQzYEHM2A32ycTUStSQwxJE0ozbLfS7SSgOcR7ZmZhijpFba0KD0UOjZnqyXIFOY
-	 ZcEl2vj7MccvZ7hIxH4YuZPgjUI+BQ2uYhS/mpIYvzESs88lvifPKGndXDspS5HGsoGxc
-	 9C+Pxb8+OQ5RNjkq6nMWNfRaAKGEMuZinP9t8IWdItZZnwNnABqgSUx33kktidObFhC7s
-	 Jx64oK1Sg4TcsvUHdwr/2Vi0ZUxhapoAbpAgGOr7IQbFF5JXTP8/R3z45J6TPyF1ORWKn
-	 Nd4U+IgCIYxV7qOqnfeT8C3SjQY1hBI55kuDW95gw2zdaf85sx8ce0dEB7hJyBUHm1Q==
+	bh=9ky/YX5DKM1LuPiDl8C/my62WiDkt2RLA2gyxR0KPwA=;
+	b=4sRWPFJKQVE3qaLE974h4jtchsz3Ts5Egqb5nksRWQhbTlSpDuWs09tqiiS1xjG03ICY
+	 IkdPVao4eKw05Ax0iuwkapvJC+z8zsvT/28VWJ8Zk29CK1sPgpcGhHo2vNe/5x5JUbNDU
+	 9zIuf0dLiEWZUiQXtk3xn7U+70bLtp5Nhsqxv7SSEryAiV84MgV07vu52a7US9bF9I4on
+	 Uw8PccO+2KE8mp3Fxb3w9YthjRLQHYJ1fwtBcnCpEsTAMxgnnZUibGdgiEkenTuQsw/0Z
+	 GLcw81wL6yiMHNh15y5dspxB6DvtfwmnG1GKJM12xlG3DVQmp3xtSkBl1g0edp+pO+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pYjoIsUV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=thYWmgKv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF582606A31C;
-	Wed, 18 Nov 2026 17:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A604C606A31C;
+	Wed, 18 Nov 2026 17:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pYjoIsUV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146561F000C6;
-	Wed, 18 Nov 2026 17:56:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=thYWmgKv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA921F000C4;
+	Wed, 18 Nov 2026 17:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024586;
-	bh=MjsbPnYeIx+a3klWyhZieummBXCGp+5dAaVw26gZS6k=;
+	s=korg; t=1795024589;
+	bh=9ky/YX5DKM1LuPiDl8C/my62WiDkt2RLA2gyxR0KPwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pYjoIsUV/E6RKTBqZ1D2/ekQ9SgdL4rHAgICkF/e2+RMnfn2x6aqONAgn+5ucCwmw
-	 mF0LFsDmdVFIFKnpJS68D3Ije3tSWXoShTznFQMZqgMBHwA2GbmxFnMhfyrV4kkbxr
-	 eR0f2r053x5Gz2JWQbsdlXShEeu3yFcryVtO4Kb4=
+	b=thYWmgKvBWQ5iKa/FuhS8eAW3hl3USaFbuT1qz7GkACoRd/v+cOw1NZm0yehPb3s3
+	 KdmKMcd/pj5bqf0V2p7eq+V/8Vqy5q2I2GAuVZvZbBqWPQVhsO7K4OfCqLmlqHhhah
+	 av5EUUl+143PYfk2jxxxzrcTBt2vQoZ1MfhCMkOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
+	syzbot+e08e0a15269eefa87790@syzkaller.appspotmail.com,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0776/2151] ARM: dts: gemini: Use a level-high interrupt for TVE200
-Date: Wed, 18 Nov 2026 15:41:51 +0100
-Message-ID: <20261118150150.397956233@linuxfoundation.org>
+Subject: [PATCH 6.18 0738/2151] mtd: block: prevent reclaim I/O during request processing
+Date: Wed, 18 Nov 2026 15:41:13 +0100
+Message-ID: <20261118150148.919504332@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -67,41 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit 5bf1bb010712bba28eda926ed453db3cab91381a ]
+[ Upstream commit d498b2ddda99eed28cde177b1620dbcea246a1c4 ]
 
-TVE200's interrupt is configured as rising-edge. On the D-Link DIR-685,
-this can stop interrupt delivery after the first vertical interrupt,
-causing vblank and page-flip timeouts and delaying framebuffer console
-startup.
+The blktrans request callbacks run under dev->lock and may allocate
+memory with GFP_KERNEL. For example, mtdblock_writesect() uses vmalloc()
+to allocate its eraseblock cache. Direct reclaim can then recurse into
+block I/O and deadlock on resources held by the request being processed.
+syzbot reports a circular locking dependency involving the device mutex
+and fs_reclaim.
 
-The vertical interrupt can remain pending after acknowledgment. Use
-level-high triggering so the pending condition is delivered again
-without requiring another edge.
+Commit d5ba1c8ffd0b ("mtd: don't use PF_MEMALLOC") removed PF_MEMALLOC
+from the MTD request thread. That flag had prevented direct reclaim,
+so its removal made allocations during request processing eligible for
+reclaim without excluding I/O.
 
-Fixes: d2b85241a9f5 ("ARM: dts: Add TVE200 to the Gemini SoC DTSI")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Message-ID: <20260921-gemini-tve200-fix-v1-2-8be03ac2a8f7@kernel.org>
+Wrap request processing in mtd_queue_rq() in a NOIO scope. This covers
+both the request and background callbacks, including allocations made
+by lower MTD drivers, and prevents reclaim from initiating filesystem
+or block I/O.
+
+Fixes: d5ba1c8ffd0b ("mtd: don't use PF_MEMALLOC")
+Assisted-by: Codex:gpt-6-astra
+Reported-by: syzbot+e08e0a15269eefa87790@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e08e0a15269eefa87790
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/gemini/gemini.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/mtd_blkdevs.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm/boot/dts/gemini/gemini.dtsi b/arch/arm/boot/dts/gemini/gemini.dtsi
-index befe322bd7de9..c95faa197bcf1 100644
---- a/arch/arm/boot/dts/gemini/gemini.dtsi
-+++ b/arch/arm/boot/dts/gemini/gemini.dtsi
-@@ -428,7 +428,7 @@ dma-controller@67000000 {
- 		display-controller@6a000000 {
- 			compatible = "cortina,gemini-tvc", "faraday,tve200";
- 			reg = <0x6a000000 0x1000>;
--			interrupts = <13 IRQ_TYPE_EDGE_RISING>;
-+			interrupts = <13 IRQ_TYPE_LEVEL_HIGH>;
- 			resets = <&syscon GEMINI_RESET_TVC>;
- 			clocks = <&syscon GEMINI_CLK_GATE_TVC>,
- 				 <&syscon GEMINI_CLK_TVC>;
+diff --git a/drivers/mtd/mtd_blkdevs.c b/drivers/mtd/mtd_blkdevs.c
+index 28e09d0804405..245c19cb22590 100644
+--- a/drivers/mtd/mtd_blkdevs.c
++++ b/drivers/mtd/mtd_blkdevs.c
+@@ -18,6 +18,7 @@
+ #include <linux/spinlock.h>
+ #include <linux/hdreg.h>
+ #include <linux/mutex.h>
++#include <linux/sched/mm.h>
+ #include <linux/uaccess.h>
+ 
+ #include "mtdcore.h"
+@@ -167,6 +168,7 @@ static blk_status_t mtd_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 				 const struct blk_mq_queue_data *bd)
+ {
+ 	struct mtd_blktrans_dev *dev;
++	unsigned int noio_flags;
+ 
+ 	dev = hctx->queue->queuedata;
+ 	if (!dev) {
+@@ -174,10 +176,13 @@ static blk_status_t mtd_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 		return BLK_STS_IOERR;
+ 	}
+ 
++	/* Reclaim must not recurse into I/O while processing requests. */
++	noio_flags = memalloc_noio_save();
+ 	spin_lock_irq(&dev->queue_lock);
+ 	list_add_tail(&bd->rq->queuelist, &dev->rq_list);
+ 	mtd_blktrans_work(dev);
+ 	spin_unlock_irq(&dev->queue_lock);
++	memalloc_noio_restore(noio_flags);
+ 
+ 	return BLK_STS_OK;
+ }
 -- 
 2.53.0
 
