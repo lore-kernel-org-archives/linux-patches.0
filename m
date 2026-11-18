@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059522;
-	b=zI0iGTqvawk8wzPXhAOkl0z6laDuY1G3uKdENR7YKuhY6XfYKM/ovibgATjJign4/Ht5
-	 M5t+/KJLqfNT9Yx+TRU3osdSYxV7FeCDAUtokkmKg7BaivlfIDO3PKuYa6ui25RwAgUBY
-	 oEZZdKpKI77Z98Qf560aGzfqG+Ya9DhIsGyiACXLcqw897Co3pof9QUUgzEu1AIWYjfcI
-	 Jn5Jgs1n/Og30kqjurst2lFciHLuQ2DrQW2ju6+YgU7sBQAqqOGRoG+WPDlnDD1l+JJV4
-	 7txK9aYvh/FHVkJKptAnA437g6PHGX9UQWCHmqayURd5CLxMcATXaEXL0R70c+j2xHg==
+	t=1795059525;
+	b=rcI1xJ2Bd3AtWZcAgMX4Z+1ot5B7xEexkrdufNmdkxx/j98hBpgUgLMSHbVLJQFueDRN
+	 MvFZJR1c6pt98dya++mul77WLDJf4eO6WYRNwIJmPKqbfgxKARtyhv1/CUOLHiSVSZFnJ
+	 wQMA1cw4wKT9Wa3R+Kjj5ZO3z89TVCqcK9mynt4tFdey+b4eR0kPOOV7Ku8CYLKzhdR2g
+	 xPAly6xZH2WAYMio4hmAi86od3RhnvPNnW2ZlVBa5AIYVxGnCDYKAeahivQ9CWd77G/sC
+	 M5r5BDssd1kgcXNGpfYFR4ue2jLTznWANmTRW1+sChbsPcATPA6x5ad9FM4v31XwKcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059522;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059525;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cIPvHfVFTMsoEHif4Tj/bxvu/6eS1YGGMjvhRXCq1js=;
-	b=pp5Xx4gSSnUii1e9CIPNlfItNsLaSOzhKTzVJuymS/Sd2S+Hr+UnafnsrGPHf/NjVajL
-	 3zsTiNn4NOFXQtJNdpUrL+LsmyxsBXaLqGUOoFsdl8GihwO1fYObYJHsHnqdZULA9xMEb
-	 agfsKsT4PsOpEa4gZDzmJAbwaL9NYrvJNTkwfyWwyiZRgYTRqWbu1eefATLXENp/nU2k1
-	 y5JKuxtyBgfo2M/XkcZ/3wFtukGkkfp6c34ZR1MRGZdLn11emGz7E6yJFfc+eB4gYlyK7
-	 phrWMWKrvR4Sesr/00gf82JuPRI2mMsUWSecUGHv8VgVN1NrsLYXMsSeM1YTUveDdSw==
+	bh=T9MU4Wo2za1djcjLKfRmF32UOpnG13FXgE806E+r1CU=;
+	b=Akc0aeXdf19l4DoEjDzfX+6QBz8zwq3R2Vwx8yWdmuZvIe7WTBxfjX+MahJ4Xfzis9ob
+	 4bIKUW9wMEY/lj97Xdgb/1V26XG11xVwZPBy/CHwFJo3F8dVLijnamjbLI106jXbNG+ok
+	 KUCkaR/RZBV99kSPYao1YK/X41CaCeL5Iek5W0cbk3tTnaINHv+H0ILIctW3Ltc+VdxYb
+	 +bG489Npx+shyeB+2kM836PbIJBTxhxeqPtvHTVtGkLe/zcUXkvSQDAqX/IuFM4SzlZAk
+	 YBJzCJbBA/GOibWdHIZ71tfvOgsu/BYkqgUu3eJ0eFKm2PDvYvE46rD8Pu4xo80ACEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dZi3x8Aw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C5byeB1j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D5D606A320;
-	Thu, 19 Nov 2026 03:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A4D606A330;
+	Thu, 19 Nov 2026 03:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dZi3x8Aw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033F51F000C4;
-	Thu, 19 Nov 2026 03:38:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C5byeB1j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC971F000C5;
+	Thu, 19 Nov 2026 03:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059522;
-	bh=cIPvHfVFTMsoEHif4Tj/bxvu/6eS1YGGMjvhRXCq1js=;
+	s=korg; t=1795059525;
+	bh=T9MU4Wo2za1djcjLKfRmF32UOpnG13FXgE806E+r1CU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dZi3x8AwPhe3PeeQIj/cawR2vRx6sLz4yIg8qPap4IoaQh2kvkf8SbTK/CVokKjQw
-	 uc2tk57OZwyBcnxFic4o1ODwl1EXGfrYBS7AM3X3MPWGXwOBFMh+aLj1dlr+z+OryR
-	 mp/Vo//mzqYEdvYQff6GlMVfzCnXF4zqiSAjXRV0=
+	b=C5byeB1jhD+BdtY9kGRqYX0o6x5MLbEWvihDaHt4EnxLcaI+1EVAJywpYeMfdCIZw
+	 NwRAEDU8m70PQEY7fe/VriuMpYk/bzFi/R92NDOcjGS1nl9ii5wrAF3mw4shOcrPNv
+	 luQV9v8C0jA++y1baVk1Fkpdxt0bieHTjAdR01sY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0871/1848] media: vpif_capture: Fix i2c adapter reference leak in vpif_probe()
-Date: Wed, 18 Nov 2026 15:48:29 +0100
-Message-ID: <20261118145952.905828465@linuxfoundation.org>
+Subject: [PATCH 5.10 0872/1848] dm-writecache: report I/O error if flush failed
+Date: Wed, 18 Nov 2026 15:48:30 +0100
+Message-ID: <20261118145952.942626991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,56 +67,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit b00fbdad64d4ea7d594bc67988c1722fe5b3be50 ]
+[ Upstream commit 78a6afc2999d26e5a30a56db77db34c22b88f5d5 ]
 
-vpif_probe() takes a reference to the i2c adapter with
-i2c_get_adapter() and passes it to v4l2_i2c_new_subdev_board(),
-which does not consume it, but the reference is never released, so
-it is leaked both when the probe succeeds and when it fails after
-the adapter has been acquired.
+There was a bug that if writecache_flush fails due to I/O error, the
+error is not reported in the FUA bio. This commit fixes it.
 
-Release the reference with i2c_put_adapter() on the success path
-and in the probe_subdev_out cleanup, and initialise i2c_adap so
-that the cleanup is a no-op when the adapter was never acquired.
-
-Fixes: 6ffefff5a9e7 ("V4L/DVB (12906c): V4L : vpif capture driver for DM6467")
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: opencode:big-pickle
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ sashal: adjusted vpif_probe() context to account for the absent v4l2_async_nf_cleanup() call ]
+Fixes: 48debafe4f2f ("dm: add writecache target")
+[ sashal: adapted the change to writecache_map() because writecache_map_write() has not been split out ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/davinci/vpif_capture.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/md/dm-writecache.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/davinci/vpif_capture.c b/drivers/media/platform/davinci/vpif_capture.c
-index f90de09c14853..e81c894dc2aed 100644
---- a/drivers/media/platform/davinci/vpif_capture.c
-+++ b/drivers/media/platform/davinci/vpif_capture.c
-@@ -1617,7 +1617,7 @@ vpif_capture_get_pdata(struct platform_device *pdev)
- static int vpif_probe(struct platform_device *pdev)
- {
- 	struct vpif_subdev_info *subdevdata;
--	struct i2c_adapter *i2c_adap;
-+	struct i2c_adapter *i2c_adap = NULL;
- 	struct resource *res;
- 	int subdev_count;
- 	int res_idx = 0;
-@@ -1701,9 +1701,12 @@ static int vpif_probe(struct platform_device *pdev)
- 		}
+diff --git a/drivers/md/dm-writecache.c b/drivers/md/dm-writecache.c
+index 1b7d89794c6a3..f8b671299c854 100644
+--- a/drivers/md/dm-writecache.c
++++ b/drivers/md/dm-writecache.c
+@@ -1454,10 +1454,13 @@ static int writecache_map(struct dm_target *ti, struct bio *bio)
+ 		} while (bio->bi_iter.bi_size);
+ 
+ 		if (unlikely(bio->bi_opf & REQ_FUA ||
+-			     wc->uncommitted_blocks >= wc->autocommit_blocks))
++			     wc->uncommitted_blocks >= wc->autocommit_blocks)) {
+ 			writecache_flush(wc);
+-		else
++			if (writecache_has_error(wc))
++				bio->bi_status = BLK_STS_IOERR;
++		} else {
+ 			writecache_schedule_autocommit(wc);
++		}
+ 		goto unlock_submit;
  	}
  
-+	i2c_put_adapter(i2c_adap);
-+
- 	return 0;
- 
- probe_subdev_out:
-+	i2c_put_adapter(i2c_adap);
- 	/* free sub devices memory */
- 	kfree(vpif_obj.sd);
- vpif_unregister:
 -- 
 2.53.0
 
