@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042641;
-	b=KinPQktKle5qOLbZ55iy/sLbOsa98m45e77HciLx4zLlJmw1JiPk66Nxc8g2W2uiZ54a
-	 /3D3qIorPN4HiT2qG/5Qxn/qx34OfCMeTnbqgARenqnT05JUblY1tzWDZorlx9rLj2iyB
-	 IRkfu4tghF+84hxzGtZj6V+q93H4jwBgq1pvEHPWmbngZPCINzrJXYQtxLgojrgjXc3qO
-	 6Uvr8F182ONWXr/uCDb8EVuxJOBWvrxC5c2nkHQl7K9Wm8ixNDHjtFGbiRydbYJ6J0uTO
-	 f8gy24XR+j6HypgSAfuhIvKR9ViaPREvRmsdGEuSy1c4SUdseEBZ+XFsJOEnVSFPWBQ==
+	t=1795042643;
+	b=Z+DCb7Sb3TSHd8K019H836+sKaGlcLS72UB5z5vzm9+I47BKSb6srYDMsammgAFY6sZk
+	 4V1ow6G4n/qCsCeh2AhEiAWwkqDlTC77KgRR1ThV+qeOP1OvG+PYLgxP7o56VScE8wYzx
+	 r+zExgmxY15VIRFu0l+zQta/o8DNFspzrxFdW13G1VkmMRNVRDXnS6hKftSGDRFvipwgP
+	 YEKgvxZppJ+LWG5phY8fUPGQgfDmNg/ejHFexTIdKoQB9at7btlBKWGIWh3CfanqVAuAq
+	 KnZEQpHJcmUrLkunjBGvvN7LTxwYwe94fA3rtxorulQq1ldFWqfilchYmZzH69gCglg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042641;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042643;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M2WqFEUMV8ZfUdLGTBOnajYLkMjWJIwSQmcrGMxXp5o=;
-	b=ry2R05wxZG9o6M/Ip3+Q2qGFy/HTDLlyB7+qKeq8TfH0xUQFl9Eb3zZ6mUI5gdxOYm+o
-	 hEexfYHIpgkuRBsKonsbcTFpVHhFHLkX2yddPS4A7YqaAP0nQTGtJwI81IhPttJVtmNlZ
-	 adFsOgEx9i0V5FXJBNjE4hLMYQiCMDINEP7h4vjva1J18zpXBPG2p2w3es73wbufdppmG
-	 7cB6z19KN9yT3QhPoetG/0hf0dji0Mv86mpdqnQMItw6aEZzNon0iNe5rwrtYTxXyGC6p
-	 KDobE47jQOTZRGVqRq7E83Ry27G8d+5HMqsIBa6YiDe/ylP1COWnfArj7xw87gzOzbA==
+	bh=KLfOy3ZiacO/29KQ2erT9dEF+dbSYtyOlJGmKWaDwjU=;
+	b=1W3byQAWb3V+txGCYjTeVgZV55ca2TYBL7VrmuUj4R/0WjAeKEiyv6Xaz9AEPlPyMzUU
+	 VtiOE/Q2Y3BhM4S7WuJDXO7ZaazPpZD2q55RmWDCgFez6eGk6Ibh5aIU5ChbhO12tA3fW
+	 PugAaeyvJy/AkvSAhZiYE2gWWWu0Drol+lx0sYXRXyrRNrqNE/S5NunODznXa298f+U6H
+	 croj9DLnFqUUhsyqMcEH7GjkOSLi9oE+d6XjTEXbgUxwwN0RbjkJ48zvz4/d48OWHipRZ
+	 qzhgaV5rg/3xCHudeLZXoOggnYdbSVSYXUIUBXolROD104G4xH7A370Pj3N7dZvMZow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xAqMZVdu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kfY4OFYz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E22606A31C;
-	Wed, 18 Nov 2026 22:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B25606A320;
+	Wed, 18 Nov 2026 22:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xAqMZVdu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421271F000C4;
-	Wed, 18 Nov 2026 22:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kfY4OFYz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F09D1F000C4;
+	Wed, 18 Nov 2026 22:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042640;
-	bh=M2WqFEUMV8ZfUdLGTBOnajYLkMjWJIwSQmcrGMxXp5o=;
+	s=korg; t=1795042643;
+	bh=KLfOy3ZiacO/29KQ2erT9dEF+dbSYtyOlJGmKWaDwjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xAqMZVduRibWpDm50+6U94G8X0QA5UzJxLMIcrOGupc8jkcakRPbsUfQjv9C4/SIL
-	 sIRIKQrryRwGwpKq2H4YNZvlxd2FLe6mrCUG0YbUX5KxRUNwaOIXO88sLTxr4j6rVR
-	 mV0kV3RfVJwM3V+hFVQ98wszJZZURnV1Tl3z/1lk=
+	b=kfY4OFYzdmARiEVlbuTfQ2Znj2GYBsYKVPY7knHiCAi7cW95FjlkNra3xc3/OkZVN
+	 pPBNJY1ZKR1dgUS3tT59glZM7x26qB7YGOzRsWWDYoIdXcszyKzSEEQBFAwFAn89Ie
+	 IMCa25ENkQyC23rgGdRUbSsZKhE98f1uLhWj9l5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkui Xiao <xiaolinkui@kylinos.cn>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3241/3318] net: bridge: netlink: do not clear the vlan info dump error
-Date: Wed, 18 Nov 2026 16:04:23 +0100
-Message-ID: <20261118150456.905873874@linuxfoundation.org>
+Subject: [PATCH 6.6 3203/3318] net: dsa: mv88e6xxx: fix 6351 family statistics snapshot
+Date: Wed, 18 Nov 2026 16:03:45 +0100
+Message-ID: <20261118150455.846059469@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,53 +69,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkui Xiao <xiaolinkui@kylinos.cn>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit fcc00b15cb21a6de76826e5012b2c758505f5e65 ]
+[ Upstream commit 9663edfa71e8807890203578dab6db60c6b548c4 ]
 
-br_fill_ifinfo() assigns the result of br_fill_vlan_tunnel_info() over
-the result of br_fill_ifvlaninfo() or br_fill_ifvlaninfo_compressed()
-instead of only running the second helper when the first one succeeded.
+The 88E6171, 88E6175, 88E6350 and 88E6351 take the port number in the
+low bits of the statistics operation register. The 6320 snapshot helper
+instead encodes the port as (port + 1) << 5. On an EA4500 with an
+88E6171, this causes ethtool -S to return physical port 0's MIB counters
+for every user port. Traffic on other ports does not update their
+reported hardware counters.
 
-When the vlan information no longer fits in the skb but the port has no
-vlan mapped to a tunnel dst, br_fill_vlan_tunnel_info() walks the vlan
-list and returns 0 without touching the skb. The -EMSGSIZE is lost,
-br_fill_ifinfo() completes a message whose IFLA_AF_SPEC is truncated,
-and the dump carries on to the next interface instead of stopping, so
-userspace silently sees an incomplete vlan list.
+Before the snapshot operation was moved into the chip operations, only
+the 6320 and 6352 families used the shifted encoding. The refactoring
+incorrectly assigned that encoding to all four 6351 family chips.
 
-Only fill the tunnel information when the vlan information was filled
-successfully.
+Use the unshifted snapshot helper for the entire 6351 family. This
+matches the Marvell DSDT statsCapture() implementation, which uses the
+raw port number for chips outside DEV_RMON_PORT_BITS, including these
+four chips.
 
-This was flagged as a pre-existing issue in the Sashiko review of the
-net-next series, which noted that the VLAN fill result is overwritten
-before it is tested (see the Link tag below). Not triggered or tested.
+The original 88E6171 change was tested on an EA4500: pings through
+different switch ports updated only the corresponding port's hardware
+counters. The other three chips have not been hardware tested.
 
-Fixes: efa5356b0d97 ("bridge: per vlan dst_metadata netlink support")
-Link: https://lore.kernel.org/bridge/ed1de95e-e112-4076-93f0-6f7668e657ad@blackwall.org/T/#u#5
-Signed-off-by: Linkui Xiao <xiaolinkui@kylinos.cn>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20261027085200.1501599-1-xiaolinkui@126.com
+Fixes: a605a0fe7115 ("net: dsa: mv88e6xxx: Abstract stats_snapshot into ops structure")
+Link: https://lore.kernel.org/all/404d5f2d-24a5-4edc-897b-b1b3c54a20e1@lunn.ch/
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20261026164733.737299-2-f.fainelli@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/bridge/br_netlink.c b/net/bridge/br_netlink.c
-index f2e2ca01fab78..45cfb68a0e54f 100644
---- a/net/bridge/br_netlink.c
-+++ b/net/bridge/br_netlink.c
-@@ -534,7 +534,7 @@ static int br_fill_ifinfo(struct sk_buff *skb,
- 		else
- 			err = br_fill_ifvlaninfo(skb, vg);
- 
--		if (port && test_bit(BR_VLAN_TUNNEL_BIT, &port->flags))
-+		if (!err && port && test_bit(BR_VLAN_TUNNEL_BIT, &port->flags))
- 			err = br_fill_vlan_tunnel_info(skb, vg);
- 		rcu_read_unlock();
- 		if (err)
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 93310cad29798..3ee5c796faaf7 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -4474,7 +4474,7 @@ static const struct mv88e6xxx_ops mv88e6171_ops = {
+ 	.port_disable_pri_override = mv88e6xxx_port_disable_pri_override,
+ 	.port_get_cmode = mv88e6352_port_get_cmode,
+ 	.port_setup_message_port = mv88e6xxx_setup_message_port,
+-	.stats_snapshot = mv88e6320_g1_stats_snapshot,
++	.stats_snapshot = mv88e6xxx_g1_stats_snapshot,
+ 	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
+ 	.stats_get_sset_count = mv88e6095_stats_get_sset_count,
+ 	.stats_get_strings = mv88e6095_stats_get_strings,
+@@ -4576,7 +4576,7 @@ static const struct mv88e6xxx_ops mv88e6175_ops = {
+ 	.port_disable_pri_override = mv88e6xxx_port_disable_pri_override,
+ 	.port_get_cmode = mv88e6352_port_get_cmode,
+ 	.port_setup_message_port = mv88e6xxx_setup_message_port,
+-	.stats_snapshot = mv88e6320_g1_stats_snapshot,
++	.stats_snapshot = mv88e6xxx_g1_stats_snapshot,
+ 	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
+ 	.stats_get_sset_count = mv88e6095_stats_get_sset_count,
+ 	.stats_get_strings = mv88e6095_stats_get_strings,
+@@ -5236,7 +5236,7 @@ static const struct mv88e6xxx_ops mv88e6350_ops = {
+ 	.port_disable_pri_override = mv88e6xxx_port_disable_pri_override,
+ 	.port_get_cmode = mv88e6352_port_get_cmode,
+ 	.port_setup_message_port = mv88e6xxx_setup_message_port,
+-	.stats_snapshot = mv88e6320_g1_stats_snapshot,
++	.stats_snapshot = mv88e6xxx_g1_stats_snapshot,
+ 	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
+ 	.stats_get_sset_count = mv88e6095_stats_get_sset_count,
+ 	.stats_get_strings = mv88e6095_stats_get_strings,
+@@ -5282,7 +5282,7 @@ static const struct mv88e6xxx_ops mv88e6351_ops = {
+ 	.port_disable_pri_override = mv88e6xxx_port_disable_pri_override,
+ 	.port_get_cmode = mv88e6352_port_get_cmode,
+ 	.port_setup_message_port = mv88e6xxx_setup_message_port,
+-	.stats_snapshot = mv88e6320_g1_stats_snapshot,
++	.stats_snapshot = mv88e6xxx_g1_stats_snapshot,
+ 	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
+ 	.stats_get_sset_count = mv88e6095_stats_get_sset_count,
+ 	.stats_get_strings = mv88e6095_stats_get_strings,
 -- 
 2.53.0
 
