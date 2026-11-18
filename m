@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059505;
-	b=MrPTYBtAVUEZfUo2q/AwypPxKmeZC9sGungFePUqfZc2Mx7oFQOGr0Og/4FnYNw7Z30Q
-	 ddPb034PVJq8IzaCFVYKX7CTaRyG/KfqCko55mRt3rENioVNYhLrFTpz2QjNqGiwXD828
-	 pe7Ev5j95mGzlihREGo+5xJaGoB82NXPy9OXO27z4V9NijSvRZDu9qejHh9DB67+jH+1a
-	 M7Wc7mZXk7tOK2Lb9oKYQviYZ/VvzzYJyfMr/sCHLOzE0m8oowhUg3lAPJH2TS2GUdqSk
-	 BnIjgjrOQY3Fv+xE+ZUhEXoeQ5QcZcbWn/qnrnUFe0uThsogrXOtG9t5oFDdWNV2fOg==
+	t=1795059508;
+	b=SjfoWes0fPwt+rx/Gr1Wj7IRFT8F0AwcLohnXgtsI0l2/mSqCzP5k7JiIlXEHN9u5NyQ
+	 BC6mxIzvSU0wKsY90dJp9pjbA17hxwn1YFjErzAzl61VV7vr/QcMYF7zenoUGSK5OMqp9
+	 YRcEEN2q6/oZwGbd1+NAHsPjdG8LD5S78aUn29XnUvcDnqZGSz/bP4wQYdK4D2QYuHsg/
+	 X4V85q9FKUUQayUgtsDbIk8mRUR0IEKVgRzCw06hHHt8WMNJ4vLiuwoseWUO484kwkYQy
+	 73ctua0qmcrMyMLxp2Mz+fvvVZNIVRXxqJoGT7U7X8VgRX9xhHAlXoPEbuxWweAre9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059505;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059508;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eOJB5GrCVJreRUIPqKYGfyVFoxuc4B5xHipF44r+EuA=;
-	b=cRqQ44IyYUNkZWt4P05rWQxa2Q6pZ7IJbsHTXYZ9jfS7HOHM5UXFmAg4UpjW2dhYVWhh
-	 QGSema0slHjc1dntPDEa9a+swKaq0VEt+0jwSB8VnskWFffg8jFh2YPgtS8DAt+EAaAgf
-	 XOP2NQOMeRuU6UVHyLwhVDaqpB3UrVHESjtGqoRQ05vJJ/WkcigMG+YGKiuWvG8MpgEgC
-	 nOWFkiLuse/aXjmbOK8s7Tdg+KBjHAKsktNBV4/QMYOl/tsK1G1hipXYtrWiwhIvMxGZF
-	 276egyfrB0n11BdAsUceR9D95Wrr78+EBYsEmgKxhX9w+9bG65qyQ6p08XWsHhK1GSA==
+	bh=1FHYXq3/zHmNT5gPfyYPoJOCXLuZ3nauVuXnF7JMTZ0=;
+	b=MUxyeS4N6ireDBVXuJOWWtB0f+aNxTEFPgiZ4EYRBCCjWgPLQurrFNbEh/Ssws1lMVDb
+	 Gks0yDvrTfW4fUDyoCHyvhQ1B2Ba/ERYFAzBTOic4O1DPLrND1Dh13PXeL1JAxOnAeTBz
+	 3VavuM6ewJnnEAZ0fJa5fIMsd4rmK6JHj+rjQLR8HfiLHRIEGP9lkctLCJqK7+zLPfhAR
+	 WH3mOC+0n0W9lPT/uae4H5w1O0iVUY1nTzwACqpxhnxxrfE/kmFsMwvcQfRv2HFePQW/Z
+	 VEkXITmL7s/w9gGbJDLX20RMwOddmoBZE4364vm3EA/bjtf9BpkOjO08uvABEZhwbsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qnf3BsFD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ynJYpETR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A55606A325;
-	Thu, 19 Nov 2026 03:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4482606A320;
+	Thu, 19 Nov 2026 03:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qnf3BsFD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365C51F000C4;
-	Thu, 19 Nov 2026 03:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ynJYpETR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032AF1F000C4;
+	Thu, 19 Nov 2026 03:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059505;
-	bh=eOJB5GrCVJreRUIPqKYGfyVFoxuc4B5xHipF44r+EuA=;
+	s=korg; t=1795059508;
+	bh=1FHYXq3/zHmNT5gPfyYPoJOCXLuZ3nauVuXnF7JMTZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qnf3BsFD0eQ0qcsuIjTuQFw08vUS73WZyLaUWnnam5rOgyEPPbDGQfHUQCG2o51KA
-	 QK/HFSNw4MeV95esjAbJmmkKcicY4g4wOb00YY9lWeORhPK5Ebh3ohP0ANj+hH5Mt+
-	 kWMXdEvijmQ8fjLcCS/zPwN2wekcEsOM3ucP54g4=
+	b=ynJYpETR2HRBY8rgyXxFSW/yu8h4/cVn5kp031MF9Z8tFul7SdExps+b1IpgF4rc0
+	 OLU9GFFYEyR4RqfCc1WOUronLJB0zj11imf8B8vWCQ2bcfpcyOROrF+197/JvewrxX
+	 67K6T4RNl6Ahs+GJHOyn2D/vYxljCY9dvrpLaZ1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	syzbot+f6c7e1f1809f235eeb90@syzkaller.appspotmail.com,
+	Wang Jianjian <wangjianjian3@huawei.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0866/1848] dmaengine: qcom: bam_dma: free interrupt before the clock in error path
-Date: Wed, 18 Nov 2026 15:48:24 +0100
-Message-ID: <20261118145952.728410278@linuxfoundation.org>
+Subject: [PATCH 5.10 0867/1848] nilfs2: ignore non-fatal signals during synchronous log write wait
+Date: Wed, 18 Nov 2026 15:48:25 +0100
+Message-ID: <20261118145952.761979351@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,84 +70,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 82eed160cfa7a296ae4eb5acb8dd8f493323eea7 ]
+[ Upstream commit 7131aaa74bcc7c9da1f1d1c8724da75c775557a0 ]
 
-The BAM interrupt is requested with a devres helper and so on error it's
-freed after probe() returns. We disable the clock before freeing or
-masking it so it may still fire and we may end up reading BAM registers
-with clock disabled.
+Based on a syzbot report, Wang Jianjian pointed out that following a
+successful directory operation in nilfs_rename(), a synchronous write
+requested within nilfs_transaction_commit(), triggered by a sync flag
+set by nilfs_commit_chunk(), could be interrupted by a user signal.
+This interruption leaves in-memory metadata updates intact while
+returning an error, causing inconsistency with the VFS dentry cache and
+ultimately triggering a kernel warning.
 
-Stop using devres for interrupts as we free it in remove() manually
-anyway. Add an appropriate label and free the interrupt before disabling
-the clock in error path and in remove().
+According to "signal(7)", local disks are not classified as "slow
+devices" (such as terminals, FIFOs, or pipes) and their I/O operations
+on disk devices are not interrupted by signals.  In kernel space,
+waiting for such disk I/O should therefore not be aborted by ordinary
+(non-fatal) signals.
 
+Suppress this issue by modifying nilfs_segctor_sync(), which waits for
+the log writer thread to complete synchronous writes, to catch only
+fatal signals via fatal_signal_pending() and return -EINTR rather than
+-ERESTARTSYS.  To complement this change and prevent the wait loop from
+busy-looping when schedule() returns immediately due to a pending
+non-fatal signal, switch the wait state from TASK_INTERRUPTIBLE to
+TASK_KILLABLE.
+
+This serves as an effective interim stabilization measure without
+structural changes until a comprehensive fix for metadata consistency
+is implemented.
+
+Reported-by: syzbot+f6c7e1f1809f235eeb90@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f6c7e1f1809f235eeb90
+Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
+Tested-by: syzbot+f6c7e1f1809f235eeb90@syzkaller.appspotmail.com
+Cc: Wang Jianjian <wangjianjian3@huawei.com>
 Cc: stable@vger.kernel.org
-Fixes: e7c0fe2a5c84 ("dmaengine: add Qualcomm BAM dma driver")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260427-qcom-qce-cmd-descr-v16-0-945fd1cafbbc%40oss.qualcomm.com?part=2
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261008-bam-dma-free-irq-v28-1-5e5b10de441e@oss.qualcomm.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-[ sashal: also free the IRQ when dma_set_max_seg_size() fails, a check upstream no longer has ]
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+[ sashal: preserved the older return-code comment layout instead of upstream's reformatted lists ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/qcom/bam_dma.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ fs/nilfs2/ioctl.c    |  2 +-
+ fs/nilfs2/recovery.c |  2 +-
+ fs/nilfs2/segment.c  | 10 +++++-----
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index f931f074dcdb8..cc6b58162a275 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -1312,8 +1312,8 @@ static int bam_dma_probe(struct platform_device *pdev)
- 	for (i = 0; i < bdev->num_channels; i++)
- 		bam_channel_init(bdev, &bdev->channels[i], i);
+diff --git a/fs/nilfs2/ioctl.c b/fs/nilfs2/ioctl.c
+index 9f10a9cec3e0a..e6db5b8190e3c 100644
+--- a/fs/nilfs2/ioctl.c
++++ b/fs/nilfs2/ioctl.c
+@@ -1011,7 +1011,7 @@ static int nilfs_ioctl_clean_segments(struct inode *inode, struct file *filp,
+  *
+  * %-ENOSPC - No space left on device (only in a panic state).
+  *
+- * %-ERESTARTSYS - Interrupted.
++ * %-EINTR - Interrupted.
+  *
+  * %-ENOMEM - Insufficient memory available.
+  *
+diff --git a/fs/nilfs2/recovery.c b/fs/nilfs2/recovery.c
+index 33c4a97519de8..bf64a9eff4d15 100644
+--- a/fs/nilfs2/recovery.c
++++ b/fs/nilfs2/recovery.c
+@@ -750,7 +750,7 @@ static void nilfs_abort_roll_forward(struct the_nilfs *nilfs)
+  *
+  * %-ENOSPC - No space left on device (only in a panic state).
+  *
+- * %-ERESTARTSYS - Interrupted.
++ * %-EINTR - Interrupted.
+  *
+  * %-ENOMEM - Insufficient memory available.
+  */
+diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
+index 18964331ee3d9..cc12f4dd2eee2 100644
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2236,7 +2236,7 @@ static int nilfs_segctor_sync(struct nilfs_sc_info *sci)
+ 	wake_up(&sci->sc_wait_daemon);
  
--	ret = devm_request_irq(bdev->dev, bdev->irq, bam_dma_irq,
--			IRQF_TRIGGER_NONE, "bam_dma", bdev);
-+	ret = request_irq(bdev->irq, bam_dma_irq, IRQF_TRIGGER_NONE,
-+			  "bam_dma", bdev);
- 	if (ret)
- 		goto err_bam_channel_exit;
+ 	for (;;) {
+-		set_current_state(TASK_INTERRUPTIBLE);
++		set_current_state(TASK_KILLABLE);
  
-@@ -1322,7 +1322,7 @@ static int bam_dma_probe(struct platform_device *pdev)
- 	ret = dma_set_max_seg_size(bdev->common.dev, BAM_FIFO_SIZE);
- 	if (ret) {
- 		dev_err(bdev->dev, "cannot set maximum segment size\n");
--		goto err_bam_channel_exit;
-+		goto err_free_irq;
+ 		/*
+ 		 * Synchronize only while the log writer thread is alive.
+@@ -2250,11 +2250,11 @@ static int nilfs_segctor_sync(struct nilfs_sc_info *sci)
+ 			err = wait_req.err;
+ 			break;
+ 		}
+-		if (!signal_pending(current)) {
++		if (!fatal_signal_pending(current)) {
+ 			schedule();
+ 			continue;
+ 		}
+-		err = -ERESTARTSYS;
++		err = -EINTR;
+ 		break;
  	}
- 
- 	platform_set_drvdata(pdev, bdev);
-@@ -1350,7 +1350,7 @@ static int bam_dma_probe(struct platform_device *pdev)
- 	ret = dma_async_device_register(&bdev->common);
- 	if (ret) {
- 		dev_err(bdev->dev, "failed to register dma async device\n");
--		goto err_bam_channel_exit;
-+		goto err_free_irq;
- 	}
- 
- 	ret = of_dma_controller_register(pdev->dev.of_node, bam_dma_xlate,
-@@ -1374,6 +1374,8 @@ static int bam_dma_probe(struct platform_device *pdev)
- 
- err_unregister_dma:
- 	dma_async_device_unregister(&bdev->common);
-+err_free_irq:
-+	free_irq(bdev->irq, bdev);
- err_bam_channel_exit:
- 	for (i = 0; i < bdev->num_channels; i++)
- 		tasklet_kill(&bdev->channels[i].vc.task);
-@@ -1399,7 +1401,7 @@ static int bam_dma_remove(struct platform_device *pdev)
- 	/* mask all interrupts for this execution environment */
- 	writel_relaxed(0, bam_addr(bdev, 0,  BAM_IRQ_SRCS_MSK_EE));
- 
--	devm_free_irq(bdev->dev, bdev->irq, bdev);
-+	free_irq(bdev->irq, bdev);
- 
- 	for (i = 0; i < bdev->num_channels; i++) {
- 		bam_dma_terminate_all(&bdev->channels[i].vc.chan);
+ 	finish_wait(&sci->sc_wait_request, &wait_req.wq);
+@@ -2295,7 +2295,7 @@ static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err, bool force)
+  *
+  * %-ENOSPC - No space left on device (only in a panic state).
+  *
+- * %-ERESTARTSYS - Interrupted.
++ * %-EINTR - Interrupted.
+  *
+  * %-ENOMEM - Insufficient memory available.
+  */
+@@ -2332,7 +2332,7 @@ int nilfs_construct_segment(struct super_block *sb)
+  *
+  * %-ENOSPC - No space left on device (only in a panic state).
+  *
+- * %-ERESTARTSYS - Interrupted.
++ * %-EINTR - Interrupted.
+  *
+  * %-ENOMEM - Insufficient memory available.
+  */
 -- 
 2.53.0
 
