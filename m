@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035107;
-	b=SuuFDW/0J/Zb9yfSEDfu796OzM6LN3U476WRbawiP3BuToPXQw9wPR0p0UEgdSID8rc1
-	 hEFcuz/5pNdAPdB62itefYCcEibsXfNT/hf7ZTS6HrxyPFyfMK1L23L8q7jtk1EkdYxHN
-	 Y7Pamci52xwX5aeNwHDMz+ovRYRusNOyl0sWEeNCDxH261gq7QFP9/HDro6wzkiG7lhgH
-	 Vh3H9DLKvGr/sgvJQ3RLW8dcUsWd8qNB4/2GRJTmWhxD7ALJMxNjb5mDDcgLrIOvxKyGQ
-	 W6XqXrOSRdU4CkSrpzG9CxcZs6CNS405wuYen/UIWy2+yeR1w90HvX0XdKWguu/FrAA==
+	t=1795035110;
+	b=VPX+nFJsRUBJ2dtUh81ehIHJO5PCAesGyD3t+I1IBsbaNsBns4y7B/iaPjDfrkxu3yDF
+	 l2tablc3goTr3nn1zO3dcqvQNK7IhEn2h3NMM9KRo6Y8Upr6RbuhPgOozbqAwYp/FvvQ3
+	 llYTADTskbjwYqKXnpNU3E9LafJXOt/OxkpAl42mtPlCSZDERMf2D4U/xp6LJxg9sxxcr
+	 yf6Kdixlz0KwdZmCWeRWJFsBCU6R+y4dVAENwSn9rZA3eymEh0uqh3szoLXPSCD6zHj2U
+	 /O3QL7fWeLziWuPs2lCS0kRRi23HtQ09/G9gyMtFFoHI4pWiX+aXyQQSFe6RHnyqUGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035107;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035110;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=86ru2VeW+A/wLB40YeG31Xi40ZwWGne3FJfuLronCfw=;
-	b=UR2g4MzzI7LSj9CBetMSgPvPwoNfkyn/cOH8wlVRy5O6ry7AxkMWaC/yXSbT+IgdsCdU
-	 /Rc3eovce+P6NFF7wlsMvLobO21GfEzvjeARM5S6DaVNjgqwo9RNLtsQHHCSBqgCpev8N
-	 OOzl8bOAzr0fep5rymgN8AnxcjTbIH1WMwazFbWQrL2b4ntdnF0PHhoGm1gffLaPUOeCP
-	 T/Puu31Au3DNmGlwS5AiHEsaxCfvhuFTlV6khLt3ueRI1DHly1yjTsVfv8fgh3VXN3Xps
-	 M9Ky8Qr3+Wfc56FcqNRu+DsESeNGz40MVJUcFRpDflHj0A8ky8kPMLIAjrwWtFrj0zQ==
+	bh=U0Hzh2cIN7FRITtoPCy7TgVmRSqn9yZceAO253Mot/c=;
+	b=Jg4g0P0YLgQFwUMbZZWHdRTSRfQ4c4bVtMKJrh4+RU9Htb3pQKk9UHirLcr7ABwGNAOC
+	 +jMnMCnUm7igEaDdVsP0G+L2iixmfva1DHk9soYCvA4wKNIkSxVQr7OvI0vyojQkiDpZA
+	 yAj4wYxozZrEcXG0/1UFO4bna9wUdfGqtUqpRfncnJ09sSxNu5c1IMi9e6bCUCT0rbox6
+	 YbE2rRiW6ETXTjjDzW+9vX5/0exP4VMhy2B82z/h9Hq/zrPwWncOIRCqbKCAQVmjWWYlZ
+	 Ctf/9QQwMwUkSvGyZmXurP6GR2DRtWz0t2k1kAcHsORmG70XxpTyTsq4CrLZQYcwghw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uDzRSGDg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p16oDlIe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC52606A31C;
-	Wed, 18 Nov 2026 20:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B98B606A31C;
+	Wed, 18 Nov 2026 20:51:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uDzRSGDg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD731F000C4;
-	Wed, 18 Nov 2026 20:51:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p16oDlIe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2FE21F000C4;
+	Wed, 18 Nov 2026 20:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035107;
-	bh=86ru2VeW+A/wLB40YeG31Xi40ZwWGne3FJfuLronCfw=;
+	s=korg; t=1795035110;
+	bh=U0Hzh2cIN7FRITtoPCy7TgVmRSqn9yZceAO253Mot/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uDzRSGDgMUFvhi3s/dGwjT1tXQFG3L74YNqJI+tRx5wdBr5x0XdVUAGSYki8xng7b
-	 ObutaIk6DzSeaRH+VNv+B71I6wA+WYGEPGotY96f4Hcq+e0qttjdV96Nv590onYnN0
-	 /5/1iSWM0jlpn4YTEc8DvJWo9iG1LY89oqelCoqs=
+	b=p16oDlIemDJdO50/UyP2tvEotYWuGOBwVxXVsl/vISP/9nUQB67BAKzqVFHC+YPiT
+	 4SQmEFoblXIRRT+pqLeUAYkNrBJC7P/1oXdsgdZyU6p7tsPzXS1QkeNfryh/B7oNDK
+	 naCwLFtbl1gyHadN4u68PgxsaioltRIvdoWTei3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 0591/3318] media: cx23885: Fix use-after-free in cx23885_finidev due to race condition
-Date: Wed, 18 Nov 2026 15:20:13 +0100
-Message-ID: <20261118150335.333324305@linuxfoundation.org>
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 0609/3318] ALSA: control: Fix UAF in snd_ctl_elem_add() on card disconnect
+Date: Wed, 18 Nov 2026 15:20:31 +0100
+Message-ID: <20261118150336.008510825@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,74 +67,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 75016a992d9b03f5cc6df1414d1da35840d4feeb upstream.
+commit d4febca239be3c91498762dd0535a87d4af1eabc upstream.
 
-In cx23885_v4l2_dev_notify_init, &dev->cx25840_work is bound with
-cx23885_av_work_handler, and &dev->ir_rx_work and &dev->ir_tx_work
-are bound with cx23885_ir_rx_work_handler and
-cx23885_ir_tx_work_handler. cx23885_irq can schedule these works on
-system_wq when an AV_CORE interrupt is received, and the IR subdevice
-can also schedule the IR works from its interrupt service routine via
-the v4l2_device notify callback.
+A use-after-free can be triggered via SNDRV_CTL_IOCTL_ELEM_ADD when a
+USB audio card is disconnected while an ELEM_ADD ioctl is in flight.
 
-If we remove the device, cx23885_finidev makes cleanup and the memory
-allocated for dev is released by kfree(dev), while the works mentioned
-above may still be pending or running. The sequence of operations that
-may lead to a UAF bug is as follows:
+The reproducer parks the ioctl thread inside copy_from_user() using
+userfaultfd, then tears down the USB device.  Unlike every other
+ALSA control _user handler (ELEM_INFO, ELEM_READ, ELEM_WRITE, TLV_*),
+snd_ctl_elem_add_user() never calls snd_power_ref_and_wait(), so the
+parked thread holds no power reference.  snd_card_disconnect() therefore
+cannot observe it via snd_power_sync_ref() and proceeds unimpeded:
 
-CPU0                                      CPU1
+  1. card->shutdown is set to 1
+  2. device_del(&card->card_dev) drops the kobject reference on the
+     parent USB interface device (card->dev = &intf->dev)
+  3. The USB core drops its own reference and calls device_release(),
+     freeing the struct usb_interface, including the embedded struct
+     device that card->dev points to
 
-                                          | cx23885_irq
-                                          | schedule_work(&dev->cx25840_work)
-cx23885_finidev                           |
-cx23885_input_fini(dev)                   |
-cx23885_ir_fini(dev)                      |
-cx23885_shutdown(dev)                     |
-free_irq(pci_dev->irq, dev)               |
-pci_disable_device(pci_dev)               |
-cx23885_dev_unregister(dev)               |
-v4l2_device_unregister(v4l2_dev)          |
-kfree(dev)                                |
-// dev is freed                           |
-                                          | cx23885_av_work_handler
-                                          | // use dev (use-after-free)
+When the userfaultfd is resolved and the thread resumes,
+snd_ctl_elem_add() acquires controls_rwsem without checking
+card->shutdown and calls __snd_ctl_add_replace().  Because the
+reproducer pre-registered the same control, the CTL_ADD_EXCLUSIVE
+path calls dev_err(card->dev, ...) on the freed USB interface:
 
-Fix it by canceling the works after the IRQ handler that can schedule
-them has been stopped, and before proceeding with the remaining
-cleanup in cx23885_finidev.
+  KASAN: slab-use-after-free Read in __dev_printk
 
-Note that the flush_work() calls in cx23885_input_ir_stop() do not
-close this race: they only wait for works that are already queued or
-running at that moment, they do not prevent the IRQ handler, which is
-still registered at that point, from scheduling the works again
-afterwards, and they are skipped entirely when dev->sd_ir is NULL.
-The cancel_work_sync() calls are therefore placed after free_irq(),
-the only point at which no new work can be scheduled.
+Add a card->shutdown guard immediately after acquiring controls_rwsem
+in snd_ctl_elem_add().  At that point card->shutdown is guaranteed to
+be stable: snd_card_disconnect() sets it before freeing the parent
+device, and it never transitions back to 0.  A thread that acquired
+the lock before disconnect sees shutdown=0 and holds the write lock
+through the rest of the operation, preventing concurrent disconnect
+from proceeding past its own controls_rwsem-less shutdown=1 store
+(which happened earlier, outside the lock) from racing with dev_err().
 
-Fixes: e5514f104d87 ("V4L/DVB: cx23885: Move AV Core irq handling to a work handler")
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:deepseek-v4-flash
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260929125346.1478631-3-tiwai@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/cx23885/cx23885-core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ sound/core/control.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/pci/cx23885/cx23885-core.c
-+++ b/drivers/media/pci/cx23885/cx23885-core.c
-@@ -2233,6 +2233,10 @@ static void cx23885_finidev(struct pci_d
- 	/* unregister stuff */
- 	free_irq(pci_dev->irq, dev);
+--- a/sound/core/control.c
++++ b/sound/core/control.c
+@@ -1699,6 +1699,8 @@ static int snd_ctl_elem_add(struct snd_c
+ 	alloc_size = compute_user_elem_size(private_size, count);
  
-+	cancel_work_sync(&dev->cx25840_work);
-+	cancel_work_sync(&dev->ir_rx_work);
-+	cancel_work_sync(&dev->ir_tx_work);
-+
- 	pci_disable_device(pci_dev);
+ 	guard(rwsem_write)(&card->controls_rwsem);
++	if (card->shutdown)
++		return -ENODEV;
+ 	if (check_user_elem_overflow(card, alloc_size))
+ 		return -ENOMEM;
  
- 	cx23885_dev_unregister(dev);
 
 
