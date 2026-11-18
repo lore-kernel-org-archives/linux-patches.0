@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059972;
-	b=XRLZQGAK24iwBBstqEE0NQJU9YzOp/hwl2fb7GnOrCx6yE3ZXNc7DMLp4JQpg+RR66Vp
-	 WYxguvxatODcQwX5xyIi7ykePMADVi01mxGFDBl0qeCKZTk0lZUzKAKOUtamnM8z1FyT+
-	 lwtN8RpKQcq+KxqyTK4ATbIkZCsz6sLXFU+gXhlSxQWPmQ4z0ZiffjZNR0ID78MjlzRqu
-	 80HlM4V7sR+HRQ/tQ0RKUjo4WAajBVnJ9AYuT69JGz4eUlEOjQORItWUkYNkmStjk8dJZ
-	 UiXERx2ieTcT/dBXpfgY9M4VaDi9EFQpNsDET/rjWS3b/T8IMxOugBLiKH0xgqymh9A==
+	t=1795059974;
+	b=JcgR/4vi1I3z/hOnYjrKvFKCwrq3w2F8Z3KPqg4yt4pEoT0ogzO3bTF+d6G1W2GHUQdi
+	 x/JJWX7hVtFcsXBQVwu5h3babkBDMGGEnc1gsSvlLOEtJXepAtiKmyEepe3/BkrK5sw8v
+	 Vkex4376Jhg04qQ412VHBWxlf3AXXKnlgltJN+dKFf0J41B86ASp5Oqle4TlOxS9V5fXS
+	 cGIQ0Oe8MyXd9xmeYCqpFzkpnkq0qZOO3qjbFnSJfa+59IlYOSAwkqX0ep8i6tQEkoO6b
+	 13GM3SiblCuU1QgQLgMeWwljzzvCDx30YT7GQ3TMEdetmcF/3ja29hyoqvBUw5/09tw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059972;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059974;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z2eT6SACOPxKe7b3/DtH0B8Up3Usbd1ZhoNRXQP/Cyo=;
-	b=fTq3F8m8cIBLfKql2fOL3okUen/B3mAd4bkA+8/PKjLlhMgVec3gr+dWynVnqbAdSf2F
-	 dqrv+17EDWlXBWQYQRCmMGCxPuK6xHb3yFzRhC9hfamL6ZP6lkRV3SWzReqt8Wfp9q6BB
-	 MW9UE/K516bt8Bf8XgdaGCckPS2rV37TbVmFVUBVOKFIb7i+Sg9L0aVL9E5YV7biCpHVn
-	 YK8FLAD+FVBxWRk53r3x913CE2i8zyUQUr60MF60m1PMP/dsdRLZRfzVAo0PGRu0GL2HO
-	 zEd3e5neO8RT6x5jJNChcF4RVsjifQIUVgKGjjgUGZVEJg3t7BlX7KAGp8mVihmQXhg==
+	bh=uHPT7w+yGbQOzg5pCzx+/LtR8+fGUsh+miZe+mdSTyQ=;
+	b=ugGzGEDyTLiF8f0pI4ztDJW//TQgOm7t3R0hkU54IhucApDCXHdoPG69Rrq3IOXebBNC
+	 La24kAY0aziEBVbrp0xuNLDkyTktefhv3rGOI2nKWx55qVU8gIyg8UONHy5eORc8igTO2
+	 xYDY9qhxmawu5J0TO/tNcbKdpFqDmUDt+a5/RMDoJMgQXAT7/yvbhJ8Q0NvQETsh1Z5la
+	 28fnvU03GnOIjCP4VtU4UqZwIkZ1D0ND9oaexeNh5FY6q5biZu24o4MZubNNZyL0xduD7
+	 hRabjlMOQGAGSMNxeYsJdxSiqfr6hcnDg5kL4m6yADSfVIXaLv8KwURQPiBYrhsDgBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XiJoivVq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CdqKFwbR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8870606A32C;
-	Thu, 19 Nov 2026 03:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D66606A325;
+	Thu, 19 Nov 2026 03:46:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XiJoivVq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 488351F000C6;
-	Thu, 19 Nov 2026 03:46:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CdqKFwbR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C921F000C6;
+	Thu, 19 Nov 2026 03:46:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059971;
-	bh=z2eT6SACOPxKe7b3/DtH0B8Up3Usbd1ZhoNRXQP/Cyo=;
+	s=korg; t=1795059974;
+	bh=uHPT7w+yGbQOzg5pCzx+/LtR8+fGUsh+miZe+mdSTyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XiJoivVq9B7JdsadNvbuxgr8G3f8gpPBbndTzf3gCZ5Xij7EgnLyz+h/P/yIN+niq
-	 dO4UCaceZSNHz/CpvG+p3ktAr7xU5Wd70FY5fdao8dYfXoi7hzi/TAiAuWaJ2OJ08Z
-	 aG7jntrv/Gw+aBhWldtwbJHv9EeXh8SXRUiqdL00=
+	b=CdqKFwbR274mGk0ks1zkMNYZ8T2RiCz1ZRkbBtCKJsh6umP1Y2/sXtTn4LiZ+7lgZ
+	 9YRo/mE338wiwqEHvfp75KadMzlfIro9o4ntAu4wKyWWcc+TuG3cV6g4RE/HDIPPev
+	 6zSNiiP7X0CLhOGCRXRoUvbwmqpVuqbbs3fWcX1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Aleksa Sarai <aleksa@amutable.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Jake Labelle <southampton.jake.labelle@gmail.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1033/1848] proc: dont let an entry below /proc/<pid>/net be a mountpoint
-Date: Wed, 18 Nov 2026 15:51:11 +0100
-Message-ID: <20261118150000.621211232@linuxfoundation.org>
+Subject: [PATCH 5.10 1034/1848] nilfs2: validate directory position after llseek in readdir
+Date: Wed, 18 Nov 2026 15:51:12 +0100
+Message-ID: <20261118150000.657331864@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,246 +69,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Jake Labelle <southampton.jake.labelle@gmail.com>
 
-[ Upstream commit eeecea75ece2ba894bee4d3c53ed2e40abda8f0e ]
+[ Upstream commit de7f49c12566cc5c7437a2f26c6c754b9d4d5648 ]
 
-proc_net_d_revalidate() always returns 0 so that a dentry below
-/proc/<pid>/net is never reused after setns(). So lookup_fast() will end
-up calling d_invalidate(), which unhashes the dentry and detaches every
-mount on it, in every mount namespace; including locked mounts.
+nilfs_readdir() uses ctx->pos, which userspace can set to an arbitrary
+value via llseek, as an offset into the directory folio and parses
+whatever bytes sit there as a directory entry.  A position pointing
+into the middle of an entry -- or at unused bytes of a corrupted image
+that the page validator never inspected -- makes dir_emit() copy up to
+255 (name_len) bytes from a bogus entry, possibly reading past the end
+of the folio and returning unrelated memory contents to userspace.
 
-Then lookup_slow() creates a new dentry for the same entry. So a mount
-on /proc/<pid>/net/dev succeeds and goes away with the first lookup of
-the name by anybody with search permission on the directory. Given it's
-0555 that's everyone's grandma. A mask on such a name hides nothing as
-the repro below shows.
+Snap unaligned positions onto a valid entry boundary by walking the
+rec_len chain from the chunk start before parsing, as ext2 does in
+ext2_validate_entry().
 
-Treat those entries like I did fd/, fdinfo/ and map_files/ and refuse to
-mount on them in the first place. It's nonsensical theater otherwise:
+[ryusuke: fixed offset wrap-around in nilfs_validate_entry() and
+ conformed AI tag to guidelines]
 
-  procnet net/dev stat
-
-  // SPDX-License-Identifier: GPL-2.0
-  /*
-   * procnet: cover an entry of /proc/<pid>/ with a bind mount, lock the mount,
-   * then look the name up.
-   *
-   * The first task stays alive, <pid> is its pid. The "container" task has its
-   * own mount namespace. There it binds a mask on /proc/<pid>/<name>. It drops to
-   * uid 1000 and enters a new user namespace with a new mount namespace, so that
-   * the mask is locked. Then one task looks the name up:
-   *
-   *   stat    the container calls stat() on the name
-   *   umount  the container calls umount2(MNT_DETACH) on the name
-   *   nobody  a task with uid 65534 in the first namespaces calls stat()
-   *
-   * The container lists its mounts before and after (that does not look the
-   * name up) and then reads the name. MASK is fine. Anything else means that
-   * the lookup uncovered the entry.
-   *
-   * usage: procnet <name> stat|umount|nobody
-   *   name "status" is the control, "net/dev" is a file below net, "net/stat" is
-   *   a directory below net
-   */
-  #define _GNU_SOURCE
-  #include <dirent.h>
-  #include <errno.h>
-  #include <fcntl.h>
-  #include <sched.h>
-  #include <stdio.h>
-  #include <stdlib.h>
-  #include <string.h>
-  #include <time.h>
-  #include <unistd.h>
-  #include <sys/mount.h>
-  #include <sys/prctl.h>
-  #include <sys/stat.h>
-  #include <sys/wait.h>
-
-  #define WORK "/run/pn"
-
-  static char target[128];
-
-  static void die(const char *what)
-  {
-  	fprintf(stderr, "FATAL %s: %s\n", what, strerror(errno));
-  	exit(2);
-  }
-
-  static void write_str(const char *path, const char *s, int flags)
-  {
-  	int fd = open(path, O_WRONLY | flags, 0644);
-
-  	if (fd < 0 || write(fd, s, strlen(s)) < 0)
-  		die(path);
-  	close(fd);
-  }
-
-  /* list the mounts below /proc without a lookup of the target */
-  static void mounts(const char *when)
-  {
-  	char line[512];
-  	FILE *f = fopen("/proc/self/mountinfo", "r");
-  	int n = 0;
-
-  	if (!f)
-  		die("mountinfo");
-  	while (fgets(line, sizeof(line), f)) {
-  		if (!strstr(line, " /proc/"))
-  			continue;
-  		printf("container: %s: mount: %s", when, line);
-  		n++;
-  	}
-  	fclose(f);
-  	if (!n)
-  		printf("container: %s: nothing is mounted below /proc\n", when);
-  }
-
-  static void show(const char *when, int isdir)
-  {
-  	char buf[48] = "";
-  	int fd;
-
-  	if (isdir) {
-  		struct dirent *de;
-  		DIR *d = opendir(target);
-  		int hit = 0;
-
-  		if (!d) {
-  			printf("container: %s: opendir(%s) = %s\n", when, target, strerror(errno));
-  			return;
-  		}
-  		printf("container: %s: readdir(%s) =", when, target);
-  		while ((de = readdir(d))) {
-  			if (de->d_name[0] == '.')
-  				continue;
-  			printf(" %s", de->d_name);
-  			hit |= strcmp(de->d_name, "MASK");
-  		}
-  		closedir(d);
-  		printf("%s\n", hit ? "   <-- HIT" : "");
-  		return;
-  	}
-  	fd = open(target, O_RDONLY);
-  	if (fd < 0) {
-  		printf("container: %s: open(%s) = %s\n", when, target, strerror(errno));
-  		return;
-  	}
-  	if (read(fd, buf, sizeof(buf) - 1) < 0)
-  		die("read");
-  	close(fd);
-  	if (strchr(buf, '\n'))
-  		*strchr(buf, '\n') = 0;
-  	printf("container: %s: read(%s) = \"%s\"%s\n", when, target, buf,
-  	       strncmp(buf, "MASK", 4) ? "   <-- HIT" : "");
-  }
-
-  int main(int argc, char **argv)
-  {
-  	const char *name = argc > 1 ? argv[1] : "net/dev";
-  	const char *op = argc > 2 ? argv[2] : "stat";
-  	int isdir = !strcmp(name, "net/stat");
-  	int to_host[2], to_cont[2];
-  	struct stat st;
-  	pid_t pid;
-  	char c;
-
-  	setvbuf(stdout, NULL, _IOLBF, 0);
-  	snprintf(target, sizeof(target), "/proc/%d/%s", getpid(), name);
-  	if (unshare(CLONE_NEWNS) || mount(NULL, "/", NULL, MS_REC | MS_PRIVATE, NULL))
-  		die("unshare");
-  	mkdir(WORK, 0755);
-  	if (mount("W", WORK, "tmpfs", 0, NULL))
-  		die("mount W");
-  	write_str(WORK "/mask", "MASK", O_CREAT);
-  	mkdir(WORK "/maskdir", 0755);
-  	write_str(WORK "/maskdir/MASK", "MASK", O_CREAT);
-  	if (pipe(to_host) || pipe(to_cont))
-  		die("pipe");
-
-  	pid = fork();
-  	if (pid < 0)
-  		die("fork");
-  	if (!pid) {
-  		if (unshare(CLONE_NEWNS))
-  			die("container unshare");
-  		if (mount(isdir ? WORK "/maskdir" : WORK "/mask", target, NULL, MS_BIND, NULL)) {
-  			printf("container: bind the mask on %s: %s\n", target, strerror(errno));
-  			exit(0);
-  		}
-  		printf("container: bind the mask on %s: ok\n", target);
-  		if (setgid(1000) || setuid(1000) || prctl(PR_SET_DUMPABLE, 1))
-  			die("setuid");
-  		/* lock the mount: a new user namespace with a copy of the tree */
-  		if (unshare(CLONE_NEWUSER | CLONE_NEWNS))
-  			die("container userns");
-  		write_str("/proc/self/setgroups", "deny", 0);
-  		write_str("/proc/self/uid_map", "0 1000 1", 0);
-  		write_str("/proc/self/gid_map", "0 1000 1", 0);
-  		mounts("before");
-  		errno = 0;
-  		if (!strcmp(op, "stat")) {
-  			stat(target, &st);
-  			printf("container: stat(%s): %s\n", target, strerror(errno));
-  		} else if (!strcmp(op, "umount")) {
-  			umount2(target, MNT_DETACH);
-  			printf("container: umount2(%s, MNT_DETACH): %s\n", target, strerror(errno));
-  		} else if (write(to_host[1], "g", 1) != 1 || read(to_cont[0], &c, 1) != 1) {
-  			die("sync");
-  		}
-  		mounts("after");
-  		show("after", isdir);
-  		exit(0);
-  	}
-  	close(to_host[1]);
-  	if (read(to_host[0], &c, 1) == 1) {
-  		pid_t p2 = fork();
-
-  		if (!p2) {
-  			if (setgid(65534) || setuid(65534))
-  				die("setuid");
-  			errno = 0;
-  			stat(target, &st);
-  			printf("nobody: uid %u: stat(%s): %s\n", getuid(), target, strerror(errno));
-  			exit(0);
-  		}
-  		waitpid(p2, NULL, 0);
-  		if (write(to_cont[1], "g", 1) != 1)
-  			die("sync");
-  	}
-  	waitpid(pid, NULL, 0);
-  	return 0;
-  }
-
-Fixes: 1fde6f21d90f ("proc: fix /proc/net/* after setns(2)")
+Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
+Assisted-by: Claude:claude-mythos-5
+Signed-off-by: Jake Labelle <southampton.jake.labelle@gmail.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261024-work-procfs-fixes-v1-1-46b03c3a8fac@kernel.org
-Acked-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Aleksa Sarai <aleksa@amutable.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+[ sashal: adjusted helper insertion context to follow nilfs_set_de_type() instead of nilfs_next_entry() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/generic.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/nilfs2/dir.c | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/fs/proc/generic.c b/fs/proc/generic.c
-index 98d88b504478d..f4fe4c0809772 100644
---- a/fs/proc/generic.c
-+++ b/fs/proc/generic.c
-@@ -261,9 +261,10 @@ struct dentry *proc_lookup_de(struct inode *dir, struct dentry *dentry,
- 		inode = proc_get_inode(dir->i_sb, de);
- 		if (!inode)
- 			return ERR_PTR(-ENOMEM);
-+		/* never reused and so never a mountpoint for long */
- 		if (de->flags & PROC_ENTRY_FORCE_LOOKUP)
--			return d_splice_alias_ops(inode, dentry,
--						  &proc_net_dentry_ops);
-+			return proc_splice_unmountable(inode, dentry,
-+						       &proc_net_dentry_ops);
- 		return d_splice_alias_ops(inode, dentry,
- 					  &proc_misc_dentry_ops);
- 	}
+diff --git a/fs/nilfs2/dir.c b/fs/nilfs2/dir.c
+index 3d7e692f3e7f1..2ff8f8d3c3d6d 100644
+--- a/fs/nilfs2/dir.c
++++ b/fs/nilfs2/dir.c
+@@ -265,11 +265,27 @@ static void nilfs_set_de_type(struct nilfs_dir_entry *de, struct inode *inode)
+ 	de->file_type = nilfs_type_by_mode[(mode & S_IFMT)>>S_SHIFT];
+ }
+ 
++static inline unsigned int
++nilfs_validate_entry(char *base, unsigned int offset, unsigned int mask)
++{
++	struct nilfs_dir_entry *de = (struct nilfs_dir_entry *)(base + offset);
++	struct nilfs_dir_entry *p =
++		(struct nilfs_dir_entry *)(base + (offset & mask));
++
++	while ((char *)p < (char *)de) {
++		if (p->rec_len == 0)
++			break;
++		p = nilfs_next_entry(p);
++	}
++	return (char *)p - base;
++}
++
+ static int nilfs_readdir(struct file *file, struct dir_context *ctx)
+ {
+ 	loff_t pos = ctx->pos;
+ 	struct inode *inode = file_inode(file);
+ 	struct super_block *sb = inode->i_sb;
++	unsigned int chunk_size = nilfs_chunk_size(inode);
+ 	unsigned int offset = pos & ~PAGE_MASK;
+ 	unsigned long n = pos >> PAGE_SHIFT;
+ 	unsigned long npages = dir_pages(inode);
+@@ -288,6 +304,24 @@ static int nilfs_readdir(struct file *file, struct dir_context *ctx)
+ 			ctx->pos += PAGE_SIZE - offset;
+ 			return -EIO;
+ 		}
++		/*
++		 * ctx->pos comes from userspace via llseek and may point
++		 * into the middle of an entry -- or at unvalidated bytes
++		 * of a crafted image. offset is only nonzero here on the
++		 * very first iteration (subsequent pages always start at
++		 * offset 0, which -- like any chunk boundary -- is always
++		 * a legitimate entry start, since no rec_len chain crosses
++		 * a chunk boundary). Snap a non-chunk-aligned offset onto
++		 * a real entry boundary by walking the chain from the
++		 * enclosing chunk's start, as ext2 does; otherwise
++		 * dir_emit() copies name_len bytes from a fake entry,
++		 * reading past the end of the folio.
++		 */
++		if (offset & (chunk_size - 1)) {
++			offset = nilfs_validate_entry(kaddr, offset,
++					~(chunk_size - 1));
++			ctx->pos = ((loff_t)n << PAGE_SHIFT) + offset;
++		}
+ 		de = (struct nilfs_dir_entry *)(kaddr + offset);
+ 		limit = kaddr + nilfs_last_byte(inode, n) -
+ 			NILFS_DIR_REC_LEN(1);
 -- 
 2.53.0
 
