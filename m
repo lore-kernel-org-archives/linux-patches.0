@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024572;
-	b=KhnmaMDpKu7lIUoV18g0TlNHqt6QOZWaWZCM+mt1wPnXNmsZJE2ONuRZOsBq3dOWEJ54
-	 HS1kRLSgKBcY806lrIJDeWCktnezaEdq6oL9murUF7gROeje/Q+y6LWDofGWr9g5Jqb01
-	 9U0HMTn00AOWXPKwxE5nUUsQi2CUXJSyKMUjHy5FOiJAieSptu1X4FIdnkDk8uKabVPt4
-	 Psh363G7Dkbo+0P2HF7kaR9uvuXFkGFbY7wkW+Xt5gi1f9j+HUFpK+vsXq5BRpDOp5u+v
-	 TAhfqp96J8HWrSaap7RHsXvRMYlihFQ7tCjXet9LuOiK+0mxOuzWPEVSW2s/i3SOCWw==
+	t=1795024575;
+	b=ZJdcHk1vxHxuGfA1ZZ6w76JabuWHHYAEJ5qSU0z4i0rrC4KJYdQSp8guaTRwuEQpgM6O
+	 Mb9qgz4/9rfmMfOYoykyBA/6w/TcWhdYxSytzdHtCwlZn7LeDBOPo4hMnwamN2vLe7IDW
+	 t4oUonp2y12i5yIWipkQQR8rj0oFOKPUnSLmJLSW3lOCqJ9+NrA3mkyOiB3kJAszPb6pY
+	 6zI7F5ERNMFCE5RiMGNSyDsdhtvk8PrHr7jxLc56XuyeXkljxMzqywHSYd0knnUH9RKrI
+	 3MJXfaqKvPO4C3Nd+OgA7sTN+12cbZW1PKMVwxM5xLFgQHgVSeeDYrat2Ot3bOOLtnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024572;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024575;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iXTDyp7XL8kh7bNMQthPqDnq+qZM0jE2vB8NiC6zSMo=;
-	b=tpKEfOkW5BSgPhHs3EfG7PnInkqAJFUzGm2CanDEeahJrKeQSpdiyqhK11sW8vFd5i01
-	 WOnGkEesCln6lyT/TcauKEqsS5V0LbPMxD5QIDDL2EhXoewwupxXNBVRWiRyILQeg2KCZ
-	 Kt96GvBuqoVjea8HBn0CGDkb5tkKZflFN/0FhIFjHjduN6bfWiha4symUpeMV0AT/QBW7
-	 xy86bi8qwDerNniZhMWVXD9eLyMyNJpOLNeC2FS9K++t2yhVs7q99ZOWLlFarxtq6sj50
-	 DQc8OgUWSQ51M5Pg7XDEfPg3WbacqhHEtUp1FANXBvUSHytHnTuGUZoYIt999+ZWQTA==
+	bh=FqAy7SItV0LNW0+ugb+fpmMp8pD88E+MUs4pkBDRb6Q=;
+	b=Pnew8aTvvMousnoIv0F0abLhCOxeg7k2ynAX+98eDzUWGTVpu361/JMKWfmPt3HCicBJ
+	 XcldxQUHiPSYCqsbseMuhhRYRrbuh0rRi6jofX6c8XiTC1HUkUvzHbpBZPa+XpnFJW+BY
+	 acOyx5pGSCIIWCrwoYMnsq/EfUJ/i3g1MSS0SPrNsHucKCJ2hLHyc15RAVpJczLQOr5XQ
+	 rVKEj1BFECI6e3up3RT5kx8xK59vUOUpzv3+lDdPTVxhj5YDXEo5cRZK6fZbAdv5Fntom
+	 NcfFEvTaq57GbFiycRqB5mgqvauD1xhZQri53Kl1dOnGPMc9+SxjJfSLjxd2F+/1N7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rB5k5iG1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R5V5YzaW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8096606A320;
-	Wed, 18 Nov 2026 17:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5A3606A32A;
+	Wed, 18 Nov 2026 17:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rB5k5iG1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5BA1F000C5;
-	Wed, 18 Nov 2026 17:56:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R5V5YzaW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E406B1F000C4;
+	Wed, 18 Nov 2026 17:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024572;
-	bh=iXTDyp7XL8kh7bNMQthPqDnq+qZM0jE2vB8NiC6zSMo=;
+	s=korg; t=1795024575;
+	bh=FqAy7SItV0LNW0+ugb+fpmMp8pD88E+MUs4pkBDRb6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rB5k5iG1dsEVmFbjcY7Ct147xYmAwTIAlUd3z7vV9FMyh00dfx81A3lx2vqAvpalJ
-	 lsFVFOdQypPDbyAogzOamplFB5E5EBpQBPdapwIZQNhgunCGNhKzKrvTJJcR1CumPI
-	 mleo4D5vVi0vmGlPch4gYQBF5ZHBM+4LFKnbQvtE=
+	b=R5V5YzaWQZ6HufTIeIhCJoPUuMs3SWqeNZcNLSqef5StNjzSW0zeUUYdiA2/16yZz
+	 S1/iaXbR+AV8Vryt3aYykiGWt5JePwVpNBIQUryqNr3ThzQxplxcFuzQhdV1A7OT4t
+	 PQUKo9hEjW4tojNXRB3KhyyA8reXfg6bbT3jupDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Schier <n.schier@fritz.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Nia Su <nia.su@sifive.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0772/2151] kbuild: Remove alignment on .modinfo section
-Date: Wed, 18 Nov 2026 15:41:47 +0100
-Message-ID: <20261118150150.263707460@linuxfoundation.org>
+Subject: [PATCH 6.18 0737/2151] perf evlist: Dont restrict uncore events to PMU CPUs
+Date: Wed, 18 Nov 2026 15:41:12 +0100
+Message-ID: <20261118150148.886148081@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,73 +69,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Nia Su <nia.su@sifive.com>
 
-[ Upstream commit 36d4a11b56aa98da4b4652a2e34d229ffcf36070 ]
+[ Upstream commit aa9265d5073cb01b89f31ae030442873d4a259d3 ]
 
-Commit d50f21091358 ("kbuild: align modinfo section for Secureboot
-Authenticode EDK2 compat") aligned .modinfo because it appeared in the
-x86_64 compressed kernel image after commit 3e86e4d74c04 ("kbuild: keep
-.modinfo section in vmlinux.unstripped"), breaking boot.
+The PMU CPU map has different semantics for core and uncore PMUs.
 
-Commit 8678591b4746 ("kbuild: Split .modinfo out from ELF_DETAILS")
-properly addresses .modinfo appearing in unexpected contexts like
-compressed images by moving it out of ELF_DETAILS and explicitly
-specifying its location in every architecture's vmlinux linker script or
-discarding it where it may appear elsewhere.
+For core PMUs, pmu_cpus contains the CPUs on which the event can be
+opened. Intersect the user-requested CPU map with the PMU CPU map to
+reject CPUs unsupported by the PMU.
 
-Effectively revert commit d50f21091358 ("kbuild: align modinfo section
-for Secureboot Authenticode EDK2 compat") and its follow up fix,
-commit a26a6c93edfe ("kbuild: Strip trailing padding bytes from
-modules.builtin.modinfo"), as they are no longer necessary in the
-current tree. This simplifies future cleanups.
+For uncore PMUs, pmu_cpus is read from the PMU's cpumask sysfs attribute,
+which lists the default CPU to open the event on per socket/die, not the
+set of CPUs it can only be opened on. The user-requested CPU may override
+these defaults, and the driver can redirect the event to the appropriate
+control CPU.
 
-Reviewed-by: Nicolas Schier <n.schier@fritz.com>
-Link: https://patch.msgid.link/20260918005142.GA1585590@ax162/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Stable-dep-of: a98db7418797 ("kbuild: keep .modinfo when vmlinux is linked with --gc-sections")
+Currently, __perf_evlist__propagate_maps() intersects the user-requested
+CPU map with pmu_cpus for all PMUs. If the user-requested CPU is not in
+pmu_cpus, the intersection becomes empty and the evsel is removed before
+perf_event_open() is called.
+
+Add evsel->is_pmu_uncore, set once from pmu->is_uncore at parse time,
+to skip the intersection for uncore PMUs. Core PMUs, and other
+non-core PMUs such as software events, breakpoints, or tracepoints,
+continue to be restricted to their PMU CPU map.
+
+Fixes: 811082e4b668db96 ("perf parse-events: Support user CPUs mixed with threads/processes")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Assisted-by: Claude:claude-sonnet-5
+Signed-off-by: Nia Su <nia.su@sifive.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/vmlinux.lds.h |  2 +-
- scripts/Makefile.vmlinux          | 10 ----------
- 2 files changed, 1 insertion(+), 11 deletions(-)
+ tools/lib/perf/evlist.c                 | 5 +++--
+ tools/lib/perf/include/internal/evsel.h | 2 ++
+ tools/perf/util/evsel.c                 | 1 +
+ tools/perf/util/parse-events.c          | 1 +
+ 4 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index 6640e06ef2f13..f60238b0b8918 100644
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -838,7 +838,7 @@ defined(CONFIG_AUTOFDO_CLANG) || defined(CONFIG_PROPELLER_CLANG)
- 		.shstrtab 0 : { *(.shstrtab) }
+diff --git a/tools/lib/perf/evlist.c b/tools/lib/perf/evlist.c
+index 1f210dadd666f..c1c5b0684eedb 100644
+--- a/tools/lib/perf/evlist.c
++++ b/tools/lib/perf/evlist.c
+@@ -79,8 +79,9 @@ static void __perf_evlist__propagate_maps(struct perf_evlist *evlist,
+ 		}
+ 	}
  
- #define MODINFO								\
--		.modinfo : { *(.modinfo) . = ALIGN(8); }
-+		.modinfo : { *(.modinfo) }
+-	/* Ensure cpus only references valid PMU CPUs. */
+-	if (!perf_cpu_map__has_any_cpu(evsel->cpus) &&
++	/* Ensure cpus only references valid PMU CPUs, except for uncore PMUs. */
++	if (!evsel->is_pmu_uncore &&
++	    !perf_cpu_map__has_any_cpu(evsel->cpus) &&
+ 	    !perf_cpu_map__is_subset(evsel->pmu_cpus, evsel->cpus)) {
+ 		struct perf_cpu_map *tmp = perf_cpu_map__intersect(evsel->pmu_cpus, evsel->cpus);
  
- #ifdef CONFIG_GENERIC_BUG
- #define BUG_TABLE							\
-diff --git a/scripts/Makefile.vmlinux b/scripts/Makefile.vmlinux
-index 276c3134a563a..77b9969842e00 100644
---- a/scripts/Makefile.vmlinux
-+++ b/scripts/Makefile.vmlinux
-@@ -102,18 +102,8 @@ vmlinux: vmlinux.unstripped FORCE
- # modules.builtin.modinfo
- # ---------------------------------------------------------------------------
+diff --git a/tools/lib/perf/include/internal/evsel.h b/tools/lib/perf/include/internal/evsel.h
+index b988034f13710..35447bed0f958 100644
+--- a/tools/lib/perf/include/internal/evsel.h
++++ b/tools/lib/perf/include/internal/evsel.h
+@@ -128,6 +128,8 @@ struct perf_evsel {
+ 	bool			 requires_cpu;
+ 	/** Is the PMU for the event a core one? Effects the handling of own_cpus. */
+ 	bool			 is_pmu_core;
++	/** Is the PMU for the event an uncore one? */
++	bool			 is_pmu_uncore;
+ 	/** Does the evsel on read on the first CPU index such as tool time events? */
+ 	bool			 reads_only_on_cpu_idx0;
+ 	int			 idx;
+diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
+index a3d3f49d33a45..0da2c56745c10 100644
+--- a/tools/perf/util/evsel.c
++++ b/tools/perf/util/evsel.c
+@@ -497,6 +497,7 @@ struct evsel *evsel__clone(struct evsel *dest, struct evsel *orig)
+ 	evsel->core.system_wide = orig->core.system_wide;
+ 	evsel->core.requires_cpu = orig->core.requires_cpu;
+ 	evsel->core.is_pmu_core = orig->core.is_pmu_core;
++	evsel->core.is_pmu_uncore = orig->core.is_pmu_uncore;
  
--# .modinfo in vmlinux.unstripped is aligned to 8 bytes for compatibility with
--# tools that expect vmlinux to have sufficiently aligned sections but the
--# additional bytes used for padding .modinfo to satisfy this requirement break
--# certain versions of kmod with
--#
--#   depmod: ERROR: kmod_builtin_iter_next: unexpected string without modname prefix
--#
--# Strip the trailing padding bytes after extracting .modinfo to comply with
--# what kmod expects to parse.
- quiet_cmd_modules_builtin_modinfo = GEN     $@
-       cmd_modules_builtin_modinfo = $(cmd_objcopy); \
--                                    sed -i 's/\x00\+$$/\x00/g' $@; \
-                                     chmod -x $@
- 
- OBJCOPYFLAGS_modules.builtin.modinfo := -j .modinfo -O binary
+ 	if (orig->name) {
+ 		evsel->name = strdup(orig->name);
+diff --git a/tools/perf/util/parse-events.c b/tools/perf/util/parse-events.c
+index 413d5bde91147..3d05d691e8c52 100644
+--- a/tools/perf/util/parse-events.c
++++ b/tools/perf/util/parse-events.c
+@@ -309,6 +309,7 @@ __add_event(struct list_head *list, int *idx,
+ 	evsel->core.pmu_cpus = pmu_cpus;
+ 	evsel->core.requires_cpu = pmu ? pmu->is_uncore : false;
+ 	evsel->core.is_pmu_core = is_pmu_core;
++	evsel->core.is_pmu_uncore = pmu ? pmu->is_uncore : false;
+ 	evsel->core.reads_only_on_cpu_idx0 = perf_pmu__reads_only_on_cpu_idx0(attr);
+ 	evsel->pmu = pmu;
+ 	evsel->alternate_hw_config = alternate_hw_config;
 -- 
 2.53.0
 
