@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044490;
-	b=4+rmQEHasufV9UcWJO56vDnmHui5NSGtH9v6lfUcbDgJwRtpIJ4Lpfl4ky+kv1qvhhSn
-	 OSbIC5FGFvzMUVNavQjpa5sp3v3XIsqPtNMv/KMcPh1C2+9S8p6YIljpvX+p/wHaMRZ8b
-	 2Vs2RNsuKn3BEfftvWn2XvjmBZQx/r4SVPQAKmAmeskLcv1tcmnAl4iSSqkzpaUEFrR65
-	 iPxtg7Jmuo7HXky0NnxTog9nkIniexFaXAbf0lQVijAsGUaAimfV25Cyx+xB5mk1hMwlI
-	 DQxETZ4C3jjlHPxBWb5JqB1V1tmKocpfZUW7UcYva5kxRuccqhR1OJqeVIrSgkmEtKw==
+	t=1795044493;
+	b=FdWMepiDYyq15eSRrSLSIgLoTlvFA2s7ag2dYexKtWpQTAlSxqfjJiDVjbbxi8qIE4v2
+	 FjHVg30Yukr0Mqct8/iM8Pi/QMwcqcBQkjVWgvW3pErMOD2yV0N1XhCLRk59YyNNBUhuS
+	 G+2OcfckBm1Jyx4t79BG5sdoPEM2reN5VSiJzulrMwdeBvi3M5sLI+8yvBYgdjxwn/gnj
+	 v6yisCKUOtEVT8Xio9WKAJkyIKURRuvLdUgLL1gDnh/+E/GPf2B6ZPmJAOtCyoaYsp097
+	 wUFwXpcGBrB11UgmyFRty6VzLnsZiUyQ+dJy9ntpLYXcc38MSdbm7goY2OAaFG0TtSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044490;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044493;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ErI6ZnYChcgN1deYEeNCuZ7PfE4jkum5TbkL34oF/fo=;
-	b=sN9nH/7dhftgVACNEt747oyJAg+R4ZiGvKeT802Tfq81PV5mt3AEpmkS/Uq7KvpnWJBV
-	 Fs+58HkmUpMedcD+7/3hqx56AMH6NYAXoY6/sHi95U98iFli66pAbachUQ4wahbZt9mEX
-	 28zX5j85pBuufU0s0ERNUGKdghZxJmcrQuWtUBI+zOWdntSOdPvAjZVTExiTQeC3AoXpi
-	 w8YKMTpYqoc9z5EbhpiHC6ixAcRVkt2MJjhMyPNOK6IcOfs5RJUwmZmNsgShgxoyIBM1N
-	 eIRwqchfvsyDBYyogE//imeHOKTYy0DWoTK2vhiQqIVF3O3IhmB8yM+WDZycTPXjp8w==
+	bh=L0coT3wumkXuYx7ob76alpY23nxyQpGUK6a4glL9jA8=;
+	b=mWQ0uNffpiGN8WrXcVWn/qut1d5uGROY+MJ57YeC/dLMk+JE22WQz3VZ9yZT7CiRyEJG
+	 4sKyZh9Z7C1caazOKzvlTAG2satjfRLtDhf51avCfq6K/H+Sc9NnzHLIJVUYsVR0eWyn5
+	 orFGyjyNLf/cOz1sWrJLCJ1hXN7CbFKrit4hr/Ab0uVOvCKlSt+goKhqQ3Kx7A9KCyILi
+	 UUcmOQSg2GukT81ttMiYumgoilMMwypA1CIVR59W8ESIrxcyM2SMS3maav8J9/KSociuq
+	 eURlAuqlnGLTsA7+9CLSE54/k4OPvIRBnSVKeZUREtX7+ERpiDo7QsfKiTqSJK+I8pA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zZXUgZQR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=srxioM3t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7EFF606A33D;
-	Wed, 18 Nov 2026 23:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BEB4606A31C;
+	Wed, 18 Nov 2026 23:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zZXUgZQR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C4A1F000C5;
-	Wed, 18 Nov 2026 23:28:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=srxioM3t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B9C1F000C5;
+	Wed, 18 Nov 2026 23:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044490;
-	bh=ErI6ZnYChcgN1deYEeNCuZ7PfE4jkum5TbkL34oF/fo=;
+	s=korg; t=1795044493;
+	bh=L0coT3wumkXuYx7ob76alpY23nxyQpGUK6a4glL9jA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zZXUgZQRA50iUI8Gmw8RGf/x3o2Jiq18aXpxN6nab6gnvdRFZclQPEne8V5dWfYfN
-	 KrlDClRcPIQAXC9pyaGt6mrStZu82PGD7eQITMvoFi2Zix9VxIQrnIpWORLmSK3XGk
-	 HpIP/8RFb5YGOg/OfJ4pmF502v/tSTUf94BNAiv0=
+	b=srxioM3tdoqUNqaAWoLjOn96Ljq0q7O36Hiq9LWXf+mmnjOUNo9YnFmv+y0acVLzp
+	 uxC4UfwgzfztBEd+VmlEMlEmlbivCnZqF+7T292NrRrLrhNxjFQv3VqM94FUlJKlbl
+	 X3cTCVNV0FqD62aYePqji0IK17vOucVAB2gFlyuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+37a57a84893052ab6071@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0587/2857] media: usbtv: fix null-pointer dereference on disconnect
-Date: Wed, 18 Nov 2026 15:27:01 +0100
-Message-ID: <20261118150222.619328042@linuxfoundation.org>
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.1 0588/2857] xfs: reject out-of-range attribute value lengths in xfs_attr_copy_value
+Date: Wed, 18 Nov 2026 15:27:02 +0100
+Message-ID: <20261118150222.656291437@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,95 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-[ Upstream commit cb705f75d03e946a4514488beb9e3bac9bcdb2e6 ]
+commit 0643549ffecaeb716c0b75590a9b76dfa5eb35b3 upstream.
 
-A null-pointer dereference can occur in usb_make_path() when called from
-usbtv_querycap() (and other ioctl handlers) during device disconnection.
+xfs_attr_copy_value() takes the value length as a signed int and, for a
+remote xattr, is handed args->rmtvaluelen.  That field is filled from the
+on-disk __be32 xfs_attr_leaf_name_remote.valuelen in
+xfs_attr3_leaf_getvalue(), so a crafted length such as 0x80000000 is
+stored into the signed rmtvaluelen as a negative number.
 
-Oops: general protection fault, probably for non-canonical address
-0xdffffc000000000a: 0000 [#1] SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000050-0x0000000000000057]
-RIP: 0010:usb_make_path include/linux/usb.h:985 [inline]
-RIP: 0010:usbtv_querycap+0x9c/0x100
-drivers/media/usb/usbtv/usbtv-video.c:612
-...
-Call Trace:
- <TASK>
- v4l_querycap+0x236/0x470 drivers/media/v4l2-core/v4l2-ioctl.c:1106
- __video_do_ioctl+0x8af/0xc70 drivers/media/v4l2-core/v4l2-ioctl.c:3133
- video_usercopy+0x860/0x1430 drivers/media/v4l2-core/v4l2-ioctl.c:3475
- v4l2_ioctl+0x18d/0x1e0 drivers/media/v4l2-core/v4l2-dev.c:366
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x174/0x580 arch/x86/entry/syscall_64.c:94
+The "buffer too small" guard in xfs_attr_copy_value() is a signed
+comparison:
 
-This happens due to a race condition between the USB device disconnect
-routine (usbtv_disconnect()) and V4L2 ioctls. When the device is
-disconnected, usbtv_disconnect() sets usbtv->udev = NULL without holding
-the usbtv->v4l2_lock mutex. Concurrently, an ioctl handler like
-usbtv_querycap() can be executing under the v4l2_lock and attempt to use
-usbtv->udev, leading to a crash.
+	if (args->valuelen < valuelen)
+		return -ERANGE;
 
-To fix this, move the usbtv->udev = NULL assignment into usbtv_video_free()
-and protect it with mutex_lock(&usbtv->v4l2_lock). This ensures that no
-non-queue ioctl handler can run concurrently with the pointer being
-nullified. If an ioctl is already running, the mutex will block the
-disconnect path until the ioctl finishes. If an ioctl is blocked waiting
-for the lock, it will acquire it after the disconnect routine releases it,
-but will then check video_is_registered() (which was cleared by
-vb2_video_unregister_device()) and safely return -ENODEV.
+A negative valuelen therefore compares as smaller than the caller's
+buffer size, skips the -ERANGE path, and is then used as a copy length,
+leading to an out-of-bounds copy of a full remote block into a small
+getxattr(2) buffer on a mounted crafted image.
 
-Acquiring v4l2_lock after vb2_video_unregister_device() avoids
-reintroducing a historical deadlock issue, and usbtv_audio_free() remains
-safe as it is called before usbtv_video_free().
+Reject a value length that is negative or larger than the maximum xattr
+size before it is used, so a bogus on-disk length can no longer slip
+through the value copier.
 
-Fixes: 65e6a2773d65 ("media: usbtv: Remove useless locks in usbtv_video_free()")
+Fixes: 9df243a1a9e6 ("xfs: consolidate attribute value copying")
 Cc: stable@vger.kernel.org
-Assisted-by: Gemini:gemini-3.6-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+37a57a84893052ab6071@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=37a57a84893052ab6071
-Link: https://syzkaller.appspot.com/ai_job?id=5abbe65a-5853-4bc2-9135-5c75f88d51ed
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/usbtv/usbtv-core.c  | 2 --
- drivers/media/usb/usbtv/usbtv-video.c | 4 ++++
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ fs/xfs/libxfs/xfs_attr_leaf.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/media/usb/usbtv/usbtv-core.c b/drivers/media/usb/usbtv/usbtv-core.c
-index 275b21404dd22..0e1f1a535d714 100644
---- a/drivers/media/usb/usbtv/usbtv-core.c
-+++ b/drivers/media/usb/usbtv/usbtv-core.c
-@@ -136,8 +136,6 @@ static void usbtv_disconnect(struct usb_interface *intf)
- 	usbtv_audio_free(usbtv);
- 	usbtv_video_free(usbtv);
- 
--	usbtv->udev = NULL;
--
- 	/* the usbtv structure will be deallocated when v4l2 will be
- 	   done using it */
- 	v4l2_device_put(&usbtv->v4l2_dev);
-diff --git a/drivers/media/usb/usbtv/usbtv-video.c b/drivers/media/usb/usbtv/usbtv-video.c
-index f3633448e8b96..8c9f09b56bfbd 100644
---- a/drivers/media/usb/usbtv/usbtv-video.c
-+++ b/drivers/media/usb/usbtv/usbtv-video.c
-@@ -969,5 +969,9 @@ void usbtv_video_free(struct usbtv *usbtv)
- 	vb2_video_unregister_device(&usbtv->vdev);
- 	v4l2_device_disconnect(&usbtv->v4l2_dev);
- 
-+	mutex_lock(&usbtv->v4l2_lock);
-+	usbtv->udev = NULL;
-+	mutex_unlock(&usbtv->v4l2_lock);
+--- a/fs/xfs/libxfs/xfs_attr_leaf.c
++++ b/fs/xfs/libxfs/xfs_attr_leaf.c
+@@ -517,6 +517,17 @@ xfs_attr_copy_value(
+ 	int			valuelen)
+ {
+ 	/*
++	 * A value length that is negative or larger than the maximum xattr
++	 * size is on-disk corruption.  The remote value length is an on-disk
++	 * __be32 stored into the signed args->rmtvaluelen, so a crafted value
++	 * such as 0x80000000 becomes negative and would slip past the
++	 * "args->valuelen < valuelen" check below and be used as a copy
++	 * length.  Reject it before that can happen.
++	 */
++	if (valuelen < 0 || valuelen > XFS_XATTR_SIZE_MAX)
++		return -EFSCORRUPTED;
 +
- 	v4l2_device_put(&usbtv->v4l2_dev);
- }
--- 
-2.53.0
-
++	/*
+ 	 * No copy if all we have to do is get the length
+ 	 */
+ 	if (!args->valuelen) {
 
 
