@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060167;
-	b=hdKllbP3Js/MssbOcHzgsMNI5p2bar571jEcZrtR8oDNG1kSyLRJozHqhPzTNxNdB+n+
-	 xV2FYXCrBh+DQQxTv/iHN9SrfTCzS1ycaYF8qSP7HgvI0bMzK6+PZnqXQVDEepzjgkb+B
-	 dubUcdsXMx3wexXEUo9H9rYeD+cE8Eu780TqpgBxIRhaSuDPXALbHGsElzoYZLTlLwdzr
-	 YLahYWanqjoE43olS0WuV633VRuUQNmbv9zBDaDxw/qcuapYiYEN8YooTobKmynBgeLtP
-	 SuREqJp6mRrouv9GICvQM9jOBhqnyJu7TfXNZ8dNgNQfcq5PIC3kdhUCq3GehvgB2rg==
+	t=1795060170;
+	b=NYWCK/66wcoAo3FZjzv4h/APALZGAzQcp5vDQ8c7Up4HkEo6dOTNsgI5aqteVqn4YOxQ
+	 T2k/46jUs6Wo+8hEqJy1SzYNm31VX/hxaQD2a1Jy/+wvoScf324mt3gE8owTcK+tfavCY
+	 6XMA026SF3eKa3sqa+DXCAwpDItO84U5QYB++f8abue7hdfV5NCdUvboKsr7nrN5y9guh
+	 s0dQiYXqTVf+RaBzxILr+oDGHLU/c1e15GKMGQTsRUXpzwaz1qSvvDnQomPaXl5YlokW9
+	 Vmg0ZqZwjruPiAERmFxSH5VclhxsxDeejYkeOlvJT1NxVDdrermlj5Do8T/KEZAtLxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060167;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060170;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h7nrtVdw1W0WBCyOla1LJasbDjcN85YkyJaOhAa2vTQ=;
-	b=xOgV0078aR8PTQ7/1rJZZzJx0IizbwEJC1bzJDOndyQ/VjoQhAzSQcY2PVAZRMysU+gP
-	 hkVOHCq+8JGshzL3K9chHqPcC2Y22VrJR9x/Dsh0z+eGfYtxO9i0svv+WlCg+fm9O0xKW
-	 b379NS7eyfFbsn03Owx/P8ILsIJFRPu9P3GZuFd52FmiOwTOBYSnAnSWTs+aqO/g1PHEH
-	 6D9PJsDSgZQWhuYVy8G/FXxRMvXzzIsEDp4NX2MC7Q+ne6yrQk1melD2ryJT14/dOvGOk
-	 cwGXxrjxLBqPP45moje5Vzjn2irUQoc3GHOk4lQ/IFGclR9Q0UOHzgS89vpgd6hablw==
+	bh=T3mhqt4UjhHbQe6CkMEN0gSADiiDUmEVTJWKPcTSr3E=;
+	b=rdBqaTIFZ0oG3z+GV8lJAm7C3aSR30L0jZ6zvbmXnA03D0mVemFQr9vOKgPR5ZQdMFRJ
+	 tp5LbGdPO0yiqzarvDKINab1BpEwr3vqWqxqeNUxdWiAUroD3FIOZWtJwsjHAzmuSYLbA
+	 55MCneEjHYy529GGMhoo91INKL1jGOzWtwGGZQKmHEdO81uqrbgf7eYcmQEfs7MTtSEtx
+	 6S4NSms/aWvJYe7f32rLwjfboRNje8RLOFZE+0ObyaEidJxjfk77D4d9kXj1kOC6xK6ar
+	 6f+J1H4V5+GIZ1TS8oD1gBO9W2pea4byyFKjISrP1/3zB/+fsmv7RtYl8+1g3OsKjSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MH8nJkTs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zCGsS760;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25474606A320;
-	Thu, 19 Nov 2026 03:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB9E606A325;
+	Thu, 19 Nov 2026 03:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MH8nJkTs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7660B1F000C4;
-	Thu, 19 Nov 2026 03:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zCGsS760
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEDC1F000C5;
+	Thu, 19 Nov 2026 03:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060167;
-	bh=h7nrtVdw1W0WBCyOla1LJasbDjcN85YkyJaOhAa2vTQ=;
+	s=korg; t=1795060169;
+	bh=T3mhqt4UjhHbQe6CkMEN0gSADiiDUmEVTJWKPcTSr3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MH8nJkTs/8TIFLXeJOB48ZpZXxzyTc3QPa9rrUM1g33up4//q860au3B12BssS3Y3
-	 Acn5/YfutwD5fsEwwCFTTPNXnMcOwqf70a6nAm01i97IlzA0ln1bETQOnxZn6ABKOh
-	 k0vuTl0iOAwWglowYNrGu/pkObgUwENKcxGMjNTM=
+	b=zCGsS760HL5lpAsx1+sYC/GNhzHTg5m8QVIdyR81DiFmGn4hrEpXmyvCnvjbm4per
+	 wR1idbw59yWmvVquu2lxxxwrwTm3ZfSuAnWDXVw2YV9nVSahwnE7BtGWPMxu4jTNDX
+	 LzoP7bHedhn97kbeblW0ylWS6lnkmIfAmJJwZXEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1065/1848] fbdev: kyro: Use devm_ioremap() for mmio registers
-Date: Wed, 18 Nov 2026 15:51:43 +0100
-Message-ID: <20261118150002.232930109@linuxfoundation.org>
+Subject: [PATCH 5.10 1101/1848] xfrm: retry inexact policy lookup after node reinsertion
+Date: Wed, 18 Nov 2026 15:52:19 +0100
+Message-ID: <20261118150005.197878356@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,62 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit e0bf12a43243e6afc5a03fc55c58ec48aba48088 ]
+[ Upstream commit 868f63c8bfafa9b827168c9126f85264c39c02ec ]
 
-Replace the manual ioremap() call for the MMIO registers with the
-device-managed devm_ioremap() variant.
+An inexact policy lookup first records pointers to candidate hlist heads
+and then traverses the lists.  A concurrent policy insertion can merge
+inexact tree nodes between those operations:
 
-This simplifies the driver's resource management by ensuring the memory is
-automatically unmapped when the driver detaches from the device.
+  lookup                         policy insertion
+  ------                         ----------------
+  find inexact candidates
+    save obsolete hlist head
+                                 write_seqcount_begin(&bin->count)
+                                 merge inexact tree nodes
+                                   hlist_del_rcu(&policy->bydst)
+                                   reinsert policy->bydst in survivor
+                                 write_seqcount_end(&bin->count)
+  evaluate saved candidate list
+    miss the moved policy
 
-Signed-off-by: Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Stable-dep-of: d3bc005a6294 ("fbdev: kyro: Release WC setup on registration failure")
+The merge immediately reinserts the same hlist node into the surviving
+tree node.  RCU keeps the policy alive, but it does not provide a
+consistent view while its list node is moved.  A lookup that selected the
+obsolete list can observe it empty.  A lookup already traversing a moved
+policy can instead follow the next pointer rewritten by the reinsertion.
+Either case can return an incorrect IPsec policy result.
+
+The per-bin sequence counter already brackets calls to
+xfrm_policy_inexact_insert_node(), including node merges.  The read side,
+however, currently validates the counter only while searching an
+individual rb-tree.  A successful search returns without validation, and
+the later candidate-list traversal is outside that read-side section.
+
+Snapshot the per-bin sequence before discovering candidate heads and
+validate it after evaluating all candidate lists.   Retry the lookup if
+the inexact policy tree changes while it is being searched.
+
+Fixes: 9cf545ebd591 ("xfrm: policy: store inexact policies in a tree ordered by destination address")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+[ sashal: preserved the required dir argument in xfrm_policy_eval_candidates() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/kyro/fbdev.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ net/xfrm/xfrm_policy.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/kyro/fbdev.c b/drivers/video/fbdev/kyro/fbdev.c
-index 4979339dbc008..7441d48faea77 100644
---- a/drivers/video/fbdev/kyro/fbdev.c
-+++ b/drivers/video/fbdev/kyro/fbdev.c
-@@ -713,13 +713,14 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	kyro_fix.mmio_len   = pci_resource_len(pdev, 1);
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index c14f495f62b80..0b753c0ba0055 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -2104,6 +2104,7 @@ static struct xfrm_policy *xfrm_policy_lookup_bytype(struct net *net, u8 type,
+ 	struct xfrm_pol_inexact_bin *bin;
+ 	struct xfrm_policy *pol, *ret;
+ 	struct hlist_head *chain;
++	unsigned int inexact_sequence;
+ 	unsigned int sequence;
+ 	int err;
  
- 	currentpar->regbase = deviceInfo.pSTGReg =
--		ioremap(kyro_fix.mmio_start, kyro_fix.mmio_len);
-+		devm_ioremap(&pdev->dev, kyro_fix.mmio_start,
-+			     kyro_fix.mmio_len);
- 	if (!currentpar->regbase)
- 		goto out_free_fb;
+@@ -2135,12 +2136,18 @@ static struct xfrm_policy *xfrm_policy_lookup_bytype(struct net *net, u8 type,
+ 		}
+ 	}
+ 	bin = xfrm_policy_inexact_lookup_rcu(net, type, family, dir, if_id);
+-	if (!bin || !xfrm_policy_find_inexact_candidates(&cand, bin, saddr,
+-							 daddr))
++	if (!bin)
++		goto skip_inexact;
++
++	inexact_sequence = read_seqcount_begin(&bin->count);
++	if (!xfrm_policy_find_inexact_candidates(&cand, bin, saddr, daddr))
+ 		goto skip_inexact;
  
- 	info->screen_base = pci_ioremap_wc_bar(pdev, 0);
- 	if (!info->screen_base)
--		goto out_unmap_regs;
-+		goto out_free_fb;
- 
- 	if (!nomtrr)
- 		currentpar->wc_cookie = arch_phys_wc_add(kyro_fix.smem_start,
-@@ -768,8 +769,6 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 
- out_unmap:
- 	iounmap(info->screen_base);
--out_unmap_regs:
--	iounmap(currentpar->regbase);
- out_free_fb:
- 	framebuffer_release(info);
- 
-@@ -792,7 +791,6 @@ static void kyrofb_remove(struct pci_dev *pdev)
- 	deviceInfo.ulOverlayOffset = 0;
- 
- 	iounmap(info->screen_base);
--	iounmap(par->regbase);
- 
- 	arch_phys_wc_del(par->wc_cookie);
- 
+ 	pol = xfrm_policy_eval_candidates(&cand, ret, fl, type,
+ 					  family, dir, if_id);
++	if (read_seqcount_retry(&bin->count, inexact_sequence))
++		goto retry;
++
+ 	if (pol) {
+ 		ret = pol;
+ 		if (IS_ERR(pol))
 -- 
 2.53.0
 
