@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037387;
-	b=unfqrGT2NfmHivYtMnhkhmkvC6PT4IPWm2k9TFEBP9ncTTgHnHBJgPPbISwlHdikd6RX
-	 gsdX2KsnauPN2La/b22WmKDBmdqIme0C8+7ygwqLrMwhImUmczvfZBf6t7ysQFTYwhI6J
-	 DXaZa6O2zm5gRy6GEgubOSqtRHfU4cFBvcG+sy3dkj0vkIY1TJ/tJulic2JEn4pdU7U/j
-	 Ze1z+r7CYf+Xdoz6mOga31uN1dovBj4USvPG5dGa5vUx75DUVG0gy4tubcYrEh0ftVo9d
-	 g7PuOC7YRUTVyXPbDRmVpeovx/wgdU05W34yKKKWn35ntA9yLJRwlO1eT7Z5mNqj1Tg==
+	t=1795037390;
+	b=hVn82zlRdfkVbDCdU9UtI2V0jSi1SOLv2DYzTuadX+w/RkCsD+wN8do4GR8JRWmyh+/h
+	 iRx1zuSEpu9qO3GPtOzphPlAvlwOxEQ8Q6ynHlF1nCF9dEDCR/ckF2SwKZf2lV7st8pnu
+	 8qol6f3ChahVEumzJg7a1yca/gdAmxV4v6dk1FexlsFDSBFoaGmjjPQf7x+2QWvsmMheb
+	 DAK/ylcQwspVbmreXOIkS+yoQI5MYJTOs+ME/bpDH95GdVW8EUmDMZUfkyeVhB04bJk5p
+	 uM7dRAn/Ie9HXHjAYt5UqMGeMhsdVA2HANGapfRDih+u4r7vKTNeALcbXvc2KXDL9lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037387;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037390;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RxgZ7UU+LUsnbzs3WvT03gfbpTqdNJO9pqrlRqTKPKk=;
-	b=mrpcQpC2+JM1AvhqnmMsZksmeqk0WZLXMJ+nfotElJSLZ1raOdtHQRADCd/Vi71ugwME
-	 ZzRa6019jdX6M3E2Wf0En3/LUxCMzVCAcKGpk+N8kCVlu27POuMKr2tJeoh5zgJJdqCPN
-	 JDVQ9Jov2RQH2U/VXHkhhuZuT2mxiBd9ee2gNz3JFLJFeGOMFp4QJRBcRiBgIfec97O1v
-	 iKeHdSzn+dpPESpopcj2OaeytoAtssjaphybHCh1SeZkNOdNThE6nFuDoz3qWWKx8Q8GO
-	 uTthUVkOheWqQjTH6HzWK2+quRQ7WoP4B1+xCsPD3zEChKBafDAjYtXA1+VW7tydeug==
+	bh=HUuLl1rR/BUWDDpNveIe1Ftzo76F8PoJUKea1+HOPYA=;
+	b=RquRYjEkTKBg3+8d7NFY7ED3YWxw1/0SR4UAaX0SU48qRhJLF2m/G9rbqnjB8YxFZVRB
+	 40X4c00BAGpAbRT1ILj3/ole6NHhv5ukI8O543dEtvHrFIwYw+X0728cTpN1hRs75+VVH
+	 BmkQJhs7HFzfQm89ad7L5FoxWjvVyv3TgBsqLN3RHzqNBSR9KY7OWepVO0Fv5AYK6SfxE
+	 aAmzVy9EF6QjykRUt4DIjgBLL5awm9DYLyqNn8DW1nxM1f5zG6C5VZIkMvDNAHey9zAJi
+	 YHKYFMMIhmKnvpVJ8LBzhgaz3mFIFlspDyEuojmVZV4szHQeHrhdvFHJwl0uJwIogJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XJvkGK/6";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Typ+OQCq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049BB606A32A;
-	Wed, 18 Nov 2026 21:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DDF4606A32A;
+	Wed, 18 Nov 2026 21:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XJvkGK/6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408E21F000C4;
-	Wed, 18 Nov 2026 21:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Typ+OQCq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 899C91F000C4;
+	Wed, 18 Nov 2026 21:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037386;
-	bh=RxgZ7UU+LUsnbzs3WvT03gfbpTqdNJO9pqrlRqTKPKk=;
+	s=korg; t=1795037390;
+	bh=HUuLl1rR/BUWDDpNveIe1Ftzo76F8PoJUKea1+HOPYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XJvkGK/6qgQS5LaNytBRxVt0SX0TJtOCMUQPT3RiztYJiqnk9p6MGtv3GckHeKMI5
-	 8hUj+dHpIavcpHOw+omxa3gH1jt+w7rCdtLzpKobKGKwlQ4fIDEVObWUjkfWDkCXhT
-	 I3Zb1fLTnPmZx0GBaWYegaKGOE8Z64qck4T4/olc=
+	b=Typ+OQCqan5YPE4OyHFkjznu9IMI+a5S4bGUd6Zpl6G5+wPE2aBFYk6UDJkDtP0nI
+	 VS6GJtBjNQR9ZiWr5/cO7kpTQ09HUOzM9bedm9F1BEWnahKEmexyuY1rAwJMlw/mIT
+	 +uFpxZLHQbDQoh2J2xNWNZoZjXc9stQeBDAF2zVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuansheng Yang <0xbeac@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Andreas Wild <andiwild@gmail.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1343/3318] io_uring/rsrc: hold uring_lock across index-alloc put_user
-Date: Wed, 18 Nov 2026 15:32:45 +0100
-Message-ID: <20261118150400.669013202@linuxfoundation.org>
+Subject: [PATCH 6.6 1334/3318] PCI: Skip Target Speed quirk on clamped ports with no link
+Date: Wed, 18 Nov 2026 15:32:36 +0100
+Message-ID: <20261118150400.368305781@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,90 +69,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuansheng Yang <0xbeac@gmail.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-Commit d7c7037253f6935af243570635d71b4920b5a4ea upstream.
+[ Upstream commit ff8a969f7dc8e79ea6113abcfa983e070b2b585a ]
 
-io_files_update_with_index_alloc() installs a fixed file via
-io_fixed_fd_install(), which drops ->uring_lock when the request runs on
-io-wq, then put_user()s the allocated slot back to userspace. If that
-faults, the error path calls __io_close_fixed() by slot index after
-re-taking the lock.
+Since commit 72780f796468 ("PCI: Always lift 2.5GT/s restriction in PCIe
+failed link retraining") the Target Speed quirk lifts a firmware-imposed
+2.5GT/s restriction on any downstream port, without checking whether the
+link is up.  Where nothing is plugged in, the retraining that follows can
+never complete, so each attempt costs PCIE_LINK_RETRAIN_TIMEOUT_MS.  The
+quirk makes two of them -- the initial one and the restore on the error
+path -- adding a fixed 2 s to every boot.
 
-The slot can be closed and reused between the install and that cleanup:
-another fixed CLOSE plus open/accept/pipe/socket, or a FILES_UPDATE, can
-put an unrelated file into the same slot. The error path then removes
-that file instead of the one this request installed, ending an unrelated
-file's fixed-table reference early. This is a correctness/DoS issue, not
-a use-after-free: fixed-file requests hold an io_rsrc_node reference, so
-the node and file stay alive until they are done.
+On an MSI PRO Z690-A WIFI DDR4 (Intel 600 Series PCH) with one empty x1
+slot, running v7.2-rc5:
 
-Hold ->uring_lock across __io_fixed_fd_install() and put_user(), and do
-the failure cleanup with io_fixed_fd_remove() under the same lock. This
-is the same class as the io_pipe_fixed() fix in a3d7ee11289f. Faulting
-while holding ->uring_lock is fine, the registration paths already do
-it.
+  0.541 pci 0000:00:1c.0: removing 2.5GT/s downstream link speed restriction
+  1.541 pci 0000:00:1c.0: retraining failed
+  2.541 pci 0000:00:1c.2: [8086:7aba] type 01 class 0x060400
 
-Fixes: a7c41b4687f5 ("io_uring: let IORING_OP_FILES_UPDATE support choosing fixed file slots")
-Signed-off-by: Yuansheng Yang <0xbeac@gmail.com>
-Link: https://patch.msgid.link/20261104154655.81876-1-0xbeac@gmail.com
-[axboe: various touch-ups]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[axboe: 6.6 uses copy_to_user() for the slot rather than put_user(), and
-->file_data for the table check]
+Where the Link Speed has already been clamped at 2.5GT/s and no link has
+been established there is nothing worth doing, which is what the kerneldoc
+for the quirk already describes: the restriction is to be lifted where
+firmware arranged it "and the port reports its link already being up".
+Bail out early in that case, before either the ASM2824 workaround or the
+removal of the restriction is considered.
+
+Ports whose link is up are unaffected, and so is the ASM2824 workaround,
+which is reached with the Target Link Speed not clamped.
+
+With this applied the quirk returns without touching the port: both
+messages are gone, enumeration proceeds from 0000:00:1c.0 to 0000:00:1c.2
+in 1 ms rather than 2 s, and the systemd "kernel" boot phase goes from
+3.011 s to 1.036 s.
+
+Fixes: 72780f796468 ("PCI: Always lift 2.5GT/s restriction in PCIe failed link retraining")
+Reported-by: Andreas Wild <andiwild@gmail.com>
+Closes: https://lore.kernel.org/lkml/20260801092152.5643-1-andiwild@gmail.com/
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221801
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Andreas Wild <andiwild@gmail.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Andreas Wild <andiwild@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260801201244.4421-1-andiwild@gmail.com
+[ Andreas: this tree predates pcie_lbms_seen() and pcie_set_target_speed()
+  and still tests LBMS and DLLLA in one expression, so the hunk did not
+  apply.  Split that test the same way as upstream and compare the
+  LNKCTL2 Target Link Speed field against PCI_EXP_LNKCTL2_TLS_2_5GT
+  directly, as the existing code further down already does. ]
+Signed-off-by: Andreas Wild <andiwild@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/rsrc.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ drivers/pci/quirks.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/io_uring/rsrc.c b/io_uring/rsrc.c
-index f35ae7d6ecc7a..ba1dedaaa7c42 100644
---- a/io_uring/rsrc.c
-+++ b/io_uring/rsrc.c
-@@ -574,11 +574,12 @@ static int io_files_update_with_index_alloc(struct io_kiocb *req,
- {
- 	struct io_rsrc_update *up = io_kiocb_to_cmd(req, struct io_rsrc_update);
- 	__s32 __user *fds = u64_to_user_ptr(up->arg);
-+	struct io_ring_ctx *ctx = req->ctx;
- 	unsigned int done;
- 	struct file *file;
- 	int ret, fd;
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 6bef92be41f91..57dd40f2e371a 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -93,8 +93,12 @@ int pcie_failed_link_retrain(struct pci_dev *dev)
+ 	pcie_capability_read_word(dev, PCI_EXP_LNKCTL2, &lnkctl2);
+ 	pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &lnksta);
+ 	oldlnkctl2 = lnkctl2;
+-	if ((lnksta & (PCI_EXP_LNKSTA_LBMS | PCI_EXP_LNKSTA_DLLLA)) ==
+-	    PCI_EXP_LNKSTA_LBMS) {
++	if (lnksta & PCI_EXP_LNKSTA_DLLLA) {
++		;
++	} else if ((lnkctl2 & PCI_EXP_LNKCTL2_TLS) ==
++		   PCI_EXP_LNKCTL2_TLS_2_5GT) {
++		return ret;
++	} else if (lnksta & PCI_EXP_LNKSTA_LBMS) {
+ 		pci_info(dev, "broken device, retraining non-functional downstream link at 2.5GT/s\n");
  
--	if (!req->ctx->file_data)
-+	if (!ctx->file_data)
- 		return -ENXIO;
- 
- 	for (done = 0; done < up->nr_args; done++) {
-@@ -592,15 +593,25 @@ static int io_files_update_with_index_alloc(struct io_kiocb *req,
- 			ret = -EBADF;
- 			break;
- 		}
--		ret = io_fixed_fd_install(req, issue_flags, file,
--					  IORING_FILE_INDEX_ALLOC);
--		if (ret < 0)
-+		/*
-+		 * Hold the lock across the copy_to_user(), if it's dropped the
-+		 * slot can be closed and reused before the error path runs.
-+		 */
-+		io_ring_submit_lock(ctx, issue_flags);
-+		ret = __io_fixed_fd_install(ctx, file,
-+					    IORING_FILE_INDEX_ALLOC);
-+		if (ret < 0) {
-+			io_ring_submit_unlock(ctx, issue_flags);
-+			fput(file);
- 			break;
-+		}
- 		if (copy_to_user(&fds[done], &ret, sizeof(ret))) {
--			__io_close_fixed(req->ctx, issue_flags, ret);
-+			io_fixed_fd_remove(ctx, ret);
-+			io_ring_submit_unlock(ctx, issue_flags);
- 			ret = -EFAULT;
- 			break;
- 		}
-+		io_ring_submit_unlock(ctx, issue_flags);
- 	}
- 
- 	if (done)
+ 		lnkctl2 &= ~PCI_EXP_LNKCTL2_TLS;
 -- 
 2.53.0
 
