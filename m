@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029403;
-	b=V9r7nJ6JDuJmuBZopStMferRFeKxAHBI2aneVx3zNyyUncksz7uwqMXgvyAKA16FJvpi
-	 STeeCFvJz61HjjD3f7yzOQlBr0yDAUpr8RhK4L49yRPOpsOQpeVpE964jdBilG5y9svov
-	 qfvuxBehLvZSbunkZ1p1Vw9yx+gVHdHdAGOc32o4TeJwSq4KmBNG/FCDZaKz0zLhPA/DJ
-	 pjcfrrd3Nv8Nz3UXAoydTQaUNexx1HZ6+H/WLPgP8PF2gsS7pJxCQ7TkGhPXh02JEsWq0
-	 24omVdwrx1EkPpsEHBUxRqraZ1OILNHBMPRSpiTuvnJTQ8pPSf/U7e142ak/WDyDBmg==
+	t=1795029405;
+	b=VFralDEGONlh2s9sG5g431iXT2QyojBH94o4j3acEGbmcknYwltnIX79CeBeRuIfBh9Q
+	 v+Kv+SYuVa1fVEgOrp8cqEQ5G+T9AjJk0lp6jJnw9kjUfaPuYGhHLU9QxnakFNrx7tB1p
+	 xq+Wvl4qnGJHIrsuZT3XHcahqa4jChk9HgzUDyCNCu+t2mD789oOLJUvX9XexnYnFbOpO
+	 dRbJSNHLkv+7+YXL4drNADAneQjGLZfH8UluW0LZOz2Ehkw4LwCXM8kVmA7UmbMbYf4lJ
+	 cq8HbWyGAgT7AmDDRw8WofetIhsKJANHjpG8D8G1lcJesaj11Iookk0904Qxp5LQPUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029403;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029405;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d8uSicZ/g8PDPiVLOkncHWNX5ozkPYD2goigerc12zw=;
-	b=I2ooS8qK0Iy5ZkDVqaZKNy8dxcc8yxLrsdRDZfq9uCT7ezdMgTWvdz8BzNMPBU2x5xRW
-	 dLEZNYnbrcNiVIg8ZiSSmLoZR8LnuV7cHiKNyp+lzCLYg7BGkPMWOEFsHs2DytcVfP13k
-	 iOJt40CTJfa+CXaRr+g3TCPuNV9VGCaeRbtGsti8Qx8idI1BYqeq4+bvZx2R8gRcOPqva
-	 1OKIDPeGlLUG3aqPDGOYrNtVVsvJbx2QaBlCf15VOpbYGIKjwFOkn1g1CzcSfgMzVXI57
-	 vzl7nHAt3uYrdFCjB+LELRCPTI1OrxEBSK3b5dMAgyWu6ar7boearXMzvLSlmdjd4DA==
+	bh=1VT5pOp4JAz6S1NaP1M12Zl+TUEO1wBhwcB6nvf2XQA=;
+	b=Zv9LEe1M5YO4WcgxYkK95x5YE6TTjrom+v2SHdsCLzcPz6Ce7kraWY1SJpBXYxoyaKTC
+	 v4+dcor6hjJB3RGXnQymkE5vUg5im4OZL0c1BnndRcgfjjv/ZboLdnDBwxhW9ECapKajC
+	 OA6ntZeQSXSDrr29lFNBAdzIbgnuBajOoD5zC4ZQKsEj74EvMn2t8xkXtDGNmYZD8LsVI
+	 jm4R87ID4ZqeOLgmF4729E2Hw5+F+yxrQRLEIPbB4/F3Dp/nscmuw98BKtyHlgGtD5pRs
+	 XKDEagvu5TK6UkIbKD1ecWrZkglJCZLssu3BEpNkGTEtZk8otS19EEPAPSgwlHtZvPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RLu77nTi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Kh4ql/Hg";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4DF606A325;
-	Wed, 18 Nov 2026 19:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D226606A320;
+	Wed, 18 Nov 2026 19:16:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RLu77nTi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA201F000C4;
-	Wed, 18 Nov 2026 19:16:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kh4ql/Hg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35FE1F000C4;
+	Wed, 18 Nov 2026 19:16:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029402;
-	bh=d8uSicZ/g8PDPiVLOkncHWNX5ozkPYD2goigerc12zw=;
+	s=korg; t=1795029405;
+	bh=1VT5pOp4JAz6S1NaP1M12Zl+TUEO1wBhwcB6nvf2XQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RLu77nTiHavKXdGpmWmK4G/xlK4Im76v+Z3hGrrtq8tUqnd8/f8dXZI5ae+CNnoMy
-	 Xla8KEghUBqIYI3LArnzDzr1m66i1si1LSjYeptAVnbM3NOXGhGLIr9FETHFAtO3sD
-	 FcClryMjKN/B00eJfm7ISDFvOi5q66sj1pcViZ+8=
+	b=Kh4ql/HgezRDSlQAN1bBw1GMJWvQ1irzh+s+RfkekUPRsZpwVRvHouJvsDGaYNOvm
+	 bRNdaZXwMi1ElHAA6ixfWzvXafZu42tndI5ODZqlcJhQsdChBjyGhSoR87L4zsiMpB
+	 7UfjTwGStCFvyjL/KhtrOufCl75TGi4WTngRkPSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0338/1756] dmaengine: fsl_raid: zero CF descriptor pool allocations
-Date: Wed, 18 Nov 2026 15:41:05 +0100
-Message-ID: <20261118150021.701617685@linuxfoundation.org>
+Subject: [PATCH 6.12 0321/1756] kernfs: fix up the unlocked attribute reads on the creation paths
+Date: Wed, 18 Nov 2026 15:40:48 +0100
+Message-ID: <20261118150021.073059146@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,60 +69,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-[ Upstream commit 26d48e9fb6997f4026dd86daecf8d2c12258f698 ]
+[ Upstream commit 81bdc85b4c086502f4446a58eb5d25f29bb5e9f7 ]
 
-The compound frame descriptors and embedded CDBs are allocated from the
-cf_desc_pool with dma_pool_alloc(), which does not zero the memory. Only
-cdb32, the gfm coefficients and the frame address/length fields are
-programmed; the dpi_dest_spec/dpi_src_spec fields in the CDBs and the
-rbro32 field of each frame are left uninitialized. The hardware reads
-the whole block (frame 0 length is sizeof(struct fsl_re_xor_cdb) or
-sizeof(struct fsl_re_pq_cdb)), so uninitialized heap contents are
-exposed to the device on each new descriptor.
+Two creation paths read a live node's attributes without holding
+kernfs_iattr_rwsem, which kernfs_iop_setattr() takes for writing.  They
+need different fixes.
 
-Use dma_pool_zalloc() in both fsl_re_chan_alloc_desc() and
-fsl_re_alloc_chan_resources() so the descriptor and CDB memory is
-zeroed before it is handed to the RAID engine.
+kernfs_create_link() copies the target's ia_uid and then its ia_gid into
+the new link.  A chown of the target between the two reads leaves the
+link with the old uid and the new gid, an owner the target never had.
+Read both under the rwsem.
 
-Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
-Assisted-by: opencode:deepseek-v4-flash-free
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260820031654.28450-1-rosenp@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+kernfs_new_node() reads the parent's mode and ia_gid for S_ISGID
+inheritance.  Either value is fine there: the node does not exist yet,
+so nothing orders a racing chmod or chown against the creation.  Taking
+the rwsem would only pick between two answers that are both right.  Mark
+the reads with READ_ONCE() instead.
+
+The pointer that leads to them is already fine: __kernfs_iattrs()
+publishes kernfs_node::iattr with try_cmpxchg(), and both sides read it
+with READ_ONCE(), like the rest of fs/kernfs.
+
+The Fixes tag is for the symlink half.  kernfs_create_link() has read
+the pair unlocked since it started copying the target's owner; only the
+name of the lock its writer takes has changed.  The READ_ONCE() markings
+are not a fix.
+
+Fixes: 488dee96bb62 ("kernfs: allow creating kernfs objects with arbitrary uid/gid")
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Link: https://patch.msgid.link/20260905191613.3143937-5-shakeel.butt@linux.dev
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/fsl_raid.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/kernfs/dir.c     | 12 +++++++++---
+ fs/kernfs/symlink.c | 17 ++++++++++++++---
+ 2 files changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-index 5c4f1d0f0c115..4d96a0594ee69 100644
---- a/drivers/dma/fsl_raid.c
-+++ b/drivers/dma/fsl_raid.c
-@@ -305,8 +305,8 @@ static struct fsl_re_desc *fsl_re_chan_alloc_desc(struct fsl_re_chan *re_chan,
- 		if (!desc)
- 			return NULL;
+diff --git a/fs/kernfs/dir.c b/fs/kernfs/dir.c
+index 5dc90a498e75d..0eda24cf0ef3d 100644
+--- a/fs/kernfs/dir.c
++++ b/fs/kernfs/dir.c
+@@ -685,13 +685,19 @@ struct kernfs_node *kernfs_new_node(struct kernfs_node *parent,
+ {
+ 	struct kernfs_node *kn;
  
--		cf = dma_pool_alloc(re_chan->re_dev->cf_desc_pool, GFP_NOWAIT,
--				    &paddr);
-+		cf = dma_pool_zalloc(re_chan->re_dev->cf_desc_pool, GFP_NOWAIT,
-+				     &paddr);
- 		if (!cf) {
- 			kfree(desc);
- 			return NULL;
-@@ -594,8 +594,8 @@ static int fsl_re_alloc_chan_resources(struct dma_chan *chan)
- 		if (!desc)
- 			break;
+-	if (parent->mode & S_ISGID) {
++	/*
++	 * The mode and the gid below are read unlocked on purpose: they feed
++	 * a node that does not exist yet, so nothing orders a racing chmod or
++	 * chown against this creation.
++	 */
++	if (READ_ONCE(parent->mode) & S_ISGID) {
+ 		/* this code block imitates inode_init_owner() for
+ 		 * kernfs
+ 		 */
++		struct kernfs_iattrs *attrs = READ_ONCE(parent->iattr);
  
--		cf = dma_pool_alloc(re_chan->re_dev->cf_desc_pool, GFP_KERNEL,
--				    &paddr);
-+		cf = dma_pool_zalloc(re_chan->re_dev->cf_desc_pool, GFP_KERNEL,
-+				     &paddr);
- 		if (!cf) {
- 			kfree(desc);
- 			break;
+-		if (parent->iattr)
+-			gid = parent->iattr->ia_gid;
++		if (attrs)
++			gid = READ_ONCE(attrs->ia_gid);
+ 
+ 		if (flags & KERNFS_DIR)
+ 			mode |= S_ISGID;
+diff --git a/fs/kernfs/symlink.c b/fs/kernfs/symlink.c
+index 45371a70caa71..3d5fc22878936 100644
+--- a/fs/kernfs/symlink.c
++++ b/fs/kernfs/symlink.c
+@@ -31,9 +31,20 @@ struct kernfs_node *kernfs_create_link(struct kernfs_node *parent,
+ 	kuid_t uid = GLOBAL_ROOT_UID;
+ 	kgid_t gid = GLOBAL_ROOT_GID;
+ 
+-	if (target->iattr) {
+-		uid = target->iattr->ia_uid;
+-		gid = target->iattr->ia_gid;
++	/*
++	 * A symlink takes its owner from its target, so both fields have to
++	 * come from the same moment: read them under kernfs_iattr_rwsem, or
++	 * a chown of the target racing this could leave the link with the
++	 * old uid and the new gid.  The section ends before kernfs_add_one()
++	 * takes kernfs_rwsem.
++	 */
++	scoped_guard(rwsem_read, &kernfs_root(target)->kernfs_iattr_rwsem) {
++		struct kernfs_iattrs *attrs = READ_ONCE(target->iattr);
++
++		if (attrs) {
++			uid = attrs->ia_uid;
++			gid = attrs->ia_gid;
++		}
+ 	}
+ 
+ 	kn = kernfs_new_node(parent, name, S_IFLNK|0777, uid, gid, KERNFS_LINK);
 -- 
 2.53.0
 
