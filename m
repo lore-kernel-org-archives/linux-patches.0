@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041930;
-	b=pa3RqScduTXHP5jeFfWedw2/77O0wsKTVl62/SRSmq2YOAQEV0eSc0by1CLKFMwEOIn5
-	 TLAssYE6+zQvV/08UG9cbueRG1+L9NAClJfvwNKSkZ1R8ZrtVjy98U62k93LxDdige+Vz
-	 l55rXzyx1RAmN6+FnaTEpcLXM/qBif7AJsDPjh4MfH+2I5wSr8DUEmt/0R7Tv1v56t+8B
-	 qfaC1o9LkvuizkvUTi39AKhrN4DSMQWyjC4zUcgV1qZxBZp7fSySFzFDBgMofWbykaCiy
-	 oqI4VXows7kc1fHUDnLIuPo7T3/bdNiVRk+hFBmmUvCI9xclWylyKAT80jSphQgVVEw==
+	t=1795041933;
+	b=1pA1UXyoZNPX78XArIR+GP9B/NZcOPchmAtCyfMKMh77WCjdJwfaIl5DZB+dLE06snpn
+	 3d6HtVG6MLA+BoRa8FxySwJfYq9iBu2onfinWnStrdAEtS7+woxstJf6/de+/AjHUCTCn
+	 rgWFxrLKgseLCdSJy3EOIFeTIojBs2l7iJinjBGqlxdoX+6yBSGyi70HuCKCiw7rcWXTZ
+	 rX1tEh5pMvqqJl0zOHwq/B4vZhgpkhpfG8m6BtBiRJN8+UGvfTGS9Abv5Hm78O1NlV0Jz
+	 +aCxlnn5zsLXGvXcVZxlP9RkntAKIHy+pjrMkW+bwv2EGkLyNi+uSF8XfU4ol4lIxcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041930;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041933;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DCkxXSryfhf8Ppza2qFWNXQqCdoUXoKDLHl9uXWOgUw=;
-	b=Kw48O0pfg1BlyteZHGMHQDevB1jffuyVpVwpa3V6zPgSshBZyFk2Ui71gVH7s+t/toiV
-	 vUrqHqogFZL7tan/kydYwPXpVtqaw0Lm+xMNu9D5aw8NBfb/cSHtNm7V4hoXnlq4npZSA
-	 b6BLqBmNTEZGfG17VLzNEIFMKFi1bvD6vyWEIN51v2m2nrbpGgXNo4lz+JRXvk97eyZok
-	 szUlmJlu0Nvxyvr6G/s64I3Hhe9foUqbovbkaP/a34edmzj584ZCPLNu76FWN/BQf7Vcw
-	 9hZaf23EpVncFUMneIsPoF+qVVHa4kCg3fqGdtZSzgkMaA7TcijA2O/TyYBDPUMlvTw==
+	bh=3vmf5w2qDP+4D9LfUIAFAFWo8Wv4UyiKcU7XJk1NUvU=;
+	b=5trUP05aaieVtRZSKaKRaSU6e5DtjYYPt4g0hujv60vUqoophrJHDb9/soLq7/+X0b3N
+	 GKeiwG45oxpZwzoWlJgz9ufNO1FYuF9ou/Zt3rmXW23haQJu7aJWj8nsLWaADtmHFUTEf
+	 5BQngJ5CZhKtWXm8fDBKdm/NyU9qZspNhaeYK3ch8nKpK4Dv3pBkMRxENweF9iI4Lzz7v
+	 4b0Ol36xCEJtQMB0cpowuYtxFXNsidMxWEUmMy9/BG+5syZENW4BMi3r94+xEX0usUTqL
+	 oTYFHiU7vXHraGQcfPabwi0hoFPqL3ghugNVlcAYRc9uOCx9fv77KpLKeGYXL/F4/JQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KNl4IhGW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hHTi0SqM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BD6606A31C;
-	Wed, 18 Nov 2026 22:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1333606A325;
+	Wed, 18 Nov 2026 22:45:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KNl4IhGW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A8611F000C4;
-	Wed, 18 Nov 2026 22:45:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hHTi0SqM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545D31F000C4;
+	Wed, 18 Nov 2026 22:45:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041930;
-	bh=DCkxXSryfhf8Ppza2qFWNXQqCdoUXoKDLHl9uXWOgUw=;
+	s=korg; t=1795041932;
+	bh=3vmf5w2qDP+4D9LfUIAFAFWo8Wv4UyiKcU7XJk1NUvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KNl4IhGWbM/KeQPyJR0pjnjZPe36Sfm8wJYYrHcCUyZ3FWbMcSA6dVQDaTqZD4uUo
-	 9MVGM27DcfiR7KO9BVyTEAfvsMIRj24CadYtdrhRxXm9sx4d01+Rwcz70eMfV9edHB
-	 rEWcMriRzxKtoJcS2j7CiA2Js+HyBVDvAjiBvmO4=
+	b=hHTi0SqMk7M0VIXgR9Rw4DQ3cxcmjzzIiwOgAIbqFyKFNUrQAGKXeQ8hqTWp4HswN
+	 gKVbduWBr4+wkdHeJ3OTHKLCA1jjUvFjEf2yPt7Y3g0S2uH93/ofN0f6qSoH+uKR54
+	 F3q4O5GTlzfVcyvC5genZdojGPHKQ+TdLPM59LiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brad Fitzpatrick <bradfitz@tailscale.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2990/3318] gre: keep the UDP tunnel GSO type when completing GRO
-Date: Wed, 18 Nov 2026 16:00:12 +0100
-Message-ID: <20261118150449.967809485@linuxfoundation.org>
+Subject: [PATCH 6.6 2991/3318] bpf: Fix verifier WARN on narrow read of bpf_tcp_sock u64 fields
+Date: Wed, 18 Nov 2026 16:00:13 +0100
+Message-ID: <20261118150450.000638089@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,83 +71,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brad Fitzpatrick <bradfitz@tailscale.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 718f364a20ecee4f25986789c25550cf4da73b4c ]
+[ Upstream commit af873495cbcb066ab029f7f63b94410d4db47628 ]
 
-gre_gro_complete() assigns SKB_GSO_GRE to gso_type rather than OR-ing
-it in. When GRE is carried over UDP by FOU or GUE, udp_gro_complete()
-has already set SKB_GSO_UDP_TUNNEL{,_CSUM} before calling into the FOU
-or GUE gro_complete handler and then gre_gro_complete(), so that bit is
-lost.
+A BPF program can read the middle of a u64 field in struct bpf_tcp_sock:
 
-That has broken forwarding of such packets since FOU gained GRO: if a
-host with a FOU or GUE socket on the tunnel's port merges transit
-packets and then forwards them out a device that can't segment them
-itself, udp4_ufo_fragment() finds neither tunnel bit and fails, and
-the packets are dropped. Since commit 3d010c8031e3 ("udp: do not accept
-non-tunnel GSO skbs landing in a tunnel"), local receive is broken too:
-udp_unexpected_gso() considers the merged skb, which reaches the
-encapsulation socket without either UDP tunnel bit, unexpected and
-hands it to udp_rcv_segment(). Segmenting fails, so the packet is
-freed and counted in UdpInErrors. Either way, only packets GRO didn't
-merge get through, so TCP over FOU or GUE GRE tunnels slows to about
-one segment per round trip whenever the receiving device has GRO
-enabled.
+	tp = bpf_tcp_sock(listener);
+	/* +0x54 is in the middle of the u64 bytes_received */
+	unsigned hi = *(unsigned *)((char *)tp + 0x54);
 
-OR in SKB_GSO_GRE instead, as ipip_gro_complete() and
-sit_gro_complete() do for SKB_GSO_IPXIP4. For plain GRE, gso_type is
-still zero at this point unless the driver set it, so nothing changes
-there in the usual case.
+bpf_tcp_sock_is_valid_access() allows this 4-byte read (the default case
+only checks size == 4), but bpf_tcp_sock_convert_ctx_access() only knows
+the field starts and has no idea how to handle such an offset. It emits
+no instruction, cnt stays 0 and the fixup pass trips verifier_bug():
 
-The assignment dates to commit bf5a755f5e91 ("net-gre-gro: Add GRE
-support to the GRO stack"), but nothing set gso_type before it until
-FOU GRO came along, so the Fixes tag points there.
+	verifier bug: error during ctx access conversion (0)
 
-Tested under virtme-ng with bulk TCP over a GRE tunnel between two
-network namespaces joined by a veth, with GRO on the receiving veth and
-segmentation off on the sending one, so GRO sees wire-sized packets.
-32 MiB took:
+Just disallow the narrower access by matching the whole u64 range of the
+two fields, so it is turned down at check time:
 
-                  before                  after
-  FOU over IPv4   26.0s, 9658 UDP errors  0.28s, 0 errors
-  GUE over IPv4   26.1s, 9686 UDP errors  0.39s, 0 errors
-  FOU over IPv6   26.4s, 9860 UDP errors  0.16s, 0 errors
-  plain GRE       0.17s                   0.15s
+	invalid tcp_sock access off=84 size=4
 
-Forwarding the same FOU traffic through a third namespace with its own
-FOU socket on the port, GRO on its ingress and segmentation off on its
-egress, took 26.0s with 4826 egress drops before and 0.31s with none
-after. On v6.8, before 3d010c8031e3, local receive was fine but
-forwarding failed the same way (25.7s, 4764 drops).
-
-With GRO off on the receiver, all took under 0.2s both before and
-after. The gre_gso.sh and fou_mcast_encap.sh selftests give the same
-results before and after.
-
-Fixes: afe93325bc02 ("fou: Add GRO support")
-Signed-off-by: Brad Fitzpatrick <bradfitz@tailscale.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261011-bradfitz-gre-fou-gro-b4-v1-1-df713aad1531@tailscale.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 655a51e536c0 ("bpf: Add struct bpf_tcp_sock and BPF_FUNC_tcp_sock")
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Dongliang Mu <dzm91@hust.edu.cn>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261017143819.209510-1-jiayuan.chen@linux.dev
+Closes: https://lore.kernel.org/bpf/7a8ff335.1024c.1a14395f3e5.Coremail.kaiyanm@hust.edu.cn/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/gre_offload.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/filter.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/gre_offload.c b/net/ipv4/gre_offload.c
-index 311e70bfce407..22fa2493c529f 100644
---- a/net/ipv4/gre_offload.c
-+++ b/net/ipv4/gre_offload.c
-@@ -242,7 +242,7 @@ static int gre_gro_complete(struct sk_buff *skb, int nhoff)
- 	__be16 type;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 89984a086b41d..fc2b34a453ea9 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -7172,8 +7172,8 @@ bool bpf_tcp_sock_is_valid_access(int off, int size, enum bpf_access_type type,
+ 		return false;
  
- 	skb->encapsulation = 1;
--	skb_shinfo(skb)->gso_type = SKB_GSO_GRE;
-+	skb_shinfo(skb)->gso_type |= SKB_GSO_GRE;
- 
- 	type = greh->protocol;
- 	if (greh->flags & GRE_KEY)
+ 	switch (off) {
+-	case offsetof(struct bpf_tcp_sock, bytes_received):
+-	case offsetof(struct bpf_tcp_sock, bytes_acked):
++	case bpf_ctx_range(struct bpf_tcp_sock, bytes_received):
++	case bpf_ctx_range(struct bpf_tcp_sock, bytes_acked):
+ 		return size == sizeof(__u64);
+ 	default:
+ 		return size == sizeof(__u32);
 -- 
 2.53.0
 
