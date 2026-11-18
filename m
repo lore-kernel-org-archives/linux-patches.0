@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020753;
-	b=48wEX3cK1j0IRtSX+4N0nvSNO+25Cp9jUE+Ybp91KVvo1sIGS2RTN+Zn6fXwEJu6E9/Y
-	 QgS4KA1uqAK43yHb2OIOGK9gswDCD/X6e1cLvd/AGbQN2A3so/rJdEwNxEw7+pAn6vvzu
-	 gHxJReyD7s9yR9tyyRQqg9v2enRoeWZDWTVYqPfr/vIEUOIMQGYRawTs98R6cV0hESH0c
-	 pBuv2C4lxkTR3w/2mmp0qFbwMJb0gtxDCDqAw936UqbjUwYTqjImKJr99kYy+yGuXSWid
-	 axHY0dwDqWFKC6KdU6yIlDw65S4wFR68IoYYRhfx8g4hrioYGtvIuYZonTvlsKElBEQ==
+	t=1795020756;
+	b=EHN0PD5ncvb3cwjHFk6Ev6rMgiPpzmjvunEC9A6RJT6iauXY64OgF4wIO8Eow/waKAh6
+	 73VFLNUp202DR7At4d+4muF23F71YRc33RXIicHc0ms+iUw/Z4tLg17v0NzYkMq9LJhF8
+	 ALBmhIX9j+eX+jPyxfbGTWqLr8ZW6ssUFBWJBjpHH+eb7IJ1IyK9ncAd6RTs09iA/hiFq
+	 NbwWAXfcq0lskhljl3P5T4O5HZVM0MHmf9uLOED88N9RK1CsNUhwUAulVFY2aAk3VwsIO
+	 5Pqs7YHt9lVyAaZ1ordhX+UpKavWmNIj9dXwMkOj3FdHmhzaXGoCggO6e1AbUbEV1dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020753;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020756;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jnHwb0MLq55KjDY/b7IU68FQSyj0oJC+sqbrFYRN7uM=;
-	b=5kUcMCdjrl11CyfpPak5CmADcQ+yKeN7p8oBIOIo20QOmdiy+nwSm39hCtBfnGcKvvKW
-	 3/HHUID2tJobG3tDRfFaE1dRZJCIX0w8YUBzkgtxs14SPHHg01ngh5vOLRZR+kViuDBhW
-	 rJtYnK4H8Hz1qpc3LHnsNYNdzXiVw9v854dn1L1ke7xU25ue78Q6JL7SLsDQRiXInTJqA
-	 T28W8jyVEF9SbXtcxqSrPwLoQ6feQ/Whi01la6s49TbU7aXJjeGrf3Bh2qQ98yoNe1sMt
-	 He/L/jMrmz38q81J1DPgmEQqi4t15smtbQVlcl/wtFa7JYqMvXkj4ePnPcyO0qOIYpQ==
+	bh=dp6/Sn9rMG0cC9v7XYXvmGiY62hct6IUA7cW1o8NwXw=;
+	b=i9ccawx8bK64JniFldNs7LKbp/R9bJXaLS+iRBfbYYwJ+mAZ/e+TmeMMhbJI5HMBorkY
+	 Wb2ay+j13FghHnZ2HVQxPJCyGJsso6pNYOSvNOxH/EIngLDiFpZEO/n471oNhfrGm0DSX
+	 VDNbBrqBp9CBgAmDZl8ASYh19NsFdH3SX9iOvAMwPko/0tf6n2+kc4YHWqPH0rg0zqjdE
+	 Mx75s2tJAPls8knvOeczVghK6uEFYadCmpWH10GMCYgzZ6Ai8USjKl1nHN4cxfRedKjTo
+	 m7N+6ceQFgr8LWMIhrcw1IEFHFUpyRHpY/NdvlCY12ekz83RFl0OV6jHAnCW+IWeGSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f5vg5nov;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MQ2XOwmB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562D7606A325;
-	Wed, 18 Nov 2026 16:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358B5606A320;
+	Wed, 18 Nov 2026 16:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f5vg5nov
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07681F000C4;
-	Wed, 18 Nov 2026 16:52:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MQ2XOwmB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850AE1F000CC;
+	Wed, 18 Nov 2026 16:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020753;
-	bh=jnHwb0MLq55KjDY/b7IU68FQSyj0oJC+sqbrFYRN7uM=;
+	s=korg; t=1795020756;
+	bh=dp6/Sn9rMG0cC9v7XYXvmGiY62hct6IUA7cW1o8NwXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f5vg5novCSWyUUdAZoFjC2gMa7EVPjo7HZ+8vPyP2FFrk52Hpq41X4IOQW+98rpAq
-	 3ntCeWjxQdBGivnsZ8jEsyxCO0UDXpAK5ByAESJV2GnGoaOxvWb9VJT0hEaSoFv7rO
-	 CtvsZjlTa/HiXRDdyEBr2LE+cUQ1lefUWETmtSkI=
+	b=MQ2XOwmBsNBVwoViIkEn8dMlDhfy4lNGOtq7bKWlmTww3tLb3spYqlzdO4F9hffvr
+	 X6X4o+KISoXUgbcxwHrvaJ9rhV7PYwpJZVvQGbeLDV+AQ+aznctrypU71Ur+mgduHT
+	 BwBMsJO7/IqcRX5HlWB2yB7jeyi6HymhdDf+MDaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Petr Oros <poros@redhat.com>,
+	Ivan Vecera <ivecera@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2065/2651] calipso: update payload_len when removing the CALIPSO option
-Date: Wed, 18 Nov 2026 15:55:05 +0100
-Message-ID: <20261118150400.390250310@linuxfoundation.org>
+Subject: [PATCH 7.3 2066/2651] dpll: zl3073x: do not offer 0 Hz as a supported pin frequency
+Date: Wed, 18 Nov 2026 15:55:06 +0100
+Message-ID: <20261118150400.433792456@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,66 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 00accbd9d5021b942a16078bd5717d7865f6971c ]
+[ Upstream commit 23171065fb436195981ca32f9e49dcf852dbd018 ]
 
-calipso_skbuff_delattr() removes the CALIPSO option from the hop-by-hop
-extension header, or the whole extension header if CALIPSO is its only
-option, and pulls the skb by the removed length.  It never updates
-ipv6hdr->payload_len, so after a successful removal the header still
-claims the original length.
+zl3073x_pin_props_get() always adds the current pin frequency to the
+supported list without checking it. A sub-Hz frequency reads back as
+0 Hz, so 0 Hz can then be requested and the output frequency set
+callback divides by zero. A 0 Hz entry in the firmware node is not
+rejected either: it is offered for an input pin, and for an output pin
+zl3073x_pin_check_freq() divides by it at probe time.
 
-calipso_skbuff_setattr() already adjusts payload_len by the length it
-adds; the delete path was missed.
+Do not add a 0 Hz current frequency and reject 0 Hz in
+zl3073x_pin_check_freq(). If the list ends up empty, do not publish it
+at all, as the DPLL core rejects an empty non-NULL list.
 
-This is reached on the forward path when a packet carrying CALIPSO is
-sent to a destination mapped to an unlabeled NetLabel domain.  The
-forwarded packet then has a payload_len larger than its real payload
-by the removed length (8 to 264 bytes), and the receiver drops it as
-truncated.  So removing the label on the forward path has been broken
-for every packet that is not resegmented later (SYN, UDP, ICMPv6...).
+Found by code inspection, not triggered at runtime.
 
-Adjust payload_len after the header is moved.  BIG TCP packets carry
-payload_len == 0 (see ipv6_set_payload_len()), and ipv6_payload_len()
-then falls back to skb->len, so leave them alone.
-
-Tested with client, router and server network namespaces on one kernel
-(arm64, QEMU): SELinux permissive with a minimal mdp-generated policy
-(network_peer_controls=1), "netlabelctl calipso add pass doi:16", the
-default NetLabel mapping left unlabeled, IPv6 forwarding on the router.
-The client sends 5 UDP datagrams with a CALIPSO hop-by-hop option
-(DOI 16, set through IPV6_HOPOPTS) to the server through the router:
-
-  before: router Ip6OutForwDatagrams 5, server receives 0,
-          server Ip6InTruncatedPkts 5
-  after:  router Ip6OutForwDatagrams 5, server receives 5,
-          server Ip6InTruncatedPkts 0
-
-Fixes: 2917f57b6bc1 ("calipso: Allow the lsm to label the skbuff directly.")
-Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
-Link: https://patch.msgid.link/179147329205.58079.5847298721173675285@gmail.com
+Fixes: 85a9aaac4a38 ("dpll: zl3073x: Include current frequency in supported frequencies list")
+Reviewed-by: Petr Oros <poros@redhat.com>
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Fixes: a99a9f0ebdaa ("dpll: zl3073x: Read DPLL types and pin properties from system firmware")
+Link: https://patch.msgid.link/20261011061211.448373-2-ivecera@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/calipso.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/dpll/zl3073x/prop.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
-index 3017a456d289a..e399a42e30839 100644
---- a/net/ipv6/calipso.c
-+++ b/net/ipv6/calipso.c
-@@ -1428,6 +1428,10 @@ static int calipso_skbuff_delattr(struct sk_buff *skb)
- 		skb_pull(skb, delta);
- 		memmove((char *)ip6_hdr + delta, ip6_hdr, size);
- 		skb_reset_network_header(skb);
-+		ip6_hdr = ipv6_hdr(skb);
-+		/* BIG TCP packets have payload_len == 0 */
-+		if (ip6_hdr->payload_len)
-+			be16_add_cpu(&ip6_hdr->payload_len, -delta);
+diff --git a/drivers/dpll/zl3073x/prop.c b/drivers/dpll/zl3073x/prop.c
+index ac9d41d0f978e..768e5424de2d2 100644
+--- a/drivers/dpll/zl3073x/prop.c
++++ b/drivers/dpll/zl3073x/prop.c
+@@ -30,7 +30,7 @@ static bool
+ zl3073x_pin_check_freq(struct zl3073x_dev *zldev, enum dpll_pin_direction dir,
+ 		       u8 id, u64 freq)
+ {
+-	if (freq > U32_MAX)
++	if (!freq || freq > U32_MAX)
+ 		goto err_inv_freq;
+ 
+ 	if (dir == DPLL_PIN_DIRECTION_INPUT) {
+@@ -295,13 +295,20 @@ struct zl3073x_pin_props *zl3073x_pin_props_get(struct zl3073x_dev *zldev,
+ 		goto err_alloc_ranges;
  	}
  
- 	return 0;
+-	/* Start with current frequency at index 0 */
+-	ranges[0] = (struct dpll_pin_frequency)DPLL_PIN_FREQUENCY(curr_freq);
++	/* Start with current frequency at index 0. A sub-Hz frequency is
++	 * read back as 0 Hz and cannot be set, so it is not offered.
++	 */
++	j = 0;
++	if (curr_freq) {
++		struct dpll_pin_frequency freq = DPLL_PIN_FREQUENCY(curr_freq);
++
++		ranges[j++] = freq;
++	}
+ 
+ 	/* Add frequencies from firmware node, skipping current frequency
+ 	 * and filtering out frequencies not representable by device
+ 	 */
+-	for (i = 0, j = 1; i < num_freqs; i++) {
++	for (i = 0; i < num_freqs; i++) {
+ 		struct dpll_pin_frequency freq = DPLL_PIN_FREQUENCY(freqs[i]);
+ 
+ 		if (freqs[i] == curr_freq)
+@@ -312,6 +319,14 @@ struct zl3073x_pin_props *zl3073x_pin_props_get(struct zl3073x_dev *zldev,
+ 		}
+ 	}
+ 
++	/* The DPLL core rejects a non-NULL list without entries, so do
++	 * not publish the array at all when nothing is settable.
++	 */
++	if (!j) {
++		kfree(ranges);
++		ranges = NULL;
++	}
++
+ 	/* Save number of freq ranges and pointer to them into pin properties */
+ 	props->dpll_props.freq_supported = ranges;
+ 	props->dpll_props.freq_supported_num = j;
 -- 
 2.53.0
 
