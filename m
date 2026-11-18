@@ -1,63 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=178.251.229.89
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023669;
-	b=zipqwoKO98+0MHrg8aWUQPaKBUjIlwHjifvIz9AQgf2V/qBkfxPy+QEhlXcEm5dLHPLR
-	 ++gVSt41/OKQ3Wx7BXWtSn/mr+2ziHfO/qIpgutga8YgaKaV7jufKKAaPv23ICcQVooEb
-	 uVXazwZ6IIKlv0j4fLEYOLEwatvG/y92fwzgMnwUGBMkLBUCcngJlkbHQc4v4EflH50Pc
-	 URuY168Ex8SaCAfWUeWbcdyWE+hT7VufcUSgrZSZuJhLKFB8Yx5ZTlhwRCt+iCEsPvH3T
-	 npf1ys4x2P2sUOg0ENYJy2g1SZ8h7jOpFX+FiwhNLLUnzdnQn1nBwGZ3toG5EhjMZjw==
+	t=1795023670;
+	b=0r6ENyMskpSSP9qz/oCFaarGob/ZV/3j7jl2Kwrc3G/sbGx0jKVc9Oc8w2vpNXLJHM4+
+	 vYs4OYm+Onm0dUR/CzacHyri17DkjivaP15o0LVQ/Pc8Qva7TI/v1RoyTs46GT6YZX3T8
+	 KeE5whHghjFpuibTP/ibMV0+R3Zdl1qDaQfqKBkiPS6pG1FPzIqhgTmh2G6HnNfZF2Ppl
+	 PfVYnMYY7wNikQY8tks38UpDcqJh33dxo6q8R//mVHzcjeyMSe943CJgP4P+K5LEYVDNe
+	 TPYQoM/qrk/bVj1/Odshe23Ejfrw5jjDdu82Uwoocd+26nDgS7RmRcmiGqK7HSxJ/1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023669;
-	h=DMARC-Filter:Received:DKIM-Signature:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To:X-Last-TLS-Session-Version;
-	bh=upovtYOPoJaBPdnGluZPlUCFiHXTunPe4IBWLSk34pY=;
-	b=XK07Ca5eGT2dBqHWtFFT/BcY0i09s6dwBw1dRXLeo9n4ESq631leS1z563XzN9P0OUUh
-	 yXTL4+d28hsLP5JMeDAd9aCg/NZAqxTTFd6EMTv2KICMG5MjYntKj2Ek+GUTZmMt5TZ5q
-	 DtA4P0vqt82GOUnB240pBPaZRx2nNL9AHO8AdQVERRyll+v0wEJqo75foWNyBfRerJEoR
-	 h/urmWr5NrK8RwM6XWEKbuzRlCpdczQINKiWP7oMzEwhkdYcQ5VOMxtd2A/eu+azMy6h6
-	 uERkbFpf+5XKloxHQvA5HukQdOJqHfbtGeB0a82UcTtoLK528daACeIUCr6h5ngxxtw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023670;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=jcftTTtgZadt61snF94XNVTYN+bpS+T4/MeJblLBsa8=;
+	b=Ngpyd3DYKh09oj8ZRpiMQtu2xVlQoeXjsXo4zPQZ2JUtHmP/sqb6YqQ1f+CEFFnJ1A4w
+	 OW6pMyJUuDKTwIbn8Go3Vh37KKxxQcJQoFGBzF0/ivusj7iZ9i/nuMQyClUnmP/8pXoCY
+	 YjMMZS8T3vrf6eEsC6BZUnvK+LWW2pCtGrfS1z9J4H2TPxLcAKXOC0kpGP9AzB1hY9Lua
+	 xBekIEN9AfjH50O6yyQI7qw8/bfxIoqTIfKy+rzq494r+207M2M7f24km6HbJZVYnfUto
+	 G0rlt74Q/N+Y3JxyxPtKE3IpcF8WHWdA32RBvJmXJFrtWXqCLXkuo0IZq525a4/w8CA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nabladev.com;
-	spf=pass smtp.mailfrom=nabladev.com;
-	dkim=pass header.d=nabladev.com header.i=@nabladev.com header.a=rsa-sha256 header.s=dkim header.b=ijQ4wk1m;
-	arc=none smtp.remote-ip=178.251.229.89
-Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UInvnnGZ;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DA4606A32F
-	for <patches@lists.linux.dev>; Wed, 18 Nov 2026 17:41:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B5DA4606A32F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763F4606A334;
+	Wed, 18 Nov 2026 17:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.a=rsa-sha256 header.s=dkim header.b=ijQ4wk1m
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 1055E10F576;
-	Wed, 18 Nov 2026 18:40:59 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
-	s=dkim; t=1795023662;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=upovtYOPoJaBPdnGluZPlUCFiHXTunPe4IBWLSk34pY=;
-	b=ijQ4wk1mWWs5VmAST4vVRIBInAugM6Wrvhu+wM7tccgjV3E+XqaCaXoBgrc/2nsw89UxrF
-	HgFWC2tenwhZiIu5LgSRneXbEHmtR77UTTXNoAtTPWnnEXJDe4quHpNXSGnp8QuS2s8LTc
-	sTgRnCMsOhfyyN0/INUJFOQL1Ls/A23hxns81WkSlAt16NUUnAl3uf6XmYykV6sIFUPC1y
-	UTsRw7xazlegnIIhKeuS4kJbHssa8gn1lLru3CMp8LlpAy33364twgE89FBzhstxF8hv2b
-	SNolNAe0fFr0OWZZqXqiXPZA+jRFBTw+gmGtcbCUmRTblX/iuwXykZ3Kg5Fx9w==
-Date: Wed, 18 Nov 2026 18:40:58 +0100
-From: Pavel Machek <pavel@nabladev.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.18 0000/2151] 6.18.65-rc1 review
-Message-ID: <av3jKvNBBa8aiiLK@duo.ucw.cz>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UInvnnGZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82071F000C4;
+	Wed, 18 Nov 2026 17:41:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1795023670;
+	bh=jcftTTtgZadt61snF94XNVTYN+bpS+T4/MeJblLBsa8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=UInvnnGZA2YrkpFqFi/A7U0k38bEppafDhjo2KsnnHJR+jLeO9RdiJ1MwHw5Rwl2q
+	 pqrnah99gEuFPgXv7hSLQbQtWZ2Ke7JoGQH2blLxsY2VBvjMUexll+22x3PuqEU2hP
+	 IxTrlxkyIoFbx1X2WmvXAd19Vb2mWIFxQ2/3B5E0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 0452/2151] media: i2c: ar0521: remove duplicate media entity cleanup
+Date: Wed, 18 Nov 2026 15:36:27 +0100
+Message-ID: <20261118150138.496420150@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -67,41 +62,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="S1FSu5jnmE+flskM"
-Content-Disposition: inline
-In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
+
+6.18-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Guangshuo Li <lgs201920130244@gmail.com>
+
+[ Upstream commit 069a0343581bfcaee44bc598e2b95be2e2789807 ]
+
+The error path taken when ar0521_power_on() fails calls
+media_entity_cleanup() at the disable label and then falls through to
+the entity_cleanup label, where media_entity_cleanup() is called again.
+
+There is no need to clean up the media entity twice. Remove the first
+call and let all error paths converge on the common entity_cleanup
+label.
+
+This issue was found by manual code inspection.
+
+Fixes: 852b50aeed15 ("media: On Semi AR0521 sensor driver")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/media/i2c/ar0521.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/media/i2c/ar0521.c b/drivers/media/i2c/ar0521.c
+index 939bf590d4b21..a9a33b4c8e63a 100644
+--- a/drivers/media/i2c/ar0521.c
++++ b/drivers/media/i2c/ar0521.c
+@@ -1139,7 +1139,6 @@ static int ar0521_probe(struct i2c_client *client)
+ 
+ disable:
+ 	v4l2_async_unregister_subdev(&sensor->sd);
+-	media_entity_cleanup(&sensor->sd.entity);
+ free_ctrls:
+ 	v4l2_ctrl_handler_free(&sensor->ctrls.handler);
+ entity_cleanup:
+-- 
+2.53.0
 
 
---S1FSu5jnmE+flskM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-Hi!
-
-> This is the start of the stable review cycle for the 6.18.65 release.
-> There are 2151 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-CIP testing did not find any problems here:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-6.18.y
-
-Tested-by: Pavel Machek (CIP) <pavel@nabladev.com>
-
-Best regards,
-                                                                Pavel
-
---S1FSu5jnmE+flskM
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCav3jKgAKCRAw5/Bqldv6
-8mJHAJ9IBMUeJ8sOZ/NAJu9t/GIBL7IojwCgpeHRE9YCGeKtSdbdQqh+Dyj0c10=
-=wUlU
------END PGP SIGNATURE-----
-
---S1FSu5jnmE+flskM--
