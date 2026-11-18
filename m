@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017066;
-	b=EDpzmok3kjud8jjcJgaeWMlOIZgpTbTdfAM6sll2/Ej9MiiS93PHspGbB31Eg45r/W9y
-	 Jw19WizQPUFLkcLaPtOZFioy8vIWYrWrp5Lq32TwTiUwiyRJz4JEngw9GHBMa0pmJ4CJe
-	 OCj0iLATV3XuahYN9B6VtU2HMl1hWTBN/4HI1N16tn6nRbnZLCp1rmdbQ0AS6yQNsPQ+1
-	 xpfxMqE7c0TMoRsquxkrCc1iJhPLBCqFYfaHSfAOm4sQoKwA2qKw8hS32aLecd7zMedHB
-	 yl/1SwWW+/EPpng2XQLDpR3USoXAPdNZL9Zq6qn561Me1GvFzyfc2YMM9Upk5/Qo/Bw==
+	t=1795017069;
+	b=WmzVOnOdECKDaHCtZbWuCU21aTJUAu9pmsXWrX0yuQCF9xX1TEYtfI2VNPUT7+dYx/m6
+	 qwSIggXSIflLiYbjDVd6Q4VNWdzfUycE6lFcTxp5sN3euEwaDUhLcVrK/8V/z1qm2XjSc
+	 1d/47ClRHWL+idS3O8Ydhk7PcOrXTTl+hr9pDegbsQB/2cntcbekhJc6sPZzBSGT8V05g
+	 yUT2N4NEJrH3g9j46dL8z97l1qMfXF8HK4iGE24K2TqzQyWRx03seaCetDjvPmqv9Hjez
+	 45En9cQ8Z+ErX0F7Nw16XoCt00Z3qq5NHQ7zk9RlD79Ha9VEAzAhlIZmMBcqg+9gZNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017066;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017069;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yNuNi+mM6wOWMvdixME4bjE4H/OUrTb0qL1aNSBt0Pw=;
-	b=sjEhyKvVBDFgTkUc38YzZpmJTUf/0CvOT1jO5zGqTEshoUwWqzstdivF11077bw3MyGv
-	 AzewwKdZmy4yjLXf0JcucAhhv3okoZ7VJWh3EDU8cFCyj5F+0ge0WD8XlHjPHGzJe9NZ9
-	 3NwVfGVGaBDTnsklc4o8fvz70Qv2VlMVPqmlWe/Sg6cDSmHKfMp+OqjmAVpIt6FoUkAAu
-	 fqRsApCP92Tg6oN6L7UzLJy5y3nZD0jhwIDDiEVm/eaTYcQ53AEhsYtncdswoaD52POY0
-	 rQJcgcPmE2cZVZTG1Cxm+SKKFS6rA9d4St3/xxkYRWQYVomE0oAhbUcTc9CX5b7ZtxA==
+	bh=kEIo6mZ5s96M8cgItsPzwVQPb5eJZRXRMHT0DPVoAcM=;
+	b=baS4LALr4zHJWWgSGQheo4b3H0PAnBMFPFiaJUwMXiUAlAxRgQkPZwnj+fjgjgVm5Hs6
+	 GlGgL2yQI1s0b8+eyRmiYa5+xpRPzFM0A94NimT59dbptpXmKmiKZfspoKoCxKVSQlzpX
+	 Ag0PxXDeZxNOV2yGQyoUgIV08IxKLLZCDztEzqlkw3j1pfzzJtDdSgaWekksDxqTs2vUi
+	 iChIqAA3/Lc2XGI21a2M4gKpeCqr2D73Hb71EQKyoq6MbNn+SngV8MfhXLEUhr1vKCaP2
+	 jxjJ+qLW8X1Wm27wIHu9GoVXf4A1T/AIIy0vyn0axxXsERG4zDgC+4Mb6gzm66HYhnA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhXlgDJO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LoBaefOL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD97606A320;
-	Wed, 18 Nov 2026 15:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D03606A33B;
+	Wed, 18 Nov 2026 15:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhXlgDJO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E201F000C6;
-	Wed, 18 Nov 2026 15:51:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LoBaefOL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7692E1F000C8;
+	Wed, 18 Nov 2026 15:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017066;
-	bh=yNuNi+mM6wOWMvdixME4bjE4H/OUrTb0qL1aNSBt0Pw=;
+	s=korg; t=1795017069;
+	bh=kEIo6mZ5s96M8cgItsPzwVQPb5eJZRXRMHT0DPVoAcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MhXlgDJOoTSu32NAc1R86qRZ6wKUMFQvgIbd4Ofu8strA1BkqaPN5s4KdyyH3V3rI
-	 mYzFDYqnX9WwpuKYQ2qNnkDGRaYX4A+5hCXP9PSA7tj0aLA0cKv4B8pA9MvjZEuWNw
-	 jAwiuSB41f+7rLxN1qrmKdUZlqVd8thZyypK2Pg8=
+	b=LoBaefOLo4tnjztoi1eTe4io+6oahGbvU2kdLtKwPfweh+NFbi6WHR3qKU1FJGU+D
+	 A16tkhUBs/1TKZqxDqHTXU7/RwyAZomwNSzXe5oz48rtI3gDUj+dXGCTOxzi1arGng
+	 f216h6RFq4pNhnRTdTdmkRCzNxDtLbNt0ScLSaoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Esteban Urrutia <esteuwu@proton.me>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0753/2651] clk: qcom: dispcc-sm8450: Fix disp_cc_mdss_mdp_clk_src ops
-Date: Wed, 18 Nov 2026 15:33:13 +0100
-Message-ID: <20261118150314.986599861@linuxfoundation.org>
+Subject: [PATCH 7.3 0736/2651] serial: sh-sci: Unregister UART on sysfs setup failure
+Date: Wed, 18 Nov 2026 15:32:56 +0100
+Message-ID: <20261118150314.368514622@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,37 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esteban Urrutia <esteuwu@proton.me>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 8464e2284fec42d9fd05f3109d8b209d65864ece ]
+[ Upstream commit c5b33c86d86da3ccff8c05e2a28719e3ec933f70 ]
 
-If the clock frequency is changed at registration time, a flicker will be
-visible at boot.
-Switching to clk_rcg2_shared_no_init_park_ops fixes this.
+sci_probe_single() registers the UART port before sci_probe() creates
+the RX FIFO tuning attributes. If either device_create_file() call
+fails, probe returns an error without removing the port from the serial
+core. Device-managed resources are then released while the port remains
+registered.
 
-Fixes: 16fb89f92ec4 ("clk: qcom: Add support for Display Clock Controller on SM8450")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Esteban Urrutia <esteuwu@proton.me>
-Link: https://lore.kernel.org/r/20260713-sm8450-qol-dispcc-v3-1-56fd05822270@proton.me
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Unregister the UART port before returning either sysfs creation error.
+If the second attribute fails, remove the first attribute before
+unregistering the port. Keep the existing probe failure policy and leave
+the successful initialization path unchanged.
+
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
+
+Fixes: 5d23188a473d ("serial: sh-sci: make RX FIFO parameters tunable via sysfs")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260911031500.5745-1-mhun512@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sm8450.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/sh-sci.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sm8450.c b/drivers/clk/qcom/dispcc-sm8450.c
-index 3af120e54cddb..c7e04bd315d5a 100644
---- a/drivers/clk/qcom/dispcc-sm8450.c
-+++ b/drivers/clk/qcom/dispcc-sm8450.c
-@@ -613,7 +613,7 @@ static struct clk_rcg2 disp_cc_mdss_mdp_clk_src = {
- 		.parent_data = disp_cc_parent_data_5,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_5),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_shared_no_init_park_ops,
- 	},
- };
+diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
+index 92193eb26abf5..50ae9aae6b614 100644
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -3937,12 +3937,12 @@ static int sci_probe(struct platform_device *dev)
+ 	if (sp->port.fifosize > 1) {
+ 		ret = device_create_file(&dev->dev, &dev_attr_rx_fifo_trigger);
+ 		if (ret)
+-			return ret;
++			goto err_remove_port;
  
+ 		ret = device_create_file(&dev->dev, &dev_attr_rx_fifo_timeout);
+ 		if (ret) {
+ 			device_remove_file(&dev->dev, &dev_attr_rx_fifo_trigger);
+-			return ret;
++			goto err_remove_port;
+ 		}
+ 	}
+ 
+@@ -3952,6 +3952,10 @@ static int sci_probe(struct platform_device *dev)
+ 
+ 	sci_ports_in_use |= BIT(dev_id);
+ 	return 0;
++
++err_remove_port:
++	uart_remove_one_port(&sci_uart_driver, &sp->port);
++	return ret;
+ }
+ 
+ static int sci_suspend(struct device *dev)
 -- 
 2.53.0
 
