@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049086;
-	b=hfXAtr42TpmxMgKw7CjCdTU9knhBiUxOv9yDB0lawJ8aKNtY/HQ/MdfJpLuzQeUUpCJX
-	 We2WatWOCtpzo4dlGV3j8Y63oE+Mh1e58mlDxQAW/+6fx4PkssGsoymRVW8xB5T+ixXqq
-	 JCu0LZCLjduyrc3NQZp9dsG96a+ai6Nc1/OJ3hmOCi6EXM2Eznh2TqrO1aWF35jfl4Esf
-	 iBbhCvwRQEYeiZyvpwxKD2Rr/a5wfxEKo8dAdJU5ExltL0OQmd9eATsDhU71cBeceN75R
-	 FiK21o9LLCgauYDI6eINlfobS01m24U1Et3sqkYRdgpOu3NmIk+ktrNczXEee2I4QrA==
+	t=1795049089;
+	b=BY8w/ZD2TP6O16hC2zEacvpFBTBkIa5bGKl5R45K2AeqpixocxzO3zkc/zcl5VNY175J
+	 ya+EMzvSkcEgbVIXkeCalrfC1A1vxwBAjoYUtjTvyHv9fv4OwZ7nxNbschm5w6k2KBStx
+	 7t5HsR3f1TRZ5Gkcmv0rsJbMbFVV7E/blc9EZhMfoA6El8mCCK9gR6BTDjU/DVJFBLHd7
+	 fxciJ/G1KcQ1/BD+cUNyQ+oPEGh9xRx9NDorpHJtvIQ2jhyAQd6Bw9QNDHchOVyre/RDS
+	 5IKQfSvtIfQ3gKiEjorCEPtm3lz/zqTCUvwE8w8xJCA43ynYZd9kB0ahLncoC0LsQCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049086;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049089;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H4As6NK59LMBfR/1c/I4QFlQIpsn9vf3eWI9zcR5V30=;
-	b=R7B6K6wGaUnGx+M0MHC9ZNhPoP4H6UZaU50fnltcUeGNjQE336eeldACdK9BdlV0Vz2D
-	 hRGs7TfVmPFqwCSXjWM/fxxzSjT66ZunPbDHen8yPRii934eq8YrUuI1O5bf8iHvdZTdb
-	 bY0a5XfcGg/ULBFCIx1d1TDYO4XGGVrU4X9KEU40t1Y32jCMv45h30fu2LDRAWxxvF1lU
-	 sw2Bp/Q90qYf8BwnSC1cjoJkwVtxCDy+VhR8Z2L/Usu9eHdZ2V2zzG/E/+uvbr3W2lz0d
-	 OkzouDAIlbBp8MlTUv/perwCrl1Lm9YLH57q/oIrRc6ND4D13IuUYF8H4xOOAnN34Ag==
+	bh=kUxRMC9I8znq7cKltOsfGZYSXvz5zME8v8N4xkyjrB8=;
+	b=Gx96GQx/ujonpt/sm4RWoV2NcXx4m3gqPGhizroCjh19J9KdVzIQKRh6fpFu0eKn8R6d
+	 vcDBqa/QS4mkqDORpyFh9UOv/3qKqM5w03HzbhwNAExWCJcE6Wm6ZrpIajrZ4/WnCLhSm
+	 Kn4c+1A1xTbntX16knIRtbcDwEaPKcyZckpCuLG+4dBx3+mKzf4aZ/LCFSfgjRz+7KibM
+	 n1TCIpXT0gOYL4JGHn+dkH6Z0YWtRWg9kx9Iq4aE1/ST9iTTapeZWJD+x+h0vVvD96DYt
+	 HvC0vzuH6hZZkXODdtVThwsfDDs3QXEBfE+yeWePOse9kdV0rpmC1TSEl5YyrRpSVnQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m+n+L0JU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mZQMBdP7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9604F606A31C;
-	Thu, 19 Nov 2026 00:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8A8606A325;
+	Thu, 19 Nov 2026 00:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m+n+L0JU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A5D1F000C4;
-	Thu, 19 Nov 2026 00:44:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mZQMBdP7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889411F000C4;
+	Thu, 19 Nov 2026 00:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049086;
-	bh=H4As6NK59LMBfR/1c/I4QFlQIpsn9vf3eWI9zcR5V30=;
+	s=korg; t=1795049089;
+	bh=kUxRMC9I8znq7cKltOsfGZYSXvz5zME8v8N4xkyjrB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m+n+L0JUvv3Qa1cADG7JGO+OsQBdMnr6UkuQnny2ujT5F3afaeF/JJhjPKlH5eWsC
-	 BYz1U5Tii1o5D3k0tiZYcWioHyTXwD8C0WPNwy/O/95A1qs9momIFjxeENcPJfQGoF
-	 guDB35jEK6GWWModWRkNs0HOO/Fv7yfaJnc0f3fE=
+	b=mZQMBdP7VpbuhOD4N52t7uQH9AzbQOPcdJBKEhweEM/8Q9PBZteVAsMyrZ4Ltsgu2
+	 /EWalrk/A6j25tvJB2tQRuNX7t+aOHp/9QIR123LuN5to+D2AynYsS92MtplHLTL87
+	 8KB85/tJH9c464pYeemZh/wc0wDWE+W9UYzJ/Rv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diederik de Haas <didi.debian@cknow.org>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>,
-	Jonas Karlman <jonas@kwiboo.se>
-Subject: [PATCH 6.1 2224/2857] arm64: dts: rockchip: Update GPU OPP voltages in RK356x SoC dtsi
-Date: Wed, 18 Nov 2026 15:54:18 +0100
-Message-ID: <20261118150321.494132012@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 2225/2857] arm64: dts: rockchip: Update CPU OPP voltages in RK356x SoC dtsi
+Date: Wed, 18 Nov 2026 15:54:19 +0100
+Message-ID: <20261118150321.532006098@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -72,69 +70,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Dragan Simic <dsimic@manjaro.org>
 
-[ Upstream commit eb665b1c06bcaf16df10018550d8f467ed4b2887 ]
+[ Upstream commit 0e183fcc92b0eaa13b33b39846d86c3d65b8330a ]
 
-Update the values for the exact Rockchip RK356x GPU OPP voltages and the
-lower limits for the GPU OPP voltage ranges, using the most conservative
-values (i.e. the highest per-OPP voltages) found in the vendor kernel source
-(cf. downstream commit f8b9431ee38e ("arm64: dts: rockchip: rk3568: support
-adjust opp-table by otp")). [1][2]
+Update the lower/upper voltage limits and the exact voltages for the Rockchip
+RK356x CPU OPPs, using the most conservative values (i.e. the highest per-OPP
+voltages) found in the vendor kernel source. [1]
 
-Using the most conservative per-OPP voltages ensures reliable GPU operation
-regardless of the actual GPU binning, with the downside of possibly using
-a bit more power than absolutely needed.
+Using the most conservative per-OPP voltages ensures reliable CPU operation
+regardless of the actual CPU binning, with the downside of possibly using
+a bit more power for the CPU cores than absolutely needed.
 
-[1] https://github.com/rockchip-linux/kernel/commit/f8b9431ee38ed561650be7092ab93f564598daa9
-[2] https://raw.githubusercontent.com/rockchip-linux/kernel/f8b9431ee38ed561650be7092ab93f564598daa9/arch/arm64/boot/dts/rockchip/rk3568.dtsi
+Additionally, fill in the missing "clock-latency-ns" CPU OPP properties, using
+the values found in the vendor kernel source. [1]
 
-Suggested-by: Diederik de Haas <didi.debian@cknow.org>
-Helped-by: Jonas Karlman <jonas@kwiboo.se>
+[1] https://raw.githubusercontent.com/rockchip-linux/kernel/f8b9431ee38ed561650be7092ab93f564598daa9/arch/arm64/boot/dts/rockchip/rk3568.dtsi
+
+Related-to: eb665b1c06bc ("arm64: dts: rockchip: Update GPU OPP voltages in RK356x SoC dtsi")
 Signed-off-by: Dragan Simic <dsimic@manjaro.org>
-Link: https://lore.kernel.org/r/80301764e8983c8410c806ed2256403823709897.1719763100.git.dsimic@manjaro.org
+Link: https://lore.kernel.org/r/f816cd24b62742dd05a1b7c6fe162bb581c9b3bf.1730516702.git.dsimic@manjaro.org
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Stable-dep-of: 8043ed0f40fe ("arm64: dts: rockchip: Rename rk3566 and rk3568 HDMI audio cards")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk356x.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3568.dtsi |  1 +
+ arch/arm64/boot/dts/rockchip/rk356x.dtsi | 18 ++++++++++++------
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568.dtsi b/arch/arm64/boot/dts/rockchip/rk3568.dtsi
+index 4305fd20b5c32..5f0660d4397db 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3568.dtsi
+@@ -234,6 +234,7 @@ &cpu0_opp_table {
+ 	opp-1992000000 {
+ 		opp-hz = /bits/ 64 <1992000000>;
+ 		opp-microvolt = <1150000 1150000 1150000>;
++		clock-latency-ns = <40000>;
+ 	};
+ };
+ 
 diff --git a/arch/arm64/boot/dts/rockchip/rk356x.dtsi b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-index af1f809eb3762..b8de230a49ed4 100644
+index b8de230a49ed4..afcd53550d35e 100644
 --- a/arch/arm64/boot/dts/rockchip/rk356x.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-@@ -195,27 +195,27 @@ gpu_opp_table: opp-table-1 {
+@@ -134,39 +134,45 @@ cpu0_opp_table: opp-table-0 {
  
- 		opp-200000000 {
- 			opp-hz = /bits/ 64 <200000000>;
--			opp-microvolt = <825000 825000 1000000>;
-+			opp-microvolt = <850000 850000 1000000>;
- 		};
- 
- 		opp-300000000 {
- 			opp-hz = /bits/ 64 <300000000>;
--			opp-microvolt = <825000 825000 1000000>;
-+			opp-microvolt = <850000 850000 1000000>;
- 		};
- 
- 		opp-400000000 {
- 			opp-hz = /bits/ 64 <400000000>;
--			opp-microvolt = <825000 825000 1000000>;
-+			opp-microvolt = <850000 850000 1000000>;
+ 		opp-408000000 {
+ 			opp-hz = /bits/ 64 <408000000>;
+-			opp-microvolt = <900000 900000 1150000>;
++			opp-microvolt = <850000 850000 1150000>;
+ 			clock-latency-ns = <40000>;
  		};
  
  		opp-600000000 {
  			opp-hz = /bits/ 64 <600000000>;
--			opp-microvolt = <825000 825000 1000000>;
-+			opp-microvolt = <900000 900000 1000000>;
+-			opp-microvolt = <900000 900000 1150000>;
++			opp-microvolt = <850000 850000 1150000>;
++			clock-latency-ns = <40000>;
  		};
  
- 		opp-700000000 {
- 			opp-hz = /bits/ 64 <700000000>;
--			opp-microvolt = <900000 900000 1000000>;
-+			opp-microvolt = <950000 950000 1000000>;
+ 		opp-816000000 {
+ 			opp-hz = /bits/ 64 <816000000>;
+-			opp-microvolt = <900000 900000 1150000>;
++			opp-microvolt = <850000 850000 1150000>;
++			clock-latency-ns = <40000>;
+ 			opp-suspend;
  		};
  
- 		opp-800000000 {
+ 		opp-1104000000 {
+ 			opp-hz = /bits/ 64 <1104000000>;
+ 			opp-microvolt = <900000 900000 1150000>;
++			clock-latency-ns = <40000>;
+ 		};
+ 
+ 		opp-1416000000 {
+ 			opp-hz = /bits/ 64 <1416000000>;
+-			opp-microvolt = <900000 900000 1150000>;
++			opp-microvolt = <1025000 1025000 1150000>;
++			clock-latency-ns = <40000>;
+ 		};
+ 
+ 		opp-1608000000 {
+ 			opp-hz = /bits/ 64 <1608000000>;
+-			opp-microvolt = <975000 975000 1150000>;
++			opp-microvolt = <1100000 1100000 1150000>;
++			clock-latency-ns = <40000>;
+ 		};
+ 
+ 		opp-1800000000 {
+ 			opp-hz = /bits/ 64 <1800000000>;
+-			opp-microvolt = <1050000 1050000 1150000>;
++			opp-microvolt = <1150000 1150000 1150000>;
++			clock-latency-ns = <40000>;
+ 		};
+ 	};
+ 
 -- 
 2.53.0
 
