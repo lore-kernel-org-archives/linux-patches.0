@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058909;
-	b=lvMUEF3XjZoiU4bRduUus8aLHqTpFio96q+j8XWhPnAKfKNkDsH6bWeQk+5bn0b8q94L
-	 YEPYmfafpveKAOvyOznZUB9FuxUBEnUlGPSTEQr4iWS/+c8pgJTM/gdLI6NJSUlxlJOsV
-	 iSfdnx5CO47/p68o8dSnAKuADOCFYnFynggIHLEgRcjsnVt+DzUzAGQFmdIo6opnGfXlC
-	 0jVPNKnwbJGxCGHlQHzasagBh1keR2NWZG/RUwL6zyRmU+WFMh5bqfLlh5CUltJW8H0p1
-	 V48VPbNtPw4ScbpYXB8Wz5iqN7GVQ/LXIMINgfOtY48M1AFRUosW5xEG1AwQd/uNL6g==
+	t=1795058912;
+	b=Sq84zucE3wpqAGk6ZeKqYhbNTHhgx5mC3Km/2aUGvofciaZZpqAjdtcT5yQeZmWcdo8h
+	 icIEVjhZqal4y3IL4y9El8OK0Bzq7w7ma+jVvlm9FFG4F1Zpoin+20R24O+j3Ce3qPIbw
+	 jUi5G5y3cW7CNVtcbw2sUBq6Lgb+y6A0ngUeACWmMLWWguzuoJCFcrKAZiVamdeo7oY7y
+	 5ZxvbZr40E94HGwZPFrRkCcR35E1+1/qT37sZQ9pP7pjHP2XDqkQ9LKLWhLOzfbiRkrFQ
+	 58rQ82dGjv/EGf0E1X8HgPndRFl4weXMsTgdaRiJLdTtl0SZymEtLjS+iBvqrEJLx+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058909;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058912;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hb22LrHRzVtYMoJ6dgSoRDS7nKdYQovkN5w+CQzoyT8=;
-	b=k0JdrJ/xBJpm5vq8rE7Gkmmmts5MaCzDvlNB3ByEqg034BMN8qMEy4yAfuGC3Zq4ksij
-	 dCZq95A9CyftSiitrmir+NC4QxdTfQA0ul8JnZqaSYJ9ijsch+eLNt4WznvVVhFdEUgG6
-	 54QHIWWgq7SIpTbkPfDvhIi/tMVU/LjFfZeDZ9zoti+X2njWKhDL+veOeKUbZP7bc9nA4
-	 pRzDmwn0VG3QN2LYaaS2rKJh68el/0FtlIkS1kVh5+qR5Dc+FladkPC+3XLJV+AuqzoFw
-	 npYqSySmPwX28H4b17vrZbxu+MRAdTx2aDSuQuHQpVXMKHhUnGP9nmVfMADnCSD1rgg==
+	bh=v8QOcGb0VbBeiuKaHqFrPFHds6Oq5YDlkFDaLq4aa1M=;
+	b=QBGwd27Q0SCy2oIQ5bRo2iCaPDg6gZTSJoNWyuZukqiX0uJbBnVLk5hwCnG0sR17ID6H
+	 AYrGFORFhBLtsOIuYVA6YQi1dFx6pbUQQczuYLvftn0yofe/2zjpmx5NuindKN8kTRG8h
+	 HQfWiCmH2EVG2nS8mkgexdgksbzndkbta5PhBPNq0enjmepVmBdSbSKZv1uhV2V+kWSVR
+	 64HScM5qWb0k+QgBhPx6VTxcEtnILKttI0kfXiO47NtRXMJrjFQVCWh5cMJDLDqurVq6U
+	 IzbRTXBElvg7onjJmGeLeE5nAjlz7eJkfChsYcLNLVU2wxFaw4A7US6D2JYgX2DOhnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=syFLIW3a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XvynweK/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161DD606A32A;
-	Thu, 19 Nov 2026 03:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7B4606A32F;
+	Thu, 19 Nov 2026 03:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=syFLIW3a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FEC1F000C5;
-	Thu, 19 Nov 2026 03:28:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XvynweK/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E1321F000C5;
+	Thu, 19 Nov 2026 03:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058908;
-	bh=hb22LrHRzVtYMoJ6dgSoRDS7nKdYQovkN5w+CQzoyT8=;
+	s=korg; t=1795058911;
+	bh=v8QOcGb0VbBeiuKaHqFrPFHds6Oq5YDlkFDaLq4aa1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=syFLIW3aoeVLj6F4EpGhnw0Jq79ALI6uKCjDd3EldD0nSv1eSG8QICmgSgCbm4kvD
-	 uWp0IgNXAAJopDsUn8PNuprGZsRxiaT3dgPVlZSZ7SAq4rHp+L2mKcTLx1zKLlqznQ
-	 ctbvtLJHvxPQXUZG6dmhtL6S1R8LjCxbj0Cqqz/o=
+	b=XvynweK/APX2CjiuHJq37K+fCLx6W4ubWqlpwZEh3Fa4LB1jPDHtI00FUHYjvtVzm
+	 XVWBis8E74CUHMQ7WR/s5qzs7M3Nt+AeqzGO7Hu0+poghXWJtQRaFMLYmdzCzrNgLk
+	 XDUunbWDNgxDv8gwY2hAd9DzBIX+RZlowvBfBxyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0653/1848] raid6: add missing vzeroupper to AVX2 code
-Date: Wed, 18 Nov 2026 15:44:51 +0100
-Message-ID: <20261118145943.136370967@linuxfoundation.org>
+Subject: [PATCH 5.10 0654/1848] xfs: jump out of xchk_bmap_check_rmap if fatal signals
+Date: Wed, 18 Nov 2026 15:44:52 +0100
+Message-ID: <20261118145943.171464516@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,99 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 24f1241cdb056fd630e6710a916e0f7c8c910a70 upstream.
+[ Upstream commit 49d300a51442bd64b627645b7b0b1cd66e492905 ]
 
-Since the AVX2 optimized RAID6 code uses YMM registers, execute vzeroupper
-before returning from it.  This is needed to avoid degrading the
-performance of any later SSE code that may happen to be executed.
+LOLLM observes that we never check for fatal signals inside the loop
+that checks file fork mappings against the rmapbt.  This can lead to
+lengthy delays in responding to a ^C, so add some bailout checks.
 
-Link: https://lore.kernel.org/20260831212308.213855-1-ebiggers@kernel.org
-Fixes: 2c935842bdb4 ("lib/raid6: Add AVX2 optimized gen_syndrome functions")
-Fixes: 7056741fd9fc ("lib/raid6: Add AVX2 optimized recovery functions")
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: <stable@vger.kernel.org>
+Cc: stable@vger.kernel.org # v4.17
+Fixes: 5e777b62b0bcb6 ("xfs: bmap scrubber should do rmap xref with bmap for sparse files")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ sashal: Adjusted loop context to preserve direct updates to rec instead of using a check_rec copy. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/raid6/avx2.c       | 6 ++++++
- lib/raid6/recov_avx2.c | 2 ++
- 2 files changed, 8 insertions(+)
+ fs/xfs/scrub/bmap.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/lib/raid6/avx2.c b/lib/raid6/avx2.c
-index f299476e1d764..10f2b1b4d6a69 100644
---- a/lib/raid6/avx2.c
-+++ b/lib/raid6/avx2.c
-@@ -76,6 +76,7 @@ static void raid6_avx21_gen_syndrome(int disks, size_t bytes, void **ptrs)
- 	}
+diff --git a/fs/xfs/scrub/bmap.c b/fs/xfs/scrub/bmap.c
+index fed56d213a3f9..5748545afb5be 100644
+--- a/fs/xfs/scrub/bmap.c
++++ b/fs/xfs/scrub/bmap.c
+@@ -487,6 +487,10 @@ xchk_bmap_check_rmap(
+ 	struct xfs_ifork		*ifp;
+ 	struct xfs_scrub		*sc = sbcri->sc;
+ 	bool				have_map;
++	int				error = 0;
++
++	if (xchk_should_terminate(sc, &error))
++		return error;
  
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -124,6 +125,7 @@ static void raid6_avx21_xor_syndrome(int disks, int start, int stop,
- 	}
- 
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -186,6 +188,7 @@ static void raid6_avx22_gen_syndrome(int disks, size_t bytes, void **ptrs)
- 	}
- 
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -254,6 +257,7 @@ static void raid6_avx22_xor_syndrome(int disks, int start, int stop,
- 	}
- 
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -347,6 +351,7 @@ static void raid6_avx24_gen_syndrome(int disks, size_t bytes, void **ptrs)
- 	}
- 
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -457,6 +462,7 @@ static void raid6_avx24_xor_syndrome(int disks, int start, int stop,
- 		asm volatile("vmovntdq %%ymm14,%0" : "=m" (q[d+96]));
- 	}
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-diff --git a/lib/raid6/recov_avx2.c b/lib/raid6/recov_avx2.c
-index 4e8095403ee28..a7fd1ba177f1b 100644
---- a/lib/raid6/recov_avx2.c
-+++ b/lib/raid6/recov_avx2.c
-@@ -180,6 +180,7 @@ static void raid6_2data_recov_avx2(int disks, size_t bytes, int faila,
- #endif
- 	}
- 
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -297,6 +298,7 @@ static void raid6_datap_recov_avx2(int disks, size_t bytes, int faila,
- #endif
- 	}
- 
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
+ 	/* Is this even the right fork? */
+ 	if (rec->rm_owner != sc->ip->i_ino)
+@@ -517,6 +521,9 @@ xchk_bmap_check_rmap(
+ 	 * entire rmap is covered by bmbt records.
+ 	 */
+ 	while (have_map) {
++		if (xchk_should_terminate(sc, &error))
++			return error;
++
+ 		if (irec.br_startoff != rec->rm_offset)
+ 			xchk_fblock_set_corrupt(sc, sbcri->whichfork,
+ 					rec->rm_offset);
 -- 
 2.53.0
 
