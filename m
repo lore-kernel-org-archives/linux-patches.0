@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060202;
-	b=Nhd5Wtnf+XqzzNI1N+cVzmfX2u1/pLQ1YRHJtSsqFIh3tG94EPRh3N2iqiD3fhjw4aDN
-	 TuEFwGLUYR1DARriIWm6AeGaNzRSUysma2C6+xiouxc48Zh+fV+sUkYWpx7yxSLm7Zymo
-	 B6N2SIMOfTJIQ+Lw1LWhCvnW5p4s5yxXX/7LylEYT9qJNjF0AMrpaetTWEHpQkGhbO0ZQ
-	 SxEjf69TClr3JHAZAkyKMONPbYS3Oh7yS33mya8XnoNW7sNECmhm6gzk1cJcsFQIYqCjm
-	 30rnXoolb9URuCdyPG93nDLaBHwf26yK2ORP+8sII7o7/zH/kdb4TrlQl6Zg1Ksn92w==
+	t=1795060205;
+	b=suSW7oHdhVsUUX0L+Drcc6cexyYjpDQLVlOmhY1T5BEiLGvGuXBSPUBchQPuC+IEM7ln
+	 VscKn0R0TIaeqayMmT9+2Xttc5CxUveMXEi+vIU4WB7yIoRPQH2mUF6HfnnM5bJmZPBJc
+	 zEGa4ZL++To3JN6WeiFVPDKgYen7X26aoQ70aj+uRw+BdzOhqB8pAyJeYTdq6ClqSd56W
+	 hqkG1qqkQQWiCEGtqPiYmq+niQhgeEFH+dV9uQu5F5BypHdbwkZMhyb9HDQMYtC2j7Fdc
+	 iM8vJcV24qrxaSdvPEh67b3w+AV7+r1VB4LxnN4ERthU23AselghJDjioMyWnVF5B7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060202;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060205;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cX1/Wc1zxThfOx+BUOI/jBO31LhVapj9/TWn/gpyfrI=;
-	b=C/aV19BDxyCkbohvestdtPZer9MoSjPEmk4TUwz5mmwFQ63lidA/VBD5p4mEISz9zxNv
-	 UoHfGLVCZIOuVW+lASYgQ0JUlrb/gAsvb41EAA/PRBUu3FIs38qdTjZrDhKRCQ9e7hWLA
-	 KcYeCFeG4stOG3IOCjlp6A9d5c8z8kIcluVLfze0rQiZAHVBQq7BX8GEeeEyf/Q6LXT/c
-	 mvB0fIl+V1qJhxDOpQvwn8T5wOsnAmKea9dA/SAwFlMmPFBDdNjB0tS07joruDWFoBQ5B
-	 ZhW4YWiaSkVHLD/2PmPmUpJXWC5Fq19hhVZ2YsXbNqnVOVgUxQdK+8D6zZr39HRlR2g==
+	bh=hbsOyLXuvqTqR4E1k2M5K1n7DIitJ0QoRKW7Lo8lnGU=;
+	b=numnCP5mLdgfpU7mq6s5PRhSQD+v51L6knQ7LaIMouAjQPJUcbHlh9NlQO3OA+RkKApk
+	 FXwrIsWsga+YaWnq8hDOTr/wcBhsd4LDXgzoA76SIaDfFswwDJX9937Cl2sJ9jDJTHL2Y
+	 NH4lGfqWEJBz55rXcUCpv3FAot9MKliSHlhXDNxDvmC8Vu+zzKyb2K0aAgfl8Hqq+yQH+
+	 4WpBQDHK9QKAIvK3RZm3t1TU/8dUkZIp4dKU7cLzQ/39RZyiKwo2XL3uKnu+JUAWT1JPD
+	 AhXyRm3xkGwruH4J8f4TYNa97BD6dAn00inJTN0WIV0wFV0dCZC2oxBg4Jt9iTDod4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fHjy9KId;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1tyAk9rN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDC2606A320;
-	Thu, 19 Nov 2026 03:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8BC606A320;
+	Thu, 19 Nov 2026 03:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fHjy9KId
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC6F1F000C4;
-	Thu, 19 Nov 2026 03:50:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1tyAk9rN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588911F000C4;
+	Thu, 19 Nov 2026 03:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060202;
-	bh=cX1/Wc1zxThfOx+BUOI/jBO31LhVapj9/TWn/gpyfrI=;
+	s=korg; t=1795060204;
+	bh=hbsOyLXuvqTqR4E1k2M5K1n7DIitJ0QoRKW7Lo8lnGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fHjy9KIdpA4v55gzQqBpX+T2A3CnRFkC4derdsZm0RGPh6aO06rK/Z8kdd4lwyzN+
-	 O/tYeKrXoXqX53JTyJgPDBdIcV1uWfD6sZgMQ/K9Nek1QRUQv5tHhZAgCkwc3wLENf
-	 XN8hRUw/veqfAjVTAFXuqQt7gdBHOWqaksMJSL24=
+	b=1tyAk9rN4H6I/Xz857rZYO2OsC9q8F4gSxst4iOa8COcbNBVejGW/ECjq4XRA/aZb
+	 qebncBBINciNSU6bwRkquxZz9ejqiMc5+EZDXyCwgKyMTWDmdIn4Pi2Kyc/fX+TV+Y
+	 Bct3Vs03b67vg85JOe7gVjTTuygxZj1EeRRnZLcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edvard Conrad <edvard@tuta.io>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1107/1848] ovl: inherit FMODE_NONOTIFY when reading directory layers
-Date: Wed, 18 Nov 2026 15:52:25 +0100
-Message-ID: <20261118150005.673415355@linuxfoundation.org>
+	Jan Stancek <jstancek@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	Neal Gompa <neal@gompa.dev>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 5.10 1116/1848] sign-file,extract-cert: use pkcs11 provider for OPENSSL MAJOR >= 3
+Date: Wed, 18 Nov 2026 15:52:34 +0100
+Message-ID: <20261118150006.047584605@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,179 +71,289 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Jan Stancek <jstancek@redhat.com>
 
-[ Upstream commit 9ff338af0e002fe217cfa16b1289b76f6b21fc72 ]
+commit 558bdc45dfb2669e1741384a0c80be9c82fa052c upstream.
 
-Listing a merged or impure overlay directory opens the real layer
-directories from ovl_dir_read(), when the readdir cache is filled.
-Those opens use plain ovl_path_open(), so when the directory fd is
-one that fanotify created for a permission event, they can still raise
-FS_OPEN_PERM.  A listener that also marks the backing filesystem and
-calls getdents() on the event fd before answering then deadlocks the
-same way as with the directory open fixed by the previous commit.
+ENGINE API has been deprecated since OpenSSL version 3.0 [1].
+Distros have started dropping support from headers and in future
+it will likely disappear also from library.
 
-Store the overlay user file in struct ovl_readdir_data and pass it to
-ovl_path_open_realfile() from ovl_dir_read(), for both the merged and
-the impure cache.  Internal readers such as ovl_check_empty_dir() and
-the mount-time workdir cleanup still pass no user file.
+It has been superseded by the PROVIDER API, so use it instead
+for OPENSSL MAJOR >= 3.
 
-A note about severity and real world impact: The FAN_OPEN_PERM event is
-traditionally used by anti-malware protection agents and security/audit
-agents. The scope that is often used in those use cases is FAN_MARK_MOUNT
-and agents typically monitor multiple mounts in a mount namespace.
-FAN_OPEN_PERM from directory open requires user opt-in with FAN_ONDIR.
-It is often not the case that anti-malware agents monitor open of
-directories. Security/audit engines are more likely to opt-into
-FAN_OPEN_PERM on directories, but are less likely to list the content
-of a directory within the scope of FAN_OPEN_PERM event, so the real
-world impact of this bug is likely not significant.
+[1] https://github.com/openssl/openssl/blob/master/README-ENGINES.md
 
-Reported-by: Edvard Conrad <edvard@tuta.io>
-Closes: https://lore.kernel.org/all/P5Qu3co--N-9@tuta.io/
-Cc: stable@vger.kernel.org
-Tested-by: Edvard Conrad <edvard@tuta.io>
-Link: https://lore.kernel.org/ltp/P5WKBbq--F-9@tuta.io/
-Co-developed-by: Edvard Conrad <edvard@tuta.io>
-Signed-off-by: Edvard Conrad <edvard@tuta.io>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[ sashal: replaced ovl_path_open_realfile() with ovl_path_open() using explicit __FMODE_NONOTIFY flag propagation ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[jarkko: fixed up alignment issues reported by checkpatch.pl --strict]
+
+Signed-off-by: Jan Stancek <jstancek@redhat.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/readdir.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ scripts/extract-cert.c |  103 ++++++++++++++++++++++++++++++++++---------------
+ scripts/sign-file.c    |   95 +++++++++++++++++++++++++++++++--------------
+ 2 files changed, 139 insertions(+), 59 deletions(-)
 
-diff --git a/fs/overlayfs/readdir.c b/fs/overlayfs/readdir.c
-index e3ff8828b5a8c..1b1cf16544130 100644
---- a/fs/overlayfs/readdir.c
-+++ b/fs/overlayfs/readdir.c
-@@ -37,6 +37,7 @@ struct ovl_dir_cache {
+--- a/scripts/extract-cert.c
++++ b/scripts/extract-cert.c
+@@ -21,17 +21,18 @@
+ #include <openssl/bio.h>
+ #include <openssl/pem.h>
+ #include <openssl/err.h>
+-#include <openssl/engine.h>
+-
++#if OPENSSL_VERSION_MAJOR >= 3
++# define USE_PKCS11_PROVIDER
++# include <openssl/provider.h>
++# include <openssl/store.h>
++#else
++# if !defined(OPENSSL_NO_ENGINE) && !defined(OPENSSL_NO_DEPRECATED_3_0)
++#  define USE_PKCS11_ENGINE
++#  include <openssl/engine.h>
++# endif
++#endif
+ #include "ssl-common.h"
  
- struct ovl_readdir_data {
- 	struct dir_context ctx;
-+	const struct file *user_file;
- 	struct dentry *dentry;
- 	bool is_lowest;
- 	struct rb_root *root;
-@@ -295,9 +296,13 @@ static inline int ovl_dir_read(struct path *realpath,
- 			       struct ovl_readdir_data *rdd)
- {
- 	struct file *realfile;
-+	int flags = O_RDONLY | O_LARGEFILE;
- 	int err;
+-/*
+- * OpenSSL 3.0 deprecates the OpenSSL's ENGINE API.
+- *
+- * Remove this if/when that API is no longer used
+- */
+-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+-
+ #define PKEY_ID_PKCS7 2
  
--	realfile = ovl_path_open(realpath, O_RDONLY | O_LARGEFILE);
-+	if (rdd->user_file && (rdd->user_file->f_mode & FMODE_NONOTIFY))
-+		flags |= __FMODE_NONOTIFY;
+ static __attribute__((noreturn))
+@@ -61,6 +62,66 @@ static void write_cert(X509 *x509)
+ 		fprintf(stderr, "Extracted cert: %s\n", buf);
+ }
+ 
++static X509 *load_cert_pkcs11(const char *cert_src)
++{
++	X509 *cert = NULL;
++#ifdef USE_PKCS11_PROVIDER
++	OSSL_STORE_CTX *store;
 +
-+	realfile = ovl_path_open(realpath, flags);
- 	if (IS_ERR(realfile))
- 		return PTR_ERR(realfile);
++	if (!OSSL_PROVIDER_try_load(NULL, "pkcs11", true))
++		ERR(1, "OSSL_PROVIDER_try_load(pkcs11)");
++	if (!OSSL_PROVIDER_try_load(NULL, "default", true))
++		ERR(1, "OSSL_PROVIDER_try_load(default)");
++
++	store = OSSL_STORE_open(cert_src, NULL, NULL, NULL, NULL);
++	ERR(!store, "OSSL_STORE_open");
++
++	while (!OSSL_STORE_eof(store)) {
++		OSSL_STORE_INFO *info = OSSL_STORE_load(store);
++
++		if (!info) {
++			drain_openssl_errors(__LINE__, 0);
++			continue;
++		}
++		if (OSSL_STORE_INFO_get_type(info) == OSSL_STORE_INFO_CERT) {
++			cert = OSSL_STORE_INFO_get1_CERT(info);
++			ERR(!cert, "OSSL_STORE_INFO_get1_CERT");
++		}
++		OSSL_STORE_INFO_free(info);
++		if (cert)
++			break;
++	}
++	OSSL_STORE_close(store);
++#elif defined(USE_PKCS11_ENGINE)
++		ENGINE *e;
++		struct {
++			const char *cert_id;
++			X509 *cert;
++		} parms;
++
++		parms.cert_id = cert_src;
++		parms.cert = NULL;
++
++		ENGINE_load_builtin_engines();
++		drain_openssl_errors(__LINE__, 1);
++		e = ENGINE_by_id("pkcs11");
++		ERR(!e, "Load PKCS#11 ENGINE");
++		if (ENGINE_init(e))
++			drain_openssl_errors(__LINE__, 1);
++		else
++			ERR(1, "ENGINE_init");
++		if (key_pass)
++			ERR(!ENGINE_ctrl_cmd_string(e, "PIN", key_pass, 0), "Set PKCS#11 PIN");
++		ENGINE_ctrl_cmd(e, "LOAD_CERT_CTRL", 0, &parms, NULL, 1);
++		ERR(!parms.cert, "Get X.509 from PKCS#11");
++		cert = parms.cert;
++#else
++		fprintf(stderr, "no pkcs11 engine/provider available\n");
++		exit(1);
++#endif
++	return cert;
++}
++
+ int main(int argc, char **argv)
+ {
+ 	char *cert_src;
+@@ -86,28 +147,10 @@ int main(int argc, char **argv)
+ 		fclose(f);
+ 		exit(0);
+ 	} else if (!strncmp(cert_src, "pkcs11:", 7)) {
+-		ENGINE *e;
+-		struct {
+-			const char *cert_id;
+-			X509 *cert;
+-		} parms;
+-
+-		parms.cert_id = cert_src;
+-		parms.cert = NULL;
++		X509 *cert = load_cert_pkcs11(cert_src);
  
-@@ -341,12 +346,13 @@ static void ovl_dir_reset(struct file *file)
+-		ENGINE_load_builtin_engines();
+-		drain_openssl_errors(__LINE__, 1);
+-		e = ENGINE_by_id("pkcs11");
+-		ERR(!e, "Load PKCS#11 ENGINE");
+-		if (ENGINE_init(e))
+-			drain_openssl_errors(__LINE__, 1);
+-		else
+-			ERR(1, "ENGINE_init");
+-		if (key_pass)
+-			ERR(!ENGINE_ctrl_cmd_string(e, "PIN", key_pass, 0), "Set PKCS#11 PIN");
+-		ENGINE_ctrl_cmd(e, "LOAD_CERT_CTRL", 0, &parms, NULL, 1);
+-		ERR(!parms.cert, "Get X.509 from PKCS#11");
+-		write_cert(parms.cert);
++		ERR(!cert, "load_cert_pkcs11 failed");
++		write_cert(cert);
+ 	} else {
+ 		BIO *b;
+ 		X509 *x509;
+--- a/scripts/sign-file.c
++++ b/scripts/sign-file.c
+@@ -27,18 +27,19 @@
+ #include <openssl/evp.h>
+ #include <openssl/pem.h>
+ #include <openssl/err.h>
+-#include <openssl/engine.h>
+-
++#if OPENSSL_VERSION_MAJOR >= 3
++# define USE_PKCS11_PROVIDER
++# include <openssl/provider.h>
++# include <openssl/store.h>
++#else
++# if !defined(OPENSSL_NO_ENGINE) && !defined(OPENSSL_NO_DEPRECATED_3_0)
++#  define USE_PKCS11_ENGINE
++#  include <openssl/engine.h>
++# endif
++#endif
+ #include "ssl-common.h"
+ 
+ /*
+- * OpenSSL 3.0 deprecates the OpenSSL's ENGINE API.
+- *
+- * Remove this if/when that API is no longer used
+- */
+-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+-
+-/*
+  * Use CMS if we have openssl-1.0.0 or newer available - otherwise we have to
+  * assume that it's not available and its header file is missing and that we
+  * should use PKCS#7 instead.  Switching to the older PKCS#7 format restricts
+@@ -106,28 +107,64 @@ static int pem_pw_cb(char *buf, int len,
+ 	return pwlen;
  }
  
- static int ovl_dir_read_merged(struct dentry *dentry, struct list_head *list,
--	struct rb_root *root)
-+	struct rb_root *root, const struct file *user_file)
+-static EVP_PKEY *read_private_key(const char *private_key_name)
++static EVP_PKEY *read_private_key_pkcs11(const char *private_key_name)
  {
- 	int err;
- 	struct path realpath;
- 	struct ovl_readdir_data rdd = {
- 		.ctx.actor = ovl_fill_merge,
-+		.user_file = user_file,
- 		.dentry = dentry,
- 		.list = list,
- 		.root = root,
-@@ -390,9 +396,10 @@ static void ovl_seek_cursor(struct ovl_dir_file *od, loff_t pos)
- 	od->cursor = p;
+-	EVP_PKEY *private_key;
++	EVP_PKEY *private_key = NULL;
++#ifdef USE_PKCS11_PROVIDER
++	OSSL_STORE_CTX *store;
++
++	if (!OSSL_PROVIDER_try_load(NULL, "pkcs11", true))
++		ERR(1, "OSSL_PROVIDER_try_load(pkcs11)");
++	if (!OSSL_PROVIDER_try_load(NULL, "default", true))
++		ERR(1, "OSSL_PROVIDER_try_load(default)");
++
++	store = OSSL_STORE_open(private_key_name, NULL, NULL, NULL, NULL);
++	ERR(!store, "OSSL_STORE_open");
++
++	while (!OSSL_STORE_eof(store)) {
++		OSSL_STORE_INFO *info = OSSL_STORE_load(store);
++
++		if (!info) {
++			drain_openssl_errors(__LINE__, 0);
++			continue;
++		}
++		if (OSSL_STORE_INFO_get_type(info) == OSSL_STORE_INFO_PKEY) {
++			private_key = OSSL_STORE_INFO_get1_PKEY(info);
++			ERR(!private_key, "OSSL_STORE_INFO_get1_PKEY");
++		}
++		OSSL_STORE_INFO_free(info);
++		if (private_key)
++			break;
++	}
++	OSSL_STORE_close(store);
++#elif defined(USE_PKCS11_ENGINE)
++	ENGINE *e;
++
++	ENGINE_load_builtin_engines();
++	drain_openssl_errors(__LINE__, 1);
++	e = ENGINE_by_id("pkcs11");
++	ERR(!e, "Load PKCS#11 ENGINE");
++	if (ENGINE_init(e))
++		drain_openssl_errors(__LINE__, 1);
++	else
++		ERR(1, "ENGINE_init");
++	if (key_pass)
++		ERR(!ENGINE_ctrl_cmd_string(e, "PIN", key_pass, 0), "Set PKCS#11 PIN");
++	private_key = ENGINE_load_private_key(e, private_key_name, NULL, NULL);
++	ERR(!private_key, "%s", private_key_name);
++#else
++	fprintf(stderr, "no pkcs11 engine/provider available\n");
++	exit(1);
++#endif
++	return private_key;
++}
+ 
++static EVP_PKEY *read_private_key(const char *private_key_name)
++{
+ 	if (!strncmp(private_key_name, "pkcs11:", 7)) {
+-		ENGINE *e;
+-
+-		ENGINE_load_builtin_engines();
+-		drain_openssl_errors(__LINE__, 1);
+-		e = ENGINE_by_id("pkcs11");
+-		ERR(!e, "Load PKCS#11 ENGINE");
+-		if (ENGINE_init(e))
+-			drain_openssl_errors(__LINE__, 1);
+-		else
+-			ERR(1, "ENGINE_init");
+-		if (key_pass)
+-			ERR(!ENGINE_ctrl_cmd_string(e, "PIN", key_pass, 0),
+-			    "Set PKCS#11 PIN");
+-		private_key = ENGINE_load_private_key(e, private_key_name,
+-						      NULL, NULL);
+-		ERR(!private_key, "%s", private_key_name);
++		return read_private_key_pkcs11(private_key_name);
+ 	} else {
++		EVP_PKEY *private_key;
+ 		BIO *b;
+ 
+ 		b = BIO_new_file(private_key_name, "rb");
+@@ -136,9 +173,9 @@ static EVP_PKEY *read_private_key(const
+ 						      NULL);
+ 		ERR(!private_key, "%s", private_key_name);
+ 		BIO_free(b);
+-	}
+ 
+-	return private_key;
++		return private_key;
++	}
  }
  
--static struct ovl_dir_cache *ovl_cache_get(struct dentry *dentry)
-+static struct ovl_dir_cache *ovl_dir_cache_get(struct file *file)
- {
- 	int res;
-+	struct dentry *dentry = file->f_path.dentry;
- 	struct ovl_dir_cache *cache;
- 
- 	cache = ovl_dir_cache(d_inode(dentry));
-@@ -411,7 +418,7 @@ static struct ovl_dir_cache *ovl_cache_get(struct dentry *dentry)
- 	INIT_LIST_HEAD(&cache->entries);
- 	cache->root = RB_ROOT;
- 
--	res = ovl_dir_read_merged(dentry, &cache->entries, &cache->root);
-+	res = ovl_dir_read_merged(dentry, &cache->entries, &cache->root, file);
- 	if (res) {
- 		ovl_cache_free(&cache->entries);
- 		kfree(cache);
-@@ -545,14 +552,15 @@ static int ovl_fill_plain(struct dir_context *ctx, const char *name,
- 	return 0;
- }
- 
--static int ovl_dir_read_impure(struct path *path,  struct list_head *list,
--			       struct rb_root *root)
-+static int ovl_dir_read_impure(struct path *path, struct list_head *list,
-+			       struct rb_root *root, const struct file *user_file)
- {
- 	int err;
- 	struct path realpath;
- 	struct ovl_cache_entry *p, *n;
- 	struct ovl_readdir_data rdd = {
- 		.ctx.actor = ovl_fill_plain,
-+		.user_file = user_file,
- 		.list = list,
- 		.root = root,
- 	};
-@@ -590,9 +598,10 @@ static int ovl_dir_read_impure(struct path *path,  struct list_head *list,
- 	return 0;
- }
- 
--static struct ovl_dir_cache *ovl_cache_get_impure(struct path *path)
-+static struct ovl_dir_cache *ovl_cache_get_impure(struct file *file)
- {
- 	int res;
-+	struct path *path = &file->f_path;
- 	struct dentry *dentry = path->dentry;
- 	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
- 	struct ovl_dir_cache *cache;
-@@ -609,7 +618,7 @@ static struct ovl_dir_cache *ovl_cache_get_impure(struct path *path)
- 	if (!cache)
- 		return ERR_PTR(-ENOMEM);
- 
--	res = ovl_dir_read_impure(path, &cache->entries, &cache->root);
-+	res = ovl_dir_read_impure(path, &cache->entries, &cache->root, file);
- 	if (res) {
- 		ovl_cache_free(&cache->entries);
- 		kfree(cache);
-@@ -724,7 +733,7 @@ static int ovl_iterate_real(struct file *file, struct dir_context *ctx)
- 	dput(parent);
- 
- 	if (ovl_is_impure_dir(file)) {
--		rdt.cache = ovl_cache_get_impure(&file->f_path);
-+		rdt.cache = ovl_cache_get_impure(file);
- 		if (IS_ERR(rdt.cache))
- 			return PTR_ERR(rdt.cache);
- 	}
-@@ -771,7 +780,7 @@ static int ovl_iterate(struct file *file, struct dir_context *ctx)
- 	if (!od->cache) {
- 		struct ovl_dir_cache *cache;
- 
--		cache = ovl_cache_get(dentry);
-+		cache = ovl_dir_cache_get(file);
- 		err = PTR_ERR(cache);
- 		if (IS_ERR(cache))
- 			goto out;
-@@ -986,7 +995,7 @@ int ovl_check_empty_dir(struct dentry *dentry, struct list_head *list)
- 	const struct cred *old_cred;
- 
- 	old_cred = ovl_override_creds(dentry->d_sb);
--	err = ovl_dir_read_merged(dentry, list, &root);
-+	err = ovl_dir_read_merged(dentry, list, &root, NULL);
- 	revert_creds(old_cred);
- 	if (err)
- 		return err;
--- 
-2.53.0
-
+ static X509 *read_x509(const char *x509_name)
 
 
