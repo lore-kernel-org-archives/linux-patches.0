@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057853;
-	b=bCXVtNNjn25+1COX8GKKcY9asWw431xMt5OfAUWdoIzFElS0T1mV5NI6F8Zwk/jwJ1Ks
-	 zrKaNHjFb/z5BT7VyYXpzb2EwFM2+Ez5DR6nsK/1IhRhnWKuz9IluuxXkFIL4opLeXHGs
-	 NKL9bTD0Ms9jQU/Ctu5mYAq/MkbWJt56MhDrsxh976o4hGLTX22NN29BcweovuYWmkZTS
-	 +er3nQN3HnxlvoVHg0hbdHtjwIHb4IYXRVNaPCnqHElhyd1XuR2jTEiKBuO10ThCHz5bC
-	 RuHAlM4mjbczkVkkDiD1kOBjJx9WmmrdeDrgIBtV7sfxQjBif2phgJOV9bH6M74iu9Q==
+	t=1795057855;
+	b=W5EZ70bdYXcnLqXusbROVeWEaIiPEyIjAXp6tPuNKuVzC+Ct/wd9Imof2u9+/Bu45vWI
+	 6lMpljTsv3mK9k9r0tfunT3LPWCjX2HGGjHC2DKwObr2fj3/0G8F5usdf2mGPlmCoukzx
+	 tXzS74B66Si0HWrphFjpHymdQcpYkPbkT/iRkgkPB70tXTLTpTpa26Co4+Q7hatq7tT4t
+	 EeKAINzcdI6ggappkoVYM161e/SIn09nzbe77eQdvp11v9JtU2L4BpcThh8he0YFqEoDG
+	 GeSkFzVBnovaHJpc2BVSFlG0Kvy3m+UZ5rzjqAZzoxhmIknptiry14PGkhJRXvf9w2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057853;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057855;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VUY4rGQW99MuC7PZFB5PM/YbwgZvR5acq9ptSPTwdHo=;
-	b=fNAQ6qBzQOiGknF/I2coMjlLZBbJ3ZXLP4dk7S7Ppxx0Ro+KfekKNBJXoLWaAvA+SVQn
-	 AHV8gf/9vMx2IazSKTsiN1bbflKhPVynJtJTXo4FNO27VVrvaEeHSlXlK+08/OjK8LHEa
-	 YcRSoLSXdAsEow110Z+NzohO3fhWgDIc04mHAy7BnqtUP5A8re8igMKopQfLTJGPlCsVA
-	 muE5mzaOUdZneCTmXB0Lz9krpBoenLPRYGk1+W5LWIS8ImTjn34IL8X7u5TzyNT0HG4rO
-	 f/ySduz7VsoWbIV9r1U6gcqRaqRBa1pO+LOrE2diWK+TfC9XlQ4isG6IbU/cDo/M3eg==
+	bh=bCTLPA5pHJL0U+uKSHczuI9ZcGfy6W/gzyWcTTHBvLU=;
+	b=1wHPg/kLLv9IY5ofWwNqbGyNq3bP7ZputtE5iUKIK9Nd00wUeft/0vP/PAdTHC4qQvI4
+	 JjFxUUKOtRtn6ELVxLgAvNxwOypgixGy/pRyyKYHO6TbYXN2hMtFVwRCkqmQaGWg6KhSz
+	 wShQM4hSvVWFFxFUK8cvc2mndMWUfRax//eGBzjnhtMKCteZ/fcj8orFjrzqvQbXNWyJa
+	 CIp8zcWCc+FryR1FAd91uoKmGiZQ0iQPjxrqGoLCNK+XKWbBnwENoKt8ZNZ4uEXBFyUJC
+	 f1aJLQMrp6yonJabtzJHXBHbhT8T//BLRRBsbDI6hDL9olHMrjWaW23JREYDdAao7uw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0C7ClTt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wRceHb6x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474C5606A32C;
-	Thu, 19 Nov 2026 03:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFB0606A32A;
+	Thu, 19 Nov 2026 03:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0C7ClTt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBBB1F000CE;
-	Thu, 19 Nov 2026 03:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wRceHb6x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E29CE1F000C4;
+	Thu, 19 Nov 2026 03:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057852;
-	bh=VUY4rGQW99MuC7PZFB5PM/YbwgZvR5acq9ptSPTwdHo=;
+	s=korg; t=1795057855;
+	bh=bCTLPA5pHJL0U+uKSHczuI9ZcGfy6W/gzyWcTTHBvLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B0C7ClTtt8okft0LfhUJAQNmfUjaR49bJjML96IlREQEMIkIVUheitfqzrXr/0138
-	 AiihHcB6k/w2XV7jULIqVacvkijVCF4Shj0/yr3RYe36W1p+lpZa5AolVgZVTUWaJF
-	 A3iMUKV1gU0goWrgbhVnoVL6ENjlowX0u2pUTVhg=
+	b=wRceHb6xV7en/OdPM0fUjzMzdCMeWZGGuuBksJSLvGOWvKj6zDK+PdvPbHDTl+EeA
+	 sZGnQm4Jl7zfwEyET6ArN2qIBX/8gMHxxNJFKMMKrayUH6jCOxgS1nmFfcih69fRRo
+	 sApkthtfY9ZKYGTMvxE5XhAnvrdRZZdbOpD7d900=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 5.10 0278/1848] xfs: check for fragments when full-extent sharing matches
-Date: Wed, 18 Nov 2026 15:38:36 +0100
-Message-ID: <20261118145923.852076550@linuxfoundation.org>
+Subject: [PATCH 5.10 0279/1848] xfs: only written file data blocks can be shared
+Date: Wed, 18 Nov 2026 15:38:37 +0100
+Message-ID: <20261118145923.882111656@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,13 +70,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 95e213c1ddb40dfb0a8178ed35c9f29992a320e1 upstream.
+commit 634b63baf05062988456a0bd5df2696c14ea2949 upstream.
 
-LOLLM noticed that xchk_refcountbt_process_rmap_fragments returns early
-if there are enough rmap records that overlap the space referenced by a
-refcountbt record to match the refcount in that refcountbt record.
-Unfortunately, it never checks the fragment list in this case, so it
-won't find the discrepancy between the rmap and refcount btrees.
+LOLLM noticed that xchk_refcountbt_rmap_check (and its rt equivalent)
+will count any rmap owner towards the shared count.  However, the only
+blocks that can be shared between xfs files are written file data
+blocks; and the only blocks that can have single-refcount entries are
+COW staging extents.  Fix the checking code.
 
 Cc: stable@vger.kernel.org # v4.16
 Fixes: dbde19da963706 ("xfs: cross-reference the rmapbt data with the refcountbt")
@@ -86,23 +86,29 @@ Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/refcount.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/refcount.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 --- a/fs/xfs/scrub/refcount.c
 +++ b/fs/xfs/scrub/refcount.c
-@@ -157,8 +157,11 @@ xchk_refcountbt_process_rmap_fragments(
- 	xfs_nlink_t			target_nr;
+@@ -112,6 +112,18 @@ xchk_refcountbt_rmap_check(
+ 		return 0;
+ 	}
  
- 	target_nr = refchk->refcount - refchk->seen;
--	if (target_nr == 0)
-+	if (target_nr == 0) {
-+		if (!list_empty(&refchk->fragments))
-+			refchk->seen = 0;
- 		return;
++	/*
++	 * The refcount btree should only have records for written file data
++	 * blocks or for COW staging blocks.
++	 */
++	if ((XFS_RMAP_NON_INODE_OWNER(rec->rm_owner) &&
++	     rec->rm_owner != XFS_RMAP_OWN_COW) ||
++	    (rec->rm_flags & (XFS_RMAP_ATTR_FORK | XFS_RMAP_BMBT_BLOCK |
++			      XFS_RMAP_UNWRITTEN))) {
++		xchk_btree_xref_set_corrupt(refchk->sc, cur, 0);
++		return 0;
 +	}
- 
- 	/*
- 	 * There are (refchk->rc.rc_refcount - refchk->nr refcount)
++
+ 	if (rec->rm_startblock <= refchk->bno && rm_last >= rc_last) {
+ 		/*
+ 		 * The rmap overlaps the refcount record, so we can confirm
 
 
