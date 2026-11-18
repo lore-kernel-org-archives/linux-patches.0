@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043936;
-	b=LWT1LfhLw0iZxlcuj9kwHCHXvbo3sV3/4ivOn9BxaZuDTKX3btSpSgq+rxmoBsb9QIED
-	 Bz41c5F66UBwZd9yV4xqppUTHChIbXzSnXat/vadtGPfiJ3q42TbEHyWGCTVQqkaKr8DM
-	 Z40R1Ku9PKkQDK/630Pgze3GTDRLYJQ1OjMwFWX1vsZ+23WNhSJc7slntBksBLXsAiJtD
-	 0dSY+CxJHJ4aJfTDlDIP8MeqX1+xPHZf7Jj+Kwd+VBr5CzKHNsnF0K67+2N/I6KXn1x+y
-	 3aD7zyC7wg0/BXS4lxAjkKUWuyAMYXhtKKOoRJFBZd74u2FieLvDK3kSwuXTevBdTHQ==
+	t=1795043939;
+	b=wYUkQ/dPfVvc+VreUgIiSP2WKzq97mOnnmFKJ4cwj3vsX0abhe8LwChpXAagl5rSfhlG
+	 btYNomw1wyaEdwkm1tXdtubCO+g6YeBGtUPsbU60ocm9vZbQsl4vKUfK/7IOaGMEwaXwX
+	 Thb6XP75HSc3IkvjcAbjeulRyiqQWUUUVxyJUZo6rdrkEKmHSrpPk41B7VP1cbTPd3Xxn
+	 4JaHS2cb3iOr8flTCxM92K4gdf4P3AMXTyRulhRXnv51zGY2LrgSBBIfwavVrHnzNMy64
+	 /Uwk3wZXN/SJUasIsa49Z4IWHMfpgr/dtQendFxzyjIBtnu6p7kD4eL1RRdzNgZwFCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043936;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043939;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f9fv/5R+41pvLROqCdwywuLBQiTDqx/Lbb36ftRBu4A=;
-	b=d06htJ6vHuXnA/KkesDJW+ZXOeOC5ppz8LmFu1vdrFkA/gGfY3VCpTywP21/MZNtJscW
-	 vlqMZ2jVYjgGbg2Jt6cmxmFTmJyMco2YpDJdl8WnYL1DAV9PN4WYO/Z1+yCb2zsetmF3K
-	 qb9y1Z3tjgxkJyzwvpYhUwnFm69+9XyuahWqg9zYiaGLH62M3DzZtCh7EMJSLph7hw35P
-	 Sgchdoe743qHwegvmDp6EEzdAIjCX0LQBtwZCl2A9zIi9d2496mptBAn/yTfiEyo3lcHW
-	 Blv5ABcJatYXWejlAJEM5j4+0fYHt9gm1N584Xw2g3n+++L8AipeKd4z6ksWrynXccQ==
+	bh=g9KgXfMOdI3gZ2FgLXFVemUfpLP8fKecNqyjixvem7Y=;
+	b=ZMEaIaNGsWmz2jGxA1xz1AM2eKR1TPv8983mzy4ntQg9ws75TPYbzMxR69IJFHOipJ5m
+	 caPuP/1akWlAIGC1t+vMzsWetpVlJikyaaLQ1F2u6SHkviiYnQUuwDKG43oxjTUvz13yx
+	 PtC1vbUfhPyfVDN7wCG2dh1sazZeYoVXINGZQagX2Jc/J7JdI2V4NM9q4KCVKVVOGTchR
+	 tRhuQkiuih0WAKeFYPBRkrOIMTkWI44Sq2f6vT/nYbdD8qrI330XJxqdIfgxIy0YsFaoN
+	 sUz2hPYkfOwf1Ph/Yrw64Qqy/shKfDPKZqELkwYmRfElcVH2XiZQYmiVy7ebgA1wF3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O6bfn5cz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKURr4sx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62743606A32F;
-	Wed, 18 Nov 2026 23:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FFA606A320;
+	Wed, 18 Nov 2026 23:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O6bfn5cz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87421F000C4;
-	Wed, 18 Nov 2026 23:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKURr4sx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784791F000C4;
+	Wed, 18 Nov 2026 23:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043936;
-	bh=f9fv/5R+41pvLROqCdwywuLBQiTDqx/Lbb36ftRBu4A=;
+	s=korg; t=1795043939;
+	bh=g9KgXfMOdI3gZ2FgLXFVemUfpLP8fKecNqyjixvem7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O6bfn5czmd/2E8onF0IAfVBmRN+oP35RC7oc3bgBU9SHuWUO1vLDF6DwPFzvKKwCy
-	 il+uhmZkXfDPIqRDJQFbG51NkPvvElACI7d2puKLq5xXYkCCUzaxN59RLtzxlEBEPp
-	 tAvAqWRIQR16fkmX7Cfcm+zT/Gn5cJMFmnpQH/D8=
+	b=lKURr4sxNdOEv5rllOPEduiX6ApTL1vs8pru3COTLFQ9r9yq3ALfusZa/KBy9hCLN
+	 SL+dvyA1lidCWSaaEouVsbhBACmHimVDoDpxNHE/uIu8aU5q0x06Pb4jgsi/xmfj3X
+	 2S0b4EO2Ck5y0o7uL8grHHajE7oCY3WR76mUt33g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Dean Luick <dean.luick@cornelisnetworks.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0388/2857] xfrm: save input state data before secpath resets
-Date: Wed, 18 Nov 2026 15:23:42 +0100
-Message-ID: <20261118150215.371680063@linuxfoundation.org>
+Subject: [PATCH 6.1 0389/2857] IB/hfi1: Use dma_mmap_coherent for matching buffers
+Date: Wed, 18 Nov 2026 15:23:43 +0100
+Message-ID: <20261118150215.406297405@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,104 +69,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Dean Luick <dean.luick@cornelisnetworks.com>
 
-[ Upstream commit 3cf5cdecd99c9c186a5ea518d93bbf3045b6e3aa ]
+[ Upstream commit 1ec82317a1daac78c04b0c15af89018ccf9fa2b7 ]
 
-xfrm_input() stores the current xfrm_state in the skb secpath while it
-continues receive-side processing. Some input paths can reset that secpath
-before xfrm_input() has finished dereferencing the state.
+For memory allocated with dma_alloc_coherent(), use
+dma_mmap_coherent() to mmap it into user space.
 
-Receive callback users such as VTI and XFRM interfaces can reset the
-secpath. The VTI receive path does so before checking whether the packet
-crosses network namespaces, while the XFRM interface path does so only for
-cross-network-namespace packets. The XFRM_MAX_DEPTH error path can also
-reset the secpath before the final drop callback reports the current
-state's protocol.
-
-If secpath_reset() drops the last state reference while the state is
-concurrently deleted, xfrm_input() can still dereference the freed state
-when selecting transport_finish() or reporting the drop callback protocol.
-
-Save the state protocol on the stack while the state is still valid,
-and use the already saved address family for transport_finish(). A larval
-XFRM_STATE_ACQ state has no type, so retain nexthdr as its protocol. This
-preserves the existing drop-path fallback while avoiding the post-reset
-state dereferences without adding an extra state reference to every
-received packet.
-
-Fixes: df3893c176e9 ("vti: Update the ipv4 side to use it's own receive hook.")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-[ sashal: Dropped the hunk for the missing x->dir check, and kept the older xfrm_rcv_cb, transport_finish and drop code (no RCU wrapper, skb->dev) while only swapping in the saved xfrm_proto and family. ]
+Signed-off-by: Dean Luick <dean.luick@cornelisnetworks.com>
+Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Link: https://lore.kernel.org/r/167329107460.1472990.9090255834533222032.stgit@awfm-02.cornelisnetworks.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 975396b9e5a4 ("IB/hfi1: Resolve the credit-return buffer through the send context's node")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_input.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/hfi1/file_ops.c | 81 +++++++++++++++++++--------
+ 1 file changed, 57 insertions(+), 24 deletions(-)
 
-diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
-index b39bb4662d4b2..fb7c992ed91b7 100644
---- a/net/xfrm/xfrm_input.c
-+++ b/net/xfrm/xfrm_input.c
-@@ -462,6 +462,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 	struct xfrm_state *x = NULL;
- 	xfrm_address_t *daddr;
- 	u32 mark = skb->mark;
-+	u8 xfrm_proto = nexthdr;
- 	unsigned int family = AF_UNSPEC;
- 	int decaps = 0;
- 	int async = 0;
-@@ -472,6 +473,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 
- 	if (encap_type < 0 || (xo && (xo->flags & XFRM_GRO || encap_type == 0))) {
- 		x = xfrm_input_state(skb);
-+		xfrm_proto = x->type ? x->type->proto : nexthdr;
- 
- 		if (unlikely(x->km.state != XFRM_STATE_VALID)) {
- 			if (x->km.state == XFRM_STATE_ACQ)
-@@ -572,11 +574,13 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 
- 		x = xfrm_state_lookup(net, mark, daddr, spi, nexthdr, family);
- 		if (x == NULL) {
-+			xfrm_proto = nexthdr;
- 			secpath_reset(skb);
- 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINNOSTATES);
- 			xfrm_audit_state_notfound(skb, family, spi, seq);
- 			goto drop;
- 		}
-+		xfrm_proto = x->type ? x->type->proto : nexthdr;
- 
- 		skb->mark = xfrm_smark_get(skb->mark, x);
- 
-@@ -695,7 +699,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 		crypto_done = false;
- 	} while (!err);
- 
--	err = xfrm_rcv_cb(skb, family, x->type->proto, 0);
-+	err = xfrm_rcv_cb(skb, family, xfrm_proto, 0);
- 	if (err)
- 		goto drop;
- 
-@@ -718,7 +722,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 
- 		err = -EAFNOSUPPORT;
- 		rcu_read_lock();
--		afinfo = xfrm_state_afinfo_get_rcu(x->props.family);
-+		afinfo = xfrm_state_afinfo_get_rcu(family);
- 		if (likely(afinfo))
- 			err = afinfo->transport_finish(skb, xfrm_gro || async);
- 		rcu_read_unlock();
-@@ -742,7 +746,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- drop:
- 	if (async)
- 		dev_put(skb->dev);
--	xfrm_rcv_cb(skb, family, x && x->type ? x->type->proto : nexthdr, -1);
-+	xfrm_rcv_cb(skb, family, xfrm_proto, -1);
- 	kfree_skb(skb);
- 	return 0;
+diff --git a/drivers/infiniband/hw/hfi1/file_ops.c b/drivers/infiniband/hw/hfi1/file_ops.c
+index 7c5d487ec9168..e03b0207856e7 100644
+--- a/drivers/infiniband/hw/hfi1/file_ops.c
++++ b/drivers/infiniband/hw/hfi1/file_ops.c
+@@ -306,6 +306,17 @@ static ssize_t hfi1_write_iter(struct kiocb *kiocb, struct iov_iter *from)
+ 	return reqs;
  }
+ 
++static inline void mmap_cdbg(u16 ctxt, u8 subctxt, u8 type, u8 mapio, u8 vmf,
++			     u64 memaddr, void *memvirt, dma_addr_t memdma,
++			     ssize_t memlen, struct vm_area_struct *vma)
++{
++	hfi1_cdbg(PROC,
++		  "%u:%u type:%u io/vf/dma:%d/%d/%d, addr:0x%llx, len:%lu(%lu), flags:0x%lx",
++		  ctxt, subctxt, type, mapio, vmf, !!memdma,
++		  memaddr ?: (u64)memvirt, memlen,
++		  vma->vm_end - vma->vm_start, vma->vm_flags);
++}
++
+ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
+ {
+ 	struct hfi1_filedata *fd = fp->private_data;
+@@ -315,6 +326,7 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
+ 	u64 token = vma->vm_pgoff << PAGE_SHIFT,
+ 		memaddr = 0;
+ 	void *memvirt = NULL;
++	dma_addr_t memdma = 0;
+ 	u8 subctxt, mapio = 0, vmf = 0, type;
+ 	ssize_t memlen = 0;
+ 	int ret = 0;
+@@ -334,6 +346,11 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
+ 		goto done;
+ 	}
+ 
++	/*
++	 * vm_pgoff is used as a buffer selector cookie.  Always mmap from
++	 * the beginning.
++	 */ 
++	vma->vm_pgoff = 0;
+ 	flags = vma->vm_flags;
+ 
+ 	switch (type) {
+@@ -355,7 +372,8 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
+ 		vma->vm_page_prot = pgprot_writecombine(vma->vm_page_prot);
+ 		mapio = 1;
+ 		break;
+-	case PIO_CRED:
++	case PIO_CRED: {
++		u64 cr_page_offset;
+ 		if (flags & VM_WRITE) {
+ 			ret = -EPERM;
+ 			goto done;
+@@ -365,10 +383,11 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
+ 		 * second or third page allocated for credit returns (if number
+ 		 * of enabled contexts > 64 and 128 respectively).
+ 		 */
+-		memvirt = dd->cr_base[uctxt->numa_id].va;
+-		memaddr = virt_to_phys(memvirt) +
+-			(((u64)uctxt->sc->hw_free -
+-			  (u64)dd->cr_base[uctxt->numa_id].va) & PAGE_MASK);
++		cr_page_offset = ((u64)uctxt->sc->hw_free -
++			  	     (u64)dd->cr_base[uctxt->numa_id].va) &
++				   PAGE_MASK;
++		memvirt = dd->cr_base[uctxt->numa_id].va + cr_page_offset;
++		memdma = dd->cr_base[uctxt->numa_id].dma + cr_page_offset;
+ 		memlen = PAGE_SIZE;
+ 		flags &= ~VM_MAYWRITE;
+ 		flags |= VM_DONTCOPY | VM_DONTEXPAND;
+@@ -378,14 +397,16 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
+ 		 * memory been flagged as non-cached?
+ 		 */
+ 		/* vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot); */
+-		mapio = 1;
+ 		break;
++	}
+ 	case RCV_HDRQ:
+ 		memlen = rcvhdrq_size(uctxt);
+ 		memvirt = uctxt->rcvhdrq;
++		memdma = uctxt->rcvhdrq_dma;
+ 		break;
+ 	case RCV_EGRBUF: {
+-		unsigned long addr;
++		unsigned long vm_start_save;
++		unsigned long vm_end_save;
+ 		int i;
+ 		/*
+ 		 * The RcvEgr buffer need to be handled differently
+@@ -404,24 +425,34 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
+ 			goto done;
+ 		}
+ 		vma->vm_flags &= ~VM_MAYWRITE;
+-		addr = vma->vm_start;
++		/*
++		 * Mmap multiple separate allocations into a single vma.  From
++		 * here, dma_mmap_coherent() calls dma_direct_mmap(), which
++		 * requires the mmap to exactly fill the vma starting at
++		 * vma_start.  Adjust the vma start and end for each eager
++		 * buffer segment mapped.  Restore the originals when done.
++		 */
++		vm_start_save = vma->vm_start;
++		vm_end_save = vma->vm_end;
++		vma->vm_end = vma->vm_start;
+ 		for (i = 0 ; i < uctxt->egrbufs.numbufs; i++) {
+ 			memlen = uctxt->egrbufs.buffers[i].len;
+ 			memvirt = uctxt->egrbufs.buffers[i].addr;
+-			ret = remap_pfn_range(
+-				vma, addr,
+-				/*
+-				 * virt_to_pfn() does the same, but
+-				 * it's not available on x86_64
+-				 * when CONFIG_MMU is enabled.
+-				 */
+-				PFN_DOWN(__pa(memvirt)),
+-				memlen,
+-				vma->vm_page_prot);
+-			if (ret < 0)
++			memdma = uctxt->egrbufs.buffers[i].dma;
++			vma->vm_end += memlen;
++			mmap_cdbg(ctxt, subctxt, type, mapio, vmf, memaddr,
++				  memvirt, memdma, memlen, vma);
++			ret = dma_mmap_coherent(&dd->pcidev->dev, vma,
++						memvirt, memdma, memlen);
++			if (ret < 0) {
++				vma->vm_start = vm_start_save;
++				vma->vm_end = vm_end_save;
+ 				goto done;
+-			addr += memlen;
++			}
++			vma->vm_start += memlen;
+ 		}
++		vma->vm_start = vm_start_save;
++		vma->vm_end = vm_end_save;
+ 		ret = 0;
+ 		goto done;
+ 	}
+@@ -481,6 +512,7 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
+ 		}
+ 		memlen = PAGE_SIZE;
+ 		memvirt = (void *)hfi1_rcvhdrtail_kvaddr(uctxt);
++		memdma = uctxt->rcvhdrqtailaddr_dma;
+ 		flags &= ~VM_MAYWRITE;
+ 		break;
+ 	case SUBCTXT_UREGS:
+@@ -529,14 +561,15 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
+ 	}
+ 
+ 	vma->vm_flags = flags;
+-	hfi1_cdbg(PROC,
+-		  "%u:%u type:%u io/vf:%d/%d, addr:0x%llx, len:%lu(%lu), flags:0x%lx\n",
+-		    ctxt, subctxt, type, mapio, vmf, memaddr, memlen,
+-		    vma->vm_end - vma->vm_start, vma->vm_flags);
++	mmap_cdbg(ctxt, subctxt, type, mapio, vmf, memaddr, memvirt, memdma, 
++		  memlen, vma);
+ 	if (vmf) {
+ 		vma->vm_pgoff = PFN_DOWN(memaddr);
+ 		vma->vm_ops = &vm_ops;
+ 		ret = 0;
++	} else if (memdma) {
++		ret = dma_mmap_coherent(&dd->pcidev->dev, vma,
++					memvirt, memdma, memlen);
+ 	} else if (mapio) {
+ 		ret = io_remap_pfn_range(vma, vma->vm_start,
+ 					 PFN_DOWN(memaddr),
 -- 
 2.53.0
 
