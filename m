@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040697;
-	b=SdElMbL6uAXCJ394RDKy8sovgxyjwhenavpnBe2Frjbjg6Sod+iVWYBMdlWk7TCxgiBk
-	 Pju0nrcV7vh3oz8PeqjwEE1IE1kfqkLUaLpp7UE5uFJM8yu+RV5aM18comB7krLTV7lwm
-	 Md/LOkRPqOw/UrqfAE35o1tpBnqHBDsRkazjNEiaTqtJH2STArplqK+LO5bTVySaAzLYf
-	 yPUozb4VokeKkdUWq2gMsAi0SW6bPAeYw6Akc62w+b9Fnw96A9iHrFrVqSuWmJxAviKW9
-	 cJFWTTi2LZIlaz0OfhBNQsp3lRo9Ir0hLOP+OF4UNL2ahUBOlYQ3S1HRVCR0qEK8VKQ==
+	t=1795040700;
+	b=2xzWCEi9me+0R5yZMFCAkvdnQzIXosy6vnDhz4ADnH119tyAAI0sFtJlGg3LVYan27Vv
+	 vlAsN9O7RyS8onyB49XwBkNp6AY6aGOUu1Kd0X1O5GK+YlnMuO64FcEixHLMQ6ZXD8nSe
+	 xOLvkJlysfRZQIUdUgtegKW4aIadvHUw1hpv2+4uZCd4FCm+Lr+f+S8sdICO0wNmyJIUw
+	 ytK5Pwwn5XbDDmEY9cdX+EoZT/WP+nFPwZhJHGsHpZCcYisd/TCHtQU/OvsL5pEkv8ul8
+	 aYHmmw0LB/NBp5GrFTIWe9cv3JY9MpulNbaxI08Rap74QJmzojopcP827WaS9OMA7XA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040697;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040700;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c16cFNPsnlf+EEF2mx7t0481Q7+E1VycPY94vy5xk2Q=;
-	b=R6sKLbp4YGxR7dZGNP+TAxNu79X6h+dK4FEHOVeuVhllhxgNyvxeXSr6En7IhQIJ7VYl
-	 3yhmjRgz2oOVoX4gYr/4YwDvagtEV/7bN78/ZlD7mvoPeN6IscJsIGpzUdsOAoGHo6A3D
-	 L5FnYr3z/gvlPbfREqiCmmG2aiJZ1u2om8amd+2nnHJ1AC+1ekktzW0WvUDqPJRLet9Yw
-	 ha5GDApNduMzlSUd6jjF2Ofbt6ri29RDaCKOoDChP7V7J0eRLSMcbyCXkAZgFw+PqRwjf
-	 ahgIhA31CPdTE74I9WaCyzJhbFxa0BV8mAelabZOeKVgxRICwJtimiCBgpUuvJ5CLyw==
+	bh=VOrQzDN41+ROHITB8IwYcFJmGSyJhLIWDKPSlT36hDc=;
+	b=i9Gx71DsHdzRSHYMAESHBAiKnjYCf8olCgGuCCOOr9nhcjVXu49GbNRplixwn5Kttpx3
+	 wZBjVOr3KA6rJ0ofdu8fo+VZPnSimkAPA9ON57Tal/TTm7Tw98EZoFi4hKRrmM0qD/aJk
+	 8XwQJoM23BD7ivRrRPoqp9KZOL46a+lsl2yxeZQQcOltB+hBEjn/h5EVbSBCPAFtYeT4X
+	 /EGRch6cd2kv+PxHdqTxtyzi93w1/BwBfY1msHJQa2bOQH8ys768NeNqVZj2H6cq0XPO5
+	 imdv+i75X4fvAESOmWPpHSVy9il59YsUQQ7+UAT3pScD0DviGxSbUpqCrHWygEFXaPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="luyBkat/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qc+luikn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59629606A32A;
-	Wed, 18 Nov 2026 22:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F75A606A32C;
+	Wed, 18 Nov 2026 22:25:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=luyBkat/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB37C1F000C4;
-	Wed, 18 Nov 2026 22:24:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qc+luikn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801821F000C4;
+	Wed, 18 Nov 2026 22:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040697;
-	bh=c16cFNPsnlf+EEF2mx7t0481Q7+E1VycPY94vy5xk2Q=;
+	s=korg; t=1795040700;
+	bh=VOrQzDN41+ROHITB8IwYcFJmGSyJhLIWDKPSlT36hDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=luyBkat/eCKIIFEGBpBZP0aKWDxAbuoLPkjPZ8DmQgoE+pr9rPv8Y5fTmApSNC32K
-	 k7c3YHOyWjui8ykZkBMWk1408oJteVOKd+LqdhoDLcuW9f4Lkv4lcXFqiOkNFZ47NN
-	 oofO0xztNVkItG7nlfKzxc9fupP2YI02Jqzy4TbI=
+	b=Qc+luiknanbUvZN67ljbcSwk01IiicTgf+EE2PGLI2msgmLC4XV0s2rGbm4Mvahb7
+	 Wey30VeU2sli6WR7lQvmeIxIMZ8InNW5c60dZkfZG6POl6nY/J+XPGJ6GIgljJUvY9
+	 5b0Nshz61OYDsPSN9jpHCL5FacMMe+eeT6pReDnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cheng <icheng@nvidia.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Will Deacon <will@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2550/3318] perf/cxl: Clear stale overflow status before using a counter
-Date: Wed, 18 Nov 2026 15:52:52 +0100
-Message-ID: <20261118150437.789775499@linuxfoundation.org>
+Subject: [PATCH 6.6 2551/3318] spi: fsl: switch to managed controller allocation
+Date: Wed, 18 Nov 2026 15:52:53 +0100
+Message-ID: <20261118150437.816389679@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,70 +68,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 05d82cf377f706d0b566b572bc66e3a2057bd68e ]
+[ Upstream commit 6afe041c2ce9068b2b6c64eddb5537911752050c ]
 
-cxl_pmu_event_stop() leaves the counter's bit set in the overflow status
-register and only cxl_pmu_irq() ever clears it, so a counter handed from
-one event to the next starts with the previous owner's overflow pending.
-The perf core stops and starts back to back with interrupts off, so an
-interrupt latched over the handover lands on the new event. prev_count is 0
-by then, so the read path adds a full period: 2^counter_width phantom
-counts.
+Switch to device managed controller allocation to simplify error
+handling and to avoid having to take another reference during
+deregistration.
 
-Clear the bit in cxl_pmu_event_start(), before the config write arms
-Interrupt on Overflow. Clear the whole register at probe too, for counters
-no event ever owns - the driver never touched it, so firmware or a previous
-kernel can leave a bit set there.
-
-Fixes: 5d7107c72796 ("perf: CXL Performance Monitoring Unit driver")
-Reported-by: Richard Cheng <icheng@nvidia.com>
-Closes: https://lore.kernel.org/linux-cxl/anAVpO--i5heVfz9@MWDK4CY14F/
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260429091333.165363-12-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: af1d882d421d ("spi: fsl: unmap immr_spi_cs on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/cxl_pmu.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/spi/spi-fsl-spi.c | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
-index 5d69ed4f706e3..a7070cc8a0be9 100644
---- a/drivers/perf/cxl_pmu.c
-+++ b/drivers/perf/cxl_pmu.c
-@@ -690,6 +690,15 @@ static void cxl_pmu_event_start(struct perf_event *event, int flags)
- 	 */
- 	cfg |= FIELD_PREP(CXL_PMU_COUNTER_CFG_THRESHOLD_MSK,
- 			  cxl_pmu_config1_get_threshold(event));
-+
-+	/*
-+	 * Drop any overflow the previous owner of this counter left pending;
-+	 * cxl_pmu_event_stop() does not. Otherwise an interrupt latched over
-+	 * the handover gets charged to this event. Do it before arming Interrupt
-+	 * on Overflow below, and note RW1C leaves the other counters alone.
-+	 */
-+	writeq(BIT_ULL(hwc->idx), base + CXL_PMU_OVERFLOW_REG);
-+
- 	writeq(cfg, base + CXL_PMU_COUNTER_CFG_REG(hwc->idx));
+diff --git a/drivers/spi/spi-fsl-spi.c b/drivers/spi/spi-fsl-spi.c
+index 8c4db35377903..0c0d1b89c9d6a 100644
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -536,7 +536,7 @@ static struct spi_controller *fsl_spi_probe(struct device *dev,
+ 	u32 regval;
+ 	int ret = 0;
  
- 	local64_set(&hwc->prev_count, 0);
-@@ -921,6 +930,14 @@ static int cxl_pmu_probe(struct device *dev)
- 	if (!irq_name)
- 		return -ENOMEM;
+-	host = spi_alloc_host(dev, sizeof(struct mpc8xxx_spi));
++	host = devm_spi_alloc_host(dev, sizeof(struct mpc8xxx_spi));
+ 	if (host == NULL) {
+ 		ret = -ENOMEM;
+ 		goto err;
+@@ -560,7 +560,7 @@ static struct spi_controller *fsl_spi_probe(struct device *dev,
  
-+	/*
-+	 * Same for counters no event owns yet: clear whatever firmware or a
-+	 * previous kernel left set before the handler goes live. Bits above the
-+	 * implemented counters are reserved, so only write those.
-+	 */
-+	writeq(GENMASK_ULL(info->num_counters - 1, 0),
-+	       info->base + CXL_PMU_OVERFLOW_REG);
-+
- 	/*
- 	 * The handler must run on info->on_cpu, so the interrupt cannot be
- 	 * shared - IRQF_NOBALANCING is only honoured for the first action on a
+ 	ret = fsl_spi_cpm_init(mpc8xxx_spi);
+ 	if (ret)
+-		goto err_cpm_init;
++		goto err;
+ 
+ 	mpc8xxx_spi->reg_base = devm_ioremap_resource(dev, mem);
+ 	if (IS_ERR(mpc8xxx_spi->reg_base)) {
+@@ -626,8 +626,6 @@ static struct spi_controller *fsl_spi_probe(struct device *dev,
+ 
+ err_probe:
+ 	fsl_spi_cpm_free(mpc8xxx_spi);
+-err_cpm_init:
+-	spi_controller_put(host);
+ err:
+ 	return ERR_PTR(ret);
+ }
+@@ -706,13 +704,9 @@ static void of_fsl_spi_remove(struct platform_device *ofdev)
+ 	struct spi_controller *host = platform_get_drvdata(ofdev);
+ 	struct mpc8xxx_spi *mpc8xxx_spi = spi_controller_get_devdata(host);
+ 
+-	spi_controller_get(host);
+-
+ 	spi_unregister_controller(host);
+ 
+ 	fsl_spi_cpm_free(mpc8xxx_spi);
+-
+-	spi_controller_put(host);
+ }
+ 
+ static struct platform_driver of_fsl_spi_driver = {
+@@ -758,13 +752,9 @@ static void plat_mpc8xxx_spi_remove(struct platform_device *pdev)
+ 	struct spi_controller *host = platform_get_drvdata(pdev);
+ 	struct mpc8xxx_spi *mpc8xxx_spi = spi_controller_get_devdata(host);
+ 
+-	spi_controller_get(host);
+-
+ 	spi_unregister_controller(host);
+ 
+ 	fsl_spi_cpm_free(mpc8xxx_spi);
+-
+-	spi_controller_put(host);
+ }
+ 
+ MODULE_ALIAS("platform:mpc8xxx_spi");
 -- 
 2.53.0
 
