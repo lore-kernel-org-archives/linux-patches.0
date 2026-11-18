@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024150;
-	b=2xKfUqLlAypCz5QXh/3LOVe4RGnilkLuZiBwBp1NQFEn207A5weXrdT3fF2OLujNA1zQ
-	 PzA+2MoyUfFBwNGrcOB8dn6lT/6aZe8Xuy1lIhGcXqR6QKwgL51C8FwlXJ5lSQWEN/nYg
-	 tM3NgHkJRuR5UtilwKNZV1O8WBjdQkWt4/udYIOzihDG40rHq3fO+txpTndoq8ork65Jl
-	 U3fLIiw9vpEyQQ8vGM15YiCDtBpEBHulR7MQguiz8WXTuVxLJtlH26XtUEqsAQ/RFVjbF
-	 5ER1DTwKQCmqDVCveMXk+MB3aFi6Ma5sM2GZou/rt0WrXyBjUPjcTQSN/h2DLkbo9DQ==
+	t=1795024152;
+	b=fQdMyCJFBQMWEzdu7lOc2xauqpbFU66ChlinJAE0XYO1iRkXNBXHlFfCDzQn31gA+l2J
+	 Mfncp9mdLMAmmcYZJKNbOqvjB+/wcKfM2XSfyCWP1dfDOMKAEZmYVoM6TqqevkmkC7pT1
+	 FWB7D1hJTAgsLZG1miKp4TdR28PN+NxB31zum7fpYwMmDT+B6reBBWs3IaM8A4B4MBkeP
+	 t3KeLzMh8kRYo/C7vs9Uhd4wjM3weZltDzO8uvS+O4uHOHJi2CHiQzu8Am3aGGrI8MzQK
+	 NHLfuGJAotMJSxsCo1z6rjdUm7nXtKpVeUX6SGm01P0+x1FcU3VfNVU9B0J+ytjUj+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024150;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024152;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gBYYpGFUCCP6kKAEfLSiAPOZyP/HJZcDC+Y/J0TtWzI=;
-	b=3grl5VHocepgaHZwl46xpKLZWeBGvwWWFndM/kTho0tA0+pGiZwHt4/UXWvtH/Zz/EGv
-	 zqmKov5zP0EdakSHdjx1uzzSjMKiglNGmYWdIumeEqJI3Wdotee4uBmB2tvKE8AR1KeNW
-	 SyFFiYQHCgDpZik6Uqeh8Dl1zRl5BqR+CHWpnUX/92YviFaRE8LbMGo8C3Mxyqn5Ph4K3
-	 eD6+USyF3nuDadWqoVZmjfeJ71MmFyt4JJgEQtwBUNpiTdjp7tA9mP/I1wWlAq+lbQysR
-	 EkQ3nbS1btHgvGKpm0UrbNaOJ6ReH6fDw71S72VDA9DcoJbHcqCOsGuFbOKKlVprl/A==
+	bh=laYjpdCK7JSz5J4nKTSQQYxXKw4bqjsfuWYHFbzOkcU=;
+	b=MDyLfQzIYLtW934QI29IpV2f07hdh2PDMx+osya9J/IzckFPxwQm2UqYgPi1Dktl8A3t
+	 XZqCEGUJUeksRHW6Ev5Fxvgo7od7a/wTYGGqv0R/rwVne0ZUPA1H2pVDBnzWnp3xdTPSc
+	 QKI2bjAVFp5YPxnsXjhdXwYhf4ubjF0NzXWLaOsBUGQB4t+qz8jo0FkoWwGV2KDOHnJNS
+	 7b8cmXU12IqeBnxPUpS+B908gEROnBJTQLuIetSDJmZYCahvTAd0wlK4F0hSRdIO+tS0Z
+	 Ddz3lt69CFDRVVVEshcjfv5sCxg/obnCOKIfh0U+yXhV/Xg/rwAurJ0Xig37GjVpV8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sFyGqR9b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Der3+EqQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B96606A31C;
-	Wed, 18 Nov 2026 17:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD181606A320;
+	Wed, 18 Nov 2026 17:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sFyGqR9b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 507E31F000C4;
-	Wed, 18 Nov 2026 17:49:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Der3+EqQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA3B1F000C4;
+	Wed, 18 Nov 2026 17:49:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024149;
-	bh=gBYYpGFUCCP6kKAEfLSiAPOZyP/HJZcDC+Y/J0TtWzI=;
+	s=korg; t=1795024152;
+	bh=laYjpdCK7JSz5J4nKTSQQYxXKw4bqjsfuWYHFbzOkcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sFyGqR9bQMg9TgwoxaB+lxzNaRAnAttYs2gI3WRiyfiSN9l8W/7vFpvge/Dt4Z855
-	 xd2Y/LZPw7oFJAjDGhb2McBcz6CP4xhBD2NjbOpEdyThEr64DvATZO38fYu7Kgg3Wg
-	 xrfG3OU/1Mr2RUfU2GgTPvvM0xK0xir1TLRpZunc=
+	b=Der3+EqQvRFOZrFLpogJwBddN65+f12LShACLrCaxQCCYrTN53ukCbIU8341WuumQ
+	 Jl4gt+uPHSBrTIIFG05G/kGdqEiVtXFVpwg0il5gLo7R7N6E6U8nI8Hdjex7lEA2kg
+	 xG9buhuNf3wyDHwLIH/RUHdWkXE3P4iS74Z2FkmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenghai Huang <huangchenghai2@huawei.com>,
+	Weili Qian <qianweili@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0623/2151] crypto: api - Fix DUP_FIRST crash on unregister
-Date: Wed, 18 Nov 2026 15:39:18 +0100
-Message-ID: <20261118150144.606870591@linuxfoundation.org>
+Subject: [PATCH 6.18 0624/2151] crypto: hisilicon/hpre - remove dma_free_coherent on NULL req->dst in ECDH
+Date: Wed, 18 Nov 2026 15:39:19 +0100
+Message-ID: <20261118150144.639508722@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,71 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Weili Qian <qianweili@huawei.com>
 
-[ Upstream commit 1dfb35de0800967c972eee35e19f3dfc8d50e512 ]
+[ Upstream commit 5b87f619cc5c0a55dcd85ce97974e3f5b9333b7b ]
 
-The flag CRYPTO_ALG_DUP_FIRST is buggy because upon unregistration
-it tries to unregister the original algorithm rather than the
-duplicate which was allocated during registration.
+In hpre_ecdh_hw_data_clr_all(), req->dst is always NULL because
+hpre_ecdh_dst_data_init() sets hpre_req->dst = NULL before mapping
+the user buffer with dma_map_single(). The dma_free_coherent() call
+on req->dst is therefore dead code. Remove it.
 
-Fix this by locating the duplicated algorithm and unregistering
-that instead of the original.
-
-Also remove the duplicate crypto_destroy_alg call.
-
-Reported-by: Chenghai Huang <huangchenghai2@huawei.com>
-Fixes: f1440a90465b ("crypto: api - Add support for duplicating algorithms before registration")
+Fixes: 05e7b906aa7c ("crypto: hisilicon/hpre - add 'ECDH' algorithm")
+Signed-off-by: Weili Qian <qianweili@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/algapi.c | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ drivers/crypto/hisilicon/hpre/hpre_crypto.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/crypto/algapi.c b/crypto/algapi.c
-index e604d0d8b7b41..b981959ddb474 100644
---- a/crypto/algapi.c
-+++ b/crypto/algapi.c
-@@ -422,7 +422,6 @@ static void crypto_free_alg(struct crypto_alg *alg)
- 	unsigned int algsize = alg->cra_type->algsize;
- 	u8 *p = (u8 *)alg - algsize;
- 
--	crypto_destroy_alg(alg);
- 	kfree(p);
- }
- 
-@@ -492,9 +491,31 @@ void crypto_unregister_alg(struct crypto_alg *alg)
- 	LIST_HEAD(list);
- 
- 	down_write(&crypto_alg_sem);
-+	if (alg->cra_flags & CRYPTO_ALG_DUP_FIRST) {
-+		struct crypto_alg *q, *r = NULL;
-+
-+		list_for_each_entry(q, &crypto_alg_list, cra_list) {
-+			if (crypto_is_larval(q))
-+				continue;
-+			if (strcmp(q->cra_driver_name, alg->cra_driver_name))
-+				continue;
-+			r = q;
-+			break;
-+		}
-+
-+		if (!r) {
-+			up_write(&crypto_alg_sem);
-+			ret = -ENOENT;
-+			goto not_found;
-+		}
-+
-+		alg = r;
-+	}
-+
- 	ret = crypto_remove_alg(alg, &list);
- 	up_write(&crypto_alg_sem);
- 
-+not_found:
- 	if (WARN(ret, "Algorithm %s is not registered", alg->cra_driver_name))
+diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+index af5d10add106c..7d478f45ebb80 100644
+--- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
++++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+@@ -1419,8 +1419,6 @@ static void hpre_ecdh_hw_data_clr_all(struct hpre_ctx *ctx,
+ 	if (unlikely(dma_mapping_error(dev, dma)))
  		return;
  
+-	if (req->dst)
+-		dma_free_coherent(dev, ctx->key_sz << 1, req->dst, dma);
+ 	if (dst)
+ 		dma_unmap_single(dev, dma, ctx->key_sz << 1, DMA_FROM_DEVICE);
+ }
 -- 
 2.53.0
 
