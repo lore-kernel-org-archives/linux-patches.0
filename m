@@ -1,58 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038049;
-	b=H7eNzvN7O//7Mx+dc5cEX6iuDuqXeEOnOFmwcuoGx/ehKGZcBG0k2F3ohfmzwIJL/QLw
-	 U4KMTFsxEH1sbj8S3zPZin01neq9WC70llhVxddFAeI9Y4db/+6ziBrW3kk/sdPbV4l6x
-	 0OX40u4WDzxRDatGU21Cm6GkT+SwwkojhqzAKSjGDUycjZEms0Uw0pFgB7vw8LjucDF3U
-	 v6wRHcL6ieQMWk4bummZ4i1k40wOD7oAC0KgBXfM5FouyMagFvdY5QGmpfUIM42S1yanm
-	 jy3tptsUybmOfLh68qUmYLxN7C4kV4aKkWL2wW4iU7MV7x5jB/XcpNg8z8RcLcwAVrg==
+	t=1795038052;
+	b=ewBYH6W9RNZ/+nM1yRymK/uvKc//4uy4UvdIL+I/L2W3dVurvn5/hSbC3kNThxN1KHQ/
+	 rU2PA41HhPR9L3y9eDKMykO8PwYQPwi6Fc8BImPoVbH+ngOtrDHI+YrQ5LhF9sNyh0woX
+	 s6epjR6LDAxP7Vn5RGXIoCz3P3Z6dNagYhC2R9HZnPjpBpemABLTP57OXnCp3q8xrQ76Z
+	 sLWpqjtJV6tCxVil9oSETN3IdSzmGKydHfsPGlJMx6Oy7soZ7ooqc2u4FiolVhE9W3VRx
+	 Nr67JHEejtmDU2SzM/COtGAxmCjqpja8kfuV/IvKfvrtjlyf+UdsSwiJdgabCd7YEbQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038049;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038052;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yK/fJ9WFyb/nfLMFcRF5GbMMgzEeLLshWZVVzIdifQE=;
-	b=T+la8+vQqHDD30DLV1TYSaRSbAf/cRWKCkhvf+2c3PSUSt2V/wnnBc0a/sN+FoWSH6Qr
-	 HOosBOBAEGrkJqIzvGka+wxZsoBCTTqxkDcQgGTCzp/Me4F4uTWfISKRselM/vo1LHSdi
-	 YRrTincmYIvoN5n3R6Xod0eK4LcxOdWcpt6g53Wpv/haPtkPQU/qTvnzCU8rfp9C7wvA5
-	 XSnjimtpDsf/+xSnpu9ihUmkNKr9+68JrXEFUT7updVrSsXfRVh184xMXgrMoz/DMA1Gk
-	 AV4mUVcgl5t4htyArhbjpggCujI3YsQKXLeQS2FIFeMP5IEW+/pxRYCt5r0W6gPCCMg==
+	bh=ZJtOjLCdIXyfNt2H1On6gQI/UuvdXnliTajzaFgFlZY=;
+	b=KaayoAoziwbc2muuf+acbVX5wez1P0P0M4a/TDx6cZ14DIYEE6CAgyj4mlB78tz0kw1J
+	 GMTNEBEtDKQNYgG9b0aBAn4LykriVKgjIo9UELqvhgWTu/IDxPkdBAicGTzUmPib3WSE2
+	 mHtrmeI8VuG2Y5oA4pqd+ONeui2adIqwnRXTTCOxDBNYiv1XoXyRpPOlHTbzp97x75ewU
+	 RBtVinEJ7lTgNK0MI+7J1z4GplO2CKzMFFPityB9Qrz7vUAGUB3B9foSPy5sNceUq0JgU
+	 /YOvWkMgsHY3YtJq9WbKKDkAT+S/hY79MCM+i6i9f4WA5r745BYnqXO+tY3SPXldlkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mHXHzQav;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=osH0p8MI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A10560A2603;
-	Wed, 18 Nov 2026 21:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035A9606A32C;
+	Wed, 18 Nov 2026 21:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mHXHzQav
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C4F1F000C5;
-	Wed, 18 Nov 2026 21:40:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=osH0p8MI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 567CA1F000C5;
+	Wed, 18 Nov 2026 21:40:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038049;
-	bh=yK/fJ9WFyb/nfLMFcRF5GbMMgzEeLLshWZVVzIdifQE=;
+	s=korg; t=1795038051;
+	bh=ZJtOjLCdIXyfNt2H1On6gQI/UuvdXnliTajzaFgFlZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mHXHzQavC2BFQa413DHlAZAdMSZrmrArfTDGwwU67hNimRazty1eXiYQ+/3fWpEQG
-	 MwDfsavuAcsKIXOdQMx14IYrf/2ZwROjJKoMwDM1s3T8R3m0iNN5G+y7MxLdtkSpGh
-	 DSfZn8x4kXw7zSO0SA1NDIFeK9IxSuf7RAmq4SyE=
+	b=osH0p8MI9eOmA3betu3iUG3SEti+8J67A7Ei/w42FBvgkP4w4oixXfcLYvyyAlvqi
+	 RBShwjDXCRBZ9et6v+hb6CwsMONWMhjvybikWiT1rj0to0hEqINRQERtW9licVFryy
+	 P+X6o346BuwDSDZYQ7tnRirX3hPWfpbDGIzUFFuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Thomas Huth <thuth@redhat.com>,
-	Breno Leitao <leitao@debian.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Baoquan He <bhe@redhat.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Thorsten Blum <blum@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1565/3318] arm64: kexec_file: Fix elf_headers memory leak in retry loop
-Date: Wed, 18 Nov 2026 15:36:27 +0100
-Message-ID: <20261118150407.989990014@linuxfoundation.org>
+Subject: [PATCH 6.6 1566/3318] x86/boot: Fix off-by-one error in sme_clear_pgd()
+Date: Wed, 18 Nov 2026 15:36:28 +0100
+Message-ID: <20261118150408.019104608@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -74,45 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Thorsten Blum <blum@kernel.org>
 
-[ Upstream commit ac302aea3d824ccc99f29b8e499c365cb9a684a9 ]
+[ Upstream commit cb319926808b1cca522d2087a13205e840beb45b ]
 
-A retry allocates new elf headers and overwrites image->elf_headers,
-leaking the previous buffer.
+The mapping helpers __sme_map_range_pmd() and __sme_map_range_pte(), and
+therefore sme_encrypt_kernel(), use exclusive end addresses and stop
+before vaddr reaches vaddr_end.
 
-Free it before assigning.
+However, sme_clear_pgd() treats vaddr_end as inclusive when calculating
+the last PGD entry to clear. If vaddr_end is PGD-aligned, the first PGD
+entry outside the range is cleared too.
 
-Cc: Will Deacon <will@kernel.org>
-Cc: Thomas Huth <thuth@redhat.com>
-Cc: Breno Leitao <leitao@debian.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Yeoreum Yun <yeoreum.yun@arm.com>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: stable@vger.kernel.org
-Fixes: 108aa503657e ("arm64: kexec_file: try more regions if loading segments fails")
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-[catalin.marinas@arm.com: drop the redundant NULL check before vfree()]
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Use vaddr_end - 1 to calculate the last PGD entry within the range.
+
+Fixes: 6ebcb060713f ("x86/mm: Add support to encrypt the kernel in-place")
+Signed-off-by: Thorsten Blum <blum@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/20260918142714.242711-2-blum@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/machine_kexec_file.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/mm/mem_encrypt_identity.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/machine_kexec_file.c b/arch/arm64/kernel/machine_kexec_file.c
-index a11a6e14ba89f..c3883808270e2 100644
---- a/arch/arm64/kernel/machine_kexec_file.c
-+++ b/arch/arm64/kernel/machine_kexec_file.c
-@@ -123,6 +123,8 @@ int load_other_segments(struct kimage *image,
- 			vfree(headers);
- 			goto out_err;
- 		}
-+
-+		vfree(image->elf_headers);
- 		image->elf_headers = headers;
- 		image->elf_load_addr = kbuf.mem;
- 		image->elf_headers_sz = headers_sz;
+diff --git a/arch/x86/mm/mem_encrypt_identity.c b/arch/x86/mm/mem_encrypt_identity.c
+index b922b9fea6b64..1bbc117f91ab9 100644
+--- a/arch/x86/mm/mem_encrypt_identity.c
++++ b/arch/x86/mm/mem_encrypt_identity.c
+@@ -101,7 +101,7 @@ static void __head sme_clear_pgd(struct sme_populate_pgd_data *ppd)
+ 	pgd_t *pgd_p;
+ 
+ 	pgd_start = ppd->vaddr & PGDIR_MASK;
+-	pgd_end = ppd->vaddr_end & PGDIR_MASK;
++	pgd_end = (ppd->vaddr_end - 1) & PGDIR_MASK;
+ 
+ 	pgd_size = (((pgd_end - pgd_start) / PGDIR_SIZE) + 1) * sizeof(pgd_t);
+ 
 -- 
 2.53.0
 
