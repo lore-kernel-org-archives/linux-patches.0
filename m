@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016435;
-	b=Qpu5HhatwrvQPHfokOuIZ87uh+kihMIMyFaY9Y1w2Z6nECSSXd0Vy0mwwi4Rfc14GZhE
-	 EfKkzeGODuCQ7E6sqXCQfLZUxX1VZt3+7EAfMQ9VaOQTQ8s9xqei4uSeauIV7UBJNOCnI
-	 5CgrfiBhz7uYYgz48YDdMig+Qv3KnejstGFyaITOJQzmSDNZvKBJflkJ/BuCjI5ZkAunC
-	 pu6doI/nlgW7uNMq2NuJaFgVL2qQE2Ui7+jurXODqbw7oJDwHpZcy/EjzUBOOMeO1xJlT
-	 1g3/s5JNgYlABACpK6ibssNsOchyVNsb7NLAoEa6A4fKeDEQdkFojJuzT4mh5igWK9A==
+	t=1795016438;
+	b=TgSzkl6Kbb6DA4MxCOZcRDSs02vWYWYIW+q1QQA57wS7BB4jybiIMmt/3GjZAPfKuSwS
+	 G8uExu5d0HVGDObwok6nqldeLvhLKB13Nas7+mu/vQStHJmKFIiX0SZYnOg2HAVJWNfCt
+	 fBPDFfOfrfCb7/2tCTipknqOtHeT7ZKo9pwEaaex/3Uj7y+219KuJuwUFvAa9qxF0Ik4s
+	 rfazJo+0Ea8Kn00GdPMopdZK4kx2AheDkVe2oz/gDnhHcAMmLrW+zUeztBqXyrflkRlzm
+	 L3sN2ufjKFWqWG/A8W8scHzoc8ev3Lhd5WlLpqasP/yCuJ+1vAeaE8CVPzv3KslwaKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016435;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016438;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NIJfJMmfIdYYy3bg5r0u6pOseUkiSmK9V6lHYHPfyg8=;
-	b=bBNTQW4UQY56VeHMwVpk9LxFNesmUjhc4DAM+FEGolxb0MxKJx1j4St0KshqznbRf3HE
-	 fEzZjEedvjqWHbnp8mGo075CtImN/ooC6Smyf2zpDvA6hCpiDbzRrW8TXEtyNhwRpVUFI
-	 Q4pxVp8ycTH0f+zigjxf5P4l75wVAwb0+bGeZz42Q5xUnQXHetGK/qkWrJk22wuc4iaOA
-	 JJ4kdGO/LMpRif6QcXJnf8NPvlo3xLod5STexn1gSt/X1Zvh9Ky9cAv+bGINX6gAm7Wey
-	 joT9B0Us+D+m9l8s603S58/2Fn8bR1g+Wby7lA5qTX8U0K/cZZMsq45UFoLcm6hRIrg==
+	bh=J0lMQuO65ir/KMuIJ9Oi0F9p424d3tNA47idkUPb8PE=;
+	b=cB9suQ8MVZfSLNRXBn9OJaL0R60zMWoC5l47iPbHOiTim39wxFTkoxSLRGNZHs16PlPr
+	 X/6D9FDcHaKbxx4xv2G0UjV+kCySpw8odXVRXi6QHptmWXycv4TqC5vJShvjDVEgKXxwn
+	 R5UtVt0vM2sk5je2sE2t0uxRKXjWb3NVe94/xUu5GiKSGWND0NDUXt+ef9iF67jU0W2u7
+	 h+i83b3S2NJNBgPfl5PHFygelRJzb1TgDNADVthdUewoW3+J4W9RFf2fX50elr0cxw6gz
+	 RAXksP2vFYm0DXueEzmQfzbuYPLgN3ETdS0hCTROm/hTHYHZbksOBLGXdU5ARzhvjpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WBiChnOo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NnGcD/yB";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851F8606A325;
-	Wed, 18 Nov 2026 15:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C54606A32C;
+	Wed, 18 Nov 2026 15:40:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WBiChnOo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9121F000C7;
-	Wed, 18 Nov 2026 15:40:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NnGcD/yB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9491E1F000C5;
+	Wed, 18 Nov 2026 15:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016435;
-	bh=NIJfJMmfIdYYy3bg5r0u6pOseUkiSmK9V6lHYHPfyg8=;
+	s=korg; t=1795016438;
+	bh=J0lMQuO65ir/KMuIJ9Oi0F9p424d3tNA47idkUPb8PE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WBiChnOoMmyE0We/KZMZTB9rdrcBXMd7Log6CX6nTDsRi8Pj8WbwrVEEpO1uWNYXT
-	 olr37mw4Vy1+dJ7fcVILAcT7SDOA6CKAx/Q1UpFh4xKYvl1rtcBseegjDsAvr+rYFE
-	 mf5vD0rcY5OUeXa/bmvd6Rlana9/G9eLwFdQdLNQ=
+	b=NnGcD/yBZiXQtM/bRi+laqapAKMXjD7iknRurILHm6dTzwWPbzRDZeipQJV4ZRSFH
+	 ydqOG3M0k+rr3t7eA77FQ/L4nvvR3lDx46L0o8veoWzGHWNE6jOcfLAnYOxsGVPKY0
+	 R11ZtmjpNmjYQSdNjgUZFGM3rcfZjZQ5iWbL9iZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	bui duc phuc <phucduc.bui@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0529/2651] ASoC: mediatek: mt8189: Propagate runtime resume errors
-Date: Wed, 18 Nov 2026 15:29:29 +0100
-Message-ID: <20261118150306.809906810@linuxfoundation.org>
+Subject: [PATCH 7.3 0530/2651] ASoC: mediatek: mt8189: Propagate APLL errors
+Date: Wed, 18 Nov 2026 15:29:30 +0100
+Message-ID: <20261118150306.846527439@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,75 +71,49 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 483e827b005f122755785a3b6094e2bc19eb7685 ]
+[ Upstream commit 6347f276da8c6c3e6e8262b30b9cd14dfbc48248 ]
 
-mt8189_afe_runtime_resume() currently ignores errors from regmap
-operations and mt8189_afe_enable_main_clock().
+mtk_apll_event() currently ignores errors returned by the APLL
+enable functions.
 
-Propagate these errors and clean up the state before returning the
-error.
+Propagate these errors.
 
 Fixes: 7eb153585598 ("ASoC: mediatek: mt8189: add platform driver")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260916050020.14575-7-phucduc.bui@gmail.com
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20260916050020.14575-9-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8189/mt8189-afe-pcm.c | 32 ++++++++++++++++++----
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ sound/soc/mediatek/mt8189/mt8189-dai-i2s.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8189/mt8189-afe-pcm.c b/sound/soc/mediatek/mt8189/mt8189-afe-pcm.c
-index 77cf2b604f6ce..39cc2804ad4c9 100644
---- a/sound/soc/mediatek/mt8189/mt8189-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8189/mt8189-afe-pcm.c
-@@ -2332,20 +2332,40 @@ static int mt8189_afe_runtime_resume(struct device *dev)
- 	}
+diff --git a/sound/soc/mediatek/mt8189/mt8189-dai-i2s.c b/sound/soc/mediatek/mt8189/mt8189-dai-i2s.c
+index 94c49a662e2d5..4826ee250d703 100644
+--- a/sound/soc/mediatek/mt8189/mt8189-dai-i2s.c
++++ b/sound/soc/mediatek/mt8189/mt8189-dai-i2s.c
+@@ -485,6 +485,7 @@ static int mtk_apll_event(struct snd_soc_dapm_widget *w,
+ {
+ 	struct snd_soc_component *cmpnt = snd_soc_dapm_to_component(w->dapm);
+ 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(cmpnt);
++	int ret;
  
- 	regcache_cache_only(afe->regmap, false);
--	regcache_sync(afe->regmap);
-+	ret = regcache_sync(afe->regmap);
-+	if (ret)
-+		goto err_set_cache_only;
- 
- 	/* set audio 26M request */
--	regmap_update_bits(afe->regmap, AFE_SPM_CONTROL_REQ, 0x1, 0x1);
--	regmap_update_bits(afe->regmap, AFE_CBIP_CFG0, 0x1, 0x1);
-+	ret = regmap_update_bits(afe->regmap, AFE_SPM_CONTROL_REQ, 0x1, 0x1);
-+	if (ret)
-+		goto err_set_cache_only;
-+
-+	ret = regmap_update_bits(afe->regmap, AFE_CBIP_CFG0, 0x1, 0x1);
-+	if (ret)
-+		goto err_clear_26m_req;
- 
- 	/* force cpu use 8_24 format when writing 32bit data */
--	regmap_update_bits(afe->regmap, AFE_MEMIF_CON0,
--			   CPU_HD_ALIGN_MASK_SFT, 0 << CPU_HD_ALIGN_SFT);
-+	ret = regmap_update_bits(afe->regmap, AFE_MEMIF_CON0,
-+				 CPU_HD_ALIGN_MASK_SFT, 0 << CPU_HD_ALIGN_SFT);
-+	if (ret)
-+		goto err_clear_26m_req;
- 
- 	/* enable AFE */
--	mt8189_afe_enable_main_clock(afe);
-+	ret = mt8189_afe_enable_main_clock(afe);
-+	if (ret)
-+		goto err_clear_26m_req;
- 
- 	return 0;
-+
-+err_clear_26m_req:
-+	regmap_update_bits(afe->regmap,
-+			   AFE_SPM_CONTROL_REQ, 0x1, 0x0);
-+err_set_cache_only:
-+	regcache_cache_only(afe->regmap, true);
-+	mt8189_afe_disable_reg_rw_clk(afe);
-+
-+	return ret;
- }
- 
- static int mt8189_afe_component_probe(struct snd_soc_component *component)
+ 	dev_dbg(cmpnt->dev, "%s(), name %s, event 0x%x\n",
+ 		__func__, w->name, event);
+@@ -492,9 +493,11 @@ static int mtk_apll_event(struct snd_soc_dapm_widget *w,
+ 	switch (event) {
+ 	case SND_SOC_DAPM_PRE_PMU:
+ 		if (strcmp(w->name, APLL1_W_NAME) == 0)
+-			mt8189_apll1_enable(afe);
++			ret = mt8189_apll1_enable(afe);
+ 		else
+-			mt8189_apll2_enable(afe);
++			ret = mt8189_apll2_enable(afe);
++		if (ret)
++			return ret;
+ 		break;
+ 	case SND_SOC_DAPM_POST_PMD:
+ 		if (strcmp(w->name, APLL1_W_NAME) == 0)
 -- 
 2.53.0
 
