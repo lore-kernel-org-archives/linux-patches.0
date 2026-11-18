@@ -1,52 +1,69 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052039;
-	b=FA9Ak/Cak5m61VUoZcI3s5kOvFNWUutQBDB6inFQQUygPpGickI7Kta39J6Jf0nv3GHp
-	 vDQeZEY7uSBgkMKK3yfTn78PXVFKch2wamCcdhJAkhBCjzFqw7VmNuMd88eIsxv/xS4+1
-	 gg2MhuaE6NkXNqFSU5x+aVJhY84n51uLjv3oXi9Vyo9nINO04m6bSV6b942csZC2o7QPC
-	 nHetGkjxs7FCXbPdfI+WZg2ZbyHtMfUrYX202s9a+2cmZX8CuskRtmpPXn8nncb+xJY7g
-	 ObXyk5sL8/f/AMNKW7EbyBpr8jAtOl8/B9p7KG7O1opISCPYnz7mlEfcQx5KTjYHUpg==
+	t=1795052042;
+	b=NVgh/EtsBR20SUGcc7fYbObFy/y/Sv6cKUk628GCHLg9xgx2fDcELGWvCTGmc1Qidj9R
+	 3mH+06VfDRWGB5ufV5418HRRGP3oomBqBQ6pTv44eTKKpD1fKdUCGHRS3P2WXiX+ykLhs
+	 2rhtdSeYM5NOGvBS7eTsoMt6e3CF5ufZJPU0Rqi20hzELkLbyocON/MPYrb7ET41Wttq5
+	 1iSPSrajGpzvmuN7aPaHGSTTgCWrF/qzqWVGIom2xCIbdLSc+Xx8gkneYWE8w1Bb0yiEu
+	 1ay23GhmDFdDSB17Bn0x6VPyM+6oyLyVFP19V61cTysJKHKKJwNcFHOluLmrXzSTBAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052039;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052042;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EpZ2POEX7zZLRG6wpe+4rDXyXu0ydq05GJfEqjK8MXo=;
-	b=cXxjXCDamhRR6IJQg5js4o2Y47iVQTv+D+v4QN4soDflF6DjCc0bgZL9BbWmF6Q1Ib/N
-	 rO4lhwXw1ZjtNmzDiXQPf17JdWrYyotRIXl8lewlPNriaTnc0FOLKFoAHO6mShqZqaJnl
-	 af5eyVv0177LtSAglonYvc0KcvuG3RreWCXNVujT7slxj0dFesyD7onQYZ8qpvZrOvzra
-	 48ZgV5YFzqEohnJW0tsd71bDyHvirXYP+Bltwb/mCqXZil41LSbbFN4uFvoABOMG0FPB1
-	 qvuFp+NBrO88pW+W1vXXZRg2sll3tPXCqAihNJJOcMLGqam1r58+ecOSFFV8GUYXIAQ==
+	bh=qxKdIId9MYnyWtM+2lZetbAt1LVzLc9KENu4fOjE1WE=;
+	b=b8cZLRqKkxRHZJrcxEzDKCKPkTggcS/uDX5v9dxLy74wG37AZXBfTaGEVL6rOU2JgBwx
+	 HULn37el/dt4XnEi/F5iSt5SkcBW70IwB9miEcVHeNwJEYhmr4WsE91B4mxsbsys6djda
+	 PYxCvzndMIajNEO5hZSk79ybakr9Mo9BFu+yqZ5+Rv1BWMxj5JKx4rvhDvWeUq+ozKOTM
+	 UQMRS76TxFRA16mib5xJ2De1FCjB47SxnaqO534io5X1HnRY+gYvUsiufNAWAR/X3iGAS
+	 oH66+PVJxEp2r+8BVNxOYOWKHaSSPQkvp/XSqpaJNLsP/DI5FH/cyI0SOk81wpK5MSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yGYirhh4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DL7BDGgJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15825606A320;
-	Thu, 19 Nov 2026 01:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42118606A325;
+	Thu, 19 Nov 2026 01:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yGYirhh4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F631F000C5;
-	Thu, 19 Nov 2026 01:33:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DL7BDGgJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1947B1F000C4;
+	Thu, 19 Nov 2026 01:34:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052038;
-	bh=EpZ2POEX7zZLRG6wpe+4rDXyXu0ydq05GJfEqjK8MXo=;
+	s=korg; t=1795052041;
+	bh=qxKdIId9MYnyWtM+2lZetbAt1LVzLc9KENu4fOjE1WE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yGYirhh4/BIjUCdW447Mo78jczv4JpRtNihksxbIKFonz6h6KzuiFgAIlHPMD8GI8
-	 k+WmseXp5kcEN8vDP6QlhPzd3hthBW1qAP9PjQsB1bXn+dSHQ+AFm+lM9k+7Hl2MXL
-	 DY1RKBQ4St3a+TD6Drqdqcedv0N22tCEZ5Bw/vK0=
+	b=DL7BDGgJwG85FrbNuyWWFB7czR4KGxaODmwIh9LB3kEIrNvY2VF7rPfd93+XXoSSW
+	 xGxPz8huLtsE2pEcFwjir/h8+6ieikWEk6eykvjZEjDi5cNbMSvZfgdBBvf0JR16oN
+	 J66oTsBNqp3/sCYuqE8QAW8P51aoZOv7LT39hxhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+54cdc566f64abf51b7f1@syzkaller.appspotmail.com,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 5.15 0362/2214] SUNRPC: Reject a socket that already has an svc_sock attached
-Date: Wed, 18 Nov 2026 15:33:58 +0100
-Message-ID: <20261118150025.159665004@linuxfoundation.org>
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Oscar Salvador <osalvador@suse.de>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Adam Litke <agl@us.ibm.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Rik van Riel <riel@surriel.com>,
+	Peter Xu <peterx@redhat.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 0416/2214] mm/hugetlb: fix use-after-free in hugetlb_mfill_atomic_pte()
+Date: Wed, 18 Nov 2026 15:34:52 +0100
+Message-ID: <20261118150027.495155136@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,64 +85,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-commit 0995447b8059c4d23853cdcddbe789c4a2b6bb88 upstream.
+[ Upstream commit d8a9cd7fd2fb01211430c933932da58839b8ca65 ]
 
-Writing the same socket descriptor to /proc/fs/nfsd/portlist twice
-attaches a second svc_sock to one socket. svc_setup_socket() saves
-the socket's callbacks before installing its own, so the second
-attach records svc_write_space() as the old write_space callback.
-svc_udp_init() invokes that callback by way of svc_sock_setbufsize(),
-and svc_write_space() then calls itself until the kernel stack is
-exhausted:
+Let's fix another instance where we use a folio after dropping the PTL,
+where someone else could e.g., MADV_DONTNEED it once we drop the PTL,
+making us trigger a use-after-free on the folio.
 
-  BUG: TASK stack guard page was hit at ffffc900037d7ff8
-   svc_write_space+0x90/0x2b0 net/sunrpc/svcsock.c:429
-   svc_write_space+0xe6/0x2b0 net/sunrpc/svcsock.c:430
-   ... 700 more ...
-   svc_sock_setbufsize+0x18d/0x220 net/sunrpc/svcsock.c:386
-   svc_udp_init net/sunrpc/svcsock.c:854 [inline]
-   svc_setup_socket+0xb2f/0x1090 net/sunrpc/svcsock.c:1498
-   svc_addsock+0x2fd/0x760 net/sunrpc/svcsock.c:1547
-   __write_ports_addfd fs/nfsd/nfsctl.c:742 [inline]
-   write_ports+0xa5b/0xcc0 fs/nfsd/nfsctl.c:861
-   nfsctl_transaction_write+0x106/0x1a0 fs/nfsd/nfsctl.c:112
-
-svc_data_ready() and svc_tcp_state_change() chain through their saved
-callbacks the same way, so a TCP descriptor added twice recurses on
-the next incoming segment instead. Reaching any of this takes a
-writer on portlist, and the nfsd filesystem sets no FS_USERNS_MOUNT,
-so the reproducer needs CAP_SYS_ADMIN in the initial user namespace.
-
-Reject a socket that already carries sk_user_data. svc_setup_socket()
-overwrites that field unconditionally, so a socket some other
-consumer has claimed is one NFSD would corrupt whether or not the
-callbacks recurse.
-
-Fixes: b41b66d63c73 ("[PATCH] knfsd: allow sockets to be passed to nfsd via 'portlist'")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+54cdc566f64abf51b7f1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=54cdc566f64abf51b7f1
-Link: https://patch.msgid.link/20260815162844.8219-1-cel@kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <cel@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/20261015-urgent_fixes-v1-3-42796911043b@kernel.org
+Fixes: cb6acd01e2e4 ("hugetlbfs: fix races and page leaks during migration")
+Fixes: 1c9e8def43a3 ("userfaultfd: hugetlbfs: add UFFDIO_COPY support for shared mappings")
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Adam Litke <agl@us.ibm.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Josef Bacik <josef@toxicpanda.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: adapted folio-based code and comments to page-based APIs in hugetlb_mcopy_atomic_pte() ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/svcsock.c |    3 +++
- 1 file changed, 3 insertions(+)
+ mm/hugetlb.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -1372,6 +1372,9 @@ int svc_addsock(struct svc_serv *serv, s
- 	err = -EISCONN;
- 	if (so->state > SS_UNCONNECTED)
- 		goto out;
-+	err = -EBUSY;
-+	if (so->sk->sk_user_data)
-+		goto out;
- 	err = -ENOENT;
- 	if (!try_module_get(THIS_MODULE))
- 		goto out;
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index 947610e37a33c..e8ee7ef7fe03b 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -5390,11 +5390,16 @@ int hugetlb_mcopy_atomic_pte(struct mm_struct *dst_mm,
+ 	/* No need to invalidate - it was non-present before */
+ 	update_mmu_cache(dst_vma, dst_addr, dst_pte);
+ 
+-	spin_unlock(ptl);
+ 	if (!is_continue)
+ 		SetHPageMigratable(page);
+ 	if (vm_shared || is_continue)
+ 		unlock_page(page);
++
++	/*
++	 * Hold the PTL until we're done with the page: the page table owns the
++	 * page reference now.
++	 */
++	spin_unlock(ptl);
+ 	ret = 0;
+ out:
+ 	return ret;
+-- 
+2.53.0
+
 
 
