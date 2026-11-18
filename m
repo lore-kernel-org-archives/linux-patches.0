@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016195;
-	b=Cnv+yCGxa7vM2I8yx04Yt1rU+J8Wk1lLXd+fKgH4gNt2ljMmjvJPZai48MpIhPmadXP7
-	 WOqV1A+QdAXBAboW5iLip6+mhAc2wx0w9MDTrEfvsephwy0yLj0H0yLfnP2W13VQD5yme
-	 3xBx9winz4ammDy/Br5fxnaiDDEfBGdQpBr7d3rPTpRk9O5FzYKvoCvEq1pVOVvEXTozQ
-	 x7bzVKbiK+Qs/O6ASlXdXJClQLzL8LF3JToQYmEZA+bySfu+tjud3jsaDXKyaE8mkH+ux
-	 KTMjCWRg40TG8oR505dsMQKXI1tavP5KQ2N6zeD/ONHn9c/HvhVYDFVei6I0fVBcWcw==
+	t=1795016198;
+	b=MDb8VDjkjpExwSWycsZRXEparse2yt7OPpLJKcOiGIL4ngKXxBtYCVMx04afjbif8Qm8
+	 uBM1uNniNC42YFTOQ3k0MUJ1SfeD3f5tZgwncDSSIRxrargrEJoemLr6y1ladGxhcIG50
+	 1pBidcvQLaeyTm5maI16HekOAY+sO5Aaf0y76P89J6OcKpHUZMR7YhsES6th5yviTl4ff
+	 Ifvh/4rG6nYinEGrgGMPrpnXOE3OVU/NyMNVfnCYfcKI1o7matL60iU57Bzri4SNzplca
+	 royacflq+n1IX7dEW2/LQSeFV2Ao7XrQGlXpOdwQLtzaTWTyjhOA0gY17eKLzv9k9cA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016195;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016198;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7V1Xt1988ty1h3jrCDrziylSVuEW0OAcYkAjqpod+FE=;
-	b=yq53trKxdCslN9VR3aU9/BWWgI1iyqBmKzqKoVQ2zDpkgAdeOUNobiLVODYiakjFQeNN
-	 xN+liZOlM1KNZsqzIb0u6/AlbTCimbQxLHEbHtilamaYErK0r8xLIlmtcSxP2Yu+qFIdu
-	 DxrEpisHjTktlb6OT02LbKlNatqvppx2s9X7Hh//rnaUl7rR/BY17JawJUxEzCp7S3bgP
-	 STezHsYIDjQNIA0rt5QmzWZF0RqLCt/OkIj/mQ1n2zwH8vZtdteO8QEsUi8KolFFYGcBH
-	 dYXUZ3Yz+1QzO+yF8slL7OraznDflNBgN4yEkrgl/O+l+0r4mlgYc/KvNLRaMF0n//g==
+	bh=P5n164kDc6BtyVoEk19KoFzvLyny3ZuaczW7alpkkNQ=;
+	b=UrWYeG4L1c2lFAroOB1Jm80BnrS2YcN72ie998DfDuc4G4Ef/ZHHYHQd+ij+2r/6Q79Z
+	 wEzY2+yei0eFk8xEHnvVWpFoMOtGQ+xq+eiexT2alghkW0dCGAIwgB4RihcpOhcSgTkHT
+	 OfHtwCRTQDS8XYw3wCYAHoKEquDULbC1b7KcJeLtgKAJy/kHPTnV4129QvLQ6VpP09w6H
+	 Kou5sA6f4xDF/x0oPSwNrZON1yEMRa4pWkq4NE7srAshj2YloavRwADF2Nl4Ikfl3SL/R
+	 ZrTSqJH9ejf9wQ6fWp5OOw68zpqFotU9kh3NgE0nT3kl5squUG4ge8ThbS4mymDupNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sm+MaQrD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhgPjIOB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491A9606A320;
-	Wed, 18 Nov 2026 15:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7554606A31C;
+	Wed, 18 Nov 2026 15:36:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sm+MaQrD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E25D1F000C4;
-	Wed, 18 Nov 2026 15:36:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhgPjIOB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89851F000C4;
+	Wed, 18 Nov 2026 15:36:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016195;
-	bh=7V1Xt1988ty1h3jrCDrziylSVuEW0OAcYkAjqpod+FE=;
+	s=korg; t=1795016198;
+	bh=P5n164kDc6BtyVoEk19KoFzvLyny3ZuaczW7alpkkNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sm+MaQrDdp0hSPpPu3kOCb79ghkD/BRZDIq3JOcESZLf0N//2rYOqKmf+daPp+ssf
-	 MAW8T/i5KYZYJVByufg/dvw3QBM4QidHGFEQ2P4iBXZ+lPVPm0b8o77eOEDlcKhyD4
-	 XT3fzDstWdfxpAImNbdpHOdA07WWZvVM/BVYAlM0=
+	b=MhgPjIOBiX/Iv2T7/C9dTCGKJtRX7Kmoz9ZvQyK0R42o+1TYrkieNsGBGzF77YVZ1
+	 uqJO0ckUXqbfzpOThLNHtIjIbTwPIv4UY+V5mJIsKj3rYNLrgMcpi4fAKMDRRsdMI/
+	 48fBNZUimq45V/1Sl9MWOOnLly51WKamlnTWvXek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhui Liu <junhui.liu@pigmoral.tech>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Nora Schiffer <nora.schiffer@ew.tq-group.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0444/2651] clk: sunxi-ng: sun55i-a523-ccu: Use M-only clocks for MBUS, IOMMU and DRAM
-Date: Wed, 18 Nov 2026 15:28:04 +0100
-Message-ID: <20261118150303.798311588@linuxfoundation.org>
+Subject: [PATCH 7.3 0427/2651] ARM: dts: imx7-tqma7: correctly specify PMIC voltage constraints
+Date: Wed, 18 Nov 2026 15:27:47 +0100
+Message-ID: <20261118150303.200963526@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,100 +68,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhui Liu <junhui.liu@pigmoral.tech>
+From: Nora Schiffer <nora.schiffer@ew.tq-group.com>
 
-[ Upstream commit 59dced16a82d1ec685b88365c64dde27a0a0b46a ]
+[ Upstream commit f322f8f68c2c3291633ead663effa3b25c18f7b1 ]
 
-The MBUS, IOMMU, and DRAM clocks only have an M divider, but are
-currently modeled as MP clocks with a zero-width P divider.
+regulator-(min|max)-microvolt refer to the supported voltages according
+to board design, not the possible range of the regulators themselves.
+Update the configuration for the TQMa7x's PMIC and also add a comment
+regarding the PMIC's VCC_SD switching feature.
 
-ccu_mp_set_rate() generates an invalid mask for the zero-width P
-divider, clearing unrelated register fields. It also ignores
-CCU_FEATURE_UPDATE_BIT, so the new divider value does not take effect.
-
-Model these clocks as M-only clocks instead. This avoids accessing a
-nonexistent P divider and uses ccu_div_set_rate(), which handles the
-update bit.
-
-Fixes: 74b0443a0d0a ("clk: sunxi-ng: a523: add system mod clocks")
-Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
-Link: https://patch.msgid.link/20260906-sunxi-clk-no-p-v1-2-cbde21c9fe69@pigmoral.tech
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Fixes: a80a1af6ec8a ("ARM: dts: tq imx7 common board support")
+Signed-off-by: Nora Schiffer <nora.schiffer@ew.tq-group.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun55i-a523.c | 45 ++++++++++++--------------
- 1 file changed, 21 insertions(+), 24 deletions(-)
+ arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi | 40 +++++++++++++----------
+ 1 file changed, 23 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun55i-a523.c b/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
-index 20dad06b37ca3..9bc3ff0ab12d7 100644
---- a/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
-@@ -380,14 +380,13 @@ static const struct clk_parent_data mbus_parents[] = {
- 	{ .hw = &pll_periph1_150M_clk.hw },
- 	{ .fw_name = "hosc" },
- };
--static SUNXI_CCU_MP_DATA_WITH_MUX_GATE_FEAT(mbus_clk, "mbus", mbus_parents,
--					    0x540,
--					    0, 5,		/* M */
--					    0, 0,		/* no P */
--					    24, 3,	/* mux */
--					    BIT(31),	/* gate */
--					    CLK_IS_CRITICAL,
--					    CCU_FEATURE_UPDATE_BIT);
-+static SUNXI_CCU_M_DATA_WITH_MUX_GATE_FEAT(mbus_clk, "mbus", mbus_parents,
-+					   0x540,
-+					   0, 5,	/* M */
-+					   24, 3,	/* mux */
-+					   BIT(31),	/* gate */
-+					   CLK_IS_CRITICAL,
-+					   CCU_FEATURE_UPDATE_BIT);
+diff --git a/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi b/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi
+index e1f740edfb763..7f49c80fef4c6 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi
+@@ -46,8 +46,8 @@ pfuze3000: pmic@8 {
  
- static const struct clk_hw *mbus_hws[] = { &mbus_clk.common.hw };
+ 		regulators {
+ 			sw1a_reg: sw1a {
+-				regulator-min-microvolt = <700000>;
+-				regulator-max-microvolt = <3300000>;
++				regulator-min-microvolt = <1000000>;
++				regulator-max-microvolt = <1225000>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
+ 				regulator-ramp-delay = <6250>;
+@@ -55,34 +55,33 @@ sw1a_reg: sw1a {
  
-@@ -584,14 +583,13 @@ static const struct clk_parent_data iommu_parents[] = {
- 	{ .fw_name = "hosc" },
- };
+ 			/* use sw1c_reg to align with pfuze100/pfuze200 */
+ 			sw1c_reg: sw1b {
+-				regulator-min-microvolt = <700000>;
+-				regulator-max-microvolt = <1475000>;
++				regulator-min-microvolt = <1000000>;
++				regulator-max-microvolt = <1000000>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
+ 				regulator-ramp-delay = <6250>;
+ 			};
  
--static SUNXI_CCU_MP_DATA_WITH_MUX_GATE_FEAT(iommu_clk, "iommu", iommu_parents,
--					    0x7b0,
--					    0, 5,	/* M */
--					    0, 0,	/* no P */
--					    24, 3,	/* mux */
--					    BIT(31),	/* gate */
--					    CLK_SET_RATE_PARENT,
--					    CCU_FEATURE_UPDATE_BIT);
-+static SUNXI_CCU_M_DATA_WITH_MUX_GATE_FEAT(iommu_clk, "iommu", iommu_parents,
-+					   0x7b0,
-+					   0, 5,	/* M */
-+					   24, 3,	/* mux */
-+					   BIT(31),	/* gate */
-+					   CLK_SET_RATE_PARENT,
-+					   CCU_FEATURE_UPDATE_BIT);
+ 			sw2_reg: sw2 {
+-				regulator-min-microvolt = <1500000>;
+-				regulator-max-microvolt = <1850000>;
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
+ 			};
  
- static SUNXI_CCU_GATE_HWS(bus_iommu_clk, "bus-iommu", apb0_hws, 0x7bc,
- 			  BIT(0), 0);
-@@ -603,14 +601,13 @@ static const struct clk_parent_data dram_parents[] = {
- 	{ .hw = &pll_periph0_400M_clk.hw },
- 	{ .hw = &pll_periph0_150M_clk.hw },
- };
--static SUNXI_CCU_MP_DATA_WITH_MUX_GATE_FEAT(dram_clk, "dram", dram_parents,
--					    0x800,
--					    0, 5,	/* M */
--					    0, 0,	/* no P */
--					    24, 3,	/* mux */
--					    BIT(31),	/* gate */
--					    CLK_IS_CRITICAL,
--					    CCU_FEATURE_UPDATE_BIT);
-+static SUNXI_CCU_M_DATA_WITH_MUX_GATE_FEAT(dram_clk, "dram", dram_parents,
-+					   0x800,
-+					   0, 5,	/* M */
-+					   24, 3,	/* mux */
-+					   BIT(31),	/* gate */
-+					   CLK_IS_CRITICAL,
-+					   CCU_FEATURE_UPDATE_BIT);
+ 			sw3a_reg: sw3 {
+-				regulator-min-microvolt = <900000>;
+-				regulator-max-microvolt = <1650000>;
++				regulator-min-microvolt = <1350000>;
++				regulator-max-microvolt = <1350000>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
+ 			};
  
- static SUNXI_CCU_GATE_HWS(mbus_dma_clk, "mbus-dma", mbus_hws,
- 			  0x804, BIT(0), 0);
+ 			swbst_reg: swbst {
+-				regulator-min-microvolt = <5000000>;
+-				regulator-max-microvolt = <5150000>;
++				/* Not connected and left unconfigured */
+ 			};
+ 
+ 			snvs_reg: vsnvs {
+-				regulator-min-microvolt = <1000000>;
++				regulator-min-microvolt = <3000000>;
+ 				regulator-max-microvolt = <3000000>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
+@@ -95,18 +94,25 @@ vref_reg: vrefddr {
+ 
+ 			vgen1_reg: vldo1 {
+ 				regulator-min-microvolt = <1800000>;
+-				regulator-max-microvolt = <3300000>;
++				regulator-max-microvolt = <1800000>;
+ 				regulator-always-on;
+ 			};
+ 
+ 			vgen2_reg: vldo2 {
+-				regulator-min-microvolt = <800000>;
+-				regulator-max-microvolt = <1550000>;
++				regulator-min-microvolt = <1500000>;
++				regulator-max-microvolt = <1500000>;
+ 				regulator-always-on;
+ 			};
+ 
+ 			vgen3_reg: vccsd {
+-				regulator-min-microvolt = <2850000>;
++				/*
++				 * Specified values refer to 3.3V operation; voltage for 1.8V
++				 * operation is derived from this.
++				 *
++				 * The base board should usually mux GPIO1_IO08 to SD1_VSELECT for
++				 * automatic switching of SD card IO voltage.
++				 */
++				regulator-min-microvolt = <3300000>;
+ 				regulator-max-microvolt = <3300000>;
+ 				regulator-always-on;
+ 			};
+@@ -118,13 +124,13 @@ vgen4_reg: v33 {
+ 			};
+ 
+ 			vgen5_reg: vldo3 {
+-				regulator-min-microvolt = <1800000>;
++				regulator-min-microvolt = <3300000>;
+ 				regulator-max-microvolt = <3300000>;
+ 				regulator-always-on;
+ 			};
+ 
+ 			vgen6_reg: vldo4 {
+-				regulator-min-microvolt = <1800000>;
++				regulator-min-microvolt = <3300000>;
+ 				regulator-max-microvolt = <3300000>;
+ 				regulator-always-on;
+ 			};
 -- 
 2.53.0
 
