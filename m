@@ -1,61 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054962;
-	b=RquMXTw6//PpqXFwVRuRSQB+AXGsYXJgYjy7PKWg2c9IROClYaREBxlXzjWLsN2M+g8/
-	 8mB5+x97WspgPAs6DcrDHiKdlqe41cH4ydYgvPd2vddrThiBIua17a+xnWl5PYVkReU1w
-	 6hEWZO7bK6a44HqiuaTYaeqE4CBtAVl3OgWdce3zp4Q49o7YsieyOfVtLu+2woCmxAcGO
-	 M8v/DnkjthdSnJClZxTzz572aPPoOQJw0igYZ7v2uf5ScWEGo707GZmDstLn/sl1ArUw0
-	 frVfEqRJYCHfXBqJFGFeQjsxLxA0vKk5MgmqhdYMto9PNsR/3B+Dk0JzZxt5zWAK+NQ==
+	t=1795054965;
+	b=Sk2QUVvOd6lN7MRQQ9iSb3ANDWOPOPImaFqW6g7MZ1Yu9tcybtbrzGf931R5ZVVbh9Uw
+	 Hijrli12mMzerJkwtj4xpUtKcvjYQinkwGGMrZqYJ3gBYKeCneENdxWMZyozT4rtkS4f3
+	 h0JmK+FugYS3URUiL9rEYE6Wn3ZKzS0u0wFlmlMaOvwlNfMaVwKEoQMUd1Videm56WmEo
+	 P5UQecod/LXTaBD+Dv5b7C7hJp5Z25lUlOOUJvoX95PWYj0cQobv68GvXIAAPimUDD3OB
+	 WgHzFMQ93NPitKEjaCKPXEfsBJ2KyK4yXDNy1JUl1TGmihYX0hmhg+jIVnmTqse0ddA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054965;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=PZssWpdWL6QECNLs/TrUJgWqHZL0xwva4laV6s5F/Ew=;
-	b=Aq+ochX0l/NcSQBlvxCETbyOPIhBwAHbW9Vr74ohtXMCWaG7JJ98rWOT8xikl5sJE1zP
-	 NwnbUAWjNlz4NLIhcphCz720IHRQqSiaV3tuNT5vna4/PSyPawCiYIdA0q0tKEGu5I9ee
-	 r1LjUCUeHdFznvoSWKO2NwJ+cpQ+gKTHfAKWo9bFMwm0kkX/IpVqKVUuOvuhNawE/gEAG
-	 nFW26vGO+8nj8aL7OQP3ZGZ78Tp2uqG4bEGSai6IClVLjp+Vb/PHhqx+01Rrf11M4vM3v
-	 6pxPzvaOBes4UeixsvhnRNKySxUCBprMS6Qnc6gw9fTu0eooW3QT3mpk0KlPhjJVMig==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Yridi9mj8qweP3oFCwMqwKyLUmRaHAfrafSZhkk9ees=;
+	b=A4EiZV5CCP7HNzt/P+7aWRxLkXrCTCGP/S0BdW8iR3gvMNQxqASppg0CaCfiea+41U+B
+	 Su++y9S3C20hROb8+5BhWvElidvsVJlhj2vzTLhJqkHhO+N31A8QHFDOzO+XSf0au/NUp
+	 0qCEdNCaK8Tqa4kuUtdQCqafqBsrYNlaZzHggwVsVcR/IhmyjIS2wRsKhvcFl2r81tCg1
+	 A3KbSdEwS52zpmS0OH3RJSi7W9FajY4Z1oGVeVfrRrk2QZKDkXfhxrinIziC4cOGFErQM
+	 Hn8pX51zPS8mfN9QITseMKTMu2if8bbLkmw4WfE2U7iG0EeNqdX2ZuHsfLqBNw7UEyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H+vXbNak;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iUstRV85;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACD2606A320;
-	Thu, 19 Nov 2026 02:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D11606A31C;
+	Thu, 19 Nov 2026 02:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H+vXbNak
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422461F000C4;
-	Thu, 19 Nov 2026 02:22:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iUstRV85
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D071F000C4;
+	Thu, 19 Nov 2026 02:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054962;
-	bh=PZssWpdWL6QECNLs/TrUJgWqHZL0xwva4laV6s5F/Ew=;
+	s=korg; t=1795054965;
+	bh=Yridi9mj8qweP3oFCwMqwKyLUmRaHAfrafSZhkk9ees=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H+vXbNakTheL9k2OpFM2DZOv7E0AZgLRb0CNd5bvwhcOApG5DyGyAEF6prCt14hzb
-	 4PCh5+r+lb59aja8vvEGLROrDYsX79J4UHfRwJ7P08LydG+l9ibwqfeebNjKja9/kD
-	 pn5cC+kEyOav/DTa35GAkdE/2waEnJ1uOuqdlx50=
+	b=iUstRV85UEX8H/DAToslekG2o60Io/0SPJr98yNnRn8zbHoxcGAWBtHKPrJBsdzBv
+	 OP0boxWzGnjnYQEhw5dJYUrlIaI8n7NbEgLlHMe7EhQIV/opNbX5UNJsHTUKKX/zxR
+	 d0dVvkdpPLPNgwO2nWBg9JPPG6F6olmzkobmxa7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Marco Elver <elver@google.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	David Sterba <dsterba@suse.com>,
-	Sedat Dilek <sedat.dilek@gmail.com>,
-	Alex Shi <alexs@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1460/2214] Kbuild: move to -std=gnu11
-Date: Wed, 18 Nov 2026 15:52:16 +0100
-Message-ID: <20261118150109.471986365@linuxfoundation.org>
+Subject: [PATCH 5.15 1423/2214] PM: wakeup: Unify device_init_wakeup() for PM_SLEEP and !PM_SLEEP
+Date: Wed, 18 Nov 2026 15:51:39 +0100
+Message-ID: <20261118150108.130526088@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,163 +62,134 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit e8c07082a810fbb9db303a2b66b66b8d7e588b53 ]
+[ Upstream commit 09d3154a6f0f0bb5b604832095804780f3684b96 ]
 
-During a patch discussion, Linus brought up the option of changing
-the C standard version from gnu89 to gnu99, which allows using variable
-declaration inside of a for() loop. While the C99, C11 and later standards
-introduce many other features, most of these are already available in
-gnu89 as GNU extensions as well.
+Previously the CONFIG_PM_SLEEP and !CONFIG_PM_SLEEP device_init_wakeup()
+implementations differed in confusing ways:
 
-An earlier attempt to do this when gcc-5 started defaulting to
--std=gnu11 failed because at the time that caused warnings about
-designated initializers with older compilers. Now that gcc-5.1 is
-the minimum compiler version used for building kernels, that is no
-longer a concern. Similarly, the behavior of 'inline' functions changes
-between gnu89 using gnu_inline behavior and gnu11 using standard c99+
-behavior, but this was taken care of by defining 'inline' to include
-__attribute__((gnu_inline)) in order to allow building with clang a
-while ago.
+  - The PM_SLEEP version checked for a NULL device pointer and returned
+    -EINVAL, while the !PM_SLEEP version did not and would simply
+    dereference a NULL pointer.
 
-Nathan Chancellor reported a new -Wdeclaration-after-statement
-warning that appears in a system header on arm, this still needs a
-workaround.
+  - When called with "false", the !PM_SLEEP version cleared "capable" and
+    "enable" in the opposite order of the PM_SLEEP version.  That was
+    harmless because for !PM_SLEEP they're simple assignments, but it's
+    unnecessary confusion.
 
-The differences between gnu99, gnu11, gnu1x and gnu17 are fairly
-minimal and mainly impact warnings at the -Wpedantic level that the
-kernel never enables. Between these, gnu11 is the newest version
-that is supported by all supported compiler versions, though it is
-only the default on gcc-5, while all other supported versions of
-gcc or clang default to gnu1x/gnu17.
+Use a simplified version of the PM_SLEEP implementation for both cases.
 
-Link: https://lore.kernel.org/lkml/CAHk-=wiyCH7xeHcmiFJ-YgXUy2Jaj7pnkdKpcovt8fYbVFW3TA@mail.gmail.com/
-Link: https://github.com/ClangBuiltLinux/linux/issues/1603
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Acked-by: Marco Elver <elver@google.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-Acked-by: David Sterba <dsterba@suse.com>
-Tested-by: Sedat Dilek <sedat.dilek@gmail.com>
-Reviewed-by: Alex Shi <alexs@kernel.org>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Reviewed-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Stable-dep-of: e6b49f8016ee ("dmaengine: dw-axi-dmac: Fix LLI dump out-of-bounds access")
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: ece9baab2a6e ("power: supply: bq24190_charger: use the wake irq API")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/process/programming-language.rst              | 6 +++---
- .../translations/it_IT/process/programming-language.rst     | 4 ++--
- .../translations/zh_CN/process/programming-language.rst     | 3 +--
- .../translations/zh_TW/process/programming-language.rst     | 3 +--
- Makefile                                                    | 4 ++--
- arch/arm64/kernel/vdso32/Makefile                           | 2 +-
- 6 files changed, 10 insertions(+), 12 deletions(-)
+ drivers/base/power/wakeup.c | 30 ------------------------------
+ include/linux/pm_wakeup.h   | 31 +++++++++++++++++++++++--------
+ 2 files changed, 23 insertions(+), 38 deletions(-)
 
-diff --git a/Documentation/process/programming-language.rst b/Documentation/process/programming-language.rst
-index ec474a70a02fa..5fc9160ca1fa5 100644
---- a/Documentation/process/programming-language.rst
-+++ b/Documentation/process/programming-language.rst
-@@ -5,9 +5,9 @@ Programming Language
+diff --git a/drivers/base/power/wakeup.c b/drivers/base/power/wakeup.c
+index 4ef4c8dfd2bc7..37acb6e2e75b2 100644
+--- a/drivers/base/power/wakeup.c
++++ b/drivers/base/power/wakeup.c
+@@ -498,36 +498,6 @@ void device_set_wakeup_capable(struct device *dev, bool capable)
+ }
+ EXPORT_SYMBOL_GPL(device_set_wakeup_capable);
  
- The kernel is written in the C programming language [c-language]_.
- More precisely, the kernel is typically compiled with ``gcc`` [gcc]_
--under ``-std=gnu89`` [gcc-c-dialect-options]_: the GNU dialect of ISO C90
--(including some C99 features). ``clang`` [clang]_ is also supported, see
--docs on :ref:`Building Linux with Clang/LLVM <kbuild_llvm>`.
-+under ``-std=gnu11`` [gcc-c-dialect-options]_: the GNU dialect of ISO C11.
-+``clang`` [clang]_ is also supported, see docs on
-+:ref:`Building Linux with Clang/LLVM <kbuild_llvm>`.
+-/**
+- * device_init_wakeup - Device wakeup initialization.
+- * @dev: Device to handle.
+- * @enable: Whether or not to enable @dev as a wakeup device.
+- *
+- * By default, most devices should leave wakeup disabled.  The exceptions are
+- * devices that everyone expects to be wakeup sources: keyboards, power buttons,
+- * possibly network interfaces, etc.  Also, devices that don't generate their
+- * own wakeup requests but merely forward requests from one bus to another
+- * (like PCI bridges) should have wakeup enabled by default.
+- */
+-int device_init_wakeup(struct device *dev, bool enable)
+-{
+-	int ret = 0;
+-
+-	if (!dev)
+-		return -EINVAL;
+-
+-	if (enable) {
+-		device_set_wakeup_capable(dev, true);
+-		ret = device_wakeup_enable(dev);
+-	} else {
+-		device_wakeup_disable(dev);
+-		device_set_wakeup_capable(dev, false);
+-	}
+-
+-	return ret;
+-}
+-EXPORT_SYMBOL_GPL(device_init_wakeup);
+-
+ /**
+  * device_set_wakeup_enable - Enable or disable a device to wake up the system.
+  * @dev: Device to handle.
+diff --git a/include/linux/pm_wakeup.h b/include/linux/pm_wakeup.h
+index 196a157456aa8..77f4849e34189 100644
+--- a/include/linux/pm_wakeup.h
++++ b/include/linux/pm_wakeup.h
+@@ -109,7 +109,6 @@ extern struct wakeup_source *wakeup_sources_walk_next(struct wakeup_source *ws);
+ extern int device_wakeup_enable(struct device *dev);
+ extern int device_wakeup_disable(struct device *dev);
+ extern void device_set_wakeup_capable(struct device *dev, bool capable);
+-extern int device_init_wakeup(struct device *dev, bool val);
+ extern int device_set_wakeup_enable(struct device *dev, bool enable);
+ extern void __pm_stay_awake(struct wakeup_source *ws);
+ extern void pm_stay_awake(struct device *dev);
+@@ -167,13 +166,6 @@ static inline int device_set_wakeup_enable(struct device *dev, bool enable)
+ 	return 0;
+ }
  
- This dialect contains many extensions to the language [gnu-extensions]_,
- and many of them are used within the kernel as a matter of course.
-diff --git a/Documentation/translations/it_IT/process/programming-language.rst b/Documentation/translations/it_IT/process/programming-language.rst
-index 41db2598ce119..c1a9b481a6f99 100644
---- a/Documentation/translations/it_IT/process/programming-language.rst
-+++ b/Documentation/translations/it_IT/process/programming-language.rst
-@@ -10,8 +10,8 @@ Linguaggio di programmazione
+-static inline int device_init_wakeup(struct device *dev, bool val)
+-{
+-	device_set_wakeup_capable(dev, val);
+-	device_set_wakeup_enable(dev, val);
+-	return 0;
+-}
+-
+ static inline bool device_may_wakeup(struct device *dev)
+ {
+ 	return dev->power.can_wakeup && dev->power.should_wakeup;
+@@ -217,4 +209,27 @@ static inline void pm_wakeup_hard_event(struct device *dev)
+ 	return pm_wakeup_dev_event(dev, 0, true);
+ }
  
- Il kernel è scritto nel linguaggio di programmazione C [it-c-language]_.
- Più precisamente, il kernel viene compilato con ``gcc`` [it-gcc]_ usando
--l'opzione ``-std=gnu89`` [it-gcc-c-dialect-options]_: il dialetto GNU
--dello standard ISO C90 (con l'aggiunta di alcune funzionalità da C99).
-+l'opzione ``-std=gnu11`` [it-gcc-c-dialect-options]_: il dialetto GNU
-+dello standard ISO C11.
- Linux supporta anche ``clang`` [it-clang]_, leggete la documentazione
- :ref:`Building Linux with Clang/LLVM <kbuild_llvm>`.
- 
-diff --git a/Documentation/translations/zh_CN/process/programming-language.rst b/Documentation/translations/zh_CN/process/programming-language.rst
-index 2a47a1d2ec20f..fabdc338dbfbc 100644
---- a/Documentation/translations/zh_CN/process/programming-language.rst
-+++ b/Documentation/translations/zh_CN/process/programming-language.rst
-@@ -9,8 +9,7 @@
- ============
- 
- 内核是用C语言 :ref:`c-language <cn_c-language>` 编写的。更准确地说，内核通常是用 :ref:`gcc <cn_gcc>`
--在 ``-std=gnu89`` :ref:`gcc-c-dialect-options <cn_gcc-c-dialect-options>` 下编译的：ISO C90的 GNU 方言（
--包括一些C99特性）
-+在 ``-std=gnu11`` :ref:`gcc-c-dialect-options <cn_gcc-c-dialect-options>` 下编译的：ISO C11的 GNU 方言
- 
- 这种方言包含对语言 :ref:`gnu-extensions <cn_gnu-extensions>` 的许多扩展，当然，它们许多都在内核中使用。
- 
-diff --git a/Documentation/translations/zh_TW/process/programming-language.rst b/Documentation/translations/zh_TW/process/programming-language.rst
-index 54e3699eadf85..144bdaf81a416 100644
---- a/Documentation/translations/zh_TW/process/programming-language.rst
-+++ b/Documentation/translations/zh_TW/process/programming-language.rst
-@@ -12,8 +12,7 @@
- ============
- 
- 內核是用C語言 :ref:`c-language <tw_c-language>` 編寫的。更準確地說，內核通常是用 :ref:`gcc <tw_gcc>`
--在 ``-std=gnu89`` :ref:`gcc-c-dialect-options <tw_gcc-c-dialect-options>` 下編譯的：ISO C90的 GNU 方言（
--包括一些C99特性）
-+在 ``-std=gnu11`` :ref:`gcc-c-dialect-options <tw_gcc-c-dialect-options>` 下編譯的：ISO C11的 GNU 方言
- 
- 這種方言包含對語言 :ref:`gnu-extensions <tw_gnu-extensions>` 的許多擴展，當然，它們許多都在內核中使用。
- 
-diff --git a/Makefile b/Makefile
-index 5a3fb7729baaf..577eefed806f7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -524,7 +524,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Werror=strict-prototypes -Wno-trigraphs \
- 		   -fno-strict-aliasing -fno-common -fshort-wchar -fno-PIE \
- 		   -Werror=implicit-function-declaration -Werror=implicit-int \
- 		   -Werror=return-type -Wno-format-security \
--		   -std=gnu89
-+		   -std=gnu11
- KBUILD_CPPFLAGS := -D__KERNEL__
- KBUILD_AFLAGS_KERNEL :=
- KBUILD_CFLAGS_KERNEL :=
-@@ -808,7 +808,7 @@ KBUILD_CFLAGS-$(CONFIG_WERROR) += -Werror
- 
- ifdef CONFIG_CC_IS_CLANG
- KBUILD_CPPFLAGS += -Qunused-arguments
--# The kernel builds with '-std=gnu89' so use of GNU extensions is acceptable.
-+# The kernel builds with '-std=gnu11' so use of GNU extensions is acceptable.
- KBUILD_CFLAGS += -Wno-gnu
- # CLANG uses a _MergedGlobals as optimization, but this breaks modpost, as the
- # source of a reference will be _MergedGlobals and not on of the whitelisted names.
-diff --git a/arch/arm64/kernel/vdso32/Makefile b/arch/arm64/kernel/vdso32/Makefile
-index 50cb1ec092ae5..d7f5b140a5d2a 100644
---- a/arch/arm64/kernel/vdso32/Makefile
-+++ b/arch/arm64/kernel/vdso32/Makefile
-@@ -77,7 +77,7 @@ VDSO_CFLAGS += -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
-                -Werror-implicit-function-declaration \
-                -Wno-format-security \
-                -Wdeclaration-after-statement \
--               -std=gnu89
-+               -std=gnu11
- VDSO_CFLAGS  += -O2
- # Some useful compiler-dependent flags from top-level Makefile
- VDSO_CFLAGS += $(call cc32-option,-Wdeclaration-after-statement,)
++/**
++ * device_init_wakeup - Device wakeup initialization.
++ * @dev: Device to handle.
++ * @enable: Whether or not to enable @dev as a wakeup device.
++ *
++ * By default, most devices should leave wakeup disabled.  The exceptions are
++ * devices that everyone expects to be wakeup sources: keyboards, power buttons,
++ * possibly network interfaces, etc.  Also, devices that don't generate their
++ * own wakeup requests but merely forward requests from one bus to another
++ * (like PCI bridges) should have wakeup enabled by default.
++ */
++static inline int device_init_wakeup(struct device *dev, bool enable)
++{
++	if (enable) {
++		device_set_wakeup_capable(dev, true);
++		return device_wakeup_enable(dev);
++	} else {
++		device_wakeup_disable(dev);
++		device_set_wakeup_capable(dev, false);
++		return 0;
++	}
++}
++
+ #endif /* _LINUX_PM_WAKEUP_H */
 -- 
 2.53.0
 
