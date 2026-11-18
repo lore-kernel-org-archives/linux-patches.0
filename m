@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044114;
-	b=LgbbOxuUj1A7Y1sc85DkphcfwuX0EQe0YubfcElJWS3rZacl57f86gkdOlG6kBn/arRR
-	 VFbaOdfHEflZUMl3IpHzzrMPmQnbrxFhI4gc1Tcng261oeLBTUWQOjRVP67ZzuTfxUjUH
-	 M3Bqaa8rPmLbFR/5JXdR5eU4+E0CclxKi3Tpb0tSrU008j6H8herXJRpjoe42PCxje3Ok
-	 kc4BX8B57I+Qqw26EDPsboLna9DrAk8TZJ0PNtNXPhukvSJm+mFuaQJPRzyzxv4zc0/I7
-	 npuP4Zx4eacJV+QgLM0YsVztKCXNspi8L5ISTy8e4CEI2ks5iw8YKqfCThztdqkugFA==
+	t=1795044117;
+	b=HQE6FHiPBIHcwnTPVCG2S+1UCloJtTXwkAJcuz3eBuKOB3WH4IwLYxocNL7BXkNCvO1M
+	 HAwV0kzykyM6ke15MbwRpgErfxn0Zb9TIDTmJodZBOa9KjFR1Ms5RMG4SbFr9ZyqtI6+9
+	 nI5MtRR2MFsXy/mb29fjpF5tvY0snHGUlpj63Q2E+dkPrXozzRwHaOSfJz2tBdJiSHa79
+	 MyYudLNs28JrW5EN0fUR4yT/DMmxbyaAIIY7i4gjdPm+XGKwvEHahWFC13rUsG5Q67I2f
+	 2IVhyl809oVQR2ihKCZY9UTsW/oFsHPLpKCfTiYOIyVfMU6S41w62wgXkyVNt3Vg1eA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044114;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044117;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=rEfxvRJo1xq2yehDlkFN456mi1h9aHe1LnTD449dIsE=;
-	b=S6FjnuM52qP1ba1E8O74RWSltoayCULLTs3muEB4rbI4JSWRndnj4DAihucL5SR/EIOT
-	 55ni9LYCK6YeNlskdAeU4fEA4GE9Q6EEb1LtIXfoQlXgmti001hV+VHsOn9v9rPGWGVnl
-	 puB8i4YMSOJxDgWiP5s0xugPqOwJLvPFzb8mJH/adA+agTOOPhxAZhAAvLHUNI8bpEXp8
-	 ZFwILlkaCAqdXTOwWpjt4BNsYzT0M2Xkuvn5nZ5BQcIvilmC4vNZs5kIB/GkGmYvhbzZr
-	 DSfzzY1iJpTpOTQF468cWAUUwYx7FoTpO3QN5i94C7U3aMhK2AKge1ITbfCnt4bc2yg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=BbNoFPG3ZPGD4EHzLpduKPP3esKwzDT9ShY9hgAsrGI=;
+	b=BC/ErbKyOItrFQq+ymDCFysbSMUXZ1l0yYIy66vYQ7HbTCM24TkyaGz7KPoK12FO4ltv
+	 JXokQ48imu7JUZu03iFEP1vDPSMolLs3zas0I+Xk08Gzf28KvVd5Ecc8csBQc/l0OUrTa
+	 X2QKG4PV6udQH/UW9ipLIBur1/HgueNY8/U8L4sGsr50Y9cJHeNsAh4H0JWvflmXYdvs6
+	 NYzubqbKxQbiTv/njhIMcp2I1kT5VSX7/gIdrKj0eco9qlGXY708YdFxfv9lx665O9fTM
+	 yJ564DDgralcJ1HH2RCJ2zqMGnbRaUgb2RU+i2c9wJWpwwDHcIOCFXPs8aFH3sngXsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ut7yfhs3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="g3TgC/pc";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBB3606A31C;
-	Wed, 18 Nov 2026 23:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F32606A31C;
+	Wed, 18 Nov 2026 23:21:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ut7yfhs3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5922D1F000CD;
-	Wed, 18 Nov 2026 23:21:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g3TgC/pc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434221F000C4;
+	Wed, 18 Nov 2026 23:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044113;
-	bh=rEfxvRJo1xq2yehDlkFN456mi1h9aHe1LnTD449dIsE=;
+	s=korg; t=1795044116;
+	bh=BbNoFPG3ZPGD4EHzLpduKPP3esKwzDT9ShY9hgAsrGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ut7yfhs3ojSLw2NeOQ2aSvw7lbyRTf8bnNy4rEmXWV7q2ShVPS0WufmhrtGksoBss
-	 ZLOk30n6sGVRED4PC3tthxdexviozSdMrVrJiqOxigtmpFr8cJijY8IjD40nIDYQKz
-	 tAO+RtfJmjzOfJxef+yGXD2fpLNnEYXtWPCb/q7w=
+	b=g3TgC/pc7s9nXcBakHfrGzTxQHSGeWguiDwy8OwxXuj/TaiKJFSdOEakMLE77Hpki
+	 uJ8EzEdsJQJ3KMAVIQjXasCBLVaEdsYS75m7BsSODiFeXIRv/4lkZVpzeYJGmW2uMH
+	 YtAfUaV+335QitbMi0lH98f0iGMlLRDg4PCEiv44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Katherine Leaver <kleaver@janestreet.com>,
+	Bjoern Doebel <doebel@amazon.de>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0415/2857] net: macb: initialize PTP state before registering clock
-Date: Wed, 18 Nov 2026 15:24:09 +0100
-Message-ID: <20261118150216.326352247@linuxfoundation.org>
+Subject: [PATCH 6.1 0451/2857] packet: use ubuf_info completion for TX_RING packets
+Date: Wed, 18 Nov 2026 15:24:45 +0100
+Message-ID: <20261118150217.620213620@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -64,86 +64,274 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit e1406330d70e56dd44fa6fbafc86e77e5c80c122 ]
+[ Upstream commit 9518405613863d0bf0700927a21367f5942cf058 ]
 
-gem_ptp_init() registers the PTP clock before initializing
-bp->tsu_clk_lock and the TSU hardware. Since ptp_clock_register()
-publishes the PTP character device, userspace may invoke PTP callbacks
-before the lock and hardware are ready.
+tpacket_snd sends skbs with frags pointing into its ring slots. Slots
+are released when skb->destructor is called.
 
-In addition, gem_ptp_init() is called from both the interface open and
-resume paths. Reinitializing tsu_clk_lock there can reset the lock while
-timestamp processing is using it.
+A call to skb_orphan calls skb->destructor before the skb is freed.
+This can cause the slot to be reused while still linked into the skb.
 
-This race is theoretical and has not been observed in practice.
+Switch to standard zerocopy completion (ubuf_info) so the slot is only
+released once all references to the payload are freed or copied.
+Restore skb->destructor to standard sock_wfree.
 
-Initialize tsu_clk_lock once during probe and initialize the TSU before
-registering the PTP clock.
+The ubuf_info completion callback can be called with a NULL skb, but
+only from net_zcopy_put and related API, used by zerocopy implementations
+that hold their own reference on the uarg, such as MSG_ZEROCOPY. This
+uarg is only ever completed from skb_zcopy_clear, so skb is always set.
 
-Fixes: ab91f0a9b5f4 ("net: macb: Add hardware PTP support")
+To prevent userspace from aliasing in-flight state on shared ring
+slots, allocate tpacket_uarg per packet, rather than per slot. This
+adds a small allocation to the transmit path. Use standard kmalloc to
+allow backporting to stable kernels.
+
+The uarg holds an sk_wmem_alloc reference, rather than an sk_refcnt
+reference. packet_free_tx_ring waits on sk_wmem_alloc before freeing
+the ring pages. Always allocate vec->deferred for tx_ring so page-backed
+rings also wait on sk_wmem_alloc when skb_copy_ubufs drops page refs
+before calling tpacket_ubuf_complete.
+
+Drop the tx_ring.pg_vec test that tpacket_destruct_skb performed before
+accessing the slot. The sk_wmem_alloc reference now guarantees that the
+slot is valid. The test is also not sufficient by itself, as it reads
+pg_vec without pg_vec_lock, so it can race with packet_set_ring.
+
+As a result a slot is released when its payload is copied, which can
+be before transmission (e.g., in skb_orphan_frags_rx). If copied
+before skb_tx_timestamp() is called, no slot timestamp is recorded,
+similar to when skb_orphan() was called early in the datapath before
+this patch.
+
+Revert the now unused previous skb_zcopy_.._nouarg infra.
+
+Depends on commit 992cc9f94ca9 ("net/packet: defer vmalloc TX_RING
+free until skbs finish").
+
+Reported-by: Katherine Leaver <kleaver@janestreet.com>
+Reported-by: Bjoern Doebel <doebel@amazon.de>
+Closes: https://lore.kernel.org/netdev/20260909085542.3370986-1-doebel@amazon.de/
+Fixes: 5cd8d46ea156 ("packet: copy user buffers before orphan or clone")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/netdev/20260904030439.3994047-1-runyu.xiao@seu.edu.cn/
-Reviewed-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260908103924.607033-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260919004748.1463985-3-willemdebruijn.kernel@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Adapted for the older function signature by using &dev->dev in ptp_clock_register() and kept the existing per-queue timestamp init loop after registration. ]
+[ sashal: Replaced uarg->ops->complete and .ops = &tpacket_ubuf_ops with the older uarg->callback and .callback = tpacket_ubuf_complete, used plain kzalloc, and kept older context lines in tpacket_fill_skb(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 1 +
- drivers/net/ethernet/cadence/macb_ptp.c  | 4 +---
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ include/linux/skbuff.h | 19 +-------
+ net/packet/af_packet.c | 98 ++++++++++++++++++++++++++----------------
+ 2 files changed, 61 insertions(+), 56 deletions(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 61f85b54afc9c..c6e623861089f 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -5104,6 +5104,7 @@ static int macb_probe(struct platform_device *pdev)
- 
- 	spin_lock_init(&bp->lock);
- 	spin_lock_init(&bp->stats_lock);
-+	spin_lock_init(&bp->tsu_clk_lock);
- 
- 	/* setup capabilities */
- 	macb_configure_caps(bp, macb_config);
-diff --git a/drivers/net/ethernet/cadence/macb_ptp.c b/drivers/net/ethernet/cadence/macb_ptp.c
-index 84ba09bfdd303..bd1d2ca855d16 100644
---- a/drivers/net/ethernet/cadence/macb_ptp.c
-+++ b/drivers/net/ethernet/cadence/macb_ptp.c
-@@ -381,6 +381,7 @@ void gem_ptp_init(struct net_device *dev)
- 	bp->tsu_rate = bp->ptp_info->get_tsu_rate(bp);
- 	bp->ptp_clock_info.max_adj = bp->ptp_info->get_ptp_max_adj();
- 	gem_ptp_init_timer(bp);
-+	gem_ptp_init_tsu(bp);
- 	bp->ptp_clock = ptp_clock_register(&bp->ptp_clock_info, &dev->dev);
- 	if (IS_ERR(bp->ptp_clock)) {
- 		pr_err("ptp clock register failed: %ld\n",
-@@ -392,15 +393,12 @@ void gem_ptp_init(struct net_device *dev)
- 		return;
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index 1f646364926e4..1a5e463502a95 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -1736,22 +1736,6 @@ static inline void skb_zcopy_set(struct sk_buff *skb, struct ubuf_info *uarg,
  	}
- 
--	spin_lock_init(&bp->tsu_clk_lock);
- 	for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue) {
- 		queue->tx_ts_head = 0;
- 		queue->tx_ts_tail = 0;
- 		INIT_WORK(&queue->tx_ts_task, gem_tx_timestamp_flush);
- 	}
- 
--	gem_ptp_init_tsu(bp);
--
- 	dev_info(&bp->pdev->dev, "%s ptp clock registered.\n",
- 		 GEM_PTP_TIMER_NAME);
  }
+ 
+-static inline void skb_zcopy_set_nouarg(struct sk_buff *skb, void *val)
+-{
+-	skb_shinfo(skb)->destructor_arg = (void *)((uintptr_t) val | 0x1UL);
+-	skb_shinfo(skb)->flags |= SKBFL_ZEROCOPY_FRAG;
+-}
+-
+-static inline bool skb_zcopy_is_nouarg(struct sk_buff *skb)
+-{
+-	return (uintptr_t) skb_shinfo(skb)->destructor_arg & 0x1UL;
+-}
+-
+-static inline void *skb_zcopy_get_nouarg(struct sk_buff *skb)
+-{
+-	return (void *)((uintptr_t) skb_shinfo(skb)->destructor_arg & ~0x1UL);
+-}
+-
+ static inline void net_zcopy_put(struct ubuf_info *uarg)
+ {
+ 	if (uarg)
+@@ -1774,8 +1758,7 @@ static inline void skb_zcopy_clear(struct sk_buff *skb, bool zerocopy_success)
+ 	struct ubuf_info *uarg = skb_zcopy(skb);
+ 
+ 	if (uarg) {
+-		if (!skb_zcopy_is_nouarg(skb))
+-			uarg->callback(skb, uarg, zerocopy_success);
++		uarg->callback(skb, uarg, zerocopy_success);
+ 
+ 		skb_shinfo(skb)->flags &= ~SKBFL_ALL_ZEROCOPY;
+ 	}
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 73663db442cce..cc5bb8765f52e 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2592,26 +2592,6 @@ static int tpacket_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	goto drop_n_restore;
+ }
+ 
+-static void tpacket_destruct_skb(struct sk_buff *skb)
+-{
+-	struct packet_sock *po = pkt_sk(skb->sk);
+-
+-	if (likely(po->tx_ring.pg_vec)) {
+-		void *ph;
+-		__u32 ts;
+-
+-		ph = skb_zcopy_get_nouarg(skb);
+-
+-		ts = __packet_set_timestamp(po, ph, skb);
+-		__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
+-
+-		packet_dec_pending(&po->tx_ring);
+-		complete(&po->skb_completion);
+-	}
+-
+-	sock_wfree(skb);
+-}
+-
+ static int __packet_snd_vnet_parse(struct virtio_net_hdr *vnet_hdr, size_t len)
+ {
+ 	if ((vnet_hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) &&
+@@ -2641,27 +2621,52 @@ static int packet_snd_vnet_parse(struct msghdr *msg, size_t *len,
+ 	return __packet_snd_vnet_parse(vnet_hdr, *len);
+ }
+ 
++struct tpacket_uarg {
++	struct ubuf_info	ubuf;
++	struct packet_sock	*po;
++	void			*ph;
++};
++
++static void tpacket_ubuf_complete(struct sk_buff *skb, struct ubuf_info *uarg,
++				  bool success)
++{
++	struct tpacket_uarg *tu = container_of(uarg, struct tpacket_uarg, ubuf);
++	struct packet_sock *po = tu->po;
++	void *ph = tu->ph;
++	__u32 ts;
++
++	DEBUG_NET_WARN_ON_ONCE(!skb);
++
++	if (!refcount_dec_and_test(&uarg->refcnt))
++		return;
++
++	ts = __packet_set_timestamp(po, ph, skb);
++	__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
++
++	packet_dec_pending(&po->tx_ring);
++	complete(&po->skb_completion);
++
++	kfree(tu);
++	sk_free(&po->sk);
++}
++
+ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
+-		void *frame, struct net_device *dev, void *data, int tp_len,
++		struct net_device *dev, void *data, int tp_len,
+ 		__be16 proto, unsigned char *addr, int hlen, int copylen,
+ 		int hard_header_len,
+ 		const struct sockcm_cookie *sockc)
+ {
+-	union tpacket_uhdr ph;
+ 	int to_write, offset, len, nr_frags, len_max;
+ 	struct socket *sock = po->sk.sk_socket;
+ 	struct page *page;
+ 	int err;
+ 
+-	ph.raw = frame;
+-
+ 	skb->protocol = proto;
+ 	skb->dev = dev;
+ 	skb->priority = READ_ONCE(po->sk.sk_priority);
+ 	skb->mark = READ_ONCE(po->sk.sk_mark);
+ 	skb->tstamp = sockc->transmit_time;
+ 	skb_setup_tx_timestamp(skb, sockc->tsflags);
+-	skb_zcopy_set_nouarg(skb, ph.raw);
+ 
+ 	skb_reserve(skb, hlen);
+ 	skb_reset_network_header(skb);
+@@ -2801,6 +2806,7 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
+ 	struct virtio_net_hdr vnet_hdr;
+ 	bool has_vnet_hdr = false;
+ 	struct sockcm_cookie sockc;
++	struct tpacket_uarg *uarg;
+ 	__be16 proto;
+ 	int err, reserve = 0;
+ 	void *ph;
+@@ -2931,7 +2937,7 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
+ 				err = len_sum;
+ 			goto out_status;
+ 		}
+-		tp_len = tpacket_fill_skb(po, skb, ph, dev, data, tp_len, proto,
++		tp_len = tpacket_fill_skb(po, skb, dev, data, tp_len, proto,
+ 					  addr, hlen, copylen, hard_header_len,
+ 					  &sockc);
+ 		if (likely(tp_len >= 0) &&
+@@ -2963,7 +2969,24 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
+ 			virtio_net_hdr_set_proto(skb, &vnet_hdr);
+ 		}
+ 
+-		skb->destructor = tpacket_destruct_skb;
++		uarg = kmalloc(sizeof(*uarg), GFP_KERNEL);
++		if (unlikely(!uarg)) {
++			if (likely(len_sum > 0))
++				err = len_sum;
++			else
++				err = -ENOMEM;
++			goto out_status;
++		}
++		uarg->po = po;
++		uarg->ph = ph;
++		uarg->ubuf.callback = tpacket_ubuf_complete;
++		uarg->ubuf.flags = SKBFL_ZEROCOPY_FRAG;
++		refcount_set(&uarg->ubuf.refcnt, 1);
++
++		/* Hold a sk_wmem_alloc reference until completion */
++		refcount_inc(&po->sk.sk_wmem_alloc);
++		skb_zcopy_init(skb, &uarg->ubuf);
++
+ 		__packet_set_status(po, ph, TP_STATUS_SENDING);
+ 		packet_inc_pending(&po->tx_ring);
+ 
+@@ -4516,21 +4539,20 @@ static struct pgv *alloc_pg_vec(struct tpacket_req *req, int order, bool tx_ring
+ 	vec->len = block_nr;
+ 	pg_vec = vec->pg_vec;
+ 
++	if (tx_ring) {
++		vec->deferred = kzalloc(sizeof(*vec->deferred),
++					GFP_KERNEL | __GFP_NOWARN);
++		if (!vec->deferred)
++			goto out_free_pgvec;
++		vec->deferred->vec = vec;
++		INIT_DELAYED_WORK(&vec->deferred->work,
++				  packet_free_pg_vec_work);
++	}
++
+ 	for (i = 0; i < block_nr; i++) {
+ 		pg_vec[i].buffer = alloc_one_pg_vec_page(order);
+ 		if (unlikely(!pg_vec[i].buffer))
+ 			goto out_free_pgvec;
+-
+-		if (tx_ring && !vec->deferred &&
+-		    is_vmalloc_addr(pg_vec[i].buffer)) {
+-			vec->deferred = kzalloc(sizeof(*vec->deferred),
+-						GFP_KERNEL | __GFP_NOWARN);
+-			if (!vec->deferred)
+-				goto out_free_pgvec;
+-			vec->deferred->vec = vec;
+-			INIT_DELAYED_WORK(&vec->deferred->work,
+-					  packet_free_pg_vec_work);
+-		}
+ 	}
+ 
+ out:
 -- 
 2.53.0
 
