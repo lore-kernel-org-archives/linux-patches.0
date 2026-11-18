@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034390;
-	b=cKbZuRCWQyOddE3lbqslK2T2e7HiorZ36y4xV5t5ShaVFvnSzP0JUlA9rKAMPNMDae0o
-	 iWLIsV8Zpg/hDeiv5+zDO6ew49Q4yWE3HrICdoQm6yUeDESIF7Vj1+qeIZZGvCiUnsj29
-	 5vT6NnutTLSydJAgPnIUm9PtHkHt+9cVjvbSUNnHy6IPiRSepKlQFtmyo4bvQVmABDMm7
-	 2GSHLOL7beoUuaCBWVFgkaer4MTC6KK1CGQnGec8yK7W1nUh6Jhs+QkAEaGefawe1ILmN
-	 RHCaqQ/Gp8CCjTYNcwzhggM+9A9qSaYfX9IzJU1NxpnUjNj20jh0tByINESywU3Xc8A==
+	t=1795034393;
+	b=L8HbRoh9D9r4bzsMKmRjSjegfhsK/m4+1oKC0VZu+LGeP0b3xWJT8FmkoFqRC27Jr2cb
+	 CH9JwlA73EbR9SeQmLP1iavxoRuGnzBv6FElWq/acZ8WTgClC4EPrJLMfY6y9aq9Yel5t
+	 jCzg82cQu98FFujLYWrUkggKeYFP9cfWwjiwR9tke4lZhhB0r5/9FaAI9HZkvTaoFHG6O
+	 O8+6TFITFuJ6Fdum7EedhW898rNX0l45dzmXkCSxq/QLMMiVsHu6MIdbxRRRBme3vUdpJ
+	 ry67NPEyVaj/vlOSz1qoEYwmwtuj4RJMzj/tBUTljndJ2sTPQ70f2uouBX1i5or95qg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034390;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034393;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s53Hmuepc99wdv457R0FzcX+Nl+DY0riYEO3hIm9MvY=;
-	b=S1AEuBJNCrEbw+0VS0mYZz9vDrQb9QJNXZGZWSamdpjqU4bE/SUPQ/hTa6JYocIVHeou
-	 aH/CjXTpyrGyz3pp5kDx3Z4LRF5a0r5c3isx//ei53+9OouoJcVbO79482hXOxphOj//C
-	 W1RZuY3fncZyb2L4MAb8MbSWQpu+/fMjLWD4PSQjx4uG97P4SiC9ubFotVymUW9/bohb0
-	 /xJS2dEBcTbeRp3j6y5PpuhlZpCIGFMa2v/5bat2+lGQp4xS+d1sDHY3jcgc6yF0VuDUQ
-	 kwMs3tb8KV2MYDOoTgUfqYSyM6rtD397jem75r4S166Xx6JxTvWCLv659xesnmD+88w==
+	bh=/rYr4b9NEzLo8gBEtWkk+wvp61MX4ZZuCrnYlXyCGuk=;
+	b=nXcq/jyoFl7JEnYu3AlC/v2gR98zcD/uSQGF3mzXN2pRbD2mIngru/qso8j9Ljc2+XD3
+	 vw2mIhTwzH1vPmkIya9IcutPTt1upsOpTM9GGwavJ2kiab/V2T4Yn7ero5Fo2LdI5fXR9
+	 H2KyrlSqUueTEYxVIM90LXAq++mCKAIYkX+j7SQwgeanZCUaCbLU/yiS77y/HDMBWN0GX
+	 SwszSA8GcmZ1X3WfAg51iIsIwQkTROtUGSqNam/jbQ7b2OUvJ7224tNUqOLe3NX92qhdw
+	 gIz/6o3zhya6tmi2lX4j7KLwqjY9O73OPc+cGau1M0Kqenu2J3pgRDBpuQMnbe6j7FQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TST5mIW7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I6EM0QBJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6AF606A325;
-	Wed, 18 Nov 2026 20:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F9F606A31C;
+	Wed, 18 Nov 2026 20:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TST5mIW7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B0351F000C5;
-	Wed, 18 Nov 2026 20:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I6EM0QBJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231FF1F000C5;
+	Wed, 18 Nov 2026 20:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034390;
-	bh=s53Hmuepc99wdv457R0FzcX+Nl+DY0riYEO3hIm9MvY=;
+	s=korg; t=1795034392;
+	bh=/rYr4b9NEzLo8gBEtWkk+wvp61MX4ZZuCrnYlXyCGuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TST5mIW7adWb1fML5hY88NwvTSQ2vgQGjZY7i0HWDKffotfxvcidOZG0/KSeu9YEE
-	 9XTQCPPMRVOzaPF9ES2+e615PHeqmydkq8t7sdEIInjeuhDgOVUijJlW2YvwK20BjG
-	 nSZSFr6/zkl57VXMf3WW5zmoQGpIhxsVPUPnngiY=
+	b=I6EM0QBJoZBfDuB1kpiaeOu7eH/1W6/6q1rEAOr5AOGL+M2og+M54DwET/excvDKn
+	 9hOUoKIfcVNiMeWMjhsQeiE4a4jHuwIJ0bEvV3wiJEZwRj+VFYbuGoYpFEIQHYNPf5
+	 IutKXa5gWXA/leDKdoPCUzgX8AXoP4ZlfpaO05fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Mark Brown <broonie@kernel.org>,
+	Matus Gajdos <matuszpd@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0352/3318] spi: cadence-qspi: Fix status polling with octal DTR chips
-Date: Wed, 18 Nov 2026 15:16:14 +0100
-Message-ID: <20261118150326.631367560@linuxfoundation.org>
+Subject: [PATCH 6.6 0353/3318] ALSA: usb-audio: Add native DSD support for Cambridge Audio streamers
+Date: Wed, 18 Nov 2026 15:16:15 +0100
+Message-ID: <20261118150326.669690441@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,100 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Matus Gajdos <matuszpd@gmail.com>
 
-[ Upstream commit fd99864b0ac936e870c7ae28354c5cd3dad5efd0 ]
+[ Upstream commit 4e1462e7cd6a9b920f441842726cc2b9d232673e ]
 
-Most SPI NOR chips today use 0x05 as ReaD Status Register (RDSR)
-opcode. After almost every transaction, the core will wait for the said
-transation to be digested by the chip by polling its status
-register. This mechanism has been automated by certain chips, such as
-the Cadence QSPI controller. Unfortunately, the feature has been
-disabled for various (relevant) reasons. Disabling this feature has been
-done by setting WRITE_COMPLETION_CTRL_REG.DISABLE_POLLING_FLD, keeping
-the rest of the register intact. In this same register, there is also a
-field named WRITE_COMPLETION_CTRL_REG.OPCODE_FLD, which by default also
-contains 0x05, as primary RDSR opcode.
+The Cambridge Audio streamer advertises the UAC2 RAW_DATA format on
+altsetting 2 of its playback interface, but without the DSD_RAW quirk
+flag the driver exposes it only as a SPECIAL format that cannot be
+used.
 
-As a result, both the SPI NOR and SPI NAND cores, primary users through
-spi-mem of the spi_mem_ops interface, do send their own RDSR. In this
-driver, such command goes through one of the fifth possible data path
-specifically crafted for short register-like commands, named STIG. In
-STIG mode, the opcode of the operation is written to
-OSPI_FLASH_CMD_CTRL_REG. This means that the opcode field of STIG
-configuration and the opcode field of the automatic polling
-configuration contain the same value.
+Add QUIRK_FLAG_DSD_RAW for the device (USB ID 22e8:ca10), so the
+altsetting is exposed as DSD_U32_BE, enabling native DSD64/128/256
+playback.
 
-Unfortunately, the TRM explains in two different places that this
-configuration is forbidden, without explaining why it is problematic:
+Tested with: gst-launch-1.0 filesrc location=file.dsf ! \
+                            avdemux_dsf ! dsdconvert ! \
+                            alsasink device=hw:2,0
 
-$12.4.2.4.11 OSPI Software-Triggered Instruction Generator (STIG)
-```
-OSPI_FLASH_CMD_CTRL_REG[31-24] CMD_OPCODE_FLD bits should be set
-different than OSPI_DEV_INSTR_RD_CONFIG_REG[7-0] RD_OPCODE_NON_XIP_FLD
-and OSPI_DEV_INSTR_WR_CONFIG_REG[7-0] WR_OPCODE_FLD.
-```
-
-and
-
-$12.4.2.5.2 Configuring the OSPI Controller for Optimal Use
-```
-When using the OSPI Controller, the opcodes in
-OSPI_DEV_INSTR_RD_CONFIG_REG[7-0] RD_OPCODE_NON_XIP_FLD,
-OSPI_DEV_INSTR_WR_CONFIG_REG[7-0] WR_OPCODE_FLD and
-OSPI_WRITE_COMPLETION_CTRL_REG[7-0] OPCODE_FLD bit fields shall not
-match the opcode in the OSPI_FLASH_CMD_CTRL_REG[31-24] CMD_OPCODE_FLD
-bit field.
-```
-
-For some reasons, this is only unveiled now when testing in ODTR
-mode. Plain SDR modes work flawlessly with the same chips. One possible
-reason for this, is that the internal data path in ODTR mode is
-very different due to the extra opcode extension/repetition which may be
-interpreted differently (this is a wild guess). For sure there is an
-interference, as even the TRM states that there is some magic happening:
-
-$12.4.2.4.13 OSPI Command Translation
-```
-The WREN and the RDSR device instructions are the only ones that are
-sent by the controller under the hood.
-```
-
-I cannot probe the bus when the problem arises, so I don't know exactly
-what is sent on the bus. Practically speaking, the chip was driving the
-lines low (reading all 0s), which is not the usual default state when
-the chip is not driving the lines (all 1s). Other people on the mailing
-list claimed successfully using ODTR chips with this controller. My take
-here is that either they were using a variant of the IP without write
-completion at all (there is a quirk for it), or they were using chips
-slightly more flexible about their opcode sequency or maybe with
-different addr/dummy requirements.
-
-Clearing the WRITE_COMPLETION_CTRL_REG.OPCODE_FLD while disabling write
-completion polling entirely seems the best compromise.
-
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/20261001-winbond-spi-next-cadence-rdsr-fix-v1-1-ec5ff594ba5d@bootlin.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Matus Gajdos <matuszpd@gmail.com>
+Link: https://patch.msgid.link/20261002125237.82188-1-matuszpd@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-quadspi.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index 3e7bf76be22bb..33090e69ec215 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -996,8 +996,7 @@ static int cqspi_write_setup(struct cqspi_flash_pdata *f_pdata,
- 	 * care of polling the status register.
- 	 */
- 	if (cqspi->wr_completion) {
--		reg = readl(reg_base + CQSPI_REG_WR_COMPLETION_CTRL);
--		reg |= CQSPI_REG_WR_DISABLE_AUTO_POLL;
-+		reg = CQSPI_REG_WR_DISABLE_AUTO_POLL;
- 		writel(reg, reg_base + CQSPI_REG_WR_COMPLETION_CTRL);
- 		/*
- 		 * DAC mode require auto polling as flash needs to be polled
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 598ca38be9676..5ae20ef3c6232 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2267,6 +2267,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	DEVICE_FLG(0x21b4, 0x0232, /* Ayre QX-5 Twenty */
+ 		   QUIRK_FLAG_DSD_RAW),
++	DEVICE_FLG(0x22e8, 0xca10, /* Cambridge Audio streamers */
++		   QUIRK_FLAG_DSD_RAW),
+ 	DEVICE_FLG(0x2522, 0x0007, /* LH Labs Geek Out HD Audio 1V5 */
+ 		   QUIRK_FLAG_SET_IFACE_FIRST),
+ 	DEVICE_FLG(0x262a, 0x9302, /* ddHiFi TC44C */
 -- 
 2.53.0
 
