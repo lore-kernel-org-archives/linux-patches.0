@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052430;
-	b=bM0hv+ETmBz4lMbak3swMKxEmrJsy8lTNHAieUseQrHtd94yCQMHdVrfdqmxUYdGbtN9
-	 DGve0dUv5Yku/ykhFebvNgM1cHZS/u5x9gBCLdkiRIuuaG+ZDMy94r36SyPvDwtPXdqqu
-	 dakMj7ZIBL9YpgEVrFsNhrASBE2jwwuDunNrM0lV0jbRNR03SSUIN+QybpUHy9Eyx4MK0
-	 fy8gsXHIEdFXHHSu7SL8eoAPiDVzUk+puM9JrY7jkSaWgLnqNlQVqbBRbLb6MaDkTIEsu
-	 pOg4CeqrHhUdFoQS0O7FAMtBWJ83AAUpFMLXL1on1OhiM7n9VBwe6j8z3+Q0Cdx0Hwg==
+	t=1795052433;
+	b=apJiYjZOMvE/kd16e18KsAjXwyJTaR0assQdX6BuxmExIXPccvCLXesulM3e8KduuQN4
+	 +scq1hBZFz3NSMZXUuAIu0+v+7C+/ZyRkwwHhguThFw84/Db/3K2UDXUFFdTTuV7dM+va
+	 hWxYgv32H1RFnqUOw8lKcKULlLpzY7JRsSvG0CATIHjooQggdyKQLUljWwKLguwvwlurg
+	 KDL1piUhbZxUe/KDpa/xgq3Dgebei3nuUoMxFGZrEp00X28gX7P1DuqV3eyPFbbBbVhwA
+	 sfxEZTg2LCzSaVD+OOU2l8KSObitLPoFjPdALa2NSZiQh38jFw775O/5dETS93pQlOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052430;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052433;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DdXws98F9kwN+g3YesE+DG1qWW19HIHE+lDgmW59J3o=;
-	b=GwGBhROyotuBvzaXRJeERCAM1eq3BLCrgB8YJeRCuRJeGrxfk8HCJ1+stkTShUwNBdVM
-	 vRvxUQMZWSzEzfE82tWzgTk+/oUTM2ODsrC7oJyuWaYukJJm05VEPVFJH5KSPYI189AFn
-	 AJLS9f5wvJxIJ/jupjVgoXgg9Qo9mUoPcDQcuTPAid4hSLGtPAKpkHeCncfF8QmtbLFje
-	 l4bdm/c3tBD6JIBjKLdQdY7vUW475YHtAI5fWxTIN+kPZsXi80ndSspbKfgoFVT+IUn1W
-	 Bm/oao/OPmGJJKAN8RpBkmnniKc1aqdR4ANSMz4GJB57r//AG5Ud0eb5QkofP3AU7LA==
+	bh=yFYoAGRZGSs7Lp+Mno/SjSFKTqKvkw5dMOzdCBLMM/w=;
+	b=JT55Xmxqm2eNkNhSFjCGqyMPzDgyNtiJJhwKF/uTHcWTjf5EZqyqRqveBZEe/4bDJhH0
+	 oeHBz+m7lyOOm+PTGzxVpB6UhQyOU0bmQTzlv2k2ma2On7HgrgEjyPnOqrcaQxZL14rL4
+	 pdbmK0+BADWMD+t5skRuwzw/dS8uyl94dGwumpuZfaIkTkOSWxz06/4BNNzttSMdhgNBf
+	 /Ck+EGiUO8cOpYIXK+E+xJKPLOtATmNqMhvR/tjNuTK+8NrcyqM3ToRQmJKAdGSmSjBpH
+	 AKP7vrefoALZLT3mUYYCBd9KrVgAnRWg0rfVIoHwfYS99Mb13GODwbYDARioUcu1cnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="HPbXL/vq";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mONbwsgM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B014C606A320;
-	Thu, 19 Nov 2026 01:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6AC606A31C;
+	Thu, 19 Nov 2026 01:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPbXL/vq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DC71F000C4;
-	Thu, 19 Nov 2026 01:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mONbwsgM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B78381F000C4;
+	Thu, 19 Nov 2026 01:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052430;
-	bh=DdXws98F9kwN+g3YesE+DG1qWW19HIHE+lDgmW59J3o=;
+	s=korg; t=1795052433;
+	bh=yFYoAGRZGSs7Lp+Mno/SjSFKTqKvkw5dMOzdCBLMM/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HPbXL/vq6GO4RFXhgNJNYrfQUVImyE6IPbhUlbYjks2j1PSXd4sxlOGlGQqcPiNn2
-	 U22qxS1Wwk/oArcjsdI2045RLa3cB3srFuB4IqrBhZQXfqwVHUESB3Yu+hA9sHv3QW
-	 HV4R8O9yNHxtGuAqEs1i0ErvzyPH8dYgOavRUDjk=
+	b=mONbwsgM/s9D5QbIXgLs8YTnJpf09zthLUvhZv8GBugdPxoXvCfZLXw+LW5JYGQtW
+	 7TI1OTWs+OldeHchvHe5xcprFk7RbfDoR2KB+7ojQYgXe6AdZ3TC0lgaYnheUSZDVS
+	 jVBl3mwVyWMd106TWcg/aNQJAkPzPA9fcjERThzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0560/2214] dm-writecache: fix a quirk in statistics
-Date: Wed, 18 Nov 2026 15:37:16 +0100
-Message-ID: <20261118150033.407323511@linuxfoundation.org>
+Subject: [PATCH 5.15 0525/2214] media: cx18: Disable PCI device on probe failure
+Date: Wed, 18 Nov 2026 15:36:41 +0100
+Message-ID: <20261118150032.083486421@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,49 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit c1ab80af0d99a906b60b769f2e692c37d2db1323 ]
+[ Upstream commit 2aefbc29765641e1e1a26b96cee194ac7d34ff49 ]
 
-writecache_bio_copy_ssd() unconditionally adds the number of extra blocks
-in the merged bio to stats.writes_allocate. That is only correct when the
-entries were taken off the freelist.
+cx18_setup_pci() enables the PCI device but does not disable it when
+DMA mask setup or the memory-region reservation fails. Later probe
+failure paths release the region without balancing the enable either.
 
-When the function is called with search_used == true -- i.e. from the
-write_hits_uncommitted / write_hits_committed paths in
-writecache_map_write() -- the first entry was found in the rbtree and
-every following entry is picked up with rb_next(), so nothing is
-allocated at all. Accordingly the writes_allocate++ that accompanies a
-successful writecache_pop_from_freelist() is skipped for that case, but
-the batch accounting below still adds n - 1.
+Unwind the enable inside cx18_setup_pci() when that helper fails after
+enabling the device. Once setup succeeds, disable it in the probe
+cleanup after releasing the memory region. Setup failures skip that
+cleanup, so each successful enable is balanced exactly once.
 
-An in-place overwrite of n contiguous cached blocks therefore reports n -
-1 allocations that never happened. Only the dmsetup status output is
-affected; there is no functional change.
+Keep the existing error codes and normal removal path unchanged.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-5
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
+
+Fixes: 1c1e45d17b66 ("V4L/DVB (7786): cx18: new driver for the Conexant CX23418 MPEG encoder chip")
 Cc: stable@vger.kernel.org
-Fixes: b2676e1482af ("dm writecache: count number of blocks written, not number of write bios")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Assisted-by: OpenAI:GPT-5.6
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-writecache.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/pci/cx18/cx18-driver.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/dm-writecache.c b/drivers/md/dm-writecache.c
-index 8d0aa6f90e94e..ee61879ac0910 100644
---- a/drivers/md/dm-writecache.c
-+++ b/drivers/md/dm-writecache.c
-@@ -1413,7 +1413,8 @@ static void writecache_bio_copy_ssd(struct dm_writecache *wc, struct bio *bio,
- 	dm_accept_partial_bio(bio, bio_size >> SECTOR_SHIFT);
+diff --git a/drivers/media/pci/cx18/cx18-driver.c b/drivers/media/pci/cx18/cx18-driver.c
+index 59497ba6bf1f1..ec2e19fdf1399 100644
+--- a/drivers/media/pci/cx18/cx18-driver.c
++++ b/drivers/media/pci/cx18/cx18-driver.c
+@@ -806,12 +806,12 @@ static int cx18_setup_pci(struct cx18 *cx, struct pci_dev *pci_dev,
+ 	}
+ 	if (dma_set_mask(&pci_dev->dev, DMA_BIT_MASK(32))) {
+ 		CX18_ERR("No suitable DMA available, card %d\n", cx->instance);
+-		return -EIO;
++		goto err_disable_device;
+ 	}
+ 	if (!request_mem_region(cx->base_addr, CX18_MEM_SIZE, "cx18 encoder")) {
+ 		CX18_ERR("Cannot request encoder memory region, card %d\n",
+ 			 cx->instance);
+-		return -EIO;
++		goto err_disable_device;
+ 	}
  
- 	wc->stats.writes += bio->bi_iter.bi_size >> wc->block_size_bits;
--	wc->stats.writes_allocate += (bio->bi_iter.bi_size - wc->block_size) >> wc->block_size_bits;
-+	if (!search_used)
-+		wc->stats.writes_allocate += (bio->bi_iter.bi_size - wc->block_size) >> wc->block_size_bits;
+ 	/* Enable bus mastering and memory mapped IO for the CX23418 */
+@@ -835,6 +835,10 @@ static int cx18_setup_pci(struct cx18 *cx, struct pci_dev *pci_dev,
+ 		   cx->pci_dev->irq, pci_latency, (u64)cx->base_addr);
  
- 	if (unlikely(wc->uncommitted_blocks >= wc->autocommit_blocks)) {
- 		wc->uncommitted_blocks = 0;
+ 	return 0;
++
++err_disable_device:
++	pci_disable_device(pci_dev);
++	return -EIO;
+ }
+ 
+ static void cx18_init_subdevs(struct cx18 *cx)
+@@ -1121,6 +1125,7 @@ static int cx18_probe(struct pci_dev *pci_dev,
+ 	cx18_iounmap(cx);
+ free_mem:
+ 	release_mem_region(cx->base_addr, CX18_MEM_SIZE);
++	pci_disable_device(pci_dev);
+ free_workqueues:
+ 	destroy_workqueue(cx->in_work_queue);
+ err:
 -- 
 2.53.0
 
