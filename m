@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046764;
-	b=swF+mEQgK+ziKeRfWWkcB5KQXOBxJ40mMmDsHqEY2FjGMT16sXYnYv3BxI735JGI8cyd
-	 eksLu8tC0q3+nxpHZL7XBeCW7bthSII0LgUVVaSigeUd4TovXQF9ODl0+hGgIy9AMnkqw
-	 Q8uByqfaeZNUIA4JVVfUXEiEk+O4OpkKI3R1LbQlgMdvRzriHXx1Dc3iE6usUfGSf01Ov
-	 RYu3VdeCwthyhxa2/f/b9ZdzEOaWmUWY4D5cHGlurkHgRII/iAqH+Hgf8mPZd7ofrwT0b
-	 roj8Zgjc423yi4jTigsuaRZ0mLEBPizz9gjWrmqmAji04YEtU0b1GVN5xyWA9iU8nzw==
+	t=1795046766;
+	b=1+hbw4V0yjYX+NJbRbQWmCbZID+HAKjyUkxzU44y0BhRS8uhnhdWBwUZ7T2jRK3rj9AK
+	 KzHbm5AHJteTV8YqXIPmXo+Npv4ZfeaHeDrPtYsGNvC4lpVqK5eomlgu4vwRGjFJhJHJf
+	 6i0Y578F5o8lCCYPKedd7c/C/SCCIiIojA7pk/YYw0JggYIiIME6egC6r2CRhgKutDiqY
+	 mAT3y1F/GfL4sTOaGmu4U7Wmam8yF4ThMLIWTsTRP5fmnGM3VXcdbwtMJoI8h+U29BP9P
+	 k99mdG52Yu1dQ9Tp9JOaj4UMLnMul/vKKybNbWsh+1Tdqxt8QTV4npY6LVNUj1/Lv8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046764;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046766;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pgxFLQ44M7K/j88/XiHpcWujPiRDh81ZXvF6PaZ4ock=;
-	b=lvV1ifq+PPEIij1vuuUzr2ZeaZfeHZPQszK3+/0A7jcow01YqbOCOlvQOKXxuVSWC3qf
-	 ncXJrNYtkPaXgab4fjwj8Hy8QsX+4KxtdL3W7COLjqmURsSoCM4gcNeDJaXFEbZg879Tm
-	 40lKUidvtK1VvpAtKb7D3PEmnM7UjFK55dhU6DEXaPem/RcaMfrCACIA31dHEzcmZ4EVY
-	 6qCWemceE5V/2qyqY2lHPEhbfJ9Xm0m6jJ1sO6cn4jgA8VZWH4azobgk9ez4a1QftCo1h
-	 AGbPBxl7G6nI2bwfZIearr1WBoF0ebILtSAuZadmObxt0s7kM9hOwHUGUu1QjDqGKLw==
+	bh=Saom9JlhkU/8HuBl6ZqBAwn6nQDtc0a70WuhMYlrluo=;
+	b=W/xayHZ/9l6WM/Jf+Xt81/+wIlqL9mLdA9yznwMfJvLAYxIvq42fqynFcsiJ8h8DrMw/
+	 TX7E8lMDR73u4ZnZzZd4BUVlPPG/wL7wk4sOytevXeXAAYG52l7Kh074v/KXXRakpJdZh
+	 GU9ZE1mVooM4BTdPkEebX64molUpwIQ8wuPQ4E+K5xvqdF5rM9qU74IWhUGoGRWZnDsO5
+	 9TgVe0rGVhoOJwOQkz+fTM7Z/6asBlM1vkCpMs4/gBKud7AvrpdGN1/VTwDWxdEnHHNTg
+	 V9QfaRgBSAGqcQWdakZmUnzstxJMMTWnNOpm2UN+Y8xSK5ofnaxfQHZk26golYTrPnA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AO1yldbD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="cT8Xk/k8";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C84606A320;
-	Thu, 19 Nov 2026 00:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D287B606A320;
+	Thu, 19 Nov 2026 00:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AO1yldbD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D4AA1F000C4;
-	Thu, 19 Nov 2026 00:06:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cT8Xk/k8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6FE1F000C4;
+	Thu, 19 Nov 2026 00:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046763;
-	bh=pgxFLQ44M7K/j88/XiHpcWujPiRDh81ZXvF6PaZ4ock=;
+	s=korg; t=1795046766;
+	bh=Saom9JlhkU/8HuBl6ZqBAwn6nQDtc0a70WuhMYlrluo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AO1yldbDujn3ahn05qU6wzJrHESSTpQx4fuuPZ/GsN0WiFgxKcwsDt8Gl9ZsAMkeb
-	 H1gepExZl70nVmFSsV4FmaN/f5F6sKnERX3nyusKizY6WrnFeK2tgF8O7CJpayKmKH
-	 zUiuTU4Pl+aAmGyULuB+YPkM0JivHcQsNXWVdnlk=
+	b=cT8Xk/k8c+oc57gpbjp5DA7h7X4AIk883QXnDHIRXWZETHrqgtXiDIuSKUREYocQa
+	 jz2gAbtvqXCmIjxTtZmB7aq9uWq0hKMsvXouExBBADzcWvZUTI+TX3BxxZCa+1/1E7
+	 w17rDFeNFG10tW9v1tPpCs1OFkno5bO4seTmIp4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+fd80bc5967eb22c3@bugs.sh,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Sinan Turunc <enscrpt@pm.me>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1397/2857] usb: xhci: Fix bounce buffer overflow
-Date: Wed, 18 Nov 2026 15:40:31 +0100
-Message-ID: <20261118150251.653705994@linuxfoundation.org>
+Subject: [PATCH 6.1 1398/2857] ALSA: usb-audio: Bound packet copies by the PCM buffer size
+Date: Wed, 18 Nov 2026 15:40:32 +0100
+Message-ID: <20261118150251.687792919@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,72 +68,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Sinan Turunc <enscrpt@pm.me>
 
-[ Upstream commit 68c5cb7574c567e83ba95258cb146db95e069a87 ]
+[ Upstream commit 06be918062adc1a5a76dc346803b136b20bdb5ae ]
 
-High-speed devices with out of spec 1024 byte bulk endpoints exist and
-are allowed by USB core, but xhci-hcd always sets packet size to 512.
-The exact nature of these devices isn't documented, commit fb5ee84ea72c
-("USB: Accept bulk endpoints with 1024-byte maxpacket") only states
-that they "don't work with xHCI host controllers", whatever it means.
+retire_capture_urb() and prepare_playback_urb() assume that one USB
+packet never carries more data than the whole ALSA ring buffer. Nothing
+enforces that: the packet size comes from the device (wMaxPacketSize,
+and curpacksize == maxpacksize when the class-specific endpoint
+descriptor sets MaxPacketsOnly), while the PCM hardware constraints only
+require 64-byte periods, two periods and a period time of one data
+interval. An 8 kHz mono U8 stream on a 128-byte buffer is legal, and a
+full-speed device can send 1023-byte packets into it.
 
-But somebody (or a malicious device) can try, and then the driver will
-allocate a 512 byte bounce buffer for this endpoint and may write up to
-1024 bytes into it if particular scatter-gather URBs are used, because
-xhci_align_td() obtains packet size from the descriptor. Fix this.
+On the first oversized packet hwptr_done is wrapped once and stays
+beyond buffer_bytes (895 for 1023 bytes into 128). On the next packet
+the wrap arithmetic in the copy path computes
 
-As a side effect, TRBs will be aligned to the packet size chosen by the
-driver on all endpoints of all speeds. Alignment serves the xHC, not
-device, so this is fine. Only out of spec devices are affected anyway.
+    bytes1 = subs->buffer_bytes - oldptr
 
-Reported-by: co+fd80bc5967eb22c3@bugs.sh
-Link: https://lore.kernel.org/linux-usb/D4tcSGerkYkIV1DmaUo1t8TaR5qQElDLkidn@bugs.sh/
-Fixes: f9c589e142d0 ("xhci: TD-fragment, align the unsplittable case with a bounce buffer")
+with oldptr > buffer_bytes, so bytes1 wraps to about 4 GB and memcpy()
+runs off the end of the URB buffer and of the vmalloc'd DMA buffer:
+
+  BUG: KASAN: slab-out-of-bounds in retire_capture_urb+0x251/0x870
+  Read of size 4294966529 at addr ffff88800c1e2800 by task vhci_rx/82
+
+and for playback, where copy_to_urb() has the same shape:
+
+  BUG: KASAN: vmalloc-out-of-bounds in copy_to_urb.isra.0+0x188/0x430
+  Read of size 4294966529 at addr ffffc9000004537f by task vhci_rx/79
+   prepare_playback_urb+0x98a/0x1fc0
+
+Truncate an oversized capture packet to the buffer size, and stop
+filling a playback URB once it holds a whole buffer. With bytes <=
+buffer_bytes the single wrap of hwptr_done and the two-part memcpy()
+in both copy paths stay inside the buffer. A device whose packets do
+not fit the buffer at all was never going to play correctly anyway.
+
+Reproduced on 7.3-rc7 with a USB/IP device (dummy_hcd cannot carry
+isochronous data) advertising a UAC1 endpoint with MaxPacketsOnly and
+wMaxPacketSize 1023, and a PCM client using period_size 64, periods 2.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20261009151624.618967-11-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: adjusted the max_pkt replacement for the existing usb_endpoint_maxp() call instead of xhci_usb_endpoint_maxp() ]
+Signed-off-by: Sinan Turunc <enscrpt@pm.me>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261026223543.620-2-enscrpt@pm.me
+[ sashal: adjusted indentation to match the existing loop in prepare_playback_urb() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ sound/usb/pcm.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 3f34aa004bc98..9c1b97846266e 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -3619,15 +3619,13 @@ static u32 xhci_td_remainder(struct xhci_hcd *xhci, int transferred,
+diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
+index 17e539b1fdb4c..771ed7e63a55c 100644
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -1248,6 +1248,18 @@ static void retire_capture_urb(struct snd_usb_substream *subs,
+ 			bytes -= adj;
+ 			subs->stream_offset_adj -= adj;
+ 		}
++		/*
++		 * A packet can be as large as the endpoint's maxpacksize, which
++		 * the device chooses, while the ring buffer can be as small as
++		 * two 64-byte periods. The hwptr_done wrap below handles one
++		 * wrap only, so never take more than one buffer from a packet.
++		 */
++		if (unlikely(bytes > subs->buffer_bytes)) {
++			dev_warn_ratelimited(&subs->dev->dev,
++					     "%u-byte packet exceeds %u-byte buffer, truncating\n",
++					     bytes, subs->buffer_bytes);
++			bytes = subs->buffer_bytes;
++		}
+ 		frames = bytes / stride;
+ 		if (!subs->txfr_quirk)
+ 			bytes = frames * stride;
+@@ -1461,8 +1473,14 @@ static int prepare_playback_urb(struct snd_usb_substream *subs,
  
- 
- static int xhci_align_td(struct xhci_hcd *xhci, struct urb *urb, u32 enqd_len,
--			 u32 *trb_buff_len, struct xhci_segment *seg)
-+			 u32 *trb_buff_len, struct xhci_segment *seg, u32 max_pkt)
- {
- 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
- 	unsigned int unalign;
--	unsigned int max_pkt;
- 	u32 new_buff_len;
- 	size_t len;
- 
--	max_pkt = usb_endpoint_maxp(&urb->ep->desc);
- 	unalign = (enqd_len + *trb_buff_len) % max_pkt;
- 
- 	/* we got lucky, last normal TRB data on segment is packet aligned */
-@@ -3772,9 +3770,8 @@ int xhci_queue_bulk_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
- 		if (enqd_len + trb_buff_len < full_len) {
- 			field |= TRB_CHAIN;
- 			if (trb_is_link(ring->enqueue + 1)) {
--				if (xhci_align_td(xhci, urb, enqd_len,
--						  &trb_buff_len,
--						  ring->enq_seg)) {
-+				if (xhci_align_td(xhci, urb, enqd_len, &trb_buff_len,
-+						ring->enq_seg, ring->bounce_buf_len)) {
- 					send_addr = ring->enq_seg->bounce_dma;
- 					/* TD bounced at least, and last on this seg */
- 					td->bounce_seg = ring->enq_seg;
+ 	for (i = 0; i < ctx->packets; i++) {
+ 		counts = snd_usb_endpoint_next_packet_size(ep, ctx, i, avail);
++		/*
++		 * Bound by the ring buffer as well as by the URB:
++		 * copy_to_urb() wraps hwptr_done once, so one URB must
++		 * never carry more than the whole buffer.
++		 */
+ 		if (counts < 0 ||
+-		    (frames + counts) * stride > ctx->buffer_size)
++		    (frames + counts) * stride > ctx->buffer_size ||
++		    (frames + counts) * stride > subs->buffer_bytes)
+ 			break;
+ 		/* set up descriptor */
+ 		urb->iso_frame_desc[i].offset = frames * stride;
 -- 
 2.53.0
 
