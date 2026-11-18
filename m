@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057290;
-	b=Nz2clwSiQEK+gV5SqDte3b4YokdJahwy724rl47oDV38W8aC3nAqcoc0nCym70pgJIMp
-	 Yv0nuEwrRQvD4Qnvq9EVeK48AnuGorQHtDgebisWWph0vyMzmZHzpz90pmcsR9Gg3Ydey
-	 /5sLAnAbVG6+W+jq8pAI4qJNCCBH7BIERO48dDmXEscaTnIWrkSpYLbyMF4qr36mEP4er
-	 aP+IyhgTgHaLjvdp+/QYTUzWVY9N3ld27Ic/ZpGhtkAfmWw7+NG0sIThw98aLI2qboasP
-	 DZJug3ynBw5/YjwKEuGJDwax1JZirWhsX/Z8Z8sWvNc5OIXOL6CEQapT1pSqJ2QjfNA==
+	t=1795057292;
+	b=uQNFCfYb91SyJspPLEJYw83dL/caRKYbTWoPR6AY6rBllBktpyS7kJoNNR0IFUjv/C6y
+	 TKzYaMvs0solO5LdT5yM2ckDqxr46P60WHPpQ3tZ6vLubWUBClIFWi6uFOtp7wPvzJzxJ
+	 pkVHrkSfEFXcQHQIIrhQupYurhCax2uxMLgfjf4eERBLvhZ1h7EPxHqWi6PWyxgY9dK8k
+	 r4xBhuXJNZpW0jR+2lEHkR4WKhCNKwiiX6coYwbaIv5uf8ZAtiVIriS1Xx2UiKrLcDZd6
+	 v0YN4Ixuit9Np1vFjWydMfpcZrwpHmZk6o5yveDNMNPg6jjdBrGenl33DIg1Z76rmTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057290;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057292;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/XG6I3s8FMnZuWjxGIISZTGCy/IKacDK/c/qQvwYHgg=;
-	b=BtcSkk9MgnYWydnMoaAA+Se8T25q6dV0xYrUePWYGGiR4XiNQbphHb9DLcxj1UJ3/bHp
-	 rSXKJFQWeDfyEl2qN6oOZSFs5MR9WfufNIX6De5mJdxUsBm36p3vyFdQKtf4KzF0dRFd9
-	 PxCvgefTVST9eyYuZ4sJBYdQliBl7bU16D0926/msDNqKk+dm/iEEAkIA9YpeIAdGhNGN
-	 CWOP8fVA45RjvjFjqmJXlH8vUTIr+JfpqJWkQZjOOdaM0f+Z3dEHsBdkK9STsS7gylOvL
-	 rId11sZ+xb4KBncNGtgWK13E53myd+1SQfEdKmfVT5UIaZCxmmbHzOxzXgCPPrmw2HA==
+	bh=pA//OYq0jqyh5/fi9e+MtdXLmei28N+eeG0l+u0tKzs=;
+	b=BGcIk/+mYynn/FgfxloZpQvIB4YPg7yHawPMHe5bNUQ1ZNwmkIe1XITFRyS0YfuVV6ga
+	 JojmNV9y+OSTMG2ZX6FkJOFJCVVgWGtxernQH6tfHC68/tZ+32MVPJR5aCQALc5e2+tmw
+	 m16tssIcDU7sprgLNgU8pA4zAO4n9jl6CDvT/9IR04BqC/hcnbBRtr4UCZpNzft6bswRC
+	 46eeJ+6WYbki8/RGhtUeHEQaAoJy/9y2V1Puq5BU4NFOgcE8c1V+kDvFXjaLy61xgkVW1
+	 VmCZhwcq12cTYIA5Gzx/b+/CjH8SDRVvVi+7kf8eP1opqdEfyjg3pTIE89nhJVtjQBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KaVQdqdY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QcGjJ6Z0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A9B60A2622;
-	Thu, 19 Nov 2026 03:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D962460A5BD2;
+	Thu, 19 Nov 2026 03:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KaVQdqdY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA8B1F000C8;
-	Thu, 19 Nov 2026 03:01:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QcGjJ6Z0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BB11F000CA;
+	Thu, 19 Nov 2026 03:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057290;
-	bh=/XG6I3s8FMnZuWjxGIISZTGCy/IKacDK/c/qQvwYHgg=;
+	s=korg; t=1795057292;
+	bh=pA//OYq0jqyh5/fi9e+MtdXLmei28N+eeG0l+u0tKzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KaVQdqdYoYJQ5QSKm2XPdhYBItS2jFPsSbEOlDHs/BSzpw5Kd/cW1uZJnVNEK63Cy
-	 XoNxuJsiALi5JuwtXBLGhJuR35DM5iOuC9Khfkj7HlWUPy5cvfjHg6TpkT2yYCqg9W
-	 HXjRkHzezmbLTJN6zv7ALtLxeUwIV8QTnBRWxJUs=
+	b=QcGjJ6Z0VzMoyff9FT2wBI8qLzrqbNDVQ7cfHx9eh91kJ0ZkC3SKMZPIZfunoAfDy
+	 4kA3ilnnWrGbhvyUfiOV8anZl+V4G/llsixEmurlDEz6bT6J9WI+fiw1p6aT5KBlzT
+	 F0E4DsWhCDegECWBwWG3k0s2EDRtioH5CrdiRJcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
+	Ben Dooks <ben.dooks@codethink.co.uk>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0078/1848] usb: misc: cypress_cy7c63: check result of IO
-Date: Wed, 18 Nov 2026 15:35:16 +0100
-Message-ID: <20261118145914.394555144@linuxfoundation.org>
+Subject: [PATCH 5.10 0052/1848] mmc: cqhci: fix to missed endian conversions
+Date: Wed, 18 Nov 2026 15:34:50 +0100
+Message-ID: <20261118145913.291396763@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,49 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-[ Upstream commit 0673b919e0933541ae56bb3f0253853f696d3773 ]
+[ Upstream commit 0aae2c73175821a71c0e20607f8e333be5b71940 ]
 
-If the device returns a bogus short read, treat it as EIO.
-Actually check for IO errors.
+Fix two places where the wrong type or conversion of little-endian
+types to fix the following sparse warnings:
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20260710095523.1646308-1-oneukum@suse.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+drivers/mmc/host/cqhci-core.c:487:15: warning: incorrect type in assignment (different base types)
+drivers/mmc/host/cqhci-core.c:487:15:    expected restricted __le32 [usertype]
+drivers/mmc/host/cqhci-core.c:487:15:    got int
+drivers/mmc/host/cqhci-core.c:566:19: warning: incorrect type in assignment (different base types)
+drivers/mmc/host/cqhci-core.c:566:19:    expected unsigned long long [usertype] *task_desc
+drivers/mmc/host/cqhci-core.c:566:19:    got restricted __le64 [usertype] *
+
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/cypress_cy7c63.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/mmc/host/cqhci.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/usb/misc/cypress_cy7c63.c b/drivers/usb/misc/cypress_cy7c63.c
-index 3be5551a98678..3def90646fdcd 100644
---- a/drivers/usb/misc/cypress_cy7c63.c
-+++ b/drivers/usb/misc/cypress_cy7c63.c
-@@ -89,8 +89,11 @@ static int vendor_command(struct cypress *dev, unsigned char request,
- 				 address, data, iobuf, CYPRESS_MAX_REQSIZE,
- 				 USB_CTRL_GET_TIMEOUT);
- 	/* we must not process garbage */
--	if (retval < 2)
-+	if (retval < 2) {
-+		if (retval >= 0)
-+			retval = -EIO;
- 		goto err_buf;
-+	}
+diff --git a/drivers/mmc/host/cqhci.c b/drivers/mmc/host/cqhci.c
+index 6a350f4953528..03c29ee8f1534 100644
+--- a/drivers/mmc/host/cqhci.c
++++ b/drivers/mmc/host/cqhci.c
+@@ -457,11 +457,11 @@ static void cqhci_set_tran_desc(u8 *desc, dma_addr_t addr, int len, bool end,
+ {
+ 	__le32 *attr = (__le32 __force *)desc;
  
- 	/* store returned data (more READs to be added) */
- 	switch (request) {
-@@ -175,8 +178,9 @@ static ssize_t read_port(struct device *dev, struct device_attribute *attr,
- 	dev_dbg(&cyp->udev->dev, "READ_PORT%d called\n", port_num);
+-	*attr = (CQHCI_VALID(1) |
+-		 CQHCI_END(end ? 1 : 0) |
+-		 CQHCI_INT(0) |
+-		 CQHCI_ACT(0x4) |
+-		 CQHCI_DAT_LENGTH(len));
++	*attr = cpu_to_le32((CQHCI_VALID(1) |
++			     CQHCI_END(end ? 1 : 0) |
++			     CQHCI_INT(0) |
++			     CQHCI_ACT(0x4) |
++			     CQHCI_DAT_LENGTH(len)));
  
- 	result = vendor_command(cyp, CYPRESS_READ_PORT, read_id, 0);
--
- 	dev_dbg(&cyp->udev->dev, "Result of vendor_command: %d\n\n", result);
-+	if (result < 0)
-+		return result;
- 
- 	return sprintf(buf, "%d", cyp->port[port_num]);
- }
+ 	if (dma64) {
+ 		__le64 *dataddr = (__le64 __force *)(desc + 4);
+@@ -510,7 +510,7 @@ static int cqhci_prep_tran_desc(struct mmc_request *mrq,
+ static void cqhci_prep_dcmd_desc(struct mmc_host *mmc,
+ 				   struct mmc_request *mrq)
+ {
+-	u64 *task_desc = NULL;
++	__le64 *task_desc = NULL;
+ 	u64 data = 0;
+ 	u8 resp_type;
+ 	u8 *desc;
+@@ -542,7 +542,7 @@ static void cqhci_prep_dcmd_desc(struct mmc_host *mmc,
+ 		 CQHCI_CMD_TIMING(timing) | CQHCI_RESP_TYPE(resp_type));
+ 	if (cq_host->ops->update_dcmd_desc)
+ 		cq_host->ops->update_dcmd_desc(mmc, mrq, &data);
+-	*task_desc |= data;
++	*task_desc |= cpu_to_le64(data);
+ 	desc = (u8 *)task_desc;
+ 	pr_debug("%s: cqhci: dcmd: cmd: %d timing: %d resp: %d\n",
+ 		 mmc_hostname(mmc), mrq->cmd->opcode, timing, resp_type);
 -- 
 2.53.0
 
