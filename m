@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028120;
-	b=SLMCMQEJFzyXUKTSSNxsvVolosnE+40iL8UwMDfTg4joDtpAyyH4uwww86Ot3hyreMuP
-	 wtOxyv7N70tNxRrS4ZMp2vGi3KQoE8RtSwg68Qq2i1/kMC5LTGE17jI/dTKacMTjmny7p
-	 HFHqK/wXiqMoYm9Wuq33YwGFnKnWr8wpjwszXA3+NX/gKRsotb/Q18tmzJ8Lk9+oi4c52
-	 h1nkPsLK+uVZ6p2ef3laQUVgh54nLnSZ2aPHvVgfrlaKRO69ubj0UMX6XaOgEGQG4S/Rs
-	 tOEpfNTPG9Zu96mE4KiQfjUhyEDyf2+sLxj60OqN/ef8lNjvIQOWOP90FTEXR//lkbg==
+	t=1795028123;
+	b=fd/Vni79ZBNw/jxzN8ew5zk2eVqUHvjPMRJhnDbBlrjpd2QMQYsypMxCc+2HYHCdyBoW
+	 5dDArQLY+yrrXb46wydjli77vfGUEAvvaC9nLw+3tcmgtSiMbTYE2Tz96TvtUxEqqv7tW
+	 tfoNVbPfrh8GEnAtXrS6KVVTfHzDwhDO0frw5b3EIb+hgjxxtrwWxRjLOaETpd7dsqwwu
+	 AKgY3DrFZpElJrVHqgW7yus8JJcuR/+/GFbzkdZkpNcfo81gNttmTqR33b/Eeniu7GIcT
+	 wEa+j11YgwbDstWns3kgkx6K4lylrL1IGQ3TDgBIehw+FWtWNtnqP5yh4FxBVPXpMdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028120;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028123;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PfdfpGxzPyIgqaMXfoVQ0TfyMLn/JhyCj9dMH7Al67k=;
-	b=0/aH/89ZcEn9FS7Ip4EkStq3BWliMbOFnj+jdtnJFLRYFQPxNUf2nk7r+5Jkz2DAHIru
-	 apUpmtveUc70iAaGtO6Ard39Tgk6tdRvqricYnmLHAOh+rwIdxpFcujvV79fcHOZcp2fb
-	 f56ykrvttEQ7Jwc3UuujsZhYtX8vNZH9kzTHVK+4U61OSvTM3XUsorELAbUT0OkzPdXVP
-	 3Q9onoif7nLxaf4GZCh8rjCO+hQ5w6agIWbihUsxFjUXvVtOEVWUyZ0MmpPg2/ODvylHg
-	 JR3ogzg/FvALqSF9NAOwhK2542Rvbi6RntU1JGvWpIJwIQ63s2LLBE6nbl1LFzYDoMQ==
+	bh=Gopjbl7yMtH9G9eycVyMq0emozQW/U9J3y11NZpEVNg=;
+	b=D2oogMkgZqEmRmMG6ZIo0W0rQslHTosik3JxvHQW8Os8mTZk3NCfEHAF37LBPOqG6jP6
+	 CA823u8gGZeCK3RbnYHlydjvYSoP3tvoIzUxL77OWZCB1nAQDSqWxQjQFPIcWyGw6APN9
+	 gvdqKt/lKvxYMRrjAe8UGtUhDluRRam5dOR8C2x+LHiESk5cJmsPdSxlRnp9zXk7eAYSf
+	 kXZ0yTS3D5ZNgBsHJtQJOG0ggZj05COb0cqgwAdUA6ER24gPQrNeSW2aE0y2HjZO1CcD7
+	 YlQclTAWpzDPcztbCimyO7y0A8VJqQuvh3MzmvThObFbvG/MJkSw2NUhiYTLZ2nTu1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iih85Z/P";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q8bZRwFh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7168C606A337;
-	Wed, 18 Nov 2026 18:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35535606A333;
+	Wed, 18 Nov 2026 18:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iih85Z/P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C970C1F000C8;
-	Wed, 18 Nov 2026 18:55:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q8bZRwFh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5011F000C4;
+	Wed, 18 Nov 2026 18:55:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028120;
-	bh=PfdfpGxzPyIgqaMXfoVQ0TfyMLn/JhyCj9dMH7Al67k=;
+	s=korg; t=1795028123;
+	bh=Gopjbl7yMtH9G9eycVyMq0emozQW/U9J3y11NZpEVNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iih85Z/PQeGnysZL5n4GmRIB1dgL/AL3amcHIkGJtb9yqb9c1dWdnVMJyH4teUNfR
-	 bioa70JbOTJoU/8J5EGsyzdCVUct8rnhjtElbewgIA9MUGqrVu/6mpYDXmPJNi51Ym
-	 z9+vwWrCb2XETSfhLAk0cgszfN7mfpDmlcIQ2xyI=
+	b=Q8bZRwFh0EqCOr98sQjgoBRNAgzTXQoONAKZJ0Pjjqe5eV4jZyRZhU2ZhMSqhyEVy
+	 xf3SkaHbkYk67dlBlOEHkxc+Xx161zT+DpUieLUpyVSGBdoc+D8sLV7/eJqT1bUHDM
+	 jzup4Fe2sV4m574ET+dtO2EPa/DmcOOLTqkupqsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -48,9 +48,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2031/2151] nvmet: fix NULL dereference in debugfs host_traddr
-Date: Wed, 18 Nov 2026 16:02:46 +0100
-Message-ID: <20261118150235.723188780@linuxfoundation.org>
+Subject: [PATCH 6.18 2032/2151] nvmet-tcp: dont read a removed port at Connect time
+Date: Wed, 18 Nov 2026 16:02:47 +0100
+Message-ID: <20261118150235.757607619@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -74,23 +74,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 81ce4d9bbe8cf47d4b023e932ee29b22367545e6 ]
+[ Upstream commit 3f98ce65a87979e881343dcf082c9595ec90ddc7 ]
 
-The host_traddr callbacks of tcp, rdma and fc take the host address from
-the transport queue around ctrl->sqs[0], which nvmet_sq_destroy() clears
-when the admin queue goes away while the controller lives on with its
-I/O queues. A host that closes the admin connection and keeps an I/O
-queue leaves such a controller behind, and reading its host_traddr in
-debugfs dereferences a near-NULL pointer:
+nvmet_tcp_alloc_cmd() takes the nvmet port of a command from
+queue->port, and the commands of a queue are allocated from the io work
+when the Connect arrives. nvmet_tcp_remove_port() shuts down the queues
+that have no controller yet and frees the port without waiting for
+them, they're released later from a work. An io work handling a Connect
+at that moment reads the freed port for every command of the queue and
+hands the result to the core.
 
-  BUG: kernel NULL pointer dereference, address: 00000000000002e0
-  RIP: 0010:nvmet_tcp_host_port_addr+0x19/0x50 [nvmet_tcp]
+Note the nvmet port in the queue at allocation. It outlives the
+transport port.
 
-Don't ask the transport if there's no admin queue. Nothing holds the
-queue for debugfs, so a reader that's past the check when the queue
-goes away is still on its own.
-
-Fixes: 7e5c3de3f2f2 ("nvmet: add 'host_traddr' callback for debugfs")
+Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
 Cc: Christoph Hellwig <hch@lst.de>
 Cc: Sagi Grimberg <sagi@grimberg.me>
 Cc: Chaitanya Kulkarni <kch@nvidia.com>
@@ -99,23 +96,39 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/nvme/target/tcp.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index 7cae1543c3a51..90acbb5636f06 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -1802,6 +1802,9 @@ ssize_t nvmet_ctrl_host_traddr(struct nvmet_ctrl *ctrl,
- {
- 	if (!ctrl->ops->host_traddr)
- 		return -EOPNOTSUPP;
-+	/* They all take the address from the admin queue */
-+	if (!ctrl->sqs[0])
-+		return -ENOTCONN;
- 	return ctrl->ops->host_traddr(ctrl, traddr, traddr_len);
- }
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 1e7e68e008c71..6f8d5c268a221 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -166,6 +166,7 @@ enum nvmet_tcp_queue_state {
+ struct nvmet_tcp_queue {
+ 	struct socket		*sock;
+ 	struct nvmet_tcp_port	*port;
++	struct nvmet_port	*nport;
+ 	struct work_struct	io_work;
+ 	struct nvmet_cq		nvme_cq;
+ 	struct nvmet_sq		nvme_sq;
+@@ -1535,7 +1536,7 @@ static int nvmet_tcp_alloc_cmd(struct nvmet_tcp_queue *queue,
+ 	u8 hdgst = nvmet_tcp_hdgst_len(queue);
  
+ 	c->queue = queue;
+-	c->req.port = queue->port->nport;
++	c->req.port = queue->nport;
+ 
+ 	c->cmd_pdu = page_frag_alloc(&queue->pf_cache,
+ 			sizeof(*c->cmd_pdu) + hdgst, GFP_KERNEL | __GFP_ZERO);
+@@ -1991,6 +1992,8 @@ static void nvmet_tcp_alloc_queue(struct nvmet_tcp_port *port,
+ 	kref_init(&queue->kref);
+ 	queue->sock = newsock;
+ 	queue->port = port;
++	/* The port may be gone when the commands are allocated */
++	queue->nport = port->nport;
+ 	queue->nr_cmds = 0;
+ 	spin_lock_init(&queue->state_lock);
+ 	if (queue->port->nport->disc_addr.tsas.tcp.sectype ==
 -- 
 2.53.0
 
