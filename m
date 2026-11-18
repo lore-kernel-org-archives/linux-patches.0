@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042385;
-	b=r0m8h3+h4B4LS7BfqW3huEQlAEkgy5F1TNMds0bZ+Mxtz1S/ypyEeEhGXFqrKDCwEc16
-	 LF14HXITUtP3bK3zYtPOzyc32SkqfKY/1KTKQ0FV/DMxodYK6NuQrs00gvMUMomndRWq7
-	 dqSkR4FlHCVDZqR7YFGd3dd29SItkRHgQbCO9uspa9V9DGYU5UurAiFzFRkw7Hmg2HiBQ
-	 9LzCKXCGGktVYI9EgRVc04mTbrm0jETgksFuCF84MaD3Ygzv9Bm9aFk3ihYEPngj7l81Y
-	 XygBxng4E2Ls/RkJB/YkxARfim3/e4EpeWkdSzYM+k9BMC1f2VK2+c+XElW/PuPN4Jw==
+	t=1795042388;
+	b=SzD7S0MUshmwRVnXDR0rjGF/uWEfhshG31wiIl0PmdxYTqeVSiNaCeIHYn7wPhhL8aWS
+	 +6sZbuBlH3x4MykLFX0RPTIcDNDjE84fcEF/McXjuG9nfOfIO+kUgQZbQ3xce48tznb0L
+	 AL+wTg6bf1Zi5QJNVpiIlbnSDtHB5s5j8LwxAHpOJw0p30D5f6jD8F5zB3PZawCzovcJT
+	 Gqht+atXaa31BoNoy6Khs3Bz8h8s09W0DvNlyWFr6aRoeuVmmghwt8we8qPd7mf86iiMH
+	 4SHLfFape4exbpLRlfC+6GYIvLVtbaNKJiyUwxvs0bGXUNg7tkTGtMThPuQmAc21pUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042385;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042388;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=crh7UO3HYchVa6SY5q5AYT0iSYOA+Z61tfRSXi/sbNw=;
-	b=FkpFbLaToQAJdW9xeN5Cx6Y5/O9rjsiGPSfpdGlc+IgIhGT85nYl8dqtauRkRmjzTNSY
-	 itkK5E/p5XfuiAXKRrJxJEYu7xvid2qQZdb8N5bDEN1l7clze6HzWP2wzQFnc3ZFgLRvX
-	 Z1DRDNKiclIRLwXPmjgSlh4+7q4i0he5rJfLa+FulkRRMgI8Qjbv90XCjTtCocBLsM+vJ
-	 FFAS6MY4eesjsk/6XowO1uo5a+gDqiNf8+yvCRsvB3zAYDv3/8CQjeszsfrs3lcmVfUfO
-	 qGH4ZNPxeqXs9z/So9wTqNVLUzd6Y+26+fbhsPalu/Dj5AgRWmPfcR1chru3yQIoirQ==
+	bh=1vD+vgo5ybdr4mfu2a0pnxmTD+/q+jhyNINznjLW9P8=;
+	b=0wFRsrRREDwA+yjLWGc2166RbFyNQCZGQgK/q8sHp/Jf0rLDRXog595E7REyGYVHCTu5
+	 BKqW2vj3LG98jlcugGuEv2/319YAFgwG+zuxxVDfauhKG8E9hEk6CUBkc0bSSMNxMzCcE
+	 lvfsu8Sf8rAXNhlamW3PY9zDc0XmKrpLsLIwBosXghO7iEK9CgR/kVuQqRyLhEy0AjOwA
+	 LIGTI1v31QF8JXECoRa3dd7srQVADNDQUlAIFKVknGMamSr3DQTsin+Frvo6uxvVQWvmX
+	 uZXqn2Aj/HhAcNU5fW1Nxoce+FduZqOy9vAi+94zAJHuWTzDysqVxxPf/jo3EeHgVlw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OyPtMwHy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ABJVDSYq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA5F606A31C;
-	Wed, 18 Nov 2026 22:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CD1606A320;
+	Wed, 18 Nov 2026 22:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OyPtMwHy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06D71F000C4;
-	Wed, 18 Nov 2026 22:53:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ABJVDSYq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 739DF1F000C4;
+	Wed, 18 Nov 2026 22:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042385;
-	bh=crh7UO3HYchVa6SY5q5AYT0iSYOA+Z61tfRSXi/sbNw=;
+	s=korg; t=1795042388;
+	bh=1vD+vgo5ybdr4mfu2a0pnxmTD+/q+jhyNINznjLW9P8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OyPtMwHyi2klkKNP1IpIp60EVuTqyeRyQ8dHYmzoBOZBTC+nqiYgiraGYa++SDdLq
-	 esDnOx1NnNNXXDEqOsDbxXE19mcJDU23XGY4Bv4szmnbPOOTLvf+Ck542sIPl+dNoh
-	 qU8K6Ek4j2O0F2YFw19DJm5ZFycUhHn6VPgc2g38=
+	b=ABJVDSYq+wl5MYEzdJoxADj5yy6q6sDSF31hYLkKbyqkd6vdo5fSHbAzc/zDshkre
+	 c1HHhi9SskTm9mxdzKpgtn0Bf+TuSVOjQrajxPct9nIbbEh5U4dVSEgKlzPjKD9xPo
+	 FgDZbfOJo7zwHpHmwY4WPP0RSPwGINeCQkKpLEus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Nandor Kracser <nandor@riptides.io>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3115/3318] ASoC: samsung: Use snd_soc_substream_to_rtd() for accessing private_data
-Date: Wed, 18 Nov 2026 16:02:17 +0100
-Message-ID: <20261118150453.402916825@linuxfoundation.org>
+Subject: [PATCH 6.6 3151/3318] tls: avoid field-spanning write when copying crypto info
+Date: Wed, 18 Nov 2026 16:02:53 +0100
+Message-ID: <20261118150454.394121929@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,34 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Nandor Kracser <nandor@riptides.io>
 
-[ Upstream commit 3e726593107d134221f666b4f2be612b278c3ddb ]
+[ Upstream commit c43c1c24f3cdc0d2d3f59e5686573ac3129637aa ]
 
-Do not open-code snd_soc_substream_to_rtd().
+do_tls_setsockopt_conf() copies the cipher-specific part of the crypto
+info to crypto_info + 1, where crypto_info points at the 4-byte info
+member of union tls_crypto_context. When optval is a kernel sockptr,
+copy_from_sockptr_offset() is a memcpy(), and FORTIFY_SOURCE bounds the
+destination by that member:
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240430-asoc-snd-substream-clean-v1-12-6f8a8902b479@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: d9c23ac1217a ("ASoC: samsung: midas_wm1811: run FLL1 at the AIF1 configured rate when idle")
+  [    6.948348] memcpy: detected field-spanning write (size 52) of single field "dst" at include/linux/sockptr.h:49 (size 0)
+  [    6.948480] WARNING: include/linux/sockptr.h:49 at tls_setsockopt+0x9b2/0xa30, CPU#1: init/1
+  [    7.001355] Call Trace:
+  [    7.003146]  do_sock_setsockopt+0xb0/0x190
+  [    7.003975]  __sys_setsockopt+0x76/0xc0
+  [    7.005368]  do_syscall_64+0xda/0x4b0
+
+tls_setsockopt() gets a kernel sockptr whenever a cgroup setsockopt BPF
+program is attached, even one that leaves the option alone, because
+__cgroup_bpf_run_filter_setsockopt() passes optval on in a kernel
+buffer. With a no-op program on the root cgroup, a plain TLS_TX
+setsockopt() with AES-GCM-256 triggers the warning above on an x86_64
+build with CONFIG_FORTIFY_SOURCE.
+
+Copy into the union at offset sizeof(struct tls_crypto_info) instead.
+crypto_ctx already points at the right union for both the first set
+and the TLS 1.3 rekey (tmp) case, and the address is unchanged.
+
+Fixes: a7b75c5a8c41 ("net: pass a sockptr_t into ->setsockopt")
+Signed-off-by: Nandor Kracser <nandor@riptides.io>
+Link: https://patch.msgid.link/20261021073233.16720-1-nandor@riptides.io
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/samsung/midas_wm1811.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tls/tls_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/samsung/midas_wm1811.c b/sound/soc/samsung/midas_wm1811.c
-index 2ec7e16ddfa21..9ac5452b537e8 100644
---- a/sound/soc/samsung/midas_wm1811.c
-+++ b/sound/soc/samsung/midas_wm1811.c
-@@ -129,7 +129,7 @@ static int midas_stop_fll1(struct snd_soc_pcm_runtime *rtd)
- static int midas_aif1_hw_params(struct snd_pcm_substream *substream,
- 				struct snd_pcm_hw_params *params)
- {
--	struct snd_soc_pcm_runtime *rtd	= substream->private_data;
-+	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
- 	unsigned int pll_out;
+diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
+index 9d5c99f1e4e7c..4e022059dab0e 100644
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -664,8 +664,8 @@ static int do_tls_setsockopt_conf(struct sock *sk, sockptr_t optval,
+ 		goto err_crypto_info;
+ 	}
  
- 	/* AIF1CLK should be at least 3MHz for "optimal performance" */
+-	rc = copy_from_sockptr_offset(crypto_info + 1, optval,
+-				      sizeof(*crypto_info),
++	rc = copy_from_sockptr_offset((u8 *)crypto_ctx + sizeof(*crypto_info),
++				      optval, sizeof(*crypto_info),
+ 				      optlen - sizeof(*crypto_info));
+ 	if (rc) {
+ 		rc = -EFAULT;
 -- 
 2.53.0
 
