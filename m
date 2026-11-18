@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040744;
-	b=qFaJBZ2xyYJu7c63R1Ow6XT6EcXVU+0WZLF/vF/95ILmewhF8mb7SNA374HEDkWDDMf0
-	 nk4E/f0jCUVGsrrQNtuK9y2yLAHxEobc562MHb5tbDor87RrGXbkU+aBtteeEdndBNohO
-	 fS6OOjt/gMe1Qc6Z+3m2ze6HDWPCOqoKJW5WPPBiYsIFMQ6MTADDmc3e6H7JyOCgq5SjC
-	 q3oij2cbWlA89VzYgV30LsN+afinKIv4oLka38Im8I9GC4Ng7Arj+ohfwZOpol9IuRumt
-	 VTZ4teisupz71gvOri5yQ5I1nKaGZZOP/ord2313jJPWzYzKbseUHbcUJHKpQMSHrcA==
+	t=1795040747;
+	b=gBgJh32ursecQWEtxTTezjr0ojOrTpqPo+wgyx1Y0Itw5f7ppTXrU+96pjpD10q3ao5e
+	 3boKPLnIp8sWSj1E25lroEqQ4DuiNzOBr+pX/ZGqPfBgsElA5Y8OhVV/PfdYCQtImufow
+	 lG2Uw+4+a1XBEtW57MkK1w+W3iNOfaCwtIoLACM3O9+5Krgs3UbKD1LBfDfNXpi0lqPyb
+	 bSp6+bsOPkNKcZQ7gpjoqllffye/JbaU+KSYtrvWYgshTKu14YtYWDdXjhlAhDH4PUQTf
+	 aZrGFfUFlPWkm0TK54aKQNOYNvFW2T5X95pynASkUvejWJVUebTOKzx1YdNrIXwYGag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040744;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040747;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SbQHzQllYsDrTbwSCYPkP7caVJGc3hj7WyxA52Sssyg=;
-	b=ot6VIcOqs4lgaoarspVBZNxD77aAY6LpfOCCVHVYgsFYmWBlJvJnttcXN4mnQo/Hpl9x
-	 ATK/Y1yaD4cShjcFvWP6nTvr7vzYtGyIrf4LydotSOHHNPFseCkOTOppbIUAwGeKvpqJg
-	 N8EUedP8bQk9yw+H542nuy9whpAOOB1zCOmHTQIvOVyhJfDCdZbFt4SFolITvxHfY+uqx
-	 kayN7XhqMycxXJXEu66MPFFCNk/Qw1XqySohtLAc9sL/fRKwjykoPj5Wklkcn2CKkUI+2
-	 PVP+BvijJldx+1AwZq1QCpz3BnqCiNcN3ZvZriGt63EoSDfxTrRrX8nERMhDZ8BKaLw==
+	bh=7iQRWuL5mWluCaJx+qZSFWSZSx/FbMtllO9buBAF++Q=;
+	b=KdDiCYbK25a8jH393MYC0PKBy8kukxrA/0OQ245JBvcMsYzalF0EYKaZPeVNLbpGkPX3
+	 GX0iZLFZJTGQ2mG7Yl+mDGgzsLKWqBOKSxknkivfislMkmFw42Qu2nu5oW09baGkVA3sF
+	 KK6Bu6KJrF8EISj0VOk375n7cw1+7/i74X3vmdFiXFVsGL0Qusa+Tk5wNm5eXcGEVccIt
+	 p8D0FnEK+anIbu6+m8R2sLGNCRUtMsUdN6O5SFxEdW4oygd/Fqr+C5YX3mGxX2bbYorXz
+	 fYZ831i1ROgxfDZcHbfNSyvZedb0JjsByOLP8We/ameAKms3MUlVFMMm7oYdzu2uEfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ThqU1NYD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j8oQGe7G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9782E606A32A;
-	Wed, 18 Nov 2026 22:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75239606A31C;
+	Wed, 18 Nov 2026 22:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ThqU1NYD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F16F81F000C4;
-	Wed, 18 Nov 2026 22:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j8oQGe7G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C540C1F000C4;
+	Wed, 18 Nov 2026 22:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040744;
-	bh=SbQHzQllYsDrTbwSCYPkP7caVJGc3hj7WyxA52Sssyg=;
+	s=korg; t=1795040747;
+	bh=7iQRWuL5mWluCaJx+qZSFWSZSx/FbMtllO9buBAF++Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ThqU1NYDf6UI5pKe0M7BT9vn+LEtQ+hiRrgVWye5M9yyWL/Xx/y1cE52/ZRxRcQja
-	 lkyS+oPZBvMFRbVJRnyyAwuiYBTkCrH2UWWPzvKG/rAkRp70TGlzYTzmGgyjQW0Yoe
-	 YmEDQRY4C0LQyOSY+G9/uenCrlLRlbvTQlcnBJxw=
+	b=j8oQGe7GukkzumoeuTD7OqO0uFUk4lau6Hs+3xyS6Jo/VmQlEn0YUuHYMM65wAovh
+	 vIiWNOOS0EfNcQoOy0IbElVuiBUZHgBlo7alctyIv/XeiiEMSQbCm59Ahn/Hub9GqQ
+	 oUyfLE28tzc7GVWinB0H4xnJG5MiqkYkRtG0S8Ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jan Stancek <jstancek@redhat.com>,
+	Nicolas Schier <nsc@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2566/3318] ASoC: rt5682-sdw: always cancel jack work on remove
-Date: Wed, 18 Nov 2026 15:53:08 +0100
-Message-ID: <20261118150438.223622118@linuxfoundation.org>
+Subject: [PATCH 6.6 2540/3318] .gitignore: drop Module.markers
+Date: Wed, 18 Nov 2026 15:52:42 +0100
+Message-ID: <20261118150437.513898607@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,44 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Jan Stancek <jstancek@redhat.com>
 
-[ Upstream commit 9a98f7e955d35e0831fb179e88e98cf9bc0e001e ]
+[ Upstream commit a7d32fa14bc74d1786a2f0513b6f0815bd4be311 ]
 
-rt5682_sdw_remove() cancels jack_detect_work only when hw_init is true.
-rt5682_update_status() clears hw_init when the SoundWire slave becomes
-unattached, but jack_detect_work may already have been queued by
-rt5682_interrupt_callback() or the jack initialization path.
+commit fc5377668c3d ("tracing: Remove markers") deleted the marker code
+and the modpost output. Follow-up commit 8723eaeff59a ("Kbuild: clean up
+marker") removed it from clean and mrproper targets. Both are from 2009,
+so the file is hopefully no longer in anyone's tree, drop it from
+.gitignore as well.
 
-A remove after that status update can therefore skip the cancellation and
-leave delayed work pending after the codec private data has been freed.
-
-The work object is initialized during probe, so cancel it unconditionally
-instead of relying on the mutable hw_init state.
-
-Fixes: ac63716da307 ("ASoC: Realtek/Maxim SoundWire codecs: disable pm_runtime on remove")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260925145019.2290367-2-yaojiale02@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 8723eaeff59a ("Kbuild: clean up marker")
+Signed-off-by: Jan Stancek <jstancek@redhat.com>
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/8cbe913b9f80dc6fea73a9e3d51429db2b38905f.1790838401.git.jstancek@redhat.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5682-sdw.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ .gitignore | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt5682-sdw.c b/sound/soc/codecs/rt5682-sdw.c
-index 1fdbef5fd6cba..101996453040b 100644
---- a/sound/soc/codecs/rt5682-sdw.c
-+++ b/sound/soc/codecs/rt5682-sdw.c
-@@ -695,8 +695,7 @@ static int rt5682_sdw_remove(struct sdw_slave *slave)
- {
- 	struct rt5682_priv *rt5682 = dev_get_drvdata(&slave->dev);
- 
--	if (rt5682->hw_init)
--		cancel_delayed_work_sync(&rt5682->jack_detect_work);
-+	cancel_delayed_work_sync(&rt5682->jack_detect_work);
- 
- 	pm_runtime_disable(&slave->dev);
- 
+diff --git a/.gitignore b/.gitignore
+index d1a8ab3f98aaf..43a5ab4738653 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -66,7 +66,6 @@ modules.order
+ /vmlinux-gdb.py
+ /vmlinuz
+ /System.map
+-/Module.markers
+ /modules.builtin
+ /modules.builtin.modinfo
+ /modules.nsdeps
 -- 
 2.53.0
 
