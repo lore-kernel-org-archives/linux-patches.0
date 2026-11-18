@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030947;
-	b=uLqpsrU7St45e3vkSDxCnqwkD8utaTOADLgpsADx0A4MgeUS+Gmf6Nyf2Ba7FOvdinis
-	 RLKdb4eXvW8UaxfGNSCYHNdT5bBKAdwrGMfndVzpSyR0elZbIoDr39zFbbOdbdNeV4ARU
-	 RsS9KcVpo+dNRisi77Xb1pvOhcUWgOu3BdpTtHAiFOhErvgdhaGX0duEWNQStifaR4uB2
-	 Wu28PelWEy/kf7YN9zcMWyJO7ejM3mU3pDMvFSVBp4e/uwFO5Zu//QsrH73qnsZHeP/Qk
-	 nscP0OjpOBgPyDnRdJSryXvBFZqLnBJhRWkjUBXNNog0zpNrcMRkEWw97t6LMUOapcQ==
+	t=1795030950;
+	b=qobRqf6atuKgKtBedUi79jLtq25dlu8dxWo2D/oq79PMsT1NKL6azd8NEbgkoiI/ZzNj
+	 ANp4mkpNKvj2RtssCcycfRKrE2vxVz3CRKUQ0ybsxLeXhUXoctn4ZmjZG6G3JKR4nA6G3
+	 UGh19T9auX+mbw3sUr7birWnG5zhg1/GR19YAwdgR1jqIVKfFuysHt96rmSizaFvspZR1
+	 Y08CIw9hNdxh3ylwI2nx0fdiXpY6PP0s31W9jcHPEf3gw63TA2zmRw/ifZBrzSt44owFZ
+	 zUTYL3H5weolzu3Pl3Kn4yzzkaOBBeW2r7TlXLjJlYI06y/6JPY1yozPBmFIRDcIxTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030947;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030950;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Nk8mAYyRifN2Y4ljjTsARAcMeEggMbX9fHUhk5yxI4k=;
-	b=bwDpeO1g5kg9h37MDKovb9Xu2WTakfjmgAQJgRJhK8yDkP2YrjW/ZAQcBV5eHXt4sfU2
-	 TzSqM4v4Y7YZxez4Wp/uiq683Z95d1O8+aHTVD0VdBsbFwwMF6wOGKJvXvXMIRWyY/7yP
-	 Bf7iHOKNGfi2CcjJnUIATZHqJHtZjbuePeTqku7JXXIFopFYcN33J1RRZx2Fnl+ZgGFDO
-	 f6V+SeArofSXbH10asredBEq8BiZKGkv6m3yezZhr7iYU73Au723zNKKcHO/y1kedCYPJ
-	 QHgpwGCiwLx+jnHoFT9NjFgDQ/R64Wbni4g50EYbP7bcbRj/xe7CvpIQcolZsv4dfgw==
+	bh=nJhJEAlA5pdoNLgDfs7o/fHXjCQzhduRKM5yK8IvHdU=;
+	b=5akKw4MUD5UTzwjeu1+pN20QPsrZS2A3yZUlUbSblEV5DiKpGzmX6D8J8zncfJlwylN9
+	 /pAWu5jDkxnl5HNoelVbfCTZ0pjonLrkN2cqLbXr9rvStiYFq5LpOj613WKir8RNuXsYB
+	 nyGTswQeZlSDslME5HsDSbhk/hBWVoD/702SjUaDUUgzTxQy7Y6cxZh/IFywWf05xg5Ap
+	 DSP3FcvRsk5Q9yNnoX7fXcKiPuoEM5iV0FX6NJki7zLmsq89uCI2N8rAmDxZ2toOX2/Ss
+	 fUhAJz0soKxRWjMpMc5zN4gMNtwfMasF7owW02yNIaE5/nZAwHIKNcnHVk4TY0RTZQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QeG1YAKY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pR6Dg73M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C9C606A325;
-	Wed, 18 Nov 2026 19:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50164606A325;
+	Wed, 18 Nov 2026 19:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QeG1YAKY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3321F000C6;
-	Wed, 18 Nov 2026 19:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pR6Dg73M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5847C1F000C4;
+	Wed, 18 Nov 2026 19:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030947;
-	bh=Nk8mAYyRifN2Y4ljjTsARAcMeEggMbX9fHUhk5yxI4k=;
+	s=korg; t=1795030949;
+	bh=nJhJEAlA5pdoNLgDfs7o/fHXjCQzhduRKM5yK8IvHdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QeG1YAKYcTxQSHptZBI1x7q8mi8P2zuraWLr3wxvAHiVkI95r/9TrLrQURkefBueX
-	 cuycnfUnKjcOv/fogi6FpLSqV0r/gQJT++Y4QlD8fscOie4w7UyLMIp766hyqz2XZ6
-	 0a7KOaDZh2auZffF4saQPoKnBubbNLjA572OFogY=
+	b=pR6Dg73M4/i23W7wgYXO7mTum1iXCI2gcbcG1wk/x6vO63wPURy7imaFK67E9r+hB
+	 s7l04Ok0cMUCDBDdkb5WhkSnIm7W843Zrm9xbyacs9gyyyjr4MQpQ1uWNfGHn3CK4b
+	 VOizZlAi0BbE8wcDwz5XRhAY1aAD5whQEyPx3iXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Demidov <roman.demidov.nn@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	sashiko-bot@kernel.org,
+	Linus Walleij <linusw@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0877/1756] drm/msm/a6xx: fix use-after-free of OPP in a6xx_pm_resume
-Date: Wed, 18 Nov 2026 15:50:04 +0100
-Message-ID: <20261118150044.309872666@linuxfoundation.org>
+Subject: [PATCH 6.12 0886/1756] dmaengine: ste_dma40: Fix probe IRQ leak
+Date: Wed, 18 Nov 2026 15:50:13 +0100
+Message-ID: <20261118150044.983745120@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,46 +70,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Demidov <roman.demidov.nn@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 8128ae7af6b4dc95e486c5c0a80839a069df578e ]
+[ Upstream commit 7ca608cf6b842685bbbe131d4f7d638f7cdc2b5d ]
 
-The OPP reference obtained via dev_pm_opp_find_freq_ceil() is dropped
-with dev_pm_opp_put() before being passed to dev_pm_opp_set_opp(). If
-the reference count reaches zero, the OPP object may be freed, leading
-to a use-after-free when dev_pm_opp_set_opp() dereferences it.
+d40_probe() registers the hardware interrupt before several later probe
+steps that can fail. Those error paths jump to destroy_cache without
+freeing the IRQ, leaving the handler registered after probe resources have
+been released.
 
-Fix the order of calls: first use the OPP to set the required
-performance state, then release the reference.
+Route failures after a successful IRQ request through a dedicated cleanup
+label. Keep the request before DMAengine registration because that
+registration publishes channels to clients.
 
-Fixes: 5a903a44a984 ("drm/msm/a6xx: Introduce GMU wrapper support")
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/757104/
-Message-ID: <20260929142103.81854-1-roman.demidov.nn@gmail.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Fixes: 8d318a50b3d7 ("DMAENGINE: Support for ST-Ericssons DMA40 block v3")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-10-89f595e8851d@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/ste_dma40.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 4bae3813d90b5..4dc095f74c32b 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1879,10 +1879,10 @@ static int a6xx_pm_resume(struct msm_gpu *gpu)
- 		ret = PTR_ERR(opp);
- 		goto err_set_opp;
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index c88de0dc7c6eb..1b833fa77fba9 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -3681,18 +3681,20 @@ static int __init d40_probe(struct platform_device *pdev)
  	}
--	dev_pm_opp_put(opp);
+ 	ret = d40_dmaengine_init(base, num_reserved_chans);
+ 	if (ret)
+-		goto destroy_cache;
++		goto release_irq;
  
- 	/* Set the core clock and bus bw, having VDD scaling in mind */
- 	dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
-+	dev_pm_opp_put(opp);
+ 	ret = of_dma_controller_register(np, d40_xlate, NULL);
+ 	if (ret) {
+ 		dev_err(dev,
+ 			"could not register of_dma_controller\n");
+-		goto destroy_cache;
++		goto release_irq;
+ 	}
  
- 	pm_runtime_resume_and_get(gmu->dev);
- 	pm_runtime_resume_and_get(gmu->gxpd);
+ 	dev_info(base->dev, "initialized\n");
+ 	return 0;
+ 
++ release_irq:
++	free_irq(base->irq, base);
+  destroy_cache:
+ 	if (base->lcla_pool.dma_addr)
+ 		dma_unmap_single(base->dev, base->lcla_pool.dma_addr,
 -- 
 2.53.0
 
