@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021052;
-	b=x7BU1kybnjfL1RTA9vFNRCadiAwdFULaUHz1rXQo9KrwNkvtJPH/LFcEo/j9cgKjSCnQ
-	 Ak4t0A4SVoTqcPBvFgnZOUy0xnX4l52npBvMmAuORsulIk+cHOge1An51+HerI6uBi7rP
-	 g6Ebs4q9y3guVmYqqt9OX4QCc+ryst8HcwvS6yv/wgC9TXV2Gc8bg/ZMLSVxPNloAzF3B
-	 sg5DLiKFuiJUbYbKMEWTf2WMSYrEnW/oNtFLd+N8C1f1tSJxmJgSljqpQZZ3l0Sv9FoEE
-	 Ys+zzMeGWsXYvnGx/F0OpUPK4b5RtgXbny/yvou75lzwoxmiojCiOdFvGK5x2hv3ahg==
+	t=1795021054;
+	b=Y1flq1goP4t2iKlsYqz6/zOI2Shta2w4B0XUMd56nOu2ha4KXnXDi5JB6RZHjQPur0LA
+	 ZnY/clqT/Vo2IpRhNkwZaOEyX21tjh6I+CNw1hudnABi1g9qD+6W0z2Jk6TwFgSw7zO8F
+	 5V2y0r8Ei8zWf3yQ8h+ZlYM4ZcmqX8+7Y1Uvyk7dfCfpLXHAWYraqBYPCTnYfG/LQxFvZ
+	 Rde+sK7VYekypohiawQevSU6pohNwgrGz9h4GsKg733kJ+zrCk8dnxdG8KIfXpExaDWKl
+	 o3TdePQw4VRT8gR8yS5RucltDppn63reAN+kHX1k/25084Qq+M/mvRgUDI1gau0yx6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021052;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021054;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R61gMC6eIWlXk25F8ljhbUyMZ9v2lqCCqEMRCxYaliQ=;
-	b=gKaCL2z5Q1fzs/1oR9YGAvUeznTEXhS4bhpbg5/EHLYwUOXzuDI0wZltxVAJwzX7e/8t
-	 bJtn4LvriiHhxwoMUTiIJlmVMCk+Fw8xdT8TyW7wVqSF706EeHXQR6LqyB2iSp0R0BkvU
-	 DZZEJ1DRHrxELKpeAMieQd0Rk0m++tvH/X/4/QKEs6VXpCnYjaHJcEsWb1Z7WS05l7B5/
-	 hraTMc4fgYdLaplS/2B2/dv586V6fJHbJy7jm19UOFVH78sBJJPZdNVoWFUNzaD51EB71
-	 HnTfLP3SKYqTvEKj/Sdn5y7nxjej8lKY/oelFGunDvV4ZQK9U6hvzRzkmpHk0F+pwqw==
+	bh=qdIDOQnKRQeg39LLp7d+H7U8KhHoEx4l2KUB1VpwthY=;
+	b=TcAthJGzosqfy5FXIG27VOZKAzns5nOrRAj97Km4K8GCtNCfljr8HgoyKvfRXVFCrNE/
+	 6Dc5XdCmMRVFZatCF9jOmAW4oQJfR180mToEO24nWD1wPn8NIqNw+5HyHvKpUg08xwOME
+	 BsZOwzkP1HM5yWyfnlgwgLgPoEmyxU+CYfM35T7ikiuHq0C9zYCAPkUrk3R0iC5kRviTx
+	 3ehg9zLuDYo5vILc/+hEZfabzyzajCnGUHrrDHHONRNzaDDPMpAIwxqfYbNOXxcJ+ZdTA
+	 qCzCnkz4t+KyBVVzzFH07FIzLxOHkJsJyS/UsaUrbit6FMuTpZ/Y1nVe33yeUBDiolQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q7xY0sLn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rBQhRyLU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE190606A330;
-	Wed, 18 Nov 2026 16:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51F5606A325;
+	Wed, 18 Nov 2026 16:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q7xY0sLn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BBD1F000C4;
-	Wed, 18 Nov 2026 16:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rBQhRyLU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B3C1F000C4;
+	Wed, 18 Nov 2026 16:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021051;
-	bh=R61gMC6eIWlXk25F8ljhbUyMZ9v2lqCCqEMRCxYaliQ=;
+	s=korg; t=1795021054;
+	bh=qdIDOQnKRQeg39LLp7d+H7U8KhHoEx4l2KUB1VpwthY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q7xY0sLnvEWZnegthrX7HhafeWuA0W4TUjQZUMP9VN/8c1iLgi7QNUeIpPvsOcrx0
-	 C/hwc3NkZid7aaCbql25cIzuRTMCY5QEnU8tHuU7LL0bBU/KIpnCoqYLCDN6VzKvWe
-	 FZG95tILiKGacYm5nrK9GcDXGkFO304C+vqXYlKc=
+	b=rBQhRyLUbxNAuw2zaYjeOJMNeCuNuUtijlteeo7/WTyrDwjjH/AEMnI/4b/aMstEE
+	 4SvoOjNZS6Saqgv57oDANkWhoaD6cT/RAEH8MuZuMbnZlzGhjsTwkgNVOrtE1li4hA
+	 9eVFQpzzR1KXqBTW+epb0pydlgxP5Q6R4Ea7cnaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Will Bush <will@willbush.dev>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2169/2651] ALSA: pcm: Remove channel-map controls before freeing substreams
-Date: Wed, 18 Nov 2026 15:56:49 +0100
-Message-ID: <20261118150403.901401975@linuxfoundation.org>
+Subject: [PATCH 7.3 2170/2651] ALSA: usb-audio: Avoid applying boot quirk for Behringer UMC204HD
+Date: Wed, 18 Nov 2026 15:56:50 +0100
+Message-ID: <20261118150403.933634673@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,87 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit d5dd05c1f72a95d8ab06828d7272a185ad2b9185 ]
+[ Upstream commit e88f4749c02fba11c62e880c29d35d254b7e69d0 ]
 
-A late HDA codec bind on an already registered card builds new PCMs
-before registering them. add_std_chmaps() publishes generic channel-map
-controls during this BUILD stage. If an earlier chmap succeeds and a
-later allocation fails, probe cleanup frees the BUILD PCM while the
-card's control device remains accessible.
+There have been reports about a regression with the recent boot quirk
+for Behringer devices; it broke UMC204HD models(1397:0508 and
+1397:0509).  The quirk was to just run usb_get_descriptor(), so I
+expected it rather harmful, but in this case, it doesn't look so,
+resulting in an error like 'failed to read device descriptor: -110'
+that leads to a fatal probe error.
 
-These generic controls are added directly by snd_pcm_add_chmap_ctls();
-snd_hda_ctls_clear() only removes codec-tracked mixer controls. BUILD
-devices also skip dev_disconnect. snd_pcm_free_stream() then frees the
-substreams before free_chmap() withdraws their generic control:
+As a quick workaround, skip the quirk for those UMC204HD models.
 
-  Late HDA codec bind / rollback        Control GET on the live card
-  ------------------------------       ----------------------------
-  hda_codec_driver_probe()
-    snd_hda_codec_build_pcms()
-      PCM is BUILD
-    snd_hda_codec_build_controls()
-      add_std_chmaps()
-        publish an earlier chmap
-        later allocation: -ENOMEM
-    snd_hda_codec_cleanup_for_unbind()
-      snd_hda_ctls_clear()
-        generic chmap remains
-      codec_release_pcms()
-        snd_device_free()
-          BUILD: skip dev_disconnect
-          snd_pcm_free_stream()
-            kfree(substream)
-                                       snd_ctl_elem_read()
-                                         down_read(controls_rwsem)
-                                         pcm_chmap_ctl_get()
-                                           walk freed substream
-            free_chmap()
-              snd_ctl_remove()
-                wait for GET
-                                         up_read(controls_rwsem)
-
-The control read lock cannot protect a substream already freed before
-control removal starts. The failure above occurs before
-snd_card_register(), so the PCM has not transitioned out of BUILD.
-
-Move free_chmap() before the substream free loop. Its snd_ctl_remove()
-withdraws the control and drains readers under controls_rwsem before any
-substream is released. Normal registered-device disconnect already
-removes the control, so the later call remains harmless on that path.
-
-Fixes: 2d3391ec0ecc ("ALSA: PCM: channel mapping API implementation")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-4a207d9ef3a3597a74a4-v4-80b0113669b1a62fbbe9@gmail.com
+Fixes: b5c4823cf3e4 ("ALSA: usb-audio: Apply boot quirk for Behringer models generically")
+Reported-by: Will Bush <will@willbush.dev>
+Closes: https://lore.kernel.org/45162613-2802-401c-84c9-742f9c8c68e6@app.fastmail.com
+Closes: https://bugzilla.suse.com/show_bug.cgi?id=1285896
+Link: https://patch.msgid.link/20261019102347.2425406-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/usb/quirks.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/pcm.c b/sound/core/pcm.c
-index c2c032946d97f..7e2874cf2ff27 100644
---- a/sound/core/pcm.c
-+++ b/sound/core/pcm.c
-@@ -819,6 +819,9 @@ static void snd_pcm_free_stream(struct snd_pcm_str * pstr)
- 	/* free all proc files under the stream */
- 	snd_pcm_stream_proc_done(pstr);
- 
-+	/* Drain channel-map callbacks before freeing the substreams. */
-+	free_chmap(pstr);
-+
- 	substream = pstr->substream;
- 	while (substream) {
- 		substream_next = substream->next;
-@@ -833,7 +836,6 @@ static void snd_pcm_free_stream(struct snd_pcm_str * pstr)
- 		kfree(setup);
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index b96cb3421cc15..c11ea08fbf6ac 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -1705,8 +1705,15 @@ int snd_usb_apply_boot_quirk_once(struct usb_device *dev,
  	}
- #endif
--	free_chmap(pstr);
- 	if (pstr->substream_count)
- 		put_device(pstr->dev);
+ 
+ 	/* Behringer devices may need explicit device descriptor read at boot */
+-	if (USB_ID_VENDOR(id) == 0x1397)
++	if (USB_ID_VENDOR(id) == 0x1397) {
++		/* the quirk seems breaking on some Behringer devices */
++		switch (id) {
++		case USB_ID(0x1397, 0x0508): /* UMC204HD */
++		case USB_ID(0x1397, 0x0509): /* UMC204HD */
++			return 0;
++		}
+ 		return snd_usb_cm1a_boot_quirk(dev);
++	}
+ 
+ 	return 0;
  }
 -- 
 2.53.0
