@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018327;
-	b=LCk2Vi8yk2rpEKdGwOQsNPn3p+6vDj8wdGdoJnfmERb6NFAB7o0g2SQG2DtAUTvW/slD
-	 KiQlOsualnvIOCTJLGrg7SLsDbzQUkkRo0FTW+eA5h5Xta7SkbdOMqWIGQ3qw0QLDCcd2
-	 YfjQDhQ5FcPIq3f1xdyquHCPhzlqJ0dm20VR7efX1EuDL19Ii0OMdglNOC/RSVpIhdUxC
-	 o9Jpu4vfLwJry2oPiMs2x33HZddg6sj8siCZsltLuNbsHyheLVxrqa1kdG8V8xVyJcFOF
-	 qnTHe95Xr9AjBB0yUGD81PwZY4oi7XcTUpLYvsq1RbE5WlVYLxj2sDbFF3DGrUrEj+Q==
+	t=1795018330;
+	b=FYQGlvFL8GJDk+EM+HFjPjwwFnziAyWQEY45kTKB4IVgDI/LzQIDCyIijWDzXOZnR5u6
+	 wu0HSaUtUhAvR8mw97Tu9GNphBmvwb+WY/2yKJV9eBudOJArVQ3QNI6h6OWBGi/wQNv6J
+	 eRThOFfPUkz0mnNKvQ3Kni/BAPWP8dcDE5tA7LXd2cfcj6z/xDHb2IbunnHXRMX1yAtw9
+	 Eue4yR7gyvPfz9s3hSGgrr8akXWONAnh3W3yg/1oSomLK0DmKjTPIUkM/jtNWGeXmBVY0
+	 SW5wZzfapX5xV+cZliqcAeevVHZe1HPDjLYxz9ywyMiJvmbMbsMUq27RBdsfv4HCN7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018327;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018330;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M6y7EcvVQX40B1BAU/uQPFLafDnkKx7CPFYs9STGJB8=;
-	b=ST6R7psSPaExJx1vCfnWM2seo+kbNMd2Ab6EOT/vdn7diRrlBn0OENDx74PL/ei1XkWL
-	 8XfPSOSrW/qrcXZaLVgWQ0i5Z6mDY+su1wuK2HLrEs4jUHpBOfzP7ZC6hc09LcffoWq/M
-	 STGUKd39Vww9n5Ve4aI3TKMae6zKrc+QYN1cb7evaMkjenuOFeVRI2Ko7fkySWvfSMWBv
-	 cBEY/JM3P80P/g4f2sOhuByvMWOSinRdn3drFVLNw1Zx1mszdhT6qz7Ml6oEWFw8oefHh
-	 6qjlXfHq8LmnVzFUnDsy3s/02XR7DXOtg+YU1PEsYEsV4CJvVUR2qB/a5OALo9ghjrg==
+	bh=sJfmzkL9jCrLDaB9B25wm/o7OpeldlpOxkeM/VmMNhM=;
+	b=hdOZuEU1Hoh68C40TnLIY0BpRlgNgcppkDSkIHVqs0JKGpS1l78o4oBp3HOujoNzP7F6
+	 1O8xsmEvefGV8PwtIS1PUpli2hb54WLKw+Ff2QvBjIK9onFPO54IoQzsIOMRpDRvYZe/O
+	 EgKJgKxo+73ln+CqLONcCBAjcPd3OXJBTt6OFGS5Ig2MEqPExFJjqEGQUy7pg2F/bPq6u
+	 qATBjnWGqtAU5bs6oLe1DQRkfnqwb3ucri+ouQkUs5Xce97ipr+vRWNx/azHChwcqXFuq
+	 x6SFewf2Y3CwAo44hMoZJgIr+mdrcSRFvyQqmZGsydpFb7eb/k4LtEfq3+4tua+LRFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZNWHEn4O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PMwlKAxC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E91606A330;
-	Wed, 18 Nov 2026 16:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA82606A31C;
+	Wed, 18 Nov 2026 16:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZNWHEn4O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C853C1F000C8;
-	Wed, 18 Nov 2026 16:12:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PMwlKAxC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 958F31F000C6;
+	Wed, 18 Nov 2026 16:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018327;
-	bh=M6y7EcvVQX40B1BAU/uQPFLafDnkKx7CPFYs9STGJB8=;
+	s=korg; t=1795018330;
+	bh=sJfmzkL9jCrLDaB9B25wm/o7OpeldlpOxkeM/VmMNhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZNWHEn4Ow4ShE2cPLOtdEdu02tbEZj3fqM+qamlxqzjRJl0R8/Ibx6D2Xxnb7Vkip
-	 1VBMbaZ97s1YDdKCd8xsgBCaRrkH1dUXmcVU5UZq/PArwBdmTsy2a0nzMOBqBQvV1I
-	 29I3chRcD/6iC2Dd9WuyrLroGhOGOyhxhlWui4J0=
+	b=PMwlKAxCW5Dg361zMpP8wcYWyhf9+ZoQsFwvITMdn7Ghxg2Hhp9HhbhAdwVwVZXQ/
+	 zi1R4ib2EZaxCjH7ZvSt4+T+2pFZLpBalt2mmeLi3iHr8mCESUAr+vd982UyM0tC0e
+	 gRWeFuM9Wf7U3BPKIE+OI0GgGhzsWgydH/1SiRVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Akash Sukhavasi <akash.sukhavasi@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1201/2651] bpf: Roll back freplace link state when bpf_arch_text_poke() fails
-Date: Wed, 18 Nov 2026 15:40:41 +0100
-Message-ID: <20261118150331.232597024@linuxfoundation.org>
+Subject: [PATCH 7.3 1202/2651] phy: HiSilicon: Fix error handling in hi3670_pcie_allclk_ctrl()
+Date: Wed, 18 Nov 2026 15:40:42 +0100
+Message-ID: <20261118150331.266574202@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,59 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Akash Sukhavasi <akash.sukhavasi@gmail.com>
 
-[ Upstream commit 5ec398d9ec8fe13f8058af9a2e5f5e8f46e0a35a ]
+[ Upstream commit 7540fc0a4f667b6773d10753a602a42a3113087b ]
 
-A freplace attach claims the target prog by bumping
-tgt_prog->aux->freplace_link_cnt and setting tr->extension_prog.
-bpf_arch_text_poke() then makes the extension take effect.  If the
-poke fails, the claims are never released: the attach unwinds
-through bpf_link_cleanup(), which clears link->prog, so
-bpf_trampoline_unlink_prog() never runs.
+When hi3670_pcie_pll_ctrl() fails, hi3670_pcie_allclk_ctrl() returns
+-EINVAL directly, skipping the close_clocks cleanup path. This leaves
+the PLL with its power-down bit cleared.
 
-Drop the link count under ext_mutex on the error path, and set
-tr->extension_prog only after the poke succeeded.  The count is
-still bumped before the poke: it blocks prog_array updates while
-the entry is patched.
+Use goto close_clocks instead, which disables the PLL and propagates
+the original error code from hi3670_pcie_pll_ctrl().
 
-Fixes: d6083f040d5d ("bpf: Prevent tailcall infinite loop caused by freplace")
-Fixes: be8704ff07d2 ("bpf: Introduce dynamic program extensions")
-Suggested-by: Leon Hwang <leon.hwang@linux.dev>
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://patch.msgid.link/20260928091121.219333-1-chenyuan_fl@163.com
+Found while investigating a Smatch warning.
+
+Fixes: 73075011ffff ("phy: HiSilicon: Add driver for Kirin 970 PCIe PHY")
+Signed-off-by: Akash Sukhavasi <akash.sukhavasi@gmail.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260708-b4-hi3670-v1-1-f9236f3e585c@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/trampoline.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/phy/hisilicon/phy-hi3670-pcie.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
-index d880ad6913b38..fc94d6062109e 100644
---- a/kernel/bpf/trampoline.c
-+++ b/kernel/bpf/trampoline.c
-@@ -1026,10 +1026,17 @@ static int __bpf_trampoline_link_prog(struct bpf_tramp_node *node,
- 		err = bpf_freplace_link_tgt_prog(tgt_prog);
- 		if (err)
- 			return err;
-+		err = bpf_arch_text_poke(tr->func.addr, BPF_MOD_NOP,
-+					 BPF_MOD_JUMP, NULL,
-+					 node->link->prog->bpf_func);
-+		if (err) {
-+			/* Undo the claim from bpf_freplace_link_tgt_prog(). */
-+			guard(mutex)(&tgt_prog->aux->ext_mutex);
-+			tgt_prog->aux->freplace_link_cnt--;
-+			return err;
-+		}
- 		tr->extension_prog = node->link->prog;
--		return bpf_arch_text_poke(tr->func.addr, BPF_MOD_NOP,
--					  BPF_MOD_JUMP, NULL,
--					  node->link->prog->bpf_func);
-+		return 0;
+diff --git a/drivers/phy/hisilicon/phy-hi3670-pcie.c b/drivers/phy/hisilicon/phy-hi3670-pcie.c
+index 0b2dc590aa6f7..148763ed2c62a 100644
+--- a/drivers/phy/hisilicon/phy-hi3670-pcie.c
++++ b/drivers/phy/hisilicon/phy-hi3670-pcie.c
+@@ -480,7 +480,7 @@ static int hi3670_pcie_allclk_ctrl(struct hi3670_pcie_phy *phy, bool clk_on)
+ 	ret = hi3670_pcie_pll_ctrl(phy, true);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to enable pll\n");
+-		return -EINVAL;
++		goto close_clocks;
  	}
- 	err = bpf_trampoline_add_prog(tr, node, cnt);
- 	if (err)
+ 	hi3670_pcie_hp_debounce_gt(phy, true);
+ 	hi3670_pcie_phyref_gt(phy, true);
 -- 
 2.53.0
 
