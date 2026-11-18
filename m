@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047644;
-	b=bBdDmQ5Tb3KvhCWDHwDkAjOV2tIT1+R+xZH/Zc4ovEQ7NXkXYm0wHf3i+lD6+5RBEOZG
-	 QGGlAzxEip2ALn3bNZiG09Y8wiFesJsih3ZaI1QbgQkyhTOPflUQb8KmThi8m8Ba9/PJG
-	 FkMEZWOHTDjgHuDXqy0mbJHZQNeMH+1x3r4EFUoTxuaqrRiFD15gk5sb7Wj3Ub1e0dyEG
-	 Xvff4YGKEs3FpGny7+PV574k1ZS5jxcyXcuIWXB4jU1o2f0wNK9r8Li9vL7v6bhP+y2pV
-	 H66m7pNgphPenKlD5h22hOFwBzfO8RddiwiiNpit07rvI2ED/BmUs0cT1lyWgju2NLQ==
+	t=1795047647;
+	b=tFOIHt2vEBj7t0TniDl7LAx/1a+sCfb+LvRDx8JDSqTbNgKB/SnD/G2gSVXvWtyICXvc
+	 5prdh3WIBcnJoJfFSmO9tLh9HpJoH9d1VhcnvDQeplLkoIZ5hSmc6kan+3ThHqFsKVZtH
+	 32CjnILJ/xJUWsS7TPc8W4SZqu7BMKoW3QZrv78MbDJh7eFjBj8oEyQyjSvE0EUIF9CY9
+	 hN5djTNWKYt5RdovsOVRK1Y6HkK7sh0MHCcY9DlhMcujYQSHg1AmnvI0IpAZ9hSg5CEX+
+	 YSYOLN3wqpuWPu4Bw1+ftod8y6yis3ZEqZWXWcXfl/m4g6z6Iam1Y9m5qDvwQSgthaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047644;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047647;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SRTds/Jy6WkKQbELle2p8d7W8xgWGiKTnh8RmB1H8ms=;
-	b=rO4T9bS9gzNILJI4GaoHo+vzO+JNx9Ervhc+Ik5IScJtLcdGF4GWB84LrjmIKsMpIYKH
-	 /wu3xJ+lqK3ZNNitrlAZzZpA11KUgjbh4ISUIbd4BYhiYRoLABMHu/5D0Ctr6/WB+atVa
-	 tNrXc+d6xXhnRclm5W6oVmZTOa5sZsgIHcavTPFgmSmY/4Ao2p2rkdKjrfQNby/IwVdHW
-	 w2IVwcP6INGWJ0OqELgREAr00Cayc+cN0Nl9ZNKWbB2TAIMWX4b6gITM/3lQwgM+WbgFv
-	 Rwl3trs/qsMDRKz7exaP0rVeztR9ff9i7vGbn133JrEDRR2BwDgaeg65nbsyRAR/UuA==
+	bh=ryq2YJagZP65LrAnpjNz/ieullQbCGnSfPWIdGxH+YU=;
+	b=YUAUxRL86FdxOTMxZ/wumlgftSZGrrbYv6lQRTG8eP3tKFCBRrHans2ouRAGqLlOoQXr
+	 ZGBrG1r6HCtZZpugpbnXa5byGn+55yRr8+gwZLf1qFJi/qBjGzTrVwbFRnH30GVjER9EP
+	 3/pxJ0Y8SAt9WtIvesINLaPq0Ujinah5WQgyZKgGDy/thomuaI8CgCLPhSMY6mFQrdBlF
+	 bOfXkJ1OqzA2vecvlE84WfKaYpw9Z7+DYYhfMi7NqgVXZ5cmZDfafg2v/byA6Kub+gc1O
+	 GYjgs4LRtZ6HfrkG9dKiVEeFNsRBRIzFWRKbannqavTtPSisnrEIzOqTbaANkNbX9aQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ybq9GynI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AwVQiizW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B318E606A320;
-	Thu, 19 Nov 2026 00:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76915606A320;
+	Thu, 19 Nov 2026 00:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ybq9GynI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194431F000C4;
-	Thu, 19 Nov 2026 00:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AwVQiizW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB071F000C4;
+	Thu, 19 Nov 2026 00:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047644;
-	bh=SRTds/Jy6WkKQbELle2p8d7W8xgWGiKTnh8RmB1H8ms=;
+	s=korg; t=1795047647;
+	bh=ryq2YJagZP65LrAnpjNz/ieullQbCGnSfPWIdGxH+YU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ybq9GynIFCf05FVyWkJ2l2UlES2MRSgAtAKd36RpUPgTz2hGXgrY9lSOjd5/FEEZ9
-	 vhRe20njbZBrJYiQb2kNX4m3aQtgnszAWCbedeqQmUV+t2dWoAzOX48+UQvIskeiyK
-	 oEbMI+fpebkkbe/J09xXs7wp834ptrATKCgu7PvI=
+	b=AwVQiizWEtYtf7J9Z4aqMNaU1jAUbVXnVfzOdmxcXjxF2zO5EDUplXg/UlyHtW5FE
+	 kzFd6bQ9s2yLyDvBkfo0WGF7WhvPNA8wLoLi6rxciBHKudrqRtC2aCtaidSfo+G3v+
+	 mXwe3nAT+oR8PWISv3JrB2LXdNU5mSZ2Rj1Qs77I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Muchun Song <songmuchun@bytedance.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1711/2857] mm/shmem: fix accounting of swapin-error markers
-Date: Wed, 18 Nov 2026 15:45:45 +0100
-Message-ID: <20261118150302.934167696@linuxfoundation.org>
+Subject: [PATCH 6.1 1712/2857] mm: hugetlb: move hugeltb sysctls to its own file
+Date: Wed, 18 Nov 2026 15:45:46 +0100
+Message-ID: <20261118150302.970816368@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,123 +70,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
 
-[ Upstream commit 66ce68a249f4ac56cd6968aa6d8ded20fb4b7d09 ]
+[ Upstream commit 962de54828c5bb100eb8de881b79ed9c8b7468c0 ]
 
-A failed swap read replaces the swap entry with a swapin-error marker in
-the page-cache and subtracts its pages from "alloced" and "swapped";
-however, it leaves their block charge in place.
+This moves all hugetlb sysctls to its own file, also kill an
+useless hugetlb_treat_movable_handler() defination.
 
-Removing the marker during truncate then subtracts from "swapped" again.
-This can underflow the counters or make swapped reach zero while other
-pages remain swapped out, causing swapoff to loop without finding them.
-
-When installing the marker, subtract only from "swapped" and let
-shmem_recalc_inode() reduce "alloced" and release the block charge.
-
-Make shmem_free_swap() report successful removal separately from the
-number of swap pages freed, so removing a swapin-error marker does not
-subtract from "swapped" again.
-
-It's a bit confusing, but replacing a swapped out page by a swapin-error
-marker in shmem_set_folio_swapin_error() behaves as follows:
-
-Initially:
-	alloced=1, swapped=1, nrpages=0
-Calling shmem_recalc_inode(inode, 0, -1)
-	-> swapped = 0
-	-> freed =  1 - 0 - 0 = 1
-	-> alloced -= freed
-	-> alloced=0, swapped=0, block charge released
-
-Fixes: 6cec2b95dadf ("mm/shmem: fix infinite loop when swap in shmem error at swapoff time")
-Cc: stable@vger.kernel.org
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-14-392fc715d8f6@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: adapted newer swap-entry and accounting APIs to existing single-page swap handling with explicit inode locking ]
+Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
+Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
+Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Stable-dep-of: dfb190302d2b ("mm/hugetlb: fix mremap move length truncation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 32 ++++++++++++++++++--------------
- 1 file changed, 18 insertions(+), 14 deletions(-)
+ include/linux/hugetlb.h |  8 -------
+ kernel/sysctl.c         | 32 --------------------------
+ mm/hugetlb.c            | 51 ++++++++++++++++++++++++++++++++++++++---
+ 3 files changed, 48 insertions(+), 43 deletions(-)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 1ed9c1e9abb99..30d401a9e3ec0 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -787,18 +787,24 @@ static void shmem_delete_from_page_cache(struct folio *folio, void *radswap)
+diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
+index aa089e58bc41f..a9f175cda955c 100644
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -137,14 +137,6 @@ void hugepage_put_subpool(struct hugepage_subpool *spool);
+ 
+ void hugetlb_dup_vma_private(struct vm_area_struct *vma);
+ void clear_vma_resv_huge_pages(struct vm_area_struct *vma);
+-int hugetlb_sysctl_handler(struct ctl_table *, int, void *, size_t *, loff_t *);
+-int hugetlb_overcommit_handler(struct ctl_table *, int, void *, size_t *,
+-		loff_t *);
+-int hugetlb_treat_movable_handler(struct ctl_table *, int, void *, size_t *,
+-		loff_t *);
+-int hugetlb_mempolicy_sysctl_handler(struct ctl_table *, int, void *, size_t *,
+-		loff_t *);
+-
+ int move_hugetlb_page_tables(struct vm_area_struct *vma,
+ 			     struct vm_area_struct *new_vma,
+ 			     unsigned long old_addr, unsigned long new_addr,
+diff --git a/kernel/sysctl.c b/kernel/sysctl.c
+index 5dd6fd4b48c81..e1a964ef48617 100644
+--- a/kernel/sysctl.c
++++ b/kernel/sysctl.c
+@@ -2162,38 +2162,6 @@ static struct ctl_table vm_table[] = {
+ 		.extra1		= SYSCTL_ZERO,
+ 		.extra2		= SYSCTL_ONE,
+ 	},
+-#endif
+-#ifdef CONFIG_HUGETLB_PAGE
+-	{
+-		.procname	= "nr_hugepages",
+-		.data		= NULL,
+-		.maxlen		= sizeof(unsigned long),
+-		.mode		= 0644,
+-		.proc_handler	= hugetlb_sysctl_handler,
+-	},
+-#ifdef CONFIG_NUMA
+-	{
+-		.procname       = "nr_hugepages_mempolicy",
+-		.data           = NULL,
+-		.maxlen         = sizeof(unsigned long),
+-		.mode           = 0644,
+-		.proc_handler   = &hugetlb_mempolicy_sysctl_handler,
+-	},
+-#endif
+-	 {
+-		.procname	= "hugetlb_shm_group",
+-		.data		= &sysctl_hugetlb_shm_group,
+-		.maxlen		= sizeof(gid_t),
+-		.mode		= 0644,
+-		.proc_handler	= proc_dointvec,
+-	 },
+-	{
+-		.procname	= "nr_overcommit_hugepages",
+-		.data		= NULL,
+-		.maxlen		= sizeof(unsigned long),
+-		.mode		= 0644,
+-		.proc_handler	= hugetlb_overcommit_handler,
+-	},
+ #endif
+ 	{
+ 		.procname	= "lowmem_reserve_ratio",
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index a4b5243281af0..f036b1d5babc7 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -4274,6 +4274,12 @@ static void __init hugetlb_sysfs_init(void)
+ 	hugetlb_register_all_nodes();
  }
  
- /*
-- * Remove swap entry from page cache, free the swap and its page cache.
-+ * Remove a swap entry or swapin-error marker at index.
-+ * Return whether it was removed, counting freed swap pages in nr_swaps_freed.
-  */
--static int shmem_free_swap(struct address_space *mapping,
--			   pgoff_t index, void *radswap)
-+static bool shmem_free_swap(struct address_space *mapping,
-+		pgoff_t index, void *radswap, long *nr_swaps_freed)
++#ifdef CONFIG_SYSCTL
++static void hugetlb_sysctl_init(void);
++#else
++static inline void hugetlb_sysctl_init(void) { }
++#endif
++
+ static int __init hugetlb_init(void)
  {
-+	const swp_entry_t swp = radix_to_swp_entry(radswap);
- 	void *old;
+ 	int i;
+@@ -4329,6 +4335,7 @@ static int __init hugetlb_init(void)
  
- 	old = xa_cmpxchg_irq(&mapping->i_pages, index, radswap, NULL, 0);
- 	if (old != radswap)
--		return -ENOENT;
--	free_swap_and_cache(radix_to_swp_entry(radswap));
--	return 0;
-+		return false;
-+	/* A swapin-error marker holds no swap slot, so just drop it. */
-+	if (!non_swap_entry(swp)) {
-+		free_swap_and_cache(swp);
-+		(*nr_swaps_freed)++;
-+	}
-+	return true;
+ 	hugetlb_sysfs_init();
+ 	hugetlb_cgroup_file_init();
++	hugetlb_sysctl_init();
+ 
+ #ifdef CONFIG_SMP
+ 	num_fault_mutexes = roundup_pow_of_two(8 * num_possible_cpus());
+@@ -4660,7 +4667,7 @@ static int hugetlb_sysctl_handler_common(bool obey_mempolicy,
+ 	return ret;
  }
  
- /*
-@@ -944,8 +950,8 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 			if (xa_is_value(folio)) {
- 				if (unfalloc)
- 					continue;
--				nr_swaps_freed += !shmem_free_swap(mapping,
--							indices[i], folio);
-+				shmem_free_swap(mapping, indices[i], folio,
-+						&nr_swaps_freed);
- 				continue;
- 			}
+-int hugetlb_sysctl_handler(struct ctl_table *table, int write,
++static int hugetlb_sysctl_handler(struct ctl_table *table, int write,
+ 			  void *buffer, size_t *length, loff_t *ppos)
+ {
  
-@@ -1014,12 +1020,12 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 			if (xa_is_value(folio)) {
- 				if (unfalloc)
- 					continue;
--				if (shmem_free_swap(mapping, index, folio)) {
-+				if (!shmem_free_swap(mapping, index, folio,
-+						     &nr_swaps_freed)) {
- 					/* Swap was replaced by page: retry */
- 					index--;
- 					break;
- 				}
--				nr_swaps_freed++;
- 				continue;
- 			}
+@@ -4669,7 +4676,7 @@ int hugetlb_sysctl_handler(struct ctl_table *table, int write,
+ }
  
-@@ -1761,11 +1767,9 @@ static void shmem_set_folio_swapin_error(struct inode *inode, pgoff_t index,
- 	delete_from_swap_cache(folio);
- 	spin_lock_irq(&info->lock);
- 	/*
--	 * Don't treat swapin error folio as alloced. Otherwise inode->i_blocks won't
--	 * be 0 when inode is released and thus trigger WARN_ON(inode->i_blocks) in
--	 * shmem_evict_inode.
-+	 * Let shmem_recalc_inode() reduce alloced and release the block charge
-+	 * for the freed swap pages.
- 	 */
--	info->alloced--;
- 	info->swapped--;
- 	shmem_recalc_inode(inode);
- 	spin_unlock_irq(&info->lock);
+ #ifdef CONFIG_NUMA
+-int hugetlb_mempolicy_sysctl_handler(struct ctl_table *table, int write,
++static int hugetlb_mempolicy_sysctl_handler(struct ctl_table *table, int write,
+ 			  void *buffer, size_t *length, loff_t *ppos)
+ {
+ 	return hugetlb_sysctl_handler_common(true, table, write,
+@@ -4677,7 +4684,7 @@ int hugetlb_mempolicy_sysctl_handler(struct ctl_table *table, int write,
+ }
+ #endif /* CONFIG_NUMA */
+ 
+-int hugetlb_overcommit_handler(struct ctl_table *table, int write,
++static int hugetlb_overcommit_handler(struct ctl_table *table, int write,
+ 		void *buffer, size_t *length, loff_t *ppos)
+ {
+ 	struct hstate *h = &default_hstate;
+@@ -4706,6 +4713,44 @@ int hugetlb_overcommit_handler(struct ctl_table *table, int write,
+ 	return ret;
+ }
+ 
++static struct ctl_table hugetlb_table[] = {
++	{
++		.procname	= "nr_hugepages",
++		.data		= NULL,
++		.maxlen		= sizeof(unsigned long),
++		.mode		= 0644,
++		.proc_handler	= hugetlb_sysctl_handler,
++	},
++#ifdef CONFIG_NUMA
++	{
++		.procname       = "nr_hugepages_mempolicy",
++		.data           = NULL,
++		.maxlen         = sizeof(unsigned long),
++		.mode           = 0644,
++		.proc_handler   = &hugetlb_mempolicy_sysctl_handler,
++	},
++#endif
++	{
++		.procname	= "hugetlb_shm_group",
++		.data		= &sysctl_hugetlb_shm_group,
++		.maxlen		= sizeof(gid_t),
++		.mode		= 0644,
++		.proc_handler	= proc_dointvec,
++	},
++	{
++		.procname	= "nr_overcommit_hugepages",
++		.data		= NULL,
++		.maxlen		= sizeof(unsigned long),
++		.mode		= 0644,
++		.proc_handler	= hugetlb_overcommit_handler,
++	},
++	{ }
++};
++
++static void hugetlb_sysctl_init(void)
++{
++	register_sysctl_init("vm", hugetlb_table);
++}
+ #endif /* CONFIG_SYSCTL */
+ 
+ void hugetlb_report_meminfo(struct seq_file *m)
 -- 
 2.53.0
 
