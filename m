@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016544;
-	b=aVc3LbUGoXWJ2h8UNH0Xcni0iWqNY+oNf2fy91B1DYJvMczV4cTD2EKiikqW3X2zCCaG
-	 qnuCrA9Vccdm5ndSA+bVuEqD0rMLSr3U1qXPCxzrav6L8gQbM6k7izDjAvXbAFZmnj22U
-	 Byz59EzBxycU51gcPcyIXFYsKQihtP6fzDK4x+2BS6hWL3SfbkT6gVZDwYt08uZBSBjUh
-	 JKun7TzMgx+vsd9WuylkuNTEhm8pc4ByxSDo3rgTvN4Lg8Ep/bEUx7XoBGMs+tWiLyA4r
-	 0phptPAN3+jcWd85Pu01gcZUj6vUpqakMvD13J0Ou6sXdvaMUYTlGHxg4PuTcXJKGpQ==
+	t=1795016547;
+	b=tF4Zibq+j6aiVpRdA0JPIwvvB7mKvAKJLf+lU19SJpEpugqFxBQ5i66ZSqp2rXQW6Ukx
+	 gt485KIru3eJgi22qcPHZ+je4ODvaHQmRuCMBjvicNWrOvJ7+8MLL9XxRcBOvVuHWi7kq
+	 h6vkorF4y+M5o/XG+vfK3LDm0mnJlrYCTXfTxm+Vku9eYFcNPvEQ0uidVqcRja5B1NA4D
+	 fZef34zDweSkUImhTRDjCZOdAAIWCaiafS1vgHW/tYlEK6qdyVOKBQ2F3psCXK7tFjeIz
+	 Lt9ZcS15yfwxiuRkAc/l0SObz8SnLvNFkey1Sm55x8EE7Y7Qg9ATWOJiSUB4df3ehGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016544;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016547;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=prhJrcHS3ASyyh7Ja1u99KEtkR7KwEm9VXTZCH+YFrA=;
-	b=vZDQrtMsP3yU5JQWz2xnHLGj85C0cVYffDv3dNn9yjjPqQ6V7fTSTOm74NKK4qCOS1lF
-	 DgZlm0aCRIm7yfj3WwAJ7cgBzcPWU5TnUNmMc4B8ePmlSmGgCZciuFgEwQTppEAxM5l4O
-	 LUmq2VruaIrG7+kRnZWh2gz7vo9+q9KqFiOgqgQb40OBL+pBWVHOCWQFbGwE/EXNB9wiW
-	 JfeotwGZzuow/4yHbtWjxjDHNcGpUmv9Fk+8ZzX7eUsUI/epJx9NjJgOSfH0ScfA/z5jt
-	 RyG/e+KDO3q0l3Xhf8LYCZd2S+cVzJv2UYhk1Iu05+tb9jzMEswDd2PWG+Od/BdKEvg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=9zaz8bshYU9SK40r1+B6i91jzla86gEHpmrp7IH2D5U=;
+	b=o5ODPZsh6K2kkX+RshpmSa9W8g1dykmyH3zlUb724aHSRaWTjXE/Jdt/5LgR0Ii83XJF
+	 s9I6oTMTitzYuGV5Th2QRUrlmS5yzHZurnpS5JUMFgaNjS1K4d18ZphIQqh84HvfZA4C0
+	 h8K2CrZaJcWyc4q0SVWSTaDDk5ZDDIM5TBbRxLi5sAIOR+Eqwtsye2HhhGRK8S/zY8oM9
+	 t159pJ4PtrdM53nRF7FGeUZBltEPwk25kaDoEi8uVwNTr+6UzyEeldn/LA+c0zssrr+Rk
+	 PAMRL17tMXzByyUsZ1snn8WHNlmnGADBraWV6KMR6PwpABtGJKLd34VFoD+ipcslbXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J41U57aq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iTdzdpY9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC22606A331;
-	Wed, 18 Nov 2026 15:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30CBA60A2608;
+	Wed, 18 Nov 2026 15:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J41U57aq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62FB1F000C8;
-	Wed, 18 Nov 2026 15:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iTdzdpY9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841BA1F000C5;
+	Wed, 18 Nov 2026 15:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016544;
-	bh=prhJrcHS3ASyyh7Ja1u99KEtkR7KwEm9VXTZCH+YFrA=;
+	s=korg; t=1795016547;
+	bh=9zaz8bshYU9SK40r1+B6i91jzla86gEHpmrp7IH2D5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J41U57aqFooGAXazUz92Digr5AunDsbczY9V2yUbeDt6ImN1ZbeIUZpaxUVNW+gz6
-	 JLTpb6FYtLZ7liF1Afh4qaNwCTBuDasbjqu2MW3d4autO1H9ve1BcD19vE7nk7NHaS
-	 dS2WYeb2A5LplyqFy+deb3uiAxb6VR1Auf80Xq4M=
+	b=iTdzdpY9D673mtN94OSg+O+ultoIkjx+WzVaUO7V1N7UosMHxsK61aNxp2/S8f6xp
+	 gb5zLvi/EzWqnFAQ+XQFXVhEDZPSPKAkG3ayRoLVK892NV63OUp61e+XV1iu8ULuR0
+	 UAdn+9oPMUZIUUSNXTzhtnGHdfob0XSzqgNeG74o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Yu Kuai <yukuai@fygo.io>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Julian Braha <julianbraha@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0513/2651] md: reject v0.90 arrays with too many devices
-Date: Wed, 18 Nov 2026 15:29:13 +0100
-Message-ID: <20261118150306.219275840@linuxfoundation.org>
+Subject: [PATCH 7.3 0560/2651] kconfig: fix extra output from savedefconfig on out-of-range defaults
+Date: Wed, 18 Nov 2026 15:30:00 +0100
+Message-ID: <20261118150307.901333622@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,53 +63,250 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Julian Braha <julianbraha@gmail.com>
 
-[ Upstream commit 1a33a379e67853d6d778e6e80b214bdf1208f6f8 ]
+[ Upstream commit dbe1ae2304a3b02c3bf6ae82895ff232a29f3fee ]
 
-The v0.90 superblock has room for MD_SB_DISKS device descriptors, but
-super_90_load() only rejects nonpositive raid_disks values. A crafted
-superblock can therefore copy a larger value into mddev->raid_disks. When
-metadata is next updated, super_90_sync() walks sb->disks[] up to that
-count and reads and writes beyond the 4 KiB superblock buffer.
+The Kconfig interpreter currently allows defaults that are outside of the
+range bounds.
 
-A checksum-valid RAID1 member advertising 64 devices can be assembled by
-mdadm --incremental --run. The first write to the array then produces
-out-of-bounds writes from super_90_sync() under KASAN.
+In these cases, the 'sym_validate_range' function will adjust the default
+value to the nearest range bound. For example, see this example:
 
-Reject device counts that cannot be represented by the v0.90 format while
-loading the superblock.
+  config A
+    int
+    range 1 2
+    default 16
 
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://patch.msgid.link/20260820210703.3035608-2-Jeremy.Jean@oss.cyber.gouv.fr
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Here, since the default value of 16 is greater than the bounds, the
+effective default value gets adjusted down to the upper bound, 2.
+
+However, 'savedefconfig' writes non-default values, and without being
+aware of the automatic adjustment to the range bound, it would write: A=2
+
+This limitation is also documented in a comment: "The following fails to
+handle the situation where a default value is further limited by the valid
+range."
+
+To resolve this, let's factor out the default-range adjustment logic from
+the existing 'sym_validate_range' function into its own
+'sym_get_near_range_bound' function for 'savedefconfig' to use too, so
+that it compares against the effective value.
+
+Adds tests, accordingly.
+
+Fixes: 7cf3d73b4360 ("kconfig: add savedefconfig")
+Assisted-by: Codex:gpt-5.6-sol
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Closes: https://lore.kernel.org/lkml/CAMuHMdVyUAA3L4mUkSjmnuE3cvj-+N8z-Bhxsh1wa-FQWc=fjw@mail.gmail.com/
+Signed-off-by: Julian Braha <julianbraha@gmail.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20260830221129.2668354-1-julianbraha@gmail.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/kconfig/symbol.c                      | 39 ++++++++----
+ .../kconfig/tests/savedefconfig_range/Kconfig | 60 +++++++++++++++++++
+ .../tests/savedefconfig_range/__init__.py     |  8 +++
+ .../kconfig/tests/savedefconfig_range/config  |  7 +++
+ .../savedefconfig_range/expected_defconfig    |  0
+ 5 files changed, 102 insertions(+), 12 deletions(-)
+ create mode 100644 scripts/kconfig/tests/savedefconfig_range/Kconfig
+ create mode 100644 scripts/kconfig/tests/savedefconfig_range/__init__.py
+ create mode 100644 scripts/kconfig/tests/savedefconfig_range/config
+ create mode 100644 scripts/kconfig/tests/savedefconfig_range/expected_defconfig
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index d8ecf76d4a5f1..ef46a7ffeddd2 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -1393,7 +1393,7 @@ static int super_90_load(struct md_rdev *rdev, struct md_rdev *refdev, int minor
- 		goto abort;
+diff --git a/scripts/kconfig/symbol.c b/scripts/kconfig/symbol.c
+index 7e81b3676ee94..1536db1599f4c 100644
+--- a/scripts/kconfig/symbol.c
++++ b/scripts/kconfig/symbol.c
+@@ -157,7 +157,12 @@ static long long sym_get_range_val(struct symbol *sym, int base)
+ 	return strtoll(sym->curr.val, NULL, base);
+ }
+ 
+-static void sym_validate_range(struct symbol *sym)
++/*
++ * Return the nearest range bound for an out-of-range default value.
++ * Return NULL if the value is valid or the symbol has no active range.
++ */
++static struct symbol *sym_get_near_range_bound(struct symbol *sym,
++					  const char *value)
+ {
+ 	struct property *prop;
+ 	struct symbol *range_sym;
+@@ -172,21 +177,31 @@ static void sym_validate_range(struct symbol *sym)
+ 		base = 16;
+ 		break;
+ 	default:
+-		return;
++		return NULL;
  	}
+ 	prop = sym_get_range_prop(sym);
+ 	if (!prop)
+-		return;
+-	val = strtoll(sym->curr.val, NULL, base);
++		return NULL;
++	val = strtoll(value, NULL, base);
+ 	range_sym = prop->expr->left.sym;
+ 	val2 = sym_get_range_val(range_sym, base);
+ 	if (val >= val2) {
+ 		range_sym = prop->expr->right.sym;
+ 		val2 = sym_get_range_val(range_sym, base);
+ 		if (val <= val2)
+-			return;
++			return NULL;
+ 	}
+-	sym->curr.val = range_sym->curr.val;
++
++	return range_sym;
++}
++
++static void sym_validate_range(struct symbol *sym)
++{
++	struct symbol *range_sym;
++
++	range_sym = sym_get_near_range_bound(sym, sym->curr.val);
++	if (range_sym)
++		sym->curr.val = range_sym->curr.val;
+ }
  
--	if (sb->raid_disks <= 0)
-+	if (sb->raid_disks <= 0 || sb->raid_disks > MD_SB_DISKS)
- 		goto abort;
+ static void sym_set_changed(struct symbol *sym)
+@@ -812,7 +827,7 @@ bool sym_set_string_value(struct symbol *sym, const char *newval)
+ const char *sym_get_string_default(struct symbol *sym)
+ {
+ 	struct property *prop;
+-	struct symbol *ds;
++	struct symbol *ds, *range_sym;
+ 	const char *str = "";
+ 	tristate val;
  
- 	if (md_csum_fold(calc_sb_csum(sb)) != md_csum_fold(sb->sb_csum)) {
+@@ -830,11 +845,6 @@ const char *sym_get_string_default(struct symbol *sym)
+ 			val = EXPR_AND(expr_calc_value(prop->expr), prop->visible.tri);
+ 			break;
+ 		default:
+-			/*
+-			 * The following fails to handle the situation
+-			 * where a default value is further limited by
+-			 * the valid range.
+-			 */
+ 			ds = prop_get_symbol(prop);
+ 			if (ds != NULL) {
+ 				sym_calc_value(ds);
+@@ -878,6 +888,11 @@ const char *sym_get_string_default(struct symbol *sym)
+ 	default:
+ 		break;
+ 	}
++
++	range_sym = sym_get_near_range_bound(sym, str);
++	if (range_sym)
++		str = range_sym->curr.val;
++
+ 	return str;
+ }
+ 
+diff --git a/scripts/kconfig/tests/savedefconfig_range/Kconfig b/scripts/kconfig/tests/savedefconfig_range/Kconfig
+new file mode 100644
+index 0000000000000..fd59d9082ed5b
+--- /dev/null
++++ b/scripts/kconfig/tests/savedefconfig_range/Kconfig
+@@ -0,0 +1,60 @@
++# SPDX-License-Identifier: GPL-2.0
++
++# Static default and range values
++
++config INT_DEFAULT_ABOVE_RANGE
++	int
++	range 1 1
++	default 16
++
++config INT_DEFAULT_BELOW_RANGE
++	int
++	range 4 8
++	default 2
++
++# Default and range values determined by other options
++
++config RANGE_UPPER_BOUND
++	int
++	default 3
++
++config INT_DYNAMIC_RANGE
++	int
++	range 0 RANGE_UPPER_BOUND
++	default 4
++
++# Hex
++
++config HEX_DEFAULT_ABOVE_RANGE
++	hex
++	range 0x10 0x20
++	default 0x40
++
++# Implicit default value of 0
++
++config INT_IMPLICIT_DEFAULT_ZERO
++	int
++	range 1 4
++
++# Conditional range
++
++config USE_FIRST_RANGE
++	bool
++	default y
++
++config INT_CONDITIONAL_RANGE
++	int
++	range 1 2 if USE_FIRST_RANGE
++	range 3 4 if !USE_FIRST_RANGE
++	default 3
++
++# Conditional default
++
++config USE_DEFAULT
++	bool
++	default y
++
++config INT_CONDITIONAL_DEFAULT
++	int
++	range 1 2
++	default 3 if USE_DEFAULT
+diff --git a/scripts/kconfig/tests/savedefconfig_range/__init__.py b/scripts/kconfig/tests/savedefconfig_range/__init__.py
+new file mode 100644
+index 0000000000000..961454be732c2
+--- /dev/null
++++ b/scripts/kconfig/tests/savedefconfig_range/__init__.py
+@@ -0,0 +1,8 @@
++# SPDX-License-Identifier: GPL-2.0
++"""Test savedefconfig with numerical defaults outside of ranges."""
++
++
++def test(conf):
++    assert conf._run_conf('--savedefconfig=defconfig', dot_config='config',
++                          out_file='defconfig') == 0
++    assert conf.config_matches('expected_defconfig')
+diff --git a/scripts/kconfig/tests/savedefconfig_range/config b/scripts/kconfig/tests/savedefconfig_range/config
+new file mode 100644
+index 0000000000000..d939cfe5fd349
+--- /dev/null
++++ b/scripts/kconfig/tests/savedefconfig_range/config
+@@ -0,0 +1,7 @@
++CONFIG_INT_DEFAULT_ABOVE_RANGE=1
++CONFIG_INT_DEFAULT_BELOW_RANGE=4
++CONFIG_INT_DYNAMIC_RANGE=3
++CONFIG_HEX_DEFAULT_ABOVE_RANGE=0x20
++CONFIG_INT_IMPLICIT_DEFAULT_ZERO=1
++CONFIG_INT_CONDITIONAL_RANGE=2
++CONFIG_INT_CONDITIONAL_DEFAULT=2
+diff --git a/scripts/kconfig/tests/savedefconfig_range/expected_defconfig b/scripts/kconfig/tests/savedefconfig_range/expected_defconfig
+new file mode 100644
+index 0000000000000..e69de29bb2d1d
 -- 
 2.53.0
 
