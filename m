@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052591;
-	b=BZ2ROoDdTOo2uxLasgMQFtXk1C0xUcTf28X6B2OP2HGBwhO8wE1ApvFNHXLyTJ6TlZQF
-	 dI7zIQkytBboHPSdn+gzpdqnAHqNV/A+wLXODx3AQ6d0R8kmWwJ+HI5zWFsKZvqCQ+WlN
-	 sSCpT6Kk6TVqdM8BmR44rpgvJvBsJrvDDtizPeFlkzBKCL6uAmCLN3L2yTVaFzJKQ5bKw
-	 JOM9NdmmsABOJz4EDy1AE/nEMCfWQRPVeWOIq5+f84Oc7KfjKc/gU4HkrfljO/3jz36DF
-	 pZXZXOGUcKtyMEDXD1PEcUHP7i3+Fj+N8rJXxlObTtWM/n6AlFUgzxahltAbdiaWQ0A==
+	t=1795052593;
+	b=s1MBVQFlwBJ9kWEYYmBNkE4aFL4HoUjJCChQZyTRskhZY31XdNe4kRGZ9mLtBWVKjopY
+	 lhUbKKscLOO5QigkS+rC9uxp5eOcvzHXN1sZh48Vg29Kv9UvBkSmYrIS3L1jmE4yxHjiP
+	 igAxqbcstJylYSmfv0engDqHHwsu2OfoMh9zpK1YVRJ13fsCpnleIBYyqv/ID8DKbS4ir
+	 Rw/kMoJUU1OwjyTgAcVlSHr1FpzQ8hY+2oWim1NJzRBAhqfpdTyXh01NyBxACK1PJg1hf
+	 /r26BCUBO9YELSMUQtyFiW1SZk9Oq370hnOmw/Gno5kbdxtF3v/8pf+ucEnzAq/2bMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052591;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052593;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d7Yo5bdFgldaT/7wPZVsKWorzW9Nzr1mghT9Gm/1lvA=;
-	b=DBBrzML9wsQT9+rTG029U6u9kskI/rY7fc74fCx0G7i+6R6Nj7xPtJiwMfcsZQJCIocO
-	 e2S7hn0Bkom/vgsZMlyRQN6iJXYJhdSomPKKwfiXocQ7F7QbuVoy8WTHhS4lHaD+fbJ/K
-	 kvIanstldtZ2+JEjac4usc6g3TQf3GNvPWQBXw8cNZx/3H4dO9dIC2DAwQ22/PbhX6am5
-	 KLwjkQcNGYOyhRW9KpK3WlagEA4tXJrdzrs6oThXCv4n9CHt8XgAfpLU0KmH/Hy0lmt0W
-	 zAXY0bJoiaXyGDTZGZ9Dho/Qc1wNEA3/3iJ3gHGmOzUeuEDrW+BQnJaPFP0sFb/eV2Q==
+	bh=bUYimyjW6eSf0Y9oos9CR+xE0+g1ZZk9A8VrCs/CdnU=;
+	b=SdlQfEIpQbsxg4MakRY/deL5r2bcfBYuIT9a2OHFfed+x9dGJBmMYiCBtIXt6yiHutVu
+	 2RMPe5Q8F03ENMX9QHNj+iOiQ+M8OXAzmx9yyXRnuE/DTvzoC5vUR3C4S2XjcAhzUjrSw
+	 vZPIaBgF542vyQnwGpJAIvjkcx33JIL6sg1nADL5L/w+4q6uZyitBCki9S6UOx8sUl13G
+	 bsPX8w92gHKiLAKrUAjXJcmWjCDhMQaTwZeP9EetTgLgI+KaY4pP+OvYZnPPcDf2Dli3s
+	 SJoQN7FH2CfNPr16avaIfDmakUVLAStgQWZp7XogoE54h2APIDm90sPzfkvTmPD1anw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fzLBQVtm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Je0DcOqI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5E5606A32F;
-	Thu, 19 Nov 2026 01:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4AD606A31C;
+	Thu, 19 Nov 2026 01:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fzLBQVtm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6FF1F000C4;
-	Thu, 19 Nov 2026 01:43:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Je0DcOqI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7161F000C4;
+	Thu, 19 Nov 2026 01:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052591;
-	bh=d7Yo5bdFgldaT/7wPZVsKWorzW9Nzr1mghT9Gm/1lvA=;
+	s=korg; t=1795052593;
+	bh=bUYimyjW6eSf0Y9oos9CR+xE0+g1ZZk9A8VrCs/CdnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fzLBQVtmAOhqW0dbDjqjuugRsYBe3ifHGjyzVE6NzqbmNeKqQRmqvD1bxNtkUkmUS
-	 JJ0ElJxewzfwQGuTW3GvqC8TD24rmSnAQdD15/oonUb1F7I3NZYNGN16JxaPuN7NuJ
-	 0zuvtahzRzUaQT+WprReD6pFdudHQuBCjyO2TY68=
+	b=Je0DcOqItkci/YCqAVTkJOttuOTxb5HqGRXdH20enB1VDRStwxO7V9XkJKplFLnrI
+	 Vl7Bsxnd/8R+FEiDZWHyMikjv4CiSgk6dL9NqS5TyqF0fUbBPUQs1zBLN8me57AoJb
+	 wgOV2S5r2A0XYEzxC48KvHPfjoQuLgDyKCMxcRtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Boris Burkov <boris@bur.io>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0616/2214] arm64/efi: Clear PTE_WRITE when applying EFI_MEMORY_RO
-Date: Wed, 18 Nov 2026 15:38:12 +0100
-Message-ID: <20261118150036.031496982@linuxfoundation.org>
+Subject: [PATCH 5.15 0617/2214] btrfs: zoned: fix block group reference leak in btrfs_repair_one_zone()
+Date: Wed, 18 Nov 2026 15:38:13 +0100
+Message-ID: <20261118150036.071081056@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,47 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 215d7b6622733603751f546b9faf9b84b0c281d4 ]
+[ Upstream commit 886f1aa6e6b30a02901aa7f140149d466e10a873 ]
 
-set_permissions() sets PTE_RDONLY for regions that the Memory Attributes
-Table describes as read-only, but leaves PTE_WRITE set.  PTE_WRITE is
-the DBM bit, so when hardware dirty state management is enabled
-(TCR_EL1.HD), such a descriptor is writable-clean rather than read-only,
-and a write by the firmware will be permitted by the hardware (which
-marks the entry dirty) instead of faulting.
+btrfs_repair_one_zone() hands the block group reference taken by
+btrfs_lookup_block_group() over to relocating_repair_kthread(), which
+drops it.  However the return value of kthread_run() is not checked, so
+when the kernel thread fails to spawn, nothing executes the put and the
+block group reference is leaked.
 
-Clear PTE_WRITE as well, as pte_wrprotect() does.
+Check kthread_run() and drop the reference if the thread failed to
+start.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: f7ef5287a63d ("btrfs: zoned: relocate block group to repair IO failure in zoned filesystems")
+CC: stable@vger.kernel.org
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/efi.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/btrfs/volumes.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kernel/efi.c b/arch/arm64/kernel/efi.c
-index 9669f3fa2aefe..0ab04aa73bf2f 100644
---- a/arch/arm64/kernel/efi.c
-+++ b/arch/arm64/kernel/efi.c
-@@ -101,8 +101,14 @@ static int __init set_permissions(pte_t *ptep, unsigned long addr, void *data)
- 	efi_memory_desc_t *md = data;
- 	pte_t pte = READ_ONCE(*ptep);
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index fbf4e54ef9c57..681a4500f834f 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -8485,6 +8485,7 @@ static int relocating_repair_kthread(void *data)
+ int btrfs_repair_one_zone(struct btrfs_fs_info *fs_info, u64 logical)
+ {
+ 	struct btrfs_block_group *cache;
++	struct task_struct *task;
  
-+	/*
-+	 * Clear PTE_WRITE as well: it doubles as the DBM bit, and leaving it
-+	 * set would permit the hardware to make the mapping writable again
-+	 * when TCR_EL1.HD is set.
-+	 */
- 	if (md->attribute & EFI_MEMORY_RO)
--		pte = set_pte_bit(pte, __pgprot(PTE_RDONLY));
-+		pte = set_pte_bit(clear_pte_bit(pte, __pgprot(PTE_WRITE)),
-+				  __pgprot(PTE_RDONLY));
- 	if (md->attribute & EFI_MEMORY_XP)
- 		pte = set_pte_bit(pte, __pgprot(PTE_PXN));
- 	set_pte(ptep, pte);
+ 	/* Do not attempt to repair in degraded state */
+ 	if (btrfs_test_opt(fs_info, DEGRADED))
+@@ -8503,8 +8504,9 @@ int btrfs_repair_one_zone(struct btrfs_fs_info *fs_info, u64 logical)
+ 	cache->relocating_repair = 1;
+ 	spin_unlock(&cache->lock);
+ 
+-	kthread_run(relocating_repair_kthread, cache,
+-		    "btrfs-relocating-repair");
++	task = kthread_run(relocating_repair_kthread, cache, "btrfs-relocating-repair");
++	if (IS_ERR(task))
++		btrfs_put_block_group(cache);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
