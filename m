@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016289;
-	b=nmMa4p7+vH6u8ewdaSREiNPLGWGm9TYO3buxE11D0ArRYAJXrv0/FYpiXvGyVenWV8Tu
-	 3uv//Kz56k7QSHcZhMpwTYeh+GNgnlIv5m484q2JRzrqoUboaRQOLv7yAQsMDVJ9Ognd8
-	 U2yvRCvrHFaSCLqgf25JRduFrBtVOBnG8WKwCeXD3BspLdSi1UZ0hJEs49oPD9atD94NX
-	 UCaYOfk/s4yr/0tJnqJgLbvpatwyOwOZvdhmBpGtNxcI8cxiVqOQ9nwWj/huThP4ez+Qg
-	 mzVQCTVOX5zJ6TfjCrmX1urYsGmeDt8g3XkI8jw3n29JbzplmPyLOLNf6jj1zGIS/Rg==
+	t=1795016292;
+	b=CuiU47wEUWMnFsKBqNs/NQyxbDpb941mVcqF+vtUEbW8aqjin32mijQyTIJxiqziyY72
+	 2AiX+6JrJF83YubTtFSLibzHVPMXWlkbTCPOdNagESehIdkoP8DtsLRxUtQyPipyaNqIa
+	 46EiU5Nk7xAYsJ2XCQjYd/4VrbhBf78cRIjVvxDwqhq2z3TYByFqdhM486qOXCvxPfKkn
+	 H9BvG3ksFElarYJ2VkGqHJOkdHCMxXnXL+66p/yraIqCMJpCeZeJcicO+ZF/aN935cRrN
+	 IK9K5zBIXDAylILv3L2DEgDJICDZpsEBQ8EfZuyviDzvs5nesFVFBzAL2DXxi8kGw9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016289;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016292;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=veyJo8u3n8CojHq9F8R297ZNYpde3LbvziDX4Zqi33s=;
-	b=FD/78iJOW57o0Tzh195knl8RcU//49oj+bHnIglEp5T+8F6zuQit//e5JEZ5iXo+cI9J
-	 S++j6bXlKevpSPTmmEwKdXda9+hR6G/JiFIKYUWhlsQy3OY4v6mztrPKA1s9uWnAFJhPS
-	 BVL14UB9xRRdFqCzR+fNRwkJSVAh9TQxlIM7dl4l/JWrDb0hpZ/m3bqfBkH0oS5wgrfMZ
-	 EyOifWTD6VgjAGdpXKEu4B8PSHdmgAj4LdOhIu7ikmwfsfYVtnRkQf2AlteWBXFiIIzfc
-	 VdC29VzF9jOIYFP1AEzpfxOVCiES1FIMKrJOdtzn2ZzRDqIleChny9oNJByNIyp7+Vw==
+	bh=tVXgBTPMs6kBHo1FPxiX+OTnlUI4U2Zr8iW+9pHKzwY=;
+	b=hhbyhZ20W+ZgJwuTwNuouvZxhKTdxefcalbjzZWRjKSycaxsMx8r3OPPMsiAOevlXdZ8
+	 P1XYf5WnC0Vak2w4PnX/XSfz9Ozbf3PKlzeBweHbceQyOJQFQbdRV8PRSmFAH/VHG8SaE
+	 L70dIfsvZyKoqWmTcq5EdVzmqeOD7l4U0TjSXcBZpyOXOzwu/cOmA/SoYQZP9yDjsvk98
+	 RE1molaIWuE2eqBKXET6q/bJzNZlbjnnb8xKABxIG66dm6FiAkOcZXzU7hDxTdgE2hOHo
+	 OSA6cEOXhgcXJCY6Dwu3vrwcBJ1PlK1Ewx9YjA8PqcVqhzo4G+XJ0PHnVUEfHz7DPNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D4sSZgz8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LwK0Hukz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99AE360A262C;
-	Wed, 18 Nov 2026 15:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8277160A261F;
+	Wed, 18 Nov 2026 15:38:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D4sSZgz8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FE61F000C4;
-	Wed, 18 Nov 2026 15:38:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LwK0Hukz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24791F000C5;
+	Wed, 18 Nov 2026 15:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016289;
-	bh=veyJo8u3n8CojHq9F8R297ZNYpde3LbvziDX4Zqi33s=;
+	s=korg; t=1795016292;
+	bh=tVXgBTPMs6kBHo1FPxiX+OTnlUI4U2Zr8iW+9pHKzwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D4sSZgz88nkCEfAOGVluUVfzXDQFVyJU+U4xsx2/SMm+V10c0gIgZqpenBEj4PJW9
-	 cXR+wfRUdVGb0Hw52iLdkoPGC+Kfh/t+rAR09ox48RoVuUF8+fKLz7nSKJgXmxcaTp
-	 Jdo4FEF4tuHYDmy5hbB03l1nfpQpoVxSI8wcob0o=
+	b=LwK0Hukz4Jy1GZcGg5dUTkg+CJrhfvtsWsHjjzhSTNRkiP4IARspPgiVFBI64gmpf
+	 9txv7ckoM1G6hESpxZBVKOLx/X+UKdUqQnBvhNSmT28ffEvd4roCR1RMTsMWaq5MfV
+	 K/zYsx3DKe6SS3IPLo0cwSKDe4WpnmFO9OxoEX/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Sun Jian <sun.jian.kdev@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0425/2651] bpf: Fix program BTF use-after-free in sleepable programs
-Date: Wed, 18 Nov 2026 15:27:45 +0100
-Message-ID: <20261118150303.129613995@linuxfoundation.org>
+Subject: [PATCH 7.3 0470/2651] phy: cadence: Sierra: Do not modify register when getting parent clock
+Date: Wed, 18 Nov 2026 15:28:30 +0100
+Message-ID: <20261118150304.713371073@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,52 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+From: Gregory CLEMENT <gregory.clement@bootlin.com>
 
-[ Upstream commit 88c9c6d0a766dd146545990053e8a04422ccb367 ]
+[ Upstream commit 955e68eb3067842067b7b5395a3f8c278428802a ]
 
-Object kfunc calls embed metadata owned by the program BTF. A sleepable
-program can remain active under Tasks Trace RCU after its last reference is
-dropped, while program teardown releases the BTF through ordinary RCU. The
-invocation can then dereference freed metadata in bpf_obj_new().
+The get_parent() callback for the PLL_CMNLC1 clock was incorrectly
+writing to the register while determining the parent clock index. This
+unintended register access forces the PHY back into training mode. If
+the PHY is already configured, this unexpected change prevents it from
+exiting training mode.
 
-Move btf_put() into __bpf_prog_put_rcu(), the callback that frees the
-program. When teardown is deferred, that callback runs after the program's
-own grace period (Tasks Trace RCU for sleepable programs and ordinary RCU
-otherwise), so the BTF outlives every active invocation. The non-deferred
-path invokes the callback synchronously, so load-error cleanup stays direct.
+Remove the register write operation to ensure the PHY remains stable
+during the get_parent() callback.
 
-Fixes: 958cf2e273f0 ("bpf: Introduce bpf_obj_new")
-Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Sun Jian <sun.jian.kdev@gmail.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/20260901014829.3504342-2-sanghyun.park.cnu@gmail.com
+Fixes: da08aab940092 ("phy: cadence: Sierra: Fix to get correct parent for mux clocks")
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260306-fix_sierra_get_parent-v2-1-cafe89ee5382@bootlin.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/cadence/phy-cadence-sierra.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 96217b99399d5..12bd6a05907ac 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -2441,6 +2441,7 @@ static void __bpf_prog_put_rcu(struct rcu_head *rcu)
+diff --git a/drivers/phy/cadence/phy-cadence-sierra.c b/drivers/phy/cadence/phy-cadence-sierra.c
+index 92ab1a31646ae..dbeda7f01cbb2 100644
+--- a/drivers/phy/cadence/phy-cadence-sierra.c
++++ b/drivers/phy/cadence/phy-cadence-sierra.c
+@@ -698,23 +698,16 @@ static const struct phy_ops noop_ops = {
+ static u8 cdns_sierra_pll_mux_get_parent(struct clk_hw *hw)
  {
- 	struct bpf_prog_aux *aux = container_of(rcu, struct bpf_prog_aux, rcu);
+ 	struct cdns_sierra_pll_mux *mux = to_cdns_sierra_pll_mux(hw);
+-	struct regmap_field *plllc1en_field = mux->plllc1en_field;
+-	struct regmap_field *termen_field = mux->termen_field;
+ 	struct regmap_field *field = mux->pfdclk_sel_preg;
+ 	unsigned int val;
+ 	int index;
  
-+	btf_put(aux->btf);
- 	kvfree(aux->func_info);
- 	kfree(aux->func_info_aux);
- 	free_uid(aux->user);
-@@ -2466,7 +2467,6 @@ static void __bpf_prog_put_rcu_tasks(struct rcu_head *rcu)
- static void __bpf_prog_put_noref(struct bpf_prog *prog, bool deferred)
- {
- 	bpf_prog_kallsyms_del_all(prog);
--	btf_put(prog->aux->btf);
- 	module_put(prog->aux->mod);
- 	kvfree(prog->aux->jited_linfo);
- 	kvfree(prog->aux->linfo);
+ 	regmap_field_read(field, &val);
+ 
+-	if (strstr(clk_hw_get_name(hw), clk_names[CDNS_SIERRA_PLL_CMNLC1])) {
++	if (strstr(clk_hw_get_name(hw), clk_names[CDNS_SIERRA_PLL_CMNLC1]))
+ 		index = clk_mux_val_to_index(hw, cdns_sierra_pll_mux_table[CMN_PLLLC1], 0, val);
+-		if (index == 1) {
+-			regmap_field_write(plllc1en_field, 1);
+-			regmap_field_write(termen_field, 1);
+-		}
+-	} else {
++	else
+ 		index = clk_mux_val_to_index(hw, cdns_sierra_pll_mux_table[CMN_PLLLC], 0, val);
+-	}
+ 
+ 	return index;
+ }
 -- 
 2.53.0
 
