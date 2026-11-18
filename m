@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058838;
-	b=cTD8IzVEkowPRC6QTRImPiJXxHdeSSDU1FsjAkw42wpa9xD2uJWpxx2DFuzeeaPmFgHE
-	 15KCsEDsOTLhzmzzcCA86GXEeMYFMbsGjtviAG1QfrkOo2SqW4bJmYgc/0ZiZaAp2d+XW
-	 PFSvCZQlUToyUhhOxJiAYIB+hf6oVKnwqF5no9JC5GzHY6iOxlAMb0FyhHgKL/8NSYrL3
-	 ZF/lAfyR3X+owVbm08mZ4WIS6Y4NQlCovBd20cgLiY+8Avtmszvs5v4bhRbWs0l/i5jrq
-	 +yIaNZC57esk0gEfwlhjKJ4qBr9o7UPRfkjjO/4PVfKZbi1+2g0K7HUHSHS9Z0AqjlA==
+	t=1795058841;
+	b=rou1Ee9Vd94T7Hx/MEEz4yk3kj5Olhv6BVY744MG/DFBHJRt587UpOCD6vqN+yvq5zgt
+	 zkOUQkRVa/Y0SNN7YMqyHEILVWyNAKGw8WrHb8fdssNvKDRXDXshgGeNPuBbFxEtbk055
+	 UesgCqsZ40559eY1WUDgCcKI7GIXPL/XbrpHS0AWU2YKob4CG7hyVL2S38+RGMB/w6sJ4
+	 g0pl2Y3iCwvXb59g9fxbVxIlRELXuNjpVhH4jP/cEYFwkyTA2ImD9v8PNBEC1RIGGzP3T
+	 ATAYoiRNFvLVsLzNKDM6c4Tbda+RqBXSNkGtZMGR0Nn+RFTRv4XE3vDujLjYBCo7GRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058838;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058841;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8iaZ9G0a+MZ943badtH06j6OGYUskbBXm21030r16NY=;
-	b=OWnUUpIU1GJi2+ecqROAtl6aNEEueYl9MLh1mhaV3pksyS/UxkLPng4l1sVAdz+3pTos
-	 L+sT7xZ5mcqgf/ijlsqjBf5AHhAlbD3Z7iauAJ1BaQS74beIX574Y8i+/jttsMtrzT6Mp
-	 OROhmCSDzy2yIZxzVo0EH7tTwwKO6swSTVY9k3eGSNNvaqM6TmJg+iLGCIW9LhGODmmSZ
-	 RwTUy9/+n0YN4z8Quun5r8XLY1swIhMvQAtPUAJIDDsNIu8bd6xb8OUvwp7GOmFCCaKq5
-	 KUnQiuqmqPINth8NdoT3lSlyo+JqSCTzjfefWsp5BQpWKf+VlIoHgeMKHp35vFidgxQ==
+	bh=i1dUKFkXdYoPBlz5DQOooFDecJmWReUT6wuwuO2Tdn8=;
+	b=W4+5WAqj/VIJLhvFtz2Lh9FqMSnN7nlDyjO1Ny5+qrbg6dmWJqsHPBtdoselwayqNaqe
+	 PmvkHOqeB0BGn0EQ5RMjCOpBlbRePTBv8S0WFSRm3TLgaP4MZFr20Lht2UJWioXhLrUfN
+	 fZXrbHDs89KZJ2hClz7Z7Aqi/DbjIMHSYnHZchX0utKElSrjjOrgH69BOTL9/KhM+mpBN
+	 SAmaiyKCx6D6cf0kyXMgIH7riYDABbMKia6sAl3wpP1POyBUxCtP4EQZREWtnO4PM7pZ3
+	 McvaAzkL61ypIOHRCWH7kz3EIJnxfU9WHd6wb2rv50itc9Q3PLpKxU1vgGHSwqoHv/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vqn6bPCe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VcsnOOKE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90E160A2609;
-	Thu, 19 Nov 2026 03:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7126606A331;
+	Thu, 19 Nov 2026 03:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vqn6bPCe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264B61F000C5;
-	Thu, 19 Nov 2026 03:27:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VcsnOOKE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0434F1F000C5;
+	Thu, 19 Nov 2026 03:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058838;
-	bh=8iaZ9G0a+MZ943badtH06j6OGYUskbBXm21030r16NY=;
+	s=korg; t=1795058841;
+	bh=i1dUKFkXdYoPBlz5DQOooFDecJmWReUT6wuwuO2Tdn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vqn6bPCeYXfy+fLfhf1+utbxPqWrceYmbf7FoBRSrUcdWWS3l3XcrUd4Ngjcrikwb
-	 v+2oJucWBO+fB0keCd56MxGqUg5eEzdZCLpsTHBKBp0OdkguDzPm0fV4Pbuit1/b7+
-	 OS2qfaJovPsqJeS+Dcx0JSB1w+TxUOFIy+fG7gX0=
+	b=VcsnOOKE8eLsxM/+nelutoIZ6sU60fj8h3scANZqnY++yaJbAHgowZ7M+ucqHzE+i
+	 fmY3c5JL9AiYioGgSQu9LC9WJOkx4x0pjpdfDqbD5iHQF4X92YbPanHnVnT9UiCw1H
+	 OWw/kboWdqvxiR2M5MY87GuOnjRMnzYW6qN1Uhrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benji Wiebe <itsme@benjiwiebe.com>,
-	Jeff Layton <jlayton@kernel.org>,
+	syzbot+d5c77cabf7a3492aa650@syzkaller.appspotmail.com,
 	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0630/1848] nfsd: dont offer flexfiles layouts when NFSv3 isnt being served
-Date: Wed, 18 Nov 2026 15:44:28 +0100
-Message-ID: <20261118145941.980354659@linuxfoundation.org>
+Subject: [PATCH 5.10 0631/1848] NFSD: Move the cld upcall message out of the callers stack frame
+Date: Wed, 18 Nov 2026 15:44:29 +0100
+Message-ID: <20261118145942.046308217@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,56 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 5d28b2c920d9d9d3c45b41769342ad785eb372a7 ]
+[ Upstream commit c559b05610557fa3c6c30259261f6dae523b3f23 ]
 
-The flexfiles layout driver hands out a deviceinfo that names this server
-as an NFSv3 DS (flexfilelayout.c hardcodes da->version = 3). With v3
-disabled, the client can't talk to the DS: it loops on v3 NULL calls that
-the server answers with PROG_MISMATCH, and I/O hangs in D state.
+__cld_pipe_upcall() builds its struct rpc_pipe_msg on the stack and
+hands it to rpc_queue_upcall(), which links it into a list the pipe
+owns until the message is released. Only the completion rules keep that
+frame alive for as long as the pipe refers to it, and the peer that
+drives those rules is an untrusted userspace daemon. The gss and idmap
+upcalls do not take that on: each keeps the message in the object it
+already allocates.
 
-Skip LAYOUT_FLEX_FILES in nfsd4_setup_layout_type() unless v3 is enabled.
+Do the same here and put the message in struct cld_upcall, beside the
+reply buffer it carries. cld_pipe_destroy_msg() then reaches the upcall
+from the message directly rather than through msg->data.
 
-Reported-by: Benji Wiebe <itsme@benjiwiebe.com>
-Closes: https://lore.kernel.org/linux-nfs/c734eeb8-8486-4491-bb4d-b9656cbaffbe@app.fastmail.com/
-Fixes: 9b9960a0ca47 ("nfsd: Add a super simple flex file server")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260904-pnfs-ff-v1-1-5f502cf25401@kernel.org
+Reported-by: syzbot+d5c77cabf7a3492aa650@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d5c77cabf7a3492aa650
+Link: https://patch.msgid.link/20260901-alemi-v2-2-e163f94a3a6e@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
-[ sashal: adapted the flexfiles condition to replace an #ifdef guard instead of extending an existing IS_ENABLED() check ]
+Stable-dep-of: 2a83fcb50f3c ("NFSD: Complete a cld upcall when the daemon closes the pipe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4layouts.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4recover.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/fs/nfsd/nfs4layouts.c b/fs/nfsd/nfs4layouts.c
-index bcf16dd07d488..f55092c66f42b 100644
---- a/fs/nfsd/nfs4layouts.c
-+++ b/fs/nfsd/nfs4layouts.c
-@@ -125,6 +125,7 @@ nfsd4_set_deviceid(struct nfsd4_deviceid *id, const struct svc_fh *fhp,
- 
- void nfsd4_setup_layout_type(struct svc_export *exp)
+diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
+index 54815ce3da035..5cedbea8911ec 100644
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -720,6 +720,7 @@ struct cld_upcall {
+ 	struct completion	 cu_done;
+ 	/* daemon has read the whole upcall; protected by cn_lock */
+ 	bool			 cu_inflight;
++	struct rpc_pipe_msg	 cu_pipe_msg;
+ 	union {
+ 		struct cld_msg_hdr	 cu_hdr;
+ 		struct cld_msg		 cu_msg;
+@@ -731,22 +732,22 @@ static int
+ __cld_pipe_upcall(struct rpc_pipe *pipe, void *cmsg, struct nfsd_net *nn)
  {
-+	struct nfsd_net *nn = net_generic(exp->cd->net, nfsd_net_id);
- #if defined(CONFIG_NFSD_BLOCKLAYOUT) || defined(CONFIG_NFSD_SCSILAYOUT)
- 	struct super_block *sb = exp->ex_path.mnt->mnt_sb;
- #endif
-@@ -132,9 +133,9 @@ void nfsd4_setup_layout_type(struct svc_export *exp)
- 	if (!(exp->ex_flags & NFSEXP_PNFS))
- 		return;
+ 	int ret;
+-	struct rpc_pipe_msg msg;
+ 	struct cld_upcall *cup = container_of(cmsg, struct cld_upcall, cu_u);
++	struct rpc_pipe_msg *msg = &cup->cu_pipe_msg;
  
--#ifdef CONFIG_NFSD_FLEXFILELAYOUT
--	exp->ex_layout_types |= 1 << LAYOUT_FLEX_FILES;
--#endif
-+	if (IS_ENABLED(CONFIG_NFSD_FLEXFILELAYOUT) &&
-+	    nfsd_vers(nn, 3, NFSD_TEST))
-+		exp->ex_layout_types |= 1 << LAYOUT_FLEX_FILES;
- #ifdef CONFIG_NFSD_BLOCKLAYOUT
- 	if (sb->s_export_op->get_uuid &&
- 	    sb->s_export_op->map_blocks &&
+-	memset(&msg, 0, sizeof(msg));
+-	msg.data = cmsg;
+-	msg.len = nn->client_tracking_ops->msglen;
++	memset(msg, 0, sizeof(*msg));
++	msg->data = cmsg;
++	msg->len = nn->client_tracking_ops->msglen;
+ 
+-	ret = rpc_queue_upcall(pipe, &msg);
++	ret = rpc_queue_upcall(pipe, msg);
+ 	if (ret < 0) {
+ 		goto out;
+ 	}
+ 
+ 	wait_for_completion(&cup->cu_done);
+ 
+-	if (msg.errno < 0)
+-		ret = msg.errno;
++	if (msg->errno < 0)
++		ret = msg->errno;
+ out:
+ 	return ret;
+ }
+@@ -918,9 +919,8 @@ cld_pipe_downcall(struct file *filp, const char __user *src, size_t mlen)
+ static void
+ cld_pipe_destroy_msg(struct rpc_pipe_msg *msg)
+ {
+-	struct cld_msg *cmsg = msg->data;
+-	struct cld_upcall *cup = container_of(cmsg, struct cld_upcall,
+-						 cu_u.cu_msg);
++	struct cld_upcall *cup = container_of(msg, struct cld_upcall,
++						 cu_pipe_msg);
+ 	struct cld_net *cn = cup->cu_net;
+ 
+ 	/*
 -- 
 2.53.0
 
