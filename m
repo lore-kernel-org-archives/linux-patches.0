@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030930;
-	b=grijC7DqbgqUEYIzQUswdTSXZ09D4Kud4lZPw9UyqlyPoE+mzZHsQRlV1v6rEbS++Hcn
-	 HDXcywuijdZMViyl3InLxM7q2DA3phkBKubBgZWcQ5v34ef3FZzTTcFpSsDbUKHA/1xly
-	 QCOc1TbgAP1Wdz56YD3gVYCFkBgMVE0jXSbNFwWrHCWFpFLS6JyCAna1X2N17j2KcY6ft
-	 gYzjwgc54fflr/WgvGzxIqA6Q31NYs0Y0JRou2maHEudwE03c4Yh7y7QekwxjMTMohaEd
-	 6VHeIIG8RF2geLvEOpz/EfPOqmIA7FZ6qrQGlUIZx5lgmAi/JORpIj+gztoBbs073QA==
+	t=1795030933;
+	b=2p6tzkUQ5CTpNqGqhWP2lH83RlMRv1jlwC7uU2B3jiPojZncY1pTMSAOQA9zJWYukANd
+	 1BE0BvDzP9uV9z9u83ttHX1IcoaAjx3A6zIDaWdQFzMsvBvytrrX9yjRH0MFZr3r1Ob+o
+	 Vgz1+yQ7CGZKotpYDz/9FGBlF4RNztcbPn8Jm53Cyj3OFHdvsncuq71lZQMibVBjNZ2y3
+	 /5Zdk8n6rXDvryp3kpzXKJK+MyTEVTdwPcfVOJB39jN4Vp/BFNiZx/oWOaD3mwmx2HimN
+	 z7dxcbddOgLnO/yMqiQMgXfgx20oz31BejkKAxvUsbzGOcJPwhJCqjrp6Niy0XhuzCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030930;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030933;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=srMl6m8gk04rJa1hAXm9r/VehpzmmrRoiKdj44991WE=;
-	b=uLl07rj9hatP352TVgBJkUlhhe3Ws/mw9+oKv/wknhqCXgML1IUi2/3IABSAjdiGfOBE
-	 6P8JMUGo2r57fp6bdPA7CWk32HZj61D2Lo0OXM1g6EsrYZOlfzfVCUExglldunWAYJHWS
-	 utb0NZ0PSGb46QUawxmILRQf9zbTyJjk05RgOj4kfCoF8e31MGE5gcxL3nqDOJ7ujHbwb
-	 fz6BDDnleturI77KOjVF21+qEljPqG3uK1oIITWjJdeJ9KHls+EsfzztmkJp4Ovn8S5YA
-	 +504cg7YeeEyqs4E2yXeioRyMl5iy8gVDq0WvaDoUyMIDC6udAOYDvDItaMUPLJWNFA==
+	bh=OUmYFmirjXapUnKdsXqnEqwjsxo/dXJVeK57CEV+Th4=;
+	b=eVYvrp6kAjVFlxht+T8ZkVnJI54qXRlJ8OvCzO32EZHuLHlnlvkEwlZeRu+Fie5Uj8jq
+	 6fn5BYvn+3USDgxxn/dHbPHudGhdsR/RA1wKNnEwTutYdzFmzBd+KoOQZM4SBm8nPjruM
+	 kSr5EafNKZho3bbTdeAf0orUqTr3w5gD9aOKVYYpr0STrNHzbOOy8Me3YlVY+o0vzgrC9
+	 eXoG8V9Aj+2wHczF1Glorla3owxNCfsxqxlRNKc7JiiZM0REuhUaEcvqRIeQyotL5juQP
+	 IxvBv7RmpT4XWavg6UTsfBGCT2KRc6/ejsb9bimXIR4nzFJn6qUK8or+LO/6M5+tnig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oPuWId0L;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zxNji+ap;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66512606A325;
-	Wed, 18 Nov 2026 19:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16198606A7E8;
+	Wed, 18 Nov 2026 19:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oPuWId0L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDC31F000C4;
-	Wed, 18 Nov 2026 19:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zxNji+ap
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711F31F000C4;
+	Wed, 18 Nov 2026 19:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030930;
-	bh=srMl6m8gk04rJa1hAXm9r/VehpzmmrRoiKdj44991WE=;
+	s=korg; t=1795030932;
+	bh=OUmYFmirjXapUnKdsXqnEqwjsxo/dXJVeK57CEV+Th4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oPuWId0LHD7rMvICEa0yhJbazjF1JRkzqJm5IBkBTBIKawakjby4sXKJ5vaOHmHuU
-	 aIOULsnyxepi3xEI+eC8Yi705lt9EAJJ6ukS4JjBvYOREwN/zZ4aaNRe8kQTW4XWLg
-	 G3M9GiiXkWcoZzJFHuVgYbRZRSiS7Trlaoeyc9Z0=
+	b=zxNji+ap7JtrOM/poVRF8idbNaV3L9qwQJm/pqIvrPq5X219Pv62pRpBn6PTp/Uga
+	 XsR1UhiAnyHSg6/x+AZ6IDlmVCex7YO8LuuimnqWt4ylg9Ris/uAvvOkkbie8/c2rC
+	 gWOWc8LHoIp8cjxKbs1v8X7abfiB+ha0Tqf5xjwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0836/1756] power: supply: ab8500_charger: Retry AB8505 USB detection
-Date: Wed, 18 Nov 2026 15:49:23 +0100
-Message-ID: <20261118150042.752176172@linuxfoundation.org>
+Subject: [PATCH 6.12 0837/1756] power: supply: ab8500_charger: Recover inactive AB8505 charger
+Date: Wed, 18 Nov 2026 15:49:24 +0100
+Message-ID: <20261118150042.786451512@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,221 +70,128 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 95fba2e3055df99ed19e7d6399101bac42b3e7d5 ]
+[ Upstream commit 76bdf9d78245bb068207c23e9bf43d4b9bb201c3 ]
 
-AB8505 reports UsbLink1Status state 14 when the USB charger port is
-not OK. The manual says that software can return the port detector to
-the detection state by setting the self-clearing
-ChargerCtrl.DropCountReset bit.
+UsbChCtrl1.UsbChEna can remain set while UsbChStatus1.UsbChOn is
+clear. The existing recovery only checks the control bit, so it considers
+the charger enabled and leaves charging stopped.
 
 The Samsung-GT-S7710-Skomer, Samsung-SGH-I407-Kyle, and
-Samsung-SGH-T599-Codina-TMO product trees are reference points for a
-workaround that cycles the USB charger and retries detection three times
-before rejecting VBUS. Only the Kyle tree writes 1 to DropCountReset;
-the other two write 0 and therefore do not request the documented reset.
+Samsung-SGH-T599-Codina-TMO product trees are reference points for
+checking both bits and cycling the charger when they disagree.
 
-Add the same bounded recovery for AB8505, preserving the configured USB
-charger control bits across each cycle. Keep the charger connected while
-recovering, then report the fault and disconnect it if all three attempts
-fail. Leave AB8500 behavior unchanged.
+Extend the USB charger check to detect this AB8505 state and enable the
+check in the charging algorithm for AB8505. Only cycle the charger when
+VBUS is debounced and no charger-not-OK, thermal, overvoltage, or
+watchdog fault accounts for the inactive hardware.
 
-Fixes: d4337660d069 ("ab8500-charger: Add AB8505_USB_LINK_STATUS")
+Fixes: 4dcdf57773fd ("ab8500-bm: Quick re-attach charging behaviour")
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-12-e986ed321cc6@kernel.org
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-13-e986ed321cc6@kernel.org
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_charger.c | 114 ++++++++++++++++++++++++--
- 1 file changed, 109 insertions(+), 5 deletions(-)
+ drivers/power/supply/ab8500_chargalg.c |  9 ++---
+ drivers/power/supply/ab8500_charger.c  | 51 +++++++++++++++++++++++++-
+ 2 files changed, 53 insertions(+), 7 deletions(-)
 
+diff --git a/drivers/power/supply/ab8500_chargalg.c b/drivers/power/supply/ab8500_chargalg.c
+index 854491ad3ecd5..b450299dcbd67 100644
+--- a/drivers/power/supply/ab8500_chargalg.c
++++ b/drivers/power/supply/ab8500_chargalg.c
+@@ -1239,12 +1239,9 @@ static void ab8500_chargalg_algorithm(struct ab8500_chargalg *di)
+ 
+ 	charger_status = ab8500_chargalg_check_charger_connection(di);
+ 
+-	if (is_ab8500(di->parent)) {
+-		ret = ab8500_chargalg_check_charger_enable(di);
+-		if (ret < 0)
+-			dev_err(di->dev, "Checking charger is enabled error"
+-					": Returned Value %d\n", ret);
+-	}
++	ret = ab8500_chargalg_check_charger_enable(di);
++	if (ret < 0)
++		dev_err(di->dev, "Checking charger enable failed: %d\n", ret);
+ 
+ 	/*
+ 	 * First check if we have a charger connected.
 diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index d384004dd42a8..c162979da7799 100644
+index c162979da7799..7764821cb9266 100644
 --- a/drivers/power/supply/ab8500_charger.c
 +++ b/drivers/power/supply/ab8500_charger.c
-@@ -99,6 +99,8 @@
- 
- #define CHARGER_STATUS_POLL 10 /* in ms */
- 
-+#define AB8505_USB_CHARGER_NOT_OK_RETRIES	3
-+
- #define CHG_WD_INTERVAL			(60 * HZ)
- 
- #define AB8500_SW_CONTROL_FALLBACK	0x03
-@@ -261,6 +263,8 @@ struct ab8500_charger_max_usb_in_curr {
-  * @is_aca_rid:		Incicate if accessory is ACA type
-  * @current_stepping_sessions:
-  *			Counter for current stepping sessions
-+ * @usb_charger_not_ok_retries:
-+ *			Number of AB8505 USB charger recovery attempts
-  * @parent:		Pointer to the struct ab8500
-  * @adc_main_charger_v	ADC channel for main charger voltage
-  * @adc_main_charger_c	ADC channel for main charger current
-@@ -314,6 +318,7 @@ struct ab8500_charger {
- 	int invalid_charger_detect_state;
- 	int is_aca_rid;
- 	atomic_t current_stepping_sessions;
-+	unsigned int usb_charger_not_ok_retries;
- 	struct ab8500 *parent;
- 	struct iio_channel *adc_main_charger_v;
- 	struct iio_channel *adc_main_charger_c;
-@@ -473,6 +478,9 @@ static void ab8500_power_supply_changed(struct ab8500_charger *di,
- static void ab8500_charger_set_usb_connected(struct ab8500_charger *di,
- 	bool connected)
+@@ -52,6 +52,7 @@
+ #define MAIN_CH_DET			0x01
+ #define MAIN_CH_CV_ON			0x04
+ #define USB_CH_CV_ON			0x08
++#define USB_CH_ON			0x04
+ #define VBUS_DET_DBNC_LONG		0x02
+ #define VBUS_DET_DBNC1			0x01
+ #define OTP_ENABLE_WD			0x01
+@@ -1877,6 +1878,9 @@ static int ab8500_charger_usb_check_enable(struct ux500_charger *charger,
+ 	int vset_uv, int iset_ua)
  {
-+	if (!connected && !di->vbus_detected)
-+		di->usb_charger_not_ok_retries = 0;
-+
- 	if (connected != di->usb.charger_connected) {
- 		dev_dbg(di->dev, "USB connected:%i\n", connected);
- 		di->usb.charger_connected = connected;
-@@ -796,10 +804,19 @@ static int ab8505_charger_max_usb_curr(struct ab8500_charger *di,
- 		ret = -ENXIO;
- 		break;
- 	case AB8505_USB_STAT_CHARGER_NOT_OK:
--		di->flags.vbus_collapse = true;
--		dev_err(di->dev, "USB Type - VBUS has collapsed\n");
- 		di->max_usb_in_curr.usb_type_max_ua = USB_CH_IP_CUR_LVL_0P05;
--		ret = -ENXIO;
-+		if (di->usb_charger_not_ok_retries <
-+		    AB8505_USB_CHARGER_NOT_OK_RETRIES) {
-+			dev_warn(di->dev,
-+				 "USB Type - VBUS has collapsed, retrying\n");
-+			queue_delayed_work(di->charger_wq,
-+					   &di->check_usbchgnotok_work, 0);
-+			ret = -EAGAIN;
-+		} else {
-+			dev_err(di->dev,
-+				"USB Type - VBUS recovery failed\n");
-+			ret = -ENXIO;
-+		}
- 		break;
- 	case AB8505_USB_STAT_RESERVED_5:
- 	case AB8505_USB_STAT_RESERVED_6:
-@@ -2588,6 +2605,48 @@ static void ab8500_charger_usb_state_changed_work(struct work_struct *work)
- 	}
- }
+ 	u8 usbch_ctrl1 = 0;
++	u8 usbch_status1;
++	u8 usbch_status2;
++	bool reenable;
+ 	int ret = 0;
  
-+static int ab8505_charger_retry_usb_detection(struct ab8500_charger *di)
-+{
-+	u8 usbch_ctrl1;
-+	bool usb_enabled;
-+	int restore_ret;
-+	int ret;
-+
-+	ret = abx500_get_register_interruptible(di->dev, AB8500_CHARGER,
-+						AB8500_USBCH_CTRL1_REG,
-+						&usbch_ctrl1);
-+	if (ret < 0)
-+		return ret;
-+
-+	usb_enabled = usbch_ctrl1 & USB_CH_ENA;
-+	if (usb_enabled) {
-+		ret = abx500_mask_and_set_register_interruptible(di->dev,
-+								 AB8500_CHARGER,
-+								 AB8500_USBCH_CTRL1_REG,
-+								 USB_CH_ENA, 0);
-+		if (ret < 0)
+ 	struct ab8500_charger *di = to_ab8500_charger_usb_device_info(charger);
+@@ -1892,7 +1896,52 @@ static int ab8500_charger_usb_check_enable(struct ux500_charger *charger,
+ 	}
+ 	dev_dbg(di->dev, "USB charger ctrl: 0x%02x\n", usbch_ctrl1);
+ 
+-	if (!(usbch_ctrl1 & USB_CH_ENA)) {
++	reenable = !(usbch_ctrl1 & USB_CH_ENA);
++	if (is_ab8505(di->parent)) {
++		ret = abx500_get_register_interruptible(di->dev,
++							AB8500_CHARGER,
++							AB8500_CH_USBCH_STAT1_REG,
++							&usbch_status1);
++		if (ret < 0) {
++			dev_err(di->dev, "USB charger status read failed\n");
 +			return ret;
-+	}
++		}
 +
-+	ret = abx500_mask_and_set_register_interruptible(di->dev,
-+							 AB8500_CHARGER,
-+							 AB8500_CHARGER_CTRL,
-+							 DROP_COUNT_RESET,
-+							 DROP_COUNT_RESET);
++		if (!reenable && (usbch_status1 & USB_CH_ON))
++			return 0;
 +
-+	if (usb_enabled) {
-+		restore_ret = abx500_mask_and_set_register_interruptible(di->dev,
++		if (!(usbch_status1 & VBUS_DET_DBNC_LONG))
++			return 0;
++
++		ret = abx500_get_register_interruptible(di->dev,
++							AB8500_CHARGER,
++							AB8500_CH_USBCH_STAT2_REG,
++							&usbch_status2);
++		if (ret < 0) {
++			dev_err(di->dev, "USB charger fault status read failed\n");
++			return ret;
++		}
++
++		if ((usbch_status2 &
++		     (VBUS_CH_NOK | USB_CH_TH_PROT | VBUS_OVV_TH)) ||
++		    di->flags.usbchargernotok || di->flags.usb_thermal_prot ||
++		    di->flags.vbus_ovv || di->usb.wd_expired)
++			return 0;
++
++		if (!reenable) {
++			dev_info(di->dev,
++				 "USB charger enabled but inactive, cycling it\n");
++			ret = abx500_mask_and_set_register_interruptible(di->dev,
 +									 AB8500_CHARGER,
 +									 AB8500_USBCH_CTRL1_REG,
-+									 USB_CH_ENA,
-+									 USB_CH_ENA);
-+		if (restore_ret < 0)
-+			return restore_ret;
++									 USB_CH_ENA, 0);
++			if (ret < 0)
++				return ret;
++			reenable = true;
++		}
 +	}
 +
-+	return ret;
-+}
-+
- /**
-  * ab8500_charger_check_usbchargernotok_work() - check USB chg not ok status
-  * @work:	pointer to the work_struct structure
-@@ -2597,7 +2656,10 @@ static void ab8500_charger_usb_state_changed_work(struct work_struct *work)
- static void ab8500_charger_check_usbchargernotok_work(struct work_struct *work)
- {
- 	int ret;
-+	u8 link_status = 0;
- 	u8 reg_value;
-+	bool charger_not_ok;
-+	bool prev_collapse;
- 	bool prev_status;
++	if (reenable) {
+ 		dev_info(di->dev, "Charging has been disabled abnormally and will be re-enabled\n");
  
- 	struct ab8500_charger *di = container_of(work,
-@@ -2610,19 +2672,61 @@ static void ab8500_charger_check_usbchargernotok_work(struct work_struct *work)
- 		dev_err(di->dev, "%s ab8500 read failed\n", __func__);
- 		return;
- 	}
-+	charger_not_ok = reg_value & VBUS_CH_NOK;
-+	if (is_ab8505(di->parent)) {
-+		ret = abx500_get_register_interruptible(di->dev, AB8500_USB,
-+							AB8500_USB_LINK1_STAT_REG,
-+							&link_status);
-+		if (ret < 0) {
-+			dev_err(di->dev, "%s USB link status read failed\n",
-+				__func__);
-+			return;
-+		}
-+
-+		link_status = (link_status & AB8505_USB_LINK_STATUS) >>
-+			USB_LINK_STATUS_SHIFT;
-+		charger_not_ok |=
-+			link_status == AB8505_USB_STAT_CHARGER_NOT_OK;
-+	}
-+
- 	prev_status = di->flags.usbchargernotok;
-+	prev_collapse = di->flags.vbus_collapse;
-+
-+	if (is_ab8505(di->parent) &&
-+	    link_status == AB8505_USB_STAT_CHARGER_NOT_OK &&
-+	    di->usb_charger_not_ok_retries <
-+	    AB8505_USB_CHARGER_NOT_OK_RETRIES) {
-+		di->usb_charger_not_ok_retries++;
-+		di->flags.usbchargernotok = false;
-+		di->flags.vbus_collapse = true;
-+		dev_warn(di->dev, "Retrying USB charger detection (%u/%u)\n",
-+			 di->usb_charger_not_ok_retries,
-+			 AB8505_USB_CHARGER_NOT_OK_RETRIES);
- 
--	if (reg_value & VBUS_CH_NOK) {
-+		ret = ab8505_charger_retry_usb_detection(di);
-+		if (ret < 0)
-+			dev_err(di->dev, "USB charger retry failed: %d\n", ret);
-+
-+		queue_delayed_work(di->charger_wq,
-+				   &di->check_usbchgnotok_work, HZ);
-+	} else if (charger_not_ok) {
- 		di->flags.usbchargernotok = true;
-+		if (is_ab8505(di->parent) &&
-+		    link_status == AB8505_USB_STAT_CHARGER_NOT_OK) {
-+			di->flags.vbus_collapse = false;
-+			ab8500_charger_set_usb_connected(di, false);
-+		}
- 		/* Check again in 1sec */
- 		queue_delayed_work(di->charger_wq,
- 			&di->check_usbchgnotok_work, HZ);
- 	} else {
- 		di->flags.usbchargernotok = false;
- 		di->flags.vbus_collapse = false;
-+		di->usb_charger_not_ok_retries = 0;
- 	}
- 
--	if (prev_status != di->flags.usbchargernotok)
-+	if (prev_status != di->flags.usbchargernotok ||
-+	    prev_collapse != di->flags.vbus_collapse)
- 		ab8500_power_supply_changed(di, di->usb_chg.psy);
- }
- 
+ 		ret = abx500_mask_and_set_register_interruptible(di->dev,
 -- 
 2.53.0
 
