@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018269;
-	b=39cdgP4YG+Ohf1675ys1ajQq86TKce1AWMJ8Q/6AhUJaoMdEKhWkPKFwFXE2JWm+6Rap
-	 OCVsyoPOz0hs0zA0HwNDf3gmySHc+gs0nTjeZZPxvoMYJL5khE7ma/j+JgHUNPjVswaK/
-	 JJ6BZoEsLDsETkr6IovotKIIU/x7IgOlaNmtPyifvC65LXK5N9w3nMz7JzOl/1vMkPp9R
-	 MRYfIYU9G76KN7M6dxV+AtZaj4rV1ZhLGAMTWvLFuLsYP1XX3vxvZufKW9FP2WdZX5XbL
-	 zsvvH+B0lUHKD7MM5yP3QIFcqRDC5vry2cOW4txsy0aniKi6VeDoPsRIpYnBlyBzkUg==
+	t=1795018271;
+	b=fJTIBOJ9PX2872YIiAlae/TnUnURiWpRoWzyM/9VoWbdsd3roIJulwXpijZJc/lqRLC9
+	 Eg+SJrJX4yQ05FUzDUdY64NPAAHlW6roY0L5MrHSP2u+jB5FDvn5GzxT7b9SX8AnH3jtM
+	 XMn3u6yCGz8/7NtrwGc6mnVrK9498raHIQhmSy6Gr6KtlwBA0bFz2A+8yHtPE8+YSfdT2
+	 bK3I7LJPYx3sqiiOxZLq/Ioj9qEuteihGq2AmU2uXMEFrj2tJUcorvjomhm+8ZWzGwtM2
+	 CdgK87EMsldjMrJnbh+005G3GXAaiZWN2EFgBsZs0hOExpiUvtH+XPzeXEKaGLPG/ww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018269;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018271;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DOhLEw0HUOnjBhbRLqXAxCKAJSv0MfdQuK7q5F2b9uk=;
-	b=z6lRroQsWeKfLonXhKvWnHc0STh8Wui8HSAfjrTOU+SNyMaW0Ufh/QPxy04TC/oGf4In
-	 nd/+AAAYoSeZmNMww/wDaCFMjMPQLz/dfsRuwxGdRSqADORg70c17IeDzAYPlG9ww6cyO
-	 QCTkac3eXSuW3wQ9E/htaZoKDWeAvop8jug0NgO6Z/du/5D1HcZqPMmwOoF17AUYHrO6H
-	 rjrLJoP5gHdnbVKuMjKXXELZuzCtWJ0MXC+pNO0fZ33VJDxldmjV5l5ai0Xm1aZPPUbfc
-	 E01dpJZyASch8/85ROPyLEF3kJODCkosFRyFTL0FXmuv95BO65bEi1HZkYKI9N7K1zQ==
+	bh=B4TIAX1K00b+1pzjxa499pT7YbfPW0I3P94UwMCCgXY=;
+	b=s64/05d2qbdJB+Un1BgZO21HkIOZ4pS/FsQgI2kOqjt+zlVIvvgCafWc+Yji95LA5b6m
+	 2141EXV/qYXuEgAaK/Xs8hNN0wX8cSc1zw6b0s6FYzX1AKsgN+1AhieUuhCld6namozla
+	 dNcmPIEIijoozvALvvOtulKW8OQPkjm8gjCbJB5oB0ukZs2J2lCWSMfSs/18OTnDIPuyl
+	 CFDxHRu28pgHkdNITnxaMmYt6uvNs09oKi1uLLJ31xFi/RlvHXT2JNLncHGTjMBJIjuFL
+	 QM86j5RvuxJkGeVInCJMXD7NkiLY2xLNX2MSdQz8HiSoMm9FZqO0z6O6IfuoNB2MvXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DY5wDESX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lR8vvTMM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9962606A325;
-	Wed, 18 Nov 2026 16:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998FF606A325;
+	Wed, 18 Nov 2026 16:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DY5wDESX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3531F000C4;
-	Wed, 18 Nov 2026 16:11:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lR8vvTMM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BEC1F000C4;
+	Wed, 18 Nov 2026 16:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018268;
-	bh=DOhLEw0HUOnjBhbRLqXAxCKAJSv0MfdQuK7q5F2b9uk=;
+	s=korg; t=1795018271;
+	bh=B4TIAX1K00b+1pzjxa499pT7YbfPW0I3P94UwMCCgXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DY5wDESXN0PbIsDI80iwrYlN3jsE4BtK+GRZaVfgErtSRNbmiwWmJLWMPsBiDN7rp
-	 8PRSngNTrq6La4yMSs/+mAP4hphA2KomlTBvY1eOGVgx3lVg5wk7sOcT2IXXSTOKpJ
-	 7MsAgsz8265en1dUx8cg7KerirhbPyUyu4RWd2KI=
+	b=lR8vvTMMpm0CfuIcsDqq4TtwwaoSoHdSYYEMFp4EUDcoiV7gArQ2gfbZtDliBWaWl
+	 +guOxmncZY9ZFwjYlKNIVMUOIwwOqKyZOEqJOf895qTAw4rARFw1vyRVE/0GpBGbk+
+	 OroVC/R9okYaiD+3ABqrh2/+VyL8bMA0d8C864j0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Mostafa Saleh <smostafa@google.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1129/2651] drm/amdgpu/userq: fix reading the WPTR at a non-zero BO offset
-Date: Wed, 18 Nov 2026 15:39:29 +0100
-Message-ID: <20261118150328.658391080@linuxfoundation.org>
+Subject: [PATCH 7.3 1174/2651] iommu/arm-smmu-v3-test: Fix arm_smmu_v3_test_debug_print_used_bits()
+Date: Wed, 18 Nov 2026 15:40:14 +0100
+Message-ID: <20261118150330.274505789@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,54 +71,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Mostafa Saleh <smostafa@google.com>
 
-[ Upstream commit c7ae3b2043282da8de92bd925c8f6bb614633181 ]
+[ Upstream commit ce58940ccc3d1a377d238d93666c140405f8ce05 ]
 
-The user queue UAPI permits the WPTR at any 8-byte aligned offset within a
-BO. amdgpu_userq_fence_read_wptr() locates the mapping containing the WPTR
-address, but amdgpu_bo_kmap() returns the start of the BO, so the code read
-the first u64 regardless of the WPTR offset. USERQ_SIGNAL uses this value as
-the exported fence seqno, so a wrong read makes the fence signal early (or
-never), breaking dependency synchronization.
+arm_smmu_v3_test_debug_print_used_bits() hardcodes arm_smmu_get_ste_used()
+instead of using the provided writer->ops->get_used() callback.
+This caused Context Descriptors to be incorrectly parsed as STEs.
 
-Translate the WPTR GPU address to a byte offset within the BO, accounting
-for the VA mapping start and the mapping's BO offset, before reading it.
-
-Fixes: a292fdecd728 ("drm/amdgpu: Implement userqueue signal/wait IOCTL")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 56e1a4cc2588 ("iommu/arm-smmu-v3: Add unit tests for arm_smmu_write_entry")
+Reported-by: Sashiko <>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Mostafa Saleh <smostafa@google.com>
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c
-index 743b41db5b7cb..d29581f84535e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c
-@@ -370,7 +370,7 @@ static int amdgpu_userq_fence_read_wptr(struct amdgpu_device *adev,
- 	struct amdgpu_bo_va_mapping *mapping;
- 	struct amdgpu_bo *bo;
- 	struct drm_exec exec;
--	u64 addr, *ptr;
-+	u64 addr, offset, *ptr;
- 	int ret;
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
+index add671363c828..eae08d4d77ec2 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
+@@ -125,8 +125,8 @@ arm_smmu_v3_test_debug_print_used_bits(struct arm_smmu_entry_writer *writer,
+ {
+ 	__le64 used_bits[NUM_ENTRY_QWORDS] = {};
  
- 	addr = queue->userq_prop->wptr_gpu_addr;
-@@ -402,7 +402,10 @@ static int amdgpu_userq_fence_read_wptr(struct amdgpu_device *adev,
- 		goto lock_error;
- 	}
- 
--	*wptr = le64_to_cpu(*ptr);
-+	/* The WPTR can be anywhere within the BO's VA mapping. */
-+	offset = addr - (mapping->start << AMDGPU_GPU_PAGE_SHIFT);
-+	offset += mapping->offset;
-+	*wptr = le64_to_cpu(ptr[offset / sizeof(*ptr)]);
- 
- 	amdgpu_bo_kunmap(bo);
- 	drm_exec_fini(&exec);
+-	arm_smmu_get_ste_used(ste, used_bits);
+-	pr_debug("STE used bits: ");
++	writer->ops->get_used(ste, used_bits);
++	pr_debug("Entry used bits: ");
+ 	print_hex_dump_debug("    ", DUMP_PREFIX_NONE, 16, 8, used_bits,
+ 			     sizeof(used_bits), false);
+ }
 -- 
 2.53.0
 
