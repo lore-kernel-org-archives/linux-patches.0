@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025846;
-	b=JSl9t6xF/TxsnFLnOXspaM5QYKXL66jLYYiJnVfcFeQMfTS16Og5DGHnKP2RVBtFVQni
-	 aCq5mTwQaK9VGMOQlppQ37XY/5NtujU/jLVp6D5WeVt3AQhPpZnN+2VMkwFSHxUY87TU2
-	 gL6slb485XXTLfW6dlyaO8ZeFNhOVgfB9QCZ2FHAWWKN0Hn7ruNpXDjAlfi7uPAQN7W98
-	 M3CUhcZVkv4n4061WK5Il5A82wwkBHQuqEIUwsWxRTJNAm6pkWLRKhMF7iOWzHmLpqRjo
-	 YN/f8HWOf2p7Xq8zTDXrVzMChkJ/T/0eM/FEgI/rkOiQQQSSPgI8DO6jJBft20aK43Q==
+	t=1795025849;
+	b=PkW41zoH4ib9R07ONlJqJOh4dvr9aPHaXn8q0fxHPpsSMjyz4bbGNbbiFlCpoZEpklu9
+	 IZGsKz7vVYNEkYpR0pLN0bZDaFLQzsgfzGpv/54pNUXPvkq8LG9QiOJOyfqT6r5HTQ733
+	 KQxJarSl8uoAehAKICyc8GaaI9nCt9LoPepYJaKGyMRIwrP7MT4YtiKuNUw8aNFc+tXRU
+	 Td5GBChud+2txdP0ccSlFb+ZD+LXg4Ni/+MiRYQy6Xqn35yblci9srhlYyqHTq0lZzIAV
+	 y6evBQRGtey5fZKnwe4qY3W3Ro/UXi18c9wXfvYSBwj2WOfTbTmdBpkJKyECJg9k3Uw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025846;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025849;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Iwf9vMG0u6woEpvsxAZu6kn6RQDP1eIT5V6LBQDsr8U=;
-	b=y2lrPTY27cAiwXe7hxqjAqqzsvc1vYuHlfXGojl28OQTGAjlnCfwkhjNTb1ELV70RIIM
-	 jlylPfXJ5UbPm3IozHnQBzznRIhtQ3sZFN16OIjC0+YTGjtd7WgAGXpWE1mEcSz/5sJvV
-	 +2ly5ZlSmDBvcuWnibhaz42BpWX3FNsE66NSgqVhIRe02DTVFzCRrF7XnoQhqR+StRG3F
-	 1BTeSlRvb/xMGHRO1lZyGY1m9C9fIOyRnvsxksnlWUt2B2i9TtaDRA/e/w2cPQ1zs2FRu
-	 NGYB43psHxizOR/uCpd7N/DG8dHsp1NF06fFf0/dpAAPHaySzjfD8jGPP7yUTQXxvkw==
+	bh=VMtCqZVRaziqB9sIa+R5ZcTwcWrZJfcDqhg/VW+RpwU=;
+	b=UdzceUZYHfxDQZfXhb/NVK+0jkz/g1jM2wK2Tk6fjM9AYiL4M+ZWCTgKjMgeIZ59VSii
+	 v2DSHR0gJhxLkmqAt/2QwafSSkyW11IKdRDcKtUSdfl3h2gipZP4Ysld+DfL+GdhRORSN
+	 uJkbohVdelKGdETxwwnHPcIy4JG7EksKJrjC7GvrZLEZJ7T7fmo9DY6nKF3ytEG1r5hCS
+	 kGEQ9BbIxb1KcTaSQPxowVndUxommBKhBIivAhiukQz80WtQorPJG4dHX1qWV+8kF8W8+
+	 oycRqo7htWdxdc7gKti/xBtS0zO5cQ+sewiB+eW+DG3Y/12gWGOz2X3sV70BQM1esag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2T3Epwtx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IgJhHqua;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3BD60A3821;
-	Wed, 18 Nov 2026 18:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B43B60A260D;
+	Wed, 18 Nov 2026 18:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2T3Epwtx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24A51F0181A;
-	Wed, 18 Nov 2026 18:17:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IgJhHqua
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4951F000D2;
+	Wed, 18 Nov 2026 18:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025846;
-	bh=Iwf9vMG0u6woEpvsxAZu6kn6RQDP1eIT5V6LBQDsr8U=;
+	s=korg; t=1795025849;
+	bh=VMtCqZVRaziqB9sIa+R5ZcTwcWrZJfcDqhg/VW+RpwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2T3EpwtxGdTNmf0McvEoOktOvlmbkHC5ehe9cDgA1qdTlRjGB5JqQfpEK4mTOpS5O
-	 oC3kM7YdRaNHvPGtZt1snGXVjMCZ63YddflQalNc1AGX2gHd5Uiscerve54wFcm+0J
-	 0/xnMoOebaFT06UuHc+sFY0/gpgZ5cVESCzJXYiw=
+	b=IgJhHqualN1rUYXqh6rYaL08AVXjmnHIUdloLNENoJc24AA6lSyLjnuls5VdrbyO4
+	 Zlqws7wfgosbQ3mZsaHYII2R6PygofAPwR1Z37SgOVLcrxK/2/3suW7scvYZmXZTau
+	 3dnHuVr8vNezpr/MGBb8tjEJZ9Q984wUPhTfeYzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Papa <pcristian292@gmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1224/2151] wifi: mt76: feed the station RSSI average from the chain signals
-Date: Wed, 18 Nov 2026 15:49:19 +0100
-Message-ID: <20261118150206.781877722@linuxfoundation.org>
+Subject: [PATCH 6.18 1225/2151] wifi: mt76: abort a scan only for a link change on the scanning radio
+Date: Wed, 18 Nov 2026 15:49:20 +0100
+Message-ID: <20261118150206.813515541@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,71 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Papa <pcristian292@gmail.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit e1534fef1ae4df6e16401117394c26dbef84f361 ]
+[ Upstream commit c7a6b6a1dcc8fc0ac49ec0d7418b4603684e7d73 ]
 
-mt76_check_sta() adds status->signal of every received frame to the
-station's RSSI average, wcid->rssi, which mt76_get_min_avg_rssi() reads
-for the dynamic sensitivity of mt7603 and mt7615 and for the gain
-control of mt76x0 and mt76x2.
+mt76_assign_vif_chanctx() and mt76_unassign_vif_chanctx() abort the
+scan whenever the scanning vif gains or loses a link, on any radio. An
+AP MLD that scans on one radio for ACS while its link on another radio
+comes up therefore loses the whole scan, and hostapd gets an aborted
+scan. mac80211 does not continue an aborted scan with the next band.
 
-Since commit 4550fb9e9810 ("mt76: improve signal strength reporting"),
-drivers no longer set status->signal: mt76_rx_convert() computes it from
-the chain values when the frame is handed to mac80211, after
-mt76_check_sta() has run. Except on mt7921, which still sets it, the
-average is fed zeros. mt76_get_min_avg_rssi() then returns 0, so mt7603
-and mt7615 leave the sensitivity at its default, and mt76x0 and mt76x2
-fall back to -75 dBm for their gain settings.
+The scan uses the link of the vif that mt76_get_vif_phy_link() returns
+for the scanning radio, so it needs to stop only for a channel context
+on that radio: the new link would duplicate the offchannel link, or the
+removed link is the one the scan uses. Abort only in that case, as
+mt76_add_chanctx() does.
 
-Compute the signal from the chain values in mt76_check_sta() as well,
-as mt76_rx_convert() does. On mt7921, the average now follows the same
-combined value that mac80211 gets instead of the strongest chain.
-
-Tested on a TP-Link Archer XR500v with one client, switching between
-the old and the new input every 30 seconds. On the MT7662E (mt76x2),
-the average the AGC works with was -75 dBm, its fallback, with the old
-input and -54 dBm with the new one, while iw reported -54 and -52 dBm
-for the station, and the AGC mostly used its low_gain 2 setting instead
-of 1. On the MT7603E, the station average was 0 with the old input and
--41 dBm with the new one, while iw reported -42 and -41 dBm. The mt7603
-sensitivity still stayed at its default: a separate bug keeps it from
-leaving 0.
-
-Fixes: 4550fb9e9810 ("mt76: improve signal strength reporting")
-Assisted-by: LLM
-Signed-off-by: Cristian Papa <pcristian292@gmail.com>
-Link: https://patch.msgid.link/20260924032639.28158-1-pcristian292@gmail.com
+Fixes: e411b8190fe7 ("wifi: mt76: add multi-radio support to scanning code")
+Link: https://patch.msgid.link/20261006205936.669125-1-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/channel.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
-index 668767029599b..0ba5179ba7fa3 100644
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -1470,6 +1470,7 @@ mt76_check_sta(struct mt76_dev *dev, struct sk_buff *skb)
- 	struct ieee80211_hw *hw;
- 	struct mt76_wcid *wcid = status->wcid;
- 	u8 tidno = status->qos_ctl & IEEE80211_QOS_CTL_TID_MASK;
-+	int signal;
- 	bool ps;
+diff --git a/drivers/net/wireless/mediatek/mt76/channel.c b/drivers/net/wireless/mediatek/mt76/channel.c
+index 696b8ad3ea403..66bb75090a161 100644
+--- a/drivers/net/wireless/mediatek/mt76/channel.c
++++ b/drivers/net/wireless/mediatek/mt76/channel.c
+@@ -111,7 +111,7 @@ int mt76_assign_vif_chanctx(struct ieee80211_hw *hw,
+ 	bool mlink_alloc = false;
+ 	int ret = 0;
  
- 	hw = mt76_phy_hw(dev, status->phy_idx);
-@@ -1487,8 +1488,9 @@ mt76_check_sta(struct mt76_dev *dev, struct sk_buff *skb)
+-	if (dev->scan.vif == vif)
++	if (dev->scan.vif == vif && dev->scan.phy == phy)
+ 		mt76_abort_scan(dev);
  
- 	sta = container_of((void *)wcid, struct ieee80211_sta, drv_priv);
+ 	mutex_lock(&dev->mutex);
+@@ -160,7 +160,7 @@ void mt76_unassign_vif_chanctx(struct ieee80211_hw *hw,
+ 	struct mt76_phy *phy = ctx->phy;
+ 	struct mt76_dev *dev = phy->dev;
  
--	if (status->signal <= 0)
--		ewma_signal_add(&wcid->rssi, -status->signal);
-+	signal = mt76_rx_signal(status->chains, status->chain_signal);
-+	if (signal <= 0 && signal > -128)
-+		ewma_signal_add(&wcid->rssi, -signal);
+-	if (dev->scan.vif == vif)
++	if (dev->scan.vif == vif && dev->scan.phy == phy)
+ 		mt76_abort_scan(dev);
  
- 	wcid->inactive_count = 0;
- 
+ 	mutex_lock(&dev->mutex);
 -- 
 2.53.0
 
