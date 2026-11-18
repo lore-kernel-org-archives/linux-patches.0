@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023145;
-	b=yx0RDpqyJN7ayUMgogmu/0j7irXtCZNpV+QZbAnEkm4nqtaEyyLtPzpYV8GETCcIoyYf
-	 V2b4zVEiokR5xGbVRFwO/rN1WLm0l9x7iXOqIoTA2nigZHFd+4/pF5tfWhAmUBMmRi+p5
-	 3kbaxOtnHJiJS4i/f9uMdcI3K2wCA6RKI8yt4fwZA/tIXrXTbBBmZxsRFtKdWtv5tYmq2
-	 E9gG3NYZjt/xPv0PzVw1joJcLsmoXF0Ve90NQItVnshApqkUdh6qlaMiI5NDUMbcT7pjj
-	 307hL1nCx3lhZqowdC1sQFyWZ6l4Jrc7x6FRJ/i33NGCkPcbDQa2pq0BckskZflOT9A==
+	t=1795023148;
+	b=4EoBguWEEQIg19nvjWJx+6a/kxtVyloHMcEmg7NMfwcEgmfwRXnUtbnQ17QLjf3UZBxO
+	 3VAshnDnaQvXKIntfGwtWr9pjpH1YVVO0JC/WFbnMxJ1LpspmR+etu7zZ1yvis/3lI+vF
+	 74+0aSdyKXLF5ylz2C+GNS5d5qQJuhD3c2pTV34omeo4y2TBupgYaaPpWCCfsawBGFHRh
+	 0izolPDBmmYTQ9IIAxRnl3WQiNgQivqb/nLcztCccauaDnV2dHLF3he+HsJ61XVHIkljQ
+	 S3h0hjUCFsuVH87yioaITh4QpBFX1LLgyL01pn48xnhb3ftdNmXMkvReedy+GHwvr5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023145;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023148;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m+aXDHHydfjkXCN5H4JkdikbMjoctxxn61KBM5mKUW8=;
-	b=TZyU9gD9T8AJ+gr6bUywM4I9iHpMYz18bdr2yQFWKpFRP4M6x+I6krg0stfRyLLgFuZT
-	 uI4g7l/NwIlzSBiFTSC8BKUffxmCk07QzFHtIx/aP0F8mAuaaQjPGdLGLnw8b4pIbP5py
-	 n0viMFLAM3zWSFL4F+mGKBYVgnlBnTEkm5QqJGmsM6XOzkNF5lvJCeBv70cG5SmZDQjQT
-	 b910G4TMAMLkY7OtsIRk4O3488PC/GoV0yPzNAXUO28Xf0CZONsKbnAqHq+GfbCwRM/HT
-	 F9pzRCIbqGMqENZwuMMTytbOawKZb/fkYkC2Ey7weFUwXzlZtEsQ7K+rD5Z+9dpI9ow==
+	bh=KeKxSaL6E4+8WKmRpiTAdGiLGSAKauekDy3HVJ2+Ogk=;
+	b=xdNcuAhRyLwT05Y/Ss0NzoQcXMC+t5vh39WezpjlS1NxhApDn40/JvzPjPcY+ee5nMP4
+	 XHiL1v4PJ543UMx7GsXr2iJXVVCxs0C6l4dHXg8uAP6mBEmgcH5m6uoDBuusQ8bNxTMb3
+	 Mw7Nmys9LUuI1zvkq/pcWMP1QJJxfBGYNVdzPLP6nY7knECMKxCIlE+GoIpYMKk/qm/A1
+	 /wR2RA6B8vAd0E7LS28mJg9Wmknua1nIBGrUk6gdiIyGPVUdHt2XdjJXJxiu7zNKX2/Ei
+	 PTzb4BwzJr3WoW8moAOTrgLzCUnPvv2yihPDRHDp/77Zyt2hu7BJV+TiK0rjTskMHyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U+IMYNzY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dOyfbu2H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9588606A32C;
-	Wed, 18 Nov 2026 17:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7876F606A32C;
+	Wed, 18 Nov 2026 17:32:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U+IMYNzY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F981F000C4;
-	Wed, 18 Nov 2026 17:32:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dOyfbu2H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7EE1F000C5;
+	Wed, 18 Nov 2026 17:32:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023145;
-	bh=m+aXDHHydfjkXCN5H4JkdikbMjoctxxn61KBM5mKUW8=;
+	s=korg; t=1795023148;
+	bh=KeKxSaL6E4+8WKmRpiTAdGiLGSAKauekDy3HVJ2+Ogk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U+IMYNzY3VivWXVWTSrCZI00wZspc/8OuBr3Ol7rqQelqpYGDC6ifBUN4XK+chbXH
-	 7yNzURablXrqssG+wMDGjiEsZqBGSU8CTWMWq24xJqHD85liBw8HS5Gp8lbftjftXf
-	 mgqE3aWyhSrwIgCJz8Xud27qgpe21s24DSkVSmWo=
+	b=dOyfbu2HYwgc4nnPXEOEh+vQCIKv/MR7yHtP7SeTwLO0qFFHb2cI5/sF6PVawFCBO
+	 CdVYGxhczOyymrtj0wgKmfvHd9u9jZtpCnfUrodS2D6GHQkZAlPddBvAoV0RHd85a4
+	 0DXMx3rxMp1M8miuuqGB2GtqifLRnw7CxAx2qg+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
-	Danilo Krummrich <dakr@kernel.org>,
+	syzbot+229d761b8a110e6de517@syzkaller.appspotmail.com,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0265/2151] drivers/base/node: fix UAF on device_register() failure
-Date: Wed, 18 Nov 2026 15:33:20 +0100
-Message-ID: <20261118150131.462327406@linuxfoundation.org>
+Subject: [PATCH 6.18 0266/2151] irqchip/gic-v3-its: Dont WARN on LPI free allocation failure
+Date: Wed, 18 Nov 2026 15:33:21 +0100
+Message-ID: <20261118150131.499472473@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,57 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 6d7e9bc51d8f2d73b3403c759c769f880082f9ae ]
+[ Upstream commit 135d9e67f7ab4f261c2157ee2de1f93a4de39a41 ]
 
-node_init_node_access() frees the access node with kfree() if
-device_register() fails. After device_register() the embedded device is
-initialized and must be released with put_device() so that
-node_access_release() can free it.
+free_lpi_range() cannot give LPIs back to the allocator without
+allocating a struct lpi_range to describe the freed range, so it
+returns -ENOMEM (its only failure mode) when that allocation fails,
+and its_lpi_free() turns this into a WARN_ON().
 
-Fixes: 08d9dbe72b1f ("node: Link memory nodes to their compute nodes")
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
-Link: https://patch.msgid.link/20260907024732.1452228-1-gonglinkai@kylinos.cn
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+syzbot triggers the WARN_ON() by injecting a slab allocation failure
+on device teardown, which with panic_on_warn becomes a panic:
+
+  WARNING: drivers/irqchip/irq-gic-v3-its.c:2251 at its_msi_teardown+0x3a4/0x424
+   its_msi_teardown+0x3a4/0x424
+   msi_remove_device_irq_domain+0x16c/0x27c
+   msi_device_data_release+0x38/0x9c
+
+The failure is transient and the consequence benign: the freed range
+is simply never returned to the allocator. This does not warrant a
+WARN_ON() backtrace, so log a rate-limited error instead.
+
+Fixes: 880cb3cddd16 ("irqchip/gic-v3-its: Refactor LPI allocator")
+Reported-by: syzbot+229d761b8a110e6de517@syzkaller.appspotmail.com
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Assisted-by: Claude:claude-fable-5
+Link: https://patch.msgid.link/20260811095532.48454-1-kmehltretter@gmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=229d761b8a110e6de517
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/node.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/irqchip/irq-gic-v3-its.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/node.c b/drivers/base/node.c
-index 83aeb0518e1da..1a1139a953ced 100644
---- a/drivers/base/node.c
-+++ b/drivers/base/node.c
-@@ -167,20 +167,19 @@ static struct node_access_nodes *node_init_node_access(struct node *node,
- 	dev->parent = &node->dev;
- 	dev->release = node_access_release;
- 	dev->groups = node_access_node_groups;
--	if (dev_set_name(dev, "access%u", access))
--		goto free;
-+	if (dev_set_name(dev, "access%u", access)) {
-+		kfree(access_node);
-+		return NULL;
-+	}
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index 4443bf46e390d..77662460b086a 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -2248,7 +2248,8 @@ static unsigned long *its_lpi_alloc(int nr_irqs, u32 *base, int *nr_ids)
  
--	if (device_register(dev))
--		goto free_name;
-+	if (device_register(dev)) {
-+		put_device(dev);
-+		return NULL;
-+	}
- 
- 	pm_runtime_no_callbacks(dev);
- 	list_add_tail(&access_node->list_node, &node->access_list);
- 	return access_node;
--free_name:
--	kfree_const(dev->kobj.name);
--free:
--	kfree(access_node);
--	return NULL;
+ static void its_lpi_free(unsigned long *bitmap, u32 base, u32 nr_ids)
+ {
+-	WARN_ON(free_lpi_range(base, nr_ids));
++	if (free_lpi_range(base, nr_ids))
++		pr_err_ratelimited("ITS: failed to free LPI range %u:%u\n", base, nr_ids);
+ 	bitmap_free(bitmap);
  }
  
- #ifdef CONFIG_HMEM_REPORTING
 -- 
 2.53.0
 
