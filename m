@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018776;
-	b=dbMVa0aDAVF8P91RZ1Mt6mtiEqHmD14rflOTpkr31iCmCngWf9gmBREo0XM8Hw/JPxLF
-	 7Y/AeWby0siWhanMdLgFKcn3BPXVvm8qyYVAeqzSche4VzimMW86owOOGaBmtjmht9nSF
-	 +A9yuAC3SrOulYrydpO/hJjbEFeKmmwuBF7JTjndjXq+sXoIWm2FXyclAKIreq3ZiZOVe
-	 SEshMjrwGNU6RwIVmzvo7s8Vknr9fdNtxC8wdbY0cFKpM6u8+H7wlgw8WmDTw0J+nC8HJ
-	 Uhm4cQUiW6IJKvNCrezA5AOJBLLgi3zaVoNHINvAe3oSrgEEU90pfE8ibJZ9gjD6p9Q==
+	t=1795018779;
+	b=bKlJPZSzcnSVmHoGOmHE52LsN75ORUiNbeixtEKbpuhqZWW2vRyt6+AspJ7FNnBO2hqc
+	 uQ+fnwdmzhqVznKKj/HWvBkW68r+4PPBmyKs4eqEOZNBPnA0jx3ZjiXI4C1w1pkmzQAC3
+	 b93V4FrJyCDy3xnGgwtpw0KYDUWV20nt72JlcxE7i+uVldymy8HySTycm1hIHsMnCY2An
+	 HbLiav494QGcQXRbcs9qDfZOZhVSubvd1CnZJgH1QXa5NNyYNySVHYzxRTU5sCTBJKGoV
+	 Wx9N8mnppiGZm5ZHxLWgBlbaWKx8nBho3vBxJlUlV/Wl7FKlOrwvIauc1QDJMyWgyrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018776;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018779;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZkO3M5cVZzLLYE7x5jMrgzyH6HGNN4Z5gzHslSiR2/A=;
-	b=fFWCEKHbkBar3VtK0ek9x4+EG1sUn6salVlUDhu+xeaJfHzw3efJaKTWGO7e/uZ9yo0p
-	 nkpR4d+a2aDGNiis9ASiX2HQBDYC2Iu8Isp739WwtcqYjorRiZyKG/meT9R4OfFeiMYch
-	 LEaGeY3XlAIWPPS2am79gToWpbZSpUuN5w0M+MZOLeu9ve21Q3sgZ/1ThKQkWNE2x5TaN
-	 LTGzKL5+RHSBaKnNweGYOGZUL+HMnrw5oIinGfWeNcv2HTJKIVQCp4IqWvGWT5NhgdJ8m
-	 EpIhoM8jHhTu5DkYggkjVOWfZwFj0hzM/qMI2tJiKhvJo8Nb0AgBcK4ahxLd6Lje6yw==
+	bh=eqfQNo98wrPHWeYqpcyEfxC2fGnflA039MmcIS5Q4r8=;
+	b=cF+3MG8+kGE6dmQmLLRUBSfGdks/smPiUxNxoeVpbWGaRpheWEc/83LPJf6WdlwBWh4d
+	 TVtkIF16q7wh8PKwHgvQQhf23rFYxyxHRsTCObhDl6ObUy3+9VKewHdA/3ueGukJ2obPl
+	 V84j/5fa5FTDCNoqEXWKd8wPrP9zqRQXhd1POINzsN4Q4m5UOEhaddarvEP3TaTcIXXxO
+	 ufOlQgRF1k8gVh0a96mPPxyX2z/dp5TSXY99IJcOUW266ft2DQ8wH8qscHXxU3Ffl2TLW
+	 YX9gUKu3NVPl8AUvTTnB+rEOmeW5IhpWeVOJiOdmsargDzwERi4LG/4BdmfwUKDtsWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nD4uPbIw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L5d783TW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74BAA606A32C;
-	Wed, 18 Nov 2026 16:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E57C606A331;
+	Wed, 18 Nov 2026 16:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nD4uPbIw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA8C1F000C4;
-	Wed, 18 Nov 2026 16:19:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L5d783TW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F761F000C4;
+	Wed, 18 Nov 2026 16:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018776;
-	bh=ZkO3M5cVZzLLYE7x5jMrgzyH6HGNN4Z5gzHslSiR2/A=;
+	s=korg; t=1795018779;
+	bh=eqfQNo98wrPHWeYqpcyEfxC2fGnflA039MmcIS5Q4r8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nD4uPbIw/aow4HF62sodll+XGYjxx9fKmLe4qeMRpAdIM1UWMrT738XqJatdcZpb3
-	 nJIodoOev5D2O8Qz1XFQnZ4DuTX0uOyIYHhDdCNslkJ08Mby9wCQT5+f4M5z91M0fF
-	 gxesevXrzneWKWR7XiG0jMkNQ57d/j/eg33gMVI0=
+	b=L5d783TWEVj2spoowlFI4x/oRlNGlHKoWDS5t7PFERNp2+X6nC3yc4OUvBfb5Rr1X
+	 tcU+sQq0uoufUKEsRKbLxuv4YIOk4kN/Z2QATKigd8ZBcWoPGYJFpnr6kFRPAghKoi
+	 A7xRhJX6u3OsulfaoCGQxToWQADHIjsDoB6YG0Ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@kernel.org>,
 	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	David Ahern <dsahern@kernel.org>,
 	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1361/2651] ipv4: fix IP ID reuse in ip_select_ident_segs()
-Date: Wed, 18 Nov 2026 15:43:21 +0100
-Message-ID: <20261118150337.024714225@linuxfoundation.org>
+Subject: [PATCH 7.3 1362/2651] ipv4: reserve one IP ID per segment for UDP GSO packets
+Date: Wed, 18 Nov 2026 15:43:22 +0100
+Message-ID: <20261118150337.058569874@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,46 +72,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit fe7ca0c13f7d477d6f461114815c57fde3f930ca ]
+[ Upstream commit 852c08d6a99149dc71c51cea125b5083f555237e ]
 
-ip_select_ident_segs() must put the first of the @segs reserved IP IDs
-in iph->id, as GSO assigns id, id + 1, ..., id + segs - 1 to segments.
+__ip_make_skb() reserves a single IP ID for UDP GSO packets, but GSO
+assigns one IP ID per segment. Following packets then reuse these IDs,
+either from inet->inet_id or from the shared generator.
 
-Commit f866fbc842de ("ipv4: fix data-races around inet->inet_id")
-used atomic_add_return() for non-TCP sockets, which returns the first
-ID of the next packet instead. Consecutive GSO packets can then reuse
-IP IDs.
+Unless IP_PMTUDISC_DO/PROBE is used, DF is not set on UDP GSO packets,
+so segments can be fragmented on the path and IP ID reuse can lead to
+incorrect reassembly.
 
-SCTP GSO is affected. Other callers use segs == 1, and only see
-a harmless off-by-one (UDP GSO has a separate, older issue).
+Reserve one IP ID per segment, using the same test as udp_send_skb().
 
-Use atomic_fetch_add() instead, like the TCP path.
-
-Fixes: f866fbc842de ("ipv4: fix data-races around inet->inet_id")
+Fixes: bec1f6f69736 ("udp: generate gso with UDP_SEGMENT")
 Signed-off-by: Eric Dumazet <edumazet@kernel.org>
 Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: David Ahern <dsahern@kernel.org>
+Cc: Willem de Bruijn <willemb@google.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260930144018.1174068-2-edumazet@kernel.org
+Link: https://patch.msgid.link/20260930144018.1174068-3-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/ip_output.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/ip.h b/include/net/ip.h
-index f0aeab1b1a3b3..29bb02db8782c 100644
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -580,7 +580,7 @@ static inline void ip_select_ident_segs(struct net *net, struct sk_buff *skb,
- 			val = atomic_read(&inet_sk(sk)->inet_id);
- 			atomic_set(&inet_sk(sk)->inet_id, val + segs);
- 		} else {
--			val = atomic_add_return(segs, &inet_sk(sk)->inet_id);
-+			val = atomic_fetch_add(segs, &inet_sk(sk)->inet_id);
- 		}
- 		iph->id = htons(val);
- 		return;
+diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
+index eaa6fabda347e..3396f177a18d0 100644
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -1414,6 +1414,7 @@ struct sk_buff *__ip_make_skb(struct sock *sk,
+ 	struct iphdr *iph;
+ 	u8 pmtudisc, ttl;
+ 	__be16 df = 0;
++	int segs;
+ 
+ 	skb = __skb_dequeue(queue);
+ 	if (!skb)
+@@ -1468,7 +1469,19 @@ struct sk_buff *__ip_make_skb(struct sock *sk,
+ 	iph->ttl = ttl;
+ 	iph->protocol = sk->sk_protocol;
+ 	ip_copy_addrs(iph, fl4);
+-	ip_select_ident(net, skb, sk);
++
++	/* UDP GSO packets are segmented later (see udp_send_skb()):
++	 * reserve one IP ID per segment.
++	 */
++	segs = 1;
++	if (cork->gso_size && sk_is_udp(sk)) {
++		int datalen = skb->len - skb_transport_offset(skb) -
++			      sizeof(struct udphdr);
++
++		if (datalen > cork->gso_size)
++			segs = DIV_ROUND_UP(datalen, cork->gso_size);
++	}
++	ip_select_ident_segs(net, skb, sk, segs);
+ 
+ 	if (opt) {
+ 		iph->ihl += opt->optlen >> 2;
 -- 
 2.53.0
 
