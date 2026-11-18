@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041616;
-	b=RunoKDisXliXwuc22qNI55jPWoZPYs5Qx0Q1uG0IV3gFax/+bHu0+0xapJeRlAtFoqQE
-	 ZxUrDTfgFYdreK1YLMf3Ym/cHH3M/tui6Z5JwosXpmQvKW3MnjdKQb59eF75iMIQe+81r
-	 QApUXmnoNibOAUCnSN7i+nbGzcaFvsTkYXKjhM30aAP+Q82ZR8LTZo61Ia0PcqIqOG26H
-	 UT1IBxRsrA9iKPZKJKz+nCXZHidl3vDGrCqQHKrOYRvuyydhuv8YQqxuO/DkKk2FyqgPV
-	 orPQ/TEj8l6qowCEpkVkUqbIARM5NJFe7f7TsOo58MRG9k1S4c24NAzqRNF9HLQ/izg==
+	t=1795041619;
+	b=PXVvxi3COYe4GovlbbY84L0QKumAha6CsvmzPZ66M4qBq/th/YkntU7m04z/Sm52hvBS
+	 F5MISfaR3sMNPRYzZlyyKOqHREaxUyCgkcSytrCbCJwJhX5GMCRmFKGt0lghjpPzcq8PO
+	 PkRYFuLE2OMFVgtHD5b2GE6hkeSqF2rlWe/wBZi6kM9sZ9Hnjm73YS+XGOyHzbLixJul7
+	 2MXh0DhysI2XiaLdOq7kLvUm6Eu6B7p9yHIsTFGwqjUT8/ZE/UCEQWYtF3UVz3mf4VGx7
+	 4AxLDDpbutDEa12vGPqQoS3zXfSW0ZXQSwHBu9mtaCYIuXkxalYNGqztOD/Ns7PmiVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041616;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041619;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s7Qh8nQapYnbgqNhME6bLJS/k9YDF+FHmPXQ6p41wWs=;
-	b=fVN3E9n2uzjB2g+hE0VOeo6aLxTHF0JnYQk5pibHwZCZ/hRhTalGNcxDfUzXXOZHq3Js
-	 SdCLk68POwjYoOaI2XLnEd8CWuiUyC4iYACmQtKsppLN38GDEvZ8Owv7JaikBzRcYIq4X
-	 1HopyzUt4rj+dNAokYnONZeca2pZhClUN33nKi8n9V2Gz/dhcIzSVDF7rkrWMje8HflI/
-	 2LBOhevLYJww9T712P9IG6dHyzfmreyO5uPK8IC8TMHII56BZErFfNb3OLdktOebt+75s
-	 /PWc9vT9bv71xVzT9fnfRPQuI97nJXX50cI/0Ip509hoEfspUY8bS5Z82VVYHYxZZjQ==
+	bh=N0905kW2sYr2exQ4XeVY4xfTshe0QXS3zDbFGUU7wRg=;
+	b=stIbDAjwlWIzPhond144OgGSpxRqXoxHJL8GcjxCKb7FWSNwiXC6sPwa7m4kNToHDST/
+	 jOR8JUqDxOnqHzzrioCgNdOC+QUu78f0EVAnzrz3K5yJmZxve+jnloEUIo4GCx6XlyEio
+	 kYcyeHBpG/jRA0/9zTjQ61RqaEjF6aj+tj4DjNM71cjzG4xjFejjJ6MB/JHRxVV8sgTix
+	 q76AZ7sE7UAJ0d5ZlbhdTmM1HQ3lK8TeVcM0MhquDPbrDb79UOOUysgJ3/D6y9pijcaIl
+	 cQMeszPl3xjaO6YEGukb+HzlCSE7Ez62/rJeuHKHcWKjH23M15Eni70yHDcVF6MeJXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=meR7YU6+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hm4rieY2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35111606A31C;
-	Wed, 18 Nov 2026 22:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EE5606A32F;
+	Wed, 18 Nov 2026 22:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=meR7YU6+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC951F000C4;
-	Wed, 18 Nov 2026 22:40:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hm4rieY2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF191F000C4;
+	Wed, 18 Nov 2026 22:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041616;
-	bh=s7Qh8nQapYnbgqNhME6bLJS/k9YDF+FHmPXQ6p41wWs=;
+	s=korg; t=1795041618;
+	bh=N0905kW2sYr2exQ4XeVY4xfTshe0QXS3zDbFGUU7wRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=meR7YU6+G0YphwLK5MVKRfwP5tw4WIshuvjabDapZwloMbHJYn7lRjix1elOs8XCm
-	 lsiQABQLCqFF/8yw8K1Dgv8Bfe5dBTmfaxkoEs8uYlNWTjTjgXcQUKo32SfbZ2/RWU
-	 HsGB0quW+EJRWJgMBo9M0YcqK4NaISWPNCuVt2S0=
+	b=hm4rieY2LrXGyeZ6aZWfboStPDfFr3Cvyse1cjUAtZDU1wTOwtl5Gvv2eJgtnt4zi
+	 c3P2QDwb80dUl/4MoA9JfciR/Jx8EbFdEzWUUkpLq5KrD/Dhm/emzCI9/HVkFhjTFx
+	 GNlZxzXDHawNNz8tZ2T89C0mF+aKuNW1c8SOzPsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pauli Virtanen <pav@iki.fi>,
-	Eulgyu Kim <eulgyukim@snu.ac.kr>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2876/3318] Bluetooth: L2CAP: take chan->lock for l2cap_chan_add/ready/del
-Date: Wed, 18 Nov 2026 15:58:18 +0100
-Message-ID: <20261118150446.827716975@linuxfoundation.org>
+Subject: [PATCH 6.6 2877/3318] Bluetooth: L2CAP: hold l2cap_conn::lock in l2cap_connect_cfm()
+Date: Wed, 18 Nov 2026 15:58:19 +0100
+Message-ID: <20261118150446.854307597@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,122 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 385c0829e09e7a6380ae67998ac6ef6f4dfd5303 ]
+[ Upstream commit 115e6a21c88a5f708b2b025f7567ab78a782a74f ]
 
-chan->lock must be held for __l2cap_chan_add as eg. calls to
-l2cap_chan_close assume chan->conn writes are guarded by it.
+l2cap_new_connection() -> __l2cap_chan_add() modifies
+l2cap_conn::chan_l, which is guarded by l2cap_conn::lock. The lock is
+not held in l2cap_connect_cfm().
 
-It must be held for l2cap_chan_del() due to
-l2cap_sock.c:l2cap_chan_conn, l2cap_monitor_timeout, etc.
+Fix by holding conn->lock in l2cap_connect_cfm() to make the locking
+systematic.
 
-Similarly it should be held for l2cap_ops::ready (assumed in 6lowpan.c).
-Also teardown usually has chan->lock held, it should always have it held
-to have the same locking context.
-
-The lock is not correctly held by l2cap_core in several places.
-
-Add the missing locks for l2cap_chan_del/add/ready(), except in
-l2cap_ecred_rsp_defer() which needs separate fix as it needs lock
-nesting.
-
-Fixes: 6fef032af009 ("Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_new_connection_cb()")
+Fixes: ab4eedb790ca ("Bluetooth: L2CAP: Fix corrupted list in hci_chan_del")
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/l2cap.h |  3 ++-
- net/bluetooth/l2cap_core.c    | 15 +++++++++++++++
- 2 files changed, 17 insertions(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
-index 767df6d832c81..f7f60d64933b7 100644
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -967,7 +967,8 @@ int l2cap_chan_check_security(struct l2cap_chan *chan, bool initiator);
- void l2cap_chan_set_defaults(struct l2cap_chan *chan, struct l2cap_chan *pchan);
- int l2cap_ertm_init(struct l2cap_chan *chan);
- void l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan);
--void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan);
-+void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
-+	__must_hold(&chan->lock);
- typedef void (*l2cap_chan_func_t)(struct l2cap_chan *chan, void *data);
- void l2cap_chan_list(struct l2cap_conn *conn, l2cap_chan_func_t func,
- 		     void *data);
 diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 070211b7a9094..036c880cc4e53 100644
+index 036c880cc4e53..3c3a377673936 100644
 --- a/net/bluetooth/l2cap_core.c
 +++ b/net/bluetooth/l2cap_core.c
-@@ -706,7 +706,9 @@ void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
- void l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
- {
- 	mutex_lock(&conn->lock);
-+	l2cap_chan_lock(chan);
- 	__l2cap_chan_add(conn, chan);
-+	l2cap_chan_unlock(chan);
- 	mutex_unlock(&conn->lock);
+@@ -7595,6 +7595,8 @@ static void l2cap_connect_cfm(struct hci_conn *hcon, u8 status)
+ 	 * we left off, because the list lock would prevent calling the
+ 	 * potentially sleeping l2cap_chan_lock() function.
+ 	 */
++	mutex_lock(&conn->lock);
++
+ 	pchan = l2cap_global_fixed_chan(NULL, hcon);
+ 	while (pchan) {
+ 		struct l2cap_chan *chan, *next;
+@@ -7619,6 +7621,8 @@ static void l2cap_connect_cfm(struct hci_conn *hcon, u8 status)
+ 		pchan = next;
+ 	}
+ 
++	mutex_unlock(&conn->lock);
++
+ 	l2cap_conn_ready(conn);
  }
  
-@@ -4086,6 +4088,8 @@ static struct l2cap_chan *l2cap_new_connection(struct l2cap_conn *conn,
- 	if (!chan)
- 		return NULL;
- 
-+	l2cap_chan_lock(chan);
-+
- 	l2cap_chan_set_defaults(chan, pchan);
- 	chan->ops = pchan->ops;
- 
-@@ -4094,10 +4098,13 @@ static struct l2cap_chan *l2cap_new_connection(struct l2cap_conn *conn,
- 	if (pchan->ops->new_connection &&
- 	    pchan->ops->new_connection(pchan, chan) < 0) {
- 		l2cap_chan_del(chan, 0);
-+		l2cap_chan_unlock(chan);
- 		l2cap_chan_put(chan);
- 		return NULL;
- 	}
- 
-+	l2cap_chan_unlock(chan);
-+
- 	return chan;
- }
- 
-@@ -5065,6 +5072,8 @@ static int l2cap_le_connect_req(struct l2cap_conn *conn,
- 		goto response_unlock;
- 	}
- 
-+	l2cap_chan_lock(chan);
-+
- 	bacpy(&chan->src, &conn->hcon->src);
- 	bacpy(&chan->dst, &conn->hcon->dst);
- 	chan->src_type = bdaddr_src_type(conn->hcon);
-@@ -5098,6 +5107,8 @@ static int l2cap_le_connect_req(struct l2cap_conn *conn,
- 		result = L2CAP_CR_LE_SUCCESS;
- 	}
- 
-+	l2cap_chan_unlock(chan);
-+
- response_unlock:
- 	l2cap_chan_unlock(pchan);
- 	l2cap_chan_put(pchan);
-@@ -5289,6 +5300,8 @@ static inline int l2cap_ecred_conn_req(struct l2cap_conn *conn,
- 			continue;
- 		}
- 
-+		l2cap_chan_lock(chan);
-+
- 		bacpy(&chan->src, &conn->hcon->src);
- 		bacpy(&chan->dst, &conn->hcon->dst);
- 		chan->src_type = bdaddr_src_type(conn->hcon);
-@@ -5321,6 +5334,8 @@ static inline int l2cap_ecred_conn_req(struct l2cap_conn *conn,
- 		} else {
- 			l2cap_chan_ready(chan);
- 		}
-+
-+		l2cap_chan_unlock(chan);
- 	}
- 
- unlock:
 -- 
 2.53.0
 
