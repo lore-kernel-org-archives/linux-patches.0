@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016823;
-	b=wP/RN2AYx+90XdOslZG9xtxTWBRTA13Sh6kFPoYC1Gd5rAcE50Hrm2vF/cSDJo3pIIlR
-	 dIJm1cqC1GWzktAlwQXz+sTcP/KbU3Iphd1RmLBR9OTIFcmoG88PsOFAFe7+GNoTDXbk0
-	 wbMhLXZh138HnrVmYOFsH4gkPGpe+QLdNnXlS21wHWtQjbwzHimWFOVgxHLSyj04GCwHS
-	 Z1EUotTLyXoU5DlePD+4rThn5QxWTmwKLnYoVWxltuqePzFJxFe4CIxf4sa75nBKeHxy4
-	 BfiMPxPwuBG29OV1tBd4n0AKobuiotNbwCUvhzV92TcQufiwZ/72685DvyCGvSyyIhg==
+	t=1795016825;
+	b=Yh2/tvDVd8+lyKk8XgkuPNpAJejQQEdNhvYJrQc+2GrICLhgTCkhfdVfvmFz4XTG08Cm
+	 xilpl97wSbwsPNvkNDEOMHacoteyaW0NwuOnms9dhc78u4zJGShjkLc9f0wHr8cfnLh71
+	 Cx9ygVSJIPgeUmu+LNQqNUSJqvY7f9pfbHCRYZcOe2CG9Wjpzka0C2R/32YA0YIocVkFF
+	 HYfqi8sgyjgWFPhjxtlx7SMrUkKu37f/Wo8d9CCZ0y4BPjAaNTdoZSqnqS1irVM0sTC0R
+	 bVGvXOPnIa0B1BfzJFrC/rtcPLcDfzK9Ia7FsNnJ1slFooCK7VePFMG1WmJyEIc5q3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016823;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016825;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lSkpeWHD3hBgPgKPxi4oG5haESkFCI5HIbexsgmkRLE=;
-	b=BoEMSfokUQev1koj+XFnPxBvW6OKhLffTux0pHEcSiaR3E0Hks66dbpEl8NadDpZaGH1
-	 xgkgi3ytp92EWP8sz5uFqoZNyXQW6MTKWlTJA0LhnFkcjIGD3947Plln45tm7NWV1JlRk
-	 hF0uKDeM5VV0svEcqbvknTKNrQS55bo5nMNsyS2Ci0yEv1walTRG3wkVscFuHrw4vArXj
-	 BMB5BD0oFgs/X7dmV7L9e6XCszNhZJrSTMW47BBpV1Fpb41zhbIK+S4hCjJ0JmgLQ+5Rt
-	 XCZtqJa7gOh7p2Jv8jOyAHCbIzGdypddpwwNmHwCWqoYTG9eoauEZSgNWVsanifMGmA==
+	bh=inn/T5y9a7wCa5iqE8epExyOTf7eVvTFPlEe0qJT8as=;
+	b=5YTC0bZzbkTLohmW6oJ9DKsznmcg+6Td60NIxQONxkrY0lvd89S6m9kYmlZ6aYfWoScU
+	 4yYCA31qvr+S5wiI72BtC20uBaEI0t+4M/2rGdHfgl2JFoBdsLAM767+H0Z7rHTw7zs6z
+	 3tqGFOlzLUZ6AjUNuDPo4GN1H0IEf/xKpke+I8XFfh2ztLbjpWzDpoBrSWKenI0X/WKYg
+	 I1fNeC4HzwhNSZe9fiP2L4UQbpNwaFMEBOpVdbmtLEZReY5zlYNFN/q3I79ieLZSQ9MfF
+	 tBtidvJIHMxLtV/VzC90/Qz5eo2CMjnvGrt33lHN/geJd8KOX6/h6FdjpoXSJ7svomQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0H8SSzmb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fvz6zPmL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEEB2606A330;
-	Wed, 18 Nov 2026 15:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE182606A320;
+	Wed, 18 Nov 2026 15:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0H8SSzmb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8D01F000C9;
-	Wed, 18 Nov 2026 15:47:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fvz6zPmL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A2E1F000C4;
+	Wed, 18 Nov 2026 15:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016822;
-	bh=lSkpeWHD3hBgPgKPxi4oG5haESkFCI5HIbexsgmkRLE=;
+	s=korg; t=1795016825;
+	bh=inn/T5y9a7wCa5iqE8epExyOTf7eVvTFPlEe0qJT8as=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0H8SSzmb6TWISPFyiiMIqZWtKPdoBJBwyZ0FBcMuFohrSKncNENEcx2CNeOM8SQCq
-	 mcy001HZ/0yLttJacBmFMiHGyq25mWdyJsCUkPKZlz8oBaCHPgdvOt6ZDZkZ45wreF
-	 vQ2CwzQgEEoRQP69huYLpZKNKTI5OLe4LGlMflIw=
+	b=fvz6zPmLgY79APC6I8aEzKTZIQENKrVnmP76iKErccD6RO0R/6EPt9eXExU3GMH38
+	 QL7rd2HjSlUQM7PnWWJbLnYDc/twb6gzTfRq+1i1DriZ5/l2yvtaufx23ur0Mo7txD
+	 6dUgUiZ1mtj04uy3isq8wI5SHppOJep8guJnzVoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Nishanth Menon <nm@ti.com>,
+	Jacob Moroni <jmoroni@google.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0666/2651] arm64: dts: ti: k3-am62-verdin: fix main_gpio0/main_gpio1 line names size
-Date: Wed, 18 Nov 2026 15:31:46 +0100
-Message-ID: <20261118150311.852448545@linuxfoundation.org>
+Subject: [PATCH 7.3 0649/2651] RDMA/irdma: Fix erroneous -ENOMEM for large MR registration
+Date: Wed, 18 Nov 2026 15:31:29 +0100
+Message-ID: <20261118150311.050645433@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,84 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit 11a51e82e1f997975a28358a1dcffec190ea7282 ]
+[ Upstream commit 5bb710151753fe53047b1d34b1b54d0f179cec68 ]
 
-gpio-line-names sized main_gpio0/main_gpio1 for 87/88 lines, the SoC's
-ti,ngpio values before they were corrected to 92/52 in commit
-28c8f2189d80 ("arm64: dts: ti: k3-am62-main: Fix GPIO numbers in DT"),
-four months before this file was written. Resize both arrays to match,
-keeping every existing label at its original index.
+Commit cc8997c94bf3 ("RDMA/irdma: Refactor PBLE functions")
+replaced the explicit level1_only boolean with a bit mask
+but did not properly convert the "if (level1_only)" check
+in irdma_get_pble() to be "lvl == PBLE_LEVEL_1" and instead
+left it as "if (lvl)".
 
-Fixes: 316b80246b16 ("arm64: dts: ti: add verdin am62")
-Assisted-by: LLM
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://patch.msgid.link/20260914190943.50843-1-francesco@dolcini.it
-Signed-off-by: Nishanth Menon <nm@ti.com>
+User MR registration passes "lvl = PBLE_LEVEL_1 | PBLE_LEVEL_2"
+so this check always evaluates to true and causes the
+loop to bail after grabbing a single SD even if the region
+actually requires more than one SD (as is the case for
+regions larger than 1 GiB with 4k pages). As a result, these
+registrations can fail with -ENOMEM even if there are
+sufficient PBLE resources.
+
+Fixes: cc8997c94bf3 ("RDMA/irdma: Refactor PBLE functions")
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Link: https://patch.msgid.link/20260915170317.2901672-1-jmoroni@google.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi | 41 +++-------------------
- 1 file changed, 5 insertions(+), 36 deletions(-)
+ drivers/infiniband/hw/irdma/pble.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi b/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
-index 895b1b7dcac71..0421248280951 100644
---- a/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
-@@ -1012,6 +1012,11 @@ &main_gpio0 {
- 		"",
- 		"",
- 		"",
-+		"",
-+		"",
-+		"",
-+		"",
-+		"", /* 90 */
- 		"";
- };
+diff --git a/drivers/infiniband/hw/irdma/pble.c b/drivers/infiniband/hw/irdma/pble.c
+index 28dfad7f940c2..14318af97d581 100644
+--- a/drivers/infiniband/hw/irdma/pble.c
++++ b/drivers/infiniband/hw/irdma/pble.c
+@@ -482,7 +482,7 @@ int irdma_get_pble(struct irdma_hmc_pble_rsrc *pble_rsrc,
  
-@@ -1068,42 +1073,6 @@ &main_gpio1 {
- 		"",
- 		"SODIMM_17",
- 		"SODIMM_155", /* 50 */
--		"",
--		"",
--		"",
--		"",
--		"",
--		"",
--		"",
--		"",
--		"",
--		"", /* 60 */
--		"",
--		"",
--		"",
--		"",
--		"",
--		"",
--		"",
--		"",
--		"",
--		"", /* 70 */
--		"",
--		"",
--		"",
--		"",
--		"",
--		"",
--		"",
--		"",
--		"",
--		"", /* 80 */
--		"",
--		"",
--		"",
--		"",
--		"",
--		"",
- 		"";
- };
+ 		status = get_lvl1_lvl2_pble(pble_rsrc, palloc, lvl);
+ 		/* if level1_only, only go through it once */
+-		if (!status || lvl)
++		if (!status || lvl == PBLE_LEVEL_1)
+ 			break;
+ 	}
  
 -- 
 2.53.0
