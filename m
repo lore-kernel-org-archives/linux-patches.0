@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025110;
-	b=KWNwkziUekt4VGXMl4/XhfcXTyHYRUqM2NTM9nKsn85qvYyRUZ1NxwGDurp84yX2v4Mk
-	 0nuXA1pMblCLqfkuH6I+ySWzqnWxGZDka6uYXqUMYCLQslwGGbfomeTnQWxTMUIvT/jgS
-	 MVtAbqOFxKjFb9UtjGdhslXaOUP3Lh8PA9jFoHr07Hv/E5QextAzRDjFePhWRoMrcb15H
-	 porjRHe7jqhxzYFXGQtryl65lFebesTGGeWaB2ik+hqnOWMid5UWl0foLl1IG+EqNab44
-	 hB76pn1T+MQF1Scdx34fn7rwDGskDvk+OAl6sHIRTdqMWxKpo4F7XY+9ubeljPMfheQ==
+	t=1795025113;
+	b=sn69PRAw484c1Ns6b2kLYIyt7ArrUbVYmoXjTsOBmNbg8inLMRAukW7e2YZr4BfR0Le4
+	 isxvSQzAxTTWhBjgVFrfcNrmaWhXdginfktCGh43d/KcnWMlGVPvVeYRt2aQHzSSwxkLV
+	 VYBn+RtdAAahTy8XhRHEDeYfQaq1EwgBF9PiqI9giAOFfVE/6UJOCBk+Xzq3QXxzS4F95
+	 No8iy/iR95htmMt5TgP/5YspUuiwb7szILnciOqODy42DzN22hPbv6jRHvFrR/p8jyD+8
+	 wSthhX1B5ABjXbXMVH03fAK6cX1YWNx5N7XzK59soTtUqO//zBalfLU2MgJn4Fg/ddg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025110;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025113;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7mOzigX3p3Co3D3Zp4/gzScOsFG1u/OXuvu+m1RdPzQ=;
-	b=kYCoS04yiy1CNyqo2zno6E15t4rcssB+OkoNoJ8ZvEFxr5dga6I4yYQIvzy4y7XLPykU
-	 SYBMjl6QJFoPIgRHy73yLCNbGmKUzgrOLoFf3rWyvjgvwLdCJLFkJWRGH31ZTZ5h0UV+4
-	 dlEwnON4BERa/cMBzZPyKaJ2IlF6Q4Mj5qirjGMTbkS/iMwOjl4UdfLgFKioOFt45c3mK
-	 Fp5NC07DABmytP3RVU19dZX5jDwWjudxK9prqmw/Tljnr4T8CsmZqvs7CcQy/7lK2/hzi
-	 NTSNgEON1tr7k+rGS6wL7Qn8jsBgc/JDyLi7JKDmFNuTBykHuOVN2rbVRRWbb0i4b5w==
+	bh=M1yXeLH6lMDpMBGxwJ6qa4l3O55m8sZd3Gwt7ZXs4r0=;
+	b=ZnJ35QEg3Wq8Q92BMo9XZdbQFBLrTjWDGQdTnudcnJr41UWjKSRR/3ZlOVxxPzvFGCS4
+	 urENcQA86lKL5pKYf7cp4GKaYmT4ceDXf5eT7TcJrUrqF7RFEfOYOy1c6lYjahU27S5Vr
+	 IbieVUNLrTOwUceiXsO8bRuSFsuzKdSeCfLjj7asZ1pooRzG+JRSQ8LBXsF8tpCfGApxT
+	 riJWZ9vLCmJX6FoLXHPbd2VJ+ppBdXOXsGp51vOE1F8O52u7npB8YacfIdFkVGnUnX/UO
+	 i3zS8sAtJ4VUrfl0Q8FjRPylVoF0kr62FesQdIdeCtJzR05BA45dQL5tEPremklv7dg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iet5DfD3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ozojjtn8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8659E606A32A;
-	Wed, 18 Nov 2026 18:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BDD606A33E;
+	Wed, 18 Nov 2026 18:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iet5DfD3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87F11F000C4;
-	Wed, 18 Nov 2026 18:05:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ozojjtn8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68501F000C6;
+	Wed, 18 Nov 2026 18:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025110;
-	bh=7mOzigX3p3Co3D3Zp4/gzScOsFG1u/OXuvu+m1RdPzQ=;
+	s=korg; t=1795025113;
+	bh=M1yXeLH6lMDpMBGxwJ6qa4l3O55m8sZd3Gwt7ZXs4r0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iet5DfD3ljU1IxdqPB0a93uR7GMByeGJfwqtONpicFj3zK7olM9c2oLgZaaKjt9Bs
-	 FETbI//PGaz24qLsgj3ECEWSk7kLjNniozPbOTaHYh97YCOkSeowRhrU2wSf/Zzfy5
-	 Pu0Cq26Q0bG/254mdLa03WLNbnWpqIH0AQORu1qM=
+	b=ozojjtn8Be+7T4y+Z/hIreZrElsAhRv/uPN3gbLKF/weUtR9t64ad6icC+c8QWN5m
+	 s2MhUsu5LcQ9lxUZ01BNiVqEMn1o90Ndi1GSpTBSNWWaCgT50RIzdLN7v1BaFXj9ND
+	 OTtApW/slfOlwgDlqvN5OuzZgE56GnGrQLOy8rEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	T Pratham <t-pratham@ti.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0962/2151] crypto: atmel - handle authenc requests without plaintext
-Date: Wed, 18 Nov 2026 15:44:57 +0100
-Message-ID: <20261118150157.567270379@linuxfoundation.org>
+Subject: [PATCH 6.18 0963/2151] crypto: tcrypt - Avoid reading req->base after submission
+Date: Wed, 18 Nov 2026 15:44:58 +0100
+Message-ID: <20261118150157.602727541@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,86 +68,576 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit ccbd95b3efbc0580b6abde2a905823417ca56022 ]
+[ Upstream commit 3a31a4baad6726bf974bcc58a6398f6a36d10aa0 ]
 
-Authenc permits a nonempty associated-data string with no plaintext.  The
-Atmel driver accepts such a request, has SHA process the associated data,
-and then unconditionally asks AES DMA to transfer zero bytes.  The Atmel
-DMA engines reject the zero-length descriptor, so the valid request fails,
-normally with -ENOMEM.
+Once a request has been submitted to the Crypto API, the value
+of req->base.data must not be read by the caller as it may change
+while the request is processed.
 
-Skip the AES transfer when textlen is zero and proceed directly to SHA
-finalization.
+Avoid reading it in tcrypt by combining the crypto_wait struct
+with the request object into a tcrypt request object and pass that
+around instead of the request object.
 
-Once an HMAC transform has cached its inner and outer states, SHA can
-complete this path synchronously.  The forced ahash completion callback
-then invokes the AES finalizer through a void function and discards its
-return value.  This loses -EBADMSG for a mismatched tag and reports
-successful decryption.
-
-For synchronous SHA completion, release the SHA device without invoking
-the ahash callback and call the AES finalizer directly.  Its result then
-propagates through the synchronous call chain.  Keep the existing callback
-path for asynchronous completion.
-
-On a SAM9X75, the unpatched driver failed valid AAD-only requests and
-returned success for a bad tag after the transform had been used once. With
-this change, bad tags return -EBADMSG for both fresh and reused transforms.
-
-Fixes: 89a82ef87e01 ("crypto: atmel-authenc - add support to authenc(hmac(shaX), Y(aes)) modes")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reported-by: T Pratham <t-pratham@ti.com>
+Fixes: beb63da739f7 ("crypto: tcrypt - Add speed tests for async hashing")
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/atmel-aes.c |  2 ++
- drivers/crypto/atmel-sha.c | 14 ++++++++++++++
- 2 files changed, 16 insertions(+)
+ crypto/tcrypt.c | 182 +++++++++++++++++++++++++++---------------------
+ 1 file changed, 101 insertions(+), 81 deletions(-)
 
-diff --git a/drivers/crypto/atmel-aes.c b/drivers/crypto/atmel-aes.c
-index e057be7fc7130..70e5a6b5c4961 100644
---- a/drivers/crypto/atmel-aes.c
-+++ b/drivers/crypto/atmel-aes.c
-@@ -1831,6 +1831,8 @@ static int atmel_aes_authenc_transfer(struct atmel_aes_dev *dd, int err,
- 		dd->is_async = true;
- 	if (err)
- 		return atmel_aes_complete(dd, err);
-+	if (!rctx->textlen)
-+		return atmel_aes_authenc_digest(dd);
+diff --git a/crypto/tcrypt.c b/crypto/tcrypt.c
+index d1d88debbd71e..6ad27aa0e6417 100644
+--- a/crypto/tcrypt.c
++++ b/crypto/tcrypt.c
+@@ -56,6 +56,21 @@
+  */
+ #define get_driver_name(tfm_type, tfm) crypto_tfm_alg_driver_name(tfm_type ## _tfm(tfm))
  
- 	/* Prepare src and dst scatter-lists to transfer cipher/plain texts. */
- 	src = scatterwalk_ffwd(rctx->src, req->src, req->assoclen);
-diff --git a/drivers/crypto/atmel-sha.c b/drivers/crypto/atmel-sha.c
-index f8281a175a779..550055004b317 100644
---- a/drivers/crypto/atmel-sha.c
-+++ b/drivers/crypto/atmel-sha.c
-@@ -2395,11 +2395,25 @@ static int atmel_sha_authenc_final_done(struct atmel_sha_dev *dd)
- {
- 	struct ahash_request *req = dd->req;
- 	struct atmel_sha_authenc_reqctx *authctx = ahash_request_ctx(req);
-+	atmel_aes_authenc_fn_t cb;
-+	struct atmel_aes_dev *aes_dev;
- 	size_t i, num_words = authctx->digestlen / sizeof(u32);
- 
- 	for (i = 0; i < num_words; ++i)
- 		authctx->digest[i] = atmel_sha_read(dd, SHA_REG_DIGEST(i));
- 
-+	if (!dd->is_async) {
-+		/*
-+		 * Return the AES finalizer's status directly for synchronous requests.
-+		 * The ahash callback cannot propagate it.
-+		 */
-+		cb = authctx->cb;
-+		aes_dev = authctx->aes_dev;
-+		dd->force_complete = false;
-+		(void)atmel_sha_complete(dd, 0);
-+		return cb(aes_dev, 0, false);
-+	}
++struct tcrypt_aead_request {
++	struct aead_request *req;
++	struct crypto_wait wait;
++};
 +
- 	return atmel_sha_complete(dd, 0);
++struct tcrypt_ahash_request {
++	struct ahash_request *req;
++	struct crypto_wait wait;
++};
++
++struct tcrypt_skcipher_request {
++	struct skcipher_request *req;
++	struct crypto_wait wait;
++};
++
+ /*
+  * Used by test_cipher_speed()
+  */
+@@ -129,18 +144,15 @@ static void sg_init_aead(struct scatterlist *sg, char *xbuf[XBUFSIZE],
+ 		sg_set_buf(&sg[k + 1], xbuf[k], rem);
  }
+ 
+-static inline int do_one_aead_op(struct aead_request *req, int ret)
++static inline int do_one_aead_op(struct tcrypt_aead_request *req, int ret)
+ {
+-	struct crypto_wait *wait = req->base.data;
+-
+-	return crypto_wait_req(ret, wait);
++	return crypto_wait_req(ret, &req->wait);
+ }
+ 
+ struct test_mb_aead_data {
+ 	struct scatterlist sg[XBUFSIZE];
+ 	struct scatterlist sgout[XBUFSIZE];
+-	struct aead_request *req;
+-	struct crypto_wait wait;
++	struct tcrypt_aead_request req;
+ 	char *xbuf[XBUFSIZE];
+ 	char *xoutbuf[XBUFSIZE];
+ 	char *axbuf[XBUFSIZE];
+@@ -154,14 +166,14 @@ static int do_mult_aead_op(struct test_mb_aead_data *data, int enc,
+ 	/* Fire up a bunch of concurrent requests */
+ 	for (i = 0; i < num_mb; i++) {
+ 		if (enc == ENCRYPT)
+-			rc[i] = crypto_aead_encrypt(data[i].req);
++			rc[i] = crypto_aead_encrypt(data[i].req.req);
+ 		else
+-			rc[i] = crypto_aead_decrypt(data[i].req);
++			rc[i] = crypto_aead_decrypt(data[i].req.req);
+ 	}
+ 
+ 	/* Wait for all requests to finish */
+ 	for (i = 0; i < num_mb; i++) {
+-		rc[i] = crypto_wait_req(rc[i], &data[i].wait);
++		rc[i] = crypto_wait_req(rc[i], &data[i].req.wait);
+ 
+ 		if (rc[i]) {
+ 			pr_info("concurrent request %d error %d\n", i, rc[i]);
+@@ -310,21 +322,21 @@ static void test_mb_aead_speed(const char *algo, int enc, int secs,
+ 		}
+ 
+ 	for (i = 0; i < num_mb; ++i) {
+-		data[i].req = aead_request_alloc(tfm, GFP_KERNEL);
+-		if (!data[i].req) {
++		data[i].req.req = aead_request_alloc(tfm, GFP_KERNEL);
++		if (!data[i].req.req) {
+ 			pr_err("alg: aead: Failed to allocate request for %s\n",
+ 			       algo);
+ 			while (i--)
+-				aead_request_free(data[i].req);
++				aead_request_free(data[i].req.req);
+ 			goto out_free_xoutbuf;
+ 		}
+ 	}
+ 
+ 	for (i = 0; i < num_mb; ++i) {
+-		crypto_init_wait(&data[i].wait);
+-		aead_request_set_callback(data[i].req,
++		crypto_init_wait(&data[i].req.wait);
++		aead_request_set_callback(data[i].req.req,
+ 					  CRYPTO_TFM_REQ_MAY_BACKLOG,
+-					  crypto_req_done, &data[i].wait);
++					  crypto_req_done, &data[i].req.wait);
+ 	}
+ 
+ 	pr_info("testing speed of multibuffer %s (%s) %s\n", algo,
+@@ -386,16 +398,16 @@ static void test_mb_aead_speed(const char *algo, int enc, int secs,
+ 					     bs + (enc ? authsize : 0),
+ 					     assoc, aad_size);
+ 
+-				aead_request_set_ad(cur->req, aad_size);
++				aead_request_set_ad(cur->req.req, aad_size);
+ 
+ 				if (!enc) {
+ 
+-					aead_request_set_crypt(cur->req,
++					aead_request_set_crypt(cur->req.req,
+ 							       cur->sgout,
+ 							       cur->sg,
+ 							       bs, iv);
+-					ret = crypto_aead_encrypt(cur->req);
+-					ret = do_one_aead_op(cur->req, ret);
++					ret = crypto_aead_encrypt(cur->req.req);
++					ret = do_one_aead_op(&cur->req, ret);
+ 
+ 					if (ret) {
+ 						pr_err("calculating auth failed (%d)\n",
+@@ -404,7 +416,7 @@ static void test_mb_aead_speed(const char *algo, int enc, int secs,
+ 					}
+ 				}
+ 
+-				aead_request_set_crypt(cur->req, cur->sg,
++				aead_request_set_crypt(cur->req.req, cur->sg,
+ 						       cur->sgout, bs +
+ 						       (enc ? 0 : authsize),
+ 						       iv);
+@@ -432,7 +444,7 @@ static void test_mb_aead_speed(const char *algo, int enc, int secs,
+ 
+ out:
+ 	for (i = 0; i < num_mb; ++i)
+-		aead_request_free(data[i].req);
++		aead_request_free(data[i].req.req);
+ out_free_xoutbuf:
+ 	for (i = 0; i < num_mb; ++i)
+ 		testmgr_free_buf(data[i].xoutbuf);
+@@ -450,9 +462,10 @@ static void test_mb_aead_speed(const char *algo, int enc, int secs,
+ 	kfree(iv);
+ }
+ 
+-static int test_aead_jiffies(struct aead_request *req, int enc,
++static int test_aead_jiffies(struct tcrypt_aead_request *treq, int enc,
+ 				int blen, int secs)
+ {
++	struct aead_request *req = treq->req;
+ 	unsigned long start, end;
+ 	int bcount;
+ 	int ret;
+@@ -460,9 +473,9 @@ static int test_aead_jiffies(struct aead_request *req, int enc,
+ 	for (start = jiffies, end = start + secs * HZ, bcount = 0;
+ 	     time_before(jiffies, end); bcount++) {
+ 		if (enc)
+-			ret = do_one_aead_op(req, crypto_aead_encrypt(req));
++			ret = do_one_aead_op(treq, crypto_aead_encrypt(req));
+ 		else
+-			ret = do_one_aead_op(req, crypto_aead_decrypt(req));
++			ret = do_one_aead_op(treq, crypto_aead_decrypt(req));
+ 
+ 		if (ret)
+ 			return ret;
+@@ -473,8 +486,9 @@ static int test_aead_jiffies(struct aead_request *req, int enc,
+ 	return 0;
+ }
+ 
+-static int test_aead_cycles(struct aead_request *req, int enc, int blen)
++static int test_aead_cycles(struct tcrypt_aead_request *treq, int enc, int blen)
+ {
++	struct aead_request *req = treq->req;
+ 	unsigned long cycles = 0;
+ 	int ret = 0;
+ 	int i;
+@@ -482,9 +496,9 @@ static int test_aead_cycles(struct aead_request *req, int enc, int blen)
+ 	/* Warm-up run. */
+ 	for (i = 0; i < 4; i++) {
+ 		if (enc)
+-			ret = do_one_aead_op(req, crypto_aead_encrypt(req));
++			ret = do_one_aead_op(treq, crypto_aead_encrypt(req));
+ 		else
+-			ret = do_one_aead_op(req, crypto_aead_decrypt(req));
++			ret = do_one_aead_op(treq, crypto_aead_decrypt(req));
+ 
+ 		if (ret)
+ 			goto out;
+@@ -496,9 +510,9 @@ static int test_aead_cycles(struct aead_request *req, int enc, int blen)
+ 
+ 		start = get_cycles();
+ 		if (enc)
+-			ret = do_one_aead_op(req, crypto_aead_encrypt(req));
++			ret = do_one_aead_op(treq, crypto_aead_encrypt(req));
+ 		else
+-			ret = do_one_aead_op(req, crypto_aead_decrypt(req));
++			ret = do_one_aead_op(treq, crypto_aead_decrypt(req));
+ 		end = get_cycles();
+ 
+ 		if (ret)
+@@ -520,6 +534,7 @@ static void test_aead_speed(const char *algo, int enc, unsigned int secs,
+ 			    unsigned int tcount, u8 authsize,
+ 			    unsigned int aad_size, u8 *keysize)
+ {
++	struct tcrypt_aead_request treq;
+ 	unsigned int i, j;
+ 	struct crypto_aead *tfm;
+ 	int ret = -ENOMEM;
+@@ -535,7 +550,6 @@ static void test_aead_speed(const char *algo, int enc, unsigned int secs,
+ 	char *axbuf[XBUFSIZE];
+ 	const int *b_size;
+ 	unsigned int iv_len;
+-	struct crypto_wait wait;
+ 
+ 	iv = kzalloc(MAX_IVLEN, GFP_KERNEL);
+ 	if (!iv)
+@@ -577,7 +591,7 @@ static void test_aead_speed(const char *algo, int enc, unsigned int secs,
+ 		goto out_noreq;
+ 	}
+ 
+-	crypto_init_wait(&wait);
++	crypto_init_wait(&treq.wait);
+ 	pr_info("testing speed of %s (%s) %s\n", algo,
+ 		get_driver_name(crypto_aead, tfm), e);
+ 
+@@ -587,9 +601,10 @@ static void test_aead_speed(const char *algo, int enc, unsigned int secs,
+ 		       algo);
+ 		goto out_noreq;
+ 	}
++	treq.req = req;
+ 
+ 	aead_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
+-				  crypto_req_done, &wait);
++				  crypto_req_done, &treq.wait);
+ 
+ 	i = 0;
+ 	do {
+@@ -650,7 +665,7 @@ static void test_aead_speed(const char *algo, int enc, unsigned int secs,
+ 				 */
+ 				aead_request_set_crypt(req, sgout, sg,
+ 						       bs, iv);
+-				ret = do_one_aead_op(req,
++				ret = do_one_aead_op(&treq,
+ 						     crypto_aead_encrypt(req));
+ 
+ 				if (ret) {
+@@ -665,11 +680,11 @@ static void test_aead_speed(const char *algo, int enc, unsigned int secs,
+ 					       iv);
+ 
+ 			if (secs) {
+-				ret = test_aead_jiffies(req, enc, bs,
++				ret = test_aead_jiffies(&treq, enc, bs,
+ 							secs);
+ 				cond_resched();
+ 			} else {
+-				ret = test_aead_cycles(req, enc, bs);
++				ret = test_aead_cycles(&treq, enc, bs);
+ 			}
+ 
+ 			if (ret) {
+@@ -709,23 +724,22 @@ static void test_hash_sg_init(struct scatterlist *sg)
+ 	}
+ }
+ 
+-static inline int do_one_ahash_op(struct ahash_request *req, int ret)
++static inline int do_one_ahash_op(struct tcrypt_ahash_request *treq, int ret)
+ {
+-	struct crypto_wait *wait = req->base.data;
+-
+-	return crypto_wait_req(ret, wait);
++	return crypto_wait_req(ret, &treq->wait);
+ }
+ 
+-static int test_ahash_jiffies_digest(struct ahash_request *req, int blen,
+-				     char *out, int secs)
++static int test_ahash_jiffies_digest(struct tcrypt_ahash_request *treq,
++				     int blen, char *out, int secs)
+ {
++	struct ahash_request *req = treq->req;
+ 	unsigned long start, end;
+ 	int bcount;
+ 	int ret;
+ 
+ 	for (start = jiffies, end = start + secs * HZ, bcount = 0;
+ 	     time_before(jiffies, end); bcount++) {
+-		ret = do_one_ahash_op(req, crypto_ahash_digest(req));
++		ret = do_one_ahash_op(treq, crypto_ahash_digest(req));
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -736,28 +750,29 @@ static int test_ahash_jiffies_digest(struct ahash_request *req, int blen,
+ 	return 0;
+ }
+ 
+-static int test_ahash_jiffies(struct ahash_request *req, int blen,
++static int test_ahash_jiffies(struct tcrypt_ahash_request *treq, int blen,
+ 			      int plen, char *out, int secs)
+ {
++	struct ahash_request *req = treq->req;
+ 	unsigned long start, end;
+ 	int bcount, pcount;
+ 	int ret;
+ 
+ 	if (plen == blen)
+-		return test_ahash_jiffies_digest(req, blen, out, secs);
++		return test_ahash_jiffies_digest(treq, blen, out, secs);
+ 
+ 	for (start = jiffies, end = start + secs * HZ, bcount = 0;
+ 	     time_before(jiffies, end); bcount++) {
+-		ret = do_one_ahash_op(req, crypto_ahash_init(req));
++		ret = do_one_ahash_op(treq, crypto_ahash_init(req));
+ 		if (ret)
+ 			return ret;
+ 		for (pcount = 0; pcount < blen; pcount += plen) {
+-			ret = do_one_ahash_op(req, crypto_ahash_update(req));
++			ret = do_one_ahash_op(treq, crypto_ahash_update(req));
+ 			if (ret)
+ 				return ret;
+ 		}
+ 		/* we assume there is enough space in 'out' for the result */
+-		ret = do_one_ahash_op(req, crypto_ahash_final(req));
++		ret = do_one_ahash_op(treq, crypto_ahash_final(req));
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -768,15 +783,16 @@ static int test_ahash_jiffies(struct ahash_request *req, int blen,
+ 	return 0;
+ }
+ 
+-static int test_ahash_cycles_digest(struct ahash_request *req, int blen,
+-				    char *out)
++static int test_ahash_cycles_digest(struct tcrypt_ahash_request *treq,
++				    int blen, char *out)
+ {
++	struct ahash_request *req = treq->req;
+ 	unsigned long cycles = 0;
+ 	int ret, i;
+ 
+ 	/* Warm-up run. */
+ 	for (i = 0; i < 4; i++) {
+-		ret = do_one_ahash_op(req, crypto_ahash_digest(req));
++		ret = do_one_ahash_op(treq, crypto_ahash_digest(req));
+ 		if (ret)
+ 			goto out;
+ 	}
+@@ -787,7 +803,7 @@ static int test_ahash_cycles_digest(struct ahash_request *req, int blen,
+ 
+ 		start = get_cycles();
+ 
+-		ret = do_one_ahash_op(req, crypto_ahash_digest(req));
++		ret = do_one_ahash_op(treq, crypto_ahash_digest(req));
+ 		if (ret)
+ 			goto out;
+ 
+@@ -806,26 +822,27 @@ static int test_ahash_cycles_digest(struct ahash_request *req, int blen,
+ 	return 0;
+ }
+ 
+-static int test_ahash_cycles(struct ahash_request *req, int blen,
++static int test_ahash_cycles(struct tcrypt_ahash_request *treq, int blen,
+ 			     int plen, char *out)
+ {
++	struct ahash_request *req = treq->req;
+ 	unsigned long cycles = 0;
+ 	int i, pcount, ret;
+ 
+ 	if (plen == blen)
+-		return test_ahash_cycles_digest(req, blen, out);
++		return test_ahash_cycles_digest(treq, blen, out);
+ 
+ 	/* Warm-up run. */
+ 	for (i = 0; i < 4; i++) {
+-		ret = do_one_ahash_op(req, crypto_ahash_init(req));
++		ret = do_one_ahash_op(treq, crypto_ahash_init(req));
+ 		if (ret)
+ 			goto out;
+ 		for (pcount = 0; pcount < blen; pcount += plen) {
+-			ret = do_one_ahash_op(req, crypto_ahash_update(req));
++			ret = do_one_ahash_op(treq, crypto_ahash_update(req));
+ 			if (ret)
+ 				goto out;
+ 		}
+-		ret = do_one_ahash_op(req, crypto_ahash_final(req));
++		ret = do_one_ahash_op(treq, crypto_ahash_final(req));
+ 		if (ret)
+ 			goto out;
+ 	}
+@@ -836,15 +853,15 @@ static int test_ahash_cycles(struct ahash_request *req, int blen,
+ 
+ 		start = get_cycles();
+ 
+-		ret = do_one_ahash_op(req, crypto_ahash_init(req));
++		ret = do_one_ahash_op(treq, crypto_ahash_init(req));
+ 		if (ret)
+ 			goto out;
+ 		for (pcount = 0; pcount < blen; pcount += plen) {
+-			ret = do_one_ahash_op(req, crypto_ahash_update(req));
++			ret = do_one_ahash_op(treq, crypto_ahash_update(req));
+ 			if (ret)
+ 				goto out;
+ 		}
+-		ret = do_one_ahash_op(req, crypto_ahash_final(req));
++		ret = do_one_ahash_op(treq, crypto_ahash_final(req));
+ 		if (ret)
+ 			goto out;
+ 
+@@ -867,7 +884,7 @@ static void test_ahash_speed_common(const char *algo, unsigned int secs,
+ 				    struct hash_speed *speed, unsigned mask)
+ {
+ 	struct scatterlist sg[TVMEMSIZE];
+-	struct crypto_wait wait;
++	struct tcrypt_ahash_request treq;
+ 	struct ahash_request *req;
+ 	struct crypto_ahash *tfm;
+ 	char *output;
+@@ -896,9 +913,10 @@ static void test_ahash_speed_common(const char *algo, unsigned int secs,
+ 		goto out;
+ 	}
+ 
+-	crypto_init_wait(&wait);
++	treq.req = req;
++	crypto_init_wait(&treq.wait);
+ 	ahash_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
+-				   crypto_req_done, &wait);
++				   crypto_req_done, &treq.wait);
+ 
+ 	output = kmalloc(MAX_DIGEST_SIZE, GFP_KERNEL);
+ 	if (!output)
+@@ -921,11 +939,11 @@ static void test_ahash_speed_common(const char *algo, unsigned int secs,
+ 		ahash_request_set_crypt(req, sg, output, speed[i].plen);
+ 
+ 		if (secs) {
+-			ret = test_ahash_jiffies(req, speed[i].blen,
++			ret = test_ahash_jiffies(&treq, speed[i].blen,
+ 						 speed[i].plen, output, secs);
+ 			cond_resched();
+ 		} else {
+-			ret = test_ahash_cycles(req, speed[i].blen,
++			ret = test_ahash_cycles(&treq, speed[i].blen,
+ 						speed[i].plen, output);
+ 		}
+ 
+@@ -1211,16 +1229,16 @@ static void test_mb_skcipher_speed(const char *algo, int enc, int secs,
+ 	kfree(data);
+ }
+ 
+-static inline int do_one_acipher_op(struct skcipher_request *req, int ret)
++static inline int do_one_acipher_op(struct tcrypt_skcipher_request *req,
++				    int ret)
+ {
+-	struct crypto_wait *wait = req->base.data;
+-
+-	return crypto_wait_req(ret, wait);
++	return crypto_wait_req(ret, &req->wait);
+ }
+ 
+-static int test_acipher_jiffies(struct skcipher_request *req, int enc,
++static int test_acipher_jiffies(struct tcrypt_skcipher_request *treq, int enc,
+ 				int blen, int secs)
+ {
++	struct skcipher_request *req = treq->req;
+ 	unsigned long start, end;
+ 	int bcount;
+ 	int ret;
+@@ -1228,10 +1246,10 @@ static int test_acipher_jiffies(struct skcipher_request *req, int enc,
+ 	for (start = jiffies, end = start + secs * HZ, bcount = 0;
+ 	     time_before(jiffies, end); bcount++) {
+ 		if (enc)
+-			ret = do_one_acipher_op(req,
++			ret = do_one_acipher_op(treq,
+ 						crypto_skcipher_encrypt(req));
+ 		else
+-			ret = do_one_acipher_op(req,
++			ret = do_one_acipher_op(treq,
+ 						crypto_skcipher_decrypt(req));
+ 
+ 		if (ret)
+@@ -1243,9 +1261,10 @@ static int test_acipher_jiffies(struct skcipher_request *req, int enc,
+ 	return 0;
+ }
+ 
+-static int test_acipher_cycles(struct skcipher_request *req, int enc,
++static int test_acipher_cycles(struct tcrypt_skcipher_request *treq, int enc,
+ 			       int blen)
+ {
++	struct skcipher_request *req = treq->req;
+ 	unsigned long cycles = 0;
+ 	int ret = 0;
+ 	int i;
+@@ -1253,10 +1272,10 @@ static int test_acipher_cycles(struct skcipher_request *req, int enc,
+ 	/* Warm-up run. */
+ 	for (i = 0; i < 4; i++) {
+ 		if (enc)
+-			ret = do_one_acipher_op(req,
++			ret = do_one_acipher_op(treq,
+ 						crypto_skcipher_encrypt(req));
+ 		else
+-			ret = do_one_acipher_op(req,
++			ret = do_one_acipher_op(treq,
+ 						crypto_skcipher_decrypt(req));
+ 
+ 		if (ret)
+@@ -1269,10 +1288,10 @@ static int test_acipher_cycles(struct skcipher_request *req, int enc,
+ 
+ 		start = get_cycles();
+ 		if (enc)
+-			ret = do_one_acipher_op(req,
++			ret = do_one_acipher_op(treq,
+ 						crypto_skcipher_encrypt(req));
+ 		else
+-			ret = do_one_acipher_op(req,
++			ret = do_one_acipher_op(treq,
+ 						crypto_skcipher_decrypt(req));
+ 		end = get_cycles();
+ 
+@@ -1294,8 +1313,8 @@ static void test_skcipher_speed(const char *algo, int enc, unsigned int secs,
+ 				struct cipher_speed_template *template,
+ 				unsigned int tcount, u8 *keysize, bool async)
+ {
++	struct tcrypt_skcipher_request treq;
+ 	unsigned int ret, i, j, k, iv_len;
+-	struct crypto_wait wait;
+ 	const char *key;
+ 	char iv[128];
+ 	struct skcipher_request *req;
+@@ -1308,7 +1327,7 @@ static void test_skcipher_speed(const char *algo, int enc, unsigned int secs,
+ 	else
+ 		e = "decryption";
+ 
+-	crypto_init_wait(&wait);
++	crypto_init_wait(&treq.wait);
+ 
+ 	tfm = crypto_alloc_skcipher(algo, 0, async ? 0 : CRYPTO_ALG_ASYNC);
+ 
+@@ -1327,8 +1346,9 @@ static void test_skcipher_speed(const char *algo, int enc, unsigned int secs,
+ 		goto out;
+ 	}
+ 
++	treq.req = req;
+ 	skcipher_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
+-				      crypto_req_done, &wait);
++				      crypto_req_done, &treq.wait);
+ 
+ 	i = 0;
+ 	do {
+@@ -1395,11 +1415,11 @@ static void test_skcipher_speed(const char *algo, int enc, unsigned int secs,
+ 			skcipher_request_set_crypt(req, sg, sg, bs, iv);
+ 
+ 			if (secs) {
+-				ret = test_acipher_jiffies(req, enc,
++				ret = test_acipher_jiffies(&treq, enc,
+ 							   bs, secs);
+ 				cond_resched();
+ 			} else {
+-				ret = test_acipher_cycles(req, enc,
++				ret = test_acipher_cycles(&treq, enc,
+ 							  bs);
+ 			}
  
 -- 
 2.53.0
