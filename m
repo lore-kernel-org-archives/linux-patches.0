@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021317;
-	b=JAIJvoIxjN3UkyiewDvFVYS940442J9b+VuL8dDo3U1bfSzCRDBAMhNZnQfmKhDcA6FA
-	 v+B2FT33o88PObVL7vUhzrt4ne39WHt/LlatVRRupN0g6yCUE/lYez42JgdCIBBi+hQiY
-	 vSKmUeKNGCrn8/zXjBkCCAIs4lF09HwAcysk3GUIUNBklx9LCqUEfiIu0ZxrJuTYtmEyg
-	 tE3lIPySCARh39Ikt9MHHNtmFllDA1iTGvNNOoFfM9ZcQC9GQaR2hAaeovulWpyM5CFPZ
-	 RDIkq+I6sxrVFcYONQIGloaVM/YYLjGBFKFb3E/TJXlKRYP0SBniFydarED6IdHQM9A==
+	t=1795021320;
+	b=q/10cleDIDfBbfMixv4BoWFjZhHEChEdnK6DmO4kv4K5RH3Lu5SFnJ31sUJxXOuALvTC
+	 zzpOX6221y2yZjDJ1wmup2SD9Aw92LJhKKq7WoQkDOv03U0U8iYyG9wtXWK1CB18xXVHk
+	 VcADGgGvie+9SQfDhhc0MY6cnqGDr+tUMPvvN3xmzhI383eG6O+ct0Wz+cpB4nrVf40sD
+	 Oyp3aYXM7mYYNeio10dFYPZBwW8owqJK+2YRiEAjHkr9xcV+pmuvj/F7Ie0BWSSd9UfVR
+	 KSHYZLdsjmJO4OWOuFn6j4Ia4hRjFlDhuDkPxso25gq4j6M+5ZoUOslF3RLXTyRRAOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021317;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021320;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=OwJ917yR5SarT8zJz7tYB2rovlnXmAEXS5tQeQWM3PU=;
-	b=2Sud9Ol0vVnRZcdqzduROjW4mDrWQ8mwJsxKvtrchrVsCLS6zp1pABhfdo6uIDJBAYMR
-	 VglebhlWjawEYIwrtmOpt4FHSIbfHDyoYgJmLXsPTm8zcWwSwaHaRAOuSWtboFCdbW3M2
-	 GT0SP5ItMDAMavRpPnGcYHVJpWKIpedTC3MQjWB/bB9BppkpoqOvOC56JIvxHnIElBsip
-	 yL667piSOTeFx70E43izS/a5ts2jilXWYSjxY1YWRoSOaJQBH49d6U4Ro4XqUaimnuBFL
-	 01TMGLpYeOakgldjCcuJmQm3Q6pWA8b4r9/WHjKR0YrkwhOn8G6yvQakTMcYUxeyt2g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=pEKUZnEREQQ3Lz2gENiirs8q1GIQ9CD0dJR/SsY7TdE=;
+	b=SbAvA987iOrYF/w9pTFV08bDMhvHpK4EG5C7GPbUFrQp3k1EkMMl8NaTYP0boEi/vriM
+	 9gF9XqqEOGabPbvdAOX3mnS5AteH09gGtm4fJothz+5/6LSVq0mQH62O8x+n4tMdF8DiF
+	 KrD8//f9y5GVunSHZdI7rkWx/4lRMvHr8pH+3a8SVJqFczYbx1p43w8DbFrpyZGSAJxz2
+	 NcAjuByvpmY5e93HRQAvx6q7i7ikD6Yc3mfFK9keAl6iEDdV5Vm31TYVIa+u2Z4yQCJoZ
+	 mhpqtMr1zuMT3zzfGDdNgbdA+/uStlXUviuHRL2/7v4GBLeGsfu61k6KDs9IsSPTPnQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bogMUH9t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Afw0l+Q5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BE9606A31C;
-	Wed, 18 Nov 2026 17:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5BE9606A320;
+	Wed, 18 Nov 2026 17:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bogMUH9t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908251F000C5;
-	Wed, 18 Nov 2026 17:01:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Afw0l+Q5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7F41F000C5;
+	Wed, 18 Nov 2026 17:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021317;
-	bh=OwJ917yR5SarT8zJz7tYB2rovlnXmAEXS5tQeQWM3PU=;
+	s=korg; t=1795021319;
+	bh=pEKUZnEREQQ3Lz2gENiirs8q1GIQ9CD0dJR/SsY7TdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bogMUH9t9K+Wkz5KkVC8WdaevSVt6Y6Mkp0hil89d8OozMmaDFE6FCTOADmSgrw2T
-	 Y8biEC8bhIxmzifFBEDE/fB1n1lm2WImWesaWYY3H9t4hFyXPU3P2vBQDRg+WYTd20
-	 gYcmbESdGAXoh7jK8YBJLw7svuEtjVjWLQhAN9T0=
+	b=Afw0l+Q5M4AC0Zxh1ipXcvbO4qdMuT7VEyhAN8m4J/OpRPK5e3IH66jdwlxtA2fQ5
+	 ac2/e6FKikAkl63T3RbGvhF3uE8HqQvYqSAVZNklZsPRkpnlKk7BQd2m7agkog6OFX
+	 o6hNJAUMeuviHs36KIWMrm4hf+Ol6pdJfmkemrHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Igor Velkov <iav@iav.lv>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Dimitri Daskalakis <daskald@meta.com>,
+	Nimrod Oren <noren@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2263/2651] net: phy: marvell: keep WOL_EIE across interrupt reconfiguration
-Date: Wed, 18 Nov 2026 15:58:23 +0100
-Message-ID: <20261118150406.865643439@linuxfoundation.org>
+Subject: [PATCH 7.3 2264/2651] net/mlx5e: Update netdev features only after a successful ringparam set
+Date: Wed, 18 Nov 2026 15:58:24 +0100
+Message-ID: <20261118150406.898804130@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,232 +65,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Dimitri Daskalakis <daskald@meta.com>
 
-[ Upstream commit f434191f93884c9de58c38f18ac7fc7f1fdf9e42 ]
+[ Upstream commit 23dd5be7e19ceab8c1c79110ee3552bcabc463ef ]
 
-marvell_config_intr() rewrites the whole interrupt enable register, so
-the config_intr call from phy_init_hw() on resume silently cleared
-WOL_EIE on the 88E1318S and 88E1510: m88e1318_get_wol() still reported
-WAKE_MAGIC, but a matched magic packet was no longer routed to INTn and
-the board did not wake.
+mlx5 couples HW-GRO with tcp-data-split. If a user sets rx-gro-hw on ->
+tcp-data-split on -> rx-gro-hw off, the driver will leave HW-GRO on.
+mlx5e_ethtool_set_tcp_data_split() calls netdev_update_features() when
+tcp-data-split goes from enabled to disabled in case HW-GRO needs to be
+released. mlx5e_fix_features() reads the new HDS config from
+dev->cfg_pending, so HW-GRO is released before all ring parameters are
+validated.
 
-Bit 7 of that register is WOL_EIE only on these two PHYs; on others,
-such as the 88E1111, it enables a FIFO error interrupt. So give the
-88E1318S and 88E1510 their own config_intr and handle_interrupt, and
-leave the shared callbacks unchanged.
+If the subsequent call to mlx5e_ethtool_set_ringparam() fails, the
+ethtool core discards the pending change and reports tcp-data-split
+enabled. The device is no longer splitting, and subsequent ring changes
+are blocked.
 
-m88e1318_set_wol() now records whether WoL is enabled, and both it and
-the new config_intr derive WOL_EIE from that state under the MDIO bus
-lock. WOL_EIE stays set across config_intr while WoL is enabled, except
-when the PHY has an interrupt line and interrupts are being disabled,
-as in phy_free_interrupt(): INTn is then the PHY IRQ, and nothing would
-read IEVENT after free_irq() to release it. The bit is set again once
-interrupts are re-enabled. phy_probe() still clears a WOL_EIE left by a
-previous boot, since WoL starts out disabled. The new handler also
-claims WoL events, so they do not go unacknowledged when the PHY IRQ is
-in use.
+Move the call to netdev_update_features() after
+mlx5e_ethtool_set_ringparam() exits successfully.
 
-Helios4 (Armada 388, 88E1512), 7.2.9. With this patch WOL_EIE stays set
-over 3 link down/up cycles, "wol d" clears it, and a magic packet on a
-running board is a handled interrupt. Without it, WOL_EIE is lost on the
-first down/up, survives "wol d", and the magic packet is an unhandled
-interrupt.
+The issue was discovered by manual code inspection during review of
+a change that stops mlx5 users from disabling tcp-data-split. It was
+reproduced on a ConnectX-7 with ethtool alone.
 
-Fixes: 3871c3876f80 ("mv643xx_eth with 88E1318S: support Wake on LAN")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Tested-by: Igor Velkov <iav@iav.lv>
-Link: https://patch.msgid.link/20261014194818.11640-2-rosenp@gmail.com
+Steps to reproduce:
+ethtool -K eth0 rx-gro-hw on
+ethtool -G eth0 tcp-data-split on
+ethtool -K eth0 rx-gro-hw off # HW-GRO kept on for tcp-data-split
+
+ethtool -G eth0 tcp-data-split off rx 1 # de-sync driver & kernel state
+ netlink error: mlx5_core: rx (1) < min (16)
+ netlink error: Invalid argument
+
+ethtool -G eth0 rx 1024 # valid ring changes are now blocked
+ netlink error: mlx5_core: TCP-data-split is not supported when GRO HW is disabled
+ netlink error: Invalid argument
+
+This is not a terminal state, users can recover by setting rx-gro-hw on.
+With the fix, the failing ringparam set leaves rx-gro-hw on and later
+ring changes succeed.
+
+Fixes: 46bcce5dfd33 ("net/mlx5e: Support ethtool tcp-data-split settings")
+Reported-by: Björn Töpel <bjorn@kernel.org>
+Closes: https://lore.kernel.org/87se2grw3d.fsf@all.your.base.are.belong.to.us/
+Signed-off-by: Dimitri Daskalakis <daskald@meta.com>
+Reviewed-by: Björn Töpel <bjorn@kernel.org>
+Reviewed-by: Nimrod Oren <noren@nvidia.com>
+Acked-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261017005401.1582755-1-dimitri.daskalakis1@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/marvell.c | 97 ++++++++++++++++++++++++++++++---------
- 1 file changed, 75 insertions(+), 22 deletions(-)
+ .../ethernet/mellanox/mlx5/core/en_ethtool.c    | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/phy/marvell.c b/drivers/net/phy/marvell.c
-index f71cffa884062..94e8dbe9a859f 100644
---- a/drivers/net/phy/marvell.c
-+++ b/drivers/net/phy/marvell.c
-@@ -55,6 +55,8 @@
- #define MII_M1011_IMASK			0x12
- #define MII_M1011_IMASK_INIT		0x6400
- #define MII_M1011_IMASK_CLEAR		0x0000
-+/* WOL Event Interrupt Enable, 88E1318S and 88E1510 only */
-+#define MII_M1011_IMASK_WOL		BIT(7)
- 
- #define MII_M1011_PHY_SCR			0x10
- #define MII_M1011_PHY_SCR_DOWNSHIFT_EN		BIT(11)
-@@ -139,11 +141,6 @@
- #define MII_88E1318S_PHY_MSCR1_REG	16
- #define MII_88E1318S_PHY_MSCR1_PAD_ODD	BIT(6)
- 
--/* Copper Specific Interrupt Enable Register */
--#define MII_88E1318S_PHY_CSIER				0x12
--/* WOL Event Interrupt Enable */
--#define MII_88E1318S_PHY_CSIER_WOL_EIE			BIT(7)
--
- #define MII_88E1318S_PHY_LED_FUNC		0x10
- #define MII_88E1318S_PHY_LED_FUNC_OFF		(0x8)
- #define MII_88E1318S_PHY_LED_FUNC_ON		(0x9)
-@@ -354,6 +351,7 @@ struct marvell_priv {
- 	u32 step;
- 	s8 pair;
- 	u8 vct_phase;
-+	bool wol_enabled;
- };
- 
- static int marvell_read_page(struct phy_device *phydev)
-@@ -407,7 +405,8 @@ static int marvell_config_intr(struct phy_device *phydev)
- 	return err;
- }
- 
--static irqreturn_t marvell_handle_interrupt(struct phy_device *phydev)
-+static irqreturn_t __marvell_handle_interrupt(struct phy_device *phydev,
-+					      u16 mask)
- {
- 	int irq_status;
- 
-@@ -417,7 +416,7 @@ static irqreturn_t marvell_handle_interrupt(struct phy_device *phydev)
- 		return IRQ_NONE;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
+index 3ed59ced0407a..f38e033ab8faf 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
+@@ -403,11 +403,6 @@ static bool mlx5e_ethtool_set_tcp_data_split(struct mlx5e_priv *priv,
+ 		return false;
  	}
  
--	if (!(irq_status & MII_M1011_IMASK_INIT))
-+	if (!(irq_status & mask))
- 		return IRQ_NONE;
- 
- 	phy_trigger_machine(phydev);
-@@ -425,6 +424,57 @@ static irqreturn_t marvell_handle_interrupt(struct phy_device *phydev)
- 	return IRQ_HANDLED;
+-	/* Might need to disable HW-GRO if it was kept on due to hds. */
+-	if (tcp_data_split == ETHTOOL_TCP_DATA_SPLIT_DISABLED &&
+-	    dev->cfg->hds_config == ETHTOOL_TCP_DATA_SPLIT_ENABLED)
+-		netdev_update_features(priv->netdev);
+-
+ 	return true;
  }
  
-+static irqreturn_t marvell_handle_interrupt(struct phy_device *phydev)
-+{
-+	return __marvell_handle_interrupt(phydev, MII_M1011_IMASK_INIT);
-+}
-+
-+/* WOL_EIE also routes WoL events to INTn. Keep it set while WoL is enabled,
-+ * unless INTn is the PHY interrupt and that interrupt is being disabled:
-+ * nothing would read IEVENT after free_irq() to release the line.
-+ */
-+static u16 m88e1318_wol_imask(struct phy_device *phydev)
-+{
-+	struct marvell_priv *priv = phydev->priv;
-+
-+	if (priv->wol_enabled &&
-+	    (phydev->interrupts == PHY_INTERRUPT_ENABLED ||
-+	     !phy_interrupt_is_valid(phydev)))
-+		return MII_M1011_IMASK_WOL;
-+
-+	return 0;
-+}
-+
-+static int m88e1318_config_intr(struct phy_device *phydev)
-+{
-+	bool enable = phydev->interrupts == PHY_INTERRUPT_ENABLED;
-+	u16 imask;
+@@ -468,13 +463,23 @@ static int mlx5e_set_ringparam(struct net_device *dev,
+ 			       struct netlink_ext_ack *extack)
+ {
+ 	struct mlx5e_priv *priv = netdev_priv(dev);
 +	int err;
-+
-+	if (enable) {
-+		err = marvell_ack_interrupt(phydev);
-+		if (err)
-+			return err;
-+	}
-+
-+	/* Serialise against m88e1318_set_wol() updating wol_enabled */
-+	phy_lock_mdio_bus(phydev);
-+	imask = enable ? MII_M1011_IMASK_INIT : MII_M1011_IMASK_CLEAR;
-+	imask |= m88e1318_wol_imask(phydev);
-+	err = __phy_write(phydev, MII_M1011_IMASK, imask);
-+	phy_unlock_mdio_bus(phydev);
-+	if (err || enable)
+ 
+ 	if (!mlx5e_ethtool_set_tcp_data_split(priv,
+ 					      kernel_param->tcp_data_split,
+ 					      extack))
+ 		return -EINVAL;
+ 
+-	return mlx5e_ethtool_set_ringparam(priv, param, extack);
++	err = mlx5e_ethtool_set_ringparam(priv, param, extack);
++	if (err)
 +		return err;
 +
-+	return marvell_ack_interrupt(phydev);
-+}
++	/* Might need to disable HW-GRO if it was kept on due to hds. */
++	if (kernel_param->tcp_data_split == ETHTOOL_TCP_DATA_SPLIT_DISABLED &&
++	    dev->cfg->hds_config == ETHTOOL_TCP_DATA_SPLIT_ENABLED)
++		netdev_update_features(priv->netdev);
 +
-+static irqreturn_t m88e1318_handle_interrupt(struct phy_device *phydev)
-+{
-+	return __marvell_handle_interrupt(phydev, MII_M1011_IMASK_INIT |
-+					  MII_M1011_IMASK_WOL);
-+}
-+
- static int marvell_set_polarity(struct phy_device *phydev, int polarity)
- {
- 	u16 val;
-@@ -1969,18 +2019,27 @@ static void m88e1318_get_wol(struct phy_device *phydev,
- static int m88e1318_set_wol(struct phy_device *phydev,
- 			    struct ethtool_wolinfo *wol)
- {
-+	struct marvell_priv *priv = phydev->priv;
- 	int err = 0, oldpage;
++	return 0;
+ }
  
- 	oldpage = phy_save_page(phydev);
- 	if (oldpage < 0)
- 		goto error;
- 
--	if (wol->wolopts & (WAKE_MAGIC | WAKE_PHY)) {
--		/* Explicitly switch to page 0x00, just to be sure */
--		err = marvell_write_page(phydev, MII_MARVELL_COPPER_PAGE);
--		if (err < 0)
--			goto error;
-+	priv->wol_enabled = !!(wol->wolopts & (WAKE_MAGIC | WAKE_PHY));
- 
-+	/* Explicitly switch to page 0x00, just to be sure */
-+	err = marvell_write_page(phydev, MII_MARVELL_COPPER_PAGE);
-+	if (err < 0)
-+		goto error;
-+
-+	/* Update the WOL interrupt enable */
-+	err = __phy_modify(phydev, MII_M1011_IMASK, MII_M1011_IMASK_WOL,
-+			   m88e1318_wol_imask(phydev));
-+	if (err < 0)
-+		goto error;
-+
-+	if (priv->wol_enabled) {
- 		/* If WOL event happened once, the LED[2] interrupt pin
- 		 * will not be cleared unless we reading the interrupt status
- 		 * register. If interrupts are in use, the normal interrupt
-@@ -1990,12 +2049,6 @@ static int m88e1318_set_wol(struct phy_device *phydev,
- 		if (!phy_interrupt_is_valid(phydev))
- 			__phy_read(phydev, MII_M1011_IEVENT);
- 
--		/* Enable the WOL interrupt */
--		err = __phy_set_bits(phydev, MII_88E1318S_PHY_CSIER,
--				     MII_88E1318S_PHY_CSIER_WOL_EIE);
--		if (err < 0)
--			goto error;
--
- 		err = marvell_write_page(phydev, MII_MARVELL_LED_PAGE);
- 		if (err < 0)
- 			goto error;
-@@ -3817,8 +3870,8 @@ static struct phy_driver marvell_drivers[] = {
- 		.config_init = m88e1318_config_init,
- 		.config_aneg = m88e1318_config_aneg,
- 		.read_status = marvell_read_status,
--		.config_intr = marvell_config_intr,
--		.handle_interrupt = marvell_handle_interrupt,
-+		.config_intr = m88e1318_config_intr,
-+		.handle_interrupt = m88e1318_handle_interrupt,
- 		.get_wol = m88e1318_get_wol,
- 		.set_wol = m88e1318_set_wol,
- 		.resume = genphy_resume,
-@@ -3925,8 +3978,8 @@ static struct phy_driver marvell_drivers[] = {
- 		.config_init = m88e1510_config_init,
- 		.config_aneg = m88e1510_config_aneg,
- 		.read_status = marvell_read_status,
--		.config_intr = marvell_config_intr,
--		.handle_interrupt = marvell_handle_interrupt,
-+		.config_intr = m88e1318_config_intr,
-+		.handle_interrupt = m88e1318_handle_interrupt,
- 		.get_wol = m88e1318_get_wol,
- 		.set_wol = m88e1318_set_wol,
- 		.resume = m88e1510_resume,
+ void mlx5e_ethtool_get_channels(struct mlx5e_priv *priv,
 -- 
 2.53.0
 
