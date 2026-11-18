@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022306;
-	b=xtBr5OKpJK1TAU8Rnq4U/fAohZKjLhs1eii1XyQUQEPs7Us/DPnU2cUmEFTC55s/nAUs
-	 zLwG/QDmAajvDfFm9siq5cIuXrAcQirFqUXSBXLcfUkXAA0qCkopa9hxE5aEYZ7a2Z6Gy
-	 qiIph+wS3nxwg+4/IW850VOroFLez4FJdJvK9Hs6uECMyZMQylOOxMFDCd4DkHor1886i
-	 jukVnIhyXDQpiue2QMHI+yEcYL7wzRv0MfJkRE5YSaP1U+LNPNQi7vuZeXjrQZAKkW3ji
-	 omEvTCLRaLz8K3BPoZYNFNiPVSMKb7O/9LknfOGz0Nu00oqlzrjxG99aZ86xmloGMzA==
+	t=1795022308;
+	b=HQ19p1563q9+ir1tW82+AEbsr0dit8ZVgYqQRHmgf1wRHEaP/or7UShm5CUu83zc/hBM
+	 6gKEJXyLzGIGQn62Lc3rsJIlyMMT/60cuzb4Xv4amNRu+X06y+O2ZveiGESXtGhKuk3jH
+	 8mZ+ZGcMLJkxkb+DBVlmUENNV3IaXC8+WrtbXKILdmZkvzf2Gbxi3iTa3289zWOn2KzHD
+	 yQXfGrAZHZ0a7g+xHdUsOH3BP7llJXRHbiuX0ern/csJqTjImtmYn6jZO9QUo4y0yunOT
+	 Q0wM5Pa5ZnyGr6E0iY7mMduDIj/jHhTez2PpenmVeKRIlsngeoI8NzOJeYXnQL7pKmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022306;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022308;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kII7An6Vmph65KPgTjNw/PJmwVJMkC5O7Z8Mz1qhW+4=;
-	b=dcpIzmlU2D6I0OAT3pNApfVxHtWHen4A3xh1kYUlt6Vh/YBMqQGh7pMV0BcSToOoMcoU
-	 /Guh60wKg4srxTxcDK8kFnehiTyOIrkbfImHlpBLL3nmC51tlTUVk2dkOimQ1/jsj9Eyt
-	 VFROI78DME0zOCr67OP+ghGQJYJrY3ctbCXy5J/b0AfuREmH4AUPyv8gvPcDTr14qcuOp
-	 oUgaG6hQQN1Bd//UcIsU4bDTioZMwQ943D6QKoP+ub/5CKCQRirAHg6b+qB6NVCSncm9g
-	 SYXcAgFH6CcMKcCwRIjLZcCA69r8U4jp9f7CCRww4C/KodrkOxRpyjfAuSk7ryFGigQ==
+	bh=tL4ljBRIz5yAkv05jLczSC/Krm1r5xm4hi4x660UdmA=;
+	b=NCowP6dYO53F5koa1BauRiBOH4r4bWH7u9Dg5XbXYTRKwD7lRCNO4wXMTF9ozHAoOxgG
+	 5Vy0Kdm2jTsoPEnPNwXLCHTo6byuhlDCwC4VP30m/04o8t8tN1Gu+nHa1tkXYCR1HGrTw
+	 PSwULx9YvUXND4FGCPfa7gEr76kB4qZE442nS/8+Ym0+hILHQPrrS9546tZ3SWNtzwyp5
+	 uWFIyT3L4iK9Smg6k0tvV424UmwmD9fVkFKSP5pReo4K2HPGdC63/WE4wwoEvBeJwlmd3
+	 gN6RgKYFPgylQFh3GcUIT43pQcB47AGvHwxBZT95zOUC3/ktFaO1t6zXj8x3Kp3mTog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wzyP0yf1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I4N2eZnA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BED606A325;
-	Wed, 18 Nov 2026 17:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D61606A31C;
+	Wed, 18 Nov 2026 17:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wzyP0yf1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F171F000C4;
-	Wed, 18 Nov 2026 17:18:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I4N2eZnA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2012C1F000C4;
+	Wed, 18 Nov 2026 17:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022305;
-	bh=kII7An6Vmph65KPgTjNw/PJmwVJMkC5O7Z8Mz1qhW+4=;
+	s=korg; t=1795022308;
+	bh=tL4ljBRIz5yAkv05jLczSC/Krm1r5xm4hi4x660UdmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wzyP0yf1GTfmjqP3f9tuNkLEd/z19Xt2D4jNM3yyh5IVShei6rI9bs7SU3XnVaVdC
-	 p5bRON3dYd7UBSA5G4yb+8NdQXruKPvcKtWY6qB10PrM7PVum4811q2OWZZCZqqh4X
-	 3rtLVHMjb/hIKqBPBnKIBy5KjlBi9/zDnH6s2UmA=
+	b=I4N2eZnAGtLNMA4Ggl+heDt9SZ+vqzQYaJhPVzZeAGPnHwdbHYYw5nFwaf6MM+seZ
+	 22uVL+WHihG7w17W2ys9A6YvKn4ogpEw4QpVlNcic7EwObP8j6VBWSYEPaBXNPA7xc
+	 itXSiqIHuDT9EQ+yEX1mlTEIO2gUij1WlyLEURW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2614/2651] eth: bnxt: recycle agg buffers when Rx head buffer allocation fails
-Date: Wed, 18 Nov 2026 16:04:14 +0100
-Message-ID: <20261118150418.347135255@linuxfoundation.org>
+Subject: [PATCH 7.3 2615/2651] eth: bnxt: resize Rx head buffers when rx-copybreak changes
+Date: Wed, 18 Nov 2026 16:04:15 +0100
+Message-ID: <20261118150418.380976878@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,122 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit db2c610df81e34d497f49b68a0a1681c3f203bdb ]
+[ Upstream commit 09f10efee6f93863ea71489ce84563f4d51787f6 ]
 
-bnxt_rx_pkt() tries to return the aggregation buffers of a packet
-to the ring when the copybreak allocation fails, but the same logic
-is missing on the rx_skb_func() failure path. The agg BDs consumed
-by the device are then never posted again. The agg ring is only
-refilled one-for-one as completions consume its buffers, so each
-such failure permanently shrinks it. Under sustained memory pressure
-the ring drains completely, and the queue stops receiving anything
-that does not fit into the head buffer, even once memory is available
-again. Only re-creating the rings (e.g. ifdown / ifup) recovers it.
+Since rx-copybreak became configurable, bnxt_set_ring_params() sizes
+the head buffers to fit at least rx_copybreak bytes, and the copybreak
+path in bnxt_copy_data() syncs rx_copybreak bytes of the head buffer.
+bnxt_set_tunable() however only updates bp->rx_copybreak, and nothing
+on the open path recalculates the ring parameters. After raising
+rx-copybreak the head buffers keep their old size until some other
+setting changes, and bnxt_copy_data() syncs past their end, into the
+next buffer in the page or past the end of the page:
 
-Commit 296d5b541639 ("bnxt_en: Fix aggregation buffer leak under OOM
-condition.") fixed the copybreak path only. Recently
-commit bd3beb5c8691 ("eth: bnxt: disable rx-copybreak by default")
-made the non-copybreak path the default, re-surfacing the issue.
+  DMA-API: bnxt_en 0000:01:00.0: device driver tries to sync DMA memory it has not allocated [device address=0x00000002aa210c40] [size=1024 bytes]
+  WARNING: kernel/dma/debug.c:1162 at check_sync+0x577/0x1eb0, CPU#22: swapper/22/0
+  Call Trace:
+   <IRQ>
+   debug_dma_sync_single_for_cpu+0x66/0x90
+   bnxt_copy_data+0x12f/0x290
+   bnxt_rx_pkt+0x24ea/0x50f0
+   __bnxt_poll_work+0x42c/0xc00
+   bnxt_poll_p5+0x579/0x17a0
+   __napi_poll+0x8b/0x2c0
+   net_rx_action+0x58f/0xbb0
 
-With XDP, the agg buffers are attached to the xdp_buff as frags by
-this point. Their agg ring slots have already been refilled.
-We need to keep the original head page (and therefore shinfo)
-around until the xdp_buff cleanup.
+Here the head buffers were still sized for the 640B HDS threshold,
+four 1kB buffers per page, while rx-copybreak was raised to 1024.
+Without coherent DMA or with swiotlb the oversized sync can corrupt
+a neighboring buffer owned by the device or by an skb.
 
-Note the odd split of ownership here: rx_skb_func() only deals with
-the head buffer, the agg buffers stay with the caller in whatever
-state they are in, still on the ring without XDP, or frags of the
-xdp_buff with XDP. This complicates rx_skb_func() cleaning up all
-the buffers (head and frags), which would be more intuitive.
+The device must be down for rx-copybreak to change, so recalculate the
+ring parameters right away, like bnxt_set_ringparam() does.
 
-Discovered in production, severe packet loss would persist after
-a transient OOM event. Tested on a BCM57504 by failing the head
-buffer allocations in bnxt_rx_skb() (bpftrace override() of
-should_failslab() and should_fail_alloc_page()) while receiving
-1400B ICMPv6 echo requests. 341k packets were dropped on that queue,
-enough to drain its 8188 entry agg ring 40 times over, and the queue
-kept receiving large frames afterwards with no loss and no new HW drops.
-With a frags-capable XDP_PASS program at MTU 9000, receiving 8000B
-ICMPv6 echo requests while napi_build_skb() called from
-bnxt_rx_multi_page_skb() failed, 9.2k packets were dropped,
-the page pools' inflight count stayed flat and
-there were no KASAN or DEBUG_PAGEALLOC splats.
+Hit while testing patch 1, tested on BCM57504 - boot; set rx-copybreak
+to 1024 with the link down (CONFIG_DMA_API_DEBUG); ifup.
 
-Fixes: c0c050c58d84 ("bnxt_en: New Broadcom ethernet driver.")
-Fixes: 4c6c123c9af9 ("bnxt: adding bnxt_rx_agg_pages_xdp for aggregated xdp")
+Fixes: 152f4da05aee ("bnxt_en: add support for rx-copybreak ethtool command")
 Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20261027234940.1267225-2-kuba@kernel.org
+Link: https://patch.msgid.link/20261027234940.1267225-3-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 33 ++++++++++++++---------
- 1 file changed, 20 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 15a8349ccf7b3..4f7d2e98adaaf 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -1215,7 +1215,15 @@ static struct sk_buff *bnxt_rx_multi_page_skb(struct bnxt *bp,
- 				bp->rx_dir);
- 	skb = napi_build_skb(frag_start, rxr->rx_page_size);
- 	if (!skb) {
--		page_pool_recycle_direct(rxr->page_pool, page);
-+		struct page *new_page;
-+
-+		new_page = rxr->rx_buf_ring[RING_RX(bp, prod)].data;
-+		/* The caller may still need the XDP frags from shinfo at the
-+		 * end of the head page. Release the new buffer instead and
-+		 * put the head back on the ring.
-+		 */
-+		page_pool_recycle_direct(rxr->page_pool, new_page);
-+		bnxt_reuse_rx_data(rxr, cons, data);
- 		return NULL;
- 	}
- 	skb_mark_for_recycle(skb);
-@@ -2313,17 +2321,8 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 			skb = bnxt_copy_xdp(bnapi, &bnxt_xdp.xdp, len,
- 					    dma_addr);
- 		bnxt_reuse_rx_data(rxr, cons, data);
--		if (!skb) {
--			if (agg_bufs) {
--				if (!xdp_active)
--					bnxt_reuse_rx_agg_bufs(cpr, cp_cons, 0,
--							       agg_bufs, false);
--				else
--					bnxt_xdp_buff_frags_free(rxr,
--								 &bnxt_xdp.xdp);
--			}
--			goto oom_next_rx;
--		}
-+		if (!skb)
-+			goto oom_next_rx_agg;
- 	} else {
- 		u32 payload;
- 
-@@ -2334,7 +2333,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 		skb = bp->rx_skb_func(bp, rxr, cons, data, data_ptr, dma_addr,
- 				      payload | len);
- 		if (!skb)
--			goto oom_next_rx;
-+			goto oom_next_rx_agg;
- 	}
- 
- 	if (agg_bufs) {
-@@ -2424,6 +2423,14 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 
- 	return rc;
- 
-+oom_next_rx_agg:
-+	if (agg_bufs) {
-+		if (!xdp_active)
-+			bnxt_reuse_rx_agg_bufs(cpr, cp_cons, 0, agg_bufs,
-+					       false);
-+		else
-+			bnxt_xdp_buff_frags_free(rxr, &bnxt_xdp.xdp);
-+	}
- oom_next_rx:
- 	cpr->sw_stats->rx.rx_oom_discards += 1;
- 	rc = -ENOMEM;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index 622e89587e5db..ef4bea4a0f8cc 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -4601,6 +4601,7 @@ static int bnxt_set_tunable(struct net_device *dev,
+ 			if (netif_running(dev))
+ 				return -EBUSY;
+ 			bp->rx_copybreak = rx_copybreak;
++			bnxt_set_ring_params(bp);
+ 		}
+ 		return 0;
+ 	case ETHTOOL_PFC_PREVENTION_TOUT:
 -- 
 2.53.0
 
