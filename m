@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022188;
-	b=ZR563HcR8EAQFdIzHff2pt9E/cZijpNnG/SJpkvhFaDn20TNkO4PmBb8DJlA/TJ5Sr38
-	 bk+IYWRDpkAo/mcAzOF057bafNOxo3i1SSONCq16PwJFi9RKVIs7bcJJ1iCEiYSc727P2
-	 N4fqrfc022WLu3aWZT5GoDzkcf12wAA+Fp7P0ayY0KX8/hNgHJl0JOiR+HXzSeIFb8+fQ
-	 x3pWIoSBq5DqXYOjUftdxKrCY6Ciny8SFNlgeCepSlIDpdDF4T/yWPGZeG7DDCN2r+jwa
-	 s3AtfFnq4TFPc5Rwnv/2V7cEINLbvB8jCTzOP8AMHp/jk5BgPwQYjC4zyaneCT6Tfhw==
+	t=1795022193;
+	b=gsCm7TRh6gfLcll+6kG+e/Xvo1fbtHxz7g+b8bXe1Bs2pmsLGJcAPW//BxW0W9CKlWcZ
+	 H9/oRXRvBxVEFWYhapwIQ+8Fm4+I5dswfTRpaUJNACmbL5HjV8QiDZ8ee9fk2lOkn2UTn
+	 B9J+KrKD5KMtLakXI0oaSVrUBQCGDabLuvRAYMUeAyFBwpIZ+I5m6UcYv9oqj0ksgiRUh
+	 Qf+9sSgwG7AC7oWaHnb+GmKBNWvsyGGq3K4jC5wi1gHeRC31i3U7egEgafqESiXc+QFjU
+	 KScBywQKLF2fW0Xc0SfSDXDGjlHUH7o0knnKHs3R9Uylm1ToZfPthNXKV1Jz+TIOB6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022188;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022193;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s79mPOh4ILG2UVwiEq5kSMkMIZ4r1sEKgsV+MBO8VRg=;
-	b=gPTWmvN+tIj+WUv1wKeNZmXSKBjwz6+PM7LwZjpdVpmwHrpwwVYVzZM/gO8SpwUAJz4M
-	 xFMo6ZGWaE9RMHWTP5+DZypy2GO+RWuX26c7DBnnQ4+JwscaelnfZ4SJwm48E0Tz0/bNS
-	 FJxdQfHwZ2lcjGzk91wSXEb8zTxs7q7W2IRR4IvlMzXIehSDHbolwNrvifpN5J0lBbEY1
-	 ee6J0Da93GJydBMVp4Fjiej8aZOJTQH3tlaRG18AoBf872fCPn6iWG0V5HBaLHbW3G4FW
-	 32wtT6b0UzyYQKMQWKtC0mGjKo9tUITsJvLNhC5d6vGDFZvCt7hQhpD1NtUqvjouZcg==
+	bh=CDTlZSxrPawjJv+yARfL5taqmRBffgdt/rsmQw0K8+k=;
+	b=xBfrJeWd4GmdkByIXXxwV4a569cTGc92btn7UyqhEh/IIgJ5MDdBz+c2vCmGbfonAUPs
+	 WpD0wMEJO+ulbtXkcbq7k+FNoH+9A9PCzvpdsd3ngU/8GxLozxmMFFNue+XKb6wppaXhY
+	 lFqh4GgL4LxMhYN3QHNXdL9JADqgzigVxCaD2gaJ1EkIPVZX9kbwueGR4DQkbD6WLfa6/
+	 cyPxkBAcu3tA/MMIC0s/DG6K1ENOrqCjmlxINU3yNHJ23q5kv3g28y/dK8u4NcxE6r9d0
+	 n91UxnSQWIq5c6rT1bxxUh+LoX55oxRx4V+JapgUiITYg45EbTWRMTopqF5aqBEw+Ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OvvwhT7c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sRgnS9uu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E022606A32A;
-	Wed, 18 Nov 2026 17:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6355E60A2606;
+	Wed, 18 Nov 2026 17:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OvvwhT7c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255141F000C4;
-	Wed, 18 Nov 2026 17:16:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sRgnS9uu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C207F1F000C4;
+	Wed, 18 Nov 2026 17:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022187;
-	bh=s79mPOh4ILG2UVwiEq5kSMkMIZ4r1sEKgsV+MBO8VRg=;
+	s=korg; t=1795022193;
+	bh=CDTlZSxrPawjJv+yARfL5taqmRBffgdt/rsmQw0K8+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OvvwhT7c16jGL3Vm901lZeZ0EoB4veLeisXe79zC1SogntNTyU/OWVkbogQzetu9D
-	 qpt2JKSXuLfhYzkxXYBX+a5uX0xuJDfbNnggamhbNx/ZSucC6wxebX4fU+WWX6USbh
-	 Wji4IQXWezKt9M/r941nJAes9Lvc84xjdltQC/gI=
+	b=sRgnS9uui9JwqpctzZYqLTZ0pGZSwSBWfKa4etTYTbztecAiNzYrcKcCsdz41PYoc
+	 9aSvNiqP0rmWdo8IxBpIMyS6ReF68jHdHPfKyqp3D0kNQBSxr7hAfV65HPMKsVpQ+3
+	 ZxKyD2xxYLpcZNxB1Z0GO3hsx2/hZeY5sixyHjxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2572/2651] octeontx2-pf: fix skb use-after-free on ipsec transmit drop
-Date: Wed, 18 Nov 2026 16:03:32 +0100
-Message-ID: <20261118150416.970544513@linuxfoundation.org>
+Subject: [PATCH 7.3 2538/2651] nvmet: fix NULL dereference in debugfs host_traddr
+Date: Wed, 18 Nov 2026 16:02:58 +0100
+Message-ID: <20261118150415.945186747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,39 +72,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 14d01ff1a4952198abae713a4ad428e07819b4aa ]
+[ Upstream commit 81ce4d9bbe8cf47d4b023e932ee29b22367545e6 ]
 
-When an SA is removed while packets for it are still queued, the
-transmit path frees the packet but reports the queue as busy. The stack
-then requeues the freed skb, and the DMA mappings leak.
+The host_traddr callbacks of tcp, rdma and fc take the host address from
+the transport queue around ctrl->sqs[0], which nvmet_sq_destroy() clears
+when the admin queue goes away while the controller lives on with its
+I/O queues. A host that closes the admin connection and keeps an I/O
+queue leaves such a controller behind, and reading its host_traddr in
+debugfs dereferences a near-NULL pointer:
 
-Fixes: 6a77a158848a ("cn10k-ipsec: Process outbound ipsec crypto offload")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Link: https://patch.msgid.link/20261027-nb-otx2-ipsec-tx-fixes-net-v1-1-2114c4f10c36@tipi-net.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  BUG: kernel NULL pointer dereference, address: 00000000000002e0
+  RIP: 0010:nvmet_tcp_host_port_addr+0x19/0x50 [nvmet_tcp]
+
+Don't ask the transport if there's no admin queue. Nothing holds the
+queue for debugfs, so a reader that's past the check when the queue
+goes away is still on its own.
+
+Fixes: 7e5c3de3f2f2 ("nvmet: add 'host_traddr' callback for debugfs")
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Sagi Grimberg <sagi@grimberg.me>
+Cc: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/cn10k_ipsec.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/nvme/target/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_ipsec.c b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_ipsec.c
-index 77543d472345e..3920cd0985831 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_ipsec.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_ipsec.c
-@@ -1037,6 +1037,9 @@ bool cn10k_ipsec_transmit(struct otx2_nic *pf, struct netdev_queue *txq,
- 	cn10k_cpt_inst_flush(pf, &inst, sizeof(struct cpt_inst_s));
- 	return true;
- drop:
-+	otx2_dma_unmap_skb_frags(pf, &sq->sg[sq->head]);
-+	sq->sg[sq->head].skb = (u64)NULL;
-+	atomic_long_inc(&pf->hw.dev_stats.tx_discards);
- 	dev_kfree_skb_any(skb);
--	return false;
-+	return true;
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index c3c94bb7fb846..9bda7089b91b3 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -1822,6 +1822,9 @@ ssize_t nvmet_ctrl_host_traddr(struct nvmet_ctrl *ctrl,
+ {
+ 	if (!ctrl->ops->host_traddr)
+ 		return -EOPNOTSUPP;
++	/* They all take the address from the admin queue */
++	if (!ctrl->sqs[0])
++		return -ENOTCONN;
+ 	return ctrl->ops->host_traddr(ctrl, traddr, traddr_len);
  }
+ 
 -- 
 2.53.0
 
