@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060526;
-	b=qpr7260NEbHQoDSER+fKSHCz5DF/0hiB7k2jaJxX0dKv/HL+Vx6Yp6DSuDwVlpVw2Azs
-	 3W3++U8WZnEKc0RtwcBr8xmyf5KX825Ns3zH6U7T+Sm5tybXqPhzgkt3bHBDKsnYKS68C
-	 TSgjTfZnqc5QEf3OgKC8gZL+lVXISCtaPHa4ThiHMZ42/gbrPPv/w3G65J7AsbxuMzDfp
-	 dgDarMaIQUbnA8cmPBH/oam4UWcjVUMUn36bsm2Wd+2tffZtqVhk++R3X9rJmRdQpSE8S
-	 reqXoDqqZy8eNZRFzy+VNXSfLc0FEjdLlZvOjM/e2BSGrSd+7oljBrqM3ya9CtqwJfA==
+	t=1795060529;
+	b=KZouKMVvI8F4kCP8KxpZc4lU/LvN+/gQImzf7hQqVs+5ICzltbSesUFAHF37cLXjoq2O
+	 79VdDx+7mVbpotQXWW7qF0QtnDDIKEt5xWyeameSUIn9PhlaEhcyHpqS8ARNhYpFhj6FD
+	 s6YnsvB2y3tbTE02Jb6629qVIxpBZ/w/ZJtALJK1l4CXUAaa6Xq70s3Y0I2QFE8C1tRVq
+	 UhGd7xfS0Txet0mZwg2pKhJwcUEju+Ql5GaYkZKmmcoCx/jgJOFKHd/Fuon44iGXJ+1WZ
+	 F0uvJQzoPyo4WCGm07Y8EnKMgaebnNlEY3W1FXwivfXIf4J7r7s4GnVX76HMmh/9VwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060526;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060529;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CZBmZBcoBNx/tywQWt/v058Jx2uL09cmMsZFlmuf4ZA=;
-	b=TZ61Qe2klyxXJOdNaXLpgI9mFb2yrsaFSxqxeP1niuVBsJQNzQDUB1Z5K3ThzBE1yrKB
-	 fnlHVnQprxQfi8Sv6ZaxnAInA1c92hUXUl9XMyLLlBKnClTKx5ffA+KiCCT0xtlHc55Gr
-	 mXoFm6M93F6R1SR8GTwHb/G5G2khTJlEEV0hCkjzYzB+LXc0Qg7kXPwHNmVf/oJ2NoqEW
-	 flALTV/h6CnLLHRAKyV//FS7maBX4RkgAdYF6nrf93G5Xov9CfibrUGaoTBHcvaYGPNxn
-	 B6k3EOAmuppLFI9Mp+V1j+y9vuW8rQB/JWfn/3t5aMA7Y3TR/0TsLyZHYaTDtFXUZZw==
+	bh=x0Q/ulOw0mjcTetgHgDKGvlVpBOIXviw2z6B2j/2WK0=;
+	b=K5+XyKjup9fdtt2irs+tsClpfZEIqWeX0jgDlfk/zIkDN3/bbTA8KumoGvxJCsB/E19e
+	 lFXS0QN/Y/8ZJZBEqOlBl2oA/4AGYw7TNepmaVL30qIKo73ZDbHUAex3Pi2X2boCa+qWu
+	 Qn8g24am6Ax5mQWzLpuKqY2qH0Jmj55j+ymcROValtcmTcj0FP2qJ/l7e/JSPUSBZaHGq
+	 odgoZ4X6q4q2EVCqNpQd7wIXk6J4H5/fEefXC/X+X/WdETu50Xp7EU2mdlTv2yFkevZ6x
+	 GCJCb0nx6pv5dNXqR/l50He95oAPGANlTzaP4k1+YYDgiROMT1xl/kMGX45DSH7lYQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="q/kPtgm0";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lUEgLeNF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CC8606A335;
-	Thu, 19 Nov 2026 03:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2D3606A32F;
+	Thu, 19 Nov 2026 03:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q/kPtgm0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4681F000C4;
-	Thu, 19 Nov 2026 03:55:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lUEgLeNF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 616B81F000C4;
+	Thu, 19 Nov 2026 03:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060526;
-	bh=CZBmZBcoBNx/tywQWt/v058Jx2uL09cmMsZFlmuf4ZA=;
+	s=korg; t=1795060528;
+	bh=x0Q/ulOw0mjcTetgHgDKGvlVpBOIXviw2z6B2j/2WK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q/kPtgm0vqNBcGe0Ttzpq3rU4NOJz2sQP51NteNhOEw1s5fiptrscENtDQUUDUq/N
-	 jav9TqFI6NGIfHa6AcoPE2x37qaRDojqtrhsoGiE9dBB2vzjXg6ADJJaGtkr2aSBxP
-	 D51gNzP0oRV3vU1GwKo3Ndj5g1lTjaYV7Ust044Y=
+	b=lUEgLeNFQABdGDDw4QMCSP0M+8873VLmFJy/CblZNfGqaY6fBGmXDjpzKvxvyNA/F
+	 ArEQIpnvccEBWtAkmyc/NIEvYeRe+j/QA2F26agDllipLDokVLCHRtWUHfwzT6/Ppg
+	 Gn+Wcnw6QMUPRlK7NAZuXwCJkEOaFVnqn/3x7ZuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1229/1848] crypto: amlogic - Fix DMA memory leak in cipher error path
-Date: Wed, 18 Nov 2026 15:54:27 +0100
-Message-ID: <20261118150011.354217974@linuxfoundation.org>
+Subject: [PATCH 5.10 1230/1848] crypto: qat - avoid OOB read when stripping RSA leading zeros
+Date: Wed, 18 Nov 2026 15:54:28 +0100
+Message-ID: <20261118150011.387990849@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,90 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+From: Ahsan Atta <ahsan.atta@intel.com>
 
-[ Upstream commit 6c2373dd818b777d0a81eb02acebc03940552dcd ]
+[ Upstream commit ac508238898058f0b09b18a7891fb31279617781 ]
 
-A DMA memory leak occurs in meson_cipher() on the mapping error paths.
-The driver jumps to the end of the function without unmapping the
-previously mapped source scatterlist and key/IV buffer when the
-destination apping fails.
+The logical AND operator uses short-circuit evaluation: the first
+operand is always evaluated, while the second is evaluated only if
+the first is true. Because the first operand dereferences a pointer,
+it may cause an out-of-bounds access before the bounds check in the
+second operand is evaluated.
 
-Additionally, a memory leak occurs when a scatterlist mapping succeeds
-but the returned count exceeds the driver's MAXDESC limit. In this case,
-the driver rejects the mapping without unmapping it. The BIDIRECTIONAL
-mapping branch also lacks the required 'MAXDESC -3' upper bound check.
+Resolve this by checking the vlen prior to the pointer being dereferenced.
 
-Fix this by introducing proper error labels, error_src and error_keyiv
-and unmap resources immediately inside the calidation checks to ensure
-all successfully mapped resources are cleaned up before returning the
-error.
-
-Fixes: 48fe583fe541 ("crypto: amlogic - Add crypto accelerator for amlogic GXL")
-Signed-off-by: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+Fixes: a990532023b9 ("crypto: qat - Add support for RSA algorithm")
+Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/amlogic/amlogic-gxl-cipher.c | 25 ++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ drivers/crypto/qat/qat_common/qat_asym_algs.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/crypto/amlogic/amlogic-gxl-cipher.c b/drivers/crypto/amlogic/amlogic-gxl-cipher.c
-index 43f1c6a691bf5..ed460862970a4 100644
---- a/drivers/crypto/amlogic/amlogic-gxl-cipher.c
-+++ b/drivers/crypto/amlogic/amlogic-gxl-cipher.c
-@@ -177,10 +177,13 @@ static int meson_cipher(struct skcipher_request *areq)
- 	if (areq->src == areq->dst) {
- 		nr_sgs = dma_map_sg(mc->dev, areq->src, sg_nents(areq->src),
- 				    DMA_BIDIRECTIONAL);
--		if (!nr_sgs) {
--			dev_err(mc->dev, "Invalid SG count %d\n", nr_sgs);
-+		if (!nr_sgs || nr_sgs > MAXDESC - 3) {
-+			dev_err(mc->dev, "Invalid BIDIR SG count %d\n", nr_sgs);
- 			err = -EINVAL;
--			goto theend;
-+
-+			if (nr_sgs)
-+				dma_unmap_sg(mc->dev, areq->src, sg_nents(areq->src), DMA_BIDIRECTIONAL);
-+			goto error_keyiv;
- 		}
- 		nr_sgd = nr_sgs;
- 	} else {
-@@ -189,14 +192,20 @@ static int meson_cipher(struct skcipher_request *areq)
- 		if (!nr_sgs || nr_sgs > MAXDESC - 3) {
- 			dev_err(mc->dev, "Invalid SG count %d\n", nr_sgs);
- 			err = -EINVAL;
--			goto theend;
-+
-+			if (nr_sgs)
-+				dma_unmap_sg(mc->dev, areq->src, sg_nents(areq->src), DMA_TO_DEVICE);
-+			goto error_keyiv;
- 		}
- 		nr_sgd = dma_map_sg(mc->dev, areq->dst, sg_nents(areq->dst),
- 				    DMA_FROM_DEVICE);
- 		if (!nr_sgd || nr_sgd > MAXDESC - 3) {
- 			dev_err(mc->dev, "Invalid SG count %d\n", nr_sgd);
- 			err = -EINVAL;
--			goto theend;
-+
-+			if (nr_sgd)
-+				dma_unmap_sg(mc->dev, areq->dst, sg_nents(areq->dst), DMA_FROM_DEVICE);
-+			goto error_src;
- 		}
- 	}
+diff --git a/drivers/crypto/qat/qat_common/qat_asym_algs.c b/drivers/crypto/qat/qat_common/qat_asym_algs.c
+index 63e5569838455..16cd16b7d9a1f 100644
+--- a/drivers/crypto/qat/qat_common/qat_asym_algs.c
++++ b/drivers/crypto/qat/qat_common/qat_asym_algs.c
+@@ -932,7 +932,7 @@ static int qat_rsa_set_n(struct qat_rsa_ctx *ctx, const char *value,
+ 	const char *ptr = value;
+ 	int ret;
  
-@@ -251,6 +260,12 @@ static int meson_cipher(struct skcipher_request *areq)
- 						 ivsize, 0);
- 		}
+-	while (!*ptr && vlen) {
++	while (vlen && !*ptr) {
+ 		ptr++;
+ 		vlen--;
  	}
-+	goto theend;
-+
-+error_src:
-+	dma_unmap_sg(mc->dev, areq->src, sg_nents(areq->src), DMA_TO_DEVICE);
-+error_keyiv:
-+	dma_unmap_single(mc->dev, phykeyiv, keyivlen, DMA_TO_DEVICE);
- theend:
- 	kfree_sensitive(bkeyiv);
- 	kfree_sensitive(backup_iv);
+@@ -963,7 +963,7 @@ static int qat_rsa_set_e(struct qat_rsa_ctx *ctx, const char *value,
+ 	struct device *dev = &GET_DEV(inst->accel_dev);
+ 	const char *ptr = value;
+ 
+-	while (!*ptr && vlen) {
++	while (vlen && !*ptr) {
+ 		ptr++;
+ 		vlen--;
+ 	}
+@@ -989,7 +989,7 @@ static int qat_rsa_set_d(struct qat_rsa_ctx *ctx, const char *value,
+ 	const char *ptr = value;
+ 	int ret;
+ 
+-	while (!*ptr && vlen) {
++	while (vlen && !*ptr) {
+ 		ptr++;
+ 		vlen--;
+ 	}
+@@ -1012,7 +1012,7 @@ static int qat_rsa_set_d(struct qat_rsa_ctx *ctx, const char *value,
+ 
+ static void qat_rsa_drop_leading_zeros(const char **ptr, unsigned int *len)
+ {
+-	while (!**ptr && *len) {
++	while (*len && !**ptr) {
+ 		(*ptr)++;
+ 		(*len)--;
+ 	}
 -- 
 2.53.0
 
