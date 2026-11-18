@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024626;
-	b=YLzroYLwKQ5wzh1Zik0/hlpNQsukXbL7aTkdnSwYZ6mfWZir5yTCvp/4N/ysUsn4kXfp
-	 vIHIrdeCW17v/HY28jKbkT9CJ7OHKksDD4Hz2UmvSOZuQgXg44CsMaXIgRllpUw9rzkQx
-	 AxlpJg8PpHnuqbkCu9XL90vjjTPIz6R6E5nx7ibDcfRbPis4wnLheKV+iKY6HmDyK0hYQ
-	 rCWxx9U9/7/lMgQrpoaKhHs+Yo08oE87/brfc/I0P17VE+i9JwS9+HPSx10ujk+jb/GgM
-	 VMZDVZ2cO58bByuSeeF1hPh/kkojs0EO+xa5iLf5jkO+3NrIjOTzEf7ronESnrZniFg==
+	t=1795024629;
+	b=2oqDLpqlxofgYIhfOr1776vXfFG5XCqOaanYJHumDw7ej1eXgkMIhD0uTMNn8OvFS1n2
+	 +xVdIgWbiwGMPAFK63a/8QlUHULfwqp9sqUywojasr8RY1igSGIuQ4WLZ8/1uNsY6vz1B
+	 JrKmWCi2FcqoA+8Op5mN6Eni+bBVPKzyP0HTLOQjwICjEGcmh8lj5J8fR82ioKoarct7d
+	 TwMUxSOS4xmlqQWf3aJuO8+k9ZIZbydqLqWOhn/sbmZK0qTAYkR7zt6jJdMGsn/b2Nzbn
+	 nXqpXPOAPS6+67aQn752QaPWV5ZN/BUdC+qH4/a80o31pnzY73XZe0+WHrOMPn9uXhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024626;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024629;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=rXZia+jsgsr8ib/7YQuQ0xAwY2D3410jFPi94hceE6Y=;
-	b=2HjDN97VP/Ps/zfGwo8bYWSNoU6Y4eJUwHjabBi/p5uPX6D3ukT+jn/5mk+M7DnEaLnX
-	 /uC7IwU9GWS1vpnLBM1+WQawibef+a/GeQmj5P1z+EAySizj336r31WOqfDjKC7ranKoT
-	 YCp0KIAgg7Hu+BwDZXAJNU4Dp2sl28HeSYHyZbWY0TCcVpsvwFjMecormdeqPG6XOyVm5
-	 kylOtMmEvaz/COnzveywki4CzK4TCnbFNGfYHQKtO6Jn9/aULTgp8gEtOz/gygY1YesNu
-	 UsLtv8J5OFIEd14NKzx8P2KNBUpshTA9QckcH2ZdCk01RrMfsoPjv7J3TVtnFmS2j6w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=pN/Ln6JV14XelAN58IY9vuJ2SClpfq74ewDsErXzuSM=;
+	b=GWJHQplqXLS2DXgqo46zz2vfXUO13zOkjj8uER1/4PfKq1nCSey9RpDrTRoX9nU3r/D/
+	 I/xAvQXZlILrSWOxr+O4Fapp2IGp4vJ+pXnZyWtGtUOOiMXmkiBuEWU3Ji8EJcCCech2R
+	 KrFdWJXsLs1N2b0YTsRmIncf1QzMgPpT1u+7Mizng/5UkbYLrNyD+e2tCF3/7ibT/usrO
+	 xtI6Mle2ZXcy9jg8xBqFYCx1Z6CqmIpY/9GgdYMLlFt5k/WkrKK3PGoTwa+0yDhw60BVe
+	 hE0p2ZUzohdgeb/Y5rZxTUtWbSEKXGw0AG+fH7g6khauOKkJGFp/grn4lGGPbi2Fm1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OgBhKWq+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TdjQIsyM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B7E606A31C;
-	Wed, 18 Nov 2026 17:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD3B606A330;
+	Wed, 18 Nov 2026 17:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OgBhKWq+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8654C1F000C5;
-	Wed, 18 Nov 2026 17:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TdjQIsyM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FBD51F000C4;
+	Wed, 18 Nov 2026 17:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024626;
-	bh=rXZia+jsgsr8ib/7YQuQ0xAwY2D3410jFPi94hceE6Y=;
+	s=korg; t=1795024628;
+	bh=pN/Ln6JV14XelAN58IY9vuJ2SClpfq74ewDsErXzuSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OgBhKWq+vJN8JyEDXgLnypeqD/h9bEQ0tcaHhNY+57bWZ75ZxNRTxGAUaGiP2uIRO
-	 AE2qsrWT2AMuDUXKC07LkA/mI9nLgEd1U3o9ANpS4/Ul5bB45RVkDQUpBU4v8xBBPM
-	 GANF6PY2OxnVbsGl7ujt0QEkAlrSIeTXDSLI/VYw=
+	b=TdjQIsyM8ZLJYUvJ7BpiQ3bQnmk9YfsGiUH4VHShoh9NW5Ne835eI2ufFaKS9v/53
+	 Mj9HG7aDX3jYgftxIPBOgs237545yCf7IHPc/BRNCGhtFWv/R4AuNhQVGZsB2slQ6d
+	 It8QzRW/qDqsgZl8cxMxyTVmqBDva2FXyVM/SqaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Mateusz Nowicki <mateusz.nowicki@posteo.net>,
+	Antonio Borneo <antonio.borneo@foss.st.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0793/2151] iommu/vt-d: Fix IQE handling to cover all descriptors in submission range
-Date: Wed, 18 Nov 2026 15:42:08 +0100
-Message-ID: <20261118150150.983183593@linuxfoundation.org>
+Subject: [PATCH 6.18 0794/2151] arm64: dts: st: fix arm,smc-id of the SMC watchdog on stm32mp2
+Date: Wed, 18 Nov 2026 15:42:09 +0100
+Message-ID: <20261118150151.015896264@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,144 +63,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+From: Mateusz Nowicki <mateusz.nowicki@posteo.net>
 
-[ Upstream commit 754d07b940c4ce025fab022b548fb5c3d11bf766 ]
+[ Upstream commit ae4d08bbe3f4f5ec920dbdba26091adf0ae6ba71 ]
 
-When an Invalidation Queue Error (IQE) occurs, hardware halts fetching
-and IQH points at the faulting descriptor. The previous code only
-checked whether IQH matched the first descriptor index of the current
-submission, missing faults on any other descriptor within the batch.
+OP-TEE implements the STM32MP2 watchdog SMC service with function ID
+0xbc000000 (CFG_WDT_SM_HANDLER_ID), not 0xb200005a. With the current
+value the arm_smc_wdt probe fails with -EIO and the IWDG started by the
+bootloader is never refreshed.
 
-Expand the check to cover the entire submission range [index, wait_index],
-accounting for circular wrap-around.
-
-Furthermore, after detecting IQE, the old recovery only replaced the
-single faulting slot with a copy of the wait descriptor and immediately
-returned -EINVAL. This left two problems:
-
-  a) Hardware resumed fetching and could hit another invalid descriptor
-     in the same abandoned batch, raising a second IQE that no submitter
-     would claim — permanently deadlocking the queue.
-
-  b) The caller reclaimed all batch slots (QI_FREE) while hardware might
-     still be asynchronously processing descriptors from that batch,
-     allowing concurrent overwrite and descriptor corruption.
-
-Fix both by introducing qi_drain_remaining_descs(): upon IQE detection,
-overwrite the stranded slots in [IQH, wait_index) with fenced no-op wait
-descriptors, resubmit the wait descriptor at wait_index, clear IQE, and
-spin until hardware signals QI_DONE (with DMAR_OPERATION_TIMEOUT). This
-guarantees hardware has fully drained the batch before the caller
-reclaims slots.
-
-Fixes: 8a1d82462540 ("iommu/vt-d: Multiple descriptors per qi_submit_sync()")
-Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: 89fca38168c9 ("arm64: dts: st: add arm-wdt node for watchdog support on stm32mp251")
+Fixes: e9b03ef21386 ("arm64: dts: st: introduce stm32mp23 SoCs family")
+Signed-off-by: Mateusz Nowicki <mateusz.nowicki@posteo.net>
+Reviewed-by: Antonio Borneo <antonio.borneo@foss.st.com>
+Link: https://lore.kernel.org/r/20260907091400.55954-1-mateusz.nowicki@posteo.net
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/dmar.c | 72 ++++++++++++++++++++++++++++++++------
- 1 file changed, 61 insertions(+), 11 deletions(-)
+ arch/arm64/boot/dts/st/stm32mp231.dtsi | 2 +-
+ arch/arm64/boot/dts/st/stm32mp251.dtsi | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
-index 2a99df386560e..7376cf6502afe 100644
---- a/drivers/iommu/intel/dmar.c
-+++ b/drivers/iommu/intel/dmar.c
-@@ -1280,6 +1280,49 @@ static void qi_dump_fault(struct intel_iommu *iommu, u32 fault)
- 	       (unsigned long long)desc->qw1);
- }
+diff --git a/arch/arm64/boot/dts/st/stm32mp231.dtsi b/arch/arm64/boot/dts/st/stm32mp231.dtsi
+index 88e214d395ab7..57ab9d785f347 100644
+--- a/arch/arm64/boot/dts/st/stm32mp231.dtsi
++++ b/arch/arm64/boot/dts/st/stm32mp231.dtsi
+@@ -35,7 +35,7 @@ arm-pmu {
  
-+static int qi_drain_remaining_descs(struct intel_iommu *iommu, int head,
-+				    int wait_index)
-+{
-+	struct q_inval *qi = iommu->qi;
-+	int shift = qi_shift(iommu);
-+	struct qi_desc wait_desc = {};
-+	struct qi_desc nop_desc = {};
-+	cycles_t start;
-+
-+	nop_desc.qw0 = QI_IWD_FENCE | QI_IWD_TYPE;
-+
-+	wait_desc.qw0 = QI_IWD_STATUS_DATA(QI_DONE) | QI_IWD_PRQ_DRAIN |
-+			QI_IWD_STATUS_WRITE | QI_IWD_FENCE | QI_IWD_TYPE;
-+	wait_desc.qw1 = virt_to_phys(&qi->desc_status[wait_index]);
-+
-+	while (head != wait_index) {
-+		memcpy(qi->desc + (head << shift), &nop_desc, 1 << shift);
-+		head = (head + 1) % QI_LENGTH;
-+	}
-+
-+	WRITE_ONCE(qi->desc_status[wait_index], QI_IN_USE);
-+	memcpy(qi->desc + (wait_index << shift), &wait_desc, 1 << shift);
-+
-+	/*
-+	 * Order the descriptor rewrites before the writel() that restarts
-+	 * the fetch engine.
-+	 */
-+	wmb();
-+
-+	writel(DMA_FSTS_IQE, iommu->reg + DMAR_FSTS_REG);
-+
-+	start = get_cycles();
-+	while (READ_ONCE(qi->desc_status[wait_index]) != QI_DONE) {
-+		if (DMAR_OPERATION_TIMEOUT < (get_cycles() - start)) {
-+			pr_err("Timeout draining invalidation queue after IQE\n");
-+			return -ETIMEDOUT;
-+		}
-+		cpu_relax();
-+	}
-+
-+	return 0;
-+}
-+
- static int qi_check_fault(struct intel_iommu *iommu, int index, int wait_index)
- {
- 	u32 fault;
-@@ -1302,18 +1345,25 @@ static int qi_check_fault(struct intel_iommu *iommu, int index, int wait_index)
- 	 * is cleared.
- 	 */
- 	if (fault & DMA_FSTS_IQE) {
-+		int head_idx, ret;
-+
- 		head = readl(iommu->reg + DMAR_IQH_REG);
--		if ((head >> shift) == index) {
--			struct qi_desc *desc = qi->desc + head;
--
--			/*
--			 * desc->qw2 and desc->qw3 are either reserved or
--			 * used by software as private data. We won't print
--			 * out these two qw's for security consideration.
--			 */
--			memcpy(desc, qi->desc + (wait_index << shift),
--			       1 << shift);
--			writel(DMA_FSTS_IQE, iommu->reg + DMAR_FSTS_REG);
-+		head_idx = (head >> shift) % QI_LENGTH;
-+
-+		/*
-+		 * The faulting descriptor can be anywhere within the current
-+		 * submission's range [index, wait_index]. Since the queue is
-+		 * circular, this submission may wrap around QI_LENGTH
-+		 * (index > wait_index in that case), so check both the
-+		 * non-wrapped and wrapped cases of the range.
-+		 */
-+		if (index <= wait_index ?
-+		    (head_idx >= index && head_idx <= wait_index) :
-+		    (head_idx >= index || head_idx <= wait_index)) {
-+			ret = qi_drain_remaining_descs(iommu, head_idx, wait_index);
-+			if (ret)
-+				return ret;
-+
- 			pr_info("Invalidation Queue Error (IQE) cleared\n");
- 			return -EINVAL;
- 		}
+ 	arm_wdt: watchdog {
+ 		compatible = "arm,smc-wdt";
+-		arm,smc-id = <0xb200005a>;
++		arm,smc-id = <0xbc000000>;
+ 		status = "disabled";
+ 	};
+ 
+diff --git a/arch/arm64/boot/dts/st/stm32mp251.dtsi b/arch/arm64/boot/dts/st/stm32mp251.dtsi
+index e4e6f9f818d81..371bfa26bdd57 100644
+--- a/arch/arm64/boot/dts/st/stm32mp251.dtsi
++++ b/arch/arm64/boot/dts/st/stm32mp251.dtsi
+@@ -36,7 +36,7 @@ arm-pmu {
+ 
+ 	arm_wdt: watchdog {
+ 		compatible = "arm,smc-wdt";
+-		arm,smc-id = <0xb200005a>;
++		arm,smc-id = <0xbc000000>;
+ 		status = "disabled";
+ 	};
+ 
 -- 
 2.53.0
 
