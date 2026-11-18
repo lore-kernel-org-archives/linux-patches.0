@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050554;
-	b=xVdXTW0B5+CzYgU0DDpyebV1tSecmWzb+lSH5/jd9U+BotfBPM/vwlygS61woBeiw0ip
-	 ZYSllImPG8Vg3r90sEGr4OZ4bHhuHVkmj7zvxzwol3HMB8pPtL+5ow9BdS12VEp031OxK
-	 +nODCHS3jgRL5fHuluOcJvTIavqiJdHJRQT7Q1LjMNBYtXJe1sP/0r5qQ2w8HP9LuFQHA
-	 bXQ5fFA7Pq3B+0nfFEf34LApFD3psyXOzyE+qasJWnYaHKXQXv6gtIKwZFiJYaVqzcHC9
-	 JecWT3Xo6SwnjL3Vf2jz24/0JVRADrbIbH8EuCfFEhotsd4n3YJ6auA/45f77nzxaUA==
+	t=1795050556;
+	b=eDWIBCRaRgGm9j0pyzE0GA3kBroEr71l4B4H/q5OWI6bPm4+tDuSLBjFhS/MsYf+QZQ8
+	 K4aVbPgYaGLOJnVHZb6Nw+8XY4SQoi8ldbUa2+BSP0IG+/wjFvzWJfztRBqHSW/XXnMXF
+	 EJtPPDmG+heq0PIP2AHGERMjoWoCIJ0/c3LSuxBKIMRBkXi9ODFTKAn7RW4rSuS9qnVjX
+	 6pmlmQSEb8gmQDyExw5u/KDo1Y6PvFmTCTr7/QU7Hg4BxR8Ze7oJ8f18oz/xSYX+1knXS
+	 QTrYznDDxXAACWsHpmy36CrFl1V3dQzUKjUKCHbTAmtCQBBaQH8phw+JbG6KEscusNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050554;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050556;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FMjLPyauRipDFh69cImD6rp+ecNiJdqT5BnomdE9iLU=;
-	b=JNcP8f/ebzCo6bflZ9a8tS5cjfJx+RYbFmy1InHXo+TXaHCbUcgcxvjDf0tYN2p0oFF6
-	 NCQ9wNctg+O/h9hQEs77yMNtqcpLbiUUm2ZH+yLMf9eWUUGKpdTvCbVtK1knuRnbOD4Vu
-	 6QCcJOBrteZTSukKncxNrWuGVdWCWOsEzuhwdb9d5TIZJj8J6cVRY9r2Rf2bevYAaHrim
-	 XL5/tsr1nB0F8IiqrI6NUPLI7VN3enS5zyJWAeq+EU6gbJZ8CsOWLkr+w+gxbOaIR0zYx
-	 pwROpIJjsQKTD5MTeqF0ANec6puYb/QfeHVGXAxDb5zB0s81GkOgjHPfgqp2disNh8w==
+	bh=WhUc9CkO+U4XG46tKopJ0ZMZIZAwde1CMhFB/TSEqBk=;
+	b=FmUDqw2UnqSSDNPOvHXpB2MkLmOShkrJ/Qx+vreTfBfKhHQO3M7RJ13FZt6hfLlqp8uL
+	 XefSyDjuhC+Qm6zy+mHCGl/5wijx4MNrlWRSrSMijV8fodAn9sRJa6I0YGXEvykt5Uvqa
+	 n4ZrEA4zkSo1q0Q3L0j/p6ApLcjagMQ3Df/MjZSinp3vhWLOOwxWY/Him/ohK0PMONw34
+	 EFu4GxifejP9VgYgHb1Ffo3uPPUoAU0Ln1+jPekZJFaD+u4XTrxZAiH4Vrk4LC7GI0qFT
+	 wOo5SLEqnDAOvQMDcQ+etVRyah5df5WL3+/lL+3VnmEe5AsdOdDU4zxJoXLpZMLCIRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QfkXJ25o;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0oopqTml;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F04606A320;
-	Thu, 19 Nov 2026 01:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB18606A320;
+	Thu, 19 Nov 2026 01:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QfkXJ25o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4639F1F000C4;
-	Thu, 19 Nov 2026 01:09:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0oopqTml
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5331F000C4;
+	Thu, 19 Nov 2026 01:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050553;
-	bh=FMjLPyauRipDFh69cImD6rp+ecNiJdqT5BnomdE9iLU=;
+	s=korg; t=1795050556;
+	bh=WhUc9CkO+U4XG46tKopJ0ZMZIZAwde1CMhFB/TSEqBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QfkXJ25oRY1WJ0eBzUQJEjRF5h1U1ady6XJVLVRkf96OOP6GVsYYrboCQhIubzahJ
-	 7mXKWVQqNEShMO4npFMNxM3zMnbHvlApDTwoFQiHMCVxWY7zDXxtqnNIRob7oifvNj
-	 3EUucvcjGVVIvdO7myC9124UCXzmcOmpCMorzwaE=
+	b=0oopqTmlTYza9MFTSyb/TcCFVrZPE9ikH55wxJJQZ7suF4HE4PS//TtDM10srvg/M
+	 hlPD4v/vjNRhN/D68Yupasi0a0/5a7n/TGytqYELvBE65IRIsKY1c+vLutK0z5A043
+	 HDq+CKW5kjFmBNKuCbw0cagtxTFL6iSAirYaK+uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sally Marcher <me@gry.sh>,
-	Takashi Iwai <tiwai@suse.de>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2748/2857] ALSA: usb-audio: Add correct datainterval in the quirks-table for Microbook II
-Date: Wed, 18 Nov 2026 16:03:02 +0100
-Message-ID: <20261118150340.556421186@linuxfoundation.org>
+Subject: [PATCH 6.1 2713/2857] tls: move tls_cipher_size_desc to net/tls/tls.h
+Date: Wed, 18 Nov 2026 16:02:27 +0100
+Message-ID: <20261118150339.300298684@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,45 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sally Marcher <me@gry.sh>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit a09c2f3b267e47767b8937f65930567edbb88d44 ]
+[ Upstream commit fd0fc6fdd8896a195cb7b0210a5ee46774718fc8 ]
 
-This patch fixes playback issues on the Microbook II.
-The correct value was in the older driver for this device
-(https://github.com/manuel-rhdt/snd-microbookii/blob/dd304c097bb6a9d52276ac29c6969fa02bc7674a/audio.c#L914).
+It's only used in net/tls/*, no need to bloat include/net/tls.h.
 
-Datainterval needs to be set explicitly.
-
-Fixes: a634090a0f24 ("ALSA: usb-audio: Add quirk for MOTU MicroBook II")
-Signed-off-by: Sally Marcher <me@gry.sh>
-Link: https://lore.kernel.org/d5dfd044-69f6-4fc3-9884-6599d88afb55@student.tugraz.at
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/dd9fad80415e5b3575b41f56b331871038362eab.1692977948.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: c43c1c24f3cd ("tls: avoid field-spanning write when copying crypto info")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks-table.h | 2 ++
- 1 file changed, 2 insertions(+)
+ include/net/tls.h | 10 ----------
+ net/tls/tls.h     | 10 ++++++++++
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
-index b505ec63f199d..def8645937def 100644
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -2743,6 +2743,7 @@ YAMAHA_DEVICE(0x7010, "UB99"),
- 					.rates = SNDRV_PCM_RATE_96000,
- 					.ep_attr = USB_ENDPOINT_XFER_ISOC |
- 						   USB_ENDPOINT_SYNC_ASYNC,
-+					.datainterval = 1,
- 					.rate_min = 96000,
- 					.rate_max = 96000,
- 					.nr_rates = 1,
-@@ -2765,6 +2766,7 @@ YAMAHA_DEVICE(0x7010, "UB99"),
- 					.rates = SNDRV_PCM_RATE_96000,
- 					.ep_attr = USB_ENDPOINT_XFER_ISOC |
- 						   USB_ENDPOINT_SYNC_ASYNC,
-+					.datainterval = 1,
- 					.rate_min = 96000,
- 					.rate_max = 96000,
- 					.nr_rates = 1,
+diff --git a/include/net/tls.h b/include/net/tls.h
+index cd0dfa25c591e..56604e75c8ae4 100644
+--- a/include/net/tls.h
++++ b/include/net/tls.h
+@@ -51,16 +51,6 @@
+ 
+ struct tls_rec;
+ 
+-struct tls_cipher_size_desc {
+-	unsigned int iv;
+-	unsigned int key;
+-	unsigned int salt;
+-	unsigned int tag;
+-	unsigned int rec_seq;
+-};
+-
+-extern const struct tls_cipher_size_desc tls_cipher_size_desc[];
+-
+ /* Maximum data size carried in a TLS record */
+ #define TLS_MAX_PAYLOAD_SIZE		((size_t)1 << 14)
+ 
+diff --git a/net/tls/tls.h b/net/tls/tls.h
+index c1be900190376..8ac493a56f38f 100644
+--- a/net/tls/tls.h
++++ b/net/tls/tls.h
+@@ -50,6 +50,16 @@
+ #define TLS_DEC_STATS(net, field)				\
+ 	SNMP_DEC_STATS((net)->mib.tls_statistics, field)
+ 
++struct tls_cipher_size_desc {
++	unsigned int iv;
++	unsigned int key;
++	unsigned int salt;
++	unsigned int tag;
++	unsigned int rec_seq;
++};
++
++extern const struct tls_cipher_size_desc tls_cipher_size_desc[];
++
+ /* TLS records are maintained in 'struct tls_rec'. It stores the memory pages
+  * allocated or mapped for each TLS record. After encryption, the records are
+  * stores in a linked list.
 -- 
 2.53.0
 
