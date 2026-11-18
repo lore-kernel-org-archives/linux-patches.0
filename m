@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015297;
-	b=fPDQ1Rd1gwAINvh+64mb0TSzGNydRx6cwW47wfzlk0aSdAw2FYyBfXeamoaigsSe1MCH
-	 URyjf+lIcWdBgeb/pMV35ct+kT2R+4skJyjOMGD5jwV/R4gUO4EH+bRwstpi31QSWzsyP
-	 Bq7068hlCtNMtbCaFKnTFgzDBvZQhEl22jzAKZSRkVmsGP0MZYNQgRTNMCXYiOtAkubCC
-	 C48xocrUEsvEVPwtpk9rirWGtgne4P3miD3QNJ2KDRFYOlMO8dA1d5SC1lM7gbxBS+Ey0
-	 d30q4aqp5jHU2yoQhxzmUDhsKd2WNj2sZnfKbO3KdUHia4Z4cBmy3sCaD64YhswAh2A==
+	t=1795015300;
+	b=JuET2FbjsD7//mT9XRFgBEtxgmRsS/SDro0I4kfZeVzbCpGH7mNi2/N8urZwSLtSsOK8
+	 iOzB9asIjRC7NX68IzgDtgFC6RRzYE3Oo+Z2rH4Bttl76wwiNR72/xsLdqWIrdYtu+Odm
+	 9EKLia77h7JvKwnPRR00OsXFFrM65R28gcO3E3tIndR5eaieleDlnb6847adxn5KI/wL9
+	 jxrToM3rr4xql3got3CmkjucthTG8RAkUHdvDm+8Pi031c/b1jCLnCWmDOCZaEq1Hay/1
+	 4x82Nsd3e/ZMiccss+MNLhPad1DIz8DDbCxDnWI3tE8Qsd7sXqzCXcnZNLmOXLwWczw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015297;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015300;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cs3JczpzQfP6u+mbt4ZFM6NY3MZAtG4J4YRrFl9Sges=;
-	b=D62uMVIygZJTcOF0B03hJaaDTZN4PuiMq8obi4dnMgTOXi1vXg2VzD6H683+UzJgCvJR
-	 6pVDmwex+NALkWPesgHox/u4+Wpe3V0pshY2mAO4AwWP6y8Bn9MMuP97RHN/mAhJSjA5T
-	 syyxuWMIe8jQp4AH/az6xGAlGZoUvc9WsomgzKEUWPORVVnFPE5zq8XIOAe1oe09epc3U
-	 h4ibapyK4o6Bu+qUqqp76OuZvOrxd9iMkS/4kfgO65Mny5wjkDNAxK4WoKH6rX9PR80RV
-	 Ucv30qULeezZFqrYsqtJH/wU7S2UoT3/RpFbjERdgDXr+FzmZds2ddfoK0YlbOuecVw==
+	bh=0Ni3SU2w748Jw6L4T85x1sWJvhtRajbSmYFgtDV+15M=;
+	b=eoGFTNPrzyCGMEwjNeu/1W1e4DYM0OWEeo8J/tqYcCUlL0EgUoEIY4AnFeN7U0oYzMq1
+	 fEpdG6xC/6Drx4YYxcjR8Z2C7wYuuH8wjsQCrudezbeiX8tgWhttmI4f5K5UgoaR8BOp1
+	 4oNuzRuAViR+q4EOnzQlXVXmrd9STRSoqjyhPbmw7P8tNkJ0Q64xprzXqEcYxaCXycMxn
+	 4Bik7HKEKRm5qAHLnAQlPRoL1aBi83UqKDK+P/OHGceVBdco/ftCYIms+rOvv/Iaw8Bou
+	 AGJXjQ4Wynk3FT2iYFd0k7lF/YRTO5JlmKzGIypLTxV+39+PIQNaqnkX5skHClG5/iQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PGrT3mG7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g1mUL7d4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF09606A325;
-	Wed, 18 Nov 2026 15:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A7D606A325;
+	Wed, 18 Nov 2026 15:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PGrT3mG7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB6A1F000C4;
-	Wed, 18 Nov 2026 15:21:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g1mUL7d4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43891F000C5;
+	Wed, 18 Nov 2026 15:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015297;
-	bh=cs3JczpzQfP6u+mbt4ZFM6NY3MZAtG4J4YRrFl9Sges=;
+	s=korg; t=1795015300;
+	bh=0Ni3SU2w748Jw6L4T85x1sWJvhtRajbSmYFgtDV+15M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PGrT3mG7+UyhUPshII4mtY9NdZI5xWwlk5M96GGTpGbY2OR+kCzGagA15Cnpoy20l
-	 TC8fCY8wtbSiWQFSr7WmnFUG1CXyb5L6dNewC3gBvVl1FuFBdb1mI+wojIl3hJTBZ7
-	 oHHTkwpPIMiDE1Jyg7eBRpWHRq1oZYlQUZ0qCWjU=
+	b=g1mUL7d446hg1Y7Zs983+UW+q4L7yTI9AbJAqoMNuMVRF5Qc7MbSuw4vCXGwgJsa0
+	 0LgSoOR5txyu/4IyoRXvgCw+9fiVkUSk8a3BC0jkMkTR8EuLUpt3D+pqb5afgje7eG
+	 DKeJraU9Kx0qesMyGqzrrm3J/ei6Lvlu/V5tVqcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Stephane Eranian <eranian@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0116/2651] perf jitdump: Validate sym string NUL-termination in code load
-Date: Wed, 18 Nov 2026 15:22:36 +0100
-Message-ID: <20261118150252.052818844@linuxfoundation.org>
+Subject: [PATCH 7.3 0125/2651] soc: qcom: smem: fix 32-bit overflow in DDR frequency calculation
+Date: Wed, 18 Nov 2026 15:22:45 +0100
+Message-ID: <20261118150252.361663402@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,48 +69,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
 
-[ Upstream commit 98bfe1142ccbaa5ffdca5dcdddd26f238ad33585 ]
+[ Upstream commit 7bb5f186784074f2a91d83e191e305238be47103 ]
 
-jit_repipe_code_load() computes sym = (void *)jr + sizeof(jr->load) and
-passes it to jit_emit_elf() which calls strlen(sym) via jit_write_elf().
-If code_size equals total_size - sizeof(jr->load), the sym pointer
-aliases the code blob with no NUL terminator, and strlen() scans past
-the buffer into adjacent heap memory.
+The DDR frequency in SMEM is reported in kHz and converted to Hz by
+multiplying it by 1000. Since the SMEM frequency value is a u32, using
+an unsuffixed integer constant causes the multiplication to be performed
+with 32-bit arithmetic.
 
-Add a memchr() check to verify the symbol name is NUL-terminated within
-the region between the load header and the code blob before use.
+This overflows for DDR frequencies above 4294967 kHz, resulting in an
+incorrect frequency being reported through the SMEM DRAM interface.
 
-Fixes: 598b7c6919c7bbcc ("perf jit: add source line info support")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Stephane Eranian <eranian@google.com>
-Assisted-by: LLM
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Use an unsigned long constant for the multiplication so the calculation
+is performed with 64-bit arithmetic on the supported Qualcomm platforms.
+Apply the fix consistently to the v3, v3.1, v4, v5, and v7 SMEM parsers.
+
+Fixes: 1d234eeafc56 ("soc: qcom: smem: Expose DDR data from SMEM")
+Signed-off-by: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260827-glymur_dramc-v1-1-eba358d504b8@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/soc/qcom/smem_dramc.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index 5a3ea2681fb37..5898a7d8eb962 100644
---- a/tools/perf/util/jitdump.c
-+++ b/tools/perf/util/jitdump.c
-@@ -487,6 +487,13 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
+diff --git a/drivers/soc/qcom/smem_dramc.c b/drivers/soc/qcom/smem_dramc.c
+index 63ebe7f6db590..9612230a03bef 100644
+--- a/drivers/soc/qcom/smem_dramc.c
++++ b/drivers/soc/qcom/smem_dramc.c
+@@ -219,7 +219,7 @@ static void smem_dram_parse_v3_data(struct smem_dram *dram, void *data)
  
- 	sym   = (void *)((unsigned long)jr + sizeof(jr->load));
- 	code  = (unsigned long)jr + jr->load.p.total_size - csize;
-+
-+	/* sym string lives between the load header and the code blob */
-+	if (!memchr(sym, '\0', code - (unsigned long)sym)) {
-+		pr_warning("jitdump: unterminated symbol name in code_load record\n");
-+		return -1;
-+	}
-+
- 	count = jr->load.code_index;
- 	idr_size = jd->machine->id_hdr_size;
+ 		if (freq_entry->freq_khz && freq_entry->enabled) {
+ 			u32 freq_khz = le32_to_cpu(freq_entry->freq_khz);
+-			dram->frequencies[dram->num_frequencies++] = 1000 * freq_khz;
++			dram->frequencies[dram->num_frequencies++] = 1000UL * freq_khz;
+ 		}
+ 	}
+ }
+@@ -232,7 +232,7 @@ static void smem_dram_parse_v3_14freqs_data(struct smem_dram *dram, void *data)
+ 		struct ddr_freq_table *freq_entry = &details->ddr_freq_tbl.ddr_freq[i];
  
+ 		if (freq_entry->freq_khz && freq_entry->enabled)
+-			dram->frequencies[dram->num_frequencies++] = 1000 * freq_entry->freq_khz;
++			dram->frequencies[dram->num_frequencies++] = 1000UL * freq_entry->freq_khz;
+ 	}
+ }
+ 
+@@ -248,7 +248,7 @@ static void smem_dram_parse_v4_data(struct smem_dram *dram, void *data)
+ 
+ 		if (freq_entry->freq_khz && freq_entry->enabled) {
+ 			u32 freq_khz = le32_to_cpu(freq_entry->freq_khz);
+-			dram->frequencies[dram->num_frequencies++] = 1000 * freq_khz;
++			dram->frequencies[dram->num_frequencies++] = 1000UL * freq_khz;
+ 		}
+ 	}
+ }
+@@ -265,7 +265,7 @@ static void smem_dram_parse_v5_data(struct smem_dram *dram, void *data)
+ 
+ 		if (freq_entry->freq_khz && freq_entry->enabled) {
+ 			u32 freq_khz = le32_to_cpu(freq_entry->freq_khz);
+-			dram->frequencies[dram->num_frequencies++] = 1000 * freq_khz;
++			dram->frequencies[dram->num_frequencies++] = 1000UL * freq_khz;
+ 		}
+ 	}
+ }
+@@ -282,7 +282,7 @@ static void smem_dram_parse_v7_data(struct smem_dram *dram, void *data)
+ 
+ 		if (freq_entry->freq_khz && freq_entry->enabled) {
+ 			u32 freq_khz = le32_to_cpu(freq_entry->freq_khz);
+-			dram->frequencies[dram->num_frequencies++] = 1000 * freq_khz;
++			dram->frequencies[dram->num_frequencies++] = 1000UL * freq_khz;
+ 		}
+ 	}
+ }
 -- 
 2.53.0
 
