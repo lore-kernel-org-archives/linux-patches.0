@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025866;
-	b=u3BCtxXMV3PGORy2Z8MBfEYKXPrzG4iZalOF/HX3gDYP5Swl67AzHd12vZmeDeJvl1o7
-	 VfMufEwKiNaaHFCRDmQGawqXaKPd4mvrPcycP5Xm+bCBofTNUxpU9IHfdoUnSw74WCYKj
-	 a1edghWvXVRdHh0lAU2jP0FthPvQrkkwzYjoZ9YWdgiN04+RoG7rZ+rsMkpBlZhmOsp9U
-	 qgnHl71v0nVRYbNHPj20kxNh2WM6yJO/vIYg0RyIki6J1px/9FBo/JTxXM7pxp8kZE0ZC
-	 FYQm2uAJ23Y1VKWdQLrkPHOlvdoF3Tf2kUnDBbesSZ3lFb9LKu1pH3GVMr7ZQ/8iWFw==
+	t=1795025869;
+	b=V+5y2nvRMV9hROnYKucyReiVNUdlGfbIvjCYRMvJi6wjjqlRqYHdh8eF8yqemzwcTV8E
+	 aDtl6VVKU/VHYlePgskqhHIEytVov8/iH40ZHvEBGmg3bg246q2jrHxHjuiSqECLFWiqR
+	 xUyFam2CJhL6LWnv4awcqvWoepkB3RgBLWeAXhu8ZTORkE7U0O9OclKBEkMjNMBlK/8Kf
+	 bwza8yBKm8K6VQQstHbzv5DA0cZzeRJtOGv2zCEdlQboRxH2eDuHDIuvcGQ0jCUEoAMe+
+	 CteGKxokzb/+9kClQL1mN3GXi3QXLV9ot2HPRy4FguI8cHmVShJm9bYb80C15vFuEEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025866;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025869;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+CUB+/EUm1TUYH7iR3r/6vs9aJRE+ZvFCdnTO0BibyU=;
-	b=jQibvuWj01soVBXqt05TLORH2+F4mkAJx2Nr6ItXr98NHYWFd3vKk/opEsO+dslgntU3
-	 Hc/qD6FOTEAPt/zwg2y1lTKsm/LU1nIAkNtN8OcW2qCndU1UGSe/vKuboJFOfduAQ2Z2/
-	 ccY7AEHiY9u+q0V5kS6ECzpapLkrPWjSD+ijSH9bBd0RMxGpWGo2z35JifauWqkUimi0q
-	 he08r+jwBa3bFLmksTRuhmJPxYNgerTC0vXpd72YqctD8R5wLEITDcgYHrI0imhPhdGWm
-	 MAFgeWKd6Y0mVucRSNLEcwUiZ1NOiuc+jSxDlxL30frd1TXEVenERgGUXrCo70TIauA==
+	bh=3dVy0tvNtfXoF69ajfQPCQAfuxR9ccC9kMXe7I9zBSc=;
+	b=CWC3EPT7Y+4pDw8Aqlh4An17nuevgF0wq3/a2v+V6/SyyYUS0YQAGGjapkasZpItAUjO
+	 qQZZlhllPNRFzlo0z++5Z/a8PqZVi+CwMcyYMkNSsMkzY/+d5TEhjx00SxwgJfM83/qFS
+	 0YlwXho7MARpMhqL42nQ7mH3MflljuGEqFP2iGzssYCIRbD2KgEq8iqkfaxkGx+txHxMO
+	 Laf+sNJG39/cLPtsQEshk5tGYvvUJJ34m26qXhslnxF3tcl9EwiyHHdLToCqs5AOyhpKj
+	 MnHOmKl7D3+azPvTU0RLlLVjkpPFahD2Nm5WvECz71lUQBZlcTYlIadzLp25DjotGdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c8h8e+xR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eOxEQYxv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41EA4606A320;
-	Wed, 18 Nov 2026 18:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3722606A31C;
+	Wed, 18 Nov 2026 18:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c8h8e+xR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5D41F000C4;
-	Wed, 18 Nov 2026 18:17:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eOxEQYxv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9721F000C4;
+	Wed, 18 Nov 2026 18:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025865;
-	bh=+CUB+/EUm1TUYH7iR3r/6vs9aJRE+ZvFCdnTO0BibyU=;
+	s=korg; t=1795025868;
+	bh=3dVy0tvNtfXoF69ajfQPCQAfuxR9ccC9kMXe7I9zBSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c8h8e+xRn2q4th4ZPfJKi8qS++nTN5OOmhnqnPhW1ujVxmKEm/pnu9zxwuQmywsVY
-	 Yh03swGscrfDX3Ue/nq7ZYDu/BepFRMT1hmaCkQGHry2GhC0BiUHg/7Uc0T2SAYJeG
-	 erVAkT4aMu692jXyVPj3r54w5sIMwex/5ZRkZmj8=
+	b=eOxEQYxvdvxg9AFety4ld/j2C5fLZuTjgvVrJ3WD+L4cOSLn+ubaObxDqXnsWwKDp
+	 z95Bwr1iwXoWPToNH2egeSWhbJszYhF0qVDdBoUNXEeBb2o2lhFt7cFHMcUaH8KhM7
+	 cvN6E9gUkk/OJ2cN0kjkLY900vdZmXKdlr5ooubY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1230/2151] wifi: mt76: mt7996: clear all link wcid entries in sta_pre_rcu_remove
-Date: Wed, 18 Nov 2026 15:49:25 +0100
-Message-ID: <20261118150206.993196064@linuxfoundation.org>
+Subject: [PATCH 6.18 1231/2151] wifi: mt76: mt7996: fix PLE free page and AC queue register offsets
+Date: Wed, 18 Nov 2026 15:49:26 +0100
+Message-ID: <20261118150207.027945134@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,69 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit a53699a3d482a980efb016469b99ffac172280af ]
+[ Upstream commit c33af2e4622baafc56c565a13823f6b89d3f50db ]
 
-mt76_sta_pre_rcu_remove() clears the wcid table entry of msta->deflink
-only. mac80211 calls it before the synchronize_net() that ends the RCU
-readers of the station, and frees the station right after
-mt7996_mac_sta_remove(). For an MLD station, the wcid table entries of
-the other links stay set until mt7996_mac_sta_remove(), after that
-grace period. An RX or TX status reader that looks up one of these
-entries in that window can follow msta_link->sta or def_wcid into the
-freed station.
+The PLE register map in the MediaTek vendor driver places the free
+page counter, the free page head and tail, and the HIF group page status
+at 0x3a0, 0x3a4 and 0x3a8. The driver reads them at 0x380, 0x384 and
+0x388, and the vendor map has the band 1 TXCMD queue empty status at
+0x388. The same map has 0x100 bytes per AC for the station queue empty
+bitmaps, with the MT7992 extension register at offset 0x80. The driver
+uses 0x80, which cannot hold the 34 registers per AC of MT7996, so the
+hw-queues file reads AC1 to AC3 of a station from the wrong register.
 
-Clear the wcid table entries of all links of the station in
-.sta_pre_rcu_remove.
+Use the offsets of the vendor register map.
 
-Fixes: dd82a9e02c05 ("wifi: mt76: mt7996: Rely on mt7996_sta_link in sta_add/sta_remove callbacks")
-Link: https://patch.msgid.link/20261006205936.669125-10-nbd@nbd.name
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Link: https://patch.msgid.link/20261006205936.669125-25-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/main.c |   26 ++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/regs.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -1346,6 +1346,30 @@ mt7996_set_active_links(struct ieee80211
- 	ieee80211_set_active_links_async(vif, active_links);
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/regs.h b/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
+index a46c790550c62..3ad233e255dcd 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
+@@ -155,12 +155,12 @@ enum offs_rev {
+ #define MT_FL_Q2_CTRL				MT_PLE(0x3e8)
+ #define MT_FL_Q3_CTRL				MT_PLE(0x3ec)
  
-+static void
-+mt7996_sta_pre_rcu_remove(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
-+			  struct ieee80211_sta *sta)
-+{
-+	struct mt7996_sta *msta = (struct mt7996_sta *)sta->drv_priv;
-+	struct mt7996_dev *dev = mt7996_hw_dev(hw);
-+	unsigned int link_id;
-+
-+	mutex_lock(&dev->mt76.mutex);
-+	spin_lock_bh(&dev->mt76.status_lock);
-+
-+	for (link_id = 0; link_id < ARRAY_SIZE(msta->link); link_id++) {
-+		struct mt7996_sta_link *msta_link;
-+
-+		msta_link = mt7996_sta_link_protected(dev, msta, link_id);
-+		if (msta_link)
-+			rcu_assign_pointer(dev->mt76.wcid[msta_link->wcid.idx],
-+					   NULL);
-+	}
-+
-+	spin_unlock_bh(&dev->mt76.status_lock);
-+	mutex_unlock(&dev->mt76.mutex);
-+}
-+
- static int
- mt7996_sta_state(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 		 struct ieee80211_sta *sta, enum ieee80211_sta_state old_state,
-@@ -2400,7 +2424,7 @@ const struct ieee80211_ops mt7996_ops =
- 	.vif_cfg_changed = mt7996_vif_cfg_changed,
- 	.link_info_changed = mt7996_link_info_changed,
- 	.sta_state = mt7996_sta_state,
--	.sta_pre_rcu_remove = mt76_sta_pre_rcu_remove,
-+	.sta_pre_rcu_remove = mt7996_sta_pre_rcu_remove,
- 	.link_sta_rc_update = mt7996_link_sta_rc_update,
- 	.set_key = mt7996_set_key,
- 	.ampdu_action = mt7996_ampdu_action,
+-#define MT_PLE_FREEPG_CNT			MT_PLE(0x380)
+-#define MT_PLE_FREEPG_HEAD_TAIL			MT_PLE(0x384)
++#define MT_PLE_FREEPG_CNT			MT_PLE(0x3a0)
++#define MT_PLE_FREEPG_HEAD_TAIL			MT_PLE(0x3a4)
+ #define MT_PLE_PG_HIF_GROUP			MT_PLE(0x00c)
+-#define MT_PLE_HIF_PG_INFO			MT_PLE(0x388)
++#define MT_PLE_HIF_PG_INFO			MT_PLE(0x3a8)
+ 
+-#define MT_PLE_AC_QEMPTY(ac, n)			MT_PLE(0x600 +	0x80 * (ac) + ((n) << 2))
++#define MT_PLE_AC_QEMPTY(ac, n)			MT_PLE(0x600 + 0x100 * (ac) + ((n) << 2))
+ #define MT_PLE_AMSDU_PACK_MSDU_CNT(n)		MT_PLE(0x10e0 + ((n) << 2))
+ 
+ /* WF MDP TOP */
+-- 
+2.53.0
+
 
 
