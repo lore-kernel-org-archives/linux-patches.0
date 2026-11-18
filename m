@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022780;
-	b=Y1C3JnkW7fthklS4UqOVSYLMMkz1OKH0UV7T3l1Lj+VD2V89fvMzd3raVhw2tepy7a/D
-	 Vpgv/4lxOhuYGSPy8c01pFfmwIh3+F/XplZCRY8fqYYBk0m6Ix8Z/rt962qgTbiDPETCJ
-	 iTALmH3fjhhgpvaoncwr1j/8G8Tbh4bTymvV45R/PnnH7ScTB/ryRm2DJioTCao72JDdz
-	 go8bqd/aBFrBdARDlyOIpa+ngE6GxpahuSb6/VoobIsiBM92yiXXnCpKca79cSxdjAaWq
-	 5LcWu6G7lqJ6wMSq5tbHNEn6ZZD8kq2byjzkyao3RWlomxs7rwVEcgeF6vhY6Oo+arg==
+	t=1795022783;
+	b=zTyKW0WEC2r0892VjzwPhfRJWBnp2T5JmKB4l90tf/U9MP9rYIsgbcwL2A7qc+1AJ8pn
+	 /quUfwO6ZyCQboy9S7cSQ4jyXMed+eWiTPlAdeskp24CMQba+AkD4QDPbL5DmP9FZVCX9
+	 +UFDkTbBwasLa21+2VAksqCFFOIobSWSJQqXZhINUwwsCNon6X4u7fI+6JLn1oxFzhuGT
+	 QmAdHAS4BCsIBvT/EFBsXG6Jw7xNrmngfKLRMzvSNcAF/1EiUSvaR7dAEQtBxFvng2NMn
+	 nvxdF/O+k17Vk7MFbRXCpIcJlkcoKPZH7L2De3i3c1pQaLbRLA7/lthk9YooVj48ADw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022780;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022783;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=VuD38D9oTASK4Q3DGCsWOMTsK7/h/q57TLFiUeaM2kQ=;
-	b=fkUnrXsneWAkEX+E78osQo4tpUA1Gw3nzyd2RM0DpwI9DEtKH0wiU6SasmBlW8jVFERV
-	 BxPy1InsauMGR79/+Yuggm9xVCKWYvXSTbQ261cC7eOuuBR1jBMJY3f9H8Tp1jlOlB33A
-	 MYpThHcscenuR4GG1aatxfLCMuA/weBCIdXsI/UT1/oy1kFGoDEnbLGEuX9WZOgRt/g6d
-	 AvSFSZqYJjQMhyKq0Tb/klO/2YDTmtsKOhljm0jm09hZw+f7Dzl5J9rSh2cvG1Is0m2cT
-	 GIl+DZf6JJw4CgYcHk6ncLdhrMGPDMMj+62kb7lZDNhJsxtsFejiO6g+RsguCgWoVXQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=9agxu07SEHlVeNKMCwE9OEqsoTz12ymcZr8Gp9reZKk=;
+	b=0Yt0t0bBUmcHTz4PdYcr76K1mRzwwdwd0jv66wu+Qld3cuMj2ek9weGEdxk3wYE6Dc65
+	 AOY9k0gUCT7J2IXO6fBbvgYJgpoSu6jMRop9WtFoycv2mAfNip2mjG5H5nDB0uh2W8nUo
+	 BN+xg3g75XXCZHL3cgXLi7OgMMVQo8DzXSpc0xqxe/z/hWk7q/uzc6N87wKWr/EhDhi83
+	 rilDNqg81GnbZXVEmmEeYyQw4J7SbqXT6JEmIBM/v9M0jAdm0lb4Qjjx8EblrwITMxsmP
+	 DeL8wAlCA79g2uG8Y2ETP6/fP8qOs7UgZxaMinX96JipiNSadQ7KzDiZBmI9ndTOHqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V1Qmxlyi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hltYxPxp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43846606DABF;
-	Wed, 18 Nov 2026 17:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3296E606DABF;
+	Wed, 18 Nov 2026 17:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V1Qmxlyi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9563B1F000CB;
-	Wed, 18 Nov 2026 17:26:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hltYxPxp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733721F000C7;
+	Wed, 18 Nov 2026 17:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022780;
-	bh=VuD38D9oTASK4Q3DGCsWOMTsK7/h/q57TLFiUeaM2kQ=;
+	s=korg; t=1795022783;
+	bh=9agxu07SEHlVeNKMCwE9OEqsoTz12ymcZr8Gp9reZKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V1QmxlyiE6kFXGAK+8wembYkVpnlLrworM7BFKDobkQAHneBR/oI6bd/2KXm55EmO
-	 peHFAC0L4UMdW0DsIUfhSIBv/xrn3SzB9ar53QEuQUQVeXpBctzqgpVvTV9vaMzvzp
-	 lVvJqKh6I5SB3zFfK5OXsaReWrCsDC9xKQLZxUgo=
+	b=hltYxPxpw/pfQWsdx5ogDZSfdjdG9tV48B2lCPXITLvV4sYFNwWuGH+cyIx1PMdxF
+	 H2IWJ6jy+kAqg2HPFuLZbbRhit/wimBH8IQ11KGukvq9Vd7Nl8fskU658pAB1vtEYi
+	 l+cYPh+9FpCClk5F7V/aO/duNZJpQ5rTer16uiZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Darren Carreras <carrerasdarren@gmail.com>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9=20 ?= <alexis.lothore@bootlin.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0133/2151] libbpf: Avoid overflow in BTF.ext bounds check
-Date: Wed, 18 Nov 2026 15:31:08 +0100
-Message-ID: <20261118150126.636514394@linuxfoundation.org>
+Subject: [PATCH 6.18 0134/2151] selftests/bpf: Allocate a larger timeout for connection
+Date: Wed, 18 Nov 2026 15:31:09 +0100
+Message-ID: <20261118150126.672239461@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,72 +63,137 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Darren Carreras <carrerasdarren@gmail.com>
+From: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
 
-[ Upstream commit e40f61a31688898e7cf81e91074a42f805883e4d ]
+[ Upstream commit 669e4fa766000ae4137bb02eb22ce75ba78ad32d ]
 
-A malformed BTF.ext subsection length in an ELF input can wrap the
-pointer addition used by btf_ext_parse_sec_info() on 32-bit builds. The
-wrapped pointer passes the bounds check and parsing then reads beyond the
-copied BTF.ext data.
+Some tests, like tc_tunnel or tc_edt, sporadically fail in CI with the
+following logs:
 
-Ensure the header fits in the copied data, then validate the subsection
-offset and length with subtraction before forming its pointer.
+  (network_helpers.c:309: errno: Operation now in progress) \
+    Failed to connect to server
+  send_and_test_data:FAIL:connect to server unexpected error: -115
 
-Fixes: ae4ab4b4117d ("btf: expose API to work with raw btf_ext data")
-Closes: https://issues.oss-fuzz.com/issues/477315119
-Signed-off-by: Darren Carreras <carrerasdarren@gmail.com>
+This is due to SO_RCVTIMEO and SO_SNDTIMEO being set on the client
+socket (see settimeo() in client_socket()), allowing connect() to return
+an error and to set errno to EINPROGRESS instead of ETIMEDOUT.
+Increasing the timeout value for those tests is likely not a good
+solution (and it has already been done by commit 2790db208b44
+("selftests/bpf: Improve tc_tunnel test reliability")): some tests
+expect some data transfer to fail, and so the timeout value would
+increase overall test execution duration again (not only the connection,
+but any socket operation).
+
+Another solution is to allocate a timeout budget specific to the
+connection: we can apply a larger timeout only for connections, and once
+the connection is established, set back the timeout configured through
+opts->timeout_ms; this would allow connection to succeed under heavy CI
+load, while keeping timeout reasonable for the rest of the test traffic.
+
+Create a dedicated connect helper that sets a large timeout for the
+connect step, tries to connect, and if successful, finally sets the
+timeout value to the one configured by the test.
+
+Fixes: 99126abec5e5 ("bpf: selftests: A few improvements to network_helpers.c")
+Signed-off-by: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260813-b4-libbpf-v6-send-20260813-v6-1-56be61c52758@gmail.com
+Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Link: https://lore.kernel.org/bpf/20260818-tc_tunnel_flaky-v7-1-aec161e74ef2@bootlin.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ tools/testing/selftests/bpf/network_helpers.c | 46 ++++++++++++++-----
+ 1 file changed, 35 insertions(+), 11 deletions(-)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index 9f141395c074e..f1ee53a07f17b 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -3013,7 +3013,7 @@ static int btf_ext_parse_sec_info(struct btf_ext *btf_ext,
- {
- 	const struct btf_ext_info_sec *sinfo;
- 	struct btf_ext_info *ext_info;
--	__u32 info_left, record_size;
-+	__u32 data_left, info_left, record_size;
- 	size_t sec_cnt = 0;
- 	void *info;
+diff --git a/tools/testing/selftests/bpf/network_helpers.c b/tools/testing/selftests/bpf/network_helpers.c
+index 2067e12034ba0..39583217c9a9d 100644
+--- a/tools/testing/selftests/bpf/network_helpers.c
++++ b/tools/testing/selftests/bpf/network_helpers.c
+@@ -49,6 +49,8 @@
+ 			errno = __save;					\
+ })
  
-@@ -3026,16 +3026,20 @@ static int btf_ext_parse_sec_info(struct btf_ext *btf_ext,
- 		return -EINVAL;
- 	}
- 
--	/* The start of the info sec (including the __u32 record_size). */
--	info = btf_ext->data + btf_ext->hdr->hdr_len + ext_sec->off;
--	info_left = ext_sec->len;
-+	if (btf_ext->hdr->hdr_len > btf_ext->data_size)
-+		return -EINVAL;
- 
--	if (btf_ext->data + btf_ext->data_size < info + ext_sec->len) {
-+	data_left = btf_ext->data_size - btf_ext->hdr->hdr_len;
-+	if (ext_sec->off > data_left || ext_sec->len > data_left - ext_sec->off) {
- 		pr_debug("%s section (off:%u len:%u) is beyond the end of the ELF section .BTF.ext\n",
- 			 ext_sec->desc, ext_sec->off, ext_sec->len);
- 		return -EINVAL;
- 	}
- 
-+	/* The start of the info sec (including the __u32 record_size). */
-+	info = btf_ext->data + btf_ext->hdr->hdr_len + ext_sec->off;
-+	info_left = ext_sec->len;
++#define CONNECT_MIN_TIMEOUT_MS	5000
 +
- 	/* At least a record size */
- 	if (info_left < sizeof(__u32)) {
- 		pr_debug(".BTF.ext %s record size not found\n", ext_sec->desc);
+ struct ipv4_packet pkt_v4 = {
+ 	.eth.h_proto = __bpf_constant_htons(ETH_P_IP),
+ 	.iph.ihl = 5,
+@@ -291,6 +293,37 @@ int client_socket(int family, int type,
+ 	return -1;
+ }
+ 
++static int connect_with_timeout(int fd, const struct sockaddr_storage *addr,
++				socklen_t addrlen, int timeout_ms)
++{
++	int connect_timeout_ms = MAX(timeout_ms, CONNECT_MIN_TIMEOUT_MS);
++
++	/*
++	 * Override timeout configuration with a larger value for the
++	 * connection
++	 */
++	if (settimeo(fd, connect_timeout_ms)) {
++		log_err("Failed to set connect timeout");
++		return -1;
++	}
++
++	if (connect(fd, (const struct sockaddr *)addr, addrlen)) {
++		log_err("Failed to connect");
++		return -1;
++	}
++
++	/*
++	 * If the timeout configured by the test is different from the
++	 * connect timeout, restore it
++	 */
++	if (timeout_ms != connect_timeout_ms && settimeo(fd, timeout_ms)) {
++		log_err("Failed to set timeout for connected socket");
++		return -1;
++	}
++
++	return 0;
++}
++
+ int connect_to_addr(int type, const struct sockaddr_storage *addr, socklen_t addrlen,
+ 		    const struct network_helper_opts *opts)
+ {
+@@ -305,8 +338,7 @@ int connect_to_addr(int type, const struct sockaddr_storage *addr, socklen_t add
+ 		return -1;
+ 	}
+ 
+-	if (connect(fd, (const struct sockaddr *)addr, addrlen)) {
+-		log_err("Failed to connect to server");
++	if (connect_with_timeout(fd, addr, addrlen, opts->timeout_ms)) {
+ 		save_errno_close(fd);
+ 		return -1;
+ 	}
+@@ -376,20 +408,12 @@ int connect_fd_to_fd(int client_fd, int server_fd, int timeout_ms)
+ 	struct sockaddr_storage addr;
+ 	socklen_t len = sizeof(addr);
+ 
+-	if (settimeo(client_fd, timeout_ms))
+-		return -1;
+-
+ 	if (getsockname(server_fd, (struct sockaddr *)&addr, &len)) {
+ 		log_err("Failed to get server addr");
+ 		return -1;
+ 	}
+ 
+-	if (connect(client_fd, (const struct sockaddr *)&addr, len)) {
+-		log_err("Failed to connect to server");
+-		return -1;
+-	}
+-
+-	return 0;
++	return connect_with_timeout(client_fd, &addr, len, timeout_ms);
+ }
+ 
+ int make_sockaddr(int family, const char *addr_str, __u16 port,
 -- 
 2.53.0
 
