@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016845;
-	b=lLfQMseGRYm6ogMLyyQUhRyNGTGVfRjeFuJxVdXJvy5h4XrrbjwkoIX5qVSjOA5tgzpG
-	 cnFv8R0PXQpQyAv4ZGmOwSjFiCc+mEabeWEp5RjQaHnAAdimzVPQo52+y+rHyeYARHJ+B
-	 QV7I04ipwEps6jY8yWgIMe6XoSNTf4bdmZL2EAx86buC5CPMao1xUl90z9NnG0j1xQB1s
-	 wN/qUS7tpN9dpO2F8ePL0gaE5sYftoO7TORCM/EAt2FF6Ksd/QhMvrRFSbmvDeJ9+MXNO
-	 C0RjSGRaRZmj8HLMTWPVrkNU7wS9ja0Eb5b8GZ7CrCHWY8H76rLvBS45KgPP47jmi7Q==
+	t=1795016848;
+	b=kY1cBVpBRNXnzYaL9JI7D++zx3XJ6PZ3KydcrNDJygkFhG22cNtJS6WrFTDyPx+gLzKE
+	 VWrnH9nXCdIQ6FYD33oD/LU6K01VXTlSMYMvZkOGWTj4CNZEuW6T5JWVZl2EAwyHpqiWT
+	 Y7nPe+G9hlFdcpykC8GYE9xjLgr3V5hJp67agqja50VAXbDO+UB6UGjw+d4jUV9KDF+te
+	 qf1YfRFGqFqMJ7HUiH+A0dauXKzXfrDLzRvC7bV5eGiIlhjitQQRCRWah1jcbmyxxfqmA
+	 eYuA9c1iZEfanI5YZU6zSMLLFAH2EeWa+2PbhClCOeg4ta/QKzOEw9TKy3Pz2+AxIIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016845;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016848;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=slpCf1bRFNEfVot06mr629M1D6+OPyLufVEbZDcAM5U=;
-	b=iv/56LEyG/N7Js6buViIfRwR3nuyA/4erZtoPkthp4KU0+VZF85tdfjMJ1bVnyzTrUx8
-	 JQKE2YcGuxLREpxClqVFzvc7B0V3Qne0szLxDG4g6+rgaL3SPGQmCwmOw5X86Izod4LrT
-	 u+EWJPuD+PzLBq3/YT405ZBJ6MEx/mSbMftw9+G326J87JExPDWElfrKgGbfPlkhxJmuK
-	 NlwiDfP9i2feWnXgDb27kj9/iWCa+OdU6oj5jZ7FA5H7/SrbB1FBkOISDfHeJx46g2+MN
-	 zJrS1673NgICjDSTRXCWBX/wwgeicRgEGNpUfOj8dVXcaeSUa1FQIEREqff49ipzdjQ==
+	bh=qV8QvziTnHooQCI4dl70f5cWoAHFMzQyhHfGQh9S48Y=;
+	b=PE7CoUWfItR1hgzLZ3EwcJkEwpj6nZzZlneGUrLTPd6LDoIKlDd5rasQoGMPP2GZ9+ay
+	 fwv03MYs6v8P0q4ufGs3sFmHLcPsbIH0pmK511yqSinAVSrV0E1sbglG2O6JMpb7i67Vt
+	 p7hjNVV3kcd5n6lZ7Zn1EWeBEgeTuL1LRl3aiyP2eVb38RHUT8phU1F019lMN9309kFPt
+	 U24vXTf9McBRjVevAnBNe57caOBoJbtM5Xx576ITq3ZOeEPMLLmQWKc42ASyLrp2I5jug
+	 My1UHNx4lIhLX2dk0cIBRaSCKN1Jv/e6mss2pSVvo2L1/wvdu23eZ5kjWEyoZkeLnVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nIstU3lE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FxdrQs5O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D7F606A31C;
-	Wed, 18 Nov 2026 15:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C1B606A325;
+	Wed, 18 Nov 2026 15:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nIstU3lE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BDDC1F000C4;
-	Wed, 18 Nov 2026 15:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FxdrQs5O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70EC11F000C5;
+	Wed, 18 Nov 2026 15:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016845;
-	bh=slpCf1bRFNEfVot06mr629M1D6+OPyLufVEbZDcAM5U=;
+	s=korg; t=1795016848;
+	bh=qV8QvziTnHooQCI4dl70f5cWoAHFMzQyhHfGQh9S48Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nIstU3lEOF2H2lYYL3/szWZ4pzlQBk3NNTPx9SImWn/0sXQqrp6Z0kHupoAwvPbjI
-	 73v4G5MQLPgeQbryql9wcWhMVlYwuffZSMVPmoRnFyL79QS/jaUY3eSly+F2dK++I3
-	 mTnt6f/A8GV5DiaMmOap5f20p1L3PXiADc2BLfkw=
+	b=FxdrQs5O3JbGHBoikYiQ99sz2RAzKJxwdeJwA/UyNnV5171DGcdzOIRJev8p+3gjZ
+	 RRKiAmPDDK76Ut9BqJHAD1rnkVYp/N8hN8oe1RDjuj0YtNRpfr5yOSuiJ0CTxPs+vz
+	 w0foIIz8H4q/HfZ1vm0CysZJu1Y98tkFFoNfNs/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>,
-	Tejun Heo <tj@kernel.org>,
+	David Matlack <dmatlack@google.com>,
+	Hisam Mehboob <hisamshar@gmail.com>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0673/2651] selftests/sched_ext: Fix rt_stall runner abort
-Date: Wed, 18 Nov 2026 15:31:53 +0100
-Message-ID: <20261118150312.100757839@linuxfoundation.org>
+Subject: [PATCH 7.3 0674/2651] vfio: selftests: Include <libgen.h> for basename() on non-glibc builds
+Date: Wed, 18 Nov 2026 15:31:54 +0100
+Message-ID: <20261118150312.136562323@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,193 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+From: Hisam Mehboob <hisamshar@gmail.com>
 
-[ Upstream commit 6b8d2bc44fbb6d232382141ae70d4ecc28a9dc36 ]
+[ Upstream commit e11a07856ba06867a4c0c8aa91770e1b209dea98 ]
 
-rt_stall uses ksft_exit_fail() and friends, which call exit(), so a
-single rt_stall failure or a fork() error kills the runner and skips
-the remaining tests.
+sysfs.c calls basename() but does not include its declaration.
+Glibc exposes basename() through <string.h> with _GNU_SOURCE, while
+musl declares it in <libgen.h>.
 
-Drop the ksft_* usage, report the handshake failure back from
-wait_ready(), and let run() return SCX_TEST_FAIL so the runner records
-the failure and moves on. Since the test now returns rather than
-exiting, route every path after the forks through one cleanup label, so
-a failure cannot leave the SCHED_FIFO task spinning on CORE_ID for the
-tests that follow.
+With musl, this results in an implicit-function-declaration error and
+subsequent type-mismatch errors at the callers.
 
-Also destroy the struct_ops link before checking the exit kind, so the
-link is released when that check fails.
+Include <libgen.h> so the declaration is available on both glibc and
+musl. This is safe at both call sites: the arguments are local writable
+char[PATH_MAX] buffers filled by readlink_safe().
 
-Fixes: be621a76341c ("selftests/sched_ext: Add test for sched_ext dl_server")
-Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/kvm/CALzav=fs4bqMM7BXNPXqhtbqGzA+LW5fgx2-1Q5=sTN5+krYhw@mail.gmail.com/
+Fixes: a262fc49e0aa ("KVM: selftests: Build and link selftests/vfio/lib into KVM selftests")
+Reviewed-by: David Matlack <dmatlack@google.com>
+Signed-off-by: Hisam Mehboob <hisamshar@gmail.com>
+Link: https://lore.kernel.org/r/20260824222845.459181-3-hisamshar@gmail.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/sched_ext/rt_stall.c | 80 ++++++++++----------
- 1 file changed, 42 insertions(+), 38 deletions(-)
+ tools/testing/selftests/vfio/lib/sysfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/sched_ext/rt_stall.c b/tools/testing/selftests/sched_ext/rt_stall.c
-index a5041fc2e44fd..a1552b38a6e8c 100644
---- a/tools/testing/selftests/sched_ext/rt_stall.c
-+++ b/tools/testing/selftests/sched_ext/rt_stall.c
-@@ -17,7 +17,6 @@
- #include <scx/common.h>
- #include "rt_stall.bpf.skel.h"
- #include "scx_test.h"
--#include "../kselftest.h"
- 
- #define CORE_ID		0	/* CPU to pin tasks to */
- #define RUN_TIME        5	/* How long to run the test in seconds */
-@@ -35,15 +34,17 @@ static void signal_ready(int fd)
- }
- 
- /* Wait for a child to signal readiness via a pipe */
--static void wait_ready(int fd)
-+static bool wait_ready(int fd)
- {
-+	bool ready;
- 	char c;
- 
--	if (read(fd, &c, 1) != 1) {
-+	ready = read(fd, &c, 1) == 1;
-+	if (!ready)
- 		perror("read from ready pipe");
--		exit(EXIT_FAILURE);
--	}
- 	close(fd);
-+
-+	return ready;
- }
- 
- /* Simple busy-wait function for test tasks */
-@@ -151,13 +152,11 @@ static bool sched_stress_test(bool is_ext)
- 	float ext_runtime, rt_runtime, actual_ratio;
- 	int ext_pid, rt_pid;
- 	int ext_ready[2], rt_ready[2];
--
--	ksft_print_header();
--	ksft_set_plan(1);
-+	bool ret = false;
- 
- 	if (pipe(ext_ready) || pipe(rt_ready)) {
- 		perror("pipe");
--		ksft_exit_fail();
-+		return false;
- 	}
- 
- 	/* Create and set up a EXT task */
-@@ -172,7 +171,7 @@ static bool sched_stress_test(bool is_ext)
- 		exit(0);
- 	} else if (ext_pid < 0) {
- 		perror("fork task");
--		ksft_exit_fail();
-+		return false;
- 	}
- 
- 	/* Create an RT task */
-@@ -188,7 +187,7 @@ static bool sched_stress_test(bool is_ext)
- 		exit(0);
- 	} else if (rt_pid < 0) {
- 		perror("fork for RT task");
--		ksft_exit_fail();
-+		goto out_kill_ext;
- 	}
- 
- 	/*
-@@ -199,45 +198,47 @@ static bool sched_stress_test(bool is_ext)
- 	 */
- 	close(ext_ready[1]);
- 	close(rt_ready[1]);
--	wait_ready(ext_ready[0]);
--	wait_ready(rt_ready[0]);
-+	if (!wait_ready(ext_ready[0]) || !wait_ready(rt_ready[0]))
-+		goto out_kill;
- 
- 	/* Let the processes run for the specified time */
- 	sleep(RUN_TIME);
- 
- 	/* Get runtime for the EXT task */
- 	ext_runtime = get_process_runtime(ext_pid);
--	if (ext_runtime == -1)
--		ksft_exit_fail_msg("Error getting runtime for %s task (PID %d)\n",
--				   class_str, ext_pid);
--	ksft_print_msg("Runtime of %s task (PID %d) is %f seconds\n",
--		       class_str, ext_pid, ext_runtime);
-+	if (ext_runtime == -1) {
-+		fprintf(stderr, "Failed to read %s task runtime\n", class_str);
-+		goto out_kill;
-+	}
- 
- 	/* Get runtime for the RT task */
- 	rt_runtime = get_process_runtime(rt_pid);
--	if (rt_runtime == -1)
--		ksft_exit_fail_msg("Error getting runtime for RT task (PID %d)\n", rt_pid);
--	ksft_print_msg("Runtime of RT task (PID %d) is %f seconds\n", rt_pid, rt_runtime);
--
--	/* Kill the processes */
--	kill(ext_pid, SIGKILL);
--	kill(rt_pid, SIGKILL);
--	waitpid(ext_pid, NULL, 0);
--	waitpid(rt_pid, NULL, 0);
-+	if (rt_runtime == -1) {
-+		fprintf(stderr, "Failed to read RT task runtime\n");
-+		goto out_kill;
-+	}
- 
- 	/* Verify that the scx task got enough runtime */
- 	actual_ratio = ext_runtime / (ext_runtime + rt_runtime);
--	ksft_print_msg("%s task got %.2f%% of total runtime\n",
--		       class_str, actual_ratio * 100);
-+	fprintf(stderr, "%s task ran %.3fs, RT task ran %.3fs (%.2f%% of runtime)\n",
-+		class_str, ext_runtime, rt_runtime, actual_ratio * 100);
- 
--	if (actual_ratio >= expected_min_ratio) {
--		ksft_test_result_pass("PASS: %s task got more than %.2f%% of runtime\n",
--				      class_str, expected_min_ratio * 100);
--		return true;
-+	if (actual_ratio < expected_min_ratio) {
-+		fprintf(stderr, "%s task got less than %.2f%% of runtime\n",
-+			class_str, expected_min_ratio * 100);
-+		goto out_kill;
- 	}
--	ksft_test_result_fail("FAIL: %s task got less than %.2f%% of runtime\n",
--			      class_str, expected_min_ratio * 100);
--	return false;
-+
-+	ret = true;
-+
-+out_kill:
-+	kill(rt_pid, SIGKILL);
-+	waitpid(rt_pid, NULL, 0);
-+out_kill_ext:
-+	kill(ext_pid, SIGKILL);
-+	waitpid(ext_pid, NULL, 0);
-+
-+	return ret;
- }
- 
- static enum scx_test_status run(void *ctx)
-@@ -263,14 +264,17 @@ static enum scx_test_status run(void *ctx)
- 			link = bpf_map__attach_struct_ops(skel->maps.rt_stall_ops);
- 			SCX_FAIL_IF(!link, "Failed to attach scheduler");
- 		}
-+
- 		res = sched_stress_test(is_ext);
-+
- 		if (is_ext) {
--			SCX_EQ(skel->data->uei.kind, EXIT_KIND(SCX_EXIT_NONE));
-+			int exit_kind = skel->data->uei.kind;
- 			bpf_link__destroy(link);
-+			SCX_EQ(exit_kind, EXIT_KIND(SCX_EXIT_NONE));
- 		}
- 
- 		if (!res)
--			ksft_exit_fail();
-+			return SCX_TEST_FAIL;
- 	}
- 
- 	return SCX_TEST_PASS;
+diff --git a/tools/testing/selftests/vfio/lib/sysfs.c b/tools/testing/selftests/vfio/lib/sysfs.c
+index 98a46a2543cd9..d88e348a1e0d4 100644
+--- a/tools/testing/selftests/vfio/lib/sysfs.c
++++ b/tools/testing/selftests/vfio/lib/sysfs.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ #include <fcntl.h>
++#include <libgen.h>
+ #include <unistd.h>
+ #include <stdlib.h>
+ #include <string.h>
 -- 
 2.53.0
 
