@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020770;
-	b=26WPWkh8Yq+8jhxcRk5MnzmMijjKDcpLd0v3CEQndML7FNNuazBU3auiiHW3kqlftQLo
-	 OeHwBHHt/sHa+gahOWaJf54vyGA7LpETHZe/J8RRmByciemIeWewe6lE2PbB3NEq1z04B
-	 DT3r2eLSCmepkNYaFcFgrI9s63lT00t/0OgplhPSu9ZuXSNYR003EwBbbrAXfYrccCxUM
-	 0aw3rQHWpPY/klDTkK0/rlrGvn2LVkrs0ILF66vc8IiYfzvMIlUfQen1blz7RGo/LvOWF
-	 eewasheXBg2dyg1BbsKiWTrQb8wMLzpoy8bCW6i4jZcZlOROSVKjPrZomUOhniT1uNQ==
+	t=1795020773;
+	b=mqNDjtPGxCl6+TLn0KLgQ3yoAulDTVd/JINb8Vz6i7YkGjG9C2Rqab+6lDSXmg6r1MFl
+	 1wbEXEyI4U1t1umT7mBiUS6CxP7xU4Mx78iL7hqJrjnJrmGNlYrjnEHrEwcpOVpk/yqxc
+	 7qa4ZmLSTsfGKFwpDWDT0F2emmotVpqzbAWmbAXMKUHb9jtO3Z0t+aZFKMrUv41HGOuOI
+	 hdRzjBA6N8zVcO/62HBrnJGoIUWkd5w2LunWF9iwaOmyj5HCVX2TizYM/Q5snEEqgJuzX
+	 Qd4vLWSii0D0i9Kpg9RbeJX60YxxLFjilaACaUhSzTvwJbzX0hIDIXX+qdRa3uPEXiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020770;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020773;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=CFzLoV8fnW4mfQaVlTSqQAHlOJNnHxTN1pu9ZnzerOA=;
-	b=PwV1ND4KkjiiEOzOIOLStqrtqkjb1tWPRZ9uNN/vp4OU8qdSQSODPzwHeWzrbrOJ0bLr
-	 5UqqY3FGcxu2tzltzMQa16LdBg9B15KYJ5sOUs2yIjcg+l3dDwWwF4K38dWhEJDoXGowO
-	 VaqUK87G+FBnCRDOSNAsRMWG9Qb6oPaJy7R5+tP5fbJLic+qCy6LUiX3yPIvjq8I3nTJE
-	 kgfyFjHrbliUPkCLFBFTqL4L06tmJrytsck/dVTs1BtJCFUcMwTPQz5meXV/E/XcMgvpj
-	 PvSu4+GECMX6burq2Lc3gLRReKkeipZA0vCGi7ynm0Osd72GO3ZVP9wcp6+eCn2+iNQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=3+Oed55GboZ5pgC9R4Eg1lq4px7yyrlVYLKCelUAVYo=;
+	b=v2FoaG3hXsWOWe5qVabLm25iXS0o1bghuAIl5husQ6J9q6q7PpntiK1iiDybHK08GsmU
+	 QI/ScnbhnsCYkw9QiL3v0swL2oi6px9lp7sW3gIbsxS5NYk3s00uyErVvk1JNsZgI+n23
+	 Uy/2qM9r6oIeHvgOxTUUfUHMNFMjvw4FDC+QZww5BLinJWkjudnavMKzUoLG/4wUCb8KE
+	 bQyoh+TVTfAA/PzJaKN+suftZCUVTP8kvQwCgpMjPpgCqKSQ7OpjHYrYFZeF5pJntFLhT
+	 +6Nk3AHF47aUG4P0fathLCix6OKleg30KLHlrVGNCQX/NEL95RrMja/D8KJDVqQ1gjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JO7N9z9u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DIWC7xS7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB59606A337;
-	Wed, 18 Nov 2026 16:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A89060A5BD7;
+	Wed, 18 Nov 2026 16:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JO7N9z9u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D201F000C4;
-	Wed, 18 Nov 2026 16:52:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DIWC7xS7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B40A1F000C4;
+	Wed, 18 Nov 2026 16:52:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020770;
-	bh=CFzLoV8fnW4mfQaVlTSqQAHlOJNnHxTN1pu9ZnzerOA=;
+	s=korg; t=1795020772;
+	bh=3+Oed55GboZ5pgC9R4Eg1lq4px7yyrlVYLKCelUAVYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JO7N9z9uS0TnG3jThE7/G2r+RMW9ulFqjrsm5lc1Oq+qGWSK2iMvrE2wOatv+RbcC
-	 lwoY+msUZR7g/xPg1qN5pxe3QqeqlcIpVq24cMJ/orXk/BJNuv7OXRy82lVukYXKn6
-	 DH4dDajtKeATNL37b9hpFqSQ5OoZekbB8kcMYAJc=
+	b=DIWC7xS7FZLnLZAm1Mc/tdP3qu1glEtQ9+Q7zukV6/wEWeoUx4ts7nPjRQrtiHDDo
+	 LJuSLCUE26Ltk0NfrYLlwACfR+TqyhnN3e/iXPtci71RLPvCXbM0vOdCp9YzvkRbMC
+	 ZLwr27FLCiupZ1ewzWVkrojywikz/MjG+ikxF9DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
-	syzbot+04cd90bb99c6ef81a65d@syzkaller.appspotmail.com,
-	=?UTF-8?q?=C3=96mer=20Mete=20Kaya?= <omermetekaya0@gmail.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Vincent Jardin <vjardin@free.fr>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2053/2651] usbnet: fix smp_processor_id() use in preemptible context
-Date: Wed, 18 Nov 2026 15:54:53 +0100
-Message-ID: <20261118150359.975946320@linuxfoundation.org>
+Subject: [PATCH 7.3 2071/2651] dpaa2-ptp: fix support for PTP_EXTTS_REQUEST2 ioctl
+Date: Wed, 18 Nov 2026 15:55:11 +0100
+Message-ID: <20261118150400.609089800@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -64,82 +64,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ömer Mete Kaya <omermetekaya0@gmail.com>
+From: Vincent Jardin <vjardin@free.fr>
 
-[ Upstream commit 95a5c641fc7becab441bf244baa73b0b0f8b7dea ]
+[ Upstream commit 86a30c4348497bcddcf2796258955bbaaf58c9a3 ]
 
-tx_complete() calls this_cpu_ptr() before disabling preemption, which
-triggers a BUG when running with CONFIG_DEBUG_PREEMPT:
+Commit 7c571ac57d9d ("net: ptp: introduce .supported_extts_flags to
+ptp_clock_info") moved the validation of the external timestamp request
+flags into the PTP core. A driver that does not set
+.supported_extts_flags still accepts the legacy PTP_EXTTS_REQUEST ioctl,
+but every PTP_EXTTS_REQUEST2 request is rejected with -EOPNOTSUPP.
 
-  BUG: using smp_processor_id() in preemptible code in tx_complete
+On an LX2160A board, linuxptp ts2phc arms the external timestamp channel
+of the 1588 timer with PTP_EXTTS_REQUEST2, gets -EOPNOTSUPP and exits,
+so the PHC cannot be disciplined from an external 1PPS.
 
-Fix by using get_cpu_ptr()/put_cpu_ptr() which disable preemption and
-return the per-CPU pointer atomically. The usbnet_skb_return() hunk
-is a hardening change: that path runs in softirq context so no warning
-fires there, but the same fix is applied for consistency.
+ptp_qoriq_init() programs TMR_CTRL with ETEP1 and ETEP2 cleared, so the
+timer timestamps the rising edge of its external trigger inputs. Declare
+that, with PTP_STRICT_FLAGS, so that a falling edge request is rejected
+instead of being timestamped on the rising edge.
 
-Fixes: ed194d136769 ("usb: core: remove local_irq_save() around ->complete() handler")
-Suggested-by: David Laight <david.laight.linux@gmail.com>
-Reported-by: syzbot+04cd90bb99c6ef81a65d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=04cd90bb99c6ef81a65d
-Signed-off-by: Ömer Mete Kaya <omermetekaya0@gmail.com>
-Link: https://patch.msgid.link/20261004215937.302247-1-omermetekaya0@gmail.com
+This also makes the legacy PTP_EXTTS_REQUEST ioctl strict: a request for
+the falling edge, or for both edges, now fails with -EOPNOTSUPP instead
+of being timestamped on the rising edge. That cannot be avoided: the core
+adds PTP_STRICT_FLAGS to every PTP_EXTTS_REQUEST2 request, so a driver
+has to declare it to accept them, and once declared it applies to both
+ioctls. Commit 3200fdd4021d ("broadcom: fix support for
+PTP_EXTTS_REQUEST2 ioctl") made the same change for bcm-phy-ptp.
+
+Fixes: 7c571ac57d9d ("net: ptp: introduce .supported_extts_flags to ptp_clock_info")
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
+Signed-off-by: Vincent Jardin <vjardin@free.fr>
+Link: https://patch.msgid.link/20261009-for-upstream-qoriq-ptp-extts-flags-v2-1-0f4eeff2295d@free.fr
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/usbnet.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-ptp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index a19ecf718f36a..84f97f448b2da 100644
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -325,7 +325,7 @@ static void __usbnet_status_stop_force(struct usbnet *dev)
-  */
- void usbnet_skb_return(struct usbnet *dev, struct sk_buff *skb)
- {
--	struct pcpu_sw_netstats *stats64 = this_cpu_ptr(dev->net->tstats);
-+	struct pcpu_sw_netstats *stats64;
- 	unsigned long flags;
- 	int	status;
- 
-@@ -338,10 +338,12 @@ void usbnet_skb_return(struct usbnet *dev, struct sk_buff *skb)
- 	if (skb->protocol == 0)
- 		skb->protocol = eth_type_trans(skb, dev->net);
- 
-+	stats64 = get_cpu_ptr(dev->net->tstats);
- 	flags = u64_stats_update_begin_irqsave(&stats64->syncp);
- 	u64_stats_inc(&stats64->rx_packets);
- 	u64_stats_add(&stats64->rx_bytes, skb->len);
- 	u64_stats_update_end_irqrestore(&stats64->syncp, flags);
-+	put_cpu_ptr(dev->net->tstats);
- 
- 	netif_dbg(dev, rx_status, dev->net, "< rx, len %zu, type 0x%x\n",
- 		  skb->len + sizeof(struct ethhdr), skb->protocol);
-@@ -1298,13 +1300,15 @@ static void tx_complete(struct urb *urb)
- 	struct usbnet		*dev = entry->dev;
- 
- 	if (urb->status == 0) {
--		struct pcpu_sw_netstats *stats64 = this_cpu_ptr(dev->net->tstats);
-+		struct pcpu_sw_netstats *stats64;
- 		unsigned long flags;
- 
-+		stats64 = get_cpu_ptr(dev->net->tstats);
- 		flags = u64_stats_update_begin_irqsave(&stats64->syncp);
- 		u64_stats_add(&stats64->tx_packets, entry->packets);
- 		u64_stats_add(&stats64->tx_bytes, entry->length);
- 		u64_stats_update_end_irqrestore(&stats64->syncp, flags);
-+		put_cpu_ptr(dev->net->tstats);
- 	} else {
- 		dev->net->stats.tx_errors++;
- 
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-ptp.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-ptp.c
+index 4497e3c0456d1..ac2b873dcf8e6 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-ptp.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-ptp.c
+@@ -78,6 +78,7 @@ static const struct ptp_clock_info dpaa2_ptp_caps = {
+ 	.n_per_out	= 3,
+ 	.n_pins		= 0,
+ 	.pps		= 1,
++	.supported_extts_flags = PTP_RISING_EDGE | PTP_STRICT_FLAGS,
+ 	.adjfine	= ptp_qoriq_adjfine,
+ 	.adjtime	= ptp_qoriq_adjtime,
+ 	.gettime64	= ptp_qoriq_gettime,
 -- 
 2.53.0
 
