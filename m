@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019074;
-	b=zPd6FDYVgq9c5jk/BsWM28G1V2m/oQZn5V30hCu5plfCQfBhLdLz21U9jYmKD5+m4hpI
-	 k5Qa0fTqGgWxHR/6rpDNGa2AhTGcc1nr7Dx+e9He0N4Cs3j1L3yQj7gmvao50Rx39SQoH
-	 QY0ZqHM8BG7s1zmylBj2oMZfZRu4KGWCWYnGvOZ2cI4T8Vmy1tmanUCkREc/LEBuzNw6W
-	 qEWLlgX5uOSgkkN3Ey39j+37uq2bhKUI1YnwqztL7j5MNtrK/rhvV7dhUAAS2rCM0Yoze
-	 sdBY7Ydiwhhw6nrXsiDpL/6kEZG5qQWp0QhbfJqckL1rtb4GQlFZ0c0/6O7+/mM1w2g==
+	t=1795019077;
+	b=WSjS1M5SIpXviaqSBZZOCqxDPIv/AT/apsOecPTuIuAy6evlNJjzvVVi8Ee02cwRG6tr
+	 IBVzf+oGUkhmgRUwi7qHHay3JfzLGSysK15SyIL7J7Ogoe73GAfr/ChETd9r6WboSZyGh
+	 ORDNc7U7bmsprS6LxJnowaAHfR2PbfyktFS4oVzW06Wr1K1FGh6FxDI9A1bA7vTvI2cdC
+	 f0baBKXE+Qcv2tHcYcjKvr1xiLQCfdzO2WMKXTeb67XJVaHc/AsDCHA44D6ii8ZEl7/Xb
+	 /eCoZMSw0w9BVVzyfQF+Q0KCOLKVfSa/sQSctBTsarZjacR7MhliuI4+GYOcQHu6P9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019074;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019077;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fR4SxUAIZK+BXu2kZv7LfPU/vCvdhCHEXwOaBec6xtw=;
-	b=chFtA68gARzAxD/5y6sox+bXhBJGKXEa3/nO49369Qb+D7lQ9o0n6R66SXQCrH4LB2y/
-	 klEAq8Q3gHVFmXkT225kKXMOAtb5FzjMdAVS+a4iPq4qGZlO1tii/1s8riARHHqIBCtjy
-	 orYeoeGhAqbHnos8UOg4ExOBcZvtvZnvrjL7kHWgjdUFi8m1hxIOuZMmKZQ7itfZ/XJDV
-	 03FHWotDwQ8ikMttHnyuGZKe20G5yfjVNZk2bRn7fOxxvsqaXIfnSdMdEuA4PH32lgoCf
-	 KrHb0yrMlQIAqh8VlxEjJWKXhjj4ir9MsbnP8pIs9vaX+2grUi2MD3dAYdIS9hEKzwg==
+	bh=DdBrxbKqlbwYsBlesea63+4ELe5YP+Sr2hrfzd8s4uw=;
+	b=PYXclnz7kTFrxSlE8sawztWcrEqhuCk5Lf/GRAPReTj16Y9byXVNLkdMKj0aSO6Y87pf
+	 kv/hlqHIqgqT3115u4QZMxOWTVqPsxxJpLNvJyuvVByujStvEZuJJZyRPR6DUQOrtmxjJ
+	 mh/GjkxjbbfIU3kWM7PX+nuuHQSI+u4eHlfU9neCPx44Hcz93gtLoylxwE2lo5iAjaRdv
+	 cXrKA3JpnUCWzx3vKM5PXJV6OAnOcqnsahmyvTAmbnT+2RU0q02OcxnvVZ+WRZXpK7d02
+	 LHr4llnsP4xk92R9jz7hwQTVdYzVFcq5pd0VU1AI1NDTTcx20inA1AeU63Nk283gnRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHHgkP3Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xL+5azzR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384DF60A381B;
-	Wed, 18 Nov 2026 16:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F301760A2605;
+	Wed, 18 Nov 2026 16:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHHgkP3Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0541F000CB;
-	Wed, 18 Nov 2026 16:24:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xL+5azzR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CCBB1F000C4;
+	Wed, 18 Nov 2026 16:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019074;
-	bh=fR4SxUAIZK+BXu2kZv7LfPU/vCvdhCHEXwOaBec6xtw=;
+	s=korg; t=1795019076;
+	bh=DdBrxbKqlbwYsBlesea63+4ELe5YP+Sr2hrfzd8s4uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZHHgkP3YrX3uwyjOqZAURclq1OIaK15L8MkjL4hOPTfeCnLkcuEN3IieHTFpkZR9H
-	 pBqQnKJrlC030naTKxlBW6R0hmplVGRZQCcmb7lxILeII7tbSxapa/ynrf9ryku3O/
-	 dyr6ni5BfbiPehYuY+MuRJXuFtI9x0MykG9G2i5M=
+	b=xL+5azzRsidcHe0zk3mc8+l0X3RzE2HS/4N+0BByNd2arMsM37vdZ+fFDcYTiOb2s
+	 sCDKYrpy6HDU3I1XqM6hbGq8FhL1AdrGCZGollqLr8GyBu4EOPsaPsr2W/DOvHnYuJ
+	 4SWZ48TVWk3xRoRCctB16TwHx3G//iQQsn0Z8sRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1439/2651] wifi: mt76: mt7925: fix the lock inversion in suspend and resume
-Date: Wed, 18 Nov 2026 15:44:39 +0100
-Message-ID: <20261118150339.852337281@linuxfoundation.org>
+Subject: [PATCH 7.3 1466/2651] wifi: mt76: abort a scan only for a link change on the scanning radio
+Date: Wed, 18 Nov 2026 15:45:06 +0100
+Message-ID: <20261118150340.813433435@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,55 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit a105a9fe9a07a56d1e0b5a6978a49cde2ac7e7be ]
+[ Upstream commit c7a6b6a1dcc8fc0ac49ec0d7418b4603684e7d73 ]
 
-Same as the previous patch, other driver.
+mt76_assign_vif_chanctx() and mt76_unassign_vif_chanctx() abort the
+scan whenever the scanning vif gains or loses a link, on any radio. An
+AP MLD that scans on one radio for ACS while its link on another radio
+comes up therefore loses the whole scan, and hostapd gets an aborted
+scan. mac80211 does not continue an aborted scan with the next band.
 
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260830064201.92285-3-lucid_duck@justthetip.ca
+The scan uses the link of the vif that mt76_get_vif_phy_link() returns
+for the scanning radio, so it needs to stop only for a channel context
+on that radio: the new link would duplicate the offchannel link, or the
+removed link is the one the scan uses. Abort only in that case, as
+mt76_add_chanctx() does.
+
+Fixes: e411b8190fe7 ("wifi: mt76: add multi-radio support to scanning code")
+Link: https://patch.msgid.link/20261006205936.669125-1-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/main.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/net/wireless/mediatek/mt76/channel.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index 53845857bed33..4381e8c7559bd 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -1732,10 +1732,10 @@ static int mt7925_suspend(struct ieee80211_hw *hw,
- 	mt792x_mutex_acquire(dev);
+diff --git a/drivers/net/wireless/mediatek/mt76/channel.c b/drivers/net/wireless/mediatek/mt76/channel.c
+index 903f3a420e4ca..8d4daa76be541 100644
+--- a/drivers/net/wireless/mediatek/mt76/channel.c
++++ b/drivers/net/wireless/mediatek/mt76/channel.c
+@@ -114,7 +114,7 @@ int mt76_assign_vif_chanctx(struct ieee80211_hw *hw,
+ 	bool mlink_alloc = false;
+ 	int ret = 0;
  
- 	clear_bit(MT76_STATE_RUNNING, &phy->mt76->state);
--	ieee80211_iterate_active_interfaces(hw,
--					    IEEE80211_IFACE_ITER_RESUME_ALL,
--					    mt7925_mcu_set_suspend_iter,
--					    &dev->mphy);
-+	ieee80211_iterate_active_interfaces_mtx(hw,
-+						IEEE80211_IFACE_ITER_RESUME_ALL,
-+						mt7925_mcu_set_suspend_iter,
-+						&dev->mphy);
+-	if (dev->scan.vif == vif)
++	if (dev->scan.vif == vif && dev->scan.phy == phy)
+ 		mt76_abort_scan(dev);
  
- 	mt792x_mutex_release(dev);
+ 	mutex_lock(&dev->mutex);
+@@ -161,7 +161,7 @@ void mt76_unassign_vif_chanctx(struct ieee80211_hw *hw,
+ 	struct mt76_phy *phy = ctx->phy;
+ 	struct mt76_dev *dev = phy->dev;
  
-@@ -1750,10 +1750,10 @@ static int mt7925_resume(struct ieee80211_hw *hw)
- 	mt792x_mutex_acquire(dev);
+-	if (dev->scan.vif == vif)
++	if (dev->scan.vif == vif && dev->scan.phy == phy)
+ 		mt76_abort_scan(dev);
  
- 	set_bit(MT76_STATE_RUNNING, &phy->mt76->state);
--	ieee80211_iterate_active_interfaces(hw,
--					    IEEE80211_IFACE_ITER_RESUME_ALL,
--					    mt7925_mcu_set_suspend_iter,
--					    &dev->mphy);
-+	ieee80211_iterate_active_interfaces_mtx(hw,
-+						IEEE80211_IFACE_ITER_RESUME_ALL,
-+						mt7925_mcu_set_suspend_iter,
-+						&dev->mphy);
- 
- 	ieee80211_queue_delayed_work(hw, &phy->mt76->mac_work,
- 				     MT792x_WATCHDOG_TIME);
+ 	mutex_lock(&dev->mutex);
 -- 
 2.53.0
 
