@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032241;
-	b=tsMABKYO/tj4tqLZ2VIFhXJac52hpsrdHyFWEfNxQsUVtODJRrVpUGW+5gHWEHNbVnU5
-	 NPsgYiomp+kOYMIwU3Fc8UoMUou7IZJejiXfcoSmDk2HVlvUsaIiwx1WeJAPjzNQr941t
-	 4pUM1pFh7IMg4hqS+T26LwlNzg4DRNUsuw+SEkEC7zORbsauawV9vWFh+X6Dz4b6aMW8E
-	 j5G6I1tSDlFK2iPNKq4TeVVrfwJiBzmcSp/H7Z/BuxgnIWsZ/NMZnL2OHX64rYvv6K2wG
-	 zCV/iSOjx7DC3pb7rIfgXKyiHr5grfueWbhgNJf716Jq9rdZDgIdtUunhOL3sdspPRw==
+	t=1795032244;
+	b=UqNzJYxbsHd2wKp+aryJ5lVssc2h7HhnC+cw9UAp2ti/ErDZvA5Lqiaqo+YhH5iCGw2N
+	 ANtiIeeaE+FwCFbUPyyUoqzLFbKcq2kOqjjIUesSYhj6Sol3t5rZukHloGoQZsE1rJB70
+	 8+egStlmvv4VSPyyYhQrf+iTXwJFsNQdLiuW90+BNsJSvZ/9G5anN3Vlt6AG3wTm0XAIv
+	 eBcio/H8wWKrWIGk6Q9bAnQcVXQPvMCfWe07Omk0AhLgPQtOeIzYnYhBSa3Kov/Id8m4k
+	 Mo3mlXezzOOP0UxuKMiA17Jg5PAxOvjNm49nogCHFHBaRr65K2GZeJwB4CFksb4zpMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032241;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032244;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=18xlYOrhudUEq4B5dgFAn/FT1pM6VzFW6ccwivmUo0c=;
-	b=X5He5GMzUAv8ceUOrl0MhD0akDWFnTT/1WI6F4HQji1wPAgoXkOmWMyPT8pInH6G3j3o
-	 IW6Nl+oMk1P/KsnG1sorlq+5VHMJ8WWkt4A9tgarpYwNcbrYQXOfH84Z+tHEthd62wBwS
-	 fT1d9ZdHVJwp1thEkD1fat6DwZXhI4TKbpGk142gN/qEOv9L++DwNXUlvGRRwyhvbHQxW
-	 4YLXKQffyHxDFMFonXMZB2R+EcgHjRQunYHYHG/UAD0dqktDno5dttlVcp2jgB7FXIXuK
-	 VKCL06ZinJ6uN68uLkaYOoukMQm0WgIX3k6KY1nviDq+8iVkkW60Ut7HXJ8LMRZj26g==
+	bh=qyw46vb3aZzITNdOg6+h2jmQJ9uQT1Dv3BAgPMLAloI=;
+	b=YLfQ+edt1fX+8WxdrzES/s3yJC0Ar5yf0U6MKdrZAVfrJhh3vOc4OL7OhoMw+AjgxBn6
+	 61Fb+QUrztYMaIgb70HzmKgHigaD+jiqoZFSwMWhiTZcPzj3Qgkf3ds1hTKZVUhCxuInV
+	 fYm8HNbeoE2ndyuUY2VAlLArIKsxo9gLgt/jBUnrAq4Wdlmav/1TIAEqqqrgFZpToIOK6
+	 +hNDpb6OM+EU/uK7jQUoaPhPHOSUH6Rux/y/NKFIY9aOc9VWx9NfPxAmsLs8OtOYwqI+9
+	 9+5EzxjD2FVo8fUyG88nL7lCm5HbDwXkhlOJYOUUvR5RmlIMr2a7s5EoqdaReeIgRZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kQ1BTqp9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZA/a5SYF";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C589606A320;
-	Wed, 18 Nov 2026 20:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA92C606A320;
+	Wed, 18 Nov 2026 20:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kQ1BTqp9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DBD1F000C5;
-	Wed, 18 Nov 2026 20:04:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZA/a5SYF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471B21F000C4;
+	Wed, 18 Nov 2026 20:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032241;
-	bh=18xlYOrhudUEq4B5dgFAn/FT1pM6VzFW6ccwivmUo0c=;
+	s=korg; t=1795032243;
+	bh=qyw46vb3aZzITNdOg6+h2jmQJ9uQT1Dv3BAgPMLAloI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kQ1BTqp9YbsvbdAI7w9u02K8QKksM4y5KsHgHwsSqSwfbcMqAsqGtMveVs+Qgpq4D
-	 giRVfzWbPymL2D7vT388r0rfL7yN3ICDh03inzGrKPYGGrVlDyaUWTm3DXotv/J4qP
-	 X7u/WnycJ2Aqx9w33b5xESA550D9v3I6ZmTdKraM=
+	b=ZA/a5SYF1GhBalaK0ZIuhCoFInMrHipyWuOFLwKBWTILLOmMjjAFfpJJpHfRsk6Du
+	 DLMXxSK2YgwoM54ZlBS1WwIKfm07CgmsubhqkBAI5JOH8T9wts5oKf+uImI8zitQ+f
+	 xARlSpLN6nTUcsN1D35ST4vrRmNya5RpY0Rd8hCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	George Melikov <mail@gmelikov.ru>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1343/1756] btrfs: remove leftover EXTENT_UPTODATE clear from an inodes io_tree
-Date: Wed, 18 Nov 2026 15:57:50 +0100
-Message-ID: <20261118150102.802098126@linuxfoundation.org>
+Subject: [PATCH 6.12 1326/1756] bnx2x: fix header length calculation for encapsulated TSO
+Date: Wed, 18 Nov 2026 15:57:33 +0100
+Message-ID: <20261118150102.201605769@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,165 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: George Melikov <mail@gmelikov.ru>
 
-[ Upstream commit d2c41835fd284b73d61239ff5d637167f2563895 ]
+[ Upstream commit 4fc1d5bb448dfab391a96f949d02ad03ad8cda5c ]
 
-After commit 52b029f42751 ("btrfs: remove unnecessary EXTENT_UPTODATE
-state in buffered I/O path") we never set EXTENT_UPTODATE in an inode's
-io_tree anymore, but we still have some code attempting to clear that
-bit from an inode's io_tree. Remove that code as it doesn't do anything
-anymore. The sole use of the EXTENT_UPTODATE bit is for the excluded
-extents io_tree (fs_info->excluded_extents), which is used to track the
-locations of super blocks, so that their ranges are never marked as free,
-making them unavailable for extent allocation.
+Commit 80bfab79b835 ("net: adopt skb_network_offset() and similar helpers")
+replaced the difference between the inner transport header and the outer
+network header with skb_inner_transport_offset().
+The helper is relative to skb->data, so the new calculation incorrectly
+includes the outer Ethernet header in fw_ip_hdr_to_payload_w.
 
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: bca2cf55a733 ("btrfs: drop the extent maps of the written part of a failed ordered extent")
+On a BCM57810 transmitting TCP over VXLAN with an outer MTU of 1500,
+hardware segmentation emits packets declaring an outer IPv4 total length
+of 1514 while the actual IP packet is only 1500 bytes long. The receiver
+drops these malformed packets, severely degrading TCP connectivity.
+
+Subtract skb_network_offset() to restore the original calculation of the
+length from the outer network header to the inner TCP payload.
+
+Reproduced with plain kernel VXLAN and one TCP flow on kernel
+7.0.0-31-generic: 50 of 200 captured packets had an invalid outer IP length
+with the original driver, versus none with this fix. Disabling TSO/GSO on
+the test VXLAN device also eliminated the error with the original driver.
+
+Fixes: 80bfab79b835 ("net: adopt skb_network_offset() and similar helpers")
+Signed-off-by: George Melikov <mail@gmelikov.ru>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261009-bnx2x-tso-fix-v1-1-1ebea422422d@gmelikov.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent-io-tree.h    |  7 -------
- fs/btrfs/inode.c             | 22 ++++++++++------------
- fs/btrfs/relocation.c        |  3 ---
- fs/btrfs/tests/inode-tests.c | 12 ++++--------
- 4 files changed, 14 insertions(+), 30 deletions(-)
+ drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/extent-io-tree.h b/fs/btrfs/extent-io-tree.h
-index 3553bcf822e9f..e17243c637171 100644
---- a/fs/btrfs/extent-io-tree.h
-+++ b/fs/btrfs/extent-io-tree.h
-@@ -196,13 +196,6 @@ int set_record_extent_bits(struct extent_io_tree *tree, u64 start, u64 end,
- int set_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
- 		   u32 bits, struct extent_state **cached_state);
+diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
+index fbb34d16ff025..3ed96ecb6e025 100644
+--- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
++++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
+@@ -3666,7 +3666,8 @@ static void bnx2x_update_pbds_gso_enc(struct sk_buff *skb,
+ 	u8 outerip_off, outerip_len = 0;
  
--static inline int clear_extent_uptodate(struct extent_io_tree *tree, u64 start,
--		u64 end, struct extent_state **cached_state)
--{
--	return __clear_extent_bit(tree, start, end, EXTENT_UPTODATE,
--				  cached_state, NULL);
--}
--
- static inline int clear_extent_dirty(struct extent_io_tree *tree, u64 start,
- 				     u64 end, struct extent_state **cached)
- {
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index e4d0f87344fab..ff7dd3f16f4fc 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -3177,8 +3177,6 @@ int btrfs_finish_one_ordered(struct btrfs_ordered_extent *ordered_extent)
- 		btrfs_end_transaction(trans);
+ 	/* from outer IP to transport */
+-	hlen_w = skb_inner_transport_offset(skb) >> 1;
++	hlen_w = (skb_inner_transport_offset(skb) -
++		  skb_network_offset(skb)) >> 1;
  
- 	if (ret || truncated) {
--		u64 unwritten_start = start;
--
- 		/*
- 		 * If we failed to finish this ordered extent for any reason we
- 		 * need to make sure BTRFS_ORDERED_IOERR is set on the ordered
-@@ -3190,10 +3188,6 @@ int btrfs_finish_one_ordered(struct btrfs_ordered_extent *ordered_extent)
- 		if (ret)
- 			btrfs_mark_ordered_extent_error(ordered_extent);
- 
--		if (truncated)
--			unwritten_start += logical_len;
--		clear_extent_uptodate(io_tree, unwritten_start, end, NULL);
--
- 		/*
- 		 * Drop extent maps for the part of the extent we didn't write.
- 		 *
-@@ -3208,9 +3202,15 @@ int btrfs_finish_one_ordered(struct btrfs_ordered_extent *ordered_extent)
- 		 * we don't mess with the extent map tree in the NOCOW case, but
- 		 * for now simply skip this if we are the free space inode.
- 		 */
--		if (!btrfs_is_free_space_inode(inode))
-+		if (!btrfs_is_free_space_inode(inode)) {
-+			u64 unwritten_start = start;
-+
-+			if (truncated)
-+				unwritten_start += logical_len;
-+
- 			btrfs_drop_extent_map_range(inode, unwritten_start,
- 						    end, false);
-+		}
- 
- 		/*
- 		 * If the ordered extent had an IOERR or something else went
-@@ -7419,12 +7419,10 @@ static void btrfs_invalidate_folio(struct folio *folio, size_t offset,
- 		 *    Since the IO will never happen for this page.
- 		 */
- 		btrfs_qgroup_free_data(inode, NULL, cur, range_end + 1 - cur, NULL);
--		if (!inode_evicting) {
-+		if (!inode_evicting)
- 			clear_extent_bit(tree, cur, range_end, EXTENT_LOCKED |
--				 EXTENT_DELALLOC | EXTENT_UPTODATE |
--				 EXTENT_DO_ACCOUNTING | EXTENT_DEFRAG |
--				 extra_flags, &cached_state);
--		}
-+					 EXTENT_DELALLOC | EXTENT_DO_ACCOUNTING |
-+					 EXTENT_DEFRAG | extra_flags, &cached_state);
- 		cur = range_end + 1;
- 	}
- 	/*
-diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
-index 7d0d3279231e2..bdca67a2befc1 100644
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -2828,9 +2828,6 @@ static noinline_for_stack int prealloc_file_extent_cluster(struct reloc_control
- 		if (ret < 0)
- 			return ret;
- 
--		clear_extent_bits(&inode->io_tree, i_size,
--				  round_up(i_size, PAGE_SIZE) - 1,
--				  EXTENT_UPTODATE);
- 		folio = filemap_lock_folio(mapping, i_size >> PAGE_SHIFT);
- 		/*
- 		 * If page is freed we don't need to do anything then, as we
-diff --git a/fs/btrfs/tests/inode-tests.c b/fs/btrfs/tests/inode-tests.c
-index c21536161c436..cdc1c85d59074 100644
---- a/fs/btrfs/tests/inode-tests.c
-+++ b/fs/btrfs/tests/inode-tests.c
-@@ -953,8 +953,7 @@ static int test_extent_accounting(u32 sectorsize, u32 nodesize)
- 	ret = clear_extent_bit(&BTRFS_I(inode)->io_tree,
- 			       BTRFS_MAX_EXTENT_SIZE >> 1,
- 			       (BTRFS_MAX_EXTENT_SIZE >> 1) + sectorsize - 1,
--			       EXTENT_DELALLOC | EXTENT_DELALLOC_NEW |
--			       EXTENT_UPTODATE, NULL);
-+			       EXTENT_DELALLOC | EXTENT_DELALLOC_NEW, NULL);
- 	if (ret) {
- 		test_err("clear_extent_bit returned %d", ret);
- 		goto out;
-@@ -1021,8 +1020,7 @@ static int test_extent_accounting(u32 sectorsize, u32 nodesize)
- 	ret = clear_extent_bit(&BTRFS_I(inode)->io_tree,
- 			       BTRFS_MAX_EXTENT_SIZE + sectorsize,
- 			       BTRFS_MAX_EXTENT_SIZE + 2 * sectorsize - 1,
--			       EXTENT_DELALLOC | EXTENT_DELALLOC_NEW |
--			       EXTENT_UPTODATE, NULL);
-+			       EXTENT_DELALLOC | EXTENT_DELALLOC_NEW, NULL);
- 	if (ret) {
- 		test_err("clear_extent_bit returned %d", ret);
- 		goto out;
-@@ -1054,8 +1052,7 @@ static int test_extent_accounting(u32 sectorsize, u32 nodesize)
- 
- 	/* Empty */
- 	ret = clear_extent_bit(&BTRFS_I(inode)->io_tree, 0, (u64)-1,
--			       EXTENT_DELALLOC | EXTENT_DELALLOC_NEW |
--			       EXTENT_UPTODATE, NULL);
-+			       EXTENT_DELALLOC | EXTENT_DELALLOC_NEW, NULL);
- 	if (ret) {
- 		test_err("clear_extent_bit returned %d", ret);
- 		goto out;
-@@ -1070,8 +1067,7 @@ static int test_extent_accounting(u32 sectorsize, u32 nodesize)
- out:
- 	if (ret)
- 		clear_extent_bit(&BTRFS_I(inode)->io_tree, 0, (u64)-1,
--				 EXTENT_DELALLOC | EXTENT_DELALLOC_NEW |
--				 EXTENT_UPTODATE, NULL);
-+				 EXTENT_DELALLOC | EXTENT_DELALLOC_NEW, NULL);
- 	iput(inode);
- 	btrfs_free_dummy_root(root);
- 	btrfs_free_dummy_fs_info(fs_info);
+ 	/* transport len */
+ 	hlen_w += inner_tcp_hdrlen(skb) >> 1;
 -- 
 2.53.0
 
