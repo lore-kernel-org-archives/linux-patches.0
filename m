@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023930;
-	b=jm3RJi5j5y/jKgzDBkJ6rWhvrzlnsx5gEKi9eNNJJCCjIvmIszQgwknkC0NgengDPrN8
-	 Rsf7nc6BjQilZ7czSnNxj8Eo5H8C7znck//TvhqrVLBXmbz9Fgu7SO3VOWbA5wpIOc/8o
-	 xUBowwqE11z75SLVdjXct5iw4bUg+pczuvvAJhMYn0oCxE6lICrjLb8up+T86Iviv8e37
-	 rAXNWflGDnBxQJckDyXvFNtKQYJMD+MjciS/SRJ5cm2b11R1DKf7bjPWjvlS9O71B3VPv
-	 3rlgNwBQQemFjcf2BPhUT4vvp7tI8BkJ2lwNqvr1lG9AhuXc5vBhkI15fM0xrVt8W6g==
+	t=1795023932;
+	b=iR7ea5uvgceqUi+LTpprFc9YurNO8/vswvqqkwo7LheRxMA5NWuOum/nII1BGVhmdoSH
+	 zIXOKk1QjZ/UIaOkG9dHdqDZKhPdzke1a96duGOMX5bsBnP1or4w9piVFdDTJYVlu2nj7
+	 r0vbz9Rp07hC9o37aF3s+9aTIoIR0YUBO3y9e/lD7/uTND7MQmTzaF1rgSy65/e0fZskb
+	 rc86JFQkvqGndiMbq9eC8kHDxDtn8Oe9W//ZVG6+ystOVT9lyXVLwEYhdf3OgsPbdVHO7
+	 HyJx+W9S2j/rbNyu/SaGdx4LArU017QN5Vq/7xp8E0UI/4eHADLCRdC2Ry+4XoTeRKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023930;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023932;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N0Vz/956DtT2WoqZAE0uHMqjfAJ6KezF58O8qfMrLQ0=;
-	b=F3nhpZn1A4WYDgIWWVYwGhcdYc4G7FyH9id0FlY2H0OHtEQZ4ap9fPrG223f5/n0qiAw
-	 448tGX6YeFA3OBWmNoPr8tj0Y0k2j4blOc7nG2hdMbHLACSBCxXd9OywcXv3SWH9VJidB
-	 VwYjHj3eFBFQdOAcRJUsicjIPeY/lXKASYiwUv3/IZTAe76Ai4/vtr2dzE5TV7J9xEctR
-	 Y20Alhzga+SuOzXncmIBnkSjhZlUj3nqwuM9pnpxhgnHZrlK74KXKhcA+cUtyWafXzbvj
-	 3awoQ+4b5W40vi5W2TgInQoxS/Vk2659NFIgvLkPiYKLUogUEfg6v9ncqeYqt5ySflQ==
+	bh=iXZPZdhPaK8nu2M2io7Ng/o5QLRDNtTULX//vYwN5JQ=;
+	b=CrR+uoC3rOajAP7vI8Z4lm9pUlHHIYWitmQTUwzCmoN457BzG37Lpd1nkxuf5Kw94bFu
+	 VZLEVNN5ZWHoM3YcdC/iPu3EfHPHFExdeScCVQcJjEbvK4r1kSk+Sn1ZbIHinYc3VIMXb
+	 S3rJsciy1Yk6rey0Rj06javFmZ/OB7mipTRwTlKrIP7U9QK+fCWA06yT/FGu30ar0czkP
+	 2mzPcGOCNiS/8jmUjvbtzMefd3tfI2xg+BVnJHL5IOOf0z8OBt6xArdtldlQMabS2TGC8
+	 jIp9XJnXsvRHJ/Rfml23VxAXCkUgCcff4rDmOAdgs5M0A/lP6ksVG7JO+DK/oLe9w3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y38jm+Ql;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zZz2z7NE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3045606A325;
-	Wed, 18 Nov 2026 17:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F6F606A31C;
+	Wed, 18 Nov 2026 17:45:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y38jm+Ql
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D9E1F000C4;
-	Wed, 18 Nov 2026 17:45:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zZz2z7NE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231E41F000C4;
+	Wed, 18 Nov 2026 17:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023929;
-	bh=N0Vz/956DtT2WoqZAE0uHMqjfAJ6KezF58O8qfMrLQ0=;
+	s=korg; t=1795023932;
+	bh=iXZPZdhPaK8nu2M2io7Ng/o5QLRDNtTULX//vYwN5JQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y38jm+Ql8mjCHHmBJHjtVXg0pSDztW3Gg6DFQVLY8Z9n5mbw60UXm+vfdQZGQmKip
-	 38RvaYME+zQMp8IuqdU6xFHHsbQGLfHlQvhldDCQszs9SfIL7NmUj1nG5Th4/ZagjC
-	 4zHy6LTyzC3D/MDZxKH9OOD6pPRnNq7g0yrUGAFI=
+	b=zZz2z7NE5rcE5D6brrp7V12XJd9y2yMrd0SkJwlAoMadfH1SZCEW7VOKXWnchQkIO
+	 23IChOngOdcXYbsTlyOdzsvwfHrmKMOuyMqu/ynbJYFgJVqEpyJiJKOAYkZGv+mFvh
+	 UOiCCB9uQM25MbfEXz1HKRS7hNQliNdvDyIvbq5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Terry Bowman <terry.bowman@amd.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Karl Asseily <karl@asseily.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0517/2151] cxl/port: Move dport RAS setup to dport add time
-Date: Wed, 18 Nov 2026 15:37:32 +0100
-Message-ID: <20261118150140.877539287@linuxfoundation.org>
+Subject: [PATCH 6.18 0544/2151] dt-bindings: vendor-prefixes: add ESS Technology
+Date: Wed, 18 Nov 2026 15:37:59 +0100
+Message-ID: <20261118150141.794080760@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,256 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Karl Asseily <karl@asseily.com>
 
-[ Upstream commit 7f5ff740ce0bcde242dafcc3f9bb3cbe6b5b8f3a ]
+[ Upstream commit beb56d1d3de522885b30bb97fee83825041d65c2 ]
 
-Towards the end goal of making all CXL RAS capability handling uniform
-across host bridge ports, upstream switch ports, and endpoint ports, move
-dport RAS setup. Move it to cxl_switch_port_probe() context for switch / VH
-dports (via cxl_port_add_dport()) and cxl_endpoint_port_probe() context for
-an RCH dport. Rename the RAS setup helper to devm_cxl_dport_ras_setup() for
-symmetry with devm_cxl_switch_port_decoders_setup().
+Add the vendor prefix for ESS Technology, Inc., maker of the SABRE family
+of audio DACs. The prefix follows the company's domain, esstech.com.
 
-Only the RCH version needs to be exported and the cxl_test mocking can be
-deleted with a dev_is_pci() check on the dport_dev.
-
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Tested-by: Terry Bowman <terry.bowman@amd.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://patch.msgid.link/20260131000403.2135324-7-dan.j.williams@intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Stable-dep-of: 0de71a1ab211 ("cxl/core: Fix dport use-after-free via the einj_inject debugfs file")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Karl Asseily <karl@asseily.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260918182317.143223-2-karl@asseily.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/core.h       | 10 ++++++++++
- drivers/cxl/core/port.c       | 12 +++---------
- drivers/cxl/core/ras.c        | 30 ++++++++++++++++++------------
- drivers/cxl/cxlpci.h          |  7 ++++---
- drivers/cxl/mem.c             |  2 --
- drivers/cxl/port.c            | 12 ++++++++++++
- tools/testing/cxl/Kbuild      |  1 -
- tools/testing/cxl/test/mock.c | 12 ------------
- 8 files changed, 47 insertions(+), 39 deletions(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/cxl/core/core.h b/drivers/cxl/core/core.h
-index c38cd0fdb04c7..6058edfd9c12e 100644
---- a/drivers/cxl/core/core.h
-+++ b/drivers/cxl/core/core.h
-@@ -144,6 +144,14 @@ int cxl_pci_get_bandwidth(struct pci_dev *pdev, struct access_coordinate *c);
- int cxl_port_get_switch_dport_bandwidth(struct cxl_port *port,
- 					struct access_coordinate *c);
- 
-+static inline struct device *dport_to_host(struct cxl_dport *dport)
-+{
-+	struct cxl_port *port = dport->port;
-+
-+	if (is_cxl_root(port))
-+		return port->uport_dev;
-+	return &port->dev;
-+}
- #ifdef CONFIG_CXL_RAS
- int cxl_ras_init(void);
- void cxl_ras_exit(void);
-@@ -152,6 +160,7 @@ void cxl_handle_cor_ras(struct cxl_dev_state *cxlds, void __iomem *ras_base);
- void cxl_dport_map_rch_aer(struct cxl_dport *dport);
- void cxl_disable_rch_root_ints(struct cxl_dport *dport);
- void cxl_handle_rdport_errors(struct cxl_dev_state *cxlds);
-+void devm_cxl_dport_ras_setup(struct cxl_dport *dport);
- #else
- static inline int cxl_ras_init(void)
- {
-@@ -170,6 +179,7 @@ static inline void cxl_handle_cor_ras(struct cxl_dev_state *cxlds, void __iomem
- static inline void cxl_dport_map_rch_aer(struct cxl_dport *dport) { }
- static inline void cxl_disable_rch_root_ints(struct cxl_dport *dport) { }
- static inline void cxl_handle_rdport_errors(struct cxl_dev_state *cxlds) { }
-+static inline void devm_cxl_dport_ras_setup(struct cxl_dport *dport) { }
- #endif /* CONFIG_CXL_RAS */
- 
- int cxl_gpf_port_setup(struct cxl_dport *dport);
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 1d34ade204a18..c049b0e5eca7c 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -1164,15 +1164,6 @@ static void cxl_dport_unlink(void *data)
- 	sysfs_remove_link(&port->dev.kobj, link_name);
- }
- 
--static struct device *dport_to_host(struct cxl_dport *dport)
--{
--	struct cxl_port *port = dport->port;
--
--	if (is_cxl_root(port))
--		return port->uport_dev;
--	return &port->dev;
--}
--
- static void free_dport(void *dport)
- {
- 	kfree(dport);
-@@ -1306,6 +1297,9 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
- 
- 	cxl_debugfs_create_dport_dir(dport);
- 
-+	if (!dport->rch)
-+		devm_cxl_dport_ras_setup(dport);
-+
- 	/* keep the group, and mark the end of devm actions */
- 	cxl_dport_close_dr_group(dport, no_free_ptr(dport_dr_group));
- 
-diff --git a/drivers/cxl/core/ras.c b/drivers/cxl/core/ras.c
-index 34fd019da1cdc..eb663c9eaa5f8 100644
---- a/drivers/cxl/core/ras.c
-+++ b/drivers/cxl/core/ras.c
-@@ -152,26 +152,32 @@ static void cxl_dport_map_ras(struct cxl_dport *dport)
- }
- 
- /**
-- * cxl_dport_init_ras_reporting - Setup CXL RAS report on this dport
-+ * devm_cxl_dport_ras_setup - Setup CXL RAS report on this dport
-  * @dport: the cxl_dport that needs to be initialized
-- * @host: host device for devm operations
-  */
--void cxl_dport_init_ras_reporting(struct cxl_dport *dport, struct device *host)
-+void devm_cxl_dport_ras_setup(struct cxl_dport *dport)
- {
--	dport->reg_map.host = host;
-+	dport->reg_map.host = dport_to_host(dport);
- 	cxl_dport_map_ras(dport);
-+}
- 
--	if (dport->rch) {
--		struct pci_host_bridge *host_bridge = to_pci_host_bridge(dport->dport_dev);
-+void devm_cxl_dport_rch_ras_setup(struct cxl_dport *dport)
-+{
-+	struct pci_host_bridge *host_bridge;
- 
--		if (!host_bridge->native_aer)
--			return;
-+	if (!dev_is_pci(dport->dport_dev))
-+		return;
- 
--		cxl_dport_map_rch_aer(dport);
--		cxl_disable_rch_root_ints(dport);
--	}
-+	devm_cxl_dport_ras_setup(dport);
-+
-+	host_bridge = to_pci_host_bridge(dport->dport_dev);
-+	if (!host_bridge->native_aer)
-+		return;
-+
-+	cxl_dport_map_rch_aer(dport);
-+	cxl_disable_rch_root_ints(dport);
- }
--EXPORT_SYMBOL_NS_GPL(cxl_dport_init_ras_reporting, "CXL");
-+EXPORT_SYMBOL_NS_GPL(devm_cxl_dport_rch_ras_setup, "CXL");
- 
- void cxl_handle_cor_ras(struct cxl_dev_state *cxlds, void __iomem *ras_base)
- {
-diff --git a/drivers/cxl/cxlpci.h b/drivers/cxl/cxlpci.h
-index 970e84cf49e9a..bec6018e01ccd 100644
---- a/drivers/cxl/cxlpci.h
-+++ b/drivers/cxl/cxlpci.h
-@@ -135,7 +135,7 @@ void read_cdat_data(struct cxl_port *port);
- void cxl_cor_error_detected(struct pci_dev *pdev);
- pci_ers_result_t cxl_error_detected(struct pci_dev *pdev,
- 				    pci_channel_state_t state);
--void cxl_dport_init_ras_reporting(struct cxl_dport *dport, struct device *host);
-+void devm_cxl_dport_rch_ras_setup(struct cxl_dport *dport);
- #else
- static inline void cxl_cor_error_detected(struct pci_dev *pdev) { }
- 
-@@ -145,8 +145,9 @@ static inline pci_ers_result_t cxl_error_detected(struct pci_dev *pdev,
- 	return PCI_ERS_RESULT_NONE;
- }
- 
--static inline void cxl_dport_init_ras_reporting(struct cxl_dport *dport,
--						struct device *host) { }
-+static inline void devm_cxl_dport_rch_ras_setup(struct cxl_dport *dport)
-+{
-+}
- #endif
- 
- #endif /* __CXL_PCI_H__ */
-diff --git a/drivers/cxl/mem.c b/drivers/cxl/mem.c
-index 6e6777b7bafb5..4bf59573a1b5e 100644
---- a/drivers/cxl/mem.c
-+++ b/drivers/cxl/mem.c
-@@ -166,8 +166,6 @@ static int cxl_mem_probe(struct device *dev)
- 	else
- 		endpoint_parent = &parent_port->dev;
- 
--	cxl_dport_init_ras_reporting(dport, dev);
--
- 	scoped_guard(device, endpoint_parent) {
- 		if (!endpoint_parent->driver) {
- 			dev_err(dev, "CXL port topology %s not enabled\n",
-diff --git a/drivers/cxl/port.c b/drivers/cxl/port.c
-index 913c469e067a1..929f7e259f0d3 100644
---- a/drivers/cxl/port.c
-+++ b/drivers/cxl/port.c
-@@ -71,6 +71,7 @@ static int cxl_switch_port_probe(struct cxl_port *port)
- static int cxl_endpoint_port_probe(struct cxl_port *port)
- {
- 	struct cxl_memdev *cxlmd = to_cxl_memdev(port->uport_dev);
-+	struct cxl_dport *dport = port->parent_dport;
- 	int rc;
- 
- 	/* Cache the data early to ensure is_visible() works */
-@@ -86,6 +87,17 @@ static int cxl_endpoint_port_probe(struct cxl_port *port)
- 	if (rc)
- 		return rc;
- 
-+	/*
-+	 * With VH (CXL Virtual Host) topology the cxl_port::add_dport() method
-+	 * handles RAS setup for downstream ports. With RCH (CXL Restricted CXL
-+	 * Host) topologies the downstream port is enumerated early by platform
-+	 * firmware, but the RCRB (root complex register block) is not mapped
-+	 * until after the cxl_pci driver attaches to the RCIeP (root complex
-+	 * integrated endpoint).
-+	 */
-+	if (dport->rch)
-+		devm_cxl_dport_rch_ras_setup(dport);
-+
- 	/*
- 	 * Now that all endpoint decoders are successfully enumerated, try to
- 	 * assemble regions from committed decoders
-diff --git a/tools/testing/cxl/Kbuild b/tools/testing/cxl/Kbuild
-index af261431aef5b..0fb36cbaa14e1 100644
---- a/tools/testing/cxl/Kbuild
-+++ b/tools/testing/cxl/Kbuild
-@@ -9,7 +9,6 @@ ldflags-y += --wrap=cxl_await_media_ready
- ldflags-y += --wrap=devm_cxl_add_rch_dport
- ldflags-y += --wrap=cxl_rcd_component_reg_phys
- ldflags-y += --wrap=cxl_endpoint_parse_cdat
--ldflags-y += --wrap=cxl_dport_init_ras_reporting
- ldflags-y += --wrap=devm_cxl_endpoint_decoders_setup
- ldflags-y += --wrap=hmat_get_extended_linear_cache_size
- ldflags-y += --wrap=devm_cxl_add_dport_by_dev
-diff --git a/tools/testing/cxl/test/mock.c b/tools/testing/cxl/test/mock.c
-index 4762d8c40a8b8..93bb7bece9374 100644
---- a/tools/testing/cxl/test/mock.c
-+++ b/tools/testing/cxl/test/mock.c
-@@ -266,18 +266,6 @@ void __wrap_cxl_endpoint_parse_cdat(struct cxl_port *port)
- }
- EXPORT_SYMBOL_NS_GPL(__wrap_cxl_endpoint_parse_cdat, "CXL");
- 
--void __wrap_cxl_dport_init_ras_reporting(struct cxl_dport *dport, struct device *host)
--{
--	int index;
--	struct cxl_mock_ops *ops = get_cxl_mock_ops(&index);
--
--	if (!ops || !ops->is_mock_port(dport->dport_dev))
--		cxl_dport_init_ras_reporting(dport, host);
--
--	put_cxl_mock_ops(index);
--}
--EXPORT_SYMBOL_NS_GPL(__wrap_cxl_dport_init_ras_reporting, "CXL");
--
- struct cxl_dport *__wrap_devm_cxl_add_dport_by_dev(struct cxl_port *port,
- 						   struct device *dport_dev)
- {
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index a9cf85fd6fbec..6de8d02320b52 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -527,6 +527,8 @@ patternProperties:
+     description: Seiko Epson Corp.
+   "^esp,.*":
+     description: Espressif Systems Co. Ltd.
++  "^esstech,.*":
++    description: ESS Technology, Inc.
+   "^est,.*":
+     description: ESTeem Wireless Modems
+   "^eswin,.*":
 -- 
 2.53.0
 
