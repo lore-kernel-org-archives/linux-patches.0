@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048409;
-	b=vVM6Ib2N/bVlgEQ3mrfYM3fqI502+dsJnAkPDQ6jmIQ2YWy6GlwbaLGhC+zw5ehTzDEG
-	 YOYB+qRpbBOMSrjn3Rgh03/HWXkQGRcmYjLxLUaCjviDrNvTsbg9O4gSxf3z95pui1trQ
-	 4wc0Bstx34MvdFEOmeuZFhn/M1+oV8AZxalrskubk+j3lfT51IrwvRqizZpwP2RtrPoge
-	 XT7mSMIwWg6b9Wa3R2shsUDQixp4LiRSxEaGWC+CVodvhtyPEX9AIHbLio3Hav6SR50qB
-	 paUuvff56guMKKP1PSQuADz1EYs64/L7uteQs3TLB8bVzksestjsfFW6FayiOu4OLdQ==
+	t=1795048412;
+	b=JXFoHn492ybP7T/mtVHTqPi3MdKBmRtnBGY0rpbd/n526yCAhaI/0GDuiX56NXYlnxoy
+	 NeFCn//PbAWN93uN2gvTTID1bAgf+O+30FA0Yg3xJI4GBf2v5BvH3AsKpVBJx98Asp9vl
+	 YevO9gQ0ESk68yBs/+SR1KnijkN8UTTiBgXvJeCQduLSXLnIwHMXrBkbxfDIiKEAtV4Ck
+	 uSzCcOtuuKAj0UQ1ytXf/JwcaLkdD2YdSnsxL/9aV1zSwl8ASXJbOhwV7etefhQKzMFcF
+	 ASwp9w8D48pmHAQHGzgYE1n9nc/DgCid6Md01e0rx1GjWIYafU0je5XT1nuBLrDMqyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048409;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048412;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vFsHH+wTLRhCEkEPDFT5t1V96UJFla2OD4K6t8L8z2g=;
-	b=MY4vr3H/85qPSgzLOetp+ChmRdTi1gv3vD9rOyR69Jr5WXAu88NiKwj4NJsaqiZecRQG
-	 aAZOSTI2ybb04J0olYFrap6Puh0daNYU40DGPU1y3qXQPi2eJo6ARSRpacoXGEbxFRgsy
-	 IOkx2AcMSkknJPdOVM9zFwBD0SCRynWldIFIFDF4xyJmg2VpJwRt7dutK3SmUv07CVQMv
-	 hVSM4zf2BBVhcqxvfiOG9gMCHA7gRcy9DN5Jx4ikBAyadQLF3/2KDKCZXdwQNLsEBMx12
-	 JYUkMFfhGCBeVp+DHDC95eIs0yaVCxcpcDiJdo6Xy+jJnGXnhDKAFipkYvHubvy9GDQ==
+	bh=zslgzRWj4ZJr4qOKnHLS+2PyOyWrD+VWuhWeb28rufU=;
+	b=fcupuhJtSgKHB6084NHtt0na9f0GgPZnucyaMDAX4GNdHBRIrHVmLQij9+KI5X3G/Qnc
+	 2nsMGxRAOnGIOYpyxRY6XDxbiXtZfmhmW1iE8PNAxEfEC6cDntSrjY70YqpOpubBpjfJR
+	 TZDayySuyl8ME5DsY3NyHiZaSc+bfwrnz0CbNoppfwOp2TJKp/GObmec4AhstdtSjT4TU
+	 IO1L7NF1oK2jzw+nF98Lev9eEINSDVKdQ2Kx7tgb+yi38Q4TeHcYSjnheK98uA/iRSrqm
+	 WkGRk3pfjj0xUN+eJfvyFKZRBxtJEUbZhN/TkHPzsiG8J1LZHFYMG2Lcfnt+nC6VdUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OTfiPWGA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uzvPWKJY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FD9606A33F;
-	Thu, 19 Nov 2026 00:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1606606A325;
+	Thu, 19 Nov 2026 00:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OTfiPWGA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5061F000C4;
-	Thu, 19 Nov 2026 00:33:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uzvPWKJY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD3F1F000C4;
+	Thu, 19 Nov 2026 00:33:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048409;
-	bh=vFsHH+wTLRhCEkEPDFT5t1V96UJFla2OD4K6t8L8z2g=;
+	s=korg; t=1795048411;
+	bh=zslgzRWj4ZJr4qOKnHLS+2PyOyWrD+VWuhWeb28rufU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OTfiPWGA/T3GgOlp518keY9nbFy2V2niEFOI8emkrwGbxzgisLaJYwSq9VTOokqUI
-	 zoctiCIKxm2UXHEOjsoEaB3IcgVtI+Qq4UFWWDZmX+dpRH5qmHfUs/ScYiqHwjtVmQ
-	 m8ZXkU7/XLa9Kdchjufg8O7qRjBa8qwvO+d5xmL8=
+	b=uzvPWKJYLnPn7SpJQNK6+r2pD66OP/RH6Z0DR9Q0R+zgDxbp1EcMbjz1NfJmXLlkU
+	 MIAmjTusMIdPhfmCvsR+gdA5oT7zfGo0xiwiCE3QrzOnROVNBUX8jJHFvTQIGvCf4P
+	 O6F7blZlLYpV62pfX4NfG/HIDsrwOfrc+ZfWktyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1947/2857] ntfs3: fix out-of-bounds read in ntfs_read_mft()
-Date: Wed, 18 Nov 2026 15:49:41 +0100
-Message-ID: <20261118150311.415376190@linuxfoundation.org>
+Subject: [PATCH 6.1 1983/2857] pmdomain: imx: Propagate SCU provider registration failures
+Date: Wed, 18 Nov 2026 15:50:17 +0100
+Message-ID: <20261118150312.781071886@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,68 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit 7a374d9be8267834dc534e55f01e5e01765cab4c ]
+[ Upstream commit d3efba7921f3ebebd91fc481910a428c78414fd8 ]
 
-ntfs_read_mft() walks the attributes of an MFT record and, for each
-FILE_NAME attribute, compares the resident on-disk name with the name
-being looked up.  The only size check before the compare is
-rsize >= SIZEOF_ATTRIBUTE_FILENAME, which covers the fixed header up to
-and including name_len, but not the variable-length name that follows it.
+imx_scu_init_pm_domains() ignores of_genpd_add_provider_onecell() and
+returns success even when none of the initialized domains are published to
+DT consumers.
 
-name_len comes straight from disk and is not validated against the
-resident data_size.  A crafted image can set name_len large while keeping
-data_size at the header size, so ntfs_cmp_names_cpu() reads name_len
-le16 characters past the end of the MFT record buffer:
+Return the provider error and remove the initialized domains in reverse
+order before devm releases their backing storage on probe failure.
 
-  BUG: KASAN: slab-out-of-bounds in ntfs_cmp_names_cpu (fs/ntfs3/upcase.c:84)
-  Read of size 2 at addr ffff888031879c00 by task a.out
-   ntfs_cmp_names_cpu (fs/ntfs3/upcase.c:84)
-   ntfs_iget5 (fs/ntfs3/inode.c:209)
-   dir_search_u (fs/ntfs3/dir.c:265)
-   ntfs_lookup (fs/ntfs3/namei.c:85)
-   __lookup_slow (fs/namei.c:1915)
-   lookup_slow (fs/namei.c:1932)
-   path_lookupat (fs/namei.c:2278)
-   vfs_statx (fs/stat.c)
-   vfs_fstatat (fs/stat.c)
-   __do_sys_newfstatat (fs/stat.c)
+The issue was found by our static-analysis tool and manually reviewed.
 
-  Allocated by task:
-   mi_init (fs/ntfs3/record.c)
-   ntfs_iget5 (fs/ntfs3/inode.c)
-   dir_search_u (fs/ntfs3/dir.c)
-   ntfs_lookup (fs/ntfs3/namei.c)
-
-Check that the name fits in the resident data before using it.
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: c800cd7824bd ("firmware: imx: add SCU power domain driver")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/inode.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/firmware/imx/scu-pd.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index cb8e6d10c81d3..26861fb47469f 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -198,6 +198,11 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+diff --git a/drivers/firmware/imx/scu-pd.c b/drivers/firmware/imx/scu-pd.c
+index f1977861cd429..919f47d817c82 100644
+--- a/drivers/firmware/imx/scu-pd.c
++++ b/drivers/firmware/imx/scu-pd.c
+@@ -352,7 +352,7 @@ static int imx_scu_init_pm_domains(struct device *dev,
+ 	struct genpd_onecell_data *pd_data;
+ 	struct imx_sc_pm_domain *sc_pd;
+ 	u32 count = 0;
+-	int i, j;
++	int i, j, ret;
  
- 		names += 1;
- 		fname = Add2Ptr(attr, roff);
-+
-+		/* Make sure the full name fits in the resident data. */
-+		if (rsize < fname_full_size(fname))
-+			goto out;
-+
- 		if (fname->type == FILE_NAME_DOS)
- 			goto next_attr;
+ 	for (i = 0; i < pd_soc->num_ranges; i++)
+ 		count += pd_ranges[i].num;
+@@ -381,7 +381,13 @@ static int imx_scu_init_pm_domains(struct device *dev,
+ 	pd_data->num_domains = count;
+ 	pd_data->xlate = imx_scu_pd_xlate;
  
+-	of_genpd_add_provider_onecell(dev->of_node, pd_data);
++	ret = of_genpd_add_provider_onecell(dev->of_node, pd_data);
++	if (ret) {
++		while (count)
++			pm_genpd_remove(domains[--count]);
++
++		return ret;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
