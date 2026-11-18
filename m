@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041453;
-	b=fLmc0gz0Qq2L2xwaMru9h/La/f2lPg27lkuEsgc5EuDm+0rimOW5oRfSBoNg5s7z6OUC
-	 HqEQIzTkbBW1FXmLU723WzmWRTL0J4gysBiSdswKbkRiyvX9V9nTI6RhM9lNgO5AQvzzE
-	 kQgkMrr3Kh9OR4qbR9LHLP+QYIvJAmxmkYbzpzRhDV7WID9DKNQ9D8d8rqYBEcLbSY875
-	 VEZ2NYRH0HgkQ4gKHVHP99UjTqCI9/OGUjm7JSmy/5O91lNkD9AkWMNdP7uGF5sHNf4w+
-	 ccl5GwV6WXnpZpS2q+OqB8pcKYfmc/xw+gKYUrUKsjWldIIWpinTj3Xrr3ibHl6Xvdg==
+	t=1795041455;
+	b=l/ELbHaSbuTIGGMxekFX7qVQj24o8pcFP6ZVzdYZPUGFza+WxTC+xUXlJ3uKll8+7mhx
+	 eaz8ubaH5d6nOhdwMlTGNqml7VJcT63Nn9X6NPwBHfvWeimpU/kBmI1TRGIttp3g/vDvJ
+	 8GUJOE1yoc7I7uuZlK67Vi/jojCYuknSBWlCRRqx07jPx4RBP+LdFu+7NBz1RcMtrqVKy
+	 lHoYOzxr8PGm0SSXRHmTbUJdRE/Ffb0dUXn1OByzmAaNR8GTIoWZgY+TdzQc6xcqcoGpM
+	 JJJfFocZxvipIBDB2duavadd5ds68mANQTOqrl0sSJtYuzXCpC+J7PZ03gx43Bda7RQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041453;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041455;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qZ40UVHIPP/pUoCkAl+6M/l20taiUSuKTT0ec2XmfmI=;
-	b=p7TBYxIFjI0l5+ZYBOICah/Eb4AH13EKttnHExbVDXPvn7Oel7/14+u+OI1/QJB00ENb
-	 IQYKVwP1CNo4sh1fqgJwhbPEqCpiFRxkpyE7DBdB0VAz5EB2Q5d66bbyTmUMcFc+v9XdZ
-	 pYOoV1M2RNmxLLo3E8ygyx2lxJudQPE0TWa4yeHEJXRlPvq62Sq1lxaBVNYs24wFjt72j
-	 XQ5w2gIFqO7oiakUSTQaEqCLXIyufPMlpYVEjZGz2EQN1/3emzDNmmzNagd435Gzij7bx
-	 oxfZCLGDuh7UxRmvVEe93B1Vfzp9mONUZj0rLIJ+Hu9OwCtEUUMU7RqjCGcFwkYAQYw==
+	bh=esR0x9dCLjywOL+v1TmBfWCXJWOJlFYHbjiIMI/Y5Ng=;
+	b=BHSpzxVG55ZW5QtbZYJUrvBIS+0x7EnoeMzPMyRFzxDN1aF9CCAj64/BhLkL4hijZKm/
+	 aAhYo/vsTMAAu5DpnY64tQHsFna3umYU7zxkOTvuiLb/QeY0HcaUIr3ZnoLTEKx3fPvVr
+	 Ry2pQ2TM335TeR9FxxpAxq1nlSCSKKoI3HsOnHDHsXw298xnoOyA5dk6FLX2Q5SGFygKi
+	 fXNCp/asTucl8OweQ/TGE5vd5mQmP0/lnpYqUeh4E5CTnoB50Jc5isbUiwUq5+iPAbXWJ
+	 czNDiwSqeeKBQnRywXsCoH0wsLwsSbBOppqMKeT+Bs5+VTljPyuWj+pIdFoth12R/nA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b3Hfxzf+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kw17wt1g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8E4606A9B8;
-	Wed, 18 Nov 2026 22:37:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD480606A32C;
+	Wed, 18 Nov 2026 22:37:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b3Hfxzf+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB4A1F000CC;
-	Wed, 18 Nov 2026 22:37:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kw17wt1g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F88D1F000C4;
+	Wed, 18 Nov 2026 22:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041452;
-	bh=qZ40UVHIPP/pUoCkAl+6M/l20taiUSuKTT0ec2XmfmI=;
+	s=korg; t=1795041455;
+	bh=esR0x9dCLjywOL+v1TmBfWCXJWOJlFYHbjiIMI/Y5Ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b3Hfxzf+HIIEfBAQXi9yXSZpYwfvWYvqeryfXXJCrwDn7BHvqTwv7DE6f2zN4C1Ch
-	 I0RKELmafGOsjjtFL3svXz66h/1HM6fG0o13T4sPS1Sq2YzdZ1TLy/Uj6ArMrW/8Pj
-	 xJu9MLA2yt6dtfjLW4m5QHrRp2FnoMh1EliycZ+E=
+	b=Kw17wt1g3cXtxz740MxwUs1doQwKMbtQS0npycknKw4rCj+0a5wvFRnhqX7oznFXR
+	 k/cWHQoQoFcAuqPMjMzYEximWqRpXue2+mJX5zKDvEj9jmymeZQ1//b4HZym1EbXJO
+	 ObFTkEYu4UI5ntOzbymShwWDu9WQnTavL6rT5V/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2820/3318] ASoC: amd: ps: Fix acp63_sdw_dma_close() being skipped on rollback
-Date: Wed, 18 Nov 2026 15:57:22 +0100
-Message-ID: <20261118150445.247370175@linuxfoundation.org>
+Subject: [PATCH 6.6 2803/3318] clk: qcom: mmcc-msm8996: Fix FD AHB clock register offset
+Date: Wed, 18 Nov 2026 15:57:05 +0100
+Message-ID: <20261118150444.761971567@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,38 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit 45dd2b22ea8934ed69dd05e6ecbf3c66ac3baebf ]
+[ Upstream commit 7cb2d65286b817d8d7e26f454a9c374d65e87072 ]
 
-snd_pcm_hw_constraint_integer() may return 1, which is then returned
-from acp63_sdw_dma_open(). ASoC only marks the component as opened
-when .open() returns 0, so .close() can be skipped on rollback.
+The FD AHB clock branch register is at offset 0x3b74, not 0x3ba74.
+The incorrect offset exceeds the regmap maximum of 0xb008, so regmap
+rejects accesses to it and the clock cannot be enabled.
 
-Return 0 explicitly on success.
+Correct both the enable and halt register offsets so the driver can
+enable the branch and check its status.
 
-Fixes: f722917350ee ("ASoC: amd: ps: add SoundWire dma driver dma ops")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261008103831.542533-4-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assisted-by: LLM
+Fixes: c252659770db ("clk: qcom: Add MSM8996 Multimedia Clock Controller (MMCC) driver")
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260916-clk-qcom-mmcc-msm8996-fix-fd-ahb-offset-v1-1-a575e1b9112c@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/ps/ps-sdw-dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/mmcc-msm8996.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/amd/ps/ps-sdw-dma.c b/sound/soc/amd/ps/ps-sdw-dma.c
-index 6230d1b122251..a98402986b14a 100644
---- a/sound/soc/amd/ps/ps-sdw-dma.c
-+++ b/sound/soc/amd/ps/ps-sdw-dma.c
-@@ -243,7 +243,7 @@ static int acp63_sdw_dma_open(struct snd_soc_component *component,
- 	stream->stream_id = cpu_dai->id;
- 	stream->instance = amd_manager->instance;
- 	runtime->private_data = stream;
--	return ret;
-+	return 0;
- }
+diff --git a/drivers/clk/qcom/mmcc-msm8996.c b/drivers/clk/qcom/mmcc-msm8996.c
+index d3f2dc798567d..dd578ae557b2a 100644
+--- a/drivers/clk/qcom/mmcc-msm8996.c
++++ b/drivers/clk/qcom/mmcc-msm8996.c
+@@ -3136,9 +3136,9 @@ static struct clk_branch fd_core_uar_clk = {
+ };
  
- static int acp63_sdw_dma_hw_params(struct snd_soc_component *component,
+ static struct clk_branch fd_ahb_clk = {
+-	.halt_reg = 0x3ba74,
++	.halt_reg = 0x3b74,
+ 	.clkr = {
+-		.enable_reg = 0x3ba74,
++		.enable_reg = 0x3b74,
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "fd_ahb_clk",
 -- 
 2.53.0
 
