@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046195;
-	b=kYMCC/R3S0dGsglQ5PIrVAp9pMP+pkT2u5eSoJD1X4sduWLEluCYDfF0EDlcM1CBPNda
-	 dx+o3EEmL1vp02Dm6lwWoVWUFT6unVq+rkWOEu4dqNb71JUNqmBKkKXJ7aJvW+845MQhP
-	 WHnQnyZ4PDulNTERVy0S5zu5a761oeP4qLAi7rtLr1CMkuluP8ljjwIryLz02cv89OQ1n
-	 92S+CpRJqDAulYdX50awpxtcIlzPXcp9gb9XDF24Zi4/vxEx1u6qZC6olwA/Jjtx0GgOQ
-	 0welnhigD3lcCWaGQitSEDEdSrS56s894BSJqr/11fZLMCzJuV2X6tozX7MkP1Wr18Q==
+	t=1795046198;
+	b=EJeJzCt8l55aqWYXtkwKWkZb3MUyqzooF5EKT8sS/ktlLjncueFVe4EKCiDAr/t8RvdW
+	 rZyaTxnTXKeaNF4hTVSuUbT2PpEyQi144f1cOPMum9k6cNGcQl3IgLm2XxpCDn6l3PhVX
+	 rIzJSW8rs+iB8VYeK2Buuvh93Z/n12qv+OAVhzGDmBSGId7EHACq4iUfpt9V8KTyptzz2
+	 +c/aG/gFLor+rOWr/m0Ir94fZ1Q/NZfAPutZTa3dsrEXQqtYSXJg00hFDzOvNfoKJn/Lf
+	 sG/nh6ihgNlAo0nqixBzFwv+XL/yOttFSKyvSVvOcYFS1fM9Lbm/fPYzLclIQsyi8gA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046195;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046198;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hjhbuScHuOcOgkVtQWa/XaQI+YRj1S4vh9Ws7YKQZgA=;
-	b=AwASRt7K/THLvY+p/IJ7WCAHnMO6OpFijvXjaBHMILzNTaHx9N6BiiVLgDTQVxOIvdr/
-	 T3Mfs5NmYgTTclICm7KFmXW/CkbXYu8YIYS+kArWgJ/IQ/rPERji/UAheqmiH8fdd6uWd
-	 GCGv8cPeTLmRetqz6+vNT5a9if0Hcl9mYAb2B2R0CKbMCg5bVwEyHn96yxP1bbfMutO8T
-	 KJ4/N20Apt771HG9bi/vNYDzS94h8xKt9qeHzlacMvFW9DoUESgTZrjoiRqoAS300IPHB
-	 759VtSnubRiPXvnz7Wk2jRjH160oecH5gXdvM6sDy2bhmvIbf1gt3IoZNOuFXUm54Hg==
+	bh=rhXDIMPNfWLgkvnkb9udqFBiw5KYkp9Sav6JogsGBDY=;
+	b=4VfRDoGls3qxcuntpir584LHfys7Y8dxeKAOhfmXsOWkdm5/ChffcQETPG57nJvUa+lk
+	 5AnfgAlUHw+uwbPBMuw+0lmPu4WWFm5dsweLflismWy7KTKiKd8WK3zel4sh+JYClyaRB
+	 OLKCvOjreleaJLjmo2Z09js5+6ESnonXyo8WHLAu13oSndMbQP9N8h0RHmTZMzRX7dZPk
+	 SuDdDwbyCGbO3V7R2puKgcoGut472AqkBV2trFDhaqfsE7kRLTqhG62SGQvl/OFdCe7g8
+	 CC3K24S6T2GjYyVBsplSPFRd+L5ObH3e2yPYMXb1LDp8O+ERQGFsfZ6eBiH0KfJsOeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Qz7m/qGm";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wWhi3jXd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B43606A320;
-	Wed, 18 Nov 2026 23:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42494606A31C;
+	Wed, 18 Nov 2026 23:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qz7m/qGm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A006C1F000C4;
-	Wed, 18 Nov 2026 23:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wWhi3jXd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E6F41F000C4;
+	Wed, 18 Nov 2026 23:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046195;
-	bh=hjhbuScHuOcOgkVtQWa/XaQI+YRj1S4vh9Ws7YKQZgA=;
+	s=korg; t=1795046197;
+	bh=rhXDIMPNfWLgkvnkb9udqFBiw5KYkp9Sav6JogsGBDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qz7m/qGm5bHj1tvyK1RO/IdVvI5zLx9z0EW5kqoxolQcoVWqjNEa+PBCK2mvQXsbK
-	 5UGyZXmW3ngmW1F2NPxSHyoh64E9ZQSCEThqyDVXqQle/v3BobWifrebLy6AlFi4Y4
-	 vavwpqHjH7nQPYIPmkCG29bTIu/JUGnCsR6EsZ6s=
+	b=wWhi3jXda+JY1kqSp30iEr5KeJh/g8a37zmECrY3QwNX9Sx+ZQAE7BrNwnzIAHCbH
+	 1rKEqGLjGgUw7e0f9nVKa8/r2nSyZ5GWnrj14c5LdIqiJwaOtFyLnf2szE7nwACZYD
+	 WcjJzUTfksS9rKoMdo8kUnnLsJzycRrn8kMGlhUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Zhao Zhang <zzhan461@ucr.edu>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Qihang <q.h.hack.winter@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1193/2857] 9p: fix caches_show() out-of-bounds write
-Date: Wed, 18 Nov 2026 15:37:07 +0100
-Message-ID: <20261118150244.566324855@linuxfoundation.org>
+Subject: [PATCH 6.1 1194/2857] xfrm: interface: validate the IP header on xmit
+Date: Wed, 18 Nov 2026 15:37:08 +0100
+Message-ID: <20261118150244.605379162@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -72,78 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Zhang <zzhan461@ucr.edu>
+From: Qihang <q.h.hack.winter@gmail.com>
 
-[ Upstream commit 2acd800de8827b7cdce8cb5c2c63b8e8608ec8e3 ]
+[ Upstream commit 86de3a1118a16dbbbe5fabe9aa20ffb93c072ed5 ]
 
-The sysfs show handler for /sys/fs/9p/caches appends cache tags with
-snprintf(buf + count, limit, ...) and then advances count and limit by
-the return value. This is incorrect for truncation because snprintf()
-returns the full would-have-been length, not the number of bytes stored.
+Packets injected into an xfrm interface (e.g. AF_PACKET on an xfrmi
+device) reach the xfrm output path without IP header validation, but
+xfrm4_transport_output() uses iph->ihl for __skb_pull() and memmove()
+and expects the header to be valid.
 
-Once the accumulated output exceeds PAGE_SIZE, count can advance past
-the sysfs buffer and limit can become negative. A later iteration then
-passes an out-of-bounds destination pointer and an oversized size_t
-into snprintf(), leading to an out-of-bounds write.
+vti_tunnel_xmit() already calls pskb_inet_may_pull() before handing
+packets to the xfrm output path.  Do the same in xfrmi_xmit() and
+perform the header checks ip_rcv_core()/ip6_rcv_core() do on entry
+to the IP stack: reject wrong IP versions and malformed IPv4 header
+lengths.
 
-Use sysfs_emit_at() for the append instead. It follows the sysfs buffer
-contract and returns the number of bytes actually stored, so the offset
-remains bounded even when the output is truncated.
-
-Fixes: 86db0c32f16c ("9p: fix /sys/fs/9p/caches overwriting itself")
+Fixes: f203b76d7809 ("xfrm: Add virtual xfrm interfaces")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Zhao Zhang <zzhan461@ucr.edu>
-Co-authored-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Message-ID: <abfb65f4800634dafb08238bba20cb48797e796f.1781908090.git.zzhan461@ucr.edu>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Assisted-by: LLM
+Signed-off-by: Qihang <q.h.hack.winter@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/v9fs.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ net/xfrm/xfrm_interface_core.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
-index 2a6988db807b3..c90470d1f8890 100644
---- a/fs/9p/v9fs.c
-+++ b/fs/9p/v9fs.c
-@@ -17,6 +17,7 @@
- #include <linux/idr.h>
- #include <linux/slab.h>
- #include <linux/seq_file.h>
-+#include <linux/sysfs.h>
- #include <net/9p/9p.h>
- #include <net/9p/client.h>
- #include <net/9p/transport.h>
-@@ -555,21 +556,14 @@ static ssize_t caches_show(struct kobject *kobj,
- 			   struct kobj_attribute *attr,
- 			   char *buf)
- {
--	ssize_t n = 0, count = 0, limit = PAGE_SIZE;
-+	ssize_t count = 0;
- 	struct v9fs_session_info *v9ses;
+diff --git a/net/xfrm/xfrm_interface_core.c b/net/xfrm/xfrm_interface_core.c
+index 63d0e6e1c0c9f..7128e674da93c 100644
+--- a/net/xfrm/xfrm_interface_core.c
++++ b/net/xfrm/xfrm_interface_core.c
+@@ -524,8 +524,13 @@ static netdev_tx_t xfrmi_xmit(struct sk_buff *skb, struct net_device *dev)
  
- 	spin_lock(&v9fs_sessionlist_lock);
- 	list_for_each_entry(v9ses, &v9fs_sessionlist, slist) {
--		if (v9ses->cachetag) {
--			n = snprintf(buf + count, limit, "%s\n", v9ses->cachetag);
--			if (n < 0) {
--				count = n;
--				break;
--			}
--
--			count += n;
--			limit -= n;
--		}
-+		if (v9ses->cachetag)
-+			count += sysfs_emit_at(buf, count, "%s\n",
-+					       v9ses->cachetag);
- 	}
+ 	memset(&fl, 0, sizeof(fl));
  
- 	spin_unlock(&v9fs_sessionlist_lock);
++	if (!pskb_inet_may_pull(skb))
++		goto tx_err;
++
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_IPV6):
++		if (ipv6_hdr(skb)->version != 6)
++			goto tx_err;
+ 		memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
+ 		xfrm_decode_session(skb, &fl, AF_INET6);
+ 		if (!dst) {
+@@ -541,6 +546,9 @@ static netdev_tx_t xfrmi_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		}
+ 		break;
+ 	case htons(ETH_P_IP):
++		if (ip_hdr(skb)->version != 4 || ip_hdr(skb)->ihl < 5 ||
++		    !pskb_network_may_pull(skb, ip_hdr(skb)->ihl * 4))
++			goto tx_err;
+ 		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
+ 		xfrm_decode_session(skb, &fl, AF_INET);
+ 		if (!dst) {
 -- 
 2.53.0
 
