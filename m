@@ -1,54 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059483;
-	b=znXKKNY0fnZA+cDxoLqAF1w9uSWzRfL1PHVqaNn/64S6dI0AGCtq51peHqrEI0ZIub6N
-	 4YONoowPO9jVq2IBB1ZAtGz/it3wbt8H/3oWKlBv/xyA/YCAY5QlMoGOXiOfYVmwzFRgy
-	 0IPI6tuPqSysH4lm0Mn0nNxhXiXMvvT3SfxEEnngNpUPrB4UF/yll28MSjtMqHrMS+Uq4
-	 cJlJa+opEb0ruOyiiE0kaCvb6emJemWrYddGNj1wVAlDC87SPOb8tD7n7KHRTIjW3UIf2
-	 ZPXn+vRiYnz4p03iocmhIBdEYhjN/CxYpoipWVUio3IyRjJAVFBI4kqfEvMtEv+RPcg==
+	t=1795059486;
+	b=v09d7rz6cfg8MuC7euU5ht7geIc6u/bDpRN2hr9glNZqqqt81ZW/9nbuLeNx/8uGLeB+
+	 dM1YTF9QFlIwI3I3CHQC049HtGUUxcxkUkO7bG/tW1VDjk48DCcyHH0gpotWPOI6tdbVF
+	 K2BpMkwgV9SX+yqDBwiRyrWqci2U4xUslmWOYHSg+VFS+Qws1bvawDvr5n3H0Zj4KETgx
+	 UeTNEXKxpY4hM3S0i7U7PjxWHvM31Cq8sNMOkY1n3c2ttftyioJ0QQ9ArpyLi6coJSjw4
+	 /FT15p99sLBSn6azW2/mPT21Vpz3APeXOXAsyu4ZutkbpC1W5R1dhBKkuH3MdhlSAKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059483;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059486;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BVsK1q10pibHlM09YH1arDG6ZbgV9V+XQTaqtuGfbTc=;
-	b=E9PN0pRaOozDWUKKr3L1pVU9j2Cr1ZSO9xpvCok8ok2XCiWhtiSERNfb6ArrOmBiqntY
-	 fFRMV8CVJFYCsxpmd1zK8rsCe7ras4ocK2aaF8/YZUJZ5kfz3YFfT+kVcRXDp5eHygn1z
-	 EPKh/f29FzEsB739IWzKMHSp56ODFsBoBsHQrerPlC/ezbLMLpZOmXRFdihK2wIPec8MG
-	 ZPQ6kF4ABcPcu+1uPLwK22GyS7/Q3Ih8lNUBsmqCJqJzR6mgj+GVuC37bvlFL+qRGSfUa
-	 1S/L9X3P2OAbXUQ14D3J8GhyK8u933DPc3K8wLSYI2KIzn/HnQ0U+kRtxH9slA0QDfw==
+	bh=sCnyBrmLiu3oczyFJMvdkYgTYgzQc3VBGW8kv+qSEQs=;
+	b=hufj01u1bvC3xeGO3MUFaIcdNrUNzVxZAIE1ArF8Zpj79yUuRGfMQCauXOGvJTzMXTCG
+	 E8pjCUhhi8YB9WwZjya0nB9c32mxQ16pxVuEEhDn1/JzzLt3WmPxPPeA3VZqo3hX9NvXH
+	 +Y/XmX+xV/bJQ4TiVAg3DvYFb2JtF+eqL8LBgjITOfAVWMuT13GBM7h6L7CVn/x4ZwNiO
+	 H0oHFebqfaHOkbn+E+nvz2XZ864LutfG9K0L4iN1jz2FQ5b0/wVv5IWlKi6UxCP/5t8Id
+	 5EDwh30EGR7iZWXHo1FZ8XEQP851BwA3N3RxsXmrJDpy482tZNo1pavwq2LphPJCcUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=obJIXotS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="alY9qw/R";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1F0606A326;
-	Thu, 19 Nov 2026 03:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA5B606A32A;
+	Thu, 19 Nov 2026 03:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=obJIXotS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF5F11F000C4;
-	Thu, 19 Nov 2026 03:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=alY9qw/R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 938C81F000C4;
+	Thu, 19 Nov 2026 03:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059483;
-	bh=BVsK1q10pibHlM09YH1arDG6ZbgV9V+XQTaqtuGfbTc=;
+	s=korg; t=1795059486;
+	bh=sCnyBrmLiu3oczyFJMvdkYgTYgzQc3VBGW8kv+qSEQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=obJIXotSamw7REoWe2qHBVkQMkniVVRW6JIODu8qzV+vM2N/Dns4fNTXQi/aGopiH
-	 gIpx0D+oVkjYardL+MVtUBAe8/R6o4XEug7ipr8uJmsZzTVVO6Qqv2Ib7EGMbIATbk
-	 JqJ4Fsk2LowoLu9QRVKeVFJ0rWT+DfGoFGSYjd6c=
+	b=alY9qw/R8GydYa3GtxDBYw0zX/93EEXtnd4PYgF0OTjN/VP33cajnFLx4FeAuRLSE
+	 EcDn1iUGKd01Fndm/NYI17CJ5LcDis1nXD6m/F/XtINX7On+9FOTMkQLGu4eycXT9s
+	 RzAp2SUn4PnxyXVnYiEOOs3tXmqurAMoi2c36/jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Yu <byu@xidian.edu.cn>,
-	Cheng Wen <wencheng@xidian.edu.cn>,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Byungchul Park <byungchul@sk.com>,
+	Gregory Price <gourry@gourry.net>,
+	Ying Huang <ying.huang@linux.alibaba.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	odys.yuan@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0859/1848] ALSA: hwdep: Serialize DSP load requests
-Date: Wed, 18 Nov 2026 15:48:17 +0100
-Message-ID: <20261118145952.475154776@linuxfoundation.org>
+Subject: [PATCH 5.10 0860/1848] mm/migrate: untag addresses when querying page nodes
+Date: Wed, 18 Nov 2026 15:48:18 +0100
+Message-ID: <20261118145952.508667403@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,93 +81,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit aee83c204f80d56b4d55f53acdb8594308ddcd4a ]
+[ Upstream commit 7d8746d7dc9cc4003661011424e5880ea7ae364b ]
 
-The check of the loaded DSP indices and the call of the driver's
-dsp_load callback in snd_hwdep_dsp_load() are not serialized.  A hwdep
-file descriptor can be shared among threads, or inherited across fork,
-so two SNDRV_HWDEP_IOCTL_DSP_LOAD requests for the same index can both
-observe the index as unloaded and enter the driver's callback
-concurrently, even though the device itself is opened exclusively.
+When move_pages() is used with nodes == NULL, do_pages_stat_array()
+uses each page address as-is for its VMA lookup. A valid tagged address
+therefore gets -EFAULT in its status entry instead of the NUMA node
+reported for the corresponding untagged address.
 
-This breaks the assumption behind hw->dsp_loaded that a firmware index
-is loaded only once.  For example, snd-usb-usx2y hits
-WARN_ON(usx2y->as04.buffer) in usx2y_async_seq04_init() and may
-allocate the US-428 sequence URBs twice.
+Strip the tag before the VMA lookup while holding the mmap read lock.
+Use untagged_addr(), the helper available in 5.10 and already used by
+the migration path.
 
-Serialize the check, the callback invocation and the bookkeeping with a
-per-hwdep mutex, so that the second request returns -EBUSY.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Co-developed-by: Bin Yu <byu@xidian.edu.cn>
-Signed-off-by: Bin Yu <byu@xidian.edu.cn>
-Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20261029084810.21910-2-25031212351@stu.xidian.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-
-5.10 and 5.15 still build with -std=gnu89, so guard() cannot be used
-after the early returns of this function.  Take the mutex explicitly
-and release it on every exit path instead.
-
+Link: https://lore.kernel.org/20261026195330.46757-1-dennylin0707@gmail.com
+Fixes: 057d3389108e ("mm: untag user pointers passed to memory syscalls")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/r/20260721183257.706661F000E9@smtp.kernel.org
+Acked-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: Gregory Price <gourry@gourry.net>
+Cc: Ying Huang <ying.huang@linux.alibaba.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: <odys.yuan@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/hwdep.h |  1 +
- sound/core/hwdep.c    | 14 ++++++++++----
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ mm/migrate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/sound/hwdep.h b/include/sound/hwdep.h
-index 8d6cdb254039d..137be4b4074b2 100644
---- a/include/sound/hwdep.h
-+++ b/include/sound/hwdep.h
-@@ -57,6 +57,7 @@ struct snd_hwdep {
+diff --git a/mm/migrate.c b/mm/migrate.c
+index bf59b09455ad6..bf112dac2e73c 100644
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -1813,7 +1813,7 @@ static void do_pages_stat_array(struct mm_struct *mm, unsigned long nr_pages,
+ 	mmap_read_lock(mm);
  
- 	struct mutex open_mutex;
- 	int used;			/* reference counter */
-+	struct mutex dsp_mutex;		/* serializes DSP load requests */
- 	unsigned int dsp_loaded;	/* bit fields of loaded dsp indices */
- 	unsigned int exclusive:1;	/* exclusive access mode */
- };
-diff --git a/sound/core/hwdep.c b/sound/core/hwdep.c
-index 0c029892880a8..2862cbe757051 100644
---- a/sound/core/hwdep.c
-+++ b/sound/core/hwdep.c
-@@ -211,14 +211,19 @@ static int snd_hwdep_dsp_load(struct snd_hwdep *hw,
- 		return -ENXIO;
- 	if (info->index >= 32)
- 		return -EINVAL;
-+	mutex_lock(&hw->dsp_mutex);
- 	/* check whether the dsp was already loaded */
--	if (hw->dsp_loaded & (1u << info->index))
--		return -EBUSY;
-+	if (hw->dsp_loaded & (1u << info->index)) {
-+		err = -EBUSY;
-+		goto unlock;
-+	}
- 	err = hw->ops.dsp_load(hw, info);
- 	if (err < 0)
--		return err;
-+		goto unlock;
- 	hw->dsp_loaded |= (1u << info->index);
--	return 0;
-+unlock:
-+	mutex_unlock(&hw->dsp_mutex);
-+	return err;
- }
- 
- static int snd_hwdep_dsp_load_user(struct snd_hwdep *hw,
-@@ -376,6 +381,7 @@ int snd_hwdep_new(struct snd_card *card, char *id, int device,
- 
- 	init_waitqueue_head(&hwdep->open_wait);
- 	mutex_init(&hwdep->open_mutex);
-+	mutex_init(&hwdep->dsp_mutex);
- 	hwdep->card = card;
- 	hwdep->device = device;
- 	if (id)
+ 	for (i = 0; i < nr_pages; i++) {
+-		unsigned long addr = (unsigned long)(*pages);
++		unsigned long addr = (unsigned long)untagged_addr(*pages);
+ 		struct vm_area_struct *vma;
+ 		struct page *page;
+ 		int err = -EFAULT;
 -- 
 2.53.0
 
