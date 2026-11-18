@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017970;
-	b=LDvK2RMNZgEaaTHEyVUZvCR6nGkQTa0RqN65IU64HKATU+STLTawOv3O7izb020ZVDau
-	 bEUk7ka374WysNTc2S42AwICAsGnnOPDvjn02wZMHWEU+eraXkBKGaSg+auZ8OQb8eFv6
-	 KrTKPXT/jk4jQjMrNyZNeGSp0N8EqCO6sws99oh2e5utwwliGpob9mUKg77kV0tvnKVkp
-	 pVo7BRG0lnmlF3ReOkmaf+FwWGzMubZ5nlqjHMcSsIvsXiNWk8n/XrserEc0LX9mC2qns
-	 HYvOULme8ueKlteTwnwtsiPATx+s8b2F9RNgMrSFIZFpQKQ9QAt5fFvUDCWtE6zL2sw==
+	t=1795017973;
+	b=mxi6FVSjlgZiXV2LLReamdASof0tYbwCxvH9fl8W9eZiLTFIYsoRmkbrpcYCaoR0CDvE
+	 ns/VoDpAoQ/s4s0J41bA9aRF/f87k5VNQsTO3ckaHJH8ZKXjzmIPNSxlI2oY8f9tYP+VC
+	 60FA+DEmyp3vlXD0IF5oKM4ojFUGw54EEhXo1PXYU6PISwN8ivCaPmiEfMQ/B/MAu6x6B
+	 5hIwbza3OWuJIICKqTpTFgRibfueCzHHAueKt6Ek5LIMCV5APnDiH6NNHwMcXmgIbsGk2
+	 jlW7NXIhYV5q9BeUm3XfekJezbXmzIx7Y3W57AngSKEMQV+I0duNieZCoWaHDE3s8Yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017970;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017973;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=acwqPFEFcMTkWmFVVbRnGQNBAdruk7EJ9x7w4Yg4ars=;
-	b=Whr7DW3tGD0d4wBlVvd1GSFJgX875zr+aXF83hiof2H962cUV5aQuBsECtSAQO0Xp/zN
-	 oE5hLfeYS/ZlxBd1ovQLrPlGmlIevHgVotgGqxJz1eRbP6TEia1vSCLDUUzEdoV1yEH8n
-	 KiKjS/z4rHW/t41uyEAsT8htSNUQHHtNM2yvZYNy492/3P/asCk3axdogAqXss40qOYll
-	 7er9lmxQpGWNhZuqdGfPy0+4FDXxt3R/W4JYtpXgQeDRMevDV/LqYYoO+sZ11DTy2EcTt
-	 MhAvPDjVg5tLO/rsQnLIQNf0uMFiEfhWIQgM5D3Hx/5V1U02KhLNiRCc8CT8ggWMjhg==
+	bh=41d3FDs9N78wO7EAB8Mqo1vAaIcAwiZnYFJb/c+FgF4=;
+	b=JypKR2UzbrPGTXNQQ9ApaZJN3fqZmd06FEa2gAGCTHfADcjFNLmtQDiJmw0QLLeZOBpE
+	 TKMv9qlNWur/XF04SsKY4GHmsgbIRs3/bww6036g4piXfBXwcdBuBxZKHx2zIDmPc9BCt
+	 WdXTFU7nYgyUQLnniTnGMK+XNSoe86ZEwVVDuY1lyDkTNaDwfj5+ePeB8h4Xk+Fuu7hVD
+	 SlHB3NXDelr9+QAPzuBlJRECLjoibU+ttjgryTjdbKL/JUz7hnYQCjAOhojIYHwXm2MPs
+	 l/syxFJklwasXFGGpy28J1Kvzt1xBtHcjFcD5WupIHgEQoWoz+vHfMGnW/ErOCd2nsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BRxqlvjC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P2VOBzTP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB659606A31C;
-	Wed, 18 Nov 2026 16:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB34606A31C;
+	Wed, 18 Nov 2026 16:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BRxqlvjC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1081F000C8;
-	Wed, 18 Nov 2026 16:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P2VOBzTP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A7A1F000C6;
+	Wed, 18 Nov 2026 16:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017970;
-	bh=acwqPFEFcMTkWmFVVbRnGQNBAdruk7EJ9x7w4Yg4ars=;
+	s=korg; t=1795017973;
+	bh=41d3FDs9N78wO7EAB8Mqo1vAaIcAwiZnYFJb/c+FgF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BRxqlvjCZCY1WwghVixNjMxmh1NGbyAx/jZa+bccfBKlDSX6boCfug9hjG0rmzwrY
-	 Cyd65G9Vj8q1X+2bU15vORwS4gT1o0VoL138pqkB6H8YLdX1zNl17InLVZRzGSMYKL
-	 3/D0n6zSvSVSrpMI4egJtCKcJ1k8a1o4dq19hUAA=
+	b=P2VOBzTPBW09whh0Y5/5kv1NvWHeka5qeb2adX/75k1GzOapIF4SObrEKUYQQ22U9
+	 1zBDH/1vs/P+wBDNmyfcDO9YHPRBOgT1keFuV6034mirL1ahNuaY8RFhlMIJXPqPsW
+	 b75yYmoJ34bZ1i9QpbaGnILa66KPngogksAzLupc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aishwarya TCV <aishwarya.tcv@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	Leo Yan <leo.yan@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Swapnil Sapkal <swapnil.sapkal@amd.com>,
+	Tianyi Chen <hi@tychen.cc>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1073/2651] perf build: Build the Python extension before pylint consumers
-Date: Wed, 18 Nov 2026 15:38:33 +0100
-Message-ID: <20261118150326.615726245@linuxfoundation.org>
+Subject: [PATCH 7.3 1074/2651] perf sched stats: Reject mismatched or incomplete snapshots
+Date: Wed, 18 Nov 2026 15:38:34 +0100
+Message-ID: <20261118150326.654752539@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,91 +69,491 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Tianyi Chen <hi@tychen.cc>
 
-[ Upstream commit 179c2413bb601c94e144c7a84cd34ae3bee3b586 ]
+[ Upstream commit 9910ee15c9fc024e713b66403edf23976d33a857 ]
 
-Pylint checks for tests and standalone Python scripts can run before the
-perf Python extension is available. On a clean parallel build, an import
-error can stop make before the extension is built.
+The before and after records are paired by list position. If a CPU or
+domain disappears, counters can be subtracted from a different record
+or left as absolute values. An extra record can also advance the cursor
+past the list.
 
-Run the script and test pylint checks in separate sub-makes after the
-language bindings are built. Keep their rules in the respective Build
-files so the perf and perf-test C sub-makes can compile concurrently with
-util and the Python extension. An isolated make perf does not need to
-build the extension just for these checks.
+Identify the second snapshot by its timestamp or CPU ordering, and
+require matching CPU/domain IDs and versions before subtracting. Check
+that every record has a counterpart before printing, and propagate
+errors from either input of diff.
 
-Fixes: 8a54784e708b51c1 ("perf build: Add pylint build tests")
-Reported-by: Aishwarya TCV <aishwarya.tcv@arm.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Assisted-by: Codex:gpt-6
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
+Add a shell test with synthetic snapshots, including equal timestamps,
+CPU filtering, and missing or reordered CPU/domain records.
+
+Fixes: 5a357ae6ad63fd10 ("perf sched stats: Add support for report subcommand")
+Reviewed-by: Swapnil Sapkal <swapnil.sapkal@amd.com>
+Assisted-by: LLM
+Signed-off-by: Tianyi Chen <hi@tychen.cc>
+Tested-by: Swapnil Sapkal <swapnil.sapkal@amd.com>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Build         |  4 +++-
- tools/perf/Makefile.perf | 15 +++++++++++++++
- tools/perf/tests/Build   |  4 +++-
- 3 files changed, 21 insertions(+), 2 deletions(-)
+ tools/perf/Documentation/perf-sched.txt       |   6 +-
+ tools/perf/builtin-sched.c                    | 189 ++++++++++++------
+ tools/perf/tests/shell/schedstat_snapshots.sh | 155 ++++++++++++++
+ 3 files changed, 283 insertions(+), 67 deletions(-)
+ create mode 100755 tools/perf/tests/shell/schedstat_snapshots.sh
 
-diff --git a/tools/perf/Build b/tools/perf/Build
-index e18c80a5c1bca..bf9949fe813a7 100644
---- a/tools/perf/Build
-+++ b/tools/perf/Build
-@@ -103,4 +103,6 @@ $(OUTPUT)%.pylint_log: %
- 	$(call rule_mkdir)
- 	$(Q)$(call echo-cmd,test)pylint "$<" > $@ || (cat $@ && rm $@ && false)
+diff --git a/tools/perf/Documentation/perf-sched.txt b/tools/perf/Documentation/perf-sched.txt
+index 4da06215163ac..fe0abef2bd13b 100644
+--- a/tools/perf/Documentation/perf-sched.txt
++++ b/tools/perf/Documentation/perf-sched.txt
+@@ -95,8 +95,10 @@ There are several variants of 'perf sched':
+    events, ``try_to_wakeup()`` call among others. This is useful in understanding the
+    scheduler behavior for the workload.
  
--perf-y += $(PYLINT_TEST_LOGS)
-+.PHONY: pylint
-+pylint: $(addprefix $(OUTPUT),$(PYLINT_TEST_LOGS))
-+	@:
-diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
-index f1ac45f1ddd5b..4841a7204a308 100644
---- a/tools/perf/Makefile.perf
-+++ b/tools/perf/Makefile.perf
-@@ -534,6 +534,7 @@ strip: $(PROGRAMS) $(OUTPUT)perf
- 	$(STRIP) $(STRIP_OPTS) $(PROGRAMS) $(OUTPUT)perf
+-   Note: The tool will not give correct results if there is topological reordering or
+-         online/offline of cpus in between capturing snapshots of `/proc/schedstat`.
++   Note: Reports reject incomplete snapshots and mismatched CPU or domain IDs.
++         Topology changes that retain the same IDs, including CPUs going offline
++         and returning online between snapshots, cannot be detected and may still
++         produce incorrect results.
  
- PERF_IN := $(OUTPUT)perf-in.o
-+
- export NO_JEVENTS
+     Example usage:
+         perf sched stats record -- sleep 1
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index dd39a4fb6c7a8..9e7d170b30adb 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -4281,18 +4281,18 @@ struct schedstat_cpu {
+ };
  
- build := -f $(srctree)/tools/build/Makefile.build dir=. obj
-@@ -589,6 +590,20 @@ $(SCRIPTS) : $(OUTPUT)% : %.sh
- $(OUTPUT)PERF-VERSION-FILE: .FORCE-PERF-VERSION-FILE
- 	$(Q)$(SHELL_PATH) util/PERF-VERSION-GEN $(OUTPUT)
+ static struct list_head cpu_head = LIST_HEAD_INIT(cpu_head);
+-static struct schedstat_cpu *cpu_second_pass;
+-static struct schedstat_domain *domain_second_pass;
++static struct list_head *cpu_second_pass;
++static struct list_head *domain_second_pass;
++static u64 schedstat_timestamp;
+ static bool after_workload_flag;
+ static bool verbose_field;
  
-+ifdef PYLINT
-+# Run Python checks after the extension is ready, independently of C builds.
-+all: pylint-perf pylint-tests
-+.PHONY: pylint-perf pylint-tests
-+
-+pylint-perf pylint-tests: | $(LANG_BINDINGS)
-+
-+pylint-perf:
-+	$(Q)$(MAKE) $(build)=perf pylint
-+
-+pylint-tests:
-+	$(Q)$(MAKE) $(build)=perf-test dir=tests pylint
-+endif
-+
- # These can record PERF_VERSION
- perf.spec $(SCRIPTS) \
- 	: $(OUTPUT)PERF-VERSION-FILE
-diff --git a/tools/perf/tests/Build b/tools/perf/tests/Build
-index 66944a4f49682..8c6a9c4d39b4c 100644
---- a/tools/perf/tests/Build
-+++ b/tools/perf/tests/Build
-@@ -118,4 +118,6 @@ $(OUTPUT)%.pylint_log: %
- 	$(call rule_mkdir)
- 	$(Q)$(call echo-cmd,test)pylint "$<" > $@ || (cat $@ && rm $@ && false)
+ static void free_schedstat(struct list_head *head);
  
--perf-test-y += $(PYLINT_TEST_LOGS)
-+.PHONY: pylint
-+pylint: $(addprefix $(OUTPUT)tests/,$(PYLINT_TEST_LOGS))
-+	@:
+-static void store_schedstat_cpu_diff(struct schedstat_cpu *after_workload)
++static void store_schedstat_cpu_diff(struct perf_record_schedstat_cpu *before,
++				    struct perf_record_schedstat_cpu *after)
+ {
+-	struct perf_record_schedstat_cpu *before = cpu_second_pass->cpu_data;
+-	struct perf_record_schedstat_cpu *after = after_workload->cpu_data;
+-	__u16 version = after_workload->cpu_data->version;
++	__u16 version = after->version;
+ 
+ #define CPU_FIELD(_type, _name, _desc, _format, _is_pct, _pct_of, _ver)	\
+ 	(before->_ver._name = after->_ver._name - before->_ver._name)
+@@ -4308,11 +4308,10 @@ static void store_schedstat_cpu_diff(struct schedstat_cpu *after_workload)
+ #undef CPU_FIELD
+ }
+ 
+-static void store_schedstat_domain_diff(struct schedstat_domain *after_workload)
++static void store_schedstat_domain_diff(struct perf_record_schedstat_domain *before,
++				       struct perf_record_schedstat_domain *after)
+ {
+-	struct perf_record_schedstat_domain *before = domain_second_pass->domain_data;
+-	struct perf_record_schedstat_domain *after = after_workload->domain_data;
+-	__u16 version = after_workload->domain_data->version;
++	__u16 version = after->version;
+ 
+ #define DOMAIN_FIELD(_type, _name, _desc, _format, _is_jiffies, _ver)	\
+ 	(before->_ver._name = after->_ver._name - before->_ver._name)
+@@ -4814,12 +4813,35 @@ static int show_schedstat_data(struct list_head *head1, struct cpu_domain_map **
+  * other after completion of the workload. The above linked list stores the diff of the cpu and
+  * domain statistics.
+  */
++static int schedstat_snapshot_error(void)
++{
++	pr_err("Incompatible or incomplete schedstat snapshots\n");
++	return -EINVAL;
++}
++
++static bool schedstat_domains_complete(void)
++{
++	struct schedstat_cpu *cpu;
++
++	if (!domain_second_pass)
++		return true;
++	cpu = list_entry(cpu_second_pass, struct schedstat_cpu, cpu_list);
++	return domain_second_pass == &cpu->domain_head;
++}
++
++static int schedstat_snapshots_complete(void)
++{
++	if (!after_workload_flag || !cpu_second_pass ||
++	    cpu_second_pass->next != &cpu_head || !schedstat_domains_complete())
++		return schedstat_snapshot_error();
++	return 0;
++}
++
+ static int perf_sched__process_schedstat(const struct perf_tool *tool __maybe_unused,
+ 					 struct perf_session *session __maybe_unused,
+ 					 union perf_event *event)
+ {
+ 	struct perf_cpu this_cpu;
+-	static __u32 initial_cpu;
+ 
+ 	switch (event->header.type) {
+ 	case PERF_RECORD_SCHEDSTAT_CPU:
+@@ -4836,63 +4858,91 @@ static int perf_sched__process_schedstat(const struct perf_tool *tool __maybe_un
+ 		return 0;
+ 
+ 	if (event->header.type == PERF_RECORD_SCHEDSTAT_CPU) {
+-		struct schedstat_cpu *temp = zalloc(sizeof(*temp));
+-
+-		if (!temp)
+-			return -ENOMEM;
+-
+-		temp->cpu_data = zalloc(sizeof(*temp->cpu_data));
+-		if (!temp->cpu_data)
+-			return -ENOMEM;
++		struct perf_record_schedstat_cpu *data = &event->schedstat_cpu;
++		struct schedstat_cpu *cpu;
+ 
+-		memcpy(temp->cpu_data, &event->schedstat_cpu, sizeof(*temp->cpu_data));
+-
+-		if (!list_empty(&cpu_head) && temp->cpu_data->cpu == initial_cpu)
+-			after_workload_flag = true;
+-
+-		if (!after_workload_flag) {
+-			if (list_empty(&cpu_head))
+-				initial_cpu = temp->cpu_data->cpu;
+-
+-			list_add_tail(&temp->cpu_list, &cpu_head);
+-			INIT_LIST_HEAD(&temp->domain_head);
+-		} else {
+-			if (temp->cpu_data->cpu == initial_cpu) {
+-				cpu_second_pass = list_first_entry(&cpu_head, struct schedstat_cpu,
+-								   cpu_list);
+-				cpu_second_pass->cpu_data->timestamp =
+-					temp->cpu_data->timestamp - cpu_second_pass->cpu_data->timestamp;
+-			} else {
+-				cpu_second_pass = list_next_entry(cpu_second_pass, cpu_list);
++		if (list_empty(&cpu_head)) {
++			after_workload_flag = false;
++			cpu_second_pass = &cpu_head;
++			domain_second_pass = NULL;
++			schedstat_timestamp = data->timestamp;
++		} else if (!after_workload_flag) {
++			cpu = list_last_entry(&cpu_head, struct schedstat_cpu, cpu_list);
++			/* Snapshots share a timestamp and list CPUs in increasing order. */
++			if (data->timestamp != schedstat_timestamp ||
++			    data->cpu <= cpu->cpu_data->cpu) {
++				after_workload_flag = true;
++				schedstat_timestamp = data->timestamp;
+ 			}
+-			domain_second_pass = list_first_entry(&cpu_second_pass->domain_head,
+-							      struct schedstat_domain, domain_list);
+-			store_schedstat_cpu_diff(temp);
+-			free(temp->cpu_data);
+-			free(temp);
+ 		}
+-	} else if (event->header.type == PERF_RECORD_SCHEDSTAT_DOMAIN) {
+-		struct schedstat_cpu *cpu_tail;
+-		struct schedstat_domain *temp = zalloc(sizeof(*temp));
+ 
+-		if (!temp)
+-			return -ENOMEM;
++		if (after_workload_flag) {
++			if (data->timestamp != schedstat_timestamp || !schedstat_domains_complete())
++				return schedstat_snapshot_error();
++			cpu_second_pass = cpu_second_pass->next;
++			if (cpu_second_pass == &cpu_head)
++				return schedstat_snapshot_error();
++			cpu = list_entry(cpu_second_pass, struct schedstat_cpu, cpu_list);
++			if (data->cpu != cpu->cpu_data->cpu ||
++			    data->version != cpu->cpu_data->version ||
++			    data->timestamp < cpu->cpu_data->timestamp)
++				return schedstat_snapshot_error();
++			cpu->cpu_data->timestamp = data->timestamp - cpu->cpu_data->timestamp;
++			store_schedstat_cpu_diff(cpu->cpu_data, data);
++			domain_second_pass = cpu->domain_head.next;
++			return 0;
++		}
+ 
+-		temp->domain_data = zalloc(sizeof(*temp->domain_data));
+-		if (!temp->domain_data)
++		cpu = zalloc(sizeof(*cpu));
++		if (!cpu)
+ 			return -ENOMEM;
++		cpu->cpu_data = memdup(data, sizeof(*data));
++		if (!cpu->cpu_data) {
++			free(cpu);
++			return -ENOMEM;
++		}
++		INIT_LIST_HEAD(&cpu->domain_head);
++		list_add_tail(&cpu->cpu_list, &cpu_head);
++	} else {
++		struct perf_record_schedstat_domain *data = &event->schedstat_domain;
++		struct schedstat_domain *domain;
++		struct schedstat_cpu *cpu;
++
++		if (list_empty(&cpu_head) || data->timestamp != schedstat_timestamp)
++			return schedstat_snapshot_error();
++		if (after_workload_flag) {
++			cpu = list_entry(cpu_second_pass, struct schedstat_cpu, cpu_list);
++			if (domain_second_pass == &cpu->domain_head)
++				return schedstat_snapshot_error();
++			domain = list_entry(domain_second_pass, struct schedstat_domain,
++					    domain_list);
++			if (data->cpu != domain->domain_data->cpu ||
++			    data->domain != domain->domain_data->domain ||
++			    data->version != domain->domain_data->version)
++				return schedstat_snapshot_error();
++			store_schedstat_domain_diff(domain->domain_data, data);
++			domain_second_pass = domain_second_pass->next;
++			return 0;
++		}
+ 
+-		memcpy(temp->domain_data, &event->schedstat_domain, sizeof(*temp->domain_data));
+-
+-		if (!after_workload_flag) {
+-			cpu_tail = list_last_entry(&cpu_head, struct schedstat_cpu, cpu_list);
+-			list_add_tail(&temp->domain_list, &cpu_tail->domain_head);
+-		} else {
+-			store_schedstat_domain_diff(temp);
+-			domain_second_pass = list_next_entry(domain_second_pass, domain_list);
+-			free(temp->domain_data);
+-			free(temp);
++		cpu = list_last_entry(&cpu_head, struct schedstat_cpu, cpu_list);
++		if (data->cpu != cpu->cpu_data->cpu || data->version != cpu->cpu_data->version)
++			return schedstat_snapshot_error();
++		if (!list_empty(&cpu->domain_head)) {
++			domain = list_last_entry(&cpu->domain_head, struct schedstat_domain,
++						 domain_list);
++			if (data->domain <= domain->domain_data->domain)
++				return schedstat_snapshot_error();
+ 		}
++		domain = zalloc(sizeof(*domain));
++		if (!domain)
++			return -ENOMEM;
++		domain->domain_data = memdup(data, sizeof(*data));
++		if (!domain->domain_data) {
++			free(domain);
++			return -ENOMEM;
++		}
++		list_add_tail(&domain->domain_list, &cpu->domain_head);
+ 	}
+ 
+ 	return 0;
+@@ -4947,6 +4997,8 @@ static int perf_sched__schedstat_report(struct perf_sched *sched)
+ 	user_requested_cpus = evlist__core(session->evlist)->user_requested_cpus;
+ 
+ 	err = perf_session__process_events(session);
++	if (!err)
++		err = schedstat_snapshots_complete();
+ 
+ 	if (!err) {
+ 		setup_pager();
+@@ -4976,7 +5028,7 @@ static int perf_sched__schedstat_diff(struct perf_sched *sched,
+ 	struct list_head cpu_head_ses0, cpu_head_ses1;
+ 	struct perf_session *session[2];
+ 	struct perf_data data[2] = {0};
+-	int ret = 0, err = 0;
++	int ret = 0;
+ 	static const char *defaults[] = {
+ 		"perf.data.old",
+ 		"perf.data",
+@@ -5009,8 +5061,10 @@ static int perf_sched__schedstat_diff(struct perf_sched *sched,
+ 		goto out_delete_ses0;
+ 	}
+ 
+-	err = perf_session__process_events(session[0]);
+-	if (err) {
++	ret = perf_session__process_events(session[0]);
++	if (!ret)
++		ret = schedstat_snapshots_complete();
++	if (ret) {
+ 		free_schedstat(&cpu_head);
+ 		goto out_delete_ses0;
+ 	}
+@@ -5028,8 +5082,10 @@ static int perf_sched__schedstat_diff(struct perf_sched *sched,
+ 		goto out_delete_ses1;
+ 	}
+ 
+-	err = perf_session__process_events(session[1]);
+-	if (err) {
++	ret = perf_session__process_events(session[1]);
++	if (!ret)
++		ret = schedstat_snapshots_complete();
++	if (ret) {
+ 		free_schedstat(&cpu_head);
+ 		goto out_delete_ses1;
+ 	}
+@@ -5152,6 +5208,9 @@ static int perf_sched__schedstat_live(struct perf_sched *sched,
+ 					       user_requested_cpus);
+ 	if (err)
+ 		goto out;
++	err = schedstat_snapshots_complete();
++	if (err)
++		goto out;
+ 
+ 	setup_pager();
+ 
+diff --git a/tools/perf/tests/shell/schedstat_snapshots.sh b/tools/perf/tests/shell/schedstat_snapshots.sh
+new file mode 100755
+index 0000000000000..a4bdf2673d43c
+--- /dev/null
++++ b/tools/perf/tests/shell/schedstat_snapshots.sh
+@@ -0,0 +1,155 @@
++#!/bin/sh
++# Validate CPU and domain pairing in perf sched stats snapshots
++# SPDX-License-Identifier: GPL-2.0
++
++set -e
++
++# shellcheck source=lib/setup_python.sh
++. "$(dirname "$0")/lib/setup_python.sh"
++
++if ! perf version --build-options | grep -q 'libtraceevent:.*on'; then
++	echo "[Skip] perf sched requires libtraceevent"
++	exit 2
++fi
++
++$PYTHON - <<'PY'
++import os
++import re
++import struct
++import subprocess
++import sys
++import tempfile
++
++# Native-endian perf.data with only NRCPUS and CPU_DOMAIN_INFO features.
++endian = '<' if sys.byteorder == 'little' else '>'
++
++
++def pack(fmt, *values):
++    return struct.pack(endian + fmt, *values)
++
++
++def string(value):
++    data = value.encode() + b'\0'
++    return pack('I', len(data)) + data
++
++
++def cpu(cpu_id, timestamp, value, version):
++    return pack('IHHQIHH6I3Q', 85, 0, 72, timestamp, cpu_id, version, 0,
++                *([value] * 9))
++
++
++def domain(cpu_id, domain_id, timestamp, value, version):
++    # All supported versions use the largest union member's record size.
++    return pack('IHHQIHH45I4x', 86, 0, 208, timestamp, cpu_id, version,
++                domain_id, *([value] * 45))
++
++
++def snapshot(timestamp, value, version=17, cpus=(0, 1, 2), domains=(0, 1)):
++    records = []
++    for cpu_id in cpus:
++        records.append(cpu(cpu_id, timestamp, value + cpu_id * 100, version))
++        for domain_id in domains:
++            records.append(domain(cpu_id, domain_id, timestamp,
++                                  value + cpu_id * 100, version))
++    return records
++
++
++def write_file(path, records, version=17):
++    metadata = pack('II', version, 2)
++    for cpu_id in range(3):
++        metadata += pack('II', cpu_id, 2)
++        for domain_id in range(2):
++            metadata += pack('I', domain_id)
++            if version >= 17:
++                metadata += string('SMT' if domain_id == 0 else 'MC')
++            metadata += string('7') + string('0-2')
++    features = [pack('II', 3, 3), metadata]
++    data = b''.join(records)
++    offset = 104 + len(data) + 16 * len(features)
++    sections = b''
++    for feature in features:
++        sections += pack('QQ', offset, len(feature))
++        offset += len(feature)
++    header = pack('13Q', 0x32454c4946524550, 104, 144, 104, 0,
++                  104, len(data), 0, 0, (1 << 7) | (1 << 32), 0, 0, 0)
++    with open(path, 'wb') as output:
++        output.write(header + data + sections + b''.join(features))
++
++
++def run(args, valid, domains=True):
++    result = subprocess.run(['perf', 'sched', 'stats'] + args,
++                            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
++                            text=True, timeout=10)
++    if valid:
++        assert result.returncode == 0, result.stderr
++        assert re.search(r'^yld_count\s+:\s+10\b', result.stdout, re.M), result.stdout
++        if domains:
++            assert re.search(r'^busy_lb_count\s+:\s+10\b', result.stdout, re.M), result.stdout
++        else:
++            assert 'busy_lb_count' not in result.stdout, result.stdout
++    else:
++        assert result.returncode > 0, (args, result.returncode, result.stdout)
++        assert 'Incompatible or incomplete schedstat snapshots' in result.stderr
++        assert not result.stdout, result.stdout
++    assert 'Sanitizer' not in result.stderr, result.stderr
++
++
++with tempfile.TemporaryDirectory(prefix='perf-schedstat-') as directory:
++    good = os.path.join(directory, 'good.data')
++    test = os.path.join(directory, 'test.data')
++    before = snapshot(100, 1000)
++    after = snapshot(200, 1010)
++    write_file(good, before + after)
++
++    for version in (15, 16, 17):
++        for timestamp in (100, 200):
++            write_file(test, snapshot(100, 1000, version) +
++                       snapshot(timestamp, 1010, version), version)
++            run(['report', '-C', '0,1,2', '-i', test], True)
++            run(['diff', test, test], True)
++    print('Matching snapshots, including equal timestamps: [Success]')
++
++    write_file(test, snapshot(100, 1000, domains=()) +
++               snapshot(200, 1010, domains=()))
++    run(['report', '-C', '0,1,2', '-i', test], True, domains=False)
++    run(['diff', test, test], True, domains=False)
++    print('CPUs without domains: [Success]')
++
++    write_file(test, before + snapshot(200, 1010, cpus=(0, 1)))
++    run(['report', '-C', '0,1', '-i', test], True)
++    run(['report', '-C', '1', '-i', good], True)
++    write_file(test, snapshot(100, 1000, cpus=(0, 1)) +
++               snapshot(200, 1010, cpus=(0, 1)))
++    run(['diff', good, test], True)
++    print('CPU filtering and different CPU sets across files: [Success]')
++
++    write_file(test, snapshot(100, 0xfffffffa, cpus=(0,)) +
++               snapshot(200, 4, cpus=(0,)))
++    run(['report', '-C', '0', '-i', test], True)
++    print('Wrapping 32-bit counters: [Success]')
++
++    cases = {
++        'missing first CPU': before + snapshot(200, 1010, cpus=(1, 2)),
++        'missing middle CPU': before + snapshot(200, 1010, cpus=(0, 2)),
++        'missing last CPU': before + snapshot(200, 1010, cpus=(0, 1)),
++        'added CPU': snapshot(100, 1000, cpus=(0, 1)) + after,
++        'reordered CPUs': before + snapshot(200, 1010, cpus=(0, 2, 1)),
++        'equal timestamp, missing first CPU': before + snapshot(100, 1010, cpus=(1, 2)),
++        'missing first domain': before + snapshot(200, 1010, domains=(1,)),
++        'missing last domain': before + after[:-1],
++        'added domain': snapshot(100, 1000, domains=(0,)) + after,
++        'reordered domains': before + snapshot(200, 1010, domains=(1, 0)),
++        'domain without CPU': before[1:] + after,
++        'wrong domain CPU': before + [after[0], domain(1, 0, 200, 1010, 17)] + after[2:],
++        'changed version': before + snapshot(200, 1010, version=16),
++        'backwards timestamp': before + snapshot(50, 1010),
++        'third snapshot': before + after + snapshot(300, 1020),
++        'missing second snapshot': before,
++    }
++    for name, records in cases.items():
++        write_file(test, records)
++        run(['report', '-C', '0,1,2', '-i', test], False)
++        run(['diff', test, good], False)
++        run(['diff', good, test], False)
++        print(name + ': [Success]')
++PY
 -- 
 2.53.0
 
