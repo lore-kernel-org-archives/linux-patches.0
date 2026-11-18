@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031705;
-	b=X0TjgeWyOR7MtkMfATyujPSMeSU4JHAEBUYxigMMGgZqzgn6KXb3ZJk8nAVsoOCShsUf
-	 4WIeOmnoqYyaftjcLmJEA+45yghzK6T2W8wnxqjTCLBb3uld1T3xomg0oGkSaoBhmDClX
-	 WgIzxO/XA7VdeUbYU0UHD38q22gKfX/ARREDziraZjIxO19EXDmcG2uxJwBu+dfo/KIMZ
-	 ugH6pr4jGHUG0DxYQvQFvRGr1RSHjl+xsmjae2bvppEsAvvIaAePQvjPQ2kSiB+jKEnS/
-	 9wYLGybucT9GcctsJ+PzgoNdEAZ58WpcnAWFMhZsyV3jGFkQXkp+omvt91XlR5prKGw==
+	t=1795031708;
+	b=BdQ/9Sv+NSxl4O9zH3S+EeyDDEfC8tIAWfO7HfYDDGTGpOuUyPaiQGV04tGBr489nCns
+	 3jp4YT0qc4nGSUb2JPFisPdFD5OJI45VLiejvSoMG7C4E4Mgmwkgb0YNFiUn34HeFjkaB
+	 0Dm6V0p3QmruWf0KgNPAH6KYVEc20dqhTyFGvrtJuXuzUvDdsIt223chtE21g/RMYr1tN
+	 QHcOdRAyaveSOlx92k8njCoovCUGf148t0IzqBOB9YZNeyoUMrltLJyX5i252dAeqpTc3
+	 fA8KYsvVg9GiN73WDjO+hPU9Uqb4duyGUZ5ntM7lajjh5Q+r+dyERy1a3D/MJp3e75A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031705;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031708;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3W3grKCq0l4k9RWzM4Ym3qjM3c/QChOP+pIkSzpq+Lo=;
-	b=EbhKHxPoS6ukz7z+66ToqRWzzPQQizcrMmG12Fj91XD512PVRh3IqP6b+Pz0ig2bhgIx
-	 J9Xkkw8YZe/Amc+Z77caJsnthpdHg06LInY+cIseaJNYK2k0XAUnvLj0XpWWpfL/3XtCw
-	 cayqQKIhhEDHU3Vd3VrMk3L1w+azhn7TESBgCTa4/00vW6UzjM8J465xBtN2a+rWn6Qeq
-	 aCbmEAGzHJ/V9YWh3bRZ4ANJ7n7mk8MV2yGDaoaJsWM54pvjV1QpDqFY4kUxwbfgZlBEd
-	 1ry0N9A5d21E97uheeIic844MQhO4Tig7A9q/EmfV+1b7+p98QqVRJlZ1ChUYd+2SWg==
+	bh=B5WKk4drkyZcnXykjpSWBHH+hy9+5QutUmJ5pSGvWrY=;
+	b=L92u8ELYBAMl0dzCNryad1EM6E5LbUc4CUYkJd6fvOC1IpO5Bx0zHjLC+G/9l33du9LP
+	 TjtqR4KNwZs/KF2fFzuHutGlGonbhyaskfxV/xCkL93SiKv2HRZ3evsggcAm6J5C2ToGa
+	 Dcsmol6gto+m4QOz6LQ/++83dWFBGQFWqvyrN07OKuWieNYq/eWfG9z92LhF52B6QTw7q
+	 0z6p/kvWQ0dNyQsRxgPRLcWwhzGApKY72PwnJvfwAWdlpFiniQSRrVqpo96tDfKqcXst+
+	 8IG6Wr+TSJSHCq47qqq0hh0+zt5kyF/TqGewH6PKnmMj31JlbkUCvMOKNGsg5yAsGPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yUHQxR3D;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qzpaluMJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA525606A31C;
-	Wed, 18 Nov 2026 19:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7595B606A31C;
+	Wed, 18 Nov 2026 19:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yUHQxR3D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB831F000C4;
-	Wed, 18 Nov 2026 19:55:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qzpaluMJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A7E1F000C4;
+	Wed, 18 Nov 2026 19:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031705;
-	bh=3W3grKCq0l4k9RWzM4Ym3qjM3c/QChOP+pIkSzpq+Lo=;
+	s=korg; t=1795031708;
+	bh=B5WKk4drkyZcnXykjpSWBHH+hy9+5QutUmJ5pSGvWrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yUHQxR3Dc3isaZe4p7ri1VHtfprpCdxV3/7XkirgpvSKcVDRnDbpFvWEhIpcZ3/cg
-	 gqsU4XzkvgTmaSbHaiXAJRJjm3YdHnpVHyzxAA7cDG/oyUK3hHNf059LP3Erz+RYzl
-	 v+utu/XPypVVqvxWvofFkmiEXLgu8fram5inj8zA=
+	b=qzpaluMJ8TjUtSDgZCG6u6TXASJMoXxBoype6LgJFedJ+AIbsuNmLXP+v/9tyA6UK
+	 n1cESLMUwYgJm9MLF+L+7TdbQZcMPkCBRlPSJJEGw1qnxz6ZtxuUZXhcPb9vhWjZUz
+	 RgALbQ2NkQC+ugw1YNkeXghD7WB3i2oLMAUBTzXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+da94a51633758d13bd63@syzkaller.appspotmail.com,
+	Daniel Wagner <dwagner@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Palla Raghunath <raghunathpalla.0209@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1101/1756] ALSA: pcm: Protect delay DMA sync against concurrent HW_FREE
-Date: Wed, 18 Nov 2026 15:53:48 +0100
-Message-ID: <20261118150054.024066384@linuxfoundation.org>
+Subject: [PATCH 6.12 1146/1756] nvmet-fc: dont drop the last assoc reference in nvmet_fc_delete_ctrl()
+Date: Wed, 18 Nov 2026 15:54:33 +0100
+Message-ID: <20261118150055.664008328@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,230 +71,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Palla Raghunath <raghunathpalla.0209@gmail.com>
 
-[ Upstream commit 50f413b83b31ea8d8ee4276165ab95ed5ab0e10f ]
+[ Upstream commit 165301b5e2fd765fa05ea1044bbca8ba79820197 ]
 
-A PCM DMA buffer must remain allocated until explicit DMA synchronization
-finishes. snd_pcm_delay() calls snd_pcm_dma_buffer_sync() after dropping
-the stream lock, without participating in the buffer-access exclusion
-used by HW_FREE.
+syzbot hit a recursive locking report on subsys->lock when a subsystem
+is unlinked from an FC port.
 
-With a managed NONCONTIG buffer requiring explicit sync, HW_PARAMS can
-allocate a separate runtime descriptor when the requested ring exceeds
-the preallocation. In PREPARED state with mmap_count zero, concurrent
-HWSYNC and HW_FREE calls on the same open PCM file can interleave:
+nvmet_port_del_ctrls() holds subsys->lock while it calls ->delete_ctrl()
+for each controller. nvmet_fc_delete_ctrl() grabs a reference on the
+association, queues del_work and then drops the reference. If del_work
+gets to run to completion before that put, ours is the last reference.
+Freeing the assoc tears down the queues, the last nvmet_cq_put() drops
+the last ctrl reference, and nvmet_ctrl_free() goes for subsys->lock
+again:
 
-1. HWSYNC checks the state in snd_pcm_delay() under the stream lock and
-   releases that lock.
-2. The sync helper fetches runtime->dma_buffer_p and enters
-   snd_dma_noncontig_sync() with that descriptor.
-3. HW_FREE takes the negative buffer-access count, checks PREPARED under
-   the stream lock, releases the lock, and frees the DMA allocation and
-   dynamic descriptor through snd_pcm_lib_free_pages().
-4. The sync callback resumes and reads the freed descriptor.
+  WARNING: possible recursive locking detected
+  ...
+   nvmet_ctrl_free+0xa6/0x8e0 drivers/nvme/target/core.c:1766
+   nvmet_cq_put+0x158/0x200 drivers/nvme/target/core.c:848
+   nvmet_fc_target_assoc_free+0x418/0x2220 drivers/nvme/target/fc.c:1173
+   nvmet_fc_delete_ctrl+0x717/0x7e0 drivers/nvme/target/fc.c:1581
+   nvmet_port_del_ctrls+0xfb/0x150 drivers/nvme/target/core.c:311
+   nvmet_port_subsys_drop_link+0x1e8/0x310 drivers/nvme/target/configfs.c:1119
 
-The stream lock does not cover the allocation's release, and the sync
-operation has no positive buffer-access count to prevent it. The stale
-read causes a use-after-free in snd_dma_noncontig_sync(). DELAY uses the
-same snd_pcm_delay() path.
+It's a real hang, not only a lockdep warning. I reproduced it with
+fcloop by putting an msleep() before the put: rm on the configfs link
+gets stuck in D state for good.
 
-Take a positive buffer-access count before checking the state and keep it
-until the DMA sync finishes, as the transfer and mmap paths already do.
-HW_FREE then returns -EBUSY while this access is active. If a buffer
-writer has already entered, snd_pcm_delay() returns -EBUSY before using
-the buffer. Keep the sync outside the stream lock and balance the count
-on the state-error path as well.
+I don't think we need that reference at all. del_work does
+list_del_rcu() and synchronize_rcu() before it drops the initial
+reference, so an assoc we find on assoc_list can't go away before
+rcu_read_unlock(). nvmet_fc_schedule_delete_assoc() doesn't sleep, so
+just call it inside the RCU section and get rid of the get/put. If the
+assoc is already being deleted, terminating is set and the call is a
+no-op, which matches what happened before when the get failed.
 
-KASAN report as below:
+With the same msleep() in place the patched kernel unlinks cleanly and
+the assoc is freed from the workqueue.
 
-    BUG: KASAN: slab-use-after-free in snd_dma_noncontig_sync+0x295/0x310 [snd_pcm]
-    Read of size 4 at addr ffff888108f58584 by task pcm-uaf-fixture/487
-
-    CPU: 1 UID: 0 PID: 487 Comm: pcm-uaf-fixture Not tainted 7.2.0-rc6-pmb-alsa-functional-v2+ #1 PREEMPT(lazy)
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? snd_dma_noncontig_sync+0x295/0x310 [snd_pcm]
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? snd_dma_noncontig_sync+0x295/0x310 [snd_pcm]
-     kasan_report+0xe0/0x110
-     ? snd_dma_noncontig_sync+0x295/0x310 [snd_pcm]
-     ? __pfx_snd_dma_noncontig_sync+0x10/0x10 [snd_pcm]
-     snd_dma_noncontig_sync+0x295/0x310 [snd_pcm]
-     ? __pfx_snd_dma_noncontig_sync+0x10/0x10 [snd_pcm]
-     snd_dma_buffer_sync+0xc9/0x110 [snd_pcm]
-     snd_pcm_delay+0x3bd/0x550 [snd_pcm]
-     snd_pcm_common_ioctl+0x1e7/0x3aa0 [snd_pcm]
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_vfs_ioctl+0x1f5/0x1280
-     ? __pfx_do_vfs_ioctl+0x10/0x10
-     ? ioctl_has_perm.constprop.0.isra.0+0x34f/0x500
-     ? __pfx_snd_pcm_common_ioctl+0x10/0x10 [snd_pcm]
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     snd_pcm_ioctl+0x76/0xb0 [snd_pcm]
-     ? __pfx_snd_pcm_ioctl+0x10/0x10 [snd_pcm]
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x7f1cae7ab91b
-    Code: 00 48 89 44 24 18 31 c0 48 8d 44 24 60 c7 04 24 10 00 00 00 48 89 44 24 08 48 8d 44 24 20 48 89 44 24 10 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1c 48 8b 44 24 18 64 48 2b 04 25 28 00 00
-    RSP: 002b:00007ffe12d544f0 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-    RAX: ffffffffffffffda RBX: 0000000000000004 RCX: 00007f1cae7ab91b
-    RDX: 0000000000000000 RSI: 0000000000004122 RDI: 0000000000000003
-    RBP: 00000000000001ee R08: 0000000000000073 R09: 00000000ffffffff
-    R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000003
-    R13: 0000000000000001 R14: 00005584f32b1398 R15: 00005584f32b2ce8
-     </TASK>
-
-    Allocated by task 487:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x251/0x610
-     snd_pcm_lib_malloc_pages+0x27c/0x9f0 [snd_pcm]
-     snd_pcm_hw_params+0x171c/0x1d10 [snd_pcm]
-     snd_pcm_common_ioctl+0x1f62/0x3aa0 [snd_pcm]
-     snd_pcm_ioctl+0x76/0xb0 [snd_pcm]
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 499:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x307/0x580
-     snd_pcm_lib_free_pages+0x1c9/0x420 [snd_pcm]
-     snd_pcm_common_ioctl+0x2bd3/0x3aa0 [snd_pcm]
-     snd_pcm_ioctl+0x76/0xb0 [snd_pcm]
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    The buggy address belongs to the object at ffff888108f58580
-     which belongs to the cache kmalloc-64 of size 64
-    The buggy address is located 4 bytes inside of
-     freed 64-byte region [ffff888108f58580, ffff888108f585c0)
-
-    The buggy address belongs to the physical page:
-    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x108f58
-    flags: 0x200000000000000(node=0|zone=2)
-    page_type: f5(slab)
-    raw: 0200000000000000 ffff8881000428c0 dead000000000100 dead000000000122
-    raw: 0000000000000000 0000000000200020 00000000f5000000 0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff888108f58480: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff888108f58500: 00 00 00 00 00 06 fc fc fc fc fc fc fc fc fc fc
-    >ffff888108f58580: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-                       ^
-     ffff888108f58600: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff888108f58680: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    ==================================================================
-    Disabling lock debugging due to kernel taint
-    ------------[ cut here ]------------
-    kernel BUG at kernel/dma/mapping.c:417!
-    Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-    CPU: 1 UID: 0 PID: 487 Comm: pcm-uaf-fixture Tainted: G    B               7.2.0-rc6-pmb-alsa-functional-v2+ #1 PREEMPT(lazy)
-    Tainted: [B]=BAD_PAGE
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    RIP: 0010:__dma_sync_sg_for_cpu+0x230/0x360
-    Code: df 48 c1 e8 03 80 3c 10 00 0f 85 fa 00 00 00 4c 8b 35 d4 6b 7a 09 e8 7f e2 17 00 83 fd 02 0f 86 39 fe ff ff e8 71 e2 17 00 90 <0f> 0b e8 69 e2 17 00 be 08 00 00 00 4c 89 ff e8 bc 5f 77 00 4c 89
-    RSP: 0018:ffff888111f3fc50 EFLAGS: 00010293
-    RAX: 0000000000000000 RBX: ffffffffc0250d10 RCX: ffffffff816d395f
-    RDX: ffff88810836ba00 RSI: ffff888108f58580 RDI: ffffffffc02510d8
-    RBP: 00000000ffff8881 R08: 0000000000000000 R09: fffffbfff804a239
-    R10: ffffffffc02511cf R11: 6e696c6261736944 R12: ffff888108f58580
-    R13: 0000000002ce00e5 R14: ffffffffc0258720 R15: 0000000000000000
-    FS:  00007f1cae69c780(0000) GS:ffff8881fd861000(0000) knlGS:0000000000000000
-    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    CR2: 000055d1affa2480 CR3: 0000000108fc0003 CR4: 0000000000770ef0
-    PKRU: 55555554
-    Call Trace:
-     <TASK>
-     snd_dma_noncontig_sync+0x15a/0x310 [snd_pcm]
-     ? __pfx_snd_dma_noncontig_sync+0x10/0x10 [snd_pcm]
-     snd_dma_buffer_sync+0xc9/0x110 [snd_pcm]
-     snd_pcm_delay+0x3bd/0x550 [snd_pcm]
-     snd_pcm_common_ioctl+0x1e7/0x3aa0 [snd_pcm]
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_vfs_ioctl+0x1f5/0x1280
-     ? __pfx_do_vfs_ioctl+0x10/0x10
-     ? ioctl_has_perm.constprop.0.isra.0+0x34f/0x500
-     ? __pfx_snd_pcm_common_ioctl+0x10/0x10 [snd_pcm]
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     snd_pcm_ioctl+0x76/0xb0 [snd_pcm]
-     ? __pfx_snd_pcm_ioctl+0x10/0x10 [snd_pcm]
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x7f1cae7ab91b
-    Code: 00 48 89 44 24 18 31 c0 48 8d 44 24 60 c7 04 24 10 00 00 00 48 89 44 24 08 48 8d 44 24 20 48 89 44 24 10 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1c 48 8b 44 24 18 64 48 2b 04 25 28 00 00
-    RSP: 002b:00007ffe12d544f0 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-    RAX: ffffffffffffffda RBX: 0000000000000004 RCX: 00007f1cae7ab91b
-    RDX: 0000000000000000 RSI: 0000000000004122 RDI: 0000000000000003
-    RBP: 00000000000001ee R08: 0000000000000073 R09: 00000000ffffffff
-    R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000003
-    R13: 0000000000000001 R14: 00005584f32b1398 R15: 00005584f32b2ce8
-     </TASK>
-    Modules linked in: snd_pcmtest snd_pcm
-    ---[ end trace 0000000000000000 ]---
-    RIP: 0010:__dma_sync_sg_for_cpu+0x230/0x360
-    Code: df 48 c1 e8 03 80 3c 10 00 0f 85 fa 00 00 00 4c 8b 35 d4 6b 7a 09 e8 7f e2 17 00 83 fd 02 0f 86 39 fe ff ff e8 71 e2 17 00 90 <0f> 0b e8 69 e2 17 00 be 08 00 00 00 4c 89 ff e8 bc 5f 77 00 4c 89
-    RSP: 0018:ffff888111f3fc50 EFLAGS: 00010293
-    RAX: 0000000000000000 RBX: ffffffffc0250d10 RCX: ffffffff816d395f
-    RDX: ffff88810836ba00 RSI: ffff888108f58580 RDI: ffffffffc02510d8
-    RBP: 00000000ffff8881 R08: 0000000000000000 R09: fffffbfff804a239
-    R10: ffffffffc02511cf R11: 6e696c6261736944 R12: ffff888108f58580
-    R13: 0000000002ce00e5 R14: ffffffffc0258720 R15: 0000000000000000
-    FS:  00007f1cae69c780(0000) GS:ffff8881fd861000(0000) knlGS:0000000000000000
-    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    CR2: 000055d1affa2480 CR3: 0000000108fc0003 CR4: 0000000000770ef0
-    PKRU: 55555554
-    Kernel panic - not syncing: Fatal exception
-    Kernel Offset: disabled
-    Rebooting in 1 seconds..
-
-Fixes: a25684a95646 ("ALSA: memalloc: Support for non-contiguous page allocation")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-d74585d187e0b1810c08-v2-25432d0951f67fdaa1a9@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 4049dc96b8de ("nvmet-fc: defer cleanup using RCU properly")
+Reported-by: syzbot+da94a51633758d13bd63@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=da94a51633758d13bd63
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Palla Raghunath <raghunathpalla.0209@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_native.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/nvme/target/fc.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 24b923aabc9a2..ed9d8877f2635 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -3075,14 +3075,19 @@ static snd_pcm_sframes_t snd_pcm_forward(struct snd_pcm_substream *substream,
- static int snd_pcm_delay(struct snd_pcm_substream *substream,
- 			 snd_pcm_sframes_t *delay)
- {
-+	struct snd_pcm_runtime *runtime = substream->runtime;
- 	int err;
+diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
+index f20338e7b669e..bd2a7f4accfa7 100644
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -1579,8 +1579,14 @@ nvmet_fc_delete_ctrl(struct nvmet_ctrl *ctrl)
+ 		list_for_each_entry_rcu(assoc, &tgtport->assoc_list, a_list) {
+ 			queue = assoc->queues[0];
+ 			if (queue && queue->nvme_sq.ctrl == ctrl) {
+-				if (nvmet_fc_tgt_a_get(assoc))
+-					found_ctrl = true;
++				/*
++				 * No assoc reference here: we're called with
++				 * subsys->lock held, and if del_work beat us,
++				 * our put would free the ctrl under that lock.
++				 * RCU keeps the assoc alive until unlock.
++				 */
++				nvmet_fc_schedule_delete_assoc(assoc);
++				found_ctrl = true;
+ 				break;
+ 			}
+ 		}
+@@ -1588,11 +1594,8 @@ nvmet_fc_delete_ctrl(struct nvmet_ctrl *ctrl)
  
-+	/* Keep the DMA buffer alive through the sync below. */
-+	if (!atomic_inc_unless_negative(&runtime->buffer_accessing))
-+		return -EBUSY;
- 	scoped_guard(pcm_stream_lock_irq, substream) {
- 		err = do_pcm_hwsync(substream);
- 		if (delay && !err)
- 			*delay = snd_pcm_calc_delay(substream);
+ 		nvmet_fc_tgtport_put(tgtport);
+ 
+-		if (found_ctrl) {
+-			nvmet_fc_schedule_delete_assoc(assoc);
+-			nvmet_fc_tgt_a_put(assoc);
++		if (found_ctrl)
+ 			return;
+-		}
+ 
+ 		spin_lock_irqsave(&nvmet_fc_tgtlock, flags);
  	}
- 	snd_pcm_dma_buffer_sync(substream, SNDRV_DMA_SYNC_CPU);
-+	atomic_dec(&runtime->buffer_accessing);
- 
- 	return err;
- }
 -- 
 2.53.0
 
