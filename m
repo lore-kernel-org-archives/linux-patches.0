@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023336;
-	b=kFGdQmDrwZxb2JPsHcWQCW57yiOCREVovyAe6NcQjFR61f1D6MpUZQwdHYSe/CKvhAml
-	 KQ9jq9lGEr6/V8Gj4y5OCJjAqG3uvuYanMiq3XFbmF8O3Z0s5T1k+if1u6B84gY9bwbvC
-	 Hk/lHcxTZtg5lYc8RxlrPy45GIcWSuUA60YsWi1n0U26e27Rk5zZdU6D0bFnNrchf3F4b
-	 +PIODfkxYmTzzhK4bNuu2PJSDZDZH1WhbLfPcqpMuF/c6hdZGMT0r3ZJRszhdlbwVi6eK
-	 byGR6aDeG+HY8dYbAQsiCFF5bpFcGItg0l+yfmWSqKVC7Pql/FHNH4UxJZAedZkAZcQ==
+	t=1795023339;
+	b=GXndlea6QeuVgXQOnF3i9hXtiaJO7VtQBeHzXW7aXAc8yZHKqXi25zfF3MdgxRGZLUaO
+	 buLT6BQrVYAzepCNHpLA6Z7186u8SGweqTPgYSdX64SjqtzJ4ID4epSrb6NnmjTEb2E+4
+	 7Yyng58+xDhe4F5x37Mr/n+Yjsdycx4VyvOKjNKqXnawQyeGfgZp75B1Edx0mvu/Ezu/o
+	 yaqdKDHa4RqLqBRPjsibjaFu7rVLtfS5JyYmUQDPYmgga91Y9cS8g5VhpSRbRXwOtUdoC
+	 d37Ccsj2ErosDgNWPaPpZuaBccgE4PY2GkBXEfcA9wRFIL5ZNxThKCKbUYDIYC/24JQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023336;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023339;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MiTB25yq5/62HHDLs9+Lr+dEiruq3DFy17+D7muYKJM=;
-	b=uLxUVhsEmIHQnLnlvSoKCx+DvlLz0SAN2j/27NBIl3g9AiQpXeBBrLUu63E3rsZT19W+
-	 fXcfaQLdshfMXnJrRhgxBKKyKjy4mq6gH5ZGN8Aq4YQXtCzluq0uYz64/vRlQ4bfgIlHq
-	 d9fO+0c6/8wiLJDSPYpCEOBtkBOhNC7qgB/9/wuH83DudWAXQ9HtcOjLzFDur3+Fbhxlr
-	 TI8LxUAcxyIBdsqbqBbGz05mJseuZPYr96u8MWz/wTtB/ej0FJ5OZb0vpNoTs2VvoIskh
-	 WZvPd8/MVZtaZmPpfyl4RFg283FMAuShaVq1zfoRO/3O+sKxemN4BIVW0odhlt02c2Q==
+	bh=puK6ZhOFxzDTIRQiw8SOe0xN73eZIT5fFLkHbWH28S8=;
+	b=PYPbuja162J4ugKhWy0B78ZoM/jbz+IY8pua3+c+kh0znlhtM2yOjpxF6Ug12vZAWCNs
+	 x1Epz9BXnRtrBv9oczlQE49Iyu/lA63UtIIROzvWcueKEXnFC4L3pustTPqtOrPEbxYVI
+	 ZUwaNIzL+UNJjK4l546ghRxn+J6f/c7SNg2Q00J7EwzdkgB1q07VvyYY1qzWhxIlrPk3m
+	 WP2tuMVr31vfMIIEH23Qu9ECCl/Q8ysFozPw8tUUv4k2MuHE04N4zyT2zcnLewfauLmXh
+	 0yhNBxdp/JB7cde58VBufmY2N2cUmWksGXeVZij2hCcuZ1Qg2zzdm8MiS2XxRzUEckQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ONs/ItSP";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KwjEGWal;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A54E606A320;
-	Wed, 18 Nov 2026 17:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E9A606A325;
+	Wed, 18 Nov 2026 17:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ONs/ItSP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF13C1F000C4;
-	Wed, 18 Nov 2026 17:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KwjEGWal
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FCCE1F000C4;
+	Wed, 18 Nov 2026 17:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023336;
-	bh=MiTB25yq5/62HHDLs9+Lr+dEiruq3DFy17+D7muYKJM=;
+	s=korg; t=1795023339;
+	bh=puK6ZhOFxzDTIRQiw8SOe0xN73eZIT5fFLkHbWH28S8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ONs/ItSPp4ae+Wy05QPy2CoxAvhIsE2fnhue0ZQRDbYLOgKAi3FIiRgcCZsk42l5p
-	 fpr+T5MvIpCDBQIEpAg6J1pMHsxsOhnkKBkFdIP3v/hCk6pMqIyN+rI/AWMpDljgVa
-	 kRSnyP/MZpEiwNEfUsk+jt6RynEj/3m9xZH+WwUI=
+	b=KwjEGWalQxyu7cE70bo6VpLFAUGPHNSTxZ6WurTUNestMWZ67mQDLRD1M/hW2V5ue
+	 fVLAnL/Pm3Isa+I54aFxsZK0QX5L6EEQcydgBjprgpe5vftfouO3QPYIH1rKSVoDZR
+	 VdjsL/54ZVabfBWmoRzPZ83is8quD0zSr6lLNh4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0296/2151] dmaengine: sun6i-dma: Fix use-after-free in error handling paths
-Date: Wed, 18 Nov 2026 15:33:51 +0100
-Message-ID: <20261118150132.695580163@linuxfoundation.org>
+Subject: [PATCH 6.18 0332/2151] scsi: mpi3mr: Fix out-of-bounds sense buffer access
+Date: Wed, 18 Nov 2026 15:34:27 +0100
+Message-ID: <20261118150134.088574175@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,103 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit f472919f4c0650d7fb22bb230eacaada0c6ee951 ]
+[ Upstream commit 7fea128f6b829ad834f21834d2605d28a45b903d ]
 
-In error handling paths, the for loop frees v_lli in the loop body,
-then accesses v_lli->v_lli_next and v_lli->p_lli_next in the
-increment expression, which is use-after-free.
+The sense buffer address reported on completion is turned into a virtual
+address with no range check, so an address outside the pool resolves to
+memory that does not belong to it.
 
-Fix by refactoring the cleanup into a helper function sun6i_dma_free_desc()
-that saves both the next virtual and physical pointers before freeing the
-current node, preventing the use-after-free.
+Check that it lies within the pool and is correctly aligned.
 
-Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Suggested-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260727061142.44195-1-zenghongling@kylinos.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 824a156633df ("scsi: mpi3mr: Base driver code")
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Link: https://patch.msgid.link/20260825210411.301535-8-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sun6i-dma.c | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
-index 69f4d27247a7c..a9a4d7df248f1 100644
---- a/drivers/dma/sun6i-dma.c
-+++ b/drivers/dma/sun6i-dma.c
-@@ -408,16 +408,12 @@ static inline void sun6i_dma_dump_lli(struct sun6i_vchan *vchan,
- 		v_lli->len, v_lli->para, v_lli->p_lli_next);
- }
- 
--static void sun6i_dma_free_desc(struct virt_dma_desc *vd)
-+static void sun6i_dma_free_desc(struct sun6i_dma_dev *sdev,
-+				struct sun6i_desc *txd)
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index b83bb6027d578..d4db5a747198b 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -137,9 +137,19 @@ void *mpi3mr_get_reply_virt_addr(struct mpi3mr_ioc *mrioc,
+ void *mpi3mr_get_sensebuf_virt_addr(struct mpi3mr_ioc *mrioc,
+ 	dma_addr_t phys_addr)
  {
--	struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
--	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(vd->tx.chan->device);
- 	struct sun6i_dma_lli *v_lli, *v_next;
- 	dma_addr_t p_lli, p_next;
- 
--	if (unlikely(!txd))
--		return;
--
- 	p_lli = txd->p_lli;
- 	v_lli = txd->v_lli;
- 
-@@ -434,6 +430,17 @@ static void sun6i_dma_free_desc(struct virt_dma_desc *vd)
- 	kfree(txd);
- }
- 
-+static void sun6i_dma_free_desc_virt(struct virt_dma_desc *vd)
-+{
-+	struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
-+	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(vd->tx.chan->device);
++	u64 offset;
 +
-+	if (unlikely(!txd))
-+		return;
+ 	if (!phys_addr)
+ 		return NULL;
+ 
++	offset = phys_addr - mrioc->sense_buf_dma;
 +
-+	sun6i_dma_free_desc(sdev, txd);
-+}
++	if (phys_addr < mrioc->sense_buf_dma ||
++	    (phys_addr > mrioc->sense_buf_dma +
++	     (mrioc->num_sense_bufs * MPI3MR_SENSE_BUF_SZ) - MPI3MR_SENSE_BUF_SZ) ||
++	    do_div(offset, MPI3MR_SENSE_BUF_SZ))
++		return NULL;
 +
- static int sun6i_dma_start_desc(struct sun6i_vchan *vchan)
- {
- 	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(vchan->vc.chan.device);
-@@ -790,10 +797,7 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_slave_sg(
- 	return vchan_tx_prep(&vchan->vc, &txd->vd, flags);
- 
- err_lli_free:
--	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
--	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
--		dma_pool_free(sdev->pool, v_lli, p_lli);
--	kfree(txd);
-+	sun6i_dma_free_desc(sdev, txd);
- 	return NULL;
+ 	return mrioc->sense_buf + (phys_addr - mrioc->sense_buf_dma);
  }
- 
-@@ -861,10 +865,7 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_dma_cyclic(
- 	return vchan_tx_prep(&vchan->vc, &txd->vd, flags);
- 
- err_lli_free:
--	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
--	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
--		dma_pool_free(sdev->pool, v_lli, p_lli);
--	kfree(txd);
-+	sun6i_dma_free_desc(sdev, txd);
- 	return NULL;
- }
- 
-@@ -1419,7 +1420,7 @@ static int sun6i_dma_probe(struct platform_device *pdev)
- 		struct sun6i_vchan *vchan = &sdc->vchans[i];
- 
- 		INIT_LIST_HEAD(&vchan->node);
--		vchan->vc.desc_free = sun6i_dma_free_desc;
-+		vchan->vc.desc_free = sun6i_dma_free_desc_virt;
- 		vchan_init(&vchan->vc, &sdc->slave);
- 	}
  
 -- 
 2.53.0
