@@ -1,57 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040629;
-	b=uHQGAMM+WCrQHr1Pa5pe9GtL2cWKJ9AYGPj7SldVFc8WzsqABlMwBeEQ8wtym6z83zkF
-	 s9j5MIyMnS4fTjN8lK5KGnlORhU88va93brJYaFjCjTIc01kx2io/e2Pf21MQDIH31K83
-	 kja3upY4b8iguBA+tC0Dd/ZXQwK2G4Hh9kgnhpOMAvV0RYN9kHbq2A65v3eVpFFmZkBVh
-	 WyhfR2CSbBVOFeo4L0T7gMzTIElOcjZDDOPmqs4gtG8G9/rhfVqTZfBm7PiWNvprtpIxl
-	 LKkP8PAZllilE6TaDRH6wGiLFnu6/Hz5mj9BEuDeVUPHnG0IGPaTIfGeWrmy/spxEHg==
+	t=1795040632;
+	b=LCRjghgz79+H4x5IsKmEmU5RhuIf1X+WePiX2VNPX2v8KFe03SS3D3oL2t8Hi8b5ypXt
+	 mI1Fx0Lh11psEN1qKuOlkq4Rv6z3ms9avKqpvCC4wrevdtcl944BWgE/RjDXY7B0SQD8j
+	 JnOeQ6nUAvR193IcEAftRHr7xv9hTRcIySx1bN0kdc98WQLyGP+yCpoXL/LVIHw+O6CuV
+	 6L4sswbFfsTdtJ67FO6EzZW/zuKidNTCV6HreDrLLrLA1u8ZkfpkoH9gSOjRuo/PlPCLH
+	 DqWT37ZTxUQzyxHa7Sggll31gcQ0J4AXe7nHTY7TecPjpC3CkLm6wY5RGGPFv1v5kWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040632;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iCsczZVwQVP1xUkme/NsXFPh8fxxBNIUVen1jyKB3iw=;
-	b=wC12feOz1lEGHcpgshsxotouAck4/PaItFgI8u8aYgtGzVUq41pQsaZDzx0otzb1i9mE
-	 qkc4rQS07GvImchabdFIFhBmrPddvdSOWvZXkvr6xPmvQvUQ8xqtLc4d9jAu4zU0IwENW
-	 SNyNDWJsv9OrGdGe9ku+9BMTbSn+DJecFnuEjAT4BYlacnihGcMyPx/eVh2qOk8BW+aBi
-	 PnAjRxFLauxeua1HF9BJNySGdgg3cWRG5c0tK9RY8jT3PwPOlivPM0oO5BM6e1o56FnYi
-	 axIEqIjWoeQI8uXrkaJTPpMKtUhFmQzq2lf//W9jNqiINO8GuoKbtbkaVgxsXHS/d7A==
+	bh=MSqxXhN+BPiVVH35M3NtVZwO7X3yJySWYAR651ZUD4w=;
+	b=PfkMFUy2u+2zo0e/+lNR8V+Zl0eq/JP7ENAR6KCzPPG0RhDyUUiRrPiV2AzlVRJYy0t2
+	 O3iliv9ghhyPaQSx4XGX1sRXW2oqYK2mlGm8msRy2YmgoJsZlGk31wZbfG41zqc9z4Fs8
+	 iDbQhBStsXbA3BLNEDgRfti0xJ2PrmB1BiY8JYYQMw15z2Mqh8NejeHw18yvPMQljR8Wa
+	 dVe27ESCJQtcaz8OznMcYapkndywIyGomC2YWPl8Xc1EqmZnu6r270czBVBzR5tVt36mc
+	 6rcV6lVX2GeRQmZhanO+hnvWD9ub2NnQfPwlCHK9CufMWCJ0WB8/SlhLFR76vzBTw1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zWxoL9ZF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q4EXxoPt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB82606A325;
-	Wed, 18 Nov 2026 22:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13949606A31C;
+	Wed, 18 Nov 2026 22:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zWxoL9ZF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEBBC1F000C4;
-	Wed, 18 Nov 2026 22:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q4EXxoPt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68F4F1F000C4;
+	Wed, 18 Nov 2026 22:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040629;
-	bh=iCsczZVwQVP1xUkme/NsXFPh8fxxBNIUVen1jyKB3iw=;
+	s=korg; t=1795040631;
+	bh=MSqxXhN+BPiVVH35M3NtVZwO7X3yJySWYAR651ZUD4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zWxoL9ZFLDUIIM9A64B7Xld5CoNaTfRdOtU9zZtNIEGppT7wZisPuzY04GiTBIyTX
-	 bJwOfdgyO12cccKZ9mCLb1UenuLtrvbL+VZyrSMmg7aGEXbVGNpQJKw4z6rJn6w01S
-	 z6YtxC6uxB4hB8e7wm2QqCHsbLcGKeP2ozE/gvbs=
+	b=Q4EXxoPtIVAlUO7Z3oI10096VJKADInybE8Qfd77Ys3Vo5itSWUle6jlSYv9Bx/RV
+	 I72j5eVrz5Jv75q9xKWeHE0ub3rzZWcdzIpK4dBSO8hSrTZAQpwwYdM2gxfAeTGY53
+	 8z9WqtkcutrYc0ra1iOitjKs/IZQ+JnPRENEzvck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksandr Natalenko <oleksandr@natalenko.name>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Wyes Karny <wyes.karny@amd.com>,
-	Huang Rui <ray.huang@amd.com>,
-	Perry Yuan <perry.yuan@amd.com>,
-	Meng Li <li.meng@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2498/3318] cpufreq: amd-pstate: Update amd-pstate preferred core ranking dynamically
-Date: Wed, 18 Nov 2026 15:52:00 +0100
-Message-ID: <20261118150436.327519180@linuxfoundation.org>
+Subject: [PATCH 6.6 2525/3318] drm/msm/dpu: extract bandwidth aggregation function
+Date: Wed, 18 Nov 2026 15:52:27 +0100
+Message-ID: <20261118150437.103769721@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -73,177 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meng Li <li.meng@amd.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit e571a5e2068ef57945fcd5d0fb950f8f96da6dc8 ]
+[ Upstream commit b9aedd32a81792f5b4b7716815aba375ebaff526 ]
 
-Preferred core rankings can be changed dynamically by the
-platform based on the workload and platform conditions and
-accounting for thermals and aging.
-When this occurs, cpu priority need to be set.
+In preparation to refactoring the dpu_core_perf debugfs interface,
+extract the bandwidth aggregation function from
+_dpu_core_perf_crtc_update_bus().
 
-Tested-by: Oleksandr Natalenko <oleksandr@natalenko.name>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Wyes Karny <wyes.karny@amd.com>
-Reviewed-by: Huang Rui <ray.huang@amd.com>
-Reviewed-by: Perry Yuan <perry.yuan@amd.com>
-Signed-off-by: Meng Li <li.meng@amd.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: f6d3cbc63935 ("cpufreq: amd-pstate: Restore previous mode when changing driver mode fails")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/636058/
+Link: https://lore.kernel.org/r/20250209-dpu-perf-rework-v5-1-87e936cf3004@linaro.org
+Stable-dep-of: 480ba24aa340 ("drm/msm/dpu: compute the CRTC bandwidth from the state being checked")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 52 ++++++++++++++++++++++++++++++++++++
- include/linux/amd-pstate.h   |  6 +++++
- 2 files changed, 58 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 45 ++++++++++---------
+ 1 file changed, 25 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index d16e626155a2d..1e4ce11910d73 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -354,6 +354,7 @@ static int pstate_init_perf(struct amd_cpudata *cpudata)
- 	WRITE_ONCE(cpudata->nominal_perf, AMD_CPPC_NOMINAL_PERF(cap1));
- 	WRITE_ONCE(cpudata->lowest_nonlinear_perf, AMD_CPPC_LOWNONLIN_PERF(cap1));
- 	WRITE_ONCE(cpudata->lowest_perf, AMD_CPPC_LOWEST_PERF(cap1));
-+	WRITE_ONCE(cpudata->prefcore_ranking, AMD_CPPC_HIGHEST_PERF(cap1));
- 	WRITE_ONCE(cpudata->min_limit_perf, AMD_CPPC_LOWEST_PERF(cap1));
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+index d29df73c02c5f..63080510456cf 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+@@ -204,36 +204,41 @@ int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
  	return 0;
  }
-@@ -378,6 +379,7 @@ static int cppc_init_perf(struct amd_cpudata *cpudata)
- 	WRITE_ONCE(cpudata->lowest_nonlinear_perf,
- 		   cppc_perf.lowest_nonlinear_perf);
- 	WRITE_ONCE(cpudata->lowest_perf, cppc_perf.lowest_perf);
-+	WRITE_ONCE(cpudata->prefcore_ranking, cppc_perf.highest_perf);
- 	WRITE_ONCE(cpudata->min_limit_perf, cppc_perf.lowest_perf);
  
- 	if (cppc_state == AMD_PSTATE_ACTIVE)
-@@ -809,6 +811,40 @@ static void amd_pstate_init_prefcore(struct amd_cpudata *cpudata)
- 	schedule_work(&sched_prefcore_work);
- }
+-static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
+-		struct drm_crtc *crtc)
++static void dpu_core_perf_aggregate(struct drm_device *ddev,
++				    enum dpu_crtc_client_type curr_client_type,
++				    struct dpu_core_perf_params *perf)
+ {
+-	struct dpu_core_perf_params perf = { 0 };
+-	enum dpu_crtc_client_type curr_client_type
+-					= dpu_crtc_get_client_type(crtc);
+-	struct drm_crtc *tmp_crtc;
+ 	struct dpu_crtc_state *dpu_cstate;
+-	int i, ret = 0;
+-	u64 avg_bw;
+-
+-	if (!kms->num_paths)
+-		return 0;
++	struct drm_crtc *tmp_crtc;
  
-+static void amd_pstate_update_limits(unsigned int cpu)
-+{
-+	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
-+	struct amd_cpudata *cpudata = policy->driver_data;
-+	u32 prev_high = 0, cur_high = 0;
-+	int ret;
-+	bool highest_perf_changed = false;
-+
-+	mutex_lock(&amd_pstate_driver_lock);
-+	if ((!amd_pstate_prefcore) || (!cpudata->hw_prefcore))
-+		goto free_cpufreq_put;
-+
-+	ret = amd_pstate_get_highest_perf(cpu, &cur_high);
-+	if (ret)
-+		goto free_cpufreq_put;
-+
-+	prev_high = READ_ONCE(cpudata->prefcore_ranking);
-+	if (prev_high != cur_high) {
-+		highest_perf_changed = true;
-+		WRITE_ONCE(cpudata->prefcore_ranking, cur_high);
-+
-+		if (cur_high < CPPC_MAX_PERF)
-+			sched_set_itmt_core_prio((int)cur_high, cpu);
-+	}
-+
-+free_cpufreq_put:
-+	cpufreq_cpu_put(policy);
-+
-+	if (!highest_perf_changed)
-+		cpufreq_update_policy(cpu);
-+
-+	mutex_unlock(&amd_pstate_driver_lock);
+-	drm_for_each_crtc(tmp_crtc, crtc->dev) {
++	drm_for_each_crtc(tmp_crtc, ddev) {
+ 		if (tmp_crtc->enabled &&
+-			curr_client_type ==
+-				dpu_crtc_get_client_type(tmp_crtc)) {
++		    curr_client_type == dpu_crtc_get_client_type(tmp_crtc)) {
+ 			dpu_cstate = to_dpu_crtc_state(tmp_crtc->state);
+ 
+-			perf.max_per_pipe_ib = max(perf.max_per_pipe_ib,
+-					dpu_cstate->new_perf.max_per_pipe_ib);
++			perf->max_per_pipe_ib = max(perf->max_per_pipe_ib,
++						    dpu_cstate->new_perf.max_per_pipe_ib);
+ 
+-			perf.bw_ctl += dpu_cstate->new_perf.bw_ctl;
++			perf->bw_ctl += dpu_cstate->new_perf.bw_ctl;
+ 
+-			DRM_DEBUG_ATOMIC("crtc=%d bw=%llu paths:%d\n",
+-				  tmp_crtc->base.id,
+-				  dpu_cstate->new_perf.bw_ctl, kms->num_paths);
++			DRM_DEBUG_ATOMIC("crtc=%d bw=%llu\n",
++					 tmp_crtc->base.id,
++					 dpu_cstate->new_perf.bw_ctl);
+ 		}
+ 	}
 +}
 +
- static int amd_pstate_cpu_init(struct cpufreq_policy *policy)
- {
- 	int min_freq, max_freq, nominal_freq, lowest_nonlinear_freq, ret;
-@@ -980,6 +1016,17 @@ static ssize_t show_amd_pstate_highest_perf(struct cpufreq_policy *policy,
- 	return sysfs_emit(buf, "%u\n", perf);
- }
- 
-+static ssize_t show_amd_pstate_prefcore_ranking(struct cpufreq_policy *policy,
-+						char *buf)
++static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
++					  struct drm_crtc *crtc)
 +{
-+	u32 perf;
-+	struct amd_cpudata *cpudata = policy->driver_data;
++	struct dpu_core_perf_params perf = { 0 };
++	int i, ret = 0;
++	u64 avg_bw;
 +
-+	perf = READ_ONCE(cpudata->prefcore_ranking);
++	if (!kms->num_paths)
++		return 0;
 +
-+	return sysfs_emit(buf, "%u\n", perf);
-+}
-+
- static ssize_t show_amd_pstate_hw_prefcore(struct cpufreq_policy *policy,
- 					   char *buf)
- {
-@@ -1223,6 +1270,7 @@ cpufreq_freq_attr_ro(amd_pstate_max_freq);
- cpufreq_freq_attr_ro(amd_pstate_lowest_nonlinear_freq);
++	dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
  
- cpufreq_freq_attr_ro(amd_pstate_highest_perf);
-+cpufreq_freq_attr_ro(amd_pstate_prefcore_ranking);
- cpufreq_freq_attr_ro(amd_pstate_hw_prefcore);
- cpufreq_freq_attr_rw(energy_performance_preference);
- cpufreq_freq_attr_ro(energy_performance_available_preferences);
-@@ -1233,6 +1281,7 @@ static struct freq_attr *amd_pstate_attr[] = {
- 	&amd_pstate_max_freq,
- 	&amd_pstate_lowest_nonlinear_freq,
- 	&amd_pstate_highest_perf,
-+	&amd_pstate_prefcore_ranking,
- 	&amd_pstate_hw_prefcore,
- 	NULL,
- };
-@@ -1241,6 +1290,7 @@ static struct freq_attr *amd_pstate_epp_attr[] = {
- 	&amd_pstate_max_freq,
- 	&amd_pstate_lowest_nonlinear_freq,
- 	&amd_pstate_highest_perf,
-+	&amd_pstate_prefcore_ranking,
- 	&amd_pstate_hw_prefcore,
- 	&energy_performance_preference,
- 	&energy_performance_available_preferences,
-@@ -1590,6 +1640,7 @@ static struct cpufreq_driver amd_pstate_driver = {
- 	.suspend	= amd_pstate_cpu_suspend,
- 	.resume		= amd_pstate_cpu_resume,
- 	.set_boost	= amd_pstate_set_boost,
-+	.update_limits	= amd_pstate_update_limits,
- 	.name		= "amd-pstate",
- 	.attr		= amd_pstate_attr,
- };
-@@ -1604,6 +1655,7 @@ static struct cpufreq_driver amd_pstate_epp_driver = {
- 	.online		= amd_pstate_epp_cpu_online,
- 	.suspend	= amd_pstate_epp_suspend,
- 	.resume		= amd_pstate_epp_resume,
-+	.update_limits	= amd_pstate_update_limits,
- 	.name		= "amd-pstate-epp",
- 	.attr		= amd_pstate_epp_attr,
- };
-diff --git a/include/linux/amd-pstate.h b/include/linux/amd-pstate.h
-index 68fc1bd8d851e..d21838835abda 100644
---- a/include/linux/amd-pstate.h
-+++ b/include/linux/amd-pstate.h
-@@ -39,11 +39,16 @@ struct amd_aperf_mperf {
-  * @cppc_req_cached: cached performance request hints
-  * @highest_perf: the maximum performance an individual processor may reach,
-  *		  assuming ideal conditions
-+ *		  For platforms that do not support the preferred core feature, the
-+ *		  highest_pef may be configured with 166 or 255, to avoid max frequency
-+ *		  calculated wrongly. we take the fixed value as the highest_perf.
-  * @nominal_perf: the maximum sustained performance level of the processor,
-  *		  assuming ideal operating conditions
-  * @lowest_nonlinear_perf: the lowest performance level at which nonlinear power
-  *			   savings are achieved
-  * @lowest_perf: the absolute lowest performance level of the processor
-+ * @prefcore_ranking: the preferred core ranking, the higher value indicates a higher
-+ * 		  priority.
-  * @max_freq: the frequency that mapped to highest_perf
-  * @min_freq: the frequency that mapped to lowest_perf
-  * @nominal_freq: the frequency that mapped to nominal_perf
-@@ -73,6 +78,7 @@ struct amd_cpudata {
- 	u32	nominal_perf;
- 	u32	lowest_nonlinear_perf;
- 	u32	lowest_perf;
-+	u32     prefcore_ranking;
- 	u32     min_limit_perf;
- 	u32     max_limit_perf;
- 	u32     min_limit_freq;
+ 	avg_bw = perf.bw_ctl;
+ 	do_div(avg_bw, (kms->num_paths * 1000)); /*Bps_to_icc*/
 -- 
 2.53.0
 
