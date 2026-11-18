@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045670;
-	b=t7/P6emJpQsL5Z0iLXJczz2ekDK9+4fINhK2rKc4IGktd3lKOnKkHYXj697gdw126eCf
-	 nzmXJUpWpkwdrKLCiREXE512gZI6BG6TZJ9IQ4K+pQTlZzosC8jPwDOSBWT5LInwSHplb
-	 p8nOvLze0rB1Zuuc9qtMWhvwcVkDtZDBufSaoCCcHn37Jg/0A2B5l52pdvkqHANTCrshf
-	 NLr8nJDV4yJCYKdgawiJGpzi1/btnjzT2OkQlL8oLPW1tzTlDDkIoRGhkuPRqe3hwMU1W
-	 rloNg3JpZbQwicpf4w1ogPsmfOeDKG4zcTkC+2NFjkkxeGHRSCz4YInROnLzNoBqwww==
+	t=1795045672;
+	b=5G3c9YCY7hyehH6WixR69rdEMAEeiSKdOQIRd3OvNvvApPtdU2sDwS3bPY8bmTXhqbQc
+	 KwJQlPoetqreroIyc6+P6g8JAxfKbsPJPgFO9DiyJ4ZAPRgA24N9Pg5SJJQL2xYPWsfpC
+	 eQ2EaIVPCSPRWJ+MVkV+/d2y4fQjbH2hLrSEKzTtupp+ykOlB5kkVaUcQEDpBEM2EG1AX
+	 cdAxuPu0YeeZWx1nm3+WT3aHjY1mn2pbaZI8Kky1dL6IPTjEO2kiXiSNR/+h7DSk/1ak5
+	 YqrUQApiqJyFZr61AkGffeKJWXMH/9mu5sjcPWlRqeuPOhK33V0bzSNrrx2X5yUj07w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045670;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045672;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2f0qVgce0lH4pTZhXBMohnPJBJUSpUrfKDVOsjv9w2Y=;
-	b=W7alfT0IBrsMuZrrDrMucldLA1mbnWkxq4pRolkczaYqJjAKXYXlAG4TFcea4ZL1MiUM
-	 Gaf4VkMPrgaFLOulJjzfNHxW1yvzqiVJ7PbZ9eptnhlXFkFzUEQR6NshQSlptsj9E+RE+
-	 fECgeJCRCZ/HhO7gzWOg4rAjueUTQjzqhCNzIh2xSvMdm5VejTC55n7Eb88qvSYCvAxYH
-	 b8EeVsX3N0dA+3XiSTGnC8B39eLQmSBIYfqIbCo6WZZU9wDRl/NQJXodVweiYTq9XT9jX
-	 S4JV4PD/m8fxtomcczMfYPs+UcU7o/ZT4V1e/Nz2WRsXr4kBqDlpcVcSooAumEcCJpQ==
+	bh=XXb0Y3XkyExKaia3HodPxClzJ/5trDZGwPawE3zyCYc=;
+	b=sDSIv3Z0e7gqh5f93zGJCTG0hQl9gnfVkV/63akHTD2pqWy24NOqdEUYhytc7BblSKyI
+	 XGMz9pwCamQbNiEQqDpnDlMTp/utnsuj7U67VocKMxazGi7raLuXiQTXPUoB8KD4L6/Qf
+	 JeAbBAYaPFGisipO7KbexQV3VOkIg7KSKbSSeC7lsOs7DdwtNkybDt+v0XQMXhj5tdRlP
+	 oGHT+nhDyQofInFb1w3aphSCK1QYXSaFfbapMW3SX3sCukjvaO8iBebMdR1Jpr46dQSQL
+	 ds9qLg+rrwh0/4R1DoLi5PUdwn4+0tbag2tp3ym+R6pZAYsVdkl0B+m++9JqQdptEng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aaJpeLvk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rk3zeSDL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B70606A31C;
-	Wed, 18 Nov 2026 23:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD168606A31C;
+	Wed, 18 Nov 2026 23:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aaJpeLvk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A6D1F000C6;
-	Wed, 18 Nov 2026 23:47:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rk3zeSDL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8CB1F000C4;
+	Wed, 18 Nov 2026 23:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045669;
-	bh=2f0qVgce0lH4pTZhXBMohnPJBJUSpUrfKDVOsjv9w2Y=;
+	s=korg; t=1795045672;
+	bh=XXb0Y3XkyExKaia3HodPxClzJ/5trDZGwPawE3zyCYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aaJpeLvk6CzP8e/XCCunK7uAmrGDzfp7zVdeMJYxfUB10RnXOFcX0JP5bcvxKiy3P
-	 bKYlbyPsGedY8lcKZMPe2sMwrd2Y6vtkenaxMBk3WOJofGl3TVjpIMAQG1QI++iqiN
-	 N1OuvnMympz5xBUJUORalThZq1rdqkvtxWbxtF9I=
+	b=rk3zeSDLVWvvCTfQCnV1QzQwEEK/MCt7oNpfZRaX9ylXqRF9N6tWoxvABH9d0oPUh
+	 QFR6UcosAsSLca6HwVLF/E/evOHZCV5y1r16wrvIYZSE5TE/62CZ8f3FYbxIINI4Ng
+	 P1FtvWrjdgYFv77vHNPFTM0ub8YKRYqmsy2VavYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko <netdev-bot+sashiko@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
 	Daehyeon Ko <4ncienth@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1006/2857] ipv6: initialize temporary ifaddr before publication
-Date: Wed, 18 Nov 2026 15:34:00 +0100
-Message-ID: <20261118150237.817993928@linuxfoundation.org>
+Subject: [PATCH 6.1 1007/2857] ipv6: do not restart DAD for a dead ifaddr
+Date: Wed, 18 Nov 2026 15:34:01 +0100
+Message-ID: <20261118150237.853157859@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -72,107 +72,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit ed7f278812e540db507f683e5bf9b6d0a1f5bc1e ]
+[ Upstream commit ffb668669ce4144347973d8b2fad449e9be0563d ]
 
-ipv6_create_tempaddr() holds a reference to the public ifaddr, publishes
-the new temporary address through ipv6_add_addr(), and only then stores
-the reference and final timestamps.
+addrconf_dad_failure() can create a stable-privacy replacement without
+RTNL. After ipv6_add_addr() publishes it, addrconf_ifdown() can mark the
+new ifaddr DEAD, clear its route, and unlink it before the recovery path
+takes ifp2->lock.
 
-addrconf_ifdown() can remove the temporary address before ifpub is
-stored, leaking the public ifaddr reference. Publishing ifpub alone is
-insufficient: manage_tempaddrs() can then find the object before cstamp
-and tstamp are final, update its lifetimes, and have the constructor
-overwrite its timestamp with an older value.
+The recovery path then unconditionally changes the state back to PREDAD
+and queues delayed DAD work. The MTU teardown path can leave IF_READY
+set. For an optimistic address, addrconf_dad_begin() can consequently
+pass the cleared NULL route to ip6_ins_rt().
 
 This follow-on was found by source review and was not separately
 triggered at runtime.
 
-Pass the public ifaddr and both timestamps in ifa6_config. Initialize all
-three fields before adding the temporary address to either the hash or
-per-device lists. On success the existing public-ifaddr reference
-transfers to the temporary object. On error it remains owned and released
-by ipv6_create_tempaddr().
+The new ifaddr is already initialized in PREDAD. Under ifp2->lock, record
+the retry and queue DAD only if teardown has not changed the state to
+DEAD. If teardown wins after this check, the work observes DEAD and exits
+without reviving the address.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+This complements the existing lock_errdad check that preserves the original
+ifaddr's DEAD state after the same function reacquires its lock.
+
+Fixes: 5f40ef77adb2 ("ipv6: do retries on stable privacy addresses")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
-Closes: https://lore.kernel.org/r/179122559913.434549.12720841717630168470@kernel.org
-Link: https://lore.kernel.org/r/179161099665.434549.5858601179492551889@kernel.org
-Link: https://lore.kernel.org/r/20261007164548.GA1153540@shredder
-Link: https://lore.kernel.org/r/20261012145240.GA779501@shredder
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Closes: https://lore.kernel.org/r/179161099408.434549.14449036924552933828@kernel.org
+Link: https://lore.kernel.org/r/20260513025509.3776405-1-lilinmao@kylinos.cn
 Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261015050651.1841557-4-4ncienth@gmail.com
+Link: https://patch.msgid.link/20261015050651.1841557-5-4ncienth@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/addrconf.h |  3 +++
- net/ipv6/addrconf.c    | 20 +++++++++++++-------
- 2 files changed, 16 insertions(+), 7 deletions(-)
+ net/ipv6/addrconf.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/addrconf.h b/include/net/addrconf.h
-index 1363f88eb11e0..66ac594d0278d 100644
---- a/include/net/addrconf.h
-+++ b/include/net/addrconf.h
-@@ -75,6 +75,9 @@ struct ifa6_config {
- 	u8			ifa_proto;
- 
- 	const struct in6_addr	*peer_pfx;
-+	struct inet6_ifaddr	*ifpub;
-+	unsigned long		cstamp;
-+	unsigned long		tstamp;
- 
- 	u32			rt_priority;
- 	u32			ifa_flags;
 diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 7e54b264f672f..9b21080754133 100644
+index 9b21080754133..e2630c226b620 100644
 --- a/net/ipv6/addrconf.c
 +++ b/net/ipv6/addrconf.c
-@@ -1144,10 +1144,19 @@ ipv6_add_addr(struct inet6_dev *idev, struct ifa6_config *cfg,
- 		ifa->flags |= IFA_F_TENTATIVE;
- 	ifa->valid_lft = cfg->valid_lft;
- 	ifa->prefered_lft = cfg->preferred_lft;
--	ifa->cstamp = ifa->tstamp = jiffies;
- 	ifa->tokenized = false;
+@@ -2141,6 +2141,7 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
+ 			     ifp->idev->dev->name, &ifp->addr, eth_hdr(skb)->h_source);
  
- 	ifa->rt = f6i;
-+	ifa->ifpub = cfg->ifpub;
-+	if (cfg->ifpub) {
-+		ifa->cstamp = cfg->cstamp;
-+		ifa->tstamp = cfg->tstamp;
-+	} else {
-+		unsigned long now = jiffies;
-+
-+		ifa->cstamp = now;
-+		ifa->tstamp = now;
-+	}
+ 	if (ifp->flags & IFA_F_STABLE_PRIVACY) {
++		bool start_dad = false;
+ 		struct in6_addr new_addr;
+ 		struct inet6_ifaddr *ifp2;
+ 		int retries = ifp->stable_privacy_retry + 1;
+@@ -2179,11 +2180,14 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
+ 			goto lock_errdad;
  
- 	ifa->idev = idev;
- 	in6_dev_hold(idev);
-@@ -1438,6 +1447,9 @@ static int ipv6_create_tempaddr(struct inet6_ifaddr *ifp, bool block)
+ 		spin_lock_bh(&ifp2->lock);
+-		ifp2->stable_privacy_retry = retries;
+-		ifp2->state = INET6_IFADDR_STATE_PREDAD;
++		if (ifp2->state != INET6_IFADDR_STATE_DEAD) {
++			ifp2->stable_privacy_retry = retries;
++			start_dad = true;
++		}
+ 		spin_unlock_bh(&ifp2->lock);
  
- 	cfg.pfx = &addr;
- 	cfg.scope = ipv6_addr_scope(cfg.pfx);
-+	cfg.ifpub = ifp;
-+	cfg.cstamp = now;
-+	cfg.tstamp = tmp_tstamp;
- 
- 	ift = ipv6_add_addr(idev, &cfg, block, NULL);
- 	if (IS_ERR(ift)) {
-@@ -1448,12 +1460,6 @@ static int ipv6_create_tempaddr(struct inet6_ifaddr *ifp, bool block)
- 		goto retry;
- 	}
- 
--	spin_lock_bh(&ift->lock);
--	ift->ifpub = ifp;
--	ift->cstamp = now;
--	ift->tstamp = tmp_tstamp;
--	spin_unlock_bh(&ift->lock);
--
- 	addrconf_dad_start(ift);
- 	in6_ifa_put(ift);
- 	in6_dev_put(idev);
+-		addrconf_mod_dad_work(ifp2, net->ipv6.sysctl.idgen_delay);
++		if (start_dad)
++			addrconf_mod_dad_work(ifp2, net->ipv6.sysctl.idgen_delay);
+ 		in6_ifa_put(ifp2);
+ lock_errdad:
+ 		spin_lock_bh(&ifp->lock);
 -- 
 2.53.0
 
