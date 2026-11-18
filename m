@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023439;
-	b=YB9ynlK9KiwSsCW/MBBANJX1HVHaa/RezutuRZBU+ytwmwPua9CTbzJ/o0hdPmSHRg8T
-	 DL/pAUYqfOappRmhVlgn/Q6TMJuIA2yI/ASir7rVjLLhzpVQGPqXNwZ5HNZNAoV+03vb+
-	 kUNiKBpyqQhWFdGhBCmAjn8WKVYR6Ueh5cREzO20bxM25r3qN3KKPvd58RIyfsRJmtyDB
-	 rvaE2MDRSjnoCSF1bHHiCxP5mtrY+8rJi+GbWHRYd2FFYsFTrUaGjQYE5DYJvE3aqMATp
-	 4YVY+gS7wH63+UNdODfKjWnYeQq3jszqZWzOlHkWLcLHX1SPT1eYs4N3yu5hJRPZmSw==
+	t=1795023442;
+	b=k+Qf48HL0WBciwF8sQ0f1nhRt5BOcnJ32Z/fyLV2XFYkzGuITAPZTDBvvJZdBn1NTcku
+	 GW9yZjpudoSVvMhQLHg3M2t2nFquJ7ONLQABKHzKJjk4kp9zyZm64y/Uypw4kzt1fdDap
+	 lQo/z7QsqMyzoBq9gkIHcxcJBJl9WTI31oa34tCa/aEE6xH5AGbJsvRnlt0n0hZSCH6n2
+	 HYPYNVGH5q8A03cnIvu7gOUmfEIJXRzCO3DFpY0d7wBYZ6v+uSlJjQaZmvCGPV/rA1NEU
+	 k8t+9GixZk4BJKnRiufl/lqVk7HQxt5gG3EfHmJ+R1dKd5AhWABlDn0lRo8nG1Sw0yQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023439;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023442;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f+zsZq+SCOUOtV2ke+FpVmwIHTd6dgk3yFW//VSqZ3M=;
-	b=x9oOAZWkNPPmtfXeTCG7VQjzUok6KlhNd8aaIc5GtD0GkcPBUM1EhoD9Ic+6MgHqT7JY
-	 L4TQM3bPAqYuF/OGC+rxHW2PtxnOPnnUzXgnwB/i1pbIdwa+mgD0zKOnWq8wy29iVJ4Mt
-	 IG7wzG9HNkXK3u/noJlCBCBj9DlTJQ6Tfpw0F2p0AkyyHki1NQfeX2EXZ9ZC2S/nWXxTh
-	 Fw7cBWUEuvmVGjdD+DN2F22jbJjG/AHCY0HxIVkkNYOkP2TgYKXBHr/vuwhJ2esZWnS6e
-	 DT3sMvm683sNWzshR26r49/uGcVKchD5QU/EUpowORIzYiLrHZ2dnSKU+UTgHwjcfRg==
+	bh=LuIUeeqKS2jp5G/56zeEzg/e4kO31skcBzvZ9QgP+Ng=;
+	b=DIL0aVhktj4QiOXrYinoIXMf70yREgaupvjPOA68BGXY9tvxEXAlke5f2qBH4CpR1ovS
+	 zUcfaYRh98lRHNmUJ38t3bpvxbf/Kqiowpyz7tVRJyD3Vc0zP6re9TKWbSTKEmvqHBakY
+	 wZ1Wr7T9f2o5odWv9bnvKAN4raRaWCkXmV6XA13i6eGYMoZUaX2FznQLyehP4Q7n1dcRq
+	 9PnTb2KszhyLrII1jJvYcIHZ1yJU7nQky0gznfDgNSAWzpiyRcG8ZR1PQYp9vJDa5k2pL
+	 c68IeDUmvto3F06/u7XQ46tL2HOtu9b5ifQN0xrPogd6O/LcKj11sF/77ojH6kNKPJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PLHD9JeW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OgYJRKX+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FB4606CA5A;
-	Wed, 18 Nov 2026 17:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4BC606CA7D;
+	Wed, 18 Nov 2026 17:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PLHD9JeW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F1F31F000C4;
-	Wed, 18 Nov 2026 17:37:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OgYJRKX+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131331F000C9;
+	Wed, 18 Nov 2026 17:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023439;
-	bh=f+zsZq+SCOUOtV2ke+FpVmwIHTd6dgk3yFW//VSqZ3M=;
+	s=korg; t=1795023442;
+	bh=LuIUeeqKS2jp5G/56zeEzg/e4kO31skcBzvZ9QgP+Ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PLHD9JeW56GxdsIF318coesdAcCYyPheoLM0J4I7AjvMZXDRWkFUE2CJPZt3Cfdfj
-	 LcusvMWqkLlfzSwp/MfSYw6x5tvqwcXPqH3SGQM3ljBrEBll+xq/XmSFhBQ5z/+PR3
-	 LwIPER+u4acru8wpcPTskCJBQIDWh/OX491LzP8Q=
+	b=OgYJRKX+6jtLzDZ9ovWSUk0xxeXo+nOpNGPP6P+qvMm+thL8V1y/4oSCHhj6+ukbZ
+	 goBLK/Rwu2S2+0dbqxLo6hONX96c24ny0buaZTVV1fZl64zcD+pCD3LK17U95rByHQ
+	 bOA7RXosa2E87xDcYcjL9rd0gI4R2zpVF+aY4cwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Wang <wangjia@ultrarisc.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0369/2151] dmaengine: dw-axi-dmac: Fix CH_CFG2 channel priority position
-Date: Wed, 18 Nov 2026 15:35:04 +0100
-Message-ID: <20261118150135.533356352@linuxfoundation.org>
+Subject: [PATCH 6.18 0370/2151] PCI: endpoint: pci-epf-vntb: Serialize virtual PCI bus scan
+Date: Wed, 18 Nov 2026 15:35:05 +0100
+Message-ID: <20261118150135.568582209@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,39 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Wang <wangjia@ultrarisc.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 2a9013c20c46216b92ff09e2283b5244a91c59da ]
+[ Upstream commit 84c3520c9e8c14b09a5cf645cc4fa7c6d9d61127 ]
 
-The CH_CFG2 channel priority field occupies bits 51:47 of the 64-bit
-channel configuration register, corresponding to bits 19:15 of CH_CFG2_H.
+The virtual PCI bus is scanned without holding the PCI rescan/remove
+lock. This can race with other PCI topology changes.
 
-The driver currently shifts the priority value by 20, programming the
-wrong bits. Use bit 15 as the field position.
+Hold the lock across the bus scan and device addition.
 
-Fixes: 824351668a41 ("dmaengine: dw-axi-dmac: support DMAX_NUM_CHANNELS > 8")
-Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260902-dma-fix-v3-3-414c6449fbcc@ultrarisc.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/3tgrcel5fl55ulf3zjya4fkz4t2ms7iwwjif5rnzn2rafsydd6@i4e5etm7uqvz/
+Link: https://patch.msgid.link/20260901063238.631166-2-den@valinux.co.jp
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index d6e53f400af25..21adc030a7109 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -325,7 +325,7 @@ enum {
- #define CH_CFG2_H_TT_FC_POS		0
- #define CH_CFG2_H_HS_SEL_SRC_POS	3
- #define CH_CFG2_H_HS_SEL_DST_POS	4
--#define CH_CFG2_H_PRIORITY_POS		20
-+#define CH_CFG2_H_PRIORITY_POS		15
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index eef9d0e724381..53bf54edd5353 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -1099,15 +1099,20 @@ static int vpci_scan_bus(void *sysdata)
+ 	struct pci_bus *vpci_bus;
+ 	struct epf_ntb *ndev = sysdata;
  
- /**
-  * DW AXI DMA channel interrupts
++	pci_lock_rescan_remove();
++
+ 	vpci_bus = pci_scan_bus(ndev->vbus_number, &vpci_ops, sysdata);
+ 	if (!vpci_bus) {
+ 		pr_err("create pci bus failed\n");
++		pci_unlock_rescan_remove();
+ 		return -EINVAL;
+ 	}
+ 	ndev->vpci_bus = vpci_bus;
+ 
+ 	pci_bus_add_devices(vpci_bus);
+ 
++	pci_unlock_rescan_remove();
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
