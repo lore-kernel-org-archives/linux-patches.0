@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020779;
-	b=bj+dMqJ8pgtBqOnP0TWfkCyw7GFhbTJgf59DE1arvkOSwcfP0en2cpIDbWIYCyZu4Cw6
-	 lPoIPILjY13AVN69WKomjUSyPBLQyTAIi+XyDMoYTY2Wxe2uONwh+u260yKUPvTD5VdB9
-	 I6Wh9gEXIkoXoJXWyvlc1Vrhkyq7Bis34XZ+p0q7qvxPrs58VoE8jYI3jgRg9pMdM0x2o
-	 m0rybzEqVvqbGrswKYmzUeUlJdv/QrP/btK+buBgZIYVjguavkRADHqeOr6rBPX4kNQ2r
-	 6tueAH+VHzs3dvfNj5Cp9+bT9cAGFKQWfhriJpDOPq/6X0u10Ud6lkViaRSG5DCVBJw==
+	t=1795020781;
+	b=RYNZlByz1mc46POBEzfHYVnCj8bx3OPTgS5DBjz1FRpHOiXzqPR1RqdFUkzhERlOi3j8
+	 crwCk/I3NrP2uWusuezO3/Df3Aqk5MXZczVR+W1HWPHN2CON8IYc/67+eCL81zzJhTPNQ
+	 P9aeRscHhyhdpQOeFbx6ZLXByoGmSiMJ2AxH4SRaaJ8kc+OcmuXe50QJLNXEaWEmkFyff
+	 kVOVAMb41wzaBYZei5v+adH6gRN0vQjhKVCjXvHVjMSJ2V9ulxRbNLrTb/xkk/9gKw52k
+	 Spnl6ydCuW7rIrDy2RjNv+Tbbb9QJANhhNPvk1p76Y4eATSZdcnbrxp3jQZYiAOsRaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020779;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020781;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5cPkuFbynq+PvRq+xdJb/VuJiV1RdaebezRkgKjGVUU=;
-	b=xooYyPZ5a7UjxSkSmvDVUXCLB48i3EtaJJoOnqiXuyB9QWMFcz66sr+e2Q/03PlKBnkP
-	 cqCi4rzRmfm5IVKNOqec7inrz8O8kSH/kiAjvAbEG4gYtIqwFeAb1PGi/Nwdckifqt29U
-	 I8nKpYYhuIXvmbxu7u/iVR0MMDS5T7UJn7/cS5reL1YjwAJa1GY6l05bdazH3xkByQCeZ
-	 dA1/BWxDmJkl4NUr3yEmSQVtv1+GJJ2r1U3Kk+RZ4npfdoX8ooZ8RVm2Pxl9F7+xHZJnK
-	 pZSZ1OYuaofUq3K7Y2ImRH+9kgXkPacjyBiozkMzjiR66LNTKi3qsVJKcNpgEabiWlQ==
+	bh=6mzNVbh/opTs4lXEuY83QID6hDpWdOH7PKq46u0JlUc=;
+	b=k3hJGMVZT8m/opTTIsyrPqCO3LM8ixuWJ7xXDWfYBfhL5PveaoXTcgw8OS77mwPMFnHu
+	 zdsGIsa9Ah/qxRmjIaTKeetr5ocAkgy4GkJZTACe1c0nNFKmfso8lrYcY02lFAIdfMzJ0
+	 w5F4ohlAs7OXl5zoqgMgToz3nAmMtt0Ja5/SpbYOojb6mQN7KnaJOi468P56nPN4a+u5K
+	 BmznWCcwuMNBfXafGVUNA5K1b4QyGB+55OkZWzykD9iWmLwnVuec6H9Ub7L/qJgaz8GKF
+	 MH5neyiQ7YKW1w9l05L4jZLkoCrHRUNsQRJ7CPN7pKOZBpOfio3Gnq/rxI+8FGRd4RQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k0cuK0x5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZWvgEIID;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1512606A33D;
-	Wed, 18 Nov 2026 16:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A55B60A6F59;
+	Wed, 18 Nov 2026 16:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k0cuK0x5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF8D1F000C5;
-	Wed, 18 Nov 2026 16:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZWvgEIID
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD3251F000C8;
+	Wed, 18 Nov 2026 16:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020778;
-	bh=5cPkuFbynq+PvRq+xdJb/VuJiV1RdaebezRkgKjGVUU=;
+	s=korg; t=1795020781;
+	bh=6mzNVbh/opTs4lXEuY83QID6hDpWdOH7PKq46u0JlUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k0cuK0x5itf5MgkGce5+PNipO7cVwFS/cxHWABcZXAW0bqDN+ARZ1nPfo8kIShjFP
-	 puvaT2ht567WIzE2zq5FtHmlBKFhPexS5tB2OEYP78zi7k6Gbi66r8wdP9iIo6obVE
-	 cp+OCYxZGAkIJ0/OrdkKcWAin0Sr6Gn/i0dYsMKQ=
+	b=ZWvgEIIDIHyWVM/wSdwZZAUfDt9sqw5AO8tQw1SwFKkpy8yMX0ESyUAxHnSPpR/HO
+	 qOyBX/0PBrkVLnobjtiRAuAYA5ZcTHTaVxgSU2pq8LHMF8auK5gYnHqnT3Il3TZp1V
+	 qKP6IAAOtMy0rJGduFTma4ca6T88fxDyd+vFdLeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Vincent Jardin <vjardin@free.fr>,
-	Wei Fang <wei.fang@nxp.com>,
+	Brad Fitzpatrick <bradfitz@tailscale.com>,
+	Eric Dumazet <edumazet@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2073/2651] ptp: qoriq: fix support for PTP_EXTTS_REQUEST2 ioctl
-Date: Wed, 18 Nov 2026 15:55:13 +0100
-Message-ID: <20261118150400.673065332@linuxfoundation.org>
+Subject: [PATCH 7.3 2074/2651] gre: keep the UDP tunnel GSO type when completing GRO
+Date: Wed, 18 Nov 2026 15:55:14 +0100
+Message-ID: <20261118150400.707439707@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,54 +69,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Jardin <vjardin@free.fr>
+From: Brad Fitzpatrick <bradfitz@tailscale.com>
 
-[ Upstream commit d347ab5cf809365e7b3749dc91d77e89e4b7ec3f ]
+[ Upstream commit 718f364a20ecee4f25986789c25550cf4da73b4c ]
 
-Commit 7c571ac57d9d ("net: ptp: introduce .supported_extts_flags to
-ptp_clock_info") moved the validation of the external timestamp request
-flags into the PTP core. A driver that does not set
-.supported_extts_flags still accepts the legacy PTP_EXTTS_REQUEST ioctl,
-but every PTP_EXTTS_REQUEST2 request is rejected with -EOPNOTSUPP, since
-the core always adds PTP_STRICT_FLAGS to it.
+gre_gro_complete() assigns SKB_GSO_GRE to gso_type rather than OR-ing
+it in. When GRE is carried over UDP by FOU or GUE, udp_gro_complete()
+has already set SKB_GSO_UDP_TUNNEL{,_CSUM} before calling into the FOU
+or GUE gro_complete handler and then gre_gro_complete(), so that bit is
+lost.
 
-ptp_qoriq_init() programs TMR_CTRL with ETEP1 and ETEP2 cleared, so the
-timer timestamps the rising edge of its external trigger inputs. Declare
-that, with PTP_STRICT_FLAGS, so that a falling edge request is rejected
-instead of being timestamped on the rising edge.
+That has broken forwarding of such packets since FOU gained GRO: if a
+host with a FOU or GUE socket on the tunnel's port merges transit
+packets and then forwards them out a device that can't segment them
+itself, udp4_ufo_fragment() finds neither tunnel bit and fails, and
+the packets are dropped. Since commit 3d010c8031e3 ("udp: do not accept
+non-tunnel GSO skbs landing in a tunnel"), local receive is broken too:
+udp_unexpected_gso() considers the merged skb, which reaches the
+encapsulation socket without either UDP tunnel bit, unexpected and
+hands it to udp_rcv_segment(). Segmenting fails, so the packet is
+freed and counted in UdpInErrors. Either way, only packets GRO didn't
+merge get through, so TCP over FOU or GUE GRE tunnels slows to about
+one segment per round trip whenever the receiving device has GRO
+enabled.
 
-This also makes the legacy PTP_EXTTS_REQUEST ioctl strict: a request for
-the falling edge, or for both edges, now fails with -EOPNOTSUPP instead
-of being timestamped on the rising edge. That cannot be avoided: the core
-adds PTP_STRICT_FLAGS to every PTP_EXTTS_REQUEST2 request, so a driver
-has to declare it to accept them, and once declared it applies to both
-ioctls. Commit 3200fdd4021d ("broadcom: fix support for
-PTP_EXTTS_REQUEST2 ioctl") made the same change for bcm-phy-ptp.
+OR in SKB_GSO_GRE instead, as ipip_gro_complete() and
+sit_gro_complete() do for SKB_GSO_IPXIP4. For plain GRE, gso_type is
+still zero at this point unless the driver set it, so nothing changes
+there in the usual case.
 
-Fixes: 7c571ac57d9d ("net: ptp: introduce .supported_extts_flags to ptp_clock_info")
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Signed-off-by: Vincent Jardin <vjardin@free.fr>
-Reviewed-by: Wei Fang <wei.fang@nxp.com>
-Link: https://patch.msgid.link/20261009-for-upstream-qoriq-ptp-extts-flags-v2-3-0f4eeff2295d@free.fr
+The assignment dates to commit bf5a755f5e91 ("net-gre-gro: Add GRE
+support to the GRO stack"), but nothing set gso_type before it until
+FOU GRO came along, so the Fixes tag points there.
+
+Tested under virtme-ng with bulk TCP over a GRE tunnel between two
+network namespaces joined by a veth, with GRO on the receiving veth and
+segmentation off on the sending one, so GRO sees wire-sized packets.
+32 MiB took:
+
+                  before                  after
+  FOU over IPv4   26.0s, 9658 UDP errors  0.28s, 0 errors
+  GUE over IPv4   26.1s, 9686 UDP errors  0.39s, 0 errors
+  FOU over IPv6   26.4s, 9860 UDP errors  0.16s, 0 errors
+  plain GRE       0.17s                   0.15s
+
+Forwarding the same FOU traffic through a third namespace with its own
+FOU socket on the port, GRO on its ingress and segmentation off on its
+egress, took 26.0s with 4826 egress drops before and 0.31s with none
+after. On v6.8, before 3d010c8031e3, local receive was fine but
+forwarding failed the same way (25.7s, 4764 drops).
+
+With GRO off on the receiver, all took under 0.2s both before and
+after. The gre_gso.sh and fou_mcast_encap.sh selftests give the same
+results before and after.
+
+Fixes: afe93325bc02 ("fou: Add GRO support")
+Signed-off-by: Brad Fitzpatrick <bradfitz@tailscale.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261011-bradfitz-gre-fou-gro-b4-v1-1-df713aad1531@tailscale.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_qoriq.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/gre_offload.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ptp/ptp_qoriq.c b/drivers/ptp/ptp_qoriq.c
-index 76272e5ac5b85..bcd29104effe7 100644
---- a/drivers/ptp/ptp_qoriq.c
-+++ b/drivers/ptp/ptp_qoriq.c
-@@ -355,6 +355,7 @@ static const struct ptp_clock_info ptp_qoriq_caps = {
- 	.n_per_out	= 0,
- 	.n_pins		= 0,
- 	.pps		= 1,
-+	.supported_extts_flags = PTP_RISING_EDGE | PTP_STRICT_FLAGS,
- 	.adjfine	= ptp_qoriq_adjfine,
- 	.adjtime	= ptp_qoriq_adjtime,
- 	.gettime64	= ptp_qoriq_gettime,
+diff --git a/net/ipv4/gre_offload.c b/net/ipv4/gre_offload.c
+index 5028c72d494ab..c8129782d39de 100644
+--- a/net/ipv4/gre_offload.c
++++ b/net/ipv4/gre_offload.c
+@@ -242,7 +242,7 @@ static int gre_gro_complete(struct sk_buff *skb, int nhoff)
+ 	__be16 type;
+ 
+ 	skb->encapsulation = 1;
+-	skb_shinfo(skb)->gso_type = SKB_GSO_GRE;
++	skb_shinfo(skb)->gso_type |= SKB_GSO_GRE;
+ 
+ 	type = greh->protocol;
+ 	if (greh->flags & GRE_KEY)
 -- 
 2.53.0
 
