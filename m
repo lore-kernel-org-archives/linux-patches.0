@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034006;
-	b=D/0tx7rOaBu/5tYAI4gwvMHEa/WHv4MZ58k3EtNF/sD2Gm9XY6vDII93ab+CktHR63sH
-	 HQqzCl6CQcl/zwvXwWi0OtofUl3EJltaPvp+ZvmrZ4SEyaMoCknbXGrvhqDIGr0FLr6VN
-	 5hd3NQaEoAteq1wFv8IXs0MRHXLhzaii9K/JFKnt7pmxke1BdN7nA6XhcTmPIe9kbWGAK
-	 f6tQhFhCU80TmpW4LBc7q1Vv1R8TjXnXT1vn9Ep7/0PgM0I0FotdO22mMZchfO/f2/2tv
-	 8xDjekT/OyZt2KAyH+xfOUMdZLsBDqujcQFcPbjHqNf4C/pXmOc9lfEXp5r6qh5OGDQ==
+	t=1795034009;
+	b=qjtsz2wpoKaEYZIlSCJvIB3AZOFGe46w9gsqNWB3WjkCdpsudfE+qsuyLqKFBrchv/Ij
+	 4ArO/Wo1pD08XSsVUNaSl7/YLFheVciHNvz22ov3oteeVMtN4H1bsZHEHhk07Hrb+q9Kz
+	 LkEKhd4VATK4VMoWDqjOyC/s3gUHNrijk+8qEE9IDu2Mjn7uBzn5hGK/2onNzyi+MwUS1
+	 A3iqfvgjajvp1WwxxhzLcokeecYDHjqgnG1+O+bULGHswu94zCk9bprqhAEiTx+287fGM
+	 g1zLnCpfpnSAjOHWFvL1zck3WuekAMtf3JoJN6v/FJO/13wEwg39eT6vILRHfNKfvHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034006;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034009;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=S/Qz/9Xf5yukTWFkDM12wG6r7jOZ07VLz/wtBb6bNOg=;
-	b=d8TH2ElmCs26JfifI6F64iyGJPBqd4b+P35ZxbU/QZY74MlRZuTNSkCn+LGYHfzZhtwp
-	 hb16WKSZTXLdM/3BpJZRCATIlo1m5No6IEfLqI4JUOj8IAy90Ox9dUwMjMN61m26gkI9h
-	 qpgvKAYCuntn9TFuMnHsqFQarLZ0x/34Cn5+a1LJ7MlNnxy2sCiYEjKdSTtNHB/SESMcJ
-	 o11Bp+FME716rA9QqxqGdH/1RNvLIcV9vajClVN3rOxZGmMgyb5hC7EqQb0/VrLQ89SU6
-	 0yb1fvz7adL3u9QxhqkOJ2qIq86d+lYgSI9QpWX+V+uMVrhFHPbjAfIrFszT7fHRI9Q==
+	bh=is4OMLKdEXiZ2833jGKDlKPY0XVeoOb1bGesKbJTPvc=;
+	b=uw5cUb5VePVSs7X5DYONsP7KKqZ7TDZ8xrFEsTLuhXEC2K3HsWAhtVUsSUt/c9DgN3Bo
+	 UtXHEzSTGv0cds/iRK42Im7CyC2rEEwqEATzhUN5gt5kphkYniOUYzlZvt2PR8SZhKXyx
+	 a65TIe8fTy5O2Wa6znzE7lbkkDfX+zcdDQ9wnsss/ysuyx4BpJrmcjLgj7VfJjhyfXJOE
+	 pcLW+9XjseERrPWZ00x3G/Fdx44lxStEN2wKQhyc88aYaIm0dF3BKS9Da/85eTMbYk7V5
+	 3X79OBMGXgfJgZoLJfc6HSgza6StPtEi0wjDf7tSog+ZZWWV8SibNIeojg8t0mgTk6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dsxsObTR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WBrE93HI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A97606A31C;
-	Wed, 18 Nov 2026 20:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BABD606A31C;
+	Wed, 18 Nov 2026 20:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dsxsObTR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B56011F000C4;
-	Wed, 18 Nov 2026 20:33:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WBrE93HI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5031F000C4;
+	Wed, 18 Nov 2026 20:33:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034006;
-	bh=S/Qz/9Xf5yukTWFkDM12wG6r7jOZ07VLz/wtBb6bNOg=;
+	s=korg; t=1795034009;
+	bh=is4OMLKdEXiZ2833jGKDlKPY0XVeoOb1bGesKbJTPvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dsxsObTR06PpWCJypAwT1phB6StxbS0YuGN3m5y9Fga32aFcIqHWBWbCuiUgxkXdt
-	 72jtFa/jy68Aj+XPQ/6kcGdxZNXJXOgu6P13ASXp/X0snV9BY8/0iug5g3b2Jgc1Cj
-	 rz89NIGGf/fMmO1226hb7FNq15wM3L8TsAkhGeBA=
+	b=WBrE93HI3MGqGoXGL9IMz0frAGDdfO52fuH7l0ae9sjoZ0l3D26YYnQiIq3rZ7id0
+	 ebQNaR9yYHU/MKk4Wzrxtqbczm1smHGH8ZShq1pJUlH3DITIbP/8cafLiAPdSl2CzP
+	 5LsGhJdHhF6w1ZaK1WzWLjvSnN7CzgDyaB65qn70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
-	Bastien Nocera <hadess@hadess.net>,
+	Aaron Ma <mapengyu@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0217/3318] HID: logitech-hidpp: Add support for G502 X Plus USB mouse
-Date: Wed, 18 Nov 2026 15:13:59 +0100
-Message-ID: <20261118150321.476280030@linuxfoundation.org>
+Subject: [PATCH 6.6 0218/3318] HID: quirks: Add ALWAYS_POLL quirk for Beitong BTP-KP20D dongle
+Date: Wed, 18 Nov 2026 15:14:00 +0100
+Message-ID: <20261118150321.512345996@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,34 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
+From: Aaron Ma <mapengyu@gmail.com>
 
-[ Upstream commit 6f4b44abe4ccdcfdab75c9493b8c7634fee37133 ]
+[ Upstream commit bfff246b3a31cb45ec297ca5e2a77c1410b207ac ]
 
-The wireless dongle is already supported, this adds detection for
-the mouse in wired mode. Supports battery reporting.
+The BTP-KP20D dongle in Direct/HID mode (20dd:5159) re-enumerates every
+few seconds because usbhid never submits its interrupt-IN URB: no HID
+driver binds to the vendor-specific report descriptor, so the device is
+never opened, and the firmware treats the idle endpoint as a lost link.
 
-Signed-off-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
-Reviewed-by: Bastien Nocera <hadess@hadess.net>
+Add HID_QUIRK_ALWAYS_POLL to keep the interrupt-IN URB submitted from
+probe time.
+
+Signed-off-by: Aaron Ma <mapengyu@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/hid-ids.h    | 3 +++
+ drivers/hid/hid-quirks.c | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index 88b4027236cdf..eb3066cd24d47 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4654,6 +4654,8 @@ static const struct hid_device_id hidpp_devices[] = {
- 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC082) },
- 	{ /* Logitech G502 Lightspeed Wireless Gaming Mouse over USB */
- 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC08D) },
-+	{ /* Logitech G502 X Plus Wireless Gaming Mouse over USB */
-+	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC095) },
- 	{ /* Logitech G703 Gaming Mouse over USB */
- 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC087) },
- 	{ /* Logitech G703 Hero Gaming Mouse over USB */
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index a429ec77ff4b6..0a714af21056e 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -252,6 +252,9 @@
+ #define USB_VENDOR_ID_BAANTO		0x2453
+ #define USB_DEVICE_ID_BAANTO_MT_190W2	0x0100
+ 
++#define USB_VENDOR_ID_BEITONG		0x20dd
++#define USB_DEVICE_ID_BEITONG_KP20D	0x5159
++
+ #define USB_VENDOR_ID_BELKIN		0x050d
+ #define USB_DEVICE_ID_FLIP_KVM		0x3201
+ 
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index b95521c50d252..97722b8803ce6 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -45,6 +45,7 @@ static const struct hid_device_id hid_quirks[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_CS682), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_CS692), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_UC100KM), HID_QUIRK_NOGET },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_BEITONG, USB_DEVICE_ID_BEITONG_KP20D), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_MULTI_TOUCH), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_PIXART_USB_OPTICAL_MOUSE), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_PIXART_USB_OPTICAL_MOUSE2), HID_QUIRK_ALWAYS_POLL },
 -- 
 2.53.0
 
