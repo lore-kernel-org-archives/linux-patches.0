@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040488;
-	b=O2/9h5+9Z6nb0+2XbFG2dTu5NPFyIkRmBpBeomrd4T9stkAvWE5MY9fOTAS+Fpu9vdKD
-	 xOKT133jg/19aGoaU/IF81Ax9Hv/59HEtU9kPDsYU+wxPYO4Nlhqk5CCbtheEL+CjFBY+
-	 ffawCJ/6oaguesXZIfskxRa4O6AYvyCY9qyf4frXIODy7rb17XRlwv3nU4KeHe/BhO7+q
-	 6tXIcpM1tlZwIIUeKoeu40Ja0FD/SYS39DoDuplgZTkUSqWrTZXh9463i1bxw4aMfrauC
-	 FI8nrd/A2fT8AEi5PXkAwPOB6QeZN+l1jM8bDPyTzpq6GzKZ0AgTL8obLFY57//q9/A==
+	t=1795040491;
+	b=kVzcwEuoT1tXQhZt0tFlZoY++Tg1OavWYCq/F02mqN0bTyUmxibN0Ker/ox7C51exUHT
+	 H6MGHbybXGh9Gdi0aAbJKuQH9lhcSaiXnr8ErrIbFvbARx/eTEzmjzByVo4ACNgWbEySP
+	 ICPvAszkLrFL0VEDjOUaQvqGxpBTxdf56dxUEbzRVOo8r5UQNFyguvb4wXC2yIIc0TOj1
+	 wNl78TMd2HdlXoW4q50UqGFsDsL0s5qkp+vpU2gIMfhogweP24zMRup93dCOY+QpY5qrX
+	 tUKTAcn05WkRA8k13hTXthZ6ZuycigaAl8TOFOl9Ko/eHA5oTl+PF+NfPAlNQcg3Abg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040488;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040491;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0MrMUIi4g6Nb1CM/2dQfoFlnkX4IX10lCva3ICFnpGo=;
-	b=AhlUPjnFgoqW6osPT12mpBPkwNHG1JDAgPCkGYyWujFzxsYqOlDyHUMV+bVBxSAkt8xy
-	 Lg04jlWgO3cnLaW4jEq6/R/0PeAvwRG9uW7Cnsrh1vEBac/rOU02xVZS46Khv5M27VM4U
-	 fLMJqhm7Hh1mCw/rwZ1CQ7/byp1LDR50mPAAELbLtQi+LtKLuuUY7n4FoZsXA+eNzQOiu
-	 qezFwO9H54zmFQRY+qmkXPO4EgN59uOovTWE8TbCpInmiZKaKsnuj8VRUTX7H18H1w6EM
-	 MfDglJPnQ0GhbpC91ZXlf7kGSv042+vBtANMmNBEikpRxUK0S1iLtuyetvla+1dsYAw==
+	bh=b1QJgYTn0mxChRLl2w+jpc8SF5a8cYenpA/G6FAnNQY=;
+	b=33JS+Vwm9zJRfCgTVsu9sTH2V9uqZiY8e+mAVXiBA+GpzBjnnlQISa3qIuwH85rtpIkW
+	 8NBzCMGo58YKDZlZO03TqGRZMsfQTYnT9NQi88QhwTYaxNhkq8X59nmfK6Lk2GACewGdQ
+	 EnAsfVrvKV999W+kRzeBsY21eM1j3zXCWvaMDDy1pcku9baDzaHAK2Gb1gqkAYiof9XHD
+	 hmjKVzjxeA1T0kpOseESW35nZOSQUKwxrlH115uxhu4UE3p/gSSNO0BuU4pkr54tOh9yN
+	 yFahb5PEF2u0XWJGucFhZyJk/vEniMNzU8gfRpqgDTwvTAj614KwsvU0oddVIbdh73A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LyGZzBl8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LHdoBZ6T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB06606A31C;
-	Wed, 18 Nov 2026 22:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77405606A320;
+	Wed, 18 Nov 2026 22:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LyGZzBl8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F841F000C4;
-	Wed, 18 Nov 2026 22:21:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LHdoBZ6T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00FB1F000C4;
+	Wed, 18 Nov 2026 22:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040488;
-	bh=0MrMUIi4g6Nb1CM/2dQfoFlnkX4IX10lCva3ICFnpGo=;
+	s=korg; t=1795040491;
+	bh=b1QJgYTn0mxChRLl2w+jpc8SF5a8cYenpA/G6FAnNQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LyGZzBl88pqZqQArVSCyL7/2T6NoMLbg3HFG336ZzsRdomg4ICNxt0AeGhApLEvkk
-	 Dgk6jMBRPVDaQNMQaP9lt6PWWBJ/2CMx86+4OpGlgq0RI7fltmRasoOaYGbsXbM0FG
-	 yTABGBG0K530lgWvfpNqRmb4lsHWJHqn08oFYSSk=
+	b=LHdoBZ6TEWsMAMej+5/But2yCczx7kNuxW6HKMMTpwVILBpuUIw/vQc9FLUYGs7qx
+	 J1WzBWgj5XY1ZL3HdMCOYZ4dKrEuCYP5Dy+pZyHH+8dNmtypkgRa722wBJqrdUZcju
+	 w/U1hjH8S/AtMM1ka8ADl5/P5QJByW/PNOHY8PEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2475/3318] rtc: bd70528: properly enable wakeup
-Date: Wed, 18 Nov 2026 15:51:37 +0100
-Message-ID: <20261118150435.658356156@linuxfoundation.org>
+Subject: [PATCH 6.6 2449/3318] RDMA/bnxt_re: Initialize wqe.flags in bnxt_re_post_srq_recv()
+Date: Wed, 18 Nov 2026 15:51:11 +0100
+Message-ID: <20261118150434.912660947@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,47 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit cb8a6249236fd970fc3418d5d2b27dc37376f3ff ]
+[ Upstream commit 4d8168a3b7c93385c11dc836df569d337089b218 ]
 
-Wakeup on RTC alarm now only accidentially works when wakeup for the power
-button connected to the same PMIC is also enabled. Fix that by properly
-specifying the wakeup irq.
+wqe is declared once above the WR loop and never zeroed, so
+wqe.flags holds indeterminate stack contents on the first WR and the
+previous WR's stale value thereafter. This propagates straight into
+the hardware-visible srqe->flags in bnxt_qplib_post_srq_recv().
 
-Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: 32a4a4ebf768 ("rtc: bd70528: Initial support for ROHM bd70528 RTC")
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20260922-rtc-bd-v3-1-7f2580c55d58@kemnade.info
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Most values of the wqe struct is set except flags. So initialize
+flags also.
+
+Fixes: 37cb11acf1f7 ("RDMA/bnxt_re: Add SRQ support for Broadcom adapters")
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-bd70528.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rtc/rtc-bd70528.c b/drivers/rtc/rtc-bd70528.c
-index 59b627fc1ecfa..7f10f2f4f468b 100644
---- a/drivers/rtc/rtc-bd70528.c
-+++ b/drivers/rtc/rtc-bd70528.c
-@@ -10,6 +10,7 @@
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_wakeirq.h>
- #include <linux/regmap.h>
- #include <linux/rtc.h>
- 
-@@ -318,6 +319,10 @@ static int bd70528_probe(struct platform_device *pdev)
- 	device_set_wakeup_capable(&pdev->dev, true);
- 	device_wakeup_enable(&pdev->dev);
- 
-+	ret = devm_pm_set_wake_irq(&pdev->dev, irq);
-+	if (ret)
-+		return ret;
-+
- 	rtc = devm_rtc_allocate_device(&pdev->dev);
- 	if (IS_ERR(rtc)) {
- 		dev_err(&pdev->dev, "RTC device creation failed\n");
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index 3007733e6036d..536f8beb1fc07 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -1892,6 +1892,7 @@ int bnxt_re_post_srq_recv(struct ib_srq *ib_srq, const struct ib_recv_wr *wr,
+ 	spin_lock_irqsave(&srq->lock, flags);
+ 	while (wr) {
+ 		/* Transcribe each ib_recv_wr to qplib_swqe */
++		wqe.flags = 0;
+ 		wqe.num_sge = wr->num_sge;
+ 		bnxt_re_build_sgl(wr->sg_list, wqe.sg_list, wr->num_sge);
+ 		wqe.wr_id = wr->wr_id;
 -- 
 2.53.0
 
