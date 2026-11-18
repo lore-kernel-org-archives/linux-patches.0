@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040660;
-	b=Sp1dw7lNHAxxzl7cymlcnKnNkn4WQYlvyp5sQpTbR9KSIqe8HtDEPLbRl+6LM5A3MGjF
-	 t70dT2JJmfycOLADCcCTz6jhdHRiEXKJTs027bMwGPYmd9/IUnzJIm5ciFwBmA5XthXTL
-	 hPRZWJAPdIGaKbyFx4knljf7izhy/ixaNJxvRD8LubEg8C93Rov3eVPkSuLMv8ZYLADV3
-	 sHkOLj9AdZqWU64954qgd3UeFcyHkLoEmYBydXqJcwFox/yGaPr7axe6M+1PgAyejIiOT
-	 DR+Nq+tFxpdOUQCV+ojceAAhYrHzXznpW08eIkICRCmrWLLgKMOq6wzpOTS2AJOkONw==
+	t=1795040663;
+	b=mRiuOpJNzaq0PiJCIEm1GQ0adAWBLQn9FWiUQpYlX3ncNP4JZP9nX695TnHFtTSBxgdn
+	 Xtb0Go9hLvffatv/73JiQRTrZ+Q03RDRPLDu7G7pm57Z7YMUFbrnBGIbumiBp3zZWqjnk
+	 b70e6hnXA7paht5k8xHLFQXC2jfR2k76JsbZtiGOk9rXKrUfPHD55MyCuvZoQYqtUUu+N
+	 +nR3RsBthyiz1haCMghWKDHdXCSlHsqh0EavOl3o1+iy6t6OhZzZJnzM928xeWPKc25D6
+	 fF9Pi2PqB/Br4iG8p9NzEkmIaofV3LVrSC32I0HWmqiGj59plDDBNyZB8A5iRb0+DSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040660;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040663;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oYPu+6AtD5o/k7Ym1995Z3iss7SUxiQ4aEMpXTpQ9Ec=;
-	b=zJDqkAbRXw3qSyynK6BjAbv5mINNJav7LLLCKf5oUGFG9Ojcw181QkiXPo7GkR3U5EQA
-	 xrIfZ7gmklfXWQEF0YNukWZXEg9vov+XVuVpDpPL2Dow06vbtQgwr9G/vcGZ45AfSfpDY
-	 iwB79dZNmt48HJGn7/7WavvLMqknr7KqEUGKIgwT9rdpMa3CGOl/Use2lWaCrld4bsUF1
-	 5KXrMA733gJSpo8+g6TTL+ZTCqNtCf0S1Jgz5RMSk/93P2nAuf/gTYyAgL6lSM2iNYTi9
-	 pctE/JU8V87FDbX3zdzhfca+bgy2AKyZqRdHknAlNYpy3ld2jccB2J6FwA7gvhw/E1A==
+	bh=SkeHSJkdwwCFmmY3B12HeOZmTuNTFbJFtOSCfvXhssU=;
+	b=Gtz6Od69mxSIU7fxGXbQ/QBlbVWKr6AueZABL3hzCXE3rLXtBoE70W6YXiJr982BzM2+
+	 ATZYlcLUcmV6MKiOl5FtJIWguaxmbIsnwAOPaXHWeiCZuDVZhyd3pctYH6wrOOAMKUnrj
+	 0GAPvccCn0s4JodtJT0P/ypJhU3icn3Rvq6xSZPa45pibfvwsQM0vEZ9aOwBYfoI+xmB0
+	 iuF4J0LjCmhnDdp6DW7Zkjf7srzX47cTe9Qebp2s9pSVUUKXfgj/x5FlNOzq8HpMLh2I+
+	 Vqdc2zBT6zKjLIeEOEbRrbDotMaUVg6z0ZWcqq77Vw+KUGtp+wwVr49n4MAFheTTiMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kLMIpFF1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wUALKF8M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57C2606A325;
-	Wed, 18 Nov 2026 22:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98859606A32A;
+	Wed, 18 Nov 2026 22:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kLMIpFF1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD271F000C4;
-	Wed, 18 Nov 2026 22:24:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wUALKF8M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA2811F000C4;
+	Wed, 18 Nov 2026 22:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040660;
-	bh=oYPu+6AtD5o/k7Ym1995Z3iss7SUxiQ4aEMpXTpQ9Ec=;
+	s=korg; t=1795040663;
+	bh=SkeHSJkdwwCFmmY3B12HeOZmTuNTFbJFtOSCfvXhssU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kLMIpFF1uua8gvls3RAE73s/AaMI/AL1DOao360+4vVliA0UZT0dRz7ORXDFZ7pxs
-	 YMVbkTEPecPnRRHzkZQFfWeRYh0z/2fLCp2F4HtPihLdx5fdG6B7jT11UPAD3n7Nmd
-	 HvwEH8m/KiKxToXbhyd7/MJ0KgxJ0aqxhEffvIH0=
+	b=wUALKF8MmsTwyY45FiPC7NX96FZxTBqBK5VKu6oM3bA1yc8NeqlLifnTy3393OVp7
+	 zn0iCecnAIfBBhPGs7khgNLdlVz+cAlb2dV8HJ3dGPEn4IAT14PUfY6u0ub4RdiEFZ
+	 2Hx2VJ0dHkOW/GLdnrBKItW6ubel/4alAzGva+D0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huang Rui <ray.huang@amd.com>,
-	Li Meng <li.meng@amd.com>,
-	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Perry Yuan <perry.yuan@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	syzbot+75d7e96ad03ac2dbbd9f@syzkaller.appspotmail.com,
+	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2499/3318] cpufreq: amd-pstate: Unify computation of {max,min,nominal,lowest_nonlinear}_freq
-Date: Wed, 18 Nov 2026 15:52:01 +0100
-Message-ID: <20261118150436.359403100@linuxfoundation.org>
+Subject: [PATCH 6.6 2535/3318] md: take reconfig_mutex when enabling PPL on an inactive array
+Date: Wed, 18 Nov 2026 15:52:37 +0100
+Message-ID: <20261118150437.374331868@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,221 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Perry Yuan <perry.yuan@amd.com>
+From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
 
-[ Upstream commit 5547c0ebfc2efdab6ee93a7fd4d9c411ad87013e ]
+[ Upstream commit 900bf42e0ff8009f66ffd4a679c56264957019dd ]
 
-Currently the amd_get_{min, max, nominal, lowest_nonlinear}_freq()
-helpers computes the values of min_freq, max_freq, nominal_freq and
-lowest_nominal_freq respectively afresh from
-cppc_get_perf_caps(). This is not necessary as there are fields in
-cpudata to cache these values.
+consistency_policy_store() sets MD_HAS_PPL for an external-metadata array
+that is not running yet, without holding reconfig_mutex.  But ->pers is
+only assigned after pers->run() returns, so "not running" also covers an
+md_run() that is in progress under the lock.
 
-To simplify this, add a single helper function named
-amd_pstate_init_freq() which computes all these frequencies at once, and
-caches it in cpudata.
+If the write lands inside raid5_run() after log_init() has decided not to
+set up PPL, or after a failed ppl_init_log() has cleared the flag, the
+flag ends up set with conf->log_private still NULL.  The next idle pass
+of raid5d() then does:
 
-Use the cached values everywhere else in the code.
+  raid5d() -> handle_active_stripes() -> log_flush_stripe_to_raid()
+    -> ppl_write_stripe_run()
 
-Acked-by: Huang Rui <ray.huang@amd.com>
-Reviewed-by: Li Meng <li.meng@amd.com>
-Tested-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-Co-developed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Signed-off-by: Perry Yuan <perry.yuan@amd.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: f6d3cbc63935 ("cpufreq: amd-pstate: Restore previous mode when changing driver mode fails")
+and dereferences the NULL ppl_conf:
+
+  Oops: general protection fault, probably for non-canonical address
+  0xdffffc0000000002
+  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+  RIP: 0010:ppl_write_stripe_run+0x60/0x1320 drivers/md/raid5-ppl.c:538
+
+Take reconfig_mutex around the update and refuse it with -EBUSY once the
+array is running, in which case ->change_consistency_policy() is the
+right interface.
+
+Fixes: 664aed04446c ("md: add sysfs entries for PPL")
+Reported-by: syzbot+75d7e96ad03ac2dbbd9f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=75d7e96ad03ac2dbbd9f
+Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Link: https://patch.msgid.link/20260924171345.75894-1-ngocthang2710.1999@gmail.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 126 ++++++++++++++++-------------------
- 1 file changed, 59 insertions(+), 67 deletions(-)
+ drivers/md/md.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 1e4ce11910d73..130e434e8d683 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -623,74 +623,22 @@ static void amd_pstate_adjust_perf(unsigned int cpu,
- 
- static int amd_get_min_freq(struct amd_cpudata *cpudata)
- {
--	struct cppc_perf_caps cppc_perf;
--
--	int ret = cppc_get_perf_caps(cpudata->cpu, &cppc_perf);
--	if (ret)
--		return ret;
--
--	/* Switch to khz */
--	return cppc_perf.lowest_freq * 1000;
-+	return READ_ONCE(cpudata->min_freq);
- }
- 
- static int amd_get_max_freq(struct amd_cpudata *cpudata)
- {
--	struct cppc_perf_caps cppc_perf;
--	u32 max_perf, max_freq, nominal_freq, nominal_perf;
--	u64 boost_ratio;
--
--	int ret = cppc_get_perf_caps(cpudata->cpu, &cppc_perf);
--	if (ret)
--		return ret;
--
--	nominal_freq = cppc_perf.nominal_freq;
--	nominal_perf = READ_ONCE(cpudata->nominal_perf);
--	max_perf = READ_ONCE(cpudata->highest_perf);
--
--	boost_ratio = div_u64(max_perf << SCHED_CAPACITY_SHIFT,
--			      nominal_perf);
--
--	max_freq = nominal_freq * boost_ratio >> SCHED_CAPACITY_SHIFT;
--
--	/* Switch to khz */
--	return max_freq * 1000;
-+	return READ_ONCE(cpudata->max_freq);
- }
- 
- static int amd_get_nominal_freq(struct amd_cpudata *cpudata)
- {
--	struct cppc_perf_caps cppc_perf;
--
--	int ret = cppc_get_perf_caps(cpudata->cpu, &cppc_perf);
--	if (ret)
--		return ret;
--
--	/* Switch to khz */
--	return cppc_perf.nominal_freq * 1000;
-+	return READ_ONCE(cpudata->nominal_freq);
- }
- 
- static int amd_get_lowest_nonlinear_freq(struct amd_cpudata *cpudata)
- {
--	struct cppc_perf_caps cppc_perf;
--	u32 lowest_nonlinear_freq, lowest_nonlinear_perf,
--	    nominal_freq, nominal_perf;
--	u64 lowest_nonlinear_ratio;
--
--	int ret = cppc_get_perf_caps(cpudata->cpu, &cppc_perf);
--	if (ret)
--		return ret;
--
--	nominal_freq = cppc_perf.nominal_freq;
--	nominal_perf = READ_ONCE(cpudata->nominal_perf);
--
--	lowest_nonlinear_perf = cppc_perf.lowest_nonlinear_perf;
--
--	lowest_nonlinear_ratio = div_u64(lowest_nonlinear_perf << SCHED_CAPACITY_SHIFT,
--					 nominal_perf);
--
--	lowest_nonlinear_freq = nominal_freq * lowest_nonlinear_ratio >> SCHED_CAPACITY_SHIFT;
--
--	/* Switch to khz */
--	return lowest_nonlinear_freq * 1000;
-+	return READ_ONCE(cpudata->lowest_nonlinear_freq);
- }
- 
- static int amd_pstate_set_boost(struct cpufreq_policy *policy, int state)
-@@ -845,6 +793,53 @@ static void amd_pstate_update_limits(unsigned int cpu)
- 	mutex_unlock(&amd_pstate_driver_lock);
- }
- 
-+/**
-+ * amd_pstate_init_freq: Initialize the max_freq, min_freq,
-+ *                       nominal_freq and lowest_nonlinear_freq for
-+ *                       the @cpudata object.
-+ *
-+ *  Requires: highest_perf, lowest_perf, nominal_perf and
-+ *            lowest_nonlinear_perf members of @cpudata to be
-+ *            initialized.
-+ *
-+ *  Returns 0 on success, non-zero value on failure.
-+ */
-+static int amd_pstate_init_freq(struct amd_cpudata *cpudata)
-+{
-+	int ret;
-+	u32 min_freq;
-+	u32 highest_perf, max_freq;
-+	u32 nominal_perf, nominal_freq;
-+	u32 lowest_nonlinear_perf, lowest_nonlinear_freq;
-+	u32 boost_ratio, lowest_nonlinear_ratio;
-+	struct cppc_perf_caps cppc_perf;
-+
-+
-+	ret = cppc_get_perf_caps(cpudata->cpu, &cppc_perf);
-+	if (ret)
-+		return ret;
-+
-+	min_freq = cppc_perf.lowest_freq * 1000;
-+	nominal_freq = cppc_perf.nominal_freq;
-+	nominal_perf = READ_ONCE(cpudata->nominal_perf);
-+
-+	highest_perf = READ_ONCE(cpudata->highest_perf);
-+	boost_ratio = div_u64(highest_perf << SCHED_CAPACITY_SHIFT, nominal_perf);
-+	max_freq = (nominal_freq * boost_ratio >> SCHED_CAPACITY_SHIFT) * 1000;
-+
-+	lowest_nonlinear_perf = READ_ONCE(cpudata->lowest_nonlinear_perf);
-+	lowest_nonlinear_ratio = div_u64(lowest_nonlinear_perf << SCHED_CAPACITY_SHIFT,
-+					 nominal_perf);
-+	lowest_nonlinear_freq = (nominal_freq * lowest_nonlinear_ratio >> SCHED_CAPACITY_SHIFT) * 1000;
-+
-+	WRITE_ONCE(cpudata->min_freq, min_freq);
-+	WRITE_ONCE(cpudata->lowest_nonlinear_freq, lowest_nonlinear_freq);
-+	WRITE_ONCE(cpudata->nominal_freq, nominal_freq);
-+	WRITE_ONCE(cpudata->max_freq, max_freq);
-+
-+	return 0;
-+}
-+
- static int amd_pstate_cpu_init(struct cpufreq_policy *policy)
- {
- 	int min_freq, max_freq, nominal_freq, lowest_nonlinear_freq, ret;
-@@ -872,6 +867,10 @@ static int amd_pstate_cpu_init(struct cpufreq_policy *policy)
- 	if (ret)
- 		goto free_cpudata1;
- 
-+	ret = amd_pstate_init_freq(cpudata);
-+	if (ret)
-+		goto free_cpudata1;
-+
- 	min_freq = amd_get_min_freq(cpudata);
- 	max_freq = amd_get_max_freq(cpudata);
- 	nominal_freq = amd_get_nominal_freq(cpudata);
-@@ -913,13 +912,8 @@ static int amd_pstate_cpu_init(struct cpufreq_policy *policy)
- 		goto free_cpudata2;
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 398461e01273f..a62c66fc2e58c 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -5572,7 +5572,15 @@ consistency_policy_store(struct mddev *mddev, const char *buf, size_t len)
+ 		else
+ 			err = -EBUSY;
+ 	} else if (mddev->external && strncmp(buf, "ppl", 3) == 0) {
+-		set_bit(MD_HAS_PPL, &mddev->flags);
++		/* md_run() holds the lock until ->pers is set */
++		err = mddev_lock(mddev);
++		if (err)
++			return err;
++		if (mddev->pers)
++			err = -EBUSY;
++		else
++			set_bit(MD_HAS_PPL, &mddev->flags);
++		mddev_unlock(mddev);
+ 	} else {
+ 		err = -EINVAL;
  	}
- 
--	/* Initial processor data capability frequencies */
--	cpudata->max_freq = max_freq;
--	cpudata->min_freq = min_freq;
- 	cpudata->max_limit_freq = max_freq;
- 	cpudata->min_limit_freq = min_freq;
--	cpudata->nominal_freq = nominal_freq;
--	cpudata->lowest_nonlinear_freq = lowest_nonlinear_freq;
- 
- 	policy->driver_data = cpudata;
- 
-@@ -1357,6 +1351,10 @@ static int amd_pstate_epp_cpu_init(struct cpufreq_policy *policy)
- 	if (ret)
- 		goto free_cpudata1;
- 
-+	ret = amd_pstate_init_freq(cpudata);
-+	if (ret)
-+		goto free_cpudata1;
-+
- 	min_freq = amd_get_min_freq(cpudata);
- 	max_freq = amd_get_max_freq(cpudata);
- 	nominal_freq = amd_get_nominal_freq(cpudata);
-@@ -1373,12 +1371,6 @@ static int amd_pstate_epp_cpu_init(struct cpufreq_policy *policy)
- 	/* It will be updated by governor */
- 	policy->cur = policy->cpuinfo.min_freq;
- 
--	/* Initial processor data capability frequencies */
--	cpudata->max_freq = max_freq;
--	cpudata->min_freq = min_freq;
--	cpudata->nominal_freq = nominal_freq;
--	cpudata->lowest_nonlinear_freq = lowest_nonlinear_freq;
--
- 	policy->driver_data = cpudata;
- 
- 	cpudata->epp_cached = amd_pstate_get_epp(cpudata, 0);
 -- 
 2.53.0
 
