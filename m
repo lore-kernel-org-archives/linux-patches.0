@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047775;
-	b=Qv87begDU9D1orTN6yD1xnd/+GTUjAufa1quEPSTs32dIhc42b/IrjYhBUeIyD3ytuM5
-	 RjBtNuvrrNgmJQ65KthApxhObMCg1jsa0ttug1jZeqs5lKsZAiKDVXKZwVSLDSkPlRzcO
-	 qvZDlFN9PPS0bevdXHd8lLWr3pq7eG52nEXhBOU9DeQ+AB4N/IwVCvOtEXVBONmJZR5AT
-	 nP7ca5CXhhOoPi7YUpxAkjFtX4auxk3I4soS8rq0FiXXPSMjaIajHs2t1tBVolUABLPsE
-	 jPuepl3wT8SVCYCV+5NRE9jyH0j57QnOBUW5vx+qAuVxVeS7i1rW8z5Owi27MSMeUSg==
+	t=1795047778;
+	b=iWM0FoyG1D6ralV7sbUU1Yeab7QnaYc+wr/XJ9Ba8+NKruQVvmkOmq03NxzVFgB1Z+OT
+	 QH8di2AiX4+hXSaXEnKRC2RqjCgAyPld2yNLr7u3U9I/ol4B7TirQJyzT0wgCEi2EWRu1
+	 AwIEcso4GCmEE1VTiW9bBVVOrk3HTwqZmzW8mqTvTWKoRNMYa39a8dKH02D1kNUxl4tpB
+	 wO7iZk3pallcWk4AYN2fJOw9tBAikpCUBO8abFospMORuds0SZn8ERtyguE1jkEO59bjS
+	 ek90SN8t56h4IxWMckGPZxXvhX7XRBClXIy11FDZIgFjTQoTPQqgCFell9dMZ26wKfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047775;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047778;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GNzTHZV7SXN9/X+L5FGjtPYU9jP34HHIHPqtLF+GYcQ=;
-	b=TUMUXuu3Zj53HevMhNxPnKr7u7VUFuI13bBneCoCbkP8HFDeMLkc6w4QREgBxKemeFpe
-	 +D1Gc6/rYq/d/diTgGuu07ESZDt7xcbrEvKpNtUN91DiJshfvE9hrXebETPpfz+RBIYE3
-	 jd6VPAXm10zs392Hty2ti9QHID2n5cFECXxRS5pVKklSIWYpYVVwxZ9Dyb3BSeFPSkRpQ
-	 DWbH8vqUHdP4C4w4A0a5+E8KS7ODY553dv9DFS5EkjVm2Jc6+GPu7DMyvaq6HvcPkJw37
-	 WwUuSsuJOqI5PV4u9tygnqDIG5hzgMtY7f5RKVHDCKIrhu2tlizMxjgntBlCcahtU2w==
+	bh=v+AoDfrJT8zZjYPskycmaEruV9VakAN/Msu8rTk2MGM=;
+	b=5oZTjR7324CnlJFS3tKGSgYeg8o9Le3mFfNkwgRVoTbTg+YvTOeLx2++KSqDESto5gGW
+	 IUvhaui+YKvhaKrUyIhZ8p64uyuLx8NAXZu6ggosEryezCAbYSEEvaBWiJyBvwKmqDYMh
+	 QRLhuYTmlctkvneogS5yfW1cyHMFPLDvk+zpwJ/U/YsLTOBkbvpjo2yPmLzASPjWldHUp
+	 izqt5+hYLb0sG0c/WGpticGnP01pcnS4pck/4Txrmcgttjr9z5ChDhPCAkGwygyssgkgv
+	 ZgwgbX0T81JlJvW5ckNlN4UMBr5jm6LnHy3aru+TOf6Vmfj03hgB94PGUq9Z3tiFRCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="BVscaFY/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X+Jf0Flh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3424F606A325;
-	Thu, 19 Nov 2026 00:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E80606A31C;
+	Thu, 19 Nov 2026 00:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BVscaFY/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8919B1F000C4;
-	Thu, 19 Nov 2026 00:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X+Jf0Flh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B1F1F000C4;
+	Thu, 19 Nov 2026 00:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047775;
-	bh=GNzTHZV7SXN9/X+L5FGjtPYU9jP34HHIHPqtLF+GYcQ=;
+	s=korg; t=1795047777;
+	bh=v+AoDfrJT8zZjYPskycmaEruV9VakAN/Msu8rTk2MGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BVscaFY/gc/m10081oGuGLVVpIqm1bE/pEu8ypQ3IZH7iJ6bvk1QYkwk/bExWk1do
-	 O7IHxj+W45StREbokjZI6Lyve9BjZ1mDr5NY4wKTEjH227S6nRytexAk4StxBmavQW
-	 HXIMcrcJsJArgfNUcJP0L5r5gJu8kx0/ph+0TF/s=
+	b=X+Jf0FlhbqQio6MGSxk+7mtUX18ofABc1+u4pD0tpAd1T8a1FCUReF+KaTbEZAtvz
+	 FU/+MCPslecJyRB09TkRrReWXmG9RTiPViAvdDsc2A3uUB5psP5735/Yx9iyT4SKFy
+	 vshgCtlBX2P7UQ5rbYLzijFFSlt9ujnYRkgvocOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	David Heidelberg <david@ixit.cz>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1758/2857] remoteproc: qcom_q6v5_adsp: Fix double jiffies conversion in adsp_start()
-Date: Wed, 18 Nov 2026 15:46:32 +0100
-Message-ID: <20261118150304.589376617@linuxfoundation.org>
+Subject: [PATCH 6.1 1759/2857] ASoC: wcd-mbhc-v2: Fix incorrect properties names and typos
+Date: Wed, 18 Nov 2026 15:46:33 +0100
+Message-ID: <20261118150304.626850681@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,48 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit f559ef6316971fe39dc5f5edd6a483429ba03768 ]
+[ Upstream commit 17bca5d55446c1e21944d47354ee2f0b80db36d6 ]
 
-adsp_start() computes 5 * HZ, an already-converted jiffies count, and
-passes it into msecs_to_jiffies(), which expects milliseconds --
-reinterpreting the value and shrinking the intended timeout. Every
-other caller (q6v5_start() in qcom_q6v5_mss.c, qcom_pas_start() in
-qcom_q6v5_pas.c) passes msecs_to_jiffies(5000) directly, matching
-qcom_q6v5_wait_for_start()'s kerneldoc, which documents @timeout as
-already being in jiffies.
+Improves debugging experience.
 
-On CONFIG_HZ=250 this shrinks the intended 5 second timeout to
-~1.25 seconds, causing a DSP that legitimately takes 2-3 seconds to
-signal ready to be spuriously torn down as a boot failure.
-
-Fix by passing msecs_to_jiffies(5000) directly, matching every other
-caller.
-
-Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
-Fixes: dc160e449122 ("remoteproc: qcom: Introduce Non-PAS ADSP PIL driver")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260831-b4-adsp_start_jiffies_fix_upstream-v1-1-9f8cf85ea220@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 0e5c9e7ff899 ("ASoC: codecs: wcd: add multi button Headset detection support")
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Link: https://patch.msgid.link/20260823-wcd-dt-typo-fix-v1-1-a71b458e0d31@ixit.cz
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_adsp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/wcd-mbhc-v2.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index 4c9a1b99cd511..efc4740074713 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -376,7 +376,7 @@ static int adsp_start(struct rproc *rproc)
- 		goto disable_adsp_clks;
- 	}
+diff --git a/sound/soc/codecs/wcd-mbhc-v2.c b/sound/soc/codecs/wcd-mbhc-v2.c
+index 5da1934527f34..d5e9c28b5c496 100644
+--- a/sound/soc/codecs/wcd-mbhc-v2.c
++++ b/sound/soc/codecs/wcd-mbhc-v2.c
+@@ -802,7 +802,7 @@ static int wcd_measure_adc_continuous(struct wcd_mbhc *mbhc)
+ 	u8 adc_en;
  
--	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5 * HZ));
-+	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5000));
- 	if (ret == -ETIMEDOUT) {
- 		dev_err(adsp->dev, "start timed out\n");
- 		goto disable_adsp_clks;
+ 	/* Pre-requisites for ADC continuous measurement */
+-	/* Read legacy electircal detection and disable */
++	/* Read legacy electrical detection and disable */
+ 	wcd_mbhc_write_field(mbhc, WCD_MBHC_ELECT_SCHMT_ISRC, 0x00);
+ 	/* Set ADC to continuous measurement */
+ 	wcd_mbhc_write_field(mbhc, WCD_MBHC_ADC_MODE, 1);
+@@ -903,7 +903,7 @@ static int wcd_check_cross_conn(struct wcd_mbhc *mbhc)
+ 	if (wcd_mbhc_read_field(mbhc, WCD_MBHC_HPH_PA_EN))
+ 		return -EINVAL;
+ 
+-	/* Read legacy electircal detection and disable */
++	/* Read legacy electrical detection and disable */
+ 	elect_ctl = wcd_mbhc_read_field(mbhc, WCD_MBHC_ELECT_SCHMT_ISRC);
+ 	wcd_mbhc_write_field(mbhc, WCD_MBHC_ELECT_SCHMT_ISRC, 0);
+ 
+@@ -1409,14 +1409,14 @@ int wcd_dt_parse_mbhc_data(struct device *dev, struct wcd_mbhc_config *cfg)
+ 	ret = of_property_read_u32(np, "qcom,mbhc-headset-vthreshold-microvolt",
+ 				   &microvolt);
+ 	if (ret)
+-		dev_dbg(dev, "missing qcom,mbhc-hs-mic-max-vthreshold--microvolt in dt node\n");
++		dev_dbg(dev, "missing qcom,mbhc-headset-vthreshold-microvolt in dt node\n");
+ 	else
+ 		cfg->hs_thr = microvolt/1000;
+ 
+ 	ret = of_property_read_u32(np, "qcom,mbhc-headphone-vthreshold-microvolt",
+ 				   &microvolt);
+ 	if (ret)
+-		dev_dbg(dev, "missing qcom,mbhc-hs-mic-min-vthreshold-microvolt	entry\n");
++		dev_dbg(dev, "missing qcom,mbhc-headphone-vthreshold-microvolt entry\n");
+ 	else
+ 		cfg->hph_thr = microvolt/1000;
+ 
 -- 
 2.53.0
 
