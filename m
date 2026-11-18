@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044036;
-	b=FjHy9DJgjSRF85IP+JbegMj4jtK+UxXUwdL16Z79XRC6oFZMr+3gMMvhO/caFefRGaEb
-	 0CL/3zC1Zb9NIU5+hCyqsIO0LcLutZWBVHLN0vlZLwORsu8D1UWLVmFSh1D+cKh3zNSqA
-	 yci2cbPCdMi7+Cc12zPj9btrYn9HsSbCdJqJo79L+NUmPHyloW6uqdwVI7N31OHTT8YnE
-	 9M3tqwHZzqtccwSAc0ZhVtUC6RO2Tq466kB5UsrLey9I0SThptWRFwtm5Jvrkwq83wGBO
-	 4i9uLwIgby801FqjjQdC+V69rvbWJTXjr1K8yEoflbzLEL2Z0pcJy5Lnaf+TDqZaksQ==
+	t=1795044039;
+	b=tvONcG2DXTaDSpc6ejgPFbTt46wxWDndjuCBK5wHz/M6JrgKyP1pKHTY4AzdcRo/1e9x
+	 9KlgvDehOr/C5x2bn8qzZBV1xSeaJ1oDgX6OTbL4TuqyXfmtKJdl/P/hzyHJKiEPF7WGW
+	 WWv+tVgirK0+cKZnrMVeOMKvEM1Nh/p/aIuzoGRq0dzBQkihanY1rGbIYnrHaOUBd7vrQ
+	 wyEK+6vIGXBF/IMkVuDAN8kw8Vn2eTHjKKhPCaR0TKtIW0O0kV5NnDlNlJLQCJcobFo3b
+	 NmgNCVMKQ/fipxpKQbaKOKhcesNRvvCfSEeBYPygp1jncAqA09ArObzbH312tHOC/jA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044036;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044039;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=aQHc1xjgF/ZS5K9xU7xqd5X5EUo7X9A3xhLGnDDZ8rM=;
-	b=yetpIYqBMsx2b3FELnqAKftO8y8aSGT6uzHDl2c+OXLC02+CIzeUjSCknusXYtA5GGKJ
-	 bhgvNlGKEflNO3tzLvS/ox0+eq8ct+um+uqHbztRI5h/B4Us2uxAumKRHQ17cs7tx06vG
-	 YEu0dGc1k3qB8AANGk1qbLx6Be6kG5kFS7DjrTA4Me3b4QyF85PqEG8DYLgPrbQzBwUzX
-	 O27YrI5DcprSojCPG0qn80vWujrB/Z3/Ykct0FCh88mBIzRDqrDbhdCR1ffAMsYDwEqW8
-	 m+Sf/DWI1rttZHMEdmLcL/SvnGBJQDCYDeBq6YR6dpZ0QI+dahImbjjMBnA/4Ol6XiA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=y0OcTdRQsqaKk4MD6I4tln4E4t7MobVkJTOKZkwOadg=;
+	b=q40eowbsyxJfZpxVcrN7EF8SjO04RGM7A4PFJ0Ey95BDXxbsru+el3po2EmY8BT/vC6Y
+	 y3DMt7D3sqFmoswaH2xISvmpYeLfOG2GoaMHhJEAeeiFcF+9Aaaqb4BzqGgJ5coM1f5Qz
+	 OELXXiCqIeuKFYO+KBVBF1CL1Bp63lJ0ToIubhFCRJtcQApaH6hAGykX/Y2KRu0X/f25a
+	 ovl3efJVanJclpAGWNw5yLD9KhnPjfRrOlyeVsa1EQJv1JklfZEBruHuVMbj2ZH03ywyQ
+	 Fb4k1/skH5aIzh0qiM8DJqoSs83mA6oPwxjnsg0Lr8jgXl60qiaQ22RVLNfXUgV90tQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dn1qajTz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u7mB468W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68191606A31C;
-	Wed, 18 Nov 2026 23:20:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE72606A339;
+	Wed, 18 Nov 2026 23:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dn1qajTz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B930A1F000C6;
-	Wed, 18 Nov 2026 23:20:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u7mB468W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 748441F000C4;
+	Wed, 18 Nov 2026 23:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044036;
-	bh=aQHc1xjgF/ZS5K9xU7xqd5X5EUo7X9A3xhLGnDDZ8rM=;
+	s=korg; t=1795044038;
+	bh=y0OcTdRQsqaKk4MD6I4tln4E4t7MobVkJTOKZkwOadg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dn1qajTzwVqGPqL8ZYIMDvihe/R+TUXBx4fokXgS+nDQgXtzuT2L2mNel3XuMrE83
-	 U0K9kYonmJc97O8pkTJF00To49nnn6qbBwPh8x2OwjZNpAL4RQjz4nntv6Y3/iKjXH
-	 aM0ecootaavCSk3SPfFbcmvkvBexu//9mOGvk3kg=
+	b=u7mB468WfnBP4XTrMVyKj2yrocZSoP1wX5oxKBA4oKiPyOeWBt/1RYl3frpBJF3B+
+	 snOOovoZNdyAvEWfBlL+3W0XmsDf8YEEoOmPDOHi0glAMAJRtHakWRpR26N1rs+cLl
+	 Kbotg7wA6EKH6vaNdhzU1luEezJehA7Ive5+d/D0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <cenzhang@linux.microsoft.com>,
-	Francis Perron <francis@akrites.dev>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Geoff Levand <geoff@infradead.org>,
+	Thierry Reding <treding@nvidia.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0425/2857] KEYS: encrypted: fix integer overflow of datablob_len
-Date: Wed, 18 Nov 2026 15:24:19 +0100
-Message-ID: <20261118150216.688228482@linuxfoundation.org>
+Subject: [PATCH 6.1 0426/2857] ALSA: core: Make snd_card_disconnect() return void
+Date: Wed, 18 Nov 2026 15:24:20 +0100
+Message-ID: <20261118150216.723816981@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -64,90 +66,117 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cen Zhang <cenzhang@linux.microsoft.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 8697c431e297eb0d0ab13dda6bc172b48a34f05c ]
+[ Upstream commit 663f922fd7a9e9342dca512db339c7fb2b59b8e6 ]
 
-encrypted_key_alloc() stores datablob_len in a u16. It is computed from
-multiple string and payload lengths. If the result exceeds U16_MAX, the
-assignment truncates the allocation size. KASAN reports a 32760-byte
-slab-out-of-bounds write when __ekey_init() copies the master key
-description into the undersized buffer.
+All callers from other files ignore the return value of this function.
+And it can only ever return a non-zero value if the parameter card is NULL.
 
-The total payload length stored in key->datalen is also a u16. Use
-check_add_overflow() to reject values that do not fit either destination,
-and use kzalloc_flex() for the flexible-array allocation.
+Move the check for card being NULL into snd_card_free_when_closed() to keep
+the previous behaviour. Note this isn't necessary for
+snd_card_disconnect_sync() because if card was NULL in there the dereference
+of card for dev_err() would oops the kernel. Replace this by an oops
+triggered by the dereference of card for spin_lock_irq().
 
-Fixes: 7e70cb497850 ("keys: add new key-type encrypted")
-Cc: stable@vger.kernel.org
-Assisted-by: GitHub-Copilot:claude-opus-4.6
-Signed-off-by: Cen Zhang <cenzhang@linux.microsoft.com>
-Signed-off-by: Francis Perron <francis@akrites.dev>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
-Link: https://lore.kernel.org/r/20260909153433.83117-1-cenzhang@linux.microsoft.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-[ sashal: Replaced the upstream kzalloc_flex() allocation with the equivalent kzalloc(struct_size(...), GFP_KERNEL), since kzalloc_flex() doesn't exist in this tree. ]
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Jaroslav Kysela <perex@perex.cz>
+Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Acked-by: Geoff Levand <geoff@infradead.org>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20230207191907.467756-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: fd95e68df6fe ("ALSA: core: Fix potential UAF after asynchronous card release")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/encrypted-keys/encrypted.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ include/sound/core.h |  2 +-
+ sound/core/init.c    | 24 ++++++++----------------
+ 2 files changed, 9 insertions(+), 17 deletions(-)
 
-diff --git a/security/keys/encrypted-keys/encrypted.c b/security/keys/encrypted-keys/encrypted.c
-index 1e313982af02a..b39bf082d5a29 100644
---- a/security/keys/encrypted-keys/encrypted.c
-+++ b/security/keys/encrypted-keys/encrypted.c
-@@ -18,6 +18,7 @@
- #include <linux/parser.h>
- #include <linux/string.h>
- #include <linux/err.h>
-+#include <linux/overflow.h>
- #include <keys/user-type.h>
- #include <keys/trusted-type.h>
- #include <keys/encrypted-type.h>
-@@ -606,6 +607,7 @@ static struct encrypted_key_payload *encrypted_key_alloc(struct key *key,
+diff --git a/include/sound/core.h b/include/sound/core.h
+index 4365c35d038b4..9a73c60b6f1ea 100644
+--- a/include/sound/core.h
++++ b/include/sound/core.h
+@@ -286,7 +286,7 @@ int snd_devm_card_new(struct device *parent, int idx, const char *xid,
+ 		      struct module *module, size_t extra_size,
+ 		      struct snd_card **card_ret);
+ 
+-int snd_card_disconnect(struct snd_card *card);
++void snd_card_disconnect(struct snd_card *card);
+ void snd_card_disconnect_sync(struct snd_card *card);
+ int snd_card_free(struct snd_card *card);
+ int snd_card_free_when_closed(struct snd_card *card);
+diff --git a/sound/core/init.c b/sound/core/init.c
+index 2cb554b393fce..4258aef4f7a0a 100644
+--- a/sound/core/init.c
++++ b/sound/core/init.c
+@@ -489,17 +489,17 @@ static const struct file_operations snd_shutdown_f_ops =
+  *  Note: The current implementation replaces all active file->f_op with special
+  *        dummy file operations (they do nothing except release).
+  */
+-int snd_card_disconnect(struct snd_card *card)
++void snd_card_disconnect(struct snd_card *card)
  {
- 	struct encrypted_key_payload *epayload = NULL;
- 	unsigned short datablob_len;
-+	unsigned short payload_totallen;
- 	unsigned short decrypted_datalen;
- 	unsigned short payload_datalen;
- 	unsigned int encrypted_datalen;
-@@ -659,16 +661,22 @@ static struct encrypted_key_payload *encrypted_key_alloc(struct key *key,
+ 	struct snd_monitor_file *mfile;
  
- 	encrypted_datalen = roundup(decrypted_datalen, blksize);
+ 	if (!card)
+-		return -EINVAL;
++		return;
  
--	datablob_len = format_len + 1 + strlen(master_desc) + 1
--	    + strlen(datalen) + 1 + ivsize + 1 + encrypted_datalen;
-+	if (check_add_overflow(format_len + 1 + strlen(master_desc) + 1
-+			       + strlen(datalen) + 1 + ivsize + 1,
-+			       encrypted_datalen, &datablob_len))
-+		return ERR_PTR(-EINVAL);
+ 	spin_lock(&card->files_lock);
+ 	if (card->shutdown) {
+ 		spin_unlock(&card->files_lock);
+-		return 0;
++		return;
+ 	}
+ 	card->shutdown = 1;
+ 
+@@ -560,7 +560,6 @@ int snd_card_disconnect(struct snd_card *card)
+ #ifdef CONFIG_PM
+ 	snd_power_sync_ref(card);
+ #endif
+-	return 0;	
+ }
+ EXPORT_SYMBOL(snd_card_disconnect);
+ 
+@@ -575,15 +574,7 @@ EXPORT_SYMBOL(snd_card_disconnect);
+  */
+ void snd_card_disconnect_sync(struct snd_card *card)
+ {
+-	int err;
+-
+-	err = snd_card_disconnect(card);
+-	if (err < 0) {
+-		dev_err(card->dev,
+-			"snd_card_disconnect error (%d), skipping sync\n",
+-			err);
+-		return;
+-	}
++	snd_card_disconnect(card);
+ 
+ 	spin_lock_irq(&card->files_lock);
+ 	wait_event_lock_irq(card->remove_sleep,
+@@ -629,9 +620,10 @@ static int snd_card_do_free(struct snd_card *card)
+  */
+ int snd_card_free_when_closed(struct snd_card *card)
+ {
+-	int ret = snd_card_disconnect(card);
+-	if (ret)
+-		return ret;
++	if (!card)
++		return -EINVAL;
 +
-+	if (check_add_overflow(datablob_len,
-+			       payload_datalen + HASH_SIZE + 1,
-+			       &payload_totallen))
-+		return ERR_PTR(-EINVAL);
- 
--	ret = key_payload_reserve(key, payload_datalen + datablob_len
--				  + HASH_SIZE + 1);
-+	ret = key_payload_reserve(key, payload_totallen);
- 	if (ret < 0)
- 		return ERR_PTR(ret);
- 
--	epayload = kzalloc(sizeof(*epayload) + payload_datalen +
--			   datablob_len + HASH_SIZE + 1, GFP_KERNEL);
-+	epayload = kzalloc(struct_size(epayload, payload_data, payload_totallen),
-+			   GFP_KERNEL);
- 	if (!epayload)
- 		return ERR_PTR(-ENOMEM);
- 
++	snd_card_disconnect(card);
+ 	put_device(&card->card_dev);
+ 	return 0;
+ }
 -- 
 2.53.0
 
