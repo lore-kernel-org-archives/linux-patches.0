@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043757;
-	b=JFVnd3Oq97wx65x+w3u6yDugUunDHwtg1LmLB9XMXl4JcIRUehNRQc+RY0OqxyEiZxl9
-	 EpZ3L2HyV8xv+JP3Ak3wlQVZrb5odR8Teah1/etSCZCucEBQTSqgPr6Ya0Ubp1D9ANMct
-	 04l2bJtgU/Y4gh/udGsMyjpG0nyb7Y/3xoqbC5ONQ/HGttN//4w+XeXjtBHvrycTlfVJP
-	 Me3a2rCcWOmIBZIUQQdVnCVkmn6JPP7sjeLrYbs4FWCFDPSTpiHHTRwifXpljIsnkyBeY
-	 FQNjg2UO2DD597zEPchBZWBTkDa72vWehcmQEUWhmTHA0cSdSs9X+IhwzOP2Fxm82pQ==
+	t=1795043760;
+	b=tHizsLaLQdmuFSlvINCw3uHhe5NAljthbOQccWCvMYpWVAqXoxdMYEvduuGv68645ISO
+	 sK+mTTs6JdE/XDI+rg6vF8T7Ui0bXyN2mE+ZTCWAPWybO2nU2viXkKNUb433gq54LqeXM
+	 FZ/nVluv07ry2PAZN0Q66N6cL/G4XPfafgDK83cZsZFxkzjSXIGzlOOLjn5IOhLxz5Kgn
+	 543CNqmOUlOBkEwDTUT6yEriMUUj45L8kQM6Av23X7oEGeOMu2cXGh+lzyfilligAwbz6
+	 Me7dfAZ738d+G/oFUma5KHsQx5dEmjsOiYmo+rP8DyuxDY4PU+/IHTedBGMm0rzv+Og==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043757;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043760;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=21MlNro8tnhlsUsvfnpU0sMlwop6hYx8deLTqLkxh3M=;
-	b=y7SjZLrwM932q+rtG1/V3q/1Eo5CZMiWTujvErmcxAFpw3BGJ53qXXT5XOtYaUfD4sXA
-	 0fbWXm49hTdVFMWX7LnCLh4uUroiIU268AVXenITd6XJUmtxKPpnids5nBc/xBv4EkdQp
-	 BCwoSCZMmMYKGZgRCNQINXXrrN6cTXBqx5qgVnIK9//ZGE7Ed86D5Bu6hCcVxmHChxkNC
-	 E/jkqCLBa7p/lc5pV7AA9at+NmViryIU93Zo1zGFc7ZB5B26trCNI2fXMFKblCqU8zgXW
-	 Z6qHVAdlQuzc+XZIWYktPx8HR/ehlJed55Iawlca/5+/zrP2xF4CqAGXOD4QJ8ak3Ew==
+	bh=8mgVmJtJ75Y/WCYpgp9OvvP8IZ+e2Qtys6HEiqlSzJA=;
+	b=RmGe5koNwtID9SO1eAElBXDBg0BfSRu03+xLWL47P/y1ilMQv+so3z9Aj4bDwE6q5OPy
+	 7uHi7xdcH78WOZpkDJxGxy9+3qv7AOq2xuEgL+KUlMGEFa8dqI/9aOqmtxGJBcOcFPKDE
+	 cbkm3HSQUl81CRIpKWCYTPCIloh+hxFhrwkGwOiEaXQFWo2PpWBwnOSLcpoGsix1XuhvE
+	 ev6TUNpCIANbGD8aGo/RdiwK5Ub9kR9mEyoUpLecxYJKl0tjXhbqjpMqukEQD4R/QDnvo
+	 6UMTbjkciD1yBp5uEGnxxAAWGu3UD2eCanABCWfISzZQMm51VbKAIErShhrIzV/wabw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p65h0tsS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ru+Ph0YX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64242606A32F;
-	Wed, 18 Nov 2026 23:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C0A606A331;
+	Wed, 18 Nov 2026 23:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p65h0tsS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93101F000C4;
-	Wed, 18 Nov 2026 23:15:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ru+Ph0YX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 707B41F000C4;
+	Wed, 18 Nov 2026 23:15:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043757;
-	bh=21MlNro8tnhlsUsvfnpU0sMlwop6hYx8deLTqLkxh3M=;
+	s=korg; t=1795043760;
+	bh=8mgVmJtJ75Y/WCYpgp9OvvP8IZ+e2Qtys6HEiqlSzJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p65h0tsSONS6fem/91Qh6MXb/i/+/sy9D49sR4Ha69efeqeUmiwj79D3sV45UJA0L
-	 x/og0vHHZ4m9JVozFCyzM7Yti+MMVCLpQ7Nz9yOpJ7+1jXesNmxewL1bPOW+X+AnSN
-	 4quSjPpL991CVnG91Tu6zJ2jGbcohe93k70gqYbQ=
+	b=ru+Ph0YXNNA6yk9tEM1+Icna2C20DxXHf96H1drz0xPvg7mr5N+LJu6AChrSZ3YQ6
+	 LQPFVSbao+AI4M8Ud60X4FBgpn0bojZkXQyEprDA31Q0gSb+H1mnd1DKDYiHeIdHPF
+	 ZaCm83cYLPRNuXfLFQeASXSHo7hvOENQXOeeiak4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Youth Cao <cocoh2os08@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0283/2857] ksmbd: handle allocated range queries on dense files
-Date: Wed, 18 Nov 2026 15:21:57 +0100
-Message-ID: <20261118150211.617401186@linuxfoundation.org>
+Subject: [PATCH 6.1 0284/2857] HID: i2c-hid: Add i2c-hid-quirk-bad-input-size quirk for 0911:5288 device
+Date: Wed, 18 Nov 2026 15:21:58 +0100
+Message-ID: <20261118150211.651093178@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,84 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Youth Cao <cocoh2os08@gmail.com>
 
-[ Upstream commit 350684e0498512d06963858b810101f58563810b ]
+[ Upstream commit 58d97b45f3f43af0afd9c74e8480d22d36fd3f72 ]
 
-FSCTL_QUERY_ALLOCATED_RANGES currently relies on SEEK_DATA and SEEK_HOLE
-for every file. That works for files with holes, but it is not a good
-match for dense files.
+I have recently acquired a cheap Apollo Lake-based laptop that uses a
+Hynitron CST128-A touchpad controller. While booting from a Debian LiveCD,
+the kernel log is flooded with the following error (though the touchpad
+works well):
 
-A zeroed range in a dense file may be represented as an unwritten extent
-and skipped by SEEK_DATA. The server can then return no allocated ranges
-even though the file should still be treated as allocated from the
-protocol point of view.
+  i2c_hid_acpi i2c-ALPS0001:00: i2c_hid_get_input: incomplete report (27/42405)
 
-For dense files, report the requested range clipped to EOF as allocated
-instead of probing holes. Keep using SEEK_DATA and SEEK_HOLE for files
-marked with FILE_ATTRIBUTE_SPARSE_FILE, and wait for writeback before
-probing so punch-hole updates are visible to the filesystem seek
-implementation.
+The CST128-A was identified via ACPI as ALPS0001:00, and the I2C HID
+device ID (0911:5288) was shared with the Hantick 5288.
 
-This fixes the case where a query after zeroing data could return no
-ranges for a dense file.
+Add the I2C_HID_QUIRK_BAD_INPUT_SIZE quirk option to the existing Hantick
+5288 quirk entry to suppress the kernel log flood.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Youth Cao <cocoh2os08@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs.c | 29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ drivers/hid/i2c-hid/i2c-hid-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index 5b335743c43b9..39af3051c8dfc 100644
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -1031,7 +1031,8 @@ int ksmbd_vfs_fqar_lseek(struct ksmbd_file *fp, loff_t start, loff_t length,
- {
- 	struct file *f = fp->filp;
- 	struct inode *inode = file_inode(fp->filp);
--	loff_t maxbytes = (u64)inode->i_sb->s_maxbytes, end;
-+	loff_t maxbytes = (u64)inode->i_sb->s_maxbytes, end, query_start;
-+	loff_t query_length, size;
- 	loff_t extent_start, extent_end;
- 	int ret = 0;
- 
-@@ -1047,11 +1048,33 @@ int ksmbd_vfs_fqar_lseek(struct ksmbd_file *fp, loff_t start, loff_t length,
- 	if (length > maxbytes || (maxbytes - length) < start)
- 		length = maxbytes - start;
- 
--	if (start + length > inode->i_size)
--		length = inode->i_size - start;
-+	size = i_size_read(inode);
-+	if (start >= size)
-+		return 0;
-+
-+	if (!length)
-+		return 0;
-+
-+	if (start + length > size)
-+		length = size - start;
- 
- 	*out_count = 0;
-+	query_start = start;
-+	query_length = length;
- 	end = start + length;
-+	if (!(fp->f_ci->m_fattr & FILE_ATTRIBUTE_SPARSE_FILE_LE)) {
-+		ranges[0].file_offset = cpu_to_le64(query_start);
-+		ranges[0].length = cpu_to_le64(query_length);
-+		*out_count = 1;
-+		return 0;
-+	}
-+
-+	if (start < end) {
-+		ret = file_write_and_wait_range(f, start, end - 1);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	while (start < end && *out_count < in_count) {
- 		extent_start = vfs_llseek(f, start, SEEK_DATA);
- 		if (extent_start < 0) {
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index d301dc5acd31e..7d151ceab1c84 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -125,7 +125,7 @@ static const struct i2c_hid_quirks {
+ 	{ USB_VENDOR_ID_WEIDA, HID_ANY_ID,
+ 		I2C_HID_QUIRK_SET_PWR_WAKEUP_DEV },
+ 	{ I2C_VENDOR_ID_HANTICK, I2C_PRODUCT_ID_HANTICK_5288,
+-		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET },
++		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET | I2C_HID_QUIRK_BAD_INPUT_SIZE },
+ 	{ I2C_VENDOR_ID_ITE, I2C_DEVICE_ID_ITE_VOYO_WINPAD_A15,
+ 		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET },
+ 	{ I2C_VENDOR_ID_RAYDIUM, I2C_PRODUCT_ID_RAYDIUM_3118,
 -- 
 2.53.0
 
