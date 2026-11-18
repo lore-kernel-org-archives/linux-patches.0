@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028566;
-	b=k8TZQ8Rea2KiOvldDWGIaQBalHEx8c5Pnfpm2U+234n5i6lV6hq9k6iQls4K7JeLuw9e
-	 el12YO/s0ROECcGPKLgtE1aqXQy+PRBvHhlCDeb+gTTonmfn9e53GROMdgfAuIgPTwNXq
-	 ojGFlr3ur7eVo5TrQwSanIMHcgtKe1rwOTb/TNAe3Px7LjoV76zRYZtkECfJQmxpPzyAh
-	 evPnZsdmURIvw8Yz/H9p+JIUAutxwFpnLKwPWhX/zhnbCKFZYRb0tW8OPwxGVbbWLDW6h
-	 cqZRIpMiR7Rla/9pPmvhR5xixGn67g/A8ipRmEfLWDWX7XqQukKd8Tb5qY+FbeSQGRw==
+	t=1795028569;
+	b=zLmP7VrgUw4b9ygwor17n6jA/95uxUesnY0Ui8ZnuiZrpHsmp9v+a6ftqI7naVbywS9+
+	 iJYN1+P/e44fK0VTJC92fWbLVygzqKmZiX+c0Y6yFL73d4t+smXGVHdVpkXJd/qwlWHmz
+	 RYbfAzRPS7QJZqitqrptJe5AnpGdzbmh0+e3qg9wvjoV2nLd5vDxlTwDDCgOIJ+/hgyq8
+	 DtTZGseyIVl/tcZXieEEGSaOgTtFtvJrp6HuwdCE2I0VYwc+t5QclH15nMgWaiQx9Qp0g
+	 PeBHso5cjwh99JI89wMepE/MgxZczTcfcUCuNYd5gGVFh0nGvZnMoB31UIYIC27TRPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028566;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028569;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hX23Tv+pcPsfFs2pNc3V8LbudHgAiYmS60SFPSVMnk4=;
-	b=EtYRvn1iB27rN6JIwwixL9xO4U+XjWynf/k/38QMlXqTnRidDn7Ymg0gj1ich13fhX87
-	 R23l7/WlJGCKaYw/laHRlW79nXY2BarZ1OSkQ8nmSAnO4E9MwKdVFeWc+5PNfSUJSm4fH
-	 oUQQfOG1GW06PLWj+KQOHMDPoTi15JEh7RbuFiTmTLdNuKJrv2OXZewQLeZdWPQLPIhRz
-	 HpGK/cjmlFXU0qQa6aA86btZu0iVmDRpUEFkJAzs//5arTE5V5PsuHpGmH3kwcyDsu1EI
-	 HTFdKjzHNKH8mVHGh1we+uwU9/xKMvM+ES1WK1rpeWMGAQ7wFMJYtpAY7f6CoraDe5w==
+	bh=XEEvo0XwtYXi/AVRrdhIzCULVa6qLxTlkGGkPnGlZc0=;
+	b=Fer4Z/crJuNcPMalZU1aQmv+aKqmpdHXn3cTHHcIcO9Ey6fEWEY5BLqHQUG2F/QT8SuN
+	 GsRzJcGEFSTuhMQ2WxPO4QHVN9KF/lJ2SDJkelmQRhNBgg8Hx0wq3r3zmSJzbdnn2oeVk
+	 +YQJpMgY+fxd1KaJrh0r6ewLpiHdyf+YsT3K0tM64Fuw6LXIFVdxEjd+anPHkjTtOLs16
+	 CKr17gOVa0OIwxWXCxVhvbXhWSZhtRrHTiLfVPFaXsr0LNZlBQzBF8p0LJbr7U5IxSqxW
+	 e9QXPb/E0yLKFftE2Ajy1gwbS4y6+4dBFjOHIMlk4Ca/ntq9Vf48f/Rk9k+WJ5FBQ4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tZbm95Y2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jToxleIT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4AC4606A320;
-	Wed, 18 Nov 2026 19:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A858A606A32C;
+	Wed, 18 Nov 2026 19:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tZbm95Y2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2346D1F000C4;
-	Wed, 18 Nov 2026 19:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jToxleIT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 039A71F000C4;
+	Wed, 18 Nov 2026 19:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028566;
-	bh=hX23Tv+pcPsfFs2pNc3V8LbudHgAiYmS60SFPSVMnk4=;
+	s=korg; t=1795028569;
+	bh=XEEvo0XwtYXi/AVRrdhIzCULVa6qLxTlkGGkPnGlZc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tZbm95Y25v0NKQdcTelO6eX2ATVzrJcQP50JVDhdh0wtJD+9yU1GHWGfOZnLfOeqK
-	 BXNLKqBldnxFW7FJl5F1yqjchwVlPWrsWkPU/spn7iaaI55YVekxIlMMeagUtkIHZx
-	 OpQlg4dFrz2OwSYZeOjyd26YmXYUEf1PE8GluaKU=
+	b=jToxleIT3e33ZbEqesaq9TtkTC5uOFlWM7yXZ+GKTs7xZFxAEeb7RUCL17HmMY3Nc
+	 3z9MFZ1kPM8jlxsHIOqqnng1F6AEv5xGSMRAb6Tox8CH9W7vbG2ukt7+b3kZSHlndM
+	 hcYMNofHWJUIw2xvPqfbIkEy0D+cRB2+d5+O3J0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol@kernel.org>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0041/1756] can: dev: can_dropped_invalid_skb: drop CAN XL frames on non-CAN XL devices
-Date: Wed, 18 Nov 2026 15:36:08 +0100
-Message-ID: <20261118150009.528242637@linuxfoundation.org>
+Subject: [PATCH 6.12 0042/1756] ALSA: pcm: Optimize cpu_latency_qos_*() calls
+Date: Wed, 18 Nov 2026 15:36:09 +0100
+Message-ID: <20261118150009.623878807@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,58 +67,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Mailhol <mailhol@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 0fce44e29fce4b07642491b098afb41bd571e4f2 ]
+[ Upstream commit 9f6f4e97fd53908aecb0979507d9ff10a22288eb ]
 
-Sending a PF_PACKET bypasses the CAN framework logic and can directly
-reach a CAN driver's xmit() function. The PF_PACKET framework only
-checks that skb->len does not exceed the net_device MTU.
+We have a few cpu_latency_qos_*() calls in PCM callbacks, but they
+seem suboptimal in a few aspects:
+- We call them at each time when the hw_params changed, but explicitly
+  do remove and (re-)add; this could be
+  cpu_latency_qos_update_request(), instead
+- The setup of cpu_latency_qos_*() doesn't have to be in hw_params at
+  all; it's not the place where the actual parameters are set up, but
+  rather better at the prepare callback.
+- The hw_free calls cpu_latency_qos_remove_request() unconditionally,
+  which may be poking a WARNING when it wasn't queued.
 
-For a CAN device that is not CAN XL capable, anything above CANFD_MTU
-(72 bytes) is therefore dropped before it reaches the driver. However,
-CAN XL frames are variable length. can_is_canxl_skb() accepts lengths in
-the range CANXL_HDR_SIZE + CANXL_MIN_DLEN up to CANXL_MTU, i.e. 13 to
-2060 bytes.
+For addressing the issues above, this patch cleans up and reorganize
+the cpu_latency_qos_*() calls in the PCM core by a couple helper
+functions.  Now, they are set up at prepare callback, and cleared at
+hw_free and release callbacks via the new helpers.
 
-As a result, an ETH_P_CANXL skb with a length between 13 and 72 bytes
-can pass both the MTU and the can_dropped_invalid_skb() checks.
-
-A driver that does not support CAN XL will interpret canxl_frame->flags
-as a length because of the overlap with can_frame->len. And because
-CANXL_XLF is set, the resulting length is between 128 and 255. For
-drivers that do not check can_frame->len before copying can_frame->data,
-as most drivers do, this results in a buffer overflow of up to 247
-bytes.
-
-Drop ETH_P_CANXL skbs if the device does not have the CAN_CAP_XL
-capability. Keep can_is_canxl_skb() for the validation of CAN XL skbs.
-
-Closes: https://sashiko.dev/#/patchset/20260731-master-v5-0-5b27029dee20@qq.com?part=1
-Fixes: fb08cba12b52 ("can: canxl: update CAN infrastructure for CAN XL frames")
-Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
-Link: https://patch.msgid.link/20260731-drop_canxl_frames-v1-1-7387b70353b3@kernel.org
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-[ sashal: Replaced can_cap_enabled(dev, CAN_CAP_XL) with can_is_canxl_dev_mtu(dev->mtu) because the capability API is unavailable. ]
+Link: https://patch.msgid.link/20261002150420.879056-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 9017bc3d13da ("ALSA: pcm: Prevent O_APPEND open on OSS streams")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/skb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/pcm_native.c | 35 +++++++++++++++++++++++++----------
+ 1 file changed, 25 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
-index 6fb1f9b2a9e20..b643995fc5369 100644
---- a/drivers/net/can/dev/skb.c
-+++ b/drivers/net/can/dev/skb.c
-@@ -354,7 +354,7 @@ bool can_dropped_invalid_skb(struct net_device *dev, struct sk_buff *skb)
- 		break;
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index dd135ed91c99c..f3b17ec2f1778 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -751,11 +751,32 @@ EXPORT_SYMBOL_GPL(snd_pcm_runtime_buffer_set_silence);
+ #define is_oss_stream(substream)	false
+ #endif
  
- 	case ETH_P_CANXL:
--		if (!can_is_canxl_skb(skb))
-+		if (!can_is_canxl_dev_mtu(dev->mtu) || !can_is_canxl_skb(skb))
- 			goto inval_skb;
- 		break;
++static void pcm_qos_req_clear(struct snd_pcm_substream *substream)
++{
++	if (cpu_latency_qos_request_active(&substream->latency_pm_qos_req))
++		cpu_latency_qos_remove_request(&substream->latency_pm_qos_req);
++}
++
++static void pcm_qos_req_update(struct snd_pcm_substream *substream, int usecs)
++{
++	if (usecs < 0) {
++		pcm_qos_req_clear(substream);
++		return;
++	}
++
++	if (cpu_latency_qos_request_active(&substream->latency_pm_qos_req))
++		cpu_latency_qos_update_request(&substream->latency_pm_qos_req,
++					       usecs);
++	else
++		cpu_latency_qos_add_request(&substream->latency_pm_qos_req,
++					    usecs);
++}
++
+ static int snd_pcm_hw_params(struct snd_pcm_substream *substream,
+ 			     struct snd_pcm_hw_params *params)
+ {
+ 	struct snd_pcm_runtime *runtime;
+-	int err, usecs;
++	int err;
+ 	unsigned int bits;
+ 	snd_pcm_uframes_t frames;
  
+@@ -862,12 +883,6 @@ static int snd_pcm_hw_params(struct snd_pcm_substream *substream,
+ 	snd_pcm_timer_resolution_change(substream);
+ 	snd_pcm_set_state(substream, SNDRV_PCM_STATE_SETUP);
+ 
+-	if (cpu_latency_qos_request_active(&substream->latency_pm_qos_req))
+-		cpu_latency_qos_remove_request(&substream->latency_pm_qos_req);
+-	usecs = period_to_usecs(runtime);
+-	if (usecs >= 0)
+-		cpu_latency_qos_add_request(&substream->latency_pm_qos_req,
+-					    usecs);
+ 	err = 0;
+  _error:
+ 	if (err) {
+@@ -944,7 +959,7 @@ static int snd_pcm_hw_free(struct snd_pcm_substream *substream)
+ 		goto unlock;
+ 	result = do_hw_free(substream);
+ 	snd_pcm_set_state(substream, SNDRV_PCM_STATE_OPEN);
+-	cpu_latency_qos_remove_request(&substream->latency_pm_qos_req);
++	pcm_qos_req_clear(substream);
+  unlock:
+ 	snd_pcm_buffer_access_unlock(runtime);
+ 	return result;
+@@ -1972,6 +1987,7 @@ static int snd_pcm_do_prepare(struct snd_pcm_substream *substream,
+ 	err = substream->ops->prepare(substream);
+ 	if (err < 0)
+ 		return err;
++	pcm_qos_req_update(substream, period_to_usecs(substream->runtime));
+ 	return snd_pcm_do_reset(substream, state);
+ }
+ 
+@@ -2762,8 +2778,7 @@ void snd_pcm_release_substream(struct snd_pcm_substream *substream)
+ 		substream->ops->close(substream);
+ 		substream->hw_opened = 0;
+ 	}
+-	if (cpu_latency_qos_request_active(&substream->latency_pm_qos_req))
+-		cpu_latency_qos_remove_request(&substream->latency_pm_qos_req);
++	pcm_qos_req_clear(substream);
+ 	if (substream->pcm_release) {
+ 		substream->pcm_release(substream);
+ 		substream->pcm_release = NULL;
 -- 
 2.53.0
 
