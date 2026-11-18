@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030398;
-	b=YXYV0P9A4yuOMt2jEGuVT0rL6uzxlHeAquAZp14ZfCqHeNcV29jbynEkW0BqHxG5u6XU
-	 vnjfH3mScxm3oJJZF96O5vPFs9tlSPVLmeYqiy3OdfzwbjTl3va8Sexzi5N/Plaeq17Ug
-	 akniTt8S93vF5xhbmSXAepUpM7UxzSwg9w3MaHSg0qsUsOcwYiPqHczhBcsHm+D+Pe0FS
-	 41BREdj1/lU80f8OE4YEbGpbaJxQinb5Qql7lGNxRDG/LGd0BCWHQJ3bMerciTak3cEYp
-	 rfkneIa9w05H3hmtp4Dr1ll9jblRioaS+j9jZTeKvrmKUUHJhyHhWUi0S5f6LNrnbLA==
+	t=1795030401;
+	b=FkhjozzELeAYTWUWPEL0wFFeRZPr3YWVpTFjD7FZ8AnG3Nfrd1ITRiDKbGwZDL3qaeI2
+	 V4+Hl64stG/iadICuQkCMfCVfMJ73Q3hMLV9P4rEbG/JIdC5e0dB5klRMqqmXo6U5izQz
+	 fZmQ/sW45hOcOBAAJXp+F5EYblKmhZ1sC7a5PyR8f0h5ELI9LGpdyPgpdFovfYkpW1tKE
+	 clVE7LJbFGIvob/+t/YWQMHYS3X5mzQ+JjJW4/tHSb0bC2JnXjAGB9VrEjI5OToUVIB7a
+	 AMeehhPrnqvsQSiK3wRKE/vY3UhATv1IfidJs83hy4mx7K9FEkLiuBr36m40XUhioIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030398;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030401;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t+H915xg53HaCnpl8EuLcxjJvqJehRxI2mDYqHmV1pU=;
-	b=D4SJkpluRTuOqWu62LHbvchuiOCWgV6bsAYsmhYPwmKiSbWLAB/pbVrFGFqAfXGTK0fE
-	 ZwPvcxEhbQ1G+N6tQKiQ4fJJLoINW6sNij9+5YwsROKohuUqh+yb/W1SN0F4L4HZ+wILE
-	 jLcDcu7+ohtYRtE9LtmCAP+47YrUUsUXfs+Ump5xRGuIkVXFXiAybhvXGMM8+QiEfgs//
-	 FptNf69ANrGMEODg704ckwWfMQtagsnsnKWQD8O9fAERI3wAfThkeC+JwozkyYtcu0gZV
-	 bwIDNX0s2pG3gnxT1+p9pKADXlObIdPNbQyvDsklBW+awUVwCQs3hN9lDhA5ueKaFug==
+	bh=8CnuhxgiGmQ2IBo2I6KPyoy/KS7YhmwUF6bvgUI8oG4=;
+	b=To7prJMXzR+nWxLBKEclE0ALl5xGI6Xqi9FwQYHDEJWO32KHfQl9N3RXovGbQ5lARt20
+	 qJnWWhipJRm7KFlNZnnYb5cOHmQvTVwS15Wl2LfO252uO9LoIZgy8CfjatmQHu4pv44ux
+	 3jRAFg0tM37GD6jfdgGu2P4JacRfMG6YvumVDZNhF2rSU+OU9UarzArRwFO5TJC7KuTUJ
+	 I+UQqtiVAyOniKJAynkoT+CZ1aHPkSIVzWRj7F9BifevwpwJhFkzJaLN+hcHJvqFfkgSC
+	 xhHjEc+SgRCz1/PYAed9NYLvskUWUcnF2VBuAAt8US85wLLEhK/yuDe0KIUZcVqUwkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vs1wKMQy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=glxnCykH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34BD2606A336;
-	Wed, 18 Nov 2026 19:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007EC606A336;
+	Wed, 18 Nov 2026 19:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vs1wKMQy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B4911F000C4;
-	Wed, 18 Nov 2026 19:33:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=glxnCykH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530941F000C5;
+	Wed, 18 Nov 2026 19:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030398;
-	bh=t+H915xg53HaCnpl8EuLcxjJvqJehRxI2mDYqHmV1pU=;
+	s=korg; t=1795030400;
+	bh=8CnuhxgiGmQ2IBo2I6KPyoy/KS7YhmwUF6bvgUI8oG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vs1wKMQyCuXrCzzB8vddhdpUHfzSG7NnfTcaSfXwVHv2Iy14BSdPSs5bJw2QFwc3y
-	 f5wAeznpeJsFKQPCmTFqzXY3tAC4NUCw2JlKwFF4OMUQxVTIYqP+VFbcCkSLrdgia1
-	 Qk7h/hGtUisTakmrgdG61UtZW8NjWsJJSPVLUVbY=
+	b=glxnCykHcVdJaTmO+vBjxmAbN5nwP2X8hDDYQqRrDJTzKg22DOKajrUWMHHuENScX
+	 AychvZD3k17oJ58Y28jWS52I2zE1FPN7/18F7iUtps2GJeBRaUzUj79n5CErI0fy1+
+	 HtgMWb+/ZFRfBZJl2CTZfq1740vFjz3aJ+WktqDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0688/1756] RDMA/bnxt_re: Use bnxt_ext_stats_supported for counter count selection
-Date: Wed, 18 Nov 2026 15:46:55 +0100
-Message-ID: <20261118150036.607459583@linuxfoundation.org>
+Subject: [PATCH 6.12 0650/1756] ASoC: mediatek: mt8192: mt8192-afe-gpio: Use guard() for mutex locks
+Date: Wed, 18 Nov 2026 15:46:17 +0100
+Message-ID: <20261118150034.754252288@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,51 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 7cc8ccb157a4769c8fbce8296532dcb8a8ea0d5e ]
+[ Upstream commit 14edf39daefbf7aa689ea2bb8811a85c498e0ff6 ]
 
-Selecting between BNXT_RE_NUM_EXT_COUNTERS and
-BNXT_RE_NUM_STD_COUNTERS relied only on
-bnxt_qplib_is_chip_gen_p5_p7(), which doesn't account for the
-extended stats capability flag or the PF/VF restriction. Use
-bnxt_ext_stats_supported() instead, matching the check already
-used to populate the extended stats, so the counter count stays
-consistent with what gets filled in.
+Convert the explicit mutex_lock()/mutex_unlock() pair to guard(mutex)
+to simplify the locking logic and automatically release the mutex on
+all exit paths.
 
-Fixes: 8238c7bd8420 ("RDMA/bnxt_re: Fix the statistics for Gen P7 VF")
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+This changes the mutex release point from immediately before dev_warn()
+to automatic cleanup at scope exit. However, the affected path only emits
+a warning and immediately returns -EINVAL, without any further processing.
+
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260610102021.83273-6-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 411be3902fa8 ("ASoC: mediatek: mt8192: Propagate errors in mt8192_afe_gpio_request()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/hw_counters.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/mediatek/mt8192/mt8192-afe-gpio.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/hw_counters.c b/drivers/infiniband/hw/bnxt_re/hw_counters.c
-index f51adb0a97e66..699ef8537e4eb 100644
---- a/drivers/infiniband/hw/bnxt_re/hw_counters.c
-+++ b/drivers/infiniband/hw/bnxt_re/hw_counters.c
-@@ -371,7 +371,8 @@ int bnxt_re_ib_get_hw_stats(struct ib_device *ibdev,
+diff --git a/sound/soc/mediatek/mt8192/mt8192-afe-gpio.c b/sound/soc/mediatek/mt8192/mt8192-afe-gpio.c
+index de5e1deaa167d..b993ca2dbd7c8 100644
+--- a/sound/soc/mediatek/mt8192/mt8192-afe-gpio.c
++++ b/sound/soc/mediatek/mt8192/mt8192-afe-gpio.c
+@@ -208,7 +208,7 @@ static int mt8192_afe_gpio_adda_ch34_ul(struct device *dev, bool enable)
+ int mt8192_afe_gpio_request(struct device *dev, bool enable,
+ 			    int dai, int uplink)
+ {
+-	mutex_lock(&gpio_request_mutex);
++	guard(mutex)(&gpio_request_mutex);
+ 	switch (dai) {
+ 	case MT8192_DAI_ADDA:
+ 		if (uplink)
+@@ -296,11 +296,9 @@ int mt8192_afe_gpio_request(struct device *dev, bool enable,
+ 		}
+ 		break;
+ 	default:
+-		mutex_unlock(&gpio_request_mutex);
+ 		dev_warn(dev, "%s(), invalid dai %d\n", __func__, dai);
+ 		return -EINVAL;
  	}
+-	mutex_unlock(&gpio_request_mutex);
  
- done:
--	return bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx) ?
-+	return bnxt_ext_stats_supported(rdev->chip_ctx, rdev->dev_attr->dev_cap_flags,
-+					 rdev->is_virtfn) ?
- 		BNXT_RE_NUM_EXT_COUNTERS : BNXT_RE_NUM_STD_COUNTERS;
+ 	return 0;
  }
- 
-@@ -381,7 +382,8 @@ struct rdma_hw_stats *bnxt_re_ib_alloc_hw_port_stats(struct ib_device *ibdev,
- 	struct bnxt_re_dev *rdev = to_bnxt_re_dev(ibdev, ibdev);
- 	int num_counters = 0;
- 
--	if (bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx))
-+	if (bnxt_ext_stats_supported(rdev->chip_ctx, rdev->dev_attr->dev_cap_flags,
-+				     rdev->is_virtfn))
- 		num_counters = BNXT_RE_NUM_EXT_COUNTERS;
- 	else
- 		num_counters = BNXT_RE_NUM_STD_COUNTERS;
 -- 
 2.53.0
 
