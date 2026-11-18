@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036720;
-	b=n5ySYivJriKADPntDJOZw6GOr87PmhD6beH8vTD1NtTHa1F+Yllqxu6AMR7sFOUxrdYH
-	 74C+WrwHG5uvwnTYb4YfPZXMHD1Mc603gE8uyw4RY/amZ74//Uux+mTVWQ6xOom/RH3Yu
-	 BmOL9Pb/ZNPU6e/HwS/QgRosVJypoOq/w1nOos4dlCAqDEyPbOl4qSZMcAvjUyFCXjytI
-	 GS2c0xVpFZaNxsTvXEva/Yw/S1v4Nu0K9TIZp88v6S+724KVya2Vw+ZDPs6TjgnGXTH4t
-	 d7jIgsJxU/2DI3/PsH3nxqlFxIhpZVMxHFmDfp6qWvG0/LJAicBF5nV5V6Ry2wwDESg==
+	t=1795036722;
+	b=cxRp4k0cFzlYvPvNMXmjM0Jij3MORvKzRW46cNbbzDI9JIEudj8XKhvnY/JeyvGgormv
+	 TA+xrjm62Mv23TD5yfYhDoxxwPvhCRGWa9ouR7EOTcagvOMkCMfYakki2lmsLCVkT7R7V
+	 m0z3AMZpA3qoTQ4UxeXqNWK18To1EnLAXmIVVD64O4TbKGIBMCRa1rH7HCb6J4BJ2/WVh
+	 yO6XiI/cvYUWRYBJePzLT1pyqWSpqHTptFe2M/IWNPxv+PSZDt5nvP6Nw9ImcEVqg07y3
+	 uvX0ALd8tlNGfmbI0ktxKuepIdIhY7TifQwbsjibwZloz1fnSwuQ/c+VxiCvQeq8UUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036720;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036722;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=sipRqXb50PJEtvMuOEkZvW8xLD5ZlHImtZOeBb0ycC8=;
-	b=FbOpppM1aWAQ4u7ldJS7Ai90cEXVCMew51oAHDulcpfx1UEGtiQuAppfTHhq1Ij/LFkz
-	 NJe1EaGFP9nBVN+INa+CWYK6BB1K6O2Nc4yO3xFINgHCT00mXt3niga9J2UH5mrzB1z2n
-	 gi3LFflGcGMwZZG2wF/Ci5SlSjnbyKK/SdI93O2hht0j88/LJcR0KXeQ8NxwmIDGrc5PQ
-	 u0+596r9ZGPigU3ZOAfsxSWm7kJ5G9y9WdLONrmTfu5BLn94aitAY2NeR79F87i9UMEft
-	 mBXrBOyRRmaHg2X8vZLbx44WOrHaCZ2cq4hnYftAfJzCbXvuKC8JcSWgy6bIDS/XhbQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=nnROav1AFx8WT9BYir/eR14MGGbNk6HDzvFQ2k40V3I=;
+	b=OPaNKWv8chNZJHmXGM7/CPBH5dbcWJ5m+6ayA1sTeCWaWyrksOQ968F3/LHgolJ+6bcY
+	 9IZktIfji6ilvUZo2fJ5DJrYMejDtKcqE2aLiDtRposjy2oq4oT4+LJj9CHqOp/wKyRdB
+	 nCr6ql0jipx9nxcuUHkgN2oepyW3jyK85RjKJpLky5tIoaOHnSnHnywyNxeF78ZTozpnj
+	 5WDTLREyPxYRKANPBBqee5OABWH9EVXrp+zn0zA4Hhl/0eGwKfhXz/FZLlHkujqVhqFkv
+	 r/i33/gwn1aFZwYy/VvdIgd88HPGVVXNfvikXuBum45qCYWrRmlrGInQvvHCioXOwAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0K8E76pq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0KhzzM77;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112E8606A325;
-	Wed, 18 Nov 2026 21:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA8F60A260A;
+	Wed, 18 Nov 2026 21:18:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0K8E76pq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA681F000C4;
-	Wed, 18 Nov 2026 21:18:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0KhzzM77
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00D51F000C5;
+	Wed, 18 Nov 2026 21:18:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036719;
-	bh=sipRqXb50PJEtvMuOEkZvW8xLD5ZlHImtZOeBb0ycC8=;
+	s=korg; t=1795036722;
+	bh=nnROav1AFx8WT9BYir/eR14MGGbNk6HDzvFQ2k40V3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0K8E76pqAXXcubMASxJkYmuf2TScvs5oxwwHtKVMtJkzkBWGuNzCW+NqHge7xsm4V
-	 S7IIwqkyKyo9/LGURE30iwvF2ngMnYNZpu3iUVkmzZgQUS0sYhi6184sRWOrTBldAB
-	 1pnni6FVzEu/OEttMdX2ibQZBjR4pd9ljTIRrX9g=
+	b=0KhzzM771QqQSTtNI8IawlbKfkJ570eJvqhqOC3LjdGmJNJPkt6enoEjJVDtkevcD
+	 26hnGA4dDetGdWEWwbh03NETqLrIJ70PwSRu7+ojyVNo4JAhUdnv/uK6Fh2s18ax1S
+	 ktHhJHXK5yhIgBIepDxMgzY0cPs2AIPYo8buUQ9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Matt Turner <mattst88@gmail.com>,
+	Magnus Lindholm <linmag7@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1106/3318] platform/x86: hp-bioscfg: allow clearing current_password
-Date: Wed, 18 Nov 2026 15:28:48 +0100
-Message-ID: <20261118150353.174123676@linuxfoundation.org>
+Subject: [PATCH 6.6 1154/3318] alpha: do not skip TLB shootdown IPIs for kthread-borrowed mms
+Date: Wed, 18 Nov 2026 15:29:36 +0100
+Message-ID: <20261118150354.715928379@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,72 +62,244 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Magnus Lindholm <linmag7@gmail.com>
 
-[ Upstream commit acada379d5c4dd3a86d48fc69802e769eff29f7e ]
+[ Upstream commit fe221b7b2d3ecd042dd391f74ff6a6fdeb7c2038 ]
 
-The ABI documents echo "" > current_password as the way to end a
-session, but validate_password_input() rejects an empty string when
-min_password_length is nonzero, so the password stays cached.
+flush_tlb_mm(), flush_tlb_page() and flush_icache_user_page() skip the
+shootdown IPI when mm_users <= 1, on the assumption that no other CPU can
+be running the mm. A task that borrows an mm through kthread_use_mm()
+takes mmgrab() rather than mmget(), so it never appears in mm_users, and
+kthread_use_mm() may be handed an mm that is already the caller's
+active_mm and loaded on that CPU. Such a CPU was not only left without
+an IPI, its mm->context[cpu] was cleared from under it.
 
-Skip the length check for an empty current_password so the write
-clears it.
+mm->context[cpu] is already the record of which CPUs hold an ASN for the
+mm. Test it rather than clearing it: take the shortcut only when no
+other CPU has one, and otherwise fall through to the IPI, which
+invalidates those CPUs properly. A CPU that merely ran the mm in the
+past also holds a context and now costs an IPI, which errs in the safe
+direction.
 
-Compile tested only.
+Change ipi_flush_tlb_mm(), ipi_flush_icache_page() and the migration
+callback ipi_flush_mm_and_page() to test current->mm, like
+ipi_flush_tlb_page(). A CPU that only retains the mm lazily then clears
+its own slot through flush_tlb_other(), rather than publishing a new ASN
+on every IPI or migration rendezvous. The migration callback still does
+its per-VA tbi() afterwards. Returning to the mm allocates a fresh ASN
+through ev5_switch_mm(), or through the direct-load path when
+kthread_use_mm() switches current's mm.
 
-Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
+Once these historical slots are gone, the shortcut is available again
+if mm_users remains at most one and no other CPU has taken or kept a
+context. An explicit kthread_use_mm() borrower has current->mm set and
+still receives the invalidate it needs.
+
+The caller-side tests in flush_tlb_mm() and flush_icache_user_page()
+remain current->active_mm. A kernel thread that flushes its lazily held
+mm can therefore publish its own context slot. Those branches also
+perform the shortcut check, which excludes the calling CPU's slot, so
+leave them unchanged. This is distinct from a remote lazy CPU keeping
+its slot populated through repeated callbacks.
+
+Together with the preceding patch, dropping these clearing loops leaves
+every runtime write to mm->context[] targeting the writing CPU's own slot,
+so the array becomes a lockless publication of which CPUs may be using the
+mm, with a single writer per slot. Mark the two stores that are now
+observed from other CPUs; flush_tlb_other() already uses WRITE_ONCE().
+The uniprocessor flush_icache_user_page() is left alone, as nothing reads
+another CPU's slot there, and init_new_context() runs before the mm is
+shared.
+
+Order the slot reads after the page-table changes with smp_mb(). On the
+publishing CPU, the store in ev5_switch_mm() precedes the mb() in Alpha's
+arch_spin_unlock(), when finish_lock_switch() drops the rq lock. This
+relies on Alpha's unlock implementation, not a generic scheduler promise
+of a full barrier on unlock; document that reliance at the store. Also
+issue smp_mb() after publishing in __load_new_mm_context(), before loading
+and using the mm.
+
+This covers every caller, including check_mmu_context(), which can
+publish a replacement after finish_lock_switch() has already run.
+
+This requires the preceding removal of remote slot clearing from
+migrate_flush_tlb_page(). It also requires the stale-TLB series to set
+need_new_asn on both the reused and newly allocated ASN paths. Otherwise
+an IPI between finish_lock_switch() and check_mmu_context() can zero a
+new slot while asn_lock is set, and the task can return to user space
+with a live ASN that the shortcut cannot see.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: <stable@vger.kernel.org> # 53ab52cfe5ce: alpha: load the MMU context when switch_mm() switches the current task
+Cc: <stable@vger.kernel.org> # 01df8f401888: alpha: run check_mmu_context() from finish_arch_post_lock_switch()
+Cc: <stable@vger.kernel.org> # ef43cfc28c42: alpha: only use a targeted tbi() when the target mm is really current
+Cc: <stable@vger.kernel.org> # 738cf8f7a78f: alpha: invalidate the local context in flush_tlb_page()
+Cc: <stable@vger.kernel.org> # 62c92086f30e: alpha: fix the local TLB invalidate in flush_tlb_page()
+Cc: <stable@vger.kernel.org> # 3faee097b939: alpha: fix the local TLB invalidate in the UP flush_tlb_page()
+Cc: <stable@vger.kernel.org> # b2c3b654bb64: alpha: invalidate the local context in flush_tlb_mm()
+Cc: <stable@vger.kernel.org> # f19ae6f51a38: alpha: invalidate the local context in flush_icache_user_page()
+Cc: <stable@vger.kernel.org> # 471e7f9c890b: alpha: do not clear remote MMU contexts in migrate_flush_tlb_page()
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://lore.kernel.org/all/20261007134711.473857-1-meatuni001@gmail.com/
-Link: https://patch.msgid.link/20261007134711.473857-5-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20261010144621.974850-3-linmag7@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/x86/hp/hp-bioscfg/passwdobj-attributes.c    | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/alpha/include/asm/mmu_context.h |  7 +++-
+ arch/alpha/kernel/smp.c              | 52 ++++++++++++++--------------
+ arch/alpha/mm/fault.c                |  4 ++-
+ arch/alpha/mm/tlbflush.c             |  2 +-
+ 4 files changed, 36 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-index d36f75ed1d773..5d4923b90ff38 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-@@ -61,7 +61,8 @@ int hp_get_password_instance_for_type(const char *name)
- 	return -EINVAL;
+diff --git a/arch/alpha/include/asm/mmu_context.h b/arch/alpha/include/asm/mmu_context.h
+index 7aeee0846dc9d..42c9ab7624224 100644
+--- a/arch/alpha/include/asm/mmu_context.h
++++ b/arch/alpha/include/asm/mmu_context.h
+@@ -149,7 +149,12 @@ ev5_switch_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm,
+ 	mmc = next_mm->context[cpu];
+ 	if ((mmc ^ asn) & ~HARDWARE_ASN_MASK) {
+ 		mmc = __get_new_mm_context(next_mm, cpu);
+-		next_mm->context[cpu] = mmc;
++		/*
++		 * Ordered before any user access through the mm by the
++		 * mb() in arch_spin_unlock(), when finish_lock_switch()
++		 * drops the rq lock.
++		 */
++		WRITE_ONCE(next_mm->context[cpu], mmc);
+ 	}
+ #ifdef CONFIG_SMP
+ 	/* A deferred shootdown can also invalidate a newly allocated ASN. */
+diff --git a/arch/alpha/kernel/smp.c b/arch/alpha/kernel/smp.c
+index 42c33f6ca514d..a9cea367d3e16 100644
+--- a/arch/alpha/kernel/smp.c
++++ b/arch/alpha/kernel/smp.c
+@@ -629,12 +629,30 @@ static void
+ ipi_flush_tlb_mm(void *x)
+ {
+ 	struct mm_struct *mm = x;
+-	if (mm == current->active_mm && !asn_locked())
++	if (mm == current->mm && !asn_locked())
+ 		flush_tlb_current(mm);
+ 	else
+ 		flush_tlb_other(mm);
  }
  
--static int validate_password_input(int instance_id, const char *buf)
-+static int validate_password_input(int instance_id, const char *buf,
-+				   bool is_current)
- {
- 	int length;
- 	struct password_data *password_data = &bioscfg_drv.password_data[instance_id];
-@@ -70,6 +71,10 @@ static int validate_password_input(int instance_id, const char *buf)
- 	if (length > 0 && buf[length - 1] == '\n')
- 		length--;
- 
-+	/* An empty current_password clears the session password */
-+	if (is_current && !length)
-+		return 0;
++/* True if a CPU other than this one holds an ASN for MM.  */
++static bool
++mm_context_elsewhere(struct mm_struct *mm)
++{
++	int cpu, this_cpu = smp_processor_id();
 +
- 	if (length > MAX_PASSWD_SIZE)
- 		return -E2BIG;
++	/* Pairs with the barrier the publishing CPU issues before using MM.  */
++	smp_mb();
++
++	for_each_online_cpu(cpu) {
++		if (cpu == this_cpu)
++			continue;
++		if (READ_ONCE(mm->context[cpu]))
++			return true;
++	}
++	return false;
++}
++
+ void
+ flush_tlb_mm(struct mm_struct *mm)
+ {
+@@ -642,14 +660,8 @@ flush_tlb_mm(struct mm_struct *mm)
  
-@@ -98,7 +103,7 @@ static int store_password_instance(struct kobject *kobj, const char *buf,
- 		id = get_password_instance_id(kobj);
+ 	if (mm == current->active_mm) {
+ 		flush_tlb_current(mm);
+-		if (atomic_read(&mm->mm_users) <= 1) {
+-			int cpu, this_cpu = smp_processor_id();
+-			for (cpu = 0; cpu < NR_CPUS; cpu++) {
+-				if (!cpu_online(cpu) || cpu == this_cpu)
+-					continue;
+-				if (mm->context[cpu])
+-					mm->context[cpu] = 0;
+-			}
++		if (atomic_read(&mm->mm_users) <= 1 &&
++		    !mm_context_elsewhere(mm)) {
+ 			preempt_enable();
+ 			return;
+ 		}
+@@ -694,14 +706,8 @@ flush_tlb_page(struct vm_area_struct *vma, unsigned long addr)
+ 	/* As in ipi_flush_tlb_page(): a targeted tbi() needs MM current.  */
+ 	if (mm == current->mm) {
+ 		flush_tlb_current_page(mm, vma, addr);
+-		if (atomic_read(&mm->mm_users) <= 1) {
+-			int cpu, this_cpu = smp_processor_id();
+-			for (cpu = 0; cpu < NR_CPUS; cpu++) {
+-				if (!cpu_online(cpu) || cpu == this_cpu)
+-					continue;
+-				if (mm->context[cpu])
+-					mm->context[cpu] = 0;
+-			}
++		if (atomic_read(&mm->mm_users) <= 1 &&
++		    !mm_context_elsewhere(mm)) {
+ 			preempt_enable();
+ 			return;
+ 		}
+@@ -732,7 +738,7 @@ static void
+ ipi_flush_icache_page(void *x)
+ {
+ 	struct mm_struct *mm = (struct mm_struct *) x;
+-	if (mm == current->active_mm && !asn_locked())
++	if (mm == current->mm && !asn_locked())
+ 		__load_new_mm_context(mm);
+ 	else
+ 		flush_tlb_other(mm);
+@@ -751,14 +757,8 @@ flush_icache_user_page(struct vm_area_struct *vma, struct page *page,
  
- 		if (id >= 0)
--			ret = validate_password_input(id, buf_cp);
-+			ret = validate_password_input(id, buf_cp, is_current);
- 	}
+ 	if (mm == current->active_mm) {
+ 		__load_new_mm_context(mm);
+-		if (atomic_read(&mm->mm_users) <= 1) {
+-			int cpu, this_cpu = smp_processor_id();
+-			for (cpu = 0; cpu < NR_CPUS; cpu++) {
+-				if (!cpu_online(cpu) || cpu == this_cpu)
+-					continue;
+-				if (mm->context[cpu])
+-					mm->context[cpu] = 0;
+-			}
++		if (atomic_read(&mm->mm_users) <= 1 &&
++		    !mm_context_elsewhere(mm)) {
+ 			preempt_enable();
+ 			return;
+ 		}
+diff --git a/arch/alpha/mm/fault.c b/arch/alpha/mm/fault.c
+index f40ac0826a854..53e170e965915 100644
+--- a/arch/alpha/mm/fault.c
++++ b/arch/alpha/mm/fault.c
+@@ -46,7 +46,9 @@ __load_new_mm_context(struct mm_struct *next_mm)
+ 	struct pcb_struct *pcb;
  
- 	if (!ret) {
+ 	mmc = __get_new_mm_context(next_mm, smp_processor_id());
+-	next_mm->context[smp_processor_id()] = mmc;
++	WRITE_ONCE(next_mm->context[smp_processor_id()], mmc);
++	/* Publish the context before this CPU can access the mm. */
++	smp_mb();
+ 
+ 	pcb = &current_thread_info()->pcb;
+ 	pcb->asn = mmc & HARDWARE_ASN_MASK;
+diff --git a/arch/alpha/mm/tlbflush.c b/arch/alpha/mm/tlbflush.c
+index 239c72b8a7412..a2aef90e6234b 100644
+--- a/arch/alpha/mm/tlbflush.c
++++ b/arch/alpha/mm/tlbflush.c
+@@ -66,7 +66,7 @@ static void ipi_flush_mm_and_page(void *x)
+ 	struct tlb_mm_and_addr *d = x;
+ 
+ 	/* Part 1: mm context side (Alpha uses ASN/context as a key mechanism). */
+-	if (d->mm == current->active_mm && !asn_locked())
++	if (d->mm == current->mm && !asn_locked())
+ 		__load_new_mm_context(d->mm);
+ 	else
+ 		flush_tlb_other(d->mm);
 -- 
 2.53.0
 
