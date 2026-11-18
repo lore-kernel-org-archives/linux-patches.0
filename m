@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027646;
-	b=S5bCIaVcbYmgGwYIcl18iISXLNyujwLGptRJAPqelVFJYApzCQuMSuGd/Dz/R5sHaFWH
-	 FU3MthNk5tWKp4fDlGQOxG7dJfLLwACKVTZvgsrCtFetdoZbrDcyDyKq6Ka4jUTnPyz1U
-	 1E6Ejsia+6t2R1vU/MpSXtVDbiObknghdizctV8Zl8XYuRLn0DiXQmMmDUW6zxBq3JGD+
-	 i/7QRnRuLOjG/ODh74GhkyhBGR8k2fpEYpn/TB97bHHuHxrPvpiZWIyXBDgKeiCrZ/PbM
-	 HksLxvCys7QE7HBg7S/O6tP5WBWA6YN8Z0lMrviy2O0GgY3KpHcJeEURhf/P+5EcQgA==
+	t=1795027649;
+	b=RTem/gJXn22kIjODKf251eDfox8E5lOpLqExKKh4pnaWAJGBDoB15PyTX1I0lj5DmE1Y
+	 YSWAZ3khCc5IKGlQtrXg35+3sufEIvYQ5iNDBW0L02vwcWMYka3+vQWSj9jC5QtoI4MMg
+	 sCCR/QXyMNyACsY8qnq8Ek8kjbTdEkfXRNmoUiHkF/DNtpW7zFi4qaIiREFSz8jxwdtkg
+	 nuk84FJChzIZAqU0Sp2CKlpKtGwcd7aNqZTdeye40CifT2UfxPUg/19rrXWuCukwoaKZ4
+	 deT5MLS6PzL3BxzejJM6tz7v1eqlI/f1nQ0JnN9hCFDpv+3zES7qCgEGOmifxuUSRKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027646;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027649;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EAh3VIFxyqEm95cTRBEWaQh5iZ4dbSYWuypazL/cPgw=;
-	b=5UrCwfiMLjiOB7QLE3SLG0nGA4/2eUMWVDIUsN2wnGuclY/ZV6LPd/aBmvi9K+A1B2lK
-	 /q5ZELZQ17u8zHjDc1GdwMgHEe9+UZSpB3RjSBaWdBgifrfR73e74wd5q8CX7tNMUKxc1
-	 2FFwnDrtOf9i1/2xBNrDyxj7N024MKveDNU0pDH684aHdZi7va02ubVNg6zEU2l60UNeA
-	 SsyEO8YomCWcz6baT4TdI1D9yyMRXzK7kUMKk6/PjS0yWYOFbwzX4g7ctfb4M67ytyFMB
-	 1QZ9U9owkH6Wq1KcJEjjU9D3YhEejt8/zIKDAYR/aBUoNOGv37uRXHi34AqPSWSamCg==
+	bh=XRAjOB63YbKkfofrv6trV+PuXlxEtbziShVtbwXFstg=;
+	b=VmZ8CAufpJigGjM4iC78sR86PuNhy4xq5DIP7+kRrbKj0/KWhtLJCOcmidcRQ038cje3
+	 v2d418rLBUcia+uXPLLaC5skyg444gbpZpgEmwtDZEyqR0gDdResEkotHQ5oIolLGWedF
+	 TQyq7gNtrWjAtSnEKKOwtiIHPkCGbDjg7KhgXWW7VgsEQHWm8z71NkiYhTp8B3x0GmFXI
+	 ekab1otmPQA+qJhP6BYg+G2HA6clOVzroYWGgmcHVenh/8XtvaJFfcLR+CAXd4OucH+rk
+	 2gDSeXx/1igxSFj8UiMoKeVKwkYDY9IcNIvfJ6476lPuKTLvB5C9y1F1RIxt/09p/ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PFbzHclS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y825bcYK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81867606A337;
-	Wed, 18 Nov 2026 18:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4D3606A338;
+	Wed, 18 Nov 2026 18:47:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PFbzHclS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C2D1F000C4;
-	Wed, 18 Nov 2026 18:47:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y825bcYK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B356B1F000C4;
+	Wed, 18 Nov 2026 18:47:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027646;
-	bh=EAh3VIFxyqEm95cTRBEWaQh5iZ4dbSYWuypazL/cPgw=;
+	s=korg; t=1795027649;
+	bh=XRAjOB63YbKkfofrv6trV+PuXlxEtbziShVtbwXFstg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PFbzHclSrpsrlS8GTFdL9GEUXOovYGGiSxJHjGafXSfLtBzaP3lRf+oOSaWA8lkRy
-	 R2GaXUNcftmYU/6vIUMwXtrei36LDeeWJ/9wGsoAL58FXX1U1Hdv4iNJ3DIY81MDYs
-	 gSjDCsYkMBkhQDZJ/7LYawywGShnVmwyrMLbiFAY=
+	b=y825bcYKS6zSPxub0cA01lMKIGsk6ca5fIs4lRHnA+NterHTB2EC2ruxdPnpBN6L+
+	 SF8NV0OTR0ACPH98jPlRu5AHmtXWrX2Q9lC1qdRRMKaD1H/ddO0Hf4cDaFwUMuvnFy
+	 seAT/9jr+Ax1cPaOqRiq5wZN0nfiR1rEDjth9x8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Alexey Dobriyan <adobriyan@gmail.com>
-Subject: [PATCH 6.18 1861/2151] selftests/proc: proc-pid-vm: fix unused variable warning on non-x86
-Date: Wed, 18 Nov 2026 15:59:56 +0100
-Message-ID: <20261118150229.593712951@linuxfoundation.org>
+	Jiale Yao <yaojiale02@163.com>,
+	Naman Jain <namjain@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 1862/2151] Drivers: hv: vmbus: Check ACPI companion before use
+Date: Wed, 18 Nov 2026 15:59:57 +0100
+Message-ID: <20261118150229.629825285@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,74 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit c4d9005e7e1ee6ce277f47cf53d44fc5b90b287b ]
+From: Jiale Yao <yaojiale02@163.com>
 
-g_vsyscall is only used by the x86_64 test, so clang builds for other
-architectures get:
+[ Upstream commit dd57772e36f72f8d9a53d7fa4d90c974d8ebbcff ]
 
-  proc-pid-vm.c:224:21: warning: unused variable 'g_vsyscall' [-Wunused-variable]
+Platform drivers can be forced to bind to devices outside their match
+tables through driver_override. vmbus_acpi_add() assumes that every bound
+device has an ACPI companion and dereferences it without checking.
 
-The vsyscall strings next to it had the same problem and were marked
-__maybe_unused for it. Move all of the vsyscall variables into the
-__x86_64__ block that uses them instead, and drop those annotations
-along with the local __maybe_unused fallback that was added for them.
+Return -ENODEV when the companion is absent to avoid a NULL pointer
+dereference.
 
-Link: https://lore.kernel.org/20261012115330.3777115-1-sashal@kernel.org
-Fixes: 17415606f9d8 ("tools/testing/selftests/proc/proc-pid-vm.c: test with vsyscall in mind")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Andrew Morton <akpm@linux-foundation.org>
-Assisted-by: LLM
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Fixes: 9c8434238041 ("Drivers: hv: vmbus: Convert acpi_device to more generic platform_device")
+Reviewed-by: Naman Jain <namjain@linux.microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/proc/proc-pid-vm.c | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ drivers/hv/vmbus_drv.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/proc/proc-pid-vm.c b/tools/testing/selftests/proc/proc-pid-vm.c
-index 4e6a3e53f9757..98e882e568154 100644
---- a/tools/testing/selftests/proc/proc-pid-vm.c
-+++ b/tools/testing/selftests/proc/proc-pid-vm.c
-@@ -47,10 +47,6 @@
- #include <sys/resource.h>
- #include <linux/fs.h>
- 
--#ifndef __maybe_unused
--#define __maybe_unused __attribute__((__unused__))
--#endif
--
- #include "kselftest.h"
- 
- static inline long sys_execveat(int dirfd, const char *pathname, char **argv, char **envp, int flags)
-@@ -214,7 +210,6 @@ static int make_exe(const uint8_t *payload, size_t len)
- 
- 	return fd1;
- }
--#endif
- 
- /*
-  * 0: vsyscall VMA doesn't exist	vsyscall=none
-@@ -222,15 +217,14 @@ static int make_exe(const uint8_t *payload, size_t len)
-  * 2: vsyscall VMA is r-xp		vsyscall=emulate
-  */
- static volatile int g_vsyscall;
--static const char *str_vsyscall __maybe_unused;
-+static const char *str_vsyscall;
- 
--static const char str_vsyscall_0[] __maybe_unused = "";
--static const char str_vsyscall_1[] __maybe_unused =
-+static const char str_vsyscall_0[] = "";
-+static const char str_vsyscall_1[] =
- "ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]\n";
--static const char str_vsyscall_2[] __maybe_unused =
-+static const char str_vsyscall_2[] =
- "ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]\n";
- 
--#ifdef __x86_64__
- static void sigaction_SIGSEGV(int _, siginfo_t *__, void *___)
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index 1dc371eb53400..5b55a44c3dd96 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -2545,10 +2545,14 @@ EXPORT_SYMBOL_GPL(vmbus_free_mmio);
+ #ifdef CONFIG_ACPI
+ static int vmbus_acpi_add(struct platform_device *pdev)
  {
- 	_exit(g_vsyscall);
++	struct acpi_device *ancestor;
++	struct acpi_device *device;
+ 	acpi_status result;
+ 	int ret_val = -ENODEV;
+-	struct acpi_device *ancestor;
+-	struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
++
++	device = ACPI_COMPANION(&pdev->dev);
++	if (!device)
++		return -ENODEV;
+ 
+ 	vmbus_root_device = &device->dev;
+ 
 -- 
 2.53.0
 
