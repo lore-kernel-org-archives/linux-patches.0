@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038277;
-	b=YJ5AD9/h5gycFlpC2fQR5uDujB5unzTcpjwgOTqC+rGkWBg9GrKakGBkn1dnyaVnMCy4
-	 ziQWoZ5cRCro6acx+l7PjQE7dXP17eRwQG3EGY2RHmyApXBljGyWRjQK7xP5dlm7Iclje
-	 6G6wdmMj6KCL3cCRThvm01IzG/+VtBBvGQaBEX2/kFV3s+D0XVkdj8c8+36lNhOzBmVKh
-	 tLp4KuZPiXO/dfEqcYUByDzx6GBYckutdhNjGe5oYnD/7VbQ4fFChZVtYviNf8xVxQ5nl
-	 kS82RGPud5OZqzefCOMtj0pb2zzS5Sxfbnfj2WSX7ym1ys6ohJ0MSHpYyMlvqyoEpWg==
+	t=1795038280;
+	b=GWFHjd3WEsA3b6d5yT/fZLIinJIZwWSasGZHgKBTqUJYWTvGtkaRTBI/jxJpKgyMy+fN
+	 ETU4vA/RBUS/BF+nR812SMWowx7eaIGYbe/5L5Uj8hKz1RSRuu1e6rWFCKwGcmDpzgXA0
+	 20jSePpppZlG6RJ7YzuJUmMuch79XEQaMOsKRc/GgjVZxcCCz58ntvmjqdLhFtD27egqg
+	 ShzgGz8fNEyZ5cTPHEt86fM/edA6FQammPprNvsy/+Jo3b9Qdl8iUvv163rhDL1liAM7q
+	 7QRwFLaOpvcqBXEzxD+AHYEFNq8J/mgbaXZvj4mRdVLbbcUlcISM8X7D71vf+mbiiQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038277;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038280;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xZGB4Swt+V2ca4AJrGrNrPJXCTD6baKHR42/q77wpCU=;
-	b=aTZpTpDJvVmkiG+9yM8siJYOYTl3qyMLXQ8B7fadp8k3CXWd3fZg6kHqG0nIiOwwl1Vp
-	 LsTifz2g4aKK+VNCpmWWmSmNNr1PyUqyCqbsjJFcsO9BnN+4Vd/Bt25f0KbgXNz9X1NNd
-	 IeKhBH0HOPwm4zydabJQ/M22fWILjrwVtoLjXN6xrXArkxHM/82Bry5h9pTQlvMMiQUlc
-	 XwvrTrZXQ1sOEh509OJAN/4LNJkegWoXegOtIHAW7HvJ2r3/MO8ttyMvX+TqSIDNeHwPm
-	 JfCFr821SnEXVY/rVT1VCbi1bV1kWq8WY7TtcBZWkTcw7ugYcxqugHb4Qg7+ukTcBNA==
+	bh=X8+agpZuRPym8e1+78K5xjridwuzmYZB69bTfI+f+QM=;
+	b=MdHDks62WN0u/M7ZxI81TQGOikYUaDE/av+mOTJHlShs4Lh59wOKlBZAwfrG/3KxQf3o
+	 N7CDhQDl3Rz7egw1oESRxLK7uc++UvXMLcfsZWciBqycP6/V1Ci1DTDx+X3eDszyZPbx6
+	 6wgQQ88OL/FpvO6sZmm/GtEwAIRKqi+D4oYW8hoCQFzz4Rh6QodgVfGtchXy6XsDnnlCw
+	 TYGclXNNnq4Igyn0W3WbNyQoV1XH9VYfPU0N6PAHtec+AUa5J7T67DJLFOSo6z2VsYM6w
+	 e5Br9KOYfKD12lj9FG+Vn14Zbcb7ul60D6m16thOL7rG9ANMHmbj8rYBEMQbfpEqb7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iLZMTvbg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qweQgCn/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25B660A2601;
-	Wed, 18 Nov 2026 21:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749A7606A320;
+	Wed, 18 Nov 2026 21:44:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iLZMTvbg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191CA1F000C4;
-	Wed, 18 Nov 2026 21:44:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qweQgCn/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D851F000C4;
+	Wed, 18 Nov 2026 21:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038277;
-	bh=xZGB4Swt+V2ca4AJrGrNrPJXCTD6baKHR42/q77wpCU=;
+	s=korg; t=1795038280;
+	bh=X8+agpZuRPym8e1+78K5xjridwuzmYZB69bTfI+f+QM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iLZMTvbgSuCWPpFNknR3Zv1qtg+F5+m97THbD9rr6LRJqgWxb7KRXYPbukLTKM0cd
-	 ZWkUuGeGIX+X2slxI7BtMxGdPTXxTQ6kdDt27F2a4zmiRLo2xH16sRN/IHV7gbPdqI
-	 R0X2r/+RuLmTzKPaZ/sRUIAlIHGV1IP8+WK9Z19k=
+	b=qweQgCn/omvwxvL2tGL0c8Y/CWafAdsqoxnF62+TR8snp4n49ZW6WbcCTICEr8Lon
+	 /AqebsCfR+NYYl5QLOqoDBaeV+7e/ZFyHnjRzwOdk5UYM7RlfVLAvqfhrXQ4N9vOxm
+	 bEcn3R+Diz8j3nLI3CJ1El8aMcDvBDVH5+hCVk54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Jun Yang <junvyyang@tencent.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+f6c7e1f1809f235eeb90@syzkaller.appspotmail.com,
+	Wang Jianjian <wangjianjian3@huawei.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1651/3318] sctp: re-point retained control chunks on association migration
-Date: Wed, 18 Nov 2026 15:37:53 +0100
-Message-ID: <20261118150411.294264340@linuxfoundation.org>
+Subject: [PATCH 6.6 1687/3318] nilfs2: ignore non-fatal signals during synchronous log write wait
+Date: Wed, 18 Nov 2026 15:38:29 +0100
+Message-ID: <20261118150412.435582392@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,160 +70,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yang <junvyyang@tencent.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 52ffeaa358d1f3d91aa87a26ad90d77769cff74b ]
+[ Upstream commit 7131aaa74bcc7c9da1f1d1c8724da75c775557a0 ]
 
-sctp_sock_migrate() transfers DATA chunk ownership but leaves retained
-control chunks pointing at the old socket. A later retransmission can
-therefore access the socket after it has been freed.
+Based on a syzbot report, Wang Jianjian pointed out that following a
+successful directory operation in nilfs_rename(), a synchronous write
+requested within nilfs_transaction_commit(), triggered by a sync flag
+set by nilfs_commit_chunk(), could be interrupted by a user signal.
+This interruption leaves in-memory metadata updates intact while
+returning an error, causing inconsistency with the VFS dentry cache and
+ultimately triggering a kernel warning.
 
-Extend the migration walk to cover retained control chunks and use
-sctp_control_set_owner_w() to assign their new owner. Reuse the DATA
-ownership check so each chunk is processed once per pass, even when it
-is reachable through multiple lists or retained pointers.
+According to "signal(7)", local disks are not classified as "slow
+devices" (such as terminals, FIFOs, or pipes) and their I/O operations
+on disk devices are not interrupted by signals.  In kernel space,
+waiting for such disk I/O should therefore not be aborted by ordinary
+(non-fatal) signals.
 
-Preserve a control chunk's existing authentication key across migration
-so its final release can still generate SCTP_AUTH_FREE_KEY when needed.
+Suppress this issue by modifying nilfs_segctor_sync(), which waits for
+the log writer thread to complete synchronous writes, to catch only
+fatal signals via fatal_signal_pending() and return -EINTR rather than
+-ERESTARTSYS.  To complement this change and prevent the wait loop from
+busy-looping when schedule() returns immediately due to a pending
+non-fatal signal, switch the wait state from TASK_INTERRUPTIBLE to
+TASK_KILLABLE.
 
-Fixes: d04adf1b3551 ("sctp: reset owner sk for data chunks on out queues when migrating a sock")
-Cc: stable@kernel.org
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261009074244.3718-3-juny24602@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This serves as an effective interim stabilization measure without
+structural changes until a comprehensive fix for metadata consistency
+is implemented.
+
+Reported-by: syzbot+f6c7e1f1809f235eeb90@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f6c7e1f1809f235eeb90
+Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
+Tested-by: syzbot+f6c7e1f1809f235eeb90@syzkaller.appspotmail.com
+Cc: Wang Jianjian <wangjianjian3@huawei.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sctp/sm.h    |  1 +
- net/sctp/sm_make_chunk.c |  5 ++--
- net/sctp/socket.c        | 53 ++++++++++++++++++++++++++++++----------
- 3 files changed, 44 insertions(+), 15 deletions(-)
+ fs/nilfs2/ioctl.c    |  2 +-
+ fs/nilfs2/recovery.c |  2 +-
+ fs/nilfs2/segment.c  | 10 +++++-----
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/include/net/sctp/sm.h b/include/net/sctp/sm.h
-index 64c42bd56bb24..84e71381e19bc 100644
---- a/include/net/sctp/sm.h
-+++ b/include/net/sctp/sm.h
-@@ -253,6 +253,7 @@ struct sctp_chunk *sctp_make_fwdtsn(const struct sctp_association *asoc,
- 				    struct sctp_fwdtsn_skip *skiplist);
- struct sctp_chunk *sctp_make_auth(const struct sctp_association *asoc,
- 				  __u16 key_id);
-+void sctp_control_set_owner_w(struct sctp_chunk *chunk);
- struct sctp_chunk *sctp_make_strreset_req(const struct sctp_association *asoc,
- 					  __u16 stream_num, __be16 *stream_list,
- 					  bool out, bool in);
-diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
-index c2f716e68d6e0..c1a5384eed75f 100644
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -95,7 +95,7 @@ static void sctp_control_release_owner(struct sk_buff *skb)
+diff --git a/fs/nilfs2/ioctl.c b/fs/nilfs2/ioctl.c
+index f8c53a411d549..d15d88571fe27 100644
+--- a/fs/nilfs2/ioctl.c
++++ b/fs/nilfs2/ioctl.c
+@@ -960,10 +960,10 @@ static int nilfs_ioctl_clean_segments(struct inode *inode, struct file *filp,
+  * Return: 0 on success, or one of the following negative error codes on
+  * failure:
+  * * %-EFAULT		- Failure during execution of requested operation.
++ * * %-EINTR		- Interrupted.
+  * * %-EIO		- I/O error.
+  * * %-ENOMEM		- Insufficient memory available.
+  * * %-ENOSPC		- No space left on device (only in a panic state).
+- * * %-ERESTARTSYS	- Interrupted.
+  * * %-EROFS		- Read only filesystem.
+  */
+ static int nilfs_ioctl_sync(struct inode *inode, struct file *filp,
+diff --git a/fs/nilfs2/recovery.c b/fs/nilfs2/recovery.c
+index b5207e4c50007..af1b2a6a93db7 100644
+--- a/fs/nilfs2/recovery.c
++++ b/fs/nilfs2/recovery.c
+@@ -743,11 +743,11 @@ static void nilfs_abort_roll_forward(struct the_nilfs *nilfs)
+  *
+  * Return: 0 on success, or one of the following negative error codes on
+  * failure:
++ * * %-EINTR		- Interrupted.
+  * * %-EINVAL		- Inconsistent filesystem state.
+  * * %-EIO		- I/O error.
+  * * %-ENOMEM		- Insufficient memory available.
+  * * %-ENOSPC		- No space left on device (only in a panic state).
+- * * %-ERESTARTSYS	- Interrupted.
+  */
+ int nilfs_salvage_orphan_logs(struct the_nilfs *nilfs,
+ 			      struct super_block *sb,
+diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
+index ab2359959b566..5c7802de2679b 100644
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2243,7 +2243,7 @@ static int nilfs_segctor_sync(struct nilfs_sc_info *sci)
+ 	wake_up(&sci->sc_wait_daemon);
+ 
+ 	for (;;) {
+-		set_current_state(TASK_INTERRUPTIBLE);
++		set_current_state(TASK_KILLABLE);
+ 
+ 		/*
+ 		 * Synchronize only while the log writer thread is alive.
+@@ -2257,11 +2257,11 @@ static int nilfs_segctor_sync(struct nilfs_sc_info *sci)
+ 			err = wait_req.err;
+ 			break;
+ 		}
+-		if (!signal_pending(current)) {
++		if (!fatal_signal_pending(current)) {
+ 			schedule();
+ 			continue;
+ 		}
+-		err = -ERESTARTSYS;
++		err = -EINTR;
+ 		break;
  	}
- }
- 
--static void sctp_control_set_owner_w(struct sctp_chunk *chunk)
-+void sctp_control_set_owner_w(struct sctp_chunk *chunk)
- {
- 	struct sctp_association *asoc = chunk->asoc;
- 	struct sk_buff *skb = chunk->skb;
-@@ -108,7 +108,8 @@ static void sctp_control_set_owner_w(struct sctp_chunk *chunk)
- 	 *  For now don't do anything for now.
- 	 */
- 	if (chunk->auth) {
--		chunk->shkey = asoc->shkey;
-+		if (!chunk->shkey)
-+			chunk->shkey = asoc->shkey;
- 		sctp_auth_shkey_hold(chunk->shkey);
- 	}
- 	skb->sk = asoc ? asoc->base.sk : NULL;
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index d974d5d147771..137916dfaacba 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -156,9 +156,24 @@ static void sctp_clear_owner_w(struct sctp_chunk *chunk)
- 
- static void sctp_set_owner_w_migrate(struct sctp_chunk *chunk)
- {
--	sctp_set_owner_w(chunk);
--	if (chunk->shkey)
--		sctp_auth_shkey_release(chunk->shkey);
-+	struct sctp_shared_key *shkey = chunk->shkey;
-+
-+	if (chunk->msg)
-+		sctp_set_owner_w(chunk);
-+	else
-+		sctp_control_set_owner_w(chunk);
-+
-+	if (shkey)
-+		sctp_auth_shkey_release(shkey);
-+}
-+
-+static void sctp_process_tx_chunk(struct sctp_association *asoc,
-+				  struct sctp_chunk *chunk, bool clear,
-+				  void (*cb)(struct sctp_chunk *))
-+{
-+	if ((clear && asoc->base.sk == chunk->skb->sk) ||
-+	    (!clear && asoc->base.sk != chunk->skb->sk))
-+		cb(chunk);
- }
- 
- #define traverse_and_process()	\
-@@ -166,17 +181,14 @@ do {				\
- 	msg = chunk->msg;	\
- 	if (msg == prev_msg)	\
- 		continue;	\
--	list_for_each_entry(c, &msg->chunks, frag_list) {	\
--		if ((clear && asoc->base.sk == c->skb->sk) ||	\
--		    (!clear && asoc->base.sk != c->skb->sk))	\
--			cb(c);	\
--	}			\
-+	list_for_each_entry(c, &msg->chunks, frag_list)	\
-+		sctp_process_tx_chunk(asoc, c, clear, cb);	\
- 	prev_msg = msg;		\
- } while (0)
- 
--static void sctp_for_each_tx_datachunk(struct sctp_association *asoc,
--				       bool clear,
--				       void (*cb)(struct sctp_chunk *))
-+static void sctp_for_each_tx_chunk(struct sctp_association *asoc,
-+				   bool clear,
-+				   void (*cb)(struct sctp_chunk *))
- 
- {
- 	struct sctp_datamsg *msg, *prev_msg = NULL;
-@@ -199,6 +211,21 @@ static void sctp_for_each_tx_datachunk(struct sctp_association *asoc,
- 
- 	list_for_each_entry(chunk, &q->out_chunk_list, list)
- 		traverse_and_process();
-+
-+	list_for_each_entry(chunk, &q->control_chunk_list, list)
-+		sctp_process_tx_chunk(asoc, chunk, clear, cb);
-+
-+	list_for_each_entry(chunk, &asoc->asconf_ack_list, transmitted_list)
-+		sctp_process_tx_chunk(asoc, chunk, clear, cb);
-+
-+	list_for_each_entry(chunk, &asoc->addip_chunk_list, list)
-+		sctp_process_tx_chunk(asoc, chunk, clear, cb);
-+
-+	if (asoc->strreset_chunk)
-+		sctp_process_tx_chunk(asoc, asoc->strreset_chunk, clear, cb);
-+
-+	if (asoc->addip_last_asconf)
-+		sctp_process_tx_chunk(asoc, asoc->addip_last_asconf, clear, cb);
- }
- 
- static void sctp_for_each_rx_skb(struct sctp_association *asoc, struct sock *sk,
-@@ -9708,9 +9735,9 @@ static int sctp_sock_migrate(struct sock *oldsk, struct sock *newsk,
- 	 * paths won't try to lock it and then oldsk.
- 	 */
- 	lock_sock_nested(newsk, SINGLE_DEPTH_NESTING);
--	sctp_for_each_tx_datachunk(assoc, true, sctp_clear_owner_w);
-+	sctp_for_each_tx_chunk(assoc, true, sctp_clear_owner_w);
- 	sctp_assoc_migrate(assoc, newsk);
--	sctp_for_each_tx_datachunk(assoc, false, sctp_set_owner_w_migrate);
-+	sctp_for_each_tx_chunk(assoc, false, sctp_set_owner_w_migrate);
- 
- 	/* If the association on the newsk is already closed before accept()
- 	 * is called, set RCV_SHUTDOWN flag.
+ 	finish_wait(&sci->sc_wait_request, &wait_req.wq);
+@@ -2295,10 +2295,10 @@ static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err, bool force)
+  *
+  * Return: 0 on success, or one of the following negative error codes on
+  * failure:
++ * * %-EINTR		- Interrupted.
+  * * %-EIO		- I/O error (including metadata corruption).
+  * * %-ENOMEM		- Insufficient memory available.
+  * * %-ENOSPC		- No space left on device (only in a panic state).
+- * * %-ERESTARTSYS	- Interrupted.
+  * * %-EROFS		- Read only filesystem.
+  */
+ int nilfs_construct_segment(struct super_block *sb)
+@@ -2325,10 +2325,10 @@ int nilfs_construct_segment(struct super_block *sb)
+  *
+  * Return: 0 on success, or one of the following negative error codes on
+  * failure:
++ * * %-EINTR		- Interrupted.
+  * * %-EIO		- I/O error (including metadata corruption).
+  * * %-ENOMEM		- Insufficient memory available.
+  * * %-ENOSPC		- No space left on device (only in a panic state).
+- * * %-ERESTARTSYS	- Interrupted.
+  * * %-EROFS		- Read only filesystem.
+  */
+ int nilfs_construct_dsync_segment(struct super_block *sb, struct inode *inode,
 -- 
 2.53.0
 
