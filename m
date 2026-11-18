@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058612;
-	b=viN16qIXdfBb3epxHd1Ua+f2I1pb7k0HXJUPbg+0kVQhJ1WWJRYebOqHTHIfvO+ahGXt
-	 8xfePN1D7vbVA8dKMHUppbERyg+i2LgNloIZDzLW9xI6WEh40xtGaBpi13nKRGdWVjR4U
-	 w7m77ZB2d1NM+DcjGDLaMx46GKj9A1yqAi1eFTP5po2u3is2fW5zM/H9ISt+tNa4s0mBG
-	 LHUMiQlv3EcFzWoKyw4YJvq3nb5Dmp8Lwz61HguELs4HlK89HSD5H3DvgUFqiwgCTYK7B
-	 EmGZIUKhhnR/i4/ukd+TQu8ON/3w7sBFY3pe1Ni1zOC16I0x35/zEuD2aF3erqCsNUQ==
+	t=1795058615;
+	b=1tsd5hx41DrmGiRHIcNAauE/TPpYgDnWeXd39I76Zg/DR6tbOFfMYZf7wdHfCbm/7Xhg
+	 +hrAjJ15Dfd5kKyvynSqdrZCTeSoqRX+eY45GQfGjoq1GSBJci7s6+mG52XXLbI/G2UUO
+	 cAGUe+yBftQ/BhHlrBhFWoRIjq2h0ISghLApKx5ASieOFCTYLD6/ksYOsnYoaHXUdf8ES
+	 kF1ZtChZx+mh8BI2BBhF+MLlA6jPFc3AkbrY9JnGEgPl+xi4R+a9Cs0haMtIsGnoNhW52
+	 n2CIKdHGRV0XsalwOP0PX3Hf9F8K+nUM415SGrG51f2PFlmsTc5gL+U92sDAMH1DI/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058612;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058615;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=syDaaiP8z925x5NKjhLF6H5aM53sYQssqfccJvYjgww=;
-	b=WVmAMyHvh1GC/S1u95TarbWWCENpe/0vqcfctiL+01fTNp0kWh4awdafQ36c0qbOGt4o
-	 hpTz26Y7OXJoXGxc3RnMpjUdi0A3oM8mOPHAxVKcbzer2YO4I5zooiCKPy3wMNDKCqykc
-	 Eqxg2J20JjprHRJ1g84puvuoiY2P+RM4Q6VO8SHICe1EgWOXIbCLqTYhc4RDQjyWgzHVf
-	 R86j+j2pIyAnU54rK4eyjzNOf4hfwCP2yCuUgZ/kNV0Emx3nH+JXOkItOr1zhJcekfyLh
-	 s49HrpcZdcC+J0HQujGn1zLQ32ZHGUooBcq4OOuYC/MLJ5cLXX2LLgslVUYw1KN7Jxg==
+	bh=BY+zfizMfuN3O5clHh6J0ovnkQU/4J11e69xy9edDnE=;
+	b=Fo5EsmLEMHPoqafFW0NQON4T8q3J6siyGilAc2vjwC2TDl1bFIXVpbGDYIPqIE6HZMQJ
+	 HlF6vQbXCfpS4upSXOvA82q4c5+H0R58fJj5gyuiCkj+vY+xKlNb1+LajZ2bjaa+NLZKo
+	 ZtkdvOsh28Bb/wR0iI9NSYJokLbcglI56j5u0wYyFcprZuYdQoVbAMi+fZN6nqN7U1Bfo
+	 nEWETY0RfYwSg59gwp5kqtuc1CGe1PjEtkDPg7tjMWm3ZSsoHCUpr1pVjOb8EG2Ovty9a
+	 Qbn2oFoTdP+MCpUxTDubCFz1uaXVMRjtz52LqYK2sDLLpN/bNcnFEML2ThuD5Y9G86g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jta7Zyyy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s3qo2Aim;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD465606A31C;
-	Thu, 19 Nov 2026 03:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5E5606A320;
+	Thu, 19 Nov 2026 03:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jta7Zyyy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B611F000C6;
-	Thu, 19 Nov 2026 03:23:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s3qo2Aim
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0EB11F000C4;
+	Thu, 19 Nov 2026 03:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058612;
-	bh=syDaaiP8z925x5NKjhLF6H5aM53sYQssqfccJvYjgww=;
+	s=korg; t=1795058615;
+	bh=BY+zfizMfuN3O5clHh6J0ovnkQU/4J11e69xy9edDnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jta7ZyyyQqaPQaxNzCJjEpRta1ihUnwzgNeHCl0Eqb7/q2N8cBIJE3XA++ljNuvEt
-	 VELfZo59ZTm2AElv5P7kU57/aQZS5TJo2A5rbm+35UiprU4UuPb2OmIQplrmNdxhxy
-	 PqLVX2ipqdJOfOw9H/IistjhSHZ6zzPee1iWJyak=
+	b=s3qo2AimVSY4u7dwLu4uf675u8uJKyIbJ/NuZy15qqmfyaZDZpHvosx/ylc6wPzuW
+	 VZSTD1VKoIxlpzVZfyu2t058SXE6D8jpnVmQCi/rpSgwNkecLJHl+3SW542IA8sYvS
+	 8EUs6LaRuTJwS1pnlFa/5ufzojVEor2u4GXYlTbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Maciej Kucharek <qchcio@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0548/1848] drm/amdgpu: reset CIK ASIC on Apple boards with VRAM at 0
-Date: Wed, 18 Nov 2026 15:43:06 +0100
-Message-ID: <20261118145937.902365019@linuxfoundation.org>
+Subject: [PATCH 5.10 0549/1848] drm/amdgpu: reset VI ASIC on Apple boards with VRAM at 0
+Date: Wed, 18 Nov 2026 15:43:07 +0100
+Message-ID: <20261118145937.937261789@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,21 +70,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej Kucharek <qchcio@gmail.com>
 
-[ Upstream commit 095f634ea0aa5b9da19495520b5fc1a155b2c137 ]
+[ Upstream commit 92a5184787b81e67f7b831ad860ca9b053505cf8 ]
 
 On MacBookPros with switchable graphics, the firmware puts VRAM at MC
 address 0 when the iGPU is enabled.  A later post (S3 resume, GPU
-reset) moves VRAM back to the VBIOS default.  The SI fix resets and
-posts the ASIC at load, so the driver uses the VBIOS layout from the
-start:
+reset) moves VRAM back to the VBIOS default.  gmc_v8_0 reads
+MC_VM_FB_LOCATION once at init and reprograms it only on SR-IOV.  On
+bare metal, the driver then keeps using the old layout.
 
-  "drm/amdgpu: reset SI ASIC on MacBookPros with VRAM at 0"
+vi_reset_quirks[] handles this for the MacBookPro14,3 by PCI ID:
 
-No MacBookPro has a CIK GPU, and no affected CIK board is known.  Add
-the same test to cik_need_reset_on_init(), so that SI, CIK and VI
-handle this firmware layout in the same way.  gmc_v7_0 reads
-MC_VM_FB_LOCATION once at init and does not reprogram it.  A CIK board
-with VRAM at 0 therefore has the same problem as the SI boards.
+  commit b6b1d9721851 ("drm/amdgpu: reset VI ASIC on MacBookPro14,3")
+
+Add the test that SI and CIK use: an Apple subsystem vendor and VRAM at
+0.  Other Polaris MacBookPros then get the same reset at load, for
+example the MacBookPro13,3 if its firmware leaves VRAM at 0.  These
+boards are not tested.
+
+Keep vi_reset_quirks[].  Its MacBookPro15,1 entries fix a different
+failure, a module reload after S3:
+
+  commit a5be7ad8f5f0 ("drm/amdgpu: reset VI ASIC on MacBookPro15,1")
+
+VRAM is not at 0 at that point, so the new test may not cover it.
 
 After the reset, FB_BASE is not 0, so the new test does not fire again
 on a module reload.
@@ -96,19 +104,19 @@ Assisted-by: Claude:claude-opus-5-5
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Maciej Kucharek <qchcio@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6bb4b79d6a6c461b40750fd67cb4e2a070e20b67)
+(cherry picked from commit c2335b685b1e1e387f2fea1c67f56b5b8a8b6dc6)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/cik.c | 10 ++++++++++
+ drivers/gpu/drm/amd/amdgpu/vi.c | 10 ++++++++++
  1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/cik.c b/drivers/gpu/drm/amd/amdgpu/cik.c
-index 453464914f353..f8ccf31eb01ca 100644
---- a/drivers/gpu/drm/amd/amdgpu/cik.c
-+++ b/drivers/gpu/drm/amd/amdgpu/cik.c
-@@ -1882,6 +1882,16 @@ static bool cik_need_reset_on_init(struct amdgpu_device *adev)
- {
+diff --git a/drivers/gpu/drm/amd/amdgpu/vi.c b/drivers/gpu/drm/amd/amdgpu/vi.c
+index 1ceb23f2fd92d..c2f93e4144644 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vi.c
++++ b/drivers/gpu/drm/amd/amdgpu/vi.c
+@@ -1076,6 +1076,16 @@ static bool vi_need_reset_on_init(struct amdgpu_device *adev)
+ 	unsigned int i;
  	u32 clock_cntl, pc;
  
 +	/*
@@ -121,9 +129,9 @@ index 453464914f353..f8ccf31eb01ca 100644
 +	    !(RREG32(mmMC_VM_FB_LOCATION) & MC_VM_FB_LOCATION__FB_BASE_MASK))
 +		return true;
 +
- 	if (adev->flags & AMD_IS_APU)
- 		return false;
- 
+ 	for (i = 0; i < ARRAY_SIZE(vi_reset_quirks); i++)
+ 		if (adev->pdev->device == vi_reset_quirks[i].device &&
+ 		    adev->pdev->subsystem_vendor == vi_reset_quirks[i].subsystem_vendor &&
 -- 
 2.53.0
 
