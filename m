@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053635;
-	b=wSq30bKxvj7Pkm1VSpUSutRpq0xZDiOoxCo0UFffCpGNblOL9sgkktojuxi54khFO+VX
-	 bJZTPcOD2ppc8MU8ywQCuU79G6vO8oZ3ojWjPipSm3yldYcEmqwYuWCPESpqt9M4PxNZB
-	 B+0S4vmqoYvRmGOTSPTGNk03XbAYAPoQxRlOKoyWy7OXYoxHA6lzd8gPF8M3UKZay+2A+
-	 Xj/KCoG0GYvSjKhluVEOxCltcnmXQmc7TsUCgMRifjUlJ23u1SfzwYyz2dQHIgYyYpWaW
-	 idWUXE5Zbu6lCv0Y/AH0+PyElshpZpx2344krHmXC7vdpiqNlzpMr4rI8X+XtlNfysw==
+	t=1795053638;
+	b=FNXRgIGbtgXfNa++SQe2tAAXkzwyKQP4pi7AM5JTDVIdi8R8NFJXrPQ4yUMcN35EvHX2
+	 Lh9NtHZiSckkoueUOAOu2+/KHehUcJuTpF2lnhYDjsdWtA4tcs0NXK4bNVNfgFa7mVvwL
+	 iebGh7FeH5MPiFmCdlYB5Fbfy8nBxvRrOmSIl5M9Ux3EgnuYlDG8xYLRD2ruIXVPU4Nq7
+	 1PtSg7UilYzv0zIoHJ7Q8gGqyKThvSa1GjHCXKhi48AHEb0bbTQaSsKuRfeZyBFaNDFiE
+	 zTWSce/V1v85zLN4Sgo3Tt7g0vlXQcpqtNI7u6azWBXx3XTAlE9l4JbeEUl0a+u2uAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053635;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053638;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GGNw/Q5BZm4vcYqN+uxyw3HWZW8FHlkjYJG6LSzmaoo=;
-	b=dz1mA8Jl9R/lqPSMbukKyf8Mp/uVePSHjj0V0PfMOTU8JMovpqemM9vqkrWlGu3Bht8K
-	 j8Pq8sySH02C+BxckdBWwY7x9oo+mUdxj9+O3o1wAmCM8CBSw/MYd2rsfiqUevbNzooyf
-	 K/pBY1jPOi6rLRVS/HaaXjP5ml62aKminvSM2iJIcOoVmgHvUZDEDQm5/1yzwnIDuKnS2
-	 ESWe1x0AA4eu1T4cDBJxJ9tjd+M6Q0ov2Jfu3zOTA1qXTnPKoE6JiV9eTCAtbUyRe9mTE
-	 pB3t7AQRN/L2kfdXTDmJ5XG0KybKqE98aZPK1Jt+PdOjKXu3bz+qe5yOdr8izSqib+g==
+	bh=0q96qn5CREZB1ssRzuqQmU+syOSYRiMrEwd2Bk6meCI=;
+	b=aOwUm3A8+Uvc+gH+tjXCpjG80MSe9dcKORCV2lTadtbqJsMfK1EV0fgO/QNQI/ujCRQQ
+	 iamoNpG6dOaVPFwOngS71IQo6J8zJiZCkJcdv8OIg3PkbW5zf3QFvF8e1Ra6eucntP1aa
+	 YYr/E5s7itfByBsm5lqbE0GMKxNry+u1N1KiUoGCZ9sfVScqFuo9ZnGMTEUCGiUDSjLgP
+	 5B4FCgLbaP2QH+gdILRTU+UlSs4Lq27aKOMCx0BpM1RPQoZhguMYO9wRyxt5JY2KwbsTT
+	 V9nps413O4dgAM0VF2yT2OHnMcTxRJqBLYHAFV2nIhnDrWSkclKcP5DbkjGcPiXhq3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T0C4x1dA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="O7c/IUmQ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455D0606A32A;
-	Thu, 19 Nov 2026 02:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A97606A325;
+	Thu, 19 Nov 2026 02:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T0C4x1dA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FE11F000C4;
-	Thu, 19 Nov 2026 02:00:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O7c/IUmQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4801F000C5;
+	Thu, 19 Nov 2026 02:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053635;
-	bh=GGNw/Q5BZm4vcYqN+uxyw3HWZW8FHlkjYJG6LSzmaoo=;
+	s=korg; t=1795053637;
+	bh=0q96qn5CREZB1ssRzuqQmU+syOSYRiMrEwd2Bk6meCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T0C4x1dA1AroDuQqpd1gEjq1bgx6k7z56M53brnzzgpxNasv0YwKrWIykIumzqyr/
-	 Iv89bXGpGnEC5i30i5PBICuf/X95T5ykIdn388kcQPaQznM13BLmDsf7pp3PeoLGFG
-	 bRPY/t+FUaJfF+C5n/KA335MJXih6p1aN+zM/PDY=
+	b=O7c/IUmQM4QSNkJ4h+FTmdv6SIeMUPGMOeuE7nVMb5bHf1HswQLP6FZ62XsSINXYU
+	 ZOOGQTHwqCHqC8AIyoB9BAXBgQLPvGGpUjdt3GopURI7QA0NyQbHTAvN4a1N/OOsP7
+	 5y2CSAJI82Fs+oJp9kqJzhZdYgjuVn7P1qvkcGhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Verdonck <tom.verdonck@inspiral.be>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Jiaming Zhang <r772577952@gmail.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0990/2214] hwmon: (tmp102) Fix jiffies wraparound in conversion-ready check
-Date: Wed, 18 Nov 2026 15:44:26 +0100
-Message-ID: <20261118150051.946173024@linuxfoundation.org>
+Subject: [PATCH 5.15 0991/2214] gfs2: reject invalid inode sizes
+Date: Wed, 18 Nov 2026 15:44:27 +0100
+Message-ID: <20261118150052.009207881@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,79 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Verdonck <tom.verdonck@inspiral.be>
+From: Jiaming Zhang <r772577952@gmail.com>
 
-[ Upstream commit 56c1d32323e773b8b927316f8beeae9238576335 ]
+[ Upstream commit 33ed0a0567e0abe66ea65e89dad2e35082890fbe ]
 
-tmp102 records a one-shot deadline in ->ready_time at probe (and resume)
-and, on every temperature read, refuses the read with -EAGAIN while
-time_before(jiffies, ready_time) is true, in order to skip the first
-~35 ms conversion.
+A corrupted GFS2 image can store a dinode size that is larger than what VFS
+i_size can represent. gfs2_dinode_in() reads the on-disk di_size as a u64 and
+writes it directly into inode->i_size. If the value is larger than S64_MAX, the
+incore i_size becomes negative. That negative value can bypass the existing
+stuffed inode size check:
 
-->ready_time is an unsigned long compared with time_before(), whose
-signed difference is only meaningful while the two values are within
-LONG_MAX jiffies of each other. Because ->ready_time is set once and
-never refreshed, jiffies keeps advancing away from it, and after 2^31
-jiffies the difference flips sign. On a 32-bit HZ=100 kernel that
-happens ~248.5 days after boot: time_before() then permanently reports
-"not ready" and the driver returns -EAGAIN on every read, without ever
-touching the sensor, until the next reboot.
+inode->i_size > gfs2_max_stuffed_size(ip)
 
-Store the deadline as a 64-bit jiffies value and compare it with
-get_jiffies_64()/time_before64(), which does not wrap in any practical
-uptime.
+Later, gfs2_quotad may try to sync the quota file and unstuff the quota inode.
+gfs2_unstuffer_folio() reads the negative i_size into an unsigned length and
+passes it to memcpy(), turning it into a huge copy size and triggering a
+out-of-bound issue.
 
-Fixes: 3d8f7a89a197 ("hwmon: (tmp102) Improve handling of initial read delay")
+Reject dinodes whose size exceeds sb->s_maxbytes before storing the value in
+inode->i_size. Also make the stuffed inode check use the raw on-disk size while
+it is still unsigned.
+
+Fixes: 70376c7ff312 ("gfs2: Always check inode size of inline inodes")
+Closes: https://lore.kernel.org/lkml/CANypQFaF6bvORKKbRALvEL0k_epFaneFiOQqco4gjdmKVbdURg@mail.gmail.com/
+Assisted-by: Codex:gpt-5.5-xhigh
 Cc: stable@vger.kernel.org
-Signed-off-by: Tom Verdonck <tom.verdonck@inspiral.be>
-Link: https://patch.msgid.link/2952f070f82913aea96eec25d28008d3b9058656.1790358356.git.tom.verdonck@inspiral.be
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ sashal: adjusted context for the simpler tmp102 structure and tmp102_read() instead of tmp102_read_temp() ]
+Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+[ sashal: adjusted context for direct inode->i_state access and existing dinode field assignments ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/tmp102.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/gfs2/glops.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/tmp102.c b/drivers/hwmon/tmp102.c
-index e867a0c2e5399..181373cc1289a 100644
---- a/drivers/hwmon/tmp102.c
-+++ b/drivers/hwmon/tmp102.c
-@@ -54,7 +54,7 @@
- struct tmp102 {
- 	struct regmap *regmap;
- 	u16 config_orig;
--	unsigned long ready_time;
-+	u64 ready_time;
- };
+diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
+index 8a077de9ee0a4..67351df7b4b33 100644
+--- a/fs/gfs2/glops.c
++++ b/fs/gfs2/glops.c
+@@ -405,6 +405,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
+ 	umode_t mode = be32_to_cpu(str->di_mode);
+ 	struct inode *inode = &ip->i_inode;
+ 	bool is_new = inode->i_state & I_NEW;
++	u64 size;
  
- /* convert left adjusted 13-bit TMP102 register value to milliCelsius */
-@@ -79,7 +79,7 @@ static int tmp102_read(struct device *dev, enum hwmon_sensor_types type,
- 	switch (attr) {
- 	case hwmon_temp_input:
- 		/* Is it too early to return a conversion ? */
--		if (time_before(jiffies, tmp102->ready_time)) {
-+		if (time_before64(get_jiffies_64(), tmp102->ready_time)) {
- 			dev_dbg(dev, "%s: Conversion not ready yet..\n", __func__);
- 			return -EAGAIN;
- 		}
-@@ -245,7 +245,7 @@ static int tmp102_probe(struct i2c_client *client)
- 	 * Mark that we are not ready with data until the first
- 	 * conversion is complete
- 	 */
--	tmp102->ready_time = jiffies + msecs_to_jiffies(CONVERSION_TIME_MS);
-+	tmp102->ready_time = get_jiffies_64() + msecs_to_jiffies(CONVERSION_TIME_MS);
+ 	if (unlikely(ip->i_no_addr != be64_to_cpu(str->di_num.no_addr))) {
+ 		gfs2_consist_inode(ip);
+@@ -430,7 +431,12 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
+ 	i_uid_write(inode, be32_to_cpu(str->di_uid));
+ 	i_gid_write(inode, be32_to_cpu(str->di_gid));
+ 	set_nlink(inode, be32_to_cpu(str->di_nlink));
+-	i_size_write(inode, be64_to_cpu(str->di_size));
++	size = be64_to_cpu(str->di_size);
++	if (unlikely(size > inode->i_sb->s_maxbytes)) {
++		gfs2_consist_inode(ip);
++		return -EIO;
++	}
++	i_size_write(inode, size);
+ 	gfs2_set_inode_blocks(inode, be64_to_cpu(str->di_blocks));
+ 	atime.tv_sec = be64_to_cpu(str->di_atime);
+ 	atime.tv_nsec = be32_to_cpu(str->di_atime_nsec);
+@@ -468,7 +474,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
+ 	ip->i_depth = (u8)depth;
+ 	ip->i_entries = be32_to_cpu(str->di_entries);
  
- 	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name,
- 							 tmp102,
-@@ -279,7 +279,7 @@ static int tmp102_resume(struct device *dev)
- 	err = regmap_update_bits(tmp102->regmap, TMP102_CONF_REG,
- 				 TMP102_CONF_SD, 0);
- 
--	tmp102->ready_time = jiffies + msecs_to_jiffies(CONVERSION_TIME_MS);
-+	tmp102->ready_time = get_jiffies_64() + msecs_to_jiffies(CONVERSION_TIME_MS);
- 
- 	return err;
- }
+-	if (gfs2_is_stuffed(ip) && inode->i_size > gfs2_max_stuffed_size(ip)) {
++	if (gfs2_is_stuffed(ip) && size > gfs2_max_stuffed_size(ip)) {
+ 		gfs2_consist_inode(ip);
+ 		return -EIO;
+ 	}
 -- 
 2.53.0
 
