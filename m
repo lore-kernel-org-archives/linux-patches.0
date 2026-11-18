@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034082;
-	b=1CwEAS+mL3ygXmw3fgJsGr0SrZJ7AT5mOeUetBN45LwyHaxHdIBOCIe3lp/QSFPz6pG0
-	 3Qx8NfgANmV4PxJVinrDriYaAABi48HE9NHTR2lkqfDq42+Rtfnops+LlQVqTa/3x8jPU
-	 drSvfIH7TboAFBbtYpJtVafIXMLkUQLMk1VtL8CjoJ2PSYqiliuqZGYmgefcP7fsOd71F
-	 5BW6uWaaAM30dwaFeeWJK2SDrCTLVQ18PW2nox9DUKtsfR2HHLjYrj67ja8xVJWqDALcB
-	 TN9d8llQgWIcGI9hB55Mk8dCW8FXFwsfvfTZjBRdH0MyQTcPFOXxEY130EugZBHOS4w==
+	t=1795034085;
+	b=PZTXt1qn7KqaW9Tqg66+KtcO2YlR2xsFQOP+Dh/+5IY0bpnftKzlqfUNV30BhYdbfXpx
+	 VOid3Nj6oRNSUqR0kN0PqwvscMrjLBK6sW2H80NHNK/9Ward70h510vPNNaVrxADZ9+bQ
+	 7yBPDPmcHDvrxpC3iYBJQE3nCTROLsAonzZ3MrDyMeg35MMdpqqqire+d5QeSLGICM63y
+	 HodGt+CyOZoWQ8WwTUpqCnMD+XQuF7IxKPMGLnFBZ5MHSjBSBy9vuuAOH2CKqo3/ZkZp7
+	 GCPAEKciIC+J6R19Hytu1H/au8Uy6KSEPYJuaub5uu4EPZp4brqMMLlcQEnW87ZtDKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034082;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034085;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nh+jss6jI69hnQEEHwqW3JbqnFFaurZI2olmaH3/ONg=;
-	b=aORso4uJG2IXmARZgsSIOs0eqC80VwRXLIats4XLjc+hRMuNdwJA61SUPcjWRHhzjucE
-	 aq7SLuelV9kBhyPP0O6Z5oFM18cAqhg9wJgEwP5p2v3cEwOZ+uAiXtDih7/qBrvSPNzSO
-	 I5RHuHkzuPsvAIbt/6ynfzVFtNPM0C2bzMF7sVtvRLazuIc4mUpv6EDpVWqNSZIP0hnhp
-	 Rrmg7DpGyZcZlxlq06WIa13EiBgInbqUUSxfcEWC720NHIYSiDEIzzdCmm1Axoyc8atf9
-	 UJTqsA4poh6+wLpBkiSdMTZ9CqMQIQxMvcCY4nQ00CkrqPtIDpp5n8aLOfsbZaOwsdQ==
+	bh=R8OfiOoCfhGAj38CqIdMqFLYIpe3VNfc6QtXh7034nQ=;
+	b=2sc4jpzPODEY2UU5FxudfnFeb71a2XNSN7okOL6TuLtpEQu9C7e+IlUMb+2YyZb03qI0
+	 ncCDYmy+JVy3/jmlrJ/SdyUqt4Ox2U24SCIVv51At0rbp/4osEWbM2YJbw3n9vy6TTtfx
+	 q/AJn9pqD42hgBbD9egB651JLBYbYB+a1bGvPI+6z3Phh8j2VBnePNnMf/JvSHiEnaOQI
+	 PkXVEF4oBKtohhL0yfWEQcaiNXRuMtWmuUgPYn2plaFLEPiMYzNxskyuJ/7Cb8iuYS/R/
+	 JqDAZ2+Upw1wn51Uay0no5qST//oBnMlFLwqtb8//L4s6GuqnggvaT7/X1C9ZbQftjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KMfRhSZP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dgjHXI7Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01ABD606A32F;
-	Wed, 18 Nov 2026 20:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0757E606A32A;
+	Wed, 18 Nov 2026 20:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KMfRhSZP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA4A1F000C5;
-	Wed, 18 Nov 2026 20:34:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dgjHXI7Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 279B61F000C4;
+	Wed, 18 Nov 2026 20:34:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034081;
-	bh=nh+jss6jI69hnQEEHwqW3JbqnFFaurZI2olmaH3/ONg=;
+	s=korg; t=1795034084;
+	bh=R8OfiOoCfhGAj38CqIdMqFLYIpe3VNfc6QtXh7034nQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KMfRhSZPiOKpublwXcBXiBfkANiLsVODGRkGIKrRo7LeAkDENKq0Ho5pqxiXJzHBk
-	 kK09uHiA4oyrhLnzRLZuTGo9H5/n9X5oElhVSuYjMAG4qfPwPG73aVpGCssUEOYThI
-	 7SJPnK6dLnF3ch47plQ+9XooXJJGV4tgtiLT+uPA=
+	b=dgjHXI7ZI2YcUz2eYcZKN5VRg1zk3K0lOydqxjow2K8Cue5/eU10ky65olYfPQEM3
+	 45KAOYFJJ2Hcl5irTT3u8AcSnu+merfSJmP5h9jiN8edH45EWYGm6ZFct3mx2Z71pC
+	 JQ5tYzslJes1uzeS8PKWRNFCcRm/eGh7DLyWsRgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Naseef <naseefkm@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Pavel Zverev <playximik29@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0206/3318] wifi: mt76: mt7603: add 0x7592 EEPROM chip ID
-Date: Wed, 18 Nov 2026 15:13:48 +0100
-Message-ID: <20261118150321.077491343@linuxfoundation.org>
+Subject: [PATCH 6.6 0242/3318] Bluetooth: btusb: Add support for 1357:c123 Realtek 8852BE device
+Date: Wed, 18 Nov 2026 15:14:24 +0100
+Message-ID: <20261118150322.400274794@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,38 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed Naseef <naseefkm@gmail.com>
+From: Pavel Zverev <playximik29@gmail.com>
 
-[ Upstream commit d16447d7470502e998d82e806ca7ed49d1baa853 ]
+[ Upstream commit 335d7bd554a20f33acf762655cafe1089f7f5822 ]
 
-Some EcoNet based routers ship an on-flash EEPROM whose chip-id is
-0x7592 instead of the expected 0x7603. The device probes as PCI
-14c3:7603 and the hardware MT_HW_CHIPID register reports 0x7603,
-independent of the EEPROM value.
+Wiko Hi MateBook 14 Ryzen 200 laptops (DMI system-product-name
+"MNCA-XX", board "M1060") are equipped with an RTL8852BE Wi-Fi/BT
+combo chip (rtw89_8852be), whose Bluetooth radio enumerates as
+1357:c123 instead of one of the already-supported 1358:c123 / 0bda:c123
+identifiers, presumably due to OEM rebranding. Without a matching
+entry it only matches the generic USB Bluetooth class fallback, so the
+Realtek firmware/config (rtl8852btu_fw.bin / rtl8852btu_config.bin) is
+never loaded and the adapter cannot discover or connect to any device,
+even though hciconfig reports it as powered and scanning.
 
-This is seen across multiple EcoNet EN751221 and EN7528 based devices
-(for example the Genexis Platinum 4410).
+Device descriptor:
+  idVendor           0x1357
+  idProduct          0xc123
+  bcdDevice            0.00
+  iManufacturer           1 Realtek
+  iProduct                2 Bluetooth Radio
+  bDeviceClass          224 Wireless
+  bDeviceSubClass         1 Radio Frequency
+  bDeviceProtocol         1 Bluetooth
 
-Signed-off-by: Ahmed Naseef <naseefkm@gmail.com>
-Link: https://patch.msgid.link/20260719082530.3879831-1-naseefkm@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Adding the same BTUSB_REALTEK | BTUSB_WIDEBAND_SPEECH quirk already
+used for 1358:c123 and 0bda:c123 fixes firmware loading and normal
+operation.
+
+Signed-off-by: Pavel Zverev <playximik29@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
-index d951cb81df833..7d316212ac59b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
-@@ -142,6 +142,7 @@ static int mt7603_check_eeprom(struct mt76_dev *dev)
- 	case 0x7628:
- 	case 0x7603:
- 	case 0x7600:
-+	case 0x7592:
- 		return 0;
- 	default:
- 		return -EINVAL;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 95becfdb0d2e9..a5a7cd41e0ae9 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -804,6 +804,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0bda, 0xc123), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x1357, 0xc123), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0cb5, 0xc547), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 
 -- 
 2.53.0
 
