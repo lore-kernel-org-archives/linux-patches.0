@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053332;
-	b=I02rEpbNdbv1dID08CxRMlJt/6jw9w7B8ypqlGidGmdt2daUUEV26dE/iHBZlLTOhwRV
-	 VB4xRAOT/Kbg7UxwaS36lTvRNOebDpcptPZlylV4DleXhPvjJbUZE/qUxUZNY/LmxCdFu
-	 gpsD65oob/WdwVUdbCqxwcA80P5X1gvpimCcfFAG0JNWQaEVQi6wmdRjvKiXP79Qnh4OR
-	 331NYMp8g4ofQIih5QB9A9XjhU13P8rfEY5r9LNo9giYlqaTsIqbfWmI0gR4lE0ocWhRS
-	 XcD2bVcBTynofIMy4VPjhPaQDtBj4KLbUvDicw6HAD02pANtJiHsxpuevd1SEoazV0A==
+	t=1795053336;
+	b=aUlhiCOqr4Vx3xK0x0B2lGMN65C0IK42LPwk+ghRiw14vQ+HXeJJW+TCXHxvk/SNSbrb
+	 9NwivKQ5PQi2PaZQbzQAWtjkT/tqjlAUE+VrvHDkfdgxF0v4Rp6Td/3iMbfRZD2LOQQ5R
+	 HCERzEKo7zIwuGg8NP+jj5pAKSs7l45BSvMxpK3VneHskxXU+oRFTasS+tfdWkWw1gj/U
+	 sIb0oY1HOQbjbPGU+/xPiSSW5cPox8NxFmR6silOGK2SNgTQq1Bq4L6vSvUmezygVWjBd
+	 hK3f7A0ZrmXUe8Mgm/ibg20jbMT+wM5NtmbAR/1LaXD08fVCIDZsE0WrhgQxeLfyzow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053332;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053336;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3vIt9zOs+FI7jJB4FPeSBrgZv66kusOIEFDzAKsB5Ew=;
-	b=Hr46Z3oHq8KKfgI6N6QKMDNmmYEQpv9GVwy/bLPg1E/z9kzFdQxS0uq9FybTgNP9JHB7
-	 Bky1EHUZ4FUB78fvizTuQOqInBFJCPU8Sr+AEedlLqxVbLt7pVJM2840ShYRfk3UKwkTE
-	 hVQ/B5a42ueWNb7PWnaOcYw5G6D9nZ9xRsUGwJm4+4K4GfaJVZRwA1u4aNC+1FCoz0x7M
-	 T2zzwcdwNJwU8c08mmT2Hydjzalnh0eUCJnE9zc9XDaz+IiY/iuGOFL0m8dqWlY5wfG67
-	 EHyrD8JKgZIuUeW5oZVR4NB1U8UoLZQJT6ZwwC3fnFlrEpzYD0Xj7zGSA6HDlnWuEfw==
+	bh=shJDy35+5QVpEq+OM204EE8A8xkyc4K1FrpAurLuUag=;
+	b=UOvTSCLxmjLwNHDK3sO09na8Z6Vhf2ybXebQiDBnINQojmy4n86wEl+UPVjq//SUQlOT
+	 IQSgGVqUwwdDvvzHlapyT3AAmhsC4UP3EGyNnZjmYXE7dhc71snMq62nfmT6fZ5WKyMqz
+	 Scscn4W52E803IvHxjrvfzOU3xVcEIvSDWj4WjCTCV2wCIAtS7T4uW83v13K+yz7fdjG3
+	 MfLLnV+hNugIKAYX9HO2DhiphIXMkJrCxMgyJGp6/3lH9RDLWqmGNZvYuZZbEydW70fkM
+	 KHoRZ6GHpOqbjYy+sZcDUAWyGWVfSbb9I+EIy3H5a29fK30xA+TPZ4PhBWdF8++SuNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M3Cu0aNw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xpT2+zQf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DAF606A320;
-	Thu, 19 Nov 2026 01:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7A060A2606;
+	Thu, 19 Nov 2026 01:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M3Cu0aNw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7BC1F000C5;
-	Thu, 19 Nov 2026 01:55:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xpT2+zQf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604891F000C9;
+	Thu, 19 Nov 2026 01:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053332;
-	bh=3vIt9zOs+FI7jJB4FPeSBrgZv66kusOIEFDzAKsB5Ew=;
+	s=korg; t=1795053335;
+	bh=shJDy35+5QVpEq+OM204EE8A8xkyc4K1FrpAurLuUag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M3Cu0aNwGzu/58bGHTYjkMb7Ox7ehfn7LQI1RtuYcXNwtxwmKRNL4EBxGegPJuRQJ
-	 +QTJcxfWl6spjE2IeECJLG0A8npuxjS13iM7QVMNYNxSYek5pAlFSQ1HL7WFSxGZC6
-	 l02dwdrk7pBbAzlaIbhceD8IM7m/YCcMG31syi58=
+	b=xpT2+zQfO66rfVgDoc5egnZKUXHnQmCkrqB74A0yvK/DlTC1+/Ksgr+6BPeaGhB5Y
+	 Pki9fBV65swE8J5/e8jY4JFASd4tFBX6Ab8edI6VhrjnIHtZzG4/yKC0tLU/J5E6Kt
+	 OYPDCVVDMy2ZA+8oEJ5I6NQX9tWA8Ye1LVo2lRlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
+	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
+	Pedro Falcato <pfalcato@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0880/2214] ocfs2: do not read the entry array of an empty xattr block
-Date: Wed, 18 Nov 2026 15:42:36 +0100
-Message-ID: <20261118150047.384988776@linuxfoundation.org>
+Subject: [PATCH 5.15 0881/2214] fat: hold truncate_lock in fat_write_failed()
+Date: Wed, 18 Nov 2026 15:42:37 +0100
+Message-ID: <20261118150047.422989101@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,78 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
 
-[ Upstream commit cd7c3563a98fe8c984463d83772e518cb7e68356 ]
+[ Upstream commit 7b90009546f5d3f3ac9428040cd7ffbdfd60f2eb ]
 
-ocfs2_cp_xattr_block_to_bucket() sizes the name and value area it has to
-carry over from the block's last entry, so an empty block makes it read
-xh_entries[-1].  That lands on the header, where xe_name_offset overlaps
-xh_name_value_len, and block storage never maintains that field, so it
-reads as 0 and the copy runs from the header to the end of the block.
+The current fat_write_failed() implementation calls into
+fat_truncate_blocks() without holding truncate_lock.
 
-The bucket that comes out has xh_count 0 but a name_value_len of
-blocksize less the header, and a matching xh_free_start that claims
-those bytes are in use -- nearly the whole bucket with the common 4K
-block size -- while the last block of the bucket holds a copy of the old
-block's bytes.  Nothing but a trace event reads xh_name_value_len, the
-copied bytes came from the same inode and were wiped before the entry
-was removed, and ocfs2_defrag_xattr_bucket() recomputes xh_free_start,
-so this corrupts the header rather than leaking anything.
+A failed or short extending write racing with FIBMAP can spuriously make a
+FAT filesystem read-only.  FIBMAP bounds its lookup by i_blocks, so it can
+walk allocated clusters beyond i_size while fat_write_failed() is removing
+them.  If the chain is shortened during the walk, the mapper can report a
+bogus "request beyond EOF" error, triggering the default read-only error
+policy.  Hold truncate_lock for write around the block cleanup to
+serialize it with _fat_bmap().
 
-Leave the bucket empty instead, carrying over the hash the block was
-keyed by, since ocfs2_add_new_xattr_bucket() and
-ocfs2_xattr_bucket_find() both read xh_entries[0] of an empty bucket.
-That read is the exception ocfs2_xa_remove_entry() documents rather than
-a new out of bounds access.
+For comparison, fat_setattr() correctly holds truncate_lock during
+truncation:
 
-A block reaches the conversion empty when truncating an external value
-back fails partway through: the "reusing" and "overwriting" callers of
-ocfs2_xa_cleanup_value_truncate() remove the entry without setting
-ctxt->set_abort, so ocfs2_xattr_block_set() sees a plain -ENOSPC and
-converts.  The "growing" caller does set it, and the block form makes a
-single attempt with no defragment and retry in between, so that is the
-only route here.
+	down_write(&MSDOS_I(inode)->truncate_lock);
+	truncate_setsize(inode, attr->ia_size);
+	fat_truncate_blocks(inode, attr->ia_size);
+	up_write(&MSDOS_I(inode)->truncate_lock);
 
-Link: https://lore.kernel.org/20261024151012.1059683-7-joseph.qi@linux.alibaba.com
-Fixes: 012255961c9e ("ocfs2: Enable xattr set in index btree")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Make it so ->truncate_lock is held exclusive while truncating.
+
+Link: https://lore.kernel.org/20261021162105.62525-1-matheus.aalmeida@inf.ufrgs.br
+Fixes: 16fab2015099 ("fat: permit to return phy block number by fibmap in fallocated region")
+Fixes: 459f6ed3b8c7 ("fat: convert to use the new truncate convention.")
+Signed-off-by: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
+Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+Cc: Pedro Falcato <pfalcato@suse.de>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/fat/inode.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index cad7a46525192..8d15b0e824cdf 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -4238,6 +4238,21 @@ static void ocfs2_cp_xattr_block_to_bucket(struct inode *inode,
- 	for (i = 0; i < blks; i++)
- 		memset(bucket_block(bucket, i), 0, blocksize);
+diff --git a/fs/fat/inode.c b/fs/fat/inode.c
+index de0c9b013a851..185e6f6c68151 100644
+--- a/fs/fat/inode.c
++++ b/fs/fat/inode.c
+@@ -221,7 +221,9 @@ static void fat_write_failed(struct address_space *mapping, loff_t to)
  
-+	/*
-+	 * An empty block has no names or values to carry over, and the
-+	 * xh_entries[count - 1] below would be xh_entries[-1].  Leave the
-+	 * bucket empty, but carry over the hash ocfs2_xa_remove_entry() left
-+	 * in the block's xh_entries[0] so that the bucket still holds the key
-+	 * it is looked up by.
-+	 */
-+	if (!count) {
-+		xh->xh_num_buckets = cpu_to_le16(1);
-+		xh->xh_free_start = cpu_to_le16(OCFS2_XATTR_BUCKET_SIZE);
-+		xh->xh_entries[0].xe_name_hash =
-+			xb_xh->xh_entries[0].xe_name_hash;
-+		return;
-+	}
-+
- 	/*
- 	 * Since the xe_name_offset is based on ocfs2_xattr_header,
- 	 * there is a offset change corresponding to the change of
+ 	if (to > inode->i_size) {
+ 		truncate_pagecache(inode, inode->i_size);
++		down_write(&MSDOS_I(inode)->truncate_lock);
+ 		fat_truncate_blocks(inode, inode->i_size);
++		up_write(&MSDOS_I(inode)->truncate_lock);
+ 	}
+ }
+ 
 -- 
 2.53.0
 
