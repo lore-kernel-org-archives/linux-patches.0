@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058326;
-	b=pRTle2t+eC/f7Je2MnHF/tUObY5FDcXyuLIIq1aiKzpKWOSaWca1c6BbZbAk84yaSVrJ
-	 nMqpxQ/A/gahmXA0OBLA3kCs+U8BEGwu5xCrdURlgjVVbn1hiXWE8kVbdYVbRuTwNAYh3
-	 X+oOul979NzGWVIDs9/cEDdkUAPi8MSFnameW0Tzlhxg7c1EwaHZNoMTSK548+Kz+BzSt
-	 K3ryL28k3nUvltA9KPzyQEcUE+CHUjd4xcdwZ89H4YzmHzpddL6g+2z35qJlKVa2TcNfk
-	 u3Snq/IaGk89JV4vRoV71LL+xMLMi+aveGrELYb7pWO21fIK5qIIBnq/DEn4RiHyJXQ==
+	t=1795058329;
+	b=JtSNO6gqdtsZUaWu5rxnNXr/Kg4cOEgooWMJRorJjLNdChwd0g1Sl8poQ5chQlASSplO
+	 XDQJJySO8NP6qgCZGm3EJJwijciPSGOnNBmWGguoNStj/4/lom5DbMD9PXD1oUMEHnx3U
+	 14iyoE+cI9d/TO5H2Jo0xFvdQbWgQUxu0qTA/nftgee/pevrX7gyoeNkBBjDOfn6kP2mX
+	 k+Xn37C+7D/PpJ4oe+MeKlry4UfL43BuWv8QHfma8iz7Gnwna7E63evRzmSY8ZYB5gxjY
+	 bcmUfUfJJFNW9RmlGibZbJWW8NZehPykbp3DvcgHjTSFlez9ZTx4ZpoSH4TIFfaUAWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058326;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058329;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q783ZyeGM4QgPXBaDhDxMukDgq+HclHCyz32+4ohIAw=;
-	b=bB6yTaLETX/qJTcYD9haVBA88FxuRc1dp0kQ9o6l1j9pBYhaVlJSiFTPEJIUC0MqZNPh
-	 6dSEKFR81qz4Hu0sqJa5xnky7FUQK8h9zI0FkSqGDecDjLJkg0yJ2Q6BlkPjTBOtRRdPU
-	 I+a8HTZFO3l7upXBcSO223cqVFDrSEPnSbUtKRMzZLfeHUhN0gTeUSnl5xGAGJHLn3tJw
-	 Ko+oE1Km3p8uefMph8PpiGSAoKOOXgeut6F+fUpaDc2UWxHSG3NUiktzyGT5VXOhSs7tx
-	 /PcxVptq6xB/jA9ppEStOD4GZlJ0xMs4mCjNnBJVSlw4d/fF0zxW3//YTxVgtv5Y7Hg==
+	bh=vddHVhX9uUwlbwXe5l6dapsYnsX8h/Blj8xL+Yg6Y0c=;
+	b=zw8duLPzXJZUIhyzcJIJrxWAbptLW6CLXwuUCcPvbPmbHTsUgOBbkB3IeJGIHs4ZAt6Z
+	 Xs8lkGa22mgI+PTOPQok2eWDxBdbY3RwLt5RgCVJOtAsmS4xKsd8d5/QQd92bIPAlGG4m
+	 xOmjE/0REySy0TGgEwBZb1Rh1f9qG1RNgO/fHa4cN3z51qzcGQtpQnYsuXTI+KLXZkJlx
+	 PeaDW0SC0BlfxRbqIgJ2oGfDW0t/B4AWH58LOC61JDUh+XKnix/XJ3Ssqcr59G/xkIiyr
+	 TsWmN5r1y07y7FEN+UY59jxPDKLdexZZFvGf44lQg8Cpbd8yWgZCMh6amfOAn0LWmYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zd6zWmMO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWkyUMnJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F64F606A31C;
-	Thu, 19 Nov 2026 03:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D910606A326;
+	Thu, 19 Nov 2026 03:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zd6zWmMO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CE01F000C4;
-	Thu, 19 Nov 2026 03:18:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWkyUMnJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82C61F000C4;
+	Thu, 19 Nov 2026 03:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058326;
-	bh=Q783ZyeGM4QgPXBaDhDxMukDgq+HclHCyz32+4ohIAw=;
+	s=korg; t=1795058329;
+	bh=vddHVhX9uUwlbwXe5l6dapsYnsX8h/Blj8xL+Yg6Y0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zd6zWmMOBNUHuOyeuv80MW/YcIyDY5rBF+WzVTtj1GnDwzrBvADj8oQrh1c39U9Lh
-	 Iso4IG6mT+Bf+M0Go/xePrECWMm6CyqyRyQFgaesXVB+/XnjdwEAvd/ijVpdPWYva1
-	 sKGhHz51q0Aj6pe2xt8OQ9khkTNGZ4G6r+XTodWU=
+	b=iWkyUMnJbohXTE2uZm5tpb8jWnr7pkOPTOM6jdZ76AZBdWwPo/tgbu5LSIyAYYURQ
+	 rZRPnuHPrwCH/072WKAEg2YpJX9IqNucEhl4PPXjsw++S1oaGDRIXuWEmCYhRFRa34
+	 tp/ThzDYaGdTL+hWxzcObJydIFjTWBBFLWntYBCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cao Guanghui <caoguanghui@kylinos.cn>,
-	Yu Kuai <yukuai@fygo.io>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0404/1848] md/raid5: track disks array size to fix extra_page leak on error paths
-Date: Wed, 18 Nov 2026 15:40:42 +0100
-Message-ID: <20261118145930.755835827@linuxfoundation.org>
+Subject: [PATCH 5.10 0395/1848] ata: ahci_st: Do not ignore errors when getting the reset controls
+Date: Wed, 18 Nov 2026 15:40:33 +0100
+Message-ID: <20261118145930.352700346@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,87 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cao Guanghui <caoguanghui@kylinos.cn>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 5028ceee173bfcf844469cfb0d1c151d3f6d0296 ]
+[ Upstream commit c74ee9230a8d1d2f6fcbceff55f56f7dd9b9cccd ]
 
-free_conf() iterates conf->pool_size entries to free extra_page
-allocations, but pool_size may not reflect the actual size of the
-conf->disks array.  Two scenarios cause a mismatch:
+st_ahci_probe_resets() treats any error from devm_reset_control_get() as
+"reset control not defined" and continues with a NULL reset control:
 
-1. setup_conf() early abort: pool_size is 0 (not yet set by
-   grow_stripes) but conf->disks has max_disks entries with
-   extra_page allocated.  The loop iterates 0 times, leaking all
-   pages.
+	drv_data->pwr = devm_reset_control_get(dev, "pwr-dwn");
+	if (IS_ERR(drv_data->pwr)) {
+		dev_info(dev, "power reset control not defined\n");
+		drv_data->pwr = NULL;
+	}
 
-2. resize_stripes() Step 4 failure: conf->disks was replaced with
-   a newsize-entry array in Step 3, but pool_size is only updated
-   on success.  The loop iterates pool_size (old, smaller value)
-   times, leaking (newsize - pool_size) pages.
+This also swallows -EPROBE_DEFER, which is returned when the reset
+controller providing the reset has not been probed yet. probe() then
+continues as if the device tree did not specify any reset, so the resets
+of the SATA IP are never deasserted, and st_ahci_configure_oob() and
+ahci_platform_init_host() access the MMIO of an IP which is still held in
+reset and powered down, which can result in an external abort.
 
-Add a dedicated disks_cnt field to track the actual number of
-entries in conf->disks.  Set it immediately after each allocation
-or replacement (in setup_conf and resize_stripes Step 3, where the
-array is safely stalled with no concurrent access), and use it in
-free_conf() instead of pool_size.
+The resets are optional in the binding, as they are not part of its
+required properties, so use devm_reset_control_get_optional(), which
+returns NULL if the reset is not specified in the device tree, and
+propagate all other errors.
 
-This leaves pool_size untouched, preserving the check_reshape()
-retry behavior that depends on pool_size only being updated on
-full success.
+Note that an absent reset is now indicated by a NULL reset control
+instead of an error, so the "reset control not defined" messages are
+dropped.
 
-Fixes: d7bd398e97f2 ("md/r5cache: handle alloc_page failure")
+Fixes: 76884cb2f7da ("ahci: st: Add support for ST's SATA IP")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cao Guanghui <caoguanghui@kylinos.cn>
-Link: https://patch.msgid.link/20260827080341.112296-1-ghuicao@163.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20260915084127.692494-9-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 5 +++--
- drivers/md/raid5.h | 1 +
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/ata/ahci_st.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index c0f2a43a3f356..82b94abc5df3e 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -2582,6 +2582,7 @@ static int resize_stripes(struct r5conf *conf, int newsize)
- 		} else {
- 			kfree(conf->disks);
- 			conf->disks = ndisks;
-+			conf->disks_cnt = newsize;
- 		}
- 	} else
- 		err = -ENOMEM;
-@@ -7091,7 +7092,7 @@ static void free_conf(struct r5conf *conf)
- 	free_thread_groups(conf);
- 	shrink_stripes(conf);
- 	raid5_free_percpu(conf);
--	for (i = 0; i < conf->pool_size; i++)
-+	for (i = 0; i < conf->disks_cnt; i++)
- 		if (conf->disks[i].extra_page)
- 			put_page(conf->disks[i].extra_page);
- 	kfree(conf->disks);
-@@ -7273,7 +7274,7 @@ static struct r5conf *setup_conf(struct mddev *mddev)
+diff --git a/drivers/ata/ahci_st.c b/drivers/ata/ahci_st.c
+index c268264c2129c..98ec746d4a2ca 100644
+--- a/drivers/ata/ahci_st.c
++++ b/drivers/ata/ahci_st.c
+@@ -105,23 +105,20 @@ static int st_ahci_probe_resets(struct ahci_host_priv *hpriv,
+ {
+ 	struct st_ahci_drv_data *drv_data = hpriv->plat_data;
  
- 	if (!conf->disks)
- 		goto abort;
+-	drv_data->pwr = devm_reset_control_get(dev, "pwr-dwn");
+-	if (IS_ERR(drv_data->pwr)) {
+-		dev_info(dev, "power reset control not defined\n");
+-		drv_data->pwr = NULL;
+-	}
 -
-+	conf->disks_cnt = max_disks;
- 	for (i = 0; i < max_disks; i++) {
- 		conf->disks[i].extra_page = alloc_page(GFP_KERNEL);
- 		if (!conf->disks[i].extra_page)
-diff --git a/drivers/md/raid5.h b/drivers/md/raid5.h
-index 5c05acf20e1f2..3e6f6df34de7e 100644
---- a/drivers/md/raid5.h
-+++ b/drivers/md/raid5.h
-@@ -667,6 +667,7 @@ struct r5conf {
- 	unsigned long		cache_state;
- 	struct shrinker		shrinker;
- 	int			pool_size; /* number of disks in stripeheads in pool */
-+	int			disks_cnt; /* number of entries in disks[] array */
- 	spinlock_t		device_lock;
- 	struct disk_info	*disks;
- 	struct bio_set		bio_split;
+-	drv_data->sw_rst = devm_reset_control_get(dev, "sw-rst");
+-	if (IS_ERR(drv_data->sw_rst)) {
+-		dev_info(dev, "soft reset control not defined\n");
+-		drv_data->sw_rst = NULL;
+-	}
+-
+-	drv_data->pwr_rst = devm_reset_control_get(dev, "pwr-rst");
+-	if (IS_ERR(drv_data->pwr_rst)) {
+-		dev_dbg(dev, "power soft reset control not defined\n");
+-		drv_data->pwr_rst = NULL;
+-	}
++	drv_data->pwr = devm_reset_control_get_optional(dev, "pwr-dwn");
++	if (IS_ERR(drv_data->pwr))
++		return dev_err_probe(dev, PTR_ERR(drv_data->pwr),
++				     "failed to get pwr-dwn reset\n");
++
++	drv_data->sw_rst = devm_reset_control_get_optional(dev, "sw-rst");
++	if (IS_ERR(drv_data->sw_rst))
++		return dev_err_probe(dev, PTR_ERR(drv_data->sw_rst),
++				     "failed to get sw-rst reset\n");
++
++	drv_data->pwr_rst = devm_reset_control_get_optional(dev, "pwr-rst");
++	if (IS_ERR(drv_data->pwr_rst))
++		return dev_err_probe(dev, PTR_ERR(drv_data->pwr_rst),
++				     "failed to get pwr-rst reset\n");
+ 
+ 	return st_ahci_deassert_resets(hpriv, dev);
+ }
 -- 
 2.53.0
 
