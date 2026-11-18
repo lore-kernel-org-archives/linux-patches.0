@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030188;
-	b=CBYJg2ZX8ZQmwlkA5waoBxQvq97ycu1AwuMXQCKVLDjo2vK7nwc60RJoiOFsWznWVYPZ
-	 EJv7l8Q7HPt5uyx0LOfJBmajlf2V7wuMZXLbi0JPUh1WEUdT5oJ6H5D5yfWgW/IHDPEHt
-	 uKm4h0KdmqHcEFbkU8+6rwZTWWP2sH8X5turJXNs0qVH0Qudz08LAgJq9n5F9AtN8/PPw
-	 GigJmt0G9eVlJKXAu/sYAXm2DJXYFXa5cErV7+7WlEXnT8W0qnRSZfivWuac6Hl7yUmwu
-	 1tQ5z2wAl6ZkJXfraArolSpjgjXW4HlhQBOzdJkD7pcsJIIBxKiEaU0ExnWFLxrNJyQ==
+	t=1795030191;
+	b=eNIQv3dD6Fb0ERvjccT92Y9nnINMl7lqGd2iYYCVLEW8wsX8RAFXh95QihvNrDeHnJgZ
+	 Uv44Cu1RuDufm10cfiKJvcDZpCZsHoURZI8QJ5dUv3Y9YcyImoDKQpE9KQFTp/S+CTaL0
+	 6ubu2FAkVeHY7KhvB1SyJomU+wO5nuwTvjvwzTQALFeH9yKuupOuu2Hw8QnPueqY5VmU/
+	 rUAhM03ULoSQKp0Pnz4PC8KZrIhPxWuoN1kuquZ0ILdyeKN2HwXpKyn0Vkt0GNTOnbNeL
+	 LLzThGcoBBO7US08HSVyfwFSb3A8+JhQsNfq7eAq0OhGRbSYzzB6m7b0if/mfsZxuJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030188;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030191;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QdBSPJPMHdsvVocjHbmGLBbqJjkoBQKxbbjgtWCPioE=;
-	b=HuvWtz8rWZOrMH+KeGVieAMigBzHkr7+N+GOrEUXY6CZKNIDjxEbwEv11JtCWvMHhj8J
-	 fhApaUgFmCUVc0Gxp6qpP9hgTralhfSuuQ/Y/jF1aR/R6nwsx/bqYr0iMXX1N3xIGSd+3
-	 4Jjc0KSNmkpaKvorCdXIr8lYfh1d7xbIbMzm8Nfmg3+XIynNTx98fcg+403Flc0VtSwIb
-	 9chaYkb6jtREraTnbGMZPy0XBkVGHK654KqXhtskC4bNHUVwWXovVp//uZ4DOzYW/Pdt0
-	 gORw2boJSFyH/xmV0DvQbyFrQaN4hMSGFz2BpFQx0KXr1QRfFF3yFGjKvC0R2GZaHqQ==
+	bh=WIl/+spZ58RQkDpnyMvGHZCbn7n9tlnNaq5zTHZUtKk=;
+	b=0DwMN3Js6WYTAw21UjMOYbGTOfGMZhBC8ep7ylJxbeI0UJFKeHhMDiP+OEaTJvZZyj2j
+	 2njPG1obuBWqLmMusYSYzaKUEZg5KTTbYQ9Qd+jQWfodbQp+t4mMoTf7sQeJ53wUvlAI4
+	 t0ZS8mw19l6XlXOdj+4M+aEODZplQEHBroeHDrU1BS1rPCWdu90O09Bn/ohQZThQMT3Z+
+	 gkID6iki/7HwfiZ8LgzB9u623Yay8vLyCm0c5OZFhqGEQ5PVAcXFZmLxaQ/Pq4mcZqz7+
+	 fT+R3KGlasMKQ8r5v1LYBVMK65ILHPHrF5qF+3WKPw0SH9f0C7kVPbrlld8yRD0JSgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="k/a1S2OJ";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=loo9U3iI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9503A606A32C;
-	Wed, 18 Nov 2026 19:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A1C606A32C;
+	Wed, 18 Nov 2026 19:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k/a1S2OJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEE01F000C4;
-	Wed, 18 Nov 2026 19:29:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=loo9U3iI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691211F000C4;
+	Wed, 18 Nov 2026 19:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030188;
-	bh=QdBSPJPMHdsvVocjHbmGLBbqJjkoBQKxbbjgtWCPioE=;
+	s=korg; t=1795030191;
+	bh=WIl/+spZ58RQkDpnyMvGHZCbn7n9tlnNaq5zTHZUtKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k/a1S2OJtEAXVi4fHSYeGPGInR+GiehHSae4YQ58Y7Vk1v3XR7vSFdQZKUwiv2FT2
-	 JwVlYAHIaN/cPjmGCapiIvz2Mubab+mxvePcx39aQgV8Yo2X4Q85yhWVioj5CK/Mur
-	 BXukhYfEzpNuwjlDkUjPQ28z5oH4YPBPT1zTnKv4=
+	b=loo9U3iIKhtvxTy3fMj0JU0D97dn+ZWjd+isQvT02JITAltlF1Fvcd6FVOSIvLf7s
+	 fH93afSL85CnzCSgY0vcVAVtqcOY+gh1W9KXIAtWi9PLSro++ERf+ziXbrSCgbBbHV
+	 ZHf2Jyn1v+UhwXqDA17sOW38Fs/Uva79c2FE7tYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0617/1756] netfilter: synproxy: fix reset of ct seqadj when reopening a connection
-Date: Wed, 18 Nov 2026 15:45:44 +0100
-Message-ID: <20261118150033.482626300@linuxfoundation.org>
+Subject: [PATCH 6.12 0618/1756] ARM: dts: gemini: Use a level-high interrupt for TVE200
+Date: Wed, 18 Nov 2026 15:45:45 +0100
+Message-ID: <20261118150033.517983715@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,90 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit a8708aa9fe1095ca7859cb3f102b6a3fa0fb98bd ]
+[ Upstream commit 5bf1bb010712bba28eda926ed453db3cab91381a ]
 
-SYNPROXY is resetting conntrack seqadj when a closed connection is
-re-opened, but it was using nf_ct_seqadj_init() which is a no-op for a
-zero offset.
+TVE200's interrupt is configured as rising-edge. On the D-Link DIR-685,
+this can stop interrupt delivery after the first vertical interrupt,
+causing vblank and page-flip timeouts and delaying framebuffer console
+startup.
 
-This patch introduces nf_ct_seqadj_reset() which sets the offset values
-directly to zero and avoid setting IPS_SEQ_ADJUST_BIT flag, it changes
-SYNPROXY code to use it when needed.
+The vertical interrupt can remain pending after acknowledgment. Use
+level-high triggering so the pending condition is delivered again
+without requiring another edge.
 
-Fixes: 48b1de4c110a ("netfilter: add SYNPROXY core/target")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: d2b85241a9f5 ("ARM: dts: Add TVE200 to the Gemini SoC DTSI")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Message-ID: <20260921-gemini-tve200-fix-v1-2-8be03ac2a8f7@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_conntrack_seqadj.h |  1 +
- net/netfilter/nf_conntrack_seqadj.c         | 17 +++++++++++++++++
- net/netfilter/nf_synproxy_core.c            |  4 ++--
- 3 files changed, 20 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/gemini/gemini.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/netfilter/nf_conntrack_seqadj.h b/include/net/netfilter/nf_conntrack_seqadj.h
-index 883c414b768ee..0f5bbb14a25aa 100644
---- a/include/net/netfilter/nf_conntrack_seqadj.h
-+++ b/include/net/netfilter/nf_conntrack_seqadj.h
-@@ -33,6 +33,7 @@ static inline struct nf_conn_seqadj *nfct_seqadj_ext_add(struct nf_conn *ct)
- 
- int nf_ct_seqadj_init(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
- 		      s32 off);
-+void nf_ct_seqadj_reset(struct nf_conn *ct, enum ip_conntrack_info ctinfo);
- int nf_ct_seqadj_set(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
- 		     __be32 seq, s32 off);
- void nf_ct_tcp_seqadj_set(struct sk_buff *skb, struct nf_conn *ct,
-diff --git a/net/netfilter/nf_conntrack_seqadj.c b/net/netfilter/nf_conntrack_seqadj.c
-index b7e99f34dfce8..8dba6a0d5dc21 100644
---- a/net/netfilter/nf_conntrack_seqadj.c
-+++ b/net/netfilter/nf_conntrack_seqadj.c
-@@ -29,6 +29,23 @@ int nf_ct_seqadj_init(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
- }
- EXPORT_SYMBOL_GPL(nf_ct_seqadj_init);
- 
-+void nf_ct_seqadj_reset(struct nf_conn *ct, enum ip_conntrack_info ctinfo)
-+{
-+	struct nf_conn_seqadj *seqadj = nfct_seqadj(ct);
-+	enum ip_conntrack_dir dir = CTINFO2DIR(ctinfo);
-+	struct nf_ct_seqadj *this_way;
-+
-+	if (unlikely(!seqadj))
-+		return;
-+
-+	spin_lock_bh(&ct->lock);
-+	this_way = &seqadj->seq[dir];
-+	this_way->offset_before	 = 0;
-+	this_way->offset_after	 = 0;
-+	spin_unlock_bh(&ct->lock);
-+}
-+EXPORT_SYMBOL_GPL(nf_ct_seqadj_reset);
-+
- int nf_ct_seqadj_set(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
- 		     __be32 seq, s32 off)
- {
-diff --git a/net/netfilter/nf_synproxy_core.c b/net/netfilter/nf_synproxy_core.c
-index 69f84c44801dc..309bee4e1ed65 100644
---- a/net/netfilter/nf_synproxy_core.c
-+++ b/net/netfilter/nf_synproxy_core.c
-@@ -685,7 +685,7 @@ ipv4_synproxy_hook(void *priv, struct sk_buff *skb,
- 		 * adjustments, they will get initialized once the connection is
- 		 * reestablished.
- 		 */
--		nf_ct_seqadj_init(ct, ctinfo, 0);
-+		nf_ct_seqadj_reset(ct, ctinfo);
- 		synproxy->tsoff = 0;
- 		this_cpu_inc(snet->stats->conn_reopened);
- 		fallthrough;
-@@ -1115,7 +1115,7 @@ ipv6_synproxy_hook(void *priv, struct sk_buff *skb,
- 		 * adjustments, they will get initialized once the connection is
- 		 * reestablished.
- 		 */
--		nf_ct_seqadj_init(ct, ctinfo, 0);
-+		nf_ct_seqadj_reset(ct, ctinfo);
- 		synproxy->tsoff = 0;
- 		this_cpu_inc(snet->stats->conn_reopened);
- 		fallthrough;
+diff --git a/arch/arm/boot/dts/gemini/gemini.dtsi b/arch/arm/boot/dts/gemini/gemini.dtsi
+index befe322bd7de9..c95faa197bcf1 100644
+--- a/arch/arm/boot/dts/gemini/gemini.dtsi
++++ b/arch/arm/boot/dts/gemini/gemini.dtsi
+@@ -428,7 +428,7 @@ dma-controller@67000000 {
+ 		display-controller@6a000000 {
+ 			compatible = "cortina,gemini-tvc", "faraday,tve200";
+ 			reg = <0x6a000000 0x1000>;
+-			interrupts = <13 IRQ_TYPE_EDGE_RISING>;
++			interrupts = <13 IRQ_TYPE_LEVEL_HIGH>;
+ 			resets = <&syscon GEMINI_RESET_TVC>;
+ 			clocks = <&syscon GEMINI_CLK_GATE_TVC>,
+ 				 <&syscon GEMINI_CLK_TVC>;
 -- 
 2.53.0
 
