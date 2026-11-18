@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019755;
-	b=X7ZqXZYNJovgBLWUzcXjC8I/Z5cjHW6Afw5cnMr7AkECBtBff9a4TdyImVFD6cw5Vylc
-	 GoPHsHgU1m4t9huExS24AqakubbDydYo9v7a8RvfYAj/7U69STeXMlGvcQVWlqdHZs7WA
-	 NxRYoqEK5eGDybI+A6yT+vDDmmUrBmMl902E0DON4pOMHg1SWvsSHgqK5rqZnjzgEX0UC
-	 YBfeIMpDRDLc2sl1fBih78QiPqRYK4qxaO8DC8etlYvR5b1AGIQPuXq9fU9id0D9tkLf8
-	 3Ud8gkk2Vp1TP5sfFrql/Z95pgVCw+wo+Hhg5W+69W2GW8WxeaVBcVaGyvY7GDF4Ylw==
+	t=1795019758;
+	b=l2TliOLUE1I981FxGXjCKwFPPoJo63a3oMKomUWsHDj9LO9fbEqtLgf/5uPz+3Q+pE6M
+	 t9LDkXrECJvzxybHVKYR8yftDeGV6vhx5CbUcWq7nxXxBKyw43WZvWhqSKec4qxmuOo+k
+	 dC4Y0xQMjGYk7Me0OTxEXI50nDhlxuHKQkic83NvYIkAe5Fs1/vksv6ny7WefE1JnMI8q
+	 oLgZ/tdguZM+yxwNvEXowvtuznwIKn4CCVX5kAPYG3W3k24lGJYmW26iDP+ZtQGtzQ/hS
+	 vPvb74LR76f6laLbHqtXfrEm1XVNxhH2bKhwqmLQzGdq+vXnlsCuVTTjgg8Sqm5EFaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019755;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019758;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JL0RnZgBVkNiXH11iWUmlMCtonicuMDlOmz43Q/YIlo=;
-	b=NZcecqRKqL526iUlUcnYNbVt4gv1Lv3bYaTwNCQNcU2zq2hrFxY/3o5QzspLtIG9JFbh
-	 KyGYNupsIfrXuLKS+2c3R7+MzcQvlDVQfn0vbMGUZ3FecF+Zk0v9RVoyuZFO8W7QjUCN2
-	 ehoFcTibWWUcsKj+GRgo6brrY6uCMRR3hh+Jlyr0RKQax9tzssOiVrFzvcUTkE63RH5dL
-	 5ZJ7lBDa269pvg7a55kyaOX12ZaklSE8EMB/uLJ2hg9o4ied2kHwNu7OPh8570Kow0vPk
-	 OeH+gs8j4Tvzf0v+kb6PXhbmds7kTyanW/XopTHF2XdwaxfStoWQEeZyYOoJvjsqESQ==
+	bh=LWd5SFWjBKF6kFuATsncFPzHXOnkKxcmZriLH86nRvU=;
+	b=AOsf/clUeH9q6DaWs7hudY+o5/FQ9NOCbtl+ymPhhF/sEN5JLZ56FfxeRV/SMMynQ91j
+	 Ls2oPE4hokm1C75d4vsIA7NhkYqA+83kcepT22p5L/Wdr98MVFQ53XAU+fdHGy8T347CK
+	 l3+vnZquUYCgl+ZY58mBJUQRSC2rQKckkO0ce6YXJtnP5j40jpEDbDPx0lg0PcdywhLQs
+	 RQiesEwui45FcPPXasMtQnJIexyORimCi25GlSMbn5zgLaetNejW8rTNGERn62fOqGXlo
+	 JF3VmB44HDssB7h+8ReRB8S3/+b9uLIGTI+1YzD1xqosG45DZRHQOyE/N1DeW/DcUfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gX0LdF99;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=14xitdMV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4428D606A32F;
-	Wed, 18 Nov 2026 16:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CD9606A320;
+	Wed, 18 Nov 2026 16:35:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gX0LdF99
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9654A1F000C4;
-	Wed, 18 Nov 2026 16:35:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=14xitdMV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60CEE1F000C5;
+	Wed, 18 Nov 2026 16:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019755;
-	bh=JL0RnZgBVkNiXH11iWUmlMCtonicuMDlOmz43Q/YIlo=;
+	s=korg; t=1795019757;
+	bh=LWd5SFWjBKF6kFuATsncFPzHXOnkKxcmZriLH86nRvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gX0LdF99M3u7jV00ZjD4bcZOanl4AJJh31NVo0tQolhr4U8SwmgO8Zuz6/9cqgcjj
-	 qGjjwxUYskAZCfzQOFLYpS+oKZPYRNqjbVxsgvI3Z+wOmnRBeUFu4RzKQmbiJU/ipo
-	 bCun9O1n1OfLWvU+qwT6UVcBIbtndzAeOQ7qIriY=
+	b=14xitdMVw68Y9mrLMTHhWE4Ixt+RlcmLWXrTSzcStaoBh31k2ZbopHxVLgm23kt/l
+	 1QbLESS6WiAK6XkXXkWKmC7CMOZfvFCDcQxxssY9n07G/cmUIvio2wGaE/prnt5MNK
+	 Z/BjfHI+61gAaCAYbZGIhzEVC7LwAa+yLLkc7XC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Chen <jeff.chen_1@nxp.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1710/2651] wifi: mwifiex: append hotfix number to firmware version string
-Date: Wed, 18 Nov 2026 15:49:10 +0100
-Message-ID: <20261118150349.195233772@linuxfoundation.org>
+Subject: [PATCH 7.3 1711/2651] serial: qcom-geni: power the console back up on system resume
+Date: Wed, 18 Nov 2026 15:49:11 +0100
+Message-ID: <20261118150349.228056849@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,111 +67,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Chen <jeff.chen_1@nxp.com>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit 958f20d5aa0aa645068454fdb62ebc625ac9a115 ]
+[ Upstream commit e95442c31ae65b57ddffdfa609531c549055f308 ]
 
-mwifiex_ret_get_hw_spec() parses and logs the FW_HOTFIX_VER_ID TLV,
-but the hotfix value is not stored in the adapter structure. As a
-result, the hotfix number never appears in the firmware version string
-returned by mwifiex_drv_get_driver_version().
+The console holds a runtime PM reference on its port, which keeps the
+port powered while the tty is closed. On system suspend
+pm_runtime_force_suspend() powers the port down regardless, but a single
+reference makes pm_runtime_need_not_resume() report the port as not in
+use, so it is marked runtime suspended instead of being flagged for
+pm_runtime_force_resume(). On system resume the port therefore stays
+powered down while uart_resume_port() goes on to program the termios
+settings and re-enable the console.
 
-Store the hotfix version from FW_HOTFIX_VER_ID and append it to the
-firmware version string.
+If the tty has been opened before, uart_resume_port() ends up in
+startup(), whose runtime PM reference powers the port up again, and only
+the register writes made before that are lost. If the tty has never been
+opened (no getty on the port, /dev/console backed by another console),
+nothing powers the port back up and the console stays dead after the
+first suspend.
 
-Assisted-by: LLM sparse
-Fixes: 7715d79553de ("wifi: mwifiex: Support firmware hotfix version in GET_HW_SPEC responses")
-Signed-off-by: Jeff Chen <jeff.chen_1@nxp.com>
-Link: https://patch.msgid.link/20261012123624.3147417-2-jeff.chen_1@oss.nxp.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Resume the port explicitly before uart_resume_port() when the console
+was force suspended.
+
+Assisted-by: LLM
+Fixes: aee1f94dab13 ("serial: qcom-geni: remove .pm callback, use runtime PM in startup/shutdown")
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Link: https://patch.msgid.link/20260918-qcom-geni-pm-v1-1-cb587e215607@ixit.cz
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cmdevt.c    | 10 ++++++++--
- drivers/net/wireless/marvell/mwifiex/fw.h        |  6 ++++++
- drivers/net/wireless/marvell/mwifiex/init.c      |  1 +
- drivers/net/wireless/marvell/mwifiex/main.h      |  1 +
- drivers/net/wireless/marvell/mwifiex/sta_ioctl.c |  3 ++-
- 5 files changed, 18 insertions(+), 3 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/cmdevt.c b/drivers/net/wireless/marvell/mwifiex/cmdevt.c
-index 29e0f274575e5..268a795db4867 100644
---- a/drivers/net/wireless/marvell/mwifiex/cmdevt.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cmdevt.c
-@@ -1594,11 +1594,17 @@ int mwifiex_ret_get_hw_spec(struct mwifiex_private *priv,
- 						    api_rev->major_ver,
- 						    api_rev->minor_ver);
- 					break;
--				case FW_HOTFIX_VER_ID:
-+				case FW_HOTFIX_VER_ID: {
-+					struct hw_spec_fw_hotfix_ver *hf;
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index a851b8f0ef047..dbb1bb7160cc1 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -2128,6 +2128,12 @@ static int qcom_geni_serial_resume(struct device *dev)
+ 			return ret;
+ 	}
+ 
++	if (console_suspend_enabled && uart_console(uport)) {
++		ret = pm_runtime_resume(dev);
++		if (ret < 0)
++			return ret;
++	}
 +
-+					hf = (void *)tlv;
-+					adapter->fw_hotfix_ver =
-+						le16_to_cpu(hf->hotfix_ver);
- 					mwifiex_dbg(adapter, INFO,
- 						    "Firmware hotfix version %d\n",
--						    api_rev->major_ver);
-+						    adapter->fw_hotfix_ver);
- 					break;
-+				}
- 				default:
- 					mwifiex_dbg(adapter, FATAL,
- 						    "Unknown api_id: %d\n",
-diff --git a/drivers/net/wireless/marvell/mwifiex/fw.h b/drivers/net/wireless/marvell/mwifiex/fw.h
-index 93561116959ac..f254d6d6e3eb9 100644
---- a/drivers/net/wireless/marvell/mwifiex/fw.h
-+++ b/drivers/net/wireless/marvell/mwifiex/fw.h
-@@ -1104,6 +1104,12 @@ struct hw_spec_api_rev {
- 	u8 minor_ver;
- } __packed;
- 
-+struct hw_spec_fw_hotfix_ver {
-+	struct mwifiex_ie_types_header header;
-+	__le16 api_id;
-+	__le16 hotfix_ver;
-+} __packed;
-+
- struct host_cmd_ds_get_hw_spec {
- 	__le16 hw_if_version;
- 	__le16 version;
-diff --git a/drivers/net/wireless/marvell/mwifiex/init.c b/drivers/net/wireless/marvell/mwifiex/init.c
-index 0c89250137248..e8a5f9b758d60 100644
---- a/drivers/net/wireless/marvell/mwifiex/init.c
-+++ b/drivers/net/wireless/marvell/mwifiex/init.c
-@@ -296,6 +296,7 @@ static void mwifiex_init_adapter(struct mwifiex_adapter *adapter)
- 	adapter->config_bands = 0;
- 	adapter->adhoc_start_band = 0;
- 	adapter->fw_release_number = 0;
-+	adapter->fw_hotfix_ver = 0;
- 	adapter->fw_cap_info = 0;
- 	memset(&adapter->upld_buf, 0, sizeof(adapter->upld_buf));
- 	adapter->event_cause = 0;
-diff --git a/drivers/net/wireless/marvell/mwifiex/main.h b/drivers/net/wireless/marvell/mwifiex/main.h
-index 27559e2ddc317..eb47ade44e1fb 100644
---- a/drivers/net/wireless/marvell/mwifiex/main.h
-+++ b/drivers/net/wireless/marvell/mwifiex/main.h
-@@ -1003,6 +1003,7 @@ struct mwifiex_adapter {
- 	bool host_mlme_enabled;
- 	struct ieee80211_txrx_stypes mwifiex_mgmt_stypes[NUM_NL80211_IFTYPES];
- 	u8 fw_api_ver;
-+	u16 fw_hotfix_ver;
- 	u8 key_api_major_ver, key_api_minor_ver;
- 	u8 max_p2p_conn, max_sta_conn;
- 	struct memory_type_mapping *mem_type_mapping_tbl;
-diff --git a/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c b/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
-index 19196848778c0..1d38747348511 100644
---- a/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
-@@ -1144,7 +1144,8 @@ mwifiex_drv_get_driver_version(struct mwifiex_adapter *adapter, char *version,
- 	char fw_ver[32];
- 
- 	ver.l = cpu_to_le32(adapter->fw_release_number);
--	sprintf(fw_ver, "%u.%u.%u.p%u", ver.c[2], ver.c[1], ver.c[0], ver.c[3]);
-+	sprintf(fw_ver, "%u.%u.%u.p%u.%u", ver.c[2], ver.c[1],
-+		ver.c[0], ver.c[3], adapter->fw_hotfix_ver);
- 
- 	snprintf(version, max_len, driver_version, fw_ver);
- 
+ 	ret = uart_resume_port(private_data->drv, uport);
+ 	if (uart_console(uport)) {
+ 		geni_icc_set_tag(&port->se, QCOM_ICC_TAG_ALWAYS);
 -- 
 2.53.0
 
