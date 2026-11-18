@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045901;
-	b=k6/s2dg77nn3lFizLu7lwB7mBeoCDB0xyfvX6vaMB9v39TfAAr8EwSr86Apnsbw1Nsnn
-	 icg+k2MUFBvinMqlJFwlKYp1jJ5st8JP2w4XXdeTGlLJd7WgU2dmr3C41Oaso8eLk6K4A
-	 FqgWn8ZEYvPrtfP5LN7M0hoSDxFH2CJ4Kc0ATRnqKNxIP5mIDWaNsz1l/BQQOVV108h+K
-	 GHBg8pdW+7x1OJvoisl8C19H6E2l3QV/bpiJctFhVOh1Vl00u+cd44FH2GZsWaLAMSXTI
-	 wC5gCo9v6TXYeqLto7IMrfqZqnfBwYzIFu0s3tjroLxqaZkljoqIDmar3PlBzZRhCqQ==
+	t=1795045904;
+	b=Omr4JST5GUHC7bK9NpPywpGdTUZ6RY64ZjmtSzPo8OFhtZxyQ1K28dh9L1U4ZhQjKaNr
+	 BX123vvsD2p2b7DtPE1Wd0h+fPww573MPAHJJ4zYxdV3pb3B1aED7DOGYrL+rnSD4gEVy
+	 uy0hwu59spunsC8DqMZnWO/bWPxTBMvoy1ZoSHhREV4QBEABH0BjMOwCuLxfPCWH3ofX/
+	 8pXkMAmdHFZTvevysBgHYGQ6JP5shOXjBJbpuEqN3ZFtgHLa2UPQIDEVBzFIIumwzZv8J
+	 HLrKA8Rzv8wL8nGQsa7Gipa2/3kL8bqe1naKVZt1IZPtazr5E2Gz2V6X0xCJxiVPOIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045901;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045904;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/oapP6tZ8758HvnVlvrOGshQN5nNmbm27ywIqvq+T6c=;
-	b=PvszweQf72BSEcLOYzOO0MgTyU/GVEmVrxeyZFIIwO8fPtfBNYQPECaVO/ie/vmXsE/N
-	 AhvamT5ABpTEy/xadmI9xWATqYiKaKOOvU/ETnofmO47WIukdzuhMkwgmhwWwfsYaubKu
-	 CFGt50WRl5MIbUpY8KnHdxNI6/3Fm0yr1rAMSxECsxsDksei27HMQfUEXm0pXy+RmITyD
-	 Rh0n4Lfjqtnci+fkQ7OuYbEGwvw7AsGtsZgl31R3dCGQhxWiv1QJMUlFV78PSnzgjxO+Y
-	 sgl4l3sM6TfGgztzEXWf3JaGANRoGanLYOIf1/SkNFUJ2WUDHMuP7HerLldyQ+cPefQ==
+	bh=nKOmEFpSFKQCGYdfOVvHrs21t7qsYngxwI2/YR6Unpg=;
+	b=DS8xUYrRDVGee3gkZlFvFyhqgu5mQMjRysIhO63xBcEWbD6NN8jvR64hk6XFKnf33Uxm
+	 D+W+UJkZrFGco5EoMEXqSivVvfIZ0390OH7zvSwvsHcP093rl6C1ry9YtT54LvUS1+sQw
+	 e2quDD9zAdK8ddofJquPlmLXmjF0ilUsslKn6Z+4yAKEP9g4dRhTw4ED9Lb3iJZxzSe65
+	 8uUd1O0Horv8d8WFSfPSkCv/7csOqpIAqXs5nv2cOHyzFLIMsUdxQGOvU53CVVlFyV+3Y
+	 F7RY+MhbZ2EE2RBIZEpnwX6zWxFepQIZcO5MbreqmPswHSOvemHPkAWu8pbURL2zFpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M88DNMEI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXlJCr1e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCF0606A32A;
-	Wed, 18 Nov 2026 23:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39524606A32A;
+	Wed, 18 Nov 2026 23:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M88DNMEI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40EF1F000C4;
-	Wed, 18 Nov 2026 23:51:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXlJCr1e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9035B1F000C4;
+	Wed, 18 Nov 2026 23:51:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045901;
-	bh=/oapP6tZ8758HvnVlvrOGshQN5nNmbm27ywIqvq+T6c=;
+	s=korg; t=1795045904;
+	bh=nKOmEFpSFKQCGYdfOVvHrs21t7qsYngxwI2/YR6Unpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M88DNMEI4X2ajqonv4p6F+Q5ZS8CnehBDRA5XQpEQ2igy+Jo7d3JWyRjGsVZC1jZS
-	 IZ6cekVhk5Nyrf576bmIoNQBs3qJuKprv88Xs8egD4kdXpR/EnGoxELClbYv7GhT0O
-	 qFtyYRDc4GONwlg/tL+A3EhuXAJ/nr9nb40V8ZzI=
+	b=LXlJCr1eyQrMjVEfa2BMtQgwYhFkRlzXk48GzL/mlWN37OUKU8pWf5+CUAmackJtW
+	 0gq//PhSNXbxcrraadsMWkjLbBAIeonOr3zcXU4fdyuLARwZnCHV6IqjjaN63Gn/9d
+	 qE2mp3ZXfn6Op5TgwAtqXrO/H91lxkOmi/uVuEMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1090/2857] fsverity: Be more careful with return value of ->get_verity_descriptor()
-Date: Wed, 18 Nov 2026 15:35:24 +0100
-Message-ID: <20261118150240.870147856@linuxfoundation.org>
+Subject: [PATCH 6.1 1073/2857] drm/amdkfd: evict the queues only once for CRIU PROCESS_INFO
+Date: Wed, 18 Nov 2026 15:35:07 +0100
+Message-ID: <20261118150240.243751622@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,103 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 8f8faec82aa902b1997ae578c46bcc84afbad811 ]
+[ Upstream commit 8f3ecda0ab42fb5ba7310fe848013d3eff31b416 ]
 
-If fsverity_operations::get_verity_descriptor() returns that the verity
-descriptor has 0 size, then a zero-size buffer is allocated to hold it,
-and it's called again with bufsize=0.
+criu_process_info() evicts the queues of the process on every call, and
+each kfd_process_evict_queues() increments qpd->evicted, but CRIU UNPAUSE
+restores them only once. After PROCESS_INFO twice and UNPAUSE the queues
+stay evicted for good. On navi31, a barrier-AND packet on an HSA queue
+completes after PROCESS_INFO + UNPAUSE, but times out after
+PROCESS_INFO, PROCESS_INFO, UNPAUSE.
 
-But bufsize=0 is a special case that says to return the actual size.  If
-in the meantime the filesystem has decided that the size is some
-actually valid size, it will return that size, and then
-validate_fsverity_descriptor() will read from ZERO_SIZE_PTR and crash.
+The error path has a related problem: when kfd_process_evict_queues()
+itself fails, it has already rolled back its partial eviction, and the
+kfd_process_restore_queues() in the error path restores once more.
 
-Of course, for the filesystem to misbehave in that strange way, it
-generally would require direct writes to the block device.
+Evict only when the queues are not paused yet, and on errors only undo
+an eviction done by this call. The barrier now completes after any
+number of PROCESS_INFO calls followed by UNPAUSE.
 
-Regardless, fsverity_get_descriptor() might as well guard against it.
-Make it do so.  Specifically, validate that the first call to
-->get_verity_descriptor() returns at least the minimum descriptor size,
-and validate that the second call returns the same size as the first.
-
-Fixes: fd2d1acfcadf ("fs-verity: add the hook for file ->open()")
+Fixes: cd9f79103003 ("drm/amdkfd: CRIU Implement KFD unpause operation")
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 4d79c9e3c32c677fcadf5ca10ab81ee0a4b81f99)
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261025203831.120095-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/verity/open.c | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/fs/verity/open.c b/fs/verity/open.c
-index 81ff94442f7b4..42b7975c95ea8 100644
---- a/fs/verity/open.c
-+++ b/fs/verity/open.c
-@@ -221,12 +221,6 @@ static bool validate_fsverity_descriptor(struct inode *inode,
- 					 const struct fsverity_descriptor *desc,
- 					 size_t desc_size)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index 0bcbf4ac458ef..43bfd668c5480 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -2611,6 +2611,7 @@ static int criu_process_info(struct file *filep,
+ 				struct kfd_process *p,
+ 				struct kfd_ioctl_criu_args *args)
  {
--	if (desc_size < sizeof(*desc)) {
--		fsverity_err(inode, "Unrecognized descriptor size: %zu bytes",
--			     desc_size);
--		return false;
--	}
--
- 	if (desc->version != 1) {
- 		fsverity_err(inode, "Unrecognized descriptor version: %u",
- 			     desc->version);
-@@ -265,31 +259,37 @@ static bool validate_fsverity_descriptor(struct inode *inode,
- int fsverity_get_descriptor(struct inode *inode,
- 			    struct fsverity_descriptor **desc_ret)
- {
--	int res;
-+	int size, res;
- 	struct fsverity_descriptor *desc;
++	bool paused_here = false;
+ 	int ret = 0;
  
--	res = inode->i_sb->s_vop->get_verity_descriptor(inode, NULL, 0);
--	if (res < 0) {
--		fsverity_err(inode,
--			     "Error %d getting verity descriptor size", res);
--		return res;
-+	size = inode->i_sb->s_vop->get_verity_descriptor(inode, NULL, 0);
-+	if (size < 0) {
-+		fsverity_err(inode, "Error %d getting verity descriptor size",
-+			     size);
-+		return size;
+ 	mutex_lock(&p->mutex);
+@@ -2621,11 +2622,15 @@ static int criu_process_info(struct file *filep,
+ 		goto err_unlock;
  	}
--	if (res > FS_VERITY_MAX_DESCRIPTOR_SIZE) {
--		fsverity_err(inode, "Verity descriptor is too large (%d bytes)",
--			     res);
-+	if (size < sizeof(*desc) || size > FS_VERITY_MAX_DESCRIPTOR_SIZE) {
-+		fsverity_err(inode,
-+			     "Verity descriptor has invalid size (%d bytes)",
-+			     size);
- 		return -EMSGSIZE;
- 	}
--	desc = kmalloc(res, GFP_KERNEL);
-+	desc = kmalloc(size, GFP_KERNEL);
- 	if (!desc)
- 		return -ENOMEM;
--	res = inode->i_sb->s_vop->get_verity_descriptor(inode, desc, res);
-+	res = inode->i_sb->s_vop->get_verity_descriptor(inode, desc, size);
- 	if (res < 0) {
- 		fsverity_err(inode, "Error %d reading verity descriptor", res);
- 		kfree(desc);
- 		return res;
- 	}
--
--	if (!validate_fsverity_descriptor(inode, desc, res)) {
-+	if (res != size) {
-+		fsverity_err(inode, "Verity descriptor size changed (%d => %d)",
-+			     size, res);
-+		kfree(desc);
-+		return -EINVAL;
+ 
+-	ret = kfd_process_evict_queues(p, KFD_QUEUE_EVICTION_CRIU_CHECKPOINT);
+-	if (ret)
+-		goto err_unlock;
++	/* UNPAUSE restores the queues once, so evict them only once */
++	if (!p->queues_paused) {
++		ret = kfd_process_evict_queues(p, KFD_QUEUE_EVICTION_CRIU_CHECKPOINT);
++		if (ret)
++			goto err_unlock;
+ 
+-	p->queues_paused = true;
++		p->queues_paused = true;
++		paused_here = true;
 +	}
-+	if (!validate_fsverity_descriptor(inode, desc, size)) {
- 		kfree(desc);
- 		return -EINVAL;
+ 
+ 	args->pid = task_pid_nr_ns(p->lead_thread,
+ 					task_active_pid_ns(p->lead_thread));
+@@ -2640,7 +2645,7 @@ static int criu_process_info(struct file *filep,
+ 				args->priv_data_size);
+ 
+ err_unlock:
+-	if (ret) {
++	if (ret && paused_here) {
+ 		kfd_process_restore_queues(p);
+ 		p->queues_paused = false;
  	}
 -- 
 2.53.0
