@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031363;
-	b=zJ6MMrjtTDuVSWZzQohs4+AcKHn4hQomYbIZ80C4RZHNJ1X/Qw+5NVMas1K+zLAMZWxg
-	 TgKuA05gYfGnDxJJ0O0eqjux0l0zfnvJqx2V3BKWEWIKvf/EtRJ4cwrXLH5X8+Xz4l0ha
-	 N8AwhWy3RmArxPs/YSygLymHQhTARx3RlYwkRzEwciauZ424tbMxciiE/n559RNTBzCsf
-	 7BBTZChBwmucLk3UloTZg0e+edoF0uI0KozZTTo3Rs/aAs8cFtc/RyUbQpxtW6rxi5+Xl
-	 IZBGreTV0TF69hz1Cysn967GTn2Z3RSOeYBOgGw8V4sH0y902ce9FmbwLmVSbJlRt7A==
+	t=1795031366;
+	b=SUBLlwn52iku8Ff5RXlTdDXSqDQiuyz6s+qrxeK/LXqc7++lCaGaU9CYQxJASLZNxf6Z
+	 XDmOoi+qzeBhifXm31q4aBiUqKxLjQOTo0zLDjlQzpX9nvsXqRnrYwgBPus2GkA+e0gID
+	 C3i80x/NnMf16/o1rUVd48Eh/zlQ/zbQ/3awNimri7Ewpwb+s7DDO2IeUsuZ0swFvrOxt
+	 Vzav8xppsNhKm7N8VF4k7/Gh5qExIsti370U3yld2EyNDsilHLZTqoAodsrhvQ56ESMKq
+	 VMmdbjrYpwDlyRvi9g2zIKqljNnDRyrbsZ6ziQBAeokd6WprIixIDu2kget7jE5j2Aw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031363;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031366;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=veOvHDRp3VdN3F3mWCLtA5J3zWaGRGqyG7WCeEiNmUI=;
-	b=3+8biN3lQK+5PgWINv9t6IT2xFMRLYPWvfzoYdg3oE6tddlaCwwcBzw43FgzKZfhPrFs
-	 Czmp0eo+sDB8pMQp4/4fjcyZEIPUNggaSr5QaUyGuk8jPFRtEUH0F8Ot5TiN23A8uCgNk
-	 NKvR+wpd7aDaM0rcaY0SKORl5WYgYngS4bYF1Aiei4XNSjXLkkAZem6U175DtBQjSz3LG
-	 Mv/70/FpSaike1UH+u13gS7o+ym2yydjH0RI+1NNaxMa0akKtuqftrbPGxTOBO+EEVVDg
-	 IFcMwxJy2YDk2HjJqvKgU8nQOzKyZ/symzEZIhxqrWT7dpah3QYC7ccrKA5X/ECIgtA==
+	bh=+MPdfSZlZ9ANln5gv0UDQrWXILoQYo3j9asfof+lZE4=;
+	b=MSt6p+NkGyW7CR3pL3xpkR3bOAHQIf3g8vaySXbrw9sb43DFpKKtP4un/qEh1EON5YUp
+	 Z8KSjJtQ1KDFqjUv5s8fjOtjf/aRSQ8oLP0Ouc0VOjg/XOuLkqJY1oPyVKSJhznB59SMu
+	 BYIVqytgVRdC77QXHcquvmDGkxTziQZpepyNIITn4fIp7vpoYznEQkq9cWC0He4t8MGsx
+	 jL7D5MTrwtq9ung0kQNXltGyXKaSI8AZb6q5RvvDBN6zH+e1h++xzGOLu1JgyShESKuBZ
+	 VyS3YJD5q8QtjqUQ0BUoU0TMEPV1OuKpTt+VcdDVzxVppyJOlnB54PBv3Joxm+eS9Hg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nmZVPFhr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jr+gVQAQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FEC606A31C;
-	Wed, 18 Nov 2026 19:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48BF6606A31C;
+	Wed, 18 Nov 2026 19:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nmZVPFhr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D483E1F000C4;
-	Wed, 18 Nov 2026 19:49:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jr+gVQAQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07761F000C4;
+	Wed, 18 Nov 2026 19:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031363;
-	bh=veOvHDRp3VdN3F3mWCLtA5J3zWaGRGqyG7WCeEiNmUI=;
+	s=korg; t=1795031366;
+	bh=+MPdfSZlZ9ANln5gv0UDQrWXILoQYo3j9asfof+lZE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nmZVPFhrecnWcRDi4Qp/9EpkFrz52yb22CrzFugHPrGLmbWUEnGcHvEUiJexQWelB
-	 UfSYubFjgpDBVpCmp1mx2erGW8dioLvJfkyB0oZK/K7aQhvtPGAoeJYaFyMbj6yLLT
-	 100rdJQ3u2ZEc1zBl0RNxp9Oo1kXC0mecnjYl3Cs=
+	b=jr+gVQAQjt84rrRZRGP8S6Yl/1HrRFvLdRbHfV60rr62e42qhsGUSV4ya50GNg9To
+	 IrJ0bJRDKElX+hS0hFnUl7ViIGFbhCxyf1jmobB3ogF3jOHuLTe63oc48WbbOl6rWd
+	 noZ41B4tEkQ3pUsD73e+SDKu4DRnlmGj4WWaItgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Leo Cheng <leo-cheng@vip.qq.com>,
 	Michael Walle <mwalle@kernel.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Srinivas Kandagatla <srini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1032/1756] nvmem: layouts: sl28vpd: fix device_node reference leak in error path
-Date: Wed, 18 Nov 2026 15:52:39 +0100
-Message-ID: <20261118150051.159758971@linuxfoundation.org>
+Subject: [PATCH 6.12 1033/1756] nvmem: layouts: onie-tlv: fix device_node reference leak in error path
+Date: Wed, 18 Nov 2026 15:52:40 +0100
+Message-ID: <20261118150051.195348973@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,42 +71,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Leo Cheng <leo-cheng@vip.qq.com>
 
-[ Upstream commit 73bd84aa58ad1fd775d6af2e8445a9456659c445 ]
+[ Upstream commit 9d44e80151dd360fad6155f36b6bfa57efb0f2f5 ]
 
-sl28vpd_add_cells() takes a reference on the child node via
-of_get_child_by_name() for each entry and passes it to
-nvmem_add_one_cell() as info.np. On success the created cell entry
-adopts that reference and releases it later via of_node_put() when the
-entry is torn down; nvmem_add_one_cell() does not take its own
-reference. On failure it does not consume the reference either, so the
-caller still owns it, but the error path only puts layout_np before
-returning, leaking the child node reference.
+onie_tlv_add_cells() takes a reference on the child node via
+of_get_child_by_name() for each parsed TLV and passes it to
+nvmem_add_one_cell() as cell.np. On success the created cell entry
+adopts that reference and releases it later via of_node_put(); on
+failure nvmem_add_one_cell() does not consume it, so the caller still
+owns it, but the error path only puts layout before returning, leaking
+the child node reference.
 
-Put info.np on the error path as well. of_node_put(NULL) is a no-op, so
+Put cell.np on the error path as well. of_node_put(NULL) is a no-op, so
 this is safe even when of_get_child_by_name() returned NULL.
 
-Fixes: d9fae023fe86 ("nvmem: layouts: sl28vpd: Add new layout driver")
+Fixes: d3c0d12f6474 ("nvmem: layouts: onie-tlv: Add new layout driver")
 Signed-off-by: Leo Cheng <leo-cheng@vip.qq.com>
 Reviewed-by: Michael Walle <mwalle@kernel.org>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20261002101329.1084348-3-srini@kernel.org
+Link: https://patch.msgid.link/20261002101329.1084348-4-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/layouts/sl28vpd.c | 1 +
+ drivers/nvmem/layouts/onie-tlv.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvmem/layouts/sl28vpd.c b/drivers/nvmem/layouts/sl28vpd.c
-index e93b020b08369..79de1e6947d09 100644
---- a/drivers/nvmem/layouts/sl28vpd.c
-+++ b/drivers/nvmem/layouts/sl28vpd.c
-@@ -126,6 +126,7 @@ static int sl28vpd_add_cells(struct nvmem_layout *layout)
+diff --git a/drivers/nvmem/layouts/onie-tlv.c b/drivers/nvmem/layouts/onie-tlv.c
+index 8b0f3c1b8a0e9..4da3a704388e9 100644
+--- a/drivers/nvmem/layouts/onie-tlv.c
++++ b/drivers/nvmem/layouts/onie-tlv.c
+@@ -128,6 +128,7 @@ static int onie_tlv_add_cells(struct device *dev, struct nvmem_device *nvmem,
  
- 		ret = nvmem_add_one_cell(nvmem, &info);
+ 		ret = nvmem_add_one_cell(nvmem, &cell);
  		if (ret) {
-+			of_node_put(info.np);
- 			of_node_put(layout_np);
++			of_node_put(cell.np);
+ 			of_node_put(layout);
  			return ret;
  		}
 -- 
