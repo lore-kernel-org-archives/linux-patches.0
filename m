@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025099;
-	b=IMG1Ukj94ysHV8HEanYYCzAnKkB5XBAKxxF1DK1fgSL3p0+wbwyCOj9vWL8VXIDLw702
-	 9I1s5BMM2yL90ZZVqTuuxrLyueXdAaJbDPfDi24VeSfAIyDGFmuXYHyzhBcdxHmXAopBy
-	 rMVEq6/G0nVH04fmOG9NAUgl1eSHxCxVdE0+3Oed8TYaCAHIQC6/OydFqhvduER7CrA5J
-	 pufUpZAFnnuAIHrGTe3kEIVH5dje18Wl7fodO/Pbq9lRZgWNJawDKXXiWnakv7JKNCUyV
-	 HlNjzeQPCdroe8a2MsF2dE8IX71fq/f89OEfaUUwSnbFqU+xteD7FiprkrNH9F8K0gg==
+	t=1795025102;
+	b=lPusdKtIRi+0lCVJ1WYTlIKTwC0oCZq83ddkmM28ePhclfseIv5ROCTNboyZPE75Yy4T
+	 fGB1wH4y4G4Fe1cG85gM/lS/ebv0VOAuSPlcDfSjhF3ER3m0JXqVeOvrOnFmH21wP8qWY
+	 MdKr7KMiipQUtTUgO84VpsjaXwqvI2BjBCG3S6RdGclBZGAru4HqKcZKXd6LE73pYtdOe
+	 XhPUhctAASd5VyL9H6yEzVJ1H0g1tmnzlc74ATVkWvDFW2Bka2V42HBqhFaEKvT/8crZK
+	 Ed+pDy6KStno8uXWu5aRCF4LdL5bwwzU+6ki2QeAf4brnfq/G1qwnf/E2GTYRACAZIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025099;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025102;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3emBemrPlRNKSoWmkHkHpDfjp3WCMKz1VOi56kBRb7s=;
-	b=lNobXxYErxvjk0JzClWUBhaW9LMhchVZGID4mc4iNh5Tn85kU04BbB5jv9BC/R6CBxeB
-	 D83Pzqc41JZAP0J0y3CIndiN0GWKLSIMff26O0jeHDao+Cpx2bTFOufYWYSoaVB+DpiWz
-	 DDVuXx0T8G5gZz2hXtgRJ/T6kdEFDTUabmBNlnJ4burzWy9d5Gx5+NxJbEwKrazNlV9A+
-	 Zt38AejgSw7JDXjLrdLcJWOBziYjaH5QsGyncu1eUKaQIzFEtYTVsjpOZEb0QXP1barTy
-	 eU22oGUmWQwtTfSQsteHBDHY6kTJ+OEZtpp7b48B9J6CfeENfgbGRn9FvQmHXWM0cWw==
+	bh=NFTPt6qaooLVh0e1Y5PSzFAyZ37urgU9CW2q6rADUMQ=;
+	b=CempXM+WoSqFmrq5TIdElxHyPxbCeEH2I2Y3hYgAa2+/PS3+bSBm3bMldYzr4452M0XA
+	 B2SmhXKo5amN6gGboq0MhfSRNHzZkrFNnMkgwpbUKWWYI+eFxf4X7xB8qegYjRHfLeTgj
+	 Co4WVtEuYGHlCRd2tRxbOoeXAXyXlc/mg0Up0Arr0TfhTIAad6agdHkzkRICvpqeiJNIC
+	 kipBwSMd4nD51YekUaaYazmbeXKkoTQxDH7UZhoZmza1cy591f1wMGlFWahgO+wP2QdTK
+	 2XwmVPvlyd4KqwfUEXYaVMxh2bR9I0dvXtSkU9ZyfJe6clNBMv3hPgezoRAl656Fjew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f9qCNwNc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=He6GfO+M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A66606A31C;
-	Wed, 18 Nov 2026 18:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50A6606A31C;
+	Wed, 18 Nov 2026 18:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f9qCNwNc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0151F000C4;
-	Wed, 18 Nov 2026 18:04:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=He6GfO+M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F071F000C4;
+	Wed, 18 Nov 2026 18:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025099;
-	bh=3emBemrPlRNKSoWmkHkHpDfjp3WCMKz1VOi56kBRb7s=;
+	s=korg; t=1795025101;
+	bh=NFTPt6qaooLVh0e1Y5PSzFAyZ37urgU9CW2q6rADUMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f9qCNwNcpejkQ68zJdvIawZzLz8QdjHWWG3P84PO2CC6z3BC+GLUvybsHznM4q5Az
-	 nWj2nEysHjSzdl7fvhbwZNgLbNlL7sEE3mMs6IYiigznwYGZLBcRk8BWY7DHKWJrq9
-	 hs5cHifGtNlBJF7+uhYI3tC7u41HwhX6DFp/UCeI=
+	b=He6GfO+MRcLFdnj/DcaiNHkDPWpmPe9eP2x8dNaKQppL6DXjhFqzP0nqx0l2lJQVY
+	 mvx4sJOJwtat/CpCwfKqlXe844pp10IuqR6gwosdyAIBbN2QkbXt/axePidGSm+6En
+	 9Y7OksiypI1fitguuWrmdG6u5t3NRvGjJD3EYjBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Zahka <daniel.zahka@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Alexander Duyck <alexanderduyck@fb.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0958/2151] eth: fbnic: take netif_addr_lock_bh() around rx mode address programming
-Date: Wed, 18 Nov 2026 15:44:53 +0100
-Message-ID: <20261118150157.360582785@linuxfoundation.org>
+Subject: [PATCH 6.18 0959/2151] fbnic: Rework the BMC state pulled from the capabilities message
+Date: Wed, 18 Nov 2026 15:44:54 +0100
+Message-ID: <20261118150157.420010678@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,95 +68,296 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Zahka <daniel.zahka@gmail.com>
+From: Alexander Duyck <alexanderduyck@fb.com>
 
-[ Upstream commit 96e7f9122aae0ed000ee321f324b812a447906d9 ]
+[ Upstream commit d261a371e3b74c82c417b1171264dd35f6ddc615 ]
 
-When __fbnic_set_rx_mode() is called from contexts other than
-.ndo_set_rx_mode_async(), the uc and mc addr lists are accessed
-without the addr lock that __hw_addr_sync_dev() and
-__hw_addr_unsync_dev() require. Wrap these unprotected accesses with
-netif_addr_lock_bh(). fbnic_clear_rx_mode() has similar issues.
+The BMC side of the RPC configuration is driven entirely out of the
+capabilities message: it carries the BMC presence, its MAC addresses and
+the all-multi request, and the reinit flag raised off it is what gets the
+service task to reprogram the MACDA and action TCAMs. Pull that out of
+fbnic_fw_parse_cap_resp() into a helper and rework the state it publishes.
 
-Fixes: eb690ef8d1c2 ("eth: fbnic: Add L2 address programming")
-Signed-off-by: Daniel Zahka <daniel.zahka@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260617-linux-fbnic-hwaddr-v1-1-3f9f5dee7f99@gmail.com
+The firmware reports the BMC present as soon as its NC-SI channel is
+enabled, before the BMC has been assigned a MAC address. Such a message
+carries no BMC MAC array and is rejected with -EINVAL, discarding the rest
+of it. Treat a present BMC with no MAC as absent instead. There is no entry
+to steer traffic to without one, so the BMC paths stay disabled either way,
+and the link speed, FEC and anti-rollback version in the same message are
+no longer thrown out with it.
+
+bmc_present, need_bmc_tcam_reinit, need_bmc_macda_sync and all_multi are
+single bit members of one bitfield, so every write to one is a
+read-modify-write of all four. The mailbox writes three of them and the
+service task writes the other two. Move them into an unsigned long state
+field driven by the atomic bitops. Putting it at the top of the struct
+keeps the cost to the word itself: 152 bytes grows to 160, still three
+cachelines, with a 1 byte hole left ahead of anti_rollback_version.
+
+Order the reinit handoff while there. The mailbox publishes the BMC state
+before raising the flag and the service task tests the flag before
+consuming it, so pair an smp_mb__before_atomic() on the raise with a
+test_and_clear_bit() on the consume. Claiming the flag atomically also
+keeps a raise that lands mid-pass instead of dropping it.
+
+Commit all_multi unconditionally rather than only when the firmware
+supplied the attribute. An absent attribute means the BMC is not asking for
+all-multi, so holding the previous value just kept stale state. It is read
+out of the message only when a BMC is present, so it is never set on its
+own and the three callers that paired it with the presence check can test
+it alone.
+
+fbnic_write_macda() tests the reinit flag to force a MACDA sync and now
+always sees it clear when reached from fbnic_bmc_rpc_check(). That path is
+unaffected, as fbnic_bmc_rpc_init() unconditionally marks the broadcast
+entry, so the update count is never zero while a BMC is present.
+
+Signed-off-by: Alexander Duyck <alexanderduyck@fb.com>
+Fixes: 20d2e88cc746 ("eth: fbnic: Add initial messaging to notify FW of our presence")
+Fixes: 04a230b27d8f ("fbnic: Add logic to repopulate RPC TCAM if BMC enables channel")
+Fixes: cee8d21d8091 ("fbnic: Push local unicast MAC addresses to FW to populate TCAMs")
+Link: https://patch.msgid.link/179061192791.414394.2161969547553719796.stgit@ahduyck-xeon-server.home.arpa
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: d261a371e3b7 ("fbnic: Rework the BMC state pulled from the capabilities message")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_netdev.c | 7 ++++++-
- drivers/net/ethernet/meta/fbnic/fbnic_pci.c    | 4 ++++
- drivers/net/ethernet/meta/fbnic/fbnic_rpc.c    | 2 ++
- 3 files changed, 12 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/meta/fbnic/fbnic.h     |  7 +-
+ drivers/net/ethernet/meta/fbnic/fbnic_fw.c  | 78 +++++++++++++--------
+ drivers/net/ethernet/meta/fbnic/fbnic_fw.h  | 15 ++--
+ drivers/net/ethernet/meta/fbnic/fbnic_rpc.c | 24 ++++---
+ 4 files changed, 80 insertions(+), 44 deletions(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-index d6100ce2bdc1c..fe995632a42c6 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-@@ -262,8 +262,11 @@ static int fbnic_set_mac(struct net_device *netdev, void *p)
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic.h b/drivers/net/ethernet/meta/fbnic/fbnic.h
+index b03e5a3d51445..ca465282b53f1 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic.h
++++ b/drivers/net/ethernet/meta/fbnic/fbnic.h
+@@ -149,7 +149,12 @@ void fbnic_fw_wr32(struct fbnic_dev *fbd, u32 reg, u32 val);
  
- 	eth_hw_addr_set(netdev, addr->sa_data);
+ static inline bool fbnic_bmc_present(struct fbnic_dev *fbd)
+ {
+-	return fbd->fw_cap.bmc_present;
++	return test_bit(FBNIC_FW_CAP_F_BMC_PRESENT, &fbd->fw_cap.state);
++}
++
++static inline bool fbnic_bmc_all_multi(struct fbnic_dev *fbd)
++{
++	return test_bit(FBNIC_FW_CAP_F_BMC_ALL_MULTI, &fbd->fw_cap.state);
+ }
  
--	if (netif_running(netdev))
-+	if (netif_running(netdev)) {
-+		netif_addr_lock_bh(netdev);
- 		__fbnic_set_rx_mode(fbn->fbd, &netdev->uc, &netdev->mc);
-+		netif_addr_unlock_bh(netdev);
+ static inline bool fbnic_init_failure(struct fbnic_dev *fbd)
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
+index 645408a04a4c0..36607840de1ee 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
+@@ -578,11 +578,55 @@ static int fbnic_fw_parse_bmc_addrs(u8 bmc_mac_addr[][ETH_ALEN],
+ 	return 0;
+ }
+ 
++static int fbnic_fw_parse_bmc_cap(struct fbnic_dev *fbd,
++				  struct fbnic_tlv_msg **results)
++{
++	struct fbnic_tlv_msg *attr;
++	bool bmc_present = false;
++	u32 all_multi = 0;
++	int err;
++
++	/* FW reports the BMC present once its NC-SI channel is enabled, before
++	 * it has a MAC. No MAC array means nothing to program, so treat it as
++	 * absent rather than rejecting the message.
++	 */
++	attr = results[FBNIC_FW_CAP_RESP_BMC_PRESENT] ?
++	       results[FBNIC_FW_CAP_RESP_BMC_MAC_ARRAY] : NULL;
++	if (attr) {
++		err = fbnic_fw_parse_bmc_addrs(fbd->fw_cap.bmc_mac_addr,
++					       attr, 4);
++		if (err)
++			return err;
++
++		all_multi = fta_get_uint(results,
++					 FBNIC_FW_CAP_RESP_BMC_ALL_MULTI);
++		bmc_present = true;
++	} else {
++		memset(fbd->fw_cap.bmc_mac_addr, 0,
++		       sizeof(fbd->fw_cap.bmc_mac_addr));
 +	}
++
++	/* all_multi is only read out of the message when a BMC is present, so
++	 * it is never set on its own and callers can test it without pairing
++	 * it with the presence check.
++	 */
++	assign_bit(FBNIC_FW_CAP_F_BMC_PRESENT, &fbd->fw_cap.state, bmc_present);
++	assign_bit(FBNIC_FW_CAP_F_BMC_ALL_MULTI, &fbd->fw_cap.state, all_multi);
++
++	/* Always assume we need a BMC reinit. The barrier orders the BMC state
++	 * published above ahead of the flag, pairing with the ordering implied
++	 * by the test_and_clear_bit() in fbnic_bmc_rpc_check().
++	 */
++	smp_mb__before_atomic();
++	set_bit(FBNIC_FW_CAP_F_BMC_TCAM_REINIT, &fbd->fw_cap.state);
++
++	return 0;
++}
++
+ static int fbnic_fw_parse_cap_resp(void *opaque, struct fbnic_tlv_msg **results)
+ {
+-	u32 all_multi = 0, version = 0;
+ 	struct fbnic_dev *fbd = opaque;
+-	bool bmc_present;
++	u32 version = 0;
+ 	int err;
  
+ 	version = fta_get_uint(results, FBNIC_FW_CAP_RESP_VERSION);
+@@ -642,37 +686,13 @@ static int fbnic_fw_parse_cap_resp(void *opaque, struct fbnic_tlv_msg **results)
+ 	fbd->fw_cap.link_fec =
+ 		fta_get_uint(results, FBNIC_FW_CAP_RESP_FW_LINK_FEC);
+ 
+-	bmc_present = !!results[FBNIC_FW_CAP_RESP_BMC_PRESENT];
+-	if (bmc_present) {
+-		struct fbnic_tlv_msg *attr;
+-
+-		attr = results[FBNIC_FW_CAP_RESP_BMC_MAC_ARRAY];
+-		if (!attr)
+-			return -EINVAL;
+-
+-		err = fbnic_fw_parse_bmc_addrs(fbd->fw_cap.bmc_mac_addr,
+-					       attr, 4);
+-		if (err)
+-			return err;
+-
+-		all_multi =
+-			fta_get_uint(results, FBNIC_FW_CAP_RESP_BMC_ALL_MULTI);
+-	} else {
+-		memset(fbd->fw_cap.bmc_mac_addr, 0,
+-		       sizeof(fbd->fw_cap.bmc_mac_addr));
+-	}
+-
+-	fbd->fw_cap.bmc_present = bmc_present;
+-
+-	if (results[FBNIC_FW_CAP_RESP_BMC_ALL_MULTI] || !bmc_present)
+-		fbd->fw_cap.all_multi = all_multi;
++	err = fbnic_fw_parse_bmc_cap(fbd, results);
++	if (err)
++		return err;
+ 
+ 	fbd->fw_cap.anti_rollback_version =
+ 		fta_get_uint(results, FBNIC_FW_CAP_RESP_ANTI_ROLLBACK_VERSION);
+ 
+-	/* Always assume we need a BMC reinit */
+-	fbd->fw_cap.need_bmc_tcam_reinit = true;
+-
  	return 0;
  }
-@@ -308,8 +311,10 @@ void fbnic_clear_rx_mode(struct fbnic_dev *fbd)
- 	/* Write updates to hardware */
- 	fbnic_write_macda(fbd);
  
-+	netif_addr_lock_bh(netdev);
- 	__dev_uc_unsync(netdev, NULL);
- 	__dev_mc_unsync(netdev, NULL);
-+	netif_addr_unlock_bh(netdev);
- }
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_fw.h b/drivers/net/ethernet/meta/fbnic/fbnic_fw.h
+index 57ab3a5450be0..86736063e922a 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_fw.h
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_fw.h
+@@ -43,7 +43,18 @@ struct fbnic_fw_ver {
+ 	char commit[FBNIC_FW_CAP_RESP_COMMIT_MAX_SIZE];
+ };
  
- static int fbnic_hwtstamp_get(struct net_device *netdev,
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-index 74bd390026e4c..0ae0f0cf24ad0 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-@@ -135,7 +135,9 @@ void fbnic_up(struct fbnic_net *fbn)
- 
- 	fbnic_rss_reinit_hw(fbn->fbd, fbn);
- 
-+	netif_addr_lock_bh(fbn->netdev);
- 	__fbnic_set_rx_mode(fbn->fbd, &fbn->netdev->uc, &fbn->netdev->mc);
-+	netif_addr_unlock_bh(fbn->netdev);
- 
- 	/* Enable Tx/Rx processing */
- 	fbnic_napi_enable(fbn);
-@@ -176,7 +178,9 @@ static int fbnic_fw_config_after_crash(struct fbnic_dev *fbd)
- 	}
- 
- 	fbnic_rpc_reset_valid_entries(fbd);
-+	netif_addr_lock_bh(fbd->netdev);
- 	__fbnic_set_rx_mode(fbd, &fbd->netdev->uc, &fbd->netdev->mc);
-+	netif_addr_unlock_bh(fbd->netdev);
- 
- 	return 0;
- }
++/* Bits in fbnic_fw_cap.state. The firmware mailbox publishes the BMC state
++ * and the service task consumes it, so they are updated with atomic bitops.
++ */
++enum {
++	FBNIC_FW_CAP_F_BMC_PRESENT,
++	FBNIC_FW_CAP_F_BMC_ALL_MULTI,
++	FBNIC_FW_CAP_F_BMC_TCAM_REINIT,
++	FBNIC_FW_CAP_F_BMC_MACDA_SYNC,
++};
++
+ struct fbnic_fw_cap {
++	unsigned long state;
+ 	struct {
+ 		struct fbnic_fw_ver mgmt, bootloader;
+ 	} running;
+@@ -52,10 +63,6 @@ struct fbnic_fw_cap {
+ 	} stored;
+ 	u8	active_slot;
+ 	u8	bmc_mac_addr[4][ETH_ALEN];
+-	u8	bmc_present		: 1;
+-	u8	need_bmc_tcam_reinit	: 1;
+-	u8	need_bmc_macda_sync	: 1;
+-	u8	all_multi		: 1;
+ 	u8	link_speed;
+ 	u8	link_fec;
+ 	u32	anti_rollback_version;
 diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_rpc.c b/drivers/net/ethernet/meta/fbnic/fbnic_rpc.c
-index fe95b6f696463..bc0f38b6a2b2b 100644
+index bc0f38b6a2b2b..f94ce73ddc109 100644
 --- a/drivers/net/ethernet/meta/fbnic/fbnic_rpc.c
 +++ b/drivers/net/ethernet/meta/fbnic/fbnic_rpc.c
-@@ -244,7 +244,9 @@ void fbnic_bmc_rpc_check(struct fbnic_dev *fbd)
+@@ -117,7 +117,7 @@ void fbnic_bmc_rpc_all_multi_config(struct fbnic_dev *fbd,
+ 	 * BMC.
+ 	 */
+ 	mac_addr = &fbd->mac_addr[fbd->mac_addr_boundary - 1];
+-	if (fbnic_bmc_present(fbd) && fbd->fw_cap.all_multi) {
++	if (fbnic_bmc_all_multi(fbd)) {
+ 		if (mac_addr->state != FBNIC_TCAM_S_VALID) {
+ 			eth_zero_addr(mac_addr->value.addr8);
+ 			eth_broadcast_addr(mac_addr->mask.addr8);
+@@ -148,7 +148,7 @@ void fbnic_bmc_rpc_all_multi_config(struct fbnic_dev *fbd,
+ 	/* If we are not enabling the rule just delete it. We will fall
+ 	 * back to the RSS rules that support the multicast addresses.
+ 	 */
+-	if (!fbnic_bmc_present(fbd) || !fbd->fw_cap.all_multi || enable_host) {
++	if (!fbnic_bmc_all_multi(fbd) || enable_host) {
+ 		if (act_tcam->state == FBNIC_TCAM_S_VALID)
+ 			act_tcam->state = FBNIC_TCAM_S_DELETE;
+ 		return;
+@@ -242,20 +242,25 @@ void fbnic_bmc_rpc_check(struct fbnic_dev *fbd)
+ {
+ 	int err;
  
- 	if (fbd->fw_cap.need_bmc_tcam_reinit) {
+-	if (fbd->fw_cap.need_bmc_tcam_reinit) {
++	/* Consume the flag before the state it advertises. The ordering
++	 * implied by test_and_clear_bit() pairs with the barrier in
++	 * fbnic_fw_parse_bmc_cap(), and claiming it atomically means a set
++	 * racing with us is kept and retried rather than overwritten.
++	 */
++	if (test_and_clear_bit(FBNIC_FW_CAP_F_BMC_TCAM_REINIT,
++			       &fbd->fw_cap.state)) {
  		fbnic_bmc_rpc_init(fbd);
-+		netif_addr_lock_bh(fbd->netdev);
+ 		netif_addr_lock_bh(fbd->netdev);
  		__fbnic_set_rx_mode(fbd, &fbd->netdev->uc, &fbd->netdev->mc);
-+		netif_addr_unlock_bh(fbd->netdev);
- 		fbd->fw_cap.need_bmc_tcam_reinit = false;
+ 		netif_addr_unlock_bh(fbd->netdev);
+-		fbd->fw_cap.need_bmc_tcam_reinit = false;
  	}
  
+-	if (fbd->fw_cap.need_bmc_macda_sync) {
++	if (test_and_clear_bit(FBNIC_FW_CAP_F_BMC_MACDA_SYNC,
++			       &fbd->fw_cap.state)) {
+ 		err = fbnic_fw_xmit_rpc_macda_sync(fbd);
+ 		if (err)
+ 			dev_warn(fbd->dev,
+ 				 "Writing MACDA table to FW failed, err: %d\n", err);
+-		fbd->fw_cap.need_bmc_macda_sync = false;
+ 	}
+ }
+ 
+@@ -488,8 +493,7 @@ void fbnic_promisc_sync(struct fbnic_dev *fbd,
+ 				mac_addr->act_tcam);
+ 			mac_addr->state = FBNIC_TCAM_S_ADD;
+ 		}
+-	} else if (mc_promisc &&
+-		   (!fbnic_bmc_present(fbd) || !fbd->fw_cap.all_multi)) {
++	} else if (mc_promisc && !fbnic_bmc_all_multi(fbd)) {
+ 		/* We have to add a special handler for multicast as the
+ 		 * BMC may have an all-multi rule already in place. As such
+ 		 * adding a rule ourselves won't do any good so we will have
+@@ -660,12 +664,12 @@ void fbnic_write_macda(struct fbnic_dev *fbd)
+ 	}
+ 
+ 	/* If reinitializing the BMC TCAM we are doing an initial update */
+-	if (fbd->fw_cap.need_bmc_tcam_reinit)
++	if (test_bit(FBNIC_FW_CAP_F_BMC_TCAM_REINIT, &fbd->fw_cap.state))
+ 		updates++;
+ 
+ 	/* If needed notify firmware of changes to MACDA TCAM */
+ 	if (updates != 0 && fbnic_bmc_present(fbd))
+-		fbd->fw_cap.need_bmc_macda_sync = true;
++		set_bit(FBNIC_FW_CAP_F_BMC_MACDA_SYNC, &fbd->fw_cap.state);
+ }
+ 
+ static void fbnic_clear_act_tcam(struct fbnic_dev *fbd, unsigned int idx)
 -- 
 2.53.0
 
