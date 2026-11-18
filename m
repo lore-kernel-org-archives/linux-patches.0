@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042995;
-	b=gEZk+QB4EDDh3LFGP2bXiCv9xNYc2z4L4e6lAs/4UNsOIlZc+RlqMAY8MfMjE+H6hKS3
-	 V0j7izrWaGbmFxWc4MS8J806pO2i6e9CBR8w/6QOAOmhq0YGsHO9eBcVfBNlBSP2nlVF+
-	 dajIL33yhsmviZ1kypDgJLFCReNGDdtpI0q1cURu6hEWG7/XcSGiQ2Ov+MGkQAYMvo/vd
-	 3dPSC505RWzpuuaeS53q5lOZ7RQK7W8bLyjTwydh4wa5CbilAbibEPnylzhuHCPGcKLHA
-	 mqZgzqrFjyl2QVs0IlixnIvEohIpb6Riq6yTLsbu0yMVf5viWKJ7W4Es5niVDHBe6eA==
+	t=1795042998;
+	b=jdT9KyV7eUecai512eEkXnKORUMw13lT5nFjyZDeKJqdEgihg3/j+94Bi7phCnDVXcOB
+	 BrkFINS1MM+RUEuU8Mo4h4LM1UuMjb85uAX+Kl7ErO2bMi21KTbXty3QD62qA0KgoSbMv
+	 KTFeaciPKZclRYIAL7PAFX85QyLZB2dNeV0unoAaWoPcSOS2qKM2mebqYBzZevgtfb9zC
+	 E+sUYpnShjTA/dtsPvvaIH9UAtAq4FYViMZdXBbTfDigccbZQu3skNVvaxF+wElEmzdA/
+	 QCsCz40g8Dy3vE/eeyCfDnDQ+9uv2+nokXkX/9uOkG6que/5/b1DrQrqwxLwdl32woQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042995;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042998;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=poA8i0YK0Vn3YkBr+X91cZS9nnIxyuNMngOnuDQ3MEI=;
-	b=zlcqd8By0OrccAhMTCOppJw9dE4gjFGFqxB6OyOBNGgiZNzn/IRZfTbU++gZwNM+hymn
-	 Nfs54dfeiK3gP6h9lXmRHLk9XlXCddpuwJXn8wQawcuQmyDp3RNa1pNx/aVRDN+A66Tmj
-	 9841zhw5wYUQLVn9+GRT9EYrFzulJzec2cukIsAZib/gEQNxvWMdE+Fzggofdh4hJP5M4
-	 otSdPbR30TRrdM2rQzsEs3XUEwGgWDn1TmCgiacY9bdQMXjMEZHnkKW9PvT51a0U9nf9a
-	 KAlyMRBQgzlFSydCiAhMbWigSqfM3Jv30qshN4qFZuia6PMlR1e1g9z/Or+dc32CjEw==
+	bh=daWNGHV9MbLdcd0me67W5Nv52TporlQFtripGq8h4d8=;
+	b=CF5Ig5kPCXYGnVsLl3rj/889QdLaFG/Ugp3LgtluKrdO1vzLIfzzPtLLVtqsbkLrMBOo
+	 2LywaFxCbyYr+jaFLhqdOGIsMp3S5ahBYwZSVYTK5T4o16J0b7wQKJtNKVG4HI0Yo3Ny0
+	 tIUw6CZobJyKxM83EutEhJEkaY6lNeFyap7p4v5ZF5ouv98CZiE2HW6Uha6YF1lJPKn4l
+	 2L1ePpkyGmuyvG2Y6kObVpBJesXD3boNrQ97d56RsTtikyNhgJqLaiskhvfPqoNOIM7uR
+	 XXSC6bezp4b9rvk8D0QWRZjwWc/EB1kGxtxjL00yqbx3VJDERjyWB8nPayKy/f1Divw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mGjsgQRU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tEXscDk2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7AA606A31C;
-	Wed, 18 Nov 2026 23:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDDA606A331;
+	Wed, 18 Nov 2026 23:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mGjsgQRU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA941F000C4;
-	Wed, 18 Nov 2026 23:03:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tEXscDk2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E4F1F000C4;
+	Wed, 18 Nov 2026 23:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042995;
-	bh=poA8i0YK0Vn3YkBr+X91cZS9nnIxyuNMngOnuDQ3MEI=;
+	s=korg; t=1795042998;
+	bh=daWNGHV9MbLdcd0me67W5Nv52TporlQFtripGq8h4d8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mGjsgQRUkxhGngAgL8tG8+8BSMoOINOwC/3KgRuv9wUg/EXeo2lVyRNCtVHKdYKMP
-	 rXckc0zeJyeGYt4j/Qw2GIhtR9zIILQekzhR0rHRmqJ99n3khQiV36aTQ91rO/9EQc
-	 LJlqoIXADTksmRwg/pvL7v06KTvWQqmxeuSWFyAU=
+	b=tEXscDk2QLTEsVrwrODWaAyguTFqp3A1Z3KAByLSD/PBcbndeELnABB/IELeN0kRw
+	 pOf62aTGPSnHUMu2+N34BT1huU+5r/36NJvpRArv+YwC1RrTifKYnWRJDg5xw9K/UF
+	 gG8QxltRcMRz3xSd6Ql0J3dCyCOHI0IJI/VKsZjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Hansen-Baird <william.hansen.baird@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0052/2857] wifi: rtlwifi: rtl8723be: Remove unnecessary irq save/restore in hw_init()
-Date: Wed, 18 Nov 2026 15:18:06 +0100
-Message-ID: <20261118150203.187348996@linuxfoundation.org>
+	Bin Yu <byu@xidian.edu.cn>,
+	Cheng Wen <wencheng@xidian.edu.cn>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 0017/2857] ALSA: line6: Clear prev_fbuf on capture buffer release
+Date: Wed, 18 Nov 2026 15:17:31 +0100
+Message-ID: <20261118150201.980486922@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,97 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Hansen-Baird <william.hansen.baird@gmail.com>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-[ Upstream commit 1b4cd55626b6ffa93d18848412afb912a4add585 ]
+commit aa118c8f61d59387961d58ffae831c5259a9f222 upstream.
 
-rtl8723be hw_init() calls local_save_flags(flags) followed by
-local_irq_enable(). Later, local_irq_restore(flags) is called.
+A KASAN slab-use-after-free read was reported in submit_audio_out_urb()
+when generating an impulse test signal:
 
-This causes warnings from Lockdep on boot and modprobe,
-as local_irq_restore(flags) should only be called while irqs are disabled.
-The warning was introduced to detect this class of bug in [1].
+  BUG: KASAN: slab-use-after-free in create_impulse_test_signal sound/usb/line6/playback.c:76 [inline]
+  BUG: KASAN: slab-use-after-free in submit_audio_out_urb+0x1848/0x1b20 sound/usb/line6/playback.c:249
+  Read of size 2 at addr ffff888008d74870 by task syz.2.3214/7785
 
-With testing I found that all paths which call hw_init() have irqs
-already enabled for rtl8723be.
+  Allocated by task 11:
+   kmem_cache_alloc_noprof+0x2f0/0x390 mm/slub.c:4144
+   line6_buffer_acquire+0x1a1/0x220 sound/usb/line6/pcm.c:158
+   line6_pcm_acquire+0xb6/0x230 sound/usb/line6/pcm.c:329
+   line6_startup_work+0x3c/0x50 sound/usb/line6/driver.c:728
 
-Furthermore, the calls were originally added for the rtl8192ce
-in commit f78bccd79ba3 ("rtlwifi: rtl8192ce: Fix too long disable of IRQs")
-before later being added to most other rtlwifi drivers.
+  Freed by task 7785:
+   kfree+0xf8/0x390 mm/slub.c:6566
+   line6_buffer_release sound/usb/line6/pcm.c:176 [inline]
+   line6_buffer_release+0xa5/0xf0 sound/usb/line6/pcm.c:170
+   __line6_pcm_release sound/usb/line6/pcm.c:305 [inline]
+   line6_pcm_release+0x5a/0x80 sound/usb/line6/pcm.c:313
+   snd_toneport_monitor_put+0x11b/0x190 sound/usb/line6/toneport.c:183
 
-Commit d3feae41a347 ("rtlwifi: Update power-save routines for 062814 driver")
-then replaces the call to spin_lock_irqsave() before hw_init(),
-and thus the codepath which caused irqs to be disabled in hw_init and
-prompted the original commit has been removed.
+line6pcm->prev_fbuf points into the capture PCM stream buffer
+(line6pcm->in.buffer), which is updated during audio_in_callback() to
+feed rate synchronization, software monitoring, and impulse test signal
+generation on playback side.
 
-The same irq save/restore pattern is also present in the hw_init() of
-rtl8192ce, rtl8723ae, rtl8188ee, rtl8192se and rtl8192cu,
-however I don't have the hardware to test them,
-so I did not include them in my changes.
+When all capture streams are closed, line6_buffer_release() frees
+pstr->buffer with kfree().  However, it does not clear line6pcm->prev_fbuf.
+If playback is subsequently started (e.g. via impulse test signal
+volume control snd_line6_impulse_volume_put()), submit_audio_out_urb()
+dereferences the stale pointer line6pcm->prev_fbuf under in.lock,
+resulting in a slab-use-after-free read.
 
-Tested on a Razer Blade 14 2017.
+Clear prev_fbuf and prev_fsize in line6_buffer_release() when releasing
+the capture stream buffer under in.lock, ensuring that no stale buffer
+pointer can be accessed by submit_audio_out_urb().
 
-Example of output from Lockdep prior to fix:
-
-raw_local_irq_restore() called with IRQs enabled
-
-...
-
-Call Trace:
-<TASK>
-rtl8723be_hw_init+0x5992/0x7220 [rtl8723be]
-? static_obj+0x61/0xa0
-rtl_pci_start+0x222/0x5c0 [rtl_pci]
-rtl_op_start+0x128/0x1a0 [rtlwifi]
-? __kasan_check_read+0x11/0x20
-drv_start+0x16c/0x550 [mac80211]
-
-...
-
-irq event stamp: 887679
-hardirqs last  enabled at (887689): [<ffffffff96511170>] __up_console_sem+0x90/0xa0
-hardirqs last disabled at (887698): [<ffffffff96511155>] __up_console_sem+0x75/0xa0
-softirqs last  enabled at (887670): [<ffffffff962f4675>] __irq_exit_rcu+0x175/0x2f0
-softirqs last disabled at (887649): [<ffffffff962f4675>] __irq_exit_rcu+0x175/0x2f0
----[ end trace 0000000000000000 ]---
-
-[1] https://lore.kernel.org/all/20210111153707.10071-1-mark.rutland@arm.com/
-
-Signed-off-by: William Hansen-Baird <william.hansen.baird@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260609095359.2964193-1-william.hansen.baird@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 63e20df1e5b2 ("ALSA: line6: Reorganize PCM stream handling")
+Cc: stable@vger.kernel.org
+Co-developed-by: Bin Yu <byu@xidian.edu.cn>
+Signed-off-by: Bin Yu <byu@xidian.edu.cn>
+Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20261013063554.571-1-25031212351@stu.xidian.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c | 6 ------
- 1 file changed, 6 deletions(-)
+ sound/usb/line6/pcm.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c
-index 0ba3bbed6ed36..69d2370792e26 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c
-@@ -1339,11 +1339,6 @@ int rtl8723be_hw_init(struct ieee80211_hw *hw)
- 	bool rtstatus = true;
- 	int err;
- 	u8 tmp_u1b;
--	unsigned long flags;
--
--	/* reenable interrupts to not interfere with other devices */
--	local_save_flags(flags);
--	local_irq_enable();
- 
- 	rtlhal->fw_ready = false;
- 	rtlpriv->rtlhal.being_init_adapter = true;
-@@ -1449,7 +1444,6 @@ int rtl8723be_hw_init(struct ieee80211_hw *hw)
- 
- 	rtl8723be_dm_init(hw);
- exit:
--	local_irq_restore(flags);
- 	rtlpriv->rtlhal.being_init_adapter = false;
- 	return err;
- }
--- 
-2.53.0
-
+--- a/sound/usb/line6/pcm.c
++++ b/sound/usb/line6/pcm.c
+@@ -173,6 +173,14 @@ static void line6_buffer_release(struct
+ 	clear_bit(type, &pstr->opened);
+ 	if (!pstr->opened) {
+ 		line6_wait_clear_audio_urbs(line6pcm, pstr);
++		if (pstr == &line6pcm->in) {
++			/* prev_fbuf points into the capture buffer we are about
++			 * to free; drop it while no capture URB is in flight.
++			 */
++			guard(spinlock_irqsave)(&line6pcm->in.lock);
++			line6pcm->prev_fbuf = NULL;
++			line6pcm->prev_fsize = 0;
++		}
+ 		kfree(pstr->buffer);
+ 		pstr->buffer = NULL;
+ 	}
 
 
