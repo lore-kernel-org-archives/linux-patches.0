@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059830;
-	b=YHrmfpr1EeAmqQOpmeZKQd9GuND9A9LVjvULWvbs9XFIatXKXJDN/PzDVsX9p2M+WIzz
-	 dkcujEvNVoLHxrqu9HuImrlzgeM3bN6VrAdeECEoDIkT/hwWy5wcXPWSKr8qHI6JV0hU0
-	 +UMUnEwYT7q0Pd+cbgntAjUsZYLp0fQlh8Abq1sTM+WzZzeEY/ZILln1ZgYIbhwwhv+H4
-	 iooeniNUvea68NMgDH098khYIqIwjZtmcvZIL0Xrnjwc2FpkmSzJTlQSN+M1Xm6LWEsyY
-	 wESBE8xWBIjfqkdy3w/BaB4Za4whFE4A5Brp1mSOnnfTS0lHBSIQZ+X1iAcmJZ4ydqA==
+	t=1795059833;
+	b=IDvB6aID5xYqZdhPKM4YE5cKvGOmhRqlro2Z96BnaaBnAGWWjgr6Qk0XOKBGXmVsS5q/
+	 LvvwQeyiFpjBWyl+IB8nA1ZcfneU0ttvd0tvLTJ+p9ryyZlFSMKzOEvOrjYY5YjD7ssuT
+	 hLW3zOx6FB47qGAPghFmLsCmZwWA3xFCSyUb7i0jCNDujKVpFOsj+c4RrAYrByHxQm+yt
+	 uHj92b49mWQHRwJzFxlXpCIOtv614Ca5JSwbMzRSGJyypxI25LOKYaQZzV6TyVLKby+Do
+	 nt/BowkLDRCjHnkKVmC2HoQfkhpDWHyQJ6NnJjlWyfGEZVZtkJenEexz4Iyfmlpi3NA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059830;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tSYWmreZxto7PeUXrGY5RoVHdJ9D9O4W1zSmG0pMM+8=;
-	b=VFCfS5Sj0VW7P6GV6N9uF/ye1Cq1NNStAvr+EFRlbbazjwxpVg0BvPSiSrqXehrv0MBz
-	 5MTEL7wQrwdWlT0vOF8hg/6chwytUWjOgfX5tohsXXcc0G5KTfmW9VmfoNScI5ARE2iPr
-	 KJZpZ5Jc0+yqplIBOEX263OAUDJEzcZjPvr7V9ZCC2yQpyO3zCo6HvzrLz7zsNNdBQHQs
-	 CQdtGawuC1jvcTbDj2SEVqUmkxdeZTd2XQAlHHBmiFutknCZFzO3G6dtzgADwtTPo/Wrd
-	 rPXExZVZoNyICN8kxQI9QXzPzi8Xv6nDQ0MYX09G9b4XSK/6PmPPYz9zDrZsx7v0YWA==
+	bh=WifheW7fzfhiXuz6kSuq11/odfSky8xNr2R/GcjQm/o=;
+	b=eSrVgoHqeCRIL6jKnMW09t3YFHjS4U82wLK2R5Bh9qaG7baes4Y9GBz7+4850iB7gRWI
+	 jSf/ftnzp4nip0hrjMU+Lg1bBd1lNOmqJzpYIWdFsq4PcZecdt30K4IgBPg7bepMyEHPw
+	 RzO6z/4xHUSU3qMveiyw8q3c9x7Z6X3i7metXthv4uyLA/voyETL4EO3yZsg619Lz59bz
+	 sB0zvrmoWBPaRK4nMZe8dY6QM3oIFgCnhP/3gTTDYKkvp1YuAFJaPhQu4LVAn3y8ouok5
+	 orSJtnxzY2G7iX4LzbEVSStd0VY1iKb4lIUi5mVUjoPQYzPOIDxoqgBtqWlUtO51W4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wl0Xbxkh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oc2r5MpY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B0B606A320;
-	Thu, 19 Nov 2026 03:43:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48EB9606A320;
+	Thu, 19 Nov 2026 03:43:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wl0Xbxkh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE681F000C4;
-	Thu, 19 Nov 2026 03:43:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oc2r5MpY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A001F000C4;
+	Thu, 19 Nov 2026 03:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059830;
-	bh=tSYWmreZxto7PeUXrGY5RoVHdJ9D9O4W1zSmG0pMM+8=;
+	s=korg; t=1795059833;
+	bh=WifheW7fzfhiXuz6kSuq11/odfSky8xNr2R/GcjQm/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wl0Xbxkh1aYnkpsgNIQDMbLuh8u6oO6H2uVErqn34nbzrNLF1jFUaTchi5QgyvQDK
-	 EfY4zxL3upSH33MYGRBBPpdlEdxC+zp8WlJVkWIAxnXPWaOHrK7+5T+W3HKpnscqUL
-	 NdyXUQsjF2GuqIT+kR2YpcvjuF16oZrPdZ4LJBQk=
+	b=Oc2r5MpYPoKvyuuWUGR78RJSl8wuubSCKp5j0KIDCSghUXtfa59RNSvd/sT8m/9yn
+	 bVSPnDaYBeOCRIt02bOF/emclW+zBi3BfzRhF7r7eA5TYcbG1dgfbiE/qKMarkGWuy
+	 42AOPxlMIb+EOFDG1I9r7UdvCdJM5tVcE5a/+i+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Breno Leitao <leitao@debian.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0983/1848] crypto: omap-sham - fix crypto engine cleanup
-Date: Wed, 18 Nov 2026 15:50:21 +0100
-Message-ID: <20261118145958.065710248@linuxfoundation.org>
+Subject: [PATCH 5.10 0984/1848] dcache: report a Tasks-RCU quiescent state in dentry_kill()
+Date: Wed, 18 Nov 2026 15:50:22 +0100
+Message-ID: <20261118145958.102041165@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,46 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit be51ea091c6563158531e8c74e040552fdb1e28c ]
+[ Upstream commit a647a53bc89a046bee4a12a0a5627f2dfaaef807 ]
 
-omap_sham_probe() allocates and starts a crypto engine, but the remove
-path does not call the matching crypto_engine_exit(). The probe failure
-path already performs this cleanup.
+I am constantly seeing the following warning on Meta's fleet:
 
-crypto_engine_alloc_init() creates a kthread worker for processing
-requests. Without crypto_engine_exit() during driver removal, the
-worker is left running after the device is removed.
+  INFO: rcu_tasks detected stalls on tasks:
+    native_queued_spin_lock_slowpath
+    locked_inode_to_wb_and_lock_list
+    inode_io_list_del
+    evict
+    __dentry_kill
+    shrink_dentry_list
+    shrink_dcache_tree
+    d_invalidate
+    btrfs_delete_subvolume
+    btrfs_ioctl_snap_destroy
+    btrfs_ioctl
+    do_syscall_64
 
-Call crypto_engine_exit() after unregistering the algorithms and before
-tearing down the remaining request handling resources. This stops the
-engine and destroys its worker.
+dentry_kill() is the common funnel for dentry teardown: dput(),
+shrink_dentry_list() and shrink_dcache_tree() all reach it, once per
+dentry, and its cond_resched() is the only reschedule point on that path.
 
-This issue was found by manual code inspection.
+cond_resched() is not an RCU-tasks quiescent state.
 
-Fixes: 133c3d434d91 ("crypto: omap-sham - convert to use crypto engine")
+Use cond_resched_tasks_rcu_qs() so the teardown reports an RCU-tasks
+quiescent state as it proceeds.
+
+Fixes: 9c5f1d30199d ("dcache: move cond_resched() into the end of __dentry_kill()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-[ sashal: adjusted cleanup context to match the existing inline unregister loops and tasklet_kill() ]
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260918-dcache-task-rcu-qa-v1-1-963ec83e6d0b@debian.org
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: applied the cond_resched() replacement in __dentry_kill() instead of dentry_kill() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/omap-sham.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/dcache.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/omap-sham.c b/drivers/crypto/omap-sham.c
-index 5a57617441b81..b2e1617474553 100644
---- a/drivers/crypto/omap-sham.c
-+++ b/drivers/crypto/omap-sham.c
-@@ -2223,6 +2223,7 @@ static int omap_sham_remove(struct platform_device *pdev)
- 					&dd->pdata->algs_info[i].algs_list[j]);
- 			dd->pdata->algs_info[i].registered--;
- 		}
-+	crypto_engine_exit(dd->engine);
- 	tasklet_kill(&dd->done_task);
- 	pm_runtime_disable(&pdev->dev);
+diff --git a/fs/dcache.c b/fs/dcache.c
+index d17c98508a088..34e8a97e0323e 100644
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -595,7 +595,7 @@ static void __dentry_kill(struct dentry *dentry)
+ 	spin_unlock(&dentry->d_lock);
+ 	if (likely(can_free))
+ 		dentry_free(dentry);
+-	cond_resched();
++	cond_resched_tasks_rcu_qs();
+ }
  
+ static struct dentry *__lock_parent(struct dentry *dentry)
 -- 
 2.53.0
 
