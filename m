@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050811;
-	b=zU3UVivolNMQMTihXdTPOxc07x0zT9q9HqBrnPwKacozYUooupZM/uU7H5ffiq57D/hF
-	 e6OgSELX9nMHJCre34P7zGDH1bbMyXqtFX2nkPNSqwr8laGBYh8mqd9U21ErPmZ5m65Dr
-	 lHN3poc4F75QLmfY+prZ7QN4/QMYf0oz7CPbhmOd5vXCKrftOin5piZaCdONacWcNQtni
-	 ie9aqU9J2mCSSMKVDp0HsbmNfS6JAoNTmAJotQyHvBHLj/nEgooxWz3nR9lyDKs0de5qZ
-	 tjYcYzfqL1PKQG/GMq8eI4731WGtwQFsS75mBo1XwVrZeH07VHGbONugthnhpToOpHw==
+	t=1795050814;
+	b=yDks9g0wSYImSsCABiuKIHjPVQ02Czro4KnwxfJTouyuGgqgqkyMp7UU88/WiIgvqhY9
+	 DDufhWY+qKnwphRyk5x6EthoBoo5Lsr7ivazCGN0Bvw8pBT9ofm5EOU0i6rokKJkfUtNf
+	 XWbfadcOpitSt/iWdhwbshRo9mI89XHQ49PMYUM27s5H/O4AllqFV+RJGFMTSA+oDnEwv
+	 94Wazi3UxWMP81RlbjtgtvYsXdonZSLKl3adwZ6kMhoGrM2xwkFkzkxbMbdF9yBiQBwQN
+	 ufd+ZgEkj0vmeq5WUuhFK+46hKwKhecgIIH9qAqRccEQN//oD67PzfgAD3VWwj9uSYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050811;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050814;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+l+jGJyzB2bXdA4LsZcaIHw0GBLJu4JlrRMgrV8KU18=;
-	b=CQZdikm8VUiJ5tbkfquS7FC044HTGesLjHIImIha0dR06pRj4B0h8dsCOGaajw3e270a
-	 i884L3IcRlgSHFMfn66VWUd5ruiVbFVz0O0EOW2768KzT71m8wr9Cwy493u+CoHOFf05z
-	 qG6qEEwOGNay20oxRwEpE2Gzo8LLI7SBTQyyCNdjURGSWvN+T3B26jZRVYw0GyjhNR3lz
-	 4cinedsCXDU+5ovuqaSUTJKI0U7HP3PWF/KoKGetAYz7wkIuDC1BhzHIh/nn1K55Icj59
-	 G4ZUjrOaF2hN9bLkA3ue6MTdqElKNVfrgxrG3wy0jduqZqRKr3b0TAcyc2lsxMa8gQw==
+	bh=rMKzaSbzatGzyH9bWJkNUjgwCUXx3c6yYhZueYiPlmA=;
+	b=osL+wIa81CPPmKJEO7ggG9Fr32zxOEHKxUYg9CEUJP14jGlM8Lzn8f1AANsI+RB9lyNc
+	 uOLfSHS7ubb5UlLACZpibp7+4P1A5CS8ARqpTod2vj8L+phrH3gaQrrWTm4O5B9kx8ewM
+	 cKTGQO8CaZs8bzwIDRAxsYmsfAUQe91ViJubh2DMokgOZv4AURu005RXrci2O7Xvo5V2X
+	 cGqXwQ9IPP81pi0+iJ8Ja8kxOPeArUxY2Ks1fmvp5eLl8HlJYl/wXvkpSKlqsC6bYWaew
+	 CkrCdEZmqltd6mzEV6TPYyCIu5gUNucrRWfGE3x7I23e7YrkABBGwTb6LqKmyid9K/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=upmSSKlE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LDQKXOqQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C02606A333;
-	Thu, 19 Nov 2026 01:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBB7606A32A;
+	Thu, 19 Nov 2026 01:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=upmSSKlE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1BED1F000C5;
-	Thu, 19 Nov 2026 01:13:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LDQKXOqQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4151F000C5;
+	Thu, 19 Nov 2026 01:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050811;
-	bh=+l+jGJyzB2bXdA4LsZcaIHw0GBLJu4JlrRMgrV8KU18=;
+	s=korg; t=1795050814;
+	bh=rMKzaSbzatGzyH9bWJkNUjgwCUXx3c6yYhZueYiPlmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=upmSSKlE1+Y5EbSX1ixIFVtfc7JeAXsPW9XK0DWDfYNXV0n+4rZdIyvrEv0vWvNxP
-	 yHVwD/N8errkGuSoTwLc/3K/7YJH55hi+t58q5+5m/IcS0igzlrROMTvB4Fiyeuu4N
-	 DqSl1tutf5yKUpCx9kpSmWHsBBlDRj4Lj+jdNHY4=
+	b=LDQKXOqQDcVCmTvd9V2hHGeRYhDn9X0eQvDLcKqL+U/dLGiYuIZAOx3JKDKOgwnrz
+	 zXdJjLt/plIBZXzveM/awLfJ0x446p0vvsi4BDWH9sVw1Fj/3nA3tTmIFgQ2LHvMEb
+	 DhXA9to4NzSwBVVfdaEiiT+suMUoaz8isi8W2BRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shanker Donthineni <sdonthineni@nvidia.com>,
-	Steven Price <steven.price@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.1 2839/2857] irqchip/gic-v3-its: Fix over allocation in itt_alloc_pool()
-Date: Wed, 18 Nov 2026 16:04:33 +0100
-Message-ID: <20261118150343.793203477@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 2802/2857] blk-mq: dont bring back flags of a completed request
+Date: Wed, 18 Nov 2026 16:03:56 +0100
+Message-ID: <20261118150342.483140105@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,37 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Price <steven.price@arm.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit bc88d44bd7e45b992cf8c2c2ffbc7bb3e24db4a7 upstream.
+[ Upstream commit 9531230ee1fcb8eca2c9cbb9bf02651cbf798842 ]
 
-itt_alloc_pool() calls its_alloc_pages_node() to allocate an individual
-page to add to the pool (for allocations <PAGE_SIZE). However the final
-argument of its_alloc_pages_node() is the page order not the number of
-pages. Currently it allocates two pages and leaks the second page.
-Fix it by passing 0 instead (1 << 0 = 1 page).
+The timeout handler sets and clears RQF_TIMED_OUT in a request it only
+holds a reference to, with a plain read-modify-write, while the
+completion clears flags in rq_flags the same way. If the two interleave,
+blk_mq_finish_request() runs twice with the flags back: the zone write
+plug reference is dropped twice and the scheduler's ->finish_request()
+is called again.
 
-Fixes: b08e2f42e86b ("irqchip/gic-v3-its: Share ITS tables with a non-trusted hypervisor")
-Reported-by: Shanker Donthineni <sdonthineni@nvidia.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/1f6e19c4-1fb9-43ab-a8a2-a465c9cff84b@arm.com
-Closes: https://lore.kernel.org/r/ed65312a-245c-4fa5-91ad-5d620cab7c6b%40nvidia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Change RQF_TIMED_OUT with cmpxchg, so the handler never writes back a
+flag that changed under it.
+
+Fixes: e5c0ca13659e ("blk-mq: release scheduler resource when request completes")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20261028164415.1262013-31-axboe@kernel.dk
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-mq.c      |  2 +-
+ block/blk-timeout.c |  3 ++-
+ block/blk.h         | 14 ++++++++++++++
+ 3 files changed, 17 insertions(+), 2 deletions(-)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -264,7 +264,7 @@ static void *itt_alloc_pool(int node, in
- 		if (addr)
- 			break;
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 155d602bb2afb..4229ec5899268 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -1559,7 +1559,7 @@ EXPORT_SYMBOL_GPL(blk_mq_queue_inflight);
  
--		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, 1);
-+		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, 0);
- 		if (!page)
- 			break;
+ static void blk_mq_rq_timed_out(struct request *req)
+ {
+-	req->rq_flags |= RQF_TIMED_OUT;
++	blk_rq_change_timed_out(req, true);
+ 	if (req->q->mq_ops->timeout) {
+ 		enum blk_eh_timer_return ret;
  
+diff --git a/block/blk-timeout.c b/block/blk-timeout.c
+index 1b8de0417fc1a..0590720e38c7f 100644
+--- a/block/blk-timeout.c
++++ b/block/blk-timeout.c
+@@ -137,7 +137,8 @@ void blk_add_timer(struct request *req)
+ 	if (!req->timeout)
+ 		req->timeout = q->rq_timeout;
+ 
+-	req->rq_flags &= ~RQF_TIMED_OUT;
++	if (req->rq_flags & RQF_TIMED_OUT)
++		blk_rq_change_timed_out(req, false);
+ 
+ 	expiry = jiffies + req->timeout;
+ 	WRITE_ONCE(req->deadline, expiry);
+diff --git a/block/blk.h b/block/blk.h
+index db6232c5be60f..bd5ad5515510e 100644
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -251,6 +251,20 @@ unsigned long blk_rq_timeout(unsigned long timeout);
+ void blk_add_timer(struct request *req);
+ const char *blk_status_to_str(blk_status_t status);
+ 
++/*
++ * The timeout handler changes RQF_TIMED_OUT in a request which it does not
++ * own: whoever completes it changes rq_flags at the same time, with plain
++ * loads and stores. Never write back a flag that has changed under us.
++ */
++static inline void blk_rq_change_timed_out(struct request *rq, bool set)
++{
++	req_flags_t old = READ_ONCE(rq->rq_flags), new;
++
++	do {
++		new = set ? old | RQF_TIMED_OUT : old & ~RQF_TIMED_OUT;
++	} while (!try_cmpxchg(&rq->rq_flags, &old, new));
++}
++
+ enum bio_merge_status {
+ 	BIO_MERGE_OK,
+ 	BIO_MERGE_NONE,
+-- 
+2.53.0
+
 
 
