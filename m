@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031337;
-	b=4NU8G2zlwXZ0LRIYOKjA8NZ8MLLGsci2vP5FBBDTSfI0LmLkBEeqq8+eFZS4CEyB2zag
-	 AVxTFeqr/9rebSZErRximG/hhl6HzmtpZ3ZwNlRO6npJUcO8cTtVtXE55eglnajw4OTC8
-	 8QZSVQqSVgoIzp7J93MKspWctbuzndZZAmQWGE24H2wUku14IH5OBBUtW2O509wSxsDUq
-	 AqcLcb58APXDHuwL2hgSM4Kc77LvdLqeWE7eRXe8QiBYmwWtGj5nfOaMO/L91tyh/AWCU
-	 Sy7ay9D5WTxqrljtvCR2IK+Wq1MeCQUrKl3jns698UOT6vHxRwOUV3FAW9pDvSBoPEg==
+	t=1795031340;
+	b=UWp5ni2yaQ4FeZChVFZH36IrKiRjmc/j0SDQRMMXthUXH/Bm2VN4udXyG5nmx2r1fiTi
+	 zkRdN/mnyfMjw/2MkAmPvAE5O49KZ9feKaMePVrzYgwn9FsgzriCMIvnJkMuGWx077UBl
+	 lobgpLF1Y0rqu5edFRT8GniPkS4masy2eIPGZBDKgNORx5+pF2oGfsY4I16MsnfDxuSkl
+	 aVPRVgOKUbChvXVFV2bpBZedQsIeLrRv4XCisG6BRgAz7GjLflACRaqRtWgJ3RehR/S9g
+	 TnZow8a/W7m3sLM6Iix/pKK0uj2nsuIHdyZUOj3BygLV8RDQIm3KvFA5YroBSZxMChg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031337;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031340;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QL/HsC3SZOF5mJIUZYNHk883qlLN25rIPdkfMjy244U=;
-	b=r++INkC/EUJ3IsA4xXkBI4YzF/O+NvuAtY27DrX2HmAMLSvTu4AHAJTThIVJgsLCG2pn
-	 YCgMV/Vhy+oqzml2fTmbawdz76NGz+5FW2Kvk6y4QEVwa4QlZGZEV4fvekpQmTvTj/14j
-	 gwdb+Zlpx4UJS23AXRW1EgouRBCPkrSOAz7ZJYyMG7bPX0dG7HZV62lmvJGdmWE8NUZmb
-	 mfnRtNqDihN86AA2kllFluLKCiF8v7F3eLKpr09RT0alVzWSZPr/SsN07DMHxWgTw5cQ3
-	 JTq6ETiK+qsBsnUniidFkmxl0XqUbfygBkvGtvvnFWId9QxGcJum1aTEj70W0EYMMTw==
+	bh=1TCY/D00cGOZCrDV8yfSxbn/Vt1AUY2kqOGHDSnIwJU=;
+	b=eZzaO7GMLYKwttwJLkmkIxeFt621fi/lReei8QVfqj5ZnKo9bwzApqjtNssp3mlZbkFz
+	 +ELyAo8CTz2J8+YehdXv/9WedYZuf4rj08t6d1S7DEU2iy0Vp67xpKYn7l/uTYGTu09tm
+	 u0DpvNk3tsfCNA0cCCIbpJiaV3jReFTakN30TZEPrcMyeCi5wKFlTppV01H+KYQmrqBgq
+	 2yu4/4IlWe8QTT3kv9OqFZNCaFXuLon1g2U4YGwIPM70aGCBTyDtx/EQhvNd4gbjnf2+g
+	 /niFPghmn1ienHDNCVMumZ9WMjDSzbSEQl50MXMGgMkdrhUh1Q+WGSZat9CFbhNZG9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="s/oHxIU+";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rcF73Gyw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D082A606A31C;
-	Wed, 18 Nov 2026 19:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF621606A320;
+	Wed, 18 Nov 2026 19:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s/oHxIU+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 585041F000C4;
-	Wed, 18 Nov 2026 19:48:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rcF73Gyw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C541F000C4;
+	Wed, 18 Nov 2026 19:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031337;
-	bh=QL/HsC3SZOF5mJIUZYNHk883qlLN25rIPdkfMjy244U=;
+	s=korg; t=1795031340;
+	bh=1TCY/D00cGOZCrDV8yfSxbn/Vt1AUY2kqOGHDSnIwJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s/oHxIU+Q24P6aquJwDaB9mjORoRsbCr+jynaBXqfrRvxx3OCLpTfAcHrdtQAWPA2
-	 Uk+XaGcanVk3TL4PE62NKoP5fRgqczP2BCZs+Zm5+XxWQEuR6rL1xmbY94VRzejGFz
-	 SzpUkuVNQ/QlCkxxyXc9AEwnr5PBV5xGUncsjCBg=
+	b=rcF73GywDvO7tVtKd4/2mUc8OyHpoDpiGwbhm1OJKi32J8GiK3NakvQPxOQP06nDm
+	 zVvU4RsQxEVtw8ADgvE3OIRRm6/F9WT7kjgOADKV6X2kpjjz54QLctBC6crb7AJQ5+
+	 ydQSNcEY++viC7A2KcrRpv9VOlfy6V70wtmOy1q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1024/1756] wifi: mac80211: mesh: use hlist_add_head_rcu()
-Date: Wed, 18 Nov 2026 15:52:31 +0100
-Message-ID: <20261118150050.862476975@linuxfoundation.org>
+Subject: [PATCH 6.12 1025/1756] wifi: mac80211: kill wake_txqs_tasklet on unregistration
+Date: Wed, 18 Nov 2026 15:52:32 +0100
+Message-ID: <20261118150050.897067689@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,34 +69,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 2ce8b78102e91c9d6536630cdef96491121c84d3 ]
+[ Upstream commit 8ea4f50c3426aaaf3f4c118ee2c2876326ca5db5 ]
 
-The mesh paths walk list used under RCU, so we must use
-hlist_add_head_rcu() to publish an entry. Fix one place
-that didn't do that.
+We never kill the wake_txqs_tasklet so it could be running
+while the hardware is being freed. Kill it, late enough to
+never be able to restart afterwards.
 
 Assisted-by: LLM
-Fixes: b4c3fbe63601 ("mac80211: Use linked list instead of rhashtable walk for mesh tables")
-Link: https://patch.msgid.link/20261005224950.e0db543145e1.Ieaf30d3546e8ff63ccf400f6fb26e027c218721f@changeid
+Fixes: 21a5d4c3a45c ("mac80211: add stop/start logic for software TXQs")
+Link: https://patch.msgid.link/20261005224950.3fdb8d0ff377.I851e79ac625c4926e211642ee7a7e458728b0ad3@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh_pathtbl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
-index 26a34458fb792..93e9699adcc2f 100644
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -712,7 +712,7 @@ struct mesh_path *mesh_path_add(struct ieee80211_sub_if_data *sdata,
- 						  &new_mpath->rhash,
- 						  mesh_rht_params);
- 	if (!mpath)
--		hlist_add_head(&new_mpath->walk_list, &tbl->walk_head);
-+		hlist_add_head_rcu(&new_mpath->walk_list, &tbl->walk_head);
- 	spin_unlock_bh(&tbl->walk_lock);
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index a65d49e4402ad..34a2241335693 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -1694,6 +1694,8 @@ void ieee80211_unregister_hw(struct ieee80211_hw *hw)
  
- 	if (mpath) {
+ 	cancel_work_sync(&local->restart_work);
+ 
++	tasklet_kill(&local->wake_txqs_tasklet);
++
+ 	ieee80211_clear_tx_pending(local);
+ 	rate_control_deinitialize(local);
+ 
 -- 
 2.53.0
 
