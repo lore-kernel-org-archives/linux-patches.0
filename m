@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029209;
-	b=R2CKjNB8yrQU9ZlV5/R+efvrgMHZwrP2XiKaUJxZbZXTqu5mBk3vmYNLQL5ulCTatZRy
-	 /T47pQc+o7Qv5/rdxH6Adi/mj09LJU7tFcusxmsr2VxLoMk9Kt/eXz3knqDIB01ePfaNQ
-	 O8lpp52CWZEWgDFhr9lB7eYUkYfULEfCuJ69BjGk0x9uCyslHWem2K+Odh0ZL9+aBS/iv
-	 SSkpiMjzzI3t7Noq7EjGkBWa3Cisi2KbolUJMZ6NyNkjM0ogEi2yT2SLkG9ceuHN2+qRg
-	 tmMsgR33y18NsnavOhowU+eSsItB15HWBN6g0AQeHo6s1dMaCnnwZN6g7HfnBPDfRNA==
+	t=1795029212;
+	b=or+rL6O6KMkwjmstnRqm+cuStfuti9tY17UmCXhpPShSKesmDkYtNqsa3WrNiImoHch7
+	 OwoNBddzpZw7jhQ2afl0OjnOXklgEjolDasuLgm7OZLeuPWW4j7SWTtyGR06DgONSsioI
+	 QeOaigJ1HTOIyiL+7+JlhGxSFL9OEu148yKw+cJS44VfdKorkeTxUlwmt8aHbVsQMOl4d
+	 8RyN7Uyc6V37LUVDJXBPJmGZFphFDam+NuKBBq6w2uh1iWqbACB5Irlio5TWXsqL9CQNL
+	 q6Wg+fxH9YNUhqO8fQhCVZjljFxN/QccGiQpqhLTbC6e9HLzid0AeGLP0HeIvG14noQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029209;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029212;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0YZ5SVH85grbUkSCrNtxF255w8XEsF+VPMKGep56nVc=;
-	b=pStikb0kctSQyqhjvalZfL0YvV4stf4lTj8bwwj9s6SLhD9qqBtyO4gYHAxJ+h228BZJ
-	 UvRxQQDY2VDqbhbOaRUVHE5HLvy3/GvVT2UEP53OD/LK+pfwVdto9jUsplweJ772tqOf6
-	 CKLGkssIeK02/OOijLYs1aEofugkAZAg4KF80JdOYUH2H+Lp0puj2rfkrSd8+a1uEazM8
-	 Dkg5GV/MQDIHB5qY3efRsf82lq6oVxq4ELl2MCTmlCAONfqOMKoUfSCQjLYOe4tDYVHp1
-	 Xw5PlYnlmtiPRBDitQCTPbRd+xJRLZUursGkvyKf1flmu5HsoKiO4eqShCG0qrhZtLA==
+	bh=BZ4Y0kdHRQ1G7/X6btteKRdSqIbe4k7Bkj24hr9MJY4=;
+	b=XwO+ldr90i5pC8bPhBczuhXCp5m/db9w3/+DslMna8vVVBZgtxUD/N62/44rPHGKbfre
+	 G7uH3itJG5igml8TV6kiw+RzRQNgLH7GxZDT6/NHtV9EsZJDwUTKtKYVf2m+89XT+9J5N
+	 YRBgaf71pmyK2UcjPxPboex7n4xD3EMXwOjxJrf7NC+GZDCMDJsVckfW5iIHKmBHIDODJ
+	 EnKfnihHuXaXGQ4IN85kGsipyOTC1dAUWFWsQJ8XPMp/WMcITAkveNzpm3hSH5ubhlpeW
+	 rvyPZWk/nW5PXr9cY/41Kxoz+ROxz0yR5791IM67P1rNxVxb0SHJ01sIACkLWdZZenA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TD8bwmMr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yygeHQas;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CE4606A31C;
-	Wed, 18 Nov 2026 19:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA522606A325;
+	Wed, 18 Nov 2026 19:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TD8bwmMr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9551F000C4;
-	Wed, 18 Nov 2026 19:13:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yygeHQas
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 069251F000C6;
+	Wed, 18 Nov 2026 19:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029209;
-	bh=0YZ5SVH85grbUkSCrNtxF255w8XEsF+VPMKGep56nVc=;
+	s=korg; t=1795029212;
+	bh=BZ4Y0kdHRQ1G7/X6btteKRdSqIbe4k7Bkj24hr9MJY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TD8bwmMr9VgtdrXX9xEcoX1dTlWUtgiIl3BEhKqi7vajXThLUtNx8r8KFReEOPMau
-	 etXew43TkR0K0L7LuvxqcNw1K8rlXEPH4EPvbeSnCNp7ezNxP0pLn21sbw1TlnPP9A
-	 QvZqYwT5rD/e8keXd5NPAcNKclMrdwb7sCGWzZ6Q=
+	b=yygeHQasGApP7IjYM+M9W5f+BwhN2xFZ0NrZCvOC0bYevtBZKZycu+ju3ynFSwety
+	 AFVmFc0PmU7r5xjWn9+en7ZgvcLGpTtQJZj4EY/TEbdKxJRCdMtyy47l9HzEniY27y
+	 hWwbbkqU5b7V8d+SVM7EvKNh7C/IxrCYXP7StudY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Dolan <paul.dolan.dev@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0218/1756] selftests/clone3: tighten CLONE_CLEAR_SIGHAND conflict test
-Date: Wed, 18 Nov 2026 15:39:05 +0100
-Message-ID: <20261118150016.993103249@linuxfoundation.org>
+Subject: [PATCH 6.12 0219/1756] wifi: mac80211: fix unauthorised port check for encap offload
+Date: Wed, 18 Nov 2026 15:39:06 +0100
+Message-ID: <20261118150017.028542418@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,48 +67,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Dolan <paul.dolan.dev@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit aeebb4884f0e8feb9929f013067488b7f2081f33 ]
+[ Upstream commit d59b9bf7df49367e01b06e82dd0f6e7ad3be493c ]
 
-The CLONE_CLEAR_SIGHAND test intends to verify that
-CLONE_CLEAR_SIGHAND and CLONE_SIGHAND are mutually exclusive. However,
-CLONE_SIGHAND without CLONE_VM is independently invalid, so the test
-input has another reason to fail with EINVAL.
+The check in ieee80211_tx_dequeue() reads frame_control, addr1 and
+addr2 out of the skb, but for encapsulation offload that's just a
+random part of the ethernet addresses, so dropping depends on bits
+in the destination address. This is obviously wrong.
 
-Add CLONE_VM so that CLONE_SIGHAND is otherwise valid, and require
-clone3() to fail with EINVAL. This ensures the test exercises the
-intended flag conflict and does not accept an unrelated failure.
+Refactor the check and short-circuit for ethernet format frames,
+it only needs the port-control flag check since those are locally
+generated and not forwarded frames.
 
-Fixes: de5287235631 ("tests: test CLONE_CLEAR_SIGHAND")
-Signed-off-by: Paul Dolan <paul.dolan.dev@gmail.com>
-Link: https://patch.msgid.link/20260902174939.15135-1-paul.dolan.dev@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 50ff477a8639 ("mac80211: add 802.11 encapsulation offloading support")
+Link: https://patch.msgid.link/20260802105818.dd5da579813d.I51ed0121154bb652bebc97bb0597b1fae9ac978f@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/clone3/clone3_clear_sighand.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/mac80211/tx.c | 48 +++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 34 insertions(+), 14 deletions(-)
 
-diff --git a/tools/testing/selftests/clone3/clone3_clear_sighand.c b/tools/testing/selftests/clone3/clone3_clear_sighand.c
-index ce04267868288..2be0221104456 100644
---- a/tools/testing/selftests/clone3/clone3_clear_sighand.c
-+++ b/tools/testing/selftests/clone3/clone3_clear_sighand.c
-@@ -50,12 +50,12 @@ static void test_clone3_clear_sighand(void)
- 	 * Check that CLONE_CLEAR_SIGHAND and CLONE_SIGHAND are mutually
- 	 * exclusive.
- 	 */
--	args.flags |= CLONE_CLEAR_SIGHAND | CLONE_SIGHAND;
-+	args.flags |= CLONE_VM | CLONE_CLEAR_SIGHAND | CLONE_SIGHAND;
- 	args.exit_signal = SIGCHLD;
- 	pid = sys_clone3(&args, sizeof(args));
--	if (pid > 0)
-+	if (pid != -1 || errno != EINVAL)
- 		ksft_exit_fail_msg(
--			"clone3(CLONE_CLEAR_SIGHAND | CLONE_SIGHAND) succeeded\n");
-+			"clone3(CLONE_CLEAR_SIGHAND | CLONE_SIGHAND) did not fail with EINVAL\n");
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index fff9ea0dba079..bacc732df0c6d 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3864,6 +3864,38 @@ static bool ieee80211_xmit_fast(struct ieee80211_sub_if_data *sdata,
+ 	return true;
+ }
  
- 	act.sa_handler = nop_handler;
- 	ret = sigemptyset(&act.sa_mask);
++static bool ieee80211_drop_unauth_port(struct ieee80211_tx_data *tx)
++{
++	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
++	struct ieee80211_hdr *hdr;
++
++	if (likely(test_sta_flag(tx->sta, WLAN_STA_AUTHORIZED)))
++		return false;
++
++	if (info->flags & IEEE80211_TX_CTL_INJECTED)
++		return false;
++
++	if (ieee80211_vif_is_mesh(&tx->sdata->vif) ||
++	    tx->sdata->vif.type == NL80211_IFTYPE_OCB)
++		return false;
++
++	/* no need to check forwarding here */
++	if (info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP)
++		return !(info->control.flags & IEEE80211_TX_CTRL_PORT_CTRL_PROTO);
++
++	hdr = (struct ieee80211_hdr *)tx->skb->data;
++
++	if (!ieee80211_is_data_present(hdr->frame_control) ||
++	    is_multicast_ether_addr(hdr->addr1))
++		return false;
++
++	if ((info->control.flags & IEEE80211_TX_CTRL_PORT_CTRL_PROTO) &&
++	    ieee80211_is_our_addr(tx->sdata, hdr->addr2, NULL))
++		return false;
++
++	return true;
++}
++
+ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 				     struct ieee80211_txq *txq)
+ {
+@@ -3930,20 +3962,8 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 
+ 	if (txq->sta) {
+ 		tx.sta = container_of(txq->sta, struct sta_info, sta);
+-		/*
+-		 * Drop unicast frames to unauthorised stations unless they are
+-		 * injected frames or EAPOL frames from the local station.
+-		 */
+-		if (unlikely(!(info->flags & IEEE80211_TX_CTL_INJECTED) &&
+-			     ieee80211_is_data_present(hdr->frame_control) &&
+-			     !ieee80211_vif_is_mesh(&tx.sdata->vif) &&
+-			     tx.sdata->vif.type != NL80211_IFTYPE_OCB &&
+-			     !is_multicast_ether_addr(hdr->addr1) &&
+-			     !test_sta_flag(tx.sta, WLAN_STA_AUTHORIZED) &&
+-			     (!(info->control.flags &
+-				IEEE80211_TX_CTRL_PORT_CTRL_PROTO) ||
+-			      !ieee80211_is_our_addr(tx.sdata, hdr->addr2,
+-						     NULL)))) {
++
++		if (unlikely(ieee80211_drop_unauth_port(&tx))) {
+ 			I802_DEBUG_INC(local->tx_handlers_drop_unauth_port);
+ 			ieee80211_free_txskb(&local->hw, skb);
+ 			goto begin;
 -- 
 2.53.0
 
