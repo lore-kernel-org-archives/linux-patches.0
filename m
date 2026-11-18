@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049913;
-	b=rwShF0oRXTWE8y93rjeK37w1jnBUYKxwfyYVBpd5UyfoXyMFuI+6QOPzD/8Hv5nSX2Oe
-	 hqJ+dxsMDHAZRKWqGnqXnf0vxi/TPUrRk8xbPd+PQ1higCyOtG5/7lmIPWuMOT5zWuks1
-	 SggVIgygSTAF2zQ51AEbabM+KI0Fu8EOfaPuKbDBnaEGScLPfcP2OEcPsEKXiB1KG/gkB
-	 gFTE2SfE1k2F2ADJ3iOkH1PVCID65pucfnJC4gUS4n2xBjMHKecA8ErSIlA2OlOLZPQ2u
-	 Wu/RR+ycIpT+UQHB9EoT9apuk0y+TWZYxwFeTpxfK/Wsf6ULRjYkz/MWLKABVFJot2g==
+	t=1795049915;
+	b=Kr8cagbqYUdFC3sPeLWfnqQAJljJbP4H1h9cnNDjYtjbdn4AqDsETMH0Q7McDzWXZ01F
+	 Fx1cLmeRnnZcr0U0YgkniHayLJDySwgY98cFSic0alMqH6nj6VhD+rExgOO7Qg24O/cLT
+	 9aTPVzYEnz2i9XkVdGh8n/fIJJaUqZnTBXqxIiN0bJtV3tBMhBUGW4iIQRZw3ymnS53Tw
+	 AyzwesjgRRoI6IMeWSCBQJ5cyZ490O/QCtj+uZJDyC1HO8UcxC4+nUditR6EdyBRVWQGb
+	 xbTdfGyy247H8ylXYrM2WYgDLsh+/UfClk/Z11eQ+Ay4EPzSheFJQRYsyA6fvkffwYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049913;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049915;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m2/Y6ijMHMP2H06KkZO/W9nwewCcJnAXkXAUUhoaJl4=;
-	b=k2gQ0vwKO8u0NmeEfIDmdOvEPJKlZQZd6m9Cf99Aj7FfU+vqOfUZG39c6mXkw8TEHgjZ
-	 0O4weJrYSL+lwDIk4Ttu0NZ9j/lemhLyx/Fn9w8xzJW42aifykyrNgCSq6v6tlcUTMfb0
-	 FEFEcVZQ98F1BylAMcqT+dkYjX8QEaFSs9HNwr4sTL9UbAGTykoOPhecz0y65XBJDGb51
-	 qVGV0R4SPyy9Z6mw0z6xaD60KSkjYpEz4PRYjWauZJuFhvV91DqmBAYCbNT9C9hDBQ8Xr
-	 aV2hReBm0U7ySO52VTReOLmB/qi0+4v0imktTwWjFAXczvP3dtYwAfEAIyumj15lAHQ==
+	bh=mFGiSWbyefXAZ5O1VflWYTNw4YXEsLkMkOTaXRKpqFY=;
+	b=btCJRu2tv56Fr7NoGIOk/7VzTFzKR2MVkbYl7EMbHoZ1Ak8uirObX2WGpoqwfgvzMP3V
+	 JGTLwhIV11sZLFsqCXIzcCR4q532YfFRTWkNvTOjW+dSVCziHbAE2KyqMKWkL2LtZlV04
+	 SrCJ4BJaEVZoED0Z35vL72LGeaPFrzWYlmX4gpTqm5986slA1T8kFIydW2iowmqhDR2UC
+	 jzsCnCNDIp3h1UlcAvls1YrfNRxyoao9GzUM+Ov9cdpwNnxZOTv2p4GF96g6xX49klgWx
+	 U58ej4VncEYsHpP2AMkg1NzjdiPvlvR2ANkHA4hbssDpereI4j9zIz798fVSAXJ1wKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tlq9m4QG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h3m9ZG8D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10342606A320;
-	Thu, 19 Nov 2026 00:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8513606A32F;
+	Thu, 19 Nov 2026 00:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tlq9m4QG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D941F000C4;
-	Thu, 19 Nov 2026 00:58:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h3m9ZG8D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3550D1F000C4;
+	Thu, 19 Nov 2026 00:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049912;
-	bh=m2/Y6ijMHMP2H06KkZO/W9nwewCcJnAXkXAUUhoaJl4=;
+	s=korg; t=1795049915;
+	bh=mFGiSWbyefXAZ5O1VflWYTNw4YXEsLkMkOTaXRKpqFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tlq9m4QGW8SZq9FLIiiqxfKhwC7VGO962OOK7AL9RTl/2WEuT8m9tQmrmmFOEe/jl
-	 gllh7c5QKwRBgjEcV2i0HIAaweTO5PmyqbNeCtLlPRJN7N0dNcrf2WRvOvQGLOLLbQ
-	 +Z+A1T2kSHzrAy/vPfWrfx2ECLkvDMHqce8gPfZQ=
+	b=h3m9ZG8DR/ddP/Rzn1mHM+JxlPs/VKk7CT2k/vh31D0r+KHAJruOd99WYQ63cqAXs
+	 7AyeQzXsF8/zzzOUB/ak8JsucVVgwhDKxWcuUa7DUb54aLphde0OgtmVMdBbfcPw0b
+	 gdsphhKWlzbO7c4wrQUsGebtPnVw3ti9oxPcqk/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2494/2857] Bluetooth: 6LoWPAN: Use RCU-safe device list removal
-Date: Wed, 18 Nov 2026 15:58:48 +0100
-Message-ID: <20261118150331.359770698@linuxfoundation.org>
+Subject: [PATCH 6.1 2521/2857] irqchip/gic-v3-its: Dont free a vPE table shared with another ITS
+Date: Wed, 18 Nov 2026 15:59:15 +0100
+Message-ID: <20261118150332.312504277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,137 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit 8c27d7d06e21ba9455ddae4e14f364c57f095cba ]
+[ Upstream commit 32e056cc1d1582951f981113ca8b98914f29c32a ]
 
-RCU readers of bt_6lowpan_devices must be able to follow an adapter's
-forward link until their read-side critical section ends. The entries
-are published with list_add_rcu(), but device_event() removes an entry
-on NETDEV_UNREGISTER with list_del(), poisoning that link.
+On GICv4.1, its_alloc_tables() copies a sibling's vPE table baser
+rather than allocating one, but its_free_tables() frees it like the
+rest. A probe failure on the copying ITS then frees pages the enabled
+sibling still points GITS_BASER2 at, and the kernel comes up running
+on that sibling.
 
-When an adapter is being unregistered and 6LoWPAN is enabled, a
-6lowpan_control debugfs write with an existing LE L2CAP connection can
-enter lookup_peer() after unregister's first synchronize_net(). If the
-connection has no peer on that adapter, the reader must advance to the
-next list entry. Neither RTNL nor devices_lock excludes this RCU reader.
+Mark a shared table so its_free_tables() skips it.
 
-The last peer's chan_close_cb() schedules delete_netdev(), which reaches
-unregister_netdevice_many_notify() through unregister_dev() and
-lowpan_unregister_netdev(). The following ordering is possible:
-
-  Unregister worker                 Control writer
-  -----------------                 --------------
-  synchronize_net() returns
-                                    lowpan_control_write()
-                                    lookup_peer(): rcu_read_lock()
-                                    reach adapter; no matching peer
-  device_event(): devices_lock
-  list_del(&entry->list)
-  spin_unlock(&devices_lock)
-                                    follow poisoned next link
-                                    read invalid adapter address
-  post-notifier synchronize_net()
-    waits for the reader
-
-This invalid pointer access can fault in lookup_peer(). The first grace
-period drains existing readers but permits new ones to start, and the
-later grace period cannot prevent the intervening poisoned-link access.
-
-Use list_del_rcu() under the existing devices_lock to preserve the
-forward link for readers that already reached the adapter. The existing
-post-notifier synchronize_net() waits for those readers before netdevice
-teardown frees the private storage containing lowpan_btle_dev.
-
-KASAN report as below:
-
-    [...]
-    [   45.867526] Oops: general protection fault, probably for non-canonical address 0xfbd59c0000000023: 0000 [#1] SMP KASAN NOPTI
-    [   45.869489] KASAN: maybe wild-memory-access in range [0xdead000000000118-0xdead00000000011f]
-    [   45.870981] CPU: 1 UID: 0 PID: 646 Comm: sh Not tainted 7.2.0-rc6-pmb-bt-functional-v1+ #4 PREEMPT(lazy)
-    [   45.872609] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    [   45.874380] RIP: 0010:lookup_peer+0x1ba/0x320
-    [   45.875067] Code: 48 89 d9 ba 04 00 00 00 4c 89 fe bf a0 06 00 00 e8 2b e8 ad fb e9 56 ff ff ff e8 01 1e c3 fb 49 8d 7f 18 48 89 f8 48 c1 e8 03 <80> 3c 28 00 0f 85 4a 01 00 00 4d 8b 47 18 4c 89 f1 ba 04 00 00 00
-    [   45.878206] RSP: 0018:ffff888114d67b90 EFLAGS: 00010212
-    [   45.879106] RAX: 1bd5a00000000023 RBX: 0000000000000000 RCX: ffffffff85c1d19f
-    [   45.880334] RDX: ffff88810dc35700 RSI: 0000000000000000 RDI: dead000000000118
-    [   45.881455] RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000001
-    [   45.882546] R10: ffffffff893d3057 R11: ffff88810dc35700 R12: ffff88810a690000
-    [   45.883839] R13: ffff888115451038 R14: ffff88810a690000 R15: dead000000000100
-    [   45.885186] FS:  00007fa889bac780(0000) GS:ffff8881fd852000(0000) knlGS:0000000000000000
-    [   45.886539] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    [   45.887527] CR2: 00007ffe304f2f80 CR3: 0000000104f64005 CR4: 0000000000770ef0
-    [   45.888687] PKRU: 55555554
-    [   45.889183] Call Trace:
-    [   45.889666]  <TASK>
-    [   45.890061]  lowpan_control_write+0x445/0x9e0
-    [   45.890854]  ? __pfx_lowpan_control_write+0x10/0x10
-    [   45.891738]  ? srso_alias_return_thunk+0x5/0xfbef5
-    [   45.892603]  ? srso_alias_return_thunk+0x5/0xfbef5
-    [   45.893383]  ? __debugfs_file_get+0x1bd/0x7f0
-    [   45.894057]  ? srso_alias_return_thunk+0x5/0xfbef5
-    [   45.894902]  ? lock_acquire+0x17b/0x2f0
-    [   45.895593]  ? ksys_write+0x111/0x200
-    [   45.896290]  full_proxy_write+0x11f/0x180
-    [   45.896991]  vfs_write+0x25a/0x1010
-    [   45.897642]  ? __pfx_full_proxy_write+0x10/0x10
-    [   45.898440]  ? __pfx_vfs_write+0x10/0x10
-    [   45.899178]  ? lock_release+0x11f/0x280
-    [   45.899855]  ksys_write+0x111/0x200
-    [   45.900435]  ? __pfx_ksys_write+0x10/0x10
-    [   45.901074]  ? irqentry_exit+0xbe/0x820
-    [   45.901722]  ? srso_alias_return_thunk+0x5/0xfbef5
-    [   45.902489]  do_syscall_64+0x115/0x6a0
-    [   45.903064]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    [   45.903813] RIP: 0033:0x7fa889c3e687
-    [   45.904359] Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
-    [   45.906981] RSP: 002b:00007ffd7651b960 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
-    [   45.908070] RAX: ffffffffffffffda RBX: 00007fa889bac780 RCX: 00007fa889c3e687
-    [   45.909102] RDX: 000000000000001c RSI: 00005570f25e8d10 RDI: 0000000000000001
-    [   45.910133] RBP: 00005570f25e8d10 R08: 0000000000000000 R09: 0000000000000000
-    [   45.911162] R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000001
-    [   45.912190] R13: 000000000000001c R14: 0000000000000000 R15: 00005570f25e8a78
-    [   45.913208]  </TASK>
-    [   45.913530] Modules linked in:
-    [   45.914022] ---[ end trace 0000000000000000 ]---
-    [   45.914709] RIP: 0010:lookup_peer+0x1ba/0x320
-    [   45.915436] Code: 48 89 d9 ba 04 00 00 00 4c 89 fe bf a0 06 00 00 e8 2b e8 ad fb e9 56 ff ff ff e8 01 1e c3 fb 49 8d 7f 18 48 89 f8 48 c1 e8 03 <80> 3c 28 00 0f 85 4a 01 00 00 4d 8b 47 18 4c 89 f1 ba 04 00 00 00
-    [   45.919191] RSP: 0018:ffff888114d67b90 EFLAGS: 00010212
-    [   45.920046] RAX: 1bd5a00000000023 RBX: 0000000000000000 RCX: ffffffff85c1d19f
-    [   45.921129] RDX: ffff88810dc35700 RSI: 0000000000000000 RDI: dead000000000118
-    [   45.922553] RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000001
-    [   45.923653] R10: ffffffff893d3057 R11: ffff88810dc35700 R12: ffff88810a690000
-    [   45.925119] R13: ffff888115451038 R14: ffff88810a690000 R15: dead000000000100
-    [   45.926180] FS:  00007fa889bac780(0000) GS:ffff8881fd852000(0000) knlGS:0000000000000000
-    [   45.927817] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    [   45.928726] CR2: 00007ffe304f2f80 CR3: 0000000104f64005 CR4: 0000000000770ef0
-    [   45.930069] PKRU: 55555554
-    [   45.930456] Kernel panic - not syncing: Fatal exception
-    [   45.931542] Kernel Offset: disabled
-    [   45.932040] Rebooting in 1 seconds..
-
-Fixes: 90305829635d ("Bluetooth: 6lowpan: Converting rwlocks to use RCU")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 5e5168461c22c ("irqchip/gic-v4.1: VPE table (aka GICR_VPROPBASER) allocation")
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20260925085000.753400-2-fuad.tabba@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v3-its.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index ff93a81940bb0..8da455a8136ce 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -1262,7 +1262,7 @@ static int device_event(struct notifier_block *unused,
- 			if (entry->netdev == netdev) {
- 				BT_DBG("Unregistered netdev %s %p",
- 				       netdev->name, netdev);
--				list_del(&entry->list);
-+				list_del_rcu(&entry->list);
- 				break;
- 			}
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index 1c2f09778bfbf..0b8ad8bb59359 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -85,6 +85,8 @@ struct its_baser {
+ 	u64		val;
+ 	u32		order;
+ 	u32		psz;
++	/* Inherited from a sibling ITS, not freed here */
++	bool		shared;
+ };
+ 
+ struct its_device;
+@@ -2615,7 +2617,8 @@ static void its_free_tables(struct its_node *its)
+ 
+ 	for (i = 0; i < GITS_BASER_NR_REGS; i++) {
+ 		if (its->tables[i].base) {
+-			its_free_pages(its->tables[i].base, its->tables[i].order);
++			if (!its->tables[i].shared)
++				its_free_pages(its->tables[i].base, its->tables[i].order);
+ 			its->tables[i].base = NULL;
  		}
+ 	}
+@@ -2709,6 +2712,7 @@ static int its_alloc_tables(struct its_node *its)
+ 				WARN_ON(i != 2);
+ 				if ((sibling = find_sibling_its(its))) {
+ 					*baser = sibling->tables[2];
++					baser->shared = true;
+ 					its_write_baser(its, baser, baser->val);
+ 					continue;
+ 				}
 -- 
 2.53.0
 
