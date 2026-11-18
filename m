@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034769;
-	b=mWihcXfGJiLeBTHRofl8LneOD7PcNUZVchL9X4dnDtcepza5Mkjkw/q3Lpz7iMy1pbTz
-	 0IG78yNuVQXZtwqI4MiCbEjXQZJM5aImLlfhghJ8fyFBtwYcxqdZssxOU1UYX1A+3yXWH
-	 hLyYdSzt+YMFFbn/iN2Sf3Xmh3Kj+G1A+VB8VlGRRU3CWnU9hx3Zxogcs7uXHHrsK6ORJ
-	 xgxGNr9O0+KhGHrNcyNw0Z1dao7fKSS6epA/FcR17JtSq65WzLkfDkE6UH9jj2P7QHE2V
-	 BE+eDU52boYFSwdfuV/HOMbAC/YRwMRK1Um4YGLnRd5VzWkQrVCMGCu6fVMxBA4Lwww==
+	t=1795034771;
+	b=aHwUzMeytPiF+a8SFdVsWn21R1IfBHjxQ/8+ho1bc6lvlqU6F9kDuTQPDfqky2aKsi2m
+	 wfGwC+TpimN9gF2Zur7Ya9cTX/MMBcmfu7YPJMkfNGsJNtYrZZf+UIfmE42tttTkfzEfD
+	 kiV+g9OAbckt0xlZqnnU+v/1F7aBpzpA8xzCHUPTisf86nZhODNgos3vhNVf62Gpq2kqF
+	 0ylKbfQPzf9c8Q62k52uyy0librUL9hcVoN0cS4rghUMPhZkKDyaajQMqpW1KJ6+l1L6C
+	 /0JAG9sCX44g0LnVyXvoxwOchH4qVfZj61SIJ2R6+RzVnJcC8YzaL4gzKbFVvF5H51w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034769;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034771;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CBxNFfWKylefEZQ1faXDXw0iY2224WU7x0oWad0KXNY=;
-	b=vXyJNjBEfLucxonmQam70KTCHP2ZDHXay3OT98jsYmp8IUEZ3tAfU8HIkvzKE4DMw6Qz
-	 opqRwUo4+OLGfEodF0Wq9BVe3pfH/TiDpyu2/OLpW/H6LEkkC/vhmCoQ2DNMXK3523/C6
-	 79LSdkUEreodgBGFK8WwK/nLsdtZHn24YsGmiHzYSEwm/enNnAZtV7ApThGSLnUa4q0KU
-	 tTj5YkPitTPTJ7aVyycOCfOIfXrH9eoxdlOgVqelcMYGaEvj+8KZ5F5QzEFamq4W9ApeO
-	 SRz8mNggPeSJLsiBx0UfDK9Rss3xKYKbYHnjWfUwbIXS3Mynpy8X1nDdk5yuU6peD3A==
+	bh=NmQNS48h9RW9j+zrErFDD/tHnHXVUDNvTQFe9Fyo858=;
+	b=Q4fGKdK9Y4o3QgPmiMTJGpLG4r1CgzNrSN8kQRyypgkEgFrb8dSw5aU2TpHdIAehQdCt
+	 tnFar9aUbFsrAfvmI/Y0gjPfqzaluqMgsg0DDr2aQYcpP1gEKxiuQmjRvOYy+dw00KAXl
+	 oaxh2DDrES0wx8q4F+ol7I4fHQLIDh8bMrYbYuZptGpWOR4vyMjjsMHAJPTvubPW0pDmS
+	 SlOkAV2a7pyeVboT6Iwb170if2P84s2v3UiQ9sycCKPwW1P6Q5U+iOM7ERJL/djvkudQ8
+	 SbIM3IuNNv7XH2WjGjMi/RU6q23RsK97U2wrQ4uoMaSZ76xzyDEEsJfXDAcuf9TnnEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JiqX2K7P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rlk5V2MJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B572606A330;
-	Wed, 18 Nov 2026 20:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D824C606A31C;
+	Wed, 18 Nov 2026 20:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JiqX2K7P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D82A1F000C4;
-	Wed, 18 Nov 2026 20:46:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rlk5V2MJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE701F000C4;
+	Wed, 18 Nov 2026 20:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034769;
-	bh=CBxNFfWKylefEZQ1faXDXw0iY2224WU7x0oWad0KXNY=;
+	s=korg; t=1795034771;
+	bh=NmQNS48h9RW9j+zrErFDD/tHnHXVUDNvTQFe9Fyo858=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JiqX2K7POvV4I6YEtdq8qzHixlWDrK2S8mzvbMTBxWEVS9SvLcMqmlQ7WbfcOm0uR
-	 /gHGvGfl9GIubbBuTfDZsQ9Oyh5QJ3QnlYuyfvO/YwV0c+PAGnMq2qrtvSXZmw8kh0
-	 4xMb7/yw5+tm0dVarvMQTfe6NPzwwqACq1qXfcYc=
+	b=Rlk5V2MJKEL7zuTT2Tg4hL1Ut7Yl8oygvXmyiQ1MIQQssZzY1H8F+JHQoAa4aLDYL
+	 t98YV/rQn2flau1n2Kg/vYZN6xQi+3EfHquzhWICTCUAFuzQMOlkBrU9d+lik/5cc0
+	 hJCX4/feD67dUlHqZZ/9mdj88EcoEbpTR3P9RECA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunpeng Tian <shionthanatos@gmail.com>,
-	Mingda Zhang <npczmd@qq.com>,
-	Gongming Wang <gmwgg05@gmail.com>,
-	Qinrun Dai <jupmouse@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Vishnu Dasa <vishnu.dasa@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0437/3318] smb: client: reject SetEA requests that do not fit the request buffer
-Date: Wed, 18 Nov 2026 15:17:39 +0100
-Message-ID: <20261118150329.788073902@linuxfoundation.org>
+Subject: [PATCH 6.6 0438/3318] vsock/vmci: validate packet source for connected sockets
+Date: Wed, 18 Nov 2026 15:17:40 +0100
+Message-ID: <20261118150329.824523909@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,112 +72,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunpeng Tian <shionthanatos@gmail.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 4aa2c106aef4bf3dfd97c30842db0767b26e8428 ]
+[ Upstream commit ad9a7da3fa39c2d616ec0dd3cf6e30531d032fe7 ]
 
-CIFSSMBSetEA() copies the caller's extended attribute value into the
-SMB request buffer without checking that it fits.  The requirement is
-stated in the source but was never implemented:
+vmci_transport_recv_stream_cb() looks up sockets first by the full source
+and destination tuple, then by destination only in the bound table. The
+fallback can select a non-listening socket without checking whether the
+packet came from its stored peer.
 
-	/*BB add length check to see if it would fit in
-	     negotiated SMB buffer size BB */
-	/* if (ea_value_len > buffer_size - 512 (enough for header)) */
-	if (ea_value_len)
-		memcpy(parm_data->list.name + name_len + 1,
-		       ea_value, ea_value_len);
+This was reproduced with two VMCI contexts. A RST from the context not
+stored in a TCP_SYN_SENT socket reset that socket after it was selected by
+the destination-only lookup.
 
-The only bound applied on the way in is in cifs_xattr_set():
+VMCI can process notification packets in bottom-half context when the
+socket is not owned by user context, or defer packets to a workqueue. Use
+vsock_check_source() after taking the socket lock in the bottom-half path,
+and recheck after lock_sock() in the workqueue path. Listening sockets
+continue to accept packets from any source.
 
-	#define MAX_EA_VALUE_SIZE CIFSMaxBufSize
-	...
-	if (size > MAX_EA_VALUE_SIZE)
+Reply with a RST addressed from the received packet before dropping a
+source that fails validation. This preserves the existing reset behavior
+for bound non-listening and concurrently closed sockets without directing
+the reset to a connected socket's stored peer.
 
-CIFSMaxBufSize is the full payload capacity of the buffer, so a value
-of exactly that size leaves no room for the SMB header, the TRANS2
-parameter block, the fealist header and the EA name that are written
-ahead of it in the same object.
-
-SendReceive() already enforces the correct limit on this very length:
-
-	if (in_len > CIFSMaxBufSize + MAX_CIFS_HDR_SIZE)
-
-but it is called after the copy has taken place.  An unprivileged
-setxattr(2) on an SMB1 mount with a 250-byte name and a 16384-byte
-value writes 16384 bytes starting 345 bytes into a 16588-byte
-cifs_request object, ending 141 bytes past it:
-
-  BUG: KASAN: slab-out-of-bounds in CIFSSMBSetEA+0xabc/0xde0
-  Write of size 16384 at addr ffff888003aa0159 by task init/68
-   __asan_memcpy+0x3c/0x60
-   CIFSSMBSetEA+0xabc/0xde0
-   cifs_xattr_set+0xd3a/0xff0
-   __vfs_setxattr+0x13e/0x1a0
-  The buggy address is located 345 bytes inside of
-   allocated 16588-byte region
-
-Apply SendReceive()'s limit to the assembled request before the copy
-rather than after it, and widen the byte counters so the sum cannot
-wrap before it is tested.
-
-byte_count is also tested against U16_MAX, because it is stored in the
-16-bit pSMB->ByteCount.  That becomes reachable when CIFSMaxBufSize is
-raised at module load, where it may be set as high as 1024*127: with a
-5-byte EA name and a 65521-byte value, count is exactly U16_MAX while
-byte_count is 65556, and cpu_to_le16() would truncate it to 20 and
-transmit a frame whose ByteCount does not match its length.  Testing
-byte_count covers count as well, since byte_count is the larger of the
-two and count's only 16-bit consumer is written after this point.
-
-check_add_overflow() is evaluated first so that total_len is assigned
-before it is reported.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Yunpeng Tian <shionthanatos@gmail.com>
-Reported-by: Mingda Zhang <npczmd@qq.com>
-Reported-by: Gongming Wang <gmwgg05@gmail.com>
-Reported-by: Qinrun Dai <jupmouse@gmail.com>
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/netdev/20260814121255.6B5001F000E9@smtp.kernel.org/
 Cc: stable@vger.kernel.org
-Signed-off-by: Yunpeng Tian <shionthanatos@gmail.com>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: Declared in_len and set it from be32_to_cpu(pSMB->hdr.smb_buf_length) + 4, since smb_init() here doesn't return the header length that upstream's in_len = rc relies on. ]
+Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Reviewed-by: Vishnu Dasa <vishnu.dasa@broadcom.com>
+Link: https://patch.msgid.link/20260826003929.966160-3-4ncienth@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ net/vmw_vsock/vmci_transport.c | 34 ++++++++++++++++++++++++++++------
+ 1 file changed, 28 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index bc5de4d3d3462..e3dffaeecbc2b 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -5896,8 +5896,10 @@ CIFSSMBSetEA(const unsigned int xid, struct cifs_tcon *tcon,
- 	int name_len;
- 	int rc = 0;
- 	int bytes_returned = 0;
--	__u16 params, param_offset, byte_count, offset, count;
-+	__u16 params, param_offset;
-+	unsigned int byte_count, offset, count;
- 	int remap = cifs_remap(cifs_sb);
-+	unsigned int in_len, total_len;
+diff --git a/net/vmw_vsock/vmci_transport.c b/net/vmw_vsock/vmci_transport.c
+index 4f02a6f269cdb..d1bc2ec3d21fa 100644
+--- a/net/vmw_vsock/vmci_transport.c
++++ b/net/vmw_vsock/vmci_transport.c
+@@ -676,11 +676,13 @@ static int vmci_transport_recv_stream_cb(void *data, struct vmci_datagram *dg)
+ 	struct vmci_transport_packet *pkt;
+ 	struct vsock_sock *vsk;
+ 	bool bh_process_pkt;
++	bool drop_pkt;
+ 	int err;
  
- 	cifs_dbg(FYI, "In SetEA\n");
- SetEARetry:
-@@ -5948,6 +5950,14 @@ CIFSSMBSetEA(const unsigned int xid, struct cifs_tcon *tcon,
- 	pSMB->Reserved3 = 0;
- 	pSMB->SubCommand = cpu_to_le16(TRANS2_SET_PATH_INFORMATION);
- 	byte_count = 3 /* pad */  + params + count;
-+	in_len = be32_to_cpu(pSMB->hdr.smb_buf_length) + 4;
-+	if (check_add_overflow(in_len, byte_count, &total_len) ||
-+	    byte_count > U16_MAX ||
-+	    total_len > CIFSMaxBufSize + MAX_CIFS_HDR_SIZE) {
-+		cifs_dbg(VFS, "EA request too large: %u bytes\n", total_len);
-+		cifs_buf_release(pSMB);
-+		return -E2BIG;
+ 	sk = NULL;
+ 	err = VMCI_SUCCESS;
+ 	bh_process_pkt = false;
++	drop_pkt = false;
+ 
+ 	/* Ignore incoming packets from contexts without sockets, or resources
+ 	 * that aren't vsock implementations.
+@@ -757,17 +759,29 @@ static int vmci_transport_recv_stream_cb(void *data, struct vmci_datagram *dg)
+ 	bh_lock_sock(sk);
+ 
+ 	if (!sock_owned_by_user(sk)) {
+-		/* The local context ID may be out of date, update it. */
+-		vsk->local_addr.svm_cid = dst.svm_cid;
++		if (sk->sk_state != TCP_LISTEN &&
++		    !vsock_check_source(vsk, &vmci_transport, &src)) {
++			drop_pkt = true;
++			err = VMCI_ERROR_NO_ACCESS;
++		} else {
++			/* The local context ID may be out of date, update it. */
++			vsk->local_addr.svm_cid = dst.svm_cid;
+ 
+-		if (sk->sk_state == TCP_ESTABLISHED)
+-			vmci_trans(vsk)->notify_ops->handle_notify_pkt(
+-					sk, pkt, true, &dst, &src,
+-					&bh_process_pkt);
++			if (sk->sk_state == TCP_ESTABLISHED)
++				vmci_trans(vsk)->notify_ops->handle_notify_pkt(sk, pkt, true,
++									       &dst, &src,
++									       &bh_process_pkt);
++		}
+ 	}
+ 
+ 	bh_unlock_sock(sk);
+ 
++	if (drop_pkt) {
++		if (vmci_transport_send_reset_bh(&dst, &src, pkt) < 0)
++			pr_err("unable to send reset\n");
++		goto out;
 +	}
- 	pSMB->DataCount = cpu_to_le16(count);
- 	parm_data->list_len = cpu_to_le32(count);
- 	parm_data->list.EA_flags = 0;
++
+ 	if (!bh_process_pkt) {
+ 		struct vmci_transport_recv_pkt_info *recv_pkt_info;
+ 
+@@ -892,6 +906,7 @@ static void vmci_transport_recv_pkt_work(struct work_struct *work)
+ {
+ 	struct vmci_transport_recv_pkt_info *recv_pkt_info;
+ 	struct vmci_transport_packet *pkt;
++	struct sockaddr_vm src;
+ 	struct sock *sk;
+ 
+ 	recv_pkt_info =
+@@ -900,6 +915,12 @@ static void vmci_transport_recv_pkt_work(struct work_struct *work)
+ 	pkt = &recv_pkt_info->pkt;
+ 
+ 	lock_sock(sk);
++	vsock_addr_init(&src, pkt->dg.src.context, pkt->src_port);
++	if (sk->sk_state != TCP_LISTEN &&
++	    !vsock_check_source(vsock_sk(sk), &vmci_transport, &src)) {
++		vmci_transport_reply_reset(pkt);
++		goto out;
++	}
+ 
+ 	/* The local context ID may be out of date. */
+ 	vsock_sk(sk)->local_addr.svm_cid = pkt->dg.dst.context;
+@@ -929,6 +950,7 @@ static void vmci_transport_recv_pkt_work(struct work_struct *work)
+ 		break;
+ 	}
+ 
++out:
+ 	release_sock(sk);
+ 	kfree(recv_pkt_info);
+ 	/* Release reference obtained in the stream callback when we fetched
 -- 
 2.53.0
 
