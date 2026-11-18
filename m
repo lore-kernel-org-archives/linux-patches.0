@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060340;
-	b=14eTnq4pSt7tGHipFDl+GHux7M+7gZ1nQb6oESXrRwlzjZgWosfJPmArKL+G6/HSXvgC
-	 6539bLx3QGO7nVnb9DVEZPI2RHB4G9W9IpCZZu18SYo3Ikws7siMjdWEdfrTnbHMwAgFb
-	 NiLo28RDy5rl5tUijpSYp7pfaLy3Hlka71O+Nm6sdCb3kvNue6ITzY/MQG0iKfzXS/SXW
-	 b1WYk517y1UppGyPpio519/hutIpaaLGIFoZq3Pivd8fhNnH8vsESR2PW0DkmyU7EtqTl
-	 FN5Vv3HY/zRPl5jxItcJSHYd64zx9MjMtcsyZpFOvrLZ+TqjEviEkNmwJZDK7cCOQqA==
+	t=1795060343;
+	b=SU6FKQjtCH55LM/LuEDeAdTNYJT0E9Punh3xMhxOpde/UX6U2RLinS4N+7+XZh/rS9+L
+	 5mAV/UaROw2VFxy9owsf0OGxDHM6xu9fii2x/lC2/nnfYBdGMeUrV+mrcNyOnAaOIiSoc
+	 0KNKP1dveyXdZb3XzDKFkDH6qV+EQhcnzXAzoqIgzRKcdTK95S5HN/gEueOF1UbuEiO+z
+	 PvamxFVwyg/g1ySrUlVghrGIddPErcXZb8r9HEFUFiXLskcYrNpsQ5mrhEi8akn6Kds6+
+	 eSmlgM9kqeaamUALu1CCTi8a3PnOwP2Kba7sjiBDnpQyjKYPI2PvnwLKp2dJlx47q0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060340;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060343;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SRPiJOJ2SRVg3GvogmUryt1zLM0g9JGCpSaMRamKnH4=;
-	b=Ve9fg8T8wv4sXeBDwUW5aAvlUrvMeJEZb1KSzq300hgTlSsRpWApz4ItlfCA01GEybza
-	 n0mJR8OqY2tI1oB02GZgtkCTtDczu9k17PHhdQSOg9wwfqasCg2pmIhHAawflOdhIzjzn
-	 XVmlsPLtBIHt5YDhAr9h7Y784N64zLOpL72tacgsQ0jciSlo7GZQwfc8D3mBFb9a4QG4Q
-	 Fr+v9dGM3GweKnnuLfmIcDuo5On5sZpPfkP5iyFl2EutciPNp7+oEz4Gb6tm7eSNtkZiA
-	 iQ5HurSn0qbBrFqwAVV9yNhAO/IbGp2L18k6c82kSH+gZmg6GjH0mpY0Kbn1UsrGPhw==
+	bh=2cXlznvwnfQZ1IX5ls/WOd6jTHiHWjoVeQCL2Th+3gM=;
+	b=az/v/MrjD75NER6xhgkp70VKhWY3Suz18M/Z/9McuOiiqtLTzPC/XelhloX28Eh9NTLV
+	 F58tXCXCdS29lDOQPVjCyDDacLggwer3PKBClzspySKfqVaVyrb91vZ3WH5XgUj1IxN/G
+	 jUYOS+7q57vduMsz3deWOJEy+4dMJ4v0Ao5RFxlDANJ+jjPY+z5vxVpcxt9cfiJhUV5tX
+	 kiuvG4UVMFSLmm3/L1RX18YfNLe6zvlA6dDWOzLxrWByq9Ft57X7cgXSSoFcUYxXMgeG+
+	 Axxd3e27HN+0eoO0fI6D4np+6++/bQ3a9QHdji2ptZzZEl5NwN0vSDU+YBS+XdUnLEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WqTf2xk2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IsnhOyms;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2BF606A325;
-	Thu, 19 Nov 2026 03:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F96D606A320;
+	Thu, 19 Nov 2026 03:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WqTf2xk2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAD91F000C5;
-	Thu, 19 Nov 2026 03:52:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IsnhOyms
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F791F000C5;
+	Thu, 19 Nov 2026 03:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060340;
-	bh=SRPiJOJ2SRVg3GvogmUryt1zLM0g9JGCpSaMRamKnH4=;
+	s=korg; t=1795060343;
+	bh=2cXlznvwnfQZ1IX5ls/WOd6jTHiHWjoVeQCL2Th+3gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WqTf2xk25bWJpeAstRygMaujnLRHK4XgpYFwEecaTPM+k67JSpC/oBp+8x6OdfU4c
-	 r0y4IkFG8JYOequxfhmDlKpqzauaO6BNxU60JBNOgkn6Der7Sf3WnJG9aGnvHau/UP
-	 JvFbW8XIlI46aEWo7GdychvC6azlKDDpKe3eBLHU=
+	b=IsnhOymsgq8hay562YxNAACeCGJIOnImEgAZXnd5U3TiOYZqafiG1DNlfHVhsD4vy
+	 O+FUKG0StK7rz3A1Rl5efuCcBNEMwpWHS5Ly4OEIVC1xEPr6FSF1tqa1WbTaHSxfvp
+	 2zwlhqjbvDZ/U5GvRyztzpJGwnIZDeYT4RI/nRrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Axel Lin <axel.lin@ingics.com>,
+	Mark Brown <broonie@sirena.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1165/1848] memory: brcmstb_dpfe: validate firmware section sizes
-Date: Wed, 18 Nov 2026 15:53:23 +0100
-Message-ID: <20261118150008.437470764@linuxfoundation.org>
+Subject: [PATCH 5.10 1166/1848] regulator: mp886x: Convert to use regulator_set_ramp_delay_regmap
+Date: Wed, 18 Nov 2026 15:53:24 +0100
+Message-ID: <20261118150008.471014980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,66 +68,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Axel Lin <axel.lin@ingics.com>
 
-[ Upstream commit e61c1a1103e2617e8f86288368911a8591e35c1e ]
+[ Upstream commit e1e8d55bb90c9a07aa66a0c9fa17bd5a67d2689c ]
 
-The firmware header is read before the image has been shown to contain a
-complete header. In addition, the final size check adds two
-firmware-provided u32 section lengths before comparing the result with
-fw->size, so the addition can wrap.
+Use regulator_set_ramp_delay_regmap instead of open-coded.
 
-Reject images shorter than the fixed header and checksum before reading
-the header. Then derive the available payload length with subtraction and
-require the two declared sections to fill it exactly.
-
-Fixes: 2f330caff577 ("memory: brcmstb: Add driver for DPFE")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260815134559.47888-1-pengpeng@iscas.ac.cn
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Axel Lin <axel.lin@ingics.com>
+Message-Id: <20210525102708.2519323-1-axel.lin@ingics.com>
+Signed-off-by: Mark Brown <broonie@sirena.org.uk>
+Stable-dep-of: 24fa0eadc2e3 ("regulator: mp886x: fix vsel_mask")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/brcmstb_dpfe.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/regulator/mp886x.c | 32 +++++++-------------------------
+ 1 file changed, 7 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/memory/brcmstb_dpfe.c b/drivers/memory/brcmstb_dpfe.c
-index 1c8ed138b93ad..6e58febbf4f23 100644
---- a/drivers/memory/brcmstb_dpfe.c
-+++ b/drivers/memory/brcmstb_dpfe.c
-@@ -534,9 +534,15 @@ static int __verify_firmware(struct init_data *init,
- 			     const struct firmware *fw)
- {
- 	const struct dpfe_firmware_header *header = (void *)fw->data;
--	unsigned int dmem_size, imem_size, total_size;
-+	unsigned int dmem_size, imem_size;
- 	bool is_big_endian = false;
- 	const u32 *chksum_ptr;
-+	size_t payload_size;
-+
-+	if (fw->size < sizeof(*header) + sizeof(*chksum_ptr))
-+		return ERR_INVALID_SIZE;
-+
-+	payload_size = fw->size - sizeof(*header) - sizeof(*chksum_ptr);
+diff --git a/drivers/regulator/mp886x.c b/drivers/regulator/mp886x.c
+index a84fd74081de8..8ad4722eca4b3 100644
+--- a/drivers/regulator/mp886x.c
++++ b/drivers/regulator/mp886x.c
+@@ -26,7 +26,7 @@
  
- 	if (header->magic == DPFE_BE_MAGIC)
- 		is_big_endian = true;
-@@ -555,13 +561,8 @@ static int __verify_firmware(struct init_data *init,
- 	if ((dmem_size % sizeof(u32)) != 0 || (imem_size % sizeof(u32)) != 0)
- 		return ERR_INVALID_SIZE;
+ struct mp886x_cfg_info {
+ 	const struct regulator_ops *rops;
+-	const int slew_rates[8];
++	const unsigned int slew_rates[8];
+ 	const int switch_freq[4];
+ 	const u8 fs_reg;
+ 	const u8 fs_shift;
+@@ -42,28 +42,6 @@ struct mp886x_device_info {
+ 	unsigned int sel;
+ };
  
--	/*
--	 * The header + the data section + the instruction section + the
--	 * checksum must be equal to the total firmware size.
--	 */
--	total_size = dmem_size + imem_size + sizeof(*header) +
--		sizeof(*chksum_ptr);
--	if (total_size != fw->size)
-+	/* The data and instruction sections must fill the payload exactly. */
-+	if (dmem_size > payload_size || imem_size != payload_size - dmem_size)
- 		return ERR_INVALID_SIZE;
+-static int mp886x_set_ramp(struct regulator_dev *rdev, int ramp)
+-{
+-	struct mp886x_device_info *di = rdev_get_drvdata(rdev);
+-	const struct mp886x_cfg_info *ci = di->ci;
+-	int reg = -1, i;
+-
+-	for (i = 0; i < ARRAY_SIZE(ci->slew_rates); i++) {
+-		if (ramp <= ci->slew_rates[i])
+-			reg = i;
+-		else
+-			break;
+-	}
+-
+-	if (reg < 0) {
+-		dev_err(di->dev, "unsupported ramp value %d\n", ramp);
+-		return -EINVAL;
+-	}
+-
+-	return regmap_update_bits(rdev->regmap, MP886X_SYSCNTLREG1,
+-				  MP886X_SLEW_MASK, reg << MP886X_SLEW_SHIFT);
+-}
+-
+ static void mp886x_set_switch_freq(struct mp886x_device_info *di,
+ 				   struct regmap *regmap,
+ 				   u32 freq)
+@@ -169,7 +147,7 @@ static const struct regulator_ops mp8869_regulator_ops = {
+ 	.is_enabled = regulator_is_enabled_regmap,
+ 	.set_mode = mp886x_set_mode,
+ 	.get_mode = mp886x_get_mode,
+-	.set_ramp_delay = mp886x_set_ramp,
++	.set_ramp_delay = regulator_set_ramp_delay_regmap,
+ };
  
- 	/* The checksum comes at the very end. */
+ static const struct mp886x_cfg_info mp8869_ci = {
+@@ -248,7 +226,7 @@ static const struct regulator_ops mp8867_regulator_ops = {
+ 	.is_enabled = regulator_is_enabled_regmap,
+ 	.set_mode = mp886x_set_mode,
+ 	.get_mode = mp886x_get_mode,
+-	.set_ramp_delay = mp886x_set_ramp,
++	.set_ramp_delay = regulator_set_ramp_delay_regmap,
+ };
+ 
+ static const struct mp886x_cfg_info mp8867_ci = {
+@@ -290,6 +268,10 @@ static int mp886x_regulator_register(struct mp886x_device_info *di,
+ 	rdesc->uV_step = 10000;
+ 	rdesc->vsel_reg = MP886X_VSEL;
+ 	rdesc->vsel_mask = 0x3f;
++	rdesc->ramp_reg = MP886X_SYSCNTLREG1;
++	rdesc->ramp_mask = MP886X_SLEW_MASK;
++	rdesc->ramp_delay_table = di->ci->slew_rates;
++	rdesc->n_ramp_values = ARRAY_SIZE(di->ci->slew_rates);
+ 	rdesc->owner = THIS_MODULE;
+ 
+ 	rdev = devm_regulator_register(di->dev, &di->desc, config);
 -- 
 2.53.0
 
