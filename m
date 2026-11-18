@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027229;
-	b=UDG2t3tNmUkx1kLsJtUHHS3pNQPOAgSZEuVgtg7SLhhuo8UTiogcu2MzfRKKtYJ3Lkok
-	 02hlZXpm1FzfGMTYw5TA6CZy0QBgh5uBr3fpq2EfoYeb8z7USYwUfL64Z33OmO2ayhuuO
-	 3iOdEFay1ekCs7Rv6vgNqP3BNCigVJmOYvdjz6a0x12mvp9AJBGUp4tAh0Sio8mjsbckm
-	 AtNeL/kdWx6tN7RuAOs2dweSYdVSUrl3YZHR5PO47V2eIcJ5LebdW2w7EXYM/33HKP8jt
-	 ju/EPzKyOwSBrelPKLvc0b9cn+OxwWPo31nfsu73tblTaHYvh3cq+JnIe2xvkEgmQ/g==
+	t=1795027232;
+	b=Pycn31/p7QpX2ZA+aPQRC+CfhLvRk7ICCrXegVUL4LWQ0BKGUKS6SqwUOABaxt9tnRqk
+	 pxOv6QfeEHM3VtcMjcG4u3pbNx+U5oadZakjSX5PSNctaR5+oX8V9TZE/W/oz5E5Lx3fZ
+	 cjwaQoSrVdHajf9S0VUtYN98nSuda8NfZYOQGJLHpgfFpuJGbe+7EBrcDBp1UfloXhcXd
+	 v2PSwD6YrKIvbQfgIln23NIli0Ajsbr4YF072eQsDE6JLDLCVupvoK0i7OeK9UHXna3AO
+	 3Z6doWxpLfpRExZ4O0vcq96nubPXm8EkYFUtDmYVq79cE3mpKs3OvEqBGpKEAWNDC5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027229;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027232;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0o8dQqgEZS6UKIkxMFLPgc35r618WGfrSm/DW+7AnRM=;
-	b=3ec265G9O6ea0FNgU1RBZpAZfh6AVXIQU/o2A/lvMBDk7X1QVSBn8GYugNFF0Ip7GHmi
-	 KKARwE8bDBQRAv5eN96QdvvhLHF3mFAiVsLyHjtd+mdQx6ETMztD0CCTGlENo2fhoyq/y
-	 A4QC6rbANokPfSXtOK80JNswjq22fK8m8tdriZ0M5WcR1FRXZemv+Zb/Pei0rWfbIpjn2
-	 9VkeHdvZcWTS9ZlWZfbeLTDMEtKCrbj/fFztetRS5RVOSkbFi+beUgaCVFojG0SxfC22O
-	 8RfM3aaisgEerz5XtP9rummtLI5tUoigPGrcZ8yJUascypLxTu7pHFJriumZOG43DiA==
+	bh=fLHWVLJEhcucpX+gbSl9mSrBHlY2ICVzN07W2gEM2Ds=;
+	b=B5n6jkiwiwLilT0nuOpucPqgghcJEnSQE1Qbgex7VBNCRCpLL1/1+Wii4H9tQCe6DN8V
+	 Fut6jLsZIKgTSQaxLJqUji0lhgq74WnWZFjt2rxlifvEnGg0JcZDHiuZqcISTQDSb04sL
+	 n/KE3bDFsZfUFofm2HXvwLPtoJym/4pgyYslVRR/WB3INTwDpoQ7srj4vBOUqgjkCzVZD
+	 Mt7j8OjAVhS7w9AaL09yQmCEFR7rh6Voe7e8PqygLF02rFNdIHstju5W4R6a2WzqAALO1
+	 UeuE1HTTx7DMf7/guEKRyn1klkoktUM2bklviaRMjr5hmZ9j5uGDt6+y5g6Z3EiVzug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=weMDDmre;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v25KCHNr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0D1606A76F;
-	Wed, 18 Nov 2026 18:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F9D60A2618;
+	Wed, 18 Nov 2026 18:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=weMDDmre
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027A21F000D0;
-	Wed, 18 Nov 2026 18:40:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v25KCHNr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23561F000D0;
+	Wed, 18 Nov 2026 18:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027229;
-	bh=0o8dQqgEZS6UKIkxMFLPgc35r618WGfrSm/DW+7AnRM=;
+	s=korg; t=1795027232;
+	bh=fLHWVLJEhcucpX+gbSl9mSrBHlY2ICVzN07W2gEM2Ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=weMDDmre7RZrk9Nj/ARz5PQlYwA/Ngh/7zgt3bJOYyA3rXQ9c1Qsh3qnC+Q132RUn
-	 fXyr0KeB8MqXJHIELbE7l+d4dNMv/pA8dT6zpTJ2FZ7ev1z41gvFPmy6qzCSLES0vT
-	 Brg/hvZZZ+0I/eSmzxSdOExVYMzozNMxQiLGV0EM=
+	b=v25KCHNr+3ZMwBFYZMIwk+hKDTrdr1UyZq9CxZg8pV7R+iCdgpTxKPdMzgdIPUhLn
+	 OYbLmDvvmbgXg0yabKEebSNrUpR64IMhxOery19uHGRB8Yu37BzDNjSyU7CannqoAG
+	 6sJN6S80iqWBQvVd5QDCwudE9txUi0d9XbOjZF78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1716/2151] bpf: Use the frame mem type in devmap egress XDP
-Date: Wed, 18 Nov 2026 15:57:31 +0100
-Message-ID: <20261118150224.340138965@linuxfoundation.org>
+Subject: [PATCH 6.18 1717/2151] bpf: Reject sleepable programs for task_vma iterator
+Date: Wed, 18 Nov 2026 15:57:32 +0100
+Message-ID: <20261118150224.378673784@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,71 +70,147 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit b3ca872947ef322c475ceaa7a76a9ebb3356152e ]
+[ Upstream commit dfcd1765911223df60845e288ad392d5237f47a3 ]
 
-A devmap egress program that removes a whole fragment of a redirected
-xdp_frame with bpf_xdp_adjust_tail() or bpf_xdp_pull_data() frees it
-with page_frag_free() whatever the frame's memory type is. For a
-MEM_TYPE_PAGE_POOL frame from a page_pool based driver this drops the
-page reference owned by the pool while the pool still accounts the
-fragment ("page_pool leak" bad page, leaked pp reference).
+A sleepable "iter.s/task_vma" program can be attached, but its ->show()
+callback runs with the mmap_lock of the iterated mm held for read. As soon
+as the program runs, bpf_iter_run_prog() calls might_fault(), and any
+bpf_copy_from_user() or bpf_copy_from_user_task() it does may really fault
+or take mmap_lock again. With lockdep this is reported as recursive
+locking of mmap_lock. Without lockdep, a fault on the reader's own mm, or
+access_process_vm() on the iterated mm, has to take mmap_lock for read
+again. If a writer queued up in the meantime that blocks behind the
+writer, which in turn waits for the read lock the iterator already holds,
+and the read() hangs:
 
-kernel/bpf/devmap.c:dev_map_bpf_prog_run() points xdp.rxq at an
-on-stack
+    reader (iter.s/task_vma)        other thread of the same mm
+    task_vma_seq_get_next()
+      mmap_read_lock(mm)
+                                    mmap_write_lock(mm)  <- waits
+    bpf prog: copy_from_user()
+      page fault
+        mmap_read_lock(mm)          <- queued behind the writer
 
-    struct xdp_rxq_info rxq = { .dev = rx_dev };
+The reader waits killable, so the hang lasts until it gets a fatal signal.
 
-whose mem.type is 0, i.e. MEM_TYPE_PAGE_SHARED, and
-net/core/filter.c:bpf_xdp_shrink_data() releases frags according to
-rxq->mem.type. cpumap, which runs programs on xdp_frames the same way,
-already copies xdpf->mem_type into its private rxq for each frame.
+bpf_iter_link_attach() allows sleepable programs for the targets that set
+BPF_ITER_RESCHED, and task_vma sets it because cond_resched() between VMAs
+is fine with mmap_lock held. Rescheduling between objects and running a
+sleepable program inside ->show() are different properties, though, and
+task_vma only has the first one. The open-coded task_vma iterator does not
+have this problem since it hands out a snapshot of the VMA and holds no
+lock when it returns to the program.
 
-With 9000 byte frames from virtio_net and an egress program that cuts the
-fragments off:
+The vma handed to the program is only stable under mmap_lock, so the lock
+can't be dropped around ->show(). Add a feature flag BPF_ITER_NOSLEEP for
+targets which can't run sleepable programs although they can reschedule,
+and set it for task_vma.
 
-  BUG: Bad page state in process swapper/3  pfn:10660b
-  page dumped because: page_pool leak
-   bad_page+0xbd/0x190
-   __free_frozen_pages+0x5c7/0x900
-   bpf_xdp_adjust_tail+0x3be/0x480
-   bpf_prog_dad43f894a3faff7_egress+0x15c/0x1cd
-   dev_map_bpf_prog_run+0x288/0x610
+The check at attach time is not enough. BPF_LINK_UPDATE replaces the
+program of a link, and bpf_iter_link_replace() only compares the type, the
+attach type and the BTF id of the two programs, which are the same for a
+sleepable and a non-sleepable one. Do the check there as well. That also
+closes this way around the existing rule: so far a sleepable program could
+be put on a link of a target that doesn't set BPF_ITER_RESCHED, like the
+hash map element iterator, which runs it under rcu_read_lock().
 
-The pool waits for these pages for ever when its device is gone. That is
-the harmless case. A page of the pool can hold more than one fragment
-while its refcount is 1: the first page_frag_free() frees it under the
-fragment which is still in use, and the second one runs into
+BPF_LINK_CREATE of a sleepable program for the task_vma target, and
+BPF_LINK_UPDATE to one, now fail with -EINVAL, also for programs that
+don't touch user memory and have been working since sleepable iterator
+programs exist. The programs can still be loaded. They have to be
+loaded as non-sleepable programs, or use the open-coded iterator.
 
-  page dumped because: VM_BUG_ON_PAGE(page_ref_count(page) == 0)
-  kernel BUG at include/linux/mm.h:1846!
-
-veth is not affected. It takes references of its own on the pages and
-redirects the frame as MEM_TYPE_PAGE_SHARED.
-
-Fix by setting rxq.mem.type from each frame before running the devmap
-program, as cpu_map_bpf_prog_run_xdp() does.
-
-Fixes: ca9984c5f0ab ("bpf: devmap: provide rxq after redirect")
+Fixes: b77fb25dcb34 ("bpf: Add support for bpf iterator programs to use sleepable helpers")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-2-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-6-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/devmap.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/bpf.h    |  3 ++-
+ kernel/bpf/bpf_iter.c  | 17 ++++++++++++++---
+ kernel/bpf/task_iter.c |  6 +++++-
+ 3 files changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
-index dc7b859e8bbfd..1b8f0d7f84552 100644
---- a/kernel/bpf/devmap.c
-+++ b/kernel/bpf/devmap.c
-@@ -350,6 +350,7 @@ static int dev_map_bpf_prog_run(struct bpf_prog *xdp_prog,
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index d551905c8aae9..8a34e139a1215 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -2665,7 +2665,8 @@ typedef const struct bpf_func_proto *
+ 			     const struct bpf_prog *prog);
  
- 		xdp_convert_frame_to_buff(xdpf, &xdp);
- 		xdp.txq = &txq;
-+		rxq.mem.type = xdpf->mem_type;
- 		xdp.rxq = &rxq;
+ enum bpf_iter_feature {
+-	BPF_ITER_RESCHED	= BIT(0),
++	BPF_ITER_RESCHED	= BIT(0),	/* may cond_resched() between objects */
++	BPF_ITER_NOSLEEP	= BIT(1),	/* ->show() can't run sleepable progs */
+ };
  
- 		act = bpf_prog_run_xdp(xdp_prog, &xdp);
+ #define BPF_ITER_CTX_ARG_MAX 2
+diff --git a/kernel/bpf/bpf_iter.c b/kernel/bpf/bpf_iter.c
+index 54596447fbca8..c31fe8775e720 100644
+--- a/kernel/bpf/bpf_iter.c
++++ b/kernel/bpf/bpf_iter.c
+@@ -72,6 +72,15 @@ static inline bool bpf_iter_target_support_resched(const struct bpf_iter_target_
+ 	return tinfo->reg_info->feature & BPF_ITER_RESCHED;
+ }
+ 
++/* Only allow sleepable program for resched-able iterator that can run one */
++static bool bpf_iter_target_support_prog(const struct bpf_iter_target_info *tinfo,
++					 const struct bpf_prog *prog)
++{
++	return !prog->sleepable ||
++	       (bpf_iter_target_support_resched(tinfo) &&
++		!(tinfo->reg_info->feature & BPF_ITER_NOSLEEP));
++}
++
+ static bool bpf_iter_support_resched(struct seq_file *seq)
+ {
+ 	struct bpf_iter_priv_data *iter_priv;
+@@ -409,6 +418,8 @@ static int bpf_iter_link_replace(struct bpf_link *link,
+ 				 struct bpf_prog *new_prog,
+ 				 struct bpf_prog *old_prog)
+ {
++	struct bpf_iter_link *iter_link =
++		container_of(link, struct bpf_iter_link, link);
+ 	int ret = 0;
+ 
+ 	mutex_lock(&link_mutex);
+@@ -419,7 +430,8 @@ static int bpf_iter_link_replace(struct bpf_link *link,
+ 
+ 	if (link->prog->type != new_prog->type ||
+ 	    link->prog->expected_attach_type != new_prog->expected_attach_type ||
+-	    link->prog->aux->attach_btf_id != new_prog->aux->attach_btf_id) {
++	    link->prog->aux->attach_btf_id != new_prog->aux->attach_btf_id ||
++	    !bpf_iter_target_support_prog(iter_link->tinfo, new_prog)) {
+ 		ret = -EINVAL;
+ 		goto out_unlock;
+ 	}
+@@ -544,8 +556,7 @@ int bpf_iter_link_attach(const union bpf_attr *attr, bpfptr_t uattr,
+ 	if (!tinfo)
+ 		return -ENOENT;
+ 
+-	/* Only allow sleepable program for resched-able iterator */
+-	if (prog->sleepable && !bpf_iter_target_support_resched(tinfo))
++	if (!bpf_iter_target_support_prog(tinfo, prog))
+ 		return -EINVAL;
+ 
+ 	link = kzalloc(sizeof(*link), GFP_USER | __GFP_NOWARN);
+diff --git a/kernel/bpf/task_iter.c b/kernel/bpf/task_iter.c
+index 13e1aabe6f886..cf2bf388e1817 100644
+--- a/kernel/bpf/task_iter.c
++++ b/kernel/bpf/task_iter.c
+@@ -737,7 +737,11 @@ static const struct bpf_iter_seq_info task_vma_seq_info = {
+ static struct bpf_iter_reg task_vma_reg_info = {
+ 	.target			= "task_vma",
+ 	.attach_target		= bpf_iter_attach_task,
+-	.feature		= BPF_ITER_RESCHED,
++	/*
++	 * ->show() runs with the mmap_lock of the iterated mm held, which a
++	 * sleepable program takes again when it faults on user memory.
++	 */
++	.feature		= BPF_ITER_RESCHED | BPF_ITER_NOSLEEP,
+ 	.ctx_arg_info_size	= 2,
+ 	.ctx_arg_info		= {
+ 		{ offsetof(struct bpf_iter__task_vma, task),
 -- 
 2.53.0
 
