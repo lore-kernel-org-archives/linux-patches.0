@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022581;
-	b=2gjio6VJSTZUQS4qVneTSzLGCsZMHHA7/Ss3tX6upIXYHwOZZlTl7FHuJBFJ4EKvCU+F
-	 MQEH4c1eSgwGAioLhj1xk3SddJ66higzPXzqYhfQlf+CnR7IFnxPg8xzZywgmw0lq0u9g
-	 b+NOfeLAyykS3calGQ8ca59v72J/e52l+UhAPWYw17jhnZf8DsLLk7GOK1HZPrUzDLkls
-	 Ptk27n7Fp2PACsG9T3JxXlqz3eb3CjzDnmx4yUF/RiEFEsi3oR8f+BKuiXXPz8oGoX7s3
-	 d8zy8oRwUZjgizbWlXOuIU28ZMHW/frNvQj2lTMcdQQJFmk8wv9iRnE6uyjhDhj7ivQ==
+	t=1795022584;
+	b=1fG9kFJj+w6U0D5shE9o4yNtZOUmju+/StHPeKdHy111fO4SGeN7v+o+x/rGyuytzThs
+	 U6lXT/aCw3CtN/NK4E80WbYuldFq6Hc3r4lmOz7JiMpmjxaeErOgYRDTUZ1lK6mR9lrVr
+	 muWsjg0Mr/1NORkgLDg5rEJYnq117BrcLK9yToaAtCpyvcIjaQfTJhLRMOs1AWRY7HD88
+	 QYXTZt8qmGtYS0u5M9rCW2+LG2crXmq905jwFY+iKbjYSwo77wK/ydlUp8aRHqfN/22Du
+	 U9Nn16O0KbqiodeKQosq6Q+bUGqvsLiWogkDriRS2t4cyR/3EEugge0dxL6uDM9uJxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022581;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022584;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kdSX144JpuOYxe2YlQVIxkPwNUWzZf3FYegDEx2fZx4=;
-	b=RVw9TwgpqlQmXz5jtRXjAeKIKU0DRmkGjZvu3s86GKdb4GOtpKrNJC7t0pGVZTq3dl2Z
-	 UWlSTD/3RxeICjQoOuYy0WMJ86dTuATEKQB7X8O5+hLElpYAqyJCaVcL/iiZ61okMFdhl
-	 p2HX3lJp0midO0Raid1O6oxjmCnw98Rkg7AIJwlXqQBZUHD2J82POxcQy/1HNRe9Ip8HV
-	 NdvSqcNFnSrNCsIdeMqGBtxZoNbq3peLvum3LlScLbBXft8Tsa1Y/P/88P84cEZ3RVdMy
-	 m1ONOg5+zdoTIFlc04MQv4YEtc5p+ifRaa+e/M+JVgIsnye1UkQp8NkKgmQiVKr66TA==
+	bh=r0ev9OxbPokwjU9eH0rGmsq9UU9pq7vcblWVoSAEAQE=;
+	b=U4QuMeHMm54qty7sUICq20v5LrhPN/pNewCz0QmoZkVE1IrB7J/8Ao5XTDU9UlzsGjFK
+	 nuuWeLnPr49uQsddJnIuDyOb+g6IgcJfaU3Jw0r7/Zmaw8Lt0sSVpIxcG7O3d4l4zgdO2
+	 +37DBSqDCZn+djRYYYO5PB4Ceo7hKq195WBzZm3sFIHN6KIimwRnAcRBUyKkpib4vvoMq
+	 JrCg3i2gObSIzEZVk1kSla7jPdqDpuuH4hiMq1bmjP093lU8H52G9eSarHYv3jonKemLv
+	 3eJTzGKc718GeLAC3wqLN0qnWRXW/0cNRDNyrpMSCUhQ4MrbeLcVdmfhcQQt52U+0EA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yqjFnioC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhC1BCNc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58147606A32A;
-	Wed, 18 Nov 2026 17:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AED2606A338;
+	Wed, 18 Nov 2026 17:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yqjFnioC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFED91F000C4;
-	Wed, 18 Nov 2026 17:23:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhC1BCNc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD451F000C5;
+	Wed, 18 Nov 2026 17:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022581;
-	bh=kdSX144JpuOYxe2YlQVIxkPwNUWzZf3FYegDEx2fZx4=;
+	s=korg; t=1795022584;
+	bh=r0ev9OxbPokwjU9eH0rGmsq9UU9pq7vcblWVoSAEAQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yqjFnioCR9mdF+OiqQmwkxkpufC9Vj7/WvKMmsvSnCWwUNZ+LoP1yUWwp856JcUDN
-	 +oEOWaAhHYJKDKOH4cwfI7OdkO3REyUk6ajakLmtzCJO6hk3T1JiprPGTfIaUrP6wr
-	 ZN26hfUEfPONVA8DPTfJtOMXs1ijDvldl8Lrou1g=
+	b=MhC1BCNcCp5hgKaJ86QwiP63hd3A/SFCxpNcxROlcUBfId1t9kGPR5zdcjKdbS6SC
+	 HztfmUAKGRlpTwTmdzRxPhzE7X8tm+qp7OK7G2wFVfnzcH2UMybl756NBwK7oP5aAa
+	 EbSqBEFcGBny/gQypoTUlsPy5BquBJ9DByyF51U8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuqiang Sun <izaiahsun@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Pierre-Loup A. Griffais" <pgriffais@valvesoftware.com>,
+	Melissa Wen <mwen@igalia.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0065/2151] ALSA: usb-audio: qcom: Check the return value of qmi_handle_init()
-Date: Wed, 18 Nov 2026 15:30:00 +0100
-Message-ID: <20261118150124.128256554@linuxfoundation.org>
+Subject: [PATCH 6.18 0066/2151] drm/amd/display: Signal PQ EOTF in FreeSync infopacket for DP HDR
+Date: Wed, 18 Nov 2026 15:30:01 +0100
+Message-ID: <20261118150124.164793928@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,86 +70,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuqiang Sun <izaiahsun@gmail.com>
+From: Melissa Wen <mwen@igalia.com>
 
-[ Upstream commit a3cf5ebab5f1db9e6f751e2a08df05a84f37ea57 ]
+[ Upstream commit 81f923b065801c7d30042bcda31ccb9449b4f58b ]
 
-qc_usb_audio_probe() overwrites the return value of qmi_handle_init()
-with that of qmi_add_server() without checking it. When
-qmi_handle_init() fails, it has already freed the receive buffer and
-destroyed the workqueue, and qmi->sock may hold an error pointer. If
-QRTR is not available, qmi_handle_init() returns -EPROBE_DEFER and
-qmi->sock is ERR_PTR(-EAFNOSUPPORT), so qmi_add_server() passes it to
-kernel_sendmsg():
+Commit c2791297013e ("drm/amd/display: Add color bit info to freesync
+infoframe") created the app_tf interface for FreeSync HDR and commit
+c21a764a98cb ("drm/amd/display: Send PQ bit in AMD VSIF") used it to set
+PB9 bit 5 (PQ EOTF) in v2/v3 AMD Freesync infopacket. However, Linux
+never made use of this interface: DM ignores what userspace sets
+regarding HDR and always passes TRANSFER_FUNC_UNKNOWN as app_tf, so the
+PQ bit is never set in the infopacket received by the eDP panel.
 
-  BUG: unable to handle page fault for address: ffffffffffffffb7
-  RIP: 0010:selinux_socket_sendmsg+0xa0/0x590
-  Call Trace:
-   security_socket_sendmsg+0x29/0x50
-   __sock_sendmsg+0x43/0x150
-   kernel_sendmsg+0xd6/0x180
-   qmi_send_new_server+0x1b8/0x2b0
-   qmi_add_server+0x165/0x200
-   qc_usb_audio_probe+0xf4/0x2e0
-   really_probe+0x2b4/0x850
+Check the EOTF in the HDR static metadata and set the PQ bit in Freesync
+infopacket for DP accordingly. This fixes gray-washed HDR on KDE/GNOME
+on Framework 13 Pro AI 9 HX 370 (DCN 3.5) and may fix similar issues on
+other VRR-capable panels that advertise Replay in its AMD VSDB.
 
-Had the probe gone on, the error and remove paths would call
-qmi_handle_release() on the half-initialized handle, which destroys the
-workqueue and frees the receive buffer a second time.
+It doesn't affect color/EOTF bits on infopackets for SDR and native
+HDMI.
 
-Return the error from qmi_handle_init(), so that -EPROBE_DEFER defers
-the probe, and check qmi_add_server() as well.
-
-The bug was found with kbound, a static analysis prototype for
-ownership mismatches at kernel interfaces, on v7.2.12; it is present in
-mainline.
-
-Build-tested with x86_64 and arm64 allmodconfig (W=1, sparse): no new
-warnings. Run-tested on QEMU (x86_64, KVM) with KASAN and kmemleak, with
-the driver built in and a test module that registers the
-q6usb.qc-usb-audio-offload auxiliary device. Without QRTR, the probe
-crashes as above without this patch; with it the device is deferred and
-removing it again reports nothing. With QRTR the probe succeeds, and
-removal reports nothing either.
-
-Fixes: 326bbc348298 ("ALSA: usb-audio: qcom: Introduce QC USB SND offloading support")
+Reported-by: Pierre-Loup A. Griffais <pgriffais@valvesoftware.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/3200
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit b318f3e13dd73781404670d3b3c6cf2177e0119c)
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuqiang Sun <izaiahsun@gmail.com>
-Link: https://patch.msgid.link/20261102035237.56253-1-izaiahsun@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ sashal: Inlined dm_dp_in_hdr_mode() checks into the existing static update_freesync_state_on_stream() function. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/qcom/qc_audio_offload.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
-index 62a57b8d171b8..3a0a0d8f4654b 100644
---- a/sound/usb/qcom/qc_audio_offload.c
-+++ b/sound/usb/qcom/qc_audio_offload.c
-@@ -1975,8 +1975,13 @@ static int qc_usb_audio_probe(struct auxiliary_device *auxdev,
- 			      QMI_UAUDIO_STREAM_REQ_MSG_V01_MAX_MSG_LEN,
- 			      &uaudio_svc_ops_options,
- 			      &uaudio_stream_req_handlers);
-+	if (ret)
-+		goto free_qmi_hdl;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 40ac1a33326fa..d3ec5c11abb18 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -9440,6 +9440,8 @@ static void remove_stream(struct amdgpu_device *adev,
+ 	acrtc->enabled = false;
+ }
+ 
++#define DP_HDR_SDP_EOTF_IDX 2
 +
- 	ret = qmi_add_server(svc->uaudio_svc_hdl, UAUDIO_STREAM_SERVICE_ID_V01,
- 			     UAUDIO_STREAM_SERVICE_VERS_V01, 0);
-+	if (ret)
-+		goto release_qmi_hdl;
+ static void update_freesync_state_on_stream(
+ 	struct amdgpu_display_manager *dm,
+ 	struct dm_crtc_state *new_crtc_state,
+@@ -9455,6 +9457,8 @@ static void update_freesync_state_on_stream(
+ 	bool pack_sdp_v1_3 = false;
+ 	struct amdgpu_dm_connector *aconn;
+ 	enum vrr_packet_type packet_type = PACKET_TYPE_VRR;
++	enum color_transfer_func app_tf;
++	const struct dc_info_packet *hdr;
  
- 	uaudio_svc = svc;
+ 	if (!new_stream)
+ 		return;
+@@ -9506,12 +9510,18 @@ static void update_freesync_state_on_stream(
+ 					&new_stream->adaptive_sync_infopacket);
+ 	}
  
-@@ -1993,7 +1998,9 @@ static int qc_usb_audio_probe(struct auxiliary_device *auxdev,
++	hdr = &new_stream->hdr_static_metadata;
++	app_tf = dc_is_dp_signal(new_stream->signal) && hdr->valid &&
++		 hdr->sb[DP_HDR_SDP_EOTF_IDX] == HDMI_EOTF_SMPTE_ST2084 ?
++		 TRANSFER_FUNC_PQ2084 :
++		 TRANSFER_FUNC_UNKNOWN;
++
+ 	mod_freesync_build_vrr_infopacket(
+ 		dm->freesync_module,
+ 		new_stream,
+ 		&vrr_params,
+ 		packet_type,
+-		TRANSFER_FUNC_UNKNOWN,
++		app_tf,
+ 		&vrr_infopacket,
+ 		pack_sdp_v1_3);
  
- release_qmi:
- 	qc_usb_audio_cleanup_qmi_dev();
-+release_qmi_hdl:
- 	qmi_handle_release(svc->uaudio_svc_hdl);
-+free_qmi_hdl:
- 	kfree(svc->uaudio_svc_hdl);
- free_svc:
- 	kfree(svc);
 -- 
 2.53.0
 
