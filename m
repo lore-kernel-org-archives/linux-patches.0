@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034937;
-	b=OK5KuddmUgXyrcjfccj0v3fTz9cpzeZaZXfh8c9SJkTUPivECFZbeABYj68zNnxzpPcc
-	 4JXE2NggLPcKY4zEBUm4D1r/Q9+JQ++nY7Jj7y1TlzA6sh8y8fVq875hnaywi2QUlXKSv
-	 hMrTsAhcieuu0yZ1D7ZMMBlax3AXH9qQKHes/mgBtvd4QQTc6MbVld2OFii70rrbCoxgB
-	 hvEwY4sUayYmQhsZC68/7CdTisihSbz8wd6ljJPs6h+5ihBBl9Xpq32z0AB6IrWItFkKV
-	 EGVCtyoGD0OuLjH+1GjBfPblWaQp8s8BzDE9e76rClh+kt60rnHkE7xaiJhJfekAacw==
+	t=1795034940;
+	b=Go9N5PyG4FG2wIwCzx2TIhTrrgg2aUrWaay0eV/we+y47KkdgmSmuqTi+IPJRnbEONIp
+	 8QkKwrF0X4qAB88D17Kg516Gfsc3i3il/Ova/qJnesVQSCF3VWWtmVgJv+CuomivMzqgG
+	 2GZspXPSnTaLRLKsTeplX0z9iGQtSRU/1wit5oERqtw+iL7vKJWHm2W/Rh5l+5VDqenfY
+	 6LwHPJ6Nj9aWfu6ZumAzhthS6JKhI1TPEmCeiMoZiap6xhXYItcIpzVxc3smkvoYhd1SW
+	 iZM61xv6L2ePt7UmDCDPBs8TwNvgVuxunwin916p8Vu7fGTO/Q3EavHVSL8vY5G4K+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034937;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034940;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=2jF26SSiQuVWnMuD0Ue37xpPOv1W3sAMurvXvvVuIjk=;
-	b=v7DOkXeZB7sRE7VjhI0dAeVw+tMUjjB0QrXJ6RoqLabrJ6D1u58MG+BPVvQ3Ss0xFA4q
-	 /xO/OGzq5z19F7kH4xHDmvyTbO0l9Uj6BeOdkqQKkemNeFiPCBicTBnN710AcqpKalwzH
-	 W/mDjGOh+nlg5+PUB5JR6jVfskzQt/sYdIpIUJDvR6J5OJRRmHYWKV5dz4Lekfx+OvuUy
-	 OUt3SQeZhwsYDiBRFO9V4DNbrCBgqoXjcZclqzmNY0biJzyZKDaUpBDEkAKSxy0WskyT9
-	 XWicSdafgaaJYp+omjIpGzNrDT8bE5qyoHCZNTkGCSTQ9Tu36K/UMC+t/81HsPygn/g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=qfMknR1jjuCLS+EsZpo1iE4nYrMn6880GTJzdJ3Uijo=;
+	b=GOL2SSD7VzJxRbwuNj/31lm2UqJj4LjhJCrt0Q0+8DRaEWGGfVmOWa06Om9ZGhQJX1Cr
+	 dN30zBPDvb3gwaFHO62L/cCMb2Yx4dk4CClPMfa1iOT3y6ay/pfaiG6C3tLVwhF15Ro3j
+	 z+Tl5qznmSauI1ZXvJQ7uxo7iqR1sehkE2uChZQR8Mi03+t43TJVJ7+RPdjiROFWxN6pd
+	 5S3dIcSo5XruKJUHoY/r7XtNWzdG17xnFWdSrnorLzRHOnnEmdqdqx7aku4+rK9XJzD+t
+	 ZyS7RP3nyuJUH1isoK7I3q4RMBtb2KQeSDROK3/pWg3ImubzRu9aysFSdige98oFIWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qVkWsx/e";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcgWre1i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B22606A31C;
-	Wed, 18 Nov 2026 20:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070BC606A31C;
+	Wed, 18 Nov 2026 20:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qVkWsx/e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75E1E1F000C4;
-	Wed, 18 Nov 2026 20:48:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcgWre1i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5295C1F000C4;
+	Wed, 18 Nov 2026 20:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034937;
-	bh=2jF26SSiQuVWnMuD0Ue37xpPOv1W3sAMurvXvvVuIjk=;
+	s=korg; t=1795034939;
+	bh=qfMknR1jjuCLS+EsZpo1iE4nYrMn6880GTJzdJ3Uijo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qVkWsx/eFPL2+Fj8pWTR2o+J4Y9ahqgUs6idFhvhFmFSIjXZYmhwIjb4vo/eXEq2W
-	 k/3KiIiccLH1MECfeCkyJFIY7CtmKHPG4VtnXprx0CINSWA904YHiFVF2VssiWFSO4
-	 GylGRsupHc90m1JlbL8FvtQ1St9+BEMz8Q0T93dc=
+	b=JcgWre1iVko3Brnqj1PDI523akvNmNaEan1doJyLjDbIQ5RTrktbwTogH/g9JuDbK
+	 9OlPRVxHbhkbYyE4j2NbmYdaW05g4vBoBoU6t5O3dKeQ9crZO843wBVAHJYS/vcpYo
+	 qp9gKb/3ylhx2yvPNwgal5y6MheWR062Gf5IGok4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	syzbot+351f8764833934c68836@syzkaller.appspotmail.com,
+	Eric Dumazet <eric.dumazet@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0548/3318] drm/amdgpu/uvd3.1: Fix checking whether UVD firmware keyselect was already set
-Date: Wed, 18 Nov 2026 15:19:30 +0100
-Message-ID: <20261118150333.737225519@linuxfoundation.org>
+Subject: [PATCH 6.6 0549/3318] ALSA: rawmidi: Fix kvfree() call in spinlock
+Date: Wed, 18 Nov 2026 15:19:31 +0100
+Message-ID: <20261118150333.772985800@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,47 +63,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 800ea86e83e137395eba54103e5c459c2bc9965f ]
+[ Upstream commit 20c0c49720dc4e205d4c1d64add56a5043c5ec5f ]
 
-The PASS_MASK is for a different register not for UVD_FW_START.
-It was a mistake to check this flag. It should be enough to check
-that the register is non-zero.
+At the conversion of locking with guard(), I overlooked that kvfree()
+must not be called inside the spinlock unlike kfree(), and this was
+caught by syzkaller now.
 
-Fixes: 889a2cfd889c ("drm/amdgpu/uvd3.1: Don't validate the firmware when already validated")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20261006211607.75407-1-timur.kristof@gmail.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9dee462c83259ca769aa1bf82228adee9831685c)
-Cc: stable@vger.kernel.org
+This patch reverts the conversion partially for restoring the kvfree()
+call outside the spinlock.  It's not trivial to use guard() in this
+context, unfortunately.
+
+Fixes: 84bb065b316e ("ALSA: rawmidi: Use guard() for locking")
+Reported-by: syzbot+351f8764833934c68836@syzkaller.appspotmail.com
+Reported-by: Eric Dumazet <eric.dumazet@gmail.com>
+Closes: https://lore.kernel.org/6744737b.050a0220.1cc393.007e.GAE@google.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20241125142041.16578-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/rawmidi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-index 49a0d66d5b2c0..5334da3c0cf1b 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-@@ -288,7 +288,7 @@ static int uvd_v3_1_fw_validate(struct amdgpu_device *adev)
- 	int i;
- 	uint32_t keysel = adev->uvd.keyselect;
- 
--	if (RREG32(mmUVD_FW_START) & UVD_FW_STATUS__PASS_MASK) {
-+	if (RREG32(mmUVD_FW_START)) {
- 		dev_dbg(adev->dev, "UVD keyselect already set: 0x%x (on CPU: 0x%x)\n",
- 			RREG32(mmUVD_FW_START), adev->uvd.keyselect);
- 		return 0;
+diff --git a/sound/core/rawmidi.c b/sound/core/rawmidi.c
+index 7da8ce4c1ef09..96e7c1e5c1d53 100644
+--- a/sound/core/rawmidi.c
++++ b/sound/core/rawmidi.c
+@@ -727,8 +727,9 @@ static int resize_runtime_buffer(struct snd_rawmidi_substream *substream,
+ 		newbuf = kvzalloc(params->buffer_size, GFP_KERNEL);
+ 		if (!newbuf)
+ 			return -ENOMEM;
+-		guard(spinlock_irq)(&substream->lock);
++		spin_lock_irq(&substream->lock);
+ 		if (runtime->buffer_ref) {
++			spin_unlock_irq(&substream->lock);
+ 			kvfree(newbuf);
+ 			return -EBUSY;
+ 		}
+@@ -736,6 +737,7 @@ static int resize_runtime_buffer(struct snd_rawmidi_substream *substream,
+ 		runtime->buffer = newbuf;
+ 		runtime->buffer_size = params->buffer_size;
+ 		__reset_runtime_ptrs(runtime, is_input);
++		spin_unlock_irq(&substream->lock);
+ 		kvfree(oldbuf);
+ 	}
+ 	runtime->avail_min = params->avail_min;
 -- 
 2.53.0
 
