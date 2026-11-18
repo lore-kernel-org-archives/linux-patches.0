@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027490;
-	b=J/ZOvHzjr4VTRot0fLzemkLRy/ip7yqDwFJwzqRzgoglhmeBHxoUNgUuBZ1PNOVEegrj
-	 nKaa4S9cvIO7Npt8x1q29Ac7IrSV8CxGDN3I8lTytxw4lFXT7OAax5zTj75EAXHfasiDu
-	 OK01M0oxK4gQm7dThBwONfeZ0/+qCnCZCD62w7i/CkWHuD+FASPV2SfIPzuHVzqV0E0KO
-	 WKkURTI4ZRERIVKYvbIlQNEDBgP8i49T6q0G1HSn2jfzWHUoLe3lv5fCPHh2M8r1Shfuc
-	 DfEqse4CJeIAdrfuVp6ipTYJdgXPCmsymt/22SAD0+iwA7rEd+ZSdgGRQr8jkxEuCjg==
+	t=1795027493;
+	b=en/yfnYUaVZVZYrH08cdtB3P+9K8ZqujE1h6hmy3B0gHmknK27D5AI5elnrDDjFS2p1Y
+	 K37rA9Z9XwyzHivxcrwHAIS6r9uJBSZGoELLdXXcRwsyz0j+RoJtpTGNhcPSWeJ36/OaX
+	 v2sTW6FS7SoFL19LkfuTnPbcWAeYk92X5dAaWe0i/uLGooFCuDKiLoiHFw/ua8BCSlvJF
+	 7gCN2/jRm1bblrZrb1nNv5ZbpPKIn2W29UcBHGvplvWSNI7m3cfGuePQK0aOKxc2Vej4f
+	 9QvWzUSVK47mOCBoM7W2V8AnSSu5jcFVOpeZUea+Zeqi7XTDWbPnFpdln1RzVDllFZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027490;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027493;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E7hpigCWp56tf48jIkaWTUqLzKDocQb2A0l1vOaS8O8=;
-	b=rWDzQUSDQ+RVHRWEfpXq1+k+TW4wSWbBFttQi6YLl/tgdfVAC2YnMm4tSlxXWJtaC37t
-	 HBAD8ErByneC4n8CcV7Y1jBnu0VTD4P1Qwh3HFx27N21RDcsnFEGKIZXD7I8hfMIwLRng
-	 Z74ox3fhjwE26b+8eafxNSx/saQ1IzMUdy439XhRAsBzZfo/y/O5Lv58U1E2uXyLRGrXN
-	 Dl/2TtUd/uqF4hnuB4uZktMa4kquhWx4KLh9W1BeUUnA+jZxecXO7hXU01J8G+RO5X3aM
-	 5LS3kSGrK4/gVN3H2U1ZGmvqr5ExvNklr4U9OLDGkkkahTA6SncQgcUBITK09QMNpcQ==
+	bh=oEEouzrXDMnnsRE9gmpKsREsCqwFYYK9mkDycue0bFM=;
+	b=l8iZrRaNq+NkFj4KdkMulzXOFIpRmKvp4NSRXXgECCfLndLj4bgCZqryIA5NPdsAZ94W
+	 NgHpfLgSjkut28Zf5wqI2+qgOtWjg5Wszdfmfn1kF1HmjL2zoUh3FLYF5eIEVZ2PJ4Uoa
+	 7GJ+HnPgp/lOl1RXwL7l1HJg57eAPZzb3S+UQMTGBovUYHZgwvESTDWoHYkvVv2yNCZGJ
+	 Lejk/OcM3MZoEa7IYwsoEZbmzKHAbC1s2GEX+IyQs6t9Aa6Pggz/yV0JtiuJtzbXDypa2
+	 E4WHfP0zQYwiM4BbueecKBEp98v2c9EOzhXz42tgYLWgkKkZFNHCzMAqHvzE2+5h+xQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I4pwRdsw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="MTL/cMfw";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685BE60A261E;
-	Wed, 18 Nov 2026 18:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F15960A260F;
+	Wed, 18 Nov 2026 18:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I4pwRdsw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA4DA1F000C6;
-	Wed, 18 Nov 2026 18:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MTL/cMfw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB8BF1F000C4;
+	Wed, 18 Nov 2026 18:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027490;
-	bh=E7hpigCWp56tf48jIkaWTUqLzKDocQb2A0l1vOaS8O8=;
+	s=korg; t=1795027493;
+	bh=oEEouzrXDMnnsRE9gmpKsREsCqwFYYK9mkDycue0bFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I4pwRdswOaMbI9PHr2gDJ01QqiA+kjR0OdOC95CYvA/LyUXrCTPoCuFbf4Ub6jEbj
-	 LRHXraCAIs7XfxqbZOLmOCqYq6u5ryNwHG1rLHdpzQ+Ess6B88Wf6/Y4ua8v2UX/Fb
-	 KUfOyekaNg3bqyRGBLLnWz8kUvsC1emDfZbl/rrQ=
+	b=MTL/cMfwihBfnc/oe7p3jB1uQYFDYZmCr+aqjXbl/FE/r0IbcnR9b3kivbBJ6ez6a
+	 SJZFLMZOyjRp6Iu7OOFM2qZb90U5Ya8nuwrZxaErP+cJ1mDJaYUwR0WT1QhMtC6L7x
+	 AtpoZTI5WhnipHZd0Nc0iZ1q1aESz/xbmH3K9470=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.18 1807/2151] vhost: vringh: use get_user()/put_user() for IOTLB 16-bit accesses
-Date: Wed, 18 Nov 2026 15:59:02 +0100
-Message-ID: <20261118150227.629597435@linuxfoundation.org>
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 1808/2151] net: openvswitch: skip IPv4 later fragments on TCP/UDP set actions
+Date: Wed, 18 Nov 2026 15:59:03 +0100
+Message-ID: <20261118150227.669021758@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,52 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 95a214f31a3b1ef40034f1e1cb3b9d758a374f01 ]
+[ Upstream commit 14c0350142ab0a10ebeefed03b779df23749e16a ]
 
-getu16_iotlb() and putu16_iotlb() use __get_user() and __put_user() when
-the IOTLB maps to user virtual addresses.  Nothing nearby checks the
-translated address: that relies on the mapping having been validated
-against the user's VMAs when it was set up.
+An IPv4 later fragment carries no L4 header, but key extraction leaves
+ip.proto set to the real protocol and the flow may wildcard the frag
+field, so validate_set() accepts such packets. set_tcp() and set_udp()
+then treat the first bytes of the fragment payload as an L4 header,
+rewrite them as ports and patch the bytes at the checksum offset,
+corrupting the packet.
 
-Use get_user() and put_user(), which do the same single, untorn access
-and also check the address.  The only atomic-context use, the vdpa
-simulators' notification check, now disables page faults around it, so
-the might_fault() in the checked accessors stays quiet there.
+Skip these actions for OVS_FRAG_TYPE_LATER. IPv6 later fragments are not
+affected, since their ip.proto is NEXTHDR_FRAGMENT and validate_set()
+rejects L4 set actions for them.
 
-This is part of getting rid of __get_user() and __put_user() entirely.
-
-Tested-and-acked-by: Michael S. Tsirkin <mst@redhat.com>
-Fixes: 42823a871fd4 ("vringh: support VA with iotlb")
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: ccb1352e76cf ("net: Add Open vSwitch kernel components.")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20261015124749.4694-1-fmancera@suse.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vringh.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/openvswitch/actions.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/vhost/vringh.c b/drivers/vhost/vringh.c
-index 3391413379579..e0fd976324730 100644
---- a/drivers/vhost/vringh.c
-+++ b/drivers/vhost/vringh.c
-@@ -1214,7 +1214,7 @@ static inline int getu16_iotlb(const struct vringh *vrh,
- 		return ret;
+diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
+index 9d9697cf63298..cbab49ecaf152 100644
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -594,6 +594,9 @@ static int set_udp(struct sk_buff *skb, struct sw_flow_key *flow_key,
+ 	__be16 src, dst;
+ 	int err;
  
- 	if (vrh->use_va) {
--		ret = __get_user(tmp, (__virtio16 __user *)ivec.iov.iovec[0].iov_base);
-+		ret = get_user(tmp, (__virtio16 __user *)ivec.iov.iovec[0].iov_base);
- 		if (ret)
- 			return ret;
- 	} else {
-@@ -1252,7 +1252,7 @@ static inline int putu16_iotlb(const struct vringh *vrh,
- 	tmp = cpu_to_vringh16(vrh, val);
++	if (flow_key->ip.frag == OVS_FRAG_TYPE_LATER)
++		return 0;
++
+ 	err = skb_ensure_writable(skb, skb_transport_offset(skb) +
+ 				  sizeof(struct udphdr));
+ 	if (unlikely(err))
+@@ -637,6 +640,9 @@ static int set_tcp(struct sk_buff *skb, struct sw_flow_key *flow_key,
+ 	__be16 src, dst;
+ 	int err;
  
- 	if (vrh->use_va) {
--		ret = __put_user(tmp, (__virtio16 __user *)ivec.iov.iovec[0].iov_base);
-+		ret = put_user(tmp, (__virtio16 __user *)ivec.iov.iovec[0].iov_base);
- 		if (ret)
- 			return ret;
- 	} else {
++	if (flow_key->ip.frag == OVS_FRAG_TYPE_LATER)
++		return 0;
++
+ 	err = skb_ensure_writable(skb, skb_transport_offset(skb) +
+ 				  sizeof(struct tcphdr));
+ 	if (unlikely(err))
 -- 
 2.53.0
 
