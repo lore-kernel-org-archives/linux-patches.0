@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041649;
-	b=0zGbr0FoisCE2/AXC7d5A8t704DQyejjp5JhNwQCwii7T9gcJf4SCPl2Obmhids5TugP
-	 u2dwWcYrsWjVDFTghiXW/ik7mUNR4HZpAXy3ZoDCdDSs/iBxetUBYhAsV9OeFcHveZS7i
-	 YSYbuRY7FkZggX6iQAhJ1BUpuOEboC+ZpAtqiThEcswH5VHDmt9r1rG8OVMI44gnykKwx
-	 dlmRda+V6I/jWtEiadY+7O4/iITC9sUILyBbhqzEsTQcrVB6C6t1UL6XljynSRDWK9ptQ
-	 cBFSYUlpBxdG38lmw/weMyM45GFKlBAr1pjthQ8XsQs9aA4DJi6Qwf8BOPa9bKumoEA==
+	t=1795041652;
+	b=KIVtn5FqVYaW607OPZwVeH2oT++cM1MvfmIuVw9wsiJ6b519xis8xl9DLnz1OuIH9U8/
+	 KC3MfeI8fTAL8sGv8JEAOg8dJDkLgHA6GUrLl6yUqG8ADxZ630E07PobFYIIjoIM1dJM0
+	 gjoCRcVIXcuXx49ugDLTw4A9xexHy76cyspCWzEsivnajJSZjJu3dUEksRcfLD5kNys9i
+	 chdAuXZZJ8S7/5Vps37psqeswl3ZGg/wopRQiHgm1uS6W0/eQe1qgu7YTSlLSn49HfMmA
+	 3qECkzfSQBZKB3j1bmd95YB3VhoJKmzEXnLE653Mcr2mG0ygmZpwjp+jLGMtz7O/D0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041649;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041652;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J77AvWQUV2dLwDSqXs1OrO6Z3D30kgxd2Y22wETlyu8=;
-	b=A4GEch79MSTfKhptQWTd6wkkQNervHgbfmrA9Mq9yjxkkfxI9JMEvH9lgovvfLZCXgmY
-	 4NUKT5gSkN4AHNF8mKGJyZqVkEVkW1FeC89+2Qs5BlSRUK6PhJh0BRFRanrMJ9UT7TH1h
-	 AtNZp2RrRcWCn4D5neJgAj/wZSIOledkFkioYQi3M0s7F3vkb0ZGEgmUNRdwG5UakQgQd
-	 aE+pkKax3tZXyUz7F/+NXs/vLRSw4gOUJ7GVYk+PmwkuHiEjTcL1ICPE6p7F2ugi0zyMK
-	 Sf8LeSm3TS2FwdjZ7yuNfJgJ6+7KeX3gAf9QUhMEbPt4hn5ll+V75sXoKLu8egymrnQ==
+	bh=nGMLYKwV6buCNlRvwuD+/ssuYHaAaYWXMsI/cc1EaTs=;
+	b=jsPc0uU+Fsyh4q6wfH7LyRoGwj1UMZ5rQCrA5F/EcB71jfFTT19e1yaELfyYKG/yKlng
+	 NqNvgmDVXRJsxPm7n0Liw7WfHRhS+cGN4Q/sQVe4baGV4CpBGjn+6DzsaIrSrfz3yPEtB
+	 CVHSPjFtvr1J5g80sn9NlMifnKFhLrWzevY8v3NQimkQPAIn5xHXO4XwrTHCRKaEbmZXG
+	 pWAJbSP/B4p1jrUks2L8vXGWcizn0txhFFseB+mdJ5dScY8RV4TZlKWau371RA5SRRRlB
+	 3qunyMu1sKxxuCfj98yWmd+0pr98+uKmodCH8OQY2FmmyB7L8/D53GsHq4jybcgLPeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A7JyxM97;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nfTYbCE/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F09606A31C;
-	Wed, 18 Nov 2026 22:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AAA606A31C;
+	Wed, 18 Nov 2026 22:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A7JyxM97
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C461F000C4;
-	Wed, 18 Nov 2026 22:40:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nfTYbCE/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A491F000C4;
+	Wed, 18 Nov 2026 22:40:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041649;
-	bh=J77AvWQUV2dLwDSqXs1OrO6Z3D30kgxd2Y22wETlyu8=;
+	s=korg; t=1795041652;
+	bh=nGMLYKwV6buCNlRvwuD+/ssuYHaAaYWXMsI/cc1EaTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A7JyxM973yTvFXVFXQXDsfA8N+Z4r0IkmfJwNBgFJy3X1u9d5F7TNBoCkwtptAMki
-	 cGkONLGkILDSe/BcZKX41vuFJ/YMo0YS6Bf+7/n4cbfY5QUPWMv1EPyEwWwFhPyaT1
-	 ExxcuawgXbO+mlnIfW+C64MaZTTo6MJYgznQynkg=
+	b=nfTYbCE/jCwxfYeurb3mj4Y7yBQaRnCWnC5NOSOBToWa9VBNBPNJ3Ueq24LszlWXv
+	 RIBX1cJA7Y2N2ICQgnxk4TwNjjwECaDiu+z3yRuD7hO58XT9PylnfJaODBuzZYhC/i
+	 yd+upUryd6m1qtJA8r1bUdd3k4L3OdcFkzOgiywY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cen Zhang <zzzccc427@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2887/3318] Bluetooth: ISO: Hold the listener during disconnect notification
-Date: Wed, 18 Nov 2026 15:58:29 +0100
-Message-ID: <20261118150447.130941739@linuxfoundation.org>
+Subject: [PATCH 6.6 2888/3318] Bluetooth: MGMT: Reject quality report requests during unregister
+Date: Wed, 18 Nov 2026 15:58:30 +0100
+Message-ID: <20261118150447.158097984@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,198 +70,150 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit b4a00dedc5cc6f6f98c07ec1b54d24a817d9fc88 ]
+[ Upstream commit 213e7a99bea19e2f29f394321b86c792eec73a24 ]
 
-An ISO listener must remain alive until a queued child's disconnect
-notification completes. bt_accept_enqueue() retains only the child and
-stores a raw parent pointer; iso_conn_ready() drops its temporary
-listener reference after setup. iso_chan_del() saves that pointer,
-unlinks the child and then calls parent->sk_data_ready() without holding
-a listener reference.
+A quality report request must not call a driver callback after its
+module text has been released. hci_mgmt_cmd() holds an hci_dev reference
+through set_exp_feature(), but that reference only preserves the device
+allocation. set_quality_report_func() takes req_lock and invokes
+hdev->set_quality_report without checking HCI_UNREGISTER.
 
-With an incoming CIS child still queued, disconnect and listener release
-can proceed in this order:
+This is unsafe when a SET_EXP_FEATURE request for an Intel controller
+would change HCI_QUALITY_REPORT and is delayed before taking req_lock
+while the controller is removed. With btintel_pcie and btintel built as
+modules and no other btintel dependents, the following order is
+possible:
 
-  HCI disconnect                   Listener release
-  iso_conn_del(): lock child
-  iso_chan_del(): save parent
-  bt_accept_unlink(child)
-                                   iso_sock_cleanup_listen():
-                                     drain empty accept queue
-                                   iso_sock_release():
-                                     orphan and kill listener
-                                     final sock_put(listener)
-  parent->sk_data_ready(parent)
+  Management request                Removal and module unload
+  ------------------                -------------------------
+  hci_mgmt_cmd(): retain hdev
+                                    hci_unregister_dev():
+                                      set HCI_UNREGISTER
+                                      remove hdev from lookup
+                                      close under req_lock
+                                      release req_lock
+                                    btintel_pcie_remove(): return
+                                    unload btintel_pcie, then btintel
+  set_quality_report_func():
+    take req_lock
+    call hdev->set_quality_report
 
-After unlink, listener cleanup no longer has to take the child socket
-lock. The listener can therefore be freed before iso_chan_del() reads
-sk_data_ready, causing a use-after-free.
+When the request resumes after btintel unload, the indirect call targets
+released module text and can cause an instruction-fetch page fault. The
+close operation serializes with a running callback but does not prevent
+a delayed management handler from invoking it afterwards.
 
-Take a temporary parent reference before bt_accept_unlink() and drop it
-after the notification. The child lock excludes accept dequeue while the
-child is still queued, so listener cleanup cannot complete before
-sock_hold(). The reference then keeps the listener alive across unlink
-and through the callback without changing lock order.
+Check HCI_UNREGISTER immediately after acquiring the existing req_lock
+and return MGMT_STATUS_INVALID_INDEX via the common unlock path. If
+unregister passed its close section first, the request now rejects the
+removed controller before accessing the callback. If the request passes
+the check first, hci_dev_do_close() must wait for req_lock until the
+callback has returned, so unregister cannot finish before the use.
 
-KASAN report as below:
+Oops report as below:
 
-    ==================================================================
-    BUG: KASAN: slab-use-after-free in iso_chan_del+0x302/0x320
-    Read of size 8 at addr ffff888105ca2188 by task kworker/2:1/50
-
-        CPU: 2 UID: 0 PID: 50 Comm: kworker/2:1 Not tainted
-    7.2.0-rc6-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
-        Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps
-    fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Workqueue: events iso_fixture_disconnect_work
+    BUG: unable to handle page fault for address: ffffffffc0408e10
+    #PF: supervisor instruction fetch in kernel mode
+    #PF: error_code(0x0010) - not-present page
+    PGD 80a9067 P4D 80a9067 PUD 80ab067 PMD 0
+    Oops: Oops: 0010 [#1] SMP KASAN NOPTI
+    CPU: 1 UID: 0 PID: 439 Comm: btmgmt Tainted: G           O        7.2.0-rc6-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
+    Tainted: [O]=OOT_MODULE
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    RIP: 0010:0xffffffffc0408e10
+    Code: Unable to access opcode bytes at 0xffffffffc0408de6.
+    RSP: 0018:ffff888110927838 EFLAGS: 00010293
+    RAX: 0000000000000000 RBX: 1ffff11022124f0c RCX: ffffffff85b1a1b6
+    RDX: ffff888117511d00 RSI: 0000000000000001 RDI: ffff888117598000
+    RBP: ffff888110927950 R08: 0000000000000001 R09: 0000000000000001
+    R10: ffffffff893d3057 R11: ffff888117511d00 R12: ffff888117598000
+    R13: 0000000000000001 R14: ffffffffc0408e10 R15: ffff888117599970
+    FS:  00007f15453f2040(0000) GS:ffff8881fd852000(0000) knlGS:0000000000000000
+    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    CR2: ffffffffc0408de6 CR3: 000000010b832005 CR4: 0000000000770ef0
+    PKRU: 55555554
     Call Trace:
      <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? iso_chan_del+0x302/0x320
+     ? set_quality_report_func+0x232/0x660
+     ? __pfx_set_quality_report_func+0x10/0x10
+     ? pmbd_gate_maybe+0x47/0x60
      ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? iso_chan_del+0x302/0x320
-     kasan_report+0xe0/0x110
-     ? iso_chan_del+0x302/0x320
-     iso_chan_del+0x302/0x320
-     iso_conn_del+0x19d/0x3c0
-     ? __pfx_iso_disconn_cfm+0x10/0x10
-     iso_disconn_cfm+0x78/0x120
-     hci_disconn_complete_evt+0x319/0xa30
-     ? find_held_lock+0x2b/0x80
-     hci_test_iso_disconn_event+0x85/0xb0
-     ? __pfx_hci_test_iso_disconn_event+0x10/0x10
+     ? pmbd_probe_hit_cookie+0xe7/0x1c0
      ? srso_alias_return_thunk+0x5/0xfbef5
+     ? pmbd_probe_hit_cookie+0xee/0x1c0
+     set_exp_feature+0xf7/0x260
+     ? set_exp_feature+0xf7/0x260
+     ? hci_sock_sendmsg+0x12b2/0x2400
+     ? __pfx_hci_sock_sendmsg+0x10/0x10
      ? srso_alias_return_thunk+0x5/0xfbef5
-     ? _raw_read_unlock+0x23/0x40
+     ? selinux_socket_sendmsg+0x160/0x280
+     ? sock_write_iter+0x4c0/0x550
+     ? __pfx_hci_sock_sendmsg+0x10/0x10
+     ? __pfx_sock_write_iter+0x10/0x10
+     ? __file_has_perm+0x25e/0x420
+     ? __pfx___file_has_perm+0x10/0x10
+     ? do_iter_readv_writev+0x59c/0x860
+     ? __pfx_do_iter_readv_writev+0x10/0x10
      ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __hci_dev_get+0x15d/0x280
-     iso_fixture_disconnect_work+0x67/0x290
-     process_one_work+0x908/0x19c0
-     ? __pfx_process_one_work+0x10/0x10
+     ? security_file_permission+0x26/0x80
+     ? vfs_writev+0x30e/0xc10
+     ? __pfx_vfs_writev+0x10/0x10
+     ? __pfx_do_epoll_wait+0x10/0x10
+     ? __pfx_do_epoll_ctl+0x10/0x10
+     ? do_writev+0x241/0x2f0
      ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_is_held_type+0x8f/0x100
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     worker_thread+0x65c/0xe40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __kthread_parkme+0x175/0x220
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_worker_thread+0x10/0x10
-     kthread+0x34f/0x460
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork+0x659/0x940
-     ? __pfx_ret_from_fork+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __switch_to+0x74f/0xf80
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork_asm+0x1a/0x30
+     ? do_writev+0x241/0x2f0
+     ? __pfx_do_writev+0x10/0x10
+     ? irqentry_exit+0xbe/0x820
+     ? do_syscall_64+0x115/0x6a0
+     ? entry_SYSCALL_64_after_hwframe+0x77/0x7f
      </TASK>
+    Modules linked in: [last unloaded: btintel(O)]
+    CR2: ffffffffc0408e10
+    ---[ end trace 0000000000000000 ]---
+    RIP: 0010:0xffffffffc0408e10
+    Code: Unable to access opcode bytes at 0xffffffffc0408de6.
+    RSP: 0018:ffff888110927838 EFLAGS: 00010293
+    RAX: 0000000000000000 RBX: 1ffff11022124f0c RCX: ffffffff85b1a1b6
+    RDX: ffff888117511d00 RSI: 0000000000000001 RDI: ffff888117598000
+    RBP: ffff888110927950 R08: 0000000000000001 R09: 0000000000000001
+    R10: ffffffff893d3057 R11: ffff888117511d00 R12: ffff888117598000
+    R13: 0000000000000001 R14: ffffffffc0408e10 R15: ffff888117599970
+    FS:  00007f15453f2040(0000) GS:ffff8881fd852000(0000) knlGS:0000000000000000
+    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    CR2: ffffffffc0408de6 CR3: 000000010b832005 CR4: 0000000000770ef0
+    PKRU: 55555554
+    Kernel panic - not syncing: Fatal exception
+    Kernel Offset: disabled
+    Rebooting in 1 seconds..
 
-    Allocated by task 521:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_noprof+0x2d7/0x770
-     sk_prot_alloc+0x13e/0x260
-     sk_alloc+0x37/0xb40
-     bt_sock_alloc+0x40/0x3b0
-     iso_sock_alloc.constprop.0+0x3a/0x360
-     iso_sock_create+0xc7/0x160
-     bt_sock_create+0x171/0x330
-     __sock_create+0x2c4/0x730
-     __sys_socket+0x141/0x210
-     __x64_sys_socket+0x77/0xc0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 521:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x307/0x580
-     __sk_destruct+0x64f/0x790
-     sk_destruct+0xb3/0xd0
-     __sk_free+0xdd/0x370
-     sk_free+0x51/0x80
-     iso_sock_release+0x46d/0x5b0
-     __sock_release+0xb8/0x270
-     sock_close+0x21/0x30
-     __fput+0x39f/0xa60
-     task_work_run+0x144/0x230
-     do_exit+0x834/0x2830
-     do_group_exit+0xc7/0x280
-     get_signal+0x20a9/0x2400
-     arch_do_signal_or_restart+0x94/0x6f0
-     exit_to_user_mode_loop+0xcf/0x570
-     do_syscall_64+0x4f0/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    The buggy address belongs to the object at ffff888105ca2000
-                                                                which
-                                belongs to the cache kmalloc-2k of size
-                                2048
-    The buggy address is located 392 bytes inside of
-                                                                freed
-                                2048-byte region [ffff888105ca2000,
-                                ffff888105ca2800)
-
-    The buggy address belongs to the physical page:
-        page: refcount:0 mapcount:0 mapping:0000000000000000
-    index:0xffff888105ca5000 pfn:0x105ca0
-    head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-    flags: 0x200000000000240(workingset|head|node=0|zone=2)
-    page_type: f5(slab)
-        raw: 0200000000000240 ffff888100042f00 ffffea00042cd010
-    ffffea00042c9210
-        raw: ffff888105ca5000 0000000000080005 00000000f5000000
-    0000000000000000
-        head: 0200000000000240 ffff888100042f00 ffffea00042cd010
-    ffffea00042c9210
-        head: ffff888105ca5000 0000000000080005 00000000f5000000
-    0000000000000000
-        head: 0200000000000003 fffffffffffffe01 00000000ffffffff
-    00000000ffffffff
-        head: ffff888105ca1000 0000000000000000 00000000ffffffff
-    0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff888105ca2080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-     ffff888105ca2100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-    >ffff888105ca2180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                          ^
-     ffff888105ca2200: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-     ffff888105ca2280: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-    ==================================================================
-
-Fixes: f764a6c2c1e4 ("Bluetooth: ISO: Add broadcast support")
+Fixes: ae7d925b5c04 ("Bluetooth: Support the quality report events")
 Assisted-by: LLM
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bluetooth/mgmt.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index cc1267cec8229..fd854838c39a3 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -196,8 +196,11 @@ static void iso_chan_del(struct sock *sk, int err)
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 23dd8a68c372f..3307a86709280 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -4917,6 +4917,13 @@ static int set_quality_report_func(struct sock *sk, struct hci_dev *hdev,
  
- 	parent = bt_sk(sk)->parent;
- 	if (parent) {
-+		/* Unlinking the child allows the parent to be freed. */
-+		sock_hold(parent);
- 		bt_accept_unlink(sk);
- 		parent->sk_data_ready(parent);
-+		sock_put(parent);
- 	} else {
- 		sk->sk_state_change(sk);
- 	}
+ 	hci_req_sync_lock(hdev);
+ 
++	if (hci_dev_test_flag(hdev, HCI_UNREGISTER)) {
++		err = mgmt_cmd_status(sk, hdev->id,
++				      MGMT_OP_SET_EXP_FEATURE,
++				      MGMT_STATUS_INVALID_INDEX);
++		goto unlock_quality_report;
++	}
++
+ 	val = !!cp->param[0];
+ 	changed = (val != hci_dev_test_flag(hdev, HCI_QUALITY_REPORT));
+ 
 -- 
 2.53.0
 
