@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049025;
-	b=2JGeNu9JaPBnFQROOeB0TnLTfyS1qrgAiBqEpB9ATtGaE7H712TFk4ew18KEkuAWeokl
-	 kmg+EeL/UWR7xVTJQomXzSoJq5e2asMfBGEiNClz9wCIvXbNlOyLDt337Hf7tWsRZjifn
-	 ooFo8d7aciWvACI6FYqsXOZLY1Gbh9LEArYXOAqI1w800SU1F47wo2SZmcW1IQl+1ZB2f
-	 7BHEAfxwklwjZNWSUzXIY0mf80LzSiSlIi2Ava5JSSUZSh7QKIyXstlfKeTouD0t2lr+4
-	 Nby1WwyXP0UXUuMso/nnSEbQBWk5mylxcrs/K36jd1e2Ld1aDSrAzKw77Mx+eOMtIcA==
+	t=1795049027;
+	b=fXxKHOWU4eXGadIWXmp287Jfj/uenmWnzxkcu3DHQxbqTtJ7MRKz5IUEkVHtMmadizaW
+	 NJul/gFFjqPaZLyczymQnylFNV+8B0V2ssGKBb3IOI2n9o2PHtTUvRYFoiRDemlMGA4IC
+	 zLuNCSZ0T8Ptl22Huan+hJnHBU+KlxHwyRw6Ux+r6C0JZSmykwNQ5XTEeZNS01nKI0MGp
+	 hdhJaLcYf0UwoIXPVjF598rn8LpmPbcgqaiLGC85RUoceiv9KBdM+yr7wniTPNr3L4lv7
+	 8WNfuQgRYacwLq0vy/rV0W9mtUXIQPHC/oS4jNSonaF4Cb4f7dTHCYMprAFkNycU6ew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049025;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049027;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oLwMI8UquJ3AvbLOKSqJ8eHIBq1o8oLAs6xKAZRpXVU=;
-	b=c9ptD/lXkA6JRlO6/4O6RBTtuHI4JJ36vpOMY3HMqzsSely2RYOzrING1kBs4SmFRVkn
-	 f7brYASOah/iDePiuoM7/SlBNgv/fhGU/Z45VNkhlQLZaym9BNOddEgcZm0RQqoBEWCNl
-	 EnmuMd0t15ONPVeMPvsooVh3t8jlKfMpPZpXJ8kP0CjrrgqC0HTBZmothOT4iTTARLE4r
-	 wqDi4RRFWS3nwo/jU0lqo4mCUVs5f9+18dGhZrR08rkBnyh3Wh1dlr2QoM9aQQhmuxrSD
-	 DekSbyyUJiT/HyFbe0nYjIWh79WnTZxUsZpLeBMpxjTpGmAOEkTv4Q6BQ/jJDwQ9uww==
+	bh=U+6qCyppFYGIBeCVAUWA5m6CeYplBtcWHXljAOP7EsU=;
+	b=H5sah2Zliar0jzCqd5Fq/OatbwK362dn5GNWGEBamf1lRs6L5/Ky6LNawyCTZrJo2scv
+	 B7vck4mIPsXLZ3F9aNbX+kLy7qSrFQ5n0N7rvZ+aGWtbobvwVK8qQ5tj0NcX/Wa4hLUIj
+	 r45upQY/t2SnmeiGpAk6V4Jr95kyMbo9IwFdONqYrwjtSpfl4tEUnTqWEBe4O9fDg8urR
+	 2WU4mSXU51jW5NHH3zOBhwvQw1k/F/P4WeLJzRD8ngmWFfGJYJEp0HCH89BrIcN5twyCI
+	 KuZ/YqNG1Zn0wGGGzi+tay4JH4Qw1j5XdKpet2iyq3lDmbLvpGoMJ+BEFIFPDM7Ovtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zWP2dO5Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c9CMLuVo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FAA606A31C;
-	Thu, 19 Nov 2026 00:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8422606A333;
+	Thu, 19 Nov 2026 00:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zWP2dO5Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDE71F000C4;
-	Thu, 19 Nov 2026 00:43:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c9CMLuVo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0907C1F000C4;
+	Thu, 19 Nov 2026 00:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049024;
-	bh=oLwMI8UquJ3AvbLOKSqJ8eHIBq1o8oLAs6xKAZRpXVU=;
+	s=korg; t=1795049027;
+	bh=U+6qCyppFYGIBeCVAUWA5m6CeYplBtcWHXljAOP7EsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zWP2dO5ZWsAFs0b449jYvxVAyNZKLnuVJ6of2tatYQ9o/6bn6PPC/BurIx+ogStA8
-	 ajVQST5nt/djcvkwEF2HEGKQMktnTG6LpIE7FO1BwgTQeSp6gUdOYPplwXeeCdyGRn
-	 CZKkZ9jWkil8agYwmynlZdCmfcFpVd9x6KyrJ6C0=
+	b=c9CMLuVo/6w+7h2k6JoHYKPNCnD06MZbQ/4Oa0pN2fK6xYOqrbXjS86ipqkCHrZMP
+	 3PkedXEKkRJJnyWDoQUlLnYANZDCUkN6VRDteV5DgMLF5FJJikGAw8nWEM+Rob6Cct
+	 sDU+yVAHcLpp4saNFPpoJWha6wvSH2BCq8td32FM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Stancek <jstancek@redhat.com>,
-	Nicolas Schier <nsc@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2204/2857] .gitignore: drop Module.markers
-Date: Wed, 18 Nov 2026 15:53:58 +0100
-Message-ID: <20261118150320.784758296@linuxfoundation.org>
+Subject: [PATCH 6.1 2205/2857] selftests/alsa: Do not take another controls event as our own
+Date: Wed, 18 Nov 2026 15:53:59 +0100
+Message-ID: <20261118150320.816784465@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,38 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Stancek <jstancek@redhat.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit a7d32fa14bc74d1786a2f0513b6f0815bd4be311 ]
+[ Upstream commit c9b0768669976a1beb0a1537b4257bd6b76dfbac ]
 
-commit fc5377668c3d ("tracing: Remove markers") deleted the marker code
-and the modpost output. Follow-up commit 8723eaeff59a ("Kbuild: clean up
-marker") removed it from clean and mrproper targets. Both are from 2009,
-so the file is hopefully no longer in anyone's tree, drop it from
-.gitignore as well.
+The wait_for_event() skips an event for a different control with a
+continue inside its do-while loop. But continue goes straight to the
+loop condition, and that tests the mask of the event just skipped. So
+a value event for another control ends the wait as if it were ours.
 
-Fixes: 8723eaeff59a ("Kbuild: clean up marker")
-Signed-off-by: Jan Stancek <jstancek@redhat.com>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Link: https://patch.msgid.link/8cbe913b9f80dc6fea73a9e3d51429db2b38905f.1790838401.git.jstancek@redhat.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+A driver that notifies a second control from its put() queues that
+event first. The core only sends ours once put() returns. So the wait
+returns early and leaves ours in the queue. The next test then
+reports it as spurious. And event_missing passes for a control whose
+put() said nothing changed, as long as it notified a neighbour.
+
+To fix this, clear the mask before skipping the event.
+
+Fixes: b1446bda5645 ("kselftest: alsa: Check for event generation when we write to controls")
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260930111534.3782264-2-sammiee5311@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .gitignore | 1 -
- 1 file changed, 1 deletion(-)
+ tools/testing/selftests/alsa/mixer-test.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/.gitignore b/.gitignore
-index d4da8ea943327..86056b79cae8e 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -65,7 +65,6 @@ modules.order
- /vmlinux-gdb.py
- /vmlinuz
- /System.map
--/Module.markers
- /modules.builtin
- /modules.builtin.modinfo
- /modules.nsdeps
+diff --git a/tools/testing/selftests/alsa/mixer-test.c b/tools/testing/selftests/alsa/mixer-test.c
+index a3fb3f708f9e7..fac8131296640 100644
+--- a/tools/testing/selftests/alsa/mixer-test.c
++++ b/tools/testing/selftests/alsa/mixer-test.c
+@@ -280,6 +280,8 @@ static int wait_for_event(struct ctl_data *ctl, int timeout)
+ 		if (ev_id != snd_ctl_elem_info_get_numid(ctl->info)) {
+ 			ksft_print_msg("Event for unexpected ctl %s\n",
+ 				       snd_ctl_event_elem_get_name(event));
++			/* The loop condition must not see the other control's mask */
++			mask = 0;
+ 			continue;
+ 		}
+ 
 -- 
 2.53.0
 
