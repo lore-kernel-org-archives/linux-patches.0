@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038401;
-	b=i3vIDoEIkRhPquKraIJaFMYsqKhJvrZ3Y2aj0AiW78q7S3NuGevc2jz23GWvxpzf3+bo
-	 wmXWODzubp8qMUnvyDEvc2/havd/Apq00f8A8hzd6AES0+MqigSD+TxG/96zCJzaJEZXL
-	 3Oyuc7BI1/e8NbMO73znqFk8WO5qy49wnmoqRKwOdlzKbdWvQGnXtXDRW8afIYCahY/Y1
-	 Ix9jo7tvj3OmWPxrB2VIkhBqvNfYG/cGh0Tvk9f7i3RsIr1OhDBw4M6vEz8YXzMXmdDy0
-	 zOwrMyFIkjnOhi5kuI/h422MOLXGNJ8m2UkfovSIK1KU7s7QeozPgoTHA85ileuyNRQ==
+	t=1795038403;
+	b=TN/2ivZAMs+378qSBzJ9Dh9xSwh4skB5/2PsLPNJI+IfZvMU8SzsKcTRSph41U5w0HXH
+	 40SLGx6Us0O86Sa2OOtMNEKk++cA+b2UWde16O0ML7HcvpQMCVL5kGBurDq2nPn/8JGWN
+	 Y5kSm1qUZFzvGDfUFJ3yyv5LEQgEeRzrG7KVWUFOXVQp/hil19jRiDJev7M9Jcw2/WBo8
+	 QwCO4BD4DJzEiuh4saHUTEbA1b7PXR3luJA/QmSmyugb0VSxo7YjFUt2vomAX2n+llIMU
+	 k6brBHXH0OG1uakFS53zSnQzOBEcVYBDWtCEdSy1XEjdIJQHWOFAAC7ozVJpcspHwfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038401;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038403;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3z63yVBbbH8Z3nbScYJSgjtzSkks3dW/OMTEx7nSGE4=;
-	b=x4z94SDTMQ0L+OKvQ3LP8HY1/90liaD2wRHKdSrylqFKkO7L7NPdRr092/HvayUImTvW
-	 DOMhqqZwU1TG4QydDlIj/ed0/HbLRskqsKN2Z/KqVSB+UtqnKFkw3BtPYIzj85i05kLmO
-	 lxj3nym6eOFZ5rvAZrD5CjM546yXMf+dGPj/BhV3I9njFeO0LzIo1Uh/ngxfcRlsmYT5D
-	 RRkvnssN3048IUVn0+l7PEd1ydnpZFs4bENNKuuMwFnJxcOsC69n4/LvReQIK2uKu+fTu
-	 qQgMf4TyM+yzcIYfnZWgi5iWnoNdwKb3/qfLNZtNsCMw3aPKqlN8QIa1icRIM6RfcjA==
+	bh=JF4Wy0uSA4XvxkUGqagoW/mg/Vu+U9iasVgziIFc6Hk=;
+	b=4RjuxghJjQaSJw58fhWE87mWozmkFk2tKdDj72rcB8hASK4CTfbuSCoQDvyAXF0bwkhL
+	 aMGANjXCZHWBX/4/xuf+CP/jdy0jlBwcRH+nVE4gAGkwF4niCNszP+IsRNQIFuoj2PRBJ
+	 8XRlmbqmg5H8mcD7K1u5gT08tqcPi2Sv1l4sHiEJVPalOkPVXacfK0J7Hh6OLJSU+KoIQ
+	 MOfAdBkMVK3BCkRYYfKW/pAbw0PjDJC4SSAH4uwPY5RmmzdypprrEo8AmYyaEtQKje9Km
+	 XeZUlfbk0T7C18ys8qSdVJA/c6LhaDeQFKRFw5i7kg1bJZyIkZ6KuK35MD2TeYzdNFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V7tqI0bI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f1w4Vv7s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1947C606A31C;
-	Wed, 18 Nov 2026 21:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD259606A31C;
+	Wed, 18 Nov 2026 21:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V7tqI0bI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726CA1F000C5;
-	Wed, 18 Nov 2026 21:46:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f1w4Vv7s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238E81F000C5;
+	Wed, 18 Nov 2026 21:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038401;
-	bh=3z63yVBbbH8Z3nbScYJSgjtzSkks3dW/OMTEx7nSGE4=;
+	s=korg; t=1795038403;
+	bh=JF4Wy0uSA4XvxkUGqagoW/mg/Vu+U9iasVgziIFc6Hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V7tqI0bILgaknFUhCq0OkwrEKBDSixu5n5jAHbIWR7iLex6dbEizaybhbf9ZhZ+HQ
-	 wrOjdEGMdtd04zcGmzqMbPRcVbmwGhUZAeDtq7EeziUnZQ1F8FRdtAGjazE4M7yjRV
-	 jSml0RNfOY2XJsd0lvoDk15KckG3AdYWgkkbz43c=
+	b=f1w4Vv7s/qziIiy1L1xJwUV4lJjk1aG2vZ+QI/FR5B/OBM79ao/4vFFFIB4vY0FL0
+	 KfmVF78DfJ/5B1UMCOjaj2uyqvgED9hl8skQEY4aVB57AEDUCzA9jN69Q48X/NKg0Y
+	 n5owU/roaX2VuFstRBkwMuhrPkf5qFb/Shq3PiEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragan Simic <dsimic@manjaro.org>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Geraldo Nascimento <geraldogabriel@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1730/3318] PCI: rockchip: Drive at 2.5 GT/s, error other speeds
-Date: Wed, 18 Nov 2026 15:39:12 +0100
-Message-ID: <20261118150413.767253661@linuxfoundation.org>
+Subject: [PATCH 6.6 1731/3318] dm-bufio: fix non-working memory limit
+Date: Wed, 18 Nov 2026 15:39:13 +0100
+Message-ID: <20261118150413.796792110@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,96 +67,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geraldo Nascimento <geraldogabriel@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 84d08ff902f1ec01177fef1a21a38934927f5aee ]
+[ Upstream commit 1190dbeaeaa026a4879e675b8556a150c36a7ced ]
 
-Configure the core to be driven at 2.5 GT/s Link Speed and ignore any other
-speed with a warning. Also drop the 5.0 GT/s Link Speed defines from
-Rockchip PCIe header.
+The function evict_old is supposed to loop and evict buffers while the
+allocated size is above the threshold. However if it hits one bufio
+client that is empty, it stops and doesn't attempt to scan other
+clients.
 
-The reason is that Shawn Lin from Rockchip has reiterated that there may be
-danger of "catastrophic failure" in using their PCIe with 5.0 GT/s speeds.
+This commit fixes it, so that it skips empty clients and retries up to
+dm_bufio_client_count times.
 
-While Rockchip has done so informally without issuing a proper errata, and
-the particulars are thus unknown, this may cause data loss or worse.
-
-This change is corroborated by RK3399 official datasheet [1], which states
-maximum link speed for this platform is 2.5 GT/s.
-
-[1] https://opensource.rock-chips.com/images/d/d7/Rockchip_RK3399_Datasheet_V2.1-20200323.pdf
-
-Fixes: 956cd99b35a8 ("PCI: rockchip: Separate common code from RC driver")
-Reported-by: Dragan Simic <dsimic@manjaro.org>
-Reported-by: Shawn Lin <shawn.lin@rock-chips.com>
-Link: https://lore.kernel.org/all/ffd05070-9879-4468-94e3-b88968b4c21b@rock-chips.com/
-Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
+Fixes: 450e8dee51aa ("dm bufio: improve concurrent IO performance")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/7421df7a7b7778ee99363cccfdfabbfa8aa6ab5e.1781622998.git.geraldogabriel@gmail.com
-[ sashal: adjusted patch context for the older Rockchip PCIe driver implementation ]
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: Claude:claude-opus-5
+[ sashal: Adapted the oldest_buffer assignment to use params.last_accessed. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rockchip.c | 14 ++++++--------
- drivers/pci/controller/pcie-rockchip.h |  3 ---
- 2 files changed, 6 insertions(+), 11 deletions(-)
+ drivers/md/dm-bufio.c | 41 +++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 37 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-rockchip.c b/drivers/pci/controller/pcie-rockchip.c
-index c07d7129f1c7c..6a970dc766d4d 100644
---- a/drivers/pci/controller/pcie-rockchip.c
-+++ b/drivers/pci/controller/pcie-rockchip.c
-@@ -66,8 +66,10 @@ int rockchip_pcie_parse_dt(struct rockchip_pcie *rockchip)
- 	}
+diff --git a/drivers/md/dm-bufio.c b/drivers/md/dm-bufio.c
+index 8f121a7e87bca..b8addbc3a3430 100644
+--- a/drivers/md/dm-bufio.c
++++ b/drivers/md/dm-bufio.c
+@@ -2499,6 +2499,13 @@ struct dm_bufio_client *dm_bufio_client_create(struct block_device *bdev, unsign
+ 	init_waitqueue_head(&c->free_buffer_wait);
+ 	c->async_write_error = 0;
  
- 	rockchip->link_gen = of_pci_get_max_link_speed(node);
--	if (rockchip->link_gen < 0 || rockchip->link_gen > 2)
--		rockchip->link_gen = 2;
-+	if (rockchip->link_gen < 0 || rockchip->link_gen >= 2) {
-+		rockchip->link_gen = 1;
-+		dev_warn(dev, "invalid max-link-speed, limited to 2.5 GT/s\n");
++	/*
++	 * A client with no buffers yet is not holding the oldest buffer in
++	 * the system; leaving this zeroed would claim exactly that and keep
++	 * the client pinned at the front of dm_bufio_all_clients.
++	 */
++	c->oldest_buffer = jiffies;
++
+ 	c->dm_io = dm_io_client_create();
+ 	if (IS_ERR(c->dm_io)) {
+ 		r = PTR_ERR(c->dm_io);
+@@ -2828,9 +2835,23 @@ static unsigned long __evict_a_few(unsigned long nr_buffers)
+ 	count = __evict_many(c, &params, LIST_CLEAN, nr_buffers);
+ 	dm_bufio_unlock(c);
+ 
+-	if (count)
++	if (count) {
+ 		c->oldest_buffer = params.last_accessed;
+-	__insert_client(c);
++		__insert_client(c);
++	} else {
++		/*
++		 * We evicted nothing, so 'oldest_buffer' tells us nothing new
++		 * and the client keeps its old, possibly very stale, value.
++		 * Requeue it at the back rather than by that value, otherwise
++		 * __insert_client() would put it straight back at the front
++		 * and every subsequent call would pop this same client again,
++		 * never reaching any of the others.
++		 *
++		 * This leaves the list slightly out of order, which is fine -
++		 * it is only ever an approximation.
++		 */
++		list_add_tail(&c->client_list, &dm_bufio_all_clients);
 +	}
  
- 	rockchip->core_rst = devm_reset_control_get_exclusive(dev, "core");
- 	if (IS_ERR(rockchip->core_rst)) {
-@@ -237,12 +239,8 @@ int rockchip_pcie_init_port(struct rockchip_pcie *rockchip)
- 		goto err_exit_phy;
+ 	return count;
+ }
+@@ -2855,11 +2876,23 @@ static void evict_old(void)
+ {
+ 	unsigned long threshold = dm_bufio_cache_size -
+ 		dm_bufio_cache_size / DM_BUFIO_LOW_WATERMARK_RATIO;
++	int unproductive = 0;
+ 
+ 	mutex_lock(&dm_bufio_clients_lock);
+ 	while (dm_bufio_current_allocated > threshold) {
+-		if (!__evict_a_few(64))
+-			break;
++		if (__evict_a_few(64)) {
++			unproductive = 0;
++		} else {
++			/*
++			 * This client had nothing to give.  Try the others
++			 * before giving up: one idle client, or one whose
++			 * buffers are all held, must not stop us evicting
++			 * from everybody else.  Stop once a whole sweep of
++			 * the client list has freed nothing.
++			 */
++			if (++unproductive >= dm_bufio_client_count)
++				break;
++		}
+ 		cond_resched();
  	}
- 
--	if (rockchip->link_gen == 2)
--		rockchip_pcie_write(rockchip, PCIE_CLIENT_GEN_SEL_2,
--				    PCIE_CLIENT_CONFIG);
--	else
--		rockchip_pcie_write(rockchip, PCIE_CLIENT_GEN_SEL_1,
--				    PCIE_CLIENT_CONFIG);
-+	rockchip_pcie_write(rockchip, PCIE_CLIENT_GEN_SEL_1,
-+			    PCIE_CLIENT_CONFIG);
- 
- 	regs = PCIE_CLIENT_LINK_TRAIN_ENABLE | PCIE_CLIENT_ARI_ENABLE |
- 	       PCIE_CLIENT_CONF_LANE_NUM(rockchip->lanes);
-diff --git a/drivers/pci/controller/pcie-rockchip.h b/drivers/pci/controller/pcie-rockchip.h
-index 049ad984a4164..4702caac56114 100644
---- a/drivers/pci/controller/pcie-rockchip.h
-+++ b/drivers/pci/controller/pcie-rockchip.h
-@@ -37,7 +37,6 @@
- #define   PCIE_CLIENT_MODE_RC		  HIWORD_UPDATE_BIT(0x0040)
- #define   PCIE_CLIENT_MODE_EP            HIWORD_UPDATE(0x0040, 0)
- #define   PCIE_CLIENT_GEN_SEL_1		  HIWORD_UPDATE(0x0080, 0)
--#define   PCIE_CLIENT_GEN_SEL_2		  HIWORD_UPDATE_BIT(0x0080)
- #define PCIE_CLIENT_LEGACY_INT_CTRL	(PCIE_CLIENT_BASE + 0x0c)
- #define   PCIE_CLIENT_INT_IN_ASSERT		HIWORD_UPDATE_BIT(0x0002)
- #define   PCIE_CLIENT_INT_IN_DEASSERT		HIWORD_UPDATE(0x0002, 0)
-@@ -184,8 +183,6 @@
- 	(((x) & PCIE_CLIENT_DEBUG_LTSSM_MASK) == PCIE_CLIENT_DEBUG_LTSSM_L2)
- #define PCIE_LINK_UP(x) \
- 	(((x) & PCIE_CLIENT_LINK_STATUS_MASK) == PCIE_CLIENT_LINK_STATUS_UP)
--#define PCIE_LINK_IS_GEN2(x) \
--	(((x) & PCIE_CORE_PL_CONF_SPEED_MASK) == PCIE_CORE_PL_CONF_SPEED_5G)
- 
- #define RC_REGION_0_ADDR_TRANS_H		0x00000000
- #define RC_REGION_0_ADDR_TRANS_L		0x00000000
+ 	mutex_unlock(&dm_bufio_clients_lock);
 -- 
 2.53.0
 
