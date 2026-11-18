@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016746;
-	b=Y1kcT4X9AEXumoELf3fSzfjbChhWF3tZsnLWLrturb7qT7qaiDRZ2xJpWqWOQLowyIGg
-	 s9E6lLJYTBSwLq0RITxyMGozWkYiTPoXhAcTSet7KbLGMt4vZgv1wOwCphWOKj3MDoghS
-	 /jfr+YT0QnPOyZw4AbP494qif0cb3q2lJt+JdQBX0vnLn1U8xeQgemomGqw6EVeMq9rCn
-	 3oMMX5Gjs304VU4LS4SZdwohOpKmcLQE67WwYaWCQ5ZL85wOnk2WTrqpZpxmZczV3BtaQ
-	 dw/d0NBpe7Q91A6iaK23RIvaZtJ7rq3J9Evx67P92GA9dDF/RMtFP7X1vB1VtebLhpQ==
+	t=1795016748;
+	b=bUjY9WVswx7vQooo3HTF25ZGzTHCqKcTb1EJB6J/ur5KRd2CUD+s3uHnamdZmhB3JO90
+	 Z5aqOh/37oz8BT7y29R+t6Ds3/0QUjip5dwcpee6ty24h1XtAIDZVjH6/KUloJnW+CDwA
+	 aFPxMop7EZa0RSydGMcjRcSVeaQejVe7xng2W5CPehR2ls70kH/jKVCDdpthMtJbuN+u1
+	 IuaeqLCyoMu1q8uEdXkSm+5xr1+tXBxntq4KvL24gXR1wUSdbyMn2FwPGJ50B6S9pU7xP
+	 TEAN7xGzhJJc2QpDcTKEYp1usLfAmFHOYg+DAZ6hJTXxkNeeC/OGMcdv+XflyNBRSaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016746;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016748;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JJsG5fu4XfSdcUjVNr5qAWqKihCDNrRIPZR4itTkIso=;
-	b=fcLvre97kk+mHr+VAJSalbgEIulwth5WoTuDPgMGErY0kf/FhCvQDrcb/GZ1rINTY5U0
-	 67it7C1XAnn2PJhJzAyPbDNGPdA/GkHLXRJ4Luvf5T4nsWz8kLkv2Ppc57R+G/c4cT8id
-	 DT7NMnPYPgDC4elEXGgLM8C2ZR7IZ2M/ZWZsfm2eEElz/sUTO+6UnHqLMyUXYIUSeQ6n9
-	 iW1DrDdQbLrxwNTFjjdLNYqAgbu40M7Sh/gPdvC+t8nbbf4nu5pIl7Vzhk08FHxerpqJZ
-	 FZmJeEqYeOYGMk/je1gBUHRkPg0YlGHd3WT0AwVBUdK/5gZhdY5hv4zySUGoBHF2klQ==
+	bh=s9VsOHs/EGYAbpjlyZobjhuQ2VM1fHe8rG1MGYWSSS0=;
+	b=3kfTQMrutBrTdoeh0jKRhZigGbOnQ9F1E9Ljuub54PHvysP76RzTRROD/oHN50KM4DAz
+	 yhZZB90rEJ1jtG4/ld5xFU73xqk+l3y46phYdeShPGymq8i39vm+EcCzYN5StXrrj2niG
+	 xqsEtXooqVkuvFPhP5Mw3466yEfcvjHhX8rXKnwJ0wRo7Z9t4+wd5fKtpok1KvEBlqIl6
+	 8Puqwv6UMG858HWSf+/Nwk4CfeVvgqHO0ATrUzaz6Q/kQHbTS9YtCmT7zhW5DE9yTODjn
+	 XypGcP0fSZM9IJKU9LUixV8QZ72V4E3DlKQdZXkNppriOMIEJj0Q273tExcoKNGaHTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fpPGk2UN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MRkndlmR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3AF606A31C;
-	Wed, 18 Nov 2026 15:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CF3606A320;
+	Wed, 18 Nov 2026 15:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fpPGk2UN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F1B1F000C4;
-	Wed, 18 Nov 2026 15:45:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MRkndlmR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E0F1F000C4;
+	Wed, 18 Nov 2026 15:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016746;
-	bh=JJsG5fu4XfSdcUjVNr5qAWqKihCDNrRIPZR4itTkIso=;
+	s=korg; t=1795016748;
+	bh=s9VsOHs/EGYAbpjlyZobjhuQ2VM1fHe8rG1MGYWSSS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fpPGk2UNV1BCHdiWIwfR9ulN2R5S+peHedzK/tv8Rs7Ms17TBe5jUVPBjoS/GmUWF
-	 X9W07RifN5aTqPGM7c1Hu6bgWis6OuFNtfliVv6uaMSXLZZ+um46x8tG5J+yQn4zD/
-	 VaLWiF14PbCatXS7RhyUmRzx8OOg+FCI8bLihQJ0=
+	b=MRkndlmRhBiR1/rjBhprLNWtc2yMILJXZ1PIEAGsqG185O86mR32aZcrGqqrOtxRA
+	 fD2o7q1/6Kc036pk+5Du0jSMJDIun5WO2dxeZKROz6WNjUc1LdhiVlx66B4WdYGsh/
+	 XypEbhgSqWTTJL23PNitBpsPVI72joRJeUfrC1kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Lee Jones <lee@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Hui Su <sh_def@163.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0637/2651] leds: pca9532: Check i2c_smbus_read_byte_data() return value
-Date: Wed, 18 Nov 2026 15:31:17 +0100
-Message-ID: <20261118150310.621189232@linuxfoundation.org>
+Subject: [PATCH 7.3 0638/2651] perf synthetic-events: Fix schedstat event lifetime handling
+Date: Wed, 18 Nov 2026 15:31:18 +0100
+Message-ID: <20261118150310.655983116@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,56 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Hui Su <sh_def@163.com>
 
-[ Upstream commit 1b75f038e5f71ed32ce6593b5763f9776ec58a25 ]
+[ Upstream commit cf3d239189da0bd5122ae38c62f5fefdb744eb86 ]
 
-Coverity report INTEGER_OVERFLOW (tainted_data_return ->
-cast_underflow -> overflow) in pca9532_getled().
-pca9532_getled() stored the return value of i2c_smbus_read_byte_data()
-into a char and used it directly to compute the LED state without
-checking for an error. i2c_smbus_read_byte_data() returns a negative
-error code on failure. On an I2C read error the negative value was
-assigned to an unsigned type, triggering an integer underflow/overflow,
-and a meaningless LED state was returned to the caller.
+perf_event__synthesize_schedstat() has two event lifetime issues.
 
-Read the value into an int, check for the error, and fall back to
-PCA9532_OFF while emitting a warning when the read fails.
+After a successful iteration, event is freed but retains its value. If
+the next iteration starts with an unrecognized schedstat record type,
+neither synthesizer assigns a new value. The stale pointer then passes
+the NULL check, may be passed to process(), and is freed again.
 
-Fixes: 28c5fe99016d ("leds: pca9532: Extend pca9532 device tree support")
-Assisted-by: VeroCoder:vero-1 [cli]
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260727-led-fix-v1-1-d635c5037109@nxp.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+In addition, when user_requested_cpus filters out a synthesized event,
+the continue path skips free(event), leaking the event.
+
+Make event local to each loop iteration so it always starts as NULL.
+Also avoid the filter continue and unconditionally free each synthesized
+event at the end of the iteration.
+
+Fixes: c3030995f23b3d35 ("perf sched stats: Add record and rawdump support")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Hui Su <sh_def@163.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pca9532.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ tools/perf/util/synthetic-events.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
-index b2e081c8f1393..1133fa348e246 100644
---- a/drivers/leds/leds-pca9532.c
-+++ b/drivers/leds/leds-pca9532.c
-@@ -298,12 +298,15 @@ static enum pca9532_state pca9532_getled(struct pca9532_led *led)
- 	struct i2c_client *client = led->client;
- 	struct pca9532_data *data = i2c_get_clientdata(client);
- 	u8 maxleds = data->chip_info->num_leds;
--	char reg;
--	enum pca9532_state ret;
-+	int reg;
-+	enum pca9532_state ret = PCA9532_OFF;
+diff --git a/tools/perf/util/synthetic-events.c b/tools/perf/util/synthetic-events.c
+index 0c150193cca83..2eac2310a01da 100644
+--- a/tools/perf/util/synthetic-events.c
++++ b/tools/perf/util/synthetic-events.c
+@@ -2817,7 +2817,6 @@ int perf_event__synthesize_schedstat(const struct perf_tool *tool,
+ 				     struct perf_cpu_map *user_requested_cpus)
+ {
+ 	char *line = NULL, path[PATH_MAX];
+-	union perf_event *event = NULL;
+ 	size_t line_len = 0;
+ 	char bf[BUFSIZ];
+ 	__u64 timestamp;
+@@ -2858,6 +2857,7 @@ int perf_event__synthesize_schedstat(const struct perf_tool *tool,
+ 	 * for filtered out cpus.
+ 	 */
+ 	for (ch = io__get_char(&io); !io.eof; ch = io__get_char(&io)) {
++		union perf_event *event = NULL;
+ 		struct perf_cpu this_cpu;
  
- 	mutex_lock(&data->update_lock);
- 	reg = i2c_smbus_read_byte_data(client, LED_REG(maxleds, led->id));
--	ret = (reg & LED_MASK(led->id)) >> LED_SHIFT(led->id);
-+	if (reg >= 0)
-+		ret = (reg & LED_MASK(led->id)) >> LED_SHIFT(led->id);
-+	else
-+		dev_warn(&client->dev, "failed to read LED register: %d\n", reg);
- 	mutex_unlock(&data->update_lock);
- 	return ret;
- }
+ 		if (ch == 'c') {
+@@ -2872,12 +2872,12 @@ int perf_event__synthesize_schedstat(const struct perf_tool *tool,
+ 
+ 		this_cpu.cpu = cpu;
+ 
+-		if (user_requested_cpus && !perf_cpu_map__has(user_requested_cpus, this_cpu))
+-			continue;
+-
+-		if (process(tool, event, NULL, NULL) < 0) {
+-			free(event);
+-			goto out_free_line;
++		if (!user_requested_cpus ||
++		    perf_cpu_map__has(user_requested_cpus, this_cpu)) {
++			if (process(tool, event, NULL, NULL) < 0) {
++				free(event);
++				goto out_free_line;
++			}
+ 		}
+ 
+ 		free(event);
 -- 
 2.53.0
 
