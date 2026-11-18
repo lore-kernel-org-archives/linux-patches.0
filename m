@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049353;
-	b=UNeftyvfDt5NqC8oDWC5l0MoPonkV+kEsfM/AhVKGzJT0Hb/LYQlOaMB5FPT+HOAxcJT
-	 3d4stGMDYKPMseCRj26swDDeCH3IkbWvPDsunPC5KEairximLh4FAtOQOVP7helmSlsGl
-	 jCQanhVm0ZUc5+OXty0pclQsU9gXcxkudVPfufBLXyegXvxUsRcg8asezArwMGmVNSKYG
-	 RX27cbCzItLFHNk+8H1zJKMWMrPg20HxezbVnrKSUtps4apFls/DtrGd96u9Xs3VylW9M
-	 6M5HrVxRg+ClJ3N3dFJfZeMyb16mmgmFIOZnTEeLxsHDTMDRAZ9w5C8/zuyCwgLcZRw==
+	t=1795049355;
+	b=GDBafYVl5hcwQkHvxp/GHVF1t+qhN3rbyTvG+291oJRuZ6BpIFelRC+oz+XGksxoRlAN
+	 Qmlq21EWWF15mkkyLdC5AqvozX3Q3LezrMCEd7z6nvNXRMQ7JfUaadVQJY+ZQowTTYmj7
+	 fn8LvcdyFlfIGR3/Gcy74vXgwADwXgMvO/q3asOlCEThgGH/TMQE5TJQKmF/6bn9qi9j5
+	 WczZTGHnrz6FSQyiTzGFH+6J3wF53+fxPk+Wjh71e0wXqZ5Z4M+ikhV3khDaXkDLPDARZ
+	 QjNUfFiJAUqI1JW4o6WPCBSR58pvWXREyQRX0Jenohtw2Yid+B99CuYukDzsXD66eow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049353;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049355;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QTG43dKiOfSnARixBkCbmdpbr2wVUYXgLT93mzREn9g=;
-	b=Jd52bdYFH4Nw+S0SGWJjALMvA1a78bCkrWZwmCCL4U7KmuPZHvXbhPVo6g3LqGgqN3Si
-	 0qAbsn/KPsu1ywm5TGsOq1oErbg1n2ax5i/xoB3HhuFLg5Nqelh2S0H25K50Cc+vF7P8f
-	 h/ScAsIUZuYTnZG3VHXtdb38xPP9oNzQe90xJn15fFFwAW0ZWxm9dxE0M9eLtSFwI+lJT
-	 djFbxSRibGyYevTQHeATCM7wwzHdUAaJMV1RU9a3rOgo02S+9junTRB5NIpHhtORi5c+U
-	 McdlqSIAxXY/IekGfgBOYIZDpytoF2uBekFE/R2X+yfqHcQup+6+ovUWPnE5vwgOIfg==
+	bh=ZZaqpzW4yqKG7zLy0PXs9FqNP4uhG/q6zDX5jbaUzOk=;
+	b=Ctlm4GZvRJlIlbc5WQNqcK6IKa9YzGHZWyiwRzaBKa1XvQAHQnlfycZoB40JD4atR2GW
+	 6l1RCF/clWgcS/BDdOdwbBwDFO9dHL9/41Z6eGANusjH/8szRV803Zr1nzw/83fNIs0J2
+	 otmU2b4RD+6/Ere59SsHO8VnnX9h7jL65i/K3UhuMF4snpg1FN6670sO3Quu58mCQNwon
+	 ZDjqrdKV+oS4wzt9HghvCZcrksaRzf0v+g07OsgxXF2YH4TwB8kD9YkIbkN5TgsBElKPi
+	 i81k1nZrNiuvOar4LtLR1gqiszxnrAIzQVm/f5W4KvcVU9uVbD4aHnor1Au5r09qG9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCETFlKs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mNepOU42;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3F0606A32C;
-	Thu, 19 Nov 2026 00:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC50606A32A;
+	Thu, 19 Nov 2026 00:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCETFlKs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8271F000C8;
-	Thu, 19 Nov 2026 00:49:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mNepOU42
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B001F000C8;
+	Thu, 19 Nov 2026 00:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049352;
-	bh=QTG43dKiOfSnARixBkCbmdpbr2wVUYXgLT93mzREn9g=;
+	s=korg; t=1795049355;
+	bh=ZZaqpzW4yqKG7zLy0PXs9FqNP4uhG/q6zDX5jbaUzOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CCETFlKsq8vXrSPWLKWl2PoRLUjLGjDZM7ZwM/WoT39NW0uzG97K08maUY8NMz88h
-	 WtKJ6s1a4WJRamS4s/4X6EAxZ4/mf4pDJ3EeSP9ZCZgo3qix+CdLR7LjaSBLzROj6a
-	 k2PyuCKNKq5HaWt0QFFmPLsRaCIzM4TqUOSow6cw=
+	b=mNepOU42QD+Jk1G2qXCzFxhem+lnOeZIQUpwFxwscbFL8b9LVUoN/uG/eKCN90OhC
+	 wz0jdfWYK+ILGCC8FDEyfcCWaddsUSLSZyirf8bhAcEEN1k/ImNcdLnWaSon5LjvOd
+	 HIUTU6/oZmpHIWFGYSmyC0ra5bjcw4Do2xShO9f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	sashiko-bot@kernel.org,
+	Frank Li <Frank.Li@nxp.com>,
 	Linus Walleij <linusw@kernel.org>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2280/2857] dt-bindings: dma: dma40: Restore disabled-channels
-Date: Wed, 18 Nov 2026 15:55:14 +0100
-Message-ID: <20261118150323.552804995@linuxfoundation.org>
+Subject: [PATCH 6.1 2271/2857] dmaengine: ste_dma40: Validate memcpy configuration
+Date: Wed, 18 Nov 2026 15:55:05 +0100
+Message-ID: <20261118150323.219649729@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,54 +72,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 38d97b1122e02f6b8859e660990aaeda1c32e00f ]
+[ Upstream commit 0ac4a90c4805b41013044fdefff051ae59a54302 ]
 
-The conversion of the DMA40 binding to YAML omitted the optional
-disabled-channels property from the original text binding. The driver still
-parses this property, but additionalProperties: false rejects any device
-tree using it.
+d40_config_memcpy() builds a default memcpy configuration without passing
+it through d40_validate_conf(). A dev_type supplied through the
+memcpy-channels device tree property can therefore bypass the bounds
+checks added for client configurations.
 
-Restore disabled-channels and constrain it to the physical channel range.
-Also constrain memcpy-channels to the limits enforced by the driver and
-reject duplicate channel entries in both properties.
+The generic DMA direction enum assigns zero to DMA_MEM_TO_MEM, unlike
+DMA40's old private enum. Allow memory-to-memory directions in the
+validator so checking the generated configuration does not reject all
+memcpy channels.
 
-Fixes: 23fbc87c8ae6 ("dt-bindings: dma: Rewrite ST-Ericsson DMA40 to YAML")
+Validate the generated memcpy configuration before deriving logical
+channel registers or allocating the channel.
+
+Fixes: 2c2b62d5d911 ("dmaengine: ste_dma40: Replace ST-E's home-brew DMA direction defs with generic ones")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
 Assisted-by: LLM
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-Link: https://patch.msgid.link/20260918-dma40-dt-disabled-channels-v1-1-0f691109d8d3@kernel.org
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-24-89f595e8851d@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/dma/stericsson,dma40.yaml  | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/dma/ste_dma40.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
-index 69094dfd9284f..3f754fc17c382 100644
---- a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
-+++ b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
-@@ -145,8 +145,22 @@ properties:
-     items:
-       maxItems: 1
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index 6f0a918e65812..684ca58c03591 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -1766,7 +1766,8 @@ static int d40_validate_conf(struct d40_chan *d40c,
+ 	    d40c->base->gen_dmac.num_event_groups)
+ 		invalid_dev_type = true;
  
-+  disabled-channels:
-+    $ref: /schemas/types.yaml#/definitions/uint32-array
-+    minItems: 1
-+    maxItems: 31
-+    uniqueItems: true
-+    items:
-+      maximum: 31
-+    description: Physical channels that cannot be used by the DMA engine.
+-	if (!conf->dir) {
++	if (conf->dir != DMA_MEM_TO_MEM &&
++	    !is_slave_direction(conf->dir)) {
+ 		chan_err(d40c, "Invalid direction.\n");
+ 		res = -EINVAL;
+ 	}
+@@ -2061,12 +2062,17 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+ static int d40_config_memcpy(struct d40_chan *d40c)
+ {
+ 	dma_cap_mask_t cap = d40c->chan.device->cap_mask;
++	int ret;
+ 
+ 	if (dma_has_cap(DMA_MEMCPY, cap) && !dma_has_cap(DMA_SLAVE, cap)) {
+ 		d40c->dma_cfg = dma40_memcpy_conf_log;
+ 		d40c->dma_cfg.dev_type =
+ 			d40c->base->plat_data->memcpy_channels[d40c->chan.chan_id];
+ 
++		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
++		if (ret)
++			return ret;
 +
-   memcpy-channels:
-     $ref: /schemas/types.yaml#/definitions/uint32-array
-+    minItems: 1
-+    maxItems: 8
-+    uniqueItems: true
-+    items:
-+      maximum: 63
-     description: Array of u32 elements indicating which channels on the DMA
-       engine are elegible for memcpy transfers
+ 		d40_log_cfg(&d40c->dma_cfg,
+ 			    &d40c->log_def.lcsp1, &d40c->log_def.lcsp3);
+ 
+@@ -2074,6 +2080,10 @@ static int d40_config_memcpy(struct d40_chan *d40c)
+ 		   dma_has_cap(DMA_SLAVE, cap)) {
+ 		d40c->dma_cfg = dma40_memcpy_conf_phy;
+ 
++		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
++		if (ret)
++			return ret;
++
+ 		/* Generate interrupt at end of transfer or relink. */
+ 		d40c->dst_def_cfg |= BIT(D40_SREG_CFG_TIM_POS);
  
 -- 
 2.53.0
