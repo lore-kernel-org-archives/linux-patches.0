@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052608;
-	b=yGVegQzjaRxHJlFydYm/LMKvcTcoL4YK2sNLSqgchM6ohWec1jAdVRFy9GYp80xw7L2j
-	 xpnVUZQ6fGsNa4m6ZZil3Mrg2SASBLDNTeHLNHa+21MGetTKCueLh2VIRf90aJime6YzR
-	 ZZwFjrizfAdvBzwcx9xUCBI2LzbCnah4RKvEeDq6uyufv8VtwxULEDU3DymHVEEJM19gu
-	 NrotnLRfSu0/3ia4dYlKPyq0vz7ZS+t/5joBO3RuUsm6qN37gIGaFP7AcREQZijtmMDQS
-	 Eut+C7yf4ZSGdHzh7BHk6hjlg5miz1QINSMGYAwwsXq2RsIiE3LXFCV++Xlx72Cs6MQ==
+	t=1795052610;
+	b=q2yWNZKboexuEwJXKU6v0NbVW8WI2tXon2uu/YJmgjBhCMiK4v37Scs1ctOEMjQhRLpc
+	 J3hW1AXCBGfBFihrROlK45slBZ+xq5GO6AWPmRLQbUayRpyzyt5mkyDG+gLFaBXSNVtJC
+	 G161f2+X6WPmXSqTfxwVTK4vyi25CcoHe9ekXWK2OXLcwAv9/aeVLUrYXE+dn/KTzNht0
+	 Rk4l2qWZ4YGSIwaIXwswASkQg5dOBGU1v6Q5s9DFZYg4oNp8A9FrA+6nDixqgL2fVIlqI
+	 rG5hz5Uc3GQ/YLFRNP7KNuJnqd/HmVwAvzkNHsBjJhNteio4hNVYESPvoOU4lm68BPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052608;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052610;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yLmQcdS4xpGm3h2EqbWpy+2+beoiI+1Ni1EEmx3wHcQ=;
-	b=I8Xaj5B0Cg9VyMzQgmFzhFhNHT+wM3cnKG3mX9pjuaFMdVrUk78fX3Daqy2Eau9eb+jA
-	 PMCqlFSYcwfluTW82hdLJaAZ/rdjehv1RLbRT6Uln3EhWKVHWyavkC2Y+ZW9Pd77X2NbY
-	 UJDAUDGUWUNBQ7dsAlYCDS2vmPBcJJ8vn8X4Kdb5Mue8HoA6SQ7flwhYYZCT4dsOoPPR0
-	 lFp5Q1J4lu6xFaD2ZXBUrFDJ/JNTXPBGPuxVDy5EElqh/9tTpeGBHgv21U1FXl2u7Q5JN
-	 2HlAhrsa7t0gQpjBZP1ZggHRXdwXNLjbdGqXH4SsbJgDz7KQIFfT1oh5ae8qarK+9Wg==
+	bh=7jTame540xXhmUXLGjpLJ2U2WJVEC+Be6FCzU8+leps=;
+	b=wnZNQN96Pbe4KNlPFwHLc9cp/p7BbKTW3uECLWiKXJi04Yqb2f27sAdBpzZTV2zwNU6Y
+	 meAGwviNuX5D+qg9Fi4XZ8D0A324/ZW+MJ+LnbimVwDsS0uB37u7RI6iwz9oUymyz3x5G
+	 vE1TSYLin1iCC1vq+wMjPnuCXS2ewkZ/6AEg1ISlR0hhM7sQfvMyHE1DLt7qlk36NiEzL
+	 z1OfkE5nJkCMXc/D6PgtT9QhpWq0DXO/JmtxLtG5ysofTkkiSY96swS4iB+xfDeuOG0EG
+	 /K8vQTmMlnK+LSwUZxO/ugB68w1pLwVG4oKOnOdZRWkdyH+9POUcs/i8Vhwp2p51xRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QDH9QmLU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Unlj0FoC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148DE606A31C;
-	Thu, 19 Nov 2026 01:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00E3606A31C;
+	Thu, 19 Nov 2026 01:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QDH9QmLU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A0D1F000C4;
-	Thu, 19 Nov 2026 01:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Unlj0FoC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0A871F000C5;
+	Thu, 19 Nov 2026 01:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052607;
-	bh=yLmQcdS4xpGm3h2EqbWpy+2+beoiI+1Ni1EEmx3wHcQ=;
+	s=korg; t=1795052610;
+	bh=7jTame540xXhmUXLGjpLJ2U2WJVEC+Be6FCzU8+leps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QDH9QmLUSQbEpPS3PdKnbqR/Bd7LCG/PapHCBhANUhe2fkXhOx2M3fSGL2sRMnsnO
-	 mpsmnspa33RSeQF9JlimEqevsf1+RiCl9rIO4c2eq62V+3r3nO6kq0O5o1/oZhNam9
-	 tT6y0R4bbMI3T7cE7eknTfGDGETeQoX/b1Q8j2AI=
+	b=Unlj0FoCLVMD14KyGql+3o01tAD26+Wx1TzLvuKokBHszE3huHrvvbP2cFJ78BiH3
+	 uZ8rVH2pf9zoo/jhX0jnX6VPEa3vDJ0UUbM3JE19GUTkFOnLjByOpJUFNAT2C5uRkC
+	 oFFEDvg0ju6tGTY1NmHrX5kxh4DI9E1/DLXaynkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0622/2214] fbdev: ssd1307fb: check for fb_deferred_io_init() error
-Date: Wed, 18 Nov 2026 15:38:18 +0100
-Message-ID: <20261118150036.265696913@linuxfoundation.org>
+Subject: [PATCH 5.15 0623/2214] fbdev: xen-fbfront: check for fb_deferred_io_init() error
+Date: Wed, 18 Nov 2026 15:38:19 +0100
+Message-ID: <20261118150036.304948973@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,12 +70,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit 81ae1f9a6c850efab3e5dec6b7c9aa5c587f92b7 ]
+[ Upstream commit 5b234b0dd29d79207c059c7b40851dd1e934fa3a ]
 
 fb_deferred_io_init() allocates deferred I/O state, populating
 info->fbdefio_state, or leaving it NULL if an error occurs.
 
-Currently ssd1307fb_probe() ignores its return value.
+Currently xenfb_probe() ignores its return value.
 
 Therefore if an error arises in fb_deferred_io_init() (for instance, due
 to an allocation failure) info->fbdefio_state is left NULL.
@@ -91,26 +91,34 @@ Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/ssd1307fb.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/xen-fbfront.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/ssd1307fb.c b/drivers/video/fbdev/ssd1307fb.c
-index 212494b0a4ba8..f35c097525b0d 100644
---- a/drivers/video/fbdev/ssd1307fb.c
-+++ b/drivers/video/fbdev/ssd1307fb.c
-@@ -753,7 +753,11 @@ static int ssd1307fb_probe(struct i2c_client *client)
- 	info->fix.smem_start = __pa(vmem);
- 	info->fix.smem_len = vmem_size;
+diff --git a/drivers/video/fbdev/xen-fbfront.c b/drivers/video/fbdev/xen-fbfront.c
+index 37e3f226f78ce..83505ff49c361 100644
+--- a/drivers/video/fbdev/xen-fbfront.c
++++ b/drivers/video/fbdev/xen-fbfront.c
+@@ -464,7 +464,11 @@ static int xenfb_probe(struct xenbus_device *dev,
+ 	}
  
--	fb_deferred_io_init(info);
-+	ret = fb_deferred_io_init(info);
-+	if (ret) {
-+		dev_err(dev, "failed to init fb deferred io: %d\n", ret);
-+		goto fb_defio_error;
+ 	fb_info->fbdefio = &xenfb_defio;
+-	fb_deferred_io_init(fb_info);
++	ret = fb_deferred_io_init(fb_info);
++	if (ret < 0) {
++		xenbus_dev_fatal(dev, ret, "fb_deferred_io_init");
++		goto error_cmap;
 +	}
  
- 	i2c_set_clientdata(client, info);
+ 	xenfb_init_shared_page(info, fb_info);
  
+@@ -486,6 +490,7 @@ static int xenfb_probe(struct xenbus_device *dev,
+ 
+ error_fb:
+ 	fb_deferred_io_cleanup(fb_info);
++error_cmap:
+ 	fb_dealloc_cmap(&fb_info->cmap);
+ 	framebuffer_release(fb_info);
+ error_nomem:
 -- 
 2.53.0
 
