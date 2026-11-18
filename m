@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023935;
-	b=0Nrfim/R+7xYwzCEf2uuZwt03AJA4zjmymC8rZZ+6EVzc9gjR0NBetdf2Tei/XurMg9Y
-	 E7GSKXlQjw0af4juEDtcL74HqobnpQMkUm8onUUW1ueFsGdAXpOCqiFAzgpBXbrqYsEgT
-	 zFIwlXrSVJHS62H9yb2dAOXTJi4qt/xkpxZ4CqgXQ7I84olC6txU3Tb3oMz+gJ2ba23ns
-	 2nZAeHFrZNWzcnX5EX90XX/Dnl+sD8wTbjng8OAEhQmYfLhSSL4RHsiQI5Z3N/pS3GNAv
-	 Z/KvPfwJRGhahcN7tEUg/qp0R7hDnzTcL0mgebQ/WAcIU6gcd8CXuBpDAkaJQ6w9lOQ==
+	t=1795023938;
+	b=QUhyKArA5k+Ks6GcUJfHVN7QLS1eJYeT38zGtS6rsGWonyE1Vmk3iMN9gV6Vh761TTa0
+	 lPhK/SeihHuilNnfEAYOPrsboXVwUq5M9t5NE3h5tJ+Ct0gE0uZrEcNoj2kZtpEA5lVeU
+	 v7aMUwuNCY5CzU6FJAFGZlfoqnWaIz53ZqadmwEENQ/liRLond9Kpd3rVDKxsyhI4Kgtk
+	 OHqAxaS9jmdIxD3I2ddDWs9zDv0QVM9jGn6iOwRh2MunxmYrZvMrigWX7btAK5zKsVxFw
+	 lvsds4ej2cmS7tmuCjgP7jj3upt6PMyz8u45v6BgVyp3n614gLTBBxZgOlZREoz3qFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023935;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023938;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wkyA2BljqeiLkbqoSSSGPCuRqxq6HTku7TJdjRZU+lo=;
-	b=d7ZsPHT+NxljvvghlATJeuuyVGquUkqkFn8dwqLadKYnWgVkKqGeldfiyTUjUQdJTmZJ
-	 2sbcvfUdptUyHXv5zMUoEd4TuDNpWyJa/FOYur06bPO0++8LZmBmlyxSRtW2DG1JxF+Pc
-	 xVEdbDaEKmo24T8AaaKkXXerJYVnHQyknpTLuRtI6cu+PwTqArTTPrplF2i5meFa5Ckea
-	 IbTdscatfF4Hf4R9x3UVNk1hIG16PSX0THpe3Ba2vw0qZ6jRg4sF2SG37ZDP98HUhCQEP
-	 Rw8b3DF3qA2e9hUH92RAF0J/bY+mjMEDw/otZOdcstSypuy15Arfak9l0bCctoNhNdw==
+	bh=/eMZ57ldgiXPJhS2Tu4IKfG6oa18Kfd0g2/10wcKHTQ=;
+	b=DZrXeaQj6l7wBUO/siW0pbVWGWds+W7i2BuZ/76TG5WNa1sFD3Bvhe0Nvt+XQaxyAhag
+	 LoVQWa1/4ZHvUOpcI2a6bq9kQxp2vYgVfIjoGIShCSEg/vxE6SJJqijDUXlOkH9LunXUR
+	 N3VEbekbTY1AHsXXWrBn2Qi4QBhDag2TRioyYZAelVpE6/cnLnq2h0beeiolCozwzCsh6
+	 u78zicvuanNTdzCkU+1DibKtpuqnx1QlNZefwQUFgFOOdZ+P1Vel4utmnjLqy45wGSE9I
+	 1nwH/z3ddeKvqnozwZeSBcIfgtRUsAoymmgB8Kc+a2LML3qWowsuUElnQbpcl2mPl4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=znDQzczu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y3MpL04O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904D3606A32C;
-	Wed, 18 Nov 2026 17:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D342606A320;
+	Wed, 18 Nov 2026 17:45:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=znDQzczu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66BB1F000C4;
-	Wed, 18 Nov 2026 17:45:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y3MpL04O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96EB11F000C4;
+	Wed, 18 Nov 2026 17:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023935;
-	bh=wkyA2BljqeiLkbqoSSSGPCuRqxq6HTku7TJdjRZU+lo=;
+	s=korg; t=1795023938;
+	bh=/eMZ57ldgiXPJhS2Tu4IKfG6oa18Kfd0g2/10wcKHTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=znDQzczurfhxfTBforX7Po9JUPIu22AOBEHrugqaJlV+tnZ2x6XZ7KBhGwD8WLXyO
-	 co/cSxAyFgiVlNSTb2jr+E5J1h3PZU88MY/J/eEN0O7xkww49jdPxzYBWcve7PFcsv
-	 Kntk4jwM4WsB5oPkLuS8aJIvkIW9yZRQgNSkQV6A=
+	b=y3MpL04OglxnqYBMQkU3U4o9IXXhrLlOtBY2+czZUiFovqtKyX5I6enP77WANOcEY
+	 jKgX+zTwX3roZxY6NiT1I53EtZHN6PHZezGFFYPT6H+ZbxmH3uA7VLLkh83iSfG6gj
+	 x+TolxOYKf21CgBkopZLESK0zjUEO5EXrtAGMVFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Triet Hoang <triet.hoang.dev@gmail.com>,
-	Stefan Wahren <wahrenst@gmx.net>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
 	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0545/2151] clk: raspberrypi: Handle cpufreq device registration failure
-Date: Wed, 18 Nov 2026 15:38:00 +0100
-Message-ID: <20261118150141.826534545@linuxfoundation.org>
+Subject: [PATCH 6.18 0546/2151] clk: versatile: clk-icst: Fix node reference leak in of_syscon_icst_setup()
+Date: Wed, 18 Nov 2026 15:38:01 +0100
+Message-ID: <20261118150141.859509248@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,39 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Triet Hoang <triet.hoang.dev@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit e98e3d712023859af7cd78bb7fdb87ea3a9ffb83 ]
+[ Upstream commit c90a50d07f0c38c62ce13a60806ab5e3b841f70f ]
 
-Check the return value of platform_device_register_data() when
-registering the raspberrypi-cpufreq device and propagate the error
-if registration fails.
+of_get_parent() takes a reference on the syscon parent node. The
+reference is intentionally kept on the success path, but the error paths
+return without dropping it, leaking the node reference. Release the
+reference before returning on the error paths.
 
-This prevents the clock driver from reporting a successful probe
-when the cpufreq device could not be registered.
-
-Signed-off-by: Triet Hoang <triet.hoang.dev@gmail.com>
-Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
-Fixes: e2bb18347c8e5 ("clk: raspberrypi: register platform device for raspberrypi-cpufreq")
+Fixes: d430819d69a5 ("clk: versatile-icst: add device tree support")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/bcm/clk-raspberrypi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/versatile/clk-icst.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/clk/bcm/clk-raspberrypi.c b/drivers/clk/bcm/clk-raspberrypi.c
-index 1a9162f0ae31e..eb08dcf7f827f 100644
---- a/drivers/clk/bcm/clk-raspberrypi.c
-+++ b/drivers/clk/bcm/clk-raspberrypi.c
-@@ -516,6 +516,8 @@ static int raspberrypi_clk_probe(struct platform_device *pdev)
+diff --git a/drivers/clk/versatile/clk-icst.c b/drivers/clk/versatile/clk-icst.c
+index 86ca04ad9fab0..8d198ab248402 100644
+--- a/drivers/clk/versatile/clk-icst.c
++++ b/drivers/clk/versatile/clk-icst.c
+@@ -516,16 +516,19 @@ static void __init of_syscon_icst_setup(struct device_node *np)
+ 	map = syscon_node_to_regmap(parent);
+ 	if (IS_ERR(map)) {
+ 		pr_err("no regmap for syscon ICST clock parent\n");
++		of_node_put(parent);
+ 		return;
+ 	}
  
- 	rpi->cpufreq = platform_device_register_data(dev, "raspberrypi-cpufreq",
- 						     -1, NULL, 0);
-+	if (IS_ERR(rpi->cpufreq))
-+		return PTR_ERR(rpi->cpufreq);
+ 	if (of_property_read_u32(np, "reg", &icst_desc.vco_offset) &&
+ 	    of_property_read_u32(np, "vco-offset", &icst_desc.vco_offset)) {
+ 		pr_err("no VCO register offset for ICST clock\n");
++		of_node_put(parent);
+ 		return;
+ 	}
+ 	if (of_property_read_u32(np, "lock-offset", &icst_desc.lock_offset)) {
+ 		pr_err("no lock register offset for ICST clock\n");
++		of_node_put(parent);
+ 		return;
+ 	}
  
- 	return 0;
- }
+@@ -552,6 +555,7 @@ static void __init of_syscon_icst_setup(struct device_node *np)
+ 		ctype = ICST_INTEGRATOR_CP_CM_MEM;
+ 	} else {
+ 		pr_err("unknown ICST clock %pOF\n", np);
++		of_node_put(parent);
+ 		return;
+ 	}
+ 
 -- 
 2.53.0
 
