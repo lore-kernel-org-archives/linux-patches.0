@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051938;
-	b=E2ENGbM0+TOC6gtBemTF1fuEU+7nu0oFmhr32g7HrZKTNzbbxg/soD7HrGTOMEAa4RX5
-	 /AvVsB5/G33Qs9sa94Y+38cMShK5OcV0ayn3RdDRFlZ6yN4k8v4V9hVWu/BI8Hn822ias
-	 J6NmNgY4LGqG6zH9ReXelgOJmDTPpqS7rZAVD9tbIjCnr6ywFoIQ4sEoO3yhWy3/1xD7a
-	 SAkEWdoq9Y/xpcTBCQXZjwNnAdvvj03+2BqLXaT7++X+9vmQQNTgWWsFMzkaK2yCtcH98
-	 6iBIzn7b1hkw8Wmy5mOiBRGtR+GSCmKwjP1lVqKX1Uu3fJYv2PEvg8DTQk1t78NX+yg==
+	t=1795051941;
+	b=Qenkbfz+BIBMoBaNWstlBUldRIPQOLfJsrcn1QQfU40huRyG2cad39B4ihc8HT6Wljks
+	 9rEsCMqYXHiIrL3sPeMQEg33jX7VlCDS6MFJ0/U9jyS9V0d8LtFz8oXyosgidAmSIAzC/
+	 vV8pOCgojSLRD50Xl2qvPsgk2Klto0LOwYBA8W4wqWSWEpAy6LI1ozLQUCxdVcVd/hwaM
+	 CFjN3l3OVdCs+EAfNkJRIxkJZxFi6i7JN7GzyNgwP5hnxj8HLtmgnQhjdPZKOq24niSFI
+	 gPdy0i+z17ItGRHCnxgsDglRUgpgVn71wb48VPhdcWKefr+M3v0i/2ux26OElrVdEpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051938;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051941;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6yC1k6VXT4LkjPz5N1x9xlO8JT/DRVThr4GkU0WIaSA=;
-	b=x58FAz86/Fxf00NwRI2ryFVhwhHsdfWb3oOxf8aiIdAtoUFobmMYzWzH6p8WUXVVTtWI
-	 hEsIFthGKkXxQg8hHVZ46EEQ3CltGk9mX+kxVgLWeoSwi7tLQ6kupDS0Z7pPA9zocntkM
-	 BlA2rDoZEbNFRJQ7E4Etd2V+lXrFN0kuQABGcktvOnZ82RorG1kTZKoBzAA43QL0vcCft
-	 V07hJ/Eq+gFK3aFyfRosnCH3gRJn0vJDrEDDVMwCU8Vllej4dt4Boc/ABwYiRkhPykbdL
-	 acJL/125lKOlZkueDL/SSHQppwXev7vQ6mLxEL9M9b47R5DIZt+hwBwOGFM7JDSlA+g==
+	bh=JDpnYaog61dQTRZ6n/2vwSPjG74qrt0wkdO2p7E7Dtw=;
+	b=rMJZZyVBMDCn2Ncola5pE30ask8ohALIVVC+esg18HAPALbKo7R3cS6yO4bcbe6FuwZ7
+	 G7bT00Kcmz/CG5NQM1TTWsEvW58HNCHPqHjs+hEycVR+x0X4ElwroGA5Zysh6CTDdgaQj
+	 cxkM5m9qGAnTv2QK3ihPItfSnU5IROwZBzAvvt2wW8m3rjKHrW6KU+rJ9kevDWeNiGzIr
+	 RSMAVo+KQ9TbW15z4vAmT8RWAaNE7ez37lzabaW57XVpc4nHutHKpUK5BDzamtZNBAvOB
+	 QvaCzN62XIJgFeUWUqFRPIO0EzqXoTvD2t4+vWg4hXTBbHdjiyIP/e5oDesnz2qyPeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SHVo0KC6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fugLb8rK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341A7606A320;
-	Thu, 19 Nov 2026 01:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EF7606D68C;
+	Thu, 19 Nov 2026 01:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SHVo0KC6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4BE1F000C4;
-	Thu, 19 Nov 2026 01:32:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fugLb8rK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A081F000C4;
+	Thu, 19 Nov 2026 01:32:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051938;
-	bh=6yC1k6VXT4LkjPz5N1x9xlO8JT/DRVThr4GkU0WIaSA=;
+	s=korg; t=1795051940;
+	bh=JDpnYaog61dQTRZ6n/2vwSPjG74qrt0wkdO2p7E7Dtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SHVo0KC67ochQPYkz0O+KDjsNHf9s5nta+T1LFve7M9MY1IxekmDhUUCUXrXN1VGc
-	 onZikYQW6CNlRLIQgnwhNRvk4DwFsFA3B7eGFEpM2SYXFiBsZlX/7G8EVSHaBSSxdn
-	 e3WTG4acncrWzD7hEYc7qwsXGkwwCcf6QuRTYf58=
+	b=fugLb8rK0qfT9T4ASnX3x0x6k+nz3B0PfFYTUy2/8A5Y7i6KzlIIRTlmkaZBGKK/N
+	 JSBVmqAFt6YKazHdQ5qH1r3NrrF6vRVU1+f1hzEL+vsMGJqOGM4g9DyBFgNJawx0t1
+	 FN/oX6qyf9uDYLdsqbgKYdnfRFh1ntboZQyL6WEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 5.15 0386/2214] HID: roccat: savu: reject short special reports
-Date: Wed, 18 Nov 2026 15:34:22 +0100
-Message-ID: <20261118150026.121690240@linuxfoundation.org>
+	Yang Wang <kevinyang.wang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Yang Wang <lkevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 0387/2214] drm/amdgpu/powerplay: Align get_tonga_state_array() header with prototype
+Date: Wed, 18 Nov 2026 15:34:23 +0100
+Message-ID: <20261118150026.159470482@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,39 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit 76c51fdc825a0486f8d88ff896d39acec8f377b4 upstream.
+commit 4986757d3207383c052689532e505edccc6df7c8 upstream.
 
-The raw event callback runs before HID core validates and zero-pads the
-report.  It passes the buffer to a helper which inspects data[0] and, for a
-special report, reads the complete struct savu_mouse_report_special.  A
-truncated report can therefore cause an out-of-bounds read.
+The function header above get_tonga_state_array() still refers to
+check_powerplay_tables() and does not describe all of the function
+parameters.
 
-Require enough data for the special report before calling the helper.
-Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
-sequence") added the same kind of raw-event length validation to hid-asus.
+Update it to match the current function prototype and include the
+missing parameter description.
 
-Fixes: 6a2a6390cf09 ("HID: roccat: add support for Roccat Savu")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Fixes: 1ac24df78c56 ("drm/amd/pm: Validate Tonga PowerPlay state array bounds")
+Cc: Yang Wang <kevinyang.wang@amd.com>
+Cc: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Yang Wang <lkevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-roccat-savu.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/hid/hid-roccat-savu.c
-+++ b/drivers/hid/hid-roccat-savu.c
-@@ -179,6 +179,9 @@ static int savu_raw_event(struct hid_dev
- 	if (savu == NULL)
- 		return 0;
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
+@@ -1502,11 +1502,12 @@ static int init_thermal_controller(
+ }
  
-+	if (size < sizeof(struct savu_mouse_report_special))
-+		return 0;
-+
- 	if (savu->roccat_claimed)
- 		savu_report_to_chrdev(savu, data);
- 
+ /**
+- * check_powerplay_tables - Private Function used during initialization.
+- * Inspect the PowerPlay table for obvious signs of corruption.
++ * get_tonga_state_array - Get the Tonga state array from the PowerPlay table.
+  * @hwmgr: Pointer to the hardware manager.
+  * @powerplay_table: Pointer to the PowerPlay Table.
+- * Exception:  2 if the powerplay table is incorrect.
++ * @state_array: Pointer to the returned Tonga state array.
++ *
++ * Return: 0 on success, negative error code on failure.
+  */
+ static int get_tonga_state_array(struct pp_hwmgr *hwmgr,
+ 	const ATOM_Tonga_POWERPLAYTABLE *powerplay_table,
 
 
