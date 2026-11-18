@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041422;
-	b=FVJRrNYj2jU9Som52eTZ1YwJH3Mm6yLS4Lc69FB2keNXsnNtFaI+FkiK3m5aNJU8Jdx4
-	 GePchhGdpIWezP0IfOS1swKvNWSzQa8yR8O7qHsk7Nr9fpR5EAPOEnUYT3lqlckLUKqx9
-	 SyLGLCe0cSRkiNxriBtl+taD21B9mCxw4Od47BhrG2ye/VwaMcBqvKvDB6ZCK6eQq3Goi
-	 W7e3Z2x4G219iN1jjmFXlnpPxeHw+1ZdiOegROIx2himkRZDP/DKyUdy2NCToAi59FPWL
-	 VUYjnAN04JFPPdrWlSh8kgeRqfrU/R+1j4/ResGwQmfRJJ84p7jpKheKyrvh2e5P0Mw==
+	t=1795041424;
+	b=3yJ/luyNJ3gCckImAFTL+5tQY1jLhk584M4AtIDDa15oeRelp138SJPzi/tIfMLBXwF1
+	 gnpnrFqAxscZDHViIZd2y64WWF724keBcf07iv5QEPOVufM7+c9J8EICp5FJ0Vyn5GnP7
+	 eb2XWwW9GmKvYo38mvLDRS+zhgS5Bzk+74oOpSJ2SXEk1AnqKoBq3uMq7dkrv3pvTtp1N
+	 Az72M6jZAPovr+T3ZVsH/wP0hURkHPrNZ8uKYXJnoT6HuRfv3G1wu5RB08fyc83GAHWDh
+	 zTHufIhe3zWHandW706ul/WoDZ2StYGjaIUeAN7dNnBW3FgfgjFksQUngHInracyCdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041422;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041424;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=dvKrGaoeQHIr5IlDTjzR/EONvR9eRTX/gxaIVw2k4KQ=;
-	b=PXRikFTnVH4JhSUCjBkdXWZpvSAfc+lWEuPQseV//Eb6qbrH1AG2Sl48+bpl3RcsIid7
-	 xF59ETKl/s9t8L+Aa2TAdhf7KPJia6qc22yTNFxyMUr0HKf+NCCtDr4cdLsPVRTfPy4z4
-	 Muo9hI25a5z96NHwg1daAx3ppmWSmo5SJAukD/vqap+dtsIfXnuHQbPOmJYHPE2skbA//
-	 mmihGytKUIszddhmC7nyTDPVB2GykmL+wCReYl4sR3Y1uy1XdYSUAsA/yPhlEmjdqvW4I
-	 uwScvi1Q9HJmPm6fOuKIIoBiTbJbbNJ/ihMUj1Q3qF9ZFntLik3EmZbC9BLMXx8Qzuw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=dv9JPYbNkMeuQdIPAAlX1vUHgMUqSHjjQfyGfBffFaw=;
+	b=qmkM/YgjBOIU1JJ9SyA5MWM1hPsT/Q59HTDEjmYjfSMjhth4VoX1ARItjjiniiWBOzwt
+	 73/M2RCSHtDlI35ObuyTSR+ZyWS4GpLbOUBB6ZwkxdQ4PMSJWBFxlb2DBPwwZ3jRlc8rH
+	 2N16WxH9TI2S43Uq2Mpasp3xfKR39AryUuylPym3Mbl9n4zcptekcTHMAGkmkTzyPu7BO
+	 AzXgKewmzj4F11Czdk0eruBp9iUsOnZovRSoNtD66KuafEl7OIIpspuqNRuFZrSs380fU
+	 l0My3DQZJ/1YrMbu7ZgRw6Bx5S3sVoikVdHH25up1rskQX4sZLhlEQZ6eiVP6KR+czw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tv0fKCGv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y7dUk7kX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCBA606A31C;
-	Wed, 18 Nov 2026 22:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14D6606A31C;
+	Wed, 18 Nov 2026 22:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tv0fKCGv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622B91F000C4;
-	Wed, 18 Nov 2026 22:37:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y7dUk7kX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F0D91F000C4;
+	Wed, 18 Nov 2026 22:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041421;
-	bh=dvKrGaoeQHIr5IlDTjzR/EONvR9eRTX/gxaIVw2k4KQ=;
+	s=korg; t=1795041424;
+	bh=dv9JPYbNkMeuQdIPAAlX1vUHgMUqSHjjQfyGfBffFaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tv0fKCGvg6m+iE5sYfB8LGJqqHYESsE8jcM06wIW59MRPyGq/STZ7DEAqDlCkQmmp
-	 +M+QPorqvYffFXkwMYMQhYPaE62S7fUA1nU2+v7gJP65L0k9HE9MlzVyz6opr8avIy
-	 S00KvxARk7suSLmxj3ZVs6U6SLMdaJi2o6cmabmE=
+	b=Y7dUk7kXlr1AOo7P8GoqDfo5Bd3KA8R/HI9Y6qrugL2j66SZiZ+4CSXntT3Jin+F1
+	 CWNxD++fKZBPVIoQ5G2oKkP2kE/vbIRW3K+FGu1MmbZ4VhrdtAzELUFRg6EnisrhdG
+	 1Jy3W+sNJymWNpWtLonoch3icW5EBvvrVdNuweXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alvin.sipraga@analog.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yuho Choi <oss.patchbox@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2757/3318] ASoC: codecs: rt5659: propagate GPIO errors
-Date: Wed, 18 Nov 2026 15:56:19 +0100
-Message-ID: <20261118150443.447612792@linuxfoundation.org>
+Subject: [PATCH 6.6 2802/3318] bus: arm-cci: Drop cci-control-port node reference in __cci_ace_get_port()
+Date: Wed, 18 Nov 2026 15:57:04 +0100
+Message-ID: <20261118150444.735111759@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,53 +62,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Yuho Choi <oss.patchbox@gmail.com>
 
-[ Upstream commit c1e321bd5ce6ae3702db65837cfe0c792634d603 ]
+[ Upstream commit 810ccc792193909ba9bbb4246e0eb0de14dad724 ]
 
-devm_gpiod_get_optional() may return an error pointer, including
--EPROBE_DEFER, but rt5659_i2c_probe() does not handle these errors
-for the ldo1-en GPIO and does not check for errors for the reset GPIO.
+__cci_ace_get_port() looks up the device's "cci-control-port" node with
+of_parse_phandle(), which returns the node with its reference count
+raised, and only compares the pointer against the probed ports.  Neither
+the match nor the no-match return releases it.
 
-Check the return values and propagate GPIO lookup errors.
+Drop the reference on both paths once the comparison is done.
 
-Fixes: d3cb2de2479b ("ASoC: rt5659: add rt5659 codec driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Reviewed-by: Alvin Šipraga <alvin.sipraga@analog.com>
-Link: https://patch.msgid.link/20261009112204.33199-2-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: ed69bdd8fd9b ("drivers: bus: add ARM CCI support")
+Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
+Link: https://lore.kernel.org/r/20260923164122.596910-1-oss.patchbox@gmail.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5659.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/bus/arm-cci.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt5659.c b/sound/soc/codecs/rt5659.c
-index 8b0691cd66bd9..ee1e3e3a3c8bf 100644
---- a/sound/soc/codecs/rt5659.c
-+++ b/sound/soc/codecs/rt5659.c
-@@ -4112,10 +4112,14 @@ static int rt5659_i2c_probe(struct i2c_client *i2c)
- 	rt5659->gpiod_ldo1_en = devm_gpiod_get_optional(&i2c->dev, "ldo1-en",
- 							GPIOD_OUT_HIGH);
- 	if (IS_ERR(rt5659->gpiod_ldo1_en))
--		dev_warn(&i2c->dev, "Request ldo1-en GPIO failed\n");
-+		return dev_err_probe(&i2c->dev, PTR_ERR(rt5659->gpiod_ldo1_en),
-+				     "failed to get ldo1-en GPIO\n");
+diff --git a/drivers/bus/arm-cci.c b/drivers/bus/arm-cci.c
+index ab9b49451f8f2..25a741e48573f 100644
+--- a/drivers/bus/arm-cci.c
++++ b/drivers/bus/arm-cci.c
+@@ -167,9 +167,12 @@ static int __cci_ace_get_port(struct device_node *dn, int type)
+ 	cci_portn = of_parse_phandle(dn, "cci-control-port", 0);
+ 	for (i = 0; i < nb_cci_ports; i++) {
+ 		ace_match = ports[i].type == type;
+-		if (ace_match && cci_portn == ports[i].dn)
++		if (ace_match && cci_portn == ports[i].dn) {
++			of_node_put(cci_portn);
+ 			return i;
++		}
+ 	}
++	of_node_put(cci_portn);
+ 	return -ENODEV;
+ }
  
- 	rt5659->gpiod_reset = devm_gpiod_get_optional(&i2c->dev, "reset",
- 							GPIOD_OUT_HIGH);
-+	if (IS_ERR(rt5659->gpiod_reset))
-+		return dev_err_probe(&i2c->dev, PTR_ERR(rt5659->gpiod_reset),
-+				     "failed to get reset GPIO\n");
- 
- 	/* Sleep for 300 ms miniumum */
- 	msleep(300);
 -- 
 2.53.0
 
