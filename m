@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051728;
-	b=RZJxDaSylh2iGc3sz9RzZX/ZNRApAwFgvN/DBhOqc+pA4lbRXlAqE9/yi0KveyFKrnOv
-	 NzwR0KKLaFxMuwfNt5ljQ9tax+jAXyyGbnfhUdYOc7nx8+4iGknhVjeOseYx2K/GL7Ot0
-	 o/c3ZQh5VWxCqaC4dy7RYcjsBNFwlRVsJNB02irZeBrn6cUR83FHwtzgp4P1VHnyp6PMT
-	 jVp+uYZqGGMQx+v74HMlJWD8MBILWpSR/4ea8pHfocNVTXOGd0X5HGaDpKU7GPidVs0w3
-	 kmwm3Cv2HUSDn9Wod0apZoPU0kaPf6vKAJFXIcO/5iEshaTKfhtkF285ZB8++Vzi5Gw==
+	t=1795051731;
+	b=rRsgqCfFpjfF5FPXDXZwHni4Fh7xOw59vaX0cfgVHPEOpfja2bpgm7TqPkFqZOYq12LZ
+	 cjkAfqv1NFegH5GlSHytFr4mIKZZHa2bhv/2OO8DlXWCIGEDkSbCUHjfPguYI2anghh33
+	 h2RVoI0+Ks/utcxkvuUu0fPylLeqzWoXyziV1uEHlHca1ASCl5Iu6gcfvHWuq3L2h+rHQ
+	 Ewg72x3d0GgnsRSbITy7r4XIDPsQSvzIN9p6bs3WkOmRwutTi1KSgNmVWBV0oZ2MoiAwk
+	 YCVZf5rMFiUtv+Vd8F0vrMAF+zetpXtW+DLdn90wp2ddCBABjQmJrTWUA708NhDjixw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051728;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051731;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VxKmz8Su1ijBy3tCC0CiowIIJ0NtDkGYQJdKFXyAehQ=;
-	b=JCOPD/T8epTqOAF/6XdlZtWPTJ+jERG5dlrZv19D7VPEzkzkPmaMPwiPbgG24MfZRl2a
-	 AasH4pEs1zdo3vJ+uUOlLl4sZUcHS20jeFaKDnjBsEzKdnOcHJm6+gN6atwR/nTxspdOW
-	 s39TzKk5VOLAJ1wo0mHAfchfn4w1MBtkvjm5AY2qQI+YDFSqR2BiZZPnspbOe0JzxknZJ
-	 E7k/isTYwUfQyDaRXi1Lj9mQ1ANAuUPgc1vWa0i0p7KI8FFday274aomjcabNPudf33A3
-	 qr9hSkfi2hZIgMnWNt32kGHI8XAkiyuPIJMDNTf0Niy0u0LKjPOH4UagX8JClNEzKmw==
+	bh=yT30C429dlDSUtcpYv3nNf3LDXXiY0e2oya3SOBLJ+Q=;
+	b=y8G4T6LqnFK5ipdc7ekZUMKZrTocSObxSv8EHVc4MLA9UiRwlr4Zb+bK33ty8HJ2zmFN
+	 Qnirnx0mE3D0DMualvTrf61ywG7dR3G0uYnKwAioGgVw/8+wVGy8nQPC7AztmXwj0TQFf
+	 nT59p4omWMlN4AIQKZyYdl/+7y7VYh0TuvIFBgYuisTW9rAedfDfdgTha5FwZWEmyadKp
+	 vRD63rFjohjIvpoSdlYk27TN/muTKUfY3G3Cpjdu0Vxn6S5pVzqllpMxqi61yisC6G1Be
+	 +MxH0FJ9W+oQEOEuuzAJNyC+YLLvWj7+8sxBr5elzDEa8+dN/nZ8bt3LqeOMGGcvcBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BTRoRcqu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e4spZHrg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177A7606A31C;
-	Thu, 19 Nov 2026 01:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C0A606A31C;
+	Thu, 19 Nov 2026 01:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BTRoRcqu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 685531F000C4;
-	Thu, 19 Nov 2026 01:28:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e4spZHrg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A7A1F000C4;
+	Thu, 19 Nov 2026 01:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051727;
-	bh=VxKmz8Su1ijBy3tCC0CiowIIJ0NtDkGYQJdKFXyAehQ=;
+	s=korg; t=1795051730;
+	bh=yT30C429dlDSUtcpYv3nNf3LDXXiY0e2oya3SOBLJ+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BTRoRcqu8AJkQzy1tKm+6rsZwKi+Se9IeHHQxvw2b4qHbzvpmEGBeO8KPQjAzYFlT
-	 +GQTBk1tq4C4wDO56lfLEwH0BdKl/hEWFcpBk9bj9lywLfMgbTUG8bYbBVG3xSXM8P
-	 Hk8H4NxD82OTQMsecXeIUgst0NC0cYwxGDSptX8s=
+	b=e4spZHrgSynGXDaP1vvPRoUoooFCVkNGh5ppwPKRqinixFBzzsuOScbEJcBP3CxWt
+	 +0Q0hpeBiphtLC1JebUh363CbhAxN8YwC0kmLbDBHs/wKoGZeGPeSb4xN2TKxSN8gQ
+	 wwViIIjO1PVht8b0ID97Uf4Ijdy6e51BmdgFDBJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+563191a4939ddbfe73d4@syzkaller.appspotmail.com,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.15 0308/2214] HID: hiddev: keep state alive through disconnect unlock
-Date: Wed, 18 Nov 2026 15:33:04 +0100
-Message-ID: <20261118150022.480280279@linuxfoundation.org>
+	Eric Dumazet <edumazet@kernel.org>,
+	co+71b6509cb791e531@bugs.sh,
+	Kaho Jiang <kj2864@nyu.edu>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 0263/2214] net: ipv4: add zero check for snd_cwnd_clamp
+Date: Wed, 18 Nov 2026 15:32:19 +0100
+Message-ID: <20261118150020.621879608@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,130 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Kaho Jiang <kj2864@nyu.edu>
 
-commit 03f449b5de36a25fc5eba7dabf2b4494389bdb91 upstream.
+commit 363c8c79220d0db4d65dcd570529ddda15067cb5 upstream.
 
-mutex_unlock() clears the mutex owner before taking its wait lock. A
-thread spinning in the final hiddev file release can acquire
-existancelock after hiddev_disconnect() clears the owner, then free
-hiddev before the disconnecting thread reaches the mutex wait lock. This
-causes a use-after-free in the mutex slow unlock path.
+When RTAX_CWND is locked, user is able to pass 0 into it.
+This could lead to writing 0 to tp->snd_cwnd, leading to a
+division by zero error.
 
-Give the connection and each open file an explicit reference. Drop each
-reference only after its existancelock critical section has completed,
-so neither unlock path can free the mutex while the other is still using
-it.
+Oops: divide error: 0000 [#1] SMP KASAN NOPTI
+Call Trace:
+ <IRQ>
+ tcp_reno_cong_avoid (net/ipv4/tcp_cong.c:510 (discriminator 1))
+ tcp_ack (net/ipv4/tcp_input.c:3517 net/ipv4/tcp_input.c:3873 net/ipv4/tcp_input.c:4440)
+ tcp_rcv_established (net/ipv4/tcp_input.c:6685)
+ tcp_v4_do_rcv (net/ipv4/tcp_ipv4.c:1854)
+ tcp_v4_rcv (net/ipv4/tcp_ipv4.c:2248)
+ ip_protocol_deliver_rcu (net/ipv4/ip_input.c:207 (discriminator 1))
+ ip_local_deliver_finish (net/ipv4/ip_input.c:241 (discriminator 1))
+ ip_local_deliver (./include/linux/netfilter.h:325 ./include/linux/netfilter.h:319 net/ipv4/ip_input.c:262)
+ ip_rcv (./include/net/dst.h:481 (discriminator 6) net/ipv4/ip_input.c:492 (discriminator 6) ./include/linux/netfilter.h:325 (discriminator 6) ./include/li)
+ __netif_receive_skb_one_core (net/core/dev.c:6297 (discriminator 4))
+ __netif_receive_skb (net/core/dev.c:6410)
+ process_backlog (net/core/dev.c:6761)
+ __napi_poll.constprop.0 (net/core/dev.c:7830)
+ net_rx_action (net/core/dev.c:7893 net/core/dev.c:8050)
+ handle_softirqs (kernel/softirq.c:645)
+ __irq_exit_rcu (kernel/softirq.c:679 kernel/softirq.c:519 kernel/softirq.c:758)
+ irq_exit_rcu (kernel/softirq.c:775)
+ sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1062 (discriminator 35) arch/x86/kernel/apic/apic.c:1062 (discriminator 35))
+RIP: 0010:tcp_cong_avoid_ai (net/ipv4/tcp_cong.c:482)
 
-Fixes: 079034073faf ("HID: hiddev cleanup -- handle all error conditions properly")
-Reported-by: syzbot+563191a4939ddbfe73d4@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=563191a4939ddbfe73d4
+Fix by checking if user pass in zero as parameter and if lock is present.
+
+Fixes: 814d488c6126 ("tcp: fix the timid additive increase on stretch ACKs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Link: https://syzkaller.appspot.com/bug?extid=563191a4939ddbfe73d4
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Suggested-by: Eric Dumazet <edumazet@kernel.org>
+Reported-by: co+71b6509cb791e531@bugs.sh
+Signed-off-by: Kaho Jiang <kj2864@nyu.edu>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261021235732.1313305-2-kj2864@nyu.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/usbhid/hiddev.c |   37 +++++++++++++++++++------------------
- include/linux/hiddev.h      |    2 ++
- 2 files changed, 21 insertions(+), 18 deletions(-)
+ net/ipv4/metrics.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/hid/usbhid/hiddev.c
-+++ b/drivers/hid/usbhid/hiddev.c
-@@ -46,6 +46,12 @@ struct hiddev_list {
- 	struct mutex thread_lock;
- };
+--- a/net/ipv4/metrics.c
++++ b/net/ipv4/metrics.c
+@@ -63,6 +63,11 @@ static int ip_metrics_convert(struct net
+ 	if (ecn_ca)
+ 		metrics[RTAX_FEATURES - 1] |= DST_FEATURE_ECN_CA;
  
-+static void hiddev_put(struct hiddev *hiddev)
-+{
-+	if (refcount_dec_and_test(&hiddev->refcount))
-+		kfree(hiddev);
-+}
++	if ((metrics[RTAX_LOCK - 1] & (1 << RTAX_CWND)) && !metrics[RTAX_CWND - 1]) {
++		NL_SET_ERR_MSG(extack, "Locked cwnd metric must be non zero");
++		return -EINVAL;
++	}
 +
- /*
-  * Find a report, given the report's type and ID.  The ID can be specified
-  * indirectly by REPORT_ID_FIRST (which returns the first report of the given
-@@ -216,26 +222,21 @@ static int hiddev_fasync(int fd, struct
- static int hiddev_release(struct inode * inode, struct file * file)
- {
- 	struct hiddev_list *list = file->private_data;
-+	struct hiddev *hiddev = list->hiddev;
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&list->hiddev->list_lock, flags);
-+	spin_lock_irqsave(&hiddev->list_lock, flags);
- 	list_del(&list->node);
--	spin_unlock_irqrestore(&list->hiddev->list_lock, flags);
-+	spin_unlock_irqrestore(&hiddev->list_lock, flags);
- 
--	mutex_lock(&list->hiddev->existancelock);
--	if (!--list->hiddev->open) {
--		if (list->hiddev->exist) {
--			hid_hw_close(list->hiddev->hid);
--			hid_hw_power(list->hiddev->hid, PM_HINT_NORMAL);
--		} else {
--			mutex_unlock(&list->hiddev->existancelock);
--			kfree(list->hiddev);
--			vfree(list);
--			return 0;
--		}
-+	mutex_lock(&hiddev->existancelock);
-+	if (!--hiddev->open && hiddev->exist) {
-+		hid_hw_close(hiddev->hid);
-+		hid_hw_power(hiddev->hid, PM_HINT_NORMAL);
- 	}
- 
--	mutex_unlock(&list->hiddev->existancelock);
-+	mutex_unlock(&hiddev->existancelock);
-+	hiddev_put(hiddev);
- 	vfree(list);
- 
  	return 0;
-@@ -270,6 +271,7 @@ static int __hiddev_open(struct hiddev *
- 	spin_unlock_irq(&hiddev->list_lock);
- 
- 	file->private_data = list;
-+	refcount_inc(&hiddev->refcount);
- 
- 	return 0;
- 
-@@ -897,6 +899,7 @@ int hiddev_connect(struct hid_device *hi
- 	INIT_LIST_HEAD(&hiddev->list);
- 	spin_lock_init(&hiddev->list_lock);
- 	mutex_init(&hiddev->existancelock);
-+	refcount_set(&hiddev->refcount, 1);
- 	hid->hiddev = hiddev;
- 	hiddev->hid = hid;
- 	hiddev->exist = 1;
-@@ -937,9 +940,7 @@ void hiddev_disconnect(struct hid_device
- 	if (hiddev->open) {
- 		hid_hw_close(hiddev->hid);
- 		wake_up_interruptible(&hiddev->wait);
--		mutex_unlock(&hiddev->existancelock);
--	} else {
--		mutex_unlock(&hiddev->existancelock);
--		kfree(hiddev);
- 	}
-+	mutex_unlock(&hiddev->existancelock);
-+	hiddev_put(hiddev);
  }
---- a/include/linux/hiddev.h
-+++ b/include/linux/hiddev.h
-@@ -13,6 +13,7 @@
- #ifndef _HIDDEV_H
- #define _HIDDEV_H
  
-+#include <linux/refcount.h>
- #include <uapi/linux/hiddev.h>
- 
- 
-@@ -24,6 +25,7 @@ struct hiddev {
- 	int minor;
- 	int exist;
- 	int open;
-+	refcount_t refcount;
- 	struct mutex existancelock;
- 	wait_queue_head_t wait;
- 	struct hid_device *hid;
 
 
