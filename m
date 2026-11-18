@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024330;
-	b=tVkqx/UfOmBqSo/fM+TxECicHZhpdeieD5mFALiAKZEFiu1IKfuIv5O5aDuiZpFGtgGI
-	 JgpVFcdFlkMyQSBCwjGXB78S/u6ewlODnzNRYcyka95LZTuYw+p9LIKrBVSC87IcWvQUZ
-	 edx+bP8jMEx9+HAAHZldgqaNQCHx7I5NWZqeOKJGSjVGgVqDFBgbpr+jiHUL2MpVOYv64
-	 uomR91suinILqKZaOGh+R80IKvQmh6NC4u7kvjwyF18d3bkf79L/0j4CPc/NyxzqUcGpZ
-	 +EO6/hNc97OnBgeeWaiU83BPl/wegRCR77cwSIjXDt8rrvyEok8Wall5fZzusaZ+KiA==
+	t=1795024333;
+	b=4qGtUmd/39TZvUXLfm5QbOlHaYXlm/iN5wrEEfnvHwWs2x9muk8DkYquXn/Fzo03hqmv
+	 GfvE4bxdvQff1Nh/ygrtQtX8Y7q54wQPUroBvBfnGt1QUnGKipJrfjAdi32acfM8fhgnb
+	 VvedIszOUKuKb4ncICRyRuH3tEUZ1X0x3uJQMyMqaRo7nd9D6S2UlGMliSIVKJaejYUqw
+	 QgdNt5IRNKo2hQCNbL1f2NZLyE345xlXKF4+3zNReejARHKBseHTxVEEFLveoKipGOz4z
+	 baAy9Q7hbvTl/uwYB6f0nfMvedpCFBgEqcuCd0/2OU9NTBAJTTaEBAvKHgtjuwUJN6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024330;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024333;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kyylfqVKMuBLNg4/6eHtXtnIyxfKVwF2eu0PnFXIQSw=;
-	b=IJFhkckiau43W8+uCr1JF3oJNUAsoJC4Fyko5OjumeOmC+4Tr/6GOC5Q9Kq1wpAx8VD6
-	 Y9471i4M3qvm/w5ckFR2aemqrFDbUWSypu1juN9293PlAwQQmRchFLVVCIDocl82vyC14
-	 U7xHvD+d4QSf2sM4f7uPRsApb+AVcqeJR6iOTpBAoTbOz1BL1X1pxmw1krMsfaY1/zQVo
-	 EFrpZzCfg6BL8oT2ot+LxbaIzE0Z7bRzEPRyFmClLxFeuETLnNTJiFpanfVDDVSO1MAiO
-	 IuxMakF3WlGOnszskqOSlvRny7FxbBSHG5ITNmCW/k+6wcCr6fyxJRGcTtLif5lwskQ==
+	bh=VGvUXaIEdWbPCgvKl5djLGY4vWYD6Z1v+ja7HGnbo5Y=;
+	b=4GyYH+C7jVC/zkRURKZPfyEw54QvLiV6d8bM8EGmSf2nPhFQGGVwXL2nkreq1Dv5AbiH
+	 lbxg/7xUcpWN72NEHLwwtGSxNjAyfEgcgRmofNdleDB/uYabp8H/T9SZqbLVMdWtyQHKi
+	 w5w5ZLLDmq9unEW3k5HC8hW2BLklJx+8a8QPYB79guNm/krro9IRR1d5OwXfbe3BY4BL4
+	 UXzyy/sJYyMQ8CG+qFSSTUvk2XsK3aL/ZaxASaFBKKHZNXyG8ZireJcVmVZ3yLckChH2m
+	 rWuaFWZgik33K5g2ByPFwWK64Gbra6yJf5lGxvqNGIzrHZ1ZkUdkISLo8EWFhwdnFWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zqOdVRt2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EkpRS6Q+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8025160A2610;
-	Wed, 18 Nov 2026 17:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525E260A261E;
+	Wed, 18 Nov 2026 17:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zqOdVRt2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D066C1F00939;
-	Wed, 18 Nov 2026 17:52:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EkpRS6Q+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B751F000D0;
+	Wed, 18 Nov 2026 17:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024330;
-	bh=kyylfqVKMuBLNg4/6eHtXtnIyxfKVwF2eu0PnFXIQSw=;
+	s=korg; t=1795024333;
+	bh=VGvUXaIEdWbPCgvKl5djLGY4vWYD6Z1v+ja7HGnbo5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zqOdVRt2tILYoofkXhGG+rihJtgtABgB58cutEF9bHcSt3lNm9L/bitK8QpyLn0cS
-	 HW5+QT6aIFnBzqYJDYrpP5V9lv0xZxAzP6LUVptNJByECTUskgkSnLdkEQILBJ1KAQ
-	 JfuLD6iiqE9JhQIGSvR+x1I38aB0sn4gxhY1nAbE=
+	b=EkpRS6Q+PrN6iFqYDtYIoAB/jAc/ofISWOWSAGHPwX+ENn6AnqTCNXH+25hleg+mH
+	 oxUAvDMBrMMqSNKjaIpBTW7ULNdzNVPNEaxQsdK8AQ7WJePZZpkBqJJo7rJ0tnuVrS
+	 D6o3gEXd+Z06WrNba7oSgqYHw4eA5q9qeOsPY0zQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Vivier <laurent@vivier.eu>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Stan Johnson <userm57@yahoo.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Beata Michalska <beata.michalska@arm.com>,
+	Robin Murphy <robvin.murphy@arm.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0650/2151] swim: Revisit delays
-Date: Wed, 18 Nov 2026 15:39:45 +0100
-Message-ID: <20261118150145.524911704@linuxfoundation.org>
+Subject: [PATCH 6.18 0686/2151] rust: dma: allow drivers to tune max segment size
+Date: Wed, 18 Nov 2026 15:40:21 +0100
+Message-ID: <20261118150146.787893976@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,79 +70,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Beata Michalska <beata.michalska@arm.com>
 
-[ Upstream commit bbcd3e38a4f355d6b0320f3f6916df96c109f2ad ]
+[ Upstream commit c71257394bc9c59ea727803f6e55e83fe63db74e ]
 
-AFAIK, timing requirements for the various FDHD drive mechanisms aren't
-well documented. But we do have the UPD72070 spec and secondary sources
-like swim3.c and mkLinux source code. This patch is needed to satisfy
-the requirements in the UPD72070 spec and follows mkLinux.
+Make dma_set_max_seg_size() available to Rust so drivers can perform
+standard DMA setup steps.
 
-Change the LSTRB pulse to 2 microseconds, because this is what mkLinux
-does. Inside Macintosh says, "Hold LSTRB high for at least one usec but
-not more than one msec".
-
-When a disk is ejected, pause before de-asserting /ENBL. Wait 150 us after
-the STEP command for valid signalling. Pause for 1 us after setting the
-step direction before sending the STEP command.
-
-Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/af356248a1e6a4fd956f71acf17feead27ba4918.1788513997.git.fthain@linux-m68k.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Beata Michalska <beata.michalska@arm.com>
+Acked-by: Robin Murphy <robvin.murphy@arm.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20260128135320.689046-1-beata.michalska@arm.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Stable-dep-of: c15c5befd6d6 ("rust: scatterlist: honor the device's maximum segment size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ rust/helpers/dma.c |  6 ++++++
+ rust/kernel/dma.rs | 17 +++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
-diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index 2e343766f4535..2fdf36868155e 100644
---- a/drivers/block/swim.c
-+++ b/drivers/block/swim.c
-@@ -290,7 +290,7 @@ static inline void swim_action(struct swim __iomem *base, int action)
- 	swim_select(base, action);
- 	udelay(1);
- 	swim_write(base, phase, LSTRB | action | PHASE_PIN_DIR);
--	udelay(1);
-+	udelay(2);
- 	swim_write(base, phase, action | PHASE_PIN_DIR);
- 	udelay(1);
- 
-@@ -337,6 +337,7 @@ static inline void swim_drive(struct swim __iomem *base,
- 		swim_write(base, mode0, EXTERNAL_DRIVE);
- 		swim_write(base, mode0, MOTON);
- 	}
-+	udelay(1);
- }
- 
- static inline void swim_motor(struct swim __iomem *base,
-@@ -355,6 +356,7 @@ static inline void swim_eject(struct swim __iomem *base)
+diff --git a/rust/helpers/dma.c b/rust/helpers/dma.c
+index 2afa32c21c946..20413428a4960 100644
+--- a/rust/helpers/dma.c
++++ b/rust/helpers/dma.c
+@@ -40,3 +40,9 @@ size_t rust_helper_dma_max_mapping_size(struct device *dev)
  {
- 	swim_action(base, EJECT);
- 	swim_readbit_timeout(base, DISK_IN, false, 2000 * 1000);
-+	msleep(1);
+ 	return dma_max_mapping_size(dev);
+ }
++
++__rust_helper void rust_helper_dma_set_max_seg_size(struct device *dev,
++						    unsigned int size)
++{
++	dma_set_max_seg_size(dev, size);
++}
+diff --git a/rust/kernel/dma.rs b/rust/kernel/dma.rs
+index b6c73db358ced..6a9497bc69a7d 100644
+--- a/rust/kernel/dma.rs
++++ b/rust/kernel/dma.rs
+@@ -84,6 +84,23 @@ unsafe fn dma_set_mask_and_coherent(&self, mask: DmaMask) -> Result {
+             bindings::dma_set_mask_and_coherent(self.as_ref().as_raw(), mask.value())
+         })
+     }
++
++    /// Set the maximum size of a single DMA segment the device may request.
++    ///
++    /// This method is usually called once from `probe()` as soon as the device capabilities are
++    /// known.
++    ///
++    /// # Safety
++    ///
++    /// This method must not be called concurrently with any DMA allocation or mapping primitives,
++    /// such as [`CoherentAllocation::alloc_attrs`].
++    unsafe fn dma_set_max_seg_size(&self, size: u32) {
++        // SAFETY:
++        // - By the type invariant of `device::Device`, `self.as_ref().as_raw()` is valid.
++        // - The safety requirement of this function guarantees that there are no concurrent calls
++        //   to DMA allocation and mapping primitives using this parameter.
++        unsafe { bindings::dma_set_max_seg_size(self.as_ref().as_raw(), size) }
++    }
  }
  
- static inline void swim_head(struct swim __iomem *base, enum head head)
-@@ -368,6 +370,7 @@ static inline void swim_head(struct swim __iomem *base, enum head head)
- static inline int swim_step(struct swim __iomem *base)
- {
- 	swim_action(base, STEP);
-+	udelay(150);
- 	return swim_readbit_timeout(base, STEP, false, 20 * 1000);
- }
- 
-@@ -398,6 +401,7 @@ static inline int swim_seek(struct swim __iomem *base, int step)
- 		step = -step;
- 	} else if (step > 0)
- 		swim_action(base, SEEK_POSITIVE);
-+	udelay(1);
- 
- 	swim_READY_timeout(base);
- 
+ /// A DMA mask that holds a bitmask with the lowest `n` bits set.
 -- 
 2.53.0
 
