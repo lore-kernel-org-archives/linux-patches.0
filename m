@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033485;
-	b=soAxxvMi3JniSI5MZHRDBKrqkz4f3BROMnhNZFzl0aDyvDT2rMz702+bsQu09Ked1PQi
-	 VPCqAaFi/mHkg+SLdXwGQgjwEeYfqAqmhITWb4RkPGpLqGxh+8lDApKx39F5viD+yWYZC
-	 wwJP+Dasv7lIrOZ0tX4t1qHmLUpqqRXgo3PN4v60HfB5OG1fOsDm09AieEP9ibHPh4Ytj
-	 zu+9GlfqMpxkmHSeepKAn9xKoCD36iMCPSrKTp5EaqZS9VQur4fQI9UvDqFinfvFMD4Au
-	 Af9/5MfLtNyrlnNA/SDqng43QKTSdu7BdesF+kJbHsfmOEzbKHoJ6r2eZ/ebqn/Hg/A==
+	t=1795033488;
+	b=DFU8dI3JLUk2mJ8a2v/mrJqeUl4+7G8nPtOcWLtKRSAvC/KkUUcEf654iyNR/zkKwccf
+	 S5ZXmMcmayPRHcs/icD2/nUTbJRbEAPwHrIcqrny5VNhHpiw5jMqcewxbZvTP5MKLcQ/J
+	 28cePF28AkXOv/GJxwTc23uxwH9GH31tsGK03yoOaa+Y55MveX1TSeR3dnhSwNFGFbOPH
+	 9wvFwUDc3jvSDcUHjFWKhP+m/du/nV6QiyL3m594mH/K9qivLvYLCCWSg88UGJ7i/P+ZH
+	 xbP6UQSj4JuEpIX2CfkzUWFLdQMH5ryYROJSacD9pmaaT5uGnDgBcIxQDqhsnB3HHrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033485;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033488;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zh5VXOnlrwhNBQRUV1zV6GN3PhF6nCvl/Up36nl2q8g=;
-	b=xxNLdWalDjHhKrgp+mif2Lo4D6L6zBJ8Gph7Rzt6be6JZHZG6PH66WFPH+Dt3I2MU/0i
-	 CpXCV3Gm7Der8A0BOijut++4aw5kcH97AjMZwVlTwRpLyFXkBCCQo9EWqrIT3j1PSAL58
-	 hO0AJcrD7CyDtKhuqLb2f6qMkzVJercFxMsuccG5ZoclH6t2/c72O1d/mVYypBQhHvZAC
-	 c9Ify9itD7hCaP28gXTjKvry7TsEbt5j6Kdlm3pO5iO3YCIZHXvwVdcou5dl4FT6fi8gE
-	 cms3s+xMxRcEf3fD9vFslon/jdbBuHVJQe457z28QHOen1TGQUR9HqoSTIzV8Zk5DHg==
+	bh=DFvTwdoVdl4gdGLOZWT3q6aHOBcdMWPRYIRJApY12Lo=;
+	b=J5N81ZD0mqB66UCFfCkq2ueFfqYpPIBxzmuJLMkP6Lxwg8ex9TcyCTJr4ntD9f/xhjtX
+	 ty3IMpReXxE9AYd8BN2XR7hX/JyUjyrkIPxqn/bZYg3ySK4wSkcGXJ5ENY1tL9WcxBaQF
+	 kcFVnJBcsxrIT+A+JHmXUQyayZ2/xiIv7L2lRJ5R1Dw1XmeoQOX8xTY79xJNNKsoL2T57
+	 DRUcoNg77MXEc9NAc1ZquHK/L7EVPpj6sdW8ZWffxWRGQVPPjpTMkWfhSQ6SB5NDnrxvl
+	 ncl2YV+zwPxO/gjPtbHgNsFpshKSd3jWp5kf8Ea7+9t5GlumHj+HRfoTFSiNm6Pe5kA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BFrTLxYv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mwazlEHw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106A1606A325;
-	Wed, 18 Nov 2026 20:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40D9606A336;
+	Wed, 18 Nov 2026 20:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BFrTLxYv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED381F000C5;
-	Wed, 18 Nov 2026 20:24:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mwazlEHw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BEA61F000C4;
+	Wed, 18 Nov 2026 20:24:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033484;
-	bh=zh5VXOnlrwhNBQRUV1zV6GN3PhF6nCvl/Up36nl2q8g=;
+	s=korg; t=1795033487;
+	bh=DFvTwdoVdl4gdGLOZWT3q6aHOBcdMWPRYIRJApY12Lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BFrTLxYv6kVQovnLS+eSAUg1uT9lrfcZFh8iu8ryoaWgk9aHh406YB2H/RGKYq7wN
-	 7AHwNoDXQL+1ZYy8bdhHCapj2Sb6rnj6zFl1MfS7d7NspJCOZyEfGoHfRegqlvHOcz
-	 7wqyuQuI6iyGS36NH2cueFvYevr8OtKUWTqqRKdA=
+	b=mwazlEHwaZ8kAO/9GzM7bgIMdH7glGdHdRDa8kGj3dmGlSw1COVoRFM7b9Z4O10Jl
+	 23+qrMLxEU+aMAqSjU2VsKkCCfQeBjNPlPPcVCJbh/UW44nLBMQ6GR1674+v731Ubq
+	 X6k2Ju/jyVKel0D/2l5pW7LqVA2rSwTB5au/bNUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tu Dinh <ngoc-tu.dinh@vates.tech>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.6 0003/3318] xen-netback: Zero out sring pointers on unmap
-Date: Wed, 18 Nov 2026 15:10:25 +0100
-Message-ID: <20261118150313.710073008@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0025/3318] gpio: pca9570: Use I2C match data
+Date: Wed, 18 Nov 2026 15:10:47 +0100
+Message-ID: <20261118150314.509192702@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,50 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tu Dinh <ngoc-tu.dinh@vates.tech>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit f96f16592a32430a0582309d73a873b6d3ee2bdb upstream.
+[ Upstream commit 415c63896b76fd98883e190bc7518383cb01779c ]
 
-If xenvif_map_frontend_data_rings() fails when a ring is already mapped,
-it unmaps them via xenvif_unmap_frontend_data_rings() which keeps the
-ring pointers unchanged. xenvif_connect_data()'s cleanup path calls
-xenvif_disconnect_queue() which in turn calls
-xenvif_unmap_frontend_data_rings() again, which will attempt to unmap the
-pointers a second time.
+The driver stores chip metadata in both the OF match table and the I2C
+id table, but probe currently reads it with device_get_match_data().
+That helper only returns firmware-node match data, so an I2C-id/modalias
+match can leave chip_data NULL before the driver dereferences it to read
+ngpio.
 
-Zero out the ring pointers after they are unmapped to avoid this issue.
+Use i2c_get_match_data() so the I2C id table driver_data is consumed
+when firmware match data is not present.
 
-This is XSA-532
-
-Fixes: 2ac061ce97f4 ("xen/netback: cleanup init and deinit code")
-Signed-off-by: Tu Dinh <ngoc-tu.dinh@vates.tech>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260624053744.72612-1-pengpeng@iscas.ac.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/xen-netback/netback.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpio/gpio-pca9570.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/xen-netback/netback.c
-+++ b/drivers/net/xen-netback/netback.c
-@@ -1523,12 +1523,17 @@ static inline bool tx_dealloc_work_todo(
+diff --git a/drivers/gpio/gpio-pca9570.c b/drivers/gpio/gpio-pca9570.c
+index d37ba40493683..29fd67ca41268 100644
+--- a/drivers/gpio/gpio-pca9570.c
++++ b/drivers/gpio/gpio-pca9570.c
+@@ -127,7 +127,7 @@ static int pca9570_probe(struct i2c_client *client)
+ 	gpio->chip.get = pca9570_get;
+ 	gpio->chip.set = pca9570_set;
+ 	gpio->chip.base = -1;
+-	gpio->chip_data = device_get_match_data(&client->dev);
++	gpio->chip_data = i2c_get_match_data(client);
+ 	gpio->chip.ngpio = gpio->chip_data->ngpio;
+ 	gpio->chip.can_sleep = true;
  
- void xenvif_unmap_frontend_data_rings(struct xenvif_queue *queue)
- {
--	if (queue->tx.sring)
-+	if (queue->tx.sring) {
- 		xenbus_unmap_ring_vfree(xenvif_to_xenbus_device(queue->vif),
- 					queue->tx.sring);
--	if (queue->rx.sring)
-+		queue->tx.sring = NULL;
-+	}
-+
-+	if (queue->rx.sring) {
- 		xenbus_unmap_ring_vfree(xenvif_to_xenbus_device(queue->vif),
- 					queue->rx.sring);
-+		queue->rx.sring = NULL;
-+	}
- }
- 
- int xenvif_map_frontend_data_rings(struct xenvif_queue *queue,
+-- 
+2.53.0
+
 
 
