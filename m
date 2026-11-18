@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057925;
-	b=qlNhtLFDD/x5ZTFxjj2mlBr4QYBK34jwYyL7e6FCJ/vFDbM3JJJcNUp+x8uI3e8w8YJo
-	 se9SUaw0BIUYn8Tret7BAJnE6R/O3RQnQUOTyrR9DesLwXxYjDI9AHVq4aO2jbU7Hovm2
-	 edLJt32rWcIH9ZLLS5SGuUJWvLNEH+VdnOI6/q/ezhE6Vt/HCheVMfLcw2Mv+jHzMxHY5
-	 ypQdFpEDz1CnfvP5LuiDkqqbWtJipha/CS9q5BfJNf+pFWAHCDk2qLtLlCKWinWnvPucY
-	 7/JPnwAcX0hz9W9QwzsgOTSEo/7DMcsW88JHiWP6RFOSbLOQS3ZEF3tNqPZgq/pk5pw==
+	t=1795057928;
+	b=FX5JlO8ErY0n4C4qOJ2Z/z+RUAZnXx6gghGf2Mlp7+FwHsr2y9Gr+ldOjIUTjvErTm47
+	 S+QMqSCHhviBdK/aep8By2y2SlOzvZ/IykW5klda6Kf+U509r5o1JwZ5Ko5VEdcGfeXNP
+	 zNHyV1qSJYE0QdFxQxChevvlYJDbBD+UImgkf1KSqdHf0+1xNpdpeqKFYJMqKsGIfQ6nS
+	 NaXYo5jCYLwgba2DHGzqgCBf3imHhBkJxxJUS6wtRAgmmbkOuwGjepgGg1Bs1RQyZSXuP
+	 IfgpFSVFHLb4bILzSs91fAJR5ci+5TR7rejAW6kJD8MSgbfedfIE8NZgge64mQu998g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057925;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057928;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2PBxy7ENk5/xYUZtKBy0YjF6QaSWaSPBNRxDnxxt/4w=;
-	b=pLqx38OvMoi3Gac3ocSYEdDnRM1pUwBcYPtzyI7phnp9T6FeYowfq0OB+AXWT8Co6tbV
-	 msjFjnwP6KeJFXM7waHIivarFxcxXowpX9rhyyV6zWINe8vKMnup5yYwrsbmTXoWfmDJJ
-	 E1xyDbLzrLz4JD4o/k8gMxE1Ptdib/YmAxqq9zvPZWFQsyhL9qY1G0TDvTYry/Zxe1xDC
-	 duOkgsOuHSdf4mUKLms+Sla/0RzUaekuI8jj2vv/fopJ+gDFNEUCjyHygPSpJsZUHYOAa
-	 U8U0T69iyUAPimnkwrmMwMPiLy2VHAz3x0mG/BrNVCLhRpC37hQbEnj/2rWXkU5m3Ag==
+	bh=g+CRRQFq+BfRAX2oq5poI1bSkp4z8OdpcyPpaehHGyg=;
+	b=qEWMgVOuEQnbSUeSB5WS1yuf4esQ46FlPyy0jN4dNtGnuJpXjQpMAeg0RqSGdU1C9Zjj
+	 A2msuZhc+GIuCClTbf9cR3yLiwNxe6eA1S1mLFa+/QZraUTtYAqJf9JQph/KEkfyyI9sT
+	 6203I2wtuTGik35Vno5vg8bY6UK7I4S+7//eVkG0V+Sv9gYCIkuraISJm7r5iTP9N/MGf
+	 iiNnf7QD3uUBQ6PBxQICkxposeNIQm6Xi56TGmawnXi55IiJnySF9JpAfDEFsF1w7uY88
+	 jxgT3l1y2TefjNAQDuKWSYX3Psyy/ptvnsGpcGuXLi4FFG+PXTixhxqKCGbDdlMHf0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=05kWTw9L;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oSqwfLih;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8D9606A31C;
-	Thu, 19 Nov 2026 03:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30DE606A31C;
+	Thu, 19 Nov 2026 03:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=05kWTw9L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7931F000C4;
-	Thu, 19 Nov 2026 03:12:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oSqwfLih
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552941F000C4;
+	Thu, 19 Nov 2026 03:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057925;
-	bh=2PBxy7ENk5/xYUZtKBy0YjF6QaSWaSPBNRxDnxxt/4w=;
+	s=korg; t=1795057927;
+	bh=g+CRRQFq+BfRAX2oq5poI1bSkp4z8OdpcyPpaehHGyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=05kWTw9LP0kFER3QLvRCDk22LPadkfP8MVzBTTb7eqNZyzjg7A4ILz0RGK9fiMz+e
-	 ZfXmN2eL2h5FCUBllQxpHszaBgl7XsE3JycAmxsWUvDT7a/JVh4C/uhMOIvaPxSEZW
-	 SwNNiuHBTE9WUx4i3gSzPUVwbK/yCUtTMQqFV8IE=
+	b=oSqwfLihSY5w0qLv8qyQr0BxzPJ4pcaL//z573jWmmsnudSgBKzNlsnXvuGeHwz75
+	 MKoUbkd7ysIZDNqc/n3ZoHXzES/shiDfKRY/zTbAaoyE7yRTm6Wi5uVKuzkqGs7FO+
+	 Fm2CpuyMYXR+LtUCdYh5uMqfNrUaLy0VDANjk7/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>
-Subject: [PATCH 5.10 0266/1848] ocfs2: fix chunk number of the first chunk in a local quota file
-Date: Wed, 18 Nov 2026 15:38:24 +0100
-Message-ID: <20261118145923.445975781@linuxfoundation.org>
+	syzbot+54cdc566f64abf51b7f1@syzkaller.appspotmail.com,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 5.10 0302/1848] SUNRPC: Reject a socket that already has an svc_sock attached
+Date: Wed, 18 Nov 2026 15:39:00 +0100
+Message-ID: <20261118145924.800267711@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -74,117 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaming Zhang <r772577952@gmail.com>
+From: Chuck Lever <cel@kernel.org>
 
-commit 4effccfd50baee4f325694964aeee997dca7bd96 upstream.
+commit 0995447b8059c4d23853cdcddbe789c4a2b6bb88 upstream.
 
-Mounting a crafted OCFS2 image can corrupt kernel memory.  When the
-local quota file header of such an image claims zero chunks, the first
-quota entry allocated during the mount gets a chunk number taken from a
-kernel pointer, and releasing that entry clears a bit far outside the
-chunk bitmap.
+Writing the same socket descriptor to /proc/fs/nfsd/portlist twice
+attaches a second svc_sock to one socket. svc_setup_socket() saves
+the socket's callbacks before installing its own, so the second
+attach records svc_write_space() as the old write_space callback.
+svc_udp_init() invokes that callback by way of svc_sock_setbufsize(),
+and svc_write_space() then calls itself until the kernel stack is
+exhausted:
 
-The write will corrupt the data stored at that address, and the
-corruption may lead to a system crash or damage unrelated data.
-Mounting requires CAP_SYS_ADMIN, so it takes an untrusted image, such
-as removable media or a loop mount of a file from elsewhere.
+  BUG: TASK stack guard page was hit at ffffc900037d7ff8
+   svc_write_space+0x90/0x2b0 net/sunrpc/svcsock.c:429
+   svc_write_space+0xe6/0x2b0 net/sunrpc/svcsock.c:430
+   ... 700 more ...
+   svc_sock_setbufsize+0x18d/0x220 net/sunrpc/svcsock.c:386
+   svc_udp_init net/sunrpc/svcsock.c:854 [inline]
+   svc_setup_socket+0xb2f/0x1090 net/sunrpc/svcsock.c:1498
+   svc_addsock+0x2fd/0x760 net/sunrpc/svcsock.c:1547
+   __write_ports_addfd fs/nfsd/nfsctl.c:742 [inline]
+   write_ports+0xa5b/0xcc0 fs/nfsd/nfsctl.c:861
+   nfsctl_transaction_write+0x106/0x1a0 fs/nfsd/nfsctl.c:112
 
-Since the chunk number comes from a kernel pointer, the address of the
-bit that gets cleared differs from boot to boot, and the issue has been
-reported under several titles:
+svc_data_ready() and svc_tcp_state_change() chain through their saved
+callbacks the same way, so a TCP descriptor added twice recurses on
+the next incoming segment instead. Reaching any of this takes a
+writer on portlist, and the nfsd filesystem sets no FS_USERNS_MOUNT,
+so the reproducer needs CAP_SYS_ADMIN in the initial user namespace.
 
-- BUG: unable to handle kernel paging request in ocfs2_local_release_dquot
-- KASAN: use-after-free Write in ocfs2_local_release_dquot
-- KASAN: slab-out-of-bounds Write in ocfs2_local_release_dquot
-- KASAN: slab-use-after-free Write in ocfs2_local_release_dquot
-- KFENCE: use-after-free write in ocfs2_local_release_dquot
+Reject a socket that already carries sk_user_data. svc_setup_socket()
+overwrites that field unconditionally, so a socket some other
+consumer has claimed is one NFSD would corrupt whether or not the
+callbacks recurse.
 
-Note that none of these is a use-after-free in the quota code: the
-chunk and its buffer head are alive.  The bit that gets cleared lies
-far outside the bitmap.  KASAN and KFENCE name each report based on the
-object occupying that address, which explains why the same issue is
-reported under so many different titles.  In the report I sent, the
-address fell in a free page, which KASAN labels use-after-free.
-
-There are known reproducers.  Both a syzkaller and a C reproducer are
-available from the Google Drive link [1] in my report thread.  The
-issue was found by our modified syzkaller, not a theoretical thing
-found by an LLM.  I have not seen it outside fuzzing, so it is not
-affecting me in the real world.
-
-The local quota file in OCFS2 is divided into chunks, and each chunk
-begins with a header block holding a bitmap of the quota entries that
-chunk has handed out.  Chunks are numbered from zero, and that number is
-used to convert the file offset of an entry back into a bit position in
-the bitmap.  ocfs2_local_quota_add_chunk() appends a new chunk to the
-in-memory list and numbers it one past the chunk that was last:
-
-	list_add_tail(&chunk->qc_chunk, &oinfo->dqi_chunk);
-	chunk->qc_num = list_entry(chunk->qc_chunk.prev,
-				   struct ocfs2_quota_chunk,
-				   qc_chunk)->qc_num + 1;
-
-The predecessor is looked up after the new chunk is added to the list, so
-if the list was empty, the prev pointer is the list head itself.  The head
-is the dqi_chunk member of struct ocfs2_mem_dqinfo and is not a chunk, so
-reading qc_num through it lands 16 bytes past the start of the head, on
-the dqi_gqinode pointer that follows it.  The first chunk of the file is
-then numbered with the lower half of a kernel pointer instead of 0.
-
-The list is empty when the local quota file header claims the file has no
-chunks.  ocfs2_local_read_info() takes dqi_chunks from that header without
-validating it, so an image with dqi_chunks == 0 takes this path when the
-first quota entry is allocated.
-
-ocfs2_create_local_dquot() turns the bad number into a file offset with
-ol_dqblk_off(), which shifts a 32-bit block number left by the block size
-bits, so the top bits of such a large block number are lost.
-ocfs2_local_release_dquot() turns the offset back into a bit index with
-ol_dqblk_chunk_off(), using the full chunk number, so the lost bits push
-that index far outside the bitmap, and clearing it corrupts unrelated
-memory.
-
-Compute the chunk number before putting the chunk on the list, and use 0
-when the list is empty.
-
-Link: https://lore.kernel.org/20260914034940.4070970-1-r772577952@gmail.com
-Link: https://drive.google.com/drive/folders/1-LzPTgOALEc3eOjmgM6oOfRKkYXJ-bnO?usp=drive_link [1]
-Fixes: 9e33d69f553a ("ocfs2: Implementation of local and global quota file handling")
-Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Closes: https://lore.kernel.org/lkml/CANypQFZ05tpth0Xc33gmP6jgPnkY4VuezyHcsajV-SqCsmN_gg@mail.gmail.com/
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: Claude Code:claude-opus-5
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
+Fixes: b41b66d63c73 ("[PATCH] knfsd: allow sockets to be passed to nfsd via 'portlist'")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+54cdc566f64abf51b7f1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=54cdc566f64abf51b7f1
+Link: https://patch.msgid.link/20260815162844.8219-1-cel@kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/quota_local.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/sunrpc/svcsock.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/ocfs2/quota_local.c
-+++ b/fs/ocfs2/quota_local.c
-@@ -1071,10 +1071,13 @@ static struct ocfs2_quota_chunk *ocfs2_l
+--- a/net/sunrpc/svcsock.c
++++ b/net/sunrpc/svcsock.c
+@@ -1380,6 +1380,9 @@ int svc_addsock(struct svc_serv *serv, s
+ 	err = -EISCONN;
+ 	if (so->state > SS_UNCONNECTED)
  		goto out;
- 	}
- 
-+	if (list_empty(&oinfo->dqi_chunk))
-+		chunk->qc_num = 0;
-+	else
-+		chunk->qc_num = list_entry(oinfo->dqi_chunk.prev,
-+					   struct ocfs2_quota_chunk,
-+					   qc_chunk)->qc_num + 1;
- 	list_add_tail(&chunk->qc_chunk, &oinfo->dqi_chunk);
--	chunk->qc_num = list_entry(chunk->qc_chunk.prev,
--				   struct ocfs2_quota_chunk,
--				   qc_chunk)->qc_num + 1;
- 	chunk->qc_headerbh = bh;
- 	*offset = 0;
- 	return chunk;
++	err = -EBUSY;
++	if (so->sk->sk_user_data)
++		goto out;
+ 	err = -ENOENT;
+ 	if (!try_module_get(THIS_MODULE))
+ 		goto out;
 
 
