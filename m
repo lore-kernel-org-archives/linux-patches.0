@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054690;
-	b=1baga0dA//joFu303LILH3fznYpSFgu5M9cdNNpX08ZZQpxS6f2q0z6Zcrivdea+yxo6
-	 7P2X6GK8Sna8UrI10S5fU2NtQvgwxkjR7GKpSROLF/qOArU0fEgLwYDBlzvBKYUPuEIb3
-	 d20rU1qACdrpraQu9EjX9wKDPUSasps2pbP4mEHv4Oumn2QzEtloasu00XA9F3R4YXuZP
-	 ICpTgn2yKCNFRBqpr/L04bNLi3hrr4vReKts1s6048vx3LlhvVCubxZLcFqNWclT9gAky
-	 ds4ihIsutq1nJbrCnSmZvLz//176Kd1IQxtvCLluOMyGm637d8xqwSnamvA7aNYKp1w==
+	t=1795054693;
+	b=m1t5H4qni2x87U2+DKmty3Kc/98CzoRBEsLbZW5gfu2+gL5scZCQVT37kfdzpaRC0RbF
+	 cgnBQnpx08nYPYnPNzzABIHfrRk2EaRS76Q7a8ZX+yQehzomZoDQBy/iNW2dhlj9Vo0MR
+	 qqnFypCpq9ocEqco5Uv0icQSM8RGot9JBEm//zoYpf34OTzgKg3K+snXmqacqtXv+2OKN
+	 nhhk/kyT9RnzHod/OaqiwSuIPqUkxhtz1aCoYZPQ/YIIgihK1gpdgGev4ZuKA+JmzGzna
+	 43TB30QNHjyMrjpc12/pB3xVlKZBNmQqthMVq4tf2+29infglPI840Ygzd0k+bjfYPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054690;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054693;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JmS+J8JQ2O5fa6z26aR0Ybu3ZAWXgdW6KortP288vlw=;
-	b=Gpq99yuNjvTjT7XAOYfV1r+mljQ0P50+YbmYPdfNgrOutisXYBaSSCQxyGtIc5cQZ6BJ
-	 UWbWEnzvlVc0axhVHH9/OGz2/+1ZFh2Ghexlwk2ROW1+R5D0DDofydi+7yyxU6Poqu2jH
-	 GjQtv/nbyECgxjZulLHUL1R9MNOSqfeByKJcz70CjB9V3BtZ/L9qOX+KZgxDvfvIlJsWs
-	 fY7B2wiGlfDzefAOXMZV71UrgC0AjjN5ndTlcvzUdTQY94ndRvMKxHdmiO1b3pYiHF9cb
-	 GFCZiNb1hllZFHp6p3iEm5nxAuUp51TFPTZxr1/3j7f3GSYfipVpeuz4AhsYLQpuQGQ==
+	bh=eieTU7iVroWcyCM8QypPxIjU9flyPO/p5a/JAuegHz0=;
+	b=cyg/tMEFjSV1Mda3ZGc3e0kLk2q2/cku1o5UjhfCTeIdjWr2D3SMB3JuSHCqcptQm/gA
+	 qCBpYkycwXW9qbK0NvZLVDSXPfzNoZZF4LNyw0m7ov40vEuQ73M3LGx/T7Ds6SRb6+n/a
+	 Ab9/zACo6dxKifmO1LiHeJaPF9YyD8ZA9K72YXOa6TZ29k7Hy9fvg7gADXPudYfrf8tEh
+	 Roa25bpLD+UMdfWXfKwO/y4qFfyUFpemQo63jpHqCXpC+PLEv3uE4Lix1HoXbBUGI6ZiG
+	 CzDyhO+oDnfWj66xn8pgx6uj2r+sAIclqQmJqQ94fWEurP9VQb05y//XnGjKxrmrXYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UJzH+Y46;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aNBiWbJC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529E0606A31C;
-	Thu, 19 Nov 2026 02:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD16606A320;
+	Thu, 19 Nov 2026 02:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UJzH+Y46
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39E41F000C5;
-	Thu, 19 Nov 2026 02:18:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aNBiWbJC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8671F000C4;
+	Thu, 19 Nov 2026 02:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054690;
-	bh=JmS+J8JQ2O5fa6z26aR0Ybu3ZAWXgdW6KortP288vlw=;
+	s=korg; t=1795054692;
+	bh=eieTU7iVroWcyCM8QypPxIjU9flyPO/p5a/JAuegHz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UJzH+Y46gln4uRBCQBE1M6FYDHbyQicoF1d6ZeEwU+584/a+xOtN0f/N66KQ1fjCj
-	 2w75soaCcmTtxMBMmx/xXsOdDQ1/xkFU1yZnt5U94q5miTudIiYQYFtSdRBN+puN0r
-	 eHA8etfBkpoUtkjMpIZjEfYf0ABfE9fyJPd09o2g=
+	b=aNBiWbJCWE6i17vmgTT9GnNqIsKq4VbuI8nKmoh4eK4zvgM8DcekWoO3bJon4PfBX
+	 09VK6QGfBLn3TbnACRN65YMyyeC5h0iDh0LlPlOMFS1nbVMJxdKpit/Tn3LW9X2SHE
+	 c793decspwDmPppihh+I+nHF1Qop179IoXP98iio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Michael Straube <straube.linux@gmail.com>,
+	Hans de Goede <hansg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1363/2214] staging: rtl8723bs: change remaining printk to proper api
-Date: Wed, 18 Nov 2026 15:50:39 +0100
-Message-ID: <20261118150105.923527024@linuxfoundation.org>
+Subject: [PATCH 5.15 1364/2214] staging: rtl8723bs: remove return from void function
+Date: Wed, 18 Nov 2026 15:50:40 +0100
+Message-ID: <20261118150106.022161081@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,119 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
+From: Michael Straube <straube.linux@gmail.com>
 
-[ Upstream commit e139445ccbe4d902fce1dce517cd3b63f5b68eb8 ]
+[ Upstream commit 9279204d37cce549f40cdc677b86405e8628212c ]
 
-As part of TODO file for future work, use dyn debug api for
-remaining printk statements.
+Remove exit label and return statement from a void function.
+After the exit label no cleanup is done, so it is safe to remove it
+and return early in the only place where the label is used.
+This simplifies the code and clears a checkpatch warning.
 
-Signed-off-by: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20241029221544.112800-1-rodrigo.gobbi.7@gmail.com
+WARNING: void function return statements are not generally useful
+
+Signed-off-by: Michael Straube <straube.linux@gmail.com>
+Reviewed-by: Hans de Goede <hansg@kernel.org>
+Link: https://lore.kernel.org/r/20250615123758.41869-1-straube.linux@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: baa84b1bb164 ("staging: rtl8723bs: disable SDIO function on block size failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme_ext.c     |  6 +++---
- drivers/staging/rtl8723bs/hal/hal_com.c           |  7 +++----
- drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c | 12 ++++++++----
- drivers/staging/rtl8723bs/os_dep/sdio_intf.c      |  2 +-
- 4 files changed, 15 insertions(+), 12 deletions(-)
+ drivers/staging/rtl8723bs/os_dep/os_intfs.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-index 1c586e4d95e40..1befbf5177a9d 100644
---- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-@@ -1903,10 +1903,10 @@ unsigned int OnAction_sa_query(struct adapter *padapter, union recv_frame *precv
- 	if (0) {
- 		int pp;
+diff --git a/drivers/staging/rtl8723bs/os_dep/os_intfs.c b/drivers/staging/rtl8723bs/os_dep/os_intfs.c
+index 279347be77c40..e3308f3953217 100644
+--- a/drivers/staging/rtl8723bs/os_dep/os_intfs.c
++++ b/drivers/staging/rtl8723bs/os_dep/os_intfs.c
+@@ -1149,7 +1149,7 @@ void rtw_suspend_common(struct adapter *padapter)
  
--		printk("pattrib->pktlen = %d =>", pattrib->pkt_len);
-+		netdev_dbg(padapter->pnetdev, "pattrib->pktlen = %d =>", pattrib->pkt_len);
- 		for (pp = 0; pp < pattrib->pkt_len; pp++)
--			printk(" %02x ", pframe[pp]);
--		printk("\n");
-+			pr_cont(" %02x ", pframe[pp]);
-+		pr_cont("\n");
+ 	if ((!padapter->bup) || (padapter->bDriverStopped) || (padapter->bSurpriseRemoved)) {
+ 		pdbgpriv->dbg_suspend_error_cnt++;
+-		goto exit;
++		return;
  	}
+ 	rtw_ps_deny(padapter, PS_DENY_SUSPEND);
  
- 	return _SUCCESS;
-diff --git a/drivers/staging/rtl8723bs/hal/hal_com.c b/drivers/staging/rtl8723bs/hal/hal_com.c
-index 909b37bcc8974..3404c93c5f707 100644
---- a/drivers/staging/rtl8723bs/hal/hal_com.c
-+++ b/drivers/staging/rtl8723bs/hal/hal_com.c
-@@ -1138,10 +1138,9 @@ void rtw_dump_raw_rssi_info(struct adapter *padapter)
+@@ -1171,10 +1171,6 @@ void rtw_suspend_common(struct adapter *padapter)
  
- 	for (rf_path = 0; rf_path < pHalData->NumTotalRFPath; rf_path++) {
- 		if (!isCCKrate) {
--			printk(", rx_ofdm_pwr:%d(dBm), rx_ofdm_snr:%d(dB)\n",
--			psample_pkt_rssi->ofdm_pwr[rf_path], psample_pkt_rssi->ofdm_snr[rf_path]);
--		} else {
--			printk("\n");
-+			netdev_dbg(padapter->pnetdev, ", rx_ofdm_pwr:%d(dBm), rx_ofdm_snr:%d(dB)\n",
-+				   psample_pkt_rssi->ofdm_pwr[rf_path],
-+				   psample_pkt_rssi->ofdm_snr[rf_path]);
- 		}
- 	}
+ 	netdev_dbg(padapter->pnetdev, "rtw suspend success in %d ms\n",
+ 		   jiffies_to_msecs(jiffies - start_time));
+-
+-exit:
+-
+-	return;
  }
-diff --git a/drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c b/drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c
-index cce3e7e809531..9014828feba61 100644
---- a/drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c
-+++ b/drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c
-@@ -63,7 +63,8 @@ static int _BlockWrite(struct adapter *padapter, void *buffer, u32 buffSize)
- 	for (i = 0; i < blockCount_p1; i++) {
- 		ret = rtw_write32(padapter, (FW_8723B_START_ADDRESS + i * blockSize_p1), *((u32 *)(bufferPtr + i * blockSize_p1)));
- 		if (ret == _FAIL) {
--			printk("====>%s %d i:%d\n", __func__, __LINE__, i);
-+			netdev_dbg(padapter->pnetdev, "write failed at %s %d, block:%d\n",
-+				   __func__, __LINE__, i);
- 			goto exit;
- 		}
- 	}
-@@ -86,7 +87,8 @@ static int _BlockWrite(struct adapter *padapter, void *buffer, u32 buffSize)
- 			ret = rtw_write8(padapter, (FW_8723B_START_ADDRESS + offset + i), *(bufferPtr + offset + i));
  
- 			if (ret == _FAIL) {
--				printk("====>%s %d i:%d\n", __func__, __LINE__, i);
-+				netdev_dbg(padapter->pnetdev, "write failed at %s %d, block:%d\n",
-+					   __func__, __LINE__, i);
- 				goto exit;
- 			}
- 		}
-@@ -128,7 +130,8 @@ static int _WriteFW(struct adapter *padapter, void *buffer, u32 size)
- 		ret = _PageWrite(padapter, page, bufferPtr+offset, MAX_DLFW_PAGE_SIZE);
- 
- 		if (ret == _FAIL) {
--			printk("====>%s %d\n", __func__, __LINE__);
-+			netdev_dbg(padapter->pnetdev, "page write failed at %s %d\n",
-+				   __func__, __LINE__);
- 			goto exit;
- 		}
- 	}
-@@ -139,7 +142,8 @@ static int _WriteFW(struct adapter *padapter, void *buffer, u32 size)
- 		ret = _PageWrite(padapter, page, bufferPtr+offset, remainSize);
- 
- 		if (ret == _FAIL) {
--			printk("====>%s %d\n", __func__, __LINE__);
-+			netdev_dbg(padapter->pnetdev, "remaining page write failed at %s %d\n",
-+				   __func__, __LINE__);
- 			goto exit;
- 		}
- 	}
-diff --git a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-index 258f68c35dc07..b77f1dcfcc7a9 100644
---- a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-+++ b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-@@ -73,7 +73,7 @@ static int sdio_alloc_irq(struct dvobj_priv *dvobj)
- 	err = sdio_claim_irq(func, &sd_sync_int_hdl);
- 	if (err) {
- 		dvobj->drv_dbg.dbg_sdio_alloc_irq_error_cnt++;
--		printk(KERN_CRIT "%s: sdio_claim_irq FAIL(%d)!\n", __func__, err);
-+		netdev_crit(dvobj->if1->pnetdev, "%s: sdio_claim_irq FAIL(%d)!\n", __func__, err);
- 	} else {
- 		dvobj->drv_dbg.dbg_sdio_alloc_irq_cnt++;
- 		dvobj->irq_alloc = 1;
+ static int rtw_resume_process_normal(struct adapter *padapter)
 -- 
 2.53.0
 
