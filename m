@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036963;
-	b=vErKZc2eJYXv8k8x/Of77g0uNvV32awqSdEvn++mORB+6levtzGUS0YZYXz65t91hu6L
-	 rE0/5dTPEMLXaQaETN6wGCPNfNsDSdWz9b4mwZmUAM4gn0GkLe8hz76gJv/28TtfIfstJ
-	 FRMAnW7E5GFNgowUxV3Pfpn5FxuPUDpAJBVjjtI9k+mwps5C8ItH1GppF889kh3+5GxYr
-	 c12Qab6kYp+Do9EZndwb3qQQmEWq+34t9Eg2XWtcke+qyfqfMCzbLH/iZDXJNS9XG1X1p
-	 yi9bOJajEhcfXBzes54XvqklSI3tmow/TDTy9a9FBBumTgZ0lRFavvWMcT52zlJTsvw==
+	t=1795036966;
+	b=hmUMIAUhL2U+i3NAyZTwnv5rqjvLSJtOS9iAaWccPIhY1U7dq+ivp7Zmbsn3/EHjqP9A
+	 pD65dHrCTZj0hRkN3Zy6aamf7q7xARRX1xka8WwR3AuE27Qv3lcJbPyJn2ZIiWgwvPURi
+	 Wie7jpK4yI1pbsrY2PWKi/YQZ1qj0r/2vnWLIUif9mSdVEO9Ih/rgP0fGQRUnQwuXLx5x
+	 MwWpNo5bgy38RohQwVuIMaebU3DfNqzrwyIU6TAtVSdjbCvVO0szw/9k55B+PmdvQrNLB
+	 qt0ajlowgfsff5UVHhC/3e3bZNKusBNR33xJVqINptYgEcH7lj53UE1XQ/58T9k4o8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036963;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036966;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f5gUDsx2kXAJ4+dbM4ySrJsDnutVQOrBZpBPd7i8U8g=;
-	b=MLn+kCLN9KawxwFEDv7VOeCsTfP6NpSiom6DhxfhrjpYWjkSPowDwelH5Comvf12MG3M
-	 t4FZPwwocljzL+wlRIfTgjnZm/2Fq/alqE9qwt65RpngLFMHEO0DHscb04Wqn1KcFjQGr
-	 8GausjpooK0aEs+kDSW0PdTOKupAwx5hlglV+GhyjIO7FfjJriBk/EbuXBAmw2FAz84H1
-	 KJRHZb8Imr6c8GyaDGpVZ2iuvcQkCbes9Bry1ddGxahzTGmorSLrSWC26lHgAcE6b/QMx
-	 7Es4UUi0v/zdFK5go2I4+hiUdUjtulVjntWA8+UHkx7qZvMcbWpJeYgmpcMVfQY8IYA==
+	bh=y/VpvmfD+od6S0OyEP+H4W3BAf0OuYrZji9XaMZVi0Q=;
+	b=cQBJ8Kw+wR+hPqp8ouAk2M3IT0cttJ2X8KyGXuSzb2lfXjl9bOMobFPhJU+YqnGc/OXN
+	 JVPzGkO6Q8U7cFj9L3/R8Cq3vut9BhRSwM2sq4+08rKTQqO+StesKEJ9A7X9qtWAsgXNu
+	 x48GZJoOcMWLsrELcwZ3FU4kgjCY3l0I/iNsRPjyw4g4a/qmBrjjYbh9xL6LWF8Ai8lYM
+	 9zgfCVcPF9OIj3aVnl1i7VHoVVzOD4n1XdVEtfRidStvByiKD6QM0VyH3nDde8aHr9nD+
+	 MoiM0e+kQTPEGUJNyF7hrNDxQSdVrTTp7zq7+WRnqKMUuRlN9jmD4tShjx8RBBtThSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Kbbz1VF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tzapHscv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43640606A336;
-	Wed, 18 Nov 2026 21:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F905606A320;
+	Wed, 18 Nov 2026 21:22:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Kbbz1VF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93EFD1F000CA;
-	Wed, 18 Nov 2026 21:22:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tzapHscv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D7B1F000C8;
+	Wed, 18 Nov 2026 21:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036963;
-	bh=f5gUDsx2kXAJ4+dbM4ySrJsDnutVQOrBZpBPd7i8U8g=;
+	s=korg; t=1795036965;
+	bh=y/VpvmfD+od6S0OyEP+H4W3BAf0OuYrZji9XaMZVi0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Kbbz1VFg8b6m5svqMSHPXfxPUAVjbYFFtn4MXieWoLJkdKNFEETKDWCleAdRmNnr
-	 Cv02ydGHtoP9SFGCmYkJdTA04hxsy0icYbI3vM65xGdlVykVMRGBscaqfJwKHGG/kg
-	 RKj32n7/IhLTCFsNtwGB6onQu6L0J47Mo+TJzOYo=
+	b=tzapHscvxy9RsscgDUQDQIrjcdjM3k7LKLkYyr3qN5BKEcBS+nAeKgGUdQy1o3YJc
+	 2b0nn4pDULlN1XNOT7MA+AllRHKGTewPaBpyLyYj9wRa9KP0dMVr47O5IKo9v1VYz+
+	 bvbKahcTTcM9pZMgmiFZD9/ODhz/DLmpPOA0KYsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pei Xiao <xiaopei01@kylinos.cn>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1202/3318] tpm: tpm_nsc: stop using the cleanup callback as dev.release
-Date: Wed, 18 Nov 2026 15:30:24 +0100
-Message-ID: <20261118150356.231461053@linuxfoundation.org>
+Subject: [PATCH 6.6 1203/3318] tpm: fix zero-length read discarding the pending response
+Date: Wed, 18 Nov 2026 15:30:25 +0100
+Message-ID: <20261118150356.261435513@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,46 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit df0ef271087623439a1e900f323ed2a57204706d ]
+[ Upstream commit 6fc1b05077b8ac7c3193616f0bc419f6185988c6 ]
 
-tpm_nsc_remove() is called explicitly from cleanup_nsc() and also
-runs as the platform device release callback on the final
-platform_device_put(), so the cleanup executes twice on module
-exit; the second invocation operates on a chip that has already
-been freed by the devm cleanup, and the I/O region is released
-twice.
+POSIX requires that a read() with a count of zero returns zero and
+has no other effects.  tpm_common_read() treats such a call as a
+consumed response: it marks the pending response as read and drops
+it, so the response can never be retrieved; subsequent reads return
+zero and the next write() is allowed to overwrite the response
+buffer, silently breaking the command/response pairing of the TPM
+character devices.
 
-Overwriting the release callback installed by
-platform_device_alloc() also keeps platform_device_release() from
-running, leaking the platform object allocation.
-
-Leave the default release callback in place; the explicit call in
-cleanup_nsc() remains the single cleanup point.
+Return early when the caller passes a zero count, leaving any
+pending response untouched for the next read.  A zero-length read
+will not report a deferred asynchronous error; POSIX permits read()
+to skip error detection for a zero count.
 
 Cc: stable@vger.kernel.org
-Fixes: 570302a31149 ("[PATCH] tpm: move nsc driver off pci_dev")
+Fixes: 9488585b21be ("tpm: add support for partial reads")
 Assisted-by: GLM-5.3
 Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/a6155310e6772f708b47291cc959e02c05b90eb7.1791015549.git.xiaopei01@kylinos.cn
+Link: https://lore.kernel.org/r/3f15140ab3c26e98b49d6aceaaa826585d56960b.1791015549.git.xiaopei01@kylinos.cn
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_nsc.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/char/tpm/tpm-dev-common.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/char/tpm/tpm_nsc.c b/drivers/char/tpm/tpm_nsc.c
-index bec0b1fcad27a..c33d49172df23 100644
---- a/drivers/char/tpm/tpm_nsc.c
-+++ b/drivers/char/tpm/tpm_nsc.c
-@@ -326,7 +326,6 @@ static int __init init_nsc(void)
+diff --git a/drivers/char/tpm/tpm-dev-common.c b/drivers/char/tpm/tpm-dev-common.c
+index c3fbbf4d3db79..ff86a1fdb5cdc 100644
+--- a/drivers/char/tpm/tpm-dev-common.c
++++ b/drivers/char/tpm/tpm-dev-common.c
+@@ -131,6 +131,9 @@ ssize_t tpm_common_read(struct file *file, char __user *buf,
+ 	ssize_t ret_size = 0;
+ 	int rc;
  
- 	pdev->num_resources = 0;
- 	pdev->dev.driver = &nsc_drv.driver;
--	pdev->dev.release = tpm_nsc_remove;
++	if (!size)
++		return 0;
++
+ 	mutex_lock(&priv->buffer_mutex);
  
- 	if ((rc = platform_device_add(pdev)) < 0)
- 		goto err_put_dev;
+ 	if (priv->response_length) {
 -- 
 2.53.0
 
