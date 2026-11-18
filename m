@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060896;
-	b=DqFZBW4sUZMHwyC8Nx6cCohgLlHQ8YB/xcqIcwu60H+L9bEoYWP8f1nbdC9uiDM0foyN
-	 MQWUutU81Olv6JoJdg2ZLqlY16WRYEfEwZSx6Y46yLOnLoc9CXUDPkdOv1qFdlK1JoU6z
-	 f7RBP4Lm7/WuVegF3Te5ROuzpsTkrxDIkmzyWzmzA8J7MlTdxHovMFw1JvFrEK+Ki8qzU
-	 ypRucrlUJ6ROEosaiGDHsqMrvzrUsAyjOCi9bQhYWACK1pmxc+HGzHNhS5Xu5WOmelmCM
-	 QDNnW6aNU+LYaaOFzE1VJWrV/9oAsb4cq0pzFW2Z7188mW94g8guk9tY4DeRAzOi6hg==
+	t=1795060899;
+	b=QyGHhTMQW7zO3TW8OHGAxuCSSbUIF+/QALzUZ7ohZUUlLw3wpIMv5jjoC93uZu/ZGmiT
+	 XK0gRPvU5uzLXbEQSQlyrIbasvcvSxByeTwXSZEmc0Ohdts0bfe8wmprCw1Nln2vo/niA
+	 CZtQqhatNvc5a4prLHACwt1Oj6lPI6uQ8juNs9IY8zhkmzYqL5RbFEkol+JM+zaM5nBGl
+	 FyaNbifrWPuwslJ6Eh85JIpIqxQPV6T3KdDbdes1YjAFs/wmy2hNPuLzJ/iupupUQKc+e
+	 LoN2H1hwUOcbw7YwWVU6GtggeoJGLEQFQHJmJe8jcXAArg0KtmrBUVc2EmSk0tAvmVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060896;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060899;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OOcnIb4aEXFNyUKokTyue7v+HYml8Io4f3hgzFSziIA=;
-	b=TYI4326O8f7aeyUPO/Uu6dJICxy5QRormuLxfcTp77K7S9q1UwC6aVMXqGdBBA+1RZ3M
-	 sFm4v9/7YKLwPZ3unnh45iSr6izrWLjJHmdXpnl+JIab6aVXqdN7CXFeNhiRIJRl1GOwu
-	 ZnGM9BFtxtnHEylmiPVWXgEWOyS6hJg2PjtttVQ+kB+Bn1nUO0drrYXE6F3jYV+wlZE1a
-	 xvY0iV92EuZjCtw2hjIK6SgiuBWaSml1l9bpP22Rcogq/Swq41p49r+8Z56XV8YxAH9rX
-	 x2LyDKf9ejCFShlJonNk8vhY2o5psPJUOioNuMyIMNKp0NQiTfQivjK80V3r8LOU2JA==
+	bh=g+rE890GKJGvTjbfD3IXvvh299VyMzCv3omksXDsBO8=;
+	b=e30SzjlDTb7NKEJxoK+WvngH+sOlyLtylrsjymM33baZ3oglj8U3NCwoMXqWWFOfpBX5
+	 O730c7gy8QsUKUXhLrqEtECa0HBpmHfukXYpZvnNuN9GIY7I6x4WADv+UBuRIEfibg7qh
+	 L+pgf9r7tsiF6cfVfLoou8dl1O4V3lkAMJVg99NP+947HEaHcopTEi9BGraUOBf5TzwMD
+	 3M6NNNiLOQScREpGPbl5zn+A6LVS39MJIYfeOEfOJ25VGGdZ/u/WSEAUkrt7wT6u+ILkF
+	 ino/rm3uKCEEF9/kfN7ftUxQ+9GALV9qzidqmm86dUdCbYHyW2khZiHqD0Hz2obkddA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E+E+9W5g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hy1rX6+c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA4C606A32F;
-	Thu, 19 Nov 2026 04:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12F4606A325;
+	Thu, 19 Nov 2026 04:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E+E+9W5g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 438411F000C4;
-	Thu, 19 Nov 2026 04:01:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hy1rX6+c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD471F000C4;
+	Thu, 19 Nov 2026 04:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060896;
-	bh=OOcnIb4aEXFNyUKokTyue7v+HYml8Io4f3hgzFSziIA=;
+	s=korg; t=1795060899;
+	bh=g+rE890GKJGvTjbfD3IXvvh299VyMzCv3omksXDsBO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E+E+9W5g173nG4M/mjUKNmr1IUobbFhfenNu8/7+lJJrJ8tex0XhHRDRgywFttPLb
-	 yx+7hLkaOOtOdBVJcgXHtDEodtb0CLpd03vV9uEz5ESC7aXROUX19Xnh33Fh8W1e58
-	 fO9ixs1KgGKr8maymh6EEh8SE7FnMWbvA7dnNrz8=
+	b=hy1rX6+cWb8pJfA9Hnj25hLr8CY4AEJYmFyhcXsVlSWnmB7Odo8+JKuHE1z4mZTHX
+	 c6BhApyJa3Xv8Jdp8tKEM/RLdq8I328GAA4GTDBVfvVDY/28Nr355spb6NA846pLi2
+	 vkV5EXA0fGaE/FCHHmYm3Wr8V1A00zmjYw73BNyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jagan Teki <jagan@edgeble.ai>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Aaron Kling <webgeek1234@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1362/1848] dt-bindings: vendor-prefixes: Document Chongzhou
-Date: Wed, 18 Nov 2026 15:56:40 +0100
-Message-ID: <20261118150016.609416812@linuxfoundation.org>
+Subject: [PATCH 5.10 1363/1848] dt-bindings: vendor-prefixes: Add Chip Wealth Technology
+Date: Wed, 18 Nov 2026 15:56:41 +0100
+Message-ID: <20261118150016.645657007@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,38 +68,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jagan Teki <jagan@edgeble.ai>
+From: Aaron Kling <webgeek1234@gmail.com>
 
-[ Upstream commit 90f86d0c617d9461cb00f4d8e861eda28011d46e ]
+[ Upstream commit 058ee00216a1356e710446b59a800065d2abbd80 ]
 
-Chongzhou is a professional is a manufacturer of LCD panels
-from Shenzhen.
+Add an entry for Chip Wealth Technology (https://www.chipwealth.com/)
 
-Add vendor prefix for it.
-
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Jagan Teki <jagan@edgeble.ai>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221108173120.618312-1-jagan@edgeble.ai
-Stable-dep-of: 058ee00216a1 ("dt-bindings: vendor-prefixes: Add Chip Wealth Technology")
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+Link: https://patch.msgid.link/20260727-ayn-qcs8550-v9-1-e3db456e10e5@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index d5b0f3043ffa2..8dbd288fdd659 100644
+index 8dbd288fdd659..762398cf70290 100644
 --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
 +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
 @@ -211,6 +211,8 @@ patternProperties:
      description: ChipOne
    "^chipspark,.*":
      description: ChipSPARK
-+  "^chongzhou,.*":
-+    description: Shenzhen Chongzhou Electronic Technology Co., Ltd
++  "^chipwealth,.*":
++    description: Chip Wealth Technology
+   "^chongzhou,.*":
+     description: Shenzhen Chongzhou Electronic Technology Co., Ltd
    "^chrontel,.*":
-     description: Chrontel, Inc.
-   "^chrp,.*":
 -- 
 2.53.0
 
