@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045314;
-	b=Z0jJLwtjyMC9O8dF9p3fwJbQirD6VdtCsdyCfrE5Ynblqi6TUINxMMTNNYNPNqSCIuY5
-	 110rLI8JXQJVUAQKDgsIphJKkS/r+vGujc5b7jDsym0USW0Cyg5L46DJmtH9TNG6uu4aC
-	 j5GZTV2CuJw3rPeFCNRZ3Qdr+qYD+Af1j6LFlMjg1+cWbE3nnoEKQ3N9S4W+7VqzpLD8a
-	 /9FBCYkUbGXvu/2ktrApex5iJPqjT5KH2p+vhOuqFUXZpjjCGw7RLOXuQazpNiGfXyMRD
-	 34gjibMpNQMXot59mXrzvuqZzobTJygZZR/mg89LfBQxEs882OxM25FJ40YNjL51qDg==
+	t=1795045317;
+	b=k0J1LeDX3eFjvMmuITIHbUcXS+2VvASXwcgbkol1unObzppPqeE//bP3Ek0ZnbBZTg+1
+	 DhEj5BdY411ZU6CfEIYKNiPbBwp3b4fAdKgkDS6/nX1BEtUxwSGJmEAe9LhBaEUsEz+ik
+	 Jx5w3G2qgasuNE44t6tkWbzfLdk0Qm3vE2ED5ZGLqaBItglgHal4IW5jGH8enqljBM+j0
+	 wlHH9iWKVPv61ZB+JJXDIR1qXRNGUkusUSrK03lKZpWpORD8Vk9IEO51aj5lHuqM/pB6d
+	 njvV6RwZCekMJrXmnfw46bph49u4CO4fcUy/ljzj8q7VE/xEH/MbqFXVgUUFoIzqj1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045314;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045317;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YAN/EFxDqcTB7VxEdqmxI5TdhoZj4N0NspIVRKPcGlk=;
-	b=iez12rY+wNiWY99n0rF2Qah/IvicpLuYqHagx5H0DhajTRSes/Xb4O0qlHyW1UtHNzPk
-	 lOSWAI3gSaT+NFTkhA/qYsPMz1TZC4tcrSwhngxkf048PgyMe+MNWt24CV+YpuPOxIP23
-	 oFfFTzFjKBrAWlTmdfYK9kBlr7svauMisewl+90gLX350FPEJjegG1hEf2Sn7goUWW68I
-	 0+UENHjDuvedKIq7XWF4sX4oXF5l3ue9s7rrsrG2B+BSyGPDB6cu/7Gk8zVny+YK+8H6y
-	 NFoO1gYY3O4UsPQJLpgRKd4IfP1BhbtIryp29b21NMN7FQ/xB79WrgrFKnRU4BzaVnw==
+	bh=3umsxfB33OV5KldM4ggAOQ8JxiuHpF0UcWtO1R6NKYc=;
+	b=EUldycIWxpKIpoK782bPzLIuBk3URqlgqYEatk1GekGYPciuOA7MzR1vQftiWsRtULJd
+	 WrpzUiHH6eIEGYfxJWaatYUwjw7/KkuGBd0z/bCIrof1DFnIVtwz25QBsKTqAwgny2YtQ
+	 jE7pI2faX4GyBlZcHwzULca6EETNKjUe8bNUvcVC/Hc2rtGT8/Ir6jYHRPvnrmK9rxVMj
+	 zQIHTMluUjAgvE4W2+LcBOr1V8ZKdy4lBvLDxZ9Q2fdqfTzeyN+oBM7RTTcLEFXQ/Q0sL
+	 emEqh099sfG8txm2m/H6m5jOZQRhTRen71QKg1YoZxpJ4Y7JnpHKVcrpHhd7W/1tAOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fIoFcAeZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pUTYmz3E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86489606A32A;
-	Wed, 18 Nov 2026 23:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EEA3606A325;
+	Wed, 18 Nov 2026 23:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fIoFcAeZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1281F000C4;
-	Wed, 18 Nov 2026 23:41:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pUTYmz3E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B59AF1F000C4;
+	Wed, 18 Nov 2026 23:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045314;
-	bh=YAN/EFxDqcTB7VxEdqmxI5TdhoZj4N0NspIVRKPcGlk=;
+	s=korg; t=1795045317;
+	bh=3umsxfB33OV5KldM4ggAOQ8JxiuHpF0UcWtO1R6NKYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fIoFcAeZ2Iwfvlarvp68SHck1GqzqhQdDiCkr7zSWXaiK3zh3BLs3d7GsPWnV1hV6
-	 R8fDwtk+kJCKfuh+MzGPJQRDdZlZaz4U19du8DgkHxMo7Ryo4qk1o6gMwTP9JDckrB
-	 34i5rSYdCrmGquWmDvPxL1YK6eJYNVZsvYJTqL5Q=
+	b=pUTYmz3ELZAlJ/Wm+5shPRPYhs0L9GCRE5FJqPtIiE4D0t8tTh16WaCBu4ugbyOCC
+	 wwv9viziNHt5tNM6kqr2b2nQ/lz/udZ2X4wQ7bWS6PpzqtHAKARc0hwd4pLj0JuhsR
+	 NnBLRhTQf0CIj+3YWifQjU4aQlR+FNDqj08G/gmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0877/2857] power: supply: ab8500_fg: Report sub-percent charge changes
-Date: Wed, 18 Nov 2026 15:31:51 +0100
-Message-ID: <20261118150233.141887885@linuxfoundation.org>
+Subject: [PATCH 6.1 0878/2857] perf: xgene: initialize lock before requesting IRQ
+Date: Wed, 18 Nov 2026 15:31:52 +0100
+Message-ID: <20261118150233.175850025@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,55 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 4d40dba1815d46c6ef9019ed80e3b998b0fc443d ]
+[ Upstream commit d4b7b0c77142b3bc535192fa65130474a129c487 ]
 
-The fuel gauge updates bat_cap.mah from the coulomb counter but exposes
-bat_cap.prev_mah through CHARGE_NOW and ENERGY_NOW. It only refreshes
-prev_mah when the rounded integer capacity percentage changes, making the
-momentary properties appear frozen between percentage steps.
+xgene_pmu_probe() requests the PMU IRQ before initializing
+xgene_pmu->lock. request_irq() enables IRQ handling before it returns,
+so xgene_pmu_isr() can run in this window and acquire the uninitialized
+raw spinlock.
 
-Refresh prev_mah and notify userspace whenever the new charge remains
-within the currently accepted percentage. If a discharge estimate tries
-to cross upward into a higher percentage, the existing rejection still
-leaves both the reported percentage and charge unchanged.
+Initialize the lock before requesting the IRQ so the handler always sees a
+valid lock.
 
-The AB8500 fuel-gauge implementations in the Samsung-GT-I8160-Codina,
-Samsung-GT-I8160_HD-Codina, Samsung-GT-I8530-Gavini,
-Samsung-GT-S7710-Skomer, Samsung-SGH-I407-Kyle and
-Samsung-SGH-T599-Codina-TMO product trees retain the same percentage-gated
-prev_mah update and contain no finer-grained reporting workaround.
-
-Fixes: 13151631b5bd ("ab8500-fg: A8500 fuel gauge driver")
+Fixes: 832c927d119b ("perf: xgene: Add APM X-Gene SoC Performance Monitoring Unit driver")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-2-e986ed321cc6@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_fg.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/perf/xgene_pmu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
-index 327c7a9f31ece..766e5cfad4eb0 100644
---- a/drivers/power/supply/ab8500_fg.c
-+++ b/drivers/power/supply/ab8500_fg.c
-@@ -1392,6 +1392,13 @@ static void ab8500_fg_check_capacity_limits(struct ab8500_fg *di, bool init)
- 		}
- 	}
+diff --git a/drivers/perf/xgene_pmu.c b/drivers/perf/xgene_pmu.c
+index 0c32dffc7edef..42ab66655f6a9 100644
+--- a/drivers/perf/xgene_pmu.c
++++ b/drivers/perf/xgene_pmu.c
+@@ -1894,6 +1894,8 @@ static int xgene_pmu_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		return -EINVAL;
  
-+	/* Keep the charge properties current between percentage changes. */
-+	if (di->bat_cap.prev_percent == percent &&
-+	    di->bat_cap.prev_mah != di->bat_cap.mah) {
-+		di->bat_cap.prev_mah = di->bat_cap.mah;
-+		changed = true;
-+	}
++	raw_spin_lock_init(&xgene_pmu->lock);
 +
- 	if (changed) {
- 		if (di->bm->capacity_scaling) {
- 			di->bat_cap.cap_scale.scaled_cap =
+ 	rc = devm_request_irq(&pdev->dev, irq, xgene_pmu_isr,
+ 				IRQF_NOBALANCING | IRQF_NO_THREAD,
+ 				dev_name(&pdev->dev), xgene_pmu);
+@@ -1904,8 +1906,6 @@ static int xgene_pmu_probe(struct platform_device *pdev)
+ 
+ 	xgene_pmu->irq = irq;
+ 
+-	raw_spin_lock_init(&xgene_pmu->lock);
+-
+ 	/* Check for active MCBs and MCUs */
+ 	rc = xgene_pmu_probe_active_mcb_mcu_l3c(xgene_pmu, pdev);
+ 	if (rc) {
 -- 
 2.53.0
 
