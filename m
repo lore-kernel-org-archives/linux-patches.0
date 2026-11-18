@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045736;
-	b=h6HdOTlQUmt1T0g2chJQVP0fZ0SPxYP5bcpABCpQYIOTFWX7zDexNa+snprjI9k3xUx6
-	 vm1uUdj3RFe2GALJpUJjoPdvcNz9geFKUSMsjba88SRcYQS+mexNyNn9DRrspri3owRuy
-	 2+ZhUzI5Q5Vt6EFVWPnBGIWMClyLFMMy30GEB0shupg/dt42nTGjrrHR19WieH61I+XRt
-	 KlSANyPqS2oBPddEPGt6guCWJldNDphjVZivtFkOglLJ9m21BFDTpwIqD6ZN8XkSrjbqL
-	 0kZOTJIldCTWE3G2lI0PA3CwVrQ7B7oSFYkCLAzXTIEZK5+yVU24EPGSe/wYMkdZ6ZA==
+	t=1795045738;
+	b=5JVAbep4eHTi5IYNJ7uHTxfv9ISRquH5SPRkGBogCQhe6cFQX9BBJFnlMR4gwQOji0eJ
+	 MYjht6QSHSKmKztv15bWz/SVFwphVWzCM8xQShi9o8uCKWJg/W5vUnVPfLmaWOTCIm75T
+	 hwcEkdXQnTyTM6Y4+RGWGpfzjGpPSxsE5XBNNqDh98irbi97Re8qKkKCM/rBK2c320GMq
+	 Bo+OTB+vk9sP89tWmhnyV3OwtuGfMuwkvPpxSd+ycgw5nlHhZXRwnavAKn2bJBSFBbswy
+	 BIMVB4Y8cGMq/UIA718kB7j5pK08gvsgVaSGqngITYGerRBfwa0ScCFIaBULfx1sxPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045736;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045738;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2A8p6V/lqbOr+f+q6ThFb0deu31fVDymZtWZeFOmVkg=;
-	b=BcQqagXSGKm8JBqELKb4Nh6K7jwQCV3NcNiWZ6PsBOR1MkPrCPa3NO095q7VmlotuhpW
-	 Qp1J9hZJ/5efhqk7pp7jiF6TAF6xKqwkHeSDuVyK2lGDItXDLin8QjtsDSHOW8QtIwKPm
-	 cCOXou/p/uZ166GRG4r8Si82FMxNkWbkOhHYeQjWjTtCSPyOEk97PrQACc3ACtqqyRXqc
-	 RaQJBwKPaSdmt/xVk/V59Cx6xjAjD31dgwTY/csRPjyzdRWeD8YqoP8PSqWFATtN+yHUe
-	 sY1zYM9cqYFfadx1U/7uaVkDdu9PVhFYpwDmWpeLq8qTkwYcubqfrMhl/KA3j5tSbkw==
+	bh=DFl7toTxwSctrNYRUj+gJUQHOtZlIBcSJg0h1UcLZTg=;
+	b=x0IP55kwdmj7NFjNRK7hTBmd75X1qf/JGBXsj+g3wAHCAlxfIcfeVheDEdTjYBEpGGQP
+	 wACLKEUZBfF+fzhH92cBmykoaGRsaG1SAEYAT2VLprY4Gwg8rjxk1/NR+EAEdEqaqsOlv
+	 evQy8vFUkN/3hx+AccF7hJNQd6Ia4XbwUaCd2OVkxLPSOIdHpu4hfguEgG9hmnpMU5Jbc
+	 2jssX4GQr9JGyP1/8SM888Qge/7jKVmEU04Cspa+oCqhaYyJPtZDEjJ50/8IJHbZbT8DT
+	 JbSChZbUaJazYYJOmiATAbdXCfMuXXxQbucIQUkbdGR3Bmi1Z+GIIKkxrLPhqa2Vbzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b662lDfW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QvQ8O1TZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9EC606A320;
-	Wed, 18 Nov 2026 23:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22D9606A320;
+	Wed, 18 Nov 2026 23:48:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b662lDfW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753BA1F000C4;
-	Wed, 18 Nov 2026 23:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QvQ8O1TZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337F41F000C4;
+	Wed, 18 Nov 2026 23:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045736;
-	bh=2A8p6V/lqbOr+f+q6ThFb0deu31fVDymZtWZeFOmVkg=;
+	s=korg; t=1795045738;
+	bh=DFl7toTxwSctrNYRUj+gJUQHOtZlIBcSJg0h1UcLZTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b662lDfW3Yy7LpMMxSuAAg3TaTpJR+mO58+1GYxZEnZO4gVPdy1BU64yEOAAgydVK
-	 0HHzKJMXTnlwau7biWfh1hdSsyVhlkjWm6lnGRSzbs22SY1jsiy4H48iCBDQ+naYnA
-	 mXheJ86lkd0FiU0iyLDz6ydXAkMYjY03Pf0WiqEw=
+	b=QvQ8O1TZ4TBoKhPSoitWF7N79LprdV42qw6eLbXsBoTt4u/uAJ8YT3dDFeovzKMTt
+	 reO9WTVmuAElo0naExnFSw6IYBebtBkQZ7Uuxbe9+VMOTzYOOxCFEh6UEXmP2lcvRe
+	 sHSLfpqqw3jV8HXhE1Dfy2MqBRjiLmrLcYNjssvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Ma Ke <make_ruc2021@163.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0989/2857] rtc: cmos: Disable ACPI RTC event before handling it
-Date: Wed, 18 Nov 2026 15:33:43 +0100
-Message-ID: <20261118150237.211654924@linuxfoundation.org>
+Subject: [PATCH 6.1 0990/2857] platform/x86/amd/pmc: Fix RTC reference leak in amd_pmc_verify_czn_rtc()
+Date: Wed, 18 Nov 2026 15:33:44 +0100
+Message-ID: <20261118150237.246463716@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,75 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit 3f67038df8b5cba07254d1cff60d73e988b49ab7 ]
+[ Upstream commit 22b9306f1fcf86f80b55f05f08d10a9951ba970a ]
 
-Users of RTC_UIE_ON can stop receiving update interrupts when rtc-cmos
-handles alarms through ACPI. In one 50-run test, 40 runs passed and 10
-timed out after receiving between one and four of five expected events.
+amd_pmc_verify_czn_rtc() opens the RTC with rtc_class_open(), which
+takes both a device reference and a module reference on the RTC
+driver. The matching release is rtc_class_close(), and it is never
+called. Every return path after the device has been opened, the ones
+that return 0 as well as the ones that report an error, leaves both
+references behind, so each S0i3 suspend leaks them.
 
-The ACPI ff_rt_clk counter stopped at 218, exactly matching the number
-of events delivered to userspace, and reported:
+Release the reference with a __free() cleanup on the declaration,
+which covers every return path without adding labels.
 
-    218     STS disabled     unmasked
+rtc_class_close() does not accept a NULL argument, so the cleanup
+helper has to guard against one: rtc_class_open() may fail and the
+declaration still has to be cleaned up.
 
-rtc_handler() runs in the threaded ACPI SCI handler and calls
-cmos_interrupt(), which schedules rtc->irqwork. The work can run before
-rtc_handler() returns:
+Found by code review.
 
-    ACPI SCI thread          rtc->irqwork
-
-    cmos_interrupt()
-      schedule_work()
-                             __rtc_set_alarm()
-                               rtc_wake_on()
-    acpi_clear_event()
-    acpi_disable_event()
-
-The SCI thread then disables the event that the worker enabled for the
-next alarm. That alarm sets its status while delivery remains disabled,
-so no update interrupt reaches userspace.
-
-Clear and disable the current ACPI RTC event before cmos_interrupt()
-schedules the work. The worker can then enable the next event without
-the handler undoing it. With this ordering, 150 runs delivered all 750
-events without a stall.
-
-Fixes: 311ee9c151ad ("rtc: cmos: allow using ACPI for RTC alarm instead of HPET")
+Fixes: 59348401ebed ("platform/x86: amd-pmc: Add special handling for timer based S0i3 wakeup")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-Link: https://patch.msgid.link/20261015173029.3091872-2-gourry@gourry.net
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/20261011121759.3267678-1-make_ruc2021@163.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/platform/x86/amd/pmc.c | 5 +++--
+ include/linux/rtc.h            | 2 ++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 47799baa32d76..8854e4027c9c5 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -757,7 +757,9 @@ static u32 rtc_handler(void *context)
- 	unsigned char rtc_intr;
- 	unsigned long flags;
+diff --git a/drivers/platform/x86/amd/pmc.c b/drivers/platform/x86/amd/pmc.c
+index 8eb5ddeca0d46..ca3b874058ff0 100644
+--- a/drivers/platform/x86/amd/pmc.c
++++ b/drivers/platform/x86/amd/pmc.c
+@@ -14,6 +14,7 @@
+ #include <linux/acpi.h>
+ #include <linux/bitfield.h>
+ #include <linux/bits.h>
++#include <linux/cleanup.h>
+ #include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/io.h>
+@@ -694,7 +695,6 @@ static int amd_pmc_czn_wa_irq1(struct amd_pmc_dev *pdev)
  
--
-+	/* Quiesce this event before rtc->irqwork can arm the next one. */
-+	acpi_clear_event(ACPI_EVENT_RTC);
-+	acpi_disable_event(ACPI_EVENT_RTC, 0);
- 	/*
- 	 * Always update rtc irq when ACPI is used as RTC Alarm.
- 	 * Or else, ACPI SCI is enabled during suspend/resume only,
-@@ -780,8 +782,6 @@ static u32 rtc_handler(void *context)
- 	}
+ static int amd_pmc_verify_czn_rtc(struct amd_pmc_dev *pdev, u32 *arg)
+ {
+-	struct rtc_device *rtc_device;
+ 	time64_t then, now, duration;
+ 	struct rtc_wkalrm alarm;
+ 	struct rtc_time tm;
+@@ -710,7 +710,8 @@ static int amd_pmc_verify_czn_rtc(struct amd_pmc_dev *pdev, u32 *arg)
+ 	if (pdev->major < 64 || (pdev->major == 64 && pdev->minor < 53))
+ 		return 0;
  
- 	pm_wakeup_hard_event(dev);
--	acpi_clear_event(ACPI_EVENT_RTC);
--	acpi_disable_event(ACPI_EVENT_RTC, 0);
- 	return ACPI_INTERRUPT_HANDLED;
- }
+-	rtc_device = rtc_class_open("rtc0");
++	struct rtc_device *rtc_device __free(rtc_class_close) =
++		rtc_class_open("rtc0");
+ 	if (!rtc_device)
+ 		return 0;
+ 	rc = rtc_read_alarm(rtc_device, &alarm);
+diff --git a/include/linux/rtc.h b/include/linux/rtc.h
+index 1fd9c6a21ebe8..447bdba3497b5 100644
+--- a/include/linux/rtc.h
++++ b/include/linux/rtc.h
+@@ -13,6 +13,7 @@
+ #define _LINUX_RTC_H_
  
+ 
++#include <linux/cleanup.h>
+ #include <linux/types.h>
+ #include <linux/interrupt.h>
+ #include <linux/nvmem-provider.h>
+@@ -197,6 +198,7 @@ extern void rtc_update_irq(struct rtc_device *rtc,
+ 
+ extern struct rtc_device *rtc_class_open(const char *name);
+ extern void rtc_class_close(struct rtc_device *rtc);
++DEFINE_FREE(rtc_class_close, struct rtc_device *, if (_T) rtc_class_close(_T));
+ 
+ extern int rtc_irq_set_state(struct rtc_device *rtc, int enabled);
+ extern int rtc_irq_set_freq(struct rtc_device *rtc, int freq);
 -- 
 2.53.0
 
