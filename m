@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043718;
-	b=KqvN8y3hwCFzDKdp39izwkL4tHinO3Rhp4Edh+VhBoq7Ysp2GwYGuJeTvqSTfoszbh1Z
-	 VLr1uuw+Qn3Oe/dQQk7IcC2drAhVvtpjsX85gb3o/W4tV19kesojz7dKGOvNOb2L5c8Jz
-	 5iDRfXp1/yVwkozkxOIFG/USxnNFd3fGh4CTrrS++PEQCKEhOYaMj8kBC/Mjf2n5nvVwG
-	 8GLa2mKHZXc6FahFVB7kU0gZNXg8A0WDilGDwZN+tV6jOPSj3JTmlfYp1DQ87ts8Wfp6W
-	 P2IT4C9t417gAliYeYqBdL5uldHIi+zQc8T+rMkE2hxl1VgfVLgUclkRL14+KjOMLdw==
+	t=1795043721;
+	b=X8yjdUgYKHfjhQgCcS1uxvqGE2+rUe7AFe0EIev24olZ349+D9bpKAfSQr+WdqpPImS4
+	 z9g/avOq8H84q/seqlEd1GTei6ywV7th2tEuTVTrUKM7jrHWyGxfT+L5tjH6p7J9nSYBD
+	 TQr7WPhOWYncF886WeA23towon+e3V7MUERmDpNznZYDsEfqmSg8dMqmn/5yhCyOKDpPi
+	 V0nUkEc5FPSV1xdNL4ucPo7CcHed6A/ImekKST09IxjgIvbnc8otYQ+/dm/HQPMdGyr/A
+	 fmvj4JSje0s99B+GUAUESzAE0xxT+fJC/qube3bmPxs11xMydqXWF6/yNTIK0Z0+rlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043718;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043721;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nDmBQRYdU8hW1VSbbiSZhuunSrCJLgnI+ARevwrsCl0=;
-	b=b5bZAeiw4rgaqB9+SVVKm1Ong3Z7zkDlgcArG7cbhF/eua56okq8DmxVRO6dcKo4Pt2u
-	 dhtX6cQiJZdUsLFQkKCnf1z0k6PHPqXp8LBzsFGIlANN+c6oN19ewlsSzgKWtlKyC87cF
-	 8Cz7k2wEllDQE5PPdXf/9joqvIlB9I2wG/2d6U+p9FD/nof/6lafSiJvBuV2LU/X6S9II
-	 XGp5usgPqhlr0/XnxCdCoGXMQS4mEQnsymzSSjLpqLWakgzOMQAjB9CDrTDyoKE+gf47p
-	 0BdUL/aAKYjqAEJOGLdqk8yizZDinXGA2TX4+JwzPjG1Ir32/FPxP0bIT++vul0ikiQ==
+	bh=S8CESGj9Z43DccM+n1h8Bp48lh6Pdkqv7RiJBLcivko=;
+	b=1jIx4tQ2uQI1HzVHG1Xjk/XOyn3upjy8qYC+J+WJ0M3G6ZmxCpZYLdLoaA0jOhqT2Rvb
+	 S8qehI5clrZ98E21JEYR2LIMDZullxgExlhjW1oVIhAWmXk68aqrGnkSga2sv9kyZFGAo
+	 h843K8xUGUWagRwt3HKbXh5Uc7oWZB4CAd7mYqWeGuSjSdRQm4rF06YrUp9i/KwHLZEuu
+	 Y9gDtW7KecuttKhgGM5O4n2TcprfzLCt1+fqau+pyYLaAW+2oqV17E2o6umiCG7zYw1hC
+	 KvbFnsJk65ZdGe8A/cIosjZiHkNMg52JmPp//5PTFLgTxZkvKdkN9cUHcVqH2Dq7Dew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GyaAZvuO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kn1lVKBB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C51A606A32C;
-	Wed, 18 Nov 2026 23:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC6C606A320;
+	Wed, 18 Nov 2026 23:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GyaAZvuO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED13E1F000C5;
-	Wed, 18 Nov 2026 23:15:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kn1lVKBB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C9E1F000C6;
+	Wed, 18 Nov 2026 23:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043718;
-	bh=nDmBQRYdU8hW1VSbbiSZhuunSrCJLgnI+ARevwrsCl0=;
+	s=korg; t=1795043721;
+	bh=S8CESGj9Z43DccM+n1h8Bp48lh6Pdkqv7RiJBLcivko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GyaAZvuOJU/t3fOu/hE0DN5qDwmWzPkCHzpKUIdOuDvRcyM0YX0gRceCc51SjyYcB
-	 d2xzLXfCz3eAydzw2te7tk4X/aIGfqR3C2fZ+40OrO6zll2TvJZdTw0+EKSNnXEchz
-	 BDJ3+MP0ZiZFxsomuywuscZa5+Jtyp2A4GAsPKl0=
+	b=kn1lVKBBE4D3CJ+EbkplUihsE6INM5KA/t7+ZYy9WilHD7zH5LZoTOuMK5XQzEMWD
+	 9uIFDlF7GNk2VigVGsXRC6FrMFEXFabt2wR0ZHujzouo5SfOEcPJtzfXZm8umrY3Vx
+	 CRaQbIAdqBb3K+ddEHCTGnhiwmGVzVPhoM7Hputo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
+	co+9782320f78c23f40@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 0309/2857] media: cx88: Disable PCI device on MPEG initialization failure
-Date: Wed, 18 Nov 2026 15:22:23 +0100
-Message-ID: <20261118150212.571244632@linuxfoundation.org>
+Subject: [PATCH 6.1 0310/2857] media: em28xx: reject audio endpoint with zero packet size
+Date: Wed, 18 Nov 2026 15:22:24 +0100
+Message-ID: <20261118150212.608846197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,66 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 80494a83223bc972145c23890b083d20651512bd upstream.
+commit aebfe430ba885d2f8fc882d7a6d60a7fdbe535d8 upstream.
 
-cx8802_init_common() enables the PCI device, then returns directly if
-DMA mask setup or IRQ registration fails. cx8802_probe() frees the
-device and drops the shared core reference without disabling PCI.
+em28xx_audio_urb_init() divides by the audio endpoint's wMaxPacketSize
+without checking it, so a USB device that declares a zero-sized audio
+endpoint divides by zero at probe time.
 
-Disable the PCI device on both post-enable failures. Preserve -EIO for
-a DMA mask failure and the original request_irq() error. Do not call
-the full fini helper because the IRQ was not successfully requested.
-The successful probe and normal removal paths are unchanged.
+Reject a zero-sized audio endpoint like a missing one; the caller already
+unwinds on a negative return.
 
-These missing error-path disables are present in the initial Git import.
+  Oops: divide error: 0000 [#1] SMP NOPTI
+  Workqueue: usb_hub_wq hub_event
+  RIP: 0010:em28xx_audio_init (drivers/media/usb/em28xx/em28xx-audio.c:718)
+  Call Trace:
+   em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
+   em28xx_init_dev.isra.0 (drivers/media/usb/em28xx/em28xx-cards.c:3887)
+   em28xx_usb_probe (drivers/media/usb/em28xx/em28xx-cards.c:4258)
+   usb_probe_interface (drivers/usb/core/driver.c:396)
+   ...
+   usb_set_configuration (drivers/usb/core/message.c:2268)
+   usb_generic_driver_probe (drivers/usb/core/generic.c:250)
+   usb_probe_device (drivers/usb/core/driver.c:291)
+   ...
+   usb_new_device (drivers/usb/core/hub.c:2703)
+   hub_event (drivers/usb/core/hub.c:5961)
+   process_one_work (kernel/workqueue.c:3322)
+   worker_thread (kernel/workqueue.c:3486)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+  Kernel panic - not syncing: Fatal exception
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 1b3fd2d34266 ("[media] em28xx-audio: don't hardcode audio URB calculus")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Assisted-by: OpenAI:GPT-5.6
+Reported-by: co+9782320f78c23f40@bugs.sh
+Closes: https://lore.kernel.org/all/51lCz4R7QyTUKbh4mhXNaNzX0evpk0siOzbh%40bugs.sh/
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/cx88/cx88-mpeg.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/media/usb/em28xx/em28xx-audio.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/media/pci/cx88/cx88-mpeg.c
-+++ b/drivers/media/pci/cx88/cx88-mpeg.c
-@@ -392,7 +392,8 @@ static int cx8802_init_common(struct cx8
- 	err = dma_set_mask(&dev->pci->dev, DMA_BIT_MASK(32));
- 	if (err) {
- 		pr_err("Oops: no 32bit PCI DMA ???\n");
--		return -EIO;
-+		err = -EIO;
-+		goto fail_disable_device;
+--- a/drivers/media/usb/em28xx/em28xx-audio.c
++++ b/drivers/media/usb/em28xx/em28xx-audio.c
+@@ -693,6 +693,13 @@ static int em28xx_audio_urb_init(struct
  	}
  
- 	dev->pci_rev = dev->pci->revision;
-@@ -413,13 +414,17 @@ static int cx8802_init_common(struct cx8
- 			  IRQF_SHARED, dev->core->name, dev);
- 	if (err < 0) {
- 		pr_err("can't get IRQ %d\n", dev->pci->irq);
--		return err;
-+		goto fail_disable_device;
- 	}
- 	cx_set(MO_PCI_INTMSK, core->pci_irqmask);
- 
- 	/* everything worked */
- 	pci_set_drvdata(dev->pci, dev);
- 	return 0;
+ 	ep_size = em28xx_audio_ep_packet_size(udev, ep);
++	if (ep_size == 0) {
++		dev_err(&dev->intf->dev,
++			"Audio endpoint 0x%02x has a zero packet size\n",
++			EM28XX_EP_AUDIO);
++		return -ENODEV;
++	}
 +
-+fail_disable_device:
-+	pci_disable_device(dev->pci);
-+	return err;
- }
+ 	interval = 1 << (ep->bInterval - 1);
  
- static void cx8802_fini_common(struct cx8802_dev *dev)
+ 	dev_info(&dev->intf->dev,
 
 
