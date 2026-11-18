@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044214;
-	b=PfIKaNzCvCb0m3zkGcreq67YepA/nFnQgBQmgxA2Y2b1Qwn6i0rG2tJXJ+YxfYinxsdK
-	 8w5QYpr4YRYQITSDyQ5D5G4GJb2EncUZJN7/qgKAlhMQ3MXQsvcPJGOeqeipASMJiYpYt
-	 XrIjb5VU6PyXBvz9i8nA/uDpw7waRdgk51xwX9T16OdRwaYnf0G+Jt7NsQoWJGDgrD4GA
-	 hyK/UizxOAJE1SrLrVRlI2pkUvZP4e0UCvPu45NvXciYKz6Qd/eLdSQqUut5l2EbQ0jtf
-	 c8pZd8ZbJvH+T+bb/HzG3fJsYEOnqVdi3NJ1k383dwcTVYCrpuonyyOt6QlJE1JTY6A==
+	t=1795044217;
+	b=cY5L+qVMyQqBisTmPPEc8GZVfhYBc/5xwv5HhszIJ377YZsUWMgFN5nmsnXrhf+m+7ND
+	 8lde4QijjBPK7kkHbCAQxd+PYlRBEbmwoaN66FewnI4Ys+ZLf03FVPI2g0AIDFtggkJ3R
+	 9ztVi1TqiOYT+jK2DUp8SJGLOT0F2beTdK2NHuHkhmJLBZv5HpAMQ55dcgD+RNBAexZ9a
+	 SzBJCIwd6yEZmG3alkwtYIN82lDFoRRyMyFPaDmE3qJxDOo+YAYTxYeSUKcM/XTk9vUvF
+	 xpsqWDrQs419pP5kDXe/S8RpHTz3cYE75EiKVIMPUG0WIQh0OhmoaHqEryvxk3b1N2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044214;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044217;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iDhS2Ymg0rzz6o0GvGBYb3M9vEArS66/cQYAvxuO9Vk=;
-	b=cUJ2iEdc8acqjFyo079G6tVxatPxMLZpxvkAqvM4jUahFk9XneMDxFJMSiH9ed3BgGB/
-	 4wv81abHSu0rnGSi7VhGMEsWzfhw3SNAbdqq1yF93IV2BflYHXa0p5JcsoCSZjctlIHt5
-	 Yb5GLScH4/muLmaN6ONVG8Z/rI+fPfW7zPBNBn/pUq0z0FD9wE/EmfwJIUzeQrRW8D5Pg
-	 gg1sZhVSdY27XLnPSQduV7BNpBFaPe94JUHZG2TpI7hz0RG1dYXx7/+bKvevqiTKjZ1y0
-	 /zyKWRJs735Zlhl53y8HrkYuFbUCrTXY1ktpKXAHNPCGOjBHvwZGJA2ktvgt97sZrRQ==
+	bh=CIJwKjn/CjCBlnlzAzG8k3FvAE4VGpBtW742Au1tvvQ=;
+	b=rZTU3QoFvXNsxggYdKYjUQfUXj1F0oZafRhpCSiLtkfl8e4Ke/UNYKq0jsRYjzNdSefW
+	 Cc4FYpwY61dBbQI2/M/6xtChLqPOKqlzzUTN695UB9K0Q50lF8l0jsTv+9pFkxpX6KUWM
+	 mJk3iWkQpTZawzl4ZN2x9h7ln3u9mdksrs6eB1dheDaK5s/zu186W0Fbb2DGg/PKWAmRZ
+	 yjD3gRmP7Of4kgV3AErzJD7O8UL2VG0kkXHVKGeTp5fL9bgRZVTqzIWIkQ+2raCCsirM+
+	 kr7jKsymwPwQ2ct7YmA+3DT6e391RpnE0yjLWdGOeAYHHlx2OO4h7Do2KGdqVP5CE7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D8UfWHk9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M0xrLHPp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A991B606A31C;
-	Wed, 18 Nov 2026 23:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0BE606A320;
+	Wed, 18 Nov 2026 23:23:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D8UfWHk9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013B21F000C4;
-	Wed, 18 Nov 2026 23:23:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M0xrLHPp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5EFC1F000C4;
+	Wed, 18 Nov 2026 23:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044214;
-	bh=iDhS2Ymg0rzz6o0GvGBYb3M9vEArS66/cQYAvxuO9Vk=;
+	s=korg; t=1795044217;
+	bh=CIJwKjn/CjCBlnlzAzG8k3FvAE4VGpBtW742Au1tvvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D8UfWHk9dddcdPr+sAsQsskgjKW3vu/Wd28l6rnOkZPMaWN5/pcuFdUy8J75Wf5vn
-	 7ffZ/krIvIa9ECtkT+UF243Ur583M8Ei8tCJ2N6a4AxeO+8kIZTbID8BXoy2iQZ+9C
-	 xD+j02YMJx3iw8bfT7O6VFMXcASFzAR355nOj3u8=
+	b=M0xrLHPpJMz1GpeQwatjGOBN0Mdi3NM5yjDKropbTxeD0o45Bu6XdOjVkhvNKS+sf
+	 YBg55kxP+E9Qgc3RTKlif2sgWkmIVjdcLgQ+wekXKMS0b2De3IbjnxXdsXZOU6QbhM
+	 JGhtmy8azJfezjb4fGv3BBHcgd7IoFFXMMcEy1j4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
+	EJ Campbell <ejc3@meta.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0488/2857] x86/kvm: Use separate percpu variable to track the enabling of asyncpf
-Date: Wed, 18 Nov 2026 15:25:22 +0100
-Message-ID: <20261118150219.022237676@linuxfoundation.org>
+Subject: [PATCH 6.1 0489/2857] x86/kvm: Dont consume async #PF flags on a kernel #PF in NMI context
+Date: Wed, 18 Nov 2026 15:25:23 +0100
+Message-ID: <20261118150219.061680352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,128 +68,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: EJ Campbell <ejc3@meta.com>
 
-[ Upstream commit ccb2280ec2f9e805d70f57a3a1c5deff0d532cb3 ]
+[ Upstream commit 81d99abe2bd81379abfb595e403bbbee6fbfc624 ]
 
-Refer to commit fd10cde9294f ("KVM paravirt: Add async PF initialization
-to PV guest") and commit 344d9588a9df ("KVM: Add PV MSR to enable
-asynchronous page faults delivery"). It turns out that at the time when
-asyncpf was introduced, the purpose was defining the shared PV data 'struct
-kvm_vcpu_pv_apf_data' with the size of 64 bytes. However, it made a mistake
-and defined the size to 68 bytes, which failed to make fit in a cache line
-and made the code inconsistent with the documentation.
+An async #PF "page not present" event arrives through the #PF vector,
+and its reason sits in the per-CPU apf_reason.flags until
+__kvm_handle_async_pf() reads and clears it. If an NMI arrives after
+the event is injected and before the #PF handler reads the flags, and
+the NMI handler itself takes a #PF, that fault reads and clears the
+flags belonging to the #PF it interrupted. It then finds interrupts
+disabled in the NMI context it interrupted, and panics:
 
-Below justification quoted from Sean[*]
+  Kernel panic - not syncing: Host injected async #PF in interrupt
+disabled region
+  Call Trace:
+   <NMI>
+   panic+0x52/0x60
+   __kvm_handle_async_pf+0xb0/0xb0
+   exc_page_fault+0x71/0xb0
+   asm_exc_page_fault+0x27/0x30
+  RIP: 0010:__get_user_nocheck_8+0x6/0x20
+   perf_callchain_user+0x147/0x1a0
+   get_perf_callchain+0x12d/0x1c0
+   ...
+   perf_event_nmi_handler+0x26/0x50
+   exc_nmi+0xe8/0x110
+  RIP: 0010:asm_exc_page_fault+0x0/0x30
+   </NMI>
 
-  KVM (the host side) has *never* read kvm_vcpu_pv_apf_data.enabled, and
-  the documentation clearly states that enabling is based solely on the
-  bit in the synthetic MSR.
+The last RIP line shows the NMI landing on the first instruction of
+the #PF entry. perf with user call chains takes such a fault: the
+sampling NMI walks the user stack with __get_user(), which faults when
+a saved frame pointer is not a valid user address or the walk runs off
+the top of the stack. The same window exists when KVM, running as an
+L1 hypervisor with DELIVERY_AS_PF_VMEXIT, reads the flags itself after
+a #PF VM-exit.
 
-  So rather than update the documentation, fix the goof by removing the
-  enabled filed and use the separate percpu variable instread.
-  KVM-as-a-host obviously doesn't enforce anything or consume the size,
-  and changing the header will only affect guests that are rebuilt against
-  the new header, so there's no chance of ABI breakage between KVM and its
-  guests. The only possible breakage is if some other hypervisor is
-  emulating KVM's async #PF (LOL) and relies on the guest to set
-  kvm_vcpu_pv_apf_data.enabled. But (a) I highly doubt such a hypervisor
-  exists, (b) that would arguably be a violation of KVM's "spec", and
-  (c) the worst case scenario is that the guest would simply lose async
-  #PF functionality.
+The NMI entry code saves and restores CR2 for this nesting, but not the
+async #PF reason. Andy Lutomirski described the race, with perf as the
+example, when async #PF delivery was reworked in 2020 [1]. Saving and
+clearing the flags across the NMI, next to CR2, was discussed there but
+not merged.
 
-[*] https://lore.kernel.org/all/ZS7ERnnRqs8Fl0ZF@google.com/T/#u
+Since that rework, Linux has stopped setting KVM_ASYNC_PF_SEND_ALWAYS,
+so the host delivers "page not present" only for user mode faults and
+a kernel-mode fault in NMI context (including kernel-mode #MC and #DB)
+cannot be an async page fault.  In that case, return without touching
+the flags so that the interrupted handler finds them intact.
 
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://lore.kernel.org/r/20231025055914.1201792-2-xiaoyao.li@intel.com
-[sean: use true/false instead of 1/0 for booleans]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Stable-dep-of: 81d99abe2bd8 ("x86/kvm: Don't consume async #PF flags on a kernel #PF in NMI context")
+Tested on v7.3-rc5 in a 4-vCPU, 2 GiB guest restored from a snapshot
+whose memory is served on demand through userfaultfd, so that reading
+it back takes async #PFs, while every thread samples hardware cycles
+with user call chains and points its frame pointer at an unmapped page.
+Without this patch the guest panicked as above in 3 of 3 runs. With it,
+the guest survived 3 of 3 runs of 60 seconds, and the host counted
+148,441 to 153,334 kvm_async_pf_not_present events in the first 20
+seconds of each. On 6.18.50 the results were the same: the guest
+panicked without the patch and survived with it.
+
+Link: https://lore.kernel.org/all/ed71d0967113a35f670a9625a058b8e6e0b2f104.1583547991.git.luto@kernel.org/ [1]
+Link: https://lore.kernel.org/all/20211126123145.2772-1-jiangshanlai@gmail.com/ [2]
+Cc: stable@vger.kernel.org # v5.9+
+Signed-off-by: EJ Campbell <ejc3@meta.com>
+Link: https://patch.msgid.link/CADkxfh-uQTca_6jB1JPDq1MsKffF_UKGQR339oQSJNcoV75GNQ@mail.gmail.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/virt/kvm/x86/msr.rst   |  1 -
- arch/x86/include/uapi/asm/kvm_para.h |  1 -
- arch/x86/kernel/kvm.c                | 11 ++++++-----
- 3 files changed, 6 insertions(+), 7 deletions(-)
+ arch/x86/kernel/kvm.c | 32 +++++++++++++++++++++++++++++---
+ 1 file changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/virt/kvm/x86/msr.rst b/Documentation/virt/kvm/x86/msr.rst
-index 9315fc385fb0b..f6d70f99a1a73 100644
---- a/Documentation/virt/kvm/x86/msr.rst
-+++ b/Documentation/virt/kvm/x86/msr.rst
-@@ -204,7 +204,6 @@ data:
- 		__u32 token;
- 
- 		__u8 pad[56];
--		__u32 enabled;
- 	  };
- 
- 	Bits 5-4 of the MSR are reserved and should be zero. Bit 0 is set to 1
-diff --git a/arch/x86/include/uapi/asm/kvm_para.h b/arch/x86/include/uapi/asm/kvm_para.h
-index 6e64b27b2c1ee..605899594ebb8 100644
---- a/arch/x86/include/uapi/asm/kvm_para.h
-+++ b/arch/x86/include/uapi/asm/kvm_para.h
-@@ -142,7 +142,6 @@ struct kvm_vcpu_pv_apf_data {
- 	__u32 token;
- 
- 	__u8 pad[56];
--	__u32 enabled;
- };
- 
- #define KVM_PV_EOI_BIT 0
 diff --git a/arch/x86/kernel/kvm.c b/arch/x86/kernel/kvm.c
-index 99e0768ccaae7..014bfe7fb91cc 100644
+index 014bfe7fb91cc..e109760eefd86 100644
 --- a/arch/x86/kernel/kvm.c
 +++ b/arch/x86/kernel/kvm.c
-@@ -65,6 +65,7 @@ static int __init parse_no_stealacc(char *arg)
- 
- early_param("no-steal-acc", parse_no_stealacc);
- 
-+static DEFINE_PER_CPU_READ_MOSTLY(bool, async_pf_enabled);
- static DEFINE_PER_CPU_DECRYPTED(struct kvm_vcpu_pv_apf_data, apf_reason) __aligned(64);
- DEFINE_PER_CPU_DECRYPTED(struct kvm_steal_time, steal_time) __aligned(64) __visible;
- static int has_steal_clock = 0;
-@@ -244,7 +245,7 @@ noinstr u32 kvm_read_and_reset_apf_flags(void)
- {
- 	u32 flags = 0;
- 
--	if (__this_cpu_read(apf_reason.enabled)) {
-+	if (__this_cpu_read(async_pf_enabled)) {
- 		flags = __this_cpu_read(apf_reason.flags);
- 		__this_cpu_write(apf_reason.flags, 0);
- 	}
-@@ -295,7 +296,7 @@ DEFINE_IDTENTRY_SYSVEC(sysvec_kvm_asyncpf_interrupt)
- 
- 	inc_irq_stat(irq_hv_callback_count);
- 
--	if (__this_cpu_read(apf_reason.enabled)) {
-+	if (__this_cpu_read(async_pf_enabled)) {
- 		token = __this_cpu_read(apf_reason.token);
- 		kvm_async_pf_task_wake(token);
- 		__this_cpu_write(apf_reason.token, 0);
-@@ -362,7 +363,7 @@ static void kvm_guest_cpu_init(void)
- 		wrmsrl(MSR_KVM_ASYNC_PF_INT, HYPERVISOR_CALLBACK_VECTOR);
- 
- 		wrmsrl(MSR_KVM_ASYNC_PF_EN, pa);
--		__this_cpu_write(apf_reason.enabled, 1);
-+		__this_cpu_write(async_pf_enabled, true);
- 		pr_debug("setup async PF for cpu %d\n", smp_processor_id());
- 	}
- 
-@@ -383,11 +384,11 @@ static void kvm_guest_cpu_init(void)
- 
- static void kvm_pv_disable_apf(void)
- {
--	if (!__this_cpu_read(apf_reason.enabled))
-+	if (!__this_cpu_read(async_pf_enabled))
- 		return;
- 
- 	wrmsrl(MSR_KVM_ASYNC_PF_EN, 0);
--	__this_cpu_write(apf_reason.enabled, 0);
-+	__this_cpu_write(async_pf_enabled, false);
- 
- 	pr_debug("disable async PF for cpu %d\n", smp_processor_id());
+@@ -254,11 +254,39 @@ noinstr u32 kvm_read_and_reset_apf_flags(void)
  }
+ EXPORT_SYMBOL_GPL(kvm_read_and_reset_apf_flags);
+ 
++static __always_inline bool kvm_apf_reason_pending(void)
++{
++	return __this_cpu_read(async_pf_enabled) &&
++	       __this_cpu_read(apf_reason.flags);
++}
++
+ noinstr bool __kvm_handle_async_pf(struct pt_regs *regs, u32 token)
+ {
+-	u32 flags = kvm_read_and_reset_apf_flags();
+ 	irqentry_state_t state;
++	u32 flags;
++
++	if (!kvm_apf_reason_pending())
++		return false;
++
++	/*
++	 * The guest does not enable KVM_ASYNC_PF_SEND_ALWAYS, so the host
++	 * delivers async #PF only to user mode (or as a #PF VM-exit, which KVM
++	 * reads itself). A #PF from kernel mode can still arrive between that
++	 * delivery and the read of the reason flags, inside an NMI that
++	 * interrupted it, for instance perf reading user memory for a call
++	 * chain. Such a fault is not async, so leave the async PF flags
++	 * untouched for the outer handler.  Outside NMI context, on the other
++	 * hand, async PF flags on a kernel-mode fault mean the host is broken.
++	 */
++	if (!user_mode(regs)) {
++		if (likely(in_nmi()))
++			return false;
++		state = irqentry_enter(regs);
++		instrumentation_begin();
++		panic("Host injected async #PF in kernel mode\n");
++	}
+ 
++	flags = kvm_read_and_reset_apf_flags();
+ 	if (!flags)
+ 		return false;
+ 
+@@ -274,8 +302,6 @@ noinstr bool __kvm_handle_async_pf(struct pt_regs *regs, u32 token)
+ 		panic("Host injected async #PF in interrupt disabled region\n");
+ 
+ 	if (flags & KVM_PV_REASON_PAGE_NOT_PRESENT) {
+-		if (unlikely(!(user_mode(regs))))
+-			panic("Host injected async #PF in kernel mode\n");
+ 		/* Page is swapped out by the host. */
+ 		kvm_async_pf_task_wait_schedule(token);
+ 	} else {
 -- 
 2.53.0
 
