@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060758;
-	b=xWW6E8UGX8FhHihiNGjyv4J0s2JSdT030FbauVCrOx8nKUL/IfdTrORXB6p1OY+IEoFS
-	 keWAtBmAS+Xc7ntZ2S11+dhE6QTvA96m3IAF/XYs89x+NGU2HyvsDyJyBRN/klI9/y9HA
-	 8+W+SoglPsm5XjmIDJoDbbfI3WCQa+5J5+/7FrsDh7Bnk6MjwDd1L/G905ZCoM9Gah9iC
-	 O2n8LClB7Qd/Gz2TN8RpRqyhSk1fjPV9cSiD9xQeF+Cju4oKKNz3SxuAKcLawQ3s8lZ/e
-	 MiLaWvJP9R1vATIYiEZdLC8e/2P0ybrl3iHlE5n/56JWl91JeQ0EWtEEGEJpMf1Uh+A==
+	t=1795060761;
+	b=a/UhFHaei1PSLQmDzPb+7eeu3aCWL5YOP+SvDAgxKSIonJDKyiLjO8VHOFaKfLujw5Ds
+	 eHWg9YC8DbCwHLWf8vXfgao6BogSVSuYW00Q34yq5VDoadTgCQG+K2ZueVDEuPhNvcZum
+	 q+pbrpTkICk1/0OKaKEnNw034Z7zuBhXeAsXVMUQBEbuhZ2T302oNoa/sccz7e1Y3hiQd
+	 81dByNsm7Ydgm+/clAFg6jqKoS1NjC3QVStPsf5Fm1u37hPOA9NZskvBjRLk7iQ6Hl6hm
+	 dH5ZW0UD5dUpBqmamrCdLMAqoGjGkDQLgGVDe/89uYoL9mx+jE4ca2etEBkYqdZPhxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060758;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060761;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TmofVcCi6upDO9mHcw846trVAuCAv4ZUa+wsyOtVnQw=;
-	b=XNZmdZt/UATXRDyzmypDFxu6QZWqmiAkXjwcHXtQGdBicUlZb3hsdvZ2P8atB72fMX3u
-	 Irg9osOtI9Zopr2hYRaBDsm1q/JVYx6fgyY99Yb2MbolqCJA7aIgb6QdcQLtqbAQDFF+a
-	 s8EuXW5Bi7cH6B4zV8hFbF/L8lFu2EnPupq0+KeaLLDn2MsEBWKFWycGg9sOOfKZ9Vo99
-	 TlKtZPpEotO2Y386ICUoBo9mpXu33O3U/SKO2CVpJYAWbWQsquKM0rm3RgrUmiw4CSD58
-	 rA2NsLpfZ+9DBd/QISb1oDmJ6kvzGCt24EXgrgqo5FQ3Ni3Pent5lORVmWvXeuX2mJw==
+	bh=JkI6clri1gpLwSX7a7FA0OtVu57SR2+C5rlwOuzKpEA=;
+	b=eZjODYr7SCY9SOOYdZ08VU2RvgmnFmJmmnexwQATs+dt9SswpqLVe/gZjQVWBo/L47dB
+	 +3x0c+4Bi/GdJQwdpKO0jjknmqNjnochQaVCtlBofhFwhOALsP6qI3kUZXeyng+jxRUgW
+	 h2jBxcTEP+Xwd7uP0xI9KDW5yjCdLhGWyghBHfWrZI5BIm+/A2w86G5XTMPU02Ho834OD
+	 cUgyigddnJvJdO8elLsgONo28AJtbUatfm5ZWce8ZO4gt+Ek+gMvSc8VbKpCAJK6hpOPu
+	 LM6gHCHvXyB36TRWjkAUz2YtOBnLnTp4mKoUNcvmHuNNsrcIm8qZRjntdcTMwPEGFBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RQipQwNP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Phr5n8Fp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3867606A320;
-	Thu, 19 Nov 2026 03:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1843606A320;
+	Thu, 19 Nov 2026 03:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RQipQwNP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1582B1F000C4;
-	Thu, 19 Nov 2026 03:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Phr5n8Fp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECCB91F000C4;
+	Thu, 19 Nov 2026 03:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060758;
-	bh=TmofVcCi6upDO9mHcw846trVAuCAv4ZUa+wsyOtVnQw=;
+	s=korg; t=1795060761;
+	bh=JkI6clri1gpLwSX7a7FA0OtVu57SR2+C5rlwOuzKpEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RQipQwNPyDDtjG6CiFphUj4pC2DxZPlNdEs0G8VRoDMw1dRF5c3cyrJa8LrLMFfDs
-	 YKr0t2zYDuuaVSR70ac+LYE1LUBalI9BURAOwWfjkJRPlvCYVmx23bupRe2I8j+MWl
-	 PMIuGMq0ypmS+p659m9QGlhlPOMyIgbQ1k+lBkkU=
+	b=Phr5n8Fp3Fs2h/RjWplWHI3gBcY/Pa1+8lqt3hjNbv7BwTl11MOLRIEDg0rHJ4NmM
+	 171hlYEBnQiluZFS5uPwZaOz+t+JHZOmommNRc69NxMBBIZ6Y7BJ3bOedORPZbVXuC
+	 o7adQYnStzQzaZ0apGSFTfpBoUVFQyrJPpMGNhOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Kees Cook <kees@kernel.org>,
+	Laurent Vivier <laurent@vivier.eu>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1287/1848] pstore: dont leave an ERR_PTR in the ramoops zone pointer
-Date: Wed, 18 Nov 2026 15:55:25 +0100
-Message-ID: <20261118150013.460184521@linuxfoundation.org>
+Subject: [PATCH 5.10 1314/1848] swim: Simplify return value initialization
+Date: Wed, 18 Nov 2026 15:55:52 +0100
+Message-ID: <20261118150014.486803971@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,40 +70,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 70fec428c845216da98041b1ae9f16a8f54b3d68 ]
+[ Upstream commit 385a44e78702762e2fce796cf37b6f465d86a87f ]
 
-ramoops_init_prz() stores the result of persistent_ram_new() in *prz and
-returns the error without clearing it when initialization fails.
-ramoops_probe() then cleans up through ramoops_free_przs(), which hands
-*prz to persistent_ram_free(); that treats the ERR_PTR as a valid zone
-and dereferences it, crashing the kernel.
+Initialize the error result once only. Update the result only after a
+successful read.
 
-Clear *prz before returning so that cleanup sees a NULL zone.
-
-Fixes: b5d38e9bf1b0c ("pstore/ram: Add console messages handling")
-Assisted-by: LLM
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/20260921202317.70595-2-parri.andrea@gmail.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Link: https://patch.msgid.link/28322f0cbefd865bdfb679bab4352c111996795b.1788513997.git.fthain@linux-m68k.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: d66bdef0a308 ("swim: Check error register during sector read")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/block/swim_asm.S | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
-index 44fc3b3962882..7a367222a4086 100644
---- a/fs/pstore/ram.c
-+++ b/fs/pstore/ram.c
-@@ -590,6 +590,7 @@ static int ramoops_init_prz(const char *name,
- 	if (IS_ERR(*prz)) {
- 		int err = PTR_ERR(*prz);
+diff --git a/drivers/block/swim_asm.S b/drivers/block/swim_asm.S
+index 250e408060e8b..81c824923336c 100644
+--- a/drivers/block/swim_asm.S
++++ b/drivers/block/swim_asm.S
+@@ -49,6 +49,7 @@ swim_read_sector_header:
+ 	link	%a6, #0
+ 	moveml	%d1-%d5/%a0-%a4,%sp@-
+ 	movel	%a6@(0x0c), %a4
++	moveq	#-1, %d0
+ 	bsr	mfm_read_addrmark
+ 	moveml	%sp@+, %d1-%d5/%a0-%a4
+ 	unlk	%a6
+@@ -63,7 +64,6 @@ mfm_read_addrmark:
+ 	movel	%a6@(0x08), %a3
+ 	lea	%a3@(read_handshake), %a2
+ 	lea	%a3@(read_mark), %a3
+-	moveq	#-1, %d0
+ 	movew	#seek_time, %d2
  
-+		*prz = NULL;
- 		dev_err(dev, "failed to request %s mem region (0x%zx@0x%llx): %d\n",
- 			name, sz, (unsigned long long)*paddr, err);
- 		return err;
+ wait_header_init:
+@@ -143,10 +143,7 @@ crc1:	tstb	%a2@
+ 	tstb	%a3@(read_error - read_mark)
+ 
+ 	moveq	#0, %d0
+-	moveb	#0x18, %a3@(write_mode0 - read_mark)
+-	rts
+ signal_nonyb:
+-	moveq	#-1, %d0
+ 	moveb	#0x18, %a3@(write_mode0 - read_mark)
+ 	rts
+ 
+@@ -155,6 +152,7 @@ swim_read_sector_data:
+ 	link	%a6, #0
+ 	moveml	%d1-%d5/%a0-%a5,%sp@-
+ 	movel	%a6@(0x0c), %a4
++	moveq	#-1, %d0
+ 	bsr	mfm_read_data
+ 	moveml	%sp@+, %d1-%d5/%a0-%a5
+ 	unlk	%a6
+@@ -238,15 +236,12 @@ data_crc1:
+ 
+ 	tstb	%a3@(read_error - read_mark)
+ 
+-	moveb	#0x18, %a3@(write_mode0 - read_mark)
+-
+ 	/* return number of bytes read */
+ 
+ 	movel	#sector_size, %d0
+ 	addw	#1, %d4
+ 	subl	%d4, %d0
+-	rts
++
+ data_exit:
+ 	moveb	#0x18, %a3@(write_mode0 - read_mark)
+-	moveq	#-1, %d0
+ 	rts
 -- 
 2.53.0
 
