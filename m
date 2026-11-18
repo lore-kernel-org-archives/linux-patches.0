@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024974;
-	b=NvGT5x/vYu1nfqwTMLiX5Z2Ylc7P+Ff33fElOEeEqOwtHPBrU/Nm1YTppgUymXShKBkV
-	 VlT5SNlhVBQPQCCdAHNwlDgZERYDnBelcz3PbwO9hL3xaAG+vhH60wcp1yPF8xNQSU33C
-	 NHSv9kBm6T7nGyvDBy58B4zeprZmtyXr0ttc+g5Ks8HBzEYJrpEb3qJsuTLTfGc2ry5c/
-	 zYWu/v1xKTaIft1ae8jimjk1c65Xcs5Oy9Ixz7spxk3ES49Ly6ZDmXWyMR7CrqjhrTOMh
-	 COW5s3dVPubVTX7CPMzJSpFsoW+lEMAVFz2W1p3NsBNsZpWlWFd54BdOPkX6PXxV9zA==
+	t=1795024977;
+	b=rg5KcjghU/eeaD3SYkeTGaFSCU9UKBw2klj5OlFFmIHI8vZ7mk6t/BTiftcFCBj2nMYC
+	 RNeZba8tMx35WO3hjmWKUyvLzZyWwbfdkUAgZSgeci69PyNH0QHjdd2W2Oa8KZaitdF7q
+	 fTRJeVv1HUKSWhKuKGzx5j76R6iXnSSDJn+O0WIbYojLrQ2l85f0uOj+ACaCAElXSUFfq
+	 YtZfDPY+0EC0FIPY6GuV71ji4EkP655/ldgnyHAmm9EMQZL9XHm1PIAYnOjZcTgnRLPbP
+	 fC+e4nibbmEMzXqBHvTKxIea21qPGgfa2AhT0FH79COO1tygzK4HX1Ev+uJfSF1Do6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024977;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eE74+xD2s1fbryu9MFnKKEBY6033rR2FEwRffYxcjJ4=;
-	b=A9YYHxtv0Xs0bDzXuYX7KY6z9Z6tQuBM7CqmyMeeW7g5k6h4xn6tcAFSklZdcNNkoQxy
-	 C6PQCiqdMqAGqoItZP6FE3xsiOx60hCHswyua6GV3AnCcDEsTKbwIdxNnYG1W6wQ5BmCp
-	 Iq3qt/eU4pWQefxvMQcfVpHW8eCLZEEngn1r1WPLYIdV7f0Nr9xNwUdf9Mu+OeSyblcwd
-	 ALQyVYquoU8WCNYQuIdIr0CgGnLfgH7x4cnQNvpGQGkx/b4irFfHnw57Mx9THmUAAPjI9
-	 mUMBsddda0yCDI0AZZd5mBHuBYeHxf4tbrPAeGymAQ8g14vG78tx30usbTPtD8SSILQ==
+	bh=X51uaylUDV9TYUOjCmB/+MQysRjm7Y2OG7tmi7AgmuU=;
+	b=wnHMumNI/PJ8/SBmdTLcyea/E9/rUBVh+j827rzW+pF3rkmsV1D130hGe0auoEh8By0K
+	 7JrGO+LFRA/UyH/TENkG/2JBBH1JxP6H0bUXgByE5+6YrvSXVcgNPmjnpyErmC6bZ+pZN
+	 HHOMV9zH/9wtMaX5stmiuZpZ0hTWdsL0TXvdNdRBF7fWw+o0hLqi5xfSZHEbe5CIjIxQb
+	 PaRO4LaOA0dyqjtZy3CHTU1B7JAa+tB2ofobJSbdj+A9RoPp30AMYB/i9/LVV48p0rAbv
+	 y5Zv4EyH0fii43QAmcEIpk7AILmBIrlRxjrhW4KFWa3YE7sq2lizwEEWVdL1CBBPVpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2lLP1Vz3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vnlKvxKD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC91606A320;
-	Wed, 18 Nov 2026 18:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873E8606A31C;
+	Wed, 18 Nov 2026 18:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2lLP1Vz3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125651F000C4;
-	Wed, 18 Nov 2026 18:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vnlKvxKD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D805E1F000C4;
+	Wed, 18 Nov 2026 18:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024974;
-	bh=eE74+xD2s1fbryu9MFnKKEBY6033rR2FEwRffYxcjJ4=;
+	s=korg; t=1795024977;
+	bh=X51uaylUDV9TYUOjCmB/+MQysRjm7Y2OG7tmi7AgmuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2lLP1Vz30yTExJjkdUjr9YGLwGsIcUWy4Z2ABnFJOveKXw3S3FKKKh5zvi58Ofpzu
-	 NiXAoSPL8GbYpIEmEkWg1D5Uzsvb5owsH2Xt8R7UK//8KnEQxAYbtF1whPavtUsxmT
-	 DHu1UsP+9NeRMjo6SZWJngnlFdJ7BwcMXOextrS0=
+	b=vnlKvxKDaH1n30BIS1KbUS+CXuOcCsHeuKKed8YlcN1/08WiGDr8uaXlwGjzRQfiI
+	 /yhCVCMwsIE7B6yBDxDLFLROl7AD443iScy6AbK5K/aPqCJF0ju/8eQzEksUNNZBV7
+	 zK94LtL5dtI2EiWOPH9UGFPSzDLrvJGupgR3IMfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	Pengpeng Hou <hppiscas@163.com>,
+	Yili Zhang <zhangyili01@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0874/2151] clk: si5351: fail prepare when PLL reset times out
-Date: Wed, 18 Nov 2026 15:43:29 +0100
-Message-ID: <20261118150154.031889839@linuxfoundation.org>
+Subject: [PATCH 6.18 0875/2151] RDMA/nldev: Fix NULL deref in dumps of objects abandoned by DRIVER_FAILURE
+Date: Wed, 18 Nov 2026 15:43:30 +0100
+Message-ID: <20261118150154.068721476@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,83 +68,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Yili Zhang <zhangyili01@baidu.com>
 
-[ Upstream commit b6685c30d15cd7f28c40b2daaeacc00f21b2f12a ]
+[ Upstream commit 9f4c322be27bf617cad2f4a15f6c6024a69e220c ]
 
-The clock prepare path requests a PLL reset when the platform data
-requires a deterministic output phase. The reset helper logs polling
-errors but returns no status, so prepare still enables the output and
-reports success when the reset did not complete.
+fill_res_cq_entry() dereferences cq->uobject->uevent.uobject.context->res.id
+unconditionally for user resources.
 
-Return the poll result to prepare, restore the output power-down bit on
-failure, and leave the output disabled. XTAL and CLKIN inputs continue
-to bypass PLL reset successfully.
+This is normally safe by ordering: destroy_hw() removes the resource
+from the restrack before uverbs_destroy_uobject() clears ->context,
+and the XA_ZERO_ENTRY marker set by rdma_restrack_begin_del() hides
+the entry from concurrent netlink dumps.
 
-The issue was found by our static-analysis tool.
+The ordering breaks when a driver keeps failing to destroy an object
+during ucontext teardown. uverbs_destroy_ufile_hw() then falls back to
+__uverbs_cleanup_ufile(RDMA_REMOVE_DRIVER_FAILURE), which
+abandons the object in place: the HW object and its restrack entry
+are intentionally leaked, while the uobject bookkeeping is torn down
+and ->context is explicitly set to NULL by uverbs_destroy_uobject().
+rdma_restrack_del() is never reached, so the orphaned entry stays in
+the device restrack with a valid kref, reachable by any subsequent
+netlink dump.
 
-Fixes: 5142cbcea324 ("clk: si5351: Wait for bit clear after PLL reset")
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Observed on 6.1.52 with MLNX_OFED 24.10, after an mlx5 FW failure
+left a process unable to tear down its CQ (destroy_cq FW command
+failing during FD close):
+
+  WARNING: ... uverbs_destroy_ufile_hw+0xe3/0x100
+  BUG: kernel NULL pointer dereference, address: 0000000000000058
+  RIP: 0010:fill_res_cq_entry+0x15e/0x180 [ib_core]
+   res_get_common_dumpit+0x304/0x530 [ib_core]
+   nldev_res_get_cq_dumpit+0x1a/0x20 [ib_core]
+
+The faulting chain maps to the source (CR2 = 0x58):
+  cq->uobject            (struct ib_cq +0x08, res at +0x98)
+  uobject->context       (struct ib_uobject +0x10, NULL after abandon)
+  context->res.id        (struct ib_ucontext +0x58)
+
+The recent restrack rework (8d186210677c and its series) moved the
+restrack deletion to the start of the destroy flow and thus fences
+concurrent dumps from an object being destroyed, but it does not
+cover this case: when destroy fails, rdma_restrack_abort_del()
+restores the entry, and the RDMA_REMOVE_DRIVER_FAILURE sweep still
+never removes it from the restrack.
+
+>From the fallback until the device is unregistered, any "rdma res
+show cq" deterministically takes the NULL pointer dereference; this
+is a long-lived state, NOT A RACE. The dump path holds neither the
+restrack lock (dropped before the fill callback runs) nor
+ufile->hw_destroy_rwsem, and rdma_restrack_get() only guarantees
+that the res memory stays alive, not that ->context is still valid.
+
+Fix the dump side: check the uobject context directly instead of the
+rdma_is_kernel_res() marker. A non-NULL uobject already implies a
+user resource, so kernel resources keep being skipped, and the
+additional ->context check skips the RES_CTXN attribute for
+orphaned entries instead of crashing the dump. The orphaned resource
+itself remains visible in "rdma res show" (cqn/cqe/usecnt/pid),
+which is what an operator needs after the accompanying uverbs WARN
+to diagnose the driver destroy failure.
+
+fill_res_pd_entry() has the same pattern (pd->uobject->context->res.id)
+and is fixed the same way; a PD can even reach the fallback without
+its own driver callback failing, e.g. uverbs_free_pd() returns -EBUSY
+while another object that failed to destroy still holds the PD usecnt.
+
+Fixes: c3d02788b45a ("RDMA/nldev: Provide parent IDs for PD, MR and QP objects")
+Signed-off-by: Yili Zhang <zhangyili01@baidu.com>
+Link: https://patch.msgid.link/20260923131239.6521-1-zhangyili01@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-si5351.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ drivers/infiniband/core/nldev.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/clk-si5351.c b/drivers/clk/clk-si5351.c
-index e755db545e2ee..6cffdd009612f 100644
---- a/drivers/clk/clk-si5351.c
-+++ b/drivers/clk/clk-si5351.c
-@@ -907,7 +907,7 @@ static int _si5351_clkout_set_disable_state(
- 	return 0;
- }
+diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+index c92c24e681f11..b3b1d5c9f6f60 100644
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -652,7 +652,8 @@ static int fill_res_cq_entry(struct sk_buff *msg, bool has_cap_net_admin,
  
--static void _si5351_clkout_reset_pll(struct si5351_driver_data *drvdata, int num)
-+static int _si5351_clkout_reset_pll(struct si5351_driver_data *drvdata, int num)
- {
- 	u8 val = si5351_reg_read(drvdata, SI5351_CLK0_CTRL + num);
- 	u8 mask = val & SI5351_CLK_PLL_SELECT ? SI5351_PLL_RESET_B :
-@@ -918,7 +918,7 @@ static void _si5351_clkout_reset_pll(struct si5351_driver_data *drvdata, int num
- 	switch (val & SI5351_CLK_INPUT_MASK) {
- 	case SI5351_CLK_INPUT_XTAL:
- 	case SI5351_CLK_INPUT_CLKIN:
--		return;  /* pll not used, no need to reset */
-+		return 0;  /* pll not used, no need to reset */
- 	}
- 
- 	si5351_reg_write(drvdata, SI5351_PLL_RESET, mask);
-@@ -931,6 +931,8 @@ static void _si5351_clkout_reset_pll(struct si5351_driver_data *drvdata, int num
- 	dev_dbg(&drvdata->client->dev, "%s - %s: pll = %d\n",
- 		__func__, clk_hw_get_name(&drvdata->clkout[num].hw),
- 		(val & SI5351_CLK_PLL_SELECT) ? 1 : 0);
+ 	if (nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_CQN, res->id))
+ 		return -EMSGSIZE;
+-	if (!rdma_is_kernel_res(res) &&
 +
-+	return err;
- }
++	if (cq->uobject && cq->uobject->uevent.uobject.context &&
+ 	    nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_CTXN,
+ 			cq->uobject->uevent.uobject.context->res.id))
+ 		return -EMSGSIZE;
+@@ -742,7 +743,7 @@ static int fill_res_pd_entry(struct sk_buff *msg, bool has_cap_net_admin,
+ 	if (nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_PDN, res->id))
+ 		goto err;
  
- static int si5351_clkout_prepare(struct clk_hw *hw)
-@@ -947,8 +949,18 @@ static int si5351_clkout_prepare(struct clk_hw *hw)
- 	 * Do a pll soft reset on the parent pll -- needed to get a
- 	 * deterministic phase relationship between the output clocks.
- 	 */
--	if (pdata->clkout[hwdata->num].pll_reset)
--		_si5351_clkout_reset_pll(hwdata->drvdata, hwdata->num);
-+	if (pdata->clkout[hwdata->num].pll_reset) {
-+		int ret;
-+
-+		ret = _si5351_clkout_reset_pll(hwdata->drvdata, hwdata->num);
-+		if (ret) {
-+			si5351_set_bits(hwdata->drvdata,
-+					SI5351_CLK0_CTRL + hwdata->num,
-+					SI5351_CLK_POWERDOWN,
-+					SI5351_CLK_POWERDOWN);
-+			return ret;
-+		}
-+	}
- 
- 	si5351_set_bits(hwdata->drvdata, SI5351_OUTPUT_ENABLE_CTRL,
- 			(1 << hwdata->num), 0);
+-	if (!rdma_is_kernel_res(res) &&
++	if (pd->uobject && pd->uobject->context &&
+ 	    nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_CTXN,
+ 			pd->uobject->context->res.id))
+ 		goto err;
 -- 
 2.53.0
 
