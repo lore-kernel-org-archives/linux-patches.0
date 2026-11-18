@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038344;
-	b=z75pMBlSCJau+qBPlSzUMNHhwH2glELHcU79QppXSIUMFBaxEbgXkQhB2/Dxv+dkWcXo
-	 ljZFIkLod9emJVkUQsdaIJ+p0F55YfqSkJsqKgLoy6m65xf8WDARRMq4dvw5X8zzSF56/
-	 eCTAqr5PHUFRgc1IMJxRw6cdEXPJCyq7oRGBcNgdcOyJa4BIqeJy5OOwUXAGOpNKEwveJ
-	 dzi/Xyl6CFu8W0CH9iIUAh7uFzzcv24lim0Ni2RMTILm5uALf9zFanYBz/HQ3/l1E42bg
-	 XzIuGr+udPIlTHa3qbJL1+lKHUUjqD6kSA0eR4+11peFDGpEpbo6L6u1Vb1svP/xvGA==
+	t=1795038347;
+	b=PIJa2hXvO1w0YHMr0rPkBUy2foGkVii1LYoujV0H2TeVyngbmhd7zdhsd5iq2ZIXe/Tx
+	 y/HlH+lrqYmLECJf38AT/RPHwl72cJOusErnBOW8CCg0nenw0OU1f5ROo1O10F1A2G31d
+	 bfp7waTbzk7HG8HOThV8TqHLQbQdkF9quKnn1aGDz1H+Ve6QuTYe2mF0zknStI+oxio8e
+	 O7gjZxmRugWTHRZoy8RIIrRRw2wF8BJoaZZEdqcC2tDVBv9jxpwtf6pAm7y290mjlphYo
+	 j1B+XUf9W4tdvgolVeWz/B/gWmobm6cvSz/E942GODW5w0YAtxQZDhXbBBD7e3OyBpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038344;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038347;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eimOHcDdvFCEQ1qF0BC9nzFcb4aOvpTKs6rUK9QB4Uc=;
-	b=mNmC2+C2tNm4CK76z3qdnGpQQo2N1LJvNMqCKfEycgxpioIiGx55/wEwyonhGtovq+h6
-	 kgFYmLwCKMzX3HuFX7Ul5QLXXTDKEl/5+8dMnTvVeGxQwZ2Yxl5zncqY73BYpYVcXJaIF
-	 09PQkimfhlfOeNgpAGoDUSz5XflA74sBMwj5reE0jXF/jiVVYujAQMX3JodzA8VllEIAD
-	 uWn+cYeVk33QF1/nmnYXbisOsC+GW2cFVSjBLIzZRNZweZSVpNBITgbZXpxseyc1Ckt/L
-	 0Tlc6VYNbGBLVc6MuSBrnxAvFKHaFffEAEwRPpekNA+kDWPgCHEsj5uzsAATJpG3elA==
+	bh=hRftSvJGhG5gxMRx6pkFyLsHu9yRB4nNtwcgnfwE7T0=;
+	b=ShQ6JAL1HpmiTQIFA+naRncL3V19UC40gjKQDp2fWC4zil7GeWHQhbPuq2QqUWPbYbQl
+	 yH6zdLZ2bbDnrsltSxlQn2awim1fOLIpyTvt53WXqtbQ4sU5hGW3PbCaKdjHFyQEF+oNr
+	 3yUb+BmAiuPyggVeV1eH65SZdZDShy9nJifjULx6mENcrlrOJe8Gk+kzWOGQhNptxt1dX
+	 4VGS5289mppk0b7SiLb/dXSutEeJJcnbkTsHO/zPbF2pkPabVQn9bTRXuAEddcItcGSXC
+	 dg/OrdCK7pvTSScj7Do1tONLy6xrIdIe0BDw37yW3u8NrFr8jUTgCZH0jCbl3ot6ecQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dvE6ijtv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v3FMLPcg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6509D606A32A;
-	Wed, 18 Nov 2026 21:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE7F606A31C;
+	Wed, 18 Nov 2026 21:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dvE6ijtv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91F01F000C4;
-	Wed, 18 Nov 2026 21:45:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v3FMLPcg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC171F000C4;
+	Wed, 18 Nov 2026 21:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038344;
-	bh=eimOHcDdvFCEQ1qF0BC9nzFcb4aOvpTKs6rUK9QB4Uc=;
+	s=korg; t=1795038347;
+	bh=hRftSvJGhG5gxMRx6pkFyLsHu9yRB4nNtwcgnfwE7T0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dvE6ijtv4S2yMIRFtmUmu7W3hZ9HeP7ggV9SCeMkoMlWu02zY8SGm2bo6PlsZm3ht
-	 3bsDD8IPZBf63sOoVTZEljQVVvGbjjvdVJO6mDIJ2elFwcM925dqgD6fX5fyapeEoR
-	 dFQqhRmXoRGtdSfwBR8UfAjA9JJnaVPLQxsYlcog=
+	b=v3FMLPcgeXDdcssZuZ/TSO684qnKNiUICPYVyV1r3LM9rJ0nUcJcCz1lzRzK7TRxx
+	 6A/FWfHAC4QZbY7wFYvNcVbjLkFKvpyt0F8jKosM7Jw0s5YB8xCjJsOQXhwFammpVR
+	 DhrXzR2AOYB0D2noyb5ceeB88WFYM7yTj/PDOEPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <blum@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Dan Moulding <dmoulding@me.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1694/3318] init: fix early boot crash with bare hostname parameter
-Date: Wed, 18 Nov 2026 15:38:36 +0100
-Message-ID: <20261118150412.650945022@linuxfoundation.org>
+Subject: [PATCH 6.6 1712/3318] f2fs: convert f2fs_mpage_readpages() to use folio
+Date: Wed, 18 Nov 2026 15:38:54 +0100
+Message-ID: <20261118150413.227501634@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,42 +68,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <blum@kernel.org>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit b6bec5b63a5b812145e53aaad1e63661c7214f93 ]
+[ Upstream commit db92e6c729d87e6f5b0f467f01a96dbf1e452106 ]
 
-When a bare hostname parameter is specified on the kernel command line
-without the '=' separator, early parameter parsing passes NULL to
-early_hostname(), which dereferences it in strscpy() and can crash the
-system during early boot.
+Convert f2fs_mpage_readpages() to use folio and related
+functionality.
 
-Reject NULL values in early_hostname() and return -EINVAL instead.
-
-Link: https://lore.kernel.org/20260826100904.296151-2-blum@kernel.org
-Fixes: 5a704629f2c1 ("init: add "hostname" kernel parameter")
-Signed-off-by: Thorsten Blum <blum@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Dan Moulding <dmoulding@me.com>
-Cc: <stable@vger.kernel.org>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: b3c984358925 ("f2fs: remove mappedtodisk flag usage in mmap write path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/version.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/f2fs/data.c | 80 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 40 insertions(+), 40 deletions(-)
 
-diff --git a/init/version.c b/init/version.c
-index 94c96f6fbfe6a..0bd5c45aabc46 100644
---- a/init/version.c
-+++ b/init/version.c
-@@ -23,6 +23,9 @@ static int __init early_hostname(char *arg)
- 	size_t maxlen  = bufsize - 1;
- 	ssize_t arglen;
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 435eaf4f7547b..05ea56610fd79 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2375,7 +2375,7 @@ int f2fs_read_multi_pages(struct compress_ctx *cc, struct bio **bio_ret,
+  * Major change was from block_size == page_size in f2fs by default.
+  */
+ static int f2fs_mpage_readpages(struct inode *inode,
+-		struct readahead_control *rac, struct page *page)
++		struct readahead_control *rac, struct folio *folio)
+ {
+ 	struct bio *bio = NULL;
+ 	sector_t last_block_in_bio = 0;
+@@ -2395,6 +2395,7 @@ static int f2fs_mpage_readpages(struct inode *inode,
+ #endif
+ 	unsigned nr_pages = rac ? readahead_count(rac) : 1;
+ 	unsigned max_nr_pages = nr_pages;
++	pgoff_t index;
+ 	int ret = 0;
  
-+	if (!arg)
-+		return -EINVAL;
+ 	map.m_pblk = 0;
+@@ -2408,64 +2409,63 @@ static int f2fs_mpage_readpages(struct inode *inode,
+ 
+ 	for (; nr_pages; nr_pages--) {
+ 		if (rac) {
+-			page = readahead_page(rac);
+-			prefetchw(&page->flags);
++			folio = readahead_folio(rac);
++			prefetchw(&folio->flags);
+ 		}
+ 
+-#ifdef CONFIG_F2FS_FS_COMPRESSION
+-		if (f2fs_compressed_file(inode)) {
+-			/* there are remained compressed pages, submit them */
+-			if (!f2fs_cluster_can_merge_page(&cc, page->index)) {
+-				ret = f2fs_read_multi_pages(&cc, &bio,
+-							max_nr_pages,
+-							&last_block_in_bio,
+-							rac != NULL, false);
+-				f2fs_destroy_compress_ctx(&cc, false);
+-				if (ret)
+-					goto set_error_page;
+-			}
+-			if (cc.cluster_idx == NULL_CLUSTER) {
+-				if (nc_cluster_idx ==
+-					page->index >> cc.log_cluster_size) {
+-					goto read_single_page;
+-				}
+-
+-				ret = f2fs_is_compressed_cluster(inode, page->index);
+-				if (ret < 0)
+-					goto set_error_page;
+-				else if (!ret) {
+-					nc_cluster_idx =
+-						page->index >> cc.log_cluster_size;
+-					goto read_single_page;
+-				}
++		index = folio_index(folio);
+ 
+-				nc_cluster_idx = NULL_CLUSTER;
+-			}
+-			ret = f2fs_init_compress_ctx(&cc);
++#ifdef CONFIG_F2FS_FS_COMPRESSION
++		if (!f2fs_compressed_file(inode))
++			goto read_single_page;
 +
- 	arglen = strscpy(init_uts_ns.name.nodename, arg, bufsize);
- 	if (arglen < 0) {
- 		pr_warn("hostname parameter exceeds %zd characters and will be truncated",
++		/* there are remained compressed pages, submit them */
++		if (!f2fs_cluster_can_merge_page(&cc, index)) {
++			ret = f2fs_read_multi_pages(&cc, &bio,
++						max_nr_pages,
++						&last_block_in_bio,
++						rac != NULL, false);
++			f2fs_destroy_compress_ctx(&cc, false);
+ 			if (ret)
+ 				goto set_error_page;
++		}
++		if (cc.cluster_idx == NULL_CLUSTER) {
++			if (nc_cluster_idx == index >> cc.log_cluster_size)
++				goto read_single_page;
+ 
+-			f2fs_compress_ctx_add_page(&cc, page);
++			ret = f2fs_is_compressed_cluster(inode, index);
++			if (ret < 0)
++				goto set_error_page;
++			else if (!ret) {
++				nc_cluster_idx =
++					index >> cc.log_cluster_size;
++				goto read_single_page;
++			}
+ 
+-			goto next_page;
++			nc_cluster_idx = NULL_CLUSTER;
+ 		}
++		ret = f2fs_init_compress_ctx(&cc);
++		if (ret)
++			goto set_error_page;
++
++		f2fs_compress_ctx_add_page(&cc, &folio->page);
++
++		goto next_page;
+ read_single_page:
+ #endif
+ 
+-		ret = f2fs_read_single_page(inode, page, max_nr_pages, &map,
++		ret = f2fs_read_single_page(inode, &folio->page, max_nr_pages, &map,
+ 					&bio, &last_block_in_bio, rac);
+ 		if (ret) {
+ #ifdef CONFIG_F2FS_FS_COMPRESSION
+ set_error_page:
+ #endif
+-			zero_user_segment(page, 0, PAGE_SIZE);
+-			unlock_page(page);
++			folio_zero_segment(folio, 0, folio_size(folio));
++			folio_unlock(folio);
+ 		}
+ #ifdef CONFIG_F2FS_FS_COMPRESSION
+ next_page:
+ #endif
+-		if (rac)
+-			put_page(page);
+ 
+ #ifdef CONFIG_F2FS_FS_COMPRESSION
+ 		if (f2fs_compressed_file(inode)) {
+@@ -2502,7 +2502,7 @@ static int f2fs_read_data_folio(struct file *file, struct folio *folio)
+ 	if (f2fs_has_inline_data(inode))
+ 		ret = f2fs_read_inline_data(inode, page);
+ 	if (ret == -EAGAIN)
+-		ret = f2fs_mpage_readpages(inode, NULL, page);
++		ret = f2fs_mpage_readpages(inode, NULL, folio);
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
