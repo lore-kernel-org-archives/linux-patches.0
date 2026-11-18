@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050339;
-	b=XoMt5dSr/gUiyg9CCN3owF6FMu62B2PI8BCw7jTqAZeiucjD7s5rYVrotwRcIJCKbdqE
-	 86kWI0ZNz6O0Qd+cYII7sSMfYMOFsa83J3v3NPh+5nN0K8zqeJqDV58gXCiHUOwJ2u6eP
-	 DqbcpWPLx3MEIetM0U41zMVnKnEL1OlE0YeGS8jhb6RoHZyH8s3CjuhzzGDVsAHYTTAme
-	 nzBY2jGlnMy0C+KTYKKtp8h3eCGNnREXQ8AYWyJvLmUOWE7YPaZjCHXXaeZq4RaP1LyQg
-	 dfcnfnna2m9/Es598u+0HH/qCwR9E6cwEp7k5rxPVcnZxV+rcjbA7UjBM3qH+ZYkbgw==
+	t=1795050342;
+	b=1lBeLpkV55ZM2u8ykO38UTRV/3viVttLAumuYvH+VPo4bq/E+CJv5U4X0eYB9/UGwZHJ
+	 F8551BX4qkLgLEw/ban0DELk1Z1gNHuT7S0kQvxDs9wYmXLLHu6KdEkXjiBqj1ZTV5PXK
+	 xXRLS6vr3PC8PrT4XQxmMCL0HlSlkSnVH/KPMSmSkxQn0UqUSmWVpwj7nqUdNNGKuA+uN
+	 OO6W1hkLn7ayHykbO21A2pU4R+BFqaAf168YLYgXSpi9g2lowwcEs6+eFAk8pHTI7TvXq
+	 NUx19bZqLeaY8PRxoiiuW3ZZL2zC3DfijT0G6MKSLA+b+Ag0DB9EP7qyXLb3n7YNM+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050339;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050342;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=najeLN42aADuf9f1LCkOn3u7X06S5COKes7AK7Zpfo0=;
-	b=j5K444J82SRMIiqFS/icQOCqsCwBHEedSsNtSeuj0EEfHa0ba3Y7OJbvtX8wuw68Sug+
-	 UYLsaW8qAJQLXX1OMJJEeoXs0AxSvNUzaTXtNYAwUYdzUxHHAe1RsI/X4r+Sr2gV2dZzQ
-	 YPkTkbE/ojVOkBkhItr1J7/auS2k+0rjH9xTWeZirr3m09YBLOsNwWh53Ufk3ok2VAAcS
-	 gpHWedftTXE1GKW7FEvgHki6fM74+OnER5JH7kLsXDDt0hgBA4yqly5cERUedxYZqiBNp
-	 LH/YpW1w6TJBDbufZShQ3pKD9yyi+o71Pu8G99l5/IRPl4qzVUhIDKtn1+Xus2DXsag==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=IHCFPwHd942QsYt9XLBBHoUN/KF+HP9YB48iJFUNRcc=;
+	b=JP4aV79bi+maM6h85aG//Y5oTp/XpTsOZvXfpAdHC5EZIxHZFuiSRBE2aEiZDp5UnuuE
+	 O48v5pGEPNP8Lqw8JRW9vLpw3WiwjJToh42xtzXPZSdt6AdTjcl8KAxwahkWg3bbbSiE3
+	 UKl+d8T7p4Gpo79stcbhfc2bWkkWjJB7A2G7kyiY+pKXdZCgedY6L+k8sP+SDw8DPqg3/
+	 hzNzvID/A3/JLn5OiHue5BhX0wJryZqs2szlB8uRZBW6fL+zPnq4FMnOP8NPEnjd8qS76
+	 D5UZbojHaVUGhAdyl3fN/a6tB4PLB4KaE+kkP+sGZLroN9jk7w4BbSC1BCedqIUugmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F7pnzAFH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=chzKa1GM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9160A606A31C;
-	Thu, 19 Nov 2026 01:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B4A606A32F;
+	Thu, 19 Nov 2026 01:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F7pnzAFH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7DC91F000C5;
-	Thu, 19 Nov 2026 01:05:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=chzKa1GM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2631F000C6;
+	Thu, 19 Nov 2026 01:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050339;
-	bh=najeLN42aADuf9f1LCkOn3u7X06S5COKes7AK7Zpfo0=;
+	s=korg; t=1795050342;
+	bh=IHCFPwHd942QsYt9XLBBHoUN/KF+HP9YB48iJFUNRcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F7pnzAFHn0iyAYAGAhUyHtAG8ZNNTmjmpnoaTe+eP/WV801hlx3NLk55y0kj6u3a7
-	 jr/RJAP5K2H1cPMdVPuphKEY+PPIUUoHsdhpZk+II9XTlKohyEnuuvFkgi75kc3iDf
-	 5twPY8Hu2OSahw33uw5iWv75I9GahgpLe7K4I8cw=
+	b=chzKa1GM1qYNC/ZyaDAIw33nMBlIHv1kK3PNxfexwyyFjblpChOt/9W2/QuHO8mdU
+	 /YOS0R8c6o1QDiUGS3RpxIW59AZ3k177ABwvP2MJOK/Ax8DsBBLcV0TM0hnLbWCKFK
+	 xjWBebj00d+U3nCaMGXm508pzFM9Swk7UMDpHAEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2622/2857] octeontx2-af: Fix CQ enable state tracking after AQ writes
-Date: Wed, 18 Nov 2026 16:00:56 +0100
-Message-ID: <20261118150335.980886134@linuxfoundation.org>
+Subject: [PATCH 6.1 2667/2857] net: skbuff: dont copy alloc_cpu in skb header copies
+Date: Wed, 18 Nov 2026 16:01:41 +0100
+Message-ID: <20261118150337.607203198@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -64,57 +67,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 07bd391eb9572e74f073c49acef327611234f9bb ]
+[ Upstream commit 78d4bd22ec9df490135303c00e190ac43d5c334a ]
 
-Use the CQ context's ena field when updating the CQ enable bitmap.
-The current code reads rq.ena, which overlaps bit 0 of the CQ base address
-and can leave the bitmap out of sync with the hardware context. This can
-cause enabled CQs to be skipped during teardown.
+Commit 68822bdf76f1 ("net: generalize skb freeing deferral to
+per-cpu lists") added alloc_cpu to struct sk_buff and placed it in the
+headers group copied by __copy_skb_header().
 
-Use sq.ena for the SQ bitmap update as well, so each queue type reads
-its own context.
+This is wrong for newly allocated skbs. For example, skb_segment()
+allocates a new skb and records the current CPU in alloc_cpu, but
+__copy_skb_header() overwrites it with the value from the original skb.
 
-Fixes: 557dd485eaeb ("octeontx2-af: Support for disabling NIX RQ/SQ/CQ contexts")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Sunil Goutham <sgoutham@marvell.com>
-Link: https://patch.msgid.link/20261011125508.534618-1-alok.a.tiwari@oracle.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+If the original skb was allocated on another CPU, the segment may later
+be treated as remotely allocated and unnecessarily deferred there when
+it is freed.
+
+Move alloc_cpu out of the headers group so it is preserved across
+header copies. Copy it explicitly in skb_clone(), which allocates
+the skb object directly instead of going through __alloc_skb().
+
+This was discovered while investigating a throughput regression with
+software IPsec. The load used 512 IPsec tunnels carrying traffic over
+VXLAN, with 512 parallel iperf3 flows and an MTU of 4500.
+
+Before the fix:
+
+  16.09%  queued_spin_lock_slowpath
+             |
+             --15.90%--_raw_spin_lock_irqsave
+                       |
+                       --9.37%--__slab_free
+                                 kfree
+                                 skb_release_data
+                                 napi_consume_skb
+                                 mlx5e_poll_tx_cq
+
+After the fix:
+
+   6.84%  queued_spin_lock_slowpath
+             |
+             --6.57%--_raw_spin_lock_irqsave
+                      |
+                      --5.00%--__slab_free
+                                kfree
+                                skb_release_data
+                                napi_consume_skb
+                                mlx5e_poll_tx_cq
+
+Fixes: 68822bdf76f1 ("net: generalize skb freeing deferral to per-cpu lists")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Björn Töpel <bjorn@kernel.org>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261019174152.2932829-1-cjubran@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/skbuff.h | 4 ++--
+ net/core/skbuff.c      | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 8b2e59e864d3a..5d6cfd3d3a7cc 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -1040,7 +1040,7 @@ static int rvu_nix_blk_aq_enq_inst(struct rvu *rvu, struct nix_hw *nix_hw,
- 				__clear_bit(req->qidx, pfvf->rq_bmap);
- 		}
- 		if (req->ctype == NIX_AQ_CTYPE_SQ) {
--			ena = (req->rq.ena & req->sq_mask.ena) |
-+			ena = (req->sq.ena & req->sq_mask.ena) |
- 				(test_bit(req->qidx, pfvf->sq_bmap) &
- 				~req->sq_mask.ena);
- 			if (ena)
-@@ -1049,7 +1049,7 @@ static int rvu_nix_blk_aq_enq_inst(struct rvu *rvu, struct nix_hw *nix_hw,
- 				__clear_bit(req->qidx, pfvf->sq_bmap);
- 		}
- 		if (req->ctype == NIX_AQ_CTYPE_CQ) {
--			ena = (req->rq.ena & req->cq_mask.ena) |
-+			ena = (req->cq.ena & req->cq_mask.ena) |
- 				(test_bit(req->qidx, pfvf->cq_bmap) &
- 				~req->cq_mask.ena);
- 			if (ena)
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index 3c4a8e1345654..f60bfeeb85285 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -993,8 +993,6 @@ struct sk_buff {
+ 	__u16			tc_index;	/* traffic control index */
+ #endif
+ 
+-	u16			alloc_cpu;
+-
+ 	union {
+ 		__wsum		csum;
+ 		struct {
+@@ -1042,6 +1040,8 @@ struct sk_buff {
+ 
+ 	); /* end headers group */
+ 
++	u16			alloc_cpu;
++
+ 	/* These elements must be at the end, see alloc_skb() for details.  */
+ 	sk_buff_data_t		tail;
+ 	sk_buff_data_t		end;
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 78a0d1a4d8f45..ea5faa225e759 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -1160,7 +1160,6 @@ static void __copy_skb_header(struct sk_buff *new, const struct sk_buff *old)
+ #ifdef CONFIG_NET_RX_BUSY_POLL
+ 	CHECK_SKB_FIELD(napi_id);
+ #endif
+-	CHECK_SKB_FIELD(alloc_cpu);
+ #ifdef CONFIG_XPS
+ 	CHECK_SKB_FIELD(sender_cpu);
+ #endif
+@@ -1192,6 +1191,7 @@ static struct sk_buff *__skb_clone(struct sk_buff *n, struct sk_buff *skb)
+ 	C(pfmemalloc);
+ 	C(pp_recycle);
+ 	n->destructor = NULL;
++	C(alloc_cpu);
+ 	C(tail);
+ 	C(end);
+ 	C(head);
 -- 
 2.53.0
 
