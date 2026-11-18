@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050965;
-	b=Ww+ZjpcQ8n2Q2aYnAqUIT/H5DNl4gQNolxujxFFIUEFJZj2s1+6VZaJkNMXQJkDKMUDj
-	 n7LzvhOJUZnYya2ecGHwCkVw6DwqADB25+Ws7DtMXQKoKMyNV/0SrAovdZoVZsrTl4GmZ
-	 nfWH6Zh26twaRdqsx9UCHWl8RmgEdxXo99dc/fTeGeRTKWDQCgGqDkz2oPQK/nFJdIsvt
-	 LM2rBEnplTlk4jGisxmo9C1q8CxPhascM1U4WVbPcyYWaaO2V2z0TU7mqEAJmPEU2SxVe
-	 a4bhDhKR5FOKpTBfvwlzqZspm2OB172RuxOIMf+wrEeaqJDvaMhA5T0ShMvG1oZjPRw==
+	t=1795050968;
+	b=GsLgZu3fqyBOTBxb5UqllQiWerCjHklfjzB3wJolbZeg/rW42HrtZ87DI5uIBor4IGxq
+	 VJxPejJsrizjbT0c12IZAxzZF4LBdqX3O1WjmjZc7ucLjquxtFxf01VmPmiVl96zU0CV4
+	 7a5ylxJgX4zQWYvrKveZ8lzv5c1wa0oQLLF9DDQkGFbXhU3afhKa5MSFtuJzJ2yCMV4pW
+	 +xUSMzqQaP10Be4o1eRJbs1RUvhGwoPlwvl5YyDI2M0VvQuiIHO+JGSMWCXebB+1BO5Of
+	 GwuCN2g4rnDlhNUZfb8Oq1q4Bx6EcIqsEJ1RjA4/sSLIclCx+Hga2H9YBh9k9bGr0mA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050965;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050968;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Sn/liOrfidEwsgQLWCPcmOFM+iq+wqETMOH1DpZrw4Q=;
-	b=FuTMb5Ntw6fUpQTzBJKXuQtFQldgnfr5s7Lq0ZaVWVjpvt4xtTzNrgkEIfi5GfXm8fX1
-	 4N1ebuqOz/Gbp56sRuoejlbM4QP5L/Qqf702s59Zb6500NfQ41D9ozu3HxItdRYV8h/Pf
-	 CvPAYltlC3qGTfzHE8CiQp4K1TX94Hd3UOT3S4UeVXrb20QYRDLl3KTDcYyIRxwZiE97z
-	 cUtrqsVI/VUeyYW7qldyzlZPtyYPHfFXABEc/6kgHEmgfKtS8sqYZBFuj71vUz+lz/IP8
-	 pagrqEOWZAHXtFwZeYimsmPztWiPyELakOCTe7WWJZY+89nzj5DvtKP2Z1bLfRb29+Q==
+	bh=ghSyl/eLEw065e1dkyggxwOrkPu1ec8lSm2aYYgzzpQ=;
+	b=WwP8QkGHtHrQbyV1CKjffrxJlRzosKcZbNztWP8qphSA+AkHVk82OYiFfni/ZET6pjpy
+	 x7mqgjGGdUibQuzEFbQPvZHIktZUjeY99SvLjHTF/C9J+G8vvw0hGc9GM7GCnz1cdLCGj
+	 WMGdRkBJyLKUI4LqlFiBJSZLCnQKzEsuC5Y8FbzEUM2xUJMm7HCmfONJOealUUMxSCq5U
+	 wfvd72z+28EAgjgUoRiJ839SkvC5Wacw4yFadyjy1cpCvM6vZTlIEYnbBWinePrdki4mZ
+	 slYg1/J3+m5CXEYYdYCGJqF0Bz8E60Y1Rwd5sHmYTBCc7H5akyl1m6ed8GXrNYOkKEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wh4rajWL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vslT4nPj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC523606A320;
-	Thu, 19 Nov 2026 01:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D22F606A325;
+	Thu, 19 Nov 2026 01:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wh4rajWL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C576F1F000C4;
-	Thu, 19 Nov 2026 01:16:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vslT4nPj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D60C1F000C4;
+	Thu, 19 Nov 2026 01:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050965;
-	bh=Sn/liOrfidEwsgQLWCPcmOFM+iq+wqETMOH1DpZrw4Q=;
+	s=korg; t=1795050968;
+	bh=ghSyl/eLEw065e1dkyggxwOrkPu1ec8lSm2aYYgzzpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wh4rajWLVDru3WxYyg/6K0O/mRsAJpo3xzMlSmO/LlgArmG4V5cbvOadTRekoqaNH
-	 HedJ2tODXQP7grMpe5jhRJiglenf6FtF+lXWUJXy20gCYVVHy7OXasPlLRGspE9zYR
-	 JesQVIUO1n73K1/DfIQ0aATLOgAPNk0BxQy68dig=
+	b=vslT4nPjDiGNB8L91UHJTM0c+tF+4KLaTnrppA/iELCDlwVEJBip28gG5scD7lyey
+	 CsbcAqtX8P90xjrP4wB3KVA7ehaW7o3LHE6uMOKZc0dvquOfcu1PwPyAqJb28lD/ji
+	 aU5VAh3W9ZguAUPyn396ZogJ9Iz8Edp9vHohR5Mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Juanlu Herrero <juanlu@fastmail.com>,
+	Anand Natarajan <anand@meta.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0009/2214] asymmetric_keys: reject trust keys without IDs
-Date: Wed, 18 Nov 2026 15:28:05 +0100
-Message-ID: <20261118150010.527519547@linuxfoundation.org>
+Subject: [PATCH 5.15 0010/2214] io_uring/poll: avoid retry wakeup loss when dropping ownership
+Date: Wed, 18 Nov 2026 15:28:06 +0100
+Message-ID: <20261118150010.564401810@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,60 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Juanlu Herrero <juanlu@fastmail.com>
 
-[ Upstream commit 9695df3b1db4ac4534274d38ee16e3b9b0bf910e ]
+[ Upstream commit 937d38dcacd675dc0572d6c9b6743960df3128ed ]
 
-The PKCS#8 parser deliberately leaves the asym_key_ids payload slot
-empty. key_or_keyring_common() unconditionally dereferences that slot
-when a PKCS#8 key is supplied to a key_or_keyring restriction. Both the
-plain and :chain forms reach this branch, allowing an unprivileged caller
-to trigger a NULL pointer dereference through KEYCTL_RESTRICT_KEYRING
-followed by add_key().
+If a wakeup sets IO_POLL_RETRY_FLAG between the owning task consuming
+the existing instance of IO_POLL_RETRY_FLAG and the loop check
+of io_poll_check_events(), then we stall on processing the request
+until an unrelated wakeup comes along.
 
- Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000
- KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
- RIP: 0010:key_or_keyring_common (crypto/asymmetric_keys/restrict.c:205 crypto/asymmetric_keys/restrict.c:279)
- Call Trace:
-  <TASK>
-  __key_create_or_update (security/keys/key.c:884)
-  key_create_or_update (security/keys/key.c:1021)
-  __do_sys_add_key (security/keys/keyctl.c:134)
-  do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-  </TASK>
- Kernel panic - not syncing: Fatal exception
+Using atomic_cmpxchg instead of atomic_sub_return to guarantee both the
+count v and poll_refs are 0 and no wake-ups are missed.
 
-Reject an asymmetric restriction key without key IDs. A PKCS#8 private
-key cannot identify the signer of a candidate certificate and is not a
-valid trust anchor.
-
-Fixes: 3c58b2362ba8 ("KEYS: Implement PKCS#8 RSA Private Key parser [ver #2]")
 Cc: stable@vger.kernel.org
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Link: https://lore.kernel.org/r/20260429181629.110802-2-bestswngs@gmail.com
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-[ sashal: Reused the existing signer_ids structure pointer for the NULL check instead of introducing a separate kids variable. ]
+Fixes: a26a35e9019f ("io_uring: make poll refs more robust")
+Signed-off-by: Juanlu Herrero <juanlu@fastmail.com>
+Assisted-by: LLM
+Suggested-by: Anand Natarajan <anand@meta.com>
+Link: https://patch.msgid.link/20261013-pu-cmpxchg-v1-1-4ddc10fd8a03@fastmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ sashal: Relocated the change to io_poll_check_events() in the monolithic io_uring implementation. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/asymmetric_keys/restrict.c | 2 ++
- 1 file changed, 2 insertions(+)
+ io_uring/io_uring.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/crypto/asymmetric_keys/restrict.c b/crypto/asymmetric_keys/restrict.c
-index 84cefe3b35856..d95002812bb84 100644
---- a/crypto/asymmetric_keys/restrict.c
-+++ b/crypto/asymmetric_keys/restrict.c
-@@ -154,6 +154,8 @@ static int key_or_keyring_common(struct key *dest_keyring,
- 			const struct asymmetric_key_ids *signer_ids;
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 8d5791d8f4031..a87b24c77c0ee 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -5690,8 +5690,8 @@ static int io_poll_check_events(struct io_kiocb *req)
+ 		 * Release all references, retry if someone tried to restart
+ 		 * task_work while we were executing it.
+ 		 */
+-	} while (atomic_sub_return(v & IO_POLL_REF_MASK, &req->poll_refs) &
+-					IO_POLL_REF_MASK);
++		v &= IO_POLL_REF_MASK;
++	} while (atomic_cmpxchg(&req->poll_refs, v, 0) != v);
  
- 			signer_ids = asymmetric_key_ids(trusted);
-+			if (!signer_ids)
-+				return -ENOKEY;
- 
- 			/*
- 			 * The auth_ids come from the candidate key (the
+ 	return 1;
+ }
 -- 
 2.53.0
 
