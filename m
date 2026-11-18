@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037360;
-	b=Bf8WitGPpZGJcKhpNknhukw6C+e+dGuIrtltWj7Mzrli+/eytMqXB53QA6mREU/d8Fau
-	 4X8A645dIIzDTZgTXYVNupyRw0uPvhpdfw/pw04IqDeq4kJt1sprqsmaa3fR4KQUGjiFO
-	 rfhB9WF3TJJmlMtNGJGlb3UKD6p4lg8r/Mj9WAM3lPZ8LyRLsQ3NqP5Tk9KRxXz19tmMn
-	 nB1PA9mS/Cs9M/QW9jmivssk6sBB5ZIthmwjd/GIRFQ0XsMaQAA9+8vgLvZnnLPW3+an4
-	 LhLksX4ItzYfHBH/6wdxxrki20JrvIaQyXrZ3wZ4kCabbeVfcGZlQe71fWsOi0lvsdA==
+	t=1795037363;
+	b=Ca0nrkhdaqJjZBTxMtqNFf0OTGPUzzwH5bRk2nzyRsfSAciqt309GWrqvC6/hkQFKdyu
+	 3o8cLrbqoyadLaqN/p9mj9Gi8jjnYkTRgghMR03/NXQ2fBNH0kHnCxaEPm47U77NPSAjA
+	 nkIqApbgzFR4y4l2ZSJr2+rh3nkXF8jAqy+v73+Er05ezKFAkBYl7yOMsbNll4aaECL4Y
+	 oLAdjPPtgiPskZ185rA6rCgikeso5T1ZAFlD2ruglHEZmCPOPiNwUgGLNkiR57HQv7cG+
+	 +BWzWHYQEvnaec+qPBmaDhrmegoIMv4TTjAvRTJUT3l0FfUy8hO+zpHtFB0fPmd8tOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037360;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037363;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C6h/z4ntlSd8SoXzUcLaOnlAwlPDmF5kdpz6zr2bEYM=;
-	b=gFk6zSgIR3kMi8t0TGD3huc0MsIJ1q3FGpvOudb05cf0b3YvmaVAEaDbIK1Od/S7gBaS
-	 dsugElNG1Ko3FVrizeRQzf7UTF9AIEd7E735Sca5jW4TnrH26ZCy7xjvJc/GCi5KgJ1Vb
-	 5vleM6GWOE3Iu6nxHL3By9MhmOl/8TLagjB8ZUYkbeXibfnZwc8XnLOL5adJUCvXoCRDv
-	 SsBxbjIutRmV1PdSVqPwFFluQkW49HeHLh17uVzdc4poDdEJUD5l12e1aPegm23noaWcj
-	 YhN49mrwek9HR4LqUnB6k1JCRu0olecZHl1pUFHsj3aPaT9JsR8xjCK/FfydhVF/efA==
+	bh=CvcxZzOpqDUiSJ8hSTD898IVxHw/YetJO5WygcLVfpM=;
+	b=TH53EU0SzYb8vz7Xtphg6wzO7vuShogsc+Nia8RDGIwI405aGgaJyBASvXT77bFeH7y3
+	 9FxbNE7zFhDB8DF7+2WINmxrx9/gLmyMVcl9tohA2Ie8gltxqiMJagpBSVGH1hsrW2PsJ
+	 kBSfPJnSvKmzdNwYHOpRSktd5O07gwQFuO9+cw4QwOI3ONKzjK/AMbjOftIFrGxfE/zbj
+	 GnANBRXh7naUVyf+6wvDr4cLkJQJquhlqcwyG0HsikDjMFuzNvlvnjZMQZzQ+M+u18mVN
+	 l/nSLLz3rbB2Fj1Fx776xzlB3hYEB2fmLS0iq2X9ElRlxdShRQJs7Cfl/DCaXPdArLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZihHW9W5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JjGPkIrR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE7660A3812;
-	Wed, 18 Nov 2026 21:29:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D7C606A32C;
+	Wed, 18 Nov 2026 21:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZihHW9W5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694AB1F000C4;
-	Wed, 18 Nov 2026 21:29:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JjGPkIrR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDFD1F000C4;
+	Wed, 18 Nov 2026 21:29:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037360;
-	bh=C6h/z4ntlSd8SoXzUcLaOnlAwlPDmF5kdpz6zr2bEYM=;
+	s=korg; t=1795037363;
+	bh=CvcxZzOpqDUiSJ8hSTD898IVxHw/YetJO5WygcLVfpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZihHW9W5vUX2MXhOcL2Cw0E6/x99ZHJiQfdBfv3dHvsk2mprFKkwcCb+qxarzdnJY
-	 i7EQrcrITKpBP+/Q8KCW3WVvcSIU6kOE+Is9IO6OzOBoE4QDfUQEqjAk9EsDYsnMup
-	 yqOxvJcqPCNYJ4dfMRkIIIicFOEnqSwhzxN8JSW4=
+	b=JjGPkIrRfcDSf/5P16wydo3R4QuyaST0GJ+haJl6jjxFPGJQaeK5N9tjsCYKxX+XI
+	 Q6sXk7acPLAIXn3zg3Q2151rVq9qzmpBWA0LonwlCOXV4eSEIVeBUkA49Gd6Z1Pbch
+	 rSExHBwRPRfyqJCNSjKi2qMIQ6rElCaC+dKDdZSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Cong <yicong@kylinos.cn>,
-	Felix Fietkau <nbd@nbd.name>,
+	stable@kernel.org,
+	Yu Junzhe <junzheyu1@gmail.com>,
+	Daejun Park <daejun7.park@samsung.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1374/3318] wifi: mt76: mt792x: fix negative errno truncation in offload capability
-Date: Wed, 18 Nov 2026 15:33:16 +0100
-Message-ID: <20261118150401.731921408@linuxfoundation.org>
+Subject: [PATCH 6.6 1375/3318] jbd2: dont advance j_fc_off before the buffer is recorded
+Date: Wed, 18 Nov 2026 15:33:17 +0100
+Message-ID: <20261118150401.764271827@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,58 +71,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Cong <yicong@kylinos.cn>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit d0115096429ca090a592770c7645f9553a839954 ]
+commit 9f359c031885bb50add7d23c7a5a0e9755b134c9 upstream.
 
-Returning a negative errno as u8 turned -ENOENT into 0xfe, wrongly
-enabling CNM and NAN caps. Return int and default to no caps on error.
+jbd2_fc_get_buf() increments journal->j_fc_off before jbd2_journal_bmap()
+and __getblk() have had a chance to fail.  When either does, the slot
+j_fc_wbuf[fc_off] is never assigned, but j_fc_off already counts it.
 
-Fixes: e8a264ccd2de ("wifi: mt76: mt7921: move init shared code in mt792x-lib module")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yi Cong <yicong@kylinos.cn>
-Link: https://patch.msgid.link/20260824021429.43761-1-cong.yi@linux.dev
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+ext4 then fails the fast commit and falls back, and the fallback path
+reaches jbd2_fc_release_bufs() via ext4_fc_commit ->
+jbd2_fc_end_commit_fallback -> __jbd2_fc_end_commit -> ext4_fc_cleanup.
+That walks down from j_fc_off - 1 and put_bh()es every slot until it
+sees NULL, so it also touches the slot that was never written.
+j_fc_wbuf comes from a plain kmalloc() and is never zeroed, so a slot
+used for the first time holds uninitialised heap data.
+
+Advance j_fc_off only after the buffer head has been stored.  That
+restores the invariant that j_fc_off covers exactly the filled slots,
+which is what jbd2_fc_release_bufs() relies on: the live buffers of the
+current fast commit sit above the NULLs the previous one released, so
+stopping at the first NULL is correct.
+
+Reproduced on a KASAN kernel with an ext4 fast_commit filesystem on a
+loop device, truncating the backing file under the live mount so that
+only the journal's fast-commit region falls past the end of the device.
+__getblk() then fails for the first fast-commit block while the rest of
+the journal is still addressable, so the journal is not aborted and the
+fast commit reaches the fallback path.  j_fc_wbuf was poisoned to make
+the read of the never-written slot visible:
+
+  BUG: KASAN: wild-memory-access in jbd2_fc_release_bufs+0x6b/0xd0
+  Write of size 4 at addr 5a5a5a5a5a5a5ab2 by task sync/961
+   jbd2_fc_release_bufs+0x6b/0xd0
+   ext4_fc_cleanup+0x97/0x830
+   __jbd2_fc_end_commit+0x37/0xc0
+   ext4_fc_commit+0x524/0x560
+   ext4_sync_file+0x3c4/0x4b0
+   __x64_sys_fsync+0x20/0x30
+
+With this patch the same run leaves j_fc_off at 0 across repeated
+__getblk() failures and completes cleanly.
+
+[ Context: in 6.6.y, jbd2_fc_get_buf() still advances j_fc_off inside
+  the if/else bounds check, so the increment is removed from there.
+  The change is otherwise the same as upstream. ]
+
+Fixes: ff780b91efe9 ("jbd2: add fast commit machinery")
+Cc: stable@kernel.org
+Reported-by: Yu Junzhe <junzheyu1@gmail.com>
+Closes: https://lore.kernel.org/linux-ext4/7e4b109d-64c3-444f-a5dc-93c2ca4576cc@gmail.com/
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260819060939epcms2p37bb8589b2f8a52a2b14bef38fadcf69d@epcms2p3
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt792x_core.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/jbd2/journal.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_core.c b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-index 66806ed4f942d..d990e34cfcd23 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-@@ -591,7 +591,7 @@ int mt792x_init_wiphy(struct ieee80211_hw *hw)
- }
- EXPORT_SYMBOL_GPL(mt792x_init_wiphy);
+diff --git a/fs/jbd2/journal.c b/fs/jbd2/journal.c
+index e0d82f83abdc0..ad3f522101aba 100644
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -869,7 +869,6 @@ int jbd2_fc_get_buf(journal_t *journal, struct buffer_head **bh_out)
+ 	if (journal->j_fc_off + journal->j_fc_first < journal->j_fc_last) {
+ 		fc_off = journal->j_fc_off;
+ 		blocknr = journal->j_fc_first + fc_off;
+-		journal->j_fc_off++;
+ 	} else {
+ 		ret = -EINVAL;
+ 	}
+@@ -887,6 +886,7 @@ int jbd2_fc_get_buf(journal_t *journal, struct buffer_head **bh_out)
  
--static u8
-+static int
- mt792x_get_offload_capability(struct device *dev, const char *fw_wm)
- {
- 	const struct mt76_connac2_fw_trailer *hdr;
-@@ -653,13 +653,20 @@ mt792x_get_mac80211_ops(struct device *dev,
- 			void *drv_data, u8 *fw_features)
- {
- 	struct ieee80211_ops *ops;
-+	int ret;
  
- 	ops = devm_kmemdup(dev, mac80211_ops, sizeof(struct ieee80211_ops),
- 			   GFP_KERNEL);
- 	if (!ops)
- 		return NULL;
+ 	journal->j_fc_wbuf[fc_off] = bh;
++	journal->j_fc_off++;
  
--	*fw_features = mt792x_get_offload_capability(dev, drv_data);
-+	ret = mt792x_get_offload_capability(dev, drv_data);
-+	if (ret < 0) {
-+		dev_warn(dev, "failed to read firmware offload caps: %d\n", ret);
-+		*fw_features = 0;
-+	} else {
-+		*fw_features = ret;
-+	}
- 	if (!(*fw_features & MT792x_FW_CAP_CNM)) {
- 		ops->remain_on_channel = NULL;
- 		ops->cancel_remain_on_channel = NULL;
+ 	*bh_out = bh;
+ 
 -- 
 2.53.0
 
