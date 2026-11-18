@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022140;
-	b=gxj7Fx4vTPPIYb1CoOqN2KB1k23ctxZYXuuDRaIDPofUuGlbIDPnbdssaiK6qF28g4ZS
-	 FDMEt45TvJrrc/g1w1wDXsyZH1QTf2eFED8s+qnrhH5SBFi0xqqY8A4v6a8qh5coKC10N
-	 Q1XIr3u8pCU0Km5GB2Rf11ulTWl542HbI3fs4VDKoHLVQQEujbnrRMV9ZeGRt504xP7X7
-	 ZU60KZbRMO9kMwpSYjrVQpfsDlC7+4/xem0BkaQ+zKZBj5ZEyxrO0ry9DSHfQ1SYQTahf
-	 M0n22SVsSkRSy0eWf8p3KywFeMRdJL+aVP+T7F7knt4xFj8I9nDIRV/8OzXow3NMMlg==
+	t=1795022143;
+	b=hdSIk01UuYihp34rB181HFdJX00XCjmY3EJPLHbnTPqTo16K+kMxDwdrqKwzv2MM0+UR
+	 jF1+FUxpLtrfGDd8bUq40hWGV9cOJVF1tcHwEuVhW8B5jR21Isx9meMKzIP9PO4ONFLEo
+	 kKU09e9z91hpK44pk4DvpiLAn4uurXD0ZS3aa8f4VOX6f65NgmGmu/gN5hpIPDFtl6Sq0
+	 86JMjnI7C6+8iqGPWDw5fsSon1Fynh5pAwWxsM84NPPhjHwVgAQl9ZrixZvhvq7M1DS2S
+	 cDFvda9kK/TOfrwWLMqngPlFXUhLJNezSZJQJCX6juKpRKwqNyXL0faLc2isy6JFZFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022140;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022143;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8ZMN7dd59rO6zC5mZRM7v5FpiCIpBBT6UPTv4R19mbA=;
-	b=wNv0dJaCPLmNpr6AnyLlEkGzrbArQjBsLOrexqNDbNQcd1bckodU5ysIdl45O4ZtWVjq
-	 1a5N80YkDm+doGNgg6LQSqePCufHeX12ypz0stAlajpXfdaaKKl2DcAcgQMM0gb0qkOxJ
-	 jvsq4qwOdi5TU5VfvkvFCrYKgpvxutzsdjRNb6BzqiX3hXlxeuQPbKpfOxD252xhxiWiD
-	 jtBpQ9lL3+B+DRMAC+p1cpE9PWHBU3XfZg2IUSnU1jZQS6P6+q4gxs9sfjDvYpebNBEqv
-	 MqIHIp549XkViVPYtvfWIj4x4YG1ykNC1H8+tWfRwvLnC1xkH7KV9Q/iS215P/1/jOw==
+	bh=KhDk8MhsTy3KKW4upAyeuGVjt8zUOx56d5jSMdWHR+c=;
+	b=aDJ+gylyglha1NyA+SnTH7WdJGub811RcJTVvktUBoJEV/Q5tiX++nC/31/hB62+fRf4
+	 XkNKzkYu2KwZXfG8j6ga1V7F0963IU6EQIyftEVCYrPqwTtW58CgxNjxhw5cnDgVDuBzA
+	 nwG2mFs8DvJ90A05vRrF+5WECzxICHXzT8o3UGiDkdo9+rzMRCnm/3zIch9i411upw1Og
+	 l30bamHQzdt6zsNe4/e3AYFcx5UVKn6v6xqvE73fjzhZOZguBeZM9qtcC48L2EsF//GMz
+	 fyG2uKMmsiSlOazdptPMgKgLYw2xQyksDO0BJ4aGf5WPUVZ93LOkaVuTFhelQL91ZPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hb8gBzKE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qlonu7W9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528EE60A2607;
-	Wed, 18 Nov 2026 17:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B98606A32A;
+	Wed, 18 Nov 2026 17:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hb8gBzKE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B381F000CC;
-	Wed, 18 Nov 2026 17:15:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qlonu7W9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A1111F000CC;
+	Wed, 18 Nov 2026 17:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022140;
-	bh=8ZMN7dd59rO6zC5mZRM7v5FpiCIpBBT6UPTv4R19mbA=;
+	s=korg; t=1795022143;
+	bh=KhDk8MhsTy3KKW4upAyeuGVjt8zUOx56d5jSMdWHR+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hb8gBzKE6mBneaDwXA3Q3B0SxCrxLPrTGGyRhhvGfnKvPN1Z0BaYOup4gYH6fSie/
-	 IO0z+ru1hAoVbPAwyEV7MsqEMch577Z/lc4uzAoTZqxaKj2K6ApN1rINcDUPn14Veh
-	 tu4QjjwQvBCPS1qniqgeIW0qlfYMdzBjDzvcWl6k=
+	b=Qlonu7W9B3rc0qsn7ds6mQfoSVGilUJKZIc4O/k+D9vP2X7gTgBqhHdX2n1GI67mO
+	 OgMJXrfnnqaqZPkGaZrhrv2SXZdri7iaLfSLpIZKSnOSu9P5x1bYWmlw5dZxIOBfVN
+	 LLeIxanH3tmIhsh5Ez3GF27fstp8iNUa7++l9SgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Chuck Lever <cel@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2556/2651] net: dcb: initialize PFC value before calling getpfccfg
-Date: Wed, 18 Nov 2026 16:03:16 +0100
-Message-ID: <20261118150416.493024379@linuxfoundation.org>
+Subject: [PATCH 7.3 2557/2651] tls: Honor O_NONBLOCK in tls_sw_splice_read()
+Date: Wed, 18 Nov 2026 16:03:17 +0100
+Message-ID: <20261118150416.521770019@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,65 +68,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit ca87a2dffbb550fc934647d5e8d1c4ae85590132 ]
+[ Upstream commit 78ded647d43e335891f981f68c5992a2e763cfcc ]
 
-dcbnl_getpfccfg() and dcbnl_cee_fill() pass the address of an
-uninitialized stack u8 to the driver's getpfccfg() op and then put it
-into the netlink reply unconditionally.  The op returns void, so the
-core cannot tell whether the driver wrote the value.
+tls_sw_splice_read() takes its blocking behavior from
+SPLICE_F_NONBLOCK alone. When splicing from a socket to a pipe,
+do_splice() sets that flag from the pipe's O_NONBLOCK, not the
+socket's. On a nonblocking socket, a splice(2) call without
+SPLICE_F_NONBLOCK therefore sleeps in tls_rx_rec_wait() until a
+record arrives. tcp_splice_read() instead reads sock->file->f_flags
+and returns -EAGAIN.
 
-i40e_dcbnl_get_pfc_cfg() and ice_dcbnl_get_pfc_cfg() return without
-writing *setting unless the DCBX agent is host managed and in CEE mode.
-Both drivers normally run with firmware managed DCBX
-(DCB_CAP_DCBX_LLD_MANAGED), and i40e with FW LLDP disabled runs host
-managed in IEEE mode, so on a DCB capable i40e/ice port the PFC values
-in DCB_CMD_PFC_GCFG and DCB_CMD_CEE_GET replies, and in the CEE part of
-RTNLGRP_DCB notifications, come from uninitialized stack.  The same u8
-is reused for all eight priorities, so this is one byte per reply.
+Polling first does not avoid the sleep once tls_sw_splice_read()
+consumes zero-length records, as it does after a later patch in this
+series. tls_sw_sock_is_readable() reports the socket readable while
+any record sits on rx_list, including a zero-length record that
+delivers no bytes to the pipe. For TLS 1.3 the strparser announces a
+record before decryption, when its plaintext length is still unknown,
+so the readiness test cannot screen such a record out. A splice that
+consumes the record and waits for the next stalls every connection
+an event loop multiplexes.
 
-dcb_doit() only requires CAP_NET_ADMIN for RTM_SETDCB, so the GET
-commands are available to unprivileged users.
+An LLM audit of the TLS read paths found this defect.
 
-Set the value to 0 before each call, like the PG config path already
-presets its outputs to DCB_ATTR_VALUE_UNDEFINED.  0 is also what the
-reply contains today on kernels built with CONFIG_INIT_STACK_ALL_ZERO,
-so nothing changes for those.
+Treat the socket's O_NONBLOCK as nonblocking too. A caller that
+sets O_NONBLOCK on the socket and splices without SPLICE_F_NONBLOCK
+now gets -EAGAIN where the splice blocked before. sendfile(2) from
+a TLS socket changes the same way, because do_sendfile() leaves the
+input file's O_NONBLOCK out of the splice flags. Both now behave as
+they do on a plain TCP socket.
 
-Found by code inspection, compile-tested only (W=1).  I don't have
-i40e/ice hardware to check the reply.
-
-Fixes: b94b013eb626 ("ice: Implement DCBNL support")
-Fixes: 5effa78e7c94 ("i40e: Add netlink callbacks support for software based DCB")
-Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
-Link: https://patch.msgid.link/179289284460.50470.572724041164324949@gmail.com
+Fixes: c46234ebb4d1 ("tls: RX path for ktls")
+Signed-off-by: Chuck Lever <cel@kernel.org>
+Link: https://patch.msgid.link/20261027015215.605919-2-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dcb/dcbnl.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/tls/tls_sw.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/dcb/dcbnl.c b/net/dcb/dcbnl.c
-index 35164bfa563d1..593c9d89d36a0 100644
---- a/net/dcb/dcbnl.c
-+++ b/net/dcb/dcbnl.c
-@@ -281,6 +281,7 @@ static int dcbnl_getpfccfg(struct net_device *netdev, struct nlmsghdr *nlh,
- 		if (!getall && !data[i])
- 			continue;
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index d1ad31986cf2c..79639ed79821c 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -2007,10 +2007,14 @@ ssize_t tls_sw_splice_read(struct socket *sock,  loff_t *ppos,
+ 	struct tls_msg *tlm;
+ 	struct sk_buff *skb;
+ 	ssize_t copied = 0;
++	bool nonblock;
+ 	int chunk;
+ 	int err;
  
-+		value = 0;
- 		netdev->dcbnl_ops->getpfccfg(netdev, i - DCB_PFC_UP_ATTR_0,
- 		                             &value);
- 		ret = nla_put_u8(skb, i, value);
-@@ -1395,6 +1396,7 @@ static int dcbnl_cee_fill(struct sk_buff *skb, struct net_device *netdev)
- 			goto nla_put_failure;
+-	err = tls_rx_reader_lock(sk, ctx, flags & SPLICE_F_NONBLOCK);
++	nonblock = flags & SPLICE_F_NONBLOCK ||
++		   sock->file->f_flags & O_NONBLOCK;
++
++	err = tls_rx_reader_lock(sk, ctx, nonblock);
+ 	if (err < 0)
+ 		return err;
  
- 		for (i = DCB_PFC_UP_ATTR_0; i <= DCB_PFC_UP_ATTR_7; i++) {
-+			value = 0;
- 			ops->getpfccfg(netdev, i - DCB_PFC_UP_ATTR_0, &value);
- 			if (nla_put_u8(skb, i, value))
- 				goto nla_put_failure;
+@@ -2024,8 +2028,7 @@ ssize_t tls_sw_splice_read(struct socket *sock,  loff_t *ppos,
+ 	} else {
+ 		struct tls_decrypt_arg darg;
+ 
+-		err = tls_rx_rec_wait(sk, flags & SPLICE_F_NONBLOCK,
+-				      true, false);
++		err = tls_rx_rec_wait(sk, nonblock, true, false);
+ 		if (err <= 0)
+ 			goto splice_read_end;
+ 
 -- 
 2.53.0
 
