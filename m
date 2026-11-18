@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038155;
-	b=vhW2+M3QVXxrbQP/+o5xmxYWGO3DbRRXvF34+O0wS0M7gm9ec0Klzr5DbSftjKkmCjGl
-	 8g5T3mNjjR8U/8zMS7o+S6U0iDRYgTPHei4imG5YHMfRGdIKju5IG8LeYWsE0IHFkPK/U
-	 P/5yMt1RDOHoErsvp5yaxkgsydoBRF/kgxAH+WQjZHuFtUqXcqcACy0BGijoqoedtbC+J
-	 4s87Ez6Egl1AE9H8YFmUeOHmJonYOz76tRDFG9Pt0W1wRjQlz0WE/GcprYTnzXjGRCJ5q
-	 UgMANxER4FJahkq6PjsWPw08RleEtgKGRiIP8FQUQrH7flb5D2TnA90yEmCcgof+DUQ==
+	t=1795038158;
+	b=CR2ED2ka01UPIdh00qdLDF3FenbTzRnl+A+AW8fAs0QkmPejjJROI0wvROj4sh10UEu/
+	 5GZd/M/CxVKiN0FLfOm0FTRAuXf7EUfngHzIpqGFM8JVP6At65NHiB0adQjDheOC4R3WJ
+	 lILqIjzGI/RcocD+cCgAzfXKMhKkUGsA0SF5Mbeu9DkFnxHydv52E/yIoYqrayPAfvRbd
+	 Ap+TpigkLaM3Q6uUrHTc34qwzma51jToRH1Ttl2rsaMOC28q2VuTIsH0Kf73DOI4fNDBj
+	 Jw8bHefU0OG0bjSi9WoxC++gTCWxVZfJq4tosItgiG2Ak13ldT+6QFjiXkQvksAVngQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038155;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038158;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ChJcakPvIiRBgal1tg4ZY0uuIPqFqeaMgGWa6m2JbLU=;
-	b=Q4H3vy8J53y/MqOI9IPxnZoKBz4+fty7/wk+ImMvxUwqr4Ix+gBW8fwGGV4k4ECydz4r
-	 Lxe3pxB5bZ53BthJABlKqzTirtcoo2j8v6UdQGaIgsZC31deRG343+bFYrGGB1Peyo+pM
-	 Xrm3oeR+9YGWmCupM3MBu0chErNntp/NQZwVHTOTcmTDKiZrQnMn7goPgrcS3IPnQC+dr
-	 lXD1/nwA+3oOtes/j6wdC0/mfL117c3HN0Wsc6CC2Zh/jFhdQGJeyQnO9BzxR2VTNptFJ
-	 EThPVja8dR4DoVcsPvwUDGqUL/E/ddbEpxCH11ypu6smvxilBENsya9l47uVgsW5GfA==
+	bh=Q0iwPT2IDS66uHcUk+dgCCGBo0gKsbGQNFWoqvlJTPM=;
+	b=XOspK0MzUt2ar3NmGhyEUG2hZm12t7axyhmecL5P+uRD3oDu56JUsBwl8EjY937B2pdb
+	 jB596cd9KSRmVzvJ8gLXlRWO9z3ebNjbETm+hPEkjvzxrIjRhDLblzRMCLzDh//AjD/f2
+	 26hrpw957KumqajbKV8N/medV+pGjPdmSRyC0jrVwGY1RBXnJTuIANfCb5ICsQuvIgLMr
+	 rjzY+86SA/MpkJp9jeHigv7pRJ35JVHetn/Ua2YU6VKu2jB7ovo9RR3CUtzvNV+Gfuhwg
+	 zw/0Zq5K8VIrioy/QvgLQWmlV6kbabWrQRbHFce4MS+nJlamjhSXIh2++RylDcWa11g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PIINsW7V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cItAlz1N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D19606A31C;
-	Wed, 18 Nov 2026 21:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6883B606A31C;
+	Wed, 18 Nov 2026 21:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PIINsW7V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB7A21F000C5;
-	Wed, 18 Nov 2026 21:42:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cItAlz1N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62681F000C5;
+	Wed, 18 Nov 2026 21:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038155;
-	bh=ChJcakPvIiRBgal1tg4ZY0uuIPqFqeaMgGWa6m2JbLU=;
+	s=korg; t=1795038158;
+	bh=Q0iwPT2IDS66uHcUk+dgCCGBo0gKsbGQNFWoqvlJTPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PIINsW7Visrxomec9IGqG9XYbPkFYl6ShQZKQs+YWfiCDIHQwMXv/pi5NdaD9DqcX
-	 hVXggTtjKzhww7NC8a70M6wq+cItZ6MHs0LBeioaSobhdxxOnhbR5pySr0uR3/XQid
-	 u6CQ+n7fqKV4feDLU6nfr4jjWboZm+VYwOqhB7h0=
+	b=cItAlz1NVUdNd7vSvdPlIBKUgeJOwaVmrNltZkTr5RuXKmcV6gwz+CGkqa0G8E2wC
+	 WNl3Kl8VFlC5AksR92dYCx6WQ2TTNM8FYUjGlnTOYW1YWlQ6heQ1/JE95pbT5ZTuep
+	 tf77uSpDgOjN8VHfTK0+iP6HlKqq/NZt6hLHgmUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Gabriel Krisman Bertazi <krisman@collabora.com>,
+	Eugen Hristev <eugen.hristev@collabora.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1643/3318] drm/panel: Fix build error on !CONFIG_OF
-Date: Wed, 18 Nov 2026 15:37:45 +0100
-Message-ID: <20261118150411.051504677@linuxfoundation.org>
+Subject: [PATCH 6.6 1644/3318] ext4: Move CONFIG_UNICODE defguards into the code flow
+Date: Wed, 18 Nov 2026 15:37:46 +0100
+Message-ID: <20261118150411.080144397@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,92 +71,212 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas De Marchi <lucas.demarchi@intel.com>
+From: Gabriel Krisman Bertazi <krisman@collabora.com>
 
-[ Upstream commit 8f47efd68db3bd87941df1ea3a5b77c62db5632e ]
+[ Upstream commit d98c822232f8642960a69caedeb7909471127939 ]
 
-Move helpers outside of CONFIG_OF, so basic allocation also works
-without it.
+Instead of a bunch of ifdefs, make the unicode built checks part of the
+code flow where possible, as requested by Torvalds.
 
-Fixes: ed9c594d495d ("drm/panel: Add new helpers for refcounted panel allocatons")
-Fixes: dcba396f6907 ("drm/panel: Add refcount support")
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Link: https://lore.kernel.org/r/nyrjnvctqnk6f3x5q7rlmy5nb7iopoti56pgh43zqknici5ms4@cibpldh7epra
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-[ sashal: Moved __devm_drm_panel_alloc() ahead of the #ifdef CONFIG_OF block, since the refcount helpers that upstream also moves don't exist in this tree. ]
+Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
+[eugen.hristev@collabora.com: port to 6.10-rc1]
+Signed-off-by: Eugen Hristev <eugen.hristev@collabora.com>
+Link: https://lore.kernel.org/r/20240606073353.47130-7-eugen.hristev@collabora.com
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 19e16597f9ba ("ext4: fix ABBA deadlock in ext4_rmdir()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel.c | 50 ++++++++++++++++++-------------------
- 1 file changed, 25 insertions(+), 25 deletions(-)
+ fs/ext4/crypto.c | 10 ++--------
+ fs/ext4/ext4.h   | 33 +++++++++++++++++++++------------
+ fs/ext4/namei.c  | 14 +++++---------
+ fs/ext4/super.c  |  4 +---
+ 4 files changed, 29 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
-index ea1f42cee44dc..02bcaf52c9ec0 100644
---- a/drivers/gpu/drm/drm_panel.c
-+++ b/drivers/gpu/drm/drm_panel.c
-@@ -298,6 +298,31 @@ int drm_panel_get_modes(struct drm_panel *panel,
- }
- EXPORT_SYMBOL(drm_panel_get_modes);
+diff --git a/fs/ext4/crypto.c b/fs/ext4/crypto.c
+index 8497f6125a8eb..c52971f62e525 100644
+--- a/fs/ext4/crypto.c
++++ b/fs/ext4/crypto.c
+@@ -31,11 +31,10 @@ int ext4_fname_setup_filename(struct inode *dir, const struct qstr *iname,
  
-+void *__devm_drm_panel_alloc(struct device *dev, size_t size, size_t offset,
-+			     const struct drm_panel_funcs *funcs,
-+			     int connector_type)
+ 	ext4_fname_from_fscrypt_name(fname, &name);
+ 
+-#if IS_ENABLED(CONFIG_UNICODE)
+ 	err = ext4_fname_setup_ci_filename(dir, iname, fname);
+ 	if (err)
+ 		ext4_fname_free_filename(fname);
+-#endif
++
+ 	return err;
+ }
+ 
+@@ -51,11 +50,9 @@ int ext4_fname_prepare_lookup(struct inode *dir, struct dentry *dentry,
+ 
+ 	ext4_fname_from_fscrypt_name(fname, &name);
+ 
+-#if IS_ENABLED(CONFIG_UNICODE)
+ 	err = ext4_fname_setup_ci_filename(dir, &dentry->d_name, fname);
+ 	if (err)
+ 		ext4_fname_free_filename(fname);
+-#endif
+ 	return err;
+ }
+ 
+@@ -70,10 +67,7 @@ void ext4_fname_free_filename(struct ext4_filename *fname)
+ 	fname->usr_fname = NULL;
+ 	fname->disk_name.name = NULL;
+ 
+-#if IS_ENABLED(CONFIG_UNICODE)
+-	kfree(fname->cf_name.name);
+-	fname->cf_name.name = NULL;
+-#endif
++	ext4_fname_free_ci_filename(fname);
+ }
+ 
+ static bool uuid_is_zero(__u8 u[16])
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index 5a9a05d62f549..c3200c942d676 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -2747,8 +2747,25 @@ ext4_fsblk_t ext4_inode_to_goal_block(struct inode *);
+ 
+ #if IS_ENABLED(CONFIG_UNICODE)
+ extern int ext4_fname_setup_ci_filename(struct inode *dir,
+-					 const struct qstr *iname,
+-					 struct ext4_filename *fname);
++					const struct qstr *iname,
++					struct ext4_filename *fname);
++
++static inline void ext4_fname_free_ci_filename(struct ext4_filename *fname)
 +{
-+	void *container;
-+	struct drm_panel *panel;
-+
-+	if (!funcs) {
-+		dev_warn(dev, "Missing funcs pointer\n");
-+		return ERR_PTR(-EINVAL);
-+	}
-+
-+	container = devm_kzalloc(dev, size, GFP_KERNEL);
-+	if (!container)
-+		return ERR_PTR(-ENOMEM);
-+
-+	panel = container + offset;
-+	panel->funcs = funcs;
-+
-+	drm_panel_init(panel, dev, funcs, connector_type);
-+
-+	return container;
++	kfree(fname->cf_name.name);
++	fname->cf_name.name = NULL;
 +}
-+EXPORT_SYMBOL(__devm_drm_panel_alloc);
++#else
++static inline int ext4_fname_setup_ci_filename(struct inode *dir,
++					       const struct qstr *iname,
++					       struct ext4_filename *fname)
++{
++	return 0;
++}
 +
- #ifdef CONFIG_OF
- /**
-  * of_drm_find_panel - look up a panel using a device tree node
-@@ -336,31 +361,6 @@ struct drm_panel *of_drm_find_panel(const struct device_node *np)
- }
- EXPORT_SYMBOL(of_drm_find_panel);
++static inline void ext4_fname_free_ci_filename(struct ext4_filename *fname)
++{
++}
+ #endif
  
--void *__devm_drm_panel_alloc(struct device *dev, size_t size, size_t offset,
--			     const struct drm_panel_funcs *funcs,
--			     int connector_type)
--{
--	void *container;
--	struct drm_panel *panel;
+ /* ext4 encryption related stuff goes here crypto.c */
+@@ -2771,16 +2788,11 @@ static inline int ext4_fname_setup_filename(struct inode *dir,
+ 					    int lookup,
+ 					    struct ext4_filename *fname)
+ {
+-	int err = 0;
+ 	fname->usr_fname = iname;
+ 	fname->disk_name.name = (unsigned char *) iname->name;
+ 	fname->disk_name.len = iname->len;
+ 
+-#if IS_ENABLED(CONFIG_UNICODE)
+-	err = ext4_fname_setup_ci_filename(dir, iname, fname);
+-#endif
 -
--	if (!funcs) {
--		dev_warn(dev, "Missing funcs pointer\n");
--		return ERR_PTR(-EINVAL);
--	}
--
--	container = devm_kzalloc(dev, size, GFP_KERNEL);
--	if (!container)
--		return ERR_PTR(-ENOMEM);
--
--	panel = container + offset;
--	panel->funcs = funcs;
--
--	drm_panel_init(panel, dev, funcs, connector_type);
--
--	return container;
--}
--EXPORT_SYMBOL(__devm_drm_panel_alloc);
--
- /**
-  * of_drm_get_panel_orientation - look up the orientation of the panel through
-  * the "rotation" binding from a device tree node
+-	return err;
++	return ext4_fname_setup_ci_filename(dir, iname, fname);
+ }
+ 
+ static inline int ext4_fname_prepare_lookup(struct inode *dir,
+@@ -2792,10 +2804,7 @@ static inline int ext4_fname_prepare_lookup(struct inode *dir,
+ 
+ static inline void ext4_fname_free_filename(struct ext4_filename *fname)
+ {
+-#if IS_ENABLED(CONFIG_UNICODE)
+-	kfree(fname->cf_name.name);
+-	fname->cf_name.name = NULL;
+-#endif
++	ext4_fname_free_ci_filename(fname);
+ }
+ 
+ static inline int ext4_ioctl_get_encryption_pwsalt(struct file *filp,
+diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
+index 1e72aa6f207ed..c77a18ce76bc7 100644
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -1875,8 +1875,7 @@ static struct dentry *ext4_lookup(struct inode *dir, struct dentry *dentry, unsi
+ 		}
+ 	}
+ 
+-#if IS_ENABLED(CONFIG_UNICODE)
+-	if (!inode && IS_CASEFOLDED(dir)) {
++	if (IS_ENABLED(CONFIG_UNICODE) && !inode && IS_CASEFOLDED(dir)) {
+ 		/* Eventually we want to call d_add_ci(dentry, NULL)
+ 		 * for negative dentries in the encoding case as
+ 		 * well.  For now, prevent the negative dentry
+@@ -1884,7 +1883,7 @@ static struct dentry *ext4_lookup(struct inode *dir, struct dentry *dentry, unsi
+ 		 */
+ 		return NULL;
+ 	}
+-#endif
++
+ 	return d_splice_alias(inode, dentry);
+ }
+ 
+@@ -3260,16 +3259,14 @@ static int ext4_rmdir(struct inode *dir, struct dentry *dentry)
+ 	ext4_fc_track_unlink(handle, dentry);
+ 	retval = ext4_mark_inode_dirty(handle, dir);
+ 
+-#if IS_ENABLED(CONFIG_UNICODE)
+ 	/* VFS negative dentries are incompatible with Encoding and
+ 	 * Case-insensitiveness. Eventually we'll want avoid
+ 	 * invalidating the dentries here, alongside with returning the
+ 	 * negative dentries at ext4_lookup(), when it is better
+ 	 * supported by the VFS for the CI case.
+ 	 */
+-	if (IS_CASEFOLDED(dir))
++	if (IS_ENABLED(CONFIG_UNICODE) && IS_CASEFOLDED(dir))
+ 		d_invalidate(dentry);
+-#endif
+ 
+ end_rmdir:
+ 	brelse(bh);
+@@ -3371,16 +3368,15 @@ static int ext4_unlink(struct inode *dir, struct dentry *dentry)
+ 		goto out_trace;
+ 
+ 	retval = __ext4_unlink(dir, &dentry->d_name, d_inode(dentry), dentry);
+-#if IS_ENABLED(CONFIG_UNICODE)
++
+ 	/* VFS negative dentries are incompatible with Encoding and
+ 	 * Case-insensitiveness. Eventually we'll want avoid
+ 	 * invalidating the dentries here, alongside with returning the
+ 	 * negative dentries at ext4_lookup(), when it is  better
+ 	 * supported by the VFS for the CI case.
+ 	 */
+-	if (IS_CASEFOLDED(dir))
++	if (IS_ENABLED(CONFIG_UNICODE) && IS_CASEFOLDED(dir))
+ 		d_invalidate(dentry);
+-#endif
+ 
+ out_trace:
+ 	trace_ext4_unlink_exit(dentry, retval);
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 9be69402c704e..f91f36c39651c 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -3630,14 +3630,12 @@ int ext4_feature_set_ok(struct super_block *sb, int readonly)
+ 		return 0;
+ 	}
+ 
+-#if !IS_ENABLED(CONFIG_UNICODE)
+-	if (ext4_has_feature_casefold(sb)) {
++	if (!IS_ENABLED(CONFIG_UNICODE) && ext4_has_feature_casefold(sb)) {
+ 		ext4_msg(sb, KERN_ERR,
+ 			 "Filesystem with casefold feature cannot be "
+ 			 "mounted without CONFIG_UNICODE");
+ 		return 0;
+ 	}
+-#endif
+ 
+ 	if (readonly)
+ 		return 1;
 -- 
 2.53.0
 
