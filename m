@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051410;
-	b=b46/6RZN6ehmYzJB9QgcGRVu4nhBvGN+idxRQbfcJOs+vzMDo+9+qCgJp8P70oNhs5Ah
-	 heHYAKr5UC3QVzu2sbTmPFCD8SNLRCveDTNaDOmYOnEMZNkplCvz+4/+2p4DOV23GFg98
-	 BiY+p5YduTOwB6s5IMvhrOLp8VmDWZUnccqxtQBTaN42NcMJXUwnGEFNfuK/sdk15v0i0
-	 Eg7/WtEmOoxY+8efeqlyn/DL0YyQt+wfPe9osu8VqICfvVk1Eg3BtYvv1OgGP77g+mQsh
-	 55alq0EfeKl46Usyf5IOArqdTaB8Non3FzUzWIrRdBIAYdQ/9lTYlAS/7yjbGQphCbw==
+	t=1795051413;
+	b=uCedF6R/ncWoXbloKVgqGA2MFKG0dK88td6Oj1hKcCWuwc8vfL2NAAqlZtuwxk2rIw8i
+	 3JcytXHJ1qx55l85OfFLKBaQ5iSWPJn9hIvhKo6X9FUMSQ65Bso3qVq9qao1+0olWzFGG
+	 lKqELGQh0TUCzTQUO7ZdfmeCh6yt1uwPZE9YGEgrevWlGPXDycJC66nZPjN23IMDJv6rw
+	 M637bFJNOJmOVpa3co/DVDFaXnxA9qoSxEG1QatQSl/43kjZvdiB7uQjuzhYhmO+mTh70
+	 hS80NueFHlv/ROT/Zsv9Iy7hXvQgotEbRH1L1xtis4SR8iA7XMnUR0NhXV2Q3lrarUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051410;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051413;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=mNvCuPZ11rtOuGeQXxhXp9niAWLfXp3Slg4mLmjzCWE=;
-	b=4uDDp7jC0bBGn3U9TQVkFWws6T128WNsFAO3YGCifdgyBV8XUD/Ui7mM0S2cNPClPVUz
-	 Dy5+uL5klp00i2IFwJKxSOII+jOXJBwsU39Vy+lr741K9mCsSYe0LJQHVTGW+Qy9/MR7V
-	 8tU+9YjzgUAPJCKm2LWCmhdZXDzjgWf4iCP6JXz9KxGycwPLEqwXeJlIJ9YL1SQx0EJPM
-	 yu6ur62IrAeivrYXRhx1vMqTgLBiFTx6Ic5uhMqVACD4c6EmFRXm6Ey6ozFQ8zM/FKIEv
-	 TqzJiAM1OxXlhvWQzQ9J0m3grQ6ZKJL0UT3Zc7kb8ffo9UREKApcWq587o97qQOWlkA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=fZUpHls+Ov8OwQkOe97St1btwFkxOt+30KgrKuScy0U=;
+	b=4n3YEqVP/BY9HjcaaEROqW1GExshxTKzVsBsibKQfZUW9t1h4jf1ELEMpAPDMhNNeUm1
+	 +tNV4UVC7IreqBX+ju6F4DkunxOXjQCUslftfjZHtTLwrDHLnCdRcLYjzC7eTcU6cfVkX
+	 YDpL4Uk+AflSp3h9jn1aPIXRlwGoCzC6g1jA0lqIo2du2iF6xNWdVb3cS9p+H/ylMpEoz
+	 OyDPVGRyVgKiuGrw6dxw+OrhVhhS/wofSayzwS+N4yjjVxV5V/Y8tqNaJc34uUA9T8n9i
+	 y4T7Aaop4ZRoVwiLfsC9S5iQWVJD9aggJ/gZr84j37DYBGt6r83q02JFj5Xc5OWgGfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qZ3rq8zQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQLTevCf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889E0606A320;
-	Thu, 19 Nov 2026 01:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E16606A320;
+	Thu, 19 Nov 2026 01:23:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qZ3rq8zQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC261F000C5;
-	Thu, 19 Nov 2026 01:23:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQLTevCf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D09F1F000C4;
+	Thu, 19 Nov 2026 01:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051410;
-	bh=mNvCuPZ11rtOuGeQXxhXp9niAWLfXp3Slg4mLmjzCWE=;
+	s=korg; t=1795051413;
+	bh=fZUpHls+Ov8OwQkOe97St1btwFkxOt+30KgrKuScy0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qZ3rq8zQDDM2U0bSCgo3cuq+L5escwqpvUK+ULsZxKwu4uH6RkIlIHiTMONE0l/Yo
-	 6AzTLHXKeGzXiz28HmMMg1Oh8GA60zFgkGr1jUwRwzTwH1CI91kNHXaHz7K87kiqYf
-	 qb97bl92+o2NTKk3UVNHIJSFkUe3NdSZDPkD810I=
+	b=eQLTevCfAyKQmMJfKOVN6xzNKmv/P8OC+9DH52fUw8CJptS2LpP4aHKtN92zK788M
+	 iwrAYmJz/3sXXM8PiwDeB/pVLoZRntrLvypkU+wjnYHrdcGBF+1AJzen5D3AhOGPiU
+	 evvFJ/dEgAn9FhaR6Pc+8H6StvAy3mbGC2qSSOf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Heidelberg <david@ixit.cz>,
+	Carl Lee <carl.lee@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Ian Ray <ian.ray@gehealthcare.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20 ?= <u.kleine-koenig@baylibre.com>,
 	Griffin Kroah-Hartman <griffin@kroah.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0198/2214] nfc: mrvl: spi: Unregister dev on allocation fail
-Date: Wed, 18 Nov 2026 15:31:14 +0100
-Message-ID: <20261118150018.143624927@linuxfoundation.org>
+Subject: [PATCH 5.15 0199/2214] nfc: nxp-nci: Add remove on IRQ error
+Date: Wed, 18 Nov 2026 15:31:15 +0100
+Message-ID: <20261118150018.181037437@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,6 +67,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
@@ -70,38 +76,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-[ Upstream commit d832b95697384a2b67f20b35106bbf925358cde9 ]
+[ Upstream commit 56345cea6a30dc7a1b036d5fb7900434b4a4c5e8 ]
 
-Call nfcmrvl_nci_unregister_dev() if nci_spi_allocate_spi() fails,
-unwrapping the previous call to nfcmrvl_nci_register_dev() during the
-nfcmrvl_spi_probe() function.
+Add a call to nxp_nci_remove() in nxp_nci_i2c_probe() when the
+request_threaded_irq() fails.
+Previously, IRQ resources were not being freed upon error.
 
-Assisted-by: gkh-clanker-2000
+Assisted-by: gkh_clanker_2000
 Cc: David Heidelberg <david@ixit.cz>
+Cc: Carl Lee <carl.lee@amd.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: Ian Ray <ian.ray@gehealthcare.com>
+Cc: "Uwe Kleine-König (The Capable Hub)" <u.kleine-koenig@baylibre.com>
 Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026070716-crucial-slouchy-b8a9@gregkh
+Reviewed-by: Ian Ray <ian.ray@gehealthcare.com>
+Link: https://patch.msgid.link/2026070726-observer-fang-9716@gregkh
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/nfcmrvl/spi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/nfc/nxp-nci/i2c.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nfc/nfcmrvl/spi.c b/drivers/nfc/nfcmrvl/spi.c
-index abd75779194cd..23273828a8a41 100644
---- a/drivers/nfc/nfcmrvl/spi.c
-+++ b/drivers/nfc/nfcmrvl/spi.c
-@@ -168,6 +168,10 @@ static int nfcmrvl_spi_probe(struct spi_device *spi)
- 
- 	drv_data->nci_spi = nci_spi_allocate_spi(drv_data->spi, 0, 10,
- 						 drv_data->priv->ndev);
-+	if (!drv_data->nci_spi) {
-+		nfcmrvl_nci_unregister_dev(drv_data->priv);
-+		return -ENOMEM;
+diff --git a/drivers/nfc/nxp-nci/i2c.c b/drivers/nfc/nxp-nci/i2c.c
+index a0e665f958c4d..0fdd6cc648a77 100644
+--- a/drivers/nfc/nxp-nci/i2c.c
++++ b/drivers/nfc/nxp-nci/i2c.c
+@@ -327,8 +327,10 @@ static int nxp_nci_i2c_probe(struct i2c_client *client,
+ 				 nxp_nci_i2c_irq_thread_fn,
+ 				 irqflags | IRQF_ONESHOT,
+ 				 NXP_NCI_I2C_DRIVER_NAME, phy);
+-	if (r < 0)
++	if (r < 0) {
+ 		nfc_err(&client->dev, "Unable to register IRQ handler\n");
++		nxp_nci_remove(phy->ndev);
 +	}
  
- 	/* Init completion for slave handshake */
- 	init_completion(&drv_data->handshake_completion);
+ 	return r;
+ }
 -- 
 2.53.0
 
