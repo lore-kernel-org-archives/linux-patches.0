@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020478;
-	b=BhCMvDF3HiKvJHozkfb/JlZUxy+iw6VtwpiIukcgJUIgC4NMQAWUd25m+OGxPgWfFGbs
-	 VD0BPiasZ0r6cRKNOovbiIMNyVOUPWrmy6+YfNB+mhZBipFsUqSYCGi3AC9W36Vfz786z
-	 f7B0+D+uC9uTB42bR+/zdhtpE4DMLRgaY/Ut0+yNegfRkTNmq9in2fELn24nde2tp6idF
-	 FuxAKNyVDycSSQdRSk3mvGfrQyFfWAtpklby0LNP7b9c0yMFmVyxQb/Yk9Y5pZR6RIK2J
-	 vnHSmSO+ksuYBbZ8F91fJHvne8MghVaKM/6gHILuc0vCGkfYNYh2fWhb0Bnw9L8GVoQ==
+	t=1795020481;
+	b=TWRvN0phqIJcm6M08Quxn5FwT1LKGsJ1y93Ha8nhxegUg/A2ts+KsnOSdmr/mkP+Ms3t
+	 h0rGCggrvBLAE5srf4ToGo88XDBD5BkK5LbxrBpM7MmOJ/6faBMT2CV3wlRFce/8uv+C3
+	 8mE51zG8Dca+AZTiTY5nR0c2c1Z3lK0R7FF/VtBslS+L/Nuyf0XPJZaGEdznL0n88aA2y
+	 yuIP6Kdb1J6eLskkXiVAJpelkMqA/WWi+oCXgWq5c+OyXbGQMLHtMNFCeVxedPxdhQiF1
+	 xp3ZDgJGHhfBUv/s+l74hx71XKaZ9QT/+49nEPISGI8f0o9DCizN1wXQiCuhio4ZuwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020478;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020481;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5dDpXKG3VJdSkxrdUjCHlP7HBU+iHpzNrxVeOE2vuQ4=;
-	b=1o3QQCmZRoX4bG9VgtrTNJWRWLPjrhXp9F6cstcu4XKyR4UhVLEt2/W6cMI06UKGfZlr
-	 ogvwEHe3QtpEA1MqVfe1+pPJ6zvsIQ0hSWpwHT0tzQq85PVGsGe9+5Kb0HJpQOtw6HsCX
-	 3Ub8eMdbSldews5AwUh7NamD7WTYxwoeOEvizZ9Pe9GAXGtIjMz/71qoHowWthNWWhHBY
-	 u7QW48hiZmhvj8wap+PLQPfDwMaqycLRSAhukZWpil49feOoHg/eFM1WmyUCT29FI3Cdp
-	 6w5LGvq71i/et1CWNWQYL35JBtyGMGfzFOCZAHR85Kjt/USw7rSgYmupav7WAh/ZGlw==
+	bh=BmO05Oiit75wgULVdaexUPMDi5fyGtx6YUWwyAS90uM=;
+	b=2VewGY++CSkYuSQ66VDt66dP0VunMu1Rtg2z41a0dyuBJrm/Pj1akl7JudTDBzBfA50W
+	 4nbM1eUDzuxcl3sgmSgUGF7oquA9tLVvicjxCuEaF6svbrFrVLVFHTxzzJHB6Aaj23ng0
+	 Y/7X6F+Tkys6UQ7BvvV8DG+aw2P2wp/rtqAMV222rZTp8VYyxFv72orH9veTeQ0nzL4l/
+	 npQ6+2hKLgGDlPvLuSzXtsCB/nUaxmTdCEQdR5c7hGwFD0bJ6lCgA6nhii0CUcvJ0ZN4Z
+	 ZIBDj5DBrKGCXzW+zZgkKZOVP6c4YfSUtl4IUR4PiravggHtRGPXFShCpk2DhlHfr5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcHnHGpw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sd4zXPQx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B02606A31C;
-	Wed, 18 Nov 2026 16:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28133606A31C;
+	Wed, 18 Nov 2026 16:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcHnHGpw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C031F000C4;
-	Wed, 18 Nov 2026 16:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sd4zXPQx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30101F000C4;
+	Wed, 18 Nov 2026 16:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020478;
-	bh=5dDpXKG3VJdSkxrdUjCHlP7HBU+iHpzNrxVeOE2vuQ4=;
+	s=korg; t=1795020481;
+	bh=BmO05Oiit75wgULVdaexUPMDi5fyGtx6YUWwyAS90uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UcHnHGpwQx+dnaL2Z5StAETYS9pJtQUjR+//tSdwcbJL0v5XTj5HXyIHD2adfAW8c
-	 QQjp6creNHim2xGTWWzNJOxqPywQIqciHIZ38Day7TwmuJyBRFmVt3j1MzEDI1cwuc
-	 pRiQ4kUa+DOt95tgo9cTWFoWtkQcKQQyLCRrOqxE=
+	b=sd4zXPQxC1uNVxt7CSid1HhhFpo9HXfOIahdyVokCYW9IZMw/fGoUIv0rHjgpXuvs
+	 1esgTcvT3/lNfeUTRWx52CCpkS0npUqrvcJ/9TMqb5tCRJ2x1BY/zVsyg416uZ6Sll
+	 sXdoTGdx2gex0p7gaTCqneRhsCBx8+kzV0DZXoH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youngsung Ahn <ays511.kr@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Kyrylo Biryuk <illofspeed@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1964/2651] RDMA/rxe: bound the WQE opcode before indexing rxe_wr_opcode_info[]
-Date: Wed, 18 Nov 2026 15:53:24 +0100
-Message-ID: <20261118150357.215774335@linuxfoundation.org>
+Subject: [PATCH 7.3 1926/2651] ata: libahci: re-enable FBS after error handling on a port multiplier
+Date: Wed, 18 Nov 2026 15:52:46 +0100
+Message-ID: <20261118150356.052230963@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,49 +69,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youngsung Ahn <ays511.kr@gmail.com>
+From: Kyrylo Biryuk <illofspeed@gmail.com>
 
-[ Upstream commit c887e53e1c852b88bd5442d1bf4717ee3e7aadda ]
+[ Upstream commit 23eab9e877497397a0e2394ee9174d576816209e ]
 
-wr_opcode_mask() indexes the global rxe_wr_opcode_info[] array with
-a caller-supplied opcode and no bounds check. For a user QP the WQE
-comes from an mmap'd SQ ring, so wqe->wr.opcode is an
-attacker-controlled __u32 read back by the requester
-(req_next_wqe() -> rxe_requester()); rxe_post_send() takes the
-qp->is_user branch and never runs validate_send_wr(), whose only
-opcode check is itself !wr_opcode_mask() (it indexes before it
-checks). rxe_wr_opcode_info[] has entries only up to IB_WR_REG_MR,
-so an out-of-range opcode reads out of bounds and the result is used
-as a mask and dereferenced; observed as a KASAN global-out-of-bounds
-"Read of size 4" and a wild-pointer oops.
+ahci_do_softreset() disables FBS before resetting a device behind a port
+multiplier, as required by AHCI 1.2 section 9.3.9, and re-enables it only
+when that softreset succeeds. If it fails, for example because a
+hot-plugged drive is still spinning up ("softreset failed (device not
+ready)"), EH escalates to a hardreset of the PMP link, and nothing turns
+FBS back on: only ahci_pmp_attach() does, which runs at the next boot.
+The port keeps working with command-based switching until then.
 
-Return a zero mask for an out-of-range opcode, matching how
-validate_send_wr() already treats a zero mask (an invalid WR), so no
-path indexes the array out of bounds.
+Seen on a Marvell 88SE9235 (1b4b:9235) with Marvell 88SM9705 port
+multipliers (1b4b:9705, in a Synology DX1222 expansion unit): after
+hot-plugging a drive, the kernel logged "FBS is disabled" followed by
+"softreset failed (device not ready)" and a PMP hardreset, and never
+"FBS is enabled" again (twice, on two different ports).
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Signed-off-by: Youngsung Ahn <ays511.kr@gmail.com>
-Link: https://patch.msgid.link/20261002164552.294749-1-ays511.kr@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+At the end of ahci_error_handler(), re-enable FBS if a PMP is still
+attached and FBS is supported but disabled.
+
+Fixes: 89dafa20f3da ("ahci: disabled FBS prior to issuing software reset")
+Assisted-by: LLM
+Signed-off-by: Kyrylo Biryuk <illofspeed@gmail.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20261012103917.389-1-illofspeed@gmail.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_loc.h | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/ata/libahci.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_loc.h b/drivers/infiniband/sw/rxe/rxe_loc.h
-index e57861a628236..9a8e96dfb792d 100644
---- a/drivers/infiniband/sw/rxe/rxe_loc.h
-+++ b/drivers/infiniband/sw/rxe/rxe_loc.h
-@@ -185,6 +185,9 @@ void rxe_comp_queue_pkt(struct rxe_qp *qp, struct sk_buff *skb);
+diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
+index f3fd56f153340..222af8d9fc013 100644
+--- a/drivers/ata/libahci.c
++++ b/drivers/ata/libahci.c
+@@ -2233,6 +2233,21 @@ void ahci_error_handler(struct ata_port *ap)
  
- static inline unsigned int wr_opcode_mask(int opcode, struct rxe_qp *qp)
- {
-+	if (unlikely(opcode < 0 || opcode > IB_WR_REG_MR))
-+		return 0;
+ 	sata_pmp_error_handler(ap);
+ 
++	/*
++	 * ahci_do_softreset() turns FBS off before resetting a fan-out link
++	 * and turns it back on only if that reset succeeds. When it fails
++	 * (e.g. a hot-plugged drive is still spinning up), EH escalates to a
++	 * PMP hardreset, which never re-enables FBS, so the port would keep
++	 * command-based switching until the PMP is attached again (reboot).
++	 * Restore FBS once recovery is done and the PMP is still attached.
++	 */
++	if (sata_pmp_attached(ap) && ata_dev_enabled(ap->link.device)) {
++		struct ahci_port_priv *pp = ap->private_data;
 +
- 	return rxe_wr_opcode_info[opcode].mask[qp->ibqp.qp_type];
++		if (pp->fbs_supported && !pp->fbs_enabled)
++			ahci_enable_fbs(ap);
++	}
++
+ 	if (!ata_dev_enabled(ap->link.device))
+ 		hpriv->stop_engine(ap);
  }
- 
 -- 
 2.53.0
 
