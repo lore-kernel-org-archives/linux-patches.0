@@ -1,64 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053831;
-	b=Ik11xfj0i1PZDrBPHCIKG6Xy6Ya2qWgMRIzMynxxueZ2EjRYifLmNa5zpWqTV6moDmzR
-	 YB3cB8Rz0MTv58/ewq5qBQxC9wnH/l1Fl4rnc3eyQXBxgHRUU4+OOjOWEvQ1YIUGdmoXn
-	 b1qw1MOxrySlPe3/RHP2hqBtpSFV8/Dy+0YogUkpmWzU3VwuWwk86FNYAoqMzqln+qZ1t
-	 s5jeDudPr2S8lYBodmhUCNdfFDIONKAGpz0dNV79IqXLYpo+/XBfEQu6YnVqFLa/LbohW
-	 Pfy0QukiLdoXG1PNsTP2n/L/zMX7piD+dtVYd7t1FBHINmA1CjtCmIYEdVsqPn6NZCg==
+	t=1795053833;
+	b=NZ78lKzD/jzqeiy16/faUg856gEChKSoPkfILSSiRcJmJOAIbkJ6aJDL9j81XnLiHwCj
+	 LGTQ1/04Fye87M98AoZ2PuaxxQ4RxJRqj5kvk9oDm8LcEpOlLd9Wjj7GHfsWOAUji26K6
+	 79p0GzjjqgbAgqeR+u/4sw4qP/0DWAwQSa5hIg+t6CoowKl5NzdEyOeGBEBQYt45DM94R
+	 e0MuEicaB6YJMj3ssSXFL+WvJcM52Q0y0vJpZNmInZReAAuocMhq/mty/BQWLkkA2ljFH
+	 GrYY5y28lIsTDQzKXT+ZkF5VQuyCL7bAtbwa3v/1nEPJ+0ZPXL3Ai6HMjQVd67tWIWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053831;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=68/UW+FRFdv1rdlkS14zLT39FfsNhxUYOX3gw+vJppw=;
-	b=qZ5f5Nl4xbC8ZZevGtVeJGg+viwbGALcnbAPIsG5/CsDem6AkhE789Q+0dhPV3OOrRkM
-	 7zFFjjzcemAtqalf6++1HWGPb3D/VNfAeR88WiZACzzEI7oxjWYHxp1u/tjgmnKM89SkB
-	 nHtiF2ITpU1f5bb4fP34ZaPl37JUPkSVDDSzcUlwMgoUCoxnqq/nJKaccGMYRh28IEHqt
-	 P/c6/nNIZZCYsEexR4BuOMXzwj2Vyx3BntEpvZdrdq2FC4a2gD+i6VqFHXLqrIFNlf+DT
-	 tfhQ2UYlTs/PefUsvCRZ7C7CFqiU+sxMreNkvRIol+h1WylFEGYl/28wfUq+0r8pyOg==
+	bh=/Pk+sb8qflD45+wr0Jr/G8RtwA8qhFVhMLaRPISJdns=;
+	b=3Zh71QdulP0whdX08aAfcE1EBaO69z+LcROu5U1pFHWFRk0hRrRa4eZKM7fZUn9tIq8f
+	 yZaUgVCyxWIKpW8d4212TVg4Dm3SnLB2M+LdPC3eRv+Q+Io09W+uyoz0XuUP/TjB9Q6uW
+	 DhJpsEOYsDXv/vymSUI7TSWW3SP2UioK4eXpZ9Cwmdj9YgMuXqdb6apU1pN0Xwe6IBt7a
+	 fhDeDKResyp4bXRUE2FYv0V1byI1xWcLbtNhmTyiINhxYBr4c33vDy5Ns9BRgUj5ZW+eg
+	 uQUVZoBrNeCe62tIX7diS/2qEzJ180a8SmxKKPUBMDd8j6poPKr2dOUifc8bYWB2Iew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T1BnWg47;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x9ollYiO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1129B606A31C;
-	Thu, 19 Nov 2026 02:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88F0606A31C;
+	Thu, 19 Nov 2026 02:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T1BnWg47
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE761F000C4;
-	Thu, 19 Nov 2026 02:03:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x9ollYiO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 280E21F000C4;
+	Thu, 19 Nov 2026 02:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053830;
-	bh=68/UW+FRFdv1rdlkS14zLT39FfsNhxUYOX3gw+vJppw=;
+	s=korg; t=1795053833;
+	bh=/Pk+sb8qflD45+wr0Jr/G8RtwA8qhFVhMLaRPISJdns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T1BnWg47DHJCk6+aYogPHOYN1fpnbiM25b+bxC7EzNuuh72XTiDhvcniL+bn9uUCO
-	 0DlkN56iXMtYAdRluR1HT2JWf55HgPwilvyM3nBqURzMnrScjOd+UG/Kl75UQgOpZq
-	 b5RlUq4Nt7ra4GxsnMHP9EcoEEFf7lv0RHTawzFs=
+	b=x9ollYiOXA+z99oHFTNM9JC9PBWZBDtNzQsMok2hkquqpoiDInXzxtM8XAMyRhQoc
+	 vqT+K9lmGJ+NTX4dxvEvCtYmVILofHSFBGKE5WppBek23YO91g3XBbP9WiCKO86HRF
+	 +kbR9b35Rx8yccAv5l2NpxdW947TgjadaYonww6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+49b1021becba70c1f3f6@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>,
-	Rik van Riel <riel@redhat.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1057/2214] mm: disallow ioremaping ordinary RAM in generic_access_phys()
-Date: Wed, 18 Nov 2026 15:45:33 +0100
-Message-ID: <20261118150054.595322570@linuxfoundation.org>
+Subject: [PATCH 5.15 1058/2214] cxl/acpi: Check ACPI companion before use
+Date: Wed, 18 Nov 2026 15:45:34 +0100
+Message-ID: <20261118150054.633499026@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -80,98 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 4590752e20aa393cc0d4fe538c0747d14a98c97a ]
+[ Upstream commit 371c2ad1624283b6c7a62a28199f5161d388a738 ]
 
-generic_access_phys() can end up getting called on CoW PFNMAP mappings,
-resulting in it trying to ioremap anonymous folios, which especially
-the x86 code doesn't enjoy, and which is in general just odd/wrong.
+Platform drivers can be forced to match devices outside their ID tables
+through driver_override.  cxl_acpi_probe() assumes that every bound device
+has an ACPI companion and dereferences adev->dev.bus without checking the
+result of ACPI_COMPANION().  Force-binding cxl_acpi to a platform device
+without a companion therefore causes a NULL pointer dereference.
 
-E.g., with a CoW mapping of a PCI BAR:
+This was reproduced by setting the driver override for the pcspkr platform
+device to cxl_acpi and binding it through sysfs:
 
-ioremap on RAM at 0x0000000045623000 - 0x0000000045623fff
-  WARNING: arch/x86/mm/ioremap.c:216 at __ioremap_caller.isra.0+0x4c2/0x5f0
+  BUG: kernel NULL pointer dereference, address: 0000000000000280
+  #PF: supervisor read access in kernel mode
+  RIP: cxl_acpi_probe+0xf4/0x220
   Call Trace:
-   generic_access_phys+0x130/0x4d0 mm/memory.c:7178
-   kernfs_vma_access+0x1ce/0x280 fs/kernfs/file.c:437
-   __access_remote_vm+0x58f/0x890 mm/memory.c:7256
-   mem_rw+0x2a1/0x670 fs/proc/base.c:912
+   platform_probe+0x4d/0x80
+   really_probe+0x106/0x370
+   device_driver_attach+0x4c/0xa0
+   bind_store+0xd0/0x100
 
-But more generically, we should disallow access to anything that looks
-like ordinary RAM in the system: including allocating memory (e.g.,
-alloc_pages) and mapping them in a VM_PFNMAP.
+Commit 2b3a5dabe89e ("platform/surface: acpi-notify: Check ACPI
+companion before use") fixed the same force-binding issue in another
+platform driver.  Check the companion before setting up the CXL root and
+return -ENODEV when it is absent.
 
-For pages with an online memmap, allow only pages marked as reserved
-(PageReserved). This also includes memblock allocations, however,
-distinguishing them from other MMIO is tricky, and nobody should really
-be mapping them in a PFNMAP (except someone abusing /dev/mem, which we
-do not care about).
-
-So only allow access if there is no online memmap, or if the pages are
-marked reserved. Reject other pages with -EINVAL.
-
-Note that, just like other pfn_to_online_page() users, we won't care about
-concurrent memory offlining; mapping memory that can concurrently get
-offlined is highly dubious.
-
-Link: https://lore.kernel.org/20261013-generic_access_phys-v1-1-b3963ef76e37@kernel.org
-Fixes: 28b2ee20c7cb ("access_process_vm device memory infrastructure")
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: <syzbot+49b1021becba70c1f3f6@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=49b1021becba70c1f3f6
-Reported-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Closes: https://lore.kernel.org/r/20261001152524.171115-1-ngocthang2710.1999@gmail.com/
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Cc: Peter Zijlstra <a.p.zijlstra@chello.nl>
-Cc: Rik van Riel <riel@redhat.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: adapted args.pfn and follow_pfnmap_end() to pte_pfn(pte) and pte_unmap_unlock() for the existing follow_pte() interface ]
+Fixes: 7d4b5ca2e2cb ("cxl/acpi: Add downstream port data to cxl_port instances")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260926071605.3013893-1-yaojiale02@163.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+[ sashal: Adjusted cxl_acpi_probe() declaration context to preserve the required acpi_status status variable. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/cxl/acpi.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/mm/memory.c b/mm/memory.c
-index e5c54f39e7e04..3c5abd02aca64 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -5150,6 +5150,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- 	resource_size_t phys_addr;
- 	unsigned long prot = 0;
- 	void __iomem *maddr;
-+	struct page *page;
- 	pte_t *ptep, pte;
- 	spinlock_t *ptl;
- 	int offset = offset_in_page(addr);
-@@ -5162,6 +5163,19 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- 	if (follow_pte(vma->vm_mm, addr, &ptep, &ptl))
- 		return -EINVAL;
- 	pte = *ptep;
-+
-+	/*
-+	 * Reject anything that looks like ordinary RAM, including anonymous
-+	 * folios in CoW mappings or allocated kernel memory. Note that we
-+	 * cannot distinguish memblock allocations from non-RAM reliably, so
-+	 * we cannot easily reject them here.
-+	 */
-+	page = pfn_to_online_page(pte_pfn(pte));
-+	if (page && !PageReserved(page)) {
-+		pte_unmap_unlock(ptep, ptl);
-+		return -EINVAL;
-+	}
-+
- 	pte_unmap_unlock(ptep, ptl);
+diff --git a/drivers/cxl/acpi.c b/drivers/cxl/acpi.c
+index 54e9d4d2cf5f5..f2203f14af2cd 100644
+--- a/drivers/cxl/acpi.c
++++ b/drivers/cxl/acpi.c
+@@ -377,11 +377,15 @@ static int add_root_nvdimm_bridge(struct device *match, void *data)
  
- 	prot = pgprot_val(pte_pgprot(pte));
+ static int cxl_acpi_probe(struct platform_device *pdev)
+ {
+-	int rc;
+ 	acpi_status status;
++	struct acpi_device *adev;
+ 	struct cxl_port *root_port;
+ 	struct device *host = &pdev->dev;
+-	struct acpi_device *adev = ACPI_COMPANION(host);
++	int rc;
++
++	adev = ACPI_COMPANION(host);
++	if (!adev)
++		return -ENODEV;
+ 
+ 	root_port = devm_cxl_add_port(host, host, CXL_RESOURCE_NONE, NULL);
+ 	if (IS_ERR(root_port))
 -- 
 2.53.0
 
