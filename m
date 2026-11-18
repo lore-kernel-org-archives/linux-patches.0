@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028006;
-	b=NkHZ4cTlTcVnFwH8cKW8n3X7QgG/3jsX/ii6PuQUnGv35mJD0PMg8XBqWpIv2YI5RENN
-	 D7qZHRzUonL07bDwL78ZPQO5AvkiZN+CimrMl4zMqWikm7DIAGoMbMUMdJAnJHzM0DkII
-	 jFmbuzmsEiWssU6iSram6omKJdHkrv0JKwQ05Uzl9iH3JpgXuYORmTg3V6j3CUIu5J4Vr
-	 poum38rO2H3eeg7E9i/Oh4lICf/con+jEV1isELoQteXLxbArrHfWm+VHs7EZ/XxPMVaN
-	 Qq8k1fJydSU5zTCOePKRCyjWxdtdiAsmlFQwaqe1siWXM20dfen8R8ow+cDgvtSXilA==
+	t=1795028009;
+	b=UJScqT1T4UsHdEAXahIbzA22G8g2oNmj2m6LExpYf816LHmdpauN/hvvjQCfUeWbS6Z4
+	 tIGcqQzyEijkq9Co8DiMKOAiYh1D4p57o1a/qyAPiEnXh9JFrp3+Uj+R6xt4a+dL6sFsB
+	 7qYQhSrgefANzAuyy0qegeZ0GLMYvQvWMVhssopybN0B+I1OSVGBEa846rsQeSyx/dcTR
+	 dVhGe2KmRETspuBzoKBiTVy77a+690JXCJpiz5VxGAGVggsmdDdx2XIGFIbmBLfIrAvcb
+	 6CwU6h7Zt2C74Mfjzh9UfrhnjG69edxq2fu5Gd9jcyK3B+thM5uS3KCu5AgNJuZbMQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028006;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028009;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QTzNbX5bE0QgjhsKfxycc4AvevFeh2hpfdo/pSuB3x0=;
-	b=mKMFmtcCsb4jW7+bJ0CV/5F238bnvF+OZXN8Gp78dwKPGe90L+XKmJYBBuJPYLhZ2SCg
-	 vYGxvy3TIBZrU+3dYYDEMHAkzVbddk5gJM5gd56v1kscLOOVMw6eIRtIF1K3Tr7Rh5yug
-	 hZnrHwqhT4Q45rOAN7pcMta+I1kprSSYhGZz2Ah5ViFCHePXBWIWDP86aMxIKmfJHjfEX
-	 0FWA6EcEZL+qSNxPd+m2ViQjsU4gml2AEIbUhZRNdlLwBNTujKduykq/S0QA+oEMvjY5/
-	 wdLNqU6TiAhfxK3wtDxlbs+EgQqTNKUPMAI+f3AiscmXMwrt6zG6pN3GAO3szw6DNWg==
+	bh=W7jSF/z4EZ+NNY2bFqY4HzEHhy2VsuW5/ghd7DbID+E=;
+	b=MIOiL6JwGB8pL3mH6WhrvIJYub1icm5cEIaop6DHguokVruj+YjIWgKgUpkasjZ1vAKB
+	 sKr8iijRLGhudVX0rYC+VFwMRMP6/0lHZWxTepYNj5LYw1Tgj4/oUULt1+pMI1h/FqGn7
+	 uzwoZ1vDHVvdLpzhLsEh7TvGg6/7bjwzxdLRA+jAwH644rhsPpbW3KbzDfZdUx+lD7GGm
+	 Fj/DP7XEvNVTfRZ6N0+ngbbgZHIUgFrb1FXNee0/tF2usWanP7pbEcOewvGSGLc0fkln9
+	 R+1E/uAZQesthv3mpvYQzY9wKBQko9TKcOzU7tyuz3ZNaFpNcD37QiODswn3MjUVBpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nB9xLsvv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qDJCeCuM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306B2606A31C;
-	Wed, 18 Nov 2026 18:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F91606A31C;
+	Wed, 18 Nov 2026 18:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nB9xLsvv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B061F000C4;
-	Wed, 18 Nov 2026 18:53:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qDJCeCuM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435C91F000C4;
+	Wed, 18 Nov 2026 18:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028006;
-	bh=QTzNbX5bE0QgjhsKfxycc4AvevFeh2hpfdo/pSuB3x0=;
+	s=korg; t=1795028008;
+	bh=W7jSF/z4EZ+NNY2bFqY4HzEHhy2VsuW5/ghd7DbID+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nB9xLsvvTbBNz0mVLaC3pAZbtLLUqVYJyp5m+Na0Pl6lKmaY3HSV1cdk7Qd3N5ZUW
-	 iZTA9bjt8ma2V5uF2K1S8Ckx/tLhDbbrzlV735A4jjG258MZyYoiSUCRbCGxm3rksv
-	 3e4d+dIGdf2y4wPuH1ZB8ygkI/XKh6BnWaduEOuA=
+	b=qDJCeCuMlETnMtJ0BRyUu0tLZBVSpbVsJfvP/exxPzAMCORmlIARpRSzt56af0JDP
+	 2CecIRZOgYESvwmdqNPswg2FKSsahrwex5w6BR5cVNBmaLVSfF74n6rtaas9YTbEjn
+	 chAjT31swqydP63zeQtGll5db24kWrIqsxE42h+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Tao Gong <gongtao0607@gmail.com>,
+	kernel test robot <yi1.lai@intel.com>,
+	Joel Granados <joel.granados@kernel.org>,
+	Allison Henderson <achender@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1990/2151] net: dsa: mt7530: trap frames to conduit in MFC on EN7581 and AN7583
-Date: Wed, 18 Nov 2026 16:02:05 +0100
-Message-ID: <20261118150234.216519242@linuxfoundation.org>
+Subject: [PATCH 6.18 1991/2151] net/rds: do not fail init when CONFIG_SYSCTL=n
+Date: Wed, 18 Nov 2026 16:02:06 +0100
+Message-ID: <20261118150234.254541147@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,60 +71,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Gong <gongtao0607@gmail.com>
+From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit a58b221496dd576191095d12996f39cee58cf6a8 ]
+[ Upstream commit fbea154a86641d2543a871aa19f7c77a366de542 ]
 
-On EN7581, STP BPDUs received on switch user ports never reach the CPU.
+With CONFIG_SYSCTL=n, register_net_sysctl() and register_net_sysctl_sz()
+are inline stubs that return NULL.  rds_sysctl_init(),
+rds_ib_sysctl_init() and rds_tcp_init_net() all treat that NULL as
+-ENOMEM, so RDS refuses to initialize at all even though every tunable
+has a sane compiled-in default.
 
-Like MT7531 and MT7988, EN7581 and AN7583 only set the CPU port bitmap
-in MT7531_CFC and are skipped by mt753x_conduit_state_change(). On
-EN7581 this is not enough: trapped BPDUs reach the CPU only when
-MT7530_CPU_EN and MT7530_CPU_PORT are also set in MT753X_MFC. Add
-EN7581 and AN7583 to mt753x_conduit_state_change().
+When RDS is built in, that is worse than a missing feature: the failed
+rds_init() destroys rds_wq, but the rds_rdma initcall still runs, and
+when rds_ib_sysctl_init() fails the same way, the error path in
+rds_ib_init() flushes the already freed workqueue:
 
-Tested on an AN7581 board (Gemtek W1700K, airoha,en7581-switch), where
-only lan3 and lan4 are switch user ports. With RSTP BPDUs arriving on
-lan4:
-- without this patch, none reached the CPU;
-- setting CPU_EN and CPU_PORT by hand delivered them, and clearing them
-  stopped them;
-- with this patch, they are received from boot.
+  BUG: KASAN: slab-use-after-free in touch_wq_lockdep_map
+  ...
+   __flush_workqueue
+   rds_ib_init
+   rds_rdma_init
+  ...
+  Allocated by task 1:
+   alloc_workqueue_noprof
+   rds_threads_init
+   rds_init
+  ...
+  Freed by task 0:
+   kfree
+   rcu_do_batch
 
-Only BPDUs were tested. AN7583 is untested and is included because the
-driver sets it up like EN7581.
+Only treat the NULL return as a failure when sysctl support is actually
+compiled in.  The exit paths need no change: unregister_net_sysctl_table()
+is an empty stub with CONFIG_SYSCTL=n and already tolerates a NULL header
+otherwise.
 
-Fixes: 2b0229f67932 ("net: dsa: mt7530: Add EN7581 support")
-Fixes: d76556db10bf ("net: dsa: mt7530: Add AN7583 support")
-Acked-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Signed-off-by: Tao Gong <gongtao0607@gmail.com>
-Link: https://patch.msgid.link/20261022205649.2351696-1-gongtao0607@gmail.com
+The underlying problem of built-in transports initializing after
+rds_init() has failed is independent of sysctl and is addressed
+separately.
+
+Reported-by: kernel test robot <yi1.lai@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202610190310.9737b2e3-lkp@intel.com
+Fixes: 3e5048495c85 ("RDS: sysctls")
+Fixes: e6babe4cc4ce ("RDS/IB: Stats and sysctls")
+Fixes: c6a58ffed536 ("RDS: TCP: Add sysctl tunables for sndbuf/rcvbuf on rds-tcp socket")
+Suggested-by: Joel Granados <joel.granados@kernel.org>
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Reviewed-by: Joel Granados <joel.granados@kernel.org>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Link: https://patch.msgid.link/20261021195837.142802-2-achender@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/rds/ib_sysctl.c | 2 +-
+ net/rds/sysctl.c    | 2 +-
+ net/rds/tcp.c       | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index 4f391ef797ea3..b9094e36c99ad 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -3280,10 +3280,13 @@ mt753x_conduit_state_change(struct dsa_switch *ds,
+diff --git a/net/rds/ib_sysctl.c b/net/rds/ib_sysctl.c
+index 2af678e71e3c6..bc97a3eecad69 100644
+--- a/net/rds/ib_sysctl.c
++++ b/net/rds/ib_sysctl.c
+@@ -114,7 +114,7 @@ void rds_ib_sysctl_exit(void)
+ int rds_ib_sysctl_init(void)
+ {
+ 	rds_ib_sysctl_hdr = register_net_sysctl(&init_net, "net/rds/ib", rds_ib_sysctl_table);
+-	if (!rds_ib_sysctl_hdr)
++	if (!rds_ib_sysctl_hdr && IS_ENABLED(CONFIG_SYSCTL))
+ 		return -ENOMEM;
+ 	return 0;
+ }
+diff --git a/net/rds/sysctl.c b/net/rds/sysctl.c
+index 025f518a43495..968d6279bbd36 100644
+--- a/net/rds/sysctl.c
++++ b/net/rds/sysctl.c
+@@ -103,7 +103,7 @@ int rds_sysctl_init(void)
  
- 	/* Set the CPU port to trap frames to for MT7530. Trapped frames will be
- 	 * forwarded to the numerically smallest CPU port whose conduit
--	 * interface is up.
-+	 * interface is up. On EN7581, trapped BPDUs do not reach the CPU port
-+	 * without this, even with the CPU port bitmap set. AN7583 is set up
-+	 * the same way as EN7581.
- 	 */
- 	if (priv->id != ID_MT7530 && priv->id != ID_MT7621 &&
--	    priv->id != ID_EN7528)
-+	    priv->id != ID_EN7528 &&
-+	    priv->id != ID_EN7581 && priv->id != ID_AN7583)
- 		return;
- 
- 	mask = BIT(cpu_dp->index);
+ 	rds_sysctl_reg_table =
+ 		register_net_sysctl(&init_net, "net/rds", rds_sysctl_rds_table);
+-	if (!rds_sysctl_reg_table)
++	if (!rds_sysctl_reg_table && IS_ENABLED(CONFIG_SYSCTL))
+ 		return -ENOMEM;
+ 	return 0;
+ }
+diff --git a/net/rds/tcp.c b/net/rds/tcp.c
+index eab960d10ab08..7fae00350b404 100644
+--- a/net/rds/tcp.c
++++ b/net/rds/tcp.c
+@@ -643,7 +643,7 @@ static __net_init int rds_tcp_init_net(struct net *net)
+ 	tbl[RDS_TCP_RCVBUF].data = &rtn->rcvbuf_size;
+ 	rtn->rds_tcp_sysctl = register_net_sysctl_sz(net, "net/rds/tcp", tbl,
+ 						     ARRAY_SIZE(rds_tcp_sysctl_table));
+-	if (!rtn->rds_tcp_sysctl) {
++	if (!rtn->rds_tcp_sysctl && IS_ENABLED(CONFIG_SYSCTL)) {
+ 		pr_warn("could not register sysctl\n");
+ 		err = -ENOMEM;
+ 		goto fail;
 -- 
 2.53.0
 
