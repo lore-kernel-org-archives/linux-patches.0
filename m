@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016598;
-	b=Um+yHH2h+Q64uFlZl1aRDEI3YyDmVDV6jRNMs79HccMoq0Fy/HYCE4MfnGK3K0u13P+6
-	 AtIqXzeDZpTEsuJ6wNZdyxmJaz0t192qRxiKRdaw3TdNpMqlrrdsCzYQabsQccvX8ZB5b
-	 xU5OaBkGek3+yRf/sQJiEzbHDGG2hYZ7WbcjtlmRxq82pmMIckCFKHnq5P0n/HaiKJBat
-	 JHqQjTl654XENp4YhVMozv4+8vtWpW4LcXu0CAwbft9XF7LMRgKkLEx3xsiBnNWItLRfa
-	 iGztWtmzcHVEzoScjaPOvf/lMFnAEWHo+1S1/eFfplPOEWFPxQpTFQn0/gXOnPDNzVw==
+	t=1795016600;
+	b=mxhLHnjaAmT01ct1PjwKqgTh0xPwm1SVJ4FieURJcVOlLs2fqnlDBzgZU0rn3zJaHSY1
+	 +WKXPuIjQKbQfxxe8ITtn+Mi973NYVRr8ZkFCeLeB426M4QX0GAU+F0vohq/w4ud0Hwx0
+	 B/Y4fGIL3homaaE9wWgmdVfjVXKwccBkYfn0atUTMNmHVMzst0SXugsUYucaLE43yIe9I
+	 ptn1H3OxzJ5YnCgMAcVQBvSM0lFxmhmg/7RkIqueAKtX9AMybL3SaAyQfrHGf4a5WP+MS
+	 CTbxl8iClCrvbOuVtRfizYKOtz8wUXITPX1VMwBBHbvhwXw8x+2LraBx/WBtrTzciCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016598;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016600;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n7RskBsrUcbIOut3hGMFDPLvMEJlBrCn8lbu18tvwS8=;
-	b=Do1Q1yREI6CaSGsUiAqlC0HbLZjhSgMqbGepU96KfZGkUmZBhFRBMb7lSrH4Eh8pQTol
-	 eBBJaUia5ZzzI04R1IaygpERphfJvRV1MAHxG6q/4/+6rsxpnKCdBJmbZoIeBcLP2W+Di
-	 EhpED+Uy0AegQf4iX9a9gJ+xLI4aXdfqHqb0h+G037bvTcCx229wJy8qBKAsS1uIb4iq2
-	 2X5z9Mrs19dHOrF5EbZ59/AsoK3NAjh8LHofLrlIu9C3/AFoWPTiLhyxKvbBeXeHJ8x0l
-	 A/Pd/pl2EccL32LmQ5AaNEtlDrWtiXRQ6I5rVZ62MzSSCvND1sgkgOl9dZH8T5FR6Pw==
+	bh=tsojaBcznlsmEDTqNzybss0co30liQ7OAmfxZPmVNtw=;
+	b=Kd1fwexVUXzn0vTHqDneH067/ke5vHjfwqL0was8UEkDYhoHbAa+718zby+U4lqACybh
+	 fQYeUo7A//ptpIO1/+gdQHx5bAKoDI0f2lYVkNltHIJuDN9S4fV86/iNGqQfRUQW7wkwx
+	 MNMNiccssRPLZGYZDmGmykW1oOYAkSOwowyvMguU9nGyD7B/y6wQQq8QVYZ5Lls+RjAW2
+	 c0X1zVu8pZaBurKFVuansBTtGs/JG/cikniA7ftnazyWmDMMbnjwmaz88i/lRKdgg8gm0
+	 lWF3DeSuCKxlQ3U/FQlGqHQq3xOAHwxX4JgT9PiTifU34yhibXm57Hmp7fDv15nyB0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nbpzcs9I;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IEaGYGbv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E702606A32C;
-	Wed, 18 Nov 2026 15:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6414606A31C;
+	Wed, 18 Nov 2026 15:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nbpzcs9I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779331F000C9;
-	Wed, 18 Nov 2026 15:43:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IEaGYGbv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395451F000C9;
+	Wed, 18 Nov 2026 15:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016598;
-	bh=n7RskBsrUcbIOut3hGMFDPLvMEJlBrCn8lbu18tvwS8=;
+	s=korg; t=1795016600;
+	bh=tsojaBcznlsmEDTqNzybss0co30liQ7OAmfxZPmVNtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nbpzcs9IbO+zDq0fPQgMpyc7Q8/bcNJbficZZzAOGE5l1IwdTtXNUo82uyy9k+Gcy
-	 OPbPiHg1zvmjeE79FYQ9I0mF3Pd+qqPoeb5sy/Uxt4/O5lnHEVyRJSLm0feCp7UeXL
-	 xQjc24+aeg1rIqDh88ZcxrKhij25FAdwcHcfNfgU=
+	b=IEaGYGbvag+brVSCigMAe+cEP5O+QuDfv/eeIZO80k9EUBOieBHArKniOeuka6K6o
+	 TCqJKthCq99mFx7bcUtT2jwCAxFyiKZ3Im9wRnghEDdfAm/1pmjEWv7nFwhDasP9uO
+	 8IDJ+VHlw5XlcqFY2BFmbouITFQ6QAhSE3LzYvzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Guixin Liu <kanie@linux.alibaba.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Alison Schofield <alison.schofield@intel.com>,
+	Li Ming <ming.li@zohomail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0585/2651] cxl/region: Create node access attributes for CFMWS-only NUMA nodes
-Date: Wed, 18 Nov 2026 15:30:25 +0100
-Message-ID: <20261118150308.785806746@linuxfoundation.org>
+Subject: [PATCH 7.3 0586/2651] cxl/core: Skip einj_inject creation when devm_add_action_or_reset() fails
+Date: Wed, 18 Nov 2026 15:30:26 +0100
+Message-ID: <20261118150308.819664058@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,73 +72,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit ef71014055f7b4959e4cb023ca8a18258cb5641c ]
+[ Upstream commit b25af6afd2f26b455108bab03dfeba52378e8dd2 ]
 
-A NUMA node that only backs a CXL fixed memory window and is not
-enumerated by SRAT has no memory_target in the HMAT code, so
-hmat_callback() exits early at find_mem_target() and never creates
-the node's accessN attributes:
-/sys/devices/system/node/nodeX/accessN/initiators/* stays missing.
+cxl_debugfs_create_dport_dir() ignores the devm_add_action_or_reset()
+result and creates the einj_inject file below @dir unconditionally.
 
-Commit debdce20c4f2 ("cxl/region: Deal with numa nodes not enumerated
-by SRAT") had the CXL region notifier call node_set_perf_attrs()
-directly for such nodes, but commit 2e454fb8056d ("cxl, acpi/hmat:
-Update CXL access coordinates directly instead of through HMAT")
-replaced it with node_update_perf_attrs(), which only updates
-attributes that already exist and thus does nothing for these nodes.
+When the devres allocation fails, remove_debugfs() has already run
+before devm_add_action_or_reset() returns, i.e. debugfs_remove() has
+released @dir. The subsequent debugfs_create_file() would then use
+that dentry as its parent although its final reference was dropped in
+the removal and its memory is subject to call_rcu() delayed freeing.
 
-Create the attributes with node_set_perf_attrs() when the node is not
-backed by a real SRAT pxm.
+Skip the file creation in that case, consistent with how the rest of
+the helper tolerates debugfs failures.
 
-Tested on a QEMU CXL topology with a CFMWS window not described by
-SRAT or HMAT: node1/access0/initiators/{read,write}_{bandwidth,latency}
-appear with the calculated coordinates once the region's first memory
-block comes online.
-
-Fixes: 2e454fb8056d ("cxl, acpi/hmat: Update CXL access coordinates directly instead of through HMAT")
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Fixes: 9185b1a3043c ("cxl/core: Fix dport use-after-free via the einj_inject debugfs file")
 Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260917024632.1397380-1-kanie@linux.alibaba.com
+Reviewed-by: Li Ming <ming.li@zohomail.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260915060138.2007974-1-kanie@linux.alibaba.com
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/region.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/cxl/core/port.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index 27e63e6dab7c8..9a5fd3da539d9 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /* Copyright(c) 2022 Intel Corporation. All rights reserved. */
-+#include <linux/acpi.h>
- #include <linux/memregion.h>
- #include <linux/genalloc.h>
- #include <linux/debugfs.h>
-@@ -2630,7 +2631,19 @@ static bool cxl_region_update_coordinates(struct cxl_region *cxlr, int nid)
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 2ebf24655cda0..7fdf23b9d24de 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -846,7 +846,8 @@ static void cxl_debugfs_create_dport_dir(struct cxl_dport *dport)
  
- 	for (int i = 0; i < ACCESS_COORDINATE_MAX; i++) {
- 		if (cxlr->coord[i].read_bandwidth) {
--			node_update_perf_attrs(nid, &cxlr->coord[i], i);
-+			/*
-+			 * A CFMWS-only node (not backed by a real SRAT pxm)
-+			 * has no HMAT memory_target, so hmat_callback()
-+			 * never created the access attributes for it:
-+			 * create them here instead of only updating them.
-+			 * This is called at most once per node (see
-+			 * nodemask_region_seen), so the attributes are not
-+			 * created twice.
-+			 */
-+			if (!acpi_node_backed_by_real_pxm(nid))
-+				node_set_perf_attrs(nid, &cxlr->coord[i], i);
-+			else
-+				node_update_perf_attrs(nid, &cxlr->coord[i], i);
- 			cset++;
- 		}
- 	}
+ 	dir = cxl_debugfs_create_dir(dev_name(dport->dport_dev));
+ 
+-	devm_add_action_or_reset(dport_to_host(dport), remove_debugfs, dir);
++	if (devm_add_action_or_reset(dport_to_host(dport), remove_debugfs, dir))
++		return;
+ 
+ 	debugfs_create_file("einj_inject", 0200, dir, dport,
+ 			    &cxl_einj_inject_fops);
 -- 
 2.53.0
 
