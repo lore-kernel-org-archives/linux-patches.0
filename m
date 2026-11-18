@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050077;
-	b=rZdQoGpISEfhwT6oXk8gI1a0C0D7TKfArs03xfmfjB7Zt+dJn/OHJU3yilTvxN6Z+G0g
-	 2LsLrtgxJMuMyCT/UJY/+dRQDy+gO245T5wVBWCyb8TFBCUvjUvncEp+6EQd4wQ1Tn10f
-	 MrXuUcAQyIGnl8ZXclUZ7QUlQeRL110KJwWQFJAMfLQ/NiJAtOpjhvRSJm4vbrPVuRF7L
-	 7YEb/G7pfthN/VnplGZmGYo+8MMfqyirObWs9gEyKZtDHUQTgnY5kqBck20S8PCsh9Asb
-	 1lKRnJKBRSEOXFlMjrcOjcMzj5kSYv4yS5yRfCamVvFtBLNfbYr8XRINF+GSU5lWFiQ==
+	t=1795050080;
+	b=l56rjEp7YvcbL+0MBeespRu0tJMqFytgCfwEDj9AxEWY0TwkSB2IWP904cPejz52v+vC
+	 XwBBrIZCvaaF69fTnCH6ei8kLVpNf4cbnR3xUFmGZby6NiZypB3sGmW+kp+/ls+A95FbU
+	 l+p1MR+p/mbGoPyAxvBlTwSbtrZePRGEYJv44xZhP9XPvnXEVJRbg8WcyNync8VRsyUgz
+	 2DdsSzi6R9cu+M9bkic5XBQwxPgXXGQUbk3/SbaRvsg8nbJFd2H4SiJXgA2geMuprTXVf
+	 uLZf3MzW40oqjL8I/ZTW2zn+YE449YhSdYirSZR1uhhY9CyLVa+x1WGzZVcBIgmC7Sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050077;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050080;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=viyPJQSiasT+WnUdzHRC+KyYsMpw5bIBWOMULTGw9Ck=;
-	b=UsDH7XGErjQopQE/xhnuKh3exS8fc+teqdi2znQOnM70Bo3K+8Vktm+6UDt6MlsPO21/
-	 KDxwF/tip+qruJQZQEQaNVaKcn7s3RxcKGKQo8IQC6ikaWKcaeICH/F48RIDSw9Rxx/H+
-	 Ao0EjltBYGppc6EypWRwNTC20g3KrI9nJzTTzZ8EKgIE0LrU5+yCSvzojw2KPli6lSj4j
-	 PAOhFShUxUti/8/qXDExBeNI0CSIsn/mxNILYYnxkztxx0/4/c5MJOpugX1NEJt7Np5Fm
-	 RouuCDNoqfW4p6IABL2GJN6m0i1nue275e9Z5/H1GBrYI9WCVapdzbkxCbvv8yvYMkA==
+	bh=1OmmsolQ6r6/t3WtofMuy1De6ncgMZ2zd/s5K5Ee9pU=;
+	b=RQlcw0BoULCYDYGKDTmQQDlbbOm3Sx7Z72/0XUifPBk4bmXSRmREZKwSWlU2zJihSFZo
+	 CqYxMBbBsL9AyTn9IsOS6mRmIcRpUk3UO8H1XDQLvqUhp55+lFEIhEDGnJOu1guaC35PO
+	 t6W8ID8aUmVfB3c+N6WPNykAA5vvHv1/13VO2FDamenLptJNMY3X9pOEmeoG+hjkebt9o
+	 ArQful4c4CJxEZXLNWnDReZ3+m5ue0EiBO8jHxVOHmFmjDiy7jmzMaA/0aJKTqFziNiC3
+	 uFsQhZIa39QG+QtG6LJ/ns90qMaAITwpFQSZ57EcRTM11h02T6+mugdCP/hxzQrpE7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w2LHDASj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dhA6OQDk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756CB606A31C;
-	Thu, 19 Nov 2026 01:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979CF606A31C;
+	Thu, 19 Nov 2026 01:01:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w2LHDASj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E651F000C5;
-	Thu, 19 Nov 2026 01:01:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dhA6OQDk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996F91F000C4;
+	Thu, 19 Nov 2026 01:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050077;
-	bh=viyPJQSiasT+WnUdzHRC+KyYsMpw5bIBWOMULTGw9Ck=;
+	s=korg; t=1795050080;
+	bh=1OmmsolQ6r6/t3WtofMuy1De6ncgMZ2zd/s5K5Ee9pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w2LHDASjGHUmyDlYVwSdQTXBS1XkxzsmvipqhMb5YNX1NtwUtsrhBIDa0VrhGDpSJ
-	 dlv42SA9WtINdTL3P+4O4WjU+DMXr+SW1Ywh9079LFx2ZFRQmHXFZCBNRUPF0g3ysO
-	 PvlZ2+StqEkSknhXrYqJwb0rUK35oRJjFZHvQzLI=
+	b=dhA6OQDkCgK6s5VK7nZTqJe3ILZqKEw6u32yPvvUdg//alNiW9svkqFN40f0hTKI+
+	 6cO4Qytjnik+X+jJ6CzP1BIiZ5aCHs97kLEPxpmeJQb2o1N+cIFNk1ribIk84kOYgP
+	 Ko285Z7dhWDpdNh0YmHUnn3HUXDUfXWbLDpX/3BQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	"Alan Maguire (Oracle)" <almagui@kernel.org>
-Subject: [PATCH 6.1 2577/2857] ARC: Strip libgcc debug information when generating BTF
-Date: Wed, 18 Nov 2026 16:00:11 +0100
-Message-ID: <20261118150334.279637102@linuxfoundation.org>
+	Hongbo Li <lihongbo22@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 2540/2857] ASoC: remove unused substream in macro soc_link_mark_pop
+Date: Wed, 18 Nov 2026 15:59:34 +0100
+Message-ID: <20261118150332.980986991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,88 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit ca201ad6e92a1924138e83ff966f7a091e3bbe6e ]
+From: Hongbo Li <lihongbo22@huawei.com>
 
-ARC links against the compiler's libgcc archive. The ARC GNU 2023.03
-toolchain ships this library with debug information, including complex
-floating-point types in integer arithmetic helpers such as __udivdi3.
-These types reach vmlinux even though the kernel does not use complex
-floating-point arithmetic.
+[ Upstream commit 2f12d0de77b99f0f35755d16efeb12e6f45e5710 ]
 
-When floating-point BTF encoding is enabled, pahole rejects those types:
+The soc_link_mark_pop don't need substream, therefore we can
+remove it.
 
-  Complex, interval and imaginary float types are not supported
-  Error while encoding BTF.
-  FAILED: load BTF from .tmp_vmlinux1.BTF.1: No such file or directory
-
-KernelCI's upgrade to pahole 1.31 exposed this long-standing problem as
-failed ARC builds. As of 1.32, pahole still rejects these types, and
-older versions will stay in use, so the kernel build has to keep them
-out of vmlinux. Commit f122668ddcce ("ARC: Add eBPF JIT support")
-documented the same failure along with a workaround of disabling
-floating-point BTF encoding, but that also discards supported
-floating-point types from kernel BTF.
-
-For CONFIG_DEBUG_INFO_BTF, generate a debug-stripped copy of the selected
-libgcc archive in the output tree and link that copy. Preserve the archive
-structure so that only needed helpers are linked, and use the normal
-Kbuild objcopy rule to track input and command changes. The trade-off is
-that vmlinux in BTF-enabled builds no longer carries DWARF for the libgcc
-helpers. Debug information for kernel code, the installed toolchain and
-non-BTF builds stay unchanged.
-
-Reproduced and tested with ARC GCC 12.2.1 and pahole 1.31 and 1.32 using
-an ARCv2 tinyconfig with BPF_SYSCALL and DWARF4/BTF enabled. Before and
-after vmlinux.o files are identical after stripping debug information.
-
-Fixes: db16c1fe92d7 ("bpf: Generate BTF_KIND_FLOAT when linking vmlinux")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Alan Maguire (Oracle) <almagui@kernel.org>
-Link: https://github.com/kernelci/kernelci-core/commit/e71b8c9f42253180596e734c18965a5aad80c8c5
-Link: https://patch.msgid.link/20261015154044.4058618-1-sashal@kernel.org
+Signed-off-by: Hongbo Li <lihongbo22@huawei.com>
+Link: https://patch.msgid.link/20240821070815.2326534-5-lihongbo22@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 7ef99fcfbbac ("ASoC: soc-link: Correct stream stop operations in snd_soc_link_trigger")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arc/Makefile     | 9 ++++++++-
- arch/arc/lib/Makefile | 8 ++++++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ sound/soc/soc-link.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arc/Makefile b/arch/arc/Makefile
-index 8e6f52c6626db..b5065408f76b2 100644
---- a/arch/arc/Makefile
-+++ b/arch/arc/Makefile
-@@ -90,7 +90,14 @@ core-$(CONFIG_ARC_PLAT_TB10X)	+= arch/arc/plat-tb10x/
- core-$(CONFIG_ARC_PLAT_AXS10X)	+= arch/arc/plat-axs10x/
- core-$(CONFIG_ARC_SOC_HSDK)	+= arch/arc/plat-hsdk/
+diff --git a/sound/soc/soc-link.c b/sound/soc/soc-link.c
+index 619664cc9ab95..e6d806591bb13 100644
+--- a/sound/soc/soc-link.c
++++ b/sound/soc/soc-link.c
+@@ -35,7 +35,7 @@ static inline int _soc_link_ret(struct snd_soc_pcm_runtime *rtd,
+  * In such case, we can update these macros.
+  */
+ #define soc_link_mark_push(rtd, substream, tgt)		((rtd)->mark_##tgt = substream)
+-#define soc_link_mark_pop(rtd, substream, tgt)		((rtd)->mark_##tgt = NULL)
++#define soc_link_mark_pop(rtd, tgt)		((rtd)->mark_##tgt = NULL)
+ #define soc_link_mark_match(rtd, substream, tgt)	((rtd)->mark_##tgt == substream)
  
--libs-y		+= arch/arc/lib/ $(LIBGCC)
-+libs-y		+= arch/arc/lib/
-+
-+ifdef CONFIG_DEBUG_INFO_BTF
-+export LIBGCC := $(LIBGCC)
-+libs-y		+= arch/arc/lib/libgcc.a
-+else
-+libs-y		+= $(LIBGCC)
-+endif
+ int snd_soc_link_init(struct snd_soc_pcm_runtime *rtd)
+@@ -94,7 +94,7 @@ void snd_soc_link_shutdown(struct snd_pcm_substream *substream,
+ 		rtd->dai_link->ops->shutdown(substream);
  
- boot		:= arch/arc/boot
+ 	/* remove marked substream */
+-	soc_link_mark_pop(rtd, substream, startup);
++	soc_link_mark_pop(rtd, startup);
+ }
  
-diff --git a/arch/arc/lib/Makefile b/arch/arc/lib/Makefile
-index 30158ae69fd4a..2807ee24f27e6 100644
---- a/arch/arc/lib/Makefile
-+++ b/arch/arc/lib/Makefile
-@@ -13,3 +13,11 @@ lib-$(CONFIG_ISA_ARCV2)		+=memcpy-archs-unaligned.o
- else
- lib-$(CONFIG_ISA_ARCV2)		+=memcpy-archs.o
- endif
-+
-+# libgcc can contain complex floating-point debug types unsupported by BTF.
-+# Strip only the debug information from a local copy of the selected archive.
-+always-$(CONFIG_DEBUG_INFO_BTF) += libgcc.a
-+OBJCOPYFLAGS_libgcc.a := --strip-debug
-+
-+$(obj)/libgcc.a: $(LIBGCC) FORCE
-+	$(call if_changed,objcopy)
+ int snd_soc_link_prepare(struct snd_pcm_substream *substream)
+@@ -138,7 +138,7 @@ void snd_soc_link_hw_free(struct snd_pcm_substream *substream, int rollback)
+ 		rtd->dai_link->ops->hw_free(substream);
+ 
+ 	/* remove marked substream */
+-	soc_link_mark_pop(rtd, substream, hw_params);
++	soc_link_mark_pop(rtd, hw_params);
+ }
+ 
+ static int soc_link_trigger(struct snd_pcm_substream *substream, int cmd)
+@@ -175,7 +175,7 @@ int snd_soc_link_trigger(struct snd_pcm_substream *substream, int cmd,
+ 			break;
+ 
+ 		ret = soc_link_trigger(substream, cmd);
+-		soc_link_mark_pop(rtd, substream, startup);
++		soc_link_mark_pop(rtd, startup);
+ 	}
+ 
+ 	return ret;
+@@ -209,7 +209,7 @@ void snd_soc_link_compr_shutdown(struct snd_compr_stream *cstream,
+ 	    rtd->dai_link->compr_ops->shutdown)
+ 		rtd->dai_link->compr_ops->shutdown(cstream);
+ 
+-	soc_link_mark_pop(rtd, cstream, compr_startup);
++	soc_link_mark_pop(rtd, compr_startup);
+ }
+ EXPORT_SYMBOL_GPL(snd_soc_link_compr_shutdown);
+ 
 -- 
 2.53.0
 
