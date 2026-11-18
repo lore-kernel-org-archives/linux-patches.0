@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061696;
-	b=Meja/3Um3BqCFFoAYeIfwvycm3GF4ufGIlWGMfFxP6H2AU+sgrO7rHKRW4GY9DAPHGGv
-	 WivmxCCz6BsiySXC1NH+qom2XqxoCGdsEfLo+zF2szTuEVjCAHW1ph3rQAazVpT6tnWRU
-	 6LcqXOJFFBLZtHwR3DhmRATXfy0ySpY91b5ECvxCSjn10jY15m8Pqf21UwUoMLqF8Gc56
-	 AqOcZsGw2cHkDHGjdPepjqVg+C1/VWvtBkqR/qQdWZISQ1UmfP7QzzqV8qONc8XlQ1f2s
-	 x3HEMnvOWVnmT/woXTYyaIucHPmYoejX11YUiYANY7dv2iX2Guj5a2IIWFlBJMFXegA==
+	t=1795061698;
+	b=StFiLbE/cW3pTrJB6rz2z03txo9EGck7LTxmG8PBvYcSSHv9xQVpiVAcMhDXRLL6r4aQ
+	 Nl23jLUo6VJ/7vOPuZ00B0Y+azF8EKEM/pP+hWi5M9wod3alB9Gk7TRSUAx+3bmlwkLzO
+	 Dy25dPW6Tju3CZ1vkkNqhx9h0Jis0TQBkKadoWVJ1TUuSiA9Fyx3fjYJNv8uJLXlGR0/p
+	 X+bniIQ7Wxa8IhOBmRdqhDDjozYCR9Pc5K1bQOayXYXauBKxlVMZLEd3Vl+aBsF74LI8q
+	 Ftem+1d7MJ7Ss8B6VGhwvPt6193lZILw0WNujOu/J7Zv0eleR20xikIv3fUUT4GE8sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061696;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061698;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZQORLvgTroaGi6ztYdQqn1j5PLYGXuGVwCTOPWqfnKo=;
-	b=QDD7NTLTZTld/kTfgN9qwgXM5fUSrUzrRZiUueUNVWoBD3LEANlah+FSu59BZl6uxBrI
-	 RRBxSuCH+eazWG0p4jihP/PJjs8ocWt2BcobsS/p/UGmEwrVjtcMBXZMStu/hOv4DVWhD
-	 aioOTKDI1ByKyOb6OT4hky759yR8EM/dexII748TTC3d3r7mTsFqLaaw/kkrq/h+34MTf
-	 hilv8vpCNp0uyF0Lnfn4hWDRXLSPKIEiULs04r+H7gwvUkRAwfU73dduZ1XFmdpz50eiE
-	 7g0wVImDsG+d2rmleA0IYr2OjtkObcENKFlsrqMtn+ka+oAj3IZMIh0EeiUPJ1NQ/iA==
+	bh=p8bJlezZ/KqyXDCeKMP+P+Uk/QuauGhIyLpYdsin+lE=;
+	b=Tz4trTtoYjzSK7LpRHVDQC3SQnERB7JVMFB0wZCrMnjRPqW3HdK3tL5f3mA/VRe1rtlE
+	 QYSn3Xtgm+xwcBQS/EMLRkrYb/TUlZw1nKHt3974kBau/HeruIm0PyijTaS6p5r3abiGy
+	 xV7DOKhrXAw4Tqv3IAttdFzkj4B+HPnLpPOJX/IBll9BB7pDNcrmMV4uAK81i0q0X6YUK
+	 j8guCeFZuJ7gHswkK31aBLGLLR2trT8SAlUi3PVf5QrFP/UngRKnt/8npuWu07P1aUm7m
+	 21SL8b79+XQhMHVeEHiDVXIco5WUPnbA0oX01qIDX0kUqicfxHbWKwTMawYlGT0zaMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="G7maNqE/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ssqKQEOQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BF2606A320;
-	Thu, 19 Nov 2026 04:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A1C606A320;
+	Thu, 19 Nov 2026 04:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G7maNqE/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE3B1F000C4;
-	Thu, 19 Nov 2026 04:14:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ssqKQEOQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 044141F000C5;
+	Thu, 19 Nov 2026 04:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061695;
-	bh=ZQORLvgTroaGi6ztYdQqn1j5PLYGXuGVwCTOPWqfnKo=;
+	s=korg; t=1795061698;
+	bh=p8bJlezZ/KqyXDCeKMP+P+Uk/QuauGhIyLpYdsin+lE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G7maNqE/AQqy+JtkNNgQPcO5p7c0KtIj0YpxoSGj+C0jbYxFQYc76jSBiMBt2p8S9
-	 utSdfHGYyK4HeVStgSNdVnF0UmK80PV80RbFOTbGNjhKhPMqMLDi6LUgLGbHqGpT8f
-	 wJ+lU/I5znIZ2GRDXZTzMvoY0sA3RX8HozvR093Y=
+	b=ssqKQEOQM0pFUdxg6IToyilzH/14Hd8Tk/usIHYfaqWPC4rBnljHdoX5NHc5+zCl/
+	 Ji6nz4V2IMUmDV6DcmmGiK0YD33/mcU4ZWVATaL8j5+gEobLcsGbrwV8YEST62BoL9
+	 /8xDAjfxIZ7mHg9I/30I/Iv/DuVFef792Vap1CHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yogesh Gaur <yogeshgaur.83@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1604/1848] clk: qcom: rcg2: Propagate force-enable status errors
-Date: Wed, 18 Nov 2026 16:00:42 +0100
-Message-ID: <20261118150026.711160386@linuxfoundation.org>
+Subject: [PATCH 5.10 1595/1848] comedi: dt2814: validate the IRQ supplied by userspace
+Date: Wed, 18 Nov 2026 16:00:33 +0100
+Message-ID: <20261118150026.266843565@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,46 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Yogesh Gaur <yogeshgaur.83@gmail.com>
 
-[ Upstream commit 8c0f93e10fa9e34009817bd37bb75c1b5a691fa2 ]
+[ Upstream commit 81026c2b3f9096cdfdfa02918f94865629fb7f90 ]
 
-clk_rcg2_is_enabled() returns either a hardware status or a negative
-regmap error. The force-enable polling loop treats every nonzero return as
-an enabled clock, so a failed status read is incorrectly reported as
-success and clock reconfiguration can continue with unknown hardware
-state.
+comedi boards are configured through the COMEDI_DEVCONFIG ioctl, so
+it->options[1] is a number chosen by userspace. dt2814 passes it to
+request_irq() without checking it first, which lets an interrupt owned by
+another irqdomain -- a PCI device's IO-APIC GSI, for instance -- be
+claimed for this board. When the owner of that interrupt is later
+released the descriptor is freed while this driver's handler is still
+installed on it.
 
-Check for negative returns before testing the enabled status and propagate
-the read error to the caller.
+Every interrupt this board can assert is a legacy ISA one, so the ISA
+range is the right bound; it is also sufficient, because
+mp_chip_data->isa_irq is set only by alloc_isa_irq_from_domain() and
+mp_unmap_irq() returns early when it is set.
 
-Fixes: 7ef6f11887bd ("clk: qcom: Configure the RCGs to a safe source as needed")
+Bound the value before requesting it, as das16m1.c already does. An
+out-of-range value is ignored rather than rejected, so the board still
+attaches without interrupt support, exactly as it does today when
+request_irq() fails.
+
+Fixes: a211ea977a41 ("Staging: comedi: add dt2814 driver")
 Assisted-by: LLM
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260917-topic-qc_clk_fixes-v1-2-5531cb00514b@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
+Link: https://patch.msgid.link/20260909104848.1763-4-yogeshgaur.83@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-rcg2.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/staging/comedi/drivers/dt2814.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index eb4fd803bae0d..fa86832b3f825 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -828,7 +828,10 @@ static int clk_rcg2_set_force_enable(struct clk_hw *hw)
+diff --git a/drivers/staging/comedi/drivers/dt2814.c b/drivers/staging/comedi/drivers/dt2814.c
+index bcf4d5444fafa..174253f15645a 100644
+--- a/drivers/staging/comedi/drivers/dt2814.c
++++ b/drivers/staging/comedi/drivers/dt2814.c
+@@ -244,7 +244,8 @@ static int dt2814_attach(struct comedi_device *dev, struct comedi_devconfig *it)
+ 	i = inb(dev->iobase + DT2814_DATA);
+ 	i = inb(dev->iobase + DT2814_DATA);
  
- 	/* wait for RCG to turn ON */
- 	for (count = 500; count > 0; count--) {
--		if (clk_rcg2_is_enabled(hw))
-+		ret = clk_rcg2_is_enabled(hw);
-+		if (ret < 0)
-+			return ret;
-+		if (ret)
- 			return 0;
- 
- 		udelay(1);
+-	if (it->options[1]) {
++	/* only ISA interrupts are valid on this board */
++	if (it->options[1] >= 1 && it->options[1] <= 15) {
+ 		ret = request_irq(it->options[1], dt2814_interrupt, 0,
+ 				  dev->board_name, dev);
+ 		if (ret == 0)
 -- 
 2.53.0
 
