@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041297;
-	b=hIFGvw0sK+PgmYCxgGj+Di83LwVo/S7hKiiPfjaW558OUJoK8fVGFnX1euoShC5baCHT
-	 vzMUt+6MVWH6K16fio8ThamVf14zhtSrk/ys2GRuuzORWnf1yTO1SM71yB0QK41tMGXgv
-	 E0JZ+GoZ2fRKvr5fa9LVkvyMx7ZBZ7J75NDK2tISxXr6gHbj4osE0XjV+/Xh5GWED15i+
-	 zm4eYkf+6y5DMvIPI6+aiLlOQyZ9GKvsnGNUfHWUfxb5IRY0MrzRBpLw65m0bxAEJ8WJZ
-	 wOJ2EZev+RPhgFTvL7DSgOO2Qi+Bzmn4scOzv2i0zrvzotV3Q05S/qS49L16Ddkd7tg==
+	t=1795041299;
+	b=RcAQpXT0+FrRJfKs/6PZvWhGW9brYQl/KDX/3JSY2fXpJonEWYnPYWos1Cka6ybrOTTI
+	 mI1cllMiUMVzqXRKPwngsaA/bNQEiayKs/DdJIZIl5O6+x3Ka0zuUjh5Nc9nCe18yxvwl
+	 cpjldu7our83kC+PF/PqhlWdbViX6wx/q/8JCoStZdYoZXjreokAYSYxYzp4vHEhYDEkJ
+	 50HkmBCq7gWYdzTfx11NukbhG0TXkgcaMyJ6dgnjvnL//9onCVH+jGzO3pHPV83nRjonT
+	 K0c26aOc4ofJfktWbBXHAWU7N5eDS6GLr9FeY/u2GJzMtc5VBhDWZd/rj9CP/b59SPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041297;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041299;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xPrBAU/5LEv86uF1K1iNWFU3PEXGV1pS5sN2W+qr4jo=;
-	b=RZyzgH1G5SqBpIZDGxnjQLUsjLaw1molRh5ITPePuUsWUYQAHe2v/j2Y+lQDG988YPyX
-	 u3Aqg/aSdq4k6ymgahm6goAPp1eTBHK4IFy/VjSwdG9NWsAT7+bqmP2ygqC6Hd36DAiTx
-	 B4VKs0qFIuRY50+u0f7I7SxUNtnkBKuiw3HBw0oti3SDSf05blqeRqR/VN/M65U20CIqN
-	 SwxsxP7fxfJ5AxrMqDBqtlUm57NHtoNaQbd1g0QEXSQliHgh5odt16ErTclcStBsokDgi
-	 ues6chgqSr0veF/pUXPFTck7whOsBhIygcAgNmq7DANaqODmidpior0nWMpNI8kWy2A==
+	bh=or+fO+EakdW+cK/HUFUSWxYaR4aOnFbk/bpDT3hr+Uk=;
+	b=27A8zB8NNGX/hEMeOA3elsWJik8GMt+Erdfg/7IXk5nT2awzHOtgunf0GebQL6tCcfc8
+	 yKcbRGDVD1NZhyKGdgWzii8XFXUj5I5+uIo1CpAYmWCxyPQyjbERyrE2MaT9QNjcBQK7B
+	 KpooXFixnu4fixSntAUNaeW5CUWartUbrMr8u9I4h0byuOUWWNdbSBVgOUYZ2iyR7gpbQ
+	 /rwSUvKbF8n9Ma4WPlnpUQFzl3RPQAhfBAkkHfJGWSoMDkY+wW/qKY2//nkuojZ7BB4eO
+	 AF+ZHQKIfwjVB+c+7AFecY2oAdpFzFGMkimWP5UtJZz5IY6XkxFdQhX8j0ESaskauFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZwOZMS0O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S0uBsJ+i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A095606A32C;
-	Wed, 18 Nov 2026 22:34:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD6C606A325;
+	Wed, 18 Nov 2026 22:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZwOZMS0O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6231F000C4;
-	Wed, 18 Nov 2026 22:34:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S0uBsJ+i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E961F000C5;
+	Wed, 18 Nov 2026 22:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041296;
-	bh=xPrBAU/5LEv86uF1K1iNWFU3PEXGV1pS5sN2W+qr4jo=;
+	s=korg; t=1795041299;
+	bh=or+fO+EakdW+cK/HUFUSWxYaR4aOnFbk/bpDT3hr+Uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZwOZMS0O5ihP8jHfsVSyTwetUzcLa+ey6sorOIs1yzmbDbfm6a/BQLn0NoMSPUrhf
-	 tzpPfv7I9PeLFRys8ZDaEzFAY9ey/9AZiJa8tnWwhnKgdBQI5b+I7tkrTjNEglYxZ8
-	 pgKfTrryepyel9bHjDx/aOgXBlOByB//hOQaVKS8=
+	b=S0uBsJ+iwYcfSpYMCuLtzmURqXYaIWdEItufb6wcclKJZ0oJLEPP5b2X4aYrBWDv6
+	 7nLKdlfZ50Onz/Im2ORFLs2rVZsODn9nsx5ssaqE1cPRheei23Ia0O6QJWOauTcQ0c
+	 9C+vU3DXlLX2lY7m1gdp7UIdsnwNvJK91abciZRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Cheng <leo-cheng@vip.qq.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2722/3318] nvmem: layouts: onie-tlv: fix device_node reference leak in error path
-Date: Wed, 18 Nov 2026 15:55:44 +0100
-Message-ID: <20261118150442.507024213@linuxfoundation.org>
+Subject: [PATCH 6.6 2713/3318] wifi: mac80211: kill wake_txqs_tasklet on unregistration
+Date: Wed, 18 Nov 2026 15:55:35 +0100
+Message-ID: <20261118150442.264311641@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,44 +67,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Cheng <leo-cheng@vip.qq.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 9d44e80151dd360fad6155f36b6bfa57efb0f2f5 ]
+[ Upstream commit 8ea4f50c3426aaaf3f4c118ee2c2876326ca5db5 ]
 
-onie_tlv_add_cells() takes a reference on the child node via
-of_get_child_by_name() for each parsed TLV and passes it to
-nvmem_add_one_cell() as cell.np. On success the created cell entry
-adopts that reference and releases it later via of_node_put(); on
-failure nvmem_add_one_cell() does not consume it, so the caller still
-owns it, but the error path only puts layout before returning, leaking
-the child node reference.
+We never kill the wake_txqs_tasklet so it could be running
+while the hardware is being freed. Kill it, late enough to
+never be able to restart afterwards.
 
-Put cell.np on the error path as well. of_node_put(NULL) is a no-op, so
-this is safe even when of_get_child_by_name() returned NULL.
-
-Fixes: d3c0d12f6474 ("nvmem: layouts: onie-tlv: Add new layout driver")
-Signed-off-by: Leo Cheng <leo-cheng@vip.qq.com>
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20261002101329.1084348-4-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Assisted-by: LLM
+Fixes: 21a5d4c3a45c ("mac80211: add stop/start logic for software TXQs")
+Link: https://patch.msgid.link/20261005224950.3fdb8d0ff377.I851e79ac625c4926e211642ee7a7e458728b0ad3@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/layouts/onie-tlv.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/mac80211/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/nvmem/layouts/onie-tlv.c b/drivers/nvmem/layouts/onie-tlv.c
-index 607821721c245..c391bfa0b10fa 100644
---- a/drivers/nvmem/layouts/onie-tlv.c
-+++ b/drivers/nvmem/layouts/onie-tlv.c
-@@ -128,6 +128,7 @@ static int onie_tlv_add_cells(struct device *dev, struct nvmem_device *nvmem,
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index f0ffefe822241..853540106ad50 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -1531,6 +1531,8 @@ void ieee80211_unregister_hw(struct ieee80211_hw *hw)
+ 	cancel_work_sync(&local->restart_work);
+ 	cancel_work_sync(&local->reconfig_filter);
  
- 		ret = nvmem_add_one_cell(nvmem, &cell);
- 		if (ret) {
-+			of_node_put(cell.np);
- 			of_node_put(layout);
- 			return ret;
- 		}
++	tasklet_kill(&local->wake_txqs_tasklet);
++
+ 	ieee80211_clear_tx_pending(local);
+ 	rate_control_deinitialize(local);
+ 
 -- 
 2.53.0
 
