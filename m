@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044746;
-	b=WS8HHCWu2Qjye+HhO5OoMRc6R0Yxw1sTtWXPxp4JuAInj/0GHBJyCxxTrW3NbW0snUCZ
-	 ofhjS/mB6gYUn0yXHS8aLCyJ5l18u+lbQCXtFTGrTBNkbgkR4kCx0OcTXZ3H1oWez/0wV
-	 HE+0VzVNCOPgF1A9fUhZAm5TJMGsYP9g+Nmt54RaVHvCf4g5ANwF79ShB6tF7r3+EqBET
-	 uEsUydfcntMz/2DKEyaLVFjd9tvkUzoVmK5/0vp2aMYQAJNwgMf4bBLrmvr5H4XuoTexH
-	 0BZxdnwlb6HM1xGmLi/gwlqNVFlR0uVcsoTYjwSmX1775Obp6nHVaI6AkFhWbQ2p9IA==
+	t=1795044748;
+	b=sdfJy6W9bIDJQDPWsc20J6JI2LGqFQAnqL4yoQrhrhpo3vEIyeN2rmW2LZbPcMAe/sBL
+	 1xq68MbPTp1/7z3lys9SetcUeedgaMJKOVmTenohSrJHn8dbPUtQl1NdiNy31el+2wsFJ
+	 MjOcAT8YbVkyHKilL8IhpyzceGpR1oP8rUyqPcdI8/JWRkIap2s3ku6Soy30mxow9cXxU
+	 PyucLk7ifSMyl0g5GF8x1aRtqG0d2Hk5fBmyPiaeBUkQJG4VUpwRGhDTXguut1fPZRK+B
+	 +8Hho/6Dt9Yok7FqwYUlCxXABpLdV2uMjeBHvSXrRqigomLnQpHZVZTINl7bH5VnLQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044746;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044748;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R45pvSStZAG5wL0ULMgOPrcXt8IYlooywnmXlKs93Hw=;
-	b=MKypNwWeO6WTG7yYKSPZteyKECoXVNTnwgYjQVJXCkIbMduZ0bAwoyM94AFJK3/xcyYh
-	 eGwn7SNjFBwcVqnxzWMqm918ipC7h+3sNvdqq0oS0RGgBuj4AJIKCbaWYdMA56x5MxXV4
-	 dyPlGXOiRY9r2/pMZnJ1d2nNNGvmX47eKm3Bz4MNHUlBjSpngf9tZv185j1SrlSwZkm5U
-	 P15NYQS92083XaMzHdW887KTMOLdsnnEkR6EM86M/oPbX+OZG0kUUxEuuduQ8NoCLGxR8
-	 V7YoNsWLYCAVPzUvIvPD7q+p91meLDDQ7IXtGGqSDEf9JxisKCJpF/vnjoyUGOPtUQA==
+	bh=8NAtA4H7iSwZiWUjMUaCkIrUqzt1FlmQCTETaFmZL90=;
+	b=FdduhHedSRg8Hn3tuh4kXHNJy9mlkYBVerVYQhaH5A5rnskeBVgy/jPUd7834YwbvR4c
+	 E222sENAadY+F6wmyGjJLJNudL+pfasxi1/ya+sxrqeTTH1Vw3mtlD1Z4xj5LmtvmhcVN
+	 6ltVz4s50cY6BKW67FD4aUB+DCYTh3JU5ifmJTWKn/o+6LRz2d9dHjdK9W059E9qi0Zgf
+	 1KJweHJHGbgIJS/Qg2MI2VnwuPMWUi3RtC7t9i5DzESVeGDI/Uzo/Jz9oLVuiuGlBJiXu
+	 Z9oe6U8xB8Ey1Z4RUFAog5w4xR0ugojqagXqVf3KFEddkZkWjvC6VvlvMpTdSw4C7wg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WV7+BBSF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1vpT0j0R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5BE606A33D;
-	Wed, 18 Nov 2026 23:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44F260A3806;
+	Wed, 18 Nov 2026 23:32:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WV7+BBSF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A33E1F000CA;
-	Wed, 18 Nov 2026 23:32:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1vpT0j0R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDD61F000C7;
+	Wed, 18 Nov 2026 23:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044745;
-	bh=R45pvSStZAG5wL0ULMgOPrcXt8IYlooywnmXlKs93Hw=;
+	s=korg; t=1795044748;
+	bh=8NAtA4H7iSwZiWUjMUaCkIrUqzt1FlmQCTETaFmZL90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WV7+BBSFHIHnbvSPom9n0bEzg3ToJ/dUGZ3o0gd3Ljj4jBJLfpHjcaZGAxjH59v0n
-	 0qUvaSn2FvISC3QzhoqOAVbgxDY8ENL/GCpYEJoSdN8MVcYgkH8anIXsqun1XqcLCJ
-	 FFeOS/Ta3f0rBPHKr2KN5xlST+2f5GQS6p33ZRUQ=
+	b=1vpT0j0R9NB3lt3fQ42vIB0ku2W0csjO+CjdYoObVgM4ARwr5YVW9w2pEmsiR/mEV
+	 GrzqBS/973e6TJR1gAPLm0CtX2zXT98JboX2bXBNemYcbwCPuaGQrQW4o9g9aSvhau
+	 9LJjppvIWvbjqa5N8LXZ+gGoFo5Y4weQJ0NCdUMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
+	Dairui Zhang <zhangdairui@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0674/2857] ksmbd: fix out-of-bounds read when padding the final compound response
-Date: Wed, 18 Nov 2026 15:28:28 +0100
-Message-ID: <20261118150225.830029151@linuxfoundation.org>
+Subject: [PATCH 6.1 0675/2857] ksmbd: verify transform SessionId matches the decrypted header
+Date: Wed, 18 Nov 2026 15:28:29 +0100
+Message-ID: <20261118150225.866829038@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,72 +68,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Dairui Zhang <zhangdairui@gmail.com>
 
-[ Upstream commit 714f27729121d59f103ca4dad7b0c2d1c125cd71 ]
+[ Upstream commit 798214e6fafcdcc29f5ba2661a473232b5e70cfb ]
 
-Compound response handling pads the last response of a compound to an
-8-byte boundary by growing the final iov and the RFC1002 length.
-smb2_allocate_rsp_buf() allocates exactly response_sz. A command can
-fill the response buffer to within 7 bytes of its end, for example a
-QUERY_INFO whose output is bounded only by the space left. The padding
-can then run past the allocation, and ksmbd_tcp_writev() reads those
-bytes when it sends the response.
+When an encrypted request comes in, the decryption key is picked by
+the SessionId in the transform header, but the request is then
+authorized under whatever session the decrypted inner header names.
+Nothing ever compares the two, so on a connection with more than
+one session a client can get a request decrypted with one session's
+key and run it as another session. Encrypted requests are exempt
+from signing too, so a valid AEAD tag is the only proof of session
+identity, and it is checked against the wrong session.
 
-  BUG: KASAN: slab-out-of-bounds in _copy_from_iter+0x744/0x10e0
-  Call Trace:
-   _copy_from_iter+0x744/0x10e0
-   tcp_sendmsg_locked+0x2290/0x3f80
-   ksmbd_tcp_writev+0x10c7/0x1ab0 [ksmbd]
+MS-SMB2 says the server must check that the transform SessionId
+matches the one in the decrypted SMB2 header and treat a mismatch
+as a protocol error. Add that check in __handle_ksmbd_work() after
+decryption, before dispatching: the message has to be at least one
+fixed SMB2 header, the first operation must not set
+SMB2_FLAGS_RELATED_OPERATIONS and its SessionId must match the
+transform SessionId, and every following non-related operation in
+a compound chain must carry the same SessionId. NextCommand
+offsets must be 8-byte aligned and stay inside the message; the
+bounds check is done by subtraction so it cannot wrap.
 
-Allocate room for the padding when the request is a compound, as
-smb2_read() and smb2_read_pipe() do for their payloads. response_sz is
-unchanged, so commands still fill only up to it, and kvzalloc() zeroes
-the padding.
+When the decrypted payload is a compression transform, the
+existing decompression step runs first and the decompressed SMB2
+message is checked instead, since a compression transform header
+carries no SessionId.
 
 Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Reported-by: Dairui Zhang <zhangdairui@gmail.com>
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
-Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Dairui Zhang <zhangdairui@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: used GFP_KERNEL instead of KSMBD_DEFAULT_GFP in the response buffer allocation ]
+[ sashal: Replaced ksmbd_conn_abort() calls with ksmbd_conn_set_exiting() followed by return. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ fs/smb/server/server.c  | 16 ++++++++++++
+ fs/smb/server/smb2pdu.c | 54 +++++++++++++++++++++++++++++++++++++++++
+ fs/smb/server/smb2pdu.h |  1 +
+ 3 files changed, 71 insertions(+)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 6b24448a55e18..2e9e4d7581c0b 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -538,7 +538,7 @@ int smb2_allocate_rsp_buf(struct ksmbd_work *work)
- 	struct smb2_hdr *hdr = smb_get_msg(work->request_buf);
- 	size_t small_sz = MAX_CIFS_SMALL_BUFFER_SIZE;
- 	size_t large_sz = small_sz + work->conn->vals->max_trans_size;
--	size_t sz = small_sz;
-+	size_t sz = small_sz, pad_sz = 0;
- 	int cmd = le16_to_cpu(hdr->Command);
+diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
+index 85edc24ca9cdc..d314e21b753b6 100644
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -169,10 +169,26 @@ static void __handle_ksmbd_work(struct ksmbd_work *work,
  
- 	if (cmd == SMB2_IOCTL_HE || cmd == SMB2_QUERY_DIRECTORY_HE)
-@@ -560,10 +560,17 @@ int smb2_allocate_rsp_buf(struct ksmbd_work *work)
+ 	if (conn->ops->is_transform_hdr &&
+ 	    conn->ops->is_transform_hdr(work->request_buf)) {
++		u64 tr_sess_id;
++
++		if (get_rfc1002_len(work->request_buf) <
++		    sizeof(struct smb2_transform_hdr)) {
++			ksmbd_conn_set_exiting(conn);
++			return;
++		}
++		tr_sess_id = le64_to_cpu(((struct smb2_transform_hdr *)
++				smb_get_msg(work->request_buf))->SessionId);
++
+ 		rc = conn->ops->decrypt_req(work);
+ 		if (rc < 0)
+ 			return;
+ 		work->encrypted = true;
++
++		rc = ksmbd_check_transform_session(work, tr_sess_id);
++		if (rc < 0) {
++			ksmbd_conn_set_exiting(conn);
++			return;
++		}
  	}
  
- 	/* allocate large response buf for chained commands */
--	if (le32_to_cpu(hdr->NextCommand) > 0)
-+	if (le32_to_cpu(hdr->NextCommand) > 0) {
- 		sz = large_sz;
-+		/*
-+		 * is_chained_smb2_message() pads the last response of a
-+		 * compound to 8 bytes, which can take it past response_sz.
-+		 * Leave room for the padding. kvzalloc() zeroes it.
-+		 */
-+		pad_sz = ALIGN(sz - sizeof(__be32), 8) - (sz - sizeof(__be32));
+ 	if (conn->ops->allocate_rsp_buf(work))
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 2e9e4d7581c0b..4d4271956492b 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8968,6 +8968,60 @@ bool smb3_is_transform_hdr(void *buf)
+ 	return trhdr->ProtocolId == SMB2_TRANSFORM_PROTO_NUM;
+ }
+ 
++/*
++ * The decryption key is selected by the transform SessionId, but
++ * the request is authorized under the session named in the
++ * decrypted SMB2 header. Per MS-SMB2 the two must match, so check
++ * the decrypted message and its compound chain before dispatch.
++ */
++int ksmbd_check_transform_session(struct ksmbd_work *work, u64 tr_sess_id)
++{
++	struct smb2_hdr *hdr = smb_get_msg(work->request_buf);
++	size_t msg_len = get_rfc1002_len(work->request_buf);
++	size_t off = 0;
++	bool first = true;
++
++	if (msg_len < sizeof(*hdr)) {
++		pr_err_ratelimited("Decrypted message is smaller than SMB2 header\n");
++		return -ECONNABORTED;
 +	}
- 
--	work->response_buf = kvzalloc(sz, GFP_KERNEL);
-+	work->response_buf = kvzalloc(sz + pad_sz, GFP_KERNEL);
- 	if (!work->response_buf)
- 		return -ENOMEM;
- 
++
++	for (;;) {
++		u64 sid = le64_to_cpu(hdr->SessionId);
++		u32 next;
++
++		if (first) {
++			if (hdr->Flags & SMB2_FLAGS_RELATED_OPERATIONS) {
++				pr_err_ratelimited("RELATED_OPERATIONS set on first operation\n");
++				return -ECONNABORTED;
++			}
++			if (sid != tr_sess_id) {
++				pr_err_ratelimited("SessionId mismatch between transform and inner header\n");
++				return -ECONNABORTED;
++			}
++			first = false;
++		} else if (!(hdr->Flags & SMB2_FLAGS_RELATED_OPERATIONS) &&
++			   sid != tr_sess_id) {
++			pr_err_ratelimited("SessionId mismatch in compound chain\n");
++			return -ECONNABORTED;
++		}
++
++		next = le32_to_cpu(hdr->NextCommand);
++		if (!next)
++			return 0;
++		if (next % 8) {
++			pr_err_ratelimited("NextCommand %u is not 8-byte aligned\n", next);
++			return -ECONNABORTED;
++		}
++		if (next > msg_len - off - sizeof(*hdr)) {
++			pr_err_ratelimited("NextCommand %u is out of the message\n", next);
++			return -ECONNABORTED;
++		}
++		off += next;
++		hdr = (struct smb2_hdr *)((u8 *)smb_get_msg(work->request_buf) + off);
++	}
++}
++
+ int smb3_decrypt_req(struct ksmbd_work *work)
+ {
+ 	struct ksmbd_session *sess;
+diff --git a/fs/smb/server/smb2pdu.h b/fs/smb/server/smb2pdu.h
+index 7518aa42f11ed..1271557678e60 100644
+--- a/fs/smb/server/smb2pdu.h
++++ b/fs/smb/server/smb2pdu.h
+@@ -487,6 +487,7 @@ struct channel *lookup_chann_list(struct ksmbd_session *sess,
+ void smb3_preauth_hash_rsp(struct ksmbd_work *work);
+ bool smb3_is_transform_hdr(void *buf);
+ int smb3_decrypt_req(struct ksmbd_work *work);
++int ksmbd_check_transform_session(struct ksmbd_work *work, u64 tr_sess_id);
+ int smb3_encrypt_resp(struct ksmbd_work *work);
+ bool smb3_11_final_sess_setup_resp(struct ksmbd_work *work);
+ int smb2_set_rsp_credits(struct ksmbd_work *work);
 -- 
 2.53.0
 
