@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020458;
-	b=nWS9OtuhwRX6ELu8EspEQkwj6bhhlGp4jt7CfYoT05b4e7iLEFF/Eu6G6Gw9E+6xSHWw
-	 DbGSmpZm1Z9/DU+xepyeVuefctM7USW+PXawbpMwuZf/S/WsCEUvAsUOLJpSijCJOWNdp
-	 +MoZtRVtQYHCdsmAnnTXaaJVcWZ9AZuA/bK1aO1XOUweS1oaIFRQVUWjrf976ZECbGS0g
-	 sQu3PBZ5CcBrFzkOQ+/EEWgynlChucXJ0VH6GTG7ELiUpOJEyLk6lVMwuaglXStg9LObl
-	 YYPfMJx6WVGRbO76x0jpuZSXHljO1hz70yBEFwXfXMgCk+AeHmU9coPnIUsfQmuZInw==
+	t=1795020461;
+	b=sFKQskkln3RttPR9PqskEWFYS/LasrL0ra1+OJf4iptv+ztcJt4CUlVxfQjpI2j/DJub
+	 tuAHq2g3if/8ZbmIV1BMNKzhAIeBtOxYiJpn2WVkjlDw6biSF6Dl6gLkJhr4HEghZBGOh
+	 33+KiFDTHQDnYEr7sEc2DBvOlUrOafMg2/86KmADZJwhvJLB2Ewud7U6cZvZhfB51QJGN
+	 Xo34939oksYaF1uXCrW5EDtC0pJ+zNdw4giIqBkg2oPJD6HXlU+xpuczqCkcDB7n0xxrh
+	 36uuDsL7OsYlpsvXlYnUeW1lWqbKvXclfke51VagHf8X8nh00tGH4KTw61eUmG9iULw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020458;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020461;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hq9Bfpomm8Hnqp48PoXjInlTnpZz0a5m2RJvvY2p4Rg=;
-	b=wZqYzrlKyZKJPAfkQ1Rc9qnT4SRTv0PulbVBl9rR8S1oj3XBWc/huzz8JbPR79tobvBC
-	 zXiE4X7Ms5ei1NFMwmXa/rNQzyK+uZ66Ri74MRiZ4pZDkhUYHtFoL6Jzmce9HWmo1+5eg
-	 aCvcFsjBF5rzmtMVzgktZIQnYBb13gMP/ZaS2hUtkZysDYXnjpAL/OnYOESjv2EcEe1gm
-	 Yd8fuUHOBhMInDzdjOEGSauIQYu/Gg5H3eYQ8mX06s+W++bps22/LRD8wgPSVYPReoDJ1
-	 it4whOeIO3rLdwqGFuvW2pCm1Ihi7Agwp+YrO2N/i4EO5YErvP6PgPL5LhAS/UfLOag==
+	bh=xfrL19TihJCWTSlCmE/ps8vU3lVoZjDmub/buvjUcv8=;
+	b=mgtMz4B1A8ObZtxzQCkapXWo3SYQ5QzS5k8nklu7tLoNMUsDJgBV6RmBz5qRQaeQJ7Rt
+	 wzGGkPLpqrIh708tsktvnZRjG/LDvrfl0Qe33tYVvkER9hsv2eO27gese2///Vc3bRhVW
+	 V5LABJgwm80MDG14wq1QP9iFOZOiRtThzxPUI20a8ZaUhNhVzqDRG1aCbWg7hb0z+q6UQ
+	 Idighw6qfbpbhPEFs5If9Um2xMuhz6ca9HvKd+JPZzU1CXoahUhfwIXC3NVU/rUIf9sG0
+	 5Ve6+Gu6mxBPdHxGmzs8UHeYMOtjE6/TG2LMo+E6B20qdjUAnKHaH8IEbT6/QqGMgWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="PoZ2tfd/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GF5UsXX1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3109606A31C;
-	Wed, 18 Nov 2026 16:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA84606A32F;
+	Wed, 18 Nov 2026 16:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PoZ2tfd/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 089FB1F000C4;
-	Wed, 18 Nov 2026 16:47:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GF5UsXX1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1011F000C4;
+	Wed, 18 Nov 2026 16:47:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020458;
-	bh=hq9Bfpomm8Hnqp48PoXjInlTnpZz0a5m2RJvvY2p4Rg=;
+	s=korg; t=1795020461;
+	bh=xfrL19TihJCWTSlCmE/ps8vU3lVoZjDmub/buvjUcv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PoZ2tfd/2lfMbUM98DcaRpl0bSC4ULvBZGestZB1sthN5FLfXU28u5beMA+SBbqrW
-	 A8eo5Fb5tVIAccZYfXwjZG3pecH/R3/YpxnL+FKAv6QihUE+ioZjvlGlPkGG56EIOR
-	 lqJF1MvMlk3omfa1Pv59IS47SVmg/xTWggrYPQLA=
+	b=GF5UsXX14MOPR2JoOciv4FoO7XjxsPmyw12Z+1AEVn+bizSZ3Kz8TBN6p4GmkBQXS
+	 P3jPv9g1AxkuWmV0iKyPWpqNJNVUGJWy6Gaai+N+xGkLGTVMG7rA0HLG4rr+aaZZ7z
+	 4dV/3xpJDXEpKdxGDvTzjJ+DCUHcd7BpYdW4TbfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Youngsung Ahn <ays511.kr@gmail.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1958/2651] RDMA/rxe: refuse to destroy a QP with type 2 MWs still bound
-Date: Wed, 18 Nov 2026 15:53:18 +0100
-Message-ID: <20261118150357.028262370@linuxfoundation.org>
+Subject: [PATCH 7.3 1959/2651] RDMA/rxe: reject IB_WR_REG_MR from user QPs in rxe_reg_fast_mr()
+Date: Wed, 18 Nov 2026 15:53:19 +0100
+Message-ID: <20261118150357.060756007@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,103 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Youngsung Ahn <ays511.kr@gmail.com>
 
-[ Upstream commit 9e61a2ac6590e9c42d2eeef687749781334b300f ]
+[ Upstream commit 33afe9909f213d8bb8e80f0b93382dde0f56e2c7 ]
 
-Binding a type 2 memory window takes a reference on the QP:
-rxe_do_bind_mw() does rxe_get(qp) and stores it in mw->qp. That
-reference is released only when the window is invalidated
-(rxe_do_invalidate_mw() on IB_WR_LOCAL_INV) or the window itself is
-destroyed (rxe_mw_cleanup()).
+IB_WR_REG_MR is documented as kernel-only ("can not be issued by
+userspace"), but nothing enforces it.
+rxe_wr_opcode_info[IB_WR_REG_MR] sets WR_LOCAL_OP_MASK for IB_QPT_RC,
+a QP type userspace can create, so a user QP that writes
+opcode = IB_WR_REG_MR into its mmap'd SQ ring reaches
+rxe_do_local_ops() -> rxe_reg_fast_mr(). That function then trusts
+the ring-supplied fields:
 
-rxe_qp_chk_destroy() does not account for those references -- it only
-refuses when qp->mcg_num is non-zero. So an unprivileged user can bind
-a type 2 MW to a QP and then destroy the QP while the binding is still
-live. __rxe_cleanup() cannot drop the QP refcount to zero (the MW still
-holds a reference), hits its -ETIMEDOUT path, and frees the QP anyway;
-mw->qp is left dangling. When the MW is later invalidated or
-deallocated, rxe_mw_cleanup()/rxe_do_invalidate_mw() do rxe_put(mw->qp)
-on the freed struct rxe_qp -- a use-after-free write (refcount_dec, and
-complete()/list work if it reaches zero) reachable from userspace.
-IB_WR_BIND_MW is a local operation, so no peer is required.
+	struct rxe_mr *mr = to_rmr(wqe->wr.wr.reg.mr);
+	...
+	if (unlikely(mr->state != RXE_MR_STATE_FREE))    /* deref */
+	...
+	mr->access = access;                             /* write */
 
-Track the number of type 2 MWs bound to a QP and refuse to destroy the
-QP while that count is non-zero, returning -EBUSY exactly as the
-existing multicast-attachment check does. The window must be
-invalidated or deallocated, which drops the reference and the count,
-before the QP can be destroyed.
+For a user QP wqe->wr.wr.reg.mr is a fully attacker-chosen pointer,
+so this is an arbitrary-kernel-address dereference (arbitrary read
+confirmed, oops). No existing check distinguishes a user QP on this
+path.
+
+Reject IB_WR_REG_MR for user QPs before dereferencing the supplied
+pointer.
 
 Fixes: 8700e3e7c485 ("Soft RoCE driver")
 Signed-off-by: Youngsung Ahn <ays511.kr@gmail.com>
-Link: https://patch.msgid.link/20260930182223.2511145-1-ays511.kr@gmail.com
+Link: https://patch.msgid.link/20261001152426.3259522-1-ays511.kr@gmail.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mw.c    |  3 +++
- drivers/infiniband/sw/rxe/rxe_qp.c    | 10 ++++++++++
- drivers/infiniband/sw/rxe/rxe_verbs.h |  1 +
- 3 files changed, 14 insertions(+)
+ drivers/infiniband/sw/rxe/rxe_mr.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mw.c b/drivers/infiniband/sw/rxe/rxe_mw.c
-index bddb7a2578313..a2e3a6ce09463 100644
---- a/drivers/infiniband/sw/rxe/rxe_mw.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mw.c
-@@ -161,6 +161,7 @@ static void rxe_do_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
+diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
+index 71d9ea4772890..3a914c2438294 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mr.c
++++ b/drivers/infiniband/sw/rxe/rxe_mr.c
+@@ -777,6 +777,10 @@ int rxe_reg_fast_mr(struct rxe_qp *qp, struct rxe_send_wqe *wqe)
+ 	u32 key = wqe->wr.wr.reg.key;
+ 	u32 access = wqe->wr.wr.reg.access;
  
- 	if (mw->ibmw.type == IB_MW_TYPE_2) {
- 		rxe_get(qp);
-+		atomic_inc(&qp->mw_bind_num);
- 		mw->qp = qp;
- 	}
- }
-@@ -245,6 +246,7 @@ static void rxe_do_invalidate_mw(struct rxe_mw *mw)
- 	/* valid type 2 MW will always have a QP pointer */
- 	qp = mw->qp;
- 	mw->qp = NULL;
-+	atomic_dec(&qp->mw_bind_num);
- 	rxe_put(qp);
- 
- 	/* valid type 2 MW will always have an MR pointer */
-@@ -332,6 +334,7 @@ void rxe_mw_cleanup(struct rxe_pool_elem *elem)
- 		struct rxe_qp *qp = mw->qp;
- 
- 		mw->qp = NULL;
-+		atomic_dec(&qp->mw_bind_num);
- 		rxe_put(qp);
- 	}
- 
-diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
-index 311f285d78a6b..fea55bc3b0cb9 100644
---- a/drivers/infiniband/sw/rxe/rxe_qp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_qp.c
-@@ -858,6 +858,16 @@ int rxe_qp_chk_destroy(struct rxe_qp *qp)
- 		return -EBUSY;
- 	}
- 
-+	/* An attempt to destroy a QP while it still holds references for
-+	 * bound type 2 memory windows will fail immediately.  Otherwise the
-+	 * QP is freed with those references outstanding and the windows are
-+	 * left pointing at freed memory (use-after-free).
-+	 */
-+	if (atomic_read(&qp->mw_bind_num)) {
-+		rxe_dbg_qp(qp, "Attempt to destroy while type 2 MWs are bound\n");
-+		return -EBUSY;
-+	}
++	/* IB_WR_REG_MR is a kernel-only op; a user QP must not reach here. */
++	if (qp->is_user)
++		return -EOPNOTSUPP;
 +
- 	return 0;
- }
- 
-diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.h b/drivers/infiniband/sw/rxe/rxe_verbs.h
-index 0f5ffd94643f9..80df376e61eea 100644
---- a/drivers/infiniband/sw/rxe/rxe_verbs.h
-+++ b/drivers/infiniband/sw/rxe/rxe_verbs.h
-@@ -261,6 +261,7 @@ struct rxe_qp {
- 	struct rxe_av		alt_av;
- 
- 	atomic_t		mcg_num;
-+	atomic_t		mw_bind_num;
- 
- 	struct sk_buff_head	req_pkts;
- 	struct sk_buff_head	resp_pkts;
+ 	/* user can only register MR in free state */
+ 	if (unlikely(mr->state != RXE_MR_STATE_FREE)) {
+ 		rxe_dbg_mr(mr, "mr->lkey = 0x%x not free\n", mr->lkey);
 -- 
 2.53.0
 
