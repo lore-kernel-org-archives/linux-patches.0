@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021328;
-	b=E3IweA/aof+8YqDnC6DyNHOj1R0Y+v9IgizCnUDAZvdKUSUQSEmmseJWvg50SS/h0Uud
-	 OlcdkMuryuz9LCU5lY4jfWT6KUG7JK615O/IA5QnOi2mr3yOyRno/YXNMKybJJA586vsX
-	 gC6zA1TESwVSBFSpLKaKXARGVeB3xac/4KftP94O7XYw+z01X1j+vI95ttRVbkpCiU/2q
-	 vEG63gP/sM9eR2K8ZYoN2lykt5knkDzeJ17EoIMJJ2O/We3+VSrwJmQA1GRFExuAsedWH
-	 CGrpPLLrNx8yfZMVI97agk9WwFhq1BC6bOYS1N+ZjVuJl/ehFSN7xLx34AgHmnvMRkQ==
+	t=1795021330;
+	b=QaNsQmNiDWPvyAeUlpKyL3GhCERW8Bcl58KPzlM/xmhcmlhwfr/dS163Ybghz3kB5YQx
+	 BDgEyGBYzFUUaITGFaFA6kDHmDPSf3cEdjmlId06U88cWEix4vZ3S26bYuuNalq5GHLek
+	 X+pzQxl5WFs2ZJfa4CVh+44DE3BGVrGY+9WYGUs/igSPsuvb1n7UQbVUhyvE4yNWSao6w
+	 HHCqRIk7MiISpwnlWatZdJBwJ2l5x8CDJBzMjzkAwUifolun17CgaHmIHCcielrCWpGa/
+	 FBjbcpNWQ1Hb7ObQi6RM4niEV9bd9pK/xkf1hnFYDIuLk01PyrieKm5fBFC1ACBOY7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021328;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021330;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=p5Q86U8sZeMdwiND40/Ye14rIm5TT7KOpGhn06+fxNo=;
-	b=Nalpios6KI1HPPQbWaeauKTWDBQv8hqIetSijP18EzuwtJRifuG0/4aawS/iH34OdHao
-	 Z2glXpEcT293D8tz2pk7rNhkvA2a1PJo8SU7ZbG0yz/4mlh68pQYovyhvaXVttrMSupZJ
-	 7mqavPc/0y7PIbgfE7Zv2gRHrIG2YKluE2iymCEkU3rEZLjcMFgknp5dw/7sFM9P5G7OU
-	 O2Wwk66CDwkcnnOYOxKamGHyu8WNvwYVgenZiDf9la2SyZrt9ht0b3uclnbmAMzTLUZQX
-	 6Z7tIvvkREPGOZMOvQhz00nk81AbBEfO8BOseKRnl8+3HpWQwEBiAwrRH8WJ69AkBjw==
+	bh=cjgnWCJmeqnZxoTRO3Pnk5b0snaqI/bWRz8/fXel+r8=;
+	b=enCIi274B1/brB28M6CG4no2CCH7n752+XC4vU/CCoc6CzkwHeFZfhEaVzuOGkBzMD08
+	 pRmkKYx+GHGcv2o+NBFsgmzKreizVqF3WJ0foDWqZG+chkoeFxteY2cwcMlsuRY+VXncc
+	 mV3OC2CQm4iKoh7grJ6fneB8Ar44LTsg+jcIdjqivE9X03slYTUI5CmVPrz/d5bp5xzX+
+	 /HPqAztGAe6QywmFnsOSc0tc+UdiQMQIU4jsO2nROFnUnG7MRT36xUz3Ei5TpuwTJ9sxX
+	 7kYUruCmub1qL912lnGxhy/p2jBXKkPv4uqc3XaLimJnUNmHwClaTY3KP3FxYh8t1sA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s5G7nTLQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jDI9Sa2S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D584606A333;
-	Wed, 18 Nov 2026 17:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70A8606A32A;
+	Wed, 18 Nov 2026 17:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s5G7nTLQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DE51F000C5;
-	Wed, 18 Nov 2026 17:02:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jDI9Sa2S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278E11F000C6;
+	Wed, 18 Nov 2026 17:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021327;
-	bh=p5Q86U8sZeMdwiND40/Ye14rIm5TT7KOpGhn06+fxNo=;
+	s=korg; t=1795021330;
+	bh=cjgnWCJmeqnZxoTRO3Pnk5b0snaqI/bWRz8/fXel+r8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s5G7nTLQnTvgjDdOty8onePULNl2jk5KJBFHjal+F2UQf6XIY38IxJp5wyhkTFSI/
-	 pwWs0qEkcpHPIMeS75D4p7Uhrto32ejsVLc9vaK9KTfjr2EoNAu7/wdKbmlC1pIogO
-	 QgJuVKNHrksbW8/ort/5lhfghmyfklkuBmhNyOcw=
+	b=jDI9Sa2SgFdhnqLv8LLig48EteqRtVdhz90eUmXUuhX7WpIeo2SsoKbs/niBQGfJT
+	 qA9wrzLcmzCrooJEqQ5KMt6m5lsU+QmcaCNPaGVomnvAYaJjY5/861OmwmNvJH+sG9
+	 fMsc8j2R7xPx7s2mTuBV4hMwrsRbQQy/uWnW1QYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Alexandre Cassen <acassen@corp.free.fr>,
-	Simon Horman <horms@kernel.org>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2231/2651] net/mlx5: HWS, fix reformat pool creation race
-Date: Wed, 18 Nov 2026 15:57:51 +0100
-Message-ID: <20261118150405.844823004@linuxfoundation.org>
+Subject: [PATCH 7.3 2267/2651] team: reject CAN, IEEE 802.15.4 and 6LoWPAN devices in team_port_add
+Date: Wed, 18 Nov 2026 15:58:27 +0100
+Message-ID: <20261118150406.991002519@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,65 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Cassen <acassen@corp.free.fr>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit d730ca15cf3e4806e38fa8fc6f2af8d7405ef2a4 ]
+[ Upstream commit 9043be310c6a4c5e57f7bba4b9870554eac7aa96 ]
 
-mlx5_fs_get_pr_encap_pool() inserts a new pool when the lookup misses.
-Two callers allocating the first reformat of a size at once both
-create one and the second fails with -EBUSY. TC serializes these
-allocations under encap_tbl_lock while RDMA flow actions on the FDB
-don't.
+When the first port has a non-Ethernet type, team_setup_by_port()
+copies port_dev->type to the team device while netdev_priv() of the
+team device still holds a struct team. Several L2 stacks identify their
+devices by dev->type alone and then access type specific data that the
+team driver never sets up:
 
-Sashiko AI review of an earlier series spotted this issue.
+- CAN protocols rely on the CAN mid-layer private data (ml_priv)
+- IEEE 802.15.4 code dereferences ieee802154_ptr and the mlme ops in
+  ml_priv
+- the 6LoWPAN netdev notifier writes through lowpan_dev(dev) on
+  NETDEV_DOWN and reads it on NETDEV_UP/NETDEV_CHANGE
 
-Tested for regressions on ConnectX-7 with firmware 28.48.1000.
+Enslaving such a device (e.g. vxcan, wpan0, lowpan0) therefore leads to
+NULL pointer dereferences or to writes into struct team.
 
-Fixes: aecd9d1020e3 ("net/mlx5: fs, add HWS packet reformat API function")
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261012100555.1317878-2-acassen@corp.free.fr
-Acked-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This is the same problem that syzbot reported for the bonding driver
+with a vxcan device enslaved to a bond master, which crashed in
+can_rx_unregister() and was fixed by commit 8ba68464e478 ("bonding:
+refuse to enslave CAN devices"). The team driver has the same gap.
+
+Reject ARPHRD_CAN, ARPHRD_IEEE802154, ARPHRD_IEEE802154_MONITOR and
+ARPHRD_6LOWPAN devices in team_port_add().
+
+Link: https://lore.kernel.org/all/b58d98e0-8fe3-4e4e-b8a5-c1c7e647ccca@hartkopp.net/
+Link: https://syzkaller.appspot.com/bug?extid=8ed98cbd0161632bce95 # bonding splat
+Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20261019155407.61487-1-socketcan@hartkopp.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/steering/hws/fs_hws.c        | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/net/team/team_core.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
-index 54761754e6577..fcef2b64f62cc 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
-@@ -1229,7 +1229,7 @@ static struct mlx5_fs_pool *
- mlx5_fs_get_pr_encap_pool(struct mlx5_core_dev *dev, struct xarray *pr_pools,
- 			  enum mlx5hws_action_type reformat_type, size_t size)
- {
--	struct mlx5_fs_pool *pr_pool;
-+	struct mlx5_fs_pool *pr_pool, *old;
- 	unsigned long index = size;
- 	int err;
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index ca75f08e3c593..957cc7885d2fb 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -1225,6 +1225,17 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
+ 		return -EINVAL;
+ 	}
  
-@@ -1243,13 +1243,14 @@ mlx5_fs_get_pr_encap_pool(struct mlx5_core_dev *dev, struct xarray *pr_pools,
- 	err = mlx5_fs_hws_pr_pool_init(pr_pool, dev, size, reformat_type);
- 	if (err)
- 		goto free_pr_pool;
--	err = xa_insert(pr_pools, index, pr_pool, GFP_KERNEL);
--	if (err)
--		goto cleanup_pr_pool;
--	return pr_pool;
-+	old = xa_cmpxchg(pr_pools, index, NULL, pr_pool, GFP_KERNEL);
-+	if (!old)
-+		return pr_pool;
- 
--cleanup_pr_pool:
- 	mlx5_fs_hws_pr_pool_cleanup(pr_pool);
-+	kfree(pr_pool);
-+	return xa_is_err(old) ? ERR_PTR(xa_err(old)) : old;
++	if (port_dev->type == ARPHRD_CAN ||
++	    port_dev->type == ARPHRD_IEEE802154 ||
++	    port_dev->type == ARPHRD_IEEE802154_MONITOR ||
++	    port_dev->type == ARPHRD_6LOWPAN) {
++		NL_SET_ERR_MSG(extack,
++			       "CAN, IEEE 802.15.4 and 6LoWPAN devices can't be added as a team port");
++		netdev_err(dev, "Device %s is CAN, IEEE 802.15.4 or 6LoWPAN. These device types can't be added as a team port\n",
++			   portname);
++		return -EINVAL;
++	}
 +
- free_pr_pool:
- 	kfree(pr_pool);
- 	return ERR_PTR(err);
+ 	if (netif_is_team_port(port_dev)) {
+ 		NL_SET_ERR_MSG(extack, "Device is already a port of a team device");
+ 		netdev_err(dev, "Device %s is already a port "
 -- 
 2.53.0
 
