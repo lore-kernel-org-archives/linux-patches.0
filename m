@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060509;
-	b=RJsX5+dRJ4y9PHeWDyfGEsacuGeM1AsUysq1b72lOkB5EQH+w2Tb44IZpd/4txjJmzSa
-	 fE4r4nfXRUHt/Nl8md1U/UtrSPXVAWgs/1tVJLIhQA0K0WrR35J+vr86wokTuwOk8AozT
-	 pQ9HiFPj+RV4bVmjVzfTqqjkw0w7AemiVq8lJpFHUV//B5ua7vMxRbvr4cXi3l48WOico
-	 ZF79yS0mHmTYnLiXZG6KlZ5funSIyPRt2cPMR6D2jF8X6knyN2pmZxn3E4dMd4Wvm89Og
-	 gIhhA16Wr/rRPulsIxrOnbWBA/Xhp1ZFUbCuGU/qAkyb9Dol7Q98GX84szxOyAJDoCg==
+	t=1795060512;
+	b=VjyDolxd48XA3whIGJch4upyf8KTITae4kkqQzwfNVdDMGNunUKDn47v1KZ3t29MtfZQ
+	 J6lSEr+WXy2t/EgmU7MZFPpbxIDYkooxj2dyZCY6y7C9TT2qTwQxPAv/P09Vz7m28XCW4
+	 z1VPLec780VVrVAYrC4T97CE8cPxbmFZ+of2UxU+4INH9HJdRy2x9fuJcjWi9wYfZ5OMa
+	 EqLYruc0pGq9CRJ2X1sz0NgccQhyiobw8QElj06LUvzJ5nPi8iTsSgufysq2roMMP9ipF
+	 YsTOTxabPMa4uHeGz6xf8FsOtX27JhD6eL94e50Lje8fiphTzQLAjWaHZk/RWzcWamg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060509;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060512;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sScUw/sNg40ZJVQA/4nz0+2bh5WOQnGX1gPmSIEr3aw=;
-	b=X2qPZ9LjB70Lph0arrmAHCDUrOGC1LoH38lSVV/5RUkW0Fz89rzn9i8cW9JtXitHtOX9
-	 XT/tQS8rlLqEWn6DfxGbTAH30jYaMm2uR6M/hlJ48QJKqmVxq3w4Tkwuzy2GwF5g5u9xb
-	 ahs3mSu2YW4UjNa6b8tUxhGrpR0lF8aMHwDJ14Aelmrx84ENXr4Sj+4XMGBH0crTI5xhB
-	 S2pLfoVXNsA3xi8SyQ21Vrqbr7h6OMGpTLfqP8JZHu16AWjrIzKeEb5zQhd+1MVmexkJb
-	 G4Npyv6011eK9VLEC+iLOE12He2z63bRdMwUUtFMD3mfDoMo1B0OJM3jC0xO8iaCOuA==
+	bh=Nzk93j4tgxNf/R+fn3RM2F33Rg4uVLgcfoqNvtEVFaw=;
+	b=Qr3xWohjekqoZsR9v6YguQjvC5OC8mGGDA8jyM+AmuL1SihPKtByUHPil+9CYQk1edH5
+	 6XkOU2+a//m2z8CtUACSufRe5Mj1kZwQWm7ehD2zHASBK+8c+zfvs3LSSSWWU1ZISPmgT
+	 UP1QeppmU8uSEsU61dF1MGdIsYemVW98h0J48260Bjotdpjg7swbWwr439+FGwbP8WS64
+	 A0fAgVkxElFxMfawzCXKbugwpz+/1X3KldFLY7Oe/9Jb+LMdRVgu3tOQxp8YE0c68ArYN
+	 WaiPpDbg6DxIMRpxKiY93dCNZbjp/jq1jFbsn/LDBqPNk0WsgAXVtQClXfiE+NjxZJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jfzndjkl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XbBx1PA3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A88606A325;
-	Thu, 19 Nov 2026 03:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74ED606A326;
+	Thu, 19 Nov 2026 03:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jfzndjkl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F60F1F000C4;
-	Thu, 19 Nov 2026 03:55:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XbBx1PA3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0611F1F000C4;
+	Thu, 19 Nov 2026 03:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060509;
-	bh=sScUw/sNg40ZJVQA/4nz0+2bh5WOQnGX1gPmSIEr3aw=;
+	s=korg; t=1795060512;
+	bh=Nzk93j4tgxNf/R+fn3RM2F33Rg4uVLgcfoqNvtEVFaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JfzndjklKnuhZmOzqnjwFEuNfZQIU/BrF/TBMHS/p2RedbnuBF6quEmkKRL1s34Po
-	 ys0Qjg6AKirqRxJmDlNvXpsVI4g0JrFL9FVw2ehY3xnSB9hY9MEyZVPwsXHPgVM3j7
-	 7Y53bSJrngK4hPSn2Cyk5aNUqS0R7NRdAZ2aE+eU=
+	b=XbBx1PA32P8rqbKwpjXr+nB/zyzc7DbtsMxQrzDc91lmCfXWR/FTd+PRfrf+n/EVO
+	 wC5QgdFkCkVr9JYFOm49j7ZjKg3h8jW+0WGvqhnBrGWjzo2H+NgGIfQVdA5Zwutmwg
+	 OiRVrshZ21s2fQoy11XOt+1dc3wfH2ue/PMwHnzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1197/1848] power: supply: mp2629: Use the full batt_impedance_compensation name in the ABI document
-Date: Wed, 18 Nov 2026 15:53:55 +0100
-Message-ID: <20261118150009.775237984@linuxfoundation.org>
+Subject: [PATCH 5.10 1224/1848] regulator: ab8500: Test dedicated enable bits only
+Date: Wed, 18 Nov 2026 15:54:22 +0100
+Message-ID: <20261118150011.172031371@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,37 +68,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 1101833121a447999309a01f03d5b35bc1652e09 ]
+[ Upstream commit a5ee78846015512b4d3d32f8aa463024a23234ce ]
 
-drivers/power/supply/mp2629_charger.c creates the attribute with
-DEVICE_ATTR_RW(batt_impedance_compensation). The ABI file documents it
-under the truncated name batt_impedance_compen, which does not exist in
-sysfs.
+Some regulator control registers have independent enable and low-power
+bits. is_enabled() currently tests their combined update mask, so an
+off regulator with its low-power bit set is incorrectly reported as
+enabled.
 
-Use the full name.
+Add an optional enable mask and use it for VINTCORE, AB8500 TVOUT,
+AB8505 ADC, and AB8505 VAUX5/6. Regulators whose two-bit field encodes
+the complete operating state continue to test the full update mask.
 
-Fixes: fe27f04e0cdc ("power: supply: mp2629: Add impedance compensation config")
+References: AB8500 User Manual, UM0836 Rev 3, p. 214;
+AB8505 User Manual, DM00046744 Rev 3, pp. 171-172 and 223
+
+Fixes: 65e03ed2d0cd ("regulators: Fixed errors in ab8500 register mapping")
 Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260905101849.42830-1-kmehltretter@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260901-ux500-dts-snowball-regulator-v2-5-fe88b01829bf@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-class-power-mp2629 | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/ab8500.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/ABI/testing/sysfs-class-power-mp2629 b/Documentation/ABI/testing/sysfs-class-power-mp2629
-index 914d67caac0d7..a85f926ce9c26 100644
---- a/Documentation/ABI/testing/sysfs-class-power-mp2629
-+++ b/Documentation/ABI/testing/sysfs-class-power-mp2629
-@@ -1,4 +1,4 @@
--What:		/sys/class/power_supply/mp2629_battery/batt_impedance_compen
-+What:		/sys/class/power_supply/mp2629_battery/batt_impedance_compensation
- Date:		April 2020
- KernelVersion:	5.7
- Description:
+diff --git a/drivers/regulator/ab8500.c b/drivers/regulator/ab8500.c
+index ba39ff87339cd..43720f51e3076 100644
+--- a/drivers/regulator/ab8500.c
++++ b/drivers/regulator/ab8500.c
+@@ -48,6 +48,7 @@ struct ab8500_shared_mode {
+  * @update_bank: bank to control on/off
+  * @update_reg: register to control on/off
+  * @update_mask: mask to enable/disable and set mode of regulator
++ * @enable_mask: optional mask for an enable bit separate from the mode bit
+  * @update_val: bits holding the regulator current mode
+  * @update_val_idle: bits to enable the regulator in idle (low power) mode
+  * @update_val_normal: bits to enable the regulator in normal (high power) mode
+@@ -69,6 +70,7 @@ struct ab8500_regulator_info {
+ 	u8 update_bank;
+ 	u8 update_reg;
+ 	u8 update_mask;
++	u8 enable_mask;
+ 	u8 update_val;
+ 	u8 update_val_idle;
+ 	u8 update_val_normal;
+@@ -263,6 +265,7 @@ static int ab8500_regulator_is_enabled(struct regulator_dev *rdev)
+ {
+ 	int ret;
+ 	struct ab8500_regulator_info *info = rdev_get_drvdata(rdev);
++	u8 enable_mask;
+ 	u8 regval;
+ 
+ 	if (info == NULL) {
+@@ -278,13 +281,15 @@ static int ab8500_regulator_is_enabled(struct regulator_dev *rdev)
+ 		return ret;
+ 	}
+ 
++	enable_mask = info->enable_mask ? info->enable_mask : info->update_mask;
++
+ 	dev_vdbg(rdev_get_dev(rdev),
+ 		"%s-is_enabled (bank, reg, mask, value): 0x%x, 0x%x, 0x%x,"
+ 		" 0x%x\n",
+ 		info->desc.name, info->update_bank, info->update_reg,
+-		info->update_mask, regval);
++		enable_mask, regval);
+ 
+-	if (regval & info->update_mask)
++	if (regval & enable_mask)
+ 		return 1;
+ 	else
+ 		return 0;
+@@ -719,6 +724,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x03,
+ 		.update_reg		= 0x80,
+ 		.update_mask		= 0x44,
++		.enable_mask		= 0x04,
+ 		.update_val		= 0x44,
+ 		.update_val_idle	= 0x44,
+ 		.update_val_normal	= 0x04,
+@@ -747,6 +753,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x03,
+ 		.update_reg		= 0x80,
+ 		.update_mask		= 0x82,
++		.enable_mask		= 0x02,
+ 		.update_val		= 0x02,
+ 		.update_val_idle	= 0x82,
+ 		.update_val_normal	= 0x02,
+@@ -956,6 +963,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x01,
+ 		.update_reg		= 0x55,
+ 		.update_mask		= 0x18,
++		.enable_mask		= 0x10,
+ 		.update_val		= 0x10,
+ 		.update_val_idle	= 0x18,
+ 		.update_val_normal	= 0x10,
+@@ -978,6 +986,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x01,
+ 		.update_reg		= 0x56,
+ 		.update_mask		= 0x18,
++		.enable_mask		= 0x10,
+ 		.update_val		= 0x10,
+ 		.update_val_idle	= 0x18,
+ 		.update_val_normal	= 0x10,
+@@ -999,6 +1008,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x03,
+ 		.update_reg		= 0x80,
+ 		.update_mask		= 0x44,
++		.enable_mask		= 0x04,
+ 		.update_val		= 0x04,
+ 		.update_val_idle	= 0x44,
+ 		.update_val_normal	= 0x04,
+@@ -1027,6 +1037,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x03,
+ 		.update_reg		= 0x80,
+ 		.update_mask		= 0x82,
++		.enable_mask		= 0x02,
+ 		.update_val		= 0x02,
+ 		.update_val_idle	= 0x82,
+ 		.update_val_normal	= 0x02,
 -- 
 2.53.0
 
