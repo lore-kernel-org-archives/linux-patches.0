@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055165;
-	b=klXw2dxq/b3//ERI8zSvRHcI1fmAcbYGY7Gahil8p04NUhPe2JSD53k5DJjmO+PsZHoM
-	 /GHfvAuXjig+x0G11g5uHj1P7uMaP8HCtLe7Iv08yWoKRdRSXdtXfos8xP4fMirSThqkk
-	 mmI60gPJeWfxlfJzue8GehDcY5lBO8aTJabaPyWk6nb7l1mQ50ZoC+kpUk4F6eJiM3txR
-	 h5V0tcTNMqkbMZl6N+raTBgLIZbUMLk7Eq71RcQj2b7IUBwYCEBC1HPqsC4UJ1XOxHuUw
-	 fR/DdAHE3Ghko3KCc65V7KP2JW+bYTsxLYDp+zXyp7zys82hFS43/a1qTU1Q5/J47zg==
+	t=1795055168;
+	b=fdl5C8sGcHdKoIJx5fOBXIzCkVpL6nt/VkYDa4E5FCUADyGBoYmztE3rzS8S0Pa5vUgZ
+	 EOstBnV1tQEELIZ9EoLhM3ZhDE5jXgraBk50KMiVYc30kILEcAemIkB3ukSHAN8VfQQ41
+	 dcs9fE5UsetnbCQDSu+5NRumdM87/RfNNnp/7jw05yJ4QR5HiUnQPbvieV0HDXnEBGLOK
+	 /ZCaITgiJUptuzgoULtKetp2ZOKGA3CQJD+mM51BYi0pbbJYXEsak5abmrT0nqDnKEENh
+	 s22PREeyXaJjeWq4cq9ZCFoYtocpnH/d3dbxsUWkdtOGnKNeRfidrcFi3DUjsGlRntQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055165;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055168;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+O/AMZi+pRCgZ63+TSBarfKDiUeh6sajnleLQTf4wD0=;
-	b=htXfTDsjH5Ik3/FPkBu4VqpQEKjd0kH1Dejuud/EjD6EZff3jVxQwjEI2gMTd1Xb7hrn
-	 ekWjIfR5eB3eniNfI3gW8aED+vvWQLX1ght0AivdipolFQDYKfDghEg65N5aJiAnTPehC
-	 p6d6XLgUWrvERGqjhq53DqE2xMRCZhVz3Vrj38Ejpmkjc4hHhnQmCywx/eAqbNkEEO9Lr
-	 zD3//KoeRmu3Eg5NZ3RpWEAp/VPWjX9AqkASyqpNWNqi+FNwVXOxtjnOXA1su72LGoqh4
-	 dq63FG6JO9xgPdiBM7Rdbkl+hIuLDsQgAnxjOZnUttX5+f95WQ9+iWJtkrgh2KWa8jQ==
+	bh=7d4C93pBzmYesmTCKDLgeLMC0pCIYKakWhyc2vz3JI8=;
+	b=bXwQ9qwpqjdA3CML44g3TR9ijTMA/iD/TZQNX77KTkxkV2lUsAmuT+d+2Fl4lgh0YU1b
+	 glBiB2UUPoWey724rduNToemuVEMRLUox869fUZtCCdmvI/nh3amEzj/q0wyuPI+gAv3y
+	 cUxw03+PochTneJ9RoyzHoUVMcYD4mFilgPs1dsMK8AKYkWh/wuwLOPxPip+c28wmUaea
+	 YbG6v+opa10SftAuKtKlZo/aQfVhmepI8n6DMIwD0LoniMU504FX8+Qb6islixjCq8hKn
+	 Y3xM/tc5zCupdSvF1l9Bu5/bmwYo89bYvz+lxXlt0BYjBhMYtOpJF6SnP5eIAGR6Y7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mcb2FtCy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Rr8QPLU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFE4606A325;
-	Thu, 19 Nov 2026 02:26:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F240606A32A;
+	Thu, 19 Nov 2026 02:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mcb2FtCy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D99F1F000C4;
-	Thu, 19 Nov 2026 02:26:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Rr8QPLU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D111F000C4;
+	Thu, 19 Nov 2026 02:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055165;
-	bh=+O/AMZi+pRCgZ63+TSBarfKDiUeh6sajnleLQTf4wD0=;
+	s=korg; t=1795055168;
+	bh=7d4C93pBzmYesmTCKDLgeLMC0pCIYKakWhyc2vz3JI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mcb2FtCyjCFcamI4COMs+uNT+fw9CP0SgmI5+j5ivycEeNyeao24sipDXj5Gm2KBX
-	 FbZVcQombFWYxpBViTvUA4H9ErFFC/J6Uz8ewZ9tlTvF+X0/Qa5j8n3Pf3CNm08OKq
-	 Onz+HrcJ9nVmFkt58QDvf6ZQvqOwmqJkLWOdqlGs=
+	b=1Rr8QPLU1OTk5ZZniz2uGI7h8VUEZeyI6fyQYVoFcw2mHGigjzAI3joyNpCECsf6Q
+	 ahnVNTQt6p5VpzbDKU2df4JgFpk3FC/EQVC8u+9kOiIP57pSu3pXUR1og7Ugc4ZV/Q
+	 jQ63dgx+G/hshHjJy8MURUDE2hkIhJ0XFupLOaJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Asseily <karl@asseily.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1534/2214] dt-bindings: vendor-prefixes: add ESS Technology
-Date: Wed, 18 Nov 2026 15:53:30 +0100
-Message-ID: <20261118150113.538140051@linuxfoundation.org>
+Subject: [PATCH 5.15 1508/2214] dmaengine: mv_xor: kill tasklet on channel add error path
+Date: Wed, 18 Nov 2026 15:53:04 +0100
+Message-ID: <20261118150112.317808797@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,36 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Asseily <karl@asseily.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit beb56d1d3de522885b30bb97fee83825041d65c2 ]
+[ Upstream commit bcb4d469b19d53dc21e4a1da12d4438e7489e150 ]
 
-Add the vendor prefix for ESS Technology, Inc., maker of the SABRE family
-of audio DACs. The prefix follows the company's domain, esstech.com.
+If request_irq() succeeds but a later step (self-test or device
+registration) fails, the error path at err_free_irq frees the IRQ
+but does not kill the tasklet.  A previously scheduled tasklet can
+still run after the channel is freed, accessing freed memory.
 
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Karl Asseily <karl@asseily.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260918182317.143223-2-karl@asseily.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Add tasklet_kill() after free_irq() on the error path.
+
+Fixes: ff7b04796d98 ("dmaengine: DMA engine driver for Marvell XOR engine")
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260909234601.101883-1-rosenp@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/mv_xor.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 38fc30b90f6cd..2ca68ee8602cf 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -379,6 +379,8 @@ patternProperties:
-     description: Seiko Epson Corp.
-   "^esp,.*":
-     description: Espressif Systems Co. Ltd.
-+  "^esstech,.*":
-+    description: ESS Technology, Inc.
-   "^est,.*":
-     description: ESTeem Wireless Modems
-   "^ettus,.*":
+diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
+index 8b215cbca1186..7c1fdb2c91ce1 100644
+--- a/drivers/dma/mv_xor.c
++++ b/drivers/dma/mv_xor.c
+@@ -1162,6 +1162,7 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
+ 
+ err_free_irq:
+ 	free_irq(mv_chan->irq, mv_chan);
++	tasklet_kill(&mv_chan->irq_tasklet);
+ err_free_dma:
+ 	dma_free_wc(&pdev->dev, MV_XOR_POOL_SIZE,
+ 			  mv_chan->dma_desc_pool_virt, mv_chan->dma_desc_pool);
 -- 
 2.53.0
 
