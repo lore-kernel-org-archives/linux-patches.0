@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046971;
-	b=SuadB8HFri/gANMjbJ2eJv2DG+Se29P/+g7phXlEJnPFfZqz4XJAZz4pLnQXmcdSIIma
-	 i1bAoOo4O1UQyBdwCm6c6rPOkefAAnoqX//CYS8qs3Iv2gj7wjkroGhQ25598K8T1WzP9
-	 qnDGg0mirZtqBF/0FfYrXPa34I8QXbcyw3xPHjDTR/cRVnHHu1K+9TSIh/w9+b1pNcYhC
-	 rmUD2XDY1HqswdZlbFJ+ijeA/oXiexBm/Zerl3q4d1xRKC5d2+YwARMQ9pQ0gDkm/JFVX
-	 FJM2OvR0TTnLbh8MkdZm7fF2uorKjcyVM8xkZfqeIA1Wz/SzGeTRsuS0v/unCIsFf7Q==
+	t=1795046974;
+	b=ZD6taD7ycWBKCUTrLRs0+2CxY4jvkZPtnRDM6Dy2PLq+Fdcj72LKMzD5dIercrudsvdB
+	 lf7GLPKKAoNWwKhh2X+vtwmKermLYdLR5LDS0prdtM2n+a/1mmNVSyvGVGnJzMqqe0JdT
+	 +eHcw2NygehaoeJZhs7OaXmOaWO1yR3MKPP3xOpO64x2lA2LjXsY9/9W/46c8H8gfLRoL
+	 0lTBpUR5HbJw1xPJv4IA86+CuRs1lCLh1iYU2XYV3SySzDjwR3UdO6EmdTANucJgorGmY
+	 3jRayjCbr+uEfiGAfk9vR+hbcrrmHauiigVMQlVVJjIQPMzCbwXCrkfqLgPZYd63F2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046971;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046974;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2FZ2UMONGS11z/Y0d396rbmhuplZXFivaQRp7PMIb44=;
-	b=xo5go49k3QCo4wPRVs/tjYOfOsQD5LER5PIO+dTYUxNw7LdjaRlYPQ75HUfCxBsZW05i
-	 yJGqOFlk0HS6ySjFKcDt3MN7QzqjveeIPvYEkh7M++izP/Nn+odo47tNLT7EF3om0SQul
-	 T8t2/lWxzvbACdinIXeKy/bkcn6aH9U4+MYMx7yKFXBs6Gix2zdbrqcNFeXAs/9L6nAx/
-	 KrORap3Qw2m8AG6fpItsbI2rrv3zrPOGY8PHtJFgiusEeR+NaeWpp2mWryjRdcgn/1POW
-	 bK7H7XwkIBb9r679+iZ5d5u/N216t5AfjiGgr/Ve2NGv5MlK2+xoUCGQuMCY4jTCFhQ==
+	bh=p0JBJNrNS+GNjxT7IhcW0uDZChr0Wi+kZygN0U1ZXF8=;
+	b=Hhj9Fzb0YUdFJwEddOmR6wiP3He3IO0G8Np11SPvTpYL2putffGpAUW/tDQKNlYXETB/
+	 9Nl5jMiYraTlQbQVUgOybEgDjMtb7mC9tNOMWCgzoFFFjsU7lmlZuIBGN8VeX9LP/MgyD
+	 d4iHReLhzSSLvtdtF4NgWZV0xNMCilQ1qUPPns4tYTBsZFL5AlPCPOpfZAy4UWCiw2L9z
+	 /WWTeWbZWjXfMJkHqFbiQjBc6G3L4X7qlpe3sg214Z9fUjZtIFIHXdUgaQR26bwfSvqDt
+	 sZhz0fBXw7e5InZJJFxzoa9WAGQQ6UmzoFU8jaVz5APgKGqrALCIKcC8z7zSs0pZ82g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fW4s1zuf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vd4Gk4lq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A927606A31C;
-	Thu, 19 Nov 2026 00:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71245606A32A;
+	Thu, 19 Nov 2026 00:09:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fW4s1zuf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31281F000C4;
-	Thu, 19 Nov 2026 00:09:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vd4Gk4lq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C890B1F000C4;
+	Thu, 19 Nov 2026 00:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046971;
-	bh=2FZ2UMONGS11z/Y0d396rbmhuplZXFivaQRp7PMIb44=;
+	s=korg; t=1795046974;
+	bh=p0JBJNrNS+GNjxT7IhcW0uDZChr0Wi+kZygN0U1ZXF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fW4s1zufmivtUXELVxFEQCUHFL4C8vcDWlEb2GcgwhXIF4eAOEzegpZGECWccyUIy
-	 y24PK0ZHBMCP7WFS3Fq1FTQPLwN+Buiay8axIzafqZUNDXYWFnY03C/EzNlNZ3dQiD
-	 Mk8G0fBS/CEDcV005JsQ+E0xhwkTBdfIPjrFDYAc=
+	b=vd4Gk4lq2kEd8l7BY4Y+OGLxQZQes1MfgQzJFCf0mRZCBCoVaUh1Ux7PSsqS8PW+v
+	 kbmH+vzBEvnp+orFzXsrLKLchLfnUsxusagkh5TWDHsjfysuGo57HYF4jYBtlaz4bS
+	 0Z7uSt9goEl8DqT2ozjvmBc9DAYlq1xIglSYnNsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Radu Rendec <radu@rendec.net>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Geraldo Nascimento <geraldogabriel@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1473/2857] irqchip/imx-intmux: Fix runtime PM teardown on remove
-Date: Wed, 18 Nov 2026 15:41:47 +0100
-Message-ID: <20261118150254.352535583@linuxfoundation.org>
+Subject: [PATCH 6.1 1474/2857] PCI: rockchip: Drive at 2.5 GT/s, error other speeds
+Date: Wed, 18 Nov 2026 15:41:48 +0100
+Message-ID: <20261118150254.387353592@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,81 +71,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Geraldo Nascimento <geraldogabriel@gmail.com>
 
-[ Upstream commit b167c1a30e9e020e4c5e102c7a555943742c024b ]
+[ Upstream commit 84d08ff902f1ec01177fef1a21a38934927f5aee ]
 
-imx_intmux_probe() enables the IPG clock and then drops its runtime PM
-reference with pm_runtime_put(). With CONFIG_PM enabled, the runtime
-suspend callback disables the IPG clock. With CONFIG_PM disabled, the
-clock remains enabled after probe.
+Configure the core to be driven at 2.5 GT/s Link Speed and ignore any other
+speed with a warning. Also drop the 5.0 GT/s Link Speed defines from
+Rockchip PCIe header.
 
-imx_intmux_remove() accesses the CHANIER registers without first making
-sure that the device is runtime active. The device may therefore be
-runtime suspended with the IPG clock disabled when these registers are
-accessed. In addition, the remove path only calls pm_runtime_disable()
-and does not balance the clock enable when CONFIG_PM is disabled.
+The reason is that Shawn Lin from Rockchip has reiterated that there may be
+danger of "catastrophic failure" in using their PCIe with 5.0 GT/s speeds.
 
-Resume the device and acquire a runtime PM reference before accessing
-the registers. If resume fails, skip the register accesses but still
-tear down the chained handlers and IRQ domains. Disable runtime PM
-afterwards, drop the acquired reference without triggering another
-runtime suspend, and explicitly disable the IPG clock.
+While Rockchip has done so informally without issuing a proper errata, and
+the particulars are thus unknown, this may cause data loss or worse.
 
-This keeps the clock enabled while the hardware registers are accessed
-and balances the clk_prepare_enable() performed during probe for both
-CONFIG_PM configurations.
+This change is corroborated by RK3399 official datasheet [1], which states
+maximum link speed for this platform is 2.5 GT/s.
 
-This issue was found by manual code inspection.
+[1] https://opensource.rock-chips.com/images/d/d7/Rockchip_RK3399_Datasheet_V2.1-20200323.pdf
 
-Fixes: bb403111e017 ("irqchip/imx-intmux: Implement intmux runtime power management")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Radu Rendec <radu@rendec.net>
+Fixes: 956cd99b35a8 ("PCI: rockchip: Separate common code from RC driver")
+Reported-by: Dragan Simic <dsimic@manjaro.org>
+Reported-by: Shawn Lin <shawn.lin@rock-chips.com>
+Link: https://lore.kernel.org/all/ffd05070-9879-4468-94e3-b88968b4c21b@rock-chips.com/
+Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260914134211.1734163-1-lgs201920130244@gmail.com
+Link: https://patch.msgid.link/7421df7a7b7778ee99363cccfdfabbfa8aa6ab5e.1781622998.git.geraldogabriel@gmail.com
+[ sashal: adjusted context to match the existing Rockchip PCIe initialization code and HIWORD_UPDATE register macros ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-imx-intmux.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/pci/controller/pcie-rockchip.c | 14 ++++++--------
+ drivers/pci/controller/pcie-rockchip.h |  3 ---
+ 2 files changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/irqchip/irq-imx-intmux.c b/drivers/irqchip/irq-imx-intmux.c
-index c7bf73dcb7a10..87061eac27e91 100644
---- a/drivers/irqchip/irq-imx-intmux.c
-+++ b/drivers/irqchip/irq-imx-intmux.c
-@@ -284,12 +284,16 @@ static int imx_intmux_probe(struct platform_device *pdev)
- static void imx_intmux_remove(struct platform_device *pdev)
- {
- 	struct intmux_data *data = platform_get_drvdata(pdev);
--	int i;
-+	int i, ret;
-+
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
-+	if (ret < 0)
-+		dev_warn(&pdev->dev, "failed to resume device: %d\n", ret);
- 
- 	for (i = 0; i < data->channum; i++) {
- 		/* disable all interrupt sources of this channel */
--		writel_relaxed(0, data->regs + CHANIER(i));
--
-+		if (ret >= 0)
-+			writel_relaxed(0, data->regs + CHANIER(i));
- 		irq_set_chained_handler_and_data(data->irqchip_data[i].irq,
- 						 NULL, NULL);
- 
-@@ -297,6 +301,11 @@ static void imx_intmux_remove(struct platform_device *pdev)
+diff --git a/drivers/pci/controller/pcie-rockchip.c b/drivers/pci/controller/pcie-rockchip.c
+index bdce1ba7c1bc0..c1567a2ef1890 100644
+--- a/drivers/pci/controller/pcie-rockchip.c
++++ b/drivers/pci/controller/pcie-rockchip.c
+@@ -65,8 +65,10 @@ int rockchip_pcie_parse_dt(struct rockchip_pcie *rockchip)
  	}
  
- 	pm_runtime_disable(&pdev->dev);
-+	if (ret >= 0) {
-+		pm_runtime_put_noidle(&pdev->dev);
-+		clk_disable_unprepare(data->ipg_clk);
-+		pm_runtime_set_suspended(&pdev->dev);
+ 	rockchip->link_gen = of_pci_get_max_link_speed(node);
+-	if (rockchip->link_gen < 0 || rockchip->link_gen > 2)
+-		rockchip->link_gen = 2;
++	if (rockchip->link_gen < 0 || rockchip->link_gen >= 2) {
++		rockchip->link_gen = 1;
++		dev_warn(dev, "invalid max-link-speed, limited to 2.5 GT/s\n");
 +	}
- }
  
- #ifdef CONFIG_PM
+ 	rockchip->core_rst = devm_reset_control_get_exclusive(dev, "core");
+ 	if (IS_ERR(rockchip->core_rst)) {
+@@ -236,12 +238,8 @@ int rockchip_pcie_init_port(struct rockchip_pcie *rockchip)
+ 		goto err_exit_phy;
+ 	}
+ 
+-	if (rockchip->link_gen == 2)
+-		rockchip_pcie_write(rockchip, PCIE_CLIENT_GEN_SEL_2,
+-				    PCIE_CLIENT_CONFIG);
+-	else
+-		rockchip_pcie_write(rockchip, PCIE_CLIENT_GEN_SEL_1,
+-				    PCIE_CLIENT_CONFIG);
++	rockchip_pcie_write(rockchip, PCIE_CLIENT_GEN_SEL_1,
++			    PCIE_CLIENT_CONFIG);
+ 
+ 	regs = PCIE_CLIENT_LINK_TRAIN_ENABLE | PCIE_CLIENT_ARI_ENABLE |
+ 	       PCIE_CLIENT_CONF_LANE_NUM(rockchip->lanes);
+diff --git a/drivers/pci/controller/pcie-rockchip.h b/drivers/pci/controller/pcie-rockchip.h
+index 049ad984a4164..4702caac56114 100644
+--- a/drivers/pci/controller/pcie-rockchip.h
++++ b/drivers/pci/controller/pcie-rockchip.h
+@@ -37,7 +37,6 @@
+ #define   PCIE_CLIENT_MODE_RC		  HIWORD_UPDATE_BIT(0x0040)
+ #define   PCIE_CLIENT_MODE_EP            HIWORD_UPDATE(0x0040, 0)
+ #define   PCIE_CLIENT_GEN_SEL_1		  HIWORD_UPDATE(0x0080, 0)
+-#define   PCIE_CLIENT_GEN_SEL_2		  HIWORD_UPDATE_BIT(0x0080)
+ #define PCIE_CLIENT_LEGACY_INT_CTRL	(PCIE_CLIENT_BASE + 0x0c)
+ #define   PCIE_CLIENT_INT_IN_ASSERT		HIWORD_UPDATE_BIT(0x0002)
+ #define   PCIE_CLIENT_INT_IN_DEASSERT		HIWORD_UPDATE(0x0002, 0)
+@@ -184,8 +183,6 @@
+ 	(((x) & PCIE_CLIENT_DEBUG_LTSSM_MASK) == PCIE_CLIENT_DEBUG_LTSSM_L2)
+ #define PCIE_LINK_UP(x) \
+ 	(((x) & PCIE_CLIENT_LINK_STATUS_MASK) == PCIE_CLIENT_LINK_STATUS_UP)
+-#define PCIE_LINK_IS_GEN2(x) \
+-	(((x) & PCIE_CORE_PL_CONF_SPEED_MASK) == PCIE_CORE_PL_CONF_SPEED_5G)
+ 
+ #define RC_REGION_0_ADDR_TRANS_H		0x00000000
+ #define RC_REGION_0_ADDR_TRANS_L		0x00000000
 -- 
 2.53.0
 
