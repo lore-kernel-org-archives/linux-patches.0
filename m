@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058453;
-	b=clYJubTcfBbQhIX1kf0t1mNw5Qex30LeWdCHbUUWuk01X5aoLQeYUd3Fb25A3qO1uaur
-	 tjv0qD02nWL6a0zx8k1odSP+NIjdC0JkyMBZedDF7FaSQ/9stvQjcnPUCo7hhq7/YBDSy
-	 SQZbMK3OdMwKZpOtzq/DJs6WchO/3TvPot8ALtSL5K++dCVI7AuiUMcclBusoTM9hue4l
-	 gaHWAuE5Ymx2xEPRC99Aq7O5U6mOskyfaXCl9J8asdtWgyVUajk/tJdiD2d+0Hqau3OE6
-	 UAYRdNJ4R47YxKsW78m86ozaQtTG7iNmnq7KCEUSi6Zhtsz3N6yMAZDDLCDDoxSVzsw==
+	t=1795058456;
+	b=b5R60PaN26w+YOlDhnw4EJddVCuJkwxRUOUmLgAHJze+/jLjIy3JQMLk8f3p+BB8gT1Q
+	 xeizIZLrUSfYGiS3pes65UJ2UwetwToExvzrN37A6k5IBnUrXimkuSAtof4Ek1ON+NY2J
+	 X/n+SpXsbPXKYXokrsJNlOGGuUSfvwt6UacrvsjzhexHMth7lxshGXYve4BhnknQJmraY
+	 baofvO+79WsTqbnyyHBeU3fpu8ARJQ32123pjBKze04q8LHmjWepcrO4EF1T0PscIdb4S
+	 WwRzHsh/JVnDtTcLfSGBGDPysffnRuRZuwwwo30LHJjPT4oBbyLfzGfmt2Wq9tt3CSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058453;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058456;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OKF5ivMuJzrB9jpeRyJzJubHgfrxPYtLL21Tnd2bB9Q=;
-	b=O85b1+Lf7cl1KYRZ7kN+5exvXgQDkPCRNGe+9r6QcQq3SsLCIDXyM1MB1Km16WlbhN8F
-	 64M8izOZDK0nBEHMEnaQgDb2KBKy4SoqaKxwz6xA5iJM7LJ/25T5ZpY6c22Hj0KoJdwhV
-	 xq9xDOXu0ECld4eVQzhXNU9jURCQfoKTq9xn9Bg++teSYVtYUuLnJkVj1DMkG7oTScjFs
-	 u3Gf1Twn8wwky4baXPyTLZ21QhbeBUTzHbp2Op0zd0mikMmAcIhXhGikSC/EyAjR/Jzql
-	 1KbP58j1z/fiT8Mu8/XLcPOgAjEqTEcSp+j+BFr/oTFjBe0oY0d6Pk3Rocx8wUANOYw==
+	bh=RhTC3bji/+oYLmGAjGYS6MQbBi6qMR1PY9158Htw28w=;
+	b=Swd+bWjpyzhYKIujCHYCC8bEYD74N/oCCJ840tnXT4KOM+jwsT2m1IuqpmQFF3AjWVRU
+	 H5EhvmZFzDsEBtmYJ4Fqcx5QF4ScoHWlYaWF409MU3afBiW6FH4BrvqsJgNrVcr56ij30
+	 bKMBYCaev3t21q37EXUJFnycSmQk8/43YxcNR2p9blVefOmKJbUOdrSkWrGNRZkgYWjxF
+	 zBhzgfplVkX+HA9Jb5Js6asb0IQ2ifbwDUqlctRtx89qhgqZe4RM3sFFYE1LjVycfkvRM
+	 Ah1EPxhenVcRvK2q7ppV0+aNkS/AvjaIC4RuZWdB7NpGJZCPTCudEf8WHYvViIinZPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tMfa5BRJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=czc05yDF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE427606A332;
-	Thu, 19 Nov 2026 03:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE362606A32F;
+	Thu, 19 Nov 2026 03:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tMfa5BRJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311BF1F000C5;
-	Thu, 19 Nov 2026 03:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=czc05yDF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0914A1F000C5;
+	Thu, 19 Nov 2026 03:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058453;
-	bh=OKF5ivMuJzrB9jpeRyJzJubHgfrxPYtLL21Tnd2bB9Q=;
+	s=korg; t=1795058456;
+	bh=RhTC3bji/+oYLmGAjGYS6MQbBi6qMR1PY9158Htw28w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tMfa5BRJUz5LZJ2nb84YC3wJ2WgnbVW/vtw0qfrA4r5sDZH9MGd6hyEZe1zUwwIoE
-	 Gox8DLVN2qBHeNoi03pd/jzEAetaTI15JD398oznt5bqF9NN9BN6DGnPCkYzgZg382
-	 /OFVLz41lkq/LBtyGXTLS8Qzp9hzp+P5WRMwylWI=
+	b=czc05yDF2j5qi0Nmf4tb/pTL8wZKo+tf8jT6/07/9zLSBlI2MNApC4uowqA/dWYFq
+	 vNwFU2Uum06e8Q6OrZPTSx5zXsP0kHvBSf6QfHh/K1maM5C43tXdOjvNGOTREEB2yA
+	 svTWvfc6mmBkMsyOdQ1B1kwA4rOegtUMLrMi6wuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 5.10 0449/1848] staging: greybus: uart: fix racy TIOCMIWAIT implementation
-Date: Wed, 18 Nov 2026 15:41:27 +0100
-Message-ID: <20261118145933.187367772@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 0440/1848] mtd: maps: l440gx: Fix double put of the PM device in init_l440gx()
+Date: Wed, 18 Nov 2026 15:41:18 +0100
+Message-ID: <20261118145932.607119228@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,90 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit e94cda6551d4716b17353fc458baa9e85ddea9ff ]
+[ Upstream commit e6ca524ee5b2705be30ea19ce2e55122d9f9ed8f ]
 
-Check the wakeup condition after adding the task to the waitqueue and
-updating the task state to avoid missing a racing modem status update or
-disconnect.
+The PIIX4 PM device reference taken with pci_get_device() is dropped
+again before the iobase resource is allocated.  If pci_assign_resource()
+fails, the error path calls pci_dev_put() on pm_dev a second time,
+releasing a reference that is no longer owned and underflowing the
+reference count.
 
-Store the old icount on entry and do not update it in the completion
-handler to avoid missing events or reporting spurious ones (due to modem
-status changes before TIOCMIWAIT was called).
+Remove the extra pci_dev_put().
 
-Fixes: e68453ed28c5 ("greybus: uart-gb: now builds, more framework added")
-Cc: stable@kernel.org	# 4.9
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260907095305.130762-1-johan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: dd8e9ed6ed54 ("[MTD] Switch to pci_get_device and do ref counting")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/uart.c | 30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ drivers/mtd/maps/l440gx.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/staging/greybus/uart.c b/drivers/staging/greybus/uart.c
-index 4895029bb39f2..153ca95e9889e 100644
---- a/drivers/staging/greybus/uart.c
-+++ b/drivers/staging/greybus/uart.c
-@@ -53,7 +53,6 @@ struct gb_tty {
- 	spinlock_t read_lock;
- 	spinlock_t write_lock;
- 	struct async_icount iocount;
--	struct async_icount oldcount;
- 	wait_queue_head_t wioctl;
- 	struct mutex mutex;
- 	u8 ctrlin;	/* input control lines */
-@@ -656,11 +655,16 @@ static int wait_serial_change(struct gb_tty *gb_tty, unsigned long arg)
- 	if (!(arg & (TIOCM_DSR | TIOCM_RI | TIOCM_CD)))
- 		return -EINVAL;
+diff --git a/drivers/mtd/maps/l440gx.c b/drivers/mtd/maps/l440gx.c
+index 85cd273ce0654..1df5ea5fafcac 100644
+--- a/drivers/mtd/maps/l440gx.c
++++ b/drivers/mtd/maps/l440gx.c
+@@ -110,7 +110,6 @@ static int __init init_l440gx(void)
  
--	do {
-+	spin_lock_irq(&gb_tty->read_lock);
-+	old = gb_tty->iocount;
-+	spin_unlock_irq(&gb_tty->read_lock);
-+
-+	add_wait_queue(&gb_tty->wioctl, &wait);
-+	for (;;) {
-+		set_current_state(TASK_INTERRUPTIBLE);
-+
- 		spin_lock_irq(&gb_tty->read_lock);
--		old = gb_tty->oldcount;
- 		new = gb_tty->iocount;
--		gb_tty->oldcount = new;
- 		spin_unlock_irq(&gb_tty->read_lock);
- 
- 		if ((arg & TIOCM_DSR) && (old.dsr != new.dsr))
-@@ -670,18 +674,20 @@ static int wait_serial_change(struct gb_tty *gb_tty, unsigned long arg)
- 		if ((arg & TIOCM_RI) && (old.rng != new.rng))
- 			break;
- 
--		add_wait_queue(&gb_tty->wioctl, &wait);
--		set_current_state(TASK_INTERRUPTIBLE);
--		schedule();
--		remove_wait_queue(&gb_tty->wioctl, &wait);
- 		if (gb_tty->disconnected) {
--			if (arg & TIOCM_CD)
--				break;
- 			retval = -ENODEV;
--		} else if (signal_pending(current)) {
-+			break;
-+		}
-+
-+		schedule();
-+
-+		if (signal_pending(current)) {
- 			retval = -ERESTARTSYS;
-+			break;
- 		}
--	} while (!retval);
-+	}
-+	__set_current_state(TASK_RUNNING);
-+	remove_wait_queue(&gb_tty->wioctl, &wait);
- 
- 	return retval;
- }
+ 		/* Allocate the resource region */
+ 		if (pci_assign_resource(pm_dev, PIIXE_IOBASE_RESOURCE) != 0) {
+-			pci_dev_put(pm_dev);
+ 			printk(KERN_WARNING "Could not allocate pm iobase resource\n");
+ 			iounmap(l440gx_map.virt);
+ 			return -ENXIO;
 -- 
 2.53.0
 
