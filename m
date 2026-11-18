@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048683;
-	b=KYXbrjFzFGQK4rSY/K9PXcCbob+ZJK3fTj5R8cgUTOyRg5ddyuklGl3ompjIJ0ayicBz
-	 RzTgrAnq7AYeZ66vlHRwwYHM/K8DuK3iGsWzuyUyTcUZSYmp5Q6nOsc9RPr/XFeheVDd5
-	 p+LLATOxAFyha64bQP1PoJZR7FWtp+W3w7PF21YmBpetIvmMLw+XKqG4mLAOcNHzj6O5g
-	 qi3fL8KzqbCpbVswSqBAD5BVcpJESCKAws5uDFIhmCTWDbbjVou+YWSLrURCkYpWhyvGI
-	 /3Hfnf5jCEk9PXADByw5Lm2nc7BCRGcvYT6Grpx8iUH/asRf5WhyTBrKbG1cVojrJiw==
+	t=1795048685;
+	b=B5padTwwUAyhFWjvsVPPndwmS2I8TWN3Idv6k3SJQxmrUg3ISLFie8+IIeWJj0HF3R3+
+	 zMJ05gN7FbAp+n+11l7zIB1+2wx57LQD6YfcvovSSedM7BJ3xJ6eYbd19M2zVbi0Vrz/C
+	 B79P0fyVnZOWTnj+Zr3m1xzPUlWzKjpTkXT9qXKQPRDZAKYUVY8upH1BH2S2Jk+V7bwOB
+	 tpyalRrpU+PMSkLPfhbnt9XxtT6OLrSgCsHsdhFazAQOPtCLOzYj9bOiJTaQJEwTAQ9ev
+	 dcr/214NvlH4EjXxEsggF2IFoiTCEY9iS6bjhXivBgjlPX0fI7bY+z2YTdpshqlR+Bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048683;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048685;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A55cmRlI7fuSbl1W6UcAjVe/OE5GK0qyVf/Xj652zdQ=;
-	b=gLcLevnlEt9EXn8os3rqy9BVbVBsOYYNCrPGWW6uf59MLl85jRpH3RvjIq1jMaXn8h5B
-	 zdKDKroZlSFJLrOSA9RfIdcLwUflo7Kz4Zzzq+528S3OCaLcTof5itvAeQlw5seVPX7sF
-	 BYj3MZZgwOmMnu6DisSDpWLeHg/FKwb43/FP5NeBR0BhVexIxy/nwijvuiKmQicHzdCfQ
-	 DciGy7szUr/UAabYKgt6CWLbvtEvld80haJJtPNrB/oQem7isnKY0dnE8cLIGJJq1oSCn
-	 S+V9rAx7GOUE9dStVmHzJ8UYbGQiB1O+mlKb4OQles6tqzNQzTHoOzqRazs6j1qeaxg==
+	bh=dnvAos0m1tBPDhKcyQ3Z03v8+QW9E1VLcJYgraERi8w=;
+	b=1dVijg1aZWKBIFkKysxxc1/5YfcfklUdkNHjEfR82NAtuPbJdINnrfdzdxE3TyUWnGf6
+	 JZQIo+E6mdiX+7D5vtbrVPb9jRkkfgtJAJQ11mj6Xb2fn6qFEx2mZMjGKooXncs4W+ewO
+	 t5sdWL4+ImUDl+kzQBp4wKVzeNl8o1FJUpA5rvdk69U+vv8/jjB8T8aDDDm5DI2PWW3Eh
+	 rG9DwuhqRwUma7LiJqlz0xBrLZKCREoxkB/K/bil2YoOkzO58qcf+kAXQi/5+uevI8uSu
+	 4lC+JSy21eu3Hd5OdAi0s0URrK1zHqpXQzg3rNy1w6CBeFptVEIfvhyJIkk+NATj+QA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GPrrAPHf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KvGpxudf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C771606A31C;
-	Thu, 19 Nov 2026 00:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DABD9606A31C;
+	Thu, 19 Nov 2026 00:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GPrrAPHf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8124E1F000C4;
-	Thu, 19 Nov 2026 00:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KvGpxudf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF181F000C4;
+	Thu, 19 Nov 2026 00:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048683;
-	bh=A55cmRlI7fuSbl1W6UcAjVe/OE5GK0qyVf/Xj652zdQ=;
+	s=korg; t=1795048685;
+	bh=dnvAos0m1tBPDhKcyQ3Z03v8+QW9E1VLcJYgraERi8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GPrrAPHfqy/7Nq36ZjEzEHtwGF/NdvaGkVn+GVfJulgYxuObVjE+eWTuyFUArlKrr
-	 i3Z+PU64OcIxCZ94WeRY6tBc173asrWwgeTFJrdfZD589Iholf7fZ9pJVIZUOVnk6U
-	 fPHkqbHTPxn7OCzfBpM5GbAMpBU5srhTuMv/QvFA=
+	b=KvGpxudfIkok18Kuxc/Jvj6Ai/8LzyATCQYaEoGRtZJmUHxSeD7+NTTq0abgaeQ1l
+	 J2Cz8mvS/72QzRgo+XR/CkKfb3zZscQWRXukAXJz+SAq/4Aj7CR10gC1oiRmMSqRqi
+	 5hY0YevGlXuuial0JyQeCmS/Dkf/nDKxZSdbLigQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Chen Linxuan <chenlinxuan@uniontech.com>,
-	WangYuli <wangyuli@uniontech.com>,
-	Chen Linxuan <me@black-desk.cn>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2075/2857] MIPS: Only check -msym32 when need-compiler
-Date: Wed, 18 Nov 2026 15:51:49 +0100
-Message-ID: <20261118150316.124108985@linuxfoundation.org>
+Subject: [PATCH 6.1 2084/2857] RDMA/hns: Pin CQ buffer writable to match device DMA write access
+Date: Wed, 18 Nov 2026 15:51:58 +0100
+Message-ID: <20261118150316.444895159@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,88 +68,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Yishai Hadas <yishaih@nvidia.com>
 
-[ Upstream commit 7a8f286c235f5d308208cfdcb025b2a0e0c84742 ]
+[ Upstream commit ce29f6e741844a78ad1977f2a550ede27ecf95f8 ]
 
-During 'make modules_install', the need-compiler variable is null, so
-Makefile.compiler isn't included.  This results in call cc-option-yn
-returning nothing and consequently an error is issued:
+alloc_cq_buf() leaves user_access zero-initialized, but the device
+writes CQEs into the CQ buffer. Set IB_ACCESS_LOCAL_WRITE so the buffer
+is pinned writable, matching the device's write access.
 
-*** CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32.  Stop.
-
-and the invocation terminated for configurations that set the Kconfig
-option named.
-
-Previously commit a79a404e6c22 ("MIPS: Fix CONFIG_CPU_DADDI_WORKAROUNDS
-`modules_install' regression") addressed the same issue for GCC versions
-now supported for Linux compilation, but caused a build error with Clang
-because it doesn't support '-msym32'.  Then commit 18ca63a2e23c ("MIPS:
-Probe toolchain support of -msym32") fixed the issue with Clang, but
-reintroduced the 'make modules_install' error listed above.
-
-Wrap the handling of the '-msym32' option then with ifdef need-compiler,
-fixing said error for 'make modules_install'.
-
-For more technical details on why need-compiler is null during 'make
-modules_install' and why no compiler invocation is actually needed at
-this point, please refer to commit 4fe4a6374c4d ("MIPS: Only fiddle with
-CHECKFLAGS if need-compiler") and commit 805b2e1d427a ("kbuild: include
-Makefile.compiler only when compiler is needed").
-
-NB leading 8 spaces rather than tabs required due to `make' syntax.
-
-Link: https://lore.kernel.org/all/alpine.DEB.2.21.2502120612000.65342@angie.orcam.me.uk/
-Link: https://lore.kernel.org/all/alpine.DEB.2.21.2307180025120.62448@angie.orcam.me.uk/
-Fixes: a79a404e6c22 ("MIPS: Fix CONFIG_CPU_DADDI_WORKAROUNDS `modules_install' regression")
-Reported-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Closes: https://lore.kernel.org/all/alpine.DEB.2.21.2501030535080.49841@angie.orcam.me.uk/
-Co-developed-by: Chen Linxuan <chenlinxuan@uniontech.com>
-Signed-off-by: Chen Linxuan <chenlinxuan@uniontech.com>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Reviewed-by: Chen Linxuan <me@black-desk.cn>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 744b7bdfa79e ("RDMA/hns: Support 0 hop addressing for CQE buffer")
+Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://patch.msgid.link/20260915140933.40580-3-yishaih@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/Makefile | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_cq.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/mips/Makefile b/arch/mips/Makefile
-index 94080a5073485..c534ccb1274f3 100644
---- a/arch/mips/Makefile
-+++ b/arch/mips/Makefile
-@@ -301,18 +301,20 @@ drivers-$(CONFIG_PCI)		+= arch/mips/pci/
- # We can always force a build with a 64-bits symbol format by
- # passing 'KBUILD_SYM32=no' option to the make's command line.
- #
--ifdef CONFIG_64BIT
--  ifndef KBUILD_SYM32
--    ifeq ($(shell expr $(load-y) \< 0xffffffff80000000), 0)
--      KBUILD_SYM32 = $(call cc-option-yn, -msym32)
-+ifdef need-compiler
-+  ifdef CONFIG_64BIT
-+    ifndef KBUILD_SYM32
-+      ifeq ($(shell expr $(load-y) \< 0xffffffff80000000), 0)
-+        KBUILD_SYM32 = $(call cc-option-yn, -msym32)
-+      endif
-     endif
--  endif
+diff --git a/drivers/infiniband/hw/hns/hns_roce_cq.c b/drivers/infiniband/hw/hns/hns_roce_cq.c
+index c72bbf21f1aeb..7d79273b39cd5 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_cq.c
++++ b/drivers/infiniband/hw/hns/hns_roce_cq.c
+@@ -206,6 +206,7 @@ static int alloc_cq_buf(struct hns_roce_dev *hr_dev, struct hns_roce_cq *hr_cq,
+ 	buf_attr.region[0].size = hr_cq->cq_depth * hr_cq->cqe_size;
+ 	buf_attr.region[0].hopnum = hr_dev->caps.cqe_hop_num;
+ 	buf_attr.region_count = 1;
++	buf_attr.user_access = IB_ACCESS_LOCAL_WRITE;
  
--  ifeq ($(KBUILD_SYM32), y)
--    cflags-$(KBUILD_SYM32) += -msym32 -DKBUILD_64BIT_SYM32
--  else
--    ifeq ($(CONFIG_CPU_DADDI_WORKAROUNDS), y)
--      $(error CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32)
-+    ifeq ($(KBUILD_SYM32), y)
-+      cflags-$(KBUILD_SYM32) += -msym32 -DKBUILD_64BIT_SYM32
-+    else
-+      ifeq ($(CONFIG_CPU_DADDI_WORKAROUNDS), y)
-+        $(error CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32)
-+      endif
-     endif
-   endif
- endif
+ 	ret = hns_roce_mtr_create(hr_dev, &hr_cq->mtr, &buf_attr,
+ 				  hr_dev->caps.cqe_ba_pg_sz + PAGE_SHIFT,
 -- 
 2.53.0
 
