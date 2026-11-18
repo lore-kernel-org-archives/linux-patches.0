@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033224;
-	b=VErzRWUSmQ1MdwsvVB4a5OA2FkvSc02nn2HQ6GwD3a8rnZ4OR2D9CeJ8BoA8w3/YLEgj
-	 QZ+0pLZGEUUcvCw27hmFLTkgNNtfjP42Xrb5aNUJulRsdHg1wcZYeOVlT6YtVNel6QI3R
-	 sBRlBGj/ezmfWb7YjKaSGQNT0ybbvI1qLzrJZQ717qrk23cHAZ6fL5AVJ7D+BQxjxVXMC
-	 wfRPk7mPUAHRVzqJZKE9P/+78be9DSOBtL/ecGVt2bky84jAV2UO1G3VQ6mM4Few51raF
-	 jISJQg55melaHS7VmC4dWAf84U8FTsm/7U6ljeDdGpsinCBoZO+AehfaPWo7T1AgJyg==
+	t=1795033227;
+	b=gp40LF5fkvSXzwh1SfS8FWiwbLsh/T68CqYDJkFhxHp73xxQmvBWVeJxH94BkPBch96g
+	 fBacZVHF0Sp5AZBGmvDm17JgYyXWnR0ukCBxpD7tijYHpC0smV4YuIzyX0r1h91zlQlG5
+	 Pbclr1Tm9SK92ZnLG0Zvb/44IDUJZNhUsYM8xDl34MzOBoHHLYTCRBfJKOuOwO1MLWLSH
+	 g7+PVEudI5xfGKAVaAaC8KOaruuKvcDYCKjZ7ODWbh8ZLplOTE1FH2zZaZFSxHrWtcDWs
+	 KhnJ1eT/4VLYCUMJ+Azs7b/lXuaIVt21JXK5N1xqAWTivUnv99cRc/zMcqaboPln1nQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033224;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033227;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AIgUMMJJfRV9ImpK9arHz12fIrAOj1imedN/n/VLvi8=;
-	b=2byAOPZ6WfB7wptF4k8Qi6IHNAt364vZq8LevsJNVWq2iJDMZ2rMPOKRqAvI2Ke6uiJZ
-	 9L3dg1PZHKLl8LkQpCsUjnijCvhoyzN1p/1dL4JPdjhp+pXITW+K/u13lFGYNoKB3Bfea
-	 /v0IOLN2b/sRM+q2qAIajADwdigd0M/6sZZMTNbCMzYrLUeFjxSVEfy+bZdTKZ1KH77LC
-	 ZMPJbprKRB4/zxvA/cfGCBCiSfhuNr5oTR5DmubMkZdlMFBtScdRIumMVW+uC/vb5hHmW
-	 Jq52mtbyomfXSfu830d1jJUDcGle/wmcF+Evs77eJ4p+GkRrt3eFus7FYEUrkPZuM2A==
+	bh=bug3YS2PnxCyEx3xTdqezLUXr2hLVUUd04cT0fgn11s=;
+	b=QA5JorcCavNrF3CIFvLYUbe+N/i8DnBy23tolUTMKbwl7myTSj8MZRE6wHHdl8+cv8qi
+	 MT+aKa+zSxXL2oicHgSJ+aoot9TBA2LNgNZfgdwfeHnsJJRwBX5wxSSoR46ODXlL73sPv
+	 7p39IyILeaV7dTwIlvYP+XcE8OkOEA7kfjrvw0qwGr7m6XQAb93fywNd3QSuN9oi4Y8gd
+	 HG5EccIZFbpuutZY+QDJgnHnAAlqYuxzb9QnilC/Ty4uyV2+B+kDzeEXxOAwdt/+d+dOr
+	 sPFnNkF5caqucDmLUZg6Eny8159f5Ro/1pqvrcLAQFB/KcPENkj0xOWBUfF5BzcHtfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0NM3Yixb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XR6hcls1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC6860A2600;
-	Wed, 18 Nov 2026 20:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B5D606A330;
+	Wed, 18 Nov 2026 20:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0NM3Yixb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44511F000C4;
-	Wed, 18 Nov 2026 20:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XR6hcls1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F891F000C4;
+	Wed, 18 Nov 2026 20:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033224;
-	bh=AIgUMMJJfRV9ImpK9arHz12fIrAOj1imedN/n/VLvi8=;
+	s=korg; t=1795033227;
+	bh=bug3YS2PnxCyEx3xTdqezLUXr2hLVUUd04cT0fgn11s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0NM3YixbKRW0zCgDt4j+ICJSWvQRSLpPg3I37W01CnL1Lvi0JVByyIiaINCGZBdyD
-	 tiHX3LEfubhd0tfmWcTTPOeIZBsdXJPJpmZfRQrOgX3REU+agIvxEY7U4CzL0Rxd6T
-	 oAyEUmduzRXM0M95jXSK9mEDBvn8jDgiu9lKexcA=
+	b=XR6hcls1ysvysKY2ZyYeu6nZEcnjpEc2+mxuj225Ua5W6gA9qj9GzvUQDByorv6UY
+	 I5B8OVjMEubxW3k0pItVHRZR4wIDckoS1uRSTXn/jac54uKanrMcza+aLVrWuTcxJB
+	 vLAqwbvSfYddMMD3SdI/kIeNHwltqdABv9b/aaPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Berger <opendmb@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1649/1756] net: bcmgenet: revise suspend/resume
-Date: Wed, 18 Nov 2026 16:02:56 +0100
-Message-ID: <20261118150115.391168845@linuxfoundation.org>
+Subject: [PATCH 6.12 1650/1756] net: bcmgenet: recover from a failed resume
+Date: Wed, 18 Nov 2026 16:02:57 +0100
+Message-ID: <20261118150115.427221037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,362 +69,230 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doug Berger <opendmb@gmail.com>
+From: Nicolai Buchwitz <nb@tipi-net.de>
 
-[ Upstream commit 254f3239dd070e469f45c3ca8b6ac38e47d6c730 ]
+[ Upstream commit 1c1f51c3ee9ccf86462e36548291ed44fecd5355 ]
 
-If the network interface is configured for Wake-on-LAN we should
-avoid bringing the interface down and up since it slows the time
-to reestablish network traffic on resume.
+A resume that fails in bcmgenet_init_dma() returns with the interface
+still IFF_UP and the datapath gone. The next ifdown runs the teardown
+a second time and napi_disable() waits for a NAPI_STATE_SCHED bit that
+nothing will clear:
 
-Redundant calls to phy_suspend() and phy_resume() are removed
-since they are already invoked from within phy_stop() and
-phy_start() called from bcmgenet_netif_stop() and
-bcmgenet_netif_start().
+  task:ip  state:D
+    usleep_range_state+0xec/0x158
+    napi_disable_locked+0x254/0x318
+    napi_disable+0x3c/0x68
+    bcmgenet_netif_stop+0x1c8/0x318
+    bcmgenet_close+0x24/0xd0
+    __dev_close_many+0x18c/0x310
 
-Signed-off-by: Doug Berger <opendmb@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250306192643.2383632-15-opendmb@gmail.com
+RTNL is held across the wait, so everything else blocks behind it.
+
+The same resume gates the clock and detaches the device. Close releases
+the clock a second time and ifup fails with -ENODEV. The hardware filters
+stay armed, so the next WoL suspend wakes on any frame. That suspend sets
+CMD_RX_EN for magic packet detection, so the WoL resume reuses rings that
+are gone.
+
+A failed resume should leave a state the ordinary paths can handle. Clear
+rx_cbs and tx_cbs as they are freed so they answer whether a datapath
+exists, and leave the clock alone so close and suspend release it once.
+The WoL resume rebuilds instead, so stop the PHY first, phy_start() only
+takes PHY_READY or PHY_HALTED.
+
+Flagged in a sashiko review and reproduced on a CM4 by forcing the resume
+allocation to fail.
+
+Fixes: b6e978e50444 ("net: bcmgenet: add suspend/resume callbacks")
+Fixes: 254f3239dd07 ("net: bcmgenet: revise suspend/resume")	# for the WoL parts
+Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261022-nb-genet-fini-dma-net-v3-1-6e9fc89c0156@tipi-net.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 1c1f51c3ee9c ("net: bcmgenet: recover from a failed resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/genet/bcmgenet.c    | 100 +++++++++++++++---
- .../net/ethernet/broadcom/genet/bcmgenet.h    |   2 +
- .../ethernet/broadcom/genet/bcmgenet_wol.c    |  69 ++++++------
- 3 files changed, 119 insertions(+), 52 deletions(-)
+ .../net/ethernet/broadcom/genet/bcmgenet.c    | 92 +++++++++++++------
+ 1 file changed, 62 insertions(+), 30 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index 44bee231caab8..9280f94641d74 100644
+index 9280f94641d74..608dd03c6fe69 100644
 --- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
 +++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -2616,7 +2616,7 @@ static void init_umac(struct bcmgenet_priv *priv)
+@@ -2991,7 +2991,9 @@ static void bcmgenet_fini_dma(struct bcmgenet_priv *priv)
  
- 	/* Enable MDIO interrupts on GENET v3+ */
- 	if (bcmgenet_has_mdio_intr(priv))
--		int0_enable |= (UMAC_IRQ_MDIO_DONE | UMAC_IRQ_MDIO_ERROR);
-+		int0_enable |= UMAC_IRQ_MDIO_EVENT;
- 
- 	bcmgenet_intrl2_0_writel(priv, int0_enable, INTRL2_CPU_MASK_CLEAR);
- 
-@@ -3183,10 +3183,8 @@ static irqreturn_t bcmgenet_isr0(int irq, void *dev_id)
- 	netif_dbg(priv, intr, priv->dev,
- 		  "IRQ=0x%x\n", status);
- 
--	if (bcmgenet_has_mdio_intr(priv) &&
--		status & (UMAC_IRQ_MDIO_DONE | UMAC_IRQ_MDIO_ERROR)) {
-+	if (bcmgenet_has_mdio_intr(priv) && status & UMAC_IRQ_MDIO_EVENT)
- 		wake_up(&priv->wq);
--	}
- 
- 	/* all other interested interrupts handled in bottom half */
- 	status &= (UMAC_IRQ_LINK_EVENT | UMAC_IRQ_PHY_DET_R);
-@@ -3344,19 +3342,21 @@ static void bcmgenet_netif_stop(struct net_device *dev, bool stop_phy)
- {
- 	struct bcmgenet_priv *priv = netdev_priv(dev);
- 
--	bcmgenet_disable_tx_napi(priv);
- 	netif_tx_disable(dev);
- 
- 	/* Disable MAC receive */
-+	bcmgenet_hfb_reg_writel(priv, 0, HFB_CTRL);
- 	umac_enable_set(priv, CMD_RX_EN, false);
- 
-+	if (stop_phy)
-+		phy_stop(dev->phydev);
-+
- 	bcmgenet_dma_teardown(priv);
- 
- 	/* Disable MAC transmit. TX DMA disabled must be done before this */
- 	umac_enable_set(priv, CMD_TX_EN, false);
- 
--	if (stop_phy)
--		phy_stop(dev->phydev);
-+	bcmgenet_disable_tx_napi(priv);
- 	bcmgenet_disable_rx_napi(priv);
- 	bcmgenet_intr_disable(priv);
- 
-@@ -4121,7 +4121,10 @@ static int bcmgenet_resume_noirq(struct device *d)
- 			pm_wakeup_event(&priv->pdev->dev, 0);
- 
- 		/* From WOL-enabled suspend, switch to regular clock */
--		bcmgenet_power_up(priv, GENET_POWER_WOL_MAGIC);
-+		if (!bcmgenet_power_up(priv, GENET_POWER_WOL_MAGIC))
-+			return 0;
-+
-+		/* Failed so fall through to reset MAC */
- 	}
- 
- 	/* If this is an internal GPHY, power it back on now, before UniMAC is
-@@ -4133,8 +4136,6 @@ static int bcmgenet_resume_noirq(struct device *d)
- 	/* take MAC out of reset */
- 	bcmgenet_umac_reset(priv);
- 
--	bcmgenet_intrl2_0_writel(priv, UMAC_IRQ_WAKE_EVENT, INTRL2_CPU_CLEAR);
--
- 	return 0;
+ 	bcmgenet_free_rx_buffers(priv);
+ 	kfree(priv->rx_cbs);
++	priv->rx_cbs = NULL;
+ 	kfree(priv->tx_cbs);
++	priv->tx_cbs = NULL;
  }
  
-@@ -4144,10 +4145,46 @@ static int bcmgenet_resume(struct device *d)
- 	struct bcmgenet_priv *priv = netdev_priv(dev);
- 	struct bcmgenet_rxnfc_rule *rule;
- 	int ret;
-+	u32 reg;
+ /* init_edma: Initialize DMA control register */
+@@ -3051,6 +3053,7 @@ static int bcmgenet_init_dma(struct bcmgenet_priv *priv, bool flush_rx)
+ 			       GFP_KERNEL);
+ 	if (!priv->tx_cbs) {
+ 		kfree(priv->rx_cbs);
++		priv->rx_cbs = NULL;
+ 		return -ENOMEM;
+ 	}
  
- 	if (!netif_running(dev))
- 		return 0;
+@@ -3069,7 +3072,9 @@ static int bcmgenet_init_dma(struct bcmgenet_priv *priv, bool flush_rx)
+ 		netdev_err(priv->dev, "failed to initialize Rx queues\n");
+ 		bcmgenet_free_rx_buffers(priv);
+ 		kfree(priv->rx_cbs);
++		priv->rx_cbs = NULL;
+ 		kfree(priv->tx_cbs);
++		priv->tx_cbs = NULL;
+ 		return ret;
+ 	}
  
-+	if (device_may_wakeup(d) && priv->wolopts) {
-+		reg = bcmgenet_umac_readl(priv, UMAC_CMD);
-+		if (reg & CMD_RX_EN) {
-+			/* Successfully exited WoL, just resume data flows */
-+			list_for_each_entry(rule, &priv->rxnfc_list, list)
-+				if (rule->state == BCMGENET_RXNFC_STATE_ENABLED)
-+					bcmgenet_hfb_enable_filter(priv,
-+							rule->fs.location + 1);
-+			bcmgenet_hfb_enable_filter(priv, 0);
-+			bcmgenet_set_rx_mode(dev);
-+			bcmgenet_enable_rx_napi(priv);
+@@ -3377,7 +3382,9 @@ static int bcmgenet_close(struct net_device *dev)
+ 
+ 	netif_dbg(priv, ifdown, dev, "bcmgenet_close\n");
+ 
+-	bcmgenet_netif_stop(dev, false);
++	/* A failed resume has torn the datapath down already */
++	if (priv->tx_cbs)
++		bcmgenet_netif_stop(dev, false);
+ 
+ 	/* Really kill the PHY state machine and disconnect from it */
+ 	phy_disconnect(dev->phydev);
+@@ -3385,6 +3392,9 @@ static int bcmgenet_close(struct net_device *dev)
+ 	free_irq(priv->irq0, priv);
+ 	free_irq(priv->irq1, priv);
+ 
++	/* A failed resume left the device detached, __dev_open() refuses that */
++	netif_device_attach(dev);
 +
-+			/* Reinitialize Tx flows */
-+			bcmgenet_tdma_disable(priv);
-+			bcmgenet_init_tx_queues(priv->dev);
-+			reg = bcmgenet_tdma_readl(priv, DMA_CTRL);
-+			reg |= DMA_EN;
-+			bcmgenet_tdma_writel(priv, reg, DMA_CTRL);
-+			bcmgenet_enable_tx_napi(priv);
+ 	if (priv->internal_phy)
+ 		ret = bcmgenet_power_down(priv, GENET_POWER_PASSIVE);
+ 
+@@ -4152,7 +4162,11 @@ static int bcmgenet_resume(struct device *d)
+ 
+ 	if (device_may_wakeup(d) && priv->wolopts) {
+ 		reg = bcmgenet_umac_readl(priv, UMAC_CMD);
+-		if (reg & CMD_RX_EN) {
 +
-+			bcmgenet_link_intr_enable(priv);
-+			phy_start_machine(dev->phydev);
++		/* The WoL power down sets CMD_RX_EN itself, so the bit
++		 * alone does not mean the rings survived
++		 */
++		if (priv->tx_cbs && (reg & CMD_RX_EN)) {
+ 			/* Successfully exited WoL, just resume data flows */
+ 			list_for_each_entry(rule, &priv->rxnfc_list, list)
+ 				if (rule->state == BCMGENET_RXNFC_STATE_ENABLED)
+@@ -4182,6 +4196,9 @@ static int bcmgenet_resume(struct device *d)
+ 		bcmgenet_rdma_disable(priv);
+ 		bcmgenet_intr_disable(priv);
+ 		bcmgenet_fini_dma(priv);
++		if (phy_is_started(dev->phydev) ||
++		    dev->phydev->state == PHY_ERROR)
++			phy_stop(dev->phydev);
+ 		enable_irq(priv->irq1);
+ 	}
+ 
+@@ -4207,8 +4224,9 @@ static int bcmgenet_resume(struct device *d)
+ 	/* Reinitialize TDMA and RDMA and SW housekeeping */
+ 	ret = bcmgenet_init_dma(priv, false);
+ 	if (ret) {
++		/* Leave the block clocked, close and suspend tear it down */
+ 		netdev_err(dev, "failed to initialize DMA\n");
+-		goto out_clk_disable;
++		return ret;
+ 	}
+ 
+ 	if (!device_may_wakeup(d))
+@@ -4219,50 +4237,64 @@ static int bcmgenet_resume(struct device *d)
+ 	netif_device_attach(dev);
+ 
+ 	return 0;
++}
+ 
+-out_clk_disable:
+-	if (priv->internal_phy)
+-		bcmgenet_power_down(priv, GENET_POWER_PASSIVE);
+-	clk_disable_unprepare(priv->clk);
+-	return ret;
++/* Arm the configured wake filters and drop the rest, then clear old
++ * matches so that only a new one wakes the system
++ */
++static void bcmgenet_wol_arm_filters(struct bcmgenet_priv *priv)
++{
++	struct bcmgenet_rxnfc_rule *rule;
++	u32 reg, hfb_enable = 0;
 +
-+			netif_device_attach(dev);
-+			enable_irq(priv->irq1);
-+			return 0;
-+		}
-+		/* MAC was reset so complete bcmgenet_netif_stop() */
-+		umac_enable_set(priv, CMD_RX_EN | CMD_TX_EN, false);
-+		bcmgenet_rdma_disable(priv);
-+		bcmgenet_intr_disable(priv);
-+		bcmgenet_fini_dma(priv);
-+		enable_irq(priv->irq1);
++	if (priv->wolopts & WAKE_FILTER)
++		list_for_each_entry(rule, &priv->rxnfc_list, list)
++			if (rule->fs.ring_cookie == RX_CLS_FLOW_WAKE &&
++			    rule->state == BCMGENET_RXNFC_STATE_ENABLED)
++				hfb_enable |= 1 << rule->fs.location;
++
++	reg = bcmgenet_hfb_reg_readl(priv, HFB_CTRL);
++	if (GENET_IS_V1(priv) || GENET_IS_V2(priv)) {
++		reg &= ~RBUF_HFB_FILTER_EN_MASK;
++		reg |= hfb_enable << (RBUF_HFB_FILTER_EN_SHIFT + 1);
++	} else {
++		bcmgenet_hfb_reg_writel(priv, hfb_enable << 1,
++					HFB_FLT_ENABLE_V3PLUS + 4);
 +	}
++	if (!hfb_enable)
++		reg &= ~RBUF_HFB_EN;
++	bcmgenet_hfb_reg_writel(priv, reg, HFB_CTRL);
 +
- 	init_umac(priv);
++	bcmgenet_intrl2_0_writel(priv, 0xFFFFFFFF, INTRL2_CPU_MASK_SET);
++	bcmgenet_intrl2_0_writel(priv, 0xFFFFFFFF, INTRL2_CPU_CLEAR);
+ }
  
- 	phy_init_hw(dev->phydev);
-@@ -4194,19 +4231,52 @@ static int bcmgenet_suspend(struct device *d)
+ static int bcmgenet_suspend(struct device *d)
  {
  	struct net_device *dev = dev_get_drvdata(d);
  	struct bcmgenet_priv *priv = netdev_priv(dev);
-+	struct bcmgenet_rxnfc_rule *rule;
-+	u32 reg, hfb_enable = 0;
+-	struct bcmgenet_rxnfc_rule *rule;
+-	u32 reg, hfb_enable = 0;
  
  	if (!netif_running(dev))
  		return 0;
  
++	/* A failed resume has torn the datapath down already. Resume still
++	 * enables irq1 on the WoL path, so it has to be disabled here.
++	 */
++	if (!priv->tx_cbs) {
++		if (device_may_wakeup(d) && priv->wolopts) {
++			bcmgenet_wol_arm_filters(priv);
++			disable_irq(priv->irq1);
++		}
++		return 0;
++	}
++
  	netif_device_detach(dev);
  
--	bcmgenet_netif_stop(dev, true);
-+	if (device_may_wakeup(d) && priv->wolopts) {
-+		netif_tx_disable(dev);
-+
-+		/* Suspend non-wake Rx data flows */
-+		if (priv->wolopts & WAKE_FILTER)
-+			list_for_each_entry(rule, &priv->rxnfc_list, list)
-+				if (rule->fs.ring_cookie == RX_CLS_FLOW_WAKE &&
-+				    rule->state == BCMGENET_RXNFC_STATE_ENABLED)
-+					hfb_enable |= 1 << rule->fs.location;
-+		reg = bcmgenet_hfb_reg_readl(priv, HFB_CTRL);
-+		if (GENET_IS_V1(priv) || GENET_IS_V2(priv)) {
-+			reg &= ~RBUF_HFB_FILTER_EN_MASK;
-+			reg |= hfb_enable << (RBUF_HFB_FILTER_EN_SHIFT + 1);
-+		} else {
-+			bcmgenet_hfb_reg_writel(priv, hfb_enable << 1,
-+						HFB_FLT_ENABLE_V3PLUS + 4);
-+		}
-+		if (!hfb_enable)
-+			reg &= ~RBUF_HFB_EN;
-+		bcmgenet_hfb_reg_writel(priv, reg, HFB_CTRL);
-+
-+		/* Clear any old filter matches so only new matches wake */
-+		bcmgenet_intrl2_0_writel(priv, 0xFFFFFFFF, INTRL2_CPU_MASK_SET);
-+		bcmgenet_intrl2_0_writel(priv, 0xFFFFFFFF, INTRL2_CPU_CLEAR);
+ 	if (device_may_wakeup(d) && priv->wolopts) {
+ 		netif_tx_disable(dev);
  
--	if (!device_may_wakeup(d))
--		phy_suspend(dev->phydev);
-+		if (-ETIMEDOUT == bcmgenet_tdma_disable(priv))
-+			netdev_warn(priv->dev,
-+				    "Timed out while disabling TX DMA\n");
- 
--	/* Disable filtering */
--	bcmgenet_hfb_reg_writel(priv, 0, HFB_CTRL);
-+		bcmgenet_disable_tx_napi(priv);
-+		bcmgenet_disable_rx_napi(priv);
-+		disable_irq(priv->irq1);
-+		bcmgenet_tx_reclaim_all(dev);
-+		bcmgenet_fini_tx_napi(priv);
-+	} else {
-+		/* Teardown the interface */
-+		bcmgenet_netif_stop(dev, true);
-+	}
- 
- 	return 0;
- }
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.h b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-index 532a4ea04c6e6..4f18193a6bd09 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-@@ -295,6 +295,8 @@ struct bcmgenet_rx_stats64 {
- /* Only valid for GENETv3+ */
- #define UMAC_IRQ_MDIO_DONE		(1 << 23)
- #define UMAC_IRQ_MDIO_ERROR		(1 << 24)
-+#define UMAC_IRQ_MDIO_EVENT		(UMAC_IRQ_MDIO_DONE | \
-+					 UMAC_IRQ_MDIO_ERROR)
- 
- /* INTRL2 instance 1 definitions */
- #define UMAC_IRQ1_TX_INTR_MASK		0xFFFF
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-index 945b32fe5697d..96d5d4f7f51fe 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-@@ -145,8 +145,7 @@ int bcmgenet_wol_power_down_cfg(struct bcmgenet_priv *priv,
- 				enum bcmgenet_power_mode mode)
- {
- 	struct net_device *dev = priv->dev;
--	struct bcmgenet_rxnfc_rule *rule;
--	u32 reg, hfb_ctrl_reg, hfb_enable = 0;
-+	u32 reg, hfb_ctrl_reg;
- 	int retries = 0;
- 
- 	if (mode != GENET_POWER_WOL_MAGIC) {
-@@ -154,18 +153,6 @@ int bcmgenet_wol_power_down_cfg(struct bcmgenet_priv *priv,
- 		return -EINVAL;
- 	}
- 
--	/* Can't suspend with WoL if MAC is still in reset */
--	spin_lock_bh(&priv->reg_lock);
--	reg = bcmgenet_umac_readl(priv, UMAC_CMD);
--	if (reg & CMD_SW_RESET)
--		reg &= ~CMD_SW_RESET;
--
--	/* disable RX */
--	reg &= ~CMD_RX_EN;
--	bcmgenet_umac_writel(priv, reg, UMAC_CMD);
--	spin_unlock_bh(&priv->reg_lock);
--	mdelay(10);
--
- 	if (priv->wolopts & (WAKE_MAGIC | WAKE_MAGICSECURE)) {
- 		reg = bcmgenet_umac_readl(priv, UMAC_MPD_CTRL);
- 		reg |= MPD_EN;
-@@ -177,13 +164,8 @@ int bcmgenet_wol_power_down_cfg(struct bcmgenet_priv *priv,
- 	}
- 
- 	hfb_ctrl_reg = bcmgenet_hfb_reg_readl(priv, HFB_CTRL);
--	if (priv->wolopts & WAKE_FILTER) {
--		list_for_each_entry(rule, &priv->rxnfc_list, list)
--			if (rule->fs.ring_cookie == RX_CLS_FLOW_WAKE)
--				hfb_enable |= (1 << (rule->fs.location + 1));
--		reg = (hfb_ctrl_reg & ~RBUF_HFB_EN) | RBUF_ACPI_EN;
--		bcmgenet_hfb_reg_writel(priv, reg, HFB_CTRL);
--	}
-+	reg = hfb_ctrl_reg | RBUF_ACPI_EN;
-+	bcmgenet_hfb_reg_writel(priv, reg, HFB_CTRL);
- 
- 	/* Do not leave UniMAC in MPD mode only */
- 	retries = bcmgenet_poll_wol_status(priv);
-@@ -198,14 +180,12 @@ int bcmgenet_wol_power_down_cfg(struct bcmgenet_priv *priv,
- 	netif_dbg(priv, wol, dev, "MPD WOL-ready status set after %d msec\n",
- 		  retries);
- 
--	clk_prepare_enable(priv->clk_wol);
-+	/* Disable phy status updates while suspending */
-+	mutex_lock(&dev->phydev->lock);
-+	dev->phydev->state = PHY_READY;
-+	mutex_unlock(&dev->phydev->lock);
- 
--	if (hfb_enable) {
--		bcmgenet_hfb_reg_writel(priv, hfb_enable,
--					HFB_FLT_ENABLE_V3PLUS + 4);
--		hfb_ctrl_reg = RBUF_HFB_EN | RBUF_ACPI_EN;
--		bcmgenet_hfb_reg_writel(priv, hfb_ctrl_reg, HFB_CTRL);
--	}
-+	clk_prepare_enable(priv->clk_wol);
- 
- 	/* Enable CRC forward */
- 	spin_lock_bh(&priv->reg_lock);
-@@ -213,13 +193,17 @@ int bcmgenet_wol_power_down_cfg(struct bcmgenet_priv *priv,
- 	priv->crc_fwd_en = 1;
- 	reg |= CMD_CRC_FWD;
- 
-+	/* Can't suspend with WoL if MAC is still in reset */
-+	if (reg & CMD_SW_RESET)
-+		reg &= ~CMD_SW_RESET;
-+
- 	/* Receiver must be enabled for WOL MP detection */
- 	reg |= CMD_RX_EN;
- 	bcmgenet_umac_writel(priv, reg, UMAC_CMD);
- 	spin_unlock_bh(&priv->reg_lock);
- 
- 	reg = UMAC_IRQ_MPD_R;
--	if (hfb_enable)
-+	if (hfb_ctrl_reg & RBUF_HFB_EN)
- 		reg |=  UMAC_IRQ_HFB_SM | UMAC_IRQ_HFB_MM;
- 
- 	bcmgenet_intrl2_0_writel(priv, reg, INTRL2_CPU_MASK_CLEAR);
-@@ -230,6 +214,7 @@ int bcmgenet_wol_power_down_cfg(struct bcmgenet_priv *priv,
- int bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
- 			      enum bcmgenet_power_mode mode)
- {
-+	struct net_device *dev = priv->dev;
- 	u32 reg;
- 
- 	if (mode != GENET_POWER_WOL_MAGIC) {
-@@ -242,6 +227,10 @@ int bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
- 
- 	bcmgenet_intrl2_0_writel(priv, UMAC_IRQ_WAKE_EVENT,
- 				 INTRL2_CPU_MASK_SET);
-+	if (bcmgenet_has_mdio_intr(priv))
-+		bcmgenet_intrl2_0_writel(priv,
-+					 UMAC_IRQ_MDIO_EVENT,
-+					 INTRL2_CPU_MASK_CLEAR);
- 
- 	/* Disable Magic Packet Detection */
- 	if (priv->wolopts & (WAKE_MAGIC | WAKE_MAGICSECURE)) {
-@@ -252,14 +241,12 @@ int bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
- 		bcmgenet_umac_writel(priv, reg, UMAC_MPD_CTRL);
- 	}
- 
--	/* Disable WAKE_FILTER Detection */
--	if (priv->wolopts & WAKE_FILTER) {
+ 		/* Suspend non-wake Rx data flows */
+-		if (priv->wolopts & WAKE_FILTER)
+-			list_for_each_entry(rule, &priv->rxnfc_list, list)
+-				if (rule->fs.ring_cookie == RX_CLS_FLOW_WAKE &&
+-				    rule->state == BCMGENET_RXNFC_STATE_ENABLED)
+-					hfb_enable |= 1 << rule->fs.location;
 -		reg = bcmgenet_hfb_reg_readl(priv, HFB_CTRL);
--		if (!(reg & RBUF_ACPI_EN))
--			return -EPERM;	/* already reset so skip the rest */
--		reg &= ~(RBUF_HFB_EN | RBUF_ACPI_EN);
+-		if (GENET_IS_V1(priv) || GENET_IS_V2(priv)) {
+-			reg &= ~RBUF_HFB_FILTER_EN_MASK;
+-			reg |= hfb_enable << (RBUF_HFB_FILTER_EN_SHIFT + 1);
+-		} else {
+-			bcmgenet_hfb_reg_writel(priv, hfb_enable << 1,
+-						HFB_FLT_ENABLE_V3PLUS + 4);
+-		}
+-		if (!hfb_enable)
+-			reg &= ~RBUF_HFB_EN;
 -		bcmgenet_hfb_reg_writel(priv, reg, HFB_CTRL);
--	}
-+	/* Disable ACPI mode */
-+	reg = bcmgenet_hfb_reg_readl(priv, HFB_CTRL);
-+	if (!(reg & RBUF_ACPI_EN))
-+		return -EPERM;	/* already reset so skip the rest */
-+	reg &= ~RBUF_ACPI_EN;
-+	bcmgenet_hfb_reg_writel(priv, reg, HFB_CTRL);
+-
+-		/* Clear any old filter matches so only new matches wake */
+-		bcmgenet_intrl2_0_writel(priv, 0xFFFFFFFF, INTRL2_CPU_MASK_SET);
+-		bcmgenet_intrl2_0_writel(priv, 0xFFFFFFFF, INTRL2_CPU_CLEAR);
++		bcmgenet_wol_arm_filters(priv);
  
- 	/* Disable CRC Forward */
- 	spin_lock_bh(&priv->reg_lock);
-@@ -268,5 +255,13 @@ int bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
- 	bcmgenet_umac_writel(priv, reg, UMAC_CMD);
- 	spin_unlock_bh(&priv->reg_lock);
- 
-+	/* Resume link status tracking */
-+	mutex_lock(&dev->phydev->lock);
-+	if (dev->phydev->link)
-+		dev->phydev->state = PHY_RUNNING;
-+	else
-+		dev->phydev->state = PHY_NOLINK;
-+	mutex_unlock(&dev->phydev->lock);
-+
- 	return 0;
- }
+ 		if (-ETIMEDOUT == bcmgenet_tdma_disable(priv))
+ 			netdev_warn(priv->dev,
 -- 
 2.53.0
 
