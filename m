@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030437;
-	b=CXA03bapKtnmbGhxooBjKEBHPG0MbSz3qCPPIIu683mko5gJf+ld6sgxzPn+M9N/qCQm
-	 gcW2xcTniT8EedAuGUOWMP9gXr4c7p2eK3qmMGUqit7sA4Q5fzi0L5CWw7P4C0w6I5+m0
-	 pkwxA69dTyrUu238nAsm+vMpRmKFoFOgJN2jXyVy/q2af3MOU2Eb3Ek3S6LD/cUchs/hb
-	 bsntqeBVQY9wlGkRIbVaw4AF0B6jlpwe4VGlz18NyeexNlrgXKnc7PYwSsh/X1ILZHxnx
-	 Bd+dvRWGjzO0lrrCbQaEoe31S7W6MU963D8F7JJEBP5dmfcvvc+MFWlFqPgi7cQu6gQ==
+	t=1795030439;
+	b=D8yOHEkqirmbcOcDbN625tXPAdTg+HC4jr5v8dgVwHkmxr7fzVO5P3RW3kZ40MQJjYbg
+	 RSRVVR0irYx1ZUstPiCRQKez5cb2Kroh9tfs5kbxkAiPzHBhj0AcG6yxwH3Fpc5Ox1EKK
+	 HWfC7BaGN5ZrkwZzd2gIr4U7WP/h3xrajh38P63MdvfpTgj4faBNhZot9LtsaiJzdqg7G
+	 c5pIEQlZpH8840wws2jEVk4XP9J8AS+FAezgrDCldUbLJSOso5I8UFSIEzrngFNGOpfhs
+	 kXSx7BydzrSI/SrMu1b94VdG+nj672VIJTNGY/d7dDV/Tu8KghGN71YjvWGokiNMy8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030437;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030439;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ybxc/GMCu6JveQY44GG5iPAzvtXVkLtXxKWDWsEctY4=;
-	b=rolHRjDDPe5N9o/PkCIvbqN6aqeIV7+jWxFna7sDyekg0/60mk9HC3aHBxaWREw01s+z
-	 3L4A2Ixvpzvt6GMBlpRYUzuXrePGnWSSyauOWakmqus/qw7N6s24sMAgKkzgoMIb15/wa
-	 ImH90HHLCBkSDXLuOzI4W9W2WZdS9pjLUhOavwE07v2X6+B/cCe/pcsStN+Vd3sl3LYgH
-	 jRhS6udJvsIrKoQvFSg8asy9/xer+cbynOnOtUr7Si9BTSE6s5ndOs5/sukwbwOg0/BnR
-	 rDTAuYjC6H3SXB+4hMfernlaeUEV3vrU9Fm7P9baNAJYl2Xu1Ey9fuJxgp5b39JS65Q==
+	bh=E/gO5IalVBL+XOgofShEH9ZyiFxjiHU+OH0kFv4sz5I=;
+	b=UNQfU/jC0T2/OLim6H0fNggGWThc073rMW8XSINIbOyiv2M8aZj6SVLK+NIjKgT5k7OL
+	 y0GjDaKz4F/r6ry2c55tisEu75OdNMDKkeZHnXeTqUwID/zeOonPxswEJWysC8jostvqE
+	 oAFzKkc9BIgUhlXbv3dxQFB+JLWTsIK+Ob2gDXXUlFTi0hCiVOgnfdkCxtIpLorGipgZJ
+	 HuqyRseIns8So7xEhFGezovpgfjdUsTStH/F6pNFTSCdbJlm2umkUIwfLNxbAfOjAgL69
+	 0NQqkTWRa9rVtxGcWEeysCBpEnPUtsdcln1NjKGO23dumQMwsENozwJs1sOeyqflB9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DFBT2Kgi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zJ7qCywW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D9A606B10B;
-	Wed, 18 Nov 2026 19:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3A1606B10B;
+	Wed, 18 Nov 2026 19:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DFBT2Kgi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487FD1F000C4;
-	Wed, 18 Nov 2026 19:33:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zJ7qCywW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263F11F000C4;
+	Wed, 18 Nov 2026 19:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030436;
-	bh=Ybxc/GMCu6JveQY44GG5iPAzvtXVkLtXxKWDWsEctY4=;
+	s=korg; t=1795030439;
+	bh=E/gO5IalVBL+XOgofShEH9ZyiFxjiHU+OH0kFv4sz5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DFBT2KgiBW9t0zbcbMZASdywadUkdx+XSNVpA+FMiKqiWZGuMW+N2wfSeFBzrHRpN
-	 tzQTPwVpmswG+37lOLGYNIY0OZE4Jc/5L203HPYhMpdxeGj4qkYlEU4RQUi1qChpWi
-	 dt2k88t/kMn9XjXC7z2TslrLj2oa1OEiVYylIQyQ=
+	b=zJ7qCywWHG2Tlj23ICAqDg2mqwu7IjirfT9ID5KXCxonBmGeodghLOdGZxa2thVN0
+	 nbmAJOu0ksq0lCeedu/oQhwtDxO52Raq5pvPDCw0Nzr5wHWCspaRXKJH+m6yqy6sya
+	 /K4xxUWXd7JoInSgTIs1qYMHPZZEdHLKn7CylmEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alireza Haghdoost <haghdoost@uber.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Quanye Yang <quanyeyang@proton.me>,
+	Jack Wang <jinpu.wang@cloud.ionos.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0705/1756] perf symbols: Dont let a modules last symbol overlap the next module
-Date: Wed, 18 Nov 2026 15:47:12 +0100
-Message-ID: <20261118150037.291034414@linuxfoundation.org>
+Subject: [PATCH 6.12 0706/1756] RDMA/rtrs-clt: Validate peer-supplied IO completion msg_id
+Date: Wed, 18 Nov 2026 15:47:13 +0100
+Message-ID: <20261118150037.364461125@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,165 +70,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alireza Haghdoost <haghdoost@uber.com>
+From: Quanye Yang <quanyeyang@proton.me>
 
-[ Upstream commit 45d15e89a783a0a279b7a54f9018c230127380d7 ]
+[ Upstream commit c1fcde82f7b68181553af7efb4410df04109a9a8 ]
 
-symbols__fixup_end() extends a zero-size symbol that is the last one in
-the kernel or in a module to the end of the next page. On x86 the next
-module can start in that page, so the stretched symbol overlaps it, and
-a lookup can return the wrong symbol. For example:
+process_io_rsp() indexes clt_path->reqs[] with the 19-bit msg_id
+taken from a WRITE_WITH_IMM immediate. That value is chosen by the
+peer. The only check was WARN_ON(msg_id >= queue_depth), which still
+lets a completion run after free_path_reqs() has set reqs to NULL,
+or against a slot whose FRWR is already gone. Either path
+dereferences req->mr and can GPF; KASAN reports a null-ptr-deref at
+offsetof(struct rtrs_clt_io_req, mr).
 
-  ffffffffc0c4aa50 t dca_sysfs_exit    [dca]
-  ffffffffc0c4b000 t __nft_trace_packet [nf_tables]
-  ffffffffc0c4b0b0 t nft_do_chain      [nf_tables]
+Treat a missing reqs array, an out-of-range msg_id, or a req
+without an MR as a protocol error and recover the connection.
 
-dca_sysfs_exit gets end 0xffffffffc0c4c000, and samples in nft_do_chain
-are reported as dca_sysfs_exit.
-
-This patch clamps the end to the next symbol's start. The ARM case this
-code was added for, where the next module is far away, is unchanged.
-
-Add a "Kallsyms symbol ends" test case to the Symbols suite that covers
-the kernel/module boundary, adjacent modules and a distant module.
-
-Fixes: 8799ebce84d672aa ("perf symbol: Update symbols__fixup_end()")
-Fixes: bacefe0c7b77b752 ("perf tools: Fixup module symbol end address properly")
-Signed-off-by: Alireza Haghdoost <haghdoost@uber.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Link: https://patch.msgid.link/r/20260923-rtrs-warning-inrtrs-clt-rdma-done-v1-1-0827a9a77c0b@proton.me
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Closes: https://lore.kernel.org/r/CA+0ovCiJZz6O8LzsS9Dq1-JE1OE1L_OTA6Mr-WratpUE6jczHw@mail.gmail.com
+Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
+Signed-off-by: Quanye Yang <quanyeyang@proton.me>
+Reviewed-by: Jack Wang <jinpu.wang@cloud.ionos.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/symbols.c | 96 +++++++++++++++++++++++++++++++++++++-
- tools/perf/util/symbol.c   |  4 ++
- 2 files changed, 99 insertions(+), 1 deletion(-)
+ drivers/infiniband/ulp/rtrs/rtrs-clt.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/tests/symbols.c b/tools/perf/tests/symbols.c
-index c947a83699cc0..f110763c42c2b 100644
---- a/tools/perf/tests/symbols.c
-+++ b/tools/perf/tests/symbols.c
-@@ -2,6 +2,7 @@
- #include <linux/compiler.h>
- #include <linux/string.h>
- #include <sys/mman.h>
-+#include <inttypes.h>
- #include <limits.h>
- #include "debug.h"
- #include "dso.h"
-@@ -223,4 +224,97 @@ static int test__symbols(struct test_suite *test __maybe_unused, int subtest __m
- 	return ret;
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+index 99de772e99afb..dbce23eabcfd1 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+@@ -489,18 +489,22 @@ static int rtrs_post_send_rdma(struct rtrs_clt_con *con,
+ 					    imm, flags, wr, NULL);
  }
  
--DEFINE_SUITE("Symbols", symbols);
-+struct kallsyms_sym {
-+	u64 start;
-+	const char *name;
-+};
-+
-+/*
-+ * kallsyms from an x86 host where nf_tables was loaded in the page right
-+ * after the last symbol of dca, plus a kernel symbol followed closely by a
-+ * module and a module far away from the others.
-+ */
-+static const struct kallsyms_sym kallsyms_syms[] = {
-+	{ 0xffffffff81000000, "_stext" },
-+	{ 0xffffffff81000ff0, "last_kernel_symbol" },
-+	{ 0xffffffff81001000, "near_module_symbol\t[near]" },
-+	{ 0xffffffffc0c4aa40, "dca_exit\t[dca]" },
-+	{ 0xffffffffc0c4aa50, "dca_sysfs_exit\t[dca]" },
-+	{ 0xffffffffc0c4b000, "__nft_trace_packet\t[nf_tables]" },
-+	{ 0xffffffffc0c4b0b0, "nft_do_chain\t[nf_tables]" },
-+	{ 0xffffffffc0c4b4e0, "nf_tables_core_module_exit\t[nf_tables]" },
-+	{ 0xffffffffc2000000, "far_module_symbol\t[far]" },
-+};
-+
-+static int check_symbol(struct dso *dso, u64 addr, const char *name, u64 end)
-+{
-+	struct symbol *sym = dso__find_symbol_nocache(dso, addr);
-+
-+	if (!sym || strcmp(sym->name, name)) {
-+		pr_debug("%#" PRIx64 ": expected %s, got %s\n", addr, name,
-+			 sym ? sym->name : "no symbol");
-+		return TEST_FAIL;
-+	}
-+	if (sym->end != end) {
-+		pr_debug("%s: expected end %#" PRIx64 ", got %#" PRIx64 "\n",
-+			 name, end, sym->end);
-+		return TEST_FAIL;
-+	}
-+	return TEST_OK;
-+}
-+
-+static int test__kallsyms_fixup_end(struct test_suite *test __maybe_unused,
-+				    int subtest __maybe_unused)
-+{
-+	struct dso *dso = dso__new("[kernel.kallsyms]");
-+	int ret = TEST_FAIL;
-+
-+	if (!dso)
-+		return TEST_FAIL;
-+
-+	for (unsigned int i = 0; i < ARRAY_SIZE(kallsyms_syms); i++) {
-+		struct symbol *sym = symbol__new(kallsyms_syms[i].start, 0, 0, 0,
-+						 kallsyms_syms[i].name);
-+
-+		if (!sym)
-+			goto out;
-+		symbols__insert(dso__symbols(dso), sym);
-+	}
-+
-+	symbols__fixup_end(dso__symbols(dso), true);
-+
-+	ret = TEST_OK;
-+	/* The next symbol is too close for the end of the page. */
-+	if (check_symbol(dso, 0xffffffff81000ff8, "last_kernel_symbol",
-+			 0xffffffff81001000))
-+		ret = TEST_FAIL;
-+	if (check_symbol(dso, 0xffffffffc0c4aa58, "dca_sysfs_exit\t[dca]",
-+			 0xffffffffc0c4b000))
-+		ret = TEST_FAIL;
-+	if (check_symbol(dso, 0xffffffffc0c4b280, "nft_do_chain\t[nf_tables]",
-+			 0xffffffffc0c4b4e0))
-+		ret = TEST_FAIL;
-+
-+	/* Far from the next module, the end of the page is still used. */
-+	if (check_symbol(dso, 0xffffffffc0c4b4f0,
-+			 "nf_tables_core_module_exit\t[nf_tables]",
-+			 0xffffffffc0c4d000))
-+		ret = TEST_FAIL;
-+	if (check_symbol(dso, 0xffffffff81001008, "near_module_symbol\t[near]",
-+			 0xffffffff81002000))
-+		ret = TEST_FAIL;
-+out:
-+	dso__put(dso);
-+	return ret;
-+}
-+
-+static struct test_case tests__symbols[] = {
-+	TEST_CASE("Symbols", symbols),
-+	TEST_CASE("Kallsyms symbol ends", kallsyms_fixup_end),
-+	{ .name = NULL, }
-+};
-+
-+struct test_suite suite__symbols = {
-+	.desc = "Symbols",
-+	.test_cases = tests__symbols,
-+};
-diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
-index b3f25a937b71e..99ee76bc6c513 100644
---- a/tools/perf/util/symbol.c
-+++ b/tools/perf/util/symbol.c
-@@ -278,6 +278,10 @@ void symbols__fixup_end(struct rb_root_cached *symbols, bool is_kallsyms)
- 			else
- 				prev->end = curr->start;
+-static void process_io_rsp(struct rtrs_clt_path *clt_path, u32 msg_id,
++static bool process_io_rsp(struct rtrs_clt_path *clt_path, u32 msg_id,
+ 			   s16 errno, bool w_inval)
+ {
+ 	struct rtrs_clt_io_req *req;
  
-+			/* The next module can start within that page */
-+			if (prev->end > curr->start)
-+				prev->end = curr->start;
+-	if (WARN_ON(msg_id >= clt_path->queue_depth))
+-		return;
++	if (!clt_path->reqs || msg_id >= clt_path->queue_depth)
++		return false;
+ 
+ 	req = &clt_path->reqs[msg_id];
++	if (!req->mr)
++		return false;
 +
- 			pr_debug4("%s sym:%s end:%#" PRIx64 "\n",
- 				  __func__, prev->name, prev->end);
- 		}
+ 	/* Drop need_inv if server responded with send with invalidation */
+ 	req->mr->need_inval &= !w_inval;
+ 	complete_rdma_req(req, errno, true, false);
++	return true;
+ }
+ 
+ static void rtrs_clt_recv_done(struct rtrs_clt_con *con, struct ib_wc *wc)
+@@ -562,7 +566,8 @@ static void rtrs_clt_rkey_rsp_done(struct rtrs_clt_con *con, struct ib_wc *wc)
+ 		if (WARN_ON(buf_id != msg_id))
+ 			goto out;
+ 		clt_path->rbufs[buf_id].rkey = le32_to_cpu(msg->rkey);
+-		process_io_rsp(clt_path, msg_id, err, w_inval);
++		if (!process_io_rsp(clt_path, msg_id, err, w_inval))
++			goto out;
+ 	}
+ 	ib_dma_sync_single_for_device(clt_path->s.dev->ib_dev, iu->dma_addr,
+ 				      iu->size, DMA_FROM_DEVICE);
+@@ -634,7 +639,13 @@ static void rtrs_clt_rdma_done(struct ib_cq *cq, struct ib_wc *wc)
+ 			w_inval = (imm_type == RTRS_IO_RSP_W_INV_IMM);
+ 			rtrs_from_io_rsp_imm(imm_payload, &msg_id, &err);
+ 
+-			process_io_rsp(clt_path, msg_id, err, w_inval);
++			if (!process_io_rsp(clt_path, msg_id, err, w_inval)) {
++				rtrs_err(clt_path->clt,
++					 "Invalid IO rsp: msg_id %u queue_depth %zu\n",
++					 msg_id, clt_path->queue_depth);
++				rtrs_rdma_error_recovery(con);
++				return;
++			}
+ 		} else if (imm_type == RTRS_HB_MSG_IMM) {
+ 			WARN_ON(con->c.cid);
+ 			rtrs_send_hb_ack(&clt_path->s);
 -- 
 2.53.0
 
