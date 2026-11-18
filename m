@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056049;
-	b=jFQNPiLojYeg/Y7YomeH53Y6iF/VF64D5Zzb32d1CMdVKLxzt/vEhy+bBuiTK87U5xsn
-	 DT5gyS9eH3O8V3fTLEUdQWn24VPI9Q2Ym9vviZsKtHRJbt0KqOOZCzPyUnPfWas+Cflku
-	 Itg0Nrl2iFY6zC5ytAa3D40/toHl5VLEL/xKXJScR294Lxu9MwbsQ9v8AfGaJiNZs7ahB
-	 4NMMOFUHfjnXMuysck1fQhjwTk/vuRpbqxJMCKEx5KGFbR1e4UGIP7A4Sdx87ZB6rJ7+w
-	 VdVM+EtqT6O5R2MNSqPft23sEwpjdaZ1m+wutwNr9rPVIuzl0Dut3sVHTHYmpFGIZ/g==
+	t=1795056051;
+	b=YmH8/mFn3T6oAiTtLYkoBVRiHrynHUty4GHcGJ6Xx4qzefT8WxlxeD0qRb87HT57ZSYe
+	 4qWmtCN8Sh7ZVvU873GgW9HitNtRNqMHu0AcUyJ6AIuXKVWqRGONH8/VzeCoPm69gj6bt
+	 2LuqAI38sDjrAh6rNCkQFVRw7PCvrDhrT5sAKjvgz9xW+d5YC0rwJUHavNqBNEVmlUZhu
+	 wcWiERQKBAViSMsjYBRD0315j1CVPjllsQf0RST71I1YPWhfLRv5YB8/io+4sKCStYEGq
+	 T0T17Y2kMvxJlTMxdQ+srC3U9/mocKAkawPNxhCP3VyTlSwYNba3bpA44pdm1npkZoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056049;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056051;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q4PuWj5xv84XDHeyq5IQmdKTRaEJ8JU0XspQI1l5kQk=;
-	b=yLQAMmUoAB7XBBkrnK83iuBCPNv1N2xjxzvyL7nmb/gVdR1dZH/J756//vfun0QL/Flz
-	 RjFus8XTIOEJDv0RaTKFx4ZSI6SjYfQACzcXfHtNFkl/vVxgOctnLz0Mz5VcmOZRl/8Q6
-	 P4P5bbjRGqcZIMLb/avV5cLbB6WWG1/A/2RyRkt49Ipxw3zo5gOpbgOss4HY5JtcrpYW+
-	 TPnBoIDZyspKK6QEYnHbxOp5FsTSZw53kTr6AhXHXD/Gy0X9WfrN00qkJV0i2aigfdRM1
-	 6mEErZYCv29nls0hHyw6YV2M23nqfk8wHyRTdFGObu2PhP4c3u88UNeZvSWs6hCYj+A==
+	bh=oNaQ01scCHf4TTNzHI1D6BTF95JoJ8bcT5yKrCDw5W0=;
+	b=tk8hQCMDFhj5rP0kEiuDN+g6qKp6HZuVcIiqXIHC1zQBEO3YwejCtYuIgA/V0BcMpQvo
+	 bbVBYny/GuFJYGPB3oJvS+IUvsz4W3t+EmizTh9GsGEr9hGX3WEsDAcWtRSXDpoKDQ2Eu
+	 JUbjqTST20fuB/iLGqftpVxRV5fA0niYpu6El5uAixLFBN4a/Jnj39pnFw1r9Z+LsuhRg
+	 XiFINjNXzDeomJaSdpd4/zg1kqc/U+aiv3bl3cwxqkwwviGUpwB9dm3SxSv47IbMHvxly
+	 0PXAllBEvWewxTZLZLYRguDWKHPjL0ETgUQ1uqrqbGtjEiDz2+IFSh9I+fzd11YaqgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b3H6iTJF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I30W2cmt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3877606A31C;
-	Thu, 19 Nov 2026 02:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1934606A31C;
+	Thu, 19 Nov 2026 02:40:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b3H6iTJF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418031F000C4;
-	Thu, 19 Nov 2026 02:40:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I30W2cmt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA981F000C4;
+	Thu, 19 Nov 2026 02:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056048;
-	bh=Q4PuWj5xv84XDHeyq5IQmdKTRaEJ8JU0XspQI1l5kQk=;
+	s=korg; t=1795056051;
+	bh=oNaQ01scCHf4TTNzHI1D6BTF95JoJ8bcT5yKrCDw5W0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b3H6iTJFwtV02769vrWfEqLV6JbXASNn3c8a2yeS8e1hTdUjwt9V1AnyI1T2PFPHe
-	 T/De+P8Gvz/hBNI3BcNHvEGldKWRGipF1N8WbYEjjElplqMmMh87XXLE7ls6AwB1Je
-	 moekFWl6JPH6GLCFe78a51BgTLOzL+RRAlp+DgY4=
+	b=I30W2cmt/NVjqZLMHZv5gW3QRovnHlq+CRGADbrbwsHLyoKHq8Up1uWlf7JQ9PCTd
+	 AW9XCG0AwHMhUG0b9kSG2SDn0dXqgY9noR+47fGs4w53+E+eGMJf4dxHqJoJUj5dKj
+	 2b5IEP6OP2y38a7XuBy9KZRLgnZEGbilfhd3Xi/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Sebastian Reichel <sre@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1848/2214] btrfs: qgroup: fix swapped blocks existence check when tracing after COW
-Date: Wed, 18 Nov 2026 15:58:44 +0100
-Message-ID: <20261118150125.320927765@linuxfoundation.org>
+Subject: [PATCH 5.15 1849/2214] power: supply: generic-adc-battery: convert to managed resources
+Date: Wed, 18 Nov 2026 15:58:45 +0100
+Message-ID: <20261118150125.354232829@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,59 +69,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Sebastian Reichel <sre@kernel.org>
 
-[ Upstream commit 0388b5bd3a6eb8bcb20208c3b6dbee96fd30bbe0 ]
+[ Upstream commit 93297ef6920f071ed109cbdcf640edfc693d0456 ]
 
-In btrfs_qgroup_trace_subtree_after_cow(), after we erase the swapped
-block, iterate over all possible tree levels to check if we sill have
-other swapped blocks. However the check is wrong, it considers that there
-are other swapped blocks if any rbtree for any level is empty, instead of
-not empty. As a consequence we set blocks->swapped to true basically every
-time since we always find an empty rbtree at least at level 7, since in
-practice it's nearly impossible to find such a huge btree. This makes
-every future call to btrfs_qgroup_trace_subtree_after_cow() do an
-unnecessary rbtree search instead of returning immediately.
+Convert driver to use managed resources to simplify driver code.
 
-Fix this by updating the condition to set swapped to true if we find an
-rbtree that is not empty.
-
-Fixes: f616f5cd9da7 ("btrfs: qgroup: Use delayed subtree rescan for balance")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Signed-off-by: Sebastian Reichel <sre@kernel.org>
+Stable-dep-of: 36b0abe904ac ("power: supply: generic-adc-battery: Propagate charged GPIO errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.h  | 2 +-
- fs/btrfs/qgroup.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/power/supply/generic-adc-battery.c | 81 ++++++----------------
+ 1 file changed, 23 insertions(+), 58 deletions(-)
 
-diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
-index 61ec4ba5414d5..6b670e041b918 100644
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -1138,7 +1138,7 @@ static inline void btrfs_wake_unfinished_drop(struct btrfs_fs_info *fs_info)
-  */
- struct btrfs_qgroup_swapped_blocks {
- 	spinlock_t lock;
--	/* RM_EMPTY_ROOT() of above blocks[] */
-+	/* True if any of the rbtrees in the blocks array below is not empty. */
- 	bool swapped;
- 	struct rb_root blocks[BTRFS_MAX_LEVEL];
+diff --git a/drivers/power/supply/generic-adc-battery.c b/drivers/power/supply/generic-adc-battery.c
+index 33e151422d946..6cb697e24db0f 100644
+--- a/drivers/power/supply/generic-adc-battery.c
++++ b/drivers/power/supply/generic-adc-battery.c
+@@ -23,6 +23,7 @@
+ #include <linux/iio/consumer.h>
+ #include <linux/iio/types.h>
+ #include <linux/power/generic-adc-battery.h>
++#include <linux/devm-helpers.h>
+ 
+ #define JITTER_DEFAULT 10 /* hope 10ms is enough */
+ 
+@@ -269,14 +270,13 @@ static int gab_probe(struct platform_device *pdev)
+ 	 * copying the static properties and allocating extra memory for holding
+ 	 * the extra configurable properties received from platform data.
+ 	 */
+-	properties = kcalloc(ARRAY_SIZE(gab_props) +
+-			     ARRAY_SIZE(gab_chan_name),
+-			     sizeof(*properties),
+-			     GFP_KERNEL);
+-	if (!properties) {
+-		ret = -ENOMEM;
+-		goto first_mem_fail;
+-	}
++	properties = devm_kcalloc(&pdev->dev,
++				  ARRAY_SIZE(gab_props) +
++				  ARRAY_SIZE(gab_chan_name),
++				  sizeof(*properties),
++				  GFP_KERNEL);
++	if (!properties)
++		return -ENOMEM;
+ 
+ 	memcpy(properties, gab_props, sizeof(gab_props));
+ 
+@@ -285,12 +285,13 @@ static int gab_probe(struct platform_device *pdev)
+ 	 * based on the channel supported by consumer device.
+ 	 */
+ 	for (chan = 0; chan < ARRAY_SIZE(gab_chan_name); chan++) {
+-		adc_bat->channel[chan] = iio_channel_get(&pdev->dev,
+-							 gab_chan_name[chan]);
++		adc_bat->channel[chan] = devm_iio_channel_get(&pdev->dev, gab_chan_name[chan]);
+ 		if (IS_ERR(adc_bat->channel[chan])) {
+ 			ret = PTR_ERR(adc_bat->channel[chan]);
++			if (ret != -ENODEV)
++				return dev_err_probe(&pdev->dev, ret, "Failed to get ADC channel %s\n", gab_chan_name[chan]);
+ 			adc_bat->channel[chan] = NULL;
+-		} else {
++		} else if (adc_bat->channel[chan]) {
+ 			/* copying properties for supported channels only */
+ 			int index2;
+ 
+@@ -305,10 +306,8 @@ static int gab_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	/* none of the channels are supported so let's bail out */
+-	if (!any) {
+-		ret = -ENODEV;
+-		goto second_mem_fail;
+-	}
++	if (!any)
++		return dev_err_probe(&pdev->dev, -ENODEV, "Failed to get any ADC channel\n");
+ 
+ 	/*
+ 	 * Total number of properties is equal to static properties
+@@ -319,25 +318,24 @@ static int gab_probe(struct platform_device *pdev)
+ 	psy_desc->properties = properties;
+ 	psy_desc->num_properties = index;
+ 
+-	adc_bat->psy = power_supply_register(&pdev->dev, psy_desc, &psy_cfg);
+-	if (IS_ERR(adc_bat->psy)) {
+-		ret = PTR_ERR(adc_bat->psy);
+-		goto err_reg_fail;
+-	}
++	adc_bat->psy = devm_power_supply_register(&pdev->dev, psy_desc, &psy_cfg);
++	if (IS_ERR(adc_bat->psy))
++		return dev_err_probe(&pdev->dev, PTR_ERR(adc_bat->psy), "Failed to register power-supply device\n");
+ 
+-	INIT_DELAYED_WORK(&adc_bat->bat_work, gab_work);
++	ret = devm_delayed_work_autocancel(&pdev->dev, &adc_bat->bat_work, gab_work);
++	if (ret)
++		return dev_err_probe(&pdev->dev, ret, "Failed to register delayed work\n");
+ 
+-	adc_bat->charge_finished = devm_gpiod_get_optional(&pdev->dev,
+-							   "charged", GPIOD_IN);
++	adc_bat->charge_finished = devm_gpiod_get_optional(&pdev->dev, "charged", GPIOD_IN);
+ 	if (adc_bat->charge_finished) {
+ 		int irq;
+ 
+ 		irq = gpiod_to_irq(adc_bat->charge_finished);
+-		ret = request_any_context_irq(irq, gab_charged,
++		ret = devm_request_any_context_irq(&pdev->dev, irq, gab_charged,
+ 				IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING,
+ 				"battery charged", adc_bat);
+ 		if (ret < 0)
+-			goto gpio_req_fail;
++			return dev_err_probe(&pdev->dev, ret, "Failed to register irq\n");
+ 	}
+ 
+ 	platform_set_drvdata(pdev, adc_bat);
+@@ -346,38 +344,6 @@ static int gab_probe(struct platform_device *pdev)
+ 	schedule_delayed_work(&adc_bat->bat_work,
+ 			msecs_to_jiffies(0));
+ 	return 0;
+-
+-gpio_req_fail:
+-	power_supply_unregister(adc_bat->psy);
+-err_reg_fail:
+-	for (chan = 0; chan < ARRAY_SIZE(gab_chan_name); chan++) {
+-		if (adc_bat->channel[chan])
+-			iio_channel_release(adc_bat->channel[chan]);
+-	}
+-second_mem_fail:
+-	kfree(properties);
+-first_mem_fail:
+-	return ret;
+-}
+-
+-static int gab_remove(struct platform_device *pdev)
+-{
+-	int chan;
+-	struct gab *adc_bat = platform_get_drvdata(pdev);
+-
+-	power_supply_unregister(adc_bat->psy);
+-
+-	if (adc_bat->charge_finished)
+-		free_irq(gpiod_to_irq(adc_bat->charge_finished), adc_bat);
+-
+-	for (chan = 0; chan < ARRAY_SIZE(gab_chan_name); chan++) {
+-		if (adc_bat->channel[chan])
+-			iio_channel_release(adc_bat->channel[chan]);
+-	}
+-
+-	kfree(adc_bat->psy_desc.properties);
+-	cancel_delayed_work_sync(&adc_bat->bat_work);
+-	return 0;
+ }
+ 
+ static int __maybe_unused gab_suspend(struct device *dev)
+@@ -411,7 +377,6 @@ static struct platform_driver gab_driver = {
+ 		.pm	= &gab_pm_ops,
+ 	},
+ 	.probe		= gab_probe,
+-	.remove		= gab_remove,
  };
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index ca907ed7d337c..ff1f77a22eca7 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -4327,7 +4327,7 @@ int btrfs_qgroup_trace_subtree_after_cow(struct btrfs_trans_handle *trans,
- 	/* Found one, remove it from @blocks first and update blocks->swapped */
- 	rb_erase(&block->node, &blocks->blocks[level]);
- 	for (i = 0; i < BTRFS_MAX_LEVEL; i++) {
--		if (RB_EMPTY_ROOT(&blocks->blocks[i])) {
-+		if (!RB_EMPTY_ROOT(&blocks->blocks[i])) {
- 			swapped = true;
- 			break;
- 		}
+ module_platform_driver(gab_driver);
+ 
 -- 
 2.53.0
 
