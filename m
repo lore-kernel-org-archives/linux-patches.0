@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023737;
-	b=2XvkJu4+BArekKfn20Rl9nE9lVIX9dQbKCdLEcUZmFJN/LL7MIZLhqOUQUWGNKrboGjY
-	 yxOfcqHMRGqZBfuENGQgaZ+UQ3O2lCpDN9ygzpaXUPEabXbi0QuPbwVo6UcYTBP2D9wT0
-	 Lhixt9vk1/9DqSUCeHJmljHHLhNIPTzqF5TWTJkY31au1E1ymfbArV0SKUpTeiY8V1ASB
-	 qGAbNF97DnkaBc7SRzWaCPqWcuLMdyeW3S3qK6sBe9EdMLSF4UCillppFeh9uVtcQ4Ysf
-	 SzI8sCp15wRXWSqPlhizu5DTv4BLpRUUT+Kcb/SBUGknThrHhuEIAQtiO0jLhMkmuCQ==
+	t=1795023740;
+	b=RhuuvVHq99K9tuPYGq+x3XT+V49DWH76NhDmm4lXXOsA0/dPQ07emczbkKwTlFVpn+vX
+	 29BnkUw3GuVSrSsDVW1F07cTKhTWd3JyTA45UtgAG+wff68W5Axg5D0cJP/dTMrR6pA/X
+	 N4g9XHkHbjHP1SZeoa6dSxjVBvknZAjXJh+hohUMUgAHy4tMiSQKIYQiEnWIIriv9BUyq
+	 bgUYNe8jqOCYyuY3Sc76FPnj5Rv+49azy51iEXiWGZHxw+OOTk3WhQZmBlKHpeSfc7OOf
+	 g1Ijm9oS6K0BsvdXy673SEAFFL9UsDty6eKqHIYYrML14G9kf4ViCGS0fiBAAuyvwLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023737;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023740;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bR66snseKV1gWvoWDrhj7aDIMCMDR9ysVkk9VHJZkuM=;
-	b=L6Cfqw5nzw3HE21wOmZY8hpYztbYBaNEOg5UoFdAhs2kqrRGSL1kRhj3EATSEFj8sfHg
-	 la/G3FZJVPf+Z9gzvk2i36b+OXSi85wkI83fT4XTpQk5y1gEbgJWeek0HlvlMo4Wentv0
-	 1T8yxWm4Th3EuMbKmji+x+nMFm2kC+gTJdND6KwWdktGzvCnBJTUDJ6n+9pGPp1MUQdcJ
-	 g9DDNPkOxmAESDsV4yzNMaV5DcrtWqaVYYoQYe+gEBEyu7eXxWgCMQqSbrY4vnmRWJme7
-	 Lnx/9tii2hiDIihuOgNGeh0L/LxOJ5UUGScBrgOpqt1CGl7JMsq8mad1uEgM4RZeVYw==
+	bh=mcDMFBt9gA0F6k4HOXGBaS+IOZUxwmU5l9UKVgTCagA=;
+	b=ay0brhPP52w3CCUhGKIUWbZ7M+5JiE6nUiE6/gph22f3scaPSb6CZOrSL2VTzADEgBEa
+	 Qsr+3Zd/4/wqVC7syZlBizCPpbrx3bBaaO7CuFoZy5T6NBDyM+0JFmybqnge4PR49BpyS
+	 uQb5UKPJtnvmjhkg7VyZhHVcSFGTmixpwaRw6EilBhrgkCwxmwT0OS6KgpEXUUJr1fl5C
+	 EALxXTNKUQYpsTeOBIB8uAzpviRafyq1AOPcvC0ALS1ePiWzUDL0pJzjZ6k25swyv6ZLt
+	 EVp3YZ3GMxcxZbOGoR7wwrm6TZg953xQurqBMkuYC+1JE5czOkYxEASvALfMHxeBdUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a6dbEi/8";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rkZWFIO1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB278606A325;
-	Wed, 18 Nov 2026 17:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78450606A31C;
+	Wed, 18 Nov 2026 17:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a6dbEi/8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE881F000C4;
-	Wed, 18 Nov 2026 17:42:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rkZWFIO1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC0E1F000C4;
+	Wed, 18 Nov 2026 17:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023737;
-	bh=bR66snseKV1gWvoWDrhj7aDIMCMDR9ysVkk9VHJZkuM=;
+	s=korg; t=1795023740;
+	bh=mcDMFBt9gA0F6k4HOXGBaS+IOZUxwmU5l9UKVgTCagA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a6dbEi/8WtL18aNBPpYtOfiV0PXtO6Q+NLtcjXjth+gcDDOGtpkzznGQBQm4oQPt5
-	 9boS4Fkp3SkNyk3I1Lp8i3A7msSXfpZxs+3LU0EZojI/0v63n8VKZOlrHgo+EVV6NQ
-	 8Q30wmiOQyiPeg5JHRu59o5A//zthbBMlDyNdbJs=
+	b=rkZWFIO1CZPBgnVz2TsvdXqIcwXn64T092yASnaP88YbwSmpX9d3MAPk1DqYSFHKZ
+	 WHnAdoH+FLpgT3g+tlTH3LFPFBFI3mgmWGhiHL2MxyXX0dQQRWeZKfNnG00S6vn/AJ
+	 GGKTRNdV3hOtyRSmAq+feeYxvYy1XHFaflDFScOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0435/2151] fs/ntfs3: zero frame pages on read error
-Date: Wed, 18 Nov 2026 15:36:10 +0100
-Message-ID: <20261118150137.884166070@linuxfoundation.org>
+Subject: [PATCH 6.18 0426/2151] clk: sunxi-ng: sun55i-a523-ccu: Use M-only clocks for MBUS, IOMMU and DRAM
+Date: Wed, 18 Nov 2026 15:36:01 +0100
+Message-ID: <20261118150137.574764056@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,46 +68,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Junhui Liu <junhui.liu@pigmoral.tech>
 
-[ Upstream commit a32e893a077a4b0d3b04c86cb7f69e354a187995 ]
+[ Upstream commit 59dced16a82d1ec685b88365c64dde27a0a0b46a ]
 
-ni_read_frame() marks every frame page uptodate at the 'out:' label
-regardless of the return value. The pages come from ntfs_lock_new_page()
-and are not zeroed, and several error paths reach 'out:' before anything
-is written to them (e.g. a failed decompress_lznt()/decompress_lzx_xpress()
-on a corrupted chunk, or an allocation failure).
+The MBUS, IOMMU, and DRAM clocks only have an M divider, but are
+currently modeled as MP clocks with a zero-width P divider.
 
-A page marked uptodate is served directly from the page cache, so a later
-read() of the file returns the uninitialized page contents to userspace.
-On a crafted compressed image this leaks kernel memory, including pointers.
+ccu_mp_set_rate() generates an invalid mask for the zero-width P
+divider, clearing unrelated register fields. It also ignores
+CCU_FEATURE_UPDATE_BIT, so the new divider value does not take effect.
 
-Zero each page on the error path before marking it uptodate. The success
-path is unchanged.
+Model these clocks as M-only clocks instead. This avoids accessing a
+nonexistent P divider and uses ccu_div_set_rate(), which handles the
+update bit.
 
-Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 74b0443a0d0a ("clk: sunxi-ng: a523: add system mod clocks")
+Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+Link: https://patch.msgid.link/20260906-sunxi-clk-no-p-v1-2-cbde21c9fe69@pigmoral.tech
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/sunxi-ng/ccu-sun55i-a523.c | 45 ++++++++++++--------------
+ 1 file changed, 21 insertions(+), 24 deletions(-)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 8269664ce2065..81b536a268633 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -2703,6 +2703,8 @@ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,
- out:
- 	for (i = 0; i < pages_per_frame; i++) {
- 		pg = pages[i];
-+		if (err)
-+			clear_highpage(pg);
- 		SetPageUptodate(pg);
- 	}
+diff --git a/drivers/clk/sunxi-ng/ccu-sun55i-a523.c b/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
+index 20dad06b37ca3..9bc3ff0ab12d7 100644
+--- a/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
++++ b/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
+@@ -380,14 +380,13 @@ static const struct clk_parent_data mbus_parents[] = {
+ 	{ .hw = &pll_periph1_150M_clk.hw },
+ 	{ .fw_name = "hosc" },
+ };
+-static SUNXI_CCU_MP_DATA_WITH_MUX_GATE_FEAT(mbus_clk, "mbus", mbus_parents,
+-					    0x540,
+-					    0, 5,		/* M */
+-					    0, 0,		/* no P */
+-					    24, 3,	/* mux */
+-					    BIT(31),	/* gate */
+-					    CLK_IS_CRITICAL,
+-					    CCU_FEATURE_UPDATE_BIT);
++static SUNXI_CCU_M_DATA_WITH_MUX_GATE_FEAT(mbus_clk, "mbus", mbus_parents,
++					   0x540,
++					   0, 5,	/* M */
++					   24, 3,	/* mux */
++					   BIT(31),	/* gate */
++					   CLK_IS_CRITICAL,
++					   CCU_FEATURE_UPDATE_BIT);
  
+ static const struct clk_hw *mbus_hws[] = { &mbus_clk.common.hw };
+ 
+@@ -584,14 +583,13 @@ static const struct clk_parent_data iommu_parents[] = {
+ 	{ .fw_name = "hosc" },
+ };
+ 
+-static SUNXI_CCU_MP_DATA_WITH_MUX_GATE_FEAT(iommu_clk, "iommu", iommu_parents,
+-					    0x7b0,
+-					    0, 5,	/* M */
+-					    0, 0,	/* no P */
+-					    24, 3,	/* mux */
+-					    BIT(31),	/* gate */
+-					    CLK_SET_RATE_PARENT,
+-					    CCU_FEATURE_UPDATE_BIT);
++static SUNXI_CCU_M_DATA_WITH_MUX_GATE_FEAT(iommu_clk, "iommu", iommu_parents,
++					   0x7b0,
++					   0, 5,	/* M */
++					   24, 3,	/* mux */
++					   BIT(31),	/* gate */
++					   CLK_SET_RATE_PARENT,
++					   CCU_FEATURE_UPDATE_BIT);
+ 
+ static SUNXI_CCU_GATE_HWS(bus_iommu_clk, "bus-iommu", apb0_hws, 0x7bc,
+ 			  BIT(0), 0);
+@@ -603,14 +601,13 @@ static const struct clk_parent_data dram_parents[] = {
+ 	{ .hw = &pll_periph0_400M_clk.hw },
+ 	{ .hw = &pll_periph0_150M_clk.hw },
+ };
+-static SUNXI_CCU_MP_DATA_WITH_MUX_GATE_FEAT(dram_clk, "dram", dram_parents,
+-					    0x800,
+-					    0, 5,	/* M */
+-					    0, 0,	/* no P */
+-					    24, 3,	/* mux */
+-					    BIT(31),	/* gate */
+-					    CLK_IS_CRITICAL,
+-					    CCU_FEATURE_UPDATE_BIT);
++static SUNXI_CCU_M_DATA_WITH_MUX_GATE_FEAT(dram_clk, "dram", dram_parents,
++					   0x800,
++					   0, 5,	/* M */
++					   24, 3,	/* mux */
++					   BIT(31),	/* gate */
++					   CLK_IS_CRITICAL,
++					   CCU_FEATURE_UPDATE_BIT);
+ 
+ static SUNXI_CCU_GATE_HWS(mbus_dma_clk, "mbus-dma", mbus_hws,
+ 			  0x804, BIT(0), 0);
 -- 
 2.53.0
 
