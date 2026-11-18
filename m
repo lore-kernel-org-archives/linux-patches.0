@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034319;
-	b=HXZGyuUDcyFDQ6yjlIrRPkuuD5dKX4uyy55+A5ZuuyCbWldAP2tfN4hbbSPn3WJWKTrZ
-	 +Z/ylcS5Ns/ccWbhGQuRymslDzthfoizwBdwL2d+upMrS6Odr5lPpuSjD1TTZiDW/zgU0
-	 jfxUItLogN4ToJzb3nFOJxxaaNrwQXGDCNHJkSweU0lsJkZNXOUffNeFE7pY0EzOp+Seg
-	 WySuR3s2+F3nUtw72/jR50TMLPyESNc6anXhdT9m9lt6oHckCtPcyPUh0JD0jccoLevgt
-	 uIKUFcwSVX2nHX2iNO5WXoV9H47pHkvWjcibaAIsP0ipUs2Ji78WhP9Esgwx9IxaPow==
+	t=1795034322;
+	b=eDqxbvmtw16J524ma+cKGK727irjg02IxDOPl1HBN+m5l077pDs2JI6JyGmVpfWgnq9P
+	 4y5aSq0Lx8m+5c1i3uQ4s/LF75WIUBld/yelX/JRvcXCSBVcdTEL+7XkLxfwGzwr4k4oI
+	 MnTMO4CvPh5/PolTV2dIFhF5Q66lyyd+tqDIteoRraltg4qRtc4WCHIcfJGzzFJcCjPAs
+	 fy8IpQWWXC9gYzsxiBEU9kJfRyr17rqCwK6AsBCGtpgfjowcNNQ1ppQ1swt3O3u6EypFN
+	 nivWLVFNiYI9pqFn5hyR+iUG3ZS5I89+vJszqXGkSsvMGc6dg3/kEcC3KLLwPVSBIng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034319;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034322;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=2OaTcsan0zPKSq48kE+2IbKwNWwbdCI0TEMzchalJmQ=;
-	b=jRsHAHQnrZSAKgINvBdaNnH9KCJYqeu2u2dMEUT8pD6OOCH9xI8GtwIw0T9d0wqX9BuS
-	 bnWxKqEufPgAsMCLzyxSh741MjUEalRlxJa+Mj9RmsQcuEutW4PvG4CCiiJ8xhdlQblX7
-	 H4zeLiFZ5LlLTfIiHx9ibJ/n1CLu6wlG1cOCmtEuUS+sHDMDAe9c5b/DEfiyLiDYjBHxP
-	 +lN1AKqn1moFHQ0+rlletYTwNFRiprEoc0s6P9U3TjeaSPDBCOIUoUdgkOlTPjTLLfgx3
-	 DaasthJQzD7Mz8lTAyPFsoXSveLQYoe2Uog244v40mVy688wN6q2Yo6kgRRB1Yo76Tg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=zj68o8AaBppCVCx19nH7baLNP4m0VenLw8i3gVAtD4M=;
+	b=qzoZBcEkbTMvYif+SKoqNaqne4l83wOmva0TgBPualdor7UwsmhL5wc/a0H6dpHzs2+z
+	 S73V9fjGYRU3e9vlf7huoB0IosQo6sWMV7FbhaViC9Cr4B50yU9jKBns08p2gLy25rF98
+	 RGpIijkJ4fqj+Hq2cVlcR8w0qz+J9Vqk6jCZz9V9okCNQLgxnHF5w/Krcl7H1TCeK2AL4
+	 RGom6W1Rr1XUv/TZ69graEXzcddV8skQBRr49YmvAJCHhzrh8XGyYiB4LrhS9NoYt2rTI
+	 9xa8N5cDtD0dkeajtJRehuHCk/XYTZq/JlQxpvXz/eZsE00GiXJd2NeRGGSDMr+KjIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QKGfjejO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0LOHarc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB9B606A31C;
-	Wed, 18 Nov 2026 20:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F81D606A32A;
+	Wed, 18 Nov 2026 20:38:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QKGfjejO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103281F000C6;
-	Wed, 18 Nov 2026 20:38:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0LOHarc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64651F000C4;
+	Wed, 18 Nov 2026 20:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034319;
-	bh=2OaTcsan0zPKSq48kE+2IbKwNWwbdCI0TEMzchalJmQ=;
+	s=korg; t=1795034322;
+	bh=zj68o8AaBppCVCx19nH7baLNP4m0VenLw8i3gVAtD4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QKGfjejOaA0HRoVuIKnZaXa47GHL76ra8XTSPm9Kw0E81c1AEurYix+mDkAsujpoJ
-	 PtboxfykQqzwQu3MCeb8CHQUM/hvI9k7+HP/51nZpSw62kJleydluOLMC4aTOoW9R4
-	 GmT/vgIvX+ShG5+Db3BjaqJqm1Hfbye2/T44r5Gc=
+	b=B0LOHarctDh4janD+ZwzghLsyg9jLIyL0aPEfMyuKMQZAlF7sys6Hf+ou4Wuxe4Mg
+	 oiqm9GWC7g2dBNZwmTDNZxjVUf5tt09nFxsc16LtYskZ5OSFvWK9o9LhKJLpBEcToR
+	 1jiUE9LhZIrARwZy4b02WGRmsh+y/FFV/2cQsYXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Klishko <vadim@cirque.com>,
+	Dave Carey <carvsdriver@gmail.com>,
 	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0325/3318] HID: i2c-hid: Add a quirk for a Cirque I2C device.
-Date: Wed, 18 Nov 2026 15:15:47 +0100
-Message-ID: <20261118150325.637843108@linuxfoundation.org>
+Subject: [PATCH 6.6 0326/3318] HID: multitouch: Fix stale MT slots when contact count drops to zero
+Date: Wed, 18 Nov 2026 15:15:48 +0100
+Message-ID: <20261118150325.673170686@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,53 +62,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vadim Klishko <vadim@cirque.corp-partner.google.com>
+From: Dave Carey <carvsdriver@gmail.com>
 
-[ Upstream commit 1c942462c3969b287a86ab6dbb143324289d564e ]
+[ Upstream commit e8e60b6439eed340a611e9d7a5b9bcbd0ef62725 ]
 
-Cirque touchpads with PID D0C1 generate an error when probed
-by the I2C HID driver, resulting in no hidraw device created.
-Adding I2C_HID_QUIRK_NO_IRQ_AFTER_RESET fixes the issue.
+The INGENIC 17EF:6161 touchscreen (Lenovo Yoga Book 9 14IAH10) reports
+HID_DG_CONTACTCOUNT=0 in the frame immediately following the last finger
+lift rather than omitting the frame entirely.  In mt_touch_report() the
+existing code only updates num_expected when contact_count is non-zero,
+so a zero contact count on the first packet of a new frame leaves
+num_expected at its previous value (e.g. 2 for a two-finger gesture).
+The sync check "num_received >= num_expected" then evaluates "0 >= 2"
+and never fires, preventing INPUT_MT_DROP_UNUSED from releasing the
+stale slots.  Those slots remain active in the kernel MT layer until the
+next touch, at which point they are released in a batch alongside the
+new contact — causing the userspace event consumer to miss the
+intervening finger-up sequence and corrupt its gesture session state.
 
-Signed-off-by: Vadim Klishko <vadim@cirque.com>
+Fix by resetting num_expected to 0 when contact_count is zero and
+num_received is still 0 (i.e., this is the first and only packet of the
+frame, not a continuation packet in a multi-packet sequence).  With
+num_expected=0 the sync check "0 >= 0" fires immediately, calling
+input_mt_sync_frame() which drops the stale slots via
+INPUT_MT_DROP_UNUSED.
+
+The num_received==0 guard is critical: continuation packets in a
+multi-packet frame arrive after at least one contact has already been
+processed (num_received>0), so they are correctly excluded from this
+path and the existing multi-packet logic is unaffected.
+
+Signed-off-by: Dave Carey <carvsdriver@gmail.com>
+Tested-by: Dave Carey <carvsdriver@gmail.com>
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h              | 1 +
- drivers/hid/i2c-hid/i2c-hid-core.c | 2 ++
- 2 files changed, 3 insertions(+)
+ drivers/hid/hid-multitouch.c | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index d98d04e9e0bdf..e7ae90817b62e 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -323,6 +323,7 @@
- 
- #define I2C_VENDOR_ID_CIRQUE           0x0488
- #define I2C_PRODUCT_ID_CIRQUE_1063     0x1063
-+#define I2C_PRODUCT_ID_CIRQUE_D0C1     0xD0C1
- 
- #define USB_VENDOR_ID_CJTOUCH		0x24b8
- #define USB_DEVICE_ID_CJTOUCH_MULTI_TOUCH_0020	0x0020
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 1760f2693d31b..60f04a36d5f8d 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -133,6 +133,8 @@ static const struct i2c_hid_quirks {
- 		I2C_HID_QUIRK_BAD_INPUT_SIZE },
- 	{ I2C_VENDOR_ID_CIRQUE, I2C_PRODUCT_ID_CIRQUE_1063,
- 		I2C_HID_QUIRK_NO_SLEEP_ON_SUSPEND },
-+	{ I2C_VENDOR_ID_CIRQUE, I2C_PRODUCT_ID_CIRQUE_D0C1,
-+		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET },
- 	/*
- 	 * Sending the wakeup after reset actually break ELAN touchscreen controller
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 422172ecf2bb2..0e061f266cef2 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -1227,21 +1227,18 @@ static void mt_touch_report(struct hid_device *hid,
+ 	 * Includes multi-packet support where subsequent
+ 	 * packets are sent with zero contactcount.
  	 */
+-	if (contact_count >= 0) {
++	if (contact_count > 0)
++		app->num_expected = contact_count;
++	else if (app->num_received == 0 && app->prev_scantime != scantime) {
+ 		/*
++		 * New multi-report frame:
++		 *
+ 		 * For Win8 PTPs the first packet (td->num_received == 0) may
+ 		 * have a contactcount of 0 if there only is a button event.
+-		 * We double check that this is not a continuation packet
+-		 * of a possible multi-packet frame be checking that the
+-		 * timestamp has changed.
++		 *
++		 * Some other devices use a sentinel frame with 0 to release all contacts
+ 		 */
+-		if ((app->quirks & MT_QUIRK_WIN8_PTP_BUTTONS) &&
+-		    app->num_received == 0 &&
+-		    app->prev_scantime != scantime)
+-			app->num_expected = contact_count;
+-		/* A non 0 contact count always indicates a first packet */
+-		else if (contact_count)
+-			app->num_expected = contact_count;
++		app->num_expected = 0;
+ 	}
+ 	app->prev_scantime = scantime;
+ 
 -- 
 2.53.0
 
