@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032976;
-	b=d+PfyAc3C8AAKX1QyxO+vUr+GzvpJklFCxF9KBWA9dxCuDYaMJBF3Ix4QQQ0vqOZBEis
-	 Pp47CgwcI6TwOx2obJWUUePdoL+Qw1OwYI6gubpMfvaLbAJzGre8IGxwpvO0ATS4bmTGq
-	 jCbq9dYsWcKryJe+U8I0hHQol0+qXfgRcRw2JmSmBW0MR9761YqdvpjVzCZa5+ULrUX/n
-	 IWRX/sqwqfpO0m3tptoL60Wx877+tn2+VrAzyOQtEtzfgba4WfOO+zIC4yMN/JeeqJtmD
-	 C3y1rSx57rdYIo9tzD4sVnT0N0UmNMXL4CcdHBhTcOSthRWANKpAtO1sq4Jq7fxuN7w==
+	t=1795032979;
+	b=EV6JmRSDGmwBLkcGPrdS2s8PjpZkt2CxdzSDbv6arhL5oKGeAzb/EeBC0Ho36eFtQ+Og
+	 ruWJmftBkRHmx67JXdMENlXeVW5ghMZUsVATgM+kWLKqVES+iitMGhQVBMUasnOvsxTJj
+	 y0hbN4rSOCcqtg2LD4wKfahk0/rc9wh0qYxmWmeTHmK8KmKGtkD7PTsw+nTn1n8xKBwFr
+	 7Fl/W/RSRAv9mRqI6pLVDBaxkptZoAIK8FCCmJ1vjM9VTpfL1X6O+BoVBfeaTfAjrEJc8
+	 cWaxuMU/jg39i1xVaYcj/8WFJ9YRxx4eyTMVduus1eeTi/dzu0FhFmgMKpsZHJXixHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032976;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032979;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=paq3caMLswffa2KVtRgwd/TUzY+wy7fQU1j6iSu6ja4=;
-	b=0Su8Qn/eoTFw35tmu0eo4T8JssBgSNXO1jeLAkdG+5BPeY5YEqqNepVpYQAfZeWW02rA
-	 d2Jy97QugVq/Ar0Vi4wq9mgeJCPkCMjjwqlbE4ryps1iD6kGL4sU6y8I9uGaMUdyQ0ZLg
-	 Fm4VWCc14IdYoTSXNIWSndsyQtfO7YtJrox1F0aPugsDJ11e2+lwknCReI9BGLuzntssX
-	 bwrTX2KJRZLeGNHiWyQC9wqFP1mC23CfR51qM5+ia2qu8tG8ynsnxdGkJlBEdNxmI6A30
-	 ZqfbaNILNxDnzfp+RySJi0VKwU3SdIX1E5HZhD5xlH8FKkBua52bYAJu+rGLBDux+6g==
+	bh=LKnoYGfbt3QWUMf6RtutTefj80OE/ZzyAnjG6EYHRx0=;
+	b=X5JEzCYpNwYUs0W5zyTdjCfmi3sp0+uDPYW8rGpOgv8YmH82ZWHPLBSmW1j/U7iuXg1+
+	 8jpRhQUD6QtRuUru6WrdJLkzeT6ugtzLa3LamHp0nHa+qK+vU2ZMFSbbfVfjZJVk2en+U
+	 A6MgGSLv+WWcEdl5JxvM65TqUqsJERBlxNrigJNyjBrH13OO2sT/BGIyhbjwjH7cBqcFq
+	 VBjQ84EGQVq2BrNKYxvXV/2BLNsNqc+Fg6EKcsArYf8fGEDq7ZT10MILibJt6Kybd/Xo0
+	 l+9TVRlbdKdP2t6q40gHRSQO11svo/VYc3olWggoO/MCHCe/oVMABeaGN9iTWxsn65Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ivIpAC79;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N4twKxk7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743E0606A31C;
-	Wed, 18 Nov 2026 20:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F04C606A31C;
+	Wed, 18 Nov 2026 20:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ivIpAC79
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9881F000C4;
-	Wed, 18 Nov 2026 20:16:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N4twKxk7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7855F1F000C4;
+	Wed, 18 Nov 2026 20:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032976;
-	bh=paq3caMLswffa2KVtRgwd/TUzY+wy7fQU1j6iSu6ja4=;
+	s=korg; t=1795032979;
+	bh=LKnoYGfbt3QWUMf6RtutTefj80OE/ZzyAnjG6EYHRx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ivIpAC79Xt2AMdEw8uwMUSJLa2J7PZ6YhX3Cf5z7WWI4jqZqksXIhwJAz08guh1hl
-	 Y4jVONEV3ZwKlHf6eRzuVYNC8GFDPfWvfV/XEFwPpeb2PJnK7PlL4cxSjxabhob+R4
-	 H6ul27tRwGRohJXtyCXtLWOzb2DVEPT5cLDbpHQo=
+	b=N4twKxk7vwImW1qhb8IKNZr6SurCDuKINJGHlz4SdK2JCjxolT+OujEpm8WZ6rQbF
+	 s1p5Qfcv7bl9c7ir62ThNGAAb0OCrffQ8bQNdi3Jp62Taz5+LJqOR23jHk5TdVBNOD
+	 8xjOOcvHorJis/HO/xWFRb8QHOi02nv80coKQIGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1562/1756] netlink: fix out-of-bounds bitmap access clearing stale mc groups
-Date: Wed, 18 Nov 2026 16:01:29 +0100
-Message-ID: <20261118150111.650615221@linuxfoundation.org>
+Subject: [PATCH 6.12 1563/1756] ceph: remove unused field `i_cap_migration_resv`
+Date: Wed, 18 Nov 2026 16:01:30 +0100
+Message-ID: <20261118150111.708453915@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,60 +70,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit 6430fb7f1cc4e329e386521b7b208df443de92f2 ]
+[ Upstream commit a200e12135c96893f7c29bdf97f46868132f695d ]
 
-netlink_realloc_groups() sizes nlk->groups to the number of groups
-that exist at bind/ADD_MEMBERSHIP time.  When more multicast groups
-are registered later (e.g. a new genl family), existing sockets keep
-their smaller bitmap.
+This field was added 17 years ago by commit de57606c23afd ("ceph:
+client types") but it was never used.
 
-When clearing a multicast group of a departing family,
-__netlink_clear_multicast_users() runs netlink_update_socket_mc() on
-each socket on mc_list, which does test_bit()/__assign_bit() on
-group - 1 with no regard to nlk->ngroups.  Skip sockets whose bitmap
-predates the group: such a socket can never have joined it.
+This reduces the size of `struct ceph_inode_info` by 8 bytes.
 
-The overflow windows differ per architecture, both needing privileged
-module (un)loading.  On 32-bit kernels the ~54 dynamically allocated
-genl groups already exceed the initial 32-bit bitmap, so the table
-can grow there directly.  On 64-bit kernels the same in-tree set fits
-the initial 64-bit bitmap only while allocation stays contiguous:
-genl_allocate_reserve_groups() takes the first free contiguous range
-and unregister does not compact, so an unload/reload sequence can
-fragment the ~59 free IDs until no fitting range remains, forcing
-the table past 64 bits and reaching the same stale-bitmap overflow on
-the next family teardown.
-
-This issue was discovered by Tencent CodeBuddy Security.
-
-Fixes: 84659eb529b3 ("[NETLIKN]: Allow removing multicast groups.")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Fixes: de57606c23afd ("ceph: client types")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/ceph/super.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 7e1c087a98647..fb84eaa63d0ac 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -2135,8 +2135,12 @@ void __netlink_clear_multicast_users(struct sock *ksk, unsigned int group)
- 	struct netlink_table *tbl = &nl_table[ksk->sk_protocol];
- 	struct hlist_node *tmp;
- 
--	sk_for_each_bound_safe(sk, tmp, &tbl->mc_list)
-+	sk_for_each_bound_safe(sk, tmp, &tbl->mc_list) {
-+		/* bitmap predates the group, can't be a member */
-+		if (group - 1 >= nlk_sk(sk)->ngroups)
-+			continue;
- 		netlink_update_socket_mc(nlk_sk(sk), group, 0);
-+	}
- }
- 
- struct nlmsghdr *
+diff --git a/fs/ceph/super.h b/fs/ceph/super.h
+index 83ddd61e16475..e5c22c833b8ef 100644
+--- a/fs/ceph/super.h
++++ b/fs/ceph/super.h
+@@ -438,7 +438,6 @@ struct ceph_inode_info {
+ 	wait_queue_head_t i_cap_wq;      /* threads waiting on a capability */
+ 	unsigned long i_hold_caps_max; /* jiffies */
+ 	struct list_head i_cap_delay_list;  /* for delayed cap release to mds */
+-	struct ceph_cap_reservation i_cap_migration_resv;
+ 	struct list_head i_cap_snaps;   /* snapped state pending flush to mds */
+ 	struct ceph_snap_context *i_head_snapc;  /* set if wr_buffer_head > 0 or
+ 						    dirty|flushing caps */
 -- 
 2.53.0
 
