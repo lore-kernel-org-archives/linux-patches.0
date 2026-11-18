@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029419;
-	b=zK7KITixv9aTks40ovzcaxgXwW1StptNBKk4B3NtTbGjQ3zj5fdLD4bO6dQ35Br0yOHb
-	 2jEvPZNUNPbfF/AOvyl4QoDNrFhZ39R4uNIcpuYCwUdXflpR+z34fsxHBurGbkLfpEhpa
-	 1oHowdWKECaGLGvj2HwrFOds1UsWdmULqSZq25xEEk34583EkgzDDRi3La81ykUMNC8xh
-	 lPFWJadTJQpZM5tSVzC8T5TsLHBlRZGKiZbSVpaO77/ZegMTS8BziZp2ntkHw67usjgJL
-	 9MAqIidnX+6s+czi4fstHcDOWZW3QboGMbN5fvDiDjZidOa5ZJcUsPLE3faiRDg4kkg==
+	t=1795029422;
+	b=V1sRJq7bzxV1oJ00bVrBI8kuCjvJHYKqBpXovbV/WtmObK6CAOPTwUvkWmHs3pu7cBh9
+	 KblFOJNVZl4sHIxiefNCR/Kjb43QYEAjLpnHzyyRzrd9rTfsuZjeQAaWmgqzUsSl833Zc
+	 4YpVnlVWzODlPIIlHd547p2W6hgWcjEPhWCGxTfuL1hZ5OP6qMtCumDWVxB3f7KrmogYk
+	 QNRCUH7Vssr/es1VIaMJHGLIQ/0m5OC9QjfAq2cMHQ1yx1Nsr71mNv7jegBsPA64zZSX2
+	 NTvG4sj11WtXbQVbP0hd6FDgvUvK5AXqSSbqNqylZ4OxijoCNn9MnKlvs8T6EkXHAQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029419;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029422;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Qzd4SmTk8eNd2ZvB3UQqKfpjcoy2EmMSiNygfRLGrYE=;
-	b=v5IgPxz+KZAzyndss3PNsflMTC1ZsL8FWMxXFcYzXkENU17FkE8zOeXbMPnc7v2SAtqo
-	 Jd0YX+NbakJXFbg2DiJRq7Edv5UlOdkNXIFE8H3+bZ9WfarIKvG7Io77jqV7B6VWzw81n
-	 Ja6tlaLtm5mYwcMSeYC1/otPES34RcI51ToBxhCQN9ICEXdu+ENTmzz95nyuCZ/yVa30D
-	 NzKIQDuzwT1+wJRRBvx8l8Fz3P4DdigG63+4q0saV2Ty1w9P+Pfo0NQ4gthPCWErjrmyM
-	 VxMjuEDDhePKrc+Ywi6WzXEBgH9D/fX+F0XPKgrGJoIyr6tiF/JzeRCMLTN2vuhUgXA==
+	bh=6WsXvfLmgZ4LmC6JT0pn5CD8+oKCiqmBh+JRES9l6Xw=;
+	b=JpGG1EE+5kez1O4SFjksFWhIfMuNWobwzYTSyX8tTqNWD/jTxanbD0qdTzPzQMPQRQNe
+	 b1ekPusozkV8XYksQRnWjn9mAsW+5m+9ebsO9nVW6oHOcdcSpVoIRmR5prPlvDwnQWcuz
+	 8iMmjcklnx4KdelKo+wIWEAeF1qidCGS0IsTyHkaOCWAoJno5Fnnt0HhGCyihv58TDcwG
+	 C6Kw+B8b5G+xE7yOiZHOTnbOKQVQpBv1ZkCx6rr7jmO/q55uZjai4WfFFWJMafgOnxUpF
+	 HMj0qPiU2E/0/K6+r/i1rzFdRj5gZxUVM45x+RD6W5vgYVPXrbzLLIbORknGb/sNRZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ep7AdeB0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SI0d+9Me;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B46E606A325;
-	Wed, 18 Nov 2026 19:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47EC606A32A;
+	Wed, 18 Nov 2026 19:17:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ep7AdeB0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945F11F000C4;
-	Wed, 18 Nov 2026 19:16:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SI0d+9Me
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48FE81F000C8;
+	Wed, 18 Nov 2026 19:17:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029419;
-	bh=Qzd4SmTk8eNd2ZvB3UQqKfpjcoy2EmMSiNygfRLGrYE=;
+	s=korg; t=1795029421;
+	bh=6WsXvfLmgZ4LmC6JT0pn5CD8+oKCiqmBh+JRES9l6Xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ep7AdeB0rHASS0lUKDutejf5CLhIyE5XOwKmNBiCXKVz2w41cRUKKEykm57iyWwun
-	 AhetQxwiagHUo/sbrCfNNjzIBJQyVuBmTo5UX1m9vPJU9dffr0oPo1fFT7gRoKoXEi
-	 o7vMjzK77GeZKLRoK+0RTBJkimg4pT6kdwyTWjbc=
+	b=SI0d+9Me+UEqrp9R8zwt8cu7w1S5avwRIqpy8am10fwklggmyCNwGnl17z7ODpTkW
+	 pp/BEYUJTUC9cwH+1o1Y0mCWeuz/ZxwHWortZ4HE84C87oamHBP1gytDZ9DtiiI5xp
+	 H1cHfehJRxNeR4NfhtMg9E6xAuEC57BPvEr5pPGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Babanpreet Singh <bbnpreetsingh@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0343/1756] regulator: ab8500: Fix AB8505 VANA voltage selectors
-Date: Wed, 18 Nov 2026 15:41:10 +0100
-Message-ID: <20261118150022.021434784@linuxfoundation.org>
+Subject: [PATCH 6.12 0344/1756] regulator: ab8500: Remove stale expand_register kernel-doc entry
+Date: Wed, 18 Nov 2026 15:41:11 +0100
+Message-ID: <20261118150022.057515169@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,49 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Babanpreet Singh <bbnpreetsingh@gmail.com>
 
-[ Upstream commit dfdfda2a95843706428a9d95ab546cb10983e684 ]
+[ Upstream commit 0991f3b4624ed713d1d5eb56520c1c9b2deaab7a ]
 
-The AB8505 VANA voltage table assumes selector 0 represents 1.05 V
-and all eight selectors increase linearly. Selector 0 actually
-represents 1.2 V. Selectors 1 through 6 cover 1.05 V through
-1.175 V, and selector 7 represents 1.225 V.
+Commit aeee55b76bfd ("regulator: ab8500: Remove unused embedded struct
+expand_register") deleted the expand_register member from struct
+ab8500_regulator_info and, in the same hunk, added an empty
+"@expand_register:" line to the kernel-doc block. That traded one W=1
+warning for another:
 
-Correct the table so each selector reports and programs the documented
-voltage.
+  drivers/regulator/ab8500.c:196 Excess struct member 'expand_register'
+  description in 'ab8500_regulator_info'
 
-Reference: AB8505 User Manual, DM00046744 Rev 3, p. 257
+Drop the leftover line; the remaining @member entries all match the
+struct.
 
-Fixes: 8a3b1b8703fe ("regulator: ab8500: Add voltage selection for AUDIO and ANA on AB8505")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260901-ux500-dts-snowball-regulator-v2-1-fe88b01829bf@kernel.org
+No functional changes.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/r/202605160857.ZIE3nO9J-lkp@intel.com/
+Assisted-by: Claude:claude-opus-5 [kernel-doc]
+Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
+Link: https://patch.msgid.link/20260802013304.7-1-bbnpreetsingh@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: ac72c091a981 ("regulator: ab8500: Add AB8505 VAUX3 3.05 V setting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/ab8500.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/ab8500.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/drivers/regulator/ab8500.c b/drivers/regulator/ab8500.c
-index 6b4a3a3d83851..26accd604c395 100644
+index 26accd604c395..ca59406d42a85 100644
 --- a/drivers/regulator/ab8500.c
 +++ b/drivers/regulator/ab8500.c
-@@ -265,13 +265,13 @@ static const unsigned int fixed_2050000_voltage[] = {
- };
- 
- static const unsigned int ldo_vana_voltages[] = {
-+	1200000,
- 	1050000,
- 	1075000,
- 	1100000,
- 	1125000,
- 	1150000,
- 	1175000,
--	1200000,
- 	1225000,
- };
- 
+@@ -173,7 +173,6 @@ struct ab8500_shared_mode {
+  * @voltage_bank: bank to control regulator voltage
+  * @voltage_reg: register to control regulator voltage
+  * @voltage_mask: mask to control regulator voltage
+- * @expand_register: 
+  */
+ struct ab8500_regulator_info {
+ 	struct device		*dev;
 -- 
 2.53.0
 
