@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059562;
-	b=bBKLOhWHf6QnAViHCZeszkd7crc4H7PMNJx3CiVBmpi+E5yt/c26bTe5ngXcKYPKEyIC
-	 UZc4ECcYFfIb1wbeLs0r+QCuX+OEvgMP7lyCPcHg/yFklG0fknNVht+hg7xQ4xRWJTdtw
-	 8OQf7px2d8UwZ7Kuir3mzEKKSLNImkJENhXXkSlFbL/wrPFRiTHvt4WC2IDa94IMHaict
-	 WPMrs3lH7DMendYkMrQNQ8QkJl9jJYp3YJSsFk2kri/zv5O/WlVrfm21C4/6iY76hBf4H
-	 sWr19DkuiYeCZFALxJI8IDa6AZP2SG2S/P8hf3UuHEDzAo8dGo8sRK7xotuQxT8xk0w==
+	t=1795059565;
+	b=x+dUtGidT42omk5Zzf/u2TAYqxc5n8VThIkl4SHLJEZW1iivLyq7jQiAu8+vPo1LnhML
+	 gJKNaXczjbZqhifGW6mm4ddhrqfxmubhNXzoSW22GdzUJZbMrx4NW4OqqPHRl8uAEme8b
+	 hpvfWLE4/4bPNCbX2zhzfrqWq9LsLFveT3YTNvOAQoqkJsGk6WP2O8RN3BmTPXtXyF9ZR
+	 RlmVBm8pKAMiStvvVonlZztxaU653zWpbENiQKVi+ZHZ82vf6e1PDSFkEWpFIBJPDmyky
+	 C4vglx2T/no7reb56fcHfQl8IPRAx5/7TDyB19rwsKQFpAKKC2LDHep9DWFDVSkmMhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059562;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059565;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=VjXxx2pMBV80kdOlYUOoPtUWFtr3uY3QDcsi2dzLAG8=;
-	b=RxSjH1IIsbUIWqc60a72XDldIs9ohmGr6rO/dWvd2iawqItUVyaaPPlMSfED4g/7Zz7p
-	 rzvSIHXBODtjxDBDbTX5WOlzF6X5R1Hvx796TIs7tN/c0hTeDGIVZjd6ONICdWobAXD47
-	 9Imem9XU2oWYd02AxV755jrbp2RJV3z+6nenbE9MdSq6+wbInrpxZJ/NA2gITXt24xdf4
-	 FMUOnaO52T9BPH3Wre44hW4aLM5pQEULtrSiQ3OtykD2dlUtgHcExxC6fMFqq6XXkbZTD
-	 VGBfU5J8F5m8jRPtUgTL6v5RF/yBCKqnck1fFJeUTK4XNnHP78tQYwSqcc1EMpvfdUQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Iz8G2vwdudFIJLrSxa3qTJoL3/6gRAyCYBPAiRu8iYY=;
+	b=YCsSeitLLXKNwzRG66DlAylVLzt1EYc0wuMDL0vlGylpjviCFRL+K4lGC/y6cwtC2G2L
+	 IAiVoYG+++ut26yQN6R8Zl6M+GRryFlieVBf98gco8juFrVVnF8q4zLe+k5t+kLb1cxk0
+	 QXNDnwgDGnrHBF+2djJD76bg1dVn3Zo0jKb+NP6VFW36Yt4vJz5cxHv3mvZYloCLhunrT
+	 3MDC27S7N4KrRICOmEml4w8/AHnzc+PYjpEkdj8+AxuR19AbqTS0i8i1leOruyKMFIWPN
+	 J4R4qqQgz5lzZCzvzhJ4tAEBy/FGKY+7wR6tAv+jqFwCW8ZTKMwo8VLSlxzVl7EAMyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p9rL9Fsx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rqc7a+1t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028E2606A325;
-	Thu, 19 Nov 2026 03:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFED4606A32F;
+	Thu, 19 Nov 2026 03:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p9rL9Fsx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 543591F000C4;
-	Thu, 19 Nov 2026 03:39:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rqc7a+1t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB9C1F000C5;
+	Thu, 19 Nov 2026 03:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059561;
-	bh=VjXxx2pMBV80kdOlYUOoPtUWFtr3uY3QDcsi2dzLAG8=;
+	s=korg; t=1795059564;
+	bh=Iz8G2vwdudFIJLrSxa3qTJoL3/6gRAyCYBPAiRu8iYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p9rL9FsxGjDY2osUAK6KmmxOUyGcNJTGje3YRvpo8OSsDdVDIRg8atHJjtCCR08Qb
-	 03L9jaKy+sBON2NvMPJ/tUItIQeLHjHTu3HT271nRNJaO9/0AOg79yLYnZB/8g0h/m
-	 KOk3R/fOtwVleAIBBYq8+n0gD9JFQ8LfGKQqGWqs=
+	b=Rqc7a+1t6lCb2IlEqKZPurZucfsxLBeghR5xSYn1gGesbPDn0Bi4+sQj9c+dsx4S1
+	 p/xOmWPvAZAZAKDwZ1I3EOgHYm27EDNIFjSPrr36rrRawVa5gEg3XLwJJ9GmzX4t9q
+	 N4DfZbfBX65iIuI7EYo45CLOop62eJxerMCQkwHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
+	Muhammad Bilal <meatuni001@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0884/1848] Bluetooth: hci_core: Move all debugfs handling to hci_debugfs.c
-Date: Wed, 18 Nov 2026 15:48:42 +0100
-Message-ID: <20261118145953.496409266@linuxfoundation.org>
+Subject: [PATCH 5.10 0846/1848] platform/x86: hp-wmi: fix heap OOB read and memory corruption in hp_wmi_perform_query()
+Date: Wed, 18 Nov 2026 15:48:04 +0100
+Message-ID: <20261118145952.018523741@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,323 +62,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit 8331dc487fc55963e853b6858af716907717e181 ]
+[ Upstream commit 6dea092b261f04d632411c2be52d13190f5f67b1 ]
 
-This moves hci_debugfs_create_basic to hci_debugfs.c which is where all
-the others debugfs entries are handled.
+hp_wmi_perform_query() evaluates an ACPI WMI method and expects a
+struct bios_return header in the returned buffer. However, it only
+checks that the ACPI object type is ACPI_TYPE_BUFFER without verifying
+that obj->buffer.length is at least sizeof(*bios_return) (8 bytes).
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Stable-dep-of: 2a3e2287877b ("Bluetooth: hci_debugfs: Pin module for debugfs file operations")
+If the firmware or ACPI method returns a buffer shorter than 8 bytes:
+
+1. bios_return->return_code at offset 4 reads out of bounds from the
+   allocated ACPI buffer slab.
+
+2. If return_code evaluates to 0 and outsize is non-zero,
+   (int)(obj->buffer.length - sizeof(*bios_return)) evaluates to a
+   negative integer (e.g. -8 for a 0-length buffer). actual_outsize is
+   set to this negative value and passed to memcpy(buffer, ...,
+   actual_outsize), where the signed negative value is cast to
+   size_t (e.g. 0xfffffffffffffff8), attempting to copy ~18 Exabytes
+   and triggering an immediate kernel crash. Additionally,
+   memset(buffer + actual_outsize, ...) performs an out-of-bounds
+   write before buffer.
+
+Fix this by ensuring obj->buffer.length is at least sizeof(*bios_return)
+before accessing the return code, and compute actual_outsize safely
+using min_t(u32, ...), which is sound specifically because the guard
+above already rules out obj->buffer.length being smaller than
+sizeof(*bios_return) by the time that subtraction runs.
+
+Fixes: c3021ea1beee ("hp-wmi: allow setting input and output buffer sizes separately")
+Cc: stable@vger.kernel.org
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://patch.msgid.link/20260826103012.240453-1-meatuni001@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c    | 124 ------------------------------------
- net/bluetooth/hci_debugfs.c | 123 +++++++++++++++++++++++++++++++++++
- net/bluetooth/hci_debugfs.h |   5 ++
- 3 files changed, 128 insertions(+), 124 deletions(-)
+ drivers/platform/x86/hp/hp-wmi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 87ef9fdeb12ec..834cefb43b74e 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -60,130 +60,6 @@ DEFINE_MUTEX(hci_cb_list_lock);
- /* HCI ID Numbering */
- static DEFINE_IDA(hci_index_ida);
+diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
+index 140a5f797980d..c721fcdd2e43c 100644
+--- a/drivers/platform/x86/hp/hp-wmi.c
++++ b/drivers/platform/x86/hp/hp-wmi.c
+@@ -246,8 +246,9 @@ static int hp_wmi_perform_query(int query, enum hp_wmi_command command,
+ 		goto out_free;
+ 	}
  
--/* ---- HCI debugfs entries ---- */
--
--static ssize_t dut_mode_read(struct file *file, char __user *user_buf,
--			     size_t count, loff_t *ppos)
--{
--	struct hci_dev *hdev = file->private_data;
--	char buf[3];
--
--	buf[0] = hci_dev_test_flag(hdev, HCI_DUT_MODE) ? 'Y' : 'N';
--	buf[1] = '\n';
--	buf[2] = '\0';
--	return simple_read_from_buffer(user_buf, count, ppos, buf, 2);
--}
--
--static ssize_t dut_mode_write(struct file *file, const char __user *user_buf,
--			      size_t count, loff_t *ppos)
--{
--	struct hci_dev *hdev = file->private_data;
--	struct sk_buff *skb;
--	bool enable;
--	int err;
--
--	if (!test_bit(HCI_UP, &hdev->flags))
--		return -ENETDOWN;
--
--	err = kstrtobool_from_user(user_buf, count, &enable);
--	if (err)
--		return err;
--
--	if (enable == hci_dev_test_flag(hdev, HCI_DUT_MODE))
--		return -EALREADY;
--
--	hci_req_sync_lock(hdev);
--	if (enable)
--		skb = __hci_cmd_sync(hdev, HCI_OP_ENABLE_DUT_MODE, 0, NULL,
--				     HCI_CMD_TIMEOUT);
--	else
--		skb = __hci_cmd_sync(hdev, HCI_OP_RESET, 0, NULL,
--				     HCI_CMD_TIMEOUT);
--	hci_req_sync_unlock(hdev);
--
--	if (IS_ERR(skb))
--		return PTR_ERR(skb);
--
--	kfree_skb(skb);
--
--	hci_dev_change_flag(hdev, HCI_DUT_MODE);
--
--	return count;
--}
--
--static const struct file_operations dut_mode_fops = {
--	.open		= simple_open,
--	.read		= dut_mode_read,
--	.write		= dut_mode_write,
--	.llseek		= default_llseek,
--};
--
--static ssize_t vendor_diag_read(struct file *file, char __user *user_buf,
--				size_t count, loff_t *ppos)
--{
--	struct hci_dev *hdev = file->private_data;
--	char buf[3];
--
--	buf[0] = hci_dev_test_flag(hdev, HCI_VENDOR_DIAG) ? 'Y' : 'N';
--	buf[1] = '\n';
--	buf[2] = '\0';
--	return simple_read_from_buffer(user_buf, count, ppos, buf, 2);
--}
--
--static ssize_t vendor_diag_write(struct file *file, const char __user *user_buf,
--				 size_t count, loff_t *ppos)
--{
--	struct hci_dev *hdev = file->private_data;
--	bool enable;
--	int err;
--
--	err = kstrtobool_from_user(user_buf, count, &enable);
--	if (err)
--		return err;
--
--	/* When the diagnostic flags are not persistent and the transport
--	 * is not active or in user channel operation, then there is no need
--	 * for the vendor callback. Instead just store the desired value and
--	 * the setting will be programmed when the controller gets powered on.
--	 */
--	if (test_bit(HCI_QUIRK_NON_PERSISTENT_DIAG, &hdev->quirks) &&
--	    (!test_bit(HCI_RUNNING, &hdev->flags) ||
--	     hci_dev_test_flag(hdev, HCI_USER_CHANNEL)))
--		goto done;
--
--	hci_req_sync_lock(hdev);
--	err = hdev->set_diag(hdev, enable);
--	hci_req_sync_unlock(hdev);
--
--	if (err < 0)
--		return err;
--
--done:
--	if (enable)
--		hci_dev_set_flag(hdev, HCI_VENDOR_DIAG);
--	else
--		hci_dev_clear_flag(hdev, HCI_VENDOR_DIAG);
--
--	return count;
--}
--
--static const struct file_operations vendor_diag_fops = {
--	.open		= simple_open,
--	.read		= vendor_diag_read,
--	.write		= vendor_diag_write,
--	.llseek		= default_llseek,
--};
--
--static void hci_debugfs_create_basic(struct hci_dev *hdev)
--{
--	debugfs_create_file("dut_mode", 0644, hdev->debugfs, hdev,
--			    &dut_mode_fops);
--
--	if (hdev->set_diag)
--		debugfs_create_file("vendor_diag", 0644, hdev->debugfs, hdev,
--				    &vendor_diag_fops);
--}
--
- static int hci_reset_req(struct hci_request *req, unsigned long opt)
- {
- 	BT_DBG("%s %ld", req->hdev->name, opt);
-diff --git a/net/bluetooth/hci_debugfs.c b/net/bluetooth/hci_debugfs.c
-index 1192280031685..987a546de3ae1 100644
---- a/net/bluetooth/hci_debugfs.c
-+++ b/net/bluetooth/hci_debugfs.c
-@@ -27,6 +27,7 @@
- #include <net/bluetooth/hci_core.h>
+-	if (obj->type != ACPI_TYPE_BUFFER) {
+-		pr_warn("query 0x%x returned an invalid object 0x%x\n", query, ret);
++	if (obj->type != ACPI_TYPE_BUFFER ||
++	    obj->buffer.length < sizeof(*bios_return)) {
++		pr_warn("query 0x%x returned wrong type or too small buffer\n", query);
+ 		ret = -EINVAL;
+ 		goto out_free;
+ 	}
+@@ -266,7 +267,7 @@ static int hp_wmi_perform_query(int query, enum hp_wmi_command command,
+ 	if (!outsize)
+ 		goto out_free;
  
- #include "smp.h"
-+#include "hci_request.h"
- #include "hci_debugfs.h"
+-	actual_outsize = min(outsize, (int)(obj->buffer.length - sizeof(*bios_return)));
++	actual_outsize = min_t(u32, outsize, obj->buffer.length - sizeof(*bios_return));
+ 	memcpy(buffer, obj->buffer.pointer + sizeof(*bios_return), actual_outsize);
+ 	memset(buffer + actual_outsize, 0, outsize - actual_outsize);
  
- #define DEFINE_QUIRK_ATTRIBUTE(__name, __quirk)				      \
-@@ -1270,3 +1271,125 @@ void hci_debugfs_create_conn(struct hci_conn *conn)
- 	snprintf(name, sizeof(name), "%u", conn->handle);
- 	conn->debugfs = debugfs_create_dir(name, hdev->debugfs);
- }
-+
-+static ssize_t dut_mode_read(struct file *file, char __user *user_buf,
-+			     size_t count, loff_t *ppos)
-+{
-+	struct hci_dev *hdev = file->private_data;
-+	char buf[3];
-+
-+	buf[0] = hci_dev_test_flag(hdev, HCI_DUT_MODE) ? 'Y' : 'N';
-+	buf[1] = '\n';
-+	buf[2] = '\0';
-+	return simple_read_from_buffer(user_buf, count, ppos, buf, 2);
-+}
-+
-+static ssize_t dut_mode_write(struct file *file, const char __user *user_buf,
-+			      size_t count, loff_t *ppos)
-+{
-+	struct hci_dev *hdev = file->private_data;
-+	struct sk_buff *skb;
-+	bool enable;
-+	int err;
-+
-+	if (!test_bit(HCI_UP, &hdev->flags))
-+		return -ENETDOWN;
-+
-+	err = kstrtobool_from_user(user_buf, count, &enable);
-+	if (err)
-+		return err;
-+
-+	if (enable == hci_dev_test_flag(hdev, HCI_DUT_MODE))
-+		return -EALREADY;
-+
-+	hci_req_sync_lock(hdev);
-+	if (enable)
-+		skb = __hci_cmd_sync(hdev, HCI_OP_ENABLE_DUT_MODE, 0, NULL,
-+				     HCI_CMD_TIMEOUT);
-+	else
-+		skb = __hci_cmd_sync(hdev, HCI_OP_RESET, 0, NULL,
-+				     HCI_CMD_TIMEOUT);
-+	hci_req_sync_unlock(hdev);
-+
-+	if (IS_ERR(skb))
-+		return PTR_ERR(skb);
-+
-+	kfree_skb(skb);
-+
-+	hci_dev_change_flag(hdev, HCI_DUT_MODE);
-+
-+	return count;
-+}
-+
-+static const struct file_operations dut_mode_fops = {
-+	.open		= simple_open,
-+	.read		= dut_mode_read,
-+	.write		= dut_mode_write,
-+	.llseek		= default_llseek,
-+};
-+
-+static ssize_t vendor_diag_read(struct file *file, char __user *user_buf,
-+				size_t count, loff_t *ppos)
-+{
-+	struct hci_dev *hdev = file->private_data;
-+	char buf[3];
-+
-+	buf[0] = hci_dev_test_flag(hdev, HCI_VENDOR_DIAG) ? 'Y' : 'N';
-+	buf[1] = '\n';
-+	buf[2] = '\0';
-+	return simple_read_from_buffer(user_buf, count, ppos, buf, 2);
-+}
-+
-+static ssize_t vendor_diag_write(struct file *file, const char __user *user_buf,
-+				 size_t count, loff_t *ppos)
-+{
-+	struct hci_dev *hdev = file->private_data;
-+	bool enable;
-+	int err;
-+
-+	err = kstrtobool_from_user(user_buf, count, &enable);
-+	if (err)
-+		return err;
-+
-+	/* When the diagnostic flags are not persistent and the transport
-+	 * is not active or in user channel operation, then there is no need
-+	 * for the vendor callback. Instead just store the desired value and
-+	 * the setting will be programmed when the controller gets powered on.
-+	 */
-+	if (test_bit(HCI_QUIRK_NON_PERSISTENT_DIAG, &hdev->quirks) &&
-+	    (!test_bit(HCI_RUNNING, &hdev->flags) ||
-+	     hci_dev_test_flag(hdev, HCI_USER_CHANNEL)))
-+		goto done;
-+
-+	hci_req_sync_lock(hdev);
-+	err = hdev->set_diag(hdev, enable);
-+	hci_req_sync_unlock(hdev);
-+
-+	if (err < 0)
-+		return err;
-+
-+done:
-+	if (enable)
-+		hci_dev_set_flag(hdev, HCI_VENDOR_DIAG);
-+	else
-+		hci_dev_clear_flag(hdev, HCI_VENDOR_DIAG);
-+
-+	return count;
-+}
-+
-+static const struct file_operations vendor_diag_fops = {
-+	.open		= simple_open,
-+	.read		= vendor_diag_read,
-+	.write		= vendor_diag_write,
-+	.llseek		= default_llseek,
-+};
-+
-+void hci_debugfs_create_basic(struct hci_dev *hdev)
-+{
-+	debugfs_create_file("dut_mode", 0644, hdev->debugfs, hdev,
-+			    &dut_mode_fops);
-+
-+	if (hdev->set_diag)
-+		debugfs_create_file("vendor_diag", 0644, hdev->debugfs, hdev,
-+				    &vendor_diag_fops);
-+}
-diff --git a/net/bluetooth/hci_debugfs.h b/net/bluetooth/hci_debugfs.h
-index 4444dc8cedc21..9a8a7c93bb12a 100644
---- a/net/bluetooth/hci_debugfs.h
-+++ b/net/bluetooth/hci_debugfs.h
-@@ -26,6 +26,7 @@ void hci_debugfs_create_common(struct hci_dev *hdev);
- void hci_debugfs_create_bredr(struct hci_dev *hdev);
- void hci_debugfs_create_le(struct hci_dev *hdev);
- void hci_debugfs_create_conn(struct hci_conn *conn);
-+void hci_debugfs_create_basic(struct hci_dev *hdev);
- 
- #else
- 
-@@ -45,4 +46,8 @@ static inline void hci_debugfs_create_conn(struct hci_conn *conn)
- {
- }
- 
-+static inline void hci_debugfs_create_basic(struct hci_dev *hdev)
-+{
-+}
-+
- #endif
 -- 
 2.53.0
 
