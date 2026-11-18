@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015642;
-	b=JAs+b9FrwDCQhas22PCeHoDCQbq8m1J4Ppc4fwT+7xYDwBkc+kyrC0yCZz+K6mXWwTiM
-	 L2GG0NAEGs3jSEw8nxwEkGqobr4Hy5Hd/yz2xrOqbjtgcsT5ZqN/u7JQEAivEXjeKaQwV
-	 yLp7C3ms3iMYHaVoRSFs4Js6B78vVdsieaujiUH+BsWdgjU61ipohzR+xw0UdxWqvcZV9
-	 vQqXdxec9sfTjjsLOxnUGyGOQJ607Vcx5uAAyKamouKZekAVdmtUiANpfszOzg2QbfA8d
-	 JOapH5iookxaD8CyNjbPJLZZKnUugrQEF1PO8rkBwvraLwVNLgr06vnE8m/M7468rqQ==
+	t=1795015645;
+	b=FuUORqiHll2L1PBdjjoYdNGKVwpOGibQWwjStCN49/Kr7urs7G04a+1qU3x9zaf915LR
+	 /szeZJtcGNu1fOzE6eD5xP3ICHc4mV7Aiy2DRfZjPTXgSZliMK5cp8uxg9yuzQ0Hc/Ov9
+	 NUNbxnHIj/qEFo+ltJIHrHo4QjsfP6Kr1gBLbJPK0s8lUv34Aal0TtzjPUYT09MWwVeWo
+	 BpwCIlJd3G0GY5AlAPUPij54crHka7FjSI9mnq4NlFOzm8z+ePiChbLFB+jAoZ4NaRaT4
+	 +wJrM8pvvkPl/M9qle44UHAclTAt4enaU8NO5mh7I86vAiUjZCYSKjkQQe0eOsv6BiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015642;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015645;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Xt9yS64IyWkL/Nwe1IPdvGdrKG7/67+AVv+yEUtHEa8=;
-	b=CJcxv2AhFGm1iqEdjJxRpMOr58dbmgIjvZKCdhJWaI6buaMkP+W/B8MN1YoEtJ4u9MfE
-	 W1QECGRsjGL21Y1TQ4m5zcWFBD/++AQpLWZZigv+iZ1PdzScl4XdRb776UqnuCV2HAUAk
-	 j2qN5tJNDrSqD+wPXrFOob7bDvB99J5sI0NbkcWFU++d2iUO0sV7yjXh+hpn+x0H4DitU
-	 EwivmTsnmiIvkwdD55UTSR40oXBzNkvrfNkcPCds2uG5/bvUdutub5X/MiA5tGlhh/+U6
-	 PQOmA9LjP4DqBMFFMWrhbEIdTAnY2UwZqiBPQvRJPNIjTuBEn4xyt8q8srX7BJi3A6A==
+	bh=77S3KfvKVmjxXQqHde0rbPe9JM1jUClwHUPVs4Mg5wA=;
+	b=1BVFBK3rexHE/I03I266WSVbsZ7damgx1CzgLcl2k3EEUY1bA4EOC8aDAGQQUjAljNdD
+	 8oIQvK3Op3o7pI1hJry/ze1uLcdxRo1HophIdM5IGjIpDl3JSKvNSIpQS2xNInncn4GM3
+	 gS1MK5yflSuH4u/txyRIdZkqj8XSiNTtY6tOurAAPyZ37Z4S3HWb/ZA1uDaUSY0Axe+7d
+	 jZoAN2X1UQe2QBDN4xSLNsqg+X4bwyhjmEETf3GocCUy67tu1KhvfmBs3VzqqWivpYh9Q
+	 gX+rXxhCb0PYn2lXtTti4RHiAbgli0sot8N29pLJ5QkAzWb4Gpkmof06TTlYclCbVnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nnQDcCHf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vEdUMQD+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7553B60A2602;
-	Wed, 18 Nov 2026 15:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56835606A32C;
+	Wed, 18 Nov 2026 15:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nnQDcCHf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95131F000C7;
-	Wed, 18 Nov 2026 15:27:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vEdUMQD+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF501F000C8;
+	Wed, 18 Nov 2026 15:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015642;
-	bh=Xt9yS64IyWkL/Nwe1IPdvGdrKG7/67+AVv+yEUtHEa8=;
+	s=korg; t=1795015645;
+	bh=77S3KfvKVmjxXQqHde0rbPe9JM1jUClwHUPVs4Mg5wA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nnQDcCHffuGPHOwitmmJMGqWuPuF2b/NQtfwW7xtzFdogtq1defahuYneY/rqMnOt
-	 9cFoqP0J1s5p+7kDqHwoCAbhtjoa0qzJgizDzwK73y+Ns9KwwR6dKZGPbEiJZQptbL
-	 d+2AvcC+pg1wuk2OEGztqeYltoZyknQ0ZPANOSVs=
+	b=vEdUMQD+Rb+9U7WGhBueJjpYKGBz4/d2cUZSq2/WIPdDfQbXwVZ3c15n2sIq8Wx88
+	 Wi9mAS7iA3P84mpOnzfWZFMqsvzRlGg3kBx5potWjhJJ8dmbcN4Yuwy3rB37+Tt0k0
+	 26jURmU/vN/J222VLWLDS2ZQSJDXlTjuPiyqvSEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcel Hofmann <marcel.hofmann@ingenics-digital.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Peng Fan <peng.fan@nxp.com>
-Subject: [PATCH 7.3 0244/2651] remoteproc: imx_rproc: Allow mappings ending at region boundary
-Date: Wed, 18 Nov 2026 15:24:44 +0100
-Message-ID: <20261118150256.641854456@linuxfoundation.org>
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Howard Chu <howardchu95@gmail.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 0245/2651] perf trace: Fix error checking in btf_struct_scnprintf()
+Date: Wed, 18 Nov 2026 15:24:45 +0100
+Message-ID: <20261118150256.675009619@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,98 +71,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcel Hofmann <marcel.hofmann@ingenics-digital.com>
+From: Aaron Tomlin <atomlin@atomlin.com>
 
-[ Upstream commit 749eed0c7178c8d53ce4c9acdda4a545721c494b ]
+[ Upstream commit 02241f791aa28802cc05223a740e163e14cd5ea2 ]
 
-The address range checks in imx_rproc_da_to_sys() and
-imx_rproc_da_to_va() use a strict comparison for the exclusive end
-address of the requested range.
+btf_dump__dump_type_data() returns the positive number of bytes dumped on
+success, or a negative error code (e.g., -EINVAL) on failure.
 
-As a result, a valid request that ends exactly at the end of an address
-translation or mapped memory region is rejected. For a region
-[start, start + size), a request [addr, addr + len) is contained when:
+Currently, btf_struct_scnprintf() checks if btf_dump__dump_type_data()
+returns 0. When a negative error code is returned on failure, this check
+evaluates to false, causing the function to proceed down the success path
+and advance arg->augmented.args past the unprinted struct data before
+returning 0.
 
-    addr >= start && addr + len <= start + size
+Consequently, when syscall__scnprintf_args() falls back to the default
+argument beautifier upon receiving 0 from trace__btf_scnprintf(), the
+fallback beautifier or subsequent arguments read from an erroneously
+advanced augmented arguments buffer.
 
-This occurs when a loadable ELF segment fills an entire mapped memory
-region. This can be produced by a linker script that extends the
-resource table section to the end of its designated region:
+Fix this by checking for '<= 0' ensuring that on any failure or 0-byte
+dump, 0 is returned without modifying the augmented arguments pointer.
 
-    .resource_table :
-    {
-      . = ALIGN(8);
-      KEEP(*(.resource_table)) /* Resource table */
-      . = ALIGN(8);
-      . = ORIGIN(m_rsc_tbl) + LENGTH(m_rsc_tbl);
-    } > m_rsc_tbl =0x00
-
-This produces a ELF program header like:
-
-    LOAD  0x010000 0xa4220000 0xa4220000 0x01000 0x01000 R   0x1000
-
-In this case, the segment size matches the mapped region size exactly,
-causing the address translation to fail with:
-
-    bad phdr da 0xa4220000 mem 0x1000
-
-Rework the upper-bound checks to allow ranges ending exactly at the region
-boundary while guarding against integer overflow.
-
-Fixes: a0ff4aa6f010 ("remoteproc: imx_rproc: add a NXP/Freescale imx_rproc driver")
-Signed-off-by: Marcel Hofmann <marcel.hofmann@ingenics-digital.com>
-Tested-by: Peng Fan <peng.fan@nxp.com>  #i.MX95-19x19-EVK
-Link: https://lore.kernel.org/r/20260827123136.438798-1-marcel@hofmania.de
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Fixes: cb32035214b9a09d ("perf trace: Pretty print struct data")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Aaron Tomlin <atomlin@atomlin.com>
+Tested-by: Ian Rogers <irogers@google.com>
+Cc: Howard Chu <howardchu95@gmail.com>
+[ Restored that call to be a single line ]
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/imx_rproc.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ tools/perf/builtin-trace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
-index 745ce52cd8226..ea852ca143bb5 100644
---- a/drivers/remoteproc/imx_rproc.c
-+++ b/drivers/remoteproc/imx_rproc.c
-@@ -540,6 +540,7 @@ static int imx_rproc_da_to_sys(struct imx_rproc *priv, u64 da,
- 	/* parse address translation table */
- 	for (i = 0; i < dcfg->att_size; i++) {
- 		const struct imx_rproc_att *att = &dcfg->att[i];
-+		u64 offset;
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index c3c7f1f85c530..4c8f91f0f854b 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -1066,7 +1066,7 @@ static size_t btf_struct_scnprintf(const struct btf_type *type, struct btf *btf,
+ 		return 0;
  
- 		/*
- 		 * Ignore entries not belong to current core:
-@@ -552,9 +553,11 @@ static int imx_rproc_da_to_sys(struct imx_rproc *priv, u64 da,
- 				continue;
- 		}
+ 	/* pretty print the struct data here */
+-	if (btf_dump__dump_type_data(btf_dump, type_id, arg->augmented.args->value, type->size, &dump_data_opts) == 0)
++	if (btf_dump__dump_type_data(btf_dump, type_id, arg->augmented.args->value, type->size, &dump_data_opts) <= 0)
+ 		return 0;
  
--		if (da >= att->da && da + len < att->da + att->size) {
--			unsigned int offset = da - att->da;
-+		if (da < att->da)
-+			continue;
- 
-+		offset = da - att->da;
-+		if (offset <= att->size && len <= att->size - offset) {
- 			*sys = att->sa + offset;
- 			if (is_iomem)
- 				*is_iomem = att->flags & ATT_IOMEM;
-@@ -585,9 +588,14 @@ static void *imx_rproc_da_to_va(struct rproc *rproc, u64 da, size_t len, bool *i
- 		return NULL;
- 
- 	for (i = 0; i < IMX_RPROC_MEM_MAX; i++) {
--		if (sys >= priv->mem[i].sys_addr && sys + len <
--		    priv->mem[i].sys_addr +  priv->mem[i].size) {
--			unsigned int offset = sys - priv->mem[i].sys_addr;
-+		u64 offset;
-+
-+		if (sys < priv->mem[i].sys_addr)
-+			continue;
-+
-+		offset = sys - priv->mem[i].sys_addr;
-+		if (offset <= priv->mem[i].size &&
-+		    len <= priv->mem[i].size - offset) {
- 			/* __force to make sparse happy with type conversion */
- 			va = (__force void *)(priv->mem[i].cpu_addr + offset);
- 			break;
+ 	consumed = sizeof(*augmented_arg) + augmented_arg->size;
 -- 
 2.53.0
 
