@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060030;
-	b=soc+ilWXBZfod1k5gq0LTbmDp3hE4OXelr1GhfDJKmuegODgNsVeFt4HMxusl/t3JsLe
-	 chqyhIu8NqhY9KJpcHtNmHyVdqUWZ861fx6UeKDnriWro03xyNtORYZ28nuyO0mpOSn8X
-	 6eTDQjS/mNnQlwStzCvKiWKyuKaWHbom1ydWKOtabQn6QOGCzgoi1ThWXWIBJ8SCeNevq
-	 YMC+ty48ajap1SP95+6p3ld6fvw5g0aTvvKHPmzZt27z1koj+MvHgJyK02FzBV+jZHhQK
-	 Ut9U240hmslSS+XMuurEHlJ3PWcntayK9asVc6jxj7GjayGueVivqp8O6s0xpKYjvFw==
+	t=1795060033;
+	b=P8nASTGUkI5qPgUuIZMOT/tBIzaDln+BIVD+B35nHot9wrRGwWCGjWI+GZGmFu7wCvTu
+	 nvKfQj3L7HKy8GlssxLWCjLAf/4daeuXSFoZJDpFy0iRDT22JLq89pKR9egAffZpc+8t7
+	 4UAgvTmNly0be2YyrPS0k9E8RdhRRYL+26hgTOYpdxblkqoakGrd13M7n+rV6b/XfT/6u
+	 Q2Jkd1HONBta87oTfcyEAzc+vVJLbEeFOlQE2T7ao8F0iSg9Nbvya5Lt1po0O+qbR3WJo
+	 Yh4WV//Qmk/ni84rwuOPUZNEtsw9K1fSq45qfScvneZjfmY0j26uEt6NsgxRtm963gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060030;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060033;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YkghfKhpzopZSrC2FyuNZaHdio5XH45JXZ9BTjZ3L5U=;
-	b=b5+fAanFWc7ix9fb3NJjZotCs0qGdZAMMjWMcNq4JIKMTX4YLe1NZpOTE6/Hqz0thPEw
-	 rgFVQkp/9bIihXAuqdiPjc4i5nnaJSbs5l55Kvxu6MHVR4BTnKp17XESwRuhdlmBLx52A
-	 4BakWlmqOACtYpmlsFCGRumNrgglp35GHYR6FvhZsnHRNgVx9kFseAjWnyCD7q+v9vygg
-	 HyyUoBbfMIbXMv224xrF/HeHjOzgV1YUJiDKReqwThC9bfMkY/8lqqbLKDOHtRCrpPJsH
-	 vJTgzSV0ENBL9a3EvTkaj41qbtRvsJlC22YWJU4qwilBmiQaBhfesJdn8PXGVoRbKLA==
+	bh=R4m/E4ncX6suWjVBCtFMTCe0ume6TVAWL04DsNfE5Rw=;
+	b=oPV7NHJp2HjHWlxaOBthINOVe8G1IC/LRcxVe11whaRUl1apSB9/h4xsBrk5gNztYWMG
+	 Kx4svVPBHiNP1EwAMOxgX5HajMM4MSUicVkgdAhSEDFpCZpeGgnaoxHobihlZz8ruDGor
+	 1B7txs6Qq/9MJGVwoxYRfgb5Al74Q7EAFvCMbZMx85h9ETUL2qOhIuefSlVhPIX+iL/Qx
+	 nwyHI6ycGK9+j2tOMmXKOzzbRGZiNFsjtuIBA2r2HM+xoyPVj0bIvd8jJL2lR7pPIWbZD
+	 F+oqj52v8r5GdvzcBPprV5YWAeinsO41gKF5zUg8v3/D1XlhaxqmrWxf+z+2SRtIJ9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="DeDop7/Q";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NIjBXDeg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8812606A320;
-	Thu, 19 Nov 2026 03:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA28606A325;
+	Thu, 19 Nov 2026 03:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DeDop7/Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87D71F000C4;
-	Thu, 19 Nov 2026 03:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NIjBXDeg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C58E1F000C4;
+	Thu, 19 Nov 2026 03:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060030;
-	bh=YkghfKhpzopZSrC2FyuNZaHdio5XH45JXZ9BTjZ3L5U=;
+	s=korg; t=1795060033;
+	bh=R4m/E4ncX6suWjVBCtFMTCe0ume6TVAWL04DsNfE5Rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DeDop7/Qlk7vIafxTD+abTghe3FgCpRxZy2JVBoFdBnAY2kvagqOPJlpPMG2+qs+s
-	 jBYEMv6tSGZgUAtEt72TIGGwE5+IemnVGnppgWg4K/XxpIfht6ncQxN5LqD2Yni+1B
-	 dxn2nW/BCfQI/yyMH3xFloEFK8kg9NDN2ZEcQsJk=
+	b=NIjBXDegDliYz/3AkgGTqxFzFHb7icMffILi1qjO7xGix5TrjWNFe3CroLZlrC1Tg
+	 pX6CLIwlX8qt9PCopKvRU2xSr7pBiTagzwmj0q58bB8XxDZSuznC6vdSgq5NEohBaY
+	 fwVzojceyQFBDlnOIJcHDFmK1x9o5Fkrd/FPxa9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Amir Goldstein <amir73il@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1052/1848] backing-file: always end a queued write
-Date: Wed, 18 Nov 2026 15:51:30 +0100
-Message-ID: <20261118150001.339212829@linuxfoundation.org>
+Subject: [PATCH 5.10 1053/1848] mm/mremap: fix moving PUD leaves
+Date: Wed, 18 Nov 2026 15:51:31 +0100
+Message-ID: <20261118150001.378730730@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,77 +72,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 627cdcbc2a2eceb0452078a0c14370f9f1f17a91 ]
+[ Upstream commit 440c8779757f09f290770b1d361dc1516a9d0b3e ]
 
-Writes to a loop device with direct I/O on an overlay file make the
-next freeze of the upper filesystem hang for ever.
+pud_none_or_clear_bad() only really works on page tables. PUD leaves
+confuse the check and make us clear the page table entry and print a
+warning.
 
-Every kiocb_start_write() needs a kiocb_end_write(). For a write that
-is queued, vfs_iocb_iter_write() leaves the end to the completion, and
-backing_aio_rw_complete() only calls kiocb_end_write() when IOCB_WRITE
-is set in the flags copied from the submitter. In-kernel submitters
-such as loop do not set that flag, so each queued write keeps the
-freeze protection of the backing filesystem.
+Since commit aed877c2b4257 ("device/dax: properly refcount device dax pages
+when mapping"), this also leaks device-DAX folio references, mapcounts
+and RSS accounting, resulting in "Bad rss-counter state" warnings on exit.
 
-Direct writes to a loop device with direct I/O backed by an overlay
-file left fsfreeze of the ext4 upper filesystem, and a later touch
-there, blocked in D state. It takes write access to the node of the
-loop device, which root has by default, to attach the file and to write.
+Allow PUD leaves in get_old_pud(). If a PUD leaf cannot be moved as a
+whole or the move fails, split it. This unmaps it with proper accounting
+instead of treating the leaf entry as a PMD table.
 
-The fix used here is to mark a write in struct backing_aio and to call
-kiocb_end_write() on completion of every marked write.
+Keep using pud_trans_huge() for now, in the future this code should be
+cleaned up to just check for PUD leaves.
 
-Reproduced under qemu without KVM, on v7.3-rc6-21-g602042bf29f6 with
-earlier fixes of this series applied, with and without this change,
-once each. The kernel was not changed for the run. With this change
-fsfreeze finished in about a second. Not run: the nvmet and LIO file
-backends, which do not set IOCB_WRITE either, FUSE passthrough, and an
-xfs upper filesystem.
+Fix generated by an LLM and sent by Josef Bacik in private.
 
-Fixes: 2406a307ac7d ("ovl: implement async IO routines")
+Fixes: a00cc7d9dd93 ("mm, x86: add support for PUD-sized transparent hugepages")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-[amir: use aio->is_write to explicitly mark a write aio]
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://patch.msgid.link/20261029180319.2852090-1-amir73il@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: adapted backing_aio changes to ovl_aio_req and overlayfs-specific write and cleanup handlers ]
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+[ david: fallthrough after splitting ]
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-32-d6437171ecc3@kernel.org
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: applied split_huge_pud() directly in get_old_pmd() because get_old_pud() and whole-PUD move support are absent ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/file.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ mm/mremap.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/overlayfs/file.c b/fs/overlayfs/file.c
-index 4440ff43cb66d..2e74de6f4a563 100644
---- a/fs/overlayfs/file.c
-+++ b/fs/overlayfs/file.c
-@@ -19,6 +19,7 @@ struct ovl_aio_req {
- 	struct kiocb iocb;
- 	refcount_t ref;
- 	struct kiocb *orig_iocb;
-+	bool is_write;
- };
+diff --git a/mm/mremap.c b/mm/mremap.c
+index 79beead5af830..eca03a9789049 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -30,8 +30,9 @@
  
- static struct kmem_cache *ovl_aio_request_cachep;
-@@ -265,7 +266,7 @@ static void ovl_aio_cleanup_handler(struct ovl_aio_req *aio_req)
- 	struct kiocb *iocb = &aio_req->iocb;
- 	struct kiocb *orig_iocb = aio_req->orig_iocb;
+ #include "internal.h"
  
--	if (iocb->ki_flags & IOCB_WRITE) {
-+	if (aio_req->is_write) {
- 		struct inode *inode = file_inode(orig_iocb->ki_filp);
+-static pmd_t *get_old_pmd(struct mm_struct *mm, unsigned long addr)
++static pmd_t *get_old_pmd(struct vm_area_struct *vma, unsigned long addr)
+ {
++	struct mm_struct *mm = vma->vm_mm;
+ 	pgd_t *pgd;
+ 	p4d_t *p4d;
+ 	pud_t *pud;
+@@ -46,6 +47,7 @@ static pmd_t *get_old_pmd(struct mm_struct *mm, unsigned long addr)
+ 		return NULL;
  
- 		/* Actually acquired in ovl_write_iter() */
-@@ -394,6 +395,7 @@ static ssize_t ovl_write_iter(struct kiocb *iocb, struct iov_iter *iter)
- 				     SB_FREEZE_WRITE);
- 		real.flags = 0;
- 		aio_req->orig_iocb = iocb;
-+		aio_req->is_write = true;
- 		kiocb_clone(&aio_req->iocb, iocb, get_file(real.file));
- 		aio_req->iocb.ki_flags = ifl;
- 		aio_req->iocb.ki_complete = ovl_aio_rw_complete;
+ 	pud = pud_offset(p4d, addr);
++	split_huge_pud(vma, pud, addr);
+ 	if (pud_none_or_clear_bad(pud))
+ 		return NULL;
+ 
+@@ -280,7 +282,7 @@ unsigned long move_page_tables(struct vm_area_struct *vma,
+ 		next = (new_addr + PMD_SIZE) & PMD_MASK;
+ 		if (extent > next - new_addr)
+ 			extent = next - new_addr;
+-		old_pmd = get_old_pmd(vma->vm_mm, old_addr);
++		old_pmd = get_old_pmd(vma, old_addr);
+ 		if (!old_pmd)
+ 			continue;
+ 		new_pmd = alloc_new_pmd(vma->vm_mm, vma, new_addr);
 -- 
 2.53.0
 
