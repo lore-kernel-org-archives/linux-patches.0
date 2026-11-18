@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055312;
-	b=pmyoDdBEsSF2ah1WWDH1/x9LmQN/sNoQl8hlFzPJHUzzwrLM092fhpjK1pq7iv3C6nft
-	 V8W2hsCcpxOMYbEWocZ4ySTiYSfZdGWOf1ALOS+Q8/HUUZeKKis66+Uutu4vmXFWzNX4i
-	 emlwNjc2kmfsKwtqXNKrrLEGpXIH1m39dP0LVBfyXsKN6ZtMfPFNyx2zZkGHw/MYYfl90
-	 Y6xqiXxNh/HDnmz0lD6qh1Ra+jVV0qoxziv9RvwC3BYAgT1nmZijc1PN9NJT9wGTKFez3
-	 Q+1RNR+5EF7gB/D8TvgMp8ewMmuL+vaxMWnPVjiLdI8Pj3hA963dD5d1sgXw02ojmJA==
+	t=1795055315;
+	b=lByyYPIxklcxWp4as/XuTU4RUduhXK/YcpQ9IfuT6LQ2cL/Mwgq5Kd+SOl4iWUx9Z1NB
+	 z/FeMsMrTM867VUfRTDBAluAIbjkwobMcolGVGlyjsLXFzdPiZIWdT1NzZCo9YvmnbhU7
+	 xhRYvoLf5CHAscsqVMignLMyz1irDPAQtPgPNmprUY98e4iNEZ/ts7T0P/bCcx2t2IYAX
+	 Xs9vsWirIHn/L/QB8YtfOc2dK8fQ5L2hcla3cx4CBX7HWy1IwEZztjr46gbwEBmvuobnL
+	 FoQIyqx6JFok5JKpiAUt90yy4A02uHid6VD8ZPvHIwX8zpt0S5pDaHVgXOrXWVBZBUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055312;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055315;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bMOx9v72lfoWaHluZsKKyH4qUZZiayazTvXcD5fuI34=;
-	b=1zNo5LRXI42XvfYPtpRyeC56Ux547NukB9QJIn+syGomI4OYZgrNv45talqmBKGgC1Ai
-	 iLwkjK/SKd0NBCv1VErsMMCWdWYbqdzQi30EErnU61C0TouNWItR25nf6gKslg7677/4v
-	 YxdlVd4F3M1bs6xXi+nCB8ZNO8yfDG23/YPmF9EZEBkPfdUcDuzxyKKV74BfOSIotQRo0
-	 wxmbIBcC+BH+iMpdb4VEyUlNUDU8sGU7ksEx9L9uYWFtuG13T/aV9aBe2JR5lRNXjtn6p
-	 m3IL5oTNJJuDsUOAKP5EkG/NkRxTaa3ERkPTj93PBDW2SIuT8dKxKilPOX34EvAYxhw==
+	bh=IYZ6GkIMoPs3oFk8ldpdZVtUD3RVYVFfUiZgOBBC204=;
+	b=s56p/q1AKZOhSRN9EJfpDC3i3AAIGT7Hi8MgBWuDjogHepWo946mJ2MW8SuYnqaxDJ3Z
+	 EO42dRcaVP1UwA3JSuqAY/vm2V2cAa+rQFL5JjbtMUvnp8EK43FPSJ9BkFEzLAD2xzzk1
+	 Dc3Z/aKNVMFv6iAbF46QA1NlWa9sXO/tcKs3KZPCMN6SkZ7QqfyLHNvmmO1gS6B2Ff77Z
+	 cNWt9MfhAnJTFExJC2o9rlkCx/s67bGzIqv8t+laMpkJg4gYWZ5r+pX146Cq942nO1/kW
+	 auMLxtf4WH2sHZSNH6se3EIUfy1lIxxzcL12AuZKva8WsE4b6fwswnwhtP97roSIKsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YShYlnvx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZfqUVgjK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F75606A330;
-	Thu, 19 Nov 2026 02:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BA1606A325;
+	Thu, 19 Nov 2026 02:28:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YShYlnvx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2103E1F000C4;
-	Thu, 19 Nov 2026 02:28:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZfqUVgjK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2E51F000C4;
+	Thu, 19 Nov 2026 02:28:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055312;
-	bh=bMOx9v72lfoWaHluZsKKyH4qUZZiayazTvXcD5fuI34=;
+	s=korg; t=1795055315;
+	bh=IYZ6GkIMoPs3oFk8ldpdZVtUD3RVYVFfUiZgOBBC204=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YShYlnvxIS//nEjUH1+xgBGADFSFqPpo4ospuU/UZicCXvRIrMPaSQS6uE6oneQST
-	 6r334TpbfNshE/9+8coqqCI4aXwWKs25KXQBDUvkMuudYYfsziL7S9bH9l001dqqEQ
-	 nSqgUUDevWX89mPlCpciaT2/jce11Nbkzv7+2FmI=
+	b=ZfqUVgjKcQYxAcfv0e3jpv5DSXpb1pCIcxDla0bTKCBhaEhgB2BKvBVbBRaol2Eva
+	 mn/V3B55HSocqeBKvfWEqsarDAUNmJCDZr/ejKdltFnQ/nSPoJTJ+S4+dmu/HqN6pn
+	 e8JkA8va2kz2YAnTihKjpFQ55Hnqw0xeTYxhxqjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zongmin Zhou <zhouzongmin@kylinos.cn>,
+	Icenowy Zheng <uwu@icenowy.me>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1585/2214] serial: sifive: fix off-by-one in console port bounds check
-Date: Wed, 18 Nov 2026 15:54:21 +0100
-Message-ID: <20261118150115.410276109@linuxfoundation.org>
+Subject: [PATCH 5.15 1586/2214] dt-bindings: vendor-prefixes: add Genesys Logic
+Date: Wed, 18 Nov 2026 15:54:22 +0100
+Message-ID: <20261118150115.445881951@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,41 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zongmin Zhou <zhouzongmin@kylinos.cn>
+From: Icenowy Zheng <uwu@icenowy.me>
 
-[ Upstream commit bf961847813d9edcb5a9c089714069428d141fa9 ]
+[ Upstream commit 38cea8e31e9ef143187135d714aed4d7bd18463c ]
 
-sifive_serial_console_ports[] is sized SIFIVE_SERIAL_MAX_PORTS (8), so
-valid indices are 0..7. The bounds check in sifive_serial_probe() uses
-"id > SIFIVE_SERIAL_MAX_PORTS", which lets id == 8 pass and causes an
-out-of-bounds write in __ssp_add_console_port() through
-sifive_serial_console_ports[ssp->port.line].
+Genesys Logic, Inc. is a manufacturer for interface chips, especially
+USB hubs.
 
-Fix the check to use >= instead, matching the check already used in
-sifive_serial_console_setup().
+https://www.genesyslogic.com.tw/
 
-Fixes: 45c054d0815b ("tty: serial: add driver for the SiFive UART")
-Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
-Link: https://patch.msgid.link/20260827014524.19375-1-min_halo@163.com
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20221206055228.306074-2-uwu@icenowy.me
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: aa906abf611c ("dt-bindings: vendor-prefixes: add Free Mobile")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sifive.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/tty/serial/sifive.c b/drivers/tty/serial/sifive.c
-index 493bde7b8e398..a3ab203304bfb 100644
---- a/drivers/tty/serial/sifive.c
-+++ b/drivers/tty/serial/sifive.c
-@@ -975,7 +975,7 @@ static int sifive_serial_probe(struct platform_device *pdev)
- 	}
- 
- #ifdef CONFIG_SERIAL_SIFIVE_CONSOLE
--	if (id > SIFIVE_SERIAL_MAX_PORTS) {
-+	if (id >= SIFIVE_SERIAL_MAX_PORTS) {
- 		dev_err(&pdev->dev, "too many UARTs (%d)\n", id);
- 		return -EINVAL;
- 	}
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index fd2d25d7fa51b..f32408840be63 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -445,6 +445,8 @@ patternProperties:
+     description: GE Fanuc Intelligent Platforms Embedded Systems, Inc.
+   "^gemei,.*":
+     description: Gemei Digital Technology Co., Ltd.
++  "^genesys,.*":
++    description: Genesys Logic, Inc.
+   "^geniatech,.*":
+     description: Geniatech, Inc.
+   "^giantec,.*":
 -- 
 2.53.0
 
