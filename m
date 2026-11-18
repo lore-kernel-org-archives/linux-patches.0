@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048214;
-	b=oGJfNmbGvNJ8Q4Ba5AEx1hjbtj42NCQE7fjM7aQAS1U7T1X1faUYAeJ9eumvrr58uMzN
-	 Ki/Gpd5zS6PDtJVU6yVwpQW5siWpnVzW2e2NUi0fwzPa3RvQG/ROLe/rSpOmq1rxhM22Y
-	 0g4xGVhfOFph44Z0v76xzAiuuErMNLHNwT1QDYgJsRG8N0xZutsjz/4HeNBxBJuUApHmy
-	 dLtTcb2w99KmTUEm5V+sA5ODpJc5H5rNlimTiTHo6u4KJ2PbjewyaxzdQHy1nHEmQ9DGe
-	 7ZgWSm0w9zq7XLPNuLLduS497fyE+amuFCsDzznPAeiZxU7XS9+5vDac0GmNfH3gs2g==
+	t=1795048217;
+	b=wPfLWHZMDEaLUUn4mCMYhujIQWOHQJ+BCA3nv++atHSSGqy4iXMNBZPx6FlApJMKHxO5
+	 8AKVSby6VqGCARJd8vD9iF2PgZyYxmeWncgcQC2BKIuxplwi98vr5z6oZwUHum03AbbBK
+	 w8Vd2JuArUwgEZadURUiQlGqy0ZSIfhkYgk8u6U7bMEJU0OdmZ7yC6Slv0ZnkAdL8dB7i
+	 dlbWbveoQMyTOrTzCW2LGDrPmRW9XEwqrxGpaQU3XrRX8sp2hnP4UCINToCta4ceULXpX
+	 +i1vd8Xd+Sn1bRUA5CsYevJ8id524Xi8HmLlSIf7qtRR64UMLpUh29+19Rwt32oZILw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048214;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048217;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tYx7vlyDFiLXWHR2INUW504bl+Zgdguy3DnIZK32ZTc=;
-	b=lLczKifH8FcKkF5XkqjGoXg8wypo8T8seO7F6FvKPDsvhIquWLBra6ubmXsDC0OeVcfD
-	 nBH2wz1GwSko5Tr9MtRP/+sU2Xb6MtEzXbKwiC6ioHzUEahop9W8ckRI/zuWLcq4OTxTO
-	 ls9d/mGIwJInFdiwbAtSlDnuilV/+QLD4okESFD3phkXyQ6OekZhhHdB0wHvzKUTeUDCi
-	 HjsadrbT3r7UgzvARmXRQxJOdbotIQ1630j27m4TCa044iq+ku1FAg2o2C/iVk3t0M7+I
-	 YJ9w5bi6PH/3axmzgLKKBK8BWDo7C7VJEsPLeUww896CnwKIau216LS95RIAIuqur0g==
+	bh=x4g4orr/8xVmSfxKdoSzYrSxAR2tQZN+9FkKXIQCL2E=;
+	b=4adigumdnu3qTYh+btq/ODbzeyh6ujNe0nJr3/Uth4i/yXFYU2fi5+M46V2xOwiD2Vz9
+	 QcHo3ARcJLBztAIZr7tFSHDaNjqQXQqWfl30DKMvNxUbaOwUBNrSOxg5UbLnmrOL0tkS9
+	 PvM5f3ZO4VxfcCnNcxlOxKc3n+bTMISHsmpZ0vaBtNIaVmv/W5lhW68rnP9vyN4PwEQnJ
+	 8EguXjJx6I8kKznADYn308irhumfcQMgThgmqruDEmG6x1PDHF4rBuIhD+CU5yvyVDHPc
+	 539jeD0OySIPtdzuAcaeGi6Y5DX2VGzQmQ3ToCyvrFv7noyZlKhQtX8Hqlx28807Ujw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iY9Jr3LO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vfdqi0di;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F3160A2607;
-	Thu, 19 Nov 2026 00:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E564F606A337;
+	Thu, 19 Nov 2026 00:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iY9Jr3LO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04081F000CA;
-	Thu, 19 Nov 2026 00:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vfdqi0di
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEC81F00929;
+	Thu, 19 Nov 2026 00:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048214;
-	bh=tYx7vlyDFiLXWHR2INUW504bl+Zgdguy3DnIZK32ZTc=;
+	s=korg; t=1795048216;
+	bh=x4g4orr/8xVmSfxKdoSzYrSxAR2tQZN+9FkKXIQCL2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iY9Jr3LOiAz/RzRABMVG8gqERJgzYS/zEmk8S1uYYk/581f31TT9dPoPkZgw4JFIm
-	 XGqWVRWZPKg45d79lNhApdVszN2LRJn1j8kJ934miTa5vUSXcDI0wro24VvutD1iRL
-	 OSSXJXcJfTSVnzf0AXPtvKIQ5ftM7eTq+/C8UNi8=
+	b=Vfdqi0digrBFHxrYlWGI6H96rHsjAK0y9ebkj5MIisSACStQsIEgVh7+dMivkLdqx
+	 HPkx/Xdy4ojYYJA/slKY3/TxsGSGK5K3Mn4EW3yWXE0jKfiDx25usvrI7VxZiUu8Pp
+	 T3qiDT8bXSsCj7ZqDEXsntOWSu9ArDL/uIhQbPYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Zev Weiss <zev@bewilderbeest.net>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1916/2857] perf header: Fix potential memory corruption in cpu_cache_level__read
-Date: Wed, 18 Nov 2026 15:49:10 +0100
-Message-ID: <20261118150310.202536878@linuxfoundation.org>
+Subject: [PATCH 6.1 1917/2857] regulator: devres: Add devm_regulator_bulk_get_exclusive()
+Date: Wed, 18 Nov 2026 15:49:11 +0100
+Message-ID: <20261118150310.236879454@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,71 +68,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Zev Weiss <zev@bewilderbeest.net>
 
-[ Upstream commit d964ffba01f5d0935dd6bc850029958a62c74491 ]
+[ Upstream commit fd1845069711cdf1b1aaaa0f22311b7736396331 ]
 
-strim() may advance the pointer assigned to cache->size which causes
-later frees to crash.
+We had an exclusive variant of the devm_regulator_get() API, but no
+corresponding variant for the bulk API; let's add one now.  We add a
+generalized version of the existing regulator_bulk_get() function that
+additionally takes a get_type parameter and redefine
+regulator_bulk_get() in terms of it, then do similarly with
+devm_regulator_bulk_get(), and finally add the new
+devm_regulator_bulk_get_exclusive().
 
-Fix by performing the strim and then memmove-ing the potentially shifted
-string back over the original string.
-
-The bug was introduced by the transition from rtrim() to strim(), as
-rtrim() wouldn't move on the left.
-
-Fixes: 13c230ab6e56c6ae ("perf tools: Ditch rtrim(), use strim() from tools/lib")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+Link: https://lore.kernel.org/r/20221031233704.22575-2-zev@bewilderbeest.net
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 51d6888b51e0 ("regulator: qcom-rpmh: Fix the return value in rpmh_regulator_vrm_get_optimum_mode() kernel-doc")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/header.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/regulator/core.c           | 42 +++++++++++--------
+ drivers/regulator/devres.c         | 66 ++++++++++++++++++++++--------
+ drivers/regulator/internal.h       |  2 +
+ include/linux/regulator/consumer.h |  2 +
+ 4 files changed, 76 insertions(+), 36 deletions(-)
 
-diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
-index b2b0293567f07..421bf05e00f6a 100644
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -1178,7 +1178,11 @@ static int cpu_cache_level__read(struct cpu_cache_level *cache, u32 cpu, u16 lev
- 		return -1;
- 
- 	cache->type[len] = 0;
--	cache->type = strim(cache->type);
-+	{
-+		char *trimmed = strim(cache->type);
-+
-+		memmove(cache->type, trimmed, strlen(trimmed) + 1);
-+	}
- 
- 	scnprintf(file, PATH_MAX, "%s/size", path);
- 	if (sysfs__read_str(file, &cache->size, &len)) {
-@@ -1187,7 +1191,11 @@ static int cpu_cache_level__read(struct cpu_cache_level *cache, u32 cpu, u16 lev
- 	}
- 
- 	cache->size[len] = 0;
--	cache->size = strim(cache->size);
-+	{
-+		char *trimmed = strim(cache->size);
-+
-+		memmove(cache->size, trimmed, strlen(trimmed) + 1);
-+	}
- 
- 	scnprintf(file, PATH_MAX, "%s/shared_cpu_list", path);
- 	if (sysfs__read_str(file, &cache->map, &len)) {
-@@ -1197,7 +1205,11 @@ static int cpu_cache_level__read(struct cpu_cache_level *cache, u32 cpu, u16 lev
- 	}
- 
- 	cache->map[len] = 0;
--	cache->map = strim(cache->map);
-+	{
-+		char *trimmed = strim(cache->map);
-+
-+		memmove(cache->map, trimmed, strlen(trimmed) + 1);
-+	}
- 	return 0;
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 94b092da4ef03..372208ce19fcf 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -4917,22 +4917,8 @@ static int _notifier_call_chain(struct regulator_dev *rdev,
+ 	return blocking_notifier_call_chain(&rdev->notifier, event, data);
  }
  
+-/**
+- * regulator_bulk_get - get multiple regulator consumers
+- *
+- * @dev:           Device to supply
+- * @num_consumers: Number of consumers to register
+- * @consumers:     Configuration of consumers; clients are stored here.
+- *
+- * @return 0 on success, an errno on failure.
+- *
+- * This helper function allows drivers to get several regulator
+- * consumers in one operation.  If any of the regulators cannot be
+- * acquired then any regulators that were allocated will be freed
+- * before returning to the caller.
+- */
+-int regulator_bulk_get(struct device *dev, int num_consumers,
+-		       struct regulator_bulk_data *consumers)
++int _regulator_bulk_get(struct device *dev, int num_consumers,
++			struct regulator_bulk_data *consumers, enum regulator_get_type get_type)
+ {
+ 	int i;
+ 	int ret;
+@@ -4941,8 +4927,8 @@ int regulator_bulk_get(struct device *dev, int num_consumers,
+ 		consumers[i].consumer = NULL;
+ 
+ 	for (i = 0; i < num_consumers; i++) {
+-		consumers[i].consumer = regulator_get(dev,
+-						      consumers[i].supply);
++		consumers[i].consumer = _regulator_get(dev,
++						       consumers[i].supply, get_type);
+ 		if (IS_ERR(consumers[i].consumer)) {
+ 			ret = dev_err_probe(dev, PTR_ERR(consumers[i].consumer),
+ 					    "Failed to get supply '%s'\n",
+@@ -4969,6 +4955,26 @@ int regulator_bulk_get(struct device *dev, int num_consumers,
+ 
+ 	return ret;
+ }
++
++/**
++ * regulator_bulk_get - get multiple regulator consumers
++ *
++ * @dev:           Device to supply
++ * @num_consumers: Number of consumers to register
++ * @consumers:     Configuration of consumers; clients are stored here.
++ *
++ * @return 0 on success, an errno on failure.
++ *
++ * This helper function allows drivers to get several regulator
++ * consumers in one operation.  If any of the regulators cannot be
++ * acquired then any regulators that were allocated will be freed
++ * before returning to the caller.
++ */
++int regulator_bulk_get(struct device *dev, int num_consumers,
++		       struct regulator_bulk_data *consumers)
++{
++	return _regulator_bulk_get(dev, num_consumers, consumers, NORMAL_GET);
++}
+ EXPORT_SYMBOL_GPL(regulator_bulk_get);
+ 
+ static void regulator_bulk_enable_async(void *data, async_cookie_t cookie)
+diff --git a/drivers/regulator/devres.c b/drivers/regulator/devres.c
+index f1bc8608dd2dc..7111c46e9de13 100644
+--- a/drivers/regulator/devres.c
++++ b/drivers/regulator/devres.c
+@@ -245,23 +245,9 @@ static void devm_regulator_bulk_release(struct device *dev, void *res)
+ 	regulator_bulk_free(devres->num_consumers, devres->consumers);
+ }
+ 
+-/**
+- * devm_regulator_bulk_get - managed get multiple regulator consumers
+- *
+- * @dev:           device to supply
+- * @num_consumers: number of consumers to register
+- * @consumers:     configuration of consumers; clients are stored here.
+- *
+- * @return 0 on success, an errno on failure.
+- *
+- * This helper function allows drivers to get several regulator
+- * consumers in one operation with management, the regulators will
+- * automatically be freed when the device is unbound.  If any of the
+- * regulators cannot be acquired then any regulators that were
+- * allocated will be freed before returning to the caller.
+- */
+-int devm_regulator_bulk_get(struct device *dev, int num_consumers,
+-			    struct regulator_bulk_data *consumers)
++static int _devm_regulator_bulk_get(struct device *dev, int num_consumers,
++				    struct regulator_bulk_data *consumers,
++				    enum regulator_get_type get_type)
+ {
+ 	struct regulator_bulk_devres *devres;
+ 	int ret;
+@@ -271,7 +257,7 @@ int devm_regulator_bulk_get(struct device *dev, int num_consumers,
+ 	if (!devres)
+ 		return -ENOMEM;
+ 
+-	ret = regulator_bulk_get(dev, num_consumers, consumers);
++	ret = _regulator_bulk_get(dev, num_consumers, consumers, get_type);
+ 	if (!ret) {
+ 		devres->consumers = consumers;
+ 		devres->num_consumers = num_consumers;
+@@ -282,8 +268,52 @@ int devm_regulator_bulk_get(struct device *dev, int num_consumers,
+ 
+ 	return ret;
+ }
++
++/**
++ * devm_regulator_bulk_get - managed get multiple regulator consumers
++ *
++ * @dev:           device to supply
++ * @num_consumers: number of consumers to register
++ * @consumers:     configuration of consumers; clients are stored here.
++ *
++ * @return 0 on success, an errno on failure.
++ *
++ * This helper function allows drivers to get several regulator
++ * consumers in one operation with management, the regulators will
++ * automatically be freed when the device is unbound.  If any of the
++ * regulators cannot be acquired then any regulators that were
++ * allocated will be freed before returning to the caller.
++ */
++int devm_regulator_bulk_get(struct device *dev, int num_consumers,
++			    struct regulator_bulk_data *consumers)
++{
++	return _devm_regulator_bulk_get(dev, num_consumers, consumers, NORMAL_GET);
++}
+ EXPORT_SYMBOL_GPL(devm_regulator_bulk_get);
+ 
++/**
++ * devm_regulator_bulk_get_exclusive - managed exclusive get of multiple
++ * regulator consumers
++ *
++ * @dev:           device to supply
++ * @num_consumers: number of consumers to register
++ * @consumers:     configuration of consumers; clients are stored here.
++ *
++ * @return 0 on success, an errno on failure.
++ *
++ * This helper function allows drivers to exclusively get several
++ * regulator consumers in one operation with management, the regulators
++ * will automatically be freed when the device is unbound.  If any of
++ * the regulators cannot be acquired then any regulators that were
++ * allocated will be freed before returning to the caller.
++ */
++int devm_regulator_bulk_get_exclusive(struct device *dev, int num_consumers,
++				      struct regulator_bulk_data *consumers)
++{
++	return _devm_regulator_bulk_get(dev, num_consumers, consumers, EXCLUSIVE_GET);
++}
++EXPORT_SYMBOL_GPL(devm_regulator_bulk_get_exclusive);
++
+ /**
+  * devm_regulator_bulk_get_const - devm_regulator_bulk_get() w/ const data
+  *
+diff --git a/drivers/regulator/internal.h b/drivers/regulator/internal.h
+index 1e9c716421436..fb4433068d298 100644
+--- a/drivers/regulator/internal.h
++++ b/drivers/regulator/internal.h
+@@ -122,4 +122,6 @@ enum regulator_get_type {
+ 
+ struct regulator *_regulator_get(struct device *dev, const char *id,
+ 				 enum regulator_get_type get_type);
++int _regulator_bulk_get(struct device *dev, int num_consumers,
++			struct regulator_bulk_data *consumers, enum regulator_get_type get_type);
+ #endif
+diff --git a/include/linux/regulator/consumer.h b/include/linux/regulator/consumer.h
+index 8d3afff87b6e3..9a2f1e9a94a85 100644
+--- a/include/linux/regulator/consumer.h
++++ b/include/linux/regulator/consumer.h
+@@ -250,6 +250,8 @@ int __must_check of_regulator_bulk_get_all(struct device *dev, struct device_nod
+ int __must_check devm_regulator_bulk_get(struct device *dev, int num_consumers,
+ 					 struct regulator_bulk_data *consumers);
+ void devm_regulator_bulk_put(struct regulator_bulk_data *consumers);
++int __must_check devm_regulator_bulk_get_exclusive(struct device *dev, int num_consumers,
++						   struct regulator_bulk_data *consumers);
+ int __must_check devm_regulator_bulk_get_const(
+ 	struct device *dev, int num_consumers,
+ 	const struct regulator_bulk_data *in_consumers,
 -- 
 2.53.0
 
