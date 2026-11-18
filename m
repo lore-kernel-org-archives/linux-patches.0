@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036786;
-	b=iQLpHkk+ASX0MjaeLw/3rvawAwx+LBu1oDs/RlHWqOU5JfdXRPpMrh49By+jbLXxRYqs
-	 wsgnbrrCu46Oc1JjaYwDTWjJuCs9IPMk6TEy0khwL02Awdo8BviCddSNIpRRvaItczoiE
-	 FeqYT5Uv0HJHd38mA28iJrR6X+vhN/cK1w9H/FEEdl92z2lJwP5+9lF1GUzrMtD7b2jQE
-	 helHcwhr0KnBuGxMcfdWVptMVq8g40LpOVmh9RqQG0gx5SOxu+9RUbq7gDn4dFSw+vGcJ
-	 aYx8YIMB36Hf+/9hqsdgv7SwOwwWXchKrokt+QQjdIhJ6QAO6SD4XSLLo+P+aD0ffrQ==
+	t=1795036789;
+	b=PiDFhdzDMvDgZrEg9L+2G1Ad9Y6K7lHjSIb0m/dH2uoAiieXgZx0Gw77dyNyFvRfJHwP
+	 n4GXqIxOwziQjvyYsm/ldQnOEneScAldU4DjTzrlExSzWVe+JqHXGxWGNS/qVggylMvlj
+	 0JMzvItCY/m4U+DYC0GuycqHhKfJFx3u43VPjjULS8/cEXFk3SReaDStOhtcQjFqdFDTm
+	 UaBhj7lG/ln1U8iOxv4jZ0TDNvph93l0ZzxajQ0ymK2BhgzGL8Tf39e+8yo1/JYYYfPjx
+	 l04myxUPS3RNq0xZMfyA+/bPMr5zS/rIDAXF1hHSsFjkeNhfEnjPqhEOra96P1VwncA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036786;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036789;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l1LNaXDJQbGlupXW6JD4SC8cP8jJYT3gHD675PTv0Ws=;
-	b=br+Zp3ha3HtfH9K7JUjw3R/9smzA1F6MHjMykzlsjnwkHja3/YyKKa0DvVDd8gJD44kx
-	 oAtS99kLSvSopjZOsguXa9F5A3zLZd01pEEFhjkc22rv54QIzh8WO+XL2N5GocdulIWyl
-	 d7cFnqYDIgsRxAv1xr3NGt+CM2he6ynskY/i2W6xoNPxhXwna9t5GBQulgm2SsyY+0JQ9
-	 5l4ZPQ+X8FnIGs98kGO2RRBxfgYATdpLqrdcOWygTVhlIaD+AOv/QYCk/jzVmj/PTWVlo
-	 idNtWXGYm5/xanNo/NQEyQSdPrUBmrrEls/QULQd+hOVQ5Ue760WkRJCqTDcKkrpJDA==
+	bh=nQ2TSw/tTA2nWk2LC5XFpHF5lsvVzf+qGLrOK+bVGac=;
+	b=PxVHUpU5+C4YQFXgUZerWdtzFypm6VmDzrG+IUQm4nVMg9YJXTe0dJ7Y3FyG3zuUi94w
+	 /vMJWN35wO3kpjaz/h5ofN9KbcPipUDNh/ukByA5lAPCpOXzALgff0qcD88DRjGgrLW69
+	 3FmzOOeAz4DSbojTHRqxgOEkWVzvN4OxqHxcPsUL7bF/aQCdO1mXcLupOUulIANdVDSjT
+	 xX7QyCCPKExw8T92uPo1QHDlJy7i7f1l/3wcD8Vb6Sp5TPLoy8A0go6PoaDnvRmwANn7C
+	 iR2eAVoXxV70Qg72oQZwPyVLHFmbr4fCmo2rvPh5WPMTlqVK+ezoWGp3+K3JySRhNdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q9v69TI3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SUipbRfH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD70606A31C;
-	Wed, 18 Nov 2026 21:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A31606A32C;
+	Wed, 18 Nov 2026 21:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q9v69TI3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1491F000C4;
-	Wed, 18 Nov 2026 21:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SUipbRfH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 390481F000C4;
+	Wed, 18 Nov 2026 21:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036785;
-	bh=l1LNaXDJQbGlupXW6JD4SC8cP8jJYT3gHD675PTv0Ws=;
+	s=korg; t=1795036788;
+	bh=nQ2TSw/tTA2nWk2LC5XFpHF5lsvVzf+qGLrOK+bVGac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q9v69TI3+i/4b6xDvko0Dk5sbAWe/hfQzOxZjaWyGrvyEPmDH462hP2p97kwR9v7K
-	 mMx/RrpN7Ou4YNdMaB+3iUc/GQ7R1QVhpoMSTZWs83KAHV+1NdZRCfowGp7b+Ibz4m
-	 YjtoxLzF4gYfDcvspeYoY4WoWUB+9vctRAyfvB1o=
+	b=SUipbRfHU3NiK12wUjuPUkb/0dQGRj3JC9WtiMmr6sg3uZ8NUADhWnsfuQJWBlYSZ
+	 5IdcDiSdHaMZ+ceYDs/zpt79TBv8AeiPNITbOiB1Pa4bccevzafet5xat+MW3EXQiw
+	 JHBiu8BqjdjclVbPlXea0kQFyZ6RQalhTEFV+7S8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0f98b0c0bdeaab2dc2fd@syzkaller.appspotmail.com,
-	Sanan Hasanov <sanan.hasanov@ucf.edu>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Magnus Lindholm <linmag7@gmail.com>,
+	Matt Turner <mattst88@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1156/3318] hwmon: (corsair-cpro) Make wait_input_report_lock IRQ safe
-Date: Wed, 18 Nov 2026 15:29:38 +0100
-Message-ID: <20261118150354.783990106@linuxfoundation.org>
+Subject: [PATCH 6.6 1183/3318] alpha: determine tininess after rounding in the FP emulation
+Date: Wed, 18 Nov 2026 15:30:05 +0100
+Message-ID: <20261118150355.636474911@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,86 +68,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanan Hasanov <sanan.hasanov@ucf.edu>
+From: Matt Turner <mattst88@gmail.com>
 
-[ Upstream commit e4fdc82f55cf0e3d5df5c88278da5baa76a109d1 ]
+[ Upstream commit b74843b38da8f1186fd7d447646c835b47096a15 ]
 
-ccp_raw_event() is the HID ->raw_event() callback and takes
-wait_input_report_lock with a plain spin_lock(). This callback can run
-in very different contexts depending on the transport: from process
-context (e.g. uhid, via a write() to /dev/uhid) with softirqs and
-interrupts enabled, and from URB completion, which is softirq context
-for HCDs using HCD_BH and hard interrupt context for HCDs that do not
-(e.g. OHCI, UHCI).
+IEEE 754 lets an architecture determine tininess of a floating-point
+result either before or after rounding, but requires the same choice for
+every operation.  Alpha determines it after rounding, and stdlib's
+tst-tininess confirms the hardware does so for the results it produces
+itself.
 
-Taking the lock from process context with softirqs enabled while the
-same lock is also taken from softirq context can deadlock if the
-softirq interrupts the lock holder on the same CPU. Lockdep reports:
+The soft-fp emulation has no notion of the distinction and always
+determines tininess before rounding, so a result that the hardware would
+not consider tiny is reported as underflowing whenever the instruction
+happens to trap for software completion.  The two paths then disagree on
+the same machine.  A multiply of the largest subnormal double by
+1 + 2^-52 rounds up to the smallest normal and raises no underflow when
+the operands are normal, but raises it when an operand is subnormal and
+the instruction traps:
 
-  WARNING: inconsistent lock state
-  inconsistent {SOFTIRQ-ON-W} -> {IN-SOFTIRQ-W} usage.
-  ...
-   spin_lock include/linux/spinlock.h:347 [inline]
-   ccp_raw_event+0x51/0x110 drivers/hwmon/corsair-cpro.c:161
-   __hid_input_report+0x41c/0x580 drivers/hid/hid-core.c:2175
-   hid_irq_in+0x492/0x710 drivers/hid/usbhid/hid-core.c:287
-   __usb_hcd_giveback_urb+0x378/0x540 drivers/usb/core/hcd.c:1657
-   dummy_timer+0xa91/0x4cc0 drivers/usb/gadget/udc/dummy_hcd.c:2023
+  glibc math testsuite, test-float32x-float64-mul:
+    Failure: mul_double (0x3.ffffffffffffcp-1024, 0x1.0000000000001p+0):
+    Exception "Underflow" set
 
-For the same reason, the spin_lock_bh() in send_usb_cmd() is not
-sufficient when ccp_raw_event() is called from hard interrupt context.
+Add _FP_TININESS_AFTER_ROUNDING, as glibc's copy of soft-fp has, and set
+it for alpha.  It determines tininess by rounding a copy of the result as
+if the exponent range were unbounded, which is what the definition asks
+for.  A plain check of whether the rounded result came out normal is not
+equivalent: it differs for values that are still tiny once rounded with
+an unbounded exponent range but reach the smallest normal on the coarser
+subnormal grid.  That plain check is what the hardware itself does (it
+decides tininess from the delivered result), and it is why a divide such
+as -0x4p-128 / 0x1.000002p+0 in FE_DOWNWARD delivers -0x1p-126 and raises
+nothing although the result is tiny after rounding.  Such cases do not
+trap, so the emulation never sees them; where it does get control, it
+follows the definition rather than reproducing that deviation, which is
+what glibc's soft-fp does as well.
 
-Use spin_lock_irqsave() in ccp_raw_event(), since it may be called with
-interrupts already disabled, and spin_lock_irq() in send_usb_cmd(),
-which always runs in process context.
+The macro defaults to zero, so powerpc, sh and sparc keep determining
+tininess before rounding as they do now.
 
-Fixes: d02abd57e794 ("hwmon: (corsair-cpro) Protect ccp->wait_input_report with a spinlock")
-Reported-by: syzbot+0f98b0c0bdeaab2dc2fd@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0f98b0c0bdeaab2dc2fd
-Cc: stable@vger.kernel.org
-Signed-off-by: Sanan Hasanov <sanan.hasanov@ucf.edu>
-Link: https://patch.msgid.link/20261008205310.30832-1-sanan.hasanou@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org # 5.15+
+Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20260803-alpha-fp-exceptions-v1-3-c99d75608e60@gmail.com
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-cpro.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/alpha/include/asm/sfp-machine.h |  4 ++++
+ include/math-emu/op-common.h         | 23 +++++++++++++++++++++--
+ include/math-emu/soft-fp.h           |  8 ++++++++
+ 3 files changed, 33 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
-index 096e187082b80..197d7b6a00b7e 100644
---- a/drivers/hwmon/corsair-cpro.c
-+++ b/drivers/hwmon/corsair-cpro.c
-@@ -128,9 +128,9 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
- 	 * the raw event parsing and marked the ccp->wait_input_report
- 	 * completion as done.
- 	 */
--	spin_lock_bh(&ccp->wait_input_report_lock);
-+	spin_lock_irq(&ccp->wait_input_report_lock);
- 	reinit_completion(&ccp->wait_input_report);
--	spin_unlock_bh(&ccp->wait_input_report_lock);
-+	spin_unlock_irq(&ccp->wait_input_report_lock);
+diff --git a/arch/alpha/include/asm/sfp-machine.h b/arch/alpha/include/asm/sfp-machine.h
+index 5fe63afbd474f..bff1ad963c689 100644
+--- a/arch/alpha/include/asm/sfp-machine.h
++++ b/arch/alpha/include/asm/sfp-machine.h
+@@ -59,6 +59,10 @@
+     R##_c = FP_CLS_NAN;						\
+   } while (0)
  
- 	ret = hid_hw_output_report(ccp->hdev, ccp->cmd_buffer, OUT_BUFFER_SIZE);
- 	if (ret < 0)
-@@ -149,15 +149,16 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
- static int ccp_raw_event(struct hid_device *hdev, struct hid_report *report, u8 *data, int size)
- {
- 	struct ccp_device *ccp = hid_get_drvdata(hdev);
-+	unsigned long flags;
++/* Alpha determines tininess after rounding, so the emulation must do the
++   same as the hardware does for the results it produces itself.  */
++#define _FP_TININESS_AFTER_ROUNDING	1
++
+ /* Obtain the current rounding mode. */
+ #define FP_ROUNDMODE	mode
+ #define FP_RND_NEAREST	(FPCR_DYN_NORMAL >> FPCR_DYN_SHIFT)
+diff --git a/include/math-emu/op-common.h b/include/math-emu/op-common.h
+index 8ce066c035cfa..1d1ce5c08efcf 100644
+--- a/include/math-emu/op-common.h
++++ b/include/math-emu/op-common.h
+@@ -135,6 +135,24 @@ do {								\
+     else							\
+       {								\
+ 	/* we've got a denormalized number */			\
++	int _FP_PACK_CANONICAL_is_tiny = 1;			\
++	if (_FP_TININESS_AFTER_ROUNDING && X##_e == 0)		\
++	  {							\
++	    /* Architectures that detect tininess after rounding	\
++	       only signal underflow if the result is still		\
++	       subnormal once rounded as if the exponent range	\
++	       were unbounded.  Round a copy to find out.  */	\
++	    FP_DECL_##fs(_FP_PACK_CANONICAL_T);			\
++	    /* The class field is not used by the rounding below,	\
++	       and is unused entirely where this block is dead.  */	\
++	    (void)_FP_PACK_CANONICAL_T##_c;			\
++	    _FP_FRAC_COPY_##wc(_FP_PACK_CANONICAL_T, X);	\
++	    _FP_PACK_CANONICAL_T##_s = X##_s;			\
++	    _FP_PACK_CANONICAL_T##_e = X##_e;			\
++	    _FP_ROUND(wc, _FP_PACK_CANONICAL_T);		\
++	    if (_FP_FRAC_OVERP_##wc(fs, _FP_PACK_CANONICAL_T))	\
++	      _FP_PACK_CANONICAL_is_tiny = 0;			\
++	  }							\
+ 	X##_e = -X##_e + 1;					\
+ 	if (X##_e <= _FP_WFRACBITS_##fs)			\
+ 	  {							\
+@@ -161,8 +179,9 @@ do {								\
+ 		    _FP_FRAC_SRL_##wc(X, _FP_WORKBITS);		\
+ 		  }						\
+ 	      }							\
+-	    if ((FP_CUR_EXCEPTIONS & FP_EX_INEXACT) ||		\
+-		(FP_TRAPPING_EXCEPTIONS & FP_EX_UNDERFLOW))	\
++	    if (_FP_PACK_CANONICAL_is_tiny			\
++		&& ((FP_CUR_EXCEPTIONS & FP_EX_INEXACT) ||	\
++		    (FP_TRAPPING_EXCEPTIONS & FP_EX_UNDERFLOW)))	\
+ 		FP_SET_EXCEPTION(FP_EX_UNDERFLOW);		\
+ 	  }							\
+ 	else							\
+diff --git a/include/math-emu/soft-fp.h b/include/math-emu/soft-fp.h
+index 5650c16283830..02ada0a9fca16 100644
+--- a/include/math-emu/soft-fp.h
++++ b/include/math-emu/soft-fp.h
+@@ -31,6 +31,14 @@
+ #include <endian.h>
+ #endif
  
- 	/* only copy buffer when requested */
--	spin_lock(&ccp->wait_input_report_lock);
-+	spin_lock_irqsave(&ccp->wait_input_report_lock, flags);
- 	if (!completion_done(&ccp->wait_input_report)) {
- 		memcpy(ccp->buffer, data, min(IN_BUFFER_SIZE, size));
- 		ccp->buffer_recv_size = size;
- 		complete_all(&ccp->wait_input_report);
- 	}
--	spin_unlock(&ccp->wait_input_report_lock);
-+	spin_unlock_irqrestore(&ccp->wait_input_report_lock, flags);
- 
- 	return 0;
- }
++/* Whether the architecture determines tininess of a floating-point
++   result after rounding rather than before it.  IEEE 754 permits either
++   but requires the same choice for every operation, so this has to agree
++   with what the hardware does for the results it produces itself.  */
++#ifndef _FP_TININESS_AFTER_ROUNDING
++#define _FP_TININESS_AFTER_ROUNDING	0
++#endif
++
+ #define _FP_WORKBITS		3
+ #define _FP_WORK_LSB		((_FP_W_TYPE)1 << 3)
+ #define _FP_WORK_ROUND		((_FP_W_TYPE)1 << 2)
 -- 
 2.53.0
 
