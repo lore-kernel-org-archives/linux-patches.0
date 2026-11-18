@@ -1,61 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045763;
-	b=wDPD5rUIgPUQJLg36VOGICToEZR6xOrc2z4HzAOuAu1vuGETSI3fJRi1ZWjUIAXMZkfC
-	 htBxsvgeoVTXvsblNDyVwQFjkCwmA4zFWalT8IyZmMefXS6UjhQS6HtZWYg/VOc7un6iY
-	 d8SC1CmdAnk5qNpL+MxNHLXe7IIkislb1XyU3mP1A1wTKYEcXTswIn10FTHNxZoDIgkLe
-	 cHks8zGXa5da+/4YzkMs4b87bcMtYxw7Cg4Jml6OwOtn9Q2qzxR1cLZjHIdq5+NZwYF7a
-	 heBgFM0j1ifC9DFxPrMv+JCdH45G21xFR13dLTCYTzTCRXwMGseWUN0KqXvsHyFHvAQ==
+	t=1795045766;
+	b=T2oIvTeEFx69R6jAEICFych+Hs72Ay7zoW1M6yDTA4lrqS+fJ1/LoZ8wxOVLT74t1l3N
+	 ZGVQAkmAranRpKzVtNGNRz1hX6Jb4QHgThd/3cTScRq/Td+q2We6kj+1lGiZ77zClAKwT
+	 NyA2MZszYvqhnnrlV9Pni/ewZX+gaDQQ1FapWAFMhj7ASrSi+gY2RZROiMP9p6TwbRb9X
+	 q0CYB9btPxaXitmNv4Db8bimQU/fkDw17W2w3iIDY34neULAsCbUKZIbPjqOFrzoi0KWr
+	 r6AXtuZEX+5ZzVufn6c9DevDQw8wmJ2tcu51dfhSIhrnI5/htmh8FdtAp2tFRmHksWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045763;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045766;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=2KAz/7bGT961H79aWtZy7fVhF7mFiI44fX+HR0wKTps=;
-	b=ATUifT1Ev7IEhiW2J0VOTEf0fvChSbOBDdaBKEJzYnpLlrnAQA5ndKjNJoMBtlEJzolC
-	 L9Rl1byYNNBG4W1NIrL3C4XHqDbbt40IFFD6qg4QYZMbdgiCEEbGQNNH+g1SuhuPKpzY4
-	 QkXeRIFCdeh2dflucEKFpWyd4EaSQdF0sfJ6rkczp4s7IfzCZxOJzfr5Qd7lqbLPOpV4Z
-	 Iot9WTrpHIJ2f0syz9/PClmJaercvjrblfyG4tfzZTwQ3CiNuagyOjobxVMxmmNFU4K1T
-	 f8YSrJrzOIbtr39lDt2Ocop90VvxdU6sLP3xG9EcdAPkEmpJt8ZM3LO64h1LN/c6p6g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ppxZ0alAwW/8O7XQs0VEqLUN6F1r2KDj4ha1bBMt7OU=;
+	b=zwJnR7dgKZMPFl4gxi1FAGbny3F6CKrkJ0/Ifqu/a0LROx6efsnr7wH5p+FBLGXs/344
+	 x8JV9I00xNoEFQHrjNZZjDBSPPJLV5CoYfEu/iadsQroOBMYObnZVHIrDiiJrydUvqqXm
+	 KmOk7amH1ZVjrtMj7hzpmStg1Bnr8eG4MoWQDh4teqm9MvgkoK+VeqUbghEH+2msT45zQ
+	 Wb541iD0gFQnnDt+8EXSZHCxF7yblNZdtE8eB6YfeIotLWm22dprEDYgN00Xa91UwKqNJ
+	 JvC66z7K0zYnQ1QiUC7nK0z8sTfZNPjWonw/UBb+Mf+SE0r669BabEZ77iVRB6J2B0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mi10IN92;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OXnokY1G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEE5606A325;
-	Wed, 18 Nov 2026 23:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449D1606A31C;
+	Wed, 18 Nov 2026 23:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mi10IN92
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0A61F000C5;
-	Wed, 18 Nov 2026 23:49:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OXnokY1G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 960FD1F000C4;
+	Wed, 18 Nov 2026 23:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045763;
-	bh=2KAz/7bGT961H79aWtZy7fVhF7mFiI44fX+HR0wKTps=;
+	s=korg; t=1795045766;
+	bh=ppxZ0alAwW/8O7XQs0VEqLUN6F1r2KDj4ha1bBMt7OU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mi10IN92VInV8ovBYcrVhtGVelc7ySrvHqFTMpgfk/6QFpwnoyC2RwDHp4es4eH3T
-	 5ZfyNYGfa8z+KlSnI2SFpGekan8lCqktIZqFn7BeTweIuSCJnAIDK5Cq9tV5p3E6ri
-	 YUyuMfkFb34sl/LDBn5LqF3EzFc+7zi8MbCAFbJo=
+	b=OXnokY1GDCXud5XsRBMd/MkVYbcBaZY5lM5c3xQyu+gy3pHU1RHjyFC9vCLa4cq7g
+	 1tsl8smYEX8umT6JJJeShVBZjH9CmF1l8TTHE5Gqm/bQKK6bKyOTZI3w+0FCNj58+E
+	 tG+2lYKaw33wOOyK+3+kL3MQOLYBcuMdnsK1qlnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunhui Cui <cuiyunhui@bytedance.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	tongtiangen <tongtiangen@huawei.com>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Vivian Wang <wangruikang@iscas.ac.cn>,
-	Yaxing Guo <guoyaxing@bosc.ac.cn>,
+	Wang Haoran <haoranwangsec@gmail.com>,
+	Li Ximo <lixicaicai@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1041/2857] riscv: mm: exclude invalid THP PMDs from page table check
-Date: Wed, 18 Nov 2026 15:34:35 +0100
-Message-ID: <20261118150239.079296983@linuxfoundation.org>
+Subject: [PATCH 6.1 1042/2857] fbdev: atmel_lcdfb: fix list_first_entry() on possibly empty modelist in probe
+Date: Wed, 18 Nov 2026 15:34:36 +0100
+Message-ID: <20261118150239.114840347@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,82 +63,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yunhui Cui <cuiyunhui@bytedance.com>
+From: Wang Haoran <haoranwangsec@gmail.com>
 
-[ Upstream commit bdda2887cbf3937c2d0f56589c2124c4167324e1 ]
+[ Upstream commit 01d1204582f16e8b7bfce29648e5cf77a585d962 ]
 
-RISC-V THP splitting uses a temporary invalid PMD state where
-pmd_mkinvalid() clears _PAGE_PRESENT and _PAGE_PROT_NONE but leaves
-_PAGE_LEAF set so the MM code can still recognize the PMD as a THP split
-in-progress entry.
+list_first_entry() does not return NULL on an empty list; it returns a
+bogus pointer computed by container_of() from the list head.
+atmel_lcdfb_probe() initializes info->modelist with INIT_LIST_HEAD()
+and later takes its first entry with list_first_entry(), assuming
+atmel_lcdfb_of_init() populated it. However, atmel_lcdfb_of_init()
+drops the return value of fb_add_videomode() — unlike every other
+fallible call in the same function — so if fb_add_videomode() fails
+(its internal kmalloc can return -ENOMEM under memory pressure or
+fault injection), the list stays empty while of_init() reports
+success. The probe path then dereferences the bogus pointer in
+fb_videomode_to_var(&info->var, &modelist->mode). Because the bogus
+pointer lands inside the contiguous fb_info allocation, this may not
+fault immediately; instead it silently reads adjacent memory as a
+struct fb_videomode and programs garbage timing parameters into the
+LCD controller. This was found by code audit; we do not have Atmel
+hardware to reproduce it.
 
-That temporary state no longer describes a user-accessible mapping, but
-page_table_check currently treats it as one because the RISC-V PMD
-user-accessibility test only checks whether the PMD is a leaf and has user
-permissions.
+Fix this on two levels: check the return value of fb_add_videomode()
+in atmel_lcdfb_of_init() so the failure is propagated (root cause),
+and use list_first_entry_or_null() in atmel_lcdfb_probe() with a NULL
+check that fails probe gracefully with -EINVAL (defense in depth),
+consistent with the surrounding error handling which bails out to
+stop_clk.
 
-As a result, when a PMD-sized anonymous THP is split during a COW fault,
-page_table_check can account the invalid intermediate PMD as a live PMD
-mapping, and then account the replacement PTE mappings again when the
-split installs the PTE table.  This leaves stale PMD accounting behind and
-later triggers page_table_check failures such as a non-zero anon_map_count
-when the folio is freed.
-
-Fix this by tightening pmd_user_accessible_page() so PMD page-table-check
-accounting only considers leaf PMDs that still carry either _PAGE_PRESENT
-or _PAGE_PROT_NONE.  This preserves the THP split semantics required by
-the MM code while preventing page_table_check from treating invalid split
-PMDs as live user mappings.
-
-With CONFIG_PAGE_TABLE_CHECK=y and CONFIG_PAGE_TABLE_CHECK_ENFORCED=y,
-tools/testing/selftests/mm/cow completes successfully on RISC-V after this
-change.
-
-Link: https://lore.kernel.org/20260523042052.35476-1-cuiyunhui@bytedance.com
-Fixes: 3fee229a8eb9 ("riscv/mm: enable ARCH_SUPPORTS_PAGE_TABLE_CHECK")
-Signed-off-by: Yunhui Cui <cuiyunhui@bytedance.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Albert Ou <aou@eecs.berkeley.edu>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: tongtiangen <tongtiangen@huawei.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>
-Cc: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Yaxing Guo <guoyaxing@bosc.ac.cn>
-Cc: <stable@vger.kernel.org>
+Reported-by: Wang Haoran <haoranwangsec@gmail.com>
+Reported-by: Li Ximo <lixicaicai@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/pgtable.h | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/atmel_lcdfb.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/include/asm/pgtable.h b/arch/riscv/include/asm/pgtable.h
-index d25871c608832..2fb15a97cbf58 100644
---- a/arch/riscv/include/asm/pgtable.h
-+++ b/arch/riscv/include/asm/pgtable.h
-@@ -668,7 +668,14 @@ static inline bool pte_user_accessible_page(pte_t pte)
+diff --git a/drivers/video/fbdev/atmel_lcdfb.c b/drivers/video/fbdev/atmel_lcdfb.c
+index f2b63f13e2444..707a0a0cd74e7 100644
+--- a/drivers/video/fbdev/atmel_lcdfb.c
++++ b/drivers/video/fbdev/atmel_lcdfb.c
+@@ -1032,7 +1032,9 @@ static int atmel_lcdfb_of_init(struct atmel_lcdfb_info *sinfo)
+ 	if (ret < 0)
+ 		goto put_display_node;
  
- static inline bool pmd_user_accessible_page(pmd_t pmd)
- {
--	return pmd_leaf(pmd) && pmd_user(pmd);
-+	/*
-+	 * page_table_check() must ignore THP split invalidation entries created by
-+	 * pmd_mkinvalid(). These retain _PAGE_LEAF so pmd_present()/pmd_leaf() stay
-+	 * true during the split, but they no longer describe a user-accessible
-+	 * mapping once both _PAGE_PRESENT and _PAGE_PROT_NONE are cleared.
-+	 */
-+	return (pmd_val(pmd) & (_PAGE_PRESENT | _PAGE_PROT_NONE)) &&
-+		(pmd_val(pmd) & _PAGE_LEAF) && pmd_user(pmd);
- }
+-	fb_add_videomode(&fb_vm, &info->modelist);
++	ret = fb_add_videomode(&fb_vm, &info->modelist);
++	if (ret < 0)
++		goto put_display_node;
  
- static inline bool pud_user_accessible_page(pud_t pud)
+ put_display_node:
+ 	of_node_put(display_np);
+@@ -1100,8 +1102,13 @@ static int __init atmel_lcdfb_probe(struct platform_device *pdev)
+ 	}
+ 	atmel_lcdfb_start_clock(sinfo);
+ 
+-	modelist = list_first_entry(&info->modelist,
+-			struct fb_modelist, list);
++	modelist = list_first_entry_or_null(&info->modelist,
++					    struct fb_modelist, list);
++	if (!modelist) {
++		dev_err(dev, "no video mode available\n");
++		ret = -EINVAL;
++		goto stop_clk;
++	}
+ 	fb_videomode_to_var(&info->var, &modelist->mode);
+ 
+ 	atmel_lcdfb_check_var(&info->var, info);
 -- 
 2.53.0
 
