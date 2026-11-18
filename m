@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043127;
-	b=Y/86Bo1oqU2ezWL8Px5Zfh2HYsp3sD23I4plYjh0NJe+dgVtxtEVrjj+D4HGUb9DD9s8
-	 3VvSnTDVKxvWyl3JPRV6Qc04CYvlOuzAshfTEEsvebW+XYFL5Gim7ESYfbpMYKCU0HLhP
-	 p1xvgt8Jz3DS74vR5RvBZLdR43rPaYOt5OxGNKFpqHUxQFN/lUxvxvK+M0j1B5mTS1Blq
-	 UbzRnw7uZt9siRTVboBDzSxjbaB93wxSLqbklROBCEp+PMZQ9UFhRFQT0DnJVYl51yXvw
-	 jMm7JqYLnBfl81JPIy2CVNqVeUzMUM5n/3seoNq7Tf2MvNTHzZOdKwcmgRwvhudOVvg==
+	t=1795043130;
+	b=hdhNlf4DVBOyCubTma9bI1uiyZb4QnW2UXQOMNhK8IuYzb6A6K6f0RB6t7pN+FmiwNIU
+	 tJcuFcEgP2X9vabZfxc6L/Qbxnkl7HPgwizsSQ5u+375N19b2d/ZWWBPt8vOh0NMRoCB+
+	 R34K/qUEvaJR54NCtFOlBvhQDtsSTA0G+PSzTq5voEFUhWnE7F1b1a5un248sc2HXdrcj
+	 ij9rM7z5fiLODOs4O2eo8IYJUGgq8YDMD1sQ1q10YXcV9+TuhZKMJKMarcforUkdw71Pr
+	 +Mj9f6J1iWcx/F6hxosJ3IGYrQ8swQbBQk2Rk5DVhaAdfrPbwv1mgdRT0jQxyGwNnEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043127;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043130;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mMe36E6PQ6hA5Dzzm6cSOkv6ZTuplKd22EOhmhbfGdg=;
-	b=LcSNqmkW/UIsVJQ7EYB74e6a5PpcTyACR/37bZcjKLk385GD3Qz+OcrChh0KuTe/LMYg
-	 /JjzmpBut+4g8ahaKC+g36A4mtc0OvtDhSV/bPl+vRDqfAKGpLjBEmVxufntMAxEkPrEh
-	 tS0VCg/eGzL1AyauChYhwHWLPBU17gmbgHEUsYL3X9Qx2TWuiSPgsua5yM8xVbEmT3dP4
-	 gExltqDX3hNsGNz+JH7ZGxzZN2+qWLf6H4Hw/eXQjKrS/059Y5NiN6VOOp58EBmT2ylwX
-	 hZ8STuIDnQMMp1fhw35/ZpL1z4o+4RLOFZtiP9pYxe58sZya9lrXOdMXrnpr3pGkbNQ==
+	bh=/grV9ShKIAPoKNeRkM/8E9uim9Li5EsC/gROFkTSdY8=;
+	b=tmVvC/QH3osF5uqX+sNxXTCwuw7ZJ9rZxJWnS5bgilKmnC3DxGl+Vo1x09udNPGS1vb2
+	 DTDRJJYeAzrvOW2unhRlkZABaZW0TAU8ZfJse3hhPePNboUKVHKF0T4wqsClNt88dLgtT
+	 Cc3fZ2urmr/us5viHx/yIE60lvZbASacUOss8XDC2V3R2+NcESh0D/P4A4md01ScB/P1c
+	 R+xh7tmsRFEPC5ZQfCTSuog7GFkAiZkiUn4rGoc19PYk62kOzkTHSkUG0ogiV9ka+EffA
+	 RkQCdw9qlOin8FKqDMuMUiPDDvckAe1uDYRmloiC84Xc3wQaNoKe1Vrry58AHrjxDZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="oDGZRX/t";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JMHO5uES;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6DB606A31C;
-	Wed, 18 Nov 2026 23:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB31606A320;
+	Wed, 18 Nov 2026 23:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oDGZRX/t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49DDE1F000C5;
-	Wed, 18 Nov 2026 23:05:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JMHO5uES
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06EB1F000C4;
+	Wed, 18 Nov 2026 23:05:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043127;
-	bh=mMe36E6PQ6hA5Dzzm6cSOkv6ZTuplKd22EOhmhbfGdg=;
+	s=korg; t=1795043130;
+	bh=/grV9ShKIAPoKNeRkM/8E9uim9Li5EsC/gROFkTSdY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oDGZRX/tiBbYbaeLUqkqoZQ08WV02IUn9dgSHp8r0SlqbNs8D6yB55BYR+kmewppm
-	 ZPeBXTu872mRAXknxbt/pVl80ginlyaN+awsFosAMPSelauRRz3oUImt42OiQ1u3Bv
-	 lW62kK5zsKxGRqUdi0Omlx7eG76uyEFf1wQHykJo=
+	b=JMHO5uESz5DqBsp8BmckpmDRZi+A0iTFNQ+e1GCKokON6SyyM22MzrwHSEBENULQV
+	 N4uWkFEYF+JrYWftDGy7zyN0wfg2CzW/kpv60VVkHKJ8ZwdGvpMrt1183qgoCAzGC2
+	 KuDmH6hyhkIBjAaEHq1FSmnfJYp0TRa1GdrBqTQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0098/2857] media: cec: tegra_cec: dont break off msg on NACK
-Date: Wed, 18 Nov 2026 15:18:52 +0100
-Message-ID: <20261118150204.785734813@linuxfoundation.org>
+Subject: [PATCH 6.1 0099/2857] media: cec/core: drop cec_post_state_event call
+Date: Wed, 18 Nov 2026 15:18:53 +0100
+Message-ID: <20261118150204.824556692@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,50 +70,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-[ Upstream commit be627f257ce283c95fd2988080dc0db3a20d0d2a ]
+[ Upstream commit 2ff4b91e82bd76e1a6e1ff22bfc9aeda08e12a61 ]
 
-The Tegra CEC hardware has a bug where, if the first attempt
-to transmit a message is NACKed so the transmit is aborted,
-then the second attempt can contain corrupt data.
+No need to call cec_post_state_event() if the next call
+is to cec_adap_unconfigure() since that will also call
+cec_post_state_event().
 
-Ensure that the full message is always transmitted to avoid hitting
-this bug.
+This fixes the case when, when the physical address is
+invalidated, you get two CEC_EVENT_STATE_CHANGE events:
+one with a non-zero log_addr_mask and one with a zero
+log_addr_mask.
 
-I suspect some internal state is not reset in the case of aborting
-a message due to a NACK.
+You just want to see the event with phys_addr set to
+f.f.f.f and log_addr_mask set to 0.
 
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/cec/platform/tegra/tegra_cec.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/media/cec/core/cec-adap.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/media/cec/platform/tegra/tegra_cec.c b/drivers/media/cec/platform/tegra/tegra_cec.c
-index 43fe54f792b65..c30df776bf8a5 100644
---- a/drivers/media/cec/platform/tegra/tegra_cec.c
-+++ b/drivers/media/cec/platform/tegra/tegra_cec.c
-@@ -243,7 +243,18 @@ static int tegra_cec_adap_enable(struct cec_adapter *adap, bool enable)
- 		  TEGRA_CEC_INT_MASK_RX_REGISTER_FULL |
- 		  TEGRA_CEC_INT_MASK_RX_START_BIT_DETECTED);
- 
--	cec_write(cec, TEGRA_CEC_HW_CONTROL, TEGRA_CEC_HWCTRL_TX_RX_MODE);
-+	/*
-+	 * TX_NAK_MODE ensures that the whole message is transmitted even
-+	 * if each byte is NACKed. Without this flag the retransmit of the
-+	 * messages after a NACK can be corrupt. This is a bug in the hardware.
-+	 *
-+	 * While less efficient, in practice you rarely transmit messages
-+	 * that can be NACKed, with the exception of POLL messages which
-+	 * are just one byte anyway.
-+	 */
-+	cec_write(cec, TEGRA_CEC_HW_CONTROL,
-+		  TEGRA_CEC_HWCTRL_TX_RX_MODE |
-+		  TEGRA_CEC_HWCTRL_TX_NAK_MODE);
- 	return 0;
- }
- 
+diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
+index f9483268c84a1..dbaa2b8e5f2c6 100644
+--- a/drivers/media/cec/core/cec-adap.c
++++ b/drivers/media/cec/core/cec-adap.c
+@@ -1655,7 +1655,6 @@ void __cec_s_phys_addr(struct cec_adapter *adap, u16 phys_addr, bool block)
+ 		cec_phys_addr_exp(phys_addr));
+ 	if (becomes_invalid || !is_invalid) {
+ 		adap->phys_addr = CEC_PHYS_ADDR_INVALID;
+-		cec_post_state_event(adap);
+ 		cec_adap_unconfigure(adap);
+ 		if (becomes_invalid) {
+ 			cec_adap_enable(adap);
 -- 
 2.53.0
 
