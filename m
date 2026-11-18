@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039001;
-	b=hr+jXlw5BO8zxhmcH1P2SJ3BNbK/IG56BxOOENW4UQR4bwsOewTHpp8ltMH4hdwJBblT
-	 atWCxUYFoTgkZE6RtJLIzL4itBeszBtA+UdJXrKWmhaFMg9elpnu/kQb4Fh8yx09ZjWZG
-	 IRdadM5ICRksPz9D4agJoKPhLqyJE6ton/qgmpQpDGe4mSiTYwtmxWUNu5GWrNQLOWob4
-	 mUwDhtDRAU0PyxAhULeT50YD6LqRguaQuUudnO/vRU/txbqXj/ZsrPc/FEMj2DFfI+Eyd
-	 zd/m4ZykQU0QxBDtwsGZANLc44OMI2Rw3N8gs07SwjbKWN5awqpXS9jXjHkqZGGQR7Q==
+	t=1795039004;
+	b=oimxxskYU1NrS+vmBnZ5Kcffe/e36IT5JGStjrCmEhPDd/PXSL71yNWtLcu5k/8C0hGv
+	 9JA/q84QF8eumsGEsDbvYr6oEPIFoNYpsaHRjxLxS3gMMxS7LkmY45udUfKm5pepi5CuD
+	 S5x59DTaD52/zABNY++J9QrqZkLna+gria9GCJL3hwtzZZIhVkgX6il0PxrsYABIPYXlh
+	 AVO6s69SPUeotx4p+S3FSMxNCSiDLy4NUtiXx1OrcWnJputyJtvUaj1cCUSGjd1A9Curo
+	 eXRdY1sv0ZZWKeBBsNQAP9KgS23kdHNwbZpiadPXOvfswvVhwGcHtKZVSn960bDU3cg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039001;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039004;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jqQc3Ku51uTBicVcmTvk8Q2S/zIWSSVtcBaMGxka3Rg=;
-	b=BNosrznm7rkmf8qzMto0VdzxNCgCcGRL87diZIebnFUT+S8dMwWxjGRaOa8eSNciRiOF
-	 l06BhzFAKdkvqQRDd0FjG951d0rHKeBCjI+KYGl26Z05WzMjFlJFinKCpdykPL28YGnEp
-	 YXhfqHYnccxRwEvSRbZRZxbAx9+F8RzD4oJT0xxCLYk9EhFPiq9njOx0jlqH27XGQCS5n
-	 Cm9NnMxwKssZV4yjgtuPBxTBwBVmEbg0dullSdsmfq7HHOpMLlfa42jtMiUdpyLKM3iq2
-	 LApPRMOSR9UYT58wvY+6xzr0p/HS7ZgJbgvtkijwabItAENXXWCoCc6j61hFAn2BNzg==
+	bh=6u3VTPCh0nzaeeok4X0alRexB5RybsVzPR8BJd9aWL8=;
+	b=mEdaKE4lbWf0Px87M6X+ffMG+GjS7kC6VeA/L+/3OhbrKuud1whDeiA2YuhhQ1Hh4RFl
+	 WQxfvwycCJ+3M0fMito9z+HNAEM6J/8sFonn4zw597fKXojQId62/aWH29x+7Xfj+c+9e
+	 6UFYGeBbAXLAxHmN6e8vG7Sff3SKlTkGK63bZmtk40fthE2AZ/RmsJUXI65vLKQfUL/sA
+	 47hjTsO+vnTK6KI374weBSu/O0wukmplZ7jtG7A7Lm/WkPWJNJxg6NiA6eF1tCogr2wAE
+	 fSqTvLJg45KEImeLiABwiHGj+OLdwaQkhNhoqPSOEil2YmLHA+q4g2giIGk3/RsBXdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i3Uz6CF1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FFzkG0GW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B04E606A31C;
-	Wed, 18 Nov 2026 21:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A12606A33E;
+	Wed, 18 Nov 2026 21:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i3Uz6CF1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E037F1F000C4;
-	Wed, 18 Nov 2026 21:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FFzkG0GW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906EF1F000C4;
+	Wed, 18 Nov 2026 21:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039001;
-	bh=jqQc3Ku51uTBicVcmTvk8Q2S/zIWSSVtcBaMGxka3Rg=;
+	s=korg; t=1795039004;
+	bh=6u3VTPCh0nzaeeok4X0alRexB5RybsVzPR8BJd9aWL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i3Uz6CF1S686mDNeMwZl4tz4M+jBISXIWOkdjpd/Zggv3zSiOHnjnwQlXArzK8QOV
-	 oZtlLiIjzO35oqRVi7KJ1qU7aEhyR+oiT1fPDO+JrFvEdf2mW11ZXUB4S01LYLaMkL
-	 0L04ZormxFSHGeOq8gWPJ8Xzdq/GH77VSBMeD6e4=
+	b=FFzkG0GW5VzPI7GqWybMuZJxOansbuxp9XK/KOqluOHwLcBfT0i8VJz8I/Zj13p1L
+	 xHsErhKKvDLQN6s8hzc1KG6qYGDw9ZZGedK83PrGYfz/859YT60YjmCF1OsjTMv/9s
+	 vMsDn+i1UpSClES6Zyg4191gpNR2qdkKzCsHPtRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francis Perron <francis@akrites.dev>,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1944/3318] apparmor: fix query_data() output overlapping the lookup key
-Date: Wed, 18 Nov 2026 15:42:46 +0100
-Message-ID: <20261118150420.373225445@linuxfoundation.org>
+Subject: [PATCH 6.6 1918/3318] scsi: target: Fix LUN/device R/W and total command stats
+Date: Wed, 18 Nov 2026 15:42:20 +0100
+Message-ID: <20261118150419.542615893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,110 +69,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit d30844001360a403a511cf24fc75ecaa6a7a7544 ]
+[ Upstream commit 95aa2041c654161d1b5c1eca5379d67d91ef1cf2 ]
 
-In query_data(), buf and query point into the same multi_transaction
-buffer: buf at the start, query a few bytes in, and the lookup key
-right after the label string that query points to. Reusing the buffer
-is by design and is safe as long as the query is fully parsed before
-buf is written to, but the key is not: it is dereferenced on every
-iteration of label_for_each_confined(), after output has already been
-written. So when the label has more than one profile with a data
-table, the data of the first matching profile is written to buf while
-the key is still needed, and overwrites it if the data is large enough.
-The later lookups then run on a corrupted key. Besides, if the data has
-no NUL byte from the key's position to the end of the allocation,
-strhash() -> strlen() -> jhash() reads past the 4096-byte slab object,
-triggering an out-of-bound read:
+In commit 9cf2317b795d ("scsi: target: Move I/O path stats to per CPU")
+I saw we sometimes use %u and also misread the spec. As a result I
+thought all the stats were supposed to be 32-bit only. However, for the
+majority of cases we support currently, the spec specifies u64 bit
+stats. This patch converts the stats changed in the commit above to u64.
 
-  BUG: KASAN: slab-out-of-bounds in jhash+0x595/0x5e0
-  Read of size 1 at addr ff1100001159d000 by task exploit/155
-  CPU: 0 UID: 1000 PID: 155 Comm: exploit Not tainted 7.3.0-rc7 #1
-  Call Trace:
-   jhash+0x595/0x5e0
-   aa_write_access+0x880/0x1400
-   vfs_write+0x26f/0xd20
-   ksys_write+0x115/0x210
-
-Writing to the .access file is unprivileged (0666), but triggering this
-requires loaded profiles that carry a data table, which needs
-CAP_MAC_ADMIN and is not the case on default distribution policies.
-
-Fix by copying the key with kstrdup() before writing any output to buf,
-so the key stays valid across all loop iterations regardless of what
-gets written to the overlapping buffer.
-
-Fixes: 317d9a054e1c ("apparmor: update query interface to support label queries")
-Cc: stable@vger.kernel.org # v4.13+
-Cc: Francis Perron <francis@akrites.dev>
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
-[ sashal: adjusted context for label critical-section helpers without the needput argument ]
+Fixes: 9cf2317b795d ("scsi: target: Move I/O path stats to per CPU")
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Reviewed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Link: https://patch.msgid.link/20250917221338.14813-2-michael.christie@oracle.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/apparmorfs.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/target/target_core_stat.c | 24 ++++++++++++------------
+ include/target/target_core_base.h | 12 ++++++------
+ 2 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
-index bb183924b7a2c..3a14b541e44c5 100644
---- a/security/apparmor/apparmorfs.c
-+++ b/security/apparmor/apparmorfs.c
-@@ -744,7 +744,7 @@ static void profile_query_cb(struct aa_profile *profile, struct aa_perms *perms,
- static ssize_t query_data(char *buf, size_t buf_len,
- 			  char *query, size_t query_len)
- {
--	char *out;
-+	char *out, *keydup;
- 	const char *key;
- 	struct label_it i;
- 	struct aa_label *label, *curr;
-@@ -765,11 +765,18 @@ static ssize_t query_data(char *buf, size_t buf_len,
- 	if (buf_len < sizeof(bytes) + sizeof(blocks))
- 		return -EINVAL; /* not enough space */
+diff --git a/drivers/target/target_core_stat.c b/drivers/target/target_core_stat.c
+index 576d07a8484e3..cd57db809d31e 100644
+--- a/drivers/target/target_core_stat.c
++++ b/drivers/target/target_core_stat.c
+@@ -282,7 +282,7 @@ static ssize_t target_stat_lu_num_cmds_show(struct config_item *item,
+ 	struct se_device *dev = to_stat_lu_dev(item);
+ 	struct se_dev_io_stats *stats;
+ 	unsigned int cpu;
+-	u32 cmds = 0;
++	u64 cmds = 0;
  
-+	/* buf overlaps query, keep a copy of the key for the later lookups */
-+	keydup = kstrdup(key, GFP_KERNEL);
-+	if (!keydup)
-+		return -ENOMEM;
-+
- 	curr = begin_current_label_crit_section();
- 	label = aa_label_parse(curr, query, GFP_KERNEL, false, false);
- 	end_current_label_crit_section(curr);
--	if (IS_ERR(label))
-+	if (IS_ERR(label)) {
-+		kfree(keydup);
- 		return PTR_ERR(label);
-+	}
- 
- 	/* We are going to leave space for two numbers. The first is the total
- 	 * number of bytes we are writing after the first number. This is so
-@@ -787,13 +794,14 @@ static ssize_t query_data(char *buf, size_t buf_len,
- 		if (!profile->data)
- 			continue;
- 
--		data = rhashtable_lookup_fast(profile->data, &key,
-+		data = rhashtable_lookup_fast(profile->data, &keydup,
- 					      profile->data->p);
- 
- 		if (data) {
- 			if (out + sizeof(outle32) + data->size > buf +
- 			    buf_len) {
- 				aa_put_label(label);
-+				kfree(keydup);
- 				return -EINVAL; /* not enough space */
- 			}
- 			outle32 = __cpu_to_le32(data->size);
-@@ -805,6 +813,7 @@ static ssize_t query_data(char *buf, size_t buf_len,
- 		}
+ 	for_each_possible_cpu(cpu) {
+ 		stats = per_cpu_ptr(dev->stats, cpu);
+@@ -290,7 +290,7 @@ static ssize_t target_stat_lu_num_cmds_show(struct config_item *item,
  	}
- 	aa_put_label(label);
-+	kfree(keydup);
  
- 	outle32 = __cpu_to_le32(out - buf - sizeof(bytes));
- 	memcpy(buf, &outle32, sizeof(outle32));
+ 	/* scsiLuNumCommands */
+-	return snprintf(page, PAGE_SIZE, "%u\n", cmds);
++	return snprintf(page, PAGE_SIZE, "%llu\n", cmds);
+ }
+ 
+ static ssize_t target_stat_lu_read_mbytes_show(struct config_item *item,
+@@ -299,7 +299,7 @@ static ssize_t target_stat_lu_read_mbytes_show(struct config_item *item,
+ 	struct se_device *dev = to_stat_lu_dev(item);
+ 	struct se_dev_io_stats *stats;
+ 	unsigned int cpu;
+-	u32 bytes = 0;
++	u64 bytes = 0;
+ 
+ 	for_each_possible_cpu(cpu) {
+ 		stats = per_cpu_ptr(dev->stats, cpu);
+@@ -307,7 +307,7 @@ static ssize_t target_stat_lu_read_mbytes_show(struct config_item *item,
+ 	}
+ 
+ 	/* scsiLuReadMegaBytes */
+-	return snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
++	return snprintf(page, PAGE_SIZE, "%llu\n", bytes >> 20);
+ }
+ 
+ static ssize_t target_stat_lu_write_mbytes_show(struct config_item *item,
+@@ -316,7 +316,7 @@ static ssize_t target_stat_lu_write_mbytes_show(struct config_item *item,
+ 	struct se_device *dev = to_stat_lu_dev(item);
+ 	struct se_dev_io_stats *stats;
+ 	unsigned int cpu;
+-	u32 bytes = 0;
++	u64 bytes = 0;
+ 
+ 	for_each_possible_cpu(cpu) {
+ 		stats = per_cpu_ptr(dev->stats, cpu);
+@@ -324,7 +324,7 @@ static ssize_t target_stat_lu_write_mbytes_show(struct config_item *item,
+ 	}
+ 
+ 	/* scsiLuWrittenMegaBytes */
+-	return snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
++	return snprintf(page, PAGE_SIZE, "%llu\n", bytes >> 20);
+ }
+ 
+ static ssize_t target_stat_lu_resets_show(struct config_item *item, char *page)
+@@ -1044,7 +1044,7 @@ static ssize_t target_stat_auth_num_cmds_show(struct config_item *item,
+ 	struct se_dev_entry *deve;
+ 	unsigned int cpu;
+ 	ssize_t ret;
+-	u32 cmds = 0;
++	u64 cmds = 0;
+ 
+ 	rcu_read_lock();
+ 	deve = target_nacl_find_deve(nacl, lacl->mapped_lun);
+@@ -1059,7 +1059,7 @@ static ssize_t target_stat_auth_num_cmds_show(struct config_item *item,
+ 	}
+ 
+ 	/* scsiAuthIntrOutCommands */
+-	ret = snprintf(page, PAGE_SIZE, "%u\n", cmds);
++	ret = snprintf(page, PAGE_SIZE, "%llu\n", cmds);
+ 	rcu_read_unlock();
+ 	return ret;
+ }
+@@ -1073,7 +1073,7 @@ static ssize_t target_stat_auth_read_mbytes_show(struct config_item *item,
+ 	struct se_dev_entry *deve;
+ 	unsigned int cpu;
+ 	ssize_t ret;
+-	u32 bytes = 0;
++	u64 bytes = 0;
+ 
+ 	rcu_read_lock();
+ 	deve = target_nacl_find_deve(nacl, lacl->mapped_lun);
+@@ -1088,7 +1088,7 @@ static ssize_t target_stat_auth_read_mbytes_show(struct config_item *item,
+ 	}
+ 
+ 	/* scsiAuthIntrReadMegaBytes */
+-	ret = snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
++	ret = snprintf(page, PAGE_SIZE, "%llu\n", bytes >> 20);
+ 	rcu_read_unlock();
+ 	return ret;
+ }
+@@ -1102,7 +1102,7 @@ static ssize_t target_stat_auth_write_mbytes_show(struct config_item *item,
+ 	struct se_dev_entry *deve;
+ 	unsigned int cpu;
+ 	ssize_t ret;
+-	u32 bytes = 0;
++	u64 bytes = 0;
+ 
+ 	rcu_read_lock();
+ 	deve = target_nacl_find_deve(nacl, lacl->mapped_lun);
+@@ -1117,7 +1117,7 @@ static ssize_t target_stat_auth_write_mbytes_show(struct config_item *item,
+ 	}
+ 
+ 	/* scsiAuthIntrWrittenMegaBytes */
+-	ret = snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
++	ret = snprintf(page, PAGE_SIZE, "%llu\n", bytes >> 20);
+ 	rcu_read_unlock();
+ 	return ret;
+ }
+diff --git a/include/target/target_core_base.h b/include/target/target_core_base.h
+index 8874503b8af47..246bf6c9e7cc0 100644
+--- a/include/target/target_core_base.h
++++ b/include/target/target_core_base.h
+@@ -661,9 +661,9 @@ struct se_lun_acl {
+ };
+ 
+ struct se_dev_entry_io_stats {
+-	u32			total_cmds;
+-	u32			read_bytes;
+-	u32			write_bytes;
++	u64			total_cmds;
++	u64			read_bytes;
++	u64			write_bytes;
+ };
+ 
+ struct se_dev_entry {
+@@ -795,9 +795,9 @@ struct se_device_queue {
+ };
+ 
+ struct se_dev_io_stats {
+-	u32			total_cmds;
+-	u32			read_bytes;
+-	u32			write_bytes;
++	u64			total_cmds;
++	u64			read_bytes;
++	u64			write_bytes;
+ };
+ 
+ struct se_device {
 -- 
 2.53.0
 
