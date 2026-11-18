@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022036;
-	b=1bgjLmo0tQV/7oB3fwgvvkMbFRTcfk+HTtLcJx9jEzGSjztcr7pWp3ZEZ2+NW3hj7nF8
-	 Xujl+JZ/6jAnXBXppiI5P6qbiGhqJqVSSs2SpwV2ArfGQ4PpnZahrnv5/Ea7i7ALrpWvY
-	 FZ4ellN2MxRIfB7VF0maMhLSVvtwZgppsyhtbfyFp/qUDYoASLRefcxq3DFqEKEI6R0Q/
-	 ruSBAEspt9xPpLeWnm6rxqp3C9H01PfeVo1c85RmFuVMimPAByFEHDE0CaZOstQvQEENN
-	 R8wTmV6y8n6kvfRAbWFDVcJdRJ7n7WHxObcrz+SEZtHyxVXE5J2LBe9tlIsly4Z4cjQ==
+	t=1795022039;
+	b=z8Yx3UVSmwgN/lXQKawYtMym/jaGBCDBmUh95XJrdShGGkOtMNTgh06Fs8bY9JKi4ipO
+	 bDuBuW6FxZgAWskRiOHlCSFl6EY7EZ+eyBdn1Vs6VnVqWskBGZ1b+hrbdUUZeh2/Vuqjl
+	 gaSGk/Y7Ol4WwAKaGo1+hg0UmNI6ozAFTfCl8cJmDzxEmXHCI3/Kcl/zQzz7E2O96/O9P
+	 PPLUCatA7if6yVPM9kv4EJvTWF9JeqiBrvDvXGXGL8DDXHmVSnQ0yMxMtBMhvCYgStogr
+	 w+4xYmndR/ZVf7KvTx6fIWwu44MM3NtDmW7dWIs2tiFlgG3kyrCZ3G4Ka+1ycxCBqkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022036;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022039;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DiwHzUv2gLDtsHYHpquLaUeE9WPA7VL/HV44Lz2HlVw=;
-	b=5jmISK/Jssr5LRPZSQToeQ3ZUChTmsEMGlEdNAvkvG4/neYImBCPhingqGpnqeTwDaop
-	 3WDrT+StMhAiR4mi6xVhhPd1pK6sEMz/upAOaOvpJqA2aC5Y0J4Uw9X+WCLfUeSL7UO5e
-	 o7kdSAyIqEtEY2w6u38SUQsYpAkvjrofT1NfOza+P6VbE7OtAaBsAkSOWPlABJs5zeebw
-	 59rEQlmSQk6fQoHRZ9KyEKoi+uFBTxqRd2ZRilkVnuBkhUCyPk5JbYSguCR1FwwRKSZmK
-	 S5pWTrycmBXBji8atjdSimQ16/D+s0hWBZlfU8pLUhJiHudl9/8rehnrRBhKSz2y+bA==
+	bh=/JOnQIm6SP7ZTFe1zJGicgTM9X/KdIKBFgH57vt3/1Y=;
+	b=s1Z58lhOHGi6C74EPQaDAxRF8BXjOXUvh9L38df1900UuicHwwjjwc4DMSrrGZnU/zNX
+	 Jf/HZr4ClIanMtob4sgolVZuT3bNeRykeCRQMjVIl9zOyQpez98JFgC6HObVMjJD3B/et
+	 cdBqbuEOB/L8jxiwhKcotSyk8hzmB/sXDv9RLL8jX3An6BI23dhTf6VKJagkI5DcHEkCe
+	 7rmnwYB/vecJlaX6+pEwanErlAMZhNZ/EN4ahfBbdz/Pu7cIX/fB1AUi4/htbeUSV4siU
+	 6bGSY56DzbU4v0jEatTyovGbp4JTkohSlW61Q95YIj2HiYERWqKf0VVGBsQ0AgjA/Qg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=El13mzZv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QBVb+q5X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CF0606A32C;
-	Wed, 18 Nov 2026 17:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFF4606A332;
+	Wed, 18 Nov 2026 17:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=El13mzZv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E721F000C6;
-	Wed, 18 Nov 2026 17:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QBVb+q5X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC751F000C4;
+	Wed, 18 Nov 2026 17:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022036;
-	bh=DiwHzUv2gLDtsHYHpquLaUeE9WPA7VL/HV44Lz2HlVw=;
+	s=korg; t=1795022039;
+	bh=/JOnQIm6SP7ZTFe1zJGicgTM9X/KdIKBFgH57vt3/1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=El13mzZvpD8tzqN2wQcL59p9QufxFBzyIdYsN4pc4sd6qSIW+QDLsuBOlAF13ar7U
-	 lmico5xP/DxD7akETgQhHVrgkPB6JGBqwASilVAOGBAK+Lz/w0pHXoIkrOKcTdTnUw
-	 lZ8Yqo4Ej84zF840Jla00V49RwO//EiLOmTYSA68=
+	b=QBVb+q5XwifvLW9sEButif9T42Mb8zl2FW/9BmxgQsUCEuWcC3o91A0k5rAbUL7jQ
+	 wtPpz+YfOdFiCCfzFmnRDMuHA+Eode6hhBfqQJ1KHI3DKXTv4xXChYVNDQfOLfvH3k
+	 WrZ5uSE1iMGFUwws6fEYSteLnzTY+qOYS5PIpPGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7be6ad5cb228286af3e3@syzkaller.appspotmail.com,
-	Slawomir Stepien <sst@poczta.fm>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Peter Morrow <pdmorrow@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2519/2651] fs/ntfs3: handle partial allocation in attr_data_get_block_locked()
-Date: Wed, 18 Nov 2026 16:02:39 +0100
-Message-ID: <20261118150415.377711384@linuxfoundation.org>
+Subject: [PATCH 7.3 2520/2651] net/mlx4: always create the eth and ib auxiliary devices
+Date: Wed, 18 Nov 2026 16:02:40 +0100
+Message-ID: <20261118150415.406729866@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,74 +72,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slawomir Stepien <sst@poczta.fm>
+From: Peter Morrow <pdmorrow@gmail.com>
 
-[ Upstream commit ec67e8d61eb40a4e69b16d8931da217352447367 ]
+[ Upstream commit 557d80138618b9d17407733d4ec25b33d3971d60 ]
 
-When allocating clusters for a sparse or compressed attribute in
-attr_data_get_block_locked(), the requested virtual cluster number (vcn0)
-is aligned down to a frame boundary (vcn). The function then attempts to
-allocate a full frame of clusters.
+Since commit 7d22b1cb9d84 ("mlx4: Connect the infiniband part to the
+auxiliary bus"), mlx4_core creates the "ib" auxiliary device only for
+an IB port or a device that advertises IBoE. Before it, each mlx4
+interface was offered every device and decided in its own add callback.
+mlx4_ib_add() accepted Ethernet ports without IBoE and registered them
+for raw packet QPs only.
 
-If the disk is nearly full and highly fragmented, attr_allocate_clusters()
-might only manage to allocate a small fragment and return success with a
-partial allocation length. If this partial allocation is so small that it
-does not even reach the originally requested vcn0 (i.e., end <= vcn0), vcn0
-remains unallocated (a sparse hole).
+ConnectX-3 VFs on Azure have an Ethernet port and no IBoE, so since
+v6.6 they get no RDMA device. DPDK's mlx4 PMD, which needs only raw
+packet QPs, then cannot open them:
 
-When the code subsequently calls run_lookup_entry() for vcn0, it finds the
-original SPARSE_LCN entry, which triggers a WARN_ON(1).
+  net_mlx4: cannot access device, is mlx4_ib loaded?
 
-Fix this by adding a check to verify if the partial allocation reached
-vcn0. If it did not (vcn0 >= end), treat this as an -ENOSPC failure and
-jump to the undo1 label. This safely rolls back the partial allocation,
-restores the original size, and repacks the runs, leaving the inode in a
-consistent state before returning the error to the caller.
+Restore the old behaviour by creating both auxiliary devices for every
+device and letting mlx4_en and mlx4_ib decide in probe, as their add
+callbacks did. mlx4_ib_probe() returns -ENODEV when there are no usable
+ports, and mlx4_en_probe() binds a device without Ethernet ports but
+creates no netdevs, as mlx4_en_add() did.
 
-WARNING: fs/ntfs3/attrib.c:1236 at attr_data_get_block_locked+0x1980/0x25d0
-fs/ntfs3/attrib.c:1236
-RIP: 0010:attr_data_get_block_locked+0x1980/0x25d0 fs/ntfs3/attrib.c:1236
-Call Trace:
- <TASK>
- attr_data_get_block+0x1f1/0x2a0 fs/ntfs3/attrib.c:979
- ntfs_fallocate+0xd3d/0xf70 fs/ntfs3/file.c:670
- vfs_fallocate+0x663/0x7f0 fs/open.c:338
- ksys_fallocate fs/open.c:362 [inline]
- __do_sys_fallocate fs/open.c:367 [inline]
- __se_sys_fallocate fs/open.c:365 [inline]
- __x64_sys_fallocate+0xbf/0x110 fs/open.c:365
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x174/0x580 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
+Tested on 6.12.111 on an Azure VM with two ConnectX-3 VFs: each gets an
+eth and an ib auxiliary device, and DPDK attaches both VFs and passes
+traffic through them.
 
-Fixes: 099ef9ab9203 ("fs/ntfs3: implement iomap-based file operations")
-Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
-Reported-by: syzbot+7be6ad5cb228286af3e3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7be6ad5cb228286af3e3
-Link: https://syzkaller.appspot.com/ai_job?id=3c9dee6e-001d-4972-8bf6-f6c960708246
-Signed-off-by: Slawomir Stepien <sst@poczta.fm>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 7d22b1cb9d84 ("mlx4: Connect the infiniband part to the auxiliary bus")
+Closes: https://lore.kernel.org/r/20261014133951.3219055-1-pdmorrow@gmail.com
+Suggested-by: Leon Romanovsky <leon@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Peter Morrow <pdmorrow@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Acked-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrib.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/mellanox/mlx4/intf.c | 15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
-diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
-index 7b74adb2e8684..bc923c33013fc 100644
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -1249,6 +1249,10 @@ int attr_data_get_block_locked(struct ntfs_inode *ni, CLST vcn, CLST clen,
- 	total_size = total_size0 + ((u64)*len << cluster_bits);
+diff --git a/drivers/net/ethernet/mellanox/mlx4/intf.c b/drivers/net/ethernet/mellanox/mlx4/intf.c
+index 82e467c45d231..31860b4abe43f 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/intf.c
++++ b/drivers/net/ethernet/mellanox/mlx4/intf.c
+@@ -43,23 +43,12 @@ static DEFINE_IDA(mlx4_adev_ida);
  
- 	if (vcn != vcn0) {
-+		if (vcn0 >= end) {
-+			err = -ENOSPC;
-+			goto undo1;
-+		}
- 		if (!run_lookup_entry(run, vcn0, lcn, len, NULL)) {
- 			err = -EINVAL;
- 			goto out;
+ static bool is_eth_supported(struct mlx4_dev *dev)
+ {
+-	for (int port = 1; port <= dev->caps.num_ports; port++)
+-		if (dev->caps.port_type[port] == MLX4_PORT_TYPE_ETH)
+-			return true;
+-
+-	return false;
++	return true;
+ }
+ 
+ static bool is_ib_supported(struct mlx4_dev *dev)
+ {
+-	for (int port = 1; port <= dev->caps.num_ports; port++)
+-		if (dev->caps.port_type[port] == MLX4_PORT_TYPE_IB)
+-			return true;
+-
+-	if (dev->caps.flags & MLX4_DEV_CAP_FLAG_IBOE)
+-		return true;
+-
+-	return false;
++	return true;
+ }
+ 
+ static const struct mlx4_adev_device {
 -- 
 2.53.0
 
