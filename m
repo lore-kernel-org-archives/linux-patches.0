@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039263;
-	b=QToYpK+ZJNYM5YpBJVmYC3GL7DwTOD49D77mBcSDTc/tObNcfZMXN+vrF/8aVtAK/+rG
-	 OBIueCYAFDB234mVIHYXj8mFbNqQzmGFL3C1e7zTceOMtH2ECEXSJjFEyJ6ajzPq4Uu27
-	 EKt9rvgaIxSQgoenjBPAfuZeyMDT+yOsU8AAueYvaz8R++gy+umIceORcEIViiLdR7r6k
-	 FlvhpQ950aXI2FFxkwFq03PPlqM+niCClba+bZKwo+V23MdOIrUD9ZuTTNzIIdfKy2sna
-	 KiEZdAili3GinXiepkt1b/7DMxNjG0FI2FTNRvnFukwVh91mKuQ7cNMTl4O4rbbodbg==
+	t=1795039266;
+	b=P3qRJKIYUElm0XpQXJUd6ewNyGxViPLagedzsLt9IyP0ITK1wTuu4U21pqvB6qZKDv7n
+	 Mb+LpIIfLrQrFU9V5ZNxV8RO8nEm0Bd6R9p46sd5oJ90wlw1r3NkEpKElSBLBa5Cry61l
+	 80X7kGYUQKfjN3lpb3PFBYafpn8QDga5kybAb701Cvo2HKazh8wnFY+E4d4WhF1lKhQE/
+	 brkYAuyvwMKIVdL/VZV88jeR+OTnuV9OiNPlt5e3jgQknhBDiFj/8cXMNfbtIfpFMSaG4
+	 KvR3oS+6K54LxHyn8qU2gZ1Yji1hxD+eCj61jrmuNlwf+nQ2pHKbR+tzm8LHcX5XMXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039263;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039266;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VoLmamTl33hlPTRfbnzb/WzK64xMWhPAMn91nA9fCOE=;
-	b=ShjDmnPXXXss7tZcBqYdHp+vJsqwrRtDLWJ5eopuX/G1uH6Opo2UNEwgT/56p1jd3wIn
-	 I0WTwBxAdjS9ikp0rCriSOqbD3DGd6auJA9jbErQ/KXWLS2s1YvwnDlc65gfwA/KjColW
-	 NSnZIBoqdrFE7YdIaEBRDGsCznQZcyKga9fnFDZiUtLw/DhO/wry8sJMjpxXf72dNpXMf
-	 92LWVX4ECWF4I68z+8Tk5u3jesiso2m2+ml5+DG3VhAixyakMrYH0OsgECKray826VNfg
-	 ZHc8yhVJDn2do55EqLqiQa7kmChz26G0oFHBbtD2WEsCDpG7E4J5SR0r+AAsCUbMYlg==
+	bh=QBEtNj4LgZQeenPOEQ8ZmOKj3K0GRSmw4lGUKLk6Rt0=;
+	b=g0qp8VMgseEPw+MNI4yyLb610h5fPsXsVHtXNxqbn6TvwWeZk1dsgQLtTAyTFvtUyUAu
+	 6ye0vHsgtpLEiIqoUjAHJ9WpvYWNqDVw2i0AHTNVV+oYNv62L/7CIqLiWD4jc2bNHy2W4
+	 DzZoOdNh7qKKJmaDszp9h6Ad4BHRQehJ8/XHKNKNJE9NsvQtYzPgNvBXQOS9aSZCfb8hU
+	 WSTL8/gG1h7OHjgimGJN6jNMinMTKEZyfqROP517OFvwNzESSAOxhSJCplpgL3fhw83tD
+	 qlxRuIhBsG7mmyYPe7cLo6wV4ds2gDAs3Tga3O3OYq97NF66VO+RB1qaCDGqvDOVlDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t3Z1lNWi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zmbRuJpp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E25606A31C;
-	Wed, 18 Nov 2026 22:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55756606A32A;
+	Wed, 18 Nov 2026 22:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t3Z1lNWi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD911F000C4;
-	Wed, 18 Nov 2026 22:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zmbRuJpp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C241F000C4;
+	Wed, 18 Nov 2026 22:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039263;
-	bh=VoLmamTl33hlPTRfbnzb/WzK64xMWhPAMn91nA9fCOE=;
+	s=korg; t=1795039266;
+	bh=QBEtNj4LgZQeenPOEQ8ZmOKj3K0GRSmw4lGUKLk6Rt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t3Z1lNWiqVbG+WWzJoGEDdyNLLVfHBKDkasdoDuUFVN8rZoYmz+TH4aY3geU7r9Ld
-	 7i8771TPtHwn6VYXJG5c3ZgycuQeBWfOwV3BsLhahwhDv6anx8gR0w7AVb5iUOXOeu
-	 x0Nbfl2MZ9/CS3N+bUXCIOvSb0Vk7rqxFcObbIHI=
+	b=zmbRuJppKHy6uOcbLisz6PJW+qtLULjryTb4lD6Dpc2dt6mDzgxsU5xunWYKzpkHM
+	 jnW9J2qz+NlSAipLxe6c40RgW8Md6m16fkhMRj5PnuXZWNb/E/W4Yw0KTxcwtPbkmG
+	 yzbHKZJ5SJPFPVaHBpEunVc9w/E+BsafNnkvXu4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Daniel Baluta <daniel.baluta@nxp.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Iuliana Prodan <iuliana.prodan@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
 	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2037/3318] remoteproc: imx_dsp_rproc: Add support of recovery and coredump process
-Date: Wed, 18 Nov 2026 15:44:19 +0100
-Message-ID: <20261118150423.153414258@linuxfoundation.org>
+Subject: [PATCH 6.6 2038/3318] remoteproc: imx_dsp_rproc: Drop extra space
+Date: Wed, 18 Nov 2026 15:44:20 +0100
+Message-ID: <20261118150423.182628368@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,126 +72,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit c4c432dfb00fcb69d56cc9778f527cce71cec9bb ]
+[ Upstream commit 8049dc7b631e33a42d8413fe48b043113afa914c ]
 
-When enabled FW recovery, but is broken because software reset is missed
-in this recovery flow. So move software reset from
-imx_dsp_runtime_resume() to .load() and clear memory before loading
-firmware to make recovery work.
+Drop extra space between return and zero.
 
-Add call rproc_coredump_set_elf_info() to initialize the elf info for
-coredump, otherwise coredump will report error "ELF class is not set".
-
-Fixes: ec0e5549f358 ("remoteproc: imx_dsp_rproc: Add remoteproc driver for DSP on i.MX")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Link: https://lore.kernel.org/r/20250722075225.544319-1-shengjiu.wang@nxp.com
+Reviewed-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
+Tested-by: Iuliana Prodan <iuliana.prodan@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/20251119-imx-dsp-2025-11-19-v4-5-adafd342d07b@nxp.com
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Stable-dep-of: 13df1fa4f1a3 ("remoteproc: imx_dsp: Acquire runtime PM before adding carveouts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/imx_dsp_rproc.c | 45 +++++++++++++++++++-----------
- 1 file changed, 29 insertions(+), 16 deletions(-)
+ drivers/remoteproc/imx_dsp_rproc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/remoteproc/imx_dsp_rproc.c b/drivers/remoteproc/imx_dsp_rproc.c
-index 960fbd4b1d9b9..85a51b1ceb72a 100644
+index 85a51b1ceb72a..491c5a48770f8 100644
 --- a/drivers/remoteproc/imx_dsp_rproc.c
 +++ b/drivers/remoteproc/imx_dsp_rproc.c
-@@ -684,7 +684,6 @@ static int imx_dsp_rproc_prepare(struct rproc *rproc)
- {
- 	struct imx_dsp_rproc *priv = rproc->priv;
- 	struct device *dev = rproc->dev.parent;
--	struct rproc_mem_entry *carveout;
- 	int ret;
- 
- 	ret = imx_dsp_rproc_add_carveout(priv);
-@@ -695,15 +694,6 @@ static int imx_dsp_rproc_prepare(struct rproc *rproc)
+@@ -694,7 +694,7 @@ static int imx_dsp_rproc_prepare(struct rproc *rproc)
  
  	pm_runtime_get_sync(dev);
  
--	/*
--	 * Clear buffers after pm rumtime for internal ocram is not
--	 * accessible if power and clock are not enabled.
--	 */
--	list_for_each_entry(carveout, &rproc->carveouts, node) {
--		if (carveout->va)
--			memset(carveout->va, 0, carveout->len);
--	}
--
- 	return  0;
- }
- 
-@@ -932,13 +922,39 @@ static int imx_dsp_rproc_parse_fw(struct rproc *rproc, const struct firmware *fw
- 	return 0;
- }
- 
-+static int imx_dsp_rproc_load(struct rproc *rproc, const struct firmware *fw)
-+{
-+	struct imx_dsp_rproc *priv = rproc->priv;
-+	const struct imx_dsp_rproc_dcfg *dsp_dcfg = priv->dsp_dcfg;
-+	struct rproc_mem_entry *carveout;
-+	int ret;
-+
-+	/* Reset DSP if needed */
-+	if (dsp_dcfg->reset)
-+		dsp_dcfg->reset(priv);
-+	/*
-+	 * Clear buffers after pm rumtime for internal ocram is not
-+	 * accessible if power and clock are not enabled.
-+	 */
-+	list_for_each_entry(carveout, &rproc->carveouts, node) {
-+		if (carveout->va)
-+			memset(carveout->va, 0, carveout->len);
-+	}
-+
-+	ret = imx_dsp_rproc_elf_load_segments(rproc, fw);
-+	if (ret)
-+		return ret;
-+
+-	return  0;
 +	return 0;
-+}
-+
- static const struct rproc_ops imx_dsp_rproc_ops = {
- 	.prepare	= imx_dsp_rproc_prepare,
- 	.unprepare	= imx_dsp_rproc_unprepare,
- 	.start		= imx_dsp_rproc_start,
- 	.stop		= imx_dsp_rproc_stop,
- 	.kick		= imx_dsp_rproc_kick,
--	.load		= imx_dsp_rproc_elf_load_segments,
-+	.load		= imx_dsp_rproc_load,
- 	.parse_fw	= imx_dsp_rproc_parse_fw,
- 	.sanity_check	= rproc_elf_sanity_check,
- 	.get_boot_addr	= rproc_elf_get_boot_addr,
-@@ -1148,6 +1164,8 @@ static int imx_dsp_rproc_probe(struct platform_device *pdev)
- 		goto err_detach_domains;
- 	}
- 
-+	rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_XTENSA);
-+
- 	pm_runtime_enable(dev);
- 
- 	return 0;
-@@ -1176,7 +1194,6 @@ static int imx_dsp_runtime_resume(struct device *dev)
- {
- 	struct rproc *rproc = dev_get_drvdata(dev);
- 	struct imx_dsp_rproc *priv = rproc->priv;
--	const struct imx_dsp_rproc_dcfg *dsp_dcfg = priv->dsp_dcfg;
- 	int ret;
- 
- 	/*
-@@ -1197,10 +1214,6 @@ static int imx_dsp_runtime_resume(struct device *dev)
- 		return ret;
- 	}
- 
--	/* Reset DSP if needed */
--	if (dsp_dcfg->reset)
--		dsp_dcfg->reset(priv);
--
- 	return 0;
  }
  
+ /* Unprepare function for rproc_ops */
+@@ -702,7 +702,7 @@ static int imx_dsp_rproc_unprepare(struct rproc *rproc)
+ {
+ 	pm_runtime_put_sync(rproc->dev.parent);
+ 
+-	return  0;
++	return 0;
+ }
+ 
+ /* Kick function for rproc_ops */
 -- 
 2.53.0
 
