@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036685;
-	b=cRYHxFrXRNE+HimWd9MhjZ8c/3XUVTb5WW8Kx9T2s+tWSDCraM5yFeo7YZcPq3lg1tvx
-	 hcuHu9Q5mCTMh+fpqG2qryV+1QoA/H5r2v2X3u76l4SdbgTYKqal3JiTRMsUO559hzkED
-	 9LAoQxbdlgrZWqk/fG8XEklia8rNZxEk51AIypNaZqZ9//b9aC33Ut8XzmSNlCbJOcBDj
-	 nidc4bCIg/5rvM5ncOi5InNpOlk6OGnmD3mGY4a8weP/1DkAhcGEGyGF8txym19KEVCwB
-	 eXVci36CN2IyPudxxswZ6L/kHltACNrnhHRqE/yhOTYSNz/yfCcdjjQmOvjxCgprsFA==
+	t=1795036688;
+	b=VCHnf0mqDx8UcLXDmM17AE0tbf9KTMbwQiixsetU8/TSAqy1dMwy4iaeJrnTM/xsLYxX
+	 lAovWwIEz+gN5PtkVtnuQDdxDcDu/ALSrsnSpIpxfoKVRmM7VEOEX2eIMl/yK3SzLiIxD
+	 7dDhbMUObHRXx0No77oHQRPfVrsJ80TGULK+7rGN2OAwjW1Uphhbw0Jm8Ey1+UwnCCDAF
+	 ylKIHp7CtjIKzUNUEWO7R4m/ggaRnd1cwVBkUxkxNq4Uza9vykjqIKF2L8eL8cmyhafFf
+	 LtXcFjdAYX2byYQi1/rRQNd0KLa5UUbhf1mWetGamyvVIdBdwgb5fb+5bR0iedJVbWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036685;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036688;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zcNwdfLwXj0ZMG/hAH1VcNFwZIqZZYo+XloRKn/oDvo=;
-	b=iYW7bLxT1dMRMXoHU44fS5uwUHgVBG9aYIMOdSzZo81ZSDOCfGZOAtyC49gPEH+6AAJ1
-	 3y3wfCh+aTibfmedjGEZ5PuVxRlTzTobatIVvXeh3GcEfpEF29GF7QmWuVlSzm67zGFNs
-	 ZSbwyVYVuFmnE/89mUmpVa5YgVwO4c90PBr4WAEBqm4T4U9nG/ERgqbv1IauTzNv/ntcH
-	 X3bQQV5jVUxHEk69tZf9dbMhopUnL1RRVvH3E84rEaFJyYBWuuGse3qzWXUb547TEchPf
-	 cBHxpGyqJRZVOnuQkfwXWjFJSEY7XULHvYd+qVz+sGeYshCrQ3nE+Yp6jfX5ipPwJdg==
+	bh=bafAkrEFQ5895eLHvGd4Vdx+sUWuJCyCVPyYc8ysMTM=;
+	b=MesQOHdrXG945jbsu/UsRpfKZg4lgq1WwieXuZAlQlDLqytZ2ikOnkBakaff/P7tQr5U
+	 7VRqoTEPOjFrbmaSNs68zQG/47BsCCELlwVnA4S9dIr+G9SQu66QSSTbKNhHZlZXU9S0m
+	 8T6Kg8O/salPzQ0Bc1pFIJiuDn7nQReXzsSzh7FSJke0B6ie8TuFn0y8VjlDe4wXotEA+
+	 XY/ZBFCp752OURVGX4iyVlRMUSLpkBN7a9cXcHilmfyZJai8FBh+tsHuklA3PckWqSIWs
+	 tjWFb8BDIkFx+DVOKVGYaoVIC2AsAb1L+aHtGE63zoc1Qc1FRrN/JmJmRnq0dnSJtHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cmu8lOKw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vjeVU8hh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C369C606A325;
-	Wed, 18 Nov 2026 21:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93FC9606A31C;
+	Wed, 18 Nov 2026 21:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cmu8lOKw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278F71F000C4;
-	Wed, 18 Nov 2026 21:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vjeVU8hh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58FE1F000C4;
+	Wed, 18 Nov 2026 21:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036685;
-	bh=zcNwdfLwXj0ZMG/hAH1VcNFwZIqZZYo+XloRKn/oDvo=;
+	s=korg; t=1795036688;
+	bh=bafAkrEFQ5895eLHvGd4Vdx+sUWuJCyCVPyYc8ysMTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cmu8lOKwiirmY9XeMW5E9mEhFDA6A6LNpC5/PiIlVC2sMl3pSv3k/WnLESy252nPU
-	 xTTgDg56caHYOQNid7k+NmmZ4iQJzKUM/COPM6lrrwptliffg4e087Md2QSRtDk0z5
-	 /HIjVvkVErWo5j8O3E4sMPjSqHnZvkO0rwkByfDk=
+	b=vjeVU8hh8Gshch6B0/pdXTmiw0hOEnSvEHRrfaEGnBVY+5Y/EqmsTFJ8Oxoll91UL
+	 4yGb7FFKY8MF0voiL2xWKuhte8C3VlawlIITPCS3qI+g51sdRth776n7z2avtuge/V
+	 cW54TWUO5Tr4BXtUMZv2GBz0wRhVNKLX/KVWLiE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matt Turner <mattst88@gmail.com>,
 	Magnus Lindholm <linmag7@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1146/3318] alpha: run check_mmu_context() from finish_arch_post_lock_switch()
-Date: Wed, 18 Nov 2026 15:29:28 +0100
-Message-ID: <20261118150354.457468008@linuxfoundation.org>
+Subject: [PATCH 6.6 1147/3318] alpha: only use a targeted tbi() when the target mm is really current
+Date: Wed, 18 Nov 2026 15:29:29 +0100
+Message-ID: <20261118150354.490828725@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,106 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Magnus Lindholm <linmag7@gmail.com>
 
-[ Upstream commit 020d2e70b7538b66eee3c3480d2b8921fb182f0c ]
+[ Upstream commit 0d92845ac5dbc79e4ac4810b33c673f4c1c227e3 ]
 
-check_mmu_context() clears asn_lock and acts on need_new_asn, but it
-runs only as the tail of switch_to(), after alpha_switch_to() returns.
+ipi_flush_tlb_page() gates a targeted tbi() on current->active_mm.
+tbi() acts on the address space context currently loaded on the CPU, so
+it is only guaranteed to reach an mm's translations when a thread of
+that mm is running there. current->active_mm is not sufficient: under
+lazy TLB an idle or kernel task keeps an mm as its active_mm while a
+different ASN is loaded, so the invalidate is issued against the wrong
+context and the stale entry can survive. Nothing retires the old ASN
+afterwards either, mm->context[cpu] still being valid, so the resuming
+thread can reuse it.
 
-A newly forked user task never gets there: its first context switch
-resumes at ret_from_fork and reaches schedule_tail() without returning
-to the code following alpha_switch_to().
+Test current->mm instead and otherwise fall back to flush_tlb_other(),
+which clears mm->context[cpu] and forces a fresh ASN at the next switch
+whatever is loaded now.
 
-asn_lock is left set on that CPU, so the new user task can run with
-interrupts enabled while shootdown IPIs keep taking the deferred path.
-The handshake meant to complete those invalidations never runs.
-
-New kernel threads also reach schedule_tail(), but context_switch()
-does not call switch_mm() for a task without an mm. They therefore do
-not set asn_lock in the first place and are not affected by this bug.
-
-Move check_mmu_context() to finish_arch_post_lock_switch(), which is
-called by finish_task_switch() for both existing and newly created tasks.
-Drop the now redundant call from switch_to().
-
-The hook runs after finish_lock_switch() releases the rq lock and enables
-interrupts. An IPI arriving before asn_lock is cleared retires the slot
-through flush_tlb_other(); an IPI arriving afterwards can flush directly,
-since PAL_swpctx has already installed the incoming context.
-
-Set need_new_asn whether ev5_switch_mm() reuses or allocates an ASN. An
-IPI in that interval can zero either slot. Without this, the allocated
-case can return to user space with a live ASN but a zero context slot,
-which a later context-based shootdown shortcut could mistake for an
-inactive CPU. check_mmu_context() reloads only when the slot is zero.
-
-Call the hook unconditionally. Alpha selects ARCH_NO_PREEMPT, and neither
-kthread_use_mm() nor sched_force_init_mm() sleeps between the direct
-switch and this hook. RCU_STRICT_GRACE_PERIOD can enable PREEMPT_COUNT,
-but cannot make those callers migrate there. Testing preemptible() would
-only leave asn_lock set in that configuration.
-
-This requires the preceding direct-switch fix, "alpha: load the MMU
-context when switch_mm() switches the current task". It installs the
-borrowed context before kthread_use_mm() reaches this hook, so clearing
-asn_lock cannot expose a targeted invalidate against the wrong context.
+For an mm borrowed through kthread_use_mm(), patch 1 of this series
+installs the context before the task can take a shootdown IPI. The
+current->mm test therefore covers that case as well.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Reviewed-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20261010142533.974797-3-linmag7@gmail.com
+Link: https://lore.kernel.org/r/20261010142533.974797-4-linmag7@gmail.com
 Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/include/asm/mmu_context.h | 15 +++++++++++++--
- arch/alpha/include/asm/switch_to.h   |  1 -
- 2 files changed, 13 insertions(+), 3 deletions(-)
+ arch/alpha/kernel/smp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/alpha/include/asm/mmu_context.h b/arch/alpha/include/asm/mmu_context.h
-index 4eea7c6169925..7aeee0846dc9d 100644
---- a/arch/alpha/include/asm/mmu_context.h
-+++ b/arch/alpha/include/asm/mmu_context.h
-@@ -152,8 +152,8 @@ ev5_switch_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm,
- 		next_mm->context[cpu] = mmc;
- 	}
- #ifdef CONFIG_SMP
--	else
--		cpu_data[cpu].need_new_asn = 1;
-+	/* A deferred shootdown can also invalidate a newly allocated ASN. */
-+	cpu_data[cpu].need_new_asn = 1;
- #endif
+diff --git a/arch/alpha/kernel/smp.c b/arch/alpha/kernel/smp.c
+index 7439b2377df57..5349c3127f9f4 100644
+--- a/arch/alpha/kernel/smp.c
++++ b/arch/alpha/kernel/smp.c
+@@ -673,7 +673,8 @@ ipi_flush_tlb_page(void *x)
+ 	struct flush_tlb_page_struct *data = x;
+ 	struct mm_struct * mm = data->mm;
  
- 	/* Always update the PCB ASN.  Another thread may have allocated
-@@ -201,6 +201,17 @@ do {								\
- #define check_mmu_context()  do { } while(0)
- #endif
- 
-+/*
-+ * Also called from kthread_use_mm() with preemption enabled. Alpha has
-+ * no kernel preemption, so the task is still on the CPU that ran
-+ * switch_mm().
-+ */
-+#define finish_arch_post_lock_switch finish_arch_post_lock_switch
-+static inline void finish_arch_post_lock_switch(void)
-+{
-+	check_mmu_context();
-+}
-+
- __EXTERN_INLINE void
- ev5_activate_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm)
- {
-diff --git a/arch/alpha/include/asm/switch_to.h b/arch/alpha/include/asm/switch_to.h
-index 762b7f975310c..35c4b2c9d9923 100644
---- a/arch/alpha/include/asm/switch_to.h
-+++ b/arch/alpha/include/asm/switch_to.h
-@@ -9,7 +9,6 @@ extern struct task_struct *alpha_switch_to(unsigned long, struct task_struct *);
- #define switch_to(P,N,L)						 \
-   do {									 \
-     (L) = alpha_switch_to(virt_to_phys(&task_thread_info(N)->pcb), (P)); \
--    check_mmu_context();						 \
-   } while (0)
- 
- #endif /* __ALPHA_SWITCH_TO_H */
+-	if (mm == current->active_mm && !asn_locked())
++	/* A targeted tbi() needs a thread of MM to be current.  */
++	if (mm == current->mm && !asn_locked())
+ 		flush_tlb_current_page(mm, data->vma, data->addr);
+ 	else
+ 		flush_tlb_other(mm);
 -- 
 2.53.0
 
