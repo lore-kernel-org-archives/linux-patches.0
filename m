@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020987;
-	b=KG4JXP1gyLTlqi23hGNkmQRrDPAv9z2Q8utfjVs3Nj5M6zQBlIQaB2ujOVHZaifcCOmH
-	 5KgCI1JqWVlrBFLl2Vh4LMqaTnGFFb8/44Eq59siSnVc6HvNMteXdHqs0+OIEG92/oJ1+
-	 xuCuIW3zfZFbdgPwFVc2vDlTFy2bsIclPwXCIC6ogb/x3w+gVVBge8Sop98Zh9OSdBlU2
-	 xPirzUVP7E6pCYjrmNGBWo/v+szLiE8skMFrPFoDvpK0XuEZfFrDkwAooDBsdgvGr0bkK
-	 e5R5/eJGOY5Kw1UrsUKCtVOBP+AYSTt6j6jdwkwjrxJSNV530p9crKsaNCprPmFDB8Q==
+	t=1795020990;
+	b=1ag2pkuqqJMdEaiGs7GpmG0ZGXeYxwB1xEBDenCx2Xu8m6n9b6guL9iPbzWApbJuapBn
+	 6SYOgkRCibWGoUM7iDneJT5o/P5DWCFs4WSODmqf/d3RyPgfKajZgbCNRZgPammH+tJJm
+	 3y9mbL+5eYDCfp3f9u7ujydrpTwN59wj/3tVnwpXb7rmFK6LYJALXvNcW5SmKvt9OOxYE
+	 ViXvuS3GtgZQCfhF2b8dsx0mWGqHAkHQFEew4kAtUAF9apa7bAgMOkIPOq9n7t6/fuKsw
+	 xlDYRH5dd5EK47OsEXqrabfF0TInSOQVPb0BxHDxOymPTuQzQYz7mPJQ+5N2ZE1r+Ew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020987;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020990;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AQUA03PdJyZ3Gs8oouHl37tL3RStKK3YZJYNxxL4Xr4=;
-	b=1pN05oe8JTctsYB/nb2NnwxlsiQJWDz1Nz6bxcRSAvF63PNosJj6I3G1AMWbDbwFXgCU
-	 lQd1KMJap7L6HPoKvRIiEkEAbXWuHNdfMLXugVSYZuyO2yL3e3pvB3EAhirlUfcofdMdL
-	 0AlSGJaqcfoRCeUXgbCdYw4SCBF76weatmhPQwrc4w2XFtzecwoIf15hfIwTRKMYjHptz
-	 WaNOPJs3/BgyMzggJPpOjVvADLrO3VQyshWSn7TbeUXsAGupOvN7db4dW/j4v9f+J+hgj
-	 Q9qGIgeMSLS81ObkVI9gPncYXkZBf1nOhKQ5nY18k+XW4Byno4r8EQGVMi3wgynNFVQ==
+	bh=NH84FJ2NIkZ3VShteDG3bXjz6GbfAslGNCUPvFeOJcE=;
+	b=Xwk2jS6ohk9TwTDfhYhoHSxB8H+psC6WmWM/Fq2oXofIAv92pc24yMLxQNtMe/stTIMN
+	 Fqh7Jnvlg3T7SXCkXgJ5c07oQd9+KzWmuLMbVHu/rEUxc3hWg1mGEv1W7/WJ+FfIAo/zT
+	 ga69qxse084mrgPw6MfpVcIj0xmvvy1CHdHld1DGhT2l/l0YAkLT9adWSn7WcxsuxooCr
+	 vRSDE1ymasrCPkqmomYi6/9JwI1GiYnmej8VxBUlKnRIxK+40EnfNqrRqxvVAJvTGzbzv
+	 yRo56mqWAAnFXnC0lX0UoVByeF4Ze0024GD7meYoD21D8a5XDCrp3ZDGEne9e1NArFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFwoo63g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wXTRsNB6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BCD606A31C;
-	Wed, 18 Nov 2026 16:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6A1606A320;
+	Wed, 18 Nov 2026 16:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFwoo63g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D8731F000C4;
-	Wed, 18 Nov 2026 16:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wXTRsNB6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E227A1F000C4;
+	Wed, 18 Nov 2026 16:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020987;
-	bh=AQUA03PdJyZ3Gs8oouHl37tL3RStKK3YZJYNxxL4Xr4=;
+	s=korg; t=1795020990;
+	bh=NH84FJ2NIkZ3VShteDG3bXjz6GbfAslGNCUPvFeOJcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XFwoo63gOxOaD3ncF9u69s64QlCgqMSmxolCWgvMdUpMXdA/ec7yDnlMEIk8Mkz0O
-	 4jM1ef7bbpThGc+wDje/8ahcC5m+ptUNC1PcIVhME7lYglc7j3dnBRiQAv0+CZLccK
-	 OWv85NIb1G6BjeAIJLwYf5cUja3wD07MWOrN3WVc=
+	b=wXTRsNB68rIByqVwWkpUh6q2jY90MeX4y2tzu15uiAls1n+bnQtNGmE0KkU374O3h
+	 HAsPk/+SUET/1/2KyLXr22YSy+h7S0u6y4y7gdzOyABlpJuKdBCzr9m/ilVzP2E1xb
+	 3aJeHSZTQUkdZXotEPPyU5RC9lW9xyGv2HNHOiMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	KaFai Wan <kafai.wan@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2140/2651] ASoC: codecs: sta350: Fix definition of limiter threshold controls
-Date: Wed, 18 Nov 2026 15:56:20 +0100
-Message-ID: <20261118150402.913614852@linuxfoundation.org>
+Subject: [PATCH 7.3 2149/2651] selftests/bpf: Use _exit() in uprobe_multi_test clone-ed child
+Date: Wed, 18 Nov 2026 15:56:29 +0100
+Message-ID: <20261118150403.203714594@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,65 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: KaFai Wan <kafai.wan@linux.dev>
 
-[ Upstream commit 77623752c156763d7a80414afe5b769ba4532bd3 ]
+[ Upstream commit ce42271dc517baa880352d76548d301850e7385b ]
 
-The limiter attack and release thresholds are the two 4-bit halves of
-one register, so their maximum is 15, not 16. With 16 the controls on
-bits 3:0 also write bit 4, which belongs to the other threshold.
+child_func() terminates with exit(), but spawn_child_flag() also starts
+it via clone(CLONE_VM), which shares the parent's address space. That
+exit() then runs atexit handlers and static destructors against globals
+the parent is still using.
 
-Fixes: 2439ea1f0f8f ("ASoC: sta350: Add codec driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/d65a21665a1e0d63dec174dd3691bd97764b8ae0.1792135145.git.sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+LLVM commit `3c3ed59c6a2a ("[llvm] Add format check for
+MCSubtargetFeatures")` [1], included in the LLVM 23.1 releases, added
+Target::isValidFeatureListFormat() with a function-local static holding
+the compiled regex:
+
+	static const llvm::Regex pattern("^([+-][^,]+)(,[+-][^,]+)*,?$");
+	return pattern.match(Features);
+
+The child exit destroys that static while its guard variable still marks
+it as initialized, so the regex is never rebuilt in the parent. From that
+point on, get_jited_program_text() gets NULL from
+LLVMCreateDisasmCPUFeatures(), so every jited program text check in the
+tests running after filter_clone_vm fails, e.g. "verifier_jit_convergence",
+"verifier_private_stack", "verifier_tailcall_jit" and "verifier_jit_inline".
+
+Use _exit(), which runs neither atexit handlers nor static destructors, as
+uprobe_syscall.c already does for its own CLONE_VM child.
+
+[1] https://github.com/llvm/llvm-project/pull/180943
+
+Fixes: d2520bdb1932f ("selftests/bpf: Add uprobe multi pid filter test for clone-ed processes")
+Signed-off-by: KaFai Wan <kafai.wan@linux.dev>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261018005348.2195130-5-kafai.wan@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/sta350.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/sta350.c b/sound/soc/codecs/sta350.c
-index 464ef292c9067..9976348b09542 100644
---- a/sound/soc/codecs/sta350.c
-+++ b/sound/soc/codecs/sta350.c
-@@ -502,28 +502,28 @@ SOC_ENUM("Limiter2 Release Rate (dB/ms)", sta350_limiter2_release_rate_enum),
-  */
- SOC_SINGLE_TLV("Limiter1 Attack Threshold (AC Mode)",
- 	       STA350_L1ATRT, STA350_LxA_SHIFT,
--	       16, 0, sta350_limiter_ac_attack_tlv),
-+	       15, 0, sta350_limiter_ac_attack_tlv),
- SOC_SINGLE_TLV("Limiter2 Attack Threshold (AC Mode)",
- 	       STA350_L2ATRT, STA350_LxA_SHIFT,
--	       16, 0, sta350_limiter_ac_attack_tlv),
-+	       15, 0, sta350_limiter_ac_attack_tlv),
- SOC_SINGLE_TLV("Limiter1 Release Threshold (AC Mode)",
- 	       STA350_L1ATRT, STA350_LxR_SHIFT,
--	       16, 0, sta350_limiter_ac_release_tlv),
-+	       15, 0, sta350_limiter_ac_release_tlv),
- SOC_SINGLE_TLV("Limiter2 Release Threshold (AC Mode)",
- 	       STA350_L2ATRT, STA350_LxR_SHIFT,
--	       16, 0, sta350_limiter_ac_release_tlv),
-+	       15, 0, sta350_limiter_ac_release_tlv),
- SOC_SINGLE_TLV("Limiter1 Attack Threshold (DRC Mode)",
- 	       STA350_L1ATRT, STA350_LxA_SHIFT,
--	       16, 0, sta350_limiter_drc_attack_tlv),
-+	       15, 0, sta350_limiter_drc_attack_tlv),
- SOC_SINGLE_TLV("Limiter2 Attack Threshold (DRC Mode)",
- 	       STA350_L2ATRT, STA350_LxA_SHIFT,
--	       16, 0, sta350_limiter_drc_attack_tlv),
-+	       15, 0, sta350_limiter_drc_attack_tlv),
- SOC_SINGLE_TLV("Limiter1 Release Threshold (DRC Mode)",
- 	       STA350_L1ATRT, STA350_LxR_SHIFT,
--	       16, 0, sta350_limiter_drc_release_tlv),
-+	       15, 0, sta350_limiter_drc_release_tlv),
- SOC_SINGLE_TLV("Limiter2 Release Threshold (DRC Mode)",
- 	       STA350_L2ATRT, STA350_LxR_SHIFT,
--	       16, 0, sta350_limiter_drc_release_tlv),
-+	       15, 0, sta350_limiter_drc_release_tlv),
+diff --git a/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c b/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
+index f0baf5738b751..7fbcfddc3cc36 100644
+--- a/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
++++ b/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
+@@ -94,14 +94,14 @@ static int child_func(void *arg)
+ 	/* wait for parent's kick */
+ 	err = read(child->go[0], &c, 1);
+ 	if (err != 1)
+-		exit(err);
++		_exit(err);
  
- BIQUAD_COEFS("Ch1 - Biquad 1", 0),
- BIQUAD_COEFS("Ch1 - Biquad 2", 5),
+ 	uprobe_multi_func_1();
+ 	uprobe_multi_func_2();
+ 	uprobe_multi_func_3();
+ 	usdt_trigger();
+ 
+-	exit(errno);
++	_exit(errno);
+ }
+ 
+ static int spawn_child_flag(struct child *child, bool clone_vm)
 -- 
 2.53.0
 
