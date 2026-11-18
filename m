@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024710;
-	b=eswtUYiPpcJqUY+kMmydjTg7RjOaAIrQ0mt2it1BDwy2sdPjf3+rXunJlFWgrlkxDwd3
-	 +9UqOdBytXgQtl/KuQcvcEwfudlKOVioIQuXoFyl9SjY9jixQ6T32/LHv9khEIx+0OIJa
-	 UPw5GaoVRWdf1PU0X+9wcvOH+2aH9ROsmJ29rooB3r8P73VKUrLhJ1rCqXNRGXnsxZa/3
-	 apiLP1JHuo+lReNbceoVs+oUUs5eWFERsTvNheMRAFi8MG4A9FZiK8jVoJk4eAmXizKZN
-	 +JPoMazQ1U5q2t6GhqWRxmF+yr8GoKovoptjZoq339BcWBQW7UqEjGupck3rP6TI3qQ==
+	t=1795024713;
+	b=BeqMgd3ztQGLLlxeZDk7tY0p/f2AoKgZlrtMy+P31fGuI6epP6I8eVqd1gGJEdVhQbNv
+	 F7S9ywh8yg3DasJaXfek5KNVwGIWXyUYlWH/77T7K3Gz4cByg5YQx/6Bm4fb3QAlo8r1v
+	 ZxnOoau6UjB2xY5VGYslgqmpWe5jPUzay0Vvkt7gRyzVsoiVVTGz/Uz4zeiWuI8mxqYuX
+	 mIgHmOehSHQq58z9bZzVXA3QnaaMWAAUOQsfoyHqNXRj37HlUi5pfsbGDhEEMVplWImiO
+	 MtxzrZMCQ0vxQPAQwVRsPYrXiuZkfpvRgExMyHQxl6fIyNDXRN8QbSsCXOthswA4eiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024710;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024713;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+ucwmO7+8sMDKVSZzwA/vAm5CjPuv/OkvXWLF2uxhTQ=;
-	b=tiM6RU0b43le/5IbxrtcAbF7aN4orFTrbXfGdIOWQGBF3WQzcXgu8x1/oH4jVAoKfvYt
-	 8FiOXVvzkbM2N7opdvmwKlTtSy6FmHdvKKeQqMUgP15ekitBQMOHyxQ+bsdzR+yuZtm7W
-	 SidVShXlMc+fTPYKfKLb4J8bYJzKxO1wDRjwUt+MnvQjzZZAs48PAntPPEVYnl08/jP63
-	 tF7czX5ZyY4Echfs/+IFSp8+kLTyeGyo3R2bwcFuIJeZB8r/7mjtT2NGeuVQDlgBNQMb/
-	 NmOM/cFYeR40mLzRvd17q1lD0FQuJ1r5t7bV328HgI9lzmEWCP2QymAS9g45wBEpkvA==
+	bh=rj0aVlR+mg5JDY1tB3P3nThUJGqAbzzyryvScjQ3/2E=;
+	b=q/nztg5EgUUEGQNA4jE1GFu9G/a7GsOyTosRCKLeuDyDtl39Hcc7FUvtvRhCJzr6s3wH
+	 SUSXHkFRiiujKtAfOd2ZMR+pS4AWXyxH84SCV+7U6DKoLTIHGyDegTwGdxxOeKK63ThKq
+	 k2lWZhGI8S7ynCo+oFzsOLCWUlEkAJ3+nnXjrxnLIZPAvHXF0m+uvcBx/d5/U+8+eaTCd
+	 MzImaZI1b+GAAem5Pjy55Xx75iCDR3TAnHIDNNu9huP/iY77eXU8JAE72d5KbBH8zO6DC
+	 8SBMAhLUpYnG6/ns3iAg+b9PgJM1FzUDvl28JNyFIX5hcSaJ5ZxRp3WqWt0gjwA2oIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kf00BvJX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cSe4+CYS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7D5606A335;
-	Wed, 18 Nov 2026 17:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07ED6606A32C;
+	Wed, 18 Nov 2026 17:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kf00BvJX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1701F000CA;
-	Wed, 18 Nov 2026 17:58:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cSe4+CYS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5773F1F000C4;
+	Wed, 18 Nov 2026 17:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024710;
-	bh=+ucwmO7+8sMDKVSZzwA/vAm5CjPuv/OkvXWLF2uxhTQ=;
+	s=korg; t=1795024712;
+	bh=rj0aVlR+mg5JDY1tB3P3nThUJGqAbzzyryvScjQ3/2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kf00BvJXi1bbzMAoHbTCUuaz9uSBLwi+q04ScI0ugWMF0QGRdYFfwsOADqOZJNWqU
-	 lsNh2TB7wWpROa4CSej6b+owigpP8JZailDGVCIJYkr4cfw7kXekHO6elg1o2HqdJT
-	 tKT8ZUsC70e0xq6eTI4pr2NbTBxEGnGLItpVp54Q=
+	b=cSe4+CYShZjxNaBjxjWw5g1tmP61GKhdRED+j5dChHx4AKJpb06TDcKCZTBzEnfe6
+	 NwCgkEXzc9pTZ9ZtzscMCwrje2UOVxa56pwZnD2h3OhuyJxPxjDixXbLGQGKrOJT84
+	 ebSGYxQyk4H2FcBGDg3wZme31sJtXxS0liIXOT4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Xin Liu <xin.liu@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0820/2151] ASoC: mediatek: mt8192: fix AFE clock error handling
-Date: Wed, 18 Nov 2026 15:42:35 +0100
-Message-ID: <20261118150152.005606388@linuxfoundation.org>
+Subject: [PATCH 6.18 0782/2151] arm64: dts: qcom: hamoa-iot-evk: use on-board crystal for PS8830 retimers
+Date: Wed, 18 Nov 2026 15:41:57 +0100
+Message-ID: <20261118150150.595911865@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,113 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Xin Liu <xin.liu@oss.qualcomm.com>
 
-[ Upstream commit 7c54781e6e60681af8d0858148d613becb582328 ]
+[ Upstream commit 723ce02feb131a81224a281872028d584b69b0ca ]
 
-If a clock operation fails in mt8192_afe_enable_clock(), the function
-returns immediately via the EXIT label without disabling the clocks
-that were successfully enabled earlier in the sequence. This leaves
-unneeded clocks running and causes a resource leak.
+On the Hamoa IoT EVK, each of the two existing PS8830 retimers has its
+own 25 MHz crystal wired to the retimer's XI/XO pins. The reference
+clock does not come from the PMIC, so the RPMH_RF_CLK4/5 references in
+the retimer nodes are wrong: they keep those RF clocks enabled for
+nothing and describe a connection that does not exist on the board.
 
-Properly unwind clocks enabled before an error by jumping to appropriate
-cleanup labels on failure.
-
-Fixes: 125ab5d588b0 ("ASoC: mediatek: mt8192: add platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260918133912.133799-3-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: c11645afb0e2 ("arm64: dts: qcom: Add base HAMOA-IOT-EVK board")
+Signed-off-by: Xin Liu <xin.liu@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260914101233.981643-3-xin.liu@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-afe-clk.c | 28 +++++++++++++++-------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-index bd778e5663b56..7647bdd463d9c 100644
---- a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-@@ -220,21 +220,21 @@ int mt8192_afe_enable_clock(struct mtk_base_afe *afe)
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_INFRA_SYS_AUDIO], ret);
--		goto EXIT;
-+		return ret;
- 	}
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_INFRA_AUDIO_26M]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_INFRA_AUDIO_26M], ret);
--		goto EXIT;
-+		goto err_disable_infra_sys_audio;
- 	}
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_MUX_AUDIO]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_MUX_AUDIO], ret);
--		goto EXIT;
-+		goto err_disable_infra_audio_26m;
- 	}
- 	ret = clk_set_parent(afe_priv->clk[CLK_MUX_AUDIO],
- 			     afe_priv->clk[CLK_CLK26M]);
-@@ -242,14 +242,14 @@ int mt8192_afe_enable_clock(struct mtk_base_afe *afe)
- 		dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 			__func__, aud_clks[CLK_MUX_AUDIO],
- 			aud_clks[CLK_CLK26M], ret);
--		goto EXIT;
-+		goto err_disable_mux_audio;
- 	}
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_MUX_AUDIOINTBUS]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_MUX_AUDIOINTBUS], ret);
--		goto EXIT;
-+		goto err_disable_mux_audio;
- 	}
- 
- 	ret = mt8192_set_audio_int_bus_parent(afe, CLK_CLK26M);
-@@ -257,7 +257,7 @@ int mt8192_afe_enable_clock(struct mtk_base_afe *afe)
- 		dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 			__func__, aud_clks[CLK_MUX_AUDIOINTBUS],
- 			aud_clks[CLK_CLK26M], ret);
--		goto EXIT;
-+		goto err_disable_mux_audiointbus;
- 	}
- 
- 	ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUDIO_H],
-@@ -266,17 +266,27 @@ int mt8192_afe_enable_clock(struct mtk_base_afe *afe)
- 		dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 			__func__, aud_clks[CLK_TOP_MUX_AUDIO_H],
- 			aud_clks[CLK_TOP_APLL2_CK], ret);
--		goto EXIT;
-+		goto err_disable_mux_audiointbus;
- 	}
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_AFE]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_AFE], ret);
--		goto EXIT;
-+		goto err_disable_mux_audiointbus;
- 	}
- 
--EXIT:
-+	return 0;
+diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
+index 368781045d0db..1118f0e44573a 100644
+--- a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
++++ b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
+@@ -33,6 +33,18 @@ mcp2518fd_osc: clock-40000000 {
+ 			clock-frequency = <40000000>;
+ 			#clock-cells = <0>;
+ 		};
 +
-+err_disable_mux_audiointbus:
-+	clk_disable_unprepare(afe_priv->clk[CLK_MUX_AUDIOINTBUS]);
-+err_disable_mux_audio:
-+	clk_disable_unprepare(afe_priv->clk[CLK_MUX_AUDIO]);
-+err_disable_infra_audio_26m:
-+	clk_disable_unprepare(afe_priv->clk[CLK_INFRA_AUDIO_26M]);
-+err_disable_infra_sys_audio:
-+	clk_disable_unprepare(afe_priv->clk[CLK_INFRA_SYS_AUDIO]);
++		clk_rtmr1_xo: clock-rtmr1-xo {
++			compatible = "fixed-clock";
++			clock-frequency = <25000000>;
++			#clock-cells = <0>;
++		};
 +
- 	return ret;
- }
++		clk_rtmr2_xo: clock-rtmr2-xo {
++			compatible = "fixed-clock";
++			clock-frequency = <25000000>;
++			#clock-cells = <0>;
++		};
+ 	};
  
+ 	wcd938x: audio-codec {
+@@ -623,7 +635,7 @@ typec-mux@8 {
+ 		compatible = "parade,ps8830";
+ 		reg = <0x08>;
+ 
+-		clocks = <&rpmhcc RPMH_RF_CLK5>;
++		clocks = <&clk_rtmr2_xo>;
+ 
+ 		vdd-supply = <&vreg_rtmr2_1p15>;
+ 		vdd33-supply = <&vreg_rtmr2_3p3>;
+@@ -728,7 +740,7 @@ typec-mux@8 {
+ 		compatible = "parade,ps8830";
+ 		reg = <0x8>;
+ 
+-		clocks = <&rpmhcc RPMH_RF_CLK4>;
++		clocks = <&clk_rtmr1_xo>;
+ 
+ 		vdd-supply = <&vreg_rtmr1_1p15>;
+ 		vdd33-supply = <&vreg_rtmr1_3p3>;
 -- 
 2.53.0
 
