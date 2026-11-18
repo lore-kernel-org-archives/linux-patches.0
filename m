@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027055;
-	b=nHpIXDO6JhpqNw5AX+HQ88ZnRUX1T+0xzWJYz+kjxF6JNF39xmFhM/szwMEiwJKk1bWK
-	 M75OSDWidm5YXXfAB+32waG+HYv/bf17A3l1BwLUC0cp+y3nnStwRDQDwTJIdacGsykKA
-	 UHMsAK3gIoV+AuYyUZ8r5BJGefybPfqfJx0UgVzp1x1kyFcvZMBSuRpSmEx5yf06oP5cR
-	 WKw9i08KvPxrNJ/dSs6J3CDPsw6wJp5ghvNlowQMAFfiMyYJCN+TM8bxA4iWDtqZMKoGZ
-	 JzbeN2q7GIiI39kQ0rD7t648VryLZ2gnxhmKAP+D5k33KTn1pAxnXn+RnQiUM4a9gxA==
+	t=1795027058;
+	b=eFvGeodtF9vuxa5iofmWDfPpHZrQTx2AoCa/ZfZIFkITHPTV6vWgt7rcoNsNfwrLSwUP
+	 Sak8pmlJIbM1TxK6Lp+mlyQGBheQLtsQyeta8OtkEF70d9qxLyOxUYAWqp0E64RjrxRO7
+	 W/jtor8x54wT2uYy0XBJN7xfWmMLnYI+s2yv744qc8qU96wPyHF+ZusPfnBdvlZp1m0Ur
+	 27KQPz/SvX5zH+YumJTDGmDTV1iD5GpCTxPyWKjK/SHeAeL6y2zLdRkOpXmGu8hPyoQQc
+	 8y73JFwnZM7f83AMjYeK8f5WT9f81EjUzgFOpbjlzWc3W6+fSXwjCbD8rq21+sfvSqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027055;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027058;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YXnk2x07Gzm8r3esSRO8k1Xrk34KRMODh1iCh9Irtds=;
-	b=4Swb3T5+2qrBWmIWRn/gQrNr3DANCLIPrXgdbsqhgt0O4E0Ylb4pvnFVEP5FmJCd6+K8
-	 vr+7gip+WTvP+Zm6pnJKCH5AJSdqYws61ll5wA0bN7Ap8juI1ZYs6zAj5gn3cFRYGYFxx
-	 iG+4kwVF3MxwgqNBVntTs7pjU8JyssWMVNwK8KklD33ICXVOUINzPPEp9KJHAHEHvi481
-	 NMUa8gAjgjPsOOO+Qmr5dCNzhZ29zamdIKzW9sdBwf/LuLKbC6Z+QtYwN2rjTzGNOzr8f
-	 0KpeiNmSnjg14oz94G3tLuMljdqpsTfI5g7pRLz1YyJPl8bxE5Ssq9uYOdySeXQ+1Hg==
+	bh=LZ1AOD8YVKITQByHXMYiLknK8ARf6IHGSuj7ixVDgg4=;
+	b=OepDnYOL0ciTTdhw/zwwFB01E6+hGxO1+GMzO4v5ywIEWTjSFNznZ5J1sWSkm8SNT5vk
+	 kimlwDNjPgcOZi4rqNvBlb5Fr9EsfVwbk8gINJHJQ/puApFSh7zknbOq5Ye3IHgAa+zHg
+	 3AfQqy515lCBnFrtuDcPlFpYxu/Vh3u/XLkcmzegHZaUOYn+m/iSPCKzd6mcHzHUvcHDh
+	 /hyOlBRqkXkhBF1isixJ5CLK3nRe2Ekf9LLeXPCDeqT8FyOsFsvcpjRcdXhCvx5biojoD
+	 a8SLCGjkCN/R2e51RMm+c1nRRZc0YPatrZBHWXeggb3quwojiEpGTJ+kRYvb+IgoNDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gOgxxjRD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IjjDIdJD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA91606A330;
-	Wed, 18 Nov 2026 18:37:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9364606A330;
+	Wed, 18 Nov 2026 18:37:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gOgxxjRD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 225F01F000C4;
-	Wed, 18 Nov 2026 18:37:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IjjDIdJD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78491F000C4;
+	Wed, 18 Nov 2026 18:37:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027055;
-	bh=YXnk2x07Gzm8r3esSRO8k1Xrk34KRMODh1iCh9Irtds=;
+	s=korg; t=1795027058;
+	bh=LZ1AOD8YVKITQByHXMYiLknK8ARf6IHGSuj7ixVDgg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gOgxxjRDgyyKEAI1m3KzvDq9PUHxbtg58liotAdFe3s5UYVsT1Gafl4cDsRIIEUlx
-	 muKo36trEmSXSdJ/oKfjlWneZ+edSLpIVtT5UMXhQijmdZjiLZslhRfVTZxMOmVmmG
-	 97Zgy2SBAWWqNotYnj6Tx5YdaXozp44r90V7LzxE=
+	b=IjjDIdJDh/C+T+jvKVplgBcNwf6TTBfhsKqljpdfVU45KwegwY2c7pcW+kf/nx/Ql
+	 puhAC+bgiXyeXzrDmIon1KzxknpWRLRiZsLQd7EmmRZZ81b1qB5Uw5tqudB1Q4EidE
+	 TS1YR0JLKl8RXO/KsAZwVjszNXEJDXQyg3a6WirA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	KaFai Wan <kafai.wan@linux.dev>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1655/2151] selftests/bpf: Fix prog_tests framework subtest count checks
-Date: Wed, 18 Nov 2026 15:56:30 +0100
-Message-ID: <20261118150222.131345058@linuxfoundation.org>
+Subject: [PATCH 6.18 1656/2151] selftests/bpf: Skip expected_msgs subtests when stdout is not saved
+Date: Wed, 18 Nov 2026 15:56:31 +0100
+Message-ID: <20261118150222.167532724@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,67 +70,40 @@ Content-Transfer-Encoding: 8bit
 
 From: KaFai Wan <kafai.wan@linux.dev>
 
-[ Upstream commit c87652656a55e5e8cf994364314a75fa95fb2d69 ]
+[ Upstream commit cc4b1c161d92992544cc571a2475baa5b072e120 ]
 
-The hardcoded expected skip_cnt/error_cnt in test_prog_tests_framework()
-mismatch the real count when the binary is run with -t or -n filters,
-since some subtests are not selected. Count the executed subtests and
-compare against that value instead.
+stdio_hijack_init() does not set subtest_state->stdout_saved when
+running with -v in non-parallel mode, since output goes straight to
+stdout. In that case subtest_state->log_buf is left NULL, so the
+expected-messages subtests crash when inspecting it. Skip them when
+stdout was not saved.
 
-Fixes: 2324257dbd68 ("selftests/bpf: Refactor prog_tests logging and test execution")
+Fixes: 34c513be3dad ("selftests/bpf: __not_msg() tag for test_loader framework")
 Signed-off-by: KaFai Wan <kafai.wan@linux.dev>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261012140202.2754552-2-kafai.wan@linux.dev
+Link: https://patch.msgid.link/20261012140202.2754552-3-kafai.wan@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/prog_tests_framework.c    | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ .../testing/selftests/bpf/prog_tests/prog_tests_framework.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/tools/testing/selftests/bpf/prog_tests/prog_tests_framework.c b/tools/testing/selftests/bpf/prog_tests/prog_tests_framework.c
-index 7607cfc2408c2..1dc112e5b9719 100644
+index 1dc112e5b9719..274568abc052b 100644
 --- a/tools/testing/selftests/bpf/prog_tests/prog_tests_framework.c
 +++ b/tools/testing/selftests/bpf/prog_tests/prog_tests_framework.c
-@@ -13,6 +13,7 @@ static void clear_test_state(struct test_state *state)
- void test_prog_tests_framework(void)
- {
- 	struct test_state *state = env.test_state;
-+	int subtest_cnt;
+@@ -169,6 +169,12 @@ void test_prog_tests_framework_expected_msgs(void)
  
- 	/* in all the ASSERT calls below we need to return on the first
- 	 * error due to the fact that we are cleaning the test state after
-@@ -30,25 +31,30 @@ void test_prog_tests_framework(void)
- 		return;
- 	clear_test_state(state);
- 
-+	subtest_cnt = 0;
- 	if (test__start_subtest("test_skip_subtest")) {
- 		test__skip();
- 		test__end_subtest();
-+		subtest_cnt++;
- 	}
- 	if (test__start_subtest("test_skip_subtest")) {
- 		test__skip();
- 		test__end_subtest();
-+		subtest_cnt++;
- 	}
--	if (!ASSERT_EQ(state->skip_cnt, 2, "skip_cnt_check"))
-+	if (!ASSERT_EQ(state->skip_cnt, subtest_cnt, "skip_cnt_check"))
- 		return;
- 	if (!ASSERT_EQ(state->subtest_num, 3, "subtest_num_check"))
- 		return;
- 	clear_test_state(state);
- 
-+	subtest_cnt = 0;
- 	if (test__start_subtest("test_fail_subtest")) {
- 		test__fail();
- 		test__end_subtest();
-+		subtest_cnt++;
- 	}
--	if (!ASSERT_EQ(state->error_cnt, 1, "error_cnt_check"))
-+	if (!ASSERT_EQ(state->error_cnt, subtest_cnt, "error_cnt_check"))
- 		return;
- 	if (!ASSERT_EQ(state->subtest_num, 4, "subtest_num_check"))
- 		return;
+ 	for (i = 0; i < ARRAY_SIZE(cases); i++) {
+ 		if (test__start_subtest(cases[i].name)) {
++			if (!env.subtest_state->stdout_saved) {
++				test__skip();
++				test__end_subtest();
++				continue;
++			}
++
+ 			error_cnt = env.subtest_state->error_cnt;
+ 			msgs.patterns = cases[i].pats;
+ 			msgs.cnt = 0;
 -- 
 2.53.0
 
