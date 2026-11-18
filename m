@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058224;
-	b=q5ea7fGweT8+VsgehwD2SN/S8xh34R3N7QfHBXZmSq7nazUdnCxGktu8UX5NMr+i5oOL
-	 Wgyt4WR7bDiiWmtWNcE4DgTrcaZje4u7DWxaJEsEFepXiPa4QL1LgrvmMxegWK4Md6NIO
-	 4MPbgPAAFS7bth0w2U1KMukYlo+pnXu5b1njpP5lqAW3R1crxp8iOFWY5Mb3UHVX7tVXx
-	 3gTRT8mzu/i2XISTSOlN3R87teb3mQ1srkgEKjiMIIZFee6EQ1//IMX6XMg3PPTeCOYT9
-	 6r/ZvgecaZ3Q0UI0yWI+ZPx31B5cPT5v/srZXKAe3cddLcq2/3d3tmei85aeO22G5mg==
+	t=1795058227;
+	b=nCoBm4biUieUmoeZhxgf6x8dPzCQl/QAP38LxrRhZTuJWFBKea8PCysUexJjFyuYFubs
+	 yAIKdy+99KHdckqDafqqNSDHC5RT4srPwSkUTCPdt5dq989pF711LNV5x0DP8E5kmnFg6
+	 jVnC+P+KfaOshNPlIhdk9ZyS3tOWpCmEHaFMGhDFWaz4gdMhLfCpvV4mBGNWlXdO1k4/h
+	 lsJVGUEzXwa8Lp8sWci33XX9CqlNZpEFlEM/shXtEhfDgMXX0ShS72Hn7PN+Ny9tkGvN3
+	 YKhsfkim4pDGTkVQ4pZYuABjhnamMuEtC8e94miBKmiAhkUzDf1W4Y4FeeL8r9J2eew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058224;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058227;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vcEydXQhciUtrvKWFd9O/WujiNFT0SehLjp8nPF1YM8=;
-	b=IL9ecP4Mo13MAOonItwxkxh3WR7UJouMIYZSdwwITIKCcUCXK67jZsd+DhzFD/6RuYkQ
-	 HJafLhX0WLRDJ3uqszdN2XkhEPonPFW5/E2EpimneE5CtC6hzxl2ECX+jmzQEpwkyRitf
-	 jtcOui/deZcvCgjYgT6Cde47OqGHwAnGSu3cbSfL7dgqZsk5aAvGfIRjUgH91wDUDUXpO
-	 rkeyCPOtgcNAK5+bV7thGxQkyjzeaXDAppBFUIKVyqDC7mYzbtWR33jRaapbwoyZLbIzi
-	 fEhC09yti9IqKBUOFM+YR3sisNbkjR4A7xlF3V1CcOs3yCwbdMx2Ob33pg+LuYDHMNg==
+	bh=mzkLo6E9bz9KfBzmb1cUHrgILIksDRODWN1K2EotuVI=;
+	b=TrgzQj8fHTV4Baor1yzqwcsSGUI+8hbFMTChStLFW4m9ZfuMYQBHZNATVNdmz+EFos9A
+	 vPqbwQ5Xi6IvePPshMJxsl/jbsBOmrObKgbJShFxrxVusbHwuA95B9lP+wbZt8YLJrFHl
+	 U91RkbXjEvfUYaNpAAuuwA990p5YXhnRaTezii0M77TT1XOrw/w+JxcQ7oxsvAn9pXrmn
+	 +Ks4fheKO2Yu4YusxxYlwJgEcRN09eRUZlZgrywzC4LEXC5VzoxW3ikDnRqXnN7H0/N0a
+	 85IUPCF+YYFfXtEkt23Jy3HFWOhYEvn8iQ+FzlhPf/Xsr+4AEn0OhmBvA5kPQbVV0BQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h6QAyDa0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e6be7+RN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC98606A320;
-	Thu, 19 Nov 2026 03:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781AE606A31C;
+	Thu, 19 Nov 2026 03:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h6QAyDa0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2179C1F000C5;
-	Thu, 19 Nov 2026 03:17:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e6be7+RN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEAE31F000C5;
+	Thu, 19 Nov 2026 03:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058224;
-	bh=vcEydXQhciUtrvKWFd9O/WujiNFT0SehLjp8nPF1YM8=;
+	s=korg; t=1795058227;
+	bh=mzkLo6E9bz9KfBzmb1cUHrgILIksDRODWN1K2EotuVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h6QAyDa0SfV1eZNcH2yiNgJmkz0XYaJxIpOBk1xSeprLLm6IACnBQJzuNTAaapiex
-	 NAMs8z4zM1rNb8kM0wbWw0jSRgXAQWjdCuFDE3cp76D5ViU0Qc0/hZcSJR3Vb7JPd8
-	 QSma3wyfDc0IaVEaAJ/MgzVKpfs3NwduUwpFDFeI=
+	b=e6be7+RNKTZzHQF92MUov0mErzGGPMssMjrSy8rS+DTJVjZ6K0nZf0iiwfwvEMajN
+	 f5zGNHJYnwYIdOgJklG7Em1nby7ZTJ87JcLgt/n18qnfpelwOWjpUKHzB+U33Re+ZE
+	 e9IFI6fMSDkbkyvfyKix/+J1VpUq3Qlk9snbktrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>,
+	Shehryar Ahmad <shehryar.amd@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0411/1848] fpga: Fix of_fpga_mgr_get() reference in fpga_mgr_lock() docs
-Date: Wed, 18 Nov 2026 15:40:49 +0100
-Message-ID: <20261118145931.120085396@linuxfoundation.org>
+Subject: [PATCH 5.10 0412/1848] iio: accel: adis16201: fix channel order for buffer mode
+Date: Wed, 18 Nov 2026 15:40:50 +0100
+Message-ID: <20261118145931.165064277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,39 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Shehryar Ahmad <shehryar.amd@gmail.com>
 
-[ Upstream commit ac02245b0ca28388ba16273f2fa683c90da2e5dc ]
+[ Upstream commit a4b9f1137b76faab6891ce0bd3f5c02dda7c392d ]
 
-The fpga_mgr_lock() comment lists of_fpga_mgr_put() as a source of a
-manager pointer. The helper which obtains that pointer is
-of_fpga_mgr_get(). Correct the reference.
+Reshuffle adis16201_channels to ascending scan_index order to avoid data
+corruption during IIO core demultiplexing since the ADIS driver builds
+the buffer in channel array order, while the IIO core demultiplexes it
+in scan_index order.
 
-Fixes: ebf877a51ad7 ("fpga: mgr: separate getting/locking FPGA manager")
+This changes the raw buffer byte layout for existing adis16201 users
+reading buffered data directly.
+
+Fixes: 591298e54cea ("Staging: iio: accel: adis16201: Move adis16201 driver out of staging")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20260912100937.86316-1-kmehltretter@gmail.com
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+Signed-off-by: Shehryar Ahmad <shehryar.amd@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/fpga/fpga-mgr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/accel/adis16201.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/fpga/fpga-mgr.c b/drivers/fpga/fpga-mgr.c
-index f38bab01432e2..de96d6100f928 100644
---- a/drivers/fpga/fpga-mgr.c
-+++ b/drivers/fpga/fpga-mgr.c
-@@ -517,7 +517,7 @@ EXPORT_SYMBOL_GPL(fpga_mgr_put);
-  * @mgr:	fpga manager
-  *
-  * Given a pointer to FPGA Manager (from fpga_mgr_get() or
-- * of_fpga_mgr_put()) attempt to get the mutex. The user should call
-+ * of_fpga_mgr_get()) attempt to get the mutex. The user should call
-  * fpga_mgr_lock() and verify that it returns 0 before attempting to
-  * program the FPGA.  Likewise, the user should call fpga_mgr_unlock
-  * when done programming the FPGA.
+diff --git a/drivers/iio/accel/adis16201.c b/drivers/iio/accel/adis16201.c
+index 9b60ac5dadf02..6b7e87fe3f202 100644
+--- a/drivers/iio/accel/adis16201.c
++++ b/drivers/iio/accel/adis16201.c
+@@ -205,19 +205,19 @@ static int adis16201_write_raw(struct iio_dev *indio_dev,
+ }
+ 
+ static const struct iio_chan_spec adis16201_channels[] = {
+-	ADIS_SUPPLY_CHAN(ADIS16201_SUPPLY_OUT_REG, ADIS16201_SCAN_SUPPLY, 0,
+-			 12),
+-	ADIS_TEMP_CHAN(ADIS16201_TEMP_OUT_REG, ADIS16201_SCAN_TEMP, 0, 12),
+ 	ADIS_ACCEL_CHAN(X, ADIS16201_XACCL_OUT_REG, ADIS16201_SCAN_ACC_X,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
+ 	ADIS_ACCEL_CHAN(Y, ADIS16201_YACCL_OUT_REG, ADIS16201_SCAN_ACC_Y,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
+-	ADIS_AUX_ADC_CHAN(ADIS16201_AUX_ADC_REG, ADIS16201_SCAN_AUX_ADC, 0, 12),
+ 	ADIS_INCLI_CHAN(X, ADIS16201_XINCL_OUT_REG, ADIS16201_SCAN_INCLI_X,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
+ 	ADIS_INCLI_CHAN(Y, ADIS16201_YINCL_OUT_REG, ADIS16201_SCAN_INCLI_Y,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
+-	IIO_CHAN_SOFT_TIMESTAMP(7)
++	ADIS_SUPPLY_CHAN(ADIS16201_SUPPLY_OUT_REG, ADIS16201_SCAN_SUPPLY, 0,
++			 12),
++	ADIS_AUX_ADC_CHAN(ADIS16201_AUX_ADC_REG, ADIS16201_SCAN_AUX_ADC, 0, 12),
++	ADIS_TEMP_CHAN(ADIS16201_TEMP_OUT_REG, ADIS16201_SCAN_TEMP, 0, 12),
++	IIO_CHAN_SOFT_TIMESTAMP(7),
+ };
+ 
+ static const struct iio_info adis16201_info = {
 -- 
 2.53.0
 
