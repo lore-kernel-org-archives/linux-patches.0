@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061571;
-	b=2k2RbHAw9ZQkJR3b2PUKgAGtsPKIg8CalvOmiCIsY7gYxYqSI73b8P8kDPv9bXGs6y/R
-	 a/y0riZJhuIGiBtLT3QFSHijFelesx7ifQaKKfM2e/hUZ1u6UctOTGc/BuqoRqk+IC+YJ
-	 yyCUeVm27Iyd0q3JOyfPQbZ6VlaCklmAvPbZP77IYRHxsYQCPk+51d9cva0mXhiCLZdpK
-	 nzWayuubeis8IPG6VNRTHyx2MnumO6XB28M1TwLMt3MkYP11LHUIkqMK5Bhrt0YJCMlei
-	 hPIxhZg2EcROj8YgIudIUGzaoLE7JxIUcru7wkgV1BxJPWngW5GGlOYs9XPhNA+7fzA==
+	t=1795061573;
+	b=lbiSOf4d/sUPbHDo744kC/fdEvpXKe1PUplovmPJEiB4Jvi9Wkj83NKL/KU8anUiqE8O
+	 JDPxatCE8WWzLgfno/P9EZrKH2RtOrEDjm6NIrT9vZzzl5KvaOrXg849lwC3/bXDBMjmY
+	 5eNmQWjiZDZwRyLnaDMZ68s/9DQJ+Soe5z1356V6cySQ9Qv78wH191gMT7dFi669fXh0r
+	 k2cYo3qqOgsZ1izN8nHF3Vd6Z0OHUDe5+NxDmCeCfNAz8Di6ogtOts0RSxVgznhDwvek/
+	 MzB1TU8GsKzIkhFCyj7aPyF3gJOU2JsYxTy3SuDCzCgABB5YcNQC0tmhxJogg8lGUbQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061571;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061573;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rSq4wohnvk/xJSqumbesYYFJ+xy8nRqSvlBNkqWgmPw=;
-	b=wMF8ceWlxEtO3kl4qqQbqQEPDTYO9goFl8CGA/rYf3Nj/V4JsZ2iGAYef+V0itzIf4l1
-	 tf52tzpHbxja68nuozj+Qr7wee9moxmLJU4kV8UxNpe1L+jXzlS5p7bhj16rkmiXWq8dd
-	 nFZWDtYCS+2IJ4MTBwCRzP8encWYP8+kGLYsPxm4PUsvrxXb4artiitt7M54q1Sgpi4VS
-	 izvqTk3X1SuhYlLNt4TT4wr5cq9WLOIDPKRnKYqg+NHS0vQS/hWUy6BXKlwTHTdyLHv25
-	 IQMigpIpBcY3SJ0Jibuwcs4zoMOEHke1GPEnW59EhUGABVvoTkOH+7zLWvSUYDTSzHw==
+	bh=zvFpo7lUwq5Rn/1I4V31+Uj1rq+Q7fDFe5acR79OI9k=;
+	b=1LPo4J404mI/OSHtFCbXjnqP0/K4GXXaYYxqOmSHajNu8Jx2NQLnyx93yrXkzHB9lyO7
+	 fZMoyYov7E73OjJOn5bz1KoAdFwYqQaXSys1bCwyadLVVxW7gDkDt3xsiCh+jh5qFIQOx
+	 edcAWO08CsjtJotTub6e2uMYi/BUYIkopv81FwVVgMrtTjo6Hw7pOdpvk5WV+3LBhkgUq
+	 FiqkbNfpqzcJhHvP4wZsai138/Qw8ovgq3E7VIdc4NFGMUv8WSDuZJB3RlgiCTv4wyKn2
+	 Ze+mb1av8sYjV2PL63kZWmzWGPNVd4vQy2STLHYvjx5lc5x9LQUiwTqLIQxBleZ2VuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bH+u2Fzs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5hLWiUL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5AB660A261F;
-	Thu, 19 Nov 2026 04:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3FB60A2609;
+	Thu, 19 Nov 2026 04:12:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bH+u2Fzs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0815F1F000C9;
-	Thu, 19 Nov 2026 04:12:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5hLWiUL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC6DC1F000CC;
+	Thu, 19 Nov 2026 04:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061570;
-	bh=rSq4wohnvk/xJSqumbesYYFJ+xy8nRqSvlBNkqWgmPw=;
+	s=korg; t=1795061573;
+	bh=zvFpo7lUwq5Rn/1I4V31+Uj1rq+Q7fDFe5acR79OI9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bH+u2Fzseukrc3/8IzNRECtpOWH09C9EHv8ePDp8+xTo1XTTf0fcfzgCNTjaYcFLt
-	 SQzyXErL78wogxizBnhWMSq6qjovnoNN+LhKT8wTwD6/PMGtbPf7B8zqHaOQ7ErMRt
-	 i7a1ewbtEy783L5v2g++dCqOxwY5J7QD1S+FqtEo=
+	b=A5hLWiULyrDKcFBimUQfNfSCeZcwhimZkIE9A7CBtXIHUCbEhZj5dPLlVQDChbqI2
+	 VXx0m9oGOzaUfTYOGNl4cVlD8y5jKXrluTTf6X+NXjiWAcG4U8wgTnTwP0+TDdHZ/R
+	 cavhyetS9gMUSQZaj20+0XcVP+whutW9MbcenjPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	linux-rtc@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kevin P. Fleming" <kevin+linux@km6g.us>,
-	Alessandro Zummo <a.zummo@towertech.it>,
+	Antoni Pokusinski <apokusinski01@gmail.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1558/1848] rtc: abx80x: Add utility function for writing configuration key
-Date: Wed, 18 Nov 2026 15:59:56 +0100
-Message-ID: <20261118150024.835095928@linuxfoundation.org>
+Subject: [PATCH 5.10 1559/1848] rtc: abx80x: properly handle shared IRQs
+Date: Wed, 18 Nov 2026 15:59:57 +0100
+Message-ID: <20261118150024.875164864@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,106 +68,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin P. Fleming <kevin+linux@km6g.us>
+From: Antoni Pokusinski <apokusinski01@gmail.com>
 
-[ Upstream commit 49dfc1f16b03a6abc17721d4600f7a0bf3d3e4ed ]
+[ Upstream commit 632916c7bde35495f2f6776d8e335c3ec6e306ec ]
 
-Writing one of key two values into the configuration key register
-is a common operation, so a utility function has been added to
-provide consistent behavior and eliminate code duplication.
+The abx80x RTC driver registers its interrupt handler with IRQF_SHARED,
+but the handler always returned IRQ_HANDLED and cleared the status
+register even when no interrupt source from the RTC was active.
 
-Signed-off-by: Kevin P. Fleming <kevin+linux@km6g.us>
-Cc: Alessandro Zummo <a.zummo@towertech.it>
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
-To: linux-rtc@vger.kernel.org
+This could cause the driver to claim interrupts belonging to other
+devices sharing the same IRQ line and could also clear unrelated status
+bits in the RTC status register.
+
+Only handle the interrupt when the alarm or watchdog flags are set, and
+clear only those interrupt status bits that were handled. Return
+IRQ_NONE when the interrupt was not generated by the RTC.
+
+Fixes: 718a820a303c ("rtc: abx80x: add alarm support")
+Signed-off-by: Antoni Pokusinski <apokusinski01@gmail.com>
+Link: https://patch.msgid.link/20260916205138.16771-5-apokusinski01@gmail.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://lore.kernel.org/r/20200615105113.57770-2-kevin+linux@km6g.us
-Stable-dep-of: 632916c7bde3 ("rtc: abx80x: properly handle shared IRQs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-abx80x.c | 39 ++++++++++++++++-----------------------
- 1 file changed, 16 insertions(+), 23 deletions(-)
+ drivers/rtc/rtc-abx80x.c | 52 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 50 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
-index b4be5ad6366e3..c95fdbadbcca7 100644
+index c95fdbadbcca7..439b5a76ec2f7 100644
 --- a/drivers/rtc/rtc-abx80x.c
 +++ b/drivers/rtc/rtc-abx80x.c
-@@ -117,6 +117,16 @@ struct abx80x_priv {
- 	struct watchdog_device wdog;
- };
+@@ -48,12 +48,18 @@
+ #define ABX8XX_CTRL2_RSVD	BIT(5)
  
-+static int abx80x_write_config_key(struct i2c_client *client, u8 key)
-+{
-+	if (i2c_smbus_write_byte_data(client, ABX8XX_REG_CFG_KEY, key) < 0) {
-+		dev_err(&client->dev, "Unable to write configuration key\n");
+ #define ABX8XX_REG_IRQ		0x12
++#define ABX8XX_IRQ_EX1E		BIT(0)
++#define ABX8XX_IRQ_EX2E		BIT(1)
+ #define ABX8XX_IRQ_AIE		BIT(2)
++#define ABX8XX_IRQ_TIE		BIT(3)
++#define ABX8XX_IRQ_BLIE		BIT(4)
+ #define ABX8XX_IRQ_IM_1_4	(0x3 << 5)
+ 
+ #define ABX8XX_REG_CD_TIMER_CTL	0x18
+ 
+ #define ABX8XX_REG_OSC		0x1c
++#define ABX8XX_OSC_ACIE		BIT(0)
++#define ABX8XX_OSC_OFIE		BIT(1)
+ #define ABX8XX_OSC_FOS		BIT(3)
+ #define ABX8XX_OSC_BOS		BIT(4)
+ #define ABX8XX_OSC_ACAL_512	BIT(5)
+@@ -249,6 +255,7 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
+ 	struct i2c_client *client = dev_id;
+ 	struct abx80x_priv *priv = i2c_get_clientdata(client);
+ 	struct rtc_device *rtc = priv->rtc;
++	unsigned int status_flags_clear;
+ 	int status;
+ 
+ 	status = i2c_smbus_read_byte_data(client, ABX8XX_REG_STATUS);
+@@ -265,9 +272,15 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
+ 	if (status & ABX8XX_STATUS_WDT)
+ 		dev_alert(&client->dev, "watchdog timeout interrupt.\n");
+ 
+-	i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS, 0);
++	status_flags_clear = status & (ABX8XX_STATUS_AF | ABX8XX_STATUS_WDT);
+ 
+-	return IRQ_HANDLED;
++	if (status_flags_clear) {
++		i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS,
++					  status & ~status_flags_clear);
++		return IRQ_HANDLED;
++	}
++
++	return IRQ_NONE;
+ }
+ 
+ static int abx80x_read_alarm(struct device *dev, struct rtc_wkalrm *t)
+@@ -821,6 +834,41 @@ static int abx80x_probe(struct i2c_client *client,
+ 
+ 	i2c_set_clientdata(client, priv);
+ 
++	/* Disable unused interrupts */
++	data = i2c_smbus_read_byte_data(client, ABX8XX_REG_IRQ);
++	if (data < 0) {
++		dev_err(&client->dev, "Unable to read irq register\n");
 +		return -EIO;
 +	}
 +
-+	return 0;
-+}
++	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_IRQ,
++					data & ~(ABX8XX_IRQ_EX1E |
++						 ABX8XX_IRQ_EX2E |
++						 ABX8XX_IRQ_TIE |
++						 ABX8XX_IRQ_BLIE));
++	if (err < 0) {
++		dev_err(&client->dev, "Unable to write irq register\n");
++		return -EIO;
++	}
 +
- static int abx80x_is_rc_mode(struct i2c_client *client)
- {
- 	int flags = 0;
-@@ -140,12 +150,8 @@ static int abx80x_enable_trickle_charger(struct i2c_client *client,
- 	 * Write the configuration key register to enable access to the Trickle
- 	 * register
- 	 */
--	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_CFG_KEY,
--					ABX8XX_CFG_KEY_MISC);
--	if (err < 0) {
--		dev_err(&client->dev, "Unable to write configuration key\n");
-+	if (abx80x_write_config_key(client, ABX8XX_CFG_KEY_MISC) < 0)
- 		return -EIO;
--	}
- 
- 	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_TRICKLE,
- 					ABX8XX_TRICKLE_CHARGE_ENABLE |
-@@ -360,12 +366,8 @@ static int abx80x_rtc_set_autocalibration(struct device *dev,
- 	}
- 
- 	/* Unlock write access to Oscillator Control Register */
--	retval = i2c_smbus_write_byte_data(client, ABX8XX_REG_CFG_KEY,
--					   ABX8XX_CFG_KEY_OSC);
--	if (retval < 0) {
--		dev_err(dev, "Failed to write CONFIG_KEY register\n");
--		return retval;
--	}
++	data = i2c_smbus_read_byte_data(client, ABX8XX_REG_OSC);
++	if (data < 0) {
++		dev_err(&client->dev, "Unable to read Oscillator Control register\n");
++		return -EIO;
++	}
++
++	/* Unlock write access to Oscillator Control Register */
 +	if (abx80x_write_config_key(client, ABX8XX_CFG_KEY_OSC) < 0)
 +		return -EIO;
- 
- 	retval = i2c_smbus_write_byte_data(client, ABX8XX_REG_OSC, flags);
- 
-@@ -452,12 +454,8 @@ static ssize_t oscillator_store(struct device *dev,
- 		flags |= (ABX8XX_OSC_OSEL);
- 
- 	/* Unlock write access on Oscillator Control register */
--	retval = i2c_smbus_write_byte_data(client, ABX8XX_REG_CFG_KEY,
--					   ABX8XX_CFG_KEY_OSC);
--	if (retval < 0) {
--		dev_err(dev, "Failed to write CONFIG_KEY register\n");
--		return retval;
--	}
-+	if (abx80x_write_config_key(client, ABX8XX_CFG_KEY_OSC) < 0)
++
++	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_OSC,
++					data & ~(ABX8XX_OSC_ACIE |
++						 ABX8XX_OSC_OFIE));
++	if (err < 0) {
++		dev_err(&client->dev, "Unable to write Oscillator Control register\n");
 +		return -EIO;
- 
- 	retval = i2c_smbus_write_byte_data(client, ABX8XX_REG_OSC, flags);
- 	if (retval < 0) {
-@@ -765,13 +763,8 @@ static int abx80x_probe(struct i2c_client *client,
- 		 * Write the configuration key register to enable access to
- 		 * the config2 register
- 		 */
--		err = i2c_smbus_write_byte_data(client, ABX8XX_REG_CFG_KEY,
--						ABX8XX_CFG_KEY_MISC);
--		if (err < 0) {
--			dev_err(&client->dev,
--				"Unable to write configuration key\n");
-+		if (abx80x_write_config_key(client, ABX8XX_CFG_KEY_MISC) < 0)
- 			return -EIO;
--		}
- 
- 		err = i2c_smbus_write_byte_data(client, ABX8XX_REG_OUT_CTRL,
- 						data | ABX8XX_OUT_CTRL_EXDS);
++	}
++
+ 	if (abx80x_caps[part].has_wdog) {
+ 		err = abx80x_setup_watchdog(priv);
+ 		if (err)
 -- 
 2.53.0
 
