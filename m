@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022589;
-	b=uAfiiavzHyL2Fm3W5AIFxc4zRH0p5183UdQo7dUBOhGeJZrl/Jwr2A2nxFxOfqhkUBvZ
-	 +q105tuyIH491bfTHrU4JIbFX708zwjkknJKBROxpU+jMTuc6ipX0fM1srrr0mHPCGdR5
-	 2cbVtj2WNju5RNIKYLoRonOEfLqr84siTkoAfIZcuvVhISD4IAMPdKiNtmz5K5PQk9Pbg
-	 L4m5c5UTLTmYbwCw2ufqQo8STsXHg4dV/vLCa+5W6hpBh1zs0idLT+pfvjZa3bb/MI4vD
-	 DZXH71IXOYQfs5+HS7oVr91II0BDZPKXkuCs4dvwu8cYx4RAiURdNS6uFpb0Clia6rA==
+	t=1795022592;
+	b=rsPB8m6R3BoXmLnmXsygJZrXxY0xc9lvh/Qcu2+u+rgUhwy1RwdKpbrbq0rBH/vQ0rNu
+	 IMxrv/95LrfqsRwjovS2QYNK4mOnrc1cma5ZFDBH5qdUWed9f0bdeT3Ejr6OWaRoHs1NR
+	 20A3KACJfla2uZVs2RIug0egB14D5W14J42pObfPVZzd7gKNy41ZZfQS1CUGEMxOk2ChQ
+	 lPv6YyW9Ws62fTRbV39swM4bXOgL+70wnRJpzlWkAHD3K9oyN4aGatvLyTp20bfOSRcUV
+	 UnPNFuOJr0PrsuQfEiak+wiVW073v+eB4cfp8nMtN1F+pG1ChBGxwj4/rHL4WCj5k7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022589;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022592;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ykWTGLAFlSlJL2fSGSlCFtg1trl/JwJ7yU57dLp6n8o=;
-	b=jvcSscIM83KQaF+RSkUkXtqL6W3ct9KpdXtr4H1cwLycLIHpA8cLtuBocNAQtBfH+7VI
-	 r7OzK2SF9rWN/qvIO3RAdc/vSSW+F8ujbkS5HX+Gu+Q2zCj8R5noe/+wt3DcQFvOb8M1I
-	 jEqitsg+rLjOlV+gKEmphYUdtXbE0diaFcgMivRkhUDTe3nehFSLPyeMVISxDuy5ZtSDL
-	 3MEC9zBMww/6wkaktxJlbGm4FW5+EnTQTBl6c0Ug1vXXfTEJSD4TzinOd62Y8UgggWWGv
-	 CdXNmJs/UDL4Zszl//yEvar2Oskgx1c8OA1InaAS0I6xwWE1O0zcLsYY+KIjD/6SY+w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=bwrfmdjWhvUw+6FU7nj4A8uGFpmWol+Np83/detiKgk=;
+	b=D1i4XEHlVavFx/4yV0LgbCFOXJk6LOPa9mbJ+Hm4ZFYsEPfewvcfg2tZcXKCxV7taLGq
+	 0LAxFu9bVkzrbHnhhD5Bc+7uLInlHmA/D56SfQiJXAW9P0z2gF1IVpl3D1jOIwVG/qqsb
+	 KEObXap92qNQccaiS59yiZ6eNVyiCsyb0OXYVd4ca2QeIaAmfiXxoUf4ZdB8pcvJedDMM
+	 yRsRFriUUp2RdMyXfdyeX8ZHGzGTZ5TsjBIct54bPdWM85uUt7pmGFLap7g1D2mWYx52x
+	 TtSAtlulIt7pBjxZVoCB93UcjmmhqUzGZ0wFzj/0JH9+cRj5PpVxD2k753p/bZ5Yj7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HYaIPopC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tiPYXgXM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0AA60A2601;
-	Wed, 18 Nov 2026 17:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41AE1606A31C;
+	Wed, 18 Nov 2026 17:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HYaIPopC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F431F000C6;
-	Wed, 18 Nov 2026 17:23:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tiPYXgXM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E671F000C5;
+	Wed, 18 Nov 2026 17:23:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022589;
-	bh=ykWTGLAFlSlJL2fSGSlCFtg1trl/JwJ7yU57dLp6n8o=;
+	s=korg; t=1795022592;
+	bh=bwrfmdjWhvUw+6FU7nj4A8uGFpmWol+Np83/detiKgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HYaIPopCkuwZruOEeHgBBmzlt58btpRIhHb87DGx8ietbRCjntIkggJ9+mXF/REmV
-	 ADmIXzRM7eNmablFDb19CH1hvUnBGgQz5EGuuXc1+LzGPaKLzzIlP2e0DzoG+3M6Gw
-	 qOpOz8r+4AN3y7+UAdgAoQQ4WKWwlRGA0lV/hSc0=
+	b=tiPYXgXMSdhKqIYgSL2yuGrW3vB82iBlHFfWiW8VYEipGv0XmT+TJRaRRI41Kzulg
+	 5ksvCAHQH4KJZgh7FrnrhYbMAF8T7DugE+gsgRP9MZ8A3S6JGppUvLgK3TRTR5DYwD
+	 FpPfVsLbk3MqcGSYDWGOhn6/n022YXnKHNuSh0Kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	=?UTF-8?q?Asaf=20Nuri=20Bertizlio=C4=9Flu?= <ycistak@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Kevin Wang <kevin.wang@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0067/2151] hwmon: (coretemp) Set nr_cores only after core_data allocation succeeds
-Date: Wed, 18 Nov 2026 15:30:02 +0100
-Message-ID: <20261118150124.199855406@linuxfoundation.org>
+Subject: [PATCH 6.18 0068/2151] drm/amd/pm: populate unique ID for smu 13.0.7
+Date: Wed, 18 Nov 2026 15:30:03 +0100
+Message-ID: <20261118150124.236854037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,63 +63,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Kevin Wang <kevin.wang@amd.com>
 
-[ Upstream commit 95638f1f05ced75a82e83f610cd01b636d2a21b1 ]
+[ Upstream commit 079f9103d9cde68fb2ccc414e94520f43ee102de ]
 
-In init_temp_data(), pdata->nr_cores is populated from
-topology_num_cores_per_package() before allocating pdata->core_data. If
-that allocation fails, init_temp_data() returns NULL with
-pdata->core_data still NULL and pdata->nr_cores set to a positive value.
+The smu 13.0.7 backend does not register get_unique_id, leaving
+adev->unique_id at zero and KFD topology without the stable GPU
+identifier consumed by HIP.
 
-coretemp_add_core() logs the error without failing coretemp_cpu_online(),
-so the CPU still comes online with pdata->hwmon_dev registered. When the
-CPU is later taken offline (or the module is unloaded),
-coretemp_cpu_offline() calls get_temp_data(pd, cpu), which loops up to
-pdata->nr_cores and dereferences the NULL pdata->core_data pointer.
+The failure is observed at:
+    auto ierr = hipDeviceGetUuid(&uuid, 0);
 
-Store the core count in a local variable and assign pdata->nr_cores only
-after pdata->core_data is allocated, preserving the invariant that
-pdata->nr_cores is zero whenever pdata->core_data is NULL.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 1a793caf6f69 ("hwmon: (coretemp) Use dynamic allocated memory for core temp_data")
+Fixes: 113cc31dde66 ("drm/amd/pm: add SMU_13_0_7 ppt_funcs for SMU_13_0_7")
+Signed-off-by: Kevin Wang <kevin.wang@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 5e2585daaf8336d9ce1bf52e55a9b7a8cdbf625b)
 Cc: stable@vger.kernel.org
-Tested-by: Asaf Nuri Bertizlioğlu <ycistak@gmail.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ sashal: Used NUM_REAL_CORES and kcalloc() instead of topology_num_cores_per_package() and kzalloc_objs(). ]
+[ sashal: Moved the callback before smu_v13_0_7_ppt_funcs because the surrounding upstream functions are absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ .../drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c  | 20 +++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index 25a9cf8feb311..03b40d643dccf 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -491,11 +491,13 @@ init_temp_data(struct platform_data *pdata, unsigned int cpu, int pkg_flag)
- 		 * Will replace hardcoded NUM_REAL_CORES with actual per package core count
- 		 * when this information becomes available.
- 		 */
--		pdata->nr_cores = NUM_REAL_CORES;
--		pdata->core_data = kcalloc(pdata->nr_cores, sizeof(struct temp_data *),
-+		int nr_cores = NUM_REAL_CORES;
-+
-+		pdata->core_data = kcalloc(nr_cores, sizeof(struct temp_data *),
- 					   GFP_KERNEL);
- 		if (!pdata->core_data)
- 			return NULL;
-+		pdata->nr_cores = nr_cores;
- 	}
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+index 9947b3f6bb5fb..5df28b89cb696 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+@@ -2836,6 +2836,25 @@ static int smu_v13_0_7_update_pcie_parameters(struct smu_context *smu,
+ 	return ret;
+ }
  
- 	tdata = kzalloc(sizeof(struct temp_data), GFP_KERNEL);
++static void smu_v13_0_7_get_unique_id(struct smu_context *smu)
++{
++	SmuMetricsExternal_t metrics_external;
++	SmuMetrics_t *metrics = &metrics_external.SmuMetrics;
++	struct amdgpu_device *adev = smu->adev;
++	u32 upper32 = 0, lower32 = 0;
++	int ret;
++
++	ret = smu_cmn_get_metrics_table(smu, &metrics_external, false);
++	if (ret)
++		goto out;
++
++	upper32 = metrics->PublicSerialNumberUpper;
++	lower32 = metrics->PublicSerialNumberLower;
++
++out:
++	adev->unique_id = ((u64)upper32 << 32) | lower32;
++}
++
+ static const struct pptable_funcs smu_v13_0_7_ppt_funcs = {
+ 	.get_allowed_feature_mask = smu_v13_0_7_get_allowed_feature_mask,
+ 	.set_default_dpm_table = smu_v13_0_7_set_default_dpm_table,
+@@ -2905,6 +2924,7 @@ static const struct pptable_funcs smu_v13_0_7_ppt_funcs = {
+ 	.enable_uclk_shadow = smu_v13_0_enable_uclk_shadow,
+ 	.set_wbrf_exclusion_ranges = smu_v13_0_set_wbrf_exclusion_ranges,
+ 	.interrupt_work = smu_v13_0_interrupt_work,
++	.get_unique_id = smu_v13_0_7_get_unique_id,
+ };
+ 
+ void smu_v13_0_7_set_ppt_funcs(struct smu_context *smu)
 -- 
 2.53.0
 
