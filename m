@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047319;
-	b=dLF1Rhj2hV6bPUbKYOAw0lHXGMwA+Uute6FRQv3NEDz0S3q5tR7ShjrmF0ECSWEH2DL7
-	 xM6HEwKUaIke1s6Lu9IipkANGJFt5yapkUrKHOi2o+Nn19wHnrn7LupQswhQNR7R3i3bc
-	 MRS4Fmuib+qF4TgpTMa2V3s71mIiet0k4dQ5flN7s77HxcFTS/xeI/M2IH/QcCBgwQmsQ
-	 wVrJaYLzPItlliMJYaZ6/0M4PJLRjSKO0My67OH0TQY3pdlWuoutk9FAjDv0XH5U07acv
-	 nle3A+DRrURpzJcjYpdhWm/ElJOSE7d7uWuL23dgDhB8yj6PpaimXl2zh12OPvr03zg==
+	t=1795047322;
+	b=b26QLGc0DVpWKKYnNae65Y0KEIA2q7MQEJV3/C9qTmLWT3Bd3/iYeU4Rn/V4WmcKZ5i9
+	 1x0lQmsaT++ztXc7D3eRlLzTmnhewrRyU5moMhFND+iKrnTjLIZbznnunFIkh6C3D92on
+	 To8TXeO4Mcv0gWGSY4cHTEaE2jcdHPk/+PaioKU4wehMFoQChfJOlhpjlgLWNbPeYdhtQ
+	 IfxZ8UH5T4wVZFuIvKeHvGTvAm1FqBKpE5PMoQjmEp75umvnLgEjHbmpVig14alc5IFau
+	 w0bkmRJNuRkVwMIXVZPrlXrni8yShtSfX2NbBqaMZxBeDhJt3NQ9vlExzdnIKRVSBMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047319;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047322;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=srwYV9EjSFKuYEHf6HcW1/YNrAi5kYx3TFlSjrHmU0E=;
-	b=yFsLd6OsTYrG6FceXz0pb0aDhu9I9GkyAzseif4S5Cz+zvPhXCTbMO+UcwED8JcB4Rlw
-	 +FEG5H9HoZrWGsfVe1g62K9uPdBYwEyA9LH69XTnOCbE3dTFVFo6P/Pm4gx/rkSdLhcsH
-	 x99MAphI7nQJ3XS/n3WKMO8RIueutMx+zNjBjCYUocVyhMZNODMEz19MfYmhNuvrl3frK
-	 CZfqf3jt1x4qLJmjRsi8ufaR6g7bOLeDCZxvzfNp2gAh0hQkkBoO0BykKFm0uBXn7e1u8
-	 YoSjFeiJ+XQG5UO+ZLROuHxE0ozc6L0maf+1fUrtaYbvPQh1HrDrYg5XbuxpDyH2hGw==
+	bh=n1JnLMBpLX45S+VoWdG4UQlg3+cINIW30VI1xMaNV20=;
+	b=nLCFNWBlSzjcI8aar4um/oJVa+zuky3An/vRSO3ifdmuBhi4/210/2r4v2xlN3H/veV2
+	 AcRE46NwQCKHf3Xtur6B33KN5esjSk8VeCVEnsyW/wbWUocu/5yK7enynM2dBz3Iplq9f
+	 OAkoeHlIMBQ/zjgSXdHjdn7Nps6z2nmVW0/iytcoU+hfPHfiZD8pr/CYeHLcnp8uqr5pT
+	 i/nDIhu7RZssT+CfjXC8bFVoXPzKqAYNgR3xEnWx6lNuPZKOat12t0z2/bVJgRUuKJtYn
+	 lYSgsmZdA/ejDhCj30nQou7XLL2YXYV/h+uyh6y6hOHHyp/yGaiD/eETUTz0ukcgKag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wr8Rxu9c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qOViJoPB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85867606A32A;
-	Thu, 19 Nov 2026 00:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B35606A32C;
+	Thu, 19 Nov 2026 00:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wr8Rxu9c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E8E1F000C4;
-	Thu, 19 Nov 2026 00:15:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qOViJoPB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51261F000C4;
+	Thu, 19 Nov 2026 00:15:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047319;
-	bh=srwYV9EjSFKuYEHf6HcW1/YNrAi5kYx3TFlSjrHmU0E=;
+	s=korg; t=1795047322;
+	bh=n1JnLMBpLX45S+VoWdG4UQlg3+cINIW30VI1xMaNV20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wr8Rxu9cvZNjQURsNLUQlYMlr4o5SrtLmmX8QNlqp37w6w8OQk+9STQts6aR7E4r+
-	 5G7EZUstmRBQtVOMp51/wwiq7pfmIsGIAzlJDI3gjHyVRg4qYyW6hHzzTeTJtYx6mW
-	 ZctiDukCHcfydS+Op0REo8uWgCPrXjozD6Yrv6/Y=
+	b=qOViJoPBteE5xjkIUMJ0H+DB7x61gaAL6UgtEjljS8I/+1sBvCv+5HCAkGDD8bE3D
+	 nnSCOaP7JQTkUMP5K2XkBruIEqwQkoWnIfYoQpZYqncvhizXGaYwlf1M9jmOg/aCyI
+	 WLffPiU/yRBBpvcWqnvAvITANh+JvfjkZKA2oeNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanley Jhu <stanleyjhu@google.com>,
-	Bean Huo <beanhuo@micron.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1555/2857] scsi: ufs: bsg: Reject UIC commands with a non-zero result byte
-Date: Wed, 18 Nov 2026 15:43:09 +0100
-Message-ID: <20261118150257.372866941@linuxfoundation.org>
+Subject: [PATCH 6.1 1556/2857] media: serial_ir: Fix race condition where timer can be re-armed
+Date: Wed, 18 Nov 2026 15:43:10 +0100
+Message-ID: <20261118150257.409191534@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,48 +68,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Jhu <stanleyjhu@google.com>
+From: Sean Young <sean@mess.org>
 
-[ Upstream commit 1ae42513205a38b811afedb6797f9f9c4de37b90 ]
+[ Upstream commit d74ac4016ba64cb3b20f395511d0b18025ca0ba9 ]
 
-ufs_bsg_request() passes the user-supplied UIC argument2 unchanged,
-including the result byte (bits 7:0) that only the host controller
-writes. A non-zero value triggers the WARN_ON_ONCE() in
-ufshcd_dispatch_uic_cmd() and corrupts the reported result. Found by
-syzkaller.
+Ensure the timer cannot be re-armed.
 
-Reject UIC commands that have the result byte set with -EINVAL.
-
-Fixes: e77044c5a842 ("scsi: ufs-bsg: Add support for uic commands in ufs_bsg_request()")
-Fixes: 9fb4c793223b ("scsi: ufs: core: Complain if UIC argument 2 is invalid")
+Fixes: 2940c7e49775 ("[media] serial_ir: generate timeout")
+Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20261015001855.3450573-5-stanleyjhu@google.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ sashal: adjusted context to retain ufshcd_send_uic_cmd() instead of ufshcd_send_bsg_uic_cmd() ]
+Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ sashal: adjusted context for the existing del_timer_sync() call instead of timer_delete_sync() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufs_bsg.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/rc/serial_ir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufs_bsg.c b/drivers/ufs/core/ufs_bsg.c
-index 118172fd66176..89cb6825dd531 100644
---- a/drivers/ufs/core/ufs_bsg.c
-+++ b/drivers/ufs/core/ufs_bsg.c
-@@ -129,6 +129,10 @@ static int ufs_bsg_request(struct bsg_job *job)
- 		break;
- 	case UPIU_TRANSACTION_UIC_CMD:
- 		memcpy(&uc, &bsg_request->upiu_req.uc, UIC_CMD_SIZE);
-+		if (uc.argument2 & MASK_UIC_COMMAND_RESULT) {
-+			ret = -EINVAL;
-+			break;
-+		}
- 		ret = ufshcd_send_uic_cmd(hba, &uc);
- 		if (ret)
- 			dev_err(hba->dev,
+diff --git a/drivers/media/rc/serial_ir.c b/drivers/media/rc/serial_ir.c
+index 96ae0294ac102..dac341c68b2bb 100644
+--- a/drivers/media/rc/serial_ir.c
++++ b/drivers/media/rc/serial_ir.c
+@@ -797,7 +797,7 @@ static int __init serial_ir_init_module(void)
+ 
+ static void __exit serial_ir_exit_module(void)
+ {
+-	del_timer_sync(&serial_ir.timeout_timer);
++	timer_shutdown_sync(&serial_ir.timeout_timer);
+ 	serial_ir_exit();
+ }
+ 
 -- 
 2.53.0
 
