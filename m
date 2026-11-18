@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021519;
-	b=pQ/UsjZsuBe9GPP3+MN72W6J790VlV2RhN4n8C+UVMC/l0gbv/8ct+g/iGtRgknvp/9A
-	 wPOHle97Glln7RrXkd83aYs8MqR3UkvmIY0dBMq8oQinGx0wTSVJRfsxpGpc7PMsQocY1
-	 Yl8SagAjLrmrDYbifVEI/yBAzOT7XSE6PVjIeOBjQikQq4pmxhUjN397BF/J+Ib56LU4O
-	 VMSzEKOk2pouoWtVOFjJ17xkC1ZJiw2Plruc6p5nbDqJvy9ofXSDAFYUEgXCKzPrtIsta
-	 HRe2SN4DCfb1Pz+8CNsJqPTjZcC7+tSJlKCGbqBvRXvut0Q2YviH0Vpo3aAnwaWGGHg==
+	t=1795021522;
+	b=1u9/nIue2+f65r7RbgKvOlKJ4MsHTaiX5Hwzv83jaGfFeT9qXNFCS5ysoBFOFQBM2L/E
+	 S17QY+zGRqG6xS9NWVzFoFD/bJBX8utJPo4MbziTPbRAhjNKNxoIZ3i9Dce8idMt4XiWq
+	 SR+lMlzWpGl2A7/3JEUrJxkhgtO4Cyv4gi/L9S/17wVN3FcQopyhEtqI2KC8mCqPJtXox
+	 RBYwmqkUgeu1NsIYuV0Mmg8rl4SDmJ0IetMFUJFlbh7GIwYO1Eth63mL1DNGMy6XhPTV9
+	 57JnTu1iMKDTUYQ0BdnDM/5bF7yLVOuHiV0fJJMfZSEoClsiQHKgCxEJMEoI3DJb5ng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021519;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021522;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LG5W/l999DOL30yvO/29/hyI44amTFHcCjojFKK/7qM=;
-	b=hBhDUDZiOKZ2pA6a4z5G2EbKnDUJ5VQwpFcmCXPCeoOVougaU0w2rwS0BJEsuNtt5c2V
-	 Q4KleIWS+wJYH/YUnV/C/ZkL1cbYvu2jLktaQxj5Y1iksK20cS+SyxfBFz+6I+dWN0Vuo
-	 +ArStrEFFbKcv+k+I2pj9xD6Wj0QJD6/1GycLZpEnw49uGGuwhxu8APPVSc2E/G/olDQO
-	 2I7BSgRbViCmGhuiNMsDAq+jZjQB6Lbv0+LLYuyTJt+BZ/Uu2hBiezE9a5V0xOm+hwKmy
-	 8XG1TJWzPyt1n9bf56CbD9Vp1yTDPu/9iMwyuzxt4JA7pV1t9EVzlbFAi73vHz2KBwA==
+	bh=91GagwmoqcimFIFFSEArkubj9o8ccDXFCU0aNWxf08g=;
+	b=hkkO3wFJlnB9gQ6lJP7yZtxh+tjki81B/chpGGQKhGZr2b4kwJvRY0QVV9TMvj0XVuyQ
+	 Jz8NvzhzE4QgsSiFwQ/JAT3G1SxzOnSsSxzTwd0lq1TqHH4/F+q9DhTdTtvByoS1t1PTP
+	 U2gY7zQtu6iA/uGFfqt6xsA4MySInhmOrBoDgDdp7I4DwUyQUs31o6VOaw6vw31y7HMT4
+	 /TXl3HdTDIODzorUnkUwM/6nZBolnkaE8jfzCKgDJiUfjplBqQ0crgxbKDjbgqiA8JzcG
+	 QvUpsI9LkAwqGidVW/DgOxHVsZ1jdPM23d11bknBxjqmYFBP0M5eNZSBwwYu6bQ7Q5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=maM467vj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="s+A/1KiW";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D089C606A325;
-	Wed, 18 Nov 2026 17:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58C6606A32C;
+	Wed, 18 Nov 2026 17:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=maM467vj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326221F000C4;
-	Wed, 18 Nov 2026 17:05:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s+A/1KiW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034DB1F000C4;
+	Wed, 18 Nov 2026 17:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021519;
-	bh=LG5W/l999DOL30yvO/29/hyI44amTFHcCjojFKK/7qM=;
+	s=korg; t=1795021522;
+	bh=91GagwmoqcimFIFFSEArkubj9o8ccDXFCU0aNWxf08g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=maM467vjVhczreuIuU0hng9EOr/CvOa2hcprr1R74Coc3WNdYt0k5cWcEHWkbkROR
-	 rOqYV7wVf6iHDrc8IJxHeB2m0z6Wmb0APXHrHqGvJRRro/Ri5PeZOK4ZCz6UWfqafx
-	 nqErJqdmA8vp01ZEX7v8N0E1sfH/f3oNVlJjzrQQ=
+	b=s+A/1KiWps822MO5hiXNdrVqCpr4ZvXpBLYlqxKnMzgiV7uar8kkinysfnRIAfwUo
+	 S44HoBlxDnZ+2xfMqiCqJPKU8x5SYnPLU1mq44RjLmjSsq8YtohbR15EVV8zkCGEpX
+	 Kex6WPs0iQ+8RfuKsbvA8hmGaJy71/zLYEJetrTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Joyner <eric.joyner@amd.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2336/2651] ionic: free port_info when probe fails after the port is set up
-Date: Wed, 18 Nov 2026 15:59:36 +0100
-Message-ID: <20261118150409.210872736@linuxfoundation.org>
+Subject: [PATCH 7.3 2337/2651] net: hibmcge: set netdev_ops before hbg_init() to fix NULL pointer dereference
+Date: Wed, 18 Nov 2026 15:59:37 +0100
+Message-ID: <20261118150409.243069124@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,45 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Joyner <eric.joyner@amd.com>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit 4e15e0a941ce901d51b5f203713fa90feee9c4d3 ]
+[ Upstream commit 9b8ae9aaa1b8e2b6c1cbf5613d3a37923cf53bc5 ]
 
-ionic_probe() allocates the port_info DMA buffer via ionic_setup_one()
--> ionic_port_init(). If probe then fails anywhere after that, it
-unwinds through err_out_pci, which never calls ionic_port_reset();
-ionic_dev_teardown() and ionic_clear_pci() do not touch port_info, and
-so the buffer is leaked. The call was lost when the setup code was
-moved into ionic_setup_one().
+The driver assigns netdev_ops after hbg_init(), but hbg_init() calls
+hbg_mdio_init() -> hbg_phy_connect() -> phy_connect_direct() ->
+phy_attach_direct() -> phy_link_topo_add_phy(), which invokes
+netdev_need_ops_lock(). With CONFIG_NET_SHAPER enabled, this function
+dereferences dev->netdev_ops->net_shaper_ops. Since netdev_ops is still
+NULL at this point, a NULL pointer dereference occurs.
 
-Since ionic_remove() already frees the port_info DMA buffer with
-ionic_port_reset(), call that on the probe error path too. Every path
-to err_out_pci runs after ionic_setup_one() succeeded, so the BARs are
-still mapped and the firmware gets a PORT_RESET before the buffer is
-freed, the same order as in ionic_remove().
+Move the netdev_ops assignment before hbg_init() so that
+netdev_need_ops_lock() can safely access netdev_ops during PHY
+attachment.
 
-Fixes: 0de38d9f1dba ("ionic: extract common bits from ionic_probe")
-Signed-off-by: Eric Joyner <eric.joyner@amd.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20261015-ionic-port-info-lifetime-v2-2-57232013fd79@amd.com
+The issue was hit and verified on an evaluation board.
+
+Fixes: ff4edac6e9bd ("net: hibmcge: Implement some .ndo functions")
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261016110421.2288670-1-shaojijie@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/hisilicon/hibmcge/hbg_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c b/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
-index 05f19489ec5c8..68b3bceedd999 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
-@@ -397,6 +397,7 @@ static int ionic_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- err_out_free_irqs:
- 	ionic_bus_free_irq_vectors(ionic);
- err_out_pci:
-+	ionic_port_reset(ionic);
- 	ionic_dev_teardown(ionic);
- 	ionic_clear_pci(ionic);
- 	ionic_debugfs_del_dev(ionic);
+diff --git a/drivers/net/ethernet/hisilicon/hibmcge/hbg_main.c b/drivers/net/ethernet/hisilicon/hibmcge/hbg_main.c
+index 66792e2b0fadc..a518dc66d9ef8 100644
+--- a/drivers/net/ethernet/hisilicon/hibmcge/hbg_main.c
++++ b/drivers/net/ethernet/hisilicon/hibmcge/hbg_main.c
+@@ -448,6 +448,7 @@ static int hbg_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	if (ret)
+ 		return ret;
+ 
++	netdev->netdev_ops = &hbg_netdev_ops;
+ 	ret = hbg_init(priv);
+ 	if (ret)
+ 		return ret;
+@@ -460,7 +461,6 @@ static int hbg_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	netdev->pcpu_stat_type = NETDEV_PCPU_STAT_TSTATS;
+ 	netdev->max_mtu = priv->dev_specs.max_mtu;
+ 	netdev->min_mtu = priv->dev_specs.min_mtu;
+-	netdev->netdev_ops = &hbg_netdev_ops;
+ 	netdev->watchdog_timeo = 5 * HZ;
+ 
+ 	hbg_hw_set_mtu(priv, ETH_DATA_LEN);
 -- 
 2.53.0
 
