@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027485;
-	b=BTXGfsIHHCgCpPrp+0eDpU32beMq14SlKDLscgkhFSZNRUQsdCfFJj9kj/m7+o9aY7sn
-	 Ne+FSLhhtxVoC8QlIXlfPCkt8PTnSx8ea7+s0H/G+gGXT7ampBTUcod75hkkZEsugrnMy
-	 f0wLkIY0fklFb+JymZztA+I7yHnjuaaTMhTGyYuPSin/Nvrp4axVbRfT34h79qv9phYGj
-	 MpT30xyFi48ZSaqzkv+D6txoja5TznZgFKOgXsoB9vQTYRH8tuoW5o73v7wq/ezXDArSL
-	 2Z9h0UQBfd4Q7dCUCV/AscBMz+92Qby3ZVwLJpctNW24+rosGZbENPTqOzRr8NamdyA==
+	t=1795027487;
+	b=LFiJj5mVIguWpvlcY6BQ7bg1cWEAFZULhSG2HtaiYDvFHNYQcs5XWU0tgdwi9DWVJplo
+	 QqUt4UbqOawo+eFQAgwNlc6y+v5YUmHl8e7eG0uEb2lc/ZugGOkGITkZvaH02VNcaulvu
+	 /FyPqFDLQFRYryUhq2MCOzOajCrxNY1kP09b7Y2UW/uvFRo00ujqoTiyWUW/PWUN5OK6D
+	 JIBM69yX/25JgP2fuhZD53g6zosFi5KeO6MYA75z3yCxIxwNlrZEhShwrN01QaqR8lPUX
+	 AuBCcEzLVLJF1ifSM7MzxdzeYDdZWYy2iPyKze1cIuEB7VRla5dVBJvQzftmGuWLrCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027485;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027487;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mh9a0twK6uMMISXEmH4Pr3pztB2zUEpaJmLE+OhME8Y=;
-	b=VJgizMizHorslOlOUI551dnLbEVjIzUncyKjNLzT45+ZxQ4aJY5/xsDu0P6cF+qAt4gP
-	 UsWPYyhQhIG//sTHuXC5IHXlRZT94u+oKJPv7UyhWw4Tn04XjpjJEzerbUCfjwrLaMM1Z
-	 IH8nt5LOxdwrkXs0jzGhJe5q7uOV8LZEKSIpMOpP78gEMSxu+/il6OcxcIttVV7qsN+Sd
-	 keZW9VEtT75tI4cePOjkMYzjI5UY/iKe25k9/JPbC33m1S/7lI3dnyoFfPQ0hS/5cU1lI
-	 O/IaiA7ibrMJ0n7kdw2REipz2uJk1akoYgzv4ypYV1ItA8fqAv3rj0Jtpvp6f+MHgoA==
+	bh=gbAYI0pT0U46f+BZxWwWmZy/Af7K5HCESklk8zwh8U0=;
+	b=e8tXoR6V9okdEfE3Ph7IsJomQsWGNh2o7i4ejvYmY3OIGeWztT8ycx4/Fpqifg1RsnW0
+	 DajY7lR56O4zW6CBKpH9W/6ka18m0ggJwiVciHOCbkEVlpKxrJGVVSq+38ExliUqJIxFX
+	 lsgpsnZ6zBB6EtxM3mmPkbYKdOgfaX6tEfO/HQzvlmCVvatd7+dccU5/IRczPoQJq4H/S
+	 eDWPassaF5apycX6BtX2UBmTZsshKQqeq2Hfg+L1CIQvT9e6EL7AcEDsvHSAYO0AindqU
+	 vLs47s9q0wWH3P2+DBIQbtl3/oBFsp64UDzGIjpmcbnGlv6wGOsdvyrfsmTWBt+SV0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LcAuOjDJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ce/qo4Q7";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA0A60A2607;
-	Wed, 18 Nov 2026 18:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7FA60A2613;
+	Wed, 18 Nov 2026 18:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LcAuOjDJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174031F000C4;
-	Wed, 18 Nov 2026 18:44:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ce/qo4Q7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15B11F000C4;
+	Wed, 18 Nov 2026 18:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027484;
-	bh=Mh9a0twK6uMMISXEmH4Pr3pztB2zUEpaJmLE+OhME8Y=;
+	s=korg; t=1795027487;
+	bh=gbAYI0pT0U46f+BZxWwWmZy/Af7K5HCESklk8zwh8U0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LcAuOjDJ+6jFmpqI5nsg+9SeQEShIoo6vs606cuULFBBvSEElEaUjqhn+VKkC+cvc
-	 hBQXkVeWqhF+bSDHXYX/vZz58HzqGXjfWibfSTqADByxeTXGP8vSd7b3EskD4q4RPG
-	 yXWdw3iShOGCSGgIqow3KnJLo4xwl8Iw1nbV5t3I=
+	b=ce/qo4Q7+0MGJ/LF5Zdi/JzJmGwo24Xfg6I90mQgJsQdsQsdsAlfSLaZMiFDGAmug
+	 fzxFOmzKMePYdq1R2wuicr+ZUp1i4FWBRGlgafELztkPePjAm1kFjjDo7MbMVqTipy
+	 VeqOLKezoc9Smaj2SnXAb9Nfx8hnUSmFBr4lLQkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1806/2151] dt-bindings: clock: mediatek: Add MT8516 fallbacks
-Date: Wed, 18 Nov 2026 15:59:01 +0100
-Message-ID: <20261118150227.592989831@linuxfoundation.org>
+Subject: [PATCH 6.18 1780/2151] ALSA: pcm: Protect channel-map reads against runtime detach
+Date: Wed, 18 Nov 2026 15:58:35 +0100
+Message-ID: <20261118150226.666704645@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,65 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring (Arm) <robh@kernel.org>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 1d48ecb48e2ab9dd2564e735a1c1b29a5eeeb599 ]
+[ Upstream commit bb4834d5242c4829c0d8467ee68eb25a9bafc38d ]
 
-MT8516 topckgen and apmixedsys nodes use the common syscon fallback
-form. Add the MT8516 compatibles to the branches that allow the
-syscon fallback.
+Channel-map controls remain accessible between PCM opens. In-tree HDA
+code publishes the generic controls through add_std_chmaps(), so a
+SNDRV_CTL_IOCTL_ELEM_READ can overlap the final close of the same PCM
+substream.
 
-Fixes: cd9fdd06b0e8 ("dt-bindings: arm: mediatek: topckgen: Convert to DT schema")
-Fixes: 16a146735df3 ("dt-bindings: arm: mediatek: apmixedsys: Convert to DT schema")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20260921232807.3137010-1-robh@kernel.org
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+pcm_chmap_ctl_get() checks substream->runtime and later reads its channel
+count. Final close clears and frees that runtime under pcm->open_mutex,
+while the control callback holds only controls_rwsem:
+
+  Control GET                         Final PCM close
+  -----------                         ---------------
+  snd_ctl_elem_read()
+    down_read(controls_rwsem)
+    pcm_chmap_ctl_get()
+      check substream->runtime
+                                      lock(pcm->open_mutex)
+                                      snd_pcm_release_substream()
+                                        snd_pcm_detach_substream()
+                                          substream->runtime = NULL
+                                          kfree(runtime)
+                                      unlock(pcm->open_mutex)
+      substream->runtime->channels
+        NULL or freed-pointer access
+    up_read(controls_rwsem)
+
+Reloading the cleared field can fault through NULL, while retaining the
+old pointer can access freed storage. controls_rwsem keeps the control
+alive, but does not serialize the matching PCM close.
+
+Copy the channel count under open_mutex and use that scalar for the map
+lookup. Use trylock with -EBUSY because snd_pcm_dev_disconnect() takes
+open_mutex before removing controls under controls_rwsem; blocking in
+the reverse order from GET could deadlock.
+
+Fixes: 2d3391ec0ecc ("ALSA: PCM: channel mapping API implementation")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-pmb-0b5d6bc7124d0b921f2c-v4-b9738bdeab8823999181@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/clock/mediatek,apmixedsys.yaml          | 2 +-
- Documentation/devicetree/bindings/clock/mediatek,topckgen.yaml  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ sound/core/pcm_lib.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/clock/mediatek,apmixedsys.yaml b/Documentation/devicetree/bindings/clock/mediatek,apmixedsys.yaml
-index 591a9e862c7d4..438723d253207 100644
---- a/Documentation/devicetree/bindings/clock/mediatek,apmixedsys.yaml
-+++ b/Documentation/devicetree/bindings/clock/mediatek,apmixedsys.yaml
-@@ -26,7 +26,6 @@ properties:
-           - mediatek,mt7988-apmixedsys
-           - mediatek,mt8135-apmixedsys
-           - mediatek,mt8173-apmixedsys
--          - mediatek,mt8516-apmixedsys
-       - items:
-           - const: mediatek,mt7623-apmixedsys
-           - const: mediatek,mt2701-apmixedsys
-@@ -42,6 +41,7 @@ properties:
-               - mediatek,mt7629-apmixedsys
-               - mediatek,mt8167-apmixedsys
-               - mediatek,mt8183-apmixedsys
-+              - mediatek,mt8516-apmixedsys
-           - const: syscon
+diff --git a/sound/core/pcm_lib.c b/sound/core/pcm_lib.c
+index 932b9337c93ee..fc9cb30f1189b 100644
+--- a/sound/core/pcm_lib.c
++++ b/sound/core/pcm_lib.c
+@@ -2496,6 +2496,7 @@ static int pcm_chmap_ctl_get(struct snd_kcontrol *kcontrol,
+ 	unsigned int idx = snd_ctl_get_ioffidx(kcontrol, &ucontrol->id);
+ 	struct snd_pcm_substream *substream;
+ 	const struct snd_pcm_chmap_elem *map;
++	unsigned int channels;
  
-   reg:
-diff --git a/Documentation/devicetree/bindings/clock/mediatek,topckgen.yaml b/Documentation/devicetree/bindings/clock/mediatek,topckgen.yaml
-index c080fb0a16181..6594d491e215b 100644
---- a/Documentation/devicetree/bindings/clock/mediatek,topckgen.yaml
-+++ b/Documentation/devicetree/bindings/clock/mediatek,topckgen.yaml
-@@ -23,7 +23,6 @@ properties:
-           - mediatek,mt7622-topckgen
-           - mediatek,mt8135-topckgen
-           - mediatek,mt8173-topckgen
--          - mediatek,mt8516-topckgen
-       - items:
-           - const: mediatek,mt7623-topckgen
-           - const: mediatek,mt2701-topckgen
-@@ -43,6 +42,7 @@ properties:
-               - mediatek,mt7988-topckgen
-               - mediatek,mt8167-topckgen
-               - mediatek,mt8183-topckgen
-+              - mediatek,mt8516-topckgen
-           - const: syscon
- 
-   reg:
+ 	if (!info->chmap)
+ 		return -EINVAL;
+@@ -2504,11 +2505,20 @@ static int pcm_chmap_ctl_get(struct snd_kcontrol *kcontrol,
+ 		return -ENODEV;
+ 	memset(ucontrol->value.integer.value, 0,
+ 	       sizeof(long) * info->max_channels);
+-	if (!substream->runtime)
+-		return 0; /* no channels set */
++	/*
++	 * PCM disconnect takes open_mutex before removing controls.
++	 * Use trylock to avoid a deadlock with controls_rwsem.
++	 */
++	scoped_cond_guard(mutex_try, return -EBUSY,
++			  &info->pcm->open_mutex) {
++		if (!substream->runtime)
++			return 0; /* no channels set */
++		channels = substream->runtime->channels;
++	}
+ 	for (map = info->chmap; map->channels; map++) {
+ 		int i;
+-		if (map->channels == substream->runtime->channels &&
++
++		if (map->channels == channels &&
+ 		    valid_chmap_channels(info, map->channels)) {
+ 			for (i = 0; i < map->channels; i++)
+ 				ucontrol->value.integer.value[i] = map->map[i];
 -- 
 2.53.0
 
