@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033837;
-	b=bMp1ztKZ0os3qiQqS0GfK1BnDCXdGTrUHmO2jkuq5hSV/2d7oEB0X/YnZPFfRuzo0vnn
-	 3ZXdo/RoQ7HhHg2Jm7+yQwXW7k6/OyJuIrJWXaEQhVyIf29nNqTo6dBdpEghwcb0NmwE+
-	 6TFlWqhO7lc9WzyhiqRovq2k8NCiaNO14/cbsf0UuzezIfuWqW+YL5aGq19CAMmMin6Dm
-	 icZAB2KjzeWgxJrHS2BstCG/i/ynVLw84/oypfRDgHFj7lZvu01aIXwTSUt+uTQQgX59w
-	 Z3XW4GjBy11/bNsOxlSCFjsoNs6nHUG7Vmt+Wea3yq2KUocu+Af8McC5ibqNFDTtONg==
+	t=1795033840;
+	b=zIAM1Yf7hImUWED0F33shOcW4ae5Dl0k+OC7iZMK/uEkP2Yc+lXp+ZKQIqxQpNCsGQSb
+	 LINriUb1un6R+9A3Ax1urNu7vly7W1r6Zm8JNs2FAAjyICRson7V129exOZNogIoSMDdz
+	 3RbGOktCteywFHE+sFPFf8pxWgyCsxFDEEriThK7mUi5d0AsITU2mU41IOT86MXWiLtBE
+	 +XjLqhnatHVo49zRaZk1Lz278lo4dWsITsxICqNs+aZKGGwcqi/8SetgaPTyPck44waMz
+	 6Br5CyP1bcJVfgSYbWw7Dv2ASfjOq1yhN1GG9Wf76xDI5TOasYNFwfD/s3rNxBesS8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033837;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033840;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1/DOsqVwmCDR6KXrUNxNv/Z/VHm9g/xyh5K1Jr4nyMY=;
-	b=0nyD0CrvQii7ptyt8HLod/IQk7TLlk8bekibEontNBmmxbMX87QAJLj4mjrqjE3DoQ9P
-	 sUvsyoG2+Q27EroJaecK1X+JmfJjBSwSycObhCkDQWGl5SkO7svJJjS87pzBr4lpobmRA
-	 rsaALEW55ip43C7kxVxPIlow2xdnqlaTaFb3PkHG4UXgFxrmVmXcyPOADx7YiNDJLL/C1
-	 nAEZZAAFXwujUnYH5UxNE3VzWnnEn4wrmUSL918kUO+H1N/s+8sURIEdQPY2FiCualoIb
-	 +72lS/qPLPqPgNtHYacAsoU06iRDEwD8BVN1ILvTR4sWblxGwwdjca36dbMvvRhzsvA==
+	bh=+J9V+E3Dw3XLpUqR5m88hgq9Uww/KR1la6ONRUFbPDU=;
+	b=pEy5Ug/zu86uzbnuXiE1vLSApUEDGY2QJ7MLRl3Khs551fn6R3PuhBYagLeHOPk1huiD
+	 WTC6hqwDVdOtFhE20bMEit/+B2GOkXjk5nkhScfjvFRMSm8huzEtcaTsT+FVIPcCBZe59
+	 v/5QPvNN6KbH4iKLlzq7/SN0BmbvCbWhWpG/FlWJqSAAzwOLQGEnz3hJUNLSnM0s5w1Ts
+	 aw2X26dtkRkWl0oZkYxbHPD0H8qpoNTLs/sV1aNg7Gb17jZa0MAEpGre2+rEdJBYIxQvu
+	 Qtcs9FJKtbWJ+qwndsGghnqL1/1uYBjGik8BPr8C+zYXuHGqa25JeLOpOd0w1hg3FsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gtt9eY4K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vWx3o4VX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F9B606A31C;
-	Wed, 18 Nov 2026 20:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616D4606A336;
+	Wed, 18 Nov 2026 20:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gtt9eY4K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A586D1F000C4;
-	Wed, 18 Nov 2026 20:30:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vWx3o4VX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8BF1F000C5;
+	Wed, 18 Nov 2026 20:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033837;
-	bh=1/DOsqVwmCDR6KXrUNxNv/Z/VHm9g/xyh5K1Jr4nyMY=;
+	s=korg; t=1795033840;
+	bh=+J9V+E3Dw3XLpUqR5m88hgq9Uww/KR1la6ONRUFbPDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gtt9eY4KrPEpDyAy/W4XzYWy+j/APunLynAdDV7pu8pqbuBIRZCLMdLgd9kDeF35R
-	 LpB0yDAU52bDbLn36lMtLudTY1bZ5jKTWaYDogq/tJLOOhrcT+S4S6muLmRF+sQVnE
-	 zonxQ3pBO/KbqH2cL7Susc2vLRhqS+rNCrMaovF4=
+	b=vWx3o4VXXLSzy03QPzPq5T0AHzSOoW/kqBecWMMZ5FRjXriG0bbQIBLVA0Fkg76D+
+	 RoPeM/LJZPT2DLEtQzWvPnVaO+bcqnf4/bErrLx4AwEK+0cwuH5QUcaOPH15Bb3Lz2
+	 p4G7eYiWGY2+AgUY5AvVdUa4kReI3s/MsRFaPJBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	Pu Lehui <pulehui@huawei.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0154/3318] riscv, bpf: Add support for BPF_SDIV and BPF_SMOD in RV32 JIT
-Date: Wed, 18 Nov 2026 15:12:56 +0100
-Message-ID: <20261118150319.158495508@linuxfoundation.org>
+Subject: [PATCH 6.6 0155/3318] power: supply: cros_pchg: unregister EC notifier
+Date: Wed, 18 Nov 2026 15:12:57 +0100
+Message-ID: <20261118150319.193033741@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,93 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 2e0fa2389c50fd3a69bb738efa74e127b7516938 ]
+[ Upstream commit 631adfa03595c63b2a621cdc62db60bb1ce5f91c ]
 
-The current rv32 bpf jit compiler incorrectly treats BPF_SDIV and
-BPF_SMOD as unsigned operations. The BPF instruction set allows
-signed division and modulo by reusing the BPF_DIV and BPF_MOD opcodes
-with the instruction offset set to 1.
+cros_pchg_probe() registers an EC event notifier whose callback uses the
+devm-allocated charger_data via container_of().  The driver has no
+remove callback and does not unregister the notifier, so the notifier
+chain can retain a pointer to freed driver state after unbind or probe
+cleanup.
 
-Update the emit_alu_r32() function to accept an 'is_sdiv' variable and
-emit the correct div and rem instructions when the offset is 1.
+Register a devm cleanup action immediately after the notifier is
+installed so the notifier is unregistered before the driver state is
+released.  Also fail probe if the notifier cannot be registered, instead
+of leaving a charger device that cannot receive EC events.
 
-Before this patch:
-[   44.161771] test_bpf: #165 ALU_SDIV_X: -6 / 2 = -3 jited:1 ret 2147483645 != -3 (0x7ffffffd != 0xfffffffd)FAIL (1 times)
-[   44.167385] test_bpf: #166 ALU_SDIV_K: -6 / 2 = -3 jited:1 ret 2147483645 != -3 (0x7ffffffd != 0xfffffffd)FAIL (1 times)
-[   44.171053] test_bpf: #169 ALU_SMOD_X: -7 % 2 = -1 jited:1 ret 1 != -1 (0x1 != 0xffffffff)FAIL (1 times)
-[   44.172081] test_bpf: #170 ALU_SMOD_K: -7 % 2 = -1 jited:1 ret 1 != -1 (0x1 != 0xffffffff)FAIL (1 times)
-
-After this patch:
-[   16.002192] test_bpf: #165 ALU_SDIV_X: -6 / 2 = -3 jited:1 95 PASS
-[   16.002983] test_bpf: #166 ALU_SDIV_K: -6 / 2 = -3 jited:1 1059 PASS
-[   16.017167] test_bpf: #169 ALU_SMOD_X: -7 % 2 = -1 jited:1 136 PASS
-[   16.023002] test_bpf: #170 ALU_SMOD_K: -7 % 2 = -1 jited:1 109 PASS
-
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Reviewed-by: Pu Lehui <pulehui@huawei.com>
-Link: https://lore.kernel.org/bpf/20260714002451.4091139-2-visitorckw@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://patch.msgid.link/20260615063105.39152-1-pengpeng@iscas.ac.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/net/bpf_jit_comp32.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/power/supply/cros_peripheral_charger.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/net/bpf_jit_comp32.c b/arch/riscv/net/bpf_jit_comp32.c
-index 529a83b85c1c9..cfe6814baa49c 100644
---- a/arch/riscv/net/bpf_jit_comp32.c
-+++ b/arch/riscv/net/bpf_jit_comp32.c
-@@ -509,12 +509,15 @@ static void emit_alu_r64(const s8 *dst, const s8 *src,
+diff --git a/drivers/power/supply/cros_peripheral_charger.c b/drivers/power/supply/cros_peripheral_charger.c
+index a204f2355be48..6687d40c551c1 100644
+--- a/drivers/power/supply/cros_peripheral_charger.c
++++ b/drivers/power/supply/cros_peripheral_charger.c
+@@ -258,6 +258,14 @@ static int cros_ec_notify(struct notifier_block *nb,
+ 	return cros_pchg_event(charger);
  }
  
- static void emit_alu_r32(const s8 *dst, const s8 *src,
--			 struct rv_jit_context *ctx, const u8 op)
-+			 struct rv_jit_context *ctx,
-+			 const struct bpf_insn *insn)
++static void cros_pchg_unregister_notifier(void *data)
++{
++	struct charger_data *charger = data;
++
++	blocking_notifier_chain_unregister(&charger->ec_device->event_notifier,
++					   &charger->notifier);
++}
++
+ static int cros_pchg_probe(struct platform_device *pdev)
  {
- 	const s8 *tmp1 = bpf2rv32[TMP_REG_1];
- 	const s8 *tmp2 = bpf2rv32[TMP_REG_2];
- 	const s8 *rd = bpf_get_reg32(dst, tmp1, ctx);
- 	const s8 *rs = bpf_get_reg32(src, tmp2, ctx);
-+	u8 op = BPF_OP(insn->code);
-+	bool is_signed = insn->off == 1;
+ 	struct device *dev = &pdev->dev;
+@@ -345,9 +353,10 @@ static int cros_pchg_probe(struct platform_device *pdev)
+ 	ret = blocking_notifier_chain_register(&ec_dev->ec_dev->event_notifier,
+ 					       nb);
+ 	if (ret < 0)
+-		dev_err(dev, "Failed to register notifier (err:%d)\n", ret);
++		return dev_err_probe(dev, ret, "Failed to register notifier\n");
  
- 	switch (op) {
- 	case BPF_MOV:
-@@ -539,10 +542,12 @@ static void emit_alu_r32(const s8 *dst, const s8 *src,
- 		emit(rv_mul(lo(rd), lo(rd), lo(rs)), ctx);
- 		break;
- 	case BPF_DIV:
--		emit(rv_divu(lo(rd), lo(rd), lo(rs)), ctx);
-+		emit(is_signed ? rv_div(lo(rd), lo(rd), lo(rs)) :
-+				 rv_divu(lo(rd), lo(rd), lo(rs)), ctx);
- 		break;
- 	case BPF_MOD:
--		emit(rv_remu(lo(rd), lo(rd), lo(rs)), ctx);
-+		emit(is_signed ? rv_rem(lo(rd), lo(rd), lo(rs)) :
-+				 rv_remu(lo(rd), lo(rd), lo(rs)), ctx);
- 		break;
- 	case BPF_LSH:
- 		emit(rv_sll(lo(rd), lo(rd), lo(rs)), ctx);
-@@ -1042,7 +1047,7 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
- 			emit_imm32(tmp2, imm, ctx);
- 			src = tmp2;
- 		}
--		emit_alu_r32(dst, src, ctx, BPF_OP(code));
-+		emit_alu_r32(dst, src, ctx, insn);
- 		break;
+-	return 0;
++	return devm_add_action_or_reset(dev, cros_pchg_unregister_notifier,
++					charger);
+ }
  
- 	case BPF_ALU | BPF_MOV | BPF_K:
-@@ -1066,7 +1071,7 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
- 		 * src is ignored---choose tmp2 as a dummy register since it
- 		 * is not on the stack.
- 		 */
--		emit_alu_r32(dst, tmp2, ctx, BPF_OP(code));
-+		emit_alu_r32(dst, tmp2, ctx, insn);
- 		break;
- 
- 	case BPF_ALU | BPF_END | BPF_FROM_LE:
+ #ifdef CONFIG_PM_SLEEP
 -- 
 2.53.0
 
