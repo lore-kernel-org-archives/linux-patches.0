@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045702;
-	b=EYsDkOuX1xpcZayOBbcxKQyYBNBLkjolKTkv64f5QU6s1N7Ly3G+DnuqXEKPD9+PfNbc
-	 sgcVe15ZGrW6ZzFY7ag3ABJ9vHue57MVp5kv4ZqAVKphK4gW0mau1vuOXwY5B92yhr4Y6
-	 0L4Fan4XviXiFO/GZi32u3uu4L//us7k+40xxcUg8/8E+z5Je81rCFdBxd8t4fhE5EneC
-	 Cy65NSeP/SYHwIWbOE8Rk1nTi7twGM94Pd7fbw898tJi/Dtla22Y0SCLYapRLSclDDQ8w
-	 uWV/+dlLbk72vpDuAhPEop1sh8ne4Vi0Z8zS/zpfckesf3ImsR1H3FhyXgk/fhnGSrA==
+	t=1795045705;
+	b=rK5XJPTgO4nqZLKrXIqxG47i2pVy97/VeVkEtsIYvgYm+5s9+tu9EHcqdp3KWlNOPTAJ
+	 fIdSgqzayegM3RvmyNHpUrDFSH17vJlWbtpr6JfQLMiQg3CTulN9CIFhyULuW1SePAsSg
+	 oYquzZxZ/Q+tClDackANX5rTqnIefniBMEwG1QrHTE2KUjcG4EmzGIoGcKKii5f+myOCL
+	 NPWzH0OXhtMdnVXWP6mF8UqVtiUJm6MHqlpUq9U+AJwqRseRazNzVlStpSU3I0uLQvbTk
+	 DZs7O9bOpHEO/N4yfULwgtyYmEDyYmUpfdXwlNb9a+gxFgtd7buRe1TGaSqCscFZwoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045702;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045705;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2H6Bf/EIGkpFSDCep6DUkWCReFQYTyrP35LwfrtACxg=;
-	b=K/oymawcUp0SLpZbg3lMzwzP8A1BLP1GKQOC5Er8BzHx48aW4pVrTe1w8pj0aS+N3Vid
-	 XeJb8ugExat2CE1sOHn4ouLplCWgOXeHDXl3P2kKxHC2ThOsXIhE13DvB0L/iGw156TUn
-	 2obw2nM7cOk0C8qOCrlMGaFC1p1yUjwCH6UIYpDHziXurZ55RxK6XtgioMjExMYJ+89LE
-	 fMwgFapEdrlEyTelzTSXRu/Rt+6OkWUUWAeq12qKK7gjN58k7hvOm7rJ8xoljliYrr7SS
-	 R0r8YkyzgsLaJPwrGYui5INqqFN6HAXKp31Og1DPta8PWU49ZM19HFswhxRH7OlkXpA==
+	bh=gEd+5zp3FuO/6CCY+dLOSP8p4Lhf4uWQ7YVMuJ5YSE4=;
+	b=0mXUmqa2eKW6q4VzAIiFNFAE/7W80eGotyQIMTUhPJbYH1vw3wKoWnPptxpOSWpJ1zaA
+	 zgrPTZ2sjdoUNhK/oNfKmsWAcULcYWh5PTdcbSsXgVa5pOb5ci2b97f2iGQpNk8ObI0lv
+	 +8m0J10UDGIQ3q/XOFHyBu1eHVg8HGdPk3ffjhjEQdCYBxYuBSk+3hwgi5OyVqV0jJPyi
+	 +SVXmHwy9ZE3fPXXHptFehMT+1N/CVWj1uGIu5dSeTqibE08SHJdxiCzqBPXcTJ7Nin1K
+	 4C05odm4lKZFdTkTjHRFx+EBsBK1OWGLtXYKIce8P4VkNW52TxW7gPDuyA9lger2Lvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cYeh5GlM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="KYZPz/u2";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9896060A2602;
-	Wed, 18 Nov 2026 23:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DAB9606A325;
+	Wed, 18 Nov 2026 23:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cYeh5GlM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A311F000C5;
-	Wed, 18 Nov 2026 23:48:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KYZPz/u2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14A11F000C4;
+	Wed, 18 Nov 2026 23:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045702;
-	bh=2H6Bf/EIGkpFSDCep6DUkWCReFQYTyrP35LwfrtACxg=;
+	s=korg; t=1795045705;
+	bh=gEd+5zp3FuO/6CCY+dLOSP8p4Lhf4uWQ7YVMuJ5YSE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cYeh5GlMi3dbj4ynkHCe5y9EfxV68mzhJwIROtfouWtVueesWzILoWsWlGXuUod3I
-	 x/MPZTwtyySsQBJ80x4hW8ZJZNuarughGmyLc2unB6kiHAbdktZuLzvXW4PxkPdaJF
-	 kp7qxGGmkHxZGRodGE6lQrZEhfskhDja/pKVbhXA=
+	b=KYZPz/u2IBSSMleJ83s6jju3ix0aT+aknPnyiZCq28TVnRiPv44pma615xEXBbp8y
+	 /y9KAVkynIs8jf8KOtEDZ2/zRjc3JPLewqwu1AnW09Eb17Pa+cSaFKu5XRy7q4STVI
+	 qzlKmu6gGDty/uD3n2cM26pxF+v37XWdWXPtNA0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Julian Sun <sunjunchao@bytedance.com>,
-	Tejun Heo <tj@kernel.org>,
-	Jan Kara <jack@suse.cz>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1017/2857] writeback: reset dirtied_when when switching wbs
-Date: Wed, 18 Nov 2026 15:34:11 +0100
-Message-ID: <20261118150238.216553869@linuxfoundation.org>
+Subject: [PATCH 6.1 1018/2857] writeback: clear old wb dirty state after inode switches
+Date: Wed, 18 Nov 2026 15:34:12 +0100
+Message-ID: <20261118150238.250951017@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -72,70 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Julian Sun <sunjunchao@bytedance.com>
 
-[ Upstream commit 13b9a606dd0a6cf9bac12894c97b9546d22a7425 ]
+[ Upstream commit a396fe9f74ea367ae3fab2dcb70b24e83db9f0cb ]
 
-When switching a dirty inode to another wb, inode_do_switch_wbs() puts
-it at the newest end of the target b_dirty list instead of searching
-for its sorted position. This requires updating dirtied_when, which
-move_expired_inodes() uses to decide where to stop scanning.
+Switching an inode to another wb updates the target wb's dirty-I/O state,
+but no longer checks whether the source wb's dirty-I/O lists became empty.
+The check was lost when inode_io_list_del_locked(inode, old_wb) was
+removed to support tracking clean attached inodes.
 
-However, the switch updates dirtied_time_when instead. This leaves
-b_dirty out of order and can make the scan stop before reaching older
-inodes. It also resets the lazytime expiration timestamp, potentially
-delaying timestamp writeback.
+If the last dirty inode is moved, WB_has_dirty_io remains set on the old
+wb and its bandwidth contribution remains in bdi->tot_write_bandwidth.
+This can keep an empty wb scheduled for periodic writeback and overstate
+the total bandwidth used to distribute writeback work.
 
-Update dirtied_when instead, preserving both the constant-time insertion
-and the lazytime expiration timestamp. Correct the field name in the
-comment and document the distinction between the two inode timestamps.
+Call wb_io_lists_depopulated() on the old wb after the batch of inode
+switches, while its list_lock is still held. This clears the flag and
+removes the bandwidth contribution if its dirty-I/O lists are empty.
 
-Fixes: 9a6ebbdbd412 ("writeback: Avoid excessively long inode switching times")
+Fixes: f3b6a6df38aa ("writeback, cgroup: keep list of inodes attached to bdi_writeback")
 Cc: stable@vger.kernel.org
 Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
-Link: https://patch.msgid.link/20261016115230.3640770-2-sunjunchao@bytedance.com
-Acked-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20261016115230.3640770-3-sunjunchao@bytedance.com
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c  | 6 +++---
- include/linux/fs.h | 4 +++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ fs/fs-writeback.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index 085e0fa0cab37..7066cc78879e7 100644
+index 7066cc78879e7..f82d5d70a6cd0 100644
 --- a/fs/fs-writeback.c
 +++ b/fs/fs-writeback.c
-@@ -429,12 +429,12 @@ static bool inode_do_switch_wbs(struct inode *inode,
- 		if (inode->i_state & I_DIRTY_ALL) {
- 			/*
- 			 * We need to keep b_dirty list sorted by
--			 * dirtied_time_when. However properly sorting the
-+			 * dirtied_when. However properly sorting the
- 			 * inode in the list gets too expensive when switching
- 			 * many inodes. So just attach inode at the end of the
--			 * dirty list and clobber the dirtied_time_when.
-+			 * dirty list and clobber the dirtied_when.
- 			 */
--			inode->dirtied_time_when = jiffies;
-+			inode->dirtied_when = jiffies;
- 			inode_io_list_move_locked(inode, new_wb,
- 						  &new_wb->b_dirty);
- 		} else {
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 0692c2e0fcf3f..7e8d570ed839b 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -650,7 +650,9 @@ struct inode {
- 	unsigned long		i_state;
- 	struct rw_semaphore	i_rwsem;
+@@ -509,6 +509,7 @@ static void process_inode_switch_wbs(struct bdi_writeback *new_wb,
+ 		}
+ 	}
  
--	unsigned long		dirtied_when;	/* jiffies of first dirtying */
-+	/* Timestamp for writeback list ordering and age checks (jiffies). */
-+	unsigned long		dirtied_when;
-+	/* Start time for deciding when lazytime updates need writeback (jiffies). */
- 	unsigned long		dirtied_time_when;
++	wb_io_lists_depopulated(old_wb);
+ 	spin_unlock(&new_wb->list_lock);
+ 	spin_unlock(&old_wb->list_lock);
  
- 	struct hlist_node	i_hash;
 -- 
 2.53.0
 
