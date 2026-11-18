@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034223;
-	b=aeaBjmIGmjk8wx5Fa+UVdbfNDCCLouGUf96mnX9U/oCHbnC7fqp8Qsgb0TV3EHrHpJ1J
-	 BpYDNxiOyxt176s1pvoW2lAua/s+USrTJeaKKDd5P8LX/dybBD7m305ffiV1BpkbT+4Nd
-	 FR6hIej4eLXnl8yyeK8fb35gSjGi3OsQ+Tn11aJwthva7GbpHKJ4pWkIElYUAGgPMFtsh
-	 1obrxzJ1jbIeNfmKIogRVthnLpn43n+4qdI9fpxknPOQWjwpdq1UN+ka+wZ9lKNIYGkIV
-	 2x9zzYLuAvAeSZoU4epSSNcpovDvuVH9TXkIZ51WluPh+HlVarBFnySgSAE6DJ8yl3A==
+	t=1795034225;
+	b=pbLIynYC/kzPM7A8dKab07M/oafWLspMTp2Kf2wvUfQgOOKMRRFBJqWZ7zWkcJS4yLSV
+	 awY4G86sgYPbdIFwb+G3zpC18PWLpLftZkXBDcwcfL+NIaIF+i5tGF5ThX7VQydnkzSrf
+	 Xm6NXGboTNvE8tXVcPjdOufvr2h1EUOGzogqD15y6pXkeKnYBDIPCKxfEJeFs2jJCQ/GO
+	 haIbPt40lkpc7qMcA0FtxR81tuCsLvrKfIbFMDf1V+Csc9okh7hCbyMb7/A3zLR/w+4d8
+	 PAWmEWM5UjuM32VWsb6iCHRsLlzy3puKQjVp3Sty8CHI7vXeTFVZaPE9mKbm5gK1jIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034223;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034225;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q5yCOMndUr8OQOmlFIU9Y4ABLTfLJAiI4dlgzk2LxEc=;
-	b=C818gp9b2ZfWz65LoZiQV5Rq1Vs0sGgYY3O2CnMfMKRG+oTMzklwGc7FsFavLmnek3RX
-	 Msby2zoZR112GyBuNY2f0j13HrwOO/6OT+1b1gS3NPKLxmlMSYS8F+JficXv2TnrCjBtw
-	 Z84Wym+NENwnNI/TeHaN5JvHxjxcj7ox3sEkkvO1IGJYXfrvJYhSWEN+vpKuNEpJln6EX
-	 G7Mpo22aikMwQh0UOBIlZLbn7xWGwUzv+NzZXVkV6cMFW63PDLCQQkK7rhujYZ5/KbVvq
-	 FfWFc2bvDbV5sqAhKUp3RNt3fwbgOQqmLkcyDllJp1KAGjix2EOxDJ7/2yoLJQPzkhA==
+	bh=DJ2W+E7SDkzkG3NDNSpejGbTPHhPyM0UGPI86JeE3Ik=;
+	b=Kl48LzmQf2pHVw5FDs8CWkJVwxwVN55PKEqGmCfltjuaID13dvALVV0bYM0pz2MLuMGm
+	 PZrXuDc64nDqANpHgKwWqDnMjulRc8A9nid1VtzqjdJpOshHyZpWJ+ADavQMfu951X4h+
+	 6HKzH0A2GDGzBuufOwU0dwlr3YUf0l8j232El3Yk5zyVwoQGFog+3iiA0061nP7ipg4z/
+	 gdAXPIRWnCwsbvvM0jVNiKgedqT9JaANHtuFqfXMDRXnyEUFr2UzPt6THukSgB4BxeeRr
+	 ovUaLSxALNsFhQsnH3marHYxHUGVPhiJuzli3TvHToxFJ2qEq7wqoa+AzD5LXert+WA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgV0ojx2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LaDhxzLD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F229606A336;
-	Wed, 18 Nov 2026 20:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD212606A336;
+	Wed, 18 Nov 2026 20:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgV0ojx2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC521F000C4;
-	Wed, 18 Nov 2026 20:37:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LaDhxzLD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6FCB1F000C4;
+	Wed, 18 Nov 2026 20:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034222;
-	bh=Q5yCOMndUr8OQOmlFIU9Y4ABLTfLJAiI4dlgzk2LxEc=;
+	s=korg; t=1795034225;
+	bh=DJ2W+E7SDkzkG3NDNSpejGbTPHhPyM0UGPI86JeE3Ik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hgV0ojx2wX0J80wy/C42zWlaMmCgczsBXiHdv/8D5DkGCCFi3tBwENtBcd4EG0HuG
-	 Xo6nu874j1tfn0ZQLSOTtqB1Q9RleDk3Jv+GpKTaly8cTsTq9AbNr5Q5BZcDKcI/yD
-	 i90BXyYLQrdKhLxiFvz4y+nrtEcG1d8dsOBr/mz0=
+	b=LaDhxzLDUeA7pJIAJXRr1L/qJiCqS2EF2Ice1B+amjYMvtFfm7CY6nyUlYy0X0nV1
+	 gqui4ML3t30IKEr0h8z0YPlT3Sm2paEzZG+Hgtg3OeLvUOQ/3HQChuFLMDWBi21zr7
+	 gyLjjCT+c91XQHJgW333XG4wqG9rRL1Jaq0t8oMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gael Blivet <gael.blivet@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0294/3318] ksmbd: report actual xattr value length in stream enumeration
-Date: Wed, 18 Nov 2026 15:15:16 +0100
-Message-ID: <20261118150324.459596125@linuxfoundation.org>
+Subject: [PATCH 6.6 0295/3318] smb/server: cancel async requests when closing connection
+Date: Wed, 18 Nov 2026 15:15:17 +0100
+Message-ID: <20261118150324.498225202@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,67 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gael Blivet <gael.blivet@gmail.com>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit 689f1eb3719d61700b58f984ac8602837f004f8c ]
+[ Upstream commit 4fd5bad647bfa45eb86bfd2f03ba1bef3fcd5851 ]
 
-get_file_stream_info() (FileStreamInformation QUERY_INFO) reported
-each enumerated stream's StreamSize/StreamAllocationSize as
-stream_name_len -- the byte length of the stream's *name*, not its
-data. This is the same bug class already fixed for EndOfFile/
-AllocationSize on an open stream handle (ksmbd_stream_eof()), just
-missed at this second site: a client enumerating streams sees a size
-derived from the name string length instead of the stream's actual
-content length, inconsistent with what querying the same stream by
-handle reports.
+An async request may still be waiting when a connection is closed.
+This can stop the connection from closing.
 
-Compute the real value length the same way ksmbd_stream_eof() does,
-via ksmbd_vfs_casexattr_len() on the already-known xattr key.
+Cancel active async requests before waiting for them to finish.
 
-Assisted-by: Claude:claude-sonnet-5
-Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
+Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ fs/smb/server/connection.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 58d2113cd44b2..5d6469c759074 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -5138,6 +5138,8 @@ static int get_file_stream_info(struct ksmbd_work *work,
- 	struct kstat stat;
- 	const struct path *path = &fp->filp->f_path;
- 	ssize_t xattr_list_len;
-+	ssize_t slen;
-+	loff_t ssize;
- 	int nbytes = 0, streamlen, stream_name_len, next, idx = 0;
- 	int buf_free_len;
- 	int ret;
-@@ -5199,8 +5201,20 @@ static int get_file_stream_info(struct ksmbd_work *work,
- 		streamlen *= 2;
- 		kfree(stream_buf);
- 		file_info->StreamNameLength = cpu_to_le32(streamlen);
--		file_info->StreamSize = cpu_to_le64(stream_name_len);
--		file_info->StreamAllocationSize = cpu_to_le64(stream_name_len);
-+		/*
-+		 * stream_name_len is the byte length of the xattr's *name*,
-+		 * not its value -- same class of bug ksmbd_stream_eof()
-+		 * (smb2pdu.c) already fixes for EndOfFile/AllocationSize on
-+		 * a stream handle; this enumeration path needs the same
-+		 * real xattr value length, not the name length reused as a
-+		 * size.
-+		 */
-+		slen = ksmbd_vfs_casexattr_len(file_mnt_idmap(fp->filp),
-+						path->dentry, stream_name,
-+						strlen(stream_name) + 1);
-+		ssize = slen < 0 ? 0 : (loff_t)slen;
-+		file_info->StreamSize = cpu_to_le64(ssize);
-+		file_info->StreamAllocationSize = cpu_to_le64(ssize);
+diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
+index 35971331a785d..ec265f12c4902 100644
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -232,6 +232,26 @@ void ksmbd_conn_try_dequeue_request(struct ksmbd_work *work)
+ 	wake_up_all(&conn->req_running_q);
+ }
  
- 		nbytes += next;
- 		buf_free_len -= next;
++static void ksmbd_conn_cancel_async_requests(struct ksmbd_conn *conn)
++{
++	struct ksmbd_work *work, *tmp;
++
++	ksmbd_debug(CONN, "Cancel pending async requests on releasing connection\n");
++	spin_lock(&conn->request_lock);
++	list_for_each_entry_safe(work, tmp, &conn->async_requests,
++				 async_request_entry) {
++		if (work->state != KSMBD_WORK_ACTIVE)
++			continue;
++
++		ksmbd_debug(CONN, "Cancel async request id %d\n",
++			    work->async_id);
++		work->state = KSMBD_WORK_CANCELLED;
++		if (work->cancel_fn)
++			work->cancel_fn(work->cancel_argv);
++	}
++	spin_unlock(&conn->request_lock);
++}
++
+ void ksmbd_conn_lock(struct ksmbd_conn *conn)
+ {
+ 	mutex_lock(&conn->srv_mutex);
+@@ -543,6 +563,7 @@ int ksmbd_conn_handler_loop(void *p)
+ 
+ out:
+ 	ksmbd_conn_set_releasing(conn);
++	ksmbd_conn_cancel_async_requests(conn);
+ 	/* Wait till all reference dropped to the Server object*/
+ 	wait_event(conn->r_count_q, atomic_read(&conn->r_count) == 0);
+ 
 -- 
 2.53.0
 
