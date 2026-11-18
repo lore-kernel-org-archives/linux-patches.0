@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021511;
-	b=WbmqMQXSc8WEPaeukYGUfo/DPxninGdPSuLemgKeZyTGvq1oEYxD5Zs7S/m3AeUywV4N
-	 i9jU/Y5C7oen0/qNzcm/+h/VqoZ4J/Ruc5RAoIMOkzx91yWO/3QUBx2ES4j0/P4sTf9hT
-	 XDZR/7R3G1vrZwo8otAYt8w3XxB9qBi3pOIEmjdAAEVsQfymEn45K1VJ0bwMqtv6juWgq
-	 9+xG2anYMVhJOK6oOo4NqUEcxu21kGfNKfB60rLuXinkNtfaogbmEJ8WcccwJEDpTGBIR
-	 AfVI1aBRrfynk2heA/IvQiNRLRI+ETUOGuMh1fnpy6x+OLMLFt0diF5wNGWV1GWFG2w==
+	t=1795021514;
+	b=dwdWezUHdmUjo91RHq5tVmL7EOCKaEss4m+0D7jIIWf5gJOOFFeKyN1JucVlIZ+Jb4va
+	 Y2r7G2BIfZEOG/OOR4Dk/s8tPlVDws0vtLKBSJH3bVaeNN7bI1rZP+aOwMIqaIXw8Wyi7
+	 K/iiFa5JNtlaJKm40R+M0MX6UrYSUXntDW5j2If9Kgtx4sVre8tf/Vd5WhByUcfbFU2zi
+	 JIoK2k+I3he6ChzEJHBPD/aCnqKqscvCFMzcRB1KdZEJKw5ikNlKQJMTxtducGH5atdos
+	 hS/cco+VjfhwCu6iPj3FUbGZ3hS50FKF0nL+N8aqgjLNnU13gMyMFFe2vYFJz6kPUYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021511;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021514;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Td6KndiyakhBSI0iRmm5N3RU7gp1SjoX1jlOsOwB8qQ=;
-	b=1mvJ/Es/Av+ruFkINXa0BLdenTFdVO8G4jofB9PuKoH4TDXwNm5xYa49nWogv5PBgLKq
-	 pInYpG6hVtffmim3E1fk8p+OJiK1MSdfJQy4kI//U2y1nElzpWoiD3vuEBrBriJYGNI+I
-	 M66MFU3ZWViLGzbsGSBHqjujCje3CDAqVvmX08Q8WsxcTOMEwVKu25BVsfomm0zzclR7W
-	 OT2NxroBxfDTaOiq/1ouAKHbAe5j6E0KGOdVZvslsTVhqrHG6nrxTqTAmOMwbiYRbVGfo
-	 Yr0x3D/IhlvPjrgRjevSCgUot17Gne66r8FBjNtzC44ol84TO+5If9QUh52KpUgzH8g==
+	bh=rtxJQUE3AIU8UQ4iOsFpn9Fx4GN3VR1IbgJ5YriWeaY=;
+	b=Cn9KEye1pELoPF0qkNvy5G8x7dXgTEU/PdkyOQnFU4XcJReRvfBCSqcoFt5Ul8qQ4bS3
+	 epNJofr1lEbcYp8oeY5z7CJtCASr8njYlSViYkmv8nq26+n46TBJCKBgLxH7dTme2OzAw
+	 pqUiph21vEqEz7Ew8qiMRLMX1zh2gsESVhmqNmghVydU6gBZbM+OQ1XspXs0peWx7phYX
+	 +383UvO6kKuvEoUqr7EOrnMnZCm+pzBQCxgHoxQjTblGW99Md9Z8kjj+bB502H7xVZlnh
+	 IG3ZikaY5e6Zlu+5YEz13eRFaqam+o/o3cRhfTAFe2ctjNbqBII87lBWZE9gIEdCwSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LgEmxRBD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T3yWhyOe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753AF606A320;
-	Wed, 18 Nov 2026 17:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D3A606A332;
+	Wed, 18 Nov 2026 17:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LgEmxRBD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94301F000C4;
-	Wed, 18 Nov 2026 17:05:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T3yWhyOe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD0A1F000C4;
+	Wed, 18 Nov 2026 17:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021511;
-	bh=Td6KndiyakhBSI0iRmm5N3RU7gp1SjoX1jlOsOwB8qQ=;
+	s=korg; t=1795021514;
+	bh=rtxJQUE3AIU8UQ4iOsFpn9Fx4GN3VR1IbgJ5YriWeaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LgEmxRBDwafxj96hPE3cA3qWBFAiE+LALbP9mbrnuwXio7cVkmJsp22lJEhPpSPoq
-	 /t4R2DA4iaAePCaQG5901TNRV+9J/wAtt1kVm5kW8t9HzmDi1HHCKnCApJ9czuXzjV
-	 pN+92OcDW/zjxngI/c2TWtw1x2MBj27aUrptshuE=
+	b=T3yWhyOe6YjUXCWrMcvnpYx1jGA2WuNqq/Y2M0DpOVrePS01Ogzrb4UE4QrUTjcn7
+	 D+B0DWz/cTRZi2IhFp8ZW0oOtytbZhTguspKvMPt7AY8Io+SFW1IHAyDHkmnU+3Xnx
+	 bZribWrFobcz1usewqQcxokLA24IuwaMBhmNLRKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sivansh Gupta <sivansh.gupta@oss.qualcomm.com>,
-	Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2334/2651] mailbox: qcom-cpucp: read mbox hardware register using readq()
-Date: Wed, 18 Nov 2026 15:59:34 +0100
-Message-ID: <20261118150409.145973006@linuxfoundation.org>
+Subject: [PATCH 7.3 2317/2651] selftests: ALSA: pcmtest: Compare all captured bytes in ni_capture
+Date: Wed, 18 Nov 2026 15:59:17 +0100
+Message-ID: <20261118150408.607307341@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,40 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sivansh Gupta <sivansh.gupta@oss.qualcomm.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 74f1cf02d9fe0fd32ca299cd4d71bc29d3bf2a54 ]
+[ Upstream commit c8c199e1b1b3bb0ef52a2a02d1ec87bee574ce13 ]
 
-Mailbox hardware registers are 64 bit wide, but the interrupt handler
-currently reads only 32 bits with readl() at offset 0x4 (upper 32
-bits). This returns an incorrect value, while reading using readq()
-returns the expected value.
+The ni_capture test reads rate * time frames into each channel buffer
+and then compares rate * time bytes. A frame is sample_size bytes per
+channel, so with S16_LE only the first half of each channel is checked.
+If the second half is wrong the test still passes.
 
-Use readq() to access the 64 bit register and pass the expected value
-to the mailbox client.
+Compare rate * time * sample_size bytes per channel.
 
-Fixes: 0e2a9a03106c ("mailbox: Add support for QTI CPUCP mailbox controller")
-Signed-off-by: Sivansh Gupta <sivansh.gupta@oss.qualcomm.com>
-Reviewed-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Fixes: 10b98a4db11a ("selftests: ALSA: Add test for the 'pcmtest' driver")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20261021112554.4037107-1-sammiee5311@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/qcom-cpucp-mbox.c | 2 +-
+ tools/testing/selftests/alsa/test-pcmtest-driver.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/qcom-cpucp-mbox.c b/drivers/mailbox/qcom-cpucp-mbox.c
-index 515d2d12c01be..b88ea2527265a 100644
---- a/drivers/mailbox/qcom-cpucp-mbox.c
-+++ b/drivers/mailbox/qcom-cpucp-mbox.c
-@@ -61,7 +61,7 @@ static irqreturn_t qcom_cpucp_mbox_irq_fn(int irq, void *data)
- 	status = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_STAT);
+diff --git a/tools/testing/selftests/alsa/test-pcmtest-driver.c b/tools/testing/selftests/alsa/test-pcmtest-driver.c
+index e025a7bac26b7..18ee72d5d4c96 100644
+--- a/tools/testing/selftests/alsa/test-pcmtest-driver.c
++++ b/tools/testing/selftests/alsa/test-pcmtest-driver.c
+@@ -265,7 +265,7 @@ TEST_F(pcmtest, ni_capture) {
+ 	snd_pcm_close(handle);
  
- 	for_each_set_bit(i, (unsigned long *)&status, cpucp->mbox.num_chans) {
--		u32 val = readl(cpucp->rx_base + APSS_CPUCP_RX_MBOX_CMD(i) + APSS_CPUCP_MBOX_CMD_OFF);
-+		u64 val = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_CMD(i));
- 		struct mbox_chan *chan = &cpucp->chans[i];
- 		struct mbox_client *cl;
- 		unsigned long flags;
+ 	for (i = 0; i < CH_NUM; i++) {
+-		for (j = 0; j < params.rate * params.time; j++)
++		for (j = 0; j < params.rate * params.time * params.sample_size; j++)
+ 			ASSERT_EQ(chan_samples[i][j], patterns[i].buf[j % patterns[i].len]);
+ 		free(chan_samples[i]);
+ 	}
 -- 
 2.53.0
 
