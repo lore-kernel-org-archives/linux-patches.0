@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019439;
-	b=w1lzGeYiZTsH/GfkNDPXjHa4atTnMVU5VredAdMxJkodxiHngYleUKZAe2hn3riJdsi0
-	 8VMAOMYA78XEKcPf6RAZ0+IFT/t8eOzccoSBQdjatjA0nkAiqmk9SkOvYFUjPLxPXZ92O
-	 5YEbU7UPr29oczTvFcdLeuAh2v546+oJYTGcJbOg8gixmvpG8G3YjjGtW/SB4MhcgwTJg
-	 kgjgLnmvpbM57SFdPPfj55JJzI1mEMsknTZtnD3Oxf70ALnccXkFrBq6xHMA0v6tIxLkB
-	 6Z04dIxeS2e4hy0vZ0S6rqRsRquFdkTK7/BNpgfoYx8g0dh9qQBZeKN+mpUZBuvk4Ew==
+	t=1795019441;
+	b=TK2y9AaOLOBl/cReWFJqYH+2B0rl6Iu/ZNCrz4FGoG7rRBUc4H0XB04AbxGEf5hWrxca
+	 FTR1/x6Hfct40OK0HPgy+/iUdpoc1blPljaMaxohgbT3tM/G6TBk8uxpUWqOBrxrbtcxw
+	 tsuQp1x9Q6q5iTsmRvsBI93lSdODS81dAE7X8Ue0a4/r/CPtgEIvJftT/C3YzZm95lfbh
+	 OKWy/cr/VVDBM3doSkzXyajSjbgTGmHwFZDXP34BSDfBq8ChAOXNtk0j6o725vo8L7zDA
+	 I67UDLCQ+q+R1HuhIXtB2Dg1kB8OEbk6Xklqj78P6lSSGpMaYXrj5C4bX/QcYCgdlTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019439;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019441;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=WBPg6zRU7we71ChsFY0rt6H1VrWbOJeG1bdKIzcXj+U=;
-	b=MkvXiXoeZrHeU6/WVIEYKkmc6fPOvVe0HeLrFvIu8huy32nQlc19kYiNiCRVdeOwUYtf
-	 ap+Y75d2pgytq1zUl6q3fNKyuw9fqzvjDumYQR9pJPgEqiuYuved7Xm0FjnYIpCR4ku/d
-	 abAXjC0yCylvvTIDU7B/cRQyJDlPcoA6MxDSWDBjhhhgBzd5rvkFEmw4FcG02KIiiFzvj
-	 6uLyuwp7ZvWczReb8jGV/sp1PXMEBQPbOO4MdW8punan54EbCfqU8G6jeOVb0gj30B3Ef
-	 hYDk7CBZgr5GYRObssGKZvTprhbGLXB/lLaYy7x/mQRRnlnjc2KzD5TdQNYlUtuQtKQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=8u9FJ7QEsKeWgQAnvDO5niBT93otPeSV6SxjKuXLaBc=;
+	b=AEXDUkVGNVI/SIvccZ2dT8EI3+Qlt1DR3M7xd3wDg8D4UDfl4JDX6Ne8zq8Gi7smbdcH
+	 TY6rrBwtEaBh6qCySjk9ChMKUnyusnsNqR+ai3BzggawnDWdaW3s1zd2FJ6GsBogPQfKX
+	 /fVqWiq3JevLx4zsXLHNT43nvVqtKl5J+TYAwF5UA0YseLMEZdwuB/18um/pie6oxFWQM
+	 Lw22LP7A8+wN4wKDXAHQIAUboZqwVb8D7XUb3aXuCWvAd5T3CVecXJs7hZqK+C5huueEw
+	 DvN0RXRvtnNSlIo/Q4/ky+LlJ/zBR6QvT6nexXH64f2hD6QG3kWtm7lVUag//PzBYDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xz9LWCOG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LuK6Mx4d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F41760A263F;
-	Wed, 18 Nov 2026 16:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79F560A261B;
+	Wed, 18 Nov 2026 16:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xz9LWCOG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 542B51F000C5;
-	Wed, 18 Nov 2026 16:30:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LuK6Mx4d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EBC1F000C7;
+	Wed, 18 Nov 2026 16:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019438;
-	bh=WBPg6zRU7we71ChsFY0rt6H1VrWbOJeG1bdKIzcXj+U=;
+	s=korg; t=1795019441;
+	bh=8u9FJ7QEsKeWgQAnvDO5niBT93otPeSV6SxjKuXLaBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xz9LWCOGJv1xuDUnCSSnuuC35QmkuF6Y7kKOfJInYNUrOfHMEqCSeBBe4/6BV3cNI
-	 eZWKi1KFTgIhJIyS/eVkLazwkZl4Vvq0b8BfKsIx2J8UK7or+Lnjk/cY8NJ3+bcrYx
-	 MPdxJsfqc9lMMdad944+93r6GOOy7xZyyJZNppVc=
+	b=LuK6Mx4dva2ncRN7wwDx23/QwZFMOfl+lcNGN4ftuEX0t5vId2F0BUgdHYY6fXWIS
+	 sr4G+iHpGrIAf70RjoeGlv3ijJMGlY8aBGPe2aTNJrArfN5ZT1IvHDt/B6IGNp+Upr
+	 Xnbn/d8hfxXA/8potZ3OqxwA74EFEPlnbh+IPJt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Schier <n.schier@fritz.com>,
-	Kees Cook <kees@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+	=?UTF-8?q?Ali=20Ahmet=20Memi=C5=9F?= <aliamemis@disroot.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1596/2651] kbuild: Mark the initcall ordering recipe as recursive
-Date: Wed, 18 Nov 2026 15:47:16 +0100
-Message-ID: <20261118150345.341403390@linuxfoundation.org>
+Subject: [PATCH 7.3 1597/2651] ALSA: seq: Wait for one RCU grace period when deleting all ports
+Date: Wed, 18 Nov 2026 15:47:17 +0100
+Message-ID: <20261118150345.371206929@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -64,70 +62,122 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Ali Ahmet Memiş <aliamemis@disroot.org>
 
-[ Upstream commit ae5f6044c4cdffe2b3361b15c1d6fc67b339f2a4 ]
+[ Upstream commit 7ca1731b8a129cafe258c578fa87b7c414c6d004 ]
 
-generate_initcall_order.pl, which orders initcalls for Clang LTO, forks
-a child per input file, up to the job count scripts/jobserver-exec
-passes it in PARALLELISM. It used to run from link-vmlinux.sh, which
-the top-level Makefile invokes as a recursive recipe, but
-commit 5d45950dfbb15 ("kbuild: move vmlinux.o link to
-scripts/Makefile.vmlinux_o") moved it into a recipe without "+".
+Since the port list was converted to RCU, snd_seq_delete_all_ports()
+calls synchronize_rcu() once per port under register_mutex. Closing a
+client with 254 ports now takes about 1.6s and every other client
+open or close waits for it.
 
-GNU Make passes the jobserver pipe only to recipes it treats as
-recursive, and the make 4.3 in CentOS Stream 9 also hides it in
-sub-makes (a backport of the fix for GNU Make bug 58232), so
-jobserver-exec cannot open it and prints:
+Unlink all ports first, wait for a single grace period and then free
+them.
 
-  WARNING: Unable to reopen jobserver read-side pipe: FileNotFoundError(2, 'No such file or directory')
-
-PARALLELISM is then left unset, and the script caps its children at the
-number of online CPUs instead of the free job slots.
-
-Mark the recipe as recursive again (this makes "make -n" runs the script
-again too, as it did from link-vmlinux.sh). Masahiro posted the same
-change and withdrew it because the script was given only vmlinux.a, and
-so never ran more than one child [1]. But on arm64, LoongArch, and RISC-V
-with CONFIG_EFI_STUB, KBUILD_VMLINUX_LIBS also gives it the EFI stub's
-lib.a. Either way, the warning is silenced.
-
-Tested ARCH=x86_64 defconfig with CONFIG_LTO_CLANG_THIN=y, LLVM=1
-(Clang 24.0.0git), and GNU Make 4.3 plus CentOS Stream 9's
-make-4.3-cloexec.patch.
-
-Fixes: 5d45950dfbb15 ("kbuild: move vmlinux.o link to scripts/Makefile.vmlinux_o")
-Link: https://lore.kernel.org/all/CAK7LNARCM=rUm8mA8GRQ7ufeyfneGf4OEvHmESKt=zuxs2KrHw@mail.gmail.com/ [1]
-Assisted-by: LLM
-Reviewed-by: Nicolas Schier <n.schier@fritz.com>
-Signed-off-by: Kees Cook <kees@kernel.org>
-Tested-by: Paul E. McKenney <paulmck@kernel.org>
-Link: https://patch.msgid.link/20261010081914.540611-2-kees@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 4c252fbc06d6 ("ALSA: seq: Use RCU for the client port list")
+Signed-off-by: Ali Ahmet Memiş <aliamemis@disroot.org>
+Link: https://patch.msgid.link/20261010222543.1470723-1-aliamemis@disroot.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Makefile.vmlinux_o | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/seq/seq_ports.c | 41 +++++++++++++++++++++++++-------------
+ sound/core/seq/seq_ports.h |  1 +
+ 2 files changed, 28 insertions(+), 14 deletions(-)
 
-diff --git a/scripts/Makefile.vmlinux_o b/scripts/Makefile.vmlinux_o
-index 24a3a4fd271c2..0b37bd5dc3a49 100644
---- a/scripts/Makefile.vmlinux_o
-+++ b/scripts/Makefile.vmlinux_o
-@@ -19,7 +19,7 @@ quiet_cmd_gen_initcalls_lds = GEN     $@
+diff --git a/sound/core/seq/seq_ports.c b/sound/core/seq/seq_ports.c
+index eb67eb0eeb147..b582d034437f1 100644
+--- a/sound/core/seq/seq_ports.c
++++ b/sound/core/seq/seq_ports.c
+@@ -248,17 +248,9 @@ static void clear_subscriber_list(struct snd_seq_client *client,
+ }
  
- .tmp_initcalls.lds: $(srctree)/scripts/generate_initcall_order.pl \
- 		vmlinux.a $(KBUILD_VMLINUX_LIBS) FORCE
--	$(call if_changed,gen_initcalls_lds)
-+	+$(call if_changed,gen_initcalls_lds)
+ /* delete port data */
+-static int port_delete(struct snd_seq_client *client,
+-		       struct snd_seq_client_port *port)
++static void port_free(struct snd_seq_client *client,
++		      struct snd_seq_client_port *port)
+ {
+-	/* set closing flag and wait for all port access are gone */
+-	port->closing = 1;
+-	/* the port has already been unlinked from the client's port list;
+-	 * wait for a grace period so that RCU readers still traversing the
+-	 * list can no longer take a new use_lock reference, then drain the
+-	 * outstanding references before freeing
+-	 */
+-	synchronize_rcu();
+ 	snd_use_lock_sync(&port->use_lock);
  
- targets := .tmp_initcalls.lds
+ 	/* clear subscribers info */
+@@ -272,6 +264,20 @@ static int port_delete(struct snd_seq_client *client,
+ 	snd_BUG_ON(port->c_dest.count != 0);
  
+ 	kfree(port);
++}
++
++static int port_delete(struct snd_seq_client *client,
++		       struct snd_seq_client_port *port)
++{
++	/* set closing flag and wait for all port access are gone */
++	port->closing = 1;
++	/* the port has already been unlinked from the client's port list;
++	 * wait for a grace period so that RCU readers still traversing the
++	 * list can no longer take a new use_lock reference, then drain the
++	 * outstanding references before freeing
++	 */
++	synchronize_rcu();
++	port_free(client, port);
+ 	return 0;
+ }
+ 
+@@ -302,18 +308,25 @@ int snd_seq_delete_port(struct snd_seq_client *client, int port)
+ int snd_seq_delete_all_ports(struct snd_seq_client *client)
+ {
+ 	struct snd_seq_client_port *port, *tmp;
++	LIST_HEAD(deleted);
+ 
+-	/* unlink and delete each port; port_delete() waits for an RCU grace
+-	 * period before draining the port, so concurrent lockless readers can
+-	 * no longer take a new use_lock reference on it
++	/* unlink all ports first and wait for a single RCU grace period
++	 * before draining and freeing them, so concurrent lockless readers
++	 * can no longer take a new use_lock reference on any of them
+ 	 */
+ 	guard(mutex)(&client->ports_mutex);
+ 	list_for_each_entry_safe(port, tmp, &client->ports_list_head, list) {
+ 		list_del_rcu(&port->list);
+ 		client->num_ports--;
++		port->closing = 1;
++		list_add_tail(&port->delete_list, &deleted);
+ 		snd_seq_system_client_ev_port_exit(port->addr.client, port->addr.port);
+-		port_delete(client, port);
+ 	}
++	if (list_empty(&deleted))
++		return 0;
++	synchronize_rcu();
++	list_for_each_entry_safe(port, tmp, &deleted, delete_list)
++		port_free(client, port);
+ 	return 0;
+ }
+ 
+diff --git a/sound/core/seq/seq_ports.h b/sound/core/seq/seq_ports.h
+index 12ad86bf14890..ef1787d6c2dd6 100644
+--- a/sound/core/seq/seq_ports.h
++++ b/sound/core/seq/seq_ports.h
+@@ -49,6 +49,7 @@ struct snd_seq_client_port {
+ 	struct module *owner;		/* owner of this port */
+ 	char name[64];			/* port name */	
+ 	struct list_head list;		/* port list */
++	struct list_head delete_list;	/* used by snd_seq_delete_all_ports() */
+ 	snd_use_lock_t use_lock;
+ 
+ 	/* subscribers */
 -- 
 2.53.0
 
