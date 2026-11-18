@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025573;
-	b=oWFyeh9fLKkX4r0nsxFShJlosgHVNDGSE6HmQswrtpy3C0gL8ZO8VpCcDgNhieBxX1rD
-	 H+eNMgqjA1cVqvNNRAzaGUINVCzHZauCgQIa0S/NnW3GfH96Tml9veA1UxpzNfXoPilY6
-	 Oj32Oe9/6TkGWAd+w4id61qOA2gZilhiVfaYWiwPKhGhwPw7G4ZZjFoc/AHksZmvy1fpD
-	 4XWngU2Oi4e7CFG5/GSPOATRwlzAlUVss1GH09U67U+vzjzpaOOP1Dx4G3InY0oFFiN5h
-	 aVt0XxeWkWKRn4ZkldK0QwjIO78D3tCgUvUJ0r2VQsNygr0sqPi39U6qu3e9Yg5Pt0A==
+	t=1795025576;
+	b=E4ZyLSEU4BduUiIyCGEO9859RkzWh6SycgsfqDbLmhpSaPmoILJK0pEprL2MkNeWnkcj
+	 1ZvXdDQLZSZXxmrmhScwQMXONWEyVWD0x2irKQPT41SPHijtxglw0gj7mtYckgeo/FiA0
+	 R5o/nGZKl9PVru19L+uvE2y6sx2v3ZmleKxS33aDiQGWCnsp/vqJRVE0IixHPICjgs58Z
+	 UyqcRupLfyxuxMubmKdBKVKlgWTWZsr1frempkSnOphMh5xoPR55OCMw3XMCkfueV00eE
+	 AYAfXNkYA3qlhzZlqfgaN4pdSAvlyKJxmY+z3HI1MZmuhNIWkg5NBGNkaVeJtZx72Hg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025573;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025576;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m1pihxX1W7tTIEcUVtukzOF+IgOXf7Sr2CotnqsUhjE=;
-	b=XqN0G+BOtaeL0MANjfY05RK5ujaCbGpkTRGMCV5KlArOFP8l0jE4ORigId1YHn6xQ62v
-	 nCEdpodgbV6f6K/YAzdNN1ljs7t+Oe5HJDtVdi+z3fXQVZ1EiVA8aafg8bG2KoDqsdKAa
-	 c3fG/CVts3i26lYPXmepYKmV5WjI/vjyYmPYQlyhkHsRmy6sNr/e8+l0xbwOFZYE3P3rV
-	 hL1Aw6epYVYXmyjS65AyWMfqtVtnnQah+XmKdgiHhAfuuKq1daMBGmWWJo3JM9L2SoIVY
-	 MgG6bAJxMk0FH6lsk88mGzLzxfT0CTH8uyv2Ne6izENeuweVdwqbVVJ2M2aTnM8fIDQ==
+	bh=eNnFk3yNhtjgA9wxLimCFV0Ma/lVAuWmvHqf3BZJWa4=;
+	b=IBcenXw1DpGR0i1FgZ9EMQE9V9zN6nffP0/xJc+G9FOPvzh0Hxlnw7o0w1rcoVu6Vz/w
+	 /w+dpxnWukgnMMdmY0TielEmtyOHASOA0VLWtBOu88+A1khItlOdY/5b7rVnCenPgm+Vr
+	 LicVHzh1wS1kY0aFZF3ORBVuZKZNsJIbTklu42xVYLxmOez4otX6LGyCxwrw8QIuZOuaf
+	 8pBamfNGycaPrHgJkOelnMliavrrcJeLumqrmDV63OoOn9MtqcospVASt2L+4Ve4/lLmf
+	 IOOAgUAgTAePPgEh2E1GhMpjizL2RtJw80bBDTXcJk9ZuQKoUjOsxONP6hEcDd8Bs/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kXz1A00t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l+7hb6H4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99078606A32A;
-	Wed, 18 Nov 2026 18:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9DE606A325;
+	Wed, 18 Nov 2026 18:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kXz1A00t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4281F000C5;
-	Wed, 18 Nov 2026 18:12:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l+7hb6H4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF5421F000C5;
+	Wed, 18 Nov 2026 18:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025573;
-	bh=m1pihxX1W7tTIEcUVtukzOF+IgOXf7Sr2CotnqsUhjE=;
+	s=korg; t=1795025576;
+	bh=eNnFk3yNhtjgA9wxLimCFV0Ma/lVAuWmvHqf3BZJWa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kXz1A00tf8wJwEPz0fNNPYImAASL4duVzammK0Ja63BjvJGbmyt2XK1b5/U/O7Ujs
-	 hbayDh8D8zyzohJAC4DHDQBBizZ1AYGwiQIaXgwPDVJNOC4ZGi151nttRXsHKxVY4m
-	 /5PpFnMgdbWhexFcA6TCSNr6Cd97eyiU0W2T3o/A=
+	b=l+7hb6H45zEIASlXLtkXq8bGJeG+9ut83JSD5HmwkItzCWQf70CzbB2BWEEX6sKLI
+	 gAzJUeVTvyRcOs7rqQvbD24meoWpsXAyT5VAGDeyG1LOYPpjtnlJskmMgLi0Dn5jPE
+	 zNG2F8HqIfHLnX/G8pVT/MFTxbgV8NjpZL8kUH9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
 	Frank Li <Frank.Li@nxp.com>,
 	Linus Walleij <linusw@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1127/2151] dmaengine: ste_dma40: Fix memcpy channel parsing
-Date: Wed, 18 Nov 2026 15:47:42 +0100
-Message-ID: <20261118150203.257469056@linuxfoundation.org>
+Subject: [PATCH 6.18 1128/2151] dmaengine: ste_dma40: Validate disabled channel indexes
+Date: Wed, 18 Nov 2026 15:47:43 +0100
+Message-ID: <20261118150203.293018231@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,144 +71,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit f2baf04a695de4f952513cb00ccf0338c6db2e00 ]
+[ Upstream commit c96e9f056095825b5f8d4a11f4107fc174892f92 ]
 
-d40_of_probe() validates the memcpy-channels property against
-D40_MEMCPY_MAX_CHANS, but reads the property directly into a smaller global
-array. A long property can therefore overwrite adjacent data. The mutable
-global also lets a later DMA40 instance replace the memcpy channel mapping
-used for future allocations on an earlier instance.
+d40_of_probe() checks how many entries disabled-channels contains, but not
+the channel numbers themselves. d40_phy_res_init() later uses every value
+as an index into base->phy_res, whose size is the number of channels found
+in this DMA40 instance. An out-of-range value can therefore write beyond
+the allocation.
 
-Store the mapping in the per-device platform data, validate the property
-against that storage, and check the property read result. The property is
-required and d40_probe() always populates the platform data, so remove the
-obsolete global mapping and fallback.
+Validate each disabled channel against the detected hardware channel count
+before allocating and initializing the channel resources.
 
-Fixes: a7dacb68b35a ("dmaengine: ste_dma40: Allow memcpy channels to be configured from DT")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225215.5EA2F1F000E9@smtp.kernel.org/
+Fixes: 499c2bc3cc89 ("dmaengine: ste_dma40: Fetch disabled channels from DT")
 Assisted-by: LLM
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-15-89f595e8851d@kernel.org
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-16-89f595e8851d@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 45 +++++++++++++----------------------------
- 1 file changed, 14 insertions(+), 31 deletions(-)
+ drivers/dma/ste_dma40.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 0a91166061e90..ac3f1f2a4cd10 100644
+index ac3f1f2a4cd10..d51b7c19d42dc 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -28,6 +28,8 @@
- #include "ste_dma40.h"
- #include "ste_dma40_ll.h"
+@@ -3256,6 +3256,15 @@ static int __init d40_hw_detect_init(struct platform_device *pdev,
  
-+#define D40_MEMCPY_MAX_CHANS	8
-+
- /**
-  * struct stedma40_platform_data - Configuration struct for the dma device.
-  *
-@@ -41,6 +43,7 @@
-  * to use SoftLLI.
-  * @use_esram_lcla: flag for mapping the lcla into esram region
-  * @num_of_memcpy_chans: The number of channels reserved for memcpy.
-+ * @memcpy_channels: The event lines used for memcpy.
-  * @num_of_phy_chans: The number of physical channels implemented in HW.
-  * 0 means reading the number of channels from DMA HW but this is only valid
-  * for 'multiple of 4' channels, like 8.
-@@ -51,6 +54,7 @@ struct stedma40_platform_data {
- 	int				 num_of_soft_lli_chans;
- 	bool				 use_esram_lcla;
- 	int				 num_of_memcpy_chans;
-+	u32				 memcpy_channels[D40_MEMCPY_MAX_CHANS];
- 	int				 num_of_phy_chans;
- };
- 
-@@ -86,25 +90,6 @@ struct stedma40_platform_data {
- #define D40_ALLOC_PHY		BIT(30)
- #define D40_ALLOC_LOG_FREE	0
- 
--#define D40_MEMCPY_MAX_CHANS	8
--
--/* Reserved event lines for memcpy only. */
--#define DB8500_DMA_MEMCPY_EV_0	51
--#define DB8500_DMA_MEMCPY_EV_1	56
--#define DB8500_DMA_MEMCPY_EV_2	57
--#define DB8500_DMA_MEMCPY_EV_3	58
--#define DB8500_DMA_MEMCPY_EV_4	59
--#define DB8500_DMA_MEMCPY_EV_5	60
--
--static int dma40_memcpy_channels[] = {
--	DB8500_DMA_MEMCPY_EV_0,
--	DB8500_DMA_MEMCPY_EV_1,
--	DB8500_DMA_MEMCPY_EV_2,
--	DB8500_DMA_MEMCPY_EV_3,
--	DB8500_DMA_MEMCPY_EV_4,
--	DB8500_DMA_MEMCPY_EV_5,
--};
--
- /* Default configuration for physical memcpy */
- static const struct stedma40_chan_cfg dma40_memcpy_conf_phy = {
- 	.mode = STEDMA40_MODE_PHYSICAL,
-@@ -2023,7 +2008,8 @@ static int d40_config_memcpy(struct d40_chan *d40c)
- 
- 	if (dma_has_cap(DMA_MEMCPY, cap) && !dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_log;
--		d40c->dma_cfg.dev_type = dma40_memcpy_channels[d40c->chan.chan_id];
-+		d40c->dma_cfg.dev_type =
-+			d40c->base->plat_data->memcpy_channels[d40c->chan.chan_id];
- 
- 		d40_log_cfg(&d40c->dma_cfg,
- 			    &d40c->log_def.lcsp1, &d40c->log_def.lcsp3);
-@@ -3271,12 +3257,7 @@ static int __init d40_hw_detect_init(struct platform_device *pdev,
  	num_phy_chans = min(num_phy_chans, STEDMA40_MAX_PHYS);
  
++	for (i = 0; plat_data->disabled_channels[i] != -1; i++) {
++		int chan = plat_data->disabled_channels[i];
++
++		if (chan < 0 || chan >= num_phy_chans) {
++			dev_err(dev, "Invalid disabled channel %d\n", chan);
++			return -EINVAL;
++		}
++	}
++
  	/* The number of channels used for memcpy */
--	if (plat_data->num_of_memcpy_chans)
--		num_memcpy_chans = plat_data->num_of_memcpy_chans;
--	else
--		num_memcpy_chans = ARRAY_SIZE(dma40_memcpy_channels);
--
--	num_memcpy_chans = min(num_memcpy_chans, D40_MEMCPY_MAX_CHANS);
-+	num_memcpy_chans = plat_data->num_of_memcpy_chans;
+ 	num_memcpy_chans = plat_data->num_of_memcpy_chans;
  	num_log_chans = num_phy_chans * D40_MAX_LOG_CHAN_PER_PHY;
- 
- 	dev_info(dev,
-@@ -3525,6 +3506,7 @@ static int __init d40_of_probe(struct device *dev,
- 	struct stedma40_platform_data *pdata;
- 	int num_phy = 0, num_memcpy = 0, num_disabled = 0;
- 	const __be32 *list;
-+	int ret;
- 
- 	pdata = devm_kzalloc(dev, sizeof(*pdata), GFP_KERNEL);
- 	if (!pdata)
-@@ -3538,18 +3520,19 @@ static int __init d40_of_probe(struct device *dev,
- 	list = of_get_property(np, "memcpy-channels", &num_memcpy);
- 	num_memcpy /= sizeof(*list);
- 
--	if (num_memcpy > D40_MEMCPY_MAX_CHANS || num_memcpy <= 0) {
-+	if (num_memcpy > ARRAY_SIZE(pdata->memcpy_channels) ||
-+	    num_memcpy <= 0) {
- 		d40_err(dev,
- 			"Invalid number of memcpy channels specified (%d)\n",
- 			num_memcpy);
- 		return -EINVAL;
- 	}
-+	ret = of_property_read_u32_array(np, "memcpy-channels",
-+					 pdata->memcpy_channels, num_memcpy);
-+	if (ret)
-+		return ret;
- 	pdata->num_of_memcpy_chans = num_memcpy;
- 
--	of_property_read_u32_array(np, "memcpy-channels",
--				   dma40_memcpy_channels,
--				   num_memcpy);
--
- 	list = of_get_property(np, "disabled-channels", &num_disabled);
- 	num_disabled /= sizeof(*list);
- 
 -- 
 2.53.0
 
