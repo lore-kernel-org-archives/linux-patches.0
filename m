@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017661;
-	b=Fil20aQZtoOY02MFuIdxoxJJF/4bcKNtxVMqXk+OghMMJDT7JlehNgVlsTvX3UHkj08M
-	 hMHVquhFw85ywR2FkRri53iIUQCQS0uMDzD6/NSBzHXY1OvqagCQc/5LwgqdFvkQ8JVpe
-	 TSkHy2m41AA1/3eBAz5rDspYG554y2pZxbbqKWVB8U59u29SAqll8EgBntHTzo3Bi1DO1
-	 o/JDmdBqBVM1W86+O46H5wnjO1gsy9Pt6LGw3gw7TNRzFaJnxnYi02tann8g9hnyJopcv
-	 XBeTvOhLd+cnSHnj3N0PQcdYsSxHqcUjFYC2wjYHMjEVoysdjBu0EUh/C9fg0OwNqkQ==
+	t=1795017664;
+	b=zGiazuFcZ0AnF6zf8jeYgH15rRCUot1j7r+BSPYX2W90RWvh1uc/Vk5LttcooIaM/s94
+	 4sm26g4gqeC9qqKJmPv9Q53cCrN8p9xSEn3uFVKxdMUzGeW9Zbppb6QLDQ4SDguxjBRqP
+	 4/Pn4IqjgM4AdXV13dLoaOvVpCKJNAG8C70v0CVLz5Amk/KO0xUhqF87FUva1yEmZeQ5F
+	 bzVNkeVNPjfOILgxaCG2v8+PG65RDyKnC+r+vFlx6nlY7XAdQjowTHe/JtoNrlm5FponJ
+	 Tb7ofmiq/AQ/dA0pEWIRNgD5gB4tdelSQYtx2vSumfwWxLYAjK1oTP6cbLuXUZREeOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017661;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017664;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yqUNc92u1LyENL93R/a8j5HkXGGz8foMazrdjiCAofc=;
-	b=KX7k163qQrX4Z+PG/ZM9L6uNi/uv0s2fumrTmBseHhH44o+8/OqP6CCjO9vjPew61WLs
-	 6jO8otWyglFPbC63pSjPFkHcpqXPUboQs5xgC8dJt99QARpnPs6A3mICHrMLLq0nalFLV
-	 jB3ewKc5ZWcOYfbQYaHWYpDxEocxbgmHhJrhBkIHypoDuybVH1eSSTaFGFqW5rcjPwKkS
-	 OKX3DjTgWdTuWlov7LOwSV/ad4qwhD3CrlpUzNRz6zNsmtCLog60E3Iivw0/ZHBbt00cp
-	 O0ITn+GU0ell7aQGbzJxHSyvM3gd+hRKm0CE0Lq2h0aMDQf/+twfhoJrxR/qwiB3R1w==
+	bh=lWyOg1tR6aFX6uFOsGFiR+TgHuX8cg1XdiwmhFKPzt4=;
+	b=D/E+mqMt7Ar+oksyzCw2rKCUjcmmpgFZKF+basaHNNAvLXdFwYT0zvNWEAwfqiq8ZF+j
+	 MdOlCAg9kmo46w9/nEf8HKDfSuME4lSbIFfCKHMZt3mA7w8sTeSKVZkSW0tKOa/PmHUVJ
+	 aA8+kkq72b6q3J1MV6ywBsOLr65DXBulXOSYsGgGRbShmRQk42fUolldVWzfePXH0bBgA
+	 O6DR2DDId1yTBnyObbkW5fKgBvc/lzcWFp+J5DtQty4GvY0pgc5FWW4ki6DwmcQ2be2uE
+	 FVm/KyW5k+LZYOEAzMs/pPFwajZ3HKS+g27yAfw2nv0Q3dyTo1zqpoqIG0xDUkiVC4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sdGMeq6i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mv3LRrlR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD81606A31C;
-	Wed, 18 Nov 2026 16:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523F6606A325;
+	Wed, 18 Nov 2026 16:01:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sdGMeq6i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43FA1F000C4;
-	Wed, 18 Nov 2026 16:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mv3LRrlR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9CB1F000C4;
+	Wed, 18 Nov 2026 16:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017661;
-	bh=yqUNc92u1LyENL93R/a8j5HkXGGz8foMazrdjiCAofc=;
+	s=korg; t=1795017664;
+	bh=lWyOg1tR6aFX6uFOsGFiR+TgHuX8cg1XdiwmhFKPzt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sdGMeq6ilHxIa35a3UL3qbkVabUbZmL5gCnw4AUxBbxbMeAjdJgxXw72PtU9L/pV8
-	 ofqYERsZToA+dgy7ln4qJzjO0NyWxySDEFFJG0Ca4bbM2XAYDXBcTNb2ymDxgEaU1n
-	 iGz9+0drnkwU1NBCbXV1OVfMDdBJdYCiqCUWIOOQ=
+	b=Mv3LRrlR1teFN1xK8tykFJoZXqDgz3Kr8+R6JiIjplaO9Ynq0TIAvKXer5PuZPPtm
+	 SXC0KJrUs6KookfZ6x3njj7B8JAlLHVFoAjIhRdf+1wqLk+erdNqPHGeYjRIlk35WT
+	 C643Km5jI0wrP2fszICcruZqXxdAXJFN1CR7Dqww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0965/2651] ASoC: mediatek: mt8192: fix MCK clock error handling
-Date: Wed, 18 Nov 2026 15:36:45 +0100
-Message-ID: <20261118150322.645428703@linuxfoundation.org>
+Subject: [PATCH 7.3 0966/2651] ASoC: mediatek: mt8192: switch to devm_clk_get_optional()
+Date: Wed, 18 Nov 2026 15:36:46 +0100
+Message-ID: <20261118150322.681650783@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,65 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 4a0ab266cb1594f8c6aef3c79726476ad99618c5 ]
+[ Upstream commit 6f4edfdce0099dc0c346c78c85f58a23d4ee646e ]
 
-If an error occurs after enabling 'm_sel_id' or 'div_clk_id' in
-mt8192_mck_enable(), the function returns directly without disabling
-the previously enabled clocks, leading to a resource leak.
+Switch from devm_clk_get() to devm_clk_get_optional() when requesting
+clocks, as optional clocks automatically return NULL when not present
+instead of requiring manual check and NULL assignment.
 
-Fix this by jumping to proper cleanup labels to unwind enabled clocks on
-failure paths.
+Additionally, handle clock errors properly using dev_err_probe() to
+propagate error codes (such as -EPROBE_DEFER) on failure instead of
+just printing a warning and continuing with NULL pointers.
 
 Fixes: 125ab5d588b0 ("ASoC: mediatek: mt8192: add platform driver")
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260918133912.133799-5-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20260918133912.133799-6-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-afe-clk.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ sound/soc/mediatek/mt8192/mt8192-afe-clk.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-index 118dd48196828..77f596cab92da 100644
+index 77f596cab92da..9b9a3465ddb52 100644
 --- a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
 +++ b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-@@ -619,7 +619,7 @@ int mt8192_mck_enable(struct mtk_base_afe *afe, int mck_id, int rate)
- 			dev_err(afe->dev, "%s(), clk_set_parent %s-%s fail %d\n",
- 				__func__, aud_clks[m_sel_id],
- 				aud_clks[apll_clk_id], ret);
--			return ret;
-+			goto err_disable_m_sel;
- 		}
+@@ -672,13 +672,10 @@ int mt8192_init_clock(struct mtk_base_afe *afe)
+ 		return -ENOMEM;
+ 
+ 	for (i = 0; i < CLK_NUM; i++) {
+-		afe_priv->clk[i] = devm_clk_get(afe->dev, aud_clks[i]);
+-		if (IS_ERR(afe_priv->clk[i])) {
+-			dev_warn(afe->dev, "%s devm_clk_get %s fail, ret %ld\n",
+-				 __func__,
+-				 aud_clks[i], PTR_ERR(afe_priv->clk[i]));
+-			afe_priv->clk[i] = NULL;
+-		}
++		afe_priv->clk[i] = devm_clk_get_optional(afe->dev, aud_clks[i]);
++		if (IS_ERR(afe_priv->clk[i]))
++			return dev_err_probe(afe->dev, PTR_ERR(afe_priv->clk[i]),
++					     "failed to get clock %s\n", aud_clks[i]);
  	}
  
-@@ -628,17 +628,25 @@ int mt8192_mck_enable(struct mtk_base_afe *afe, int mck_id, int rate)
- 	if (ret) {
- 		dev_err(afe->dev, "%s(), clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[div_clk_id], ret);
--		return ret;
-+		goto err_disable_m_sel;
- 	}
- 	ret = clk_set_rate(afe_priv->clk[div_clk_id], rate);
- 	if (ret) {
- 		dev_err(afe->dev, "%s(), clk_set_rate %s, rate %d, fail %d\n",
- 			__func__, aud_clks[div_clk_id],
- 			rate, ret);
--		return ret;
-+		goto err_disable_div_clk;
- 	}
- 
- 	return 0;
-+
-+err_disable_div_clk:
-+	clk_disable_unprepare(afe_priv->clk[div_clk_id]);
-+err_disable_m_sel:
-+	if (m_sel_id >= 0)
-+		clk_disable_unprepare(afe_priv->clk[m_sel_id]);
-+
-+	return ret;
- }
- 
- void mt8192_mck_disable(struct mtk_base_afe *afe, int mck_id)
+ 	afe_priv->apmixedsys = syscon_regmap_lookup_by_phandle(of_node,
 -- 
 2.53.0
 
