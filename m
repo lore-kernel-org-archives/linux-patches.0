@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022847;
-	b=rIROrd98ztYNz6J1jwKEGsu9aA6h2vblFyFDtyFuBGJzQvcFpRh57qZ7Uy3w7yMTL1tB
-	 ByUBvuMBG4ygSbHJUbFoTA1MO+BXgF242Ui6c5hCYy+i2ddvBtJgr07BoelVUyCxt52+s
-	 gfU9Tz38XbsSmIfOEwfvTRu1OU16owD2ACLIk/RoPzDn4yxktxJXcF/tFp0/Jwp3Pl6Ts
-	 9so9DbTnelmtIc3/V0r3PMBB3za8PRCgLuMBcIzyGPywKQrqxaz0O1lMzPty7ScAeiDdc
-	 LPmPik9Mb5qpEATgtLlv7j2Zsqoil0T2JN1B2ainF+8aYuGwiQWPyoKjQ2sT8tKg0jQ==
+	t=1795022850;
+	b=j3nhLL3kYV9H+RyXuHiEIh+tFQlZCS1Et0+c+OSI4zfpGdHICisQDgSIuR4JeCl6QPN9
+	 HtLEtSbJ0CDorxijHG5W82cE2Wk5jAU7QAfhFXcKwhb2VKq2OpPWvoZ/LSxv5sY9jamVc
+	 yKe4/d0p5ESNaT+tK/5bmwlBgesJyc2Vq9YbUMErrxUq2tWbxx7oPP52Tc3Lx1d8f8409
+	 PYrHmgkIV/zzU5zGHdvxcMo26g3K5NMA1Wbapl/PGQuMcD8cTOMNx3tfFbGTnI1NdyevN
+	 rKJgUP/RzlQ6+HrtBYPYKmK2vMfwJjALVRs8h2jdV/C0ADN2j1+oYGoJxsmKodgRQBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022847;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022850;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=nEwgTvcHztcwBSoySgTnSeJjTfhOW29YKGqAXFX8Xi0=;
-	b=yDrsA+NjSIGcWcFmyY6klR1DXv09uX1hDdyzsJDw4Ne98+VR+5tzNB9Fc+CJ5dxD315l
-	 I+Q6KfJ5C+es0uuITk+UlnXikPaWdnCxvFy6KstGDgzJ+lpoBSYncnlGFV9AXLobjpCzO
-	 w4fMViLGmqqt81JdoM973so4Zk/xetxs0sFAzlX0KMPdr8PxKJnSpAddohakMb7blRG/f
-	 GshuYccZ+vsBCDC0DfCYFUJ8nozF2rIEr4VyYHrPzm0tWHNG9DK3vvZ6CGMF0Y/4WXcem
-	 IKCgtHGZ5cSPoxU355x14Fs7CfT/mLBd7ydAoY9c2Cxp7lbA32bu6s1XKhXgA4U6m/g==
+	bh=35UhEWz6EjQSo6gc1EBs2pIoHsd+SN3nMESPAed38AE=;
+	b=R3RbQeKdMVw9z32hsYhu/v5YE5tDIx5Ac6Wz0zyjd2GRE1HdchYT0kWhAvlIcEj1bBWC
+	 vrprA/wOgUP9UziNIjK8lZa/afEue06LOqxl7b0S9VHcW6+e5YevzjjLjLjd79c4YKzcn
+	 sFioP/ws3IbdJ/+d1rK/LlL+6W7+dXpXBDlvNqRbUdEVqOCGwO/yf3dAwuhPm9Sm+qR7h
+	 R1DiGs3KayM6pqNxApFiJfT2BO1lzdRztdr8kt1AHIa8MJpP3XeowNDEg8fMSyDH92Zwv
+	 /nE264t3M0gRvRpSoZLKq7VSCVh2lE1Fdjf1jlZFH739AmK9okIR6jOVxbDXEXuVTgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="GxcC/r2H";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MP2nXohb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E37606A754;
-	Wed, 18 Nov 2026 17:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6308F606A325;
+	Wed, 18 Nov 2026 17:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GxcC/r2H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C818C1F000CC;
-	Wed, 18 Nov 2026 17:27:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MP2nXohb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16211F000C6;
+	Wed, 18 Nov 2026 17:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022847;
-	bh=nEwgTvcHztcwBSoySgTnSeJjTfhOW29YKGqAXFX8Xi0=;
+	s=korg; t=1795022850;
+	bh=35UhEWz6EjQSo6gc1EBs2pIoHsd+SN3nMESPAed38AE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GxcC/r2HmsNdvXrR5gG71WHWwF/4KgBc8hXolcLODC+459Y1MfhO+SiZW6admcOu/
-	 rcE6jjiGhOvITG8TU4C1QhNXoFtS/HptIaOsBFfXLUb0sYL1PK/w16Z8ZB4Qnj/GfU
-	 faQXZueamQnj6iaSN6/VrItWvybEn2029YRDwkNM=
+	b=MP2nXohbUhHz8yJ2zFf/+LlZNr26j3tKIaq+t/Yh83FM05bX32FDo/BJSA2v9ywxr
+	 Zr/GSowY+Cgx0UaxClc3PUST7RmexR+Zy/s044L5aAuCxJyGk1lL9sCm8kyxM2nYVY
+	 ySUqvU24iH2HpALnhii0aXuRs6i4mSU8yXX8KAAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,12 +44,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	sashiko-bot <sashiko-bot@kernel.org>,
 	Ian Rogers <irogers@google.com>,
 	Stephane Eranian <eranian@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0159/2151] perf jitdump: Fix extended header read that always fails
-Date: Wed, 18 Nov 2026 15:31:34 +0100
-Message-ID: <20261118150127.543003177@linuxfoundation.org>
+Subject: [PATCH 6.18 0160/2151] perf jitdump: Fix debug_data and unwinding_data leaks
+Date: Wed, 18 Nov 2026 15:31:35 +0100
+Message-ID: <20261118150127.578216069@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -74,55 +73,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 598e905931380f0714d5fd50cecfac615a1ec742 ]
+[ Upstream commit 2bd967f3adcba1d3e54f10b0d8b25f950e4f03fd ]
 
-jit_open() sets bsz = bs before the fread() that uses bs - bsz as the
-read size, making the expression always evaluate to zero.  fread() with
-size 0 returns 0, which triggers the ret != 1 error path — so extended
-jitdump headers (total_size > sizeof(header)) have been silently broken
-since the original implementation.
+jit_repipe_debug_info() overwrites jd->debug_data without freeing the
+previous allocation.  If two consecutive JIT_CODE_DEBUG_INFO records
+appear without an intervening LOAD record consuming the data, the first
+allocation leaks.
 
-Additionally, when 0 < bs <= bsz the if (bs > bsz) block is skipped
-entirely, leaving extended header bytes unread in the stream.  Subsequent
-jit_get_next_entry() calls then parse those leftover bytes as a
-jr_prefix, corrupting the record stream.
+The sibling jit_repipe_unwinding_info() already frees the old
+jd->unwinding_data before reassignment — add the same pattern to
+jit_repipe_debug_info() using zfree().
 
-Fix by separating the buffer growth from the read: realloc only when
-bs > bsz, then unconditionally fread bs bytes when bs > 0.
+Also add cleanup of both buffers in jit_close() so they are freed when
+the jitdump session ends, even if no LOAD record consumed them.
 
-Fixes: 9b07e27f88b9cd78 ("perf inject: Add jitdump mmap injection support")
+Fixes: 9b07e27f88b9 ("perf inject: Add jitdump mmap injection support")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
 Reviewed-by: Ian Rogers <irogers@google.com>
 Cc: Stephane Eranian <eranian@google.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
 Assisted-by: LLM
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ tools/perf/util/jitdump.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index 2a4c14b003b31..c8934a46f7355 100644
+index c8934a46f7355..ed489d22c2fd9 100644
 --- a/tools/perf/util/jitdump.c
 +++ b/tools/perf/util/jitdump.c
-@@ -224,10 +224,12 @@ jit_open(struct jit_buf_desc *jd, const char *name)
- 		n = realloc(buf, bs);
- 		if (!n)
- 			goto error;
--		bsz = bs;
- 		buf = n;
--		/* read extra we do not know about */
--		ret = fread(buf, bs - bsz, 1, jd->in);
-+		bsz = bs;
-+	}
-+	if (bs > 0) {
-+		/* consume extended header bytes from the stream */
-+		ret = fread(buf, bs, 1, jd->in);
- 		if (ret != 1)
- 			goto error;
- 	}
+@@ -117,6 +117,8 @@ jit_close(struct jit_buf_desc *jd)
+ 	funlockfile(jd->in);
+ 	fclose(jd->in);
+ 	jd->in = NULL;
++	zfree(&jd->debug_data);
++	zfree(&jd->unwinding_data);
+ }
+ 
+ static int
+@@ -662,6 +664,7 @@ static int jit_repipe_debug_info(struct jit_buf_desc *jd, union jr_entry *jr)
+ 
+ 	memcpy(data, &jr->info.entries, sz);
+ 
++	zfree(&jd->debug_data);
+ 	jd->debug_data       = data;
+ 
+ 	/*
 -- 
 2.53.0
 
