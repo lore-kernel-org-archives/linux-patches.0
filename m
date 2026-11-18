@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035662;
-	b=YHOSsl1vWgeCe+xUFJvLPP+khlTh1mji/xwzXuhCgdFYegBXQ6s05cdq0N9h1qwBlsxB
-	 rX0KYbKw4AZwyNDgrAbXRlrZX/15Gp/46Zc2OCehtebj3d1xMaH4sl8WvL6AHLcU+tbY9
-	 miu36KLPGLjbJoO5GWb5n758UQL3lS+spUz3nfuJ3soVwwh6uftFu1F5z0GEXw9L/8iwV
-	 zD7oxz9Ehft8T3mJBXPk47qsYf+ohnL3sxgM1V6XzE2WHpnWaVYT01ps/K2e1CXirGVp/
-	 iPgpYzLmVBq9mX7IyKuwdiX1zJrJuTiToepHVHA3Rb5LYEmB1ACGePceK4Abk7zJU3A==
+	t=1795035666;
+	b=pzokD4R/hqWW5sexRVCXOkQrzs76X68ISgP5Q/9dgGBh0DvD2xrOTtx0RlWXBuv1KaLS
+	 TYIUcopHfFuWp1fnxu+JBnZmcethO+zhiV/Yl7RZu6OMSZshESUETiI8EJMM20C2Ko++f
+	 ioMk195+B2hcawWgVftaMNMbs6sD6Gf9IsKApPBB+qQ1foZFsqrXAOsAKAhxCdZP9OqaU
+	 ibXGqUHzSbiBEBSPzzM0kQtvq7bomA3gKZSzsR1DkgUXnc0Kmn1pbMlLBqB4kNj3GpZLH
+	 4dJ3TOM6SrbZdozNb8tLPY6EqBwzDptlgez1+UZ3J33e2Ea8g5RDP969C4944ltMoCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035662;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035666;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vtEiJOcjlALoWp4ak0KE86zYsgwNPMErOr2kRmHfdL0=;
-	b=OP3U3/rIaZoJfPFUo5Yfm4/0u/QW838ewq2Ep+M45T0LMFo29PMFu8QMGo4VD7uLi+Mt
-	 BTH1m/NXeyYp3efbU2WeAgchOTIcd3gVWR3sMDhS7OXdiFSRv3+mLN05G7Tnt34s+CxOn
-	 0Cs5klnLjHYYDLzDT2wbOzI3CMAKiaO6j02VHSX0yUBRRI7cCYLf7noReM8ad4hmQcfd2
-	 hAiJy49rKnX0U4OC/AsXg1RcUC4knwte834Dtji90u0FCnRmZjwFR/iJPaIPtdoMYIVuM
-	 nORuJ0zAaezz7b0RMzXKYWqnw7D+XvTkJuqFoJuVTRE7pCEZxtY0EWsmAgPj9hUg5Nw==
+	bh=DhOgqK8u1gukhp84kvDHxuC088F22GK2cimSVEVy3GA=;
+	b=oG4K1Dxsdqg+DCOVLis6u/+p2YFoUvdabois5GiaBAxb0i2H6tVyM/t8ptYRKcFBVOYT
+	 Zd0xOx2nqjGocBCz5s5C+7BTz+lReDOxow0bptmSiX/jgz0HtiXN5Of6hrZhOWGOrFN/o
+	 Nuf68eoG9A36Rl1Is8NONvVZD5BnsGf7/5db5zKe5IEPd6cTD+tBY9QSdisIByo0rSf2h
+	 vN+CtEFi/OTSdrqo9Z+6QucqtkpD2YnEC0o65Ty5TLPZUCuCZa7w3lJ4IyBoJk47dwYrI
+	 gmNMoWrwcDV6GE9EUNhm4kaj3ujEJW0xi1OwVr0Xo+zZmkhdipxIKQ0uMFrxmcwwcoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QQyzaH36;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tMeyyeIA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73E6606A325;
-	Wed, 18 Nov 2026 21:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308EB606A31C;
+	Wed, 18 Nov 2026 21:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QQyzaH36
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5681F000C4;
-	Wed, 18 Nov 2026 21:01:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tMeyyeIA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8DF1F000C4;
+	Wed, 18 Nov 2026 21:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035662;
-	bh=vtEiJOcjlALoWp4ak0KE86zYsgwNPMErOr2kRmHfdL0=;
+	s=korg; t=1795035665;
+	bh=DhOgqK8u1gukhp84kvDHxuC088F22GK2cimSVEVy3GA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QQyzaH36VPQwhxyvspNO8X1gmvZbm9oskd1Q/YxfyGy9vPM3PGcVH0mW3WPNqN25U
-	 V1pkcdWqZvRM7rc+G4CN9oHd2eruaeda9AL10n0a4vgzW57goenS5WtCuyKXvRT7V/
-	 UZAllnQWObDi5hRMQ6z+7sAU1tMWymU+st877HxI=
+	b=tMeyyeIAb9ZI2sfym/S3/LrpHVTRdXmjiwOr/Zl7JVsOHNkUfxgVRKvrbKFHMEcs6
+	 H0Ek9MiCIucOb4I2+vCgWgo/JMXm3SCtnDcomO+6q8I4pUB+Ae/BcKabGzWYWN2jDK
+	 0R5Rk7y+XsdlIgjD1Fc5bZUuFA6GyySFXWak6Abo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Marco Crivellari <marco.crivellari@suse.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0782/3318] nvmet: replace use of system_wq with system_percpu_wq
-Date: Wed, 18 Nov 2026 15:23:24 +0100
-Message-ID: <20261118150342.289938389@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 0747/3318] io_uring/io-wq: no new workers once the exit has begun
+Date: Wed, 18 Nov 2026 15:22:49 +0100
+Message-ID: <20261118150341.038280845@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,69 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Crivellari <marco.crivellari@suse.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 3d553be6d295b6cca8fd35cb673fd13934ac4cbc ]
+Commit 47c68f925062a6013235d06add85a59f7d91e0fb upstream.
 
-This patch continues the effort to refactor workqueue APIs, which has begun
-with the changes introducing new workqueues and a new alloc_workqueue flag:
+io_wq_exit_start() sets IO_WQ_BIT_EXIT, but worker creation task_work
+queued before that stays queued until io_wq_exit_workers() cancels it.
+In between the task runs its task_work while canceling requests, and a
+worker can still get created.
 
-   commit 128ea9f6ccfb ("workqueue: Add system_percpu_wq and system_dfl_wq")
-   commit 930c2ea566af ("workqueue: Add new WQ_PERCPU flag")
+That's a problem for exec. begin_new_exec() calls io_uring_task_cancel()
+after de_thread(), when it's supposedly the only thread left, and
+io_wq_exit_workers() only waits for ->worker_done, which a worker
+completes before do_exit(). So the exiting worker is still in the thread
+group, using the mm, files and sighand, while exec replaces them. Easy
+to hit with a signal pending when create_io_thread() fails and the retry
+gets queued right before execve().
 
-The point of the refactoring is to eventually alter the default behavior of
-workqueues to become unbound by default so that their workload placement is
-optimized by the scheduler.
+Cancel the queued creation task_work as soon as the exit bit is set.
+Pending work that isn't otherwise canceled now ends with -ECANCELED when
+the io-wq is destroyed, rather than depending on whether the task
+happened to run its task_work first.
 
-Before that to happen, workqueue users must be converted to the better named
-new workqueues with no intended behaviour changes:
-
-   system_wq -> system_percpu_wq
-   system_unbound_wq -> system_dfl_wq
-
-This way the old obsolete workqueues (system_wq, system_unbound_wq) can be
-removed in the future.
-
-Link: https://lore.kernel.org/all/20250221112003.1dSuoGyc@linutronix.de/
-Suggested-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: 53f6efe00cea ("nvmet-auth: serialize access to DH-HMAC-CHAP state to fix UAF")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 685fe7feedb9 ("io-wq: eliminate the need for a manager thread")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[axboe: the barrier is already upstream, see 0e5663856b69, only the
+ cancel is new]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/admin-cmd.c        | 2 +-
- drivers/nvme/target/fabrics-cmd-auth.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ io_uring/io-wq.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
-index c974beefa766b..32f01c00dc416 100644
---- a/drivers/nvme/target/admin-cmd.c
-+++ b/drivers/nvme/target/admin-cmd.c
-@@ -993,7 +993,7 @@ void nvmet_execute_keep_alive(struct nvmet_req *req)
- 
- 	pr_debug("ctrl %d update keep-alive timer for %d secs\n",
- 		ctrl->cntlid, ctrl->kato);
--	mod_delayed_work(system_wq, &ctrl->ka_work, ctrl->kato * HZ);
-+	mod_delayed_work(system_percpu_wq, &ctrl->ka_work, ctrl->kato * HZ);
- out:
- 	nvmet_req_complete(req, status);
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -1318,6 +1318,12 @@ void io_wq_exit_start(struct io_wq *wq)
+ 	set_bit(IO_WQ_BIT_EXIT, &wq->state);
+ 	/* Pairs with task_work_add() in io_queue_worker_create(). */
+ 	smp_mb__after_atomic();
++	/*
++	 * No more workers from here on. The caller is going to run its task
++	 * work, and on exec a thread that is created now would still be
++	 * around, exiting, by the time that the caller must be on its own.
++	 */
++	io_wq_cancel_tw_create(wq);
  }
-diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
-index 25a3a927ae231..8d97ced8b1d19 100644
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -360,7 +360,7 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
- 	    req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_FAILURE2) {
- 		unsigned long auth_expire_secs = ctrl->kato ? ctrl->kato : 120;
  
--		mod_delayed_work(system_wq, &req->sq->auth_expired_work,
-+		mod_delayed_work(system_percpu_wq, &req->sq->auth_expired_work,
- 				 auth_expire_secs * HZ);
- 		goto complete;
- 	}
--- 
-2.53.0
-
+ static void io_wq_cancel_tw_create(struct io_wq *wq)
 
 
