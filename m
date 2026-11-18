@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044412;
-	b=VgNH2NbrEG64XFtMOUjcRW+PX5Cq3KyKxyUqct2XtTeMQaxO0sdh1janS55F6Zlh56d0
-	 wGdbaHaS9e2763cS/jpg4huuXm5YRWDGVSZ7GOrGCmaTOBrJhEA9vrPoD9r3PMzadi9fU
-	 5pPAWfAj1DSlbgIOHPf8HEtVvOvA+5dUxYKpuvtKmZFyXjsjbJHCQ9hMOy2cWMANbsG6b
-	 +xPAzeW7n4OQ5u99zY/nOKMNEAe0gj2ZN6Or98671mwYXzxOyVDq46DXB/zPPYu/KuWwV
-	 JXakpXAWMysFp6nU9tIn4jCcnz2CEtyT7RFWLKe9+AamYFe+ooqievuV9SE0josNpTg==
+	t=1795044415;
+	b=R4cbXyv2C9WMmaouFx6CCk6lF20o1gUcNq6qiViH9PIukyBOA08lDwyiMUgx1szRUjdn
+	 +EnQl14+VkOWyNRUSW7q1gViw5t+HOnsLzAiU/x+PT9BUakDpb9Woqt+op5n5oa/0w/3l
+	 gXAIChq03ySVbYZ96oQ9CYW/IvhL9OQox/lNYrx2zqtXGi/NL2WMZP2aPhMxrWt6sLO2+
+	 ozJIC4hRrfiB7MjR5+UWe8PfMtLPzY9IKp43FGy4C6D8u43YU0kVovd6/mOY/nDLI8QRJ
+	 IboOmsobuq3pg3jr4w6dEhzcCN7YKRNvPLoMhWQYe/dnZipfdMVKP/OHz5SQNfq/EyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044412;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044415;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=1Q3RyYvXEu8eWzP9ltZtO9YhijTjTn0CBgRv6IDTWZ8=;
-	b=0N8ZiYNiqP0GxquojpffIeZdScjNrdAUiMehz2a9YjvjsPom9l69RT7ut8dXQACk/I5j
-	 K376uJYpCiP3wsWcD8JwoeSJp/AWM7XXzSqgGVWYJl3yED5fJ8KZT74D7hPDNT90AmcMU
-	 nnKeJNjlTPLp0FVSwhoh08ukyQPMAoxsV9zNqRJdZKbfK6o7u/ORMuCqfplFCDfHJeXbI
-	 BhFkl7eKveXE8XjxviyZY4BHEKxgXe7Z6GU4fRzVrczZNOps6tfQHmuxYJ1pmFf+gfaMd
-	 FSS2Mv2Kbdmgdlr11jNL03SWB197HvsAGh2oJV85XDfRzjoFoXgttLRif9rFW5PhIhA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=sDBfqea3F/97VQasCwK9om2hdPLHjehq9UeR0bcLM8g=;
+	b=iZQgZ4IacHYA30Fb9bHFMGVX0Cd9094rRbaxrd9xD+uAcDav75ffE+UMpVhMXscI0ULD
+	 7k4xUtQGKuZ3DG5gYqz8n5oVbM8cfydYxUnCGYcvlq8+lTpCm6ehA26IOoDGMwamIlUIe
+	 6eQuquVnpppr+Ve7LKsA0XY6B6ANZREmSr3RTvaWXUCIsMwZFi5D5EIbz0PvgXTO/xGHu
+	 82uDMtQntcPVEzYfuztpphkmQrFY+TMXv7Ne0VGynNwLyka4rkeK6GRYZSBX8/ctklUtk
+	 qXvZQ3uVvGPL05dvmACidjbfWD6OS2Oc+XWYFTZKqADNtUGCy8ry36QBgTXl/wILm3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KGu2T1+w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KSMOowgj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1FD606A320;
-	Wed, 18 Nov 2026 23:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6913E606A320;
+	Wed, 18 Nov 2026 23:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KGu2T1+w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947191F000C4;
-	Wed, 18 Nov 2026 23:26:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KSMOowgj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2DE1F000C4;
+	Wed, 18 Nov 2026 23:26:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044412;
-	bh=1Q3RyYvXEu8eWzP9ltZtO9YhijTjTn0CBgRv6IDTWZ8=;
+	s=korg; t=1795044415;
+	bh=sDBfqea3F/97VQasCwK9om2hdPLHjehq9UeR0bcLM8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KGu2T1+wjdeE/bafdkGmUhdjM1Aaqjor8qz1QKRHF8d2YQAC8qrtROdvnbt2zSngm
-	 Kxd8fz+BTpMbD5KOKA8abM7Y5MMkNW3U51k6enJRtiqE0PrLP9l00QDJHMTlQY8jXI
-	 8PoBT3ADN2ggrhIszi0hG6TO8DgjOoznkjq+kPuI=
+	b=KSMOowgjPUYDYWCe4Op5K/kSB5y9wznbTjh9F3eJNq4z1NqV51Xh++xrlcMfocNvK
+	 y6J+1Fe87A/L4O7XpKtEtn9kZs3s7KyhCEldXq2yAbD56cQm22SIDQ0VpayRQS1bPI
+	 CfgRrUZXnvDBO56aLe9oPv2aGuz+i0UPEZRAlay4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Elliot Berman <elliotjb@elliotjb.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0521/2857] bs/ntfs3: fix NULL folio dereference in ntfs_lock_new_page()
-Date: Wed, 18 Nov 2026 15:25:55 +0100
-Message-ID: <20261118150220.228700423@linuxfoundation.org>
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.1 0557/2857] KVM: PPC: Book3S HV: Add SRCU protection for virtual-mode HPT hcalls
+Date: Wed, 18 Nov 2026 15:26:31 +0100
+Message-ID: <20261118150221.546300978@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -61,44 +62,149 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Elliot Berman <elliotjb@elliotjb.com>
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-In 6.1, __filemap_get_folio() returns NULL on failure.  The backport of
-commit 95b917a14b15 ("ntfs: Do not overwrite uptodate pages") keeps the
-original IS_ERR() check, which is always false here, so a failed folio
-allocation while reading a compressed file dereferences NULL in
-folio_test_uptodate(). Check for NULL and return ERR_PTR(-ENOMEM).
+commit 61a39797bb136243c48b46e2586d8a9e2cea6a89 upstream.
 
-Fixes: 95b917a14b15 ("ntfs: Do not overwrite uptodate pages")
-Signed-off-by: Elliot Berman <elliotjb@elliotjb.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The virtual-mode HPT hcall handlers (H_ENTER, H_REMOVE, H_BULK_REMOVE,
+H_CLEAR_REF, H_CLEAR_MOD) call into book3s_hv_rm_mmu.c, which accesses
+memslots via kvm_memslots_raw().  kvm_memslots_raw() uses
+rcu_dereference_raw_check() to bypass SRCU lockdep annotation checking.
+This is safe in real mode because the entire guest entry/exit is wrapped
+in srcu_read_lock/unlock inside kvmppc_run_core() and
+kvmhv_run_single_vcpu().
+
+However, since commit 6165d5dd99db ("KVM: PPC: Book3S HV: add virtual
+mode handlers for HPT hcalls and page faults"), these same handlers are
+also executed in virtual mode via kvmppc_pseries_do_hcall(), which runs
+after SRCU has already been released on guest exit.
+
+A concurrent KVM_SET_USER_MEMORY_REGION deletion or move can therefore
+call synchronize_srcu_expedited() — which does not wait for this thread —
+and then kfree(slot) and vfree(slot->arch.rmap) while the hcall handler
+still holds a raw pointer to the memslot.  lock_rmap() then writes to
+freed vmalloc memory, leading to use-after-free and memory corruption.
+Because kvm_memslots_raw() suppresses lockdep checks, this race is
+entirely silent.
+
+Fix this by factoring out the 7 HPT hcall handlers (H_REMOVE, H_ENTER,
+H_READ, H_CLEAR_MOD, H_CLEAR_REF, H_PROTECT, H_BULK_REMOVE) into a
+helper function, kvmppc_pseries_do_hpt_hcall(), and wrapping its call
+site in srcu_read_lock(&kvm->srcu) / srcu_read_unlock(&kvm->srcu, idx).
+Targeting only the HPT hcalls avoids wrapping non-HPT hcalls that sleep
+(such as H_CONFER, H_REGISTER_VPA, H_PAGE_INIT) or handlers that already
+acquire SRCU internally (such as H_RTAS).
+
+Fixes: 6165d5dd99db ("KVM: PPC: Book3S HV: add virtual mode handlers for HPT hcalls and page faults")
+Cc: stable@vger.kernel.org # v5.14+
+Suggested-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260928122837.8782-2-amachhiw@linux.ibm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/frecord.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/powerpc/kvm/book3s_hv.c |   70 +++++++++++++++++++++----------------------
+ 1 file changed, 35 insertions(+), 35 deletions(-)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index a44b7338621e0..fa443144f6d1a 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -2172,8 +2172,8 @@ static struct page *ntfs_lock_new_page(struct address_space *mapping,
- 			FGP_LOCK | FGP_ACCESSED | FGP_CREAT, gfp);
- 	struct page *page;
+--- a/arch/powerpc/kvm/book3s_hv.c
++++ b/arch/powerpc/kvm/book3s_hv.c
+@@ -1085,6 +1085,38 @@ static long kvmppc_h_rpt_invalidate(stru
+ 	return H_SUCCESS;
+ }
  
--	if (IS_ERR(folio))
--		return ERR_CAST(folio);
-+	if (!folio)
-+		return ERR_PTR(-ENOMEM);
++static long kvmppc_pseries_do_hpt_hcall(struct kvm_vcpu *vcpu, unsigned long req)
++{
++	switch (req) {
++	case H_REMOVE:
++		return kvmppc_h_remove(vcpu, kvmppc_get_gpr(vcpu, 4),
++				       kvmppc_get_gpr(vcpu, 5),
++				       kvmppc_get_gpr(vcpu, 6));
++	case H_ENTER:
++		return kvmppc_h_enter(vcpu, kvmppc_get_gpr(vcpu, 4),
++				      kvmppc_get_gpr(vcpu, 5),
++				      kvmppc_get_gpr(vcpu, 6),
++				      kvmppc_get_gpr(vcpu, 7));
++	case H_READ:
++		return kvmppc_h_read(vcpu, kvmppc_get_gpr(vcpu, 4),
++				     kvmppc_get_gpr(vcpu, 5));
++	case H_CLEAR_MOD:
++		return kvmppc_h_clear_mod(vcpu, kvmppc_get_gpr(vcpu, 4),
++					  kvmppc_get_gpr(vcpu, 5));
++	case H_CLEAR_REF:
++		return kvmppc_h_clear_ref(vcpu, kvmppc_get_gpr(vcpu, 4),
++					  kvmppc_get_gpr(vcpu, 5));
++	case H_PROTECT:
++		return kvmppc_h_protect(vcpu, kvmppc_get_gpr(vcpu, 4),
++					kvmppc_get_gpr(vcpu, 5),
++					kvmppc_get_gpr(vcpu, 6));
++	case H_BULK_REMOVE:
++		return kvmppc_h_bulk_remove(vcpu);
++	}
++
++	return H_FUNCTION;
++}
++
+ int kvmppc_pseries_do_hcall(struct kvm_vcpu *vcpu)
+ {
+ 	struct kvm *kvm = vcpu->kvm;
+@@ -1100,47 +1132,15 @@ int kvmppc_pseries_do_hcall(struct kvm_v
  
- 	if (!folio_test_uptodate(folio))
- 		return folio_file_page(folio, index);
--- 
-2.53.0
-
+ 	switch (req) {
+ 	case H_REMOVE:
+-		ret = kvmppc_h_remove(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5),
+-					kvmppc_get_gpr(vcpu, 6));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_ENTER:
+-		ret = kvmppc_h_enter(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5),
+-					kvmppc_get_gpr(vcpu, 6),
+-					kvmppc_get_gpr(vcpu, 7));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_READ:
+-		ret = kvmppc_h_read(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_CLEAR_MOD:
+-		ret = kvmppc_h_clear_mod(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_CLEAR_REF:
+-		ret = kvmppc_h_clear_ref(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_PROTECT:
+-		ret = kvmppc_h_protect(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5),
+-					kvmppc_get_gpr(vcpu, 6));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_BULK_REMOVE:
+-		ret = kvmppc_h_bulk_remove(vcpu);
++		idx = srcu_read_lock(&kvm->srcu);
++		ret = kvmppc_pseries_do_hpt_hcall(vcpu, req);
++		srcu_read_unlock(&kvm->srcu, idx);
+ 		if (ret == H_TOO_HARD)
+ 			return RESUME_HOST;
+ 		break;
 
 
