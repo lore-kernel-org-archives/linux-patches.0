@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045907;
-	b=D+wFjF6ns4N+/mClfJOH0YVwl2gebApbnPpjKVhXAcoYD9W+/kkunKTot2OpYoxvP1VN
-	 N0C6YHMe6g7yuRnU9VB16DL6Sq5Bikk4iYTVxbFrva7UT5hTpuUV7YsIK/N5GXUi/FNRW
-	 9Xve4XSE9ec+qz78nHpQObaiNhoz2wP2E6tq3z4vptBk97bzSTGaLoIVIOw1he40hrNSe
-	 zDxPQPkjy6ctiOLv420GKrT4xJRfJ5NQXEgyHCJElyzTr3j8YoHiJMdOE319RbkdizNgX
-	 oYwyCQcsTHpj07DayuKnf0y7VPUpBvHO2mol8+iXhGLVMxfsD8DOnF23KLb2T8VKb/g==
+	t=1795045909;
+	b=uz02nsQt5BcWC9vUAIy/p+F2vLggvWx62NjKNF4Cs/PTo8uC3k/mH466AKCfyMCMByFK
+	 afbkbw880Nr+vGg9fCKZmtzBgoMeEBc5ZVFKB20o0YnQ3KA/U+QSKY+/HVpq6AyhXHDri
+	 ZloaNDh69C663/eIyq6CJkSLPdzH1ltGnuliluODLE8E/I2YQdeeiTOoCnTORrLAbQQRU
+	 FLs2Iz4XNsA5EktE7w2iHTvsjoWmn6MgJfZJBGiBY4t/yHVNrderPfbnIXFZsuSorP9NU
+	 LPzOVyz2GQTB6eISZ95Z0HAMcsaraWWTr0fBtCLF313EtuI4e7dUadaUB5tczlRCuPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045907;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045909;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SLGuC3peLJ5yxcDpjebiBB5iB5Qr6nxdfz+6sA6M5AM=;
-	b=0+/F+08x7d4YsFW/8Ly8ukc1jSV/bviD8zj9QW1f76cJIMCIhkvdlBr6+2nu3hDZbj3S
-	 9uIrvyI7PW2rRZLsA7tqMlAP0/L6RmPnFy8FG01wAmzGX8sI+/QtiKd7FLKukqocESrHY
-	 92zbEZHuxYNZ2jnASTCBTP4hNHrR7X1WOYtqnWRXTGUHry645Bk4ZYYC82RbccfPQ0wA/
-	 R5Zo1V8AijZ+7M456oi+I4XOKttQPuBZ32cvh/pSiI9TWdXWzRMErbiZ8DUDNfJVvyWxK
-	 /TuZMBI/mpYQHF2j3EAIvRef9Mtc0v2DxwULliuI3PyTIxvK07zA9s7fXix5Uhba8Jg==
+	bh=ilD3MWg9VbMqTpXh6YGp+4FMe+nwWEI60IFVWSLgcUE=;
+	b=HJpTgmFdmOa/sZKK3Qeoys/dkFNmGQC5BZrhDQk1NxAU9t4gB3I8gyZRsd20WhZe3UaZ
+	 iqoI/Oz0lj9JoCMO7Rfs0MghCN1NV7tQ5OVYvRmF+/VlVbeAuPPYsEtvsSqPfu1W5BSpL
+	 fSq1ERq4Sp2UkFLPcEcHCe/9iHzbOX5AO2VPeJwdq+5KiUtH8ZX1DG3FUzpnNZZN5CTKI
+	 bm9umBKtG3esE90D6BvK8gRT/TEo5v13wM3qdSE8EQGtbyjcuEMEs6HXqiXFgPw4sp+6A
+	 Okw/00+5EZrIkG79XrzT4sfBu9ApixvR7LG3EQ+3krzrbs+Z6apOZYb5XIpjpjR/g6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K2wh2NRP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tUrjbv6u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCD2606A325;
-	Wed, 18 Nov 2026 23:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4424606A325;
+	Wed, 18 Nov 2026 23:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K2wh2NRP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D28A1F000C4;
-	Wed, 18 Nov 2026 23:51:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tUrjbv6u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFF791F000C4;
+	Wed, 18 Nov 2026 23:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045906;
-	bh=SLGuC3peLJ5yxcDpjebiBB5iB5Qr6nxdfz+6sA6M5AM=;
+	s=korg; t=1795045909;
+	bh=ilD3MWg9VbMqTpXh6YGp+4FMe+nwWEI60IFVWSLgcUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K2wh2NRPmD54gVf4KUNSOTva/AQ+mmj+PoR1yByi68b547DTMKKUmM7ZLEpvzXoVB
-	 fhWamJPcWn12CxXxRtM16H/MeAVedRIA3Vkepn6duLJMyi5YM3yetXMVJqDhSSVYsX
-	 5CEvxIU7OL/y0Ar5MCB+Pf5Cdmfo9foFRq2YfSvI=
+	b=tUrjbv6uMcWmIGnJtueyzWXAfVsBpp2URkz7mlRXHHfCoVDh4Uc4cpf+zS3p7j3y3
+	 SCojyGOdGywvMVPD71zrmWhB4vIJr5ovVEOrUjURTYjqhcetKZdxoqk1oEFIQHqEva
+	 ElpA9/9WK72BsgcFdB20yQgvxW3//mMbGBye3OAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Kunhai Dai <daikunhai@didiglobal.com>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1091/2857] mount: refuse setns() with a shared fs_struct again
-Date: Wed, 18 Nov 2026 15:35:25 +0100
-Message-ID: <20261118150240.905803151@linuxfoundation.org>
+Subject: [PATCH 6.1 1092/2857] blk-iocost: abort weight transfer on invalid donation weights
+Date: Wed, 18 Nov 2026 15:35:26 +0100
+Message-ID: <20261118150240.941384926@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,52 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Kunhai Dai <daikunhai@didiglobal.com>
 
-[ Upstream commit 948e604aca8af30490accf7d46d44814ffa26f80 ]
+[ Upstream commit c810ee88cdab27f443c32270dc7c0eaad2cca3f8 ]
 
-mntns_install() refuses to switch the mount namespace of a task that
-shares its fs_struct, since root and cwd of the others would move to a
-namespace they are not in.  It looks at nsset->fs for that.  If more
-than the mount namespace is asked for, that is a private copy made by
-prepare_nsset(), which has one user by definition; commit_nsset() then
-writes root and cwd of the copy to the fs_struct of the task.
+transfer_surpluses() warns and then keeps going when the donation
+calculation produced invalid weights.  The following propagation can then
+divide by a zero hweight_inuse, so the warning is immediately followed by a
+divide error.
 
-A thread of a process with two threads, pidfd of a task in another
-mount namespace:
+When the check trips, abandon this period's donation transfer and release
+the walk lists.  This trades one period without donation for not crashing;
+the invalid state is not expected on the normal path.
 
-	setns(pidfd, CLONE_NEWNS)			-EINVAL
-	setns(pidfd, CLONE_NEWNS | CLONE_NEWUTS)	0
+Developed with assistance from Claude Code (Anthropic): the assistant
+analysed the failure path, drafted the change and ran the checks listed
+below.  The author reviewed the result and remains responsible for it.
 
-and after the second call the other thread, still in the old mount
-namespace, has lost its cwd (/tmp became /) and sees the mounts of the
-other namespace under /.
-
-Look at the fs_struct that is going to be changed.  The second call then
-fails with -EINVAL like the first one.
-
-Fixes: 303cc571d107 ("nsproxy: attach to namespaces via pidfds")
-Cc: stable@vger.kernel.org # v5.8+
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: e08d02aa5fc9 ("blk-iocost: implement Andy's method for donation weight updates")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kunhai Dai <daikunhai@didiglobal.com>
+Tested-by: Tao Cui <cuitao@kylinos.cn>
+Reviewed-by: Tao Cui <cuitao@kylinos.cn>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20261019125412.3123895-2-daikunhai@didiglobal.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-iocost.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index cb3b702de4447..211c2f1fa5e9a 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -4775,7 +4775,7 @@ static int mntns_install(struct nsset *nsset, struct ns_common *ns)
- 	if (is_anon_ns(mnt_ns))
- 		return -EINVAL;
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index 814ad657cc56e..7600aee06f840 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -1949,6 +1949,7 @@ static void transfer_surpluses(struct list_head *surpluses, struct ioc_now *now)
+ 			pr_cont(": active=%u donating=%u after=%u\n",
+ 				iocg->hweight_active, iocg->hweight_donating,
+ 				iocg->hweight_after_donation);
++			goto out;
+ 		}
+ 	}
  
--	if (fs->users != 1)
-+	if (current->fs->users != 1)
- 		return -EINVAL;
+@@ -2047,6 +2048,7 @@ static void transfer_surpluses(struct list_head *surpluses, struct ioc_now *now)
+ 		__propagate_weights(iocg, iocg->active, inuse, true, now);
+ 	}
  
- 	get_mnt_ns(mnt_ns);
++out:
+ 	/* walk list should be dissolved after use */
+ 	list_for_each_entry_safe(iocg, tiocg, &inner_walk, walk_list)
+ 		list_del_init(&iocg->walk_list);
 -- 
 2.53.0
 
