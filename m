@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016940;
-	b=uMfcyTNa9rzIB7nYWllkdWwAtukB4LL3Qb3KrqzHEu06BLz1ZI96dpnx9uLY9gP01A/j
-	 vEnkjwncSsASHwqpW0DKm99oLwFxcqoQMHEMgBSOg7o+vPoPcPTpsMuewgkqAofVAu241
-	 Ttg0Jj/wLMHud5etkZMIPL8K1pBQWLDMFldBX/CFdlasKyBvO+K13bmVxQ1XjEJHD1U3N
-	 JpcPBalExKBZ6ZwVyZ3enWSoCX3EvKMlXuKBoTZRIP8uPJX0BRM6plLnWQZA5aod2tQL7
-	 vMTDa0wIEYraKq6U9Vplh+N4MS1LFwAymkktp3W1FO6SJLym+lnla6gFmAHbMbiCgKg==
+	t=1795016943;
+	b=hb7nFKX7AKkSmJ09nytmtRGMPLvDVerilVrVbpKuHQK+D+gjGbmHZellGtBX5u0vR/Oe
+	 18tlxCEpb1N7SIuD5IbbQqdaSS1BBskeJEINNbxYwd4etSyh+4iPOw0a/LKJ50ZZwFy71
+	 cmWlIjteW9+uyXB034kCJzvA6l7+89DZWC2ryUjRLiZ7sed51VylFedczgBX7gJkt7Ltu
+	 b2XzEzlioKbWH1EMjxDy9CTcMLYTCCvBNSDdHHRnfeW3aRy/rlgI7SQLnK5Scll+oUIWz
+	 23UCs88VmxJxNzFN2ouv0MkXWM2fB/3pUdHluM1xqcgMwWj636llrsQS6Xtq0ICcLOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016940;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016943;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jMQvuykI3puZNoBuzDTexppVFiboTFL2kuuD/xnIrqo=;
-	b=kXHfgUXHAqG+dlHPeA/Sb+HTbfRodJLmLwOXjFujd6XjoydxD2u67yfuKyji6RDVDjyU
-	 09l9H8WIi70VK/F2XAihU9rPedkkB4Myoq1qYoj37TRGyIP5Z9LYWFBrh1uFwNMPlpXdc
-	 WuCI4wAoN67n+EQugMpq7dwhAe7kKg+JcGIRZyO6Em1bsb6wlIA/BFwQgtyCs5t/Y4fC1
-	 +GKlahlAB7YY4pRbS19JPCIxIpkKvR6w13IPSkZgoIjJspUUHBMQqyyOAVVRd8cofFLcP
-	 KpIgjDYYg4zaDBu2GyIFEEOBogT2zPguLAVmnMFMWZKEYy3j89OTmoOYz/ikDk47Igg==
+	bh=9SsCCurXT2HYM5R29PK3pcZWU06Y23TEJ57+4xDUGCQ=;
+	b=BiEVMN+XfWOlUhHYJUilZUNOGjkbutzq9krh9d7WFsYLzsKKUHnGBCNw4/E6j3Vmd3s1
+	 aFKYsXrhc4Nq4D/ajpaY1s4gdr6deXCqKHoRV9KYppJiLWJeXlb9i5DmAxKq8XK1+oihk
+	 hsvgtQr7WFTZZNsXbpBBa0tnNVrfc7/0lCLDFL7C8vkSsalvBfUJyN1jFmgOLyaJpJ6lH
+	 m6ilRdwthBx1LBv8crYo8BozomkXQu7R8YaJqNy1UlETIAebS7Dey5GVOtQnX8eMjqBwq
+	 c+CPcDb4dOqXspdUl1lDRJVLs2+rnWqIJjuzWYNZ3Me/DPGvnS6OglXeXsrNNpmZd9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IgW2BYwd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tP4gl2FP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CCD606A31C;
-	Wed, 18 Nov 2026 15:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE74C606A32C;
+	Wed, 18 Nov 2026 15:49:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IgW2BYwd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 333351F000C4;
-	Wed, 18 Nov 2026 15:49:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tP4gl2FP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C331F000C4;
+	Wed, 18 Nov 2026 15:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016940;
-	bh=jMQvuykI3puZNoBuzDTexppVFiboTFL2kuuD/xnIrqo=;
+	s=korg; t=1795016943;
+	bh=9SsCCurXT2HYM5R29PK3pcZWU06Y23TEJ57+4xDUGCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IgW2BYwd1LYd9itBSngC+mW5yk06OaABRgO8bg+NuvGAFZz+ArTRdCxSo+R3RqxPo
-	 r5BCcw3eo2PnsMmDLdCF1auWuDHnhDx6ix/OM2FVxZIzMOsE/sy7bzX28HBcGndvws
-	 FrAPp2i2NEJQutYdl92oYpzriLXbJsZGdUtLib/s=
+	b=tP4gl2FPOlYpxKiDHuayPlYIYNPWxMkwiF/EMeOnhN0L8vzGcLqbt3s/BjZydkAw9
+	 dadZkHEcZ9oGghDh3nMvLpbqB7joI1WWMumFib85MYU6mQ7BHIZGW/WPB+dueB8Gjo
+	 Gn7HkxBFJklpyM5wapIvRZv9DkR2z2JFETyOK//Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Vivier <laurent@vivier.eu>,
 	Finn Thain <fthain@linux-m68k.org>,
 	Stan Johnson <userm57@yahoo.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0708/2651] swim: Dont start motor until medium is present
-Date: Wed, 18 Nov 2026 15:32:28 +0100
-Message-ID: <20261118150313.315475172@linuxfoundation.org>
+Subject: [PATCH 7.3 0709/2651] swim: Recalibrate when drive is probed
+Date: Wed, 18 Nov 2026 15:32:29 +0100
+Message-ID: <20261118150313.351560785@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,46 +71,120 @@ Content-Transfer-Encoding: 8bit
 
 From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit dbbaaae83cb277d76e70426c0f0ce289e867ed77 ]
+[ Upstream commit ba087774a1493ade524f8a783461fa8be9c75039 ]
 
-The spindle motor should not be running when a disk is to be inserted.
-Don't start the motor while the drive is empty.
+Track zero recalibration can be slow and is normally done only once i.e.
+during system POST or boot-up. Recalibrate once after the drive is probed
+rather than every time the device is opened. Don't register the drive if
+recalibration fails. Park the heads before ejecting.
 
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
 Signed-off-by: Finn Thain <fthain@linux-m68k.org>
 Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/7ea60e0bf6135b9bcd4be0991a257d4c5de22bb3.1788513997.git.fthain@linux-m68k.org
+Link: https://patch.msgid.link/119e799afcc00d6bd4a479c31e0c960cb1a1d71b.1788513997.git.fthain@linux-m68k.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/block/swim.c | 37 +++++++++++++++++--------------------
+ 1 file changed, 17 insertions(+), 20 deletions(-)
 
 diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index 1ade5c497e10b..64073e8f6c365 100644
+index 64073e8f6c365..5daa60938505c 100644
 --- a/drivers/block/swim.c
 +++ b/drivers/block/swim.c
-@@ -630,8 +630,7 @@ static int floppy_open(struct gendisk *disk, blk_mode_t mode)
- 		fs->ref_count++;
+@@ -412,6 +412,7 @@ static inline int swim_track00(struct swim __iomem *base)
+ 	if (swim_readbit(base, TRACK_ZERO))
+ 		return 0;
+ 
++	pr_err("swim: track zero recalibration failed\n");
+ 	return -1;
+ }
+ 
+@@ -456,6 +457,7 @@ static int floppy_eject(struct floppy_state *fs)
+ 	struct swim __iomem *base = fs->swd->base;
  
  	swim_drive(base, fs->location);
--	swim_motor(base, ON);
--	swim_action(base, SETMFM);
-+
- 	if (fs->ejected)
- 		setup_medium(fs);
- 	if (!fs->disk_in) {
-@@ -639,6 +638,9 @@ static int floppy_open(struct gendisk *disk, blk_mode_t mode)
- 		goto out;
++	swim_track(fs, 40);
+ 	swim_motor(base, OFF);
+ 	swim_eject(base);
+ 	swim_drive(base, NO_DRIVE);
+@@ -596,13 +598,6 @@ static void setup_medium(struct floppy_state *fs)
+ 		struct floppy_struct *g;
+ 		fs->disk_in = 1;
+ 		fs->write_protected = swim_readbit(base, WRITE_PROT);
+-
+-		if (swim_track00(base))
+-			printk(KERN_ERR
+-				"SWIM: cannot move floppy head to track 0\n");
+-
+-		swim_track00(base);
+-
+ 		fs->type = swim_readbit(base, TWOMEG_MEDIA) ?
+ 			HD_MEDIA : DD_MEDIA;
+ 		fs->head_number = swim_readbit(base, SINGLE_SIDED) ? 1 : 2;
+@@ -610,7 +605,6 @@ static void setup_medium(struct floppy_state *fs)
+ 		fs->total_secs = g->size;
+ 		fs->secpercyl = g->head * g->sect;
+ 		fs->secpertrack = g->sect;
+-		fs->track = 0;
+ 	} else {
+ 		fs->disk_in = 0;
  	}
+@@ -759,24 +753,33 @@ static const struct block_device_operations floppy_fops = {
+ 	.check_events	 = floppy_check_events,
+ };
  
-+	swim_motor(base, ON);
-+	swim_action(base, SETMFM);
-+
- 	set_capacity(fs->disk, fs->total_secs);
+-static int swim_add_floppy(struct swim_priv *swd, enum drive_location location)
++static void swim_add_floppy(struct swim_priv *swd, enum drive_location location)
+ {
+ 	struct floppy_state *fs = &swd->unit[swd->floppy_count];
+ 	struct swim __iomem *base = swd->base;
  
- 	if (mode & BLK_OPEN_NDELAY)
+-	fs->location = location;
++	swim_drive(base, location);
++	if (!swim_readbit(base, DRIVE_PRESENT) ||
++	    swim_readbit(base, ONEMEG_DRIVE))
++		goto out;
++	if (swim_readbit(base, DISK_IN))
++		swim_motor(base, ON);
++	if (swim_track00(base))
++		goto out;
+ 
+-	swim_motor(base, OFF);
++	fs->location = location;
+ 
+ 	fs->type = HD_MEDIA;
+ 	fs->head_number = 2;
+ 
+ 	fs->ref_count = 0;
+ 	fs->ejected = 1;
++	fs->track = 0;
+ 
+ 	swd->floppy_count++;
+ 
+-	return 0;
++out:
++	swim_motor(base, OFF);
+ }
+ 
+ static const struct blk_mq_ops swim_mq_ops = {
+@@ -826,14 +829,8 @@ static int swim_floppy_init(struct platform_device *pdev)
+ 
+ 	/* scan floppy drives */
+ 
+-	swim_drive(base, INTERNAL_DRIVE);
+-	if (swim_readbit(base, DRIVE_PRESENT) &&
+-	    !swim_readbit(base, ONEMEG_DRIVE))
+-		swim_add_floppy(swd, INTERNAL_DRIVE);
+-	swim_drive(base, EXTERNAL_DRIVE);
+-	if (swim_readbit(base, DRIVE_PRESENT) &&
+-	    !swim_readbit(base, ONEMEG_DRIVE))
+-		swim_add_floppy(swd, EXTERNAL_DRIVE);
++	swim_add_floppy(swd, INTERNAL_DRIVE);
++	swim_add_floppy(swd, EXTERNAL_DRIVE);
+ 	swim_drive(base, NO_DRIVE);
+ 
+ 	/* register floppy drives */
 -- 
 2.53.0
 
