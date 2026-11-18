@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047195;
-	b=cYATCtPjqcpkd3pSe/IL+IMWWCxQNN6ujr8stEIHXBs4aHSiiAenqylSf2W6fFuk+gGS
-	 c0XN8URzSz4mbdtC0pAx1nDIG4UPOY50vpoqMK95piVpFJO3HQu6Jke5vhF0mRkCNFbX9
-	 keyyV/1ezvQNs9h/xZ07t25wRdvASy8X6ZGKvuKjBi3IZDyFKTluoJjc/MsoO/ypcMxaY
-	 v19kcQBram+UxV8IAvHqMAI0uzq4kKHthiL74b5pLmth1w8rn55ZOp87rCLY9K7y46bpw
-	 iOahyl9FhBD7mtWSaOudhVCEP0h3HNriqQjxHE8oXXNRlnBiJ3pffNP+lTZy/M4BuFw==
+	t=1795047198;
+	b=Hkt0hXLegNqWErHt40fxN1xjjpNXSO5y/5Uboucs0vGGsBvRGfjeag3l3HiyA2wPwIf6
+	 gI5LdpN1eoJen9HbNVtgSejZE93POdkfvpKgJg/8BD5vrpzQDBL79qCFQvcY6/9p9A2z6
+	 aT0binPP6Qhqv2ROoC2D0neeI3LS0b70RxCM4aWF+JYzrp4BSf41WIuTwZPg4YTxjhSLC
+	 S05+YEzlw1YkmiwyQelkZzEtHynNK2xhB58POzJd4SzjXmwgDNAM8TOPR4BNmYV2t3tOJ
+	 JSCDurCOv6V5ti8T5CXhNhnNe11bDJtxZEu/sFNP0y6YtSOVcUvyPFjJtzmB6G9Y76g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047195;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047198;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u9AxkLlfxDxOxJ9/OSEsI4BOokyIChn8Nxy+yOc9c9g=;
-	b=0yBdxXdYakdRqjBYsnoH8OmM2UDaXgeua4U4UzyKvfqfCZYyO1QovNuzqSVTVv+x487R
-	 xBUKdUqVx4tYBrPMq9r2Qrg3PGFv173tPPySRKAVgJZ1fDZHR0/Rw93SZGxHEJXAUKcwR
-	 XcbQ/wcniUzXKAyyT0AWJAgew/H4a82koW62W7CcPZTS2VAu+h65/vt0L/l0JCnhp2bHS
-	 9pUNxr9cqrasohfIyyUzOdvDG9J97aRTM9onki9Rx7DkCrhVj2AgpK7EQtaqr0sTKpB1q
-	 g+y1OO4K/4/dBG0qTjkHAuO+OL5fG78WpOT/OFY6EiWA1DBkejUbxxkaqsB92NEe1tA==
+	bh=eY7vdsZN9FaSJHDUW9PU+NYX5z+YKWDJWawu7R4MbmM=;
+	b=0nGoXEwrcONwDfg9KhguGKd3BmAeItfze97Hol3xjLn+fzxUZEfxtzSkHMbOZuD1V3vf
+	 gETlaOd4B5lUQO877SyMFU7BG/Jgp1+8GsIsjWynwXDMQQ82naSTnsvgEJQptUIUfKkyJ
+	 0y5+UICFWD7olM3zCe9ZoAQPlkgAO0dMLtLH6HLfRbtX9vuQE09X9swUjXOQOMHVwYLll
+	 JWGkpQA0XgMZmPoz/MldSWebbmE1c1TfwV6WwpRrnzCoa9mY3U5sRlZ1iVkJ1iJXIHYGa
+	 c67L3FDVNp8+0muvWtipIOS1Z5S+M2zomLMNsdKjTubEub4FMmJ7v2E5djEANf0fZMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GvVpUSIt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EtyIRppw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C335606A33F;
-	Thu, 19 Nov 2026 00:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E80D606A33E;
+	Thu, 19 Nov 2026 00:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GvVpUSIt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725A61F000C4;
-	Thu, 19 Nov 2026 00:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EtyIRppw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559951F000C4;
+	Thu, 19 Nov 2026 00:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047195;
-	bh=u9AxkLlfxDxOxJ9/OSEsI4BOokyIChn8Nxy+yOc9c9g=;
+	s=korg; t=1795047197;
+	bh=eY7vdsZN9FaSJHDUW9PU+NYX5z+YKWDJWawu7R4MbmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GvVpUSItFidlaGrV64EjiLuGslG2VLKB/sZRdr/KFF6h86BslhjcZuJnEMJyhZ7/x
-	 FplPRQIF02qwJM39t3I2yutFMKfI/hLgQxp6nMTgDtPzD6XjWvHzRgA8+TvZ1Rt3GI
-	 ju/y4yWSEZKuUlEh3gy7C7yoBK/l+JJBTdkLXtiI=
+	b=EtyIRppwD56Nu1CLLD7hxqZmhWny87kNE6JMmofF9AGCIP2Tl7t7hFbf4a30V9U+k
+	 NQIsmiN3hA26d5/sWxJhFa97cI8yZ0TOMOW3K4jTjQJHXX9cSLXCCOdZdhLfJJU5qA
+	 w68ObXPm0Jc1iLqbzlkYBkkOOTHoeiTBV5oAjjro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Vincent Legoll <vincent.legoll@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1512/2857] nvmem: rockchip-otp: Add clks and reg_read to rockchip_data
-Date: Wed, 18 Nov 2026 15:42:26 +0100
-Message-ID: <20261118150255.770741977@linuxfoundation.org>
+Subject: [PATCH 6.1 1513/2857] nvmem: rockchip-otp: alloc clks with main struct
+Date: Wed, 18 Nov 2026 15:42:27 +0100
+Message-ID: <20261118150255.806436806@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,174 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 8dc61364164e79e44c07fa2ac0a7b6939f00d5db ]
+[ Upstream commit 9f99bb979f930e52e6861114fe03535d4bc2f374 ]
 
-In preparation to support new Rockchip OTP memory devices with different
-clock configurations and register layout, extend rockchip_data struct
-with the related members: clks, num_clks, reg_read.
+Use a flexible array member to simplify allocation slightly. No need for
+a separate calloc.
 
-Additionally, to avoid managing redundant driver data, drop num_clks
-member from rockchip_otp struct and update all references to point to
-the equivalent member in rockchip_data.
-
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Tested-by: Vincent Legoll <vincent.legoll@gmail.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <20230611140330.154222-10-srinivas.kandagatla@linaro.org>
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260530205333.117458-3-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 9fc6a1592d84 ("nvmem: rockchip-otp: Serialize reads")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/rockchip-otp.c | 79 ++++++++++++++++++++++--------------
- 1 file changed, 49 insertions(+), 30 deletions(-)
+ drivers/nvmem/rockchip-otp.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/nvmem/rockchip-otp.c b/drivers/nvmem/rockchip-otp.c
-index 9f53bcce2f877..b5a84b379da40 100644
+index b5a84b379da40..aaa044bb231b8 100644
 --- a/drivers/nvmem/rockchip-otp.c
 +++ b/drivers/nvmem/rockchip-otp.c
-@@ -54,21 +54,19 @@
- 
- #define OTPC_TIMEOUT			10000
- 
-+struct rockchip_data {
-+	int size;
-+	const char * const *clks;
-+	int num_clks;
-+	nvmem_reg_read_t reg_read;
-+};
-+
+@@ -64,9 +64,9 @@ struct rockchip_data {
  struct rockchip_otp {
  	struct device *dev;
  	void __iomem *base;
--	struct clk_bulk_data	*clks;
--	int num_clks;
-+	struct clk_bulk_data *clks;
+-	struct clk_bulk_data *clks;
  	struct reset_control *rst;
--};
--
--/* list of required clocks */
--static const char * const rockchip_otp_clocks[] = {
--	"otp", "apb_pclk", "phy",
--};
--
--struct rockchip_data {
--	int size;
-+	const struct rockchip_data *data;
+ 	const struct rockchip_data *data;
++	struct clk_bulk_data clks[];
  };
  
  static int rockchip_otp_reset(struct rockchip_otp *otp)
-@@ -132,29 +130,23 @@ static int rockchip_otp_ecc_enable(struct rockchip_otp *otp, bool enable)
- 	return ret;
- }
- 
--static int rockchip_otp_read(void *context, unsigned int offset,
--			     void *val, size_t bytes)
-+static int px30_otp_read(void *context, unsigned int offset,
-+			 void *val, size_t bytes)
- {
- 	struct rockchip_otp *otp = context;
- 	u8 *buf = val;
--	int ret = 0;
--
--	ret = clk_bulk_prepare_enable(otp->num_clks, otp->clks);
--	if (ret < 0) {
--		dev_err(otp->dev, "failed to prepare/enable clks\n");
--		return ret;
--	}
-+	int ret;
- 
- 	ret = rockchip_otp_reset(otp);
- 	if (ret) {
- 		dev_err(otp->dev, "failed to reset otp phy\n");
--		goto disable_clks;
-+		return ret;
+@@ -239,7 +239,7 @@ static int rockchip_otp_probe(struct platform_device *pdev)
+ 		return -EINVAL;
  	}
  
- 	ret = rockchip_otp_ecc_enable(otp, false);
- 	if (ret < 0) {
- 		dev_err(otp->dev, "rockchip_otp_ecc_enable err\n");
--		goto disable_clks;
-+		return ret;
- 	}
- 
- 	writel(OTPC_USE_USER | OTPC_USE_USER_MASK, otp->base + OTPC_USER_CTRL);
-@@ -174,8 +166,28 @@ static int rockchip_otp_read(void *context, unsigned int offset,
- 
- read_end:
- 	writel(0x0 | OTPC_USE_USER_MASK, otp->base + OTPC_USER_CTRL);
--disable_clks:
--	clk_bulk_disable_unprepare(otp->num_clks, otp->clks);
-+
-+	return ret;
-+}
-+
-+static int rockchip_otp_read(void *context, unsigned int offset,
-+			     void *val, size_t bytes)
-+{
-+	struct rockchip_otp *otp = context;
-+	int ret;
-+
-+	if (!otp->data || !otp->data->reg_read)
-+		return -EINVAL;
-+
-+	ret = clk_bulk_prepare_enable(otp->data->num_clks, otp->clks);
-+	if (ret < 0) {
-+		dev_err(otp->dev, "failed to prepare/enable clks\n");
-+		return ret;
-+	}
-+
-+	ret = otp->data->reg_read(context, offset, val, bytes);
-+
-+	clk_bulk_disable_unprepare(otp->data->num_clks, otp->clks);
- 
- 	return ret;
- }
-@@ -189,8 +201,15 @@ static struct nvmem_config otp_config = {
- 	.reg_read = rockchip_otp_read,
- };
- 
-+static const char * const px30_otp_clocks[] = {
-+	"otp", "apb_pclk", "phy",
-+};
-+
- static const struct rockchip_data px30_data = {
- 	.size = 0x40,
-+	.clks = px30_otp_clocks,
-+	.num_clks = ARRAY_SIZE(px30_otp_clocks),
-+	.reg_read = px30_otp_read,
- };
- 
- static const struct of_device_id rockchip_otp_match[] = {
-@@ -225,21 +244,21 @@ static int rockchip_otp_probe(struct platform_device *pdev)
+-	otp = devm_kzalloc(&pdev->dev, sizeof(struct rockchip_otp),
++	otp = devm_kzalloc(&pdev->dev, struct_size(otp, clks, data->num_clks),
+ 			   GFP_KERNEL);
  	if (!otp)
  		return -ENOMEM;
- 
-+	otp->data = data;
- 	otp->dev = dev;
- 	otp->base = devm_platform_ioremap_resource(pdev, 0);
+@@ -250,11 +250,6 @@ static int rockchip_otp_probe(struct platform_device *pdev)
  	if (IS_ERR(otp->base))
  		return PTR_ERR(otp->base);
  
--	otp->num_clks = ARRAY_SIZE(rockchip_otp_clocks);
--	otp->clks = devm_kcalloc(dev, otp->num_clks,
--				     sizeof(*otp->clks), GFP_KERNEL);
-+	otp->clks = devm_kcalloc(dev, data->num_clks, sizeof(*otp->clks),
-+				 GFP_KERNEL);
- 	if (!otp->clks)
- 		return -ENOMEM;
- 
--	for (i = 0; i < otp->num_clks; ++i)
--		otp->clks[i].id = rockchip_otp_clocks[i];
-+	for (i = 0; i < data->num_clks; ++i)
-+		otp->clks[i].id = data->clks[i];
- 
--	ret = devm_clk_bulk_get(dev, otp->num_clks, otp->clks);
-+	ret = devm_clk_bulk_get(dev, data->num_clks, otp->clks);
- 	if (ret)
- 		return ret;
+-	otp->clks = devm_kcalloc(dev, data->num_clks, sizeof(*otp->clks),
+-				 GFP_KERNEL);
+-	if (!otp->clks)
+-		return -ENOMEM;
+-
+ 	for (i = 0; i < data->num_clks; ++i)
+ 		otp->clks[i].id = data->clks[i];
  
 -- 
 2.53.0
