@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048972;
-	b=aeoD1+DizO4a/f86JDvZRvPRh2hrgidbexKTAK/UWCGSnpBYFHtQ110rd36d5QEoZYDr
-	 6JtB2eI2B+kBVIpC/fvcQ5dWk7ph4MbiZrKfnSFBrj5IwrmOudzo97tpNPOhi0aljP1Dm
-	 CqLhF67kpC4G8v/xPKDyperjEhiAmXkX1+SY1n5YQqcsqdh42oiwYmUGeyterzsfw9hOd
-	 ANhZ6yUWb6mlCN9HicOPSkHrYMhLEuCr97CRMa7qSZnhfVxE2UwHVBPwFNnbZIBiARTun
-	 C0dSXnaMjCfdd+URt7888iKnHus1NH9kPPmnefHuKg2doQ51zEKquS+sIw+3ds/OIYw==
+	t=1795048975;
+	b=mMXlH5UQVE08FmyCN55dpJrZXXijTw7u+igbEUIy0Dp1w29oful9zhZOLZhZFEy3/F9T
+	 IkLbEG0LbrsGYwgfWhB8Ejhpv7XCiG4Gg9TKN6UYtuE2LPzTAYSvHiBc5JD1Yd+1ZxaKJ
+	 VfhFyNt35ikPIaSJ9kdVB0ShGP7qVvRSvvCRuV8hx9suK+k0rA7xiESUlSBeusiZwkWk8
+	 UvwgoBbmSSS5w6WsFEL2oonLJ9oq3bKG3iEBjugijE+4wCayeZvSzJeA7kEKbkuODyT63
+	 rJQCvrvNxO4ybjbR4IZwDx3Hl8nZk7wDMsrkhHhkwvepygaL2XM+xO7GIgjSTTriHjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048972;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048975;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W6rKeN/GnKk88um1KxfDekS5Th7M6wXTg1bq5UYWxAM=;
-	b=TJhpFFnTsDVxmUCBGUmgThZmiQHWqgB7BCqgA805XFecCjW5DF150yQNjT5sTTC3YuHr
-	 d4yERq2tgr02VS+Z1eMqquAIJxhCGjOrPOCHCjIy5XHdai1CnmP1YA9IYAqJMJ82dJ8U+
-	 moJ+8XmHktiIKsMTMZMTaXRb8vWHVcC5u7eLMC3wSImugB9J7ndEtvClG8CSuCN4pHnDT
-	 eC+Gnme1cslKUt46SjKFAWPA5N3DISYlarQD9Kx1Ef2UOgelsVkAEAbh67/JOZpWolqZD
-	 9fBFH1HxRrNgOoWAH4NfU9mtzjrL5gWGz0L6Tqbj51tUFwgzbI5RBEdc0+cJIeFbdDg==
+	bh=SAVbLfK3ZEZOF14hg58476HjJxHSe4OCJYZ5FqAFIp4=;
+	b=0wbhbHWDLxRlNBokm9UpOZW2BqpfDNRGEAL7a8tbEbCeh5mgrxjaL/7nDEPxziXeUN/5
+	 wijOr1V995Yizz5Zb1vVMk3I9E0Keb8gaF4guv2wpR2mnSeiCcaqCOoguU+a4TwG0/HKD
+	 qMJxIkaTRIJA5uZbXFpEri4eNY8tgggaPQJHVeArGV5lWdXAlRno6Mi/JgvLh19OhHvgO
+	 E/13w+LiDoOr0mgrFqWGqi1+eS0yztzzqU4wU7bwCEhoCGwHHtNpb7LwbHGzkVwi33aK3
+	 QhDLQrpmRLGu8p+ouh1hhabf9bAz7dpnvgWqKuVAShTzKVyRk0YLeW4+DZxVUAC3LNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qT2owDWw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cdVQxOmZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61EDC606A320;
-	Thu, 19 Nov 2026 00:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BAA6606A32C;
+	Thu, 19 Nov 2026 00:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qT2owDWw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA66A1F000C4;
-	Thu, 19 Nov 2026 00:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cdVQxOmZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DE11F000C4;
+	Thu, 19 Nov 2026 00:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048972;
-	bh=W6rKeN/GnKk88um1KxfDekS5Th7M6wXTg1bq5UYWxAM=;
+	s=korg; t=1795048975;
+	bh=SAVbLfK3ZEZOF14hg58476HjJxHSe4OCJYZ5FqAFIp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qT2owDWwcnm06VqIeFsCmw6YYBVB0qPrZvb7JNHBd1IzT86z43HtFxWV3XuMySMNo
-	 /WzaoMdX4Uzha/6B3+J14gIZWxpYVaQCKB8v3x+EhKC+kKR2xDgj1ajCG1pU/1vXfn
-	 cNkJajCHtZ5ooiFW2l9TbGyukjoWPk7rRMQaYewo=
+	b=cdVQxOmZpLJWHVavawgMnXAuG35AdD+C8Mn/ULMqW89QsP6u6nloi8RWZPO4UCPBp
+	 BD616SuSaFdMTCuyts/kNKzNJTBUSFnhyTRwfyrJTFQ1k+IbLpBbaYOhVsjzpcCOHC
+	 z5GQBEZkVT0m3tu0g3lfhWXX1xWy16Pcne2iQ9uA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Hemanth Selam <hemanth.selam@gmail.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2168/2857] drm/tegra: Drop reference on postfence
-Date: Wed, 18 Nov 2026 15:53:22 +0100
-Message-ID: <20261118150319.463000474@linuxfoundation.org>
+Subject: [PATCH 6.1 2169/2857] nvdimm/pmem: Release gendisk on probe failure
+Date: Wed, 18 Nov 2026 15:53:23 +0100
+Message-ID: <20261118150319.496139165@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,35 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Hemanth Selam <hemanth.selam@gmail.com>
 
-[ Upstream commit 5ba3dfe724448f308ad7b28ef8d4f41bca4896ae ]
+[ Upstream commit 855a46681e0ba601952c346e5b62d867e51ecb23 ]
 
-drm_syncobj_replace_fence() calls dma_fence_get() on the parameter
-fence, so we need to drop ours. Add a call to dma_fence_put() to do
-that.
+pmem_attach_disk() allocates the gendisk with blk_alloc_disk() and hands
+it to devres only once device_add_disk() has succeeded.  Until that
+point the probe path owns the disk itself, which is why every failure
+after the allocation jumps to the out: label and puts it there.
 
-Fixes: 13abe0bb15ce ("drm/tegra: Implement job submission part of new UAPI")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260730-b4-host1x-syncobj-wait-v1-3-afa730410392@nvidia.com
+The devm_init_badblocks() failure returns directly instead, so the disk
+allocated a few lines earlier is never released.  Nothing releases it
+afterwards either: the devres action that would have done so has not
+been registered yet, so unbinding the namespace or destroying it does
+not reach the disk, and it stays allocated along with its queue and its
+bdev inode until the machine is rebooted.
+
+devm_init_badblocks() only fails when a single page allocation fails, so
+reaching this at all needs memory exhaustion during namespace probe, and
+because device_add_disk() has not run there is nothing user visible left
+behind: no device node, no sysfs entry, only the leaked memory.
+
+Release the gendisk through the existing cleanup path on this failure.
+
+Fixes: 3dd60fb9d95d ("nvdimm/pmem: stop using q_usage_count as external pgmap refcount")
+Signed-off-by: Hemanth Selam <hemanth.selam@gmail.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260911082543.473670-1-hemanth.selam@gmail.com
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/submit.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvdimm/pmem.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/tegra/submit.c b/drivers/gpu/drm/tegra/submit.c
-index 3f2253236a606..af0c5632a7bf0 100644
---- a/drivers/gpu/drm/tegra/submit.c
-+++ b/drivers/gpu/drm/tegra/submit.c
-@@ -672,6 +672,7 @@ int tegra_drm_ioctl_channel_submit(struct drm_device *drm, void *data,
- 		}
+diff --git a/drivers/nvdimm/pmem.c b/drivers/nvdimm/pmem.c
+index 96e6e9a5f235d..cf9dc754f5d81 100644
+--- a/drivers/nvdimm/pmem.c
++++ b/drivers/nvdimm/pmem.c
+@@ -573,8 +573,10 @@ static int pmem_attach_disk(struct device *dev,
+ 	nvdimm_namespace_disk_name(ndns, disk->disk_name);
+ 	set_capacity(disk, (pmem->size - pmem->pfn_pad - pmem->data_offset)
+ 			/ 512);
+-	if (devm_init_badblocks(dev, &pmem->bb))
+-		return -ENOMEM;
++	if (devm_init_badblocks(dev, &pmem->bb)) {
++		rc = -ENOMEM;
++		goto out;
++	}
+ 	nvdimm_badblocks_populate(nd_region, &pmem->bb, &bb_range);
+ 	disk->bb = &pmem->bb;
  
- 		drm_syncobj_replace_fence(syncobj, fence);
-+		dma_fence_put(fence);
- 	}
- 
- 	goto put_job;
 -- 
 2.53.0
 
