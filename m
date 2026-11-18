@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043572;
-	b=2nQqrxBzBl7u4odZ0mjximnrSNM5rpHixyLUPCZiNslZlGgDDo00lM3lup0/FOXdbfB0
-	 1yDVDi2Qxc3PYubFlAqxdKq9DMbm5Jkyuv/sY3hHNJyOnPfgiC/IUu8aHdOhHf9qi9jyA
-	 P0YTuvoGBwJG143NZpm5FBKvGkXGXEJjopd0N+D5rF2oiqlFtgd+Z+mb1Rc7dpOglq4BK
-	 8dJOEmEqsEQBP46TE2Qiw2UM+XpeypbGa+Mn9xZsMXjaeQi6rjszwX2vEU+eVfLobjuwE
-	 kYKvtJu/64GWCS14xpXbLKUqUFd0HvBHq2LZj4BtFbloS+t0/QRrSgRYRzRtmeRrPtw==
+	t=1795043574;
+	b=tEE4M2stxt3ogZ9KWH68vs+fHHyHmECTQ9iPbdPeI1u/F84J6/b+X4onwuPwcS+qQgkm
+	 mkL2GkVJPvp61Lo9D++ELYYzBdjEI/OZBTIs4s3M/VjILQa/DNxg+XOphCrRGkyq+Osz/
+	 lgMsW8xqrYEVKMLLcPvny2Qiz92ODltZ3bU5QRJx9a5yclpof+Wsic7+6SsDU3qDdzrDH
+	 4EW0FY+Ddaej1oN+lE8vGgJ3NieXcOa8HoX8TqzMQVLg3cK44vbjQzFEbaJMXn1TSQCwU
+	 CSeUJw4qi4nXqRXff9qy6eKfaxz0L7qqwP/VzUZKoD4cRaXMZ1VPEuOwFss6sx/cERw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043572;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043574;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MLa0W27kiE37NJMMhnXUTTrsXVUPUIV9cdMq9FpxM0s=;
-	b=SbdnjsORIzDCin0yYdjbUEcSV9dIlsZZtX9+Ky5lubielTeGYh+hg3WnSpo8nouTlLNU
-	 sj0g2SH52NPcl9duZBoBjGt/HZU7vFWkcZsNrVBtTmqvsNZgnV69dCksU/U0Rcy1OiWyL
-	 MC11C7r7aVV8NokOhdmHEjwMnUSSbzJgTQdYKiSrOOmPkdUHuNJbJ85BN1kry2Qm2E3UT
-	 zVhvI0A5f/+vPZid6DBwOKmzUa4iT1GW9HGEn8US6JN6BSDO3wW43uSTK3OUs8p7T2Zqj
-	 Bmfa7n20t63ia7hI1RPgDRBvTVWvjGpMUrVpc5JQ8xcvB1udCO/O8EHI4GBtZKSqcWA==
+	bh=Q3XzZfAnCRdp9hNkODUa8XK1saMbp37YdrvjY9HLW+s=;
+	b=jLjwIgKMhm78tCs3YlRyKKEIDGeav4yMumPmChnIv7VRC6kZmP61i0Q+3Ajp3Yzr+OFi
+	 kdWgMJ8jdd8o+wUiik9Z1Vj0PMyo2onOLksmrGFlxjvnasYGegmqbJ3gjNfasm3QFYydh
+	 jdArrKolRJ4eub1pVGxAI91QNCgTvCVj9uecxOPRG+a/AGDFaTZLYj6H4sSRPcEG6f+kn
+	 XxpJoJDmabcFQMm2WCAxJRa40pZe/FceOcH5cIzQ2lnB6v76HDFchJP4B3hEMavm/wtkC
+	 PNVsT9cuyNJgjf5BPcYwLy0VBj0mPMqfg7o/4TgCV7DuUggr3R1HHrSiGA99gdIQMag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yRviCiH1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dU0jjet5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8541606A320;
-	Wed, 18 Nov 2026 23:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD53E606A32A;
+	Wed, 18 Nov 2026 23:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yRviCiH1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45CFF1F000C4;
-	Wed, 18 Nov 2026 23:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dU0jjet5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A791F000C4;
+	Wed, 18 Nov 2026 23:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043571;
-	bh=MLa0W27kiE37NJMMhnXUTTrsXVUPUIV9cdMq9FpxM0s=;
+	s=korg; t=1795043574;
+	bh=Q3XzZfAnCRdp9hNkODUa8XK1saMbp37YdrvjY9HLW+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yRviCiH1OPH/zBJwzL5F0XVoL88UnlQvy8ripb0KNh32KnfTtVoT8Lo7H6ez2y/zQ
-	 eakGFzTruXc99nYLFTa+9H/CsmfvHCGoMFmxhhCfoUxBWBTuKgHcVaU+qt1HaHZhwC
-	 C9Y+zNKIGNSg5wmI1QniMCgkCWKbv5zSJ7MIE5ok=
+	b=dU0jjet5zfDfL/+pOUbIlauR2uriXD/1mEe5ctqFMsSA8i1aSfUDH9+qA3Ya0+1w1
+	 M9Ew1ZOuH+R0hGnM0IUHjWlwCUWayzv3Ry5u0TPeYK2TPM/DnhLgnKlWTc7kWNGttI
+	 EiqMKq29NrOUDsELp0PMLkxhwCMHcXRmTvPp9+T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Alex Elder <elder@riscstar.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0258/2857] net: stmmac: use dma_addr_t for DMA addresses
-Date: Wed, 18 Nov 2026 15:21:32 +0100
-Message-ID: <20261118150210.721663114@linuxfoundation.org>
+Subject: [PATCH 6.1 0259/2857] ASoC: codec: max98926: fixup invert setup mask
+Date: Wed, 18 Nov 2026 15:21:33 +0100
+Message-ID: <20261118150210.758772663@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,63 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Elder <elder@riscstar.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 0c1f9020d2ada55aed8a2e055903ad9cd5d49dab ]
+[ Upstream commit dd0ae9a2e19a24c532c9aa80a44f572b4907bcdf ]
 
-In jumbo_frm() (implemented in both "chain_mode.c" and "ring_mode.c"),
-an unsigned integer local variable is used to hold the value returned
-by dma_map_single().  On systems where a dma_addr_t is 64 bits, the
-subsequent dma_mapping_error() check of the returned value operates
-only on the low 32 bits (whose high bit won't be sign-extended).  In
-this case, dma_mapping_error() would return 0 (no error) even if there
-were one.
+invert might have both WCI/BCI mask, but regmap_update_bits() masks
+BCI only. It needs both mask. Fixup it.
 
-Fix this in both spots by using a dma_addr_t for the local variable.
+	static int max98926_dai_set_fmt(...)
+	{
+		...
+		switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
+		case SND_SOC_DAIFMT_NB_NF:
+			break;
+		case SND_SOC_DAIFMT_NB_IF:
+=>			invert = MAX98926_DAI_WCI_MASK;
+			break;   ^^^^^^^^^^^^^^^^^^^^^
+		case SND_SOC_DAIFMT_IB_NF:
+=>			invert = MAX98926_DAI_BCI_MASK;
+			break;   ^^^^^^^^^^^^^^^^^^^^^
+		case SND_SOC_DAIFMT_IB_IF:
+=>			invert = MAX98926_DAI_BCI_MASK | MAX98926_DAI_WCI_MASK;
+			break;   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		default:
+			...
+		}
+		...
+		regmap_update_bits(max98926->regmap, MAX98926_FORMAT,
+				MAX98926_DAI_BCI_MASK, invert);
+		...		^^^^^^^^^^^^^^^^^^^^^
+	}
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/linux-devicetree/20260606010122.21A211F00899@smtp.kernel.org/
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: Alex Elder <elder@riscstar.com>
-Link: https://patch.msgid.link/20260812163832.271742-2-elder@riscstar.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/87wltomc97.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/chain_mode.c | 3 ++-
- drivers/net/ethernet/stmicro/stmmac/ring_mode.c  | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/codecs/max98926.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/chain_mode.c b/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
-index 2515608878235..5b0bab33ce4b6 100644
---- a/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
-@@ -20,9 +20,10 @@ static int jumbo_frm(struct stmmac_tx_queue *tx_q, struct sk_buff *skb,
- 	unsigned int nopaged_len = skb_headlen(skb);
- 	struct stmmac_priv *priv = tx_q->priv_data;
- 	unsigned int entry = tx_q->cur_tx;
--	unsigned int bmax, buf_len, des2;
-+	unsigned int bmax, buf_len;
- 	unsigned int i = 1, len;
- 	struct dma_desc *desc;
-+	dma_addr_t des2;
+diff --git a/sound/soc/codecs/max98926.c b/sound/soc/codecs/max98926.c
+index bffd56e240e9a..019921c8de9b1 100644
+--- a/sound/soc/codecs/max98926.c
++++ b/sound/soc/codecs/max98926.c
+@@ -360,7 +360,7 @@ static int max98926_dai_set_fmt(struct snd_soc_dai *codec_dai,
+ 	regmap_write(max98926->regmap,
+ 			MAX98926_FORMAT, MAX98926_DAI_DLY_MASK);
+ 	regmap_update_bits(max98926->regmap, MAX98926_FORMAT,
+-			MAX98926_DAI_BCI_MASK, invert);
++			MAX98926_DAI_BCI_MASK | MAX98926_DAI_WCI_MASK, invert);
+ 	return 0;
+ }
  
- 	desc = tx_q->dma_tx + entry;
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-index 88a8d22812f5d..1e6541937cb27 100644
---- a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-@@ -20,8 +20,9 @@ static int jumbo_frm(struct stmmac_tx_queue *tx_q, struct sk_buff *skb,
- 	unsigned int nopaged_len = skb_headlen(skb);
- 	struct stmmac_priv *priv = tx_q->priv_data;
- 	unsigned int entry = tx_q->cur_tx;
--	unsigned int bmax, len, des2;
-+	unsigned int bmax, len;
- 	struct dma_desc *desc;
-+	dma_addr_t des2;
- 
- 	if (priv->extend_desc)
- 		desc = (struct dma_desc *)(tx_q->dma_etx + entry);
 -- 
 2.53.0
 
