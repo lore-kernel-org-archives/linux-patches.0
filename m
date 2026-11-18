@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037649;
-	b=z6s4uJdrVo2PsOQuBrJYmB15GFAKtQbTJimKij6XPyAWK50wrSWF46huEOivTEDaCBon
-	 afaGFOzM4mHAsRvp+5Kpib1ShAYxyt+Jn/26YspDJyj5274ToBlxdvlwA4B1v+Z0+SUo+
-	 1ueDkCvEyDrCeguafGFMmXQd18xEAnfpJAhG3VZ2JY5wisap1Vhn5NzlyjgvpHsdJR51s
-	 ZJf/jtw3IHh2XH6ZtIwq8zkmMA+wuib/EKycl6wvpNvDG8ATNLIPBV9eZMW7wn52e/xmI
-	 qZFTT6qNrs9nHBDm8LkhZe4x+22OkMpDp4JPquuii+PWHjrGds8cAtK0/n5MgzVSLEQ==
+	t=1795037652;
+	b=fdYy4hwvgJBsGarAJi0W9sBMguy/hnhC8ry+whRv+ENmKPHZcsXzfcci4ET/WmI4lTcb
+	 m0dR90Isp5IlOYkdglTfz+cWD1MThw84Y5f4nzYPl8StrKyeOX2BCOip14MnOBIchG4yb
+	 cjrli6xUN3rof7AN5KZtyC4h3DQ6KBSassjuL95e/v55Bx6Tlr6DSa1EIFQ0AkDPFL1D0
+	 PxqTh3UvfUBUxfDHIHHMe163Zy6rXVARKp4fg9gwKiyooBX2DJuItkfqs8kt9fIeFte78
+	 JcZ4Ne5g7hpqYqG6/VSOJG8dbATmLbs638sqtDaEzvBplLAMcWQFhVWz17hdXWxQvzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037649;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037652;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5qnmsThdEF8ZPPato2tvc4OTlcsZJAyKKVp60n4S7Zs=;
-	b=g20rWN+5jovc+c6H9L/q3JYj0hzyoHGqWzLSaswCrkmKlTZ43UjxZD0s0X3g8t4M+mx8
-	 WPBgOz79fYL5fyxGnlfK28hwPoSqL4sHXSukIB4jxVkv6FobX7Ql6Zk5IjweJI/pOhyKh
-	 dR1u2aFn4fRGb5v5VaaIZ9X3Qc/PLuwKty4E0AJQBGQ/zCx6IGCfP/5hVSv4LXR2KpIQ1
-	 iaZ6VdBT6iUgDc0AQwfVIm2/LjM+NaBTrfUcDVO0xJs3SO2+i/kj2u7P52EcpYwlFrtQ5
-	 2fKUjBULGjgBwYmNdFg7e+TWd/NO4bGRp5ZQJX8LOi08k7bt2/CHYqXWMLbW8DJ8iWA==
+	bh=6u+eFrErLq+NVG+gDCy7Z17lNpZyaANVVLNnmAP2kXM=;
+	b=Io+C6X0jUVndwmqRlGzPjzeFqnI4ZEiBj9uc+292KD+YadUWrIWtCDtcSgbJz4Tor/1s
+	 1RTLNbyW9WKPMY+TJYudGR6i5hzWF8n/8Sz2BHeJ735uNVdtSbQ+HPISkui/DDy3aJDDv
+	 Awr2/X8IYbX0dd/aDUaM+n6qXZF84V7xt6HKiEwkC/ybrbcWeFbzVAf7fRZ9ms6h8hN85
+	 L0gz5K6ShaD4/c03IV610QUD1hwDZIPRYYkY1Q7MOp89XRYC4Wouymjm97PWQQgM2IYP+
+	 TpNymnV6Z6APZ1GyxOv4A9cyDdGYDkAx4O9o0EeoHx+7l1gFSGKbdOZZIsnythqVXSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P77pMlV6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0hhGQ0q+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF80606A338;
-	Wed, 18 Nov 2026 21:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D62606A325;
+	Wed, 18 Nov 2026 21:34:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P77pMlV6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884AA1F000C4;
-	Wed, 18 Nov 2026 21:34:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0hhGQ0q+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 740311F000C6;
+	Wed, 18 Nov 2026 21:34:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037649;
-	bh=5qnmsThdEF8ZPPato2tvc4OTlcsZJAyKKVp60n4S7Zs=;
+	s=korg; t=1795037652;
+	bh=6u+eFrErLq+NVG+gDCy7Z17lNpZyaANVVLNnmAP2kXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P77pMlV67RV7Eousl5Gqmfnt56S0Ay7S/l5WRv4HEqhwLtqFgtwB+GDGa1GHSMu9w
-	 CsRP16OC3eXkl93mSkAMmU3bBnMQUPO5ISEKtxrCiJew91is3L+IWDoWOSH1bD1pDx
-	 qCZKH6bIDZSZQJs0gen/SxPoAU7rWqKg/K2V4X+s=
+	b=0hhGQ0q+hhBSQdWEaB09o+QraYF7XO3yW41itY92ibVworp6QOS+BH+TPCe7lNvIs
+	 qQaxielcqwQ1m5MECCWGcFUmUvLlLLjoGxG6FIMa6Xnw56Hgi6zF6ngfmMWM4PLHie
+	 8z2g/Bi6JMRYfea5CXivPCrsH0p7OZicJTL8rHuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evanshenf <archwse@gmail.com>,
-	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
+	Bin Yu <byu@xidian.edu.cn>,
+	Cheng Wen <wencheng@xidian.edu.cn>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1429/3318] drm/loongson: Handle buffer mapping failures when clearing a BO
-Date: Wed, 18 Nov 2026 15:34:11 +0100
-Message-ID: <20261118150403.609874319@linuxfoundation.org>
+Subject: [PATCH 6.6 1430/3318] ALSA: us122l: Add missing NULL check in usb_stream_hwdep_mmap()
+Date: Wed, 18 Nov 2026 15:34:12 +0100
+Message-ID: <20261118150403.665981033@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,114 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Evanshenf <archwse@gmail.com>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-[ Upstream commit f00d7a241f846b053e89c0bb2285ef5988d4cafc ]
+[ Upstream commit f5d3eb483fed59fc0f3b059b8b6a32cedc922360 ]
 
-lsdc_bo_clear() ignores the return value from lsdc_bo_kmap() and writes
-to lbo->kptr unconditionally. When the first mapping of a newly allocated
-buffer fails, kptr is still NULL and the subsequent memset accesses it.
+usb_stream_hwdep_mmap() reads us122l->sk.s and dereferences it without
+checking for NULL.  The stream object is released by usb_stream_free(),
+which is reached through us122l_stop() both when the device is
+disconnected and when us122l_start() fails, and it leaves us122l->sk.s
+set to NULL.  The hwdep file stays usable after that, so a later mmap()
 
-Return the mapping error without touching the buffer and propagate it
-from lsdc_gem_object_create(). Install the GEM object functions before
-clearing so that drm_gem_object_put() can release the buffer correctly
-on failure. Do not add the failed object to the tracking list or return
-an uncleared buffer to the caller.
+	KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+	RIP: 0010:usb_stream_hwdep_mmap+0x107/0x890 sound/usb/usx2y/us122l.c:182
 
-Imported buffers still skip clearing, and successfully mapped buffers
-are cleared and unmapped as before.
+crashes while reading s->read_size, which sits at offset 0x10.
 
-Tested on LS7A2000 with a one-shot range error in ttm_bo_kmap(). Its
--EINVAL return reached userspace, the object was destroyed once, and
-no GEM handle was published. Normal create/map/zero/write/read/close
-cycles passed, with the tracked BO count and VRAM usage unchanged.
+That NULL is an expected state for this field: usb_stream_hwdep_vm_fault(),
+usb_stream_hwdep_poll(), usb_stream_hwdep_ioctl(), usb_stream_stop() and
+usb_stream_free() all test it before use.  Only the mmap callback misses
+the check, so let it return -ENODEV, matching what the other hwdep mapping
+in usx2yhwdeppcm.c does when its shared buffer has not been allocated.
 
-AI assistance was used for the lifetime analysis, fix, fault-injection
-tools, build and test execution.
-
-Fixes: f39db26c5428 ("drm: Add kms driver for loongson display controller")
+Fixes: 030a07e441296c372f946cd4065b5d831d8dc40c ("ALSA: Add USB US122L driver")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Evanshenf <archwse@gmail.com>
-Reviewed-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Link: https://patch.msgid.link/20261003093415.902f89244043-2-archwse@gmail.com
+Co-developed-by: Bin Yu <byu@xidian.edu.cn>
+Signed-off-by: Bin Yu <byu@xidian.edu.cn>
+Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20261028042525.8737-1-25031212351@stu.xidian.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/loongson/lsdc_gem.c | 12 ++++++++----
- drivers/gpu/drm/loongson/lsdc_ttm.c | 10 ++++++++--
- drivers/gpu/drm/loongson/lsdc_ttm.h |  2 +-
- 3 files changed, 17 insertions(+), 7 deletions(-)
+ sound/usb/usx2y/us122l.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/loongson/lsdc_gem.c b/drivers/gpu/drm/loongson/lsdc_gem.c
-index 04293df2f0de0..8335dbea6c828 100644
---- a/drivers/gpu/drm/loongson/lsdc_gem.c
-+++ b/drivers/gpu/drm/loongson/lsdc_gem.c
-@@ -164,14 +164,18 @@ struct drm_gem_object *lsdc_gem_object_create(struct drm_device *ddev,
- 		return ERR_PTR(ret);
- 	}
- 
-+	gobj = &lbo->tbo.base;
-+	gobj->funcs = &lsdc_gem_object_funcs;
-+
- 	if (!sg) {
- 		/* VRAM is filled with random data */
--		lsdc_bo_clear(lbo);
-+		ret = lsdc_bo_clear(lbo);
-+		if (ret) {
-+			drm_gem_object_put(gobj);
-+			return ERR_PTR(ret);
-+		}
- 	}
- 
--	gobj = &lbo->tbo.base;
--	gobj->funcs = &lsdc_gem_object_funcs;
--
- 	/* tracking the BOs we created */
- 	mutex_lock(&ldev->gem.mutex);
- 	list_add_tail(&lbo->list, &ldev->gem.objects);
-diff --git a/drivers/gpu/drm/loongson/lsdc_ttm.c b/drivers/gpu/drm/loongson/lsdc_ttm.c
-index f0562ff87bb22..ce377ea3d8842 100644
---- a/drivers/gpu/drm/loongson/lsdc_ttm.c
-+++ b/drivers/gpu/drm/loongson/lsdc_ttm.c
-@@ -393,9 +393,13 @@ void lsdc_bo_kunmap(struct lsdc_bo *lbo)
- 	ttm_bo_kunmap(&lbo->kmap);
- }
- 
--void lsdc_bo_clear(struct lsdc_bo *lbo)
-+int lsdc_bo_clear(struct lsdc_bo *lbo)
- {
--	lsdc_bo_kmap(lbo);
-+	int ret;
-+
-+	ret = lsdc_bo_kmap(lbo);
-+	if (ret)
-+		return ret;
- 
- 	if (lbo->is_iomem)
- 		memset_io((void __iomem *)lbo->kptr, 0, lbo->size);
-@@ -403,6 +407,8 @@ void lsdc_bo_clear(struct lsdc_bo *lbo)
- 		memset(lbo->kptr, 0, lbo->size);
- 
- 	lsdc_bo_kunmap(lbo);
-+
-+	return 0;
- }
- 
- int lsdc_bo_evict_vram(struct drm_device *ddev)
-diff --git a/drivers/gpu/drm/loongson/lsdc_ttm.h b/drivers/gpu/drm/loongson/lsdc_ttm.h
-index 843e1475064e2..df47d9bb0d035 100644
---- a/drivers/gpu/drm/loongson/lsdc_ttm.h
-+++ b/drivers/gpu/drm/loongson/lsdc_ttm.h
-@@ -89,7 +89,7 @@ size_t lsdc_bo_size(struct lsdc_bo *lbo);
- 
- int lsdc_bo_kmap(struct lsdc_bo *lbo);
- void lsdc_bo_kunmap(struct lsdc_bo *lbo);
--void lsdc_bo_clear(struct lsdc_bo *lbo);
-+int lsdc_bo_clear(struct lsdc_bo *lbo);
- 
- int lsdc_bo_evict_vram(struct drm_device *ddev);
- 
+diff --git a/sound/usb/usx2y/us122l.c b/sound/usb/usx2y/us122l.c
+index 2a107803af880..1458dd16711fe 100644
+--- a/sound/usb/usx2y/us122l.c
++++ b/sound/usb/usx2y/us122l.c
+@@ -200,6 +200,8 @@ static int usb_stream_hwdep_mmap(struct snd_hwdep *hw,
+ 	offset = area->vm_pgoff << PAGE_SHIFT;
+ 	mutex_lock(&us122l->mutex);
+ 	s = us122l->sk.s;
++	if (!s)
++		return -ENODEV;
+ 	read = offset < s->read_size;
+ 	if (read) {
+ 		if (area->vm_flags & VM_WRITE) {
 -- 
 2.53.0
 
