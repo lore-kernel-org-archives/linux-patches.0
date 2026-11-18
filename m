@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036705;
-	b=JEN11JwvbBvcqojdzvJVyPY44mE91I+qbqw1/LIPZLoBuEzU9Q4ogu1afYh79aVia7jm
-	 igNDyG5mG150LWbQL4LkFRq1u3b5INRmRU5Y0VtRDm36/AJee2/7PPDDXhAg0iqNa6Ya/
-	 xUjI0HgksqOrWWfZG76X/u44Qh64QkrTmuhvhAkV3rAB1GYO6T9K0KdgQSexbOhCvuuDk
-	 qm1EL1c+jBZIKbFqSSfGx911SPl2B9JggqoVdGHi7cZ7fTNBOg8oyedJfQJOafid03YLf
-	 V4h+8b186O7gxoNVWIWGjEhUuAiZCv9/Y00j9kNf0O1kgMN5GNA1KIIYrTwOsYVtnuQ==
+	t=1795036709;
+	b=TE+fGkjoiwzHeM//rLt7sNcWcJBJs1BKexUt9UGUc/4q3+D891+qiL8kIBBcnYoiJBkd
+	 lUR2rvn86XtIS0AaKFrTsacD86B9zvlg/UW7GnO17a2etLC4Tg7oEEMrH9joVT2neUnKv
+	 JkIQjayBbpks7WXOKqRNgYSFCAXxWvNTSezNVid1JsJHM+87KUFaH7pMMxnrwDipYGFXy
+	 knY3NSytH6a2CN8I++GRgoMhgv1jFz8Ve0qj8UEDvi8rjoinFegognESiw+Y1jdTSfGkO
+	 TJwAwHRPmxvSpX604/4huS7Wmt10w1Bmn9vYUDgDoyfe5JPlQdNNSVLuATVpiN7wIQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036705;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036709;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=hFcgFsrhI0XCen0xJqAdPpmGlipmRwy4+6+iZGK7ijo=;
-	b=VrGhJHT0qAiX3x84/eY5L2lYy0pPozC8BGuhMvaWH3sABZCwvF1+ke1tO13Bn6d2L9LQ
-	 WZkchUEHmMdkxhpsCfJYpVxL11Jo4TEi1eQY92TXly1wczm1+u7O+n1Xq+1o5sSVikN9d
-	 JlafLN7WuHEw+DKse3AJbXU4iz1DnDcoCaP1tsWD8dxk3uAfkzfkEMg+culsqX62Wmo2O
-	 8zuBIgY+BgUcoNBQI3Lqww+UKZw3tGNZme/spnpbyAnfH1r/tqUlUwabL5Va1KtuKeNqv
-	 jWROv15DSDVXvWM/bbnHQnKSH1Tia9xWtjZYDZeyGoDUBK+5iwW26mKHqnqN1K1k+WA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Opz4OMUJjHmwjQa1geWeqY8zGrdRcTRAxN9CcQGvpfw=;
+	b=Ir59kkoZBA6+ME51bAAd6LagCIQbcw8GhbOXU0PrzoWyxsKv/HR8bsl1RGkrSB9eknD4
+	 BFp/AvEcpR9n5IskWd4F4P4gyF7WcG69MylyijLLhJcGViUMPFPKUMXPUj1wJwlOGuV9W
+	 Lp+o5Rj9c7VO75HbHy+Xg6pH+ZJtGzwd/BbaGg6NS0w1Heu2/o6ec4GM4LALpGo9yoxow
+	 fyyQactbwhvzInyyytJILGKJDYbID6D5PE2pg+7TnnK3j99UnP0K7rCetIQPtcZDqwJBs
+	 NA4EjD/OJjif/rFerDcLvztj5vZiabir5jziF2p1kN/gxzBuQSJfKWOmYAcqEeBuUBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WlzpHlxR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N5c7g5mz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6367606A32C;
-	Wed, 18 Nov 2026 21:18:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC26606A31C;
+	Wed, 18 Nov 2026 21:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WlzpHlxR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4871F000C4;
-	Wed, 18 Nov 2026 21:18:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N5c7g5mz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3CC1F000C4;
+	Wed, 18 Nov 2026 21:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036705;
-	bh=hFcgFsrhI0XCen0xJqAdPpmGlipmRwy4+6+iZGK7ijo=;
+	s=korg; t=1795036708;
+	bh=Opz4OMUJjHmwjQa1geWeqY8zGrdRcTRAxN9CcQGvpfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WlzpHlxR7Od3Rz/6yElQqM4SDmfij2dyw3rQOTFUhv89gAXX5sngVAytLSEEFO1Vj
-	 /mchcCW6BMB0nVA6d2OVj1Gg5iQWrF2nsKFrk2eTrlZSiIbSzRWBqfiJrWxWqyVd5s
-	 gTXahQOUty8JhAwzw9tKYhZvLx17XLpQCxBZzA98=
+	b=N5c7g5mzP9z99e2OZib1TeiHiJ67gXRaVecMjnPPHwQE1Au9+GqKoaOnPWQRYhCky
+	 V8Re2X7nIzAvTJs8MbWktgseF3bnrYV+NPBOZCrv50kb2f6KqMXXJdjlFkEMW6X6Ws
+	 UYnq0Xu7NmeJm9vFnAfLLdfn9bUNypeEW+Q2WTE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
+	=?UTF-8?q?Nikolaj=20Klitlund=20B=C3=B8rty?= <nbn@sj.dk>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1111/3318] ARM: 9491/1: alignment: restore uaccess state on emulation fault
-Date: Wed, 18 Nov 2026 15:28:53 +0100
-Message-ID: <20261118150353.330613331@linuxfoundation.org>
+Subject: [PATCH 6.6 1112/3318] Bluetooth: btusb: Add device ID for Realtek RTL8761BUE (StarTech AV53C1)
+Date: Wed, 18 Nov 2026 15:28:54 +0100
+Message-ID: <20261118150353.362401212@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,206 +62,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Nikolaj Klitlund Børty <nbn@sj.dk>
 
-[ Upstream commit 80dafbcb705cead6d25cb821cf29c47da8860c8c ]
+[ Upstream commit 1430308fc9d47a801a305700cd444b1a0051d14a ]
 
-The alignment handlers enable access to user memory while emulating
-unaligned instructions. If a checked access faults, its exception table
-fixup jumps to the handler's fault label and bypasses uaccess_restore().
-This leaves DOMAIN_USER as DOMAIN_CLIENT with SW domain PAN, or leaves
-TTBR0 page table walks enabled with TTBR0 PAN, while the fault is handled.
+Add the USB ID 0x14b0:0x047a for the StarTech AV53C1-USB-BLUETOOTH
+adapter, a Realtek RTL8761BUE based Bluetooth 5.3 dongle.
 
-An ARM926 QEMU test using LDMIA across an unmapped page boundary reports
-DOMAIN_USER=1 at TYPE_FAULT before this change and DOMAIN_USER=0 after it.
-SW domain PAN is the default on ARMv5, ARMv6, and non-LPAE ARMv7 builds.
+Without this entry btusb treats the device as a generic Bluetooth
+adapter and never loads the Realtek firmware, leaving the controller on
+its ROM firmware. In that state it advertises and scans actively, but
+never reports advertisements during passive scanning. LE connections
+initiated by the kernel wait for a passive-scan report before issuing
+LE Create Connection, so connecting and pairing from BlueZ time out
+without any error from the controller.
 
-Keep the saved uaccess state at function scope and track whether it was
-saved. Restore it at the fault label only when needed. Paths that did not
-enable user access continue to skip the restore.
+The same product is also sold with the ID 0x2c0a:0x8761, which is
+already supported.
 
-Assisted-by: Codex:gpt-5.6-sol
+lsusb -v output for the device:
 
-Fixes: 274e91b81ed2 ("ARM: alignment: fix alignment handling for uaccess changes")
+Bus 001 Device 010: ID 14b0:047a StarTech.com Ltd. Bluetooth Radio
+Device Descriptor:
+  bcdUSB               1.10
+  bDeviceClass          224 Wireless
+  bDeviceSubClass         1 Radio Frequency
+  bDeviceProtocol         1 Bluetooth
+  idVendor           0x14b0 StarTech.com Ltd.
+  idProduct          0x047a
+  bcdDevice            2.00
+  iManufacturer           1 Realtek
+  iProduct                2 Bluetooth Radio
+  iSerial                 3 00E04C239987
+  bNumInterfaces          2
+    Interface Descriptor:
+      bInterfaceClass       224 Wireless
+      bInterfaceSubClass      1 Radio Frequency
+      bInterfaceProtocol      1 Bluetooth
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Nikolaj Klitlund Børty <nbn@sj.dk>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/alignment.c | 51 ++++++++++++++++++++++++++++++-----------
- 1 file changed, 37 insertions(+), 14 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/mm/alignment.c b/arch/arm/mm/alignment.c
-index ee264737be6d2..41f1497e2fd28 100644
---- a/arch/arm/mm/alignment.c
-+++ b/arch/arm/mm/alignment.c
-@@ -341,6 +341,8 @@ static int
- do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
- 	unsigned int rd = RD_BITS(instr);
-+	unsigned int ua_flags;
-+	bool ua_saved = false;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index a5a7cd41e0ae9..5c43250e4301c 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -771,6 +771,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x37ad, 0x0600), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x14b0, 0x047a), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
  
- 	ai_half += 1;
- 
-@@ -364,10 +366,11 @@ do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
-  user:
- 	if (LDST_L_BIT(instr)) {
- 		unsigned long val;
--		unsigned int __ua_flags = uaccess_save_and_enable();
- 
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		get16t_unaligned_check(val, addr);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 
- 		/* signed half-word? */
- 		if (instr & 0x40)
-@@ -375,14 +378,17 @@ do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
- 
- 		regs->uregs[rd] = val;
- 	} else {
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		put16t_unaligned_check(regs->uregs[rd], addr);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 	}
- 
- 	return TYPE_LDST;
- 
-  fault:
-+	if (ua_saved)
-+		uaccess_restore(ua_flags);
- 	return TYPE_FAULT;
- }
- 
-@@ -391,6 +397,8 @@ do_alignment_ldrdstrd(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
- 	unsigned int rd = RD_BITS(instr);
- 	unsigned int rd2;
-+	unsigned int ua_flags;
-+	bool ua_saved = false;
- 	int load;
- 
- 	if ((instr & 0xfe000000) == 0xe8000000) {
-@@ -425,26 +433,30 @@ do_alignment_ldrdstrd(unsigned long addr, u32 instr, struct pt_regs *regs)
-  user:
- 	if (load) {
- 		unsigned long val, val2;
--		unsigned int __ua_flags = uaccess_save_and_enable();
- 
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		get32t_unaligned_check(val, addr);
- 		get32t_unaligned_check(val2, addr + 4);
- 
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 
- 		regs->uregs[rd] = val;
- 		regs->uregs[rd2] = val2;
- 	} else {
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		put32t_unaligned_check(regs->uregs[rd], addr);
- 		put32t_unaligned_check(regs->uregs[rd2], addr + 4);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 	}
- 
- 	return TYPE_LDST;
-  bad:
- 	return TYPE_ERROR;
-  fault:
-+	if (ua_saved)
-+		uaccess_restore(ua_flags);
- 	return TYPE_FAULT;
- }
- 
-@@ -452,6 +464,8 @@ static int
- do_alignment_ldrstr(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
- 	unsigned int rd = RD_BITS(instr);
-+	unsigned int ua_flags;
-+	bool ua_saved = false;
- 
- 	ai_word += 1;
- 
-@@ -469,18 +483,22 @@ do_alignment_ldrstr(unsigned long addr, u32 instr, struct pt_regs *regs)
-  trans:
- 	if (LDST_L_BIT(instr)) {
- 		unsigned int val;
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		get32t_unaligned_check(val, addr);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 		regs->uregs[rd] = val;
- 	} else {
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		put32t_unaligned_check(regs->uregs[rd], addr);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 	}
- 	return TYPE_LDST;
- 
-  fault:
-+	if (ua_saved)
-+		uaccess_restore(ua_flags);
- 	return TYPE_FAULT;
- }
- 
-@@ -502,6 +520,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
- 	unsigned int rd, rn, correction, nr_regs, regbits;
- 	unsigned long eaddr, newaddr;
-+	unsigned int ua_flags;
-+	bool ua_saved = false;
- 
- 	if (LDM_S_BIT(instr))
- 		goto bad;
-@@ -547,7 +567,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- #endif
- 
- 	if (user_mode(regs)) {
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		for (regbits = REGMASK_BITS(instr), rd = 0; regbits;
- 		     regbits >>= 1, rd += 1)
- 			if (regbits & 1) {
-@@ -559,7 +580,7 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- 					put32t_unaligned_check(regs->uregs[rd], eaddr);
- 				eaddr += 4;
- 			}
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 	} else {
- 		for (regbits = REGMASK_BITS(instr), rd = 0; regbits;
- 		     regbits >>= 1, rd += 1)
-@@ -581,6 +602,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- 	return TYPE_DONE;
- 
- fault:
-+	if (ua_saved)
-+		uaccess_restore(ua_flags);
- 	regs->ARM_pc -= correction;
- 	return TYPE_FAULT;
- 
+ 	/* Additional Realtek 8821AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
 -- 
 2.53.0
 
