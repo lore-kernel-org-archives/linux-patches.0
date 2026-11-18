@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050227;
-	b=zL92Myjfmb5vBrR6G5iKKp8dBzMCZjdewBLXIbkJ1WBMeL9WsxeV5GMOR3+Pw9fjN6NJ
-	 rPGxOWFlz3o1p9RhUrahqceTcED4WNM1rfIM5FAQos0PqcY2kYbqqyYvVe/G2Hrff387r
-	 DiKnkcu1mJpAKtXQ4Gbh7Rcc8KVg/x5ROz0XdxXkri8mU/rHELz977nBqH7hGczPE7BY3
-	 rRFLi+PaUbVS1Ctr0fqWx0/Dv6KuNePY5VLm271IcbYA4op6AwDGgq/YztIL/qS0eEHV9
-	 RtbR4T4ASfxR4xBDX/oixJUGo9Tp98CqbxGnp7yLdJ9Q92RfYMoMBQ6TBFm7e/7aEeA==
+	t=1795050230;
+	b=NP9wX8JNXBc1inJCWtx8GyL4DR1/GePK9I0mbMaUx5tqzxdfK9Erl2fDW4r8wQ8+uvk2
+	 8Lg0olGp/r5Ua/VXcgbxea9CmbGmigU6TidRfFGarEHkxM1VLwLLyL2ibX4AKvUbzsGvN
+	 ren58q0rlDOh0fERn48MjwOyY5K1ZgBWiYI+OYxSC5May4MTmzgtb87PnzU0FgBDGbtWM
+	 7YaxxZXzVkdgkIDQLFMeydLA3C/wAs/XkWh5MFLWDT6ohW9UPIC7qlV03UCXtGi+S8zoe
+	 TyjS999HY8N49J4p/NfQ5qwcquKvcM0hmPZWoAai6YhRSPzOoEWStkM9ROscrvU7cLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050227;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050230;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MVrKNhMgVkRoenc3mTJ0F5EwxdFhqIP2eiINn/Rj/EM=;
-	b=Cl3Gcb7ftt2cCi7N5R0VgZLWpxhV7SKnQVYKYaz/B76a2MavO5XXbdB5uEnZLUIubKv/
-	 NfO+vDd7jq4I2Ckixk5YybwdKHIzOZKPWg458HuajU9eDnAMkNVyKXuVoWu+ig+eTjSEU
-	 NobmblZu9ub4+k3Cp55Q86WBeoERdAtqj6nOU0u3vWyrpME0rXNi+J/CM6GhdO9tEbVvw
-	 Wsu+zDCdZKHu5qC/cHVOVaOEDkmL6kBye+jcuqVFlmCpsOBe8wWVd0Mc3vXPMHbPj+QZm
-	 7GlYwsZ29pabMP2ydYVUTN+OtVtcKPEOyGUqso2I2Ap2cpuAizSVeY4oRBFKE6oYhdA==
+	bh=xhJUV7IeprYw8NI74WYToN9g89dUcFUjkMoeE1QC1QA=;
+	b=S7N2xHJk+d+scgT+IX6KDk+v3s8DfXbbN3Ae2VWy60W6S9BYhTr22RmDx/+w80XUPhmp
+	 8GqTjSN4VeZi6pVLRH9oeVRi1vNwnBy27Ey/yJeMlUd2K8wjrlfnmbMhsHwJxQmUnOsrc
+	 Jt0Ry5Qo8SQBwgpbzQ6aPh8e4iK7ZwU7cKSdTXC0BBtdpPobXmGBaAONOM5qIDwIk/Lqf
+	 8qQ1eCSgRTAC+jYYl1KPoMXpdzKPhhIQgbBC9GTDwHEFhDU8fHlGkQQYqNdMBziHTnlRF
+	 qLNqskBkp32SM1OGuZ3ZXZXaIjgBROhLIvXiviX9AgQZdESn7KIfisTK2rHW8wBfZ0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s6xakxIx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P01L2rWS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56533606A32A;
-	Thu, 19 Nov 2026 01:03:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29FB9606A32A;
+	Thu, 19 Nov 2026 01:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s6xakxIx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64A51F000C4;
-	Thu, 19 Nov 2026 01:03:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P01L2rWS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2A71F000C4;
+	Thu, 19 Nov 2026 01:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050227;
-	bh=MVrKNhMgVkRoenc3mTJ0F5EwxdFhqIP2eiINn/Rj/EM=;
+	s=korg; t=1795050230;
+	bh=xhJUV7IeprYw8NI74WYToN9g89dUcFUjkMoeE1QC1QA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s6xakxIxGpXvRVoCMR2UbWG2KXxzdbgTs91h7ihzzSV+kogWYbAWC3uD07h0NZy2T
-	 pE7T/Oznj9uesDogpwgUGePVuoV2euz5T6WABNr/2NXi5Zp56hHXpHNVbFxvWoHmvs
-	 wQEsSWPUbhYNgSt6ifqbx4fWY9I6ohb8tBTSQSgI=
+	b=P01L2rWSJteADYZoTj9iGg5vsJMUTfTEoKirAaxaadcyKxvYyOJfwVGBmkORboFkS
+	 BHYIncyDYDbwkeFCd8t6v7RToV//jiFU65EFFabc/BLUw7H4k+B2iDdtRCxzjSC8QO
+	 jVeDH4UlzvqUoqMLkyYZINQIKgUZnCT4RtlDZsO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	EricChan <chenchuangyu@xiaomi.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2634/2857] RDMA/mlx5: Fix CQ resize destination index mask
-Date: Wed, 18 Nov 2026 16:01:08 +0100
-Message-ID: <20261118150336.431819453@linuxfoundation.org>
+Subject: [PATCH 6.1 2635/2857] net: stmmac: Fix interrupt handling for level-triggered mode in DWC_XGMAC2
+Date: Wed, 18 Nov 2026 16:01:09 +0100
+Message-ID: <20261118150336.465441222@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,46 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: EricChan <chenchuangyu@xiaomi.com>
 
-[ Upstream commit 0fe31052d948a3a993bb2f58cd5886f7ec279ea7 ]
+[ Upstream commit 78b7920a03351a8402de2f81914c1d2e2bdf24b7 ]
 
-In copy_resize_cqes, the destination CQE index is computed as
-(i + 1) & cq->resize_buf->nent, but resize_buf->nent is produced by
-roundup_pow_of_two(), so it is a power of two with exactly one bit set.
-Masking with a single-bit value can only yield 0 or nent itself. The
-buffer has nent entries, so valid indices are 0 .. nent - 1 and nent is
-one past the last slot; whenever the masked result is nent the following
-memcpy writes one entry out of bounds.
+According to the Synopsys Controller IP XGMAC-10G Ethernet MAC Databook
+v3.30a (section 2.7.2), when the INTM bit in the DMA_Mode register is set
+to 2, the sbd_perch_tx_intr_o[] and sbd_perch_rx_intr_o[] signals operate
+in level-triggered mode. However, in this configuration, the DMA does not
+assert the XGMAC_NIS status bit for Rx or Tx interrupt events.
 
-Use (nent - 1) as the wrap mask instead. For a power-of-two nent,
-(i + 1) & (nent - 1) is the correct modulo-nent reduction, keeping the
-index within [0, nent - 1]. This matches get_sw_cqe(), which addresses
-the CQ buffer via n & cq->ibcq.cqe, where cq->ibcq.cqe == entries - 1 is
-exactly the nent - 1 wrap mask.
+This creates a functional regression where the condition
+if (likely(intr_status & XGMAC_NIS)) in dwxgmac2_dma_interrupt() will
+never evaluate to true, preventing proper interrupt handling for
+level-triggered mode. The hardware specification explicitly states that
+"The DMA does not assert the NIS status bit for the Rx or Tx interrupt
+events" (Synopsys DWC_XGMAC2 Databook v3.30a, sec. 2.7.2).
 
-Fixes: bde51583f49b ("IB/mlx5: Add support for resize CQ")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20261019050503.2313-1-lirongqing@baidu.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The fix ensures correct handling of both edge and level-triggered
+interrupts while maintaining backward compatibility with existing
+configurations. It has been tested on the hardware device (not publicly
+available), and it can properly trigger the RX and TX interrupt handling
+in both the INTM=0 and INTM=2 configurations.
+
+Fixes: d6ddfacd95c7 ("net: stmmac: Add DMA related callbacks for XGMAC2")
+Tested-by: EricChan <chenchuangyu@xiaomi.com>
+Signed-off-by: EricChan <chenchuangyu@xiaomi.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250703020449.105730-1-chenchuangyu@xiaomi.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 305deb54c6c2 ("net: stmmac: xgmac: do not treat TBU as a TX event")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/cq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../ethernet/stmicro/stmmac/dwxgmac2_dma.c    | 24 +++++++++----------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
-index 997bb9e245979..ec39b26c45d7d 100644
---- a/drivers/infiniband/hw/mlx5/cq.c
-+++ b/drivers/infiniband/hw/mlx5/cq.c
-@@ -1250,7 +1250,7 @@ static int copy_resize_cqes(struct mlx5_ib_cq *cq)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
+index 8d11c6472d8da..38cdf24372a01 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
+@@ -360,19 +360,17 @@ static int dwxgmac2_dma_interrupt(struct stmmac_priv *priv,
+ 	}
  
- 	while (get_cqe_opcode(scqe64) != MLX5_CQE_RESIZE_CQ) {
- 		dcqe = mlx5_frag_buf_get_wqe(&cq->resize_buf->fbc,
--					     (i + 1) & cq->resize_buf->nent);
-+					     (i + 1) & (cq->resize_buf->nent - 1));
- 		dcqe64 = dsize == 64 ? dcqe : dcqe + 64;
- 		sw_own = sw_ownership_bit(i + 1, cq->resize_buf->nent);
- 		memcpy(dcqe, scqe, dsize);
+ 	/* TX/RX NORMAL interrupts */
+-	if (likely(intr_status & XGMAC_NIS)) {
+-		if (likely(intr_status & XGMAC_RI)) {
+-			u64_stats_update_begin(&stats->syncp);
+-			u64_stats_inc(&stats->rx_normal_irq_n[chan]);
+-			u64_stats_update_end(&stats->syncp);
+-			ret |= handle_rx;
+-		}
+-		if (likely(intr_status & (XGMAC_TI | XGMAC_TBU))) {
+-			u64_stats_update_begin(&stats->syncp);
+-			u64_stats_inc(&stats->tx_normal_irq_n[chan]);
+-			u64_stats_update_end(&stats->syncp);
+-			ret |= handle_tx;
+-		}
++	if (likely(intr_status & XGMAC_RI)) {
++		u64_stats_update_begin(&stats->syncp);
++		u64_stats_inc(&stats->rx_normal_irq_n[chan]);
++		u64_stats_update_end(&stats->syncp);
++		ret |= handle_rx;
++	}
++	if (likely(intr_status & (XGMAC_TI | XGMAC_TBU))) {
++		u64_stats_update_begin(&stats->syncp);
++		u64_stats_inc(&stats->tx_normal_irq_n[chan]);
++		u64_stats_update_end(&stats->syncp);
++		ret |= handle_tx;
+ 	}
+ 
+ 	/* Clear interrupts */
 -- 
 2.53.0
 
