@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016320;
-	b=HjQHLRK7TN8ybvT65ONN1bCqFnUMBmA4luH6ezF/b48G/vnKByCiLq7vATYcHbql/skT
-	 +DtgKE9nntqC90FD6ugm6t/3KCWFzN58LpR94ArdFh1NrLyONJlEF95sp0ld6SLK783wU
-	 zhyayPpHbDxOdXhzU5ago4BtUQ/viWYgUvrAHfKEseFPAlRIOfvyu+AiU9FeuGXN2i4B3
-	 EYyGDjEQ8oBfq4ob99wrn4DtNxh1RwPylFa6L68ig6g6hHqtaG2by2ZQGWroWaaQrsGmj
-	 yO4vLJ6z4Xj1KvMAYK3gc/6Yfil5YIsPAYVPGS1QFJ57R9tSxKUXpY9iL2tn+o7xoGQ==
+	t=1795016323;
+	b=f7JQ6HPDLU2c5oKcsYSgPRujwlyzvms78DTMETfKsHoNwKJSzgeAjdKfGpJP09zA+fHy
+	 EB7fKXptbA3UJdg0ZqXSxBH+B8WGx5qNnYCq6nx32dWU+ekqN3VA5RKrbPdGSN9yZH3sc
+	 HE5YkxABPMHo5rUExzS6BSDRF1lqM5Hoi5oUZMJcYE5hC2A4s3ozIGs95bNX3mBi0x9nW
+	 CJDdIpPCwaUDySU0IbxtIMsdBAdvuxTofAS2R6N6ZdNXG2sMNYtN2b4sni+AD/DY8ar5l
+	 S8xdgvPOqGzsi6F9Ly7CYVZ5RrxUlf1tYUPJLOE3rCkwcDpuOAE8P4g6+Y4yZJxivvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016320;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016323;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pHyp2ujQIAxC8Tjyc7sBKzJtpBIoFM0sXbVQKcY5Wog=;
-	b=UNzAUlv4DL3FIJw59SnA6sINB94QrX6Ew2lGhqUOrW3YmsHlGxn7Boeau4i1QzXXtKI/
-	 On1ISQ+0RyUwrkCCAxret4kGnCUvAVm1LqiIjwalDuyVvvOVaHm0n3IozZYECTmfJGJpO
-	 KJKU8Erjw6FTjlbJE5IIk1cINF6gJhAegsRnpJ5NtYmkPS/ghbyT2LmuKJsB/gXd3Pwwr
-	 bw2LMgeQ29UAOBOzq31HPzBqVGPlMw8Ups1v9mjHo2CcnyrHHGwcg2OCdxQk6rDQUoeAF
-	 0LrdNSdbYzyJ0bP2zTugsDBZzrBBPTYQuVi3BoaOX9AbpAsI83HBGXv7jsVCK3yIzGA==
+	bh=FhueVJ13+ddwSIcfjoS7R/Tl8GVh9vz7ntyQ5dilalk=;
+	b=fZCldwJgZHKRllFFdNGaWap5HOPqQgotrBUczyU00z0dBYi1Mfk4DpkqTnFOrnBTh64t
+	 LjGGSTNg76C+xRba7hRBQFDJnI4dNRRVoZj4jxpCGdRboi6WrIxU/OBxaunHJTMoWdLmi
+	 FtTUcLqh4ZRnOPTwo15WG0wDNlpBGd20KhGJLAb+G70XXf8E0BX2kNyw5qCSwvjvJIKRV
+	 1zsss9TsNt9TSaM39UpSDiUROpgOVKg9xMw4a+AVj4i2Xv3DP19nJjxteVo2Zp2Y/BPCk
+	 fQVQEjqXpyqsVBOtL18sC8WGWP6/Y4Mm3tcaDaum685gCMcjXqpCFQ5ovCZtLfPSL+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hSuCUDE7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vl0++X0E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8375606A338;
-	Wed, 18 Nov 2026 15:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8789B60A2617;
+	Wed, 18 Nov 2026 15:38:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hSuCUDE7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6E01F000C4;
-	Wed, 18 Nov 2026 15:38:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vl0++X0E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87F31F000C4;
+	Wed, 18 Nov 2026 15:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016320;
-	bh=pHyp2ujQIAxC8Tjyc7sBKzJtpBIoFM0sXbVQKcY5Wog=;
+	s=korg; t=1795016323;
+	bh=FhueVJ13+ddwSIcfjoS7R/Tl8GVh9vz7ntyQ5dilalk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hSuCUDE76IZqgnETxEJpBVnrS5cBwQvpAdQ3isyP8H0uwcbGg8xAhjFTrtryyXBt0
-	 rP1WKgE07V+POjVI6uMRSXe+YTHWe7ft90tXZAFngxmGSoN6O9ZCgz5m4QKHJtyCuq
-	 tUS8TMfLsSn4Eqr9hMQl+Fwvw7k48ecYLS3FuusU=
+	b=Vl0++X0Ei0KCisMnbgecb4B8CjR19I8/1m4b9y7nTXHoJVhj/+tbx4k9jMWZv041p
+	 0UJr50LRBP5nuBENJGzrSYbBjz42ANU1r27AnAEaDGSYlhsp7LMxk3UH9s/ZL0pC/2
+	 cbEpWHWOsAwrGHMKwQEueYJvaJvx59ngrd6OM04Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luka Gejak <luka.gejak@linux.dev>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0488/2651] wifi: rtw88: sdio: zero the padding added to a TX transfer
-Date: Wed, 18 Nov 2026 15:28:48 +0100
-Message-ID: <20261118150305.347196354@linuxfoundation.org>
+Subject: [PATCH 7.3 0471/2651] phy: samsung: usbdrd: propagate GS101 PIPE3 lock failures
+Date: Wed, 18 Nov 2026 15:28:31 +0100
+Message-ID: <20261118150304.747762500@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,73 +69,306 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luka Gejak <luka.gejak@linux.dev>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit b81ead28aeb1fd9bc3b0de4e20342b6b538ac658 ]
+[ Upstream commit 2ef1e78ef7223eb16d9cf20814a1b2873456f671 ]
 
-rtw_sdio_write_port() rounds the transfer up with sdio_align_size() and
-then hands that length to sdio_memcpy_toio() while the skb still only
-holds skb->len bytes. The difference, between one and 511 bytes, is read
-from beyond the end of the frame and transmitted. Whether it stays
-inside the skb's allocation depends on how much tailroom the skb happens
-to have, so this is at best sending uninitialised memory over the air.
+The GS101 PIPE3 initialization checks the PMA PLL lock and then checks
+the CDR lock. The PLL helper returns an error, but the GS101 PIPE3 init
+path dropped that result. The CDR helper only logged a timeout. PHY
+initialization could therefore still return success after either the PLL
+or the selected receive lane had not locked.
 
-Pad the skb up to the transfer size first. __skb_pad() zeroes the added
-bytes, reallocates a cloned skb rather than writing into a buffer a
-clone still shares, and leaves skb->len alone, so nothing else in the
-transmit path has to change.
+Make the in-file SoC-specific phy_init hook return an int so helpers
+with real failure results can propagate them through the existing PHY
+init paths. Keep the register-only helpers returning success and use the
+new return path to report the GS101 CDR wait failure. Other SoC helper
+paths keep their previous success behavior.
 
-It must not free the skb on failure: rtw_sdio_write_data() frees the skb
-itself and rtw_sdio_process_tx_queue() requeues it, so both callers
-still own it and would double free.
-
-Found while reworking this path for the RTL8723BS. Measured on RTL8723BS
-hardware, padding the transfer costs about 2% observable over transfer:
-uplink is 19.5 to 19.8 Mbit/s padded against 20.9 to 21.1 Mbit/s unpadded
-in an interleaved A/B, with scans, reconnection and a UDP flood clean in
-both. The other SDIO parts sharing this path are untested; I have only the
-RTL8723BS.
-
-Fixes: 65371a3f14e7 ("wifi: rtw88: sdio: Add HCI implementation for SDIO based chipsets")
-Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260909074556.55709-5-luka.gejak@linux.dev
+Fixes: 32267c29bc7d ("phy: exynos5-usbdrd: support Exynos USBDRD 3.1 combo phy (HS & SS)")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260623135349.42739-1-pengpeng@iscas.ac.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/sdio.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/phy/samsung/phy-exynos5-usbdrd.c | 78 +++++++++++++++++-------
+ 1 file changed, 55 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/sdio.c b/drivers/net/wireless/realtek/rtw88/sdio.c
-index 5b40d74b16ee0..8466abad972af 100644
---- a/drivers/net/wireless/realtek/rtw88/sdio.c
-+++ b/drivers/net/wireless/realtek/rtw88/sdio.c
-@@ -636,6 +636,7 @@ static int rtw_sdio_write_port(struct rtw_dev *rtwdev, struct sk_buff *skb,
- 			       enum rtw_tx_queue_type queue)
+diff --git a/drivers/phy/samsung/phy-exynos5-usbdrd.c b/drivers/phy/samsung/phy-exynos5-usbdrd.c
+index 8711a3b62c8e1..087d552eb5119 100644
+--- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
++++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
+@@ -471,7 +471,7 @@ struct exynos5_usbdrd_phy;
+ struct exynos5_usbdrd_phy_config {
+ 	u32 id;
+ 	void (*phy_isol)(struct phy_usb_instance *inst, bool isolate);
+-	void (*phy_init)(struct exynos5_usbdrd_phy *phy_drd);
++	int (*phy_init)(struct exynos5_usbdrd_phy *phy_drd);
+ 	unsigned int (*set_refclk)(struct phy_usb_instance *inst);
+ };
+ 
+@@ -708,7 +708,7 @@ exynos5_usbdrd_apply_phy_tunes(struct exynos5_usbdrd_phy *phy_drd,
+ 	}
+ }
+ 
+-static void exynos5_usbdrd_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
++static int exynos5_usbdrd_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
  {
- 	struct rtw_sdio *rtwsdio = (struct rtw_sdio *)rtwdev->priv;
-+	size_t pad_size;
- 	bool bus_claim;
- 	size_t txsize;
- 	u32 txaddr;
-@@ -646,6 +647,17 @@ static int rtw_sdio_write_port(struct rtw_dev *rtwdev, struct sk_buff *skb,
- 		return -EINVAL;
+ 	u32 reg;
  
- 	txsize = sdio_align_size(rtwsdio->sdio_func, skb->len);
-+	pad_size = txsize - skb->len;
+@@ -721,6 +721,8 @@ static void exynos5_usbdrd_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
+ 	reg = readl(phy_drd->reg_phy + EXYNOS5_DRD_PHYTEST);
+ 	reg &= ~PHYTEST_POWERDOWN_SSP;
+ 	writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYTEST);
 +
-+	if (pad_size > 0) {
-+		/*
-+		 * __skb_pad() must not free the skb on failure: both callers
-+		 * still own it, one requeues it and the other frees it.
-+		 */
-+		ret = __skb_pad(skb, pad_size, false);
-+		if (ret)
-+			return ret;
-+	}
++	return 0;
+ }
  
- 	ret = rtw_sdio_check_free_txpg(rtwdev, queue, txsize);
- 	if (ret)
+ static void
+@@ -831,7 +833,7 @@ exynos5_usbdrd_usbdp_g2_v4_pma_check_pll_lock(struct exynos5_usbdrd_phy *phy_drd
+ 	return err;
+ }
+ 
+-static void
++static int
+ exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(struct exynos5_usbdrd_phy *phy_drd)
+ {
+ 	static const unsigned int timeout_us = 40000;
+@@ -857,9 +859,11 @@ exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(struct exynos5_usbdrd_phy *phy_drd
+ 			((phy_drd->orientation == TYPEC_ORIENTATION_NORMAL)
+ 			 ? 0
+ 			 : 2), reg);
++
++	return err;
+ }
+ 
+-static void exynos5_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
++static int exynos5_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
+ {
+ 	u32 reg;
+ 
+@@ -881,6 +885,8 @@ static void exynos5_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
+ 	reg = readl(phy_drd->reg_phy + EXYNOS5_DRD_PHYTEST);
+ 	reg &= ~PHYTEST_POWERDOWN_HSP;
+ 	writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYTEST);
++
++	return 0;
+ }
+ 
+ static int exynos5_usbdrd_phy_init(struct phy *phy)
+@@ -917,7 +923,9 @@ static int exynos5_usbdrd_phy_init(struct phy *phy)
+ 	writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYUTMICLKSEL);
+ 
+ 	/* UTMI or PIPE3 specific init */
+-	inst->phy_cfg->phy_init(phy_drd);
++	ret = inst->phy_cfg->phy_init(phy_drd);
++	if (ret)
++		goto disable_clks;
+ 
+ 	/* reference clock settings */
+ 	reg = inst->phy_cfg->set_refclk(inst);
+@@ -940,9 +948,10 @@ static int exynos5_usbdrd_phy_init(struct phy *phy)
+ 	reg &= ~PHYCLKRST_PORTRESET;
+ 	writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYCLKRST);
+ 
++disable_clks:
+ 	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks, phy_drd->clks);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int exynos5_usbdrd_phy_exit(struct phy *phy)
+@@ -1203,7 +1212,7 @@ static void exynos7870_usbdrd_phy_isol(struct phy_usb_instance *inst,
+ 			   EXYNOS7870_USB2PHY_ENABLE, val);
+ }
+ 
+-static void exynos7870_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
++static int exynos7870_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
+ {
+ 	u32 reg;
+ 
+@@ -1291,6 +1300,8 @@ static void exynos7870_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
+ 	if (phy_drd->drv_data->phy_tunes)
+ 		exynos5_usbdrd_apply_phy_tunes(phy_drd,
+ 					       PTS_UTMI_POSTINIT);
++
++	return 0;
+ }
+ 
+ static int exynos7870_usbdrd_phy_init(struct phy *phy)
+@@ -1304,11 +1315,11 @@ static int exynos7870_usbdrd_phy_init(struct phy *phy)
+ 		return ret;
+ 
+ 	/* UTMI or PIPE3 specific init */
+-	inst->phy_cfg->phy_init(phy_drd);
++	ret = inst->phy_cfg->phy_init(phy_drd);
+ 
+ 	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks, phy_drd->clks);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int exynos7870_usbdrd_phy_exit(struct phy *phy)
+@@ -1355,10 +1366,12 @@ static const struct phy_ops exynos7870_usbdrd_phy_ops = {
+ 	.owner		= THIS_MODULE,
+ };
+ 
+-static void exynos2200_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
++static int exynos2200_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
+ {
+ 	/* Configure non-Samsung IP PHY, responsible for UTMI */
+ 	phy_init(phy_drd->hs_phy);
++
++	return 0;
+ }
+ 
+ static void exynos2200_usbdrd_link_init(struct exynos5_usbdrd_phy *phy_drd)
+@@ -1458,11 +1471,11 @@ static int exynos2200_usbdrd_phy_init(struct phy *phy)
+ 	exynos2200_usbdrd_link_attach_detach_pipe3_phy(inst);
+ 
+ 	/* UTMI or PIPE3 specific init */
+-	inst->phy_cfg->phy_init(phy_drd);
++	ret = inst->phy_cfg->phy_init(phy_drd);
+ 
+ 	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks, phy_drd->clks);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int exynos2200_usbdrd_phy_exit(struct phy *phy)
+@@ -1516,7 +1529,7 @@ exynos5_usbdrd_usb_v3p1_pipe_override(struct exynos5_usbdrd_phy *phy_drd)
+ 	writel(reg, regs_base + EXYNOS850_DRD_SECPMACTL);
+ }
+ 
+-static void exynos850_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
++static int exynos850_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
+ {
+ 	void __iomem *regs_base = phy_drd->reg_phy;
+ 	u32 reg;
+@@ -1622,6 +1635,8 @@ static void exynos850_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
+ 
+ 	if (ss_ports)
+ 		exynos5_usbdrd_usb_v3p1_pipe_override(phy_drd);
++
++	return 0;
+ }
+ 
+ static int exynos850_usbdrd_phy_init(struct phy *phy)
+@@ -1635,12 +1650,13 @@ static int exynos850_usbdrd_phy_init(struct phy *phy)
+ 		return ret;
+ 
+ 	/* UTMI or PIPE3 specific init */
++	ret = 0;
+ 	scoped_guard(mutex, &phy_drd->phy_mutex)
+-		inst->phy_cfg->phy_init(phy_drd);
++		ret = inst->phy_cfg->phy_init(phy_drd);
+ 
+ 	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks, phy_drd->clks);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int exynos850_usbdrd_phy_exit(struct phy *phy)
+@@ -1689,11 +1705,12 @@ static const struct phy_ops exynos850_usbdrd_phy_ops = {
+ 	.owner		= THIS_MODULE,
+ };
+ 
+-static void exynos5_usbdrd_gs101_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
++static int exynos5_usbdrd_gs101_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
+ {
+ 	void __iomem *regs_pma = phy_drd->reg_pma;
+ 	void __iomem *regs_phy = phy_drd->reg_phy;
+ 	u32 reg;
++	int ret;
+ 
+ 	exynos5_usbdrd_usbdp_g2_v4_ctrl_pma_ready(phy_drd);
+ 
+@@ -1715,8 +1732,11 @@ static void exynos5_usbdrd_gs101_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
+ 		 SECPMACTL_PMA_INIT_SW_RST);
+ 	writel(reg, regs_phy + EXYNOS850_DRD_SECPMACTL);
+ 
+-	if (!exynos5_usbdrd_usbdp_g2_v4_pma_check_pll_lock(phy_drd))
+-		exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(phy_drd);
++	ret = exynos5_usbdrd_usbdp_g2_v4_pma_check_pll_lock(phy_drd);
++	if (ret)
++		return ret;
++
++	return exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(phy_drd);
+ }
+ 
+ static int exynos5_usbdrd_gs101_phy_init(struct phy *phy)
+@@ -1741,7 +1761,15 @@ static int exynos5_usbdrd_gs101_phy_init(struct phy *phy)
+ 	 */
+ 	exynos5_usbdrd_phy_isol(inst, false);
+ 
+-	return exynos850_usbdrd_phy_init(phy);
++	ret = exynos850_usbdrd_phy_init(phy);
++	if (ret) {
++		exynos5_usbdrd_phy_isol(inst, true);
++		if (inst->phy_cfg->id == EXYNOS5_DRDPHY_UTMI)
++			regulator_bulk_disable(phy_drd->drv_data->n_regulators,
++					       phy_drd->regulators);
++	}
++
++	return ret;
+ }
+ 
+ static int exynos5_usbdrd_gs101_phy_exit(struct phy *phy)
+@@ -2277,7 +2305,7 @@ exynosautov920_usb31drd_lane0_reset(struct exynos5_usbdrd_phy *phy_drd, int val)
+ 	writel(reg, reg_phy + EXYNOSAUTOV920_USB31DRD_PHY_RST_CTRL);
+ }
+ 
+-static void
++static int
+ exynosautov920_usb31drd_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
+ {
+ 	void __iomem *reg_phy = phy_drd->reg_phy;
+@@ -2335,6 +2363,8 @@ exynosautov920_usb31drd_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
+ 
+ 	/* override values for level settings */
+ 	exynosautov920_usb31drd_cr_write(phy_drd, 0x22, 0x00F5);
++
++	return 0;
+ }
+ 
+ static void
+@@ -2353,7 +2383,7 @@ exynosautov920_usb31drd_ssphy_disable(struct exynos5_usbdrd_phy *phy_drd)
+ 	writel(reg, reg_phy + EXYNOSAUTOV920_USB31DRD_PHY_CONFIG7);
+ }
+ 
+-static void
++static int
+ exynosautov920_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
+ {
+ 	void __iomem *reg_phy = phy_drd->reg_phy;
+@@ -2457,6 +2487,8 @@ exynosautov920_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
+ 	reg = readl(reg_phy + EXYNOS2200_DRD_CLKRST);
+ 	reg |= EXYNOS2200_CLKRST_LINK_PCLK_SEL;
+ 	writel(reg, reg_phy + EXYNOS2200_DRD_CLKRST);
++
++	return 0;
+ }
+ 
+ static void
+@@ -2504,11 +2536,11 @@ static int exynosautov920_usbdrd_phy_init(struct phy *phy)
+ 	inst->phy_cfg->phy_isol(inst, false);
+ 
+ 	/* UTMI or PIPE3 specific init */
+-	inst->phy_cfg->phy_init(phy_drd);
++	ret = inst->phy_cfg->phy_init(phy_drd);
+ 
+ 	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks, phy_drd->clks);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int exynosautov920_usbdrd_phy_exit(struct phy *phy)
 -- 
 2.53.0
 
