@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015850;
-	b=Rs5KC/zDff9WrQFIfswmAuYcX9GeQWRCHlcw4fUA3vNj4i8MQPIC2vTSN4XZ0AORuGuC
-	 ySET0J3Dmwe/HBPOpKbQ+w+lm2HA5jqKwtq52/9iOqejKEIA/OC80B3TY4xqrzryVcoSj
-	 g4GdO/3ugmkq8oza0uDkA9hkAppif4dl8GPAd2gx7EYyyUk1YvESQ+d/x3C1yI09i+lqe
-	 MLYsmO2f+LbGPGHhWYXSnNBLX1gOvyUaC77HBa/cakViXk0iJWkO8j4hQmW6wH4Zpmmvy
-	 6QRpMjna+Yg6+i1E5FSeMAoovyhcEbdGBaeRcSnhEsFrZy9SnUZzbw+nsL9q2+OwOoA==
+	t=1795015853;
+	b=hGY6QOMIyVW02c/x1uUJh8zP/sUN4cYF5NpNq00t1ghapoyMhDylW2YicbeZeJ2huRe0
+	 misKOP48ajCbJzLQrB/DQF28OhcirxtyLe+Dhg5PFuZc2KuuU6oviIubyW3tltB2Qy1jv
+	 b4BdWDojvhOMA7+8N/F7shebUSGJVctD543j+9UE5ekPzMeuVFVSNBboNtagawk3FNHcC
+	 z0g8hRlp5P4VAdUEAA6BwZvmKr5tdoLn6edHWaadQfg5fs2l/p+f2X7yJrpHE/YjLPAHM
+	 hKaVrQQip1zL0vaEu/xYnbZz9NZgfw9htGVptrQW+Ou9uYPhT3wDTCsQGTEGncKg3zQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015850;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015853;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gcKVL5uefqXN3xI0u+91N5c3Fd+iG0mBFEjz3PzIkuQ=;
-	b=Q3W4CAgcrZT78ZOOjYyEn4BRbY2pb0gMGHqgMFFIIxgJSHFg+TqqQxkcHynOdEoH20Cd
-	 REQ/C2fLNo9PUKzaRzFvxk6bnbP3SkcUM7SiRsReHvp/ME3tsfebDwjv7XefqGD88jQha
-	 RkIWUpUapWqLp5zkgRYGsTZ0RD57bUh2SjRRX/xkD3ksvcKqWQBwcyqfqUZjiekU62piH
-	 UE29EOUoduStHhTZxk3Jy3I13kOC9a/xm39gInuzQaP2emgFhvllPnaXT6chQaJ3BEAP9
-	 bFT3t1pb1g/XyeYrNDdkB5D7N/NykAHLtVNLtKqaJYIYuqRr/4b9f51RKA6yGaK9q2Q==
+	bh=sgJVB9A5zUIg55IjHIIdDhRQiA1GvcZ1nnL0+HxCKrw=;
+	b=DXHRxfmYkylqQ+7hvIhPKP+Mt3Sv88swZbY/JJYkDpwBDtgkhZPLAzbGHBgvG2Kd3hiN
+	 zbM6I63GO8anA69tKcFbfWU14QnGdIgNpN8YpT/auOv0Lbu6wquLCAQOt0y7fP5wvroHI
+	 FnmQigu6XCmgncs7Km/ExFn5xCRvuWu9rYfshY2EV908DWyP8yUmPyd3YlfBMigDhN0zw
+	 Gj8esHmatcF1WgZE2MFDDav9hg787K1GcJgTwZgtYr21kyafm2pqKZOfnKWsyhgeGquXG
+	 Q4b8tg8py5BFX7cLTymq2w4c4qj2tDD1KGSFPK+zIUGcRGUxTNuThZORg0dNX4dsv/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QfMUaLtW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vtPpT7oe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FB460A2626;
-	Wed, 18 Nov 2026 15:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C6460A2600;
+	Wed, 18 Nov 2026 15:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QfMUaLtW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6215D1F000C4;
-	Wed, 18 Nov 2026 15:30:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vtPpT7oe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013821F000C5;
+	Wed, 18 Nov 2026 15:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015850;
-	bh=gcKVL5uefqXN3xI0u+91N5c3Fd+iG0mBFEjz3PzIkuQ=;
+	s=korg; t=1795015853;
+	bh=sgJVB9A5zUIg55IjHIIdDhRQiA1GvcZ1nnL0+HxCKrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QfMUaLtWyV1w3o4VtcBmcH2VUrFTk0L5Fn81EerGPkv/FAZOpeQTURHz2UHTL0yOR
-	 9Z/6iZ72BuDrbm79y6dURUSOB0biuJ9edPWsQjBnZYoWQFCLr8xLHrnBJ78DtfhReA
-	 W4ZJ8Trly86rQ/PPAmK2f35m91QeRpiBFqqwCHcM=
+	b=vtPpT7oeG2Ou/JeOlGPBuk1YsEzHdD5kAgSBvkPjK1rC4IwkwHdZMwuhhmxBR8TtS
+	 QoEA1pEDZIwTw5+kg8FAEt6YxnbLqQlRrLWoeOfotwWTYIsXhOycU3vhoG//e5jTEb
+	 myu4YpBsY1MammG8c1acBrQvY35YgR5jPQzuK0Po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Kang Yang <kang.yang@oss.qualcomm.com>,
 	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0320/2651] wifi: ath12k: Free allocated external IRQs on request_irq() failure
-Date: Wed, 18 Nov 2026 15:26:00 +0100
-Message-ID: <20261118150259.395794774@linuxfoundation.org>
+Subject: [PATCH 7.3 0321/2651] wifi: ath12k: preserve PPDU state across monitor status buffers
+Date: Wed, 18 Nov 2026 15:26:01 +0100
+Message-ID: <20261118150259.429239901@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,105 +70,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+From: Kang Yang <kang.yang@oss.qualcomm.com>
 
-[ Upstream commit 9a78703ec4a895bd2e99bf43bd18d76683126c19 ]
+[ Upstream commit 69b2d06dafa4a61b718704d655dd370ba660052a ]
 
-When external IRQ configuration fails, the driver does not release all
-IRQs that were successfully requested before the failure. This can leak
-IRQ resources during probe failure.
+A monitor PPDU may span multiple status buffers. However,
+__ath12k_wifi7_dp_mon_process_ring() clears mon_ppdu_info before
+processing every buffer.
 
-Free previously requested external IRQs when external IRQ configuration
-fails.
+As a result, continuation buffers lose PPDU state collected from
+earlier buffers, including ppdu_id and PHY metadata.
 
-Also remove the NAPI instance with netif_napi_del() before freeing the
-associated netdev to properly clean up the NAPI resources.
+This can cause monitor RX processing to fail when
+ath12k_wifi7_dp_rx_mon_dest_process() observes a PPDU ID mismatch
+between status and destination rings, preventing MSDUs from being
+delivered. It can also produce incomplete EHT metadata that triggers
+warnings from mac80211:
+	Rate marked as an EHT rate but data is invalid: MCS:0, NSS:0
 
-Store the IRQ number only after request_irq() succeeds to avoid recording
-an IRQ that was not successfully requested.
+ath12k_wifi7_dp_mon_srng_process() already tracks status TLV
+continuations via ppdu_continuation. Apply the same logic here and
+only reinitialize mon_ppdu_info when starting a new PPDU.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01243-QCAHKSWPL_SILICONZ-1
+mon_ppdu_info persists across ar->monitor_started transitions. If
+monitor mode stops while a PPDU is mid-continuation, ppdu_continuation
+stays set and could leak into the next monitor session. Reset it
+when monitor mode starts.
 
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
+
+Fixes: 78d3d907d0f1 ("wifi: ath12k: add support to reap and process monitor status ring")
+Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260819110215.2485514-3-aaradhana.sahu@oss.qualcomm.com
+Reviewed-by: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260828065534.1537-1-kang.yang@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/pci.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c         |  7 ++++++
+ .../net/wireless/ath/ath12k/wifi7/dp_mon.c    | 23 +++++++++++--------
+ 2 files changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
-index 4270f5d6ce4e7..12bbb75570f1f 100644
---- a/drivers/net/wireless/ath/ath12k/pci.c
-+++ b/drivers/net/wireless/ath/ath12k/pci.c
-@@ -326,11 +326,11 @@ static void ath12k_pci_free_ce_irq(struct ath12k_base *ab, int num_ce)
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index a997e888feb56..815be25b33c4a 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -1506,6 +1506,13 @@ static int ath12k_mac_monitor_start(struct ath12k *ar)
+ 		return ret;
  	}
- }
  
--static void ath12k_pci_free_ext_irq(struct ath12k_base *ab)
-+static void ath12k_pci_free_ext_irq(struct ath12k_base *ab, int num_ext_irq_grp)
- {
- 	int i, j;
- 
--	for (i = 0; i < ATH12K_EXT_IRQ_GRP_NUM_MAX; i++) {
-+	for (i = 0; i < num_ext_irq_grp; i++) {
- 		struct ath12k_ext_irq_grp *irq_grp = &ab->ext_irq_grp[i];
- 
- 		for (j = 0; j < irq_grp->num_irq; j++)
-@@ -344,7 +344,7 @@ static void ath12k_pci_free_ext_irq(struct ath12k_base *ab)
- static void ath12k_pci_free_irq(struct ath12k_base *ab)
- {
- 	ath12k_pci_free_ce_irq(ab, ab->hw_params->ce_count);
--	ath12k_pci_free_ext_irq(ab);
-+	ath12k_pci_free_ext_irq(ab, ATH12K_EXT_IRQ_GRP_NUM_MAX);
- }
- 
- static void ath12k_pci_ce_irq_enable(struct ath12k_base *ab, u16 ce_id)
-@@ -600,8 +600,6 @@ static int ath12k_pci_ext_irq_config(struct ath12k_base *ab)
- 
- 			irq = ath12k_pci_get_msi_irq(ab->dev, vector);
- 
--			ab->irq_num[irq_idx] = irq;
--
- 			ath12k_dbg(ab, ATH12K_DBG_PCI,
- 				   "irq:%d group:%d\n", irq, i);
- 
-@@ -612,22 +610,24 @@ static int ath12k_pci_ext_irq_config(struct ath12k_base *ab)
- 			if (ret) {
- 				ath12k_err(ab, "failed request irq %d: %d\n",
- 					   vector, ret);
--				goto fail_request;
++	/*
++	 * A previous monitor session may have stopped mid-PPDU, leaving
++	 * ppdu_continuation set. Clear it so the first status buffer of
++	 * this session is not merged with stale state from before.
++	 */
++	ar->dp.mon_data.mon_ppdu_info.ppdu_continuation = false;
 +
-+				for (n = 0; n < j; n++)
-+					free_irq(ab->irq_num[irq_grp->irqs[n]], irq_grp);
-+
-+				netif_napi_del(&ab->ext_irq_grp[i].napi);
-+				free_netdev(ab->ext_irq_grp[i].napi_ndev);
-+				goto fail_allocate;
- 			}
-+
-+			ab->irq_num[irq_idx] = irq;
+ 	ar->monitor_started = true;
+ 	ar->num_started_vdevs++;
+ 
+diff --git a/drivers/net/wireless/ath/ath12k/wifi7/dp_mon.c b/drivers/net/wireless/ath/ath12k/wifi7/dp_mon.c
+index 016b0c38e51e2..ded7d56cd79b0 100644
+--- a/drivers/net/wireless/ath/ath12k/wifi7/dp_mon.c
++++ b/drivers/net/wireless/ath/ath12k/wifi7/dp_mon.c
+@@ -3211,18 +3211,23 @@ __ath12k_wifi7_dp_mon_process_ring(struct ath12k *ar, int mac_id,
+ 		goto exit;
+ 
+ 	while ((skb = __skb_dequeue(&skb_list))) {
+-		memset(ppdu_info, 0, sizeof(*ppdu_info));
+-		ppdu_info->peer_id = HAL_INVALID_PEERID;
++		if (!ppdu_info->ppdu_continuation)
++			ath12k_wifi7_dp_mon_rx_memset_ppdu_info(ppdu_info);
+ 
+ 		hal_status = ath12k_wifi7_dp_mon_parse_rx_dest(&ar->dp, pmon, skb);
+ 
+-		if (ar->monitor_started &&
+-		    pmon->mon_ppdu_status == DP_PPDU_STATUS_START &&
+-		    hal_status == HAL_TLV_STATUS_PPDU_DONE) {
+-			rx_mon_stats->status_ppdu_done++;
+-			pmon->mon_ppdu_status = DP_PPDU_STATUS_DONE;
+-			ath12k_wifi7_dp_rx_mon_dest_process(ar, mac_id, *budget, napi);
+-			pmon->mon_ppdu_status = DP_PPDU_STATUS_START;
++		if (hal_status == HAL_TLV_STATUS_PPDU_DONE) {
++			ppdu_info->ppdu_continuation = false;
++			if (ar->monitor_started &&
++			    pmon->mon_ppdu_status == DP_PPDU_STATUS_START) {
++				rx_mon_stats->status_ppdu_done++;
++				pmon->mon_ppdu_status = DP_PPDU_STATUS_DONE;
++				ath12k_wifi7_dp_rx_mon_dest_process(ar, mac_id,
++								    *budget, napi);
++				pmon->mon_ppdu_status = DP_PPDU_STATUS_START;
++			}
++		} else {
++			ppdu_info->ppdu_continuation = true;
  		}
- 		ath12k_pci_ext_grp_disable(irq_grp);
- 	}
  
- 	return 0;
- 
--fail_request:
--	/* i ->napi_ndev was properly allocated. Free it also */
--	i += 1;
- fail_allocate:
--	for (n = 0; n < i; n++) {
--		irq_grp = &ab->ext_irq_grp[n];
--		free_netdev(irq_grp->napi_ndev);
--	}
-+	ath12k_pci_free_ext_irq(ab, i);
- 	return ret;
- }
- 
+ 		dev_kfree_skb_any(skb);
 -- 
 2.53.0
 
