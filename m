@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036828;
-	b=pVAap8P9CzpDHKYFVV0uTtxSCMhWuLzRCvfPCoVuBZVp32ysvNs6Wd1DxpuN9HnXW4mj
-	 5ueAU7us3RnQZfQlm1N6WkjkgL+U/0UKrOBcrF6KxyWx2azIi7dHFc2vPT/T2SNhA2Q49
-	 V9hCBxzFd7QzGh9XoAiaYoDIeR53mMIaHR0s1wH3CfUTjDgnyoO/i/rjoNjeCMbKQwmzQ
-	 KCfVPxUZga/3fGBDJ5n50/aFieWj1EagAeJMbq7x9b4VL3z1g9eanmSBrMq+lRWfXlvTp
-	 tgnSVdpbiv6IIly+VB1IbBvNKVSqCgpwuI4BeFA/+pjsjZ26kLCJ36fRlgyLkZue6HA==
+	t=1795036830;
+	b=NgYqqAmxIKgeJORDm7pZlR35QdWmipb8KaYL+l+RImKjetWuRNHoRFHo1EqtzxUonS2k
+	 eVPt5mqWNqoaP0dDWvGOo3rP+6sNF7Y5qa+C9W/nvLge6pHPohTZrzm8LymuLRh3GIOik
+	 905KqilbVO9/h3z5KIYT7LcVWE5/Ti6sRHOM5cPN7O/qdujEz/lQUF3gDDGfvxKWYhF2M
+	 jmgz6ntHv4+vQEm57sCbpWrQHdjXCOyJMIbKBtUesoaHAO7+LEce2zFAT3h7hPc6sKTVo
+	 +EDwXJo6DFoAGVm6eQG5IJL52nU+5f4i83GXcM8PBDWCbMa6ZjnQCJZvx6qhFFk8kbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036828;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036830;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aaCgcFi5lgqijK6DvP9mf48xq/rDUsjOofyne6JhoA0=;
-	b=pkBPsG19zU1+MxOvjsTlc8YtTLOGI0RBTxB9DUlZGjr7SO0S+HYEHQUc6a5JWw9mV5g4
-	 ycCb+CJA5hP7xbOBQ7dxQ1YZY3mXPDvVs4DKkZiA6qS8GSr3idlZaD+4Jo3jDaRjS3VFY
-	 6Q8a5xjVDv+zil8oXJHErHWCoR0VVbU7vVPbacb6595TPQP1GkSpFbiGV7B568B3EGC0r
-	 8LDLCfJ3v7TJO0qWssvBl5z5pY9nCm2JU6an7rQN9q3XYvuVFGe804JplbUth66TxHK79
-	 fz8B8flDUT+6RXHsEqYMCB0sXO4mwhF3c04Hx+XSKsHzuQvq3PgJ/5tjeMJZFigJYmQ==
+	bh=9IMeeS77bFz8WTJUtmq99XBVBylrmArHKnbFphPdlTo=;
+	b=aEzdL0IeGaBFcH5BR8J/nJsjNTbz5VSnnCzXwatEsVTLTdI0LuKycMQxjW+JIUFx5O9f
+	 fvNOINHsr/JnI60CbORS+NTqs0SLdW4eQSY02gHdrN6FUh91AZTTSkutYa3PZdWdGYp52
+	 ODgxNfofHhJj9evd//tcNtlPiBm00fjcoUodjE9Pjp9e1CB7uclNQvOViVsMMWAz7ISpa
+	 1OuCO6BOZiByxwUwpGavSMKv7WvUoaczr/DPuDOFbvegh0pewFuM7EWusb+OanxISf+xB
+	 +fLldNTg5rxwGYikHxHl9ER5Pm5KOZwBxjmOO9lfodNYIfTz9civK/BlJ6Fv53YapwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PgX61KRW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xUH4OMSo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FF9606A31C;
-	Wed, 18 Nov 2026 21:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19EA606A320;
+	Wed, 18 Nov 2026 21:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PgX61KRW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4B21F000C4;
-	Wed, 18 Nov 2026 21:20:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xUH4OMSo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B4F1F000C4;
+	Wed, 18 Nov 2026 21:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036827;
-	bh=aaCgcFi5lgqijK6DvP9mf48xq/rDUsjOofyne6JhoA0=;
+	s=korg; t=1795036830;
+	bh=9IMeeS77bFz8WTJUtmq99XBVBylrmArHKnbFphPdlTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PgX61KRWH341jU/yO+Xu/1AGfy79Ed4lqNv2FlhiMKmwHPBscU1kMYex9eOu25MGm
-	 qsL5UkejV/dZQ3hwhTHD3Up3VgTI27Qy3rjw72QpXWE9+llpIOFF2zcVFYILez7TFC
-	 Dw1+nT/P7t8FD+rYHpLEX1/WXxCjLUJDvm0Frl28=
+	b=xUH4OMSoz1s2lIlKJcu261QtJ2MQIw3s/mQF5g1t0AGLV5CAmsRJa7E0QM1qwO0m2
+	 zS/yelg8TQorbaHgRCQMbq1SpwlxOcO/jCEKn9BfntrJCo0ollKrP8WLGCcuPuoTL2
+	 0yyFsu9wVph183y2WKKKQJyVjCXuatEocifh5kF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Paolo Abeni <pabeni@redhat.com>,
+	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1196/3318] tipc: fix broadcast sender hang on last acker departure
-Date: Wed, 18 Nov 2026 15:30:18 +0100
-Message-ID: <20261118150356.050739458@linuxfoundation.org>
+Subject: [PATCH 6.6 1158/3318] f2fs: flush SIT journal during filesystem resize
+Date: Wed, 18 Nov 2026 15:29:40 +0100
+Message-ID: <20261118150354.846954567@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,151 +71,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-[ Upstream commit f4377bf85887f57b59abb5479f7660a81ffe4449 ]
+[ Upstream commit a6ede405455106bf42164ec96fd84008c5aabdd9 ]
 
-TIPC group broadcast senders are blocked while a replicast still has
-outstanding member acks: tipc_group_bc_cong() returns true as long as
-grp->bc_ackers is non-zero, and clears *grp->open, which is what
-tipc_poll() uses to report EPOLLOUT (via tsk->group_is_open).
+During a filesystem resize, SBI_IS_RESIZEFS prevents new SIT entries
+from being added to the journal and forces existing entries to the SIT
+area. However, f2fs_flush_sit_entries() returns early when there are no
+new dirty sentries, leaving existing journal entries behind.
 
-When the last outstanding acker departs before acking,
-tipc_group_delete_member() decrements grp->bc_ackers to zero but
-never restores *grp->open.  As a result poll(EPOLLOUT) never fires
-again.  A writer blocked in sendmsg() is only released if some other
-wakeup happens after the deletion: with TIPC_GROUP_MEMBER_EVTS the
-leave event delivery calls sk_data_ready() and wakes it, but without
-member events nothing does and it sleeps indefinitely, since the
-default send timeout is MAX_SCHEDULE_TIMEOUT.
+After the main area shrinks, a later checkpoint can access a journal
+entry whose segment number is outside the new geometry and trigger
+f2fs_bug_on().
 
-Commit 99cc2a62e07a ("tipc: reject invalid and unexpected
-GRP_ACK_MSG to prevent bc_ackers underflow") already calls this out
-in its changelog as a pre-existing issue.
+Only take the zero-dirty fast path when entries may be written back to
+the journal. This lets resize drain existing entries through
+remove_sits_in_journal() even when there are no new dirty sentries.
 
-Restore the open state exactly on the 1->0 transition in the delete
-path, mirroring the GRP_ACK_MSG completion path, and invoke
-sk->sk_write_space() from tipc_sk_filter_rcv() when the group just
-became writable again.
-
-Also make the ack accounting precise.  The delete path used to test
-less(m->bc_acked, grp->bc_snd_nxt - 1), which also matches members
-that were never counted for the current replicast (JOINING/LEAVING
-members keep a stale bc_acked), and the GRP_ACK_MSG handler accepted
-an ack from any member whose bc_acked differed from the expected
-value.  Either could zero bc_ackers on behalf of a member that owes
-nothing and silently void an ack still owed by a real acker.  Track
-whether a member owes an ack for the current replicast in a new
-per-member bc_pending flag, set when the member is counted and
-cleared when its ack arrives, and use it both to accept an ack and
-to decide on deletion.  bc_acked has no remaining user and is
-removed.  Suggested by Tung Quang Nguyen.
-
-This issue was discovered by Tencent CodeBuddy Security.
-
-Cc: stable@vger.kernel.org
-Fixes: 2f487712b893 ("tipc: guarantee that group broadcast doesn't bypass group unicast")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20261019115859.3471295-1-bsdhenrymartin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: stable@kernel.org
+Fixes: 04f0b2eaa3b3 ("f2fs: ioctl for removing a range from F2FS")
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/group.c  | 19 ++++++++++---------
- net/tipc/socket.c | 12 +++++++++++-
- 2 files changed, 21 insertions(+), 10 deletions(-)
+ fs/f2fs/segment.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tipc/group.c b/net/tipc/group.c
-index 0da7b27133949..a9ce1c7018b6c 100644
---- a/net/tipc/group.c
-+++ b/net/tipc/group.c
-@@ -74,7 +74,7 @@ struct tipc_member {
- 	u16 window;
- 	u16 bc_rcv_nxt;
- 	u16 bc_syncpt;
--	u16 bc_acked;
-+	bool bc_pending;
- };
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 3ee0926843557..50a362256fab4 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -4315,7 +4315,7 @@ void f2fs_flush_sit_entries(struct f2fs_sb_info *sbi, struct cp_control *cpc)
  
- struct tipc_group {
-@@ -316,7 +316,6 @@ static struct tipc_member *tipc_group_create_member(struct tipc_group *grp,
- 	m->node = node;
- 	m->port = port;
- 	m->instance = instance;
--	m->bc_acked = grp->bc_snd_nxt - 1;
- 	ret = tipc_group_add_to_tree(grp, m);
- 	if (ret < 0) {
- 		kfree(m);
-@@ -340,9 +339,12 @@ static void tipc_group_delete_member(struct tipc_group *grp,
- 	rb_erase(&m->tree_node, &grp->members);
- 	grp->member_cnt--;
+ 	down_write(&sit_i->sentry_lock);
  
--	/* Check if we were waiting for replicast ack from this member */
--	if (grp->bc_ackers && less(m->bc_acked, grp->bc_snd_nxt - 1))
--		grp->bc_ackers--;
-+	/* If this member owed an ack for the current replicast and it
-+	 * was the last one, restore the open state so blocked broadcast
-+	 * senders can proceed.
-+	 */
-+	if (grp->bc_ackers && m->bc_pending && !--grp->bc_ackers)
-+		*grp->open = true;
+-	if (!sit_i->dirty_sentries)
++	if (!sit_i->dirty_sentries && to_journal)
+ 		goto out;
  
- 	list_del_init(&m->list);
- 	list_del_init(&m->small_win);
-@@ -394,7 +396,6 @@ void tipc_group_update_member(struct tipc_member *m, int len)
- 
- void tipc_group_update_bc_members(struct tipc_group *grp, int len, bool ack)
- {
--	u16 prev = grp->bc_snd_nxt - 1;
- 	struct tipc_member *m;
- 	struct rb_node *n;
- 	u16 ackers = 0;
-@@ -403,8 +404,8 @@ void tipc_group_update_bc_members(struct tipc_group *grp, int len, bool ack)
- 		m = container_of(n, struct tipc_member, tree_node);
- 		if (tipc_group_is_receiver(m)) {
- 			tipc_group_update_member(m, len);
--			m->bc_acked = prev;
- 			ackers++;
-+			m->bc_pending = ack;
- 		}
- 	}
- 
-@@ -800,9 +801,9 @@ void tipc_group_proto_rcv(struct tipc_group *grp, bool *usr_wakeup,
- 		if (!m || !grp->bc_ackers)
- 			return;
- 		acked = msg_grp_bc_acked(hdr);
--		if (acked != grp->bc_snd_nxt || m->bc_acked == acked)
-+		if (acked != grp->bc_snd_nxt || !m->bc_pending)
- 			return;
--		m->bc_acked = acked;
-+		m->bc_pending = false;
- 		if (--grp->bc_ackers)
- 			return;
- 		list_del_init(&m->small_win);
-diff --git a/net/tipc/socket.c b/net/tipc/socket.c
-index 157d68b91c5c3..493ad38be6d25 100644
---- a/net/tipc/socket.c
-+++ b/net/tipc/socket.c
-@@ -2360,8 +2360,18 @@ static void tipc_sk_filter_rcv(struct sock *sk, struct sk_buff *skb,
- 	if (unlikely(!msg_isdata(hdr)))
- 		tipc_sk_proto_rcv(sk, &inputq, xmitq);
- 
--	if (unlikely(grp))
-+	if (unlikely(grp)) {
-+		bool was_open = tsk->group_is_open;
-+
- 		tipc_group_filter_msg(grp, &inputq, xmitq);
-+		/* A departing member may have held the last outstanding
-+		 * replicast ack, which can restore the open state inside
-+		 * tipc_group_filter_msg(); wake up senders blocked in
-+		 * poll()/write() if the group just became writable.
-+		 */
-+		if (!was_open && tsk->group_is_open)
-+			sk->sk_write_space(sk);
-+	}
- 
- 	if (unlikely(!grp) && mtyp == TIPC_MCAST_MSG)
- 		tipc_mcast_filter_msg(net, &tsk->mc_method.deferredq, &inputq);
+ 	/*
 -- 
 2.53.0
 
