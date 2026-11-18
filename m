@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043768;
-	b=rxrnSSADI/6khXmg2FiiK0SVTZKxU4xwDI1JwOzYxMDMnoEcda+vQw6dVnzPNUzl4Ms5
-	 fye79+/hUPmb8oVq+x0K3mrxDn74oTOTHChq5qfCTubnalpqS/SvBoBk+NvR9unBm8Tn+
-	 okNnc4ATyD9fQ7LhTgE6sXhNTPQ5BiK502jJhyZi8yjBBEOTi0HUe10odu0fluvpLaS7r
-	 6YSCDsp8TOraBJcMf1+M+DTGyvwtCaJ4e8C0bK2PQFgX7gaMVjFGX3MpD6963Bd+Uuja/
-	 meKJtVChtI29kCzaBSv3k038MkNUw0GikVuO0zv3B9R/+tCC2I1AeNaoNE2XqqcQJTA==
+	t=1795043771;
+	b=gMUOqTliJv7TcPhFJhTEjB5RFrwx+G9dehpJjec4qlDEfsaRJRZoHY0ZbDE5hDBUFsKj
+	 bvCqws3weR2vZjcNqX8IYyeI2vkzsjxl56EXRoUUK49Mg1tnsLX1D8+8Hmm9lqxalaKwv
+	 7jVNOgmAu4C0H/k9JWBymv0Q5KaKS3rpdD6AfzGzBM7ip3QUKULyUbPPdat+XcZYdJOoj
+	 NV4ajXd1KJXvzm89+p9uB7mVkPZawrM2iwcuwzS3Mj9I4xpzPTpqSK+AwLG/n4Z8XR5Z3
+	 st8Zn33h1Y9pzuwSunDm/mqG28NCR1EzuvpUXEZcKkRV4G4xjZ2m2gX+O9PtxQnmkcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043768;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043771;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DQtS1IfRH1Jfy8rbVbHQnF4CfENl6bAuP3fPMT6pyBM=;
-	b=tzGaiKNHVLntYeWwLaPtIjSwrSuBlPVy0jHp9NuBEfOqgyTlLrXeP6N53YMJMQGfHbdN
-	 DuQcHCjd8C3Zll0CKl2rj2AKERp4dX19zQJGWD077cqMOMxO5mpKxVt6vyzrFqcS5naIb
-	 NYrTjFj7pRdsqAi3G9QRE1PgOFBP5iISMy8EkEMRocby3DrEUX0zylLRVXEzoc9aktKOU
-	 l5NsKwG9/Y5QsEMtDxuLXJDoNMXFx6LbHcw24hZrLBGv/awUDlxFSzLpqXUax4cX8BJWe
-	 lJ/jfucApL45MsiSXhZluIqlI+eSTHvXgTajF8+Eq3R6b5XBm5U+wfuFBGuJ0ZOj2ug==
+	bh=L+DuZznsX+FmLgmYDWQrezwMVeUzFqQHQjnsFLzT9eg=;
+	b=U58jcGkIIAzNTUF0+LiTpLeyOahUMNJojCqfqIM6oiNExPFiehXY0KWsC0yrpEX15e7w
+	 enKE6oyprVputqWwQfUT+CxlIznzikkcjOdZgZP6vWb8GH9uR/nS+O8L9FznEbddO5Cuo
+	 xWwVo3gUCpkl69hHhy+fR1SJYM1KYuWM1t4nREpo8mYQ8BTYhJoQpQnrYb+I1kXUv3oeG
+	 mWL6J9rY5takAsbDiEbYOIuDDI/yekA80odn9IJAjO7a6zOHxuK/0WcZN2bdS3Gmn6AcR
+	 RPEGCdMam5ncBoJWo2ZBE5mihL3o3RbZ1XAae5/2gId1JU4/Rw8gLva5qyd+f0hgC3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j9W9XMwP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iJzVkev1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F04606A31C;
-	Wed, 18 Nov 2026 23:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F24606A32A;
+	Wed, 18 Nov 2026 23:16:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j9W9XMwP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39E11F000C4;
-	Wed, 18 Nov 2026 23:16:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iJzVkev1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7971F000C4;
+	Wed, 18 Nov 2026 23:16:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043768;
-	bh=DQtS1IfRH1Jfy8rbVbHQnF4CfENl6bAuP3fPMT6pyBM=;
+	s=korg; t=1795043771;
+	bh=L+DuZznsX+FmLgmYDWQrezwMVeUzFqQHQjnsFLzT9eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j9W9XMwPEO/NHAL49P/ove61clU88xa3WZjtP86JjoHHpDWqvwixy3gjkf3UKyDYQ
-	 FU2lQKwDjlqsTAzzYmNwYWgVGHaxVOxdsGVVDv42RlvQQyVkMPe/VBzANKqo0GuKhZ
-	 QgvOSS+7iyVyyPsY2ZwpE9wKSd8kXHTnILmIAiQY=
+	b=iJzVkev1oRmlTNRcBk8XgTlwg6dstyW9TptQk7uBvrYRU0HaNPIOXH82WC9psEMPC
+	 KQuIT1Kl+3LBDuSAUvzJQa9QksHzk6uPwJV00KeI3+yFVJal2a8lKdwkw6206TGziV
+	 1b/p0z42Lg2O0UoZ3eem5Q/a5xnrKq+KrR7p02yQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ye Bin <yebin10@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0329/2857] crypto: atmel-ecc - avoid stale fallback key after set_secret failure
-Date: Wed, 18 Nov 2026 15:22:43 +0100
-Message-ID: <20261118150213.286195370@linuxfoundation.org>
+Subject: [PATCH 6.1 0330/2857] jbd2: use shrink_type type instead of bool type for __jbd2_journal_clean_checkpoint_list()
+Date: Wed, 18 Nov 2026 15:22:44 +0100
+Message-ID: <20261118150213.322155387@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,56 +70,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit f07a0d251db7606e4792d2610788fbcc7b2c0d12 ]
+[ Upstream commit 078760d950016f5982751f5512e69f26ad8feb31 ]
 
-Clear ->do_fallback before decoding a new ECDH secret and enable it only
-after the software fallback accepts a caller-provided private key. This
-avoids using a stale fallback key should crypto_kpp_set_secret() fail.
+"enum shrink_type" can clearly express the meaning of the parameter of
+__jbd2_journal_clean_checkpoint_list(), and there is no need to use the
+bool type.
 
-Fixes: 11105693fa05 ("crypto: atmel-ecc - introduce Microchip / Atmel ECC driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://lore.kernel.org/r/20240407065355.1528580-2-yebin10@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: f213e12ff5c9 ("jbd2: check need_resched() when skipping busy checkpoint buffers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/atmel-ecc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/jbd2/checkpoint.c | 16 +++++++++-------
+ fs/jbd2/commit.c     |  2 +-
+ include/linux/jbd2.h |  4 +++-
+ 3 files changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/crypto/atmel-ecc.c b/drivers/crypto/atmel-ecc.c
-index b9c5832cf6fcc..a52379854a3ff 100644
---- a/drivers/crypto/atmel-ecc.c
-+++ b/drivers/crypto/atmel-ecc.c
-@@ -84,6 +84,7 @@ static int atmel_ecdh_set_secret(struct crypto_kpp *tfm, const void *buf,
+diff --git a/fs/jbd2/checkpoint.c b/fs/jbd2/checkpoint.c
+index 10ce0b6b4ffa2..9fcc68884e262 100644
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -367,8 +367,6 @@ int jbd2_cleanup_journal_tail(journal_t *journal)
  
- 	kfree(ctx->public_key);
- 	ctx->public_key = NULL;
-+	ctx->do_fallback = false;
+ /* Checkpoint list management */
  
- 	if (crypto_ecdh_decode_key(buf, len, &params) < 0) {
- 		dev_err(&ctx->client->dev, "crypto_ecdh_decode_key failed\n");
-@@ -91,8 +92,9 @@ static int atmel_ecdh_set_secret(struct crypto_kpp *tfm, const void *buf,
- 	}
- 
- 	if (params.key_size) {
--		ctx->do_fallback = true;
--		return crypto_kpp_set_secret(ctx->fallback, buf, len);
-+		ret = crypto_kpp_set_secret(ctx->fallback, buf, len);
-+		ctx->do_fallback = !ret;
-+		return ret;
- 	}
- 
- 	cmd = kmalloc(sizeof(*cmd), GFP_KERNEL);
-@@ -103,8 +105,6 @@ static int atmel_ecdh_set_secret(struct crypto_kpp *tfm, const void *buf,
- 	if (!public_key)
- 		goto free_cmd;
- 
--	ctx->do_fallback = false;
+-enum shrink_type {SHRINK_DESTROY, SHRINK_BUSY_STOP, SHRINK_BUSY_SKIP};
 -
- 	atmel_i2c_init_genkey_cmd(cmd, DATA_SLOT_2);
+ /*
+  * journal_shrink_one_cp_list
+  *
+@@ -505,21 +503,25 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
+  * journal_clean_checkpoint_list
+  *
+  * Find all the written-back checkpoint buffers in the journal and release them.
+- * If 'destroy' is set, release all buffers unconditionally.
++ * If 'type' is SHRINK_DESTROY, release all buffers unconditionally. If 'type'
++ * is SHRINK_BUSY_STOP, will stop release buffers if encounters a busy buffer.
++ * To avoid wasting CPU cycles scanning the buffer list in some cases, don't
++ * pass SHRINK_BUSY_SKIP 'type' for this function.
+  *
+  * Called with j_list_lock held.
+  */
+-void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy)
++void __jbd2_journal_clean_checkpoint_list(journal_t *journal,
++					  enum shrink_type type)
+ {
+ 	transaction_t *transaction, *last_transaction, *next_transaction;
+-	enum shrink_type type;
+ 	bool released;
  
- 	ret = atmel_i2c_send_receive(ctx->client, cmd);
++	WARN_ON_ONCE(type == SHRINK_BUSY_SKIP);
++
+ 	transaction = journal->j_checkpoint_transactions;
+ 	if (!transaction)
+ 		return;
+ 
+-	type = destroy ? SHRINK_DESTROY : SHRINK_BUSY_STOP;
+ 	last_transaction = transaction->t_cpprev;
+ 	next_transaction = transaction;
+ 	do {
+@@ -560,7 +562,7 @@ void jbd2_journal_destroy_checkpoint(journal_t *journal)
+ 			spin_unlock(&journal->j_list_lock);
+ 			break;
+ 		}
+-		__jbd2_journal_clean_checkpoint_list(journal, true);
++		__jbd2_journal_clean_checkpoint_list(journal, SHRINK_DESTROY);
+ 		spin_unlock(&journal->j_list_lock);
+ 		cond_resched();
+ 	}
+diff --git a/fs/jbd2/commit.c b/fs/jbd2/commit.c
+index 6d02dcad8ffd7..33113c01f6fc6 100644
+--- a/fs/jbd2/commit.c
++++ b/fs/jbd2/commit.c
+@@ -535,7 +535,7 @@ void jbd2_journal_commit_transaction(journal_t *journal)
+ 	 * frees some memory
+ 	 */
+ 	spin_lock(&journal->j_list_lock);
+-	__jbd2_journal_clean_checkpoint_list(journal, false);
++	__jbd2_journal_clean_checkpoint_list(journal, SHRINK_BUSY_STOP);
+ 	spin_unlock(&journal->j_list_lock);
+ 
+ 	jbd2_debug(3, "JBD2: commit phase 1\n");
+diff --git a/include/linux/jbd2.h b/include/linux/jbd2.h
+index 5bf7ada754d79..e3d371565da85 100644
+--- a/include/linux/jbd2.h
++++ b/include/linux/jbd2.h
+@@ -1443,7 +1443,9 @@ void jbd2_update_log_tail(journal_t *journal, tid_t tid, unsigned long block);
+ extern void jbd2_journal_commit_transaction(journal_t *);
+ 
+ /* Checkpoint list management */
+-void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy);
++enum shrink_type {SHRINK_DESTROY, SHRINK_BUSY_STOP, SHRINK_BUSY_SKIP};
++
++void __jbd2_journal_clean_checkpoint_list(journal_t *journal, enum shrink_type type);
+ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal, unsigned long *nr_to_scan);
+ int __jbd2_journal_remove_checkpoint(struct journal_head *);
+ int jbd2_journal_try_remove_checkpoint(struct journal_head *jh);
 -- 
 2.53.0
 
