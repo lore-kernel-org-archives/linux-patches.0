@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053629;
-	b=U5aH5yf0OykTYpyjBeBw5sjAoKe924K2smWW2EVHBVNeW3ooeaGDE3GHhdNRWLzs7P7M
-	 GWAcT0uBtkrZfM0fEqATd3PlAjaIr7VxIf9hQR1cVdyaQhkYgRIsd3qp6uHIjmZktqeIY
-	 6rmQqayTg2x3SazC2mJh+Qik8ZiNilllD1AaWrO7XJjcPS4jTH3LH1FXiVYB809gzX03W
-	 YV/5eUo8UJ2ojBCT3pNfNtkqIzMRqgnvvydDWIFqytFMU7DNFvelyGQ1+1h38CIGRw9yA
-	 zhK0zyH/G5QxmiovIrGVqfHF8vzyuGPbpZT2ieliwi6P4FPmmeeoovnU5FbmH1QRopA==
+	t=1795053632;
+	b=0nrrlaTChpkJP18v+caDP2CC0hWoHO9Q9qp79GLMkZ9iVCCgKWbAQtsFmeijhpjHFOGr
+	 QNL2GAPTRorBlmHxXxQIaqfxOFr/0k2+PvN/HtSAGbeCCPYMVioToOzWSZJ7BJAJuen9s
+	 PTuAZzjNEUqgeJQddhW58GLomQiTBDzb13pptCALkDkk4VizBwP/iuesWmRX6nu0RAYam
+	 iOVWOddx+e41fFmUh4EsmEmtW+sg73IVQfRYnRZ403wnAd6E/XRBCIf9Y7lFRULWIWphK
+	 UWJ7a2xSj/LC8dYZuycHui43gs1gmgpZKLYht48Jaj5+Sk017qYV3AemW4B1ijMhDjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053632;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4ANZUY7gnGnxNaQCZ1PlCrTyEFGW9nWR12PY1rFZ4PY=;
-	b=mRq8b7tHdpqXCXRT35BtayP/2chq8KO/tLnstz9CnxOdDdDt82p45p6P38kq8rgn0Db5
-	 hG85ykeyenzMbkwLctoNiW1Fb4xMpEOKdvDj2mSoA51nB+ZOnbuCBjF7/S0A5PwLBfTnJ
-	 kJaXcrP4IO8Jt26HDWBfbo7BZIokqOGORIqXuFwl/Gz+EJ5tP5g7p8ikrJOsMTG3s0xOq
-	 7H+Wa4ia7wYublGe6Y4Mx9pV8mFnFNkHs/A5CmdfQ7eqEtDab6BbgdGa5ywV7ZZCYPkC2
-	 s4+3aBex9eJLBxdfSweIDG3tNg4ouX58sOyMnFXfk9NSW33UmZeodscaSiJ2RKDkReg==
+	bh=1hu5satxLTdn1Brd2oOyrZyg0rrUZ6bWu/ocvkNo2HM=;
+	b=u3dT6AYRvdCjwC3hPAv60s8J1bDgSHSpyBEi39cslNmk0hEqIe6uebRdvWfrVZpxWKIb
+	 oJDCht5jeUGuRB9p1ujVIJ57sHl8hKtKGJU/5w9wGybE13BICXm6KB9udqoTRXmAa440X
+	 v5Lt8I0Ziar7TryeOm0y8ZcZWxPGieGb0yF9Jyvn1KUEX2i4NZMgN78WfEoQsXcNiBFs2
+	 nP9JxbYChOMdg8WJEomyKiYb8tO5ptOC7os62ZFPbZ6NjYtzAyH+B+TcAYiYqVL8kEyxD
+	 /3Bsn+kaevcYtuuFMLA7DYQnR83ooyjuDzFLYPvpjiFWONB3j2W0M3IJSkJ+vEJ6A1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uYGs6VFT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ujH5433Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DED7606A32C;
-	Thu, 19 Nov 2026 02:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3B6606A331;
+	Thu, 19 Nov 2026 02:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uYGs6VFT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E515A1F000C4;
-	Thu, 19 Nov 2026 02:00:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ujH5433Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8ED1F000C4;
+	Thu, 19 Nov 2026 02:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053629;
-	bh=4ANZUY7gnGnxNaQCZ1PlCrTyEFGW9nWR12PY1rFZ4PY=;
+	s=korg; t=1795053632;
+	bh=1hu5satxLTdn1Brd2oOyrZyg0rrUZ6bWu/ocvkNo2HM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uYGs6VFTZ5K2SAFOfNCQs37ZvrAge79oSmFVDwFnJwMYSgJFjtRZliqbDY6U/LNVm
-	 4n/DMyBvEv25jyjbwXJtsXtRbA5L1B178wbIH0aJhWUGuso0auVXWjIVDGMogHGhe1
-	 8deFzx4pO0oJLXz4rd5aaxVtgd/+f7dtSRVPMe0s=
+	b=ujH5433QcfC3Ex4XOyV6Ba3olItJqgfsm2ymqygcSwrTsVggYEGbecesnCHD+gcgC
+	 JPdl1fhENzS6/SuYW3VsCKigdnDzJYZvm5pPwW5M5qWFh0PFG31wx++jbF1t93cJb/
+	 WvxlzvgRgpw1xu4TonA1tIHCycQD1cDqrkBvREXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0988/2214] mtd: mtdsuper: Fix MTD device reference leak in mtd_get_sb()
-Date: Wed, 18 Nov 2026 15:44:24 +0100
-Message-ID: <20261118150051.751848657@linuxfoundation.org>
+Subject: [PATCH 5.15 0989/2214] ALSA: usb-audio: Protect Roland control activation
+Date: Wed, 18 Nov 2026 15:44:25 +0100
+Message-ID: <20261118150051.856605268@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,45 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 62ee3da38f41bef83c1cf250f6816a0ee187674b ]
+[ Upstream commit 19b42c1fff7f220a6346c614d79ce1bda6d95b40 ]
 
-mtd_get_sb() is called with a reference to the MTD device already
-taken by the caller.  When sget_dev() fails, the function returns the
-error without dropping that reference, so the device is never released
-and its refcount never reaches zero.  Every mount attempt on an MTD
-device whose superblock cannot be set up leaks a reference.
+The USB MIDI driver changes the Roland MIDI Input Mode control's access
+flags directly from the rawmidi open and close paths.  These changes are
+not protected by the ALSA control core and the corresponding notifications
+can race with control access.
 
-Restore the put_mtd_device() that the fs_context conversion dropped on
-this path.
+Use snd_ctl_activate_id() so that the control core updates the access flags
+and sends the notification under its lock.  Release the USB MIDI mutex
+before calling it because the control write path holds controls_rwsem while
+roland_load_put() takes the USB MIDI mutex.
 
-Fixes: 0f071004109d ("mtd: Provide fs_context-aware mount_mtd() replacement")
+Keep the state transition and alternate-setting change under the USB MIDI
+mutex; rawmidi's open mutex serializes the enclosing open and close paths.
+
+Fixes: 96f61d9ade82 ("sound: usb-audio: allow switching altsetting on Roland USB MIDI devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-[ sashal: adjusted context around the existing sget_fc() call instead of sget_dev() ]
+Assisted-by: LLM
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260929141726.2166899-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ sashal: adapted guard-based locking to explicit mutex and rwsem lock/unlock calls ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdsuper.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/usb/midi.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/mtd/mtdsuper.c b/drivers/mtd/mtdsuper.c
-index 38b6aa849c638..24d6e3540f345 100644
---- a/drivers/mtd/mtdsuper.c
-+++ b/drivers/mtd/mtdsuper.c
-@@ -63,8 +63,10 @@ static int mtd_get_sb(struct fs_context *fc,
+diff --git a/sound/usb/midi.c b/sound/usb/midi.c
+index 4738d70ed75f3..70084be58f0fa 100644
+--- a/sound/usb/midi.c
++++ b/sound/usb/midi.c
+@@ -1152,7 +1152,9 @@ static int substream_open(struct snd_rawmidi_substream *substream, int dir,
+ 			  int open)
+ {
+ 	struct snd_usb_midi *umidi = substream->rmidi->private_data;
+-	struct snd_kcontrol *ctl;
++	struct snd_ctl_elem_id ctl_id;
++	bool activate_ctl = false;
++	bool active;
  
- 	fc->sget_key = mtd;
- 	sb = sget_fc(fc, mtd_test_super, mtd_set_super);
--	if (IS_ERR(sb))
-+	if (IS_ERR(sb)) {
-+		put_mtd_device(mtd);
- 		return PTR_ERR(sb);
-+	}
- 
- 	if (sb->s_root) {
- 		/* new mountpoint for an already mounted superblock */
+ 	down_read(&umidi->disc_rwsem);
+ 	if (umidi->disconnected) {
+@@ -1164,11 +1166,9 @@ static int substream_open(struct snd_rawmidi_substream *substream, int dir,
+ 	if (open) {
+ 		if (!umidi->opened[0] && !umidi->opened[1]) {
+ 			if (umidi->roland_load_ctl) {
+-				ctl = umidi->roland_load_ctl;
+-				ctl->vd[0].access |=
+-					SNDRV_CTL_ELEM_ACCESS_INACTIVE;
+-				snd_ctl_notify(umidi->card,
+-				       SNDRV_CTL_EVENT_MASK_INFO, &ctl->id);
++				ctl_id = umidi->roland_load_ctl->id;
++				activate_ctl = true;
++				active = false;
+ 				update_roland_altsetting(umidi);
+ 			}
+ 		}
+@@ -1181,15 +1181,15 @@ static int substream_open(struct snd_rawmidi_substream *substream, int dir,
+ 			snd_usbmidi_input_stop(&umidi->list);
+ 		if (!umidi->opened[0] && !umidi->opened[1]) {
+ 			if (umidi->roland_load_ctl) {
+-				ctl = umidi->roland_load_ctl;
+-				ctl->vd[0].access &=
+-					~SNDRV_CTL_ELEM_ACCESS_INACTIVE;
+-				snd_ctl_notify(umidi->card,
+-				       SNDRV_CTL_EVENT_MASK_INFO, &ctl->id);
++				ctl_id = umidi->roland_load_ctl->id;
++				activate_ctl = true;
++				active = true;
+ 			}
+ 		}
+ 	}
+ 	mutex_unlock(&umidi->mutex);
++	if (activate_ctl)
++		snd_ctl_activate_id(umidi->card, &ctl_id, active);
+ 	up_read(&umidi->disc_rwsem);
+ 	return 0;
+ }
 -- 
 2.53.0
 
