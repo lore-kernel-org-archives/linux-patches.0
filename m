@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037483;
-	b=WcQq6grhcLH8U+zlgP17Qfg5hQsSCmouQiZjHbdonLCd/d7eGsv6Qs0qWai1oKUSy6Y5
-	 YVQzFZec4sAJdUaYp0Teg1FxdPhCWjTpcVaQomW7yh5VqWD63xVrx7cpJ1Ic0wUZqqxns
-	 VH8U6Kq+tM9Lco3YO0RC2zkCt7UE6JW5T6AWXuwu+9Q7OCA3fRhh5kep6Qo70W6RiZY2U
-	 lEanm/FYR2Ff111W2BFoQa552RPh72DCYOngCcGY+eCtMDwXXze12bXnVx3rsoaIpHRq+
-	 jlEzY0rluc63dCSCl/XKjcGxQWYTDYFqLbwxBYEVdLUvtPUTtGz+3QjVgO08jJRS8Lg==
+	t=1795037486;
+	b=3vjpwf5WZCMXR+FULs40m4E6S/vDFACnu39S/rM71vJOZM0ueGMPKubJWfM/Y1bSAZy0
+	 ECbORYTlUCABhrwT/+Q8frFdyqAXGms2ldM0nFvcZ3RxGxc3smMlAfKWgkGGy4l94bDa0
+	 pKhUs52MEhxu95b3WuJgaPqjSKU71YH0fLSaAtjcoNXGCdhbyuu2jKvx644DQ3k6QMoCb
+	 SoL+6tXbUOS+awsPrfkDf6m0q04tUOn/YgFkI4Mh26SI2jz5JheWckRFlazcrF4Zx6PBb
+	 SHv7JK/BbHPE9bnuki+uz08Rl+xilgC06pyLwd6YOGEWCkbSk8lRtHFDNr+9irA9HsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037483;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037486;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Wc7XfELJQvaUj3AKkLdzhf2PQnMr6ZX2I9yUQWi3lF4=;
-	b=b2vRr++SuZ9mrBkjdSNUfil3rJMBNWKYQdBS2H3RXRnmwWPw8AqLAqbOwY38X1vtjI2P
-	 sdYXWdMGgXSSFJ15OxXiha9ZCVFI+dVEvuEKRpN1Q5ppJzK4gLQzlthjz2zkQwx08Ru5N
-	 pfVsCL/k+Bs+Acbx0RXyI1rJMY41CbZm3nbt2yCvantS0blxzQMDEqoPFiit8vulJmqyi
-	 ouxrF2jZG1yHQrdmczqp98Ok3wA8512/oYW62oQg+HZuvV1TWW1+22/nokaimIVC7Qwd1
-	 V6d1RBV6x6fwBolNChr6FTH2T6Xfw5OqtLdXo3x4sinjmbeYRFO7BYChdpN0WDo0wSQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=0d9K77X/uPc85yE/kUW17fGGYKi8ejJHuYsQcKL9r70=;
+	b=3MLXogsb1vjlXGng4QjxrWnqH1ixmgr6InAzW9FZ+1uU4yUgBFCThOzYhBGVwab+6w17
+	 KjEieM1J/Tbtowq6p/6yTeHIPyPaJigTDZBK5MjaO4V7f3v0e6pwTKfBMt06bwr4Ruszo
+	 i1MBW88EGc949ulpM2WHy7THgjXL+J1dype2mP7GyKkqEzLQjfrlXZCQ97p8shQwepjfU
+	 qdvEzMGVMhquzqmSHPqIo9nvkBWSDMVKSw656HdQHR7J/oIakl380bxI29UdygDqL/03s
+	 vpS5L6+YVvjOq4wFbxqKqp4T0XTqeXFWm+XgksQ4W/0zXtMvOIT9LA06trg2W1F3rzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gRWqFj9r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ryObyvIg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1A3606A31C;
-	Wed, 18 Nov 2026 21:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FDE1606A32C;
+	Wed, 18 Nov 2026 21:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gRWqFj9r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61AB31F000C4;
-	Wed, 18 Nov 2026 21:31:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ryObyvIg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7691F000C4;
+	Wed, 18 Nov 2026 21:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037483;
-	bh=Wc7XfELJQvaUj3AKkLdzhf2PQnMr6ZX2I9yUQWi3lF4=;
+	s=korg; t=1795037486;
+	bh=0d9K77X/uPc85yE/kUW17fGGYKi8ejJHuYsQcKL9r70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gRWqFj9riiaC4qLSC1s4WGMe+Cnwdln7Gn5upoCdthwJjQWjHOxbAKjtc83FrqLQr
-	 XYs5SJ4sms3xGc0faHlRFEmBuwaBU3q908D6kybwN5XngWLX1pc9KyW5M224igNLYO
-	 vpRmfOD0JCOx94F1O1dLpVqTE4TFW9c3wEwC3AJs=
+	b=ryObyvIgrL+czPaDiwsAmLdtSUyG6eQSXiT0oV6sc7ZjqcDrqN50RBNFXJtkjya/R
+	 5wEUw0XzcdzbAZDpgMNzCKjfek5vgSD6kVLI9+ZkhQlXm135Gsr/2u2FyRsGX0l186
+	 JciPoBaWjCDtt0b3+KB6+Mgm20ZpNomAy+Qq/W8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Severson <eseverson@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Imre Kaloz <kaloz@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1412/3318] wifi: mac80211: reinstate IEEE80211_TX_CTL_AMPDU flag in ieee80211_tx_prep_agg()
-Date: Wed, 18 Nov 2026 15:33:54 +0100
-Message-ID: <20261118150403.021853085@linuxfoundation.org>
+Subject: [PATCH 6.6 1413/3318] scsi: aic7xxx: Use default settings on the SGI O2 onboard controllers
+Date: Wed, 18 Nov 2026 15:33:55 +0100
+Message-ID: <20261118150403.054381007@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,66 +62,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@toke.dk>
+From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit 25e73f1d6868c759c8eb56cad4e411692c5341b4 ]
+[ Upstream commit 696bdfc58975fbc70d2e2347a74e0b562e7e2494 ]
 
-The commit 592234e941f1 ("wifi: mac80211: Fix iTXQ AMPDU fragmentation
-handling") changed the way handling of the IEEE80211_TX_CTL_AMPDU flag
-is done in mac80211, so the only place it is set is in
-ieee80211_tx_dequeue().
+The SGI O2 firmware runs its onboard aic7880s without the Adaptec BIOS, so
+scratch RAM holds no settings. The left over BIOS path reads uninitialised
+bytes, and bad parity panics the boot.
 
-This means that any frames that are sent to the driver via drv_tx() will
-no longer have the flag set. In particular, this affects packets going
-through ieee80211_tx_pending(). Evan reported that this can result in
-the ath9k driver failing to account such packets in its block ack
-window, eventually overrunning the window and stalling TX.
+Use the defaults there with host ID 0. ahc_init() keeps the default host ID
+ahc_pci_config() chose, 7 on other PCI controllers, so only the O2 changes.
 
-Fix this by reinstating the flag in ieee80211_tx_prep_agg() when inside
-a valid block ack window. This should be harmless for the TXQ path, and
-will reinstate the previous behaviour for drivers that use the flag as a
-signal to track the packet in the window.
-
-Fixes: 592234e941f1 ("wifi: mac80211: Fix iTXQ AMPDU fragmentation handling")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reported-by: Evan Severson <eseverson@gmail.com>
-Link: https://lore.kernel.org/all/20261014025734.2288693-1-eseverson@gmail.com/
-Signed-off-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Tested-by: Evan Severson <eseverson@gmail.com>
-Link: https://patch.msgid.link/20261023110052.650519-1-toke@toke.dk
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Link: https://patch.msgid.link/20261026131432.26065-1-kaloz@kernel.org
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/aic7xxx/aic7xxx_core.c |  8 ++++++--
+ drivers/scsi/aic7xxx/aic7xxx_pci.c  | 20 +++++++++++++++++++-
+ 2 files changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index cc7507ffaf001..cf463965b8d40 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -1126,6 +1126,7 @@ static bool ieee80211_tx_prep_agg(struct ieee80211_tx_data *tx,
- 	struct sk_buff *purge_skb = NULL;
+diff --git a/drivers/scsi/aic7xxx/aic7xxx_core.c b/drivers/scsi/aic7xxx/aic7xxx_core.c
+index a396f048a031e..d747d0b72a13a 100644
+--- a/drivers/scsi/aic7xxx/aic7xxx_core.c
++++ b/drivers/scsi/aic7xxx/aic7xxx_core.c
+@@ -5266,9 +5266,13 @@ ahc_init(struct ahc_softc *ahc)
  
- 	if (test_bit(HT_AGG_STATE_OPERATIONAL, &tid_tx->state)) {
-+		info->flags |= IEEE80211_TX_CTL_AMPDU;
- 		reset_agg_timer = true;
- 	} else if (test_bit(HT_AGG_STATE_WANT_START, &tid_tx->state)) {
- 		/*
-@@ -1157,6 +1158,7 @@ static bool ieee80211_tx_prep_agg(struct ieee80211_tx_data *tx,
- 		if (!tid_tx) {
- 			/* do nothing, let packet pass through */
- 		} else if (test_bit(HT_AGG_STATE_OPERATIONAL, &tid_tx->state)) {
-+			info->flags |= IEEE80211_TX_CTL_AMPDU;
- 			reset_agg_timer = true;
- 		} else {
- 			queued = true;
+ 	/*
+ 	 * Assume we have a board at this stage and it has been reset.
++	 * PCI controllers keep the host ID ahc_pci_config() chose.
+ 	 */
+-	if ((ahc->flags & AHC_USEDEFAULTS) != 0)
+-		ahc->our_id = ahc->our_id_b = 7;
++	if ((ahc->flags & AHC_USEDEFAULTS) != 0) {
++		if ((ahc->chip & AHC_PCI) == 0)
++			ahc->our_id = 7;
++		ahc->our_id_b = 7;
++	}
+ 
+ 	/*
+ 	 * Default to allowing initiator operations.
+diff --git a/drivers/scsi/aic7xxx/aic7xxx_pci.c b/drivers/scsi/aic7xxx/aic7xxx_pci.c
+index 2d4c85426dc3e..5a04c7d55e4b5 100644
+--- a/drivers/scsi/aic7xxx/aic7xxx_pci.c
++++ b/drivers/scsi/aic7xxx/aic7xxx_pci.c
+@@ -701,6 +701,21 @@ ahc_find_pci_device(ahc_dev_softc_t pci)
+ 	return (NULL);
+ }
+ 
++/*
++ * The SGI O2 firmware runs its onboard controllers, in slots 1 and 2 of the
++ * root bus, without the Adaptec BIOS and at host ID 0.  It leaves no settings
++ * in scratch RAM, which may still hold power-on contents with bad parity.
++ */
++static bool
++ahc_pci_sgi_o2_onboard(struct ahc_softc *ahc)
++{
++	int slot = ahc_get_pci_slot(ahc->dev_softc);
++
++	return IS_ENABLED(CONFIG_SGI_IP32) &&
++	       ahc_get_pci_bus(ahc->dev_softc) == 0 &&
++	       (slot == 1 || slot == 2);
++}
++
+ int
+ ahc_pci_config(struct ahc_softc *ahc, const struct ahc_pci_identity *entry)
+ {
+@@ -782,6 +797,9 @@ ahc_pci_config(struct ahc_softc *ahc, const struct ahc_pci_identity *entry)
+ 	ahc->bus_intr = ahc_pci_intr;
+ 	ahc->bus_chip_init = ahc_pci_chip_init;
+ 
++	if (ahc_pci_sgi_o2_onboard(ahc))
++		ahc->flags |= AHC_NO_BIOS_INIT;
++
+ 	/* Remember how the card was setup in case there is no SEEPROM */
+ 	if ((ahc_inb(ahc, HCNTRL) & POWRDN) == 0) {
+ 		ahc_pause(ahc);
+@@ -898,7 +916,7 @@ ahc_pci_config(struct ahc_softc *ahc, const struct ahc_pci_identity *entry)
+ 			 * Assume only one connector and always turn
+ 			 * on termination.
+ 			 */
+- 			our_id = 0x07;
++			our_id = ahc_pci_sgi_o2_onboard(ahc) ? 0 : 0x07;
+ 			sxfrctl1 = STPWEN;
+ 		}
+ 		ahc_outb(ahc, SCSICONF, our_id|ENSPCHK|RESET_SCSI);
 -- 
 2.53.0
 
