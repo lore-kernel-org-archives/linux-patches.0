@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023551;
-	b=d0rnOzIxPBhsJ/nJ4GOUaqwH51V7d/CWa1s8gVEhVv/NH5obhFTFX2olUCkIDk16zbMN
-	 T8ZdBYbiizvZxohXdUnnT9CNk/jy67/VX5LNgoy81WQ5b8EyvECASNpZ1YxvpeHwHctOW
-	 9x5HWYw69+TVEafl+hfqzLWdGWdF5L0wFOmkAhiN9bXUw7yXgXxNdzngc6TQVpebnb7Bq
-	 o1hGo9PFbyTuzA4eR7B5BWFESu4C375cwlzypcklpkR09mjkd/U6I+Aw6x3sV0mQu9Aba
-	 XzRsyJ9vJSxb04ZVzOcngYULDg6GXvwrjO3wIj4+MFZVXjVtxfG40tJXJAzakG/abLQ==
+	t=1795023554;
+	b=t1gmTuoCj9Wahp0SvUFO9r8gTUmLCcNFa669NDcfsriGfYITzGgpRULblTGw1i1ED7Oz
+	 FHBrEHFJG1Px3txUPojptWP0/a+9Q4Ev4/4jWVLrbWGy8pLoHAindiwIDt9ZfrNZgKtuJ
+	 Qao3fpHEFozbZlonKz8WAeT6iBgiiMf81wLsXJHTnMt57wWTo/Qgxb3sDKXn0N3wjMs1y
+	 SGmOAKM14FxTsftE3tJU/ycGARj+qMiuVwALhe1QsiIdQKWowWPcmxulNkgQmsAJw+Gl+
+	 Kb0aYHLrSDFdpH07BTMqSReXhAYh7OrdFyTdWeGU/hKcLxnGznGvqS2i9M8b/p+3y2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023551;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023554;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6Pfv4CDEn9ZV7cqAp/cwZHwuVUXGgIqmYMVx2kckHOs=;
-	b=LnyXxKyeeyyadVMct5nlvGRnkqPy9aZsTLSWiwdQLFkLER1wub6ZPKKaUMVrQYIoe/YH
-	 hIldt8Gv8+7m2nhfWO7wBZkzw3w3HUJlsCykrzPsNEdYvIkhXYJ/2jBqD+7nJhW//AVkZ
-	 GdO7TbTpgbGlauQIu6KqZk+uMteSX1a1ouKkn3ZWUuJ69ortjy32uKdqWs1y0NQye5xfP
-	 c3mOSuy8iQGiumgzAkLc6uDeVksRl8RekCvmTu12XX5P4/f1RUP5wPGi2sRjU4j9yKl1f
-	 SsaXsgae52GQWWFN/fDZ14drv5Gk/0rt8qbLyhiUmvWW3Rd40+FIi6I64Q5vTsQzvow==
+	bh=wZbiqrnhPWES+5Kvc0RkaqMYdhIqSKwDg7yx4aCc5ek=;
+	b=n252het5RCE6h+Fai5ECnvbPb23Uc3MiRQmhBF95DzxOkjlngHUoofq/uOFz4SXx6Cvv
+	 SA+F+ATms20+/Ha+YCAWQ3C4W8dsWNypSC/BL1cwO+5aX8gVr+C0ysV0WuXlh7OVgr/nG
+	 peZ+a/bre7zRSMhwMa9cQWG84EtdGjdqpH4FglJbYySrXJTPT3uqVX4QrPXfTAPlxRWkt
+	 cmyF4SNRszD5cK3JUR4jFMOIU9WbaR1N5YewPUyztcPLgtxOy/AM/8MB3SwgtfYyk6rH7
+	 pGrUadrRjFET8+i+EmNAVwCgQSZBNK1ppYCuWnIacgZ7ff0OINMK9rNww9IPSlazwjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z20ucOFt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h3MCcxsM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26E1606A325;
-	Wed, 18 Nov 2026 17:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AABE606A333;
+	Wed, 18 Nov 2026 17:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z20ucOFt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D591F000C4;
-	Wed, 18 Nov 2026 17:39:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h3MCcxsM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3C41F000C4;
+	Wed, 18 Nov 2026 17:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023551;
-	bh=6Pfv4CDEn9ZV7cqAp/cwZHwuVUXGgIqmYMVx2kckHOs=;
+	s=korg; t=1795023554;
+	bh=wZbiqrnhPWES+5Kvc0RkaqMYdhIqSKwDg7yx4aCc5ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z20ucOFtLwGVmN0izNUtnB6sJB+6OvAkAuyCyUNooX2sT4mOnli57OojcmOoUKDFX
-	 NcjK3rB5jRVEnoREYc2VpgNZVIqmyZ4RbP1+PDzDeBD3LfEJso7h781yJoJaivHZNs
-	 jRMdEi5zNqh14RuZfZPe+ovntW8iRG79ueOX9lKQ=
+	b=h3MCcxsM3udD6S30UbraWEObH+I+hxq+D4msGGDpUCn8TmGa1bvByHwAcG1SFmWBi
+	 r3gp++6DMuWRH5luQUdWy1HH3jB3FeRP47Ig1uAEbShfZQm+isjj3iUxlEiyx8kPSw
+	 J7+4cxifYCJl5SQ10AlE/C+eAofgP/0SjqjtV9Ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nora Schiffer <nora.schiffer@ew.tq-group.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Jared McArthur <j-mcarthur@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0410/2151] ARM: dts: imx7-tqma7: correctly specify PMIC voltage constraints
-Date: Wed, 18 Nov 2026 15:35:45 +0100
-Message-ID: <20261118150137.000711751@linuxfoundation.org>
+Subject: [PATCH 6.18 0411/2151] arm64: dts: ti: k3-j784s4-j742s2-evm-common: Set ACSPCIe refclk to MAIN_PLL2_HSDIV4 for pcie1
+Date: Wed, 18 Nov 2026 15:35:46 +0100
+Message-ID: <20261118150137.038101607@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,127 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nora Schiffer <nora.schiffer@ew.tq-group.com>
+From: Jared McArthur <j-mcarthur@ti.com>
 
-[ Upstream commit f322f8f68c2c3291633ead663effa3b25c18f7b1 ]
+[ Upstream commit 7e4b4f799bd043cb5b30176ddbe690a0fb5788bc ]
 
-regulator-(min|max)-microvolt refer to the supported voltages according
-to board design, not the possible range of the regulators themselves.
-Update the configuration for the TQMa7x's PMIC and also add a comment
-regarding the PMIC's VCC_SD switching feature.
+Commit e3dfcf482d07 ("arm64: dts: ti: k3-j784s4-j742s2-evm-common:
+Enable ACSPCIE0 output for PCIe1") enabled the ACSPCIE0 buffers
+to provide the PCIe refclk for PCIe1, but introduced a bug
+where the clock is remporarily disabled during initialization.
+The ACSPCIe reference clock is muxable between multiple
+sources: SERDESx_REF_DER_OUT_CLK, MAIN_PLL2_HSDIV4_CLKOUT, and
+SERDESx_REF_OUT_CLK [0]. On reset, the refclk is set to the
+SERDESx_REF_DER_OUT_CLK. In the J742S2 and J784S4, "the SerDes PCIe
+Reference Clock Output will be temporarily disabled when changing Data
+Rates to or from 8.0 GT/s in Derived Refclk mode" [1]. Some external PCIe
+devices cannot tolerate the reference clock being disabled and will
+therefore fail to link.
 
-Fixes: a80a1af6ec8a ("ARM: dts: tq imx7 common board support")
-Signed-off-by: Nora Schiffer <nora.schiffer@ew.tq-group.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+This advisory is described in more detail as: i2242 of the J784S4
+Silicon Revision 1.0 (Rev. B) document [1].
+
+The refclk for devices connected to PCIe1 is provided by the ACSPCIe
+buffers in the J742S2XH01EVM [2] and J784S4XEVM [3]. Work around
+the advisory by setting the ACSPCIe reference clock source to
+MAIN_PLL2_HSDIV4_CLKOUT. Use the TI SCI clock controller to assign the
+clock's source [4].
+
+[0] https://www.ti.com/lit/zip/spruj52
+[1] https://www.ti.com/lit/pdf/SPRZ536
+[2] https://www.ti.com/lit/zip/SPAC001
+[3] https://www.ti.com/lit/zip/SPRR458
+[4] https://software-dl.ti.com/tisci/esd/latest/5_soc_doc/j784s4/clocks.html
+
+Fixes: e3dfcf482d07 ("arm64: dts: ti: k3-j784s4-j742s2-evm-common: Enable ACSPCIE0 output for PCIe1")
+Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Signed-off-by: Jared McArthur <j-mcarthur@ti.com>
+Link: https://patch.msgid.link/20260908185903.404451-1-j-mcarthur@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi | 40 +++++++++++++----------
- 1 file changed, 23 insertions(+), 17 deletions(-)
+ arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi b/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi
-index 2966a33bc528a..acd85ca02e3c5 100644
---- a/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi
-@@ -46,8 +46,8 @@ pfuze3000: pmic@8 {
- 
- 		regulators {
- 			sw1a_reg: sw1a {
--				regulator-min-microvolt = <700000>;
--				regulator-max-microvolt = <3300000>;
-+				regulator-min-microvolt = <1000000>;
-+				regulator-max-microvolt = <1225000>;
- 				regulator-boot-on;
- 				regulator-always-on;
- 				regulator-ramp-delay = <6250>;
-@@ -55,34 +55,33 @@ sw1a_reg: sw1a {
- 
- 			/* use sw1c_reg to align with pfuze100/pfuze200 */
- 			sw1c_reg: sw1b {
--				regulator-min-microvolt = <700000>;
--				regulator-max-microvolt = <1475000>;
-+				regulator-min-microvolt = <1000000>;
-+				regulator-max-microvolt = <1000000>;
- 				regulator-boot-on;
- 				regulator-always-on;
- 				regulator-ramp-delay = <6250>;
- 			};
- 
- 			sw2_reg: sw2 {
--				regulator-min-microvolt = <1500000>;
--				regulator-max-microvolt = <1850000>;
-+				regulator-min-microvolt = <1800000>;
-+				regulator-max-microvolt = <1800000>;
- 				regulator-boot-on;
- 				regulator-always-on;
- 			};
- 
- 			sw3a_reg: sw3 {
--				regulator-min-microvolt = <900000>;
--				regulator-max-microvolt = <1650000>;
-+				regulator-min-microvolt = <1350000>;
-+				regulator-max-microvolt = <1350000>;
- 				regulator-boot-on;
- 				regulator-always-on;
- 			};
- 
- 			swbst_reg: swbst {
--				regulator-min-microvolt = <5000000>;
--				regulator-max-microvolt = <5150000>;
-+				/* Not connected and left unconfigured */
- 			};
- 
- 			snvs_reg: vsnvs {
--				regulator-min-microvolt = <1000000>;
-+				regulator-min-microvolt = <3000000>;
- 				regulator-max-microvolt = <3000000>;
- 				regulator-boot-on;
- 				regulator-always-on;
-@@ -95,18 +94,25 @@ vref_reg: vrefddr {
- 
- 			vgen1_reg: vldo1 {
- 				regulator-min-microvolt = <1800000>;
--				regulator-max-microvolt = <3300000>;
-+				regulator-max-microvolt = <1800000>;
- 				regulator-always-on;
- 			};
- 
- 			vgen2_reg: vldo2 {
--				regulator-min-microvolt = <800000>;
--				regulator-max-microvolt = <1550000>;
-+				regulator-min-microvolt = <1500000>;
-+				regulator-max-microvolt = <1500000>;
- 				regulator-always-on;
- 			};
- 
- 			vgen3_reg: vccsd {
--				regulator-min-microvolt = <2850000>;
-+				/*
-+				 * Specified values refer to 3.3V operation; voltage for 1.8V
-+				 * operation is derived from this.
-+				 *
-+				 * The base board should usually mux GPIO1_IO08 to SD1_VSELECT for
-+				 * automatic switching of SD card IO voltage.
-+				 */
-+				regulator-min-microvolt = <3300000>;
- 				regulator-max-microvolt = <3300000>;
- 				regulator-always-on;
- 			};
-@@ -118,13 +124,13 @@ vgen4_reg: v33 {
- 			};
- 
- 			vgen5_reg: vldo3 {
--				regulator-min-microvolt = <1800000>;
-+				regulator-min-microvolt = <3300000>;
- 				regulator-max-microvolt = <3300000>;
- 				regulator-always-on;
- 			};
- 
- 			vgen6_reg: vldo4 {
--				regulator-min-microvolt = <1800000>;
-+				regulator-min-microvolt = <3300000>;
- 				regulator-max-microvolt = <3300000>;
- 				regulator-always-on;
- 			};
+diff --git a/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi b/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi
+index 2834f0a8bbee0..2d6f80636de2a 100644
+--- a/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi
+@@ -1196,6 +1196,8 @@ &pcie1_rc {
+ 	status = "okay";
+ 	clocks = <&k3_clks 333 0>, <&serdes0 CDNS_TORRENT_REFCLK_DRIVER>;
+ 	clock-names = "fck", "pcie_refclk";
++	assigned-clocks = <&k3_clks 415 0>;
++	assigned-clock-parents = <&k3_clks 415 2>;
+ 	num-lanes = <2>;
+ 	reset-gpios = <&exp1 2 GPIO_ACTIVE_HIGH>;
+ 	phys = <&serdes0_pcie1_link>;
 -- 
 2.53.0
 
