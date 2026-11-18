@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044723;
-	b=scFPg1fevXXn2qBmLxSQJDkHeI7BGMreQaSz5MAZUUUwVXTn3FdKGZA2ujAkrQ4k2qVk
-	 TvpDWtV6qIOjdgiLkZk4mntGe2o44/9h+vTq+6ZoZ5ACJam5g6kn7FEB2ZuflBkEo5qhH
-	 6MqapzWCQxemKRYVOcwJ2CiTzxAHW/PSF6+pc2QYpSPPR871gcuAvl32X6tkeNYZ9nlGv
-	 4+0fV0kPvJ38vVvhJUyDp2n5KgHxKawmZrn3KANXOP6Fetf2owUDL+llHEIu70TSES+Ki
-	 4Ab+XXwUqwPG3qRM4Xj58IwCCzJyFw1ffQ530f2lICMxhnrdUpPJhZOF49zdSgeylYQ==
+	t=1795044726;
+	b=vFWvmUgCTpoEjAmwxDB348Y1ZxFUrbHxxr/eUrO2hBGoeG55v2xAIEh6rwROoRVmLgVO
+	 WuGq4JdFTdA1SvQHTeVzoR5C3v4vLsnriNdW1PbxWw4T8LnZdsPGvMoeqqPPs2cc+SfMK
+	 lqG5KNhqW3FZlT9zoGj2B4h3unYsOSc8xLEkIzD/uOJ6VrsSLAip2yg7/TfBHkHE6fS62
+	 BOumYFuvGy4lbXyBFEuUDSjto0k8cXBgM2NqzPdyPIK6wSuTnBYTh6xiLlvxca7sF5ohX
+	 ajNNy66Y6L028NobpxFSL/UHQHtmDvJxDAQM2e2lqnUELj1EGDUb7KdBgdMfrHDblNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044723;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044726;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=oARDafliKR15iDT3lKEGETr+IYU1D8Cu4KNAn2Ih6kQ=;
-	b=VedaoSrWQlhdQcrTAvcy/iq6QxII8BiTsYiXLv2bO5pZe2FuiLvGeqiQN3mTYuHwCmW6
-	 CyCex0JLsy3OtfFyd2+D6tSc7ADuk3OfdllCKKGbjnCvtETsbxZQX8LkDNFg7P8tMWpeR
-	 v0lxUJ45naL7FzFZtYLFdC/JmqMx387/Un1nuXAw+z8zdd8Z3jFza/zrGj0u1/kvumCc4
-	 f4o+CUWEROXw7wl6Ndwhsx5GMEeeGkBUK3ua9r7cdBjzGb9zvLekCHdGr8aZDMqNITZMf
-	 3v/0mvkMZdl/KsJo4Q+S5ulXEqss3Pyh1ar2Ud8rP8iPedxFBfyNa6hk5RrklVBI/pw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=QBS7NuatB1BX4QZO30MmDKNcQ4OVoHezs/ZJUPKXsfY=;
+	b=TH+xjfF2AWHfQgnRWWE7UAe5R+xPGC+9DUqWkD2kwAl5tpBMSzFPMQ231D/p1+kuYJfW
+	 +hNrxK/D94sI4PN0UOBMp/NPElw+KKjx6Nu3c5LPLTFMoDjmYzWtIy5bmqqR1GX53ArD0
+	 LxxIXRXy6VBEpn6L2kJnykj/ENlPI3RPkHx29tW1kvrqgylvelV3P0prs9PRm1w89ZO7T
+	 j3c1/l3Cstm+YIO/2qK1UGCvEAed69KSAI1YCNrEyZMRl5JlYCL0blhbJUFscC4B2cJAp
+	 O7CwJf8DdYlgpCz4UvDMar/osuXbu+Fbo09P3vUYuRMNT6MzcG+3PQUe2BmAhthKXRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MWlZUclq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LMpFgTtT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6121D606A32A;
-	Wed, 18 Nov 2026 23:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F084606A31C;
+	Wed, 18 Nov 2026 23:32:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MWlZUclq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04411F000C4;
-	Wed, 18 Nov 2026 23:32:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LMpFgTtT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 873BE1F000C4;
+	Wed, 18 Nov 2026 23:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044723;
-	bh=oARDafliKR15iDT3lKEGETr+IYU1D8Cu4KNAn2Ih6kQ=;
+	s=korg; t=1795044726;
+	bh=QBS7NuatB1BX4QZO30MmDKNcQ4OVoHezs/ZJUPKXsfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MWlZUclqCTQpZ/wh+s4UzoLjob6VJdmH8G27VbP3tZpgqkb+Uvhh4li4YU3JapyqG
-	 QxznGJ4TXzKDEesfi5ITm80OybZl+J5PIdw2qFOd53YdNlc8wRPVgYekdG0PAU5GEb
-	 OYjBL8aIeSQBKAvcq4BE9v3fnu5i0pfRssbXFbkY=
+	b=LMpFgTtTVeKJssozFD2ZHvZBPTfl40umsdqaZqu89YMz58nvMLwR/BPw2jnUijnbM
+	 NzJJ4EczKbaRTHrr9egcZ748GevSg/pVwsLBtplFNhB3nYDotAPiJRWuS6+nIGkehm
+	 9Z+mEZmNpQqp2ZsO2Fi6lmmVDGN7Pz8BQG7M946s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fredric Cover <fredric.cover.lkernel@gmail.com>,
+	Zikang Gao <2715417602@qq.com>,
+	David Howells <dhowells@redhat.com>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0667/2857] smb: client: fix early procfs exposure race
-Date: Wed, 18 Nov 2026 15:28:21 +0100
-Message-ID: <20261118150225.573522128@linuxfoundation.org>
+Subject: [PATCH 6.1 0668/2857] smb: client: do not pass a NULL buf to is_oplock_break()
+Date: Wed, 18 Nov 2026 15:28:22 +0100
+Message-ID: <20261118150225.610510178@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,137 +63,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fredric Cover <fredric.cover.lkernel@gmail.com>
+From: Zikang Gao <2715417602@qq.com>
 
-[ Upstream commit 7b1afb631395c958993cda4631002258ef4151ea ]
+[ Upstream commit 2225ab306575e424b3dad2ee1be2521c89249d15 ]
 
-Currently, init_cifs() calls cifs_proc_init() near the beginning of
-the function, before INIT_LIST_HEAD, leading to a momentarily
-uninitialized, but exposed, procfs. If a userspace process reads this
-empty procfs, iterating over a zeroed list_head leads to a NULL
-pointer dereference and a kernel oops/panic.
+receive_encrypted_read() sets *num_mids = 1 and never writes the
+caller's bufs[]. Offload returns -1 with *num_mids = 0, so the
+demultiplex thread skips the frame. The inline decrypt path
+returns 0 even when smb2_find_mid() fails.
 
-For example, if a delay is added between cifs_proc_init() and
-INIT_LIST_HEAD, and a userspace process is polling
-/proc/fs/cifs/DebugData, the following oops occurs:
+cifs_demultiplex_thread() then treats mids[i] == NULL as an
+oplock break and calls is_oplock_break(bufs[i], server) with
+bufs[i] still NULL. smb2_is_valid_oplock_break() reads
+hdr.Command at offset 12 and oopses.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000608
-Oops: Oops: 0000 [#1] SMP PTI
-CPU: 0 UID: 0 PID: 3477 Comm: cat Not tainted
-7.3.0-02212-g4df4d2a577db-dirty #6 PREEMPT(lazy)
-RIP: 0010:cifs_debug_data_proc_show+0x103/0xd80 [cifs]
-Call Trace:
-<TASK>
- ? seq_read_iter+0x86/0x400
- ? seq_read_iter+0x86/0x400
- seq_read_iter+0x183/0x400
- proc_reg_read_iter+0x62/0x90
- copy_splice_read+0x215/0x310
- splice_file_to_pipe+0xec/0x1c0
- do_splice+0x4b8/0x780
- __se_sys_splice+0x18f/0x250
- do_syscall_64+0x109/0x330
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-</TASK>
+A large encrypted READ whose MessageId does not match is enough
+to panic cifsd.
 
-Fix this by moving cifs_proc_init() down in init_cifs(), ensuring it runs
-only after all internal lists, locks, counters, and workqueues are fully
-ready, but before registering the filesystem. Update the error cleanup
-ladder and exit_cifs() to maintain proper LIFO order.
+    Oops: general protection fault, probably for non-canonical address
+    0xdffffc0000000001: 0000 [#1] SMP KASAN PTI
+    KASAN: null-ptr-deref in range
+    [0x0000000000000008-0x000000000000000f]
+    CPU: 0 PID: 100 Comm: cifsd
+    RIP: smb2_is_valid_oplock_break+0xc8/0x2270 [cifs]
+    cifs_demultiplex_thread
+    Kernel panic - not syncing: Fatal exception
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
-Cc: stable@vger.kernel.org
+Return -1 when inline decrypt finds no mid, and skip
+is_oplock_break() plus the unknown-frame dump when bufs[i]
+is NULL. receive_encrypted_standard() already assigns
+bufs[*num_mids].
+
+Fixes: c42a6abe3012 ("CIFS: Add capability to decrypt big read responses")
+Assisted-by: LLM
+Signed-off-by: Zikang Gao <2715417602@qq.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: Adjusted context to fit the existing CIFS initialization and teardown code while preserving upstream’s added and removed lines. ]
+Cc: stable@vger.kernel.org
+[ sashal: added braces around the existing NULL-MID branch to include the new assignment ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsfs.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ fs/smb/client/connect.c | 4 +++-
+ fs/smb/client/smb2ops.c | 5 +++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
-index d369528532c39..60ec559e0b6da 100644
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -1842,7 +1842,6 @@ static int __init
- init_cifs(void)
- {
- 	int rc = 0;
--	cifs_proc_init();
- 	INIT_LIST_HEAD(&cifs_tcp_ses_list);
- /*
-  *  Initialize Global counters
-@@ -1885,10 +1884,8 @@ init_cifs(void)
- 	}
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index 157d947846d9b..f765246fa57c7 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -1324,12 +1324,14 @@ cifs_demultiplex_thread(void *p)
+ 					mids[i]->callback(mids[i]);
  
- 	cifsiod_wq = alloc_workqueue("cifsiod", WQ_FREEZABLE|WQ_MEM_RECLAIM, 0);
--	if (!cifsiod_wq) {
--		rc = -ENOMEM;
--		goto out_clean_proc;
--	}
-+	if (!cifsiod_wq)
-+		return -ENOMEM;
+ 				release_mid(mids[i]);
+-			} else if (server->ops->is_oplock_break &&
++			} else if (bufs[i] && server->ops->is_oplock_break &&
+ 				   server->ops->is_oplock_break(bufs[i],
+ 								server)) {
+ 				smb2_add_credits_from_hdr(bufs[i], server);
+ 				cifs_dbg(FYI, "Received oplock break\n");
+ 			} else {
++				if (!bufs[i])
++					continue;
+ 				cifs_server_dbg(VFS, "No task to wake, unknown frame received! NumMids %d\n",
+ 						atomic_read(&mid_count));
+ 				cifs_dump_mem("Received Data is: ", bufs[i],
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 7f6c8ce168bca..17a44992667c2 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -5243,9 +5243,10 @@ receive_encrypted_read(struct TCP_Server_Info *server, struct mid_q_entry **mid,
+ 		goto free_pages;
  
- 	/*
- 	 * Consider in future setting limit!=0 maybe to min(num_of_cores - 1, 3)
-@@ -1964,19 +1961,22 @@ init_cifs(void)
- 	if (rc)
- 		goto out_cifs_swn_init;
- 
-+	cifs_proc_init();
-+
- 	rc = register_filesystem(&cifs_fs_type);
- 	if (rc)
--		goto out_init_cifs_idmap;
-+		goto out_clean_proc;
- 
- 	rc = register_filesystem(&smb3_fs_type);
- 	if (rc) {
- 		unregister_filesystem(&cifs_fs_type);
--		goto out_init_cifs_idmap;
-+		goto out_clean_proc;
- 	}
- 
- 	return 0;
- 
--out_init_cifs_idmap:
-+out_clean_proc:
-+	cifs_proc_clean();
- 	exit_cifs_idmap();
- out_cifs_swn_init:
- #ifdef CONFIG_CIFS_SWN_UPCALL
-@@ -2008,8 +2008,6 @@ init_cifs(void)
- 	destroy_workqueue(decrypt_wq);
- out_destroy_cifsiod_wq:
- 	destroy_workqueue(cifsiod_wq);
--out_clean_proc:
--	cifs_proc_clean();
- 	return rc;
- }
- 
-@@ -2019,6 +2017,7 @@ exit_cifs(void)
- 	cifs_dbg(NOISY, "exit_smb3\n");
- 	unregister_filesystem(&cifs_fs_type);
- 	unregister_filesystem(&smb3_fs_type);
-+	cifs_proc_clean();
- 	cifs_dfs_release_automount_timer();
- 	exit_cifs_idmap();
- #ifdef CONFIG_CIFS_SWN_UPCALL
-@@ -2039,7 +2038,6 @@ exit_cifs(void)
- 	destroy_workqueue(fileinfo_put_wq);
- 	destroy_workqueue(serverclose_wq);
- 	destroy_workqueue(cifsiod_wq);
--	cifs_proc_clean();
- }
- 
- MODULE_AUTHOR("Steve French");
+ 	*mid = smb2_find_mid(server, buf);
+-	if (*mid == NULL)
++	if (*mid == NULL) {
+ 		cifs_dbg(FYI, "mid not found\n");
+-	else {
++		rc = -1;
++	} else {
+ 		cifs_dbg(FYI, "mid found\n");
+ 		(*mid)->decrypted = true;
+ 		rc = handle_read_data(server, *mid, buf,
 -- 
 2.53.0
 
