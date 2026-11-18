@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051691;
-	b=3r6gC0NyVvFhqFto1dwgmbChAf2Dtjv1y1pDNkOS57ftoiW916d+6capoV5o7NbWm2W0
-	 bzKCgAKqjMhevfSmjOujClHiU5COAMahQap2KhrtKzcOCMi1QazxSfnDX17HigYKg+yMy
-	 eUGeXKh5EfLoGgpwhDgyRT3MGHcVUinGvPNLXAGE2fnq5FotJcoafAW3oyfX8yVlPE1+B
-	 0JvHIM36qsHnPWjAOGY/ZFqeAAQBkTj4a7YarU4k4o5AjBKcLkoltwqE5BW6AWdSDMkub
-	 T2WYYUz3ElhvUsgx47rnsNVnlkCZkUTXvkFgeGIw/PjtdI0dyg/rmliwtqwc7pkcc4g==
+	t=1795051694;
+	b=Ga3E8YDlSYdOsWqBC1PN5OFjgopmQdyL6GL/oKwQ7Q8QqrL42cz8NAgXodremg0+E+bQ
+	 iQiKxjefWKFSGW6H68MSIlHMRa10zEGdy1nnsqWVHJ7gzvM/JAOVZm6hvKECP49jd8rip
+	 3NZCYpzGaAty8i5j92tvlq6bAemNwMaGqmj4Q8I3wsU+MS8XdNLBepSd0Wpbswiu7sVk5
+	 TaGKnLKpE6fOiCssz5af+SP0P5Xy63Zz3Zm/NfOT+EUAYKHdYWRCX2ra8uahza7A06hpX
+	 3kmvO4NfFMi5DhfMEqt1Y4UzfRkL099tVafXHeOyTKVS3NC2FF7rxLg/YEJShDhslzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051691;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051694;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mDomTz/EHA1EP0+cF4Ge96wqZK0JWZ/UNmCrF+tzEZk=;
-	b=EaJs6HzDLyvky7xw6uSvlWBoynnEXEXXLLyEgFW7DMYzKVnSbd+rWQ+Pl21LDETg3JJq
-	 e4b/9fWLbUiorl/eNURebUJkyHl5S/D+jSCG+/FV75GqQ2eCU4Wz2hrw97uNzigj4xH7f
-	 UfP6U/cvVI8YhHniGOIqkOxGYv4eZVpIf2R87dJ0nrk4hmBzHrq3C9itpcp6x7c7+hIjm
-	 ybCXtvqxzCDFbg4XYXo4jdgfmmhj1YT0uNB/8lyBQ3RKL04HkUgLWtPmn5wG+Da5EovEB
-	 V6Qz4Q3Xo01Mwq4kxRH1jumo/UktOdmtSEZMIp2ow/IUCbLHIhq1ZyNsHPJsb4hNC6g==
+	bh=dS3cWKkockooykIJrvoz0cMhqVlo3g8d5sMBEuqOkhU=;
+	b=ShhO/dnirDoKwbXjSRCvV8Ujet03JSktW3Zd1nfMaCnKfvQ5Y4lU0MYNmBKR+6f6K59P
+	 JYa+XwMOlZQUf3tA+2vk/hXVM9RYhsbPwhfM/ItwIzcnkSah4hFV4KY1O6fXI+kJ5reCH
+	 fch4AiRQEC7Z/6B+kpEH1rjO4bOjp24DDizF2PFenYsR2osM40TJCjSP8L4lhorKHUwIv
+	 Lun+Jc45IZec8+pa1NytdG3+EbCrslhsJpRbj3FxmoILMqwsCBoiIUAI5o3iQkTdc/6KG
+	 84O8IEs3ZUS/oUcXgHX7fR8WOIFqh5uRUSIZBf06+H/KHn2tA6ynJzogpyF0E4ARClw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mByBnE1R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lsXMaGcP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503A3606A31C;
-	Thu, 19 Nov 2026 01:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25627606A325;
+	Thu, 19 Nov 2026 01:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mByBnE1R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A98701F000C4;
-	Thu, 19 Nov 2026 01:28:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lsXMaGcP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757641F000C4;
+	Thu, 19 Nov 2026 01:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051691;
-	bh=mDomTz/EHA1EP0+cF4Ge96wqZK0JWZ/UNmCrF+tzEZk=;
+	s=korg; t=1795051694;
+	bh=dS3cWKkockooykIJrvoz0cMhqVlo3g8d5sMBEuqOkhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mByBnE1RTO0S67RVDiV4WAfkyZIdvtJPa6QHZl1kKN6bNtCSSpL9e7etUINi0JVPw
-	 pf3D4HQg52GDF3XvT6XRVwhx9R+BssZfjvTsblC6pNuTFmtosFyxPfszkAKTa0O6sE
-	 ioEyutH/L2Ot+CJtVMOOFDM4HUDBbuQP60Lmud0g=
+	b=lsXMaGcPU3Gc9t39zjW5syZu4oco/xJiu8bN+DRrxbgr9yq4RfLljmKOAZmx/8f7f
+	 VgmYYcV2v99Y8MD/Q8Y1qNFa1FeGbbjzSgMj2U16uMHWg1t66HKiNE77E0tdnRYaHQ
+	 9q2jCPkyhqH/sV7NfNgzU5wwy+xhoSQTMBTSafA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+9782320f78c23f40@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
+	syzbot+832ce9fa3face1b7d44d@syzkaller.appspotmail.com,
+	Anuj Bolewar <bolewara@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 0261/2214] media: em28xx: reject audio endpoint with zero packet size
-Date: Wed, 18 Nov 2026 15:32:17 +0100
-Message-ID: <20261118150020.550820449@linuxfoundation.org>
+Subject: [PATCH 5.15 0297/2214] media: hackrf: fix use-after-free in hackrf_alloc_urbs() error path
+Date: Wed, 18 Nov 2026 15:32:53 +0100
+Message-ID: <20261118150022.068611167@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,66 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Anuj Bolewar <bolewara@gmail.com>
 
-commit aebfe430ba885d2f8fc882d7a6d60a7fdbe535d8 upstream.
+commit 6802ad4b6b267dda02209b5811edac7825c8a5f6 upstream.
 
-em28xx_audio_urb_init() divides by the audio endpoint's wMaxPacketSize
-without checking it, so a USB device that declares a zero-sized audio
-endpoint divides by zero at probe time.
+hackrf_alloc_urbs() frees the URBs it allocated so far when one
+allocation fails, but leaves the entries in dev->urb_list[] and
+dev->urbs_initialized untouched. The caller, hackrf_start_streaming(),
+then calls hackrf_free_urbs() on the error path, which walks
+dev->urbs_initialized entries and calls usb_free_urb() a second time on
+the already-freed URBs, causing a use-after-free (slab-use-after-free
+Write in usb_free_urb()).
 
-Reject a zero-sized audio endpoint like a missing one; the caller already
-unwinds on a negative return.
+Drop the redundant cleanup loop inside hackrf_alloc_urbs() and let
+hackrf_free_urbs(), which the caller already invokes on error, own the
+cleanup of the successfully allocated URBs.
 
-  Oops: divide error: 0000 [#1] SMP NOPTI
-  Workqueue: usb_hub_wq hub_event
-  RIP: 0010:em28xx_audio_init (drivers/media/usb/em28xx/em28xx-audio.c:718)
-  Call Trace:
-   em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
-   em28xx_init_dev.isra.0 (drivers/media/usb/em28xx/em28xx-cards.c:3887)
-   em28xx_usb_probe (drivers/media/usb/em28xx/em28xx-cards.c:4258)
-   usb_probe_interface (drivers/usb/core/driver.c:396)
-   ...
-   usb_set_configuration (drivers/usb/core/message.c:2268)
-   usb_generic_driver_probe (drivers/usb/core/generic.c:250)
-   usb_probe_device (drivers/usb/core/driver.c:291)
-   ...
-   usb_new_device (drivers/usb/core/hub.c:2703)
-   hub_event (drivers/usb/core/hub.c:5961)
-   process_one_work (kernel/workqueue.c:3322)
-   worker_thread (kernel/workqueue.c:3486)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-  Kernel panic - not syncing: Fatal exception
-
-Fixes: 1b3fd2d34266 ("[media] em28xx-audio: don't hardcode audio URB calculus")
+Reported-by: syzbot+832ce9fa3face1b7d44d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=832ce9fa3face1b7d44d
+Fixes: 969ec1f6bd92 ("[media] hackrf: HackRF SDR driver")
 Cc: stable@vger.kernel.org
-Reported-by: co+9782320f78c23f40@bugs.sh
-Closes: https://lore.kernel.org/all/51lCz4R7QyTUKbh4mhXNaNzX0evpk0siOzbh%40bugs.sh/
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Anuj Bolewar <bolewara@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/em28xx/em28xx-audio.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/media/usb/hackrf/hackrf.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/media/usb/em28xx/em28xx-audio.c
-+++ b/drivers/media/usb/em28xx/em28xx-audio.c
-@@ -703,6 +703,13 @@ static int em28xx_audio_urb_init(struct
- 	}
+--- a/drivers/media/usb/hackrf/hackrf.c
++++ b/drivers/media/usb/hackrf/hackrf.c
+@@ -665,7 +665,7 @@ static int hackrf_free_urbs(struct hackr
  
- 	ep_size = em28xx_audio_ep_packet_size(udev, ep);
-+	if (ep_size == 0) {
-+		dev_err(&dev->intf->dev,
-+			"Audio endpoint 0x%02x has a zero packet size\n",
-+			EM28XX_EP_AUDIO);
-+		return -ENODEV;
-+	}
-+
- 	interval = 1 << (ep->bInterval - 1);
+ static int hackrf_alloc_urbs(struct hackrf_dev *dev, bool rcv)
+ {
+-	int i, j;
++	int i;
+ 	unsigned int pipe;
+ 	usb_complete_t complete;
  
- 	dev_info(&dev->intf->dev,
+@@ -681,11 +681,8 @@ static int hackrf_alloc_urbs(struct hack
+ 	for (i = 0; i < MAX_BULK_BUFS; i++) {
+ 		dev_dbg(dev->dev, "alloc urb=%d\n", i);
+ 		dev->urb_list[i] = usb_alloc_urb(0, GFP_KERNEL);
+-		if (!dev->urb_list[i]) {
+-			for (j = 0; j < i; j++)
+-				usb_free_urb(dev->urb_list[j]);
++		if (!dev->urb_list[i])
+ 			return -ENOMEM;
+-		}
+ 		usb_fill_bulk_urb(dev->urb_list[i],
+ 				dev->udev,
+ 				pipe,
 
 
