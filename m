@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050610;
-	b=JyvMsFBERUw4WF98j86sibmrshICCjpnCpzbSKIOKYDhY6hBp+RxVm+QbUu2g8t+aHSJ
-	 YJF+J5PglUuucJlwgJ89JGmIUOnXUYoz8JAUfHFHnqHNcW3Nh83u/+oxrKO7uTgJDHKMO
-	 dd2nkDsg5wCO80nlX7zzGiFDigTEEwiGy9HGFN5Ao7r1D8xtG2c4yq6M4lVy1fumCJvR6
-	 PipxvHS7DPpCBjNLgKngbrc/kFijuLmz7TMKu72GQ+RCT47nXZBLCv38iXur18JthpnlO
-	 9/2/3LCuB3ILYkuuk7o/EeQJNQVuuT+F89GCNIDAiTVgbNM2ld08h8kOgToEV84rUqA==
+	t=1795050613;
+	b=tV08kwpgP6WVanU+Y3sq9kF4t6rfCC6KgKbZNsIIgx5pR4YtkWvqDxda1aneQWttCvWy
+	 bjl+e9vcmO9oxTi5aUOn47U3KuptIENwH0PeOvrCgmVXsPnVsKmA880tq+ycRSxrnZuaj
+	 tHnLZbuNAL7YkxW7sL+joYPmDpRFHbKmCUhr4HgjDGWtbN2lNGtVBivoWWbHQxR9ZU41I
+	 pU580/DOqKlzFDD0nohsKQ8ZfqRFwkCEShBKVw8YbJXP5EzqLzmEkKD/NRhTcZ+2UYdee
+	 es2C0X6wzLUwyh8Rsd4XhACghBPbJ5JsGotWNyIdFcEHCnbeNImh79cDY8kecv+mNFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050613;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=q39RnxjqH8Xcm5Tc6me87PuI+avmaUxq3b5nqotRLCM=;
-	b=oHeq2nMvL4BQOhJgLpMv8/jLMcr+2f5NN10oE0d7fFPsb6I6IwpI6kl41v0zd3Ns6Tbt
-	 0eBddPLw96t0oKzwM/uYZydTKDQg6Bm3BYI/3IJZyKqdRqLoExUXSxdciDyYrdVEIIVsj
-	 u9wTp0oB3lyoXxoN6PvqLvPrIwNME15BvAikgQZIisZUK0uI7ehHQxN9vIilkKj5cqhmH
-	 xob+qimcs644UT8Z5T4wARpqExA335NJNd+sbU0cQmCOKoR45xuhrLzH55ltBZlAdux1p
-	 Yf/QwCX9PonBSCnhe78i2EBRRe6mQvh8nf9eH56xkzwaSl9tOgQakmXHiYe19NbNpvg==
+	bh=873SjyL0EcFFSvI3ywIBhiB2ERu9j3PFQEo97+Mgmq4=;
+	b=k7yFyEpSHVroBCHdXx/GxUqCkUYmZPDfEBidbz35YBwKD+1/LMrnAXWohnKpO9T+FlLL
+	 iXGmiriAX2BBQLYGMRBLFBnQz1HtXoTQaTADDqqXpwIEGz5lX0M07Ym5lHZuwMmTf7xi4
+	 aYJAKdoKdwkcossD4Wt+UeJj/2HlBEoeCEUbFGxqbnPE62TTmQ6WWBOCq99ucujegr+bt
+	 3zog6Rns9usX9diIWWF9EW1SRDXPpOCtjqbJPZVX2qN/jcMCZe54b5trsSDcu8KA095n2
+	 lql8EbrveXubrVGv8jv8VUX0QVmJlqjVPQorG771hvKHlI8PqkrCcdflpZrKq7tg7Xw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="JMvMb/oO";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1LXLsZ7c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5C7606A320;
-	Thu, 19 Nov 2026 01:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7913C606A31C;
+	Thu, 19 Nov 2026 01:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JMvMb/oO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094221F000C4;
-	Thu, 19 Nov 2026 01:10:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1LXLsZ7c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32811F000C4;
+	Thu, 19 Nov 2026 01:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050610;
-	bh=q39RnxjqH8Xcm5Tc6me87PuI+avmaUxq3b5nqotRLCM=;
+	s=korg; t=1795050613;
+	bh=873SjyL0EcFFSvI3ywIBhiB2ERu9j3PFQEo97+Mgmq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JMvMb/oOUg2I+KWS1CI9XsWSrWvxuWfas7iCP8FKMs/3FJEfH+t1Avc9bQoXHtt+a
-	 lBvuO+BkGmSuL9qiqb8HWHuAvHeD0Bx7+Tdb5FDpFod3/hCKtDHP+SH+nsgAykNn/D
-	 PGPF52QYMzhD8g34tjZAhmMliujd8k4SKqGHA+KY=
+	b=1LXLsZ7cg1rMAeR1A9IgMjMX33CIaqdBCTymHoAmoRjMxLWodmzUEq1jD/tjuC3CQ
+	 Gi+ikdb+pOlTqJOKRh95G/bA7ONYc+JrHpLOtV46WgO7HX3t8ENksV+8ptVQoUPakx
+	 EJ1t4YHk+k6onZvnGoJMNQXf5Ywvqq9Amc4AFbRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
-	Daniel Thompson <daniel@riscstar.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2770/2857] kdb: unify CMD_BUFLEN definition into kdb_private.h
-Date: Wed, 18 Nov 2026 16:03:24 +0100
-Message-ID: <20261118150341.339095178@linuxfoundation.org>
+Subject: [PATCH 6.1 2771/2857] nvmet: ignore discard return value
+Date: Wed, 18 Nov 2026 16:03:25 +0100
+Message-ID: <20261118150341.372299913@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,79 +71,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
+From: Chaitanya Kulkarni <kch@nvidia.com>
 
-[ Upstream commit 2a052074582d976bfa81e41a0337d8ae6dd1dc65 ]
+[ Upstream commit 38d12f15c4772b5383b1249b2afb0d206a430f0f ]
 
-CMD_BUFLEN was defined separately in kdb_io.c (256) and kdb_main.c
-(200), causing kdb_main.c to use the wrong size when formatting the
-prompt string into kdb_prompt_str (which is 256 bytes).
+__blkdev_issue_discard() always returns 0, making the error checking
+in nvmet_bdev_discard_range() dead code.
 
-Move CMD_BUFLEN (256) into kdb_private.h so all users share a single
-consistent definition, and remove the local definitions from both
-files.
+Kill the function nvmet_bdev_discard_range() and call
+__blkdev_issue_discard() directly from nvmet_bdev_execute_discard(),
+since no error handling is needed anymore for __blkdev_issue_discard()
+call.
 
-Fixes: 5d5314d6795f ("kdb: core for kgdb back end (1 of 2)")
-Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
-Link: https://lore.kernel.org/r/l6b6bomrw3bvkehlv73fyghk6loz6jpdwqk5c4nthnhl7j7kzk@4jjhfpzv5zon
-Signed-off-by: Daniel Thompson <daniel@riscstar.com>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 424bd0e98ca4 ("nvmet: don't truncate the length of big discards")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/debug/kdb/kdb_io.c      | 1 -
- kernel/debug/kdb/kdb_main.c    | 6 ++----
- kernel/debug/kdb/kdb_private.h | 3 ++-
- 3 files changed, 4 insertions(+), 6 deletions(-)
+ drivers/nvme/target/io-cmd-bdev.c | 28 +++++++---------------------
+ 1 file changed, 7 insertions(+), 21 deletions(-)
 
-diff --git a/kernel/debug/kdb/kdb_io.c b/kernel/debug/kdb/kdb_io.c
-index 95bccbe3495cf..3be50493de7c5 100644
---- a/kernel/debug/kdb/kdb_io.c
-+++ b/kernel/debug/kdb/kdb_io.c
-@@ -25,7 +25,6 @@
- #include <linux/kallsyms.h>
- #include "kdb_private.h"
+diff --git a/drivers/nvme/target/io-cmd-bdev.c b/drivers/nvme/target/io-cmd-bdev.c
+index bb71ae68562ab..d6807fd0c09d9 100644
+--- a/drivers/nvme/target/io-cmd-bdev.c
++++ b/drivers/nvme/target/io-cmd-bdev.c
+@@ -360,29 +360,14 @@ u16 nvmet_bdev_flush(struct nvmet_req *req)
+ 	return 0;
+ }
  
--#define CMD_BUFLEN 256
- char kdb_prompt_str[CMD_BUFLEN];
+-static u16 nvmet_bdev_discard_range(struct nvmet_req *req,
+-		struct nvme_dsm_range *range, struct bio **bio)
+-{
+-	struct nvmet_ns *ns = req->ns;
+-	int ret;
+-
+-	ret = __blkdev_issue_discard(ns->bdev,
+-			nvmet_lba_to_sect(ns, range->slba),
+-			le32_to_cpu(range->nlb) << (ns->blksize_shift - 9),
+-			GFP_KERNEL, bio);
+-	if (ret && ret != -EOPNOTSUPP) {
+-		req->error_slba = le64_to_cpu(range->slba);
+-		return errno_to_nvme_status(req, ret);
+-	}
+-	return NVME_SC_SUCCESS;
+-}
+-
+ static void nvmet_bdev_execute_discard(struct nvmet_req *req)
+ {
++	struct nvmet_ns *ns = req->ns;
+ 	struct nvme_dsm_range range;
+ 	struct bio *bio = NULL;
++	sector_t nr_sects;
+ 	int i;
+-	u16 status;
++	u16 status = NVME_SC_SUCCESS;
  
- int kdb_trap_printk;
-diff --git a/kernel/debug/kdb/kdb_main.c b/kernel/debug/kdb/kdb_main.c
-index 35aa2e98a92a9..bf03125fe9406 100644
---- a/kernel/debug/kdb/kdb_main.c
-+++ b/kernel/debug/kdb/kdb_main.c
-@@ -865,8 +865,6 @@ static int kdb_exec_defcmd(int argc, const char **argv)
+ 	for (i = 0; i <= le32_to_cpu(req->cmd->dsm.nr); i++) {
+ 		status = nvmet_copy_from_sgl(req, i * sizeof(range), &range,
+@@ -390,9 +375,10 @@ static void nvmet_bdev_execute_discard(struct nvmet_req *req)
+ 		if (status)
+ 			break;
  
- /* Command history */
- #define KDB_CMD_HISTORY_COUNT	32
--#define CMD_BUFLEN		200	/* kdb_printf: max printline
--					 * size == 256 */
- static unsigned int cmd_head, cmd_tail;
- static unsigned int cmdptr;
- static char cmd_hist[KDB_CMD_HISTORY_COUNT][CMD_BUFLEN];
-@@ -1347,8 +1345,8 @@ static int kdb_local(kdb_reason_t reason, int error, struct pt_regs *regs,
+-		status = nvmet_bdev_discard_range(req, &range, &bio);
+-		if (status)
+-			break;
++		nr_sects = le32_to_cpu(range.nlb) << (ns->blksize_shift - 9);
++		__blkdev_issue_discard(ns->bdev,
++				nvmet_lba_to_sect(ns, range.slba), nr_sects,
++				GFP_KERNEL, &bio);
+ 	}
  
- do_full_getstr:
- 		/* PROMPT can only be set if we have MEM_READ permission. */
--		snprintf(kdb_prompt_str, CMD_BUFLEN, kdbgetenv("PROMPT"),
--			 raw_smp_processor_id());
-+		snprintf(kdb_prompt_str, CMD_BUFLEN,
-+			 kdbgetenv("PROMPT"), raw_smp_processor_id());
- 
- 		/*
- 		 * Fetch command from keyboard
-diff --git a/kernel/debug/kdb/kdb_private.h b/kernel/debug/kdb/kdb_private.h
-index 1f8c519a5f81c..e1d712e872cb7 100644
---- a/kernel/debug/kdb/kdb_private.h
-+++ b/kernel/debug/kdb/kdb_private.h
-@@ -226,7 +226,8 @@ extern void kdb_kbd_cleanup_state(void);
- #define kdb_kbd_cleanup_state()
- #endif /* ! CONFIG_KDB_KEYBOARD */
- 
--extern char kdb_prompt_str[];
-+#define CMD_BUFLEN 256
-+extern char kdb_prompt_str[CMD_BUFLEN];
- 
- #define	KDB_WORD_SIZE	((int)sizeof(unsigned long))
- 
+ 	if (bio) {
 -- 
 2.53.0
 
