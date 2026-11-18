@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053737;
-	b=m1ZTV6YbeeUtGRCX2UGElQ8PGGeqBXu6FEK/ctmg6yWePc6lnH6Ax5XTVieaADTjQ5EM
-	 Kcsznc4RNU8g1ORjTfHN31sjKW6lmMjvQky/z9VeKaGEvqNmu8oR1j+tOfNW+PuwO175s
-	 zsacP3wTgKVCxut2saOn+bwVgplRO4Lv72y51S95FtI5K8/pSHLJHkmgxQCjyK+unFcCo
-	 1GDE+z51Y4Z+gkeHHXJhFfR00ax1v9Bul1Cq0yGoFQDxuEKZe/wYrjrZML44hMTzS8wfP
-	 2gtHPs4VpCg3yw3zUFjz1zh+cvHn4LGq5VKHC8SJfMCvF+M7f0IzzCHP6VzKpCdNJKw==
+	t=1795053740;
+	b=WJXlod4nyLcFY+mFInUH7wnjVBQe8+kuCMv68np26XoCHxB+4sUZFKbJSggfOrvflFnt
+	 idOYxrOF3aQBRbxNAfGldqsrt1yCFdqhpIyUCQLkhbp6vDcQUwiFMTXciE0q+SOaM6UyV
+	 eLy+TuboDmhASQseLUjHodkIiCltjwecMvjKqgLJyNYYb8uGspyrfyMz5YtKXDnF+nQpS
+	 TKmWrzgSzoEzxP7NQdNgu/CIlbzVMNAzeJO5RyGgokltCgRZ0l4J3Vjr6zO7pMMlNYnj5
+	 gB7KVqdI+M3/Emfr23IxP2nBNi4CszjkV5biF0DVAWjomXWIHk4E1vqRbTNhCDymvGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053737;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053740;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vr3rU1EgFexiv/L5qUtXs7c1IS8sZgIyKA0FLWg1fnY=;
-	b=LVBIRLGzVlAt7q56swfG+GK39H+hcJknQKGB0LtzQh+JO54bflG+TYIDF3Meb+dvorhm
-	 DbXQI1DEcQyikEV4ek5YXxIkuxanHIzPyqYHM52m0AmtZXU0aOQevadot43oG2xMwdbZH
-	 rooO/AkyH+F/niwWoRNL5oQFIvjlpE1prUXr42OfMtIregvbvVE34GBt2CzUTzMlrEhqT
-	 we8356wRQpAPTQMMLx7ypX1qqD2OfStpdLcO/Zn9j1yTpIEBlhCtAGZQRj60+Ys+6kh1E
-	 hgVB0UnG5XPfJ7fV6A+vP+3kmD539U7b6Tg3jXLDDPNrAGuWW4YGoyg3LLIQSPO3bSg==
+	bh=TOggJ/WZw4FTbOcywY9JBoO/ptLrejynKZ1yr1ify+4=;
+	b=zg4C9Q0T39XIUOreKDYTGKBmorDtrmaapXHCuie3SuwC3iMBkRLRzaPeoHMvcUyQB3Ny
+	 q6P37v8/uKetM8bIFXDWHk/JY3V9QjLi4QTQ5TJDPhbQA7hCgmVcj21veleYiSlh7VsGd
+	 WhzO+agzMJpPJ36cRd2EMw/6026t61vJEE6PfV6UbOBgnYdEWhTOxHVF6oJIcs7yKTYRc
+	 dZTxWylYiZtNCI8asqgaiRBqgh5OGkvb6nWlYs7bTNWwwIjLau3Q3xmE+o0TIRQVn5+mz
+	 dYBlaOpkj3BW82kDQbqiyWLmcJWpEcOyBq5kcw11kCS8BBvSzl22bA1K6dgUsbDvh1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M+D4Cz6g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eeqn6cNm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46968606A31C;
-	Thu, 19 Nov 2026 02:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F349606A320;
+	Thu, 19 Nov 2026 02:02:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M+D4Cz6g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4521F000C4;
-	Thu, 19 Nov 2026 02:02:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eeqn6cNm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8BF1F000C4;
+	Thu, 19 Nov 2026 02:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053737;
-	bh=vr3rU1EgFexiv/L5qUtXs7c1IS8sZgIyKA0FLWg1fnY=;
+	s=korg; t=1795053739;
+	bh=TOggJ/WZw4FTbOcywY9JBoO/ptLrejynKZ1yr1ify+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M+D4Cz6gTj7IVNkb1ABV0ulBTMBk3RW97iG6eRY1Tg/fp2JqNqD2qDlqKA8UnRu6p
-	 Jgc1ykQJBYsRNjWcyWoPHt4SNOunajVFAKM5Z5f8eB4lRUcaXXXJjIDnF+AS47kbNU
-	 ET7xUKbFvsKn6U1pnJLskrzg6uQhsLueoN2IwlIQ=
+	b=Eeqn6cNmYiCGLgL4gUSCF+dpVQNpQlm+h1A6bicNazO2UjpULLDMhqCoXVNl1aUwU
+	 67stOdUTIjVI7AJIJ7hj64YY+cczZB0Q05Pt8OHYJDZI0VBT13dNRcvmYiP3L1izWm
+	 owf8dGhyF/U/FjyAWYO4InPvelUVRSOSQTQ03A2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Fabio Cesari <fabio.cesari@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0984/2214] iio: light: isl29028: fix runtime PM reference leak on error paths
-Date: Wed, 18 Nov 2026 15:44:20 +0100
-Message-ID: <20261118150051.599134214@linuxfoundation.org>
+Subject: [PATCH 5.15 0985/2214] KVM: arm64: vgic-v3: Undo assignment on iodev registration failure
+Date: Wed, 18 Nov 2026 15:44:21 +0100
+Message-ID: <20261118150051.637153325@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,93 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Cesari <fabio.cesari@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 0e30d15b15647df786e60022650613e16dd70645 ]
+[ Upstream commit 8a88a46b86ca3dbbd24522760d29edfb3f24ac2a ]
 
-isl29028_read_raw() and isl29028_write_raw() take a runtime PM reference
-with pm_runtime_resume_and_get() but return directly on their error
-paths without dropping it. The usage count never balances again and the
-device stops entering autosuspend for good. In isl29028_read_raw() this
-needs a regmap access to fail; in isl29028_write_raw() one rejected
-sysfs write is enough, for example
+vgic_register_redist_iodev() assigns a redistributor region and base
+address to the vCPU before adding its iodev to the MMIO bus. However, the
+region's free_index is advanced only after registration succeeds.
 
-  echo 200 > in_proximity_sampling_frequency
+If kvm_io_bus_register_dev() fails, the vCPU retains the assignment while
+free_index still identifies the same slot as free. A later registration can
+therefore reuse a slot that remains assigned to the vCPU.
 
-which is outside the [1:100] range and returns -EINVAL with the
-reference still held.
+Reserve the slot before registering its iodev. The caller holds slots_lock,
+so a registration failure cannot race with a later assignment. Undo the
+reservation and clear the cached assignment on failure.
 
-Take the reference with PM_RUNTIME_ACQUIRE_AUTOSUSPEND() instead, so it
-is released on every return path.
-
-This also stops the return value of pm_runtime_put_autosuspend() from
-reaching userspace. That value only says whether the device could be
-suspended right away, so -EAGAIN or -EPERM turns a successful access
-into a failure, and with CONFIG_PM=n the stub returns -ENOSYS on every
-access.
-
-Fixes: 2db5054ac28d ("staging: iio: isl29028: add runtime power management support")
-Suggested-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Fixes: dbd9733ab674 ("KVM: arm/arm64: Replace the single rdist region by a list")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM coccinelle
-Signed-off-by: Fabio Cesari <fabio.cesari@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-[ sashal: used explicit isl29028_set_pm_runtime_busy() calls instead of scoped runtime PM guards ]
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
+Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20260831081005.41346-2-kmehltretter@gmail.com
+[maz: moved helper into the sole caller]
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+[ sashal: adapted locking to rely on the caller-held kvm->lock instead of config_lock and guard(mutex). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/isl29028.c | 23 ++++-------------------
- 1 file changed, 4 insertions(+), 19 deletions(-)
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iio/light/isl29028.c b/drivers/iio/light/isl29028.c
-index f4e1f7de1e421..7d377b6a2b838 100644
---- a/drivers/iio/light/isl29028.c
-+++ b/drivers/iio/light/isl29028.c
-@@ -407,14 +407,9 @@ static int isl29028_write_raw(struct iio_dev *indio_dev,
+diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+index fd1fa2561520e..c3c0204b3eb1e 100644
+--- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+@@ -739,16 +739,21 @@ int vgic_register_redist_iodev(struct kvm_vcpu *vcpu)
+ 	rd_dev->nr_regions = ARRAY_SIZE(vgic_v3_rd_registers);
+ 	rd_dev->redist_vcpu = vcpu;
  
- 	mutex_unlock(&chip->lock);
++	/* Protected by kvm->lock */
++	rdreg->free_index++;
++
+ 	mutex_lock(&kvm->slots_lock);
+ 	ret = kvm_io_bus_register_dev(kvm, KVM_MMIO_BUS, rd_base,
+ 				      2 * SZ_64K, &rd_dev->dev);
+ 	mutex_unlock(&kvm->slots_lock);
  
--	if (ret < 0)
+-	if (ret)
 -		return ret;
-+	isl29028_set_pm_runtime_busy(chip, false);
++	if (ret) {
++		vgic_cpu->rdreg->free_index--;
++		vgic_cpu->rdreg = NULL;
++		vgic_cpu->rd_iodev.base_addr = VGIC_ADDR_UNDEF;
++	}
  
--	ret = isl29028_set_pm_runtime_busy(chip, false);
--	if (ret < 0)
--		return ret;
--
+-	rdreg->free_index++;
 -	return 0;
 +	return ret;
  }
  
- static int isl29028_read_raw(struct iio_dev *indio_dev,
-@@ -423,7 +418,7 @@ static int isl29028_read_raw(struct iio_dev *indio_dev,
- {
- 	struct isl29028_chip *chip = iio_priv(indio_dev);
- 	struct device *dev = regmap_get_device(chip->regmap);
--	int ret, pm_ret;
-+	int ret;
- 
- 	ret = isl29028_set_pm_runtime_busy(chip, true);
- 	if (ret < 0)
-@@ -476,17 +471,7 @@ static int isl29028_read_raw(struct iio_dev *indio_dev,
- 
- 	mutex_unlock(&chip->lock);
- 
--	if (ret < 0)
--		return ret;
--
--	/**
--	 * Preserve the ret variable if the call to
--	 * isl29028_set_pm_runtime_busy() is successful so the reading
--	 * (if applicable) is returned to user space.
--	 */
--	pm_ret = isl29028_set_pm_runtime_busy(chip, false);
--	if (pm_ret < 0)
--		return pm_ret;
-+	isl29028_set_pm_runtime_busy(chip, false);
- 
- 	return ret;
- }
+ void vgic_unregister_redist_iodev(struct kvm_vcpu *vcpu)
 -- 
 2.53.0
 
