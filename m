@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046237;
-	b=sT9q6uMPUeYB24+YnYenR9MgiG4RKleOM1C6/jhhoS2l8/oIgLMKXKTNuewGbApjOhrn
-	 8wvIGSv44sqXB4Hi+bx7Q0aWNkgoqD7pCoUebScJsFX9WwLRTlLu/a8n+BjPZFooUXfL5
-	 Q+p0cFVQcJWlm7H0bMSVVdN47yOJlEr2SwkGQ5UHPtWLFJHFqikCYw30ijDVXA1Ob9ZoO
-	 FkjsEfXQYJ587goRJO4ly19puLoOrfMkIXLnoCEXNiZw6qFvm2TeWCYt5Uaivwqi+DSW/
-	 Pg6zp4namceZupu8Y5g+I9f7b1h4o8pRbZ/PxGrDeIXvbY4xJwR0ckR5LraNYYxC4Mw==
+	t=1795046240;
+	b=AN+9os0fFpFvB9mStKqt/4/JD4Gj7GJfm2XqD0oSZZ6S7Nz3y+46xiNxi2B6vXsznq8d
+	 7+Kl3s/WyUueyUaWWWoncbtrFHZp7LtkfUZRqrJeTJYuovzGMnrQv7EFzGMDFluztiK9N
+	 i+nPbh2X0UsgpHVnOIFEp0tvvvYlsHP5mw3yu4pww/1uCdEYwRyWmnLirJzVnjoG0xZW7
+	 Xk9jh5A7TfdHEx5HefdbuEhzkJdQ13DTWe9ACJczMznSIvZtujWn60drwBN2qHdKb/kE3
+	 UbGny3ar1gesvWY37ilJh3CIyD8R3idMB0jrZsmamK9GyHS9LHGfIPAY3aj6Pjy47ZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046237;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046240;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DqZ1o6xrCzFSlRTe8TaDSkJSuUB/4a4GwtdWlaPu5S0=;
-	b=3o7fN9i9af6KcE/0gzgeF3wtI6un1I19hdZMLtvFiZqLsr62htA41GiGkhSC9f6XCm5x
-	 /swnORHucOG4v9beq3ER5xONbXX+O970VUuvnolVeQKHoGfFXeOL1cKBzsidQmw+WIQmi
-	 aTWijSKwanR6xVMuPmA8hLCoblQYrb85Ix64MWnlolzw5IANJ0oEkBT8LJfNRZVZRsGhD
-	 SvA00gMYpk7mLsefQkRvUpSYlet5duMaAMUnSyXMT2JUIkjjBFg8sRTaHEgNqimyQ4qoF
-	 xB546GMe8sFe67xPqYS/A7Ce42etjbp4w89NMHPZVu+SQ0fNvYW6oYIzFnykMjbsemQ==
+	bh=/3VrO8OvUVlKc115tCGjEqbRiGGEgus5+9AzdTRHlJs=;
+	b=3eDtLJdf9hbPAjAx/dJO74NEPahDqyPg3/H8kKUR+RlRxvVDZOlEcothwbAWr8edBn+e
+	 E66psadbB8OFzTgpY0taB2E+HzwsKfM+tY1OHY8kCEZk/fuKDr0Wx+KJa6Jy/UlPcqXJw
+	 1nub2Nb2xwJmupmG1/O+BkcoBlwaGNF1PwBkr5DO90ta92O2miMAYhZXxQgXgDYMbIMsh
+	 Uw+m31l5Ny2D4BRZs1xBMgQK4qhWxi26nFKHf09UAB4+wKuqW41peILWMcXOrroWgOoni
+	 yuwCuPMrrm8fGboSL/V4wqa1U0CXJ2BXlIE2OSppU7YNoMdMAhbkDLtKJSPlClPxS+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mCoupnM/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="aecIJBf/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0E4606A320;
-	Wed, 18 Nov 2026 23:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119D2606A31C;
+	Wed, 18 Nov 2026 23:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mCoupnM/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8928B1F000C5;
-	Wed, 18 Nov 2026 23:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aecIJBf/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F0D1F000C4;
+	Wed, 18 Nov 2026 23:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046237;
-	bh=DqZ1o6xrCzFSlRTe8TaDSkJSuUB/4a4GwtdWlaPu5S0=;
+	s=korg; t=1795046239;
+	bh=/3VrO8OvUVlKc115tCGjEqbRiGGEgus5+9AzdTRHlJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mCoupnM/7d4lDpP4pDFl2aX4Kqhqajo6zIvEL8jl//3y4R3fUCR+9Oo+QRQ5jjsj7
-	 qZ9XMfuWzO8EyB4O+8WY64vYWECSUYcQOW4qUh0xEtZWUoGmlsVYec2+iVn2H0YHkS
-	 vKTku/bTXg6VPhuQfx6QlsAVn34RMxz1Q/u7CXaE=
+	b=aecIJBf/mvWeM/H9EEUQ/bgRoE1dX4684JN+68bZE9OxHXvXLw/5zwSzMAosOBOZV
+	 0N+2QrAja9hzQpZ9i2gJg44rna5wJGzjUMT3IgQf+9FkoyMEBW0tA1mK9csrnJTuSq
+	 SFb+t++hKjc/VeFQboLQiiI3WFimrGKREbboBaP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1159/2857] raid6: add missing vzeroupper to AVX2 code
-Date: Wed, 18 Nov 2026 15:36:33 +0100
-Message-ID: <20261118150243.316617991@linuxfoundation.org>
+Subject: [PATCH 6.1 1203/2857] 9p: dont decrement a server-owned zero nlink
+Date: Wed, 18 Nov 2026 15:37:17 +0100
+Message-ID: <20261118150244.916594660@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,99 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
 
-commit 24f1241cdb056fd630e6710a916e0f7c8c910a70 upstream.
+[ Upstream commit 4e915aa8566173b44146bc46177c85afbe6bdf96 ]
 
-Since the AVX2 optimized RAID6 code uses YMM registers, execute vzeroupper
-before returning from it.  This is needed to avoid degrading the
-performance of any later SSE code that may happen to be executed.
+A 9P2000.L server can report nlink=0 for a regular file that still
+exists.  On a cache=loose or cache=fscache mount, lookup stores that
+value with set_nlink().  A later successful unlink calls
+v9fs_dec_count(), which still calls drop_nlink() for a non-directory.
+drop_nlink() warns, and the unsigned link count wraps to 4294967295.
+fstat() on a descriptor opened before the unlink shows 0 before and
+4294967295 after.
 
-Link: https://lore.kernel.org/20260831212308.213855-1-ebiggers@kernel.org
-Fixes: 2c935842bdb4 ("lib/raid6: Add AVX2 optimized gen_syndrome functions")
-Fixes: 7056741fd9fc ("lib/raid6: Add AVX2 optimized recovery functions")
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: <stable@vger.kernel.org>
+The warning on the unpatched kernel, trimmed:
+
+WARNING: fs/inode.c:408 at drop_nlink+0xac/0xd0, CPU#1: trigger/188
+CPU: 1 UID: 0 PID: 188 Comm: trigger Tainted: G                 N  7.3.0-rc4-00537-ga3ff15db6820 #1 PREEMPT(lazy)
+RIP: 0010:drop_nlink+0xac/0xd0
+Call Trace:
+ <TASK>
+ v9fs_remove+0x529/0x750
+ vfs_unlink+0x2f0/0xbd0
+ filename_unlinkat+0x340/0x6c0
+ __x64_sys_unlink+0x46/0x70
+ do_syscall_64+0xe8/0x4f0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
+---[ end trace 0000000000000000 ]---
+
+Directories whose cached nlink is at most 2 already skip this
+decrement, because the exported filesystem may not maintain nlink
+(commit ac89b2ef9b559).  cache=none skips it as well (commit
+574aa0b479947).  cache=mmap does not take this path: it sets neither
+CACHE_META nor CACHE_LOOSE.  A regular file on cache=loose or
+cache=fscache still does.  Its count came from GETATTR and may
+already be zero, so skip the decrement when i_nlink is already 0.
+
+Verified on 7.3-rc4-00537-ga3ff15db6820 with only this change.  A
+server that advertises nlink=0 and accepts the unlink no longer
+warns, and the open descriptor stays at nlink 0.  An honest server
+on the same mount still goes from 1 to 0.  A rejected unlink leaves
+the count unchanged.  cache=none is unchanged.  With panic_on_warn
+the unpatched kernel panics on the warning; the patched kernel does
+not.
+
+Fixes: ac89b2ef9b559 ("9p: don't maintain dir i_nlink if the exported fs doesn't either")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
+Message-ID: <8B490036-EBB0-4A36-AE39-F294F7C79649@stu.pku.edu.cn>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/raid6/avx2.c       | 6 ++++++
- lib/raid6/recov_avx2.c | 2 ++
- 2 files changed, 8 insertions(+)
+ fs/9p/vfs_inode.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/lib/raid6/avx2.c b/lib/raid6/avx2.c
-index 059024234dce1..2d03ce97f655d 100644
---- a/lib/raid6/avx2.c
-+++ b/lib/raid6/avx2.c
-@@ -76,6 +76,7 @@ static void raid6_avx21_gen_syndrome(int disks, size_t bytes, void **ptrs)
- 	}
+diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
+index 1e7dce8101279..ba670d86894a9 100644
+--- a/fs/9p/vfs_inode.c
++++ b/fs/9p/vfs_inode.c
+@@ -541,6 +541,12 @@ static int v9fs_at_to_dotl_flags(int flags)
+  * nothing and races with concurrent metadata fetches that may already
+  * have observed the post-unlink value (nlink == 0).
+  *
++ * The same applies to a regular file whose cached nlink has already been
++ * driven to zero by the server: in the cached modes the attributes come
++ * from GETATTR and are applied verbatim, so decrementing a link count the
++ * server does not maintain only trips the drop_nlink() WARN_ON and
++ * underflows i_nlink.
++ *
+  * @inode: inode whose nlink is being dropped
+  */
+ static void v9fs_dec_count(struct inode *inode)
+@@ -549,6 +555,8 @@ static void v9fs_dec_count(struct inode *inode)
  
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
+ 	if (v9ses->cache != CACHE_LOOSE && v9ses->cache != CACHE_FSCACHE)
+ 		return;
++	if (inode->i_nlink == 0)
++		return;
+ 	if (!S_ISDIR(inode->i_mode) || inode->i_nlink > 2)
+ 		drop_nlink(inode);
  }
- 
-@@ -124,6 +125,7 @@ static void raid6_avx21_xor_syndrome(int disks, int start, int stop,
- 	}
- 
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -186,6 +188,7 @@ static void raid6_avx22_gen_syndrome(int disks, size_t bytes, void **ptrs)
- 	}
- 
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -254,6 +257,7 @@ static void raid6_avx22_xor_syndrome(int disks, int start, int stop,
- 	}
- 
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -347,6 +351,7 @@ static void raid6_avx24_gen_syndrome(int disks, size_t bytes, void **ptrs)
- 	}
- 
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -457,6 +462,7 @@ static void raid6_avx24_xor_syndrome(int disks, int start, int stop,
- 		asm volatile("vmovntdq %%ymm14,%0" : "=m" (q[d+96]));
- 	}
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-diff --git a/lib/raid6/recov_avx2.c b/lib/raid6/recov_avx2.c
-index 4e8095403ee28..a7fd1ba177f1b 100644
---- a/lib/raid6/recov_avx2.c
-+++ b/lib/raid6/recov_avx2.c
-@@ -180,6 +180,7 @@ static void raid6_2data_recov_avx2(int disks, size_t bytes, int faila,
- #endif
- 	}
- 
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -297,6 +298,7 @@ static void raid6_datap_recov_avx2(int disks, size_t bytes, int faila,
- #endif
- 	}
- 
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
 -- 
 2.53.0
 
