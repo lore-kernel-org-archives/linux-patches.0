@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052070;
-	b=o6EhTOafmmL8tLPTFaIGDMwFsdBWWDR5HwvsTSvZhnHwPR9u6TgUDpLRqd+ggXbT1f13
-	 NfIZCBZ38pcQdeVsZShmJymbemzEqJjNx327UkuNJX1jWa768WLypei+5cLVVYUqBwsoy
-	 18JLNgykOi8vx5s8NyREKA/PVI6WH9sTJq5jL7a0yUQrFa0KpR97/6KPVL60eJ58lJ4W0
-	 ISGSRZ+jAZa05Ad16RG7J4GaD9kgs32PNfh9+2JsTJ+FSQJI2FBLSU5M4ti6FmyT6b9u1
-	 kHOoCPvYzJRHJGuscV0DlDutP6Bm2RpQx1FOe/GdhJioFnkzq/dFMQzxhSQbxIhhJcw==
+	t=1795052072;
+	b=GVAP+vfVdTFvHJMIcjvrrn0rpf4cijOWlpnjiXwbbMNnBOELsaR/2/oYso/6z/lWoYuA
+	 08r8dym+vAi1Nai4pEfU1PwC4tOj0rqNP4xaTSof1/XP9Bcoqk13qQVx81egl62tAQ6cW
+	 lTBn9diYCZSlcClPkC81hGwQGFZeDWytj68eEAR8qz1i4h+HCWWTyHuqhh09QPmMCRHzw
+	 LYPCGoTRaL9OQX5A/pvVLTryFkA9HCRaZO1oUhwOTHI4JN2uU7A5mL5nrq2LlcbcrkraZ
+	 Fv2UI845O8YnGXXk/iA3/IHhGxIZUorzhsLvBkpPPzjc3Y8tS/7OTGvPVGxBveviF2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052070;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052072;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ITlX+0tN3CvE7ERUSaWV9t0VkQrUH64cI30bQuDftNk=;
-	b=Q3yY4eM7EyCk27u+X91X31B1wsQyzzGG+FT0rKxuz85A/uIClnvnnQH6SlkYBgrZf4jM
-	 niRCTrvY0s+0XUVF6ha3EKtvQ05rbSqdeKFkjWU61vpBrXgCxLsK89RPI4k3jhvbK1vT5
-	 8tf7YrSm0IG5SY0tPXhbqUmWUB8Z15gAnm/LcGE+piV/wdBSA4xX+nlz2Mip2+KPMSXgt
-	 iylg/ii4KW4Eruwj7R2zhSBc/3uhzybJwwRa38NAiIG0LzZF3Jfd6xKHQb2ntCmx/ejiE
-	 B1QyO8TFKzWyCe5Vu4TLJQAJLhR33E85rh7otYKhqZZivnqgmoH8c+3f8NC+he3MCew==
+	bh=7sOr08JGbKt7PZzdlnBUA2fQZBCigpICW/vJithZXLY=;
+	b=dU76gbcvC568Swanlz9ELjtfMFtC24hAToA8fgw1IG5xq6XIH6ZOd7EgSRj85y521Chs
+	 X7asl/sdHZAqiTxQoJXzutffDhpNQIebk/6I1wob3XGl5ges+4UgZa3GIP3MWFjwaCi57
+	 pgTL0RwnIFC1P2evhYAcySvBcnEWFml7MQ8rQgVBZOZ/IK+RQl8vK2CHb2/fPn9bhNv49
+	 2dR4Kne7Zcj+ga+Pu75ahyb665KkOtWrCjMjsGwNF0tWNns8FGMW0Y6NZA2VBam+Ua4mq
+	 SpzkZHDbmt50zhfnv57X+Xi0BEUBcQzMMe8Y45fFfXbWrbVBWRWEf3DlQj3IO9ZwC5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y+ADeaiQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lkrYAmIR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04949606A320;
-	Thu, 19 Nov 2026 01:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD901606A31C;
+	Thu, 19 Nov 2026 01:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y+ADeaiQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522741F000C4;
-	Thu, 19 Nov 2026 01:34:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lkrYAmIR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DCEC1F000C4;
+	Thu, 19 Nov 2026 01:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052069;
-	bh=ITlX+0tN3CvE7ERUSaWV9t0VkQrUH64cI30bQuDftNk=;
+	s=korg; t=1795052072;
+	bh=7sOr08JGbKt7PZzdlnBUA2fQZBCigpICW/vJithZXLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y+ADeaiQLuFOwFZ/wHgOvGcjgmgm2Wvtj54j72kqtx9M7B6TUcYXuj7cKmHf+l8cj
-	 8n4XEp8iOH/vsaRDvaR+12aBu+QAbSFzhFFf8t6tnlkZN+mki0Z5RwcVZeNwPmHcq6
-	 fCyvIPpqVXcDdK+7Slcd7FvKC0ZIzmFM7a01h8D8=
+	b=lkrYAmIRC/AjWDQvRDbStKSc7KvfpMjmoEFkdSNseC/HuJSck/su1I3Pfqv6zcFLA
+	 Kl8VaBif0i42DyIctjkkbUfarsXVqXqmnBg/7JEFDDVGdBmoov0GZOFBANXfDSCVDJ
+	 IgMCSf2BjjKUjnWdNph/bSLUgMMwaIf/rfQGdUQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0434/2214] media: rc: Fix ABBA deadlock by making locks more fine grained
-Date: Wed, 18 Nov 2026 15:35:10 +0100
-Message-ID: <20261118150028.357836279@linuxfoundation.org>
+Subject: [PATCH 5.15 0417/2214] smb: client: fix warning in CIFSFindFirst()
+Date: Wed, 18 Nov 2026 15:34:53 +0100
+Message-ID: <20261118150027.540309156@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,129 +68,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit c6d68866ad8aa1e957a3e5a6ede971148f1e3d59 ]
+[ Upstream commit 032137fe136a6073dcc699ee15fa3fd05fd77f21 ]
 
-The ir_raw_event_unregister() function takes the ir_raw_handler_lock
-first and then the rc_dev->lock. Other functions like change_protocol
-do this in the reverse order.
+This fixes the following warning reported by kernel test robot
 
-This means that an ir decoder module unload and writing to the protocol
-sysfs file can cause a deadlock.
+  fs/smb/client/cifssmb.c:4089 CIFSFindFirst() warn: missing error
+  code? 'rc'
 
-ir_raw_handler_lock protects the client list, amongst other things.
-Split this out into a separate lock so we can ensure the locking
-order is always the same.
-
-Fixes: 93cffffc18f6 ("[media] media: rc: fix decoder module unloading")
-Signed-off-by: Sean Young <sean@mess.org>
-Cc: stable@vger.kernel.org
-Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ sashal: adjusted ir_raw_event_unregister() context for del_timer_sync() and the existing teardown sequence ]
+Link: https://lore.kernel.org/all/202306170124.CtQqzf0I-lkp@intel.com/
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: 59131dd72f62 ("smb: client: fix use-after-free infoleak via the readdir resume name")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/rc-ir-raw.c | 38 +++++++++++++++++++++++-------------
- 1 file changed, 24 insertions(+), 14 deletions(-)
+ fs/cifs/cifssmb.c | 94 +++++++++++++++++++++--------------------------
+ 1 file changed, 42 insertions(+), 52 deletions(-)
 
-diff --git a/drivers/media/rc/rc-ir-raw.c b/drivers/media/rc/rc-ir-raw.c
-index c65bba4ec4739..304cc47e781ed 100644
---- a/drivers/media/rc/rc-ir-raw.c
-+++ b/drivers/media/rc/rc-ir-raw.c
-@@ -10,7 +10,8 @@
- #include <linux/sched.h>
- #include "rc-core-priv.h"
+diff --git a/fs/cifs/cifssmb.c b/fs/cifs/cifssmb.c
+index 11a400663b9f2..36ed6906066ea 100644
+--- a/fs/cifs/cifssmb.c
++++ b/fs/cifs/cifssmb.c
+@@ -4333,11 +4333,12 @@ CIFSFindFirst(const unsigned int xid, struct cifs_tcon *tcon,
+ 	TRANSACTION2_FFIRST_REQ *pSMB = NULL;
+ 	TRANSACTION2_FFIRST_RSP *pSMBr = NULL;
+ 	T2_FFIRST_RSP_PARMS *parms;
+-	int rc = 0;
++	struct nls_table *nls_codepage;
++	unsigned int lnoff;
++	__u16 params, byte_count;
+ 	int bytes_returned = 0;
+ 	int name_len, remap;
+-	__u16 params, byte_count;
+-	struct nls_table *nls_codepage;
++	int rc = 0;
  
--/* Used to keep track of IR raw clients, protected by ir_raw_handler_lock */
-+/* Used to keep track of IR raw clients, protected by ir_raw_client_lock */
-+static DEFINE_MUTEX(ir_raw_client_lock);
- static LIST_HEAD(ir_raw_client_list);
+ 	cifs_dbg(FYI, "In FindFirst for %s\n", searchName);
  
- /* Used to handle IR raw handler extensions */
-@@ -290,13 +291,6 @@ static int change_protocol(struct rc_dev *dev, u64 *rc_proto)
- 	return 0;
- }
+@@ -4428,63 +4429,52 @@ CIFSFindFirst(const unsigned int xid, struct cifs_tcon *tcon,
+ 			 (struct smb_hdr *) pSMBr, &bytes_returned, 0);
+ 	cifs_stats_inc(&tcon->stats.cifs_stats.num_ffirst);
  
--static void ir_raw_disable_protocols(struct rc_dev *dev, u64 protocols)
--{
--	mutex_lock(&dev->lock);
--	dev->enabled_protocols &= ~protocols;
--	mutex_unlock(&dev->lock);
--}
+-	if (rc) {/* BB add logic to retry regular search if Unix search
+-			rejected unexpectedly by server */
+-		/* BB Add code to handle unsupported level rc */
++	if (rc) {
++		/*
++		 * BB: add logic to retry regular search if Unix search rejected
++		 * unexpectedly by server.
++		 */
++		/* BB: add code to handle unsupported level rc */
+ 		cifs_dbg(FYI, "Error in FindFirst = %d\n", rc);
 -
- /**
-  * ir_raw_gen_manchester() - Encode data with Manchester (bi-phase) modulation.
-  * @ev:		Pointer to pointer to next free event. *@ev is incremented for
-@@ -634,15 +628,18 @@ int ir_raw_event_register(struct rc_dev *dev)
- {
- 	struct task_struct *thread;
+ 		cifs_buf_release(pSMB);
+-
+-		/* BB eventually could optimize out free and realloc of buf */
+-		/*    for this case */
++		/*
++		 * BB: eventually could optimize out free and realloc of buf for
++		 * this case.
++		 */
+ 		if (rc == -EAGAIN)
+ 			goto findFirstRetry;
+-	} else { /* decode response */
+-		/* BB remember to free buffer if error BB */
+-		rc = validate_t2((struct smb_t2_rsp *)pSMBr);
+-		if (rc == 0) {
+-			unsigned int lnoff;
+-
+-			if (pSMBr->hdr.Flags2 & SMBFLG2_UNICODE)
+-				psrch_inf->unicode = true;
+-			else
+-				psrch_inf->unicode = false;
+-
+-			psrch_inf->ntwrk_buf_start = (char *)pSMBr;
+-			psrch_inf->smallBuf = false;
+-			psrch_inf->srch_entries_start =
+-				(char *) &pSMBr->hdr.Protocol +
+-					le16_to_cpu(pSMBr->t2.DataOffset);
+-			parms = (T2_FFIRST_RSP_PARMS *)((char *) &pSMBr->hdr.Protocol +
+-			       le16_to_cpu(pSMBr->t2.ParameterOffset));
+-
+-			if (parms->EndofSearch)
+-				psrch_inf->endOfSearch = true;
+-			else
+-				psrch_inf->endOfSearch = false;
++		return rc;
++	}
++	/* decode response */
++	rc = validate_t2((struct smb_t2_rsp *)pSMBr);
++	if (rc) {
++		cifs_buf_release(pSMB);
++		return rc;
++	}
  
-+	/* Holding dev->lock could result in a dead-lock */
-+	lockdep_assert_not_held(&dev->lock);
-+
- 	thread = kthread_run(ir_raw_event_thread, dev->raw, "rc%u", dev->minor);
- 	if (IS_ERR(thread))
- 		return PTR_ERR(thread);
+-			psrch_inf->entries_in_buffer =
+-					le16_to_cpu(parms->SearchCount);
+-			psrch_inf->index_of_last_entry = 2 /* skip . and .. */ +
+-				psrch_inf->entries_in_buffer;
+-			lnoff = le16_to_cpu(parms->LastNameOffset);
+-			if (CIFSMaxBufSize < lnoff) {
+-				cifs_dbg(VFS, "ignoring corrupt resume name\n");
+-				psrch_inf->last_entry = NULL;
+-				return rc;
+-			}
++	psrch_inf->unicode = !!(pSMBr->hdr.Flags2 & SMBFLG2_UNICODE);
++	psrch_inf->ntwrk_buf_start = (char *)pSMBr;
++	psrch_inf->smallBuf = false;
++	psrch_inf->srch_entries_start = (char *)&pSMBr->hdr.Protocol +
++		le16_to_cpu(pSMBr->t2.DataOffset);
  
- 	dev->raw->thread = thread;
+-			psrch_inf->last_entry = psrch_inf->srch_entries_start +
+-							lnoff;
++	parms = (T2_FFIRST_RSP_PARMS *)((char *)&pSMBr->hdr.Protocol +
++					le16_to_cpu(pSMBr->t2.ParameterOffset));
++	psrch_inf->endOfSearch = !!parms->EndofSearch;
  
--	mutex_lock(&ir_raw_handler_lock);
-+	mutex_lock(&ir_raw_client_lock);
- 	list_add_tail(&dev->raw->list, &ir_raw_client_list);
--	mutex_unlock(&ir_raw_handler_lock);
-+	mutex_unlock(&ir_raw_client_lock);
- 
- 	return 0;
- }
-@@ -666,8 +663,10 @@ void ir_raw_event_unregister(struct rc_dev *dev)
- 	kthread_stop(dev->raw->thread);
- 	del_timer_sync(&dev->raw->edge_handle);
- 
--	mutex_lock(&ir_raw_handler_lock);
-+	mutex_lock(&ir_raw_client_lock);
- 	list_del(&dev->raw->list);
-+
-+	mutex_lock(&ir_raw_handler_lock);
- 	list_for_each_entry(handler, &ir_raw_handler_list, list)
- 		if (handler->raw_unregister &&
- 		    (handler->protocols & dev->enabled_protocols))
-@@ -683,6 +682,8 @@ void ir_raw_event_unregister(struct rc_dev *dev)
- 	 * "device gone" is checked.
- 	 */
- 	mutex_unlock(&ir_raw_handler_lock);
-+
-+	mutex_unlock(&ir_raw_client_lock);
- }
- 
- /*
-@@ -705,15 +706,24 @@ void ir_raw_handler_unregister(struct ir_raw_handler *ir_raw_handler)
- 	struct ir_raw_event_ctrl *raw;
- 	u64 protocols = ir_raw_handler->protocols;
- 
-+	mutex_lock(&ir_raw_client_lock);
-+
- 	mutex_lock(&ir_raw_handler_lock);
- 	list_del(&ir_raw_handler->list);
-+	atomic64_andnot(protocols, &available_protocols);
-+	mutex_unlock(&ir_raw_handler_lock);
-+
- 	list_for_each_entry(raw, &ir_raw_client_list, list) {
-+		mutex_lock(&raw->dev->lock);
-+		mutex_lock(&ir_raw_handler_lock);
- 		if (ir_raw_handler->raw_unregister &&
- 		    (raw->dev->enabled_protocols & protocols))
- 			ir_raw_handler->raw_unregister(raw->dev);
--		ir_raw_disable_protocols(raw->dev, protocols);
-+		raw->dev->enabled_protocols &= ~protocols;
-+		mutex_unlock(&ir_raw_handler_lock);
-+		mutex_unlock(&raw->dev->lock);
+-			if (pnetfid)
+-				*pnetfid = parms->SearchHandle;
+-		} else {
+-			cifs_buf_release(pSMB);
+-		}
++	psrch_inf->entries_in_buffer = le16_to_cpu(parms->SearchCount);
++	psrch_inf->index_of_last_entry = 2 /* skip . and .. */ +
++		psrch_inf->entries_in_buffer;
++	lnoff = le16_to_cpu(parms->LastNameOffset);
++	if (CIFSMaxBufSize < lnoff) {
++		cifs_dbg(VFS, "ignoring corrupt resume name\n");
++		psrch_inf->last_entry = NULL;
++	} else {
++		psrch_inf->last_entry = psrch_inf->srch_entries_start + lnoff;
++		if (pnetfid)
++			*pnetfid = parms->SearchHandle;
  	}
--	atomic64_andnot(protocols, &available_protocols);
--	mutex_unlock(&ir_raw_handler_lock);
-+
-+	mutex_unlock(&ir_raw_client_lock);
+-
+-	return rc;
++	return 0;
  }
- EXPORT_SYMBOL(ir_raw_handler_unregister);
+ 
+ int CIFSFindNext(const unsigned int xid, struct cifs_tcon *tcon,
 -- 
 2.53.0
 
