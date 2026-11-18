@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031677;
-	b=H4jTosHxDNRYhTYvm6V2zgFcm6Szl0Qf1hgfp4towF3q3Ueej4kA2ZC+ZXxyskGKNZtM
-	 9tzV+6PiE+reGejezw0VL9Y+Axn7ts/cnX2BoQ7Ddzs91ZMVdsaISAYs8bRSUHZd2H1iA
-	 mmSVqlECCAfPmL8iAFOdYS0ZBAoExISfTbVNIJewXPa0MLJ96sjfR1cI0USYo6syhBkHk
-	 TjkoQb3j/FEDII8lpxb8Q7w2GrwCyIL4oi7p9MjBU44gywBC1pCZYJmCdChfbiwWLj12v
-	 8A4PnoVSztQCbosn+/VZnpOHS6gcGxw0/W53d//9HK/jxxjS1ROzNnasDx54RIcDTiQ==
+	t=1795031680;
+	b=nqw1CGf4CGTnhhzrJshWYheqj7b9/PCzcIMD5P7SmEyXSGXGzU2gGhyF2T022vuJ/bHZ
+	 6KSZ4jFVeWPKZKPOTZsMiuHKGOtfgUbFgyuvKoiFs/HvLuywJZlLdNYZxGJkRaDKuwKAV
+	 6Ux3rqre681GPhASfVaitaiZqFWjEPC6wzzz720k8NncPqwjyLVnP63XZPoVQJVF/XfmL
+	 Bq3PF1FbNKwRr2A7/nBSmdtnqNiaf3cZh2XoOYYXm88NILAdK9DppQqWZf2JmQkwPMWrr
+	 Xgy5EX0cD/+hTTEgI8CXh9PqCqyqfg+mKE/JAD1oHZvLDAKaPpD7QXLW8c2RecEf83w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031677;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031680;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DrrbUk5fAgEROnEq+/tDXCPhm6ZhzPrt4mViXdi0CMU=;
-	b=ek+AyL3Ht/rIBtOVAwwW1d9XfxkBXL/KaDeJtPUQFwblXLpwSA/MiPWpaV3TKxaQhNRM
-	 zl5L3RyND6M+Avf694Tw8jRu/YI4xLjf0CWJ0fOJ4ddeVBYNdA0biW9pUgaGaIC1lJqIN
-	 h6LoLtboK6Xk0lCDCKk+XApDcsgcOpYXwdOya4jyOCfxQhR23kpCCJvKpwHJyzT7cH/fp
-	 WFj99NZ5aaL4d0OsVmbWYgHGtXGI15LRKs5SaPlSB91tnqCASFAIr7BWFcqGSX5pwSxZx
-	 l2C9dVYukcSVsYiOpzlStqwaQWRuNvqLWBB8jIjtdVIeDzpqZ2flQILxLK9k/+rrEuQ==
+	bh=RoBy18at/J+fAESv3KmrYkV/Lu5y4ZNJEtTt+vm+AME=;
+	b=5hhtfMoChpnVVZsKcjKZdp1X73SHU1Ykhg358rcOxW/JLADxGDb8JT9J+xX8fstj+4d+
+	 OmP/r+3e6YjY8MtO4Ictl10r9DPuzyF5SKRmUBTViWMzb6avfOmvL32MBxk/3OA+TsjzT
+	 rFrz5EP1TQt9mMsTI3U6H5dJ5wi6GbmfCvjeVtNjhb+6NV4wHAgRLznn7KoJ+NXqW/4/u
+	 RLKWKe/aeXpV0DSb+Q+IQLA+N1jlvkWZgf2dORXiYIvtJsWEfvNmZw5vjLqfq1Wz99c4d
+	 BShPENvzgIHwox7Vg/hsSjbvoDlkYKxOCLgKlLkJBJjBy5cjbVdaT98TqqviWtRVmuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Xj635TJ/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cyjo3xGC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B88D60A2604;
-	Wed, 18 Nov 2026 19:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32C5606A32A;
+	Wed, 18 Nov 2026 19:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xj635TJ/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50B71F000CE;
-	Wed, 18 Nov 2026 19:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cyjo3xGC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5811E1F000C4;
+	Wed, 18 Nov 2026 19:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031677;
-	bh=DrrbUk5fAgEROnEq+/tDXCPhm6ZhzPrt4mViXdi0CMU=;
+	s=korg; t=1795031679;
+	bh=RoBy18at/J+fAESv3KmrYkV/Lu5y4ZNJEtTt+vm+AME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xj635TJ/3YwfgcrHeN7ZTrVhm4aKNyYOdgzwCJHTyydVyCRR8FWTZZGrhJaV23p0O
-	 5oZVhP9TTwdySTKyDHIo+N9O3EIvhDKERPh0KS725OSbFP1fVcBxfaAQ+tfSiRWHVm
-	 I+OH8jNs8oSOn5edW7SY6vdGPPgLD5sffRI9K1wM=
+	b=cyjo3xGCt6zy016/Qi0t1aUOSXa2escgZhGyuZtvF8CBOsECVnzCnbmRL3SIq1ZrE
+	 ELtNCf9H9+JOBmVFCWwuoTjT4yByAj5f2dLFDClEHFplkLYRjnMsfRzpC4tzPsyDyR
+	 ISnDjtIcBygf0V/Juz8QTqq/96VIgRNmvnIX083Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haitam Lazaar <haitam@lazaarsec.com>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1105/1756] RDMA/siw: Enforce IB_ACCESS_REMOTE_READ for read responses
-Date: Wed, 18 Nov 2026 15:53:52 +0100
-Message-ID: <20261118150054.164764749@linuxfoundation.org>
+Subject: [PATCH 6.12 1141/1756] clk: qcom: rcg2: Clear force enable after rate failure
+Date: Wed, 18 Nov 2026 15:54:28 +0100
+Message-ID: <20261118150055.464445049@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,71 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haitam Lazaar <haitam@lazaarsec.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit f74eac4fc6c56274fb96c2c44ffad8f01c325f17 ]
+[ Upstream commit d4e8c6b9aef42d06cf5755543ad10097b2217990 ]
 
-When generating an RDMA READ response (SIW_OP_READ_RESPONSE),
-siw_check_sgl_tx() unconditionally passes 0 as the required permission
-mask:
+Shared RCG rate changes assert force-enable before programming the new
+configuration. If programming fails, the function returns without
+clearing force-enable, leaving the root running while CCF can release
+temporary parent and resource references.
 
-    /* Reference memory to be tx'd w/o checking access for LOCAL_READ */
-    rv = siw_check_sgl_tx(qp->pd, wqe, 0);
+Attempt to clear force-enable on the configuration error path before
+returning the original programming error. This restores the same cleanup
+performed after a successful configuration while preserving the primary
+failure for callers.
 
-Because perms is 0, siw_check_mem()'s authorization test:
-    if ((mem->perms & perms) < perms)
-evaluates to (mem->perms & 0) < 0, which is always false. Consequently,
-an untrusted remote peer can issue an RDMA Read targeting any valid
-STag in the Protection Domain, even if the memory was registered strictly
-as write-only (IB_ACCESS_REMOTE_WRITE) without IB_ACCESS_REMOTE_READ.
-
-Enforce that the target memory region was granted IB_ACCESS_REMOTE_READ
-when answering SIW_OP_READ_RESPONSE work queue entries, while preserving
-perms = 0 for standard local sends.
-
-Fixes: b9be6f18cf9e ("rdma/siw: transmit path")
-Signed-off-by: Haitam Lazaar <haitam@lazaarsec.com>
-Link: https://patch.msgid.link/1a12ad1d83f.19cd98924357428.7073029566232810804@lazaarsec.com
-Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 7ef6f11887bd ("clk: qcom: Configure the RCGs to a safe source as needed")
+Assisted-by: LLM
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260917-topic-qc_clk_fixes-v1-3-5531cb00514b@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_tx.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/clk/qcom/clk-rcg2.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
-index 4abea56ac45d6..bb0c4942f1e39 100644
---- a/drivers/infiniband/sw/siw/siw_qp_tx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
-@@ -801,17 +801,21 @@ static int siw_qp_sq_proc_tx(struct siw_qp *qp, struct siw_wqe *wqe)
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index 8c6be8963c2b9..0b4a638693ed5 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -1182,8 +1182,10 @@ clk_rcg2_shared_force_enable_clear(struct clk_hw *hw, const struct freq_tbl *f)
+ 		return ret;
  
- 	if (wqe->wr_status == SIW_WR_QUEUED) {
- 		if (!(wqe->sqe.flags & SIW_WQE_INLINE)) {
--			if (tx_type(wqe) == SIW_OP_READ_RESPONSE)
--				wqe->sqe.num_sge = 1;
--
- 			if (tx_type(wqe) != SIW_OP_READ &&
- 			    tx_type(wqe) != SIW_OP_READ_LOCAL_INV) {
-+				enum ib_access_flags perms = 0;
-+
- 				/*
--				 * Reference memory to be tx'd w/o checking
--				 * access for LOCAL_READ permission, since
--				 * not defined in RDMA core.
-+				 * Local READ permission doesn't exist in RDMA core.
-+				 * A READ RESPONSE source is read by the remote peer,
-+				 * so it must be checked for REMOTE_READ permission.
- 				 */
--				rv = siw_check_sgl_tx(qp->pd, wqe, 0);
-+				if (tx_type(wqe) == SIW_OP_READ_RESPONSE) {
-+					perms = IB_ACCESS_REMOTE_READ;
-+					wqe->sqe.num_sge = 1;
-+				}
-+
-+				rv = siw_check_sgl_tx(qp->pd, wqe, perms);
- 				if (rv < 0) {
- 					if (tx_type(wqe) ==
- 					    SIW_OP_READ_RESPONSE)
+ 	ret = clk_rcg2_configure(rcg, f);
+-	if (ret)
++	if (ret) {
++		clk_rcg2_clear_force_enable(hw);
+ 		return ret;
++	}
+ 
+ 	return clk_rcg2_clear_force_enable(hw);
+ }
 -- 
 2.53.0
 
