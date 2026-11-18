@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056897;
-	b=vGV9ZpfLEp8jTYHMPH5bn/kuNUCvwggWdbLHj0w7qyrZeDAFdNrE7q4XVky2/NKLfGGY
-	 NuWBDP+tIPEK4jLvy9OFPITaYhU0iGMUXZ48sU20FRjfEmrxSOnLhTyNUDf8QqTwvz1Kx
-	 wBBSzRaEZ9hAq+GtXgvGOXJ8qNyvq5wveBKILPNSMSS/ahq+UelvVRViKuFhIaqLdF+HZ
-	 DuE2ks3+JhLLF7QfaKwnDU0OkcWbKIT9eCr9DBqLK6eJhPw/jast98Yxil9ilUe0swcyw
-	 /7YWGN93wXq5WaAmUn0Q//QAy1EYfPrqIyb0UtvLtKXcB4qoULQZVDfQT42Y4utXNhw==
+	t=1795056899;
+	b=QaZ03nKaPZJa817LHj8ipyuv9ZVZ/P4fqFBsblVad7ytwvQJc9/twKR1BSpzIeVfQpAQ
+	 qYEmc+EVUqQmn138DFxJ4eOIHcuLCEMq+4SUJvFOCo5KBn32m1W8iCb28HfSFcJlFkYNQ
+	 xzJ+Hg4y0a+Nz6KWQEj7cinyZGfg2VnwmOtsl4FlKC/yOy6M51tGSPUyZTdRUSUrjDZTc
+	 oTmeRm10fj7rhUzIKu5M10fZtkRz3132R8Mct6GaCk9ZaqM+e013nlfffAEkhgalZX7Rb
+	 BdxPKOmnCO2Qj3nmpkEeD9O7YSuvR0mexaMT2KPUJpwIeYh4Cuxwsu78NkfJReGMYtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056897;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056899;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Do2PsKGYV0hbKXCOpl8r5VM+jGubeVokSgNqvgeIddo=;
-	b=uP3W+/8wKF+RFRzo/ok3SAUJ6mRUqvboFB2wJYCyot0aw6IfMOvBU6SrEX5dE5d5Ti6B
-	 N4GN4t2apAfk4OM36GmiddvVX7mO9XAxq/nJe6329CLSZqnqbRTGXs9Zlo6EZ9M5swB2K
-	 6ZHzPLyT9hD606G+8i0EwAMeXEhVTdKP8z6zv//WntdCogKXkipuI4/0QbIvkhdMg+MI9
-	 1qQRBXaVObEOxKJyvupp1to/k6Vml0QuIlwqUzYrkfn/+nvB143L0hlYmikKhr4QyT85T
-	 VXEskNGqwqhom/mCJjb7EM3TcOIlJwxi96nfH4E++WlXzAKKR02J/5KJ6GAgwVh9wkg==
+	bh=ktx7Mh81nomg1SNHlmXct06O8r6tttAVqlbcB7IFxGs=;
+	b=j5e8LE5Nno3rtbAMlN501LnS5GlrvEm6c8uJr2De9Qa68EGB4g3zLDoCaZ846R2JsaEl
+	 bAj787yWL/1hFWPuEGMHkf3pExiotjGBe5bHRbnDfe3LoOjELVp8N9ta8hiOhAU+gdjDn
+	 OhDivGwjze7xCxC10saCTlBkR6RNa8wV90baLzSCbVgGpFuuN6CkfM0Pg4QQ3tpwxdCUT
+	 eea2dUt+jm+IpOnGUtTK4rtVDmcCToHORBZPQCQn8ukQMuKkEIRv7PTOLMY5inPwpQPV+
+	 CLh7VMBtYEfEoqAKyoUZqWSj6tq4+gZtvhSe6LBDAolJe7Ya436g4UaLsxhSTStCLJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GiaUOCQk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j3EWqU3N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EF0606A31C;
-	Thu, 19 Nov 2026 02:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACF7606A320;
+	Thu, 19 Nov 2026 02:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GiaUOCQk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569B71F000C4;
-	Thu, 19 Nov 2026 02:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j3EWqU3N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270E31F000C4;
+	Thu, 19 Nov 2026 02:54:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056896;
-	bh=Do2PsKGYV0hbKXCOpl8r5VM+jGubeVokSgNqvgeIddo=;
+	s=korg; t=1795056899;
+	bh=ktx7Mh81nomg1SNHlmXct06O8r6tttAVqlbcB7IFxGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GiaUOCQkzfjZqoRVvJTGV1JGl2couOfwrfn67AdF0pNShW99s9FA0Kmjjj0ucAYj0
-	 pm5TpgavPt1jNg1G5hOUMbl9Lc+DbhIC7a3hx9RIi5IAXHV8KP1DAM4WKxkLRd8shl
-	 kMsm02h2gXZ05tUst/knMmorh71hXI9HIXbdoY6Q=
+	b=j3EWqU3NzeBv8xhqjbUfXSrzAxdvDDyNWsRVl5/0hyQlPUwgLJlCbz3567+M8tPVG
+	 ShmI9HxuK095DIX4/pwuvrOu+hSxMIF0+UDOJ7DANUDWdNR+OCuhNjqptt/o+1MRtC
+	 ow5Zu3Duisr9Nz9JT4Ul5T0SjNq//+hBOdN1ASgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubo.li@clyso.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Qing Zhang <diasyzhang@tencent.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2124/2214] ceph: mark the superblock active after mounting
-Date: Wed, 18 Nov 2026 16:03:20 +0100
-Message-ID: <20261118150135.536811390@linuxfoundation.org>
+Subject: [PATCH 5.15 2151/2214] nvmet: protect nvmet_ports_list with nvmet_config_sem
+Date: Wed, 18 Nov 2026 16:03:47 +0100
+Message-ID: <20261118150136.524739348@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,54 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiubo Li <xiubo.li@clyso.com>
+From: Qing Zhang <diasyzhang@tencent.com>
 
-[ Upstream commit 32eacfae3b16f6a9c0c20f946115abf5a091c922 ]
+[ Upstream commit cead6beb89256ae7145b65fbe8e8a5fedba4a47c ]
 
-ceph_get_tree() calls sget_fc() directly and so never goes through
-vfs_get_super(), which is what sets SB_ACTIVE after fill_super for
-filesystems that use it.  Before commit 82995cc6c5ae ("libceph, rbd,
-ceph: convert to use the new mount API") the flag used to be set by
-get_sb_nodev(), which did this for ceph, but the conversion dropped it.
+Readers of nvmet_ports_list (e.g. nvmet_subsys_disc_changed()) hold
+nvmet_config_sem and assert it via lockdep.  The writers --
+nvmet_ports_make() and nvmet_port_release() -- do not take the lock;
+they rely on the parent directory's VFS inode lock for serialization,
+which is an implementation detail of configfs and not a guaranteed
+contract.  Align the writers with the lock the readers already require.
 
-SB_ACTIVE is required for iput_final() to retain an inode on the
-inode LRU instead of evicting it once its last reference goes away.
-This has gone unnoticed because ceph sets inode_just_drop() for
-->drop_inode, which always asks for eviction, so the retain branch in
-iput_final() was never reachable.  The next patch makes ->drop_inode()
-able to retain inodes, and that needs the flag to actually work.
+Also move list_add() in nvmet_ports_make() to after the port is fully
+initialized: the old position published the port on the global list
+before INIT_LIST_HEAD(&port->subsystems), so a concurrent reader
+could traverse uninitialized list heads.
 
-Set it once the mount is up, like nfs_get_tree() does.
+flush_workqueue() in nvmet_port_release() stays outside the semaphore
+to avoid a lock dependency on nvmet_wq.
 
-Fixes: 82995cc6c5ae ("libceph, rbd, ceph: convert to use the new mount API")
-Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: b662a078576e ("nvmet: enable Discovery Controller AENs")
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Qing Zhang <diasyzhang@tencent.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/super.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/nvme/target/configfs.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ceph/super.c b/fs/ceph/super.c
-index e520ad25454a9..ff771715f6d5e 100644
---- a/fs/ceph/super.c
-+++ b/fs/ceph/super.c
-@@ -1118,6 +1118,15 @@ static int ceph_get_tree(struct fs_context *fc)
- 	dout("root %p inode %p ino %llx.%llx\n", res,
- 	     d_inode(res), ceph_vinop(d_inode(res)));
- 	fc->root = fsc->sb->s_root;
-+
-+	/*
-+	 * The mount is up.  sget_fc() leaves SB_ACTIVE unset, and, unlike
-+	 * filesystems that go through vfs_get_super(), nothing else sets
-+	 * it here, so iput_final() would always evict an inode whose
-+	 * ->drop_inode() asks to retain it.  Set it like nfs_get_tree()
-+	 * does.
-+	 */
-+	sb->s_flags |= SB_ACTIVE;
- 	return 0;
+diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+index 7a7b9410161e9..1549137be767f 100644
+--- a/drivers/nvme/target/configfs.c
++++ b/drivers/nvme/target/configfs.c
+@@ -1570,7 +1570,9 @@ static void nvmet_port_release(struct config_item *item)
  
- out_splat:
+ 	/* Let inflight controllers teardown complete */
+ 	flush_workqueue(nvmet_wq);
++	down_write(&nvmet_config_sem);
+ 	list_del(&port->global_entry);
++	up_write(&nvmet_config_sem);
+ 
+ 	kfree(port->ana_state);
+ 	kfree(port);
+@@ -1627,8 +1629,6 @@ static struct config_group *nvmet_ports_make(struct config_group *group,
+ 			port->ana_state[i] = NVME_ANA_INACCESSIBLE;
+ 	}
+ 
+-	list_add(&port->global_entry, &nvmet_ports_list);
+-
+ 	INIT_LIST_HEAD(&port->entry);
+ 	INIT_LIST_HEAD(&port->subsystems);
+ 	INIT_LIST_HEAD(&port->referrals);
+@@ -1659,6 +1659,10 @@ static struct config_group *nvmet_ports_make(struct config_group *group,
+ 	configfs_add_default_group(&port->ana_default_group.group,
+ 			&port->ana_groups_group);
+ 
++	down_write(&nvmet_config_sem);
++	list_add(&port->global_entry, &nvmet_ports_list);
++	up_write(&nvmet_config_sem);
++
+ 	return &port->group;
+ }
+ 
 -- 
 2.53.0
 
