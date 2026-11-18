@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027143;
-	b=3zrAsLXy6j04LyA6tATxJlVSP/AQ770KEEB0z7HjF1DZ8q+bJvF5yWDTp5xw39ZczDah
-	 9XFs2w0UPOc7cj1UQDnTmp+hCBRWmT2M8wXWJV3gWZZ8Mr1qaRkesa05B/q5UN3TEBr+K
-	 sxmHrhz+aH9FMCaJEVJYqxi8KsR4RbkajGXa0LgAOr6IX0GsnL2sGTcri6VOZTfNf94n6
-	 vyaaOoiK+S70kWfXk3PkQgn/jxUbxzFN0lAMvUIO11YoM92HSIHDEkc0YAGiL9NMsWvcE
-	 al4jFh78mzDeqgDrIJ04meKlt0cxW0UWKs2ea5VVhulXWzbxVn+UUfBchKoREWwrCeQ==
+	t=1795027146;
+	b=FsZCL50zTfPeUihPzUCZdSc5J+yLY7NcfWG8QTiewoiLuN7IIhLEnhMEjB/iirK3zgTi
+	 WhLHwway4eNjG81tR5Sjy9qEWilxIrqFLqqQt3mNdTHnOTmfyvOW62jAwtTPgOwapWrm1
+	 wMvQ4CI1hr96v3Icbrojoz1wcUR/R+f5uZtk9+0zmWqZEgmAdbaqGaQmmgpOd/t/f32JJ
+	 3zuTLWNz4DlT9F6tEsYOC5tM2oEioiUCH6gM9MaYk3B0dOE8Cvy4nyI6c3H+ih6G1LB5t
+	 f2pdl56gPusulxbu+eEKBdoZvKyBmOJ5TLdaq1Sxk92lBiYNt/QbYba1cCFoWa67OKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027143;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027146;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3AAXG78C21kkBNVksvuuSP7NsLM/rqVJ76US25MYmHg=;
-	b=FbkbpLD5H3NRWsIHHGcdZDzTuWzkvjlrCYBQ1/Syn70sKzpb5o9uNISctBQfw3rxPhaF
-	 nk0V263uWQC1q+7beMUM1kd+Qc0KduISvdTUG6dYMuwVi5qgwrbvshjawwjzrKtg6f19t
-	 EvxFrOxc/QOvx/1X7PBdtZrmgHa+DlvN95PRaiL69A4HIAsJ8ZWtKxkOUL5N5lDL7z2JZ
-	 Gumj9d2EmmAmlRV9iuCadHgzN+TSKk0z22GS2ZUFQlNb18GbUB3t+dehQBovr5zcMkJN9
-	 fZ9ghOZmnKQ3tEgRpoc7Q1Vlwg4kZ50NAhkEgP4uNnRrg7To20G4pzB5yhpKLLNbElw==
+	bh=cK0Xt+2/l4Db6kbswesffzD/X58BqbeJ8PQGqbavWrM=;
+	b=aIylLj8GGJCjZDDZCFAHQ2PWeeWD6bbYnw0BrXsv14T+3YzYTimF5YYR/mIiOk8CnHde
+	 Ipq1Bvajt3iv76RcLqSOXzbE8qDgkvLik8+3K9WV74wLASdP/mZa9z0xAAAEMfhimqPq+
+	 Un9MAwz3XuOuuT1C8ostnaxfGxP0yVjEJALAW9xgCanH0nBZuXCFXxEemuaYipXVIvwk0
+	 /SOJjCEDbB4gKIZJWB9c0pazMEEVbFHb/MLk8E58p+wyIeG4jbCc6YVlD+qVNcJgRrBzg
+	 heJiK+kqkwb8Hury+wszbDCYr4HL3frnYraChLUUFcszZh6mEsHWDw9mGlxB2v3WAjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FbWOV6dn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rOy2rrV1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6465C606A32C;
-	Wed, 18 Nov 2026 18:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E624606A332;
+	Wed, 18 Nov 2026 18:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FbWOV6dn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92591F000C4;
-	Wed, 18 Nov 2026 18:39:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rOy2rrV1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776881F000C4;
+	Wed, 18 Nov 2026 18:39:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027143;
-	bh=3AAXG78C21kkBNVksvuuSP7NsLM/rqVJ76US25MYmHg=;
+	s=korg; t=1795027146;
+	bh=cK0Xt+2/l4Db6kbswesffzD/X58BqbeJ8PQGqbavWrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FbWOV6dn2ZfW1Q/2hFZVy+3yrv2jZd7VoZzUXYbzr+kiCdjYmV1CIPT7dvjgBowvL
-	 E65NvpUBDzmIvyA3JoNg/PATaqXSF1LJIajhU+DNvSO/MgPp4I+PkIeewAGqqWOe9Z
-	 Leumwkh5u1uI/md+CSuD7y/TaqXflUbdBMBFjfLc=
+	b=rOy2rrV1QWtZSz63i8KFEiV/s3wTZxHkHiNgDBrS2AbzzqxgieC32XH1CjLQgYgtQ
+	 3NXs1mDHg6KfTP4C+kPb3LJJsR1Kjc6MXg1HQkUaqGyWAeFhzAAXo/MBKixQDNh2tt
+	 3PpNUNT4Vi4kVSEdyqw9cZYXfwA0zdw1/w+DK2fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viktor Menshin <ripeeerr@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1683/2151] ALSA: hda/realtek: Fix hiss/crackle on Lenovo Xiaoxin 14 GT (17aa:3912)
-Date: Wed, 18 Nov 2026 15:56:58 +0100
-Message-ID: <20261118150223.137123212@linuxfoundation.org>
+Subject: [PATCH 6.18 1684/2151] blk-iocost: charge zone appends as writes
+Date: Wed, 18 Nov 2026 15:56:59 +0100
+Message-ID: <20261118150223.174485115@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,123 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viktor Menshin <ripeeerr@gmail.com>
+From: Tao Cui <cuitao@kylinos.cn>
 
-[ Upstream commit 2fc28b1186d6fce8b046e6118072cf3ca32f2960 ]
+[ Upstream commit febdbf5682fa7e8f325b07a2c115e7632c4252bd ]
 
-Commit 3a3e810e9108 ("ALSA: hda/realtek: Add quirk for Lenovo Xiaoxin
-14 GT") added a quirk mapping SSID 17aa:3912 to
-ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN, chosen by analogy with
-neighboring SSIDs (0x390d, 0x3911, 0x391a) without being verified on
-hardware, as noted in that commit's own message.
+Zone append is a primary write operation for zoned devices; zoned xfs
+and btrfs use it for data writes.  It is priced at zero, so the zone
+append portion of zoned workloads runs outside the controller: a
+1%-weight cgroup issued 16000 appends at zero cost on a zoned null_blk.
 
-I have since tested it on the actual hardware (Lenovo Xiaoxin Pro 14
-ASP10, same 17aa:3912 SSID) and confirmed it does not fix the reported
-issue. ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN only repoints pin 0x17
-and the preferred DAC pairs for the bass speaker; it does not touch
-the codec's vendor processing coefficients. The actual symptom -
-constant electrical hiss/crackle on both the headphone jack and the
-internal speakers, independent of volume - is unrelated to pin/DAC
-routing and is also present on stock Windows before the Realtek
-driver is installed, which points at those coefficients being left
-at their power-on default.
+Treat REQ_OP_ZONE_APPEND the same as REQ_OP_WRITE so it goes through
+the existing seq/rand classification and charging.
 
-To find the correct values, I passed the physical HD Audio controller
-through to a Windows 10 VM (VFIO, with QEMU patched to log CORB verb
-traffic) and captured the coefficient writes the vendor Realtek driver
-performs at init. Replaying a single one of them on Linux via hda-verb
-reproducibly eliminates the headphone jack noise:
-
-    hda-verb /dev/snd/hwC#D0 0x20 SET_COEF_INDEX 0x36
-    hda-verb /dev/snd/hwC#D0 0x20 SET_PROC_COEF  0x77d7
-
-This has held up across reboots and kernel updates for several weeks
-(applied via a small systemd oneshot unit while testing).
-
-Add a dedicated fixup that performs this coefficient write and chains
-it with the existing ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN (which may
-still be relevant for the bass speaker pin wiring on this board), and
-point the 17aa:3912 quirk entry at it instead.
-
-Honesty note: this fixes the headphone jack. The internal speakers
-still have noise under certain conditions (notably worse on AC power)
-that I have not been able to isolate via coefficient-table replay;
-that part remains open. Sending what is verified to work rather than
-holding this back.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221203
-Fixes: 3a3e810e9108 ("ALSA: hda/realtek: Add quirk for Lenovo Xiaoxin 14 GT")
-Signed-off-by: Viktor Menshin <ripeeerr@gmail.com>
-Link: https://patch.msgid.link/20261015132157.57198-1-ripeeerr@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 0512a75b98f8 ("block: Introduce REQ_OP_ZONE_APPEND")
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20260922043856.2020116-3-cui.tao@linux.dev
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 31 ++++++++++++++++++++++++++++++-
- 1 file changed, 30 insertions(+), 1 deletion(-)
+ block/blk-iocost.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 987f770a66d77..479ae131fa4d1 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -3451,6 +3451,28 @@ static void alc287_fixup_yoga9_14iap7_bass_spk_pin(struct hda_codec *codec,
- 	}
- }
- 
-+/*
-+ * The Lenovo Xiaoxin 14 GT (SSID 17aa:3912) uses the same bass-speaker
-+ * pin wiring as its 0x390d/0x3911/0x391a siblings, but on this board the
-+ * codec's vendor processing coefficients (node 0x20) are left at their
-+ * power-on default instead of being programmed the way the vendor
-+ * (Windows) driver programs them. That leaves audible hiss/crackle on
-+ * both the headphone jack and the internal speakers, independent of
-+ * volume, regardless of which pin/DAC routing is used.
-+ *
-+ * This single coefficient write was captured from the vendor driver's
-+ * own init sequence (via a VFIO pass-through of the physical codec to a
-+ * Windows VM) and confirmed to eliminate the headphone jack noise.
-+ */
-+static void alc287_fixup_lenovo_xiaoxin_14gt_hp_noise(struct hda_codec *codec,
-+						       const struct hda_fixup *fix, int action)
-+{
-+	if (action != HDA_FIXUP_ACT_INIT)
-+		return;
-+
-+	alc_write_coef_idx(codec, 0x36, 0x77d7);
-+}
-+
- static void alc_fixup_yoga_pro7_audio(struct hda_codec *codec,
- 				      const struct hda_fixup *fix, int action)
- {
-@@ -3976,6 +3998,7 @@ enum {
- 	ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK,
- 	ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN,
- 	ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN,
-+	ALC287_FIXUP_LENOVO_XIAOXIN_14GT_HP_NOISE,
- 	ALC295_FIXUP_DELL_INSPIRON_TOP_SPEAKERS,
- 	ALC236_FIXUP_DELL_DUAL_CODECS,
- 	ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI,
-@@ -6387,6 +6410,12 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.chained = true,
- 		.chain_id = ALC287_FIXUP_CS35L41_I2C_2,
- 	},
-+	[ALC287_FIXUP_LENOVO_XIAOXIN_14GT_HP_NOISE] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc287_fixup_lenovo_xiaoxin_14gt_hp_noise,
-+		.chained = true,
-+		.chain_id = ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN,
-+	},
- 	[ALC295_FIXUP_DELL_INSPIRON_TOP_SPEAKERS] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc295_fixup_dell_inspiron_top_speakers,
-@@ -7685,7 +7714,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
- 	SND_PCI_QUIRK(0x17aa, 0x390d, "Lenovo Yoga Pro 7 14ASP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3911, "Lenovo Yoga Pro 7 14IAH10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
--	SND_PCI_QUIRK(0x17aa, 0x3912, "Lenovo Xiaoxin 14 GT", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
-+	SND_PCI_QUIRK(0x17aa, 0x3912, "Lenovo Xiaoxin 14 GT", ALC287_FIXUP_LENOVO_XIAOXIN_14GT_HP_NOISE),
- 	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x391f, "Yoga S990-16 pro Quad YC Quad", ALC287_FIXUP_TXNW2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3920, "Yoga S990-16 pro Quad VECO Quad", ALC287_FIXUP_TXNW2781_I2C),
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index 8c0214d48e3e6..7b7d6e8a60f5f 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -2548,6 +2548,7 @@ static void calc_vtime_cost_builtin(struct bio *bio, struct ioc_gq *iocg,
+ 		coef_randio	= ioc->params.lcoefs[LCOEF_RRANDIO];
+ 		coef_page	= ioc->params.lcoefs[LCOEF_RPAGE];
+ 		break;
++	case REQ_OP_ZONE_APPEND:
+ 	case REQ_OP_WRITE:
+ 		coef_seqio	= ioc->params.lcoefs[LCOEF_WSEQIO];
+ 		coef_randio	= ioc->params.lcoefs[LCOEF_WRANDIO];
 -- 
 2.53.0
 
