@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015141;
-	b=rETaflTv3Jx+HRLBm1pnvPUsVN5PmId2kU8oxoR7dIGWvwAUMTdcSQr4GjIq1tnIaYLk
-	 0ZRB9ZJSdVdsXoreFty3+jPmFDDCwi79ujPG8eYCliFDQWOrUpsanQT9r1mSjX53rCxjJ
-	 qX58+RlGfWT6iGzEyC0KyTnI1FD/uOKW00QHkIh4aH0xcuf+UVZcDZa0AIMQRGAUpzCfX
-	 rECmr/N1UJG40UhtWT2QVp9SBQE8R/DTXGMT0wq2w41d3hGSWpA3XyG2oM7wcC4y4LwaN
-	 P6+slauVSvBidjlzxFdzA4wyxwuAihZvSpLgxAPcEcJMEofkwkHytV4BFHNzSbeMSkA==
+	t=1795015143;
+	b=RfEiK+shfiWHfs50GTrZE9MaybFOuy24aSSRv/lm48exorfW4/I0ph9yeMvjULPdQZ/5
+	 TVT8rxL/sYUox7aj7DuNmAbwWMj/iwjplAe1R8HvuVOpm2AOvT7E+hrEVgf5ZAWAztNQo
+	 Jfhe91isnVF2Lxn20U2eUvC+khA5oDUCtfEbk7QR6aY5DgKkxDlnZYO3vKDiJX4nerJeB
+	 4mYH0XtM4UI3rB09nB26YhgK6yS/uoXJ1MG7Q+72AP+hrK9lmCql/DDRtai96x+EEiueT
+	 v8BIVTUSg+26dot+pkLrDntRajXJFnVf5TxqsnnSLUWrknTUSDwihVHEP8I5Q5VHAuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015141;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015143;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3SHqtvyrHfj5I/mFmjeSkLjNpB5fYPCWAC/JB1dNLVg=;
-	b=aD/Gze9A5JrpC8+qr2sAgV4e6c69toi3nAhQKt119iQhUbKIGFK/4jMLVkWNH5eIB4lr
-	 aAkjRzg59udEwhCBqypKeLy4ghXIohHu+SZmdZtKPUO3xZkHPxcibgK+Gz0ydh2WZLEWd
-	 5uNS3RZd4PQ1scGsTcXjYkCp++wR2Zo2D/KGPFQqR0mrT136RKTV/5thCjmu/RlRdSyK5
-	 ehIXyMQr4qCqlXAnBH/EqQWgtNcFF3+PvgSaCQQrLCaNTsQeRGjO2zveUAUpZfmn6ZVGn
-	 vxv7CKozwzzIyQp+Dkn9uaTEV35/G8qH7zUFPyHsz35UIu8qN8YMrta6OTo74cN5kYg==
+	bh=cO7yTcU5dTnpxthgIIxX6/xmlzeOXZZuttgQsbSHTS8=;
+	b=Na8IALN+Ood/Of+aoDY8bO+yoBfj2DEVcNF5VyovHa+T/ac5MFzf5IdfzMbO1zPriYR8
+	 uNNxZvKAgRTuAfGoYG6MK6ETszevUqtSim52VTwLFNED7jskftls0VGze/p96HGZMo3Fo
+	 foLb9ASA+u9VZIrrE8csY5spqOpAqcq3gc+m2c7hhSAQGll0LXw0eMpDKRtakEMRqaOoL
+	 zoFkFgze/M8hsDKxwAcCuanSnH2tAXK4Rk/ss6gOL0U3svVS2Bt4UEZndm7rgLmxvik1p
+	 rN3PDtRpiD8VR5KmldNzszE1y5K9SyVJLP3gHkFufrQki5Xd54TfA2qp2Ypxcu0vLFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cj2YmKyS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YN4LaVrG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D86606A31C;
-	Wed, 18 Nov 2026 15:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D045C606A332;
+	Wed, 18 Nov 2026 15:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cj2YmKyS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7261F000C7;
-	Wed, 18 Nov 2026 15:19:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YN4LaVrG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 355381F000C5;
+	Wed, 18 Nov 2026 15:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015141;
-	bh=3SHqtvyrHfj5I/mFmjeSkLjNpB5fYPCWAC/JB1dNLVg=;
+	s=korg; t=1795015143;
+	bh=cO7yTcU5dTnpxthgIIxX6/xmlzeOXZZuttgQsbSHTS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cj2YmKyS7G5SuifyRDRwGohJ+q1p0wqa3cuSkAlzI35tRgL+SRK5BNAJ9YdwydWwD
-	 8eh1RIjdNfT1zTN9AH9NSMcd3GAgITUL2yz2b7xpOuNThhLS8BIrrBsjC6S7E+o6tu
-	 DGML9IpOf88CZHT3P5x2KxwvXvuuZYlCEQ94vYOs=
+	b=YN4LaVrGRkhocMoh6VtnlMqnTIa6U6JQXyKtOUSL1/4EYHfGvppEVeqop//gi9TDm
+	 UaDmvI4wHaZ7qlL7tInlo+KGbh7a4ef+ro/3ZigdN26YiIfqL5Ve+ajDnUE5p6XCzV
+	 R5acMIz94OkJHM8+V7FLdu5EjytklYp0xVF8bjNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0065/2651] bpf: sched_ext: Mark ops argument container pointer fields as trusted
-Date: Wed, 18 Nov 2026 15:21:45 +0100
-Message-ID: <20261118150250.282089867@linuxfoundation.org>
+Subject: [PATCH 7.3 0066/2651] drm/omap: dsi: avoid sending bta sync all the time in writes
+Date: Wed, 18 Nov 2026 15:21:46 +0100
+Message-ID: <20261118150250.317680510@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,77 +68,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Andreas Kemnade <andreas@kemnade.info>
 
-[ Upstream commit aed1bf1a352acd4f5ffd2a81e23d2bb6e8e9b636 ]
+[ Upstream commit 20207f78382ff339f3a7f7c5db2c0219b157d32a ]
 
-Walking an unannotated pointer field of a trusted struct yields a bare
-PTR_TO_BTF_ID in non-sleepable programs, which kfuncs and helpers accept,
-but PTR_UNTRUSTED in sleepable programs, which they reject. This gets in the
-way of making ops.init_task() sleepable, which schedulers want for
-allocations. For example, passing args->cgroup into bpf_cgrp_storage_get()
-then fails verification and the only recourse is round-tripping through the
-cgroup ID with bpf_cgroup_from_id().
+Some chips need configuration commands to be sent first, before they can
+send data. TC358762 for example needs PPI_LPTXTIMECNT configured
+and PPI_STARTPPI set to 1 to be able to transmit anything. To be able to
+configure such chips, do not send bta sync during writes if no acks are
+requested. Instead just wait for the packet to be sent to avoid FIFO
+overflows. There might be more to do about acks, but there seem to be
+virtually no users of that flag.
 
-The pointer fields in the sched_ext ops argument containers are all pinned
-by the callers for the duration of the ops calls and are never NULL. Add
-them to the verifier's trusted-fields whitelist so that they are PTR_TRUSTED
-in both sleepable and non-sleepable programs.
+This came to light when fiddling with the Epson Moverio BT-200 display
+which consists of 2 TC358762 bridges with SPI funneled through
+to the unknown display chip. With that patch the bridge can be accessed,
+Reading back registers works, when the above-mentioned registers are set.
 
-Fixes: 8195136669661 ("sched_ext: Add cgroup support")
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/bpf/95d7ccc17681aa3a4a2eeb1b073f00f7@kernel.org
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+In Command-Mode update, there was a nop sent, apparently the most
+relevant part was the bta sync to actually force low power mode.
+
+Video mode panel at OMAP4 (BT-200) and video mode at OMAP5 was tested.
+
+Fixes: e70965386353e ("drm/omap: dsi: simplify write function")
+Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://patch.msgid.link/20260629-vm-upstr-v4-1-9f0c62d8808e@kemnade.info
+Link: https://patch.msgid.link/20260628-vm-upstr-v3-1-9e9add93378b@kemnade.info
+Link: https://patch.msgid.link/20260529-vm-upstr-v2-1-24c30671719f@kernel.org
+Link: https://lore.gitlab.freedesktop.org/drm-ai-reviews/review-patch1-20260529-vm-upstr-v2-1-24c30671719f@kernel.org/
+Link: https://patch.msgid.link/20260528-vm-upstr-v1-1-fb93ef8cbe47@kernel.org
+Link: https://patch.msgid.link/20260804-vm-upstr-v6-1-1bf3748b2fa3@kemnade.info
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ drivers/gpu/drm/omapdrm/dss/dsi.c | 63 +++++++++++++++----------------
+ 1 file changed, 31 insertions(+), 32 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 5f874979b8d75..bc87b15d4556c 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -5923,6 +5923,28 @@ BTF_TYPE_SAFE_TRUSTED(struct file) {
- 	struct inode *f_inode;
- };
+diff --git a/drivers/gpu/drm/omapdrm/dss/dsi.c b/drivers/gpu/drm/omapdrm/dss/dsi.c
+index 6da720e8732d7..a57f5df5c8305 100644
+--- a/drivers/gpu/drm/omapdrm/dss/dsi.c
++++ b/drivers/gpu/drm/omapdrm/dss/dsi.c
+@@ -59,9 +59,6 @@ static void dsi_uninit_dispc(struct dsi_data *dsi);
  
-+/*
-+ * The pointer fields in the sched_ext ops argument containers are pinned by the
-+ * callers for the duration of the ops calls and are never NULL.
-+ */
-+BTF_TYPE_SAFE_TRUSTED(struct scx_init_task_args) {
-+#ifdef CONFIG_EXT_GROUP_SCHED
-+	struct cgroup *cgroup;
-+#endif
-+};
-+
-+BTF_TYPE_SAFE_TRUSTED(struct scx_cpu_release_args) {
-+	struct task_struct *task;
-+};
-+
-+BTF_TYPE_SAFE_TRUSTED(struct scx_sub_attach_args) {
-+	struct sched_ext_ops *ops;
-+};
-+
-+BTF_TYPE_SAFE_TRUSTED(struct scx_sub_detach_args) {
-+	struct sched_ext_ops *ops;
-+};
-+
- BTF_TYPE_SAFE_TRUSTED_OR_NULL(struct dentry) {
- 	struct inode *d_inode;
- };
-@@ -5967,6 +5989,10 @@ static bool type_is_trusted(struct bpf_verifier_env *env,
- 	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct bpf_iter__task));
- 	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct linux_binprm));
- 	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct file));
-+	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct scx_init_task_args));
-+	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct scx_cpu_release_args));
-+	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct scx_sub_attach_args));
-+	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct scx_sub_detach_args));
+ static int dsi_vc_send_null(struct dsi_data *dsi, int vc, int channel);
  
- 	return btf_nested_type_is_trusted(&env->log, reg, field_name, btf_id, "__safe_trusted");
+-static ssize_t _omap_dsi_host_transfer(struct dsi_data *dsi, int vc,
+-				       const struct mipi_dsi_msg *msg);
+-
+ #ifdef DSI_PERF_MEASURE
+ static bool dsi_perf;
+ module_param(dsi_perf, bool, 0644);
+@@ -2190,28 +2187,45 @@ static int dsi_vc_send_null(struct dsi_data *dsi, int vc, int channel)
+ static int dsi_vc_write_common(struct omap_dss_device *dssdev, int vc,
+ 			       const struct mipi_dsi_msg *msg)
+ {
++	DECLARE_COMPLETION_ONSTACK(completion);
+ 	struct dsi_data *dsi = to_dsi_data(dssdev);
++	u32 err;
+ 	int r;
+ 
++	/* wait for IRQ for packet transmission confirmation */
++	r = dsi_register_isr_vc(dsi, vc, dsi_completion_handler,
++				&completion, DSI_VC_IRQ_PACKET_SENT);
++	if (r)
++		return r;
++
+ 	if (mipi_dsi_packet_format_is_short(msg->type))
+ 		r = dsi_vc_send_short(dsi, vc, msg);
+ 	else
+ 		r = dsi_vc_send_long(dsi, vc, msg);
+ 
+-	if (r < 0)
++	if ((!r) && wait_for_completion_timeout(&completion,
++				msecs_to_jiffies(500)) == 0)
++		r = -EIO;
++
++	dsi_unregister_isr_vc(dsi, vc, dsi_completion_handler,
++			      &completion, DSI_VC_IRQ_PACKET_SENT);
++	if (r)
+ 		return r;
+ 
+-	/*
+-	 * TODO: we do not always have to do the BTA sync, for example
+-	 * we can improve performance by setting the update window
+-	 * information without sending BTA sync between the commands.
+-	 * In that case we can return early.
+-	 */
++	/* TODO: find out if more needs to be done for MIPI_DSI_MSG_REQ_ACK */
+ 
+-	r = dsi_vc_send_bta_sync(dssdev, vc);
+-	if (r) {
+-		DSSERR("bta sync failed\n");
+-		return r;
++	if (msg->flags & MIPI_DSI_MSG_REQ_ACK) {
++		r = dsi_vc_send_bta_sync(dssdev, vc);
++		if (r) {
++			DSSERR("bta sync failed\n");
++			return r;
++		}
++	} else {
++		err = dsi_get_errors(dsi);
++		if (err) {
++			DSSERR("Error while sending: %x\n", err);
++			return -EIO;
++		}
+ 	}
+ 
+ 	/* RX_FIFO_NOT_EMPTY */
+@@ -3229,21 +3243,6 @@ static int _dsi_update(struct dsi_data *dsi)
+ 	return 0;
  }
+ 
+-static int _dsi_send_nop(struct dsi_data *dsi, int vc, int channel)
+-{
+-	const u8 payload[] = { MIPI_DCS_NOP };
+-	const struct mipi_dsi_msg msg = {
+-		.channel = channel,
+-		.type = MIPI_DSI_DCS_SHORT_WRITE,
+-		.tx_len = 1,
+-		.tx_buf = payload,
+-	};
+-
+-	WARN_ON(!dsi_bus_is_locked(dsi));
+-
+-	return _omap_dsi_host_transfer(dsi, vc, &msg);
+-}
+-
+ static int dsi_update_channel(struct omap_dss_device *dssdev, int vc)
+ {
+ 	struct dsi_data *dsi = to_dsi_data(dssdev);
+@@ -3264,13 +3263,13 @@ static int dsi_update_channel(struct omap_dss_device *dssdev, int vc)
+ 	DSSDBG("dsi_update_channel: %d", vc);
+ 
+ 	/*
+-	 * Send NOP between the frames. If we don't send something here, the
++	 * Transition to LP here. If we don't send something here, the
+ 	 * updates stop working. This is probably related to DSI spec stating
+ 	 * that the DSI host should transition to LP at least once per frame.
+ 	 */
+-	r = _dsi_send_nop(dsi, VC_CMD, dsi->dsidev->channel);
++	r = dsi_vc_send_bta_sync(dssdev, VC_CMD);
+ 	if (r < 0) {
+-		DSSWARN("failed to send nop between frames: %d\n", r);
++		DSSWARN("failed to send bta sync between frames: %d\n", r);
+ 		goto err;
+ 	}
+ 
 -- 
 2.53.0
 
