@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043220;
-	b=zxHQaL+jBZhuzb1sOiGBa4PyGP9q7OCAItHkkD2YZFccAOYnub2R/kYyy6I9SYgBkNJv
-	 Ii6FCSeBCuXK7u6xKDKAHys9oqSGWiaIYWGd4Gz9HdcSpOlPjVpV+69F2srO7H7JzYPzw
-	 fMwmJWBzmypoXnxqjRlhnEf/tb9ykoGPL9VlgOOntJ95q4Byo/Tk4wCtUSb8ET19u8/sA
-	 DO9veq32LaS09MEf7RQEaR9jFahreYqvz7JWl9rZrQXSTrZu22MSLTdLG64DvldxsMKLC
-	 Kp6ZebT6zoc52mRrRIVmD8wKTYxW059UBdp57AaDhSB3VzlMMWwYiBQOFiKyYhKyDcA==
+	t=1795043223;
+	b=lYhxsKvlb/b4q+2e9+18+icPVt/WyWZmPFUI8ebYaHqDeq+JzVJMZjOkxa4+/7YSpTMk
+	 0wD2sWjffr+NN2LQe86t1udue+VCr+ci4b3ZV3Or123n5A934wK5UAMe/yxjEdxwRR65H
+	 3muApQlg3AR9ufXyCD2MX46JIvkuPykwKOr/YpVsYMSbw07y7dMZUXqFTV512G36NR1qD
+	 ejXciM99geLnSOmxPTouM21v2bhIlz41el5/N926qfjFGW9Cd9qw0mZSJzBgTyXi8yeYM
+	 1dg0M58gXjfSDVENlmMPFHX1dPYvx3TQ9e7Sk1ZxjbBkWLtUxnSRKaSs0nIs/D8Jmkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043220;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043223;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n3apMuit/ZPLV+8BRW0Ox6x1XB7z0muiTIv0bNw474Q=;
-	b=liS0GVGh9QO14W+vKLO+OFH9EcV5QSLptK8CRQgcx3Ita6df4GKOy5GcQVKXx4NtmG8P
-	 17kQT4LnBciJfFh9CZ98fW+arR1wsQnNaZGu9i3MiI61zX+6+D+LViT7XqbYcGP9RNIRP
-	 HNvFFFDSmxjo6wSmYuCEQedKvZ4jfC31Dr0wnoO6gUN8eKpaF823PNQR9TerHhpCLuX2e
-	 WU0icOIyNJoSxyo4HFXK41JMwKtTTuspKWzYw1uh3BRIcAixWfBh0dhdw/CCLd4zfddjI
-	 v6PoN1iC6MRAkcLhOTT8jFBGLNymsSqRjoUlh9XuZRNNRO6ezwETkHVD62LTXs7dPFA==
+	bh=5zIhrJpq6WpWaLvK6sj4amgpeMQsh5nVVKeVIpqd0no=;
+	b=E7/wNAIdrLuIR2MVy6sibXEe6sHMcJuuOkV42HEqBvGYe2aOJPJsSryLNymf1/Wl0GqG
+	 +ryp1/SuWbrqc3qqcDKN2y6XyRy7x6H0BBLarPiRA797yXboFdCBYI36IcipVL1q3fh+z
+	 LC5OZpya2T4DNJquuIbtuvTttmBeXgrIm1ANipVUnl099x8IADCbA1h1s9lvk5ePdVuJJ
+	 qNTQVfETLzydrIAn5JTUBmH72Bjn/zqU/6m6YWRE16u8/oKulMUITLrCHdtWuubReeIH9
+	 kDPDnZWKixzIkBRUqRWr/riW/xWNOA4Lao8gVAfDG04mgzE/phQZjBLV+o5Iy6G46Yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D5UD0lZm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UsGQ3jOd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5F6606A325;
-	Wed, 18 Nov 2026 23:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8064606A325;
+	Wed, 18 Nov 2026 23:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D5UD0lZm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 849BA1F000C4;
-	Wed, 18 Nov 2026 23:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UsGQ3jOd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E11D1F000C4;
+	Wed, 18 Nov 2026 23:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043220;
-	bh=n3apMuit/ZPLV+8BRW0Ox6x1XB7z0muiTIv0bNw474Q=;
+	s=korg; t=1795043222;
+	bh=5zIhrJpq6WpWaLvK6sj4amgpeMQsh5nVVKeVIpqd0no=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D5UD0lZma1yKK35G0kBDKVkWhBXq14ZL7a9lXtZrg5hwdljX7cgCT+sCq73SyYaSl
-	 MgwMH1Ocpv/+JZg5wDi6kXqZQ0lTtRyk+vIGktEhr4PlOPx3a37lCS7EYPwDwpi3ac
-	 j360qW8S+2QRWTyo9KRPKov89Z5hpq0P7mtiO7NA=
+	b=UsGQ3jOd+vLT9Z+XvM+6Vw6g/cP/CpGvD11rtZ/QxM17mGdgYBVyCK1bBj8iGVQgM
+	 6d0N7O46hgCbfhnh5sosMSyQcT9d5EZT5yvLT4PK1CvguR+GQbQlA3VjcbCU+6urNO
+	 +xziBmPeHSoDeEPXXEBQrwM4c04VwqQcNqY56OUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Abbott <abbotti@mev.co.uk>,
+	Shahar Tzarfati <shahar.tzarfati@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0106/2857] comedi: pcm818: Fix sanity check in interrupt handler
-Date: Wed, 18 Nov 2026 15:19:00 +0100
-Message-ID: <20261118150205.077296903@linuxfoundation.org>
+Subject: [PATCH 6.1 0133/2857] wifi: mac80211: ibss: read deauth reason_code after frame length check
+Date: Wed, 18 Nov 2026 15:19:27 +0100
+Message-ID: <20261118150206.138694271@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,47 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Shahar Tzarfati <shahar.tzarfati@intel.com>
 
-[ Upstream commit 956e8478261a575d1e87490f2e5db1788b8c209d ]
+[ Upstream commit aa4c0a649903567762edf2bbc7fff608953b3ca4 ]
 
-The driver requests an interrupt handler for the device before it is
-fully set up.
+The function was reading reason_code from the frame before validating
+that the frame is at least IEEE80211_DEAUTH_FRAME_LEN bytes long.
 
-For safety, the interrupt handler checks the dev->attached flag to
-ensure the device is fully set up, but it currently does that after
-dereferencing the dev->read_dev pointer which may be NULL if
-dev->attached is false.  Move the check to avoid the possible null
-pointer dereference.
+Move the reason_code read to after the length check so the field is
+guaranteed to be present before it is accessed.
 
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-9-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Shahar Tzarfati <shahar.tzarfati@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260715212706.db26604650bd.I2caa73c396b8c9d357224b9334d5df3cafac498e@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/pcl818.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mac80211/ibss.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/comedi/drivers/pcl818.c b/drivers/comedi/drivers/pcl818.c
-index c5b60616967e6..4a61760d1be8f 100644
---- a/drivers/comedi/drivers/pcl818.c
-+++ b/drivers/comedi/drivers/pcl818.c
-@@ -534,13 +534,14 @@ static irqreturn_t pcl818_interrupt(int irq, void *d)
- 	struct comedi_device *dev = d;
- 	struct pcl818_private *devpriv = dev->private;
- 	struct comedi_subdevice *s = dev->read_subdev;
--	struct comedi_cmd *cmd = &s->async->cmd;
-+	struct comedi_cmd *cmd;
+diff --git a/net/mac80211/ibss.c b/net/mac80211/ibss.c
+index f2d4c68cf3aa2..1fd4a918bbbc2 100644
+--- a/net/mac80211/ibss.c
++++ b/net/mac80211/ibss.c
+@@ -930,11 +930,13 @@ static void ieee80211_rx_mgmt_deauth_ibss(struct ieee80211_sub_if_data *sdata,
+ 					  struct ieee80211_mgmt *mgmt,
+ 					  size_t len)
+ {
+-	u16 reason = le16_to_cpu(mgmt->u.deauth.reason_code);
++	u16 reason;
  
- 	if (!dev->attached || !devpriv->ai_cmd_running) {
- 		pcl818_ai_clear_eoc(dev);
- 		return IRQ_HANDLED;
- 	}
+ 	if (len < IEEE80211_DEAUTH_FRAME_LEN)
+ 		return;
  
-+	cmd = &s->async->cmd;
- 	if (devpriv->ai_cmd_canceled) {
- 		/*
- 		 * The cleanup from ai_cancel() has been delayed
++	reason = le16_to_cpu(mgmt->u.deauth.reason_code);
++
+ 	ibss_dbg(sdata, "RX DeAuth SA=%pM DA=%pM\n", mgmt->sa, mgmt->da);
+ 	ibss_dbg(sdata, "\tBSSID=%pM (reason: %d)\n", mgmt->bssid, reason);
+ 	sta_info_destroy_addr(sdata, mgmt->sa);
 -- 
 2.53.0
 
