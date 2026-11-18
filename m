@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059090;
-	b=GqVhiDu/MscwhW3No7gbaihZN72Hx7sYUmW5ZN4JJRv8PYCa0QARZitUZfxJ69i0LLdG
-	 TVV1e3hJLRy74wYXYDwFZNk+NHiYPkjEJSHP1kx0jMxwBH7XGdvUOdj2ApVt2WL4QRXrB
-	 xWeQCsccirOb5B3qNO0zlkiXSfA2dsFihkQbvEHwWwoLquq+V2/199e+4bFlsasY22d/p
-	 K2pcqRAfxjZzho2Mba0eJ3reZGVzZoLbM7F02XENaF0wq/IVkEiK3UxPAo4o1vuQi3cfG
-	 n8bRysShaIoSwFkZDgINmYIh2vOfCzEZeOY3OteqSCQjOnuZ9tTxARnqHgX9mAqoy+Q==
+	t=1795059093;
+	b=pboMHPywK52lK2IBWUZ/i1MCEDD4zEfNX/yP/lX2Je+pZtqGQRPjeKTWiMzYlTBJCH4Z
+	 F0QZJWjWw3tQb100lX6BIQ/qpEkW8GCSzmxAM1xCN2OMGbH93r1seTM/F+a/O0yvMf30T
+	 zlR/p8uPPqBiBr1hUFmqvGr2KBJCtIRY3GBaqY+QjDBQzPHJv4Vsbm0kACziAMhAxkQZ4
+	 QBfvYmr/PNXtfx7X5AYGN8Zr9j7SqxgLw1pMbLvsvL4LrRVUO3mmr0+RX+K2+LjbOjEvi
+	 N2ydzw8T/RuIlFvkV4OpqYj3ydzdfCJHme+L/8g9f/mwPor3KUtlclsvTo3mrsOEG4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059090;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059093;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SGcA1vreaKHW6uTxRUuKsPnzc7LrXxSqAOMQOjgPTm8=;
-	b=o3JDNncUMNG+ZWEHnuO5Yi09o/0+EttRD0qjjNBYA9bVMS0biHbD4xfIY4NCWCKHC1WC
-	 bnNtSybZ/PzBG7ejtFVx+VyQJT5TL0kqy2A92ZVrUZCnMHX0QnBYhzZrgpAucTp9ddp06
-	 Yd8NYUuw1ZGcfZ2VCtYyelYhXt9bxZxrrG7NFsY/7iYTcFAoMPTl6MXqB37ISl7KM5oks
-	 cPNX6oBRDfUCBoedLj9iVJsG+nx81omJhplVO7EAxxh5HNklAI8ilEVJryTpFWHFQtKhg
-	 7kTcfUyUhk6zAgq9oL8uRCXJ1rvIhrBM7pcsgDiOS0cBkVWDD5Xqj65bs4NCgwAx6WA==
+	bh=g3KMXc+iXoV7vx/z3NfGZasdfqqTzCwTF5/boUQJV5M=;
+	b=NjVX0aZknY7FsO0P+g0NjGEQHBbMSCjzgzyo7HmP4Ch8dqaStqoe7lOHZX9+Uptj8d/v
+	 ieSBodYJDuag8Iafo3YauMZ6aP9GnBGeLCCopuHH50OkNHr72CRS7VgKbfspYqIC8dlbQ
+	 abiu11sMLZtkQE7bayNGUBtYr2URXZi+YIhh6z7WaWtuBVfhOO+urDWXCC+km5wLmB8Zs
+	 gaNmHiLCHTbBTjz0is/BzWfThmpekSOHvejNmo4E9iuSyok0BATtTMHdnHZ8yTzHEZiUD
+	 ZJKPAFl+EywQbXtD4tygyEwG3A5JmU2UgJ3UeMc1SABvEB1akHoZcWz1IK7+TH03sXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ej9Lt5EO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZGmF6FQn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5785606A31C;
-	Thu, 19 Nov 2026 03:31:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80340606A31C;
+	Thu, 19 Nov 2026 03:31:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ej9Lt5EO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375621F000C4;
-	Thu, 19 Nov 2026 03:31:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZGmF6FQn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC211F000C8;
+	Thu, 19 Nov 2026 03:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059090;
-	bh=SGcA1vreaKHW6uTxRUuKsPnzc7LrXxSqAOMQOjgPTm8=;
+	s=korg; t=1795059093;
+	bh=g3KMXc+iXoV7vx/z3NfGZasdfqqTzCwTF5/boUQJV5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ej9Lt5EOy6T+0c7eZnNmjmaDShC6SKP+1ZZG+3XEbg5UVA6Im86lTAVFTyytZv57Y
-	 a4x1xwx+hp80fqxLHr6JeruUOItOa1M2LHA0ltNHtQH11F2S/ABpkYv/1BT8yHDonR
-	 KZnkXzHgpis6IVD+3apdTobfWoGOmToil+6oaaxw=
+	b=ZGmF6FQnHBKBUoQ0/vKZRVwDuZMRac1UrRifiQvgK+oA8rZKRDiq/k0G4rSXQFnZw
+	 cLEi1xdk/rUC1q/BDuSKHQW4Cq8aDGhu7kNEmWI+2nYT1fqUscdEI26CaCZfbXh/qc
+	 8IeP/VxDDzKJwY9mjldfovF4liH1fiCZZ8xjClCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Esben Haabendal <esben@geanix.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0719/1848] drm/bridge: nwl-dsi: Limit LCDIF specific sync override
-Date: Wed, 18 Nov 2026 15:45:57 +0100
-Message-ID: <20261118145945.929058768@linuxfoundation.org>
+Subject: [PATCH 5.10 0720/1848] inotify: do not coalesce rename events
+Date: Wed, 18 Nov 2026 15:45:58 +0100
+Message-ID: <20261118145945.972702488@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,45 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esben Haabendal <esben@geanix.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 54a88d9afcca66221d14f438d0960472984968ec ]
+[ Upstream commit 581230d2ec3c0380917d1255792508851e7c4627 ]
 
-When using DCSS with NWL, overriding the mode flags to enforce active high
-sync is preventing the use of active low with downstream bridges, such as
-ti-sn65dsi83, which will not see such mode flags set by the panel.
+inotify compares the mask, watch descriptor and name when coalescing
+adjacent unread events, but ignores their rename cookies. Distinct
+IN_MOVED_FROM events can therefore be coalesced, losing the cookie needed
+to match a later IN_MOVED_TO event.
 
-Fixes: 44cfc6233447 ("drm/bridge: Add NWL MIPI DSI host controller support")
+For example, watch two directories with IN_MOVE. Move an entry from the
+first directory into an unwatched directory, recreate it under the same
+name, then move it from the first directory into the second watched
+directory before reading the events. The second IN_MOVED_FROM is merged
+with the first, while the IN_MOVED_TO retains the second rename's cookie.
+Userspace can no longer pair the second rename's events.
+
+The original inotify implementation compared cookies before coalescing.
+The fsnotify conversion lost this comparison. Do not coalesce
+IN_MOVED_FROM or IN_MOVED_TO events, which carry the identity of their
+respective renames. Leave coalescing of other event types unchanged.
+
+Fixes: 63c882a05416 ("inotify: reimplement inotify using fsnotify")
 Cc: stable@vger.kernel.org
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Esben Haabendal <esben@geanix.com>
-Link: https://patch.msgid.link/20261027-nwl-dsi-fixes-v5-2-b6d1d3d2d356@geanix.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Suggested-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://patch.msgid.link/20261027192027.8617-1-dennylin0707@gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/nwl-dsi.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/notify/inotify/inotify_fsnotify.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/nwl-dsi.c b/drivers/gpu/drm/bridge/nwl-dsi.c
-index 0b2dfdd5d3233..f9b6b8a3f6e67 100644
---- a/drivers/gpu/drm/bridge/nwl-dsi.c
-+++ b/drivers/gpu/drm/bridge/nwl-dsi.c
-@@ -831,10 +831,13 @@ static int nwl_dsi_bridge_atomic_check(struct drm_bridge *bridge,
- 				       struct drm_connector_state *conn_state)
- {
- 	struct drm_display_mode *adjusted_mode = &crtc_state->adjusted_mode;
-+	struct nwl_dsi *dsi = bridge_to_dsi(bridge);
+diff --git a/fs/notify/inotify/inotify_fsnotify.c b/fs/notify/inotify/inotify_fsnotify.c
+index 993375f0db673..ff0af29745a8c 100644
+--- a/fs/notify/inotify/inotify_fsnotify.c
++++ b/fs/notify/inotify/inotify_fsnotify.c
+@@ -36,7 +36,7 @@ static bool event_compare(struct fsnotify_event *old_fsn,
  
- 	/* At least LCDIF + NWL needs active high sync */
--	adjusted_mode->flags |= (DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC);
--	adjusted_mode->flags &= ~(DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC);
-+	if (dsi->endpoint == NWL_DSI_ENDPOINT_LCDIF) {
-+		adjusted_mode->flags |= (DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC);
-+		adjusted_mode->flags &= ~(DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC);
-+	}
- 
- 	/* Do a full modeset if crtc_state->active is changed to be true. */
- 	if (crtc_state->active_changed && crtc_state->active)
+ 	old = INOTIFY_E(old_fsn);
+ 	new = INOTIFY_E(new_fsn);
+-	if (old->mask & FS_IN_IGNORED)
++	if (old->mask & (FS_IN_IGNORED | FS_MOVE))
+ 		return false;
+ 	if ((old->mask == new->mask) &&
+ 	    (old->wd == new->wd) &&
 -- 
 2.53.0
 
