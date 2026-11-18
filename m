@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036281;
-	b=bP8kXSOERrcD8musd0/rdHHVbXjj6uK/Rmgd3mXfoqNY8uvRbbQoVakRFjGqvUPRDOXh
-	 MOgapcJPZV3FfituwlFgyuki3Sgk98hZntvueaibxcV42lYdKLm/fKJgln7EQVtIE3E7G
-	 Hi8Nx24sheNQy8cFQHNQqXSszGMfu26V0kEwlcOGEw03nHcyMb0oehagG1b+vjZC+ncaG
-	 lrSF6Sug6VAzGMZ4SCtKIoi9GNarT7r627pmUjg1+KBwyjJtfoURAJwTQ1Zo0B/tNi+HD
-	 75HFuI31rTqV6xPHODSB8EXJOCQ0fBx1K2D9aKK8f8s18N2r6EENa0vElL55PU1LICQ==
+	t=1795036284;
+	b=bXUvXaic0IlrZ93+sKh19mPwfR+Bp4D35f+muouljR/WbcWdYG2ZLIp9IrYc9CAjwifN
+	 pVXIOnoz+H8HRD6K+ZZkDyjWuT8iQeta5Hj8QhQ40UZxMP52YKbhESjYHjj/V84z32/co
+	 1d1zeXTJMhzu746/48tMxi2yxInfbhx+PqbiEfXEytVqTqNjFRi+ozZoBzz41i2EJghfv
+	 lpGXURjidY+fQd2lYTyMdDpgzZuuJDb664tC8BXlpsznUgQ1MNQsT6K4X9bNh9i/05ayQ
+	 XCEPcqrfUgu4XAzeLv4MfWCsoCFK8xuCiZhbW/p4t8Qqc6saUgWCG4XyKhuNKpD32WQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036281;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036284;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9QRPlwWNQd2FUeCpccIh6KUvMWxes+M8IfEkK+Aumm8=;
-	b=h64aD5o+yF6MbloaNemHC20MOmfdof4qS4d1ixbPS1VgH3debfPH6JFNO2cPui5vec1R
-	 ADLS1rHgH9lL7fDj/u+u1qhYtvxOjImoDM1EPR+4LVSBKOtx8QVYMHLvDSocnxIXCt0jg
-	 WislJzy96tAzHdjq9E4Ku78Ubwrm7vJM0DtTc19Yt+MQsBcU8pEmmsXc/0Am860sudGe8
-	 v5AmCLTt0NQGI0kPQgTLWlBvU+gfI64/YBYbGy1awAHX7z2dTkXcqxr5XV2+w/LDVgqE6
-	 Gq4ydjo9EGNuuxZI5qmrjj4+zbavpKpGUSHzM8WJ1SRB7g0BbA9wWKSHGbV39HkbXLA==
+	bh=dd42soEh9lqFXcRfpDJQObbCJqZLyZabZHmTxpCWeVQ=;
+	b=nSWqp6qp/6oMZGozwGAFqcj2sTQxLcTDd+TdBcgQMkEi08q8+3dWoLqaMWuW6bPhzj5s
+	 A+UKIaVXwwahi63g6N6kxxCuvKsFav1M01UX0+uyMhIXfSHPm9FekwVDD2KTOEXMBbv2u
+	 j806KnPnmL9E+UsWE6iv5J3P/rlOPHC21KqsGyv4YdQc1xLsj1PvzIgdUGaB4lJhlSPtG
+	 uusAJW4CTxMC+XbU5dwldWUywKtX/moDtLJZ/+T8Oa2hRuaXuful2sCNpdSnCPYX2J/Mb
+	 IMIgS2jBTpYYLF5U6BdmwhRzpruriwrDbA0V+5OnCN59TLmyhtbhCP0PzbbHcmImFjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WbXEIUKF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jyqRNxCY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF30606A32F;
-	Wed, 18 Nov 2026 21:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C481606A31C;
+	Wed, 18 Nov 2026 21:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WbXEIUKF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709C61F000C4;
-	Wed, 18 Nov 2026 21:11:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jyqRNxCY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 357831F000C6;
+	Wed, 18 Nov 2026 21:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036281;
-	bh=9QRPlwWNQd2FUeCpccIh6KUvMWxes+M8IfEkK+Aumm8=;
+	s=korg; t=1795036283;
+	bh=dd42soEh9lqFXcRfpDJQObbCJqZLyZabZHmTxpCWeVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WbXEIUKFDNe2rLjEYhLZvCTVS2PuXlfI7y6efqmRczWp5w/+tbCYnqHh9kCxE8616
-	 PjcLCWHZ23DEHI1skoBw9uPt116gD3E9nPEU62quJKxd5gaNL/VJPWuFQwjvnbKYsE
-	 IIPvWtCOjdbiV1N/pdOKy0TsG2iMMIjjz08lxuIU=
+	b=jyqRNxCY+6CuqHAbXRH6n+JKfOFthIUSw5mFNP35su5sEGy/y3pVRXWC9D3j2SznI
+	 NAEINZohD9/eLjttd4GApMDJQGp7zdu88xo8/67rzM2np0ywF2MOhrGnvgxXbsaE6m
+	 i9EFX42e/WedLqT2VOtPcg4LGVIk1aXR3Y3emy5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Michail Tatas <michail.tatas@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1002/3318] media: mediatek: vpu: release reserved memory on remove
-Date: Wed, 18 Nov 2026 15:27:04 +0100
-Message-ID: <20261118150349.930744546@linuxfoundation.org>
+Subject: [PATCH 6.6 1003/3318] media: verisilicon: rockchip: Fix leaks in init
+Date: Wed, 18 Nov 2026 15:27:05 +0100
+Message-ID: <20261118150349.966434695@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,48 +70,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Michail Tatas <michail.tatas@gmail.com>
 
-[ Upstream commit 8af0e2bdd9791848d9caf3761825ac51a67c2b9c ]
+[ Upstream commit 96f6b5e2295996a9e2dd1e2382d3872f98cbb554 ]
 
-mtk_vpu_probe() may assign a reserved memory region to the VPU device
-with of_reserved_mem_device_init(). The probe failure path releases the
-assignment with of_reserved_mem_device_release(), but the normal remove
-path does not perform the corresponding cleanup.
+If one of the dma_alloc_coherent in the init function fails then
+the previously allocated ones leak.
 
-As a result, removing the VPU driver after a successful probe can leave
-the reserved memory assignment associated with the device after its
-lifetime has ended.
+Fix by freeing them in the error path.
 
-Release the reserved memory assignment after freeing the VPU external
-firmware memory, matching the cleanup performed by the probe failure
-path.
-
-This issue was found by manual code inspection.
-
-Fixes: 3003a180ef6b ("[media] VPU: mediatek: support Mediatek VPU")
+Fixes: 727a400686a2 ("media: verisilicon: Add Rockchip AV1 decoder")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Michail Tatas <michail.tatas@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/vpu/mtk_vpu.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../verisilicon/rockchip_vpu981_hw_av1_dec.c  | 68 +++++++++++++++----
+ 1 file changed, 55 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/vpu/mtk_vpu.c b/drivers/media/platform/mediatek/vpu/mtk_vpu.c
-index 3d437898e1f47..e0357dd21a427 100644
---- a/drivers/media/platform/mediatek/vpu/mtk_vpu.c
-+++ b/drivers/media/platform/mediatek/vpu/mtk_vpu.c
-@@ -967,6 +967,7 @@ static void mtk_vpu_remove(struct platform_device *pdev)
- 		destroy_workqueue(vpu->wdt.wq);
- 	vpu_free_ext_mem(vpu, P_FW);
- 	vpu_free_ext_mem(vpu, D_FW);
-+	of_reserved_mem_device_release(&pdev->dev);
- 	mutex_destroy(&vpu->vpu_mutex);
- 	clk_unprepare(vpu->clk);
+diff --git a/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c b/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
+index ea94be9ad22cf..0543b6ee4f2df 100644
+--- a/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
++++ b/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
+@@ -368,6 +368,7 @@ void rockchip_vpu981_av1_dec_exit(struct hantro_ctx *ctx)
+ 
+ int rockchip_vpu981_av1_dec_init(struct hantro_ctx *ctx)
+ {
++	int ret = 0;
+ 	struct hantro_dev *vpu = ctx->dev;
+ 	struct hantro_av1_dec_hw_ctx *av1_dec = &ctx->av1_dec;
+ 
+@@ -376,39 +377,54 @@ int rockchip_vpu981_av1_dec_init(struct hantro_ctx *ctx)
+ 	av1_dec->global_model.cpu = dma_alloc_coherent(vpu->dev, GLOBAL_MODEL_SIZE,
+ 						       &av1_dec->global_model.dma,
+ 						       GFP_KERNEL);
+-	if (!av1_dec->global_model.cpu)
+-		return -ENOMEM;
++	if (!av1_dec->global_model.cpu) {
++		ret = -ENOMEM;
++		goto global_model_cpu_err;
++	}
++
+ 	av1_dec->global_model.size = GLOBAL_MODEL_SIZE;
+ 
+ 	av1_dec->tile_info.cpu = dma_alloc_coherent(vpu->dev, AV1_TILE_INFO_SIZE,
+ 						    &av1_dec->tile_info.dma,
+ 						    GFP_KERNEL);
+-	if (!av1_dec->tile_info.cpu)
+-		return -ENOMEM;
++	if (!av1_dec->tile_info.cpu) {
++		ret = -ENOMEM;
++		goto tile_info_cpu_err;
++	}
++
+ 	av1_dec->tile_info.size = AV1_TILE_INFO_SIZE;
+ 
+ 	av1_dec->film_grain.cpu = dma_alloc_coherent(vpu->dev,
+ 						     ALIGN(sizeof(struct rockchip_av1_film_grain), 2048),
+ 						     &av1_dec->film_grain.dma,
+ 						     GFP_KERNEL);
+-	if (!av1_dec->film_grain.cpu)
+-		return -ENOMEM;
++	if (!av1_dec->film_grain.cpu) {
++		ret = -ENOMEM;
++		goto film_grain_cpu_err;
++	}
++
+ 	av1_dec->film_grain.size = ALIGN(sizeof(struct rockchip_av1_film_grain), 2048);
+ 
+ 	av1_dec->prob_tbl.cpu = dma_alloc_coherent(vpu->dev,
+ 						   ALIGN(sizeof(struct av1cdfs), 2048),
+ 						   &av1_dec->prob_tbl.dma,
+ 						   GFP_KERNEL);
+-	if (!av1_dec->prob_tbl.cpu)
+-		return -ENOMEM;
++	if (!av1_dec->prob_tbl.cpu) {
++		ret = -ENOMEM;
++		goto prob_tbl_cpu_err;
++	}
++
+ 	av1_dec->prob_tbl.size = ALIGN(sizeof(struct av1cdfs), 2048);
+ 
+ 	av1_dec->prob_tbl_out.cpu = dma_alloc_coherent(vpu->dev,
+ 						       ALIGN(sizeof(struct av1cdfs), 2048),
+ 						       &av1_dec->prob_tbl_out.dma,
+ 						       GFP_KERNEL);
+-	if (!av1_dec->prob_tbl_out.cpu)
+-		return -ENOMEM;
++	if (!av1_dec->prob_tbl_out.cpu) {
++		ret = -ENOMEM;
++		goto prob_tbl_out_cpu_err;
++	}
++
+ 	av1_dec->prob_tbl_out.size = ALIGN(sizeof(struct av1cdfs), 2048);
+ 	av1_dec->cdfs = &av1_dec->default_cdfs;
+ 	av1_dec->cdfs_ndvc = &av1_dec->default_cdfs_ndvc;
+@@ -419,11 +435,37 @@ int rockchip_vpu981_av1_dec_init(struct hantro_ctx *ctx)
+ 						   AV1_TILE_SIZE,
+ 						   &av1_dec->tile_buf.dma,
+ 						   GFP_KERNEL);
+-	if (!av1_dec->tile_buf.cpu)
+-		return -ENOMEM;
++	if (!av1_dec->tile_buf.cpu) {
++		ret = -ENOMEM;
++		goto tile_buf_cpu_err;
++	}
++
+ 	av1_dec->tile_buf.size = AV1_TILE_SIZE;
+ 
+-	return 0;
++	return ret;
++
++tile_buf_cpu_err:
++	dma_free_coherent(vpu->dev, av1_dec->prob_tbl_out.size,
++			  av1_dec->prob_tbl_out.cpu,
++			  av1_dec->prob_tbl_out.dma);
++prob_tbl_out_cpu_err:
++	dma_free_coherent(vpu->dev, av1_dec->prob_tbl.size,
++			  av1_dec->prob_tbl.cpu,
++			  av1_dec->prob_tbl.dma);
++prob_tbl_cpu_err:
++	dma_free_coherent(vpu->dev, av1_dec->film_grain.size,
++			  av1_dec->film_grain.cpu,
++			  av1_dec->film_grain.dma);
++film_grain_cpu_err:
++	dma_free_coherent(vpu->dev, av1_dec->tile_info.size,
++			  av1_dec->tile_info.cpu,
++			  av1_dec->tile_info.dma);
++tile_info_cpu_err:
++	dma_free_coherent(vpu->dev, av1_dec->global_model.size,
++			  av1_dec->global_model.cpu,
++			  av1_dec->global_model.dma);
++global_model_cpu_err:
++	return ret;
  }
+ 
+ static int rockchip_vpu981_av1_dec_prepare_run(struct hantro_ctx *ctx)
 -- 
 2.53.0
 
