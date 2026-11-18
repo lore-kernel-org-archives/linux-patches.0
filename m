@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021897;
-	b=gVaWJczsB0V5QwFaa12xry0e6DVSda5v9QFH6SVypogUztxvM+C1ZPAToiLr/WaahIao
-	 B80nOWK0Ngk1LaPtEngyUZWhKi/5131pU7HSGUN2ji0at/Soft41OsTwwpH1AXelQ1+3s
-	 ypag33oGac5Mv3npvyGePQO4fuCpms7COWaJORJeS3h97mgXW3RQSmYee6atTJPvnUXfZ
-	 duoGAQLWtaqFtm/etx5O+gZUgjuFFSG+Y7wyIe3bJsjUCCV4oMs5Q006HMcCuceE2r77r
-	 QeZBeFt5jwMX/PzgJeefQhS3ccGyi3XTH/3jqnHONOAhXhubOA5ONaDgwYqFzSRL/ow==
+	t=1795021900;
+	b=FX2yzqs8z+oGxfPVztEJDguCnuwgdOiiizm7d1zWBZMs56P5JMaZWxjbeAfP38hiZjR2
+	 2BPTV6yYh2UpHSO5kzwe8iYexmJ2vK69sUF10X6sMn81zMSngqOe7/CaA7faIBqkqdDib
+	 nKNEXdg38dDmLF1MNw0ttZ0ZoZ6x42lQLe9g6Q7+W5S5llhUKx5ychQsHUTr5sR4Fs0Mk
+	 6igNaY9n6rSWb7R859fmtBsnA8tk35KmZw7ihW04SKv2NBizFqUoEJrCts0dAEdRATEE/
+	 bVnJlkRZj6UuvlqvAkG9XuUuImuc9xuX2XwPbiBInFqrP6QCbxsHIW/y2HZPkdY4pzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021897;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021900;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nuuWt8pxMq+JQc4fBYh5+ju9rDAdyOPB4a6uH+lucgI=;
-	b=If8tKc8Y2uSeoLbeOW8hv5kSrBHiHMRoQkQiI1SzFjo46+vmNoNA03Mb+ZkN7Dypci8b
-	 /54Lp0w6PKe1C/joIFKgCsdMfgi6IdK4gN7Bv5BJdcoTomcHMgEt+YK/+HuM3SJW/0ZEi
-	 5iM8+IyUclXf+WgERqojEanlZa34oWLJrBPG0nGaBZsbqryRzrYQf9cMA39rsrOQiWXKy
-	 l1HWnPXXtZSdFZR1aF0Kfooc2lXxzlcVdhyfTQdw6mU32poYIjk1XQu60YPE2mpdbg6oH
-	 an8xRCCDBEHqRXMSyjzlfZdxVtyZdlYj4MkaoFm8br3j3ViuOBgQtUIVS2rCmKizIKA==
+	bh=4+OIOobbhIJ9T30csvtwpqwe19I7MiVZ5w4lWBLXz9g=;
+	b=RuCtK2gmWNT51YdzLdddFZSqNpefDyLwNidU5bQN2LOgg7mYc/CY/DVm6G5Hrs2JVSqm
+	 ndBUOWaftQaMCl+zAPcrIf4d13m3e5iLoMRMVDTAxJoG6jk5n2+R6YoSIPd7QcKiTFgTQ
+	 CcFjIGaSEKbEBDNGPAEihhLz9PxGHXokclpoTsjT8bHYSfGuBvPEHH55WsMQszdCg1GDd
+	 fE4FUI11y8lpryMD+VpHvkW8EZt1kgcWX+BlpXQ2zQlNPCr2pfU4AjZkKgjj7wc2aFL3j
+	 QIin2cCvuBp+CRCXxD7CWrf2+tixsPHsGK26GSDkWgns7s52l7MOXyJUtI2MFAdTnXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k1uAhrHO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0v4pNVds;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA9F606A32C;
-	Wed, 18 Nov 2026 17:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3511F606A320;
+	Wed, 18 Nov 2026 17:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k1uAhrHO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D9E1F000C4;
-	Wed, 18 Nov 2026 17:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0v4pNVds
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A1B1F000C4;
+	Wed, 18 Nov 2026 17:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021897;
-	bh=nuuWt8pxMq+JQc4fBYh5+ju9rDAdyOPB4a6uH+lucgI=;
+	s=korg; t=1795021900;
+	bh=4+OIOobbhIJ9T30csvtwpqwe19I7MiVZ5w4lWBLXz9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k1uAhrHO970b2o79Hgi6WQJd8XKMt4jkkSMtmqiyP1++ty0vnwKBGcMyWsBfAb0Hx
-	 7n6rwUbV9tsHtoRKoX/qUCf9W6LHyPYwVGNn91ozUPH4jzyiL5VWz97ST2Ab3vE8IQ
-	 XtvmBIhlCseinaJZ0ANNRoQNnPIo0AP28f5gRrao=
+	b=0v4pNVdsWaCLoI7aBCDEaIjCrI61DAIdN6wPpZrt4WcMKZb+NsuQ1wB2kXLGrGHxD
+	 PxlQHpZNSzNXMzvpGGkoRHivjaCHT6MlKfHNry2rAeb/Umg2iJA9C9MPTyn+R8Rl4q
+	 6XgAAAE7DHZA0NmUTSSsEZLCVPtwU7gDdWOiaVmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Laimer <h.laimer@proxmox.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Petr Machata <petrm@nvidia.com>,
-	Gabriel Goller <g.goller@proxmox.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Eric Dumazet <edumazet@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2470/2651] vxlan: keep reserved_bits across changelink
-Date: Wed, 18 Nov 2026 16:01:50 +0100
-Message-ID: <20261118150413.916551840@linuxfoundation.org>
+Subject: [PATCH 7.3 2471/2651] pppoe: wait for RCU readers before reusing a socket
+Date: Wed, 18 Nov 2026 16:01:51 +0100
+Message-ID: <20261118150413.946464605@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,77 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Laimer <h.laimer@proxmox.com>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit e3a629477d52a9f49d50d72903be06a4d1f4aa58 ]
+[ Upstream commit e7b01bc0202a57f1b7dcdf19b2ffab6b781d47f8 ]
 
-vxlan_nl2conf() derives reserved_bits from the extension attributes
-set in the netlink message if IFLA_VXLAN_RESERVED_BITS is absent. A
-changelink having it set is rejected, so this means that every
-changelink will reset all extension bits and reserve them again.
-vxlan_nl2flag() rejects setting a flag on an attribute that is
-create-only on changelink. So also setting an extension attribute will
-fail before it can un-reserve its fields.
+When pppoe_connect() disconnects or reuses a socket, it removes the old
+session from the hash table and resets the socket's fields. An RCU
+reader that reached the entry before it was unlinked can still be using
+its address, ifindex or next pointer.
 
-The extension's header bits being reserved again then makes
-vxlan_rcv() drop frames that have them set in their header as invalid.
-The device still reports the extension as enabled, because only the
-reserved_bits are rebuilt and the flags are just copied.
+If sockets A and B share a hash bucket with A preceding B, a concurrent
+__get_item() looking for B can be traversing A when it is removed.
+Clearing A->next then makes the lookup miss B and drop the packet.
+Reinserting A can similarly redirect the reader into another hash chain.
 
-A simple reproducer is
+Call synchronize_net() after unlinking the old session and before
+clearing its fields. This allows existing receive-path and
+/proc/net/pppoe readers to finish before the socket is cleared or reused.
 
-    ip link add vxgbp type vxlan id 1 dstport 4789 local 10.0.0.1 gbp
-    ip link set dev vxgbp type vxlan ageing 300
+This was found by Sashiko's static analysis, and reproduced on a VM
+stress test with KCSAN.
 
-After setting the unrelated ageing, incoming packets with the GBP bit
-set in the header start getting dropped.
+ BUG: KCSAN: data-race in hash_item+0x1c/0x60
 
-Keeping the reserved_bits on changelink is safe because anything a
-changelink accepts leaves the header bits enabled extensions use
-unchanged.
+ race at unknown origin, with read to 0xffff888000a1c566 of 2 bytes by task 147 on cpu 2:
+  hash_item+0x1c/0x60
+  pppoe_seq_next+0x112/0x1b0
+  seq_read_iter+0x595/0x700
+  seq_read+0xb0/0xe0
+  proc_reg_read+0xd0/0xf0
+  vfs_read+0xbd/0x220
+  ksys_read+0xa9/0x100
+  __x64_sys_read+0x47/0x60
+  x64_sys_call+0x98/0x1fd0
+  do_syscall_64+0x5b/0x260
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
 
-Ran into this when adding support for the GBP flag in ifupdown2, see
-link below. The device kept dropping packets after some time, it
-turned out it always started after a changelink.
+ value changed: 0x0002 -> 0x0000
 
-Tested this by changing ageing by hand on a vxlan device that was
-created by ifupdown2 with the gbp flag, and checking the reserved bits
-using
-
-    ip -d link show vxgbp | grep -o 'reserved_bits 0x[0-9a-f]*'
-
-Without the fix I got 0xf7ffffff000000ff after the changelink, and
-with the fix it stayed 0x77000000000000ff. The following patch
-contains a selftest that fails without the fix and passes with it.
-
-Fixes: e4f8647767cf ("vxlan: Track reserved bits explicitly as part of the configuration")
-Link: https://lore.proxmox.com/pve-devel/20260828134708.692354-1-h.laimer@proxmox.com/
-Signed-off-by: Hannes Laimer <h.laimer@proxmox.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/20261023-b4-vxlan-changelink-gbp-v1-1-f0d13951c09b@proxmox.com
-Tested-by: Gabriel Goller <g.goller@proxmox.com>
-Reviewed-by: Gabriel Goller <g.goller@proxmox.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Fixes: 72cdc67e7fa7 ("pppoe: remove rwlock usage")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261020092118.47416-1-qingfang.deng@linux.dev
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261026061300.256009-1-qingfang.deng@linux.dev
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ppp/pppoe.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 7ecd73a5a3745..66fdca6cad1c3 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -4358,7 +4358,7 @@ static int vxlan_nl2conf(struct nlattr *tb[], struct nlattr *data[],
- 		}
- 
- 		conf->reserved_bits = reserved_bits;
--	} else {
-+	} else if (!changelink) {
- 		/* For backwards compatibility, only allow reserved fields to be
- 		 * used by VXLAN extensions if explicitly requested.
- 		 */
+diff --git a/drivers/net/ppp/pppoe.c b/drivers/net/ppp/pppoe.c
+index bdaa8cf8404ba..9edf8151bd7d1 100644
+--- a/drivers/net/ppp/pppoe.c
++++ b/drivers/net/ppp/pppoe.c
+@@ -621,6 +621,10 @@ static int pppoe_connect(struct socket *sock, struct sockaddr_unsized *uservaddr
+ 		pppox_unbind_sock(sk);
+ 		pn = pppoe_pernet(sock_net(sk));
+ 		delete_item(pn, po);
++
++		/* wait for concurrent readers before clearing the fields */
++		synchronize_net();
++
+ 		if (po->pppoe_dev) {
+ 			dev_put(po->pppoe_dev);
+ 			po->pppoe_dev = NULL;
 -- 
 2.53.0
 
