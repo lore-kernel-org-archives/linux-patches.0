@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052725;
-	b=txehW5mfTtAme5vCk51Jb6DkNinPDsk0DbdVtCXHMoNDKA6660JBT2JU+tUFavJtoNhb
-	 Io8ZS8rjxIn047siI+fo+MCo1+9522rmcy6y4LBb25dmsIUjursxmsgltgTevqsSXofE0
-	 yh5YyqPl9TkG9Xph2wsI6/m9pwvvWpTZM0AY4Fb/WHi6eGGmpcAiiroSAsTFPu/AeH4gQ
-	 oY0DWD5+0VeSuBfpNnkc3kiCODy6tDMmYCVGVr/+Jr2Y7ICnqQQAIp71Yyr7fe5RIMQif
-	 g7khzc1vxHLuck5IMsY/HNdINJiKIH4Qi7YYOatZJCm9fThxbnarEARvUgObbtfsaUg==
+	t=1795052728;
+	b=eGaoFvqF50LKLwabhCqOmLGAsdqvsVzZ9FWNYpvzHsJaMbro+BKwS17hxgySECjguPTL
+	 s9PtpjsjU9CtquBWPVsHjeWadhJOw2ImuXafmI6BweX1GKThLi3N+J0unAyN6YyYSuM8Y
+	 w9GIFkGpTXFDZ9qIbtunoc5YIBjkquDG4Qizu33Xv4eFSl1hIeELrJqIC6knas1FNs3Rq
+	 3YzCEuS372v602NagebS4C/UyjFUDmnfy3Htym+jwFsq1X2ubscBUN44tDHS1tHDifYq9
+	 AgbvchPMsxB4+joNX3K9m5ekfYFd3Lx7TFmOihCVUa/ckIcBNAKRfsEEzm/e5U4I/Qg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052725;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052728;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m7nKuc5jKfpWzrTREc/5jc3BiQy5SO0DQFnkbE+C+gU=;
-	b=34jofDeXKE80Y46xD+D7JP3q6hHNfubP/r7DgCgLog5zCtMe6kAjszdGfuf5qyfU/Odw
-	 Uscqj+luGhlFGfohrGbwFgIo9t6E3Hj2HTfWMj+a+KSCizDFph/lyeLmy5T3u37gEdwyR
-	 9tlsVOkjE0WeeLYImMxXmlN46zCNh1y1OIdFgEdmuTyRV1nMgr7Og8sCH4f5JeaPhidmg
-	 9jqny3Yr9IjWLGyKOiLkUgDWN9uG6I8OhuganCj9dLgw0471K0V4Ll3YSkZu8LLW6fYAP
-	 xAQYei/1wM4PnHNUCmIQlkqcULzYUssiQ2HPFcmKRjcoLbo/P5K1nP5GUx6YKeaPAYA==
+	bh=hbgXz2RhuKB/fldB8gP8/kKOqA8DKBaV0G1OdDraFww=;
+	b=0gvRab2eqiuKLkM8SND7lJeQVGoKbiQVB6Y4eBtBa47o5c5idMyvknz03Tzqvmb4X2EV
+	 GkHx6Hz6HDrJjMZlJgE7TOS5R+r6kOArpXNpzs0NX5ST0EjLZdh9XUF9zF44cct77KqVy
+	 WsPRYxKfVKPhsUBD/JiQQqK3+7dxMqBAD3PadtFLZwJryMC1tC+8lXY7AqAM2va9DDv3g
+	 LIWYoJ6UoTQUpFO4uPIm2tfgEYOPutA27FgOYKVXlNyQ45oGMU+VpT09OzKHrk78FuoGX
+	 lc4mJRnhb0+/TbKxthuKentmVymGIw1wgcx2YYlFDIGMN7SLILwa6xl6M+vZa/AVjVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CKZ94Ia4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2BxZ7Gom;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11888606A320;
-	Thu, 19 Nov 2026 01:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A97F606A320;
+	Thu, 19 Nov 2026 01:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CKZ94Ia4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0E81F000C4;
-	Thu, 19 Nov 2026 01:45:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2BxZ7Gom
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BEFD1F000C4;
+	Thu, 19 Nov 2026 01:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052724;
-	bh=m7nKuc5jKfpWzrTREc/5jc3BiQy5SO0DQFnkbE+C+gU=;
+	s=korg; t=1795052727;
+	bh=hbgXz2RhuKB/fldB8gP8/kKOqA8DKBaV0G1OdDraFww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CKZ94Ia4shlMhB1kDaVS0Pee0qZgG2Lfpe3EoCSNMt7DabTS+a5LJbKhUwF+hfYKt
-	 epTlno1DSO0BXXME6/YrjYJDVjzHCAG/IwcemaH4Reh2EWNCOFNo8Gqpu1sukQutVI
-	 j43oPqgkVt4Tpc7NKKtDjOpT0GSz0GjUnK9p/oBA=
+	b=2BxZ7Gomc8EO/ulC8xT0kQQdY5V3AlzPdi7evY5hTqVPtTbPh5xHwDh9gF7YW0c6R
+	 AWUKzxSSAmQSDwFsn1YN3O4xu8ujBXWim9YKBxZTt7cWen6uGKi7kFW6b/ZNbYt/J/
+	 TjcSZEvvu8JS3MvEZpT3G0RG3ndJofgIYERHfQBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0f98b0c0bdeaab2dc2fd@syzkaller.appspotmail.com,
-	Sanan Hasanov <sanan.hasanov@ucf.edu>,
-	Guenter Roeck <linux@roeck-us.net>,
+	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0665/2214] hwmon: (corsair-cpro) Make wait_input_report_lock IRQ safe
-Date: Wed, 18 Nov 2026 15:39:01 +0100
-Message-ID: <20261118150038.450632484@linuxfoundation.org>
+Subject: [PATCH 5.15 0666/2214] f2fs: flush SIT journal during filesystem resize
+Date: Wed, 18 Nov 2026 15:39:02 +0100
+Message-ID: <20261118150038.482174675@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,86 +71,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanan Hasanov <sanan.hasanov@ucf.edu>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-[ Upstream commit e4fdc82f55cf0e3d5df5c88278da5baa76a109d1 ]
+[ Upstream commit a6ede405455106bf42164ec96fd84008c5aabdd9 ]
 
-ccp_raw_event() is the HID ->raw_event() callback and takes
-wait_input_report_lock with a plain spin_lock(). This callback can run
-in very different contexts depending on the transport: from process
-context (e.g. uhid, via a write() to /dev/uhid) with softirqs and
-interrupts enabled, and from URB completion, which is softirq context
-for HCDs using HCD_BH and hard interrupt context for HCDs that do not
-(e.g. OHCI, UHCI).
+During a filesystem resize, SBI_IS_RESIZEFS prevents new SIT entries
+from being added to the journal and forces existing entries to the SIT
+area. However, f2fs_flush_sit_entries() returns early when there are no
+new dirty sentries, leaving existing journal entries behind.
 
-Taking the lock from process context with softirqs enabled while the
-same lock is also taken from softirq context can deadlock if the
-softirq interrupts the lock holder on the same CPU. Lockdep reports:
+After the main area shrinks, a later checkpoint can access a journal
+entry whose segment number is outside the new geometry and trigger
+f2fs_bug_on().
 
-  WARNING: inconsistent lock state
-  inconsistent {SOFTIRQ-ON-W} -> {IN-SOFTIRQ-W} usage.
-  ...
-   spin_lock include/linux/spinlock.h:347 [inline]
-   ccp_raw_event+0x51/0x110 drivers/hwmon/corsair-cpro.c:161
-   __hid_input_report+0x41c/0x580 drivers/hid/hid-core.c:2175
-   hid_irq_in+0x492/0x710 drivers/hid/usbhid/hid-core.c:287
-   __usb_hcd_giveback_urb+0x378/0x540 drivers/usb/core/hcd.c:1657
-   dummy_timer+0xa91/0x4cc0 drivers/usb/gadget/udc/dummy_hcd.c:2023
+Only take the zero-dirty fast path when entries may be written back to
+the journal. This lets resize drain existing entries through
+remove_sits_in_journal() even when there are no new dirty sentries.
 
-For the same reason, the spin_lock_bh() in send_usb_cmd() is not
-sufficient when ccp_raw_event() is called from hard interrupt context.
-
-Use spin_lock_irqsave() in ccp_raw_event(), since it may be called with
-interrupts already disabled, and spin_lock_irq() in send_usb_cmd(),
-which always runs in process context.
-
-Fixes: d02abd57e794 ("hwmon: (corsair-cpro) Protect ccp->wait_input_report with a spinlock")
-Reported-by: syzbot+0f98b0c0bdeaab2dc2fd@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0f98b0c0bdeaab2dc2fd
-Cc: stable@vger.kernel.org
-Signed-off-by: Sanan Hasanov <sanan.hasanov@ucf.edu>
-Link: https://patch.msgid.link/20261008205310.30832-1-sanan.hasanou@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@kernel.org
+Fixes: 04f0b2eaa3b3 ("f2fs: ioctl for removing a range from F2FS")
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-cpro.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/f2fs/segment.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
-index 62f9372f2d355..e0cf92896bc66 100644
---- a/drivers/hwmon/corsair-cpro.c
-+++ b/drivers/hwmon/corsair-cpro.c
-@@ -128,9 +128,9 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
- 	 * the raw event parsing and marked the ccp->wait_input_report
- 	 * completion as done.
- 	 */
--	spin_lock_bh(&ccp->wait_input_report_lock);
-+	spin_lock_irq(&ccp->wait_input_report_lock);
- 	reinit_completion(&ccp->wait_input_report);
--	spin_unlock_bh(&ccp->wait_input_report_lock);
-+	spin_unlock_irq(&ccp->wait_input_report_lock);
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 0d10bea639372..f070ec5995a92 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -4232,7 +4232,7 @@ void f2fs_flush_sit_entries(struct f2fs_sb_info *sbi, struct cp_control *cpc)
  
- 	ret = hid_hw_output_report(ccp->hdev, ccp->cmd_buffer, OUT_BUFFER_SIZE);
- 	if (ret < 0)
-@@ -149,15 +149,16 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
- static int ccp_raw_event(struct hid_device *hdev, struct hid_report *report, u8 *data, int size)
- {
- 	struct ccp_device *ccp = hid_get_drvdata(hdev);
-+	unsigned long flags;
+ 	down_write(&sit_i->sentry_lock);
  
- 	/* only copy buffer when requested */
--	spin_lock(&ccp->wait_input_report_lock);
-+	spin_lock_irqsave(&ccp->wait_input_report_lock, flags);
- 	if (!completion_done(&ccp->wait_input_report)) {
- 		memcpy(ccp->buffer, data, min(IN_BUFFER_SIZE, size));
- 		ccp->buffer_recv_size = size;
- 		complete_all(&ccp->wait_input_report);
- 	}
--	spin_unlock(&ccp->wait_input_report_lock);
-+	spin_unlock_irqrestore(&ccp->wait_input_report_lock, flags);
+-	if (!sit_i->dirty_sentries)
++	if (!sit_i->dirty_sentries && to_journal)
+ 		goto out;
  
- 	return 0;
- }
+ 	/*
 -- 
 2.53.0
 
