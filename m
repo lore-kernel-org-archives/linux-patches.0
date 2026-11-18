@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023140;
-	b=ECC6TNmKjFR57ODj3SYXOPiGij6CvRpATFir6U89OqQHjuCrA4+2RWJe/Twg7Sf+x2sA
-	 2eSQmHac3nrzA60arEvcnEIsyi9f5M0s85VAlSzl/tb9tyWFXSCvvfOc/9GpFFZhpM9an
-	 +/T01edElvK0Xinrc6DJT+MskVxmkwG6+rdxYl3u3WHzKvpsmsCB07hWnsk6vdx8Kk7EW
-	 E0rAjRoOj239UMhyNNnra2sNr9QCEaq5CCVZfYwjc00nRwY3UqknmhUktpCmBCa8Le0GB
-	 StanhMmzvOmqG6DTE59Z+q8ZvFhRMGjgryD8tkmrXrkyep3u3O1hgrNyo7OzbQLuwuw==
+	t=1795023143;
+	b=lwC2V0nF2rv+aflVQHVFMyK2svBtKzR1GCkYcsTPR6zG6LvWesspW38UyVuAMU7/KUa0
+	 MQcIty1a/qYi0YUQ9vVG8wumoeHslRcrhN+sq8iPSsqv+OEAZEMjuzi08MatatJ6+qMTy
+	 u9+eK43TIQDj5R3oPY0SvNiYFirNSlTFEfLoywIhl6E9OXs+5XJ5t/6ZpvGw5be0dG0VF
+	 53eOKZdutI2Tlg25ZzHU7fx1DkOh2M0BzgSg2z7qJl37AGOkET8hAF3oXPmrHGDfoGmk3
+	 GroLE9efRunsIkZcW+v4W0zAyxTA5YduWp/5is13W32EAH1mrSG/O8y4r3vwEg1d1Mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023140;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023143;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=GqIgNPXn1lOIXGrT+uODVZD1HohIfG6a1fKnwaPCIeA=;
-	b=fNSlwcXBuL2lM84LrFN4Iu/fLOB6REIZqEt4FmTsZh9RLkcYcB+abVeLTvz7L1431vBQ
-	 /ZmubmDEnuf7VC/DtefONSfNNM0GPsqvDjKlMH29bbb9UmHmT50sbkIGtcZ8vlAU5ZTCt
-	 LIFGRDOJxpSrLk9kPLLoz2jANj8E/dpSBFk9GfrjhrT38yHmlqYL7npat9qAMVWPdHwto
-	 B6Ht6wx+ucZIGUybN/ju0if8/sCtH0BgREHuglywEPNOYII20SIPyzZN4ky4Ac5MTnS7a
-	 U2UZArcttW7NvQr39SGYPy8yDqR5nDFP/+Plq0zCAE81Aln5ePc/ctLVck8L+j/blNg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=n664HoK3bJfv4p3tjfFPYksUbWT9cA4AHDG4UldYGYU=;
+	b=X/e8fpfTJ5j8mzwxmI1n2qB+V3iTnB9DClCdrNeIh26tHDQYNsSzhEfcE2VjSJ+IHrZx
+	 XV6SGeyKDGyRyzOByig7ij8hsAgMpxYETrXpXng8OMPYdx8fxhQ6i5DsPLKjab39iDWzR
+	 FWIxAdazZk+hGWGPuoK4EAgT2tljEUt2H7LccSK5gckbCKAAplJ7nkPwZG/eIlA364Oce
+	 CGBUWBPyRK6y3m2E9CWdB5ZjA9xv9tZdPLJRy742O84NB+Z6fYvdVF+1aB51iRkXNK57i
+	 ew3XjATRVzFKMIsOO/04SoZVZ5t7Ou87o0UuRCc0bWHx4JRtiMzEWQEXo5xbMF5CXcg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QQ28PbBM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bwlMtzOP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989DC606A320;
-	Wed, 18 Nov 2026 17:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441BF606A320;
+	Wed, 18 Nov 2026 17:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QQ28PbBM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF8471F000C6;
-	Wed, 18 Nov 2026 17:32:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bwlMtzOP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EDE61F000C6;
+	Wed, 18 Nov 2026 17:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023140;
-	bh=GqIgNPXn1lOIXGrT+uODVZD1HohIfG6a1fKnwaPCIeA=;
+	s=korg; t=1795023143;
+	bh=n664HoK3bJfv4p3tjfFPYksUbWT9cA4AHDG4UldYGYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QQ28PbBMzb6y3Iqxz1fVnuvULXkVna6+XIt1GzN46yhFwK8qtkypAztD5YYNkt5m5
-	 XQpz9/M4dXAAMC1Re2GUrgwaK4QROGIQIxwrdf8X0fyNP9V8jVu/B1ywbYzAx3TRz2
-	 tW5QN2qILrB6hEU37ZSoqX1hLAuuRK86tI2uIAmQ=
+	b=bwlMtzOP2aLoUXlGm9Xd27smLILCvv7bd0Dhx+t25j1bA0LvRQ6O94xIrjtGqPPr6
+	 DRcDlHckc/EM+FOMhC+QmADotG9w1uxqdsjxl9OCeGZ5LbSU50ZnbSOhY4N9i1i0xp
+	 T7GqVuh/xx5Zg6QCCwmkZNwwP4sFzfySpuOCVrOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0263/2151] ABI: sysfs-class-infiniband: Drop the entries of the removed qib driver
-Date: Wed, 18 Nov 2026 15:33:18 +0100
-Message-ID: <20261118150131.381538451@linuxfoundation.org>
+Subject: [PATCH 6.18 0264/2151] pwm: loongson: Reload PWM configuration through counter reset
+Date: Wed, 18 Nov 2026 15:33:19 +0100
+Message-ID: <20261118150131.424554198@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,160 +62,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Keguang Zhang <keguang.zhang@gmail.com>
 
-[ Upstream commit 63367df6e7255067ad6a83abe0d2799dfa491876 ]
+[ Upstream commit 0de9b836a3bc1cd30578ae2c4463d09afd85ed3d ]
 
-Commit 24baad32b710 ("RDMA/qib: Remove outdated driver") removed the qib
-driver but left its /sys/class/infiniband/qibX/* entries in the stable
-ABI file. Nothing creates those files any more.
+The Loongson PWM controller latches the LOW and PERIOD registers only at
+the start of each PWM period. After disabling and re-enabling the PWM,
+the controller resumes from the previous counter value and completes the
+current period before re-latching the updated LOW and PERIOD values.
 
-Remove the block.
+Reset the PWM counter when disabling the PWM and release it when
+enabling the PWM so that the updated LOW and PERIOD values are latched
+before the PWM starts running again.
 
-Fixes: 24baad32b710 ("RDMA/qib: Remove outdated driver")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260905092057.41306-1-kmehltretter@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 2b62c89448dd ("pwm: Add Loongson PWM controller support")
+Signed-off-by: Keguang Zhang <keguang.zhang@gmail.com>
+Link: https://patch.msgid.link/20260715-pwm-loongson-fix-v3-2-0aab2847eaa7@gmail.com
+[ukleinek: Note LOW refers to the register currently named
+LOONGSON_PWM_REG_DUTY. That name is wrong, the fix is still under
+discussion.]
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ABI/stable/sysfs-class-infiniband         | 118 ------------------
- 1 file changed, 118 deletions(-)
+ drivers/pwm/pwm-loongson.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/ABI/stable/sysfs-class-infiniband b/Documentation/ABI/stable/sysfs-class-infiniband
-index 694f23a03a287..89500d064d239 100644
---- a/Documentation/ABI/stable/sysfs-class-infiniband
-+++ b/Documentation/ABI/stable/sysfs-class-infiniband
-@@ -422,124 +422,6 @@ Description:
- 				information)
- 		=============== =============================================
+diff --git a/drivers/pwm/pwm-loongson.c b/drivers/pwm/pwm-loongson.c
+index 31a57edecfd0b..a7bd479aafe01 100644
+--- a/drivers/pwm/pwm-loongson.c
++++ b/drivers/pwm/pwm-loongson.c
+@@ -99,6 +99,7 @@ static void pwm_loongson_disable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 	struct pwm_loongson_ddata *ddata = to_pwm_loongson_ddata(chip);
  
--
--sysfs interface for Intel IB driver qib
-----------------------------------------
--
--What:		/sys/class/infiniband/qibX/version
--What:		/sys/class/infiniband/qibX/hw_rev
--What:		/sys/class/infiniband/qibX/hca_type
--What:		/sys/class/infiniband/qibX/board_id
--What:		/sys/class/infiniband/qibX/boardversion
--What:		/sys/class/infiniband/qibX/nctxts
--What:		/sys/class/infiniband/qibX/localbus_info
--What:		/sys/class/infiniband/qibX/tempsense
--What:		/sys/class/infiniband/qibX/serial
--What:		/sys/class/infiniband/qibX/nfreectxts
--What:		/sys/class/infiniband/qibX/chip_reset
--Date:		May, 2010
--KernelVersion:	v2.6.35
--Contact:	linux-rdma@vger.kernel.org
--Description:
--		=============== ======================================================
--		version:	(RO) Display version information of installed software
--				and drivers.
--
--		hw_rev:		(RO) Hardware revision number
--
--		hca_type:	(RO) Host channel adapter type
--
--		board_id:	(RO) Manufacturing board id
--
--		boardversion:	(RO) Current version of the chip architecture
--
--		nctxts:		(RO) Return the number of user ports (contexts)
--				available
--
--		localbus_info:	(RO) Human readable localbus info
--
--		tempsense:	(RO) Display temp sense registers in decimal
--
--		serial:		(RO) Serial number of the HCA
--
--		nfreectxts:	(RO) The number of free user ports (contexts)
--				available.
--
--		chip_reset:	(WO) Reset the chip if possible by writing
--				"reset" to this file. Only allowed if no user
--				contexts are open that use chip resources.
--		=============== ======================================================
--
--
--What:		/sys/class/infiniband/qibX/ports/<N>/sl2vl/[0-15]
--Date:		May, 2010
--KernelVersion:	v2.6.35
--Contact:	linux-rdma@vger.kernel.org
--Description:
--		(RO) The directory contains 16 files numbered 0-15 that specify
--		the Service Level (SL). Listing the SL files returns the Virtual
--		Lane (VL) as programmed by the SL.
--
--What:		/sys/class/infiniband/qibX/ports/<N>/CCMgtA/cc_settings_bin
--What:		/sys/class/infiniband/qibX/ports/<N>/CCMgtA/cc_table_bin
--Date:		May, 2010
--KernelVersion:	v2.6.35
--Contact:	linux-rdma@vger.kernel.org
--Description:
--		Per-port congestion control. Both are binary attributes.
--
--		=============== ================================================
--		cc_table_bin	(RO) Congestion control table size followed by
--				table entries.
--
--		cc_settings_bin (RO) Congestion settings: port control, control
--				map and an array of 16 entries for the
--				congestion entries - increase, timer, event log
--				trigger threshold and the minimum injection rate
--				delay.
--		=============== ================================================
--
--What:		/sys/class/infiniband/qibX/ports/<N>/linkstate/loopback
--What:		/sys/class/infiniband/qibX/ports/<N>/linkstate/led_override
--What:		/sys/class/infiniband/qibX/ports/<N>/linkstate/hrtbt_enable
--What:		/sys/class/infiniband/qibX/ports/<N>/linkstate/status
--What:		/sys/class/infiniband/qibX/ports/<N>/linkstate/status_str
--Date:		May, 2010
--KernelVersion:	v2.6.35
--Contact:	linux-rdma@vger.kernel.org
--Description:
--		[to be documented]
--
--		=============== ===============================================
--		loopback:	(WO)
--		led_override:	(WO)
--		hrtbt_enable:	(RW)
--		status:		(RO)
--
--		status_str:	(RO) Displays information about the link state,
--				possible cable/switch problems, and hardware
--				errors. Possible states are- "Initted",
--				"Present", "IB_link_up", "IB_configured" or
--				"Fatal_Hardware_Error".
--		=============== ===============================================
--
--What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/rc_resends
--What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/seq_naks
--What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/rdma_seq
--What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/rnr_naks
--What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/other_naks
--What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/rc_timeouts
--What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/look_pkts
--What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/pkt_drops
--What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/dma_wait
--What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/unaligned
--Date:		May, 2010
--KernelVersion:	v2.6.35
--Contact:	linux-rdma@vger.kernel.org
--Description:
--		[to be documented]
--
--
- sysfs interface for Mellanox Connect-IB HCA driver mlx5
- -------------------------------------------------------
+ 	val = pwm_loongson_readl(ddata, LOONGSON_PWM_REG_CTRL);
++	val |= LOONGSON_PWM_CTRL_REG_RST;
+ 	val &= ~LOONGSON_PWM_CTRL_REG_EN;
+ 	pwm_loongson_writel(ddata, val, LOONGSON_PWM_REG_CTRL);
+ }
+@@ -109,6 +110,7 @@ static int pwm_loongson_enable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 	struct pwm_loongson_ddata *ddata = to_pwm_loongson_ddata(chip);
+ 
+ 	val = pwm_loongson_readl(ddata, LOONGSON_PWM_REG_CTRL);
++	val &= ~LOONGSON_PWM_CTRL_REG_RST;
+ 	val |= LOONGSON_PWM_CTRL_REG_EN;
+ 	pwm_loongson_writel(ddata, val, LOONGSON_PWM_REG_CTRL);
  
 -- 
 2.53.0
