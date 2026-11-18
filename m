@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048286;
-	b=AxZpZ7PMvROnMu9WfEqJD1XvSWoXilNbygGLCrS4nlweMUd+v2HYjwa0PpqfL39eEBIM
-	 2dwjNudAtzqfOKu7fNIrf8TmYWAysiqcE2LawittKDDfOZv/c4umig9m509toBMypXhxN
-	 Q7BgQkW3PavUhscd/RlYFwtTw1f1EvaKPYMmUxDxjku7zIoi1WoBSe6T7wDEIb1bhx0kF
-	 9FjuiFFh4lTTE0D60XoJomZXFxBmBhShqfk9dzTzQ0GY3NAsigXw5PKB4ONxiRBUrJAOV
-	 hv9gWX9hMv8M8Cc+NYGzengcSMzeEfYZpnCV4qSp1cezmomL4Q6/QuW5rga1NE/mNgw==
+	t=1795048289;
+	b=3vN3sb5WRByR6ZO+csf/5Uxh7AoGHD1otSEpnL22+9T1fXQFCr4q+pTZRqmCtOEJCwCc
+	 4e2BMQSBuwVRrmNABuU51IcMxxwF8ibc6d43N1i2Uo9RdeosNRZIj3FM6DutoMWe6dXad
+	 EEwGA4ykd66oVnrR5y8IRfSCa3CWYmq+NoN8RkRTtt2yNZHdaAoF0ik27qyVap3PAGIGQ
+	 pzplNj9MyEgFpfUHbKgfskzCm34p1tNRYzjKkKxo25eZgYhsJwZxtBkVLIqeYsruCCpC+
+	 TdYvcyjNN/M5hfWixNi5LGYiVifKncD3B6tMu1ucZ/04OVOqxdXjD5/BRPPcbht1eGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048286;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048289;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=dkCx19iTQps7APISQkwyu2GtIyzA4yHGSvljCOWVrqA=;
-	b=Dkaq0L2Qhf+IBkj+G6K8C+Jppqx239lrNMNcygco7ycw8vBw/XOQrbjPCAGfjOfG2JCi
-	 LHoP2OHsjxjsst95MdoktU/eyyow1SdZXBCV10rYVW6IFHLCxaGEoMI8+xsiPjQ5y3ppn
-	 T+9sB6SKHOVNia3vUfyLuSU3VdnLj0niMi0sQlolFKrAZmPOn9bKvW+wfmeNCCNoUK67U
-	 WVW0LBgDQBUrgnaucWAP3iSWStf9lgvoQiMqZ33XoMn3NDnKQQ2F0bFKSuW2Lhq2EgVDf
-	 TCfpVUtC6mi3oKjwqBERXcu5+voYNi0+JFXofi/K0J8qTOXPUFNJh1aYzCrbHqB2wuA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=MxUYijrPIulGMdjl68E5/71aP/nSxW2Y6lLzDArOj6I=;
+	b=usRtr2bf7L7s8658kfkQO7MfEY2TjMNAeas1ZpTgrs4H1cYGZb5ZaYHQuQQoNPMYjn77
+	 KSCR5KHRtPAtL+I6JDwYmuJf+Hd4CSwoMNERBCljOA2VwvRw3WKRF6ZguO4GXVTIJM3Oh
+	 Ms1lO6M3OcVkBHhSDgn57EeTM9qC5X0RkR4pHH5p3UBbBfi6cO/yYVTyGVEgy+pGzDmWP
+	 707Amqa5t7obOcr/61uUxmy95gCMxQu4ZCZPbcWwGjOmKTGvCFu4AE1JmJOwpf0pCnfOB
+	 92DJ/B0ymofj02s/L8TCe9pn3j2/27UlsXa/Zy3voJYsPIgDX9PLGwgyQirGz6h49Mg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1EYjSRRC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ulj0HpH7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F8A606A31C;
-	Thu, 19 Nov 2026 00:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234C6606A31C;
+	Thu, 19 Nov 2026 00:31:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1EYjSRRC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722461F000C4;
-	Thu, 19 Nov 2026 00:31:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ulj0HpH7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352781F000C4;
+	Thu, 19 Nov 2026 00:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048286;
-	bh=dkCx19iTQps7APISQkwyu2GtIyzA4yHGSvljCOWVrqA=;
+	s=korg; t=1795048288;
+	bh=MxUYijrPIulGMdjl68E5/71aP/nSxW2Y6lLzDArOj6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1EYjSRRCUU5JSxFrsc4/wJCL/j3Sc887hVYP08IPNU8ODsSqWH7Z0MbcMc5MTMQ5m
-	 cYP3kIBvH2VOagi7m7pnmZagQG2GQD0xj6fGsAx1svCHEr8tE+fAodIC4v99ARqYSq
-	 hHLHgswkxFJ3k/P0Cy2U6nxOBZDxykZsfqRFleTg=
+	b=Ulj0HpH7EL8OaMsQ+FHktlXgPQYsNoYVvv8IZYnGmFncjokgkbNK0jg6e1zeDW9M+
+	 8dn/Rkfp6wvp9POG0N3+4m0U7n7o3+UbBLfVIaKIH3xJZRhlbgG4FyvAXLUoKAO2Zt
+	 ry6ng8eAd5xw7+6eTKUveS+47WBC6QBMUWiztmYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xueqin Luo <luoxueqin@kylinos.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1903/2857] cpuidle: menu: Do not return a disabled idle state
-Date: Wed, 18 Nov 2026 15:48:57 +0100
-Message-ID: <20261118150309.746892717@linuxfoundation.org>
+Subject: [PATCH 6.1 1939/2857] memory: emif: Convert to platform remove callback returning void
+Date: Wed, 18 Nov 2026 15:49:33 +0100
+Message-ID: <20261118150311.027965090@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,54 +62,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xueqin Luo <luoxueqin@kylinos.cn>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit d594187cafd5ad65afc5f00242f8fa20e1d8c0f1 ]
+[ Upstream commit c8a53461990cb697ca494d6671fab9e196d20ce4 ]
 
-When idle state 0 is disabled and the PM QoS latency constraint is
-zero (latency_req == 0), the first branch of the || in the early-return
-condition of menu_select() is taken immediately, so state 0 is returned
-regardless of its disable flag.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-Address this by making the !disable check a prerequisite for the entire
-early-return condition, so that when state 0 is disabled the normal
-state selection loop is used instead, which already skips disabled
-states.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-Fixes: 53812cdc9100 ("cpuidle: menu: Move the latency_req == 0 special case check")
-Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
-Link: https://patch.msgid.link/20260827094820.3900062-1-luoxueqin@kylinos.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/da2fa8d040d542edc1318aeae5117317bb22aa06.1702822744.git.u.kleine-koenig@pengutronix.de
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Stable-dep-of: 314ef67d6732 ("memory: emif: fix device_node reference leak on np_ddr")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/governors/menu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/memory/emif.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
-index ef1ff9c36c6de..6a8fe31b03674 100644
---- a/drivers/cpuidle/governors/menu.c
-+++ b/drivers/cpuidle/governors/menu.c
-@@ -314,10 +314,10 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
- 	nr_iowaiters = nr_iowait_cpu(dev->cpu);
- 	data->bucket = which_bucket(data->next_timer_ns, nr_iowaiters);
+diff --git a/drivers/memory/emif.c b/drivers/memory/emif.c
+index f305643209f03..434982545be63 100644
+--- a/drivers/memory/emif.c
++++ b/drivers/memory/emif.c
+@@ -1159,13 +1159,11 @@ static int __init_or_module emif_probe(struct platform_device *pdev)
+ 	return -ENODEV;
+ }
  
--	if (latency_req == 0 ||
--	    ((data->next_timer_ns < drv->states[1].target_residency_ns ||
--	      latency_req < drv->states[1].exit_latency_ns) &&
--	     !dev->states_usage[0].disable)) {
-+	if (!dev->states_usage[0].disable &&
-+	    (latency_req == 0 ||
-+	     data->next_timer_ns < drv->states[1].target_residency_ns ||
-+	     latency_req < drv->states[1].exit_latency_ns)) {
- 		/*
- 		 * In this case state[0] will be used no matter what, so return
- 		 * it right away and keep the tick running if state[0] is a
+-static int __exit emif_remove(struct platform_device *pdev)
++static void __exit emif_remove(struct platform_device *pdev)
+ {
+ 	struct emif_data *emif = platform_get_drvdata(pdev);
+ 
+ 	emif_debugfs_exit(emif);
+-
+-	return 0;
+ }
+ 
+ static void emif_shutdown(struct platform_device *pdev)
+@@ -1185,7 +1183,7 @@ MODULE_DEVICE_TABLE(of, emif_of_match);
+ #endif
+ 
+ static struct platform_driver emif_driver = {
+-	.remove		= __exit_p(emif_remove),
++	.remove_new	= __exit_p(emif_remove),
+ 	.shutdown	= emif_shutdown,
+ 	.driver = {
+ 		.name = "emif",
 -- 
 2.53.0
 
