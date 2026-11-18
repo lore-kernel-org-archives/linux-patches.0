@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047607;
-	b=5MJu1jfHklpAGCRxfWnv+9MeqSJ/VgUNmWq8AieaySLAnN1L8N6tCN/FsDrvefzYErJQ
-	 cXa+NNjts2wvGvJKU2d7Zh1IW02hn3cD4Oht22MI61uUJkHDJqPl+FOoZFTh+cdN9o5ZZ
-	 /lKQfRbwOYLE1/lqaegdO77tTb9f6illT3j5h6X7qvP4vHXNEDmZdyisx/KmYrbz6i5jv
-	 ABYjMacfgfIE1pwZ9Bp6yIsSFage8A3SmJoVA9aPdYILGi5f5Nmz3d3XY9OHi9aNXdy55
-	 16/UmpRbxEmMrQWH8d45dAxGTR3s26tiV8xcjQqRGN2t1pgUhIAT3c22frQK/J4r1wA==
+	t=1795047610;
+	b=BSTckytjjquPgO8dvh7uuTNBcN25c7ZFT5YmY+fqvzEkcZzdgrxbGLSKYgxz24oAT+7v
+	 KKcZ+ekilZ0Gmjh8QrWAd/cLFia/EtzUCp27TtS/TslT/5h5PdWA4WQV/Qn1yIvstx0af
+	 ojFuKA6QWDzw45s5oSM7lvn7HD2rMSz4OCbwgY695/q/dFy56TFlYYgbhz+K8umWpBlgA
+	 UPztoPTgEWGn2I99oyGr6aak4/e/dfDiUs1AnICtO1fAQVpJzsZ7qf+P2yYHGWVehAGfE
+	 uiYyR6A+TLaTghjhcAXU0KIU4XRVzWWzmGBr0RsTsPCCkmo6V3L7HG439PrJ+e4d6/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047607;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047610;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mDRa/82tMfT1o8Er8puAJdeeE7iyVxIRn7LLK5jx4gE=;
-	b=XACOMJ5YsdoDAPHojbbCJjDsulJMfY4jGf6LnKV2HPAuQbeb0IvFu9fjb+jc7CtDs/g1
-	 M4QuKhDffGMQg/h2kGPCpYbsvFQ8TBj6jOQlhNzJfYxrdQwP1q0X/Dz5U/FVg5ea5Pi88
-	 PeMRQ6fCRgTfafLKStQNtU80N+fLEyZqV/4t0wCenaU/9M//SddhzVpw+bN36cb4dzhtG
-	 CVahqe/xb0nakG58nCciv0c7dDaCSxCEUUEyHssplv1W+Sz2irjTndLRqTX3j0XbcZkq0
-	 yZu/idEK5M76c4XFnQjPaF5Ma00YoRwXSBmXGO2fJI4whm+Zbdkq9R3CzWnZ6iy/fPA==
+	bh=7lrExduf+0zDnWpYOmCJZan3cZqSjqhVbkF1x+BMStg=;
+	b=08LqWbOH+zSFSoCnTpOUsqYsu6oeNNT7vm4/xF18JkBfMVkxExuS9bTNyzImJKCFQi2V
+	 vlKuiimPrxxhSc5Hp4Z9IFsNg2lDas2xqBQjj9HZW8WX9TF8Dq3uqxQQ7FT7SXmnqJw6K
+	 xuUCDp47LEAN+MopELobvKyWtjaVqZXHYA2qJSxMHNcvuyMf4M0bbtOULQc45V0hLPr8W
+	 yl3tX103uDB2bnEk2UpLTprVb3L6lbmO+9Evp1UTQrNlIUceOKFCjOrWPujBZcGEfxWPQ
+	 te7RsZsxS8l79piS7lpcoBGi1HqWLqqWZwukRyPCVu17UHgHUzd3DcXxjfBaTiygzrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="s0Xl/uZ7";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDfu9ku6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2667606A320;
-	Thu, 19 Nov 2026 00:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A16606A325;
+	Thu, 19 Nov 2026 00:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s0Xl/uZ7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E1E1F000C4;
-	Thu, 19 Nov 2026 00:20:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDfu9ku6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A48C1F000C4;
+	Thu, 19 Nov 2026 00:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047606;
-	bh=mDRa/82tMfT1o8Er8puAJdeeE7iyVxIRn7LLK5jx4gE=;
+	s=korg; t=1795047610;
+	bh=7lrExduf+0zDnWpYOmCJZan3cZqSjqhVbkF1x+BMStg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s0Xl/uZ71IHce68Lp5TjHqkrY7e+ERkkdydGIaHiIxUWHmATh4tVvtaqGfpbcDc38
-	 +oDdPDiRv9PgQjbzenRm9vV7DZxX32bu8YUrcSv0omyT6o6lATbi/+NR81OKk3zjA1
-	 weNIhtTBMaN8oIPAMNPZSjHqJiyjrQhrAnkKzizo=
+	b=zDfu9ku6kyXLehUJjMmgS/TkaE8LFq2yvWbKCXge7/3JvKzWPWcg4uck5Xo7JXk/l
+	 nRWn+4aDk6ak4nnYxo1GZ6tUaP3M9HLoCQfE+TPqRc9SwLJvvo/h8vgQvjexVqHlzP
+	 iqOvysl84pW+8FfZo41yvTXlM91hIiHN0u2YOLFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
+	Vas Zayarskiy <contact@vasily.cc>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1700/2857] ocfs2: read the xattr entry hash before defragmenting the bucket
-Date: Wed, 18 Nov 2026 15:45:34 +0100
-Message-ID: <20261118150302.542802388@linuxfoundation.org>
+Subject: [PATCH 6.1 1683/2857] hwmon: (aquacomputer_d5next) Avoid truncating scaled sensor readings
+Date: Wed, 18 Nov 2026 15:45:17 +0100
+Message-ID: <20261118150301.931425152@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,120 +68,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Vas Zayarskiy <contact@vasily.cc>
 
-[ Upstream commit f48151da595e74efdc23d83d8d6d142207b8c731 ]
+[ Upstream commit c221091f7e30c64280e4cbfa27dc4c05edc96d0c ]
 
-Patch series "ocfs2: fix stale xattr entry pointers and empty header
-reads", v1.
+High Flow Next power is reported in watts. Multiplying the 16-bit value
+by one million can overflow both the signed intermediate and the u32
+cache. Store power in long, perform the conversion in u64, and clamp to
+LONG_MAX. The other existing power conversions fit in a signed 32-bit
+value. Return -ENODATA for unavailable power instead of exposing the
+stored error as a reading.
 
-Five defects in the ocfs2 extended attribute code, plus one robustness
-measure that belongs with them, all on the paths that move entries
-between a block, a bucket and an index tree.  They fall into two groups.
+The power cache is updated by HID reports without the hwmon read mutex.
+Read it once with READ_ONCE() and use that snapshot for both the
+availability check and the returned value. Mark the corresponding
+updates with WRITE_ONCE() so that the shared accesses are explicit.
 
-Stale entry pointers (patches 1 to 3)
+Widen the shared current cache to u32. The Aquastream XT conversion to
+milliamperes can exceed 65535 mA; clamp its negative conversion results
+to zero before assigning to the unsigned cache. This also permits devices
+with scaled aggregate currents to store milliamperes directly.
 
-ocfs2_xa_set() writes through a pointer into xh_entries[] that two of
-its callers invalidate first.  Defragmenting a bucket ends in a sort()
-on xe_name_hash, and lib/sort.c is an unstable heapsort, so entries that
-share a hash can trade slots.  Copying a block into a bucket changes the
-order outright, since a block holds its entries in insertion order while
-a bucket holds them by hash, yet ocfs2_xattr_update_xattr_search()
-relocates the search by the index the entry had in the block.  Neither
-path compares the entry's name with the one being set, so setxattr() can
-replace a neighbouring attribute's value and still report success, or
-trip ocfs2_xa_reuse_entry()'s BUG_ON.  Patch 1 takes the hash before the
-sort; patches 2 and 3 look the entry up again afterwards.
-
-Reads of an empty entry array (patches 4 to 6)
-
-A block and a bucket may both hold no entries: ocfs2_xa_remove_entry()
-keeps the last slot when it removes the only one, so an empty bucket
-still carries the hash it is keyed by.  Three sites index xh_entries[]
-without checking xh_count and so read xh_entries[-1], which lands on the
-header and comes back as xh_count | xh_free_start << 16.  Nothing
-faults, but the value is acted on: the collision check reports no
-collision for an empty bucket, the divide commits a sentinel hash that
-hides part of the key space from ocfs2_xattr_bucket_find(), and the
-block to bucket copy claims storage the bucket does not hold.  Patches 4
-to 6 guard each site and keep the one read of xh_entries[0] that
-ocfs2_xa_remove_entry() documents as intentional.
-
-This patch (of 6):
-
-ocfs2_xattr_set_entry_index_block() takes the hash a bucket split has to
-work with out of xs->here, but only after ocfs2_xattr_set_entry_bucket()
-has tried and failed to fit the entry.  That call defragments the bucket
-when it runs out of room, and ocfs2_defrag_xattr_bucket() finishes by
-sorting the entry array by name hash.  lib/sort.c is not stable, so two
-entries sharing a hash may trade slots and xs->here is left naming an
-entry other than the one the search found.
-
-The hash value itself survives the permutation -- the array is already
-sorted, so a slot can only exchange with an equal-hash neighbour -- but
-there is no reason to depend on that.  Pick the hash up before the set,
-where xs->here is unambiguously the entry the search landed on.
-
-No functional change intended.
-
-Link: https://lore.kernel.org/20261024151012.1059683-1-joseph.qi@linux.alibaba.com
-Link: https://lore.kernel.org/20261024151012.1059683-2-joseph.qi@linux.alibaba.com
-Fixes: e39baff18b85 ("ocfs2: use the stored hash when checking xattr bucket collision")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
+Fixes: aed80bb91de8 ("hwmon: (aquacomputer_d5next) Add support for Aquacomputer High Flow Next")
+Cc: stable@vger.kernel.org
+Signed-off-by: Vas Zayarskiy <contact@vasily.cc>
+Link: https://patch.msgid.link/20260927191316.4137752-2-contact@vasily.cc
+[groeck: Dropped obsolete 'Assisted-by: tag]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[ sashal: Replaced priv->fan_structure->power with the existing AQC_FAN_POWER_OFFSET constant. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ drivers/hwmon/aquacomputer_d5next.c | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index 49b1b4e072ce3..ede497d00f2d7 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -5719,6 +5719,22 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
+diff --git a/drivers/hwmon/aquacomputer_d5next.c b/drivers/hwmon/aquacomputer_d5next.c
+index f192919fa3643..876900f829ec3 100644
+--- a/drivers/hwmon/aquacomputer_d5next.c
++++ b/drivers/hwmon/aquacomputer_d5next.c
+@@ -17,6 +17,7 @@
+ #include <linux/hwmon.h>
+ #include <linux/jiffies.h>
+ #include <linux/ktime.h>
++#include <linux/limits.h>
+ #include <linux/module.h>
+ #include <linux/mutex.h>
+ #include <linux/seq_file.h>
+@@ -312,9 +313,9 @@ struct aqc_data {
+ 	/* Sensor values */
+ 	s32 temp_input[20];	/* Max 4 physical and 16 virtual */
+ 	u16 speed_input[8];
+-	u32 power_input[8];
++	long power_input[8];
+ 	u16 voltage_input[8];
+-	u16 current_input[8];
++	u32 current_input[8];
  
- 	trace_ocfs2_xattr_set_entry_index_block(xi->xi_name);
+ 	/* Label values */
+ 	const char *const *temp_label;
+@@ -525,6 +526,7 @@ static umode_t aqc_is_visible(const void *data, enum hwmon_sensor_types type, u3
+ static int aqc_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
+ 		    int channel, long *val)
+ {
++	long power;
+ 	int ret;
+ 	struct aqc_data *priv = dev_get_drvdata(dev);
  
-+	/*
-+	 * An existing entry keeps the hash it was stored under, and that is
-+	 * the hash a split has to work with.  A new entry is stored under the
-+	 * unsigned one, which is what ocfs2_xa_add_entry() will write.
-+	 *
-+	 * Read it before the set below.  Filling the bucket may defragment it,
-+	 * and ocfs2_defrag_xattr_bucket() re-sorts the entry array, so
-+	 * afterwards xs->here only denotes whichever entry the sort left in
-+	 * that slot.
-+	 */
-+	if (xs->not_found)
-+		name_hash = ocfs2_xattr_name_hash(inode, xi->xi_name,
-+						  xi->xi_name_len);
-+	else
-+		name_hash = le32_to_cpu(xs->here->xe_name_hash);
-+
- 	ret = ocfs2_xattr_set_entry_bucket(inode, xi, xs, ctxt);
- 	if (!ret)
- 		goto out;
-@@ -5734,17 +5750,7 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
- 	 * the maximum number of collisions we will allow for then is
- 	 * one bucket's worth, so check it here whether we need to
- 	 * add a new bucket for the insert.
--	 *
--	 * An existing entry keeps the hash it was stored under, and that is
--	 * the hash a split has to work with.  A new entry is stored under the
--	 * unsigned one, which is what ocfs2_xa_add_entry() will write.
- 	 */
--	if (xs->not_found)
--		name_hash = ocfs2_xattr_name_hash(inode, xi->xi_name,
--						  xi->xi_name_len);
--	else
--		name_hash = le32_to_cpu(xs->here->xe_name_hash);
--
- 	ret = ocfs2_check_xattr_bucket_collision(xs->bucket, name_hash);
- 	if (ret) {
- 		mlog_errno(ret);
+@@ -542,7 +544,10 @@ static int aqc_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
+ 		*val = priv->speed_input[channel];
+ 		break;
+ 	case hwmon_power:
+-		*val = priv->power_input[channel];
++		power = READ_ONCE(priv->power_input[channel]);
++		if (power == -ENODATA)
++			return -ENODATA;
++		*val = power;
+ 		break;
+ 	case hwmon_pwm:
+ 		if (priv->fan_ctrl_offsets) {
+@@ -755,9 +760,9 @@ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8
+ 	for (i = 0; i < priv->num_fans; i++) {
+ 		priv->speed_input[i] =
+ 		    get_unaligned_be16(data + priv->fan_sensor_offsets[i] + AQC_FAN_SPEED_OFFSET);
+-		priv->power_input[i] =
+-		    get_unaligned_be16(data + priv->fan_sensor_offsets[i] +
+-				       AQC_FAN_POWER_OFFSET) * 10000;
++		WRITE_ONCE(priv->power_input[i],
++			   get_unaligned_be16(data + priv->fan_sensor_offsets[i] +
++					      AQC_FAN_POWER_OFFSET) * 10000);
+ 		priv->voltage_input[i] =
+ 		    get_unaligned_be16(data + priv->fan_sensor_offsets[i] +
+ 				       AQC_FAN_VOLTAGE_OFFSET) * 10;
+@@ -780,10 +785,11 @@ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8
+ 	case highflownext:
+ 		/* If external temp sensor is not connected, its power reading is also N/A */
+ 		if (priv->temp_input[1] == -ENODATA)
+-			priv->power_input[0] = -ENODATA;
++			WRITE_ONCE(priv->power_input[0], -ENODATA);
+ 		else
+-			priv->power_input[0] =
+-			    get_unaligned_be16(data + HIGHFLOWNEXT_POWER) * 1000000;
++			WRITE_ONCE(priv->power_input[0],
++				   min_t(u64, get_unaligned_be16(data + HIGHFLOWNEXT_POWER) *
++					 1000000ULL, LONG_MAX));
+ 
+ 		priv->voltage_input[0] = get_unaligned_be16(data + HIGHFLOWNEXT_5V_VOLTAGE) * 10;
+ 		priv->voltage_input[1] =
 -- 
 2.53.0
 
