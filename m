@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027789;
-	b=N1WF6OT1ADqPG0isLB4Bp2J3athQsaeBM3D5brYArPSeAecijB5HwlOGSWe60ShYpeXJ
-	 XvKF+wXJtaThIUwQBeP+j76powXGimsv5gswjDnCYred+mGG0ZnmYfiRbLRjmchVhvF1S
-	 jVNkHyYMYzKZzQ6ZyoehqV/wUKRzJUFL3Q2vMl/Zyz/8ysPXea8GC1TFKg+D2mUr+nz7K
-	 2ck2IUE6wUVz6kGoeBY2nz5W5FUUuQklV8/6fA5GKEq00KoPU2nWcJhE28a6LKjm1V1Rm
-	 yI6l4/mvukZcEFaDq8sokLID0FOr7sBQKBi2+GCeMIGIMZHZ4SfBoa7S+GOJol1SzYA==
+	t=1795027792;
+	b=P5AD8I4+7seXxECf0dHrqnBwMfGixsEzqpZjCTRwtUw6GPPbk43fgOP0UZYpJ4XwbFtj
+	 qrdGWWc23Vww8LeSlvsv6byUCLAcuOGcKY/UW4HvYLWuSkAndBd6ZFLZNkk/eRsIOY5c7
+	 wj9IDkrj0wsKWk/wCdYyhqPcwS/8n+8zWWBGTdL9W2/n0gLVbXjiFaEHYBdkKnHT5OpdF
+	 KqnxTUAzFrbZyWXS6S1Wy0B0unCZXciMmrvOJeAi6gcVofwNbrD+tNnJFX3nlw7zmf1XU
+	 izuu01eQWqb2SfqVLorhBbdWxKwljfG6Irnb3K6mtqhTLS05zGwVClIWB7zfFmp+NUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027789;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027792;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Rm4G8+EMvXBOf+V/bph2xC+OZgx/l70fV9OqzE6RGyY=;
-	b=DhFUgZojO9c+oUE1rlu11aU79sR3sC7k4WmQAqBzr+4ds4iVKVPr1R+4FWVCxhgUUA7k
-	 6VGsK4cMlmRxc5XvBJnpWKwOAWR03117mgfknKTEMMsjvpT66d76P+a9AqEYYoJwfMdoS
-	 IxvEtjL12diK3dR3g5iwochg5MJIlYZ0hssbYw9EWYcDq3eBeQEyVYEDozFAy4iom9QGo
-	 4kW3DYIj9nPyx+WVVdiCc4IBaz74AsjWcHgIkrFKKd5aj+Gy9I4OPRp9UBQwxV6fKQtod
-	 wZZj+QYZVHMH4Da1TUWim33IOskOZ+Xbf1UKRB+wS2BBd9w8fGNwFlLr0uUNtbqRp2Q==
+	bh=oUrlTe8jdJ9t98x6/nnYis0fWrIvstOG5nWx6d8Wqwc=;
+	b=iD9PEBU4w9DcmjTg00c5gax8sG0Efcpdz+oKqxa5UQRl4O2wn6As8B8lfCnn7DXVJ/qd
+	 DzR2eMuG5HJn7tXMDxfskP+CjTuH/ZAGWvG9kB787vxm26czu1BaWeWQtIOlVkdh3puYO
+	 iU0B4VUP8RUp1cmwj7bfJIy3YhhwxThCh30oBeR6lmdHqyIDBRkcq28iPKobwIjK6LvVa
+	 vgvaq2V8dEYS6b+ZYhU8pFU6GUoIvGGpf5WH6vvoFhw4t4uRrSFTSqBeuRqsKTu0AEPpW
+	 vidGBy1XOVkDBkCHCPgsrNpJKL/ozBQT1Vs8MeNGkO5ZBwgKYT/BNS+XQDuP4PqwkYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxDYK2bF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wYAhq5Ke;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D7C606A320;
-	Wed, 18 Nov 2026 18:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57608606A333;
+	Wed, 18 Nov 2026 18:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxDYK2bF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E451F000CD;
-	Wed, 18 Nov 2026 18:49:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wYAhq5Ke
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A785A1F000C4;
+	Wed, 18 Nov 2026 18:49:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027789;
-	bh=Rm4G8+EMvXBOf+V/bph2xC+OZgx/l70fV9OqzE6RGyY=;
+	s=korg; t=1795027792;
+	bh=oUrlTe8jdJ9t98x6/nnYis0fWrIvstOG5nWx6d8Wqwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hxDYK2bFQH4zYfIoRqGvRT4wjzqS/iAhki77L6dQ+aMBSb7Y92MXa+FWLRRsI+GNX
-	 AxhZCQ1HJJajFpmdDbwlU5r/MdwiITM1huYaYWcWGvHjbgDlorapJA3GLgWWQAcHfO
-	 aILaReuf8xBJgo0JQ469WcHS01Ybhgs3fQGY4X7I=
+	b=wYAhq5Ke27V2E5+BymeXLEQLaq+/9QqeiX6kWbHFuD4flDHkw3b1JiNN8vvaY1zFX
+	 58WytY6hi8zxFa+t2JXrnCms+01sd8R+PktTuVY1FwiupXdWKE7lYS0b5/H4RUB485
+	 OI1gMs/8ez0Wpvp25Dkz4X3gf9N9C9WS8xtXXzsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1873/2151] selftests: ALSA: pcmtest: Compare all captured bytes in ni_capture
-Date: Wed, 18 Nov 2026 16:00:08 +0100
-Message-ID: <20261118150230.023407936@linuxfoundation.org>
+Subject: [PATCH 6.18 1874/2151] ASoC: wm8994: fix MCLK gating for AIF clocks sourced from MCLK2
+Date: Wed, 18 Nov 2026 16:00:09 +0100
+Message-ID: <20261118150230.060081154@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,40 +70,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit c8c199e1b1b3bb0ef52a2a02d1ec87bee574ce13 ]
+[ Upstream commit 872215109fc880de7a03fa30437346f9212649e8 ]
 
-The ni_capture test reads rate * time frames into each channel buffer
-and then compares rate * time bytes. A frame is sample_size bytes per
-channel, so with S16_LE only the first half of each channel is checked.
-If the second half is wrong the test still passes.
+aif_mclk_set() masks the AIFnCLK_SRC field of the AIFn clocking
+register, but compares the result with unshifted field values. The
+MCLK2 source (0x08) therefore never matches, so MCLK2 is never enabled
+for an AIF clocked from it, and the AIF relies on other users of that
+clock to keep it running.
 
-Compare rate * time * sample_size bytes per channel.
+On the Exynos4412 Trats2 board, AIF1 and SYSCLK run from MCLK2, the
+32768Hz PMIC clock, while the codec is idle. That clock is shared with
+the WLAN and Bluetooth chips, which enable it only once their drivers
+are loaded. Until then the codec runs from a stopped clock: FLL1 fails
+to lock when configured from that state, and the codec floods the
+kernel log with FIFO error interrupts once a digital path is powered
+up:
 
-Fixes: 10b98a4db11a ("selftests: ALSA: Add test for the 'pcmtest' driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20261021112554.4037107-1-sammiee5311@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+ wm8994-codec wm8994-codec: Timed out waiting for FLL lock
+ wm8994-codec wm8994-codec: FIFO error
+
+Booting with clk_ignore_unused, which keeps that clock running from
+the bootloader, makes both issues disappear.
+
+Fixing just the comparison is not enough. The AIF clock source can
+be changed while the AIF clock is running, for example the Midas
+machine driver switches AIF1 between MCLK2 and FLL1 while AIF1CLK is
+kept enabled for jack detection. Looking up the clock again on disable
+can then release a different MCLK than the one enabled, leaking the
+enable count of one clock and underflowing the other.
+
+Shift the field value before decoding it, and remember which MCLK has
+been enabled for each AIF, so that the same clock is released on
+disable. While at it, report the MCLK number 1-based in the error
+message.
+
+Fixes: 001b83d395ab ("ASoC: wm8994: Add support for MCLKn clock gating")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Link: https://patch.msgid.link/20261021101750.3297770-2-m.szyprowski@samsung.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/alsa/test-pcmtest-driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/wm8994.c | 28 ++++++++++++++++++----------
+ sound/soc/codecs/wm8994.h |  1 +
+ 2 files changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/alsa/test-pcmtest-driver.c b/tools/testing/selftests/alsa/test-pcmtest-driver.c
-index e025a7bac26b7..18ee72d5d4c96 100644
---- a/tools/testing/selftests/alsa/test-pcmtest-driver.c
-+++ b/tools/testing/selftests/alsa/test-pcmtest-driver.c
-@@ -265,7 +265,7 @@ TEST_F(pcmtest, ni_capture) {
- 	snd_pcm_close(handle);
+diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
+index 13ef3d0c5053d..18c4e351c68ae 100644
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -1062,13 +1062,24 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
+ 	unsigned int offset, val, clk_idx;
+ 	int ret;
  
- 	for (i = 0; i < CH_NUM; i++) {
--		for (j = 0; j < params.rate * params.time; j++)
-+		for (j = 0; j < params.rate * params.time * params.sample_size; j++)
- 			ASSERT_EQ(chan_samples[i][j], patterns[i].buf[j % patterns[i].len]);
- 		free(chan_samples[i]);
++	/*
++	 * The AIF clock source may be changed while the AIF clock is
++	 * running, so release the MCLK which has been enabled for it
++	 * instead of the one currently selected.
++	 */
++	if (!enable) {
++		clk_disable_unprepare(wm8994->aif_mclk[aif]);
++		wm8994->aif_mclk[aif] = NULL;
++		return 0;
++	}
++
+ 	if (aif)
+ 		offset = 4;
+ 	else
+ 		offset = 0;
+ 
+ 	val = snd_soc_component_read(component, WM8994_AIF1_CLOCKING_1 + offset);
+-	val &= WM8994_AIF1CLK_SRC_MASK;
++	val = (val & WM8994_AIF1CLK_SRC_MASK) >> WM8994_AIF1CLK_SRC_SHIFT;
+ 
+ 	switch (val) {
+ 	case 0:
+@@ -1081,16 +1092,13 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
+ 		return 0;
  	}
+ 
+-	if (enable) {
+-		ret = clk_prepare_enable(wm8994->mclk[clk_idx].clk);
+-		if (ret < 0) {
+-			dev_err(component->dev,	"Failed to enable MCLK%d\n",
+-				clk_idx);
+-			return ret;
+-		}
+-	} else {
+-		clk_disable_unprepare(wm8994->mclk[clk_idx].clk);
++	ret = clk_prepare_enable(wm8994->mclk[clk_idx].clk);
++	if (ret < 0) {
++		dev_err(component->dev,	"Failed to enable MCLK%d\n",
++			clk_idx + 1);
++		return ret;
+ 	}
++	wm8994->aif_mclk[aif] = wm8994->mclk[clk_idx].clk;
+ 
+ 	return 0;
+ }
+diff --git a/sound/soc/codecs/wm8994.h b/sound/soc/codecs/wm8994.h
+index b28398aa9e48f..5b22cfab317e1 100644
+--- a/sound/soc/codecs/wm8994.h
++++ b/sound/soc/codecs/wm8994.h
+@@ -81,6 +81,7 @@ struct wm8994_priv {
+ 	struct wm_hubs_data hubs;
+ 	struct wm8994 *wm8994;
+ 	struct clk_bulk_data mclk[WM8994_NUM_MCLK];
++	struct clk *aif_mclk[2];
+ 	int sysclk[2];
+ 	int sysclk_rate[2];
+ 	int mclk_rate[2];
 -- 
 2.53.0
 
