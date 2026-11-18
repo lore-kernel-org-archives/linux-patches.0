@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025377;
-	b=pLiGKNIya27PKi8v32chwbaTkvH7cos0p64yry31wJGVGj9p72UYXDTe2aD0PPhZOfNt
-	 aW2LeqNH6ioIOA9tPo7kXOgHBqpLtobbSc6CmemdU/47j5AqgcIEN+AD0bmY9RFP6tAQ2
-	 9wv0wKLndvocGV1Uuki4AGRKH+sC9KIxHFdhsBsdouCpebbhrNQtIQWw7fVHNVhx3+cVp
-	 t5RC5HVbEeU/nQ5qrYHpb2DJi7+UB3x0SA5w4WPl/L/lrhRuWkLpCDhWtV0+oV9sPLIES
-	 m7BByOmeGpnH33B37QWSt1ubcXRlgmVLFWSyy5YJDSsoO+TwKVT4vbRivfkgxno4mzA==
+	t=1795025380;
+	b=zhRQctiUcCz6Q2SE2FeIGJjqnaxL0aS2pyVgh2K2GzO0GP2HybHYRPeN4nZtJVD/w5A+
+	 GJSQT62SfS3Jvl9CudgTUF1RT1tjnyIWTMD7Mbb31HfKDM7tiUoPeSehYiJ3alBfJn6k2
+	 s8wiNvODqnUfoicShQjyWyf5nGNqC/UjVKABBZyAA8xzUb6t5L7l7rswKVatcbvd+6haw
+	 idor/ZlpZxKDgwzGCjPZn1IcUdJaGl8Z1nvgnsKfWm2XTMP0fNp8kRc3Iz650e1RBrxwZ
+	 ZxcCK+fTcE6VLgkKYyA789qVGEnpvpo26UcOe9FWC5neOppqlkxIblBn0Z08PkE5xCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025377;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025380;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wi66VFX9F+ZG+NxrjZ7iqyt9lVbeaNY8CWh9LLJD5i0=;
-	b=vzgNOGah2IjRnu0rkPSmvb+yUQ5cP/0wH+1OIMkzl7GYC/EIKLP6heSy5QZBAykOHvCT
-	 CrolVrxds56Rt2zIFxFpGrY6kHP2EMOMH2TpZ741ZCzJY/oRh9dQLd977Lt0jp84rg7VI
-	 +QakQJcnjxSCDchGy09l/8S9Wke70SaDyFrvefoRgBlyLW+uK9RJ5NZAB/WgE7cAH7L8n
-	 cG49AueZ+o6vJJUrrD7kjZLNcOHWSSQ6r+xn1kQZPgXQWbm9R+2uU0JvhEbGQV9QhHrn3
-	 t4VNcK+XXau2TCPh1KSOBIY2UmRyyxS9DjjjgaF9XgLUT4BPyA0TeWwVOPAbyK4PdNw==
+	bh=pDvNnWTn8eytYqVIXheLvTtiqF7oLfwtLc5w+pI6+dQ=;
+	b=AkkvTy1x/E81mubba/YKo6HzB5S97cZDp6aQuBnA77pqVkc3VFpkem1i0lXGaGLzt6nD
+	 XGnosF1wgoBB011Cr+ahPVKE44w2AupfttAzCcLIMiQIwzQoeqj4qLz02CL/Mgzrcf0o6
+	 8zMMUINwSc9LCHslmu2cFLCcyqkgPNOmNGqJeu/t4ydCFILXB9CcoYA6O8bZjYpioGVoW
+	 dq5a0LPpQTUKpXif7Tjlu3Qf0U+Y+3Wx3zMh3UBi/qwSYAWaHnBEMYECWQfbUEIaQvUEB
+	 RN+rWIncDYyeN57DCZJjIAqGaliyuHnTEwtBY2zi9anyqGlqtzGQS9fLW1j7irNAqhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DkB7OI1U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XvaM5KY4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C21606A31C;
-	Wed, 18 Nov 2026 18:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D2A606A31C;
+	Wed, 18 Nov 2026 18:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DkB7OI1U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF961F000C4;
-	Wed, 18 Nov 2026 18:09:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XvaM5KY4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0131F000C5;
+	Wed, 18 Nov 2026 18:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025376;
-	bh=wi66VFX9F+ZG+NxrjZ7iqyt9lVbeaNY8CWh9LLJD5i0=;
+	s=korg; t=1795025379;
+	bh=pDvNnWTn8eytYqVIXheLvTtiqF7oLfwtLc5w+pI6+dQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DkB7OI1UCE9t+RofffsCEMk0u7Pl5n0j9paeET7IkGeweS3BxqNWzPWT2XA3ZQ8le
-	 ohlp8nvIgJ9slZPJco/B+hZE1dtDlXaJ1lGaKMdjo7elD8EO/BgJxNuMg9GKQ2mhNz
-	 JmX2gNHJspq5hNQrbJKi52VdYQl6nRdnHfGtqJW0=
+	b=XvaM5KY4vz9vd7pdjRPufvGgVSAnWKf5TntoT5tbofI4pAIpejIj32YFIP/oUBJQa
+	 u7OIeNWbhoQStQFEirAPu9tar3JjB6V8uIP6icdfVmED+RsYkpZ16EiFRfEYL78Zzn
+	 UT0q4WvRt/eh3N0MGEI83VSQCfUDgzBJOJpGtQf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	John Garry <john.garry@linux.dev>,
-	Niklas Cassel <cassel@kernel.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1021/2151] scsi: scsi_debug: Validate the access parameters of WRITE ATOMIC (16)
-Date: Wed, 18 Nov 2026 15:45:56 +0100
-Message-ID: <20261118150159.594491289@linuxfoundation.org>
+Subject: [PATCH 6.18 1057/2151] power: supply: ab8500_charger: Handle detection errors
+Date: Wed, 18 Nov 2026 15:46:32 +0100
+Message-ID: <20261118150200.813179165@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,47 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit a6c339feb830daa097ccc4c50c339c1733c12d42 ]
+[ Upstream commit 1098c619ce7595a77a8c2e366a703e9fc5f29bf7 ]
 
-resp_atomic_write() validates the fields that are specific to an atomic
-write, but never the range that the command addresses. Every other command
-that writes user data calls check_device_access_params() first, which
-rejects a transfer that ends beyond the capacity of the device, one whose
-length exceeds the size of the store, and any write to a write protected
-device.
+ab8500_charger_detect_chargers() returns either a charger bitmask or
+a negative register-access error. The probe and component-bind paths
+use a negative return value as a bitmask, making failed reads appear
+as both AC and USB connections.
 
-Call check_device_access_params(). The zone checks that it ends with are
-unreachable, as atomic writes and ZBC emulation are mutually exclusive.
+Propagate detection errors and release the bind-time workqueue on
+failure.
 
+Fixes: 84edbeeab67c ("ab8500-charger: AB8500 charger driver")
+Fixes: 1c1f13a006ed ("power: supply: ab8500: Move to componentized binding")
 Assisted-by: LLM
-Fixes: 84f3a3c01d70 ("scsi: scsi_debug: Atomic write support")
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: John Garry <john.garry@linux.dev>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20260929082456.857423-28-cassel@kernel.org
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-10-e986ed321cc6@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/power/supply/ab8500_charger.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index a54253c369549..5acf24391ae67 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -6086,6 +6086,10 @@ static int resp_atomic_write(struct scsi_cmnd *scp,
- 		}
+diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
+index b0aca9441ed51..8358f8c8d3612 100644
+--- a/drivers/power/supply/ab8500_charger.c
++++ b/drivers/power/supply/ab8500_charger.c
+@@ -3462,6 +3462,10 @@ static int ab8500_charger_bind(struct device *dev)
  	}
  
-+	ret = check_device_access_params(scp, lba, len, true);
-+	if (ret)
-+		return ret;
-+
- 	/*
- 	 * Short atomic writes are not allowed: SBC-6 4.28.2 requires an
- 	 * atomic write that cannot complete to leave its LBAs unaltered, and
+ 	ch_stat = ab8500_charger_detect_chargers(di, false);
++	if (ch_stat < 0) {
++		destroy_workqueue(di->charger_wq);
++		return ch_stat;
++	}
+ 
+ 	if (ch_stat & AC_PW_CONN) {
+ 		if (is_ab8500(di->parent))
+@@ -3750,6 +3754,10 @@ static int ab8500_charger_probe(struct platform_device *pdev)
+ 
+ 	/* Identify the connected charger types during startup */
+ 	charger_status = ab8500_charger_detect_chargers(di, true);
++	if (charger_status < 0) {
++		ret = charger_status;
++		goto remove_ab8500_bm;
++	}
+ 	if (charger_status & AC_PW_CONN) {
+ 		di->ac.charger_connected = 1;
+ 		di->ac_conn = true;
 -- 
 2.53.0
 
