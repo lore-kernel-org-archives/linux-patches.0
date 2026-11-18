@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036522;
-	b=fRf+L2+kGm0d6ElT3uvZFa5uUT4eY0CYB/lt8h14w4WAh3B/K3J1dpXYHgBEicx49IF0
-	 VtGerX9nzaKuRrwDe24c1404LGsP0PgkpR4u1Vsz5dVEBKtIfv1VFYEucz9q9+DZcM+up
-	 zARVCdW7iLiJ1wPW+HYcCuuwvq6o1UGc7ZjVM++al8S4+jH/WaRwgjuEd7E0jdp8f2RMr
-	 sXOLReIZgi7B+N8XNDrd+TxaGbkfH8xmD0/eVMGqCO7XQFJdX7CNXvXy/H8juwYcmPNp5
-	 XYfeZ8nfibEoYkfEVyCkYnOSf0Jvn1+3/PobPVJMIUYbpbS27G69pWp3Hghvo0g2WFA==
+	t=1795036528;
+	b=uhU+b3mhIkxZpvpi7P/7lIc1/uKPXuNE1xobfLaujfF6RrC+EYUtihJJVn5EEmckSNl+
+	 dRuYQLgfwMrkkku263BJKgwbwekwVg+2CY8yhE5SiGkHlAMQjyQnqjwa4nSa6u5J/RCFx
+	 Yq/THSQm6xOTELj0OPGUssGH/RfwfzBVEt2Qc0A/ifBe2G4Yp7vAAjHK6b2maYALby8I6
+	 MP1Z9L5oi4worGkBRd7FEdR1tjDIXD0tdZA1q90OQ6f3ZXToP5eHFeShxS9ybqad0npuy
+	 alQuMAOD0xX5NxqZ76FL6x0dYuaqb2IgmefFee3awTUStjVfB2HK+ik5gZh4bX7kgrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036522;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036528;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OU4CrfPCTqb5f9W3Ul91wRmvggACK/YhpOEbSimTNkw=;
-	b=pLrc5i0SOfinRZ194IOLJ7BZe5ARptgPuyrch5WuFE7GXYqapOXQhIwqRvERygWd54ky
-	 n53/IZqqVdvw/xwFmNUESdUT3a2L4XP/8vvy1C6J0tibJKKK4MH1nixxqYs39t+b0DFE0
-	 GK6C0Z61JYdA3XuX2rChDKJavaddEx5E0rIhdp4l18e7zFmWapUZOBKXYCg8WlKqiU9aq
-	 EEBNuio5e7LQOO4SFdZh0KsrDaHTue7kMevVOXI+a7/lY8QRgIMbOLqfCfCXrF8VV3CSw
-	 OYM2sAQSMSbnj76N+A0CsNt938CWx8VlHewhbOK+sGJIz4zARHYG+S4KLdhzLOPd68A==
+	bh=DKqJ4QWXsJYMDnSRlMBrGpDl3qLgvUVpYcwNKlJ6X+4=;
+	b=nbYj+lbEaI9ID3beS/vpW3y6lHwV0LhzngQLgrGwZLvDycC48yDvGff/x2PcBnS1kE8B
+	 53wF/nSGiSxtD303o/z9ud0kOyl+qLg9vtfyajkYfAoEyBjCol06ONtpqE6/ieOFXGGmy
+	 /W+QHn3InCdG8ZOHaB4HFxl3sAtOqNn99hAvrS8jd8FnKBHn8rJBoWSt+PhIpN2SJdMtv
+	 9TfBJ+FW6DQyLdMDE93z4Eu/MPUyXTDUnSBBYYRZi+c8eC54210AX+4iWEcSRhCNkCzqB
+	 GBdbmVY8XcwPYHAdh8x3Qee0z9SpXp0gUbFP7pZ/7W/wFNGr8oM4yxKbjz8YXt3SH6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OfPo8IQ8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2GPTVCo7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB28E60A2630;
-	Wed, 18 Nov 2026 21:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8D0606A320;
+	Wed, 18 Nov 2026 21:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OfPo8IQ8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06FCE1F000CA;
-	Wed, 18 Nov 2026 21:15:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2GPTVCo7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C8E81F000C5;
+	Wed, 18 Nov 2026 21:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036522;
-	bh=OU4CrfPCTqb5f9W3Ul91wRmvggACK/YhpOEbSimTNkw=;
+	s=korg; t=1795036528;
+	bh=DKqJ4QWXsJYMDnSRlMBrGpDl3qLgvUVpYcwNKlJ6X+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OfPo8IQ87oowzzl3dKjUaG/R7EXkzFKw8R3ZCw+9uSDTZV2wjIZfMQLkzSPWKkoMU
-	 Kkke6RgJ9xrm5JhYj/vzUou7SW5XPRb7Z5jzrsDO9dJMSyncNuzwNvejzH0+zhT26N
-	 qH328zVtARPTFTKuq9eZpQmZeAH3jKTASyhFMuLE=
+	b=2GPTVCo7BkxcHCaAOuQQhGy2CN/5k46kkwOZ64aE6ehAeMCLw+daTwn7XkCkcWFaK
+	 uAvbouGSaaRJ6NbqYjspzweNrV5X8P5R5lxIInDAVCsIeFhtlGwSgP7vbRT9tghRds
+	 H7khqEQlsWeGziX1RlctOUITfTmvbawludywdOcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Brian Foster <bfoster@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1063/3318] mailbox: qcom-ipcc: Guard against NULL con_priv in send_data()
-Date: Wed, 18 Nov 2026 15:28:05 +0100
-Message-ID: <20261118150351.849047273@linuxfoundation.org>
+Subject: [PATCH 6.6 1091/3318] iomap: dont lose a fiemap iteration error when emitting the last extent
+Date: Wed, 18 Nov 2026 15:28:33 +0100
+Message-ID: <20261118150352.706353005@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,68 +71,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 7b3cc361b5942ac600f38e5dff7aed009be34964 ]
+[ Upstream commit 0d0104adc2c8316433b660cdf6d182a09881864f ]
 
-qcom_ipcc_mbox_shutdown() clears chan->con_priv with no locking.
-qcom_ipcc_mbox_send_data() dereferences the same field without
-checking for NULL first, so a send racing a concurrent shutdown can
-crash:
+iomap_fiemap() emits extents one behind: iomap_fiemap_iter() flushes the
+previous extent and remembers the current one, and the remembered extent
+is written with FIEMAP_EXTENT_LAST after the iteration loop.
 
-  mchan = chan->con_priv;
-  ...
-  hwirq = qcom_ipcc_get_hwirq(mchan->client_id, mchan->signal_id);
+That final flush overwrites ret, so when ->iomap_begin() fails partway
+through the iteration the error is replaced by the result of
+iomap_to_fiemap() (zero on success) and iomap_fiemap() returns success
+with a truncated extent list whose last entry is wrongly marked as the
+last extent in the file.  The pre-iomap_iter code returned the error
+from inside the loop, before flushing the pending extent.
 
-Add the same NULL guard mbox_send_message() already uses for
-chan->cl, and bail out before dereferencing a cleared con_priv.
+Check for the iteration error before flushing the pending extent, so
+that real errors are propagated and only a successful iteration emits
+the final FIEMAP_EXTENT_LAST extent.  -ENOENT (no mapping) is still not
+an error, and the pending extent is still emitted in that case.
 
-To close the remaining race where send_data() reads con_priv a moment
-before a concurrent shutdown clears it, acquire the spinlock in
-qcom_ipcc_mbox_shutdown() using the modern guard(spinlock_irqsave)
-primitive before setting con_priv to NULL.
-
-Fixes: d6fbfdbc1274 ("mailbox: qcom-ipcc: Fix IPCC mbox channel exhaustion")
-Cc: stable@vger.kernel.org
-Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Fixes: 7892386d3571 ("iomap: switch iomap_fiemap to use iomap_iter")
+Cc: stable@vger.kernel.org # v5.15
+Reviewed-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://patch.msgid.link/250226e33b3b23c6b1714a45dc3c465c2a45cdc0.1790342457.git.parri.andrea@gmail.com
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/qcom-ipcc.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/iomap/fiemap.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-index 6fbf98ddb73e4..c1e0d7ef0053c 100644
---- a/drivers/mailbox/qcom-ipcc.c
-+++ b/drivers/mailbox/qcom-ipcc.c
-@@ -10,6 +10,7 @@
- #include <linux/mailbox_controller.h>
- #include <linux/module.h>
- #include <linux/platform_device.h>
-+#include <linux/spinlock.h>
+diff --git a/fs/iomap/fiemap.c b/fs/iomap/fiemap.c
+index 610ca6f1ec9b6..1cf49bac25011 100644
+--- a/fs/iomap/fiemap.c
++++ b/fs/iomap/fiemap.c
+@@ -80,15 +80,15 @@ int iomap_fiemap(struct inode *inode, struct fiemap_extent_info *fi,
+ 	while ((ret = iomap_iter(&iter, ops)) > 0)
+ 		iter.processed = iomap_fiemap_iter(&iter, fi, &prev);
  
- #include <dt-bindings/mailbox/qcom-ipcc.h>
- 
-@@ -149,6 +150,9 @@ static int qcom_ipcc_mbox_send_data(struct mbox_chan *chan, void *data)
- 	struct qcom_ipcc_chan_info *mchan = chan->con_priv;
- 	u32 hwirq;
- 
-+	if (!mchan)
-+		return -EINVAL;
++	/* inode with no (attribute) mapping will give ENOENT */
++	if (ret < 0 && ret != -ENOENT)
++		return ret;
 +
- 	hwirq = qcom_ipcc_get_hwirq(mchan->client_id, mchan->signal_id);
- 	writel(hwirq, ipcc->base + IPCC_REG_SEND_ID);
- 
-@@ -157,6 +161,8 @@ static int qcom_ipcc_mbox_send_data(struct mbox_chan *chan, void *data)
- 
- static void qcom_ipcc_mbox_shutdown(struct mbox_chan *chan)
- {
-+	guard(spinlock_irqsave)(&chan->lock);
-+
- 	chan->con_priv = NULL;
+ 	if (prev.type != IOMAP_HOLE) {
+ 		ret = iomap_to_fiemap(fi, &prev, FIEMAP_EXTENT_LAST);
+ 		if (ret < 0)
+ 			return ret;
+ 	}
+-
+-	/* inode with no (attribute) mapping will give ENOENT */
+-	if (ret < 0 && ret != -ENOENT)
+-		return ret;
+ 	return 0;
  }
- 
+ EXPORT_SYMBOL_GPL(iomap_fiemap);
 -- 
 2.53.0
 
