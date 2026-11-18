@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017344;
-	b=Ok6MiithYCPva5CDoBh7ZrtW8B5B0RrRewEPDSvw7665/KSJbCT/UPo2nPI3qFBkFKXD
-	 YC5P4+9jCLI616JreW0wAOE4y2MUlGkFjig9QqvDwtZD59/S6pJ0cY5rXNWAFeiK75IkC
-	 Fi9PSsj3LW0CSFLh8nXfe3WQgpQ5YHqfHHwj4KqvS8xKahOQDHAIKAoZvqxktKyRmI5C4
-	 h7frTjCp++WvbOe1nJ3hgy+evBIW7OYfJjTLJcyEw7wA84tUAbNqPc3I7PxDyFHT2Hais
-	 tJ9kb8WzmjmzytifvpjWyU8BMCFWwtkWxp8yBsyO2Sr08dgkTqfSfdkeqFRyn3TBrQw==
+	t=1795017347;
+	b=WINKbvJRQRBj+1+dtMAF77bWyDpT3b0rL63T7MHwiBv3u9Ysm2At41TZxFPi4GAExiGJ
+	 K8gcF3MEZtqZOB712hU8lR2+r1LgPi4dADF4RLFzj83IrLeM7C8H6b9lnKWNkgGMMal16
+	 RgAVO/QpDmZM0qwdPMTr0N9pbdllTYUyoJhmvANJPB3cGkvOsNHp2OnTvsKlp3NpdxkXM
+	 zQLgQip8xd6LGaOrUOro/R5Ku68aqxO9MNBa10V5OQTJvH7h3KwWWrR89JsquFkuBhJag
+	 65CXx8UCh8uY/hK9L9WnnRvk316mDmWhwywljw03Jmaql6HZebZPFSFsZIhTCm5O7Cw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017344;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017347;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x8m4Lq2f1xDWte5y1lS1jAYCubPc5YLWyf6bX6/QnNw=;
-	b=v/OoQ5Pqmf+cV4bOGs2r3YYmx+Uw8nj30UM9vPn777VURTO7QPQi11X81DUqEJcFbmlD
-	 beBH+M5C5EP/97kXlXuIF1gP5vp8+FDBtgljQ20Jq7G+imO5EM8yD/lChVPI9OTKkgmud
-	 4OF5ouo236ifhpb35Xmeabod2iArEqrdvAoxyRLRuDGlm+/Nw2/1DL5pDcOygzAVpcSti
-	 WXWweFoRbNZxRQRHDPgVeXSf/xK58hIMlJibWnrfiwEwXaFGqvuDZdlKMb7n5BQizS/pd
-	 a4swB+E1DoYYwsUQ1zbP870ozyfZyQtlM6E4CEbHWNJgsiOkUbfYBdqKI/NPVC8S1Eg==
+	bh=ZbvGNno7R9JRD7rZJasUsvEl3ygKuZngAkayjzokkrc=;
+	b=kT/X7BrrSi0ZiNi/ZersYh6aoDv39a7ga8wtZHFvnj3QZrCSMULcoXO3/AfjyuoxX2CN
+	 zUX9HuY23+ZMWI6uutCI0UkZs9WRkNzvMdh73+Vs4lS6N4OmTJhr+w/lUf+RawSMuExGS
+	 XyphAo0IqUhfcILBZpaaW//+KnQjuMcmLSnYljD/Pqu8foAy0ckljyj0aXqAkMnvV5Y0d
+	 60lk4zztsZ1IUrXun98jcvwTxDNcUAQ0XrRTTbqk+PpXrZ2DNfE9+viGRV7ASCkUXdu5q
+	 f7rsWhmXwGtOcrQgNcH5cUM7jPMfPRt6K8Qdxj/+GoDLt5JbIHxHA4/qu5rpaSUD2iw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1TMzappc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JSf60hGm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B88606A31C;
-	Wed, 18 Nov 2026 15:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29877606A31C;
+	Wed, 18 Nov 2026 15:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1TMzappc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03A81F000C4;
-	Wed, 18 Nov 2026 15:55:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JSf60hGm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4331F000C4;
+	Wed, 18 Nov 2026 15:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017344;
-	bh=x8m4Lq2f1xDWte5y1lS1jAYCubPc5YLWyf6bX6/QnNw=;
+	s=korg; t=1795017347;
+	bh=ZbvGNno7R9JRD7rZJasUsvEl3ygKuZngAkayjzokkrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1TMzappcDF4GTVsMYwQH4/KTNhp9igfp76N2Obozj17NUJ2V2I5wqi79gdefyGqcH
-	 U9GdxwKjK/aP4jJ4pVKJytd++GewsNFeJCy0xnIYOiW7wJulYVpCivdr7aRNAUAtsv
-	 hE4R6wOh4pelZfIYWSe37ARV+UH+UmR7RRgDy+E0=
+	b=JSf60hGmgehJ9iXMA0YMbictruPw5gk1FJ5ilB9bcmMOtmJG7AQADIJJSalC+WbF1
+	 oOyYpO5QoXzr2Xj8Gok2d7rHNoW/CH9rg3i78JdK9i60fLWmPs3Ljv35+yRFcdG0G6
+	 H/Cewn9t7M0DoL25hgpBZ1/K+CGNKcF8ELN9rA00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Mark Brown <broonie@kernel.org>,
+	Kang Yang <kang.yang@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0851/2651] ASoC: amd: acp: add EFI dependency for selecting TAS2783
-Date: Wed, 18 Nov 2026 15:34:51 +0100
-Message-ID: <20261118150318.509600609@linuxfoundation.org>
+Subject: [PATCH 7.3 0852/2651] wifi: ath12k: fix skb leak on paddr mismatch in wifi7 mon RX pop
+Date: Wed, 18 Nov 2026 15:34:52 +0100
+Message-ID: <20261118150318.544618844@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,46 +70,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Kang Yang <kang.yang@oss.qualcomm.com>
 
-[ Upstream commit 4d2b92b82ee82f0008179cd795b02256144064e1 ]
+[ Upstream commit 4dfe8e3ac731c3372b5c1f1f73b0676c301c3916 ]
 
-The TAS2783 codec requires EFI support, so it cannot be selected
-unless that is also enabled:
+When rxcb->paddr does not match the MSDU-list paddr reported by
+the link descriptor, ath12k_wifi7_dp_rx_mon_mpdu_pop() sets
+drop_mpdu = true and continues to the next MSDU. At that point
+the skb is still attached to the descriptor via desc_info->skb;
+the local msdu variable only holds a copy of that pointer. The
+continue skips the rest of the loop body, which would normally
+DMA-unmap the buffer, free the skb, clear desc_info->skb, and
+append the descriptor to used_list in the next_msdu block.
 
-WARNING: unmet direct dependencies detected for SND_SOC_TAS2783_SDW
-  Depends on [n]: SOUND [=m] && SND [=m] && SND_SOC [=m] && SOUNDWIRE [=m] && SND_SOC_SDCA [=m] && EFI [=n]
-  Selected by [m]:
-  - SND_SOC_AMD_LEGACY_SDW_MACH [=m] && SOUND [=m] && SND [=m] && SND_SOC [=m] && SND_SOC_AMD_ACP_COMMON [=m] && X86 [=y] && PCI [=y] && ACPI [=y] && SOUNDWIRE [=m]
+The descriptor therefore stays in_use with the skb attached
+forever. The skb is never DMA-unmapped, delivered, freed or
+replaced, and HW does not write into it either because the
+descriptor is no longer posted to any SRNG. The descriptor is
+also never returned to used_list, so
+ath12k_dp_rx_bufs_replenish() cannot allocate a fresh buffer
+for it and the RX refill ring gradually drains.
 
-Add this as a dependency for SND_SOC_AMD_LEGACY_SDW_MACH, assuming
-that this is only needed on modern x86 machines that require EFI
-support already. It would likely be possible to do something more
-complex to still allow SND_SOC_AMD_LEGACY_SDW_MACH to be used without
-TAS2783 when EFI is disabled, but I cannot see a usecase for that.
+The skb is still reachable via dp->rxbaddr[][].skb and is
+reclaimed at teardown by ath12k_dp_cc_cleanup(), so this is not
+a kmemleak-style unreachable leak. Nevertheless, both the
+descriptor slot and the skb memory are wasted for the module
+lifetime, and under sustained mismatches monitor RX stalls.
 
-Fixes: 28114992dd2f ("ASoC: amd: acp: enable TAS2783 and add RT712-VB SoundWire machine")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20260925131137.146638-1-arnd@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Remove the continue so drop_mpdu remains true, execution reaches
+the DMA unmap and dev_kfree_skb_any() below, and the descriptor
+is returned to used_list via the next_msdu block for replenish.
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
+
+Fixes: 72bfbf19b7da ("wifi: ath12k: add support to reap and process mon dest ring")
+Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260916060325.854-2-kang.yang@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/wifi7/dp_mon.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/sound/soc/amd/acp/Kconfig b/sound/soc/amd/acp/Kconfig
-index 6433876430f04..b7b7b4f4a55ca 100644
---- a/sound/soc/amd/acp/Kconfig
-+++ b/sound/soc/amd/acp/Kconfig
-@@ -167,7 +167,7 @@ config SND_SOC_AMD_SOF_SDW_MACH
- 
- config SND_SOC_AMD_LEGACY_SDW_MACH
- 	tristate "AMD Legacy(No DSP) Soundwire Machine Driver Support"
--	depends on X86 && PCI && ACPI
-+	depends on X86 && PCI && ACPI && EFI
- 	depends on SOUNDWIRE
- 	select SND_SOC_AMD_SDW_MACH_COMMON
- 	select SND_SOC_SDW_UTILS
+diff --git a/drivers/net/wireless/ath/ath12k/wifi7/dp_mon.c b/drivers/net/wireless/ath/ath12k/wifi7/dp_mon.c
+index ded7d56cd79b0..ed66867466056 100644
+--- a/drivers/net/wireless/ath/ath12k/wifi7/dp_mon.c
++++ b/drivers/net/wireless/ath/ath12k/wifi7/dp_mon.c
+@@ -2718,7 +2718,6 @@ ath12k_wifi7_dp_rx_mon_mpdu_pop(struct ath12k *ar, int mac_id,
+ 					   i, (unsigned long)rxcb->paddr,
+ 					   (unsigned long)msdu_list.paddr[i]);
+ 				drop_mpdu = true;
+-				continue;
+ 			}
+ 			if (!rxcb->unmapped) {
+ 				dma_unmap_single(ar->ab->dev, rxcb->paddr,
 -- 
 2.53.0
 
