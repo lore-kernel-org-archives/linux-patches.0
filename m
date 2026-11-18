@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054946;
-	b=E8m7KTdtY2pecwYlBd2gymhgx3RHWwJbGqZxptH1G3zyiF5DD45JKq1BYTCLpqzBIz+k
-	 NCd/weWTqTQou/N+uouhSFMyG8B142BG2lma5MEVsao+62qGe0OV2S/D/+OJ+Kxd7uAfr
-	 3hxEX9R9Maj4e+GrY5Nhl2OGtlXU0BEyjDgX1JJ8ySKmFmrTgkhH4P9OIkhulGposw1zA
-	 BMDyqHS2PQqN8w3ZxDg4AnG/7Zq5QOcGSB0igdHf/LnCqkHO+uAHEe7RwGx0McRrWjaoH
-	 BT1UKTAleM5rTcNXGcrB7iX6AfsgQdiGTEqRss6g2t7qsOJ0BpkCVwsxklfHL1Omf6g==
+	t=1795054949;
+	b=F75RrMd+l2oYocVJXrFmA53IT3ZNQQidBCoOeFOCvUoDH5qhposuHkt3KGSVmD1R/kDr
+	 bv7dbwJEUJRZhrMIqYOvR5SkTPu32mxjFQ+tYt4M6Y/9NulFxFLcpMouXTpUj9/OrEwEu
+	 KXZItAFT7KNkyRypcQIeSS8ViVl7Hw/bGs8LI2gcGkTfjoOfDIX09rms9HwrMR653cCi6
+	 PgpXLXfh27YkItfsZyNIL2Fz8dkkaZXd97kTKTkDC5+jLI4RANoa12Eb/PWmXwQU/jsuO
+	 00Ov3O2xabmrhBmcSQFsyWyIg26Lgyow0DuEeYwJs5C8OKvvKWU6s1YsbJRgoluPrag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054946;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054949;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SIsAMt5fxaLZlsn7/z+8g8Sz8gFYx2pyFWeaXvyddKo=;
-	b=1Oto0vSrY8JKNXIZ6emLYDPOZtgMePF3i1sgPdttWeV46vVilLM4LPBhDDRytbU/XYNl
-	 XgGWrpu50dMHOqeWd/uP0sDZEaqwxkKHGES2b4gvmPwVP+uVHkugcqN7UehqZV1CggLXa
-	 cLVPpZbob/HX7/0VTNiKkSDtHqIhKuIGD0SsMf08x5PPVYndj92No6Uy3+W8n89Mh19hD
-	 RQtwvBOYFAtYA2ZUXjlDgAFIahDU6A8KpjDqJc1a7/ca7z1g/1tKJv1Adpg8z3Qkj8wW2
-	 p2rIPA3jYtKSRalzNSHzqxM3RsXWjYd3FkDTkB9B4Q0oK+EpVOELnQx7uftIczsfKdw==
+	bh=li1RxLWTWiIlSqSfA1fZqJAJakQzppEQMCSzSfYhucQ=;
+	b=abt+CG/Vcn81TIPoE80mQo2ux4jJwzY/acXIJOK5xm5PY+OedZPKb6s5kZuGO4i9JGlE
+	 6QO6FNc+Pqj1eYdiRJU4vNdQyq4nBw+ZtGnXtqBnHQubstt8xpRfIALXReqHlTmJPtAfP
+	 100jKFgwH89sCOEeTffA4pVTSyiN81PpB1Eet/67fR4iXyyIOUVImGsFway7aJyagGhh5
+	 O/aevbRzr3TwLG7AZ8f2LGl1lAUa1Hol626SKJMv/ERBASaYwoiqYTrk2gNv+5EoWxHdX
+	 VP+j7WsOUEer937P4PIW/pTPYM1pwO3/iCdeOiSGnseTsesKWI9eBHKLEnW+1JjRw9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pd2xyWZS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lBUrvPrp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C39606A335;
-	Thu, 19 Nov 2026 02:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C62A606A31C;
+	Thu, 19 Nov 2026 02:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pd2xyWZS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4B71F000C4;
-	Thu, 19 Nov 2026 02:22:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lBUrvPrp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16481F000C4;
+	Thu, 19 Nov 2026 02:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054946;
-	bh=SIsAMt5fxaLZlsn7/z+8g8Sz8gFYx2pyFWeaXvyddKo=;
+	s=korg; t=1795054949;
+	bh=li1RxLWTWiIlSqSfA1fZqJAJakQzppEQMCSzSfYhucQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pd2xyWZSl7SBFN2YN+fTJYjlp2voDLi3y07jJ8w6FFoY9OqYKLbJxehwMd/9TOJSH
-	 VEzq2374MEYjhmvn/CfOnO7BmDKGWsKcPvnRsVcOBA9/dVfeu2j9VAuK/XcLRSCYuw
-	 +xLuVaiYeB972gvE0PEdjnqqaZvH5VLC1MP5jJTE=
+	b=lBUrvPrpxK/dFtFFXqAJ2ITewbpSaSR5sV18yH9lc8P0NpQpcuXNS5DzfmCqRW00a
+	 DVTIgGyjC7oRzi9/7rmHz/az1p1fV7YdcDzNwSMQorkGIImP+gPUw3g6xegtFA4Ds8
+	 psrF9F9b1HTEHV18n5zA6nCZI3AZYwWjArC52GIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a83a5a1ba9ff57935171@syzkaller.appspotmail.com,
+	syzbot+d31109047baed8f3b590@syzkaller.appspotmail.com,
 	Keisuke Tsukuda <tkdkei@outlook.jp>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1455/2214] usb: gadget: composite: avoid warning on aborted delayed status
-Date: Wed, 18 Nov 2026 15:52:11 +0100
-Message-ID: <20261118150109.280543337@linuxfoundation.org>
+Subject: [PATCH 5.15 1456/2214] usb: gadget: f_mass_storage: ignore class requests while inactive
+Date: Wed, 18 Nov 2026 15:52:12 +0100
+Message-ID: <20261118150109.316376577@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,42 +71,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Keisuke Tsukuda <catnyaaan@outlook.com>
 
-[ Upstream commit 048884b782b137229399b9f727b6437d9b4f1071 ]
+[ Upstream commit e84caed6e7f58d96ea2e4aaa0b947ab05faa451b ]
 
-A SET_CONFIGURATION request that disables the current configuration, or a
-disconnect, can abort a control transfer whose status stage was delayed by
-a function driver. The asynchronous function work can nevertheless finish
-later and call usb_composite_setup_continue() after reset_config() has
-cleared delayed_status.
+SET_CONFIGURATION is handled asynchronously by the mass-storage thread.
+A class request can arrive after the composite core selects the function
+but before the thread installs common->fsg, or while the function is being
+disabled.
 
-This is an expected consequence of aborting the old control transfer, and
-does not require a kernel warning. Keep the diagnostic available under
-dynamic debug and ignore the obsolete completion as before.
+fsg_setup() already rejects this state with -EOPNOTSUPP, but checking it
+through fsg_is_set() also emits a warning. Check the active function
+directly so normal requests during a configuration transition are rejected
+without hiding fsg_is_set() warnings from other internal paths.
 
-Fixes: 2bac51a1827a ("usb: gadget: composite: reset delayed_status on reset_config")
-Reported-by: syzbot+a83a5a1ba9ff57935171@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a83a5a1ba9ff57935171
+Fixes: 8876f5e7d3b2 ("USB: gadget: f_mass_storage: added eject callback")
+Reported-by: syzbot+d31109047baed8f3b590@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d31109047baed8f3b590
 Signed-off-by: Keisuke Tsukuda <tkdkei@outlook.jp>
-Link: https://patch.msgid.link/20260908203348.95825-2-tkdkei@outlook.jp
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260908203348.95825-3-tkdkei@outlook.jp
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/composite.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_mass_storage.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/composite.c b/drivers/usb/gadget/composite.c
-index afacaeb95fa5b..2c6b4c068c059 100644
---- a/drivers/usb/gadget/composite.c
-+++ b/drivers/usb/gadget/composite.c
-@@ -2614,7 +2614,7 @@ void usb_composite_setup_continue(struct usb_composite_dev *cdev)
- 	spin_lock_irqsave(&cdev->lock, flags);
+diff --git a/drivers/usb/gadget/function/f_mass_storage.c b/drivers/usb/gadget/function/f_mass_storage.c
+index b20aabf3fb2f3..5a4edb856e92f 100644
+--- a/drivers/usb/gadget/function/f_mass_storage.c
++++ b/drivers/usb/gadget/function/f_mass_storage.c
+@@ -461,7 +461,12 @@ static int fsg_setup(struct usb_function *f,
+ 	u16			w_value = le16_to_cpu(ctrl->wValue);
+ 	u16			w_length = le16_to_cpu(ctrl->wLength);
  
- 	if (cdev->delayed_status == 0) {
--		WARN(cdev, "%s: Unexpected call\n", __func__);
-+		DBG(cdev, "%s: Ignoring obsolete call\n", __func__);
+-	if (!fsg_is_set(fsg->common))
++	/*
++	 * fsg_is_set() warns when common->fsg is NULL, but that can happen
++	 * normally while a configuration change installs or removes the active
++	 * function.
++	 */
++	if (!fsg->common->fsg)
+ 		return -EOPNOTSUPP;
  
- 	} else if (--cdev->delayed_status == 0) {
- 		DBG(cdev, "%s: Completing delayed status\n", __func__);
+ 	++fsg->common->ep0_req_tag;	/* Record arrival of a new request */
 -- 
 2.53.0
 
