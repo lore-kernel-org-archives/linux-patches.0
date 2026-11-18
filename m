@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026404;
-	b=kF7E+GkkwGjFqaMGbJV5Tji39i2BARh3j2Y5u4JCA72MJ/Ymktp+Cj/9kXBU29dGNAZj
-	 68PdcjxlbU+Jn9fWl+Hma3GQKdZvQfEc19yb2+Gbnt2Is3+pXPUfH+7tV6/bRLSWLzdEA
-	 MduWypdQgMOLt5HXjmZu9fKWH/NaZscrGmEVPeJjgWMdNwqylsKY0/nH4z2yDmiasSG74
-	 5tjh5kJ+OKAoMBEZMsavGooMxFkVGGKabhMsyTM4SpTwdiDG2+w6tEi0sobuVTPPORftj
-	 jSY8EyQbGsDK1BYGZDuS6/JouqONozRlpZuAQULWtBKdETECJYGoUxSmPyI5BSemiig==
+	t=1795026407;
+	b=Res7GJfWa5yjLqM/upxaRyWutq6K9q7UTp1idCVC90vylbPkcdWwfT8xB1ip7Az5eI48
+	 tH5XyHAXF++uZk8YS5HylP3b1IcViqe1ErW3G03FrstB9ttO8MJkYMVFBP7qVAqFuy0uB
+	 sjqBIFKBzRluYtuwO+udvyWkrJug29etwvj5iV5gBms/v5/1juPx1XclAGE+3lK8XNgFG
+	 WIgvL49IN226AiVOkyG7twPz9/80mxSDIukVD57c/BxO3X23/Nc8nnlonLYS/PUCbOQAs
+	 /bf6vI30SuHO8cffGZ2UPZJ4d0LAUoLEf2NKQesCdTrB9ATUWLeSfckK+pFUZxUSNdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026404;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026407;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=hlUZKSuOKw1Fsls7J/j2m1qtTZVx0d8NZtuJJTWyetc=;
-	b=Gn11CPvCaaVNxfQTE1zVh0Q5oAVh1cbP5SJaaDbnHJZ7/Z/GKFzAd04Mgn6Lgv/Qao5R
-	 JEs3cXHfpbe4btQzZVw6y+Uycx8SX2ckpzVnHGOxfOjO4s9O+ALsDRYCcxjiknG649Fdz
-	 rsevoWDo/TN9bQ/cvM1Yzd7B+lVjBHMGgFRIeDaDn/mmBtZ143Js1vLdgMsX1nkXTX+iK
-	 RqZHF7QTVbHqLz9xSzu+CwuCNvExGYsfmq7aJovcheHx7CCd36LN+E7El5xavlqcaZ3ud
-	 Rf0VP63CIsRrMhtpmct8eBIc7XXvRRwngxSPM42TGgiwUlr9f3SWbbPPtqJJGLRfMXQ==
+	bh=HAGBV88/M2BMVaxK7X2P6qqHEmN3NgNStCdCbAyPcNM=;
+	b=IM0lz4JJndZfwoUF4UGUiW4g/Btg4PmsfCamq7axDeYuEfWoWCkW0VwMLhneNYBXkK4+
+	 02aoBdA6ZtRYt5c+huHwEj5EBXJXizUpA2QzibVb41gElr9AasVbzkhXBGelmQC20jTel
+	 kGszx3YoEYvDG07OWNgJIQthJ0Uz0oKm5otGG/StGCD9WNSew8iSkH461iysGwUL5e+Y/
+	 erPyLwuQd81Z6jSbRMSvYqCHMSLGmE44x6zSjGMBueewLhIC5rBtT4Uu6ujehIhQKE6Dk
+	 WAhucnCSA2CGrOqxVGQw7oCSKzUOULhufhEaM91tAjMCuQO0N1OE5LroY9I9M4ygYaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cWcwdJSO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S9RIcGCP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E356606A320;
-	Wed, 18 Nov 2026 18:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5FD606A31C;
+	Wed, 18 Nov 2026 18:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cWcwdJSO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D711F000C4;
-	Wed, 18 Nov 2026 18:26:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S9RIcGCP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF271F000C4;
+	Wed, 18 Nov 2026 18:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026404;
-	bh=hlUZKSuOKw1Fsls7J/j2m1qtTZVx0d8NZtuJJTWyetc=;
+	s=korg; t=1795026407;
+	bh=HAGBV88/M2BMVaxK7X2P6qqHEmN3NgNStCdCbAyPcNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cWcwdJSOFl8EibUKD6GSkOo2BTjuulk6kr88TT36vouEfYeD45QTIeTIE1eocEKBM
-	 1oAqXWxeMme9/7ERlXjtIi4DFKQSq5tQo4vjCbB2syldJ4Q0RkxBeIdYxUdwFFRrM6
-	 S9I0dJnql6CepTCX9KtPDYIWlESIyG8FgIs6BEJk=
+	b=S9RIcGCP+HR0AXOq5JW4Q4n20AwgPZydZnqrZe62kekvmZDPngkUN9wczbRT09m2b
+	 B1+qejzF4d6vSZigmL+v0K/gZtd/rHA4YKoF+NbqN30Xa5qAq9DhFmFU6VSZr+o8WB
+	 qk5bUt9yoDNYO5FHnbgK2L51wDMlCMwO+HkIVEaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daasaradhi Mannava <daasaradhimannava@gmail.com>,
+	Kristen Carlson Accardi <kristen.c.accardi@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1382/2151] platform/x86: msi-ec: Report valid charge thresholds when unset
-Date: Wed, 18 Nov 2026 15:51:57 +0100
-Message-ID: <20261118150212.349607615@linuxfoundation.org>
+Subject: [PATCH 6.18 1383/2151] platform/x86/intel: power-domains: Handle failed init in tpmi_get_linux_die_id()
+Date: Wed, 18 Nov 2026 15:51:58 +0100
+Message-ID: <20261118150212.384665877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,58 +70,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daasaradhi Mannava <daasaradhimannava@gmail.com>
+From: Kristen Carlson Accardi <kristen.c.accardi@intel.com>
 
-[ Upstream commit a102207eaf4a18c60c2ffbdc421ad3d30bfed591 ]
+[ Upstream commit e7aa0a21a38afd3063fd9b4bf31025a882537d95 ]
 
-The charge thresholds are computed by subtracting a fixed offset from
-the raw EC value. When no charge limit has been set, the EC can hold a
-value below range_min (0x80 on an MSI GL65 Leopard 9SCXK), and reading
-the sysfs attributes returns nonsense:
+tpmi_init() returns early with -ENODEV on CPU models that are not in
+tpmi_cpu_ids, before domain_die_map is allocated. When the driver is
+built in, tpmi_get_linux_die_id() remains callable after the failed
+init and dereferences the NULL domain_die_map.
 
-  charge_control_start_threshold: -10
-  charge_control_end_threshold:   0
+This is reachable from user space: uncore-frequency-tpmi calls
+tpmi_get_linux_die_id() from the show function of the world-readable
+die_id sysfs attribute. The attribute is created on multi-die packages
+for clusters with the core agent type, so reading it on such a CPU
+that is missing from tpmi_cpu_ids oopses.
 
-Both attributes are documented to be within 0 - 100, and an end
-threshold of 0 wrongly suggests that charging is disabled.
+Likewise, if cpuhp_setup_state() fails, the error path frees
+domain_die_map but leaves the pointer set, so a later call would read
+freed memory.
 
-The store path already rejects values outside range_min..range_max.
-Apply the same range to the show path and report the maximum threshold
-for any value outside of it.
+Return -ENODEV when the map was not allocated, and clear the pointer
+wherever it is freed.
 
-Tested on an MSI GL65 Leopard 9SCXK (EC firmware 16U8EMS2.100) with
-the EC holding 0x80: the attributes now read 90 and 100.
+tpmi_get_linux_cpu_number(), tpmi_get_punit_core_number() and
+tpmi_get_power_domain_id() read only the static per-CPU data and hash
+table, so they are safe after a failed init. tpmi_get_power_domain_mask()
+has the same problem as this helper but no callers, so it is handled
+separately.
 
-Fixes: 392cacf2aa10 ("platform/x86: Add new msi-ec driver")
+Fixes: e37be5d85c60 ("platform/x86/intel: power-domains: Add interface to get Linux die ID")
 Assisted-by: LLM
-Signed-off-by: Daasaradhi Mannava <daasaradhimannava@gmail.com>
-Link: https://patch.msgid.link/20260916174812.11496-1-daasaradhimannava@gmail.com
+Signed-off-by: Kristen Carlson Accardi <kristen.c.accardi@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://patch.msgid.link/20260924193625.1830526-2-kristen.c.accardi@intel.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/msi-ec.c | 9 +++++++++
+ drivers/platform/x86/intel/tpmi_power_domains.c | 9 +++++++++
  1 file changed, 9 insertions(+)
 
-diff --git a/drivers/platform/x86/msi-ec.c b/drivers/platform/x86/msi-ec.c
-index 0cec54d497d1e..e00c4ed7d7b3c 100644
---- a/drivers/platform/x86/msi-ec.c
-+++ b/drivers/platform/x86/msi-ec.c
-@@ -1197,6 +1197,15 @@ static ssize_t charge_control_threshold_show(u8 offset,
- 	if (result < 0)
- 		return result;
+diff --git a/drivers/platform/x86/intel/tpmi_power_domains.c b/drivers/platform/x86/intel/tpmi_power_domains.c
+index 7d93119a4c30c..476ad9b8cf3cf 100644
+--- a/drivers/platform/x86/intel/tpmi_power_domains.c
++++ b/drivers/platform/x86/intel/tpmi_power_domains.c
+@@ -156,6 +156,13 @@ EXPORT_SYMBOL_NS_GPL(tpmi_get_power_domain_mask, "INTEL_TPMI_POWER_DOMAIN");
  
+ int tpmi_get_linux_die_id(int pkg_id, int domain_id)
+ {
 +	/*
-+	 * The EC may hold an out-of-range value (e.g. 0x80) when no charge
-+	 * limit has been set. Report the maximum threshold instead of a
-+	 * meaningless (possibly negative) percentage.
++	 * When built in, this stays callable after tpmi_init() failed
++	 * before allocating the map.
 +	 */
-+	if (rdata < conf.charge_control.range_min ||
-+	    rdata > conf.charge_control.range_max)
-+		rdata = conf.charge_control.range_max;
++	if (!domain_die_map)
++		return -ENODEV;
 +
- 	return sysfs_emit(buf, "%i\n", rdata - offset);
+ 	if (pkg_id >= topology_max_packages() || domain_id >= MAX_POWER_DOMAINS)
+ 		return -EINVAL;
+ 
+@@ -245,6 +252,7 @@ static int __init tpmi_init(void)
+ 
+ free_domain_map:
+ 	kfree(domain_die_map);
++	domain_die_map = NULL;
+ 
+ free_domain_mask:
+ 	kfree(tpmi_power_domain_mask);
+@@ -258,6 +266,7 @@ static void __exit tpmi_exit(void)
+ 	cpuhp_remove_state(tpmi_hp_state);
+ 	kfree(tpmi_power_domain_mask);
+ 	kfree(domain_die_map);
++	domain_die_map = NULL;
  }
+ module_exit(tpmi_exit)
  
 -- 
 2.53.0
