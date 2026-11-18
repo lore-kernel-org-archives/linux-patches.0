@@ -1,63 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045697;
-	b=QheQUHq1lmFMmKH8xGj1H0i+3qyTqmWQsxDCaX0BYSte6C3ks+sv7ZinXDOZDTBnAZsn
-	 BoKjsuNSbfDLYqrjSe3XeWz9WvjEcfaRQmMxDO5gEPyVML7vBHde92PP8OoBveFIQ1vjN
-	 2pfvgnfT0d0Cr/hrmq6vyOw3ywxo8isCaM6ScEaYnLSJdVDlOd/KLSXrgdOyF+SutTJ+l
-	 V1N7UNh6+dVwacHm7pohsbsGKCpu7G2n5I5gIbx/GDvOpW2/dUY0knA3MiyEhfBn+Yce4
-	 5m79axGvpZawb/RDC6tiXlYOYeBwWdOSoabBmBAF7j5F6yu61ToBaPNwzHxYL9Uz8xA==
+	t=1795045700;
+	b=C+IWCiiVOf7Z8ijFZ59vOjFZJabO6LNMa6qB//Tmkpy1MAG46VEdEx3K0FpnsMlbq8ZK
+	 8YSru6nj1dcx1+aYF8OmOOFdiqU3SJmGnfdcVl9tXxVbakh9tqYV59Cj5DyuIXPSABYsQ
+	 +a8uFDgzytAn4V6RRUbnOB8jW95LH2UXbH3NXV+pipd+PQPw16lA06DKxm62hwlQvH3ZZ
+	 e8wcboMAsiKKs2RChn+i2jCfiP50TLLDViwSlVPT0lXHgZAmkSqHWl1XhneDGzOol/j4k
+	 757vbZ9psJYxQmvny3KmG5R9rw7imLADVlm6uElcibWX+TI2/Ur4KNqLx2EXrZ+ktvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045697;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045700;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sQTqAuYr+XMOpvePN5xwu7sa8oUgLqGoxuajOLEMEDc=;
-	b=LkYEavRpguPbM3CEvv7EWRoFXsQp71zV+41cW/j99LYJux64GAVVJ7N4ZJ3ozOVG9htv
-	 eTQl/d74bX+9qRbl6dNMxKMaIXUlRlwVYZ+y9sKUkjrpWkstSAvuVKZJo0MFvjlZCTk6J
-	 2gMkYluutnJlFarua/xzUN4mfUxv0LVwp85xE+ZZ/BONCA8iHk3Er0HCALhLR4BXHofxr
-	 UDN/eSoYPLiQZ3vTfEdNgzyU1hqDTmFSYkwtQF4YseM3arVIBtggrXMiBKfQ0TwOCCytZ
-	 5uaJAwYaq8LjmGLvLJW5Kf5eN3zHcG/0nesGyAcuQJxmK3HjVYogaoYGNPsHRckkaKg==
+	bh=VkKT56lAC3r5eomPeu7L9nvU9eIksCU6Car2uaaCfJk=;
+	b=D5Kple2HWgCSplWmfTlSEqbPudF0r8qqTX3QB3ego2TAuCaiKTKjuWeif/tC5o3XaBvf
+	 yGN49t2iuZH4n+T7oXhWt+kiM8yVYDs5S2PV6fQP0ixNtK/FtX8OGWvSa1f0Em6HMgJUe
+	 Th70Crf5saV7mJdhJ2+RA/Rwxs8Djyyvfqr5j6zeUxqVcT3qwKBcY1VtWLXo0abcOcDhR
+	 MLwN8x13c5KUsthhQWPqcTPOsRW67DEpaifhq6aicTqhVC1g5XDZDNbEKy0nAn6BUQdO0
+	 NtQnGOVfHdfn//vlNW3SkdsTuq6eKdpBjtCQTzC4B45EEGOnijC3jqPQ0asCOY1p/Og==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DXBGYkQs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=agxu5G7l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E67606A320;
-	Wed, 18 Nov 2026 23:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7389606A31C;
+	Wed, 18 Nov 2026 23:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DXBGYkQs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD581F000C4;
-	Wed, 18 Nov 2026 23:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=agxu5G7l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0DC1F000C4;
+	Wed, 18 Nov 2026 23:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045697;
-	bh=sQTqAuYr+XMOpvePN5xwu7sa8oUgLqGoxuajOLEMEDc=;
+	s=korg; t=1795045699;
+	bh=VkKT56lAC3r5eomPeu7L9nvU9eIksCU6Car2uaaCfJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DXBGYkQs/dw9bbUQRC/8++N4XT6fuahLvEKqqncNolmYrK9g02mO66ms+LcBJDUjq
-	 kj/OnPORYCCRHltznuyelqxIVkGpQdvJWb8kJDsqWclNNL0o9bbj47Iud6p+G8QocU
-	 w15/G0fljkYo+fMR+mtOAqkfWUzMh5unyVhWmpi8=
+	b=agxu5G7lj/N1UwGnCHYq149cHweTPqQry70PmqEaLfmg+72CWggjwmwY/cvAE79za
+	 SdsP5JKLl1FICFTBXVicYA3uyaCJD5COg+dqm+jrH6wUsp8Ihh0uKEXIXMRHsZnqYj
+	 j1vAQyDEEZ08MdUUHvqMOj+tI4czFq30deODvOts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Yufan Chen <ericterminal@gmail.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Kees Cook <kees@kernel.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Sunil Mushran <sunil.mushran@oracle.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	Michael Kelley <mhklinux@outlook.com>,
+	Naman Jain <namjain@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1015/2857] ocfs2/cluster: initialize heartbeat regions before publishing them
-Date: Wed, 18 Nov 2026 15:34:09 +0100
-Message-ID: <20261118150238.141566656@linuxfoundation.org>
+Subject: [PATCH 6.1 1016/2857] Documentation: hyperv: Update documentation for sending VMBus packets
+Date: Wed, 18 Nov 2026 15:34:10 +0100
+Message-ID: <20261118150238.178909915@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -79,192 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Michael Kelley <mhkelley58@gmail.com>
 
-[ Upstream commit c5b7a30a5172317e1e3cba61d8c9f9c588c497bb ]
+[ Upstream commit 6a3d77a0a8cf69cf3d234305e6711729eb5d10c4 ]
 
-A region on o2hb_all_regions must have an initialized config item and
-name. o2hb_heartbeat_group_make_item() currently links the zeroed region
-under o2hb_live_lock, drops the lock, and only then initializes hr_item.
-The lock therefore protects the list without protecting initialization
-from readers of the published item.
+The functions for sending VMBus packets have changed.
+vmbus_sendpacket_mpb_desc() can target multiple ranges, and
+vmbus_sendpacket_pagebuffer() has been removed. vmbus_sendpacket_getid()
+has been added. Update the documentation accordingly.
 
-With global heartbeat enabled, a DLM_QUERY_REGION from the current
-joining node can pass the existing-domain and protocol checks while a
-configfs mkdir creates another region. The DLM locks are not taken by
-the constructor, and the network worker does not take the configfs
-subsystem mutex. The following ordering is possible:
-
-  Configfs mkdir                     O2net receive worker
-  --------------                     --------------------
-  Allocate reg
-  Lock o2hb_live_lock
-  Link into o2hb_all_regions
-  Unlock o2hb_live_lock
-                                     dlm_query_region_handler()
-                                       dlm_match_regions()
-                                         o2hb_get_all_regions()
-                                           Lock o2hb_live_lock
-                                           Copy 32 bytes from NULL name
-                                           Unlock o2hb_live_lock
-  config_item_init_type_name()
-
-The query thus dereferences NULL. Initialize hr_item before linking the
-region so the existing list lock also orders name initialization before
-any reader. Reject a failed name allocation, since the initialization
-helper does not propagate that error.
-
-Use config_item_put() on initialized constructor failures to release the
-name and respect references retained by o2hb_region_pin(). Initialize
-the list heads, mutex and delayed works needed by o2hb_region_release()
-before any such put, and leave the list node self-linked after rollback.
-Keep the existing handler drain before removing a failed published item.
-
-KASAN report as below:
-
-    ==================================================================
-    BUG: KASAN: null-ptr-deref in o2hb_get_all_regions+0xbb/0x1f0
-    Read of size 32 at addr 0000000000000000 by task kworker/u16:1/14
-
-    CPU: 2 UID: 0 PID: 14 Comm: kworker/u16:1 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Workqueue: o2net o2net_rx_until_empty
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     kasan_report+0xe0/0x110
-     ? o2hb_get_all_regions+0xbb/0x1f0
-     kasan_check_range+0x105/0x1b0
-     __asan_memcpy+0x23/0x60
-     o2hb_get_all_regions+0xbb/0x1f0
-     dlm_query_region_handler+0x4c2/0xc20
-     ? __pfx_dlm_query_region_handler+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? trace_hardirqs_on+0x18/0x160
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? kvm_clock_get_cycles+0x31/0x60
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_dlm_query_region_handler+0x10/0x10
-     o2net_rx_until_empty+0x1a50/0x3200
-     ? reacquire_held_locks+0xdd/0x200
-     ? __pfx_o2net_rx_until_empty+0x10/0x10
-     ? lock_acquire+0x190/0x300
-     ? process_one_work+0x935/0x1b40
-     ? process_one_work+0x834/0x1b40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x290
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     process_one_work+0x9a8/0x1b40
-     ? __pfx_process_one_work+0x10/0x10
-     ? lock_acquire+0x190/0x300
-     ? lock_is_held_type+0x8f/0x100
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     worker_thread+0x65c/0xe40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __kthread_parkme+0x177/0x220
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_worker_thread+0x10/0x10
-     kthread+0x351/0x460
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork+0x659/0x940
-     ? __pfx_ret_from_fork+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __switch_to+0x74f/0xf70
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork_asm+0x1a/0x30
-     </TASK>
-    ==================================================================
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0079-v5-f931a29339cadc0a2a70@gmail.com
-Fixes: 536f0741f324 ("ocfs2/cluster: Track number of global heartbeat regions")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Yufan Chen <ericterminal@gmail.com>
-Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Karl Mehltretter <kmehltretter@gmail.com>
-Cc: Sunil Mushran <sunil.mushran@oracle.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
+Fixes: 45a442fe369e ("Drivers: hv: vmbus: Remove vmbus_sendpacket_pagebuffer()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Naman Jain <namjain@linux.microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/heartbeat.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ Documentation/virt/hyperv/vmbus.rst | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
-index 706a8c2de09e8..e7229d755dcbe 100644
---- a/fs/ocfs2/cluster/heartbeat.c
-+++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -2115,6 +2115,18 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
- 	}
- 	reg->hr_node_num = O2NM_MAX_NODES;
+diff --git a/Documentation/virt/hyperv/vmbus.rst b/Documentation/virt/hyperv/vmbus.rst
+index d2012d9022c5e..3326bb103a5ab 100644
+--- a/Documentation/virt/hyperv/vmbus.rst
++++ b/Documentation/virt/hyperv/vmbus.rst
+@@ -141,14 +141,15 @@ Three functions exist to send VMbus messages:
  
-+	INIT_LIST_HEAD(&reg->hr_all_item);
-+	mutex_init(&reg->hr_arming_mutex);
-+	reg->hr_stopping = true;
-+	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
-+	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
-+	INIT_LIST_HEAD(&reg->hr_handler_list);
-+	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
-+	if (!config_item_name(&reg->hr_item)) {
-+		ret = -ENOMEM;
-+		goto put_item;
-+	}
-+
- 	spin_lock(&o2hb_live_lock);
- 	reg->hr_region_num = 0;
- 	if (o2hb_global_heartbeat_active()) {
-@@ -2123,26 +2135,19 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
- 		if (reg->hr_region_num >= O2NM_MAX_REGIONS) {
- 			spin_unlock(&o2hb_live_lock);
- 			ret = -EFBIG;
--			goto free;
-+			goto put_item;
- 		}
- 		set_bit(reg->hr_region_num, o2hb_region_bitmap);
- 	}
- 	list_add_tail(&reg->hr_all_item, &o2hb_all_regions);
- 	spin_unlock(&o2hb_live_lock);
+ 1. vmbus_sendpacket():  Control-only messages and messages with
+    embedded data -- no GPAs
+-2. vmbus_sendpacket_pagebuffer(): Message with list of GPAs
+-   identifying data to transfer.  An offset and length is
+-   associated with each GPA so that multiple discontinuous areas
+-   of guest memory can be targeted.
+-3. vmbus_sendpacket_mpb_desc(): Message with list of GPAs
+-   identifying data to transfer.  A single offset and length is
+-   associated with a list of GPAs.  The GPAs must describe a
+-   single logical area of guest memory to be targeted.
++2. vmbus_sendpacket_getid(): Similar to vmbus_sendpacket() but returns
++   a transaction ID that is matched against a reply from the Hyper-V
++   host. Useful when the struct completion (or other rendezvous data)
++   must reside on the caller's stack. By invalidating the transaction
++   ID before exiting the function due to a timeout or other error, a
++   late arriving interrupt is assured to not trash the stack.
++3. vmbus_sendpacket_mpb_desc(): Message with one or more data ranges
++   to target. Each range consists of a single offset and length plus
++   a list of GPAs that describe a logical area of guest memory.
  
--	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
--
- 	/* this is the same way to generate msg key as dlm, for local heartbeat,
- 	 * name is also the same, so make initial crc value different to avoid
- 	 * message key conflict.
- 	 */
- 	reg->hr_key = crc32_le(reg->hr_region_num + O2NM_MAX_REGIONS,
- 		name, strlen(name));
--	mutex_init(&reg->hr_arming_mutex);
--	reg->hr_stopping = true;
--	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
--	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
--	INIT_LIST_HEAD(&reg->hr_handler_list);
- 	ret = o2net_register_handler(O2HB_NEGO_TIMEOUT_MSG, reg->hr_key,
- 			sizeof(struct o2hb_nego_msg),
- 			o2hb_nego_timeout_handler,
-@@ -2165,10 +2170,13 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
- 	o2net_unregister_and_flush_handler_list(&reg->hr_handler_list);
- remove_item:
- 	spin_lock(&o2hb_live_lock);
--	list_del(&reg->hr_all_item);
-+	list_del_init(&reg->hr_all_item);
- 	if (o2hb_global_heartbeat_active())
- 		clear_bit(reg->hr_region_num, o2hb_region_bitmap);
- 	spin_unlock(&o2hb_live_lock);
-+put_item:
-+	config_item_put(&reg->hr_item);
-+	return ERR_PTR(ret);
- free:
- 	kfree(reg);
- 	return ERR_PTR(ret);
+ Historically, Linux guests have trusted Hyper-V to send well-formed
+ and valid messages, and Linux drivers for synthetic devices did not
 -- 
 2.53.0
 
