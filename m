@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058580;
-	b=ugdhOXmhC570CeoP+THKS1WWLy+G3CRM40fcEicHwpIsA57iRtYPvtalzbgTYmQvnp8y
-	 mpC0JneUccnEMoU0Rvuhs5LX75gj+PYX0yNnSF84RPJZblzi9GBBMnjIBosCpUATr1s20
-	 fYJgAPisyRCqeZvwm4xdZo+2sgOncq3o4hvsWJJdVrXvOObVgysLsU7oj9Ans0XY3UBb0
-	 wzLXoNkdy+2GIx1pDUtvtNaqfIWNm/yHTPjUK3hK1HAD2O1BYBg3bYsXZkDRfr4tkpDWt
-	 nFDeKUov1bWQoq87JyUgzsdFubT10ghknUjOg8nehnYHxr0pYsRdeIaVYCmDdn9zkLQ==
+	t=1795058583;
+	b=o8hgDxi4FWdnwlTds48K4AN60OzQs1FHRDb/m5chMbIGzXuwVUEiaQ3D1cNgAPYzWFZq
+	 NQfMVbAyokJvgOssLmz9IjO4LR5XFaE0B+JRqeuFnAUkp2dhjCx6iF+CYWgA6Bqe3zib5
+	 IkcxyYrWc8CrBsbHLFkbfd9KMg+jOTv5sYQmJgxyfa/z2ZSrwlw9Kk9Iq0lUz4lgYBs+V
+	 C++9y9O39aLh+8lvoNwSDOkNrcKUS7kkWS+wUVovUO5Ew+e5n9/113AKcjYVMOpuOt4vV
+	 tlO/JuGxRq9/lqEbQCkFPeRso1Q3K/0bvRKUVqu3gZhTLoOz1WFi5Fve99fdnVnoM3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058583;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YHHBT5P+xw0A1iAFMU6ApLANpfSvw5TAyBYqWzXrVL4=;
-	b=x+WQAofMAzhX9b10HkoNAWSzmyHYZAp0wXbVZ22AqkN8C/ESz927eglmGjR5qx7NnuxU
-	 TRCO63GwqD9b7CpJD64Sy1djA4nvs8raEtqkHF99/G3dy4V/143YHq43kmNi9940caR2U
-	 1wI2v9yfr5i9cKKodcpDe40wf70L5HPp26Z0+r4+pOGVYg2MQIIZaktSYLqRIWvZ0441U
-	 OOyO9BiqpsbeDoKQfOe+ayJZN8zz0XjFu7jBxEvREQZeAuPw/yYP1+d8v+xVvSY6wkbhq
-	 xEz6hRWcDUMDHSD3JibBvGdHDyWPaYMIqsy8ZCpOg434JmXyHqlO1LA5Y0PhECtY2VA==
+	bh=5rARhLjVAgKix4I+I0IdfgQv4spbSVeIBb13UxxtaNQ=;
+	b=2fO2o4Z8aV3VLmEdRG2UfRg/EqjP/4tyVvLgBm0YQGJqDI5BGInHVzrJHVQf29XFLSDu
+	 Rr37jkbyKxqtrU3EgqEJPRbWUgnrJw625bNK6JMVn+Fpzc509WdUiax+EAnfcL6NfqI7j
+	 uB5JY17vB59ot4VcOh+lkt0ArTzSFzZEJT3zH5ZVRiR0lGnSj0Vvz4Woh/J7G9kQXokUt
+	 rI3GaTi/PE+wnlQizJUb5U3v4Tayvop3+S+KUptWp3eFo0EQmyMhOAhdPStXm1Y385jus
+	 4tZzafVHeI++lxDVx9gbuBladoIycPovzu+OuLqxiogSv9Vom2pgN8rI0ZbGjuLctzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OwW8GPOX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LzZeG3nv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB82606A320;
-	Thu, 19 Nov 2026 03:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B62606A32C;
+	Thu, 19 Nov 2026 03:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OwW8GPOX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859C51F000C4;
-	Thu, 19 Nov 2026 03:22:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LzZeG3nv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499F71F000C4;
+	Thu, 19 Nov 2026 03:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058580;
-	bh=YHHBT5P+xw0A1iAFMU6ApLANpfSvw5TAyBYqWzXrVL4=;
+	s=korg; t=1795058582;
+	bh=5rARhLjVAgKix4I+I0IdfgQv4spbSVeIBb13UxxtaNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OwW8GPOXvOZShCXW/zeYYn6XjqazT56f9eZtmliKIUAn2SUZPXm1WntYrmC21F3kq
-	 T9G1NJ2eFfcICtHYukQ1aG2gtQH1c7b8R+EkSO6eJtQ/QzqVHBzfntNCiBHMIddAqd
-	 NfIIedH9s7SkcwVYWW2DY6lLla62roamyl4WKytg=
+	b=LzZeG3nvg2KSMMVRjwUYiekvb0Ft388/LxgL8McwWQ3wJQkMMhhMFrSJWyEa/NEoM
+	 qLotd8M3WV3FivgDIGKDSU+tb8ATLgClOPd/H5l1OqbcaX9qjwqL4N2RWnHXoRZKKg
+	 HZe7vNPLgQ+lHkzPljkRxJ1xJpjmK8Z4Op2mVeXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Zixuan Chai <petalzu987@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Matt Turner <mattst88@gmail.com>,
+	Magnus Lindholm <linmag7@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0529/1848] ipv6: defrag: orphan skb before queuing
-Date: Wed, 18 Nov 2026 15:42:47 +0100
-Message-ID: <20261118145937.077174728@linuxfoundation.org>
+Subject: [PATCH 5.10 0538/1848] alpha: invalidate the local context in flush_tlb_mm()
+Date: Wed, 18 Nov 2026 15:42:56 +0100
+Message-ID: <20261118145937.499348072@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -72,53 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zixuan Chai <petalzu987@gmail.com>
+From: Magnus Lindholm <linmag7@gmail.com>
 
-[ Upstream commit 5dfa91a5ec53cfbf907a1fca095ac3ac7a4e94c9 ]
+[ Upstream commit 721bb7a129771f0ff9cef1dd5abfc106ef65feba ]
 
-IPv4 and nf_conntrack fragment queues orphan skbs before returning
--EINPROGRESS, but ip6_frag_queue() leaves the socket association intact.
+flush_tlb_mm() has the same caller-CPU omission that was fixed in
+flush_tlb_page(): when the target mm is not the calling CPU's active_mm
+nothing happens locally, and smp_call_function() handles only the other
+CPUs, so this CPU may later reuse the old ASN together with the
+translations it still holds.
 
-Commit 18685451fc4e ("inet: inet_defrag: prevent sk release while still in
-use") moved skb_orphan() into ip_frag_queue() and nf_ct_frag6_queue(), but
-missed ip6_frag_queue().
+The active_mm test itself is left alone here. That path calls
+flush_tlb_current(), which loads a fresh context through
+__load_new_mm_context() rather than issuing a targeted tbi() against
+whatever ASN happens to be loaded, so it does not depend on which context
+is current.
 
-Without orphaning, inet_frag_reasm_finish() clears fp->sk on frag_list
-skbs but leaves fp->destructor set to sock_pfree. Freeing the reassembled
-skb then calls sock_pfree() with a NULL socket. A socket using
-SOCK_RCU_FREE may also be released while its fragment is queued, leaving a
-stale socket pointer; this is a second consequence of the same missing
-orphan.
+The uniprocessor implementation in asm/tlbflush.h already has the missing
+branch. Counted over a fork-heavy run, flush_tlb_mm() was entered with the
+mm not this CPU's active_mm 2934 times, and 632 times while otherwise idle.
 
-Orphan the skb before returning -EINPROGRESS so the queued fragment no
-longer retains the socket association or destructor.
+The proposed Alpha hugetlb support routes hugetlb invalidations through
+flush_tlb_range(), which calls this function. Unmapping or migrating a
+hugetlb folio from another context will also need this local invalidate.
 
-Fixes: cf7fbe660f2d ("bpf: Add socket assign support")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Zixuan Chai <petalzu987@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Link: https://patch.msgid.link/5c396b7011168cd98b9812df4d6bbd00a96048e7.1791008591.git.petalzu987@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20261010142533.974797-8-linmag7@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/reassembly.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/alpha/kernel/smp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ipv6/reassembly.c b/net/ipv6/reassembly.c
-index 6993675171556..c74cfca91dc4b 100644
---- a/net/ipv6/reassembly.c
-+++ b/net/ipv6/reassembly.c
-@@ -221,6 +221,7 @@ static int ip6_frag_queue(struct frag_queue *fq, struct sk_buff *skb,
+diff --git a/arch/alpha/kernel/smp.c b/arch/alpha/kernel/smp.c
+index 3e25329d5d124..8a72f6fa71388 100644
+--- a/arch/alpha/kernel/smp.c
++++ b/arch/alpha/kernel/smp.c
+@@ -659,6 +659,9 @@ flush_tlb_mm(struct mm_struct *mm)
+ 			preempt_enable();
+ 			return;
+ 		}
++	} else {
++		/* smp_call_function() does not call back into this CPU.  */
++		flush_tlb_other(mm);
  	}
  
- 	skb_dst_drop(skb);
-+	skb_orphan(skb);
- 	return -EINPROGRESS;
- 
- insert_error:
+ 	smp_call_function(ipi_flush_tlb_mm, mm, 1);
 -- 
 2.53.0
 
