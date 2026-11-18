@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021166;
-	b=JfVIALYaKQDlCeKrkm9AGnEtaZB3egoFLRBXAJOsDWRgU3qF1pGDHT00pJWYM+DtaTkj
-	 2HxhnIoPFjT1jzZgG+wO9fAWrPVwEDews5AfVBn7ZKNueRE7gYN6ELCriFzMwzZCFRYk2
-	 cTMNx0MBV2JFQDZENGsNPhT5l9R+MhmrzQsT/FmQgOV1ashO/2fyarXoYuKau1EPwCF3f
-	 dKi93+fkk0pvApdk7NTtZgUU2oui4sdLWLbMAN1Q8k6ljxLXLmesve393Tzjt3mwPcMgZ
-	 w2uOXo4WFaDCs6rDKbD3nWsfIwFcqfSBsF4NR83ILnzv4zmdbGTDU+FEPbcNK/JahKg==
+	t=1795021177;
+	b=YrAsTuLYReFKGhyyIfSjbrTucTOGeg56FxqWjmNUiknJeqNHl1D1hMV1H3XiwGxYQvg2
+	 1SV447iQEn2q9rALV0hQO6VzGzkfM2xxX+OfRWQiUKpAs2YPCfp3zGnxX88ecgFGnfqqe
+	 8FooGour6hoS1UyRGxVshu0bwuzoiIcpln1pikeNkk1qEIdRVqZmjV/aRmqHyMbNlAALw
+	 g7sLculc89tFcladgEMsvSizyFhVzbjswl/xYGD3YBZi4I2eA0ijiPUHW7zEBZP2IeYsW
+	 7zt8HcW7yEgxvYQpz1rQ6BbG6px01qWyUW/84kX0wxPZ+MQUyhNlghjJtzpP4UMefvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021166;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021177;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/qiVsI1JklzFbb9crDPEEA6Ns12HfEBxBuxOQ6R31dU=;
-	b=nk1WLWcikUzsCM0q3kgo/qOcWzZEU/KGqqb7USWaOJn/vM5PlY/18tDYjicMHZ8yTVJZ
-	 gjcyphDXFx9XGKoyLbO/JGRJ5HJGGQwo2Ty3SbbMeoszBEvg532egqj12ZqePXX/TH1CS
-	 WXRurT0jzBwUV3poQTcoJAhhZleAjDcVw0DhpmXZSTIVYbB3/FSmLnkGuPjIKtDj/lCw9
-	 h0m95/ynIXPXU9216TZ2+EUx+efrAUJi1U8dg4VWKSN+mKRZ2GVfdk+0lTASSksIAOvHK
-	 zpKEgcg/82ov07u7pbyflQa3qvxOeUQ95XOm6GS3xNvNzwKDFnKQduf2HcLh1Me7lrw==
+	bh=PbdDe7yfSO220EtkaJzhhh81+/cQeBncWKVYKl+JDZo=;
+	b=vY36L8uY1FEmzgds7zT+pIbQxtGjZ7GPRYDde3sebpaGaNBnmfQ2tx7yN/Hq35G7z0Fx
+	 EN6dT60o9fYVCOVLwLRS5eV8xXV3bQMuoIN2SVS7ZYvitTOUUQwqi4K8IRXkcXFtCTt3R
+	 H99oxJzmBLjUWwK/ghrLniCOYSGz+a15hwwJ5DsTvqaTiL9dGcuypEfXOpgkA9zXGHQge
+	 INO9XeA/JMLknatif2istZczPoqqn45RX0aSBns1XMLjFTq0aLckCEUFragf0WAdEtIIy
+	 LEGNaLvoPiDd8KKMrAZ0X4I8O+m1Lz/s9pqSDuBBX5YJAnBpgIAegp2EFtuWRfNYjUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rhKGwaC9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RYBXFwmY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28199606A337;
-	Wed, 18 Nov 2026 16:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5973A606A320;
+	Wed, 18 Nov 2026 16:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rhKGwaC9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1841F000C5;
-	Wed, 18 Nov 2026 16:59:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RYBXFwmY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605E71F000C7;
+	Wed, 18 Nov 2026 16:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021165;
-	bh=/qiVsI1JklzFbb9crDPEEA6Ns12HfEBxBuxOQ6R31dU=;
+	s=korg; t=1795021176;
+	bh=PbdDe7yfSO220EtkaJzhhh81+/cQeBncWKVYKl+JDZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rhKGwaC9nXWPxrZdedMJ/qIe4atbCVaNawW0UBQKLJ5Zfavq3I2EUdtpcJBBenP/x
-	 xtlCw8cD3NK1ADKDI3FNra9WzMB3v2jtkmG43io/LQv+7hPe5MplYK904cYzSB5PWa
-	 PvGithesnmaAVZ1HMt/6+lIZ7u9uWrdIoh9yWr7M=
+	b=RYBXFwmYsfvXAD6rF4N/Mh5Vq31scZ3k+oDReQ7uFuIf1IQIt4Xo1p56zAC93RaG8
+	 hYGCiNro609KxyhDqjmSbT0He1vZ8T/nMZDPWoPIOjhr5vnQOaPbvhkYQ+Ee0+/b4P
+	 OThI4C9vXENmHMcowu5kFXtyzZC1HrQ0KSe3LnvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Baolin Liu <liubaolin@kylinos.cn>,
-	Xuewen Wang <wangxuewen@kylinos.cn>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2210/2651] ntfs: wait for the bitmap scan before MFT bitmap extension
-Date: Wed, 18 Nov 2026 15:57:30 +0100
-Message-ID: <20261118150405.213572674@linuxfoundation.org>
+Subject: [PATCH 7.3 2213/2651] ntfs: accept standard sparse compression unit
+Date: Wed, 18 Nov 2026 15:57:33 +0100
+Message-ID: <20261118150405.304676915@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,43 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuewen Wang <wangxuewen@kylinos.cn>
+From: Hyunchul Lee <hyc.lee@gmail.com>
 
-[ Upstream commit 0c3f2944e9060c31a221f32906267b827659b0c7 ]
+[ Upstream commit 87a548005f7a56e4171ff5d2050c591547b5449f ]
 
-If MFT bitmap extension fails before the initial $Bitmap scan completes,
-rollback calls ntfs_bitmap_clear_bit(), which holds a folio lock while
-ntfs_set_lcn_empty_bits() waits for the scan. The scanner deadlocks if it
-still needs that folio.
+Windows native sparse-file inspection shows that a non-resident $DATA
+attribute can be marked sparse and record the standard compression unit
+(4) even when the file is not compressed.
 
-Wait for the initial scan before taking the runlist or bitmap folio locks
-and attempting allocation.
-
-Fixes: 11ccc9107dc4 ("ntfs: update runlist handling and cluster allocator")
+Fixes: af0db57d4293 ("ntfs: update inode operations")
 Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
-Signed-off-by: Xuewen Wang <wangxuewen@kylinos.cn>
-Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
+Signed-off-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/mft.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ntfs/inode.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ntfs/mft.c b/fs/ntfs/mft.c
-index 482a216ade2cb..3192c018653b3 100644
---- a/fs/ntfs/mft.c
-+++ b/fs/ntfs/mft.c
-@@ -1352,6 +1352,10 @@ static int ntfs_mft_bitmap_extend_allocation_nolock(struct ntfs_volume *vol)
- 	size_t new_rl_count;
+diff --git a/fs/ntfs/inode.c b/fs/ntfs/inode.c
+index 302089f7f83a4..71b364e2ca73f 100644
+--- a/fs/ntfs/inode.c
++++ b/fs/ntfs/inode.c
+@@ -1148,14 +1148,21 @@ static int ntfs_read_locked_inode(struct inode *vi)
+ 					goto unm_err_out;
+ 				}
  
- 	ntfs_debug("Extending mft bitmap allocation.");
-+	/* The initial bitmap scan must finish before we lock or change a folio. */
-+	if (!NVolFreeClusterKnown(vol))
-+		wait_event(vol->free_waitq, NVolFreeClusterKnown(vol));
-+
- 	mft_ni = NTFS_I(vol->mft_ino);
- 	mftbmp_ni = NTFS_I(vol->mftbmp_ino);
- 	/*
++				/*
++				 * Windows stores the standard compression unit in
++				 * sparse attributes even when the data is not compressed.
++				 */
+ 				if (NInoSparse(ni) &&
+ 				    a->data.non_resident.compression_unit &&
+ 				    a->data.non_resident.compression_unit !=
+-				     vol->sparse_compression_unit) {
++				     vol->sparse_compression_unit &&
++				    a->data.non_resident.compression_unit !=
++				     STANDARD_COMPRESSION_UNIT) {
+ 					ntfs_error(vi->i_sb,
+-						   "Found non-standard compression unit (%u instead of 0 or %d).  Cannot handle this.",
++						   "Found non-standard compression unit (%u instead of 0, %d, or %d).  Cannot handle this.",
+ 						   a->data.non_resident.compression_unit,
+-						   vol->sparse_compression_unit);
++						   vol->sparse_compression_unit,
++						   STANDARD_COMPRESSION_UNIT);
+ 					err = -EOPNOTSUPP;
+ 					goto unm_err_out;
+ 				}
 -- 
 2.53.0
 
