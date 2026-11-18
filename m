@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033017;
-	b=IcT3vbzgJ8keVJ0C22fLebRJLkKiStULidiPeC27yv2sW31i5Sy4nKiGYhlDA/0X/BxW
-	 ops7BohKW0mCo6q19XEd4hUbHS0qc7vd02QmHKL1O0XZmu4wnZ8zaeJuBR3Ha3vD7NiHn
-	 s2PmQYC6g6BBZuy5ZuMdZZgLwPZiSluipe+oSmktnt+D2Vpv1yyG3GuUsFakZhBw3osJq
-	 PhEpNWXEI+q8tX9SBz8w00W/O7JkMJLRG1neh9bTHaSjKllkQ7b+0gXZ+nz6LfqTXWKvr
-	 Yq8ThMsIWZrfU6HjyHujE5//PxL5a3TPo/Og5bL8KpNV2tUzrvEYOpUq3146wN2PM0A==
+	t=1795033020;
+	b=XSY4JuFf6FLOlu1Efy/pWj6i2WsLnWDP4J2nsCSRikonohlecdYWg8wZuEElY4CuKdL0
+	 +ztVq+OOZ1rqX3Qh5pUfXs9N80CNeqpoetAQzEekOQBm3849DDYP6NJ5oYupK2lThSIhz
+	 eiY9OW6yB7NnWBorv4hl9aOctn9QUGGcaaPjcFQktvq3Ednx5Xgq0knZHDAAZX33VF1J+
+	 BLUu2HsAV5J3UxrYCo7A4jHDVORT7X+2rhUabdpo4WTl3o13T1Nqi7LHs4y3rA+dDt/9Z
+	 8wFaQGw0PMllidqISH7hvGohW454h6Ruyng07ikKPHLH6tO3xLKGsEBp37nLzgPMw+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033017;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033020;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Qx1L5ICJDPtf9x4h2VmdpORgCLT2ZkZYzYf5HHdWhvM=;
-	b=3MoI31qFNScfVaw8GVhMOOB3vi1u0l7dusPRHc0oKWTCcBJN//Cu899V0c6Q2lX0GyWx
-	 UhKPGTOnsBapEpBOY/ZuQsgiWTHpro8nkNWB/5YUHe7RnHfiDUI0bhwIqD5LvKhv0jcLg
-	 zKWxqCxZzLOjHCZjH0wKeaWGhJuvmcBJFAdOatHYM0k4TukGnWawbj8JuTHr74wZEVjK6
-	 C1eaDwSUPPWJKdVy7w7pjZYDjpqnFtBYNmTkqN7jRVTQodCA4CW8HX2sVFBdIixNaRy4q
-	 VkwwkJWOjq9cKPFp5/nKO89MPuoFMDGnlQUXF7fnxeyXZBelGdtR7k0pVUMqjYEH+Xw==
+	bh=+jtTB5cwY8wxMM1CBpjfIhWUs0rnJXTMpBfb97hm5a8=;
+	b=SS66KK7bVx7eJavNZKySDP9Td1afWdx4vB8l7hcd4i/qXkTvE0/36WDpI7fT4q3WlvI1
+	 Ps9ccOr+8LX2aDJVhTcLGnic6aqrwWGD2OV2QGO/JXS/4Vsf92W8rtIGRWtt9+mYjvX/j
+	 JIFr5GJ/NSDOu+i6mQwD1MBpmuBfZ/3ymtodE21IaDzJ22YeBkJZOuJm7tBZj9C1xHDW/
+	 285iZ73+qcyRmfPBCccXfzJ/5yDZeOAnYfptzxyEo1cVUMKutM+ZGM7YjJgoEHN7hjP3u
+	 GYVGjXgIV7Xg7UNxiqQT3yAjvSJ6Tyyt728nwI5ThRvNreUnDrSMAX9j+rEsTHPl5Ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pcxq0rhS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gjyPdd7q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44845606A32C;
-	Wed, 18 Nov 2026 20:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347A4606A320;
+	Wed, 18 Nov 2026 20:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pcxq0rhS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ADE41F000C4;
-	Wed, 18 Nov 2026 20:16:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gjyPdd7q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB571F000C4;
+	Wed, 18 Nov 2026 20:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033017;
-	bh=Qx1L5ICJDPtf9x4h2VmdpORgCLT2ZkZYzYf5HHdWhvM=;
+	s=korg; t=1795033020;
+	bh=+jtTB5cwY8wxMM1CBpjfIhWUs0rnJXTMpBfb97hm5a8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pcxq0rhSBZJ1f8umD0igYemQ4QhyoeRDS/Bn5GvsCh4ozJ+VDKiLND+BLbS5zGIH3
-	 4lhyb89gIRHTF2WOYuTMN+RT0J/WZLFAeu0xaikNrFJZBuvniwz/CTzxM/YN6Ct2kq
-	 HFpXo07ARk8eB0nzP90oarZZpr0L/MvlvlATDPtA=
+	b=gjyPdd7q2YGvClYIxp0yedmqJfLumvAYWl5TaSTez9DiTboVSBQyv1CHJuZPkijhV
+	 R1PxQGUd/GpQZbM51t3/8od2M5+4hIFnpFpRa/i/lHEkq/vzVA1uORxxJ8qBq6y4HA
+	 F+HWZD0vQSB9XxDrrpFVDKHNjOp9UVSdTn7w97kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Allison Henderson <achender@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Feng Yang <yangfeng@kylinos.cn>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Mahe Tardy <mahe.tardy@gmail.com>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1601/1756] net/rds: do not initialize transports after rds_init() failed
-Date: Wed, 18 Nov 2026 16:02:08 +0100
-Message-ID: <20261118150113.633577625@linuxfoundation.org>
+Subject: [PATCH 6.12 1619/1756] bpf: Fix out-of-bounds btf->types write for split BTF
+Date: Wed, 18 Nov 2026 16:02:26 +0100
+Message-ID: <20261118150114.287977211@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,124 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Feng Yang <yangfeng@kylinos.cn>
 
-[ Upstream commit ffbbc315b8b883a1c0e131fb3186b9428d2812aa ]
+[ Upstream commit 6c476d2b73056ed151c3f8b884c627c75999ed7c ]
 
-rds, rds_rdma and rds_tcp each have their own module_init().  When they
-are built in, those run in link order, so rds_init() goes first, but
-do_initcalls() does not stop when it fails.  The transports then
-initialize against a core that has already been torn down: rds_wq has
-been destroyed, yet rds_ib_dev_put(), rds_ib_unregister_client() and
-rds_tcp_accept_work() still queue onto or flush it, and
-rds_trans_register() hands the transports to a core whose socket
-family may never have been registered.
+btf_add_type() stores the types of a BTF in btf->types[], which can hold at
+most BTF_MAX_TYPE entries.  The types of a split BTF get IDs start_id ..
+start_id + nr_types - 1, so only BTF_MAX_TYPE - start_id of them fit, but
+neither the limit check nor the size used to grow the array accounts for
+start_id: the check is an equality test against BTF_MAX_TYPE
+('start_id + btf->types_size == BTF_MAX_TYPE') and the new size is clamped
+to BTF_MAX_TYPE.
 
-This was seen with CONFIG_SYSCTL=n, where rds_sysctl_init() failed and
-rds_ib_init()'s error path then flushed the freed rds_wq [1], but any
-rds_init() failure after rds_threads_init() has the same effect.
+The check therefore only fires if the array happens to grow to exactly
+BTF_MAX_TYPE - start_id entries.  Otherwise, if the module has more than
+BTF_MAX_TYPE types, the array is filled up to BTF_MAX_TYPE entries.  The
+next type that needs to be added reallocates the array to the same size,
+after which btf->types_size no longer equals btf->nr_types and the growth
+path is not taken anymore, so every following type is written past the end
+of the array:
 
-Record whether rds_init() succeeded and have rds_rdma_init() and
-rds_tcp_init() bail out with -ENODEV otherwise.  Modular builds are
-unaffected: the transports need symbols exported by rds.ko, so they
-cannot be loaded unless rds_init() succeeded.
+  BUG: unable to handle page fault for address: ffffc90006200000
+  RIP: 0010:btf_add_type+0x74/0x270
+  Call Trace:
+   btf_check_all_metas
+   btf_parse_module
 
-[1] https://lore.kernel.org/oe-lkp/202610190310.9737b2e3-lkp@intel.com
-Fixes: 55b7ed0b582f ("RDS: Common RDMA transport code")
-Fixes: 70041088e3b9 ("RDS: Add TCP transport to RDS")
-Suggested-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20261021195837.142802-3-achender@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Bound both the array size and the limit check by BTF_MAX_TYPE - start_id.
+Base BTF (start_id == 0) is unaffected.
+
+Fixes: 951bb64621b8 ("bpf: Add in-kernel split BTF support")
+Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Mahe Tardy <mahe.tardy@gmail.com>
+Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Link: https://patch.msgid.link/20261028031933.277550-1-yangfeng59949@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/af_rds.c         | 14 ++++++++++++++
- net/rds/rdma_transport.c |  3 +++
- net/rds/rds.h            |  1 +
- net/rds/tcp.c            |  3 +++
- 4 files changed, 21 insertions(+)
+ kernel/bpf/btf.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/rds/af_rds.c b/net/rds/af_rds.c
-index 63b6d6e6b035d..942ee11c67a9f 100644
---- a/net/rds/af_rds.c
-+++ b/net/rds/af_rds.c
-@@ -921,8 +921,11 @@ static void rds6_sock_info(struct socket *sock, unsigned int len,
- }
- #endif
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 8956f2fd0c57d..e152b4d9113f8 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -1600,15 +1600,16 @@ static int btf_add_type(struct btf_verifier_env *env, struct btf_type *t)
+ 		/* Expand 'types' array */
  
-+static bool rds_initialized;
-+
- static void rds_exit(void)
- {
-+	rds_initialized = false;
- 	sock_unregister(rds_family_ops.family);
- 	proto_unregister(&rds_proto);
- 	rds_conn_exit();
-@@ -943,6 +946,16 @@ module_exit(rds_exit);
+ 		struct btf_type **new_types;
+-		u32 expand_by, new_size;
++		u32 expand_by, new_size, max_size;
  
- u32 rds_gen_num;
+-		if (btf->start_id + btf->types_size == BTF_MAX_TYPE) {
++		if (btf->start_id + btf->types_size >= BTF_MAX_TYPE) {
+ 			btf_verifier_log(env, "Exceeded max num of types");
+ 			return -E2BIG;
+ 		}
  
-+/* When RDS is built in, a failed rds_init() does not stop the rds_rdma
-+ * and rds_tcp initcalls from running against a core that has already
-+ * been torn down (rds_wq in particular).  Let them bail out early.
-+ */
-+bool rds_is_initialized(void)
-+{
-+	return rds_initialized;
-+}
-+EXPORT_SYMBOL_GPL(rds_is_initialized);
-+
- static int __init rds_init(void)
- {
- 	int ret;
-@@ -979,6 +992,7 @@ static int __init rds_init(void)
- 	rds_info_register_func(RDS6_INFO_SOCKETS, rds6_sock_info);
- 	rds_info_register_func(RDS6_INFO_RECV_MESSAGES, rds6_sock_inc_info);
- #endif
-+	rds_initialized = true;
++		max_size = BTF_MAX_TYPE - btf->start_id;
+ 		expand_by = max_t(u32, btf->types_size >> 2, 16);
+-		new_size = min_t(u32, BTF_MAX_TYPE,
++		new_size = min_t(u32, max_size,
+ 				 btf->types_size + expand_by);
  
- 	goto out;
- 
-diff --git a/net/rds/rdma_transport.c b/net/rds/rdma_transport.c
-index 7be38be1228ec..cc6a7d29791ae 100644
---- a/net/rds/rdma_transport.c
-+++ b/net/rds/rdma_transport.c
-@@ -325,6 +325,9 @@ static int __init rds_rdma_init(void)
- {
- 	int ret;
- 
-+	if (!rds_is_initialized())
-+		return -ENODEV;
-+
- 	ret = rds_ib_init();
- 	if (ret)
- 		goto out;
-diff --git a/net/rds/rds.h b/net/rds/rds.h
-index 5a1789ace8fbf..9396eda4c3ff7 100644
---- a/net/rds/rds.h
-+++ b/net/rds/rds.h
-@@ -1008,6 +1008,7 @@ extern unsigned int  rds_sysctl_trace_level;
- int rds_threads_init(void);
- void rds_threads_exit(void);
- extern struct workqueue_struct *rds_wq;
-+bool rds_is_initialized(void);
- void rds_queue_reconnect(struct rds_conn_path *cp);
- void rds_connect_worker(struct work_struct *);
- void rds_shutdown_worker(struct work_struct *);
-diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index 7fae00350b404..73b587660b3ac 100644
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -819,6 +819,9 @@ static int __init rds_tcp_init(void)
- {
- 	int ret;
- 
-+	if (!rds_is_initialized())
-+		return -ENODEV;
-+
- 	rds_tcp_conn_slab = KMEM_CACHE(rds_tcp_connection, 0);
- 	if (!rds_tcp_conn_slab) {
- 		ret = -ENOMEM;
+ 		new_types = kvcalloc(new_size, sizeof(*new_types),
 -- 
 2.53.0
 
