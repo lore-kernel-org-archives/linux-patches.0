@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016997;
-	b=CT2MHrc0EuiTxDp8MAFtzXKhUGeW9bBkC8kt9fUIdQieHjAAeHlRCl825K5AGI/bEDub
-	 5DofvO+aKnBCqkqml+4nAlqn1aGOP/Wn84Y+1X53uYa6TV7AZy8miTWgN4JKOl/vmONdm
-	 YioNBNgK4APuNXtmbS7+KwRRgkXZWx5KDfx4tPf+PMbpQSn9XOmjw9bUdKSavrCCGawpQ
-	 kxX/hRc88OAlOiBU32cDqtfc6qp784eCehuEF+2D/CUNYgu+cxkHPRwrMZDNE6KjBgzux
-	 AS4ZChtYP4F7x/5RhMxE5DwvlVXnznUf7fwZRqwQFT93ejjmDREgOkUV3+db7zEQXfQ==
+	t=1795017000;
+	b=jGw4C3NXARRbB3MizhPYcqSEvmgTsJovcbVkqJsuY9F2bUrziecHn+692WGaVX0Vyp13
+	 f4c7hpeqBJ/vLLrbjgnnnmYiSCqWWX98AOyj4XTMPofOHmSAnuMiOs4vQLc0kS9AZtkDY
+	 3lQyWoIBQmQEqf50m/mCiV40LwT18QCCAVuOTlGyFjDkzlTK1QM514VxRdqOGbfS3Z2QZ
+	 Z+k+H4iwIUVAafJFCUsMLBNAFwTO9n9DmVQ6wYaIZ50iJZIZhiEHiHc7Xf2800pvXd+VU
+	 ibQbRZI0iA52wAf+KYKiyo8vBfDndmxU3H1iXksQyi++JYbRiZkQbywTNcdXg0L/Qwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016997;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017000;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=CWHtAXe+kCXmUecpUC+2RSe+PDJMmEzPFXv46IWmEIk=;
-	b=4MyQZ/Zqq0YOu352s6nWeDVma8QkcMvVO71K2re9QwaFHY/WCXSz3j+skl7TmcH3Bpie
-	 TXUwJcfLQ2Lhs7+MlEzHT6yDZh410B2S2VIsKVnu3ofKv6rQ7ekZA6FbaNOijlBdeVDYS
-	 tbVPME/4DA5dhiiUIE0QzJve1SPPv0Nu8i/HM84ASffRg5kNJLKH8I+ujpkOSdIMEIGWJ
-	 73v2RPu42QtQ/ZKyE4M56a3p9uXXHSyjYOZ0/elWH5vdvUkFi9akC51uwkbh24U6NUNYv
-	 j+fK+MBim6YZaxNwjhrUH6CZYWjKwSGsl0hsxN1LEs2psUiPGDUZc7lU9vV5fAAfy6w==
+	bh=UCmJn1atyq3r+1V5pU8kbXwTZPiOBoXPr1ppwPexmJE=;
+	b=d2bqlfnBlhSlIxcnD6AdWX7dAwWbUMaiYp6z9e5xB15dHQcFWjUI1tMR2nF/inbtl48G
+	 unIYL5ejth/mmW91tN3XKb2oYmKrOmcmWPRnc0Kpoo23jvnfwgSe0DUjBV72z5h8HSWHn
+	 PBl/y6u5Oz9PYhO8OtoV+52G7Vm3ujFyU80mUvb8ehqbP6LMi8RpXsuIq+TXoDNwdsFpx
+	 9SWB6z7tWC3Qk0KrgoLrVObaYm1JmuLa07RhXakOMFJtLHGRWPZe8+i0jKzSnScTzfIKa
+	 1yPHtaJpqNAI67CWyHLekVsM7xZRiQh/+rtbuazypWT+1NWeobRfbDCvrzMXGofZNZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nY6sv99f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ipJYBgin;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCDB606A320;
-	Wed, 18 Nov 2026 15:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADFB606A32A;
+	Wed, 18 Nov 2026 15:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nY6sv99f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4DB1F000C4;
-	Wed, 18 Nov 2026 15:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ipJYBgin
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 890701F000C4;
+	Wed, 18 Nov 2026 15:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016997;
-	bh=CWHtAXe+kCXmUecpUC+2RSe+PDJMmEzPFXv46IWmEIk=;
+	s=korg; t=1795017000;
+	bh=UCmJn1atyq3r+1V5pU8kbXwTZPiOBoXPr1ppwPexmJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nY6sv99f7ekas33awqBLCfYLv8Np5xyEUC51sjbvRz31Zckq2EaewewyrQ2olNehu
-	 OHFApfGj6g9/J/uFc/84O4svByL3f7ncmeKa0MIhDWPzDR4r1vMojE4tNVSO0s5abN
-	 abTUUl+q/JqXbUh1jXo54wg9OKoXrLQ1OV9osEVI=
+	b=ipJYBginqK5f0qlRnmOMAjk41wgIBZ49dFWcz4K7GnDgv5poxmUMfhpq3KmRkDoE1
+	 CQeihrhlq/iIjOXWkMRMwp8Y6zf3JSuz4cnLAtTe0bgJOuKg0Y/wBAe8zWpqimJPzA
+	 OgEAUHCGcP7AOnXrgiHTwxZfh9OzxEG1kyZu0IoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Atsushi Nemoto <anemo@mba.ocn.ne.jp>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20 ?= <u.kleine-koenig@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0726/2651] serial: txx9: Drop noop probe function and dangerous remove callback
-Date: Wed, 18 Nov 2026 15:32:46 +0100
-Message-ID: <20261118150314.005497527@linuxfoundation.org>
+Subject: [PATCH 7.3 0727/2651] serial: 8250: Fix corner case for port matching
+Date: Wed, 18 Nov 2026 15:32:47 +0100
+Message-ID: <20261118150314.042028958@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,121 +71,128 @@ Content-Transfer-Encoding: 8bit
 
 From: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 22c6a6ac74c2434735638e7ef1101597ae263aec ]
+[ Upstream commit c526404a4a92dd83b2332446d544eac7cfd3d376 ]
 
-The only platform device that can be bound to the driver is allocated by
-the driver itself. That device doesn't have platdata, so the probe
-function only consists of a loop that is never run and thus can be
-dropped without loss of functionality.
+In the case CONFIG_SERIAL_8250=y + CONFIG_SERIAL_8250_HUB6=m
+hub6_match_port() evaluates statically to false in
+serial8250_match_port() which is a bug and a change in behavior compared
+to before commit 7ab80d1e7243 ("serial: 8250: fix compile error with
+hub6_match_port() when compiled as a module").
 
-The remove function then should better not undo things that were not
-done in the first place. That happens because serial_txx9_init() calls
-serial_txx9_register_ports() with the created platform device and so
-up->dev == &dev->dev evaluates to true and uart_remove_one_port() is
-called twice for each port.
+To make the comparison correct, the dummy implementation of
+hub6_match_port() must only be used if CONFIG_SERIAL_8250_HUB6 is
+disabled. Then as there is a bidirectional dependency between
+8250_hub6.c and 8250_core.c, put both in the same module.
 
-So let serial_txx9_exit() undo exactly what serial_txx9_init() does and
-remove the useless respectively wrong functions.
-
-Fixes: 0970769aceb9 ("[SERIAL] serial_txx9 driver update")
-Reviewed-by: Atsushi Nemoto <anemo@mba.ocn.ne.jp>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 7ab80d1e7243 ("serial: 8250: fix compile error with hub6_match_port() when compiled as a module")
 Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/cd4fce2cef14907ebe4713c147f8896924380e44.1786697789.git.u.kleine-koenig@baylibre.com
+Link: https://patch.msgid.link/9ad6983ae584ce9d962f2a841f4d5e90c2012ceb.1786697789.git.u.kleine-koenig@baylibre.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial_txx9.c | 55 ++------------------------------
- 1 file changed, 3 insertions(+), 52 deletions(-)
+ drivers/tty/serial/8250/8250.h          | 8 +++++++-
+ drivers/tty/serial/8250/8250_hub6.c     | 8 +-------
+ drivers/tty/serial/8250/8250_platform.c | 4 ++++
+ drivers/tty/serial/8250/Kconfig         | 4 ++--
+ drivers/tty/serial/8250/Makefile        | 2 +-
+ 5 files changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/tty/serial/serial_txx9.c b/drivers/tty/serial/serial_txx9.c
-index 4ae9a45c8e3a3..ef56979321b9e 100644
---- a/drivers/tty/serial/serial_txx9.c
-+++ b/drivers/tty/serial/serial_txx9.c
-@@ -1009,7 +1009,8 @@ static void serial_txx9_unregister_port(int line)
- 	struct uart_port *uart = &serial_txx9_ports[line];
- 
- 	mutex_lock(&serial_txx9_mutex);
--	uart_remove_one_port(&serial_txx9_reg, uart);
-+	if (uart->iobase || uart->mapbase)
-+		uart_remove_one_port(&serial_txx9_reg, uart);
- 	uart->flags = 0;
- 	uart->type = PORT_UNKNOWN;
- 	uart->iobase = 0;
-@@ -1019,52 +1020,6 @@ static void serial_txx9_unregister_port(int line)
- 	mutex_unlock(&serial_txx9_mutex);
- }
- 
--/*
-- * Register a set of serial devices attached to a platform device.
-- */
--static int serial_txx9_probe(struct platform_device *dev)
--{
--	struct uart_port *p = dev_get_platdata(&dev->dev);
--	struct uart_port port;
--	int ret, i;
--
--	memset(&port, 0, sizeof(struct uart_port));
--	for (i = 0; p && p->uartclk != 0; p++, i++) {
--		port.iobase	= p->iobase;
--		port.membase	= p->membase;
--		port.irq	= p->irq;
--		port.uartclk	= p->uartclk;
--		port.iotype	= p->iotype;
--		port.flags	= p->flags;
--		port.mapbase	= p->mapbase;
--		port.dev	= &dev->dev;
--		port.has_sysrq	= IS_ENABLED(CONFIG_SERIAL_TXX9_CONSOLE);
--		ret = serial_txx9_register_port(&port);
--		if (ret < 0) {
--			dev_err(&dev->dev, "unable to register port at index %d "
--				"(IO%lx MEM%llx IRQ%d): %d\n", i,
--				p->iobase, (unsigned long long)p->mapbase,
--				p->irq, ret);
--		}
--	}
--	return 0;
--}
--
--/*
-- * Remove serial ports registered against a platform device.
-- */
--static void serial_txx9_remove(struct platform_device *dev)
--{
--	int i;
--
--	for (i = 0; i < UART_NR; i++) {
--		struct uart_port *up = &serial_txx9_ports[i];
--
--		if (up->dev == &dev->dev)
--			serial_txx9_unregister_port(i);
--	}
--}
--
- #ifdef CONFIG_PM
- static int serial_txx9_suspend(struct platform_device *dev, pm_message_t state)
- {
-@@ -1096,8 +1051,6 @@ static int serial_txx9_resume(struct platform_device *dev)
+diff --git a/drivers/tty/serial/8250/8250.h b/drivers/tty/serial/8250/8250.h
+index 9337fec9394ed..3fd25b7a7b81c 100644
+--- a/drivers/tty/serial/8250/8250.h
++++ b/drivers/tty/serial/8250/8250.h
+@@ -316,6 +316,12 @@ static inline int serial8250_pnp_init(void) { return 0; }
+ static inline void serial8250_pnp_exit(void) { }
  #endif
  
- static struct platform_driver serial_txx9_plat_driver = {
--	.probe		= serial_txx9_probe,
--	.remove		= serial_txx9_remove,
- #ifdef CONFIG_PM
- 	.suspend	= serial_txx9_suspend,
- 	.resume		= serial_txx9_resume,
-@@ -1251,9 +1204,7 @@ static void __exit serial_txx9_exit(void)
- 	platform_driver_unregister(&serial_txx9_plat_driver);
- 	platform_device_unregister(serial_txx9_plat_devs);
- 	for (i = 0; i < UART_NR; i++) {
--		struct uart_port *up = &serial_txx9_ports[i];
--		if (up->iobase || up->mapbase)
--			uart_remove_one_port(&serial_txx9_reg, up);
-+		serial_txx9_unregister_port(i);
- 	}
++#ifdef CONFIG_SERIAL_8250_HUB6
++int serial8250_hub6_init(void);
++#else
++static inline int serial8250_hub6_init(void) { return 0; }
++#endif
++
+ #ifdef CONFIG_SERIAL_8250_RSA
+ void univ8250_rsa_support(struct uart_ops *ops, const struct uart_ops *core_ops);
+ void rsa_enable(struct uart_8250_port *up);
+@@ -336,7 +342,7 @@ int fintek_8250_probe(struct uart_8250_port *uart);
+ static inline int fintek_8250_probe(struct uart_8250_port *uart) { return 0; }
+ #endif
  
- 	uart_unregister_driver(&serial_txx9_reg);
+-#if IS_REACHABLE(CONFIG_SERIAL_8250_HUB6)
++#if IS_ENABLED(CONFIG_SERIAL_8250_HUB6)
+ bool hub6_match_port(const struct uart_port *port1, const struct uart_port *port2);
+ #else
+ static inline bool hub6_match_port(const struct uart_port *port1, const struct uart_port *port2)
+diff --git a/drivers/tty/serial/8250/8250_hub6.c b/drivers/tty/serial/8250/8250_hub6.c
+index b6767633c966c..3e548530ec4e3 100644
+--- a/drivers/tty/serial/8250/8250_hub6.c
++++ b/drivers/tty/serial/8250/8250_hub6.c
+@@ -49,13 +49,7 @@ bool hub6_match_port(const struct uart_port *port1, const struct uart_port *port
+ }
+ EXPORT_SYMBOL_GPL(hub6_match_port);
+ 
+-static int __init hub6_init(void)
++int __init serial8250_hub6_init(void)
+ {
+ 	return platform_device_register(&hub6_device);
+ }
+-
+-module_init(hub6_init);
+-
+-MODULE_AUTHOR("Russell King");
+-MODULE_DESCRIPTION("8250 serial probe module for Hub6 cards");
+-MODULE_LICENSE("GPL");
+diff --git a/drivers/tty/serial/8250/8250_platform.c b/drivers/tty/serial/8250/8250_platform.c
+index af946d12e7648..3a2dff9ce7b76 100644
+--- a/drivers/tty/serial/8250/8250_platform.c
++++ b/drivers/tty/serial/8250/8250_platform.c
+@@ -319,6 +319,10 @@ static int __init serial8250_init(void)
+ 	if (ret)
+ 		goto unreg_uart_drv;
+ 
++	ret = serial8250_hub6_init();
++	if (ret)
++		goto unreg_pnp;
++
+ 	serial8250_isa_devs = platform_device_alloc("serial8250", PLAT8250_DEV_LEGACY);
+ 	if (!serial8250_isa_devs) {
+ 		ret = -ENOMEM;
+diff --git a/drivers/tty/serial/8250/Kconfig b/drivers/tty/serial/8250/Kconfig
+index fa6f33303cb08..1d3f7e57e9595 100644
+--- a/drivers/tty/serial/8250/Kconfig
++++ b/drivers/tty/serial/8250/Kconfig
+@@ -304,8 +304,8 @@ config SERIAL_8250_EXAR_ST16C554
+ 	  will be called 8250_exar_st16c554.
+ 
+ config SERIAL_8250_HUB6
+-	tristate "Support Hub6 cards"
+-	depends on SERIAL_8250 != n && ISA && SERIAL_8250_MANY_PORTS
++	bool "Support Hub6 cards"
++	depends on SERIAL_8250_MANY_PORTS && ISA
+ 	help
+ 	  Say Y here if you have a HUB6 serial board.
+ 
+diff --git a/drivers/tty/serial/8250/Makefile b/drivers/tty/serial/8250/Makefile
+index 46adadcfe072c..330dd6cf7c832 100644
+--- a/drivers/tty/serial/8250/Makefile
++++ b/drivers/tty/serial/8250/Makefile
+@@ -7,6 +7,7 @@ obj-$(CONFIG_SERIAL_8250)		+= 8250.o
+ 8250-y					:= 8250_core.o
+ 8250-y					+= 8250_platform.o
+ 8250-$(CONFIG_SERIAL_8250_PNP)		+= 8250_pnp.o
++8250-$(CONFIG_SERIAL_8250_HUB6)		+= 8250_hub6.o
+ 
+ obj-$(CONFIG_SERIAL_8250)		+= 8250_base.o
+ 8250_base-y				:= 8250_port.o
+@@ -35,7 +36,6 @@ obj-$(CONFIG_SERIAL_8250_EXAR_ST16C554)	+= 8250_exar_st16c554.o
+ obj-$(CONFIG_SERIAL_8250_FOURPORT)	+= 8250_fourport.o
+ obj-$(CONFIG_SERIAL_8250_FSL)		+= 8250_fsl.o
+ obj-$(CONFIG_SERIAL_8250_HP300)		+= 8250_hp300.o
+-obj-$(CONFIG_SERIAL_8250_HUB6)		+= 8250_hub6.o
+ obj-$(CONFIG_SERIAL_8250_INGENIC)	+= 8250_ingenic.o
+ obj-$(CONFIG_SERIAL_8250_IOC3)		+= 8250_ioc3.o
+ obj-$(CONFIG_SERIAL_8250_KEBA)		+= 8250_keba.o
 -- 
 2.53.0
 
