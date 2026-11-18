@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033473;
-	b=gAtoZNVwn9Uplmxk4KrZE7fzITTdrxCQbbX5lclSAm73WrMJf05tQqPZZ4DUh6oILrzc
-	 WmlO2pYh3c0W/SKVET/I9+sLCCQ1HYwLooQtjLk3lQMa6kItSj0QYUh/4tYy6CLG13rYO
-	 QaxNd8gd8LSmUHWJAZs+Kmfql70IuIo7/zflUjgGZqdqsUlY0n59k9CdnHR4tG0vLT4c6
-	 hayPxLRc2lbCSk7docWP0k1AZO1dvtTQ2dTBqvj/QJbVWpGJSxlrj9mLVQyNfuNdSY8+W
-	 mvJAdgdILpMQ4OrAKhkP3xdNFSiCZPZtNkWh43l8vhfGFGBipR/Xro1IAwCiA2BHa9A==
+	t=1795033476;
+	b=MVs+irS4qFKVHBYhf52K89jSnaCblEB7KppctkUBLnw9m5GNnZrFCYZZJdbzhaYyqWPW
+	 rxlwkwVsvWHcf8iDoW1kK13IndrF9khl+pgDrv5lNbm3hHvp+GEp7Gek4/lqJy4Prija5
+	 9xw64M0Utx1N4YyM7KdTu+l24iMfPajMj4qSmgb1S/4igFfY5X97ZxVlEZw5jbHWcfYUE
+	 XZ7N/ZWcsVUwv1iJ7FYPEKiGOILOZzfwdlnmlXP1Psavq4/aiy1bWdkI1YYutV/YyEgPE
+	 dBo1QEZt1ewvqUrTdgdOKJGQZYgoaPaLdV/pNJ0OpwmlnecYAyMjCgclqGejRgt/Wqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033473;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033476;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=fwvLRuUyFO9dJ1ppOhQ4NRi6d0Gupbvu1fXEefVQWQA=;
-	b=LxLq44T7wB+nDhAHiFJdYsDtMGNgRZbl9YPYyAEqQ55L09aiDRNsnrtr9BLpIyw6eNWx
-	 snYYeIX42heVZ5wT4PM+g+sIjvt6vP1r1UsFKo+4MxyR3flg0bs2vKsBMzbd7wFH+mQPB
-	 /aIf4ecA1++8pewwzCHYHfNqSFMMulPI+btzbX3UzYYmW+wew0nRAHf48b0Sh9WoKAKrD
-	 5NpR3lwqW1hDhJz34F29b8HO1bfgMQQPpbUTUZMX2Kwg5BGlrKo9y+e/ocgEEL1R56XPL
-	 G8q03Q1D3ndEUTes6/M3cXGhkBc+sdadgTWIDxT9kp1GM7HLadhWWdnGB75hC4lSNWg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=SCGr0aNl7r0ZERoXl/kGPHmi9oiqZ9z5ENpbu0iKYn4=;
+	b=B3WK1CHmj5x4VgGEHRYRj9/09twj/9ESXBsDyY1MhJZKsca+cyQWpy2YqlCx8BJH32B5
+	 05RcEVfegKWEq9aTy3AkmK7sItyeOXdCjcqBh2cy2aHTTt2NDL5X+MoaDRlO7PvnNplIN
+	 lYNwI6BXLimp8FrCZOAY6YbjfBJsinhJLsnSQbLUKAMLEnJoueW3Z+OZC27rlwAO6vGyT
+	 dp+wFGLONj1pam3og4c73Rev+NkYagrwTfnBE8kElFiaiQSqGdDRPj//bIWD9rOS8ntfq
+	 klVJhfGnST4Z3H9u49D9S627mHRF1xo5+v4zuXqY2t8RVCAUeLL9yoRK5Z/qij6EiUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2E+TOin/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gn6sI4cb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9183A606A320;
-	Wed, 18 Nov 2026 20:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D333606A320;
+	Wed, 18 Nov 2026 20:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2E+TOin/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7851F000C4;
-	Wed, 18 Nov 2026 20:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gn6sI4cb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0181F000C6;
+	Wed, 18 Nov 2026 20:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033473;
-	bh=fwvLRuUyFO9dJ1ppOhQ4NRi6d0Gupbvu1fXEefVQWQA=;
+	s=korg; t=1795033476;
+	bh=SCGr0aNl7r0ZERoXl/kGPHmi9oiqZ9z5ENpbu0iKYn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2E+TOin/l2cbUsbmKoXqFkC0HSQoywwqudeE8TfoV2kJwniJJH1PHzjZpMCfQjhMW
-	 DQCSSCeCXYy7QwFf8P8HXAyDhgSpCvRWvBoroK0jCIz2kDe3bRt99HR1B9stR9QK7S
-	 aq9ZMbxcPGiUclu22FbLgPiWfx2HXPfX+ZNELT3A=
+	b=gn6sI4cbt1gBqS24ChB6S6Vhfqdm3PFJzOQ91ZKEZU7VbyIZXwV6bXII27feLzqwC
+	 NN12R0YNvABm3pRIVxVkGjvl/kbOenH8YOX4dtUJ1vM3xMdu+lrA2omHOAT84zwBuD
+	 I8JCaJ06Ynxu2XwvjYFWiU6t58Yl4PhgG6stoNDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0009/3318] kbuild: link-vmlinux.sh: improve detection of third pass requirement
-Date: Wed, 18 Nov 2026 15:10:31 +0100
-Message-ID: <20261118150313.926313513@linuxfoundation.org>
+Subject: [PATCH 6.6 0010/3318] exec: cancel io_uring requests before de_thread()
+Date: Wed, 18 Nov 2026 15:10:32 +0100
+Message-ID: <20261118150313.962655999@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,95 +63,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 14b8b4bf2d7bd5d58c17adbeed0edfda1dfc1a7f upstream.
+[ Upstream commit b42c85c20d84ff3e4f0f027d6596c3b3b4a20657 ]
 
-It can happen that symbol sizes within .tmp_vmlinux1.kallsyms.o and
-.tmp_vmlinux2.kallsyms.o differ, without affecting file size on disk
-because of section alignment and/or padding emitted by the assembler.
+begin_new_exec() cancels the exec'ing thread's io_uring requests after
+de_thread() made it the only thread in the thread-group. Now
+io_uring_task_cancel() runs task work after. If it runs a
+create_worker_cb() item then a io-wq queued on the thread before the
+exec creates a new io-wq worker thread.
 
-link-vmlinux.sh doesn't detect this case currently and keeps using
-.tmp_vmlinux2.kallsyms.o to link the final vmlinux. Due to the
-different symbol sizes, other symbols are shifted within the final
-image compared to .tmp_vmlinux2, and the final comparison of System.map
-against "${kallsyms_sysmap}" fails with the message:
+Said thread joins the thread-group which de_thread() just took down. The
+io-iwq sticks around until it notices that its workqueue is dying. But
+code after de_thread() relies on being single-threaded.
 
-    Inconsistent kallsyms data
-    Try "make KALLSYMS_EXTRA_PASS=1" as a workaround
+Move io_uring_task_cancel() before de_thread() but behind the point of
+no return. Any worker created during task work run from
+io_uring_task_cancel() is just a sibling thread that de_thread() will
+take down and reap.
 
-This can happen in particular if the linker emits additional symbols
-that might have different names between our (re-)linking steps, e.g.
-because those names depend on the virtual address of the symbol. Linker
-stubs for ARM errata work-arounds are one such case.
+Once io_uring_task_cancel() returned the thread has neither a task
+context nor a workqueue left so nothing can add a thread behind
+de_thread()'s back anymore.
 
-These changed symbol names can cause the output of the token
-compression of kallsyms.c to change due to the changed symbol substring
-count, which in turn can change the size of the kallsyms_names symbol
-itself, causing the potential shift of subsequent symbol addresses in
-.tmp_vmlinux2.kallsyms.o and therefore the final image.
-
-Update link-vmlinux.sh to not rely on file size of
-.tmp_vmlinux?.kallsyms.o alone but to also consider symbol offsets
-within to resolve this, and do a third pass if required.
-
-[AD: kallsymso_prev is already tracked by kallsyms_step() here, so only
- add kallsymso_changed() and use it]
-
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Suggested-by: Oleg Nesterov <oleg@redhat.com>
+Link: https://lore.kernel.org/r/aq0_lvHDViIpX_Mu@redhat.com
+Fixes: 3bfe6106693b ("io-wq: fork worker threads from original task")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-12-8e4adb1619e6@kernel.org
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/link-vmlinux.sh | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ fs/exec.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
-index ad16e25a62ced..2b8746f7bcc81 100755
---- a/scripts/link-vmlinux.sh
-+++ b/scripts/link-vmlinux.sh
-@@ -144,6 +144,18 @@ gen_btf()
- 	printf "${et_rel}" | dd of=${2} conv=notrunc bs=1 seek=16 status=none
- }
+diff --git a/fs/exec.c b/fs/exec.c
+index 4f59e453cecdc..7833518692eaa 100644
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -1268,6 +1268,13 @@ int begin_new_exec(struct linux_binprm * bprm)
+ 	 */
+ 	bprm->point_of_no_return = true;
  
-+# Check if kallsymso_prev and kallsymso differ
-+# If symbol sizes within ${kallsymso} change, any symbols within vmlinux are
-+# likely to shift, invalidating ${kallsymso}.
-+# Since file size can remain unchanged even if symbol sizes change, compare the
-+# actual symbols instead of relying on file size only.
-+kallsymso_changed()
-+{
-+	${NM} -n "${kallsymso_prev}" > "${kallsymso_prev}.sym"
-+	${NM} -n "${kallsymso}" > "${kallsymso}.sym"
-+	! cmp -s "${kallsymso_prev}.sym" "${kallsymso}.sym"
-+}
++	/*
++	 * Cancel any io_uring activity across execve. This runs task work
++	 * that may still create an io-wq worker, so do it while de_thread()
++	 * can still zap it.
++	 */
++	io_uring_task_cancel();
 +
- # Create ${2} .S file with all symbols from the ${1} object file
- kallsyms()
- {
-@@ -271,7 +283,12 @@ if is_enabled CONFIG_KALLSYMS; then
- 	size1=$(${CONFIG_SHELL} "${srctree}/scripts/file-size.sh" ${kallsymso_prev})
- 	size2=$(${CONFIG_SHELL} "${srctree}/scripts/file-size.sh" ${kallsymso})
+ 	/* Make this the only thread in the thread group */
+ 	retval = de_thread(me);
+ 	if (retval)
+@@ -1284,10 +1291,6 @@ int begin_new_exec(struct linux_binprm * bprm)
  
--	if [ $size1 -ne $size2 ] || [ -n "${KALLSYMS_EXTRA_PASS}" ]; then
-+	# Due to alignment, file size of the kallsymso object file might remain
-+	# unchanged even if individual symbols within change size. Changed
-+	# symbol sizes can still shift other symbols, though. Therefore, don't
-+	# rely on file size alone.
-+	if [ $size1 -ne $size2 ] || kallsymso_changed || \
-+			[ -n "${KALLSYMS_EXTRA_PASS}" ]; then
- 		kallsyms_step 3
- 	fi
- fi
+ 	/* see the comment in check_unsafe_exec() */
+ 	current->fs->in_exec = 0;
+-	/*
+-	 * Cancel any io_uring activity across execve
+-	 */
+-	io_uring_task_cancel();
+ 
+ 	/* Ensure the files table is not shared. */
+ 	retval = unshare_files();
 -- 
 2.53.0
 
