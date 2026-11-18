@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041858;
-	b=zZq1+e99Kq2BNApxGPvh6h45axf0qbeUXH13b6MnUgHSVKiPFHHc4qo9gDMQbLk04eM2
-	 6SuYilN4eTclRMEquo8ywkxFOe7lvUiEAoveeWs2lBH2yW4itAKLUQfxAoye2Y4j99AS+
-	 /06iJBSW+12rdNT+RHy/Brt2awvTCCA9h9Ai0Sg3nqp9lHHBUR35N+Z5ss8bO2cKRBd3L
-	 tnjTLhGBDJyJP8qBKeGELb+DlaasRtErKYd+jEwPW4dveZBMNcY8cVrhMsxJgPxYq2kA8
-	 rVA0ONxc7QscW281DKF3kJatTCYtbtvkauqog1MhMPZJSpxN24xwP7D5SpAuiQ1BV9A==
+	t=1795041860;
+	b=DS8FSGzoh1YjSiC7v0PnSG62e7ob+07BnN4skRwBDemckIwQhToj7l9T86F2Lxvw7xnP
+	 KMrnNdfhpxJpoIoAHe2kBmi16z+LIQgoziJ7ybmru57Ihu9/btvdmpKi8r0JpWAIRXcp2
+	 etJDy/W7a1KzjjrETPT/9pfQRM1n4JTya/0HGRC1Lfae9WJt0Qv90KuM3FrcADH8+N4o/
+	 Oz9wna8ynqH98MLukvvWU8YzmLm5gzMvoAV2WRZKGLL4gi7refc/Rc/pUkuKsAF8C5fiT
+	 7sc4U1TZfR9jE/cQTG7siECvSGvykChCHSAedZuyxdFCukJPFEbxcs4hRz3aW5c4FEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041858;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041860;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z+MpyO9n1kn1oyXIv7FbGzNwuz+3HTNSKcTnYAnTUz0=;
-	b=qG6xyhgRxUUFNCQtWKclBfMC3r4n8rX+OTIbZTasvFpaKjVr5tn78l4Q8TiQWopeWnEZ
-	 uICasmY1yNAfK6U/T4BPiqejsEmWQTWN1LRcyZeokk7NQjMlopBnxn8U3Bw+fDhCXhX6q
-	 ZQgh+BE8m9WCms7dVa0O2EbJ/Nknz2DfflYzeZz7Etuc5CZMvZ1FOi8TBGufj05Rjn5YT
-	 NfxoDYgaStsZ5mTSkhqNvIzX2CszpO3ngJtCJhhddheXqsGjOSFvLzjCQrL2PDlEYV4NQ
-	 qFXM22YdVPwhOTqYS0G8V3w0GXe9OlKN8SMtSBsIwaNNMxpX3nMYfmj3LrxcN6hCMdA==
+	bh=9qIt62f554fIaL/jFeLPEMiqGqgKbdydr4JdCqdGU0A=;
+	b=2m5O+4cYTu55F5v+NqjteZTVJ4may2baX05n+vCGn4saAxIzZiHhKL2S+THN8U867J5Y
+	 RZZ0T8rvGIguVLJPXB0arrmTYrFZeaakbSBBKgQpiqZtMA/WRH9WRCPOgxvl3spYunScv
+	 UrlcqqOyZgxwQkcxbUBBuydQ/GZ5BDqQr1tBif8nn6/CUfX3QJtxy9ZsE1aCj9c89UhLG
+	 WJb5LshpcNgxvQ8833IxsIRG0ftzAIP82clNgQFOVrUw3hAH4koW2vBYtAF6R0rHr/OZq
+	 9zaZWOY20JXSutrHW4DurkZwOU9Yhx61eZkmaAZtiwuooaUM76sSAdrv8XSbDSCiVRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N7jZ9z0N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ncCcL2uN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C5160A2604;
-	Wed, 18 Nov 2026 22:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF41606A325;
+	Wed, 18 Nov 2026 22:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N7jZ9z0N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5491F000C4;
-	Wed, 18 Nov 2026 22:44:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ncCcL2uN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DACA01F000C4;
+	Wed, 18 Nov 2026 22:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041857;
-	bh=z+MpyO9n1kn1oyXIv7FbGzNwuz+3HTNSKcTnYAnTUz0=;
+	s=korg; t=1795041860;
+	bh=9qIt62f554fIaL/jFeLPEMiqGqgKbdydr4JdCqdGU0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N7jZ9z0NKoX5usrejqQ12htS5H4NtmdIHH+nBpXcm73AAotXQMlmf0l1PSc10G3fo
-	 YvxIn6p/WPILpeixliJAHzIcJlsz9kg5nqrDIhZLYfLhvlNesnwKp7YyNDdaKaw9MG
-	 eWG6BQKBUNVX6MD/8aN30TPR5NYeWkYTtSJ1C8uc=
+	b=ncCcL2uNPwifRFjJX6n8cUV8YKh9bxm3C8TAHZw2Y7UjYu8+wsiL6QkmgYTaw0I6H
+	 DtJM/nhwmEXkh1AplsJ6JEqFKIgOH5BTPW1+87Ukb7/Vocwd8ZfbAISCZYkCsaEZBa
+	 zJqBgMB5Q6evukNRo3YJ9T/6jRifsSIeDPzzBOXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
 	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2963/3318] tracing: Print the bucket size as unsigned
-Date: Wed, 18 Nov 2026 15:59:45 +0100
-Message-ID: <20261118150449.184053841@linuxfoundation.org>
+Subject: [PATCH 6.6 2964/3318] tracing: Only report the stacktrace modifier on a real field
+Date: Wed, 18 Nov 2026 15:59:46 +0100
+Message-ID: <20261118150449.213769105@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,22 +70,28 @@ Content-Transfer-Encoding: 8bit
 
 From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit 387945e8d2f29fa8a28d219af5416e6d3bedc314 ]
+[ Upstream commit 18bb005845b78e0c0eb44b7f231c29d138552438 ]
 
-A key's bucket size reads back negative once it exceeds LONG_MAX:
+get_hist_field_flags() returns "stacktrace" for any field carrying
+HIST_FIELD_FL_STACKTRACE, including the common_stacktrace pseudo-field,
+which has no ftrace_event_field behind it. parse_field() no longer takes
+the modifier there:
 
-  # echo 'hist:keys=next_pid.buckets=18446744073709551615' > trigger
-  # cat trigger
-  hist:keys=next_pid.buckets=-1:vals=hitcount:...
+	if (stack_modifier &&
+	    (!field || field->filter_type != FILTER_STACKTRACE)) {
+		hist_err(tr, HIST_ERR_BAD_FIELD_MODIFIER, errpos(field_str));
 
-parse_field() takes the size with kstrtoul() and rejects only zero, so the
-whole unsigned long range is accepted and stored, but hist_field_print()
-renders it with %ld.
+so expr_field_str() renders "common_stacktrace.stacktrace", a spelling
+that cannot be parsed back.
 
-Print it with %lu.
+Report the modifier only when there is a field to report it for.
 
-Link: https://patch.msgid.link/20260914053443.981201-2-donggeunyoo.kernel@gmail.com
-Fixes: de9a48a360b7 ("tracing: Add linear buckets to histogram logic")
+hist_field_print(), the other caller of get_hist_field_flags(), excludes
+HIST_FIELD_FL_STACKTRACE before it calls, so this is confined to
+expr_field_str(), whose only key renderer arrives in the next patch.
+
+Link: https://patch.msgid.link/20260914053443.981201-4-donggeunyoo.kernel@gmail.com
+Fixes: a5e70ba87ca8 ("tracing: Fix memory corruption from the histogram stacktrace modifier")
 Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 Assisted-by: Claude:claude-fable-5
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
@@ -95,18 +101,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 8c2bc07154f77..e6259e04ea663 100644
+index e6259e04ea663..c3fb3cc447e31 100644
 --- a/kernel/trace/trace_events_hist.c
 +++ b/kernel/trace/trace_events_hist.c
-@@ -6184,7 +6184,7 @@ static void hist_field_print(struct seq_file *m, struct hist_field *hist_field)
- 		}
- 	}
- 	if (hist_field->buckets)
--		seq_printf(m, "=%ld", hist_field->buckets);
-+		seq_printf(m, "=%lu", hist_field->buckets);
- }
+@@ -1718,7 +1718,7 @@ static const char *get_hist_field_flags(struct hist_field *hist_field)
+ 		flags_str = "percent";
+ 	else if (hist_field->flags & HIST_FIELD_FL_GRAPH)
+ 		flags_str = "graph";
+-	else if (hist_field->flags & HIST_FIELD_FL_STACKTRACE)
++	else if (hist_field->flags & HIST_FIELD_FL_STACKTRACE && hist_field->field)
+ 		flags_str = "stacktrace";
  
- static int event_hist_trigger_print(struct seq_file *m,
+ 	return flags_str;
 -- 
 2.53.0
 
