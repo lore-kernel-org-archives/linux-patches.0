@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036284;
-	b=bXUvXaic0IlrZ93+sKh19mPwfR+Bp4D35f+muouljR/WbcWdYG2ZLIp9IrYc9CAjwifN
-	 pVXIOnoz+H8HRD6K+ZZkDyjWuT8iQeta5Hj8QhQ40UZxMP52YKbhESjYHjj/V84z32/co
-	 1d1zeXTJMhzu746/48tMxi2yxInfbhx+PqbiEfXEytVqTqNjFRi+ozZoBzz41i2EJghfv
-	 lpGXURjidY+fQd2lYTyMdDpgzZuuJDb664tC8BXlpsznUgQ1MNQsT6K4X9bNh9i/05ayQ
-	 XCEPcqrfUgu4XAzeLv4MfWCsoCFK8xuCiZhbW/p4t8Qqc6saUgWCG4XyKhuNKpD32WQ==
+	t=1795036286;
+	b=WmIyuqMb9otyM8h7xuV5C8IhKZs18MvjrGhatXUR3er+QYb1j1SfTVu3bbhY2AaMQbtE
+	 QnpRbrku/zFlKG94RONTLE3+F0ZaZ8D0hNLmMyPEKrgGY4zs0MYWwo9ZPcOWY3ew6HOGu
+	 VjTkbat8StJtkmNkVIm1RtFrKs4qbkigzitEaCEzpQiHSblVS4JtByGaM5HD4+UPpot3Z
+	 zQKBAvcaEnIPkbuVCzlR1rg9ieVLyABWIAX27jUwWuPiw8tSXBPfBra4UsycDEeD740Fl
+	 +lrDNxbnxXfUsDlWC/C5fRVuvxmi6msZ3x4un0tQiXeK8EzWPBei63TeXgwsheSza5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036284;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036286;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dd42soEh9lqFXcRfpDJQObbCJqZLyZabZHmTxpCWeVQ=;
-	b=nSWqp6qp/6oMZGozwGAFqcj2sTQxLcTDd+TdBcgQMkEi08q8+3dWoLqaMWuW6bPhzj5s
-	 A+UKIaVXwwahi63g6N6kxxCuvKsFav1M01UX0+uyMhIXfSHPm9FekwVDD2KTOEXMBbv2u
-	 j806KnPnmL9E+UsWE6iv5J3P/rlOPHC21KqsGyv4YdQc1xLsj1PvzIgdUGaB4lJhlSPtG
-	 uusAJW4CTxMC+XbU5dwldWUywKtX/moDtLJZ/+T8Oa2hRuaXuful2sCNpdSnCPYX2J/Mb
-	 IMIgS2jBTpYYLF5U6BdmwhRzpruriwrDbA0V+5OnCN59TLmyhtbhCP0PzbbHcmImFjw==
+	bh=CmXrbXVmxFmZkLQZMG1vUDq8oCcHURY7p6wgOCHZULA=;
+	b=unWQOBP8LlJYLeLeFnVoBb16ZerQzaUUkCryV7/1xZNYDJbCsv8gyaCKXQR3WBXjdsHG
+	 OSzbMqoxJrsthKOlkEbd34Aj3ERoNNDRppD9bwx4XgMLUeLcz7QPEvu9tOuAcL6WLERB0
+	 6rCGddKT8IGrCkZd/nd3RqotK34VJJhr9cuyJLGp5PpGsPrzT3OUWG8OJ5XNBm6OW1Dpe
+	 Mv3nNvfWdMuCpVuYiju9eDD9GRCrwGZVI9TQyOrzvfQsfgKvu4nK6wHuAPKWxKIQ/b4Vt
+	 mic5obINwnRJ2wuFYsZnf/CRwXNsQOmFrVNVbrRLTAAgatO+p/pUwJEkpJ7FdaRt40Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jyqRNxCY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iPlqkGqc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C481606A31C;
-	Wed, 18 Nov 2026 21:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D838B606A332;
+	Wed, 18 Nov 2026 21:11:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jyqRNxCY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 357831F000C6;
-	Wed, 18 Nov 2026 21:11:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iPlqkGqc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76931F000C5;
+	Wed, 18 Nov 2026 21:11:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036283;
-	bh=dd42soEh9lqFXcRfpDJQObbCJqZLyZabZHmTxpCWeVQ=;
+	s=korg; t=1795036286;
+	bh=CmXrbXVmxFmZkLQZMG1vUDq8oCcHURY7p6wgOCHZULA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jyqRNxCY+6CuqHAbXRH6n+JKfOFthIUSw5mFNP35su5sEGy/y3pVRXWC9D3j2SznI
-	 NAEINZohD9/eLjttd4GApMDJQGp7zdu88xo8/67rzM2np0ywF2MOhrGnvgxXbsaE6m
-	 i9EFX42e/WedLqT2VOtPcg4LGVIk1aXR3Y3emy5w=
+	b=iPlqkGqcVg/e8FmuJJzSWwpJi1tFAR3yahwyilmpQSOyPOzu3Mhu1uMmi40CRWujS
+	 UypNCQLNWcZ36tC0EdC74zSMUeEb4lmEhqJu1orqeP9lTVWeT1+ac1eVaGoxvTn3ar
+	 JTQ8rsOMxBx/vtbU9ZonZcNC3jdoeGAXSXs5JI9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michail Tatas <michail.tatas@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1003/3318] media: verisilicon: rockchip: Fix leaks in init
-Date: Wed, 18 Nov 2026 15:27:05 +0100
-Message-ID: <20261118150349.966434695@linuxfoundation.org>
+Subject: [PATCH 6.6 1004/3318] media: mediatek: jpeg: retry HW selection after successful wait
+Date: Wed, 18 Nov 2026 15:27:06 +0100
+Message-ID: <20261118150349.999565311@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,144 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michail Tatas <michail.tatas@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 96f6b5e2295996a9e2dd1e2382d3872f98cbb554 ]
+[ Upstream commit eb0bbd0ad679bf363387e3b8be8892cfbedabb72 ]
 
-If one of the dma_alloc_coherent in the init function fails then
-the previously allocated ones leak.
+wait_event_interruptible_timeout() returns a positive value when its
+condition becomes true before the timeout. mtk_jpegdec_worker() treats
+every nonzero result as a failure, so a normal decoder wakeup finishes
+the mem2mem job as though no hardware became available.
 
-Fix by freeing them in the error path.
+Handle interrupted waits and exhausted timeout retries separately, and
+retry hardware selection after a successful wakeup. Increment the retry
+count only for actual timeouts. The encoder uses
+wait_event_interruptible(), whose successful return is zero, so its
+existing check is correct; leave that separate no-timeout policy
+unchanged.
 
-Fixes: 727a400686a2 ("media: verisilicon: Add Rockchip AV1 decoder")
+Fixes: dedc21500334 ("media: mtk-jpegdec: add jpeg decode worker interface")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michail Tatas <michail.tatas@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Assisted-by: Codex:gpt-5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../verisilicon/rockchip_vpu981_hw_av1_dec.c  | 68 +++++++++++++++----
- 1 file changed, 55 insertions(+), 13 deletions(-)
+ drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c b/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-index ea94be9ad22cf..0543b6ee4f2df 100644
---- a/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-+++ b/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-@@ -368,6 +368,7 @@ void rockchip_vpu981_av1_dec_exit(struct hantro_ctx *ctx)
- 
- int rockchip_vpu981_av1_dec_init(struct hantro_ctx *ctx)
- {
-+	int ret = 0;
- 	struct hantro_dev *vpu = ctx->dev;
- 	struct hantro_av1_dec_hw_ctx *av1_dec = &ctx->av1_dec;
- 
-@@ -376,39 +377,54 @@ int rockchip_vpu981_av1_dec_init(struct hantro_ctx *ctx)
- 	av1_dec->global_model.cpu = dma_alloc_coherent(vpu->dev, GLOBAL_MODEL_SIZE,
- 						       &av1_dec->global_model.dma,
- 						       GFP_KERNEL);
--	if (!av1_dec->global_model.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->global_model.cpu) {
-+		ret = -ENOMEM;
-+		goto global_model_cpu_err;
-+	}
+diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+index 5a1ae5cd44b95..48ed4e3ae633c 100644
+--- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
++++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+@@ -1709,9 +1709,15 @@ static void mtk_jpegdec_worker(struct work_struct *work)
+ 		ret = wait_event_interruptible_timeout(jpeg->hw_wq,
+ 						       atomic_read(&jpeg->hw_rdy) > 0,
+ 						       MTK_JPEG_HW_TIMEOUT_MSEC);
+-		if (ret != 0 || (i++ > MTK_JPEG_MAX_RETRY_TIME)) {
+-			dev_err(jpeg->dev, "%s : %d, all HW are busy\n",
+-				__func__, __LINE__);
++		if (ret < 0) {
++			dev_err(jpeg->dev, "decoder HW wait interrupted: %d\n",
++				ret);
++			v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
++			return;
++		}
 +
- 	av1_dec->global_model.size = GLOBAL_MODEL_SIZE;
- 
- 	av1_dec->tile_info.cpu = dma_alloc_coherent(vpu->dev, AV1_TILE_INFO_SIZE,
- 						    &av1_dec->tile_info.dma,
- 						    GFP_KERNEL);
--	if (!av1_dec->tile_info.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->tile_info.cpu) {
-+		ret = -ENOMEM;
-+		goto tile_info_cpu_err;
-+	}
-+
- 	av1_dec->tile_info.size = AV1_TILE_INFO_SIZE;
- 
- 	av1_dec->film_grain.cpu = dma_alloc_coherent(vpu->dev,
- 						     ALIGN(sizeof(struct rockchip_av1_film_grain), 2048),
- 						     &av1_dec->film_grain.dma,
- 						     GFP_KERNEL);
--	if (!av1_dec->film_grain.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->film_grain.cpu) {
-+		ret = -ENOMEM;
-+		goto film_grain_cpu_err;
-+	}
-+
- 	av1_dec->film_grain.size = ALIGN(sizeof(struct rockchip_av1_film_grain), 2048);
- 
- 	av1_dec->prob_tbl.cpu = dma_alloc_coherent(vpu->dev,
- 						   ALIGN(sizeof(struct av1cdfs), 2048),
- 						   &av1_dec->prob_tbl.dma,
- 						   GFP_KERNEL);
--	if (!av1_dec->prob_tbl.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->prob_tbl.cpu) {
-+		ret = -ENOMEM;
-+		goto prob_tbl_cpu_err;
-+	}
-+
- 	av1_dec->prob_tbl.size = ALIGN(sizeof(struct av1cdfs), 2048);
- 
- 	av1_dec->prob_tbl_out.cpu = dma_alloc_coherent(vpu->dev,
- 						       ALIGN(sizeof(struct av1cdfs), 2048),
- 						       &av1_dec->prob_tbl_out.dma,
- 						       GFP_KERNEL);
--	if (!av1_dec->prob_tbl_out.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->prob_tbl_out.cpu) {
-+		ret = -ENOMEM;
-+		goto prob_tbl_out_cpu_err;
-+	}
-+
- 	av1_dec->prob_tbl_out.size = ALIGN(sizeof(struct av1cdfs), 2048);
- 	av1_dec->cdfs = &av1_dec->default_cdfs;
- 	av1_dec->cdfs_ndvc = &av1_dec->default_cdfs_ndvc;
-@@ -419,11 +435,37 @@ int rockchip_vpu981_av1_dec_init(struct hantro_ctx *ctx)
- 						   AV1_TILE_SIZE,
- 						   &av1_dec->tile_buf.dma,
- 						   GFP_KERNEL);
--	if (!av1_dec->tile_buf.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->tile_buf.cpu) {
-+		ret = -ENOMEM;
-+		goto tile_buf_cpu_err;
-+	}
-+
- 	av1_dec->tile_buf.size = AV1_TILE_SIZE;
- 
--	return 0;
-+	return ret;
-+
-+tile_buf_cpu_err:
-+	dma_free_coherent(vpu->dev, av1_dec->prob_tbl_out.size,
-+			  av1_dec->prob_tbl_out.cpu,
-+			  av1_dec->prob_tbl_out.dma);
-+prob_tbl_out_cpu_err:
-+	dma_free_coherent(vpu->dev, av1_dec->prob_tbl.size,
-+			  av1_dec->prob_tbl.cpu,
-+			  av1_dec->prob_tbl.dma);
-+prob_tbl_cpu_err:
-+	dma_free_coherent(vpu->dev, av1_dec->film_grain.size,
-+			  av1_dec->film_grain.cpu,
-+			  av1_dec->film_grain.dma);
-+film_grain_cpu_err:
-+	dma_free_coherent(vpu->dev, av1_dec->tile_info.size,
-+			  av1_dec->tile_info.cpu,
-+			  av1_dec->tile_info.dma);
-+tile_info_cpu_err:
-+	dma_free_coherent(vpu->dev, av1_dec->global_model.size,
-+			  av1_dec->global_model.cpu,
-+			  av1_dec->global_model.dma);
-+global_model_cpu_err:
-+	return ret;
- }
- 
- static int rockchip_vpu981_av1_dec_prepare_run(struct hantro_ctx *ctx)
++		if (!ret && i++ > MTK_JPEG_MAX_RETRY_TIME) {
++			dev_err(jpeg->dev, "all decoder HW are busy\n");
+ 			v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
+ 			return;
+ 		}
 -- 
 2.53.0
 
