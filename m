@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032047;
-	b=0I9q3aVkc7dJW/dLdUr1T+Qhpz75s4ovkF50DtW3r229F+xjFxjnL3OjTwCLzTnDiUA1
-	 elEv8+N8gpmVfQh9CNrP05Jb2jV44RZ7nQi8anq1P/8pH6yqPyxVigGakosicZawUdpsf
-	 0sC4H7MEgIgQ/+GGt/VLdhL86NFS0/dszurcv9Yvk4o8P226/1u2cYHjeOwhhkt2XR4WR
-	 d7poSO0ALvc69TmAXANu9vIJvYxTtTy161yHNLFPMGo8eKmdUmiVWFQbkhjrZdJ9Ktmca
-	 NHTGk8a1YsxFlZa5bkcTtGRN2GV7e8bbte2JIszABYBGIUgYGmMpbG1OHWgVQWl5GBw==
+	t=1795032049;
+	b=HwDpV5uDnzulnRPkikzTWzsVHislfW7V6fO7d95oT8gxDGFffm6Vi0JkzuSjXxf47s56
+	 yyFMjbJ9L3DQkKdMdNTyrUV81WSzihlmis1OlEQizj2LpMjMUklrdt11SbUMS+T8ZVef2
+	 unSyCgyfUib3wiL7IJpBlnWD6NKvQqxhaZcAc6By3pVbUTqOYR22vJC6zouss45A79y9q
+	 nmZdqI4BaNQEJV63twmVAiXdEl7Uvjk+BGWFiw8XSmDcRir59dvyOYfSqFSHXIIO3VyfJ
+	 N+5/dA5KIYp0HPaEVgZsXL55H3fZa/B8wtNeJ5JpK7dBQmbLn00ho51ZhHR3QLFQSGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032049;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xh6HCYMKVpPkBizao3a/9qYnDMw/1ANokxD1sA7LgA0=;
-	b=RppunyWki1UEzxicHk2nYYzoZ+bbBuSwRdPJQ5j9DBM0R1hA1IG4Es8O+0NflBibYy81
-	 hFuksIAxQgUe4FzJ2K3V78EvYBMGOqxeUPEdJJmO8NAsr5tkL17gcHJbq8nWkxHmJTycT
-	 wCxiQodcVWtd+Qlhf3rVZFJL/dEMcTNw8fu5R8FEXi1igrY6IPg5leRo9QwIxSIr5lONn
-	 Z4XFfvODkmnYNzAJN9+zoSv61aPglOi0AykURDzXo8LOHKRh0BA+aHArcxJNa9V47CHmf
-	 2wy0spdDpKDcLT1yvCTA0qgaKr+SR/nA8drK3v1nczyM0CNRkAud7IsDMh/KyzOVmSw==
+	bh=qpOPSThgXDxDEbuU5deHcF9vPRR5e/EbqH2KAWPoQdM=;
+	b=DBfOeEq8f1hjgLmhki2DZBafNouhXsBola/DJeuquf4o2ikkL/myrgfY6CSoE5TSYxp+
+	 VNeMaH/C/zHtkZHy4Ma/Lg0W1wz0twY/F/4Y1CGU05yUe4iHJKNHYEXHrgakQNbkes/K4
+	 DBbGpXkeLG4b2B/CJwY6HXSpxxC/OSY/saUXIpeopQI2SI3cs4QY1ddJzLL1Kr0BRoYtc
+	 eYpyBuHoSReh/3mXutdAzP8zpD/df4mNBiV3t2aGsTeCKoQxHP9kyBI4l2FH3etgfLWQ9
+	 o5la7gk2vWJeHdQhhs+62xGKWJirQIm8z3MqOu0I5PKG7HUnNf+NN/UqTeOjKshKErg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CuCxGhmI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EhwupXJa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1011606A337;
-	Wed, 18 Nov 2026 20:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BED606A335;
+	Wed, 18 Nov 2026 20:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CuCxGhmI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C9D1F000C6;
-	Wed, 18 Nov 2026 20:00:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EhwupXJa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163CF1F000C5;
+	Wed, 18 Nov 2026 20:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032046;
-	bh=xh6HCYMKVpPkBizao3a/9qYnDMw/1ANokxD1sA7LgA0=;
+	s=korg; t=1795032049;
+	bh=qpOPSThgXDxDEbuU5deHcF9vPRR5e/EbqH2KAWPoQdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CuCxGhmIYde3faQ1GosRbt8AKf5F4q/9IQn+OkXPPtKX7ukELVp0YBQPjXQJ1Ktm2
-	 PBN/4GYuMtYPqy0tjNxZJblZYXtADRA7ZwvwzaXOQLEP8Oyx8ponRzEv5U49byWl3X
-	 bhm9HKjV8HqkojECH84CjXTrhzbuiOQnh+toQ1Kk=
+	b=EhwupXJaAWGAvzhOw3Owu0Q7dGaz9MMev74e18erizMkpGVvRy9oe2MpWD33xX9UT
+	 Sz0+saW/Ue3zL6Mx9j5yAOF3JekNXdWd/y2AU+ybNTA6mzt+YnZneYl/u1CT9ZlFMa
+	 9TO68VDKNporQwARbfCN+BhBbqiY4fieLn8oCBWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sahaj Chaudhari <sahaj123.sc@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Youngsung Ahn <ays511.kr@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1272/1756] spi: omap2-mcspi: handle DMA setup failures
-Date: Wed, 18 Nov 2026 15:56:39 +0100
-Message-ID: <20261118150100.262411389@linuxfoundation.org>
+Subject: [PATCH 6.12 1273/1756] RDMA/rxe: refuse to destroy a QP with type 2 MWs still bound
+Date: Wed, 18 Nov 2026 15:56:40 +0100
+Message-ID: <20261118150100.299199495@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,450 +68,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sahaj Chaudhari <sahaj123.sc@gmail.com>
+From: Youngsung Ahn <ays511.kr@gmail.com>
 
-[ Upstream commit c126e07bde21c518f1356937ac240500d1bc81c0 ]
+[ Upstream commit 9e61a2ac6590e9c42d2eeef687749781334b300f ]
 
-The DMA paths ignore failures from dmaengine_slave_config(), descriptor
-preparation and dmaengine_submit(), and carry FIXME comments about
-falling back to PIO. A failed setup can leave a half-started transfer
-or wait for a completion that never arrives.
+Binding a type 2 memory window takes a reference on the QP:
+rxe_do_bind_mw() does rxe_get(qp) and stores it in mw->qp. That
+reference is released only when the window is invalidated
+(rxe_do_invalidate_mw() on IB_WR_LOCAL_INV) or the window itself is
+destroyed (rxe_mw_cleanup()).
 
-Check each step and clean up with dmaengine_terminate_sync() on error.
-Prepare both descriptors before issuing either channel. Fall back to
-PIO only for host-mode transfers that have a TX buffer, when no DMA has
-been started and cleanup succeeded. RX-only and target-mode transfers
-return the error instead, since the bus may already be clocking.
+rxe_qp_chk_destroy() does not account for those references -- it only
+refuses when qp->mcg_num is non-zero. So an unprivileged user can bind
+a type 2 MW to a QP and then destroy the QP while the binding is still
+live. __rxe_cleanup() cannot drop the QP refcount to zero (the MW still
+holds a reference), hits its -ETIMEDOUT path, and frees the QP anyway;
+mw->qp is left dangling. When the MW is later invalidated or
+deallocated, rxe_mw_cleanup()/rxe_do_invalidate_mw() do rxe_put(mw->qp)
+on the freed struct rxe_qp -- a use-after-free write (refcount_dec, and
+complete()/list work if it reaches zero) reachable from userspace.
+IB_WR_BIND_MW is a local operation, so no peer is required.
 
-The FIFO is enabled before the DMA attempt, but the PIO path polls
-per-word TXS/RXS and does not expect FIFO mode. Disable the FIFO, with
-the channel off while its bits change, before falling back.
+Track the number of type 2 MWs bound to a QP and refuse to destroy the
+QP while that count is non-zero, returning -EBUSY exactly as the
+existing multicast-attachment check does. The window must be
+invalidated or deallocated, which drops the reference and the count,
+before the QP can be destroyed.
 
-Tested on an AM642 board with a TI 6.12.57 vendor kernel built with
-this patch and booted from RAM. On a McSPI bus using DMA, 200
-iterations of 4096-byte TX and 1024-byte RX spidev transfers completed
-with no errors, timeouts or kernel warnings. With a temporary change
-that fails every DMA-sized TX setup, 60 spidev writes fell back to PIO
-with no errors or timeouts. That test used a bus with no device
-attached and did not show a difference with and without the FIFO
-disable, which is based on reading the code.
-
-Fixes: 53741ed8f0a3 ("spi: omap2-mcspi: add DMA engine support")
-Link: https://lore.kernel.org/r/20250914022132.319227-1-alex.t.tran@gmail.com
-Signed-off-by: Sahaj Chaudhari <sahaj123.sc@gmail.com>
-Link: https://patch.msgid.link/20261015064341.1100422-1-sahaj123.sc@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Signed-off-by: Youngsung Ahn <ays511.kr@gmail.com>
+Link: https://patch.msgid.link/20260930182223.2511145-1-ays511.kr@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-omap2-mcspi.c | 236 ++++++++++++++++++++++++----------
- 1 file changed, 167 insertions(+), 69 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_mw.c    |  3 +++
+ drivers/infiniband/sw/rxe/rxe_qp.c    | 10 ++++++++++
+ drivers/infiniband/sw/rxe/rxe_verbs.h |  1 +
+ 3 files changed, 14 insertions(+)
 
-diff --git a/drivers/spi/spi-omap2-mcspi.c b/drivers/spi/spi-omap2-mcspi.c
-index b84b1b67d9693..62a5e9765ba38 100644
---- a/drivers/spi/spi-omap2-mcspi.c
-+++ b/drivers/spi/spi-omap2-mcspi.c
-@@ -415,10 +415,11 @@ static void omap2_mcspi_tx_callback(void *data)
- 	complete(&mcspi_dma->dma_tx_completion);
+diff --git a/drivers/infiniband/sw/rxe/rxe_mw.c b/drivers/infiniband/sw/rxe/rxe_mw.c
+index bddb7a2578313..a2e3a6ce09463 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mw.c
++++ b/drivers/infiniband/sw/rxe/rxe_mw.c
+@@ -161,6 +161,7 @@ static void rxe_do_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
+ 
+ 	if (mw->ibmw.type == IB_MW_TYPE_2) {
+ 		rxe_get(qp);
++		atomic_inc(&qp->mw_bind_num);
+ 		mw->qp = qp;
+ 	}
+ }
+@@ -245,6 +246,7 @@ static void rxe_do_invalidate_mw(struct rxe_mw *mw)
+ 	/* valid type 2 MW will always have a QP pointer */
+ 	qp = mw->qp;
+ 	mw->qp = NULL;
++	atomic_dec(&qp->mw_bind_num);
+ 	rxe_put(qp);
+ 
+ 	/* valid type 2 MW will always have an MR pointer */
+@@ -332,6 +334,7 @@ void rxe_mw_cleanup(struct rxe_pool_elem *elem)
+ 		struct rxe_qp *qp = mw->qp;
+ 
+ 		mw->qp = NULL;
++		atomic_dec(&qp->mw_bind_num);
+ 		rxe_put(qp);
+ 	}
+ 
+diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
+index 3dbc424099547..7b2d7a0056f3e 100644
+--- a/drivers/infiniband/sw/rxe/rxe_qp.c
++++ b/drivers/infiniband/sw/rxe/rxe_qp.c
+@@ -809,6 +809,16 @@ int rxe_qp_chk_destroy(struct rxe_qp *qp)
+ 		return -EBUSY;
+ 	}
+ 
++	/* An attempt to destroy a QP while it still holds references for
++	 * bound type 2 memory windows will fail immediately.  Otherwise the
++	 * QP is freed with those references outstanding and the windows are
++	 * left pointing at freed memory (use-after-free).
++	 */
++	if (atomic_read(&qp->mw_bind_num)) {
++		rxe_dbg_qp(qp, "Attempt to destroy while type 2 MWs are bound\n");
++		return -EBUSY;
++	}
++
+ 	return 0;
  }
  
--static void omap2_mcspi_tx_dma(struct spi_device *spi,
--				struct spi_transfer *xfer,
--				struct dma_slave_config cfg)
-+static int omap2_mcspi_tx_dma(struct spi_device *spi,
-+			      struct spi_transfer *xfer,
-+			      struct dma_slave_config cfg)
- {
-+	int ret;
- 	struct omap2_mcspi	*mcspi;
- 	struct omap2_mcspi_dma  *mcspi_dma;
- 	struct dma_async_tx_descriptor *tx;
-@@ -426,31 +427,31 @@ static void omap2_mcspi_tx_dma(struct spi_device *spi,
- 	mcspi = spi_controller_get_devdata(spi->controller);
- 	mcspi_dma = &mcspi->dma_channels[spi_get_chipselect(spi, 0)];
+diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.h b/drivers/infiniband/sw/rxe/rxe_verbs.h
+index 49bac90a8f272..b9eb8bed8128e 100644
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.h
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.h
+@@ -260,6 +260,7 @@ struct rxe_qp {
+ 	struct rxe_av		alt_av;
  
--	dmaengine_slave_config(mcspi_dma->dma_tx, &cfg);
-+	ret = dmaengine_slave_config(mcspi_dma->dma_tx, &cfg);
-+	if (ret)
-+		return ret;
+ 	atomic_t		mcg_num;
++	atomic_t		mw_bind_num;
  
- 	tx = dmaengine_prep_slave_sg(mcspi_dma->dma_tx, xfer->tx_sg.sgl,
- 				     xfer->tx_sg.nents,
- 				     DMA_MEM_TO_DEV,
- 				     DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
--	if (tx) {
--		tx->callback = omap2_mcspi_tx_callback;
--		tx->callback_param = spi;
--		dmaengine_submit(tx);
--	} else {
--		/* FIXME: fall back to PIO? */
--	}
--	dma_async_issue_pending(mcspi_dma->dma_tx);
--	omap2_mcspi_set_dma_req(spi, 0, 1);
-+	if (!tx)
-+		return -EIO;
-+
-+	tx->callback = omap2_mcspi_tx_callback;
-+	tx->callback_param = spi;
-+
-+	return dma_submit_error(dmaengine_submit(tx));
- }
- 
--static unsigned
-+static int
- omap2_mcspi_rx_dma(struct spi_device *spi, struct spi_transfer *xfer,
--				struct dma_slave_config cfg,
--				unsigned es)
-+		   struct dma_slave_config cfg, unsigned int es,
-+		   unsigned int *count, bool *rx_submitted, bool *dma_started)
- {
- 	struct omap2_mcspi	*mcspi;
- 	struct omap2_mcspi_dma  *mcspi_dma;
--	unsigned int		count, transfer_reduction = 0;
-+	unsigned int		transfer_reduction = 0;
- 	struct scatterlist	*sg_out[2];
- 	int			nb_sizes = 0, out_mapped_nents[2], ret, x;
- 	size_t			sizes[2];
-@@ -463,7 +464,8 @@ omap2_mcspi_rx_dma(struct spi_device *spi, struct spi_transfer *xfer,
- 
- 	mcspi = spi_controller_get_devdata(spi->controller);
- 	mcspi_dma = &mcspi->dma_channels[spi_get_chipselect(spi, 0)];
--	count = xfer->len;
-+	*count = xfer->len;
-+	*rx_submitted = false;
- 
- 	/*
- 	 *  In the "End-of-Transfer Procedure" section for DMA RX in OMAP35x TRM
-@@ -477,14 +479,16 @@ omap2_mcspi_rx_dma(struct spi_device *spi, struct spi_transfer *xfer,
- 	l = mcspi_cached_chconf0(spi);
- 
- 	if (word_len <= 8)
--		element_count = count;
-+		element_count = *count;
- 	else if (word_len <= 16)
--		element_count = count >> 1;
-+		element_count = *count >> 1;
- 	else /* word_len <= 32 */
--		element_count = count >> 2;
-+		element_count = *count >> 2;
- 
- 
--	dmaengine_slave_config(mcspi_dma->dma_rx, &cfg);
-+	ret = dmaengine_slave_config(mcspi_dma->dma_rx, &cfg);
-+	if (ret)
-+		return ret;
- 
- 	/*
- 	 *  Reduce DMA transfer length by one more if McSPI is
-@@ -495,7 +499,7 @@ omap2_mcspi_rx_dma(struct spi_device *spi, struct spi_transfer *xfer,
- 
- 	if (transfer_reduction) {
- 		/* Split sgl into two. The second sgl won't be used. */
--		sizes[0] = count - transfer_reduction;
-+		sizes[0] = *count - transfer_reduction;
- 		sizes[1] = transfer_reduction;
- 		nb_sizes = 2;
- 	} else {
-@@ -503,44 +507,56 @@ omap2_mcspi_rx_dma(struct spi_device *spi, struct spi_transfer *xfer,
- 		 * Don't bother splitting the sgl. This essentially
- 		 * clones the original sgl.
- 		 */
--		sizes[0] = count;
-+		sizes[0] = *count;
- 		nb_sizes = 1;
- 	}
- 
- 	ret = sg_split(xfer->rx_sg.sgl, xfer->rx_sg.nents, 0, nb_sizes,
- 		       sizes, sg_out, out_mapped_nents, GFP_KERNEL);
- 
--	if (ret < 0) {
-+	if (ret) {
- 		dev_err(&spi->dev, "sg_split failed\n");
--		return 0;
-+		return ret;
- 	}
- 
- 	tx = dmaengine_prep_slave_sg(mcspi_dma->dma_rx, sg_out[0],
- 				     out_mapped_nents[0], DMA_DEV_TO_MEM,
- 				     DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
--	if (tx) {
--		tx->callback = omap2_mcspi_rx_callback;
--		tx->callback_param = spi;
--		dmaengine_submit(tx);
--	} else {
--		/* FIXME: fall back to PIO? */
-+	if (!tx) {
-+		ret = -EIO;
-+		goto out_free_sg;
- 	}
- 
-+	tx->callback = omap2_mcspi_rx_callback;
-+	tx->callback_param = spi;
-+	ret = dma_submit_error(dmaengine_submit(tx));
-+	if (ret)
-+		goto out_free_sg;
-+
-+	*rx_submitted = true;
-+	if (mcspi->target_aborted) {
-+		ret = -EINTR;
-+		goto out_free_sg;
-+	}
-+	*dma_started = true;
-+	if (xfer->tx_buf) {
-+		if (spi_controller_is_target(mcspi->ctlr))
-+			mcspi_write_reg(mcspi->ctlr, OMAP2_MCSPI_IRQENABLE,
-+					OMAP2_MCSPI_IRQSTATUS_EOW);
-+		dma_async_issue_pending(mcspi_dma->dma_tx);
-+		omap2_mcspi_set_dma_req(spi, 0, 1);
-+	}
- 	dma_async_issue_pending(mcspi_dma->dma_rx);
- 	omap2_mcspi_set_dma_req(spi, 1, 1);
--
- 	ret = mcspi_wait_for_completion(mcspi, &mcspi_dma->dma_rx_completion);
--	if (ret || mcspi->target_aborted) {
--		dmaengine_terminate_sync(mcspi_dma->dma_rx);
--		omap2_mcspi_set_dma_req(spi, 1, 0);
--		return 0;
--	}
-+	if (ret || mcspi->target_aborted)
-+		goto out_free_sg;
- 
- 	for (x = 0; x < nb_sizes; x++)
- 		kfree(sg_out[x]);
- 
- 	if (mcspi->fifo_depth > 0)
--		return count;
-+		return 0;
- 
- 	/*
- 	 *  Due to the DMA transfer length reduction the missing bytes must
-@@ -567,9 +583,9 @@ omap2_mcspi_rx_dma(struct spi_device *spi, struct spi_transfer *xfer,
- 		} else {
- 			int bytes_per_word = mcspi_bytes_per_word(word_len);
- 			dev_err(&spi->dev, "DMA RX penultimate word empty\n");
--			count -= (bytes_per_word << 1);
-+			*count -= (bytes_per_word << 1);
- 			omap2_mcspi_set_enable(spi, 1);
--			return count;
-+			return 0;
- 		}
- 	}
- 	if (!mcspi_wait_for_reg_bit(chstat_reg, OMAP2_MCSPI_CHSTAT_RXS)) {
-@@ -584,19 +600,27 @@ omap2_mcspi_rx_dma(struct spi_device *spi, struct spi_transfer *xfer,
- 			((u32 *)xfer->rx_buf)[elements] = w;
- 	} else {
- 		dev_err(&spi->dev, "DMA RX last word empty\n");
--		count -= mcspi_bytes_per_word(word_len);
-+		*count -= mcspi_bytes_per_word(word_len);
- 	}
- 	omap2_mcspi_set_enable(spi, 1);
--	return count;
-+	return 0;
-+
-+out_free_sg:
-+	if (!ret)
-+		ret = -EINTR;
-+	for (x = 0; x < nb_sizes; x++)
-+		kfree(sg_out[x]);
-+	return ret;
- }
- 
--static unsigned
--omap2_mcspi_txrx_dma(struct spi_device *spi, struct spi_transfer *xfer)
-+static int omap2_mcspi_txrx_dma(struct spi_device *spi,
-+				struct spi_transfer *xfer,
-+				unsigned int *count,
-+				bool *pio_fallback)
- {
- 	struct omap2_mcspi	*mcspi;
- 	struct omap2_mcspi_cs	*cs = spi->controller_state;
- 	struct omap2_mcspi_dma  *mcspi_dma;
--	unsigned int		count;
- 	u8			*rx;
- 	const u8		*tx;
- 	struct dma_slave_config	cfg;
-@@ -604,10 +628,13 @@ omap2_mcspi_txrx_dma(struct spi_device *spi, struct spi_transfer *xfer)
- 	unsigned es;
- 	void __iomem		*chstat_reg;
- 	void __iomem            *irqstat_reg;
--	int			wait_res;
-+	bool			tx_submitted = false, rx_submitted = false;
-+	bool			dma_started = false, terminate_failed = false;
-+	int			ret, wait_res;
- 
- 	mcspi = spi_controller_get_devdata(spi->controller);
- 	mcspi_dma = &mcspi->dma_channels[spi_get_chipselect(spi, 0)];
-+	*pio_fallback = false;
- 
- 	if (cs->word_len <= 8) {
- 		width = DMA_SLAVE_BUSWIDTH_1_BYTE;
-@@ -620,7 +647,7 @@ omap2_mcspi_txrx_dma(struct spi_device *spi, struct spi_transfer *xfer)
- 		es = 4;
- 	}
- 
--	count = xfer->len;
-+	*count = xfer->len;
- 
- 	memset(&cfg, 0, sizeof(cfg));
- 	cfg.src_addr = cs->phys + OMAP2_MCSPI_RX0;
-@@ -638,31 +665,39 @@ omap2_mcspi_txrx_dma(struct spi_device *spi, struct spi_transfer *xfer)
- 	reinit_completion(&mcspi_dma->dma_rx_completion);
- 	reinit_completion(&mcspi->txdone);
- 	if (tx) {
--		/* Enable EOW IRQ to know end of tx in target mode */
-+		ret = omap2_mcspi_tx_dma(spi, xfer, cfg);
-+		if (ret)
-+			goto out;
-+		tx_submitted = true;
-+	}
-+
-+	if (rx) {
-+		ret = omap2_mcspi_rx_dma(spi, xfer, cfg, es, count,
-+					 &rx_submitted, &dma_started);
-+		if (ret)
-+			goto out;
-+	} else if (tx) {
-+		if (mcspi->target_aborted) {
-+			ret = -EINTR;
-+			goto out;
-+		}
- 		if (spi_controller_is_target(spi->controller))
--			mcspi_write_reg(spi->controller,
--					OMAP2_MCSPI_IRQENABLE,
-+			mcspi_write_reg(spi->controller, OMAP2_MCSPI_IRQENABLE,
- 					OMAP2_MCSPI_IRQSTATUS_EOW);
--		omap2_mcspi_tx_dma(spi, xfer, cfg);
-+		dma_started = true;
-+		dma_async_issue_pending(mcspi_dma->dma_tx);
-+		omap2_mcspi_set_dma_req(spi, 0, 1);
- 	}
- 
--	if (rx != NULL)
--		count = omap2_mcspi_rx_dma(spi, xfer, cfg, es);
--
--	if (tx != NULL) {
--		int ret;
--
-+	if (tx) {
- 		ret = mcspi_wait_for_completion(mcspi, &mcspi_dma->dma_tx_completion);
--		if (ret || mcspi->target_aborted) {
--			dmaengine_terminate_sync(mcspi_dma->dma_tx);
--			omap2_mcspi_set_dma_req(spi, 0, 0);
--			return 0;
--		}
-+		if (ret || mcspi->target_aborted)
-+			goto out;
- 
- 		if (spi_controller_is_target(mcspi->ctlr)) {
- 			ret = mcspi_wait_for_completion(mcspi, &mcspi->txdone);
- 			if (ret || mcspi->target_aborted)
--				return 0;
-+				goto out;
- 		}
- 
- 		if (mcspi->fifo_depth > 0) {
-@@ -696,7 +731,43 @@ omap2_mcspi_txrx_dma(struct spi_device *spi, struct spi_transfer *xfer)
- 				dev_err(&spi->dev, "EOT timed out\n");
- 		}
- 	}
--	return count;
-+	return 0;
-+
-+out:
-+	if (!ret)
-+		ret = -EINTR;
-+	if (rx_submitted) {
-+		wait_res = dmaengine_terminate_sync(mcspi_dma->dma_rx);
-+		if (wait_res) {
-+			dev_err(&spi->dev, "failed to terminate RX DMA: %d\n",
-+				wait_res);
-+			terminate_failed = true;
-+			ret = wait_res;
-+		}
-+		omap2_mcspi_set_dma_req(spi, 1, 0);
-+	}
-+	if (tx_submitted) {
-+		wait_res = dmaengine_terminate_sync(mcspi_dma->dma_tx);
-+		if (wait_res) {
-+			dev_err(&spi->dev, "failed to terminate TX DMA: %d\n",
-+				wait_res);
-+			terminate_failed = true;
-+			ret = wait_res;
-+		}
-+		omap2_mcspi_set_dma_req(spi, 0, 0);
-+	}
-+	if (spi_controller_is_target(mcspi->ctlr))
-+		mcspi_write_reg(mcspi->ctlr, OMAP2_MCSPI_IRQENABLE, 0);
-+
-+	*pio_fallback = !dma_started && !terminate_failed;
-+	return ret;
-+}
-+
-+static bool omap2_mcspi_can_pio_fallback(bool cleanup_ok,
-+					 const struct spi_transfer *xfer,
-+					 bool is_target)
-+{
-+	return cleanup_ok && xfer->tx_buf && !is_target;
- }
- 
- static unsigned
-@@ -1209,6 +1280,8 @@ static int omap2_mcspi_transfer_one(struct spi_controller *ctlr,
- 
- 	if (t->len) {
- 		unsigned	count;
-+		bool		pio_fallback;
-+		int		ret;
- 
- 		if ((mcspi_dma->dma_rx && mcspi_dma->dma_tx) &&
- 		    spi_xfer_is_dma_mapped(ctlr, spi, t))
-@@ -1222,10 +1295,31 @@ static int omap2_mcspi_transfer_one(struct spi_controller *ctlr,
- 					+ OMAP2_MCSPI_TX0);
- 
- 		if ((mcspi_dma->dma_rx && mcspi_dma->dma_tx) &&
--		    spi_xfer_is_dma_mapped(ctlr, spi, t))
--			count = omap2_mcspi_txrx_dma(spi, t);
--		else
-+		    spi_xfer_is_dma_mapped(ctlr, spi, t)) {
-+			ret = omap2_mcspi_txrx_dma(spi, t, &count,
-+						   &pio_fallback);
-+			if (ret) {
-+				bool is_target = spi_controller_is_target(ctlr);
-+				bool fallback;
-+
-+				fallback = omap2_mcspi_can_pio_fallback(pio_fallback, t,
-+									is_target);
-+				if (!fallback) {
-+					status = ret;
-+					goto out;
-+				}
-+
-+				dev_warn(&spi->dev,
-+					 "DMA setup failed, falling back to PIO\n");
-+				/* PIO does not use the FIFO enabled for DMA */
-+				omap2_mcspi_set_enable(spi, 0);
-+				omap2_mcspi_set_fifo(spi, t, 0);
-+				omap2_mcspi_set_enable(spi, 1);
-+				count = omap2_mcspi_txrx_pio(spi, t);
-+			}
-+		} else {
- 			count = omap2_mcspi_txrx_pio(spi, t);
-+		}
- 
- 		if (count != t->len) {
- 			status = -EIO;
-@@ -1241,8 +1335,12 @@ static int omap2_mcspi_transfer_one(struct spi_controller *ctlr,
- out:
- 	/* Restore defaults if they were overriden */
- 	if (par_override) {
-+		int restore_status;
-+
- 		par_override = 0;
--		status = omap2_mcspi_setup_transfer(spi, NULL);
-+		restore_status = omap2_mcspi_setup_transfer(spi, NULL);
-+		if (!status)
-+			status = restore_status;
- 	}
- 
- 	omap2_mcspi_set_enable(spi, 0);
+ 	struct sk_buff_head	req_pkts;
+ 	struct sk_buff_head	resp_pkts;
 -- 
 2.53.0
 
