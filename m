@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023401;
-	b=EJ9UGssEleV2IsNJoMS5kmVdkkMtEOZBB4SIbBpxHa606lW9EhCtjroy8GcdVozDEgsg
-	 jcLqvNtNcU9p7hpgLkCO9GWutvTPXJxvLEuJeoKXfg8sjNZzILnrniJCCa6E7/woOB9/X
-	 L8m6+qMERbcZJw5BY+8vRnXcaFlz5MB+vppjf+Q6XLs2kJJ1TcCpMniSvY0Kwx9xMoWJL
-	 8PTNGiVkqEZP6UIp3pdjsH2VfmqmgetCuoxLx4Sxh/GuMH/PlKRz5Og8+BA+v8Z+yuoWy
-	 jHB7AsS15RMau+64SHxSjpvWGIsGBrUAf5ExIbhMmUneIJZkegV3bHEZgOyo6KQxtcQ==
+	t=1795023404;
+	b=uNUoiA80yMxDwmfHtwMnSqKwhdbz9/nZJAje66cjqDHqDeINLwpjgcpnlu96PITgjJA3
+	 s/ldRCiWv77og+uOcIGM8gBIgfhOq4TS3p1lzMGfIiDEQfJZozSI2O3j7+9cxslRonRrN
+	 bIw5e76snm05wJRkyn7b8SbjxkV6P81+R+i6pSTmEwa2YwSIpynExJS4TQp/Rvfc3G1uv
+	 Yag3gIJBuV52lJ7dSPDMUaFmB8OH8tE8Y2NstoQWOETTJ/GHbF8xaSWXLPDWGODUKTz6S
+	 GG3fh4p9PgiRyLB6CSOxbg2jBVSLgEAPBoW55SlJn3Bw4QsS0S6eukD1bjlXLx0EjDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023401;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023404;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=stYGdf237hxKo9MPiqv092S8GDblizJ5/GFhqVYQG0M=;
-	b=XRF144gh5m1U4gFDn7wvPB+jTqXfCGoscQ+hiS/ojVznmOZ5FQdZqhjlyoRqc887U852
-	 KWoXwbnoUnkApUPjGCBU/u8uzE0xLkxoC+g86/CcCATvtjlI7j4E4CLB9enCU2qPzy8Oa
-	 MotnKjHBny99DbaZf1BZ1OO5utsBx8jYujp93c5mXxAtx6mj3uOkbSWDNelm14FElNV1w
-	 mqFooqIChnq+m4yuRgL9DT5NkNhQYXeUpClB8cGRv5HQ6RrYF7xGEJCHpSJnEoHWIRNNV
-	 MDtn+h20Osl5oBiHfxUgq9BIKZfJQXWA4vaqA5Q0CVTW2kalF3WLDtuHPPOI+ap019Q==
+	bh=sYrJPMAtCll07VbZfelEQoMPqy4DxjH4OWu9OXRZB30=;
+	b=xXGsB6eGbJX8tTstXVlKpvZyRhw1NIPeW1NOjy5Zz4y7phxOGZ5u3WjxWA0lTVcmDP1E
+	 MXy8VlLANvoZogEAadq1d8d4uJqDcjGqzj77hvQ1UufZQzEGOkXgZG7PL6bADTdzRkFjm
+	 kQTrYXVblUn8nlyizf2GgNKra+CGbcB/JH786RxjYPftMmqp9JLsxET6oT4wYWPbERqX7
+	 Rqg7O9piPFMDb9GxGU05OFYqrDL3siWbmLbokizikCV7DH0nV89hW+RedWx6/TTrh8ing
+	 hhZtgD932Af3Rq/I/m3oJwIBftwgXoSuXIruBuGi5pAJOC8AQCj0Z31UGlACOFntLWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Lboh/sfv";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vhq2OoRs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B65606CA47;
-	Wed, 18 Nov 2026 17:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE84F606CA4D;
+	Wed, 18 Nov 2026 17:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lboh/sfv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B9B1F000C5;
-	Wed, 18 Nov 2026 17:36:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vhq2OoRs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1816E1F000C5;
+	Wed, 18 Nov 2026 17:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023400;
-	bh=stYGdf237hxKo9MPiqv092S8GDblizJ5/GFhqVYQG0M=;
+	s=korg; t=1795023403;
+	bh=sYrJPMAtCll07VbZfelEQoMPqy4DxjH4OWu9OXRZB30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lboh/sfvd7tN7PfDersda+A7IyMpOBpebsA6HRYUotc3FQKli7NWfshCCjYbmEuqd
-	 XjN8Hwo1DHSvrrE97yEnGmw1lS5igQOwofUy3PZRiS8syq0rAQkz3EQomDFUFqpss2
-	 Za7GS0lyLBimuiuoqhjObh37lWviJJOuMa4xLcQE=
+	b=Vhq2OoRsS5fzESnFYzg7yhlLRbe4rJ3TC8+tA00cxf77yMOTQ0wHHk+qkmP0dMDs3
+	 Tju3FAZa7UvxrRYWsVF601Ay+94Zm0TWHcYUAcO7LWaQT5XCmFbN0QCGK8bAzPZz0R
+	 D7pFhAdu01kw4zFnee4s4nAQZY0WulFp+gOHAshM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Arka Mondal <arka@arkamondal.net>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0357/2151] usb-storage: alauda: fix out-of-bounds zone index
-Date: Wed, 18 Nov 2026 15:34:52 +0100
-Message-ID: <20261118150135.109252866@linuxfoundation.org>
+Subject: [PATCH 6.18 0340/2151] scsi: mpi3mr: Fix out-of-bounds read in PCIe topology change events
+Date: Wed, 18 Nov 2026 15:34:35 +0100
+Message-ID: <20261118150134.455120357@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,110 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arka Mondal <arka@arkamondal.net>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit c4542993c071fcafe7335698bf52650dee7e3555 ]
+[ Upstream commit 7d572b4dc4ed0494e67097d4b7368666655f5c99 ]
 
-MEDIA_INFO(us).lba_to_pba and .pba_to_lba are arrays of num_zones
-pointers, allocated by kcalloc() in alauda_init_media().
-alauda_ensure_map_for_zone() reads lba_to_pba[zone] and
-pba_to_lba[zone], and when either is NULL alauda_read_map() writes a
-pointer back to both. Two separate errors let zone reach num_zones, one
-element past the end.
+The number of entries in a PCIe topology change event is used to walk the
+entry array without being compared against the amount of event data that
+was received.
 
-max_lba is capacity >> (blockshift + pageshift), which counts physical
-blocks, but zone is lba / uzonesize and uzonesize is 125/128 of
-zonesize. On a 16 MB card (alauda_card_ids id 0x73) num_zones is 1 and
-uzonesize is 1000, so lba 1000 to 1023 pass the bounds check and index
-element 1 of a one-element array.
+Bound the entry count to the received event data before use.
 
-alauda_read_data() also calls alauda_ensure_map_for_zone() before it
-compares lba against max_lba, so any larger lba is used as an index
-before the check rejects it. alauda_write_data() already checks first.
-
-Bound lba by num_zones * uzonesize on both paths and move the read
-side's call below the check. alauda_transport() reports
-num_zones * uzonesize * blocksize for READ_CAPACITY, so the new bound is
-exactly the range the device advertises and no block becomes
-unreachable.
-
-sd never issues an lba past the reported capacity; an SG_IO READ_10 can.
-
-Fixes: e80b0fade09e ("[PATCH] USB Storage: add alauda support")
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Arka Mondal <arka@arkamondal.net>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260901065831.43567-4-arka@arkamondal.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8e653455547a ("scsi: mpi3mr: Add support for PCIe device event handling")
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Link: https://patch.msgid.link/20260825210411.301535-15-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/alauda.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_os.c | 22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/storage/alauda.c b/drivers/usb/storage/alauda.c
-index 1de09c9f115ab..d182ac88cbf4c 100644
---- a/drivers/usb/storage/alauda.c
-+++ b/drivers/usb/storage/alauda.c
-@@ -949,6 +949,7 @@ static int alauda_read_data(struct us_data *us, unsigned long address,
- 	unsigned char *buffer;
- 	u16 lba, max_lba;
- 	unsigned int page, len, offset;
-+	unsigned int num_zones;
- 	unsigned int blockshift = MEDIA_INFO(us).blockshift;
- 	unsigned int pageshift = MEDIA_INFO(us).pageshift;
- 	unsigned int blocksize = MEDIA_INFO(us).blocksize;
-@@ -973,7 +974,9 @@ static int alauda_read_data(struct us_data *us, unsigned long address,
- 	/* Figure out the initial LBA and page */
- 	lba = address >> blockshift;
- 	page = (address & MEDIA_INFO(us).blockmask);
--	max_lba = MEDIA_INFO(us).capacity >> (blockshift + pageshift);
-+	num_zones = MEDIA_INFO(us).capacity >> (MEDIA_INFO(us).zoneshift
-+		+ blockshift + pageshift);
-+	max_lba = num_zones * uzonesize;
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
+index 8551aa47549e3..cb105c8fdbb18 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_os.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+@@ -2675,12 +2675,28 @@ static void mpi3mr_pcietopochg_evt_th(struct mpi3mr_ioc *mrioc,
+ 	struct mpi3_event_data_pcie_topology_change_list *topo_evt =
+ 	    (struct mpi3_event_data_pcie_topology_change_list *)event_reply->event_data;
+ 	int i;
+-	u16 handle;
+-	u8 reason_code;
++	u16 handle, avail_len;
++	u8 reason_code, max_entries, num_entries;
+ 	struct mpi3mr_tgt_dev *tgtdev = NULL;
+ 	struct mpi3mr_stgt_priv_data *scsi_tgt_priv_data = NULL;
  
- 	result = USB_STOR_TRANSPORT_GOOD;
- 	offset = 0;
-@@ -985,10 +988,6 @@ static int alauda_read_data(struct us_data *us, unsigned long address,
- 		unsigned int pages;
- 		u16 pba;
- 
--		result = alauda_ensure_map_for_zone(us, zone);
--		if (result != USB_STOR_TRANSPORT_GOOD)
--			break;
--
- 		/* Not overflowing capacity? */
- 		if (lba >= max_lba) {
- 			usb_stor_dbg(us, "Error: Requested lba %u exceeds maximum %u\n",
-@@ -997,6 +996,10 @@ static int alauda_read_data(struct us_data *us, unsigned long address,
- 			break;
- 		}
- 
-+		result = alauda_ensure_map_for_zone(us, zone);
-+		if (result != USB_STOR_TRANSPORT_GOOD)
-+			break;
+-	for (i = 0; i < topo_evt->num_entries; i++) {
++	avail_len = event_reply->event_data_length * 4;
++	if (avail_len < offsetof(struct mpi3_event_data_pcie_topology_change_list, port_entry)) {
++		ioc_err(mrioc, "PCIe topology event: event data too small (%u bytes)\n",
++			avail_len);
++		return;
++	}
++	max_entries = (avail_len -
++		      offsetof(struct mpi3_event_data_pcie_topology_change_list, port_entry)) /
++		      sizeof(struct mpi3_event_pcie_topo_port_entry);
++	num_entries = topo_evt->num_entries;
++	if (num_entries > max_entries) {
++		ioc_err(mrioc, "PCIe topology event: num_entries(%d) exceeds max(%d)\n",
++			num_entries, max_entries);
++		return;
++	}
 +
- 		/* Find number of pages we can read in this block */
- 		pages = min(sectors, blocksize - page);
- 		len = pages << pageshift;
-@@ -1052,6 +1055,7 @@ static int alauda_write_data(struct us_data *us, unsigned long address,
- 	unsigned int pagesize = MEDIA_INFO(us).pagesize;
- 	struct scatterlist *sg;
- 	u16 lba, max_lba;
-+	unsigned int num_zones;
- 	int result;
- 
- 	/*
-@@ -1078,7 +1082,9 @@ static int alauda_write_data(struct us_data *us, unsigned long address,
- 	/* Figure out the initial LBA and page */
- 	lba = address >> blockshift;
- 	page = (address & MEDIA_INFO(us).blockmask);
--	max_lba = MEDIA_INFO(us).capacity >> (pageshift + blockshift);
-+	num_zones = MEDIA_INFO(us).capacity >> (MEDIA_INFO(us).zoneshift
-+		+ blockshift + pageshift);
-+	max_lba = num_zones * MEDIA_INFO(us).uzonesize;
- 
- 	result = USB_STOR_TRANSPORT_GOOD;
- 	offset = 0;
++	for (i = 0; i < num_entries; i++) {
+ 		handle = le16_to_cpu(topo_evt->port_entry[i].attached_dev_handle);
+ 		if (!handle)
+ 			continue;
 -- 
 2.53.0
 
