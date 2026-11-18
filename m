@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016785;
-	b=LnTCwlWD1A13xw2A5pHKX65nAHNFyOvpCiv1SRwG+UInTzWSyK8HRVP+vz5A3XCWuSNs
-	 UzMKQP0XLKXOOID4UdGNrOuQQIMnjvAYwkqC+yrcGyCcK39q9qduaLYb7uHJXKL5TNVMt
-	 gU0bA7Z3OdgV2aqyg8qrYAXD/LE4GxNCVBrXydQgO+7av2+4S11PoYaTLWWSYgd52G9Xi
-	 BQTCJjIa5ODlWwAbaDIKwyHAOvpbOHY2qxuxAw6qtz2m9b7MfdbID3OR2QTDNvZjH0DaR
-	 ELeX/+rud7C4FEpKsdchZANTHqdDIh+ubGo50Xp7ML6AjpenTo5QQv1EaF3aKs4LlWA==
+	t=1795016787;
+	b=CHUZ6TS9RkuCdycyNbapGgxo/1xjaGPyH+1lYhrfyghR8baaR/fzxgle4gHgcXQ0mejY
+	 EylrIRgb3+b6fmXrVo1gmo+EEiXK67KmTlpdUvKDxkRjE2iakzdbd/ui9OmWtbB3i8JY4
+	 Gi5HuU6I2yIy54FSqsUFIZnN5CtPH/ODSiFbwx4oahfAg+q1VMRS8gUx94C+qB5ezORPE
+	 7Oa7CtkUWgOf+a1zOqbbhPTKZndGsF3ffm7I37QjatEU8Z8iq3RWZ7F4Fl+c5vKQZHY5C
+	 fC9ebjbWC5HvSZpwzPI66npaOvkHwx+hXTwUDFeam1Xph25kxPc8eI9ZJs86tt2/YgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016785;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016787;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r+/fcaA3z2fmTvDDXa5gkXgJYwTCDVxWI1ghK80/goA=;
-	b=E7qNadsCTOM0PfbwbSAJcvTBnEPCtHM8SHOW6Vnn4ap2mu6RZARYVVzw4dikfYo22FRi
-	 WHrA+VkVPDijBxhdXQrEaTNwEvAnxjRktq8ogQvhbZ2zsha0JZ9s1w3wu53CXzlnx501j
-	 aKY0HrC8d4gtrNjXa7hkewibg0sahLeyaJgcBa/EIGmBqEDVHX5u0KXwAdD6hjdX8AbsU
-	 eWNGJPMZwat56eUEJxoPgPhFdj8NGQYyyI7Mf12BQ2OhATfchcDhmpSs7TmzXkyfJ5CdM
-	 RsKW58azD0d17lzkER5FXEPSdNwdsJG2nmg4GHJg3Kj/in1QAkXR20OtC021M6FaGQA==
+	bh=lsOlx5Mbnez3RX9sZypn9Wue02/9lSEBlcLJYoW1tSY=;
+	b=j8mFgy6S7xGgG8J8eiROCfKUWVvVqfWZYkRBOjvuA6JpyH/5xuHNtzBrxeMWO9aX0pr4
+	 olQTLZOwgd9XLGdtn4yxh+ZZ8dtkOdoTRzLkLFla/ctBprSorx5gMpZ+o1hBBjDkfpkgZ
+	 nGueBMDBW6FTiUNf5GTs1Q3wN246SYM4rHkESYMqixz/2Q+O9I1umAlIGow4r0YxI/FOR
+	 DiSL6w1U8mIk8sviLAN6sI8DOnGc0DeYHZRoV/ybScTnw0fYniMFLwoNhNHg4YRj0bqZy
+	 teXiwHr/l34rliCF+gRe14Y3V0Lh5VWUpPnxcc3eyflujstq3MV0q1Izhbsh8g/x3yQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="TjkNbql/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BXm7wUqt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273B4606A31C;
-	Wed, 18 Nov 2026 15:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD84606A338;
+	Wed, 18 Nov 2026 15:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TjkNbql/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C7F1F000C4;
-	Wed, 18 Nov 2026 15:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BXm7wUqt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335801F000C8;
+	Wed, 18 Nov 2026 15:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016785;
-	bh=r+/fcaA3z2fmTvDDXa5gkXgJYwTCDVxWI1ghK80/goA=;
+	s=korg; t=1795016787;
+	bh=lsOlx5Mbnez3RX9sZypn9Wue02/9lSEBlcLJYoW1tSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TjkNbql/lmTk8kQj29BZBil0ZkBdi8LOclUwvFp+lsYU5HvcA7L6z8vMgLpvfMG+4
-	 w7kkVQVN35Gak22x9ppN+pV8WdraKAaOj8Fq8u6k5ORa4wpv0UpWGqFMVeYGVnE0oE
-	 WyBKiW09ge5PV82hqiHybi/nVxEl68sNZ/G9iW5o=
+	b=BXm7wUqth7A/t+7D/aqTdxQ0k7mOTr3bLLXVPVR3AZc+VG5pCP7EVrsGhtznXRNMv
+	 FhV3FK4rD6ZM9FyD9DmfZvp9Y2BpWCB1wCU0YTVff9S7mB2rEiAJSOeIjkEI6DmkEz
+	 FcbbzMwQW+pn0pXy2R8pk6VC1h1T2n5R2y6DoPDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <hppiscas@163.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0611/2651] pmdomain: imx: Propagate SCU provider registration failures
-Date: Wed, 18 Nov 2026 15:30:51 +0100
-Message-ID: <20261118150309.714082214@linuxfoundation.org>
+Subject: [PATCH 7.3 0612/2651] pmdomain: renesas: r8a78000: Fix lockdep false positive
+Date: Wed, 18 Nov 2026 15:30:52 +0100
+Message-ID: <20261118150309.747197631@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,56 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit d3efba7921f3ebebd91fc481910a428c78414fd8 ]
+[ Upstream commit ddacdefc38200bafa35e79925bbc1f4b1fdf41a8 ]
 
-imx_scu_init_pm_domains() ignores of_genpd_add_provider_onecell() and
-returns success even when none of the initialized domains are published to
-DT consumers.
+Lockdep reports a possible circular locking dependency when attaching
+devices to an MDLC PM domain:
 
-Return the provider error and remove the initialized domains in reverse
-order before devm releases their backing storage on probe failure.
+  - During creation of the singleton PM domain:
+      A. r8a78000_genpd_always_on_singleton() takes r8a78000_mdlc_lock,
+      B. pm_genpd_init() takes gpd_list_lock.
 
-The issue was found by our static-analysis tool and manually reviewed.
+  - During attachment of devices to PM domains:
+      A. pm_genpd_add_device() takes gpd_list_lock,
+      B. r8a78000_mdlc_attach_dev() takes r8a78000_mdlc_lock.
 
-Fixes: c800cd7824bd ("firmware: imx: add SCU power domain driver")
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+As the former is done only once, before any devices are attached, such a
+AB-BA deadlock cannot really happen.  Fix this false positive by
+introducing a separate lock to protect the creation of the singleton
+domain.
+
+Fixes: 9f79f93963b0 ("pmdomain: renesas: Add R-Car X5H MDLC driver")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pmdomain/imx/scu-pd.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/pmdomain/renesas/r8a78000-mdlc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pmdomain/imx/scu-pd.c b/drivers/pmdomain/imx/scu-pd.c
-index e3f9e741daf76..05d4364f34be9 100644
---- a/drivers/pmdomain/imx/scu-pd.c
-+++ b/drivers/pmdomain/imx/scu-pd.c
-@@ -474,7 +474,7 @@ static int imx_scu_init_pm_domains(struct device *dev,
- 	struct genpd_onecell_data *pd_data;
- 	struct imx_sc_pm_domain *sc_pd;
- 	u32 count = 0;
--	int i, j;
-+	int i, j, ret;
+diff --git a/drivers/pmdomain/renesas/r8a78000-mdlc.c b/drivers/pmdomain/renesas/r8a78000-mdlc.c
+index 2668fc2ac9cbd..1fd71bb3da776 100644
+--- a/drivers/pmdomain/renesas/r8a78000-mdlc.c
++++ b/drivers/pmdomain/renesas/r8a78000-mdlc.c
+@@ -45,8 +45,9 @@ struct r8a78000_mdlc_priv {
+ };
  
- 	for (i = 0; i < pd_soc->num_ranges; i++)
- 		count += pd_ranges[i].num;
-@@ -503,7 +503,13 @@ static int imx_scu_init_pm_domains(struct device *dev,
- 	pd_data->num_domains = count;
- 	pd_data->xlate = imx_scu_pd_xlate;
- 
--	of_genpd_add_provider_onecell(dev->of_node, pd_data);
-+	ret = of_genpd_add_provider_onecell(dev->of_node, pd_data);
-+	if (ret) {
-+		while (count)
-+			pm_genpd_remove(domains[--count]);
+ static struct generic_pm_domain *r8a78000_genpd_always_on;
 +
-+		return ret;
-+	}
+ static HLIST_HEAD(r8a78000_mdlc_list);
+-static DEFINE_MUTEX(r8a78000_mdlc_lock);	/* protects the two above */
++static DEFINE_MUTEX(r8a78000_mdlc_lock);	/* protects the list above */
  
- 	return 0;
- }
+ static struct generic_pm_domain *r8a78000_genpd_xlate(
+ 			const struct of_phandle_args *spec, void *data)
+@@ -191,10 +192,11 @@ static void r8a78000_genpd_del_provider(void *data)
+ 
+ static int r8a78000_genpd_always_on_singleton(struct device *dev)
+ {
++	static DEFINE_MUTEX(singleton_lock);
+ 	struct generic_pm_domain *genpd;
+ 	int ret;
+ 
+-	guard(mutex)(&r8a78000_mdlc_lock);
++	guard(mutex)(&singleton_lock);
+ 
+ 	if (r8a78000_genpd_always_on)
+ 		return 0;
 -- 
 2.53.0
 
