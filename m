@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062019;
-	b=0i37I51S8bjXc+sRVxr0rP/YfPiyu1I2JkW/cVyI4pVZFJqiuA3sguK4H4X1eLVv7ULf
-	 hkp+ZExP6snTHrEVJ85dZgyWlmDleT0rBfsUGMOeGGEhTY4K+SsCFQsBWu1Wf8ZLeVNsA
-	 ov0q8R8Nt1xdTM5BbxWFk7/GQ4oEz6pj1JRkU9CZv5b24f7Z5j2yZdeOD8FYtIrKBROLR
-	 yJ5x3FvJZaN99R7WfDSlXoMinVju3d3CIJ2+5s47HTyjk4hL99BvQ7ogMQAZemJeVJN9+
-	 x3CPrnhV9aQ1jP8g2M5oT8inLHDb5oCxG5lGxIKhlsrr0k1ngcqfJHtvS4MGG1EP14A==
+	t=1795062022;
+	b=Dh5MtmBuINCCzv2FaVF2p0FPbhkqwWPbOZBQJckeA2whUoqXif41DR48p9FgJVSblfq1
+	 WioHuCnHeKxLJWC+d9Irfqv8rEDHKnfNqhLpF0Pvo1D7RUQuGYcUYUvl4QQM168je2lRL
+	 Loc9h8AXlA/RpEbz1ZxJu/nzhgDhRsB9Ea6GUGn69aa1DkddoUtuQfG7RW0BDOaPWICLz
+	 JmoWbOiEjMH6c9nQPcbqELygn9OSiY8NLO76RSeCuWZQuO1UVAexqJmOI8k8WFxmGgOhQ
+	 GstshJ8cZFgMlz373VSVjSn7GgTG3/QtpbWZuPw30JNDML0xI8dtaFl+r5o5Fuf0czw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062019;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062022;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kZquoRR+qDk3DBFCn1cFcLEk6+/SpZ5W2MwSnXpD/cY=;
-	b=n1EjIPxH4a/DgurH/q7Qa7CM1/qpxwrHUFVI5fzetixa3dwv5PPppoqbMpJHEf28X6jT
-	 aMo7JpKNK+PR+gCaw5boR8JEUn6YM1ZFSSuaaBtkD6qtGXF5CAGCImja5e6pxNKfr5Vay
-	 tPwRI10ncn0A7zXHS7F/9sOaIVFtrnoEylisXY27jK29mnvfovrLvFAlTG2XfxFJZcr9A
-	 QoyRPebML2nGjBmOops9lyrp2aeaQmHfUP9kDkQeqPHelDznytwmUb9Qc6sqvYYxqaeoN
-	 RZEC4zCqXv45Jq/M48CO7M3F+kL+mAc8oM3ZTaIt1p7NaKVjz9B9a4Sz81A4JhuuWDw==
+	bh=fTCAZDZEy5qSzQOs7UfM9v9tPGLysIiqbW1+baAy6rM=;
+	b=i60uhcbnolFYVTmAMTKDsybgAS9ngvVH5n6slxNcDnNCBI64Bb4g+IFJ3rNa0djeWDqQ
+	 lirebvPQo3+ZxVs2H+E73nuQt9HMN1ZLGEHBPSx06yDZdmA2Uj40A1rsvFoa8SiZq7F0a
+	 FkaTlvZfBqskOsn95mn8BVGRDZ+4OPFbgVsOlyi4LQvnrpwoa3VvNUcuJ3E0IbEK/gvcC
+	 XfeNcqgMhAqLObFmDbH6MNXaBX5GmP2OiqJcwbpeSFeN4cnZsE2ioSa3B0b4FL5d17N3v
+	 kcFPWMiVy70BawMSI6vCEobUxdXx8Emdp1jUnia9fg876KGVpV3Mrmh/lCqVDT19CkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sTiAkECv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K7Q1RRcU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5C6606A320;
-	Thu, 19 Nov 2026 04:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89186606A320;
+	Thu, 19 Nov 2026 04:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sTiAkECv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F6FE1F000C4;
-	Thu, 19 Nov 2026 04:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K7Q1RRcU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE41B1F000C4;
+	Thu, 19 Nov 2026 04:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062019;
-	bh=kZquoRR+qDk3DBFCn1cFcLEk6+/SpZ5W2MwSnXpD/cY=;
+	s=korg; t=1795062022;
+	bh=fTCAZDZEy5qSzQOs7UfM9v9tPGLysIiqbW1+baAy6rM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sTiAkECvowCWLQ1CRuVFZiMK1MhSZsxU1eilXS+XaA4uBWHAthMTmJSXCdSGM/uQ4
-	 6GrSPAP4q3uxrqjEB/shOYteEGBvonVTRxuv6A2TKWowT25UZcwAz3m62VMQJZ1Di9
-	 6Qyn25WIVvirDsxiQuuq1OTheO2aAlX+frepvMi4=
+	b=K7Q1RRcUiPzb3svgwUaR1mTs6klr3RdN8ngxvi1/NpKjZLhDXcrYL6dau4btRT+hv
+	 VmGKfIdHiAjYj/MfsuIyP4uzFDJdKxKdcB2mp2fvPTM9WDln0AB2z05kDU4gvw0OWX
+	 /VhdSsHRBB4qBa3HurfFTjCTkYmQTz1wEgRgooEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Hu <ivan.hu@canonical.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Leonard Lausen <leonard@lausen.nl>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	sashiko-reviews <sashiko-bot@kernel.org>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1760/1848] ACPICA: Initialize parser_state.aml_end in acpi_install_method()
-Date: Wed, 18 Nov 2026 16:03:18 +0100
-Message-ID: <20261118150033.125452848@linuxfoundation.org>
+Subject: [PATCH 5.10 1761/1848] ASoC: amd: raven: Fix memory leak in acp3x_dma_close()
+Date: Wed, 18 Nov 2026 16:03:19 +0100
+Message-ID: <20261118150033.164120919@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,59 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Hu <ivan.hu@canonical.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit ec696f34774db985841bac9a2df179c0040ef073 ]
+[ Upstream commit e0b17f84f6e3fa1201b8e2857094023c42ce5636 ]
 
-In AcpiInstallMethod(), the local ParserState is stack-allocated and
-only ParserState.Aml was initialized. Parser helpers called by this path
-read ParserState.AmlEnd for bounds checking: AcpiPsPeekOpcode() reads it
-before validating the first AML opcode, and AcpiPsGetNextPackageEnd()
-reads it indirectly via AcpiPsGetNextPackageLength(). The subsequent
-package-limit check also compares against ParserState.AmlEnd. Because
-AmlEnd was never set, these checks operated on an uninitialized value,
-which Coverity flagged as an uninitialized read (CID 1684785) and which
-could lead to incorrect parser bounds decisions.
+acp3x_dma_open() allocates a struct i2s_stream_instance for
+each substream, but acp3x_dma_close() never frees it, leaking
+it on every open/close cycle.
 
-Coverity report:
+Free it in acp3x_dma_close().
 
-*** CID 1684785:         Memory - illegal accesses  (UNINIT)
-/src/acpica/source/components/namespace/nsxfname.c: 712             in AcpiInstallMethod()
-        ParserState.Aml += AcpiPsGetOpcodeSize (Opcode);
->>>     CID 1684785:         Memory - illegal accesses  (UNINIT)
->>>     Using uninitialized value "ParserState.AmlEnd" when calling
-        "AcpiPsGetNextPackageEnd".
-        ParserState.PkgEnd = AcpiPsGetNextPackageEnd (&ParserState);
-
-Initialize ParserState.AmlEnd to the end of the table
-(Buffer + Table->Length) so the parser bounds checks operate on a valid
-limit.
-
-Link: https://github.com/open-acpica/acpica/commit/19429ef91ebfb2144c918038dce13e297b4ef051
-Fixes: bdc357540129 ("ACPICA: add boundary checks in two places")
-Signed-off-by: Ivan Hu <ivan.hu@canonical.com>
-Signed-off-by: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
-Signed-off-by: Leonard Lausen <leonard@lausen.nl>
-[ rjw: Subject tweaks ]
-Link: https://patch.msgid.link/20261019145421.47181-2-leonard@lausen.nl
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 9f7041b71a2f ("ASoC: amd: closing specific instance.")
+Reported-by: sashiko-reviews <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/sashiko-outbox-173760@kernel.org/
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20261016085047.535265-1-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/nsxfname.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/amd/raven/acp3x-pcm-dma.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/acpica/nsxfname.c b/drivers/acpi/acpica/nsxfname.c
-index 5c846978c38af..4bfd001d62039 100644
---- a/drivers/acpi/acpica/nsxfname.c
-+++ b/drivers/acpi/acpica/nsxfname.c
-@@ -503,6 +503,7 @@ acpi_status acpi_install_method(u8 *buffer)
- 	/* First AML opcode in the table must be a control method */
+diff --git a/sound/soc/amd/raven/acp3x-pcm-dma.c b/sound/soc/amd/raven/acp3x-pcm-dma.c
+index 52944b59613d3..5c29e57ffb704 100644
+--- a/sound/soc/amd/raven/acp3x-pcm-dma.c
++++ b/sound/soc/amd/raven/acp3x-pcm-dma.c
+@@ -363,6 +363,8 @@ static int acp3x_dma_close(struct snd_soc_component *component,
+ 		}
+ 	}
  
- 	parser_state.aml = buffer + sizeof(struct acpi_table_header);
-+	parser_state.aml_end = buffer + table->length;
- 	opcode = acpi_ps_peek_opcode(&parser_state);
- 	if (opcode != AML_METHOD_OP) {
- 		return (AE_BAD_PARAMETER);
++	kfree(ins);
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
