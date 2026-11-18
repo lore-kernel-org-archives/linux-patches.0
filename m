@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027551;
-	b=BNGKugR1wZFB0vBFWQnDfAtYPtf8R9oNbGOMvTVm6z3x8O+sj4SH+y8aT/m1f+cZRq17
-	 4YuVWjXyfNb4BHK0PqAn1htbnD1msLp/4JIDCkZ+36/C0+RLBBtMrHjeWB3MP8uE919OZ
-	 ThsViFWOkVySXrBg8f+O1UDx+zL1I9mGqJiIRVB/bosoh5NW/hB3qoieWnBt3KRSzGKJp
-	 F8CSrrgw01M5q7H+py0MLt87o5S5Zh02s2Sf5SNIwspjehQP5FyKd9UHaH7x5/VSe18uF
-	 yhYUMPQJfxEjVfktbrN7/POXWltyVh/N66VPUU5NNIClsJt1D/sTybghrx0x4Fm6zKQ==
+	t=1795027553;
+	b=0wlaCRJMkz58Rn7KMJs3YOCIUCGizGTAzLXEhQfUfMoDdk+vX7yYS7eVIaX1Vxc+Z2Ig
+	 OvN6VGdx2ta3w/HfIxSraHGyoPeUTZREwskPhHrqHHOtkRROc3Vb/lLA4JOGfwnSAbHGy
+	 41KIZEPpAUyLbX7xF4NICkcPxP5W+BL1o9gtBicTAvR0lOgO/On+uehuz4grN+JMFeGGv
+	 4EldysbEdqB4nB7GuIfBlKBiI8RT/guCiweyZvDg31NK6v1y7hVjveVzIILE6ued/2JYn
+	 Ne76t49DqWz9Hk6S6nTHiOfRgi3bnB6ZSB0FC2bTSUJfDJmjQccG9s6SDEvC/BZuo/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027551;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027553;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jc658wY104oUEO90H/n1a1dmbDXp/qiMbCKW7Jqu4Ss=;
-	b=Ve2M388d2Kl005oLNMknKUEBS4AWRMFi81lg5aAm00nCRnU0/IneBn2y4nuRnUGsWFXC
-	 ZbWNHGnTojUHFi9FSEV6gzi7U3G8mCxMoIr32jg7dqR8OTG1aX9n+VYRLtT6pct32F6GL
-	 wXYRROxIVBixZlttKlYnTnYzqvAQUlhD435s/+mn6+qmCxCXJOsKtDPRyCatKI2ovrU2q
-	 XbDEmTtnRSKSKojpBEVGKDlgG/9XrnifjyvYEfhfk9ez0kxPi3gBr2kaRf+wud798MxyE
-	 lW3AanSg4/PLQXG4NkD89DMJxM0FBgoKDOltAlZfu9++bbeoYU2WAofYh/0kcGwnIIQ==
+	bh=muGp6I/gKYLorAltcX2kusqDj4fFw9baHfklDt232Bk=;
+	b=hqtGKQQ7fG06KetTI40mhLrXmn1PP77lHh+6J+U26NC6uG5SQSgf0NAg79tN4jq4FZ6q
+	 oAYZ8Jk/DXA8t+DLXr+O7jyYLWH4ZDzE5ofciXMa4Zt0LNCHsXN2U/RbAuUQJUCCUdBIB
+	 AQv/NkNQ+HqFZT3DkGjk9lK682IiqezDUOIvoPasbSZKef+HPVnOIa4B0w1DVBEAoyLQA
+	 VsTJZ065EUv/PL3IyJ3mvMBdCzEZGNod8qKyzUTv0cPjX8nBFWgDJMynqrC9J4WPjZEH4
+	 5kq2SotCf2F09bTdejuIz2TA4ztVYbmKnvwTwt+snMVUPWUCQYi2RBd0qLM0O/dPiqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vvazva/r";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pKqz2V2o;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CF860A2612;
-	Wed, 18 Nov 2026 18:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C8860A260F;
+	Wed, 18 Nov 2026 18:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vvazva/r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568DF1F000C6;
-	Wed, 18 Nov 2026 18:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pKqz2V2o
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19CFE1F000C6;
+	Wed, 18 Nov 2026 18:45:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027550;
-	bh=jc658wY104oUEO90H/n1a1dmbDXp/qiMbCKW7Jqu4Ss=;
+	s=korg; t=1795027553;
+	bh=muGp6I/gKYLorAltcX2kusqDj4fFw9baHfklDt232Bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vvazva/r/EwOANhYIviNraBvQBcq0aZLNgZHtrh4b4ntZwol4XNttaGgucR4yPCV0
-	 9V7okg/F5gXoGM/3QCg3W4h7fJbQIHrXvKAKWJmIx5/Ss79rt+c/efENR4aQFI+Ggn
-	 lha95qgT6f6ag4QGG1alIIMd3cRpJ/GEi0j2CSBQ=
+	b=pKqz2V2oPvO4/8Bs7Jm/20u7NPOqwEVHVLUbV6tt/Ns3USoSV1OLXPVs1sWiRsXG0
+	 OUGnH9xP8tZtERk8UG40gkrq3cud+8CPYpw5367759FetUir0yrN+BAx7z0VHrX4F3
+	 tMt52ZRZC0DszZ0wq0q0z3oNqv5FAAW0aGd2/iEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunlong Ma <yunlong_ma@buaa.edu.cn>,
-	Nikolay Aleksandrov <nikolay@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Gabriel Goller <g.goller@proxmox.com>,
+	Mingming Cao <mmc@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1822/2151] bridge: mcast: Delete empty MDB entry when port group creation fails
-Date: Wed, 18 Nov 2026 15:59:17 +0100
-Message-ID: <20261118150228.177724768@linuxfoundation.org>
+Subject: [PATCH 6.18 1831/2151] ibmveth: fix netpoll races with RX replenish
+Date: Wed, 18 Nov 2026 15:59:26 +0100
+Message-ID: <20261118150228.504608734@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,131 +68,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Mingming Cao <mmc@linux.ibm.com>
 
-[ Upstream commit 1d0590f96fa4133578b7370ea9ce1d871f6bfc21 ]
+[ Upstream commit 8d9ecac6b96e61d0e6d126c60644829fd9f66952 ]
 
-When a port group cannot be created for a new group, the MDB entry that
-was created for it is left with no ports and is not joined by the host.
-Its timer is never armed, so the entry is never deleted, but it is
-counted towards mcast_hash_max. When this maximum is reached, the bridge
-disables multicast snooping.
+ibmveth_poll_controller() runs RX replenish outside NAPI and without
+a lock, racing NAPI's replenish on another CPU. Both can fill the
+same slot, so an skb and its DMA mapping leak and PHYP can write
+into an unmapped buffer. netpoll calls it from netconsole and from
+netpoll-enabled bonds.
 
-Since commit b57e8d870d52 ("net: bridge: Maintain number of MDB entries
-in net_bridge_mcast_port"), port group creation also fails when the port
-reached its mcast_max_groups limit. A host behind such a port can
-therefore disable snooping by sending reports for new groups, which is
-what the limit is meant to prevent. The RTM_NEWMDB path has the same
-problem.
+ibmveth_open() also enables NAPI before the RX resources exist.
+ibmveth_change_mtu(), veth_pool_store(), ibmveth_set_csum_offload()
+and ibmveth_set_tso() call close() and open() directly, so while
+open() is still setting up, netpoll and the direct ibmveth_interrupt()
+calls can replenish NULL pools and read freed memory.
 
-Fix by deleting the entry after a failure if it is unused. Delete it
-immediately rather than arming its timer, so that it stops counting
-towards the maximum right away.
+Remove the callback, as Eric Dumazet did for many drivers after
+commit ac3d9dd034e5 ("netpoll: make ndo_poll_controller() optional"),
+including ibmvnic in commit 0c3b9d1b37df ("ibmvnic: remove
+ndo_poll_controller"). netpoll then polls NAPI itself with budget 0.
+napi->poll_owner serializes that with NAPI, but not with a NAPI poll
+that was already running when netpoll was set up, so skip RX
+replenish at budget 0, which netpoll uses for TX only. TX completes
+synchronously, so ibmveth_poll() has nothing else to do for netpoll.
 
-Fixes: b57e8d870d52 ("net: bridge: Maintain number of MDB entries in net_bridge_mcast_port")
-Reported-by: Yunlong Ma <yunlong_ma@buaa.edu.cn>
-Closes: https://lore.kernel.org/netdev/2f5b61e2.1e71a.1a11fcb3809.Coremail.yunlong_ma@buaa.edu.cn/
-Acked-by: Nikolay Aleksandrov <nikolay@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Gabriel Goller <g.goller@proxmox.com>
-Reviewed-by: Gabriel Goller <g.goller@proxmox.com>
-Link: https://patch.msgid.link/20261016101407.2030133-2-idosch@nvidia.com
+Enable NAPI just before request_irq(), once everything
+ibmveth_poll() touches exists.
+
+Found in review of the ibmveth multi-queue RX series and confirmed by
+code inspection of poll_one_napi() and the direct close()/open()
+callers; neither race was reproduced. Tested on a POWER10 LPAR with
+netconsole over ibmveth: a ping flood (678,470 packets, no loss) during
+a printk flood, and MTU changes and buffer pool toggles under traffic,
+with no warnings. No kernel selftests cover ibmveth.
+
+Fixes: 6b4223748895 ("[PATCH] ibmveth: Add netpoll function")
+Fixes: bea3348eef27 ("[NET]: Make NAPI polling independent of struct net_device objects.")
+Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
+Link: https://patch.msgid.link/20261013182926.30417-2-mmc@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_mdb.c       | 16 +++++++++++++---
- net/bridge/br_multicast.c |  9 +++++++++
- net/bridge/br_private.h   |  1 +
- 3 files changed, 23 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/ibm/ibmveth.c | 28 +++++++++++++---------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
-diff --git a/net/bridge/br_mdb.c b/net/bridge/br_mdb.c
-index a80ec51fe18d1..e43919fead898 100644
---- a/net/bridge/br_mdb.c
-+++ b/net/bridge/br_mdb.c
-@@ -819,6 +819,7 @@ static int br_mdb_add_group_src_fwd(const struct br_mdb_config *cfg,
- 	struct br_mdb_config sg_cfg;
- 	struct br_ip sg_ip;
- 	u8 flags = 0;
-+	int err;
+diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
+index c490dc078066b..7fdf0c5c2f9c4 100644
+--- a/drivers/net/ethernet/ibm/ibmveth.c
++++ b/drivers/net/ethernet/ibm/ibmveth.c
+@@ -628,8 +628,6 @@ static int ibmveth_open(struct net_device *netdev)
  
- 	sg_ip = cfg->group;
- 	sg_ip.src = src_ip->src;
-@@ -842,7 +843,11 @@ static int br_mdb_add_group_src_fwd(const struct br_mdb_config *cfg,
- 	sg_cfg.filter_mode = MCAST_INCLUDE;
- 	sg_cfg.rt_protocol = cfg->rt_protocol;
- 	sg_cfg.nlflags = cfg->nlflags;
--	return br_mdb_add_group_sg(&sg_cfg, sgmp, brmctx, flags, extack);
-+	err = br_mdb_add_group_sg(&sg_cfg, sgmp, brmctx, flags, extack);
-+	if (err)
-+		br_multicast_del_group(sgmp);
-+
-+	return err;
- }
+ 	netdev_dbg(netdev, "open starting\n");
  
- static int br_mdb_add_group_src(const struct br_mdb_config *cfg,
-@@ -1047,6 +1052,7 @@ static int br_mdb_add_group(const struct br_mdb_config *cfg,
- 	struct net_bridge_mcast *brmctx;
- 	struct br_ip group = cfg->group;
- 	unsigned char flags = 0;
-+	int err;
+-	napi_enable(&adapter->napi);
+-
+ 	for(i = 0; i < IBMVETH_NUM_BUFF_POOLS; i++)
+ 		rxq_entries += adapter->rx_buff_pool[i].size;
  
- 	brmctx = __br_mdb_choose_context(br, entry, extack);
- 	if (!brmctx)
-@@ -1073,9 +1079,13 @@ static int br_mdb_add_group(const struct br_mdb_config *cfg,
- 		flags |= MDB_PG_FLAGS_PERMANENT;
- 
- 	if (br_multicast_is_star_g(&group))
--		return br_mdb_add_group_star_g(cfg, mp, brmctx, flags, extack);
-+		err = br_mdb_add_group_star_g(cfg, mp, brmctx, flags, extack);
- 	else
--		return br_mdb_add_group_sg(cfg, mp, brmctx, flags, extack);
-+		err = br_mdb_add_group_sg(cfg, mp, brmctx, flags, extack);
-+	if (err)
-+		br_multicast_del_group(mp);
-+
-+	return err;
- }
- 
- static int __br_mdb_add(const struct br_mdb_config *cfg,
-diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
-index c437cb684aebb..80ab7850eea1f 100644
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -647,6 +647,14 @@ static void br_multicast_del_mdb_entry(struct net_bridge_mdb_entry *mp)
- 	queue_work(system_long_wq, &br->mcast_gc_work);
- }
- 
-+void br_multicast_del_group(struct net_bridge_mdb_entry *mp)
-+{
-+	if (mp->ports || mp->host_joined)
-+		return;
-+
-+	br_multicast_del_mdb_entry(mp);
-+}
-+
- static void br_multicast_group_expired(struct timer_list *t)
- {
- 	struct net_bridge_mdb_entry *mp = timer_container_of(mp, t, timer);
-@@ -1561,6 +1569,7 @@ __br_multicast_add_group(struct net_bridge_mcast *brmctx,
- 	p = br_multicast_new_port_group(pmctx->port, group, *pp, 0, src,
- 					filter_mode, RTPROT_KERNEL, NULL);
- 	if (unlikely(!p)) {
-+		br_multicast_del_group(mp);
- 		p = ERR_PTR(-ENOMEM);
- 		goto out;
+@@ -717,10 +715,18 @@ static int ibmveth_open(struct net_device *netdev)
+ 		}
  	}
-diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
-index e4c8bc8576df6..d1d8e94c333b3 100644
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -990,6 +990,7 @@ struct net_bridge_mdb_entry *
- br_mdb_ip_get(struct net_bridge *br, struct br_ip *dst);
- struct net_bridge_mdb_entry *
- br_multicast_new_group(struct net_bridge *br, struct br_ip *group);
-+void br_multicast_del_group(struct net_bridge_mdb_entry *mp);
- struct net_bridge_port_group *
- br_multicast_new_port_group(struct net_bridge_port *port,
- 			    const struct br_ip *group,
+ 
++	/* NAPI can run as soon as it is enabled, from netpoll during the
++	 * direct close()/open() pairs or from a direct ibmveth_interrupt()
++	 * call, so enable it only once everything ibmveth_poll() touches
++	 * exists.
++	 */
++	napi_enable(&adapter->napi);
++
+ 	netdev_dbg(netdev, "registering irq 0x%x\n", netdev->irq);
+ 	rc = request_irq(netdev->irq, ibmveth_interrupt, 0, netdev->name,
+ 			 netdev);
+ 	if (rc != 0) {
++		napi_disable(&adapter->napi);
+ 		netdev_err(netdev, "unable to request irq 0x%x, rc %d\n",
+ 			   netdev->irq, rc);
+ 		goto out_free_buffer_pools;
+@@ -765,7 +771,6 @@ static int ibmveth_open(struct net_device *netdev)
+ out_free_buffer_list:
+ 	free_page((unsigned long)adapter->buffer_list_addr);
+ out:
+-	napi_disable(&adapter->napi);
+ 	return rc;
+ }
+ 
+@@ -1542,7 +1547,11 @@ static int ibmveth_poll(struct napi_struct *napi, int budget)
+ 		}
+ 	}
+ 
+-	ibmveth_replenish_task(adapter);
++	/* netpoll polls with budget 0 for TX only, and is not serialized
++	 * with a NAPI poll that was already running when it was set up
++	 */
++	if (budget)
++		ibmveth_replenish_task(adapter);
+ 
+ 	if (frames_processed == budget)
+ 		goto out;
+@@ -1682,14 +1691,6 @@ static int ibmveth_change_mtu(struct net_device *dev, int new_mtu)
+ 	return -EINVAL;
+ }
+ 
+-#ifdef CONFIG_NET_POLL_CONTROLLER
+-static void ibmveth_poll_controller(struct net_device *dev)
+-{
+-	ibmveth_replenish_task(netdev_priv(dev));
+-	ibmveth_interrupt(dev->irq, dev);
+-}
+-#endif
+-
+ /**
+  * ibmveth_get_desired_dma - Calculate IO memory desired by the driver
+  *
+@@ -1791,9 +1792,6 @@ static const struct net_device_ops ibmveth_netdev_ops = {
+ 	.ndo_validate_addr	= eth_validate_addr,
+ 	.ndo_set_mac_address    = ibmveth_set_mac_addr,
+ 	.ndo_features_check	= ibmveth_features_check,
+-#ifdef CONFIG_NET_POLL_CONTROLLER
+-	.ndo_poll_controller	= ibmveth_poll_controller,
+-#endif
+ };
+ 
+ static int ibmveth_probe(struct vio_dev *dev, const struct vio_device_id *id)
 -- 
 2.53.0
 
