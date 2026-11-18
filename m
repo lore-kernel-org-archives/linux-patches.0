@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055199;
-	b=WKJWFeFK9/n7h2gkVp4mJqXK7/vJKLxtQPHer18+C1w2pafRVxcTOI0CoP9y/NRidMYo
-	 HCxKr9BIabW5Qk78go74uwl8mqWyworn0wIonjW3xRMBn6KkJVI/sgqYz3AdvoLwwNqju
-	 ED0wznOCG9hNGX11PuGeURFwNp+3RR9ALnaE/CfleFqoZSa/0RPjFoVXuA23Mb09/EaFf
-	 xqdSS1+EBobAEbHLAHkjcWmanj9JNDnrA2jObl7sBXzmHP947fyQCHkmBQUTUhMu+Yn5E
-	 QVGw0SQykzanXk6bxmHQ0xbzfLmRiTYMY6uMqwCssONnoYQ7ZdY9PAC3ZFK/AWg5F3g==
+	t=1795055202;
+	b=EDqNwn1H5QTng2W7qakGRodrmzb4u1HOj+KoxzGx2HltYmeJaj4NRfRQDcXOzXo9HLAc
+	 2QpnZ+xD43el00yYlKACd3PaY7wgGNf5jV/8IiKN8PW/lV3aT8is6BukPNRAx2BkLd3Rr
+	 3Ou/mHhONgWmDtV4zt91jsTrDDn11hb0xEXrF4gfWHiHqOvNv4VHkyXw9pKD6fcZQ/092
+	 vG9xskiG8lO6it9l7sxzNQpLSlc3U5NYAOwu397fA88In8B/KzTww7NIjXLIB7Mj4VXNa
+	 9bm6YrBkuZblUsDbTpLoCB8d/UW6ojE8NIQrbrL2pz8k8HazCJLGTd52t08rHu5QK4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055202;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y4zcYQo6vqy2+x6grBx6Qv+TOhU+7gx+Oi6+3dJuWIA=;
-	b=Rgq50jXdbXG3puaMIwA8z4bfGYS6kH2ucM06LV0IUO19qQcKsjQCJLzT7fflK4le+9Rn
-	 WhRw497KpMT82D6AUYlqigAdrv89J+E32F7HoUEmrRfDjFT99Wa66X3PFxmVUw6NFa1Zk
-	 FkMAH0h3vGc92bx3Ny11cst55I116IerTptutsnnOHCsS3MeopV1S8U0hVVyENMl1mdeE
-	 /u2Ys3UAFVgo0lKdeqx4f7GwqzwgaqaIcwr0Vsi5v6u0cqYCb7zbTmVK+hVtawJOBz8Ko
-	 knu4PfKtJHcXgmoVdNMNBjZfKuUM+aGIO2TXUvqyv4VwCmZETSDNiuhPP4UKmC5ol1Q==
+	bh=KKs9+WVr6k61ZcK9Np/08jY6WwIWcCVylkl26WHKQD0=;
+	b=CDU+lz9X+TCs7G8XlkssScYimNd8N+EQjpbHbzh3axXfJo7NKNG3GOlGcekTLcLuu5pi
+	 F1YsV/w2T7wU70NCzQ4vzC40YiIEkLBjQozab3Z35dKkCpxHC5ZdHEqKTOjPctn1b0Sqb
+	 AMOc8C409LFgA/kdmno7RdbsOqPa8XXRl8HUg7dqZkIEIoyxyIQwkXvq5Addr7QWmvTYZ
+	 224kxIuKlinP/YYcIuRVdtWYjDXi+KmetPBTNGNA+4BraqpZnLEh5FgN7rPeqzb20zlbz
+	 Dfcw7W+NzZswa4iIzLzwRWjV9VBkkFopQ9qg4/Zk/rQNsmvUcgewbH7My62GmsdvnjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILeBWMQo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PnRMRnTG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE970606A31C;
-	Thu, 19 Nov 2026 02:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87522606A31C;
+	Thu, 19 Nov 2026 02:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILeBWMQo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54C01F000C4;
-	Thu, 19 Nov 2026 02:26:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PnRMRnTG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0CB01F000C5;
+	Thu, 19 Nov 2026 02:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055199;
-	bh=Y4zcYQo6vqy2+x6grBx6Qv+TOhU+7gx+Oi6+3dJuWIA=;
+	s=korg; t=1795055202;
+	bh=KKs9+WVr6k61ZcK9Np/08jY6WwIWcCVylkl26WHKQD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ILeBWMQoGDaqbB+gM/dDFXUCmtR+cdATRT7858BLGGok2VYdUWlKQ8WujSVvRpof+
-	 b7d92Q7R1wmQOUn4XxerX1uGj/oB+S2/1nQT25FxIASXf6HSLZtYznE/7Ft7IGdrKo
-	 UD/SYQrUvvh0YU4iXVLBSO5gm3ZbVD5eQK7ZYBII=
+	b=PnRMRnTG+Vi5fWO1oFfPiPFq0/tcM32zvpIoVEh/TMykGtLEltTHGvKoHgs5N8vXE
+	 GoTCa9feHhh3byl8qbotl0x37h1E01bNREMox5bdx0U4MxW4fLUMEmvaCmJqnwdeHu
+	 QTzBj1Xgsmjiy2Bfs1GWX2p0wb4wSpNdAOxE7Q4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1509/2214] loadpin: Fix stale KEXEC_VERIFY_SIG reference in documentation
-Date: Wed, 18 Nov 2026 15:53:05 +0100
-Message-ID: <20261118150112.385827136@linuxfoundation.org>
+Subject: [PATCH 5.15 1545/2214] pstore: reject persistent RAM zones too small for the buffer header
+Date: Wed, 18 Nov 2026 15:53:41 +0100
+Message-ID: <20261118150113.940493396@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,46 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit eb0b0d222a832b6ec851e56d4922a775ac762955 ]
+[ Upstream commit 1b30df8662ac85a6759be4332f3bec7e3cb28efc ]
 
-Commit 99d5cadfde2b ("kexec_file: split KEXEC_VERIFY_SIG into KEXEC_SIG
-and KEXEC_SIG_FORCE") removed CONFIG_KEXEC_VERIFY_SIG but left the
-LoadPin documentation pointing at it. Refer to CONFIG_KEXEC_SIG instead.
+persistent_ram_buffer_map() computes
 
-While at it, clean up the grammar of the sentence.
+	prz->buffer_size = size - sizeof(struct persistent_ram_buffer);
 
-Fixes: 99d5cadfde2b ("kexec_file: split KEXEC_VERIFY_SIG into KEXEC_SIG and KEXEC_SIG_FORCE")
+without checking that size is large enough to hold the header.  A
+ramoops zone configured with a tiny size (e.g. ramoops.pmsg_size=1)
+underflows buffer_size to a huge value, which defeats every bounds
+check in persistent_ram_write() and persistent_ram_write_user(); a
+write to /dev/pmsg0 then copies user data far past the end of the zone
+and corrupts kernel memory.
+
+Reject zones that are not larger than the buffer header.
+
+Fixes: 404a6043385de ("staging: android: persistent_ram: handle reserving and mapping memory")
 Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Message-ID: <20260905013655.58665-1-kmehltretter@gmail.com>
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://patch.msgid.link/20260921202317.70595-3-parri.andrea@gmail.com
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/LSM/LoadPin.rst | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/pstore/ram_core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/Documentation/admin-guide/LSM/LoadPin.rst b/Documentation/admin-guide/LSM/LoadPin.rst
-index dd3ca68b5df18..a90fd9dac9606 100644
---- a/Documentation/admin-guide/LSM/LoadPin.rst
-+++ b/Documentation/admin-guide/LSM/LoadPin.rst
-@@ -23,9 +23,9 @@ sysctl allows for easy testing on systems with a mutable filesystem.)
- It's also possible to exclude specific file types from LoadPin using kernel
- command line option "``loadpin.exclude``". By default, all files are
- included, but they can be excluded using kernel command line option such
--as "``loadpin.exclude=kernel-module,kexec-image``". This allows to use
-+as "``loadpin.exclude=kernel-module,kexec-image``". This allows using
- different mechanisms such as ``CONFIG_MODULE_SIG`` and
--``CONFIG_KEXEC_VERIFY_SIG`` to verify kernel module and kernel image while
--still use LoadPin to protect the integrity of other files kernel loads. The
--full list of valid file types can be found in ``kernel_read_file_str``
--defined in ``include/linux/kernel_read_file.h``.
-+``CONFIG_KEXEC_SIG`` to verify kernel modules and kernel images while
-+still using LoadPin to protect the integrity of other files the kernel
-+loads. The full list of valid file types can be found in
-+``kernel_read_file_str`` defined in ``include/linux/kernel_read_file.h``.
+diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
+index 8a86b9928503d..2d89725929d27 100644
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -507,6 +507,12 @@ static int persistent_ram_buffer_map(phys_addr_t start, phys_addr_t size,
+ 	prz->paddr = start;
+ 	prz->size = size;
+ 
++	if (size <= sizeof(struct persistent_ram_buffer)) {
++		pr_err("%s: persistent ram zone too small (%#llx bytes)\n",
++		       prz->label, (unsigned long long)size);
++		return -EINVAL;
++	}
++
+ 	if (pfn_valid(start >> PAGE_SHIFT))
+ 		prz->vaddr = persistent_ram_vmap(start, size, memtype);
+ 	else
 -- 
 2.53.0
 
