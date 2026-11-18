@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033738;
-	b=KneJ281qyvDQoBe0mZmPu4RP1jVcVaDEiExTjHIMYfstdqiZrIEDD+sJdfsxr0FsX1XC
-	 +oq8iIZWWjCY6pBv6+sfSLKmfvMMIeFI8P1HwHbFa/2GHv1KSovNZ42cEKwEqisAlJvw8
-	 m8RAWihJkT9dTCi1UwuRihuDXZGst+1t8zDpu64e5JQmDMmfrCvjRwjcBIK4rQBPHGQbm
-	 WxDRXFaMAzrSVkek3ffZtXyQoJnD6a77MWJ/Dn/J4O7G4OOTYxbnWmhy4J8syo4BSuZaA
-	 EWFFLtppmZT7mfKvzX65WWP2jqNSuTmvC2oa7OptR5ifwCuqLPiTQrkSschXcWscKbw==
+	t=1795033741;
+	b=rZlExnv2a+9r24QcTciZdFHzANOKWTPe96I1dy64z2wUVBJsPm43I9m1cvkM+GOqJBhc
+	 4V8RagSLMc0F/WQ1H0b9H1k2NUEAqm6LhUAs5CR3xT7E8aEOFenbWRZbMxzt4ZwhoxChz
+	 859W3pLNv1CnPFhWGS8xWlihMgZdKt8nd+BCW3E1JW7Rchl50TeEI1naJa8khqtc0C/Gp
+	 6apFbF/FNoFjfzLidYz4MtIpdNYDdfg7L3eCcAytnvbl5DpcOtEe5L/2yffTWuL6R1BbA
+	 +5HeK+VNonvi4e1hTcV/FUAs14knv8Hy0ewUojryixGr7BhyG7MeydFQscF3B/YmMwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033738;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033741;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d/WZZUI1jz4gtzv0s7/QgKK7LbUBMrSqxm60qdtazqw=;
-	b=UxOvUYe6ndeb8XKpifvLPh4ExMpGdAFAygm2Lqehdwnmc6Hi3LzUZXsqyTjND1sewstD
-	 JgYBfRrYFM3sZYWobCLpFsTief/IJXSESwVdsFt7ZNoBH6HApO9zwwRFtfON7bnyCAkC+
-	 jYugpm4j6uR9UId7+cDHMZwuwRTRKmnqTItg0ho4nkSniB4NzpSNByw9+YudpO7rVa6XU
-	 +loLL7ma4JSu/W3ZmUf0xwmIzCqTVLOKQwwnuvcncL7pBFZS9b8u9SQKCjex7RWuU3zSf
-	 XL3+HXF2VLyJO8Z1uI/I2/QsdBVivywlggtRnwi91RigFD0KMx8P42t9V3e8oMuHKbw==
+	bh=eQ1gzVRx0laIZOXPeAD65bZOWtgUQLMyoU/Gf5bHOPI=;
+	b=bAK1jC0CCKIWxlDQ0Hxu4fom+PnnDcb/lKUmsZXayDAJQm4cZMjvM+2Xb3mI6J+raO90
+	 KzQdvLJSIc//d4pFYZsWJC2XFeQjPTsrVFuCF65ip7WdxDz0IhjUOS7hqnMQh9Ca6DTed
+	 JKFt57wmIIvtPxxFOblCvksl4ezqyVshiukgxUJ69jwUrqwth3jvx520r6QkLakSIPUCF
+	 JS2gi8oIdkl2gtseYmoSXHlAEjzqIRN90f0YGnX75k2CXYt83vidrzWc0101cCObLe2af
+	 PcskcXqHDXBWH5zzXw/M/8NIsqNky51TgFhi7mQY9Kx5+wRODy7DS023lTkOE5TIFmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Amy1t+nt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L3EnRB8s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5B2606A332;
-	Wed, 18 Nov 2026 20:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CD7606A32F;
+	Wed, 18 Nov 2026 20:29:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Amy1t+nt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 848821F000C5;
-	Wed, 18 Nov 2026 20:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L3EnRB8s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50EAF1F000C9;
+	Wed, 18 Nov 2026 20:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033738;
-	bh=d/WZZUI1jz4gtzv0s7/QgKK7LbUBMrSqxm60qdtazqw=;
+	s=korg; t=1795033740;
+	bh=eQ1gzVRx0laIZOXPeAD65bZOWtgUQLMyoU/Gf5bHOPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Amy1t+ntjXxWVqEOetUlvxIGZGiopR1+ghqUYx+/kYH0M3uVzGimbB9dhl6W4widv
-	 pJ//g5ceCX2+rdl3dGPumhonexAvdmK5c+raWqgorK0CEoeTH9tkLsQgLo3a6VTx2j
-	 5pv1OGo1TdbM3F5NOWO++QcH+c/iT0eBuTK+9rHE=
+	b=L3EnRB8s4MYlR7jGVu33wS0kt32MVuJKqstKFU6M77uxSHH1ySOYXkzATlHApCTJb
+	 +3VWa9Kxdmpk3bOUxAadQhA7hrjlKjqImc1kNmR4fBOc6uIBa1U0W3Hlny7qYqNcfn
+	 8wgywUJq98TM1kRlZ5kFd5xNkB54iWHjruDMjruo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Heidelberg <david@ixit.cz>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+	Kyle Mahlkuch <kmahlkuc@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0069/3318] dt-bindings: arm: qcom,ids: Add SoC ID for Snapdragon SDM 850
-Date: Wed, 18 Nov 2026 15:11:31 +0100
-Message-ID: <20261118150316.091022953@linuxfoundation.org>
+Subject: [PATCH 6.6 0115/3318] scsi: qla2xxx: Handle INTx not connected while passing through
+Date: Wed, 18 Nov 2026 15:12:17 +0100
+Message-ID: <20261118150317.751498433@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,34 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
 
-[ Upstream commit d529495c991a2b7d07c01622e8b3cb5ec066acee ]
+[ Upstream commit 7268e509b43ac1734e1bdb7d18553f7e1080dfb4 ]
 
-Add SoC ID for Qualcomm Snapdragon SDM850.
+The PCI_INTERRUPT_PIN reports if the device supports the INTx.  However,
+when the device is assigned to a guest via vfio, the PCI_INTERRUPT_PIN
+is set to 0 (i.e none) if the line is not connected and/or the platform
+cannot route the interrupt.
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260627-sda850-v2-1-44bf46ade42e@ixit.cz
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+In such cases, the guest PCI_INTERRUPT_PIN is 0 and the port number
+becomes -1 (255, uint8_t underflow) for qla[25|27|28]xx and qla2031
+devices.  The flt_region_nvram is never set, and subsequently the LUN
+detection fails.  Below warnings show the NVRAM configuration failure:
+
+ []-0073:1: Inconsistent NVRAM checksum=0xffffffc0 id=HCAM version=0x100.
+ []-0074:1: Falling back to functioning (yet invalid -- WWPN) defaults.
+ []-0076:1: NVRAM configuration failed.
+
+Handle this case and set the port_no to devfn like its done everywhere
+else.
+
+Reference: commit 2bd42b03ab6b ("vfio/pci: Virtualize zero INTx PIN if no pdev->irq")
+Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Reviewed-by: Kyle Mahlkuch <kmahlkuc@linux.ibm.com>
+Link: https://patch.msgid.link/177885270578.1573.14283751510936407585.stgit@linux.ibm.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/dt-bindings/arm/qcom,ids.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/qla2xxx/qla_os.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
-index be12e1dd1f38f..32dc6fc24d412 100644
---- a/include/dt-bindings/arm/qcom,ids.h
-+++ b/include/dt-bindings/arm/qcom,ids.h
-@@ -183,6 +183,7 @@
- #define QCOM_ID_IPQ8078			344
- #define QCOM_ID_SDM636			345
- #define QCOM_ID_SDA636			346
-+#define QCOM_ID_SDM850			348
- #define QCOM_ID_SDM632			349
- #define QCOM_ID_SDA632			350
- #define QCOM_ID_SDA450			351
+diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
+index cac01f733492b..d343bda31f827 100644
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -2818,11 +2818,16 @@ qla2x00_set_isp_flags(struct qla_hw_data *ha)
+ 	else {
+ 		/* Get adapter physical port no from interrupt pin register. */
+ 		pci_read_config_byte(ha->pdev, PCI_INTERRUPT_PIN, &ha->port_no);
+-		if (IS_QLA25XX(ha) || IS_QLA2031(ha) ||
+-		    IS_QLA27XX(ha) || IS_QLA28XX(ha))
+-			ha->port_no--;
+-		else
+-			ha->port_no = !(ha->port_no & 1);
++		if (ha->port_no == 0) {
++			/* None of INT[A|B|C|D] may be virtualized by vfio */
++			ha->port_no = PCI_FUNC(ha->pdev->devfn);
++		} else {
++			if (IS_QLA25XX(ha) || IS_QLA2031(ha) ||
++			    IS_QLA27XX(ha) || IS_QLA28XX(ha))
++				ha->port_no--;
++			else
++				ha->port_no = !(ha->port_no & 1);
++		}
+ 	}
+ 
+ 	ql_dbg_pci(ql_dbg_init, ha->pdev, 0x000b,
 -- 
 2.53.0
 
