@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039682;
-	b=2eywvgDvImn01Hy7TDdNwCu2DTs2BZCSfL9I3RPM/tCHlpMOk8P73kqeVEyijgJcnRqo
-	 SBqKkxju3mxfrwoJn8Jv3BwyDq3o79wTPLlbqL+mbqI659QMSynGoI49esk0Pl/wodBq1
-	 G8Uu/B7+sVf5QehoBFYqhtD4OhQNYuRaRAbaZWKTK3esZrn+8OOAxijLtd6nfTw7cnbWI
-	 TLa2R5wqnDoidBvj0EH0Uvheeq2G+kXQpeQ3TtrIzEy2mW2+X8sD/PCHxoZzTmPl0xQ/M
-	 6LZ/vW+/mNPFpX5QBrH8b1tKTStyBMuFv7zBsQ3+KTHVYHUoTCnUgpSNyIfFyVJGjiQ==
+	t=1795039685;
+	b=A3Re5ZJJTnZgaOLjGkKLA2xcG42X85T7L61Z3kzvJYs5bu4NR9rvSyhX2aUPU1n/D9Pg
+	 4r/OACJwu4p+PHAJmNHHLLtEcb9lObJ/ExAEhP9EFMG/4sSj+I6uYOj45/WCSe9LzW0c5
+	 8BKAXUVwc+N/i4Zxq1ycM+/CT41w0wXpf6Amux1BYsBu1tLjcnxYgekPIbo9sWG6cKzhu
+	 GelRnTklzlDvw3W0uazwmlI4WUq3VOES6GttIUdVazj48NjH0qaN0QtxlNoFsO/WTbMSg
+	 pI8FK0Q62isLaC6qWYdHK65ROLXSJGiX9vJjh6M6qm3o+x9eRMEhLFAk5Yu+bJ8av8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039682;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039685;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GjytFhh7Bz1ALQge8OKQS9EplditcJtbEyP6HpWWwmw=;
-	b=4uLhATzUZ48UWMKt5Yet/8bmbEsR5Y/AK8h+igpPuOtYE1qv/afJbU0ppRWMGJ07I9nz
-	 UnSdNWLdSzagLTIurSf0uYr6WL9YB1GiHqkWk5JsM18XS61uPabL0GDWIb11PkGvBTSM3
-	 0RTg/ms3NbDZwl24MPoTOI+Mu/7VpmBBAWFtpgi5+rvw7uh1IrJaSAKWSdt1BepWuKesA
-	 jTpXmb+lDqEo4fP+r1m/aR/+iHQT5LOat40R1kGx9G/2ry9edyRZnY96HB3gyAfZf500q
-	 MpYbSyM4RdIQ8JKu8Ck4S6wfoNzoMtZNCT+M/sC+7anRlfhgtpr7mj4WlVXho1O2o1w==
+	bh=D1TbabkGTqtCshyGeHzw3gsczKM/zdXRbF6v9atgz/8=;
+	b=vqg4bTD5I3EO+9mIWypWRBtXcfAo4NM7AI7AVwVAaqew7WSI008oVPE1OyIsOq78ndLh
+	 acRdKIZdN25qoQX+yp+gKgUHA4ZA04k6ro++OOc8YMyNFAva6conj5JvfQjmjbKsfmJ54
+	 /W0NJljYQ7mn+P2B7okvCjnaSbyyQRQN4Vqn/s8rWSBeQdC/e8Z2Zj9B7Mko21rNhC7Ym
+	 11r0ZjkDHoPkJoOb2+V6gBQMgHSbxdH+V4hwNA7A+9i3cOMGhq6hVIXYauk6oHTd/UzHJ
+	 r8HJcFfomhdq87Br4sFVsj8a8YL422kfi8gJAB/sowYIGweSV8MKvYNDOu6de4tShrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XmQlsr3H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dFKvpbkP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC79606A31C;
-	Wed, 18 Nov 2026 22:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05333606A31C;
+	Wed, 18 Nov 2026 22:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XmQlsr3H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBC11F000C5;
-	Wed, 18 Nov 2026 22:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dFKvpbkP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563DD1F000C7;
+	Wed, 18 Nov 2026 22:08:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039682;
-	bh=GjytFhh7Bz1ALQge8OKQS9EplditcJtbEyP6HpWWwmw=;
+	s=korg; t=1795039684;
+	bh=D1TbabkGTqtCshyGeHzw3gsczKM/zdXRbF6v9atgz/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XmQlsr3HySJhsPauBiZU/VHWob1pF0xrblsX3Sq6930BuEgbIJNbcDKVXfulXONdB
-	 MbsQ+T0ePXrnEZ1nNfoVYQvku/aXauywXGtfp6I+mIvjfxj8bfsHsjqaxYTs6xVWVY
-	 4b3BmseJJc+hZyV58LnQfORabUSIw2Ul7dbam4Oo=
+	b=dFKvpbkPGI43Edbg0dgmFHlfxczjr7wvvIqkJcGZ6PpA6S0hm0qu2WUEAY1tdjH+b
+	 Jt1oNqL0o/AWeSXFJRi0dL6zE5zsU1LPsabuv7GLdyfpOMMPfDaCgHNgdqHg4TJhMt
+	 DImUBFS+anAvyANPc/+lyFmuRrr0DwGBLWLmpro8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arka Mondal <arka@arkamondal.net>,
 	Alan Stern <stern@rowland.harvard.edu>,
+	Arka Mondal <arka@arkamondal.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2146/3318] usb-storage: alauda: check the return value of alauda_read_map()
-Date: Wed, 18 Nov 2026 15:46:08 +0100
-Message-ID: <20261118150426.426144681@linuxfoundation.org>
+Subject: [PATCH 6.6 2147/3318] usb-storage: alauda: fix out-of-bounds zone index
+Date: Wed, 18 Nov 2026 15:46:09 +0100
+Message-ID: <20261118150426.454162080@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,75 +70,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Arka Mondal <arka@arkamondal.net>
 
-[ Upstream commit eb882419790c6710646904c6b25132189152cf33 ]
+[ Upstream commit c4542993c071fcafe7335698bf52650dee7e3555 ]
 
-alauda_ensure_map_for_zone() ignores the value alauda_read_map()
-returns. On failure lba_to_pba[zone] and pba_to_lba[zone] are left NULL,
-and both callers dereference them immediately:
+MEDIA_INFO(us).lba_to_pba and .pba_to_lba are arrays of num_zones
+pointers, allocated by kcalloc() in alauda_init_media().
+alauda_ensure_map_for_zone() reads lba_to_pba[zone] and
+pba_to_lba[zone], and when either is NULL alauda_read_map() writes a
+pointer back to both. Two separate errors let zone reach num_zones, one
+element past the end.
 
-  pba = MEDIA_INFO(us).lba_to_pba[zone][lba_offset];
+max_lba is capacity >> (blockshift + pageshift), which counts physical
+blocks, but zone is lba / uzonesize and uzonesize is 125/128 of
+zonesize. On a 16 MB card (alauda_card_ids id 0x73) num_zones is 1 and
+uzonesize is 1000, so lba 1000 to 1023 pass the bounds check and index
+element 1 of a one-element array.
 
-alauda_read_map() returns USB_STOR_TRANSPORT_ERROR when either kcalloc()
-fails or an alauda_get_redu_data() transfer fails, so one failed bulk
-transfer is enough to reach the NULL dereference.
+alauda_read_data() also calls alauda_ensure_map_for_zone() before it
+compares lba against max_lba, so any larger lba is used as an index
+before the check rejects it. alauda_write_data() already checks first.
 
-Return that value from alauda_ensure_map_for_zone() and check it in
-alauda_read_data() and alauda_write_lba().
+Bound lba by num_zones * uzonesize on both paths and move the read
+side's call below the check. alauda_transport() reports
+num_zones * uzonesize * blocksize for READ_CAPACITY, so the new bound is
+exactly the range the device advertises and no block becomes
+unreachable.
+
+sd never issues an lba past the reported capacity; an SG_IO READ_10 can.
 
 Fixes: e80b0fade09e ("[PATCH] USB Storage: add alauda support")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217862
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
 Signed-off-by: Arka Mondal <arka@arkamondal.net>
 Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260901065831.43567-3-arka@arkamondal.net
+Link: https://patch.msgid.link/20260901065831.43567-4-arka@arkamondal.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/alauda.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/usb/storage/alauda.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/usb/storage/alauda.c b/drivers/usb/storage/alauda.c
-index 46039016ab82c..fdedb5820f5e4 100644
+index fdedb5820f5e4..9cd92c125bfb2 100644
 --- a/drivers/usb/storage/alauda.c
 +++ b/drivers/usb/storage/alauda.c
-@@ -697,11 +697,13 @@ static int alauda_read_map(struct us_data *us, unsigned int zone)
-  * Checks to see whether we have already mapped a certain zone
-  * If we haven't, the map is generated
-  */
--static void alauda_ensure_map_for_zone(struct us_data *us, unsigned int zone)
-+static int alauda_ensure_map_for_zone(struct us_data *us, unsigned int zone)
- {
- 	if (MEDIA_INFO(us).lba_to_pba[zone] == NULL
- 		|| MEDIA_INFO(us).pba_to_lba[zone] == NULL)
--		alauda_read_map(us, zone);
-+		return alauda_read_map(us, zone);
-+
-+	return 0;
- }
+@@ -949,6 +949,7 @@ static int alauda_read_data(struct us_data *us, unsigned long address,
+ 	unsigned char *buffer;
+ 	u16 lba, max_lba;
+ 	unsigned int page, len, offset;
++	unsigned int num_zones;
+ 	unsigned int blockshift = MEDIA_INFO(us).blockshift;
+ 	unsigned int pageshift = MEDIA_INFO(us).pageshift;
+ 	unsigned int blocksize = MEDIA_INFO(us).blocksize;
+@@ -973,7 +974,9 @@ static int alauda_read_data(struct us_data *us, unsigned long address,
+ 	/* Figure out the initial LBA and page */
+ 	lba = address >> blockshift;
+ 	page = (address & MEDIA_INFO(us).blockmask);
+-	max_lba = MEDIA_INFO(us).capacity >> (blockshift + pageshift);
++	num_zones = MEDIA_INFO(us).capacity >> (MEDIA_INFO(us).zoneshift
++		+ blockshift + pageshift);
++	max_lba = num_zones * uzonesize;
  
- /*
-@@ -849,7 +851,9 @@ static int alauda_write_lba(struct us_data *us, u16 lba,
- 	unsigned int new_pba_offset;
- 	unsigned int zone = lba / uzonesize;
- 
--	alauda_ensure_map_for_zone(us, zone);
-+	result = alauda_ensure_map_for_zone(us, zone);
-+	if (result != USB_STOR_TRANSPORT_GOOD)
-+		return result;
- 
- 	pba = MEDIA_INFO(us).lba_to_pba[zone][lba_offset];
- 	if (pba == 1) {
-@@ -980,7 +984,10 @@ static int alauda_read_data(struct us_data *us, unsigned long address,
- 		unsigned int lba_offset = lba - (zone * uzonesize);
+ 	result = USB_STOR_TRANSPORT_GOOD;
+ 	offset = 0;
+@@ -985,10 +988,6 @@ static int alauda_read_data(struct us_data *us, unsigned long address,
  		unsigned int pages;
  		u16 pba;
--		alauda_ensure_map_for_zone(us, zone);
-+
+ 
+-		result = alauda_ensure_map_for_zone(us, zone);
+-		if (result != USB_STOR_TRANSPORT_GOOD)
+-			break;
+-
+ 		/* Not overflowing capacity? */
+ 		if (lba >= max_lba) {
+ 			usb_stor_dbg(us, "Error: Requested lba %u exceeds maximum %u\n",
+@@ -997,6 +996,10 @@ static int alauda_read_data(struct us_data *us, unsigned long address,
+ 			break;
+ 		}
+ 
 +		result = alauda_ensure_map_for_zone(us, zone);
 +		if (result != USB_STOR_TRANSPORT_GOOD)
 +			break;
++
+ 		/* Find number of pages we can read in this block */
+ 		pages = min(sectors, blocksize - page);
+ 		len = pages << pageshift;
+@@ -1052,6 +1055,7 @@ static int alauda_write_data(struct us_data *us, unsigned long address,
+ 	unsigned int pagesize = MEDIA_INFO(us).pagesize;
+ 	struct scatterlist *sg;
+ 	u16 lba, max_lba;
++	unsigned int num_zones;
+ 	int result;
  
- 		/* Not overflowing capacity? */
- 		if (lba >= max_lba) {
+ 	/*
+@@ -1078,7 +1082,9 @@ static int alauda_write_data(struct us_data *us, unsigned long address,
+ 	/* Figure out the initial LBA and page */
+ 	lba = address >> blockshift;
+ 	page = (address & MEDIA_INFO(us).blockmask);
+-	max_lba = MEDIA_INFO(us).capacity >> (pageshift + blockshift);
++	num_zones = MEDIA_INFO(us).capacity >> (MEDIA_INFO(us).zoneshift
++		+ blockshift + pageshift);
++	max_lba = num_zones * MEDIA_INFO(us).uzonesize;
+ 
+ 	result = USB_STOR_TRANSPORT_GOOD;
+ 	offset = 0;
 -- 
 2.53.0
 
