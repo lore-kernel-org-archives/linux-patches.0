@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043380;
-	b=PqzEE3tl1pPjjGw6fzKOzPVO66Rn9jWWIVEfXTKWG6CRAYx9xqr/EoT0IhPiElPDDEhm
-	 7fxVC9PllziTfE1znQ5OfIdc7oAnqEW7ItEEJdOnI2PrMyL3A5MxzaDR1zdz8/gKWatG/
-	 rv85vl73RKS+gE9kHL9CceY6tdZFsbGMY0JLAM6xNzvl7eT8jX68XpzHVFU41rcOzmEWq
-	 dSVriXhjTfsNtQeGbrqtx1/P7J5QAQVdDq/hKlSuih4/fAWGgQeMUm7NAkWe54oQzPFOr
-	 sq+bOhTZH/xEZ54hvulwLrpJ9Dz5uSGEzxf6D3DPLLh84slgYsKfrrYtkC5ZxobCVew==
+	t=1795043383;
+	b=Mx2dp0eERYzvbuJs6t6S31uEZdgXSR46aEEyA50SKiRIkW5VXjQdpuyD8DDyw9dgxCm+
+	 yeUnGV7XgFgSfVKqlaq2Y/sBg10SENE4S8vkYArbDgfRAyi7vxrg4idGl7yHv8XAA133l
+	 f3ZyCsNK9M4sQJ7rzomk5XOTOtJbxii2+FF9vN7tEHDyEC2BwXgCRV3+Z5CzJtRclEBE+
+	 E5KinO73Fey/kr667bxPp1aObyzfOwwzRhf/ZERkNZGLYMBJKysJJG5297qgfZDy2YavR
+	 RCu1YwOMRLGmi++rS/MJUUMNk4+c8bvCbTNYRPXQFbTa9TTUtEw7FktctRm4zwnBvWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043380;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043383;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cibSdoGxmAdAJpf+RNNepgpukQ7Y7Cm8hB7cCgnrg0g=;
-	b=QJasTQNiNK7reJWDrHGPJFZe4FN6U2XJGUn9s513gGRhNMpF66/lcZ6pLXNOqqX63kzd
-	 0UCCUdIKHRB9IjoRqG9l4vrqd0JnaE6/jGksBac9add0kNglKOUl9kgeD0lnbssWQ20nz
-	 nattkJXw06IR0uorlehh/BS/AbVKEzpPIHBRMDo9LBcOQiAOtlgU3M0cxAOV/6lAGWoSY
-	 UXylLPtgobOr+4rUliPQw7pJjS4hattw3eYGzqQgxR1p8McZwWJdNFv4wPfh3oedC6ZSU
-	 sDjFYT/QP+rV5+LUOZDo4aAPDexvhQ912hRmGviLFIoFSGf7iCf5Au4S95VvaUv8How==
+	bh=JxoMnJQrVC2VsQatidknaAb+GJ47OPUvQ8IdIrnpRJw=;
+	b=MM1FTwEURc3ZW6JxT114pIG80TNZm43Z6KaoFgreJb5A7ZkwIKS7CIkNj07lzrZrT7CV
+	 bbwfXg3RB/xEiTdOzi7aNJidW7XpPZQpTUUFwzeO+GnJ6igx+fERR0mrm1J+QWBXjwm3J
+	 zWePaDqVomMu9EV4QAY4kDbLHbVfx20mnSJJeb7RHonmi/iKhH4jqbm/wCGF8utBvneaJ
+	 EBRso4w5XWJhlfW/wZ0YnDEDY9S7q763t60Yfwf13jP5AEPLQBQSfwNuuQQlEW61nUZeW
+	 fpJYPo6fgjocJUwl3vwGqgfdtNMSaXC9O34l4pj4PVWcnrkWzzpvXnHCyQPaurKLqQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EG5J4bje;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CT9+MEzf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DE7606A320;
-	Wed, 18 Nov 2026 23:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEEC606A320;
+	Wed, 18 Nov 2026 23:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EG5J4bje
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDA31F000C4;
-	Wed, 18 Nov 2026 23:09:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CT9+MEzf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6BA1F000C4;
+	Wed, 18 Nov 2026 23:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043380;
-	bh=cibSdoGxmAdAJpf+RNNepgpukQ7Y7Cm8hB7cCgnrg0g=;
+	s=korg; t=1795043383;
+	bh=JxoMnJQrVC2VsQatidknaAb+GJ47OPUvQ8IdIrnpRJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EG5J4bje7gFpBM0EE7MnIbFZjar3T9mNsvEgayfILMJTTKfkXJ17ulVcFTHdTa4kb
-	 FbJ23Q0lyt5SpIqsqUCZi7P9S3Uc7LgBp30Oa1HANlA1BdoGMT3eFKu9eL0H0Tebhk
-	 bmQM11L+IEJ8pIl9tFOrcqMa08WTLhOdudWkhrV0=
+	b=CT9+MEzfgfrQa++WnG7mRvhKBbQhvZvyDKHc3YhRmJrpO70CJ8xBAAm2O9PY339To
+	 AL1owofRjk1c5Od1f9J/D2YqMwTbljiftJ+qmT44fq8YNlflj5HB842ZWTfRcqEZXr
+	 h7R/gU7p7kR+ucYhHh8KMPv4u8Oyw3DL1gNFGavA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Ma <mapengyu@gmail.com>,
+	Yuxiang Lin <mclyxfdw@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0188/2857] HID: quirks: Add ALWAYS_POLL quirk for Beitong BTP-KP20D dongle
-Date: Wed, 18 Nov 2026 15:20:22 +0100
-Message-ID: <20261118150208.115054616@linuxfoundation.org>
+Subject: [PATCH 6.1 0189/2857] HID: quirks: add ALWAYS_POLL quirk for AULA Mini 60 HE Pro Dongle
+Date: Wed, 18 Nov 2026 15:20:23 +0100
+Message-ID: <20261118150208.160652038@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,52 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Ma <mapengyu@gmail.com>
+From: Yuxiang Lin <mclyxfdw@gmail.com>
 
-[ Upstream commit bfff246b3a31cb45ec297ca5e2a77c1410b207ac ]
+[ Upstream commit 2884e21b18613708f050ec75330b265dd07ecc03 ]
 
-The BTP-KP20D dongle in Direct/HID mode (20dd:5159) re-enumerates every
-few seconds because usbhid never submits its interrupt-IN URB: no HID
-driver binds to the vendor-specific report descriptor, so the device is
-never opened, and the firmware treats the idle endpoint as a lost link.
+The AULA Mini 60 HE Pro wireless keyboard dongle (USB ID
+0c45:fefe) becomes unresponsive after roughly one minute of idle.
+No error appears in dmesg; the only recovery is physically
+replugging the dongle.
 
-Add HID_QUIRK_ALWAYS_POLL to keep the interrupt-IN URB submitted from
-probe time.
+This has been reproduced across kernels 6.8, 6.14 and 7.1.3.
 
-Signed-off-by: Aaron Ma <mapengyu@gmail.com>
+Testing shows HID_QUIRK_ALWAYS_POLL alone resolves the issue,
+verified via usbhid.quirks=0x0c45:0xfefe:0x400.
+
+Signed-off-by: Yuxiang Lin <mclyxfdw@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h    | 3 +++
- drivers/hid/hid-quirks.c | 1 +
- 2 files changed, 4 insertions(+)
+ drivers/hid/hid-ids.h    | 1 +
+ drivers/hid/hid-quirks.c | 2 ++
+ 2 files changed, 3 insertions(+)
 
 diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 310ba8c01c101..4d185a3a4d2ad 100644
+index 4d185a3a4d2ad..0176d074ebea9 100644
 --- a/drivers/hid/hid-ids.h
 +++ b/drivers/hid/hid-ids.h
-@@ -247,6 +247,9 @@
- #define USB_VENDOR_ID_BAANTO		0x2453
- #define USB_DEVICE_ID_BAANTO_MT_190W2	0x0100
+@@ -723,6 +723,7 @@
+ #define USB_DEVICE_ID_JESS_YUREX	0x1010
+ #define USB_DEVICE_ID_ASUS_MD_5112	0x5112
+ #define USB_DEVICE_ID_REDRAGON_ASURA	0x760b
++#define USB_DEVICE_ID_AULA_MINI_60_HE_PRO 0xfefe
  
-+#define USB_VENDOR_ID_BEITONG		0x20dd
-+#define USB_DEVICE_ID_BEITONG_KP20D	0x5159
-+
- #define USB_VENDOR_ID_BELKIN		0x050d
- #define USB_DEVICE_ID_FLIP_KVM		0x3201
- 
+ #define USB_VENDOR_ID_JESS2		0x0f30
+ #define USB_DEVICE_ID_JESS2_COLOR_RUMBLE_PAD 0x0111
 diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 3dc6101680cc5..683b3a2251ed6 100644
+index 683b3a2251ed6..1d2f0b260ab63 100644
 --- a/drivers/hid/hid-quirks.c
 +++ b/drivers/hid/hid-quirks.c
-@@ -45,6 +45,7 @@ static const struct hid_device_id hid_quirks[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_CS682), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_CS692), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_UC100KM), HID_QUIRK_NOGET },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_BEITONG, USB_DEVICE_ID_BEITONG_KP20D), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_MULTI_TOUCH), HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_PIXART_USB_OPTICAL_MOUSE), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_PIXART_USB_OPTICAL_MOUSE2), HID_QUIRK_ALWAYS_POLL },
+@@ -113,6 +113,8 @@ static const struct hid_device_id hid_quirks[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_PIXART_OEM_USB_OPTICAL_MOUSE_1f4a), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_IDEACOM, USB_DEVICE_ID_IDEACOM_IDC6680), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_INNOMEDIA, USB_DEVICE_ID_INNEX_GENESIS_ATARI), HID_QUIRK_MULTI_INPUT },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_JESS, USB_DEVICE_ID_AULA_MINI_60_HE_PRO),
++		HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_PIXART_USB_OPTICAL_MOUSE_ID2), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_MOUSEPEN_I608X), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_EASYPEN_M610X), HID_QUIRK_MULTI_INPUT },
 -- 
 2.53.0
 
