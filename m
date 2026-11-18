@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028166;
-	b=3B+h8dy36a2xksLPVHQVpEpL2BPw6D6gP8/+Da+wTv2n+Dvqpe8QjUVyn5fg3guSJtOq
-	 DYxfBkLhdWdjMcZBlbfbe6RNmPn5cX+yfJxneDEspUQqipqJUGEEa4T8ypHFYC4ceUuru
-	 d2FQxPwz3U4hd3hb0PosRXfefpeeR2CkWMV5GMvenn/aML7zDGcln0B12LHtGRDn0yn2s
-	 iBaRa846BvjYEEXkOcYHjRXQ3Ub4Sprnvezz4pDM/xp7s6/YWjridsxLsYCNyE9Za3jfH
-	 J9Qc3p/tR0o53fdxDNO7HyGmgXE2xTRnedh0honYyw4Kw9r4TPat3u8zEDHPCX2Ej9g==
+	t=1795028168;
+	b=4M0oKlV4ryahuZbM6ThAW700PxfFj6PHf4cboqrUePJzf6k3lKYX/KZ1PK59K/CZw/TL
+	 6N672yRavVceSIm1gOL4GrFfXDbod2b406LFWy8KwgvngWKNz/n6iOHhxDMRrPdbyBBUk
+	 X/eQ4uak5bnnH60nZft0bzgD+0QvnQB7hSBkIYy95o8Mi8zzyyfg23+sKJeXZpiLMx0UU
+	 dAyCsaCrpFZh7o+EsVW7bR92ND8WKobW97hpeivYGbUwKb7JBw1Tu4656HU3l8yIO9IDN
+	 pLJeTSbmMiesmm6EyT0NWkkg35vi3t1yy9wkxJPGLWkxFJXCKY0jV1prI/muwPWkuUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028166;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028168;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wS8OTGVfpoYkMM6kJZ9AwlAZ4We+he3fBYag7vRPRno=;
-	b=NLeLWA0KKTIOlVmjZi1MhlzvTvFdljCtWxbspWZkZqh9I7dLrtMwYOqr0sowBbqlav6K
-	 Z2weXVb+i6csvuEjx7qIIGs5cnVWUKL7qILqxEAWYk8W+mGdv8CNcyu/jnPejzPq+78u/
-	 XengxGIczfgWkBlLYT6YAw+yBP89C+cUv6a3TnVBnNDhpMi7r1+0RIaTwK2DzPbSIAApf
-	 9vSa/z5rHdauTg19ivyu6PAAVa+aYUFGlu/UkvPg6Zam6t7K7eTV3W7pPpRbQgPREKtOe
-	 e83svObfYkaZ6Ks4W/M95KmLqKGDIWyhX+JIK3ztpqZKmVgW7xcH0KX4tqgvPQZ0KwA==
+	bh=h2PUD/dXLJmNJmYgxZ0tEtRO0kI7b9/TyBeMIs8fndM=;
+	b=3VfEWF46WetOU9lKDT0Nw5Laz8rCRdyAwNFXO50NLu/mC70FUmmZC3CN7fPRJ7DRYVwy
+	 KTXErU5uvieTikbdfVEsLZ2u2CJmOSFrdFO/0DYdTrOqa5dB3Zk4xSqSU3kT3FMoTrrY7
+	 AeNCj0M/N+yffbNVNsUVM7WIjBw/4m2w6JkjJESD6TNE1Sk5VvUPogEBYMVdsPwslyVs5
+	 FWc/ROehyajvaIXYDYBfz705PTvfiYU5D5RdPkU6QxamwcVcqwB1Zn0IOyEEJ3rfqWS7d
+	 xgtWBZSMoVKBFcI0emndlh9JGi99V0APmpuwN7Uqj2H5Hc3UabmTHqNzU6sp/hLJHWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AFfAxfT8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s8RaXtgM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1E060A2619;
-	Wed, 18 Nov 2026 18:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4F1606A330;
+	Wed, 18 Nov 2026 18:56:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AFfAxfT8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9347A1F000CA;
-	Wed, 18 Nov 2026 18:56:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s8RaXtgM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498831F000C4;
+	Wed, 18 Nov 2026 18:56:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028166;
-	bh=wS8OTGVfpoYkMM6kJZ9AwlAZ4We+he3fBYag7vRPRno=;
+	s=korg; t=1795028168;
+	bh=h2PUD/dXLJmNJmYgxZ0tEtRO0kI7b9/TyBeMIs8fndM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AFfAxfT83H2nOAv1TfTI+4AHPhlhbRz3ST6UgoBkiTI4wtgAwG158OZ01UqYLiQ2F
-	 Dk4KktihoKkzOWdj820XRlrDr264S5ILTDLjAdAsIRqaGTEMYViPZKDGqPcWc8Hrw9
-	 jl2s+cBiJTrvs4rTgmqxWswQJfC7J0YnkMOyvhhQ=
+	b=s8RaXtgM6wrgUo2rJwkHQ2HhIipAwUE6J4BqWKmaKsw535RVKDr9oFFnfx83SaYgS
+	 TzX+pkA5ZBulRyHPryGVSOa9ldf73JoC47zTghDOgD3Pif8KAULUXW4iEAhfCaYcdG
+	 s58zsV9Jgob+y5qrQ5Vmdbuo4mM2A4pvqZN7hY+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+bd975ef54294bec73f0e@syzkaller.appspotmail.com,
+	Tal Zussman <tz2294@columbia.edu>,
+	Julian Sun <sunjunchao@bytedance.com>,
+	Zhenxian Ma <mzx199711@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2007/2151] net: lan966x: release the in-flight slot of a stale TX skb
-Date: Wed, 18 Nov 2026 16:02:22 +0100
-Message-ID: <20261118150234.838055448@linuxfoundation.org>
+Subject: [PATCH 6.18 1998/2151] block: fix recursive i_rwsem locking in blkdev_write_iter()
+Date: Wed, 18 Nov 2026 16:02:13 +0100
+Message-ID: <20261118150234.506398906@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,88 +72,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Zhenxian Ma <mzx199711@gmail.com>
 
-[ Upstream commit 074caa30a62726c0ee959e8b8ccb64cda0b26ae5 ]
+[ Upstream commit 21b88cc8bafceee6c6c82503e3b2cc6f1d0c78bf ]
 
-lan966x_ptp_txtstamp_request() counts every two step TX skb waiting for
-its timestamp in lan966x->ptp_skbs, and refuses new ones once
-LAN966X_MAX_PTP_ID are in flight. lan966x_ptp_txtstamp_old_release()
-frees the skbs that have waited longer than LAN966X_PTP_TIMEOUT.
+Commit 2fec4fd97cc3 ("block: take i_rwsem for the direct I/O write
+fallback") takes i_rwsem around blkdev_buffered_write() in the direct
+write fallback to close a race with set_blocksize().  Commit
+1b1be9ea4e34 ("block: take the inode lock for buffered write fallback")
+fixes the same race by taking i_rwsem inside blkdev_buffered_write()
+instead.  With both commits applied, the fallback path takes i_rwsem
+recursively:
 
-Before this patch, old_release() does not decrement ptp_skbs, so every
-skb whose timestamp never arrives, for example because the switch
-discarded the frame, keeps its slot forever. Once LAN966X_MAX_PTP_ID
-slots are lost, two step frames fail to transmit on every port of the
-switch.
+  blkdev_write_iter()
+    inode_lock_shared(bd_inode)
+    blkdev_buffered_write()
+      inode_lock_shared(inode)
 
-Return the number of released skbs from old_release() and subtract it
-from ptp_skbs in txtstamp_request(), under the ptp_ts_id_lock it already
-takes.
+syzbot reports this as:
 
-This fixes the accounting only. A port's stale skbs are still aged out
-only when that port sends a two step frame, so a port that stops sending
-them keeps its stale skbs, and their slots, until it sends one again.
-That behaviour is unchanged by this patch.
+  WARNING: possible recursive locking detected
+  syz.0.40/6005 is trying to acquire lock:
+  ffff888024956f68 (&sb->s_type->i_mutex_key#10){++++}-{4:4}, at: blkdev_buffered_write+0xd7/0x160 block/fops.c:738
+  but task is already holding lock:
+  ffff888024956f68 (&sb->s_type->i_mutex_key#10){++++}-{4:4}, at: blkdev_write_iter+0x6c5/0x810 block/fops.c:815
 
-Found by an AI code review agent. Reproduced on a lan9668 board.
+rw_semaphore read locks are not recursive: once a writer is queued,
+new readers block behind it.  If set_blocksize() calls inode_lock()
+between the two acquisitions, it waits for the first read lock to be
+released, while the second inode_lock_shared() waits behind
+set_blocksize(), and the task deadlocks.
 
-Fixes: 77eecf25bd9d ("net: lan966x: Update extraction/injection for timestamping")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261026-lan966x-ptp-stale-tx-slot-v1-1-9f7c895eb1ff@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Drop the outer locking in the fallback.
+
+Fixes: 1b1be9ea4e34 ("block: take the inode lock for buffered write fallback")
+Reported-by: syzbot+bd975ef54294bec73f0e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bd975ef54294bec73f0e
+Cc: Tal Zussman <tz2294@columbia.edu>
+Cc: Julian Sun <sunjunchao@bytedance.com>
+Assisted-by: LLM
+Signed-off-by: Zhenxian Ma <mzx199711@gmail.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20261022062513.77372-1-mzx199711@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ block/fops.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-index 8c40db90ee8f6..9be2cfe6feeb7 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-@@ -376,9 +376,10 @@ static void lan966x_ptp_classify(struct lan966x_port *port, struct sk_buff *skb,
- 	*rew_op = IFH_REW_OP_TWO_STEP_PTP;
- }
+diff --git a/block/fops.c b/block/fops.c
+index 68b55d3c0876e..64e8017cce431 100644
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -845,9 +845,7 @@ static ssize_t blkdev_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 			} else {
+ 				ssize_t ret2;
  
--static void lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
-+static unsigned int lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
- {
- 	struct sk_buff *skb, *skb_tmp;
-+	unsigned int purged = 0;
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&port->tx_skbs.lock, flags);
-@@ -389,14 +390,18 @@ static void lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
- 
- 		__skb_unlink(skb, &port->tx_skbs);
- 		dev_kfree_skb_any(skb);
-+		purged++;
- 	}
- 	spin_unlock_irqrestore(&port->tx_skbs.lock, flags);
-+
-+	return purged;
- }
- 
- int lan966x_ptp_txtstamp_request(struct lan966x_port *port,
- 				 struct sk_buff *skb)
- {
- 	struct lan966x *lan966x = port->lan966x;
-+	unsigned int purged;
- 	unsigned long flags;
- 	u8 pdu_type;
- 	u8 rew_op;
-@@ -408,9 +413,10 @@ int lan966x_ptp_txtstamp_request(struct lan966x_port *port,
- 	if (rew_op != IFH_REW_OP_TWO_STEP_PTP)
- 		return 0;
- 
--	lan966x_ptp_txtstamp_old_release(port);
-+	purged = lan966x_ptp_txtstamp_old_release(port);
- 
- 	spin_lock_irqsave(&lan966x->ptp_ts_id_lock, flags);
-+	lan966x->ptp_skbs -= purged;
- 	if (lan966x->ptp_skbs == LAN966X_MAX_PTP_ID) {
- 		spin_unlock_irqrestore(&lan966x->ptp_ts_id_lock, flags);
- 		return -EBUSY;
+-				inode_lock_shared(bd_inode);
+ 				ret2 = blkdev_buffered_write(iocb, from);
+-				inode_unlock_shared(bd_inode);
+ 				ret = direct_write_fallback(iocb, from, ret,
+ 							    ret2);
+ 				need_sync = true;
 -- 
 2.53.0
 
