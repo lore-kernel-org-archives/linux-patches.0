@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050590;
-	b=mPKWRePaq/NmqLZCg9Ry6qwDWMg2p8E2e9rpsOR16PWcJGMy+cm270/gsjN7tjY6/uPR
-	 M57NVGZbKJRj1fC7/5y/Uz2NcRhzuxfIJmcrgX5i3FMOc8iTbQM08DCepjvhpTNPDp9TC
-	 uXtx+0OKXDuC9CDg/0lB8+hmNMCv4v/glfhciNcI52FeyddSXGlJb95FVIUqqCbszbWpx
-	 o7FsG36Atxg7Yi5GSyVFfDFGm3CArfExvqWJwcAfm+FASXTn+rRJE94jjq2kz0LdYmyVJ
-	 6aNxJmJwXIgGsNYv7EKAlVtoo4TuFqMsgOCDg8ojD+dmWYVWyntjaIP7/l+AYLcfY3g==
+	t=1795050593;
+	b=qpClA1ou1IeVhp3TWq47ceaBJzBp+eQDShuXUf2KV7C6xgI+csy5X6avugyNtXxSQ/Tk
+	 4YsotYJVHKLne+T9/VhIGBfKn7Ajhy98al1wtQhzkX7l2GW8yTEgi1RoDz8/hObEDZpLD
+	 5JX+xox8EGTeLawZuUE1i5O1rgAmUbHB+uSJb/oj8IQ/0DL5mYit2wpRNzCSAKJsjQVfd
+	 XFsIhotMdB3Iu7BcX3AZ3aXxiVnSFzS3yB9TaHKqhH02o/TksMKhGKqTQVuolAeMA2Vrl
+	 x13NuOjOtIC5gr96NdPm1eP3sLrBDe5S1JAxytz5hqw8v2t9w/pB0DJcInUq8CEqCtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050590;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050593;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Xy4HtF3DUNECpT3atGuVzWZ5cjWNgV0xE8Lr5yEx1WE=;
-	b=zSiPCkYhbGLYtm1qFRnYd6uIZAETxrBQJgXbvBL6YUrlnVy7K43GXrVvXt4gb8apf/eW
-	 1Mt6+Vv4vkggcAAntaaYpLYLE8kEmg8Tty9nQw4OZST4y8CE9ULjLbcC9ixfNfl1eyW2P
-	 sDP2XTTCGBFzpFvMxviW0/4Lx1+9Ar5KaqhPggeJ2ZvAzGI7LfVYaFYGI5AOHM0KBVHBP
-	 axLCP4XGHbAbvX5YFwd5eYtc63TxQGPrhfKRORJcKPCSxcNsgUuGFZMStX5jjjIIvuMbg
-	 F/OpBjF1ahV+XsciJ1gKphXG7N02Fyw8+Mag/ph/tWx9Yvbb1zLe2s7nSFZtenbxnxg==
+	bh=C+5gDTK2Wvv1Rg7D+PwsS3hv8Ri6SLouweqE6JL15pY=;
+	b=E9txfF8PC+YExEuLXcTqFECVTKJKv0r2LMtqVYGazto+3Z4LBH5uC/oHylbZltIYoWA8
+	 YxYRI/jygAu3uWJuQcrFehD55TCRZKxNLN+Z84ovtYm1jM2UqDtsFVzxqmqszmM5beqLW
+	 x8uupxTeJRMSts1hDTaXOm2OWSTF2lddm3AxF1c7mIeKMRv2L1Kmdrzx3Yn97plBrzp3e
+	 VNW64tkOAFcBw2Gso9a82FujBMOhQFCoLeeZBJS9EuArN/0kREZBr8vfGM7tg1735zW33
+	 SrFsgEsSG643yhknJlkmV0yuxcGX3jXzUVHzGlz48fmaB9hPKqEa2kW+eciT/Zk8DWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UavCTrUV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o6Lag+xX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DCD606A32A;
-	Thu, 19 Nov 2026 01:09:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897BB606A325;
+	Thu, 19 Nov 2026 01:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UavCTrUV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2986D1F000C4;
-	Thu, 19 Nov 2026 01:09:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o6Lag+xX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8851F000C4;
+	Thu, 19 Nov 2026 01:09:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050590;
-	bh=Xy4HtF3DUNECpT3atGuVzWZ5cjWNgV0xE8Lr5yEx1WE=;
+	s=korg; t=1795050593;
+	bh=C+5gDTK2Wvv1Rg7D+PwsS3hv8Ri6SLouweqE6JL15pY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UavCTrUVhCaCCFJp3LJSVbcqIbxGrig6yBW/YrGsk2CPataFd3LXkgUMbMnXL2h9y
-	 j3L8fK73DUlJM+D/Zf/UZwjG3FLi16nXmQwtEig1Hl5uQoyBGT2dB8B0kzzdoKqKt3
-	 YOfbuaCU6rZyWo53x4Sfa7kh+DDNITpBa2BjL7PM=
+	b=o6Lag+xXk3Jdmrz4ncD9+X4jK0an09z1Ct2w/SkkPwTOHj6Qmcd0eYS58ae4LybTq
+	 Ccbcj1sWrh16VboKuRZ3vacM39ByMmZxazoSPLVil3vCClNoWedPul1Ic0vL9ZHBtm
+	 wYV8YmLM6t2hLDfAekr8yWMToL5OEp42yHLZEcLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	"Gaddipati, Naveen" <naveen.gaddipati@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2763/2857] ASoC: xilinx: formatter_pcm: Fix read-modify-write of AUD_CTRL in hw_params
-Date: Wed, 18 Nov 2026 16:03:17 +0100
-Message-ID: <20261118150341.087090236@linuxfoundation.org>
+Subject: [PATCH 6.1 2764/2857] nvmet: zns: reject a NUMD whose byte count wraps
+Date: Wed, 18 Nov 2026 16:03:18 +0100
+Message-ID: <20261118150341.122909948@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,88 +68,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 3b54e739273752b370e49b09976da152fa3b802c ]
+[ Upstream commit 12740bec646dafe009a7d9a4d22d3495ef1ea5cd ]
 
-xlnx_formatter_pcm_hw_params() does a read-modify-write on XLNX_AUD_CTRL
-but only ORs in the new data width and active channel values without
-clearing the old ones. If hw_params is called more than once on an
-open stream, these fields may retain bits from the previous configuration,
-resulting in an incorrect sample width or channel count.
+Zone Management Receive computes its buffer size as (numd + 1) << 2 in
+u32, in nvmet_bdev_validate_zone_mgmt_recv(),
+nvmet_bdev_zone_zmgmt_recv_work() and
+nvmet_bdev_execute_zone_mgmt_recv(). NUMD is a 32-bit dword count, so
+any NUMD from 0x3fffffff up wraps.
 
-Clear both fields before writing the new values, and use FIELD_PREP() so
-the values cannot spill into neighbouring bits.
+The data length check in nvmet_bdev_execute_zone_mgmt_recv() sees the
+same wrapped value, so such a command can pass it. A data length that
+does not match the wrapped size is already rejected by that check, with
+Data SGL Length Invalid.
 
-Fixes: 6f6c3c36f091 ("ASoC: xlnx: add pcm formatter platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Reviewed-by: Gaddipati, Naveen <naveen.gaddipati@amd.com>
-Link: https://patch.msgid.link/20261023102818.523331-1-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Every site agrees on the wrapped size, so the target zeroes and fills
+only that many bytes and nothing leaks, but it answers a command whose
+NUMD asks for 4 GiB or more.
+
+Reject a NUMD from U32_MAX / 4 up with Invalid Field at the start of
+nvmet_bdev_execute_zone_mgmt_recv(), before this handler or its work
+item computes the byte count. A size_t computation would still wrap on
+32-bit kernels, where nvmet_check_transfer_len() and req->transfer_len
+are 32 bits wide.
+
+nvmet_io_cmd_transfer_len() in core.c, which the pci-epf transport uses
+to size its buffer, computes the same expression before this handler
+runs. Return 0 there for such a NUMD, so pci-epf allocates no buffer and
+the handler then rejects the command.
+
+Tested over the loop, tcp, rdma and fc transports with a zoned
+null_blk namespace: a wrapping NUMD, sent with a data length that
+matches the wrapped size, was accepted before this patch and now fails
+with Invalid Field, while ordinary NUMD values still succeed. The core.c
+change only affects pci-epf and is build-tested only.
+
+Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/xilinx/xlnx_formatter_pcm.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/nvme/target/core.c |  3 +++
+ drivers/nvme/target/zns.c  | 12 ++++++++++--
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/xilinx/xlnx_formatter_pcm.c b/sound/soc/xilinx/xlnx_formatter_pcm.c
-index 8fdff87a7ff85..09cf9e6ef0720 100644
---- a/sound/soc/xilinx/xlnx_formatter_pcm.c
-+++ b/sound/soc/xilinx/xlnx_formatter_pcm.c
-@@ -6,6 +6,7 @@
- //
- // Author: Maruthi Srinivas Bayyavarapu <maruthis@xilinx.com>
- 
-+#include <linux/bitfield.h>
- #include <linux/clk.h>
- #include <linux/io.h>
- #include <linux/module.h>
-@@ -57,8 +58,8 @@
- #define CFG_S2MM_XFER_SHIFT	29
- #define CFG_S2MM_PKG_MASK	BIT(28)
- 
--#define AUD_CTRL_DATA_WIDTH_SHIFT	16
--#define AUD_CTRL_ACTIVE_CH_SHIFT	19
-+#define AUD_CTRL_DATA_WIDTH_MASK	GENMASK(18, 16)
-+#define AUD_CTRL_ACTIVE_CH_MASK		GENMASK(22, 19)
- #define PERIOD_CFG_PERIODS_SHIFT	16
- 
- #define PERIODS_MIN		2
-@@ -509,28 +510,29 @@ static int xlnx_formatter_pcm_hw_params(struct snd_soc_component *component,
- 	writel(high, stream_data->mmio + XLNX_AUD_BUFF_ADDR_MSB);
- 
- 	val = readl(stream_data->mmio + XLNX_AUD_CTRL);
-+	val &= ~(AUD_CTRL_DATA_WIDTH_MASK | AUD_CTRL_ACTIVE_CH_MASK);
- 	bits_per_sample = params_width(params);
- 	switch (bits_per_sample) {
- 	case 8:
--		val |= (BIT_DEPTH_8 << AUD_CTRL_DATA_WIDTH_SHIFT);
-+		val |= FIELD_PREP(AUD_CTRL_DATA_WIDTH_MASK, BIT_DEPTH_8);
- 		break;
- 	case 16:
--		val |= (BIT_DEPTH_16 << AUD_CTRL_DATA_WIDTH_SHIFT);
-+		val |= FIELD_PREP(AUD_CTRL_DATA_WIDTH_MASK, BIT_DEPTH_16);
- 		break;
- 	case 20:
--		val |= (BIT_DEPTH_20 << AUD_CTRL_DATA_WIDTH_SHIFT);
-+		val |= FIELD_PREP(AUD_CTRL_DATA_WIDTH_MASK, BIT_DEPTH_20);
- 		break;
- 	case 24:
--		val |= (BIT_DEPTH_24 << AUD_CTRL_DATA_WIDTH_SHIFT);
-+		val |= FIELD_PREP(AUD_CTRL_DATA_WIDTH_MASK, BIT_DEPTH_24);
- 		break;
- 	case 32:
--		val |= (BIT_DEPTH_32 << AUD_CTRL_DATA_WIDTH_SHIFT);
-+		val |= FIELD_PREP(AUD_CTRL_DATA_WIDTH_MASK, BIT_DEPTH_32);
- 		break;
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index ca4fd4e88e116..9035c78fba75c 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -905,6 +905,9 @@ static u32 nvmet_io_cmd_transfer_len(struct nvmet_req *req)
+ 	case nvme_cmd_dsm:
+ 		return nvmet_dsm_len(req);
+ 	case nvme_cmd_zone_mgmt_recv:
++		/* The handler rejects a NUMD whose byte count would wrap. */
++		if (le32_to_cpu(req->cmd->zmr.numd) >= U32_MAX / 4)
++			return 0;
+ 		return (le32_to_cpu(req->cmd->zmr.numd) + 1) << 2;
  	default:
- 		return -EINVAL;
- 	}
+ 		return 0;
+diff --git a/drivers/nvme/target/zns.c b/drivers/nvme/target/zns.c
+index 64ec757c7c23b..877d5f7ebc782 100644
+--- a/drivers/nvme/target/zns.c
++++ b/drivers/nvme/target/zns.c
+@@ -324,9 +324,17 @@ static void nvmet_bdev_zone_zmgmt_recv_work(struct work_struct *w)
  
--	val |= active_ch << AUD_CTRL_ACTIVE_CH_SHIFT;
-+	val |= FIELD_PREP(AUD_CTRL_ACTIVE_CH_MASK, active_ch);
- 	writel(val, stream_data->mmio + XLNX_AUD_CTRL);
+ void nvmet_bdev_execute_zone_mgmt_recv(struct nvmet_req *req)
+ {
+-	u32 out_bufsize = (le32_to_cpu(req->cmd->zmr.numd) + 1) << 2;
++	u32 numd = le32_to_cpu(req->cmd->zmr.numd);
++
++	/* From U32_MAX / 4 up, (numd + 1) << 2 wraps here and in the work. */
++	if (numd >= U32_MAX / 4) {
++		req->error_loc = offsetof(struct nvme_zone_mgmt_recv_cmd, numd);
++		nvmet_req_complete(req,
++				   NVME_SC_INVALID_FIELD | NVME_STATUS_DNR);
++		return;
++	}
  
- 	val = (params_periods(params) << PERIOD_CFG_PERIODS_SHIFT)
+-	if (!nvmet_check_transfer_len(req, out_bufsize))
++	if (!nvmet_check_transfer_len(req, (numd + 1) << 2))
+ 		return;
+ 
+ 	INIT_WORK(&req->z.zmgmt_work, nvmet_bdev_zone_zmgmt_recv_work);
 -- 
 2.53.0
 
