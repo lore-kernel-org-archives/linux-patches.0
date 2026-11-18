@@ -1,83 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034490;
-	b=A9qA9kKCaBN1Mk8fpBLKXXiwlyPbt10Q1LOeel5RFNnWvZQHXWRFnssQZySdvcqjP7/i
-	 RbSwDmthmtdnpdGT4UxmXNY9qThl7U6DfiO3hPemmdMoSfxuD9x+DNxlpalYLkcIDtEJ3
-	 rfvWlk+ir8NgvYvVt3U74PkA53ZLUQ+bq0oo1PKxGklzpmCHZKrjam9eMujFSlzkj//wg
-	 Cyr2T6Qt7O/sz9Y7Lt1KEW3elM0a/4WaU82krK9swxLnASLZw53M215vUTfe/nmAkOVvN
-	 iNKUwkTssTmh/lxZm/SNTiLkTQ61EGW8CWlZdUNc6sQYSJFdbLRFR36xoqBk2zEQwRw==
+	t=1795034493;
+	b=IK1yx646ty8U+YTRBWlu8DdGGdhmO91Mqwl29b+5I+hsU6H/HEmLOWErCuV38QgNWRaK
+	 ezIcEXn32CQAHU6XlCCADOEHzuBomUT3RDihaHq2uaLWXT4QRRle7on5vb83j5oOps2fS
+	 DZbPRSV0i8za/pnyR1AHLxgmHzs9uPQUHclY2Wobt666aV0+rQJYwyuEagEPghA40rpWp
+	 xjFqOsIO2nJNsxst1A5niNfPADMHTLKECQj6ko8g6CwZk37XqMN8u8wCxqSb58bCsbk2E
+	 QlgtpbAK73Iwdr/vF75uTFp9kDu7gtu10p2oP8aR09udNQw9eSHRA9QPgRgSpOmqtwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034490;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034493;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v7mMBQLMuEM6pF5PpnSdwZjuHoHOsXsb9JgSZ/djLjI=;
-	b=JfmCda+xVjbh6/NsILyYu2oLf4skhhVhLTdm92lT2owT31SqCcTrXrJePp1GjA/5EOPr
-	 Djc9xnSWjGdgkWu80KNFDQuMHEJ+zkCkaAvXEee71GzewfakzVe0LNFTDorhjqFIAVSv2
-	 WytRzCNzYXLeyZuUcIo6w/PQkKDH17dM5ZmR8VsRVv7WnudZMJxRqqqrBRYMX6vD1UETI
-	 8mn9guHAUSxIkri/BhNQ+pPz9gidXc1FGjCqUbBAV9Lygr4YKzC0Pf1a3d4L8D/qiVimb
-	 XAz8XSmT8yXs31j09pWkkS8TjAaFcmXaMrQYld0FmNXCJPL+xKN4klpQ7bBCTBf+XSw==
+	bh=AanSLcfqNnVZMNsIr8yb5ciiOuCAKcApOMjoGkLJNiI=;
+	b=xFg5WgSjoe0x/df+ctZA/Q2dMeSNRSRxAnNY7hBkN2w+ylawmf0MmktKIHzj2Q6VcJVX
+	 2dmutb3lvkV43zq1WDDaKJ6X3u45TiRUaeHAp2Am2RtqJBuUdjXuXdodqecVH7uvMrqpL
+	 bpvN5cFXN4ciDA+FIkZVuVZsxzcoCE+YYfACwgaZEu9IgJgShE1Rh6O+qdJb/eYdfMo74
+	 r3gN0Cm0GhVfMlhVl96+MMfMrxVTciq/MytiP9I9EiKPTmEMv5EaofY1VrPHEjXQjkVOk
+	 3sr5c4M1v9uKB5QsGz+gwCg9+VX4E8ZqBg758vjI+pmMRWx+YOhcl1x9rmRY+6RUtuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QX0QGk5i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xSe1QXUh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6A9606A31C;
-	Wed, 18 Nov 2026 20:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1FB606A31C;
+	Wed, 18 Nov 2026 20:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QX0QGk5i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DC61F000C4;
-	Wed, 18 Nov 2026 20:41:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xSe1QXUh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71961F000C4;
+	Wed, 18 Nov 2026 20:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034490;
-	bh=v7mMBQLMuEM6pF5PpnSdwZjuHoHOsXsb9JgSZ/djLjI=;
+	s=korg; t=1795034493;
+	bh=AanSLcfqNnVZMNsIr8yb5ciiOuCAKcApOMjoGkLJNiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QX0QGk5i5PUPgtEgNUowiYs03DwqBORxCR4B7BG50hA5cAo1golPsgQbv7iIybMjp
-	 lUSanY0/nXktLKYdf7RHhHMFoGp8SB5ZAd/mFHcE3sdKXjtGmhzW1lID4hyCWaLURR
-	 gHylRCuihU0HWTcx4l/GhLNPW+A6O2eHJtTZDJJk=
+	b=xSe1QXUhPhoCG41/M3S//xinu8AxcPkhr7IKn36MSaZpzETpqRSGXaSknL8XWJSzT
+	 qzjWDkwAdu2UF61GwOpaJNtlwLjf130lNHlV657h5IUgrIF1OTlVcvCblDLi4bwoXG
+	 oDBhq9nxydcvB+JT0mlL2xwPIFAbr/PYciust/NM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dev Jain <dev.jain@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@intel.com>,
-	Gregory Price <gourry@gourry.net>,
-	Harry Yoo <harry@kernel.org>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Jann Horn <jannh@google.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	=?UTF-8?q?Junichi=20 Nick =20Nomura?= <j-nomura@ce.jp.nec.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Mel Gorman <mel@csn.ul.ie>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	Rik van Riel <riel@surriel.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	sashiko-bot@kernel.org,
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0389/3318] mm/page_vma_mapped: use huge_ptep_get() for hugetlb
-Date: Wed, 18 Nov 2026 15:16:51 +0100
-Message-ID: <20261118150327.993936541@linuxfoundation.org>
+Subject: [PATCH 6.6 0390/3318] HID: nintendo: register input device after capabilities are set
+Date: Wed, 18 Nov 2026 15:16:52 +0100
+Message-ID: <20261118150328.031660524@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -99,83 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dev Jain <dev.jain@arm.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-[ Upstream commit e87df0d5d6962bde50f55f6d02b779daa394f894 ]
+[ Upstream commit d723bc1fe2e72b9252234e94c11af644ec477bf7 ]
 
-check_pte() is the final validation step in page_vma_mapped_walk().  It
-reads pvmw->pte with ptep_get() to decide whether the entry maps the PFN
-range being walked.  For hugetlb VMAs, that pointer refers to a hugetlb
-entry.
+input_register_device() exposes the device to userspace immediately.
+In joycon_input_create() it was called before joycon_config_rumble()
+configures the FF_RUMBLE capability and the memless force-feedback
+device, so a concurrent EVIOCSFF could dereference a NULL dev->ff.
 
-On arches which provide their own huge_ptep_get() to dereference a huge
-pte pointer, accessing via ptep_get() would cause pte_pfn(), pte_present()
-etc to misbehave.
+Registering early also means the initial udev event lacks button and
+axis information, which can make input managers ignore the device.
 
-It is not clear whether this has a trivially visible effect to userspace.
+Move input_register_device() to the end of joycon_input_create(), after
+all capabilities, the IMU input device and the force-feedback callbacks
+have been configured.
 
-Use huge_ptep_get() to dereference a huge pte pointer.
-
-Link: https://lore.kernel.org/20260703114202.365553-6-dev.jain@arm.com
-Fixes: ace71a19cec5 ("mm: introduce page_vma_mapped_walk()")
-Signed-off-by: Dev Jain <dev.jain@arm.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@intel.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Harry Yoo <harry@kernel.org>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Jun'ichi "Nick" Nomura <j-nomura@ce.jp.nec.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Mel Gorman <mel@csn.ul.ie>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ralph Campbell <rcampbell@nvidia.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ sashal: Adapted the huge_ptep_get() call in check_pte() to the older single-argument form, passing only pvmw->pte. ]
+Fixes: 2af16c1f846b ("HID: nintendo: add nintendo switch controller driver")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://sashiko.dev/#/patchset/20260730031927.25444-1-yijiangshan@kylinos.cn?part=1
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Link: https://sashiko.dev/#/patchset/20260730031927.25444-1-yijiangshan@kylinos.cn?part=1
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+[ sashal: Moved the input_register_device(ctlr->input) call to the end of the older monolithic joycon_input_create(), since the refactored helper functions the upstream patch touches don't exist here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_vma_mapped.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/hid/hid-nintendo.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/mm/page_vma_mapped.c b/mm/page_vma_mapped.c
-index dcc1ee3d059e9..c7e8ccd1aa06f 100644
---- a/mm/page_vma_mapped.c
-+++ b/mm/page_vma_mapped.c
-@@ -97,7 +97,12 @@ static bool map_pte(struct page_vma_mapped_walk *pvmw, spinlock_t **ptlp)
- static bool check_pte(struct page_vma_mapped_walk *pvmw, unsigned long pte_nr)
- {
- 	unsigned long pfn;
--	pte_t ptent = ptep_get(pvmw->pte);
-+	pte_t ptent;
-+
-+	if (is_vm_hugetlb_page(pvmw->vma))
-+		ptent = huge_ptep_get(pvmw->pte);
-+	else
-+		ptent = ptep_get(pvmw->pte);
+diff --git a/drivers/hid/hid-nintendo.c b/drivers/hid/hid-nintendo.c
+index 7e272e79e00fb..18a426c2c5b85 100644
+--- a/drivers/hid/hid-nintendo.c
++++ b/drivers/hid/hid-nintendo.c
+@@ -1796,10 +1796,6 @@ static int joycon_input_create(struct joycon_ctlr *ctlr)
+ 	ctlr->rumble_msecs = jiffies_to_msecs(jiffies);
+ #endif
  
- 	if (pvmw->flags & PVMW_MIGRATION) {
- 		swp_entry_t entry;
+-	ret = input_register_device(ctlr->input);
+-	if (ret)
+-		return ret;
+-
+ 	/* configure the imu input device */
+ 	ctlr->imu_input = devm_input_allocate_device(&hdev->dev);
+ 	if (!ctlr->imu_input)
+@@ -1850,6 +1846,10 @@ static int joycon_input_create(struct joycon_ctlr *ctlr)
+ 	if (ret)
+ 		return ret;
+ 
++	ret = input_register_device(ctlr->input);
++	if (ret)
++		return ret;
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
