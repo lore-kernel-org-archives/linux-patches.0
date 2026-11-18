@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058083;
-	b=LvMPofi8GyfC6vpftFIBr9TrLZ2YLbQ2D+H9z8w0iv8EQom2tUluY3MILMNB7rPHukQo
-	 R8JR6RhhNBBOJVY7n+NrXyfcKBYmnGGiL0tG4bLvLjjrWPdq9QYGqILF99KxmSErlUJHd
-	 U/V22C6bdfXKuURHv3QLWZTGDC+YSYfEcR4C7n9I2zjBJyy0Ie/Jwt6dAl7NFtJU+s8QT
-	 9jq7CYW+FK93W5iq5mREB0ZlUieG7kNeWfLBL6xJPuD4IvuI8hcRrx4eX+1mjju5VyIXO
-	 Oo6MeZdu8ahkKo39H9vAGxvW9KA8N+k0CBsIIk0Fd6ogPjPhppg/wpCgdAhyjfdMfqg==
+	t=1795058086;
+	b=wHj6imLHqCkCtNK20mMKxjaVU3OfVE6yTjpgdxzKghcMtSTpO5wRnoNvgPSajahs6YXg
+	 y20RAzspjui6reOqUs/WaYIlraFAGU4INFejx6QN5wMKmt/VlMyfcVONQiz0bOHbYKgtf
+	 EEyx8MsPYuqAEUnV0WP9EZFaT3phRKmf0tLJpW5j2sM0O8RjI3LHL6Ze5TzPACTz/HVQY
+	 vaQDR2uPrwAoO3fNgRXBfEu6GUZ7i6KARd/H3KXyEtZ0jpe5HC3xthPQf8lloWUOVJIa/
+	 a6lOUaWlHBz8ANAJ3+F6dqIATHPVclQokfTASi5s/6tXTdGFCXp2h+570BZCLqKSHMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058083;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058086;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XhyXfAMHWi+I156UdJonm9canzZr5aGBMMLpU6UtMJI=;
-	b=G1aCp5a6BlsGi2Mo/gYajHIqkJokN9Cm+EjRp2A07+M9TmuNagravihtF4csazfLeD89
-	 nHvQns9bPNND/0zy/dGBtGXdhtwLAWmgsU4Y7OOcs9BP/4U1AIRZlBeR620cl+9A3VrOM
-	 AgyO8/DjSyeTYtCzTM057ZzOW1s/MlLF8143kQgJGmsHmskL4uLSD2IJCz0Ost8yLZZki
-	 qaNC0LOoXZF1/6uxSktlHmWMWjSK/O+sJogulGNZYXKCCnLUUMfk7LWt4Sk7CT8shZigT
-	 cZL2MI1WlQptmpVBtux8531k7ejNQ1p1ws9G7aJiMFw9jWhhiMnIjmUkUHG052AvMOA==
+	bh=38UScKs7bF6pirOdN1u6OvYp+GuVXfLlAxDkrwj24Wc=;
+	b=YL6W2T/5cLENt/N9n8o0sOTEBMQJJPlGnQVhZQBV0dct2aSOuKYdo82pPZT+8sX2OyVv
+	 0FaHkaZgghyBPF+D24cU+nt/9lHNUTxGbvFaMwqFlFgxpjLocWNUkoerr+ONr1/EtWbT4
+	 lO5VbGtxpmbb/k0cueeePp6+VL6AnYxCyqkw+8oPkRW3AaqTsetjKtxNDspTKo02aFYlS
+	 G/bPWgiY0tpbcqtHwOQ3uGPZ15kthuyPQyj8O2iRb9u9ToJDRTqzKDM0rkzogkXHbX6Ul
+	 CSYG7WteRG3heIbVWTJb7UJadNO05aWuFmEVYVhGTv/JPjYo+wncvhX59OsBoX4ziWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y0UZr3Io;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QNcc7reC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32132606A31C;
-	Thu, 19 Nov 2026 03:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7B9606A320;
+	Thu, 19 Nov 2026 03:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y0UZr3Io
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880B11F000C5;
-	Thu, 19 Nov 2026 03:14:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QNcc7reC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0DD1F000C4;
+	Thu, 19 Nov 2026 03:14:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058083;
-	bh=XhyXfAMHWi+I156UdJonm9canzZr5aGBMMLpU6UtMJI=;
+	s=korg; t=1795058085;
+	bh=38UScKs7bF6pirOdN1u6OvYp+GuVXfLlAxDkrwj24Wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y0UZr3IoALNQMudlrGJ8gt5rSW3OS8MmmGeB4kME2RBn95lQkxjzt1td9i7Jv7OjJ
-	 VRUjMsm758eMecFkIiVxr1ogFGPVejkfRe32m+2nwqGuxVWw/RmP92+QWlzBOncKiJ
-	 Zowj4aj32rW90dvdbY+lqkF+sgH5yNKZzcNqK6Bs=
+	b=QNcc7reCVcMeTNxxyYdcTBK1Pe7yxkIGTZDcG/4lS7Bu8uDcXSnL404UrDwAN9QMA
+	 EPnVxQT3pK9aG/DFfmMfPE+lFVjfc67uhp/kfirN/xRLRpPjZxJhyyzYtZNwkH8KPg
+	 tdz/H1Wx9Mjj/oFdDAStbbCy8d+LJXqoL2iZpXXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0360/1848] wifi: ath11k: Fix possible memory leak in ath11k_dp_srng_setup()
-Date: Wed, 18 Nov 2026 15:39:58 +0100
-Message-ID: <20261118145928.185708055@linuxfoundation.org>
+Subject: [PATCH 5.10 0361/1848] fs_pin: publish pins with RCU list helpers
+Date: Wed, 18 Nov 2026 15:39:59 +0100
+Message-ID: <20261118145928.249022499@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,49 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 6132d70d0890c03546f6970893fd71938efb2a2f ]
+[ Upstream commit 8d01d6b4c17c406f37a9b6edac93dfb858af30d0 ]
 
-In ath11k_dp_srng_setup(), the memory allocated for
-ring->vaddr_unaligned is not freed in the error paths that follow.
-Fix that by calling ath11k_dp_srng_cleanup() in those error paths.
+pin_insert() initializes a pin before adding it under pin_lock.  The kill
+paths read the list heads under RCU without taking that lock.  Plain hlist
+insertion does not publish the earlier initialization to those readers.
 
-Compile tested only. Issue found using a prototype static analysis tool
-built on the LLVM compiler infrastructure.
+KCSAN weak-memory checking reported acct_on() callback initialization
+racing with pin_kill() after the superblock-list publication.  The
+corresponding LKMM model permits the stale read with plain publication;
+the RCU release/acquire pair forbids it.
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Use the RCU hlist add and dereference helpers for both pin lists.
+
+Fixes: 2798d4ce6160 ("acct: get rid of acct_lock for acct->count")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-sonnet-4-6
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260801114911.91483-1-nihaal@cse.iitm.ac.in
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260903002100.34822-1-kmehltretter@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/fs_pin.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp.c b/drivers/net/wireless/ath/ath11k/dp.c
-index 62dba9fc3ff59..598b7177ad546 100644
---- a/drivers/net/wireless/ath/ath11k/dp.c
-+++ b/drivers/net/wireless/ath/ath11k/dp.c
-@@ -288,12 +288,14 @@ int ath11k_dp_srng_setup(struct ath11k_base *ab, struct dp_srng *ring,
- 	case HAL_RXDMA_DIR_BUF:
- 		break;
- 	default:
-+		ath11k_dp_srng_cleanup(ab, ring);
- 		ath11k_warn(ab, "Not a valid ring type in dp :%d\n", type);
- 		return -EINVAL;
- 	}
+diff --git a/fs/fs_pin.c b/fs/fs_pin.c
+index 47ef3c71ce907..1a508f2167e0a 100644
+--- a/fs/fs_pin.c
++++ b/fs/fs_pin.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <linux/fs.h>
++#include <linux/rculist.h>
+ #include <linux/sched.h>
+ #include <linux/slab.h>
+ #include "internal.h"
+@@ -22,8 +23,8 @@ void pin_remove(struct fs_pin *pin)
+ void pin_insert(struct fs_pin *pin, struct vfsmount *m)
+ {
+ 	spin_lock(&pin_lock);
+-	hlist_add_head(&pin->s_list, &m->mnt_sb->s_pins);
+-	hlist_add_head(&pin->m_list, &real_mount(m)->mnt_pins);
++	hlist_add_head_rcu(&pin->s_list, &m->mnt_sb->s_pins);
++	hlist_add_head_rcu(&pin->m_list, &real_mount(m)->mnt_pins);
+ 	spin_unlock(&pin_lock);
+ }
  
- 	ret = ath11k_hal_srng_setup(ab, type, ring_num, mac_id, &params);
- 	if (ret < 0) {
-+		ath11k_dp_srng_cleanup(ab, ring);
- 		ath11k_warn(ab, "failed to setup srng: %d ring_id %d\n",
- 			    ret, ring_num);
- 		return ret;
+@@ -73,7 +74,7 @@ void mnt_pin_kill(struct mount *m)
+ 	while (1) {
+ 		struct hlist_node *p;
+ 		rcu_read_lock();
+-		p = READ_ONCE(m->mnt_pins.first);
++		p = rcu_dereference(hlist_first_rcu(&m->mnt_pins));
+ 		if (!p) {
+ 			rcu_read_unlock();
+ 			break;
+@@ -87,7 +88,7 @@ void group_pin_kill(struct hlist_head *p)
+ 	while (1) {
+ 		struct hlist_node *q;
+ 		rcu_read_lock();
+-		q = READ_ONCE(p->first);
++		q = rcu_dereference(hlist_first_rcu(p));
+ 		if (!q) {
+ 			rcu_read_unlock();
+ 			break;
 -- 
 2.53.0
 
