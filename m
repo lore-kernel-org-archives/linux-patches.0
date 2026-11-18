@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031658;
-	b=AaSXTZKVmksXKJVjnk4gpIFfmqZ5l/ESBTSdN9/II4+hQhuU9cGXYmcWKXlCjTnXEU65
-	 2ERTfkBAguI3CUujvcKjG6U+Ey0Wq4teCMZeLmjnqJguGpUltUmfPlV0msRtyW/24tsku
-	 7N4ie68lF/+Ex7lrABadElOE5yE6oplw7S7NfuX8ZlXjP6ka0PykEpluCFA12ud/ecjZ9
-	 ycBh0QVJXQGIeLCGydPLVP6IpVemKDNOQYdPtbpTKww/4U71N9x0sghGrivRf4EkYWEvC
-	 1sUk3MtCRdtU9+O5anAwNra2h+lMBEhI6qNg49f+u8HAZHYE+rC4mOW7JkLuXVPLoRw==
+	t=1795031661;
+	b=BwMilqRJ6I7lDwGFy8Lsq28+hRsRK5p3KXv81hXl71hoHr42/apkuBNRisTEpR/1YnBO
+	 qQmvP16wOgD49CDvKMqCwWOVA+IhJIW4wXbPLC3EBiuBx0UEFrGr2fOXxTe1ckuM0fQ+O
+	 q5gmItZfUUXXKKTi4tPrumPSo0Qr7anWh3q9NmJHUFvLrYeRZ5bvmaKnpbkVcesV6cHnd
+	 cncW1b8QKdidgAqYEDEpOmPbmRqRpjuSDwjtDKiw9qWh2DX1Qze0LTFXPD1xBxBWiLeVQ
+	 jfqR/h0YGBD/dhDRE5oGzXdMiUsZvxPz9UvwNF3tcCW9AGON377tXbwiBIvinz/uxMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031658;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031661;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xAOgkYaacDgl2pwgKT4Y6/FZq56mtJV9IcUY4McSb3k=;
-	b=3eaG3azZJVxihTnRwVysDapVjDMALMnPixh+eso1sXTso3FyeGYjqkIDcTb9E8VroXCl
-	 lfAD0/qvErfER5nnZGSJL4hC+yz8dxXF2cvOdeHSXF11Nl8D0bB3OqXNfRQ666r2Y0WaK
-	 ajjsm+qULdGoeuWGEnMSH7Lsgy9UO6Ssv7atDyNGncldoAEjjnvMcjbEpu3aUpiAh+xVA
-	 BPRwTo5lkiTAHDlCizThJxtaYosLj5wRoGjPtjcZphuvLE6B6zFfB2uowaWMAhCGZ4MUp
-	 POviQTDely33xEayUogyjwvXuUnjWhzS9a5Gnu8ABF9eaQFPZ2zlQmaKw96GC146e7Q==
+	bh=fUcbMoOvBvIQQiv7Ao8bF4vMUN2k/g94omi7cT5FWQ4=;
+	b=HHtuoVWHK5UyH85y6BSlFzInB81VtMTKXUA38xfbIcJEiSA4nWk0D4H9zztp0o4Wkcc8
+	 ZYsm40J8kfTOueDdC2KPpKZ683R3E/96kMmwOVUUZLsJnarmebOKWueQfvBrRiN4bVjgy
+	 262rALZ6pkffh9n05b8BmycPeY4h/nC3rP9EowQ0kbsk1Hf47uB1+5MIS6V0kNEFalcJF
+	 gcATQFNKqNCmE1oj4k50bm25hBWyAyAxtr4T0lXKsVzCtAYJ2EvpH6pG/JHvfduY2Jygq
+	 f7NHUpw8VQ9tgMN993uGpkDWBX9rK4srhV190Qj6wt28H457zggT1byNSzNGIJRGirw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q1fkXdWX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eMvUSeZG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63066606A325;
-	Wed, 18 Nov 2026 19:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2BE606A31C;
+	Wed, 18 Nov 2026 19:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q1fkXdWX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A4F1F000C4;
-	Wed, 18 Nov 2026 19:54:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eMvUSeZG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B551F000C4;
+	Wed, 18 Nov 2026 19:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031658;
-	bh=xAOgkYaacDgl2pwgKT4Y6/FZq56mtJV9IcUY4McSb3k=;
+	s=korg; t=1795031660;
+	bh=fUcbMoOvBvIQQiv7Ao8bF4vMUN2k/g94omi7cT5FWQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q1fkXdWXhPHZ7N4NUTVtmmxT76SmLRpdnI/D3iW2Cv+ykLtSsjMi3wwhqrvJnoIwF
-	 jKmw9WqJtXXAypbcqnZ5U+NE92scglM9Nuu8CE5xIIJmHb6/nqGghebK6yS5W0ZO3N
-	 5f0meHD8fHaELMRz7Y9TxGz5u15dKDBy7wyYUVFk=
+	b=eMvUSeZGPWvFZQDcGRvC/JMcVC+aGXkw1+IukKMEeNpsiBi2q21qM838muB+nWnjN
+	 fafzgRWpBSS+cKUVniUKC4decsaFLrxfi4LST8Wqvhef0AgMOBSisTU1UMoZG9Cu+s
+	 14+pIyr4jC5qgpfRbktgXpoXkiGrA6e8BthkN6v4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <oss.patchbox@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1134/1756] bus: arm-cci: Drop cci-control-port node reference in __cci_ace_get_port()
-Date: Wed, 18 Nov 2026 15:54:21 +0100
-Message-ID: <20261118150055.212924816@linuxfoundation.org>
+Subject: [PATCH 6.12 1135/1756] clk: qcom: gcc-x1e80100: Dont poll the status bit of GCC_USB4_n_SYS_CLK
+Date: Wed, 18 Nov 2026 15:54:22 +0100
+Message-ID: <20261118150055.249351813@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,44 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <oss.patchbox@gmail.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 810ccc792193909ba9bbb4246e0eb0de14dad724 ]
+[ Upstream commit d42e0c55e6db7b8282e8dc63f7e70595da0f72f5 ]
 
-__cci_ace_get_port() looks up the device's "cci-control-port" node with
-of_parse_phandle(), which returns the node with its reference count
-raised, and only compares the pointer against the probed ports.  Neither
-the match nor the no-match return releases it.
+These clocks are PHY-sourced and their halt bits seem not to update
+reliably. Ignore it to prevent spurious warnings.
 
-Drop the reference on both paths once the comparison is done.
-
-Fixes: ed69bdd8fd9b ("drivers: bus: add ARM CCI support")
-Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
-Link: https://lore.kernel.org/r/20260923164122.596910-1-oss.patchbox@gmail.com
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 161b7c401f4b ("clk: qcom: Add Global Clock controller (GCC) driver for X1E80100")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260915-topic-hamoa_clk_usb4-v1-1-5d8d5225b598@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/arm-cci.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-x1e80100.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bus/arm-cci.c b/drivers/bus/arm-cci.c
-index ab9b49451f8f2..25a741e48573f 100644
---- a/drivers/bus/arm-cci.c
-+++ b/drivers/bus/arm-cci.c
-@@ -167,9 +167,12 @@ static int __cci_ace_get_port(struct device_node *dn, int type)
- 	cci_portn = of_parse_phandle(dn, "cci-control-port", 0);
- 	for (i = 0; i < nb_cci_ports; i++) {
- 		ace_match = ports[i].type == type;
--		if (ace_match && cci_portn == ports[i].dn)
-+		if (ace_match && cci_portn == ports[i].dn) {
-+			of_node_put(cci_portn);
- 			return i;
-+		}
- 	}
-+	of_node_put(cci_portn);
- 	return -ENODEV;
- }
+diff --git a/drivers/clk/qcom/gcc-x1e80100.c b/drivers/clk/qcom/gcc-x1e80100.c
+index e96faa529d3c4..288e413aa29fb 100644
+--- a/drivers/clk/qcom/gcc-x1e80100.c
++++ b/drivers/clk/qcom/gcc-x1e80100.c
+@@ -5988,7 +5988,7 @@ static struct clk_branch gcc_usb4_0_sb_if_clk = {
  
+ static struct clk_branch gcc_usb4_0_sys_clk = {
+ 	.halt_reg = 0x9f054,
+-	.halt_check = BRANCH_HALT,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.clkr = {
+ 		.enable_reg = 0x9f054,
+ 		.enable_mask = BIT(0),
+@@ -6205,7 +6205,7 @@ static struct clk_branch gcc_usb4_1_sb_if_clk = {
+ 
+ static struct clk_branch gcc_usb4_1_sys_clk = {
+ 	.halt_reg = 0x2b054,
+-	.halt_check = BRANCH_HALT,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.clkr = {
+ 		.enable_reg = 0x2b054,
+ 		.enable_mask = BIT(0),
+@@ -6422,7 +6422,7 @@ static struct clk_branch gcc_usb4_2_sb_if_clk = {
+ 
+ static struct clk_branch gcc_usb4_2_sys_clk = {
+ 	.halt_reg = 0x11054,
+-	.halt_check = BRANCH_HALT,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.clkr = {
+ 		.enable_reg = 0x11054,
+ 		.enable_mask = BIT(0),
 -- 
 2.53.0
 
