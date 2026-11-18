@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031632;
-	b=GJWrODa5CpQFrJGxBfhqJKzgPCvGwnNvW0RLj8yIEzQhml9RTfgkZABI5jriXJbjX+tB
-	 W4CHueXgYXO06mHgnMRp6hbV/+2Tc5VPWu1+lry6o3MBoKP6Nlo0fJ3gEQzH+9TdIrg1n
-	 S13n1m2VemyHAm2nhTfdp0v0zhFV2rLiY3NYJMJj2Cno1D3kvsM4jV1+rud7dePachIgh
-	 KLN+7H7m6q6xG5Cj97QfiwDWtA4T7SA0DumLJ8saFhyO2Hg+vJUK69cAfUvY8zoJ6RK+k
-	 +HSy2DX/ssIemce90yR4dyW3m8Onzaa8PVBFqQ/Vn7kVs0Ip66hfbfInHudbz2i7gUw==
+	t=1795031635;
+	b=A1XpCyGSASu9sVVj44VhwGYWiePdnCRNNwKNCpgnUSMYGMcjXOQxV9MYT7Ti1aDlr5Bg
+	 0dtFRV3+gJZbwoc16WY1ix69gwfLdntX9L2NqMAIYux6lDbPhEXpNpxrH2+KqYe/N48ik
+	 pwvK9or1Fu+HqlgiVl+TRz2zbq6D6xpTVPJh0QrRrU0ApkNfTiIsA+KpkzeY834nTIjyZ
+	 gYUjL2de5PzKf7g5IjMmmYwlxxwUcE/Vnz5b/Xd8axUrcoxCsNgPdMq4oQ/MenYXvQTKn
+	 A9gPpTFAgOxL2lhdLNSH3U6UQ/bWifWoA1BvTwRGGYLR978BIx8ZxjcKK3mCFQysI1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031632;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031635;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6WBgfu2qW0bNmnrR2AITxEwZwxt6sKT6o4maC07sgvA=;
-	b=FyFS7/vAIMTg+oUascZQTMqwGbYxhnPpJRcjQuJWFk9/6NX/6cqM4hQdHOoafsaR9TRd
-	 GxfsoxI9Ogvl+NGmQT+Jq9iLQNqGw5O/BM+1S1iYb484IzVkQjUHpz5QMD6HObySlyTfC
-	 OGgAEuruX8NnJDRf5IcomqcR0kHxxsHhobT7yAtWQk8ahaDZmdH5Jt73zCjv85t4C//vQ
-	 /I7MeW52gwXsH6CmfAp8VmUqJgfLyNUSSLm9c1+WOB4YEdytDOwHnsugNGMrzXPWnNCni
-	 lDYENbM9DCIAxdHtkkJNRGkTXvh4eyNFBtqZ/TwRWAIohPAPr+lLov8/XuqleXnBcvw==
+	bh=6N6qdmfnG1WiTFmJM3vXqGqxAazRKodLmjINa2trD+Q=;
+	b=oQNNjsubpRXzeSyaDMUf7+ATD/bu95js8cQGheO6bqxHuR4unmW9KkE9yx56ge1cOjvO
+	 87vTnfsVBgek6v+Ht4dGkuRdekj4sCS+liJxUJO7rseP8MSTbH0+uwekGEGlmlRpOIz0g
+	 WzB8BOKuFYw+dfSTcCPtM3XloLuBLLjnyTsBmREvuwEyWtKSmn5EyV7X3/BT5DAD30Gak
+	 01VmIpY8aLD+h5SS5Sj+UxFTO2bXtWKwckWYgOgFoGH+7oFn/D5ucatDWQcXLZ4YFYoYT
+	 qnACglSllU+9fLXl62/ZZz/HBro6iKaOrnQF8NxjTYpKtJGlrc4h6VFMCxcMsQ50d/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y3XRTOv5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p1xQW1SW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D73F606A32A;
-	Wed, 18 Nov 2026 19:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA49606A33E;
+	Wed, 18 Nov 2026 19:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y3XRTOv5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3841F000C5;
-	Wed, 18 Nov 2026 19:53:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p1xQW1SW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C02F01F000C7;
+	Wed, 18 Nov 2026 19:53:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031632;
-	bh=6WBgfu2qW0bNmnrR2AITxEwZwxt6sKT6o4maC07sgvA=;
+	s=korg; t=1795031635;
+	bh=6N6qdmfnG1WiTFmJM3vXqGqxAazRKodLmjINa2trD+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y3XRTOv5FQRfUw9lQICH4ro9GofMSJCisRH8f3rBxhaOMI0nLH5sI4MGSMUwwdbLZ
-	 iNFaYUtoK743qqEMwKuLVy5TPnXhsGOf55SE4AXflbI6+YczyrlZAxU1mBdxGGmAER
-	 ZCMnjtfzgIvCIGpz23m8iX4eg940gR0qT5Ybz5as=
+	b=p1xQW1SW2mp8wYuZed3I8IF3KDmQcPRMaLCpYOvURTcwt3cwS1vbXG0Et8MEI6Ukp
+	 d/O48BRYckvBwJC4diW5YOQePWvAL8JfC2NYZE+oBBxAaJU+SLIWJALboft0QdUN8M
+	 yyfNQKMsOYZMnVjDp5hUSBBVxuJUHe2d2wMkmJEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yogesh Gaur <yogeshgaur.83@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1126/1756] comedi: dt2814: validate the IRQ supplied by userspace
-Date: Wed, 18 Nov 2026 15:54:13 +0100
-Message-ID: <20261118150054.921811142@linuxfoundation.org>
+Subject: [PATCH 6.12 1127/1756] comedi: dmm32at: validate the IRQ supplied by userspace
+Date: Wed, 18 Nov 2026 15:54:14 +0100
+Message-ID: <20261118150054.954878220@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,10 +69,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Yogesh Gaur <yogeshgaur.83@gmail.com>
 
-[ Upstream commit 81026c2b3f9096cdfdfa02918f94865629fb7f90 ]
+[ Upstream commit 797d56d7f90864e67424f8e82639a9b3aedf37e0 ]
 
 comedi boards are configured through the COMEDI_DEVCONFIG ioctl, so
-it->options[1] is a number chosen by userspace. dt2814 passes it to
+it->options[1] is a number chosen by userspace. dmm32at passes it to
 request_irq() without checking it first, which lets an interrupt owned by
 another irqdomain -- a PCI device's IO-APIC GSI, for instance -- be
 claimed for this board. When the owner of that interrupt is later
@@ -89,28 +89,28 @@ out-of-range value is ignored rather than rejected, so the board still
 attaches without interrupt support, exactly as it does today when
 request_irq() fails.
 
-Fixes: a211ea977a41 ("Staging: comedi: add dt2814 driver")
+Fixes: 3c501880ac44 ("Staging: comedi: add dmm32at driver")
 Assisted-by: LLM
 Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
-Link: https://patch.msgid.link/20260909104848.1763-4-yogeshgaur.83@gmail.com
+Link: https://patch.msgid.link/20260909104848.1763-5-yogeshgaur.83@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/dt2814.c | 3 ++-
+ drivers/comedi/drivers/dmm32at.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/comedi/drivers/dt2814.c b/drivers/comedi/drivers/dt2814.c
-index c98a5a4a7aecf..3e734e343431b 100644
---- a/drivers/comedi/drivers/dt2814.c
-+++ b/drivers/comedi/drivers/dt2814.c
-@@ -315,7 +315,8 @@ static int dt2814_attach(struct comedi_device *dev, struct comedi_devconfig *it)
- 		return -EIO;
+diff --git a/drivers/comedi/drivers/dmm32at.c b/drivers/comedi/drivers/dmm32at.c
+index 910cd24b1bed5..240d0711b6c2a 100644
+--- a/drivers/comedi/drivers/dmm32at.c
++++ b/drivers/comedi/drivers/dmm32at.c
+@@ -584,7 +584,8 @@ static int dmm32at_attach(struct comedi_device *dev,
+ 		return ret;
  	}
  
 -	if (it->options[1]) {
 +	/* only ISA interrupts are valid on this board */
 +	if (it->options[1] >= 1 && it->options[1] <= 15) {
- 		ret = request_irq(it->options[1], dt2814_interrupt, 0,
+ 		ret = request_irq(it->options[1], dmm32at_isr, 0,
  				  dev->board_name, dev);
  		if (ret == 0)
 -- 
