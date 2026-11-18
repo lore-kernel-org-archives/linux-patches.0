@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029286;
-	b=A9i7DF+a2grFoIeDoUZgH+s+xMspsJkZheEEVLxzZgDWB1XiLrPsF/3IP+vjNQQofKYe
-	 EpjGWjmBImGgpuM3dDTxr4kJZs0Zo0a/NWipl1BpFJzSu6Hyz3NDzqEgCg0V7bCGVWEOS
-	 dApaFmD6A3Ag0DvGSylaHgSCj8DynLWLCYji+pJOiu7Uvmx85mA6mwLbntQKhJ6CwmTh/
-	 dUkHet5KDEqyy1yLuxPs6azhTL/JIrDfSWJXzEpDeQMQSrEf+kH5Pz8XNZ/NOEYN+LWVF
-	 gu8hjSkOKkxanSuJ4ZoARBG6zlNv9YYuB6drMKcGW82cxraJtPVh70XmHFuXT44dn9g==
+	t=1795029289;
+	b=QIVZQQliCmcoUil0Ub55wZVNzNcKNFR3JlVciLfLfBrXNGDOv4IBNF3Lzas9wYpytSPy
+	 HhNl5QcMspB83TXLwxuZYLhTX8m9Ci7A3zQ0Zm6E6q87WY8z6Wqng4r1m7Z2T/KfsjeAf
+	 +1jGRy2rejnnkkrlIuxjJR2q1bEQyYrXtJVP38YmnYqJ3rxDjcfxf/GQVUVFWIe7+JoPv
+	 UtTuJVNIxGg7viWLea5Nu9haNZkHhAet3w/XL3J2+FwqXlj/5wyob4Tq9wsCDHM0NuGUr
+	 ZX+Z538WWf/23wouVkU4PVgYQHqpfgAzrNJcEORL4GriQ9TEV0LIiOpGVnkqTs7SOxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029286;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029289;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MxZDGljvhH8KMpDAhRov/bqSFlztglThVlhFbq1VYK0=;
-	b=3FR7YvL/AVRqYoubNHh9vIwqIS8FvRPrH1TZFjvfQR/gvd3v/kpmSikokNgrznzt7HYs
-	 nmPN0viSAxPOhk5gidWpK0cKk8nGt7pCm+Jl42uJxa3stUe2+mtT4qDjc51C/1La3McV8
-	 /M0TPBa1zjAY/228c86XAYEUUpjKCCeP7nx2OHdbm5ndwcnGX/FNXmIbiuwQWA2CBoJkL
-	 u8/GwQDor5E4hqzzFjPP8WVe2C6jTKuGnmfQ2b+gB3cYbnCkJxovEpSgf6YFVsxmbW1x1
-	 7g/CawLSiIowUcUHtYuxU2qUuXnDfbA3ZFtVEL2j+ngkcMlUiqIMlwKwtwXGNGEoroA==
+	bh=iGqSvWeK69ctylzIgs0+WErd9+mNdy/TFhvmYXgOfjk=;
+	b=ofpeHU9dGU9LmrUkreJkR8QVm4k9tksx/4zfRM0MFx6RQDhlnz+MGmd4jTJnZYMYPir5
+	 i5vyxIo4H2cJCmJEZ5RHmiYoM8mu8v7nVgwOl2BYNEFouq0sZbjitpLH4XHcwlCRrGJAT
+	 UFKZdH612+lVd7NEM36bzIYBk0WrhPY38fKGK7qJc/61N2FhZoVnQy5sEUI563PvXggvC
+	 PzuFuzNd4AEVJSAqGha1oXT9MGVDzQIdkruKl9xYw2VmHyoFyVBCb+f6kChHr602/Qna/
+	 wvcetq4NUxXmPkTFT0TRJJKg+Oh4nmNfGB6ta3jsQs2KCK6NxcGMM6Jx5Mrn2zPa1sg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KW7382yr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bOle/GRX";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD3B606A31C;
-	Wed, 18 Nov 2026 19:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90C6606A31C;
+	Wed, 18 Nov 2026 19:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KW7382yr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71FC31F000C4;
-	Wed, 18 Nov 2026 19:14:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bOle/GRX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459EA1F000C4;
+	Wed, 18 Nov 2026 19:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029286;
-	bh=MxZDGljvhH8KMpDAhRov/bqSFlztglThVlhFbq1VYK0=;
+	s=korg; t=1795029288;
+	bh=iGqSvWeK69ctylzIgs0+WErd9+mNdy/TFhvmYXgOfjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KW7382yrLGRmIpBAtcz0YqQIW2Jda0GNCnWcjRiQsn9KyEgDTFawiQvyZ+odcPva/
-	 F6R255mDciKLq40RnLYsh9vcEsVoMc6H4pWV+tftyvexG4VJKK7yvJoMJB5y/2l/lU
-	 VAdHkmRx27Dvy1pND0gefm/O9wu+xaGu5tet/Ejo=
+	b=bOle/GRX+HBt+bRX/ZTrpF+nBI0N0nUhgi9JOGmFHD2rlnmpekRxwBhfLk9wlHqW4
+	 lg6VAg/nkUlLNC2hBujxbmIsZx25dsRdtrPlc/j7qxetO3QJOk74taTEylq12viTv2
+	 9B2+qctUaqTRxW1YM0iZqtIhf0N/cTo9tlRqjFlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ryan Brue <ryanbrue.dev@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0269/1756] perf trace: Enhance BTF type formatting to symbolise kernel function pointers
-Date: Wed, 18 Nov 2026 15:39:56 +0100
-Message-ID: <20261118150019.126750709@linuxfoundation.org>
+Subject: [PATCH 6.12 0296/1756] power: supply: bq24190_charger: use the wake irq API
+Date: Wed, 18 Nov 2026 15:40:23 +0100
+Message-ID: <20261118150020.146503725@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,252 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Tomlin <atomlin@atomlin.com>
+From: Ryan Brue <ryanbrue.dev@gmail.com>
 
-[ Upstream commit c6dd6161815d0c10ed24ad13fdad847bec63d961 ]
+[ Upstream commit ece9baab2a6e79224d3f591893be23b540b1625f ]
 
-When BTF (BPF Type Format) metadata is loaded from vmlinux, 'perf trace'
-can inspect the precise C types of tracepoint and system call parameters.
-However, function pointer arguments are currently not recognised during
-BTF pretty-printing and default to hexadecimal output.
+bq24190_probe() calls enable_irq_wake() on the charger interrupt and
+never calls disable_irq_wake(). That is wrong in three ways.
 
-Introduce btf_is_func_ptr() to inspect BTF type hierarchies
-(i.e., traversing pointers, typedefs, and type modifiers) to determine
-whether a parameter resolves to a function prototype
-(BTF_KIND_FUNC_PROTO).
+It is unbalanced. free_irq() does not touch desc->wake_depth -- only
+irq_set_irq_wake() does -- so after the driver is unbound the descriptor
+is still one wake reference deep and the irqchip is still configured for
+wake, forever, for an interrupt nobody owns any more.
 
-Generalise BTF type caching via syscall_arg_fmt__cache_btf_type() to
-handle structs, unions, enums, and function pointers alike. When a field
-is identified as a kernel function pointer, trace__btf_scnprintf()
-routes its value to syscall_arg__scnprintf_ksym(), enabling automatic
-zero-config symbolisation of kernel function pointers whenever BTF is
-available.
+It ignores the device's wakeup policy. The chip is made a system wake
+source whether or not anyone asked for it, and because
+device_init_wakeup() is never called there is no power/wakeup attribute
+for userspace to say otherwise. A board that would rather not be woken
+by its charger has no way to express that.
 
-Signed-off-by: Aaron Tomlin <atomlin@atomlin.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 024b219744a9 ("perf trace: Add upper bound checks for augmented BTF struct printing")
+And it arms the interrupt for wake permanently, from probe onwards,
+rather than for the sleep it is meant to cover.
+
+Use the wake irq API instead: devm_device_init_wakeup() to make the
+device wakeup-capable and enabled -- preserving today's behaviour -- and
+devm_pm_set_wake_irq() to hand the interrupt to the PM core, which arms
+it in dpm_suspend_noirq() (only if device_may_wakeup(), immediately
+before suspend_device_irqs()) and disarms it on resume. Both are unwound
+by devm, so the reference is balanced on unbind, and userspace gets the
+power/wakeup control it should have had.
+
+No intended change in behaviour: charger events still wake the system by
+default.
+
+The same conversion was made to another charger driver for the same
+reason, in commit 6c5393771c50 ("power: supply: qcom_pmi8998_charger: fix
+wakeirq").
+
+Fixes: f385e6e2a153 ("power: bq24190_charger: Use PM runtime autosuspend")
+Assisted-by: LLM
+Signed-off-by: Ryan Brue <ryanbrue.dev@gmail.com>
+Link: https://patch.msgid.link/20260908-rbrue-suez-upstreaming-bq24190_charger-use-wake-irq-api-v1-1-c3f10ae2a34a@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 106 +++++++++++++++++++++++++++++--------
- 1 file changed, 85 insertions(+), 21 deletions(-)
+ drivers/power/supply/bq24190_charger.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index f0d7d9b53f9b2..d701836f62819 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -122,6 +122,7 @@ struct syscall_arg_fmt {
- #ifdef HAVE_LIBBPF_SUPPORT
- 	const struct btf_type *type;
- 	int	   type_id; /* used in btf_dump */
-+	bool	   btf_type_cached;
- #endif
- };
+diff --git a/drivers/power/supply/bq24190_charger.c b/drivers/power/supply/bq24190_charger.c
+index c47f32f152e60..35611eca057e1 100644
+--- a/drivers/power/supply/bq24190_charger.c
++++ b/drivers/power/supply/bq24190_charger.c
+@@ -10,6 +10,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/delay.h>
+ #include <linux/pm_runtime.h>
++#include <linux/pm_wakeirq.h>
+ #include <linux/power_supply.h>
+ #include <linux/power/bq24190_charger.h>
+ #include <linux/regulator/driver.h>
+@@ -2151,7 +2152,13 @@ static int bq24190_probe(struct i2c_client *client)
+ 	if (ret < 0)
+ 		goto out_charger;
  
-@@ -928,21 +929,68 @@ static size_t syscall_arg__scnprintf_getrandom_flags(char *bf, size_t size,
- #define SCA_GETRANDOM_FLAGS syscall_arg__scnprintf_getrandom_flags
- 
- #ifdef HAVE_LIBBPF_SUPPORT
--static void syscall_arg_fmt__cache_btf_enum(struct syscall_arg_fmt *arg_fmt, struct btf *btf, char *type)
-+static bool btf_is_func_ptr(const struct btf *btf, const struct btf_type *type)
- {
-+	int nr_ptrs = 0;
+-	enable_irq_wake(client->irq);
++	ret = devm_device_init_wakeup(dev);
++	if (ret < 0)
++		goto out_charger;
 +
-+	while (type) {
-+		if (btf_is_ptr(type)) {
-+			if (++nr_ptrs > 1)
-+				return false;
-+			type = btf__type_by_id(btf, type->type);
-+		} else if (btf_is_typedef(type) || btf_is_mod(type)) {
-+			type = btf__type_by_id(btf, type->type);
-+		} else {
-+			break;
-+		}
-+	}
-+	return nr_ptrs == 1 && type && btf_is_func_proto(type);
-+}
-+
-+static void syscall_arg_fmt__cache_btf_type(struct syscall_arg_fmt *arg_fmt,
-+					    struct btf *btf, const char *type)
-+{
-+	char name[128];
-+	const char *pos;
-+	size_t len = 0;
- 	int id;
++	ret = devm_pm_set_wake_irq(dev, client->irq);
++	if (ret < 0)
++		goto out_charger;
  
--	type = strstr(type, "enum ");
-+	arg_fmt->btf_type_cached = true;
-+
- 	if (type == NULL)
- 		return;
- 
--	type += 5; // skip "enum " to get the enumeration name
-+	/* Pointers to enums are memory addresses, not scalar enums */
-+	if (strstr(type, "enum ") && strchr(type, '*'))
-+		return;
-+
-+	if ((pos = strstr(type, "enum ")) != NULL)
-+		pos += 5;
-+	else if ((pos = strstr(type, "struct ")) != NULL)
-+		pos += 7;
-+	else if ((pos = strstr(type, "union ")) != NULL)
-+		pos += 6;
-+	else
-+		pos = type;
-+
-+	while (isspace(*pos))
-+		pos++;
-+
-+	while ((isalnum(pos[len]) || pos[len] == '_') && len < sizeof(name) - 1) {
-+		name[len] = pos[len];
-+		len++;
-+	}
-+	name[len] = '\0';
-+
-+	if (len == 0)
-+		return;
- 
--	id = btf__find_by_name(btf, type);
-+	id = btf__find_by_name(btf, name);
- 	if (id < 0)
- 		return;
- 
- 	arg_fmt->type = btf__type_by_id(btf, id);
-+	arg_fmt->type_id = id;
- }
- 
- static bool syscall_arg__strtoul_btf_enum(char *bf, size_t size, struct syscall_arg *arg, u64 *val)
-@@ -976,10 +1024,8 @@ static bool syscall_arg__strtoul_btf_type(char *bf, size_t size, struct syscall_
- 	if (btf == NULL)
- 		return false;
- 
--	if (arg->fmt->type == NULL) {
--		// See if this is an enum
--		syscall_arg_fmt__cache_btf_enum(arg->fmt, btf, type);
--	}
-+	if (!arg->fmt->btf_type_cached)
-+		syscall_arg_fmt__cache_btf_type(arg->fmt, btf, type);
- 
- 	// Now let's see if we have a BTF type resolved
- 	bt = arg->fmt->type;
-@@ -987,19 +1033,22 @@ static bool syscall_arg__strtoul_btf_type(char *bf, size_t size, struct syscall_
- 		return false;
- 
- 	// If it is an enum:
--	if (btf_is_enum(arg->fmt->type))
-+	if (btf_is_enum(arg->fmt->type)) {
-+		if (type && strchr(type, '*'))
-+			return false;
- 		return syscall_arg__strtoul_btf_enum(bf, size, arg, val);
-+	}
- 
- 	return false;
- }
- 
--static size_t btf_enum_scnprintf(const struct btf_type *type, struct btf *btf, char *bf, size_t size, int val)
-+static size_t btf_enum_scnprintf(const struct btf_type *type, struct btf *btf, char *bf, size_t size, unsigned long val)
- {
- 	struct btf_enum *be = btf_enum(type);
- 	const unsigned int nr_entries = btf_vlen(type);
- 
- 	for (unsigned int i = 0; i < nr_entries; ++i, ++be) {
--		if (be->val == val) {
-+		if ((unsigned long)(__u32)be->val == val || (unsigned long)be->val == val) {
- 			return scnprintf(bf, size, "%s",
- 					 btf__name_by_offset(btf, be->name_off));
- 		}
-@@ -1026,14 +1075,19 @@ static size_t btf_struct_scnprintf(const struct btf_type *type, struct btf *btf,
- 		.bf   = bf,
- 		.size = size,
- 	};
--	struct augmented_arg *augmented_arg = arg->augmented.args;
-+	struct augmented_arg *augmented_arg;
- 	int type_id = arg->fmt->type_id, consumed;
- 	struct btf_dump *btf_dump;
- 
- 	LIBBPF_OPTS(btf_dump_opts, dump_opts);
- 	LIBBPF_OPTS(btf_dump_type_data_opts, dump_data_opts);
- 
--	if (arg == NULL || arg->augmented.args == NULL)
-+	if (arg == NULL || arg->augmented.args == NULL || arg->augmented.size <= 0 ||
-+	    arg->fmt == NULL || !arg->fmt->from_user)
-+		return 0;
-+
-+	augmented_arg = arg->augmented.args;
-+	if (augmented_arg->size <= 0)
- 		return 0;
- 
- 	dump_data_opts.compact	  = true;
-@@ -1044,8 +1098,10 @@ static size_t btf_struct_scnprintf(const struct btf_type *type, struct btf *btf,
- 		return 0;
- 
- 	/* pretty print the struct data here */
--	if (btf_dump__dump_type_data(btf_dump, type_id, arg->augmented.args->value, type->size, &dump_data_opts) <= 0)
-+	if (btf_dump__dump_type_data(btf_dump, type_id, arg->augmented.args->value, type->size, &dump_data_opts) <= 0) {
-+		btf_dump__free(btf_dump);
- 		return 0;
-+	}
- 
- 	consumed = sizeof(*augmented_arg) + augmented_arg->size;
- 	arg->augmented.args = ((void *)arg->augmented.args) + consumed;
-@@ -1057,33 +1113,40 @@ static size_t btf_struct_scnprintf(const struct btf_type *type, struct btf *btf,
- }
- 
- static size_t trace__btf_scnprintf(struct trace *trace, struct syscall_arg *arg, char *bf,
--				   size_t size, int val, char *type)
-+				   size_t size, unsigned long val, char *type)
- {
- 	struct syscall_arg_fmt *arg_fmt = arg->fmt;
- 
- 	if (trace->btf == NULL)
- 		return 0;
- 
--	if (arg_fmt->type == NULL) {
--		// Check if this is an enum and if we have the BTF type for it.
--		syscall_arg_fmt__cache_btf_enum(arg_fmt, trace->btf, type);
--	}
-+	if (!arg_fmt->btf_type_cached)
-+		syscall_arg_fmt__cache_btf_type(arg_fmt, trace->btf, type);
- 
- 	// Did we manage to find a BTF type for the syscall/tracepoint argument?
- 	if (arg_fmt->type == NULL)
- 		return 0;
- 
-+	if (type && strchr(type, '*')) {
-+		if (btf_is_enum(arg_fmt->type) || btf_is_func_ptr(trace->btf, arg_fmt->type))
-+			return 0;
-+	}
-+
- 	if (btf_is_enum(arg_fmt->type))
- 		return btf_enum_scnprintf(arg_fmt->type, trace->btf, bf, size, val);
- 	else if (btf_is_struct(arg_fmt->type) || btf_is_union(arg_fmt->type))
- 		return btf_struct_scnprintf(arg_fmt->type, trace->btf, bf, size, arg);
-+	else if (btf_is_func_ptr(trace->btf, arg_fmt->type)) {
-+		arg->val = val;
-+		return syscall_arg__scnprintf_ksym(bf, size, arg);
-+	}
- 
- 	return 0;
- }
- 
- #else // HAVE_LIBBPF_SUPPORT
- static size_t trace__btf_scnprintf(struct trace *trace __maybe_unused, struct syscall_arg *arg __maybe_unused,
--				   char *bf __maybe_unused, size_t size __maybe_unused, int val __maybe_unused,
-+				   char *bf __maybe_unused, size_t size __maybe_unused, unsigned long val __maybe_unused,
- 				   char *type __maybe_unused)
- {
- 	return 0;
-@@ -2377,7 +2440,8 @@ static size_t syscall__scnprintf_args(struct syscall *sc, char *bf, size_t size,
- 
- 			default_scnprintf = sc->arg_fmt[arg.idx].scnprintf;
- 
--			if (trace->force_btf || default_scnprintf == NULL || default_scnprintf == SCA_PTR) {
-+			if (trace->force_btf || default_scnprintf == NULL ||
-+			    default_scnprintf == SCA_PTR || default_scnprintf == SCA_KSYM) {
- 				btf_printed = trace__btf_scnprintf(trace, &arg, bf + printed,
- 								   size - printed, val, field->type);
- 				if (btf_printed) {
+ 	pm_runtime_mark_last_busy(dev);
+ 	pm_runtime_put_autosuspend(dev);
 -- 
 2.53.0
 
