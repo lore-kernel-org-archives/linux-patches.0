@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045700;
-	b=C+IWCiiVOf7Z8ijFZ59vOjFZJabO6LNMa6qB//Tmkpy1MAG46VEdEx3K0FpnsMlbq8ZK
-	 8YSru6nj1dcx1+aYF8OmOOFdiqU3SJmGnfdcVl9tXxVbakh9tqYV59Cj5DyuIXPSABYsQ
-	 +a8uFDgzytAn4V6RRUbnOB8jW95LH2UXbH3NXV+pipd+PQPw16lA06DKxm62hwlQvH3ZZ
-	 e8wcboMAsiKKs2RChn+i2jCfiP50TLLDViwSlVPT0lXHgZAmkSqHWl1XhneDGzOol/j4k
-	 757vbZ9psJYxQmvny3KmG5R9rw7imLADVlm6uElcibWX+TI2/Ur4KNqLx2EXrZ+ktvw==
+	t=1795045702;
+	b=EYsDkOuX1xpcZayOBbcxKQyYBNBLkjolKTkv64f5QU6s1N7Ly3G+DnuqXEKPD9+PfNbc
+	 sgcVe15ZGrW6ZzFY7ag3ABJ9vHue57MVp5kv4ZqAVKphK4gW0mau1vuOXwY5B92yhr4Y6
+	 0L4Fan4XviXiFO/GZi32u3uu4L//us7k+40xxcUg8/8E+z5Je81rCFdBxd8t4fhE5EneC
+	 Cy65NSeP/SYHwIWbOE8Rk1nTi7twGM94Pd7fbw898tJi/Dtla22Y0SCLYapRLSclDDQ8w
+	 uWV/+dlLbk72vpDuAhPEop1sh8ne4Vi0Z8zS/zpfckesf3ImsR1H3FhyXgk/fhnGSrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045700;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045702;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VkKT56lAC3r5eomPeu7L9nvU9eIksCU6Car2uaaCfJk=;
-	b=D5Kple2HWgCSplWmfTlSEqbPudF0r8qqTX3QB3ego2TAuCaiKTKjuWeif/tC5o3XaBvf
-	 yGN49t2iuZH4n+T7oXhWt+kiM8yVYDs5S2PV6fQP0ixNtK/FtX8OGWvSa1f0Em6HMgJUe
-	 Th70Crf5saV7mJdhJ2+RA/Rwxs8Djyyvfqr5j6zeUxqVcT3qwKBcY1VtWLXo0abcOcDhR
-	 MLwN8x13c5KUsthhQWPqcTPOsRW67DEpaifhq6aicTqhVC1g5XDZDNbEKy0nAn6BUQdO0
-	 NtQnGOVfHdfn//vlNW3SkdsTuq6eKdpBjtCQTzC4B45EEGOnijC3jqPQ0asCOY1p/Og==
+	bh=2H6Bf/EIGkpFSDCep6DUkWCReFQYTyrP35LwfrtACxg=;
+	b=K/oymawcUp0SLpZbg3lMzwzP8A1BLP1GKQOC5Er8BzHx48aW4pVrTe1w8pj0aS+N3Vid
+	 XeJb8ugExat2CE1sOHn4ouLplCWgOXeHDXl3P2kKxHC2ThOsXIhE13DvB0L/iGw156TUn
+	 2obw2nM7cOk0C8qOCrlMGaFC1p1yUjwCH6UIYpDHziXurZ55RxK6XtgioMjExMYJ+89LE
+	 fMwgFapEdrlEyTelzTSXRu/Rt+6OkWUUWAeq12qKK7gjN58k7hvOm7rJ8xoljliYrr7SS
+	 R0r8YkyzgsLaJPwrGYui5INqqFN6HAXKp31Og1DPta8PWU49ZM19HFswhxRH7OlkXpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=agxu5G7l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cYeh5GlM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7389606A31C;
-	Wed, 18 Nov 2026 23:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9896060A2602;
+	Wed, 18 Nov 2026 23:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=agxu5G7l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0DC1F000C4;
-	Wed, 18 Nov 2026 23:48:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cYeh5GlM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A311F000C5;
+	Wed, 18 Nov 2026 23:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045699;
-	bh=VkKT56lAC3r5eomPeu7L9nvU9eIksCU6Car2uaaCfJk=;
+	s=korg; t=1795045702;
+	bh=2H6Bf/EIGkpFSDCep6DUkWCReFQYTyrP35LwfrtACxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=agxu5G7lj/N1UwGnCHYq149cHweTPqQry70PmqEaLfmg+72CWggjwmwY/cvAE79za
-	 SdsP5JKLl1FICFTBXVicYA3uyaCJD5COg+dqm+jrH6wUsp8Ihh0uKEXIXMRHsZnqYj
-	 j1vAQyDEEZ08MdUUHvqMOj+tI4czFq30deODvOts=
+	b=cYeh5GlMi3dbj4ynkHCe5y9EfxV68mzhJwIROtfouWtVueesWzILoWsWlGXuUod3I
+	 x/MPZTwtyySsQBJ80x4hW8ZJZNuarughGmyLc2unB6kiHAbdktZuLzvXW4PxkPdaJF
+	 kp7qxGGmkHxZGRodGE6lQrZEhfskhDja/pKVbhXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Naman Jain <namjain@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Julian Sun <sunjunchao@bytedance.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1016/2857] Documentation: hyperv: Update documentation for sending VMBus packets
-Date: Wed, 18 Nov 2026 15:34:10 +0100
-Message-ID: <20261118150238.178909915@linuxfoundation.org>
+Subject: [PATCH 6.1 1017/2857] writeback: reset dirtied_when when switching wbs
+Date: Wed, 18 Nov 2026 15:34:11 +0100
+Message-ID: <20261118150238.216553869@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,53 +70,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mhkelley58@gmail.com>
+From: Julian Sun <sunjunchao@bytedance.com>
 
-[ Upstream commit 6a3d77a0a8cf69cf3d234305e6711729eb5d10c4 ]
+[ Upstream commit 13b9a606dd0a6cf9bac12894c97b9546d22a7425 ]
 
-The functions for sending VMBus packets have changed.
-vmbus_sendpacket_mpb_desc() can target multiple ranges, and
-vmbus_sendpacket_pagebuffer() has been removed. vmbus_sendpacket_getid()
-has been added. Update the documentation accordingly.
+When switching a dirty inode to another wb, inode_do_switch_wbs() puts
+it at the newest end of the target b_dirty list instead of searching
+for its sorted position. This requires updating dirtied_when, which
+move_expired_inodes() uses to decide where to stop scanning.
 
-Fixes: 45a442fe369e ("Drivers: hv: vmbus: Remove vmbus_sendpacket_pagebuffer()")
+However, the switch updates dirtied_time_when instead. This leaves
+b_dirty out of order and can make the scan stop before reaching older
+inodes. It also resets the lazytime expiration timestamp, potentially
+delaying timestamp writeback.
+
+Update dirtied_when instead, preserving both the constant-time insertion
+and the lazytime expiration timestamp. Correct the field name in the
+comment and document the distinction between the two inode timestamps.
+
+Fixes: 9a6ebbdbd412 ("writeback: Avoid excessively long inode switching times")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Naman Jain <namjain@linux.microsoft.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
+Link: https://patch.msgid.link/20261016115230.3640770-2-sunjunchao@bytedance.com
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/virt/hyperv/vmbus.rst | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ fs/fs-writeback.c  | 6 +++---
+ include/linux/fs.h | 4 +++-
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/virt/hyperv/vmbus.rst b/Documentation/virt/hyperv/vmbus.rst
-index d2012d9022c5e..3326bb103a5ab 100644
---- a/Documentation/virt/hyperv/vmbus.rst
-+++ b/Documentation/virt/hyperv/vmbus.rst
-@@ -141,14 +141,15 @@ Three functions exist to send VMbus messages:
+diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
+index 085e0fa0cab37..7066cc78879e7 100644
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -429,12 +429,12 @@ static bool inode_do_switch_wbs(struct inode *inode,
+ 		if (inode->i_state & I_DIRTY_ALL) {
+ 			/*
+ 			 * We need to keep b_dirty list sorted by
+-			 * dirtied_time_when. However properly sorting the
++			 * dirtied_when. However properly sorting the
+ 			 * inode in the list gets too expensive when switching
+ 			 * many inodes. So just attach inode at the end of the
+-			 * dirty list and clobber the dirtied_time_when.
++			 * dirty list and clobber the dirtied_when.
+ 			 */
+-			inode->dirtied_time_when = jiffies;
++			inode->dirtied_when = jiffies;
+ 			inode_io_list_move_locked(inode, new_wb,
+ 						  &new_wb->b_dirty);
+ 		} else {
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index 0692c2e0fcf3f..7e8d570ed839b 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -650,7 +650,9 @@ struct inode {
+ 	unsigned long		i_state;
+ 	struct rw_semaphore	i_rwsem;
  
- 1. vmbus_sendpacket():  Control-only messages and messages with
-    embedded data -- no GPAs
--2. vmbus_sendpacket_pagebuffer(): Message with list of GPAs
--   identifying data to transfer.  An offset and length is
--   associated with each GPA so that multiple discontinuous areas
--   of guest memory can be targeted.
--3. vmbus_sendpacket_mpb_desc(): Message with list of GPAs
--   identifying data to transfer.  A single offset and length is
--   associated with a list of GPAs.  The GPAs must describe a
--   single logical area of guest memory to be targeted.
-+2. vmbus_sendpacket_getid(): Similar to vmbus_sendpacket() but returns
-+   a transaction ID that is matched against a reply from the Hyper-V
-+   host. Useful when the struct completion (or other rendezvous data)
-+   must reside on the caller's stack. By invalidating the transaction
-+   ID before exiting the function due to a timeout or other error, a
-+   late arriving interrupt is assured to not trash the stack.
-+3. vmbus_sendpacket_mpb_desc(): Message with one or more data ranges
-+   to target. Each range consists of a single offset and length plus
-+   a list of GPAs that describe a logical area of guest memory.
+-	unsigned long		dirtied_when;	/* jiffies of first dirtying */
++	/* Timestamp for writeback list ordering and age checks (jiffies). */
++	unsigned long		dirtied_when;
++	/* Start time for deciding when lazytime updates need writeback (jiffies). */
+ 	unsigned long		dirtied_time_when;
  
- Historically, Linux guests have trusted Hyper-V to send well-formed
- and valid messages, and Linux drivers for synthetic devices did not
+ 	struct hlist_node	i_hash;
 -- 
 2.53.0
 
