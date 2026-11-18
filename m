@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026300;
-	b=ogubCRou2ReaEiXWg9S9mHDcnUSUaeEvF5nxM/RU+uKI9YpZPj1kWd06b0bn4qi5c4WT
-	 bJcEQCfYQQFvZPlvNThne2t23mZrwv+ULtxlX6luNAhAAwYIFr6U5SDW+AQUdGOq1fUN4
-	 L8ud71UqOetJ9KUXyHcQOdyz8VO37ELWnDDDLTBIMIKhAy82vk17spPdNoPP+R0qyX3DV
-	 hZ7e9UG0QDBcYmfIx7Rtrl8LmL+S92JqmDM6JNvSsZJWh/Au49gbbRHXykI23hz/GkkLo
-	 +y7M0+q3MqGln+hi3gHLlMVwPrvYdV0sflvM0JOiJHjhFk8O0nIw2nV9r93g0VuQY3g==
+	t=1795026303;
+	b=EBAAlUyYyO/iMSfDqi2eldZevuIQK7qS1QArgFgJFVw2eRNTcHcaGaiL/BFI/yRFvhtt
+	 sHflVPWUmKh7k2mhGPgpEVbvXaF28NmcP803s93cU/gCBc3Nf29jtfIcHkBSZ0Q5NhDFN
+	 YfEggQ09OSLlZAAmwsB8t1aSITL1E15H49rM2tzuaRGwPqA/u7c/SZA3VbSbgHw7wew7N
+	 LOXDUwo4h8zF0VzCPJ71ITPF0eSkufKqn9wu15LUymRTbmutnRNnFK+4HWOVHvJGhekvr
+	 POZ2S7ffyN4TV7JgvoIt4e0ZOLtvucXS/F//UAADwNIAvQ+yrtcI12T35LALuaidCtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026300;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026303;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=INJGJVvA0T/ZkMY7nfTFOncbqdaiqthxJ/mXQlV8cM0=;
-	b=HFRlPEwupAbFRlTXnG4tZ95XJOKHAaDaw44dtWlT7Zx7dE0AF0fP3u49obx70eCTXbYU
-	 nOCtPrOW/3D0F4geyuxUra9SWxFfh51PU2OBpoHtTOCF/6+7OWhdBpfhgz2LdXnDG8cjN
-	 Rr+7ZaZNuDwiOuMz1i1Dj9uBWs4okcxLaGdweVuiwhGTD/uOzCPxggQeuCj/79gOxAlow
-	 m9guj+j2xLA2XiOtdlJMfToYOHoXoIsswRcZ31ab3y/lD8WmhP2/H5R649uY7ZKBk70Cr
-	 21A4QXk1rrnrWovREBxMjLzOHP/2lfiHmPx+WTJrDJr4Qxp+TA1lpHRKwLuDM+MjAiA==
+	bh=rHxCnZfSQt/L2Q2Fro2b3ASQRs03yox5tqoxX75Iybk=;
+	b=gtYE6SZDnKgaFlrY7e7rRajRNvzEkCEzOkRHiLhvgZuko2JLLwNAflNPzqTg9+1lANRj
+	 O+ykW4BJQ4sC315I6K8w8cEHUs5qv/kDMK1wP80AYQMmiC8CmCJTpqOxyzxm5I0PmJ3Fg
+	 DWTTa7iUnrgPHCTqY5BsVUWrSPSSedeGcw5I+E9iuwy61dvKODF3rSo55/YgIzScMn6S+
+	 wdjWxoVndhWc7poId+YbA0vDoSzjMYxECcOcFHBjGjS9wOa06a5EzRp1R+DGGtQ5NwgKX
+	 CLISIk8pFrAu1LKq0Pplv1m96+qSZ7mo8H/nkXPSzPLCN4jR3nvtEBUnXQ26yMPy1PQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TnA6P0qd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0LWeLmR5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAC8606A31C;
-	Wed, 18 Nov 2026 18:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0F8606A320;
+	Wed, 18 Nov 2026 18:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TnA6P0qd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8816F1F000C4;
-	Wed, 18 Nov 2026 18:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0LWeLmR5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B841F000C4;
+	Wed, 18 Nov 2026 18:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026300;
-	bh=INJGJVvA0T/ZkMY7nfTFOncbqdaiqthxJ/mXQlV8cM0=;
+	s=korg; t=1795026302;
+	bh=rHxCnZfSQt/L2Q2Fro2b3ASQRs03yox5tqoxX75Iybk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TnA6P0qdOFIOIqAkBvWjhrhxYMIWXTaoB+mj39jxt63ggT3cvg5muyDpRrHEMNBRU
-	 j4lf0KnolEg3EmZWlAhKkxGUMbirfksAcVzbn6ILQ/MhuXYXtdVUEkR2UOBRCeIgWv
-	 r7XnxLxr2xwyCzZ6RTwNveDm5s6GZq9hHldLfmLw=
+	b=0LWeLmR5avL30B7ieU8MhfT1dfrUMcjUGqpy8c0yx5yFbygfY8/FgXgVA9uo/XxSq
+	 fAKCOqypSy1Gno9yhFA7sHhtZvIxOkGIhQHiIJxlI2pAqK1zSxMfWirGbeC4Y1uSmn
+	 40GZypdGKb1CcEJdK86RBLBvbM60Ya3s1PAw707E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1387/2151] fbdev: gxt4500: Release WC setup on probe failure
-Date: Wed, 18 Nov 2026 15:52:02 +0100
-Message-ID: <20261118150212.533346129@linuxfoundation.org>
+Subject: [PATCH 6.18 1388/2151] ALSA: rawmidi: Drain input work before freeing the runtime
+Date: Wed, 18 Nov 2026 15:52:03 +0100
+Message-ID: <20261118150212.566580360@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,41 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit b71e0bb7ad40c005b167e9b48be3af5a3fa51974 ]
+[ Upstream commit 8c3529f0a8faaac7d73333486f69da1617ecc579 ]
 
-gxt4500_probe() adds a write-combining range before allocating the cmap
-and registering the framebuffer. If a later step fails, the range is
-not released. Add the missing cleanup before unmapping the framebuffer,
-matching the successful remove path.
+The input runtime embeds event_work, so the work must be drained before
+close_substream() frees the runtime. The cancellation in
+snd_rawmidi_input_trigger() runs before close clears substream->opened,
+leaving a window for snd_rawmidi_receive() to enqueue more work.
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
+With a sequencer subscription to a USB MIDI input port, an in-flight
+completion can overlap the last subscription's midisynth_unsubscribe():
 
-Fixes: 38fc4d45fae5 ("gxt4500: Use arch_phys_wc_* for framebuffer")
+1. snd_usbmidi_input_data() observes input_triggered and is delayed
+   before calling snd_rawmidi_receive().
+2. Unsubscribe enters close_substream(), clears input_triggered through
+   the provider trigger callback and returns from cancel_work_sync().
+   The substream is still opened.
+3. The completion resumes. snd_rawmidi_receive() takes substream->lock,
+   sees opened set and queues runtime->event_work before dropping the
+   lock.
+4. Close clears opened under that lock, closes the provider and frees
+   the runtime. Stopping USB URBs does not drain the raw-MIDI work.
+5. The queued work runs and snd_rawmidi_input_event_work() reads event
+   or substream from the freed runtime, causing a use-after-free.
+
+Cancel input event_work again after clearing opened, before closing the
+provider or releasing the runtime's private data. Receive holds
+substream->lock through its opened check and work enqueue, so once close
+has cleared opened under that lock, no further receive can queue work.
+The final cancellation therefore drains any late work before the
+runtime is freed. Keep it outside the spinlock so a running callback can
+finish.
+
+Fixes: b3c705aa9e91 ("ALSA: rawmidi - Use workq for event handling")
 Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-pmb-98489078ab56528d8e4a-v2-9408ce8c8f3c70b5c10d@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/gxt4500.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/core/rawmidi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/video/fbdev/gxt4500.c b/drivers/video/fbdev/gxt4500.c
-index 15a82c6b609ea..138f5efbf4f40 100644
---- a/drivers/video/fbdev/gxt4500.c
-+++ b/drivers/video/fbdev/gxt4500.c
-@@ -719,6 +719,7 @@ static int gxt4500_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
-  err_free_cmap:
- 	fb_dealloc_cmap(&info->cmap);
-  err_unmap_all:
-+	arch_phys_wc_del(par->wc_cookie);
- 	iounmap(info->screen_base);
-  err_unmap_regs:
- 	iounmap(par->regs);
+diff --git a/sound/core/rawmidi.c b/sound/core/rawmidi.c
+index 63c8978c98750..efbc9ff4c1150 100644
+--- a/sound/core/rawmidi.c
++++ b/sound/core/rawmidi.c
+@@ -557,6 +557,9 @@ static void close_substream(struct snd_rawmidi *rmidi,
+ 		substream->opened = 0;
+ 		substream->append = 0;
+ 	}
++	/* Drain input work queued after the earlier cancellation. */
++	if (substream->stream == SNDRV_RAWMIDI_STREAM_INPUT)
++		cancel_work_sync(&substream->runtime->event_work);
+ 	substream->ops->close(substream);
+ 	if (substream->runtime->private_free)
+ 		substream->runtime->private_free(substream);
 -- 
 2.53.0
 
