@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057794;
-	b=FsVo5HTBT5zU6ZGNHOKVKC3gPjHOrqEWnMPhmpH4LSIGkYmmnzDgDn9G5yzgU/8QOsTK
-	 QcshPq2PnlD3SAkCxJNUDp7tvon0fWKJFVSZCORz1sn2zT2XrsraAwdAYs0BCZ7PFpSrN
-	 Afx20Jcg8YEgqlsTF8/1wkn23R4ky0Mqo1zrSfRdxpzAFkJ+5m0ZZWMVC8XYVFZH6KcWQ
-	 Z0P9JXD/FLtXA2XSTxQzTWC5QOKVGy4zbIh2feaVn6lAw+a5PGlrRJDCXtkqQcsf/xt1w
-	 3ysDGAVpaBqziDImnR7tIMk08myFfNjEsGMnl23FRluel0+tLth0EpjJZpiT2qG8arQ==
+	t=1795057796;
+	b=HuxIWbCpMjofCgs7sIQFD6ThXXV2VAMOjakGBpb/YxMmqWAMqbe0CbiU2FWZsn0iJWUP
+	 ZI0QPjEkXnyofsvhk5lzoGkb1bBVBXmaJ2rdzlUtH4AE6B3zOEXQwDs+1q1yTcVv+b0kp
+	 D2zYxcyOp7e+xmbR4pnaQG/9/advHdowGw37CL3zZB39VDsfUGXMq86PGLplxCjQissgC
+	 Y3AolVVGzQNaEKXvykBUM8BeBjslOncgsT76PgaEcLQ8DhgaOLmMTo419rUOL3g3ZXSwf
+	 cJ+DyL6AW8se3ANkESIm8QGeJs0ernytDbMzTSAXVWqi2qR9h0uCSY8TyRlXNlk2URg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057794;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057796;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=txMcFgSBm08xKll+HVs3i6W2mgprePYmFVPywsPtIsY=;
-	b=zgRhlvzenRAfbUQj8yLI6wQyaeC+3ea67IqaveLHl0uAQ72qTWfX+XPexKxaMdRBRx82
-	 CJFwkw0KTDFSzJVqXAYacWjDZ67DEFxwVtlmIplSMddUJ8MCEvxWbA1pfUwSrzBrJvysi
-	 Cza1ln8kYEf2KJjxYG87CfpdF8M6EK3vHFoQ5J3k0nhveR108O4SF8Gwr3VlqnE9Pf3QN
-	 KmPy5Fy+oJTrrZvNxVxyycDnODn+VAE5/cKnzTmqo1c9/XJDIFPIlDLEdlgV9tOPhRNfM
-	 F9gm17rOnIkiCs8AMrZEKfdZMw5X+VBLaKJTLQxn2jCeG9YiHJg5GQ3WqXJLFLL/1DA==
+	bh=w8QI87LXSfzh7dPM5pCKtD+n3jousfUSubGwaHZXF/w=;
+	b=l+SgyjZbbx8m/nxiYLrHux98SnmWo2ArFxx2/W4WRM7X3pK4aKg62oYNPcrX4AQrgyHD
+	 7CfQIfxa7RlSDAwAmJkVcc38awLZ9h0WkSjDB/JR4aTUUkWCH9F1IhU3gx/xOEAAAqFLE
+	 qdo9ya2TqmdrIE9UnnsGSQp55KkeBT6slZQeAqe+2EQ2CoDa+rcru7E7uHvdLuHHBzo7O
+	 aJ1Vy6znwPQvAjs1urM5N+4vxKjZrhflpjH551eGFV0nqtOz3h7bGte1E51xz9VJxDOPj
+	 axEHli+RT8KsnsyIHaDgZbxmNDtXD7XrlMDZgvhCaDn0/fH+Sd0R965SM2eV035V7og==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pcWYrcrm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xMonhYR3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E54606A32C;
-	Thu, 19 Nov 2026 03:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD60A606A31C;
+	Thu, 19 Nov 2026 03:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pcWYrcrm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D871F000C4;
-	Thu, 19 Nov 2026 03:09:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xMonhYR3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227021F000C4;
+	Thu, 19 Nov 2026 03:09:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057793;
-	bh=txMcFgSBm08xKll+HVs3i6W2mgprePYmFVPywsPtIsY=;
+	s=korg; t=1795057796;
+	bh=w8QI87LXSfzh7dPM5pCKtD+n3jousfUSubGwaHZXF/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pcWYrcrmiwSkp7GFQ74gBTPh3tMVh3GCPXvVJg3o+c0W6zhCRQUp2l5POaCMUzf3k
-	 PJWTQa3zWI6cdu/SeQ9idGvkkiaynIkFIaU/aR6SkENq6OTLpWCUgwTZsQKJ02H7C5
-	 jp23ePOOO/eYx9eQRSLCf2/fIZRKKJbwTbp/eUVk=
+	b=xMonhYR3NXNs2By5FzEkcSwNSEkHp9Gp106b888Ls7pTGgdM5oWgR/7Ws1OSMasAT
+	 tP21Ge9bCPrL1AhhQSPiKtwn3mA6+LP+EvH9mJLhf5JpCB6JqQnssmMV+MMzGpQ8PO
+	 4h6FxAc8V+bJUsJR6A45QYmmaIgdgwRWLvouY0vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@kernel.org>,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.10 0255/1848] media: gspca: use vb2_video_unregister_device() on disconnect
-Date: Wed, 18 Nov 2026 15:38:13 +0100
-Message-ID: <20261118145922.857409090@linuxfoundation.org>
+	syzbot+302b9b575a06733ff60c@syzkaller.appspotmail.com,
+	Rik van Riel <riel@surriel.com>,
+	Sean Young <sean@mess.org>
+Subject: [PATCH 5.10 0256/1848] media: redrat3: fix UAF in probe error path leaving rc device registered
+Date: Wed, 18 Nov 2026 15:38:14 +0100
+Message-ID: <20261118145922.913199665@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,47 +68,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Rik van Riel <riel@surriel.com>
 
-commit 3dbbbc3cafa2de377d9b97af4e35b8b6b5282047 upstream.
+commit af452b9e01331b5338a1e5141624f17607239207 upstream.
 
-gspca uses vb2_fop_release(), but gspca_disconnect() only unregisters
-the video device. If the queue owner closes the device after USB
-disconnect, vb2_fop_release() releases the queue and invokes
-gspca_stop_streaming() at that point.
+redrat3 stores its device name and phys path inside the main rr3
+structure, and the rc device's device_name and input_phys point into
+rr3. When the RC device is registered, it keeps those pointers.
 
-gspca_stream_off() calls subdriver stop callbacks and
-usb_set_interface() through gspca_dev->dev. By the time the late close
-runs, the USB core can have freed the usb_device, resulting in a
-use-after-free. This was observed as a KASAN use-after-free in sd_stopN().
+  KASAN: slab-use-after-free in string_nocheck lib/vsprintf.c:648
+  Read of size 1 at addr ffff888051fda758 by task udevd/7464
+  Call Trace:
+   string_nocheck lib/vsprintf.c:648 [inline]
+   string+0x216/0x2d0 lib/vsprintf.c:730
+   vsnprintf+0x74a/0xef0 lib/vsprintf.c:2945
+   vscnprintf+0x41/0x90 lib/vsprintf.c:3014
+   sysfs_emit+0x10e/0x180 fs/sysfs/file.c:761
+   input_dev_show_name+0x58/0x70 drivers/input/input.c:1282
 
-Use vb2_video_unregister_device() so the queue is released and streaming
-is stopped synchronously during disconnect, while the usb_device is still
-valid. Since the helper takes the queue lock, which is usb_lock, call it
-after dropping that lock.
+  Allocated by task 10:
+   redrat3_dev_probe+0x477/0x2570 drivers/media/rc/redrat3.c:1023
+  Freed by task 10:
+   redrat3_delete drivers/media/rc/redrat3.c:466 [inline]
+   redrat3_dev_probe+0x1bf4/0x2570 drivers/media/rc/redrat3.c:1124
 
-Fixes: f729ef5796d8 ("media: videobuf2-v4l2.c: add vb2_video_unregister_device helper function")
-Cc: stable@vger.kernel.org # 5.10.x
-Suggested-by: Hans Verkuil <hverkuil@kernel.org>
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Syzkaller triggers this via usb probing. It probes the RedRat3 USB
+interface, which calls redrat3_dev_probe() in redrat3.c. That function
+allocates rr3, then builds an rc device whose name points into rr3 via
+redrat3_init_rc_dev() in redrat3.c, and registers it with
+rc_register_device().
+
+When the detector enable fails after the RC device is registered, the
+probe jumps to the led_free path. That path unregisters the LED but does
+not unregister the RC device before freeing rr3 via redrat3_delete() in
+redrat3.c. The RC device still holds device_name = rr3->name which is now
+freed.
+
+Later udevd reads /sys/.../input device name via sysfs_emit() in file.c,
+which calls input_dev_show_name() in input.c, which emits dev->name which
+is the freed rr3->name.
+
+When the detector enable fails after the RC device is registered, the
+error path must not leave the RC device registered. Make the probe error
+path clean up the same way redrat3_dev_disconnect() does.
+
+This change should be safe because the RC device is fully registered at
+this point and its teardown via rc_unregister_device() is protected by
+the input device mutex, and rr3 is still alive during unregister so
+device_name remains valid until after unregister. The URBs are killed
+before rc_free, so no completion can run after rc is freed. No new lock
+ordering is introduced.
+
+Reported-by: syzbot+302b9b575a06733ff60c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=302b9b575a06733ff60c
+Link: https://lore.kernel.org/all/6a74a76d.ec7c9571.3ac9bb.0056.GAE@google.com/
+Fixes: 2154be651b90 ("[media] redrat3: new rc-core IR transceiver device driver")
+Cc: stable@vger.kernel.org
+Assisted-by: Hermes:muse-spark-1.2 syzkaller
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/gspca/gspca.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/media/rc/redrat3.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/usb/gspca/gspca.c
-+++ b/drivers/media/usb/gspca/gspca.c
-@@ -1641,9 +1641,8 @@ void gspca_disconnect(struct usb_interfa
- #endif
+--- a/drivers/media/rc/redrat3.c
++++ b/drivers/media/rc/redrat3.c
+@@ -977,6 +977,7 @@ static int redrat3_dev_probe(struct usb_
+ 	struct device *dev = &intf->dev;
+ 	struct usb_host_interface *uhi;
+ 	struct redrat3_dev *rr3;
++	struct rc_dev *rc;
+ 	struct usb_endpoint_descriptor *ep;
+ 	struct usb_endpoint_descriptor *ep_narrow = NULL;
+ 	struct usb_endpoint_descriptor *ep_wide = NULL;
+@@ -1121,9 +1122,12 @@ static int redrat3_dev_probe(struct usb_
+ 	return 0;
  
- 	v4l2_device_disconnect(&gspca_dev->v4l2_dev);
--	video_unregister_device(&gspca_dev->vdev);
--
- 	mutex_unlock(&gspca_dev->usb_lock);
-+	vb2_video_unregister_device(&gspca_dev->vdev);
+ led_free:
++	rc_unregister_device(rr3->rc);
+ 	led_classdev_unregister(&rr3->led);
+ redrat_free:
++	rc = rr3->rc;
+ 	redrat3_delete(rr3, rr3->udev);
++	rc_free_device(rc);
  
- 	/* (this will call gspca_release() immediately or on last close) */
- 	v4l2_device_put(&gspca_dev->v4l2_dev);
+ no_endpoints:
+ 	return retval;
 
 
