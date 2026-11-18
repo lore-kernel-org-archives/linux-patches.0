@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039721;
-	b=QKsdp6NSSAU2Gx/xhvnqYXlvDQvgwMDb4QbtGPHU9nXRDquihsWIztzF/OaDABx4+w67
-	 U/GqC6DAgBgy7DY9yfITMIwA+Hp40jyJEZ1fE5rELace2dsAFa0jk9Cm+Kc3mljvaqVZL
-	 VemM9LTsQ5C/njCtn1c9LAUaSQJ1WrgCdzkhQRaFoDag396ZHMmGW2BCWLidrkK3VMRFu
-	 RcrT1rztJGvE69igKN7aVUmatY24FMmPaG67nMQW74Zw7TuE96VRxCqBmnP72KzouBUNo
-	 ayXRETrkPsNDUUYHIW1sxfxiPtAWuEoaKWcHGYLu7s/eHJsQUrDBwn2MZbNeZR/SSfQ==
+	t=1795039724;
+	b=jA7LHkgZ4LI/FqrBb/qexRUYTtexLcYO9dhbfQ7Mvi3AAzMqUO8VGqNcDXTvyJMX+tAZ
+	 2G33TBFEa4dQdOwD/wSManMDYzUtOrhONGAxdqjnYtxe2S3MSrMS0+OT+2Nd2wwnI1+GG
+	 JAjE8cZ9q4lkN6JIndseVvcKbhjwqhmHePkZ+8GvtmhqHojhXIFT45FpK1KdTnEBXUONU
+	 l1nyWkh9C8U3wfsPediX4jESb8Yn5L+3qpnjrLQs5iEXHUMe+Adp6gCQ4JYwrBnNisted
+	 fBovUj9mYWWADILxjDPdOirhH9BfevH6zH9Z4oMuiin2ziwiIjTrxCSAC0TzQQUX2Rg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039721;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039724;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oHkJn1+FnBsoq0EdKYiYyk0lPSGNZZsPiNuQAdDBdI8=;
-	b=azEVGjfxlKFVERlJ8mTbs1ZSgS0uOiJPJ0CofuuI1ltspVZwERBUy2paayMV3t2tkY3p
-	 HsuUheDVY46YSaJG8CA6TTzLzAIHX/oxreAB7zx3ASL1THOML+pDcd08VORw1RL2w+nLL
-	 +tK0HzH+Sjsu9eXPE4Za4SZ4hpSCIAW5/VwykSjoXjk/F2TIuOuohTbY6Pkm48UU85rSn
-	 EzvY1p0w/zwHoVlMMGEBnV4MifyvmYuHbmCEElzK+j1TH8bVQQ58Ry9+oI12eFxZ2UdEx
-	 vzKmAx4tOpS9xEErsOPhyIEapKhzkKTqLMXvmt6httK1nMx+nrAjW1lUEkHarnGSWRw==
+	bh=0O529OCgrU8QWACwILApSm2vBW20x16oWnuISPi/vwA=;
+	b=nYiQiMlJ2LiE3qT5h2M/JVJ444ZVdde+PzClPT4GQD4NxlKcJjtZyRX7CFHdHsNK7/+R
+	 DTlluaPMLkV414Ik2/0jBlvsWFPPNYihfnGKdGRcYT4N4ZFFTQzA0vtcID8DwEIzU8/3Y
+	 gfRfDk0da06Jz0d0bwUqkFQz9sIbxOnV+sl1x1jQCg7Eqd5kY1t5Gp6MmKNr9pG9wcj3i
+	 wnyd13omILOzwOqJbsEzXewz10JU+xsCa/kQkYvmmWCrQwxUSWpNt7FPGVquSG2SvdrEY
+	 oup+e7L16VuRrbFF4kHfSHl+S6Dzidli98/PTK6KcOagxhZi+JglfslSUX7i/+3Mouw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pyHWiPE1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="izgY/Gmq";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17164606A32F;
-	Wed, 18 Nov 2026 22:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39E1606A31C;
+	Wed, 18 Nov 2026 22:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pyHWiPE1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6633B1F000CF;
-	Wed, 18 Nov 2026 22:08:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=izgY/Gmq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F2331F000C4;
+	Wed, 18 Nov 2026 22:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039720;
-	bh=oHkJn1+FnBsoq0EdKYiYyk0lPSGNZZsPiNuQAdDBdI8=;
+	s=korg; t=1795039723;
+	bh=0O529OCgrU8QWACwILApSm2vBW20x16oWnuISPi/vwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pyHWiPE1f2gpJe0GuFp34jYYfo1IH6gFe8/3JIyeoDsB7DouYZa7hVggN2mUS6OM4
-	 8P73fpoz3kvjvhOEMlvu4B2OXsCcW+7f7er7Xl97FNtR6vy8e3jvSWTHzyAZ0ZpL1h
-	 OrLX4hIxMy5Q+6LSHPZ8S9EN1Ck5Mq6nEdfqWn4Q=
+	b=izgY/GmqDb3wNpcM9pvKM+LjpFoiEqgWPh0o7sILBFdzaXZZRl9blMFBcmgWwEE1z
+	 bQcqEawDmXeQrm1w6I1fdB3ZkxlWOMupvzYihP+qWdWIqJJaF4CnP16jlHOYtqgRie
+	 82sFhp5O56EvfMjVHhAaRSegohuDh7mzQTsq019Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Sun Jian <sun.jian.kdev@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2184/3318] bpf: Fix program BTF use-after-free in sleepable programs
-Date: Wed, 18 Nov 2026 15:46:46 +0100
-Message-ID: <20261118150427.482422412@linuxfoundation.org>
+Subject: [PATCH 6.6 2202/3318] ntfs3: Convert attr_wof_frame_info() to use a folio
+Date: Wed, 18 Nov 2026 15:47:04 +0100
+Message-ID: <20261118150427.990814251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,52 +68,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 88c9c6d0a766dd146545990053e8a04422ccb367 ]
+[ Upstream commit c091354d6bf60ec606d4c0772459ea2f3bbee271 ]
 
-Object kfunc calls embed metadata owned by the program BTF. A sleepable
-program can remain active under Tasks Trace RCU after its last reference is
-dropped, while program teardown releases the BTF through ordinary RCU. The
-invocation can then dereference freed metadata in bpf_obj_new().
+This involves converting all users of offs_page to offs_folio, but
+it's worth it because we get rid of a lot of hidden calls to
+compound_head().  We continue to use order-0 folios here, and convert
+back to a struct page to call ntfs_bio_pages().
 
-Move btf_put() into __bpf_prog_put_rcu(), the callback that frees the
-program. When teardown is deferred, that callback runs after the program's
-own grace period (Tasks Trace RCU for sleepable programs and ordinary RCU
-otherwise), so the BTF outlives every active invocation. The non-deferred
-path invokes the callback synchronously, so load-error cleanup stays direct.
-
-Fixes: 958cf2e273f0 ("bpf: Introduce bpf_obj_new")
-Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Sun Jian <sun.jian.kdev@gmail.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/20260901014829.3504342-2-sanghyun.park.cnu@gmail.com
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Stable-dep-of: ad39d8d90fa0 ("fs/ntfs3: take run_lock when freeing offs_folio in ni_decompress_file")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/attrib.c  | 27 ++++++++++++++-------------
+ fs/ntfs3/frecord.c | 12 ++++++------
+ fs/ntfs3/ntfs_fs.h |  2 +-
+ 3 files changed, 21 insertions(+), 20 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 599ae0b135916..c92ee2b5c315e 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -2144,6 +2144,7 @@ static void __bpf_prog_put_rcu(struct rcu_head *rcu)
- {
- 	struct bpf_prog_aux *aux = container_of(rcu, struct bpf_prog_aux, rcu);
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index 37d5f0ff575fe..75b3a895a1c79 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -1423,7 +1423,7 @@ int attr_wof_frame_info(struct ntfs_inode *ni, struct ATTRIB *attr,
+ 	u32 voff;
+ 	u8 bytes_per_off;
+ 	char *addr;
+-	struct page *page;
++	struct folio *folio;
+ 	int i, err;
+ 	__le32 *off32;
+ 	__le64 *off64;
+@@ -1468,18 +1468,18 @@ int attr_wof_frame_info(struct ntfs_inode *ni, struct ATTRIB *attr,
  
-+	btf_put(aux->btf);
- 	kvfree(aux->func_info);
- 	kfree(aux->func_info_aux);
- 	free_uid(aux->user);
-@@ -2154,7 +2155,6 @@ static void __bpf_prog_put_rcu(struct rcu_head *rcu)
- static void __bpf_prog_put_noref(struct bpf_prog *prog, bool deferred)
- {
- 	bpf_prog_kallsyms_del_all(prog);
--	btf_put(prog->aux->btf);
- 	module_put(prog->aux->mod);
- 	kvfree(prog->aux->jited_linfo);
- 	kvfree(prog->aux->linfo);
+ 	wof_size = le64_to_cpu(attr->nres.data_size);
+ 	down_write(&ni->file.run_lock);
+-	page = ni->file.offs_page;
+-	if (!page) {
+-		page = alloc_page(GFP_KERNEL);
+-		if (!page) {
++	folio = ni->file.offs_folio;
++	if (!folio) {
++		folio = folio_alloc(GFP_KERNEL, 0);
++		if (!folio) {
+ 			err = -ENOMEM;
+ 			goto out;
+ 		}
+-		page->index = -1;
+-		ni->file.offs_page = page;
++		folio->index = -1;
++		ni->file.offs_folio = folio;
+ 	}
+-	lock_page(page);
+-	addr = page_address(page);
++	folio_lock(folio);
++	addr = folio_address(folio);
+ 
+ 	if (vbo[1]) {
+ 		voff = vbo[1] & (PAGE_SIZE - 1);
+@@ -1495,7 +1495,8 @@ int attr_wof_frame_info(struct ntfs_inode *ni, struct ATTRIB *attr,
+ 	do {
+ 		pgoff_t index = vbo[i] >> PAGE_SHIFT;
+ 
+-		if (index != page->index) {
++		if (index != folio->index) {
++			struct page *page = &folio->page;
+ 			u64 from = vbo[i] & ~(u64)(PAGE_SIZE - 1);
+ 			u64 to = min(from + PAGE_SIZE, wof_size);
+ 
+@@ -1508,10 +1509,10 @@ int attr_wof_frame_info(struct ntfs_inode *ni, struct ATTRIB *attr,
+ 			err = ntfs_bio_pages(sbi, run, &page, 1, from,
+ 					     to - from, REQ_OP_READ);
+ 			if (err) {
+-				page->index = -1;
++				folio->index = -1;
+ 				goto out1;
+ 			}
+-			page->index = index;
++			folio->index = index;
+ 		}
+ 
+ 		if (i) {
+@@ -1549,7 +1550,7 @@ int attr_wof_frame_info(struct ntfs_inode *ni, struct ATTRIB *attr,
+ 	*ondisk_size = off[1] - off[0];
+ 
+ out1:
+-	unlock_page(page);
++	folio_unlock(folio);
+ out:
+ 	up_write(&ni->file.run_lock);
+ 	return err;
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 00faacc33b088..33520848db87c 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -124,10 +124,10 @@ void ni_clear(struct ntfs_inode *ni)
+ 	else {
+ 		run_close(&ni->file.run);
+ #ifdef CONFIG_NTFS3_LZX_XPRESS
+-		if (ni->file.offs_page) {
++		if (ni->file.offs_folio) {
+ 			/* On-demand allocated page for offsets. */
+-			put_page(ni->file.offs_page);
+-			ni->file.offs_page = NULL;
++			folio_put(ni->file.offs_folio);
++			ni->file.offs_folio = NULL;
+ 		}
+ #endif
+ 	}
+@@ -2395,9 +2395,9 @@ int ni_decompress_file(struct ntfs_inode *ni)
+ 
+ 	/* Clear cached flag. */
+ 	ni->ni_flags &= ~NI_FLAG_COMPRESSED_MASK;
+-	if (ni->file.offs_page) {
+-		put_page(ni->file.offs_page);
+-		ni->file.offs_page = NULL;
++	if (ni->file.offs_folio) {
++		folio_put(ni->file.offs_folio);
++		ni->file.offs_folio = NULL;
+ 	}
+ 	mapping->a_ops = &ntfs_aops;
+ 
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index c035a97e6d22e..4f3ba6f516718 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -386,7 +386,7 @@ struct ntfs_inode {
+ 			struct rw_semaphore run_lock;
+ 			struct runs_tree run;
+ #ifdef CONFIG_NTFS3_LZX_XPRESS
+-			struct page *offs_page;
++			struct folio *offs_folio;
+ #endif
+ 		} file;
+ 	};
 -- 
 2.53.0
 
