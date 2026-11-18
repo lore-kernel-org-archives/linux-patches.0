@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041610;
-	b=xYrr0jJSnVupentHTdtOlnR3JBPqcVK2JgP7ZiTzRy8Z+77Dw8mISYjmLKTs/50NVK7A
-	 TP9qNnGdL18zuz0XsJtcDrJ5TZKuFxYTJBOUSVuCbrGhgHyVTtaX2+aetpBvaM6e5ipMj
-	 v0gAj87a12hFOExcDYbhgcjsnRwJB7UuqoS880ONe+e99Fk8pgKoBHhfKXw04cD+ch0E/
-	 0t2JylFlp3oI8BCwQhG0rB72LJ/+fCSRmS24/ISXQ+z1ycGQbP/V50d1RlIUQw1sBsT6q
-	 rdTmNC1gfU44WDvW0oKO5DZYOkufmbTVp+EAHLd4gNqEMVjAKLolkSBzF64nJxu2bbw==
+	t=1795041613;
+	b=K14MAppTfeJOsWoaSLEZMjjYfZ7M8CmHV9E1vHy3nH77y7+JlSshnmsTRPr068QjkFtn
+	 iAHyR/zzlbqa0lXZVm/tCJKFWPqBdRRvev2JYp3rcoEI1f24LHmK+76uju6fTz0sfa2A8
+	 4TTg87rj/QEFD14VtGFq5LRr/rycMznNWoasVNZuizbH6w8mqdOndzhoo25+YE2x6UI+K
+	 PYWVsY5Ml3h98m/wl4rwuriXlo27P0uUAEvIZwUCx04uA4w4RVGRgc1SAV20l8iakYUEV
+	 vuPyAYlsNX4aAcF1PggdOA0sLrm1LDDSF6g6UhmT+VbDIi3kROHFRdMuEZOjf6qgXNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041613;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t0vSAX7JRk03sTHGjtT58TSxHEal0xlYwBX3q3ms6Qs=;
-	b=hZKEPY68gFo+ih3oTPeZLXGr9zH07AfGJ2tsn7MjgbT8Yyt1YGqIS4KeeojveIJeopQx
-	 dSHluxnoD8iW7/eS54fK0MZT+DFolymSr7aq0Gfc6vwNszZeFBpdWbahcyBIjrBtWDXc/
-	 rZEc0jTon98YD+X58aZ4dnIsPO0H3dqlfQbKZ4t0j3ETCG93M5QmRNY+QKDBdXT8x3OaT
-	 N6DYiCIs2+LgJCSAGxFIdJsD8qXU3JhS1EV64YKnO9vi+Q5YWMHHEexV+XtBTu8kF/N++
-	 eTYO1HUh2rR0WHULzaykJQnXgvo6VSrnI1pxQWWOk2XLrYA52pRCWSuLKXRRNiCvlLg==
+	bh=BKCuiaCFi7lsq25OEKxjDeSuNeHhMaA4xKmHxnCybu8=;
+	b=jIsX5OKJkSl1tCWMB2GxZDJaZh1nwf/LgFJQvxVgmVoAfV241KTl+SaP6YLEfqRDJD9M
+	 d2RNjOMG+ZGFooaHWT2R60bzsjOQi93QyIeTufjFGhRhv9OaXysdLSjG+zvRMkjEJK5TJ
+	 Mpt716xZO21WaY+OqccoYE/5CUwM8qMkijHO2AyF3Gbc0Z+JmpL80alSTr85AJr/zupQB
+	 /JIBUaVMrcqhoKFjr620phWFcoc3F+Da3S3F23VAOIltUvDDSd7+vavRidM6NsL73FZ0Q
+	 bDR38KwZC9TYOWwuDOKB3CuvWHcFBMusALZQoWeRr3XsmOm2uRmKEBjW8nQl6aQ9RfQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mlZPCGjX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="TT/Vw5FK";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D18606A325;
-	Wed, 18 Nov 2026 22:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F3D606A31C;
+	Wed, 18 Nov 2026 22:40:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mlZPCGjX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139DB1F000C4;
-	Wed, 18 Nov 2026 22:40:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TT/Vw5FK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3FD1F000C4;
+	Wed, 18 Nov 2026 22:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041610;
-	bh=t0vSAX7JRk03sTHGjtT58TSxHEal0xlYwBX3q3ms6Qs=;
+	s=korg; t=1795041613;
+	bh=BKCuiaCFi7lsq25OEKxjDeSuNeHhMaA4xKmHxnCybu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mlZPCGjX2MXquj7EWI1w++QcP4WzPCibypGsX5fgmlhDeFbBvem8uKIg4Txqix6Tm
-	 8zf4ZhjEV/lzc1lGTnkXgOucOYzKVBviVsMpOj8AzxWCbUt4UOejVz6dnhCi+CNkU+
-	 1lw2qUTLoq44C7+wXD4Kf6DxZvvgQ7cZ9U8SZQNc=
+	b=TT/Vw5FKa1fyRUBSRywk/JZBK2wXVYcg/0hbAQTTLkdzffPZuQ6gshpZ9WXp1qtXr
+	 mbi4I7xhYcVlOAU78K/rfAjjHW4KwF3IoPs78SN6YgH1IY26OSS7PHaLcTNAhWMGYZ
+	 hfCpW6j/qWEl0MmS2BELUfydyj3Up0oxHyhlCM+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2848/3318] wifi: cfg80211: track SSID regardless of country data
-Date: Wed, 18 Nov 2026 15:57:50 +0100
-Message-ID: <20261118150446.045674206@linuxfoundation.org>
+Subject: [PATCH 6.6 2875/3318] PCI: Fix out-of-bounds MMIO read in nvme_disable_and_flr()
+Date: Wed, 18 Nov 2026 15:58:17 +0100
+Message-ID: <20261118150446.798979017@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,78 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
 
-[ Upstream commit 577f690ce5dc641d9d8646d15bb8e99ff4a8280e ]
+[ Upstream commit 6aaa3f42e3410ea8e26c857477260159f724cb1d ]
 
-If the country data cannot be found, the function exits
-and then doesn't track the SSID. Move the SSID tracking
-up to fix that.
+In nvme_disable_and_flr(), the PCI bar is mapped using
+NVME_REG_CC + sizeof(cfg) which is (0x14 + 4 = 0x18 bytes)
 
-Fixes: c38c70185101 ("wifi: cfg80211: Set SSID if it is not already set")
-Link: https://patch.msgid.link/20261013151258.7fbca481c328.I7beb03fb4309698bdcfade57c6804573f96eeb18@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+However, the function later reads the controller status from
+NVME_REG_CSTS - offset 0x1C, which is outside the mapped 0x18 byte
+boundary. This violates the API contract.
+
+Fix this by increasing the mapping size to include NVME_REG_CSTS. Also
+change sizeof(cfg) to sizeof(u32) to make the intent clearer.
+
+Fixes: ffb0863426eb9 ("PCI: Disable Samsung SM961/PM961 NVMe before FLR")
+Signed-off-by: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Alex Williamson <alex@shazbot.org>
+Link: https://patch.msgid.link/20260903164615.5744-1-raizudeen.kerneldev@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/sme.c | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ drivers/pci/quirks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/sme.c b/net/wireless/sme.c
-index eb0434783f9fb..2e56f61d28127 100644
---- a/net/wireless/sme.c
-+++ b/net/wireless/sme.c
-@@ -887,6 +887,25 @@ void __cfg80211_connect_result(struct net_device *dev,
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 57dd40f2e371a..7957b78cf6130 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -4089,7 +4089,7 @@ static int nvme_disable_and_flr(struct pci_dev *dev, bool probe)
+ 	if (probe)
+ 		return 0;
  
- 	cfg80211_upload_connect_keys(wdev);
+-	bar = pci_iomap(dev, 0, NVME_REG_CC + sizeof(cfg));
++	bar = pci_iomap(dev, 0, NVME_REG_CSTS + sizeof(u32));
+ 	if (!bar)
+ 		return -ENOTTY;
  
-+	if (!wdev->u.client.ssid_len) {
-+		rcu_read_lock();
-+		for_each_valid_link(cr, link) {
-+			u32 ssid_len;
-+
-+			ssid = ieee80211_bss_get_elem(cr->links[link].bss,
-+						      WLAN_EID_SSID);
-+
-+			if (!ssid || !ssid->datalen)
-+				continue;
-+
-+			ssid_len = min(ssid->datalen, IEEE80211_MAX_SSID_LEN);
-+			memcpy(wdev->u.client.ssid, ssid->data, ssid_len);
-+			wdev->u.client.ssid_len = ssid_len;
-+			break;
-+		}
-+		rcu_read_unlock();
-+	}
-+
- 	rcu_read_lock();
- 	for_each_valid_link(cr, link) {
- 		country_elem =
-@@ -912,25 +931,6 @@ void __cfg80211_connect_result(struct net_device *dev,
- 				   country_data, country_datalen);
- 	kfree(country_data);
- 
--	if (!wdev->u.client.ssid_len) {
--		rcu_read_lock();
--		for_each_valid_link(cr, link) {
--			u32 ssid_len;
--
--			ssid = ieee80211_bss_get_elem(cr->links[link].bss,
--						      WLAN_EID_SSID);
--
--			if (!ssid || !ssid->datalen)
--				continue;
--
--			ssid_len = min(ssid->datalen, IEEE80211_MAX_SSID_LEN);
--			memcpy(wdev->u.client.ssid, ssid->data, ssid_len);
--			wdev->u.client.ssid_len = ssid_len;
--			break;
--		}
--		rcu_read_unlock();
--	}
--
- 	return;
- out:
- 	for_each_valid_link(cr, link)
 -- 
 2.53.0
 
