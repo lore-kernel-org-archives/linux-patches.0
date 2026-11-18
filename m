@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020920;
-	b=oYX4f/Ggg3LIwTCzysXcnpPYRaS/5/EVKkFicxs7+rphJRPD88aMSIZdkGbp22dtL1jn
-	 AjzfsFVEPLus4AC41vLwN5L1wI4DD9DaT8xLTJ8Jlz9J/dGHaqXtfljh7s0k61u4ITtyK
-	 R/r5apPAatux1MjjuekSMSvWBzKXIKVtu3vZoHH/Pw+ntpHqXyIHa4bIWWBVMAF94gagC
-	 LJ9lj5h/ky26ph3rtUKqL0Bp7oTC2Vpyiy+Tk7HZmiMSY5MmJcRJxI/vgk7y/qJCaXzBv
-	 6qPrdVS15f/iQLSSbpLC94K8hxR5slmi7tON13XaufLwL9U4kqmqSIpuRwV5C+9F4lQ==
+	t=1795020923;
+	b=T+t8cfiB4Y4VxA5+jQFQca8Se9+9KAkrp9x6+EXEpBs5Mu7Z1wUP6LsDsBopegP2Zl+X
+	 eoNZhIAZB3+5kku1El2cbr5TBK2o5ZTUdDTvx6S4Ga8n7uRLiioCy8D4yUSl42n6UwzhH
+	 j96eph3THc5+AvHYHDYWriWzPA3nWRrlLX4zBBR0Jwu2t6gdnmYXflFUBu26uSQebq/jU
+	 MuYRmOfxX0hpmTLmX5ucZLmAlvuNt8+jJjrf1U6xzZRYNYG34YaA91GBryl44z6mDOWCY
+	 x2+0FL+qFafhNR2+adnJFy9jSyGm3mGMqG+ysDPIgfNWJeJGsia7vAc8Fi4+4GTHGlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020920;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020923;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TKDzqNdQGDxcvnDmX7MouM4wDwUtqd1otxZFlH16ha4=;
-	b=2Ibku0uN9BV12L7vuulhU6bSpv4R+joLKv46Tby3RKD9EaAQAfmIE8iD7soae60NkciR
-	 tsVEuciS87q89eDEelDjWMerHcOWYE1ho3IBsWv233bhxKNsLY2zPTJQGK2P7Dn0Jck3+
-	 G9RVraha8CyJDhU9AkJJWHkfzc6g3j83xJAGLBgqJd9ahnVX71nh4fCyhPppDT95O9EmT
-	 k9pCHXQeHzJqaVK13E/lUAHNcOi/Lv8Wzx1XuCfuMz095xJ/zY+mvhLxud679ooabHDjJ
-	 7fyLsxCQlYZ8kPlVoepmFk0Ju445oGQ7im+5/yZS5DZnZKGOdAiA69ncg5LvQmSsZoA==
+	bh=M4JhunbFp55KQa2utH/Lt2YKt+wZFD5OB1GpMkPetCA=;
+	b=0EAKd3Vbku7/MH34aY2GRPGmQL9thyjrKuZGeZ12xRCAR1edn3917uFQtITfzTOh//20
+	 Z+Om5vnmzGanMbhAXnH3p6hlqpvM8zM/msSzM5PTxHZBqV/AOojWaKw2ZknCwpmj+qrP8
+	 Y0gNDM36WTmNXlj0MYh4Lu/+zPafWyngH8fMdv63uztifCLywx4JMjYB0ScoL+p5M7hiB
+	 i2jq5SvjZaFDz7J8DiESzHcFwgG7tWCsmlrR3p0bt+kadzs9frfYmcctBm01VKwbVyvZ5
+	 Mug3sOqvQmvwNICFtAd93cQrCAPcCwxIuxzCSAJ/VAPvxwA6jYn/vchU11dAT1BA32w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z6KSNj7x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZDRIw3dw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55455606A331;
-	Wed, 18 Nov 2026 16:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A89606A320;
+	Wed, 18 Nov 2026 16:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z6KSNj7x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A478A1F000C5;
-	Wed, 18 Nov 2026 16:55:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZDRIw3dw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691651F000C4;
+	Wed, 18 Nov 2026 16:55:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020920;
-	bh=TKDzqNdQGDxcvnDmX7MouM4wDwUtqd1otxZFlH16ha4=;
+	s=korg; t=1795020922;
+	bh=M4JhunbFp55KQa2utH/Lt2YKt+wZFD5OB1GpMkPetCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z6KSNj7xNXUoWIVK9xhzWoNOBNtEdutsgqnPXmU7ODPowFfw2bsAKjefhID0ycpUt
-	 K2w2pE/LArnBVI4PigztIXSDcHn6HDOTBTOV0jGA2lfXqOGBSdwnoZ2P0QcngZQIb9
-	 utyWygUwmzOHpg33h3V7Dw8wjIbxfIkJ+gGc8JIE=
+	b=ZDRIw3dwxFahziPzAEORnWQ+6T4WQM9f73SgSrh0yi00koYp5px7RxRCpBIRhdh3P
+	 t3jH+0/urOZqTzceCVXnU9PzIwMgbgUxs0F26ddAsB+VndA2L0IQW5Kev6S9Fal88Q
+	 yPeFW57U1VfclWwN+nKrY+X/FWZtuKtiPsGlumQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2123/2651] bpf: Keep values of a dead owner for sleepable programs
-Date: Wed, 18 Nov 2026 15:56:03 +0100
-Message-ID: <20261118150402.344456062@linuxfoundation.org>
+Subject: [PATCH 7.3 2124/2651] bpf: Keep the symbols of a program until it has ended
+Date: Wed, 18 Nov 2026 15:56:04 +0100
+Message-ID: <20261118150402.380246589@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,158 +70,155 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit f693030a187b56a3946b36521bb90d785f906669 ]
+[ Upstream commit 4eaf4d71b91a983489227336adcab33d8eae58a5 ]
 
-bpf_local_storage_destroy() frees the elements of an owner behind a plain
-RCU grace period, on the ground that no program can refer to an owner that
-goes away.  But the pointer that bpf_task_storage_get() and its like
-return stays valid for the verifier after the program has released the
-owner, or has left the bpf_rcu_read_lock() section it had the owner from.
-A sleepable program is in no RCU read side critical section, so it can
-write to the value after the owner has died and the element was freed:
+When the last reference to a program goes, __bpf_prog_put_noref() takes
+its symbols out of the kallsyms tree and frees its line info at once, and
+waits for the grace periods only with the rest.  But the program may still
+be running: the link or the array it was called from is gone, the call is
+not over.
 
-  BUG: KASAN: slab-use-after-free in _copy_from_user+0x42/0xa0
-  Write of size 8 at addr ffff8880074404a8 by task lsuaf/55
+search_bpf_extables() finds the exception table of a program by its
+symbol.  A load that faults, and that the table is there to fix up, is
+fatal from then on:
 
-Free the element behind an RCU Tasks Trace grace period if sleepable code
-may use the map.  A program that a map is bound to was loaded, and counted
-in map->sleepable_refcnt, before it got a value from the live owner, and
-stays counted until a grace period behind its last run.
+  Oops: general protection fault, probably for non-canonical address
+  0xdead0000000006f8: 0000 [#1] SMP NOPTI
+  RIP: 0010:0xffffffffc06008f6
 
-A program can also get at a storage map by a lookup in an outer map.  Then
-only the outer map is counted, its programs can come after the inner map
-was put into it, and can hold on to the inner map after it was taken out.
-So note in a map that it has been an inner map, and treat it like one with
-sleepable users from then on.
+It takes a program that is detached and closed on one CPU while it runs on
+another.  Unwinders and bpf_prog_find_from_stack() do not know the program
+any more either, and the stack dump of a BPF stream reads the freed line
+info.
 
-The same goes for what the special fields of the value hold.  The page of
-a uptr has to stay pinned, and a kptr which the program stores after the
-owner has died has to be released.  Leave the fields, and the smap that it
-takes to free them, to bpf_selem_free_trace_rcu(), as bpf_selem_unlink()
-does.  bpf_local_storage_map_free() waits for that callback, and leaves
-smap alone if it comes across such an element.
+Free the line info behind the grace periods the program needs, as it is
+done with the BTF that its text comes from.  Remove the symbols in
+bpf_prog_free_deferred(), which runs behind them as well.  The symbols are
+looked up under rcu_read_lock(), so the images and the program itself are
+freed one more grace period later.  All that the program refers to is
+released when it was before.
 
-Elements of such maps now wait for sleepable programs that are running
-when their owner dies.  Other maps are freed as before.
-
-Fixes: dcf456c9a095 ("bpf: Fix usage of trace RCU in local storage.")
+Fixes: 3dec541b2e63 ("bpf: Add support for BTF pointers to x86 JIT")
+Fixes: d7c431cafcb4 ("bpf: Add dump_stack() analogue to print to BPF stderr")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017230950.802052-4-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017230950.802052-6-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h            |  1 +
- kernel/bpf/bpf_local_storage.c | 31 +++++++++++++++++++++++++------
- kernel/bpf/map_in_map.c        |  7 +++++--
- 3 files changed, 31 insertions(+), 8 deletions(-)
+ include/linux/bpf.h  |  1 +
+ kernel/bpf/core.c    | 50 +++++++++++++++++++++++++++++++-------------
+ kernel/bpf/syscall.c |  5 ++---
+ 3 files changed, 38 insertions(+), 18 deletions(-)
 
 diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 8bc7800d90add..191b2fede27fc 100644
+index 191b2fede27fc..b052efd4a0591 100644
 --- a/include/linux/bpf.h
 +++ b/include/linux/bpf.h
-@@ -337,6 +337,7 @@ struct bpf_map {
- 	bool frozen; /* write-once; write-protected by freeze_mutex */
- 	bool free_after_mult_rcu_gp;
- 	bool free_after_rcu_gp;
-+	bool was_inner_map;
- 	atomic64_t sleepable_refcnt;
- 	s64 __percpu *elem_count;
- 	u64 cookie; /* write-once */
-diff --git a/kernel/bpf/bpf_local_storage.c b/kernel/bpf/bpf_local_storage.c
-index 4f471e0620d2c..94b1858ff32d9 100644
---- a/kernel/bpf/bpf_local_storage.c
-+++ b/kernel/bpf/bpf_local_storage.c
-@@ -350,7 +350,8 @@ int bpf_selem_unlink(struct bpf_local_storage_elem *selem)
- static void bpf_selem_unlink_nofail(struct bpf_local_storage_elem *selem,
- 				    struct bpf_local_storage_map_bucket *b)
- {
--	bool in_map_free = !!b, free_storage = false;
-+	bool in_map_free = !!b, free_storage = false, sleepable_users = false;
-+	bool keep_fields = false;
- 	struct bpf_local_storage *local_storage;
- 	struct bpf_local_storage_map *smap;
- 	unsigned long flags;
-@@ -360,17 +361,26 @@ static void bpf_selem_unlink_nofail(struct bpf_local_storage_elem *selem,
- 	smap = rcu_dereference_check(SDATA(selem)->smap, bpf_rcu_lock_held());
- 
- 	if (smap) {
-+		/* A map that is freed, or NULL here, has no program left. */
-+		sleepable_users = !in_map_free &&
-+				  (atomic64_read(&smap->map.sleepable_refcnt) ||
-+				   READ_ONCE(smap->map.was_inner_map));
- 		b = b ? : select_bucket(smap, local_storage);
- 		err = raw_res_spin_lock_irqsave(&b->lock, flags);
- 		if (!err) {
- 			/*
- 			 * Call bpf_obj_free_fields() under b->lock to make sure it is done
- 			 * exactly once for an selem. Safe to free special fields immediately
--			 * as no BPF program should be referencing the selem.
-+			 * as no BPF program should be referencing the selem, unless it
-+			 * is sleepable: see below.
- 			 */
- 			if (likely(selem_linked_to_map(selem))) {
- 				hlist_del_init_rcu(&selem->map_node);
--				bpf_obj_free_fields(smap->map.record, SDATA(selem)->data);
-+				if (sleepable_users)
-+					keep_fields = true;
-+				else
-+					bpf_obj_free_fields(smap->map.record,
-+							    SDATA(selem)->data);
- 				unlink++;
- 			}
- 			raw_res_spin_unlock_irqrestore(&b->lock, flags);
-@@ -385,7 +395,15 @@ static void bpf_selem_unlink_nofail(struct bpf_local_storage_elem *selem,
- 		 * with selem1 as raw_res_spin_lock_irqsave() returns -ETIMEDOUT.
- 		 */
- 		WARN_ON_ONCE(err && in_map_free);
--		if (!err || in_map_free)
-+		/*
-+		 * A sleepable program can still use, and fill, the fields of a value
-+		 * that it got before it let go of the owner. As for bpf_selem_unlink(),
-+		 * bpf_selem_free_trace_rcu() frees them, and takes smap for that:
-+		 * map_free() waits for this RCU read side critical section and then
-+		 * for the callback. It must not take smap away from an selem that
-+		 * destroy() has unlinked from the map.
-+		 */
-+		if (in_map_free ? err || unlink : !err && !keep_fields)
- 			RCU_INIT_POINTER(SDATA(selem)->smap, NULL);
- 	}
- 
-@@ -432,11 +450,12 @@ static void bpf_selem_unlink_nofail(struct bpf_local_storage_elem *selem,
- 	 *
- 	 * The owner that map_free() takes an selem from is alive: sleepable code, which
- 	 * is in no RCU read side critical section, may be walking its list for another
--	 * map.
-+	 * map.  And it can still use a value that it got before it let go of an owner
-+	 * that destroy() is called for.
- 	 */
- 	if (unlink == 2 ||
- 	    atomic_cmpxchg(&selem->state, SELEM_UNLINKED, SELEM_TOFREE) == SELEM_UNLINKED)
--		bpf_selem_free(selem, !in_map_free);
-+		bpf_selem_free(selem, !in_map_free && !sleepable_users);
- 
- 	if (free_storage)
- 		bpf_local_storage_free(local_storage, !in_map_free);
-diff --git a/kernel/bpf/map_in_map.c b/kernel/bpf/map_in_map.c
-index d2cbab4bdf644..edad013d260c7 100644
---- a/kernel/bpf/map_in_map.c
-+++ b/kernel/bpf/map_in_map.c
-@@ -106,10 +106,13 @@ void *bpf_map_fd_get_ptr(struct bpf_map *map,
- 		return ERR_PTR(-ENOTSUPP);
- 
- 	inner_map_meta = map->inner_map_meta;
--	if (inner_map_meta->ops->map_meta_equal(inner_map_meta, inner_map))
-+	if (inner_map_meta->ops->map_meta_equal(inner_map_meta, inner_map)) {
- 		bpf_map_inc(inner_map);
--	else
-+		/* Its users are those of the outer maps from now on */
-+		WRITE_ONCE(inner_map->was_inner_map, true);
-+	} else {
- 		inner_map = ERR_PTR(-EINVAL);
-+	}
- 
- 	return inner_map;
+@@ -1902,6 +1902,7 @@ struct bpf_prog_aux {
+ 	union {
+ 		struct work_struct work;
+ 		struct rcu_head	rcu;
++		struct rcu_work rwork;
+ 	};
+ 	struct bpf_stream stream[2];
+ 	struct mutex st_ops_assoc_mutex;
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 593c0f2523114..f4682bcaea9d0 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -3073,12 +3073,40 @@ static void bpf_free_used_btfs(struct bpf_prog_aux *aux)
+ 	kfree(aux->used_btfs);
  }
+ 
+-static void bpf_prog_free_deferred(struct work_struct *work)
++static void bpf_prog_free_images(struct work_struct *work)
+ {
+ 	struct bpf_prog_aux *aux;
+ 	int i;
+ 
++	aux = container_of(to_rcu_work(work), struct bpf_prog_aux, rwork);
++	for (i = 0; i < aux->real_func_cnt; i++) {
++		/* We can just unlink the subprog poke descriptor table as
++		 * it was originally linked to the main program and is also
++		 * released along with it.
++		 */
++		aux->func[i]->aux->poke_tab = NULL;
++		bpf_jit_free(aux->func[i]);
++	}
++	if (aux->real_func_cnt) {
++		kfree(aux->func);
++		bpf_prog_unlock_free(aux->prog);
++	} else {
++		bpf_jit_free(aux->prog);
++	}
++}
++
++static void bpf_prog_free_deferred(struct work_struct *work)
++{
++	struct bpf_prog_aux *aux;
++	bool ksyms;
++
+ 	aux = container_of(work, struct bpf_prog_aux, work);
++	/*
++	 * A prog that still runs when its last reference goes needs its symbols,
++	 * by which its exception table is found.  It has ended by now.
++	 */
++	ksyms = aux->real_func_cnt || !list_empty(&aux->ksym.lnode);
++	bpf_prog_kallsyms_del_all(aux->prog);
+ #ifdef CONFIG_BPF_SYSCALL
+ 	bpf_free_kfunc_btf_tab(aux->kfunc_btf_tab);
+ 	bpf_prog_stream_free(aux->prog);
+@@ -3098,20 +3126,12 @@ static void bpf_prog_free_deferred(struct work_struct *work)
+ #endif
+ 	if (aux->dst_trampoline)
+ 		bpf_trampoline_put(aux->dst_trampoline);
+-	for (i = 0; i < aux->real_func_cnt; i++) {
+-		/* We can just unlink the subprog poke descriptor table as
+-		 * it was originally linked to the main program and is also
+-		 * released along with it.
+-		 */
+-		aux->func[i]->aux->poke_tab = NULL;
+-		bpf_jit_free(aux->func[i]);
+-	}
+-	if (aux->real_func_cnt) {
+-		kfree(aux->func);
+-		bpf_prog_unlock_free(aux->prog);
+-	} else {
+-		bpf_jit_free(aux->prog);
+-	}
++	/* The symbols are looked up under rcu_read_lock() */
++	INIT_RCU_WORK(&aux->rwork, bpf_prog_free_images);
++	if (ksyms)
++		queue_rcu_work(system_percpu_wq, &aux->rwork);
++	else
++		bpf_prog_free_images(&aux->rwork.work);
+ }
+ 
+ void bpf_prog_free(struct bpf_prog *fp)
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index de04cd266a422..1836cf9403fe2 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -2449,6 +2449,8 @@ static void __bpf_prog_put_rcu(struct rcu_head *rcu)
+ 	struct bpf_prog_aux *aux = container_of(rcu, struct bpf_prog_aux, rcu);
+ 
+ 	btf_put(aux->btf);
++	kvfree(aux->jited_linfo);
++	kvfree(aux->linfo);
+ 	kvfree(aux->func_info);
+ 	kfree(aux->func_info_aux);
+ 	free_uid(aux->user);
+@@ -2473,10 +2475,7 @@ static void __bpf_prog_put_rcu_tasks(struct rcu_head *rcu)
+ 
+ static void __bpf_prog_put_noref(struct bpf_prog *prog, bool deferred)
+ {
+-	bpf_prog_kallsyms_del_all(prog);
+ 	module_put(prog->aux->mod);
+-	kvfree(prog->aux->jited_linfo);
+-	kvfree(prog->aux->linfo);
+ 	kfree(prog->aux->kfunc_tab);
+ 	kfree(prog->aux->ctx_arg_info);
+ 	if (prog->aux->attach_btf)
 -- 
 2.53.0
 
