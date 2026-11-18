@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040508;
-	b=No2tc3CY2SVrdUeyzIq92cQeSGA1zbv968ml00vUoOX0IzL1LwLapJ2+ZPHisvDNz1HH
-	 kWimxCD4Lv7WiI9TXf+ZxORS0aYhazUR3JCYgbTQVvAT9pGdIB8eVsvlp6pq+A56z+VAK
-	 TPxKKdPc59SFDu9OLVf56+Gp3gCcjw/RNsR3SUSgz+4Qqh+y4x/Ye1I06g5z0PIzifmhk
-	 fV/2nN1RGP3aSdkhnxK9MuKtWa+MZ5GKGffMzBJPtQ9uvaWlZqIilrLEiS6XwFoklsFuX
-	 aZ600RGYaplZ/5lQtXM+8Tu44I5NmqGFl1tu44wNidiPCpf2tsL5AmcWir2DLbzdN0w==
+	t=1795040510;
+	b=N4WowY60bvCHbAutNV2pk1BahJnaa1EdstKStWmK+5xKWb56/wvnBeDPeEHY0ls4XhvF
+	 09da5WOwq86LWlB9oXAzqZ+w5KtfT+Q7wVPBuaryQSvuYG3j1g0hf4epc0/+JszFi4Pjr
+	 y8sR6HtfCt9DTqCQR7NIKtL/HQpz7tsSsHf2VAWvvvGrZLL5NiyHbRlAP/zF5S2zyIRgY
+	 1sNkD5YpOmoAbm7rc+vDiSGEm23yzG99rR9OLsOe4oiFyxsCEkNeWlIZIl761lNmHnfOW
+	 ZzV1QbEtM2VV0Mgq+TGZgvw4PeNjWQCDutmoq+BO2G1kVeS7Q+ugRumUehcn/EuPE0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040508;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040510;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1MEdJbQgaHW5PcBgIsTcLzxSeKWemMbi8VCcrfrj9ng=;
-	b=daCa48p3IzL3RAxbC4T6DD437/Eqj04SXDIKx69Ht4kkqh3h4PKpuu5DHpERYzhuG11A
-	 RNvNh6EKwSqQfGZ0ZQ26wFd8DH6d9B7e7UJQ2cTwRirTXHsfUY2FzPsyHpYdE1+wd2VnF
-	 FpfxRxxv00E4aGDfnidj4HltppcEuBs1s6r0QbGgeeSjofq7yxAohX308BkHb6fO6K48g
-	 4E9J2OGqKyid4/lPnPaut9PhhY2fXwn8zw97B24oEVHOaoUgLZ1YkARyiHHxrfq8Kumou
-	 xqdMig2vxDn0fAUc/1FMML6Ne5IyoBe2HaUpdHJsCyTCKHROP+TbX+ca6rFgXDEYo0A==
+	bh=a7Q43QlRU+6Z6rhant3spiveUA1xkmZ/ejUcSVIcOg4=;
+	b=ebqcgTPgRTKkTK3B8m/bUdkzzVu2sDhnNd6Vxy/lx/1Ks/2QayWRi82YD1UvvEsRkSdL
+	 ENqH5+Meo61Y6XsmipqmdEB67RLier4t7jBWmm6FP1NsHDlYu3HbMts+MPeD/B/hUjGwo
+	 Gaypcukw2J9lk2X1o/YCwo8FbWlXtIijLYdWw/FiYME7qJq1RnrU4AcKiaOonhu0MVcmW
+	 okIoupsS6+F0lAF5SHqytVu7lJWO570hD7FL6H4/BH+NLNspvufifPlPs1iZt1Ru4FXO0
+	 L6aXpNyrBrxihBln/TgSmccxmbGglbSOfCbImTv2I6OdnVpLQa3NHcUfQV2yomawmoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dobmMquk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e3Wj8lJr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A97606A31C;
-	Wed, 18 Nov 2026 22:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C032C606A325;
+	Wed, 18 Nov 2026 22:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dobmMquk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2781F000C4;
-	Wed, 18 Nov 2026 22:21:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e3Wj8lJr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E8E1F000C4;
+	Wed, 18 Nov 2026 22:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040507;
-	bh=1MEdJbQgaHW5PcBgIsTcLzxSeKWemMbi8VCcrfrj9ng=;
+	s=korg; t=1795040510;
+	bh=a7Q43QlRU+6Z6rhant3spiveUA1xkmZ/ejUcSVIcOg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dobmMquknSIRhAvaTSSaektqSih4gjz4MKTfLTWaDhw45jO2zV7r7XtAtP7MzaDl9
-	 y1FewUHfPiCYzvwqwRciwmr4t0mbC8re0fcxAICOa+ZtylDHu6Xtt1fD0i/FTZiiT3
-	 l+nfGbY+Q1feL5N5xuqUkbPieagRA9rxhPwMOtpI=
+	b=e3Wj8lJrkNnNMSswoVoL5Pko0eRiFmUzA7FXwYwveHNZDBHSALwkReMJy5yDtSMNv
+	 H8TqMIkekebdRCK1gCnHuiO+1ldPSvmOZPWhJx4sUaoz0U73ORi3tLXLaYat8PsWNs
+	 UiHWg+kDLY6owu/vVGFoa7eW/IRtZMNrEhdlpV7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2481/3318] ARM: mvebu: fix Cortex-A9 errata selection for Armada 38x
-Date: Wed, 18 Nov 2026 15:51:43 +0100
-Message-ID: <20261118150435.832977909@linuxfoundation.org>
+Subject: [PATCH 6.6 2482/3318] ice: skip stats handling for channel VSIs on rebuild
+Date: Wed, 18 Nov 2026 15:51:44 +0100
+Message-ID: <20261118150435.869879485@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,47 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit 76e67df8bc1cb72157368c3669119e64cdb0a6a6 ]
+[ Upstream commit 3fca849c965333f387aa02dca02326ce3abd1305 ]
 
-Armada 38x uses Cortex-A9 r4p1, but MACH_ARMADA_38X selects the
-workaround for erratum 720789, which was fixed in r2p0, and omits
-workarounds for errata that still affect r4p1.
+ice_vsi_alloc_stat_arrays() returns early for ICE_VSI_CHNL, so a channel
+VSI never gets an entry in pf->vsi_stats[]. ice_vsi_realloc_stat_arrays()
+dereferences that entry unconditionally, and ice_vsi_rebuild() calls it
+before anything else, so the NULL is not filtered out anywhere.
 
-Drop ARM_ERRATA_720789 and select ARM_ERRATA_754322 for faulty MMU
-translations following an ASID switch and ARM_ERRATA_764319 for
-unexpected undefined instruction exceptions when reading debug
-registers. Also select ARM_ERRATA_764369 when SMP is enabled to work
-around cache maintenance by MVA failing to reach other agents.
+The path is live. ice_prepare_for_reset() removes the queue channels only
+for resets other than a PFR, so a PFR leaves the channel VSIs in place,
+and ice_rebuild() then calls ice_rebuild_channels(), which rebuilds every
+ICE_VSI_CHNL VSI it finds. A PF reset with ADQ (mqprio hardware offload)
+configured thus dereferences NULL.
 
-The Cortex-A9 r4 Software Developers Errata Notice (ARM UAN 0009D)
-lists these errata in sections 2.3.3, 2.5.10 and 2.3.4, respectively.
+That combination is reset recovery on top of an active mqprio offload,
+which is why it went unnoticed. It was found while refactoring this code,
+not reported by a user.
 
-Link: https://documentation-service.arm.com/static/608118675e70d934bc69f143
-Fixes: 9aa30f1c13d1 ("ARM: mvebu: add initial support for the Armada 380/385 SOCs")
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+I'm leaning towards removing our limited (compared to OOT ADQ) support,
+but it's outside of this series. Bug could be triggered by:
+
+  tc qdisc del dev "$IF" root 2>/dev/null || true
+  tc qdisc add dev "$IF" root mqprio num_tc 2 \
+    map 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 \
+    queues 2@0 2@2 hw 1 mode channel
+  sleep 3
+  ethtool --reset "$IF" irq dma filter offload
+
+Workqueue: ice ice_service_task [ice]
+RIP: 0010:ice_vsi_rebuild+0x289/0x380 [ice]
+ ice_rebuild_channels+0xd6/0x320 [ice]
+ ice_rebuild+0x4f6/0x540 [ice]
+ ice_do_reset+0x9f/0x1a0 [ice]
+ ice_service_task+0x4a/0x460 [ice]
+
+Fixes: 5995ef88e3a8 ("ice: realloc VSI stats arrays")
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Link: https://patch.msgid.link/20260925132636.123300-2-przemyslaw.kitszel@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-mvebu/Kconfig | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_lib.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm/mach-mvebu/Kconfig b/arch/arm/mach-mvebu/Kconfig
-index 9f60a6fe0eafb..5203b5cfa4577 100644
---- a/arch/arm/mach-mvebu/Kconfig
-+++ b/arch/arm/mach-mvebu/Kconfig
-@@ -55,7 +55,9 @@ config MACH_ARMADA_375
- config MACH_ARMADA_38X
- 	bool "Marvell Armada 380/385 boards"
- 	depends on ARCH_MULTI_V7
--	select ARM_ERRATA_720789
-+	select ARM_ERRATA_754322
-+	select ARM_ERRATA_764319
-+	select ARM_ERRATA_764369 if SMP
- 	select PL310_ERRATA_753970
- 	select ARM_GIC
- 	select ARM_GLOBAL_TIMER
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
+index 3af3fc401331e..8e957adde1ace 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -3106,6 +3106,10 @@ ice_vsi_realloc_stat_arrays(struct ice_vsi *vsi)
+ 	u16 prev_rxq = vsi->alloc_rxq;
+ 	int i;
+ 
++	/* channel VSIs have no entry in pf->vsi_stats[] */
++	if (vsi->type == ICE_VSI_CHNL)
++		return 0;
++
+ 	vsi_stat = pf->vsi_stats[vsi->idx];
+ 
+ 	if (req_txq < prev_txq) {
 -- 
 2.53.0
 
