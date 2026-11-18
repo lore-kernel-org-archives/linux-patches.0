@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047126;
-	b=1ZCY3fFn84m7gh3MxtTndG0ML4sv5LB4JU4l29KglnUcgJyAmPOqz0HSuooeDhkEnl5A
-	 PY9WGlJvtqnWUwM0lGTp4NqU/0ccXPEL1xPjm9v6gyMMj6TP6cWjr7wggWWbMjYS46LeV
-	 Y4yjn6AWufXiaVUhd1Xb7/GxT89RbUCkKeG63IPqcSsK40t6vN2hi9G0wGJRu8PijxQyZ
-	 3vXTWp3QxxY8rbt20y5avsHBY/uzXE0Iw0fOuABp63z4VHx6UaIF6AKtOW8zWhriTJlfJ
-	 2Zi1RD28NQVW0idz50oUq6xV/K2Yh/yjJvgHZVP4hx83DOH8aIeWdCYnqYKWGerGhXw==
+	t=1795047128;
+	b=g4eCSoskSVJvKXZjJpwn60EXY/UiaHKaX6HCNM/ipbShza80xVlelXRUooXDOW+KNGyB
+	 xttQBCRxHvZ4WqYaSntwbjxDpISwareLBYrra64Zztu9WHabt+pTy/t3tTBYeFaVm7mU2
+	 z0S8zax//KkF7rtQ4zOvJTInKVvcVp24X4aeZa9Zwj1G86HXFyp91uqhvwnTMOVVRwTZi
+	 Iz6GYQBL9DkZbuoqXIENeh5I86XVWbpjHr39QpgkVb9rsdEOChlh5iIgYN1LDSWpX4zQa
+	 YdAu6I/xHAtfx8vj3cE4uB+2DFMKS6EGnAg/5xGVObURBVdy/T6D9XZ1l5wWB63WO1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047126;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047128;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=7IoI8nvtLPFk6HgNPVUubffNbqKMizE3c/P0gV+18J8=;
-	b=VIFrbfFUQku1gF+quvAkUN5JJ366kELF5RqBbtdetoqXlUyYj1df0Zi/Wy/ldnFc7HGq
-	 zNTtTjFIRveHM3FJvMLV0grPOnCe1c5fnVM/ryHYoJ2LALkjG8fApylyHbMFHJZa3sPAB
-	 8AFwl9hAmldpql2uxFNDVeILMkx6zWAL+xXDZuUwjDzLxEUjz4Yp7aXnKsIuZHSZI2th3
-	 JBF99FiJp4/d9cKX+V49RZlD0FCWH94IIAFTVO9mzaaA164/OsmjNvG56Vyg0X+mPkSF3
-	 89Yam+jzG73OgcbqL4/u+lZnlth9LTb9kyvRMX1y7CwX3UVnBSNxOaDuqWeCEKQrLKg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=wMgrbmw56w0DFRLZv/G9u70/6jtO0WsePohaNRwSW3I=;
+	b=S2X9nuRgriPkpANbi2+C7r7oMQjZRJbiGZ2Q9ChZAkKAxnw1RaT88poV1akzU0RUCMJc
+	 NTnwqYWZ7ur5srZ7YXiPYHYtv6ZzDRChBkSqzhVQsMeDDq4cqJz+Dg74AgUcIZZfsv2MI
+	 FICToWl1ABpwgoIGmh9+nL9mOI29IQxOr2IZWvprOVmPLjWyCqsrCyHpxK9W7jf1g/Jef
+	 6c0xqYhAYZHLvILLcZDQ7yssaIcx5MzJ7jPnqFC6b1ull5EWgrKCSEbVIFKhQEfDKKdpy
+	 MXp6/NhPVkPlB7TkKeVzgZiRvJdGHD2laJ/9RCUw8Ky/9IspkcRuQjaIv5jdpoDNgBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0eLwNuEb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S6ZS38aN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A83C606A325;
-	Thu, 19 Nov 2026 00:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E8E606A31C;
+	Thu, 19 Nov 2026 00:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0eLwNuEb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7631F000C4;
-	Thu, 19 Nov 2026 00:12:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S6ZS38aN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1930C1F000C4;
+	Thu, 19 Nov 2026 00:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047125;
-	bh=7IoI8nvtLPFk6HgNPVUubffNbqKMizE3c/P0gV+18J8=;
+	s=korg; t=1795047128;
+	bh=wMgrbmw56w0DFRLZv/G9u70/6jtO0WsePohaNRwSW3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0eLwNuEbb82Nkt2+USWwy9y2Y+9XKMf/UkOLFK0sQVqZIR0gsBUC9fpBV90u7b6wa
-	 KHyPwrBU6DyXNCRtEDcQwFDnNCkhWpLmXcXAlhcfB5HyMU1vAREyKCuYgjan8u4pRC
-	 ZcfC1RhliZQFE2OZ00xXh5Gc577atH6wARkppezw=
+	b=S6ZS38aNCMK6GZbJRV/gUQwgUqBbL2XG/D2ldrhHjCMpJANGoxmyPrVPdR24+N/tp
+	 GL/gbwVytq4owb5qNSIUFBaI1tKMO4RMtjCVH2vaX5u3DkHUB5gCYb+zRaHKF1glZ6
+	 K4LT4rDDVMr3Q6YFwRkaAIiyhnMji14Z1MHy/YGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hitesh Patel <hitesh@ebytelogic.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1527/2857] media: qcom: camss: vfe: Fix VFE reset while another line is streaming
-Date: Wed, 18 Nov 2026 15:42:41 +0100
-Message-ID: <20261118150256.304996776@linuxfoundation.org>
+Subject: [PATCH 6.1 1528/2857] platform/x86: simatic-ipc: fix platform device leak on registration failure
+Date: Wed, 18 Nov 2026 15:42:42 +0100
+Message-ID: <20261118150256.339397782@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,97 +62,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hitesh Patel <hitesh@ebytelogic.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit e5d4b0e69a4017fd39354499c9d7583f625f0524 ]
+[ Upstream commit 9523698252fd583d6987582b9c34ec6500d10986 ]
 
-vfe_disable_output() stops the write masters of the line being
-disabled and then resets the whole VFE. The reset is not limited to
-that line.
+register_platform_devices() registers the battery, LED, and watchdog
+platform devices in sequence. If LED registration fails, the battery
+device remains registered. If watchdog registration fails, the LED and
+battery devices remain registered.
 
-When two lines of one VFE stream at the same time, which is the case
-whenever a CSID demultiplexes several virtual channels to different
-RDIs, stopping the first line resets the VFE underneath the second
-line. The second line's write master configuration is wiped, the
-buffers it had in flight are never completed, and the VFE is left in
-a state in which the next global reset is not acknowledged. Stopping
-or restarting the second line then fails with:
+These failure paths leave successful platform_device_register_data()
+calls without the matching platform_device_unregister() calls.
 
-  VFE reset timeout
+Add an unwind ladder to unregister previously registered platform
+devices in reverse order before returning the registration error.
 
-Move the reset to vfe_disable() and do it under stream_lock, as part
-of the decrement that makes the count reach zero, so that exactly one
-caller resets and no line can be enabled while the reset runs.
-Stopping the line's write masters is enough to quiesce that line on
-its own. With a single line streaming, the reset happens exactly as
-before.
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
 
-Fixes: 7319cdf189bb ("media: camss: Add support for VFE hardware version Titan 170")
+Fixes: dd123e62bded ("platform/x86: simatic-ipc: add main driver for Siemens devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hitesh Patel <hitesh@ebytelogic.com>
-Suggested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-[bod: Converted vfe_disable_output to void]
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260924115617.1578309-1-lgs201920130244@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+[ sashal: omitted battery-device cleanup because the driver lacks battery-monitoring support ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ drivers/platform/x86/simatic-ipc.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index e333e4463433b..096a284c6bfc2 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -407,7 +407,7 @@ int vfe_put_output(struct vfe_line *line)
+diff --git a/drivers/platform/x86/simatic-ipc.c b/drivers/platform/x86/simatic-ipc.c
+index b3622419cd1a4..10060959e5aff 100644
+--- a/drivers/platform/x86/simatic-ipc.c
++++ b/drivers/platform/x86/simatic-ipc.c
+@@ -55,6 +55,7 @@ static int register_platform_devices(u32 station_id)
+ 	u8 ledmode = SIMATIC_IPC_DEVICE_NONE;
+ 	u8 wdtmode = SIMATIC_IPC_DEVICE_NONE;
+ 	char *pdevname = KBUILD_MODNAME "_leds";
++	int ret;
+ 	int i;
+ 
+ 	platform_data.devmode = SIMATIC_IPC_DEVICE_NONE;
+@@ -96,8 +97,10 @@ static int register_platform_devices(u32 station_id)
+ 				KBUILD_MODNAME "_wdt", PLATFORM_DEVID_NONE,
+ 				&platform_data,
+ 				sizeof(struct simatic_ipc_platform));
+-		if (IS_ERR(ipc_wdt_platform_device))
+-			return PTR_ERR(ipc_wdt_platform_device);
++		if (IS_ERR(ipc_wdt_platform_device)) {
++			ret = PTR_ERR(ipc_wdt_platform_device);
++			goto err_unregister_led;
++		}
+ 
+ 		pr_debug("device=%s created\n",
+ 			 ipc_wdt_platform_device->name);
+@@ -111,6 +114,11 @@ static int register_platform_devices(u32 station_id)
+ 	}
+ 
  	return 0;
++
++err_unregister_led:
++	if (ledmode != SIMATIC_IPC_DEVICE_NONE)
++		platform_device_unregister(ipc_led_platform_device);
++	return ret;
  }
  
--static int vfe_disable_output(struct vfe_line *line)
-+static void vfe_disable_output(struct vfe_line *line)
- {
- 	struct vfe_device *vfe = to_vfe(line);
- 	struct vfe_output *output = &line->output;
-@@ -419,8 +419,6 @@ static int vfe_disable_output(struct vfe_line *line)
- 		vfe->ops->vfe_wm_stop(vfe, output->wm_idx[i]);
- 	output->gen2.active_num = 0;
- 	spin_unlock_irqrestore(&vfe->output_lock, flags);
--
--	return vfe_reset(vfe);
- }
- 
- /*
-@@ -432,21 +430,19 @@ static int vfe_disable_output(struct vfe_line *line)
- int vfe_disable(struct vfe_line *line)
- {
- 	struct vfe_device *vfe = to_vfe(line);
--	int ret;
-+	int ret = 0;
- 
--	ret = vfe_disable_output(line);
--	if (ret)
--		goto error;
-+	vfe_disable_output(line);
- 
- 	vfe_put_output(line);
- 
- 	mutex_lock(&vfe->stream_lock);
- 
--	vfe->stream_count--;
-+	if (--vfe->stream_count == 0)
-+		ret = vfe_reset(vfe);
- 
- 	mutex_unlock(&vfe->stream_lock);
- 
--error:
- 	return ret;
- }
- 
+ static int __init simatic_ipc_init_module(void)
 -- 
 2.53.0
 
