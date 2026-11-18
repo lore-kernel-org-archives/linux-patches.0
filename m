@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026594;
-	b=KsZdlq4kARA0MqDEzKbIxLMA0Occg/YBGCAIHUp/lbBx1bEUIuBJn3tIGgUWh02Wnunn
-	 MXYkUujj6JAz1immculJ2CQVOJMK1bh9+kNDyD9gJQoFYNyrdqg5VWKS7vUaPjThfEPqS
-	 +3BqkzZOC0R74loY3RSruMiP6Hbuf4b4I2cYL+FUg1PhusJP/XrCpQyb/xDBvwUyRxy1Y
-	 eNvK3HsGQ3yTANpc7TlPIzJE+sCwyi4k7qYFX1sA6sH1oo2ncvOGYnOzezfk4VI7VZIaV
-	 ZLAKS8Pk2PqoT60iB5alB7cHUfZQtUSdSqyKyoNTlWcIa1+Z4/zKk3MSYsbQNaX5qEw==
+	t=1795026597;
+	b=4zir04ZdZYoyFlEueCR+iZyb3oXWh/QcoENV9eTtO6BDEr6WQQI+nuvAbCsAHLtNfKG5
+	 hCAoY/GYlLrJUE8V4C6F9olJcolh/mgEtNd//oar1gGbxXSPrgZY4GP8j4CGfBMXGA6qS
+	 A0YCHBTiwpS0o6h4xS3gmmKKMJcnfPNw8KpNgHvJ1VQEEkvWG+FLNI3hAg3Del4Cc/DvF
+	 2QXeCmOs1MGIqEw3IYR6Q7fgaRD7MDRFFUB3Fy+9cnDGh09NzRN3LUGBvkg+xgGr4TfL+
+	 D3VBg4t11W1VMHuAdwytZmuo4DFtO+kj+qCnC4fnBTHbmncTcq3vHewo+espgMxw+bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026594;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026597;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vB1ZbJ73J4ZqqvKGcVtW/0PeKdr9feBscs+ejOLI2Kw=;
-	b=z+6j/A8DNQpgDDYbi1jqx+qOIJxrKqkCVaVVpO4/IlhKaoBScYl2LSuf99DR7VDzDdfW
-	 A1b6RpZ/av2dSjrbcwvdOYafEZdPPWcIaDQzpDXL1reiL00bFvZApL0yqLPOc/WxPv/ru
-	 AkNzoHQR9z68pAjV5Ki1azRjEXxAs+cSyjgpwUUjSVGbp3iAztlhD9ojoMK64DoRw9TrH
-	 Tm75fEBLEw2SXT5k/8337eW3IzcRTpMSbr3xZywVRRwSoqLPSGZcgVDQMHOEF9rKsViZa
-	 AfFGxAXS6fTITy9JbpXMCoQWREWkO/nWwmi1Pb0xJBCiTIwU6iwG3J9cBjBbQqGX3Fg==
+	bh=RR8Ase3I9bj4ZCPTGGavuqTq7dz+6HsqDvW/xgWL0kI=;
+	b=G2zaUGw27PKA+7RC3UU3wyMYEm2ITN1lAetm2HtygHIcwcD7zL1AF9SmIlFEByxRSRi9
+	 STBvBM5WS70XQFUcitgKXZnuNQmcZk2axiZao4AbquzFpPlNCCF5etHKhlwUinxS898O7
+	 kcpcCUcCgKK0GG6y4tmD3BJevd6yLZoQQiuUl+8bpdxR9RkxEwk+sVGmLmtRRpr0dlRna
+	 +uZuId0nrdfbYDdpdhZqCsb+afkXGif52PaP5e2Y4yftsMYRfZpYlohMmStQjwNZwhdio
+	 IuAKVFmhFiCAm9O6LoT+vmEe3pHLosOS1Uw1VO948pyd5fvoj1pjaotRAC4ehTBb5nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h5LSEoAb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eg1cliOo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AD8606A325;
-	Wed, 18 Nov 2026 18:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C0B606A31C;
+	Wed, 18 Nov 2026 18:29:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h5LSEoAb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F62A1F000C4;
-	Wed, 18 Nov 2026 18:29:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eg1cliOo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BDB1F000C4;
+	Wed, 18 Nov 2026 18:29:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026594;
-	bh=vB1ZbJ73J4ZqqvKGcVtW/0PeKdr9feBscs+ejOLI2Kw=;
+	s=korg; t=1795026597;
+	bh=RR8Ase3I9bj4ZCPTGGavuqTq7dz+6HsqDvW/xgWL0kI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h5LSEoAbjmiEtkbeChYWZUmPfT+aDpEBwSsxSk11lb//LVkUT0Hvkj+lj8AVe0Q0C
-	 cKcN9GPUFmRiZTMejr2zibdHCHeHEWljQtRibECLDtcuBv0PsiwDJcm22uovtU9Rpg
-	 mehFYZHmCEakS/1v5Nl+v0DsOEQv/60qmc3Yho3A=
+	b=eg1cliOoO5VpUCmZNbR1TLqiiX7ZPIrDzNt6Ryb7hZESeqwZe9w/VHekbbuyXsVhK
+	 Kc6+IRq8WjljFG2HX4T5mi5OsarOP6r/fT4LKn5HXSmQ7kC/DR9iENWBnkpZWZAwh2
+	 dKKBx2COnB1wbuPn20Gk1GYTLwD6iI9IG+yYNfbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1491/2151] wifi: iwlwifi: mvm: move rate conversions to utils.c
-Date: Wed, 18 Nov 2026 15:53:46 +0100
-Message-ID: <20261118150216.190777061@linuxfoundation.org>
+Subject: [PATCH 6.18 1492/2151] wifi: iwlwifi: mvm: fix the VHT MCS sent to a v1 firmware
+Date: Wed, 18 Nov 2026 15:53:47 +0100
+Message-ID: <20261118150216.224532983@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,398 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit eade5cacc95c3d8b2e88a694a6a0a42dc0dc1819 ]
+[ Upstream commit a2f60db1c1514c7d083b5c0c8b9510b1adf0cc2c ]
 
-These aren't really related to rate scaling, they're just
-firmware API functions. Try to keep rs.c more for scaling
-and move these out.
+When converting a v3 rate to the v1 format, the MCS index was read
+from the mask of the NSS field and written into the mask of the MCS
+field. This is obviously wrong, we must not mix the NSS and the MCS.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 3592c0083fb2 ("wifi: iwlwifi: mvm: fix beacon template/fixed rate")
+Assisted-by: LLM
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250915113137.547129c7732e.I12c40876537722680d069b4bb5fc058206ba63d4@changeid
-Stable-dep-of: a2f60db1c151 ("wifi: iwlwifi: mvm: fix the VHT MCS sent to a v1 firmware")
+Link: https://patch.msgid.link/20261011140453.dfca0c8b560a.I7a3e1f0e91f0d0c6f4c5f1e6a33dc7c0c5e9ad11@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mvm.h  |   5 +
- drivers/net/wireless/intel/iwlwifi/mvm/rs.c   | 164 ------------------
- drivers/net/wireless/intel/iwlwifi/mvm/rs.h   |   3 -
- .../net/wireless/intel/iwlwifi/mvm/utils.c    | 164 ++++++++++++++++++
- 4 files changed, 169 insertions(+), 167 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/utils.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-index 319301504b7eb..a100439b860a4 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-@@ -2894,4 +2894,9 @@ iwl_mvm_send_ap_tx_power_constraint_cmd(struct iwl_mvm *mvm,
- 
- void iwl_mvm_smps_workaround(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
- 			     bool update);
-+
-+/* rate_n_flags conversion */
-+u32 iwl_mvm_v3_rate_from_fw(__le32 rate, u8 rate_ver);
-+__le32 iwl_mvm_v3_rate_to_fw(u32 rate, u8 rate_ver);
-+
- #endif /* __IWL_MVM_H__ */
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rs.c b/drivers/net/wireless/intel/iwlwifi/mvm/rs.c
-index 5802ed80a9ca9..d1619a229d8f2 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rs.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rs.c
-@@ -4178,167 +4178,3 @@ int iwl_mvm_tx_protection(struct iwl_mvm *mvm, struct iwl_mvm_sta *mvmsta,
- 	else
- 		return rs_drv_tx_protection(mvm, mvmsta, enable);
- }
--
--static u32 iwl_legacy_rate_to_fw_idx(u32 rate_n_flags)
--{
--	int rate = rate_n_flags & RATE_LEGACY_RATE_MSK_V1;
--	int idx;
--	bool ofdm = !(rate_n_flags & RATE_MCS_CCK_MSK_V1);
--	int offset = ofdm ? IWL_FIRST_OFDM_RATE : 0;
--	int last = ofdm ? IWL_RATE_COUNT_LEGACY : IWL_FIRST_OFDM_RATE;
--
--	for (idx = offset; idx < last; idx++)
--		if (iwl_fw_rate_idx_to_plcp(idx) == rate)
--			return idx - offset;
--	return IWL_RATE_INVALID;
--}
--
--u32 iwl_mvm_v3_rate_from_fw(__le32 rate, u8 rate_ver)
--{
--	u32 rate_v3 = 0, rate_v1;
--	u32 dup = 0;
--
--	if (rate_ver > 1)
--		return iwl_v3_rate_from_v2_v3(rate, rate_ver >= 3);
--
--	rate_v1 = le32_to_cpu(rate);
--	if (rate_v1 == 0)
--		return rate_v1;
--	/* convert rate */
--	if (rate_v1 & RATE_MCS_HT_MSK_V1) {
--		u32 nss;
--
--		rate_v3 |= RATE_MCS_MOD_TYPE_HT;
--		rate_v3 |=
--			rate_v1 & RATE_HT_MCS_RATE_CODE_MSK_V1;
--		nss = u32_get_bits(rate_v1, RATE_HT_MCS_MIMO2_MSK);
--		rate_v3 |= u32_encode_bits(nss, RATE_MCS_NSS_MSK);
--	} else if (rate_v1 & RATE_MCS_VHT_MSK_V1 ||
--		   rate_v1 & RATE_MCS_HE_MSK_V1) {
--		u32 nss = u32_get_bits(rate_v1, RATE_VHT_MCS_NSS_MSK);
--
--		rate_v3 |= rate_v1 & RATE_VHT_MCS_RATE_CODE_MSK;
--
--		rate_v3 |= u32_encode_bits(nss, RATE_MCS_NSS_MSK);
--
--		if (rate_v1 & RATE_MCS_HE_MSK_V1) {
--			u32 he_type_bits = rate_v1 & RATE_MCS_HE_TYPE_MSK_V1;
--			u32 he_type = he_type_bits >> RATE_MCS_HE_TYPE_POS_V1;
--			u32 he_106t = (rate_v1 & RATE_MCS_HE_106T_MSK_V1) >>
--				RATE_MCS_HE_106T_POS_V1;
--			u32 he_gi_ltf = (rate_v1 & RATE_MCS_HE_GI_LTF_MSK_V1) >>
--				RATE_MCS_HE_GI_LTF_POS;
--
--			if ((he_type_bits == RATE_MCS_HE_TYPE_SU ||
--			     he_type_bits == RATE_MCS_HE_TYPE_EXT_SU) &&
--			    he_gi_ltf == RATE_MCS_HE_SU_4_LTF)
--				/* the new rate have an additional bit to
--				 * represent the value 4 rather then using SGI
--				 * bit for this purpose - as it was done in the
--				 * old rate
--				 */
--				he_gi_ltf += (rate_v1 & RATE_MCS_SGI_MSK_V1) >>
--					RATE_MCS_SGI_POS_V1;
--
--			rate_v3 |= he_gi_ltf << RATE_MCS_HE_GI_LTF_POS;
--			rate_v3 |= he_type << RATE_MCS_HE_TYPE_POS;
--			rate_v3 |= he_106t << RATE_MCS_HE_106T_POS;
--			rate_v3 |= rate_v1 & RATE_HE_DUAL_CARRIER_MODE_MSK;
--			rate_v3 |= RATE_MCS_MOD_TYPE_HE;
--		} else {
--			rate_v3 |= RATE_MCS_MOD_TYPE_VHT;
--		}
--	/* if legacy format */
--	} else {
--		u32 legacy_rate = iwl_legacy_rate_to_fw_idx(rate_v1);
--
--		if (WARN_ON_ONCE(legacy_rate == IWL_RATE_INVALID))
--			legacy_rate = (rate_v1 & RATE_MCS_CCK_MSK_V1) ?
--				IWL_FIRST_CCK_RATE : IWL_FIRST_OFDM_RATE;
--
--		rate_v3 |= legacy_rate;
--		if (!(rate_v1 & RATE_MCS_CCK_MSK_V1))
--			rate_v3 |= RATE_MCS_MOD_TYPE_LEGACY_OFDM;
--	}
--
--	/* convert flags */
--	if (rate_v1 & RATE_MCS_LDPC_MSK_V1)
--		rate_v3 |= RATE_MCS_LDPC_MSK;
--	rate_v3 |= (rate_v1 & RATE_MCS_CHAN_WIDTH_MSK_V1) |
--		(rate_v1 & RATE_MCS_ANT_AB_MSK) |
--		(rate_v1 & RATE_MCS_STBC_MSK) |
--		(rate_v1 & RATE_MCS_BF_MSK);
--
--	dup = (rate_v1 & RATE_MCS_DUP_MSK_V1) >> RATE_MCS_DUP_POS_V1;
--	if (dup) {
--		rate_v3 |= RATE_MCS_DUP_MSK;
--		rate_v3 |= dup << RATE_MCS_CHAN_WIDTH_POS;
--	}
--
--	if ((!(rate_v1 & RATE_MCS_HE_MSK_V1)) &&
--	    (rate_v1 & RATE_MCS_SGI_MSK_V1))
--		rate_v3 |= RATE_MCS_SGI_MSK;
--
--	return rate_v3;
--}
--
--__le32 iwl_mvm_v3_rate_to_fw(u32 rate, u8 rate_ver)
--{
--	u32 result = 0;
--	int rate_idx;
--
--	if (rate_ver > 1)
--		return iwl_v3_rate_to_v2_v3(rate, rate_ver > 2);
--
--	switch (rate & RATE_MCS_MOD_TYPE_MSK) {
--	case RATE_MCS_MOD_TYPE_CCK:
--		result = RATE_MCS_CCK_MSK_V1;
--		fallthrough;
--	case RATE_MCS_MOD_TYPE_LEGACY_OFDM:
--		rate_idx = u32_get_bits(rate, RATE_LEGACY_RATE_MSK);
--		if (!(result & RATE_MCS_CCK_MSK_V1))
--			rate_idx += IWL_FIRST_OFDM_RATE;
--		result |= u32_encode_bits(iwl_fw_rate_idx_to_plcp(rate_idx),
--					  RATE_LEGACY_RATE_MSK_V1);
--		break;
--	case RATE_MCS_MOD_TYPE_HT:
--		result = RATE_MCS_HT_MSK_V1;
--		result |= u32_encode_bits(u32_get_bits(rate,
--						       RATE_HT_MCS_CODE_MSK),
--					  RATE_HT_MCS_RATE_CODE_MSK_V1);
--		result |= u32_encode_bits(u32_get_bits(rate,
--						       RATE_MCS_NSS_MSK),
--					  RATE_HT_MCS_MIMO2_MSK);
--		break;
--	case RATE_MCS_MOD_TYPE_VHT:
--		result = RATE_MCS_VHT_MSK_V1;
--		result |= u32_encode_bits(u32_get_bits(rate,
--						       RATE_VHT_MCS_NSS_MSK),
--					  RATE_MCS_CODE_MSK);
--		result |= u32_encode_bits(u32_get_bits(rate, RATE_MCS_NSS_MSK),
--					  RATE_VHT_MCS_NSS_MSK);
--		break;
--	case RATE_MCS_MOD_TYPE_HE: /* not generated */
--	default:
--		WARN_ONCE(1, "bad modulation type %d\n",
--			  u32_get_bits(rate, RATE_MCS_MOD_TYPE_MSK));
--		return 0;
--	}
--
--	if (rate & RATE_MCS_LDPC_MSK)
--		result |= RATE_MCS_LDPC_MSK_V1;
--	WARN_ON_ONCE(u32_get_bits(rate, RATE_MCS_CHAN_WIDTH_MSK) >
--			RATE_MCS_CHAN_WIDTH_160_VAL);
--	result |= (rate & RATE_MCS_CHAN_WIDTH_MSK_V1) |
--		  (rate & RATE_MCS_ANT_AB_MSK) |
--		  (rate & RATE_MCS_STBC_MSK) |
--		  (rate & RATE_MCS_BF_MSK);
--
--	/* not handling DUP since we don't use it */
--	WARN_ON_ONCE(rate & RATE_MCS_DUP_MSK);
--
--	if (rate & RATE_MCS_SGI_MSK)
--		result |= RATE_MCS_SGI_MSK_V1;
--
--	return cpu_to_le32(result);
--}
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rs.h b/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
-index dfb062b7c5c21..34c957bef6f8a 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
-@@ -425,9 +425,6 @@ void iwl_mvm_rate_control_unregister(void);
- 
- struct iwl_mvm_sta;
- 
--u32 iwl_mvm_v3_rate_from_fw(__le32 rate, u8 rate_ver);
--__le32 iwl_mvm_v3_rate_to_fw(u32 rate, u8 rate_ver);
--
- int iwl_mvm_tx_protection(struct iwl_mvm *mvm, struct iwl_mvm_sta *mvmsta,
- 			  bool enable);
- 
 diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/utils.c b/drivers/net/wireless/intel/iwlwifi/mvm/utils.c
-index 63e84efdaa46c..2931a8d5ccc96 100644
+index 2931a8d5ccc96..557c16d4e609d 100644
 --- a/drivers/net/wireless/intel/iwlwifi/mvm/utils.c
 +++ b/drivers/net/wireless/intel/iwlwifi/mvm/utils.c
-@@ -1237,3 +1237,167 @@ bool iwl_mvm_vif_is_active(struct iwl_mvm_vif *mvmvif)
- 
- 	return false;
- }
-+
-+static u32 iwl_legacy_rate_to_fw_idx(u32 rate_n_flags)
-+{
-+	int rate = rate_n_flags & RATE_LEGACY_RATE_MSK_V1;
-+	int idx;
-+	bool ofdm = !(rate_n_flags & RATE_MCS_CCK_MSK_V1);
-+	int offset = ofdm ? IWL_FIRST_OFDM_RATE : 0;
-+	int last = ofdm ? IWL_RATE_COUNT_LEGACY : IWL_FIRST_OFDM_RATE;
-+
-+	for (idx = offset; idx < last; idx++)
-+		if (iwl_fw_rate_idx_to_plcp(idx) == rate)
-+			return idx - offset;
-+	return IWL_RATE_INVALID;
-+}
-+
-+u32 iwl_mvm_v3_rate_from_fw(__le32 rate, u8 rate_ver)
-+{
-+	u32 rate_v3 = 0, rate_v1;
-+	u32 dup = 0;
-+
-+	if (rate_ver > 1)
-+		return iwl_v3_rate_from_v2_v3(rate, rate_ver >= 3);
-+
-+	rate_v1 = le32_to_cpu(rate);
-+	if (rate_v1 == 0)
-+		return rate_v1;
-+	/* convert rate */
-+	if (rate_v1 & RATE_MCS_HT_MSK_V1) {
-+		u32 nss;
-+
-+		rate_v3 |= RATE_MCS_MOD_TYPE_HT;
-+		rate_v3 |=
-+			rate_v1 & RATE_HT_MCS_RATE_CODE_MSK_V1;
-+		nss = u32_get_bits(rate_v1, RATE_HT_MCS_MIMO2_MSK);
-+		rate_v3 |= u32_encode_bits(nss, RATE_MCS_NSS_MSK);
-+	} else if (rate_v1 & RATE_MCS_VHT_MSK_V1 ||
-+		   rate_v1 & RATE_MCS_HE_MSK_V1) {
-+		u32 nss = u32_get_bits(rate_v1, RATE_VHT_MCS_NSS_MSK);
-+
-+		rate_v3 |= rate_v1 & RATE_VHT_MCS_RATE_CODE_MSK;
-+
-+		rate_v3 |= u32_encode_bits(nss, RATE_MCS_NSS_MSK);
-+
-+		if (rate_v1 & RATE_MCS_HE_MSK_V1) {
-+			u32 he_type_bits = rate_v1 & RATE_MCS_HE_TYPE_MSK_V1;
-+			u32 he_type = he_type_bits >> RATE_MCS_HE_TYPE_POS_V1;
-+			u32 he_106t = (rate_v1 & RATE_MCS_HE_106T_MSK_V1) >>
-+				RATE_MCS_HE_106T_POS_V1;
-+			u32 he_gi_ltf = (rate_v1 & RATE_MCS_HE_GI_LTF_MSK_V1) >>
-+				RATE_MCS_HE_GI_LTF_POS;
-+
-+			if ((he_type_bits == RATE_MCS_HE_TYPE_SU ||
-+			     he_type_bits == RATE_MCS_HE_TYPE_EXT_SU) &&
-+			    he_gi_ltf == RATE_MCS_HE_SU_4_LTF)
-+				/* the new rate have an additional bit to
-+				 * represent the value 4 rather then using SGI
-+				 * bit for this purpose - as it was done in the
-+				 * old rate
-+				 */
-+				he_gi_ltf += (rate_v1 & RATE_MCS_SGI_MSK_V1) >>
-+					RATE_MCS_SGI_POS_V1;
-+
-+			rate_v3 |= he_gi_ltf << RATE_MCS_HE_GI_LTF_POS;
-+			rate_v3 |= he_type << RATE_MCS_HE_TYPE_POS;
-+			rate_v3 |= he_106t << RATE_MCS_HE_106T_POS;
-+			rate_v3 |= rate_v1 & RATE_HE_DUAL_CARRIER_MODE_MSK;
-+			rate_v3 |= RATE_MCS_MOD_TYPE_HE;
-+		} else {
-+			rate_v3 |= RATE_MCS_MOD_TYPE_VHT;
-+		}
-+	/* if legacy format */
-+	} else {
-+		u32 legacy_rate = iwl_legacy_rate_to_fw_idx(rate_v1);
-+
-+		if (WARN_ON_ONCE(legacy_rate == IWL_RATE_INVALID))
-+			legacy_rate = (rate_v1 & RATE_MCS_CCK_MSK_V1) ?
-+				IWL_FIRST_CCK_RATE : IWL_FIRST_OFDM_RATE;
-+
-+		rate_v3 |= legacy_rate;
-+		if (!(rate_v1 & RATE_MCS_CCK_MSK_V1))
-+			rate_v3 |= RATE_MCS_MOD_TYPE_LEGACY_OFDM;
-+	}
-+
-+	/* convert flags */
-+	if (rate_v1 & RATE_MCS_LDPC_MSK_V1)
-+		rate_v3 |= RATE_MCS_LDPC_MSK;
-+	rate_v3 |= (rate_v1 & RATE_MCS_CHAN_WIDTH_MSK_V1) |
-+		(rate_v1 & RATE_MCS_ANT_AB_MSK) |
-+		(rate_v1 & RATE_MCS_STBC_MSK) |
-+		(rate_v1 & RATE_MCS_BF_MSK);
-+
-+	dup = (rate_v1 & RATE_MCS_DUP_MSK_V1) >> RATE_MCS_DUP_POS_V1;
-+	if (dup) {
-+		rate_v3 |= RATE_MCS_DUP_MSK;
-+		rate_v3 |= dup << RATE_MCS_CHAN_WIDTH_POS;
-+	}
-+
-+	if ((!(rate_v1 & RATE_MCS_HE_MSK_V1)) &&
-+	    (rate_v1 & RATE_MCS_SGI_MSK_V1))
-+		rate_v3 |= RATE_MCS_SGI_MSK;
-+
-+	return rate_v3;
-+}
-+
-+__le32 iwl_mvm_v3_rate_to_fw(u32 rate, u8 rate_ver)
-+{
-+	u32 result = 0;
-+	int rate_idx;
-+
-+	if (rate_ver > 1)
-+		return iwl_v3_rate_to_v2_v3(rate, rate_ver > 2);
-+
-+	switch (rate & RATE_MCS_MOD_TYPE_MSK) {
-+	case RATE_MCS_MOD_TYPE_CCK:
-+		result = RATE_MCS_CCK_MSK_V1;
-+		fallthrough;
-+	case RATE_MCS_MOD_TYPE_LEGACY_OFDM:
-+		rate_idx = u32_get_bits(rate, RATE_LEGACY_RATE_MSK);
-+		if (!(result & RATE_MCS_CCK_MSK_V1))
-+			rate_idx += IWL_FIRST_OFDM_RATE;
-+		result |= u32_encode_bits(iwl_fw_rate_idx_to_plcp(rate_idx),
-+					  RATE_LEGACY_RATE_MSK_V1);
-+		break;
-+	case RATE_MCS_MOD_TYPE_HT:
-+		result = RATE_MCS_HT_MSK_V1;
-+		result |= u32_encode_bits(u32_get_bits(rate,
-+						       RATE_HT_MCS_CODE_MSK),
-+					  RATE_HT_MCS_RATE_CODE_MSK_V1);
-+		result |= u32_encode_bits(u32_get_bits(rate,
-+						       RATE_MCS_NSS_MSK),
-+					  RATE_HT_MCS_MIMO2_MSK);
-+		break;
-+	case RATE_MCS_MOD_TYPE_VHT:
-+		result = RATE_MCS_VHT_MSK_V1;
-+		result |= u32_encode_bits(u32_get_bits(rate,
-+						       RATE_VHT_MCS_NSS_MSK),
-+					  RATE_MCS_CODE_MSK);
-+		result |= u32_encode_bits(u32_get_bits(rate, RATE_MCS_NSS_MSK),
-+					  RATE_VHT_MCS_NSS_MSK);
-+		break;
-+	case RATE_MCS_MOD_TYPE_HE: /* not generated */
-+	default:
-+		WARN_ONCE(1, "bad modulation type %d\n",
-+			  u32_get_bits(rate, RATE_MCS_MOD_TYPE_MSK));
-+		return 0;
-+	}
-+
-+	if (rate & RATE_MCS_LDPC_MSK)
-+		result |= RATE_MCS_LDPC_MSK_V1;
-+	WARN_ON_ONCE(u32_get_bits(rate, RATE_MCS_CHAN_WIDTH_MSK) >
-+			RATE_MCS_CHAN_WIDTH_160_VAL);
-+	result |= (rate & RATE_MCS_CHAN_WIDTH_MSK_V1) |
-+		  (rate & RATE_MCS_ANT_AB_MSK) |
-+		  (rate & RATE_MCS_STBC_MSK) |
-+		  (rate & RATE_MCS_BF_MSK);
-+
-+	/* not handling DUP since we don't use it */
-+	WARN_ON_ONCE(rate & RATE_MCS_DUP_MSK);
-+
-+	if (rate & RATE_MCS_SGI_MSK)
-+		result |= RATE_MCS_SGI_MSK_V1;
-+
-+	return cpu_to_le32(result);
-+}
+@@ -1372,8 +1372,8 @@ __le32 iwl_mvm_v3_rate_to_fw(u32 rate, u8 rate_ver)
+ 	case RATE_MCS_MOD_TYPE_VHT:
+ 		result = RATE_MCS_VHT_MSK_V1;
+ 		result |= u32_encode_bits(u32_get_bits(rate,
+-						       RATE_VHT_MCS_NSS_MSK),
+-					  RATE_MCS_CODE_MSK);
++						       RATE_MCS_CODE_MSK),
++					  RATE_VHT_MCS_RATE_CODE_MSK);
+ 		result |= u32_encode_bits(u32_get_bits(rate, RATE_MCS_NSS_MSK),
+ 					  RATE_VHT_MCS_NSS_MSK);
+ 		break;
 -- 
 2.53.0
 
