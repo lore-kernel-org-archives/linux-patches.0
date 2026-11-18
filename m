@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056789;
-	b=oWatWavjA+oE7RvWbEofT+rGOieLpsCy4AA1cmTpobK/xFpurtlBp+nbqSrS1vVBnB74
-	 jztCvgwm2wlbph8XaSCdb6bwu7t11FWEs5LJDKeE8KNm5suJaWEHUpyTXCYGH6Kf0ICR8
-	 0lm7uMfPSqm6LbipwGi+qJBRbeWn+X7ARZB+NBcSh5XhG+T8u7dwKZ8GlMsZtGMgZpTcM
-	 z6jo6Ly8q0dnwQ4lExt+uOyMEWRSfG8yMLiSYvTZOG4rF09rM9yRUC88DE6wcjrk9Co9Z
-	 lNA/dLKC8Aa8E/albkIsxGPok7MtEX1Ezgbh/DhHgLN8uTBXVNbndr0NstseYqpFPng==
+	t=1795056791;
+	b=KmWqxTEWDufyxPxaanXBamCp1Hd2XDLLDKz3bd0m6sp/kL4nYOn8NDZbilQjl/fEDpsi
+	 6NkvAkzT/w+VvTqiUS7ilu0O6wC9R6Xb+ZQekFo6282XFBN7ZohYv0RYaSjUOiw4UtFjx
+	 YTrLEXJJXRvl8MCXwlQF1iN4SMF7HB0fFdChdGAJopFusFzyuoDp+CM8Z7D/rH2+gSNEh
+	 aVy7hE6/2Ir4kIwkAi6ebjGZzKGer12dycUw9nCTkrFornmDrXsIiGtMQNDjAcEtNJs54
+	 coXQFu15Az39EB+1GxATuQ8a3wDNwH0H2UkbFEoUx8ZUS2SMVEbp5Jg6kc/iPCa3KpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056789;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056791;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j/KivnGzRi+JTxraoPA4OH4q85b+gNP5BTPmH2T5oCg=;
-	b=p/EhTckneUOIyZ0EZ09sEa180LklKBZi77oAOIShqDryVa6eZey+c+IIyQ1z6Kd/NmEf
-	 qAg+c4wWedJ8RtzqrV2RB4bZxhvloxOqX6aHzrEXg0X9gMIR4ZwThXFRW9TofFU0v0IX2
-	 wGJ+wPhrDyYa5o4+QGdvkudlKNhBHia/QWxurpQiRM8uYAusXqKDljWJnjhwX7rof6CFV
-	 A3/kXklZIZ3XqD5Q1KkG9YDOeCGJiYSciixgxwYaU3tW/Sr5MruyPd8GWu6dZTMKhdVVP
-	 LyM2YnJOP6UGhMfCXlyESFMwTTS8UkfIQrkbusNYKght6iE9PpUJlEZ8wwzBvAWS3IQ==
+	bh=xVJzWKAA+pcBzRIjTCMrpxTJuuCjIwxps8bpFidM3Z8=;
+	b=uU+BArqdGKA0sz2ZDORrHrqQzE2U0Ag313NLg8sUDIZbtt69cDDC3+PP3/G5wMi5TbfQ
+	 7TXMTpX80mNHH7uXGZ+2B/N3poBbrRFPHDMwR/S//wuq8BP244yNg3BQcRQHQKMZ0369y
+	 exHkygZYnQWObZMxrfOX8kvCA/9tT6ZYRQJAzskK88gUlf3+yabJrt6bfhF3q+L2DJnkr
+	 15iOIyEl+/SR8NcmDxpRbS660NIYWECi1H6AWNtZJgsgdrWc4Ojc0dxN3co1B6N3WeoCC
+	 ErBsTMd8lNQWUEQ7XP6xhXYBt7cZXLcu4ZmASVZ9XDCUwd+SgA++Ujw+9WjVg+3iFvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UhpAvi+X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2FKGfXmo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BEB606A31C;
-	Thu, 19 Nov 2026 02:53:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A17606A320;
+	Thu, 19 Nov 2026 02:53:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UhpAvi+X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0C31F000C4;
-	Thu, 19 Nov 2026 02:53:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2FKGfXmo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8141F000C4;
+	Thu, 19 Nov 2026 02:53:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056788;
-	bh=j/KivnGzRi+JTxraoPA4OH4q85b+gNP5BTPmH2T5oCg=;
+	s=korg; t=1795056791;
+	bh=xVJzWKAA+pcBzRIjTCMrpxTJuuCjIwxps8bpFidM3Z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UhpAvi+XM3D+fC/ogFQoJiSGoLJ2ukNbfzBhuuaAk5J7rEvXZaXHFchIRcMGkIKu0
-	 MKTCOgOnEdanKph2KNIPx4wogwsnzPKtaSVPieAVOoHMFvOOjOVvuf93RtKKUJbN5t
-	 yMWY94owOKvmvVoL1ABkxs/7Olp6BudKFEZpo4EE=
+	b=2FKGfXmo7PXNRiuuA9K597Lah2WhFyujIxFZd3aHe+yznEKtGuPhqoetrN+h2zO+f
+	 ThrK6Ru9jDoAV6r5xYhbdMm4Q4MB5RjQUxzhuPcUlfo9HQmnXMJSWWRfpdAZN+J4Qw
+	 NLEJ/9J/mJAck/xguQKTY47/3SpmPE4eot890HyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Simon Polack <spolack+git@mailbox.org>,
-	Willem de Bruijn <willemb@google.com>,
-	Wang Zhan <wang.zhan@smartx.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2112/2214] net: fix frag_list leak in skb_segment_list() error path
-Date: Wed, 18 Nov 2026 16:03:08 +0100
-Message-ID: <20261118150135.100239505@linuxfoundation.org>
+Subject: [PATCH 5.15 2113/2214] net/rds: include the scope id in the sendmsg connection cache check
+Date: Wed, 18 Nov 2026 16:03:09 +0100
+Message-ID: <20261118150135.136821823@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,59 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit 546daf344420b5dce27eded3ad15be12628dd185 ]
+[ Upstream commit b7dfff5e3eb3984d42026a6d653ec2a3d5cec729 ]
 
-skb_segment_list() detaches the frag_list from the head skb and moves
-its members one by one to the skb->next chain. On error, err_linearize
-frees that chain with kfree_skb_list(skb->next), relying on the members
-not yet processed to still be linked after the current one.
+rds_sendmsg() reuses the connection cached in rs->rs_conn when its
+peer address and ToS match the request.  The interface index is part
+of a connection's identity as well: rds_conn_create_outgoing() passes
+the request's scope_id down as dev_if, and rds_conn_lookup() compares
+c_dev_if, so sends to the same link-local address through two
+interfaces are two different connections.  The cache-hit test never
+looked at it.
 
-This does not hold when the current member was shared: it is replaced
-by skb_clone(), and __skb_clone() clears ->next. If __skb_linearize()
-then fails on that clone, the remaining members are no longer reachable
-from skb->next nor from skb_shinfo(skb)->frag_list, and they leak.
+A socket bound to a non-link-local address has rs_bound_scope_id 0,
+and the scope check at the top of rds_sendmsg() accepts any non-zero
+destination scope for such a socket.  So after a send to fe80::x%ifA,
+a send to fe80::x%ifB hits the cached ifA connection and the datagram
+leaves through ifA, to whichever peer answers to that address there.
 
-The skb_shared() error branch already relinks nskb->next to list_skb
-before jumping to err_linearize. Do it unconditionally right after nskb
-is added to the chain, so every error exit sees the remaining members.
-On the last member list_skb is NULL, which still terminates the chain.
+Compare c_dev_if with the request's scope_id in the cache test, so
+that such a send takes the lookup path and finds, or creates, the ifB
+connection - the same key the lookup uses.  A send without a
+destination takes its scope from the socket, and the connection it
+created was keyed on that same scope, so the comparison holds for it
+too; the next patch gives that send the connected peer's own scope.
 
-Fixes: 53475c5dd856 ("net: fix use-after-free when UDP GRO with shared fraglist")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Cc: Simon Polack <spolack+git@mailbox.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Wang Zhan <wang.zhan@smartx.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20261021161858.761205-1-edumazet@kernel.org
+Found by inspection while reworking this cache for the connection
+lifetime series on net-next; not observed in the field.
+
+Fixes: 1e2b44e78eea ("rds: Enable RDS IPv6 support")
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20261020002816.3087414-2-achender@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/rds/send.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 5867fcac3f05b..32511b77d8122 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -3965,10 +3965,13 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
- 		else
- 			tail->next = nskb;
- 
--		if (unlikely(err)) {
--			nskb->next = list_skb;
-+		/* nskb may be a clone with a NULL ->next: keep the remaining
-+		 * members linked so that err_linearize frees them.
-+		 */
-+		nskb->next = list_skb;
-+
-+		if (unlikely(err))
- 			goto err_linearize;
--		}
- 
- 		tail = nskb;
- 
+diff --git a/net/rds/send.c b/net/rds/send.c
+index 64cdfd58e511b..f38ed9cb33f0d 100644
+--- a/net/rds/send.c
++++ b/net/rds/send.c
+@@ -1309,7 +1309,8 @@ int rds_sendmsg(struct socket *sock, struct msghdr *msg, size_t payload_len)
+ 	/* rds_conn_create has a spinlock that runs with IRQ off.
+ 	 * Caching the conn in the socket helps a lot. */
+ 	if (rs->rs_conn && ipv6_addr_equal(&rs->rs_conn->c_faddr, &daddr) &&
+-	    rs->rs_tos == rs->rs_conn->c_tos) {
++	    rs->rs_tos == rs->rs_conn->c_tos &&
++	    rs->rs_conn->c_dev_if == scope_id) {
+ 		conn = rs->rs_conn;
+ 	} else {
+ 		conn = rds_conn_create_outgoing(sock_net(sock->sk),
 -- 
 2.53.0
 
