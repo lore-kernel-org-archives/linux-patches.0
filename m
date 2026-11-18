@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043312;
-	b=QJtuqNkr07wTURPfI6x92ngQYpAEgI4De2Jy1IN36lUEQreMCpha2LgLPMTyFHrhZskE
-	 ZNTOeImDVlroIj50NeYX2eWox30KK1/a7gaGRdm1KSaUEFyNfNoBRgwj8cROSu3zqpv7x
-	 m/mb/XTmQHBRSeE2V0VbfTN+UqgVNWQAEu5CfxnlkivjEQM60yqrgt+Um6SJa1PZCYJT8
-	 ggijMzfmk0UYT5xdKembyGhSqPYzfmXLqdNZaLJhxBlLU+3Wh6u2UVrAh/nNRV88B7dgT
-	 YM+VSSMR1ha4s9ajktdK9bWj1IbHnAJFevJcnbs+mrUJIoQGBI103mUfqUZ2N++D6vQ==
+	t=1795043315;
+	b=bEi+eZj2MgY+rhSwE5RLjI00IYcCh9NUfuf/jTF2NDqNfxl0DO50hUpGNfJsRzdrAvbF
+	 ZoXQfQYPKoYSYM+z0RCYEgrpO44wztoDoFrqJX2f0eVhlaHDs4N4lJUOmBK+KMT/ALHsm
+	 MGe34tgpvN/7E0BdtglN8jcUq7m/QSZ6dVVSgUorouWBTrqwEKkQb1KazSFFODltCzLE6
+	 yS8bB371hR6BVjQfe7WL1x+yuQ1ATUVNFB+wpVJA4KJ+UIRS/NMvwm5rXy9+o5JuYlFDY
+	 Ey0K8dYBQupkFFkwvaNuLRikfZ2Si2bPBmzH08JiGScLm9WW2VSc3D1G5WcM8SMBXbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043312;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043315;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Fwt+26TyKRAwmgYFK0357XUa72s3SkS7/1vZofazNGI=;
-	b=cATIBU1915ynI4rXnVCL5BOu87wZ616H82MZJlWZ1k0wXPirqnbk71NcRzGoGaA3Fpw2
-	 evdj0RzmjmeUe9fHxtaX6CQYklZwj3D1ejOWtTcoie+kQSE79hKRN9fh8V9nkOgk2Xy6z
-	 eQmqeyzLDVBoe6j9xWHbE1M9UrKZUNYuPmJdVt3H/uqIYsAuoSMEPVu1lFtNY7ab9DOdf
-	 LZw/xhFHWe47B0xfyFaA1t80zYyeOP0B6GRYgoCy8zB6vmtEfF/YKohqhrSB9P1DDG6sa
-	 gDksB3F+buPwpeeM4iLpEWo2bS0XSR1y02a9lPGhMkAe7sNRvNm52UR+KnPEpm5kxIQ==
+	bh=jB982b6rynLcX3Bj6HX1GG3lXIfLC267jRqKpWvqVV0=;
+	b=Kk4KRlL2CQNQyQOzbOYN/rSkEzS/uP0Clm6nWXHL75ZDYctDKoqqI8VWdUZqgk/1kTJ6
+	 H1uh0wZfNnZVC8Ay8T7H5CYfrjTnaI6kFa+L2M5MYxahKOL29Ke2tI78h9MKy43tE/Uig
+	 noGLyeJD82ieOiiZt0cZ4r7/if4sJu3iajGHPz1P0NP+1xQTWIfZcjoPTqBbUDDFGmPpn
+	 aH/SVYDDMyQea+P7DIJr8AXJ/ls/LE6yX5i/hwQevHCvdaxf8SG5mDi6XAvsTRc1XVX68
+	 JdLredfNn72wBhUKCNHkcvNsDbYJKJATOOIn40w6rETLKpkPPIAylvUwRpxhbWIQH6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YkZvSJHy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MGZ8qb2v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515C5606A31C;
-	Wed, 18 Nov 2026 23:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513F1606A32C;
+	Wed, 18 Nov 2026 23:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YkZvSJHy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2CB31F000C4;
-	Wed, 18 Nov 2026 23:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MGZ8qb2v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE841F000C7;
+	Wed, 18 Nov 2026 23:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043312;
-	bh=Fwt+26TyKRAwmgYFK0357XUa72s3SkS7/1vZofazNGI=;
+	s=korg; t=1795043315;
+	bh=jB982b6rynLcX3Bj6HX1GG3lXIfLC267jRqKpWvqVV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YkZvSJHyBhdcDBqdnmutRv1TsqUETYsyYOyAU+hODO8S1NT2fNIbM28GnvSOKCAP1
-	 SlfFDbNQN3MlMmRi1FwdVvyZuKZzkurnZbFp+02hco35wJDymf9I3JGhLLNvEkIkx0
-	 rutkV5uWCBa3DmETeJv/40mq/lqjWgfH/E0odBH0=
+	b=MGZ8qb2vN/lFetC/O+ui2+f4emxeiXTOLsomvz7TpDm4AZBXQCNmtFxFmPAENjhOL
+	 nhKwXJi8lxlqDT9q5ycl7MOCT4JcPj0LRqhIywCRsi3jeJRB8PPpTkgqGGFUN8ctbL
+	 h/xIbeB3OMyvMOPXSub72vPWF/wgmeVNKHXxhn2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Bob Song <songxiebing@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0149/2857] fs/ntfs3: reserve NUL byte when converting UTF-16 names
-Date: Wed, 18 Nov 2026 15:19:43 +0100
-Message-ID: <20261118150206.713588305@linuxfoundation.org>
+Subject: [PATCH 6.1 0167/2857] ALSA: hda/realtek: add missing NULL check for codec->bus->pci
+Date: Wed, 18 Nov 2026 15:20:01 +0100
+Message-ID: <20261118150207.367366450@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,47 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Bob Song <songxiebing@kylinos.cn>
 
-[ Upstream commit 4871fedaabbfd574ac0a075b80e75afdd532e11e ]
+[ Upstream commit 3b36ac93739e7b119a30affaee9c2dd41f24efbb ]
 
-ntfs_utf16_to_nls() appends a trailing NUL to the converted output,
-but it passes the caller-supplied size directly to the conversion loop.
-For the UTF-8 path, utf16s_to_utf8s() can legitimately fill all
-buf_len bytes and return buf_len, after which ntfs_utf16_to_nls()
-writes the terminator one byte past the end of the destination buffer.
+In alc269_probe(), codec->bus->pci is dereferenced without a NULL check
+for the ALC236 vendor ID case. Add the missing check, consistent with
+the existing pattern used elsewhere in the same function.
 
-The same contract problem exists for the NLS path when a converted
-character consumes the last available byte.
-
-Reserve one byte for the terminator before doing either conversion.
-The function continues to return the number of converted bytes,
-excluding the NUL terminator.
-
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Bob Song <songxiebing@kylinos.cn>
+Link: https://patch.msgid.link/20260730015302.253008-2-songxiebing@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/dir.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
-index ca13b5a1fdabf..0215850964d79 100644
---- a/fs/ntfs3/dir.c
-+++ b/fs/ntfs3/dir.c
-@@ -24,6 +24,11 @@ int ntfs_utf16_to_nls(struct ntfs_sb_info *sbi, const __le16 *name, u32 len,
- 
- 	static_assert(sizeof(wchar_t) == sizeof(__le16));
- 
-+	if (buf_len <= 0)
-+		return -EINVAL;
-+
-+	buf_len -= 1;
-+
- 	if (!nls) {
- 		/* UTF-16 -> UTF-8 */
- 		ret = utf16s_to_utf8s(name, len, UTF16_LITTLE_ENDIAN, buf,
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 4b4e85d83af36..ce737b84729ca 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11284,6 +11284,7 @@ static int patch_alc269(struct hda_codec *codec)
+ 		spec->init_hook = alc256_init;
+ 		spec->gen.mixer_nid = 0; /* ALC256 does not have any loopback mixer path */
+ 		if (codec->core.vendor_id == 0x10ec0236 &&
++		    codec->bus->pci &&
+ 		    codec->bus->pci->vendor != PCI_VENDOR_ID_AMD)
+ 			spec->en_3kpull_low = false;
+ 		break;
 -- 
 2.53.0
 
