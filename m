@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042246;
-	b=Lq4cSo3rrJJ67IBfCOCPSh+rFx7ILei40ckNTOVR4OKuteQgOLAypGRGw/2uGM/y6eG5
-	 273P8R7BaZ/AiSl3/KrPG8OCkBA0VX2/enAjKyZZZIJ2HS1ANvajbX8u6LsyCca02ND+p
-	 lYpF23NxKA6zjEU4w7+IaGuIYz6c3L6p405MqstMiM2SURThdKROjsZPwcR+/z/pjIaYV
-	 NTOp0ZP7MPnvMZbKIRBoShT5yibCu6/ebAqYCq9xnUryInO9LTyp13EQfAiiw218gVFi6
-	 T24sXf1bxUCUTAEhYRi9tWjC6M/bO6uhEEhZKmrD+5MAP3pnCGM5ru1LJPpc/fD3T+A==
+	t=1795042249;
+	b=w5xPcv1FRIqE9QZjSL7r05eK/rcgRqjeV5+Z64+WphJPiBvrYgrMz6T5Rxr0/akG5GQB
+	 jk47/IYlXdWTOadRSTftEUbKaalFpbLfaKiYfzJ15craqzm1jNz50LhH8GJfJlFhsXit5
+	 sSz/24G7CrL6iay+rgd5nY2mcG0sM4wLi7BB5aS339jf457gtNirkGPkCpUp9TzNUxUrU
+	 qogADQTYx3IMFAouBsuyIbXowN6BG/O6PFHiawKtOsWE/Ip0gqAQN4BWUTctGPOQZvypx
+	 DqHALDRUv1jL6ppDWrWYWsb9ZxpFwW4odiFmxvBfMYXAzeoUX2k3QT0j4/A4fdkcpJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042246;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042249;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=77KRuuSe6Zt/3DcJf0QPNqUzWM4U8qsfbPHaKTtB0lo=;
-	b=ciyTezUbyuK9TD8oYj+fbrrOyrzbHoOg5Wtqf5CIJit2gOcwkQqH9WFW1pghHzIGGykS
-	 0Jq0wW+zXF5U9osku/aUPmO4H3oQtQ1NjW9elXYYUg6IwL/y1NUXlBKLZSWTxQ2J2Bprk
-	 +ZnIRfZZE0j7ZIyH2XG9cDlBpFtjp7AQ8oz8K6xPrgWgsfG53yuG3ysdz/q/kqbOv2xDa
-	 wJEdXQtAllTNNG7TRHmeXJlwQcK7l69O0KytLK7UlGW1a2C19pGFAQigu8OMVXNnl8iE2
-	 r6ffce0orUBEQt6pCcbXQkIQD9PACVhUAEl280hMAku6K1aSHtMtLjEU45hL/nzNjOA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=RMr2r0ZX4ZXx5XjIGQYWDObmS3A2T/oq6ypBtow5FIU=;
+	b=VhKjn74jaOMKmebtM5158Wm7ffuop9yRTawYEaGXMMSFSuQxjdY5BdZ2y/1iAtxOhi5V
+	 mTiempZTRvkIVjHC+ApMMsI+QBJV6g+4mDUXt2Vice7ywGSVGNCHcVjnAd04GP8sdRtlo
+	 o95b2fF8MSl4xJRt1FQvD8XyhjbEgjbgUFyenNrajI/MCOpRJ7j6ZOxxnOYrHKbW8sciH
+	 AaFEwu50sfbUvslH/Syy/qHJHy28vsa/NLibOzSRMxZ8kdr2Q8w4WVqZCiV8UHuGRVXT4
+	 CT3Nc9Uoe8IG4q9vPj+HHVJ0HDk90hiSogAvvWblmgf01kOKPZddnb+oarO9vPb57/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aMLyXeKs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dVyc35GK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC575606A31C;
-	Wed, 18 Nov 2026 22:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D31606A320;
+	Wed, 18 Nov 2026 22:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aMLyXeKs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401A11F000C4;
-	Wed, 18 Nov 2026 22:50:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dVyc35GK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0601F000C4;
+	Wed, 18 Nov 2026 22:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042246;
-	bh=77KRuuSe6Zt/3DcJf0QPNqUzWM4U8qsfbPHaKTtB0lo=;
+	s=korg; t=1795042249;
+	bh=RMr2r0ZX4ZXx5XjIGQYWDObmS3A2T/oq6ypBtow5FIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aMLyXeKsfv2qkZ4xufmM/YaqzsYZZ3Y7pm8NLT0mFgm6W6yi4MyaxLQ15pDERbkzO
-	 td+epoGzccHGhS7fTaxK0LVXfPVPS5yixyMygNxTMoqr448aqqSAD/OLvXnqm+MnJE
-	 T1Da06Ll64qPjIRebwpo0MeOTVUvRYyEHOqKcVag=
+	b=dVyc35GK9/z+Opr44dmacMSdy3z+S1Cxl7IIvbS9GD9bgcZSOFhgixIUcd1y2iWAW
+	 bqYhCATwjzmodz5pkBB4N/uRItiLF8jiP5ECRnGKqYXvsLTSNgsl+V0JrFe853K9uX
+	 qlQ8Zhzz27fcQDgLMrz1KctdF1t8eiG5uzvtDU80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michail Andreas Michalopoulos <mike.michalo@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3101/3318] ksmbd: reject FILE_ATTRIBUTE_TEMPORARY on directories
-Date: Wed, 18 Nov 2026 16:02:03 +0100
-Message-ID: <20261118150453.035331184@linuxfoundation.org>
+Subject: [PATCH 6.6 3102/3318] net: skbuff: dont copy alloc_cpu in skb header copies
+Date: Wed, 18 Nov 2026 16:02:04 +0100
+Message-ID: <20261118150453.061173320@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,56 +67,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 8323aab48525b83f750e712f66e6e9387b550cf4 ]
+[ Upstream commit 78d4bd22ec9df490135303c00e190ac43d5c334a ]
 
-Setting FILE_ATTRIBUTE_TEMPORARY on a directory with SMB2 SET_INFO
-(FileBasicInformation) succeeds: ksmbd keeps the attribute and, with
-"store dos attributes" enabled, also writes it to the DOS attribute
-xattr.
+Commit 68822bdf76f1 ("net: generalize skb freeing deferral to
+per-cpu lists") added alloc_cpu to struct sk_buff and placed it in the
+headers group copied by __copy_skb_header().
 
-MS-FSA (FileBasicInformation) says the request must fail with
-STATUS_INVALID_PARAMETER when FILE_ATTRIBUTE_TEMPORARY is set on a
-directory, and Samba rejects it too. smbtorture's
-smb2.create.dosattr_tmp_dir checks this and fails against ksmbd.
+This is wrong for newly allocated skbs. For example, skb_segment()
+allocates a new skb and records the current CPU in alloc_cpu, but
+__copy_skb_header() overwrites it with the value from the original skb.
 
-Return -EINVAL, which is sent as STATUS_INVALID_PARAMETER, when a
-directory is asked to become TEMPORARY. Do the check before any
-timestamp is changed, so a rejected request leaves the open file and
-the inode unchanged.
+If the original skb was allocated on another CPU, the segment may later
+be treated as remotely allocated and unnecessarily deferred there when
+it is freed.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Assisted-by: LLM
-Signed-off-by: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Move alloc_cpu out of the headers group so it is preserved across
+header copies. Copy it explicitly in skb_clone(), which allocates
+the skb object directly instead of going through __alloc_skb().
+
+This was discovered while investigating a throughput regression with
+software IPsec. The load used 512 IPsec tunnels carrying traffic over
+VXLAN, with 512 parallel iperf3 flows and an MTU of 4500.
+
+Before the fix:
+
+  16.09%  queued_spin_lock_slowpath
+             |
+             --15.90%--_raw_spin_lock_irqsave
+                       |
+                       --9.37%--__slab_free
+                                 kfree
+                                 skb_release_data
+                                 napi_consume_skb
+                                 mlx5e_poll_tx_cq
+
+After the fix:
+
+   6.84%  queued_spin_lock_slowpath
+             |
+             --6.57%--_raw_spin_lock_irqsave
+                      |
+                      --5.00%--__slab_free
+                                kfree
+                                skb_release_data
+                                napi_consume_skb
+                                mlx5e_poll_tx_cq
+
+Fixes: 68822bdf76f1 ("net: generalize skb freeing deferral to per-cpu lists")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Björn Töpel <bjorn@kernel.org>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261019174152.2932829-1-cjubran@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ include/linux/skbuff.h | 4 ++--
+ net/core/skbuff.c      | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 1c96df8000123..7794a35ba3552 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -6422,6 +6422,11 @@ static int set_file_basic_info(struct ksmbd_file *fp,
- 	inode = file_inode(filp);
- 	idmap = file_mnt_idmap(filp);
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index d6167cc0280c4..9340ee3b60045 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -992,8 +992,6 @@ struct sk_buff {
+ 	__u16			tc_index;	/* traffic control index */
+ #endif
  
-+	/* MS-FSA FileBasicInformation: a directory can't be marked TEMPORARY */
-+	if (S_ISDIR(inode->i_mode) &&
-+	    (file_info->Attributes & FILE_ATTRIBUTE_TEMPORARY_LE))
-+		return -EINVAL;
+-	u16			alloc_cpu;
+-
+ 	union {
+ 		__wsum		csum;
+ 		struct {
+@@ -1046,6 +1044,8 @@ struct sk_buff {
+ 
+ 	); /* end headers group */
+ 
++	u16			alloc_cpu;
 +
- 	if (file_info->CreationTime)
- 		fp->create_time = le64_to_cpu(file_info->CreationTime);
- 
+ 	/* These elements must be at the end, see alloc_skb() for details.  */
+ 	sk_buff_data_t		tail;
+ 	sk_buff_data_t		end;
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index e0f31155c8007..28e84b894936b 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -1409,7 +1409,6 @@ static void __copy_skb_header(struct sk_buff *new, const struct sk_buff *old)
+ #ifdef CONFIG_NET_RX_BUSY_POLL
+ 	CHECK_SKB_FIELD(napi_id);
+ #endif
+-	CHECK_SKB_FIELD(alloc_cpu);
+ #ifdef CONFIG_XPS
+ 	CHECK_SKB_FIELD(sender_cpu);
+ #endif
+@@ -1441,6 +1440,7 @@ static struct sk_buff *__skb_clone(struct sk_buff *n, struct sk_buff *skb)
+ 	C(pfmemalloc);
+ 	C(pp_recycle);
+ 	n->destructor = NULL;
++	C(alloc_cpu);
+ 	C(tail);
+ 	C(end);
+ 	C(head);
 -- 
 2.53.0
 
