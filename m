@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051287;
-	b=AWAXeGDmbqr2mDZgkGb+EWceP10bhlEoM3N9I3uNFxbPQAOcKTORtLRq664LXwl7KpSi
-	 My07edkB0XKUVPgRXrkE2V+uJhyfo5RDxK6IJA2yttZyQAF59ZWq3NfZd8fXegBg5AVRt
-	 2BZ3pWI2KJHkg51sUlOW0F7JMW+I5mr4LzyVW+NgMBMwc9FkXCnEVuls0BX9lHPuWZqdk
-	 D2fIgIClTwTHxnv4pMXkne3rhJKWTBFTrBu0oNoKWQjQCNJ5Zvt+ALbUbXKbzujFXZAKq
-	 1hY89PMu9p4G6y0mi4YSSV/NORWNyUHe0hOW6JHi8yTW+rZZ0GjgdTj9Jb4RTOmLgmw==
+	t=1795051290;
+	b=dKBkWEe4n/4uqHkHp+6RnsczoMXe9bZugCNkFBYVblzhE3cbEndnXWL+uT48Jpjc6mYY
+	 e5tbBggfq9rqeeOTIf7TVoNfd+iGQl9fdxMinDoCwL0Yo4e2OgP+wzXpUoZ8Dih64qL2r
+	 ajrMJ9EkVov+91aqx10YQWYNQ1OciFnSBgK70oQJKSXogXNPCdSIflAfXC9bnpj95iRd4
+	 tjoq+0P+3lqb8PXjoK8PWmIWo4/7HlBQwaPJ30MwxigrDCuRDDl92J0M9aoD7vd9tQMWH
+	 Q5NzWdxAS/lfGeuk8qPaiA9GxXmDZMjGygZATSYPQTwR4BVxJJ9b9119K4x1cFoJ85Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051287;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051290;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r/WdfzThOFy/Ro7+PKB49IVKVS1R0MRNj6ev2uy27r4=;
-	b=dX0iR8zlJEDdI8wp/dkNNuXmWCc4ogFCPDY9TlIt2hBcKmgtTxh5cGePrXdttyhYYL+y
-	 mX7WU6e/ZqeIM29rLmdV3Cr0Dp9MMCUxEeO7iGohdWcxQbTu36JMmCQY/Tu04fqq/Am8S
-	 egaWjwgd84fi+URAgOW8alp7VMvmyUS9nkJo6G+nvUmCWDwl6DHuelrInYOquPo3YjEeQ
-	 VQtnWBVfisWUxHweq9dbpb0dB+6O52ck9uK0WxF5zp7GH+2Fbpw+zy8uaDzVWQHK/0UhK
-	 FV+7He+gL7t/R0rABRbUAAt/vhurCP3z7DBRuVYIvcgIei/+jrQXGHRSqHHxYajRrtg==
+	bh=snURjwSdtrlddynHx2fJzAPH4Ki4Fqo+pIQsK92WrPQ=;
+	b=a5jXXuJlOdv7E8WoF+2gjhdzBHnI+WUQ5EVQKFUBQma2pEGpeasen44rIVBnLXFYWgVA
+	 ZU2O99WbXNaYfyvo3WKjIJWpzM9IYDHFJ+Lyk0P00Z83BkslSVSAibz5lTGGHkqvsgq0A
+	 QVoCfIpxY01pleiYfpvYeOfWQBwOO65ryRnItPviMgmffjcixE6ePNQOAnvWM25PS+eku
+	 Q7qlV7t308kOIhxzr2hLkgCpe0IOtQjPBWUijWDrXmCG1zz9hRyof6r3+XN6OxlCK8PsH
+	 u6n7uDW85PxNw5SWoV57pCOb/ekjydOiSi2OMy9jR6vbHWq3X/zXM10G02MEnz7rghg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gZDQ034Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="BRG7/r84";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD9D606A31C;
-	Thu, 19 Nov 2026 01:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B86606A31C;
+	Thu, 19 Nov 2026 01:21:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gZDQ034Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08681F000C4;
-	Thu, 19 Nov 2026 01:21:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BRG7/r84
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E761F000C4;
+	Thu, 19 Nov 2026 01:21:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051287;
-	bh=r/WdfzThOFy/Ro7+PKB49IVKVS1R0MRNj6ev2uy27r4=;
+	s=korg; t=1795051290;
+	bh=snURjwSdtrlddynHx2fJzAPH4Ki4Fqo+pIQsK92WrPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gZDQ034ZzqOs8lYuCMUTnHjoOHMpjbamvujm8dCYXdRteLh/QFZdYG5vid8vbvPKt
-	 Bejh38LCtwrakB7XrPQDDP+Qp50/i25MeCvn0tp+/3Gvswr+OXQmrXmfzYa5gwZ2oq
-	 ligi4a06ZFcx4lyzUSUVVzt+Y9aUU+L/0yN3hCrc=
+	b=BRG7/r84GjtSstDnQ1v1eLDW9wjAFwB7tCu8MQrk+qtckrC9XTus5Y078wy9RgfWX
+	 IwXySy2FYr3bV9yvvttHZyWpsttD9OR79znoiOiw3gvuk4mLGP7P5n2sZFmGwPa7Pd
+	 ovyfJ+ce9YzkRMeeyXeqJS/ncp1ByYEeS38oil9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0155/2214] regulator: rt6245: Restore state on enable failure
-Date: Wed, 18 Nov 2026 15:30:31 +0100
-Message-ID: <20261118150016.342352292@linuxfoundation.org>
+Subject: [PATCH 5.15 0129/2214] ext4: check return value of ext4_get_block() in ext4_load_tail_bh()
+Date: Wed, 18 Nov 2026 15:30:05 +0100
+Message-ID: <20261118150015.383339107@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,43 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit e95a0a309ca02bf26dc937cdeb3fe2a235c65f63 ]
+[ Upstream commit 705a3fd3bac167f1dabe3d3bba46cd484c5528dd ]
 
-Currently, if regcache_sync() fails after the enable GPIO has been
-asserted, the driver returns with enable_gpio still set high and
-regcache_cache_only() left disabled. This leaves the device state
-inconsistent with the disabled state, where the enable GPIO is low and
-cache_only is enabled.
-On failure, restore the original state by setting cache_only back to
-true and driving the enable GPIO low before returning the error.
+ext4_load_tail_bh() ignores the return value of ext4_get_block(), so an
+I/O or allocation failure is silently discarded. buffer_mapped(bh) stays
+false and the function returns NULL, which callers such as
+ext4_block_do_zero_range() treat as "nothing to do" and return success.
+This can mask real failures during zero-range, truncate, or punch-hole
+operations, potentially exposing stale data if the block was not
+actually a hole and needed zeroing. So propagate the error to the
+callers.
 
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260729100018.66577-1-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260714080044.4038124-4-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/rt6245-regulator.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/ext4/inode.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/rt6245-regulator.c b/drivers/regulator/rt6245-regulator.c
-index cb22a207e9fff..051b444224bb7 100644
---- a/drivers/regulator/rt6245-regulator.c
-+++ b/drivers/regulator/rt6245-regulator.c
-@@ -49,8 +49,11 @@ static int rt6245_enable(struct regulator_dev *rdev)
- 
- 	regcache_cache_only(regmap, false);
- 	ret = regcache_sync(regmap);
--	if (ret)
-+	if (ret) {
-+		regcache_cache_only(regmap, true);
-+		gpiod_direction_output(priv->enable_gpio, 0);
- 		return ret;
-+	}
- 
- 	priv->enable_state = true;
- 	return 0;
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 5d2409cd4030d..f248bd14c8dc9 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -3750,7 +3750,9 @@ static int __ext4_block_zero_page_range(handle_t *handle,
+ 	}
+ 	if (!buffer_mapped(bh)) {
+ 		BUFFER_TRACE(bh, "unmapped");
+-		ext4_get_block(inode, iblock, bh, 0);
++		err = ext4_get_block(inode, iblock, bh, 0);
++		if (err < 0)
++			goto unlock;
+ 		/* unmapped? It's a hole - nothing to do */
+ 		if (!buffer_mapped(bh)) {
+ 			BUFFER_TRACE(bh, "still unmapped");
 -- 
 2.53.0
 
