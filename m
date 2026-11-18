@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017560;
-	b=CKqOSlROy/3Sk5wknBOgAYRkFdrOj3srcHSX2WVt70Ira5pE6kA4LcVHRTqSjWTv/mvI
-	 +Z3dfucKqucvCR8ubcjMsf5Y556DIeJ6/xQzXoMjfZ5yNlMAWkwJjnCj8A6PhC4RxM1TR
-	 8Ql82p7zfqPGHqfYmK5fuZswkoJxadfeA5oE285L9YfDwubM6CREjBbR++Zgo+Xjk9QTG
-	 NpVqZP/ybkOdogK4lVoSVzKocgsgvGDjPVdr8YG0unGkhNQehZS4IGTVmAtQrb35Vpqpw
-	 0XbSE8RMRAgPSRNQyvaPYOIeHYTwFuFrQQh9WP9SaSxnmIwGHKQqY15kzLcWy7N6KSw==
+	t=1795017563;
+	b=kwyc1BQ3wGSzSFe4ENWeHCtKyGOx6UpIFnavpAWT8hTtZJDRWoBTr9oU4w3xsJ/8zDqf
+	 Kumn2I8PdyTAdz1Zn0HIb82g/vIUs3h7PYh671yvmvIhgs+6JU1qVMznWEisMYJr378u0
+	 +36Gg8wxaQ+SRLBOVTBVq1HoFQ+MLZ1++vjmncJ3hM4e8exXuolzMroyXNMQgo/ZdPyon
+	 jVWYTDrRCXo8vOfzWcV3MixzohpAjeJvneLJ8z6o5PqeUCkjQiIAFewqD3Yp8bMPOOVjt
+	 85U2zFZHrXCkIOFZeyNWPkK12WjyXC5U3F1D0nXfRRDNIQQkVAKeoLRc0tI+W9uQGUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017560;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017563;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ADNoFmR3f2z8POBgFhHcqJPBujmb3W5f4MveEi4aJXc=;
-	b=QNzEa9DFeThjTzdPQ2rjy6zmJYnHStE4mKvxXTCCN7OpBreTBPFd/7gR/Hnw9X58GrEr
-	 Z7ss+YSvavfyoipI7NtbjDALSKps3k/PNOwHglINL1i/3oD2g9T4v7FRluVquHVxi/obW
-	 t3UfjoqY8/cpEE15zi0tZXvdcDgeMBk2stHalmNQbZs7puheTflSFPStWVEVnu5G7e74D
-	 0OlYPGuHuj7TqE/xWzsoc9KJACo6k8mpjgr2yzL8u+Bh7s7CuSvjj4j8EfZcr213ol/jV
-	 FYarsxnTOlUC6Ru5thOVbGgsiq2HlJxfHExSnLrj92h+uyiHQ4i3IyI15G442MuQXjA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=/PLOGO8MJ63S8LArrXwtg1TqhOcAQRmiL8l8JqI9XjQ=;
+	b=zBxf2Gxl/D6/aCLfR2NXhMWkb3kvup5Pv5JO1YMOYKeqVloMQhYPORDjpDx0QiGIlAuq
+	 cUARNQYv+agtYzWSGSRoBMHOjsudqPaYhJXv4mLZ0XNAxmIbml2GSvaWKvTEjfgvPR3a4
+	 7ISyRBTL6aJhpfwVcoh7V1j8Qb6j0At4xgKSlLrnL2ptfvCyJij+5eB6VGBlzLMnSPACy
+	 mdlQ56HXfrTMWiw8drev1fDMXe9BZdUUsH499HJ+giH4J+als7ekliANP0H6HjM8Rd+gT
+	 cUAynb/ScmAN6UnY90bIcpORptEJ0WP5fgqnIykrcvyFvJOiB50iAj30Z+03qtvMULw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tUyn38RH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="j/GHKiHx";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB2D606A338;
-	Wed, 18 Nov 2026 15:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E97606A336;
+	Wed, 18 Nov 2026 15:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tUyn38RH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2350B1F000C4;
-	Wed, 18 Nov 2026 15:59:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j/GHKiHx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D251F000C4;
+	Wed, 18 Nov 2026 15:59:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017560;
-	bh=ADNoFmR3f2z8POBgFhHcqJPBujmb3W5f4MveEi4aJXc=;
+	s=korg; t=1795017563;
+	bh=/PLOGO8MJ63S8LArrXwtg1TqhOcAQRmiL8l8JqI9XjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tUyn38RHTqOXDLNSUvV0wQDSSShrsFAQUJubWTrNFJ+4N4aJBXeXvRQl8omLPh1rI
-	 1KlaTxsVgKj+2nwQv6I5qTTZA4/4WgXTdAuUPD/hKO3YK1oyTBDQIdDVFhcAKctotm
-	 4xlbXm56hZDXObuI2gxyV2k6x2wvsotj1bCAHHlQ=
+	b=j/GHKiHxJKGUQs2cH5OWsZhKVcs2WR3KUiLwXN7uGS5x+ZF/5t92HVXam9Z9X5B9y
+	 bLn8O93IpOcZJL4d9/mufdQD5vAb3IfZLgC/tn35aQiOidsH1Ibn94PT52fxi53kdf
+	 IXuArjxT9BRq5lFLbCWP+y5gxE0yeHfTbSP4aeik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Kees Cook <kees@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Nicolas Schier <n.schier@fritz.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0929/2651] iommu/vt-d: Fix IQE handling to cover all descriptors in submission range
-Date: Wed, 18 Nov 2026 15:36:09 +0100
-Message-ID: <20261118150321.326796088@linuxfoundation.org>
+Subject: [PATCH 7.3 0912/2651] kbuild: do not allocate .modinfo in vmlinux
+Date: Wed, 18 Nov 2026 15:35:52 +0100
+Message-ID: <20261118150320.720360108@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,144 +64,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit 754d07b940c4ce025fab022b548fb5c3d11bf766 ]
+[ Upstream commit 5fe4dd59664105a9ea1a9468aa7391806b80364a ]
 
-When an Invalidation Queue Error (IQE) occurs, hardware halts fetching
-and IQH points at the faulting descriptor. The previous code only
-checked whether IQH matched the first descriptor index of the current
-submission, missing faults on any other descriptor within the batch.
+Commit 3e86e4d74c04 ("kbuild: keep .modinfo section in vmlinux.unstripped")
+placed MODULE_INFO() strings in the .modinfo section in vmlinux.unstripped,
+however it left the section allocatable, so it gets assigned an address and
+on arm64, arm and riscv, the section is tagged as PT_LOAD.
 
-Expand the check to cover the entire submission range [index, wait_index],
-accounting for circular wrap-around.
+This is useless as the data is ultimately stripped anyway.
 
-Furthermore, after detecting IQE, the old recovery only replaced the
-single faulting slot with a copy of the wait descriptor and immediately
-returned -EINVAL. This left two problems:
+Doing this results in a lot of unnecessary work - each pass copies the
+whole file, 450 MiB with relocations for an x86 allmodconfig build and 250
+MiB for an arm64 allmodconfig build.
 
-  a) Hardware resumed fetching and could hit another invalid descriptor
-     in the same abandoned batch, raising a second IQE that no submitter
-     would claim — permanently deadlocking the queue.
+This adds ~0.7s on the serial tail of every build for arm64 and ~0.2s for
+x86 (the tail is single-threaded work done after parallel work has
+finished).
 
-  b) The caller reclaimed all batch slots (QI_FREE) while hardware might
-     still be asynchronously processing descriptors from that batch,
-     allowing concurrent overwrite and descriptor corruption.
+Nothing requires .modinfo to exist at an address, so mark the output
+section (INFO) so that it's not allocated and use --dump-section to extract
+it as -O only emits allocated sections.
 
-Fix both by introducing qi_drain_remaining_descs(): upon IQE detection,
-overwrite the stranded slots in [IQH, wait_index) with fenced no-op wait
-descriptors, resubmit the wait descriptor at wait_index, clear IQE, and
-spin until hardware signals QI_DONE (with DMAR_OPERATION_TIMEOUT). This
-guarantees hardware has fully drained the batch before the caller
-reclaims slots.
+The dump doesn't pick up the arch's OBJCOPYFLAGS any longer as they should
+not impact the output of this section.
 
-Fixes: 8a1d82462540 ("iommu/vt-d: Multiple descriptors per qi_submit_sync()")
-Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Image, bzImage, System.map and modules.builtin.modinfo are unchanged and
+the stripped vmlinux differs only in its program headers.
+
+The objcopy passes are on the serial tail of every build that links
+vmlinux, no-op builds are unchanged.
+
+Whole build, 128-thread Threadripper 9980X, best of N runs:
+
+                                         before   after     delta
+                                         -------------------------------
+  x86 defconfig, touch mm/vma.c, gcc       11.2s    11.1s    -0.15s (-1%)
+  x86 defconfig, touch mm/vma.c, clang     11.3s    11.1s    -0.19s (-2%)
+  x86 defconfig, clean, gcc                32.5s    32.3s    -0.16s (-1%)
+  x86 defconfig, clean, clang              34.5s    34.2s    -0.26s (-1%)
+  x86 allmodconfig, touch mm/vma.c, gcc    40.1s    39.7s    -0.44s (-1%)
+
+Assisted-by: LLM
+Reviewed-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Nicolas Schier <n.schier@fritz.com>
+Link: https://patch.msgid.link/20260923-build-speedup-v4-1-73128809a4a4@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Stable-dep-of: a98db7418797 ("kbuild: keep .modinfo when vmlinux is linked with --gc-sections")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/dmar.c | 72 ++++++++++++++++++++++++++++++++------
- 1 file changed, 61 insertions(+), 11 deletions(-)
+ include/asm-generic/vmlinux.lds.h |  2 +-
+ scripts/Makefile.vmlinux          | 10 ++--------
+ 2 files changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
-index ba675b08cd208..6377ba97a9ea6 100644
---- a/drivers/iommu/intel/dmar.c
-+++ b/drivers/iommu/intel/dmar.c
-@@ -1344,6 +1344,49 @@ static void qi_dump_fault(struct intel_iommu *iommu, u32 fault)
- 	       (unsigned long long)desc->qw1);
- }
+diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
+index 26201821ea7ff..a6730d34e8c67 100644
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -855,7 +855,7 @@
+ 		KLP_SYMID
  
-+static int qi_drain_remaining_descs(struct intel_iommu *iommu, int head,
-+				    int wait_index)
-+{
-+	struct q_inval *qi = iommu->qi;
-+	int shift = qi_shift(iommu);
-+	struct qi_desc wait_desc = {};
-+	struct qi_desc nop_desc = {};
-+	cycles_t start;
-+
-+	nop_desc.qw0 = QI_IWD_FENCE | QI_IWD_TYPE;
-+
-+	wait_desc.qw0 = QI_IWD_STATUS_DATA(QI_DONE) | QI_IWD_PRQ_DRAIN |
-+			QI_IWD_STATUS_WRITE | QI_IWD_FENCE | QI_IWD_TYPE;
-+	wait_desc.qw1 = virt_to_phys(&qi->desc_status[wait_index]);
-+
-+	while (head != wait_index) {
-+		memcpy(qi->desc + (head << shift), &nop_desc, 1 << shift);
-+		head = (head + 1) % QI_LENGTH;
-+	}
-+
-+	WRITE_ONCE(qi->desc_status[wait_index], QI_IN_USE);
-+	memcpy(qi->desc + (wait_index << shift), &wait_desc, 1 << shift);
-+
-+	/*
-+	 * Order the descriptor rewrites before the writel() that restarts
-+	 * the fetch engine.
-+	 */
-+	wmb();
-+
-+	writel(DMA_FSTS_IQE, iommu->reg + DMAR_FSTS_REG);
-+
-+	start = get_cycles();
-+	while (READ_ONCE(qi->desc_status[wait_index]) != QI_DONE) {
-+		if (DMAR_OPERATION_TIMEOUT < (get_cycles() - start)) {
-+			pr_err("Timeout draining invalidation queue after IQE\n");
-+			return -ETIMEDOUT;
-+		}
-+		cpu_relax();
-+	}
-+
-+	return 0;
-+}
-+
- static int qi_check_fault(struct intel_iommu *iommu, int index, int wait_index)
- {
- 	u32 fault;
-@@ -1366,18 +1409,25 @@ static int qi_check_fault(struct intel_iommu *iommu, int index, int wait_index)
- 	 * is cleared.
- 	 */
- 	if (fault & DMA_FSTS_IQE) {
-+		int head_idx, ret;
-+
- 		head = readl(iommu->reg + DMAR_IQH_REG);
--		if ((head >> shift) == index) {
--			struct qi_desc *desc = qi->desc + head;
+ #define MODINFO								\
+-		.modinfo : { *(.modinfo) }
++		.modinfo (INFO) : { *(.modinfo) }
+ 
+ #ifdef CONFIG_GENERIC_BUG
+ #define BUG_TABLE							\
+diff --git a/scripts/Makefile.vmlinux b/scripts/Makefile.vmlinux
+index 6833b517cacb6..95b523fe4f9ee 100644
+--- a/scripts/Makefile.vmlinux
++++ b/scripts/Makefile.vmlinux
+@@ -89,11 +89,8 @@ remove-section-$(CONFIG_ARCH_VMLINUX_NEEDS_RELOCS) += '.rel.*'
+ 
+ remove-symbols := -w --strip-unneeded-symbol='__mod_device_table__*'
+ 
+-# To avoid warnings: "empty loadable segment detected at ..." from GNU objcopy,
+-# it is necessary to remove the PT_LOAD flag from the segment.
+ quiet_cmd_strip_relocs = OBJCOPY $@
+-      cmd_strip_relocs = $(OBJCOPY) $(patsubst %,--set-section-flags %=noload,$(remove-section-y)) $< $@; \
+-                         $(OBJCOPY) $(addprefix --remove-section=,$(remove-section-y)) $(remove-symbols) $@
++      cmd_strip_relocs = $(OBJCOPY) $(addprefix --remove-section=,$(remove-section-y)) $(remove-symbols) $< $@
+ 
+ targets += vmlinux
+ vmlinux: vmlinux.unstripped FORCE
+@@ -103,10 +100,7 @@ vmlinux: vmlinux.unstripped FORCE
+ # ---------------------------------------------------------------------------
+ 
+ quiet_cmd_modules_builtin_modinfo = GEN     $@
+-      cmd_modules_builtin_modinfo = $(cmd_objcopy); \
+-                                    chmod -x $@
 -
--			/*
--			 * desc->qw2 and desc->qw3 are either reserved or
--			 * used by software as private data. We won't print
--			 * out these two qw's for security consideration.
--			 */
--			memcpy(desc, qi->desc + (wait_index << shift),
--			       1 << shift);
--			writel(DMA_FSTS_IQE, iommu->reg + DMAR_FSTS_REG);
-+		head_idx = (head >> shift) % QI_LENGTH;
-+
-+		/*
-+		 * The faulting descriptor can be anywhere within the current
-+		 * submission's range [index, wait_index]. Since the queue is
-+		 * circular, this submission may wrap around QI_LENGTH
-+		 * (index > wait_index in that case), so check both the
-+		 * non-wrapped and wrapped cases of the range.
-+		 */
-+		if (index <= wait_index ?
-+		    (head_idx >= index && head_idx <= wait_index) :
-+		    (head_idx >= index || head_idx <= wait_index)) {
-+			ret = qi_drain_remaining_descs(iommu, head_idx, wait_index);
-+			if (ret)
-+				return ret;
-+
- 			pr_info("Invalidation Queue Error (IQE) cleared\n");
- 			return -EINVAL;
- 		}
+-OBJCOPYFLAGS_modules.builtin.modinfo := -j .modinfo -O binary
++      cmd_modules_builtin_modinfo = $(OBJCOPY) -O binary -j .modinfo --dump-section .modinfo=$@ $< /dev/null
+ 
+ targets += modules.builtin.modinfo
+ modules.builtin.modinfo: vmlinux.unstripped FORCE
 -- 
 2.53.0
 
