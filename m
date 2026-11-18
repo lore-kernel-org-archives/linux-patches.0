@@ -1,57 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022375;
-	b=fajbCjjkRtbfAOa0YIQq0uUNFkrO47VYfsRX9+5jnyRD5r/lFKX+HCunDUX9w1Sb093u
-	 23E+SEyKFgsdqAL/JxaYOa/Z8Odc/e50FGZlYv+ysGm05Iq3SLuM/LABxDJ7O4mp/NeO8
-	 ZMeDHgfqi3ePExbxUaw7y/Lmdc7/v92yaJUFITXGb5LkDRNm1+innZjZEFzsRJQRJmI/p
-	 QtZLW+7nVhIkYsKx+wSwl/fiCO8b1n4z0R+62eE89FRXyQPySdg2SF7UiOE6imfrhSdhf
-	 5aSV0Wv3U44XV5RLiKEXFInC9aOPhqj9+twIP9mWmEaAr5aqnPvJpcisOtLuBEoaATQ==
+	t=1795022377;
+	b=SH0jEU/AFU83osv6qZ9KeGh0FDAjwlu2916nJk9sqkb8LcnlllR8VTSIgSjtWRgwdSYZ
+	 tdM4KmA+pBPSeVojKJxUcAHn5Gur5WffhFG9brDMWEPmeC5hMj6HpdlS2Ewmwfo77B1ko
+	 mlkykScZ+XTlJZ57GNpvGzQD8lRrmSAU7udyAZdy4JdAmAxqeFXOSd69CNw3Y6mP8tvga
+	 gCBygwTNqeG2zwgLiExxtTFbDRbmw0/gL5diM6mZLqQio/8cW+XBxMI9+VssPZGFLQiku
+	 Igph98CPGvQwRLyqgYeMB8LaCnj7abXQ6c0mq837brP/C6kgTPzsjKP0dDHRmP05/bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022375;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022377;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=exEpAzfIRhXplO/thZ0gsNMC36VVeQoqIHuRXn0TFck=;
-	b=AAs0ifI8AY9XYCXL9ZiP4r93FrvAmeNV8j7EwlbGINBUeeVqNFlTgeaMJ+1gp270piQm
-	 YxwM6qBzV3T2Pd2nIPLCXSYXGFH9zhxJavCpGTlUgXLPYcPwDa79G2JaTexjzGRmEpkrI
-	 XViHZlnXld1n+NufWdBj0/qzo6d1+r07IU3ZlVzZ3yI2x+tIPTtciEnx1rM8Ruhz8/Rct
-	 cmBfEPZkre5uPmJ2UVLxy/hrR6jT+rBehYGWmDMAJ218AWU2EOPlZqvKIdlu8xZwVfGz6
-	 UEVG/USSdN9IxBgRo6I4NHeP/EOcHHdilK/7sQ4DMk4WnUD2SHwXjmUz2K24fiy/5Rg==
+	bh=TJRqnqty6XQhB+dpcM2BEyLcCU0N+GmmAaLOZ0+fCfo=;
+	b=0HeW96qZGxSvuY3bbvyeTz9d8GYx5Cxse2S1dF+ITOzRr50DMQV9fde+M5XWNOwv2EYa
+	 X9J+RzwgVXEeSeH1Kv4q9jkYmgbkx89a2Utru8DF43A7K/QDcnxltoT8liUOnn+qRUg7F
+	 QiQe0BPxgI2WNZYVjVUstOSx9+bu4FnzhzM7GxNBUaX65StAAooEAY/18xtX2DvHOtMli
+	 biXx+4k3PDV4JD+9ToUZScGxcAwGpM5FLIYscaZnBPadxu7gnLFUAPsz7fCt/ncVDOJRi
+	 2lzUg4QOSORRQpo1Dtvts0GUfE0em847yxExnEivMC1oA/hXIUPtNpoaIIfkVWx7pQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P+7fPdVG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xur8nmqs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D3E606A31C;
-	Wed, 18 Nov 2026 17:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A04606A320;
+	Wed, 18 Nov 2026 17:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P+7fPdVG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D72D1F000C4;
-	Wed, 18 Nov 2026 17:19:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xur8nmqs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186901F000C4;
+	Wed, 18 Nov 2026 17:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022374;
-	bh=exEpAzfIRhXplO/thZ0gsNMC36VVeQoqIHuRXn0TFck=;
+	s=korg; t=1795022377;
+	bh=TJRqnqty6XQhB+dpcM2BEyLcCU0N+GmmAaLOZ0+fCfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P+7fPdVGoDq+6O4fwDGyWHv8Aje0ciBx7Jczngf74u31R/6a3I55uQ29uQIyPaA+T
-	 T9G0E0UUsUxg+IX1R06RoySM7mr8O6Xe/twvB1RXVWtngG7FQaiRa4xfi2/F7LfhnP
-	 xWgETEEZAVm/JcQRZuEWjSJ6HL+xEJGj/FbWtpao=
+	b=Xur8nmqsZZ7nlyKPFUOXyIVlpLYtO/8JVRg0aoAGmIAKtXaHmdGYXyx2vUDG6oGO9
+	 b7lkq7hTZv2IO/eZVwvp/o56j8bPZOvPeScCLJchq+jzSX29AfIyQJZ9dwg99O5uEZ
+	 VfGKVOee5/BdystAEvk2ltrHNV8KCay8audCdCt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Breno Leitao <leitao@debian.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Kayra Cizmeci <kayracizmeci@gmail.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Stian Halseth <stian@itx.no>,
-	Ingo Molnar <mingo@kernel.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2640/2651] sched/cputime: Dont warn when the tick period starts after idle exit
-Date: Wed, 18 Nov 2026 16:04:40 +0100
-Message-ID: <20261118150419.156726621@linuxfoundation.org>
+Subject: [PATCH 7.3 2623/2651] tcp: initialize mapped children before route lookup
+Date: Wed, 18 Nov 2026 16:04:23 +0100
+Message-ID: <20261118150418.632924220@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,68 +70,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stian Halseth <stian@itx.no>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit b327e63683a2b894b500027375342c25222b58ef ]
+[ Upstream commit b7ff0e7a9ae3df2f123807a7e670bc348b1e1b9d ]
 
-kcpustat_dyntick_stop() warns if idle ends before the tick period
-that the next tick will account has started. That happens on x86 in
-a CPU's first idle period with the tick stopped, right after the
-switch from the jiffies clocksource to tsc-early.
+IPv4 passive opens on a dual-stack listener go through
+tcp_v4_syn_recv_sock() with tcp_v6_mapped_child_init() as the optional
+initializer. The callback currently runs after the output route lookup.
+If that lookup fails, tcp_done() destroys a clone whose pinet6 and
+ipv6_fl_list still refer to the listener's state.
 
-On the jiffies clocksource ktime only moves at the tick. When the
-clocksource switches some time d after a tick, that d is lost: ktime
-continues from the value of the last tick. The next tick comes
-TICK_NSEC after the last one, but ktime has only moved TICK_NSEC - d,
-while tick_periodic() still adds a full TICK_NSEC to tick_next_period,
-which is now d ahead of ktime. When NOHZ starts,
-tick_init_jiffy_update() rounds it up to a multiple of TICK_NSEC and
-the sched timer is armed there, up to nearly two ticks after now. A
-tick stop saves that as ts->last_tick, and an idle exit before now
-reaches ts->last_tick - TICK_NSEC sees the tick period in the future.
+With the flowlabel list head in inet_sock, fl6_free_socklist() walks
+the clone's list and RCU-frees its nodes without unlinking them from the
+live listener. Subsequent flowlabel operations can use or free the nodes
+again. Commit 858d2a4f67ff ("tcp: fix potential race in
+tcp_v6_syn_recv_sock()") moved the initializer before ehash insertion,
+but did not cover this error path.
 
-Nothing is accounted twice then. The first tick covers a period that
-starts after the idle exit, and the code already handles it. Drop the
-warning.
+Invoke the existing initializer after the IPv4 fields it consumes have
+been set, but before route lookup can fail. It needs neither the
+destination nor sk_setup_caps(), and all later disposal paths remain
+covered.
 
-Fixes: 96a494c9cfd8 ("sched/cputime: Don't account idle time twice after dyntick-idle")
-Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reported-by: Breno Leitao <leitao@debian.org>
-Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
-Reviewed-by: Kayra Cizmeci <kayracizmeci@gmail.com>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Stian Halseth <stian@itx.no>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/all/auTCQauaU733PY5z@gmail.com/
-Link: https://lore.kernel.org/all/CAHk-=winC2u2D1FAX5grfq9F=bxmARxhuiQ4MvHAiJFu3iF6gw@mail.gmail.com/
-Link: https://patch.msgid.link/20261031081408.3378884-1-stian@itx.no
-Closes: https://lore.kernel.org/all/bfe9b14a-6e65-41c5-b638-26f6e033788b@molgen.mpg.de/
---
- kernel/sched/cputime.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+Fixes: 1c17f4373d4d ("ipv6: Move ipv6_fl_list from ipv6_pinfo to inet_sock.")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261028154101.2153360-1-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/cputime.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_ipv4.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/sched/cputime.c b/kernel/sched/cputime.c
-index faac7c2066d84..a19e61890c74c 100644
---- a/kernel/sched/cputime.c
-+++ b/kernel/sched/cputime.c
-@@ -479,7 +479,12 @@ void kcpustat_dyntick_stop(u64 now, u64 tick_start)
- 			kc->idle_tick_overlap = 0;
- 		}
- 		tick_start = max(tick_start, kc->idle_dyntick_entry);
--		if (!WARN_ON_ONCE(now < tick_start))
-+		/*
-+		 * After a switch from the jiffies clocksource the tick can be
-+		 * armed more than a tick ahead, so the period may not have
-+		 * started yet.
-+		 */
-+		if (now > tick_start)
- 			kc->idle_tick_overlap += now - tick_start;
- 		kcpustat_idle_stop(kc, now);
- 		kc->idle_dyntick = false;
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index a38cafcc553b6..b414313381020 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -1723,6 +1723,12 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
+ 	if (READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_reflect_tos))
+ 		newinet->tos = tcp_rsk(req)->syn_tos & ~INET_ECN_MASK;
+ 
++#if IS_ENABLED(CONFIG_IPV6)
++	/* Detach IPv6 state before a route lookup can fail. */
++	if (opt_child_init)
++		opt_child_init(newsk, sk);
++#endif
++
+ 	if (!dst) {
+ 		dst = inet_csk_route_child_sock(sk, newsk, req);
+ 		if (!dst)
+@@ -1732,10 +1738,6 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
+ 	}
+ 	sk_setup_caps(newsk, dst);
+ 
+-#if IS_ENABLED(CONFIG_IPV6)
+-	if (opt_child_init)
+-		opt_child_init(newsk, sk);
+-#endif
+ 	tcp_ca_openreq_child(newsk, dst);
+ 
+ 	tcp_sync_mss(newsk, dst4_mtu(dst));
 -- 
 2.53.0
 
