@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016912;
-	b=fJwdUle3nxPWMOFL0t+HoGfWxJMLYxKF9i9YX0OyvYTJcBShcDPKa8vlG+pddV6IVDS4
-	 ksc+t46gWNw7wgxEJBJt2hbR7P7pA4xnBFCkqkPBvpJTqG2XHlYTjdPq8DjgSndKV9S5/
-	 k8CO6cx5+CrEowlp+gVlfexcERZlXgPh80d0bsTQiNQLStSr5oTjvAYqYkt8i42HEgSmC
-	 i9CS3Vn9GJx1LOF4KXo7f1IVK511OwPbjbiTV7dwlA3oKCGWllen4afNusQgh542Rr6x7
-	 qLQXEvs6Obn6WQz31sogRYCzoOFwUX3AxIOsLtPrKk0hfNXVPbHnbJVt+eGE34NAZkQ==
+	t=1795016915;
+	b=HGELHkWoP6A0P0R4jgzUNnRYKYHWyNovVmucbpH7LIfQolHYYLAhG5eUWR0+Rlmzot5A
+	 IvyTEojUaOUgM7tl64csBf5Ug1rY9F7rH+YvSvc+9res53XfjQrinCd54Nf2N7pjB+mcW
+	 MoOCKh+A8F8gdiUXkIYA+I3yH6Lf7tWYKKET4Nh8kSMGVPkMXfVHgRElEPaBv4uZGOa5x
+	 ZrFzhJtLuqu8jSWK+7HF6NzrnJRtGSFuBRAQzHLQoxb1Ed8mTbBPV8JH/QRG4+qEVed1K
+	 m4LMM5UTp9aPsaQQwdPgfm02zWawf8uTJmiqQkkuNlsct+7NVkTyk8Eo6i72lV5V+KA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016912;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016915;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A8vXiVTMMe7pmZJRyV7vJFcjX85CiWpWDmADptsBgdY=;
-	b=uNNNDqV58DnwzEnsiu7eqfLxeu6Zzw1tWRjeY3aNU9ikx2P2rBHd7qxfwsxA7jUhK+kh
-	 Jj5mNJVc1j8DRATzNgX9drZ1PhTRNsouXEKjXo/i781PdSNHVVtv8cC82VwG7m7grSxtk
-	 Deev9lkFkCkwhkhiWVDHBxkiKnpz8af5+YsCesp+ocCc+fSOvQG90A+15YMwg/dicPyxY
-	 ibntD1E+hcZIoBAnAWvxXPJCutsmLS6iCCG6v/NiNJX4xd0FmzITbbDG6jMOH7p/d2HHm
-	 HvRp8EGer8++N3mbVE6uJlovl8GO4B5RM44wD6oU6PW8oNkxqDgkKc4REG26QctR+yg==
+	bh=M2XlEIqOVK5ms+96ZXfiTza4ozOTOAlqtuu/18WU9EU=;
+	b=wpNg2smzScV5Mw5enzVXOxrghDFbEK9vpzktAee7/EOkqKbGv9Yb/EpnmjlM6eKm1QAk
+	 N0wkTektUj41mQcO0RwwNwULrxhBRD0EiZn7t+8km7soCWC4nkvg27TqExIBA/DMFx+t5
+	 wPV/B4TLK+KvKQE9ykLpXtxqH2ME8jMfvzHlzLtqhPktxFw2uSW6k7w+YdjIHFclAAn6w
+	 Kn9wbRH48DD4KVFS9NqykgrcpACC2bmLOTyiE2OLbmbk5+dh/ihIAuu1Pzu9vaTkYa3tc
+	 j3b9MgkTIweAxXua4QEg9miFF0KWEbv9mnYLSue2X0SyNS9jF1jnz9wf+sgpU2iqCCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="IptxW/y0";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kKj/+AvL";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941EE606A320;
-	Wed, 18 Nov 2026 15:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BCC606A325;
+	Wed, 18 Nov 2026 15:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IptxW/y0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A2A1F000C4;
-	Wed, 18 Nov 2026 15:48:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kKj/+AvL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF0411F000C4;
+	Wed, 18 Nov 2026 15:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016912;
-	bh=A8vXiVTMMe7pmZJRyV7vJFcjX85CiWpWDmADptsBgdY=;
+	s=korg; t=1795016915;
+	bh=M2XlEIqOVK5ms+96ZXfiTza4ozOTOAlqtuu/18WU9EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IptxW/y0C1GY1RK30Wd6OEwhRi7D6D5T/39rUOAV1KbGwBPUqNKPX+K+SYBRX0EhI
-	 dshGT/cMU0X89I2xmqxLHxjKqX/uzi6UKy4arebvBud6lmb7Q9xCvaseAqmeVH7Pfz
-	 tkg5vkTZECge/Nogtp9j5KPiWsFohk9LU6EQiLMY=
+	b=kKj/+AvL4Pm9HZq/PpXDo89XU+zwIoz22Vb198Uj9TWRY0aL/76En2l6m18UQJgWg
+	 hbee6uRnoJeJSB+zhlVXYOLLTc1fs3/6aKSJ37l0MjA3j3wibDGwy8fHmKKhxL0C7L
+	 tz12Lck3BvvrEOfAv8bCiDVKvcbxXFS1GH7rfnWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manuel Fombuena <fombuena@outlook.com>,
-	Lee Jones <lee@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0656/2651] leds: st1202: Take a reference on the LED firmware node
-Date: Wed, 18 Nov 2026 15:31:36 +0100
-Message-ID: <20261118150311.378241194@linuxfoundation.org>
+Subject: [PATCH 7.3 0647/2651] perf annotate-data: Show the sample count in the data-type browser
+Date: Wed, 18 Nov 2026 15:31:27 +0100
+Message-ID: <20261118150310.973573771@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,77 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manuel Fombuena <fombuena@outlook.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 5882de94edf7a53812a76a882a95e1e86d7105d9 ]
+[ Upstream commit 9db4e9d6cc7c7d318fb6d6bb73abe3fed27385a8 ]
 
-st1202_dt_init() stores each LED's firmware node while walking the
-device tree with for_each_available_child_of_node_scoped(), which drops
-its reference to the node at the end of every iteration. The LED class
-stores the pointer with device_set_node() and does not take a reference
-of its own, so nothing keeps the node alive for as long as the LED
-device uses it. That has been the case since the driver was added, when
-the LED class devices were registered inside that same loop.
+The data-type browser has a samples view, selected with -n (or with
+annotate.show_nr_samples), in which browser__write_overhead() prints a
+local nr_samples variable that is initialized to zero and never
+updated, so every member is listed as having no samples while the
+period and percent columns for the same entry are filled in.
 
-Commit c72e455b89f2 ("leds: leds-st1202: Fix NULL pointer access on race
-condition") moved the registration into a separate loop in
-st1202_probe(), which also leaves the stored pointer unreferenced
-between the two loops.
+Print the histogram entry's own count instead.
 
-With CONFIG_OF_DYNAMIC the node can be freed while it is still in use,
-leaving led->fwnode and the LED device's firmware node dangling.
+This predates the load/store counter split, so fix it ahead of that
+patch: the split then only has to adapt a line that is already correct,
+and this fix can be picked on its own.
 
-Take a reference when the node is stored and release it through a devm
-action. The action is registered before the LED class devices are, so it
-runs after they have been unregistered.
-
-Fixes: 259230378c65 ("leds: Add LED1202 I2C driver")
-Signed-off-by: Manuel Fombuena <fombuena@outlook.com>
+Fixes: d001c7a7f4736743 ("perf annotate-data: Add hist_entry__annotate_data_tui()")
+Acked-by: Namhyung Kim <namhyung@kernel.org>
 Assisted-by: LLM
-Link: https://patch.msgid.link/GV1PR08MB849710C564F23C21BDA3EA41C5BA2@GV1PR08MB8497.eurprd08.prod.outlook.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-st1202.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ tools/perf/ui/browsers/annotate-data.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/leds-st1202.c b/drivers/leds/leds-st1202.c
-index be45c9cf14146..f30cbfdb4f367 100644
---- a/drivers/leds/leds-st1202.c
-+++ b/drivers/leds/leds-st1202.c
-@@ -12,6 +12,7 @@
- #include <linux/i2c.h>
- #include <linux/leds.h>
- #include <linux/module.h>
-+#include <linux/property.h>
- #include <linux/slab.h>
- #include <linux/string.h>
+diff --git a/tools/perf/ui/browsers/annotate-data.c b/tools/perf/ui/browsers/annotate-data.c
+index aa8c89fe2e82c..1080ed1a40d26 100644
+--- a/tools/perf/ui/browsers/annotate-data.c
++++ b/tools/perf/ui/browsers/annotate-data.c
+@@ -370,7 +370,7 @@ static void browser__write_overhead(struct ui_browser *uib,
+ 	u64 period = hist->period;
+ 	double percent = total->period ? (100.0 * period / total->period) : 0;
+ 	bool current = ui_browser__is_current_entry(uib, row);
+-	int nr_samples = 0;
++	int nr_samples = hist->nr_samples;
  
-@@ -399,6 +400,11 @@ static int st1202_blink_set(struct led_classdev *led_cdev,
- 	return 0;
- }
+ 	ui_browser__set_percent_color(uib, percent, current);
  
-+static void st1202_fwnode_put(void *data)
-+{
-+	fwnode_handle_put(data);
-+}
-+
- static int st1202_dt_init(struct st1202_chip *chip)
- {
- 	struct device *dev = &chip->client->dev;
-@@ -418,7 +424,11 @@ static int st1202_dt_init(struct st1202_chip *chip)
- 
- 		led = &chip->leds[reg];
- 		led->is_active = true;
--		led->fwnode = of_fwnode_handle(child);
-+		led->fwnode = fwnode_handle_get(of_fwnode_handle(child));
-+
-+		err = devm_add_action_or_reset(dev, st1202_fwnode_put, led->fwnode);
-+		if (err)
-+			return err;
- 
- 		led->led_cdev.max_brightness = U8_MAX;
- 		led->led_cdev.brightness_set_blocking = st1202_led_set;
 -- 
 2.53.0
 
