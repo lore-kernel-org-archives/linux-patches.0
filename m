@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045558;
-	b=5qmIqVD6BrnOvWXtdUNeo/a28BQl+IskEhoJqN6SOC0lmJCRGcYsfI7MocK4ZrUSzAWW
-	 EsehWD3G+U39yusBrKfZLOZ8PEL4a7n9EvJ8LpIKNmLpXmgWY2KqxTHDOPVLInI2N342d
-	 i7urCEAeVpZQM/HUC1bB4HmZq2KLQNtOVmrSiYaheaWtpheRqhEehfiN+i8UOSBXnOpvU
-	 Lm/cy5E25KklymfBYaDK3glisFrUld8RZ0nz2SJ2TWpkWuhhoiwwb8n8zmCzCNgjltNpN
-	 iQTddUXc+p3e+6YihNO9RaI2leLFOF76S1MkZrJwfDWaKuKbIq1qw7HvRsZlVpi0Tfg==
+	t=1795045561;
+	b=t1hItqceNZnPPakHK9TveqB+Uq7hG+hRY2AHeUMULyfb0LrTkEyqydZqi7F3lSK7YOm2
+	 BseShOiRClpLdHBR8qcw9CBmvEZkUKxYQdYFf3+UG/Jswwc+AO2HIRf5UYpCXWrgGLS9A
+	 BiSEieYAS9qK0PJIkefA1O8M6UUD+5rh3/0eipulWgg6akBta3qlXpYFWo7i3pn9yqQck
+	 sCBbvtFWQAyz/cIERWOxfWIALNPX/Uz3pf6MlYv5mHHsfZ6kllxt80oFW6dxWMlm96Gew
+	 isEf6jXbWP8OAHNWA6idC0aurS3MqEeNLraJY2wQzgWS+6HwNlSBaG31KCUfrv/qfzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045558;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045561;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NmeqfRYce8NPyPYWSFpxRfaQJW8d3T1g8Z3wAuPh/ss=;
-	b=2+xOU2dEyTosjDJ3GPBoLAr7Dy3FIZszjF2hCBEiHn1pBfx4n1KjlT/W4V49o5xqCDc6
-	 SlMSmfnN7lW7loRjW2gZUeqSDmSd2yiYghR47BFzge9yykfwQY+CuFn3/FM14XJHNIor0
-	 6YYfmF1jVH2RtMNWy543ul8Hm6jqooaVCAbisAlRUqkt5AVcDNcKIcIVPHB4sByIlMAw+
-	 wLi4thEteGB/2cch+2xueg+/jkCsmpuco3IFi2MC2joVvzuD7LNnrf6sc7rsn3DLHpLYy
-	 9l9qigHpoNp2MlfDHjsNHlBBpRVSri1VhgW0Qyzhx603vw7pzr0o3oumAENihSNeK8A==
+	bh=cGYLdjDLHdHmJXrxMSvl4CQt3Oop5SKn4y41lzGwCZA=;
+	b=X4Wz7ARmI4NHCd2jSWpaHg+lnsA7EOx998h/gWYLdqAE67J56gv5pY9B3RZbw+OZCBSc
+	 sayzFY6Ij2kv01eEdMnY5rnuVwpQ94vqYXH3L87QuCr+Od6zeRCG9xb3okFFSBQyP0coU
+	 JYTp/G41NrmEo6R/MMnCd1NBEhDOuvxy9/SKXS6fPjjfs5Ms2YTajD82i6BUgY0V9VZ8m
+	 iZbSmzbzf74I321lDsKnQNHEfyTEQlWHfTcJAfesbA8nsk7TVde7jXom42qkVLCdUEQHq
+	 LlnB/Ir/gs9atLu8EmL5VsGFuTZMaVJ3XNnCYHRdv9nIJWyLrQZmxP1k9NSZk6ueVLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eV7qwjg7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bho2fdFn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7EC606A337;
-	Wed, 18 Nov 2026 23:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB1D606A320;
+	Wed, 18 Nov 2026 23:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eV7qwjg7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B502B1F000C5;
-	Wed, 18 Nov 2026 23:45:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bho2fdFn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF051F000C4;
+	Wed, 18 Nov 2026 23:46:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045558;
-	bh=NmeqfRYce8NPyPYWSFpxRfaQJW8d3T1g8Z3wAuPh/ss=;
+	s=korg; t=1795045561;
+	bh=cGYLdjDLHdHmJXrxMSvl4CQt3Oop5SKn4y41lzGwCZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eV7qwjg7XBWp7And7KIL3S6thL6E6WMI+F36KDsyNB+HB5dMjRuDd+vFoctgxegDc
-	 Lx7v2rlO4qhGh84hZWPNSUnrF8JOV6sIpsG4ruyrzp7PYexjXHihazAmWe5GvUQtjN
-	 1axG2xs5NJWo57dtdfJ5wUYipDBZ6AJswIqatPZ0=
+	b=bho2fdFn8WlMYL67WUM3WAmpbuzejF0+kry+0lE3d7o+gMjUXSgwrCHahm1fq/NOr
+	 gO3Ss8nDp/KY/bY4Sefcy+jwLaENLCqbu03x+Eo6wtc1PRdj8eKyeIhlPdQKT4Bbyt
+	 7HLQYAaObJgNmc7RVc8joUUOfhuDti7jssDWbvw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>,
-	Lee Jones <lee@kernel.org>,
+	Guanglei Zhu <zhugl3@xiaopeng.com>,
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0966/2857] mfd: tps65217: Check return value when masking interrupt sources
-Date: Wed, 18 Nov 2026 15:33:20 +0100
-Message-ID: <20261118150236.387554922@linuxfoundation.org>
+Subject: [PATCH 6.1 0967/2857] spi: amd: fix len==0 underflow and FIFO overflow
+Date: Wed, 18 Nov 2026 15:33:21 +0100
+Message-ID: <20261118150236.423436793@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,48 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
+From: Weibin Liu <liuwb@xiaopeng.com>
 
-[ Upstream commit 66ed12c1e5a986bee1dc63f9bd9c7f068138a69a ]
+[ Upstream commit e2f4edfc061e493fddde16c4bbe1c4f230f41e4a ]
 
-tps65217_irq_init() ignores the error returned by
-tps65217_set_bits() when masking all interrupt sources. A failed
-register write leaves the driver's software mask out of sync with the
-hardware and may result in spurious interrupts.
+amd_spi_fifo_xfer() unconditionally decrements xfer->len when a tx_buf
+is present. The SPI core does not reject zero-length transfers, so a
+transfer submitted through the SPI_IOC_MESSAGE ioctl with len == 0 and
+a tx_buf makes the u32 len wrap to 0xFFFFFFFF, and the following
+per-byte loop writes far past the FIFO window.
 
-Check the return value and propagate the error to the caller.
+The driver also never checks the cumulative FIFO offset against
+AMD_SPI_FIFO_SIZE. The core splits each transfer down to the
+controller's max transfer size but does not bound the total message
+length, so a message of several transfers whose total exceeds the FIFO
+overflows it with out-of-bounds MMIO writes (tx) and reads (rx).
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Skip zero-length transfers and reject any transfer that would run past
+the end of the FIFO window.
 
-Fixes: 6556bdacf646fcaa ("mfd: tps65217: Add support for IRQs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
-Link: https://patch.msgid.link/20261002113624.178588-3-r.zhambakiev@prosoftsystems.ru
-Signed-off-by: Lee Jones <lee@kernel.org>
+Tested with a user-space replica of the fifo_xfer length arithmetic
+(ASAN build): a zero-length transfer with tx_buf makes len-- wrap to
+0xffffffff, and skipping zero-length transfers avoids the wrap. No AMD
+SPI hardware was available, so the FIFO bound check was verified by
+inspection against AMD_SPI_FIFO_SIZE.
+
+Fixes: bbb336f39efc ("spi: spi-amd: Add AMD SPI controller driver support")
+Cc: stable@vger.kernel.org # 5.8+
+Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
+Link: https://patch.msgid.link/20261014-spi-amd-fifo-fix-v1-1-9fec9ab753e8@xiaopeng.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/tps65217.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/spi/spi-amd.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/mfd/tps65217.c b/drivers/mfd/tps65217.c
-index 35fb732358dcb..0d050693d296e 100644
---- a/drivers/mfd/tps65217.c
-+++ b/drivers/mfd/tps65217.c
-@@ -156,8 +156,12 @@ static int tps65217_irq_init(struct tps65217 *tps, int irq)
+diff --git a/drivers/spi/spi-amd.c b/drivers/spi/spi-amd.c
+index 357d46651f609..bdb4c486d53a9 100644
+--- a/drivers/spi/spi-amd.c
++++ b/drivers/spi/spi-amd.c
+@@ -284,11 +284,22 @@ static inline int amd_spi_fifo_xfer(struct amd_spi *amd_spi,
  
- 	/* Mask all interrupt sources */
- 	tps->irq_mask = TPS65217_INT_MASK;
--	tps65217_set_bits(tps, TPS65217_REG_INT, TPS65217_INT_MASK,
--			  TPS65217_INT_MASK, TPS65217_PROTECT_NONE);
-+	ret = tps65217_set_bits(tps, TPS65217_REG_INT, TPS65217_INT_MASK,
-+				TPS65217_INT_MASK, TPS65217_PROTECT_NONE);
-+	if (ret) {
-+		dev_err(tps->dev, "Failed to mask interrupt sources: %d\n", ret);
-+		return ret;
-+	}
+ 	list_for_each_entry(xfer, &message->transfers,
+ 			    transfer_list) {
++		/* Skip zero-length transfers to avoid len underflow below */
++		if (!xfer->len)
++			continue;
++
+ 		if (xfer->speed_hz)
+ 			amd_set_spi_freq(amd_spi, xfer->speed_hz);
+ 		else
+ 			amd_set_spi_freq(amd_spi, spi->max_speed_hz);
  
- 	tps->irq_domain = irq_domain_add_linear(tps->dev->of_node,
- 		TPS65217_NUM_IRQ, &tps65217_irq_domain_ops, tps);
++		/* Reject transfers that would overflow the FIFO window */
++		if (fifo_pos + xfer->len >
++		    AMD_SPI_FIFO_BASE + AMD_SPI_FIFO_SIZE) {
++			message->status = -EMSGSIZE;
++			goto fin_msg;
++		}
++
+ 		if (xfer->tx_buf) {
+ 			buf = (u8 *)xfer->tx_buf;
+ 			if (!tx_len) {
+@@ -331,6 +342,12 @@ static inline int amd_spi_fifo_xfer(struct amd_spi *amd_spi,
+ 
+ 		list_for_each_entry(xfer, &message->transfers, transfer_list)
+ 			if (xfer->rx_buf) {
++				/* Reject transfers that would overflow the FIFO window */
++				if (fifo_pos + xfer->len >
++				    AMD_SPI_FIFO_BASE + AMD_SPI_FIFO_SIZE) {
++					message->status = -EMSGSIZE;
++					goto fin_msg;
++				}
+ 				buf = (u8 *)xfer->rx_buf;
+ 				/* Read data from FIFO to receive buffer */
+ 				for (i = 0; i < xfer->len; i++)
 -- 
 2.53.0
 
