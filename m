@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037085;
-	b=AFjtyruGBGfD2txtkFxFUAY0ne9b+dC/s5ouCR5LGd1R5/6w2f8SoRj6Vj37VNzplOk0
-	 gWNiW3UGh6w035BarWwH1VIr8K/VmNz+kSuY+xarEwQJU2x7RZHRuXw1UC85MSDgAVZjy
-	 Qz+FS2t/WwDp7ZizGg+sG39pIcikZl/6J4rSmR4xkWrNftn2etH8T3GI1MP1uAzuH8o7S
-	 dU1jxbVCXwVjAQEmF77EBhB+TBo/a0PF/idUtzJQO59ehhZBKEyCsXuPLaUoQTBugpInf
-	 c0x9pYBT/Kto7whCokcUxVVATNmRUFSp3ct1/XqGRMHO9qHXrxrQCukPTW95UAjihcg==
+	t=1795037088;
+	b=3KtjhMb2+K2gOJQf2QhOrK29QjGsXr+o5O/YFybbdFQSSs+NtFAYuve8yQQIxpeuro37
+	 Vp03fS9ROFuc/0CnS/g4iWYleyT3NJXwXGKU2uCjvT/M8tNbWY/8UzFpIQRaOheYRV8FX
+	 l+O/lg3jWTg1GeXMNKeqqXdeOVuFKXGhAwj3RRCr36z2FsJG3OnT2mg8gGE3calPsYEau
+	 KgVIa3zORLVac+fOH2KqhYjR3O9ILyOC8+XOkOGCrvvjlsC63HRZziJLniVAs9Ze73wzg
+	 LNu1UHsGF5m/PK84eZLcC2r3Xc4WbgAzNR+5B5NJBn9jobrEHC2TDCuWNLfORLM8L7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037085;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037088;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rwjGNHhbL4XribA0wr+mq1ZnW7zXL3Cj5c+tLX+fjGM=;
-	b=LQLruZnRrEPz3NQBAuL+BdVr5I2WTdB9oM2RR8vvqPeU+3DawfyCt05Pkj6zjrBR4Uyu
-	 E6mF60xBxjWm1F/m6hvbnm8g5jJstl88lOUaJK4rEEDMFAO7vm6Kc55CuQKosVdwyRKcR
-	 ZCXBqTA1vbuCsUQKnf+UYyO7TuuoXJCXNcxqoux+j4Zsh22SzxaCcwh9TCVgweHkVkQ7I
-	 pUbGcG3EJySBrv5X3PR8aPnfU9CaFRHHklkWA8r2TndGp7p2pleG8jz8ojwmq6A+tt3UI
-	 fs2szGoNn3zK8pCSOApm76AxJ/nVJxfGUgyo/YxdWRkrZhFXRG99KY9igApMk/dEQeA==
+	bh=mS8AgpJ+MmOlsVxexs1zXPrx7HAKW5x1Qr1CrHMIrEU=;
+	b=EF94I8Vrh4IGzIadx3NQ4O7XfvwPw33aY+rwpbgtEvyW5DsrVrSFYSrQwlZnZjFX/0qc
+	 WKv2PeJ5ger6ys+PKNl251LhfetQTw2OZiGnoKrCJSu/Su9Eup24fBcMFboEZF4K99Q0n
+	 4CAMlNrZ77W5rxKuHrxzjGnyRbhbsWCL3k8nrMwEaaewce2+WJfGUYHqK8abtJ8weqn7B
+	 j8qNLNkAElgcZhwjUDc565nefTKgV6+V1owmkj/IHM/7QpL33vzp/1cZGyAkYsceVxNSs
+	 cp5nnqlKU9kY6GqZ/6Pfw/9w1WtmSe8rK+tTXGDDf5UKaeay6mDDVv0tD26e/+JR7PA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ATCtMCYX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WbM5vJAS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F51606A325;
-	Wed, 18 Nov 2026 21:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ABD9606A320;
+	Wed, 18 Nov 2026 21:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ATCtMCYX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C3D1F000C4;
-	Wed, 18 Nov 2026 21:24:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WbM5vJAS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626C31F000C4;
+	Wed, 18 Nov 2026 21:24:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037085;
-	bh=rwjGNHhbL4XribA0wr+mq1ZnW7zXL3Cj5c+tLX+fjGM=;
+	s=korg; t=1795037087;
+	bh=mS8AgpJ+MmOlsVxexs1zXPrx7HAKW5x1Qr1CrHMIrEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ATCtMCYXBL/Bz5tlib3N2tJWgYyQvU+mzS2osRu/pyqg8j27Dcm94x4xRwQvDJ0Gx
-	 pmwoE5N0s3I62dh4+fasLFCVL07SujMcOJpYeFYQ5VMlES3FEZLTje7dG6yxo+oTyT
-	 bhngl2MXLAr2cVqWXCYkTwGTMyZIE3KF0MW/ZNfI=
+	b=WbM5vJAS8EvBn4B22BOT02uyo6sC54WadlLb2iUBkDJsaFGYwCMi1WbrLZ1+wwQUi
+	 I/uW+yi0LrUWftHnNTqCQZYRTc8a94JaiCltNTj+dB5xw2cMB2RQycvd2njQIUVeWs
+	 xb3hFU/XJbz8qz3mswNj8noPQPDGp3D8aX2vwlLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1286/3318] apparmor: fix refcount leak in aa_get_newest_profile()
-Date: Wed, 18 Nov 2026 15:31:48 +0100
-Message-ID: <20261118150358.839060450@linuxfoundation.org>
+Subject: [PATCH 6.6 1287/3318] net/packet: check TX_RING fragments before memory accounting
+Date: Wed, 18 Nov 2026 15:31:49 +0100
+Message-ID: <20261118150358.868529399@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,62 +71,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 33ed50716251d5b2875706c40d0c8082d46be0b1 ]
+[ Upstream commit dc4dd12f80e499dc034710cd8195489abcf0b059 ]
 
-The labels_profile() macro is evaluating its argument twice
+tpacket_fill_skb() adds the full non-linear payload length to
+skb->truesize and sk_wmem_alloc before checking MAX_SKB_FRAGS. With
+PACKET_VNET_HDR, userspace can submit a ring-sized frame even when it
+greatly exceeds the device MTU.
 
-  #define labels_profile(X) ((X)->vec[(X)->size - 1])
+A near-INT_MAX frame can saturate sk_wmem_alloc before the fragment
+loop rejects it. A subsequent refcount_add(0x40000001) can temporarily
+turn REFCOUNT_SATURATED into 1. A concurrent TX completion can then
+drop that apparent last reference and free the still-live packet
+socket before refcount_warn_saturate() restores the counter.
 
-unfortunately aa_get_newest_profile() passes
-   aa_get_newest_label(&p->label)
-so every call to aa_get_newest_profile results in 2 refcounts
-being taken with one being leaked.
+Check that the remaining payload fits in MAX_SKB_FRAGS pages before
+accounting it. Include the initial page offset in the calculation,
+and move the existing -EFAULT handling out of the fragment loop.
+This preserves the accepted packet sizes and error code while
+preventing an invalid frame from injecting an oversized byte charge.
 
-There is no need for labels_profile() to be a macro. Convert it to
-an inline fn, which ensures all uses are passing the correct struct
-and removes the double evaluation.
-
-Fixes: 637f688dc3dc ("apparmor: switch from profiles to using labels on contexts")
+Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
 Cc: stable@vger.kernel.org
-Reported-by: Georgia Garcia <georgia.garcia@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+[edumazet: use net_warn_ratelimited() instead of pr_err(), add a Fixes: tag]
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261028181450.2221013-1-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/include/label.h | 6 +++++-
- security/apparmor/label.c         | 1 -
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ net/packet/af_packet.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/security/apparmor/include/label.h b/security/apparmor/include/label.h
-index 55b5372ecf240..9881c6ea6e320 100644
---- a/security/apparmor/include/label.h
-+++ b/security/apparmor/include/label.h
-@@ -147,7 +147,11 @@ do {							\
- #define labels_ns(X) (vec_ns(&((X)->vec[0]), (X)->size))
- #define labels_set(X) (&labels_ns(X)->labels)
- #define labels_view(X) labels_ns(X)
--#define labels_profile(X) ((X)->vec[(X)->size - 1])
-+
-+static inline struct aa_profile *labels_profile(const struct aa_label *label)
-+{
-+	return label->vec[label->size - 1];
-+}
- 
- 
- int aa_label_next_confined(struct aa_label *l, int i);
-diff --git a/security/apparmor/label.c b/security/apparmor/label.c
-index 37282a3c68a72..3d3c55906bf9a 100644
---- a/security/apparmor/label.c
-+++ b/security/apparmor/label.c
-@@ -380,7 +380,6 @@ void aa_label_kref(struct kref *kref)
- 		label_free_switch(label);
- 		return;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 2509f878cffad..bd09a8c414907 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2696,6 +2696,12 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
  	}
--	/* TODO: update labels_profile macro so it works here */
- 	AA_BUG(label_isprofile(label) &&
- 	       on_list_rcu(&label->vec[0]->base.profiles));
- 	AA_BUG(label_isprofile(label) &&
+ 
+ 	offset = offset_in_page(data);
++	if (unlikely(to_write > MAX_SKB_FRAGS * PAGE_SIZE - offset)) {
++		net_warn_ratelimited("Packet exceed the number of skb frags(%u)\n",
++				     (unsigned int)MAX_SKB_FRAGS);
++		return -EFAULT;
++	}
++
+ 	len_max = PAGE_SIZE - offset;
+ 	len = ((to_write > len_max) ? len_max : to_write);
+ 
+@@ -2707,12 +2713,6 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
+ 	while (likely(to_write)) {
+ 		nr_frags = skb_shinfo(skb)->nr_frags;
+ 
+-		if (unlikely(nr_frags >= MAX_SKB_FRAGS)) {
+-			pr_err("Packet exceed the number of skb frags(%u)\n",
+-			       (unsigned int)MAX_SKB_FRAGS);
+-			return -EFAULT;
+-		}
+-
+ 		page = pgv_to_page(data);
+ 		data += len;
+ 		flush_dcache_page(page);
 -- 
 2.53.0
 
