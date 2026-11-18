@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048507;
-	b=DZpyUhQkup6jBJ1BInKxvNmOJ2ppe1TOGCOTeIRuFf1O/z/j4ULzSww5WUSg1STLWArt
-	 hEdyGt2omYkstQDaF0k3xIqsZcXR6+/A52lRmPKLaSS53poll5WPMo+h1whtS/uhSWL06
-	 4koKfKZktHZzU/crggEZATcBlTaFckf8HXN7pIh0HOvi+zlA1KZkx9wWtkIjVSiv54Nu8
-	 98ClimPiHR3mk3BEI8vLblxN4ADGPjbYn6q7VH+Oc6IJIHfuWpRRuzzjbJ3prF7Z49BBY
-	 ec/AeitPj1ddhm2WivTpNTjmNYcmCD+18Avk8xk9km4l7vt8E+Yt/D8F3TuyY6APOBw==
+	t=1795048509;
+	b=mkTCOxgpkz0w5B/6pwpWkYdkxzMImcDrx1YDHv7nR/pr6UScnU0b+Rydu1RKW7buhXf/
+	 93GCYM79SJNmNg/fXAKOb9vERntrTJsB6D8d/StUY8iPLfelCS9XGy61MOcKmEaS9ges7
+	 8Sutnk2Q0BOrIIQTAkvOiUrmUfp9qv/OXzl2jZPJ+vQ3uJdwpWO/NR2PJ9EAN60k9JaoT
+	 8kggtE/0h0dZMZZTqqUSa+eW4wG9QM8p+DP8f5Ttp4M9RN8E2zGBqJeWg9BOO7vUbGm7a
+	 FUNVvqHcrHSFEK5fcl/h6EqkoB8Nhi4tzrriRUKJG7Ihpx+BlQNSaHXON17qGe1iTzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048507;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048509;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i0zJnY7xtwUXToH6OxLXDkIQKEwCHPc7ShtMQ1FVUGU=;
-	b=PGjfrJUDATZ1DVH4uZtPOptiZp0h8+/M4YurPF+gGL1bnjziN2rq+J7sOz7YzbpSFVfV
-	 oS7NByPgZFsnTHCjp4XNo8i+6OMDTANCJoIKhfiEv6OeTa0gpumwQruRrJjJhnUTPJYTb
-	 wvwNRrDdifI17nd1VUOCZY040aGd0LOqDMz62je8lXMl0LH2joQST3willFXkPolueR8T
-	 K/QdrEf+RlTQrKUJkARlC8ekLwqwSVK0UqxDMSTJ/yA9y0LAcKwBFWXXK9p1j0CDZfp7K
-	 hffGj9UEMyy1sQFP3nMyC3VhGRk4XnH/YIQdw0b+tZfVochZzuNlLcJtljGEs1w115A==
+	bh=ADb1E7Uoit+XShrEgmMnXGqBr44EOr0VRxRXutEVcNk=;
+	b=zi5mCY5rKDqsaHyAX6Gbz5gVnyzz7IJXH1mdbxXBuIeKG5pmK/qUCTaW/ihEfZNTJkQL
+	 NfpjVR9Pdn/Yep7KqSIjwiA2xOGT9VYGfvpv1RGolHTt26GSasfR90pN/g9PCv28LE6K6
+	 sXbBzuuxsyHw/aU3WuksNzsDiwTCdVO2qs1coRtniWdAlwuJP5GtNGoA/KUpzjwGwYlI0
+	 jb/nWaVVdRcgTawDBI26SsRHlEV8k3gGevolbE1oSVHnTifDRHTFVvhrvdECAwH542D1d
+	 KR6dO6GFq9FLVLO3qpe+U64lCHkyhGuwl7U/8xxfmS3NrI74WKkrun1GHMDh+PCLEow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u+AZUWlR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ODiGbQ0o;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A50606A325;
-	Thu, 19 Nov 2026 00:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7877E606A325;
+	Thu, 19 Nov 2026 00:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u+AZUWlR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313261F000C8;
-	Thu, 19 Nov 2026 00:35:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ODiGbQ0o
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49E21F000C8;
+	Thu, 19 Nov 2026 00:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048506;
-	bh=i0zJnY7xtwUXToH6OxLXDkIQKEwCHPc7ShtMQ1FVUGU=;
+	s=korg; t=1795048509;
+	bh=ADb1E7Uoit+XShrEgmMnXGqBr44EOr0VRxRXutEVcNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u+AZUWlRDHtx2d2jadNKldU5Srdqopl5vA3d5Lyi4F8ibU12gbAD9oMHIdcO6sdYQ
-	 /ub5lvEhEj64RbZUCGjlHJ8urGSwOhEjciOH/3p4QzSj4p4RggPYzufd0hqZQGvmXm
-	 O8RUVYoW1RJyOtILM04W0BsioTyhjiI1ltC6de8w=
+	b=ODiGbQ0o2QypB0dOJk+9wNM4eSXY/Ku06jqegj37Sm5HX8ubZdgPclSkdVRAbqGD/
+	 dBfo5QZPduJLu9WWXvRoSDy0+X6cMa2p4ggGiw4rJo0+okO0Z5rWKosYZ4Paj2NoFT
+	 VSSgqt8lwWWgNinRdU/Wh9i924fXE+VxfjhLvPWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stan Johnson <userm57@yahoo.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2018/2857] swim: Add track zero recalibration delay
-Date: Wed, 18 Nov 2026 15:50:52 +0100
-Message-ID: <20261118150314.060716002@linuxfoundation.org>
+Subject: [PATCH 6.1 2019/2857] swim: Handle FIFO timeout error
+Date: Wed, 18 Nov 2026 15:50:53 +0100
+Message-ID: <20261118150314.098612581@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -72,49 +72,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit b9c1095048537cc9563f12d0a24f2f0df129e4d5 ]
+[ Upstream commit 2e9bcbecee68431b689d16b23bc5529db686f8d4 ]
 
-The UPD72070 spec indicates that the track zero sensor can take 3 ms
-to stabilize following a STEP command so add a call to msleep().
-Remove the duplicate swim_readbit() call as there's no need for that
-once the sensor signal has stabilized.
+When polling the FIFO for a mark byte in the sector header, don't
+return zero if the timeout counter has expired, return an error code.
 
 Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
 Signed-off-by: Finn Thain <fthain@linux-m68k.org>
 Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/6d17ca20a7286c1d74833b29510c506a66d96e6f.1788513997.git.fthain@linux-m68k.org
+Link: https://patch.msgid.link/aadb674d27d6e6d346d9b525597bf2e339c57e04.1788513997.git.fthain@linux-m68k.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/block/swim_asm.S | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index 0d738368da44e..796d1ddd4702b 100644
---- a/drivers/block/swim.c
-+++ b/drivers/block/swim.c
-@@ -402,16 +402,15 @@ static inline int swim_track00(struct swim __iomem *base)
- 	for (try = 0; try < 100; try++) {
+diff --git a/drivers/block/swim_asm.S b/drivers/block/swim_asm.S
+index 3d7a2d87595a5..208622ac4aeb9 100644
+--- a/drivers/block/swim_asm.S
++++ b/drivers/block/swim_asm.S
+@@ -79,7 +79,7 @@ wait_addr_mark_byte:
  
- 		swim_select(base, RELAX);
-+		msleep(3);
-+
- 		if (swim_readbit(base, TRACK_ZERO))
--			break;
-+			return 0;
+ 	tstb	%a2@
+ 	dbmi	%d2, wait_addr_mark_byte
+-	bpl	header_exit
++	bpl	signal_nonyb
  
- 		if (swim_step(base))
--			return -1;
-+			break;
- 	}
+ 	moveb	%a3@, %d3
+ 	cmpb	%a0@+, %d3
+@@ -136,7 +136,6 @@ crc1:	tstb	%a2@
  
--	if (swim_readbit(base, TRACK_ZERO))
--		return 0;
--
- 	pr_err("swim: track zero recalibration failed\n");
- 	return -1;
- }
+ 	tstb	%a3@(read_error - read_mark)
+ 
+-header_exit:
+ 	moveq	#0, %d0
+ 	moveb	#0x18, %a3@(write_mode0 - read_mark)
+ 	rts
 -- 
 2.53.0
 
