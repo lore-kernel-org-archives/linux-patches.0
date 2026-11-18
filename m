@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028409;
-	b=pEIpPQJysglw21aFjCk0E6g3B09nclOSU3MUxqVcSmsM3kOC0U+cdzpiqzimGcEdi2lA
-	 rp7bHG5P9Hvtdym81k17w4pw/ZFf5r9LUcM4dDrv7eFwEKFYy9L+TomqhQLe6G5D50lmo
-	 3m/ywxOtbvQDMlKfPE4ohCjusoYwuELYOAPlhnGO9S+bmRkI7k+lhH/dtwLyUmQLqdkfz
-	 PL1n2n7wMLt4lWtaJpmxDG6Few0k7QArc6VTVF24RxB6b9e/LGmfafVz+2HSBUe3clvxz
-	 on+ncef7uniZHDUPAUm+CWqSyCkOYCCCAkeL7WmetgT853ymNn5AGshcFg1s3aVc4Zg==
+	t=1795028412;
+	b=a9nVimKhgxC9V/06Ry1NOBMvuDX/mnKguZW3YnpXlCFQKMilfTdmdQvl3+7bFznG7np9
+	 ddXOEaHYl1UmWhx7U9CJbZ+VOOHWqp7+OEDZMD5M7uR3FZ3Efk9ADpgoD0VrNmcgnXCIN
+	 56sysPlCmkS/FukcBNhUp3Z3rohe0tnQaC44TYhY8kzQ0T7hLsUeiDxN07QXUpz+SPMRK
+	 Q++AToPRVpVbb4w1HxKeeyZVxV1cXXDXM/2sXhzlBVOzjNlQF+BqBQauYbRyumaUtjUIr
+	 nghk5MFdu6E+VTaT/ofTB28GKIKlPzFg1F9MHdZCA56oqzCWIgcs/ftERFZYDd3KARQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028409;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028412;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lmWT07alqjpbNsqKNKF5KULWZhlKrcHkWq4FjJbOv44=;
-	b=kbKpUlH5bGj+Inuy68DroicxlpM8W3GyscMZ+tM4/46yWcpY9BIuZtvAXYpXHVGe2Ebu
-	 bHqguwvfhtpzLh+bUFVGeY7wKSniR8n1fnM58Xr69yYI7o4Rn+jydf8pJ5BPe67d+jeXy
-	 OUkN1RS4oUFbNpMxuCf7is7JqgtOf0oVVzVwbG97N8rFNX/2u+ceRgakk3NU8kK6Thmcu
-	 QIIZ9wCsA8gTh0elGB5wBkUyMB8PCy0KLyrV6o1wJFq4vH+nrSj+ZDLyEoOOBPRDwycBD
-	 V9l7RUV5ySs33NXntbVuU/wteKHPilMGv4c7yc7NUBZc5m4VK3TGCEl/hEtjg96DIQQ==
+	bh=RjMhJo/CgEAwOqrCkvzRh8TubDR6vdvxWbXOEKUMWss=;
+	b=3hVUUULjkEWMwNLnThbA3WdCT8VZL0yfQ1ELa/aW8IViscyVsGuwF1+g+lGKBSZ9s6h+
+	 6iSVbB8J8o4le+obhfI4CbfSNQfGFNd0Ur9jxxzIdCyQt+pQDHOmtE68rKBGtnVFaW28h
+	 8W3eI1tAN0Opt06+v9FU9s35955FgcqT91jvfmIKH3BPR/h4SdshCH2qWan80krGdYSkb
+	 /68qWedEUQUOGdBVAIMtBde0XRzKOFVmK9q1hHVBZiPwG/aPgaGVDy2N1y7iM4QY+QXoP
+	 k0hXh5SHRae/JgOb43FgUU25omiX4VobBciVSokVXznEm1g4YHjiRwiXN2l/B+Qntyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jWc1vP42;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ipBvfb8Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B527606A332;
-	Wed, 18 Nov 2026 19:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C461606A334;
+	Wed, 18 Nov 2026 19:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jWc1vP42
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C063B1F000C4;
-	Wed, 18 Nov 2026 19:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ipBvfb8Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFF91F000C4;
+	Wed, 18 Nov 2026 19:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028409;
-	bh=lmWT07alqjpbNsqKNKF5KULWZhlKrcHkWq4FjJbOv44=;
+	s=korg; t=1795028412;
+	bh=RjMhJo/CgEAwOqrCkvzRh8TubDR6vdvxWbXOEKUMWss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jWc1vP42XVr4oGRaam1tuYI7oI3oioavR+qvcXBC0iMY4/uJK3oL1Eq+6bpOSoKAn
-	 N4CY930Hs3tRCalTYUIjGH3SZehwAfdR8NxXO7ioSSFcs9ml9rvJwi9s+erNsgCv2A
-	 jwFCheNux591deVy9Z43v7eKbhZlQmY7ajK1rJSk=
+	b=ipBvfb8QfL3l8GydLCgwbTz7iVa+ScuYIsPZhQeHs0lNw3PBazX+XO/I4/gUorSoM
+	 +P5BAqK9HdrLYliXQb1pTRqRmQz899VODNc4eruNgzMzeKm0u07szoXK+Se0R4KyZz
+	 yd8nhYjxN/Cr7BH4H2aIVROIuhjObvAHBFjKLgoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2093/2151] zloop: share more code for opening a zone backing file
-Date: Wed, 18 Nov 2026 16:03:48 +0100
-Message-ID: <20261118150237.943495309@linuxfoundation.org>
+Subject: [PATCH 6.18 2094/2151] zloop: fput file after failed zone init
+Date: Wed, 18 Nov 2026 16:03:49 +0100
+Message-ID: <20261118150237.978005950@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,114 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 5e9929e2f03c79574e76605e1a82509575db2d30 ]
+[ Upstream commit 134ffb0755626c91af82fc7debc8b6f75f1f777e ]
 
-Use a common path for opening and querying the block size.
+Clean up after failure in zloop_init_zone, as the caller only cleans up
+the zones before the current one.
 
+Fixes: eb0570c7df23 ("block: new zoned loop block device driver")
 Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261029150353.2503201-3-hch@lst.de
+Link: https://patch.msgid.link/20261029150353.2503201-4-hch@lst.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 134ffb075562 ("zloop: fput file after failed zone init")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/zloop.c | 65 +++++++++++++++++--------------------------
- 1 file changed, 26 insertions(+), 39 deletions(-)
+ drivers/block/zloop.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/block/zloop.c b/drivers/block/zloop.c
-index b1ec6d6a30242..9e64e1229dd6a 100644
+index 9e64e1229dd6a..a485eeb97b379 100644
 --- a/drivers/block/zloop.c
 +++ b/drivers/block/zloop.c
-@@ -813,8 +813,6 @@ static int zloop_init_zone(struct zloop_device *zlo, struct zloop_options *opts,
- {
- 	struct zloop_zone *zone = &zlo->zones[zone_no];
- 	int oflags = O_RDWR;
--	struct kstat stat;
--	sector_t file_sectors;
- 	int ret;
+@@ -839,7 +839,7 @@ static int zloop_init_zone(struct zloop_device *zlo, struct zloop_options *opts,
+ 	if (zlo->block_size) {
+ 		ret = zloop_get_block_size(zlo, zone);
+ 		if (ret)
+-			return ret;
++			goto out_fput;
+ 	}
  
- 	mutex_init(&zone->lock);
-@@ -826,27 +824,33 @@ static int zloop_init_zone(struct zloop_device *zlo, struct zloop_options *opts,
- 	if (!opts->buffered_io)
- 		oflags |= O_DIRECT;
- 
-+	zone->file = zloop_filp_open_fmt(oflags, 0600, "%s/%u/%s-%06u",
-+				zlo->base_dir, zlo->id,
-+				zone_no < zlo->nr_conv_zones ? "cnv" : "seq",
-+				zone_no);
-+	if (IS_ERR(zone->file)) {
-+		pr_err("Failed to open zone %u file %s/%u/%s-%06u (err=%ld)",
-+		       zone_no, zlo->base_dir, zlo->id,
-+		       zone_no < zlo->nr_conv_zones ? "cnv" : "seq",
-+		       zone_no, PTR_ERR(zone->file));
-+		return PTR_ERR(zone->file);
-+	}
-+
-+	if (zlo->block_size) {
-+		ret = zloop_get_block_size(zlo, zone);
-+		if (ret)
-+			return ret;
-+	}
-+
  	if (zone_no < zlo->nr_conv_zones) {
-+		sector_t file_sectors;
-+		struct kstat stat;
-+
- 		/* Conventional zone file. */
- 		set_bit(ZLOOP_ZONE_CONV, &zone->flags);
- 		zone->cond = BLK_ZONE_COND_NOT_WP;
- 		zone->wp = U64_MAX;
- 
--		zone->file = zloop_filp_open_fmt(oflags, 0600, "%s/%u/cnv-%06u",
--					zlo->base_dir, zlo->id, zone_no);
--		if (IS_ERR(zone->file)) {
--			pr_err("Failed to open zone %u file %s/%u/cnv-%06u (err=%ld)",
--			       zone_no, zlo->base_dir, zlo->id, zone_no,
--			       PTR_ERR(zone->file));
--			return PTR_ERR(zone->file);
--		}
--
--		if (!zlo->block_size) {
--			ret = zloop_get_block_size(zlo, zone);
--			if (ret)
--				return ret;
--		}
--
+@@ -854,14 +854,14 @@ static int zloop_init_zone(struct zloop_device *zlo, struct zloop_options *opts,
  		ret = vfs_getattr(&zone->file->f_path, &stat, STATX_SIZE, 0);
  		if (ret < 0) {
  			pr_err("Failed to get zone %u file stat\n", zone_no);
-@@ -867,30 +871,13 @@ static int zloop_init_zone(struct zloop_device *zlo, struct zloop_options *opts,
- 			       zone_no, ret);
- 			return ret;
- 		}
--
--		return 0;
--	}
--
--	/* Sequential zone file. */
--	zone->file = zloop_filp_open_fmt(oflags, 0600, "%s/%u/seq-%06u",
--					 zlo->base_dir, zlo->id, zone_no);
--	if (IS_ERR(zone->file)) {
--		pr_err("Failed to open zone %u file %s/%u/seq-%06u (err=%ld)",
--		       zone_no, zlo->base_dir, zlo->id, zone_no,
--		       PTR_ERR(zone->file));
--		return PTR_ERR(zone->file);
--	}
--
--	if (!zlo->block_size) {
--		ret = zloop_get_block_size(zlo, zone);
--		if (ret)
 -			return ret;
-+	} else {
-+		/* Sequential zone file. */
-+		mutex_lock(&zone->lock);
-+		ret = zloop_update_seq_zone(zlo, zone_no);
-+		mutex_unlock(&zone->lock);
++			goto out_fput;
+ 		}
+ 		file_sectors = stat.size >> SECTOR_SHIFT;
+ 
+ 		if (restore && file_sectors != zlo->zone_size) {
+ 			pr_err("Invalid conventional zone %u file size (%llu sectors != %llu)\n",
+ 			       zone_no, file_sectors, zlo->zone_capacity);
+-			return ret;
++			goto out_fput;
+ 		}
+ 
+ 		ret = vfs_truncate(&zone->file->f_path,
+@@ -869,15 +869,21 @@ static int zloop_init_zone(struct zloop_device *zlo, struct zloop_options *opts,
+ 		if (ret < 0) {
+ 			pr_err("Failed to truncate zone %u file (err=%d)\n",
+ 			       zone_no, ret);
+-			return ret;
++			goto out_fput;
+ 		}
+ 	} else {
+ 		/* Sequential zone file. */
+ 		mutex_lock(&zone->lock);
+ 		ret = zloop_update_seq_zone(zlo, zone_no);
+ 		mutex_unlock(&zone->lock);
++		if (ret)
++			goto out_fput;
  	}
  
--	mutex_lock(&zone->lock);
--	ret = zloop_update_seq_zone(zlo, zone_no);
--	mutex_unlock(&zone->lock);
--
++	return 0;
++
++out_fput:
++	fput(zone->file);
  	return ret;
  }
  
