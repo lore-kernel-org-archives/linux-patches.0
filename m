@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039893;
-	b=i0823pPwN+01xh65UIGMnXdifqxtNoA6R2mPc/qg5wd1MWECYaYWWmUM79lii64MpMO7
-	 8PHqgYALLeOpxWXPojXToHSfnL4hB/9WcR4SJtw9QCfQBa3edbn4cenme4v32kwfLr95M
-	 zoCWQsgnXWh7mGG/R2wfKG+uo9En2GHq4npJ28C83YUfNabqA3G0wvhvGLolVonX8UO3e
-	 5Fte4qsM8MW8EPZVAkTAfgyaoZJXUJ/ALfyYKLc3F+fXEMmKfrbAGFdaYCXp38vLKXwpz
-	 l2sFK+MJweMJ24ZDUv0EWqVHSNtR24VZPpzXnWKi0latOaR9Zc+TaTnjshhIm0f38PQ==
+	t=1795039896;
+	b=EB2QjzinJTk6ZCqFxOK63KEM8F7eEkOVqgIx2G2mE2mdEixgDMQGjJOMupJCYqUdwwea
+	 45fwj8p+dTJsUVujSfpeAfRac0KH+TO5V8am5kkv080reqgWViwKsOhFsdijx31DV3KoX
+	 mVa4xDJ58IUEMYiFF6IhdEX6JOfNR2kXqL/2GgvpzHsdbXW69UQwBUBPxlQ7+LpJDbdB6
+	 MNrpKwwJu8Z9klErQXzGiFgYx+MkQ3AO14/C8LngpbxHXfTqxrfCCb6jttvLp7n2WAO25
+	 TjtRJWfQn6hD0dzcJEyCETVUBU/DyawgYVtr6GsD3YGzEJDqOVfNCfxwaVI/yX5SDCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039893;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039896;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aDxjjmGPs9LPXEtNsgmcB0R+ndHWvZPpvLMpGtQp+KI=;
-	b=1NP3C+UisQlHJKOSl7fTRtxGeJisEttypZEpkRfrB71ZYQN5vcQ4vf2HU6aj+CxAeuU/
-	 r7/9S7cJwAyh575mhcRsO+f0C6nO976eCckA6/GFA/KZY84aMtky+veHrgcEmPFtS3Clq
-	 SirU+VRTLgPVP4oDUlVVlllxSi6XeCMygGqGbrREfhs/Sskz6M5b+khFWiF4tY2NYWKcL
-	 F/DGYpwQj2dpI8z7H3sywiP8BiYSWJLuDFibgIlefumILgXEJoBoqFN+7VDFgwSg66ha3
-	 jGjp2WsIOaNvcv/hKw+/FxZF7bH102hS8jgz6U9zfa+sT8mwfeMw5Ffwz0FcECHX2ew==
+	bh=I2M7+c8Rn4FRPwrxYbiDqneCZIgfLFYVs1RjJKp/40o=;
+	b=z/UoC6pgST9/ycESQbi4iZPLKDXQ8IsWiO/py0Az+Zlh1JcZc4qqlIb9q+s7rZrTgcPc
+	 YOCxSJ36ztwoF3UIHPViewreyN+8ND8EeS/6sVT6JJ2GbCOYOw0Ed9ce6715zOCyr3BDj
+	 hF5CAGl9EA1epeV1nVBkEPE0urLbSqz9G6UK5drdX1lVwamOZ08xjPEV6z6pWRHLc2PMj
+	 gIFgRYGcTWiLwtmOpCsBJeKogYm9J8xo2zCWwwNLSw58O+pvaBz+Pz643GHGZVEjvB2xv
+	 YptABMP8XBRUij6kmU61aR+lHICb8dZz0lv49Q+yQ7doye9pcJZSCgAg3WQxCXkuYYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tudbtqCd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H20OC1Vt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612C1606A31C;
-	Wed, 18 Nov 2026 22:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CBB606A31C;
+	Wed, 18 Nov 2026 22:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tudbtqCd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED001F000C5;
-	Wed, 18 Nov 2026 22:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H20OC1Vt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8AE1F000C5;
+	Wed, 18 Nov 2026 22:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039893;
-	bh=aDxjjmGPs9LPXEtNsgmcB0R+ndHWvZPpvLMpGtQp+KI=;
+	s=korg; t=1795039895;
+	bh=I2M7+c8Rn4FRPwrxYbiDqneCZIgfLFYVs1RjJKp/40o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tudbtqCdG5IH+G4shtl0DrJqtBebM3VBJFK+jzb2Fnu+0hSac6ZHcqMs6lP/lv5AX
-	 FO3sbEW1RotbrAqibJcuzJbS5ROBg6k+cBDW45zu3ZF0Eh1i4Yqi4sGUDdPhcy/9Ts
-	 pY45yk+Fk+s75ydG+wUhQD3coi59zUTocdxwc034=
+	b=H20OC1VtYXBuCaT5XDywX9V1iVHCausLI7tq5o7SPxFqrrT1smwpf8tU5Bf+4E22v
+	 wo4AYMucX1uP6NB2djAMD+8keUyykUAXon3eNRkhiGI9VpJAaH5bqmrLP/tdkc7Qcf
+	 xUZcsiXrVloKYYfx4IoPwNN39iWWftW5D5oW+vE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>,
-	Georgi Djakov <djakov@kernel.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2262/3318] interconnect: qcom: use 64-bit SMD RPM bus votes
-Date: Wed, 18 Nov 2026 15:48:04 +0100
-Message-ID: <20261118150429.675469275@linuxfoundation.org>
+Subject: [PATCH 6.6 2263/3318] RDMA/restrack: Dont set RESTRACK_DD mark after a failed xa_insert()
+Date: Wed, 18 Nov 2026 15:48:05 +0100
+Message-ID: <20261118150429.702796767@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,82 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 24e7422ce31189502d07279c083646aaca513311 ]
+[ Upstream commit 391c5d826fd0a5dacad54613dbef74c50e966f5c ]
 
-SMD RPM bus bandwidth requests carry a 64-bit bandwidth value.
-The interconnect proxy declared the KVP payload as u32, truncating
-votes above 4 GiB/s and advertising the wrong payload size to RPM.
+When adding a QP to the restrack xarray, rdma_restrack_add() does:
 
-Use a little-endian 64-bit payload and accept a u64 value in the proxy
-API. This has always been the right behavior, even on msm-3.10 and
-32-bit SoCs.
+	ret = xa_insert(&rt->xa, res->id, res, GFP_KERNEL);
+	if (ret)
+		res->id = 0;
 
-Fixes: be06f8e7425d ("interconnect: qcom: Add interconnect RPM over SMD driver")
-Assisted-by: LLM
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260904-topic-icc_rpm_64b_req-v1-1-37e24f1991a3@oss.qualcomm.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+	if (qp->qp_type >= IB_QPT_DRIVER)
+		xa_set_mark(&rt->xa, res->id, RESTRACK_DD);
+
+The xa_set_mark() call is not guarded by "!ret".  When xa_insert() fails
+(possible on a qp_num collision or memory pressure), res->id is reset to
+0, yet the mark is still applied to index 0.  If a legitimate QP whose
+qp_num is 0 already occupies that slot - e.g. a normal QP or the SMI QP
+- it is spuriously tagged as driver-private (RESTRACK_DD), and the
+netlink dump path res_get_common_dumpit() then hides it from "rdma res"
+output whenever the caller does not request driver details.
+
+Only set the mark when the insertion actually succeeded by folding the
+mark into the non-failure branch.
+
+Fixes: e18fa0bbcedf8 ("RDMA/core: Add an option to display driver-specific QPs in the rdmatool")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260916073042.1746-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/icc-rpm.h | 4 ++--
- drivers/interconnect/qcom/smd-rpm.c | 8 ++++----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/infiniband/core/restrack.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
-index eed3451af3e6e..4545e9d50ff5f 100644
---- a/drivers/interconnect/qcom/icc-rpm.h
-+++ b/drivers/interconnect/qcom/icc-rpm.h
-@@ -30,7 +30,7 @@ enum qcom_icc_type {
-  * @resource_type: RPM resource type of the clock resource
-  * @clock_id: index of the clock resource of a specific resource type
-  * @branch: whether the resource represents a branch clock
--*/
-+ */
- struct rpm_clk_resource {
- 	u32 resource_type;
- 	u32 clock_id;
-@@ -149,7 +149,7 @@ int qnoc_probe(struct platform_device *pdev);
- int qnoc_remove(struct platform_device *pdev);
- 
- bool qcom_icc_rpm_smd_available(void);
--int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u32 val);
-+int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u64 val);
- int qcom_icc_rpm_set_bus_rate(const struct rpm_clk_resource *clk, int ctx, u32 rate);
- 
- #endif
-diff --git a/drivers/interconnect/qcom/smd-rpm.c b/drivers/interconnect/qcom/smd-rpm.c
-index 16a145a3c9144..92916c5f1db0e 100644
---- a/drivers/interconnect/qcom/smd-rpm.c
-+++ b/drivers/interconnect/qcom/smd-rpm.c
-@@ -21,7 +21,7 @@ static struct qcom_smd_rpm *icc_smd_rpm;
- struct icc_rpm_smd_req {
- 	__le32 key;
- 	__le32 nbytes;
--	__le32 value;
-+	__le64 value;
- };
- 
- bool qcom_icc_rpm_smd_available(void)
-@@ -30,12 +30,12 @@ bool qcom_icc_rpm_smd_available(void)
- }
- EXPORT_SYMBOL_GPL(qcom_icc_rpm_smd_available);
- 
--int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u32 val)
-+int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u64 val)
- {
- 	struct icc_rpm_smd_req req = {
- 		.key = cpu_to_le32(RPM_KEY_BW),
--		.nbytes = cpu_to_le32(sizeof(u32)),
--		.value = cpu_to_le32(val),
-+		.nbytes = cpu_to_le32(sizeof(u64)),
-+		.value = cpu_to_le64(val),
- 	};
- 
- 	return qcom_rpm_smd_write(icc_smd_rpm, ctx, rsc_type, id, &req,
+diff --git a/drivers/infiniband/core/restrack.c b/drivers/infiniband/core/restrack.c
+index c03042dc1ca5a..c6ecc0d6628d4 100644
+--- a/drivers/infiniband/core/restrack.c
++++ b/drivers/infiniband/core/restrack.c
+@@ -246,8 +246,7 @@ void rdma_restrack_add(struct rdma_restrack_entry *res)
+ 		ret = xa_insert(&rt->xa, res->id, res, GFP_KERNEL);
+ 		if (ret)
+ 			res->id = 0;
+-
+-		if (qp->qp_type >= IB_QPT_DRIVER)
++		else if (qp->qp_type >= IB_QPT_DRIVER)
+ 			xa_set_mark(&rt->xa, res->id, RESTRACK_DD);
+ 	} else if (res->type == RDMA_RESTRACK_COUNTER) {
+ 		/* Special case to ensure that cntn points to right counter */
 -- 
 2.53.0
 
