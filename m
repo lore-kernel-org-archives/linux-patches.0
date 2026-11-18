@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027140;
-	b=kRawExA5SUuUhdRpm9vXUhxu063+jpfoKNoN6aM9BkdI+r0itffKI8vMxbN5HSsLxNYU
-	 dn1iN0JKizmtkYo+B7ObhQ1pBZVvzDkbw9Ooxv2jCFDBdjTOy5S/3NfQKXSM7MqXzhLu7
-	 CmTM9R4cPImWPIf5cEQttyoxi9I+Myt1rmg5FQNWYF86SyquRp3psCCiP0eweex5Esdeb
-	 GTdeUgr2Ow37eeo0Sq4Riw/Ial9OpVphW6DB95sAAVyy/M07PCC4sS8thbtmZG2WkA25M
-	 7w+cUQ+1CISk5HzHZiRXyvFICK4KvXCTu1rYZil9fb2EEymX5GPlZmk9B67VZ6buFPw==
+	t=1795027143;
+	b=3zrAsLXy6j04LyA6tATxJlVSP/AQ770KEEB0z7HjF1DZ8q+bJvF5yWDTp5xw39ZczDah
+	 9XFs2w0UPOc7cj1UQDnTmp+hCBRWmT2M8wXWJV3gWZZ8Mr1qaRkesa05B/q5UN3TEBr+K
+	 sxmHrhz+aH9FMCaJEVJYqxi8KsR4RbkajGXa0LgAOr6IX0GsnL2sGTcri6VOZTfNf94n6
+	 vyaaOoiK+S70kWfXk3PkQgn/jxUbxzFN0lAMvUIO11YoM92HSIHDEkc0YAGiL9NMsWvcE
+	 al4jFh78mzDeqgDrIJ04meKlt0cxW0UWKs2ea5VVhulXWzbxVn+UUfBchKoREWwrCeQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027140;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027143;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dmyfzD229e2OVdx3biIbjP1Ox8GqQOPriOOodL7lUpQ=;
-	b=l2OJXD/6d3x021A0JDz/gwz1Pqf5H5de59TXHJHjJt8R+lc7KySVmPhC1Fp0p26aVK3f
-	 8qi5XIqeoQKSF+4Oi5B3nKryCb97VGqLE/Ot41NQye2Ns49ZhOmhXvmJPmHFPhvnf5VNY
-	 YP330xA9/KeC9IgDzJBbdZ5ezcKqYljWXE3YN299xNtlqQTTRGepwA+jJQYrpWuIwDGeC
-	 WI6jmULa/7XuaVkJqR3cVzOd5i++cJoo8jIrjRcET81xrpWunsVH3WGJpJCtq1j2E0iSn
-	 UW+4dwAAbDdI3eHzKYDLbEoyk39XRxQ1XGClF6d5HPCqD4bltJ46JM/Q0lfqxAX6Q0Q==
+	bh=3AAXG78C21kkBNVksvuuSP7NsLM/rqVJ76US25MYmHg=;
+	b=FbkbpLD5H3NRWsIHHGcdZDzTuWzkvjlrCYBQ1/Syn70sKzpb5o9uNISctBQfw3rxPhaF
+	 nk0V263uWQC1q+7beMUM1kd+Qc0KduISvdTUG6dYMuwVi5qgwrbvshjawwjzrKtg6f19t
+	 EvxFrOxc/QOvx/1X7PBdtZrmgHa+DlvN95PRaiL69A4HIAsJ8ZWtKxkOUL5N5lDL7z2JZ
+	 Gumj9d2EmmAmlRV9iuCadHgzN+TSKk0z22GS2ZUFQlNb18GbUB3t+dehQBovr5zcMkJN9
+	 fZ9ghOZmnKQ3tEgRpoc7Q1Vlwg4kZ50NAhkEgP4uNnRrg7To20G4pzB5yhpKLLNbElw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rZ5iAA5w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FbWOV6dn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A21606A31C;
-	Wed, 18 Nov 2026 18:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6465C606A32C;
+	Wed, 18 Nov 2026 18:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rZ5iAA5w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36A01F000C4;
-	Wed, 18 Nov 2026 18:38:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FbWOV6dn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92591F000C4;
+	Wed, 18 Nov 2026 18:39:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027140;
-	bh=dmyfzD229e2OVdx3biIbjP1Ox8GqQOPriOOodL7lUpQ=;
+	s=korg; t=1795027143;
+	bh=3AAXG78C21kkBNVksvuuSP7NsLM/rqVJ76US25MYmHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rZ5iAA5wWvLfIyRURTemodS0ouwuTJyoRi92G1nwHX5a+uivhgao1t5ZyXvnV5O93
-	 drRXUaxMRiPEnsxtxVEPYnxc7PvrW23t2YVUUmyt/P+Aw/BNBzDE6BM+UwhqlwUn2N
-	 ggbK5ETYgym0ZPXvueSmhZ56WH+ODkwFMhPZwPvY=
+	b=FbWOV6dn2ZfW1Q/2hFZVy+3yrv2jZd7VoZzUXYbzr+kiCdjYmV1CIPT7dvjgBowvL
+	 E65NvpUBDzmIvyA3JoNg/PATaqXSF1LJIajhU+DNvSO/MgPp4I+PkIeewAGqqWOe9Z
+	 Leumwkh5u1uI/md+CSuD7y/TaqXflUbdBMBFjfLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	pengdonglin <pengdonglin@xiaomi.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Viktor Menshin <ripeeerr@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1647/2151] tracing: Avoid BTF lookup in atomic context
-Date: Wed, 18 Nov 2026 15:56:22 +0100
-Message-ID: <20261118150221.846490994@linuxfoundation.org>
+Subject: [PATCH 6.18 1683/2151] ALSA: hda/realtek: Fix hiss/crackle on Lenovo Xiaoxin 14 GT (17aa:3912)
+Date: Wed, 18 Nov 2026 15:56:58 +0100
+Message-ID: <20261118150223.137123212@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,43 +68,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: pengdonglin <pengdonglin@xiaomi.com>
+From: Viktor Menshin <ripeeerr@gmail.com>
 
-[ Upstream commit 42643ba35deb8ad1821acfc0577b445ee7ad7548 ]
+[ Upstream commit 2fc28b1186d6fce8b046e6118072cf3ca32f2960 ]
 
-The function graph trace formatter can be called from ftrace_dump_one()
-with interrupts disabled. When ftrace_dump_on_oops is enabled, the trace
-panic notifier can reach ftrace_dump() from the panic path, including the
-nmi_panic() path used by the hard lockup detector.
+Commit 3a3e810e9108 ("ALSA: hda/realtek: Add quirk for Lenovo Xiaoxin
+14 GT") added a quirk mapping SSID 17aa:3912 to
+ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN, chosen by analogy with
+neighboring SSIDs (0x390d, 0x3911, 0x391a) without being verified on
+hardware, as noted in that commit's own message.
 
-btf_find_func_proto() calls bpf_find_btf_id(), which may initialize vmlinux
-BTF under a mutex. Skip the BTF lookup when running in an atomic context
-or with interrupts disabled, and fall back to the existing return value
-formatting.
+I have since tested it on the actual hardware (Lenovo Xiaoxin Pro 14
+ASP10, same 17aa:3912 SSID) and confirmed it does not fix the reported
+issue. ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN only repoints pin 0x17
+and the preferred DAC pairs for the bass speaker; it does not touch
+the codec's vendor processing coefficients. The actual symptom -
+constant electrical hiss/crackle on both the headphone jack and the
+internal speakers, independent of volume - is unrelated to pin/DAC
+routing and is also present on stock Windows before the Realtek
+driver is installed, which points at those coefficients being left
+at their power-on default.
 
-Link: https://patch.msgid.link/20260916133218.1282590-2-dolinux.peng@gmail.com
-Fixes: ebeed8d4a555 ("tracing/probes: Move finding func-proto API and getting func-param API to trace_btf")
-Signed-off-by: pengdonglin <pengdonglin@xiaomi.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+To find the correct values, I passed the physical HD Audio controller
+through to a Windows 10 VM (VFIO, with QEMU patched to log CORB verb
+traffic) and captured the coefficient writes the vendor Realtek driver
+performs at init. Replaying a single one of them on Linux via hda-verb
+reproducibly eliminates the headphone jack noise:
+
+    hda-verb /dev/snd/hwC#D0 0x20 SET_COEF_INDEX 0x36
+    hda-verb /dev/snd/hwC#D0 0x20 SET_PROC_COEF  0x77d7
+
+This has held up across reboots and kernel updates for several weeks
+(applied via a small systemd oneshot unit while testing).
+
+Add a dedicated fixup that performs this coefficient write and chains
+it with the existing ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN (which may
+still be relevant for the bass speaker pin wiring on this board), and
+point the 17aa:3912 quirk entry at it instead.
+
+Honesty note: this fixes the headphone jack. The internal speakers
+still have noise under certain conditions (notably worse on AC power)
+that I have not been able to isolate via coefficient-table replay;
+that part remains open. Sending what is verified to work rather than
+holding this back.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221203
+Fixes: 3a3e810e9108 ("ALSA: hda/realtek: Add quirk for Lenovo Xiaoxin 14 GT")
+Signed-off-by: Viktor Menshin <ripeeerr@gmail.com>
+Link: https://patch.msgid.link/20261015132157.57198-1-ripeeerr@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_btf.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 31 ++++++++++++++++++++++++++++++-
+ 1 file changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_btf.c b/kernel/trace/trace_btf.c
-index 43e3798011776..2fcb1efe49abf 100644
---- a/kernel/trace/trace_btf.c
-+++ b/kernel/trace/trace_btf.c
-@@ -15,6 +15,9 @@ const struct btf_type *btf_find_func_proto(const char *func_name, struct btf **b
- 	const struct btf_type *t;
- 	s32 id;
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 987f770a66d77..479ae131fa4d1 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -3451,6 +3451,28 @@ static void alc287_fixup_yoga9_14iap7_bass_spk_pin(struct hda_codec *codec,
+ 	}
+ }
  
-+	if (unlikely(in_atomic() || irqs_disabled()))
-+		return NULL;
++/*
++ * The Lenovo Xiaoxin 14 GT (SSID 17aa:3912) uses the same bass-speaker
++ * pin wiring as its 0x390d/0x3911/0x391a siblings, but on this board the
++ * codec's vendor processing coefficients (node 0x20) are left at their
++ * power-on default instead of being programmed the way the vendor
++ * (Windows) driver programs them. That leaves audible hiss/crackle on
++ * both the headphone jack and the internal speakers, independent of
++ * volume, regardless of which pin/DAC routing is used.
++ *
++ * This single coefficient write was captured from the vendor driver's
++ * own init sequence (via a VFIO pass-through of the physical codec to a
++ * Windows VM) and confirmed to eliminate the headphone jack noise.
++ */
++static void alc287_fixup_lenovo_xiaoxin_14gt_hp_noise(struct hda_codec *codec,
++						       const struct hda_fixup *fix, int action)
++{
++	if (action != HDA_FIXUP_ACT_INIT)
++		return;
 +
- 	id = bpf_find_btf_id(func_name, BTF_KIND_FUNC, btf_p);
- 	if (id < 0)
- 		return NULL;
++	alc_write_coef_idx(codec, 0x36, 0x77d7);
++}
++
+ static void alc_fixup_yoga_pro7_audio(struct hda_codec *codec,
+ 				      const struct hda_fixup *fix, int action)
+ {
+@@ -3976,6 +3998,7 @@ enum {
+ 	ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK,
+ 	ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN,
+ 	ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN,
++	ALC287_FIXUP_LENOVO_XIAOXIN_14GT_HP_NOISE,
+ 	ALC295_FIXUP_DELL_INSPIRON_TOP_SPEAKERS,
+ 	ALC236_FIXUP_DELL_DUAL_CODECS,
+ 	ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI,
+@@ -6387,6 +6410,12 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC287_FIXUP_CS35L41_I2C_2,
+ 	},
++	[ALC287_FIXUP_LENOVO_XIAOXIN_14GT_HP_NOISE] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc287_fixup_lenovo_xiaoxin_14gt_hp_noise,
++		.chained = true,
++		.chain_id = ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN,
++	},
+ 	[ALC295_FIXUP_DELL_INSPIRON_TOP_SPEAKERS] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc295_fixup_dell_inspiron_top_speakers,
+@@ -7685,7 +7714,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
+ 	SND_PCI_QUIRK(0x17aa, 0x390d, "Lenovo Yoga Pro 7 14ASP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x3911, "Lenovo Yoga Pro 7 14IAH10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+-	SND_PCI_QUIRK(0x17aa, 0x3912, "Lenovo Xiaoxin 14 GT", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x3912, "Lenovo Xiaoxin 14 GT", ALC287_FIXUP_LENOVO_XIAOXIN_14GT_HP_NOISE),
+ 	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x391f, "Yoga S990-16 pro Quad YC Quad", ALC287_FIXUP_TXNW2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3920, "Yoga S990-16 pro Quad VECO Quad", ALC287_FIXUP_TXNW2781_I2C),
 -- 
 2.53.0
 
