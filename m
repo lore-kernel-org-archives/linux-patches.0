@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041969;
-	b=WXIXIkzRoQpPrrhXa5p5vOXtuNIGweTJGUk70IQHJeVgUrq05wRLdSwGDicMPBdM+Hnb
-	 6t4+CPf4HES2QnCC+uwlq2vRCUFmWU2LAFDkyuh8uVHU+dnN0IeyEPHWt5WvTxD/uOCKs
-	 LAE161YTN+xsRsEtpE59hQ5y/t3tMs1rkt9r/1amuiiBr/TfZXD/ftKcIyYGxBwgHT9gM
-	 jVqQydHlU4JuYXOYii2re4zgLrJgQavMkGRsALdzOYUXUjmX7lZu9Ifql7EeXuGtEBZ1p
-	 hnIDdr6avaPxrscSY1LELTSjOC900OmAzYbeBN36d1ZuoVw9/5x3jRnL0Y5a0zw9NdA==
+	t=1795041972;
+	b=et1RMVtQF4h7I9rpl+72GoD50lfB/MCIJEfnXc1lmLpbTEtDdQ157j5RE8FI8lMZv76M
+	 aDsjzFvKH7qivcZzYowuDbFaCrye+1WOY7upI+7wMUrQIi8uYG4592JGeay9+g1Sk72HD
+	 Jg7DeVX6HX1gYOPZpYdrJKUpIyWz+7kxx8hp2pf4rZJ0lbOMXB8vMwAvH2HQjMiT7ceY0
+	 iSMcMhwiq6SOdsBVI+5A7vEML54AstmG9IsQKsRf8PG01rZuqCnoWHhxfCGEzRChozMJ1
+	 NYXblgCfXQzAsL8fRXbE5yfDEy5plex2daSE7vah29vD0MjFjkP8ZG1AzfyhW/PewEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041969;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041972;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qNY4uVvNORhtN3JLxNI0ynwmZpHecXOOhJH6p/aXckE=;
-	b=w/XL/ii+GyDmzfLeUawsJCz7JaxuNmaW6SeHhNFOOaMCv5DlWrrVXsT1bgGXwdBEFTg1
-	 ueXkEoUmvv/qoSLPqninRCraKGHIj1+K9tb2QNkuXpsiBBECYsaSsy6YP373ZZxjxi4rj
-	 /K6Gx+uaXPVfuzvEhEoug5eaPk06WMUoiMmlsidS7JBIvoqxJR10hyh19L22qhF/9IyoV
-	 M5KGiXf/XMuDwL4jYFkRvsPlJxV1bGtlMvBqkbu9t+aw46terKLsFV0ZpJr1j/+GLVeUY
-	 XpUFBUw5s3ed6kbsUimhaZLIRv1r6Xc2f1EI1U4oYUsG8rQhc6wnpBCA5q5n2UU0uGw==
+	bh=n/iqQLnW5xyZjHEfnOND3SgPNrc81AuSt/L6ZPMGQMQ=;
+	b=Paz42ImpWZqDlNVY80Pt6DZpEvs+is9rFrITGgXCXVyHXIOx3x9f1vNQu0bdSnzcexhf
+	 jRUP/Yc3SyIUDJtHfT7EOCoueXN/PxAXVGKD2qc0zRhWvD3W2a8mtMSVVosnQHbv8uVPA
+	 SEl3lXnM6k0YzVsEolaO3sNv2zJwyBlxTtQ5OXj47HEA95gcrFHfbMc3m6nOf/RC/12rg
+	 X2NVjEohgbyMcMmTbBxqOyZlKHQYesFN6Mj5Y8/g/08dZrGxQGNVEI1lDClOBiE1GULry
+	 +oewIqqVlV9m1utGs2L8C2imBiIrdVuZHvHh/LAE3aP8UbgK9XRzGg6Tmm0ccaknNQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jM9kXQyC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bPaMH5aM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CBF5606A320;
-	Wed, 18 Nov 2026 22:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F094606A31C;
+	Wed, 18 Nov 2026 22:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jM9kXQyC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937EC1F000C4;
-	Wed, 18 Nov 2026 22:46:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bPaMH5aM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF621F000C4;
+	Wed, 18 Nov 2026 22:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041969;
-	bh=qNY4uVvNORhtN3JLxNI0ynwmZpHecXOOhJH6p/aXckE=;
+	s=korg; t=1795041971;
+	bh=n/iqQLnW5xyZjHEfnOND3SgPNrc81AuSt/L6ZPMGQMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jM9kXQyC1nn69D5GQZUPPHhlPsPXB4b1OCg+Jy3y+ARhrdPaeEiEasPvNEWJpP15R
-	 EX58GgvfIT7CrFkvOI2s3vw2SKdUzb59zaVefpj2wVvEUYCr06iUL+C9wbyRyIpxj5
-	 eWbWRX/X5MfGjCrt6MA33aHZcCu+9sjg4xuf3Zf8=
+	b=bPaMH5aMIyEQHQsRQmDNdtEdzcAlmahV9km8xrPoFfi+F9+d0SqEncZwVDLQ4kqiq
+	 HMTJxFhQwRWZx2P5qC+UXOeWZpyudh1veU6wLfAc1pdqF6kWJXNP75Mu5lwANreCUT
+	 rm5m0mZ0xaHuMRu4EtGe0zE9PX6M7LQywjkuIg/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3003/3318] bpf: Fix stale offload->prog pointer after realloc
-Date: Wed, 18 Nov 2026 16:00:25 +0100
-Message-ID: <20261118150450.346407726@linuxfoundation.org>
+Subject: [PATCH 6.6 3004/3318] bpf: Dont bind a program to a netdev that goes away
+Date: Wed, 18 Nov 2026 16:00:26 +0100
+Message-ID: <20261118150450.373600680@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,115 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 8e83d53596445fcf5b0385e5fbe8bcd971e06d06 ]
+[ Upstream commit af929bc938e0d0ecd839e6fed9a2ce5eb5185e5c ]
 
-bpf_prog_realloc() moves a program that the rewrites of the verifier make
-outgrow its pages.  It updates aux->prog, but not the offload->prog of a
-device-bound program.  When the device is unregistered,
-__bpf_offload_dev_netdev_unregister() hands the stale pointer to
-__bpf_prog_offload_destroy(), which faults on the freed program:
+bpf_prog_dev_bound_init() looks the device up, takes bpf_devs_lock and
+registers the device for the program.  The reference it holds does not
+keep the device registered.  If bpf_dev_bound_netdev_unregister() has run
+by the time the lock is taken, nobody takes the program off the device any
+more: the bpf_offload_netdev and offload->netdev point to a net_device
+that is freed as soon as the reference is dropped.
+bpf_dev_bound_resolve_kfunc() dereferences it while the program is
+verified, and a new device at the same address finds the old entry.
 
-  BUG: unable to handle page fault for address: ffffc90000071050
-  RIP: 0010:__bpf_prog_offload_destroy+0x3f/0x310
+unregister_netdevice_many_notify() leaves NETREG_REGISTERED before it
+calls bpf_dev_bound_netdev_unregister(), which takes bpf_devs_lock.  Look
+at reg_state under that lock, and treat a device that goes like one that
+is not there.
 
-It takes the right to load a device-bound XDP program, CAP_BPF and
-CAP_NET_ADMIN or a BPF token, and a device that can be removed.
-
-Commit a1aa9ef47c29 ("bpf: Fix stale offload->prog pointer after constant
-blinding") repaired the other place that replaces a program.  Do the same
-here.
-
-Nothing keeps the device while a program is loaded, so it can also be
-unregistered at that very moment.  That frees the offload, and it may have
-read offload->prog already when the old copy of the program is freed.  In
-both places update the pointer under bpf_devs_lock, before the old copy
-goes.
-
-Fixes: ab3f0063c48c ("bpf: offload: add infrastructure for loading programs for a specific netdev")
 Fixes: 2b3486bc2d23 ("bpf: Introduce device-bound XDP programs")
-Fixes: a1aa9ef47c29 ("bpf: Fix stale offload->prog pointer after constant blinding")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-21-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-22-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h  |  5 +++++
- kernel/bpf/core.c    |  4 ++--
- kernel/bpf/offload.c | 16 ++++++++++++++++
- 3 files changed, 23 insertions(+), 2 deletions(-)
+ kernel/bpf/offload.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index e3af0e06b4bfd..64fd49b68725c 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -2865,6 +2865,7 @@ int bpf_dev_bound_kfunc_check(struct bpf_verifier_log *log,
- void *bpf_dev_bound_resolve_kfunc(struct bpf_prog *prog, u32 func_id);
- int bpf_prog_dev_bound_init(struct bpf_prog *prog, union bpf_attr *attr);
- int bpf_prog_dev_bound_inherit(struct bpf_prog *new_prog, struct bpf_prog *old_prog);
-+void bpf_prog_dev_bound_moved(struct bpf_prog *prog);
- void bpf_dev_bound_netdev_unregister(struct net_device *dev);
- 
- static inline bool bpf_prog_is_dev_bound(const struct bpf_prog_aux *aux)
-@@ -2925,6 +2926,10 @@ static inline int bpf_prog_dev_bound_inherit(struct bpf_prog *new_prog,
- 	return -EOPNOTSUPP;
- }
- 
-+static inline void bpf_prog_dev_bound_moved(struct bpf_prog *prog)
-+{
-+}
-+
- static inline void bpf_dev_bound_netdev_unregister(struct net_device *dev)
- {
- }
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 175ef2a64cb13..4ad9435c915d7 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -253,6 +253,7 @@ struct bpf_prog *bpf_prog_realloc(struct bpf_prog *fp_old, unsigned int size,
- 		memcpy(fp, fp_old, fp_old->pages * PAGE_SIZE);
- 		fp->pages = pages;
- 		fp->aux->prog = fp;
-+		bpf_prog_dev_bound_moved(fp);
- 
- 		/* We keep fp->aux from fp_old around in the new
- 		 * reallocated structure.
-@@ -1478,8 +1479,7 @@ void bpf_jit_prog_release_other(struct bpf_prog *fp, struct bpf_prog *fp_other)
- 	 * know whether fp here is the clone or the original.
- 	 */
- 	fp->aux->prog = fp;
--	if (fp->aux->offload)
--		fp->aux->offload->prog = fp;
-+	bpf_prog_dev_bound_moved(fp);
- 	bpf_prog_clone_free(fp_other);
- }
- 
 diff --git a/kernel/bpf/offload.c b/kernel/bpf/offload.c
-index ae0c8e7894586..21547b5d63809 100644
+index 21547b5d63809..dad387fbcae6f 100644
 --- a/kernel/bpf/offload.c
 +++ b/kernel/bpf/offload.c
-@@ -105,6 +105,22 @@ static int __bpf_offload_dev_netdev_register(struct bpf_offload_dev *offdev,
- 	return err;
- }
+@@ -268,7 +268,14 @@ int bpf_prog_dev_bound_init(struct bpf_prog *prog, union bpf_attr *attr)
+ 	prog->aux->offload_requested = !(attr->prog_flags & BPF_F_XDP_DEV_BOUND_ONLY);
  
-+/*
-+ * @prog takes the place of a copy that the caller is about to free. Nothing
-+ * keeps the netdev while a program is loaded: once the lock is dropped, no
-+ * unregistration is left that has got the old copy from offload->prog.
-+ */
-+void bpf_prog_dev_bound_moved(struct bpf_prog *prog)
-+{
-+	if (!bpf_prog_is_dev_bound(prog->aux))
-+		return;
-+
-+	down_read(&bpf_devs_lock);
-+	if (prog->aux->offload)
-+		prog->aux->offload->prog = prog;
-+	up_read(&bpf_devs_lock);
-+}
-+
- static void __bpf_prog_offload_destroy(struct bpf_prog *prog)
- {
- 	struct bpf_prog_offload *offload = prog->aux->offload;
+ 	down_write(&bpf_devs_lock);
+-	err = __bpf_prog_dev_bound_init(prog, netdev);
++	/*
++	 * Behind bpf_dev_bound_netdev_unregister() nobody would take the
++	 * program off the device, which goes once the reference is dropped.
++	 */
++	if (READ_ONCE(netdev->reg_state) == NETREG_REGISTERED)
++		err = __bpf_prog_dev_bound_init(prog, netdev);
++	else
++		err = -EINVAL;
+ 	up_write(&bpf_devs_lock);
+ 
+ out:
 -- 
 2.53.0
 
