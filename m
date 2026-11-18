@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034132;
-	b=S6rkduV2H16A9/EQLQ31YlLz8Uo/HXDVEaUqz+kkPvJjDAO3gzXmWvo0q+0Xei7yABzt
-	 qzYP0OKXKNUNuw/B/nSc20PvyL3t0slPPH2jtAJdGpiC6+XllWQK782TDXewvLFRSlOn6
-	 R4EY+396owa3RIn/iH8/WZmrWVercO16d5eeiG50Z7vG+We8suBEuvmB+UpEiR5nvoDQx
-	 /NgtFGdIdkpXnRQcpHEHgMPNcA5MEHYg+NSgC2Cru4hu9PGcWETKU1unn9rIYWxnVEmzB
-	 W6k63xBmoJjwqasECcEy5RLZHqCO0X+Wg11XkPCsbopyIiA0KYk19dfitBdMLz1573w==
+	t=1795034135;
+	b=nXGVhJ3gSY3XkDfoT7F7Oq7r93JIFzIp1+qN3T8ncoQEIIete3R0enxnjjYfwf4RXM30
+	 h6DunsdJhNybzwk5VS1Vodrvv+eGYEMHTrHh15DKBEv+DirMoMbQuZiY7y8zuYYAC8G9j
+	 eg0gqx5xkeSvMlsfO0rs4RhI8EXnAFHC+hdD9WKJbNdFC4WeA5d8+AnJLtrfN5wGT7zOO
+	 8rWfS9PpkCqcUWSmnTzSPj1T0PtruVFrSjtyiKatmLeClasTHV5dYc1uoynp4L3W4035n
+	 Ge2fX97+NBFKWpQfhy8EpBWPTmjO6xlKKmf0i9qGehEd8Rpvz9H0m7V2Tv0wZ6Nef0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034132;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034135;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uqFzWtjMk3mLiRfub1AZttb1guKEXOs2CE+iX7bYiFc=;
-	b=eopDY++WHB8CnSWRscXIJ9CpD11X4LgJNA2ilcjIpVs9aYtAlGCcf85P1vRlZ1oqXkFI
-	 /Z+Ox8RioHuIYL7hteHGqKWPldOdEh512ISAhaJ8TG8P++N7uM/uXtwery4h+cxBVfEE+
-	 YRWGfWQbiN498tJb8hOztEYAh1JqehxHiU/rUmBPRGII/cZZHp3aDmKSBaN6D/cYubhzm
-	 H+aZRq2Yf57qrnY+hB7Rn4nA1ocnHyqkSjh1eOlCYFZDL5tlPfyUAs0OZt7BlQb7ieT6N
-	 TdrV6NddW7MSuiYI6CX5XVydtci5Zp12ddR/wo5miKZBefTlYlPN1/c/dZ591vykCeg==
+	bh=lmVIUrCRGpbiXo7agrVQ7p778NePgYXRBxlZRLuCSkE=;
+	b=qE6gT/IisY8vxb5nb1evE18yK90rsdcAkcR8dGxBmHIAxthz4P/ORa8dYVqjiKTwbCUt
+	 97KrG4pG1NfwyuEKOzbCppWSIWt1zfK8zBurCDhqjwjEBTSuiS9hs2Fuzz9rNn0gtHSZi
+	 uFA1pZQiDrbWNU5cjqtBCHjQYH3yjZIu+ujtitOGisCDbZtfme/GEMg3zqu7mMl5i+eDD
+	 PftSaVWs5jH7CnbP/KtzTx/Nhs0YnhykWytbNbsZ0srihufVtnIbq+wXuJrefoh7qWOEd
+	 hRYbgL4hUFtO3kdab+E70YV59Txk9Ztm0tlLFofM7GJF8g0hhknB/vYUrC0RqqCU97A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Knb8KLJK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WVzE+SEk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843D0606A33E;
-	Wed, 18 Nov 2026 20:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EE160A261C;
+	Wed, 18 Nov 2026 20:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Knb8KLJK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BFD1F000C4;
-	Wed, 18 Nov 2026 20:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WVzE+SEk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25B01F000C4;
+	Wed, 18 Nov 2026 20:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034132;
-	bh=uqFzWtjMk3mLiRfub1AZttb1guKEXOs2CE+iX7bYiFc=;
+	s=korg; t=1795034135;
+	bh=lmVIUrCRGpbiXo7agrVQ7p778NePgYXRBxlZRLuCSkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Knb8KLJKGqDaqWwnSk0YNNDor9oa76uUrev4jQU4kbwbaOKbT04oSxqkt/wm27QTB
-	 RKxjh/1Vxj+R9FpwFkfr+9ncX/HKdyl8K64Lc3RH6ar5pZz5rGy72HYGDUgcp8BzMO
-	 TCHli6IgufDVS/X4NS0OUYR/KsAPg5rTMjjTL19c=
+	b=WVzE+SEk/tIHQqP79NmI0qd8/uyg3aVIzS+Jc5n8TzZb8JVPzKWGaKvDk/iMp2kWc
+	 fo182BRsY3U9/DKJqH0xAWOvWxfIDB6mY8E9wGMPVz2dg3voDq7Pi6SScyZoOsEihB
+	 vtwjN678wU+szXKpUqGbdtAlbaFq5wKVomiYkqnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhe Liu <liuzhe1@kylinos.cn>,
-	Tao Cui <cuitao@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0262/3318] docs: cgroup-v2: fix stale "io" controller introduction
-Date: Wed, 18 Nov 2026 15:14:44 +0100
-Message-ID: <20261118150323.242835442@linuxfoundation.org>
+Subject: [PATCH 6.6 0263/3318] nvme-tcp: look up host_iface in the current netns
+Date: Wed, 18 Nov 2026 15:14:45 +0100
+Message-ID: <20261118150323.279842799@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,57 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhe Liu <liuzhe1@kylinos.cn>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 3345c7248a9e2a91cb9e2477c29af16881706f4f ]
+[ Upstream commit 58202950e39c127d593ec4f0624d8b8985a285b1 ]
 
-The introductory paragraph for the IO controller still states that
-weight based distribution is "available only if cfq-iosched is in use"
-and that "neither scheme is available for blk-mq devices".  This text
-dates from when the cgroup v2 documentation was first written (2015)
-and was correct at the time, but is no longer accurate:
+nvme_tcp_alloc_ctrl() looks opts->host_iface up in &init_net, the boot-time
+netns. When called from any other netns - e.g. the selftest's ns2, where
+ns2eth1 actually lives - the lookup misses and the controller setup fails
+with "invalid interface passed":
 
-  * cfq-iosched was removed in v5.0;
-  * blk-mq is now the only block I/O path, and both the absolute limit
-    scheme (io.max via blk-throttle) and the weight based scheme
-    (io.weight via iocost, or io.bfq.weight under BFQ) work on it;
-  * latency based protection (iolatency) and I/O priority (ioprio)
-    controllers have since been added.
+ nvmet: adding nsid 1 to subsystem nqn.2014-08.org.nvmexpress.mptcpdev
+ nvmet_tcp: enabling port 24660 (0.0.0.0:24099)
+ # nvme discover -a 10.1.1.1 --tos=0x10 --host-iface=ns2eth1
+ nvme_tcp: invalid interface passed: ns2eth1
+ # failed to add controller, error invalid interface
 
-The rest of the section already documents io.weight, io.max,
-io.cost.{qos,model}, io.latency and io.prio.class correctly, so the
-introduction is the only part that contradicts them.  Rewrite it to
-reflect the current state.
+Look the device up in current->nsproxy->net_ns instead so the check sees
+the calling task's netns.
 
-Signed-off-by: Zhe Liu <liuzhe1@kylinos.cn>
-Reviewed-by: Tao Cui <cuitao@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/cgroup-v2.rst | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/nvme/host/tcp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/admin-guide/cgroup-v2.rst b/Documentation/admin-guide/cgroup-v2.rst
-index 622a7f28db1fd..0d027b848f1ca 100644
---- a/Documentation/admin-guide/cgroup-v2.rst
-+++ b/Documentation/admin-guide/cgroup-v2.rst
-@@ -1698,9 +1698,13 @@ IO
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index abfa680bdd216..fd27e6a35bbcc 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -2721,7 +2721,8 @@ static struct nvme_ctrl *nvme_tcp_create_ctrl(struct device *dev,
+ 	}
  
- The "io" controller regulates the distribution of IO resources.  This
- controller implements both weight based and absolute bandwidth or IOPS
--limit distribution; however, weight based distribution is available
--only if cfq-iosched is in use and neither scheme is available for
--blk-mq devices.
-+limit distribution.  Absolute BPS and IOPS limits are enforced by
-+blk-throttle and apply to all devices, while weight based proportional
-+distribution is provided by the iocost cost model controller
-+(CONFIG_BLK_CGROUP_IOCOST) and, when the BFQ I/O scheduler is in use
-+for a device, by BFQ's own cgroup support.  Latency-based protection
-+(CONFIG_BLK_CGROUP_IOLATENCY) and I/O priority assignment
-+(CONFIG_BLK_CGROUP_IOPRIO) are also available.
- 
- 
- IO Interface Files
+ 	if (opts->mask & NVMF_OPT_HOST_IFACE) {
+-		if (!__dev_get_by_name(&init_net, opts->host_iface)) {
++		if (!__dev_get_by_name(current->nsproxy->net_ns,
++				       opts->host_iface)) {
+ 			pr_err("invalid interface passed: %s\n",
+ 			       opts->host_iface);
+ 			ret = -ENODEV;
 -- 
 2.53.0
 
