@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041866;
-	b=FsZZuz8pWxwJ+7SDhu4NPoRgh9BgZokcGto88xbd9ddFD3bow0gqbCBojJAaWFq4A8c7
-	 1dOcJgsr/FR/YBoEF5afsgFyEzXyHFe8HznX+GJrMEv/41fb98iit9ogYw20ACxtveAKq
-	 Inb5Vh+VChuLZ8CEcyE/G4pUDexu0i5Z6S8m+fcWltMdJx9E31zmbgvTbio8hEiYOdfm4
-	 9qyLQIBqBvzuQCmsVE7Ex5rBF124wdl6Dev2c+ZPyVKvU05jxnPLb7MOYIR+LPXMVSYmP
-	 xTgCVu1/HmDLXfJ+LjS1VsAo+4jRDo+Kr5NY9jlPAiZsMZNKjKPJiSVeXcKvdlegZcg==
+	t=1795041869;
+	b=xQZ4rmQTIpsGgpMI/amPwYpcXEntCH6Ty5v7V2kBkC8lqnwigfEtfU2M65CTLYLt+Hka
+	 ImevdnT3cDTlqywO9y53GdfZ43QDaOyCUDwA9C0dwih+i5tnOE0YcdEW9CRmXLSdZ67Vs
+	 /JNilyNNVaxSZICv3hABUjUrBFxkpHYAhX1SgQLQPUfXTQWaSkjAvZMp93+rHm8dmfz23
+	 PYqwUeXw5k3+iChab7JYsj6RERNNSbwLgVZ3vps/7FvGPtTAptcmZnWMLt8UrlEmWhYwJ
+	 08D+YWWi+tbRjBMT6Qlm3oxVSIhpFP0q21H54TJctDBBbEqqumGw88ZlhdRfizenbWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041866;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041869;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T4tw2pnhJ/GXYeOAxPkPBnpxB5v8ygZ6vs0oDGkcOCU=;
-	b=oXFsl+D0JitzJaJJOJFpduIBuSLTG7xrm0qFtjj5kVf0b8fsmbNJKxcNBu2e+AuKujd7
-	 sLpcun+hIh8a4Jp8HFLrBFQQKBCjhmJybIAnGZT9fmHJxb3diSLf1L+eNvgSb4aphGLMX
-	 LjVyhE2GVKSEEboM179BqzpmKLkLQulV8f6omhtbdlv+iPz8oJzSubDVhlNpsPDrFnF7C
-	 9M6ZZN1W7B3umC/JZEn8mAXOdKdWEbT4UBdPWrkmC7ZIYd2OeygYFGD3ZSp8Vrma9WxLB
-	 86lHVJAqdqpaj/gypCa4AFUbBkqNyLePcb/Rc18q3b/5AV++/Srku3hmDVGkAuzBvMA==
+	bh=bhq+w0ihkX7JyVP5XEUaArh/jg+bGX2Au3NjwV8kYTQ=;
+	b=DuxKSUq0sn8KtWd0fT9s1UrK7NCvBru0bODNmtGW4qgWDKzuWBWMTKD+0Fe2WMSeggL0
+	 Ap92KK2oZVNq83ozGNtZlE1I2r/OlGC4LZyHjChNxbiRSjRhMbwv+HOo4HkWaYV76KdgV
+	 jdOpHwpSzoIAgkO/6oqEfr4hic8vNhby8htf69wvQlXVOsYpACxdJfC4FOJjRiZvd6aPq
+	 ExTaV4yF6kmdlSjDRnIsSib6ajBMlyyTqbApbnA6uY5ht5F5MysC0mbLUzurplm3jAmpf
+	 FZLY9Wreci7wgRHSZyKnOjifiHXOPeZrTdmYDwXeAoTBySDhA8NSnbbtdHM/hH47+mg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DSML1Yaj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wuNmvRMn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B709606A32A;
-	Wed, 18 Nov 2026 22:44:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFA0606A32A;
+	Wed, 18 Nov 2026 22:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DSML1Yaj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED8F1F000C4;
-	Wed, 18 Nov 2026 22:44:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wuNmvRMn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515161F000C5;
+	Wed, 18 Nov 2026 22:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041866;
-	bh=T4tw2pnhJ/GXYeOAxPkPBnpxB5v8ygZ6vs0oDGkcOCU=;
+	s=korg; t=1795041868;
+	bh=bhq+w0ihkX7JyVP5XEUaArh/jg+bGX2Au3NjwV8kYTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DSML1YajXBrstZAEmPNc9mEYD0zCnWqB/0Pin33LyUexZPm8LPDbuu8UxpzzHiEb8
-	 BppWH535/XIXxXJjH13hsUZVmyWIshdZk8N+uatNB86DwpoE9ysyAB/+DIcK3JPUQp
-	 ZHNGKjJK2VMXJop3hpESEgJqbWE5cyWyE5nuSPqE=
+	b=wuNmvRMn+LbXCLcnp9A5U6KVlfdLJFZsqFBWsbYrILbkZiJ5C+1p+4DoxvWjcylMr
+	 TaNuAy9oPamFTk2CiRuJleuFf6L10cCCPrHT2U/g8/nwMv6XrSbJYn2htTORXN74cV
+	 ZS7DkTFSjXniSq8FvtfjlylKYuFBhNO5JpWPYJHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	pengdonglin <pengdonglin@xiaomi.com>,
 	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2965/3318] tracing: Clamp the printed end of a histogram bucket at U64_MAX
-Date: Wed, 18 Nov 2026 15:59:47 +0100
-Message-ID: <20261118150449.241798752@linuxfoundation.org>
+Subject: [PATCH 6.6 2966/3318] tracing: Avoid BTF lookup in atomic context
+Date: Wed, 18 Nov 2026 15:59:48 +0100
+Message-ID: <20261118150449.270312688@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,77 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: pengdonglin <pengdonglin@xiaomi.com>
 
-[ Upstream commit 289e2a775de434ccab2d107076bc78362ce288bd ]
+[ Upstream commit 42643ba35deb8ad1821acfc0577b445ee7ad7548 ]
 
-A key with the ".buckets=N" modifier is stored as the start of its bucket,
-and hist_trigger_print_key() prints the range it covers as start to
-start + N - 1. That addition overflows once the start is within N of
-U64_MAX:
+The function graph trace formatter can be called from ftrace_dump_one()
+with interrupts disabled. When ftrace_dump_on_oops is enabled, the trace
+panic notifier can reach ftrace_dump() from the panic path, including the
+nmi_panic() path used by the hard lockup detector.
 
-  # echo 'hist:keys=offset.buckets=10' >> \
-      events/syscalls/sys_enter_lseek/trigger
-  # ./seeker 5 -1                      # lseek(0, 5) and lseek(0, -1)
-  # cat events/syscalls/sys_enter_lseek/hist
-  ...
-  { offset: ~ 18446744073709551610-3 } hitcount:          1
-  { offset: ~ 0-9 } hitcount:          1
-  ...
+btf_find_func_proto() calls bpf_find_btf_id(), which may initialize vmlinux
+BTF under a mutex. Skip the BTF lookup when running in an atomic context
+or with interrupts disabled, and fall back to the existing return value
+formatting.
 
-18446744073709551610 + 10 - 1 does not fit in 64 bits, so the range ends
-below where it starts.
-
-The bucket does end at U64_MAX: it holds every value hist_field_bucket()
-maps onto its start, and there is no value above U64_MAX. Clamp the printed
-end there. Printed honestly the group is shorter than the size asked for,
-which histogram.rst does not mention, so say it there.
-
-Link: https://patch.msgid.link/20260914132346.2234731-1-donggeunyoo.kernel@gmail.com
-Fixes: de9a48a360b7 ("tracing: Add linear buckets to histogram logic")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Assisted-by: Claude:claude-fable-5
+Link: https://patch.msgid.link/20260916133218.1282590-2-dolinux.peng@gmail.com
+Fixes: ebeed8d4a555 ("tracing/probes: Move finding func-proto API and getting func-param API to trace_btf")
+Signed-off-by: pengdonglin <pengdonglin@xiaomi.com>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/trace/histogram.rst | 3 +++
- kernel/trace/trace_events_hist.c  | 7 ++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ kernel/trace/trace_btf.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/Documentation/trace/histogram.rst b/Documentation/trace/histogram.rst
-index 3c9b263de9c24..1f4ca14c25802 100644
---- a/Documentation/trace/histogram.rst
-+++ b/Documentation/trace/histogram.rst
-@@ -1943,6 +1943,9 @@ the ".buckets" modifier and specify a size (in this case groups of 10)::
-       Entries: 16
-       Dropped: 0
+diff --git a/kernel/trace/trace_btf.c b/kernel/trace/trace_btf.c
+index 43e3798011776..2fcb1efe49abf 100644
+--- a/kernel/trace/trace_btf.c
++++ b/kernel/trace/trace_btf.c
+@@ -15,6 +15,9 @@ const struct btf_type *btf_find_func_proto(const char *func_name, struct btf **b
+ 	const struct btf_type *t;
+ 	s32 id;
  
-+Keys are 64-bit, so the group holding the largest values is truncated where
-+that range ends and can be smaller than the size asked for.
++	if (unlikely(in_atomic() || irqs_disabled()))
++		return NULL;
 +
- To save stacktraces, create a synthetic event with a field of type "unsigned long[]"
- or even just "long[]". For example, to see how long a task is blocked in an
- uninterruptible state::
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index c3fb3cc447e31..1c8e42716b76d 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -5548,9 +5548,14 @@ static void hist_trigger_print_key(struct seq_file *m,
- 				   *(u64 *)(key + key_field->offset));
- 		} else if (key_field->flags & HIST_FIELD_FL_BUCKET) {
- 			unsigned long buckets = key_field->buckets;
-+			u64 end;
-+
- 			uval = *(u64 *)(key + key_field->offset);
-+			end = uval + buckets - 1;
-+			if (end < uval)
-+				end = U64_MAX;
- 			seq_printf(m, "%s: ~ %llu-%llu", field_name,
--				   uval, uval + buckets -1);
-+				   uval, end);
- 		} else if (key_field->flags & HIST_FIELD_FL_STRING) {
- 			seq_printf(m, "%s: %-50s", field_name,
- 				   (char *)(key + key_field->offset));
+ 	id = bpf_find_btf_id(func_name, BTF_KIND_FUNC, btf_p);
+ 	if (id < 0)
+ 		return NULL;
 -- 
 2.53.0
 
