@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024699;
-	b=ql/BYljr6ZDBTFBNPQddzBc8OacTswRCh4qKETGi1lSgLkecmy9eIg3czVNrFkIizHaV
-	 nm3hgkSPcq4210yNz8BJCjJ/1gBNjRdf8FUoDLYb2q2/36rVL8iSJLraio3dMlACTmTR4
-	 p9NZDPY9TESqZVQ4xkoy6MOcUDfVqrV47vkgZkaaGefbj+MlgdfjTsZo2ToTE1iEFUssi
-	 LKJtojC0jwXHyYXprk/TcpjrDAmZUp9cJsvnXgmhdkOMytQcH1cMZzc7A9qXNQvtVTf+G
-	 CUehfp8zlUJkTqHP1hN3VWDONDKX+tsIwOzXouJwJku7c7qw/B9Cphv0nG65GshIV6w==
+	t=1795024701;
+	b=hT2UWb14C1lGJFFQO7g6TAaqj5F3hMAbWyL8/MvQRup5hGSY6v8jy1Y6lKYuX9AX8GcK
+	 YCkvNkXEnwZLsfwBGYvk6mUU4cWs11qcyQiYwkezeu6+dD8GyaDoM5lB74wfcP267Z6bb
+	 00EqRsGSEMRcvk1FvBhUlBW71m92qrwiOOVooUcg/di4cCkOuf6rOF0qJHEXouNIKmC9M
+	 4GMgR9R+5L6UHkioJ9X2rqx5mUfcj7BeqAtSxu0+DbYcvFNyMcrG+/SRj9TcYtVQCMzfZ
+	 2nP9m/YQ2EXu1tg314oYQsTlOo/QN11XFyLoNSHznwP9XxIpTLVhQaUCXnKIErGPZiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024699;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024701;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ryL0IFRAuxJ8YIjkc0iYqgL5EGXdMJKX7tQzr3heHRk=;
-	b=HVqFU34fbzezmhhOXx6XVDZq7DTjB6vYHfO/wltpLO6WQ+qPk+gYt9uVsQKdh2ki/pIH
-	 ZbIJujoGsRO45v9GEoEjAtdyjKxt5viO+qbDdWBH7s2pEdmpI/qFSTlPRYQv1kPiFnJhi
-	 1z0e+DRw6iHuxkoWEGFOWXcUZ7iG3TcaXZV8WkEHXa22lx4rv2NFqNRUGOJHCZITZUF8t
-	 rP6D82QFRHTb5bhqaAo5E8dpy6cHZHg4wWR86COklylh8I4Dmv4bec+bzgN74xn8tzbuM
-	 GMSclZqIcnxcWaGtlywUIUU27w9tiYdlnwFyz4ncsXAG89qAHr3FUt9eVHavKBgev5A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=+OJv0gCvhKVwm8uBiCHbg5/IppyFkMK2OATr3URtFvE=;
+	b=0QXXHyRKU6O0L+AX2P1T6clW7/eBNICGCptv3ZniwJERWenUX40OC8O3QTIaG1+4pc51
+	 GNZacZst7vJ3/2gFqFlG9r7G/xKtW1ZZ0h0Y5kXxOlYWDjLC+UKzrrfuC2UNZI5mujm11
+	 pmlFvW3Msy/hf84DJEyy1ScqcUGh1ZHPWlWkQgxQAYQUlm/D8hJno1UiSy+DuCNlnh7Fr
+	 QNYNE6jV13FUX4patx8zo9/cp/HVoIITKl1YckJZlPBA+s0SnUnpNJAQJv3L1NLKBKT5A
+	 /dOnB+1qKwTjR9tPmVsQ6J5p5O5F6JFLUxV+HU0pk4PtbjKdFESLD2ilZNwO3alDl5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LQZF2l98;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jLLCHXQx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E003D606A32C;
-	Wed, 18 Nov 2026 17:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6552606A331;
+	Wed, 18 Nov 2026 17:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LQZF2l98
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB301F000C9;
-	Wed, 18 Nov 2026 17:58:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jLLCHXQx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082CE1F000CA;
+	Wed, 18 Nov 2026 17:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024698;
-	bh=ryL0IFRAuxJ8YIjkc0iYqgL5EGXdMJKX7tQzr3heHRk=;
+	s=korg; t=1795024701;
+	bh=+OJv0gCvhKVwm8uBiCHbg5/IppyFkMK2OATr3URtFvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LQZF2l98Zdq/WucuBpPjmWQVHik8Dmsuh4DRSueJVdvrTYmbol4fgr6I9OUuaFXqR
-	 9Z9OFM8Of6ImSGXZEJyKdQt12UrLebh25sbDvuEJu0/WuEx30SHNjc0UTb0NiYiYJd
-	 lAYGd/NLXGbHKoRJ2HqOPboSlvyGmV1a7ENx5Nr8=
+	b=jLLCHXQxBUvWPlCrGkG+MMhHvPTeD5mnUEOZs2AwZYw0Gnwn/H5mLaYWOjzFf/gid
+	 dA/W+enZGbySsc+c1hNfURNBOTFjl0v/Ix5LBnWwxtNYB6MPzqYtmyqKdE5PxAg0A4
+	 bupD87dfBGFuRyZYbxWSPSxV1tW+LoTRmMefzIyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Niko Huuskonen <niko.huuskonen.00@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0781/2151] arm64: dts: qcom: hamoa-iot-evk: add MCP2518FD CAN on spi18
-Date: Wed, 18 Nov 2026 15:41:56 +0100
-Message-ID: <20261118150150.566125098@linuxfoundation.org>
+Subject: [PATCH 6.18 0817/2151] ALSA: caiaq: Fix the Kore controller key map
+Date: Wed, 18 Nov 2026 15:42:32 +0100
+Message-ID: <20261118150151.902378824@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -64,70 +62,105 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+From: Niko Huuskonen <niko.huuskonen.00@gmail.com>
 
-[ Upstream commit 181bef739979466b6ede95b34d6c94d0250b1c0e ]
+[ Upstream commit c0508fc6895137f9e2dd43c1a09cc834254cc149 ]
 
-Enable the Microchip MCP2518FD CAN-FD controller on hamoa. The controller
-is connected via SPI18 and uses a 40 MHz oscillator.
+keycode_kore does not match the hardware in two places:
 
-Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260515-hamoa-spi-can-devicetree-v2-1-d0e922608065@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 723ce02feb13 ("arm64: dts: qcom: hamoa-iot-evk: use on-board crystal for PS8830 retimers")
+- Softkeys 5 to 8 are listed in reverse order, so pressing the fifth
+  softkey reports BTN_8, the sixth BTN_7 and so on. Softkeys 1 to 4 are
+  correct. The OpenKoreBridge project, which drives a Kore 2 through
+  this driver, works around the same reversal in userspace.
+
+- On the first Kore controller the touch sensors of the eight knobs are
+  scrambled: touching knob 1 reports KEY_BRL_DOT6, knob 2 KEY_BRL_DOT8,
+  knob 3 KEY_BRL_DOT2, knob 6 KEY_BRL_DOT7, knob 7 KEY_BRL_DOT1 and
+  knob 8 KEY_BRL_DOT3. Only knobs 4 and 5 are right.
+
+Put the softkeys in order for both controllers, and give the first Kore
+controller its own touch sensor order, so that BTN_n and KEY_BRL_DOTn
+belong to the n-th knob. The touch sensor order of the Kore 2 is left
+alone, as it could not be checked.
+
+Userspace that compensates for the old order needs to follow. It can
+read the key map with EVIOCGKEYCODE, which also makes it possible to
+support kernels with and without this change.
+
+Tested on a Kore controller (USB ID 17cc:4711).
+
+Link: https://github.com/OpenKoreBridge/OpenKoreBridge
+Fixes: 8e3cd08ed8e5 ("[ALSA] caiaq - add control API and more input features")
+Assisted-by: LLM
+Signed-off-by: Niko Huuskonen <niko.huuskonen.00@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260927003532.289468-3-niko.huuskonen.00@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ sound/usb/caiaq/input.c | 29 +++++++++++++++++++++++++----
+ 1 file changed, 25 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-index 6d69f239928ce..368781045d0db 100644
---- a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-+++ b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-@@ -27,6 +27,14 @@ backlight: backlight {
- 		pinctrl-names = "default";
- 	};
- 
-+	clocks {
-+		mcp2518fd_osc: clock-40000000 {
-+			compatible = "fixed-clock";
-+			clock-frequency = <40000000>;
-+			#clock-cells = <0>;
-+		};
-+	};
-+
- 	wcd938x: audio-codec {
- 		compatible = "qcom,wcd9385-codec";
- 
-@@ -969,6 +977,19 @@ tpm@0 {
- 	};
+diff --git a/sound/usb/caiaq/input.c b/sound/usb/caiaq/input.c
+index 6a5adb8d1e6a7..aee526e0da36a 100644
+--- a/sound/usb/caiaq/input.c
++++ b/sound/usb/caiaq/input.c
+@@ -41,11 +41,11 @@ static const unsigned short keycode_kore[] = {
+ 	BTN_3,
+ 	BTN_2,
+ 	BTN_1,
+-	BTN_8,
+-	BTN_7,
+-	BTN_6,
+ 	BTN_5,
+-	KEY_BRL_DOT4,   /* touch sensitive knobs */
++	BTN_6,
++	BTN_7,
++	BTN_8,
++	KEY_BRL_DOT4,   /* touch sensitive knobs (Kore 2 order) */
+ 	KEY_BRL_DOT3,
+ 	KEY_BRL_DOT2,
+ 	KEY_BRL_DOT1,
+@@ -55,6 +55,21 @@ static const unsigned short keycode_kore[] = {
+ 	KEY_BRL_DOT5
  };
  
-+&spi18 {
-+	status = "okay";
++/* index of the first touch sensor in keycode_kore */
++#define KORE_TOUCH_KEYS	24
 +
-+	can@0 {
-+		compatible = "microchip,mcp2518fd";
-+		reg = <0>;
-+		interrupts-extended = <&tlmm 68 IRQ_TYPE_LEVEL_LOW>;
-+		clocks = <&mcp2518fd_osc>;
-+		spi-max-frequency = <14000000>;
-+		microchip,xstbyen;
-+	};
++/* the first Kore controller reports its touch sensors in this order */
++static const unsigned short keycode_kore1_touch[] = {
++	KEY_BRL_DOT4,
++	KEY_BRL_DOT8,
++	KEY_BRL_DOT3,
++	KEY_BRL_DOT7,
++	KEY_BRL_DOT2,
++	KEY_BRL_DOT6,
++	KEY_BRL_DOT1,
++	KEY_BRL_DOT5
 +};
 +
- &swr0 {
- 	status = "okay";
- 
+ #define MASCHINE_BUTTONS   (42)
+ #define MASCHINE_BUTTON(X) ((X) + BTN_MISC)
+ #define MASCHINE_PADS      (16)
+@@ -656,6 +671,12 @@ int snd_usb_caiaq_input_init(struct snd_usb_caiaqdev *cdev)
+ 		input->absbit[BIT_WORD(ABS_MISC)] |= BIT_MASK(ABS_MISC);
+ 		BUILD_BUG_ON(sizeof(cdev->keycode) < sizeof(keycode_kore));
+ 		memcpy(cdev->keycode, keycode_kore, sizeof(keycode_kore));
++		BUILD_BUG_ON(KORE_TOUCH_KEYS + ARRAY_SIZE(keycode_kore1_touch) >
++			     ARRAY_SIZE(keycode_kore));
++		if (cdev->chip.usb_id ==
++		    USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_KORECONTROLLER))
++			memcpy(cdev->keycode + KORE_TOUCH_KEYS, keycode_kore1_touch,
++			       sizeof(keycode_kore1_touch));
+ 		input->keycodemax = ARRAY_SIZE(keycode_kore);
+ 		input_set_abs_params(input, ABS_HAT0X, 0, 999, 0, 10);
+ 		input_set_abs_params(input, ABS_HAT0Y, 0, 999, 0, 10);
 -- 
 2.53.0
 
