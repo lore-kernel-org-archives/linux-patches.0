@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023946;
-	b=MK36yYFG5EMo9+DUjWr4oXtRjjt5mh8+CoiGGdDmLn6hnjUYGhwfPDS5DMsRV9qHZO+G
-	 9aCmkCugf50ZvbMQhE6stJABNlwC04HkwLppWKfpdDxvNBSWrbF/xKoVeHldEG8FWmZEW
-	 B4U3QlqZYkBM7lNrMzNfYIZKSCXFmy4BBU/mvRxuGxbizQTVhFWx8N9dQLPBCX63CgIsa
-	 ieVwpgOQTReDeNxwkC2tLq7utjqbQa2JrHM++ILQl+13ADXZBeCoMwt1NeOMF06oFVSyb
-	 TjudF57OHC7CAvAZIIz3ctJj0Z+a7AnVdNLQbDMswhy18X94ymxXw8mN8fXcJbo32Cg==
+	t=1795023949;
+	b=aF+axdv7dO3bNG3nMNV3ny1ECdJDT+/nnq63h7mBYOqgxi0k0xdQtuolEC6OpPm3Cf9o
+	 1RBAv5Y0Hze2IsJtxddtG4/Mz0E8Ed8D+2TWWYT6GeIq76ojU/TPN833MrQkpH7ZTbyDY
+	 Z+0IBqFDunffVakgS7yBg/wsabZ0epYO5qH7u3efHCdT7QMbFtRQvHZyW4YQzPH536n5a
+	 K1tAg5at0N8jReHFbpzPRAn09209o1fa2B1eqpUiCql64yG+JbiyTuXg9SGu3b5ZSDVHm
+	 UBAjci7nT5riSHp2NUiNtHhZdvg3sPjh19IEZ9BYinbxUvHsQCMvm/g1p0hrBwde/Ug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023946;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023949;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DdOFWU1x8LI20IHYm9M91mRWDCR5VkwZ5SemRExvdlM=;
-	b=1m/3WC3eW3xM3GwnGLXljmbrbDeFHkL9IfDlMusNKAKgGhxnAzdsHu1/ydorEoJ/vDxq
-	 ZGzf8So3K98MmjkCmIVW9LV4tNp8QgxUo8GVNJyA6PtRBSOYba2nXpKGxHRsgz2ZNHDKi
-	 ZAWk4FChphL7prezf8YY5TkwrFiFp/W1oqUPxSzJq/bpPu1mDUC3ID0LGca03y4VVKcRV
-	 zSCFcHssrfDT+HOMgmAzzfd3dH/ZPUW6jeeHh+lb3jiiZBWmkmSaRWx6C7CVlUs1D4G1n
-	 6+gFDNgdsSMCOGY4QGlX6n9pVxsTzMDkiz0JdADh0gquYH7MmptfsZ19vs3QkGMMHoA==
+	bh=4ODMG7IjAx0Yzp5kf1yEvbjrnK2J0bNVKXE+wV2hQyM=;
+	b=tdKryOLy88unoAHluyWYnCdc+01U0P3l9hdL45Rz+HpdPivmqNdnUisZzjL8kctAKbod
+	 fxadPekNsMrdnWREgjChuJPirx+Q2H/2PtmBUWyPXZWghP5ulqtbjUr1SX/jh85rHmYLm
+	 T8UnNt87Yg2HHOrplAgblFQTASXRpaddMVSm82IHgvd70gh4SkY99GYSOg4DJ6Awrg4iM
+	 QgH0GkEnya7yKELgTWDz0kiuHuDQIurHw+jjjftMdsbz9Zt6UsFF9VHB70xfl/BE3/LQ6
+	 BedbtR9wUPQUHv6o5JwC+DeC6TftbLGDvcU7LtpFlbHC7ZhvLBLrixrK5oJAQizPiTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mHHk/ktP";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K5+Lhjj6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FF8606A320;
-	Wed, 18 Nov 2026 17:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF0A606A32A;
+	Wed, 18 Nov 2026 17:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mHHk/ktP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7BFA1F000C4;
-	Wed, 18 Nov 2026 17:45:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K5+Lhjj6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9FE1F000C4;
+	Wed, 18 Nov 2026 17:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023946;
-	bh=DdOFWU1x8LI20IHYm9M91mRWDCR5VkwZ5SemRExvdlM=;
+	s=korg; t=1795023949;
+	bh=4ODMG7IjAx0Yzp5kf1yEvbjrnK2J0bNVKXE+wV2hQyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mHHk/ktPt2VO4vRJ+dWxTMnjFmXKl/FkqdKyQqaCOBtPAWRwEFg2Y1LUDfsTlwj9m
-	 5aMLt9/lXwFgoR2X1MZDoRwwCHe29D8FMg/nf0MfoYYcNZjQmLxcYLjnKKw4ecVclj
-	 fo2f4hzmN+tr/gStzSCRuczNihXT2KLHTC0vYv/A=
+	b=K5+Lhjj6jrZZcn7kmxHtuVj/Rl34PuGg7dcgJrBs6G+dNkB1wFNBH2ebMwm1b5pmY
+	 RoEZ49eRF5PyHNg+1BuiekKcBq0jTd8449DfWN6dacYADN1ovQjzzcwVx6GaZ0x0Ch
+	 LjKcT0dMywLmU0rbMa2SepzrcfKpet35+Aub7QoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Gaylard <ag@ffroot.co.za>,
-	Linus Walleij <linusw@kernel.org>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0549/2151] pinctrl: fix PINCTRL_SPPCTL=m
-Date: Wed, 18 Nov 2026 15:38:04 +0100
-Message-ID: <20261118150141.965217487@linuxfoundation.org>
+Subject: [PATCH 6.18 0550/2151] fs/ntfs3: check INDEX_ROOT resident size before use in ntfs_read_mft()
+Date: Wed, 18 Nov 2026 15:38:05 +0100
+Message-ID: <20261118150142.000051638@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,56 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Gaylard <ag@ffroot.co.za>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-[ Upstream commit 7dcf87d2dbbe8c9c1efb69fe9be728a3dfd51d3d ]
+[ Upstream commit d0ac69ce3af4dbae01d4f064b7482f0c5440dbde ]
 
-The PINCTRL_SPPCTL option is defined as a tristate in Kconfig, and the
-help text suggests that the user can build it as a module by setting to
-'m'.
+When ntfs_read_mft() parses an ATTR_ROOT attribute it computes
 
-However, it cannot currently be set to 'm', because SOC_SP7021, the only
-platform that supports it, is a bool option that uses 'select' on it.
-Also, the SP7021 requires this driver to be built in, in order to boot.
+	root = Add2Ptr(attr, roff);
 
-Change the tristate to bool and fix the help text.
+using the on-disk resident data offset (roff = attr->res.data_off) and
+then dereferences root->type and root->rule, and later passes root on to
+indx_init(). Unlike the ATTR_STD and ATTR_NAME cases, which validate that
+the resident data is large enough (asize >= sizeof(struct X) + roff and
+rsize >= sizeof(struct X)) before accessing it, the ATTR_ROOT case has no
+such check.
 
-Tested on linux-next-2026-09-14 on a LTPP3G2 board.
+mi_enum_attr() only guarantees data_off + data_size <= attribute size, so
+a crafted image can set data_off such that root lands at (or past) the end
+of the MFT record's slab allocation while still passing that check (e.g.
+data_size == 0). The subsequent read of root->type is then a
+slab-out-of-bounds read, reported by KASAN when mounting the image:
 
-This impossible tristate was detected by kconfirm, a static analysis tool
-for Kconfig, by Julian Braha <julianbraha@gmail.com>.
+  BUG: KASAN: slab-out-of-bounds in ntfs_iget5 (fs/ntfs3/inode.c:283)
+  Read of size 4 at addr ffff88800c06a400 by task exploit/142
+  Call Trace:
+   ...  [KASAN report internals]
+   ntfs_iget5 (fs/ntfs3/inode.c:283 fs/ntfs3/inode.c:542)
+   ntfs_fill_super (fs/ntfs3/super.c:1690)
+   get_tree_bdev_flags (fs/super.c:1634)
+   vfs_get_tree (fs/super.c:1694)
+   fc_mount (fs/namespace.c:1198)
+   path_mount (fs/namespace.c:3765 ...)
+   __x64_sys_mount (fs/namespace.c:4174 ...)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:63)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  The buggy address is located 0 bytes to the right of
+   allocated 1024-byte region [ffff88800c06a000, ffff88800c06a400)
+   which belongs to the cache kmalloc-1k of size 1024
 
-Fixes: aa74c44be19c ("pinctrl: Add driver for Sunplus SP7021")
-Signed-off-by: Andrew Gaylard <ag@ffroot.co.za>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Validate the resident data size in the ATTR_ROOT case the same way the
+neighbouring cases do, so that a truncated or mis-offset INDEX_ROOT is
+rejected before root is dereferenced.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/sunplus/Kconfig | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ fs/ntfs3/inode.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/sunplus/Kconfig b/drivers/pinctrl/sunplus/Kconfig
-index 4b5c47c193d97..a359fdbda1b3a 100644
---- a/drivers/pinctrl/sunplus/Kconfig
-+++ b/drivers/pinctrl/sunplus/Kconfig
-@@ -4,8 +4,8 @@
- #
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index e9ac5c5c7239d..bad5d16fed2c1 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -283,7 +283,9 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 		break;
  
- config PINCTRL_SPPCTL
--	tristate "Sunplus SP7021 PinMux and GPIO driver"
--	depends on SOC_SP7021
-+	bool "Sunplus SP7021 PinMux and GPIO driver"
-+	depends on SOC_SP7021 || COMPILE_TEST
- 	depends on OF && HAS_IOMEM
- 	select GENERIC_PINCTRL_GROUPS
- 	select GENERIC_PINMUX_FUNCTIONS
-@@ -17,6 +17,4 @@ config PINCTRL_SPPCTL
- 	help
- 	  Say Y here to support Sunplus SP7021 pinmux controller.
- 	  This driver requires the pinctrl framework.
--	  GPIO is provided by the same driver.
--	  To compile this driver as a module, choose M here.
--	  The module will be called sppinctrl.
-+	  This driver also provides GPIO.
+ 	case ATTR_ROOT:
+-		if (attr->non_res)
++		if (attr->non_res ||
++		    asize < sizeof(struct INDEX_ROOT) + roff ||
++		    rsize < sizeof(struct INDEX_ROOT))
+ 			goto out;
+ 
+ 		root = Add2Ptr(attr, roff);
 -- 
 2.53.0
 
