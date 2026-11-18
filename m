@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038475;
-	b=m7IR5YA/igZR24cj/cNpkoEfihUmPg4YWBxV49yk1jOs7D08qQIumaDsFuz3dfqczwvr
-	 rHJ0Pw6R+k7VmCWq0fysOf65X31EgSE+yqbW0KrhHkbdxfRLrdsUu9AWWlZd7lxCleAzA
-	 0J5NECFRZ2T+f0KI/LAbo3pazURYNNVtCaKSdUSeVWs1JHOynlQVuO9ewIBe4Na6wUzyV
-	 Cij+jo6WGVwvl/shSsBSTNNeBIwGRKAo2oRmCc1TNyCjmDVsquLDD7d9QIPsijQmKlwcN
-	 fA1HWUqxRx1cP3owbLONEulqeuh96Iodco9sBL9Ujg4EQU2PdHTVp5DBgfxSk8VJjrg==
+	t=1795038478;
+	b=kR9RGTcJhF2mHMNounDoRQ6TKO2sP5lflbEcVaWKs1y7QVFR2HNfWc5nJaQDg53S4h8/
+	 Bis5oNANtdTgr184fMtiQWecOGHnDwouZVelt/7GwYFc6oKazUeVTDgYyMtpCMGENWo8R
+	 KlH1Nf8NEYMNwMC7oYU499shtVCt91ntlsc3yDhYHClrHVEJTZwX6E92azCfyLG0bKLE5
+	 1CKICj1rT99duJpsWqxj2T9zUQnGTkNMM0MkeT+IJtmht+IBhXbidLbdSEFPHK5hB7kpb
+	 YCSl91bG6O4+gmDbLxGpRxW50iuamDro+ixooleTDnKAIdfhmrQSP24u85SrYIU0K/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038475;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038478;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IHxJz0v6qYwmH+y21xlQHBsR+2TRr/OYKAZ8tK6AtIE=;
-	b=TJR2jlwA03gQuQnB8dapU+YcqMqUpGbQCv/IbiuslUCHNiMmm/12fFtJG+4pshC2RMXX
-	 fJprM/hLTz9Y804oD36DlURTZsYeGT5/en/ZJEgKzsgo6kXmy60YGsMJLzyqS3bYQsfiI
-	 1DIY5lYPmTD9aAk0SxCHWvVHuworgNpnfogVVionVO6mlmLD/KO/K/5iMezOXOT4+cuDE
-	 rVtwK1zrbqHRKhqsIV7aOSmmlVCZ6zI/v9bC1keZ822pLXInvX1kfVdK4wCKeM/hOSUNt
-	 rfTdpAcSaTUQcgT1L4AmKqsfRPGbyuXcxUmzPuXMD/EBxzhLCCo1NJTjaw7Pt5HYjzw==
+	bh=YoaNGstXB/XshezwvgLsBssT0FNJyI1y8PQ3U6FW9YU=;
+	b=mSp1WUPwYPWO09RZoc9HIScCGN/qsSx8G9TcjJAaPU6sKrOODBOb4XjLStvJpEhW3SoK
+	 YYYV+zDgiLxAoMKhkd0olEWHFh58nQJOkYv3nTVv5sJBXVQSYUWir+ODl2yw2y3vbHcFY
+	 pwlhjd21dnQMSEZjdWr6nfAil0ppE1ZX1oPyq1iB3ZI8P3pLitctxvxFmQXzATma8rya6
+	 mXKU+pdxOO7BEBSkz3nmVA56NE4qyRc8F0LURACGNakzc+d+n6oMboAhPx9CqDs97GTGm
+	 XsN9Ola8E4tgY1V03uH1trNFtXPFA07/CxeLUPBJPiLgCRbTptn7IPdh0GAq2mG8HVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PSkqVx2c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=whJT8ZV7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49456606A325;
-	Wed, 18 Nov 2026 21:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A799606A325;
+	Wed, 18 Nov 2026 21:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PSkqVx2c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CEA71F000C4;
-	Wed, 18 Nov 2026 21:47:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=whJT8ZV7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC3A1F000C4;
+	Wed, 18 Nov 2026 21:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038475;
-	bh=IHxJz0v6qYwmH+y21xlQHBsR+2TRr/OYKAZ8tK6AtIE=;
+	s=korg; t=1795038477;
+	bh=YoaNGstXB/XshezwvgLsBssT0FNJyI1y8PQ3U6FW9YU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PSkqVx2cizRJlKkq/u6XWZRKZdMdDYFuSAVnSR+7Du2V8y9BX/i+Jfxs1sak7vdaD
-	 R3I2J/QtTBUSc2MNrHfc0zpgI/ySGHz/ayp8bS8mLaecpD8QIsXOta5O7pGmRl5OO6
-	 3OY8t80IaEC7EDEsg7iqYjIMr5kX5gaYO9oq79/w=
+	b=whJT8ZV74hJ7h4YQhZ76w4I028Vj/EkvpaAKsiW9oTgSImjZiPFqX1IihG2IWa6BG
+	 1uTLVsP5V0R95cwO/VM5vUFlS4pY694/B1PdVivg4/gk6rGcD6iZqZ9n/OCj+kP0PS
+	 whX5/IFhWDJWp1kIuEffTh4JKSJ6+pfUSzfBxOPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oupton@kernel.org>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1756/3318] KVM: arm64: vgic: Stop the target vcpu when disabling LPIs
-Date: Wed, 18 Nov 2026 15:39:38 +0100
-Message-ID: <20261118150414.536825055@linuxfoundation.org>
+Subject: [PATCH 6.6 1757/3318] driver core: Add device_show_string() helper for sysfs attributes
+Date: Wed, 18 Nov 2026 15:39:39 +0100
+Message-ID: <20261118150414.566240023@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,58 +68,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit a1b4bd2c2c262b8094c86afb99364d16ac08cb66 ]
+[ Upstream commit 3cc50d07be10f67aff836f8247a240ec132c6a67 ]
 
-Disabling LPIs is pretty nasty, as it directly messes with the AP list
-of the affected CPU, which could be running... This has the potential to
-lead to really bad behaviours, and we should not be doing that.
+For drivers wishing to expose an unsigned long, int or bool at a static
+memory location in sysfs, the driver core provides ready-made helpers
+such as device_show_ulong() to be used as ->show() callback.
 
-Take example on the way the Active state is handled and simply pause the
-the vcpu so that we are sure it is in a quiescent state, and the state be
-safely manipulated.
+Some drivers need to expose a string and so far they all provide their
+own ->show() implementation.  arch/powerpc/perf/hv-24x7.c went so far
+as to create a device_show_string() helper but kept it private.
 
-Nobody has any expectation of performance for this anyway.
+Make it public for reuse by other drivers.  The pattern seems to be
+sufficiently frequent to merit a public helper.
 
-Fixes: 96085b949672d ("KVM: arm/arm64: vgic-v3: Retire pending interrupts on disabling LPIs")
-Co-developed-by: Oliver Upton <oupton@kernel.org>
-Signed-off-by: Oliver Upton <oupton@kernel.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
-Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20261015100539.1011760-7-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ sashal: Replaced kvm_pause_vcpu()/kvm_resume_vcpu() with whole-guest kvm_arm_halt_guest()/kvm_arm_resume_guest() calls. ]
+Add a DEVICE_STRING_ATTR_RO() macro in line with the existing
+DEVICE_ULONG_ATTR() and similar macros to ease declaration of string
+attributes.
+
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Acked-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/2e3eaaf2600bb55c0415c23ba301e809403a7aa2.1713608122.git.lukas@wunner.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 3d9a175707ee ("platform/x86: asus-wmi: fix TUF keyboard power state shutdown naming")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-mmio-v3.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/powerpc/perf/hv-24x7.c | 10 ----------
+ drivers/base/core.c         |  9 +++++++++
+ include/linux/device.h      | 15 +++++++++++++++
+ 3 files changed, 24 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-index 33ff9fcfcfb08..1dab5298ae9e7 100644
---- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-@@ -276,9 +276,19 @@ static void vgic_mmio_write_v3r_ctlr(struct kvm_vcpu *vcpu,
- 		if (ctlr != GICR_CTLR_ENABLE_LPIS)
- 			return;
+diff --git a/arch/powerpc/perf/hv-24x7.c b/arch/powerpc/perf/hv-24x7.c
+index 3449be7c0d51f..cfb010dc285b7 100644
+--- a/arch/powerpc/perf/hv-24x7.c
++++ b/arch/powerpc/perf/hv-24x7.c
+@@ -425,16 +425,6 @@ static char *memdup_to_str(char *maybe_str, int max_len, gfp_t gfp)
+ 	return kasprintf(gfp, "%.*s", max_len, maybe_str);
+ }
  
-+		/*
-+		 * Yes, disabling LPIs is painful, since it can be done from
-+		 * a *remote* vcpu! So let's not take any chance, and make
-+		 * sure that the target vCPU has written their LRs back to the
-+		 * irq structures, and release any reference they would have.
-+		 *
-+		 * If it hurts, don't do it.
-+		 */
-+		kvm_arm_halt_guest(vcpu->kvm);
- 		vgic_flush_pending_lpis(vcpu);
- 		vgic_its_invalidate_cache(vcpu->kvm);
- 		atomic_set_release(&vgic_cpu->ctlr, 0);
-+		kvm_arm_resume_guest(vcpu->kvm);
- 	} else {
- 		ctlr = atomic_cmpxchg_acquire(&vgic_cpu->ctlr, 0,
- 					      GICR_CTLR_ENABLE_LPIS);
+-static ssize_t device_show_string(struct device *dev,
+-		struct device_attribute *attr, char *buf)
+-{
+-	struct dev_ext_attribute *d;
+-
+-	d = container_of(attr, struct dev_ext_attribute, attr);
+-
+-	return sprintf(buf, "%s\n", (char *)d->var);
+-}
+-
+ static ssize_t cpumask_show(struct device *dev,
+ 			    struct device_attribute *attr, char *buf)
+ {
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index 3e722d2d5dd3c..69d9115fec0f0 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -2548,6 +2548,15 @@ ssize_t device_show_bool(struct device *dev, struct device_attribute *attr,
+ }
+ EXPORT_SYMBOL_GPL(device_show_bool);
+ 
++ssize_t device_show_string(struct device *dev,
++			   struct device_attribute *attr, char *buf)
++{
++	struct dev_ext_attribute *ea = to_ext_attr(attr);
++
++	return sysfs_emit(buf, "%s\n", (char *)ea->var);
++}
++EXPORT_SYMBOL_GPL(device_show_string);
++
+ /**
+  * device_release - free device structure.
+  * @kobj: device's kobject.
+diff --git a/include/linux/device.h b/include/linux/device.h
+index 15eb24877a518..85f0412ca0668 100644
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -138,6 +138,8 @@ ssize_t device_show_bool(struct device *dev, struct device_attribute *attr,
+ 			char *buf);
+ ssize_t device_store_bool(struct device *dev, struct device_attribute *attr,
+ 			 const char *buf, size_t count);
++ssize_t device_show_string(struct device *dev, struct device_attribute *attr,
++			   char *buf);
+ 
+ /**
+  * DEVICE_ATTR - Define a device attribute.
+@@ -257,6 +259,19 @@ ssize_t device_store_bool(struct device *dev, struct device_attribute *attr,
+ 	struct dev_ext_attribute dev_attr_##_name = \
+ 		{ __ATTR(_name, _mode, device_show_bool, device_store_bool), &(_var) }
+ 
++/**
++ * DEVICE_STRING_ATTR_RO - Define a device attribute backed by a r/o string.
++ * @_name: Attribute name.
++ * @_mode: File mode.
++ * @_var: Identifier of string.
++ *
++ * Like DEVICE_ULONG_ATTR(), but @_var is a string. Because the length of the
++ * string allocation is unknown, the attribute must be read-only.
++ */
++#define DEVICE_STRING_ATTR_RO(_name, _mode, _var) \
++	struct dev_ext_attribute dev_attr_##_name = \
++		{ __ATTR(_name, (_mode) & ~0222, device_show_string, NULL), (_var) }
++
+ #define DEVICE_ATTR_IGNORE_LOCKDEP(_name, _mode, _show, _store) \
+ 	struct device_attribute dev_attr_##_name =		\
+ 		__ATTR_IGNORE_LOCKDEP(_name, _mode, _show, _store)
 -- 
 2.53.0
 
