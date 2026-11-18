@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054492;
-	b=jFtZw83Fptlt3z+B6lMJazM9ih7qdeMs/2h7daUa4G7b/78f/I+lAq317LsNT12oUKev
-	 cHCZhkMuzVsbzsryGrtbCtgz3zZkzIJtP6fSzocvM0uBO7j809sZuY1dK4Ka3ykK82Yiu
-	 jbi6QWhN8SsfddCSJJzG5r5EdAktGfuBJkkGPrI3L0zFVQIemoAwOLjCusm4s1oF65FxB
-	 VSSqA+jAC5x9c1hs3pXyAfRHzb32kdoDjNMBIsAvF1gjoLEzk8kXbZCptRK8GPLtX8RAq
-	 0CCOVe3QtacvXddws1KsSc2FCsoLKtAdabdK407vLb4Wckum+wp/GC8Pvtqh18YoHTw==
+	t=1795054494;
+	b=Fq9jZI2kody8DW1sS9jVgXaux+nHEaVYaUKlvJ0+QLICai9TF7RXkiGjnRhlIQtkItD1
+	 Hw9wjXe5d92XvoH3YYa37ozgQgZIwSZqajHqOj57vxpNDF6B8tn6yHEQOFrADO2wOC7JW
+	 7jdTTFt2L3OGtd5aEzNtfOLLQ/WbW915y17Y29wARAZ7lr7MtUW1gDcdfEt6fW5Nxv102
+	 pyCzxiOMyHASamG05xgGSeFNtNYbBGyycBnWBMAKOfoUkTSjyLZNkUZ1AzfXfXdCM0hK7
+	 nEU+5NtAve3TMItEovydLwGy7OTzWk/IMbNmlkQdIZXj7gnFZIJWL4GeGbh2hy745XA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054492;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054494;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4KLfsXPrfjEY3MLx/vMMLWHNkfUA/BpkaIXve0z8zIw=;
-	b=AE7MWAsAtA9Po0AaOw3dYtjVLKMo94xz7O9k1ZuLmg+Jl/TBx3XhzHU0jniQYC0PDK74
-	 bFAx3ODHbahC+QwwDUBCN16VoUgm/jp9ZDNAI037I8O4NgLLUBOVMCEb3Josv7XT6p3Sv
-	 owVKwEmOftXDFXBuACSm8YaFdO1/AZrq7VgTQoinhH8SiE8d/Ib2Crd1svjJfAtyjJEuX
-	 11uwDNhPUyYGTkN9rKiGa+rbYTHGJCUo+bTBVPSRiM/jGOY2R/6mGvo1zfL6Z8fiwdinA
-	 5/pMBBpao7hNcUMvcNpk4e7+YNFaYhPfZ7y4Q8smbcgwzw9Y8HwbeNy4c/jJDC42ZnA==
+	bh=d0mWlEU8i3Z1NOQURYuY52s2Ca0b95F+9eY18O0b2Q4=;
+	b=YdmwUEHt7Qholvx7Mtl+NCUOeF34315DZmOSR+BW+Sji2YT0aZAcVn8DHdQCjFQ08Vgl
+	 otaftdK/bT6vq4Qa8AVi2VBEFx0KfMMREd0yotrRNpggcCPjFQwKyEb9gTt5HJSrWRtbB
+	 +MsbPjlZ8VUybNhflP3N4p4HYgint4f0MUXVRoj3cwZ4LcD8YWvlvctDvcRs5K73m+aXZ
+	 mehIb96YwJd70ymmePayg7kiK9DLO7d22jTKyp6+fyrbAkHU1V+5uuhjixvI7rJlleEOC
+	 P7448tY3U9cE6JVIUaooPAi2yY+pHmXHWV7tkRQyl9vDGdaRpKnfhCcQVLlTV10fSow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=02qiEt2k;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ALiblO8a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11588606A320;
-	Thu, 19 Nov 2026 02:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD20606A31C;
+	Thu, 19 Nov 2026 02:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=02qiEt2k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF511F000C4;
-	Thu, 19 Nov 2026 02:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ALiblO8a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BFC51F000C4;
+	Thu, 19 Nov 2026 02:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054491;
-	bh=4KLfsXPrfjEY3MLx/vMMLWHNkfUA/BpkaIXve0z8zIw=;
+	s=korg; t=1795054494;
+	bh=d0mWlEU8i3Z1NOQURYuY52s2Ca0b95F+9eY18O0b2Q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=02qiEt2k+0y9OiC/gzz7r9T0ALOYcdUB9H7T24SZjDhu7MEVxVh/lHgo7yuAUWKwc
-	 pqu5WTicynwQHILrlmX9P3lWjwyWPYfmtIHX6b68e2e7Snvz2cVSBxREfcJS9BkOBU
-	 eG/qj3U8lIdh0j7CDtiYaOWNCVWUWAWSpaG3kCyk=
+	b=ALiblO8aEUDN+QGVysMe+EnJOKcnhjmAFzEEDN7AsWLEYDcELopdTNMN0H8ED5+gi
+	 FpNQl6lRk2/y9cFFmVRmX8nFaUpmtR3kReFENPj7lduAS/sgLDgadWt5yGEcArN11U
+	 ZGqyR/LV1OuC3XMYOsQw68EpnQ/jh2JhOS8jVbnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Liu <leo.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1253/2214] drm/amdgpu: cancel idle work in hw_init failure paths for vcn/uvd/vce/jpeg
-Date: Wed, 18 Nov 2026 15:48:49 +0100
-Message-ID: <20261118150101.799138679@linuxfoundation.org>
+Subject: [PATCH 5.15 1244/2214] ocfs2: cache the mount context for dentry lock callbacks
+Date: Wed, 18 Nov 2026 15:48:40 +0100
+Message-ID: <20261118150101.478553890@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,302 +74,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Liu <leo.liu@amd.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit a56c2536c399d57a9bb1c02fd411e0c25859af3b ]
+[ Upstream commit 5b4696e0bfc358619adaeab25ad35b4979af8331 ]
 
-When hw_init() fails, amdgpu_device_ip_fini_early() skips hw_fini()
-because status.hw was never set.  For VCN, UVD (including UVD ENC), VCE,
-and JPEG, hw_fini() is where cancel_delayed_work_sync() is called.  Any
-idle work queued during the partial hw_init() is therefore left pending
-after sw_fini() frees the adev state the handler touches.
+ocfs2_drop_dentry_lock() drops the inode reference before releasing the
+DENTRY lock.  This lets inode eviction release the local inode and open
+locks before a remote unlink can proceed past the DENTRY lock.
 
-Cancel the idle work in each hw_init() error path, immediately before
-returning the error, so that hw_fini() remains the sole cancel site on
-the normal teardown path with no duplication.
+A DLM callback can still arrive before the DENTRY lock has been dropped.
+ocfs2_get_dentry_osb() obtains the mount context through dl_inode->i_sb,
+which can access a freed inode when the downconvert thread drops the
+last inode reference in its post-unlock callback:
 
-Link: https://github.com/ROCm/amdgpu/issues/234
-Fixes: 416e1fab4752 ("drm/amdgpu: drop redundant cancel_delayed_work_sync call")
-Assisted-by: Claude:Claude-Sonnet-4.6
-Signed-off-by: Leo Liu <leo.liu@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7ff2327fde029e97d0050fcb94e3f4063c318547)
-Cc: stable@vger.kernel.org
-[ sashal: Replaced per-instance VCN idle-work cancellations with a single cancellation of the shared worker, which also covers integrated JPEG. ]
+  Downconvert thread                     DLM callback thread
+  ------------------                     -------------------
+  ocfs2_process_blocked_lock()
+    ocfs2_dentry_post_unlock()
+      ocfs2_dentry_lock_put()
+        ocfs2_drop_dentry_lock()
+          iput(dl->dl_inode)
+          [inode reclaimed after RCU]
+                                         ocfs2_blocking_ast()
+                                           ocfs2_get_dentry_osb()
+                                             dl->dl_inode->i_sb
+          ocfs2_simple_drop_lockres()
+
+Store the mount context in the DENTRY lock resource's l_priv field and use
+the default mount-context lookup.  Recover the containing dentry lock with
+container_of(), as already done for refcount locks, and remove
+ocfs2_get_dentry_osb().  ocfs2_dismount_volume() shuts down the DLM before
+freeing the mount context, so callbacks can use it without accessing the
+inode.  Preserve the existing iput-before-unlock order to avoid delaying
+local inode and open lock release until after the DENTRY lock is released.
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0012-v9-eeb9084fb29577971229@gmail.com
+Fixes: 8ed6b23709b3 ("ocfs2: revert iput deferring code in ocfs2_drop_dentry_lock")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c | 4 +++-
- drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c | 6 +++++-
- drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c | 4 +++-
- drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c  | 4 +++-
- drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c  | 4 +++-
- drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c  | 4 +++-
- drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c  | 4 +++-
- drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c  | 4 +++-
- drivers/gpu/drm/amd/amdgpu/vce_v2_0.c  | 6 +++++-
- drivers/gpu/drm/amd/amdgpu/vce_v3_0.c  | 6 +++++-
- drivers/gpu/drm/amd/amdgpu/vce_v4_0.c  | 6 +++++-
- drivers/gpu/drm/amd/amdgpu/vcn_v1_0.c  | 4 +++-
- drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c  | 4 +++-
- drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c  | 4 +++-
- drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c  | 4 +++-
- 15 files changed, 53 insertions(+), 15 deletions(-)
+ fs/ocfs2/dcache.h  |  5 ++---
+ fs/ocfs2/dlmglue.c | 16 ++++------------
+ 2 files changed, 6 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
-index 8e20ae3f0f117..25f034d5bafb3 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
-@@ -155,7 +155,9 @@ static int jpeg_v2_0_hw_init(void *handle)
- 		(adev->doorbell_index.vcn.vcn_ring0_1 << 1), 0);
+diff --git a/fs/ocfs2/dcache.h b/fs/ocfs2/dcache.h
+index 7f246c5692d82..046ab9a807692 100644
+--- a/fs/ocfs2/dcache.h
++++ b/fs/ocfs2/dcache.h
+@@ -17,9 +17,8 @@ struct ocfs2_dentry_lock {
+ 	u64			dl_parent_blkno;
  
- 	r = amdgpu_ring_test_helper(ring);
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+	else
- 		DRM_INFO("JPEG decode initialized successfully.\n");
+ 	/*
+-	 * The ocfs2_dentry_lock keeps an inode reference until
+-	 * dl_lockres has been destroyed. This is usually done in
+-	 * ->d_iput() anyway, so there should be minimal impact.
++	 * The inode reference is dropped before dl_lockres is unlocked.
++	 * Callbacks must not use it to find the mount context during teardown.
+ 	 */
+ 	struct inode		*dl_inode;
+ 	struct ocfs2_lock_res	dl_lockres;
+diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
+index ce61085f3b94b..c8cda79945317 100644
+--- a/fs/ocfs2/dlmglue.c
++++ b/fs/ocfs2/dlmglue.c
+@@ -56,7 +56,6 @@ struct ocfs2_mask_waiter {
+ #endif
+ };
  
- 	return r;
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c
-index c682d1fab7f0d..db7a24c509779 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c
-@@ -169,12 +169,16 @@ static int jpeg_v2_5_hw_init(void *handle)
+-static struct ocfs2_super *ocfs2_get_dentry_osb(struct ocfs2_lock_res *lockres);
+ static struct ocfs2_super *ocfs2_get_inode_osb(struct ocfs2_lock_res *lockres);
+ static struct ocfs2_super *ocfs2_get_file_osb(struct ocfs2_lock_res *lockres);
+ static struct ocfs2_super *ocfs2_get_qinfo_osb(struct ocfs2_lock_res *lockres);
+@@ -256,7 +255,6 @@ static const struct ocfs2_lock_res_ops ocfs2_orphan_scan_lops = {
+ };
  
- 		r = amdgpu_ring_test_helper(ring);
- 		if (r)
--			return r;
-+			goto error;
- 	}
+ static const struct ocfs2_lock_res_ops ocfs2_dentry_lops = {
+-	.get_osb	= ocfs2_get_dentry_osb,
+ 	.post_unlock	= ocfs2_dentry_post_unlock,
+ 	.downconvert_worker = ocfs2_dentry_convert_worker,
+ 	.flags		= 0,
+@@ -307,7 +305,7 @@ static inline struct ocfs2_dentry_lock *ocfs2_lock_res_dl(struct ocfs2_lock_res
+ {
+ 	BUG_ON(lockres->l_type != OCFS2_LOCK_TYPE_DENTRY);
  
- 	DRM_INFO("JPEG decode initialized successfully.\n");
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+	return r;
+-	return (struct ocfs2_dentry_lock *)lockres->l_priv;
++	return container_of(lockres, struct ocfs2_dentry_lock, dl_lockres);
  }
  
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
-index 8c49a67bf0408..62b517699180e 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
-@@ -144,8 +144,10 @@ static int jpeg_v3_0_hw_init(void *handle)
- 		(adev->doorbell_index.vcn.vcn_ring0_1 << 1), 0);
- 
- 	r = amdgpu_ring_test_helper(ring);
--	if (r)
-+	if (r) {
-+		cancel_delayed_work_sync(&adev->jpeg.idle_work);
- 		return r;
-+	}
- 
- 	DRM_INFO("JPEG decode initialized successfully.\n");
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-index 3a27bed57b4ff..482007346fe14 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-@@ -712,7 +712,9 @@ static int uvd_v3_1_hw_init(void *handle)
- 	amdgpu_ring_commit(ring);
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->uvd.idle_work);
-+	else
- 		DRM_INFO("UVD initialized successfully.\n");
- 
- 	return r;
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c b/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
-index 01d8e7d2caf97..abcdf37f0cb15 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
-@@ -195,7 +195,9 @@ static int uvd_v4_2_hw_init(void *handle)
- 	amdgpu_ring_commit(ring);
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->uvd.idle_work);
-+	else
- 		DRM_INFO("UVD initialized successfully.\n");
- 
- 	return r;
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c b/drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c
-index 563493d1f8306..ddc44841f3722 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c
-@@ -192,7 +192,9 @@ static int uvd_v5_0_hw_init(void *handle)
- 	amdgpu_ring_commit(ring);
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->uvd.idle_work);
-+	else
- 		DRM_INFO("UVD initialized successfully.\n");
- 
- 	return r;
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c b/drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c
-index 72f8762907681..0d8cd2e1ddb34 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c
-@@ -522,7 +522,9 @@ static int uvd_v6_0_hw_init(void *handle)
- 	}
- 
- done:
--	if (!r) {
-+	if (r) {
-+		cancel_delayed_work_sync(&adev->uvd.idle_work);
-+	} else {
- 		if (uvd_v6_0_enc_support(adev))
- 			DRM_INFO("UVD and UVD ENC initialized successfully.\n");
- 		else
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c b/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
-index 1fd9ca21a091b..79cf2746aea16 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
-@@ -589,7 +589,9 @@ static int uvd_v7_0_hw_init(void *handle)
- 		}
- 	}
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->uvd.idle_work);
-+	else
- 		DRM_INFO("UVD and UVD ENC initialized successfully.\n");
- 
- 	return r;
-diff --git a/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
-index ddbcfcc70df5c..d9e690e5ff4a2 100644
---- a/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
-@@ -467,12 +467,16 @@ static int vce_v2_0_hw_init(void *handle)
- 	for (i = 0; i < adev->vce.num_rings; i++) {
- 		r = amdgpu_ring_test_helper(&adev->vce.ring[i]);
- 		if (r)
--			return r;
-+			goto error;
- 	}
- 
- 	DRM_INFO("VCE initialized successfully.\n");
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->vce.idle_work);
-+	return r;
+ static inline struct ocfs2_mem_dqinfo *ocfs2_lock_res_qinfo(struct ocfs2_lock_res *lockres)
+@@ -608,13 +606,6 @@ static __u64 ocfs2_get_dentry_lock_ino(struct ocfs2_lock_res *lockres)
+ 	return be64_to_cpu(inode_blkno_be);
  }
  
- static int vce_v2_0_hw_fini(void *handle)
-diff --git a/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c b/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-index 6095ddf1d7b79..fcf7ebad605c5 100644
---- a/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-@@ -477,12 +477,16 @@ static int vce_v3_0_hw_init(void *handle)
- 	for (i = 0; i < adev->vce.num_rings; i++) {
- 		r = amdgpu_ring_test_helper(&adev->vce.ring[i]);
- 		if (r)
--			return r;
-+			goto error;
- 	}
+-static struct ocfs2_super *ocfs2_get_dentry_osb(struct ocfs2_lock_res *lockres)
+-{
+-	struct ocfs2_dentry_lock *dl = lockres->l_priv;
+-
+-	return OCFS2_SB(dl->dl_inode->i_sb);
+-}
+-
+ void ocfs2_dentry_lock_res_init(struct ocfs2_dentry_lock *dl,
+ 				u64 parent, struct inode *inode)
+ {
+@@ -622,6 +613,7 @@ void ocfs2_dentry_lock_res_init(struct ocfs2_dentry_lock *dl,
+ 	u64 inode_blkno = OCFS2_I(inode)->ip_blkno;
+ 	__be64 inode_blkno_be = cpu_to_be64(inode_blkno);
+ 	struct ocfs2_lock_res *lockres = &dl->dl_lockres;
++	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
  
- 	DRM_INFO("VCE initialized successfully.\n");
+ 	ocfs2_lock_res_init_once(lockres);
  
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->vce.idle_work);
-+	return r;
+@@ -650,9 +642,9 @@ void ocfs2_dentry_lock_res_init(struct ocfs2_dentry_lock *dl,
+ 	memcpy(&lockres->l_name[OCFS2_DENTRY_LOCK_INO_START], &inode_blkno_be,
+ 	       sizeof(__be64));
+ 
+-	ocfs2_lock_res_init_common(OCFS2_SB(inode->i_sb), lockres,
++	ocfs2_lock_res_init_common(osb, lockres,
+ 				   OCFS2_LOCK_TYPE_DENTRY, &ocfs2_dentry_lops,
+-				   dl);
++				   osb);
  }
  
- static int vce_v3_0_hw_fini(void *handle)
-diff --git a/drivers/gpu/drm/amd/amdgpu/vce_v4_0.c b/drivers/gpu/drm/amd/amdgpu/vce_v4_0.c
-index 70b8c88d30513..2050b890bb4a3 100644
---- a/drivers/gpu/drm/amd/amdgpu/vce_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vce_v4_0.c
-@@ -530,12 +530,16 @@ static int vce_v4_0_hw_init(void *handle)
- 	for (i = 0; i < adev->vce.num_rings; i++) {
- 		r = amdgpu_ring_test_helper(&adev->vce.ring[i]);
- 		if (r)
--			return r;
-+			goto error;
- 	}
- 
- 	DRM_INFO("VCE initialized successfully.\n");
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->vce.idle_work);
-+	return r;
- }
- 
- static int vce_v4_0_hw_fini(void *handle)
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v1_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v1_0.c
-index 462008d506904..923a71350962c 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v1_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v1_0.c
-@@ -213,7 +213,9 @@ static int vcn_v1_0_hw_init(void *handle)
- 		goto done;
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->vcn.idle_work);
-+	else
- 		DRM_INFO("VCN decode and encode initialized successfully(under %s).\n",
- 			(adev->pg_flags & AMD_PG_SUPPORT_VCN_DPG)?"DPG Mode":"SPG Mode");
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-index 02ae3e7a8a552..5eaf3e13d0efc 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-@@ -248,7 +248,9 @@ static int vcn_v2_0_hw_init(void *handle)
- 	}
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->vcn.idle_work);
-+	else
- 		DRM_INFO("VCN decode and encode initialized successfully(under %s).\n",
- 			(adev->pg_flags & AMD_PG_SUPPORT_VCN_DPG)?"DPG Mode":"SPG Mode");
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
-index a0956d8623770..063d732869de5 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
-@@ -307,7 +307,9 @@ static int vcn_v2_5_hw_init(void *handle)
- 	}
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->vcn.idle_work);
-+	else
- 		DRM_INFO("VCN decode and encode initialized successfully(under %s).\n",
- 			(adev->pg_flags & AMD_PG_SUPPORT_VCN_DPG)?"DPG Mode":"SPG Mode");
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-index 7085c1f45cf74..f1ad7fdd035fa 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-@@ -372,7 +372,9 @@ static int vcn_v3_0_hw_init(void *handle)
- 	}
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->vcn.idle_work);
-+	else
- 		DRM_INFO("VCN decode and encode initialized successfully(under %s).\n",
- 			(adev->pg_flags & AMD_PG_SUPPORT_VCN_DPG)?"DPG Mode":"SPG Mode");
- 
+ static void ocfs2_super_lock_res_init(struct ocfs2_lock_res *res,
 -- 
 2.53.0
 
