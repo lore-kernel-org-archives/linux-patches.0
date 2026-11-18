@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053093;
-	b=3d2oFHjTWFuALZ08I150YgeoKleNVVJDMlF6OTgrgY1B9Ae/6sdsrmQIkVT+pPsKF1hu
-	 VMptXwwJCT3wGwt+MTZMbqtuumuXRWa8lkZVT+xLpmJAtb1JnGiFVHVN9oKHlTpUNzKpa
-	 HMGrhsyqjvlo4l+3egSnVjQIEfZE9EHnwkcF/3LtNbxbPVzXsCt0Mm/xao7qPK5zVXQmB
-	 2oAdb4PiIqwa5gpwVUjRzodMgluDYHJKkkU/XDqwIF5H+T0hoAnkn8Nk4TmGtp4z2XRq8
-	 6q4C7Hmb+eqZoWk/kn+BcJUGeFSB5TYhc405sNTgpY6hPZP2Ces5/gJiY9ySrgIt9xQ==
+	t=1795053095;
+	b=Xz2aeWkGYN3PE+R8ILuVdROehyNOb5mL61iPje/Y5ICAPd8KeS8n5baijGIjcaMImrjt
+	 D77bHPBRSB89p7gF/8GOWMpZWpcdM2lmuYaWP+qWBG8Rx8mQGW4FmEFdvxNZiQ921hSgL
+	 EHgjyBoGqRjWUJYSk/vWQDo4oUOoULHkjLL9gjerM5vauUtRsTpad7KrKoqJELqkd2BQU
+	 26/owpMd7j1V2iaFi6MMxySRcntk7v9bgADg+jW7AfSyWWFo2N/7tcn0TrEqq2o8FEU/o
+	 5KrcXHrxFiTo4MGh7MM5K7lnEMPJaFpWUwJMGz40SCcQgkfw2Y1gh2qOu2HiD5HR8EQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053093;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053095;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rYXa0h9EZ95jUPxJ2tLrrBClbdYQrLGyHBlUIBKYQGg=;
-	b=hdOT38ClgnnaP6NRoN2Lf3y56dNZ2NKMJGIjk8Jk1DQ7bG4GR4uIqwj8qUZsteF+5UHf
-	 YqS+Z5A7Zt/E0EGQhVNPr4jK5MkXr3b9Pcv6bEV4FXUi3MEv5UtBVA3xedE8nrqiKy1M0
-	 aTM9KWaoKtZ7bgOvmgsQ6xCn+HDLsR48cFA+G8XiN95+UfR97Mklx865GT3TfIXtWHgQ3
-	 kC/cjzvgzr0TnHEeyJ8Pncvrpqa1rv6iu/gxErbYLUVjYxfacCCX2EFvvsizKBxvUDkwG
-	 Cf3HOzNDBVpjxpgsqZuLlhZ7UZc20b1TAKEQ6XuYmtd6xI+C/R8ONCZFDPDF3ThCq9g==
+	bh=5l2f8xmSVEF8JYFEa0dRTJzOfff8dsYZEyLN3QU0Xr8=;
+	b=VsntNy8VGWmsJpo9PU8qd1kq7fTS1j4UbN3DqzE+xQJqKJT7HeOEnoKO11b79qvhRz3k
+	 NpZ+O157nyinJw2urb8MwZ/OjpDqdIjcTvSVRj6zMc8y/3s8rHB32aWyDbh/YQ0fTEL/M
+	 JXfhdySrCKk0vWzKD9EvepkkhnusP4ufkGvJjnov7c2il06LUuU/vpWEZ9xHVdA6gcuS+
+	 299zn9aYnXfyFZmYuDrB+ygTT+ewaOVNyuTGckrNoZIz1ephX9FEvR+SOgYQ1WWls1mnC
+	 uCB6+k/6LTe/zo8GCrt9mjLdkEfppFtWjfOV5nCGoCU/A5EVBMr2gNpvMJ+wHMFHvRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nVlPHF9r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=abXvgAB2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033DE606A325;
-	Thu, 19 Nov 2026 01:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60FF606A320;
+	Thu, 19 Nov 2026 01:51:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nVlPHF9r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 580BD1F000C4;
-	Thu, 19 Nov 2026 01:51:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=abXvgAB2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30BEE1F000C4;
+	Thu, 19 Nov 2026 01:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053092;
-	bh=rYXa0h9EZ95jUPxJ2tLrrBClbdYQrLGyHBlUIBKYQGg=;
+	s=korg; t=1795053095;
+	bh=5l2f8xmSVEF8JYFEa0dRTJzOfff8dsYZEyLN3QU0Xr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nVlPHF9r2Q1JkXwwLpbJDpLnZ1KkvLo8gYIfi7XKy37gMmHFID+ecKLgD+eM6ulnP
-	 UnwQL62G7p8EBsPio1Hv3BLYNWeQ5gJ6zCgxO4OeanTN5hATxJ+XZFEHn285fYg3lZ
-	 KDoD5Xfbl11MBC8i5V2kw1SYzNx0vfrmi1/5B4wY=
+	b=abXvgAB2Rvm+p8edPc0YGtZpdhgbj/gkCaU+U47duwV5KAiFnw2MVmxmPW0WCVjD+
+	 StzX4r10Qc6+DoYUGmcneIXuD3XGb0s+chTVdOz6St96S7QdoBfpuLHJU9HWrzVv2P
+	 8uol97BbRIcfEy+5Mr2kzAvqX8HWJOluuCN/jViA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Christian Loehle <christian.loehle@arm.com>,
-	Sumit Gupta <sumitg@nvidia.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0798/2214] ACPI: CPPC: Propagate errors from cross-CPU FFH calls
-Date: Wed, 18 Nov 2026 15:41:14 +0100
-Message-ID: <20261118150043.456214447@linuxfoundation.org>
+Subject: [PATCH 5.15 0799/2214] debugobjects,locking: Annotate debug_object_fill_pool() wait type violation
+Date: Wed, 18 Nov 2026 15:41:15 +0100
+Message-ID: <20261118150043.489602238@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,54 +70,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 36e96b469da24868f727b4cd168d7cf01cbd163d upstream.
+commit 0cce06ba859a515bd06224085d3addb870608b6d upstream.
 
-The arm64 and RISC-V CPPC FFH accessors ignore the return value of
-smp_call_function_single(). If the target CPU is offline, the call can
-return -ENXIO without running the callback. The accessors then consume
-callback output which was never initialized and may report success.
+There is an explicit wait-type violation in debug_object_fill_pool()
+for PREEMPT_RT=n kernels which allows them to more easily fill the
+object pool and reduce the chance of allocation failures.
 
-CPU offlining leaves the CPU's CPPC sysfs attributes present. On arm64,
-the AMU feature mask does not exclude an offline CPU, so a paired counter
-read can expose uninitialized stack values through feedback_ctrs. RISC-V
-has the same problem in both SBI and CSR reads, and its write paths also
-inspect an uninitialized callback status after a failed cross-CPU call.
+Lockdep's wait-type checks are designed to check the PREEMPT_RT
+locking rules even for PREEMPT_RT=n kernels and object to this, so
+create a lockdep annotation to allow this to stand.
 
-Return the SMP call error before using callback output. The arm64 single
-and paired counter readers already check the helper's return value. For
-RISC-V, also check the callback status before copying a read value: an
-unsupported CSR sets the error but does not initialize the value.
+Specifically, create a 'lock' type that overrides the inner wait-type
+while it is held -- allowing one to temporarily raise it, such that
+the violation is hidden.
 
-Fixes: 68c5debcc06d ("arm64: implement CPPC FFH support using AMUs")
-Fixes: 30f3ffbee86b ("ACPI: RISC-V: Add CPPC driver")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Tested-by: Sumit Gupta <sumitg@nvidia.com>
-Link: https://patch.msgid.link/20260916162805.1039247-18-christian.loehle@arm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: Vlastimil Babka <vbabka@suse.cz>
+Reported-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Link: https://lkml.kernel.org/r/20230429100614.GA1489784@hirez.programming.kicks-ass.net
 Signed-off-by: Christian Loehle <christian.loehle@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/topology.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ include/linux/lockdep.h       | 14 ++++++++++++++
+ include/linux/lockdep_types.h |  1 +
+ kernel/locking/lockdep.c      | 28 +++++++++++++++++++++-------
+ lib/debugobjects.c            | 15 +++++++++++++--
+ 4 files changed, 49 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm64/kernel/topology.c b/arch/arm64/kernel/topology.c
-index 5feda5b55d454..a1f9053248dfc 100644
---- a/arch/arm64/kernel/topology.c
-+++ b/arch/arm64/kernel/topology.c
-@@ -303,9 +303,7 @@ int counters_read_on_cpu(int cpu, smp_call_func_t func, u64 *val)
- 	if (WARN_ON_ONCE(irqs_disabled()))
- 		return -EPERM;
+diff --git a/include/linux/lockdep.h b/include/linux/lockdep.h
+index e8cb0f1925ba4..5abb22964e36c 100644
+--- a/include/linux/lockdep.h
++++ b/include/linux/lockdep.h
+@@ -345,6 +345,16 @@ extern void lock_unpin_lock(struct lockdep_map *lock, struct pin_cookie);
+ #define lockdep_repin_lock(l,c)	lock_repin_lock(&(l)->dep_map, (c))
+ #define lockdep_unpin_lock(l,c)	lock_unpin_lock(&(l)->dep_map, (c))
  
--	smp_call_function_single(cpu, func, val, 1);
--
--	return 0;
-+	return smp_call_function_single(cpu, func, val, 1);
++/*
++ * Must use lock_map_aquire_try() with override maps to avoid
++ * lockdep thinking they participate in the block chain.
++ */
++#define DEFINE_WAIT_OVERRIDE_MAP(_name, _wait_type)	\
++	struct lockdep_map _name = {			\
++		.name = #_name "-wait-type-override",	\
++		.wait_type_inner = _wait_type,		\
++		.lock_type = LD_LOCK_WAIT_OVERRIDE, }
++
+ #else /* !CONFIG_LOCKDEP */
+ 
+ static inline void lockdep_init_task(struct task_struct *task)
+@@ -432,6 +442,9 @@ extern int lockdep_is_held(const void *);
+ #define lockdep_repin_lock(l, c)		do { (void)(l); (void)(c); } while (0)
+ #define lockdep_unpin_lock(l, c)		do { (void)(l); (void)(c); } while (0)
+ 
++#define DEFINE_WAIT_OVERRIDE_MAP(_name, _wait_type)	\
++	struct lockdep_map __maybe_unused _name = {}
++
+ #endif /* !LOCKDEP */
+ 
+ #ifdef CONFIG_PROVE_LOCKING
+@@ -582,6 +595,7 @@ do {									\
+ #define rwsem_release(l, i)			lock_release(l, i)
+ 
+ #define lock_map_acquire(l)			lock_acquire_exclusive(l, 0, 0, NULL, _THIS_IP_)
++#define lock_map_acquire_try(l)			lock_acquire_exclusive(l, 0, 1, NULL, _THIS_IP_)
+ #define lock_map_acquire_read(l)		lock_acquire_shared_recursive(l, 0, 0, NULL, _THIS_IP_)
+ #define lock_map_acquire_tryread(l)		lock_acquire_shared_recursive(l, 0, 1, NULL, _THIS_IP_)
+ #define lock_map_release(l)			lock_release(l, _THIS_IP_)
+diff --git a/include/linux/lockdep_types.h b/include/linux/lockdep_types.h
+index 6c5c270469469..aaa681ba65546 100644
+--- a/include/linux/lockdep_types.h
++++ b/include/linux/lockdep_types.h
+@@ -33,6 +33,7 @@ enum lockdep_wait_type {
+ enum lockdep_lock_type {
+ 	LD_LOCK_NORMAL = 0,	/* normal, catch all */
+ 	LD_LOCK_PERCPU,		/* percpu */
++	LD_LOCK_WAIT_OVERRIDE,	/* annotation */
+ 	LD_LOCK_MAX,
+ };
+ 
+diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
+index 43a58e749d5fc..7fdf066620c2d 100644
+--- a/kernel/locking/lockdep.c
++++ b/kernel/locking/lockdep.c
+@@ -2253,6 +2253,9 @@ static inline bool usage_match(struct lock_list *entry, void *mask)
+ 
+ static inline bool usage_skip(struct lock_list *entry, void *mask)
+ {
++	if (entry->class->lock_type == LD_LOCK_NORMAL)
++		return false;
++
+ 	/*
+ 	 * Skip local_lock() for irq inversion detection.
+ 	 *
+@@ -2279,14 +2282,16 @@ static inline bool usage_skip(struct lock_list *entry, void *mask)
+ 	 * As a result, we will skip local_lock(), when we search for irq
+ 	 * inversion bugs.
+ 	 */
+-	if (entry->class->lock_type == LD_LOCK_PERCPU) {
+-		if (DEBUG_LOCKS_WARN_ON(entry->class->wait_type_inner < LD_WAIT_CONFIG))
+-			return false;
++	if (entry->class->lock_type == LD_LOCK_PERCPU &&
++	    DEBUG_LOCKS_WARN_ON(entry->class->wait_type_inner < LD_WAIT_CONFIG))
++		return false;
+ 
+-		return true;
+-	}
++	/*
++	 * Skip WAIT_OVERRIDE for irq inversion detection -- it's not actually
++	 * a lock and only used to override the wait_type.
++	 */
+ 
+-	return false;
++	return true;
  }
  
  /*
+@@ -4781,7 +4786,8 @@ static int check_wait_context(struct task_struct *curr, struct held_lock *next)
+ 
+ 	for (; depth < curr->lockdep_depth; depth++) {
+ 		struct held_lock *prev = curr->held_locks + depth;
+-		u8 prev_inner = hlock_class(prev)->wait_type_inner;
++		struct lock_class *class = hlock_class(prev);
++		u8 prev_inner = class->wait_type_inner;
+ 
+ 		if (prev_inner) {
+ 			/*
+@@ -4791,6 +4797,14 @@ static int check_wait_context(struct task_struct *curr, struct held_lock *next)
+ 			 * Also due to trylocks.
+ 			 */
+ 			curr_inner = min(curr_inner, prev_inner);
++
++			/*
++			 * Allow override for annotations -- this is typically
++			 * only valid/needed for code that only exists when
++			 * CONFIG_PREEMPT_RT=n.
++			 */
++			if (unlikely(class->lock_type == LD_LOCK_WAIT_OVERRIDE))
++				curr_inner = prev_inner;
+ 		}
+ 	}
+ 
+diff --git a/lib/debugobjects.c b/lib/debugobjects.c
+index 81b319d574176..29b495adac242 100644
+--- a/lib/debugobjects.c
++++ b/lib/debugobjects.c
+@@ -609,10 +609,21 @@ __debug_object_init(void *addr, const struct debug_obj_descr *descr, int onstack
+ 
+ 	/*
+ 	 * On RT enabled kernels the pool refill must happen in preemptible
+-	 * context:
++	 * context -- for !RT kernels we rely on the fact that spinlock_t and
++	 * raw_spinlock_t are basically the same type and this lock-type
++	 * inversion works just fine.
+ 	 */
+-	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || preemptible())
++	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || preemptible()) {
++		/*
++		 * Annotate away the spinlock_t inside raw_spinlock_t warning
++		 * by temporarily raising the wait-type to LD_WAIT_SLEEP,
++		 * allowing the allocator's spinlock_t and local_lock_t locks.
++		 */
++		static DEFINE_WAIT_OVERRIDE_MAP(fill_pool_map, LD_WAIT_SLEEP);
++		lock_map_acquire_try(&fill_pool_map);
+ 		fill_pool();
++		lock_map_release(&fill_pool_map);
++	}
+ 
+ 	db = get_bucket((unsigned long) addr);
+ 
 -- 
 2.53.0
 
