@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031883;
-	b=hK7LnfCx9qO0ORvKT0u0XFfHiLAUhxAx7bt+kEA5okQBcTCLFWdheNZCuGjMgjfAyZ1a
-	 0uJtDw/bYAaBQNoFmVR1cZdaTLfpM+rcDSkSxiw7XKQWI67zc/gFw9I9gPwlgH1HYFKaQ
-	 6dz4PD6hbFUadxFKmWoISc5pgWEX8cUqPtF9ZfrMc69tZX6T3rJOBIND9haqeNs/k6NpG
-	 E7uieCc088rwrn2Pk9a3Lslp8sb/x8VtFVLJwNwmPi7ZT84UWwFCFpw8oG8sBooML0X4L
-	 +lnWh9BxjmYynL2xrfjeAyENqZrqdKSxul9rZePzVCY0zgJ2Xx1CU9zYHZRcd0Yekfg==
+	t=1795031886;
+	b=LiYwnKzzZxyxyqTZjDskPqW/ROIIiIG0ZbvHD2qHY5wvD3rSqMq2ODTs7zhtIrMutAA7
+	 U1CfLYR6PNtkv0muvz3ex+buVdSV9CubEmwiqIdw8V1HwV4H2v3y2S6EuyaGsVA6apEr2
+	 H4VJuT8ocN8lqHirvx11yViSwHI7BnyhQQjlL3RHM1QN02vJti39Gno1+9FHzBH9APebg
+	 geQsufaF2kQDimgCnlygwvpdAjN60IBAHhy33IWZyxSyTWkT1Np0rt+WexEQTxqge7LrM
+	 7KzfT3tj06J7zKUk4FkC80liHpb40iGHAogTdJX5vccIg31wGIn98GnPi+MkrY7ensg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031883;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031886;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r4D0iNqcCg8cfAyQBuwWpR94uMmWavA3R6vJn+qgF48=;
-	b=GPjByjbhagHl62Htt4FkHAHZARlsuoQZK8Z0enSw4GWkfZyqHQ4Aw3aItamFPZNKeGLj
-	 EE+bZ+XWtHwUAm5X7KNQkqFDkk1cTfkHfBThpYyVwdwS5pZvLsbNoQ2xQhZa9FtfqN9hy
-	 yCOU2lRIvG/D1joXm+0RfrjRpLzoYpcLTagR4kieneG6ca3m+QOxGJzGov+/5HT+Me9Xl
-	 ONpuQkVMOf7jpDHVkt+YPPu/cPaIaxMI0XWQau02WY3slx01paGUqAKDmLtsEB3GAcJtK
-	 rq2MHpFkOfu1NpM+ali6itdf7uNT7IOBPBzN1p5eaWGxW+dJWtl0/EFdSVa5pa+H83g==
+	bh=zLJ/1HwTlX9JMp4ncXnDBS6EG5NzZ6vFiCxZ194XbNU=;
+	b=JGrvweOOrpL+MInx7fTJ8qQekQdKBSW75/vxUTKlhBGVf4yuPq25kDZQTGDITX1fJcL+
+	 2jd+w4nHW+aWAY8aLmvY1Ud14b7efjnuOmH3Fxle79uIDu+y7QH4ffouLz5Tu43cwzmoA
+	 JNX4AerK1Im8bVMXWTgTjA+tO6cVpjt+xOiUNoWrvvxeBAs4JJo4i7lzUEe3cQPTv3CSQ
+	 nBaewiVdHKN4eQB25Cytph7/Xyu4NfGAB/y8H10Jgqp20LAcfKCwMFcGewL2uAL2oMFfC
+	 Mu6iiBwXKYS3MwxA8PXfqFTo7imIZLaGvIe5iisOofsZFobjFGO57VLWhVYyqBnPt8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LMfJythM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KXulkmJc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA29606A31C;
-	Wed, 18 Nov 2026 19:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D63606A31C;
+	Wed, 18 Nov 2026 19:58:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LMfJythM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95A6D1F000C5;
-	Wed, 18 Nov 2026 19:58:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KXulkmJc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 740001F000C5;
+	Wed, 18 Nov 2026 19:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031883;
-	bh=r4D0iNqcCg8cfAyQBuwWpR94uMmWavA3R6vJn+qgF48=;
+	s=korg; t=1795031886;
+	bh=zLJ/1HwTlX9JMp4ncXnDBS6EG5NzZ6vFiCxZ194XbNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LMfJythMelQEyzVc+jbgLqgx0NQEdLJxFScCpaWeDJb76MbJsPMvPaocQYR2GJodD
-	 b3RAhe957t9U7W3s+KIXE81zUxDPQ970YOT1y+hn5JqARNDBXv9sxAolm68lkzyutc
-	 hvv5x0stajec7OxIWVyQlN4L5DobYozEJXYBHxOw=
+	b=KXulkmJcLHTIGzItqv8uH88PWjMxLBsl9bVoXoyMmgRWi89LaaJsk88Zfm2fP8p3k
+	 3Lbb0TbAZwJcSp5BOsKQpT0+UOHf/SMXmH0wZP+JTuvCnZzxVM7LQrNCvOoGjpgOkp
+	 nP1Y7F3wKE3eDMRKOJbxCW2BjSQv38tTTT1r8gD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Alex Williamson <alex@shazbot.org>,
+	Chris Lu <chris.lu@mediatek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1215/1756] PCI: Fix out-of-bounds MMIO read in nvme_disable_and_flr()
-Date: Wed, 18 Nov 2026 15:55:42 +0100
-Message-ID: <20261118150058.174737410@linuxfoundation.org>
+Subject: [PATCH 6.12 1216/1756] Bluetooth: btmtksdio: Remove redundant firmware filename override
+Date: Wed, 18 Nov 2026 15:55:43 +0100
+Message-ID: <20261118150058.207643705@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,43 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit 6aaa3f42e3410ea8e26c857477260159f724cb1d ]
+[ Upstream commit 8c947cd1c27d6493ed7e6630e168222454f53edb ]
 
-In nvme_disable_and_flr(), the PCI bar is mapped using
-NVME_REG_CC + sizeof(cfg) which is (0x14 + 4 = 0x18 bytes)
+btmtksdio_setup() derives the firmware filename with
+btmtk_fw_get_filename() and then overwrites it with an snprintf() that
+open-codes that helper's fallback format. Commit 7f935b21bee4 ("Bluetooth:
+btmtk: apply the common btmtk_fw_get_filename") added the helper call
+without removing the snprintf() it was meant to replace.
 
-However, the function later reads the controller status from
-NVME_REG_CSTS - offset 0x1C, which is outside the mapped 0x18 byte
-boundary. This violates the API contract.
+None of the device ids the helper special-cases can appear here: 0x6639,
+0x7925 and the flavored 0x7961 belong to parts with no SDIO interface, and
+btmtksdio_setup() passes a flavor of 0 accordingly. The helper always falls
+through to the snprintf()'s own format, so both produce the same string and
+removing it is a no-op.
 
-Fix this by increasing the mapping size to include NVME_REG_CSTS. Also
-change sizeof(cfg) to sizeof(u32) to make the intent clearer.
+Remove it anyway, since it silently defeats the helper for any device id
+the helper special-cases.
 
-Fixes: ffb0863426eb9 ("PCI: Disable Samsung SM961/PM961 NVMe before FLR")
-Signed-off-by: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Alex Williamson <alex@shazbot.org>
-Link: https://patch.msgid.link/20260903164615.5744-1-raizudeen.kerneldev@gmail.com
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: a2bb734c3687 ("Bluetooth: btmtksdio: Pass the hardware device id to mt79xx_setup()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btmtksdio.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 5b266583acb57..3d568e217c157 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -4107,7 +4107,7 @@ static int nvme_disable_and_flr(struct pci_dev *dev, bool probe)
- 	if (probe)
- 		return 0;
+diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
+index 575bac139715b..3e3e6970d48d1 100644
+--- a/drivers/bluetooth/btmtksdio.c
++++ b/drivers/bluetooth/btmtksdio.c
+@@ -1155,9 +1155,6 @@ static int btmtksdio_setup(struct hci_dev *hdev)
+ 		btmtk_fw_get_filename(fwname, sizeof(fwname), dev_id,
+ 				      fw_version, 0);
  
--	bar = pci_iomap(dev, 0, NVME_REG_CC + sizeof(cfg));
-+	bar = pci_iomap(dev, 0, NVME_REG_CSTS + sizeof(u32));
- 	if (!bar)
- 		return -ENOTTY;
- 
+-		snprintf(fwname, sizeof(fwname),
+-			 "mediatek/BT_RAM_CODE_MT%04x_1_%x_hdr.bin",
+-			 dev_id & 0xffff, (fw_version & 0xff) + 1);
+ 		err = mt79xx_setup(hdev, fwname);
+ 		if (err < 0)
+ 			return err;
 -- 
 2.53.0
 
