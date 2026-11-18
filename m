@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061903;
-	b=qN7ck3EwMyXvbKkx1Ux/GWcbnP3N5gR5W0N5EM+2Prsg1wCSVdTufQWGxPpceu5Gn0ZR
-	 GfuoVrlZcXnXD+18iuf2W3DzStYPLWi1ZMIN7QHOg68zHdsu+5LcLDgxUz9cA7D5MUUZ5
-	 uOfvqT6o6N/OBAr7jIVGjPR8M8cjZWU5Z6md6O7/zl+iwNp3omJWxk9RPoTZMHoTWJlf+
-	 zL6QoX3SHbimNjnvO7CEO8jWvYev/tqqV/l+T9Z3iN417hJwt73B6Q+aPaUPTxxFpoI7l
-	 caB9zaPoSLSTbibYqwBDwR5+mtWUrYnifG5d4TLzb4Xb8ZK+RWcmApOOTautMScoQow==
+	t=1795061905;
+	b=QQFzHIGHLRUa2KCKhLhR935xpSj4hH6a0zz+s5907aRuf7ypB4dFycKunNAcnh3S5269
+	 GZPXLgLA8skjfdDc9MqAaRK60vYOPT0mBV4EkiFU3maXBqz6r9IfI8Vs4sNPqVjB22VRX
+	 Zt1oOH9KR/+6/Ihxy50kf2vZ+pgthcPdlUUlVroEeX9ofKUWB4mgzyolUPJmj1R5ZGKsC
+	 v7oe1rsp1OwTLiTq3uH+jReSKvyaSiQsmhuIuyuEZIOcWQ88Ke7H/eyD0hDpqs2EwvFAi
+	 1C0RIHQzIikr+w6Iug2/0t+5oMUEvJ7nTjbnxbKW0HSiD4QXYGB2W2XZLk5To5BOChA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061903;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061905;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7sO0DbsmSdTLYvF9Q5QNXFDSfV5MSj3KRwADArsV31g=;
-	b=x9D5VxQ5KBQVR33BvA/7x4SZ/qZcC7JvdfPyH9Od0I9FOY0ZhbqmhTSOBH0p6SgkSaMa
-	 GtJk0CrnLXRsBP/GlloXJsFGBzAI27NBduRZxrwRi7ddsDgxsiCMYGaUKUksI0hS6zJDY
-	 d42F4x/SLrD6ouRPmVAqV8ypRFc2UT0LRkfeCRYZw4SE7lNbUYsx0Au7sJtJ+R14Me+3R
-	 8j8zKfrDBEnj0n5pY5D22iPSoqhTCOO2a+1si+HBAY2dZFofD7/Vpt2qvtIb2QYtVOyha
-	 yJh+4uO23i84zPk9dsqzlqPWjCm4O2cBIj3rngH6GUGyf0csxrs8QMyAsXfWakViF5A==
+	bh=MwSVUxcQkBOOoXNLgI5fKHN2jcdU2/3zNDK7fcjevJk=;
+	b=v4yhh1oPAaCzrxrpvSYZdmEhtcWZkWtvuaAO8IdnYUROeG/2IBa23YumMoTWMoQpUx1q
+	 2BjuaLw0wZI3zGWzq7aaif4KYF2Ni3mDkx8o0jhKzix62KgBSkJnwoa35kmwXK5sIyvsn
+	 4msuLb3qu+LiLDgHvppDHnLRbFJ+CnORSOOir+TlWkn/Fr9eOH3cST3ZaE1zRYJgmwa5m
+	 EF50dx+ehANvXhZAtFIKi1wMqSR3ESXf9+Tcr9dujl7AzswUymTEojRm6gMLNQFoGDqdl
+	 u5KjhWpkiuVr884A3BLB0Iguzqw+Wo3LRu43vPaJKoMElvxCK4xuMzzd7vPVRcwNBNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wSQC3CgN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="MU0U/N2t";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359B8606A320;
-	Thu, 19 Nov 2026 04:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F4F606A320;
+	Thu, 19 Nov 2026 04:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wSQC3CgN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8B71F000C4;
-	Thu, 19 Nov 2026 04:18:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MU0U/N2t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D94A1F000C4;
+	Thu, 19 Nov 2026 04:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061903;
-	bh=7sO0DbsmSdTLYvF9Q5QNXFDSfV5MSj3KRwADArsV31g=;
+	s=korg; t=1795061905;
+	bh=MwSVUxcQkBOOoXNLgI5fKHN2jcdU2/3zNDK7fcjevJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wSQC3CgNzVbdz/jmIsnFt8nV/r16jQl3nH/Hd1tx9zQC48Mk1eKTkSOdzViJ6h9s2
-	 qBr7OoX4iHUCSopQCeX/v0es9V1wpKrL2kWmkdB6JDZOd8tjpIhesD52jQZYcDfSjI
-	 EokHQkcZM/CrcGl6jaNkHWN3A8Taby9JHk27Ngos=
+	b=MU0U/N2tamx/3p6S2zyTesnlbWdWCYto2ZNRJoNOyRL71uNoHW84kkWzrEHebkfYJ
+	 m4NcH1cKPh17hTsAiUV7aYaTAfUkSaHaqak6r4hlzpiybddB4h5ePJ3PTDdTbeNexI
+	 Imj2PVALrbckEmY5jiHeq7I7d01qOkKK3FsonhNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serhat Kumral <serhatkumral1@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Mikhail Zhilkin <csharper2005@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1718/1848] RDMA/usnic: Bound buffer size to sizeof(buf) in flowinfo_read()
-Date: Wed, 18 Nov 2026 16:02:36 +0100
-Message-ID: <20261118150031.578177496@linuxfoundation.org>
+Subject: [PATCH 5.10 1719/1848] dt-bindings: Add Sercomm (Suzhou) Corporation vendor prefix
+Date: Wed, 18 Nov 2026 16:02:37 +0100
+Message-ID: <20261118150031.617299521@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,37 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Serhat Kumral <serhatkumral1@gmail.com>
+From: Mikhail Zhilkin <csharper2005@gmail.com>
 
-[ Upstream commit 9dd8b9a337af844291edcd9139c927d0f7958dbe ]
+[ Upstream commit d217c4d968bb590e5aa1ff7d02f680c9ba5c1cec ]
 
-In flowinfo_read(), 'left' tracks the remaining space in the 512-byte
-stack buffer 'buf', but it is initialized to 'count'.
+Add "sercomm" vendor prefix for "Sercomm (Suzhou) Corporation".
 
-Initialize 'left' to sizeof(buf) instead of 'count'.
+Company website:
+Link: https://www.sercomm.com/
 
-Fixes: 9f637f793602 ("IB/usnic: Expose flows via debugfs")
-Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
-Link: https://patch.msgid.link/20261017185028.1019445-1-serhatkumral1@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Mikhail Zhilkin <csharper2005@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20220516151637.885324-1-csharper2005@gmail.com
+Stable-dep-of: f4ba4f8cc8e8 ("dt-bindings: vendor-prefixes: Add Sensylink")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/usnic/usnic_debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/usnic/usnic_debugfs.c b/drivers/infiniband/hw/usnic/usnic_debugfs.c
-index e5a3f02fb0789..f2ad0cdba3ce2 100644
---- a/drivers/infiniband/hw/usnic/usnic_debugfs.c
-+++ b/drivers/infiniband/hw/usnic/usnic_debugfs.c
-@@ -77,7 +77,7 @@ static ssize_t flowinfo_read(struct file *f, char __user *data,
- 
- 	qp_flow = f->private_data;
- 	ptr = buf;
--	left = count;
-+	left = sizeof(buf);
- 
- 	if (*ppos > 0)
- 		return 0;
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 4fdfdf8f162cd..c75aca426c110 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -988,6 +988,8 @@ patternProperties:
+     description: Sensirion AG
+   "^sensortek,.*":
+     description: Sensortek Technology Corporation
++  "^sercomm,.*":
++    description: Sercomm (Suzhou) Corporation
+   "^sff,.*":
+     description: Small Form Factor Committee
+   "^sgd,.*":
 -- 
 2.53.0
 
