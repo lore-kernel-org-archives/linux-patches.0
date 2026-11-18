@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033152;
-	b=CJZzSufJSAmL27WkQRjKWUUGGAX2r4P2ou+mTfymkyc2LWn2DRhSxTCJ7poNnc1y6u+P
-	 i6qo+R2/lYLewpVsarl5e3W8mirTcuqdQ3bbeb3U9kE5fN82kNvHJImcFqK5+ZFS5UPiB
-	 z7yj7DaC0KJt0E3MCl18Bv4IanRK/SYfaNhELrxCREPd/0KHARx2lIofcuRk/Ca9oBHR/
-	 vckzaCHQqjASZmexFAF3LQ4b7NsbqVsTypOmfJxacUcrLeoZEW3WZgn+cP//aicNvNvR9
-	 KEep3rFhx7YVYkBKOVpuxLl350lBfP/UdcIOvfUTFwgJUws3hXhbc8L3wmaEo9mO2Yg==
+	t=1795033155;
+	b=fgG6grFZT2y3EUgAzSWYwTvj5xD2FFjQpLOTz1cqX1ecsX2HBNtvBEfzjIhpgMkaPszb
+	 zcyZQrETgR1u9JKStI/xA31ZP2F4Q371rHLpOprq/VCbNgSB9z8l1IAh9PK05ld7tihkh
+	 ThnIPrRH2o7Ykp+vD9Eu05RB0Yp+GiPcej/4wiHhCQz/ScJ+pwjKHzLCEtKx9vgovfp6b
+	 vkLWsl5GkdZhOzFBlOsV8oR8d4/SdexeRA5waMEucYtjiBam8k8NmOAcYEMO2P2KGZofI
+	 WcZh6yBnjExykEeKQ+Xyb96gJVEzX77ebZ7yWundwJETVrwLS1ht7GcO1z2/4RD363g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033152;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033155;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cA72WA1WPfYPNaCYUBLuOUmS9DSuzYSR3wIRznx9o2I=;
-	b=vqNVhu3vrqpWOZcMRsOkQV5lAEuMiqGBTMFx00VBoEBv/pdjnLiXdqPazZXonbYPazBg
-	 Fv4wd6ocGP5kQ7EdesLJIpDTn5AKYmT2NvD6qxUEGbFtrqNmmNVantpZN6o3+NIU8VhoD
-	 SSr9tQAOljgi3JWkMwglji6c7JCGjkJyxHKumnfJ0j23ML6NSBDuEKUtCAcNyaCvXtN38
-	 x7SxSzU9lOoP2RJxVDNYkSzano16HuZYT+Kf+fci1HAhPeYg4kWlPwQTTMikbt7k51ior
-	 9e/F//z02A7rKh4OMtFSgZkcN4cubpRey16dlVUlXimHOaD4/2vceABaTPktcMuwUcg==
+	bh=hUugiSjmVccuk8SEKvqtwDiA5MZ9wCJQxOXlfsuwRSQ=;
+	b=X6T3oCz3lAQEqKHXTyMAUXWWA0eBp4CAffOyqhNEapUX7wV9fJXZa4kvVQgZhV72wczh
+	 ns3e8H8Ou9em6e+oUWrbx9XDmbWQGzcU1Df8odEcCkEKTrH/dqZNSpBOyTyk4yaHt5TxY
+	 mBH8J2h8dCKRpYbsggCTVA1HBWE7nwDWMLpGhDcb0di69s90KQCHJcsET1qViUwKHBkBp
+	 h+nhrm4FdiYiX4R49s+F3zQLQrZh8iDkHtKm33kZ5eQ0lk/SqNJgvEJFi42c7HefiQu4O
+	 dW9Uk3H75ePsCZqJJVtONgwxDNBaG/CO2uMutZ6xfvoLEJngu2jkeN10SiSRizV/txQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcDRpOXy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K8fK6a3s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5EB606A33B;
-	Wed, 18 Nov 2026 20:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B41606A31C;
+	Wed, 18 Nov 2026 20:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcDRpOXy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04EC1F000C9;
-	Wed, 18 Nov 2026 20:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K8fK6a3s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785661F000C9;
+	Wed, 18 Nov 2026 20:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033152;
-	bh=cA72WA1WPfYPNaCYUBLuOUmS9DSuzYSR3wIRznx9o2I=;
+	s=korg; t=1795033155;
+	bh=hUugiSjmVccuk8SEKvqtwDiA5MZ9wCJQxOXlfsuwRSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UcDRpOXyF6j9Br46aivYaayYcvWeW9CbSe7QTuY2+ZvsYZW8zDnNJg+8yDFC/6HIA
-	 /0W193X5GtZ8bpVyfMZYhdSMRaEV2fcMBvRb+TNxqZIsDNabUu5YnCOAcbNIhv+2Q7
-	 pvZ0JDUvC/D0vZp1RPZD2AITzxm3FsMx6qlesARE=
+	b=K8fK6a3stBFerxyoq2qAZj25MxrV19gHSfdulXF/0PMhT/3RW3X61DVLsllF55hyj
+	 jYgulQoNRoWDSjuotsr8eE3ZmCTACxg0mIIc/FKan5tuymQl2DS0e3HBzETEMPrmc7
+	 SyW6MblMiJg7ajMYwM237V/xLSmLK4TQxi/GIxMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Probst <markus.probst@posteo.de>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1666/1756] rtc: s35390a: Read 24-hour mode on access
-Date: Wed, 18 Nov 2026 16:03:13 +0100
-Message-ID: <20261118150116.037877316@linuxfoundation.org>
+Subject: [PATCH 6.12 1667/1756] fork: Let nobody keep a task that may not come to life
+Date: Wed, 18 Nov 2026 16:03:14 +0100
+Message-ID: <20261118150116.072285175@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,252 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Probst <markus.probst@posteo.de>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 6199051016cddba920b6023a44199c5221352c44 ]
+[ Upstream commit 5cf0881344cfa0a3b558107741884d8f43269d7b ]
 
-Instead of reading if the 24-hour mode is used on probe once, read it on
-access. This makes it impossible for the mode to be out of sync and fixes
-time corruption if resetting the chip while in 12-hour mode, as
-`s35390a_init` did not update the cached value.
+dup_task_struct() sets rcu_users to 2.  From then on bpf_task_acquire()
+hands out references to the new task, which BPF programs see as a trusted
+pointer long before it is sure to live: in the task_alloc LSM hook and in
+ops.init_task() of sched_ext.
 
-Fixes: 16486d0c1c65 ("rtc: s35390a: handle invalid RTC time")
-Signed-off-by: Markus Probst <markus.probst@posteo.de>
-Link: https://patch.msgid.link/20260930-rtc_s35390a_int1-v10-4-e7b1cbc50a7b@posteo.de
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+If copy_process() fails later on, it undoes what it has done and frees
+the task without a look at the count.  A program that has stored its
+reference in a map is left with a pointer to freed memory:
+
+  BUG: KASAN: slab-use-after-free in put_task_struct_rcu_user+0x22/0x90
+
+The program is loaded by the administrator, but any user can make a fork
+fail, for example at the pids.max of a cgroup.
+
+Honouring the count would not do: the task would stay behind with its mm,
+files and credentials freed.  Leave rcu_users at zero until copy_process()
+cannot fail any more.  bpf_task_acquire() returns NULL until then, which
+its callers have to be prepared for, and which they get for init_task,
+whose count has always been zero.  The other users of rcu_users deal with
+tasks that have run.
+
+Fixes: 90660309b0c7 ("bpf: Add kfuncs for storing struct task_struct * as a kptr")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-s35390a.c | 78 +++++++++++++++++++++------------------
- 1 file changed, 42 insertions(+), 36 deletions(-)
+ kernel/fork.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/rtc/rtc-s35390a.c b/drivers/rtc/rtc-s35390a.c
-index 94c75cdf0c8a7..0f4599ea558c0 100644
---- a/drivers/rtc/rtc-s35390a.c
-+++ b/drivers/rtc/rtc-s35390a.c
-@@ -63,7 +63,6 @@ MODULE_DEVICE_TABLE(of, s35390a_of_match);
+diff --git a/kernel/fork.c b/kernel/fork.c
+index f3ba045debeda..1f1bb6e341f07 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -1162,10 +1162,10 @@ static struct task_struct *dup_task_struct(struct task_struct *orig, int node)
+ 	dup_user_cpus_ptr(tsk, orig, node);
  
- struct s35390a {
- 	struct i2c_client *client[8];
--	int twentyfourhour;
- };
- 
- static int s35390a_set_reg(struct s35390a *s35390a, int reg, u8  *buf, int len)
-@@ -101,9 +100,8 @@ static int s35390a_get_reg(struct s35390a *s35390a, int reg, u8 *buf, int len)
- 	return 0;
- }
- 
--static int s35390a_init(struct s35390a *s35390a)
-+static int s35390a_init(struct s35390a *s35390a, u8 *sts)
- {
--	u8 buf;
- 	int ret;
- 	unsigned initcount = 0;
- 
-@@ -116,17 +114,17 @@ static int s35390a_init(struct s35390a *s35390a)
- 	 * The 24H bit is kept over reset, so set it already here.
+ 	/*
+-	 * One for the user space visible state that goes away when reaped.
+-	 * One for the scheduler.
++	 * Nobody can keep the task while copy_process() may still fail, which
++	 * frees it no matter what.
  	 */
- initialize:
--	buf = S35390A_FLAG_RESET | S35390A_FLAG_24H;
--	ret = s35390a_set_reg(s35390a, S35390A_CMD_STATUS1, &buf, 1);
-+	*sts = S35390A_FLAG_RESET | S35390A_FLAG_24H;
-+	ret = s35390a_set_reg(s35390a, S35390A_CMD_STATUS1, sts, 1);
+-	refcount_set(&tsk->rcu_users, 2);
++	refcount_set(&tsk->rcu_users, 0);
+ 	/* One for the rcu users */
+ 	refcount_set(&tsk->usage, 1);
+ #ifdef CONFIG_BLK_DEV_IO_TRACE
+@@ -2584,6 +2584,12 @@ __latent_entropy struct task_struct *copy_process(
  
- 	if (ret < 0)
- 		return ret;
+ 	/* No more failure paths after this point. */
  
--	ret = s35390a_get_reg(s35390a, S35390A_CMD_STATUS1, &buf, 1);
-+	ret = s35390a_get_reg(s35390a, S35390A_CMD_STATUS1, sts, 1);
- 	if (ret < 0)
- 		return ret;
- 
--	if (buf & (S35390A_FLAG_POC | S35390A_FLAG_BLD)) {
-+	if (*sts & (S35390A_FLAG_POC | S35390A_FLAG_BLD)) {
- 		/* Try up to five times to reset the chip */
- 		if (initcount < 5) {
- 			++initcount;
-@@ -180,9 +178,9 @@ static int s35390a_disable_test_mode(struct s35390a *s35390a)
- 	return s35390a_set_reg(s35390a, S35390A_CMD_STATUS2, buf, sizeof(buf));
- }
- 
--static char s35390a_hr2reg(struct s35390a *s35390a, int hour)
-+static char s35390a_hr2reg(int hour, bool twentyfourhour)
- {
--	if (s35390a->twentyfourhour)
-+	if (twentyfourhour)
- 		return bin2bcd(hour);
- 
- 	if (hour < 12)
-@@ -191,11 +189,11 @@ static char s35390a_hr2reg(struct s35390a *s35390a, int hour)
- 	return 0x40 | bin2bcd(hour - 12);
- }
- 
--static int s35390a_reg2hr(struct s35390a *s35390a, char reg)
-+static int s35390a_reg2hr(char reg, bool twentyfourhour)
- {
- 	unsigned hour;
- 
--	if (s35390a->twentyfourhour)
-+	if (twentyfourhour)
- 		return bcd2bin(reg & 0x3f);
- 
- 	hour = bcd2bin(reg & 0x3f);
-@@ -209,7 +207,7 @@ static int s35390a_rtc_set_time(struct device *dev, struct rtc_time *tm)
- {
- 	struct i2c_client *client = to_i2c_client(dev);
- 	struct s35390a	*s35390a = i2c_get_clientdata(client);
--	int i;
-+	int i, err;
- 	u8 buf[7], status;
- 
- 	dev_dbg(&client->dev, "%s: tm is secs=%d, mins=%d, hours=%d mday=%d, "
-@@ -217,14 +215,18 @@ static int s35390a_rtc_set_time(struct device *dev, struct rtc_time *tm)
- 		tm->tm_min, tm->tm_hour, tm->tm_mday, tm->tm_mon, tm->tm_year,
- 		tm->tm_wday);
- 
--	if (s35390a_read_status(s35390a, &status) == 1)
--		s35390a_init(s35390a);
-+	err = s35390a_read_status(s35390a, &status);
-+	if (err == 1)
-+		err = s35390a_init(s35390a, &status);
++	/*
++	 * One for the user space visible state that goes away when reaped.
++	 * One for the scheduler.
++	 */
++	refcount_set(&p->rcu_users, 2);
 +
-+	if (err < 0)
-+		return err;
- 
- 	buf[S35390A_BYTE_YEAR] = bin2bcd(tm->tm_year - 100);
- 	buf[S35390A_BYTE_MONTH] = bin2bcd(tm->tm_mon + 1);
- 	buf[S35390A_BYTE_DAY] = bin2bcd(tm->tm_mday);
- 	buf[S35390A_BYTE_WDAY] = bin2bcd(tm->tm_wday);
--	buf[S35390A_BYTE_HOURS] = s35390a_hr2reg(s35390a, tm->tm_hour);
-+	buf[S35390A_BYTE_HOURS] = s35390a_hr2reg(tm->tm_hour, status & S35390A_FLAG_24H);
- 	buf[S35390A_BYTE_MINS] = bin2bcd(tm->tm_min);
- 	buf[S35390A_BYTE_SECS] = bin2bcd(tm->tm_sec);
- 
-@@ -242,8 +244,11 @@ static int s35390a_rtc_read_time(struct device *dev, struct rtc_time *tm)
- 	u8 buf[7], status;
- 	int i, err;
- 
--	if (s35390a_read_status(s35390a, &status) == 1)
-+	err = s35390a_read_status(s35390a, &status);
-+	if (err == 1)
- 		return -EINVAL;
-+	if (err < 0)
-+		return err;
- 
- 	err = s35390a_get_reg(s35390a, S35390A_CMD_TIME1, buf, sizeof(buf));
- 	if (err < 0)
-@@ -255,7 +260,7 @@ static int s35390a_rtc_read_time(struct device *dev, struct rtc_time *tm)
- 
- 	tm->tm_sec = bcd2bin(buf[S35390A_BYTE_SECS]);
- 	tm->tm_min = bcd2bin(buf[S35390A_BYTE_MINS]);
--	tm->tm_hour = s35390a_reg2hr(s35390a, buf[S35390A_BYTE_HOURS]);
-+	tm->tm_hour = s35390a_reg2hr(buf[S35390A_BYTE_HOURS], status & S35390A_FLAG_24H);
- 	tm->tm_wday = bcd2bin(buf[S35390A_BYTE_WDAY]);
- 	tm->tm_mday = bcd2bin(buf[S35390A_BYTE_DAY]);
- 	tm->tm_mon = bcd2bin(buf[S35390A_BYTE_MONTH]) - 1;
-@@ -291,7 +296,7 @@ static int s35390a_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alm)
- {
- 	struct i2c_client *client = to_i2c_client(dev);
- 	struct s35390a *s35390a = i2c_get_clientdata(client);
--	u8 buf[3], sts = 0;
-+	u8 buf[3], status1, status2 = 0;
- 	int err, i;
- 
- 	dev_dbg(&client->dev, "%s: alm is secs=%d, mins=%d, hours=%d mday=%d, "\
-@@ -300,22 +305,22 @@ static int s35390a_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alm)
- 		alm->time.tm_mon, alm->time.tm_year, alm->time.tm_wday);
- 
- 	/* disable interrupt (which deasserts the irq line) */
--	err = s35390a_set_reg(s35390a, S35390A_CMD_STATUS2, &sts, sizeof(sts));
-+	err = s35390a_set_reg(s35390a, S35390A_CMD_STATUS2, &status2, sizeof(status2));
- 	if (err < 0)
- 		return err;
- 
- 	/* clear pending interrupt (in STATUS1 only), if any */
--	err = s35390a_get_reg(s35390a, S35390A_CMD_STATUS1, &sts, sizeof(sts));
-+	err = s35390a_get_reg(s35390a, S35390A_CMD_STATUS1, &status1, sizeof(status1));
- 	if (err < 0)
- 		return err;
- 
- 	if (alm->enabled)
--		sts = S35390A_INT2_MODE_ALARM;
-+		status2 = S35390A_INT2_MODE_ALARM;
- 	else
--		sts = S35390A_INT2_MODE_NOINTR;
-+		status2 = S35390A_INT2_MODE_NOINTR;
- 
- 	/* set interrupt mode*/
--	err = s35390a_set_reg(s35390a, S35390A_CMD_STATUS2, &sts, sizeof(sts));
-+	err = s35390a_set_reg(s35390a, S35390A_CMD_STATUS2, &status2, sizeof(status2));
- 	if (err < 0)
- 		return err;
- 
-@@ -324,8 +329,8 @@ static int s35390a_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alm)
- 	else
- 		buf[S35390A_ALRM_BYTE_WDAY] = 0;
- 
--	buf[S35390A_ALRM_BYTE_HOURS] = s35390a_hr2reg(s35390a,
--			alm->time.tm_hour) | 0x80;
-+	buf[S35390A_ALRM_BYTE_HOURS] = s35390a_hr2reg(alm->time.tm_hour,
-+						      status1 & S35390A_FLAG_24H) | 0x80;
- 	buf[S35390A_ALRM_BYTE_MINS] = bin2bcd(alm->time.tm_min) | 0x80;
- 
- 	if (alm->time.tm_hour >= 12)
-@@ -344,14 +349,20 @@ static int s35390a_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alm)
- {
- 	struct i2c_client *client = to_i2c_client(dev);
- 	struct s35390a *s35390a = i2c_get_clientdata(client);
--	u8 buf[3], sts;
-+	u8 buf[3], status1, status2;
- 	int i, err;
- 
--	err = s35390a_get_reg(s35390a, S35390A_CMD_STATUS2, &sts, sizeof(sts));
-+	err = s35390a_read_status(s35390a, &status1);
-+	if (err == 1)
-+		return -EINVAL;
-+	if (err < 0)
-+		return err;
-+
-+	err = s35390a_get_reg(s35390a, S35390A_CMD_STATUS2, &status2, sizeof(status2));
- 	if (err < 0)
- 		return err;
- 
--	if ((sts & S35390A_INT2_MODE_MASK) != S35390A_INT2_MODE_ALARM) {
-+	if ((status2 & S35390A_INT2_MODE_MASK) != S35390A_INT2_MODE_ALARM) {
- 		/*
- 		 * When the alarm isn't enabled, the register to configure
- 		 * the alarm time isn't accessible.
-@@ -380,8 +391,8 @@ static int s35390a_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alm)
- 
- 	if (buf[S35390A_ALRM_BYTE_HOURS] & 0x80)
- 		alm->time.tm_hour =
--			s35390a_reg2hr(s35390a,
--				       buf[S35390A_ALRM_BYTE_HOURS] & ~0x80);
-+			s35390a_reg2hr(buf[S35390A_ALRM_BYTE_HOURS] & ~0x80,
-+				       status1 & S35390A_FLAG_24H);
- 
- 	if (buf[S35390A_ALRM_BYTE_MINS] & 0x80)
- 		alm->time.tm_min = bcd2bin(buf[S35390A_ALRM_BYTE_MINS] & ~0x80);
-@@ -415,7 +426,7 @@ static int s35390a_rtc_ioctl(struct device *dev, unsigned int cmd,
- 		break;
- 	case RTC_VL_CLR:
- 		/* update flag and clear register */
--		err = s35390a_init(s35390a);
-+		err = s35390a_init(s35390a, &sts);
- 		if (err < 0)
- 			return err;
- 		break;
-@@ -476,11 +487,6 @@ static int s35390a_probe(struct i2c_client *client)
- 		return err_read;
- 	}
- 
--	if (status1 & S35390A_FLAG_24H)
--		s35390a->twentyfourhour = 1;
--	else
--		s35390a->twentyfourhour = 0;
--
- 	if (status1 & S35390A_FLAG_INT2) {
- 		/* disable alarm (and maybe test mode) */
- 		buf = 0;
+ 	/*
+ 	 * Copy seccomp details explicitly here, in case they were changed
+ 	 * before holding sighand lock.
 -- 
 2.53.0
 
