@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061122;
-	b=M6gxzP5fWw/csofuw99vww6HOcm1pRm26ud4zoRvkpQ/MWnR04RuBZ9i0wCtevy4UHr/
-	 ewqhlx8zbHEnegiKyuF2kbC+fOE7+db3R2CP+JV2tTvlC6uVIQ23iEj1pnUEQJv2dqU0L
-	 X82/hnPt7DratjFzcUirwq2+Cfeshp6UJxxkFAnP2C99S+Oe3j/j76XzxeQJGXsw3TEnd
-	 vjpavmWmKJKg9Y2vvpQ33BldjpMz/vhGQlYfX7bHMKr3JXiryPJbH/p6oV44LMtWFgelJ
-	 gUlT1yF9Ny1os8xdYeRqvXDKgpSQ+GQlhoXofX4YnWuhBi37gcbLv/PfUJ7oMsk0VhQ==
+	t=1795061125;
+	b=QxRWfjGaiqPOZQNaeozTwU0gsfw/j0ngAoPVoIwo5k83SV/T1G96xMR8lLiwocAurCLO
+	 rbFm9qxKeeD/IRXtOg0B/mDhrz4RRuLyzi6uzBmq+GETuDi+rYgbLqRAVmLywcQYYB3LK
+	 uIo+BpQFIgF1bX915Ol5Jvi8ZirA0sTBi94A2DaKc5IhcInCHTU/FwEFUKvSytAV08KWt
+	 ie7nAVgbSTrYtwNtJ5c6Ssu8puuJwu+5GoqrqF/Z+zmD3cwW8SpaCNFKPPLpWK4MBEeUh
+	 4NfdKO7vU0sDYHkpwNhQvh88uVmP9vewLBvO8DommVEULpM6roJApxtCNnsTgeBAIxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061122;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061125;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jU58/CvvG8AquWy4yLV9BzWux2WakJo47i4ZRsE+kX8=;
-	b=zJY9R/sKs4v3vcc1Q31BJgMA67txO0N9uPJ3uh9v1ga8uzwCaL9GwixZ2P5p4L3l0pov
-	 pi+Yn1VbvayjS4Q7YPOYS0MsrpvPQgYFby/YtnU2YMWgQ+04wxHwyEj3Kw4Z93nZJpa/9
-	 OwbMyTAO7VEPENlhFk+9gbFZTJA4ScFCQyhkjjnCsPGnK7rNZ/Q4ffCvXYdQCu2yt8Fb9
-	 Fhy4MahWcGjdovrrjqvYmUkXwLYrswRiNh35URD1zoNHo9vgdE1lPInLVEXmh5rTpXkFJ
-	 D7cA1WuT4c4j8oshatZuVRd6An9EtjZj4muQyvgWJ+Bx1cD7/d0ttI5cpPezk+QV+OA==
+	bh=id58xVcNUZ9plKgchnmZaj2NgArlloW21uEsQ0HlUtk=;
+	b=a7AcoNnP9+Fwh4ANzb5XLtRxs25lFO38i4VYobLLlNFjzLchAEgKgEhWimoxZvRH1SXg
+	 awD9eeronnu3GzJOsSKIkGbP22eLUf88gmepF0/KH7HCv/UrXaSFXhx09lbEe5c8Xl20D
+	 LhntWbFURaqnlJbLd+G53NEiB8Rk3ogNhD2tFTSgOEftI0Tzonky96att2C40QuyRxOwS
+	 M5sJFIZr4ywndjcXN2mPc+XmQf/Pp4LeBlNYE3Nmrqw5aQnbhP0w5jBh8wn4kVb2iJAdN
+	 HPDiefoAsKSPZPgN2/i0blu/VhOAAkawT63SYh+1iA7ITRQdS4Y9KlcjhC5HJ8hoCsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=khjwCatN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kPAupsQo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B94B606A325;
-	Thu, 19 Nov 2026 04:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABD2606A326;
+	Thu, 19 Nov 2026 04:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=khjwCatN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17061F000C4;
-	Thu, 19 Nov 2026 04:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kPAupsQo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FCB1F000C4;
+	Thu, 19 Nov 2026 04:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061122;
-	bh=jU58/CvvG8AquWy4yLV9BzWux2WakJo47i4ZRsE+kX8=;
+	s=korg; t=1795061125;
+	bh=id58xVcNUZ9plKgchnmZaj2NgArlloW21uEsQ0HlUtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=khjwCatN8yBpltomq9DbFmFBXNzNhWhtnWtYctGcN5pttWnDnOxP8VLLK0te9c/lr
-	 70WjUAZoW9WVKik7Du9Z7dZzdFHHs9Pc1wLbdioFsnang54VBBmMtQX2Tl35uTSdbs
-	 SeCAp3u50jIVoRf318Dk6AsZmxA8aZq2z5hpcJ4w=
+	b=kPAupsQo1raSdm+Q1Ct9ebATiwtNRaR7++HLLpnM5HOe45p0ZcAryUqNjccFaHXz4
+	 SRUue+vpX15jOkQ1O3ixiTzAIxPpe6o6BC7RNL/tZVkTIN+TUdxSmI+ceeijMPhR+R
+	 9kt+/e4iSi8uX4TnscTy6TJz96m8qvWsyO8qxjtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Goergens <matthias.goergens@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1440/1848] isofs: return long Joliet names whole
-Date: Wed, 18 Nov 2026 15:57:58 +0100
-Message-ID: <20261118150019.760774066@linuxfoundation.org>
+Subject: [PATCH 5.10 1441/1848] soc/tegra: flowctrl: Release OF node reference on error
+Date: Wed, 18 Nov 2026 15:57:59 +0100
+Message-ID: <20261118150019.795213786@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,197 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit b8253bcf92d6365b20eea6465f5a93c9fc4aa029 ]
+[ Upstream commit 4eaed7ea6ab36e1160d660b05551702c36dfed6c ]
 
-get_joliet_filename() writes into a buffer allocated by its caller but
-is not told how big that buffer is.  It hardcodes PAGE_SIZE as the
-output limit for utf16s_to_utf8s() and gives uni16_to_x8() no limit at
-all.  PAGE_SIZE was never the right bound.  Before commit b2eb2e288604
-("isofs: Drop support of directory entries straddling blocks") both
-callers allocated a page, but only its first 1024 bytes were for the
-name, the rest holding a copy of a directory record that straddled a
-block.  It could not overflow only because a directory record holds at
-most 222 bytes of name (255 bytes, 33 of them fixed), which no converter
-expands beyond 1024 bytes.
+tegra_flowctrl_init() obtains a reference from
+of_find_matching_node() and currently releases it only after
+of_address_to_resource() succeeds.
 
-It also keeps the converted length in an unsigned char.  222 bytes of
-name are 111 UTF-16 units, and the UTF-8 converter, used for
-iocharset=utf8 and when CONFIG_NLS_DEFAULT is "utf8", needs three bytes
-for each CJK, Thai or Devanagari character, so such a name can take up
-to 333 bytes.  Past 255 the length wraps.  readdir then reports a short
-name that usually ends in the middle of a UTF-8 sequence, and lookup
-finds the file only under that name, never under its real one; a name
-that wraps to exactly 0 bytes is not listed at all.
+Release the reference before checking the resource conversion result so
+the error path is balanced as well.
 
-Such names are out of spec, since Joliet allows 64 units, but common
-tools write them: PowerISO 9.5 and UltraISO 9.76 both keep up to 110
-units by default.  Windows, for which Joliet was made, returns them
-whole, including 111-unit names in records that leave out the padding
-byte.
-
-Return them whole here too.  Pass the buffer size down and have both
-converters respect it.  utf16s_to_utf8s() stops before a character that
-does not fit, and uni16_to_x8() now hands uni2char() the space that
-actually remains and stops on -ENAMETOOLONG, as fs/hfsplus/unicode.c
-does.  Both callers pass JOLIET_NAME_MAX + 1, room for 111 units at
-three bytes each plus the terminator; no character set needs more than
-three bytes for a UTF-16 unit, and isofs_dir_record_valid() already
-rejects a record whose name_len claims more than the record holds, so no
-name is cut.  Make the length an int, which is what both converters
-return.
-
-These names are longer than NAME_MAX.  POSIX lets the limit vary by
-filesystem, reported by pathconf(_PC_NAME_MAX), and the VFS limits a
-name only by PATH_MAX (verify_dirent_name() in fs/readdir.c).
-
-vfat, exfat, hfsplus and ntfs3 already return names of up to 255 UTF-16
-units, 765 bytes of UTF-8, and such names break the same things there:
-copying the file to a filesystem with a 255-byte limit, such as ext4 or
-tmpfs, fails with ENAMETOOLONG, and cp, tar, rsync and Python's shutil
-report that file and carry on with the rest, so the copy is incomplete
-but says so.  glibc's readdir() returns the names, but the deprecated
-readdir_r() skips them and fails with ENAMETOOLONG, and an inotify
-reader with the buffer size inotify(7) suggests gets EINVAL.  In the
-kernel, fanotify reports events on such a file without its name and
-warns once in fanotify_info_copy_name(), and a directory with such a
-name cannot be reconnected from a file handle, because the generic
-get_name() in fs/exportfs, which isofs uses, skips names longer than
-NAME_MAX.  Cutting at NAME_MAX would avoid these, but would list names
-that Windows does not show and that can coincide within a directory.
-
-Every name of at most 255 bytes is returned exactly as before.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
-Link: https://patch.msgid.link/20260926042916.3277409-2-matthias.goergens@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: 1fd09e5d884a ("soc/tegra: Add initial flowctrl support for Tegra132/210")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/isofs/dir.c    |  4 +++-
- fs/isofs/isofs.h  | 11 ++++++++++-
- fs/isofs/joliet.c | 27 ++++++++++++++++++++-------
- fs/isofs/namei.c  |  3 ++-
- 4 files changed, 35 insertions(+), 10 deletions(-)
+ drivers/soc/tegra/flowctrl.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/isofs/dir.c b/fs/isofs/dir.c
-index 23c73bb56d821..561b709b20441 100644
---- a/fs/isofs/dir.c
-+++ b/fs/isofs/dir.c
-@@ -215,7 +215,9 @@ static int do_isofs_readdir(struct inode *inode, struct file *file,
- 		if (map) {
- #ifdef CONFIG_JOLIET
- 			if (sbi->s_joliet_level) {
--				len = get_joliet_filename(de, tmpname, inode);
-+				len = get_joliet_filename(de, tmpname,
-+							  JOLIET_NAME_MAX + 1,
-+							  inode);
- 				p = tmpname;
- 			} else
- #endif
-diff --git a/fs/isofs/isofs.h b/fs/isofs/isofs.h
-index 3459cefe1003c..ed174b1a12ea3 100644
---- a/fs/isofs/isofs.h
-+++ b/fs/isofs/isofs.h
-@@ -116,7 +116,16 @@ extern int parse_rock_ridge_inode(struct iso_directory_record *, struct inode *,
- extern int get_rock_ridge_filename(struct iso_directory_record *, char *, struct inode *);
- extern int isofs_name_translate(struct iso_directory_record *, char *, struct inode *);
+diff --git a/drivers/soc/tegra/flowctrl.c b/drivers/soc/tegra/flowctrl.c
+index 5db919d96aba5..727b92e938311 100644
+--- a/drivers/soc/tegra/flowctrl.c
++++ b/drivers/soc/tegra/flowctrl.c
+@@ -197,11 +197,14 @@ static int __init tegra_flowctrl_init(void)
  
--int get_joliet_filename(struct iso_directory_record *, unsigned char *, struct inode *);
-+/*
-+ * The longest name the Joliet converter returns, in bytes.  A directory
-+ * record is at most 255 bytes long, which leaves room for 111 UTF-16 units
-+ * of name, and no character set needs more than three bytes for one unit.
-+ */
-+#define JOLIET_NAME_MAX \
-+	((255 - sizeof(struct iso_directory_record)) / 2 * 3)
+ 	np = of_find_matching_node(NULL, tegra_flowctrl_match);
+ 	if (np) {
+-		if (of_address_to_resource(np, 0, &res) < 0) {
++		int err = of_address_to_resource(np, 0, &res);
 +
-+int get_joliet_filename(struct iso_directory_record *de, unsigned char *outname,
-+			int outsize, struct inode *inode);
- int get_acorn_filename(struct iso_directory_record *, char *, struct inode *);
- 
- extern struct dentry *isofs_lookup(struct inode *, struct dentry *, unsigned int flags);
-diff --git a/fs/isofs/joliet.c b/fs/isofs/joliet.c
-index c0f04a1e7f695..d37e67c5e36f4 100644
---- a/fs/isofs/joliet.c
-+++ b/fs/isofs/joliet.c
-@@ -15,19 +15,26 @@
-  * Convert Unicode 16 to UTF-8 or ASCII.
-  */
- static int
--uni16_to_x8(unsigned char *ascii, __be16 *uni, int len, struct nls_table *nls)
-+uni16_to_x8(unsigned char *ascii, __be16 *uni, int len, struct nls_table *nls,
-+	    int outsize)
- {
- 	__be16 *ip, ch;
--	unsigned char *op;
-+	unsigned char *op, *end;
- 
- 	ip = uni;
- 	op = ascii;
-+	end = ascii + outsize - 1;	/* leave room for the terminator */
- 
- 	while ((ch = get_unaligned(ip)) && len) {
- 		int llen;
--		llen = nls->uni2char(be16_to_cpu(ch), op, NLS_MAX_CHARSET_SIZE);
++		of_node_put(np);
 +
-+		if (op >= end)
-+			break;
-+		llen = nls->uni2char(be16_to_cpu(ch), op, end - op);
- 		if (llen > 0)
- 			op += llen;
-+		else if (llen == -ENAMETOOLONG)
-+			break;
- 		else
- 			*op++ = '?';
- 		ip++;
-@@ -38,21 +45,27 @@ uni16_to_x8(unsigned char *ascii, __be16 *uni, int len, struct nls_table *nls)
- 	return (op - ascii);
- }
- 
-+/*
-+ * Convert the Joliet name of @de into @outname, a buffer of @outsize bytes.
-+ * The result is at most @outsize - 1 bytes long; a longer name is cut at a
-+ * character boundary.
-+ */
- int
--get_joliet_filename(struct iso_directory_record * de, unsigned char *outname, struct inode * inode)
-+get_joliet_filename(struct iso_directory_record *de, unsigned char *outname,
-+		    int outsize, struct inode *inode)
- {
- 	struct nls_table *nls;
--	unsigned char len = 0;
-+	int len = 0;
- 
- 	nls = ISOFS_SB(inode->i_sb)->s_nls_iocharset;
- 
- 	if (!nls) {
- 		len = utf16s_to_utf8s((const wchar_t *) de->name,
- 				de->name_len[0] >> 1, UTF16_BIG_ENDIAN,
--				outname, PAGE_SIZE);
-+				outname, outsize - 1);
- 	} else {
- 		len = uni16_to_x8(outname, (__be16 *) de->name,
--				de->name_len[0] >> 1, nls);
-+				de->name_len[0] >> 1, nls, outsize);
- 	}
- 	if ((len > 2) && (outname[len-2] == ';') && (outname[len-1] == '1'))
- 		len -= 2;
-diff --git a/fs/isofs/namei.c b/fs/isofs/namei.c
-index 58f80e1b3ac0d..62c2f15fc6004 100644
---- a/fs/isofs/namei.c
-+++ b/fs/isofs/namei.c
-@@ -112,7 +112,8 @@ isofs_find_entry(struct inode *dir, struct dentry *dentry,
- 			dpnt = tmpname;
- #ifdef CONFIG_JOLIET
- 		} else if (sbi->s_joliet_level) {
--			dlen = get_joliet_filename(de, tmpname, dir);
-+			dlen = get_joliet_filename(de, tmpname,
-+						   JOLIET_NAME_MAX + 1, dir);
- 			dpnt = tmpname;
- #endif
- 		} else if (sbi->s_mapping == 'a') {
++		if (err < 0) {
+ 			pr_err("failed to get flowctrl register\n");
+ 			return -ENXIO;
+ 		}
+-		of_node_put(np);
+ 	} else if (IS_ENABLED(CONFIG_ARM)) {
+ 		/*
+ 		 * Hardcoded fallback for 32-bit Tegra
 -- 
 2.53.0
 
