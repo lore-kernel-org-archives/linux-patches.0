@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018373;
-	b=LCUNB6i9JyY62Rh2moXVnXnHv2B3TQPNF6E4zXQ/G4X9N5cicrA4YdQcpk95m35XmYsJ
-	 2Gdv7TFutGUHL/jjUP6NcgDXOjW+o/q+qGgOSF5eJJZf9lZiBABuTCxFd3WxeVeFnOSzE
-	 3YtN0GaxZM7Cx+aYEmn82V0UcPOB/qJWBkSsITjwFnqa/q6Orq/wq90O2FYBpwS7MyjB4
-	 kkyeE89/9gRmLipl6r5ZCcCzaVKrQJM1lObR7oMRv8XWW3r6f/4O6kgfJfrqdekt1LlR2
-	 Pd/tVYyin9CJehvA85XwHK/4yxTK4+L6AKiBtq9zSALRUTajmYKYCuY+XVkIxuhW6Og==
+	t=1795018376;
+	b=Cii+YqR3dURVtirFFjk0S5Y9b3XydVdnzmpg9evaUpkwX36+G7d7S6Z208VJnnBRvumm
+	 FrccSLxzvthjmpe2TPaTlDmLRVv+QP7dCu5rxB9IjHVvBzcYlj4LhohcWBKyP8pCGGQbU
+	 urb0+jYQFcDHJXh7QgtPW8APTToqAyC1XTuSLUdN5UwyvbbVUEDrG8vHptC1W+MgwdSmp
+	 m9AztFFmv3+XP6+zERepk4Voc/oiAzDgDHV45qSWWvzDkhsyZis5HuCs+4rSyf17kfOfv
+	 IXJ7LtxnFazyAxX7BlK4G2BJcXuPvPjxzYkiticxLfMJx5nBGvEoJHHVnf17cbQiT6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018373;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018376;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z4qiA6j5Xu3gtue5e2yn+om1F8wTCnU4yBoa54sztC8=;
-	b=c7ybZ+T2mSWWgTiYjIS7N2p0e8XHWrj0Dhl1CmrQuU6BPbcNY7isrL98G93fCOufp+jr
-	 EkTsBS9HxBsbunptNKaj60fu9wvqt6siz5cRNcGth582wy8KK1S2XJIhPQMQVV/MjmeEl
-	 EWEQit0HupLVebV+2Aau475dtWJueGasFRgIQE7QElKw6Wl9r58bC50Vm+PSGze49KIGv
-	 BrxnS8gKh736rTDnGglipfTttlJxag+707lGv+fCd1nQRx2a+W/W9rq982XTqC4eK3E8h
-	 tTkI09eCNhcsistUfdJgvrRJJgTXoUcAJwfbHx9F+KJLRz9I6CYMjviBjUoKXsSfC0g==
+	bh=DSYteJZTp6WxpeaIBZXoAb+EomHl1Hr1OysP75CirgQ=;
+	b=oisM5JFATUKVigf/UJROQQUqW/496bQvRxuCcr9b48p+PKTM0k9jmGlID1nkNNF8Dp0I
+	 kwEcaNaNBAMkyHCbI3vAPegLjoe7YU1IPinGNb2InCyBS1FKShpyO8wPu2yN0MeYXsUWM
+	 1b4KCMCvHki3GTVu0pW0z3haj/N+0ePTmmmI2cYGkQLAJCUjcm2xupkpoqS36mENIayrJ
+	 wvSW1YeEifNrh4W/S5R9M79/JtFLT0kzXffoT9e9ZGsiDVQU44/Eelq1ydKfjx561R9kx
+	 hLbdU6x5pGSXHVkt8wXNE9SV84DTe6ztLDXHDalEii3Tw465kkvff+MTiRg42A2HTGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COudGF81;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2njw1HZ8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D142E606A331;
-	Wed, 18 Nov 2026 16:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DFA606A336;
+	Wed, 18 Nov 2026 16:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COudGF81
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5261F000C5;
-	Wed, 18 Nov 2026 16:12:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2njw1HZ8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD6601F000C4;
+	Wed, 18 Nov 2026 16:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018373;
-	bh=Z4qiA6j5Xu3gtue5e2yn+om1F8wTCnU4yBoa54sztC8=;
+	s=korg; t=1795018376;
+	bh=DSYteJZTp6WxpeaIBZXoAb+EomHl1Hr1OysP75CirgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=COudGF81/TD9yiyaA33sbUGYRxP8gZHold8HgOAyc0vcz86aF1bGpyitB8TPAIKee
-	 A6WF1e9pA5mh8ZAjPCWdIZI+gXxdMe0m6P43OvdeQx08EB3/ibrV1+KTz8ydtTJJqe
-	 J7kTCzLopGYBakJ5WDfKLlWPdTD8vMUZU56EjIRA=
+	b=2njw1HZ82EmVX9D20olxjY2KpjG1kpm/O3lanXhBosuc3OjIDad6oRTUKe5t0dKxS
+	 0qG6yTNkSy4u984Pemd1TweiVoDpMmhxmA+E+EAAz0F4DXuVkk/2AWNj1rUkhbheWw
+	 4zK8uqaCPlNx9/5aD2TOeGyWAbPhUQvlGJ+FnoGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Igor Paunovic <royalnet026@gmail.com>
-Subject: [PATCH 7.3 1215/2651] phy: rockchip: usbdp: Avoid xHCI SErrors
-Date: Wed, 18 Nov 2026 15:40:55 +0100
-Message-ID: <20261118150331.741405193@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@linaro.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 1178/2651] perf python: Track linked libraries as extension dependencies
+Date: Wed, 18 Nov 2026 15:40:18 +0100
+Message-ID: <20261118150330.418261798@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,65 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit cf3aa34e6f0798544c26ad93a6c3c2231ab09738 ]
+[ Upstream commit 2ed38aa8a52d3e245a9f71b98825ad7f77956d50 ]
 
-The USBDP PHY provides the PIPE clock to the USB3 controller, which
-means the PHY must be fully running when anything tries to access
-the xHCI registers.
+Since the Python extension switched to linking perf libraries, setup.py
+only lists util/python.c as a source. The libraries are supplied through
+LDFLAGS, which setuptools does not consider when deciding whether the
+extension needs to be rebuilt.
 
-When switching between USB3-only, USB3 + DP and DP-only mode, the
-PHY must be re-initialized resulting in a short period of the PHY
-being disabled. If the DWC3 driver decides to access the xHCI at
-this point the system will fail with an SError.
+When a library changes, make invokes setup.py, but setuptools can skip
+the build and the recipe copies the stale cached extension back into
+python/. This leaves perf and its Python module running different
+versions of the same code.
 
-This patch avoids the problems by disabling the USB3 port before
-re-initializing it. This does a couple of things:
+Pass the linked library paths to setup.py and declare them as Extension
+dependencies so that library changes trigger a rebuild. Include
+EXTRA_PERFLIBS in the shared library list so that both make and
+setuptools track those inputs as well, preserving the existing linker
+order.
 
-- forces phystatus to 0 from GRF (not from PHY)
-- switches PIPE clock source from PHY to UTMI (safe fallback clock)
-- num_u3_port=0
-
-The last part will be ignored, as DWC3 already probed, but the
-clock re-routing will avoid the SError. There is a small delay
-afterwards to make sure the mux happened. The datasheet gives
-no hints how long it takes, so delay time is a guess.
-
-Fixes: 2f70bbddeb45 ("phy: rockchip: add usbdp combo phy driver")
-Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-part2-v15-9-8d507cb1174f@collabora.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 9dabf4003423c8d3 ("perf python: Switch module to linking libraries from building source")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Assisted-by: Codex:GPT-6-Astra
+Signed-off-by: James Clark <james.clark@linaro.org>
+[ Applied manually to address some fuzz ]
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-usbdp.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ tools/perf/Makefile.perf | 5 +++--
+ tools/perf/util/setup.py | 1 +
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-index 794f7112c1f15..b4739ab6a015f 100644
---- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
-+++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-@@ -964,13 +964,16 @@ static int rk_udphy_power_on(struct rk_udphy *udphy, u8 mode)
- 			rk_udphy_u3_port_disable(udphy, false);
- 		udphy->phy_needs_reinit = false;
- 	} else if (udphy->phy_needs_reinit) {
--		if (udphy->mode == UDPHY_MODE_DP)
--			rk_udphy_u3_port_disable(udphy, true);
-+		rk_udphy_u3_port_disable(udphy, true);
-+		udelay(10);
+diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
+index 4841a7204a308..00f6a13f9a1b1 100644
+--- a/tools/perf/Makefile.perf
++++ b/tools/perf/Makefile.perf
+@@ -482,8 +482,8 @@ endif
+ EXTLIBS := $(call filter-out,$(EXCLUDE_EXTLIBS),$(EXTLIBS))
+ LIBS = -Wl,--whole-archive $(PERFLIBS) $(EXTRA_PERFLIBS) -Wl,--no-whole-archive -Wl,--start-group $(EXTLIBS) -Wl,--end-group
  
- 		rk_udphy_disable(udphy);
- 		ret = rk_udphy_setup(udphy);
- 		if (ret)
- 			return ret;
-+
-+		if (!udphy->hs && udphy->mode & UDPHY_MODE_USB)
-+			rk_udphy_u3_port_disable(udphy, false);
- 		udphy->phy_needs_reinit = false;
- 	}
+-PERFLIBS_PY := $(call filter-out,$(LIBPERF_BENCH) $(LIBPERF_TEST),$(PERFLIBS))
+-LIBS_PY = -Wl,--whole-archive $(PERFLIBS_PY) $(EXTRA_PERFLIBS) -Wl,--no-whole-archive -Wl,--start-group $(EXTLIBS) -Wl,--end-group
++PERFLIBS_PY := $(call filter-out,$(LIBPERF_BENCH) $(LIBPERF_TEST),$(PERFLIBS)) $(EXTRA_PERFLIBS)
++LIBS_PY = -Wl,--whole-archive $(PERFLIBS_PY) -Wl,--no-whole-archive -Wl,--start-group $(EXTLIBS) -Wl,--end-group
  
+ export INSTALL SHELL_PATH
+ 
+@@ -515,6 +515,7 @@ $(shell [ -d '$(OUTPUT)python' ] || mkdir -p '$(OUTPUT)python')
+ $(OUTPUT)python/perf$(PYTHON_EXTENSION_SUFFIX): util/python.c util/setup.py python/perf.pyi $(PERFLIBS_PY)
+ 	$(QUIET_GEN)LDSHARED="$(CC) -pthread -shared" \
+         CFLAGS='$(CFLAGS)' LDFLAGS='$(LDFLAGS) $(LIBS_PY)' \
++	  PYTHON_EXT_DEPS='$(PERFLIBS_PY)' \
+ 	  $(PYTHON_WORD) util/setup.py \
+ 	  $(python_setup_quiet) build_ext; \
+ 	cp $(PYTHON_EXTBUILD_LIB)perf*.so $(OUTPUT)python/; \
+diff --git a/tools/perf/util/setup.py b/tools/perf/util/setup.py
+index 8380980ade4c4..3b6a59f66944c 100644
+--- a/tools/perf/util/setup.py
++++ b/tools/perf/util/setup.py
+@@ -173,6 +173,7 @@ def main() -> None:
+     perf = Extension(
+         'perf',
+         sources=[os.path.join(src_perf, 'util/python.c')],
++        depends=shlex.split(os.getenv('PYTHON_EXT_DEPS', '')),
+         include_dirs=['util/include'],
+         extra_compile_args=cflags,
+     )
 -- 
 2.53.0
 
