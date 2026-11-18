@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022672;
-	b=Ol+1GaQ2hmpB2x8+KJ2KWv+Q7KGnsKvbZ6Zk3PWNC1iFKdZQlarea9mo4e7vm1oUbydZ
-	 DvOOVn7RLQFkbDPTvWBkS2sdT6LWcdWeoHd/GFxOSoQVfc/HU1zye2U/CGEyliGL6+a1Q
-	 e3hcxZyEbzKlQFdf/1DMrWcPYiCp28KRhXesO2R3jXFUN6J7C4/XqCp7mGzSzKQOBR8zS
-	 gU352iFkDT2VPFLQc+AzcbSG1WYB0ySHky1eHhruoxw0XJcx7uQkmytJMd2cgYPCXynWJ
-	 gV3JJHRB+JH7lwJGKkdVBAazIp7DOLRfjT6PFQ7SkgD9255LOvWR0TGskO4V7tCP4qg==
+	t=1795022675;
+	b=gOWUZN1CvgDN8OxOpQ59dIKW/MT3KUWcRgDIE4+Hdnizd1WFuoVz35n4zz21ix8ulkwr
+	 wIR6/D8Q8JIusH0zBibRH58ofVWk13JuSVLPcE4itbhod3Mi7x5tc1G8eBwQ7pEFJTRgO
+	 W07/Tzba33Zbm1ZzUSOSXe/aRaOitxU1pL/sNp+D0TnmotVuWjP36mnzIcnjPQHN5x0H7
+	 TxcywcxR7Q7OK3CwR/c2mRLQq270jdnuha+7bVYYwjYWvpQpcBmeNqABJ1OWD3S+lN8Ij
+	 ytaj51KVr9KQ36BgOnO2hFvDThy9VhVtm9gYJNUqmHee6cQo3dAYc9eHb52bfqyy+4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022672;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022675;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aecaVdw7f0cEAn9PYDoaXkRkQ5EvcE4wucXkUSCmSig=;
-	b=jQvK0zv1AzFAnOG6b9nTrzCYNm8dOT8D1OBTw+4lht+CpwdqTAgPThhls4q1aLatwjKs
-	 KVZOgFXk+cPufdBKdSVAa1tyT7gNxB8aWsGX6k/lo4ihKVq5ZZ2AH5289GIj4zSv8Ssy7
-	 bp65A9uLck58avoV1P/3MUBMt6bfJOLKjlqSapv1EFk3Vry5pTWiisje4nM7JRnzXJ7C9
-	 gxmrFzXSgmocQ0S8gojZDvjNC+/mqKpy5ZuqYj/sfSLIajXPISOaOXJrrxseTFklto0QM
-	 JZLMnRks0v8YlDiEo8GFS2zqANcUrkcQiZU2itLxX1q3xGJ9b5OaXNHV3Nl6pzeMIEw==
+	bh=B8In5UecZdglJPHyLfxVFR8UhWfs0GXKkwVdymvucu8=;
+	b=sddgiOYswbw1ou67W+U7DJCsqviDqZ56nIMBBrNGzvIhuidDwt9bxzfHBtAnoJsWw1M3
+	 tUrtr2xTk7t0YbLxWZzsX7cMJHb43H5+3vhAtOC7yAsERwWzfhtjyNHveoe/NSKmahS1D
+	 XOOPx+pXAdfwICilJrAtoqeTDKDGT2ktdeTbDiERPiqvNMzcpYu8vcluMjyycwg+AUIv6
+	 7zLs54HrbC6JPkRutxyd2Q7lWz3mCMP4CdYt0BhavkboOIhAgpuBWByosMss/zxLHcxxb
+	 MiIkGlcIi8eit1GR1LnI1i5m+Tka9AA9P42W7rfFnVmp1VSdDTt2VtgTKCPJEN6sLCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C+aGj24B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QmYCTutv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482EE606A331;
-	Wed, 18 Nov 2026 17:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB6F606A325;
+	Wed, 18 Nov 2026 17:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C+aGj24B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95DF11F000C4;
-	Wed, 18 Nov 2026 17:24:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QmYCTutv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6F61F000C4;
+	Wed, 18 Nov 2026 17:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022672;
-	bh=aecaVdw7f0cEAn9PYDoaXkRkQ5EvcE4wucXkUSCmSig=;
+	s=korg; t=1795022674;
+	bh=B8In5UecZdglJPHyLfxVFR8UhWfs0GXKkwVdymvucu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C+aGj24BdzDelB19NqaDqIwV1dEhr/gfXI6+dJ3geS4tNmQ4W/2xGar5g6MHRU3wI
-	 z9rLVr/kkf/2P2xTODU8jTpSDNCn5+DlY6hjHYlEYkN612hhmBYCbQBd4v4kPO++BM
-	 a+h/V9OwjGXbM5UhkLZnx8Xnf/6+kisLLkWNmmRI=
+	b=QmYCTutvfFKmNsFq9/gQL03sVhXwPRg/Uppse5O0tgNf60kAMxlVbhpRsQP5h3+O+
+	 B6jUeS6Qwn4L65gZE6P23d8GIUOnajvizyM63WJrW/VNSQsCMMk4Ds0jJtNhd6tMjo
+	 4IpFyxoS9zDVUNpb8iqbe4T8xDQfY2z0HQW6HwEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+16bf7cd0ebeb1de93aa5@syzkaller.appspotmail.com,
-	Lance Yang <lance.yang@linux.dev>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Chris J Arges <carges@cloudflare.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0055/2151] khugepaged: fix readahead lock inversion in collapse_file()
-Date: Wed, 18 Nov 2026 15:29:50 +0100
-Message-ID: <20261118150123.745982602@linuxfoundation.org>
+Subject: [PATCH 6.18 0056/2151] net: Use a dedicated flag to track disabled napi instances
+Date: Wed, 18 Nov 2026 15:29:51 +0100
+Message-ID: <20261118150123.784354897@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,132 +70,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lance Yang <lance.yang@linux.dev>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit eadce52a9ef657d561b3e76c9b5f178bd99735f5 ]
+commit 8dc87fc5d6a0eb337744737008177342a708bf36 upstream.
 
-collapse_file() can call page_cache_sync_readahead() while still holding
-source folios locked. If truncate holds mapping->invalidate_lock
-exclusively and waits for one of those folios, readahead waits for
-invalidate_lock and neither side can make progress.
+Trying to disable the napi threaded state while the napi instance is
+disabled will hang forever in napi_stop_kthread(), as it waits for
+NAPIF_STATE_SCHED_THREADED to clear.
 
-We need to release those folio locks before starting readahead. On a page
-cache miss, roll back first, populate the collapse range, and retry once.
-Doing readahead after rollback avoids an extra pass when all folios are
-already present. If another miss occurs on retry, give up rather than keep
-retrying while truncate or reclaim removes folios.
+This won't happen until the next ____napi_schedule() call, which won't
+happen as it's disabled.
 
-Keep page_cache_sync_readahead() and wait for read I/O with
-filemap_lock_folio(), releasing each folio before moving to the next. The
-existing uptodate check during collapse still handles read errors.
+This happens in 2 instances :
 
-Shmem uses shmem_get_folio() for swapin and fallocated folios without
-taking mapping->invalidate_lock, so it is unaffected.
+ - Drivers that create but don't use napi instances (stmmac's rxtx napi
+   for AF_XDP for example), here it's a driver bug
 
-Reported-by: syzbot+16bf7cd0ebeb1de93aa5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=16bf7cd0ebeb1de93aa5
-Fixes: 730633f0b7f9 ("mm: Protect operations adding pages to page cache with invalidate_lock")
-Cc: stable@vger.kernel.org
-Signed-off-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Link: https://patch.msgid.link/20261026152013.10511-1-lance.yang@linux.dev
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+ - Drivers that create their napi instances in .probe(). Here, setting
+   threaded off while the interface is down will hang :
+
+   ip link set eth0 down
+   echo 1 > /sys/class/net/eth0/threaded
+   echo 0 > /sys/class/net/eth0/threaded
+   -> hang
+
+Checking on netif_running() isn't enough, as napi instances may be
+transiently disabled when changing the MTU for example, let's use a
+dedicated flag to track if the instance is disabled.
+
+This allows immediately disabling the kthread when the instance is
+disabled.
+
+This was tested on mvpp2 (probe-time napi_add) and stmmac.
+
+[ Backport: omit threaded busy-poll state handling, which is not present
+  in 6.18.y. ]
+
+Fixes: 689883de94dd ("net: stop napi kthreads when THREADED napi is disabled")
+Tested-by: Daniel Machon <daniel.machon@microchip.com>
+Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20261029153130.121204-1-maxime.chevallier@bootlin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chris J Arges <carges@cloudflare.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/khugepaged.c | 49 +++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 37 insertions(+), 12 deletions(-)
+ include/linux/netdevice.h |  2 ++
+ net/core/dev.c            | 14 ++++++++++++--
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index 6bff1096de7d8..6fa4d9b7e0129 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1868,6 +1868,8 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
- 	XA_STATE_ORDER(xas, &mapping->i_pages, start, HPAGE_PMD_ORDER);
- 	int nr_none = 0, result = SCAN_SUCCEED;
- 	bool is_shmem = shmem_file(file);
-+	bool do_readahead = false;
-+	bool readahead_done = false;
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index 7be5b78b2bff7..e272d0006c6bd 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -431,6 +431,7 @@ enum {
+ 	NAPI_STATE_THREADED,		/* The poll is performed inside its own thread*/
+ 	NAPI_STATE_SCHED_THREADED,	/* Napi is currently scheduled in threaded mode */
+ 	NAPI_STATE_HAS_NOTIFIER,	/* Napi has an IRQ notifier */
++	NAPI_STATE_DISABLED,		/* NAPI is disabled */
+ };
  
- 	VM_BUG_ON(!IS_ENABLED(CONFIG_READ_ONLY_THP_FOR_FS) && !is_shmem);
- 	VM_BUG_ON(start & (HPAGE_PMD_NR - 1));
-@@ -1879,6 +1881,10 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
+ enum {
+@@ -445,6 +446,7 @@ enum {
+ 	NAPIF_STATE_THREADED		= BIT(NAPI_STATE_THREADED),
+ 	NAPIF_STATE_SCHED_THREADED	= BIT(NAPI_STATE_SCHED_THREADED),
+ 	NAPIF_STATE_HAS_NOTIFIER	= BIT(NAPI_STATE_HAS_NOTIFIER),
++	NAPIF_STATE_DISABLED		= BIT(NAPI_STATE_DISABLED),
+ };
  
- 	mapping_set_update(&xas, mapping);
+ enum gro_result {
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 673223065b955..95126e2360792 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -7127,6 +7127,12 @@ static void napi_stop_kthread(struct napi_struct *napi)
+ {
+ 	unsigned long val, new;
  
-+retry:
-+	result = SCAN_SUCCEED;
-+	do_readahead = false;
-+	xas_set_order(&xas, start, HPAGE_PMD_ORDER);
- 	__folio_set_locked(new_folio);
- 	if (is_shmem)
- 		__folio_set_swapbacked(new_folio);
-@@ -1943,17 +1949,9 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
- 			}
- 		} else {	/* !is_shmem */
- 			if (!folio || xa_is_value(folio)) {
--				xas_unlock_irq(&xas);
--				page_cache_sync_readahead(mapping, &file->f_ra,
--							  file, index,
--							  end - index);
--				/* drain lru cache to help folio_isolate_lru() */
--				lru_add_drain();
--				folio = filemap_lock_folio(mapping, index);
--				if (IS_ERR(folio)) {
--					result = SCAN_FAIL;
--					goto xa_unlocked;
--				}
-+				do_readahead = !readahead_done;
-+				result = SCAN_FAIL;
-+				goto xa_locked;
- 			} else if (folio_test_dirty(folio)) {
- 				/*
- 				 * khugepaged only works on read-only fd,
-@@ -2095,7 +2093,10 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
- 		 * in do_dentry_open() truncating the page cache. This is
- 		 * particularly important if there are dirty folios in transit.
- 		 */
--		filemap_invalidate_lock_shared(mapping);
-+		if (!filemap_invalidate_trylock_shared(mapping)) {
-+			result = SCAN_FAIL;
-+			goto rollback;
-+		}
- 		filemap_nr_thps_inc(mapping);
- 		/*
- 		 * Paired with the fence in do_dentry_open() -> get_write_access()
-@@ -2296,6 +2297,30 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
- 	new_folio->mapping = NULL;
- 
- 	folio_unlock(new_folio);
-+
-+	/* Readahead may take invalidate_lock; source folios are unlocked. */
-+	if (do_readahead) {
-+		for (index = start; index < end;) {
-+			folio = filemap_lock_folio(mapping, index);
-+			if (IS_ERR(folio)) {
-+				page_cache_sync_readahead(mapping, &file->f_ra,
-+							  file, index, end - index);
-+				folio = filemap_lock_folio(mapping, index);
-+				if (IS_ERR(folio)) {
-+					result = SCAN_FAIL;
-+					goto out_put;
-+				}
-+			}
-+			index = folio_next_index(folio);
-+			folio_unlock(folio);
-+			folio_put(folio);
-+		}
-+		/* Drain the local LRU batch before retrying isolation. */
-+		lru_add_drain();
-+		readahead_done = true;
-+		goto retry;
++	/* Instance is disabled, we can immediately stop the kthread */
++	if (test_bit(NAPI_STATE_DISABLED, &napi->state)) {
++		clear_bit(NAPI_STATE_THREADED, &napi->state);
++		goto stop;
 +	}
-+out_put:
- 	folio_put(new_folio);
- out:
- 	VM_BUG_ON(!list_empty(&pagelist));
++
+ 	/* Wait until the napi STATE_THREADED is unset. */
+ 	while (true) {
+ 		val = READ_ONCE(napi->state);
+@@ -7156,6 +7162,7 @@ static void napi_stop_kthread(struct napi_struct *napi)
+ 		msleep(20);
+ 	}
+ 
++stop:
+ 	kthread_stop(napi->thread);
+ 	napi->thread = NULL;
+ }
+@@ -7541,6 +7548,7 @@ void netif_napi_add_weight_locked(struct net_device *dev,
+ 	napi->list_owner = -1;
+ 	set_bit(NAPI_STATE_SCHED, &napi->state);
+ 	set_bit(NAPI_STATE_NPSVC, &napi->state);
++	set_bit(NAPI_STATE_DISABLED, &napi->state);
+ 	netif_napi_dev_list_add(dev, napi);
+ 
+ 	/* default settings from sysfs are applied to all NAPIs. any per-NAPI
+@@ -7577,7 +7585,8 @@ void napi_disable_locked(struct napi_struct *n)
+ 			val = READ_ONCE(n->state);
+ 		}
+ 
+-		new = val | NAPIF_STATE_SCHED | NAPIF_STATE_NPSVC;
++		new = val | NAPIF_STATE_SCHED | NAPIF_STATE_NPSVC |
++		      NAPIF_STATE_DISABLED;
+ 		new &= ~(NAPIF_STATE_THREADED | NAPIF_STATE_PREFER_BUSY_POLL);
+ 	} while (!try_cmpxchg(&n->state, &val, new));
+ 
+@@ -7620,7 +7629,8 @@ void napi_enable_locked(struct napi_struct *n)
+ 	do {
+ 		BUG_ON(!test_bit(NAPI_STATE_SCHED, &val));
+ 
+-		new = val & ~(NAPIF_STATE_SCHED | NAPIF_STATE_NPSVC);
++		new = val & ~(NAPIF_STATE_SCHED | NAPIF_STATE_NPSVC |
++			      NAPIF_STATE_DISABLED);
+ 		if (n->dev->threaded && n->thread)
+ 			new |= NAPIF_STATE_THREADED;
+ 	} while (!try_cmpxchg(&n->state, &val, new));
 -- 
 2.53.0
 
