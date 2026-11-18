@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044303;
-	b=JnGz1yUSlizzmx0Bz1Dd+9cv5MFrGEZK56waV2J9LiXPZ4iQ6SqOd3UPAQw+piiNqyRp
-	 Mm1jPpqwbtF8qoS4UM52caGCtjx4bC2EfRPhy3o2PkimzOxiavBWPC1+J8EhY6kVd020z
-	 JKMOLv3beq+1y5gYrUtgWxQk/Yh8qqpFlXulrImfi5gDUIqz9JWocDjkmLzo9/JRbrHQO
-	 9osP9BlpD2sHI7vyYO08ton3Jt8db4Ti5TFtETsk9LP7SE73gMqtHuuk3bneqLuh63z7q
-	 Zd/HppCnbumIOv2N46/MYAbgH48OFytJtaxECU51kVu08bFVckQbvjws5lZ6OljyDxA==
+	t=1795044306;
+	b=rWR3XEqeC7yjtPJDwth5eAa0AVJElMT5xETx/srtpXOLtDBjurAHiXtxXRNLVzyyyAcn
+	 /IwnOxexw8AmtwjKc8/RSWc68Or8nrL1WUutQfECOixC9FkD1xJS/IsRI5dWFSsP2CO/U
+	 SxAOJXPZLhh6zMMPuuEBk8AY9huEmzLcLfYJSmMKj50JifJJ0WVLEwT1XQExgGJKLAoF+
+	 rngLjKv5MBzWfPH+In7ML7OLkPqYt46oExv63zLMyHK0xFXPCtWw3CvzG8TwUD68wkJeJ
+	 ukVSw4zWh4SKq9eNnuSwpmttdcFdo3eeGLF7i212HDZJEYqANYdLLE33Fd4x+cX24tw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044303;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044306;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O/u80BT8sRt8EMOIlBWvScChc+NYnvVZ3OSPuUNvn98=;
-	b=oxSoWGHz0F+m9lcLj6Oy46Np/ilvOagicaNcbuBoMKICtzLgPyKhUmFywPUQmfuSkyB+
-	 hPwW1hxX9s407yCiP2L1qeSPwfAz9+Pv7PxFH8+ByyRsPS0gM6PJFok59b2sZW9UZKUjF
-	 P+JCXGBTEpnypePjr19YKY+EVdmSgBvmTNiyHgEHUPTin0uYFmHfTOw5mjCeNxoPEsXw9
-	 2hEd3Xx24SNCAF4YBTSASc9ECPCZBBwDwWmVDODYz6y1KcpZzi8BBMi3yNhfMQEt8ASkh
-	 ZF+AP9iXm/7NoXQmhgIQVpNpaZinGUtVBrSDFxdmFX9fO9nfZXcOuyEycdsEg9PR4yA==
+	bh=MVFFvi9D4CskRJJXe/c0T/g8nNHzjC62TXIpB1BrJVo=;
+	b=S3dxj1jpRO3ghrpfBbzbBpo6iA3wgphorAgpxIzbtDR+UMNw2XOC83pzEk7Dwy/GClY8
+	 m3VTgS7DamK20H7kf/kGAfq7eBwLtmclJqxyTnAElw/lil8mLWvaBnYuAXzzmcKugUWdK
+	 EqBWkt0ShCmEGfw2qwjARK9YFeS+EJgCZIuzroB7Zl8HqeOFStzlTuMqW8arrQCORlNCv
+	 K5nLgDqxXncKDe0FaBG+/o8cBhNfjBPVEDSedXskROozpHKjam4lZ0QVW3Xz9WamHESGX
+	 vScgzYHJjJfmFwOnn7fumJIZ0P8fs3u7+v9LVY9Y0z3FwBHrcQ2weSNx0y+97ccH/rw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FtxEaJ+o;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q4gweocG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5954F606A325;
-	Wed, 18 Nov 2026 23:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17313606A31C;
+	Wed, 18 Nov 2026 23:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FtxEaJ+o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D4D1F000C4;
-	Wed, 18 Nov 2026 23:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q4gweocG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD471F000C4;
+	Wed, 18 Nov 2026 23:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044303;
-	bh=O/u80BT8sRt8EMOIlBWvScChc+NYnvVZ3OSPuUNvn98=;
+	s=korg; t=1795044305;
+	bh=MVFFvi9D4CskRJJXe/c0T/g8nNHzjC62TXIpB1BrJVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FtxEaJ+oDKmQIiLy1nMwNkryqyV2wpayC5fOTveM6RmuVCcCN10Qr17K4WTD07u4i
-	 QtPTqw2n0TcISOy2o+Lm6NVAdYNfuHsca/VoMPY9X5KqH5VZGgBce3gNY/9wiNfndf
-	 GCVyKltbrUFXm8gu6FkWoKHPsPCtBrcrdKjy6vuY=
+	b=q4gweocGKY+TkCIE3dE73jJIQsyaC7UcBnKHBxxUW9megPRjqnaRERFI1nhHV6e9O
+	 PpN/3Yu4c+p7GYVUowg7xS1dJlGSwARCsiAwTYY9BhbLnxjqRcEdukBUXBADHx0Tv9
+	 nQdArYolyr3QMEABB+OaB6NZaVXnvhpa3bq16Wbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdifatah Suruur <suruurism@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.1 0516/2857] ksmbd: reserve space for the UTF-16 terminator in stream info
-Date: Wed, 18 Nov 2026 15:25:50 +0100
-Message-ID: <20261118150220.047225997@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0469/2857] Bluetooth: Serialize SMP remote OOB data access
+Date: Wed, 18 Nov 2026 15:25:03 +0100
+Message-ID: <20261118150218.336492845@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,48 +68,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdifatah Suruur <suruurism@gmail.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit a025c4991a7d83edc4dd339e3ea86d8ff6226eca upstream.
+[ Upstream commit 81a2345f1984f0b36d3226571bc196316a01b648 ]
 
-smb_strtoUTF16() always writes a terminating zero UTF-16 unit after the
-converted characters, but get_file_stream_info() budgets only
-sizeof(struct smb2_file_stream_info) + streamlen * 2 for a stream entry
-and sizeof(struct smb2_file_stream_info) + 7 * 2 for the trailing
-"::$DATA" entry. When an entry exactly fills the 448-byte small response
-buffer, the terminator is written two bytes past the allocation.
+build_pairing_cmd() looks up remote OOB data and copies its contents
+without holding hdev->lock, which serializes the list's writers. After
+SMP finds an entry, a concurrent management Remove Remote OOB Data
+command can unlink and free it before SMP reads its present flag or
+copies its random and confirmation values. Removal can also invalidate
+an entry while the lookup is still traversing the list.
 
-Reserve one extra UTF-16 unit in both budget checks. The terminator is
-not part of the wire format, so the reported lengths are unchanged.
+KASAN reported:
 
+  BUG: KASAN: slab-use-after-free in build_pairing_cmd+0x948/0x9b0
+  Call Trace:
+   build_pairing_cmd+0x948/0x9b0
+   smp_recv_cb+0x459f/0x8110
+   l2cap_recv_frame+0xf14/0x9190
+   l2cap_recv_acldata+0xa64/0xd40
+   hci_rx_work+0x4ca/0x730
+
+  Allocated by task 87:
+   hci_add_remote_oob_data+0x11d/0x530
+   add_remote_oob_data+0x282/0x400
+   hci_sock_sendmsg+0x1033/0x1ea0
+
+  Freed by task 93:
+   hci_remote_oob_data_clear+0x108/0x1c0
+   remove_remote_oob_data+0x198/0x220
+   hci_sock_sendmsg+0x1033/0x1ea0
+
+Taking hdev->lock in build_pairing_cmd() would recurse for callers that
+already hold it and invert the device-to-L2CAP lock order on the receive
+path. Add a per-device remote_oob_lock instead, held across the SMP
+lookup and copies and by the add, remove and clear helpers. Cover
+initialization and in-place updates as well, so SMP cannot read partially
+initialized or updated OOB values. Release the mutex on allocation
+failure, preserving the existing error return.
+
+The new critical sections acquire no device, connection or channel locks.
+Writers retain their existing hdev->lock protection, which continues to
+serialize the other readers without changing their locking or behavior.
+
+Link: https://lore.kernel.org/r/00660cd3-7d71-13a4-f617-229e6defb701@gmail.com
+Fixes: 02b05bd8b0a6 ("Bluetooth: Set SMP OOB flag if OOB data is available")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ sashal: Kept the older kmalloc(sizeof(*data), GFP_KERNEL) instead of kmalloc_obj(*data) in hci_add_remote_oob_data(), while adding the upstream braces and mutex_unlock() on the failure path. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/net/bluetooth/hci_core.h |  1 +
+ net/bluetooth/hci_core.c         | 12 +++++++++++-
+ net/bluetooth/smp.c              |  2 ++
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -4837,7 +4837,8 @@ static void get_file_stream_info(struct
- 				     ":%s", &stream_name[XATTR_NAME_STREAM_LEN]);
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 1502affe5e5ec..f47a88d39c168 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -553,6 +553,7 @@ struct hci_dev {
+ 	struct list_head	link_keys;
+ 	struct list_head	long_term_keys;
+ 	struct list_head	identity_resolving_keys;
++	struct mutex		remote_oob_lock;
+ 	struct list_head	remote_oob_data;
+ 	struct list_head	le_accept_list;
+ 	struct list_head	le_resolv_list;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index c07e7c2ad76ae..1cf9bbbff239c 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -1521,8 +1521,10 @@ int hci_remove_remote_oob_data(struct hci_dev *hdev, bdaddr_t *bdaddr,
  
- 		next = sizeof(struct smb2_file_stream_info) + streamlen * 2;
--		if (next > buf_free_len) {
-+		/* smbConvertToUTF16() also writes a terminating UTF-16 unit. */
-+		if (next + sizeof(__le16) > buf_free_len) {
- 			kfree(stream_buf);
- 			break;
+ 	BT_DBG("%s removing %pMR (%u)", hdev->name, bdaddr, bdaddr_type);
+ 
++	mutex_lock(&hdev->remote_oob_lock);
+ 	list_del(&data->list);
+ 	kfree(data);
++	mutex_unlock(&hdev->remote_oob_lock);
+ 
+ 	return 0;
+ }
+@@ -1531,10 +1533,12 @@ void hci_remote_oob_data_clear(struct hci_dev *hdev)
+ {
+ 	struct oob_data *data, *n;
+ 
++	mutex_lock(&hdev->remote_oob_lock);
+ 	list_for_each_entry_safe(data, n, &hdev->remote_oob_data, list) {
+ 		list_del(&data->list);
+ 		kfree(data);
+ 	}
++	mutex_unlock(&hdev->remote_oob_lock);
+ }
+ 
+ int hci_add_remote_oob_data(struct hci_dev *hdev, bdaddr_t *bdaddr,
+@@ -1543,11 +1547,14 @@ int hci_add_remote_oob_data(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ {
+ 	struct oob_data *data;
+ 
++	mutex_lock(&hdev->remote_oob_lock);
+ 	data = hci_find_remote_oob_data(hdev, bdaddr, bdaddr_type);
+ 	if (!data) {
+ 		data = kmalloc(sizeof(*data), GFP_KERNEL);
+-		if (!data)
++		if (!data) {
++			mutex_unlock(&hdev->remote_oob_lock);
+ 			return -ENOMEM;
++		}
+ 
+ 		bacpy(&data->bdaddr, bdaddr);
+ 		data->bdaddr_type = bdaddr_type;
+@@ -1580,6 +1587,8 @@ int hci_add_remote_oob_data(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 
+ 	BT_DBG("%s for %pMR", hdev->name, bdaddr);
+ 
++	mutex_unlock(&hdev->remote_oob_lock);
++
+ 	return 0;
+ }
+ 
+@@ -2523,6 +2532,7 @@ struct hci_dev *hci_alloc_dev_priv(int sizeof_priv)
+ 	mutex_init(&hdev->lock);
+ 	mutex_init(&hdev->req_lock);
+ 	mutex_init(&hdev->mgmt_pending_lock);
++	mutex_init(&hdev->remote_oob_lock);
+ 
+ 	ida_init(&hdev->unset_handle_ida);
+ 
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index 1700e295f14da..6ccfef2d380ad 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -682,6 +682,7 @@ static void build_pairing_cmd(struct l2cap_conn *conn,
+ 		else
+ 			bdaddr_type = BDADDR_LE_RANDOM;
+ 
++		mutex_lock(&hdev->remote_oob_lock);
+ 		oob_data = hci_find_remote_oob_data(hdev, &hcon->dst,
+ 						    bdaddr_type);
+ 		if (oob_data && oob_data->present) {
+@@ -692,6 +693,7 @@ static void build_pairing_cmd(struct l2cap_conn *conn,
+ 			SMP_DBG("OOB Remote Confirmation: %16phN", smp->pcnf);
+ 			SMP_DBG("OOB Remote Random: %16phN", smp->rr);
  		}
-@@ -4859,7 +4860,7 @@ static void get_file_stream_info(struct
++		mutex_unlock(&hdev->remote_oob_lock);
  
- out:
- 	if (!S_ISDIR(stat.mode) &&
--	    buf_free_len >= sizeof(struct smb2_file_stream_info) + 7 * 2) {
-+	    buf_free_len >= sizeof(struct smb2_file_stream_info) + (7 + 1) * 2) {
- 		file_info = (struct smb2_file_stream_info *)
- 			&rsp->Buffer[nbytes];
- 		streamlen = smbConvertToUTF16((__le16 *)file_info->StreamName,
+ 	} else {
+ 		authreq &= ~SMP_AUTH_SC;
+-- 
+2.53.0
+
 
 
