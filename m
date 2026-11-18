@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047120;
-	b=PEA8rZp9nFiE2WLelGBJ1baIqFLivA/sI+Y0gXNtlijC7NCD18kZH8XwfT9vdUIXRbPa
-	 RdZu1neXkGMg6nyY7Sg+EWzetQ8o8vX+KeTzgJDid0kOniT3H7J7uMhtjuUG1x9sldtK2
-	 Q4JTqIc9hpS5wMSKEsE7uiAdgFkTzXH+z8UnJgC2Jnls9hxAXBOyy/aVT4e16MIAP80vX
-	 9bfVlhQMf7jK+923+C8NwzA04+dO2YBH3l4GOhM/adhncAs9Tt8Y/a2TiaFYK5xyegLny
-	 hIx5/gifA9bHZt/dtzbdJd/kghzhjWSQGK3vSi8w+2Ubb79EMpzTG7JmEywJ5XL6MGg==
+	t=1795047123;
+	b=f1nPYqOfOYs+bwbIHiC0zCC2BRDuzkDrk057ucq6LQat0LeaMVAEDdVxxyqiwpCiJJvn
+	 sOnqT0fKgJSD+E93Iizmh1chX1BzdLSDtSMcTCfTU492p+aumqEwo8m3kQsRO/9kJ8Fcw
+	 nlgWh8cbH/afhzuWpPPzqApVmQA9zuONLNZvYWehGsrMq6u8AoieWZe985cJlfRGfAD0N
+	 FIfmUSObRqonKs0fv6l+l33Lmj0Y7fmOvpchAloN2Ewg9NkH7RlYgRomAgd7ZNZaA3YCQ
+	 q/O6i4ncw80JkTO4xAhdusmGAYCQ9S4ZEnhla99n6UecFSuOm9xTAfmP7Ta00JQev8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047120;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047123;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0iEMdLqvoTynqELvFzJ5dNfxmdAj0ouB1XSBxh5FXUE=;
-	b=xeCuDNLhw6Qq04MeojUt5E/LXKA/Zwb4esJwQjc7/GFt+G9Au0LARfV2Hbs7Mr4fLIPt
-	 17ZlvkS/vybATRZsMSdwLl6ZEejNqRXhvwSY4nlGvKKHOG1xn4w6JIoLWNuQTGLKtdN6t
-	 SfWoXnPYy6/CPKgMXsDk+OQExCOKkY4oTGPDkYLIHYYZNBmPNjXcZ/STAXprpRToivKJm
-	 jdt8AzzdhKtjrJIBgAVVOLo59KAv3R3jSoiv+xwKUpVY12r23zPloBvRjO8VP/E9ibFxm
-	 g4YZLgbEttsDqcTtf5uNlv7OpR+7KauGRThsL8SBl/CTUo6OnaqDUXNvVvZZNReCmeg==
+	bh=3Gcs1Vs6JPompTmvN/U7m/TWpbZI9koqsL68IqwP3bw=;
+	b=llNhd1+GSaM4FN+QhuIJckLo/tCcAxWW5R5qrVkWE5gmM+69FhWcu80cGMtikn+cHn7A
+	 uIVzSoq2omJ7rXxPWuN7q3vrKapAZqUVONPgoJgiIHc9TzHVVoZc/fIon/NN6L06dqK5q
+	 0S+uBK2S2KgeQJEKigp2CkXkZQXudcXi1/IbAcoS6k7ENTXLqllgFeW2MVIsdv8qJzziX
+	 UpcNoksc/UlnziShVbcxNRjjqDC4UPkssUTiqxQSApaArFxs3IzINfgPzxxEy3Co+oL2w
+	 P2Bx3CSKYZHNFd4N9ZTZ3n4kXZKKGmt4fY4y8z7jF7HLlhlYKgJDU6ZpuvqYtNcz13A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JtHNCtqm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nPNYgD1f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A6A606A320;
-	Thu, 19 Nov 2026 00:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA9B606A31C;
+	Thu, 19 Nov 2026 00:12:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JtHNCtqm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9051F000C4;
-	Thu, 19 Nov 2026 00:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nPNYgD1f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A8A1F000C4;
+	Thu, 19 Nov 2026 00:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047120;
-	bh=0iEMdLqvoTynqELvFzJ5dNfxmdAj0ouB1XSBxh5FXUE=;
+	s=korg; t=1795047123;
+	bh=3Gcs1Vs6JPompTmvN/U7m/TWpbZI9koqsL68IqwP3bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JtHNCtqmuOP7QmgcI5OpuwF1sBMFiCqexfxndN9UIpbDkCsevRRUFKh2OmP5JkUQS
-	 X5Y5TrTkTtquDplW+GDGaPBZ7QwECm+7lX7cNxWgjKEpRhTty1iS6NkFX+1NuWNIMi
-	 H5b6xKNXrMDSk+tjMorTJFtrJ1fUIpv1BJfX2+zY=
+	b=nPNYgD1fzCa4CVLnRRlmay/ULPY20QSzn8PssmYJ2UUvH8/cby2NYrVE24qfMAN7C
+	 dtE6zl/sUyqSH4x4HUZT/HQnTlM9n268DAQ9+z+yV33KMVmGsP5e7XKZqb5Ah5yk96
+	 EsHKBQ3EAn8IjLXH+XOTCKozXbyxvK6b7Dt6HeYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-	Takashi Iwai <tiwai@suse.de>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1508/2857] ALSA: emu10k1: prune vestiges of SNDRV_SFNT_SAMPLE_{BIDIR,REVERSE}_LOOP support
-Date: Wed, 18 Nov 2026 15:42:22 +0100
-Message-ID: <20261118150255.631996480@linuxfoundation.org>
+Subject: [PATCH 6.1 1526/2857] media: qcom: camss: Propagate vfe_reset error up the callstack
+Date: Wed, 18 Nov 2026 15:42:40 +0100
+Message-ID: <20261118150256.267248787@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,153 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-[ Upstream commit 1edeac6555e9df008b1729ca445868c1177baa8b ]
+[ Upstream commit 5c07f30bed52ed85673b634f77467e404645785d ]
 
-This is required only to implement WAVE_BIDIR_LOOP and WAVE_LOOP_BACK in
-the GUS patch loader. It has not worked on emu10k1 since before ALSA hit
-mainline, yet nobody appears to have complained. And as it isn't super
-easy to implement, just admit defeat and clean up the code.
+A previous patch I had removed the returns from vfe_disable() since we
+didn't trap any meaningful errors. Konrad pointed out vfe_reset() could
+return an error, which is true.
 
-If somebody wanted to resurrect the feature, the emu8k driver could
-serve as a template, but the code would be quite different. But
-arguably, this should be done in user space in the first place, as this
-doesn't represent a hardware feature (somewhat ironically, the actual
-GUS driver has no synth support, and therefore no GUS patch loader).
+Trap the vfe_reset() error code and throw it up the callstack.
 
-Note that instead of properly rejecting affected samples, we continue to
-just pretend that the feature wasn't requested. This is extremely
-questionable behavior, but avoids that possibly unused instruments
-suddenly prevent loading the entire file, which would break backwards
-compatibility. But at least we log a warning now.
-
-Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Message-ID: <20240406064830.1029573-6-oswald.buddenhagen@gmx.de>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 8a5d87c2ba30 ("ALSA: emux: Stop voices before freeing zones in all cases")
+Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: e5d4b0e69a40 ("media: qcom: camss: vfe: Fix VFE reset while another line is streaming")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/emu10k1/emu10k1_patch.c | 73 ++++---------------------------
- 1 file changed, 8 insertions(+), 65 deletions(-)
+ drivers/media/platform/qcom/camss/camss-vfe.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/emu10k1/emu10k1_patch.c b/sound/pci/emu10k1/emu10k1_patch.c
-index 89890f24509f0..49214c2268084 100644
---- a/sound/pci/emu10k1/emu10k1_patch.c
-+++ b/sound/pci/emu10k1/emu10k1_patch.c
-@@ -28,8 +28,6 @@ snd_emu10k1_sample_new(struct snd_emux *rec, struct snd_sf_sample *sp,
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index 3597788cc02fd..e333e4463433b 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -432,8 +432,11 @@ static int vfe_disable_output(struct vfe_line *line)
+ int vfe_disable(struct vfe_line *line)
  {
- 	int offset;
- 	int truesize, size, blocksize;
--	__maybe_unused int loopsize;
--	int loopend, sampleend;
- 	unsigned int start_addr;
- 	struct snd_emu10k1 *emu;
+ 	struct vfe_device *vfe = to_vfe(line);
++	int ret;
  
-@@ -43,32 +41,24 @@ snd_emu10k1_sample_new(struct snd_emux *rec, struct snd_sf_sample *sp,
- 		return 0;
- 	}
+-	vfe_disable_output(line);
++	ret = vfe_disable_output(line);
++	if (ret)
++		goto error;
  
-+	if (sp->v.mode_flags & (SNDRV_SFNT_SAMPLE_BIDIR_LOOP | SNDRV_SFNT_SAMPLE_REVERSE_LOOP)) {
-+		/* should instead return -ENOTSUPP; but compatibility */
-+		printk(KERN_WARNING "Emu10k1 wavetable patch %d with unsupported loop feature\n",
-+		       sp->v.sample);
-+	}
-+
- 	/* recalculate address offset */
- 	sp->v.end -= sp->v.start;
- 	sp->v.loopstart -= sp->v.start;
- 	sp->v.loopend -= sp->v.start;
- 	sp->v.start = 0;
+ 	vfe_put_output(line);
  
--	/* some samples have invalid data.  the addresses are corrected in voice info */
--	sampleend = sp->v.end;
--	if (sampleend > sp->v.size)
--		sampleend = sp->v.size;
--	loopend = sp->v.loopend;
--	if (loopend > sampleend)
--		loopend = sampleend;
--
- 	/* be sure loop points start < end */
- 	if (sp->v.loopstart >= sp->v.loopend)
- 		swap(sp->v.loopstart, sp->v.loopend);
+@@ -443,7 +446,8 @@ int vfe_disable(struct vfe_line *line)
  
- 	/* compute true data size to be loaded */
- 	truesize = sp->v.size + BLANK_HEAD_SIZE;
--	loopsize = 0;
--#if 0 /* not supported */
--	if (sp->v.mode_flags & (SNDRV_SFNT_SAMPLE_BIDIR_LOOP|SNDRV_SFNT_SAMPLE_REVERSE_LOOP))
--		loopsize = sp->v.loopend - sp->v.loopstart;
--	truesize += loopsize;
--#endif
- 	if (sp->v.mode_flags & SNDRV_SFNT_SAMPLE_NO_BLANK)
- 		truesize += BLANK_LOOP_SIZE;
+ 	mutex_unlock(&vfe->stream_lock);
  
-@@ -96,8 +86,8 @@ snd_emu10k1_sample_new(struct snd_emux *rec, struct snd_sf_sample *sp,
- 	snd_emu10k1_synth_bzero(emu, sp->block, offset, size);
- 	offset += size;
+-	return 0;
++error:
++	return ret;
+ }
  
--	/* copy start->loopend */
--	size = loopend;
-+	/* copy provided samples */
-+	size = sp->v.size;
- 	if (! (sp->v.mode_flags & SNDRV_SFNT_SAMPLE_8BITS))
- 		size *= 2;
- 	if (offset + size > blocksize)
-@@ -108,53 +98,6 @@ snd_emu10k1_sample_new(struct snd_emux *rec, struct snd_sf_sample *sp,
- 		return -EFAULT;
- 	}
- 	offset += size;
--	data += size;
--
--#if 0 /* not supported yet */
--	/* handle reverse (or bidirectional) loop */
--	if (sp->v.mode_flags & (SNDRV_SFNT_SAMPLE_BIDIR_LOOP|SNDRV_SFNT_SAMPLE_REVERSE_LOOP)) {
--		/* copy loop in reverse */
--		if (! (sp->v.mode_flags & SNDRV_SFNT_SAMPLE_8BITS)) {
--			int woffset;
--			unsigned short *wblock = (unsigned short*)block;
--			woffset = offset / 2;
--			if (offset + loopsize * 2 > blocksize)
--				return -EINVAL;
--			for (i = 0; i < loopsize; i++)
--				wblock[woffset + i] = wblock[woffset - i -1];
--			offset += loopsize * 2;
--		} else {
--			if (offset + loopsize > blocksize)
--				return -EINVAL;
--			for (i = 0; i < loopsize; i++)
--				block[offset + i] = block[offset - i -1];
--			offset += loopsize;
--		}
--
--		/* modify loop pointers */
--		if (sp->v.mode_flags & SNDRV_SFNT_SAMPLE_BIDIR_LOOP) {
--			sp->v.loopend += loopsize;
--		} else {
--			sp->v.loopstart += loopsize;
--			sp->v.loopend += loopsize;
--		}
--		/* add sample pointer */
--		sp->v.end += loopsize;
--	}
--#endif
--
--	/* loopend -> sample end */
--	size = sp->v.size - loopend;
--	if (size < 0)
--		return -EINVAL;
--	if (! (sp->v.mode_flags & SNDRV_SFNT_SAMPLE_8BITS))
--		size *= 2;
--	if (snd_emu10k1_synth_copy_from_user(emu, sp->block, offset, data, size)) {
--		snd_emu10k1_synth_free(emu, sp->block);
--		sp->block = NULL;
--		return -EFAULT;
--	}
--	offset += size;
- 
- 	/* clear rest of samples (if any) */
- 	if (offset < blocksize)
+ /**
 -- 
 2.53.0
 
