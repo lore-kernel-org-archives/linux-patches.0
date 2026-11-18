@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060172;
-	b=rf1YuB9g7Kj0FM/M44ZQLm9OGKgL33uSotoRaoIv/aac0mZx5DfusHphGYwTKMqTxvCR
-	 V8deN/TmYpcNbM2nIDKanw1xxKbL/agMWH++BCr6XCkYb2hi51+PwP/w/KV4Ss8wSK861
-	 k+ZNfgy2CBw6MEyAySLFMip0c/O/SMl4yEXaWXCHbXIOpoGcJ7UUZWb/2UxuqcZa7eK6p
-	 4Zrq3SJRMLqHOG7flFLRxT9DipNhT6O5Fz8sKeIdrRw3Orcid6/G+AtEb8+8ML9z+SgEo
-	 HRsiMeNzXKQWaEpzYp0ou+k9CtHeuNOcjHXgI84Omu3bCwzeERM2meOyXfEbiNgPuIg==
+	t=1795060175;
+	b=P0cR6YS1ZzaksrJ/GcAUiRp2gkHNxFTW1qEI9UGDoya+vXUwRSTWe2K8mHi9lVXGVANI
+	 Q+m38+mfHefRI+nLghr8GBMN3Q0tPqdd9GxRoP7IAcXIBKUawenck0GiBqvRHrase7UXe
+	 p6rkjRtOyCvv5sgcBmtnMJmFfm+ZLiyyFbfJplnMH8Vp2AmUv9VsHdPODsJelJ1920DHt
+	 wPeoJ3633u0o57C9Dylxve4r5pJwX0dlDPdOxlBkzUzIvPfETk1gOCbGkRuUhSiQDCZKf
+	 O116ocZohEjFnUHyM3ZdEuVS/F6/rlIQDt/K0Txi5BykCK2X2bY+dN5ITIsNdvCHZkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060172;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060175;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GIQfqmeUyFy3at/Ro60P8EbkoV3kl73iXS2rUMZVaf8=;
-	b=bw++xoWuMAYPeWICYJZmxlmO84FHeDIdQBmSQd2uZwRZFX9tumXDn1wovs/rjZuNz0f2
-	 KQpBTCG0VekBoXZGPGNs5jrMpPbdEWgqmtFbrYXj57KhldC9ThYkv62g5lDG35hog1nAb
-	 hVUwHAuUWQk4a7sQh/efEzsD16mEGsYXwyj2TsifVyaFrRF7/l3vleKOCaPdObSHMJhTm
-	 sYFVDTszehFTFfLRJ2YJtxxKcl5H6UlFPZO5nqTDfiYXAXWos3f5OAFnkDD/irRwt1OQT
-	 T2Cr7JSMKHs3i1CanUIlZPFaJQNiXwXCKAKnizmQNZhfYKJDahx2ZuGHrBHCK1G3JwA==
+	bh=t7rp6ntX1NNLPjw0xuKA8gBEZDPCPouQO1oab5bMspA=;
+	b=MIwg1GLshdCazBAfjPhsgdrH1Hf0BA7BLg82K62iSIJlrq82/qzGP34hmrjFXoXlyOxG
+	 2iDaSeVrEtmyWMEbCpcX+Ebw7QINJa/C5tlKv3EuCiCR2aiY4qydWzSmesmxmbNOJno/3
+	 ZMh6isXUDwllH+dqHPD2H5RdGbtTOGt7UVhfzzVFNgjFJL0919/9WnQsCAkfhE0bRTtMV
+	 wtyiY27uyEuaSvJDfIix/vKxb9Rwh1YbfINgxDDH4qLsJ61JBB2KLxIJvoqAyv6mu0qWs
+	 aAuRH7vozNcuBReVbqL7pBMM1WUEqBxxMsL1ytQxtnF5QBNDtQVnth8zPcsbFwt9zVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jpyXgMui;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iDlGSR/C";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACAEE606A320;
-	Thu, 19 Nov 2026 03:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3C5606A320;
+	Thu, 19 Nov 2026 03:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jpyXgMui
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 143631F000C4;
-	Thu, 19 Nov 2026 03:49:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iDlGSR/C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E831F000C5;
+	Thu, 19 Nov 2026 03:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060172;
-	bh=GIQfqmeUyFy3at/Ro60P8EbkoV3kl73iXS2rUMZVaf8=;
+	s=korg; t=1795060175;
+	bh=t7rp6ntX1NNLPjw0xuKA8gBEZDPCPouQO1oab5bMspA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jpyXgMuiWsu/LqfXBwMf7BNeMG7z3fRomBKPmLgIzH/GgF+XgOU+i6jzQb1IOE+Cz
-	 I5EUdkM22whY4z23lL3LradbVi+kG7GnH/vXfCEw8M8G9wMk8c4tRlerBElBWY6BFN
-	 Kx6n6LjTO/TN0l+bW3n7NURqsKN0IKvXOGvb7oGc=
+	b=iDlGSR/Ca+s2q/k+Ke5Ll70lNjuPTI3rv62IGCzVq0GLV1mAD1l4Vc18+VZRN1BCw
+	 4jSRPRpzQqluyijKAi96Ctou4uSvaOEKXVDrYdHRRl4tNWyJC6Yywbn58FmS6Rk1+v
+	 eFHGuVwpfqR+ZSGPWNUyehTBRKvyEvZ/gcbZeDTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Rik van Riel <riel@surriel.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
+	Daejun Park <daejun7.park@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1102/1848] mm/filemap: dont lose a folio lock wakeup to a signal
-Date: Wed, 18 Nov 2026 15:52:20 +0100
-Message-ID: <20261118150005.290580318@linuxfoundation.org>
+Subject: [PATCH 5.10 1103/1848] xfs: mark the inode preallocated for pNFS write layouts past EOF
+Date: Wed, 18 Nov 2026 15:52:21 +0100
+Message-ID: <20261118150005.451277407@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,71 +71,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit 8ccb6ded6a47b59b4907ed4f8c293cf8122de889 ]
+[ Upstream commit 8b8e265991556d99b6d721697f148975a7c68767 ]
 
-An exclusive waiter in folio_wait_bit_common() can leave the wait loop
-because of a fatal signal, then be woken by folio_unlock() before
-finish_wait(). If the waker did not hand over the lock, the waiter returns
--EINTR without trying to acquire it.
+xfs_fs_map_blocks() marks the inode XFS_DIFLAG_PREALLOC only when it
+allocates blocks for a write layout. A write layout past EOF can also
+hand out allocated blocks, such as speculative preallocation. blockgc
+then frees them under the layout, and another file may get them.
 
-folio_wake_bit() stops after waking the first exclusive waiter, so this
-loses the wakeup and can leave other waiters asleep indefinitely on an
-unlocked folio.
+Mark the inode whenever a write mapping ends past EOF.
 
-After finish_wait(), let a waiter woken without a lock handoff try once
-more to acquire the lock. If successful, return success so the caller's
-eventual unlock wakes the next waiter. Otherwise, the current lock owner
-will do so.
-
-Fix generated by an LLM and sent by Josef Bacik in private.
-
-Fixes: 5ef64cc8987a ("mm: allow a controlled amount of unfairness in the page lock")
+Fixes: 527851124d10 ("xfs: implement pNFS export operations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-[ david: clarify and simplify comment + description ]
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Acked-by: Pedro Falcato <pfalcato@suse.de>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-7-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Replaced folio_flags(folio, 0) with &page->flags to match the existing page-based wait function. ]
+Reported-by: Chuck Lever <cel@kernel.org>
+Link: https://lore.kernel.org/r/4de5356f-bc4d-4f1a-9c81-fce09b1b46fd@slotpi15m67
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Pankaj Raghav <p.raghav@samsung.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ sashal: replaced xfs_fs_map_update_inode() with the existing xfs_update_prealloc_flags() helper ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/filemap.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ fs/xfs/xfs_pnfs.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/mm/filemap.c b/mm/filemap.c
-index f8a28274828f3..5fed26cf2020e 100644
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -1328,10 +1328,22 @@ static inline int wait_on_page_bit_common(wait_queue_head_t *q,
- 	 * return value based on that state without races.
- 	 *
- 	 * Also note that WQ_FLAG_WOKEN is sufficient for a non-exclusive
--	 * waiter, but an exclusive one requires WQ_FLAG_DONE.
-+	 * waiter, but an exclusive one must also acquire the bit.
- 	 */
--	if (behavior == EXCLUSIVE)
--		return wait->flags & WQ_FLAG_DONE ? 0 : -EINTR;
-+	if (behavior == EXCLUSIVE) {
-+		if (wait->flags & WQ_FLAG_DONE)
-+			return 0;
-+		/*
-+		 * We might have just been woken up and the waker will not
-+		 * wake up anybody else. If we ignore that now, the remaining
-+		 * waiters may not get woken up: take the bit now if it is
-+		 * still free.
-+		 */
-+		if ((wait->flags & WQ_FLAG_WOKEN) &&
-+		    !test_and_set_bit(bit_nr, &page->flags))
-+			return 0;
-+		return -EINTR;
-+	}
+diff --git a/fs/xfs/xfs_pnfs.c b/fs/xfs/xfs_pnfs.c
+index e02a6b84c609c..931080dc64d3c 100644
+--- a/fs/xfs/xfs_pnfs.c
++++ b/fs/xfs/xfs_pnfs.c
+@@ -91,6 +91,7 @@ xfs_fs_map_blocks(
+ 	int			nimaps = 1;
+ 	uint			lock_flags;
+ 	int			error = 0;
++	bool			update_inode = false;
  
- 	return wait->flags & WQ_FLAG_WOKEN ? 0 : -EINTR;
- }
+ 	if (XFS_FORCED_SHUTDOWN(mp))
+ 		return -EIO;
+@@ -157,7 +158,24 @@ xfs_fs_map_blocks(
+ 				end_fsb - offset_fsb, &imap);
+ 		if (error)
+ 			goto out_unlock;
++		update_inode = true;
++	} else {
++		xfs_iunlock(ip, lock_flags);
+ 
++		/*
++		 * Blocks past EOF that were allocated for buffered writes, such
++		 * as speculative preallocation, can be freed by
++		 * xfs_free_eofblocks() without breaking the layout unless the
++		 * inode is marked as preallocated. Mark it before handing them
++		 * out for writing, as for blocks allocated above.
++		 */
++		if (!error && write && !(ip->i_d.di_flags & XFS_DIFLAG_PREALLOC) &&
++		    imap.br_startoff + imap.br_blockcount >
++		    XFS_B_TO_FSB(mp, XFS_ISIZE(ip)))
++			update_inode = true;
++	}
++
++	if (update_inode) {
+ 		/*
+ 		 * Ensure the next transaction is committed synchronously so
+ 		 * that the blocks allocated and handed out to the client are
+@@ -168,9 +186,6 @@ xfs_fs_map_blocks(
+ 			error = xfs_log_force_inode(ip);
+ 		if (error)
+ 			goto out_unlock;
+-
+-	} else {
+-		xfs_iunlock(ip, lock_flags);
+ 	}
+ 	xfs_iunlock(ip, XFS_IOLOCK_EXCL);
+ 
 -- 
 2.53.0
 
