@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061421;
-	b=BMGn/OqRqIX4xPw+4ShkdiivUwmW/FRKVI3dioDnW1yXs+9ImYDXyG8WXPEzgLsVjshZ
-	 btT56U8b/aXMhkBdmcZI6vkTC3WVLMZWJKyrT2TJthTSat0x9yYSSQdQJ4+7/QHMpjSsr
-	 D1PdlpdrVumOq5LOHQBEI9qxatYj5kpOLF6+0iNdMVBrN7S/Q5vPbD3O+9v3Jn1lRjMZr
-	 BkrmM2b3tchr4MXSStp7EQKJQA1mxbB+xkEMzkyZfJN0WwutPLkE8ikPmmlVGnPi/nOx+
-	 v/pEdsxMprcMyTGWiusHsPq5dH/8PDsBnywgTEXFYXd8uZWG4fVxsgzCsgmPN85aYNg==
+	t=1795061424;
+	b=U3P6bngy6XrhjiNos6HWtbco/2zWGnye2gpI5DJHyFQW7KZJ/x9lFGDJA+yYQ0Zp0I/n
+	 k23w/5T5qD4ZNQoEIUjXPhqVvynWCregj4F6Pa7Yi+zkfce9VP2O7IkZ+p8Jvt5P/i0eY
+	 HAq5KWZ9wFpnYSxfLZU+Mr5qrTPHyuJ1g7sJlJbHUFYmtQ/0KqzaGi1o+VYKuo1neJOW8
+	 9OM9Yc3DLdY2gSH7jgs+SsljXKPr06J6Tn88xYiD6aeWYZysqzLiCzFoE6IbZpb3LliBd
+	 rg/NgHRkgSjTR9IjpvhyDV8VWFfJUQ8NUAMr4UK5wsJT2paBKkLiJ5tAd9JP+b2F2bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061421;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061424;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xqOvGWpaGgQ9mfiHPdQKazDW2i2khQNnNIUo9U6ny+Y=;
-	b=wvmJHVLkOqz2c/03QEB1yseCt4gRklNa9R24X0sJRkEXHWeFybddueIvdx9ttH+TmVlz
-	 U+F6B8gs7PZxwO2zKV0vyQskAj+894nmlfegRT679nAJPvHzHWVCNGKqlD4O3FzgCXkcp
-	 imn1GNCW+zCVESzwKL3jiacPvGorDbqIG/pMVJUQi/3cSGeYdNtqnyC5BubahW8FWxMmb
-	 0rIUxfNhdDSI9hi3XSJuAhInlv+0mh3mBSJZxT/9QqnpsuLs81eJsdYqY7ZQOy+ZbBx4j
-	 C4RGuE2CNfTt41xjH8CRrmtqG+VBtwZvvsivxXqHCLo1ZtcKooghVEOwCV73ujnFjaw==
+	bh=Ppt/On6bAU00VlHvU4TcCCf5N3zALCQYT/YTCatxjJI=;
+	b=Ads5wIRKuYYljEpfO+3cMbhWLnFpIHS/+CXOnT++uVXrmjLDAnSlovfL5pkDq91Bz+0f
+	 DM6V7sBWiykfxoQKBgMqlK5Ls13Cwsj1via8Pm9H1Ojj/sQnxSirMcEs/Z5d1p1yLOdUi
+	 7PU/PYDyrR6Qd+0Zzhak6YpXQ7Svlq6d/ZWy9OSOIK6IaLaivkZwdd7AnZVCmVihjl9Mv
+	 6NlW7tSDxgqLL8woRLh1lzsEzK3cF8n+iI8L42+ffXFNMlCg4H2qfiEm5j7uepia7LK2B
+	 d+3Ew8MMyeYU49YBYVI0eq/gmPhzVV+GlZl9b1wQqPSECAMJ97oLiS+lXb4XrSJ1ZLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cz0YDsID;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PuKlCqk0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A5B606A320;
-	Thu, 19 Nov 2026 04:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02483606A320;
+	Thu, 19 Nov 2026 04:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cz0YDsID
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8AE1F000C5;
-	Thu, 19 Nov 2026 04:10:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PuKlCqk0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15BE71F000C4;
+	Thu, 19 Nov 2026 04:10:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061420;
-	bh=xqOvGWpaGgQ9mfiHPdQKazDW2i2khQNnNIUo9U6ny+Y=;
+	s=korg; t=1795061423;
+	bh=Ppt/On6bAU00VlHvU4TcCCf5N3zALCQYT/YTCatxjJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cz0YDsIDC8aRHnOGbG9Uav6Ov0jg4L1DM/zMIYc13gQQdOlsxJxOd0j9MlQpp6loc
-	 2l0h+f/WYcJJFRYpH46gmQUjIi5L7IuGDcQ8n2i/+lM0bZdx7rTbK8wC5hisLGpX0Z
-	 6Zlj0Jh5BS84v+FeSbQZNXCLmBQkJALiu4aLwgxo=
+	b=PuKlCqk0WyjPpFoC8v64ryc+g4JnBcCfWSV6lx4pPjzirHBQKpbXn7ZOBwisq53NT
+	 sC3n6V4zATR3vNghxfhmG11o76dgvILQx0Z3c4+GODBPGmyFzexjWJ+BCU39KuSTdY
+	 GU7AssERb01y6QPGEjOmyPgfbdSuyY9HzEzsuE48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jake Labelle <southampton.jake.labelle@gmail.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Florian Fuchs <fuchsfl@gmail.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1545/1848] nilfs2: reject non-regular inodes in dsync recovery
-Date: Wed, 18 Nov 2026 15:59:43 +0100
-Message-ID: <20261118150024.259757690@linuxfoundation.org>
+Subject: [PATCH 5.10 1510/1848] sh: uaccess: Require offsettable operands for 64-bit user access
+Date: Wed, 18 Nov 2026 15:59:08 +0100
+Message-ID: <20261118150022.526735095@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,63 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jake Labelle <southampton.jake.labelle@gmail.com>
+From: Florian Fuchs <fuchsfl@gmail.com>
 
-[ Upstream commit ef2ccb1554df254eb4066171ce93e6d5fb1af2e3 ]
+[ Upstream commit 8b5dba9ea4a3f5ed994f03d6ca7686c49491b426 ]
 
-During roll-forward recovery, nilfs_recover_dsync_blocks() obtains the
-inode designated by fi_ino of a dsync log without checking its type.
-If a corrupted image designates a special inode (e.g. a device node)
-there, the inode's embedded bmap was never initialized:
-__nilfs_read_inode() calls nilfs_bmap_read() only for regular files,
-directories and symlinks.  The subsequent nilfs_get_block() then
-dereferences the uninitialized bmap->b_ops and jumps through it,
-crashing the kernel or worse.
+The 64-bit __get_user_u64()/__put_user_u64() paths address the memory
+operand as %T2 (base+4). This base+4 requires an offsettable address,
+but "m" also allows the indexed mode @(R0,Rn) (e.g. for a variable-
+indexed array element), which has no displacement field for the +4.
+Depending on optimization this build fails with "invalid 'asm'" or an
+ICE in GCC's change_address_1.
 
-Regular files, directories, and symlinks are the only inode types
-with data blocks to recover; reject anything else before touching
-its block mapping.
+Require an offsettable memory operand, allowing GCC to reload an
+unsuitable indexed address into an appropriate form.
 
-[ryusuke: conformed AI tag to guidelines]
-
-Fixes: 0f3e1c7f23f8 ("nilfs2: recovery functions")
-Assisted-by: Claude:claude-mythos-5
-Signed-off-by: Jake Labelle <southampton.jake.labelle@gmail.com>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: 2d2b308a8b7d ("sh: Implement __get_user_u64() required for 64-bit get_user()")
+Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/recovery.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ arch/sh/include/asm/uaccess_32.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nilfs2/recovery.c b/fs/nilfs2/recovery.c
-index bf64a9eff4d15..273052298da46 100644
---- a/fs/nilfs2/recovery.c
-+++ b/fs/nilfs2/recovery.c
-@@ -510,6 +510,23 @@ static int nilfs_recover_dsync_blocks(struct the_nilfs *nilfs,
- 			goto failed_inode;
- 		}
+diff --git a/arch/sh/include/asm/uaccess_32.h b/arch/sh/include/asm/uaccess_32.h
+index 5d7ddc092afd7..cef40414bfb13 100644
+--- a/arch/sh/include/asm/uaccess_32.h
++++ b/arch/sh/include/asm/uaccess_32.h
+@@ -92,7 +92,7 @@ __asm__ __volatile__( \
+ 	".long	1b + 2, 3b\n\t" \
+ 	".previous" \
+ 	:"=&r" (err), "=&r" (x) \
+-	:"m" (__m(addr)), "i" (-EFAULT), "0" (err)); })
++	:"o" (__m(addr)), "i" (-EFAULT), "0" (err)); })
+ #else
+ #define __get_user_u64(x, addr, err) \
+ ({ \
+@@ -116,7 +116,7 @@ __asm__ __volatile__( \
+ 	".long	1b + 2, 3b\n\t" \
+ 	".previous" \
+ 	:"=&r" (err), "=&r" (x) \
+-	:"m" (__m(addr)), "i" (-EFAULT), "0" (err)); })
++	:"o" (__m(addr)), "i" (-EFAULT), "0" (err)); })
+ #endif
  
-+		/*
-+		 * Regular files, directories, and symlinks are the only
-+		 * inode types with data blocks and an initialized bmap;
-+		 * a crafted image can reference some other inode type
-+		 * here, whose i_bmap_data was never set up by
-+		 * __nilfs_read_inode().
-+		 */
-+		if (!likely(S_ISREG(inode->i_mode) || S_ISDIR(inode->i_mode) ||
-+			    S_ISLNK(inode->i_mode))) {
-+			nilfs_warn(sb,
-+				   "%s: invalid inode type (ino=%lu, mode=0%o)",
-+				   __func__, (unsigned long)rb->ino,
-+				   inode->i_mode);
-+			err = -EINVAL;
-+			goto failed_inode;
-+		}
-+
- 		pos = rb->blkoff << inode->i_blkbits;
- 		err = block_write_begin(inode->i_mapping, pos, blocksize,
- 					0, &page, nilfs_get_block);
+ #define __put_user_size(x,ptr,size,retval)		\
+@@ -196,7 +196,7 @@ __asm__ __volatile__( \
+ 	".long	1b, 3b\n\t" \
+ 	".previous" \
+ 	: "=r" (retval) \
+-	: "r" (val), "m" (__m(addr)), "i" (-EFAULT), "0" (retval) \
++	: "r" (val), "o" (__m(addr)), "i" (-EFAULT), "0" (retval) \
+         : "memory"); })
+ #else
+ #define __put_user_u64(val,addr,retval) \
+@@ -218,7 +218,7 @@ __asm__ __volatile__( \
+ 	".long	1b, 3b\n\t" \
+ 	".previous" \
+ 	: "=r" (retval) \
+-	: "r" (val), "m" (__m(addr)), "i" (-EFAULT), "0" (retval) \
++	: "r" (val), "o" (__m(addr)), "i" (-EFAULT), "0" (retval) \
+         : "memory"); })
+ #endif
+ 
 -- 
 2.53.0
 
