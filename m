@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016817;
-	b=ZHHvQ3QzwZz9n+T+iVZCAMKIrDZXuTrqn1dsn3YvGfoTKD4dIuWn9QAkLcfpD/L68+7l
-	 69LJH/cUdDCgcuiZMYNBzS5UV8qg7kQOj4kzPD+nX8t4toK7XroongaKlMRYuErPsLWTE
-	 31eF0B1wauIZJ9f+Afe1P7mC5eAMTD84kQdtLZ3WhpxUSKMaxBrl/8WW+rdhP5W25SqU2
-	 bB1y/wZzQZni+kfzGdUvluHb/MyHmMt4X/n6jT8QPhDJaIttLvr59TSu4CyfEKuPbCX8n
-	 8Rs52VoMVT1+HqdKE+ZoVmAR+9EetSsst2PBzUxjiNjsT17XpsOlxczJjI3bxZokJWg==
+	t=1795016820;
+	b=z8MsiBmsoLZ3ZXx1KezlmJRgEj6PFh3po7dIBGBE8eEgsrrHXNhDuzG4VQ+8uiC0IobM
+	 3rUvzJnkA4JigJ3HbgEGQNnSiBv/99Rsy7mqO7IVt3LvSFqHjU3mmUcTwurJUuGyNVBMb
+	 ZRhVCXLo/X1HWLpvQkKjQgELCOcWvjXy2076RBI9pT8TsET50da1PLNudzWJnOXi8Zmmi
+	 LU5hRlyCxq4AywEPU8dncz+BnonynhsyhclIVZ16P5XqAiVjpn8C0L9qkW3Wgr0N7AuRh
+	 RlHcCCQ3sXVFVpTSTocl6mwqg1vVWnokuudaE+lTJII9wq9BIrrCUSAQBfumClXX3iA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016817;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016820;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4S1gpFgQ+jgUJgF+uQeLw4AN8A623hiirqrYQupjQsM=;
-	b=4ZfaOaGAGNCTNAk6l4f9irlVO4sJUqrwBzJo0AvaP0o5L41lc9yvQhi2XiqGc7Qzoqc4
-	 t+9qjsu+HDU8wacQCvNTVBwkW4ArDrQYk5Yy6XZWFyA2Fs4s/mBN8Pp75zW8TqE+/fRNB
-	 CFpP9LALcz30gj3zpd3OjWQa1ST5lHz78JudyaPFC9qQMRPPwHH00C81hemKb9tG8+R0L
-	 4gQYoggxTeMzUAbaXPEnEsVcHdkiw9M8F7cOjtkwDtAoaj6q4BIPC2GJkBgGcS7ORTewC
-	 a+QrPs9SuUgeIt7MlStFdpmx+0ojbukoXqJ52rA68VzE70vS8plZH8abdDTqX9iUHXA==
+	bh=606m3cbCxziK6WfiLS0Mk9dUo0+28R81y+/dD3sshbg=;
+	b=38mqHVWzzx8dxcB2KZbXwR0S66k0xgnp9uFfLVgbnBDIciw2vhP+lYL7pSSSYpzBXU4M
+	 0PmIygRBQlkVKY5Bxa4l800cjhFobUkAafMIXFlZmSc1qNJfRiaRGhNrs7iFvGiVBAndP
+	 ePvYwdp4s7+W31ICO6cliOJs0NCs4JRLsjAmM8esVlGz7HPOSTOz53vjH+3fqj3HYoILq
+	 tHyp9wD+jTLVa2gtnWhIe2sXO7MKY5uLrAAB9qxQkCcEOCw6E8yUp5jq6Iz4FhFBrtexr
+	 fYl76RQA1n1LPEshTjxEUem7edULiotMGphc9Qyud3BaQqzCM1GqO0wM+MGkA4r1jFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=buldjQNg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TFg6p6ZT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673CD606A32A;
-	Wed, 18 Nov 2026 15:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2894A606A320;
+	Wed, 18 Nov 2026 15:47:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=buldjQNg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97F41F000C4;
-	Wed, 18 Nov 2026 15:46:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TFg6p6ZT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D5771F000CA;
+	Wed, 18 Nov 2026 15:46:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016817;
-	bh=4S1gpFgQ+jgUJgF+uQeLw4AN8A623hiirqrYQupjQsM=;
+	s=korg; t=1795016820;
+	bh=606m3cbCxziK6WfiLS0Mk9dUo0+28R81y+/dD3sshbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=buldjQNgrnnT+7kSmKM40ySG7F+aI9oWzyboJEEoZgeFNYLKg1mEV3H5tv/olhGI/
-	 ZeyulDI9GOFaDh/CuxGKDKi4a9mZ+QOaSaE9mp4GioLHvcewg1yVYNO4simCTz3VNQ
-	 C+aqcYfoV/QhufkYMtrRommzc9bLrPzWFyDDBiXI=
+	b=TFg6p6ZTJ0WeO2PFnPTrNh3SjaDF763K1qSkdLfGjWzspDXV8SLL0+fKW9ce2Aodx
+	 dC0oqVmjf/SJM8EJF8VGsol+kNBZGrU5Z3nQiYfMYopEtgcrP7/OnSv6mhk/z+JQjP
+	 0Ovlt+DeSNpojjhxkkw+yparFSjJ/APFwVZKUNlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Moteen Shah <m-shah@ti.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
 	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0664/2651] arm64: dts: ti: k3-am62l-evm: Remove unnecessary internal pullups for MMC0
-Date: Wed, 18 Nov 2026 15:31:44 +0100
-Message-ID: <20261118150311.782613663@linuxfoundation.org>
+Subject: [PATCH 7.3 0665/2651] arm64: dts: ti: k3-am69-aquila: fix AQUILA_B73 gpio-line-names typo
+Date: Wed, 18 Nov 2026 15:31:45 +0100
+Message-ID: <20261118150311.817992637@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,45 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit dfba8329b8ebd49807ed1c1b336992e5791c7e48 ]
+[ Upstream commit 558c01ff1d9dc1961e0e0a91e5d4bc07eb081d56 ]
 
-AM62L EVM has external pullups on MMC0 CMD and D0 pins [0]. Remove
-internal pullups considering:
-- Internal pullups are not required, without internal pullups, RDAT and
-  RCMD values of 47K are within spec
-- having both pullups (stronger pull) results in unnecessary power
-  consumption
+wkup_gpio0's gpio-line-names has "AQUILC_B73" instead of "AQUILA_B73",
+inconsistent with every other entry in the array.
 
-[0] https://www.ti.com/lit/zip/SPRCAL6
-
-Fixes: 00fb4c73b67d ("arm64: dts: ti: k3-am62l: add initial reference board file")
-Signed-off-by: Judith Mendez <jm@ti.com>
-Reviewed-by: Moteen Shah <m-shah@ti.com>
-Link: https://patch.msgid.link/20260909214743.899477-3-jm@ti.com
+Fixes: 39ac6623b1d8 ("arm64: dts: ti: Add Aquila AM69 Support")
+Assisted-by: LLM
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://patch.msgid.link/20260914183516.28865-1-francesco@dolcini.it
 Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62l3-evm.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am69-aquila.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62l3-evm.dts b/arch/arm64/boot/dts/ti/k3-am62l3-evm.dts
-index 84a0cfaaf196a..964387eb51788 100644
---- a/arch/arm64/boot/dts/ti/k3-am62l3-evm.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am62l3-evm.dts
-@@ -253,9 +253,9 @@ AM62LX_IOPAD(0x01e0, PIN_INPUT_PULLUP, 0) /* (D8) I2C2_SDA */
- 
- 	mmc0_pins_default: mmc0-default-pins {
- 		pinctrl-single,pins = <
--			AM62LX_IOPAD(0x0214, PIN_INPUT_PULLUP, 0) /* (D2) MMC0_CMD */
-+			AM62LX_IOPAD(0x0214, PIN_INPUT, 0) /* (D2) MMC0_CMD */
- 			AM62LX_IOPAD(0x020c, PIN_OUTPUT, 0) /* (B2) MMC0_CLK */
--			AM62LX_IOPAD(0x0208, PIN_INPUT_PULLUP, 0) /* (D3) MMC0_DAT0 */
-+			AM62LX_IOPAD(0x0208, PIN_INPUT, 0) /* (D3) MMC0_DAT0 */
- 			AM62LX_IOPAD(0x0204, PIN_INPUT_PULLUP, 0) /* (D4) MMC0_DAT1 */
- 			AM62LX_IOPAD(0x0200, PIN_INPUT_PULLUP, 0) /* (C1) MMC0_DAT2 */
- 			AM62LX_IOPAD(0x01fc, PIN_INPUT_PULLUP, 0) /* (C2) MMC0_DAT3 */
+diff --git a/arch/arm64/boot/dts/ti/k3-am69-aquila.dtsi b/arch/arm64/boot/dts/ti/k3-am69-aquila.dtsi
+index 5119baf62a4c2..b6854acee8fec 100644
+--- a/arch/arm64/boot/dts/ti/k3-am69-aquila.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am69-aquila.dtsi
+@@ -1573,7 +1573,7 @@ &wkup_gpio0 {
+ 		"AQUILA_B70",
+ 		"AQUILA_B71",
+ 		"AQUILA_B72",
+-		"AQUILC_B73",
++		"AQUILA_B73",
+ 		"AQUILA_B66",
+ 		"AQUILA_B62",
+ 		"AQUILA_C21",
 -- 
 2.53.0
 
