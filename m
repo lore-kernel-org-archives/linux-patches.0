@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036585;
-	b=uj3ukD7DQtSu5NTsfY97HZM0HY69WCFGY1Z64mSLnrQY8biwhrX/Uk3eYCTJyEAIE8/4
-	 6LjFX9tDwBBVjhW5BwHT8ngRo+88ZAfALGBDhG6kT+dSff/cDuHRjVPNUU6YwRQDFuDp7
-	 eTvbOR2YrCiTUbdQ41wNfry9J7OFInCJo/HwTQ+fVkdJ6J3xuvzGpNsZC0eY19uDeVxuq
-	 vmsmzj1D0SZs8KH3EDmbctacwtTo0SFLXa22BO90yBVvkjNMGQF1GsOFm9b2zcle+xmhs
-	 dNAthtezHs8lKwkOkd79Y6rHxkA7JFSiv+qFRWrwdcbM3vxc6Zvju0bAOjaqBh9HJ0Q==
+	t=1795036588;
+	b=Rm4nFND4cQaJ8m3RK9YMhBzqxS4oNLQCPghw/kFgc5Sz7Ncc2gc/sms6NUU4op44JMYG
+	 v5IX6BnesXZZ2bm+iNbHyuPzrxBjCPTL5OMe3r1OdSSUqgULIsQps4Rtn6jzq8S5qb5bb
+	 RqLCAcxO5SCZN7rAafHyS0NNeH4O8vnbHHKC2ZhM8F/fxFSyRWqPT6f2e0LGAbkZRde0h
+	 34AwwWLv5uP2QGg0W4Zv1kayq3bDhc9fFIzHDrggljrGFCfdoIDr9llvkEMdjTdkNeC7I
+	 eLTZwX6OD1j6uzooZ3v88CIItPAU5u0GV0ccbUHYdGjoNvqmz3dMtRasupS1n+K78NA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036585;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036588;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rh9N54WtWk5G8YBZex7CCMB3ksekF7bnJU1EQ4dbIJ0=;
-	b=IXqJRG/QJZ+tn8eaob9nLRHrhd97H/EjOaWg3scS2ARnEXYlLCs0DT5K/lxttj3tDgmk
-	 9h0Ei9RAvJKE13Xn61a9TFEMZcxMz+eFFn5R4ofnD0Q+7DLHCQY2vDyASfXmc602R0M4d
-	 8ZRJLQOp8WFlkihvtMox5+s/NHn3jlvi59NElm4XKryysZO6w+mScBd/sPBAHlT2Ocqk6
-	 lT0lyVxgYZEqpwGjqB3pPqj00MzD40WAzdigzhihdcZReNKd5dw79KK/2qWJM2vTPsB3R
-	 TzpHeeKJmdiKxcd6+6e+K6hiP4N/TSLF9FgqiX/J9gqMAhBH17W4plzU+yVTCkUjUEg==
+	bh=0uJxjv1K4MbWWVC721JhyRgHaUBS60E0US9OURDTKos=;
+	b=xgDyvLhj+5BGb47xrisiWP0nOAfk3M0AKXnG3fOYogEK0t1wIhhRItJqR4XoF/puCX48
+	 fDGkKAhrRpTXeE2fIDS84o+MH3mOG80y/x8Srixv5e94WTj8Y+A8dfiBUmT1YpvC8zmnP
+	 REK95MQeWwpHQDpbswapZRHMmLk3wTqvp8d6WkocI/6OOly401JWGOaPX61UZlQ1KiATj
+	 ymapAJa0EZ8Rnm7bnqVwBVFLF10Ozp02Pds3Ta82Z/1ISA5jdk5N5b8d6qr0+aBCCPK3y
+	 R3dt+qZYL29/ZgCe8k8fjEuwLjKwwE70UZe1504AVVAG8z2fbIhf2cjZBXXHAhz6uiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dnmYoMjR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="WECWTY/s";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EAD606A334;
-	Wed, 18 Nov 2026 21:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0A9606A32C;
+	Wed, 18 Nov 2026 21:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dnmYoMjR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4661F000C4;
-	Wed, 18 Nov 2026 21:16:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WECWTY/s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C26D1F000C4;
+	Wed, 18 Nov 2026 21:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036585;
-	bh=rh9N54WtWk5G8YBZex7CCMB3ksekF7bnJU1EQ4dbIJ0=;
+	s=korg; t=1795036588;
+	bh=0uJxjv1K4MbWWVC721JhyRgHaUBS60E0US9OURDTKos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dnmYoMjRNkFl8YaxNgaUJzkB8vAM/AEIqvYB1ylkX4n+9Ls7CGzjXKKILtrg17uMU
-	 XhNTTInvg0HQibu89X6J4tE9D7bUvZK+bZi4IIQ48miUSyhUKbXghbjLCBvt7mk8eL
-	 pCzcqi69Cpm0NDmF9072km1VK9VSDIDtHOAa4bUc=
+	b=WECWTY/saFusRvEyW2yvnOs1HXeLblbTPBJv3NB/PjDEfSCAhFA+UZFjDM6cRcyMZ
+	 /7ML/2TuuMiuBbN/Yud9K488PCnCfmD2/rrmP6vRo5RbZGoAPRAGuMoop9v0oJ3e3B
+	 2ylCI5mW1CHzHb78Q4aSpI69r8EQNRHJ1+syYe5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Menninger <tmenninger@everpuredata.com>,
-	Chuck Lever <cel@kernel.org>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Seongjun Hong <hsj0512@snu.ac.kr>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1069/3318] xprtrdma: prevent disconnect feedback during endpoint teardown
-Date: Wed, 18 Nov 2026 15:28:11 +0100
-Message-ID: <20261118150352.039846230@linuxfoundation.org>
+Subject: [PATCH 6.6 1060/3318] vfio/mlx5: Fix boundary check in set_report_output()
+Date: Wed, 18 Nov 2026 15:28:02 +0100
+Message-ID: <20261118150351.754854574@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,91 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Menninger <tmenninger@everpuredata.com>
+From: Seongjun Hong <hsj0512@snu.ac.kr>
 
-[ Upstream commit 0b5bb4e586f7b0a449f4d90a524f76a3be5db355 ]
+[ Upstream commit 37b2ee6747b7857920ebc71eabc25208a39164a4 ]
 
-xprt_autoclose() clears XPRT_CLOSE_WAIT before invoking the transport's
-->close() operation. For RPC/RDMA, ->close() calls
-rpcrdma_xprt_disconnect(), which disconnects the RDMA CM endpoint and
-drains its QP.
+Use > instead of >= on boundary check of recv_buf to avoid the bug which
+the full message in the last slot of recv_buf is ignored even though the
+received data size does not overflow the recv_buf.
 
-Since commit 31e62d25b5b8 ("xprtrdma: Simplify RPC wake-ups on
-connect"), RDMA_CM_EVENT_DISCONNECTED requests a SUNRPC transport
-disconnect. Today that path, along with failed completion handling,
-reaches xprt_force_disconnect() through rpcrdma_force_disconnect().
-
-Commit c487eb7d8e41 ("xprtrdma: Clean up disconnect") later added
-re_force_disconnect to ensure that multiple failure indications request
-only one SUNRPC disconnect. However, the gate remains open when SUNRPC
-itself begins endpoint teardown.
-
-If re_force_disconnect is still clear, either a CM disconnect event or a
-completion error can set XPRT_CLOSE_WAIT again while the current close
-is in progress. When the transport send lock is subsequently released,
-xprt_clear_locked() observes XPRT_CLOSE_WAIT and queues another
-autoclose.
-
-Requesting a disconnect this way is necessary when a connection is lost
-unexpectedly, but not when the event was generated by
-rpcrdma_xprt_disconnect() itself. In that case SUNRPC is already
-committed to closing the transport.
-
-Mark re_force_disconnect before initiating local endpoint teardown so
-that CM events and completion errors caused by that teardown cannot
-request another close. An unexpected error that wins the race before
-local endpoint teardown begins can still request a disconnect normally.
-
-Use a fully ordered exchange so that the gate is globally closed before
-rdma_disconnect() can transition the QP to error and generate the
-callbacks that the gate suppresses.
-
-In 30-second traces of a sustained recovery loop, without this change
-there were 7,693 xprt_force_disconnect() calls, 6,267 SUNRPC autocloses,
-and 172,892 receive-side IB_WC_WR_FLUSH_ERR completions. With this
-change, the same tracepoints recorded 3,512 xprt_force_disconnect()
-calls, 3,212 autocloses, and 131,287 receive-side flush completions.
-Thus QP teardown continues to produce flushed completions, but closing
-the disconnect gate before teardown substantially reduces their
-feedback into the SUNRPC close path.
-
-Fixes: 31e62d25b5b8 ("xprtrdma: Simplify RPC wake-ups on connect")
+Fixes: 9c7c5430bca3 ("vfio/mlx5: Align the page tracking max message size with the device capability")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
-Reviewed-by: Chuck Lever <cel@kernel.org>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Reviewed-by: Yishai Hadas <yishaih@nvidia.com>
+Signed-off-by: Seongjun Hong <hsj0512@snu.ac.kr>
+Link: https://lore.kernel.org/r/20261005-vfio-mlx5-fix-boundary-check-v2-1-75599d2f4497@snu.ac.kr
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/verbs.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/vfio/pci/mlx5/cmd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index 4990e37bcdc00..81ed76504da02 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -114,9 +114,9 @@ static void rpcrdma_xprt_drain(struct rpcrdma_xprt *r_xprt)
- 	rpcrdma_ep_put(ep);
- }
+diff --git a/drivers/vfio/pci/mlx5/cmd.c b/drivers/vfio/pci/mlx5/cmd.c
+index 82558fa7712e4..b6d203906cd67 100644
+--- a/drivers/vfio/pci/mlx5/cmd.c
++++ b/drivers/vfio/pci/mlx5/cmd.c
+@@ -1493,7 +1493,7 @@ set_report_output(u32 size, int index, struct mlx5_vhca_qp *qp,
+ 	int i;
  
--/* Ensure xprt_force_disconnect() is invoked exactly once when a
-- * connection is closed or lost. (The important thing is it needs
-- * to be invoked "at least" once).
-+/* Ensure xprt_force_disconnect() is invoked at most once for an
-+ * unexpected endpoint failure. Local endpoint teardown closes this
-+ * gate before it can generate CM events and flushed completions.
-  */
- void rpcrdma_force_disconnect(struct rpcrdma_ep *ep)
- {
-@@ -583,6 +583,9 @@ void rpcrdma_xprt_disconnect(struct rpcrdma_xprt *r_xprt)
- 	if (!ep)
+ 	buf_offset = index * qp->max_msg_size;
+-	if (WARN_ON(buf_offset + size >= qp->recv_buf.npages * PAGE_SIZE ||
++	if (WARN_ON(buf_offset + size > qp->recv_buf.npages * PAGE_SIZE ||
+ 		    (nent > qp->max_msg_size / entry_size)))
  		return;
  
-+	/* Prevent teardown-generated events from requesting another close. */
-+	atomic_xchg(&ep->re_force_disconnect, 1);
-+
- 	id = ep->re_id;
- 	rc = rdma_disconnect(id);
- 	trace_xprtrdma_disconnect(r_xprt, rc);
 -- 
 2.53.0
 
