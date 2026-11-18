@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054261;
-	b=HRBQvBgb2MOHiFrwt0fb+2un1onxyypkrkoZlEcJnQeyoraVbKKHO/8CtbSi08wNj/9f
-	 7JIe5jWPExZBxEU1J3HXLRlZzIct+g8ZmweD/OfHG8gbDP3rKtkTiy8lewifCtzWEOT0F
-	 75KCaXo1VJp3r4Ukkp/Y+cYUYegEpe8wx5Cr8jAS3HbPlerGscr8YGOb3ht+APNIYKVXq
-	 5oVKr8s8tD8Fo5Z0/F+jQvZh1+oTLwiY6N+ubLH4biLcp4rLfb+YXfgnFO3yQ0MMWr/we
-	 1lB01KSjBPuJ3TadbsM5jvSVWjMvjLJ1tOgjmSIDBGAQubOA/CyZYRCxzoQgZpFuzQQ==
+	t=1795054264;
+	b=KggFosmPZT20uO4oRw073+0TYKoLDSqpd1tevZLTXwTcxezGqKE2hRGs9eAnS/5H+ycZ
+	 j3GVZ3LA6hf8SffvChtw+kfx7LESOP9OzDHUtCgl7cngt02PDVwsyHg7R730A+TGW1E+2
+	 8BZtseMto6YKhVTa/mOmXY0hlntqskxx7Mv6xMyvpTxS8mEHI2+sfc6WZE1TqchooL36Q
+	 O0H12EGREi8cFxRHOQN2w+s1onvYuzRaL71g7K4nod2gqwhJePOLqg/Ewa2vMoetZe9Eh
+	 IGTIJcLLOvFMxC8YzKKUxFGdPoGDmJcWf/zwM/XuFrvQbd4txXLojdswL/xZucvPDbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054261;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054264;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WRBJcaD/sCoUd/wj9YcvNvnkOXW7z9AjKjoGbNjuF4k=;
-	b=TtAgBxsPUSCamAr0cgI86c0UvlMoKZKnq5Mdf5Yt1RqCwSExWRksLXNa/efq8iQtDuJV
-	 joj6ad0GiQp/h6xLli+wJUirDwL0wax9C0zocoflsiVRzIYQNuarzTb+NQFBKas0arlL7
-	 ereyixBWWyVju9XtNyUaBMlttiEdcrzztid2C+pXbq42GS/2ueSz9+3THHlMmodyPNOSe
-	 BGjk+n8aqy4BTWlzyOSBoJhkSJGnnJlqJ98NfYQCuAenQYtLD92NXTphGZf4hcjKuD0nv
-	 6JwCAc/E5U1GewE7S84IDVuSDXet0z6xa7m4fYa4W+XjO/XOisLlzw4+ScFvN+Q2wHg==
+	bh=+aKNDr3NA1oYxQHh3B4ob5VJQAAj6cb8Sr5pOs6TJZM=;
+	b=gO9gcvRNsNV0INfJj+lbP2o3PqqSl0Qwaaqyyb+6HGVbQB3kfA+J87t3mHWt48oixi0e
+	 hIGNxwVC20SDQVVvkcuzQFqqsqC3ED71qiAOs42R2opyNZM9XwCA3+/46MXpb9vBFLDlE
+	 v5NcvRH4bhjXZM8EUpjkrm7+/5f88dMaED2BACyqcroGdGWO2IIFk+A3vB4qNJWG4ORJ7
+	 jNsRsyThMsnBUCsWe7zSLpQS4Otf7r7zwc79Wbgjg6lMVGsFldDLy0icsle6Blon+tiI/
+	 GU7R4v8hBLzKAKCFhAiCyaiL8eJITD2h4rGssiPBNaCoMSXE4ONhmqd3NJLPrdAxVRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tUmF7KPt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="j/2GKQu/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E99D606A325;
-	Thu, 19 Nov 2026 02:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146BE606A31C;
+	Thu, 19 Nov 2026 02:11:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tUmF7KPt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 942AE1F000C4;
-	Thu, 19 Nov 2026 02:11:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j/2GKQu/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD9E1F000C4;
+	Thu, 19 Nov 2026 02:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054261;
-	bh=WRBJcaD/sCoUd/wj9YcvNvnkOXW7z9AjKjoGbNjuF4k=;
+	s=korg; t=1795054263;
+	bh=+aKNDr3NA1oYxQHh3B4ob5VJQAAj6cb8Sr5pOs6TJZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tUmF7KPtEgQ397Rm7vF075nLwmX+njJiNv9/tiwHmjtTrIHLd4ydfPNekQDA+FT/G
-	 VoA0+QIqerO5lDNEnFuQl28iTVdL5odIVCeQ0aK2dpH13WGRucKmf79bMzOp/litFI
-	 3Dug1auJWEZCFl/lPnElB90yo5TJXuN0BbqImvwY=
+	b=j/2GKQu/lw5vEpvFxZtqWFCPNEH5mMxTCIjabPTzq2SXBBTqpC62ouQCz+uxZeb8l
+	 aenjwVObbHb28phzeJ09ewLC9Qwa+t2x5ef8xudKx1YHHUxgDZeczR5Bo6RrC7s2Ug
+	 vDOqF++E3pF6X135Je7ULiWwV+/XotbkFQvuUc/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Florian Westphal <fw@strlen.de>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Wang Zhan <wang.zhan@smartx.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1213/2214] inet: frags: limit the truesize of a reassembly queue
-Date: Wed, 18 Nov 2026 15:48:09 +0100
-Message-ID: <20261118150100.329194686@linuxfoundation.org>
+Subject: [PATCH 5.15 1214/2214] 9p/xen: drain response work after unbinding IRQ
+Date: Wed, 18 Nov 2026 15:48:10 +0100
+Message-ID: <20261118150100.361528895@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -73,113 +73,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit 3ae20e4697eb969104fe4b1e98a675f0100382b6 ]
+[ Upstream commit 7b6f2e3c29fb4d76f1e4973280792eabbd526602 ]
 
-The truesize of fragments in a reassembly queue is only bounded by
-the per netns ipfrag_high_thresh sysctl, which has no upper limit.
+commit ea4f1009408e ("9p/xen : Fix use after free bug in
+xen_9pfs_front_remove due to race condition") added cancel_work_sync()
+to keep xen_9pfs_front_free() from freeing a ring while
+p9_xen_response() is still running.
 
-inet_frag_reasm_finish() sums the truesize of all fragments in an int.
-If this sum reaches 2^32, it wraps, and the final sk_wmem_alloc
-adjustment of the socket owning the reassembled skb can cancel its own
-reference, leading to a use-after-free of this socket.
+The work is currently drained before the event channel IRQ is unbound.
+That leaves a race window where xen_9pfs_front_event_handler() can run
+after cancel_work_sync() returns and queue p9_xen_response() again.  The
+following unbind_from_irqhandler() synchronizes with the IRQ handler, but
+it does not cancel work that the handler already queued.  The teardown
+can then free the ring and private data while the response work remains
+pending, and the worker later dereferences ring->priv and priv->client.
 
-This can be triggered from an unprivileged user/network namespace,
-raising ipfrag_high_thresh and using padded TUN packets, which keep
-a large truesize after being trimmed by ip_rcv_core().
+Unbind the event channel IRQ before draining the work.  Once the IRQ is
+unbound, no new response work can be queued by the backend event channel,
+and cancel_work_sync() waits for any work that was queued before or
+during the unbind.  It is then safe to release the ring resources.
 
-Track the sum of the truesize of fragments in each queue, and refuse
-a fragment that would make it bigger than INT_MAX / 2. Callers kill
-the queue on this error. This bound is far above the needs of
-legitimate traffic.
-
-Fixes: 18685451fc4e ("inet: inet_defrag: prevent sk release while still in use")
+Fixes: ea4f1009408e ("9p/xen : Fix use after free bug in xen_9pfs_front_remove due to race condition")
 Cc: stable@vger.kernel.org
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Cc: Florian Westphal <fw@strlen.de>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Tested-by: Wang Zhan <wang.zhan@smartx.com>
-Link: https://patch.msgid.link/20261030081225.2575462-1-edumazet@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: moved the truesize reset from inet_frag_queue_flush() to ip_frag_reinit() ]
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: GLM:GLM-5.1
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Message-ID: <20260609155202.1706-1-zhaoyz24@mails.tsinghua.edu.cn>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+[ sashal: adjusted context for older IRQ cleanup that leaves the IRQ number unchanged after unbinding instead of resetting it to -1 ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet_frag.h  | 9 +++++++++
- net/ipv4/inet_fragment.c | 4 ++++
- net/ipv4/ip_fragment.c   | 1 +
- 3 files changed, 14 insertions(+)
+ net/9p/trans_xen.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/inet_frag.h b/include/net/inet_frag.h
-index 63540be0fc34a..0114941b4c873 100644
---- a/include/net/inet_frag.h
-+++ b/include/net/inet_frag.h
-@@ -72,6 +72,7 @@ struct frag_v6_compare_key {
-  * @meat: length of received fragments so far
-  * @flags: fragment queue flags
-  * @max_size: maximum received fragment size
-+ * @truesize: sum of the truesize of queued fragments
-  * @fqdir: pointer to struct fqdir
-  * @rcu: rcu head for freeing deferall
-  */
-@@ -92,6 +93,7 @@ struct inet_frag_queue {
- 	int			meat;
- 	__u8			flags;
- 	u16			max_size;
-+	unsigned int		truesize;
- 	struct fqdir		*fqdir;
- 	struct rcu_head		rcu;
- };
-@@ -174,6 +176,13 @@ extern const u8 ip_frag_ecn_table[16];
- #define IPFRAG_OK	0
- #define IPFRAG_DUP	1
- #define IPFRAG_OVERLAP	2
-+#define IPFRAG_TOOBIG	4
+diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
+index d07377e5a62b7..49efcd8f8fe55 100644
+--- a/net/9p/trans_xen.c
++++ b/net/9p/trans_xen.c
+@@ -312,12 +312,12 @@ static void xen_9pfs_front_free(struct xen_9pfs_front_priv *priv)
+ 	for (i = 0; i < priv->num_rings; i++) {
+ 		struct xen_9pfs_dataring *ring = &priv->rings[i];
+ 
+-		cancel_work_sync(&ring->work);
+-
+ 		if (!priv->rings[i].intf)
+ 			break;
+ 		if (priv->rings[i].irq > 0)
+ 			unbind_from_irqhandler(priv->rings[i].irq, ring);
++		cancel_work_sync(&ring->work);
 +
-+/* Max sum of the truesize of fragments in a queue. This keeps the sums
-+ * done in inet_frag_reasm_prepare() and inet_frag_reasm_finish() well
-+ * below INT_MAX. Legitimate traffic stays far below this limit.
-+ */
-+#define INET_FRAG_MAX_TRUESIZE	(INT_MAX / 2)
- int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
- 			   int offset, int end);
- void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
-diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
-index 6e6b46ebfc407..fb5973ffe4d67 100644
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -384,6 +384,9 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
- {
- 	struct sk_buff *last = q->fragments_tail;
- 
-+	if (skb->truesize > INET_FRAG_MAX_TRUESIZE - q->truesize)
-+		return IPFRAG_TOOBIG;
-+
- 	/* An IP fragment is never a GSO packet, but an untrusted source
- 	 * (virtio_net_hdr) may have attached GSO metadata to it. Do not let
- 	 * that reach the reassembled skb, whose head keeps the first
-@@ -446,6 +449,7 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
- 
- 	FRAG_CB(skb)->ip_defrag_offset = offset;
- 
-+	q->truesize += skb->truesize;
- 	return IPFRAG_OK;
- }
- EXPORT_SYMBOL(inet_frag_queue_insert);
-diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
-index 5cdc65a5c010b..00dff2c866154 100644
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -263,6 +263,7 @@ static int ip_frag_reinit(struct ipq *qp)
- 	qp->q.rb_fragments = RB_ROOT;
- 	qp->q.fragments_tail = NULL;
- 	qp->q.last_run_head = NULL;
-+	qp->q.truesize = 0;
- 	qp->iif = 0;
- 	qp->ecn = 0;
- 
+ 		if (priv->rings[i].data.in) {
+ 			for (j = 0;
+ 			     j < (1 << priv->rings[i].intf->ring_order);
 -- 
 2.53.0
 
