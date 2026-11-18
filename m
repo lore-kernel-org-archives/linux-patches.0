@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058028;
-	b=uXmnNikf4MrMPC+a368g5Nsd7sOuiv5UREK1so6oyCKIQhkI5fP8YIsVXl29KbJggdhs
-	 JtYtodn2AnVRyBTyGbFpqEev7vW9bUJt7wXe2Lu8Q2GGUwMVjNhfaAk7Kov2jgKedcJlY
-	 LQFP7wr1skVz18+I+SBm8PJbVmdU6yurTfCvxezr/l3EQg6U3s1QfSkm1dShx84XjjO1L
-	 0vkx3GFX3xBmvz+WovmO90o3Zs6Q8ObUOy71rzQ8rqV+HF5dnmIh+93kDwxD49MrClbMN
-	 hPDieIycKohuXUwT3qxdss1vRmu+E/1mJUsGYImq1fFaziJzCamwvu16zdO9uji6Kjw==
+	t=1795058031;
+	b=lKp1O3TbNaWgpS8iuMpgAXTjgpaUjSlFJdPDG/3ZUXYWV7YNpwREbuOXtOwocuvUxSQE
+	 VllQxRYd64WXoNTezdEmanNCghQf7qitpeWKD8960IcMi9rVmH+oxVkfcCwvEo+801G+z
+	 WKomQyv2zVBySjSRvlsDjgh7HPFu3ZowOa4aLWw7BmSd1EAW6x95simaf/kXj8OTKZrEQ
+	 1tgn4BGXUJdE5e6+naNN/HoPqN9wVBwLzgdjrCigFcTYAs80LgdBp7fLWD29DEpR70Rch
+	 Bw4BKf9lO4klmGYDyMtFR26RWODqyX11uXJIWbPElW0YGRBePDRpp8oc/l5KmYc3jWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058028;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058031;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=bhngQn23qxqfKqYWOn91KzTS+fUHKussVym54tkvB2A=;
-	b=J7EyQmIl83xhHouOF1I3vfH6ANwlzZVFQy5NBwIHm8ZDczE9ocOyrVbajLplk8CHLPO1
-	 e3gykxZE5WH3T6nS8SX73W0CV/iCkzsUgw5LKHGqbhgpzx4Ly4BayIYuWAPftREXcWVDq
-	 Gy4XZa9xiLRsHJQMe1DbLi2vGRbJLwsMsVkcC4rWaBlLmGR2y7OYyKrXP7bll0dxWq+gp
-	 OZ7f0IomF4np9BTb9zEu/KY46/ytdQpGnvFlbKPEdAj1HICIOIkqwdf/OtvFGci7Eth8/
-	 DzOiN8ZfEHHcMawwMJxNJE3EKgohQeJSIAJQKyDood3Uo/MWetw5RkE6SJef+1PVVYg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Msv8yDPddLef1jxFe4SmbMPlNMMy/6MkcrW96w4FN68=;
+	b=vbR6H9LuIAC/nCDGZg1bg1UwgLFUmPxlgApHv685YKqG2kdDXrYaP5FU77dtUZoap0+E
+	 C4FHwz5NX146Nzs0E8ufMivpTzqZ2oc9fiu8vCpnZOur7Ap+hxoUJ34xVZVs0F51L//K8
+	 wcCs5wYVA+Oi7Ps3Oxdaxd6vU4TLRG/OmEe3EtXDaCxLbTcRuzh2r07uu1eLv9Tkys6/Z
+	 YbdCjMH1BPKceGNccwRLXrL39BCh2aXiy7kDKQKY+EEbAtMBdNFwLs0Kp6PXXj5yIYiHl
+	 WlH52doIfJd82WGThnpuw3f8RNXBvhPUZHi0BCheBoHsIPzFUTnpH+D4hmAPchdnWSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QSOwKsEK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dGuvuKcS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D73606A31C;
-	Thu, 19 Nov 2026 03:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C710C606A31C;
+	Thu, 19 Nov 2026 03:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QSOwKsEK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA931F000C4;
-	Thu, 19 Nov 2026 03:13:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dGuvuKcS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBD5C1F000C4;
+	Thu, 19 Nov 2026 03:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058028;
-	bh=bhngQn23qxqfKqYWOn91KzTS+fUHKussVym54tkvB2A=;
+	s=korg; t=1795058031;
+	bh=Msv8yDPddLef1jxFe4SmbMPlNMMy/6MkcrW96w4FN68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QSOwKsEKiVxtpR1/e5y8CL9ap7T/9hK09A0Tgl3bH2AwhrKY2ELkDWrzjxrPtkUO5
-	 Vs5FuSqVbOSOZv7/W6WzmpGFH93Z2B8fYyJFmS1wmqtpegiWTB8PU0/N9pmF4fh+yk
-	 QPRfJr/jq1PhVdqLWO9hpvzdUG5b+RyQuiwiVnKM=
+	b=dGuvuKcS5NnI7X6zJZLXQx92UZMXfD6XH6YVZNzb4jXkRP7SyAs3jBGO2QVWC/dn9
+	 gxkPj+6VAGlmfwNhbwa3n1ErM3nYJB/UMiz+PpdG6pRi92ETgLQaSRqw/zO0+3pqBj
+	 tAeZVC5KW+ozXYajzk3ldo0JHuPiRFOU4nsitVR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
+	Yuchao Zhang <ndaugoing@gmail.com>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger@xenproject.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0339/1848] staging: rtl8723bs: fix protected RX frame validation in decrypt path
-Date: Wed, 18 Nov 2026 15:39:37 +0100
-Message-ID: <20261118145926.657134848@linuxfoundation.org>
+Subject: [PATCH 5.10 0340/1848] xen-blkfront: unbind irq before tearing down ring and shadow requests
+Date: Wed, 18 Nov 2026 15:39:38 +0100
+Message-ID: <20261118145926.686528979@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -61,111 +63,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Yuchao Zhang <ndaugoing@gmail.com>
 
-[ Upstream commit 495cb31c791bdf3f9efef255a9587b05b0526c9d ]
+[ Upstream commit f3e27b7955727a4d7c0e9264a2a209fbba788bdc ]
 
-The RX software decrypt path mishandles crafted protected frames from a
-malicious AP in two ways:
+In blkif_free_ring(), the driver tears down the ring's persistent grants,
+shadow request arrays, and shared ring structure (xenbus_teardown_ring),
+and only calls unbind_from_irqhandler() at the very end.
 
-1) decryptor() never checks that a protected frame is long enough to
-hold the 802.11 header plus the per-cipher trailer.  All of
-rtw_wep_decrypt(), rtw_tkip_decrypt() and rtw_aes_decrypt() compute
+While blkif_free_ring() is freeing persistent grants and clearing the
+shadow array, the event channel interrupt (blkif_interrupt) is still
+registered and active.  If an interrupt arrives from the backend during
+this teardown window, blkif_interrupt() reads rinfo->ring.sring and,
+via blkif_completion(), accesses rinfo->shadow[id].grants_used and
+rinfo->shadow[id].sg.  blkif_free_ring() tears these structures down
+without holding rinfo->ring_lock, and the handler only checks
+info->connected at entry, so this is a real race resulting in a
+use-after-free or NULL pointer dereference.
 
-	length = hdr.len - hdrlen - iv_len;
+Fix this by moving unbind_from_irqhandler() to the beginning of
+blkif_free_ring().  Calling unbind_from_irqhandler() first frees the
+IRQ and synchronizes with any in-flight interrupt handlers on other CPUs
+before ring memory and shadow request structures are deallocated,
+matching the teardown order in drivers/net/xen-netfront.c.
 
-and act on the result, and recvframe_chkmic() similarly computes
-
-	datalen = hdr.len - hdrlen - iv_len - icv_len - 8;
-
-for TKIP (the 8-byte Michael MIC is not accounted for in icv_len).
-A frame shorter than hdrlen + iv_len + icv_len (+ 8 for TKIP) underflows
-these unsigned subtractions, turning into a ~4 GiB iteration count in
-aes_decipher()/arc4_crypt()/rtw_seccalctkipmic() or a ~4 GiB crc32_le()
-length, causing out-of-bounds reads/writes of up to ~4 GiB starting from
-the rx skb.  Reject such frames in decryptor() before touching the IV;
-this covers all three ciphers and the TKIP MIC check, and also keeps the
-unconditional iv[3] access within the frame.
-
-2) validate_80211w_mgmt() keeps using the frame - two memcpys through
-the stale rx_data pointer and a pkt_len update - before checking
-whether decryptor() returned NULL.  On decrypt failure (e.g. a unicast
-protected deauth/disassoc/action frame with a bad MIC, which this path
-always software-decrypts) the skb has already been freed, so this is a
-use-after-free read/write, and the caller's error path frees the frame
-a second time, drifting free_recvframe_cnt.  Bail out immediately when
-decryptor() fails, freeing the temporary mgmt_DATA buffer first.
-
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
-
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Assisted-by: LLM
+Fixes: 11659569f720 ("xen/blkfront: split per device io_lock")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
-Link: https://patch.msgid.link/8ee3bdd1c45034200cb1aa9a7e9b575b9584643a@linux.dev
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: Retained the existing DBG_871X() debug message in the relocated decrypt-failure branch. ]
+Signed-off-by: Yuchao Zhang <ndaugoing@gmail.com>
+Acked-by: Roger Pau Monné <roger@xenproject.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260922072155.34625-1-ndaugoing@gmail.com>
+[ sashal: adjusted context for ring cleanup using free_pages_exact() instead of xenbus_teardown_ring() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_recv.c | 25 ++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ drivers/block/xen-blkfront.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_recv.c b/drivers/staging/rtl8723bs/core/rtw_recv.c
-index 0e6fb03ff85c8..8ed6ded1bef79 100644
---- a/drivers/staging/rtl8723bs/core/rtw_recv.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_recv.c
-@@ -451,7 +451,21 @@ union recv_frame *decryptor(struct adapter *padapter, union recv_frame *precv_fr
- 	RT_TRACE(_module_rtl871x_recv_c_, _drv_info_, ("prxstat->decrypted =%x prxattrib->encrypt = 0x%03x\n", prxattrib->bdecrypted, prxattrib->encrypt));
+diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
+index 19ddbf977d28f..44c82088a611c 100644
+--- a/drivers/block/xen-blkfront.c
++++ b/drivers/block/xen-blkfront.c
+@@ -1276,6 +1276,14 @@ static void blkif_free_ring(struct blkfront_ring_info *rinfo)
+ 	struct blkfront_info *info = rinfo->dev_info;
+ 	int i, j, segs;
  
- 	if (prxattrib->encrypt > 0) {
--		u8 *iv = precv_frame->u.hdr.rx_data+prxattrib->hdrlen;
-+		u8 *iv;
-+		u32 min_len = prxattrib->hdrlen + prxattrib->iv_len + prxattrib->icv_len;
++	/*
++	 * Interrupt teardown must be done ahead of freeing queue-related
++	 * data, otherwise the interrupt handler can race with the cleanup.
++	 */
++	if (rinfo->irq)
++		unbind_from_irqhandler(rinfo->irq, rinfo);
++	rinfo->evtchn = rinfo->irq = 0;
 +
-+		/* TKIP appends an 8-byte Michael MIC that icv_len doesn't account for */
-+		if (prxattrib->encrypt == _TKIP_)
-+			min_len += 8;
-+
-+		/* a protected frame must be long enough to hold the IV and ICV/MIC */
-+		if (precv_frame->u.hdr.len < min_len) {
-+			rtw_free_recvframe(precv_frame,
-+					   &padapter->recvpriv.free_recv_queue);
-+			return NULL;
-+		}
-+
-+		iv = precv_frame->u.hdr.rx_data + prxattrib->hdrlen;
- 		prxattrib->key_index = (((iv[3])>>6)&0x3);
+ 	/*
+ 	 * Remove indirect pages, this only happens when using indirect
+ 	 * descriptors but not persistent grants
+@@ -1365,10 +1373,6 @@ static void blkif_free_ring(struct blkfront_ring_info *rinfo)
+ 	free_pages_exact(rinfo->ring.sring,
+ 			 info->nr_ring_pages * XEN_PAGE_SIZE);
+ 	rinfo->ring.sring = NULL;
+-
+-	if (rinfo->irq)
+-		unbind_from_irqhandler(rinfo->irq, rinfo);
+-	rinfo->evtchn = rinfo->irq = 0;
+ }
  
- 		if (prxattrib->key_index > WEP_KEYS) {
-@@ -1426,6 +1440,11 @@ static sint validate_80211w_mgmt(struct adapter *adapter, union recv_frame *prec
- 				goto validate_80211w_fail;
- 			}
- 			precv_frame = decryptor(adapter, precv_frame);
-+			if (!precv_frame) {
-+				kfree(mgmt_DATA);
-+				DBG_871X("%s mgmt descrypt fail  !!!!!!!!!\n", __func__);
-+				goto validate_80211w_fail;
-+			}
- 			/* save actual management data frame body */
- 			memcpy(mgmt_DATA, ptr+pattrib->hdrlen+pattrib->iv_len, data_len);
- 			/* overwrite the iv field */
-@@ -1433,10 +1452,6 @@ static sint validate_80211w_mgmt(struct adapter *adapter, union recv_frame *prec
- 			/* remove the iv and icv length */
- 			pattrib->pkt_len = pattrib->pkt_len - pattrib->iv_len - pattrib->icv_len;
- 			kfree(mgmt_DATA);
--			if (!precv_frame) {
--				DBG_871X("%s mgmt descrypt fail  !!!!!!!!!\n", __func__);
--				goto validate_80211w_fail;
--			}
- 		} else if (IS_MCAST(GetAddr1Ptr(ptr)) &&
- 			(subtype == WIFI_DEAUTH || subtype == WIFI_DISASSOC)) {
- 			sint BIP_ret = _SUCCESS;
+ static void blkif_free(struct blkfront_info *info, int suspend)
 -- 
 2.53.0
 
