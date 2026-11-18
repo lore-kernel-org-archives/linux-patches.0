@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049997;
-	b=V4SHdLqgvcfVUfZqY4+x3TlojPsqP1ujMQL38d0oA9rnE/PxC7zHsUBcGiywEG2Ksa5F
-	 2LCxjE6wRGg5ST7/zgGntX5lu5M5cEmsQc9ZxaW9KSn7o/TebxCByLfvTNklSmDAQ2Aa9
-	 F1inZfe92nMMqs4MTRZeqf6KwrF8O/Dd9RfiPFfsphFwQ/li8AbWcdsNatKoHjoW3c3x+
-	 ll4bv/t4t3uzYsAe9UMRnAyTt2aCRvEDslwrCSU3MKxiCWwDZY/Q+7HXyRcDR6OYAbJqC
-	 9y9Ccb5VJBblc8Q3xaoMKXYlRPtmJ7DdrawRrH1zHPmBvRtF3J0Lh9hYPM1/GDIA6fA==
+	t=1795049999;
+	b=c4nS7SuFvjlRA9ycp2tUSvkIW3qr/eEXT5ALN/dMtwkwmwPd8DPl0g8A5uUiMzLbZJc2
+	 h2o/F37OQhSAH19yaN9+5cY0cDj0tONv5g+zDBT0Yt1wnrbj1S+6I7HjbIQgyI2jaBg8I
+	 9HhF7+3DOfl69aR53kfaWT8k2To2owqFzJuxSu4+stKJkpxZgo83ZH1uMwrfBEUhLVHB+
+	 NA1K6wAjGIZh/IVr6hBI5ELN2TA7Ve9plwwXU2WNKTdLIAKAWMKRuQjxzyzvEwIreiY+e
+	 BmHoHWic7bCygyCkXwCo7ybMdHyF+RPn1k6frwMxQNMybRjQy6Wqodc4IFHrbpP7NaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049997;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049999;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ABKi8135uv0Pv+nFqW4AvRZQ/DZt7xp57bwFCBbWUdU=;
-	b=sw8DYBGeOmHXxF60PTOh7AFWCgJ8zhlViExWJx1Zi7YdKqb316k4gk/ZXOULtlaP0odc
-	 O/7sK21vUwNmRH6Czn6UCGHeMWRbjegXXcp26lBa5AnGtZ4CW0FDtFVwb//8VY1aLy5sM
-	 ff/fNVEiM7Jio4XQZNKNtqlgwHFgZO0w95CqU9RdcjEyxWBlKeRvO4FeKu8rs723oO288
-	 RDcz89hU0MAG7mvHp51/83pESf/vBefGRoewI1l9cB5yoFEABYmL2f8hrCl2eeplPfzPZ
-	 bNwMgrL3sXBPjXDCIsGTHkENcj4Hch4iKkmGsFtFP1ZVA52RfdhlsTLy9dCWcAbuE4Q==
+	bh=ivmC+YH3WScCDKCWEQOBOnfCyCftjpb6fTFwURD7WqY=;
+	b=xqGIbMiwj/RJ4ywIg/KQfH8MYty3gVQkwf/aAS4470jNjoRo2tYAHj+2mfodsJP71Ujm
+	 /cw6xenVEmEh4VYVoPs41B9JzggzMMWJvSvvByKB7gZwaYK1IHoXyjtvEZ9egNw1VN3ks
+	 RaFRqJCIaDBRi6xNE+QCaLJcL3+bOgbCvfbePZbd06lnrABA8BYQ20Sxq1ttX6Kf9Y1O6
+	 y8NchXnSNU8qPaNaU8Gm8T94VTfuM1Q6IZ9ksRGC1V/jUGo/LMH6hy9yi4Oh0ELwFTJwp
+	 YmD/oXL+m3fz4pv4NHh5HxTbGz/cvOyhH5VGM6HNms42H3I8fkf1NeJkD86veE0GWrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eIhLhpU9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YmIjLB5V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB7D606A320;
-	Thu, 19 Nov 2026 00:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14D6606A331;
+	Thu, 19 Nov 2026 00:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eIhLhpU9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EBD41F000C7;
-	Thu, 19 Nov 2026 00:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YmIjLB5V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA3A1F000CB;
+	Thu, 19 Nov 2026 00:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049996;
-	bh=ABKi8135uv0Pv+nFqW4AvRZQ/DZt7xp57bwFCBbWUdU=;
+	s=korg; t=1795049999;
+	bh=ivmC+YH3WScCDKCWEQOBOnfCyCftjpb6fTFwURD7WqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eIhLhpU9F0PFt8XPa8mECA8sI+XKIh2bNSD+j0MdCYvMyT63lWAJWxgnb1X+F5ofj
-	 0s6lY/PZhIJtig0TVMLRFHCTqMabimBJOd/ZSpzLFqXVCZmJvtBCw0ih435hIa7SwE
-	 +XpmVqrX0mHO39Td1bisX2bsUBh5ibxxi1zgnymw=
+	b=YmIjLB5VNIl5+jjRyYVK0aofw4kUr3D4CdIKRhsDdxfL+K6/TTKKuGWFTlqsm31o8
+	 cByvP+v9jUbhYxI94mH0iKmdO9MHumELD2ZGN0/RWt42IVJ7e7WFXngG42jxqwktuX
+	 rxFQxkV88PywjISA59YrPE5O7KKh66hCNkmT7zyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2552/2857] ASoC: mediatek: mt8195: Fix runtime resume error handling
-Date: Wed, 18 Nov 2026 15:59:46 +0100
-Message-ID: <20261118150333.395630603@linuxfoundation.org>
+Subject: [PATCH 6.1 2553/2857] ASoC: mediatek: mt8195: Propagate IRQ lookup errors
+Date: Wed, 18 Nov 2026 15:59:47 +0100
+Message-ID: <20261118150333.429249487@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,64 +71,37 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 933fbfb6648850e003a1fc47b7bcc08fe3687961 ]
+[ Upstream commit 9d5dedb285fb61a40e04f337d9e06fc59c065857 ]
 
-Check and propagate errors when enabling the register access and main
-clocks during runtime resume.
+Propagate the error returned by platform_get_irq() instead of
+replacing it with -ENXIO.
 
-If regcache_sync() or main clock enable fails, restore regmap cache-only
-mode and disable the register access clocks before returning the error.
+This preserves errors such as -EPROBE_DEFER for proper handling
+by the caller.
 
 Fixes: 6746cc858259 ("ASoC: mediatek: mt8195: add platform driver")
+Reviewed-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261014112752.683032-10-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20261014112752.683032-12-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8195/mt8195-afe-pcm.c | 23 +++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ sound/soc/mediatek/mt8195/mt8195-afe-pcm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-index 34b05a4871eef..ab2930669568c 100644
+index ab2930669568c..0093a4c59bbea 100644
 --- a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
 +++ b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-@@ -2971,18 +2971,31 @@ static int mt8195_afe_runtime_resume(struct device *dev)
- {
- 	struct mtk_base_afe *afe = dev_get_drvdata(dev);
- 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
-+	int ret;
+@@ -3189,7 +3189,7 @@ static int mt8195_afe_pcm_dev_probe(struct platform_device *pdev)
+ 	/* request irq */
+ 	irq_id = platform_get_irq(pdev, 0);
+ 	if (irq_id < 0)
+-		return -ENXIO;
++		return irq_id;
  
--	mt8195_afe_enable_reg_rw_clk(afe);
-+	ret = mt8195_afe_enable_reg_rw_clk(afe);
-+	if (ret)
-+		return ret;
- 
- 	if (!afe->regmap || afe_priv->pm_runtime_bypass_reg_ctl)
--		goto skip_regmap;
-+		return 0;
- 
- 	regcache_cache_only(afe->regmap, false);
--	regcache_sync(afe->regmap);
-+	ret = regcache_sync(afe->regmap);
-+	if (ret)
-+		goto err_restore_cache;
-+
-+	ret = mt8195_afe_enable_main_clock(afe);
-+	if (ret)
-+		goto err_restore_cache;
- 
--	mt8195_afe_enable_main_clock(afe);
--skip_regmap:
- 	return 0;
-+
-+err_restore_cache:
-+	regcache_cache_only(afe->regmap, true);
-+	mt8195_afe_disable_reg_rw_clk(afe);
-+
-+	return ret;
- }
- 
- static int mt8195_afe_component_probe(struct snd_soc_component *component)
+ 	ret = devm_request_irq(dev, irq_id, mt8195_afe_irq_handler,
+ 			       IRQF_TRIGGER_NONE, "asys-isr", (void *)afe);
 -- 
 2.53.0
 
