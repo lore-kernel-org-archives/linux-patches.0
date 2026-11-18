@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059180;
-	b=0/vpPLS++i75ze1NeNxAmJX5FzN3TEDjBFeGHNM7Dwf7HFh5tULQRC7BWBkbct4XdxeH
-	 3Nu2VXrfcIvN0Da/rFxIzwlUMBOd7Cw/VHfIc7wxHIRKC+qI/0ATansfsCypWNCIyThTb
-	 07D+Xlw5V7UztaEgqu1bPfaELx064xZncffLJ3ij+hNUJSOjHwklLTKElbOuyKyO2ujqd
-	 Cq5pAmr1QWm6wQ3C9zk8UNPyz8gjOcYioDvob4rdlwCLOYLsOvjjIgcX+4FwMtStsYwtv
-	 DA57eFmuTe6M+jfdG3EsxXMKRgjpgVAxj27TeJiiOj47/xjmVskhEAhsiFU8UmJXttw==
+	t=1795059183;
+	b=YZ92c7Ef4uk6X5C18Po1AItTgp9nCv8sihTkkZHXTxcGbS0P+kGtNUajmH81BKPo3VTA
+	 6wJ/peXwRuxW26gTeh2BNJYI3t9MdTwg+DXyihptod8ApnkK+w5XqsluJOU6hdUuUDj7u
+	 mVJHMNpLYqoIq5LrpfOxE0iPAlv2Xvlv0/H+t96FHoq3qxd71jw516d3znM+9J5w5HxkJ
+	 mJsHSciSVKJLfX7pt3T5p/b5Niy3TdWfn5B5XWJAKjrSTWezjXk7/b8jllOPwY25K8Ak1
+	 WAvdmzI5205CCbfnD6BeoYDYRNgyVt0DzpPfzc1dNlztcW2meV2EsZOmdoYXWclU8MQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059180;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059183;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dkbQ7N6cxLuY066V/awG3NujqNXheLbmWSxlEaHhaf8=;
-	b=WtLRpgY1NOK9xw9+GwNiIuHRjAJECgqMNoXchnHFc7WlhSD/AMCzqdurSIJZ/sZZC4ew
-	 km64y61SSKueUrQgHMhV9nwvjp5uPwhpbMWAu6jpsStVM6xvpES52bPjvvkJpJSJ8+kOL
-	 r53zmMjbzPnMXhWe9n/liBrmNvShBh6qQxny6r9ohxRB/eskPhHoE75/VRYdsMwMnVnqh
-	 iEOPV0jSisMoxHo64oWTLuiyTBHNCQSoe1glm/4QAT+Hd6J3KMOQjgB4cyBPPjKHAraQc
-	 vOlOF+xnV6m/7uGr4a+H2LYj2KCiNwuZdn//c4c17NrSJnB8XZ0D6TdSztJ9AsrctnQ==
+	bh=sAlD16U5kt56a4rF1tl1J7Q1rckISdrWYw9WotgX0tQ=;
+	b=bA1CKRs6hPOxKDYA0LqZ3r6DxzJZ3jCCLl2FVEw7fwqMG6FYTNbua6dAQ4ZtGSPmI6QV
+	 NVuSmQbNzSvU1Sjo9XIwZfLTFTZ9F644VUQ9bafZIaU7rORCSyF7mTlFnCjlyVGg0IQTk
+	 cG92iIi4AjVGMRus4DubGv2cZp5Bw0ZccJr74nE2ZRnDgQ0l3Ptnzq8IrdAZBXWMTdhCD
+	 jOECBvCJZRa6DjwEFMfec7FD/ouMBc2EaozaJqticXDeTY11DUC7UK8KAF6ygYqZqp/6O
+	 n3zFqnaFnAK/JUb5NVyImMTZW4JHva99ZYHCi26QgeD29omxXUNja9hRK/AL/av5Keg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t4cm6cwV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t36Bv3uw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06754606A31C;
-	Thu, 19 Nov 2026 03:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAE0606A325;
+	Thu, 19 Nov 2026 03:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t4cm6cwV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C1741F000C4;
-	Thu, 19 Nov 2026 03:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t36Bv3uw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 436191F000C4;
+	Thu, 19 Nov 2026 03:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059179;
-	bh=dkbQ7N6cxLuY066V/awG3NujqNXheLbmWSxlEaHhaf8=;
+	s=korg; t=1795059182;
+	bh=sAlD16U5kt56a4rF1tl1J7Q1rckISdrWYw9WotgX0tQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t4cm6cwV+MnYVfVmkijoSAyM3nzznd1Q7rvvXAEZinsPHf83CqQh3/0xPN3vEY9t1
-	 AVFW1x+BZDvKR5WJr65p/933ynRgtrKE4JLJfyrN50docES/Z2xFUF8Ikbt5kt+y2y
-	 VBxp4jd08beanaa832opUKwvD71wIhju0ImQz84M=
+	b=t36Bv3uw+oKNXtiDLYf2qqQIyXfeu/Upjsct1IR3v3i3HZhCRALrV7LCO4DdJ4Xyq
+	 s0FaZ+DB5CdG10IgRfgL5aHKO5y1AGy5hDMQT927W3cHR4+kr2PqdzuIAnd+zrjtPB
+	 h7e75iIkZEwI4xx93R9GNo8QILRvyq4UIPQ6kwmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Christian Gmeiner <cgmeiner@igalia.com>,
+	syzbot+799a0e744ac47f928024@syzkaller.appspotmail.com,
+	syzbot+43fc5ba6dcb33e3261ca@syzkaller.appspotmail.com,
+	Matthias Goergens <matthias.goergens@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0748/1848] drm/etnaviv: Flush the tile status cache through both the PE and BLT
-Date: Wed, 18 Nov 2026 15:46:26 +0100
-Message-ID: <20261118145947.842726963@linuxfoundation.org>
+Subject: [PATCH 5.10 0749/1848] udf: dont let the extent type hide an exhausted free-space table extent
+Date: Wed, 18 Nov 2026 15:46:27 +0100
+Message-ID: <20261118145947.888651122@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,126 +70,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Gmeiner <cgmeiner@igalia.com>
+From: Matthias Goergens <matthias.goergens@gmail.com>
 
-[ Upstream commit c1a757f8df1363032623fa9b1baaba0dcf34de6d ]
+[ Upstream commit da582d84fcf5f2f0c1d7760e1a899ca7cedb80fc ]
 
-Since commit f232d9ec029c ("drm/etnaviv: fix TS cache flushing on GPUs
-with BLT engine"), jobs on GPUs with a BLT engine use a BLT command to
-flush the tile status cache instead of TS_FLUSH_CACHE, which is broken
-on most of these GPUs.
+udf_table_new_block() takes the first block of the free-space table
+extent closest to the goal.  It keeps that extent's type and length
+together in goal_elen, subtracts one block, and deletes the extent only
+if goal_elen then reaches zero.  UDF 2.60 section 2.3.7.1 requires the
+free-space extents of an Unallocated Space Entry to be of type 1
+(allocated but not recorded), and mkudffs writes them that way.  For
+such an extent the type bits keep goal_elen non-zero, so taking its last
+block leaves a type-1 extent of length zero behind, starting at the
+block after the extent, which is in use.
 
-GC7000 r6008/r6009 and GC8200 r6401 are the other way around:
-TS_FLUSH_CACHE works, but the BLT command does not flush the cache.
-The vendor driver handles these GPUs using TS_FLUSH_CACHE, but the
-etnaviv kernel driver has no way to identify them.
+The next allocation that picks this empty extent returns that in-use
+block.  Subtracting a block from 0x40000000 then borrows from the type
+bits, and the extent becomes type 0 with a length of 2^30 - blocksize:
+about a gigabyte of "free" space overlapping live metadata, the other
+table extents and whatever lies behind the partition.  From then on
+blocks are handed out twice, or past the end of the partition.
 
-As a result, dirty tile status cache lines survive the end of a job.
-They are written back by the next cache flush, using the page table of
-the job issuing it. If that job belongs to another process, the write
-goes to the wrong address space.
+Extents that udf_table_free_blocks() adds are type 0, where the check
+works, so only tables written by mkudffs or by another implementation
+are affected.  Nothing more than filling such a filesystem is needed:
+on a fresh 1 MiB "mkudffs --space=unalloctable" image, creating empty
+files until the partition is full writes file entries over the reserve
+volume descriptor sequence and the backup anchor, and df then reports a
+negative amount of used space.
 
-On GC7000 r6009 this causes MMU faults and GPU recoveries blamed on an
-innocent process. I see around 1100 per run of a multisample
-depth/stencil test running alongside two other GPU clients.
+On syzbot's images the same double allocation is what the two reports
+below trip over.  In the first, ftruncate() extends a new file with
+enough hole extents to need a chain of allocation extent descriptors;
+one AED is placed on another inode's file entry, and a later one is
+placed on the block of the AED currently being filled, which
+udf_setup_indirect_aext() zeroes, so __udf_add_aext() finds
+lengthAllocDescs out of step with its cursor.  In the second, an AED
+is placed past the end of the device, sb_getblk() fails, and the error
+path of udf_do_extend_file() calls udf_truncate_extents() on an extent
+list that no longer covers i_size.
 
-Emit both flushes at the end of every job on GPUs with a BLT engine.
-Whichever does not work on a given GPU is a no-op. Since dirty lines
-are only written back once, this costs one additional state load per
-job.
+Keep the type separately from the length, as udf_table_prealloc_blocks()
+already does.
 
-Fixes: f232d9ec029c ("drm/etnaviv: fix TS cache flushing on GPUs with BLT engine")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
-Link: https://patch.msgid.link/20261102-etna-pe-ts-flush-v1-1-e4454ed86f85@igalia.com
-Signed-off-by: Christian Gmeiner <cgmeiner@igalia.com>
+Reported-by: syzbot+799a0e744ac47f928024@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=799a0e744ac47f928024
+Reported-by: syzbot+43fc5ba6dcb33e3261ca@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=43fc5ba6dcb33e3261ca
+Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
+Link: https://patch.msgid.link/6b51c38d2d069544053c542470950e2a448b0b8d.1793349907.git.matthias.goergens@gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_buffer.c | 40 +++++++++++-------------
- 1 file changed, 18 insertions(+), 22 deletions(-)
+ fs/udf/balloc.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
-index 7d897aafb2a6a..baa76846ba5d9 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
-@@ -229,6 +229,17 @@ u16 etnaviv_buffer_config_pta(struct etnaviv_gpu *gpu, unsigned short id)
- 	return buffer->user_size / 8;
- }
+diff --git a/fs/udf/balloc.c b/fs/udf/balloc.c
+index e8e3e291ef819..0bbe86da3d133 100644
+--- a/fs/udf/balloc.c
++++ b/fs/udf/balloc.c
+@@ -580,7 +580,7 @@ static udf_pblk_t udf_table_new_block(struct super_block *sb,
+ 	uint32_t elen, goal_elen = 0;
+ 	struct kernel_lb_addr eloc, goal_eloc;
+ 	struct extent_position epos, goal_epos;
+-	int8_t etype;
++	int8_t etype, goal_etype = 0;
+ 	struct udf_inode_info *iinfo = UDF_I(table);
  
-+static void etnaviv_cmd_flush_ts(struct etnaviv_cmdbuf *buffer, bool has_blt)
-+{
-+	CMD_LOAD_STATE(buffer, VIVS_TS_FLUSH_CACHE, VIVS_TS_FLUSH_CACHE_FLUSH);
-+
-+	if (has_blt) {
-+		CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x1);
-+		CMD_LOAD_STATE(buffer, VIVS_BLT_SET_COMMAND, 0x1);
-+		CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x0);
-+	}
-+}
-+
- void etnaviv_buffer_end(struct etnaviv_gpu *gpu)
- {
- 	struct etnaviv_cmdbuf *buffer = &gpu->buffer;
-@@ -252,7 +263,7 @@ void etnaviv_buffer_end(struct etnaviv_gpu *gpu)
- 		unsigned int dwords = 7;
- 
- 		if (has_blt)
--			dwords += 10;
-+			dwords += 11;
- 
- 		link_target = etnaviv_buffer_reserve(gpu, buffer, dwords);
- 
-@@ -265,16 +276,8 @@ void etnaviv_buffer_end(struct etnaviv_gpu *gpu)
- 			CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x0);
+ 	*err = -ENOSPC;
+@@ -628,7 +628,8 @@ static udf_pblk_t udf_table_new_block(struct super_block *sb,
+ 			goal_epos.block = epos.block;
+ 			goal_epos.offset = epos.offset - adsize;
+ 			goal_eloc = eloc;
+-			goal_elen = (etype << 30) | elen;
++			goal_elen = elen;
++			goal_etype = etype;
  		}
- 		CMD_LOAD_STATE(buffer, VIVS_GL_FLUSH_CACHE, flush);
--		if (gpu->exec_state == ETNA_PIPE_3D) {
--			if (has_blt) {
--				CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x1);
--				CMD_LOAD_STATE(buffer, VIVS_BLT_SET_COMMAND, 0x1);
--				CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x0);
--			} else {
--				CMD_LOAD_STATE(buffer, VIVS_TS_FLUSH_CACHE,
--					       VIVS_TS_FLUSH_CACHE_FLUSH);
--			}
--		}
-+		if (gpu->exec_state == ETNA_PIPE_3D)
-+			etnaviv_cmd_flush_ts(buffer, has_blt);
- 		CMD_SEM(buffer, SYNC_RECIPIENT_FE, SYNC_RECIPIENT_PE);
- 		CMD_STALL(buffer, SYNC_RECIPIENT_FE, SYNC_RECIPIENT_PE);
- 		if (has_blt) {
-@@ -461,12 +464,12 @@ void etnaviv_buffer_queue(struct etnaviv_gpu *gpu, u32 exec_state,
- 	return_dwords = 7;
- 
- 	/*
--	 * When the BLT engine is present we need 6 more dwords in the return
-+	 * When the BLT engine is present we need 7 more dwords in the return
- 	 * target: 3 enable/flush/disable + 4 enable/semaphore stall/disable,
--	 * but we don't need the normal TS flush state.
-+	 * on top of the normal TS flush state.
- 	 */
- 	if (has_blt)
--		return_dwords += 6;
-+		return_dwords += 7;
- 
- 	return_target = etnaviv_buffer_reserve(gpu, buffer, return_dwords);
- 	CMD_LINK(cmdbuf, return_dwords, return_target);
-@@ -483,14 +486,7 @@ void etnaviv_buffer_queue(struct etnaviv_gpu *gpu, u32 exec_state,
- 				       VIVS_GL_FLUSH_CACHE_DEPTH |
- 				       VIVS_GL_FLUSH_CACHE_COLOR |
- 				       VIVS_GL_FLUSH_CACHE_SHADER_L1);
--		if (has_blt) {
--			CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x1);
--			CMD_LOAD_STATE(buffer, VIVS_BLT_SET_COMMAND, 0x1);
--			CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x0);
--		} else {
--			CMD_LOAD_STATE(buffer, VIVS_TS_FLUSH_CACHE,
--					       VIVS_TS_FLUSH_CACHE_FLUSH);
--		}
-+		etnaviv_cmd_flush_ts(buffer, has_blt);
  	}
- 	CMD_SEM(buffer, SYNC_RECIPIENT_FE, SYNC_RECIPIENT_PE);
- 	CMD_STALL(buffer, SYNC_RECIPIENT_FE, SYNC_RECIPIENT_PE);
+ 
+@@ -650,7 +651,8 @@ static udf_pblk_t udf_table_new_block(struct super_block *sb,
+ 	goal_elen -= sb->s_blocksize;
+ 
+ 	if (goal_elen)
+-		udf_write_aext(table, &goal_epos, &goal_eloc, goal_elen, 1);
++		udf_write_aext(table, &goal_epos, &goal_eloc,
++			       (goal_etype << 30) | goal_elen, 1);
+ 	else
+ 		udf_delete_aext(table, goal_epos);
+ 	brelse(goal_epos.bh);
 -- 
 2.53.0
 
