@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043375;
-	b=K8uOvd3gEoc8P0HJzfH6X1nAU8h696uSRyW3N9h1ZNFcq0TTDUkQVS6cSYRfdIKEzshj
-	 0fJ61IuUH08673hK+ntuvQCz9cH/oT3rGAN0gLT/3PAgbzBObjLf2aHym4WeadefmRPgT
-	 +CkT18tLjRT4Fp/kIz4D9OmXN9tUAIBy90tiHOjhndR5w98m8TF2pvQO0aaJx4HdmdL1l
-	 6ptiEV4RvwZi9M9MHIUCzLjlzXUxd/7WzXGDL1jdSc6Jiokc86nFt7kDzoXwCzphgsw70
-	 ApKkJTKusRIjd+PprQFcJfvbfQtvZvBuN3peaXZVuc85fD9onGaf6AOo6UGyBo1aAzQ==
+	t=1795043378;
+	b=OhY7a4mLyUyUFI7li2lX/DlnxzvpiIHYBfM3y2X8jvWYZ1BK95DTyit9h3xlTQUQFljO
+	 mXT5L+1dB6NNyOHqTgHFJkLfy2gmelqA7Aig+7h+ZF3alNabNV2xQaBLFSQKXVwREW1zb
+	 72UxkUT9dQPGgV7AQFAqyDg+u2lXHrYvVrsMjCuqNEZuTbd19MicNN7UjpHQ7UU+rop+V
+	 hEzdTn5EQVcmsYiI6S537n0dAyc9Q2b5dQf3mkqcL4EDPopGFzJn1J/OtuCYdpjXgVxdo
+	 9XUIIMN7POE+752NGIxk5YysVtWwAAStDV2BNQwBuMlgxcvNIbQzvDlsFpG+pv7sxrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043375;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043378;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jNCedxcKklL6hghn7fgvh+Sn00wKaAFpxnjvgJBoiz8=;
-	b=nparnv+nxnxCuqfTkM//OOUxcwryP2n3B3+Dj8MvfL+bh6Tz0oENi/2r4MGa6TUnPPs0
-	 sQQheRIGfaf6nw1EppjRuOQvP7lE5yvPzsXiEsB3jstoyGTzLsAbAHLTc/mrD0MY4YYik
-	 ThNUREmMUCRuFYIXrecTJM9PXhHXFE+0xgcWC+OhHr8/fHV/m8cef99+3gZawx0Vgtqw9
-	 JNW60us42ha4M3iLU0YzYNbANFNXAxf2/zUzsQuS/ueHCbd11aVG5bovlxHTeFb+GtAOp
-	 xYO+8yd55XKLiO0CkFwk9t34tWScQLrTUc4TzAmn8Zf+DSqvluBybBdMOQ8q8YnMLPg==
+	bh=buijN4ko0kn7tZv30F0mpTa6NU7I96xRUIIFtFwVDfw=;
+	b=VvFf9XH0Xuik7j2rIKD/7PSxaqcukP72snt17SXsh+u2fJ0idXoOeHU9Z1MjpZistRrw
+	 2DxRlMhb70bnVSYZ3HrBlsjPZM7SNKwJ2wHUI1wk5nUuShXgvLwJvIFrMSPt+B5+MBXUb
+	 e3YzEeeNCzADhxSfgqSM+fBt4IN+g3Yw92cJUgC8KBwKKJk3OJLoA02IGH6Dr7aAHZB9h
+	 Xhrp8jTrk4VS65723xr9FADSvxU1gGcjJ7RaF/S/Xz9OIXDlVafJePLWu98AA2Jze5jT5
+	 R3T/0k44uidHLLQheuNT20RnOrE0ygnu/l9w+yTObBbbW2iRjx9miei4H8sqcjAiJXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2cepD47x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="SXh/QCo1";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2EA606A31C;
-	Wed, 18 Nov 2026 23:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07B8606A325;
+	Wed, 18 Nov 2026 23:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2cepD47x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA0D1F000C4;
-	Wed, 18 Nov 2026 23:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SXh/QCo1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B21B1F000C4;
+	Wed, 18 Nov 2026 23:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043374;
-	bh=jNCedxcKklL6hghn7fgvh+Sn00wKaAFpxnjvgJBoiz8=;
+	s=korg; t=1795043377;
+	bh=buijN4ko0kn7tZv30F0mpTa6NU7I96xRUIIFtFwVDfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2cepD47xfzf3VzP0cHqrP3ti+nvG3HcQ+Y1zmesjeInXAFxH/arYZTA/VVjWduKl7
-	 PEkmHzOdeVCS/fBrHqEXdOxqNed9bd70SnnszP0Fj/OgbPBzJ6VNgX/nuYBJvDJrEa
-	 vGsWm9l45C3nG88AYI573agsS3pb0wWsLn8HIRYg=
+	b=SXh/QCo1XfmbV7IE9D8Es/drrSImovQopDQRdA6IFtm07y/a8A2B1DxxxMhVH3/PL
+	 IrlFPDkNhSMx4XbyNa5kpn1wSiKeNFVso8tl96v9XrUUVMHot+6R2cbHnWyfyXsBvd
+	 iO81L2VqE+IQNpSqOVrg3NZtOskR0sk8oD0I38xA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Senjin <senjin@hatchling.org>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Mauricio Orozco <maudob@live.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0151/2857] fs/ntfs3: fix lseek EINVAL on sparse/compressed files with 64-bit clusters
-Date: Wed, 18 Nov 2026 15:19:45 +0100
-Message-ID: <20261118150206.779950498@linuxfoundation.org>
+Subject: [PATCH 6.1 0187/2857] ALSA: hda/realtek: Add quirk for ASUS VivoBook M515DA/X515DAP
+Date: Wed, 18 Nov 2026 15:20:21 +0100
+Message-ID: <20261118150208.077772773@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,52 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Senjin <senjin@hatchling.org>
+From: Mauricio Orozco <maudob@live.com>
 
-[ Upstream commit 789af83e41aef54c1ff1cee16adc27822e0a0d71 ]
+[ Upstream commit a9fa2a016e805504223abf8c9b373ac9f7bfb9b3 ]
 
-When CONFIG_NTFS3_64BIT_CLUSTER is enabled, sbi->maxbytes_sparse is set
-to -1. As a signed loff_t this is -1LL, the most negative value. Any
-lseek on a sparse or compressed file passes this as maxsize to
-vfs_setpos(), which returns -EINVAL whenever offset > maxsize, and
-since -1LL is less than any non-negative offset, every seek fails,
-including lseek(fd, 0, SEEK_SET).
+The ASUS VivoBook M515DA/X515DAP (subsystem ID 1043:1e3e)
+requires the ALC256_FIXUP_ASUS_MIC_NO_PRESENCE fixup to
+enable the internal microphone.
 
-The intent of -1 here appears to be "no limit" (matching the spirit of
-MAX_LFS_FILESIZE assigned to sbi->maxbytes and sb->s_maxbytes in the
-same block), but the signed type makes it the minimum instead of the
-maximum.
+Without this quirk, the internal microphone captures only
+silence under Linux, while it works correctly under Windows.
 
-Fix by assigning MAX_LFS_FILESIZE to sbi->maxbytes_sparse in the
-64-bit cluster path, consistent with the other two limits set there.
+The fix has been verified on real hardware.
+Tested on an ASUS VivoBook M515DA/X515DAP running Linux Mint
+22.3 with Ubuntu HWE kernel 7.0.0-28.
 
-Observed on a 16 TB NTFS volume with 0xFFFFFEFF total clusters compiled
-with CONFIG_NTFS3_64BIT_CLUSTER=y. Sequential reads via dd/cp worked
-correctly; any lseek call on sparse files returned EINVAL, preventing
-archive managers and other tools from random-accessing files on the
-volume. The non-64-bit-cluster path correctly sets maxbytes_sparse to
-(1ull << (cluster_bits + 32)) - 1, a large positive value.
-
-Signed-off-by: Senjin <senjin@hatchling.org>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Mauricio Orozco <maudob@live.com>
+Link: https://patch.msgid.link/20260730033506.8958-1-mauoro3@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 9bf327a7cc7b9..dcc71541f207f 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -905,7 +905,7 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
- #ifdef CONFIG_NTFS3_64BIT_CLUSTER
- 	if (clusters >= (1ull << (64 - sbi->cluster_bits)))
- 		sbi->maxbytes = -1;
--	sbi->maxbytes_sparse = -1;
-+	sbi->maxbytes_sparse = MAX_LFS_FILESIZE;
- 	sb->s_maxbytes = MAX_LFS_FILESIZE;
- #else
- 	/* Maximum size for sparse file. */
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 3f74f485298cd..68ddad4689fd3 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10191,6 +10191,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x1da2, "ASUS UP6502ZA/ZD", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1e02, "ASUS UX3402ZA", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1e10, "ASUS VivoBook X507UAR", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1043, 0x1e3e, "ASUS VivoBook M515DA/X515DAP", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1e11, "ASUS Zephyrus G15", ALC289_FIXUP_ASUS_GA502),
+ 	SND_PCI_QUIRK(0x1043, 0x1e12, "ASUS UM3402", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1e51, "ASUS Zephyrus M15", ALC294_FIXUP_ASUS_GU502_PINS),
 -- 
 2.53.0
 
