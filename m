@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021992;
-	b=GmcEodccwUq2lsw3MEa4nCtwsA0/Lu0BgVyhHTSvS8+KNFN2pTrFdaY8BCoFiaBGK6kL
-	 2K4MQ00OxftlS2ph0nVci70mJjrp9PT2Ur5/jyAJuPaKhdmBtqEYdwH17yYEBE8UJMULG
-	 p710oGCCAaRfOoL6Km0vlFNn1Eau3hjuu9sxs3qtYVbq9xAuMui0zxDAW2zB6mknO8NNz
-	 W7QYMYeyJNITdPmjnBR7y7/1sRNFCN1NrdYtX9LSsQCMuiaaM30Ri2qg0WalddUG58y5g
-	 fNJeqEcjLsHOfTqd7pVkqWjysPVY6Pm6O4wy/y2wCLa16Vgw7tyVZAimqiFSFk04vaA==
+	t=1795021995;
+	b=reT11YoyPLGIP8mYi3J+CLYITdOoC3EpWKwKQeljK07u3nEwNlVBPsWLN7sjjZs+OOhk
+	 yL9QTnh1uu4r/ByVz75eqvkO2qxAtKtD1fI8Or/Wsqb8rz4Q564OktD9UwCdeCC73kA9v
+	 lQsJjG0vNg80Cz4WJBV229Pay0d4OmYZJfIOvdUyGh9jQyvPhH18SkRzbgIuUKDdxXmxw
+	 nU1EggS3BDGRCLm8SwXgZmEzupwhOdqzRdylFga7D9ZqW30OVkYMOnAOk1vSz8dWKDB8V
+	 ElyAG+zNBba14zeIGdK+iDsb1Jcwqdeki5wOm9rYLm0mozlgDs6JZcXsMZfo7czA3rg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021992;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021995;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qAwepq4r9T3NGHXGJcTHOxDVloE0NNsIjySur+x+POE=;
-	b=43LDvw3p+Z+/Iob7t2HzVxc+8eGecTsvQqn5WHeqe/FgFPTuZC4MaoBelZFHUqYcZjjX
-	 6TBpCEOSMb1dFkdCUC8DlzJ1WTykSC530YlGcokkR+rmXFwtiCUOYI3UyQaJo4mALWcuf
-	 ggb5BNjD+ZpO0AFIi00g3gwP0YzYcQ41eR+xssjWVWK7+i27JISAbYzrjNA+b+TB76wR4
-	 nnER2m4HL7kIIhIjBMZeG+dMzuz/QKNNfoUhXhMLpu/vP1O3/otnhI3PADOE1Il1bkxuK
-	 XwtrawAcBOrSlfu5t8tMQN70PZYRbSDNx3V09nJIESK41mPqRlZJl4DrthlR2EQfcdg==
+	bh=oUEbQyrqD1vY04GriH2d81iMR4qDglG+4MB2zSVQz78=;
+	b=iFnpobY15J5bICmjEwuHv48QtqG8gPgc+wKGGcD+QpFwONJI8FhDApw3FYeLaXsTnRcL
+	 lHLbJUyOq6kHM4GU6Ba3h+NE0h8n9XzTPy+maQrSsZ+c2qzTw7Q9p+5SU4lyGALMtn84M
+	 0dObDApAXUxbsrbMQb8Cn11gAtcXSkeK7R67UIwABmoTBKxWfK1GLDyIRctrL3ektD5M5
+	 IXQjFnYjFODACWzi6oBMhdwLg5WYieELNSdVNkrqPTRBLO313bjUsZ0wU1177a8X4+/A/
+	 M3r9eU6iqx4cV0Jy7kEloZ6KwTJGoUNjIrmfPfrFwrs3YNRKaMOxvVNulp5AQDlTmig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Jw/ekzYi";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u0ib3XGX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5884E606A31C;
-	Wed, 18 Nov 2026 17:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6888E606A31C;
+	Wed, 18 Nov 2026 17:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jw/ekzYi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD951F000C4;
-	Wed, 18 Nov 2026 17:13:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u0ib3XGX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB031F000C4;
+	Wed, 18 Nov 2026 17:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021992;
-	bh=qAwepq4r9T3NGHXGJcTHOxDVloE0NNsIjySur+x+POE=;
+	s=korg; t=1795021995;
+	bh=oUEbQyrqD1vY04GriH2d81iMR4qDglG+4MB2zSVQz78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jw/ekzYi9BRk+teXwyqf5c2eJ1KKkyoax+JfFiUf37zlJaELVToVkxTkOpQwZjdHg
-	 dFdUXKmtyA7I/xSIM9Pid3W7oX35Y8HocCn5npC2hSpX2upJJ36TQVb9gIyzBbslR3
-	 jcmyokz47hCmx2nTYZ+tIvvuTGXL92uUR7G4HbdY=
+	b=u0ib3XGXoJD7dSeKNaf8eYGRPEHgwFzQCulOPykm8VvzSNCPBsAvC+hmERFMrVWib
+	 vQw7VGk23Sfpgq4Y9oyukCpv2+u9gFT+5JAleReq5qeiZXJTkCuz06TJQg5vYGn+BH
+	 10fVhvNTpBZpNUX61pzLDqhQZrI3jMJ621vOowc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guikun Yang <yangguikun19@qq.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wang Zhaolong <wangzhaolong3@outlook.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2505/2651] devlink: region: fix snapshot id leak on kernel-allocated ids
-Date: Wed, 18 Nov 2026 16:02:25 +0100
-Message-ID: <20261118150414.959292266@linuxfoundation.org>
+Subject: [PATCH 7.3 2506/2651] ksmbd: avoid races between named-pipe operations
+Date: Wed, 18 Nov 2026 16:02:26 +0100
+Message-ID: <20261118150414.990195022@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,59 +68,775 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Wang Zhaolong <wangzhaolong3@outlook.com>
 
-[ Upstream commit ef8f0a1d888e0280452792f6d4edad237c934a51 ]
+[ Upstream commit a43e0718a4abed7f859a67bd7b154acf213589fa ]
 
-When DEVLINK_CMD_REGION_NEW is issued without a snapshot id, the kernel
-allocates one with __devlink_region_snapshot_id_get(). That helper counts
-the caller as a user of the id, and the caller must release this hold
-once it is done.
+RPC IPC replies are matched by pipe handle. READ, WRITE, TRANSCEIVE and
+CLOSE on the same pipe all use that handle. The session RPC lock protects
+the handle table, but is dropped before a pipe I/O request waits for its
+reply. Another operation, including CLOSE, can issue a request with the
+same handle while that wait is still in progress.
 
-devlink_nl_region_new_doit() never drops it. The refcount of the id goes
-1 (allocation) -> 2 (snapshot created) and stays at 2. When the snapshot
-is deleted the count only drops to 1, so the id is never erased from
-the snapshot_ids xarray. The id then stays in use for the lifetime of
-the devlink instance: requesting a snapshot with that explicit id fails
-with -EEXIST, and there is no snapshot left to delete to clean it up.
+These requests have no separate IPC correlation ID, so overlapping waits
+can interfere with reply delivery. CLOSE can also release the handle
+before an earlier operation finishes. Protecting table access alone does
+not provide the serialization or lifetime needed by an active pipe.
 
-Reproducer steps:
-  # devlink region new pci/0000:13:00.0/device-caps
-  pci/0000:13:00.0/device-caps: snapshot 0
-  # devlink region del pci/0000:13:00.0/device-caps snapshot 0
-  # devlink region new pci/0000:13:00.0/device-caps snapshot 0
-  kernel answers: File exists
+Serialize operations per pipe and keep its state and handle alive until
+all users finish. Avoid holding the session table lock across IPC waits,
+so a blocked pipe does not hold up unrelated pipes. This also provides
+the lifetime needed to retain unread replies in the following patch.
 
-Drop the caller's reference right after the snapshot has been created,
-as the snapshot then holds its own.
+Recheck cancellation, connection release and session teardown after taking
+the pipe lock, and mark a removed pipe closed before waiting for its active
+operation. Close all session RPC pipes on logoff after the other requests
+have drained; keeping the TCP connection open must not retain old handles.
+Use standard SMB2 error replies for failed pipe operations while preserving
+the selected status.
 
-Fixes: 043b3e22768d ("devlink: let kernel allocate region snapshot id")
-Reported-by: Guikun Yang <yangguikun19@qq.com>
-Closes: https://lore.kernel.org/netdev/tencent_BE912BA710539F285F9FCF28E854ABEFCD07@qq.com/
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20261026174403.512-1-fmancera@suse.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=222197
+Signed-off-by: Wang Zhaolong <wangzhaolong3@outlook.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Stable-dep-of: 2d5c7afbb1d1 ("ksmbd: fix named-pipe reply loss with small output buffers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/devlink/region.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/smb/server/mgmt/user_session.c | 127 +++++++++++++-------
+ fs/smb/server/mgmt/user_session.h |  15 +++
+ fs/smb/server/smb2pdu.c           | 190 +++++++++++++++++++++---------
+ fs/smb/server/transport_ipc.c     |  45 ++++---
+ fs/smb/server/transport_ipc.h     |  14 ++-
+ 5 files changed, 263 insertions(+), 128 deletions(-)
 
-diff --git a/net/devlink/region.c b/net/devlink/region.c
-index 537779bbff07a..c22016f23a4a4 100644
---- a/net/devlink/region.c
-+++ b/net/devlink/region.c
-@@ -719,6 +719,11 @@ int devlink_nl_region_new_doit(struct sk_buff *skb, struct genl_info *info)
- 	if (!snapshot_id_attr) {
- 		struct sk_buff *msg;
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index a18533bb4fe39..1fc4ddc8b448f 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -4,6 +4,7 @@
+  */
  
-+		/* Drop the allocation reference, the snapshot
-+		 * now holds its own.
-+		 */
-+		__devlink_snapshot_id_decrement(devlink, snapshot_id);
+ #include <linux/atomic.h>
++#include <linux/err.h>
+ #include <linux/list.h>
+ #include <linux/slab.h>
+ #include <linux/rwsem.h>
+@@ -43,11 +44,6 @@ void ksmbd_session_release_slot(struct ksmbd_conn *conn)
+ 	atomic64_dec(&conn->session_count);
+ }
+ 
+-struct ksmbd_session_rpc {
+-	int			id;
+-	unsigned int		method;
+-};
+-
+ #ifdef CONFIG_PROC_FS
+ 
+ static const struct ksmbd_const_name ksmbd_sess_cap_const_names[] = {
+@@ -305,32 +301,34 @@ static void free_channel_list(struct ksmbd_session *sess)
+ 	up_write(&sess->chann_lock);
+ }
+ 
+-static void __session_rpc_close(struct ksmbd_session *sess,
+-				struct ksmbd_session_rpc *entry)
++static void ksmbd_session_rpc_free(struct ksmbd_session_rpc *entry)
++{
++	if (refcount_dec_and_test(&entry->refcount)) {
++		ksmbd_rpc_id_free(entry->id);
++		kfree(entry);
++	}
++}
 +
- 		snapshot = devlink_region_snapshot_get_by_id(region,
- 							     snapshot_id);
- 		if (WARN_ON(!snapshot)) {
++static void __session_rpc_close(struct ksmbd_session_rpc *entry)
+ {
+ 	struct ksmbd_rpc_command *resp;
+ 
+-	resp = ksmbd_rpc_close(sess, entry->id);
++	mutex_lock(&entry->lock);
++	resp = ksmbd_rpc_close(entry);
+ 	if (!resp)
+ 		pr_err("Unable to close RPC pipe %d\n", entry->id);
+-
+ 	kvfree(resp);
+-	ksmbd_rpc_id_free(entry->id);
+-	kfree(entry);
++	mutex_unlock(&entry->lock);
++	ksmbd_session_rpc_free(entry);
+ }
+ 
+-static void ksmbd_session_rpc_clear_list(struct ksmbd_session *sess)
++void ksmbd_session_rpc_clear_list(struct ksmbd_session *sess)
+ {
+ 	struct ksmbd_session_rpc *entry;
+-	long index;
+-
+-	down_write(&sess->rpc_lock);
+-	xa_for_each(&sess->rpc_handle_list, index, entry) {
+-		xa_erase(&sess->rpc_handle_list, index);
+-		__session_rpc_close(sess, entry);
+-	}
+-	up_write(&sess->rpc_lock);
++	unsigned long index;
+ 
++	xa_for_each(&sess->rpc_handle_list, index, entry)
++		ksmbd_session_rpc_close(sess, index);
+ 	xa_destroy(&sess->rpc_handle_list);
+ }
+ 
+@@ -360,9 +358,9 @@ static int __rpc_method(char *rpc_name)
+ 
+ int ksmbd_session_rpc_open(struct ksmbd_session *sess, char *rpc_name)
+ {
+-	struct ksmbd_session_rpc *entry, *old;
++	struct ksmbd_session_rpc *entry;
+ 	struct ksmbd_rpc_command *resp;
+-	int method, id;
++	int method, id, ret;
+ 
+ 	method = __rpc_method(rpc_name);
+ 	if (method < 0)
+@@ -374,31 +372,29 @@ int ksmbd_session_rpc_open(struct ksmbd_session *sess, char *rpc_name)
+ 
+ 	entry->method = method;
+ 	entry->id = id = ksmbd_ipc_id_alloc();
+-	if (id < 0)
+-		goto free_entry;
+-
+-	down_write(&sess->rpc_lock);
+-	old = xa_store(&sess->rpc_handle_list, id, entry, KSMBD_DEFAULT_GFP);
+-	if (xa_is_err(old)) {
+-		up_write(&sess->rpc_lock);
+-		goto free_id;
++	if (id < 0) {
++		kfree(entry);
++		return id;
+ 	}
++	mutex_init(&entry->lock);
++	refcount_set(&entry->refcount, 1);
+ 
+-	resp = ksmbd_rpc_open(sess, id);
++	resp = ksmbd_rpc_open(entry);
+ 	if (!resp) {
+-		xa_erase(&sess->rpc_handle_list, entry->id);
+-		up_write(&sess->rpc_lock);
+-		goto free_id;
++		ksmbd_session_rpc_free(entry);
++		return -EINVAL;
+ 	}
++	kvfree(resp);
+ 
++	down_write(&sess->rpc_lock);
++	ret = xa_err(xa_store(&sess->rpc_handle_list, id, entry,
++			      KSMBD_DEFAULT_GFP));
+ 	up_write(&sess->rpc_lock);
+-	kvfree(resp);
++	if (ret) {
++		__session_rpc_close(entry);
++		return ret;
++	}
+ 	return id;
+-free_id:
+-	ksmbd_rpc_id_free(entry->id);
+-free_entry:
+-	kfree(entry);
+-	return -EINVAL;
+ }
+ 
+ void ksmbd_session_rpc_close(struct ksmbd_session *sess, int id)
+@@ -408,8 +404,53 @@ void ksmbd_session_rpc_close(struct ksmbd_session *sess, int id)
+ 	down_write(&sess->rpc_lock);
+ 	entry = xa_erase(&sess->rpc_handle_list, id);
+ 	if (entry)
+-		__session_rpc_close(sess, entry);
++		WRITE_ONCE(entry->closed, true);
+ 	up_write(&sess->rpc_lock);
++	if (entry)
++		__session_rpc_close(entry);
++}
++
++/* The reference pins the entry while waiting without holding rpc_lock. */
++struct ksmbd_session_rpc *ksmbd_session_rpc_get(struct ksmbd_work *work,
++					     int id)
++{
++	struct ksmbd_session_rpc *entry;
++	int err;
++
++	down_read(&work->sess->rpc_lock);
++	entry = xa_load(&work->sess->rpc_handle_list, id);
++	if (entry)
++		refcount_inc(&entry->refcount);
++	up_read(&work->sess->rpc_lock);
++	if (!entry)
++		return ERR_PTR(-ENOENT);
++
++	mutex_lock(&entry->lock);
++	if (READ_ONCE(work->state) == KSMBD_WORK_CANCELLED) {
++		err = -ECANCELED;
++		goto err_put;
++	}
++	if (ksmbd_conn_exiting(work->conn) ||
++	    ksmbd_conn_releasing(work->conn) ||
++	    READ_ONCE(work->sess->tearing_down)) {
++		err = -ESHUTDOWN;
++		goto err_put;
++	}
++	if (READ_ONCE(entry->closed)) {
++		err = -EBADF;
++		goto err_put;
++	}
++	return entry;
++
++err_put:
++	ksmbd_session_rpc_put(entry);
++	return ERR_PTR(err);
++}
++
++void ksmbd_session_rpc_put(struct ksmbd_session_rpc *entry)
++{
++	mutex_unlock(&entry->lock);
++	ksmbd_session_rpc_free(entry);
+ }
+ 
+ int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id)
+@@ -907,14 +948,14 @@ void destroy_previous_session(struct ksmbd_conn *conn,
+ 		up_write(&prev_sess->chann_lock);
+ 		goto out;
+ 	}
+-	prev_sess->tearing_down = true;
++	WRITE_ONCE(prev_sess->tearing_down, true);
+ 	up_write(&prev_sess->chann_lock);
+ 
+ 	ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_NEED_RECONNECT);
+ 	err = ksmbd_conn_wait_idle_sess(conn, prev_sess);
+ 	if (err) {
+ 		down_write(&prev_sess->chann_lock);
+-		prev_sess->tearing_down = false;
++		WRITE_ONCE(prev_sess->tearing_down, false);
+ 		up_write(&prev_sess->chann_lock);
+ 		ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_GOOD);
+ 		goto out;
+diff --git a/fs/smb/server/mgmt/user_session.h b/fs/smb/server/mgmt/user_session.h
+index 8e4ddb04f0e6d..38073ea9089d5 100644
+--- a/fs/smb/server/mgmt/user_session.h
++++ b/fs/smb/server/mgmt/user_session.h
+@@ -7,6 +7,8 @@
+ #define __USER_SESSION_MANAGEMENT_H__
+ 
+ #include <linux/hashtable.h>
++#include <linux/mutex.h>
++#include <linux/refcount.h>
+ #include <linux/xarray.h>
+ 
+ #include "../smb_common.h"
+@@ -17,6 +19,15 @@
+ #define PREAUTH_HASHVALUE_SIZE		64
+ 
+ struct ksmbd_file_table;
++struct ksmbd_work;
++
++struct ksmbd_session_rpc {
++	int			id;
++	unsigned int		method;
++	struct mutex		lock;
++	refcount_t		refcount;
++	bool			closed;
++};
+ 
+ struct channel {
+ 	char			sess_key[CIFS_KEY_SIZE];
+@@ -133,7 +144,11 @@ void ksmbd_release_tree_conn_id(struct ksmbd_session *sess, int id);
+ 
+ int ksmbd_session_rpc_open(struct ksmbd_session *sess, char *rpc_name);
+ void ksmbd_session_rpc_close(struct ksmbd_session *sess, int id);
++void ksmbd_session_rpc_clear_list(struct ksmbd_session *sess);
+ int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id);
++struct ksmbd_session_rpc *ksmbd_session_rpc_get(struct ksmbd_work *work,
++					     int id);
++void ksmbd_session_rpc_put(struct ksmbd_session_rpc *entry);
+ void ksmbd_user_session_get(struct ksmbd_session *sess);
+ void ksmbd_user_session_put(struct ksmbd_session *sess);
+ int create_proc_sessions(void);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index d43ea48fcaf31..11d3750747ee4 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3252,7 +3252,7 @@ int smb2_session_logoff(struct ksmbd_work *work)
+ 		smb2_set_err_rsp(work);
+ 		return -ENOENT;
+ 	}
+-	sess->tearing_down = true;
++	WRITE_ONCE(sess->tearing_down, true);
+ 	up_write(&sess->chann_lock);
+ 
+ 	ksmbd_all_conn_set_status(sess, KSMBD_SESS_NEED_RECONNECT);
+@@ -3261,7 +3261,7 @@ int smb2_session_logoff(struct ksmbd_work *work)
+ 	err = ksmbd_conn_wait_idle_sess(conn, sess);
+ 	if (err) {
+ 		down_write(&sess->chann_lock);
+-		sess->tearing_down = false;
++		WRITE_ONCE(sess->tearing_down, false);
+ 		up_write(&sess->chann_lock);
+ 		ksmbd_all_conn_set_status(sess, KSMBD_SESS_GOOD);
+ 		rsp->hdr.Status = STATUS_UNEXPECTED_IO_ERROR;
+@@ -3270,6 +3270,7 @@ int smb2_session_logoff(struct ksmbd_work *work)
+ 	}
+ 
+ 	ksmbd_close_session_fds(work);
++	ksmbd_session_rpc_clear_list(sess);
+ 
+ 	if (ksmbd_tree_conn_session_logoff(sess)) {
+ 		ksmbd_debug(SMB, "Invalid tid %d\n", req->hdr.Id.SyncId.TreeId);
+@@ -8950,6 +8951,21 @@ int smb2_set_info(struct ksmbd_work *work)
+ 	return rc;
+ }
+ 
++static __le32 smb2_pipe_error_status(int err, __le32 fallback)
++{
++	switch (err) {
++	case -ECANCELED:
++		return STATUS_CANCELLED;
++	case -ESHUTDOWN:
++		return STATUS_CONNECTION_DISCONNECTED;
++	case -EBADF:
++	case -ENOENT:
++		return STATUS_FILE_CLOSED;
++	default:
++		return fallback;
++	}
++}
++
+ /**
+  * smb2_read_pipe() - handler for smb2 read from IPC pipe
+  * @work:	smb work containing read IPC pipe command buffer
+@@ -8961,6 +8977,7 @@ static noinline int smb2_read_pipe(struct ksmbd_work *work)
+ 	int nbytes = 0, err;
+ 	u64 id;
+ 	struct ksmbd_rpc_command *rpc_resp;
++	struct ksmbd_session_rpc *rpc;
+ 	struct smb2_read_req *req;
+ 	struct smb2_read_rsp *rsp;
+ 
+@@ -8978,13 +8995,19 @@ static noinline int smb2_read_pipe(struct ksmbd_work *work)
+ 	}
+ 	up_read(&work->sess->rpc_lock);
+ 
+-	rpc_resp = ksmbd_rpc_read(work->sess, id);
++	rpc = ksmbd_session_rpc_get(work, id);
++	if (IS_ERR(rpc)) {
++		err = PTR_ERR(rpc);
++		rpc_resp = NULL;
++		goto out;
++	}
++	rpc_resp = ksmbd_rpc_read(work->sess, rpc);
+ 	if (rpc_resp) {
+ 		void *aux_payload_buf;
+ 
+ 		if (rpc_resp->flags != KSMBD_RPC_OK) {
+ 			err = -EINVAL;
+-			goto out;
++			goto out_put;
+ 		}
+ 
+ 		aux_payload_buf =
+@@ -8992,7 +9015,7 @@ static noinline int smb2_read_pipe(struct ksmbd_work *work)
+ 				 KSMBD_DEFAULT_GFP);
+ 		if (!aux_payload_buf) {
+ 			err = -ENOMEM;
+-			goto out;
++			goto out_put;
+ 		}
+ 
+ 		memcpy(aux_payload_buf, rpc_resp->payload, rpc_resp->payload_sz);
+@@ -9007,14 +9030,12 @@ static noinline int smb2_read_pipe(struct ksmbd_work *work)
+ 					     aux_payload_buf, nbytes);
+ 		if (err) {
+ 			kvfree(aux_payload_buf);
+-			goto out;
++			goto out_put;
+ 		}
+ 		kvfree(rpc_resp);
+ 	} else {
+-		err = ksmbd_iov_pin_rsp(work, (void *)rsp,
+-					offsetof(struct smb2_read_rsp, Buffer));
+-		if (err)
+-			goto out;
++		err = -EIO;
++		goto out_put;
+ 	}
+ 
+ 	rsp->StructureSize = cpu_to_le16(17);
+@@ -9023,10 +9044,14 @@ static noinline int smb2_read_pipe(struct ksmbd_work *work)
+ 	rsp->DataLength = cpu_to_le32(nbytes);
+ 	rsp->DataRemaining = 0;
+ 	rsp->Flags = 0;
++	ksmbd_session_rpc_put(rpc);
+ 	return 0;
+ 
++out_put:
++	ksmbd_session_rpc_put(rpc);
+ out:
+-	rsp->hdr.Status = STATUS_UNEXPECTED_IO_ERROR;
++	rsp->hdr.Status = smb2_pipe_error_status(err,
++						STATUS_UNEXPECTED_IO_ERROR);
+ 	smb2_set_err_rsp(work);
+ 	kvfree(rpc_resp);
+ 	return err;
+@@ -9587,6 +9612,7 @@ static noinline int smb2_write_pipe(struct ksmbd_work *work)
+ 	struct smb2_write_req *req;
+ 	struct smb2_write_rsp *rsp;
+ 	struct ksmbd_rpc_command *rpc_resp;
++	struct ksmbd_session_rpc *rpc;
+ 	u64 id = 0;
+ 	int err = 0, ret = 0;
+ 	char *data_buf;
+@@ -9621,22 +9647,34 @@ static noinline int smb2_write_pipe(struct ksmbd_work *work)
+ 	data_buf = (char *)(((char *)&req->hdr.ProtocolId) +
+ 			   data_offset);
+ 
+-	rpc_resp = ksmbd_rpc_write(work->sess, id, data_buf, length);
+-	if (rpc_resp) {
+-		if (rpc_resp->flags == KSMBD_RPC_ENOTIMPLEMENTED) {
+-			rsp->hdr.Status = STATUS_NOT_SUPPORTED;
+-			kvfree(rpc_resp);
+-			smb2_set_err_rsp(work);
+-			return -EOPNOTSUPP;
+-		}
+-		if (rpc_resp->flags != KSMBD_RPC_OK) {
+-			rsp->hdr.Status = STATUS_INVALID_HANDLE;
+-			smb2_set_err_rsp(work);
+-			kvfree(rpc_resp);
+-			return ret;
+-		}
++	rpc = ksmbd_session_rpc_get(work, id);
++	if (IS_ERR(rpc)) {
++		err = PTR_ERR(rpc);
++		rsp->hdr.Status = smb2_pipe_error_status(err,
++							STATUS_INVALID_HANDLE);
++		smb2_set_err_rsp(work);
++		return err;
++	}
++	rpc_resp = ksmbd_rpc_write(work->sess, rpc, data_buf, length);
++	ksmbd_session_rpc_put(rpc);
++	if (!rpc_resp) {
++		rsp->hdr.Status = STATUS_UNEXPECTED_IO_ERROR;
++		smb2_set_err_rsp(work);
++		return -EIO;
++	}
++	if (rpc_resp->flags == KSMBD_RPC_ENOTIMPLEMENTED) {
++		rsp->hdr.Status = STATUS_NOT_SUPPORTED;
++		kvfree(rpc_resp);
++		smb2_set_err_rsp(work);
++		return -EOPNOTSUPP;
++	}
++	if (rpc_resp->flags != KSMBD_RPC_OK) {
++		rsp->hdr.Status = STATUS_INVALID_HANDLE;
++		smb2_set_err_rsp(work);
+ 		kvfree(rpc_resp);
++		return ret;
+ 	}
++	kvfree(rpc_resp);
+ 
+ 	rsp->StructureSize = cpu_to_le16(17);
+ 	rsp->DataOffset = 0;
+@@ -11020,49 +11058,87 @@ static int fsctl_query_allocated_ranges(struct ksmbd_work *work, u64 id,
+ 	return ret;
+ }
+ 
++static int smb2_ioctl_rsp(struct ksmbd_work *work, struct smb2_ioctl_rsp *rsp,
++			  unsigned int cnt_code, unsigned int nbytes)
++{
++	rsp->CtlCode = cpu_to_le32(cnt_code);
++	rsp->InputCount = cpu_to_le32(0);
++	rsp->InputOffset = cpu_to_le32(112);
++	rsp->OutputOffset = cpu_to_le32(112);
++	rsp->OutputCount = cpu_to_le32(nbytes);
++	rsp->StructureSize = cpu_to_le16(49);
++	rsp->Reserved = cpu_to_le16(0);
++	rsp->Flags = cpu_to_le32(0);
++	rsp->Reserved2 = cpu_to_le32(0);
++	return ksmbd_iov_pin_rsp(work, rsp,
++				 sizeof(struct smb2_ioctl_rsp) + nbytes);
++}
++
+ static int fsctl_pipe_transceive(struct ksmbd_work *work, u64 id,
+ 				 unsigned int out_buf_len,
+ 				 struct smb2_ioctl_req *req,
+ 				 struct smb2_ioctl_rsp *rsp)
+ {
+ 	struct ksmbd_rpc_command *rpc_resp;
++	struct ksmbd_session_rpc *rpc;
+ 	char *data_buf = (char *)req + le32_to_cpu(req->InputOffset);
+-	int nbytes = 0;
++	unsigned int nbytes;
++	int err;
++
++	rpc = ksmbd_session_rpc_get(work, id);
++	if (IS_ERR(rpc)) {
++		err = PTR_ERR(rpc);
++		rsp->hdr.Status = smb2_pipe_error_status(err,
++							STATUS_INVALID_PARAMETER);
++		smb2_set_err_rsp(work);
++		return 0;
++	}
+ 
+-	rpc_resp = ksmbd_rpc_ioctl(work->sess, id, data_buf,
++	rpc_resp = ksmbd_rpc_ioctl(work->sess, rpc, data_buf,
+ 				   le32_to_cpu(req->InputCount));
+-	if (rpc_resp) {
+-		if (rpc_resp->flags == KSMBD_RPC_SOME_NOT_MAPPED) {
+-			/*
+-			 * set STATUS_SOME_NOT_MAPPED response
+-			 * for unknown domain sid.
+-			 */
+-			rsp->hdr.Status = STATUS_SOME_NOT_MAPPED;
+-		} else if (rpc_resp->flags == KSMBD_RPC_ENOTIMPLEMENTED) {
+-			rsp->hdr.Status = STATUS_NOT_SUPPORTED;
+-			goto out;
+-		} else if (rpc_resp->flags != KSMBD_RPC_OK) {
+-			rsp->hdr.Status = STATUS_INVALID_PARAMETER;
+-			goto out;
+-		}
++	if (!rpc_resp) {
++		ksmbd_session_rpc_put(rpc);
++		rsp->hdr.Status = STATUS_UNEXPECTED_IO_ERROR;
++		smb2_set_err_rsp(work);
++		return 0;
++	}
+ 
+-		nbytes = rpc_resp->payload_sz;
+-		if (rpc_resp->payload_sz > out_buf_len) {
+-			rsp->hdr.Status = STATUS_BUFFER_OVERFLOW;
+-			nbytes = out_buf_len;
+-		}
++	if (rpc_resp->flags == KSMBD_RPC_SOME_NOT_MAPPED) {
++		/*
++		 * set STATUS_SOME_NOT_MAPPED response
++		 * for unknown domain sid.
++		 */
++		rsp->hdr.Status = STATUS_SOME_NOT_MAPPED;
++	} else if (rpc_resp->flags == KSMBD_RPC_ENOTIMPLEMENTED) {
++		rsp->hdr.Status = STATUS_NOT_SUPPORTED;
++		goto error;
++	} else if (rpc_resp->flags != KSMBD_RPC_OK) {
++		rsp->hdr.Status = STATUS_INVALID_PARAMETER;
++		goto error;
++	}
+ 
+-		if (!rpc_resp->payload_sz) {
+-			rsp->hdr.Status =
+-				STATUS_UNEXPECTED_IO_ERROR;
+-			goto out;
+-		}
++	nbytes = rpc_resp->payload_sz;
++	if (rpc_resp->payload_sz > out_buf_len) {
++		rsp->hdr.Status = STATUS_BUFFER_OVERFLOW;
++		nbytes = out_buf_len;
++	}
+ 
+-		memcpy((char *)rsp->Buffer, rpc_resp->payload, nbytes);
++	if (!rpc_resp->payload_sz) {
++		rsp->hdr.Status = STATUS_UNEXPECTED_IO_ERROR;
++		goto error;
+ 	}
+-out:
++
++	memcpy((char *)rsp->Buffer, rpc_resp->payload, nbytes);
++	err = smb2_ioctl_rsp(work, rsp, FSCTL_PIPE_TRANSCEIVE, nbytes);
++	ksmbd_session_rpc_put(rpc);
+ 	kvfree(rpc_resp);
+-	return nbytes;
++	return err;
++
++error:
++	ksmbd_session_rpc_put(rpc);
++	kvfree(rpc_resp);
++	smb2_set_err_rsp(work);
++	return 0;
+ }
+ 
+ static inline int fsctl_set_sparse(struct ksmbd_work *work, u64 id,
+@@ -11373,8 +11449,10 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 	}
+ 	case FSCTL_PIPE_TRANSCEIVE:
+ 		out_buf_len = min_t(u32, KSMBD_IPC_MAX_PAYLOAD, out_buf_len);
+-		nbytes = fsctl_pipe_transceive(work, id, out_buf_len, req, rsp);
+-		break;
++		ret = fsctl_pipe_transceive(work, id, out_buf_len, req, rsp);
++		if (ret < 0)
++			goto out;
++		return 0;
+ 	case FSCTL_VALIDATE_NEGOTIATE_INFO:
+ 		if (conn->dialect < SMB30_PROT_ID) {
+ 			ret = -EOPNOTSUPP;
+diff --git a/fs/smb/server/transport_ipc.c b/fs/smb/server/transport_ipc.c
+index eb07cdf17410a..e8dfc42a1d081 100644
+--- a/fs/smb/server/transport_ipc.c
++++ b/fs/smb/server/transport_ipc.c
+@@ -834,7 +834,7 @@ ksmbd_ipc_share_config_request(const char *name)
+ 	return resp;
+ }
+ 
+-struct ksmbd_rpc_command *ksmbd_rpc_open(struct ksmbd_session *sess, int handle)
++struct ksmbd_rpc_command *ksmbd_rpc_open(struct ksmbd_session_rpc *entry)
+ {
+ 	struct ksmbd_ipc_msg *msg;
+ 	struct ksmbd_rpc_command *req;
+@@ -846,8 +846,8 @@ struct ksmbd_rpc_command *ksmbd_rpc_open(struct ksmbd_session *sess, int handle)
+ 
+ 	msg->type = KSMBD_EVENT_RPC_REQUEST;
+ 	req = (struct ksmbd_rpc_command *)msg->payload;
+-	req->handle = handle;
+-	req->flags = ksmbd_session_rpc_method(sess, handle);
++	req->handle = entry->id;
++	req->flags = entry->method;
+ 	req->flags |= KSMBD_RPC_OPEN_METHOD;
+ 	req->payload_sz = 0;
+ 
+@@ -856,7 +856,7 @@ struct ksmbd_rpc_command *ksmbd_rpc_open(struct ksmbd_session *sess, int handle)
+ 	return resp;
+ }
+ 
+-struct ksmbd_rpc_command *ksmbd_rpc_close(struct ksmbd_session *sess, int handle)
++struct ksmbd_rpc_command *ksmbd_rpc_close(struct ksmbd_session_rpc *entry)
+ {
+ 	struct ksmbd_ipc_msg *msg;
+ 	struct ksmbd_rpc_command *req;
+@@ -868,8 +868,8 @@ struct ksmbd_rpc_command *ksmbd_rpc_close(struct ksmbd_session *sess, int handle
+ 
+ 	msg->type = KSMBD_EVENT_RPC_REQUEST;
+ 	req = (struct ksmbd_rpc_command *)msg->payload;
+-	req->handle = handle;
+-	req->flags = ksmbd_session_rpc_method(sess, handle);
++	req->handle = entry->id;
++	req->flags = entry->method;
+ 	req->flags |= KSMBD_RPC_CLOSE_METHOD;
+ 	req->payload_sz = 0;
+ 
+@@ -878,7 +878,8 @@ struct ksmbd_rpc_command *ksmbd_rpc_close(struct ksmbd_session *sess, int handle
+ 	return resp;
+ }
+ 
+-struct ksmbd_rpc_command *ksmbd_rpc_write(struct ksmbd_session *sess, int handle,
++struct ksmbd_rpc_command *ksmbd_rpc_write(struct ksmbd_session *sess,
++					  struct ksmbd_session_rpc *entry,
+ 					  void *payload, size_t payload_sz)
+ {
+ 	struct ksmbd_ipc_msg *msg;
+@@ -892,25 +893,24 @@ struct ksmbd_rpc_command *ksmbd_rpc_write(struct ksmbd_session *sess, int handle
+ 	if (!msg)
+ 		return NULL;
+ 
+-	lockdep_assert_not_held(&sess->rpc_lock);
++	lockdep_assert_held(&entry->lock);
+ 
+-	down_read(&sess->rpc_lock);
+ 	msg->type = KSMBD_EVENT_RPC_REQUEST;
+ 	req = (struct ksmbd_rpc_command *)msg->payload;
+-	req->handle = handle;
+-	req->flags = ksmbd_session_rpc_method(sess, handle);
++	req->handle = entry->id;
++	req->flags = entry->method;
+ 	req->flags |= rpc_context_flags(sess);
+ 	req->flags |= KSMBD_RPC_WRITE_METHOD;
+ 	req->payload_sz = payload_sz;
+ 	memcpy(req->payload, payload, payload_sz);
+-	up_read(&sess->rpc_lock);
+ 
+ 	resp = ipc_msg_send_request(msg, req->handle);
+ 	ipc_msg_free(msg);
+ 	return resp;
+ }
+ 
+-struct ksmbd_rpc_command *ksmbd_rpc_read(struct ksmbd_session *sess, int handle)
++struct ksmbd_rpc_command *ksmbd_rpc_read(struct ksmbd_session *sess,
++					  struct ksmbd_session_rpc *entry)
+ {
+ 	struct ksmbd_ipc_msg *msg;
+ 	struct ksmbd_rpc_command *req;
+@@ -920,24 +920,23 @@ struct ksmbd_rpc_command *ksmbd_rpc_read(struct ksmbd_session *sess, int handle)
+ 	if (!msg)
+ 		return NULL;
+ 
+-	lockdep_assert_not_held(&sess->rpc_lock);
++	lockdep_assert_held(&entry->lock);
+ 
+-	down_read(&sess->rpc_lock);
+ 	msg->type = KSMBD_EVENT_RPC_REQUEST;
+ 	req = (struct ksmbd_rpc_command *)msg->payload;
+-	req->handle = handle;
+-	req->flags = ksmbd_session_rpc_method(sess, handle);
++	req->handle = entry->id;
++	req->flags = entry->method;
+ 	req->flags |= rpc_context_flags(sess);
+ 	req->flags |= KSMBD_RPC_READ_METHOD;
+ 	req->payload_sz = 0;
+-	up_read(&sess->rpc_lock);
+ 
+ 	resp = ipc_msg_send_request(msg, req->handle);
+ 	ipc_msg_free(msg);
+ 	return resp;
+ }
+ 
+-struct ksmbd_rpc_command *ksmbd_rpc_ioctl(struct ksmbd_session *sess, int handle,
++struct ksmbd_rpc_command *ksmbd_rpc_ioctl(struct ksmbd_session *sess,
++					  struct ksmbd_session_rpc *entry,
+ 					  void *payload, size_t payload_sz)
+ {
+ 	struct ksmbd_ipc_msg *msg;
+@@ -951,18 +950,16 @@ struct ksmbd_rpc_command *ksmbd_rpc_ioctl(struct ksmbd_session *sess, int handle
+ 	if (!msg)
+ 		return NULL;
+ 
+-	lockdep_assert_not_held(&sess->rpc_lock);
++	lockdep_assert_held(&entry->lock);
+ 
+-	down_read(&sess->rpc_lock);
+ 	msg->type = KSMBD_EVENT_RPC_REQUEST;
+ 	req = (struct ksmbd_rpc_command *)msg->payload;
+-	req->handle = handle;
+-	req->flags = ksmbd_session_rpc_method(sess, handle);
++	req->handle = entry->id;
++	req->flags = entry->method;
+ 	req->flags |= rpc_context_flags(sess);
+ 	req->flags |= KSMBD_RPC_IOCTL_METHOD;
+ 	req->payload_sz = payload_sz;
+ 	memcpy(req->payload, payload, payload_sz);
+-	up_read(&sess->rpc_lock);
+ 
+ 	resp = ipc_msg_send_request(msg, req->handle);
+ 	ipc_msg_free(msg);
+diff --git a/fs/smb/server/transport_ipc.h b/fs/smb/server/transport_ipc.h
+index e51850f1423ba..df94ba116d434 100644
+--- a/fs/smb/server/transport_ipc.h
++++ b/fs/smb/server/transport_ipc.h
+@@ -16,6 +16,7 @@ struct ksmbd_login_response_ext *
+ ksmbd_ipc_login_request_ext(const char *account);
+ 
+ struct ksmbd_session;
++struct ksmbd_session_rpc;
+ struct ksmbd_share_config;
+ struct ksmbd_tree_connect;
+ struct sockaddr;
+@@ -34,12 +35,15 @@ struct ksmbd_spnego_authen_response *
+ ksmbd_ipc_spnego_authen_request(const char *spnego_blob, int blob_len);
+ int ksmbd_ipc_id_alloc(void);
+ void ksmbd_rpc_id_free(int handle);
+-struct ksmbd_rpc_command *ksmbd_rpc_open(struct ksmbd_session *sess, int handle);
+-struct ksmbd_rpc_command *ksmbd_rpc_close(struct ksmbd_session *sess, int handle);
+-struct ksmbd_rpc_command *ksmbd_rpc_write(struct ksmbd_session *sess, int handle,
++struct ksmbd_rpc_command *ksmbd_rpc_open(struct ksmbd_session_rpc *entry);
++struct ksmbd_rpc_command *ksmbd_rpc_close(struct ksmbd_session_rpc *entry);
++struct ksmbd_rpc_command *ksmbd_rpc_write(struct ksmbd_session *sess,
++					  struct ksmbd_session_rpc *entry,
+ 					  void *payload, size_t payload_sz);
+-struct ksmbd_rpc_command *ksmbd_rpc_read(struct ksmbd_session *sess, int handle);
+-struct ksmbd_rpc_command *ksmbd_rpc_ioctl(struct ksmbd_session *sess, int handle,
++struct ksmbd_rpc_command *ksmbd_rpc_read(struct ksmbd_session *sess,
++					 struct ksmbd_session_rpc *entry);
++struct ksmbd_rpc_command *ksmbd_rpc_ioctl(struct ksmbd_session *sess,
++					  struct ksmbd_session_rpc *entry,
+ 					  void *payload, size_t payload_sz);
+ void ksmbd_ipc_release(void);
+ void ksmbd_ipc_soft_reset(void);
 -- 
 2.53.0
 
