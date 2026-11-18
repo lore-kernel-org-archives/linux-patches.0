@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022791;
-	b=kdm9FKRq8V0SY+n6GuxA4y/E5zfZE2JC0ja5WXtlxeueGYEzL0TkDpL5g6+kcgdsfuuk
-	 Os7rAiX6sWL60hzwVRmbeGJ/uQ1ZHojxcH1jvJio51Y5LeyTZMM0NtHgauqO+VzcxNVNi
-	 lNzWlCySD2MqQnI8I4XFrRCmcdlvGZ+9dfLNAbD6DXfi6moMc7+6LtiH2e4xuI1xz0DNI
-	 Wec8lqag5Ky7SFMT7fvbO+NDvLulHTSLkr6C9NBnTTRkrmzSHvsotVE2Q06xROSsKRs0Y
-	 T1ALZcptaNSHRugqr9EKWT25J4/lGGwK0Nglf88WS6ny9a82Tn2B7nUgxeMbUMIakaw==
+	t=1795022794;
+	b=aLGzth8CCzYHxAiB6e49AdZzo3pyo5O7d61DZbEugGqiJrORFh+XLfNALmbDMRfyu571
+	 zuMzb+9SZwi9DYrkqcbBMxboye2TPgogHJeWBT3qdB3QQmb3xLohtm3fjzF/am78qmclO
+	 MLU+kpQ9cIXU9Wl41tqtPvX8E2bge61/bBLxFjExXVoGWveT0byVI5CdZIZz41b1z5l97
+	 xRESClk9oJnZhLMroJkTThqAXjbb3Iqa9NVEiYL67Tw+fvd52W7XgTl+OFGsnzm7KYi98
+	 yX7XWaX/jSnZVBcZRkJ6socuiy7HQPr/acEy70ZOlUPceRQN7jywW1hQYOsaj4AN/nw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022791;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022794;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QPCBjcOOqyWg1jnMOSigEDTQ7N3FQKCf/s083AG5XzY=;
-	b=YfFQ5T2mR4c0TwPBbnZmgXx0x+VMk/pv8ITEoLtOCtm+2kQezziURPODAY4rZrcBmO4g
-	 1DtUN6j90UjxOfTq/CYUxJv6IzHulv0dws5JiKKNFnRWrz4vZdA80yHq4Qy4FLDeq8wcu
-	 sSw+HYWYpY0kF75wPmU4tmZMkhu5nNzUvi33iJJjfMXDzzFeb9Z3vR+cXe+xvIDBtvt6b
-	 nqVuS1KA/ivpHxq2eKgCZL8QKEEBb9c+G84qt9J9LhfGdgpMqB7uPeeGU1CZW12t+/xbL
-	 +MiTEJNzm4ZTGVYApiqMHJb/rTiXt1a9LGcFVPPNQ0JBhes9rYl6KPqDUaZq99ys1GA==
+	bh=SbYCYwicFvfOjNOYwmW6oi+FPSjEqcFVgwpJwhy1D1s=;
+	b=DX4G6Rx2/u0oHdkX7hat44DM4BjMxfexKIqU9RtovrkAy0j0fwZq4ClnwU/M+wmO9tKx
+	 bSo5Y9508VZje+6vFdVSXAvAlasAxDeBlYI6hnfrmOLMTaxLuM3ACkeAffnKkBOWm/0KC
+	 QeTrJmzgnYrzNyj+YnXhrQPr8lvDvnygUjwj6o6aDRwYu40pPVy2ELl9m9ZXB2o2WqGlf
+	 BAATkoKwtMdmmIVk6UjWWNiSXZjaHQXcz0DgJtwkFvwEdsjczaMBB4wQlSsTvU5O3djTa
+	 //tDnEhkAV+pnuPe/7W3WZYuhiGJLrHYOUyh1EOXRwKs3jnE20opLhC/CmxT4VmGd0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lv1YPpPs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b2xGXFCY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A33606B5C9;
-	Wed, 18 Nov 2026 17:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21787606B5DD;
+	Wed, 18 Nov 2026 17:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lv1YPpPs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93ED1F000C4;
-	Wed, 18 Nov 2026 17:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b2xGXFCY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8491F000D1;
+	Wed, 18 Nov 2026 17:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022791;
-	bh=QPCBjcOOqyWg1jnMOSigEDTQ7N3FQKCf/s083AG5XzY=;
+	s=korg; t=1795022794;
+	bh=SbYCYwicFvfOjNOYwmW6oi+FPSjEqcFVgwpJwhy1D1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lv1YPpPs+rhd04MCjPdHYSQ4XAz/HVenIWwEqPRlrBd9gp0FAxE21NxAPYjxqlmBP
-	 k5lm7jCjG9qpUamtDM3a6qEMkyRNOWUJ6hQOVl6Gy+N5MGok4W/8htHPwyPbLsUp1y
-	 h+tnOyAsdLWw9UVZpvH5sIs++pHhZ85TNgilWKfY=
+	b=b2xGXFCY2kiEwzfe7xXr4pkzT44IyHGX9c4URH9v4VM0X/t+Y4BHZPBzuHqJUyxiq
+	 Smnk7WKMH7NNMx7hxl7hmAZZY/JG9IdJO1QmVRr6+PLtVyqKmD3eqjT4tvcJEGc4fO
+	 06YYaGPuto91jQE4WZhOqS60GBE4uLa8mJf1ucqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Rik van Riel <riel@surriel.com>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Zi Yan <ziy@nvidia.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0098/2151] mm/shmem: preserve allocation errors when swapping in large entries
-Date: Wed, 18 Nov 2026 15:30:33 +0100
-Message-ID: <20261118150125.373590534@linuxfoundation.org>
+Subject: [PATCH 6.18 0099/2151] mm/filemap: read mapping->a_ops->free_folio under i_lock
+Date: Wed, 18 Nov 2026 15:30:34 +0100
+Message-ID: <20261118150125.407189832@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,61 +71,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit f4ce23b1feef16d435aa1188b6c2a637a5373ed5 ]
+[ Upstream commit dc24e273244e9d712257d5a6c20a32c7f5ca84e6 ]
 
-shmem_swapin_folio() adjusts swap to the requested slot within a large
-swap entry before allocating a folio. If allocation or charging fails,
-the error path compares this adjusted value with the original entry
-still stored in the XArray in shmem_confirm_swap().
+memory_failure() -> ... -> filemap_remove_folio() can read mapping->a_ops
+after the inode has been freed. Once the folio is deleted from the
+pagecache it no longer pins the mapping, so after i_lock is dropped
+e.g., a concurrent final iput() can evict and free the inode before
+filemap_free_folio() looks up mapping->a_ops->free_folio.
 
-Unless the index is at the start of the entry, this turns -ENOMEM into
--EEXIST even though nothing changed.
+Most callers hold a reference on the inode, but not all.
 
-The caller retries -EEXIST, so persistent allocation failures can leave
-the task spinning instead of returning the error.
+Documentation/filesystems/vfs.rst explicitly states that ->free_folio()
+must not assume the original address_space mapping still exists.
 
-Restore swap to index_entry on allocation failure so the existing error
-path checks the original entry. This preserves the allocation error if
-the entry is unchanged and still retries if it changed concurrently.
+Fix it by loading ->free_folio while i_lock is still held, similar to
+what folio_unmap_invalidate() does.
 
-Fixes: 91ab656ece13 ("mm/shmem, swap: tidy up swap entry splitting")
+Inline filemap_free_folio() into its remaining caller such that
+delete_from_page_cache_batch() also just loads the callback before
+dropping the i_lock.
+
+The bug was found by code inspection and has not been reproduced.
+
+Fix generated by an LLM and sent by Josef Bacik in private.
+
+Fixes: 59c66c5f8c4f ("mm: factor out page cache page freeing into a separate function")
 Cc: stable@vger.kernel.org
-Reported-by: Josef Bacik <josef@toxicpanda.com>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-12-392fc715d8f6@kernel.org
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[ david: get rid of filemap_free_folio() entirely; improve patch description ]
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-6-d6437171ecc3@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Duplicated the swap = index_entry assignment across separate direct and cached swap-in failure paths instead of one shared error block. ]
+[ sashal: Adjusted patch context to retain inode_add_lru() instead of inode_lru_list_add(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ mm/filemap.c | 29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 6828611bcdfe0..e7c4d134b8255 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -2376,6 +2376,8 @@ static int shmem_swapin_folio(struct inode *inode, pgoff_t index,
- 			if (IS_ERR(folio)) {
- 				error = PTR_ERR(folio);
- 				folio = NULL;
-+				/* Make sure to validate the original value. */
-+				swap = index_entry;
- 				goto failed;
- 			}
- 			skip_swapcache = true;
-@@ -2384,6 +2386,8 @@ static int shmem_swapin_folio(struct inode *inode, pgoff_t index,
- 			folio = shmem_swapin_cluster(swap, gfp, info, index);
- 			if (!folio) {
- 				error = -ENOMEM;
-+				/* Make sure to validate the original value. */
-+				swap = index_entry;
- 				goto failed;
- 			}
- 		}
+diff --git a/mm/filemap.c b/mm/filemap.c
+index cd7af384cff26..ee6594e691456 100644
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -227,18 +227,6 @@ void __filemap_remove_folio(struct folio *folio, void *shadow)
+ 	page_cache_delete(mapping, folio, shadow);
+ }
+ 
+-static void filemap_free_folio(const struct address_space *mapping,
+-		struct folio *folio)
+-{
+-	void (*free_folio)(struct folio *);
+-
+-	free_folio = mapping->a_ops->free_folio;
+-	if (free_folio)
+-		free_folio(folio);
+-
+-	folio_put_refs(folio, folio_nr_pages(folio));
+-}
+-
+ /**
+  * filemap_remove_folio - Remove folio from page cache.
+  * @folio: The folio.
+@@ -250,6 +238,7 @@ static void filemap_free_folio(const struct address_space *mapping,
+ void filemap_remove_folio(struct folio *folio)
+ {
+ 	struct address_space *mapping = folio->mapping;
++	void (*free_folio)(struct folio *folio);
+ 
+ 	BUG_ON(!folio_test_locked(folio));
+ 	spin_lock(&mapping->host->i_lock);
+@@ -258,9 +247,12 @@ void filemap_remove_folio(struct folio *folio)
+ 	xa_unlock_irq(&mapping->i_pages);
+ 	if (mapping_shrinkable(mapping))
+ 		inode_add_lru(mapping->host);
++	free_folio = mapping->a_ops->free_folio;
+ 	spin_unlock(&mapping->host->i_lock);
+ 
+-	filemap_free_folio(mapping, folio);
++	if (free_folio)
++		free_folio(folio);
++	folio_put_refs(folio, folio_nr_pages(folio));
+ }
+ 
+ /*
+@@ -320,6 +312,7 @@ static void page_cache_delete_batch(struct address_space *mapping,
+ void delete_from_page_cache_batch(struct address_space *mapping,
+ 				  struct folio_batch *fbatch)
+ {
++	void (*free_folio)(struct folio *folio);
+ 	int i;
+ 
+ 	if (!folio_batch_count(fbatch))
+@@ -337,10 +330,16 @@ void delete_from_page_cache_batch(struct address_space *mapping,
+ 	xa_unlock_irq(&mapping->i_pages);
+ 	if (mapping_shrinkable(mapping))
+ 		inode_add_lru(mapping->host);
++	free_folio = mapping->a_ops->free_folio;
+ 	spin_unlock(&mapping->host->i_lock);
+ 
+-	for (i = 0; i < folio_batch_count(fbatch); i++)
+-		filemap_free_folio(mapping, fbatch->folios[i]);
++	for (i = 0; i < folio_batch_count(fbatch); i++) {
++		struct folio *folio = fbatch->folios[i];
++
++		if (free_folio)
++			free_folio(folio);
++		folio_put_refs(folio, folio_nr_pages(folio));
++	}
+ }
+ 
+ int filemap_check_errors(struct address_space *mapping)
 -- 
 2.53.0
 
