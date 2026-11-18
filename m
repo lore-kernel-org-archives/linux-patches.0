@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057590;
-	b=zG30O1mRo3CnW3TkJiuNNyew48XcsASLafTCh3HJuhIuY5tQK5cYJfzety+nNzaUm6n0
-	 DSrpSg58eEHNmh1+lIkAFj6oZ0JSJgoVhEFvapxEayTW414VaLMEjnyWWfuI7xZLK9U71
-	 O8moZVpAY1ixa+y6O++otYdw/tXw87lQ2l6lcm0uBPGKq/I03OlNGAol5qabXR5VPwSUv
-	 qCOpNtvoGLAAecO1h2HeDCAASYNSC9x6g49Mnn0y/pyWgJqK6AWbeP25G/OWam5Rm4fxW
-	 YuMdcMkaqIyL69GJk6zileSLAm76PP9ZJrGRgykKe3GnFi2kYffT7k47U2CGcZWR7dw==
+	t=1795057593;
+	b=Sd87MGyu0si/ivs5EP0nu3F+SH00xIvLKbSgW2nLmxAZ0Ab7Sk1HYdYfMgpCQe7fdKQR
+	 l8bP4pk8kHek/zLEeaI99y9Ga2Ha+KyuXuQUe4yAPDA/8T3u1GkFZOaE/iugsHlRbGBb7
+	 9hwbmbEUr3c5yx1D3WNYEcbFtjZFp0zoHegYtM7k/h2RvVn386MBc6FcOpSbWUPDG4VmT
+	 SYKyD0GageUFeftzV2hxwP7Vai7czs+ojOfo4CevSjZDnRKH8G6qEpdJPJvwgbOULv2FP
+	 roKXkqWvyBdk3NLuAjpKixQns1k/8y7yCnYuFVD11K7RCzF6Ct+P9ETTOl1EUiVw1/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057590;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057593;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tAQ/thqm6PjMyaNHTHhq7NL0cckEkLhha6quGl5DunI=;
-	b=z2Wx+0R55+vcV0OzrYu1Rjw5dayAr9sMjA5v1i9ZS0WsR2mZmaV+wlmIvAcBVo6ZECPa
-	 RX2jc4UqyNn6LzImS8QoL8ZI86VtNJ72zkveokOjhSeb7QNMkGt01YcbLwFLot9aRahHF
-	 WRyEfux22Uv+lglWmNDos1955lEtvdREocCVJMGNWBTMQazNEooJHOEq3W+gJThipQb+t
-	 Onb0rsGe1oa2LgQKqnSuzfLStuuyBmgUqkRR4q97L8uef9mGyKpRnI2l7AW5umJOFFAAd
-	 K+c7zPO2gZvffDr/bMYT0VguQGQM9aeakKLblz+rbHC6Z2Q/zY1w8g5ekvWa4/+UIAA==
+	bh=tnjCRcKB+KGC0lJiF4idbhcSZ+gN9LpiSnqy6GxNlRU=;
+	b=zml1C9ONFdK/N1NN6MxhQIVUeGliOp3BONZGp+4jhVpdH6Fb1vxlwlnOIUrl1umSHFI5
+	 npeY6IpEJPa9HBFOAhdnnYh8v/Aovdh3fuaRDsi+RXIGSPDhTDowPBe0AUZnU6/7oEoL+
+	 cq1vAak+myj7cSVMgThunLYA6b7N7jqpnrCuhnqFEOslgdtuu+HWrO/bpn6avpFmu9hCV
+	 Pr2EDG7J90nZJTuRLu/pyMa7Uv5uFvIlh7cov1Rqkoopi+sstfgsQ3cMq8D5hPN5Usyro
+	 l2mK356syQmVU6BNo4O34so5oVm5ky96kegK3xWw/FzO9IDU4wgVkR6zMZjExd9ACQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wX6mbG8+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cz2C3sKT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B265260A2619;
-	Thu, 19 Nov 2026 03:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97941606A33E;
+	Thu, 19 Nov 2026 03:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wX6mbG8+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1FE1F000C4;
-	Thu, 19 Nov 2026 03:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cz2C3sKT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E555D1F000C4;
+	Thu, 19 Nov 2026 03:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057590;
-	bh=tAQ/thqm6PjMyaNHTHhq7NL0cckEkLhha6quGl5DunI=;
+	s=korg; t=1795057593;
+	bh=tnjCRcKB+KGC0lJiF4idbhcSZ+gN9LpiSnqy6GxNlRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wX6mbG8+Vy0C5Wyn+4un9xX22BzCvR4rNCojwMH00bhDspzwDFhZkvIbsmuo6qNPW
-	 JnwywcM92DMnruaC3ToGbBysXfoSvvN1wnx2fi3wLIVsyRenXRYMNLy80pSU+BME3D
-	 rtEcXQbMC82VejRz3cn69Ann8UuCnI9R7gTlsmZY=
+	b=Cz2C3sKTW2nFwpqowdIgF6H+8XcNNnzCUqJnEbU64HpEOVmhV/rwxQLeq7299lmME
+	 T2M6YEOXDvEXqdHcNaZfjF6WrSvXEDxCxmrJjleHa1Pf9Hnksu+eaU9l4ZALlsHcJ1
+	 jkS5oNqyf30CP0ALHkS11VW6EyGgGpeaFLglnjxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Everaars <robineveraars@pm.me>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Daeho Jeong <daehojeong@google.com>,
+	Sunmin Jeong <s_min.jeong@samsung.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0185/1848] ACPI: button: Add DMI quirk for Razer Blade Pro 17 early 2020 lid switch
-Date: Wed, 18 Nov 2026 15:37:03 +0100
-Message-ID: <20261118145919.356332644@linuxfoundation.org>
+Subject: [PATCH 5.10 0186/1848] f2fs: avoid setting SBI_NEED_FSCK on transient resize failure
+Date: Wed, 18 Nov 2026 15:37:04 +0100
+Message-ID: <20261118145919.424298276@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,54 +70,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Everaars <robineveraars@pm.me>
+From: Daeho Jeong <daehojeong@google.com>
 
-[ Upstream commit 415125669c2ddc773c579a60df108f75712dfa83 ]
+[ Upstream commit 258c95150c26a30db1896eacd3bdef26314f2ca1 ]
 
-The lid switch reports "close" but can miss the matching "open", leaving
-_LID closed after resume. systemd-logind then suspends the system again
-roughly every 35 seconds.
+When free_segment_range() fails in f2fs_resize_fs(), no on-disk
+superblock or filesystem metadata has been modified yet, and
+free_segment_range() safely restores all in-memory counters before
+returning.
 
-Reading the embedded controller's PSTA byte while _LID is stale shows that
-bit 0x04 is set, which the DSDT treats as open. The DSDT returns the cached
-LIDS byte from _LID. Its wake path aborts in RTEC on an unhandled
-SystemCMOS region before copying PSTA to LIDS.
+However, the current error recovery path unconditionally sets the
+SBI_NEED_FSCK flag and prints a scary error message on any error,
+forcing an unnecessary and time-consuming fsck.f2fs repair on the
+subsequent mount/reboot.
 
-Initialize the lid state to open on resume, matching the existing quirk
-for the Razer Blade Stealth 13 late 2019. With
-button.lid_init_state=open, a physical close suspended once and resume
-reported open without another suspend.
+Fix this by separating the error recovery path with a dedicated
+recover_user_blocks label to bypass setting SBI_NEED_FSCK on
+free_segment_range() failures.
 
-Signed-off-by: Robin Everaars <robineveraars@pm.me>
-Link: https://patch.msgid.link/20260817141414.213075-1-robineveraars@pm.me
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
+Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/button.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/f2fs/gc.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/button.c b/drivers/acpi/button.c
-index 4b90dd928398c..10aca4d2b8244 100644
---- a/drivers/acpi/button.c
-+++ b/drivers/acpi/button.c
-@@ -124,6 +124,17 @@ static const struct dmi_system_id dmi_lid_quirks[] = {
- 		},
- 		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
- 	},
-+	{
-+		/*
-+		 * Razer Blade Pro 17 early 2020, notification of the LID device
-+		 * only happens on close, not on open and _LID keeps returning closed.
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Razer"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Blade Pro 17 (Early 2020) - RZ09-0329"),
-+		},
-+		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
-+	},
- 	{
- 		/*
- 		 * Samsung galaxybook2 ,initial _LID device notification returns
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 651dd392b5b93..f136a6e5d7348 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -2070,7 +2070,7 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
+ 	set_sbi_flag(sbi, SBI_IS_RESIZEFS);
+ 	err = free_segment_range(sbi, secs, false);
+ 	if (err)
+-		goto recover_out;
++		goto recover_user_blocks;
+ 
+ 	update_sb_metadata(sbi, -secs);
+ 
+@@ -2091,11 +2091,14 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
+ 		f2fs_commit_super(sbi, false);
+ 	}
+ recover_out:
+-	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
+ 	if (err) {
++		f2fs_bug_on(sbi, err == -EAGAIN);
+ 		set_sbi_flag(sbi, SBI_NEED_FSCK);
+ 		f2fs_err(sbi, "resize_fs failed, should run fsck to repair!");
+-
++	}
++recover_user_blocks:
++	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
++	if (err) {
+ 		spin_lock(&sbi->stat_lock);
+ 		sbi->user_block_count += shrunk_blocks;
+ 		spin_unlock(&sbi->stat_lock);
 -- 
 2.53.0
 
