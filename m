@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035418;
-	b=L3FdGPPs1YtDa9DzyQo83wn4SHKklN2BBtJETCciXZItZAGgSkmSMaHZvVf0+SlmW3nj
-	 Jm6D/GAechTzzxAr+y2asXXO4FdzVi9Aq/JqpbvLbnwkAVD+IsJCeqjRhuFJ3rf7U60NH
-	 WTm1xpt2Wj3YTKE/cuc8MLWrZiPTpGGPO5DUUPdNC2clzaCO2q8t8bFmUjIUJ06S/cogJ
-	 kXBePUTPl4a2kngc6/w4lQslS824Uz97injcCLudiVg4rbEgLpnXJSMtgDXyhpKuOPj2k
-	 S3zSiuIq+sintHrFl/eEC6vCt6MQ+VibuvOtFnMFsTMFEkQ2kCO//vWI+TtZLxrBnTQ==
+	t=1795035421;
+	b=ChibTpRN29JAaKVGTHOWY5bymYPUasPnGoJDcFxCHKM1o1HU0+oLhibloYqOLksX17Xw
+	 A9Ad0B6eAFoeWZns80ShSivPPsCNlINhlwNcK3io+KkTF9rsqqQrYieAtQQIMTbqCAZqr
+	 6Vvyye5QevRv8UJuopaj75gx3OEP5pu4FLcEYWjxBzivwQDeJaEL8aMsxpNybMVmDSg2J
+	 tlEYxtemIujAvG5LvwvKIoxc6shAA5zA+I29VMA/BnZXP19IbZ0Z9XDTbLQttAfPEoyav
+	 hx9x8E7TOprp6WX4EpMRZOfbqG371lv+gWYLia16J4aoVrZ6WzHMzQnftuzo0K1Dx7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035418;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035421;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RdaoLK31rATlMebSW2OJHKuSSlP+c5ukJRlEtPoS8zg=;
-	b=rx/HTT8fCnyD7pQLfiUz/p/qzhYl7q5zutaCLBqiRP/p3nP9T9u+74vIxGHiMILN7u8R
-	 WMQkIypfrPfOq2hhLJoCu+Q4Wpg3qXrkZXWGpxbugWT2eDBlR2G7nJAawL8ObkVGFM49I
-	 fQvV2KySWFpoDX+BvSE+4eP3Jygg/6qF7nv/lkfL+r1dyDX4jhkMGwekIu6dd9yuohYGm
-	 CWRGLjhpGZ73dkCWsYhqlvJBbOSGorD9Oz2qKOSWHr5kpx2zVB6aL2d1HUcQ7ByXeD42H
-	 0q5LfKBeuvhIx9b3UjuYTXLKKbgmZW9VYVjCiUXP/Bp5oA5bdLV4s7fkJUvhA7jygxg==
+	bh=UIh8x1Ecng0DhczWCFzveut1E7Br+HEuT8KqE400xbI=;
+	b=TPML8C2pR0YchZL6Oc+lpE8KuHYSCrbczDaWi2bS+2YlXpezcum0pBPZei8CKwGbp0tq
+	 cowUEZFNwGTCnRJ4+Lf1ZFcGEvBPxSfY0I2DEyf4jtKe7tb3cN5EtPFc/hXFkyQGukg7Y
+	 Dggh9KFZU9Zb/F57jLq7j/WFpyy/IasqK8b8XUHJAsGTH5Fte1neQ0rNX2JSy55fGNVa9
+	 9t9fh3VLk226H5sGGX2FqkKpmufcVJMh5CXNwfUYhKSLLAdrT2vbA5sYB9G5k6FEDMBYl
+	 GdmMDVGScXoC89MOzLnshCRxY86bqmErxwCKMp56wznsLgdVB7es0NQZrwH9LqN3PMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HYTof92e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IGWanvy2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6724C606A325;
-	Wed, 18 Nov 2026 20:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58345606A32C;
+	Wed, 18 Nov 2026 20:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HYTof92e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CE71F000C4;
-	Wed, 18 Nov 2026 20:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IGWanvy2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67211F000C4;
+	Wed, 18 Nov 2026 20:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035418;
-	bh=RdaoLK31rATlMebSW2OJHKuSSlP+c5ukJRlEtPoS8zg=;
+	s=korg; t=1795035421;
+	bh=UIh8x1Ecng0DhczWCFzveut1E7Br+HEuT8KqE400xbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HYTof92eRhlMUqNhhhp+oPJ6DGutk3vKjv344/n9idVhqgyKEa8M0zQ72qSyLE2kE
-	 zsjGT/s//cWAsb/kMt7V3+DxvoUxgg561NnZ8H2+BBfBu2OVs1h7Y3bRZdktmenpCb
-	 Yft/HMxXac4HQE0goiFOGmqLrzVJnNzpOaSq2xTc=
+	b=IGWanvy2WeiE5vliYrpLh44Qn0eZEormpboiRFvLkhI79YjHCeYncSR2fVxDSRysh
+	 aVm5n0d4yKt94/YQvVt/oSQL7vZt57AXvymuFiU4d/R7X1ECDq10BkTogIb9As8PXV
+	 pTKwFO3I9J2lFRUZ+LCbZVivZAmLttLWREquw4pA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fahad Alharbi <fahad@codepure.com>,
 	Chris Mason <mason@kernel.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.6 0648/3318] ovl: do not copy up an xattr value that was never read
-Date: Wed, 18 Nov 2026 15:21:10 +0100
-Message-ID: <20261118150337.437482259@linuxfoundation.org>
+Subject: [PATCH 6.6 0649/3318] ovl: fix a torn path in ovl_get_redirect()
+Date: Wed, 18 Nov 2026 15:21:11 +0100
+Message-ID: <20261118150337.475137153@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,52 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-commit 755b5c5c9277be251a51623d6065abab948c61bc upstream.
+commit 2001cd7ca5560198131e46c6ca3c3472b06145c2 upstream.
 
-Copy-up stores uninitialized kernel memory in an xattr of the upper
-file, where the user can read it.
+A hard link of a metacopy file that races with a rename of an ancestor
+stores a redirect to the wrong lower file.
 
-ovl_copy_xattr() may only pass bytes to ovl_do_setxattr() that
-ovl_do_getxattr() has read. When the read fails with -ERANGE the
-function asks for the size again, and if the new size fits the buffer
-it stores the buffer although nothing was read into it. The buffer
-comes from kvmalloc(), or it still holds the value of the previous
-xattr.
+Each component of an absolute redirect must be the name that a dentry
+has in the parent that the walk continues with. ovl_get_redirect()
+copies the name under d_lock and calls dget_parent() after the unlock,
+and the callers for a hard link hold no lock that stops a rename across
+directories. A rename between the two steps combines the old name with
+the new parent.
 
-A FUSE lower layer that answers every sized GETXATTR with -ERANGE made
-copy-up store 4096 bytes that the server never sent, with a kernel
-pointer in them, as an xattr of the upper file.
+With delays in ovl_get_redirect(), an unprivileged user hard-linked a
+metacopy file while renaming its ancestor to another directory, the
+stored redirect named another lower path, and after a remount the file
+showed the data of a root-only file.
 
-Fix this by failing the copy-up with -EIO when the size that follows
--ERANGE fits the buffer.
+Fix this by taking the parent first and checking it again under d_lock.
 
-Reported-by: Fahad Alharbi <fahad@codepure.com>
-Closes: https://lore.kernel.org/linux-fsdevel/CAOQ4uxjhfpNVvoVrTayj46H2CViTOc3oxzM6xdb8+E7ikE2CSA@mail.gmail.com/
-Fixes: e4ad29fa0d22 ("ovl: use a minimal buffer in ovl_copy_xattr")
+Fixes: e04527fefba6 ("ovl: fix dentry leak in ovl_get_redirect")
 Cc: stable@vger.kernel.org
 Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/copy_up.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/overlayfs/dir.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -132,8 +132,12 @@ int ovl_copy_xattr(struct super_block *s
+--- a/fs/overlayfs/dir.c
++++ b/fs/overlayfs/dir.c
+@@ -975,7 +975,19 @@ static char *ovl_get_redirect(struct den
+ 		const char *name;
+ 		int thislen;
  
- retry:
- 		size = ovl_do_getxattr(oldpath, name, value, value_size);
--		if (size == -ERANGE)
-+		if (size == -ERANGE) {
- 			size = ovl_do_getxattr(oldpath, name, NULL, 0);
-+			/* Nothing was read into value, so it must not be used */
-+			if (size >= 0 && size <= value_size)
-+				size = -EIO;
++		/*
++		 * A rename can move d to another directory at any time.  Hold
++		 * d_lock to copy the name that d has in this very parent, or
++		 * else the path mixes the old name with the new parent.
++		 */
++		tmp = dget_parent(d);
+ 		spin_lock(&d->d_lock);
++		if (unlikely(tmp != d->d_parent)) {
++			spin_unlock(&d->d_lock);
++			dput(tmp);
++			continue;
 +		}
++
+ 		name = ovl_dentry_get_redirect(d);
+ 		if (name) {
+ 			thislen = strlen(name);
+@@ -988,13 +1000,13 @@ static char *ovl_get_redirect(struct den
+ 		if (thislen + (name[0] != '/') > buflen) {
+ 			ret = ERR_PTR(-EXDEV);
+ 			spin_unlock(&d->d_lock);
++			dput(tmp);
+ 			goto out_put;
+ 		}
  
- 		if (size < 0) {
- 			error = size;
+ 		buflen -= thislen;
+ 		memcpy(&buf[buflen], name, thislen);
+ 		spin_unlock(&d->d_lock);
+-		tmp = dget_parent(d);
+ 
+ 		dput(d);
+ 		d = tmp;
 
 
