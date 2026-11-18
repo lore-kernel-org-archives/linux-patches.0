@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027649;
-	b=RTem/gJXn22kIjODKf251eDfox8E5lOpLqExKKh4pnaWAJGBDoB15PyTX1I0lj5DmE1Y
-	 YSWAZ3khCc5IKGlQtrXg35+3sufEIvYQ5iNDBW0L02vwcWMYka3+vQWSj9jC5QtoI4MMg
-	 sCCR/QXyMNyACsY8qnq8Ek8kjbTdEkfXRNmoUiHkF/DNtpW7zFi4qaIiREFSz8jxwdtkg
-	 nuk84FJChzIZAqU0Sp2CKlpKtGwcd7aNqZTdeye40CifT2UfxPUg/19rrXWuCukwoaKZ4
-	 deT5MLS6PzL3BxzejJM6tz7v1eqlI/f1nQ0JnN9hCFDpv+3zES7qCgEGOmifxuUSRKQ==
+	t=1795027652;
+	b=bR04JFtNG7e2uzha6+J7Ug5GijbEDd1LQsUEo5nUHhW1aQazbSU/t3FoxRB5Fej7szKf
+	 dBdRz7D8zgCruj/mVjSnxEkgdn4+6wGnfEbaMqHskL/4bgHOSm7QePdPLGeZpxHq37rmD
+	 71svWJO2V7ZTVElpUh+kBTaAWnm2YbBqEd+OXKHbpphZQfMkti+1TLIN4C/sIO5ebRd5q
+	 ZjsY1dyEJtdX5xmbjgzPgZksKimXyYBPYJCDT08jPV4cg9J8lu3zfSd2Ox9DaiqUz82Gv
+	 hWRAzzSpETgzt/pxbWzjzHausbb0r61erViZdziFfQpl1g+xphT/AjmV8mRm9xwff1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027649;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027652;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XRAjOB63YbKkfofrv6trV+PuXlxEtbziShVtbwXFstg=;
-	b=VmZ8CAufpJigGjM4iC78sR86PuNhy4xq5DIP7+kRrbKj0/KWhtLJCOcmidcRQ038cje3
-	 v2d418rLBUcia+uXPLLaC5skyg444gbpZpgEmwtDZEyqR0gDdResEkotHQ5oIolLGWedF
-	 TQyq7gNtrWjAtSnEKKOwtiIHPkCGbDjg7KhgXWW7VgsEQHWm8z71NkiYhTp8B3x0GmFXI
-	 ekab1otmPQA+qJhP6BYg+G2HA6clOVzroYWGgmcHVenh/8XtvaJFfcLR+CAXd4OucH+rk
-	 2gDSeXx/1igxSFj8UiMoKeVKwkYDY9IcNIvfJ6476lPuKTLvB5C9y1F1RIxt/09p/ew==
+	bh=1Bj9gZB1wGB2PpPQdwmioHJE52gMtLYB1ovhICvtgac=;
+	b=01FhcaOQ+3nWfuwside3F9qCvQW7vhIuEE8/I1XSrxxRZIqkMy/WJpzhZFyLeCS1SZuD
+	 N6yaAyarPd1uyYmeV0ORElbgpRBEvWFf8iAcBkMWVBlNaBypRq9e9GQ/jgdh+pVJCQe55
+	 zdPuh42Mv09+kvttC/1Sc3IWhilVkc7Q9tVv2BBjohrQdDRGPrpB/HVgh32hgtftY6Dns
+	 A+bYYbfL1+sfPTlHdr1vju2nDQI7Ja9G3IgZPgLloRahbOmxxOKILD24bSmr5GLfETf0A
+	 j5ZiXd0dCvVr8t7QJ0ckmOPjBcbI5m1n2N+PGvHpyR/g2aaT0VPV4p79FAyoYmqgyYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y825bcYK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rI76T6nf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4D3606A338;
-	Wed, 18 Nov 2026 18:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB4F606A33B;
+	Wed, 18 Nov 2026 18:47:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y825bcYK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B356B1F000C4;
-	Wed, 18 Nov 2026 18:47:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rI76T6nf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FDD71F000C4;
+	Wed, 18 Nov 2026 18:47:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027649;
-	bh=XRAjOB63YbKkfofrv6trV+PuXlxEtbziShVtbwXFstg=;
+	s=korg; t=1795027652;
+	bh=1Bj9gZB1wGB2PpPQdwmioHJE52gMtLYB1ovhICvtgac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y825bcYKS6zSPxub0cA01lMKIGsk6ca5fIs4lRHnA+NterHTB2EC2ruxdPnpBN6L+
-	 SF8NV0OTR0ACPH98jPlRu5AHmtXWrX2Q9lC1qdRRMKaD1H/ddO0Hf4cDaFwUMuvnFy
-	 seAT/9jr+Ax1cPaOqRiq5wZN0nfiR1rEDjth9x8o=
+	b=rI76T6nfPNkNENvu6zG1f9B/lQBpQPcYeiRUO8iSd+VoVtuPQGBxTS+AAOzr79aOU
+	 WLtqkTfSrJS6CKexSVvOSdHrofroxaqLXRN1ouaoPoeBIWtQfCnh7x/ljx7wjNhUZ/
+	 TFFSXktG8h6ClccoCqvECLLsG3GR522TgaHVTnI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Naman Jain <namjain@linux.microsoft.com>,
+	Anirudh Rayabharam <anrayabh@linux.microsoft.com>,
+	Jork Loeser <jloeser@linux.microsoft.com>,
+	Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>,
 	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1862/2151] Drivers: hv: vmbus: Check ACPI companion before use
-Date: Wed, 18 Nov 2026 15:59:57 +0100
-Message-ID: <20261118150229.629825285@linuxfoundation.org>
+Subject: [PATCH 6.18 1863/2151] x86/hyperv: move stimer cleanup to hv_machine_shutdown()
+Date: Wed, 18 Nov 2026 15:59:58 +0100
+Message-ID: <20261118150229.669893698@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,47 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Jork Loeser <jloeser@linux.microsoft.com>
 
-[ Upstream commit dd57772e36f72f8d9a53d7fa4d90c974d8ebbcff ]
+[ Upstream commit f7ce370b525a02127527b0f54ee877413705a709 ]
 
-Platform drivers can be forced to bind to devices outside their match
-tables through driver_override. vmbus_acpi_add() assumes that every bound
-device has an ACPI companion and dereferences it without checking.
+Move hv_stimer_global_cleanup() from vmbus's hv_kexec_handler() to
+hv_machine_shutdown() in the platform code. This ensures stimer cleanup
+happens before the vmbus unload, which is required for root partition
+kexec to work correctly.
 
-Return -ENODEV when the companion is absent to avoid a NULL pointer
-dereference.
-
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Fixes: 9c8434238041 ("Drivers: hv: vmbus: Convert acpi_device to more generic platform_device")
-Reviewed-by: Naman Jain <namjain@linux.microsoft.com>
+Co-developed-by: Anirudh Rayabharam <anrayabh@linux.microsoft.com>
+Signed-off-by: Anirudh Rayabharam <anrayabh@linux.microsoft.com>
+Signed-off-by: Jork Loeser <jloeser@linux.microsoft.com>
+Reviewed-by: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Stable-dep-of: 228e21764b38 ("Drivers: hv: Run VMBus kexec cleanup from syscore shutdown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/vmbus_drv.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/mshyperv.c | 8 ++++++--
+ drivers/hv/vmbus_drv.c         | 1 -
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
+diff --git a/arch/x86/kernel/cpu/mshyperv.c b/arch/x86/kernel/cpu/mshyperv.c
+index cae0dcd9006bd..183301f27f080 100644
+--- a/arch/x86/kernel/cpu/mshyperv.c
++++ b/arch/x86/kernel/cpu/mshyperv.c
+@@ -195,8 +195,12 @@ void hv_remove_crash_handler(void)
+ #ifdef CONFIG_KEXEC_CORE
+ static void hv_machine_shutdown(void)
+ {
+-	if (kexec_in_progress && hv_kexec_handler)
+-		hv_kexec_handler();
++	if (kexec_in_progress) {
++		hv_stimer_global_cleanup();
++
++		if (hv_kexec_handler)
++			hv_kexec_handler();
++	}
+ 
+ 	/*
+ 	 * Call hv_cpu_die() on all the CPUs, otherwise later the hypervisor
 diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index 1dc371eb53400..5b55a44c3dd96 100644
+index 5b55a44c3dd96..1cc2c8695e0bb 100644
 --- a/drivers/hv/vmbus_drv.c
 +++ b/drivers/hv/vmbus_drv.c
-@@ -2545,10 +2545,14 @@ EXPORT_SYMBOL_GPL(vmbus_free_mmio);
- #ifdef CONFIG_ACPI
- static int vmbus_acpi_add(struct platform_device *pdev)
+@@ -2876,7 +2876,6 @@ static struct platform_driver vmbus_platform_driver = {
+ 
+ static void hv_kexec_handler(void)
  {
-+	struct acpi_device *ancestor;
-+	struct acpi_device *device;
- 	acpi_status result;
- 	int ret_val = -ENODEV;
--	struct acpi_device *ancestor;
--	struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
-+
-+	device = ACPI_COMPANION(&pdev->dev);
-+	if (!device)
-+		return -ENODEV;
- 
- 	vmbus_root_device = &device->dev;
- 
+-	hv_stimer_global_cleanup();
+ 	vmbus_initiate_unload(false);
+ 	/* Make sure conn_state is set as hv_synic_cleanup checks for it */
+ 	mb();
 -- 
 2.53.0
 
