@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031003;
-	b=D4r+ZN6ruSZq1X9lOUGwez6KrlkM6OwrZV3X3F5ExmpJrbDSUIUPyWo5P8CQLGh9esRN
-	 dAfwYFBmSVox958d51Yc2PvF2TvzT0RnzlaUbC2pRpiPDaKLPJRkEud4CsaCRxqYbMBXL
-	 vxKo7Y18FPI/+3ifhNDU5P76IxDPjIcnqMm4a2+xAg0bqUXJeV2CuDkZmGwrZr8Nc2hdK
-	 snhH0IxWSx7kB7S0FEoGbLMbAstqabu5//f57w+85/kZEtEmnYMWWSQFItl0wniItHDiv
-	 YOQdcfBEkdT+1Q14I1mn1CQNfBPB8s76hQe+ACNgvS1hMtd/k/ZofPG/H5BoiPQFWig==
+	t=1795031006;
+	b=1lufgt+RtY3kOdGbgT4Ug0RaBlL/zA8BhnPr40+rUU30X0IdldTsyIt9BhFlezXdoGZi
+	 Zwr4we1srnJDVQGgUzy13DjLPfDaAnC0rkvyID3JZthikbnZkzIhZcgDDpaQD3jf9aJ89
+	 FHp+JVTtnwrRu6CKcyEqdgB8qnlztR33plpB6+rVkD4k/uvgv/XMgStJLQA47HEelDqMG
+	 V6s6kC8tGR0dWslBdqZdXPt+zyWZf1tZ+cr+bUW20P/BVAFqOuYSE9xcFBzLHb2Hwu7uq
+	 8Lbl7IRYNp+T7tM5PUPTigcL3yXNvOQiFFH6praD0AUX52K3wZLdBeDI7M1qpCfuReQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031003;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031006;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KkgaR9UbTkyiR8yS+ljgEi76DS/o6XZi4Kg6SkPv0FU=;
-	b=5dWbAG8Hk0bA1AV1HX3GX/ASP6ZCSmeB+n0h7A/qE9GwsfI9lFlUnM1eeI+2FgDWBNVV
-	 /Ti7vNkvfmjBO01CFS4uY1AkOdBr1k6QR9WlwnEbkZcmyFijmyYLs4CdDr2rNSYWpNQIq
-	 ohcO5uxOB1ZZw8RW6drgO1XK8asWgHK4VCi9B+kBhMbPN5K3CBtn8woVXBUKxSYxG7Uz5
-	 20TodaIlWhdTT1V0M0SUvXPadj/5mly/K2OYTZznUU/0hxP0/PNYytx/U/gmeRWASUoEO
-	 Le8NNa4w+jicKneA9NPrLSlBwcZ1lC3yqxrNMmblklZusM72rTK9NGlmLrSDX723ANQ==
+	bh=YG4/S/pZcgWMbk8tdoJS9LwtnuWPxmOM7HSYc3GSfds=;
+	b=pWket0/0bZm4Kwxiv5HZMMLgJPeUFJ7Xw4ciydMuQbxzgfJuZqRi+P7V9ZBJaqKZ7TGV
+	 zsajhv0i+qRuIlRboNOCqnLwRcS5wB6KBze3hAhnmFYRtx2/aDEljh8lhbZOe1snMU/Uk
+	 cr4j6lFXtG2uzPliCl4v3X9OcRrWFflkmQLfDbfaXf6ugzYUkcNm1le1OBuFkpJcVRDVd
+	 W6wgB0ZmPAuLgV5qjKL+UKmsbn2L2bAdjqiIbt7/cNAKjF5lfsfDC3eLiPdXGtSMMvVyz
+	 uXv4vPIaAwWvKgC3doiKb/aXsCh+D2sYsh4IvY8+RQTqYEUfhTN0F5wiOfcmnQAZ9mQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2izlkYqx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uFVzznxr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB4B606A332;
-	Wed, 18 Nov 2026 19:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462A7606A320;
+	Wed, 18 Nov 2026 19:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2izlkYqx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA73C1F000C7;
-	Wed, 18 Nov 2026 19:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uFVzznxr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A051F000C7;
+	Wed, 18 Nov 2026 19:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031003;
-	bh=KkgaR9UbTkyiR8yS+ljgEi76DS/o6XZi4Kg6SkPv0FU=;
+	s=korg; t=1795031006;
+	bh=YG4/S/pZcgWMbk8tdoJS9LwtnuWPxmOM7HSYc3GSfds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2izlkYqxRncsNip7WaaJBkPr6cmcCjOSY6JR02vB6qTzo0f/K69xonm1eEAV+e/gP
-	 a7ff4/cZWc34gcfULSaye5YaQpEMl641tYJrAQCNGnrQ+aMGNSPaj32oN6kBLy1ca/
-	 JpDIX+CfcrvejQMQj/To/geEPvWUB/LLSn5b74Rg=
+	b=uFVzznxr8fStL80lvUIFktM2Axy7J4uQWTwdQox62rQYOkmzmfe1O51BE4bzMs+j0
+	 wydQATl7gqUUx5zeqoU4Xj2B8igcBEHVg1lLv2bneX/KcKPtGXFdFaEYDLHHXwW/vz
+	 MKPQ0jYbFySxae4OhXjDpzp8J30XWBBEsfGl9Pvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0904/1756] arm64: dts: allwinner: sun50i-h6: Add missing SRAM region for video engine
-Date: Wed, 18 Nov 2026 15:50:31 +0100
-Message-ID: <20261118150045.976537282@linuxfoundation.org>
+Subject: [PATCH 6.12 0905/1756] arm64: dts: allwinner: sun50i-h6: Add missing IOMMU for video engine
+Date: Wed, 18 Nov 2026 15:50:32 +0100
+Message-ID: <20261118150046.013059377@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,17 +70,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Chen-Yu Tsai <wens@kernel.org>
 
-[ Upstream commit d7287d940f3cd8d5945009076058a8120281744b ]
+[ Upstream commit 965a49fc413d996eba9bae2a3132f03f45a2ea1b ]
 
-The SRAM C region contains a partial alias to the VE SRAM already
-referenced by the video engine. To avoid access through this alias
-window, the region should also be claimed by the video engine.
+The video engine on the H6 actually has two IOMMU ports. The one already
+listed is simply named "VE" in the user manual. The missing one is named
+"VE_R" and is probably either read-only or used for reference frames.
+Either way, it should be listed.
 
-Add a reference to the SRAM C region to the video engine node.
+Add a reference to the "VE_R" IOMMU port to the video engine node.
 
-Fixes: b542570e5605 ("arm64: dts: allwinner: h6: Add Video Engine node")
+Fixes: 62a8ccf3a248 ("arm64: dts: allwinner: h6: Fix Cedrus IOMMU usage")
 Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20260712030011.3778169-6-wens@kernel.org
+Link: https://patch.msgid.link/20260712030011.3778169-7-wens@kernel.org
 Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -88,18 +89,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-index 2301c59b41b18..ba9b026677665 100644
+index ba9b026677665..a00cf51debd73 100644
 --- a/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
 +++ b/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-@@ -209,7 +209,7 @@ video-codec@1c0e000 {
- 			clock-names = "ahb", "mod", "ram";
+@@ -210,7 +210,7 @@ video-codec@1c0e000 {
  			resets = <&ccu RST_BUS_VE>;
  			interrupts = <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>;
--			allwinner,sram = <&ve_sram 1>;
-+			allwinner,sram = <&ve_sram 1>, <&de2_sram 1>;
- 			iommus = <&iommu 3>;
+ 			allwinner,sram = <&ve_sram 1>, <&de2_sram 1>;
+-			iommus = <&iommu 3>;
++			iommus = <&iommu 3>, <&iommu 1>;
  		};
  
+ 		gpu: gpu@1800000 {
 -- 
 2.53.0
 
