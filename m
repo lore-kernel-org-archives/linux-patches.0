@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034827;
-	b=YUpRVMGpHasFtaJKjTLAS60N+E22gmGTldcfGmKkDOa8O+G3iZIaRb0JJCHdLIwgzpia
-	 Engw0FHgc0GlcPgEaGgA4ThT7aB6ggNtpwZFDor84VYF3wcQe684uUpRVDArmuTX2FeK8
-	 cMTgUzr/CHO6yqs5F57iGi4bF/d0N/+juDRoropWCcdk/Fqb8r0OIBA+SvdNKKMDQe/93
-	 dxb+CN66YRNLGyScb7XjH03u/2RjwyOIFAzyHYXhlJw/1McU/VcrUJN0ZLFn9VK5yprmE
-	 ybcptyje0X1FP7OeHiNZJ6+eUYFTmvx0ZEal1MANgsqizzZNUtcoG1UAektP2cUktwg==
+	t=1795034829;
+	b=j9UTEmj3D7teMiUBqOPnA491MxL+PozggYLcLS47vScP4GtVso7LTv+eD10Dy6z//Eu6
+	 +2mBklmF1T3YisbI//DmT/lYKvY+/Wgm9CFMs7VD/FO1RGdkjNhmUwtFJ/WJ8iDJu7eeQ
+	 91TfusUH6UEjcekeY16qlI4impnn5wciWVJU6ODzJBOnbFoRWNDbOHk0aaVYt/75WdUBO
+	 zjiAWgQwEvM4xEMfWa+f3xM423BOCIdmaFOBUW16EglPaYa8fIZseB5yXEp3bKZeDgKxJ
+	 8ihg1E3dfZ8DLaRdj4doLPbBWy68hKxD2p6R7Vq+U/1oQ9422lVzY2DBNyKMYPd0c0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034827;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034829;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5nbqljQnWzkvgnHKbj/9Vs5+16nD/kFh26Z3g2PtZvI=;
-	b=yQei7PruJjhfo0lDtijo/oEyEfe/8xkfnZYZCwCRoxsqT7oukfEAvbcELphmFnDzjqDr
-	 w+P8A5wR4B3/RWqXZDEzcyMGHeFuWLg7nN4ZgaltGnp9NcNas3scffLDP/Q5q84L1WJpx
-	 gKNHbaTAQcA/9mSHiBfzIWxliYdujBtPFD0D3CQuoq9oTgyULrNjiWV431S7Bbdf066dC
-	 xPUBnEGxYm8WSLon3mC4PDPsPrWd7Kar/syN1KEVGplBHC3A1ocxP8iHu59jrFDQ0yeR9
-	 83nwSdTU09xULHf8tIjwVf6jKbdp5Vyan/6inJlYZAAtr+Z7b3BC93chuyMrk8odPbg==
+	bh=I7AyqWPrtW0fO2JNJ0vQjtCy4iroxfamYa1ywKVDsKI=;
+	b=CTqQShbXrG7GWfMgQZDStAwvl+CmwX1eImUjXykTTfvwr1TOwc2H0g4uTBbOJznvIe6Y
+	 JM8rcG+Jst4sZddTZlNpc1YlowTaQ9sGDMPHFHMOBlTzmk5DJapsB2NhI3ca17hPzts00
+	 Qo+fEklcpjOZfX6WeFV3LMr1GTSBKF3WTgWeZ8G/AwWNUgy2f2Brf+54HDHByXk9iogx6
+	 7c0K5NpL7bFAeF2gTzt21h/udPY7fXNDkt0LhiVGIOfooo85jhGcSy/nnSbiL3piMQ9r/
+	 4Gy7cZQb9WgnVt35vgjTxUCUARs4jLnKxnUqEV4N1fFh53ZJS21oqXINqT6MEp45PJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VuWIp1RR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5bX3EtU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA248606A32A;
-	Wed, 18 Nov 2026 20:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60F1606A31C;
+	Wed, 18 Nov 2026 20:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VuWIp1RR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477CF1F000C4;
-	Wed, 18 Nov 2026 20:47:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5bX3EtU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E6B1F000C4;
+	Wed, 18 Nov 2026 20:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034826;
-	bh=5nbqljQnWzkvgnHKbj/9Vs5+16nD/kFh26Z3g2PtZvI=;
+	s=korg; t=1795034829;
+	bh=I7AyqWPrtW0fO2JNJ0vQjtCy4iroxfamYa1ywKVDsKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VuWIp1RR+itg/TtEgmm99C5UQPfYnnjBr5ZWe4UZpW6Atx6ocEUhEePa9uVmDSWjJ
-	 RqQG1a0gcKxnSAavWu5Z0ktvtt/Ks2wSAy6x1bvUH0JjNEaDUJobsXqcNKEp6MyGM7
-	 XX6QFtyrP7kvEvrvIxgrFeUkTAFns8lDhi3IinYg=
+	b=A5bX3EtUeobSmnofZue9j5EWfV6wXo+dLBmW1PQpwC/W37IkzdZgz5RlBEm6ogXBQ
+	 9FAqmiYUKG3bEBWCKB671vHOIC7CObPkFLL5EiAs48g2iBzgVDzZYzs44tcj9PO/AY
+	 +hYStIesgbABiC+ycRZ3/26mrM8Rg41sA6n2Owk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeremy Kerr <jk@codeconstruct.com.au>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Hui Peng <benquike@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0508/3318] net: mctp: separate key correlation across nets
-Date: Wed, 18 Nov 2026 15:18:50 +0100
-Message-ID: <20261118150332.343287257@linuxfoundation.org>
+Subject: [PATCH 6.6 0509/3318] mctp: route: iterate socket tag list in mctp_lookup_prealloc_tag()
+Date: Wed, 18 Nov 2026 15:18:51 +0100
+Message-ID: <20261118150332.376873119@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,281 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Kerr <jk@codeconstruct.com.au>
+From: Hui Peng <benquike@gmail.com>
 
-[ Upstream commit 43e6795574f5d75284a3cb21f5b76a5ffb98e8e6 ]
+[ Upstream commit 26cc0e69cce062cd3aa6fae33074684669c35a71 ]
 
-Currently, we lookup sk_keys from the entire struct net_namespace, which
-may contain multiple MCTP net IDs. In those cases we want to distinguish
-between endpoints with the same EID but different net ID.
+When a socket transmits a packet with MCTP_TAG_PREALLOC set,
+mctp_lookup_prealloc_tag() iterates over the per-netns &mns->keys list
+and matches netid, req_tag, peer_addr, and manual_alloc, without
+checking whether tmp->sk == &msk->sk. This allows any MCTP socket in the
+same network namespace to use and consume another socket's preallocated
+tag.
 
-Add the net ID data to the struct mctp_sk_key, populate on add and
-filter on this during route lookup.
+Iterate the socket's own tag list (&msk->keys via sklist) instead of the
+namespace-wide &mns->keys list in mctp_lookup_prealloc_tag(), ensuring
+that only tags allocated by msk are matched.
 
-For the ioctl interface, we use a default net of
-MCTP_INITIAL_DEFAULT_NET (ie., what will be in use for single-net
-configurations), but we'll extend the ioctl interface to provide
-net-specific tag allocation in an upcoming change.
+Tested in QEMU against Linux 7.3.0-rc3 by allocating a manual tag
+(0x18) on socket A via SIOCMCTPALLOCTAG for peer EID 9 and sending a
+4-byte message with MCTP_TAG_PREALLOC from socket B in the same network
+namespace. On the unfixed kernel, sendto(sock_b) using socket A's
+preallocated tag succeeds (ret = 4); with this patch applied,
+sendto(sock_b) fails with -ENOENT (errno = 2) while sendto(sock_a)
+succeeds (ret = 4).
 
-Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 26cc0e69cce0 ("mctp: route: iterate socket tag list in mctp_lookup_prealloc_tag()")
+Fixes: 63ed1aab3d40 ("mctp: Add SIOCMCTP{ALLOC,DROP}TAG ioctls for tag control")
+Suggested-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Cc: stable@vger.kernel.org
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Link: https://patch.msgid.link/20260921051002.1656692-1-benquike@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/mctp.h         |  2 ++
- net/mctp/af_mctp.c         |  4 ++--
- net/mctp/route.c           | 43 +++++++++++++++++++++++++++-----------
- net/mctp/test/route-test.c |  7 +++++--
- 4 files changed, 40 insertions(+), 16 deletions(-)
+ net/mctp/route.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/mctp.h b/include/net/mctp.h
-index d7e331ce099ad..5819f2ef77189 100644
---- a/include/net/mctp.h
-+++ b/include/net/mctp.h
-@@ -136,6 +136,7 @@ struct mctp_sock {
-  *    - through an expiry timeout, on a per-socket timer
-  */
- struct mctp_sk_key {
-+	unsigned int	net;
- 	mctp_eid_t	peer_addr;
- 	mctp_eid_t	local_addr; /* MCTP_ADDR_ANY for local owned tags */
- 	__u8		tag; /* incoming tag match; invert TO for local */
-@@ -258,6 +259,7 @@ int mctp_local_output(struct sock *sk, struct mctp_route *rt,
- 
- void mctp_key_unref(struct mctp_sk_key *key);
- struct mctp_sk_key *mctp_alloc_local_tag(struct mctp_sock *msk,
-+					 unsigned int netid,
- 					 mctp_eid_t local, mctp_eid_t peer,
- 					 bool manual, u8 *tagp);
- 
-diff --git a/net/mctp/af_mctp.c b/net/mctp/af_mctp.c
-index d6e0350b1c949..3344b9871ade4 100644
---- a/net/mctp/af_mctp.c
-+++ b/net/mctp/af_mctp.c
-@@ -366,8 +366,8 @@ static int mctp_ioctl_alloctag(struct mctp_sock *msk, unsigned long arg)
- 	if (ctl.flags)
- 		return -EINVAL;
- 
--	key = mctp_alloc_local_tag(msk, MCTP_ADDR_ANY, ctl.peer_addr,
--				   true, &tag);
-+	key = mctp_alloc_local_tag(msk, MCTP_INITIAL_DEFAULT_NET,
-+				   MCTP_ADDR_ANY, ctl.peer_addr, true, &tag);
- 	if (IS_ERR(key))
- 		return PTR_ERR(key);
- 
 diff --git a/net/mctp/route.c b/net/mctp/route.c
-index c41fa80800238..53580774334b0 100644
+index 53580774334b0..12a9e2af8cbc4 100644
 --- a/net/mctp/route.c
 +++ b/net/mctp/route.c
-@@ -107,9 +107,12 @@ static struct mctp_sock *mctp_lookup_bind(struct net *net, struct sk_buff *skb)
-  * and peer addresses, or either being ANY.
-  */
+@@ -764,7 +764,7 @@ static struct mctp_sk_key *mctp_lookup_prealloc_tag(struct mctp_sock *msk,
  
--static bool mctp_key_match(struct mctp_sk_key *key, mctp_eid_t local,
--			   mctp_eid_t peer, u8 tag)
-+static bool mctp_key_match(struct mctp_sk_key *key, unsigned int net,
-+			   mctp_eid_t local, mctp_eid_t peer, u8 tag)
- {
-+	if (key->net != net)
-+		return false;
-+
- 	if (!mctp_address_matches(key->local_addr, local))
- 		return false;
- 
-@@ -126,7 +129,7 @@ static bool mctp_key_match(struct mctp_sk_key *key, mctp_eid_t local,
-  * key exists.
-  */
- static struct mctp_sk_key *mctp_lookup_key(struct net *net, struct sk_buff *skb,
--					   mctp_eid_t peer,
-+					   unsigned int netid, mctp_eid_t peer,
- 					   unsigned long *irqflags)
- 	__acquires(&key->lock)
- {
-@@ -142,7 +145,7 @@ static struct mctp_sk_key *mctp_lookup_key(struct net *net, struct sk_buff *skb,
- 	spin_lock_irqsave(&net->mctp.keys_lock, flags);
- 
- 	hlist_for_each_entry(key, &net->mctp.keys, hlist) {
--		if (!mctp_key_match(key, mh->dest, peer, tag))
-+		if (!mctp_key_match(key, netid, mh->dest, peer, tag))
- 			continue;
- 
- 		spin_lock(&key->lock);
-@@ -165,6 +168,7 @@ static struct mctp_sk_key *mctp_lookup_key(struct net *net, struct sk_buff *skb,
- }
- 
- static struct mctp_sk_key *mctp_key_alloc(struct mctp_sock *msk,
-+					  unsigned int net,
- 					  mctp_eid_t local, mctp_eid_t peer,
- 					  u8 tag, gfp_t gfp)
- {
-@@ -174,6 +178,7 @@ static struct mctp_sk_key *mctp_key_alloc(struct mctp_sock *msk,
- 	if (!key)
- 		return NULL;
- 
-+	key->net = net;
- 	key->peer_addr = peer;
- 	key->local_addr = local;
- 	key->tag = tag;
-@@ -219,8 +224,8 @@ static int mctp_key_add(struct mctp_sk_key *key, struct mctp_sock *msk)
- 	}
- 
- 	hlist_for_each_entry(tmp, &net->mctp.keys, hlist) {
--		if (mctp_key_match(tmp, key->local_addr, key->peer_addr,
--				   key->tag)) {
-+		if (mctp_key_match(tmp, key->net, key->local_addr,
-+				   key->peer_addr, key->tag)) {
- 			spin_lock(&tmp->lock);
- 			if (tmp->valid)
- 				rc = -EEXIST;
-@@ -372,6 +377,7 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
- 	struct net *net = dev_net(skb->dev);
- 	struct mctp_sock *msk;
- 	struct mctp_hdr *mh;
-+	unsigned int netid;
- 	unsigned long f;
- 	u8 tag, flags;
- 	int rc;
-@@ -396,6 +402,7 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
- 
- 	/* grab header, advance data ptr */
- 	mh = mctp_hdr(skb);
-+	netid = mctp_cb(skb)->net;
- 	skb_pull(skb, sizeof(struct mctp_hdr));
- 
- 	ver = mh->ver & MCTP_HDR_VER_MASK;
-@@ -410,7 +417,7 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
- 	/* lookup socket / reasm context, exactly matching (src,dest,tag).
- 	 * we hold a ref on the key, and key->lock held.
- 	 */
--	key = mctp_lookup_key(net, skb, mh->src, &f);
-+	key = mctp_lookup_key(net, skb, netid, mh->src, &f);
- 
- 	if (flags & MCTP_HDR_FLAG_SOM) {
- 		if (key) {
-@@ -424,7 +431,8 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
- 			 * this lookup requires key->peer to be MCTP_ADDR_ANY,
- 			 * it doesn't match just any key->peer.
- 			 */
--			any_key = mctp_lookup_key(net, skb, MCTP_ADDR_ANY, &f);
-+			any_key = mctp_lookup_key(net, skb, netid,
-+						  MCTP_ADDR_ANY, &f);
- 			if (any_key) {
- 				msk = container_of(any_key->sk,
- 						   struct mctp_sock, sk);
-@@ -462,7 +470,7 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
- 		 * packets for this message
- 		 */
- 		if (!key) {
--			key = mctp_key_alloc(msk, mh->dest, mh->src,
-+			key = mctp_key_alloc(msk, netid, mh->dest, mh->src,
- 					     tag, GFP_ATOMIC);
- 			if (!key) {
- 				rc = -ENOMEM;
-@@ -666,6 +674,7 @@ static void mctp_reserve_tag(struct net *net, struct mctp_sk_key *key,
-  * it for the socket msk
-  */
- struct mctp_sk_key *mctp_alloc_local_tag(struct mctp_sock *msk,
-+					 unsigned int netid,
- 					 mctp_eid_t local, mctp_eid_t peer,
- 					 bool manual, u8 *tagp)
- {
-@@ -680,7 +689,7 @@ struct mctp_sk_key *mctp_alloc_local_tag(struct mctp_sock *msk,
- 		peer = MCTP_ADDR_ANY;
- 
- 	/* be optimistic, alloc now */
--	key = mctp_key_alloc(msk, local, peer, 0, GFP_KERNEL);
-+	key = mctp_key_alloc(msk, netid, local, peer, 0, GFP_KERNEL);
- 	if (!key)
- 		return ERR_PTR(-ENOMEM);
- 
-@@ -697,6 +706,10 @@ struct mctp_sk_key *mctp_alloc_local_tag(struct mctp_sock *msk,
- 		 * lock held, they don't change over the lifetime of the key.
- 		 */
- 
-+		/* tags are net-specific */
-+		if (tmp->net != netid)
-+			continue;
-+
- 		/* if we don't own the tag, it can't conflict */
- 		if (tmp->tag & MCTP_HDR_FLAG_TO)
- 			continue;
-@@ -737,6 +750,7 @@ struct mctp_sk_key *mctp_alloc_local_tag(struct mctp_sock *msk,
- }
- 
- static struct mctp_sk_key *mctp_lookup_prealloc_tag(struct mctp_sock *msk,
-+						    unsigned int netid,
- 						    mctp_eid_t daddr,
- 						    u8 req_tag, u8 *tagp)
- {
-@@ -751,6 +765,9 @@ static struct mctp_sk_key *mctp_lookup_prealloc_tag(struct mctp_sock *msk,
  	spin_lock_irqsave(&mns->keys_lock, flags);
  
- 	hlist_for_each_entry(tmp, &mns->keys, hlist) {
-+		if (tmp->net != netid)
-+			continue;
-+
- 		if (tmp->tag != req_tag)
+-	hlist_for_each_entry(tmp, &mns->keys, hlist) {
++	hlist_for_each_entry(tmp, &msk->keys, sklist) {
+ 		if (tmp->net != netid)
  			continue;
- 
-@@ -934,6 +951,7 @@ int mctp_local_output(struct sock *sk, struct mctp_route *rt,
- 	struct mctp_sk_key *key;
- 	struct mctp_hdr *hdr;
- 	unsigned long flags;
-+	unsigned int netid;
- 	unsigned int mtu;
- 	mctp_eid_t saddr;
- 	bool ext_rt;
-@@ -985,16 +1003,17 @@ int mctp_local_output(struct sock *sk, struct mctp_route *rt,
- 		rc = 0;
- 	}
- 	spin_unlock_irqrestore(&rt->dev->addrs_lock, flags);
-+	netid = READ_ONCE(rt->dev->net);
- 
- 	if (rc)
- 		goto out_release;
- 
- 	if (req_tag & MCTP_TAG_OWNER) {
- 		if (req_tag & MCTP_TAG_PREALLOC)
--			key = mctp_lookup_prealloc_tag(msk, daddr,
-+			key = mctp_lookup_prealloc_tag(msk, netid, daddr,
- 						       req_tag, &tag);
- 		else
--			key = mctp_alloc_local_tag(msk, saddr, daddr,
-+			key = mctp_alloc_local_tag(msk, netid, saddr, daddr,
- 						   false, &tag);
- 
- 		if (IS_ERR(key)) {
-diff --git a/net/mctp/test/route-test.c b/net/mctp/test/route-test.c
-index ef6a3d6115ca2..4bf00385d9eae 100644
---- a/net/mctp/test/route-test.c
-+++ b/net/mctp/test/route-test.c
-@@ -544,6 +544,7 @@ static void mctp_test_route_input_sk_keys(struct kunit *test)
- 	struct mctp_sock *msk;
- 	struct socket *sock;
- 	unsigned long flags;
-+	unsigned int net;
- 	int rc;
- 	u8 c;
- 
-@@ -551,6 +552,7 @@ static void mctp_test_route_input_sk_keys(struct kunit *test)
- 
- 	dev = mctp_test_create_dev();
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dev);
-+	net = READ_ONCE(dev->mdev->net);
- 
- 	rt = mctp_test_create_route(&init_net, dev->mdev, 8, 68);
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, rt);
-@@ -562,8 +564,9 @@ static void mctp_test_route_input_sk_keys(struct kunit *test)
- 	mns = &sock_net(sock->sk)->mctp;
- 
- 	/* set the incoming tag according to test params */
--	key = mctp_key_alloc(msk, params->key_local_addr, params->key_peer_addr,
--			     params->key_tag, GFP_KERNEL);
-+	key = mctp_key_alloc(msk, net, params->key_local_addr,
-+			     params->key_peer_addr, params->key_tag,
-+			     GFP_KERNEL);
- 
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, key);
  
 -- 
 2.53.0
