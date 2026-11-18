@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047547;
-	b=gJGaq2JwexijNh2eXGgONlgGOy8kKfB6UzYXO5/6zVBXJElU7BLRtFR9yQWfGhRdXmK+
-	 bcE+8mKTxm12sJ7SCafC7cGkdnTTUvKR8B2wtZaLEej0wurva8LMb1kEOkCOTIeXFIj6M
-	 /zosIkMGZedHHnpjZ1TbokTcN1pS3dJahDYVJHdO6C5u3jGA+PQdNX5a1cRvgX9osMJ62
-	 AC4fjy2uiVdCX+lA0EWjVGH5J1pYlwRDURwLJ7nrYsDJPl/uiSKxq3bt2dD3d5L3AFdh0
-	 t2h4O9yuLPuDYqZnWFJzTU9AbO2qjtUUhwu8GK0f5c7DTqGBXybWvSnG1YlBlNqO4wQ==
+	t=1795047550;
+	b=HI6CJYKvX6PxHgvyZC07pvJJCAGTdra0MPHb+AVV7ljWD3xJ2X343szYhVFB28GjEwme
+	 8kfUMGfVIbvLN1ms7i+n7eUZBJguNKyOjZ9hRJJ9sCxmJh9pXtpY+P+CVi8Xr5gzbTDGb
+	 Ug7JOyYfu04mOlQA+CXWmxeVmtdyqWGACAHhWJEPgxNO/i9nHorn22+GznDXiTsLU1nBt
+	 mVP+0FJTPpMV34gIiQ/lUxjd5lOoYqsbIZ5UtSKUVFo4J5BuMU0xwbR7O0nMnQkYSto1S
+	 obVKTEPNrb/SxnvIPGaUjW8KBqmoQ59n99NZg93FBppVU30zxYNoSRbTO7FgOyVQ/HQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047547;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047550;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RDmUZLEvBrBFickH3ru5tqXw4sq80O3S9TMQ4OW3T3Y=;
-	b=mvCc5MROsqbtPynr8MSc4KkbK2PLJjDNSQvIVYRIUB/zgJqNoy7O0BouZjqJ58ne5F6d
-	 yMlI76hn2EOKz9of5NGz433ZVYwQXsJA3lqZia7h+I8QXraM5BV90wWNFF+lSJrNA/9wD
-	 oDCTIj0MsrRkPx+a1II7UbMWbvxXeGgBrwgxRfXuBrV30BsneVsItLJ+mN27OXVcoXtS5
-	 iE1grd4zszb2od1DpdX9dKRZmuIRwwStC8eZiW8R64WGFyHJ0yt7KL8UohcotEcd2p2Ai
-	 D2/S9M841Fm34ND3PXxYYKwXjxBkBvaf8yfikzTOAF3OeGUm05pkrvHLlcbBiR1AvEg==
+	bh=oqc6HJ3EWJsiPXoj4F4Aam2PakMkO8g8xgg0DFPYwD0=;
+	b=E7NIp/0szdOHdqhfp0SQ9F4SaMD43vwpfyoQowzRr/Q1PSRL8I+cWkJZw4LDelRB0bwZ
+	 TN6qQV8uROItucvA3NdbUjNvU8mILMEskBtgWiKkIf7wZG2SyWeEeFroscT/KRampSvOg
+	 GDaejY1Ql+5qrbb8m+KGBc33vso+Qbyouf0boA7o6GFCBpfzI6EpdvtvQ13J0Jm2wZTsL
+	 OoMxSmdiL9K3S7OLu4J0FBgYUtDEFB4XmHJOnnll1jXqFMfVXf2g21V8FyNWypUD3hDDo
+	 24/0yQLfGnfK2drZtKAcQu6ybxhONwwALS4E/x6Ci689MtKYN8OIHNdexT55TMfNiqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CHF/54AU";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VMJISAk3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66F5606A31C;
-	Thu, 19 Nov 2026 00:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94AD3606A31C;
+	Thu, 19 Nov 2026 00:19:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CHF/54AU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350141F000C4;
-	Thu, 19 Nov 2026 00:19:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VMJISAk3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8B81F000C4;
+	Thu, 19 Nov 2026 00:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047547;
-	bh=RDmUZLEvBrBFickH3ru5tqXw4sq80O3S9TMQ4OW3T3Y=;
+	s=korg; t=1795047550;
+	bh=oqc6HJ3EWJsiPXoj4F4Aam2PakMkO8g8xgg0DFPYwD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CHF/54AU9/IgkmH5OpvPuq8JW6ey9dvRfaB3nmHCcjmINw/rEH2IG70IHLFPF6phb
-	 md2fWYWgwUfJW8dOI5dhR0THiHMnDpNjf2gYzPDLd2qMRB9XRZqvHb2N2snZIDPupQ
-	 RR0kTf2ky2R+75b8WTa19p6oTtCxk+BHjbHylFMU=
+	b=VMJISAk3eVgP6p7yF/orow9mGVccYbBJCbLZoOcydYJtfTTBxxjT0P4u2iVvZ6o+8
+	 NiwTsyzRnP8NEiiDB3gc4d/UzrjL6iVzs4gtc05IsCF0IFBipETjKb/t6xORILCAsD
+	 clki5ZHufHCQ5flbuEFxQVPnqJzNoO7R3pgD6rF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Chris Mason <mason@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1641/2857] mptcp: pm: kernel: use RCU to free endpoint listeners
-Date: Wed, 18 Nov 2026 15:44:35 +0100
-Message-ID: <20261118150300.422101544@linuxfoundation.org>
+Subject: [PATCH 6.1 1677/2857] mm/memory: reject remote COW faults on PFN mappings
+Date: Wed, 18 Nov 2026 15:45:11 +0100
+Message-ID: <20261118150301.713163355@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,48 +71,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 49b09ae0bf57b4230187d4cdd0a370558e44a6e8 ]
+[ Upstream commit 8db6921cc07b74197a3866d62ed262b68aeadcf3 ]
 
-mptcp_pm_nl_create_listen_socket() starts the TCP listener directly
-instead of going through mptcp_listen(). It consequently misses setting
-SOCK_RCU_FREE on the parent MPTCP socket.
+When handling a COW fault without a normal source page (PFN mappings),
+__wp_page_copy_user() copies from the faulting user address. For remote
+faults, this accesses the wrong address space, resulting in wrong data
+getting copied.
 
-tcp_child_process() can invoke the listener's subflow_data_ready()
-callback without holding the MPTCP parent lock or a reference to the
-parent. An authenticated MP_JOIN racing with endpoint teardown can
-therefore access the parent after its last reference has been dropped.
-The ADD_ADDR error path can also close an already published listener.
+For example, user_events updates an enable bit in the registering
+process's memory. If that memory needs to be faulted in,
+user_event_enabler_fault_fixup() calls fixup_user_fault() from a work
+item. Placing the enable bit in a private PFN mapping can trigger this
+remote COW path.
 
-Set SOCK_RCU_FREE before __inet_listen_sk() publishes the TCP listener,
-matching mptcp_listen(). This protects the parent on every subsequent
-close path, including a failed endpoint addition.
+Reject these faults with VM_FAULT_SIGBUS when the target mm differs from
+current->mm: remote faults. Ordinary (non-PFN) mappings are not affected.
 
-Fixes: 1729cf186d8a ("mptcp: create the listening socket for new port")
+The user-address copy dates back to commit 6aab341e0a28 ("mm: re-architect
+the VM_UNPAGED logic"); likely, actual ways to get remote faults in
+there on COW PFN mappings appeared afterwards. But the fix is simple and
+straight forward.
+
+Fix generated by an LLM and sent by Chris Mason in private.
+
+Fixes: 6aab341e0a28 ("mm: re-architect the VM_UNPAGED logic")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20261030042255.74216-1-kylebot@openai.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: adjusted listener-creation context for kernel_listen() instead of __inet_listen_sk() ]
+Signed-off-by: Chris Mason <mason@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+[ david: simplify comment and description ]
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-35-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: Changed the -EFAULT check in wp_page_copy() to use ret instead of err. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_netlink.c | 1 +
- 1 file changed, 1 insertion(+)
+ mm/memory.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
-index 05fb4d43187ad..a618ebbc42b09 100644
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -1261,6 +1261,7 @@ static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
+diff --git a/mm/memory.c b/mm/memory.c
+index 9f965c12ea0c5..ee7faf817fbee 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -2895,6 +2895,13 @@ static inline int __wp_page_copy_user(struct page *dst, struct page *src,
+ 		return 0;
  	}
  
- 	inet_sk_state_store(newsk, TCP_LISTEN);
-+	sock_set_flag(newsk, SOCK_RCU_FREE);
- 	WRITE_ONCE(mptcp_subflow_ctx(ssock->sk)->pm_listener, true);
- 	err = kernel_listen(ssock, backlog);
- 	if (err) {
++	/*
++	 * __copy_from_user_inatomic() only works as expected for local faults.
++	 * Reject remote faults.
++	 */
++	if (unlikely(mm != current->mm))
++		return -EFAULT;
++
+ 	/*
+ 	 * If the source page was a PFN mapping, we don't have
+ 	 * a "struct page" for it. We do a best-effort copy by
+@@ -3167,6 +3174,8 @@ static vm_fault_t wp_page_copy(struct vm_fault *vmf)
+ 				put_page(old_page);
+ 
+ 			delayacct_wpcopy_end();
++			if (ret == -EFAULT)
++				return VM_FAULT_SIGBUS;
+ 			return ret == -EHWPOISON ? VM_FAULT_HWPOISON : 0;
+ 		}
+ 		kmsan_copy_page_meta(new_page, old_page);
 -- 
 2.53.0
 
