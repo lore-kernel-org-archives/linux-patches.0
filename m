@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043400;
-	b=QnBrqRFsVph8qo+KYlWyc3nTazXmkvTOxf+pTObzl2TkqwgwD4R5Stux4aOhPUegkH1w
-	 7QSRdDqrpdE7d0pvnEef3GTsH30e5ygJVs3iHxXdisJLhxM72pYknc5Tb/dCCXwQabliK
-	 e0YqkKzEIC0Ns2OUtWar11XTxMJos9oQX4dh7oA1wPOUUuP1R9K4lW1XA7Rgy3jutoyA1
-	 KhGXYzDyGOFA3XRXoHfsoJcygOTXCoQS1jglDD3ODLRVaSsLwky+QBX/My2gF6fGTN2EN
-	 BScfjU3M9Yi7EZshsR1k1f2ibbmQT3+jUT/rb4OeT8ECOsKCN22/bBCPLfOWh0Xc2/A==
+	t=1795043403;
+	b=bcDL9o5hT22+f8E1j6SDdGMbtGz0Sth71DIBQo1RHS1QJ2q15L9Tdw8f08bRJpw1DAdV
+	 TkIzoXdK/c1F2FotA1tDDHaQ3lGJ2Et45eqNcpZZ33Hud6288nXFoxKKB3M+441stRKKg
+	 +jvzwAPzYo0qFtc7cBuU63NYHix2I+oI/zLGrprtU1r0vSOpNbyUgDPO3/dWy2F4XR14S
+	 lm8hxa/MZShPs+zXdvxMKoE19Q3xNEoEFbMNQShLavClyoYJK4/1mllrsoCpgOPFOyyhI
+	 vi4mdVDZh3juEcYc9drPw8EugmEGkyFWsDJM/SwF4SblYZdsfR1Y8dK2YyB/JfOz0dA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043400;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043403;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wCSbXer5b/y/m8Imyl78A6i7/9UznLteK/1ZJ/jJz6w=;
-	b=n+HKliuqXAkqdW9ZqrzZnYq8wkgYQQqr09tznKUmPFWabgy4Bjo7xpMQ/GX4bfrK2f4k
-	 gYELY4cLfuFmXfQ+vSC61L87GGd5ajecb4W9RxP8GU//b1cOnGKPXhPVkDyY4n+/tco2b
-	 wdYVK7PeBNsP9jZvv/HErccX/d2uaTmTTkq9naUv0Jqw7Df4QyqhnnGrAPsqeTzfENHPB
-	 fJs/xPE6ed6w3Z30Gvcq4NoZFXZc9ua/x+K207GTHihWloMDGL4zQL3S1EjMY3TuImIFJ
-	 NZjBOk93S531zjjTTmt6APG1C1jYdL5Fwvglk2gkhapcSghnzc2gF+KQYd+Wo3hoIrw==
+	bh=tlhtRwHLK6pS4LyvXdSWh9PGS0cNKPF/obt8t2+m3Eg=;
+	b=TlgFPpvxBmGilD75svSe/NNNqL+iuxPNeySA6SsJFDfXWtK6z38rMkMS8lgsKOB69G7N
+	 O6EuTACGl1WoiZNp+gAtbqkPhrhkhOElLvktDqI/+yBxkREFI8XVqVJExCKtlMTTZAEls
+	 oatUzyOqN+zlKJf+KTtMrN2jA62YTOOR7/nIEe77U1rl25fDhgvj2YsBJmgVs9hqobIh0
+	 0ZoAKD/Ai/aCbgWtM7PAUhRWXbNHMEGcvHxnaZB4kXfAjNkLsMntUsFoSyvyHYYzGqhSq
+	 tD1NP12qAIuelIKCIuZRMM92doy0jDG9hMH9jnBT1Xmb4vuFkE6j8ag8o3l56UKIiiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JYAa0sJx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X9ATPF8u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B28606A325;
-	Wed, 18 Nov 2026 23:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6917F606A31C;
+	Wed, 18 Nov 2026 23:10:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JYAa0sJx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E7A1F000C4;
-	Wed, 18 Nov 2026 23:09:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X9ATPF8u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A4F1F000C4;
+	Wed, 18 Nov 2026 23:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043400;
-	bh=wCSbXer5b/y/m8Imyl78A6i7/9UznLteK/1ZJ/jJz6w=;
+	s=korg; t=1795043403;
+	bh=tlhtRwHLK6pS4LyvXdSWh9PGS0cNKPF/obt8t2+m3Eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JYAa0sJxIEGeer0aXO6pEbKNegFRgtbvD9/jmcjlte3ZDJE/O9XADiZezJ+Lu6MwM
-	 sVryoGoZLi+HeEAUMDTxiWYpRZBhIBnXpFXznvgoOtf0wP/rTnfdRJurl7iqI32ipc
-	 ogf+bjReZcDYHn470mKW4wPnl8BmdWTH+SyTONf4=
+	b=X9ATPF8uS2EJY/kFFOa83gmOBr8Wgt917WGv3OrgZ9OabfOcYm4zvv+C9X3mSMILm
+	 c3GyMSo4HvUI/D93gQCQnSzN1I1KsY8Z5US7CPQS6AUhCY+r7ZaMUMr7rItdzhqrLb
+	 VMBrLgSZRgOy3ThTuHpXNUXPfOwxqK32eORqsNnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxing Hu <gahing@gahingwoo.com>,
-	Will Deacon <will@kernel.org>,
+	Tyrel Datwyler <tyreld@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0155/2857] iommu/rockchip: Clear stale page faults before enabling stall
-Date: Wed, 18 Nov 2026 15:19:49 +0100
-Message-ID: <20261118150206.929315989@linuxfoundation.org>
+Subject: [PATCH 6.1 0156/2857] scsi: ibmvfc: check for NULL evt in implicit LOGO and target delete path
+Date: Wed, 18 Nov 2026 15:19:50 +0100
+Message-ID: <20261118150206.966359765@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,55 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxing Hu <gahing@gahingwoo.com>
+From: Tyrel Datwyler <tyreld@linux.ibm.com>
 
-[ Upstream commit b10d5920cafa292ee3cab9c20f813da4fe4f00b8 ]
+[ Upstream commit 0122eab60b151d7815f420a91c7315944a037714 ]
 
-Boot firmware can leave an IOMMU bank in PAGE_FAULT_ACTIVE before the
-driver has configured paging:
+Unlike ibmvfc_tgt_implicit_logout the ibmvfc_tgt_implicit_logout_and_del
+path fails to check for a NULL evt returned from
+ibmvfc_get_reserved_event and passes that directly to ibmvfc_send_event
+which will unconditionally derefence the evt.
 
-  PAGE_FAULT_ACTIVE=1  STALL_ACTIVE=0  IDLE=1
+Check for a NULL evt and perform same escalation as
+ibmvfc_implicit_logout.
 
-Such a bank ignores CMD_ENABLE_STALL and never reaches STALL_ACTIVE, so
-rk_iommu_enable_stall()'s readx_poll_timeout() spins until it times out
-(seen on the RK3576 NPU, whose MMUs share this poll across banks).
-
-Rather than special-casing these banks in the stall path, acknowledge the
-stale fault with CMD_PAGE_FAULT_DONE before enabling stall, so every bank
-starts from a clean state and the normal stall sequence applies to all of
-them.  Banks without a pending fault are untouched.
-
-Signed-off-by: Jiaxing Hu <gahing@gahingwoo.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Tyrel Datwyler <tyreld@linux.ibm.com>
+Link: https://patch.msgid.link/20260723000149.969416-4-tyreld@linux.ibm.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/rockchip-iommu.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/scsi/ibmvscsi/ibmvfc.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
-index 5ce951bbd69af..f7705f01638a1 100644
---- a/drivers/iommu/rockchip-iommu.c
-+++ b/drivers/iommu/rockchip-iommu.c
-@@ -418,6 +418,19 @@ static int rk_iommu_enable_stall(struct rk_iommu *iommu)
- 	if (!rk_iommu_is_paging_enabled(iommu))
- 		return 0;
+diff --git a/drivers/scsi/ibmvscsi/ibmvfc.c b/drivers/scsi/ibmvscsi/ibmvfc.c
+index 214b633148311..16f8272003e5f 100644
+--- a/drivers/scsi/ibmvscsi/ibmvfc.c
++++ b/drivers/scsi/ibmvscsi/ibmvfc.c
+@@ -4366,6 +4366,14 @@ static void ibmvfc_tgt_implicit_logout_and_del(struct ibmvfc_target *tgt)
+ 	evt = __ibmvfc_tgt_get_implicit_logout_evt(tgt,
+ 						   ibmvfc_tgt_implicit_logout_and_del_done);
  
-+	/*
-+	 * Boot firmware can leave a bank in PAGE_FAULT_ACTIVE with no handler
-+	 * (PAGE_FAULT_ACTIVE & !STALL_ACTIVE & IDLE).  Such a bank ignores
-+	 * CMD_ENABLE_STALL and never reaches STALL_ACTIVE, timing out the poll
-+	 * below.  Acknowledge any stale fault first so every bank starts clean.
-+	 */
-+	for (i = 0; i < iommu->num_mmu; i++) {
-+		if (rk_iommu_read(iommu->bases[i], RK_MMU_STATUS) &
-+		    RK_MMU_STATUS_PAGE_FAULT_ACTIVE)
-+			writel(RK_MMU_CMD_PAGE_FAULT_DONE,
-+			       iommu->bases[i] + RK_MMU_COMMAND);
++	if (!evt) {
++		vhost->discovery_threads--;
++		ibmvfc_set_tgt_action(tgt, IBMVFC_TGT_ACTION_NONE);
++		kref_put(&tgt->kref, ibmvfc_release_tgt);
++		__ibmvfc_reset_host(vhost);
++		return;
 +	}
 +
- 	rk_iommu_command(iommu, RK_MMU_CMD_ENABLE_STALL);
- 
- 	ret = readx_poll_timeout(rk_iommu_is_stall_active, iommu, val,
+ 	ibmvfc_set_tgt_action(tgt, IBMVFC_TGT_ACTION_LOGOUT_RPORT_WAIT);
+ 	if (ibmvfc_send_event(evt, vhost, default_timeout)) {
+ 		vhost->discovery_threads--;
 -- 
 2.53.0
 
