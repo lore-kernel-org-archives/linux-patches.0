@@ -1,57 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035021;
-	b=PSwNS8pSrsItnf21PWorG/LqGGL2rl/uuweFCukwl0pPeXNA7vq85Inj71eXSsyNbuRk
-	 4IC/hlXaELiMzVAPTGt2n/E7vA1n6YUXipdamcAPoV6jIS2u2jWfoSfq12kA5hxyK8Gsy
-	 DznbQZRnykv8sl1PGP12Fp9/aiPTUdi6xSi4sdpIXjlD2Ije6QnNeVFgTMMoqOV330amC
-	 LYFz06/QRs6twukc2VPgQyxL9kAea06wavFWSyNHY6y4uRSczoR2bOIgvW1wMfSSjIaXD
-	 OXKNj+P7JLMM+d55OOL3Dw59ZVt+KrQPiOUGBg9NGr4DiXqpEEOPWE7NTUdZGwAwLaA==
+	t=1795035024;
+	b=VLcs/tiDg5N+ToecyoVN/za6lE2FPBPJznS8KuJi8yjxPjHY3i1yReFH2CVh9G8sza3x
+	 AsMjboAF6jJoXeFUXWJbnOE+ziIA/Xhi9jwCXyHub2oT1rbNzl0W1yRy+9mBTYf6h1oyX
+	 lkRYSlLIZpL/dnAkmD9YbolVstqXaAVyW6wkVdBG8hQFXdYMQ9BQuNat0cIJM7ZAR2cIC
+	 gcPwx++9TMaJNuy1Zd6BZftzPdiBdZquiQ79BYUqLBO9tkgWbx23I7vJjsLeagOwINMce
+	 O800DOYbgX4py6dF3ZstUzdJm5TK/lIlF/aBjgHikRkUlEVlte1/U72m0cmcjSB8dVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035021;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035024;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FF1CMqI6QESt9PpZcgoeHb4oG38O69LDv6wyGxuhD20=;
-	b=3oW883RfZJINxQzO7JeIo0dmyXT4Cii+ek9tgByxBKDqdt2wnCxx2t9V4gpWJYixmS2w
-	 9Qy+mCEmlyy46cqKEwWywGlnGfkU4NyqQmsmPW6hw44Iak/PXP70Ms9fJpDTVWz4xO2Oy
-	 9vu39rZLR2U+GNYH8opMeFA1ZVqk+Kn2uBxeSwmuIZyZcjvb0XipLJOJr/QGI4vitGv4g
-	 gNWnIOCBJpQSS/am0dKWzUztQuaWCXeXSoJ5WtYAV3Lw5Q3mTT6r6qibZaTfdGtDz5zNF
-	 5Bl0mZuUWY/M9EpBY4EWfCxPInKk6TW6dex9x8abbCCs5Pjxdp3ABE7ahUCqi5G0GNA==
+	bh=1mBcn3SxUAHMxHAu36Rdr4U+sPgyRCLQ43/zYWkzC3A=;
+	b=Cfr+leSPzQELROxEJyZ7DAF6wAkVWVMvxUgXKLdnLO01R/Q0z0J08/8lpFUueoaml29O
+	 dz66Mk4cKvh7x5js9lVx5Flu9z+GdLEucMqv8t9vQlv30qqfuHcZ2cflmSPS66FUXaYmj
+	 UOa8HFZo416kANGCaH7Ii3yQ+J0zLuB31tFTyaMLb5kz37ixuABgdAyLCJ36Rmwqcwvk/
+	 FIEeII47IgUEGqTYWc+v3OxWdF9WIGga/oirJFnDslyglneG0IvBZM12BfAIUGFJJDpsV
+	 FCqXnunxP8yuSX+NUTddGwNnQXdfb5mo6tnDQSJhnB1VLVgElombhcQ9AstFVMkdA/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aahWbx5N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UJdq5eOv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0655B606A32F;
-	Wed, 18 Nov 2026 20:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B91606A31C;
+	Wed, 18 Nov 2026 20:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aahWbx5N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C9B1F000C4;
-	Wed, 18 Nov 2026 20:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UJdq5eOv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB721F000C4;
+	Wed, 18 Nov 2026 20:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035020;
-	bh=FF1CMqI6QESt9PpZcgoeHb4oG38O69LDv6wyGxuhD20=;
+	s=korg; t=1795035023;
+	bh=1mBcn3SxUAHMxHAu36Rdr4U+sPgyRCLQ43/zYWkzC3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aahWbx5N4kDHB3cqJTktbjWWM2zG0z7Zl+4rrdqfYwDraVE1/8+CNzoMqITRS1dhv
-	 /j9b58HdEQpT7V7SK1HJYToY1UUCUSga+yov4YomZDPB7QJPR649GSC9vzb1RQUgpC
-	 Xy7mq9ckJz3nPZ1PzQ1YIRkF1vTqg8uOygoBHI4k=
+	b=UJdq5eOv7P73PTYutce8ubsATGxt1YAVp0izEcat/M7OggkYrhjNlzmCSh1kR5llg
+	 P6pcqBrOQPG7kSDtRNhwDJ6ynwg19Agn6Z6lRkjBdUojGa4yeSTB69dJArOW+AmvuW
+	 jZ2vFVGZzyJkpJTCXvUlX2u4n6gcX1OFBIcC/7Vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Kulikov <vlad_kulikov_c@pm.me>,
-	Jan Kara <jack@suse.cz>,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Christian Brauner <brauner@kernel.org>,
-	David Hildenbrand <david@redhat.com>,
-	Ma Wupeng <mawupeng1@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0540/3318] ipc: create_ipc_ns: drop mqueue mount on sysctl setup failure
-Date: Wed, 18 Nov 2026 15:19:22 +0100
-Message-ID: <20261118150333.467591894@linuxfoundation.org>
+	DaeMyung Kang <charsyam@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.6 0576/3318] ksmbd: return end of file for reads past a named streams data
+Date: Wed, 18 Nov 2026 15:19:58 +0100
+Message-ID: <20261118150334.768803493@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -73,65 +67,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlad Kulikov <vlad.kulikov.c@gmail.com>
+From: DaeMyung Kang <charsyam@gmail.com>
 
-[ Upstream commit 7229d74e5e8c1f140529d405c88d4493e37ce4e3 ]
+commit 626611dc22a3b63b3264a7a797d9dbc530234fcd upstream.
 
-If setup_mq_sysctls(ns) fails after mq_init_ns(ns) succeeds, the error
-path skipped releasing the internal kernel mqueue mount kept in
-ns->mq_mnt. That leaves the vfsmount/superblock referenced until final
-namespace teardown, i.e. a resource leak on this rare failure edge.
+A READ on a non-empty named stream at or beyond its end fails with
+STATUS_INVALID_PARAMETER. ksmbd_vfs_stream_read() returns -EINVAL when
+the offset is not below the stream length, and smb2_read() maps -EINVAL
+to that status.
 
-Unwind it by calling mntput(ns->mq_mnt) before dropping user_ns and
-freeing the IPC namespace. This mirrors the normal ordering used in
-free_ipc_ns().
+smb2_read() already turns a zero-byte read into STATUS_END_OF_FILE, the
+status a regular file returns at its end, and an empty stream already
+takes that path. Return 0 instead of -EINVAL so that non-empty streams
+do the same. Clients that read a stream until end of file otherwise get
+an error once they have read all of its data.
 
-Link: https://lkml.kernel.org/r/20251021181341.670297-1-vlad_kulikov_c@pm.me
-Signed-off-by: Vlad Kulikov <vlad_kulikov_c@pm.me>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Cc: Aleksa Sarai <cyphar@cyphar.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Ma Wupeng <mawupeng1@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: f0e48172a59e ("ipc: drop the mqueue mount with kern_unmount() on setup failure")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The buffered copychunk path converts a zero-byte source read to -EIO,
+as it does for a regular file that shrinks during copying.
+
+Fixes: 2ae1a6cc4302 ("cifsd: fix potential read overflow in ksmbd_vfs_stream_read()")
+Cc: stable@vger.kernel.org
+Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- ipc/namespace.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/smb/server/vfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/ipc/namespace.c b/ipc/namespace.c
-index 4df91ceeeafe9..b93280de1dc5c 100644
---- a/ipc/namespace.c
-+++ b/ipc/namespace.c
-@@ -76,10 +76,10 @@ static struct ipc_namespace *create_ipc_ns(struct user_namespace *user_ns,
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -300,7 +300,7 @@ static int ksmbd_vfs_stream_read(struct
+ 		return (int)v_len;
  
- 	err = -ENOMEM;
- 	if (!setup_mq_sysctls(ns))
--		goto fail_put;
-+		goto fail_mq_mount;
+ 	if (v_len <= *pos) {
+-		count = -EINVAL;
++		count = 0;
+ 		goto free_buf;
+ 	}
  
- 	if (!setup_ipc_sysctls(ns))
--		goto fail_mq;
-+		goto fail_mq_sysctls;
- 
- 	err = msg_init_ns(ns);
- 	if (err)
-@@ -92,9 +92,10 @@ static struct ipc_namespace *create_ipc_ns(struct user_namespace *user_ns,
- 
- fail_ipc:
- 	retire_ipc_sysctls(ns);
--fail_mq:
-+fail_mq_sysctls:
- 	retire_mq_sysctls(ns);
--
-+fail_mq_mount:
-+	mntput(ns->mq_mnt);
- fail_put:
- 	put_user_ns(ns->user_ns);
- 	ns_free_inum(&ns->ns);
--- 
-2.53.0
-
 
 
