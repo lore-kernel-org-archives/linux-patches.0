@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020784;
-	b=ajWjIAEY6Lqv0IfKAR81BYepcJtIaHiAnOlTmmJnbkGRFSPx4II0ifxm1L+1fdQZgmnC
-	 doBbwgtfHAZVfrHjpDwzF8Ct9uCrW2m5JcywtS8yspyoOzC00+WBDjscFMmSZt2lLlpYw
-	 iHaxYa/VfGer1sm5DvDYYDTw8aSYYsW38lqfEtRjx3CXk0Pa6JLOBZl72chwWB5qDhOwY
-	 e/5sIyTF+AQU2V9LSQm5csxaZA9mC1xV9U2HWyLQulWJFLUQ3b30QT47Xi5j2jYOefUDS
-	 2zNylprZt/uTsnt+7X8VDs2vApFcQ9QPPihPcA8C6jpcDEIEm0QUMhIUXx9wQHRmR9w==
+	t=1795020787;
+	b=w4XOpmCQqN6/n4WTiA3ueKNRG5lPYhcOaUNjtGTGEAyxcrb9haX7LIkxzNyMhW4wd/Fp
+	 bzAxwjXNzcRv37SW7vygYaLpnZDnKCkOh5sbonvWgoDzalaIsCt7JkxwsT63fxMWT1JhE
+	 v7kSFRFzeEotbgr2AsZpAxvvIGPTX8j74idIV0ucIYCRw6xlq0bfWFDZEeQwKGlKy+5TB
+	 FFvJEexwhJ+csaatMk2lOt6QYNrpETyMsFOhLFa/pYfQe0NP8smsZVBgZNxcd+Otol4YW
+	 3dJCNqWAPe3qUX5Z9XXMQJBytdJfNRgwWyDTUqzMUN7/SI+56JbKZ5bqE64TRQ368FQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020784;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020787;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nf13rMP/Rn0DAG7khStzzdrHPhWpftl7HSVGKRyuJwM=;
-	b=AGPOGdoF+QVP9iHQtodQfa+qXnPhrq7Dh2oGT904f7VaAchwOhfgohWis+buYFE1A3rK
-	 5SS22pyOsPhr5mEULvpJrMN4VqHZ+JSi4Vv1F7JJj+NzOImp2MU8V+astNUPRbN5Yz5xK
-	 L0sgw+oHGx5Sy6wb0gUlepeJ2fxcU00LFxQgvMTsw1YNWpKl3Z3w6/y6J18TO0J9etpdi
-	 K7/0Qo3E0QV32v0Dl1NCB3u+9UiTKU8CNxh0oniaejfWDbF1q4Hg4U2WH3S7a9dU69Rum
-	 LoyaoMzY1WoSKUXUmIdy1BZsJ89Wv9UO0kIcnC/gbwgoeTpfLSzE3Ppy6FcVt0hYgAQ==
+	bh=CxLMHCzP/Y3zisjIdZHg++fSC/3zfz9Mfen0JVEY+DE=;
+	b=a7tW4ettcCEvm8uStL7Ppw5MGGxD2cWJYyewlgOwdXfBP+uFHTEuB1+y6Un8Q1Y9UFxL
+	 +raZEiESmynOUNYOSeW05QOtesvsaItFxkKMjE5IcPk6wrL7tFRx4u2NjzJYokq/OOo+b
+	 8NvYmo9oSBYKJ44TeyfmS9IWH8p1hLjPqpgJzlMgJ0FKtt4VSvHaJ2EDrpRSvvgxUIcYx
+	 9UkCtEbvIdYpk1rQwldYk5PEzf1Y2wKWkIE3ivLIUT5n0QAPE44YRl5tHwiBwH5u1OsTY
+	 vucO9b5Z6TPfZr2JcpacmLtovSMEjsDzXPvaWAAr1E/GCLc8YMhyGGCBMc5kaEw989A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X6NlolqL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Xm3dlpF/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4B860A6F74;
-	Wed, 18 Nov 2026 16:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEB660A6F7E;
+	Wed, 18 Nov 2026 16:53:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X6NlolqL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863291F000C8;
-	Wed, 18 Nov 2026 16:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xm3dlpF/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452801F000C6;
+	Wed, 18 Nov 2026 16:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020784;
-	bh=nf13rMP/Rn0DAG7khStzzdrHPhWpftl7HSVGKRyuJwM=;
+	s=korg; t=1795020786;
+	bh=CxLMHCzP/Y3zisjIdZHg++fSC/3zfz9Mfen0JVEY+DE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X6NlolqLJ4YnzFa48wAR/1+W98vh2Y4eno5+hYPnmKeGTVq3IXetBUQXuRmVfyNn8
-	 XMM/IPS8g5WoAZ829a4vHtR3kRvH7zLlT3pv/UggncR8BbF+t3mbE+pRKsdl51fOgX
-	 QF0EnK5U7nocYt1LsWaTxAcWG8wvGjMQw+rRVU60=
+	b=Xm3dlpF/wwRTcvAQXzxbNvjn2bR+Ug19/K/gKp+Yi0VmNbHzq7dBUACevnc9DV4sP
+	 k0D4kLf8kMLF8xukU4Yk8O3yUd8NNWSGn1h5T+jP2slIy/oC3TpqMka75m+zBc4v8+
+	 Te9o+tK4Rvz38w1XfuaCSuc8lGTUrx0uR8mlOE3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Monnet <qmo@kernel.org>,
-	Tianyi Chen <hi@tychen.cc>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2075/2651] bpf: Dont echo user-supplied map info fields back to userspace
-Date: Wed, 18 Nov 2026 15:55:15 +0100
-Message-ID: <20261118150400.739579890@linuxfoundation.org>
+Subject: [PATCH 7.3 2076/2651] ALSA: jack: Protect the index scan against control removal
+Date: Wed, 18 Nov 2026 15:55:16 +0100
+Message-ID: <20261118150400.773040256@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,55 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 458575e1f2ddea944d679fe778c92e370a9b61a4 ]
+[ Upstream commit ba8c3d5fc27ac3f86962641dd3b6600906234bab ]
 
-Commit ea2e6467ac36 ("bpf: Return hashes of maps in BPF_OBJ_GET_INFO_BY_FD")
-started copying struct bpf_map_info in from userspace in order to read
-the new hash and hash_size input fields. Before that, the kernel ignored
-the contents of the user buffer and returned a zeroed structure with only
-the output fields filled in.
+A control found during a jack-name index scan must remain alive until
+snd_ctl_find_id() finishes comparing its ID and count. However,
+get_available_index() calls it without holding card->controls_rwsem.
+With CONFIG_SND_CTL_FAST_LOOKUP enabled, the lookup loads a raw control
+pointer from ctl_hash and dereferences it in elem_id_matches() without
+any lock that excludes removal.
 
-Some output fields are only set for certain maps: btf_id, btf_key_type_id
-and btf_value_type_id when the map has BTF (and btf_vmlinux_id for
-struct_ops maps, ifindex, netns_dev and netns_ino when the map is
-offloaded). For all other maps, these fields now return whatever
-userspace passed in before.
+This can happen when a jack is created while a different jack owner on
+the same card removes an existing control with the same name and index.
+For example, probe and unbind of different HDA codecs can reach these
+paths on a shared card if their generated jack names match.
+The codec device locks do not serialize operations on different
+codecs. The unbind path can free the control during the index scan:
 
-This breaks userspace which reuses one bpf_map_info for several queries.
-Restore the original behavior by zeroing the structure and copying in
-only hash and hash_size from userspace before the output fields are
-filled in.
+  Codec A: probe                  Codec B: unbind
+  --------------                  ---------------
+  get_available_index()
+    snd_ctl_find_id()
+      kctl = xa_load(...)
+                                  hda_codec_driver_remove()
+                                    snd_hda_codec_cleanup_for_unbind()
+                                      snd_hda_jack_tbl_clear()
+                                        snd_device_free()
+                                          __snd_device_free()
+                                            snd_jack_dev_free()
+                                              snd_ctl_remove()
+                                                snd_ctl_remove_locked()
+                                                  __snd_ctl_remove()
+                                                    snd_ctl_free_one()
+                                                      kfree(kctl)
+      elem_id_matches(kctl, ...)
+        read freed id/count -> UAF
 
-Fixes: ea2e6467ac36 ("bpf: Return hashes of maps in BPF_OBJ_GET_INFO_BY_FD")
-Reported-by: Quentin Monnet <qmo@kernel.org>
-Reported-by: Tianyi Chen <hi@tychen.cc>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261016191635.662690-1-daniel@iogearbox.net
+Hold controls_rwsem for read across the index scan so removal cannot
+free a control until the lookup has finished using it. Release the lock
+when get_available_index() returns, before the caller adds the new
+control under the write lock.
+
+Fixes: 38ea4c3dc306 ("ALSA: control: Optimize locking for look-up")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Assisted-by: LLM
+Link: https://patch.msgid.link/pm-pmb-f08c844bb1163c8d4fa1-v2-2f3c99e40f90134846ee@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/core/ctljack.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index a353e3d4e7d8c..e7b461f33b588 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -5427,7 +5427,11 @@ static int bpf_map_get_info_by_fd(struct file *file,
- 	info_len = min_t(u32, sizeof(info), info_len);
+diff --git a/sound/core/ctljack.c b/sound/core/ctljack.c
+index 6b6ab34fbde89..36700fda79f3c 100644
+--- a/sound/core/ctljack.c
++++ b/sound/core/ctljack.c
+@@ -38,6 +38,7 @@ static int get_available_index(struct snd_card *card, const char *name)
+ 	sid.iface = SNDRV_CTL_ELEM_IFACE_CARD;
+ 	strscpy(sid.name, name, sizeof(sid.name));
  
- 	memset(&info, 0, sizeof(info));
--	if (copy_from_user(&info, uinfo, info_len))
-+	if (info_len >= offsetofend(struct bpf_map_info, hash) &&
-+	    get_user(info.hash, &uinfo->hash))
-+		return -EFAULT;
-+	if (info_len >= offsetofend(struct bpf_map_info, hash_size) &&
-+	    get_user(info.hash_size, &uinfo->hash_size))
- 		return -EFAULT;
- 
- 	info.type = map->map_type;
++	guard(rwsem_read)(&card->controls_rwsem);
+ 	while (snd_ctl_find_id(card, &sid)) {
+ 		sid.index++;
+ 		/* reset numid; otherwise snd_ctl_find_id() hits this again */
 -- 
 2.53.0
 
