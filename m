@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046667;
-	b=FWMNQdqYwX/QUSmNbPukMTEg6e3aCBgfFybSfB5oxoekW5r8JpyOrOniKsXhVfSblM0H
-	 7ESEv/8eR4A2fQ6UHku7670SU4zisJ7S8T8c+iGyBvlBhWFmAKgV0Z1pEehTrlJkLkQ4h
-	 IY7XhK/43r03tF67VI9zXOo6iS3RkJpswYPsU4qpv4+3HanGbPREmqo+FalWcpU8/DLwe
-	 68pGstGGLNlbMcZf8gul9YPuQFdFH34E7Q1UtS6WmlNlp6lVHDIaUZ1WOwkWnKoHg5S3c
-	 03OrLw49S9xhvPt6sEg4V/mpz2nGVvhTcs8zk1Jcht059Tw3Hjb9MW3wCEc9nWQBtzQ==
+	t=1795046670;
+	b=HrMyaL86zc6pefU5lpIrfMPnAWAYq4tbBcO2kGiHgF1jrEOHXXdcWZDWiDGadyqbN+eX
+	 jnR0neoPHfitf07PsW6qJ2lgT+0v/LOa36s0Nx4kYlQ5KKZJJvE7VPGH3yZiWiKxqryBH
+	 23jFUlUwOxYFYb964M0hNHxY1yTXv4CN1SIbc7YaksTTlDv3BAM+5cebRroVYI24hKxAZ
+	 IARq6bhkCaq8089xDu4jozmqZltBIn4ReYrAr9C0f5FGYBnQDpDKgKEXcx+9h7wBSxG2n
+	 ev6rRrcx6YR23EX1hv0yy/UArhOSwLnbS26721wiHH43QjXAyD2nkNr+Z2sOybBtljQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046667;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046670;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eo2mYm4jCtdGZR6jsKsjRxAOrn+Ps2jbbPEXaPDKquk=;
-	b=HD92kjGHT5ClXE3XLAusgLyjE2IJvjd/dtB4+OEez+W3VcvagWvk9GoLq40pQL6uxBLj
-	 kxNhyaGEcCdZl0wXeXHaOmD5lA7i8+tldIKI86BBgVJSJTI7PvSznwZ3kAJLvTHJpyIbO
-	 kfSOFIYiqkMXZRtWShmoAQikkJm8S0TBJ0RDV7l+RxPM7I6OSUtVPU1vL96TkTKfsfJMO
-	 cgcpIFaIvJ/j/3n0jAjsGeELfWcZan0VrYLnspqa/6EdEKTRy/AkNNPWEszPL40DQhPgB
-	 uVMCw4A0mgQ660pSphjSdqyByozEVVYXmueNezb87eGroAw9lQ6CGosDv67N+fMBPPg==
+	bh=/vzla6xm273iMd2+92v/oMnTous07ChGYwDlP+vMc14=;
+	b=uTF0tdwudU3I2iudNyRPkaeog4GVKqe0YBUT/QN3ohazHXVXL7F6+yrLh6RMvgemyqf/
+	 m5SG2xrtIKySndU79yaTiWEhFTRU0ivuu8+IwaQbyzJkzW0cu+dOUrflzty0VWlyxRmuh
+	 Q2Ze66lKCG3Um/qcBS4D6EjAJOQQgTiJV6s18+jZ8GNswy9AmZ5cji41c96kes6ySX0rp
+	 nZKAVAHtd2B5PQe0MSo/9az/VfUzA2adSMhSHllA8f/4xYKNKZ8gdUhYVK3phEYx+i7+n
+	 XZmgyauO0b08XNtxkfpJIYvhvi3Vmuorznff9oNBL+uCWijk5DlMLKdAdBeimaLcHEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NixBgDGN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lI7c3u9P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D3F606A320;
-	Thu, 19 Nov 2026 00:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEE3606A32A;
+	Thu, 19 Nov 2026 00:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NixBgDGN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39531F000C4;
-	Thu, 19 Nov 2026 00:04:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lI7c3u9P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9421F000C4;
+	Thu, 19 Nov 2026 00:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046667;
-	bh=eo2mYm4jCtdGZR6jsKsjRxAOrn+Ps2jbbPEXaPDKquk=;
+	s=korg; t=1795046670;
+	bh=/vzla6xm273iMd2+92v/oMnTous07ChGYwDlP+vMc14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NixBgDGNwns97IcPhuOYqqaIGCJX56Darqcak8sDN7qlJP9vRl9aAOJ4ylGxQ9wGa
-	 UgqYIddxtnkzPSYrM4tJjoLrUtYWCSoBVIRgnrQ87EiRMQtiLWVLqmoAWiNeVIZAAW
-	 MGF+gyGBNgAwT6HSa4ZAftlLXjvo1l+QeKcE3jmI=
+	b=lI7c3u9PIYEV8elVEKO8ph2qPJo4PV/kJByEBBbJ4J+qUJFLDogOH50J2V49uMljh
+	 v34t11KSLi3rNOxlf6t2j12h39OjGTC3JD7lYbuFkWgpf686ikXmvgYXKipg/DVUyS
+	 kPhzmlUm5m6cwRKV1sWIBzQFMdudpdfJdngv/sEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Morris <rtm@csail.mit.edu>,
-	Jan Kara <jack@suse.cz>,
+	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
+	Eugen Hristev <ehristev@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1336/2857] udf: Avoid invalid LVID used on mount
-Date: Wed, 18 Nov 2026 15:39:30 +0100
-Message-ID: <20261118150249.533018269@linuxfoundation.org>
+Subject: [PATCH 6.1 1363/2857] media: microchip-isc: dont sleep in the clk .is_enabled callback
+Date: Wed, 18 Nov 2026 15:39:57 +0100
+Message-ID: <20261118150250.480300005@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,104 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
 
-[ Upstream commit c8f1140cb82dc843e72697dc6f8c7ee1acce5d28 ]
+[ Upstream commit 61490ff518c7b3ea3ff1cd16bbc012e9e4f1ab74 ]
 
-udf_load_logicalvolint() loads logical volume integrity descriptors.
-Since there can be multiple blocks with LVIDs, we verify the contents of
-only the last (prevailing) LVID found. However if we fail to load the
-last LVID (either due to IO error or because it's checksum fails to
-match), we never perform the verification of validity of the LVID we are
-going to use. If such LVID contains invalid data, we can hit
-out-of-bounds access or similar issues. Fix the problem by verifying
-each LVID we are potentially going to accept.
+isc_clk_is_enabled() calls pm_runtime_resume_and_get() and
+pm_runtime_put_sync(), which can sleep and are not safe here, as
+.is_enabled must run in atomic context. clk_disable_unused() calls it so
+at boot, and CONFIG_DEBUG_ATOMIC_SLEEP reports a "sleeping function
+called from invalid context" BUG.
 
-Reported-by: Robert Morris <rtm@csail.mit.edu>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Stable-dep-of: a61fb39759d7 ("udf: Make sure there's enough space for LVID implementation use field")
+Use the atomic-safe pm_runtime_get_if_active() and pm_runtime_put()
+instead. A suspended ISC has its clocks gated, so report the clock
+disabled when the device is not already active.
+
+Fixes: 01192aa1c5c2 ("media: atmel-isc: Enable the clocks during probe")
+Cc: stable@vger.kernel.org
+Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+Reviewed-by: Eugen Hristev <ehristev@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ sashal: Added true as the second argument to pm_runtime_get_if_active() to match the older API. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/super.c | 42 +++++++++++++++++++++++++-----------------
- 1 file changed, 25 insertions(+), 17 deletions(-)
+ drivers/media/platform/atmel/atmel-isc-clk.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/fs/udf/super.c b/fs/udf/super.c
-index 48ffcfd287eab..b091cc98406b4 100644
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -1574,6 +1574,20 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
- 	return ret;
+diff --git a/drivers/media/platform/atmel/atmel-isc-clk.c b/drivers/media/platform/atmel/atmel-isc-clk.c
+index 2059fe376b00e..54065c2cf1817 100644
+--- a/drivers/media/platform/atmel/atmel-isc-clk.c
++++ b/drivers/media/platform/atmel/atmel-isc-clk.c
+@@ -98,15 +98,14 @@ static int isc_clk_is_enabled(struct clk_hw *hw)
+ {
+ 	struct isc_clk *isc_clk = to_isc_clk(hw);
+ 	u32 status;
+-	int ret;
+ 
+-	ret = pm_runtime_resume_and_get(isc_clk->dev);
+-	if (ret < 0)
++	/* Runs in atomic context, so must not sleep to resume the ISC. */
++	if (pm_runtime_get_if_active(isc_clk->dev, true) <= 0)
+ 		return 0;
+ 
+ 	regmap_read(isc_clk->regmap, ISC_CLKSR, &status);
+ 
+-	pm_runtime_put_sync(isc_clk->dev);
++	pm_runtime_put(isc_clk->dev);
+ 
+ 	return status & ISC_CLK(isc_clk->id) ? 1 : 0;
  }
- 
-+static bool udf_lvid_valid(struct super_block *sb,
-+			   struct logicalVolIntegrityDesc *lvid)
-+{
-+	u32 parts, impuselen;
-+
-+	parts = le32_to_cpu(lvid->numOfPartitions);
-+	impuselen = le32_to_cpu(lvid->lengthOfImpUse);
-+	if (parts >= sb->s_blocksize || impuselen >= sb->s_blocksize ||
-+	    sizeof(struct logicalVolIntegrityDesc) + impuselen +
-+	    2 * parts * sizeof(u32) > sb->s_blocksize)
-+		return false;
-+	return true;
-+}
-+
- /*
-  * Find the prevailing Logical Volume Integrity Descriptor.
-  */
-@@ -1584,7 +1598,6 @@ static void udf_load_logicalvolint(struct super_block *sb, struct kernel_extent_
- 	struct udf_sb_info *sbi = UDF_SB(sb);
- 	struct logicalVolIntegrityDesc *lvid;
- 	int indirections = 0;
--	u32 parts, impuselen;
- 
- 	while (++indirections <= UDF_MAX_LVID_NESTING) {
- 		final_bh = NULL;
-@@ -1606,32 +1619,27 @@ static void udf_load_logicalvolint(struct super_block *sb, struct kernel_extent_
- 		if (!final_bh)
- 			return;
- 
--		brelse(sbi->s_lvid_bh);
--		sbi->s_lvid_bh = final_bh;
--
- 		lvid = (struct logicalVolIntegrityDesc *)final_bh->b_data;
-+		if (udf_lvid_valid(sb, lvid)) {
-+			brelse(sbi->s_lvid_bh);
-+			sbi->s_lvid_bh = final_bh;
-+		} else {
-+			udf_warn(sb, "Corrupted LVID (parts=%u, impuselen=%u), "
-+				 "ignoring.\n",
-+				 le32_to_cpu(lvid->numOfPartitions),
-+				 le32_to_cpu(lvid->lengthOfImpUse));
-+		}
-+
- 		if (lvid->nextIntegrityExt.extLength == 0)
--			goto check;
-+			return;
- 
- 		loc = leea_to_cpu(lvid->nextIntegrityExt);
- 	}
- 
- 	udf_warn(sb, "Too many LVID indirections (max %u), ignoring.\n",
- 		UDF_MAX_LVID_NESTING);
--out_err:
- 	brelse(sbi->s_lvid_bh);
- 	sbi->s_lvid_bh = NULL;
--	return;
--check:
--	parts = le32_to_cpu(lvid->numOfPartitions);
--	impuselen = le32_to_cpu(lvid->lengthOfImpUse);
--	if (parts >= sb->s_blocksize || impuselen >= sb->s_blocksize ||
--	    sizeof(struct logicalVolIntegrityDesc) + impuselen +
--	    2 * parts * sizeof(u32) > sb->s_blocksize) {
--		udf_warn(sb, "Corrupted LVID (parts=%u, impuselen=%u), "
--			 "ignoring.\n", parts, impuselen);
--		goto out_err;
--	}
- }
- 
- /*
 -- 
 2.53.0
 
