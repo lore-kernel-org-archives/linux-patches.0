@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040424;
-	b=B+R+RKvZ9HNpKsGMmEVyglWkXhvO2VTQiciQJAZ0EwpjgGI7ukmeDUm3wEQ/7KKuHdsl
-	 2NYwD+cV6YKQMX3fieWBjS2Ji+n6fwWmy3OcC6LEiFJHyNZmfwwPYWc5VGkVynEqc+AeH
-	 WD4GsUVu6/RRCUrNA2TQNtOvqJ1w8JXuXvISyZguu4HQmFepqm1aDo+zTGIyGyDlAmmdb
-	 UbloNIpxnigELdw8Nm8JCDs3Js81B52fdd81jVckRrVul1qRyvStrnwU4J/aAtFfx21BN
-	 YxhXj+5x3smmNd6fr9L/0KXY7TqPcAX/qe2ulIY70p026wcwP4UVsdEIAdrEVJc1E8g==
+	t=1795040427;
+	b=vFsy0WgdvBl+WOObhSPVcrd8fWDScMqj8GjhWjhxnbyEI13116/UAzUKohlj+z5XfO3Q
+	 Ew7ng7dgSNnypeX5Wc8Df0dZ53R6GE6bP3sQ9VD4yZfJfOPderOnuANXD520T4YMnzReN
+	 4Wu0g6ymXcJc1jAC2aprMYUiwPFdBYZHkuKLAfsA1zhjZB/y+Tw7qvNtV/0Nj9NsO4JDI
+	 sj8Iyk7tIGLPcnptf/uANQIR3vJ6i5FygogLmzfKdmmrw+Sxsngd8YthnghP4UHDVftwx
+	 fn1vN+15Tc8f26dy8y1ubBQfL6+1ZAzn633Za6zLzu9Ri8QqO6SzI4wYe2x6csbWgsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040424;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040427;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YV+KWTmki4uNBPwVc3Dnc8A9uyuIOqq/8Puq2q/6tT8=;
-	b=QrDLWzcbmoI37fEImHdPrubDJ6wPtALjUvCfrggBBb6DVePzsCYASNUt0PK/a/CIq0RW
-	 GWC1Bg6Qb+UBW2dqv61xLqfG431LLEpNjiI5gZyKmTsW6pZydFK/E8ZCc8pkH1EsXjJRQ
-	 7cpdzHd5NI9WybiqkJvE2HHBX7la/qi4RS91IK+G7O4RZmmZ3osW93jG0tMzYCZ2G1OkM
-	 kCFfDCYtNDpWybwABjpHMD3hNePJefm4mboIYto8k/yP2Jn+6grnLCj+6+3vYZjNzQaDH
-	 wLhCO4RNSlxk5TXTkaN3SkQDkY2nWRbt/22Kl6yzFiUVmnsBukRDnbMS1swnhfkvd+w==
+	bh=JYNTKxx2ZFfIaGU6+Hyb7PnpWQJFwxJRhDBVpeTNeTk=;
+	b=aGGeji7oC7T44DNr6BTKvJCE41isgFg8DrA22rYQDjvHQU8BbA0pnKEA/fkyW78AK+Ju
+	 6BV4BT0v1v/Z9UMndF7K34MJJsq0cFjqEkckccD0ZMnikN8/iNt15+3h+9bGODFMLn2Gb
+	 vnyTTM43vLyYVFRSvAJwiv/2EhodXUEKvKH+ACsEw3Y3RdHvy7tQGEsEvxP7NUuWoSmNu
+	 jAMdOwC9WOcd5Le1iYJgJdnfiJ5cKr2vgqyexQMAXEE3ndymYWDn7vE63apkXAva/U6lX
+	 cI7J9u+ji4Wt9DtXCMOLQ6rTum9q9YLjcn8RkGrtHmLvphtedPuGiyBwiqw50Kar7XQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZovOGh9R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BblKAEcR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB4F606A320;
-	Wed, 18 Nov 2026 22:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0C0606A325;
+	Wed, 18 Nov 2026 22:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZovOGh9R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 202211F000C4;
-	Wed, 18 Nov 2026 22:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BblKAEcR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2C71F000C4;
+	Wed, 18 Nov 2026 22:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040424;
-	bh=YV+KWTmki4uNBPwVc3Dnc8A9uyuIOqq/8Puq2q/6tT8=;
+	s=korg; t=1795040427;
+	bh=JYNTKxx2ZFfIaGU6+Hyb7PnpWQJFwxJRhDBVpeTNeTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZovOGh9R+/HvS395DAYfCYOHlbsp9iuxQfC8vrDvBNj4OmcK+u/rV/v34IywaktIX
-	 x/ikpQfgc71A2D+tiW01DSvxU4TXA16BRXLDQjlPkOfn0tTL9EIOEgTkmiSadlc0gl
-	 w5L9R+EFeF9e13lvDxUBY62avtyykU+Xfg6GZeLg=
+	b=BblKAEcRNDqK7QtMwXU66urCk5m9gRevFXAdDS0F3Lojj1uL3HJXy4uswAwp/YQ4E
+	 JmwFD+mZw2Mv9cH+698je44VNSARX7zkY3Pfp0jqz3tm8VXu5v3N5AZbS8KrHBn+aY
+	 T5X2sm3MSQktZfeT/lsGWDZP4so6CJltSbMyE/aU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdelnasser Hussein <abdelnasserhussein11@gmail.com>,
-	Maxwell Doose <maxwell@maxwelld.cc>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2411/3318] staging: iio: adc: ad7816: Serialize SPI operations
-Date: Wed, 18 Nov 2026 15:50:33 +0100
-Message-ID: <20261118150433.822965622@linuxfoundation.org>
+Subject: [PATCH 6.6 2402/3318] RDMA/mlx5: Set SRQ event handler before xarray insertion
+Date: Wed, 18 Nov 2026 15:50:24 +0100
+Message-ID: <20261118150433.567202586@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,87 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdelnasser Hussein <abdelnasserhussein11@gmail.com>
+From: Yishai Hadas <yishaih@nvidia.com>
 
-[ Upstream commit 8f99c766605a484663764b52da56a0b160f9d9c3 ]
+[ Upstream commit d2aa15620e98dc4c6516944397ebea03b7a62b90 ]
 
-The ad7816_spi_read() and ad7816_spi_write() functions perform a
-sequence of GPIO state changes followed by an SPI transfer. If multiple
-operations occur simultaneously, the GPIO state could be changed by one
-thread while another is in the middle of a transfer, leading to a race
-condition.
+mlx5_cmd_create_srq() stores the SRQ into the xarray before
+srq->msrq.event was assigned. A firmware SRQ event arriving in that
+window calls through a NULL pointer.
 
-Introduce a mutex to serialize the operations, ensuring that the GPIO
-toggling and the SPI transfer are treated as a single atomic operation.
-The mutex is placed right after the pointers in the device state
-structure to avoid padding holes.
+Move the assignment before mlx5_cmd_create_srq().
 
-Signed-off-by: Abdelnasser Hussein <abdelnasserhussein11@gmail.com>
-Reviewed-by: Maxwell Doose <maxwell@maxwelld.cc>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Stable-dep-of: b96187644664 ("staging: iio: adc: ad7816: Protect sysfs attributes with mutex")
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
+Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://patch.msgid.link/20260915140933.40580-12-yishaih@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/iio/adc/ad7816.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/infiniband/hw/mlx5/srq.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/staging/iio/adc/ad7816.c b/drivers/staging/iio/adc/ad7816.c
-index 6a402e8877605..ade1b8db197d4 100644
---- a/drivers/staging/iio/adc/ad7816.c
-+++ b/drivers/staging/iio/adc/ad7816.c
-@@ -5,12 +5,14 @@
-  * Copyright 2010 Analog Devices Inc.
-  */
+diff --git a/drivers/infiniband/hw/mlx5/srq.c b/drivers/infiniband/hw/mlx5/srq.c
+index bcb6b324af506..38def085ee267 100644
+--- a/drivers/infiniband/hw/mlx5/srq.c
++++ b/drivers/infiniband/hw/mlx5/srq.c
+@@ -284,6 +284,7 @@ int mlx5_ib_create_srq(struct ib_srq *ib_srq,
  
-+#include <linux/cleanup.h>
- #include <linux/device.h>
- #include <linux/gpio/consumer.h>
- #include <linux/interrupt.h>
- #include <linux/kernel.h>
- #include <linux/list.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/slab.h>
- #include <linux/spi/spi.h>
- #include <linux/sysfs.h>
-@@ -47,6 +49,7 @@ struct ad7816_chip_info {
- 	struct gpio_desc *rdwr_pin;
- 	struct gpio_desc *convert_pin;
- 	struct gpio_desc *busy_pin;
-+	struct mutex lock; /* protect device state during SPI transfers */
- 	u8  oti_data[AD7816_CS_MAX + 1];
- 	u8  channel_id;	/* 0 always be temperature */
- 	u8  mode;
-@@ -67,6 +70,8 @@ static int ad7816_spi_read(struct ad7816_chip_info *chip, u16 *data)
- 	int ret;
- 	__be16 buf;
+ 	in.pd = to_mpd(ib_srq->pd)->pdn;
+ 	in.db_record = srq->db.dma;
++	srq->msrq.event = mlx5_ib_srq_event;
+ 	err = mlx5_cmd_create_srq(dev, &srq->msrq, &in);
+ 	kvfree(in.pas);
+ 	if (err) {
+@@ -292,8 +293,6 @@ int mlx5_ib_create_srq(struct ib_srq *ib_srq,
+ 	}
  
-+	guard(mutex)(&chip->lock);
-+
- 	gpiod_set_value(chip->rdwr_pin, 1);
- 	gpiod_set_value(chip->rdwr_pin, 0);
- 	ret = spi_write_then_read(spi_dev, &chip->channel_id, sizeof(chip->channel_id), NULL, 0);
-@@ -107,6 +112,8 @@ static int ad7816_spi_write(struct ad7816_chip_info *chip, u8 data)
- 	struct spi_device *spi_dev = chip->spi_dev;
- 	int ret;
+ 	mlx5_ib_dbg(dev, "create SRQ with srqn 0x%x\n", srq->msrq.srqn);
+-
+-	srq->msrq.event = mlx5_ib_srq_event;
+ 	srq->ibsrq.ext.xrc.srq_num = srq->msrq.srqn;
  
-+	guard(mutex)(&chip->lock);
-+
- 	gpiod_set_value(chip->rdwr_pin, 1);
- 	gpiod_set_value(chip->rdwr_pin, 0);
- 	ret = spi_write_then_read(spi_dev, &data, sizeof(data), NULL, 0);
-@@ -362,6 +369,10 @@ static int ad7816_probe(struct spi_device *spi_dev)
- 	/* this is only used for device removal purposes */
- 	dev_set_drvdata(&spi_dev->dev, indio_dev);
- 
-+	ret = devm_mutex_init(&spi_dev->dev, &chip->lock);
-+	if (ret)
-+		return ret;
-+
- 	chip->spi_dev = spi_dev;
- 	for (i = 0; i <= AD7816_CS_MAX; i++)
- 		chip->oti_data[i] = 203;
+ 	if (udata) {
 -- 
 2.53.0
 
