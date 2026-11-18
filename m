@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031173;
-	b=JI5yiWa5WxQBdmRZsqIcm4t/+d5+S79afYr7LkZA9dbFwTjhxh/X+nynZ7zFUp+Q2/QI
-	 YZr7f+t00EB1XJ+zh0Y9J6DAp2UTp58Ksbgh3C3bd0l4M03sy2ZMXur6nut3vMtrHqIvb
-	 LvLjEgZGa3Xf3zCLb1zJ4v15iFzNI46Hm8EPv8QMTpf+hBrmXjKBC03Knkg9CffOEXfd+
-	 xN/lDzTMbYa0Z5yHGnyvFuubQHxGtRp1NAYXHKpPTOexqYVxiMwahsYsh/xEDBm6PGVHM
-	 Q1eWc8ehZ8RpMERhoGdV5ADaeWmsfJIQcVbJaablQE9/vPYW4qdjCGji40mDxOYus4w==
+	t=1795031176;
+	b=hQ3LLmnqpn9w4e0lMxgmyZlyBmkXMa3VrlJPiNMgDre/o5yllscaNELj9kPbCPs39snz
+	 tMJjtfZLMrSdkZR7TiXUq4uYiPR0vuQ/stB6KCIZFDUvRBpodjRRwynTK9dNiPR6cOsrj
+	 SZz02v5YNvW0bbG+wlLkXZTtBf690JUp1J2tEZQUQqAGX+Yqm8NEg15XUd+FSLLYRqOTw
+	 Ioywv2CMdJpXXwWx8zCt7eZpPQMVZ3JmgUTN76WLCPF9xSsLT9i9Ho9U4uYweUmAhEMsJ
+	 syg+B/+t05epd3E9JFz8n8cnJbXJ16b0ZjSf3W26dSD4CAfyGYPS1x6AHMP6dv6wZpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031173;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031176;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y8rf3GI/F96YJPwMWVg5k7cv91ZR2TUnGeDjMP047hI=;
-	b=WrxjNdeep9uEJBTQUMyd17eyq1JfKudH5kqbSmLSzj9kj9HVlJRRg7BT6nwbalGdubx8
-	 yxD5i9qYaCL9Cl9csBvUiUN6rABxu2PTFh9YQaV4ZHofAD7Aa1CDZQy4dcm4XtXp7B974
-	 +HruzkQmgiRGRZYDJPx4RVKPsKJB84lFnjbD0/RfOEIuJgoqtPXcniReCGosS2GQMnp2p
-	 c4FsbMaJGRfvKY6SwZ24hqpwR/HRurSl3O04S2WokitQ8u6Sz7yLQA3nEcGi/VSWUp98a
-	 lVBQVScL2jqZqcBRD0kD1F/Mk5Lom3BQ640kaU0b4wzGNfOM08YK26JWNCWXaJ4KMeQ==
+	bh=6T5fhL87dQsOO0GpzWsdWrovzqczuwjjSxdjkxKYVYQ=;
+	b=YmleHrruX8Xeq1vAeYYfoO01vwghVMzXLRUwWp3eFTKvesr0FdzRS3a2d27+2EcolMnC
+	 1RmuPikhNx7LrMh25CSX6ojrTS/DoEzwWX2Ly93x2Plr1zhcmV22N3xgrcN85r9ojKiro
+	 qTqis5AvQdVfqXDEQjotjFhNctwFGwFq1UDjuOxTz3MJzOkZCkWq3xSueic4+uNVwt/KL
+	 X/qaGGongnaa6gXDORU529eBdKZq1nL059XQ6YGALiVg2iGAL9xwabWwRuUC7zLxf1c7q
+	 MaR+amuFVASeaXGZgchMe1yGh7iqAvowR4laKwff/FqUXESD7Zum8Ne/+GGJjZBk5DA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Yh03/AfB";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YYTGfuPc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9410D606A31C;
-	Wed, 18 Nov 2026 19:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765CB606A31C;
+	Wed, 18 Nov 2026 19:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yh03/AfB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1D71F000C7;
-	Wed, 18 Nov 2026 19:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YYTGfuPc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54E21F000C4;
+	Wed, 18 Nov 2026 19:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031173;
-	bh=Y8rf3GI/F96YJPwMWVg5k7cv91ZR2TUnGeDjMP047hI=;
+	s=korg; t=1795031176;
+	bh=6T5fhL87dQsOO0GpzWsdWrovzqczuwjjSxdjkxKYVYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yh03/AfBpmenwxe+dr4i8s+cFfG9cl5I+zYbB0lwNWV5fNLTzHmUfkr9AoNHdKw1v
-	 nYh0dwWNz63KQxuwuZAzefq9RnnlFnG1NqyKEdnbebzWG4HP8qR0WtcaDNOgoKwFsh
-	 9gGEYtXacr+7LC0LL8+1BMUur+TWljNsWlxE7mjw=
+	b=YYTGfuPcocRThKoytjo8ZEDoZ96aQjTZvuPqfXHAI1AUrzE9IWxJ8I/3w5uZ28zDK
+	 4A5yHHXPNp7wD+MSmOVMwF+i/dxEPnujK88m60wHZi1zkvOQhil+5xpD9FMnQaStig
+	 R9jjzaTLXKkxB060CbC3gzDytU3kXQDTZryxMVQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Leung <untilscour@protonmail.com>,
+	Jiale Yao <yaojiale02@163.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0963/1756] wifi: mt76: fix wcid teardown ordering in mt76_reset_device()
-Date: Wed, 18 Nov 2026 15:51:30 +0100
-Message-ID: <20261118150048.420463168@linuxfoundation.org>
+Subject: [PATCH 6.12 0964/1756] wifi: mt76: mt76x02: validate RX padding before use
+Date: Wed, 18 Nov 2026 15:51:31 +0100
+Message-ID: <20261118150048.465236961@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,44 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Leung <untilscour@protonmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 5cebbd7a87df834efe002c8e54211e6adc99703a ]
+[ Upstream commit baf375ca58eaa24503f9febac75c056852694c3a ]
 
-mt76_reset_device() tears down each wcid's pktid idr before clearing
-dev->wcid[i], which is the reverse of the ordering used on the
-sta removal path. Until the pointer is cleared, a concurrent lookup
-under status_lock can still find the wcid and access its
-already destroyed idr.
+The RX descriptor provides L2 and PN padding lengths that are used to
+locate the CCMP IV and determine how many bytes to remove from the packet.
+These lengths are not checked against the received skb length before the
+IV is read or mt76x02_remove_hdr_pad() is called.
 
-Clear dev->wcid[i] before calling mt76_wcid_cleanup(), reproducing
-the ordering mac80211 already enforces for normal sta removal (where
-mt76_sta_pre_rcu_remove() clears dev->wcid[idx] before
-mt76_wcid_cleanup() runs via the .sta_state callback).
+Reject frames whose IV does not fit within the skb or whose header padding
+would extend past the end of the skb.
 
-Fixes: 065c79df595a ("wifi: mt76: mt7915: fix list corruption after hardware restart")
-Signed-off-by: Ryan Leung <untilscour@protonmail.com>
-Link: https://patch.msgid.link/20260821-mt76-wcid-null-before-cleanup-v1-1-0e364d9062d6@protonmail.com
+Fixes: 30ce7f4456ae ("mt76: validate rx CCMP PN")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260925152754.2323624-1-yaojiale02@163.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt76x02_mac.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
-index 13e6594945180..289c1a2815560 100644
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -812,8 +812,8 @@ void mt76_reset_device(struct mt76_dev *dev)
- 			continue;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
+index d5ee2bb6f679b..441d461e76787 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
+@@ -818,9 +818,13 @@ int mt76x02_mac_process_rx(struct mt76x02_dev *dev, struct sk_buff *skb,
+ 	len = FIELD_GET(MT_RXWI_CTL_MPDU_LEN, ctl);
+ 	pn_len = FIELD_GET(MT_RXINFO_PN_LEN, rxinfo);
+ 	if (pn_len) {
+-		int offset = ieee80211_get_hdrlen_from_skb(skb) + pad_len;
+-		u8 *data = skb->data + offset;
++		unsigned int offset = ieee80211_get_hdrlen_from_skb(skb) + pad_len;
++		u8 *data;
  
- 		wcid->sta = 0;
--		mt76_wcid_cleanup(dev, wcid);
- 		rcu_assign_pointer(dev->wcid[i], NULL);
-+		mt76_wcid_cleanup(dev, wcid);
++		if (offset + 8 > skb->len)
++			return -EINVAL;
++
++		data = skb->data + offset;
+ 		status->iv[0] = data[7];
+ 		status->iv[1] = data[6];
+ 		status->iv[2] = data[5];
+@@ -840,6 +844,9 @@ int mt76x02_mac_process_rx(struct mt76x02_dev *dev, struct sk_buff *skb,
+ 		}
  	}
- 	rcu_read_unlock();
  
++	if (pad_len + ieee80211_get_hdrlen_from_skb(skb) > skb->len)
++		return -EINVAL;
++
+ 	mt76x02_remove_hdr_pad(skb, pad_len);
+ 
+ 	if ((rxinfo & MT_RXINFO_BA) && !(rxinfo & MT_RXINFO_NULL))
 -- 
 2.53.0
 
