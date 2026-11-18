@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060824;
-	b=SNwJFC5uau0dUlmMKjUvEQsJ7h/vg3Y5IRbinC+O0n3VmnAcWz2o0ncmBH9XFo8j1bun
-	 wHvP27xFIU8z20HBLs1w9Ev//Cg7RjNEO5q7/VFhL8xyiUWFyaX3qEEqSWfJELLN9DLVB
-	 vKvZppApzRrApcdSMbsp+EJyCD7xxxUPEn60iuNvZ65zH9Bsh6WsRBEkUcvddDt1Ytd42
-	 eE43NtDUlQSu/ATtHOjX+10Jr4fjNXm7R7O1jzTKYD9CqlQPr1iLbeZnWRX+DPF4xnhJ2
-	 2RVeeA0eYgRZdUY/hS9qcwuMHFedPv3xWHqKk0ANTdEyu9igy/60xNC45HbmYl3WhkQ==
+	t=1795060827;
+	b=WfqQzQt8Bso/YHQc4vvvgMUFVi9kzP4/XSsvyfLRvhRr1veLy6iamtpDuUTxJEl4BSoa
+	 RMjLX8fy+iIeXP/1eDY5haAO+ww9MOYgpmKtgGzAQEIKyUsDI4wj3EA5YqsRgJkVgvHu8
+	 sNA9r4GeYMRHWg0E7T7Ks++Q4xhE2sRgIoXEzdgPTXq5lVt48hb3dPNWiBzCxyvGu2AkG
+	 arVzcevM7MkIV6neu/ODJhSVe97Ne5GvoP5skQfqHHbfjcPQEsQbKAW2RLlGmJncL7faX
+	 pK6PgjXuZ8JCib3j5FmDKdzC/Ir+ai2fpQkqFOj3/C8OwmAtgRaS6FgEMPbyDulwBzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060824;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060827;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8O6OOPPx9ipqno5BRDbCVin80IVb0Yn2CkliOm+2a3U=;
-	b=SQFoJzLW5E4/r21iIUEuOosUEL7/QTOKKP0LrMs56S0462AxMDByXh4RjzQE35ir6AjJ
-	 c8aTEjZ0t8X8A9GamgZA6kD+MD4upBuyHqqAcFrX26btW/Dyp1mWhuVUP6a3+HD2VcG1T
-	 W6IzO10PBDktHDwSe9pPVHMl/KQaIlpw66siKOAU3Kll3r8LZkxO+i7nYm7Z+BwPIH4y8
-	 0g/LbRgJ7j2A+VrhRATshdzKY03xsnE/IFNEw7FOMV4UV9QJwTx6qZJQkNYv7dYcmLtM/
-	 3EiVewPF0C0u6GBbANflXlAQIx/3dP+0jnG88dnrv5k5g/VCHiFNxDy0t9bFNPoXfkg==
+	bh=Sn1GDYRSq4fVQ/mTW5EoOmr2egtrhugK9Ar8jF03CyM=;
+	b=vpu5Ggn0JWav+Tp7uz7JC13cnB406gE1/nVVMe7lnNm4BTcxoPUQTtOqGn10/RgkkwZs
+	 qgc2GZEK1INnCu2qaVeymoOSGX1KQ2UiRJVXH/3nY7lRHcZEY1/QaRs/fqmt9hC6Xz2Ne
+	 NgDp0hQ2n6zwpbLcY4Dgp2zXnrXZtYMOJnqm0xVxO3VwN7Jf9hA9FJHBqT0qB1xNn19L4
+	 O54crrcUezXM9qirQk08mrcqQYAGVdkgqISrdja22lONmHW3tJ2nCeLamiwlR002BvDIs
+	 3401FkF4lvSgr1PpLs0kLNsdFch9js6uvEW/OxaeqMs2+VbLCMcS+n/WYD3U86RvWgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uxMyc+0m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="i/I4M9yY";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4179606A330;
-	Thu, 19 Nov 2026 04:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AE6606A320;
+	Thu, 19 Nov 2026 04:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uxMyc+0m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F341C1F000C4;
-	Thu, 19 Nov 2026 04:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i/I4M9yY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB70C1F000C4;
+	Thu, 19 Nov 2026 04:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060824;
-	bh=8O6OOPPx9ipqno5BRDbCVin80IVb0Yn2CkliOm+2a3U=;
+	s=korg; t=1795060827;
+	bh=Sn1GDYRSq4fVQ/mTW5EoOmr2egtrhugK9Ar8jF03CyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uxMyc+0mjjPWuR84xfEfaNTRkAXBwqKsbE0Jk7UEvyAy0ODnaimLvwIBhK8hcqux4
-	 ygtwhAgNHuwYTOAfVttrM7PQArGT3SJ3W89DDHapAaxwTkTL4zl2KpKSHzrllnqhT6
-	 VMvXrWYupkY/MkF0IKF1AzvSmH0iE2uVvMuq8PDA=
+	b=i/I4M9yY8OaWCo3f4RivAhHKTq4XwggN1x6G+nG9lcBa0hZey4Fd/RSGMHt7CZumR
+	 GuXhWHUxqGeWdtiEOZ2jOZJwo1ZU9ZrRzEaiCHlBsWRIY0ZfwLSJgITyLi28oSLAod
+	 tMu1M/0brayIxGG9lg2LCb/MhTVcBaM9kIhSKSnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Dmitrii Tulnov <tulnov.dl@gmail.com>,
+	Julian Braha <julianbraha@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1338/1848] kconfig: move conf_set_all_new_symbols() to conf.c
-Date: Wed, 18 Nov 2026 15:56:16 +0100
-Message-ID: <20261118150015.724743996@linuxfoundation.org>
+Subject: [PATCH 5.10 1339/1848] kconfig: warn about malformed KCONFIG_PROBABILITY values
+Date: Wed, 18 Nov 2026 15:56:17 +0100
+Message-ID: <20261118150015.760848266@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,448 +69,260 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Dmitrii Tulnov <tulnov.dl@gmail.com>
 
-[ Upstream commit 98f8475c78697f6c1155f93d3a346d9027deb5aa ]
+[ Upstream commit 9f01cd3a324390b235c67ae4ca3d35085369ebdd ]
 
-This function is only used in conf.c. Move it there together with the
-randomize_choice_values() helper.
+randconfig checks the numeric range of each probability but does not
+validate where strtol() stops. For example, KCONFIG_PROBABILITY=50% is
+accepted as 50:0:0: the '%' is parsed repeatedly as zero. For the
+documented value 50, tristate y/m/n probabilities are 25%/25%/50%.
+With 50%, both y/m probabilities silently become zero, reducing the
+coverage of random configuration builds. Empty fields and extra fields
+are also accepted.
 
-Define 'enum conf_def_mode' locally in conf.c as well.
+Warn when the value does not follow the documented decimal format. For
+malformed inputs whose parsed probabilities are in range, preserve the
+existing interpretation unless KCONFIG_WERROR is set. In that case, exit
+with an error before writing the configuration. Leading whitespace and
+signs are accepted by strtol(), but also trigger the warning because they
+are outside the documented format.
 
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Stable-dep-of: 9f01cd3a3243 ("kconfig: warn about malformed KCONFIG_PROBABILITY values")
+Keep the strtol() result as long until the range check. This rejects
+out-of-range values that narrowing to int previously made valid, such as
+4294967296 becoming zero on a 64-bit host, regardless of KCONFIG_WERROR.
+
+Add regression tests for one warning per malformed input, preserved
+configurations, KCONFIG_WERROR, out-of-range values, the supported
+probability formats, and the documented empty-value default.
+
+Fixes: e43956e60769 ("kconfig: implement KCONFIG_PROBABILITY for randconfig")
+Assisted-by: LLM
+Signed-off-by: Dmitrii Tulnov <tulnov.dl@gmail.com>
+Tested-by: Julian Braha <julianbraha@gmail.com>
+Reviewed-by: Julian Braha <julianbraha@gmail.com>
+Link: https://patch.msgid.link/20260918213430.3-1-tulnov.dl@gmail.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/conf.c     | 193 +++++++++++++++++++++++++++++++++++++
- scripts/kconfig/confdata.c | 176 ---------------------------------
- scripts/kconfig/lkc.h      |  11 ---
- 3 files changed, 193 insertions(+), 187 deletions(-)
+ scripts/kconfig/conf.c                        |  16 ++-
+ scripts/kconfig/tests/conftest.py             |   6 +
+ .../tests/randconfig_probability/Kconfig      |  12 ++
+ .../tests/randconfig_probability/__init__.py  | 130 ++++++++++++++++++
+ 4 files changed, 163 insertions(+), 1 deletion(-)
+ create mode 100644 scripts/kconfig/tests/randconfig_probability/Kconfig
+ create mode 100644 scripts/kconfig/tests/randconfig_probability/__init__.py
 
 diff --git a/scripts/kconfig/conf.c b/scripts/kconfig/conf.c
-index 820660804cc87..289ed6f8f047b 100644
+index 289ed6f8f047b..0d393b9d7b4d3 100644
 --- a/scripts/kconfig/conf.c
 +++ b/scripts/kconfig/conf.c
-@@ -113,6 +113,199 @@ static void set_randconfig_seed(void)
- 	srand(seed);
- }
+@@ -185,12 +185,23 @@ static bool conf_set_all_new_symbols(enum conf_def_mode mode)
  
-+static bool randomize_choice_values(struct symbol *csym)
-+{
-+	struct property *prop;
-+	struct symbol *sym;
-+	struct expr *e;
-+	int cnt, def;
+ 	if (mode == def_random) {
+ 		int n, p[3];
++		bool warned = false;
+ 		char *env = getenv("KCONFIG_PROBABILITY");
+ 
+ 		n = 0;
+ 		while (env && *env) {
+ 			char *endp;
+-			int tmp = strtol(env, &endp, 10);
++			long tmp = strtol(env, &endp, 10);
 +
-+	/*
-+	 * If choice is mod then we may have more items selected
-+	 * and if no then no-one.
-+	 * In both cases stop.
-+	 */
-+	if (csym->curr.tri != yes)
-+		return false;
-+
-+	prop = sym_get_choice_prop(csym);
-+
-+	/* count entries in choice block */
-+	cnt = 0;
-+	expr_list_for_each_sym(prop->expr, e, sym)
-+		cnt++;
-+
-+	/*
-+	 * find a random value and set it to yes,
-+	 * set the rest to no so we have only one set
-+	 */
-+	def = rand() % cnt;
-+
-+	cnt = 0;
-+	expr_list_for_each_sym(prop->expr, e, sym) {
-+		if (def == cnt++) {
-+			sym->def[S_DEF_USER].tri = yes;
-+			csym->def[S_DEF_USER].val = sym;
-+		} else {
-+			sym->def[S_DEF_USER].tri = no;
-+		}
-+		sym->flags |= SYMBOL_DEF_USER;
-+		/* clear VALID to get value calculated */
-+		sym->flags &= ~SYMBOL_VALID;
-+	}
-+	csym->flags |= SYMBOL_DEF_USER;
-+	/* clear VALID to get value calculated */
-+	csym->flags &= ~SYMBOL_VALID;
-+
-+	return true;
-+}
-+
-+enum conf_def_mode {
-+	def_default,
-+	def_yes,
-+	def_mod,
-+	def_y2m,
-+	def_m2y,
-+	def_no,
-+	def_random
-+};
-+
-+static bool conf_set_all_new_symbols(enum conf_def_mode mode)
-+{
-+	struct symbol *sym, *csym;
-+	int i, cnt;
-+	/*
-+	 * can't go as the default in switch-case below, otherwise gcc whines
-+	 * about -Wmaybe-uninitialized
-+	 */
-+	int pby = 50; /* probability of bool     = y */
-+	int pty = 33; /* probability of tristate = y */
-+	int ptm = 33; /* probability of tristate = m */
-+	bool has_changed = false;
-+
-+	if (mode == def_random) {
-+		int n, p[3];
-+		char *env = getenv("KCONFIG_PROBABILITY");
-+
-+		n = 0;
-+		while (env && *env) {
-+			char *endp;
-+			int tmp = strtol(env, &endp, 10);
-+
-+			if (tmp >= 0 && tmp <= 100) {
-+				p[n++] = tmp;
-+			} else {
-+				errno = ERANGE;
-+				perror("KCONFIG_PROBABILITY");
-+				exit(1);
++			if (!isdigit((unsigned char)*env) ||
++			    (*endp && *endp != ':') ||
++			    (*endp == ':' && (!endp[1] || n == 2))) {
++				if (!warned) {
++					fprintf(stderr,
++						"warning: KCONFIG_PROBABILITY has malformed format\n");
++					warned = true;
++				}
 +			}
-+			env = (*endp == ':') ? endp + 1 : endp;
-+			if (n >= 3)
-+				break;
-+		}
-+		switch (n) {
-+		case 1:
-+			pby = p[0];
-+			ptm = pby / 2;
-+			pty = pby - ptm;
-+			break;
-+		case 2:
-+			pty = p[0];
-+			ptm = p[1];
-+			pby = pty + ptm;
-+			break;
-+		case 3:
-+			pby = p[0];
-+			pty = p[1];
-+			ptm = p[2];
-+			break;
-+		}
+ 
+ 			if (tmp >= 0 && tmp <= 100) {
+ 				p[n++] = tmp;
+@@ -226,6 +237,9 @@ static bool conf_set_all_new_symbols(enum conf_def_mode mode)
+ 			perror("KCONFIG_PROBABILITY");
+ 			exit(1);
+ 		}
 +
-+		if (pty + ptm > 100) {
-+			errno = ERANGE;
-+			perror("KCONFIG_PROBABILITY");
++		if (warned && getenv("KCONFIG_WERROR"))
 +			exit(1);
-+		}
-+	}
-+
-+	for_all_symbols(i, sym) {
-+		if (sym_has_value(sym) || sym->flags & SYMBOL_VALID)
-+			continue;
-+		switch (sym_get_type(sym)) {
-+		case S_BOOLEAN:
-+		case S_TRISTATE:
-+			has_changed = true;
-+			switch (mode) {
-+			case def_yes:
-+				sym->def[S_DEF_USER].tri = yes;
-+				break;
-+			case def_mod:
-+				sym->def[S_DEF_USER].tri = mod;
-+				break;
-+			case def_no:
-+				if (sym->flags & SYMBOL_ALLNOCONFIG_Y)
-+					sym->def[S_DEF_USER].tri = yes;
-+				else
-+					sym->def[S_DEF_USER].tri = no;
-+				break;
-+			case def_random:
-+				sym->def[S_DEF_USER].tri = no;
-+				cnt = rand() % 100;
-+				if (sym->type == S_TRISTATE) {
-+					if (cnt < pty)
-+						sym->def[S_DEF_USER].tri = yes;
-+					else if (cnt < pty + ptm)
-+						sym->def[S_DEF_USER].tri = mod;
-+				} else if (cnt < pby)
-+					sym->def[S_DEF_USER].tri = yes;
-+				break;
-+			default:
-+				continue;
-+			}
-+			if (!(sym_is_choice(sym) && mode == def_random))
-+				sym->flags |= SYMBOL_DEF_USER;
-+			break;
-+		default:
-+			break;
-+		}
-+
-+	}
-+
-+	sym_clear_all_valid();
-+
-+	/*
-+	 * We have different type of choice blocks.
-+	 * If curr.tri equals to mod then we can select several
-+	 * choice symbols in one block.
-+	 * In this case we do nothing.
-+	 * If curr.tri equals yes then only one symbol can be
-+	 * selected in a choice block and we set it to yes,
-+	 * and the rest to no.
-+	 */
-+	if (mode != def_random) {
-+		for_all_symbols(i, csym) {
-+			if ((sym_is_choice(csym) && !sym_has_value(csym)) ||
-+			    sym_is_choice_value(csym))
-+				csym->flags |= SYMBOL_NEED_SET_CHOICE_VALUES;
-+		}
-+	}
-+
-+	for_all_symbols(i, csym) {
-+		if (sym_has_value(csym) || !sym_is_choice(csym))
-+			continue;
-+
-+		sym_calc_value(csym);
-+		if (mode == def_random)
-+			has_changed |= randomize_choice_values(csym);
-+		else {
-+			set_all_choice_values(csym);
-+			has_changed = true;
-+		}
-+	}
-+
-+	return has_changed;
-+}
-+
- static void conf_rewrite_mod_or_yes(enum conf_def_mode mode)
- {
- 	struct symbol *sym;
-diff --git a/scripts/kconfig/confdata.c b/scripts/kconfig/confdata.c
-index 884dabd94a13a..6fe87c6162ee0 100644
---- a/scripts/kconfig/confdata.c
-+++ b/scripts/kconfig/confdata.c
-@@ -1149,54 +1149,6 @@ void conf_set_changed_callback(void (*fn)(void))
- 	conf_changed_callback = fn;
- }
+ 	}
  
--static bool randomize_choice_values(struct symbol *csym)
--{
--	struct property *prop;
--	struct symbol *sym;
--	struct expr *e;
--	int cnt, def;
--
--	/*
--	 * If choice is mod then we may have more items selected
--	 * and if no then no-one.
--	 * In both cases stop.
--	 */
--	if (csym->curr.tri != yes)
--		return false;
--
--	prop = sym_get_choice_prop(csym);
--
--	/* count entries in choice block */
--	cnt = 0;
--	expr_list_for_each_sym(prop->expr, e, sym)
--		cnt++;
--
--	/*
--	 * find a random value and set it to yes,
--	 * set the rest to no so we have only one set
--	 */
--	def = (rand() % cnt);
--
--	cnt = 0;
--	expr_list_for_each_sym(prop->expr, e, sym) {
--		if (def == cnt++) {
--			sym->def[S_DEF_USER].tri = yes;
--			csym->def[S_DEF_USER].val = sym;
--		}
--		else {
--			sym->def[S_DEF_USER].tri = no;
--		}
--		sym->flags |= SYMBOL_DEF_USER;
--		/* clear VALID to get value calculated */
--		sym->flags &= ~SYMBOL_VALID;
--	}
--	csym->flags |= SYMBOL_DEF_USER;
--	/* clear VALID to get value calculated */
--	csym->flags &= ~(SYMBOL_VALID);
--
--	return true;
--}
--
- void set_all_choice_values(struct symbol *csym)
- {
- 	struct property *prop;
-@@ -1216,131 +1168,3 @@ void set_all_choice_values(struct symbol *csym)
- 	/* clear VALID to get value calculated */
- 	csym->flags &= ~(SYMBOL_VALID | SYMBOL_NEED_SET_CHOICE_VALUES);
- }
--
--bool conf_set_all_new_symbols(enum conf_def_mode mode)
--{
--	struct symbol *sym, *csym;
--	int i, cnt, pby, pty, ptm;	/* pby: probability of bool     = y
--					 * pty: probability of tristate = y
--					 * ptm: probability of tristate = m
--					 */
--
--	pby = 50; pty = ptm = 33; /* can't go as the default in switch-case
--				   * below, otherwise gcc whines about
--				   * -Wmaybe-uninitialized */
--	if (mode == def_random) {
--		int n, p[3];
--		char *env = getenv("KCONFIG_PROBABILITY");
--		n = 0;
--		while( env && *env ) {
--			char *endp;
--			int tmp = strtol( env, &endp, 10 );
--			if( tmp >= 0 && tmp <= 100 ) {
--				p[n++] = tmp;
--			} else {
--				errno = ERANGE;
--				perror( "KCONFIG_PROBABILITY" );
--				exit( 1 );
--			}
--			env = (*endp == ':') ? endp+1 : endp;
--			if( n >=3 ) {
--				break;
--			}
--		}
--		switch( n ) {
--		case 1:
--			pby = p[0]; ptm = pby/2; pty = pby-ptm;
--			break;
--		case 2:
--			pty = p[0]; ptm = p[1]; pby = pty + ptm;
--			break;
--		case 3:
--			pby = p[0]; pty = p[1]; ptm = p[2];
--			break;
--		}
--
--		if( pty+ptm > 100 ) {
--			errno = ERANGE;
--			perror( "KCONFIG_PROBABILITY" );
--			exit( 1 );
--		}
--	}
--	bool has_changed = false;
--
--	for_all_symbols(i, sym) {
--		if (sym_has_value(sym) || (sym->flags & SYMBOL_VALID))
--			continue;
--		switch (sym_get_type(sym)) {
--		case S_BOOLEAN:
--		case S_TRISTATE:
--			has_changed = true;
--			switch (mode) {
--			case def_yes:
--				sym->def[S_DEF_USER].tri = yes;
--				break;
--			case def_mod:
--				sym->def[S_DEF_USER].tri = mod;
--				break;
--			case def_no:
--				if (sym->flags & SYMBOL_ALLNOCONFIG_Y)
--					sym->def[S_DEF_USER].tri = yes;
--				else
--					sym->def[S_DEF_USER].tri = no;
--				break;
--			case def_random:
--				sym->def[S_DEF_USER].tri = no;
--				cnt = rand() % 100;
--				if (sym->type == S_TRISTATE) {
--					if (cnt < pty)
--						sym->def[S_DEF_USER].tri = yes;
--					else if (cnt < (pty+ptm))
--						sym->def[S_DEF_USER].tri = mod;
--				} else if (cnt < pby)
--					sym->def[S_DEF_USER].tri = yes;
--				break;
--			default:
--				continue;
--			}
--			if (!(sym_is_choice(sym) && mode == def_random))
--				sym->flags |= SYMBOL_DEF_USER;
--			break;
--		default:
--			break;
--		}
--
--	}
--
--	sym_clear_all_valid();
--
--	/*
--	 * We have different type of choice blocks.
--	 * If curr.tri equals to mod then we can select several
--	 * choice symbols in one block.
--	 * In this case we do nothing.
--	 * If curr.tri equals yes then only one symbol can be
--	 * selected in a choice block and we set it to yes,
--	 * and the rest to no.
--	 */
--	if (mode != def_random) {
--		for_all_symbols(i, csym) {
--			if ((sym_is_choice(csym) && !sym_has_value(csym)) ||
--			    sym_is_choice_value(csym))
--				csym->flags |= SYMBOL_NEED_SET_CHOICE_VALUES;
--		}
--	}
--
--	for_all_symbols(i, csym) {
--		if (sym_has_value(csym) || !sym_is_choice(csym))
--			continue;
--
--		sym_calc_value(csym);
--		if (mode == def_random)
--			has_changed |= randomize_choice_values(csym);
--		else {
--			set_all_choice_values(csym);
--			has_changed = true;
--		}
--	}
--
--	return has_changed;
--}
-diff --git a/scripts/kconfig/lkc.h b/scripts/kconfig/lkc.h
-index 8f554ca39140d..b8ad65037ae34 100644
---- a/scripts/kconfig/lkc.h
-+++ b/scripts/kconfig/lkc.h
-@@ -30,16 +30,6 @@ static inline const char *CONFIG_prefix(void)
- #undef CONFIG_
- #define CONFIG_ CONFIG_prefix()
+ 	for_all_symbols(i, sym) {
+diff --git a/scripts/kconfig/tests/conftest.py b/scripts/kconfig/tests/conftest.py
+index af8774a5697c8..3d75025437a70 100644
+--- a/scripts/kconfig/tests/conftest.py
++++ b/scripts/kconfig/tests/conftest.py
+@@ -289,6 +289,12 @@ class Conf:
+         return self._matches('stderr', expected)
  
--enum conf_def_mode {
--	def_default,
--	def_yes,
--	def_mod,
--	def_y2m,
--	def_m2y,
--	def_no,
--	def_random
--};
--
- extern int yylineno;
- void zconfdump(FILE *out);
- void zconf_starthelp(void);
-@@ -53,7 +43,6 @@ const char *zconf_curname(void);
- const char *conf_get_configname(void);
- void sym_set_change_count(int count);
- void sym_add_change_count(int count);
--bool conf_set_all_new_symbols(enum conf_def_mode mode);
- void set_all_choice_values(struct symbol *csym);
  
- /* confdata.c and expr.c */
++@pytest.fixture(autouse=True)
++def clear_werror(monkeypatch):
++    # extra_env can set strict mode, but cannot remove an inherited flag.
++    monkeypatch.delenv('KCONFIG_WERROR', raising=False)
++
++
+ @pytest.fixture(scope="module")
+ def conf(request):
+     """Create a Conf instance and provide it to test functions."""
+diff --git a/scripts/kconfig/tests/randconfig_probability/Kconfig b/scripts/kconfig/tests/randconfig_probability/Kconfig
+new file mode 100644
+index 0000000000000..84f4e5fcc51e4
+--- /dev/null
++++ b/scripts/kconfig/tests/randconfig_probability/Kconfig
+@@ -0,0 +1,12 @@
++# SPDX-License-Identifier: GPL-2.0-only
++
++config MODULES
++	bool
++	default y
++	modules
++
++config BOOL
++	bool "Bool"
++
++config TRI
++	tristate "Tristate"
+diff --git a/scripts/kconfig/tests/randconfig_probability/__init__.py b/scripts/kconfig/tests/randconfig_probability/__init__.py
+new file mode 100644
+index 0000000000000..e6e5dda10ad92
+--- /dev/null
++++ b/scripts/kconfig/tests/randconfig_probability/__init__.py
+@@ -0,0 +1,130 @@
++# SPDX-License-Identifier: GPL-2.0-only
++"""Validate KCONFIG_PROBABILITY without changing the supported distributions."""
++
++
++def test_malformed_warns(conf):
++    probabilities = [
++        'invalid', ' ', '50%', '50 ', '0x32', '10 20', '10:20x',
++        '10:20:invalid', '10:20:30x',
++        ':50', '50:', '10::20', '10:20:', '10:20:30:', '10:20:30:40',
++        '-0', '+0', '+', '-', '+100:0', ' \t100:0', '0: \t100:0',
++    ]
++    for probability in probabilities:
++        assert conf._run_conf('--randconfig', extra_env={
++            'KCONFIG_PROBABILITY': probability,
++            'KCONFIG_SEED': '0',
++        }) == 0, repr(probability)
++        assert ('warning: KCONFIG_PROBABILITY has malformed format' in
++                conf.stderr), repr(probability)
++        assert conf.stderr.count('warning:') == 1, repr(probability)
++        assert conf.config is not None, repr(probability)
++
++
++def test_malformed_preserves_config(conf):
++    probabilities = [('50%', '50:0:0'), ('-0', '0')]
++    for seed in range(20):
++        for probability, equivalent in probabilities:
++            context = 'probability={!r}, equivalent={!r}, seed={}'.format(
++                probability, equivalent, seed)
++            assert conf._run_conf('--randconfig', extra_env={
++                'KCONFIG_PROBABILITY': probability,
++                'KCONFIG_SEED': hex(seed),
++            }) == 0, context
++            assert ('warning: KCONFIG_PROBABILITY has malformed format' in
++                    conf.stderr), context
++            assert conf.stderr.count('warning:') == 1, context
++            malformed = conf.config
++
++            assert conf._run_conf('--randconfig', extra_env={
++                'KCONFIG_PROBABILITY': equivalent,
++                'KCONFIG_SEED': hex(seed),
++            }) == 0, context
++            assert 'warning:' not in conf.stderr, context
++            assert conf.config == malformed, context
++
++
++def test_werror(conf):
++    probabilities = [
++        ('', 0), ('50', 0), ('50%', 1), ('-0', 1), ('10:20:30:40', 1),
++    ]
++    for probability, status in probabilities:
++        for werror in ['', '0', '1']:
++            context = 'probability={!r}, werror={!r}'.format(
++                probability, werror)
++            assert conf._run_conf('--randconfig', extra_env={
++                'KCONFIG_PROBABILITY': probability,
++                'KCONFIG_SEED': '0',
++                'KCONFIG_WERROR': werror,
++            }) == status, context
++            if status:
++                assert ('warning: KCONFIG_PROBABILITY has malformed format' in
++                        conf.stderr), context
++                assert conf.stderr.count('warning:') == 1, context
++            else:
++                assert 'warning:' not in conf.stderr, context
++
++
++def test_out_of_range(conf):
++    probabilities = [
++        '-1', '101', '+101', '0:101', '0:0:101', '60:41', '0:60:41',
++        '4294967296', '-4294967296',
++        '999999999999999999999999', '-999999999999999999999999',
++    ]
++    for probability in probabilities:
++        assert conf._run_conf('--randconfig', extra_env={
++            'KCONFIG_PROBABILITY': probability,
++            'KCONFIG_SEED': '0',
++        }) == 1, repr(probability)
++        assert 'KCONFIG_PROBABILITY:' in conf.stderr, repr(probability)
++
++
++def test_valid(conf):
++    probabilities = [
++        ('0', 'n', 'n'),
++        ('0:0', 'n', 'n'),
++        ('100:0', 'y', 'y'),
++        ('0:100', 'y', 'm'),
++        ('100:0:0', 'y', 'n'),
++        ('0:100:0', 'n', 'y'),
++        ('0:0:100', 'n', 'm'),
++        ('000:000:100', 'n', 'm'),
++    ]
++    for probability, boolean, tristate in probabilities:
++        assert conf._run_conf('--randconfig', extra_env={
++            'KCONFIG_PROBABILITY': probability,
++            'KCONFIG_SEED': '0',
++        }) == 0, repr(probability)
++        assert 'warning:' not in conf.stderr, repr(probability)
++        for symbol, value in [('BOOL', boolean), ('TRI', tristate)]:
++            if value == 'n':
++                expected = '# CONFIG_{} is not set'.format(symbol)
++            else:
++                expected = 'CONFIG_{}={}'.format(symbol, value)
++            assert expected in conf.config.splitlines(), repr(probability)
++
++
++def test_single_probability_matches_tristate_split(conf):
++    for seed in range(20):
++        context = 'seed={}'.format(seed)
++        assert conf._run_conf('--randconfig', extra_env={
++            'KCONFIG_PROBABILITY': '50',
++            'KCONFIG_SEED': hex(seed),
++        }) == 0, context
++        assert 'warning:' not in conf.stderr, context
++        single = conf.config
++
++        # 50% boolean y; 25% tristate y, 25% m, and 50% n.
++        assert conf._run_conf('--randconfig', extra_env={
++            'KCONFIG_PROBABILITY': '50:25:25',
++            'KCONFIG_SEED': hex(seed),
++        }) == 0, context
++        assert 'warning:' not in conf.stderr, context
++        assert conf.config == single, context
++
++
++def test_empty(conf):
++    assert conf._run_conf('--randconfig', extra_env={
++        'KCONFIG_PROBABILITY': '',
++        'KCONFIG_SEED': '0',
++    }) == 0
++    assert 'warning:' not in conf.stderr
 -- 
 2.53.0
 
