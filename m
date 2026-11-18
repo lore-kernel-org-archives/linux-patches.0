@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045150;
-	b=0daLrKDj+wVZoy939neORJeJx5xUj6KntVxfZ2Sx0nFCJFqUVnGQQvNFG/nJ+YMPh83c
-	 oOgk263H5ZM6+B9qni5E0V4I18HkdwmoOE8onKDw46Jq4e26yXgGGVaLh5JddVpJ4WeV9
-	 HJe8azrz5GMvnRJ0SSrOO4G37/Yy4wRjX3WjRTJfnH+zSCkHNfLkk+vZ1JAuaLgO/JQAC
-	 E9AQgJ6pbH2V4x/lwq1MyNO6J5kY3G+1SZRgmbrJk8Y/vcc2Ty4bHimDSWAATnjzf9PYg
-	 7+2uvqDiwccfoS0qYHe4xyI8kv/42zAxXP06tuCm/LkRrBeaYjbmgjBeBQR2rK0upZw==
+	t=1795045153;
+	b=rqRLuL2XJpDo4LgCBmh62OnCJae7dY5igpzBBO4MZ9SvlOxqeLSSgUtuvkcV8Kzx5b2X
+	 nvttWUD56teXA6/dUgvLpXYueP6A3Cnoqz9v3LW1jLnwuwzXm3Ny5qmp/sWhqfvxYd635
+	 1sC/cT8JlcOtYH/MLkYhvXky04wTykD11JaTeD4bRa7pIZ5t1rCRVfCqzbGMBj3EKmyfR
+	 iouOYweWpGubvMcVen6OU4yhGtH2TeZ7ghTKHvdVRLGxPl++M/E0W8aqzOe4XZxDBHQ4k
+	 iFHIt/wQefXGKTKMHPVhQ7vsJnK0QM96angFXGQOi34kzTm/lZN5uvFCjx1r/gHgYsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045150;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045153;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nOMdLkqNoonzWzPl5PDz8GB9PfYMr9Hw05lTDmwt8uE=;
-	b=ejqRooVVLy/yjXTxgiaeCRZ+Mf1yjqZ004ARQUw6MFQ4jEUI+PhC6Eboev1USmhORbpS
-	 iVsiTrN5PRNftChYNc3UMS8qDsgFGQ3pFRkSCT+pCriGCHdezI1za51oGcEhpuxifIuTV
-	 Wn+6AkoFHTxtrhWKUZ9pmoC7qIQJuZvlSq5dwYzEscFdPhd/IEzAkrJuZUscu8sPUOcub
-	 Lft+shFWluKeE4ysRBq/K+aqk2ZdRmpjuNbqfXxaJvC5ePcXN7hIjROurrIM5xWmxmIAx
-	 SJBO1M8zuGoH7PkM47JqcMzFrKNC0DMpxZpof9fT+V3Av4ijRZTB7xGf/nk2FZYl5bQ==
+	bh=D1KPO1EaShRSCJwvBSlPhMbeUxrcVBcYP87tb1ENInA=;
+	b=y236pIQgwkciAMRaV/ybVjrD0n6O9E0uiQgA4E6Y9kWC5oXbbt13aUU1QKMiPUNMdM4/
+	 +6DrM9ANeYIJqVfWRn9sQLWCrn+sqH9mabHyAvVIrpKmZ1yY+LGjkBdtLFtAXXGicGH1R
+	 A8RikxxlabgrGMaMUVPloDBu0mOzAqmZLaCfDM7neu+0HbmP4qre5syd1BSwsWWn2RwFC
+	 EmeUvKyJyaJXn7K6GPnFzE4CChjRjaxZBALqeZClnmEDtErjgwrCqriHysVOrPgTBKXEU
+	 ehdKt4pm5qJG5oBSixTT0/WqyHw1jNRNDVOrtI6pHUNpssUt+2T/kZBeaNe9Rj4+PQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EonTIJYs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rPxVHKfM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2809A606A320;
-	Wed, 18 Nov 2026 23:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4476606A32A;
+	Wed, 18 Nov 2026 23:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EonTIJYs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C2D1F000C4;
-	Wed, 18 Nov 2026 23:39:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rPxVHKfM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464561F000C4;
+	Wed, 18 Nov 2026 23:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045150;
-	bh=nOMdLkqNoonzWzPl5PDz8GB9PfYMr9Hw05lTDmwt8uE=;
+	s=korg; t=1795045152;
+	bh=D1KPO1EaShRSCJwvBSlPhMbeUxrcVBcYP87tb1ENInA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EonTIJYsI+ds7WZ9xLwybWjtwXeWwXg56ZhlPYwhn4SnKtEp3BFpSRPxLKZm82i9g
-	 WgsonTbkbanYhUeiDkbeRVNlt52niZKt1LUwZ9yXjiKa1/zCZuYWFdkX86VHTlYbz6
-	 sFBm8JgS9asuCD1iZ7ecf7y6SR1Qpb4IPWTNI1s8=
+	b=rPxVHKfMqw6ge+2860jxScsPtQBeXjPeBhJr1rSsMw19OaIanVBLNN3fHoknU+6cm
+	 zF1K64EfiT8A/2IO4HR0rP5AAvxeB0/10zOVjQD/CfdwS7vbcOMJX6WYW3+1MArIlt
+	 IRrmrMR7SfSf9YjreJ9Wtd+5n/3KI/V96bqN7u7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ridham Khurana <khurana.ridham222@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0820/2857] hwmon: (lm95245) Fix negative temperature conversion
-Date: Wed, 18 Nov 2026 15:30:54 +0100
-Message-ID: <20261118150231.100632721@linuxfoundation.org>
+Subject: [PATCH 6.1 0821/2857] mtd: rawnand: atmel: Fix MCK clock leak in atmel_nand_controller_init()
+Date: Wed, 18 Nov 2026 15:30:55 +0100
+Message-ID: <20261118150231.135358938@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,48 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ridham Khurana <khurana.ridham222@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit f58c16056f8585ebafb0f1f5d90c23085443a4b9 ]
+[ Upstream commit 94edcda45d888c3bb1310de11e10e4537c166f00 ]
 
-temp_from_reg_signed() uses only the high byte when the sign bit is set
-and drops the fractional bits in the low byte. Writing -500 to
-temp2_offset stores 0xff80 (-0.5 degrees C) in the offset registers,
-but reading temp2_offset back returns -1000.
+atmel_nand_controller_init() takes a reference to the MCK clock with
+of_clk_get() and keeps it in nc->mck for the lifetime of the
+controller.  If the "atmel,smc" phandle is missing or the SMC regmap
+cannot be obtained afterwards, the error path jumps to out_release_dma
+which only releases the DMA channel, so the clock reference is leaked.
+The callers return the error directly and never run
+atmel_nand_controller_cleanup(), where the clock is normally put.
 
-Negative temp1_input and temp2_input values are rounded down to the
-next whole degree the same way. The chip reports -0.125 degrees C as
-0xffe0, which the driver returns as -1000.
+Release the reference on those error paths.  The path on which
+of_clk_get() itself fails keeps jumping to out_release_dma, as nc->mck
+only holds an error pointer there.
 
-Treat the register pair as a single 16-bit two's complement value.
-
-Fixes: fffd80ccc1e6 ("hwmon: LM95245 driver")
+Fixes: f9ce2eddf176 ("mtd: nand: atmel: Add ->setup_data_interface() hooks")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
-Link: https://patch.msgid.link/20260923172551.1593798-1-khurana.ridham222@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/lm95245.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/mtd/nand/raw/atmel/nand-controller.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/lm95245.c b/drivers/hwmon/lm95245.c
-index c433f0af2d318..e7695dc751718 100644
---- a/drivers/hwmon/lm95245.c
-+++ b/drivers/hwmon/lm95245.c
-@@ -98,9 +98,9 @@ static int temp_from_reg_unsigned(u8 val_h, u8 val_l)
+diff --git a/drivers/mtd/nand/raw/atmel/nand-controller.c b/drivers/mtd/nand/raw/atmel/nand-controller.c
+index 56fd897721ad5..bac452bfb6e94 100644
+--- a/drivers/mtd/nand/raw/atmel/nand-controller.c
++++ b/drivers/mtd/nand/raw/atmel/nand-controller.c
+@@ -2079,7 +2079,7 @@ static int atmel_nand_controller_init(struct atmel_nand_controller *nc,
+ 	if (!np) {
+ 		dev_err(dev, "Missing or invalid atmel,smc property\n");
+ 		ret = -EINVAL;
+-		goto out_release_dma;
++		goto out_put_mck;
+ 	}
  
- static int temp_from_reg_signed(u8 val_h, u8 val_l)
- {
--	if (val_h & 0x80)
--		return (val_h - 0x100) * 1000;
--	return temp_from_reg_unsigned(val_h, val_l);
-+	s16 val_hl = (val_h << 8) | val_l;
-+
-+	return val_hl * 1000 / 256;
- }
+ 	nc->smc = syscon_node_to_regmap(np);
+@@ -2087,11 +2087,13 @@ static int atmel_nand_controller_init(struct atmel_nand_controller *nc,
+ 	if (IS_ERR(nc->smc)) {
+ 		ret = PTR_ERR(nc->smc);
+ 		dev_err(dev, "Could not get SMC regmap (err = %d)\n", ret);
+-		goto out_release_dma;
++		goto out_put_mck;
+ 	}
  
- static int lm95245_read_conversion_rate(struct lm95245_data *data)
+ 	return 0;
+ 
++out_put_mck:
++	clk_put(nc->mck);
+ out_release_dma:
+ 	if (nc->dmac)
+ 		dma_release_channel(nc->dmac);
 -- 
 2.53.0
 
