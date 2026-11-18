@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029858;
-	b=pNPYCkaR+tIT/2hC1vu0H/PdypqZ/KlEXZ+zQxfXKlm5qx58UmQqqbPRICkuFhzqvjta
-	 ohhnAe2V/omL3JgpntKJ0J6JoJSk/4hGjn3woFSJpN0SPkyzo53w6q8xE1sOy6GSPRKF9
-	 8FhtheFYuPcbQO4HPUCYHzTVuBcg8UvDf6PRmJNGq4WDoGz2AGKP3s8RPFXyomSSPxJKl
-	 TOrlkLFeOfxsR45dQ6An1ISyJ7pEX2N7t+n1LceP8bhM341EGcwVKhGM2/NhNGRdf11C4
-	 bpRiA/iSUUUxn+n2xF3nSYigxuSf3onyLvpZM5JAq/k80yG+JZmiqf4ZmgWzWwIZI1w==
+	t=1795029861;
+	b=0YJPaAViiEBJr+BRCEye9+UUtsNFWa4TN2E8rqsoqimhYaWcw241hwBVpNC31Q+tg1GD
+	 jky1u2am87jZBHxE2+1oHCk82ODHlVPoPC0PvhY3eap7cwbadcvZApqp77KaCRzWa+YN8
+	 kltpx7IZXnxA8d6s1BmBfvMaW+O5KxX16mtDQC8NST8udG3y4wwDC7J+oYuEOixdiwpbc
+	 oW/p/pVGKaUbaqHcA5lG8eU3yPADg3jHrrwvzWjaMS+9gcUat6Ta6+d7XX+CACxKYPIs1
+	 j8IfVtDOV51S74X4+eYDdmOrAc0VGdxR09halLcacA4meeDH9iHsqTDe795uaNIJgsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029858;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029861;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XoLBCiuFiavFIIId77ZMMiocnvvQ16gX5JsoA1GBkK4=;
-	b=e5M2ECNOyI+fMRcSkq2CYmnJqXlxMpZkclWm+7xgiqBWITwJ93mWGb4dViePN54QCzAT
-	 QG++uc9uqB+8k2wyFKM49TgmCvyV1Tq8AHrWM1A/U3c0CG+1nHej7rMJNRGnf4+RrHKTs
-	 kByuEelJLzKDAfekJZR6W2UCix8kHl4651aKI0zFVPa9dV5FgW9K31aUUsqAEDE7SlRZ4
-	 0iglW3POUoLL+bsdeRHFLIqa1dc9ee4br7Xrb3ybodKCpLu/iF7hZKXzBRfgkqqHeDi1a
-	 uj/c8ZYwhsEw4dORDj5JyIzEBpDp3qZWDd8+FIAFvLdryTpCPdF7o+ovaE6h7hk11cg==
+	bh=LjIq6yEmk5vxtVIdrEqSfN6ObCkR1A5Ss1BaaP/qoic=;
+	b=0ELlKYXYUfHYs2pXg4lffkRqfI6u6wAzHUiPVvOiQqR8gwTvE5pPBwswdRRHPaODj8dH
+	 0jTouA2WawZvxcqbz/+wK+JWAWXwhmsw3VNk8WHz0jdLmdr+vrK23UQGn9XfYRQjbiwQf
+	 G9MvbDFMtDa2KsgrlTJrEHPqRGnRUpyRDkjNdgfu55gERAoSkmTywlm6j/yjNRFZKhwU1
+	 Pz9nT/5TcBEicIQXKDgRxHKXQSLFBTsW8kOo40MCit4Hi/cMgsge5qSswNj770PG/1R+e
+	 SzRKQhOBfK2Bpkz8q09M3F1v42NuUSoh+cMjmC9i1k6L+5JFqyshMha+K9Q27/yeOEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pNez3mZ1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PHL2QrHp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64104606A320;
-	Wed, 18 Nov 2026 19:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCC0606A320;
+	Wed, 18 Nov 2026 19:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pNez3mZ1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B47851F000C4;
-	Wed, 18 Nov 2026 19:24:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PHL2QrHp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84EE31F000C4;
+	Wed, 18 Nov 2026 19:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029858;
-	bh=XoLBCiuFiavFIIId77ZMMiocnvvQ16gX5JsoA1GBkK4=;
+	s=korg; t=1795029861;
+	bh=LjIq6yEmk5vxtVIdrEqSfN6ObCkR1A5Ss1BaaP/qoic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pNez3mZ1JogPEoY3u/ebVtj0ZpZLf5t5c8RWwIDHs6ZfB9sq7UIdxnqjzqFX/SXJa
-	 Oy+TRx8MxtaJYzKEReasplnB11jdp1M1AeTt6mxpuufv2Jk8RsvfHuy6gaMBJN/Yx1
-	 VTcwH0tt6g27cI5Jz5/JLdiRdmUpD2rGI7qKvgb0=
+	b=PHL2QrHp/BLHHzYfORYdl8BzYBs48qOV0ky5qXMh9PgLoQwt9jD7E/pelrYg65iWi
+	 VU3ahqjgQFbCIlIcNbJul99AV7SfX01ntXV6Ea5ogxioJSCDjrHwiP/k1Ugnb4uARv
+	 bmQIMDXQ515KkIE2yRLKkngKLC50QiJvkTE0eMuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jisheng Zhang <jszhang@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0498/1756] regulator: mp886x: check get_voltage_sel() return value
-Date: Wed, 18 Nov 2026 15:43:45 +0100
-Message-ID: <20261118150028.910033236@linuxfoundation.org>
+Subject: [PATCH 6.12 0499/1756] regulator: mp886x: fix pontential division by zero
+Date: Wed, 18 Nov 2026 15:43:46 +0100
+Message-ID: <20261118150028.948694215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,47 +70,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit 87121c42fadc7683469aee96ad833bc560197a55 ]
+[ Upstream commit d16ef5debccc4289c1f25309a2cccfbbe879601a ]
 
-The get_voltage_sel() can fail, resulting in negative error codes
-stored in unsigned integers and corrupted state logic.
+If the "mps,fb-voltage-divider" 2nd var is 0, there will be division
+by zero bug.
 
 Fixes: 97be82880b61 ("regulator: add support for MP8869 regulator")
 Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
 Closes: https://sashiko.dev/#/patchset/20260901043123.5401-1-jszhang@kernel.org?part=1
-Link: https://patch.msgid.link/20260909143957.9284-2-jszhang@kernel.org
+Link: https://patch.msgid.link/20260909143957.9284-3-jszhang@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/mp886x.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/regulator/mp886x.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/regulator/mp886x.c b/drivers/regulator/mp886x.c
-index 451bd7c0abe24..75c6d9e5d550a 100644
+index 75c6d9e5d550a..773da194a4e4e 100644
 --- a/drivers/regulator/mp886x.c
 +++ b/drivers/regulator/mp886x.c
-@@ -256,6 +256,7 @@ static int mp886x_regulator_register(struct mp886x_device_info *di,
- {
- 	struct regulator_desc *rdesc = &di->desc;
- 	struct regulator_dev *rdev;
-+	int sel;
+@@ -317,6 +317,9 @@ static int mp886x_i2c_probe(struct i2c_client *client)
+ 	if (ret)
+ 		return ret;
  
- 	rdesc->name = "mp886x-reg";
- 	rdesc->supply_name = "vin";
-@@ -277,7 +278,12 @@ static int mp886x_regulator_register(struct mp886x_device_info *di,
- 	rdev = devm_regulator_register(di->dev, &di->desc, config);
- 	if (IS_ERR(rdev))
- 		return PTR_ERR(rdev);
--	di->sel = rdesc->ops->get_voltage_sel(rdev);
++	if (di->r[1] == 0)
++		return -EINVAL;
 +
-+	sel = rdesc->ops->get_voltage_sel(rdev);
-+	if (sel < 0)
-+		return sel;
-+	di->sel = sel;
-+
- 	return 0;
- }
- 
+ 	di->en_gpio = devm_gpiod_get(dev, "enable", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(di->en_gpio))
+ 		return PTR_ERR(di->en_gpio);
 -- 
 2.53.0
 
