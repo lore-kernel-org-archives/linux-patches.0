@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020511;
-	b=UEHW3vOPQ8ciHquFH+Hzvia0KLN3nBAusfLF7O/cSLbDsOSJr6JAP63DM+UFcLk7jxA5
-	 sZ0AhtNO0f/ftpaUk7UR2NqsqTnYHGp+jrZxG7TvHldVnkcwGujahDttLz4kwEMb/OpUm
-	 2SXP0i+LTqDforW1nLDoA5+e5TC+KaQkU9NK7qHZ1JN1ES2NAL9VoIPIgSaTFZxq0V6kI
-	 Gpf5ssCgir2D4NyqZFkgOALBpcWEEP8rtHVRWT3E9AGldkJb0ufOZD2oEuVh318MMj5JL
-	 iFjDZwB6MkUsySbMQ+6MpvdvY19GwwbyyUBxbz4T25lKQvNc2h83OJgSdZPmQ99E3eQ==
+	t=1795020513;
+	b=r7W0MkkjlClg+r8+DYZdlHPtwoG2fC8/j/tEppJjSrhq9WJ3CymhxIewX9iR0Ec5Mtpp
+	 J8d+H10XPxXhb4kkek9oPqBK7rtKTWWyav81tcGc0S7zP3Xp+hEA3WYsZ+bQk7+8Mg2u4
+	 QKv0OyokIAKv0ZLhaGaqEhr9oQ0I557YExS9RiDIP3T3L6u3jLG60nFbRjyBcUwla5sDg
+	 Zmm/WDkYvo18+Xv9K6Io4GuVMr/RUCyerAwXoZ0e9Sjk+Unduqst9R/8LB01S37XBrwt3
+	 p/6qq5DaG99qa2G4gBNODL5lUYBxwf5I9LC8lQDyn5RvG18h1iupPMhQIcXK6YxCU6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020511;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020513;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0hhbWKKz5YwkRLCfBZJi2T64whXNiuynYqSDHIKDzSA=;
-	b=iowoWLkYD27UweQX03jveZzIGqsxmyqrHZV2SgXNJz4ZapSCq9o2ua5RxrAAGk8NWoRs
-	 NNWSLm1GmJ7DMiGhPvgunqdLyQn41PgJGri4GRGURtT1HzFvh2GoLRvu0FX3Wtv8l8bz4
-	 QGNW8uet5pyjUnDXPk74tyFUxRuii7dKE/jZKYrjzsHXsIh3Yv4z7ET06wQmGronO596H
-	 Imzert4BggdK0krUKrgLDz+nUCrqIdb9GzAhK+chd/pzLRBjcAR2mNP06BTT5s9vzB8q6
-	 9O/tKlMvy3CPNFQs13JnkBHM0/LLLdjIr/LsBq1LwsbHV+8X7ioLq6Rvf03GJEp0kKg==
+	bh=EMWtgOzP7KFA8d39Aht4cSF6AGDIfPWHNh9SSFhJNbU=;
+	b=iKg8Ys7vnEcnTxqgRppf0GbPkXrDftgBJXGgccDLZGxYug16uPJMv7lH0kMdNQ+E99Bd
+	 2hqk+WlRtD58Iw7r/G6i9QHbpJoZo7+K0cbUlu5eqdYMVy9xsHYNt5Kw5eFwnG8FU8ouJ
+	 PNraduV2TMAXUfELPl9ZmrciphskCDg7oOZLV7YxfI1Yb4xAZiDkMcpJ8pzTbYfMoj2Uo
+	 hP2wjKnXFgQ54oaymXtctXc++GN8hrDQi5tQUKgjk3WXWLtH3Zw9bme953nlOOklzUaMr
+	 OlI+iV9PKeWwDjueLRAz3+djNQa1eNqlSfIxaOnOV6fm+ZDmkRsHfDHv5dBkc9DcIdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="DuAiqkG/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mT6Di0I/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31A1606A332;
-	Wed, 18 Nov 2026 16:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC39D606A31C;
+	Wed, 18 Nov 2026 16:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DuAiqkG/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409F31F000C7;
-	Wed, 18 Nov 2026 16:48:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mT6Di0I/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2DC1F000C4;
+	Wed, 18 Nov 2026 16:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020510;
-	bh=0hhbWKKz5YwkRLCfBZJi2T64whXNiuynYqSDHIKDzSA=;
+	s=korg; t=1795020513;
+	bh=EMWtgOzP7KFA8d39Aht4cSF6AGDIfPWHNh9SSFhJNbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DuAiqkG/qzZJ6EQ5FS730gQLc2GvwJWYzGboc2rvCfvzsN8YHxKqPteRsSzxXteyF
-	 yt6KusksnLS7i5Ar9nlWMMBFbRbP8p9QrALYqDjXOj8IdwMPn+XckjZnfj8FK+ydMU
-	 5Oc+2yy8Zhi7O027b4UUkojbnxvN1wbD4tqmRoj0=
+	b=mT6Di0I/CuZgxUyYaGPVq3aNq5wD0Kb2cZyaFv6WSBX5qlFXV9XFiPnB4tc628Pth
+	 Jwq20qC5dQWPdfxRjvvF/zAuRiFjZ+4AB/MmceEILk8nWS0VPon5yF852toty2iwKL
+	 X64WFpQeZEFrEsIYy8gzkmckP7tlcilfDOKdHLzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serhat Kumral <serhatkumral1@gmail.com>,
+	Jacob Moroni <jmoroni@google.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1978/2651] IB/rdmavt: Fix error unwind path for qp_priv_init() in rvt_create_qp()
-Date: Wed, 18 Nov 2026 15:53:38 +0100
-Message-ID: <20261118150357.633907567@linuxfoundation.org>
+Subject: [PATCH 7.3 1979/2651] RDMA/irdma: Fix FRWR IRDMAQPSQ_PBLADDR field population
+Date: Wed, 18 Nov 2026 15:53:39 +0100
+Message-ID: <20261118150357.663379843@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,39 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Serhat Kumral <serhatkumral1@gmail.com>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit dd36137b218ad6f18ed15e6279412d7fc160980c ]
+[ Upstream commit 59df57262e6fa9e6f4aa76d6d324134777c702a0 ]
 
-If driver_f.qp_priv_init() fails, execution jumps to bail_rq_wq, which
-bypasses bail_qpn. Because alloc_qpn() has already succeeded at this point,
-the allocated QP number is left unreleased.
+Previously, the IRDMAQPSQ_PBLADDR FRWR WQE field was being populated
+using a mask that was right-shifted, whereas it should have been the
+address being right-shifted.
 
-Jump to bail_qpn instead to ensure the QPN is properly freed via
-rvt_free_qpn().
+This ended up working fine in many cases because the lowermost 12 bits
+are always zero (the addresses are page aligned) and the uppermost 12
+bits are usually zero too, but it could break for DMA addresses that
+are wider than 52 bits.
 
-Fixes: 5190f052a3654 ("IB/hfi1: Allow the driver to initialize QP priv struct")
-Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
-Link: https://patch.msgid.link/20261015102518.15780-1-serhatkumral1@gmail.com
+Fix this by right-shifting the address instead of the mask, similar
+to how it was done in the original i40iw driver.
+
+Tested with NFS over RDMA with some added debug logs to ensure it
+was hitting both the direct (single page) path as well as multi
+page (< 512).
+
+Fixes: 3f49d6842569 ("RDMA/irdma: Implement HW Admin Queue OPs")
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Link: https://patch.msgid.link/20261015161756.3078300-1-jmoroni@google.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rdmavt/qp.c | 2 +-
+ drivers/infiniband/hw/irdma/ctrl.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rdmavt/qp.c b/drivers/infiniband/sw/rdmavt/qp.c
-index c40cce69e9457..ec64a595ce03e 100644
---- a/drivers/infiniband/sw/rdmavt/qp.c
-+++ b/drivers/infiniband/sw/rdmavt/qp.c
-@@ -1173,7 +1173,7 @@ int rvt_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
- 		if (rdi->driver_f.qp_priv_init) {
- 			ret = rdi->driver_f.qp_priv_init(rdi, qp, init_attr);
- 			if (ret)
--				goto bail_rq_wq;
-+				goto bail_qpn;
- 		}
- 		break;
- 
+diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
+index 7af1c68b2fb26..970b61aa3e24f 100644
+--- a/drivers/infiniband/hw/irdma/ctrl.c
++++ b/drivers/infiniband/hw/irdma/ctrl.c
+@@ -1729,7 +1729,7 @@ int irdma_sc_mr_fast_register(struct irdma_sc_qp *qp,
+ 			 info->first_pm_pbl_index >> 16);
+ 	set_64bit_val(wqe, 8,
+ 		      FIELD_PREP(IRDMAQPSQ_FIRSTPMPBLIDXHI, temp) |
+-		      FIELD_PREP(IRDMAQPSQ_PBLADDR >> IRDMA_HW_PAGE_SHIFT, info->reg_addr_pa));
++		      FIELD_PREP(IRDMAQPSQ_PBLADDR, info->reg_addr_pa >> IRDMA_HW_PAGE_SHIFT));
+ 	set_64bit_val(wqe, 16,
+ 		      info->total_len |
+ 		      FIELD_PREP(IRDMAQPSQ_FIRSTPMPBLIDXLO, info->first_pm_pbl_index));
 -- 
 2.53.0
 
