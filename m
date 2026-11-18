@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023988;
-	b=lOIDDvJT5GLkg5yS2xb0ThltILxB+PgxcpO0Xras0N/8t4c2SK9JWWA5g+zyg/2mqdyC
-	 IZfVSPpVgAJqaYh7Wo/U0FwCWyF8vTU6938MgsRoRi1+Xt2Kjl9tc23zDjdWLZs1ypT5N
-	 sFSJprDBG8Wu8YnW05BaCr7kqBs/zJxZ3jx78POqmngzSvh+NuBZcstOLpDFoihudHTAk
-	 TCc9FEeZV5G4gzdUon8++6YewsUxEomLeDEZB5ZPVJGZa5BOCMusw7Ysn6GkMxP1V2zfI
-	 YpGRHomyyzyIu5JIbJJGB+E2j9T2yjYByiDUSc80/uGnSsSGGfFolH0ubG+FDGoG+LA==
+	t=1795023991;
+	b=4iiHQff4jRm4cSIqn/HC+WEP6SN9ZhMid14Gih4GTvaoPXuIchHeGwZbCdraa8GaG4LE
+	 Qv0cmOw7uuNp9tlU93D2w3FAEfJmroOL8krqwBkqe4q9upOvKnm9qKLQUFwUJpJsrDGNQ
+	 nityW7KQk+6F4QSmlV5UMnHE3MRgRfv++5QrLz6UlE6mLdFggKXM2jfFcPuOxyd7+tAjr
+	 NbwH7xgv36TGl8X+wVcKD4sxYGksC9CFg62MtyLd8+uuJExIwMhiacTqkxS+UJAovwEMj
+	 tHvgjG2osQtmMG9P13z/RyxhaRugeORx/VT9HEyHYPYV83ypPbzz6nT3obKVYM07+1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023988;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023991;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yw4ho9jWGbxdVqkHGc1E3MmtcXNC9n4ujMNfEd3lNco=;
-	b=v1ryfaPcNNStqW8SGvKVkXEmVgZE9h0C8ujUv/aqI8oZnlxD5UkBrD/O3zmdFpNVGK5t
-	 HF6c0W17WE0tMOeiiU/7YPtj3I7SBy97SNNFoUtEpPQEuWDvb+BWTlB/8EfjtmesrcpAF
-	 hLFfcbiZYsk9KExc5H8r/FPDj1KvP1EZuTrUJZve/+rgX6kqxVtabD03F3u/sjhjj7Gm8
-	 +EPzZeXZ1VlqNhAzg1Di7ocXS/uzDJJgaqBrB8nSyQwBAfIACKB53BU+foFIE8Wb0lH3T
-	 ZIkehipd9xZnD7n52U9lEDB8t7ttk0/I74p+jQmSPN09E7qiFcoTQhK6pfBgIIMJ/dg==
+	bh=kWCR/4sxFFB9Jwa2CmbbmaQuAtISVVfcYXhyJ7X6gy4=;
+	b=ehXSWppqX3P2Q01K/y0tIXLomt2Yci8o67aQcnKh5osiqZ6W7ELO51QDG0Q5XW33ZijA
+	 nW24+t7vDC0QXvcySizH1vorvr/GkYIA1NWirIhXoQSWH6DbNj7l0b+8fJL/vCgGqgpjC
+	 G3NuHnxyheZqWPUpQjlw1G1hGqcIuJhjI6Aia+VC6+pmxToWwLGq6MPBDn5hA5r6kd4Yw
+	 yuWu5DxuTVYqYPu5wLuXRvb9Ey260aoqgDFZ3S/UMXWgvkXkLKg3LhI5zKhcxWSUhrAZj
+	 pyyIom8bn7ciaKPLeUtrXJnD8dzbhYR7hydyg9jL6DMvrtWMtPssaBgkNLuWZQfdI9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yhcJ2YhH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AMtRL6hZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6561606A32A;
-	Wed, 18 Nov 2026 17:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849C3606A320;
+	Wed, 18 Nov 2026 17:46:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yhcJ2YhH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0B951F000C4;
-	Wed, 18 Nov 2026 17:46:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AMtRL6hZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FECF1F000C4;
+	Wed, 18 Nov 2026 17:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023988;
-	bh=yw4ho9jWGbxdVqkHGc1E3MmtcXNC9n4ujMNfEd3lNco=;
+	s=korg; t=1795023991;
+	bh=kWCR/4sxFFB9Jwa2CmbbmaQuAtISVVfcYXhyJ7X6gy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yhcJ2YhHvzBwLiB99V1aRXUtsxZNXmoqaPlwyYpPTrpgDLFH6hAyuRVAq67ZCe+Z+
-	 956OtJ0ZTFa3rKZVzyGnakzQJCYF9TUaKq0gq6ogE8u3PXV5BlfPu5Y6OVE3VqYosl
-	 q03yw5WKmVVXCM8ROoHzE6G1qdxfPR60RhRHBAS8=
+	b=AMtRL6hZ6zd1FHRgwX7L0Y18wGFOCKi+IYDD47OATCDaqfdOpMeJ5wKY+ALJ7lXC+
+	 CyhhgPCc+nEcO1nyrEV0A+VRLkj23t/8zIHvgEE1OnmZM+u9jupNP93kkOhRNIGJMD
+	 DisGXRcHUtbCFW9qFT0ldo5c7UkWKclkcCpjGm18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terry Bowman <terry.bowman@amd.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	John Madieu <john.madieu.xa@bp.renesas.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0514/2151] cxl/port: Cleanup dport removal with a devres group
-Date: Wed, 18 Nov 2026 15:37:29 +0100
-Message-ID: <20261118150140.779601501@linuxfoundation.org>
+Subject: [PATCH 6.18 0559/2151] thermal: renesas: rzg3e: Remove stale @trim_offset kernel-doc entry
+Date: Wed, 18 Nov 2026 15:38:14 +0100
+Message-ID: <20261118150142.317695741@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,136 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: John Madieu <john.madieu.xa@bp.renesas.com>
 
-[ Upstream commit afa2bdba1ee28e21f30fe5391b0273b58b32e0d3 ]
+[ Upstream commit bf746e2a41efd98668c97759e06d436ae5af5a82 ]
 
-In preparation for adding more setup actions like RAS register mapping,
-introduce a devres group to collect all the dport creation / registration
-actions. This replaces the maintenance tedium of open coding several
-devm_release_action() calls in del_dport().
+The trim_offset field was removed from struct rzg3e_thermal_priv but
+its kernel-doc entry was left behind. Remove it to fix the mismatch.
 
-Tested-by: Terry Bowman <terry.bowman@amd.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Link: https://patch.msgid.link/20260131000403.2135324-4-dan.j.williams@intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Stable-dep-of: 0de71a1ab211 ("cxl/core: Fix dport use-after-free via the einj_inject debugfs file")
+Signed-off-by: John Madieu <john.madieu.xa@bp.renesas.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Link: https://patch.msgid.link/20260409125916.2244241-1-john.madieu.xa@bp.renesas.com
+Stable-dep-of: aa1bc39e45f2 ("thermal/drivers/renesas/rzg3e: Fix runtime PM handling of compare irq")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/port.c | 71 +++++++++++++++++++++++++++++++++++------
- 1 file changed, 61 insertions(+), 10 deletions(-)
+ drivers/thermal/renesas/rzg3e_thermal.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 9990a038d2360..c7b46eeedb093 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -1163,6 +1163,57 @@ static void cxl_dport_unlink(void *data)
- 	sysfs_remove_link(&port->dev.kobj, link_name);
- }
- 
-+static struct device *dport_to_host(struct cxl_dport *dport)
-+{
-+	struct cxl_port *port = dport->port;
-+
-+	if (is_cxl_root(port))
-+		return port->uport_dev;
-+	return &port->dev;
-+}
-+
-+static void free_dport(void *dport)
-+{
-+	kfree(dport);
-+}
-+
-+/*
-+ * Upon return either a group is established with one action (free_dport()), or
-+ * no group established and @dport is freed.
-+ */
-+static void *cxl_dport_open_dr_group_or_free(struct cxl_dport *dport)
-+{
-+	int rc;
-+	struct device *host = dport_to_host(dport);
-+	void *group = devres_open_group(host, dport, GFP_KERNEL);
-+
-+	if (!group) {
-+		kfree(dport);
-+		return NULL;
-+	}
-+
-+	rc = devm_add_action_or_reset(host, free_dport, dport);
-+	if (rc) {
-+		devres_release_group(host, group);
-+		return NULL;
-+	}
-+
-+	return group;
-+}
-+
-+static void cxl_dport_close_dr_group(struct cxl_dport *dport, void *group)
-+{
-+	devres_close_group(dport_to_host(dport), group);
-+}
-+
-+static void del_dport(struct cxl_dport *dport)
-+{
-+	devres_release_group(dport_to_host(dport), dport);
-+}
-+
-+/* The dport group id is the dport */
-+DEFINE_FREE(cxl_dport_release_dr_group, void *, if (_T) del_dport(_T))
-+
- static struct cxl_dport *
- __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
- 		     int port_id, resource_size_t component_reg_phys,
-@@ -1188,14 +1239,20 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
- 	    CXL_TARGET_STRLEN)
- 		return ERR_PTR(-EINVAL);
- 
--	dport = devm_kzalloc(host, sizeof(*dport), GFP_KERNEL);
-+	dport = kzalloc(sizeof(*dport), GFP_KERNEL);
- 	if (!dport)
- 		return ERR_PTR(-ENOMEM);
- 
-+	/* Just enough init to manage the devres group */
- 	dport->dport_dev = dport_dev;
- 	dport->port_id = port_id;
- 	dport->port = port;
- 
-+	void *dport_dr_group __free(cxl_dport_release_dr_group) =
-+		cxl_dport_open_dr_group_or_free(dport);
-+	if (!dport_dr_group)
-+		return ERR_PTR(-ENOMEM);
-+
- 	if (rcrb == CXL_RESOURCE_NONE) {
- 		rc = cxl_dport_setup_regs(&port->dev, dport,
- 					  component_reg_phys);
-@@ -1248,6 +1305,9 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
- 
- 	cxl_debugfs_create_dport_dir(dport);
- 
-+	/* keep the group, and mark the end of devm actions */
-+	cxl_dport_close_dr_group(dport, no_free_ptr(dport_dr_group));
-+
- 	return dport;
- }
- 
-@@ -1474,15 +1534,6 @@ static void delete_switch_port(struct cxl_port *port)
- 	devm_release_action(port->dev.parent, unregister_port, port);
- }
- 
--static void del_dport(struct cxl_dport *dport)
--{
--	struct cxl_port *port = dport->port;
--
--	devm_release_action(&port->dev, cxl_dport_unlink, dport);
--	devm_release_action(&port->dev, cxl_dport_remove, dport);
--	devm_kfree(&port->dev, dport);
--}
--
- static void del_dports(struct cxl_port *port)
- {
- 	struct cxl_dport *dport;
+diff --git a/drivers/thermal/renesas/rzg3e_thermal.c b/drivers/thermal/renesas/rzg3e_thermal.c
+index fc42be7f91355..b797c367ae44f 100644
+--- a/drivers/thermal/renesas/rzg3e_thermal.c
++++ b/drivers/thermal/renesas/rzg3e_thermal.c
+@@ -88,7 +88,6 @@ struct rzg3e_thermal_info {
+  * @info: chip type specific information
+  * @trmval0: calibration value 0 (b)
+  * @trmval1: calibration value 1 (c)
+- * @trim_offset: offset for trim registers in syscon
+  * @lock: protects hardware access during conversions
+  */
+ struct rzg3e_thermal_priv {
 -- 
 2.53.0
 
