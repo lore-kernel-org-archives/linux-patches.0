@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039069;
-	b=w2R+TboViI0qECH+0GP4HV2Yx37BFfvBWi7p+sTlbewoTbyoD1VWJHS5ijX53lKj6VDZ
-	 EpVTa6dhSWWJ4fhQfZ7PRkSoQkjqveiG//RBUjp+1krRb1LGJoX4AVNFhqGw2McV0lKKc
-	 2PRnFJj7qS1Szm5R+5dtUuggr+kc8XRskInwR9hl8I1+vSMlrKtOdDsUFrfYlEHWFkkM/
-	 0UBe3K0MOfaBDxco5K8ikP4P+ajkAzAywlowelQiqG9QPO4zJhlJfu0R9fGMfkQfVSrGX
-	 nelLHdCdcWTUayznbvyvHsool5KomyEshuxbGpfSwE/26Pb2Guq78fSfymP6C3bYYPw==
+	t=1795039072;
+	b=4IzuWYGQp9dUH5oy52aBeJLEGB6WaIKpAK+rdm+a0RWfpnLbOkN9OAFo4WqEAB3faqAT
+	 qX1T8Y/OkRFsgB4eT2uRwjcGndZJ7IiAWrI0HGxI3DSL6QCZBrHfK3dkflNX93A4wtib0
+	 D2eNV8r3ZQJOzst4wAuacCqAHQObLs+QjJiR2is+O+GOIVOf2yweHNlhTj5IcdFTOFA3l
+	 zcZb2zTnMqea45CPQDF7b20+SSvkfVhpsRUF1tYhzySmyE6UIWVB9k0y4pY6gvOgk5BGq
+	 Xc6okZ6Q3Eyeu0SDkyy0LPoFTVWE6byc7/Ehg7CNHp0DlcKeJ3HVkFHYkhOjgA3SvLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039069;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039072;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+NXln/sOexHLS6JFeU4WYeMUuXq19UBf9kFIz6tcqKY=;
-	b=kzP8dI0CEzfcqhZ9iYHe7rtJHETVKjCxABLfqg+hxGm56YdKp9hBUMEMfhD6keZZaP/Z
-	 dl8X12peo/rjD0B4nbBvP0lgIIgMbxrDP1gxMsOs7uvVlvCDtBIxUWAU4+SRw6vJa9RKd
-	 R59R+wibkaTq9LbPn7mmrs5o7B83Pb/s/fMRxhSbTVmJMr2JLFjd/Afw6CIyu+KNq427k
-	 /19sJQKyJ5wQB1a/WK1mH005T3xp8tWgp466sQ+4wvZhCwJD2lTJFzGPKytNGIEb3ciS8
-	 RPDhOJNdamnk3ahM1ErBByXDziV22Th2E+W0OglB+h91jAAVupx2I8wuCfIntMTpfBw==
+	bh=v/DoxAX2hKIrcbvczFy3GSwAi/YYFYwSRiOdTkWCQ8c=;
+	b=lxDLbLyK0gcBOBC0nEvaZ6PoRAMXJ809ZvZsWc4DFluZty+yI3ozF2qTzMCOveBMRqGG
+	 rnikVUS9IuH6sukNIPF7NmywmTYhZ+8SrJGfomCjy9/pW20P2sYIgz5WSiWGNPoxY4eMp
+	 FLNxpjKMvZiCo1FiEncbTSVZoI/g1laQG9XBBkpMxpGnukUYgdw0WR6wBejwez4S4HMOD
+	 7rmjmhL9TlEHwiXwomkedO08NXPQDHmbGs3vSzi8vkiUs/d7+R57OU/1VnH1gpx7mDKSy
+	 jPrF9ULG2rQOHe3X92lqTdhcq8Xl2ePnOa0zgO5Qb+UadpcxSuc4rVcD2QZlKJCUGNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IpjvfEkG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wAVhMZrz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD72C606A339;
-	Wed, 18 Nov 2026 21:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A087D606A33B;
+	Wed, 18 Nov 2026 21:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IpjvfEkG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DDB71F000C9;
-	Wed, 18 Nov 2026 21:57:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wAVhMZrz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FDF1F000C7;
+	Wed, 18 Nov 2026 21:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039069;
-	bh=+NXln/sOexHLS6JFeU4WYeMUuXq19UBf9kFIz6tcqKY=;
+	s=korg; t=1795039072;
+	bh=v/DoxAX2hKIrcbvczFy3GSwAi/YYFYwSRiOdTkWCQ8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IpjvfEkGqqFMiMWNXES7IuRd92iigjy2Dw7OnuZgERc6Q6b9t41QTNWzxguVXfprv
-	 Fjq1Z6UQ7yBiyEPVsa2eIBnJx2ThWBXwLzvpO8eGD1jROrUr7W+xFsTamF+R/Vn5wF
-	 thV7fpBbIfX7ZZTGqoyZ/Jtl8pp3GYbnfs7b0ns4=
+	b=wAVhMZrzo7ifdCzz0xguwmY1EBonq+tO/LFPKB2J0pp2zBb0oOoiQbLWj8nWN7Uwg
+	 iVpNWSZEDH1cmOOHyeYVR4yAUouENx15loeZaCuQN94cTWhrT1KZf6Ug4Bm807Tylm
+	 PjjWkznWZjGmq1LQ9F0JK8T+xPpN4VuL0fE/uiJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Kevin Brodsky <kevin.brodsky@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Will Deacon <will@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1961/3318] arm64: Fix cleared E0POE bit after cpu_suspend()/resume()
-Date: Wed, 18 Nov 2026 15:43:03 +0100
-Message-ID: <20261118150420.917863870@linuxfoundation.org>
+Subject: [PATCH 6.6 1970/3318] vsock/virtio: Move length check to callers of virtio_vsock_skb_rx_put()
+Date: Wed, 18 Nov 2026 15:43:12 +0100
+Message-ID: <20261118150421.181461501@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,73 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+From: Will Deacon <will@kernel.org>
 
-[ Upstream commit bdf3f4176092df5281877cacf42f843063b4784d ]
+[ Upstream commit 87dbae5e36613a6020f3d64a2eaeac0a1e0e6dc6 ]
 
-TCR2_ELx.E0POE is set during smp_init().
-However, this bit is not reprogrammed when the CPU enters suspension and
-later resumes via cpu_resume(), as __cpu_setup() does not re-enable E0POE
-and there is no save/restore logic for the TCR2_ELx system register.
+virtio_vsock_skb_rx_put() only calls skb_put() if the length in the
+packet header is not zero even though skb_put() handles this case
+gracefully.
 
-As a result, the E0POE feature no longer works after cpu_resume().
+Remove the functionally redundant check from virtio_vsock_skb_rx_put()
+and, on the assumption that this is a worthwhile optimisation for
+handling credit messages, augment the existing length checks in
+virtio_transport_rx_work() to elide the call for zero-length payloads.
+Since the callers all have the length, extend virtio_vsock_skb_rx_put()
+to take it as an additional parameter rather than fish it back out of
+the packet header.
 
-To address this, save and restore TCR2_EL1 in the cpu_suspend()/cpu_resume()
-path, rather than adding related logic to __cpu_setup(), taking into account
-possible future extensions of the TCR2_ELx feature.
+Note that the vhost code already has similar logic in
+vhost_vsock_alloc_skb().
 
-Fixes: bf83dae90fbc ("arm64: enable the Permission Overlay Extension for EL0")
-Cc: <stable@vger.kernel.org> # 6.12.x
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: Kevin Brodsky <kevin.brodsky@arm.com>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Stable-dep-of: beeec0404622 ("arm64: suspend: Save and restore TPIDR2_EL0 across CPU suspend")
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Message-Id: <20250717090116.11987-4-will@kernel.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Stable-dep-of: d5e912448cd9 ("vhost/vsock: size receive SKBs from declared payload")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/suspend.h | 2 +-
- arch/arm64/mm/proc.S             | 8 ++++++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/vhost/vsock.c            | 2 +-
+ include/linux/virtio_vsock.h     | 9 ++-------
+ net/vmw_vsock/virtio_transport.c | 4 +++-
+ 3 files changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm64/include/asm/suspend.h b/arch/arm64/include/asm/suspend.h
-index 0cde2f473971e..eb60c97355530 100644
---- a/arch/arm64/include/asm/suspend.h
-+++ b/arch/arm64/include/asm/suspend.h
-@@ -2,7 +2,7 @@
- #ifndef __ASM_SUSPEND_H
- #define __ASM_SUSPEND_H
+diff --git a/drivers/vhost/vsock.c b/drivers/vhost/vsock.c
+index c3fceb7892988..a5bbbb5d0273e 100644
+--- a/drivers/vhost/vsock.c
++++ b/drivers/vhost/vsock.c
+@@ -372,7 +372,7 @@ vhost_vsock_alloc_skb(struct vhost_virtqueue *vq,
+ 		return NULL;
+ 	}
  
--#define NR_CTX_REGS 13
-+#define NR_CTX_REGS 14
- #define NR_CALLEE_SAVED_REGS 12
+-	virtio_vsock_skb_rx_put(skb);
++	virtio_vsock_skb_rx_put(skb, payload_len);
  
- /*
-diff --git a/arch/arm64/mm/proc.S b/arch/arm64/mm/proc.S
-index 14fdf645edc88..51c48ac29ad5d 100644
---- a/arch/arm64/mm/proc.S
-+++ b/arch/arm64/mm/proc.S
-@@ -102,6 +102,10 @@ SYM_FUNC_START(cpu_do_suspend)
- 	 * call stack.
- 	 */
- 	str	x18, [x0, #96]
-+alternative_if ARM64_HAS_TCR2
-+	mrs	x2, REG_TCR2_EL1
-+	str	x2, [x0, #104]
-+alternative_else_nop_endif
- 	ret
- SYM_FUNC_END(cpu_do_suspend)
+ 	nbytes = copy_from_iter(skb->data, payload_len, &iov_iter);
+ 	if (nbytes != payload_len) {
+diff --git a/include/linux/virtio_vsock.h b/include/linux/virtio_vsock.h
+index 5148b035a8f38..3e91cde041037 100644
+--- a/include/linux/virtio_vsock.h
++++ b/include/linux/virtio_vsock.h
+@@ -46,14 +46,9 @@ static inline void virtio_vsock_skb_clear_tap_delivered(struct sk_buff *skb)
+ 	VIRTIO_VSOCK_SKB_CB(skb)->tap_delivered = false;
+ }
  
-@@ -144,6 +148,10 @@ SYM_FUNC_START(cpu_do_resume)
- 	 */
- 	disable_daif
- 	msr	mdscr_el1, x10
-+alternative_if ARM64_HAS_TCR2
-+	ldr	x2, [x0, #104]
-+	msr	REG_TCR2_EL1, x2
-+alternative_else_nop_endif
+-static inline void virtio_vsock_skb_rx_put(struct sk_buff *skb)
++static inline void virtio_vsock_skb_rx_put(struct sk_buff *skb, u32 len)
+ {
+-	u32 len;
+-
+-	len = le32_to_cpu(virtio_vsock_hdr(skb)->len);
+-
+-	if (len > 0)
+-		skb_put(skb, len);
++	skb_put(skb, len);
+ }
  
- 	msr	sctlr_el1, x12
- 	set_this_cpu_offset x13
+ static inline struct sk_buff *virtio_vsock_alloc_skb(unsigned int size, gfp_t mask)
+diff --git a/net/vmw_vsock/virtio_transport.c b/net/vmw_vsock/virtio_transport.c
+index 6c7221a032ee5..fb7acdf4ad2b3 100644
+--- a/net/vmw_vsock/virtio_transport.c
++++ b/net/vmw_vsock/virtio_transport.c
+@@ -530,7 +530,9 @@ static void virtio_transport_rx_work(struct work_struct *work)
+ 				continue;
+ 			}
+ 
+-			virtio_vsock_skb_rx_put(skb);
++			if (payload_len)
++				virtio_vsock_skb_rx_put(skb, payload_len);
++
+ 			virtio_transport_deliver_tap_pkt(skb);
+ 			virtio_transport_recv_pkt(&virtio_transport, skb);
+ 		}
 -- 
 2.53.0
 
