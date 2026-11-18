@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039421;
-	b=i19zD7HPIJeE6F2FOgil1GCPrpelqEJjY4VWlQOby/7DDmnyMdI6898norPY7GrgpIQ1
-	 Qd3YF0o0QY1tVQ6LiEDqOSzgFyJzaBjviHuX5/Or821159wwndItwImum6XCQLqXbQSI3
-	 j4/4OJghPNAyMEqkEM9skLNMe1rHegVjijrpDYbNgeADsEpslVOFYFPA7SwnhIzn0fWk9
-	 jaZvW/MgRQHN2N022zC3jzF39nBC5VT8oqKJhtOWnm8FpUW61Zm+CEtPDeZ8FEDQtpZWt
-	 GuGwQtIc2AGQu3/NmVZrqeB+wscUP0o3d2urwQUJLbhwJrkduWn7jfLI2/oRH+qiO7Q==
+	t=1795039424;
+	b=GJ/Yf5JkGQbr8mzrMzcjTxKOdSGWze3St08lvs3C6SC3uNp3wriv36WbqmvIylQeuJkP
+	 hitxuGNwXW211SOWymPtidVSp3apfoQNXRQMxVhFOw534SOO6z+AcjikLQOE3L4J0ZUGZ
+	 dMHecxkDtSxOGUFMiKLGOUC6jB8CN2u6HXYpZp4cmcWQwAoFeNvDoZdgqYiVLiWVdykou
+	 esn1jtNsGh2xaaGRFDFVk4oUh440nE2uv+IxgfFVJ2FQ1YYUnvQBsHQHWu2nGXaH89dzU
+	 eCIjfUsgt0JWawe55NZv/uwBlUMlxhh20GwwSsJFQmlDLIctivcRd8z89hhL+hBJHyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039421;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039424;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=x+lSpuq9uKxKiA9hXQkWpbS8mfrFhcCjRsGVN4+Co1k=;
-	b=NphFHZRp5nY1GBxH8kOBuFL033tEwZnielNHxa0xvnxEuZ800hGjLD/qAjx+UEFqA22Y
-	 1ymvLLPmy2YzrNhAHzdEmPcHgNfKm8Y2adFrx+M8KNqKBl1L0L2DpvqO0eMXujb5luZtW
-	 L82MACXAV8/HqdCiu8QrRxTjH8bdulCmaN4m7REQZ96KP39CtU00N2BBe4dXRQMLtE4oj
-	 AVkuqkVT7Z1Y/+TYZkGvoFn8XB65KmS6jahcirxGJr3ozFW4OAzqqwaloImOk1D1nzX8h
-	 G0XEbXCyy6CNqe++p8f4VtodE0mO181FC6lv3ESV0WSZvZN16eEj85cmcB+dO1uKrmg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=oQ9RQrIuC1/HimgNNccYE1ztmJf6WjHkbc/nluhzQ/M=;
+	b=pGb5LNYlpuyzrn53qByKPp0/KIBHwmYr3514aa7d7vVq3d9djdjDC/pMsNhG7VQzdAcf
+	 AOtgtp0yeN4+gFsA3DfTS/c1h08cv7PQGVDBqa65PEaqCxuxz4bEhFsa6edLCfkhUqPSi
+	 Zfq8PcvbqWZ6mRPKa8anFMoFib8fDpLCQI40Rzy+vC8RtuHJ87/vklaVfIGTxptAPmVk4
+	 IlBhrqTfCOy8u5vbdgJ6Dxo5004Kw3okrHavQojH6sd6y86o7IWxEFRniiKHFHtnAhKGG
+	 cM5D0npudsGwjHvxPRCgzcdzrtyT2u20gw6VINqkVsLpgQm+mvBoZaVWbP3oYgvFu+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=muN2b6cQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jasat9Od;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A35606A338;
-	Wed, 18 Nov 2026 22:03:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076D0606A337;
+	Wed, 18 Nov 2026 22:03:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=muN2b6cQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923051F000C7;
-	Wed, 18 Nov 2026 22:03:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jasat9Od
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF151F000C7;
+	Wed, 18 Nov 2026 22:03:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039421;
-	bh=x+lSpuq9uKxKiA9hXQkWpbS8mfrFhcCjRsGVN4+Co1k=;
+	s=korg; t=1795039423;
+	bh=oQ9RQrIuC1/HimgNNccYE1ztmJf6WjHkbc/nluhzQ/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=muN2b6cQ4U3jfI9KJ2PZ+RhdO0aM+RUo9gytvnMq2nUHHSgl2kTgQ0bwycvt7C2HT
-	 8zUyljkEa+qps9FOyoEws7933ithjhiHRDRT9wKaOy6PT9I5CZJJ4UFSv7YqnZcJjK
-	 5/EJrF4PlXiObD3i3Z9AUNC4l/YUeF2Plqa/GXWQ=
+	b=jasat9OddlYo7z6pGoeSFpAKzkrbnFoa72kj2hwctVi8mWTGgPpRYXh/wxgbiNGfI
+	 1ZuuWrkr6oJPw3mBhADho5IhLKcHZxNAueXhcJb7LgJsEWvy6cxEwnFW8z5Jx8iLpa
+	 L/EyA6/keoZ+gUjdfU2KtlZgua1PaUzD3RGoOI2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Julius Bairaktaris <julius@bairaktaris.de>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2092/3318] dmaengine: mediatek: hsdma: fix runtime PM leak on init failure
-Date: Wed, 18 Nov 2026 15:45:14 +0100
-Message-ID: <20261118150424.857308384@linuxfoundation.org>
+Subject: [PATCH 6.6 2054/3318] wifi: mac80211: fix swapped fq_overlimit/fq_overmemory in aqm debugfs
+Date: Wed, 18 Nov 2026 15:44:36 +0100
+Message-ID: <20261118150423.678021032@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -64,117 +63,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Julius Bairaktaris <julius@bairaktaris.de>
 
-[ Upstream commit f10d96b1c549a2f43506e9bf847196839808b8dc ]
+[ Upstream commit 25f3f2ff88ae604a3b473b501fc55d58fcb0f5eb ]
 
-mtk_hsdma_hw_init() enables runtime PM and gets a runtime PM reference
-before enabling the HSDMA clock. It currently ignores failures from
-pm_runtime_get_sync(); if runtime resume fails, the usage count remains
-held. If clk_prepare_enable() then fails, the usage count remains held.
+The two scnprintf arguments for fq_overlimit and fq_overmemory are in the
+wrong order, which results in the aqm debugfs file showing the overmemory
+count under the fq_overlimit label and vice versa.
 
-Use devm_pm_runtime_enable() to manage runtime PM enablement, and use
-pm_runtime_resume_and_get() so resume failures do not leak the usage count.
-If clk_prepare_enable() fails after a successful runtime resume, drop the
-runtime PM reference before returning.
-
-The probe path also ignores the return value from mtk_hsdma_hw_init(), so a
-failed hardware init can continue as a successful probe. Propagate
-mtk_hsdma_hw_init() failures from probe, while keeping a separate unwind
-label so mtk_hsdma_hw_deinit() is only called after hardware init succeeds.
-
-Fixes: 548c4597e984 ("dmaengine: mediatek: Add MediaTek High-Speed DMA controller for MT7622 and MT7623 SoC")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260804153924.49627-1-mhun512@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 2a4e675d887b ("mac80211: Export fq memory limit information in debugfs")
+Reviewed-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Julius Bairaktaris <julius@bairaktaris.de>
+Link: https://patch.msgid.link/20260904090626.92727-1-julius@bairaktaris.de
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/mediatek/mtk-hsdma.c | 26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ net/mac80211/debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/mediatek/mtk-hsdma.c b/drivers/dma/mediatek/mtk-hsdma.c
-index 64120767d9838..c18d7cc783380 100644
---- a/drivers/dma/mediatek/mtk-hsdma.c
-+++ b/drivers/dma/mediatek/mtk-hsdma.c
-@@ -848,17 +848,27 @@ static int mtk_hsdma_hw_init(struct mtk_hsdma_device *hsdma)
- {
- 	int err;
- 
--	pm_runtime_enable(hsdma2dev(hsdma));
--	pm_runtime_get_sync(hsdma2dev(hsdma));
-+	err = devm_pm_runtime_enable(hsdma2dev(hsdma));
-+	if (err)
-+		return err;
-+
-+	err = pm_runtime_resume_and_get(hsdma2dev(hsdma));
-+	if (err < 0)
-+		return err;
- 
- 	err = clk_prepare_enable(hsdma->clk);
- 	if (err)
--		return err;
-+		goto err_put_pm;
- 
- 	mtk_dma_write(hsdma, MTK_HSDMA_INT_ENABLE, 0);
- 	mtk_dma_write(hsdma, MTK_HSDMA_GLO, MTK_HSDMA_GLO_DEFAULT);
- 
- 	return 0;
-+
-+err_put_pm:
-+	pm_runtime_put_sync(hsdma2dev(hsdma));
-+
-+	return err;
- }
- 
- static int mtk_hsdma_hw_deinit(struct mtk_hsdma_device *hsdma)
-@@ -868,7 +878,6 @@ static int mtk_hsdma_hw_deinit(struct mtk_hsdma_device *hsdma)
- 	clk_disable_unprepare(hsdma->clk);
- 
- 	pm_runtime_put_sync(hsdma2dev(hsdma));
--	pm_runtime_disable(hsdma2dev(hsdma));
- 
- 	return 0;
- }
-@@ -983,7 +992,9 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
- 		goto err_unregister;
- 	}
- 
--	mtk_hsdma_hw_init(hsdma);
-+	err = mtk_hsdma_hw_init(hsdma);
-+	if (err)
-+		goto err_free;
- 
- 	err = devm_request_irq(&pdev->dev, hsdma->irq,
- 			       mtk_hsdma_irq, 0,
-@@ -991,7 +1002,7 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
- 	if (err) {
- 		dev_err(&pdev->dev,
- 			"request_irq failed with err %d\n", err);
--		goto err_free;
-+		goto err_deinit;
- 	}
- 
- 	platform_set_drvdata(pdev, hsdma);
-@@ -1000,8 +1011,9 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
- 
- 	return 0;
- 
--err_free:
-+err_deinit:
- 	mtk_hsdma_hw_deinit(hsdma);
-+err_free:
- 	of_dma_controller_free(pdev->dev.of_node);
- err_unregister:
- 	dma_async_device_unregister(dd);
+diff --git a/net/mac80211/debugfs.c b/net/mac80211/debugfs.c
+index 0392f3b28263a..2ca3e41ee8987 100644
+--- a/net/mac80211/debugfs.c
++++ b/net/mac80211/debugfs.c
+@@ -98,8 +98,8 @@ static ssize_t aqm_read(struct file *file,
+ 			"RW fq_quantum %u\n",
+ 			fq->flows_cnt,
+ 			fq->backlog,
+-			fq->overmemory,
+ 			fq->overlimit,
++			fq->overmemory,
+ 			fq->collisions,
+ 			fq->memory_usage,
+ 			fq->memory_limit,
 -- 
 2.53.0
 
