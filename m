@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044334;
-	b=K8YyQNvrQME7fWHAGxWPUUl5fhwpmPtIYPKYNhCA246XwRGu1xoaxJ0Vn4qGckN1q+s9
-	 w+h3+maebbjHAKk/7FZi8PidhY2ijCpOePKLbaG6EE+jBsVQo7qc4I6Z5z4wjNJBWF2wn
-	 NsQhyvwh7SUG4ZDd1sse+kQEaIK9zR9j24Q7fRITMM59YO918MxqR9xAxDycQXduzKIYQ
-	 hytJ0rwelSBMJb8WayuPXEJZAJWkLNxkFu6LVQ15vuqGrW3gMYTnMZJwLTcUxYpTQRvTj
-	 8U1hRbK2lB1lW8mch+NtOv/c2GqtYMMR/NxFCLtgNn9V6BAtU48L6Q35o2igCSutp3g==
+	t=1795044336;
+	b=wGee2ed43KK9AM+vqNUUuNITtYkGQxnmVbtR8Xbm6kFhDJ1zAU4CzNC2MtIvRIC+CIB2
+	 uOgZsRzRkbpn49oj3IrKoq1V3+sOsIRINHmkc9ZxFz5RHHhZqAQTfljeU563Y0r5v9mAu
+	 QL7ZKO8fWUxQK1uPGXanE1Tpc7zm+HtSGw6DONHkHJkq8lpP390Z6a4qYFuqPFaBp9Gp/
+	 d6agrRz6hUf4BTrMXL+A+P5sms9SS+R8ysmDBr2Zj8cS9Vz71DDiJOXyThLNaAMnTPd13
+	 VVugkvD1cwngjug5qGxSJGHX/32+BJTLVFLLqugE9iblHhNhkLjjTjgmy6J97+ccr1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044334;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044336;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ADJxkMMPtXtr9Mu8+0acAuyUB5KHVnYqozWk64RnzdA=;
-	b=Kwp8qz5T/2YARR7SA/NBOelhUF8toX0owjyD34bcrBCokaFBz0XtxHquzAp/FWKbxb9J
-	 DNzwaPfca3598ZWI994u0/6DeM6atHHsFx+vH4huC0oNnD1g04tmJVhh861sEpneUQkOA
-	 8oOF5D6p+fme1AJ1mGOVkzoQsv3e0qWwP0ugVURebi431w+Mk1dGGe+pn65tJRu9J/cV+
-	 FFXLR6mlgUez4gPBX76RQ38OCbCXZCZCGnVxjyeaN1ymvjqnFOUmnzS60DkvBxi5tQ3Cn
-	 8u4qI2jkNam7BSqSahzdLsqTc5nnY4FFm0LEqTWm1etngfRW9u1g5d3SemfoKL9/Tbg==
+	bh=Rgs5nGG5WBV8p83neM189Al5SgyTD/AocdzfcQypRkI=;
+	b=1qWNQWGMGFo30d+35BTBKo36I2QveQkro0ueQV53ApodODk8bsciKaImZ1EPAihWuSzV
+	 pU68q/FlLLp3Ch7UzRktQ4hP/Z+dl8Mxy6a7YpyLmesolr1tBdHS4kaQI9VEbjToNP+lM
+	 djBQn9Z8ZroU8uiUWs0Ea/6oM+oz3Wzxg6LgePly2JjuDiz2kDBkUSEkD0pzwHxDX/gPU
+	 PmYNpcPCYVI66FBHTZxAibIdokJXByol5vjtLn/jBAn653T4CC1nWquqQLyI0UtcF1MGa
+	 tgXCuq8SZRlUv0Z5LFfFi6PJ7wOGZeWhaBI5oncRYbs4CwokCp99EwyTZ5/06fTlJ+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VyeFOjzl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0gyiM+9G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528F7606A31C;
-	Wed, 18 Nov 2026 23:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99630606A31C;
+	Wed, 18 Nov 2026 23:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VyeFOjzl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF7E1F000C4;
-	Wed, 18 Nov 2026 23:25:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0gyiM+9G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4901F000C4;
+	Wed, 18 Nov 2026 23:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044333;
-	bh=ADJxkMMPtXtr9Mu8+0acAuyUB5KHVnYqozWk64RnzdA=;
+	s=korg; t=1795044336;
+	bh=Rgs5nGG5WBV8p83neM189Al5SgyTD/AocdzfcQypRkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VyeFOjzlE3AVZiVVLagLAgcrNOBNerhv2UlOhnZ/KXtZNA8inZcQGRkPxOu4P5ZlD
-	 P/r+g9TBpdBqlqYvxW4tosyG8p0RyRQe2y2mx/0Avqwng1CiDGWcJFdzoNez+/WaXu
-	 fRnHUHz2dOrSXRQrqruUTsYu6KzKb0E+sXmRZSjc=
+	b=0gyiM+9GzFfbA7bCZkrbLFnODXMTTuEm2SWB5bVCfEweCsdkEfhd6Px63E/PpdTsj
+	 +agigyDko1bvQuHc9y8VgMpWzkFT4OwOwD0LERSTklF+6yMY32uO4yxfU5Gk+3e1Ge
+	 YDaVDNG51WhntnpTPn9pRvqJVQV8SdAU4QlqsE4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Kim <james010kim@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Matt Porter <mporter@kernel.crashing.org>
-Subject: [PATCH 6.1 0531/2857] rapidio: mport_cdev: fix use-after-free in mport_mm_close()
-Date: Wed, 18 Nov 2026 15:26:05 +0100
-Message-ID: <20261118150220.596725761@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.1 0532/2857] nvmet-fc: fix use-after-free in nvmet_fc_ls_create_connection()
+Date: Wed, 18 Nov 2026 15:26:06 +0100
+Message-ID: <20261118150220.633856019@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,63 +68,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Kim <james010kim@gmail.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit 0f2cd84858e67cf8e02438bf28243bcdc67aa49a upstream.
+commit 2c29f8c9b9e598c09fa50aa02200136a107f6b3f upstream.
 
-A use-after-free vulnerability was identified in mport_mm_close() in
-drivers/rapidio/devices/rio_mport_cdev.c, identical to the pattern
-previously addressed in dma_req_free().
+nvmet_fc_ls_create_connection() looks up the association with
+nvmet_fc_find_target_assoc(), which returns it with a reference held,
+and drops that reference as soon as the target queue has been allocated.
+iod->assoc is then dereferenced again by nvmet_fc_makeconnid() while
+building the connection id.
 
-This is observable from userspace when an application creates an mmap
-mapping via the RapidIO character device and subsequently unmaps it (or
-terminates, triggering exit_mmap()).  During munmap, mport_mm_close() is
-invoked and drops the mapping reference via kref_put().
+The queue only borrows the pointer and takes no reference of its own.
+Once the lookup reference is dropped the association is kept alive
+solely by the reference taken when it was created, so a disconnect LS or
+a remote port unregister running concurrently can free it before
+nvmet_fc_makeconnid() reads it:
 
-If kref_put() drops the last reference, mport_release_mapping() is called,
-which frees the underlying rio_mport_mapping structure.  The subsequent
-mutex_unlock() then dereferences map->md to unlock buf_mutex, leading to a
-use-after-free:
+BUG: KASAN: slab-use-after-free in nvmet_fc_handle_ls_rqst_work (drivers/nvme/target/fc.c:193 drivers/nvme/target/fc.c:1841 drivers/nvme/target/fc.c:1995 drivers/nvme/target/fc.c:2021)
+Read of size 8 at addr ffff888179f1b000 by task kworker/u9:2/1167
 
-   mport_mm_close()
-     -> mutex_lock(&map->md->buf_mutex);
-     ...
-     -> kref_put(&map->ref, mport_release_mapping); /* map is freed */
-     -> mutex_unlock(&map->md->buf_mutex);          /* UAF: map used */
+Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Workqueue: nvmet-wq nvmet_fc_handle_ls_rqst_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+ print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+ kasan_report (mm/kasan/report.c:595)
+ nvmet_fc_handle_ls_rqst_work (drivers/nvme/target/fc.c:193 drivers/nvme/target/fc.c:1841 drivers/nvme/target/fc.c:1995 drivers/nvme/target/fc.c:2021)
+ process_scheduled_works (kernel/workqueue.c:3322 kernel/workqueue.c:3405)
+ worker_thread (kernel/workqueue.c:3486)
+ kthread (kernel/kthread.c:436)
+ ret_from_fork (archkernel/process.c:158)
+ ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+ </TASK>
 
-Fix this by caching map->md before kref_put() and using the cached pointer
-for mutex unlocking, ensuring that freed memory is not accessed.
+Freed by task 1167 on cpu 0 at 405.998150s:
+ kasan_save_track (mm/kasan/common.c:57 mm/kasan/common.c:78)
+ kasan_save_free_info (mm/kasan/generic.c:584)
+ __kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
+ kfree (include/linux/kasan.h:235 mm/slub.c:2705 mm/slub.c:6405 mm/slub.c:6720)
+ nvmet_fc_handle_ls_rqst_work (drivers/nvme/target/fc.c:1808 drivers/nvme/target/fc.c:1995 drivers/nvme/target/fc.c:2021)
+ process_scheduled_works (kernel/workqueue.c:3322 kernel/workqueue.c:3405)
+ worker_thread (kernel/workqueue.c:3486)
+ kthread (kernel/kthread.c:436)
+ ret_from_fork (archkernel/process.c:158)
+ ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
 
-Link: https://lore.kernel.org/20260914042327.49798-1-james010kim@gmail.com
-Fixes: e8de370188d0 ("rapidio: add mport char device driver")
-Signed-off-by: James Kim <james010kim@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Cc: <stable@vger.kernel.org>
+The buggy address belongs to the object at ffff888179f1b000
+ which belongs to the cache kmalloc-2k of size 2048
+The buggy address is located 0 bytes inside of
+ freed 2048-byte region [ffff888179f1b000, ffff888179f1b800)
+
+Hold the lookup reference until the response has been built, and drop it
+on the error path as well.
+
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Closes: https://lore.kernel.org/linux-nvme/20260731204504.2396434-1-shuangpeng.kernel@gmail.com
+Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rapidio/devices/rio_mport_cdev.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nvme/target/fc.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/rapidio/devices/rio_mport_cdev.c
-+++ b/drivers/rapidio/devices/rio_mport_cdev.c
-@@ -2186,11 +2186,12 @@ static void mport_mm_open(struct vm_area
- static void mport_mm_close(struct vm_area_struct *vma)
- {
- 	struct rio_mport_mapping *map = vma->vm_private_data;
-+	struct mport_dev *md = map->md;
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -1773,9 +1773,6 @@ nvmet_fc_ls_create_connection(struct nvm
+ 					be16_to_cpu(rqst->connect_cmd.sqsize));
+ 			if (!queue)
+ 				ret = VERR_QUEUE_ALLOC_FAIL;
+-
+-			/* release get taken in nvmet_fc_find_target_assoc */
+-			nvmet_fc_tgt_a_put(iod->assoc);
+ 		}
+ 	}
  
- 	rmcd_debug(MMAP, "%pad", &map->phys_addr);
--	mutex_lock(&map->md->buf_mutex);
-+	mutex_lock(&md->buf_mutex);
- 	kref_put(&map->ref, mport_release_mapping);
--	mutex_unlock(&map->md->buf_mutex);
-+	mutex_unlock(&md->buf_mutex);
+@@ -1789,6 +1786,8 @@ nvmet_fc_ls_create_connection(struct nvm
+ 					FCNVME_RJT_RC_INV_ASSOC :
+ 					FCNVME_RJT_RC_LOGIC,
+ 				FCNVME_RJT_EXP_NONE, 0);
++		if (iod->assoc)
++			nvmet_fc_tgt_a_put(iod->assoc);
+ 		return;
+ 	}
+ 
+@@ -1810,6 +1809,9 @@ nvmet_fc_ls_create_connection(struct nvm
+ 	acc->connectid.connection_id =
+ 			cpu_to_be64(nvmet_fc_makeconnid(iod->assoc,
+ 				be16_to_cpu(rqst->connect_cmd.qid)));
++
++	/* release get taken in nvmet_fc_find_target_assoc */
++	nvmet_fc_tgt_a_put(iod->assoc);
  }
  
- static const struct vm_operations_struct vm_ops = {
+ /*
 
 
