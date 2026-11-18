@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021939;
-	b=3Kan5TWUDmAV019sfIn2yRKrjqU0f5j43SqpLK0BNquLDGgVMzQxInRanHkR0LIba8VI
-	 YVt/Cav+E1pDbqW4QFZajrekn+aVGKRdTPIbv4G50i1wj3o49ifg+EMiwK6QRHiADFWpz
-	 oOSmFG4plYle3uBRJ7CMsEFwBy5lKh/Z5PBWKlA2+nEGOpaXF2vH7wX6zH13JlKP6+D/F
-	 wkxSCxOkjWPcp7FRHhSy3mLqJYiVTM6grsQJGcI1rR4KTCtjs90wQmmAt8ziKjvFWX7zZ
-	 1LfsNespxMVH4xq9yOl6M2QLoDCqGqoEnJsZJwSkm6Xwbz2C6X76lwvwinks2uumk0A==
+	t=1795021941;
+	b=a+VLMQiTvy2OAT+acksbQjL4nKP3W6lCUWW5KBhXANzRY0nvUUcXC/9DKCl4ELSsJ7IH
+	 cQtkTu38XwAf95uTxR16kJuuy1AeRtUiO2cpXrWEPisGadF2Q19DUvsPqFKhWYlDGdyQ+
+	 hSdom15UGfg31cApTnXbLqTcSuLK/iV4abhUIuVTzeyOmNtJAIUbTh6olyy5YZtn2YqBS
+	 DJMya0mONvyaoFuzUWHul7Y0unVH+wFu3e5SA0AgdY5th7z8d0rzPX+O/K/vk7F+M8Shi
+	 hSvaNLgm9lNpKXigvbZrdte/ULaStQGJBHz7YiaxbAYIzN0f9nS/cToMikGtOpHKqtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021939;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021941;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cYUX7xPvp/80XjO/HHnp8u9k7/0ET4t49fEJoANjtEI=;
-	b=N1+4j5J2hBq6dS5nf39toY92+zu1NFxrX7MPagPLfdcyM201elSl4k+SAOv5FuLPEb6A
-	 6gqnLLsbaHuQtSF1GOkoJIo3DNKd0bXDkkCRNW91FjGBZ6+by6omsB5KxDNecz5VMYbSP
-	 pePNs/6ZTS//4fcD2VRhAncDUW5qNXFPClglCIOMxplZr5QwbHUsT1L9kau0rV6JWOIaR
-	 CAYJfnd0Lk7u2Uxt9hW8ZdGG95jw3eA7lyEpVClpQroGtZ6N6NTWWKS8DHvWuDZ/fUHky
-	 TS1PTiXkBsRa2q+hTOpny0TWVW2FONiO1QF083Mdur+AjZOJITx198L0nOUc5M+MVjg==
+	bh=Iej7zLbfitgT7FKX+6f84XXuCZI4s9EHRqAsm5n80gs=;
+	b=mpgfiK2K6cjRxY9CaqOCKSs4PWCl9YHMBmnIJBRVxFTq/UP1Xjyz7LnrpOcfp+6ZVk4N
+	 xiNxrBfdP/QRkIB4tNHzlCbG+H60cLoTuGttYLG1jsii6sP5br2J/xU4YWxoAKN2gSkzj
+	 PNhGhoubz+6bG7Nu0ZQWLVGdTc22yJaxhProLnajLkMrTdhRVCTuQcjyoHx4jhqkMwcgu
+	 Z8X/74c3PAkahGoY94FxDsuocstfKWTl5x3aTxtDh9K12eFD+4GoI6Aa+xbHVVJwgE2GF
+	 U0q+M8E7xPvDlTTj9A1L9snsdokppvgPaOUgy9lA8CxUeThX6Mfjwg6cU8IHvM1AnEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aEEISWXM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TWVz14Aq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC8B606A320;
-	Wed, 18 Nov 2026 17:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12DD606A31C;
+	Wed, 18 Nov 2026 17:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aEEISWXM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C9051F000C4;
-	Wed, 18 Nov 2026 17:12:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TWVz14Aq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138211F000C4;
+	Wed, 18 Nov 2026 17:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021938;
-	bh=cYUX7xPvp/80XjO/HHnp8u9k7/0ET4t49fEJoANjtEI=;
+	s=korg; t=1795021941;
+	bh=Iej7zLbfitgT7FKX+6f84XXuCZI4s9EHRqAsm5n80gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aEEISWXMCTsIf+Iai0RTwdShJ4p66z8uGGk3dFfyof8vCvnCHQeSMR5A/qPJyiTlA
-	 aFZQaWambOHQ5K7AmVP55B0QlV/BYvz1vxcUF0O7u+Uf+647y352BT4M7TA52fLVIX
-	 vbThLg4YVPnCpjxGTdhURjhon06jJswVswy4A3FM=
+	b=TWVz14AqTzjGjwUYaynmSU1yTP9/ymbiGOh9QJeGWo/Peg8muDXLbN3p8FSCIgbCr
+	 ESGl7h7F+P7p1NBDrKjAxR4xOtocWLs2hF6o56NU0IlXc6Q3tvKsjp98/4v5zLorBC
+	 fcHQZNKIlp7OAIA7QexyJ3zudy4QYmXn7UwjTYRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Andrea Righi <arighi@nvidia.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Shubhang Kaushik (Ampere)" <sh@gentwo.org>,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2484/2651] sched: Restart fair hrtick after same-task repicks
-Date: Wed, 18 Nov 2026 16:02:04 +0100
-Message-ID: <20261118150414.329622801@linuxfoundation.org>
+Subject: [PATCH 7.3 2485/2651] sched: Add sched_ext hooks for proxy execution
+Date: Wed, 18 Nov 2026 16:02:05 +0100
+Message-ID: <20261118150414.358745649@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,286 +68,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shubhang Kaushik (Ampere) <sh@gentwo.org>
+From: Andrea Righi <arighi@nvidia.com>
 
-[ Upstream commit c72945693b90423f1b46ac2dbc8749c2b7804fc8 ]
+[ Upstream commit be100c77178ef2299a080eb698720832a870248b ]
 
-Fair hrticks are one-shot timers. A same-task repick after hrtick expiry
-skips set_next_task_fair() and leaves no hrtick armed for the next fair
-preemption point:
+Proxy execution splits the scheduling context (the donor) from the
+execution context (the lock owner). sched_ext needs to observe that
+split at three points in __schedule():
 
-    hrtick()
-      -> task_tick_fair(..., queued=1)
-         -> entity_tick()
-            -> resched_curr()
-      -> schedule()
-         -> pick_task_fair() selects current
-         -> put_prev_set_next_task(rq, prev, next)
-            -> next == prev
-            -> return
+ - whether a blocked EXT task can be retained on the runqueue as a
+   donor,
+ - when a donor's scheduling context starts driving a lock owner,
+ - after proxy resolution, when deferred reenqueue work that was blocked
+   by an active proxy relationship can be retried.
 
-Introduce SNT_REPICK for the next == prev path:
+Introduce scx_allow_proxy_exec(), scx_proxy_donor_start() and
+scx_proxy_reenqueue_retry(), and add their call sites in __schedule().
+The implementations are empty here and are filled in by the sched_ext
+changes that follow, so that all the sched core changes needed by proxy
+execution stay together in the preparatory patches.
 
-    put_prev_set_next_task(rq, prev, next)
-      -> next == prev
-      -> next->sched_class->set_next_task(rq, next, SNT_REPICK)
-         -> set_next_task_fair()
-            -> hrtick_start_fair()
+SCHED_PROXY_EXEC still depends on !SCHED_CLASS_EXT, so the new hooks are
+inert: they are compiled out with CONFIG_SCHED_CLASS_EXT=n and
+unreachable otherwise.
 
-set_next_task_fair() skips task-transition work for SNT_REPICK and
-restarts the fair hrtick. hrtick_start() records the delay during
-schedule(), and hrtick_schedule_exit() rearms the timer.
+This is a preparatory change to support proxy execution with sched_ext.
+No functional change.
 
-Do not restart the SCHED_DEADLINE hrtick for SNT_REPICK. Same-task
-repicks skip put_prev_task() for both fair and SCHED_DEADLINE, but
-pick_task_fair() refreshes the selected fair entity before selecting it
-again. hrtick_start_fair() reads that refreshed entity, including with
-group scheduling.
-
-The SCHED_DEADLINE picker has no corresponding current-runtime update.
-Restarting its hrtick on SNT_REPICK could therefore use stale
-dl_se->runtime and delay the next runtime enforcement point.
-
-Suggested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Shubhang Kaushik (Ampere) <sh@gentwo.org>
+Signed-off-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Link: https://patch.msgid.link/20260917-sched-fair-hrtick-restart-v4-1-4dd1414da81a@gentwo.org
+Link: https://patch.msgid.link/20260922165445.943315-6-arighi@nvidia.com
 Stable-dep-of: 5c23d1710606 ("sched_ext: Fix queued bypassed tasks stalling when the host loses SCX_CAP_BASE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c      |  2 +-
- kernel/sched/deadline.c  |  7 +++++--
- kernel/sched/ext/ext.c   |  5 ++++-
- kernel/sched/fair.c      | 21 ++++++++++++++++-----
- kernel/sched/idle.c      |  5 ++++-
- kernel/sched/rt.c        |  7 +++++--
- kernel/sched/sched.h     | 16 ++++++++++++----
- kernel/sched/stop_task.c |  5 ++++-
- 8 files changed, 51 insertions(+), 17 deletions(-)
+ kernel/sched/core.c    | 12 +++++++-----
+ kernel/sched/ext/ext.c | 13 +++++++++++++
+ kernel/sched/ext/ext.h |  7 +++++++
+ 3 files changed, 27 insertions(+), 5 deletions(-)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 0ba69c11a3f52..b596d9f5d83f6 100644
+index b596d9f5d83f6..4a051764e7119 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -7241,7 +7241,7 @@ static void __sched notrace __schedule(int sched_mode)
- 			 * on_cpu.
- 			 */
- 			donor->sched_class->put_prev_task(rq, donor, donor);
--			donor->sched_class->set_next_task(rq, donor, true);
-+			donor->sched_class->set_next_task(rq, donor, SNT_PICK);
+@@ -7196,13 +7196,12 @@ static void __sched notrace __schedule(int sched_mode)
  		}
+ 	} else if (!preempt && prev_state) {
+ 		/*
+-		 * We pass task_is_blocked() as the should_block arg
+-		 * in order to keep mutex-blocked tasks on the runqueue
+-		 * for slection with proxy-exec (without proxy-exec
+-		 * task_is_blocked() will always be false).
++		 * Keep mutex-blocked tasks on the runqueue for proxy execution
++		 * only when their scheduling class allows it. Without proxy
++		 * execution, task_is_blocked() always returns false.
+ 		 */
+ 		try_to_block_task(rq, prev, &prev_state,
+-				  !task_is_blocked(prev));
++				  !task_is_blocked(prev) || !scx_allow_proxy_exec(prev));
+ 		switch_count = &prev->nvcsw;
+ 	}
+ 
+@@ -7223,6 +7222,7 @@ static void __sched notrace __schedule(int sched_mode)
+ 			}
+ 			if (next == rq->idle) {
+ 				zap_balance_callbacks(rq);
++				scx_proxy_reenqueue_retry(rq, next);
+ 				goto keep_resched;
+ 			}
+ 		}
+@@ -7243,6 +7243,8 @@ static void __sched notrace __schedule(int sched_mode)
+ 			donor->sched_class->put_prev_task(rq, donor, donor);
+ 			donor->sched_class->set_next_task(rq, donor, SNT_PICK);
+ 		}
++		scx_proxy_donor_start(rq);
++		scx_proxy_reenqueue_retry(rq, next);
  	} else {
  		rq_set_donor(rq, next);
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 0663c00c41c04..1502a45d76aaf 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -2773,11 +2773,14 @@ static void start_hrtick_dl(struct rq *rq, struct sched_dl_entity *dl_se)
-  * DL keeps current in tree, because ->deadline is not typically changed while
-  * a task is runnable.
-  */
--static void set_next_task_dl(struct rq *rq, struct task_struct *p, bool first)
-+static void set_next_task_dl(struct rq *rq, struct task_struct *p, enum snt_e type)
- {
- 	struct sched_dl_entity *dl_se = &p->dl;
- 	struct dl_rq *dl_rq = &rq->dl;
- 
-+	if (type == SNT_REPICK)
-+		return;
-+
- 	p->se.exec_start = rq_clock_task(rq);
- 	if (on_dl_rq(&p->dl))
- 		update_stats_wait_end_dl(dl_rq, dl_se);
-@@ -2788,7 +2791,7 @@ static void set_next_task_dl(struct rq *rq, struct task_struct *p, bool first)
- 	WARN_ON_ONCE(dl_rq->curr);
- 	dl_rq->curr = dl_se;
- 
--	if (!first)
-+	if (type != SNT_PICK)
- 		return;
- 
- 	if (rq->donor->sched_class != &dl_sched_class)
+ 	}
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 0faa4877d8a6b..89e52371f7d29 100644
+index 89e52371f7d29..4482df6d1187d 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -3056,10 +3056,13 @@ static enum scx_dsp_verdict dispatch_one(struct rq *rq, struct task_struct *prev
- 	return verdict;
+@@ -24,6 +24,11 @@
+ 
+ DEFINE_RAW_SPINLOCK(scx_sched_lock);
+ 
++bool scx_allow_proxy_exec(const struct task_struct *p)
++{
++	return true;
++}
++
+ /*
+  * NOTE: sched_ext is in the process of growing multiple scheduler support and
+  * scx_root usage is in a transitional state. Naked dereferences are safe if the
+@@ -1083,6 +1088,10 @@ static void schedule_deferred_locked(struct rq *rq)
+ 	schedule_deferred(rq);
  }
  
--static void set_next_task_scx(struct rq *rq, struct task_struct *p, bool first)
-+static void set_next_task_scx(struct rq *rq, struct task_struct *p, enum snt_e type)
- {
- 	struct scx_sched *sch = scx_task_sched(p);
- 
-+	if (type == SNT_REPICK)
-+		return;
++void scx_proxy_reenqueue_retry(struct rq *rq, struct task_struct *next)
++{
++}
 +
- 	if (p->scx.flags & SCX_TASK_QUEUED) {
- 		/*
- 		 * Core-sched might decide to execute @p before it is
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 548a28e37d0e7..327d5f8f45966 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -15547,14 +15547,18 @@ static void switched_to_fair(struct rq *rq, struct task_struct *p)
+ void schedule_dsq_reenq(struct scx_sched *sch, struct scx_dispatch_q *dsq,
+ 			u64 reenq_flags, struct rq *locked_rq)
+ {
+@@ -3120,6 +3129,10 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, enum snt_e t
  	}
  }
  
--static void set_next_task_fair(struct rq *rq, struct task_struct *p, bool first)
-+static void set_next_task_fair(struct rq *rq, struct task_struct *p, enum snt_e type)
++void scx_proxy_donor_start(struct rq *rq)
++{
++}
++
+ static enum scx_cpu_preempt_reason
+ preempt_reason_from_class(const struct sched_class *class)
  {
- 	struct sched_entity *se = &p->se;
--	bool throttled = false;
- 	struct cfs_rq *cfs_rq = &rq->cfs;
- 	unsigned long weight = NICE_0_LOAD;
-+	bool first = type == SNT_PICK;
-+	bool throttled = false;
- 	bool on_rq = se->on_rq;
+diff --git a/kernel/sched/ext/ext.h b/kernel/sched/ext/ext.h
+index 0b7fc46aee08c..3cfbfeb1bf9d1 100644
+--- a/kernel/sched/ext/ext.h
++++ b/kernel/sched/ext/ext.h
+@@ -20,6 +20,9 @@ void scx_rq_deactivate(struct rq *rq);
+ int scx_check_setscheduler(struct task_struct *p, int policy);
+ bool task_should_scx(int policy);
+ bool scx_allow_ttwu_queue(const struct task_struct *p);
++bool scx_allow_proxy_exec(const struct task_struct *p);
++void scx_proxy_donor_start(struct rq *rq);
++void scx_proxy_reenqueue_retry(struct rq *rq, struct task_struct *next);
+ void init_sched_ext_class(void);
  
-+	if (type == SNT_REPICK)
-+		goto repick;
-+
- 	clear_buddies(cfs_rq, se);
+ static inline u32 scx_cpuperf_target(s32 cpu)
+@@ -54,6 +57,10 @@ static inline void scx_rq_deactivate(struct rq *rq) {}
+ static inline int scx_check_setscheduler(struct task_struct *p, int policy) { return 0; }
+ static inline bool task_on_scx(const struct task_struct *p) { return false; }
+ static inline bool scx_allow_ttwu_queue(const struct task_struct *p) { return true; }
++static inline bool scx_allow_proxy_exec(const struct task_struct *p) { return true; }
++static inline void scx_proxy_donor_start(struct rq *rq) {}
++static inline void scx_proxy_reenqueue_retry(struct rq *rq,
++					     struct task_struct *next) {}
+ static inline void init_sched_ext_class(void) {}
  
- 	if (on_rq)
-@@ -15598,11 +15602,18 @@ static void set_next_task_fair(struct rq *rq, struct task_struct *p, bool first)
- 
- 	WARN_ON_ONCE(se->sched_delayed);
- 
--	if (hrtick_enabled_fair(rq))
--		hrtick_start_fair(rq, p);
--
- 	update_misfit_status(p, rq);
- 	sched_fair_update_stop_tick(rq, p);
-+
-+repick:
-+	/*
-+	 * A same-task repick skips put_prev_task_fair(), but
-+	 * pick_task_fair() refreshed the entity hrtick_start_fair() reads
-+	 * before selecting it again. rq->cfs.curr identifies that entity,
-+	 * including with group scheduling.
-+	 */
-+	if (hrtick_enabled_fair(rq))
-+		hrtick_start_fair(rq, p);
- }
- 
- void init_cfs_rq(struct cfs_rq *cfs_rq)
-diff --git a/kernel/sched/idle.c b/kernel/sched/idle.c
-index 2880e01368b8e..e0c10a5dbda2b 100644
---- a/kernel/sched/idle.c
-+++ b/kernel/sched/idle.c
-@@ -491,8 +491,11 @@ static void put_prev_task_idle(struct rq *rq, struct task_struct *prev, struct t
- 	update_rq_avg_idle(rq);
- }
- 
--static void set_next_task_idle(struct rq *rq, struct task_struct *next, bool first)
-+static void set_next_task_idle(struct rq *rq, struct task_struct *next, enum snt_e type)
- {
-+	if (type == SNT_REPICK)
-+		return;
-+
- 	update_idle_core(rq);
- 	scx_update_idle(rq, true, true);
- 	schedstat_inc(rq->sched_goidle);
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index 85303add726df..1535046a23ffa 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -1654,11 +1654,14 @@ static void wakeup_preempt_rt(struct rq *rq, struct task_struct *p, int flags)
- 		check_preempt_equal_prio(rq, p);
- }
- 
--static inline void set_next_task_rt(struct rq *rq, struct task_struct *p, bool first)
-+static inline void set_next_task_rt(struct rq *rq, struct task_struct *p, enum snt_e type)
- {
- 	struct sched_rt_entity *rt_se = &p->rt;
- 	struct rt_rq *rt_rq = &rq->rt;
- 
-+	if (type == SNT_REPICK)
-+		return;
-+
- 	p->se.exec_start = rq_clock_task(rq);
- 	if (on_rt_rq(&p->rt))
- 		update_stats_wait_end_rt(rt_rq, rt_se);
-@@ -1666,7 +1669,7 @@ static inline void set_next_task_rt(struct rq *rq, struct task_struct *p, bool f
- 	/* The running task is never eligible for pushing */
- 	dequeue_pushable_task(rq, p);
- 
--	if (!first)
-+	if (type != SNT_PICK)
- 		return;
- 
- 	/*
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index a248c1c3bd92a..18c7799ea8864 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -2620,6 +2620,12 @@ struct affinity_context {
- 
- extern s64 update_curr_common(struct rq *rq);
- 
-+enum snt_e {
-+	SNT_NORMAL,	/* set_next_task() */
-+	SNT_PICK,	/* put_prev_set_next_task(): prev != next */
-+	SNT_REPICK,	/* put_prev_set_next_task(): prev == next */
-+};
-+
- struct sched_class {
- 
- #ifdef CONFIG_UCLAMP_TASK
-@@ -2677,7 +2683,7 @@ struct sched_class {
- 	 * __schedule: rq->lock
- 	 */
- 	void (*put_prev_task)(struct rq *rq, struct task_struct *p, struct task_struct *next);
--	void (*set_next_task)(struct rq *rq, struct task_struct *p, bool first);
-+	void (*set_next_task)(struct rq *rq, struct task_struct *p, enum snt_e type);
- 
- 	/*
- 	 * select_task_rq: p->pi_lock
-@@ -2780,7 +2786,7 @@ static inline void put_prev_task(struct rq *rq, struct task_struct *prev)
- 
- static inline void set_next_task(struct rq *rq, struct task_struct *next)
- {
--	next->sched_class->set_next_task(rq, next, false);
-+	next->sched_class->set_next_task(rq, next, SNT_NORMAL);
- }
- 
- static inline void
-@@ -2801,11 +2807,13 @@ static inline void put_prev_set_next_task(struct rq *rq,
- 
- 	__put_prev_set_next_dl_server(rq, prev, next);
- 
--	if (next == prev)
-+	if (next == prev) {
-+		next->sched_class->set_next_task(rq, next, SNT_REPICK);
- 		return;
-+	}
- 
- 	prev->sched_class->put_prev_task(rq, prev, next);
--	next->sched_class->set_next_task(rq, next, true);
-+	next->sched_class->set_next_task(rq, next, SNT_PICK);
- }
- 
- /*
-diff --git a/kernel/sched/stop_task.c b/kernel/sched/stop_task.c
-index c909ca0d8c87c..1e0109ec36b3f 100644
---- a/kernel/sched/stop_task.c
-+++ b/kernel/sched/stop_task.c
-@@ -27,8 +27,11 @@ wakeup_preempt_stop(struct rq *rq, struct task_struct *p, int flags)
- 	/* we're never preempted */
- }
- 
--static void set_next_task_stop(struct rq *rq, struct task_struct *stop, bool first)
-+static void set_next_task_stop(struct rq *rq, struct task_struct *stop, enum snt_e type)
- {
-+	if (type == SNT_REPICK)
-+		return;
-+
- 	stop->se.exec_start = rq_clock_task(rq);
- }
- 
+ #endif	/* CONFIG_SCHED_CLASS_EXT */
 -- 
 2.53.0
 
