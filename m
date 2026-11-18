@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032906;
-	b=AYbTm0aSSastBNqSXrMLgAoO/Y/s64wvDqF9n8SaGubHUSntB/24+TONoNtFjRgpgzu4
-	 UM89R57gp1oOwvOoP314pexohVRKw3+EiBjMoQoI1GZta3Vq2hna76dCWyCcNYMegGDN+
-	 m4azDeBe7fNgcksrRhl95FHoz2PvpyMBTnJ+h0Cp0rxCFDX4XIOzaryhpUZZzM5OABVyD
-	 EZ2du5K5vkCLOUUcy+nxgyIs9weBPUzIckLOY1yqsc8PZBnJ/XiNcspteVX8MkH37E1kQ
-	 ySpspnXOgOvg3C8O0Dt24CjgkFSUQXgs126y7UXV2CXd0Q+muuaZfAJS8mM4U65JkNQ==
+	t=1795032910;
+	b=5VYJPKhQ7Tv5aqIlDLf271G/Yow8lGIdTk1+w6mvxdNnImSaK8kH/yRZAf7QwPzTqpsU
+	 r78zA3is+Gphpt9Ia2tJoSRHfyApjDpEEpUzKl+KIuWxo5sH3eXVrZAzyTczqJkjkLMpr
+	 IrvBIq7hP9ZddVMHr4ioryhiOOQnxt46ZMixPST1uLOGK3fyejmcpFaxm1Ib3py/YrQ7G
+	 u7gGSNpygGl2YHC1936dn1R8FuPnOdQYn7G6ewqouRJw6xydzyqrql59UHiw1h47/AK+r
+	 vP5EgkUEy5YgUxAtuNYtARGIjuXpP+tXWxg4ZLAPSKmQ7/STtVRYQwhFqMwhH/6hVfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032906;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032910;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YsPwQtjRirQrbTh9wdWhx0mGnNT6E/jr89A/fCxve0E=;
-	b=j14D9gyIB0lq/HLG4xtZvX86DMwVeAN8bUPfSVTJiXOY8to41OwLN4/aBlsmkOEsOe3x
-	 7J72Qzxfe1YNYWiyE7ABsk7bJ0SxEd29CQmFgDfsBv7bUGZMHHZsdBHwZQkrfOi/ePh+s
-	 AYp25X8mHbCtDoB3FumGfeJUc27/GHIp+BY4upxtfLhbySNQaKBJdXekDQkCaaOhK7o22
-	 CI0llgJ7cZc2fpCVIqNV4Ko/h7vr4fs3RrEXMjGoBpKo65/SWnepKL5ASi6fJO+xmPcC0
-	 ddV7yImG/9xf3vTYikAXOCYyZS0uOpthHuZESt83wiudZjnhmy+Ca6EXowVVGbE+YyA==
+	bh=gOeloQF0oMoo7/tVZjpEY1vEstL8QF/dxfjKJdexcb4=;
+	b=OudGDJLhkELPVeovpyCMv3KWL6csPtJZN+EUBwYXTN8tjHcj2Ar0G8PMEAUxcQmpOLU9
+	 vZmUft4zeF4D1der45a5cnaMOT6l3iWS77xC3/rKCYPa4cMyeOLqxfnhHwVSFoYkDeEoa
+	 uIHqKh+tcqg/xFK6mWuf/toIcpwibRtsUK+nAchxq7Zv56TKOXClSP5Uqh8cE+HvY/0uw
+	 IO0IT6F5bYDwgcKojCxp/EtPkNUg080KmeKXrx+V0ukJMK/E5ZXN7IEaU2RWxk1z1YOIC
+	 akmTMGKV9MN1Bw7KOKsv/fVN70+Kp+Er074C7BIa9j54P1/nX5zrmotR44NQf8BF1Dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dVKPxNva;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PLNGPYdn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B059D606A320;
-	Wed, 18 Nov 2026 20:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2AA60A2604;
+	Wed, 18 Nov 2026 20:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dVKPxNva
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115211F000C4;
-	Wed, 18 Nov 2026 20:15:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PLNGPYdn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7BCA1F000C4;
+	Wed, 18 Nov 2026 20:15:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032906;
-	bh=YsPwQtjRirQrbTh9wdWhx0mGnNT6E/jr89A/fCxve0E=;
+	s=korg; t=1795032909;
+	bh=gOeloQF0oMoo7/tVZjpEY1vEstL8QF/dxfjKJdexcb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dVKPxNvaz7h8B3ChqmVwmQ8+E55NIMB1FEMiPznkCFXwQ001H4mqIFPXlUswN8byq
-	 j2EbhFPVm0QWvItNdphB+UFTuM5uc3v37LzDvMQ6erHXvIwXi2zjaprK0dkdJrGL7z
-	 meAIWIKxUPi7GuumRBWX6idWZXnpRUOYJixWM3X8=
+	b=PLNGPYdnpNMlFNfFulbaeSOkG8HlKsbOXonntWVBhSSU5suR5mIoQfMAgSx9N0knN
+	 7OWGa+5heIpLLY/4NhScoJxcpfXOMqPzT5fWEFblKWVgO0/WfLnHUISiNjM1h1G/Gw
+	 WdGB6G+bhisKtFfNcTD4/3C2zHXoWEAl7sMJ/qck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1578/1756] thermal: Fix CPU mask truncation in power limit trace event
-Date: Wed, 18 Nov 2026 16:01:45 +0100
-Message-ID: <20261118150112.589359729@linuxfoundation.org>
+Subject: [PATCH 6.12 1579/1756] ASoC: codecs: wsa884x: disable runtime PM on unbind
+Date: Wed, 18 Nov 2026 16:01:46 +0100
+Message-ID: <20261118150112.640804458@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,48 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit 82c9c94f54a444a686e926c872dae4b198d1036f ]
+[ Upstream commit 54c121eaeed8ee7751935db8100b6b5c57124db9 ]
 
-num_possible_cpus() counts CPUs, but CPU IDs need not be contiguous.
-Using it to size the thermal_power_cpu_limit bitmap can omit CPUs with
-higher IDs. For example, possible CPUs 0 and 64 produce an eight-byte
-bitmap on a 64-bit system, dropping CPU 64.
+Probe enables runtime PM but nothing disables it on unbind. The pending
+autosuspend then runs wsa884x_runtime_suspend() after the devm-managed
+regmap is freed, and dereferences NULL:
 
-Use nr_cpumask_bits for both sizing and copying the bitmap.
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000020
+  pc : regcache_cache_only+0x18/0x80
+  lr : wsa884x_runtime_suspend+0x24/0x40 [snd_soc_wsa884x]
 
-Fixes: 6828a4711f99 ("thermal: add trace events to the power allocator governor")
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Link: https://patch.msgid.link/20261023060724.5691-1-dennylin0707@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Use devm_pm_runtime_enable() so runtime PM is disabled before the regmap
+is freed.
+
+Fixes: aa21a7d4f68a ("ASoC: codecs: wsa884x: Add WSA884x family of speakers")
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261023171316.819857-5-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_trace.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/wsa884x.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/thermal_trace.h b/drivers/thermal/thermal_trace.h
-index df8f4edd6068a..2f953fd8289dd 100644
---- a/drivers/thermal/thermal_trace.h
-+++ b/drivers/thermal/thermal_trace.h
-@@ -119,7 +119,7 @@ TRACE_EVENT(thermal_power_cpu_limit,
- 	TP_ARGS(cpus, freq, cdev_state, power),
+diff --git a/sound/soc/codecs/wsa884x.c b/sound/soc/codecs/wsa884x.c
+index 1e42093849742..1fb9f11ba2a9c 100644
+--- a/sound/soc/codecs/wsa884x.c
++++ b/sound/soc/codecs/wsa884x.c
+@@ -2128,7 +2128,9 @@ static int wsa884x_probe(struct sdw_slave *pdev,
+ 	pm_runtime_use_autosuspend(dev);
+ 	pm_runtime_mark_last_busy(dev);
+ 	pm_runtime_set_active(dev);
+-	pm_runtime_enable(dev);
++	ret = devm_pm_runtime_enable(dev);
++	if (ret)
++		return ret;
  
- 	TP_STRUCT__entry(
--		__bitmask(cpumask, num_possible_cpus())
-+		__bitmask(cpumask, nr_cpumask_bits)
- 		__field(unsigned int,  freq      )
- 		__field(unsigned long, cdev_state)
- 		__field(u32,           power     )
-@@ -127,7 +127,7 @@ TRACE_EVENT(thermal_power_cpu_limit,
- 
- 	TP_fast_assign(
- 		__assign_bitmask(cpumask, cpumask_bits(cpus),
--				num_possible_cpus());
-+				nr_cpumask_bits);
- 		__entry->freq = freq;
- 		__entry->cdev_state = cdev_state;
- 		__entry->power = power;
+ 	return devm_snd_soc_register_component(dev,
+ 					       &wsa884x_component_drv,
 -- 
 2.53.0
 
