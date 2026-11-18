@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019205;
-	b=UPMzeFN2lI8NfwTKhv56ABBj/zsb4aJkcZtGNF775MKH9JMLsB27/UKfAhtBO8qEKY3a
-	 lz8cOfKN9ayOHjFr/f+IdwfOIAmSgWJUHjFD/qd5ING1xdH3KLS9+HPM1uz5FPczop+Ky
-	 n6x/iIFUZxjDC3OWoZ0K6Na9ysN7f0r68e3Fa03ecyqCMT3+rfRQLypnyR3UDLKtS094I
-	 amFWQGc8fjwnnzqenWfvsEQsjXH0uY8Kb+J1VjGvsMwXWImSkk0otzsE5QbfGIjJkfodx
-	 Im3z9NNzuL+B0sV3IYrKFC0UhdjsZjRoh32sh3qAr0JQg8OfKAJLmXl3HcP3Zj2Zvng==
+	t=1795019208;
+	b=yRgJh1IjYlj9TIGqHME+aYELZCNTlsz4+gboYRrmbWowX1k8zGl5tUc7t0n/ni/WJpCP
+	 PJDZDZ8HFp7vp5SBHwgKeKOzNakD+R3es81pKlcu+dZ/hibArVUX36Zu4KEV6LOX+tZcq
+	 s6R015+iQUwsLEWSYiXzLYdVjTBTKf+gqqbz2Y2qM0KOit5+hMmninJRG58vbNqTw/5u6
+	 QKGhW6ya9dkOQRhGaAokzhjaXQrfnoNJ0E135IRd0O4M+cgGy/rItyz4FMsYYjP1TN2xA
+	 O83laiWciZemZxU/PJRnShpEN9mX1he+WK/5h2MBg3BTS9iRJICBkhppnK/C6vXQRqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019205;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019208;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=491L/BMQMFUcaZ+bzv7DPzXIPqnbk8EPtVGCgimDYYk=;
-	b=Ulc4ub+W2ab6mXw0KFu5vTSbLKUvq0+8htbeS10TIzLTyT3Y/1YmYRkLrfSiu+QThh3C
-	 mOI186Z9jQiHoLQt4PSiXMEURT9wyY17bdPSYx2TSJBGO7KC6s1U8HpJyfu+2dJfkUFPO
-	 qSnxrQ+AO5pQ14XPgaHHDcwXSoiwCEUG3eJPFZ61SP+JD6BQ0FhFBESxrJlC3CvJvJtML
-	 KTRMX4tf89iLeDqQDqsq/UUZZWOkJiqxBGn90pjAfL3GbEVcKB5YNu/2uW6VG74YB21Pf
-	 945gk2d8gnrUmMEl1Jt19NDHsFmZoE6ZtP7Fb/BjZGrVud6Mcw34QHmCCExjoXtK9HQ==
+	bh=QCNEQN6McNKZ9AJcjSZs1pZP+jauZyP73PCTiBp+j+E=;
+	b=asPuOPewb1TcFyfXDhIXTFvzkIJdXvrVlkRCmVDm5biXAppRI1GrcdkVCdQ4fC5ohgNQ
+	 dPZ9XgG8qmO9YF8xd50OqoaxdR3Awa+ZFL9UBvFoc/+hnfetqDqHc65VqBE1Qhc8Uj8C7
+	 d+6sdvJUdhcjGQAPSXel9VT+rFLCplIXbhHzKRxug16d8cY0XSGtFx0qVSWie9R91pGp3
+	 AF5knGL+GNrBzIXTyusOoDtNddq7sCqa87BZeb1R6yIyA+qa+41doTOd8j6eEBGaT9idw
+	 oY28dCMe28kvmBotLXrO0dpUolrZk7F9YC7RmAiZUgTH2O0t0FFpsY0NkQlvLQqgnzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f0ix6CRy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Z/6UYUek";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D516606A31C;
-	Wed, 18 Nov 2026 16:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F08606A32A;
+	Wed, 18 Nov 2026 16:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f0ix6CRy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803511F000C4;
-	Wed, 18 Nov 2026 16:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z/6UYUek
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554D11F000C4;
+	Wed, 18 Nov 2026 16:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019205;
-	bh=491L/BMQMFUcaZ+bzv7DPzXIPqnbk8EPtVGCgimDYYk=;
+	s=korg; t=1795019207;
+	bh=QCNEQN6McNKZ9AJcjSZs1pZP+jauZyP73PCTiBp+j+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f0ix6CRyREZWNJYjUPtLqtWOSBmDpmVtu/rBJKXSGxx3+ZeiKUWAmogGQfJq/Yqcv
-	 PwVwJWZBe6t6KYFTKJw5VG5U+w2mY6sJtjINt1F2++p5u2NG9qzIuHAirSNTWF9Qs7
-	 rc4k9C3X0a5mOJ5LajW+UYdfP0KBezArnffUnY2I=
+	b=Z/6UYUekCCmNamMqEoVgq59dcSUEVW0jm10APVYqJi8Pa9xS3ES0iow0FlQDkx1MK
+	 xKED4eaZVttea7/jaZIYoDcwE49Z21vpTG6Gvq8mzJb39FKhW30B7i55ioB5Wpl11v
+	 d5QA4nJk5DFgfvmc0jlLGh3xBeCwhMPRZ+h9fH/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Felix Hoffmann <f3lix.dev@gmx.de>,
+	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1512/2651] net: stmmac: fix TX coalesce race and div-by-zero in XDP/legacy path
-Date: Wed, 18 Nov 2026 15:45:52 +0100
-Message-ID: <20261118150342.436356824@linuxfoundation.org>
+Subject: [PATCH 7.3 1513/2651] wifi: mm81x: validate YAPS receive framing
+Date: Wed, 18 Nov 2026 15:45:53 +0100
+Message-ID: <20261118150342.471322131@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,196 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Felix Hoffmann <f3lix.dev@gmx.de>
 
-[ Upstream commit 237782c3d416b392a12642f32959e9d3c94e0c26 ]
+[ Upstream commit 7e6689cbbf9e6040e4ce38656a126459aa994f68 ]
 
-tx_coal_frames[] is written by ethtool (stmmac_set_coalesce) and read
-locklessly from the TX fast path (stmmac_xmit, stmmac_tso_xmit,
-stmmac_xdp_xmit_zc and stmmac_xdp_xmit_xdpf), so pair every access
-with READ_ONCE()/WRITE_ONCE() to mark the intentional data race and
-read a consistent value into a local variable.
+The receive byte count comes from device-controlled status registers, but
+the packet splitter unconditionally consumes a four-byte delimiter. A count
+of one to three bytes therefore makes bytes_remaining negative. If the
+reused receive buffer contains a valid delimiter, the negative value is
+passed to memcpy() and converted to a near-SIZE_MAX length, corrupting
+kernel memory.
 
-Moreover, ethtool allows disabling TX coalescing by setting
-tx_max_coalesced_frames to 0: guard the modulo operation in
-stmmac_xdp_xmit_xdpf() against a zero tx_coal_frames[queue] to avoid
-a division by zero.
+YAPS streams are word aligned, so reject byte counts that cannot contain
+complete delimiters. Also reject delimiter sizes which do not leave any
+packet data after removing the reserved metadata page.
 
-Both issues were found by code inspection while extending the XDP TX
-path with multi-buff support, and neither has ever been triggered, so
-they are only theoretical. Tested on the Qualcomm RB3-gen2 board.
-
-Fixes: db2f2842e6f5 ("net: stmmac: add per-queue TX & RX coalesce ethtool support")
-Fixes: be8b38a722e6 ("net: stmmac: Add support for XDP_TX action")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261001-b4-stmmac-xmit-mb-v4-1-664e0c3eb289@oss.qualcomm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: LLM
+Fixes: b1906cea00b0 ("wifi: mm81x: add mm81x Wi-Fi HaLow driver")
+Signed-off-by: Felix Hoffmann <f3lix.dev@gmx.de>
+Link: https://patch.msgid.link/20261007093021.17132-1-f3lix.dev@gmx.de
+[remove Suggested-by and fix Assisted-by]
+Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/stmicro/stmmac/stmmac_ethtool.c  | 11 ++---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 42 ++++++++-----------
- 2 files changed, 24 insertions(+), 29 deletions(-)
+ drivers/net/wireless/morsemicro/mm81x/yaps_hw.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-index 1be5310ca766c..e2c5b69505104 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-@@ -798,7 +798,8 @@ static int __stmmac_get_coalesce(struct net_device *dev,
+diff --git a/drivers/net/wireless/morsemicro/mm81x/yaps_hw.c b/drivers/net/wireless/morsemicro/mm81x/yaps_hw.c
+index e1102b8fb8020..1d90137470c28 100644
+--- a/drivers/net/wireless/morsemicro/mm81x/yaps_hw.c
++++ b/drivers/net/wireless/morsemicro/mm81x/yaps_hw.c
+@@ -401,16 +401,17 @@ static int mm81x_yaps_hw_write_pkts(struct mm81x_yaps *yaps,
+ static bool mm81x_read_pkts_h_is_valid_delim(u32 delim)
+ {
+ 	u8 calc_crc = mm81x_yaps_hw_crc(delim);
+-	int pkt_size = YAPS_DELIM_GET_PHANDLE_SIZE(delim);
++	int pkt_size = YAPS_DELIM_GET_PKT_SIZE(delim);
+ 	int padding = YAPS_DELIM_GET_PADDING(delim);
  
- 	if (queue < tx_cnt) {
- 		ec->tx_coalesce_usecs = priv->tx_coal_timer[queue];
--		ec->tx_max_coalesced_frames = priv->tx_coal_frames[queue];
-+		ec->tx_max_coalesced_frames =
-+			READ_ONCE(priv->tx_coal_frames[queue]);
- 	} else {
- 		ec->tx_coalesce_usecs = 0;
- 		ec->tx_max_coalesced_frames = 0;
-@@ -887,14 +888,14 @@ static int __stmmac_set_coalesce(struct net_device *dev,
- 		int i;
+ 	if (calc_crc != YAPS_DELIM_GET_CRC(delim))
+ 		return false;
  
- 		for (i = 0; i < tx_cnt; i++) {
--			priv->tx_coal_frames[i] =
--				ec->tx_max_coalesced_frames;
-+			WRITE_ONCE(priv->tx_coal_frames[i],
-+				   ec->tx_max_coalesced_frames);
- 			priv->tx_coal_timer[i] =
- 				ec->tx_coalesce_usecs;
- 		}
- 	} else if (queue < tx_cnt) {
--		priv->tx_coal_frames[queue] =
--			ec->tx_max_coalesced_frames;
-+		WRITE_ONCE(priv->tx_coal_frames[queue],
-+			   ec->tx_max_coalesced_frames);
- 		priv->tx_coal_timer[queue] =
- 			ec->tx_coalesce_usecs;
- 	}
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index b837e8e27a352..d48eb942ae180 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -2702,7 +2702,8 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
- 		struct stmmac_metadata_request meta_req;
- 		struct xsk_tx_metadata *meta = NULL;
- 		dma_addr_t dma_addr;
--		bool set_ic;
-+		bool set_ic = false;
-+		u32 tx_coal;
+-	if (pkt_size == 0)
++	if (pkt_size <= 0)
+ 		return false;
  
- 		/* We are sharing with slow path and stop XSK TX desc submission when
- 		 * available TX ring is less than threshold.
-@@ -2743,12 +2744,9 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+-	if ((pkt_size + padding) > YAPS_MAX_PKT_SIZE_BYTES)
++	if ((pkt_size + YAPS_RESERVED_PAGE_SIZE + padding) >
++	    YAPS_MAX_PKT_SIZE_BYTES)
+ 		return false;
  
- 		tx_q->tx_count_frames++;
+ 	/* Pkt length + padding should not require more padding */
+@@ -455,6 +456,10 @@ static int mm81x_yaps_hw_read_pkts(struct mm81x_yaps *yaps,
+ 		return 0;
+ 	if (bytes_remaining < 0)
+ 		return bytes_remaining;
++	if (!IS_ALIGNED(bytes_remaining, sizeof(u32))) {
++		dev_warn(yaps->mors->dev, "yaps truncated delimiter");
++		return -EIO;
++	}
  
--		if (!priv->tx_coal_frames[queue])
--			set_ic = false;
--		else if (tx_q->tx_count_frames % priv->tx_coal_frames[queue] == 0)
-+		tx_coal = READ_ONCE(priv->tx_coal_frames[queue]);
-+		if (tx_coal && !(tx_q->tx_count_frames % tx_coal))
- 			set_ic = true;
--		else
--			set_ic = false;
- 
- 		meta_req.priv = priv;
- 		meta_req.tx_desc = tx_desc;
-@@ -3390,7 +3388,7 @@ static void stmmac_init_coalesce(struct stmmac_priv *priv)
- 	for (chan = 0; chan < tx_channel_count; chan++) {
- 		struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[chan];
- 
--		priv->tx_coal_frames[chan] = STMMAC_TX_FRAMES;
-+		WRITE_ONCE(priv->tx_coal_frames[chan], STMMAC_TX_FRAMES);
- 		priv->tx_coal_timer[chan] = STMMAC_COAL_TX_TIMER;
- 
- 		hrtimer_setup(&tx_q->txtimer, stmmac_tx_timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
-@@ -4521,10 +4519,10 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 	struct dma_desc *desc, *first, *mss_desc = NULL;
- 	struct stmmac_priv *priv = netdev_priv(dev);
- 	struct stmmac_txq_stats *txq_stats;
-+	u32 tx_coal, pay_len, mss, queue;
- 	int i, first_tx, nfrags, ndesc;
- 	struct stmmac_tx_queue *tx_q;
- 	bool set_ic, is_last_segment;
--	u32 pay_len, mss, queue;
- 	dma_addr_t des;
- 	u8 hdr;
- 
-@@ -4643,16 +4641,16 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 			      priv->dma_conf.dma_tx_size);
- 	tx_q->tx_count_frames += tx_packets;
- 
-+	tx_coal = READ_ONCE(priv->tx_coal_frames[queue]);
- 	if ((skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) && priv->hwts_tx_en)
- 		set_ic = true;
--	else if (!priv->tx_coal_frames[queue])
-+	else if (!tx_coal)
- 		set_ic = false;
- 	else if (!netdev_xmit_more())
- 		set_ic = true;
--	else if (tx_packets > priv->tx_coal_frames[queue])
-+	else if (tx_packets > tx_coal)
- 		set_ic = true;
--	else if ((tx_q->tx_count_frames %
--		  priv->tx_coal_frames[queue]) < tx_packets)
-+	else if ((tx_q->tx_count_frames % tx_coal) < tx_packets)
- 		set_ic = true;
- 	else
- 		set_ic = false;
-@@ -4797,9 +4795,9 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
- 	struct dma_desc *desc, *first_desc;
- 	struct stmmac_tx_queue *tx_q;
- 	int i, csum_insertion = 0;
-+	u32 tx_coal, sdu_len;
- 	int entry, first_tx;
- 	dma_addr_t dma_addr;
--	u32 sdu_len;
- 
- 	if (priv->tx_path_in_lpi_mode && priv->eee_sw_timer_en)
- 		stmmac_stop_sw_lpi(priv);
-@@ -4940,16 +4938,16 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
- 	tx_packets = CIRC_CNT(entry + 1, first_tx, priv->dma_conf.dma_tx_size);
- 	tx_q->tx_count_frames += tx_packets;
- 
-+	tx_coal = READ_ONCE(priv->tx_coal_frames[queue]);
- 	if ((skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) && priv->hwts_tx_en)
- 		set_ic = true;
--	else if (!priv->tx_coal_frames[queue])
-+	else if (!tx_coal)
- 		set_ic = false;
- 	else if (!netdev_xmit_more())
- 		set_ic = true;
--	else if (tx_packets > priv->tx_coal_frames[queue])
-+	else if (tx_packets > tx_coal)
- 		set_ic = true;
--	else if ((tx_q->tx_count_frames %
--		  priv->tx_coal_frames[queue]) < tx_packets)
-+	else if ((tx_q->tx_count_frames % tx_coal) < tx_packets)
- 		set_ic = true;
- 	else
- 		set_ic = false;
-@@ -5214,7 +5212,7 @@ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
- 	enum stmmac_txbuf_type buf_type;
- 	struct dma_desc *tx_desc;
- 	dma_addr_t dma_addr;
--	bool set_ic;
-+	u32 tx_coal;
- 
- 	if (stmmac_tx_avail(priv, queue) < STMMAC_TX_THRESH(priv))
- 		return STMMAC_XDP_CONSUMED;
-@@ -5259,12 +5257,8 @@ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
- 
- 	tx_q->tx_count_frames++;
- 
--	if (tx_q->tx_count_frames % priv->tx_coal_frames[queue] == 0)
--		set_ic = true;
--	else
--		set_ic = false;
--
--	if (set_ic) {
-+	tx_coal = READ_ONCE(priv->tx_coal_frames[queue]);
-+	if (tx_coal && !(tx_q->tx_count_frames % tx_coal)) {
- 		tx_q->tx_count_frames = 0;
- 		stmmac_set_tx_ic(priv, tx_desc);
- 		u64_stats_update_begin(&txq_stats->q_syncp);
+ 	if (bytes_remaining > YAPS_HW_WINDOW_SIZE_BYTES) {
+ 		bytes_remaining = YAPS_HW_WINDOW_SIZE_BYTES;
 -- 
 2.53.0
 
