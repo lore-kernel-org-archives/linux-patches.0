@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027906;
-	b=PwouBI5akE8oo1Tl+28Q4UJExARTwjHxJn0fYRIRA7L8kidaZZmEKST8FakWrHxoIBMt
-	 FoWnzNFpb0CwdVG1V1qrvpoeJqO0p1I1hWG3pgicXtuM0gVtLKHgdGS8xBTFXFfo0GDJT
-	 YDykipXXq+XUefTBLwBIga36JsliBXIv0t6RM89HvMGlO+LdvfsmqWD45WAkrer0u2a2i
-	 KszA9+YTFz+oMi4eUAJMbOMY5lf1McCcecJoO8t8JDu962c1pqxKfBTSFzgMD25Na/oEU
-	 N3GX96LKtq4cfISuxE1GP0z3KoMRpVrn4sB8mV1lktJR/JSKHO9YSAHK+Iuy6w3ZXMw==
+	t=1795027909;
+	b=BmvUepH7Va/IhuW/JDanRH5q2ZrDi74B91DtH/A5khnoNKLLFeAZWrASwDSWuR+e29tN
+	 1QtBGOlBK8Jv012sBvc+NbjyoX8xpgicbT3Uv3GXoCGh4Wm0Q9td4emXdCdTOPPh6GC83
+	 g8OoWuGssX0D9GI8V822GvK7d15R2//j2l8jXSMLFeO6wOulDJ+QATOitjw/BBldOvqf+
+	 bqac0UeoWH6ysnWWosTpcJFJ8caJuCzydsYFL1at8FWVoERIYLHaMg9+WDin6vp2f8wXn
+	 uzW9V0Q5XNUem9q6y80q2rK1MWTT5RsLqx2sTSTRYv5nZkaXNOKEi/VK82StQ4fetJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027906;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027909;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ULKhursswxFauYfBKVq07PwHm0JE70WrpJLiik7MObE=;
-	b=xNzUdR/ZuvEDWxOyodUKAnobCpM/nNVWlpFAKnvjNa5wxgLQuPheW7OuAnjLyQTQjfce
-	 fF4ncDtA1tvFVp2qZkfl6i5OElufS2mDMxF1tgY9pojKJg/A/YCC1qpS4Me7oqEbSlWLw
-	 vvdK1/eRS8gRENUjC7bBMCtO5oLDe2X1E2KZLXdk5dsJaNZax2l2HA+JIafjaAdG8N32h
-	 3PEOQ66Vfdb2x/G59vyx+j2y6BxKITTo4bavMd/QIgCPHzcRjQSDn6PaztSbAFPNetQn5
-	 Nvi+69Ka1teLrlnfDw5QN5E+1RET7QQPyEszStnC7eqv4ylmGlLIRvk0UGPnxytdSIA==
+	bh=1m2dolovSltNKv8rD8JT7pVD3+rqobGv6YPC231Sebs=;
+	b=b6A4Koo5kTxl0FOZynkQGDg0m3hhoi0ReX0KHzCdsb5RKiYOMjx5HXaVg9sHxsbMfe9h
+	 1fYzN7j5dXSIE4rnHc9jCH4xqHEWlyXFv18PpIWA3JBIXzTJ0rLckz/Fde2cbB1GA4cnQ
+	 //byslC6nThIqO5lnZk3UW2SVX9LAZKPdslMYidAue2+xpI2f3c/7xpdAoXtqlWazUeMq
+	 IGxjhRluaNpLwqTSp/M2HkHzIIPC3S/T2eFbj0X6gL39/6a+RmPRRjeBmegg/V4itFA5v
+	 YExMhi/pL8gAbur9RJohDr3MG+8kGYk+mj6Yib5HMDqA2/J3eH7Kl3AWaH33igNtgbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FDY2dXMO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2jOr1Tkn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D9A606A325;
-	Wed, 18 Nov 2026 18:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0463606A325;
+	Wed, 18 Nov 2026 18:51:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FDY2dXMO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DFE01F000C4;
-	Wed, 18 Nov 2026 18:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2jOr1Tkn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 415A41F000C6;
+	Wed, 18 Nov 2026 18:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027906;
-	bh=ULKhursswxFauYfBKVq07PwHm0JE70WrpJLiik7MObE=;
+	s=korg; t=1795027908;
+	bh=1m2dolovSltNKv8rD8JT7pVD3+rqobGv6YPC231Sebs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FDY2dXMOYZxE0tvE5oAa3GU/lhFIkhUpAVUT+R3LoJiugHG602BrqlIDx1QNjc1zk
-	 fWweVLCYr6Tt08q/OaxTksVYFWcr4zo4B3sdNWtI0siKwTff8X1RC4Fv9R8jJH1lIP
-	 BS3NiTjbFwSI11MlV3uG9wdioER724AaGEEC8G4w=
+	b=2jOr1Tknmxn9Tu9AqZPfWbLAQzADSpu7AaluhhJxacaOyHMybYNze5daLuOuKhoS6
+	 G4HBE5KhVQxUR3nOG9bmm3Av5gRxZIMgOxtrSxDFEvQTTZqvRzmgMGM3OxvPb6/wYd
+	 3lwnx8e2ZE7Zahp0PvhCsECL//27sAggxrwxUd/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Tal Zussman <tz2294@columbia.edu>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1953/2151] ceph: fix error handling when the OSD client is stopping in ceph_submit_write()
-Date: Wed, 18 Nov 2026 16:01:28 +0100
-Message-ID: <20261118150232.908106460@linuxfoundation.org>
+Subject: [PATCH 6.18 1914/2151] regulator: irq: freeze deferred hardware access during suspend
+Date: Wed, 18 Nov 2026 16:00:49 +0100
+Message-ID: <20261118150231.506340615@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,111 +69,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tal Zussman <tz2294@columbia.edu>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit ad67b498de17b709f050d7ebf84749b1fc6a242d ]
+[ Upstream commit 8a6d73e316f95e398a1de1d1f58314b6d3e7f641 ]
 
-When ceph_inc_osd_stopping_blocker() fails, ceph_submit_write()
-redirties and unlocks the folios remaining in ceph_wbc->fbatch.
-However, none of those folios are locked at this point: locked folios
-were moved to ceph_wbc->pages[] and removed from the fbatch by
-ceph_process_folio_batch(). Unlocking them triggers
-VM_BUG_ON_FOLIO(!folio_test_locked(folio)) in folio_unlock(), or
-unlocks a folio locked by another task.
+The regulator IRQ helper delays status checks and recovery callbacks on
+non-freezable workqueues. Those callbacks may access regulator hardware
+after the backing bus has been suspended.
 
-This error path also returns -EIO without fully cleaning up the folios in
-ceph_wbc->pages[]: their references are never dropped, fscrypt bounce
-pages are never freed, the writeback congestion count is never
-decremented, and the pages array is leaked. ceph_wbc->locked_pages is
-also left non-zero, so ceph_writepages_start() loops back around and
-hits BUG_ON(ceph_wbc.locked_pages).
+Use system_freezable_wq for normal-priority callbacks. Allocate a
+freezable high-priority workqueue when requested so the high_prio
+contract is preserved while hardware access is frozen across suspend.
 
-Leave the fbatch folios alone, as ceph_writepages_start() drops their
-references when releasing the batch, and unwind ceph_wbc->pages[] the
-same way writepages_finish() would have. Abort writeback in
-ceph_writepages_start() instead of continuing, matching the handling
-of ceph_inc_osd_stopping_blocker() failure on entry, as the OSD
-client is being torn down and further writeback cannot make progress.
-
-An LLM was used to verify that the cleanup was comprehensive, and
-suggested aborting the writeback instead of continuing.
-
-Fixes: 1551ec61dc55 ("ceph: introduce ceph_submit_write() method")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260804-remove-wait-on-page-writeback-v2-0-81f0ab065284%40columbia.edu?part=5
-Assisted-by: Claude:fable-5
-Signed-off-by: Tal Zussman <tz2294@columbia.edu>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Fixes: 7111c6d1b31b ("regulator: IRQ based event/error notification helpers")
+Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Link: https://patch.msgid.link/20261016100522.2582557-3-yaojiale02@163.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 39 +++++++++++++++++++++++----------------
- 1 file changed, 23 insertions(+), 16 deletions(-)
+ drivers/regulator/irq_helpers.c | 38 +++++++++++++++++++--------------
+ 1 file changed, 22 insertions(+), 16 deletions(-)
 
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index 2ca479647c320..0046f9261cf01 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -1496,27 +1496,31 @@ int ceph_submit_write(struct address_space *mapping,
- 	BUG_ON(len < ceph_fscrypt_page_offset(page) + thp_size(page) - offset);
+diff --git a/drivers/regulator/irq_helpers.c b/drivers/regulator/irq_helpers.c
+index 5b3cfac286676..cdbd170d2b150 100644
+--- a/drivers/regulator/irq_helpers.c
++++ b/drivers/regulator/irq_helpers.c
+@@ -15,6 +15,7 @@
+ #include <linux/regmap.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
++#include <linux/workqueue.h>
+ #include <linux/regulator/driver.h>
  
- 	if (!ceph_inc_osd_stopping_blocker(fsc->mdsc)) {
--		for (i = 0; i < folio_batch_count(&ceph_wbc->fbatch); i++) {
--			struct folio *folio = ceph_wbc->fbatch.folios[i];
--
--			if (!folio)
--				continue;
--
--			page = &folio->page;
--			redirty_page_for_writepage(wbc, page);
--			unlock_page(page);
--		}
--
- 		for (i = 0; i < ceph_wbc->locked_pages; i++) {
--			page = ceph_fscrypt_pagecache_page(ceph_wbc->pages[i]);
-+			page = ceph_wbc->pages[i];
-+			if (fscrypt_is_bounce_page(page)) {
-+				page = fscrypt_pagecache_page(page);
-+				fscrypt_free_bounce_page(ceph_wbc->pages[i]);
-+			}
+ #include "internal.h"
+@@ -27,6 +28,7 @@ struct regulator_irq {
+ 	int irq;
+ 	int retry_cnt;
+ 	struct delayed_work isr_work;
++	struct workqueue_struct *wq;
+ };
  
--			if (!page)
--				continue;
-+			if (atomic_long_dec_return(&fsc->writeback_count) <
-+			    CONGESTION_OFF_THRESH(fsc->mount_options->congestion_kb))
-+				fsc->write_congested = false;
+ /*
+@@ -145,12 +147,7 @@ static void regulator_notifier_isr_work(struct work_struct *work)
+ 	return;
  
- 			ceph_undo_wrbuffer_claim(inode, page_folio(page));
- 			redirty_page_for_writepage(wbc, page);
- 			unlock_page(page);
-+			put_page(page);
+ reschedule:
+-	if (!d->high_prio)
+-		mod_delayed_work(system_dfl_wq, &h->isr_work,
+-				 msecs_to_jiffies(tmo));
+-	else
+-		mod_delayed_work(system_highpri_wq, &h->isr_work,
+-				 msecs_to_jiffies(tmo));
++	mod_delayed_work(h->wq, &h->isr_work, msecs_to_jiffies(tmo));
+ }
+ 
+ static irqreturn_t regulator_notifier_isr(int irq, void *data)
+@@ -248,13 +245,8 @@ static irqreturn_t regulator_notifier_isr(int irq, void *data)
+ 	}
+ 
+ 	if (d->irq_off_ms) {
+-		if (!d->high_prio)
+-			schedule_delayed_work(&h->isr_work,
+-					      msecs_to_jiffies(d->irq_off_ms));
+-		else
+-			mod_delayed_work(system_highpri_wq,
+-					 &h->isr_work,
+-					 msecs_to_jiffies(d->irq_off_ms));
++		mod_delayed_work(h->wq, &h->isr_work,
++				 msecs_to_jiffies(d->irq_off_ms));
+ 	}
+ 
+ 	return IRQ_HANDLED;
+@@ -363,13 +355,25 @@ void *regulator_irq_helper(struct device *dev,
+ 
+ 	init_rdev_errors(h);
+ 
+-	if (h->desc.irq_off_ms)
++	if (h->desc.irq_off_ms) {
++		if (h->desc.high_prio) {
++			h->wq = alloc_workqueue("regulator_irq_highpri",
++						WQ_FREEZABLE | WQ_HIGHPRI, 0);
++			if (!h->wq)
++				return ERR_PTR(-ENOMEM);
++		} else {
++			h->wq = system_freezable_wq;
 +		}
 +
-+		if (ceph_wbc->from_pool) {
-+			mempool_free(ceph_wbc->pages, ceph_wb_pagevec_pool);
-+			ceph_wbc->from_pool = false;
-+		} else {
-+			kfree(ceph_wbc->pages);
- 		}
-+		ceph_wbc->pages = NULL;
-+		ceph_wbc->locked_pages = 0;
+ 		INIT_DELAYED_WORK(&h->isr_work, regulator_notifier_isr_work);
++	}
  
- 		ceph_osdc_put_request(req);
- 		return -EIO;
-@@ -1750,8 +1754,11 @@ static int ceph_writepages_start(struct address_space *mapping,
- 		}
+ 	ret = request_threaded_irq(h->irq, NULL, regulator_notifier_isr,
+ 				   IRQF_ONESHOT | irq_flags, h->desc.name, h);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to request IRQ %d\n", irq);
++		if (h->desc.irq_off_ms && h->desc.high_prio)
++			destroy_workqueue(h->wq);
  
- 		rc = ceph_submit_write(mapping, wbc, &ceph_wbc);
--		if (rc)
--			goto release_folios;
-+		if (rc) {
-+			/* the OSD client is being torn down, don't retry */
-+			folio_batch_release(&ceph_wbc.fbatch);
-+			goto dec_osd_stopping_blocker;
+ 		return ERR_PTR(ret);
+ 	}
+@@ -393,8 +397,11 @@ void regulator_irq_helper_cancel(void **handle)
+ 		struct regulator_irq *h = *handle;
+ 
+ 		free_irq(h->irq, h);
+-		if (h->desc.irq_off_ms)
++		if (h->desc.irq_off_ms) {
+ 			cancel_delayed_work_sync(&h->isr_work);
++			if (h->desc.high_prio)
++				destroy_workqueue(h->wq);
 +		}
  
- 		ceph_wbc.locked_pages = 0;
- 		ceph_wbc.strip_unit_end = 0;
+ 		h = NULL;
+ 	}
+@@ -441,4 +448,3 @@ int regulator_irq_map_event_simple(int irq, struct regulator_irq_data *rid,
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(regulator_irq_map_event_simple);
+-
 -- 
 2.53.0
 
