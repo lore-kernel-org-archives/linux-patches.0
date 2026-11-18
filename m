@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039324;
-	b=bq7zjlMIG72zbCgzdYLv0u595w/FR4OcohoBteIeObZhphnJL9NG5fRSewYrQ6EWTbEo
-	 MSmCcbvdyLqII7xW/sv32WzWH4VJcrShHTNzUum0WKq2FTBr5VE+ndDNz3cYqKzCAY+0W
-	 z15WUfVRo5okHnNN5uLg31Hl3vh4Y0voHtGAofp/MlbAHOBYPTjZbGZ2eLM5a0kCBisbK
-	 BngzjpjD3z+78jfQ1CdhCZYg4ji2YYEEISNvy1jSpu/qPIuMWkQBQBZ8hOihNVSFUnsIy
-	 PxKXZMuPBc2YT1MBK5foByds8egK7/mcByVLplGre6niv4O1X5WvkciG+73RDdi0/xA==
+	t=1795039327;
+	b=2eud1FhuR3Yn+qVxiGgkYP1CT1p3WdM0Tb8Ydc4wrzlEFFUdkVc6RtnEqvcjYAnpm8Fi
+	 FAv8yGr+7UAkJoAlDoFs2QGecEdhEyMOuY7hGRQYNTk8eDImVNfGcc9HYqrT+sZsDo9EL
+	 YChPPsSdji6NsuMJMnW7AV30hLtqg0taWBE1rTaIS+rcT1T9ImYoQBXV0xEDnpAi7flQ3
+	 m9deXCcrEkzFeuH4ud/UA4CxglWC3pE1KsPyoBHx70nUUiLBLr1y6dvQ0HBCkHIntF4bE
+	 aZkX0fgpRieUkuKxF71Y707TCe1oW5/7xM76frVzSRpEmkTZNTwU24OlkAV+RdH7BUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039324;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039327;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xNxzgwjewfuXOGt7XpUdTFCS6FAw5QdmEyt+WfkBqX8=;
-	b=EDZzKVtpi3y6/d5f6w8iH16nRkTE7QD9GUPaAZzriaybP0v8NCiEmH5lulwFzwe4Qwey
-	 5DcIIXK92fs3bNxQe6oACJ0qZt1VSIHPFHevvWe0Uegvixa+J9SOrOl6FenWHdX9RIXME
-	 /gzy14czxg79K1+gn17EltVL2S04aq7rhgC4nT3dXDorsG2eoja9RtuIZQXne0We8hcg+
-	 MOLeyOmnkStV1rY/gsbSyVkasF859DwjO8xA78ib1TEpyO7ynO7t+aRfgaRtreB8CUK/p
-	 fLfOCxoYbDauVQKWYPp0uf+U0k0ZcgKKqCx1vUk1J55xRc3pq2asoaoJXCmjQl+51sQ==
+	bh=VxWiA/IAQlLM+ToOa0Y00hbAP4NKk9I/VoVRwdPPfgg=;
+	b=O8IW2fkP+9T0lry2EmzpJKiXXiYn0WRpfHp4mFXo0HqhkU6NhvIzgWTftlMIkVu5z+H3
+	 dRgisZv4hma/APoq/79zswCyPh/MbK6i1FNld8Y9tTeiCHGs7q3gpi59YuBkUr9WEqGu6
+	 oVtQilZFu3wJfrJ69KbkMEp5WwPh/SdvN39NZNCL4CgbKUYvlA2O6qyT0jbA+oVIqZFl1
+	 zUY3UyqLFWlUiDv8Tf7uVXhp/XFs3im3pAHsnWkmjJaPL+5afjjU6l2hOOH6VJNjSmg/p
+	 18l1qGuQ61BrM2GiVSC+dnoIyvyZRye49Cq794jJqZt6pjJANzL6jaTvOvK9ndxGaHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gRBpaqfr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iQRzA/LZ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E4B606A320;
-	Wed, 18 Nov 2026 22:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5110D606A334;
+	Wed, 18 Nov 2026 22:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gRBpaqfr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948521F000C6;
-	Wed, 18 Nov 2026 22:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iQRzA/LZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA621F000C4;
+	Wed, 18 Nov 2026 22:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039324;
-	bh=xNxzgwjewfuXOGt7XpUdTFCS6FAw5QdmEyt+WfkBqX8=;
+	s=korg; t=1795039327;
+	bh=VxWiA/IAQlLM+ToOa0Y00hbAP4NKk9I/VoVRwdPPfgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gRBpaqfrdtunBQcbquIdGIp7+UJkcWuQTfOccMuaF1bfOG/DCO2s0jcCZkjq/FZKj
-	 U5gPUu7IjfAxMUYLaGiFHJkyqOdejo3fqMGnjAqPz5J3/Qdug5nsuGup0xxmTWcutf
-	 3kJXJzCNU/tVGrpFZqsqN7BCKxUv6Sl1nHYf0bOE=
+	b=iQRzA/LZjaXBuNKpgl2wwbcTNDVyNjg2pDYLwjJ21L3xkhRQNDKSV6kTK2dOmwMnE
+	 2bpQneYuJf6lzrw3hvNgE8lCgr7bxXUIlAYCqXjhPkYwpK08QS6qUIFyMVDOvq8II/
+	 zSharV6AKUvZq8JdSNdO5sK2tCx2nphdnusm8/fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2061/3318] spi: mtk-nor: fix runtime PM usage count leak in probe error path
-Date: Wed, 18 Nov 2026 15:44:43 +0100
-Message-ID: <20261118150423.898614048@linuxfoundation.org>
+	Marcel Hofmann <marcel.hofmann@ingenics-digital.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Peng Fan <peng.fan@nxp.com>
+Subject: [PATCH 6.6 2062/3318] remoteproc: imx_rproc: Allow mappings ending at region boundary
+Date: Wed, 18 Nov 2026 15:44:44 +0100
+Message-ID: <20261118150423.929948696@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,37 +69,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Marcel Hofmann <marcel.hofmann@ingenics-digital.com>
 
-[ Upstream commit 4cee1ed13e2687f1a9fec7dd50e31eb179506d75 ]
+[ Upstream commit 749eed0c7178c8d53ce4c9acdda4a545721c494b ]
 
-mtk_nor_probe() takes a runtime PM reference with
-pm_runtime_get_noresume() before registering the controller, but the
-error path never drops it.
+The address range checks in imx_rproc_da_to_sys() and
+imx_rproc_da_to_va() use a strict comparison for the exclusive end
+address of the requested range.
 
-Balance the get with pm_runtime_put_noidle() in the error path.
+As a result, a valid request that ends exactly at the end of an address
+translation or mapped memory region is rejected. For a region
+[start, start + size), a request [addr, addr + len) is contained when:
 
-Fixes: 3bfd9103c7af ("spi: spi-mtk-nor: Add power management support")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260904-mtk-nor-v1-1-cefdca098f83@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+    addr >= start && addr + len <= start + size
+
+This occurs when a loadable ELF segment fills an entire mapped memory
+region. This can be produced by a linker script that extends the
+resource table section to the end of its designated region:
+
+    .resource_table :
+    {
+      . = ALIGN(8);
+      KEEP(*(.resource_table)) /* Resource table */
+      . = ALIGN(8);
+      . = ORIGIN(m_rsc_tbl) + LENGTH(m_rsc_tbl);
+    } > m_rsc_tbl =0x00
+
+This produces a ELF program header like:
+
+    LOAD  0x010000 0xa4220000 0xa4220000 0x01000 0x01000 R   0x1000
+
+In this case, the segment size matches the mapped region size exactly,
+causing the address translation to fail with:
+
+    bad phdr da 0xa4220000 mem 0x1000
+
+Rework the upper-bound checks to allow ranges ending exactly at the region
+boundary while guarding against integer overflow.
+
+Fixes: a0ff4aa6f010 ("remoteproc: imx_rproc: add a NXP/Freescale imx_rproc driver")
+Signed-off-by: Marcel Hofmann <marcel.hofmann@ingenics-digital.com>
+Tested-by: Peng Fan <peng.fan@nxp.com>  #i.MX95-19x19-EVK
+Link: https://lore.kernel.org/r/20260827123136.438798-1-marcel@hofmania.de
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-mtk-nor.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/remoteproc/imx_rproc.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/spi/spi-mtk-nor.c b/drivers/spi/spi-mtk-nor.c
-index d20c3984f2a09..0d55bcee5261e 100644
---- a/drivers/spi/spi-mtk-nor.c
-+++ b/drivers/spi/spi-mtk-nor.c
-@@ -926,6 +926,7 @@ static int mtk_nor_probe(struct platform_device *pdev)
- 	return 0;
+diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
+index fda0e644f3106..9f24f8034c1eb 100644
+--- a/drivers/remoteproc/imx_rproc.c
++++ b/drivers/remoteproc/imx_rproc.c
+@@ -463,6 +463,7 @@ static int imx_rproc_da_to_sys(struct imx_rproc *priv, u64 da,
+ 	/* parse address translation table */
+ 	for (i = 0; i < dcfg->att_size; i++) {
+ 		const struct imx_rproc_att *att = &dcfg->att[i];
++		u64 offset;
  
- err_probe:
-+	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_set_suspended(&pdev->dev);
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 		/*
+ 		 * Ignore entries not belong to current core:
+@@ -475,9 +476,11 @@ static int imx_rproc_da_to_sys(struct imx_rproc *priv, u64 da,
+ 				continue;
+ 		}
+ 
+-		if (da >= att->da && da + len < att->da + att->size) {
+-			unsigned int offset = da - att->da;
++		if (da < att->da)
++			continue;
+ 
++		offset = da - att->da;
++		if (offset <= att->size && len <= att->size - offset) {
+ 			*sys = att->sa + offset;
+ 			if (is_iomem)
+ 				*is_iomem = att->flags & ATT_IOMEM;
+@@ -508,9 +511,14 @@ static void *imx_rproc_da_to_va(struct rproc *rproc, u64 da, size_t len, bool *i
+ 		return NULL;
+ 
+ 	for (i = 0; i < IMX_RPROC_MEM_MAX; i++) {
+-		if (sys >= priv->mem[i].sys_addr && sys + len <
+-		    priv->mem[i].sys_addr +  priv->mem[i].size) {
+-			unsigned int offset = sys - priv->mem[i].sys_addr;
++		u64 offset;
++
++		if (sys < priv->mem[i].sys_addr)
++			continue;
++
++		offset = sys - priv->mem[i].sys_addr;
++		if (offset <= priv->mem[i].size &&
++		    len <= priv->mem[i].size - offset) {
+ 			/* __force to make sparse happy with type conversion */
+ 			va = (__force void *)(priv->mem[i].cpu_addr + offset);
+ 			break;
 -- 
 2.53.0
 
