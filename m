@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062030;
-	b=yAAOwJaxF0zGTHutqOH40bANFwZ3/wpbmqehVd4MW7+P382bpnPmVF7lWiOO4ptypbJq
-	 ooCCyDNOXF55bTCVq0a1zblcbiillIlklpB/s1C+pkogrlY6ploQx/anGWD9CGOe7jSMx
-	 GYNxNCUMCz60xCqzG3pfzC6o5zrzHEpuLj2AE+k2wlWgFXRX7FAg81rrj1tNqA5XuayXS
-	 u1uPgXQx13LyWi6hrmvk4nOGALbpjjykjCTTj4ISx8V2up39hbrdvjKJptdV8PJEk4pdN
-	 OnSnEUEN8/LFA54n5HfiBQO5HUMm6Qylz2qyDjyzFtBO0BDzV9WR6tTRihdj2qWaFmg==
+	t=1795062032;
+	b=lr9XwgOoHri4Zln1keelyZZ1E4s+cVITG727zSUX6wSMab+WX+IPSN4fPtB13ETsgZWi
+	 tjYzl4+tKg6vHigmeXOsbiS+Kw8jblJgQOeLcFCucUMVvf60AGeEjh/81aZrZr/9JG5rJ
+	 IbVkYMdMI+e/0ZDZ1QKpNe1IAK5sbaZjfabFJZXdBJW+EXLn95OZDd1P6QjGOykYOH8k9
+	 sUlc+6Nycl1HiW0zK4oClJkJ6Ujw+O0yy+OA2e55prcrB1j7vGa1NN49p7zA5S7m9pJB8
+	 Boed1U9YOmWgYzUDF0UBYf3AQibrMBJkAG9+5fwaZeNxpD2c1I6CI7Xu3s3ctTeOVmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062030;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062032;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XBxOqFJR20iuZmSguZj9eBHGx46ljTT3eTVbbCHAhsU=;
-	b=A6Nu/HjzlaQnnNEW1s5/DM8wv6f6ddYJwAI2OrW98epYiyHe2QI08FkllM7UBjnDtrhG
-	 00xna7ykSeZ3AQYTWE4SxZQmhRMVatmqczXFAl703lmgEjJr3KRDrcW3Y/j1jPJtw95hy
-	 LzVYIiDd1TVFltyiAxEji/NNoUu8gmDlsBdBlBckPlHPI/SoDvAuody1BGIUv5Y5Imwpa
-	 iYU6FMgTemFmJ94JYFpTB3qnFSMB//shbDFeSd+TogGYTgfx1jVI829aR7KwQ9+5CGc1j
-	 kF62GhygXhlUuI1SgwF8eyJCbsgU2mfl1cSLtQCygxXCwsASxz8EXojqjfNibyEJ6Pw==
+	bh=/hAp7ztTfBTPkI1uE9szvJZOfp6C1RZvcxbz/m8AXeU=;
+	b=C1De1HjgA6CNeSMHnJuM+sb9fXDZdyEUNvPjzbj/xoSg1a9xVQtAZ+n/5qmTU1QVl+5f
+	 SuvbopHbGcUh+pCqxfjEANwkUgVCDLSOZ/zXGcaNswwv5Qex3O+syvjwHIaU1mDXeXbZR
+	 eTy/ZvsQk5hCOa+QVQxBaaBEhLnZNrK6tGKSujfG9bvgCYtrjiOP3dH4Gyh4p70Q66bxh
+	 xPv++5f8MQ1ZAp3H3eMrdIOBeaG87LiZpdnBj9+667ag+nQDY/sCJ3Q781NaLexSs+zE0
+	 ZKo57pWdwHNq2E6pIea1PeAelk7gG7B7U6k5b+a0G4rC46RVdiDBcEBKWL5xv0y4cYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ok0KADcz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gf4/nH+b";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9F0606A325;
-	Thu, 19 Nov 2026 04:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5867606A325;
+	Thu, 19 Nov 2026 04:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ok0KADcz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73CAA1F000C5;
-	Thu, 19 Nov 2026 04:20:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gf4/nH+b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD761F000C4;
+	Thu, 19 Nov 2026 04:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062030;
-	bh=XBxOqFJR20iuZmSguZj9eBHGx46ljTT3eTVbbCHAhsU=;
+	s=korg; t=1795062032;
+	bh=/hAp7ztTfBTPkI1uE9szvJZOfp6C1RZvcxbz/m8AXeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ok0KADcz17WI98xFwT+876axGH8sYf2rqZzgT5pSI6F+q2McPYeUGRsoXxUKOYLwc
-	 KvY8DYnLTVw2YogvY7MvKFEd2QcTNOCEXJvgNK8Rp3QW91ASL0tGr4fPIPB/zdEFKn
-	 53fP26innIVSDJs6wRmR3Ut5vgw1Cua8q8kDQKBg=
+	b=gf4/nH+bJZ36IVUg6DhcyoTKiJevIO6V/v2Ofk3gR3F2Ss/aDWuLbD9oYuFVpZMsd
+	 dAld6skFcwXeaDHLUxbKCDqVPUfns+ucLwFuVk0nRKRcVS2RwWsmBLKuOpJ0NYvlX7
+	 FyaRo5ChH3va9ztaMhsaufQVNL2a2aFrPFEy46qU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fuchs <fuchsfl@gmail.com>,
-	Adrian McMenamin <adrianmcmenamin@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Simon Polack <spolack+git@mailbox.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Wang Zhan <wang.zhan@smartx.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1763/1848] ALSA: sh: aica: Fix spu_memset() stride
-Date: Wed, 18 Nov 2026 16:03:21 +0100
-Message-ID: <20261118150033.235250190@linuxfoundation.org>
+Subject: [PATCH 5.10 1764/1848] net: fix frag_list leak in skb_segment_list() error path
+Date: Wed, 18 Nov 2026 16:03:22 +0100
+Message-ID: <20261118150033.275044809@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,45 +72,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fuchs <fuchsfl@gmail.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 0d01f90b07e877ef31f9959e9b0bc6bcca9b99df ]
+[ Upstream commit 546daf344420b5dce27eded3ad15be12628dd185 ]
 
-spu_memset() writes one 32-bit word per iteration, but advances the
-destination offset by only one byte. spu_reset() calls it with
-0x200000 / 4 words to clear the 2 MiB of sound RAM, so:
+skb_segment_list() detaches the frag_list from the head skb and moves
+its members one by one to the skb->next chain. On error, err_linearize
+frees that chain with kfree_skb_list(skb->next), relying on the members
+not yet processed to still be linked after the current one.
 
- - three out of four writel() calls target an unaligned address. The
-   SH4 can't do that. Each one traps and is emulated by the unaligned
-   access fixup. This call to spu_memset() causes 393216 unaligned
-   accesses, visible in /proc/cpu/alignment.
- - the clear covered only about 512 KiB of sound RAM, not 2 MiB.
+This does not hold when the current member was shared: it is replaced
+by skb_clone(), and __skb_clone() clears ->next. If __skb_linearize()
+then fails on that clone, the remaining members are no longer reachable
+from skb->next nor from skb_shinfo(skb)->frag_list, and they leak.
 
-Advance the offset by the size of the written word, to clear the full
-sound RAM using aligned writes.
+The skb_shared() error branch already relinks nskb->next to list_skb
+before jumping to err_linearize. Do it unconditionally right after nskb
+is added to the chain, so every error exit sees the remaining members.
+On the last member list_skb is NULL, which still terminates the chain.
 
-Fixes: 198de43d758c ("[ALSA] Add ALSA support for the SEGA Dreamcast PCM device")
-Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
-Acked-by: Adrian McMenamin <adrianmcmenamin@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261022163241.2504922-1-fuchsfl@gmail.com
+Fixes: 53475c5dd856 ("net: fix use-after-free when UDP GRO with shared fraglist")
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Cc: Simon Polack <spolack+git@mailbox.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Wang Zhan <wang.zhan@smartx.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20261021161858.761205-1-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/sh/aica.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/skbuff.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/sound/sh/aica.c b/sound/sh/aica.c
-index 2d59e3907fcfb..02df305e8664a 100644
---- a/sound/sh/aica.c
-+++ b/sound/sh/aica.c
-@@ -96,7 +96,7 @@ static void spu_memset(u32 toi, u32 what, int length)
- 		local_irq_save(flags);
- 		writel(what, toi + SPU_MEMORY_BASE);
- 		local_irq_restore(flags);
--		toi++;
-+		toi += sizeof(what);
- 	}
- }
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 394eef0c7c4a1..207c4d85fad78 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -3838,10 +3838,13 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
+ 		else
+ 			tail->next = nskb;
+ 
+-		if (unlikely(err)) {
+-			nskb->next = list_skb;
++		/* nskb may be a clone with a NULL ->next: keep the remaining
++		 * members linked so that err_linearize frees them.
++		 */
++		nskb->next = list_skb;
++
++		if (unlikely(err))
+ 			goto err_linearize;
+-		}
+ 
+ 		tail = nskb;
  
 -- 
 2.53.0
