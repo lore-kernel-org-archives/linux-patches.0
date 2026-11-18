@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026686;
-	b=cHrvhgVBCGZB3LOE2aTM1hMIq0e0wWs5AP++rVq0vco9oyS4UrA+N1YsRbqEPKsQiaeS
-	 1Cpsp53OYpeZTGTmM4MDJ5wHV1lGZdApLhQMpAGULQWwT65N3T0nADLlOhGPH0bHq5dAi
-	 /uzjvXkRqGUscMH4rjUSIvcKsuI4DokYzvcSlg6N9T1aQowx21K4U/1x8OkcR+9foltKB
-	 McpXCkkQ9F4PyZwcE0c+JSkgab/tyMe2vbTELHZUiFoR8/0zc5r9BFp3H6+qHZraL13bh
-	 b+JUAUz2dBSeDTMZCb0exhO5cQH2w5I4Zzmc1ezcScDyIKBwMnGBgOp+743cRO8NDgA==
+	t=1795026689;
+	b=JhZ+mjnX27JQ9G7uK4JwEYWwMaYTDGAuIkgvvNnR1EbRi2vQ9z/lA+rXk1y1al5+lmVQ
+	 IF4UfCp79zztkCdoVMRKPoWKG0hpDjY0QwOOD7A0vrYFg0yvNIvMayE+tvI9kd7iSnzW8
+	 SwRHAF2sXlAJFa0uvMmUnOoSHAJH1lm5FLFUY1LZOn5rJ2sP2y8zKta9paRbz46BdpG1M
+	 SgcwV/BzGT1+PopiBrqXQNQ4ywUBhV5c2PTf0WyEm6pJ8JLNzSaR9T+vaLU16ihmYA2LA
+	 Jso+gsjqKNfaIuJQwMe3tBfmieWih9oysVFdDd18uQzAxAtaHqjolBgB5ORdRRDPlFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026686;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026689;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8I90pFx1GyAujWjIH/yvyQs5R9wq0F9w6tsIeBwimeE=;
-	b=vN5T3NnBuhcpDLESLUeMQ3dvaJu7dPx4UZoZ2YH69zrMPAA5f2Eq5HsZcOzip51Mxio8
-	 fZ/eXANAiivLbxtPrWd2GTXxDhRckj+1a9jd2Hbq4ANGLsYon2qLWp7fXnpymhztLYPNd
-	 IqkQPdJ1olOPrfz+XIoZ9XvdMkJrV0wnXKi5wtAH9i5uPwzeCjTbIrIi98j5BoXQsevJz
-	 udNkLbtHc2N3AfO2s5047jSXEL0o+SDoIRqsDx5SbU6EMBJjDyaoJHtDuYxLjlgamFmre
-	 CFAIY3nOI/pBDk3vmIMhHc0qibfH0rqPasuU/QzyshbFoojbWb8MdeygSxpTSIorrFw==
+	bh=veEgj7+3M8bvJSm5QRcaI0S6FCg2/vqdZ89rYiFvuGY=;
+	b=2rcfDzzXIxcCfRPBkaJZkyiDHx6qtkXVLi6NlyCXqr+C6oJcO5TVZwChdQVGN0I7kCGt
+	 xN7IZrt2H09X/AIHMmAJRHHPSVXtAN0uJk+CFryXQKI+tATr4uKxxD5VDqcDW5xDnoCha
+	 msPuROB/M4CBQzij6Sc/2M1fWO31SraToHjcDHcX5GwvXvDp6IqbCLw5H51imIoSUFWT8
+	 xUsiXIw0M+jPzix59boxyK9pm3IUJhueSxp5dAZ4pJ9CFebjfzChCSqhnuVSlQgGsMIjP
+	 JU624KcEnH5PHKHugk5koY+NUY49WDA6IGnWCx43pR85OG+2vjfbT1UIC2suU2nLYpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q3ec8aAy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qoFpMpK2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B0B606A320;
-	Wed, 18 Nov 2026 18:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8893A606A325;
+	Wed, 18 Nov 2026 18:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q3ec8aAy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3AB1F000C5;
-	Wed, 18 Nov 2026 18:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qoFpMpK2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0D611F000C4;
+	Wed, 18 Nov 2026 18:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026686;
-	bh=8I90pFx1GyAujWjIH/yvyQs5R9wq0F9w6tsIeBwimeE=;
+	s=korg; t=1795026689;
+	bh=veEgj7+3M8bvJSm5QRcaI0S6FCg2/vqdZ89rYiFvuGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q3ec8aAyzB+QpkXXal0oGmnnYPbgtCHgKjns3cDMF8DVGgLOO88MiFHBGSXoahiVA
-	 XJDb0etjRpAN/62y2dgMZe34VdshQg+XAKhTk0SkEXVh13S5SlyhVe64FcSZAYXVt+
-	 OThAXjQf4FbjPzuJihB7Djo+iR4fCvlUnnKsRFpA=
+	b=qoFpMpK2JKlvq0u+m8UC1CtFDTcC1Rpdlb9QHpAd7hCrXJBKEpBzbI5EdESEsat8u
+	 fYwbPS9lSXMGzm4qwLmYAaQ31XXxvL/zB0SeuGQEqmxYhzxvsdNx20uKHjm7f2Ymei
+	 +N6yEEgGurXWk29pk7MvgDAe6wowWmKcIa+ZCAFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lu <chris.lu@mediatek.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	Eulgyu Kim <eulgyukim@snu.ac.kr>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1524/2151] Bluetooth: btmtksdio: Pass the hardware device id to mt79xx_setup()
-Date: Wed, 18 Nov 2026 15:54:19 +0100
-Message-ID: <20261118150217.350839557@linuxfoundation.org>
+Subject: [PATCH 6.18 1525/2151] Bluetooth: L2CAP: take chan->lock for l2cap_chan_add/ready/del
+Date: Wed, 18 Nov 2026 15:54:20 +0100
+Message-ID: <20261118150217.383772071@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,69 +70,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Lu <chris.lu@mediatek.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit a2bb734c368766a2499ed00590ea838cac13c76e ]
+[ Upstream commit 385c0829e09e7a6380ae67998ac6ef6f4dfd5303 ]
 
-mt79xx_setup() passes a hardcoded 0 to btmtk_setup_firmware_79xx(),
-discarding the device id that btmtksdio_setup() has just read from register
-0x70010200. That argument only gates the section filtering for MT6639,
-which has no SDIO interface, so this is a no-op on supported hardware and
-carries no Fixes: tag.
+chan->lock must be held for __l2cap_chan_add as eg. calls to
+l2cap_chan_close assume chan->conn writes are guarded by it.
 
-Pass the value that has already been read, matching the USB path. Declare
-dev_id as u32 while at it, since that is what btmtksdio_mtk_reg_read()
-writes through the pointer.
+It must be held for l2cap_chan_del() due to
+l2cap_sock.c:l2cap_chan_conn, l2cap_monitor_timeout, etc.
 
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
-Assisted-by: Claude:claude-opus-5
+Similarly it should be held for l2cap_ops::ready (assumed in 6lowpan.c).
+Also teardown usually has chan->lock held, it should always have it held
+to have the same locking context.
+
+The lock is not correctly held by l2cap_core in several places.
+
+Add the missing locks for l2cap_chan_del/add/ready(), except in
+l2cap_ecred_rsp_defer() which needs separate fix as it needs lock
+nesting.
+
+Fixes: 6fef032af009 ("Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_new_connection_cb()")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmtksdio.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/net/bluetooth/l2cap.h |  3 ++-
+ net/bluetooth/l2cap_core.c    | 15 +++++++++++++++
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
-index 70f7fe7ba2930..029cbc7e35071 100644
---- a/drivers/bluetooth/btmtksdio.c
-+++ b/drivers/bluetooth/btmtksdio.c
-@@ -892,14 +892,14 @@ static int mt76xx_setup(struct hci_dev *hdev, const char *fwname)
- 	return 0;
+diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
+index 2f7c367d68ce4..d56db97d45c5d 100644
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -974,7 +974,8 @@ int l2cap_chan_check_security(struct l2cap_chan *chan, bool initiator);
+ void l2cap_chan_set_defaults(struct l2cap_chan *chan, struct l2cap_chan *pchan);
+ int l2cap_ertm_init(struct l2cap_chan *chan);
+ void l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan);
+-void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan);
++void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
++	__must_hold(&chan->lock);
+ typedef void (*l2cap_chan_func_t)(struct l2cap_chan *chan, void *data);
+ void l2cap_chan_list(struct l2cap_conn *conn, l2cap_chan_func_t func,
+ 		     void *data);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index d648d57299541..3655d5e1d03c3 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -706,7 +706,9 @@ void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
+ void l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
+ {
+ 	mutex_lock(&conn->lock);
++	l2cap_chan_lock(chan);
+ 	__l2cap_chan_add(conn, chan);
++	l2cap_chan_unlock(chan);
+ 	mutex_unlock(&conn->lock);
  }
  
--static int mt79xx_setup(struct hci_dev *hdev, const char *fwname)
-+static int mt79xx_setup(struct hci_dev *hdev, const char *fwname, u32 dev_id)
- {
- 	struct btmtksdio_dev *bdev = hci_get_drvdata(hdev);
- 	struct btmtk_hci_wmt_params wmt_params;
- 	u8 param = 0x1;
- 	int err;
+@@ -4135,6 +4137,8 @@ static struct l2cap_chan *l2cap_new_connection(struct l2cap_conn *conn,
+ 	if (!chan)
+ 		return NULL;
  
--	err = btmtk_setup_firmware_79xx(hdev, fwname, mtk_hci_wmt_sync, 0);
-+	err = btmtk_setup_firmware_79xx(hdev, fwname, mtk_hci_wmt_sync, dev_id);
- 	if (err < 0) {
- 		bt_dev_err(hdev, "Failed to setup 79xx firmware (%d)", err);
- 		return err;
-@@ -1112,8 +1112,8 @@ static int btmtksdio_setup(struct hci_dev *hdev)
- 	ktime_t calltime, delta, rettime;
- 	unsigned long long duration;
- 	char fwname[64];
--	int err, dev_id;
--	u32 fw_version = 0, val;
-+	int err;
-+	u32 dev_id, fw_version = 0, val;
++	l2cap_chan_lock(chan);
++
+ 	l2cap_chan_set_defaults(chan, pchan);
+ 	chan->ops = pchan->ops;
  
- 	calltime = ktime_get();
- 	set_bit(BTMTKSDIO_HW_TX_READY, &bdev->tx_state);
-@@ -1155,7 +1155,7 @@ static int btmtksdio_setup(struct hci_dev *hdev)
- 		btmtk_fw_get_filename(fwname, sizeof(fwname), dev_id,
- 				      fw_version, 0);
+@@ -4143,10 +4147,13 @@ static struct l2cap_chan *l2cap_new_connection(struct l2cap_conn *conn,
+ 	if (pchan->ops->new_connection &&
+ 	    pchan->ops->new_connection(pchan, chan) < 0) {
+ 		l2cap_chan_del(chan, 0);
++		l2cap_chan_unlock(chan);
+ 		l2cap_chan_put(chan);
+ 		return NULL;
+ 	}
  
--		err = mt79xx_setup(hdev, fwname);
-+		err = mt79xx_setup(hdev, fwname, dev_id);
- 		if (err < 0)
- 			return err;
++	l2cap_chan_unlock(chan);
++
+ 	return chan;
+ }
  
+@@ -5137,6 +5144,8 @@ static int l2cap_le_connect_req(struct l2cap_conn *conn,
+ 		goto response_unlock;
+ 	}
+ 
++	l2cap_chan_lock(chan);
++
+ 	bacpy(&chan->src, &conn->hcon->src);
+ 	bacpy(&chan->dst, &conn->hcon->dst);
+ 	chan->src_type = bdaddr_src_type(conn->hcon);
+@@ -5170,6 +5179,8 @@ static int l2cap_le_connect_req(struct l2cap_conn *conn,
+ 		result = L2CAP_CR_LE_SUCCESS;
+ 	}
+ 
++	l2cap_chan_unlock(chan);
++
+ response_unlock:
+ 	l2cap_chan_unlock(pchan);
+ 	l2cap_chan_put(pchan);
+@@ -5360,6 +5371,8 @@ static inline int l2cap_ecred_conn_req(struct l2cap_conn *conn,
+ 			continue;
+ 		}
+ 
++		l2cap_chan_lock(chan);
++
+ 		bacpy(&chan->src, &conn->hcon->src);
+ 		bacpy(&chan->dst, &conn->hcon->dst);
+ 		chan->src_type = bdaddr_src_type(conn->hcon);
+@@ -5392,6 +5405,8 @@ static inline int l2cap_ecred_conn_req(struct l2cap_conn *conn,
+ 		} else {
+ 			l2cap_chan_ready(chan);
+ 		}
++
++		l2cap_chan_unlock(chan);
+ 	}
+ 
+ unlock:
 -- 
 2.53.0
 
