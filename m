@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015543;
-	b=VZEdcCx/Z0hY801LcSyQ1gx+VclVGbh3Me+QHLAkFDenIOHzTorXHH6ACAPHX1WtZ19l
-	 6vQqSfW+b0Yhxi1vJdNTWjtxwpQe+Q7RouQABcNkrXLOIHue2uWQg7viJMJvotdaJeu0F
-	 ClxQOI3YjO8jueH0tpzvn5XTJX4zpPL8Xx9TcUHa7HDnWvZeYs10MCO6nISxpd58b8vPZ
-	 qyNu5lEC7QSJnGp+TdkylCyUOJy/jjrKGBh3ia+lvIT6HIhi0GDMP6rHNRoGdlpxWIPtM
-	 7BjnoLalCU+1PwP4UrueB3MDedNRI0z6Er1rlw+OeVuzU/GAmlVEDVJ7TIjk9+tEchg==
+	t=1795015546;
+	b=nHx8gXFqh/jn0Hu01XO9G8+LcYjgCpmsf8cZTqnB1RJpQduqtkAoJLuiCjcOJU8rSA2p
+	 ZNLjJxXEQ9mwLwTpC7XafOgs6fFjZ9gVxpNXhm9Gy6y1+vkJvJwocmsj5WElGqUqp1Bor
+	 oi+y5nUlhnGKn/w5bc5ixbqnH84K5d2Ew+DP5bkdnrhKgWeuIb+EB8+vSVk5nX/6cZHkU
+	 DWJOz49OwPQkF/USC0kE07Jr8FlIFN7AcQHDSvUca88ZvTd2KXgeTpDctmkW8gFhjAHY3
+	 YuLtZg+Hbw7hiUTIQ3JlMPbsU4EX9xdj5nSTv9tYmGoccjF5PvykzKVPMOZMfPhioaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015543;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015546;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ks14c164YDKIdmZCHDpEimoQBq3N/Lkn69MaKmXV6Xk=;
-	b=2oMrai/Z3gI3S6rx8/Ehu7dLXG2lgIrZcvLR7yIhYoRmeBpBW9Cy/xO1R6+19DwzzaP2
-	 R6iCld8G27StXLiFsvG9w5nyXfCzB7zfmdPn2v8blweT6DGEUwyfBBgWgjFIelj07ipyQ
-	 sVQXhWSHIa2LfJXC7PT8Fwj2GvyW1lZePRwEZlbgZxcX38577bUCXiHPi0rYIcN85ks6x
-	 tBsPKNJWke+KpqAP9e0BduuKpbnj4K5LcfT+xhpv8HbauAgS7YG2A0Qto1hB3TFJFpjFN
-	 qM+wxMAtNXpQFBCZtnueXjGri4MsIjW6rTGeoHFH6iFB+UOmEYRdLV84rsi7qFcgl2g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=MCAFR1KRf1E3hGf8ZgT633xKOYZSZ98pI1niC1Wv9v4=;
+	b=1HV+IVckadMUH11zLXXd+WLHP1pgTp6ZShRksaHjy7rE1ATWI1NR2F2vH2B18wfPGSBv
+	 W4s5zddI8Vu0XaaiGMCNr2o/T6TF0uDE1kPYDyb7WKta9oAV9yEz579JWMQYz0mZQZIHy
+	 PXqCzvGQU7Yi7xDGkO4H49krRwaeyy9xLN35xyeM588lNfOjSH/XOaLcDY8mn7dU1TWHn
+	 BA3MuVTeMoTt28YnYp8/oIH0GF+rhtLv34FumMhy6h9qXC4RPnleSLtm+HyVhQ4speLPF
+	 PTnFMeBovlXeNvs6Gq/8mCJxspFP8+Zmwd1hq0gPSIaexelsGTusErwL1PtilFbAzKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2JrIKS0A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cNS7DYhN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7D8606A31C;
-	Wed, 18 Nov 2026 15:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54368606A31C;
+	Wed, 18 Nov 2026 15:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2JrIKS0A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7191F000C4;
-	Wed, 18 Nov 2026 15:25:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cNS7DYhN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE111F000C4;
+	Wed, 18 Nov 2026 15:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015543;
-	bh=ks14c164YDKIdmZCHDpEimoQBq3N/Lkn69MaKmXV6Xk=;
+	s=korg; t=1795015546;
+	bh=MCAFR1KRf1E3hGf8ZgT633xKOYZSZ98pI1niC1Wv9v4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2JrIKS0AcjTqU4j5+8x0fOMkUlFGtj+why59D7PDaxdhSFCvGJfEFDDscv0ZW12zM
-	 EpjW7kTpwIbR3Ylu0aoWRHngyXHOG5uKXV62ayDGt4qjJOaUqKKuWdj121JSZVC5+Q
-	 VCUJekuAQZ2ZfyGtbJ515K78ktj7z4DobRCUjsyw=
+	b=cNS7DYhNGGKIoEJijWdLEPAlB4LvA5K9XHb9kYy/9bfN9wtZrcb1z3nV2VMNi/JDB
+	 dSaGKQY4UlmuoeuUKPUulivvUrFnE0AxH6EKIqhA1kWl4uFuOo8reaYRN78v7IaFv2
+	 k27EQRyOd8mUpzswnTrZNPhJK0wzxAacpZcewBJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Gerard Salvatella <gerard.salvatella@siemens.com>,
+	Lukas Stockmann <lukas.stockmann@siemens.com>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Pouiller?= <jerome.pouiller@silabs.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0204/2651] regulator: pf1550: fix division by zero in the ramp rate selection
-Date: Wed, 18 Nov 2026 15:24:04 +0100
-Message-ID: <20261118150255.206789338@linuxfoundation.org>
+Subject: [PATCH 7.3 0213/2651] wifi: wfx: fix possible device hang during init
+Date: Wed, 18 Nov 2026 15:24:13 +0100
+Message-ID: <20261118150255.541679348@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,83 +65,191 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Jérôme Pouiller <jerome.pouiller@silabs.com>
 
-[ Upstream commit f0c54cc56a9a21047b1afa209baea8ea931f2e92 ]
+[ Upstream commit 102f54dc47be198e9310b18d41305a78d70a0796 ]
 
-set_machine_constraints() calls the set_ramp_delay() op when either
-constraints->ramp_delay or constraints->ramp_disable is set. The
-regulator binding documents regulator-ramp-delay = <0> as the way to
-disable ramp control, and of_get_regulation_constraints() turns that
-into ramp_disable = true while leaving ramp_delay at 0, so the op is
-called with a ramp_delay of 0. The range check rejects negative values
-and values above 6250 but not zero, and the value is then used as a
-divisor.
+The WFxxx device provides an SDIO interface. In addition to the usual
+in-band SDIO IRQ, the device also supports out-of-band IRQ line. OOB IRQ
+requires a specific initialization described in commit f00dc1d789e1c
+("staging: wfx: poll IRQ during init"):
 
-The mapping is also wrong for the values that do pass the check. The
-hardware offers two rates, 6250 uV/us and 3125 uV/us, selected by
-SWx_DVSSPEED in SWx_CTRL1. Dividing 6250 by the requested rate and
-taking bit 1 of the quotient does not map monotonically onto them: a
-request for 1500 uV/us selects 6250 uV/us, while a request for the
-faster 2000 uV/us selects 3125 uV/us.
+    When the chip starts in SDIO mode, the external IRQ (aka Out-Of-Band
+    IRQ) cannot be used before to configure it. Therefore, the first
+    exchanges with the chip have to be done without the OOB IRQ.
 
-Replace the division with a direct mapping onto the two supported
-rates. Requests at or below 3125 uV/us get the slower rate and anything
-above it gets the faster one. A ramp_delay of 0 asks for ramp control
-to be disabled, which this hardware cannot do, so it gets the fastest
-rate; pfuze100 handles the disabled case the same way.
+    This patch allow to poll the data until the OOB IRQ is correctly
+    setup. In order to keep the code simpler, this patch also poll data
+    even if OOB IRQ is not used.
 
-Fixes: 7320d41c29bb ("regulator: pf1550: Add support for regulator")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Link: https://patch.msgid.link/20260903082010.4024603-1-donggeunyoo.kernel@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Commit 57aa557f110d9 ("staging: wfx: introduce a way to poll IRQ")
+announce some limitation about the data polling mechanism:
+
+    This function [wfx_bh_poll_irq()] must used with care: if an IRQ
+    fires while the host reads control register, the IRQ can be lost.
+
+However, with last analysis, it seems it does not only impact the IRQ.
+When this condition happen the hardware is lost and won't reply the next
+commands. The only way to recover the error is to pull the reset pin and
+bind the device again.
+
+Currently wfx_bh_poll_irq() is only used during the two first exchanges
+with the hardware. Therefore, it has been reported to only happen after
+a few hours of bind/rebind in a loop. This explain why it has not been
+reported before.
+
+Fortunately, wfx_bh_poll_irq() is only required for OOB IRQ, which is
+probably very marginal. The In-Band IRQ case also uses this function,
+but only to simplify the code.
+
+This patch limits the use of wfx_bh_poll_irq() to the OOB IRQ. The bus
+driver now tells wfx_probe() whether polling is necessary. When it is
+not (in-band SDIO IRQ and SPI), the IRQ is subscribed before the first
+exchange with the device and wfx_bh_poll_irq() is never called. When it
+is (SDIO with OOB IRQ), the behavior is unchanged: the control register
+is polled until the PDS file has configured the IRQ line.
+
+To conclude, In-Band users are now safe. Users of OOB IRQ will be still
+impacted by the bug, but there is nothing we can do (and nobody
+complained during the last 6 years).
+
+Fixes: f00dc1d789e1c ("staging: wfx: poll IRQ during init")
+Reported-by: Gerard Salvatella <gerard.salvatella@siemens.com>
+Reported-by: Lukas Stockmann <lukas.stockmann@siemens.com>
+Signed-off-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Tested-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://patch.msgid.link/20260901083548.113131-2-jerome.pouiller@silabs.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/pf1550-regulator.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/net/wireless/silabs/wfx/bh.c       |  6 ++--
+ drivers/net/wireless/silabs/wfx/bus_sdio.c |  1 +
+ drivers/net/wireless/silabs/wfx/main.c     | 34 ++++++++++++++--------
+ 3 files changed, 26 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/regulator/pf1550-regulator.c b/drivers/regulator/pf1550-regulator.c
-index ceee553a84b23..84f8b187a91bf 100644
---- a/drivers/regulator/pf1550-regulator.c
-+++ b/drivers/regulator/pf1550-regulator.c
-@@ -49,17 +49,26 @@ static const int pf1550_ldo13_volts[] = {
- static int pf1550_set_ramp_delay(struct regulator_dev *rdev, int ramp_delay)
+diff --git a/drivers/net/wireless/silabs/wfx/bh.c b/drivers/net/wireless/silabs/wfx/bh.c
+index 21dfdcf9cc273..0071659bc9c98 100644
+--- a/drivers/net/wireless/silabs/wfx/bh.c
++++ b/drivers/net/wireless/silabs/wfx/bh.c
+@@ -284,10 +284,10 @@ void wfx_bh_request_tx(struct wfx_dev *wdev)
+ }
+ 
+ /* If IRQ is not available, this function allow to manually poll the control register and simulate
+- * an IRQ ahen an event happened.
++ * an IRQ when an event happened.
+  *
+- * Note that the device has a bug: If an IRQ raise while host read control register, the IRQ is
+- * lost. So, use this function carefully (only duing device initialisation).
++ * Note that the device has a bug: If an IRQ raise while host read control register, the device is
++ * lost. Unfortunately, this is the only way to initialize the SDIO with out-of-band IRQ.
+  */
+ void wfx_bh_poll_irq(struct wfx_dev *wdev)
  {
- 	int id = rdev_get_id(rdev);
--	unsigned int ramp_bits = 0;
-+	unsigned int ramp_bits;
- 	int ret;
+diff --git a/drivers/net/wireless/silabs/wfx/bus_sdio.c b/drivers/net/wireless/silabs/wfx/bus_sdio.c
+index ab0793b9908f4..1ca2cc262feb2 100644
+--- a/drivers/net/wireless/silabs/wfx/bus_sdio.c
++++ b/drivers/net/wireless/silabs/wfx/bus_sdio.c
+@@ -279,6 +279,7 @@ static int wfx_sdio_probe(struct sdio_func *func, const struct sdio_device_id *i
+ 		goto sdio_release;
+ 	}
  
- 	if (id > PF1550_VREFDDR)
- 		return -EACCES;
++	bus->core->poll_irq = !!bus->of_irq;
+ 	ret = wfx_probe(bus->core);
+ 	if (ret)
+ 		goto sdio_release;
+diff --git a/drivers/net/wireless/silabs/wfx/main.c b/drivers/net/wireless/silabs/wfx/main.c
+index dda36e41eed13..4e99fe7e5bb78 100644
+--- a/drivers/net/wireless/silabs/wfx/main.c
++++ b/drivers/net/wireless/silabs/wfx/main.c
+@@ -362,7 +362,6 @@ int wfx_probe(struct wfx_dev *wdev)
+ 	 */
+ 	gpio_saved = wdev->pdata.gpio_wakeup;
+ 	wdev->pdata.gpio_wakeup = NULL;
+-	wdev->poll_irq = true;
  
--	if (ramp_delay < 0 || ramp_delay > 6250)
-+	switch (ramp_delay) {
-+	case 0:
-+		/* Ramp control is disabled, so use the fastest rate. */
-+		ramp_bits = 0;
-+		break;
-+	case 1 ... 3125:
-+		ramp_bits = 1;
-+		break;
-+	case 3126 ... 6250:
-+		ramp_bits = 0;
-+		break;
-+	default:
- 		return -EINVAL;
--
--	ramp_delay = 6250 / ramp_delay;
--	ramp_bits = ramp_delay >> 1;
+ 	wdev->bh_wq = alloc_workqueue("wfx_bh_wq", WQ_HIGHPRI | WQ_PERCPU, 0);
+ 	if (!wdev->bh_wq)
+@@ -370,16 +369,24 @@ int wfx_probe(struct wfx_dev *wdev)
+ 
+ 	wfx_bh_register(wdev);
+ 
++	if (!wdev->poll_irq) {
++		err = wdev->hwbus_ops->irq_subscribe(wdev->hwbus_priv);
++		if (err)
++			goto bh_unregister;
++	}
++
+ 	err = wfx_init_device(wdev);
+ 	if (err)
+-		goto bh_unregister;
++		goto irq_unsubscribe;
++
++	if (wdev->poll_irq)
++		wfx_bh_poll_irq(wdev);
+ 
+-	wfx_bh_poll_irq(wdev);
+ 	err = wait_for_completion_timeout(&wdev->firmware_ready, 1 * HZ);
+ 	if (err == 0) {
+ 		dev_err(wdev->dev, "timeout while waiting for startup indication\n");
+ 		err = -ETIMEDOUT;
+-		goto bh_unregister;
++		goto irq_unsubscribe;
+ 	}
+ 
+ 	/* FIXME: fill wiphy::hw_version */
+@@ -399,12 +406,12 @@ int wfx_probe(struct wfx_dev *wdev)
+ 		dev_err(wdev->dev, "unsupported firmware API version (expect 1 while firmware returns %d)\n",
+ 			wdev->hw_caps.api_version_major);
+ 		err = -EOPNOTSUPP;
+-		goto bh_unregister;
++		goto irq_unsubscribe;
+ 	}
+ 
+ 	if (wdev->hw_caps.link_mode == SEC_LINK_ENFORCED) {
+ 		dev_err(wdev->dev, "chip require secure_link, but can't negotiate it\n");
+-		goto bh_unregister;
++		goto irq_unsubscribe;
+ 	}
+ 
+ 	if (wdev->hw_caps.region_sel_mode) {
+@@ -420,12 +427,14 @@ int wfx_probe(struct wfx_dev *wdev)
+ 	dev_dbg(wdev->dev, "sending configuration file %s\n", wdev->pdata.file_pds);
+ 	err = wfx_send_pdata_pds(wdev);
+ 	if (err < 0 && err != -ENOENT)
+-		goto bh_unregister;
++		goto irq_unsubscribe;
+ 
+-	wdev->poll_irq = false;
+-	err = wdev->hwbus_ops->irq_subscribe(wdev->hwbus_priv);
+-	if (err)
+-		goto bh_unregister;
++	if (wdev->poll_irq) {
++		err = wdev->hwbus_ops->irq_subscribe(wdev->hwbus_priv);
++		if (err)
++			goto bh_unregister;
++		wdev->poll_irq = false;
 +	}
  
- 	ret = regmap_update_bits(rdev->regmap, rdev->desc->vsel_reg + 4, 0x10,
- 				 ramp_bits << 4);
+ 	err = wfx_hif_use_multi_tx_conf(wdev, true);
+ 	if (err)
+@@ -474,7 +483,8 @@ int wfx_probe(struct wfx_dev *wdev)
+ ieee80211_unregister:
+ 	ieee80211_unregister_hw(wdev->hw);
+ irq_unsubscribe:
+-	wdev->hwbus_ops->irq_unsubscribe(wdev->hwbus_priv);
++	if (!wdev->poll_irq)
++		wdev->hwbus_ops->irq_unsubscribe(wdev->hwbus_priv);
+ bh_unregister:
+ 	wfx_bh_unregister(wdev);
+ 	destroy_workqueue(wdev->bh_wq);
 -- 
 2.53.0
 
