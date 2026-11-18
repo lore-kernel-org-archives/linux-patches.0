@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054500;
-	b=pMQ2XVTUZya8SHqePcrp7VhujsZ/uOqet44a1UBGqFr8i7DkHLR6U7DmWpe9NulF+T8T
-	 dqoC8cmWPdX6Xi54MHrJiMFZcYwD57XmYnePkyc1SGGFUfLAQsCimqgQHgHnVBL9jbAUW
-	 6mGDvZzROs7oM3VV80RsZZmZUlVdCgFxnurqfRU4yfgEDDzUnicoSlXws6RxfIEUE2m0v
-	 fYLI5ibATKHmbDY78P3VVcP1jBSrIpAOtEY5rz3N4tKJtWnQOom7sP+zS8nQ7ULCJbxgp
-	 TqAOzr4WBCuCmJM/iMMr+QxA2SSy8GAACuA9LFc6EA/GVg0uEwuxYRW2BnglmucVn6A==
+	t=1795054503;
+	b=stSU6X9Algod8WrIcg1IuZznPwvKGxaC59VdB0SVd+zq5mY3VXxQvsOdLKsUx+qxkB/7
+	 FBiUiCyUoO+FyDxmMx4LeKBeeOXNaVLKBRBVACDPhG1kD5G7rSh3QEeqXLU9Fb3PyDBpT
+	 Wi726vGjIEMnLn09zqjHwV513MTq1hpzqiAua8zap0for/2MgNGgibwqd4mw3C+paWOz6
+	 A6lS0jtvCR1jqSG6xoLrqklJKOPRmdp7p2EuiVm5aNz+PKuFahTXFRRADkHb/OQ7+h2Rj
+	 M9vSxh/9ibH4vzLK4VB2I8JHEGy2dz2HysInyStW2pPmvHesTXXOveuV++oU1Kb6Siw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054500;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054503;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yYLZrhPVByHh7iHY+MIdeaSJLHqZ0c3zIyofl0SUdIs=;
-	b=w8uN/AdWtMIjuzcxjuLgOjBTKkWQdeKZcwHIVdcjPOeOFmbRlA8jIC+u23Js+SCNMZkb
-	 7MoVVOV1Yds+4dzZqkuCnQVBkLKv2EG7Yo+CtXCabhz7NoTmdBldrEr3WkdbnT5X7CDtU
-	 TT3M6PGaIhbSu5OZVgKwYIM7q/2TFHwxZXlK4E4iKRyfZGpi8aAFIqtVCrHrICp0dA6HY
-	 Smn0z3NjXqKKFyiO5qRZec1ED/kxaM1Q6zALRcm7DyJeaFYJyuY3YIMN+71xYFmvxQuba
-	 buNi+VmFH1z2VioJHgKKkEhs67A+kH8BuY0plVpVnJnx6p+PyLWgPTYjKfFPJlVnOFw==
+	bh=SCtu3mz9V/2DqLbdT9Nboe83dH8hIn919HIq34ndPv8=;
+	b=DQ8Pgyz/4zntwvmv7K24RDimLDkmXS1nIyW8l9bbEvPg2+3U+FNJ+9aE6Xi6v0txrc1r
+	 /5ba0tNsZqu7GHz/DUcBwG2nBVwhyhH0/mBrR+fDB1R/HR4sBxKyVjEuouQGtcSXrWVHr
+	 YK5xuGLHuKiwN9ZsGIHPeRzgvecd51LOS7+ziunJhLwb1wqZKdrjrlHPrbGjuBXEmsET6
+	 Sxz/pAh3XLhZMaOPyP+qeVEJvwz21F9mXAsyWloCJtqcdlZpRm0xGt6DGnAZBt+OVkhXG
+	 1zzX9y9xkl4KzMqYiK9E0jwLB49udpjYc4rJ2qVRx9vFWiMS4meAlieuOGYVgN+YEcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DH4cMkY9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ZpOaNO3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F5B606A325;
-	Thu, 19 Nov 2026 02:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C672606A31C;
+	Thu, 19 Nov 2026 02:15:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DH4cMkY9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E0F1F000C5;
-	Thu, 19 Nov 2026 02:14:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ZpOaNO3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA631F000C4;
+	Thu, 19 Nov 2026 02:15:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054500;
-	bh=yYLZrhPVByHh7iHY+MIdeaSJLHqZ0c3zIyofl0SUdIs=;
+	s=korg; t=1795054503;
+	bh=SCtu3mz9V/2DqLbdT9Nboe83dH8hIn919HIq34ndPv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DH4cMkY9om+TKegm4IKQRbWXHo/yn2BlTOaYtX3/GZ9wBhE6Q05sEcyUI0aVCzDfh
-	 NrEJvGZfyBC8J4s/KHhkojgFdvn2E7Vq1k/nEqBG9csmtC3O3/itedG+980DlbL/2b
-	 kLl3LeazVmIcartmxyBi3cU0vHyrZjJxJHpg/6Pw=
+	b=1ZpOaNO3cft6BBu+v3qOULNjVNzwdBeKAtD2dNXBwZnrpwjfwaEevlGYjVsznpusF
+	 3gINTa9HuzxdgDJ1QfQNyYGnKTqGtrSwSDTDMumhd4Rsa2hyA/fzs+yWPDPV2aprlE
+	 aQxDfZW5OZ+aZuBK6tlLpTj8IsAVgrroSWZNtWVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhou Qiuyue <n0ps1edzz@gmail.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Chris Mason <mason@kernel.org>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1297/2214] ipv6: raw: fix use-after-free in rawv6_send_hdrinc()
-Date: Wed, 18 Nov 2026 15:49:33 +0100
-Message-ID: <20261118150103.426254136@linuxfoundation.org>
+Subject: [PATCH 5.15 1298/2214] mm/shmem: make shmem_file() check the files inode
+Date: Wed, 18 Nov 2026 15:49:34 +0100
+Message-ID: <20261118150103.459654581@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,51 +70,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhou Qiuyue <n0ps1edzz@gmail.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 66dfb2cacda7faae614d688943d85e75abf7f586 ]
+[ Upstream commit d3710111839d11339e414b1bb3fea3d05ab83f6e ]
 
-rawv6_send_hdrinc() caches the route before handing the skb to
-l3mdev_ip6_out(). The VRF output path may replace skb->dst and release
-the original route, leaving the cached pointer stale.
+shmem_file() only checks if file->f_mapping is a shmem mapping. This
+mapping can belong to another file, however, as with a Coda file backed
+by a tmpfs container after mmap().
 
-The function later dereferences that pointer for statistics accounting
-and as the output device passed to NF_HOOK(). Its RCU read-side critical
-section starts after l3mdev_ip6_out(), so it cannot prevent the old route
-from being reclaimed in between.
+So it does not guarantee that the file inode is an actual shmem inode.
 
-Reload the route from the current skb destination after
-l3mdev_ip6_out() returns.
+Seal handling and memfd preservation use this check before accessing
+shmem inode state, so they can access an inode of the wrong type.
 
-KASAN reports a slab-use-after-free in rawv6_sendmsg(), with the route
-allocated by ip6_dst_alloc(), freed by dst_destroy() from rcu_core(), and
-the related RCU callback queued from vrf_l3_out().
+Let's make shmem_file() check the inode's file operations instead, to
+identify shmem inodes reliably. This will identify regular shmem inodes,
+including memfds and ordinary tmpfs files, independently of wrapper file
+operations.
 
-Fixes: 4c1feac58e06 ("net: vrf: Flip IPv6 output path from FIB lookup hook to out hook")
+Use shmem_mapping() in collapse_file() instead to not change the behavior
+of collapse_file(): it operates on the page cache and uses mapping->host
+for shmem inode operations. Focusing on the file does not seem relevant.
+
+Fixes: c49fcfcda8b5 ("mm/shmem: update file sealing comments and file checking")
+Fixes: b3749f174d68 ("mm: memfd_luo: allow preserving memfd")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhou Qiuyue <n0ps1edzz@gmail.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
-[ sashal: Replaced the unavailable dst_rt6_info() helper with a direct cast to struct rt6_info *. ]
+Reported-by: Chris Mason <mason@kernel.org>
+Suggested-by: Pratyush Yadav <pratyush@kernel.org>
+Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-3-d6437171ecc3@kernel.org
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: Adjusted context to retain the existing inline shmem_mapping() helper. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/raw.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/shmem_fs.h | 15 ++++++---------
+ mm/khugepaged.c          |  2 +-
+ mm/shmem.c               |  5 +++++
+ 3 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
-index c3719e5ac89fc..2d72f5c5d8381 100644
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -650,6 +650,9 @@ static int rawv6_send_hdrinc(struct sock *sk, struct msghdr *msg, int length,
- 	if (unlikely(!skb))
- 		return 0;
- 
-+	/* l3mdev_ip6_out() may have replaced the skb dst. */
-+	rt = (struct rt6_info *)skb_dst(skb);
+diff --git a/include/linux/shmem_fs.h b/include/linux/shmem_fs.h
+index 166158b6e917a..d6aeccd1d22a0 100644
+--- a/include/linux/shmem_fs.h
++++ b/include/linux/shmem_fs.h
+@@ -68,12 +68,18 @@ extern unsigned long shmem_get_unmapped_area(struct file *, unsigned long addr,
+ 		unsigned long len, unsigned long pgoff, unsigned long flags);
+ extern int shmem_lock(struct file *file, int lock, struct ucounts *ucounts);
+ #ifdef CONFIG_SHMEM
++bool shmem_file(struct file *file);
+ extern const struct address_space_operations shmem_aops;
+ static inline bool shmem_mapping(struct address_space *mapping)
+ {
+ 	return mapping->a_ops == &shmem_aops;
+ }
+ #else
++static inline bool shmem_file(struct file *file)
++{
++	return false;
++}
 +
- 	/* Acquire rcu_read_lock() in case we need to use rt->rt6i_idev
- 	 * in the error path. Since skb has been freed, the dst could
- 	 * have been queued for deletion.
+ static inline bool shmem_mapping(struct address_space *mapping)
+ {
+ 	return false;
+@@ -115,15 +121,6 @@ static inline struct page *shmem_read_mapping_page(
+ 					mapping_gfp_mask(mapping));
+ }
+ 
+-static inline bool shmem_file(struct file *file)
+-{
+-	if (!IS_ENABLED(CONFIG_SHMEM))
+-		return false;
+-	if (!file || !file->f_mapping)
+-		return false;
+-	return shmem_mapping(file->f_mapping);
+-}
+-
+ /*
+  * If fallocate(FALLOC_FL_KEEP_SIZE) has been used, there may be pages
+  * beyond i_size's notion of EOF, which fallocate has committed to reserving:
+diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+index a7a8e6bc70b01..bd909aa4b8fee 100644
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -1694,13 +1694,13 @@ static void collapse_file(struct mm_struct *mm,
+ 		struct page **hpage, int node)
+ {
+ 	struct address_space *mapping = file->f_mapping;
++	const bool is_shmem = shmem_mapping(mapping);
+ 	gfp_t gfp;
+ 	struct page *new_page;
+ 	pgoff_t index, end = start + HPAGE_PMD_NR;
+ 	LIST_HEAD(pagelist);
+ 	XA_STATE_ORDER(xas, &mapping->i_pages, start, HPAGE_PMD_ORDER);
+ 	int nr_none = 0, result = SCAN_SUCCEED;
+-	bool is_shmem = shmem_file(file);
+ 	int nr;
+ 
+ 	VM_BUG_ON(!IS_ENABLED(CONFIG_READ_ONLY_THP_FOR_FS) && !is_shmem);
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 04363ece9ecf6..58a12931d2149 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -250,6 +250,11 @@ static const struct inode_operations shmem_special_inode_operations;
+ static const struct vm_operations_struct shmem_vm_ops;
+ static struct file_system_type shmem_fs_type;
+ 
++bool shmem_file(struct file *file)
++{
++	return file && file_inode(file)->i_fop == &shmem_file_operations;
++}
++
+ bool vma_is_shmem(struct vm_area_struct *vma)
+ {
+ 	return vma->vm_ops == &shmem_vm_ops;
 -- 
 2.53.0
 
