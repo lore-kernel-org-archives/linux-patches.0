@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045943;
-	b=r7wUfK/Ji82rlbq6OvbGskOKVbkcLymSATLql5De5RgpSPcFmFb8+3Uuz6ZCeZ6I9NVC
-	 tO4Hyy649youZKIUxQTR0bwGh565QS6wu8oKE8XDP63J9hPg08DcpyAwGlI1KyRWrKdbw
-	 IlEhn+JjaO+JX7it355N5JncLX+fUH/CGPdaZHkzmRWEFDjCIsnkRgMwfFIyaSbR6umZi
-	 mIEZ7IwvqIeyk0h+gWl/YNqSJXCE5jyVuPf9GBVQMZC2zkhRR7nGLTkHtklfdzYD94JTh
-	 lBW5zWUnG8MXuM1QHkcZjwRPxb8SSRRefq6cnIcO97PWIkgGRmx3gvHxfnHvr9cwewA==
+	t=1795045945;
+	b=pL4cWSxWDrgx7SyBr58Djk9MaS+bIgnnQq2X+Ss2wveSFqASh4x/G38GRDQu6dm7pfn0
+	 g6YmnN7kOnDfjGJ7qxrnI0nj96uzS7TJ5yUfZmf9o+Q+8JyQdkRlgn/HDXaG00i2ewldX
+	 s3iPyW3BHEOdNRwBGMQEHNml7+ZWeaYGntYm0TiJOPRnH82Sjzv/Tn0EeSFMlpoitXmyY
+	 9pdJCVsncRwSHm3JC8k/+EVsfnMJ8q1DzBrEBm/iPyYVTxbrKY54C5BJfG0RzORz8Nj0T
+	 mq4A+AcYLeofBz0/44DbI1L+PrWIV+vF/eF1rSKE0LM7Ps2TvCKYuJcKoNqY538yL/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045943;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045945;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L4uz1mS9SelKE1PryoHPPH91pmRf/O6n5cbCvPJc55M=;
-	b=pxW1/TCW3MOHo8rS9VPhanNCAdZRYpzBkOBTTBdTfbNyB3lhB1xlYlYgYN+QNJr9IQk3
-	 d9e2r4pHCtkPIY4CcQpJQzJ8BzJwxE/7Gxwwwz/MIrbZ8sJpSrzqRFreFTotXC6FYaZM6
-	 ZYQHNe1ZRU+xujrZkOW2BjOAt7DXnttTC6sJZLYt8e0ZoveI9ln8W1fzayVwP3t6dn3GK
-	 2HVGg73fdmA1AT/OUKvKF2V0ol6Lc7slqsDIKPTytzcrEKlAel5spU5iyb4LghqPcNh4Q
-	 Y3EK/NlqqvgJef/VDGmzSM4b+wDqRBhdwp8V5g//NXZx+y18Q6Lg8keHQiNgspxLKlA==
+	bh=YJMXB31/YWE9z2vx0zK/4OPpaXZqJ1OyT219rOR6C+8=;
+	b=5j9DdvibvAREJ788+EoKsKsBPLx4iQuNeDd9OuuSUw7oAq/k/nIWS3RSP+L6as7kYAYZ
+	 kCrxPNa2CwFjZ8/V6xFxgyRZ7kP0v7crrLlbmcpVJvf8/BEaSApS7Vt55V1jR9SNn7ZFG
+	 JTrli88y0FUeU1wJSLtJM6OQW9Ft83IOGdUE8bv3Q4fp/dPKh6dGzXUFaXf57SnwVnnQl
+	 Fv5/24GyMq0kWHgW9Vz19OFM5wqdu43iE9LrGoLZSrrtIB3blPIfuaJ1esv9oEWhrftjw
+	 NiSJZZ9eeEM3OmF8EDyMY7YVJ5xzTw/4kDjI3ZRzLGfUPI8kCY/cxBr7+92BEEjymeQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UKl6GpR1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1XUwpuDz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED344606A31C;
-	Wed, 18 Nov 2026 23:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B184F606A320;
+	Wed, 18 Nov 2026 23:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UKl6GpR1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462021F000C4;
-	Wed, 18 Nov 2026 23:52:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1XUwpuDz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A4A1F000C4;
+	Wed, 18 Nov 2026 23:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045942;
-	bh=L4uz1mS9SelKE1PryoHPPH91pmRf/O6n5cbCvPJc55M=;
+	s=korg; t=1795045945;
+	bh=YJMXB31/YWE9z2vx0zK/4OPpaXZqJ1OyT219rOR6C+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UKl6GpR1H9l0C2cyDDOCs5wi+BQ9U4W2aklVi+nNlBv+z0NqGP+aH8b8/NdEums/C
-	 uRUxWNO41vTaoqhhZuJFFBifyXmDLPK7xXyrWKBGEQIuD22IdHGbRZG2EK0r7+qyI1
-	 GdxYbrg8bhyXgL0pnnh7c7q6lw8sEtWu8ArSVMyM=
+	b=1XUwpuDzWNiXNDWD+PDf/UxmueoxxyMDJ/A0sHUqTeZ2Vam0PHdDsmfNPwhAZxW14
+	 VD7MqMM8QjWnYLQS4FWAnyi8eViax0ItcPel+BpgEkoUHzLTAYeSJ4Wc0XSwojPiCc
+	 x0nDkANhy/B2YjARVOZOqPAEX3gTKywOtM36siCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Miquel Raynal (DAVE)" <miquel.raynal@bootlin.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Andriy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Petr Mladek <pmladek@suse.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1103/2857] mtd: rawnand: pl353: Fix debug prints
-Date: Wed, 18 Nov 2026 15:35:37 +0100
-Message-ID: <20261118150241.349104433@linuxfoundation.org>
+Subject: [PATCH 6.1 1104/2857] sprintf.h requires stdarg.h
+Date: Wed, 18 Nov 2026 15:35:38 +0100
+Message-ID: <20261118150241.384424977@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,53 +74,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal (DAVE) <miquel.raynal@bootlin.com>
+From: Stephen Rothwell <sfr@canb.auug.org.au>
 
-[ Upstream commit 2b7baaddf1bc3e39206a0354449fdc349945b86b ]
+[ Upstream commit 0dec7201788b9152f06321d0dab46eed93834cda ]
 
-They are partially incorrect since "software" engine does not mean
-hamming, the "none" cae is also falling into this print, and on-die
-means there is some kind of hardware support; we prefer to use the
-wording on-host vs. on-die.
+In file included from drivers/crypto/intel/qat/qat_common/adf_pm_dbgfs_utils.c:4:
+include/linux/sprintf.h:11:54: error: unknown type name 'va_list'
+   11 | __printf(2, 0) int vsprintf(char *buf, const char *, va_list);
+      |                                                      ^~~~~~~
+include/linux/sprintf.h:1:1: note: 'va_list' is defined in header '<stdarg.h>'; this is probably fixable by adding '#include <stdarg.h>'
 
-Fix all those prints.
-
-Fixes: 1e06dbfdfb85 ("mtd: rawnand: pl353: Add message about ECC mode")
-Signed-off-by: Miquel Raynal (DAVE) <miquel.raynal@bootlin.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lkml.kernel.org/r/20250721173754.42865913@canb.auug.org.au
+Fixes: 39ced19b9e60 ("lib/vsprintf: split out sprintf() and friends")
+Signed-off-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Cc: Andriy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/pl35x-nand-controller.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ include/linux/sprintf.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mtd/nand/raw/pl35x-nand-controller.c b/drivers/mtd/nand/raw/pl35x-nand-controller.c
-index 1c23ad74b225c..48886a89ea28c 100644
---- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
-+++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
-@@ -974,17 +974,19 @@ static int pl35x_nand_attach_chip(struct nand_chip *chip)
+diff --git a/include/linux/sprintf.h b/include/linux/sprintf.h
+index 9ca23bcf9f42e..4dcbfd1015118 100644
+--- a/include/linux/sprintf.h
++++ b/include/linux/sprintf.h
+@@ -4,6 +4,7 @@
  
- 	switch (chip->ecc.engine_type) {
- 	case NAND_ECC_ENGINE_TYPE_ON_DIE:
--		dev_dbg(nfc->dev, "Using on-die ECC\n");
-+		dev_dbg(nfc->dev, "Using on-die hardware ECC\n");
- 		/* Keep these legacy BBT descriptors for ON_DIE situations */
- 		chip->bbt_td = &bbt_main_descr;
- 		chip->bbt_md = &bbt_mirror_descr;
- 		fallthrough;
- 	case NAND_ECC_ENGINE_TYPE_NONE:
-+		dev_dbg(nfc->dev, "Using no ECC engine\n");
-+		break;
- 	case NAND_ECC_ENGINE_TYPE_SOFT:
--		dev_dbg(nfc->dev, "Using software ECC (Hamming 1-bit/512B)\n");
-+		dev_dbg(nfc->dev, "Using software ECC\n");
- 		break;
- 	case NAND_ECC_ENGINE_TYPE_ON_HOST:
--		dev_dbg(nfc->dev, "Using hardware ECC\n");
-+		dev_dbg(nfc->dev, "Using on-host hardware ECC\n");
- 		ret = pl35x_nand_init_hw_ecc_controller(nfc, chip);
- 		if (ret)
- 			return ret;
+ #include <linux/compiler_attributes.h>
+ #include <linux/types.h>
++#include <linux/stdarg.h>
+ 
+ int num_to_str(char *buf, int size, unsigned long long num, unsigned int width);
+ 
 -- 
 2.53.0
 
