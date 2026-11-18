@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033395;
-	b=QZ8PdbYBzdBh3j2TpT3R0Qjg9EFLA2EmT0rgVyaVq8oAfmPlhT1ThgOhvouqlqFe+SWB
-	 a9JSapgXlJrWh8v2gHnq1SCiSWeCCdTFpVxI3KK0YlEBqd2nXbLi4dvdoGJkkSAfgrxIZ
-	 Hm3dNre2HDJvSe65bq3zHPoPLJGkL88pnK2dHvx4E4ALGwOHEqAddHzrRLutCXTxj4uSF
-	 W+qnmY3YoJi/1ao3CGJNPlDh51k48ziPseu0namNSpeWnu4hjxFlSsZiB+MQKgll0frB2
-	 FHAOsbjm6gDfeKTZxJ0+f9Enk6w6MwvClvo2hN58GsSm1ygO1KGp6ETqJlZuZojB00A==
+	t=1795033398;
+	b=5epVrRxwSUlf/4a0rOVJLOpaoxf+5j072uF0mHi88rSCPPQfgfJLEoYq1t1MAIrd+L8G
+	 b3zRqlOU2P0h/3cXKthwmnTea4iove2THWaY+mTB3W2e8Uiz5kCxU6Nal/73jcoFTYrx6
+	 3FkapkPkX6dcC3abchjHN++J2WfMgesnL6/P0nXCNnkr1sDuTx+mBd3IEqKLiFFjfdB47
+	 OPOCIbrBgiI3xTPLZnknbzsKaeclEpW8M6Gri7kRbL/Fhs01rH8rKz/9G67+NIUCXxbts
+	 Zcm56AOtML3RJ3fKYQx3kiTP27h+PmzT8noc2hcEnr+xeq9m4dH9Dqu+XjuIw/TJxAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033395;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033398;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2vVyQabnt/CzEyeZY0e5Bteavs5N/4g3fngM2TFqLkM=;
-	b=2QKpTnfEeu/ECpz9GOB8g2JiwHirrny3+XyD38T2mfB5OjLwUT9EHYprFeNhenIizN21
-	 7iqODNZjW6r14WhGgxtpUuqtB8tBSGtuoUQ70V8AD93GG+ZXab5bfNsmgB67YO2PDDdPB
-	 ha7hRicjkH2v2eR7EUJatGljksi/4rdRBXpkOe8ywJAtR+4Vxv/MYt752s5vch7tcCQr3
-	 G6739i42vC92t+fLFBXLK6il8gt9FbFzRfMB17fcsy484Rac+ZBGy+Q8jjxyp8kpMUnMA
-	 v8wh2EEBKjN9pN2YZVKuOVUhz9eNWeL73x0Qb1hFcW6//vLv6LvVf1fuLppc+WUiqqw==
+	bh=kjv/snz8TGiwe3omPLc7BdiAcc5YA+/G+hIF6DnYnG4=;
+	b=p9QHpVW7CA0qJptasF/emLCnOrJ3Xr8CqpseV8ZXEZP47mcnwWcN8aw3vs6uMlkvmDdQ
+	 FYH5wsD8ei2x0pC9NER5UHbJ11n2MRZ5k751Ar+YsIyqmYOa/YZb9P8VTlWy5gP9jMHmt
+	 OOGUSxx1fo8cgfvT5Fkx6AVbcpGYKNaHa9jT5BcehHrcb19OthPcjhiEFJjauD/iv4Ep6
+	 GtOZvDDTlypEs6FsvZDGBNwbaWF60lnjR0UC1R+ZG6u4+tts7a5FslmEk192vMEUIAGvk
+	 RyvtTBSHAgz8sEDuHnOdeMq+d0tesNXO9GMGHf14k4dQhPxKv+eYTWVrn5QZw4qWUHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pKfC7Q2K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ujzqr0un;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE6960A260C;
-	Wed, 18 Nov 2026 20:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA33606A32A;
+	Wed, 18 Nov 2026 20:23:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pKfC7Q2K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC451F000CE;
-	Wed, 18 Nov 2026 20:23:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ujzqr0un
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47B0F1F000C8;
+	Wed, 18 Nov 2026 20:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033395;
-	bh=2vVyQabnt/CzEyeZY0e5Bteavs5N/4g3fngM2TFqLkM=;
+	s=korg; t=1795033397;
+	bh=kjv/snz8TGiwe3omPLc7BdiAcc5YA+/G+hIF6DnYnG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pKfC7Q2KJZCwETTIu1Hn5iJ8h5qeCxJ3tCu3HnWyL+5NVm3i1mvzs72U3CstbbrQ+
-	 GRptc6LUnD9b8dB3Ryz8rEDY1geikGEfK+NX3nZLAIMZEhrleWWB2XQ4er1S9QCvJg
-	 82BcLZEbAgLNvDjMeIir0Im2797/Cw6yC2oD2OKI=
+	b=ujzqr0unO0xEhmCaObC0vIqPn8miYVdPrncYW7bTVTHl9yLeG+A1+O/oGr1S+WIo1
+	 KvNEpn2ObXbpkxB8h140Z/ylD0YMlmtd7BD/V8iwIeTcrzu6//uhpUisHdH2u2fbrT
+	 E3Z8MpK0mYPS6XL2Ao5fuR6fpT32n8XEKkewN4s4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Nicolai Buchwitz <nb@tipi-net.de>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 1754/1756] net: bcmgenet: stop Tx NAPI before disabling the queues
-Date: Wed, 18 Nov 2026 16:04:41 +0100
-Message-ID: <20261118150119.357686193@linuxfoundation.org>
+Subject: [PATCH 6.12 1755/1756] net: bcmgenet: if UMAC was suspended in SW_RESET, restore it to SW_RESET
+Date: Wed, 18 Nov 2026 16:04:42 +0100
+Message-ID: <20261118150119.393684644@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,74 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Justin Chen <justin.chen@broadcom.com>
 
-commit 7e87508b5c4d81210d0a736ed01962e52f5c4c56 upstream.
+commit 5857e5a196b069766a39ceb754736326a43bc6bc upstream.
 
-bcmgenet_netif_stop() and the Wake-on-LAN branch of bcmgenet_suspend()
-both disable the Tx queues first and stop Tx NAPI several steps later. A
-completion in flight calls netif_tx_wake_queue() in between, and nothing
-stops the queue again, so a transmit can reach the rings after they have
-been freed.
+When the revised suspend/resume sequence was introduced this led to an edge
+case where the TX is left disabled in the following sequence.
 
-Close is safe because dev_deactivate_many() stops the qdisc first.
-bcmgenet_suspend() does not, so stop Tx NAPI before the queues on both
-paths.
+1. phy link is down, so UMAC is held in reset and then network interface
+   is WoL enabled
+2. Enter suspend, bcmgenet_wol_power_down_cfg() enables UMAC_RX since MAC
+   is in SW_RESET
+4. Enter resume, UMAC_RX is left enabled. Since we only enable UMAC_TX
+   and UMAC_RX in SW_RESET. The UMAC_TX is never enabled again on link up.
 
-KASAN on a Raspberry Pi CM4, driven from an MTU change because suspend
-freezes user space before the callback runs:
-
-  BUG: KASAN: use-after-free in bcmgenet_xmit+0x17f8/0x2258
-  Write of size 8 at addr ffffff8055844a68 by task ksoftirqd/0/14
-   bcmgenet_xmit+0x17f8/0x2258
-   dev_hard_start_xmit+0x13c/0x588
-   sch_direct_xmit+0x108/0x340
-   __dev_queue_xmit+0x1190/0x3848
+The issue was hit in production and I verified the sequence keeps
+the TX  disabled in my standalone test. I tested on an internal
+development board with bcm77122, but should be reproducible
+on any genet HW that supports power management.
 
 Fixes: 254f3239dd07 ("net: bcmgenet: revise suspend/resume")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20260922130639.1660797-1-nb@tipi-net.de
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20260930230634.3132729-1-justin.chen@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -3351,6 +3351,8 @@ static void bcmgenet_netif_stop(struct n
- {
- 	struct bcmgenet_priv *priv = netdev_priv(dev);
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
+@@ -253,6 +253,17 @@ int bcmgenet_wol_power_up_cfg(struct bcm
+ 	reg = bcmgenet_umac_readl(priv, UMAC_CMD);
+ 	reg &= ~CMD_CRC_FWD;
+ 	bcmgenet_umac_writel(priv, reg, UMAC_CMD);
++
++	/*
++	 * Mirror wol_power_down_cfg(). If only UMAC_RX
++	 * is enabled, then we must place the UMAC back
++	 * into SW_RESET.
++	 */
++	reg = bcmgenet_umac_readl(priv, UMAC_CMD);
++	if ((reg & CMD_RX_EN) && !(reg & CMD_TX_EN)) {
++		reg |= CMD_SW_RESET;
++		bcmgenet_umac_writel(priv, reg, UMAC_CMD);
++	}
+ 	spin_unlock_bh(&priv->reg_lock);
  
-+	/* Stop completion polling before it can wake a stopped queue */
-+	bcmgenet_disable_tx_napi(priv);
- 	netif_tx_disable(dev);
- 
- 	/* Disable MAC receive */
-@@ -3365,7 +3367,6 @@ static void bcmgenet_netif_stop(struct n
- 	/* Disable MAC transmit. TX DMA disabled must be done before this */
- 	umac_enable_set(priv, CMD_TX_EN, false);
- 
--	bcmgenet_disable_tx_napi(priv);
- 	bcmgenet_disable_rx_napi(priv);
- 	bcmgenet_intr_disable(priv);
- 
-@@ -4297,6 +4298,8 @@ static int bcmgenet_suspend(struct devic
- 	netif_device_detach(dev);
- 
- 	if (device_may_wakeup(d) && priv->wolopts) {
-+		/* Stop completion polling before it can wake a stopped queue */
-+		bcmgenet_disable_tx_napi(priv);
- 		netif_tx_disable(dev);
- 
- 		/* Suspend non-wake Rx data flows */
-@@ -4306,7 +4309,6 @@ static int bcmgenet_suspend(struct devic
- 			netdev_warn(priv->dev,
- 				    "Timed out while disabling TX DMA\n");
- 
--		bcmgenet_disable_tx_napi(priv);
- 		bcmgenet_disable_rx_napi(priv);
- 		disable_irq(priv->irq1);
- 		bcmgenet_tx_reclaim_all(dev);
+ 	/* Resume link status tracking */
 
 
