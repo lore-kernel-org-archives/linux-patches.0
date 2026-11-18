@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029481;
-	b=gZpCxcCqRy8iMs3Nd3qvETd8BM+I0HZt0SmqSIsRCo724xf6HqFVWhbebBNh199As5cg
-	 PhCg6Y95zFTMufsTGQDbBEZuAPzXGunmz4yCnartzPwKWYqEAcxXT1CwWUgxKO9eebdy+
-	 JZx1yRs2YfvADg4HA7MuvTOOy1DJmko6+5TaomuJ9cw4ET2KfGTDyZmB8fuW3kv9UOYag
-	 K3mQDAid5hUgrRNCdZdQtn5VxeYnlVzD8l0dqaglwymNdy99lz7qIpxg22rGkbsf+lwrb
-	 LoSLeb8oCthYoHvflmN6mBHDvU2lnzP2QaCPWw/+uriI8ZRPDHjF2s7ARvxEFazChtw==
+	t=1795029483;
+	b=cxk+NSAi+4po4fHrdimIRkmh9IqQQJ0wC97HpL8+gGn+pEz0Fg1wo4bGrWolJLbvy65p
+	 pUu0KAxPaFw2TSlclT4NB1vNZI5yrIlEUXBmfxNs3ggGEgSCdWjXfUqDw7W/xh+LGPaFL
+	 0Y53SnexXwix8WnZDCnBMQugMq96nSj8QD1gC0ygQijtTeJ2m8JlRPHvBlarsmbg8Dv6o
+	 Dak5DoxBzdfBa8Rucs7QV4VFg4vOXKg5Z2Y++Vq98E2CMUK8+cjB5bmH8PSg8WnoQiAtQ
+	 ll0h5Jdh9jHYxMTzRczFLtn3VI1FpFYfJyeGYZBmx6X1bCDnQJqoH1ZmakYSRcumMHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029481;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029483;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=29Kj/eSaKkr6pfh5MbVs0lBtGdU1EJz5T+YB8Ye3/Mw=;
-	b=2bOTvMlaS9fLyadTWRj3WABFURqYo3WTRqVUlcdHLUSL8IOyZNdbxvYD3/qYRSqsz9P4
-	 kokrKKEbF1vbEqhNGDzsslEW3CxsR4q4D009VlPtHGammRc+/3eLNdyMfw8eHA7sZUs3E
-	 V9wtZAm39AkrdqPvJzXkcJ5/K/Wpb6m+TBbwB+2hUzxK4ZdsvE6tL39imlPGSzZ1Sqh/M
-	 AwHhUx9MLDdT7m9lHpvyIHkBraHvWBkcgGmBm8S2nBgYhP8icFW50B7xTncb3XDqtKimb
-	 bNz+4YCo4OeDNnvKMeewDfiO4o0hb9jIQQcUhUyK61zUEztmYjQF7KjoZMW8LBH8ZGQ==
+	bh=bdPzDLlER8EA5v8eeUEBahP/VWHNBMapo9tUeIY1COc=;
+	b=oFRllcb2wbnmhZ9AwQnI6uXcj7TsAuJlFc+W1JzEI7yO7CxlyP4wX/GISwTo0y9nyZ5i
+	 y3k1iKIH3GAR98RY/4Ps4MYclv33gmJwBSi5HOxfPLN28n4F9sVUUdzgQ4fhSBnQPrDQq
+	 +Q+GpW+/e/a/NIeTd3NLrSqC3iA2hRp1OuDLEmVYJ3e/36sSk758wRKfEE8vCuePQDpto
+	 VH7VPuwDDUH+SSz+HdWKw8DgCsr35Z4S0Q4YUUkaUKCP/xK7x3X7WM0DDyRvvLH9GAZUO
+	 s5vV4Dlk660VsmriDs+bMNYwodWVHBquKZ6vXVH30HsEEI3t+lR5vtULbg+DTE+Zo3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="OSwMa/jZ";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dqqmnNYP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D9B606A31C;
-	Wed, 18 Nov 2026 19:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7ADB606A31C;
+	Wed, 18 Nov 2026 19:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OSwMa/jZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248E81F000C4;
-	Wed, 18 Nov 2026 19:17:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dqqmnNYP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D74C1F000C4;
+	Wed, 18 Nov 2026 19:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029480;
-	bh=29Kj/eSaKkr6pfh5MbVs0lBtGdU1EJz5T+YB8Ye3/Mw=;
+	s=korg; t=1795029483;
+	bh=bdPzDLlER8EA5v8eeUEBahP/VWHNBMapo9tUeIY1COc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OSwMa/jZ49pAEpFQRStWM/T6Ic6Uydw7oCoUYMb8tLwHLe7WZQ/c9hVshg7R0+eAo
-	 j7ubRzcugM562n69DBFENxS5xc+qqB0DsEvCyKZg3BlZeDb+z2KmMIsKUOETlTEmQ+
-	 gxQbjid6uWlVkT/jJrAoo0kcRXaJ3u3d6yWNHB/k=
+	b=dqqmnNYPiqq4uqQ7SderktNOqoDBKV+frVqFc6GEQ3xWRC59arcD58MU4SKxQaHkQ
+	 RXrKgZZMtctkKwvIG1m/FRyqDMSfYUZE3MRGUoOhUolHKCveak4Rb/X7F5bUbZgZLB
+	 mC611H532Xvd/SewgtYhLobH9jmYZqoVSa9yRoM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Breno Leitao <leitao@debian.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0363/1756] firewire: core: remove unused link field in fw_packet structure
-Date: Wed, 18 Nov 2026 15:41:30 +0100
-Message-ID: <20261118150022.767332758@linuxfoundation.org>
+Subject: [PATCH 6.12 0364/1756] cpuidle: menu: Remove incorrect unlikely() annotation
+Date: Wed, 18 Nov 2026 15:41:31 +0100
+Message-ID: <20261118150022.803676709@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,33 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 00d4d31e4fdfe51312f0184f8d162b8d4de172dc ]
+[ Upstream commit fcbd7897b871e157ee5c595e950c8466d86c0cd5 ]
 
-The link field in fw_packet structure has never been used since it was
-added.
+The unlikely() annotation on the early-return condition in menu_select()
+is incorrect on systems with only one idle state (e.g., ARM64 servers
+with a single ACPI LPI state). Branch profiling shows 100% misprediction
+on such systems since drv->state_count <= 1 is always true.
 
-Fixes: 3038e353cfaf ("firewire: Add core firewire stack.")
-Link: https://lore.kernel.org/r/20260911141602.3288806-1-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+On platforms where only state0 is available, this path is the common
+case, not an unlikely edge case. Remove the misleading annotation to
+let the branch predictor learn the actual behavior.
+
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260105-annotated_idle-v1-1-10ddf0771b58@debian.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: d594187cafd5 ("cpuidle: menu: Do not return a disabled idle state")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/firewire.h | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/cpuidle/governors/menu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/firewire.h b/include/linux/firewire.h
-index b632eec3ab526..9e7ff7c3b7398 100644
---- a/include/linux/firewire.h
-+++ b/include/linux/firewire.h
-@@ -312,7 +312,6 @@ struct fw_packet {
- 	 */
- 	fw_packet_callback_t callback;
- 	int ack;
--	struct list_head link;
- 	void *driver_data;
- };
+diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
+index 0ce7323450011..88b87ad5557a7 100644
+--- a/drivers/cpuidle/governors/menu.c
++++ b/drivers/cpuidle/governors/menu.c
+@@ -287,7 +287,7 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 		data->bucket = which_bucket(KTIME_MAX);
+ 	}
  
+-	if (unlikely(drv->state_count <= 1 || latency_req == 0) ||
++	if (drv->state_count <= 1 || latency_req == 0 ||
+ 	    ((data->next_timer_ns < drv->states[1].target_residency_ns ||
+ 	      latency_req < drv->states[1].exit_latency_ns) &&
+ 	     !dev->states_usage[0].disable)) {
 -- 
 2.53.0
 
