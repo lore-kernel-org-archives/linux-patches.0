@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042509;
-	b=HQvn5LzN+89oI38bc68dfssi2/RZLLMtwpDp7lApCFf6xvDlndrZohpd2ND0IEaQjH6I
-	 Y2+H/hu3UxUSO6k/ZHsCd7+d1KdQGKgst5elxVL4f5zuokutxTLkuBLtEysdX1v6FdJHQ
-	 MndmLc0qMuwsmyMUKsAF2r6Yqq7/NpQ4gy8lOSAEnaHKlo7pRnOWkKtHsdUG2zaDue/QP
-	 kNrXoogdsaiVKUxyROm4P+ErpU0Ni+kDplKioXpNyabmu1GcPXC3GytddlOIxpJw3CPGr
-	 EFN4xTkH7dworuUIJm4Gz46rQ8te1Xm9eXHF2k7ZkktcKeclswNNMsbPeaJDSwCkxQw==
+	t=1795042512;
+	b=sMkV8lxvr1HQLQejBNdBfiPovfLwG71SOKnomxMBJMolG+p85psa4bXZj4YJYcsopP44
+	 +UhXQi/8Wo69sD1vKt/9dCmxix9XCpj6qIuNcmC5O29FtRp3YmnaCbaVJupQGBMOOUvim
+	 EFj8yLNdMMzaZqxG2rF9OlaENMaJfIAMhM5STG1jn9XOw4g/5kIDZjMkr9MZdK55Int/Y
+	 VJGgNBVx8N4Xyl8z4m7SKOP+h/FTxUVCEJcYwO3Hw5dn2r8BX1O6TLkTa9B1mP9VMCRID
+	 FPBUKPK3npxx31HylsKONIWhOSXuo1wcMxng+Hhs40iBYZifnJH6XOBPzrFZF62f77Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042509;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042512;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h+UT7NxUNl3O2MNMUx1fAzncByevntzW2CqoceMwCt4=;
-	b=GnYa/0H7Iqq40arv3l0FX5jIFwDwSlyhk+fW432NyFaTTnVQR5D2zQde1jbsevgfF6dk
-	 7zerDZoCu79+Bb8CYs/wGwK4zEqQPy6efsphOsHirfeUH2XX8wDIxTT355DutNnq40sBR
-	 9u/fUweJuobG0/GbogPTOsz70njh1yV012D/lLn4Hg4KczVSGSkXzCnAqU3xqVUXbUcO0
-	 uo8de18CX6ZmA+IOGAffrpLNEZOYwQuLSgansTJEQe+qEDkZ+xrCvw58EJLLM7Ini7NWN
-	 h963bpye5OgecSoQ8EE0C7r66Wy6gjihSOQENF0DQo2g0D14fpcRtkDduZ0A1KyyW5A==
+	bh=QG/J4wkxY+XruOzkYIuDDkTWnrXbawua0MQsFsn9ddo=;
+	b=sbwZtUTe2FMotsw2I0km7yBfgMUrpkbEovDI5lHGGiYAXcb171Fcrws6rjxV2XahLiOD
+	 TVVDOjG40B4fsjneWxYC60O7cIzcqT38x7MwaZScQgfWLdOriyt9jl4ixosQjiFMUtvSI
+	 mNtQvlmSTQRVACAmuHukFx0rT7sYXZsj5GiIp7o4Wx87i2pllhGeSihzPXp6sRRzQVAjX
+	 7PclCgCZMV6rcThRMDxqTI3ukgnV4ZpqNci9fNagMcFt1G5u8C0srEEUL6t1Hk6iGjZIV
+	 ZQInAVOkVItac+/sWzCueR6vwBg/tZaNHcO2LSelwaypu22eCsRX6KIlqkTmIZrll5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ecMpLzFt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wb+ZNSIU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F9B606A31C;
-	Wed, 18 Nov 2026 22:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44B0606A32A;
+	Wed, 18 Nov 2026 22:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ecMpLzFt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37EE91F000C4;
-	Wed, 18 Nov 2026 22:55:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wb+ZNSIU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03AAC1F000C4;
+	Wed, 18 Nov 2026 22:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042509;
-	bh=h+UT7NxUNl3O2MNMUx1fAzncByevntzW2CqoceMwCt4=;
+	s=korg; t=1795042512;
+	bh=QG/J4wkxY+XruOzkYIuDDkTWnrXbawua0MQsFsn9ddo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ecMpLzFtnjBCbQQvB8ZyVG4ydBbkblSOQJZlZYzmHqxlbBgJWDCgcn6lKfOkOD+5M
-	 7NN3ClIzLyIOX32n1HXd3lgqfhgz7L36ViSMgEPSNO85yoP1fKO0UHqh437PekEjsf
-	 XdGIJqQ3Uf4H8bkb+zPoaIVvLNlfcLYETGQOZEiw=
+	b=Wb+ZNSIUhZUB5e7LR0LhcE0pyldx3bYGBC+y5Xd5b0uJLjvLF6LuDdoruoyjGXz5n
+	 v2on8mfBwMGEK+H0sKWSbtfKX5qRvHU/qt5Thu7/KIWVqXvGvhYuLtqP64LmbLkGbx
+	 DcJnClMAWJQ+fYanlI0zafAIEgB1KZk0lgtF/g+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ting-Han Hou <ue081723@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Kuan-Ying Lee <kuan-ying.lee@canonical.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3159/3318] scripts/gdb: fix radix tree lookup pointer handling
-Date: Wed, 18 Nov 2026 16:03:01 +0100
-Message-ID: <20261118150454.628958700@linuxfoundation.org>
+Subject: [PATCH 6.6 3195/3318] net: lan966x: do not inject uninitialised bytes past skb->len
+Date: Wed, 18 Nov 2026 16:03:37 +0100
+Message-ID: <20261118150455.625689890@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,155 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ting-Han Hou <ue081723@gmail.com>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit 66d190b072b4e261aff35debb53872ace9b80628 ]
+[ Upstream commit b4a7180558eb3cd8affa1e240b22171425bdfcb4 ]
 
-Patch series "scripts/gdb: fix radix tree lookup and stack depot
-diagnostic", v2.
+lan966x_port_ifh_xmit() writes the frame to the injection FIFO one
+32-bit word at a time, and pads frames shorter than 60 bytes with zero
+words.
 
-Two scripts/gdb fixes.
+Before this patch, the last word is loaded whole even when skb->len is
+not a multiple of four, so 1 to 3 bytes past the end of the frame are
+read. For a frame shorter than 60 bytes those bytes are also
+transmitted, as VLD_BYTES marks the whole last word valid and the
+padding starts at the next word.
 
-Patch 1 fixes $lx_radix_tree_lookup(), which dereferenced slot contents
-as if they were node pointers. v2 also handles the XArray sibling,
-retry and zero entries that Sashiko pointed out: they carry the
-internal tag but are not node pointers, and the v1 patch raised a GDB
-MemoryError on them. Large folios in the page cache make sibling
-entries common, so this was worth fixing rather than documenting.
+Write the trailing bytes from a zeroed word. The number of words written
+and VLD_BYTES are unchanged.
 
-Patch 2 is unchanged from v1 apart from being resent with git
-send-email, since the earlier copy was word-wrapped by the mail
-client. Sorry about that.
+Found by an AI code review agent. Reproduced on a lan9668 board with
+register injection, by sending a
+57 byte frame and capturing it on the link partner: byte 57 of the
+padded frame was not zero. With the fix all padding bytes are zero.
 
-Both patches are tested against standalone GCC-built fixtures that use
-the kernel struct layouts (details below the --- line of each patch),
-not against a running kernel.
-
-This patch (of 2):
-
-lookup() casts each slot to a pointer to a node pointer and then
-dereferences it. Since the slot already contains an entry pointer,
-this reads the entry's contents as another pointer instead of
-returning the entry itself. Internal entries also keep their tag
-bits when descending, so multi-level trees are read from the wrong
-address and $lx_radix_tree_lookup() fails with a memory error.
-
-Sibling, retry and zero entries carry the same internal tag but are
-small integers rather than node pointers, so the tag alone must not
-decide whether to descend. A page cache populated with large folios
-has a sibling entry in every slot but the first of each folio.
-
-Walk the tree the way xas_load() does: descend only through entries
-that xa_is_node() would accept, follow sibling entries to the
-canonical slot of a multi-index entry, and treat retry and zero
-entries like empty slots since they hold no data. Remove the explicit
-shift counter, as traversal now follows the entry type.
-
-Link: https://lore.kernel.org/20261011023044.1722-1-ue081723@gmail.com
-Link: https://lore.kernel.org/20261011023044.1722-2-ue081723@gmail.com
-Fixes: b7235d6bb516 ("scripts/gdb: add a Radix Tree Parser")
-Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Assisted-by: LLM
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: Kuan-Ying Lee <kuan-ying.lee@canonical.com>
+Fixes: d28d6d2e37d1 ("net: lan966x: add port module support")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261026-lan966x-inject-tail-bytes-v1-1-51d599a48313@microchip.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gdb/linux/radixtree.py | 66 ++++++++++++++++++++--------------
- 1 file changed, 40 insertions(+), 26 deletions(-)
+ .../ethernet/microchip/lan966x/lan966x_main.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/scripts/gdb/linux/radixtree.py b/scripts/gdb/linux/radixtree.py
-index bc2954e45c327..8ce9936dfa50f 100644
---- a/scripts/gdb/linux/radixtree.py
-+++ b/scripts/gdb/linux/radixtree.py
-@@ -27,6 +27,24 @@ def entry_to_node(node):
-     indirect_ptr = node.cast(long_type) & ~constants.LX_RADIX_TREE_INTERNAL_NODE
-     return indirect_ptr.cast(radix_tree_node_type.get_type().pointer())
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+index ce48685a50b20..99d3ecae82628 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+@@ -253,9 +253,8 @@ static int lan966x_port_ifh_xmit(struct sk_buff *skb,
+ 		lan_wr((__force u32)ifh[i], lan966x, QS_INJ_WR(grp));
+ 	}
  
-+def is_node(entry):
-+    # Like xa_is_node(): internal entries below 4096 are sibling, retry
-+    # or zero entries rather than pointers to a struct xa_node.
-+    ulong_type = utils.get_ulong_type()
-+    return is_internal_node(entry) and entry.cast(ulong_type) > 4096
+-	/* Write frame */
+-	count = DIV_ROUND_UP(skb->len, 4);
+-	last = skb->len % 4;
++	/* Write the whole words of the frame */
++	count = skb->len / 4;
+ 	for (i = 0; i < count; ++i) {
+ 		/* Wait until the fifo is ready */
+ 		err = lan966x_port_inj_ready(lan966x, grp);
+@@ -265,6 +264,20 @@ static int lan966x_port_ifh_xmit(struct sk_buff *skb,
+ 		lan_wr(((u32 *)skb->data)[i], lan966x, QS_INJ_WR(grp));
+ 	}
+ 
++	/* Write the last 1 to 3 bytes, zero padded to a whole word */
++	last = skb->len % 4;
++	if (last) {
++		/* Wait until the fifo is ready */
++		err = lan966x_port_inj_ready(lan966x, grp);
++		if (err)
++			goto err;
 +
-+def is_sibling(entry):
-+    # Like xa_is_sibling(): a multi-index entry occupies several slots,
-+    # and all but the first hold a sibling entry that encodes the offset
-+    # of the first one.
-+    ulong_type = utils.get_ulong_type()
-+    return is_internal_node(entry) and entry.cast(ulong_type) < \
-+        xa_mk_internal(constants.LX_RADIX_TREE_MAP_SIZE - 1)
++		val = 0;
++		memcpy(&val, skb->data + count * 4, last);
++		lan_wr(val, lan966x, QS_INJ_WR(grp));
++		++i;
++	}
 +
-+def sibling_offset(entry):
-+    ulong_type = utils.get_ulong_type()
-+    return int(entry.cast(ulong_type)) >> 2
-+
- def node_maxindex(node):
-     return (constants.LX_RADIX_TREE_MAP_SIZE << node['shift']) - 1
- 
-@@ -40,39 +58,35 @@ def resolve_root(root):
- 
- def lookup(root, index):
-     root = resolve_root(root)
--    node = root['xa_head']
--    if node == 0:
--        return None
-+    entry = root['xa_head']
- 
--    if not (is_internal_node(node)):
--        if (index > 0):
-+    if is_node(entry):
-+        node = entry_to_node(entry)
-+        if index > node_maxindex(node):
-             return None
--        return node
- 
--    node = entry_to_node(node)
--    maxindex = node_maxindex(node)
--
--    if (index > maxindex):
--        return None
--
--    shift = node['shift'] + constants.LX_RADIX_TREE_MAP_SHIFT
--
--    while True:
--        offset = (index >> node['shift']) & constants.LX_RADIX_TREE_MAP_MASK
--        slot = node['slots'][offset]
-+        # Walk down the tree like xas_load() does.
-+        while True:
-+            offset = (index >> node['shift']) & constants.LX_RADIX_TREE_MAP_MASK
-+            entry = node['slots'][offset]
- 
--        if slot == 0:
--            return None
-+            while is_sibling(entry):
-+                entry = node['slots'][sibling_offset(entry)]
-+                if node['shift'] and is_node(entry):
-+                    # xas_descend() turns this into a retry entry.
-+                    return None
- 
--        node = slot.cast(node.type.pointer()).dereference()
--        if node == 0:
--            return None
-+            if not is_node(entry) or node['shift'] == 0:
-+                break
-+            node = entry_to_node(entry)
-+    elif index > 0:
-+        return None
- 
--        shift -= constants.LX_RADIX_TREE_MAP_SHIFT
--        if (shift <= 0):
--            break
-+    # Empty slots and retry or zero entries hold no data.
-+    if entry == 0 or is_internal_node(entry):
-+        return None
- 
--    return node
-+    return entry
- 
- def descend(parent, index):
-     offset = (index >> int(parent["shift"])) & constants.LX_RADIX_TREE_MAP_MASK
+ 	/* Add padding */
+ 	while (i < (LAN966X_BUFFER_MIN_SZ / 4)) {
+ 		/* Wait until the fifo is ready */
 -- 
 2.53.0
 
