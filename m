@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062074;
-	b=UapQTOO6tc/XWlJ8hecdPncWFws5fK9ggHXa1b0p5XSiuRDTaszf+zwmfknLvLclcPG9
-	 lrBjziNlwtu+l+2RL27BE5x3fQpV+sWzwxQZgtyD3QkJbJ/3it6bhBZAZ9e65arT3v1Of
-	 bxzksi9dD4JQhiKKQRnZtlpxjV9ZhRPE+Ot8ai1PfnFZTHgwpO2lx1XvKf6XDvsAcAfKr
-	 UWg+eQRqnSOtHEWSifbNyrfXUWcCEVDfozCY4Pvg2rlsPZ44RXxMhMRw6fJWCjAHrIBFQ
-	 ybYDPptv4jpJy3hMfAN22bjDFwUbBfHNiDetyUG4zNev3xh4p5gJozfLijN55YuuRLg==
+	t=1795062077;
+	b=eLGaANvEF/p8Mw1zKrv3qKqr/lr1vC4KbhvIR2J2fxhSeBWfW3rGmI2arwQPT4NRwPvY
+	 rYOUgL93gArM9Q68sA/6vXTF6ze1U0nhS6SoDf5xWv9WfgZCN8+03HNvtE5eJwZJ9VuRb
+	 zkzMPsjdiBH5DlTUY4q7ZfF1956kNnR9Uod047bdJcT37IC4d7N94QIAapoAkhJ8c5Jb2
+	 nGXvybyrX8EPDkholpnKQMg4+S4SzJm0zDdeFUuulJk7yBkr4YZFaC8pOG3vK+MJ7t1s3
+	 Gtt1PgmUadJ769e7ZLJ2WEmT0Kvf2a3nuRd0Ul1BZ3VG46lmJX8I0GfIhy0ky6Z5uyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062074;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062077;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EyPVsz7bedONV6zAm+0DtrMXk2SxNrYXo2ri7oPeV1w=;
-	b=ogwRpvQAtrmFRjFxIrWHNi9e53ycIYrVeiVxqfo66fQmJ3OFQ35L5xW3rHHCXqLLZxSs
-	 dMsqus2VLY/BoNRw2MX4z+3asBNVbM0esCC08MGa5BEbfTANW9kXLBd1Nu7VRd6rvldmS
-	 H99OXsFTpdIq+gje0/cKkjt64LTgHKLt72mq28zcLfgU0Gmr2tX9KlcQce8YaCppGcQBp
-	 JiUZqQh04mvhUuU0rE+6GFUmDLnVNHkvYnZItFWvOBaUQ4GijB6P1lL6JtP5jhKqb3i8C
-	 2LepNUr6ndGyiF2y+Jl4ySwLrG6nNDIY2SvtvjSwE6zRMgMha0LBf3279QJUszHnLoA==
+	bh=ITCxKpFPFsaq1m7RzM+zZ7zyaKKy2i6e5KgE2Pqoz2U=;
+	b=OOnIUsrtREA4CusgrXi1tgI1XuNWjEv9oAbmMT49U+TnrrbTAsp8pRB0qn8HoJ20SjP8
+	 bnLiGMXSdpC38Ybul8hg3MB8mF1qJ2JDv8lCRSpXqh0wtleDyXay/hGf31WFLgVY9pOqO
+	 9MZDxPZDUytJB0kcsh39WA/NGltSLeIPEja5ps4qFPHdAdn1snEFzb4bpiNNAT8yncU/F
+	 dQCWtMonsbdMijCLnu4nvmnmz7XmTcXKAfbdYrwHMl4OTfRNmB560Dsv7PbbOF8rqGh6x
+	 6o/U2mL10vh8AZSmJ839UZY5lQqbEOxGPg+l0J58bq5d35OmkBdyzTVZsTYwT3WhoGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CK/mUu5Z";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qd69LSCL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CF7606A32C;
-	Thu, 19 Nov 2026 04:21:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36425606A326;
+	Thu, 19 Nov 2026 04:21:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CK/mUu5Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B19B91F000C4;
-	Thu, 19 Nov 2026 04:21:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qd69LSCL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850DB1F000C4;
+	Thu, 19 Nov 2026 04:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062074;
-	bh=EyPVsz7bedONV6zAm+0DtrMXk2SxNrYXo2ri7oPeV1w=;
+	s=korg; t=1795062077;
+	bh=ITCxKpFPFsaq1m7RzM+zZ7zyaKKy2i6e5KgE2Pqoz2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CK/mUu5ZrC4xVA9ta/dWXQ0xw5a7RYl+RNBvtE6IgGdXOr429VllYDHeWfOLdynkZ
-	 eShloIZKQNykLrCRwQQk7ZY41NWtP8Ot1F2B86M1+0sTwDZqjeZQ7G3bWbmitwcsop
-	 ngRTclfv4vgCJg3OaiorUZSy3bF36pxZ3p7xNJdQ=
+	b=qd69LSCLLLhspZzOLFFHIWus4UgqY1VNs1Ch4FdU9P/IMcJj5M7fTKbpIvN7En6B4
+	 a7cXKGa9mPJ+VYKc3mhE4vAaMqtKWFr6BwQjwVGEOq8SitT39CK/U0idCWg7jWo5Ad
+	 8QwzSX1RYVv1SnO0fbAQ/e6QYJBDy1kUfajeuguc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (gemini)" <sashiko-bot@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1728/1848] net/sched: act_api: reject duplicate actions in a batch
-Date: Wed, 18 Nov 2026 16:02:46 +0100
-Message-ID: <20261118150031.935594276@linuxfoundation.org>
+Subject: [PATCH 5.10 1774/1848] ceph: remove unused field `i_cap_migration_resv`
+Date: Wed, 18 Nov 2026 16:03:32 +0100
+Message-ID: <20261118150033.641894129@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,87 +70,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit f67b3ed1308d7a282e2d6202d61af052ab0da39e ]
+[ Upstream commit a200e12135c96893f7c29bdf97f46868132f695d ]
 
-tca_action_gd() builds actions[] with one tcf_action_get_1() per nested
-TCA_ACT_TAB entry.  Each successful lookup takes its own reference to the
-resolved action, so repeated TCA_ACT_INDEX entries in one request yield
-the same pointer in multiple slots.
+This field was added 17 years ago by commit de57606c23afd ("ceph:
+client types") but it was never used.
 
-For RTM_DELACTION, tcf_action_delete() then consumes two references per
-slot: one in tcf_action_put() and one in tcf_idr_delete_index().  A
-duplicate therefore drives the refcount to zero mid-walk -- the delete
-frees the action and removes its IDR slot -- and the next slot calls
-tcf_action_put() on the freed action:
+This reduces the size of `struct ceph_inode_info` by 8 bytes.
 
-  refcount_t: underflow; use-after-free.
-  WARNING: lib/refcount.c:87 at refcount_dec_not_one
-   refcount_dec_and_mutex_lock
-   __tcf_action_put
-   tca_action_gd
-
-Three duplicate entries are enough.  Reject a repeated action while a
-delete batch is built, dropping the reference the extra lookup took, and
-return -EINVAL.  RTM_GETACTION balances its own references and keeps
-accepting duplicate entries.
-
-Conditions to recreate the bug:
-  tc actions add action gact index 100
-  tc actions delete action gact index 100 action gact index 100 \
-                     action gact index 100
-
-Fixes: 16af6067392c ("net: sched: implement reference counted action release")
-Reported-by: Sashiko (gemini) <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260824153903.4143642-1-victor@mojatatu.com
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-K1TH.v1.r3.20261012134653-1@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: de57606c23afd ("ceph: client types")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_api.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ fs/ceph/super.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/sched/act_api.c b/net/sched/act_api.c
-index 4ae060a3b814d..088ee4d11ee82 100644
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -1445,7 +1445,7 @@ static int
- tca_action_gd(struct net *net, struct nlattr *nla, struct nlmsghdr *n,
- 	      u32 portid, int event, struct netlink_ext_ack *extack)
- {
--	int i, ret;
-+	int i, j, ret;
- 	struct nlattr *tb[TCA_ACT_MAX_PRIO + 1];
- 	struct tc_action *act;
- 	size_t attr_size = 0;
-@@ -1470,6 +1470,25 @@ tca_action_gd(struct net *net, struct nlattr *nla, struct nlmsghdr *n,
- 			ret = PTR_ERR(act);
- 			goto err;
- 		}
-+
-+		/* A delete consumes two references per slot (tcf_action_put()
-+		 * and tcf_idr_delete_index()) but each entry takes one, so a
-+		 * repeated action would hit zero mid-walk.  GET balances its
-+		 * own references and keeps accepting duplicates.
-+		 */
-+		if (event == RTM_DELACTION) {
-+			for (j = 0; j < i - 1; j++) {
-+				if (actions[j] != act)
-+					continue;
-+
-+				tcf_action_put(act);
-+				NL_SET_ERR_MSG(extack,
-+					       "Duplicate TC action in a delete batch");
-+				ret = -EINVAL;
-+				goto err;
-+			}
-+		}
-+
- 		attr_size += tcf_action_fill_size(act);
- 		actions[i - 1] = act;
- 	}
+diff --git a/fs/ceph/super.h b/fs/ceph/super.h
+index ef1f253292b2b..aa1dd850b9148 100644
+--- a/fs/ceph/super.h
++++ b/fs/ceph/super.h
+@@ -380,7 +380,6 @@ struct ceph_inode_info {
+ 	wait_queue_head_t i_cap_wq;      /* threads waiting on a capability */
+ 	unsigned long i_hold_caps_max; /* jiffies */
+ 	struct list_head i_cap_delay_list;  /* for delayed cap release to mds */
+-	struct ceph_cap_reservation i_cap_migration_resv;
+ 	struct list_head i_cap_snaps;   /* snapped state pending flush to mds */
+ 	struct ceph_snap_context *i_head_snapc;  /* set if wr_buffer_head > 0 or
+ 						    dirty|flushing caps */
 -- 
 2.53.0
 
