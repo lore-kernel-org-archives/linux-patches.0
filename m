@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031071;
-	b=tJgZ9+MA8GQvwjEx4/zsDgqMg0DhJCMeGlPDaNtJi7500jqwQpQOe8naysNx/XID72xs
-	 p0xuqUe+Qk7Qxy4Zt6YMHfQio3UpGvm/dRdaoQ7fbpnn3nqOOYGYSEDz1cUyOrkK2XJWz
-	 3ZOQYbHJydfH9Wkid4Lho99SCwAFC30TyMkPYOGuUPr7DjAVhUnhmigxC/NbfENm3TpUO
-	 tHDKT4hSmmx5S/udyls7VCUIH+XMSfoh818V0aaJRkSduAZUaxQs46VnMNK+ukZH6ZQh3
-	 FJKBPvX8heRG5hohzcSXdVW+NnebFifx57/LdV1uKzSNeTFixp1Vy1f7L1xWlSBfKoQ==
+	t=1795031073;
+	b=txMKvDuhKJgqxjizIOuyUR3kQFWVs6k/Ux1r02eX4R/icVWsZ5MesmmUdLIF/pIvYNga
+	 //9jLpdYVDpH5cwbQU3H/4w6e89cxtMVCVrczNMZa9w55IaqCFpHfOgYw6zBriAbsjKT1
+	 Lc6b9xzJ4kIeSdSa9mfTsdINdlSATq4mBvUdCfZz5fu5nytRJn6DhnrRWz012mbiuwB8i
+	 abUwVA5KAjnJKxkxy7mBEhtTxyJ14mzQtAUKy0rfSpmdw51EJwQXJzr5La7Ov+O2ZWWdl
+	 e9UYLRpe5yB5OlMw8N27aL6RvRU4D7d5vA9E+KD8G8vsFnbzAbFTu69Ec+53r9uZiqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031071;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031073;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Aby4c3l62de/gOArX0oWhMXJUXTfnBlh4c7tr8g04vk=;
-	b=NV8oHjXCLK3j96Gf7420fBu/KfdHfrutQVUk7iU8E80Zgu+nolJ0Wg7Qqqxv4oMTHFfe
-	 lZ/nkuQ/HZlspzvlQL3+kBzRlKxzMpEpU4CGCh95iQmIr1dvJN+Dz20/XtEuOos725z8i
-	 ZTcfpgS7i+fsj62gRjAMQlcBc5JWQsi9WQaNu+iTFjVy/JHeMOmMajqYUPzjtsfe7hUqQ
-	 nWRFb+Ayd3blsTMTj3m/RyOs9I+u9kXWNdPMaKF3Ju0zuAgr79HNJ9vSyJ482oIOAbi55
-	 L9+pJqvDgw1njRv6qeZ6CiHzj9PeJLAvYMHwf8qx6eNcWJ7hFrv8eTW/M11KXxfFCLQ==
+	bh=NabY3avheq2XKr5IlosJU1+56QaLbVKWpb6Ix7UJWbk=;
+	b=EUxdwZqAPqMp29DUpd23nrVnK1tE1rhC/hAk4gVFYoLg+e5WQqAKR0dAv9x8efI5xLI0
+	 iQykEqyCchwaL9/GhNJLgix1K9oTMCX7+CUvo6HUrYbyR5ySLmmZiR+1gogyD/CGHpSMS
+	 61ssKlHBs1oVPsGeLB9G6DH3mJESE8bZAtYfuBe2LrI2KmTogZsnu+R9fU/nthBIQx8A3
+	 I1kVY7CGZTKwpQiCar9ugebOTFGaGDhwH1+XCirk6Yyn9zQt5OAoMqCD90Mm+VKQO+/6J
+	 PvkOYyE+AXX5zJ39L9Pp7+VJ+5BJ+kCQud0bRsFhfMFIURKWlmrdecv8Et5CtkrgLUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="L/QUPeKw";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VT2SskmG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015B8606A31C;
-	Wed, 18 Nov 2026 19:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91EE606A325;
+	Wed, 18 Nov 2026 19:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L/QUPeKw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB951F000C4;
-	Wed, 18 Nov 2026 19:44:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VT2SskmG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B881F000C4;
+	Wed, 18 Nov 2026 19:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031070;
-	bh=Aby4c3l62de/gOArX0oWhMXJUXTfnBlh4c7tr8g04vk=;
+	s=korg; t=1795031073;
+	bh=NabY3avheq2XKr5IlosJU1+56QaLbVKWpb6Ix7UJWbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L/QUPeKwWM0gZn9RyQ9ezWRTuB7WPNJVgjLwGwDdxhUJXkzzayKSS1y+YhnRisajJ
-	 I/3aOKnUQaS7RZvDrlfJhwFJ3ttqNDXs8Kx/vBjML76xRhuPkWvm3pQDImPhex3Fbq
-	 gYKngFJq5c1EjXZfNVBmuQz8D8GjLnj+cbqqOrrE=
+	b=VT2SskmGNTxEXB+DfguavtQi4b8pZSI0duz7y62cW5lrIYzSTl+a4jdO2D2YIhBuZ
+	 NkumBCuKKUFoRvWfgqekqXHgWhbW3gfnKWrBjIjwhL7yOwtboAJ/bg1bjmb40zdgHb
+	 O6qU5xzzpaNrcvu8GuvpBSbbGjV0HIeqcf/9DGRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jiale Yao <yaojiale02@163.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0876/1756] wifi: ath12k: Reserve space for a string terminator
-Date: Wed, 18 Nov 2026 15:50:03 +0100
-Message-ID: <20261118150044.263645709@linuxfoundation.org>
+Subject: [PATCH 6.12 0922/1756] dt-bindings: dma: dma40: Restore disabled-channels
+Date: Wed, 18 Nov 2026 15:50:49 +0100
+Message-ID: <20261118150046.683709740@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,41 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 13b15eabe2c541b80406166964cdc8ccb5e9c32a ]
+[ Upstream commit 38d97b1122e02f6b8859e660990aaeda1c32e00f ]
 
-ath12k_write_htt_stats_type() accepts count == size, which fills the
-zero-initialized buffer without a terminating NUL. sscanf() then reads
-beyond the buffer.
+The conversion of the DMA40 binding to YAML omitted the optional
+disabled-channels property from the original text binding. The driver still
+parses this property, but additionalProperties: false rejects any device
+tree using it.
 
-Reject input that leaves no room for the trailing NUL.
+Restore disabled-channels and constrain it to the physical channel range.
+Also constrain memcpy-channels to the limits enforced by the driver and
+reject duplicate channel entries in both properties.
 
-Fixes: 8c7a5031a6b0 ("wifi: ath12k: Fix buffer overflow in debugfs")
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20261003095913.575108-1-yaojiale02@163.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 23fbc87c8ae6 ("dt-bindings: dma: Rewrite ST-Ericsson DMA40 to YAML")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://patch.msgid.link/20260918-dma40-dt-disabled-channels-v1-1-0f691109d8d3@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/debugfs_htt_stats.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../devicetree/bindings/dma/stericsson,dma40.yaml  | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath12k/debugfs_htt_stats.c b/drivers/net/wireless/ath/ath12k/debugfs_htt_stats.c
-index 6f2e7ecc66af7..df95a4ebace84 100644
---- a/drivers/net/wireless/ath/ath12k/debugfs_htt_stats.c
-+++ b/drivers/net/wireless/ath/ath12k/debugfs_htt_stats.c
-@@ -1646,7 +1646,7 @@ static ssize_t ath12k_write_htt_stats_type(struct file *file,
- 	const int size = 32;
- 	int num_args;
+diff --git a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
+index 7b94d24d5ef42..73a69a1547701 100644
+--- a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
++++ b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
+@@ -145,8 +145,22 @@ properties:
+     items:
+       maxItems: 1
  
--	if (count > size)
-+	if (count >= size)
- 		return -EINVAL;
++  disabled-channels:
++    $ref: /schemas/types.yaml#/definitions/uint32-array
++    minItems: 1
++    maxItems: 31
++    uniqueItems: true
++    items:
++      maximum: 31
++    description: Physical channels that cannot be used by the DMA engine.
++
+   memcpy-channels:
+     $ref: /schemas/types.yaml#/definitions/uint32-array
++    minItems: 1
++    maxItems: 8
++    uniqueItems: true
++    items:
++      maximum: 63
+     description: Array of u32 elements indicating which channels on the DMA
+       engine are eligible for memcpy transfers
  
- 	char *buf __free(kfree) = kzalloc(size, GFP_KERNEL);
 -- 
 2.53.0
 
