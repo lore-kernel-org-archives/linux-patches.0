@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042777;
-	b=fsabddSvQVmVwjbs5qBrPOnI3e193PNIZWt1JM2YE3BFR3WzztOn5fwil0tPV5B8bU4L
-	 g0yOw3/PP3hddv/PtpertHBtgvUViD8KstiO+GODKSl4/kVlsT+NCNC9dE25v+Y4fU1ju
-	 tAnVkdClApaPds6+6ViQpfocIrbdXvykDnclPa5iWtjTasBax+Oy988P+gwpjBN7Ut9Ba
-	 IqCrGF9TXooEGu9XBH0m2GpFIcH5liRtqdL95hf85XaNH6EddrlSwi8cWT1wjauIcV9SE
-	 LgllbRbagNl5V9Cz1NZW2puxtxC1mHRXQRTW15tLOEDO6tznZAtS+86w86cmeHdvPQw==
+	t=1795042779;
+	b=jFwO/FR1hhhgxkE1IATpu+deKSF1QfpUsZ2cG07iQvUxH2SdwL5fPliPgeMev4OJMEzb
+	 czUFmeoTxWtDBBjHky7butYZBzVZvK+mVMv3n2IJoM1WqtD1p75AWsbGRdUC8SCEFIkq4
+	 BoZu9vi45rt2z+FkxnOvV21YpetBfZ6yqPb+j+iyctsnJlLR5vdoactMd9e4EiLOPAV/Q
+	 mu3wURpJKStKx1iXQ5lHkqnE3kqZnVLvURTp8JKTEKnkjYiyzTdDuOPRJJ6Z71LIJf83t
+	 xzPPUmZlyNPMxI6BPje0s+Ubdkyy42vvVRZkRMt9TqR2yKbtutjlmLVD/E0vgbd3N2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042777;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042779;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UcPFuXfcKDogEy2CT7tUmk/Uzxtw23WK89p4aT1L/qs=;
-	b=EOnsKxxlVT9lbr3JwXh306usSKzAXUm9fJl9aFciZ0ZY/6driHuTzb5lgs01p1VFmhqn
-	 NMQkwJ/Le7A3J0E1YBxG2cswcQyw2tEGZXDZAMoYumEhz23sNK8xrpxdBzdNdXSv5W3AG
-	 Gm9ThtpVH6ZLL90nU/0c3KrYdGm6JCzOz8T4365sdSTqwPq2qu8ZGrz5legpvKQiL0F67
-	 z3x6duSCxROicthrlPog4ULLbUuZd8rl5ISXj/YUaLrtJnPz3ZbTWhClOlkOEjkQWPcpX
-	 TWdliS8eb14h/N8yRb+1ILWahWMnJCD9YUMKxtLKs0jIzs72gfRBRQH86gzPyVG3PWw==
+	bh=nhJG5BXaRXHcggxJ6Wv62jvK3e7uoGmwY6xgUf5rB+8=;
+	b=UWatemeLH2xmN1MSug9iFz8U6dIvhA6bHSOYYn6ckz8szDU/0siM41rHruoePrQZHcMO
+	 F0+ehREJ/9NpzFjgAGH4HavJ4XFDfbKT2yxFr4Vf6u5+8FRrkpzDm0bY9oeOnINLDVnY9
+	 ePBlQ6ev/4cyQKl+TwJIk4LjHfZQA7jvPQ+qAIb6X4tnrlhpHej7jK1C5sqijaDAmQL02
+	 JEtKYeE7LDjDK5wDJ682PWAM1ws4IPAAxyBbYG27gTu9SFnPWq53V4fB/F5R/+7CkUE3i
+	 lsjpev2UDWk9sPpGhcwCsMHuDmBVDFDWYD7p2blu2nPK5Qn3NVzvm8IMChOlype9asA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IWZRiJvR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uG6NGONf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F28606A31C;
-	Wed, 18 Nov 2026 22:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F218606A31C;
+	Wed, 18 Nov 2026 22:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IWZRiJvR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 363251F000C4;
-	Wed, 18 Nov 2026 22:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uG6NGONf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 001CE1F000C4;
+	Wed, 18 Nov 2026 22:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042776;
-	bh=UcPFuXfcKDogEy2CT7tUmk/Uzxtw23WK89p4aT1L/qs=;
+	s=korg; t=1795042779;
+	bh=nhJG5BXaRXHcggxJ6Wv62jvK3e7uoGmwY6xgUf5rB+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IWZRiJvR/as+oNvleRrYqzWf3TELU7EYskH/v0fJyHwR+KIa3/8G9KLa2lVULgJHV
-	 CH9XGLK2C1P3zybWtar/htoKuVbCYoA2yu1t1RDUyKqdfW7zTKw1j2WZuMCERKB6ui
-	 63vPKVasNJfJhIIp9eygToS/rQIpRHlEbE5VyWd0=
+	b=uG6NGONfTePLV6kcITSOnx0O+4YBqBN3E/WIraRzmIVZo0BB0zgAbZVexWh++DBuq
+	 KFENwmpx2U5SXH1iY4r7d1cEDkge98ld8UC0Y5qCl05/mAVThDtuHlbFBlQp7AXTuM
+	 ahDjGIuH9rKU6TgFQo3PMqmg06mkCmSdX4rS1pME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominik Maier <dmnk@google.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3251/3318] xattr: always invoke cap_convert_nscap() for security.capability writes
-Date: Wed, 18 Nov 2026 16:04:33 +0100
-Message-ID: <20261118150457.174127256@linuxfoundation.org>
+Subject: [PATCH 6.6 3242/3318] net: mctp: mctp_fraq_queue should take ownership of passed skb
+Date: Wed, 18 Nov 2026 16:04:24 +0100
+Message-ID: <20261118150456.932696262@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,65 +68,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominik Maier <dmnk@google.com>
+From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-[ Upstream commit 0f4a9e682f7fa5becc3af7204606d9bf4780e425 ]
+[ Upstream commit 773b27a8a2f00ce3134e92e50ea4794a98ba2b76 ]
 
-Commit 8db6c34f1dbc ("Introduce v3 namespaced file capabilities") changed
-cap_inode_setxattr() to return 0 unconditionally for XATTR_NAME_CAPS
-("security.capability") and moved capability validation into
-cap_convert_nscap(), but placed the call inside the "if (size)" block in
-setxattr(). Commit 7c03e2cda4a5 ("vfs: move cap_convert_nscap() call into
-vfs_setxattr()") preserved that "size &&" condition in vfs_setxattr():
+As of commit f5d83cf0eeb9 ("net: mctp: unshare packets when
+reassembling"), we skb_unshare() in mctp_frag_queue(). The unshare may
+invalidate the original skb pointer, so we need to treat the skb as
+entirely owned by the fraq queue, even on failure.
 
-	if (size && strcmp(name, XATTR_NAME_CAPS) == 0) {
-		error = cap_convert_nscap(idmap, dentry, &value, size);
-		...
-	}
-
-For security.* extended attributes, xattr_permission() skips
-inode_permission(MAY_WRITE) and leaves permission checks to the security
-module, while cap_inode_setxattr() returns 0 for XATTR_NAME_CAPS assuming
-cap_convert_nscap() has already validated the write. Because
-__vfs_setxattr() treats size == 0 as an empty attribute write (setting
-value = "") rather than a removal, calling setxattr(2) on
-"security.capability" with size == 0 bypasses cap_convert_nscap() and
-allows an unprivileged caller without CAP_SETFCAP or write permission on
-the target inode to write a 0-byte security.capability xattr (or
-overwrite an existing one).
-
-When that binary is subsequently executed, get_vfs_caps_from_disk() reads
-the 0-byte security.capability xattr and fails the
-size < sizeof(magic_etc) check with -EINVAL, causing execve(2) to fail
-with -EINVAL.
-
-Always invoke cap_convert_nscap() when strcmp(name, XATTR_NAME_CAPS) == 0
-regardless of size, so that 0-byte writes hit the existing !*ivalue /
-!validheader() checks in cap_convert_nscap() and are rejected with
--EINVAL.
-
-Fixes: 8db6c34f1dbc ("Introduce v3 namespaced file capabilities")
-Signed-off-by: Dominik Maier <dmnk@google.com>
-Link: https://patch.msgid.link/20261022232119.2537209-1-dmnk@google.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: f5d83cf0eeb9 ("net: mctp: unshare packets when reassembling")
+Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Link: https://patch.msgid.link/20250829-mctp-skb-unshare-v1-1-1c28fe10235a@codeconstruct.com.au
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: d2bfe74a8fe2 ("net: mctp: free reassembly head skb when key_add fails on SOM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xattr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mctp/route.c | 35 +++++++++++++++++++----------------
+ 1 file changed, 19 insertions(+), 16 deletions(-)
 
-diff --git a/fs/xattr.c b/fs/xattr.c
-index 20a038b06d127..7ba337bb640f2 100644
---- a/fs/xattr.c
-+++ b/fs/xattr.c
-@@ -310,7 +310,7 @@ vfs_setxattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 	const void  *orig_value = value;
- 	int error;
+diff --git a/net/mctp/route.c b/net/mctp/route.c
+index 12a9e2af8cbc4..d3b20981e4ab8 100644
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -328,6 +328,7 @@ static void mctp_skb_set_flow(struct sk_buff *skb, struct mctp_sk_key *key) {}
+ static void mctp_flow_prepare_output(struct sk_buff *skb, struct mctp_dev *dev) {}
+ #endif
  
--	if (size && strcmp(name, XATTR_NAME_CAPS) == 0) {
-+	if (strcmp(name, XATTR_NAME_CAPS) == 0) {
- 		error = cap_convert_nscap(idmap, dentry, &value, size);
- 		if (error < 0)
- 			return error;
++/* takes ownership of skb, both in success and failure cases */
+ static int mctp_frag_queue(struct mctp_sk_key *key, struct sk_buff *skb)
+ {
+ 	struct mctp_hdr *hdr = mctp_hdr(skb);
+@@ -337,8 +338,10 @@ static int mctp_frag_queue(struct mctp_sk_key *key, struct sk_buff *skb)
+ 		& MCTP_HDR_SEQ_MASK;
+ 
+ 	if (!key->reasm_head) {
+-		/* Since we're manipulating the shared frag_list, ensure it isn't
+-		 * shared with any other SKBs.
++		/* Since we're manipulating the shared frag_list, ensure it
++		 * isn't shared with any other SKBs. In the cloned case,
++		 * this will free the skb; callers can no longer access it
++		 * safely.
+ 		 */
+ 		key->reasm_head = skb_unshare(skb, GFP_ATOMIC);
+ 		if (!key->reasm_head)
+@@ -352,10 +355,10 @@ static int mctp_frag_queue(struct mctp_sk_key *key, struct sk_buff *skb)
+ 	exp_seq = (key->last_seq + 1) & MCTP_HDR_SEQ_MASK;
+ 
+ 	if (this_seq != exp_seq)
+-		return -EINVAL;
++		goto err_free;
+ 
+ 	if (key->reasm_head->len + skb->len > mctp_message_maxlen)
+-		return -EINVAL;
++		goto err_free;
+ 
+ 	skb->next = NULL;
+ 	skb->sk = NULL;
+@@ -369,6 +372,10 @@ static int mctp_frag_queue(struct mctp_sk_key *key, struct sk_buff *skb)
+ 	key->reasm_head->truesize += skb->truesize;
+ 
+ 	return 0;
++
++err_free:
++	kfree_skb(skb);
++	return -EINVAL;
+ }
+ 
+ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
+@@ -481,18 +488,16 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
+ 			 * key isn't observable yet
+ 			 */
+ 			mctp_frag_queue(key, skb);
++			skb = NULL;
+ 
+ 			/* if the key_add fails, we've raced with another
+ 			 * SOM packet with the same src, dest and tag. There's
+ 			 * no way to distinguish future packets, so all we
+-			 * can do is drop; we'll free the skb on exit from
+-			 * this function.
++			 * can do is drop.
+ 			 */
+ 			rc = mctp_key_add(key, msk);
+-			if (!rc) {
++			if (!rc)
+ 				trace_mctp_key_acquire(key);
+-				skb = NULL;
+-			}
+ 
+ 			/* we don't need to release key->lock on exit, so
+ 			 * clean up here and suppress the unlock via
+@@ -510,8 +515,7 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
+ 				key = NULL;
+ 			} else {
+ 				rc = mctp_frag_queue(key, skb);
+-				if (!rc)
+-					skb = NULL;
++				skb = NULL;
+ 			}
+ 		}
+ 
+@@ -521,17 +525,16 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
+ 		 */
+ 
+ 		/* we need to be continuing an existing reassembly... */
+-		if (!key->reasm_head)
++		if (!key->reasm_head) {
+ 			rc = -EINVAL;
+-		else
++		} else {
+ 			rc = mctp_frag_queue(key, skb);
++			skb = NULL;
++		}
+ 
+ 		if (rc)
+ 			goto out_unlock;
+ 
+-		/* we've queued; the queue owns the skb now */
+-		skb = NULL;
+-
+ 		/* end of message? deliver to socket, and we're done with
+ 		 * the reassembly/response key
+ 		 */
 -- 
 2.53.0
 
