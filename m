@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028547;
-	b=FXm2xzAHihlR6dbnrZrvQYcbpSPIzfbT8nxHBS41uZYKiuCeDRCANQvpiJRkabagPPmI
-	 /rSJTUnAFV/QoGspqa9wVbVFLnLXV0lrBRCIotwZCpFaFT8mHfsxBzfdoWr7QB67cCnDu
-	 NZacunUA+aGcssHMe4xDSs1kVgvqRPFr34x1c7wM6ezaVqRTUP45HuLS7uXnyuQr3LSHS
-	 2pXYhR4cNT3nQSHDn9xZYz3vLqU/H4SxK9LmXZ/f/2cbUnOYVJkEAp+u6A+rX1eDtDibM
-	 nUUkOMuLjdESzoDvPTUGWUMgz9VA11RRSi/JRHZer9KnBcVFZYnAgxWRP2xU0wDCDAQ==
+	t=1795028549;
+	b=CeXa/6bWKH8jak7pYZKabcybyLONEbru7VMOCW9j9VNWO462sEO9E3ZAecG3ePpqpR4I
+	 9jrmbj19EisjT44XP8emJRBIQGbY1uEAopHfttI8vehCdMaXLEpoEp4hxwPJK0g29pmA7
+	 yxXcsIERV3CEbKc9J/pSZaRbryXpjE66XbFrNjXuOpZPrBJLlG3Q8Q40UMCHo2a4SlA7c
+	 5VbEX8QNHUjcmNjWmA85mYCRd1MEqMW8oiOJ+GUmLq+X2nMw1hzW7LGNH1ag3GitCb+gm
+	 7NHx5SEatkXvFx114fuHcv8anhyXykzwP8rpXWaF6boxIJkNvG6MR7vB9NaCJP/zqxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028547;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028549;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=JnqHH+Ojjy1PUVjOCeVRYU+a1yXcIJOK7cJHmGgKPG8=;
-	b=GVZ9fikTuwp1vm5F2Kxd/fEEaO8Yzu6i2sHMlhlZA2eKvcbsihf78dfe5UOfVvlQriBt
-	 or6fpvZhLv3UDBE8u+Iextf6FqC0lVMO9YMKqNZiWMCk04GmChrb32ZDKod0MJrnWxwQV
-	 i09kV9B3BMOuEJmAVtMEUagtQ11P6n1NNeDAXXSB4rbnavlYqk1y8fYKIyteMIpQGRWiE
-	 wif2I0DCLqzZGzGk+aedTyJ5Noauc8j+CeF76OAe+kKv0UURWz7B+mzjDaIijzkTudB+M
-	 HY6KSoaRCHtRZyN8VRU4oWJ9LrAoc7BmvhtBpknGZOnnUlpbcF5pvuSC7UEZBeXaNEQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=zewjrRdSfYVp52sJ2kAgifvqaIUEXfQeEmH4dTEAC54=;
+	b=Hpp7JXbV7n4JioRkNpN7p2Z29qrAR4/zHDeQJpgdAFTEJXvTzO55fZa8E51atxzh4qV2
+	 qbczYHtIeI1Oc4HHApG+vstgKfotc4oV8V8jhvl6lgju+OwdXU32GC03jreggbpuPmIZL
+	 mYM8Lq6Q/Y4gKG0/XbAGueqgQSkGiPn1CWusZ+ORElKcwo3DF/9FT4timLycnugIEs0+C
+	 XPrHlKcbnHqbKF5IOTil3y6wMq3qVtuieVG81df5loDKOqQ9zcIsRUKsvQif8H++Wfm4d
+	 Nm2v2rt3+OBFJNitP8q0WjU4kCCcKWNxVaegxZt7XcfPqiSyoQrMtuzTRIaAjE9e3GQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A+iV3wWI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pWfPsCnn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC318606A31C;
-	Wed, 18 Nov 2026 19:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DAC606A320;
+	Wed, 18 Nov 2026 19:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A+iV3wWI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508C41F000C4;
-	Wed, 18 Nov 2026 19:02:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pWfPsCnn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F99A1F000C4;
+	Wed, 18 Nov 2026 19:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028546;
-	bh=JnqHH+Ojjy1PUVjOCeVRYU+a1yXcIJOK7cJHmGgKPG8=;
+	s=korg; t=1795028549;
+	bh=zewjrRdSfYVp52sJ2kAgifvqaIUEXfQeEmH4dTEAC54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A+iV3wWIyORjm5rNsXx4tgEuoijO802jHe1j5dP7L0vE8V1Ed/0RWXKDk+xqq7zqc
-	 oAF7cZa6Y2Z5nGQfBv23bOOLxo+ntLbufWEqzUmKNTgK1LxylfPwxjZly6lgegMJ9U
-	 mZMtfFKfYaQg6Voom/TFj8ALlAecAy5BQqaKsJ0o=
+	b=pWfPsCnnjLX+M3q8zgPBCxY2pxNkQMf1gC8e7G+5ACf5nb61sn6uIqn3yVjsKwUap
+	 fBjzO7N8Mg2vCCr1FzISyJ9nr62WH8k4kMcYxWpm8frLWEViR1RXJDDy43jF6DkYG7
+	 fEGPXixAb029BFapSPsLWWQuYl6L+HlMWlbI9DQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Xu Xin <xu.xin16@zte.com.cn>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0035/1756] mm/ksm: mark migration stores with WRITE_ONCE()
-Date: Wed, 18 Nov 2026 15:36:02 +0100
-Message-ID: <20261118150009.251535402@linuxfoundation.org>
+Subject: [PATCH 6.12 0036/1756] platform/x86: hp-wmi: Order DMI board name arrays
+Date: Wed, 18 Nov 2026 15:36:03 +0100
+Message-ID: <20261118150009.288248307@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -65,86 +61,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit d3863210464f69c18615cbe400d48a6e53e770d4 ]
+[ Upstream commit 68779adbabdbb1891ba4d9b8c7d3be99ed5e0b3d ]
 
-ksm_get_folio() deliberately samples stable_node->kpfn and folio->mapping
-without taking the folio lock because the KSM folio may be migrated
-concurrently.  folio_migrate_ksm() updates the same state using plain
-assignments.
+The hp-wmi driver has a number of arrays that are getting new entries
+and all/most entries have been added to the end of the array. As a
+result, the numerical order is mixed up in a few entries.
 
-The reader can load the old kpfn, then the migrator can store the new
-kpfn, execute smp_wmb(), and clear the old folio's mapping before the
-reader checks that mapping.  Thus the initial kpfn load can overlap its
-update and the subsequent mapping load can overlap the clear, with no
-common lock.  This leaves marked READ_ONCE() accesses racing with plain
-stores.
+Reorder the array entries. Split lines for each two leading chars to
+make the arrays easier to read.
 
-The kernel reported:
+Add also trailing commas.
 
-  BUG: KCSAN: data-race in folio_migrate_ksm / ksm_get_folio
-
-  read (marked) to 0xffff8ce401421330 of 8 bytes by task 48 on cpu 3:
-   ksm_get_folio+0x7f/0x2a0
-   ksm_scan_thread+0x1635/0x3330
-   kthread+0x1af/0x1f0
-
-  write to 0xffff8ce401421330 of 8 bytes by task 102 on cpu 1:
-   folio_migrate_ksm+0x6a/0xd0
-   folio_migrate_flags+0x193/0x420
-   __migrate_folio.isra.0+0x162/0x1a0
-   migrate_folio+0x4c/0x70
-   move_to_new_folio+0xd6/0x170
-
-Use WRITE_ONCE() for both stores to pair them with the existing lockless
-reads.  This preserves the existing smp_wmb()/smp_rmb() migration protocol
-and control flow while preventing compiler transformations of the shared
-accesses.
-
-Link: https://lore.kernel.org/20260824112433.191301-1-nicoyip.dev@gmail.com
-Fixes: c8d6553b9580 ("ksm: make KSM page migration possible")
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: Xu Xin <xu.xin16@zte.com.cn>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: Replaced FOLIO_MAPPING_KSM with the equivalent PAGE_MAPPING_KSM flag. ]
+Link: https://patch.msgid.link/20251128120215.4450-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Stable-dep-of: d35a1ea827a2 ("platform/x86: hp-wmi: Add OMEN board 8A17 thermal profile support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/ksm.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/platform/x86/hp/hp-wmi.c | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/mm/ksm.c b/mm/ksm.c
-index e64a0dbcad5dd..9a98aa97317a4 100644
---- a/mm/ksm.c
-+++ b/mm/ksm.c
-@@ -1067,7 +1067,8 @@ static inline void folio_set_stable_node(struct folio *folio,
- 					 struct ksm_stable_node *stable_node)
- {
- 	VM_WARN_ON_FOLIO(folio_test_anon(folio) && PageAnonExclusive(&folio->page), folio);
--	folio->mapping = (void *)((unsigned long)stable_node | PAGE_MAPPING_KSM);
-+	WRITE_ONCE(folio->mapping,
-+		   (void *)((unsigned long)stable_node | PAGE_MAPPING_KSM));
- }
+diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
+index 02227a4392907..d189da2205609 100644
+--- a/drivers/platform/x86/hp/hp-wmi.c
++++ b/drivers/platform/x86/hp/hp-wmi.c
+@@ -59,12 +59,16 @@ MODULE_ALIAS("wmi:5FB7F034-2C63-45E9-BE91-3D44E2C707E4");
+  * contains "PerformanceControl".
+  */
+ static const char * const omen_thermal_profile_boards[] = {
+-	"84DA", "84DB", "84DC", "8574", "8575", "860A", "87B5", "8572", "8573",
+-	"8600", "8601", "8602", "8605", "8606", "8607", "8746", "8747", "8749",
+-	"874A", "8603", "8604", "8748", "886B", "886C", "878A", "878B", "878C",
+-	"88C8", "88CB", "8786", "8787", "8788", "88D1", "88D2", "88F4", "88FD",
+-	"88F5", "88F6", "88F7", "88FE", "88FF", "8900", "8901", "8902", "8912",
+-	"8917", "8918", "8949", "894A", "89EB", "8BAD", "8A42", "8A15"
++	"84DA", "84DB", "84DC",
++	"8572", "8573", "8574", "8575",
++	"8600", "8601", "8602", "8603", "8604", "8605", "8606", "8607", "860A",
++	"8746", "8747", "8748", "8749", "874A", "8786", "8787", "8788", "878A",
++	"878B", "878C", "87B5",
++	"886B", "886C", "88C8", "88CB", "88D1", "88D2", "88F4", "88F5", "88F6",
++	"88F7", "88FD", "88FE", "88FF",
++	"8900", "8901", "8902", "8912", "8917", "8918", "8949", "894A", "89EB",
++	"8A15", "8A42",
++	"8BAD",
+ };
  
- #ifdef CONFIG_SYSFS
-@@ -3258,7 +3259,7 @@ void folio_migrate_ksm(struct folio *newfolio, struct folio *folio)
- 	stable_node = folio_stable_node(folio);
- 	if (stable_node) {
- 		VM_BUG_ON_FOLIO(stable_node->kpfn != folio_pfn(folio), folio);
--		stable_node->kpfn = folio_pfn(newfolio);
-+		WRITE_ONCE(stable_node->kpfn, folio_pfn(newfolio));
- 		/*
- 		 * newfolio->mapping was set in advance; now we need smp_wmb()
- 		 * to make sure that the new stable_node->kpfn is visible
+ /* DMI Board names of Omen laptops that are specifically set to be thermal
+@@ -72,7 +76,8 @@ static const char * const omen_thermal_profile_boards[] = {
+  * the get system design information WMI call returns
+  */
+ static const char * const omen_thermal_profile_force_v0_boards[] = {
+-	"8607", "8746", "8747", "8749", "874A", "8748"
++	"8607",
++	"8746", "8747", "8748", "8749", "874A",
+ };
+ 
+ /* DMI board names of Omen laptops that have a thermal profile timer which will
+@@ -80,12 +85,13 @@ static const char * const omen_thermal_profile_force_v0_boards[] = {
+  * "balanced" when reaching zero.
+  */
+ static const char * const omen_timed_thermal_profile_boards[] = {
+-	"8BAD", "8A42", "8A15"
++	"8A15", "8A42",
++	"8BAD",
+ };
+ 
+ /* DMI Board names of Victus laptops */
+ static const char * const victus_thermal_profile_boards[] = {
+-	"8A25"
++	"8A25",
+ };
+ 
+ enum hp_wmi_radio {
 -- 
 2.53.0
 
