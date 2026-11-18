@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044423;
-	b=B0SnphNPVGPjehmT8S07x60n1pZpWprgY6xtByTjMznqvjeFpXhXdsxvAYfZthmiTmnQ
-	 7RJ5B/ANBS7vbootTABAH8qKDxFXfK+V8+X+V7x/lheJXIZKgZssU0xJlDxWX70vUZjrH
-	 pDpK3aL+k2TNilAlsdkENRWcCQbO4bpJ1OGrTxGQG94EHTVNIjY/PrJ2c2/WNYBepa1DB
-	 +HNM2YDKBwy+ExmFWNrDH4mI5YvHtPmtqjtkxHboect47CxYtuat1KB8wPxng1kYexYPQ
-	 sNDy7Q1g+7uQL+Podb2cH1dIpGbsjCTKnpdG7fGzaKsSyx29JdSNRemynJm/2bejoLA==
+	t=1795044426;
+	b=GKpE6GTUOdu2DhTldmUM7SQ/b7ZM+DyvltQ2bIjJV/QJwwvUdenoTXGIiP9qKmTvZGJ3
+	 +Ry/Mr+eAbfpEAM+nY9Zdb2yymoMU47PCwlqinUP9IG2EZTcYAxlTfqt33X77ZXtAqMA5
+	 RSd+TSRUUxuESqh4MVxh9BwYCpAoneOpRfCb81islgUtmGSq65IVmd/4Qjakpa6IV2GHa
+	 6XjoV+JkfI9woSNi/iFpns1aqZ3UDayJYwuvxCuOwJnY8bld/elQvIxCLmqkRE1zzQMBz
+	 /2iKeoVg5v8obgrFlmHh2Lt+4ulfWtQens53AVCWYRXR9YnwtJm+3rih6C6lyNW93Eg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044423;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044426;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rr8v9NVbnK1X5e0XuZMyQSUraiik81ZEhsdKo4xsFfs=;
-	b=BidzeVHoNtQX6Wrk6brmwqKoUs1dAQanoh8cTJRjvUVWbEpn5VATniKoS3BxNuO4IlIf
-	 NdDPEkKbatzM11D80RAUe68cdFq4dogax3QfJ02VVgl6mBKCDU7I8bjegD5/Jzpujvq0c
-	 0zDbk5RrqkEK2sBr/Pr8JdL9HyNz4Dsn2BCyhZ853BkQR322nh9M+ZvaGqofZsczNxCBe
-	 IAqS1OE0uB+MlanMJfTvZHihnimmbkQzpAG84hhRmhR3hsvfUXP5w26XE3QIFhaTynUga
-	 ELy/na52l6IA76bAdsGp1vQAd0J/RdQ9HiHCfEpZMiaw0/aozIat+23tNSDnDg54cWg==
+	bh=IRYEVhpqgY3p1x5Hyvz/BIih5RdKhNGFFhM9sHXI0wE=;
+	b=Q8cp11NapCkiEjmnjcsXYFdGH2tqCGk0fJDJRJdHna/vl/iAdaBNZDXzK6uVp7LKMlE9
+	 ZEOTLhwz7/NI94enFG//+8fTtkQll2Z+5FIQ+M29JjV4HFOZxju8nF+e3Mu/AxF+6TiPl
+	 e+n55MfJAjUobLpXsb368IyJmNGFagAkOTW6grJIRxif76h/1GvD6xB4ceLgqOGhC3fkR
+	 0BZtQAaHLFfr8VNh5KLKlNl3j9MZlBPTAuoR2SFSXaTd8oItdlOFSDEByDlJqwmVjdjjx
+	 ULr8hNLKTE3nOnh9ZMjRV+vIr3HHSwIO6qrGJVMWsiCftLVre7QFwAAR/XIpuecI8DQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n9uS7xKc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WNQCkNb4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F638606A320;
-	Wed, 18 Nov 2026 23:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EB2606A325;
+	Wed, 18 Nov 2026 23:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n9uS7xKc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A971F000C4;
-	Wed, 18 Nov 2026 23:27:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WNQCkNb4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54CC1F000C4;
+	Wed, 18 Nov 2026 23:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044423;
-	bh=rr8v9NVbnK1X5e0XuZMyQSUraiik81ZEhsdKo4xsFfs=;
+	s=korg; t=1795044426;
+	bh=IRYEVhpqgY3p1x5Hyvz/BIih5RdKhNGFFhM9sHXI0wE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n9uS7xKc5jptYkCt1Icb+CFheVdI9Dy/EyLutk9/iwhS4NWgxr4q0Te/VlmMg7TQQ
-	 D7zvTPqo8j0b+heN4TirWqdg8Xv8mp7cNvYcLoiNBaC2xscDqXGXz7QxbyZ/GSZVti
-	 9+brsSn01vAeLNVjkrJ67Jkzk4zj5U3ItyI/d8K0=
+	b=WNQCkNb4MKfYCoj7tuold2iNhj+UCJzIod0qPPeZF7CzPWvMejLArdz0cRf4n/zwf
+	 T9DV2x8WQaSZKHOMfysBanszXH85v5TQHtNCfEMRH6EHPO7pCh5+WefIopjXTy+L7A
+	 fJl9OO1QoC7aUc+vEKAGsPtR27O7andlOkYKeCtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 0560/2857] media: imx-jpeg: cancel timeout worker when streaming stops
-Date: Wed, 18 Nov 2026 15:26:34 +0100
-Message-ID: <20261118150221.656975366@linuxfoundation.org>
+	syzbot+302b9b575a06733ff60c@syzkaller.appspotmail.com,
+	Rik van Riel <riel@surriel.com>,
+	Sean Young <sean@mess.org>
+Subject: [PATCH 6.1 0561/2857] media: redrat3: fix UAF in probe error path leaving rc device registered
+Date: Wed, 18 Nov 2026 15:26:35 +0100
+Message-ID: <20261118150221.693631052@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,68 +68,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Rik van Riel <riel@surriel.com>
 
-commit 78fdfbf117c409273eecbfa7a528ef42358a0e38 upstream.
+commit af452b9e01331b5338a1e5141624f17607239207 upstream.
 
-Each per-fd context ctx owns a delayed_work (ctx->task_timer, callback
-mxc_jpeg_device_run_timeout) armed via schedule_delayed_work() at the end
-of mxc_jpeg_device_run() to recover a stalled encode/decode job. The only
-existing cancellation is cancel_delayed_work() in the frame-done IRQ
-handler, which de-queues a pending work item but does not wait for a
-callback that has already started, and it only runs when a frame completes.
+redrat3 stores its device name and phys path inside the main rr3
+structure, and the rc device's device_name and input_phys point into
+rr3. When the RC device is registered, it keeps those pointers.
 
-When the fd is closed while a job is in flight (the frame-done IRQ has not
-fired yet), nothing syncs the worker before mxc_jpeg_release() frees ctx
-with kfree() after v4l2_m2m_ctx_release(). A queued or executing
-mxc_jpeg_device_run_timeout() can then recover ctx through
-container_of(&ctx->task_timer) and dereference it (ctx->mxc_jpeg,
-slot_data, dev_warn) after ctx has been freed.
+  KASAN: slab-use-after-free in string_nocheck lib/vsprintf.c:648
+  Read of size 1 at addr ffff888051fda758 by task udevd/7464
+  Call Trace:
+   string_nocheck lib/vsprintf.c:648 [inline]
+   string+0x216/0x2d0 lib/vsprintf.c:730
+   vsnprintf+0x74a/0xef0 lib/vsprintf.c:2945
+   vscnprintf+0x41/0x90 lib/vsprintf.c:3014
+   sysfs_emit+0x10e/0x180 fs/sysfs/file.c:761
+   input_dev_show_name+0x58/0x70 drivers/input/input.c:1282
 
-Cancel the worker from mxc_jpeg_stop_streaming(). The cancel cannot live
-in mxc_jpeg_release(): mxc_jpeg_device_run() arms the timer while holding
-only hw_lock, not the mxc_jpeg->lock mutex that release holds, so a cancel
-in release could still race a concurrent mxc_jpeg_device_run() that
-re-arms the timer afterwards. mxc_jpeg_stop_streaming() instead runs inside
-v4l2_m2m_ctx_release() -> vb2_queue_release(), i.e. after
-v4l2_m2m_cancel_job() has set TRANS_ABORT and waited for any in-flight job
-to finish (so __v4l2_m2m_try_queue() will not queue and v4l2_m2m_try_run()
-will not run any further job for this context, which prevents
-mxc_jpeg_device_run() from re-arming the timer) and before the m2m context
-is freed. cancel_delayed_work_sync() removes a pending work item and waits
-for a running callback, so the worker can no longer race with the
-subsequent kfree(). The cancel is placed before the buffer-release loop so
-a concurrently running timeout callback cannot race with it over the same
-buffers. If the frame-done IRQ canceled a still-pending timer, this cancel
-is a no-op; if the timeout callback has already started, it waits for the
-callback to finish. The same mxc_jpeg_stop_streaming() call is also
-reached from VIDIOC_STREAMOFF, which drains the worker early, although
-STREAMOFF itself does not free ctx -- the use-after-free arises only
-when the fd is later closed.
+  Allocated by task 10:
+   redrat3_dev_probe+0x477/0x2570 drivers/media/rc/redrat3.c:1023
+  Freed by task 10:
+   redrat3_delete drivers/media/rc/redrat3.c:466 [inline]
+   redrat3_dev_probe+0x1bf4/0x2570 drivers/media/rc/redrat3.c:1124
 
-This bug was found by static analysis.
+Syzkaller triggers this via usb probing. It probes the RedRat3 USB
+interface, which calls redrat3_dev_probe() in redrat3.c. That function
+allocates rr3, then builds an rc device whose name points into rr3 via
+redrat3_init_rc_dev() in redrat3.c, and registers it with
+rc_register_device().
 
-Fixes: cfed9632ca8e ("media: imx-jpeg: Add a timeout mechanism for each frame")
+When the detector enable fails after the RC device is registered, the
+probe jumps to the led_free path. That path unregisters the LED but does
+not unregister the RC device before freeing rr3 via redrat3_delete() in
+redrat3.c. The RC device still holds device_name = rr3->name which is now
+freed.
+
+Later udevd reads /sys/.../input device name via sysfs_emit() in file.c,
+which calls input_dev_show_name() in input.c, which emits dev->name which
+is the freed rr3->name.
+
+When the detector enable fails after the RC device is registered, the
+error path must not leave the RC device registered. Make the probe error
+path clean up the same way redrat3_dev_disconnect() does.
+
+This change should be safe because the RC device is fully registered at
+this point and its teardown via rc_unregister_device() is protected by
+the input device mutex, and rr3 is still alive during unregister so
+device_name remains valid until after unregister. The URBs are killed
+before rc_free, so no completion can run after rc is freed. No new lock
+ordering is introduced.
+
+Reported-by: syzbot+302b9b575a06733ff60c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=302b9b575a06733ff60c
+Link: https://lore.kernel.org/all/6a74a76d.ec7c9571.3ac9bb.0056.GAE@google.com/
+Fixes: 2154be651b90 ("[media] redrat3: new rc-core IR transceiver device driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Assisted-by: Hermes:muse-spark-1.2 syzkaller
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/rc/redrat3.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-+++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-@@ -1263,6 +1263,8 @@ static void mxc_jpeg_stop_streaming(stru
+--- a/drivers/media/rc/redrat3.c
++++ b/drivers/media/rc/redrat3.c
+@@ -977,6 +977,7 @@ static int redrat3_dev_probe(struct usb_
+ 	struct device *dev = &intf->dev;
+ 	struct usb_host_interface *uhi;
+ 	struct redrat3_dev *rr3;
++	struct rc_dev *rc;
+ 	struct usb_endpoint_descriptor *ep;
+ 	struct usb_endpoint_descriptor *ep_narrow = NULL;
+ 	struct usb_endpoint_descriptor *ep_wide = NULL;
+@@ -1121,9 +1122,12 @@ static int redrat3_dev_probe(struct usb_
+ 	return 0;
  
- 	dev_dbg(ctx->mxc_jpeg->dev, "Stop streaming ctx=%p", ctx);
+ led_free:
++	rc_unregister_device(rr3->rc);
+ 	led_classdev_unregister(&rr3->led);
+ redrat_free:
++	rc = rr3->rc;
+ 	redrat3_delete(rr3, rr3->udev);
++	rc_free_device(rc);
  
-+	cancel_delayed_work_sync(&ctx->task_timer);
-+
- 	/* Release all active buffers */
- 	for (;;) {
- 		if (V4L2_TYPE_IS_OUTPUT(q->type))
+ no_endpoints:
+ 	return retval;
 
 
