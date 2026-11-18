@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053597;
-	b=a/7/jyIO8SFFjKJmPh3cwNMaLUTcbi3UTodAPOrQXiNU3gaCxOFMzYkwRGCZ5rexAflX
-	 NmwbVNosMxl+1eJK1aCMYlBqbHwgfPLA/qxRmOw22L+6DePcL7bhWXUlzke3QXGouQFws
-	 Fk9couRTa7XQBKGrpeLICwYJf8xcP2GIwk0Ttdo4ef4Bh/p0mAdICwITEohA7EWwIoYCy
-	 6mwiEKjbKILH67EQ+Elh7Vdd3x+pCp2I+xq6y2UNENCsr9bTFaWteju3hLWb8j+lSVJLg
-	 NE0wfYjYilU7P6n4Yr9o2gfuRDQ3I8vJKxa8WPlnAi8MGUQE4iPZZ6idR9lVFzfURLA==
+	t=1795053601;
+	b=RM3kizSqblLCc4yTdZ0Wyt/4IpElpiRwfgRnYAutpY0X0jx7oB16IpAIopqEy16shjdH
+	 GcvD53p10uDtb18Y2oytSMyvO/nPlEMgKoG+NoZ3HeR6PZ0jCVK0Mqe05IpNN/k6eu8PA
+	 u7ezvNEmeOzgw6aNpEMA7PPpWrAHH5p5PHxKbOrRJEXatHoUwfaxbRCoSsLzsZ/DKDXEB
+	 N/raNdcSbEc1umb2Qo1C3IV4kY1pp0waGEAmnI7XmHzCDNSyXIj8mfv6lg33RR2YnzIz5
+	 UcJhPtWhDTP1zQU/6lB6aVzg8woZdcT/zD2UVbl7ZpOnvxJkU9AVvWv0z8nqjTf/TcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053597;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053601;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FWWlzCvS6ummAuO3uagecIO7unkMnIOYtGqoRZptGUk=;
-	b=aURjm926ySIlQVlhxhOo0fKAspH7wfrA5BogM1mEuLC7REgOJjVitYnJ6vaTC5lmAn1A
-	 qk1sQIfEWH08xC3s4hNQUlFl4w4BSmPXokUhcvBNabm9YcdbEUgM23SZUSFvUYSoTtiJN
-	 t525BOiCf5JdVqb0jMB1YsrcRTpzmR6xvR8uGbYiyCn5kN9RueuHJ9oeTv85N8nqFrUc5
-	 WCwf2DlAKwNtXjVtqoYPQkVDBdBb5Bm4vFVyQ8BIZIPSK/WZzFlUgnpVFAaz0IN9Q3p1R
-	 e1+4Z6S7/pm+zjS6/X9a+mysa+4fdkVfrkoRWdWvkq/OOH7poDLF5uqDeO1dc2KTOjg==
+	bh=TqXPzY9VWn+TEN81C/9z2aeZpoZg+0yyC/pvpmvY2rE=;
+	b=ru4mdZ3NJM9CxEjykME8j1TCq2IipugTrstqqSoSJaX9+5XvIuD5GpOphAy0TNK2Tfwz
+	 XRSdohWLx9Nnel1zFQpU0PKmPefDcUUD5y3eBrJPoJpNrOf5TKV9VlhoNDCpPasDeFh6T
+	 EkXUrLa0nvQ+VhvGziLpNUOm5StnM5MevF2M/tZwfyObKCFffTK6vT+nWIjQ6qBkp2Tpc
+	 fjLfbobEvkvIZYU9ktyOCdoi0IpYK3nZIr5c8QzFFKOGDMKlwZHNokO0SnhfWa1UhDxTK
+	 ROnWV3eLE3bkp2CYdslvh1EU2ok9//q80OHWF2z6VJP3kKCspwJBBO3PMFU44rm7avg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EG3CQeVs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SXkGPQhS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A71606A31C;
-	Thu, 19 Nov 2026 01:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E6F606A31C;
+	Thu, 19 Nov 2026 02:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EG3CQeVs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B121F000C4;
-	Thu, 19 Nov 2026 01:59:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SXkGPQhS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5B11F000C5;
+	Thu, 19 Nov 2026 01:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053597;
-	bh=FWWlzCvS6ummAuO3uagecIO7unkMnIOYtGqoRZptGUk=;
+	s=korg; t=1795053601;
+	bh=TqXPzY9VWn+TEN81C/9z2aeZpoZg+0yyC/pvpmvY2rE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EG3CQeVsC6wXUuLfl5VdU46UWI/9gnmR+ZB12VP1geIvRHhQu95sIh+jvt4uANri+
-	 aqiaOLu2S7sEGaTRARXNIk1GjQlzedZ+DpcNm8Zl5LRQ3+LKZj6N2VexE4uxVzabSH
-	 szQcEvJ06Mw3tI+sAcY+iEEBgtHrW5MKPJVmeocU=
+	b=SXkGPQhS/iovdnXnPPVfFmQBJs1CdDFVySFy1etzKnOqCirpF7nxLmr2BDXjxKTBp
+	 3HWPwnEQFgU3VFfzWAXzn+JobeBOAcWbQqwyabT1/3f9Tc48YihzwM5Ivl9iquE5hg
+	 eEY8o7mnAsLTsAYARKzEO2bXDWF5ujZXoDXFW4H8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Burton <ross.burton@arm.com>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Rob Herring <robh@kernel.org>,
-	Georgiy Osokin <g.osokin@auroraos.dev>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0974/2214] of/fdt: Ignore disabled memory nodes
-Date: Wed, 18 Nov 2026 15:44:10 +0100
-Message-ID: <20261118150051.230653528@linuxfoundation.org>
+Subject: [PATCH 5.15 0975/2214] wifi: mac80211: queue frames while off-channel
+Date: Wed, 18 Nov 2026 15:44:11 +0100
+Message-ID: <20261118150051.271731472@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,92 +68,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: Stanislaw Gruszka <stf_xl@wp.pl>
 
-commit df5cd369876114f91f9ae60658fea80acfb15890 upstream.
+[ Upstream commit 13e51269b6656768dc595ed6025e4974f2026543 ]
 
-When we boot a machine using a devicetree, the generic DT code goes
-through all nodes with a 'device_type = "memory"' property, and collects
-all memory banks mentioned there. However it does not check for the
-status property, so any nodes which are explicitly "disabled" will still
-be added as a memblock.
-This ends up badly for QEMU, when booting with secure firmware on
-arm/arm64 machines, because QEMU adds a node describing secure-only
-memory:
-===================
-	secram@e000000 {
-		secure-status = "okay";
-		status = "disabled";
-		reg = <0x00 0xe000000 0x00 0x1000000>;
-		device_type = "memory";
-	};
-===================
+Drivers without FAST_XMIT and hardware scan support currently drop TX
+frames during software scanning while being off-channel. This happens
+in ieee80211_tx_h_check_assoc() before frames reach internal TX queue.
 
-The kernel will eventually use that memory block (which is located below
-the main DRAM bank), but accesses to that will be answered with an
-SError:
-===================
-[    0.000000] Internal error: synchronous external abort: 96000050 [#1] PREEMPT SMP
-[    0.000000] Modules linked in:
-[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 5.18.0-rc6-00014-g10c8acb8b679 #524
-[    0.000000] Hardware name: linux,dummy-virt (DT)
-[    0.000000] pstate: 200000c5 (nzCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    0.000000] pc : new_slab+0x190/0x340
-[    0.000000] lr : new_slab+0x184/0x340
-[    0.000000] sp : ffff80000a4b3d10
-....
-==================
-The actual crash location and call stack will be somewhat random, and
-depend on the specific allocation of that physical memory range.
+Move the off-channel check to invoke_tx_handlers_late(), after
+ieee80211_queue_skb(). Frames can then remain queued and be transmitted
+when the interface returns on-channel. This how TX works currently when
+code goes via ieee80211_xmit_fast() path.
 
-As the DT spec[1] explicitly mentions standard properties, add a simple
-check to skip over disabled memory nodes, so that we only use memory
-that is meant for non-secure code to use.
+Below is rt2x00 driver ping output example while scanning, before and
+after the fix. After the fix, packets are no longer lost. Some have
+increased latency, what is expected behavior.
 
-That fixes booting a QEMU arm64 VM with EL3 enabled ("secure=on"), when
-not using UEFI. In this case the QEMU generated DT will be handed on
-to the kernel, which will see the secram node.
-This issue is reproducible when using TF-A together with U-Boot as
-firmware, then booting with the "booti" command.
+BEFORE:
+64 bytes from 192.168.0.1: icmp_seq=29 ttl=64 time=3.61 ms
+64 bytes from 192.168.0.1: icmp_seq=31 ttl=64 time=3.33 ms # Missed 30
+64 bytes from 192.168.0.1: icmp_seq=32 ttl=64 time=4.03 ms
+64 bytes from 192.168.0.1: icmp_seq=34 ttl=64 time=3.10 ms # Missed 33
+64 bytes from 192.168.0.1: icmp_seq=36 ttl=64 time=3.04 ms # Missed 35
+64 bytes from 192.168.0.1: icmp_seq=38 ttl=64 time=3.05 ms # Missed 37
+64 bytes from 192.168.0.1: icmp_seq=40 ttl=64 time=4.14 ms # Missed 39
+64 bytes from 192.168.0.1: icmp_seq=41 ttl=64 time=4.50 ms
 
-When using U-Boot as an UEFI provider, the code there [2] explicitly
-filters for disabled nodes when generating the UEFI memory map, so we
-are safe.
-EDK/2 only reads the first bank of the first DT memory node [3] to learn
-about memory, so we got lucky there.
+AFTER:
+64 bytes from 192.168.0.1: icmp_seq=29 ttl=64 time=3.40 ms
+64 bytes from 192.168.0.1: icmp_seq=30 ttl=64 time=6.10 ms
+64 bytes from 192.168.0.1: icmp_seq=31 ttl=64 time=4.69 ms
+64 bytes from 192.168.0.1: icmp_seq=32 ttl=64 time=4.49 ms
+64 bytes from 192.168.0.1: icmp_seq=33 ttl=64 time=148 ms
+64 bytes from 192.168.0.1: icmp_seq=34 ttl=64 time=6.83 ms
+64 bytes from 192.168.0.1: icmp_seq=35 ttl=64 time=8.66 ms
+64 bytes from 192.168.0.1: icmp_seq=36 ttl=64 time=13.0 ms
+64 bytes from 192.168.0.1: icmp_seq=37 ttl=64 time=4.78 ms
+64 bytes from 192.168.0.1: icmp_seq=38 ttl=64 time=3.85 ms
 
-[1] https://github.com/devicetree-org/devicetree-specification/blob/main/source/chapter3-devicenodes.rst#memory-node (after the table)
-[2] https://source.denx.de/u-boot/u-boot/-/blob/master/lib/fdtdec.c#L1061-1063
-[3] https://github.com/tianocore/edk2/blob/master/ArmVirtPkg/PrePi/FdtParser.c
-
-Reported-by: Ross Burton <ross.burton@arm.com>
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Signed-off-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20220517101410.3493781-1-andre.przywara@arm.com
-[ Georgiy: 5.15 lacks commit 1f012283e936 ("of/fdt: Rework
-  early_init_dt_scan_memory() to call directly"), so the function still
-  handles one node per of_scan_flat_dt() call: return 0 instead of
-  continue and use initial_boot_params instead of the local fdt. ]
-Signed-off-by: Georgiy Osokin <g.osokin@auroraos.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260908124651.2995-1-stf_xl@wp.pl
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ sashal: preserved the existing memset() initialization and out_free cleanup path in ieee80211_8023_xmit() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/fdt.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/mac80211/tx.c | 50 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 28 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/of/fdt.c b/drivers/of/fdt.c
-index 338171c978cc1..342fdea263809 100644
---- a/drivers/of/fdt.c
-+++ b/drivers/of/fdt.c
-@@ -1102,6 +1102,9 @@ int __init early_init_dt_scan_memory(unsigned long node, const char *uname,
- 	if (type == NULL || strcmp(type, "memory") != 0)
- 		return 0;
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index a919d585b6b1b..6e5dde41e11e6 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -282,7 +282,6 @@ ieee80211_tx_h_dynamic_ps(struct ieee80211_tx_data *tx)
+ static ieee80211_tx_result debug_noinline
+ ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
+ {
+-
+ 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
+ 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
+ 	bool assoc = false;
+@@ -290,23 +289,6 @@ ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
+ 	if (unlikely(info->flags & IEEE80211_TX_CTL_INJECTED))
+ 		return TX_CONTINUE;
  
-+	if (!of_fdt_device_is_available(initial_boot_params, node))
-+		return 0;
+-	if (unlikely(test_bit(SCAN_SW_SCANNING, &tx->local->scanning)) &&
+-	    test_bit(SDATA_STATE_OFFCHANNEL, &tx->sdata->state) &&
+-	    !ieee80211_is_probe_req(hdr->frame_control) &&
+-	    !ieee80211_is_any_nullfunc(hdr->frame_control))
+-		/*
+-		 * When software scanning only nullfunc frames (to notify
+-		 * the sleep state to the AP) and probe requests (for the
+-		 * active scan) are allowed, all other frames should not be
+-		 * sent and we should not get here, but if we do
+-		 * nonetheless, drop them to avoid sending them
+-		 * off-channel. See the link below and
+-		 * ieee80211_start_scan() for more.
+-		 *
+-		 * http://article.gmane.org/gmane.linux.kernel.wireless.general/30089
+-		 */
+-		return TX_DROP;
+-
+ 	if (tx->sdata->vif.type == NL80211_IFTYPE_OCB)
+ 		return TX_CONTINUE;
+ 
+@@ -791,6 +773,33 @@ ieee80211_tx_h_rate_ctrl(struct ieee80211_tx_data *tx)
+ 	return TX_CONTINUE;
+ }
+ 
++static ieee80211_tx_result debug_noinline
++ieee80211_tx_h_check_offchannel(struct ieee80211_tx_data *tx)
++{
++	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
++	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
 +
- 	reg = of_get_flat_dt_prop(node, "linux,usable-memory", &l);
- 	if (reg == NULL)
- 		reg = of_get_flat_dt_prop(node, "reg", &l);
++	if (unlikely(info->flags & IEEE80211_TX_CTL_INJECTED))
++		return TX_CONTINUE;
++
++	if (unlikely(test_bit(SCAN_SW_SCANNING, &tx->local->scanning)) &&
++	    test_bit(SDATA_STATE_OFFCHANNEL, &tx->sdata->state) &&
++	    !ieee80211_is_probe_req(hdr->frame_control) &&
++	    !ieee80211_is_any_nullfunc(hdr->frame_control)) {
++		/*
++		 * When software scanning only nullfunc frames (to notify
++		 * the sleep state to the AP) and probe requests (for the
++		 * active scan) are allowed, all other frames should not be
++		 * sent and we should not get here, but if we do
++		 * nonetheless, drop them to avoid sending them
++		 * off-channel. See __ieee80211_start_scan() for more.
++		 */
++		return TX_DROP;
++	}
++
++	return TX_CONTINUE;
++}
++
+ static __le16 ieee80211_tx_next_seq(struct sta_info *sta, int tid)
+ {
+ 	u16 *seq = &sta->tid_seq[tid];
+@@ -1838,6 +1847,7 @@ static int invoke_tx_handlers_late(struct ieee80211_tx_data *tx)
+ 		goto txh_done;
+ 	}
+ 
++	CALL_TXH(ieee80211_tx_h_check_offchannel);
+ 	CALL_TXH(ieee80211_tx_h_michael_mic_add);
+ 	CALL_TXH(ieee80211_tx_h_sequence);
+ 	CALL_TXH(ieee80211_tx_h_fragment);
+@@ -4477,10 +4487,6 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
+ 		skb_get_hash(skb);
+ 	}
+ 
+-	if (unlikely(test_bit(SCAN_SW_SCANNING, &local->scanning)) &&
+-	    test_bit(SDATA_STATE_OFFCHANNEL, &sdata->state))
+-		goto out_free;
+-
+ 	memset(info, 0, sizeof(*info));
+ 
+ 	ieee80211_aggr_check(sdata, sta, skb);
 -- 
 2.53.0
 
