@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024185;
-	b=r4m7liJckEgNGz/lZcTyQSD2x8APRvqqNbbwZg6iutcjx8Fshxu1M0+Jnvcq19Xq5F/R
-	 cO7DKpQUNqDB1/y9gN7+rKLYrnlfHrIGVc6S+imjZ+TBQaG7oene6SNfa/vrgRIXTtRHq
-	 CArOqdjl9Ct8X5vlvMwdmT4xyec7bGTIMJky8HmvHE3JzuFLCJS8ReuY5Z4EuWVbm+yYf
-	 qJozpoUDlI43yisvIwSQBoMlopFl2SY4AhjQ5ZHQCjQD9DurtL6lexH/Npje2iEBcak9g
-	 hY+c2/Pk05l1vcSutxIwfnvXSWLha9q6aqpUpm3ES7qJpyEWo7QDI1AQZrRLoItsFEA==
+	t=1795024189;
+	b=GBf2xzv+fC4i+/A+IO9RkWhyjm3enmmbT+/49gEmEtv4L7lNkoHpsXAxGdhe+EgaTUqI
+	 XfxngbbTN/g2l8DXATadVXerFZ90D4lJfsnYoKVvnKKTI+GNEbRr7Xh49TGjQCicWiDNV
+	 S99qULpdx1tzNiuzUlBe8YeBG+iDa8m8S0ZSSLTqT/2l1hidXVI8fdkX2CL3jqxvJoqMS
+	 z4dO0LQSvR9TFpv4UM95XAkuQOt0JLKxwKKluicMhy9wiVYa1Po3zx/gOzzYYOZFPJR0E
+	 wDGaiQ4y9B8dQ7Dc31lD1wII9iMWlJuN7nu5of3h9rOBPGdkL5wvMzh1WK71We2najA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024185;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024189;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EzRCmdXBv7ntYs/yCSw2FA8kd6CbxTbxmDXPZj6ZVoM=;
-	b=IIgQlHRSQ6xEGo4Cn6LViFzw1u77L4EZ91YknMueglZkjuyifzH1DcZx/0vpg85IbQ4w
-	 vYNFE4QPHrUvnZMYpIYgSZMRWBTXdWifge89zuTsYtqeR52awre2U/Yd1kfgEoZWZPE1c
-	 +AbvYhSF68kBKi7v7AbmBXB2slnlhSxkKggbslMFwP8ep/IKE+pbrfhxtPuTedKMyazRv
-	 RdqzJgdWymemOd2Bu3e67T1oK0TIvL6H1Y4LberJuB//Mh186M24XtmP+XoMkaRFEyb1I
-	 T3bdBwcMNuh1c6wE47943TdyuLoT7ojQFmz1bMKUGjC9n96v7EieipgdWMXops4e77w==
+	bh=yB2rz3x5TOJu1PMnAaEYpBFc57P/0mw1/ftPG7HtRvM=;
+	b=S8tEi3sG5EAR97YZEKDXLqE6GNn1rHu7vlszYBSBSmyJXi7rodYe6j3BdfPdFeBPJ+FT
+	 gzes75rNuBRAbc63AOIb9UmgQSu1TzZ+B0oez1NSkxQIrwr1Sr59wKA6w7/KCYDp2cR5B
+	 aWU2w8TWJh9uVPwl/O29M8Be8Bb5I7oPM9NII7mGezT9w71EzpSoUVKZPr8aOx1ZsliNe
+	 WgwFMUJdBYcA7n6lEhA7Kc56GMYuq9r4/VZP9nmwFh945EYUMouwGc9VMuw+2r6opfyB5
+	 hNeqRUBn8IGAFx/1J2PbQbHsdUy7mFzzCZqLRsX1Oz1CIZJIyC0YJ6yBG4l8VJDDLzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CWVL4xBU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IcNP2jw9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0A5606A31C;
-	Wed, 18 Nov 2026 17:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B616606A31C;
+	Wed, 18 Nov 2026 17:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CWVL4xBU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73961F000C4;
-	Wed, 18 Nov 2026 17:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IcNP2jw9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3D31F000C4;
+	Wed, 18 Nov 2026 17:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024185;
-	bh=EzRCmdXBv7ntYs/yCSw2FA8kd6CbxTbxmDXPZj6ZVoM=;
+	s=korg; t=1795024188;
+	bh=yB2rz3x5TOJu1PMnAaEYpBFc57P/0mw1/ftPG7HtRvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CWVL4xBUOO78o4utsLRXCQICZaaPBwd+3FDIkQdlHvB2iNNjUeGIWK3+qkJqi50sY
-	 bDUTxnJYwTMleAEEXKBoJyXwvNs59w+cMDjxFKASl1fiwrJRXZL5cVI0i9/rigj6tU
-	 QQMpkoRD+RXwXuND5itN3mCKDEXFDby7/T7zpzHI=
+	b=IcNP2jw9/CyvnSfjz5wBp4x6oEzVxx302USMhcw/gnmzzkfAtfSFyvyJxTJeBznzN
+	 PxoUA4aBEB/E/36Wl84bDoIlvHXzWGtSqyAKvJF/UlwZmY1lMtoIbGNUULlZxfxJhk
+	 iIDcppYM3vG4mps7evdyHUNOuxM+dXyDYINigmB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Vivier <laurent@vivier.eu>,
+	Joshua Thompson <funaho@jurai.org>,
 	Finn Thain <fthain@linux-m68k.org>,
 	Stan Johnson <userm57@yahoo.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0634/2151] swim: Configure parameter memory
-Date: Wed, 18 Nov 2026 15:39:29 +0100
-Message-ID: <20261118150144.981795099@linuxfoundation.org>
+Subject: [PATCH 6.18 0635/2151] swim: Refactor SWIM setup
+Date: Wed, 18 Nov 2026 15:39:30 +0100
+Message-ID: <20261118150145.014625291@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,60 +72,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 994a778d966592d0e211deaf6e436fcb21413935 ]
+[ Upstream commit 62977e8ea98e99dbf86609e65930e6607398e1c5 ]
 
-The original SWIM chip has a 16 byte memory to store parameters which
-control read/write timing. The SWIM 2 chip retains the last 4 parameters
-which control write pre-compensation, but omits the first 12. Hence
-SWIM 2 can perform reads without any parameter memory setup but SWIM 1
-cannot.
+The write to the setup register is really chip initialization, so do it in
+swim_floppy_init() rather than floppy_open(). Drop the udelay(), which was
+apparently copied and pasted from swim3.c where it presumably relates to
+interrupts, of which this chip has none. (See also mkLinux SWIM 3 driver.)
 
-Configure the SWIM parameter memory with the appropriate values so that
-SWIM 1 can read too. The parameters used here were observed in SWIM chip
-memory, using Macsbug, while MacOS was reading from an MFM floppy disk.
-
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
+Cc: Joshua Thompson <funaho@jurai.org>
 Signed-off-by: Finn Thain <fthain@linux-m68k.org>
 Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/eccb76911fd255330b05eb3174ac15c29bb41a23.1788513996.git.fthain@linux-m68k.org
+Link: https://patch.msgid.link/e9facb07b20436a6941ec067288e84d8dd9311c0.1788513997.git.fthain@linux-m68k.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 3c02a14c8996 ("swim: Enable clock divider only where appropriate")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/block/swim.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index b83404d29994d..ac5475a987b74 100644
+index ac5475a987b74..7e567e7219ba1 100644
 --- a/drivers/block/swim.c
 +++ b/drivers/block/swim.c
-@@ -796,6 +796,17 @@ static void swim_cleanup_floppy_disk(struct floppy_state *fs)
- 	blk_mq_free_tag_set(&fs->tag_set);
- }
- 
-+static void swim_set_parameters(struct swim __iomem *base)
-+{
-+	unsigned int i;
-+	static const u8 mem[] = { 0x18, 0x41, 0x2e, 0x2e, 0x18, 0x18, 0x1b, 0x1b,
-+				  0x2f, 0x2f, 0x19, 0x19, 0x97, 0x1b, 0x57, 0x3b, };
+@@ -628,8 +628,7 @@ static int floppy_open(struct gendisk *disk, blk_mode_t mode)
+ 		fs->ref_count = -1;
+ 	else
+ 		fs->ref_count++;
+-	swim_write(base, setup, S_IBM_DRIVE  | S_FCLK_DIV2);
+-	udelay(10);
 +
-+	swim_write(base, mode0, 0); /* reset parameter memory index */
-+	for (i = 0; i < 16; ++i)
-+		swim_write(base, parameter, mem[i]);
-+}
-+
- static int swim_floppy_init(struct swim_priv *swd)
- {
- 	struct queue_limits lim = {
-@@ -805,6 +816,8 @@ static int swim_floppy_init(struct swim_priv *swd)
+ 	swim_drive(base, fs->location);
+ 	swim_motor(base, ON);
+ 	swim_action(base, SETMFM);
+@@ -816,6 +815,8 @@ static int swim_floppy_init(struct swim_priv *swd)
  	int drive;
  	struct swim __iomem *base = swd->base;
  
-+	swim_set_parameters(base);
++	swim_write(base, setup, S_IBM_DRIVE | S_FCLK_DIV2);
 +
- 	/* scan floppy drives */
+ 	swim_set_parameters(base);
  
- 	swim_drive(base, INTERNAL_DRIVE);
+ 	/* scan floppy drives */
 -- 
 2.53.0
 
