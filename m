@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021370;
-	b=Fa9M+UEWomLP11qAzNTKNA6bTN68CHlPveV/ud1Cm0/WTTl+AKJvEVV6R1uv/u2QTdiO
-	 33ts7ZEiV1aEOogWU0ElIRiyV+HnZ3k/vUlzVNCAXd87YtRz7pXCaAujGB4kJYsmbtpBP
-	 Ybx2Zlzraj1nOFD2EF7Gq8xbDqWq4LwLj93Z/g2ncS9ifRrAFlUykatQb2ftx0eiiLfTv
-	 AEsS5Ydp+H5ylylQdZsEKlSwNZfvcIcwjyTUk/CWdgFDJBGuxxUHlWvK9RQ6HEKHxwYmJ
-	 6YKUMvl9Dz18m4RgvrJlrCa9R6Fmf3yPgpxnbjf0JipY0158MgAWknrQeRThtzS9Wag==
+	t=1795021373;
+	b=PnBsCKPGPslTUeR57pyy/L56EvGagkItvh2X4E4b7UUbS3AprWsY+xjhl8FXIgjsVMzR
+	 3sJQHFB4fvrsdsOhKvr9W/NpRNer0ornAJlcDS2YPLJw7E+ualKRXrVRTbFjCuJYDUTyn
+	 opw6C+TNG/8PY397nEehyevM8Nu9X2DiGq6dsZafRzWNRBeQlAcA3YYiiCbOhJ8ccPjz0
+	 LtCvz+wwVSGCf71X0Oaz9PVddZ7/zhf6+OJxig2OmF1J+ebFlheT5dkqUfSS0vYcBxZLd
+	 ce3SGtakkl9BdUpNaNxDsyNttDQAxtZGWZKOi92+/RVac/1yHsuTB6qjyAp8nxwfSEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021370;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021373;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vJZIlPJ9iViDYvtFxK31PdCKL7TZPQOuZFpULpkxBMQ=;
-	b=mQ0xe3Cz1EIRKrQvW5mO4LOAJznd8oWAfApPLyYtbX5GgfyhIsjjSNkx5MuFYvFkDErl
-	 YAdlGBVxdUd+EiPI27njtJGuqQ8oUFGWBWKiuWNqKZeAuirNhl+til6q/h/WW40xkhlq8
-	 SmOuTEVY1n2ImFcZ6OrecGPE4GUL69t6g0DeTHz6gkDJ53FosavkdVnSXNwFKWrGqx7TE
-	 Mxq7t8rFAj+NC2lWuq1ry6H6SRh3Z7zQBCxTChXU0s2WXmcia2vGgPxBbjouEnLOD+gtD
-	 AVNl+RmgqZVzvAtPB4y04OoD/O+hECP5Pw7TsrCkMH0XmmRkD69M8rN11Ifhy69ZYhQ==
+	bh=zaiuwk50KEEKCZpq+wihxzDS2hfONhZoUOuxhOdHIvY=;
+	b=Pi041rrt9cHri1ZOpgVNaCMnNpxcZ7BdRNLnrFRf4t14coOSOdfdw7xUdiC+X5efKxWi
+	 W80WMk+jOdm3JomOF4NqF0mWtj8evHjBzEWoLOpupPdoAPmSt23gUziDEDz66KpPmtv1X
+	 BMlI2amj+LK5t3FcvR0Xsqflera8dGUxBOl0sGGNt1Cxx1lj3kUI2tEL2q2QnLXvufuqC
+	 6FEypR3opAy84yeGP4h+MtTafXtUlsi582KAU9GFmAf6ziHJwhE+0OU37RYWWXUllCxfr
+	 QUm25LVEB+euYCT9Ix7qg+GokkzAn2QQymgzijvUWr5SHMBYNgEgiNsCjyC+LvXLdhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jzCuIA/n";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uTUGrhrz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C239606A320;
-	Wed, 18 Nov 2026 17:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F31606A320;
+	Wed, 18 Nov 2026 17:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jzCuIA/n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 675B91F000C4;
-	Wed, 18 Nov 2026 17:02:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uTUGrhrz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F5C1F000C4;
+	Wed, 18 Nov 2026 17:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021369;
-	bh=vJZIlPJ9iViDYvtFxK31PdCKL7TZPQOuZFpULpkxBMQ=;
+	s=korg; t=1795021372;
+	bh=zaiuwk50KEEKCZpq+wihxzDS2hfONhZoUOuxhOdHIvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jzCuIA/nmAfghdoxKFRkWz26dYYrNF5ufU4jXITudqeOnMtontCle0775lFFV0YYi
-	 1kDvVFlovPy7DseWjetSB0h/1GcPIgXChmdK6JWm3n4YSuguYqRgtYnZ48k925OVDW
-	 0pq3bjKIl2GqTEJpWOj/qp/Vt/QxT5f+d41KbOFQ=
+	b=uTUGrhrzE9r9/qJAd+oAekoGNt2F9+8RsxW2BogtRbkEQuMFHkH/KvySpU+vMF0PV
+	 nxKOhTI4HrcWwOac9R/ki/Y1FX6HctvG/NpAL32areoeE7wseiofsOcIpuMgVkk+JO
+	 ULWCUdXlyqob/B1ceQkQS0BXwgD5RkCg8IC/lXJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko <sashiko-bot+sashiko@kernel.org>,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
 	Henry Hu <huhai@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2284/2651] ksmbd: fix unlocked IPv6 addr_list walk in fsctl_query_iface_info_ioctl()
-Date: Wed, 18 Nov 2026 15:58:44 +0100
-Message-ID: <20261118150407.525785512@linuxfoundation.org>
+Subject: [PATCH 7.3 2285/2651] ksmbd: fix invalid Next offset in interface info replies
+Date: Wed, 18 Nov 2026 15:58:45 +0100
+Message-ID: <20261118150407.558187076@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,51 +71,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Henry Hu <huhai@kylinos.cn>
 
-[ Upstream commit a63bb4d91c784f63ad7c063717dff7920d8445be ]
+[ Upstream commit 2c50a4a5e75db55880eca43c035649cb51fcb52a ]
 
-fsctl_query_iface_info_ioctl() walks idev6->addr_list with a plain
-list_for_each_entry() while holding only rtnl_lock(). rtnl does not
-serialize all writers of this list: the DAD-failure path
-(addrconf_dad_failure -> ipv6_add_addr) can insert addresses without
-holding RTNL. It updates idev->addr_list with list_add_tail_rcu() under
-write_lock_bh(&idev->lock), so it can race with the unlocked walk.
+fsctl_query_iface_info_ioctl() assigns nii_rsp to the next output
+slot before checking whether the interface has an in_device or
+inet6_dev. If either lookup returns NULL, the loop continues without
+advancing nbytes, leaving nii_rsp pointing at an uncommitted slot. If
+no later entry is committed, clearing nii_rsp->Next updates that slot
+instead of the last returned entry, leaving the latter with a nonzero
+Next offset.
 
-addr_list is RCU managed, so walk it with list_for_each_entry_rcu()
-under rcu_read_lock(), matching the other lockless readers of the list.
+Fix this by using nbytes to locate the last committed entry and clear
+its Next field, but only when the response contains at least one entry.
 
 Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
 Link: https://sashiko.dev/#/patchset/20260910090818.24479-1-15815827059%40163.com
-Co-developed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 Signed-off-by: Henry Hu <huhai@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 26dc8933e2a0f..efc3723389c5a 100644
+index efc3723389c5a..9b97656d599b0 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -10761,13 +10761,15 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
- 			if (!idev6)
- 				continue;
+@@ -10776,9 +10776,15 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
+ 	}
+ 	rtnl_unlock();
  
--			list_for_each_entry(ifa, &idev6->addr_list, if_list) {
-+			rcu_read_lock();
-+			list_for_each_entry_rcu(ifa, &idev6->addr_list, if_list) {
- 				if (ifa->flags & (IFA_F_TENTATIVE |
- 							IFA_F_DEPRECATED))
- 					continue;
- 				memcpy(ipv6_addr, ifa->addr.s6_addr, 16);
- 				break;
- 			}
-+			rcu_read_unlock();
- 			sockaddr_storage->addr6.ScopeId = 0;
- 			nbytes += sizeof(struct network_interface_info_ioctl_rsp);
- 		}
+-	/* zero if this is last one */
+-	if (nii_rsp)
++	/*
++	 * nii_rsp may point to an entry not included in nbytes if the IPv4
++	 * or IPv6 device lookup failed. Clear Next in the last returned entry.
++	 */
++	if (nbytes > 0) {
++		nii_rsp = (struct network_interface_info_ioctl_rsp *)
++			  &rsp->Buffer[nbytes - sizeof(*nii_rsp)];
+ 		nii_rsp->Next = 0;
++	}
+ 
+ 	rsp->PersistentFileId = SMB2_NO_FID;
+ 	rsp->VolatileFileId = SMB2_NO_FID;
 -- 
 2.53.0
 
