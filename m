@@ -1,54 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017519;
-	b=q7JvSDZ6Qyo/Sa3dKeFWTO4Q+MCD9i9mnmXYKBsW2rWTEWlbjza2Zy1dpgD7Rw0vXCcN
-	 WGxShTfIOovYzeEznUiK37dR653tLtI6OtY3k+RuONLC+kmF90rtDzyTdh6QotCs0Z5bE
-	 RJV+zsyhsIGxg1ATSFXkTqlUVjw1xH72bCW8IxUSWkdNVp75zK8HC1IbXO/lFMZwZpDEj
-	 h0PymZFVGWOU/F1wMFCuYzBCvGYh5T6qO544XYh0d43lKpLAQUFz6/r54/eaOhxMX3Dnf
-	 UVc9y8zaPEKYoTeXhWc/Ej1vbgF6yrzwxwzfg87Ub1zk8nc/4Vx9o7LImRLZXlv64lQ==
+	t=1795017521;
+	b=JfD1XsFXZaLbkORv787fNEVtRK9FPgsTuHzwOF6zIytmlLcl4RajNxMn6eAAhURVngzO
+	 9w+XfErIeZm2QtShm8fTbphBkacWQshYmydArfUgMZA0oUWAedxDIWemOjU4hXWO5hjy8
+	 rbYO25X1BsUO7fJY3XuTTJzDdKwIwijrqq3riOHwsQ0eVt65wTITTByVaymJ5SrCHoWXA
+	 rsI7+z9KNggolFjAP6cxMGiTf02CxbwobI19Vtc72TPIjXkkR4YyfZfwMamH09XQJT2pu
+	 xIf/hDrm612yvVP4ls37OGXaj5a0qGVK3i7HUoP48xbDz+/qd89B2LhmKVLP7kjpHGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017519;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017521;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xu//GPKlHj68CeVdiqa9uW75dZjajJZNLRH1CapVohE=;
-	b=mcYgTv0+aJ/R5kdN+hZcZRFd/P3P86cFn4SYJWR9cCbZ5ySYWS6clZmGtf/RBfpI3rYB
-	 GmGTKuItPpH4IljQ0uWAUaAf1u9WLlXG/r3FhbaUIbx6FOjFzadZBRhpSFFoEEhPUq01m
-	 k9NAxygyM4jv+QeVyQ99l7yrF+nHLNQgB6OlqrURxaACLRMjZ5ugI6wOyASuQ4bsR259l
-	 Gm4q30JjoQyBbmu0hUlXN4ZEbRb/0bGQRJa5Proz7iois89X0r9I+aI9khA7X0U+CDRDM
-	 oT36mNt77VJHKn9xmYLTa1bXCcgPrNyYVr4VpS/cvdZ1kGNFPCG9Bk9v1yWYM0qmQ7w==
+	bh=zdDL+vs5mG5qN0+JDea5VUFKsSQ3X+l5ALs7WFXqz+I=;
+	b=ZYzo1W25uTqjysbd2cyKMrbYfNcgYBnMhrCEhapmm3CLJr4ZPASui83QDJKZFjzG0axU
+	 cSZSManmmD7+HQbbHD3WdEOk/uoOVZ3tPBkTAb8BbiUdZ0BrDrYxUD3qqvL/5l11zNqPm
+	 rxvVzlKuzouXUIfUjZGL1m/L5gxRxZKPHgYfV3aS7HldYDj7MACQflyS7f6jMwoXm0Sg6
+	 HKTZBy4XXXtE5docWXRilWqwcP3iZzXp02swCidG85rnFP81lduNDT+hiRpYwUPOAjD73
+	 wMxXV+MU+YT+x+Kq2ZjUvubogivwe0wcxufxjsQFyoI8RIrMVAaCRSMP9C4RwHgHFOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w6MFwRaB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d5LK56Xs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06380606A31C;
-	Wed, 18 Nov 2026 15:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE534606A32A;
+	Wed, 18 Nov 2026 15:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w6MFwRaB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F4C1F000C4;
-	Wed, 18 Nov 2026 15:58:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d5LK56Xs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CC61F000C5;
+	Wed, 18 Nov 2026 15:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017518;
-	bh=xu//GPKlHj68CeVdiqa9uW75dZjajJZNLRH1CapVohE=;
+	s=korg; t=1795017521;
+	bh=zdDL+vs5mG5qN0+JDea5VUFKsSQ3X+l5ALs7WFXqz+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w6MFwRaBw3snFWUm7J7y94GnVZBLpGB46UKR1Zc/CZjJRZTmb8SXLXU1Kbo+cbIIH
-	 dyn4UPrpZnGyT2vU/tyuvhXp9x4Sx9BHg8zHa2ncdTNDTMdSgVMZ2dVcplEjUUcoWL
-	 oMdNV07PUjwUXn7WFqit2SKvtHC5kxFWVQjXkhdY=
+	b=d5LK56XswGnyglYD46vIWGOU8z+uS6ePIZR7I4whwiKgelGW2CKB+oDBntsJWPwsS
+	 f/oIgvlEhDJp5+/A3AZS/40wwedcrGe/uwUhZIf+254Lmj49kpqaApIXzrukeH8Rwn
+	 ynVLebK9RCPHYcAMOopMY0lW1+aNUR/4o/gMbufo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Sajna <sajattack@postmarketos.org>,
-	David Heidelberg <david@ixit.cz>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	syzbot+d729df28d933979e017a@syzkaller.appspotmail.com,
+	syzbot+2eac7d175baf21e6a5d5@syzkaller.appspotmail.com,
+	syzbot+7155b2fe09e033c91381@syzkaller.appspotmail.com,
+	syzbot+adeb387cede15eb11607@syzkaller.appspotmail.com,
+	syzbot+ae7f2423f3648100506d@syzkaller.appspotmail.com,
+	Kyle Zeng <kylebot@openai.com>,
+	Bruno Produit <bruno.produit@trailofbits.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0872/2651] arm64: dts: qcom: sdm845-lg: fix sdcard pinctrl nodes
-Date: Wed, 18 Nov 2026 15:35:12 +0100
-Message-ID: <20261118150319.249395145@linuxfoundation.org>
+Subject: [PATCH 7.3 0873/2651] hfs/hfsplus: serialize B-tree close against folio release
+Date: Wed, 18 Nov 2026 15:35:13 +0100
+Message-ID: <20261118150319.285277686@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,70 +74,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Sajna <sajattack@postmarketos.org>
+From: Bruno Produit <bruno.produit@trailofbits.com>
 
-[ Upstream commit e57d572ed779eb53e7eb5b8f9546731eff21bc93 ]
+[ Upstream commit dce0e0248205bb3dc5b4c6793cd2ecb453152259 ]
 
-sdcard was previously rather unreliable during boot on sdm845-lg-judyln
+B-tree nodes with a zero reference count remain in the node hash until
+folio reclaim or tree teardown frees them.  The folio release callbacks
+remove nodes while holding hash_lock, but hfs_btree_close() walks and
+frees the same hash without that lock.  Reclaim can therefore unhash and
+free a node after close has loaded its pointer, causing a use-after-free
+or double-free.
 
-Identified and applied correct settings from downstream lineageos kernel.
+The following syzkaller crashes seem to be the same UAF in
+{hfs,hfsplus}_btree_close() (or {hfs,hfsplus}_bnode_unhash()) and follow
+the same pattern, but do not contain a reproducer to confirm.
 
-Verified card was properly detected over 5 reboots with rootfs on sdcard.
+Detach each node with hfs_bnode_unhash() while holding hash_lock before
+inspecting and freeing it.  Drop the lock before hfs_bnode_free() so a
+large tree is not freed while holding a spinlock.  Apply the same fix to
+the matching HFS+ implementation.
 
-Refer to downstream: https://github.com/LineageOS/android_kernel_lge_sdm845/blob/efa8458f79dffeb380d43b38b9403407f87d9f05/arch/arm64/boot/dts/qcom/sdm845-pinctrl.dtsi#L148-L303
-
-Fixes: 28ae8aa3923c ("arm64: dts: qcom: add device tree for LG G7 and LG V35")
-Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
-Reviewed-by: David Heidelberg <david@ixit.cz>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260802-judyln-sdcard-fix-v1-1-b3477cfc42cc@postmarketos.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+d729df28d933979e017a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d729df28d933979e017a
+Reported-by: syzbot+2eac7d175baf21e6a5d5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2eac7d175baf21e6a5d5
+Reported-by: syzbot+7155b2fe09e033c91381@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7155b2fe09e033c91381
+Reported-by: syzbot+adeb387cede15eb11607@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=adeb387cede15eb11607
+Reported-by: syzbot+ae7f2423f3648100506d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ae7f2423f3648100506d
+Assisted-by: Codex:gpt-5.6-sol
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Bruno Produit <bruno.produit@trailofbits.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Tested-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20260921153729.600313-1-bruno.produit@trailofbits.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ fs/hfs/btree.c     | 7 +++++--
+ fs/hfsplus/btree.c | 7 +++++--
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-index b030a10009c58..84f0e1f0bcd32 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-@@ -581,33 +581,26 @@ &tlmm {
- 	sdc2_clk: sdc2-clk-state {
- 		pins = "sdc2_clk";
- 		bias-disable;
--
--		/*
--		 * It seems that mmc_test reports errors if drive
--		 * strength is not 16 on clk, cmd, and data pins.
--		 *
--		 * TODO: copy-pasted from mtp, try other values
--		 * on these devices.
--		 */
- 		drive-strength = <16>;
- 	};
+diff --git a/fs/hfs/btree.c b/fs/hfs/btree.c
+index 41b4e8fc94637..4f0ddc76e8c5f 100644
+--- a/fs/hfs/btree.c
++++ b/fs/hfs/btree.c
+@@ -310,15 +310,18 @@ void hfs_btree_close(struct hfs_btree *tree)
+ 		return;
  
- 	sdc2_cmd: sdc2-cmd-state {
- 		pins = "sdc2_cmd";
- 		bias-pull-up;
--		drive-strength = <16>;
-+		drive-strength = <10>;
- 	};
+ 	for (i = 0; i < NODE_HASH_SIZE; i++) {
++		spin_lock(&tree->hash_lock);
+ 		while ((node = tree->node_hash[i])) {
+-			tree->node_hash[i] = node->next_hash;
++			hfs_bnode_unhash(node);
++			spin_unlock(&tree->hash_lock);
+ 			if (atomic_read(&node->refcnt))
+ 				pr_err("node %d:%d still has %d user(s)!\n",
+ 				       node->tree->cnid, node->this,
+ 				       atomic_read(&node->refcnt));
+ 			hfs_bnode_free(node);
+-			tree->node_hash_cnt--;
++			spin_lock(&tree->hash_lock);
+ 		}
++		spin_unlock(&tree->hash_lock);
+ 	}
+ 	iput(tree->inode);
+ 	kfree(tree);
+diff --git a/fs/hfsplus/btree.c b/fs/hfsplus/btree.c
+index 2ea8cd5658e1c..bd4dbdbc8f98c 100644
+--- a/fs/hfsplus/btree.c
++++ b/fs/hfsplus/btree.c
+@@ -417,16 +417,19 @@ void hfs_btree_close(struct hfs_btree *tree)
+ 		return;
  
- 	sdc2_data: sdc2-data-state {
- 		pins = "sdc2_data";
- 		bias-pull-up;
--		drive-strength = <16>;
-+		drive-strength = <10>;
- 	};
- 
- 	sd_card_det_n: sd-card-det-n-state {
- 		pins = "gpio126";
- 		function = "gpio";
- 		bias-pull-up;
-+		drive-strength = <2>;
- 	};
- };
- 
+ 	for (i = 0; i < NODE_HASH_SIZE; i++) {
++		spin_lock(&tree->hash_lock);
+ 		while ((node = tree->node_hash[i])) {
+-			tree->node_hash[i] = node->next_hash;
++			hfs_bnode_unhash(node);
++			spin_unlock(&tree->hash_lock);
+ 			if (atomic_read(&node->refcnt))
+ 				pr_crit("node %d:%d "
+ 						"still has %d user(s)!\n",
+ 					node->tree->cnid, node->this,
+ 					atomic_read(&node->refcnt));
+ 			hfs_bnode_free(node);
+-			tree->node_hash_cnt--;
++			spin_lock(&tree->hash_lock);
+ 		}
++		spin_unlock(&tree->hash_lock);
+ 	}
+ 	iput(tree->inode);
+ 	kfree(tree);
 -- 
 2.53.0
 
