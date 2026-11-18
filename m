@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034322;
-	b=eDqxbvmtw16J524ma+cKGK727irjg02IxDOPl1HBN+m5l077pDs2JI6JyGmVpfWgnq9P
-	 4y5aSq0Lx8m+5c1i3uQ4s/LF75WIUBld/yelX/JRvcXCSBVcdTEL+7XkLxfwGzwr4k4oI
-	 MnTMO4CvPh5/PolTV2dIFhF5Q66lyyd+tqDIteoRraltg4qRtc4WCHIcfJGzzFJcCjPAs
-	 fy8IpQWWXC9gYzsxiBEU9kJfRyr17rqCwK6AsBCGtpgfjowcNNQ1ppQ1swt3O3u6EypFN
-	 nivWLVFNiYI9pqFn5hyR+iUG3ZS5I89+vJszqXGkSsvMGc6dg3/kEcC3KLLwPVSBIng==
+	t=1795034325;
+	b=IAonWcdsZohNCj2nrLNP/oaKYKYZ4ZOKvpzlaptneCHsXU288M9Hjn9F+ufkMWjGUUn2
+	 +IioXi3ck0CbzjdR4/KMUyKYfewZjR+mNY1cMH687ez0u5JeX+1eWqnhNLXi0lDb1cHDu
+	 va+XUYTfASrurd7SDNazbK3QUzmsQFzBxhy2dFmpxTUOOwyi3ARu4hZAJvvfGMJz03Ayp
+	 m2GWJk7qgNVbhix2sKU7vYlyc83c97CuxGt5lWvZ6HplZP794O5EC/zSL+8JKxILV8e7g
+	 2/RCepI/+8tfC1XL9S/LU2+piFuBzBL2idBjVFo95PsMRrLc/yet6JwuclSizqpJXww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034322;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034325;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=zj68o8AaBppCVCx19nH7baLNP4m0VenLw8i3gVAtD4M=;
-	b=qzoZBcEkbTMvYif+SKoqNaqne4l83wOmva0TgBPualdor7UwsmhL5wc/a0H6dpHzs2+z
-	 S73V9fjGYRU3e9vlf7huoB0IosQo6sWMV7FbhaViC9Cr4B50yU9jKBns08p2gLy25rF98
-	 RGpIijkJ4fqj+Hq2cVlcR8w0qz+J9Vqk6jCZz9V9okCNQLgxnHF5w/Krcl7H1TCeK2AL4
-	 RGom6W1Rr1XUv/TZ69graEXzcddV8skQBRr49YmvAJCHhzrh8XGyYiB4LrhS9NoYt2rTI
-	 9xa8N5cDtD0dkeajtJRehuHCk/XYTZq/JlQxpvXz/eZsE00GiXJd2NeRGGSDMr+KjIQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=ap9cWCGTG9+k9H4CbPVZYnc4t62znK2j9qUAYhR7a2Q=;
+	b=4MbAw6Eo7ep4nIulSjYkerRVXYhqQKVw92qPw8QqgPdnO7jXcKsjX07Fnlb0d9L4lXNz
+	 1Gr5ngpWWdrp1g5/T0tQNqBLlaipFsqjpsz8hYmYHyW3mbu3BAVeqq9tgfhPzsGQx76aI
+	 8mhG1hQtT9ei/v2tgflKQhaWT3BdM2/DBIp3qqJMOOQD0qF0miVoklFxSY7dIk3D08HDX
+	 L6/rruuCsZJeMK57jGOSNmrrhi8tsHEd0bQKDqtdH9UEpVfVtCdZ+i1xDxM/j2epvQ868
+	 4aTScIIzrRE65EGcvT07d+BhIXx9svMWPj3rGzAA7quvE2gkKwRXbomBnlZUcqIAAEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0LOHarc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hq81LJMv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F81D606A32A;
-	Wed, 18 Nov 2026 20:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC2F606A320;
+	Wed, 18 Nov 2026 20:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0LOHarc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64651F000C4;
-	Wed, 18 Nov 2026 20:38:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hq81LJMv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 847331F000C4;
+	Wed, 18 Nov 2026 20:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034322;
-	bh=zj68o8AaBppCVCx19nH7baLNP4m0VenLw8i3gVAtD4M=;
+	s=korg; t=1795034325;
+	bh=ap9cWCGTG9+k9H4CbPVZYnc4t62znK2j9qUAYhR7a2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B0LOHarctDh4janD+ZwzghLsyg9jLIyL0aPEfMyuKMQZAlF7sys6Hf+ou4Wuxe4Mg
-	 oiqm9GWC7g2dBNZwmTDNZxjVUf5tt09nFxsc16LtYskZ5OSFvWK9o9LhKJLpBEcToR
-	 1jiUE9LhZIrARwZy4b02WGRmsh+y/FFV/2cQsYXQ=
+	b=hq81LJMv/yprb5vln1CLNjsoG6HodQhuZCmaus4Rp3LmfWn1Kon7iMyfnD7S1l88Y
+	 r2g4jn+lIovudOqIhVbOMNC3hi0gArP5WqxOCdc6JRsAooUrQd6//Eu0SVwIKoO4yT
+	 +6HMBV1sfwIF04tJ7pVmo16CUgjKZI5Q/5V2EFNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Carey <carvsdriver@gmail.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Li Jun <lijun01@kylinos.cn>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0326/3318] HID: multitouch: Fix stale MT slots when contact count drops to zero
-Date: Wed, 18 Nov 2026 15:15:48 +0100
-Message-ID: <20261118150325.673170686@linuxfoundation.org>
+Subject: [PATCH 6.6 0327/3318] tpm: tpm_tis_spi: fix nodef CR50 tpm_tis_spi_resume is null
+Date: Wed, 18 Nov 2026 15:15:49 +0100
+Message-ID: <20261118150325.708755707@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,84 +62,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Carey <carvsdriver@gmail.com>
+From: Li Jun <lijun01@kylinos.cn>
 
-[ Upstream commit e8e60b6439eed340a611e9d7a5b9bcbd0ef62725 ]
+[ Upstream commit b4d1adc70471d0752bba674552d19971ed9fa869 ]
 
-The INGENIC 17EF:6161 touchscreen (Lenovo Yoga Book 9 14IAH10) reports
-HID_DG_CONTACTCOUNT=0 in the frame immediately following the last finger
-lift rather than omitting the frame entirely.  In mt_touch_report() the
-existing code only updates num_expected when contact_count is non-zero,
-so a zero contact count on the first packet of a new frame leaves
-num_expected at its previous value (e.g. 2 for a two-finger gesture).
-The sync check "num_received >= num_expected" then evaluates "0 >= 2"
-and never fires, preventing INPUT_MT_DROP_UNUSED from releasing the
-stale slots.  Those slots remain active in the kernel MT layer until the
-next touch, at which point they are released in a batch alongside the
-new contact — causing the userspace event consumer to miss the
-intervening finger-up sequence and corrupt its gesture session state.
+if no define CONFIG_TCG_TIS_SPI_CR50 in config,
+the add of tpm_tis_spi_resume is null, this cause the tpm chip to
+fail to resume.
 
-Fix by resetting num_expected to 0 when contact_count is zero and
-num_received is still 0 (i.e., this is the first and only packet of the
-frame, not a continuation packet in a multi-packet sequence).  With
-num_expected=0 the sync check "0 >= 0" fires immediately, calling
-input_mt_sync_frame() which drops the stale slots via
-INPUT_MT_DROP_UNUSED.
-
-The num_received==0 guard is critical: continuation packets in a
-multi-packet frame arrive after at least one contact has already been
-processed (num_received>0), so they are correctly excluded from this
-path and the existing multi-packet logic is unaffected.
-
-Signed-off-by: Dave Carey <carvsdriver@gmail.com>
-Tested-by: Dave Carey <carvsdriver@gmail.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Li Jun <lijun01@kylinos.cn>
+Link: https://lore.kernel.org/r/20260812100914.3540149-1-lijun01@kylinos.cn
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ drivers/char/tpm/tpm_tis_spi.h | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 422172ecf2bb2..0e061f266cef2 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -1227,21 +1227,18 @@ static void mt_touch_report(struct hid_device *hid,
- 	 * Includes multi-packet support where subsequent
- 	 * packets are sent with zero contactcount.
- 	 */
--	if (contact_count >= 0) {
-+	if (contact_count > 0)
-+		app->num_expected = contact_count;
-+	else if (app->num_received == 0 && app->prev_scantime != scantime) {
- 		/*
-+		 * New multi-report frame:
-+		 *
- 		 * For Win8 PTPs the first packet (td->num_received == 0) may
- 		 * have a contactcount of 0 if there only is a button event.
--		 * We double check that this is not a continuation packet
--		 * of a possible multi-packet frame be checking that the
--		 * timestamp has changed.
-+		 *
-+		 * Some other devices use a sentinel frame with 0 to release all contacts
- 		 */
--		if ((app->quirks & MT_QUIRK_WIN8_PTP_BUTTONS) &&
--		    app->num_received == 0 &&
--		    app->prev_scantime != scantime)
--			app->num_expected = contact_count;
--		/* A non 0 contact count always indicates a first packet */
--		else if (contact_count)
--			app->num_expected = contact_count;
-+		app->num_expected = 0;
- 	}
- 	app->prev_scantime = scantime;
+diff --git a/drivers/char/tpm/tpm_tis_spi.h b/drivers/char/tpm/tpm_tis_spi.h
+index d0f66f6f19318..ced416ecd92c2 100644
+--- a/drivers/char/tpm/tpm_tis_spi.h
++++ b/drivers/char/tpm/tpm_tis_spi.h
+@@ -40,8 +40,12 @@ static inline int cr50_spi_probe(struct spi_device *spi)
+ }
+ #endif
  
+-#if defined(CONFIG_PM_SLEEP) && defined(CONFIG_TCG_TIS_SPI_CR50)
+-extern int tpm_tis_spi_resume(struct device *dev);
++#if defined(CONFIG_PM_SLEEP)
++	#if defined(CONFIG_TCG_TIS_SPI_CR50)
++		extern int tpm_tis_spi_resume(struct device *dev);
++	#else
++		#define  tpm_tis_spi_resume tpm_tis_resume
++	#endif
+ #else
+ #define tpm_tis_spi_resume	NULL
+ #endif
 -- 
 2.53.0
 
