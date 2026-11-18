@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035415;
-	b=vX/r5OdvNsxOphj5CVSRy7K8YonpDROTWaccyKhWWGK7IsFLd6MwXok+yYYbzLSkwpaJ
-	 WMJ0X9JGhr50o2rjCO7RqsjR6dF+mknt+6daNQ7D01VO2vYk915I9KWhttep6WYLEWAzU
-	 H5o/Kcev3e4Us/vD1gkTWf+YpEVu2AS9xChHHEeb2nqsVUb7LUD7fouWhWVky2eh/Dxb8
-	 hWONIbt6W7gFW2tR1c3P0IUpIv1BejWRvXFNVC+ZcPiTkvCI45TOSILFGyEzqsGstunzf
-	 hqhhLHOM64ModOTuNVBSagdIKL4nwCfa9xrV2/rZFc/IrgBsIOVfZ+NbzNUADIl5trA==
+	t=1795035418;
+	b=L3FdGPPs1YtDa9DzyQo83wn4SHKklN2BBtJETCciXZItZAGgSkmSMaHZvVf0+SlmW3nj
+	 Jm6D/GAechTzzxAr+y2asXXO4FdzVi9Aq/JqpbvLbnwkAVD+IsJCeqjRhuFJ3rf7U60NH
+	 WTm1xpt2Wj3YTKE/cuc8MLWrZiPTpGGPO5DUUPdNC2clzaCO2q8t8bFmUjIUJ06S/cogJ
+	 kXBePUTPl4a2kngc6/w4lQslS824Uz97injcCLudiVg4rbEgLpnXJSMtgDXyhpKuOPj2k
+	 S3zSiuIq+sintHrFl/eEC6vCt6MQ+VibuvOtFnMFsTMFEkQ2kCO//vWI+TtZLxrBnTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035415;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035418;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1+yK84jys2fQqMkUGkNRqKr/3LUlhkMOYxDR1IasM5E=;
-	b=Pxd8mRK3XhzFPTWYcIjs0WJXHNdTStECZiX5Henzjh6HGtqrKjVpNfIiYGbY635IRCSA
-	 FE3FP5YJrV7ZnkP0uhpJ964eZxZqj4NOiGN5+K0ACQ+oESZNazbVrco4EDgYM65+2uWH1
-	 qg8htSshFw9UMDttBK8WoN1E7LOymOAaP6RrsHFbiodoYY+FRz4KMiYCee8uLcXta/3zT
-	 MzVMtJ/CWeYY34W4ADlIMrPvUci+Bf4sFx0PQiUou60YIlIYBi3EBjfGwDotkppMh/3m4
-	 N2lRlJtyauWBEccypUOXsvNQFKm61FjS4g6GSdxSTe7bJ8fhhFx6cAGAqSe01NzXknQ==
+	bh=RdaoLK31rATlMebSW2OJHKuSSlP+c5ukJRlEtPoS8zg=;
+	b=rx/HTT8fCnyD7pQLfiUz/p/qzhYl7q5zutaCLBqiRP/p3nP9T9u+74vIxGHiMILN7u8R
+	 WMQkIypfrPfOq2hhLJoCu+Q4Wpg3qXrkZXWGpxbugWT2eDBlR2G7nJAawL8ObkVGFM49I
+	 fQvV2KySWFpoDX+BvSE+4eP3Jygg/6qF7nv/lkfL+r1dyDX4jhkMGwekIu6dd9yuohYGm
+	 CWRGLjhpGZ73dkCWsYhqlvJBbOSGorD9Oz2qKOSWHr5kpx2zVB6aL2d1HUcQ7ByXeD42H
+	 0q5LfKBeuvhIx9b3UjuYTXLKKbgmZW9VYVjCiUXP/Bp5oA5bdLV4s7fkJUvhA7jygxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JHIsOPPU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HYTof92e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E653606A325;
-	Wed, 18 Nov 2026 20:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6724C606A325;
+	Wed, 18 Nov 2026 20:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JHIsOPPU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E45A01F000C4;
-	Wed, 18 Nov 2026 20:56:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HYTof92e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CE71F000C4;
+	Wed, 18 Nov 2026 20:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035415;
-	bh=1+yK84jys2fQqMkUGkNRqKr/3LUlhkMOYxDR1IasM5E=;
+	s=korg; t=1795035418;
+	bh=RdaoLK31rATlMebSW2OJHKuSSlP+c5ukJRlEtPoS8zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JHIsOPPUZeY7c9hhRb6YhQdeH6tNG69c2YHCOxAYfxtrRbqh8EjwWBOck94pmC0Q6
-	 AX6IHw9oWPIgU59hOQZkODsJZ9Supy+A6CWI5fjX9aOwZlbQXHE9OdkNaPbJrrkH+P
-	 DmufNGBhuKZedLsPP6XS+79iYGQRDg/2f0LKVD+c=
+	b=HYTof92eRhlMUqNhhhp+oPJ6DGutk3vKjv344/n9idVhqgyKEa8M0zQ72qSyLE2kE
+	 zsjGT/s//cWAsb/kMt7V3+DxvoUxgg561NnZ8H2+BBfBu2OVs1h7Y3bRZdktmenpCb
+	 Yft/HMxXac4HQE0goiFOGmqLrzVJnNzpOaSq2xTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neil@brown.name>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.6 0693/3318] nfsd: honour client-provided attributes for NFS4_CREATE_EXCLUSIVE4_1
-Date: Wed, 18 Nov 2026 15:21:55 +0100
-Message-ID: <20261118150339.076712857@linuxfoundation.org>
+	Fahad Alharbi <fahad@codepure.com>,
+	Chris Mason <mason@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 6.6 0648/3318] ovl: do not copy up an xattr value that was never read
+Date: Wed, 18 Nov 2026 15:21:10 +0100
+Message-ID: <20261118150337.437482259@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,43 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neil@brown.name>
+From: Chris Mason <mason@kernel.org>
 
-commit ddfabbc7840891e09cd500ab97c9cd36b650ec24 upstream.
+commit 755b5c5c9277be251a51623d6065abab948c61bc upstream.
 
-When a file is created with a v4.1 OPEN which requests
-NFS4_CREATE_EXCLUSIVE4_1, the request can include attributes to be set.
-However when the mtime/atime are set to hold the verifier, the other
-ia_valid flags are cleared, so no attributes requested by the client are
-used.
+Copy-up stores uninitialized kernel memory in an xattr of the upper
+file, where the user can read it.
 
-This code was originally written for NFSv3 where NFS3_CREATE_EXCLUSIVE
-never includes attributes.  When it was updated for v4.1, the fact that an
-exclusive create CAN include attributes was not handled properly.
+ovl_copy_xattr() may only pass bytes to ovl_do_setxattr() that
+ovl_do_getxattr() has read. When the read fails with -ERANGE the
+function asks for the size again, and if the new size fits the buffer
+it stores the buffer although nothing was read into it. The buffer
+comes from kvmalloc(), or it still holds the value of the previous
+xattr.
 
-Fixes: ac6721a13e5b ("nfsd41: make sure nfs server process OPEN with EXCLUSIVE4_1 correctly")
+A FUSE lower layer that answers every sized GETXATTR with -ERANGE made
+copy-up store 4096 bytes that the server never sent, with a kernel
+pointer in them, as an xattr of the upper file.
+
+Fix this by failing the copy-up with -EIO when the size that follows
+-ERANGE fits the buffer.
+
+Reported-by: Fahad Alharbi <fahad@codepure.com>
+Closes: https://lore.kernel.org/linux-fsdevel/CAOQ4uxjhfpNVvoVrTayj46H2CViTOc3oxzM6xdb8+E7ikE2CSA@mail.gmail.com/
+Fixes: e4ad29fa0d22 ("ovl: use a minimal buffer in ovl_copy_xattr")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: NeilBrown <neil@brown.name>
-Link: https://patch.msgid.link/20260717093001.1972119-2-neilb@ownmail.net
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/overlayfs/copy_up.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -358,8 +358,8 @@ nfsd4_create_file(struct svc_rqst *rqstp
- 	if ((iap->ia_valid & ATTR_SIZE) && (iap->ia_size == 0))
- 		iap->ia_valid &= ~ATTR_SIZE;
- 	if (nfsd4_create_is_exclusive(open->op_createmode)) {
--		iap->ia_valid = ATTR_MTIME | ATTR_ATIME |
--				ATTR_MTIME_SET|ATTR_ATIME_SET;
-+		iap->ia_valid |= ATTR_MTIME | ATTR_ATIME |
-+				 ATTR_MTIME_SET|ATTR_ATIME_SET;
- 		iap->ia_mtime.tv_sec = v_mtime;
- 		iap->ia_atime.tv_sec = v_atime;
- 		iap->ia_mtime.tv_nsec = 0;
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -132,8 +132,12 @@ int ovl_copy_xattr(struct super_block *s
+ 
+ retry:
+ 		size = ovl_do_getxattr(oldpath, name, value, value_size);
+-		if (size == -ERANGE)
++		if (size == -ERANGE) {
+ 			size = ovl_do_getxattr(oldpath, name, NULL, 0);
++			/* Nothing was read into value, so it must not be used */
++			if (size >= 0 && size <= value_size)
++				size = -EIO;
++		}
+ 
+ 		if (size < 0) {
+ 			error = size;
 
 
