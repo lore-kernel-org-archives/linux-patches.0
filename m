@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043420;
-	b=LafGO2pmwXAl2yoHfsSnJS42C38rEBOCJjdTFWeLJQ7pyaWG5b5WA6ZdM/DSxLGNHWMf
-	 0SPsi1TV7b+4wWU8xEorCY6XW6pfmCON1sf9YJjrfSbR5nCPvSLnRw+keMNf1M8j+hbGC
-	 OfylcfXAYMQQ3HuJPyKmss02Mt2nLq1Mc1yZEcveevWCbpTdJhOhVUrKwCbiTZYxnavlP
-	 R/GA1Lp6SZNlupDHtmovysqmiiAx7Dyf/UAuyyHC4OCHGue7C40JQCfMBbGsHkFYCLYYb
-	 iy8ypioAH1gWmpjW8k/boC6a/bFeAAqA3KiCch3g4+nlpvjGKRn4PUHdxC+fREYvUWA==
+	t=1795043422;
+	b=bfml1yux2XQwqjQEE/tEM8U1OnFNLHWyE8vzhJR3UKZtiAG+Es9goN8lndBsyQWihhVi
+	 MwjFyqdRBhzlcFmDAfeY+yDMRkLsG7/IKjJTwK7E3gwE6EfWLZ/MFnKFMN97GRY027/ht
+	 LQrDG8HJ5g3OlRSkR7/9DC71BlG9JQyFVc7JL7sldNWlMk9F8bRln7N95e4GF+tK9uO8e
+	 eNqGVDc65/zcRedY8nXsq3RpCWVjjGM+WIcBr6F7sYYeZae1V39xph4VMiRvY1S6LCkgb
+	 CYKvcIBOVsfbWqzQ1sxvP/TND2ocUrxg6pMaEwustirjKBzZXKjMV/5sGTqkrz59DYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043420;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043422;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8ogt7epiu/FfmhYWvprtwmw7T3zIWu4evF4LcjluNc8=;
-	b=ORa5/y89mSvSL+XgboRP1XCeXETHfLFQOcL/laT+oxgSkGroagGW21qdE5uk8S1Htt5/
-	 xPADJBSCGtBWFZe1gpoMvM1TjaNC7r7sTCWkTEFglp8gBDcc83k38MtVVimHAzGiIsy50
-	 Mu8Oxkqk2mWG+65J108dv/O7glwG8Kg2s0TygiyRjcZb6PyOcVz4I6FAdn2xso2BKWO+t
-	 t+gvgHKGM4mNtSF96/UdmHwnHUFiIyvWtbINLZmy6Mq1UdJHvIvcW8UJuVQIU2+VrvCvX
-	 mb8H98QfZbT4VSuMo6RBMVPVrFzZFP6cI6vgSeyhdwXwpoAOEYt7E/zl+Pc8mC3eM3g==
+	bh=d9lQlIAPnapt2LGvA0xAJALQSE3jotOtxmFgKl1VqJ0=;
+	b=HKcyNv61mN9l6MNxYH2vTVeeG31z5gIOV5lutMouVsXqZkifKwtZ7s0urG4ISUQGT8G/
+	 1BymAQ7VM/eM+rstIaRf30Gn98lgU/CQL7s23irPj/NSO5PFz2ZudsVueAQkoS3uHF1aO
+	 5n0IbNxsBZZQVnizhxOworFfCmPu+D9yp9q2ee+IE0Fl6Otcmzjw/vGyhMV3D5HqT3YhO
+	 OQLKLaQaN57PIlGt7cNhBe4C75J2FRmDfg7o4atAqJOpx10QmL708vV16/2dkqCkqqcdK
+	 Rq5UQqIdJ/Q0rR5tGCDILzexpO3+ukCITDXCnT417u9lyD6nTvR5f27LKAbEXVxyE0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hpFwJt2R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="cUYDL/k4";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1938960A6F6D;
-	Wed, 18 Nov 2026 23:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A805A606A94C;
+	Wed, 18 Nov 2026 23:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hpFwJt2R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2771F0093B;
-	Wed, 18 Nov 2026 23:10:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cUYDL/k4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F359A1F00937;
+	Wed, 18 Nov 2026 23:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043419;
-	bh=8ogt7epiu/FfmhYWvprtwmw7T3zIWu4evF4LcjluNc8=;
+	s=korg; t=1795043422;
+	bh=d9lQlIAPnapt2LGvA0xAJALQSE3jotOtxmFgKl1VqJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hpFwJt2R6tK/lwWFS22fGS/dfkjUecb8g38uiaLEqiKQlbFCzWvMG5reYngIStXOt
-	 T9xsVjGUx6UhodmU0yUZPAMnHsf200P7Aznejo0B0IBP5egTUaOXaK7kuYokrPfhpy
-	 zaZQS/YiJex70QPE0zTRpIbh6aNPCtlLIf3eIb+o=
+	b=cUYDL/k4lvXmqI0yO+OH7ZTyPlflBDzlv/pdLgQNkI0T3q7KGBFRmIrRTETqsPuFh
+	 rBQHSUoYDZQE0EdQI/AM4RXBVYQ1zyaeoYgGqn0p3VhtQbuuM5eKJhnuWRhvuFwR4/
+	 W3G9hKPQhik/hE4Mun+3TV4BFtZG4rLvrYB7WhFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mykola Marzhan <mykola@meshstor.io>,
+	Yunye Zhao <yunye.zhao@linux.alibaba.com>,
 	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0205/2857] md/raid5: reject zero-sector reshape chunks
-Date: Wed, 18 Nov 2026 15:20:39 +0100
-Message-ID: <20261118150208.735666709@linuxfoundation.org>
+Subject: [PATCH 6.1 0206/2857] md: add cond_resched() to md_do_sync()s skip path
+Date: Wed, 18 Nov 2026 15:20:40 +0100
+Message-ID: <20261118150208.772804521@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,74 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fygo.io>
+From: Yunye Zhao <yunye.zhao@linux.alibaba.com>
 
-[ Upstream commit a41bb2ee1aca486853e84920565e50c15f86fa5d ]
+[ Upstream commit 162eb5ba791f6260fdaabae75fa2df20134f67d8 ]
 
-Sashiko reported that RAID5 can accept a reshape chunk size that becomes
-zero sectors. chunk_size_store() stores the sysfs byte value as n >> 9, so
-writing a value below 512 bytes sets mddev->new_chunk_sectors to zero.
-RAID5 then accepted that pending reshape geometry and raid5_start_reshape()
-installed it into conf->chunk_sectors, letting reshape code divide by zero.
+When sync_request() reports a skipped region (*skipped == 1),
+md_do_sync()'s main loop advances the cursor and takes an early
+continue:
 
-Reject zero-sector chunks both in check_reshape(), where normal sysfs
-requests are validated, and in raid5_start_reshape(), so assembly/resume
-paths also cannot install zero chunk geometry.
+	j += sectors;
+	...
+	if (last_check + window > io_sectors || j == max_sectors)
+		continue;
 
-Test script: in QEMU, create a plain three-disk RAID5 array with 64K
-chunks, write/read back a small pattern, write 1 to
-/sys/block/md0/md/chunk_size, add a fourth disk, and run mdadm --grow
---raid-devices=4 --backup-file=... . The script scans dmesg for divide
-error/Oops/KASAN signatures.
+If the personality returns a small span per call (raid10 recovery
+returns only 128 sectors), syncing a large, mostly clean array iterates
+this branch an enormous number of times without ever yielding the CPU.
+On a non-preemptive kernel the resync thread then trips the soft-lockup
+watchdog:
 
-Bad kernel, eb29914412c3:
+  watchdog: BUG: soft lockup - CPU#149 stuck for 313s! [mdX_resync]
+   md_bitmap_start_sync+0x6f/0xe0
+   raid10_sync_request+0x2c9/0x1530 [raid10]
+   md_do_sync+0x810/0x1030
+   md_thread+0xa7/0x150
 
-  echo 1 > /sys/block/md0/md/chunk_size
-  mdadm --grow /dev/md0 --raid-devices=4 --backup-file=/root/md0-grow.bak
+Add a cond_resched().  This does not reduce the wasted iterations; the
+excessive iteration count is a raid10 problem addressed separately.
 
-  Oops: divide error: 0000 [#1] SMP KASAN NOPTI
-  RIP: raid5_get_active_stripe+0x863/0xc10
-  Call Trace:
-   raid5_sync_request
-   md_do_sync
-   md_thread
-  Kernel panic - not syncing: Fatal exception
-
-Fixed kernel: echo 1 > /sys/block/md0/md/chunk_size bash: echo: write
-error: Invalid argument chunk_write_rc=1 grow_rc=skipped RESULT:
-REJECTED_ZERO_CHUNK_NO_OOPS
-
-Tested-by: Mykola Marzhan <mykola@meshstor.io>
-Link: https://patch.msgid.link/20260802195038.164272-5-yukuai@kernel.org
+Signed-off-by: Yunye Zhao <yunye.zhao@linux.alibaba.com>
+Link: https://patch.msgid.link/20260723135535.101995-3-yunye.zhao@linux.alibaba.com
 Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/md/md.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 092cf1d0008ee..663b95b82360e 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -8476,6 +8476,8 @@ static int check_reshape(struct mddev *mddev)
- 		return 0; /* nothing to do */
- 	if (has_failed(conf))
- 		return -EINVAL;
-+	if (!mddev->new_chunk_sectors)
-+		return -EINVAL;
- 	if (mddev->delta_disks < 0 && mddev->reshape_position == MaxSector) {
- 		/* We might be able to shrink, but the devices must
- 		 * be made bigger first.
-@@ -8518,6 +8520,9 @@ static int raid5_start_reshape(struct mddev *mddev)
- 	if (test_bit(MD_RECOVERY_RUNNING, &mddev->recovery))
- 		return -EBUSY;
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index e268eb0be6da9..712789d386dd4 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -9100,8 +9100,10 @@ void md_do_sync(struct md_thread *thread)
+ 			 */
+ 			md_new_event();
  
-+	if (!mddev->new_chunk_sectors)
-+		return -EINVAL;
-+
- 	if (!check_stripe_cache(mddev))
- 		return -ENOSPC;
+-		if (last_check + window > io_sectors || j == max_sectors)
++		if (last_check + window > io_sectors || j == max_sectors) {
++			cond_resched();
+ 			continue;
++		}
  
+ 		last_check = io_sectors;
+ 	repeat:
 -- 
 2.53.0
 
