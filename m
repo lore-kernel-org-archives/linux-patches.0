@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022861;
-	b=QAr9oMhJWcx/onQOEH+d8iZ+RsYY8NkNAY5+emt96jpjsb3zd43BbckL4/458kL/qBG7
-	 vSJT8F5H7MPOv0+gJUaSQwg3XTO9g6iKRa6SBrxTo+kVOjxvYbAYOxePYFkPJMbqocJRv
-	 tzqdmTe/OzaLpQ1+4NurXmyDhDExYUzRaUjni+7KM4B2ac0g1cDRr+CMdQ1cajadgRH1S
-	 J1bofqsUbh6DBKafWh7BcPTIM9SSpISphFDHFx9BDhLeKVWI8EufzPBzxNue4wD7zUp3w
-	 MGRrMD+foUEtZzvhSiERGgzNsnWju3UbMMonMkcDqhbDmU7phGCuOWi5altjNqPOzVA==
+	t=1795022864;
+	b=uqT5KDGJ5sEtO1dOWZxggZXryrntzmFjRye6PKJpCS6zMMzcF4Y5Nl+MhGVJ9J509av2
+	 YHs2Km3/w/oJPNyCkocMg4/dr2hrZza52Ux2Ew8HAiT/BCeIx6pkGUKOkOhrP5wur0/W5
+	 aQnL3cBjSYWWJbrPA3swTkgm0VvBefiByTP784qpY0GWv0EiWjanGOQi7bVfPfa26VGDa
+	 kdD7yddE9dmTCc0w6bYvUvcd9x3FpLJARmpuuX0E3Rpm9UZzCBS09DOn2KTCuXJjOShwl
+	 xRbKLIrwpB9vo+oLmvEDb+G5OzULrZU6aL2RSqWhI7gHH6CBB9u7Xndb1C4ZQ/n4zzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022861;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022864;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5+r8jtoLkXyn9AT7Y1zzQ1JZPADQ8oH+LMFnKlEzxGU=;
-	b=AU7+9cPAGEiKUTKZ0B1tNUacnIxMAlQTijs+gh3jJjYx1Jzr+zRv+PhPB3k+XF88E2hI
-	 QADnRt7zrzSilMmcN17FMdZq0dcYrk3/kWmzpjZTngyEK++1qa7Ox0bvKJQvGPBP1JaDp
-	 RRRaZPNX7JE2uik8MkjV+4QBGatexdlWP/QLVxcvJBiZJyvWhf4ajChYetVDtk1diXio+
-	 r1Uk0ci15LGIcUIZcRPKKJa5/oqkRBkzPpKjaP4m0MhIo15DF9FRDKy/bDfQQXJxqvREA
-	 tkTXzfOVN04IRPl2i5B7nNq/snseYRKmCB9criR05fiUWj/5XIGtXcPHPa+nqRV5coQ==
+	bh=VWjzODGvpDRSWKQ+F+Scl7k2MpCNexb9jF9hhhfInVk=;
+	b=J1FXwoKdC0iZHDYaVsL8fdW0SO+WZKJ+fKKFR2NH7/+9GPNkf8EShUFYlrSqV5inwP9x
+	 tmkRGLB5JYGV/I1OZ7FxPQ78LkRNUSBE392attDagdrEMoJcGAytkzG7zJWPZ/u+eKDpn
+	 rcUfobryafPsoP6jKw4WubhyILSfrQApncBU5i5kTEj6GeGGU9QdXaPi+1T+JqVXAkN06
+	 HMm0puwu6yh8kPmVrvtzP/uM+XS9pgoerYwUGonZXNaA4t5Zs5dQ4gJ3/NkltPXDf8nXn
+	 K0ayPe52mdV58AEyW2JQikVXhuviKGeU6H5XJmbc2iATndFsHAL+1y9N/t0fq8g2pug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lVuWtEaC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=11B+rM4a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1A3606A33D;
-	Wed, 18 Nov 2026 17:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A4C606B3FA;
+	Wed, 18 Nov 2026 17:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lVuWtEaC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2931F000C4;
-	Wed, 18 Nov 2026 17:27:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=11B+rM4a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A3F1F000C6;
+	Wed, 18 Nov 2026 17:27:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022861;
-	bh=5+r8jtoLkXyn9AT7Y1zzQ1JZPADQ8oH+LMFnKlEzxGU=;
+	s=korg; t=1795022864;
+	bh=VWjzODGvpDRSWKQ+F+Scl7k2MpCNexb9jF9hhhfInVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lVuWtEaCtKM6Q5k3zAhZ12/yANEmQKzJt0x54+QIGyGmI0D4ZWdd3E7+UMYJOQh4b
-	 lec+SK788KBoMAy6c2g6IaI1Fj+sFd0vQLUsSYy7xG8o35NCEX27FidCqSXOS3Bwjs
-	 vqHH+5vqboRLMGbj84eYjbuG2K9NLGYD+DYnS5eE=
+	b=11B+rM4aOt2A3esTCuJxtVaN6W6a0bHlOfa4BYyC7/6uExut4t7BoJ6H1UsmkqT2A
+	 GDhEvVcZ3/gPQ063BBPh/OxZkC7CbZyTXtyUA9HuRdAhCiyRiEZK6aqlw+2BLKADoD
+	 JFP5JQfPBBRGpOyGTyTBJbjTzeDwDTMIE5F//GyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Stephane Eranian <eranian@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Jianlin Shi <shijianlin11@foxmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0164/2151] perf jitdump: Check snprintf return before computing header size
-Date: Wed, 18 Nov 2026 15:31:39 +0100
-Message-ID: <20261118150127.721462084@linuxfoundation.org>
+Subject: [PATCH 6.18 0138/2151] bpf: Reject oversized bpf_stream_vprintk output with -E2BIG
+Date: Wed, 18 Nov 2026 15:31:13 +0100
+Message-ID: <20261118150126.814890296@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,55 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Jianlin Shi <shijianlin11@foxmail.com>
 
-[ Upstream commit 0155f05ea6e133c18a04b8b5945cac59870da156 ]
+[ Upstream commit 41c0348f6e65c26df4866d5dc96c57b1995fe36c ]
 
-snprintf() returns the would-have-been length on truncation.  When the
-jitted filename exceeds PATH_MAX, the unclamped 'size' value inflates
-sizeof(event->mmap2.filename) - size into a massive underflow, causing
-the header.size computation to write an oversized header.  The
-subsequent write to 'id = event + header.size - idr_size' then corrupts
-the heap.
+bstr_printf() returns the would-be length excluding the trailing NUL.
+When that value is >= MAX_BPRINTF_BUF the message was truncated, but
+bpf_stream_push_str() still tried to allocate with the inflated length
+and failed with -ENOMEM. The boundary case of exactly MAX_BPRINTF_BUF
+could also copy the trailing NUL into the stream element.
 
-Clamp size to PATH_MAX - 1 after snprintf in both jit_repipe_code_load()
-and jit_repipe_code_move().
+Reject such lengths with -E2BIG before charging stream capacity, and
+tighten bpf_stream_elem_alloc() to accept only payloads strictly shorter
+than the bprintf buffer.
 
-Fixes: 9b07e27f88b9 ("perf inject: Add jitdump mmap injection support")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Stephane Eranian <eranian@google.com>
-Assisted-by: LLM
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 5ab154f1463a ("bpf: Introduce BPF standard streams")
+Signed-off-by: Jianlin Shi <shijianlin11@foxmail.com>
+Link: https://lore.kernel.org/r/74387ae5024d7e2996095e97211430285095b525.1787492521.git.shijianlin11@foxmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/bpf/stream.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index 5174946ffe870..8e561a0eeaa7d 100644
---- a/tools/perf/util/jitdump.c
-+++ b/tools/perf/util/jitdump.c
-@@ -494,6 +494,9 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
- 			jd->dir,
- 			nspid,
- 			count);
-+	/* snprintf returns would-be length on truncation, clamp to buffer */
-+	if (size >= sizeof(event->mmap2.filename))
-+		size = sizeof(event->mmap2.filename) - 1;
+diff --git a/kernel/bpf/stream.c b/kernel/bpf/stream.c
+index 62af66d6ee391..9a65fd2c918c1 100644
+--- a/kernel/bpf/stream.c
++++ b/kernel/bpf/stream.c
+@@ -165,11 +165,11 @@ static struct bpf_stream_elem *bpf_stream_elem_alloc(int len)
  
- 	size++; /* for \0 */
+ 	BUILD_BUG_ON(max_len > BPF_STREAM_PAGE_SZ);
+ 	/*
+-	 * Length denotes the amount of data to be written as part of stream element,
+-	 * thus includes '\0' byte. We're capped by how much bpf_bprintf_buffers can
+-	 * accomodate, therefore deny allocations that won't fit into them.
++	 * Length is the payload pushed into the stream, excluding the
++	 * trailing NUL of the bprintf buffer. Reject anything that cannot
++	 * fit without copying that NUL into the stream element.
+ 	 */
+-	if (len < 0 || len > max_len)
++	if (len < 0 || len >= max_len)
+ 		return NULL;
  
-@@ -622,6 +625,9 @@ static int jit_repipe_code_move(struct jit_buf_desc *jd, union jr_entry *jr)
- 	         jd->dir,
- 		 nspid,
- 		 jr->move.code_index);
-+	/* snprintf returns would-be length on truncation, clamp to buffer */
-+	if (size >= sizeof(event->mmap2.filename))
-+		size = sizeof(event->mmap2.filename) - 1;
+ 	if (!bpf_stream_page_local_lock(&flags))
+@@ -389,6 +389,11 @@ __bpf_kfunc int bpf_stream_vprintk_impl(int stream_id, const char *fmt__str, con
+ 		return ret;
  
- 	size++; /* for \0 */
- 
+ 	ret = bstr_printf(data.buf, MAX_BPRINTF_BUF, fmt__str, data.bin_args);
++	/* Truncation: reject before capacity charge (not -ENOMEM). */
++	if (ret >= MAX_BPRINTF_BUF) {
++		bpf_bprintf_cleanup(&data);
++		return -E2BIG;
++	}
+ 	/* Exclude NULL byte during push. */
+ 	ret = bpf_stream_push_str(stream, data.buf, ret);
+ 	bpf_bprintf_cleanup(&data);
 -- 
 2.53.0
 
