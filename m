@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017221;
-	b=KnocXD+Ko4Kdv8yHNx6hxPLDCyiCQesk3hIJkAC13Y7fE0aPxw9sQgxUXhsyPM63rbiW
-	 Q3VmM1Sjum81xHhGkX0XTOjGYXlzTx3BTtRqEhBXkWXiJoePooEVFN4W7w7EkytoDmvmS
-	 8tzGPcmw2a1KpuQ8f8vqQFBIADG8mVjqfMir36cvGXJ+yOm5+/8UHewMil4GtBOWQaDEA
-	 ItA9gcRlulIKLjEgrta21UqnwgvaMVGDqiGcXjbMRRlbpjK+CGkH7PfLJtBPZ4zIV/ck+
-	 pZNWAVjMmvBQ/4gprb9U0h7CvtDfmD9+2mxAKi7Df4Ge11BzWOR2RyD5ZVwpksVE3fg==
+	t=1795017224;
+	b=DaGcDf2WGGGSj1my7X7VxWRxl5cAtjRnSsj9pPaRzcfryIZBczujO8+7syTGIkv4iUML
+	 q67L2Aafr37KWeGvBWia6XGVfDhXyCnNL98P/M4ZDQ4LsJNkI3MUHteNyIDGFWvWvCkn8
+	 pcu5FMjIKfR5o3B3ZIasMUswNIG/coQzL8Eil3UAtEef6lfNUj1ZfVJCJloBeZwMu3Xfv
+	 zWTRe9FitwgQ38U+KqkdxDI1tLsG3APLQbCsYCtWihc6HzP+chPgU6eTQeWGzJeLmiAgp
+	 Iv4z765uoghlBB12XKJlFt6vlZ8IlJJGch/8E+36VivvnTWp/PrsTc62CPWUqV0xkbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017221;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017224;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2mEAVq4sV200h5wqdNcoJSFtvR9pVaajj5fPC5sWx1U=;
-	b=Ds1HQbZWskm5egIOKcUbt1/w7qTRK2m0bGl/uRZdRqL7CYZttVaKz2bf5qY6KEq5zoDz
-	 TJzv8fIWFDdVhe7G5wwE1b5f3BYmnN8VbClsNKCefUPiup9GZaOTb+7yh/pY/pTe4JQdB
-	 Xq3ipQPM0rMss7F5Nea0UiaQdwfD54QWN4j4yZQZCifusHPmpYcy+Be6I3Bzxhagn0SS9
-	 4Payq5LeF+S2jeiGkLLqmp3x25eBYIEN72heXc45CmF7LjJqPDtEWPllHcAOnK4iKFcEJ
-	 FYV65AIbpudogsJfnGRYXLYaowQY1lpuxPt3UmEUstu9PPZwgi+VQmjqewE6L3tsRag==
+	bh=+4aVCoRarPxLOl3UIHpmDfq7b6KMu/6kghb6bvLTLjw=;
+	b=1hEb6zEBHPOfmFu7AVNG2Ht8yI3ZkCL46pdAx8iflGjVNwAzyjt7ZSoHDePDSvpaMcA4
+	 wI8D3AhxlNkDUI8VPi8U8tDxmjNq0GujqIfzv9DHM/SNpjHxAbeAIDdwaT0WBf51s09Uj
+	 Mtxji4CHzo9KAS4vSa3kX9iJlCFLaTrsKcyRWo0Ai4gVERZPJNKWULNQjT6Q8LoqcPWTi
+	 QXSb4QWMIErXhzKZ6H6kqQ312mGYDFJIMkKDbgjaJimvmXC9Pz+lTWjLsgF4S6q6TBsG7
+	 GpRWOxtBACw0LXUUGZ5DhwdOrVraBrar30XRUfa5EJmBfMW0We2VxQhDyrf7oxNAAcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1cslZPnB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nE3dRzfF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9BC1606A31C;
-	Wed, 18 Nov 2026 15:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CEB606A33B;
+	Wed, 18 Nov 2026 15:53:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1cslZPnB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 073ED1F000C4;
-	Wed, 18 Nov 2026 15:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nE3dRzfF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C66D11F000C4;
+	Wed, 18 Nov 2026 15:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017221;
-	bh=2mEAVq4sV200h5wqdNcoJSFtvR9pVaajj5fPC5sWx1U=;
+	s=korg; t=1795017224;
+	bh=+4aVCoRarPxLOl3UIHpmDfq7b6KMu/6kghb6bvLTLjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1cslZPnBrVb+ycUnBiNZ16Z6+f+meknfOVQpcSmZePWGYip+M7fjKbf7gK9l6Ow2V
-	 58Tn2kbfYZ4vk0oe3ggl1vBTvwJesxQTyvss9mwU2Frd2SK13uGW0YvAiagHzDxrHE
-	 xdjDT8A7PH6hZzv7mxBDXGDHh9nSLRW719eKmRJM=
+	b=nE3dRzfF0xDlPC5f6UM1IyPn00ynmtQ5t9zaR9W336JGa7q+sl6s17pHVk7TDhjxJ
+	 bsbzH5lzEdUBgGPBhs7toOP01YiEEiC0gMpjkj2BcT6c5FtbvcYo5UyTpftnKWtdr9
+	 io9qUryVkZ5Q2lYkT4SHQXq//iIZvGj+PEY9Memk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0807/2651] ASoC: mediatek: mt8188: mt8188-afe-pcm: Handle runtime resume errors
-Date: Wed, 18 Nov 2026 15:34:07 +0100
-Message-ID: <20261118150316.944437254@linuxfoundation.org>
+Subject: [PATCH 7.3 0808/2651] ASoC: mediatek: mt8188: fix clk leak on error in audsys_clk_register
+Date: Wed, 18 Nov 2026 15:34:08 +0100
+Message-ID: <20261118150316.981298435@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,70 +72,72 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit f5f6941d92972ba66829a99999fa825e63da5162 ]
+[ Upstream commit 6cddf6e56d2539fd13c0ee9dd817c4e06a967173 ]
 
-Errors from clock enable and regcache synchronization are currently
-ignored during runtime resume.
-Check the return values from mt8188_afe_enable_reg_rw_clk(),
-regcache_sync(), and mt8188_afe_enable_main_clock(), and abort the
-runtime resume if any of them fails.
-On failure, disable the previously enabled reg_rw clocks and restore
-the regmap to cache-only mode.
+devm_add_action_or_reset() is called after the loop that registers gate
+clocks. If kzalloc() fails mid-loop, the function returns -ENOMEM before
+that call, so cleanup is never registered and all previously registered
+clocks leak permanently.
 
-Fixes: bf106bf09376 ("ASoC: mediatek: mt8188: add platform driver")
+Move devm_add_action_or_reset() before the loop so cleanup is always
+scheduled. The clock from the current (failing) iteration is not yet
+stored in afe_priv->lookup[i], so it still needs an explicit
+clk_unregister_gate() call.
+
+Fixes: fd67a7a1a22c ("ASoC: mediatek: mt8188: fix use-after-free in driver remove path")
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
 Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20260907120310.135693-6-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20260907120310.135693-8-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8188/mt8188-afe-pcm.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ sound/soc/mediatek/mt8188/mt8188-audsys-clk.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
-index 7b1f5d05f4d61..f8cbe7bac36de 100644
---- a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
-@@ -3030,22 +3030,33 @@ static int mt8188_afe_runtime_resume(struct device *dev)
- 	struct mtk_base_afe *afe = dev_get_drvdata(dev);
+diff --git a/sound/soc/mediatek/mt8188/mt8188-audsys-clk.c b/sound/soc/mediatek/mt8188/mt8188-audsys-clk.c
+index 972f097a13ca9..9f3b3a777577c 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-audsys-clk.c
++++ b/sound/soc/mediatek/mt8188/mt8188-audsys-clk.c
+@@ -170,7 +170,7 @@ int mt8188_audsys_clk_register(struct mtk_base_afe *afe)
  	struct mt8188_afe_private *afe_priv = afe->platform_priv;
- 	struct arm_smccc_res res;
-+	int ret;
+ 	struct clk *clk;
+ 	struct clk_lookup *cl;
+-	int i;
++	int i, ret;
  
- 	arm_smccc_smc(MTK_SIP_AUDIO_CONTROL,
- 		      MTK_AUDIO_SMC_OP_DOMAIN_SIDEBANDS,
- 		      0, 0, 0, 0, 0, 0, &res);
+ 	afe_priv->lookup = devm_kcalloc(afe->dev, CLK_AUD_NR_CLK,
+ 					sizeof(*afe_priv->lookup),
+@@ -179,6 +179,10 @@ int mt8188_audsys_clk_register(struct mtk_base_afe *afe)
+ 	if (!afe_priv->lookup)
+ 		return -ENOMEM;
  
--	mt8188_afe_enable_reg_rw_clk(afe);
-+	ret = mt8188_afe_enable_reg_rw_clk(afe);
++	ret = devm_add_action_or_reset(afe->dev, mt8188_audsys_clk_unregister, afe);
 +	if (ret)
 +		return ret;
- 
- 	if (!afe->regmap || afe_priv->pm_runtime_bypass_reg_ctl)
--		goto skip_regmap;
-+		return 0;
- 
- 	regcache_cache_only(afe->regmap, false);
--	regcache_sync(afe->regmap);
-+	ret = regcache_sync(afe->regmap);
-+	if (ret)
-+		goto err;
 +
-+	ret = mt8188_afe_enable_main_clock(afe);
-+	if (ret)
-+		goto err;
+ 	for (i = 0; i < ARRAY_SIZE(aud_clks); i++) {
+ 		const struct afe_gate *gate = &aud_clks[i];
  
--	mt8188_afe_enable_main_clock(afe);
--skip_regmap:
- 	return 0;
-+err:
-+	mt8188_afe_disable_reg_rw_clk(afe);
-+	regcache_cache_only(afe->regmap, true);
-+	return ret;
+@@ -194,8 +198,10 @@ int mt8188_audsys_clk_register(struct mtk_base_afe *afe)
+ 
+ 		/* add clk_lookup for devm_clk_get(SND_SOC_DAPM_CLOCK_SUPPLY) */
+ 		cl = kzalloc_obj(*cl);
+-		if (!cl)
++		if (!cl) {
++			clk_unregister_gate(clk);
+ 			return -ENOMEM;
++		}
+ 
+ 		cl->clk = clk;
+ 		cl->con_id = gate->name;
+@@ -206,5 +212,5 @@ int mt8188_audsys_clk_register(struct mtk_base_afe *afe)
+ 		afe_priv->lookup[i] = cl;
+ 	}
+ 
+-	return devm_add_action_or_reset(afe->dev, mt8188_audsys_clk_unregister, afe);
++	return 0;
  }
- 
- static int init_memif_priv_data(struct mtk_base_afe *afe)
 -- 
 2.53.0
 
