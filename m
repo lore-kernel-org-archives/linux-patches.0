@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018840;
-	b=49G+vcYVajhzeANKp++EUT8P7Ek/Lf8/aRj9+rQV/koeyMjdzVIuKCt877wTzrM3jWk7
-	 sOa0PzBv7iDmoYKWJqBR/lA3PGvHYAhynLD1kcJ9fiAT9wtZUAsoL2Ysbq2iU6Az74FS7
-	 R5ZYVKPg/aPtL9Yt1VXXQ3yT+l43VfT73z2j0sLlxTg4ukqcnzcHn0zaFc0AK4aAShY5A
-	 SfeHeUC3SjZq2MXcWb/Ufzt+6T/FAcvGUqM2UcjZ/7Lm+7kGs5OaJ7Ku48a4OzFiAZgOe
-	 4jLyYRMHtR3l9w0LI8Q4EYmk++hxqE4belg2UZUqDwHD7hcdAe5Q0ZUzjq9L75FTHZA==
+	t=1795018842;
+	b=hbXsc+cj9+LtWPaGqpS8f7XudFgeZQU0tmDDHgH0Qg10UBPCgQ0y4Jq2p5G8NYYzvkCp
+	 XXTlCh9SsLB9tEBdoR5hjTt2YFMUgCzwSgCNGmXAz+znvtAuHNeQYXsxhPSvcTSAF8PR/
+	 V5ojjb1STBA915pNHQFkxDra6K4MVNPIEbN/fHBVDrWXtwbcLsIjzTIl/cnDE4k3WPpK1
+	 Yr3D953ndJY0aab296+Xim3o0r14voLXKUiLYVCGg9Dha5bv4xjAZqV30Z4bDK0yxEY3/
+	 a1dsSDJLYi19MxvBbNd/1DmvfhDKbdkX62jhotx4vOnvrTO1P2sp4Wj6pfr/e8i7XoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018840;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018842;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xLJ3h2OrHp7KRc4Xua6vaZ8mHksZ74u3mZaFae7OgEs=;
-	b=bCjJ2GbbJOmAVlfpwZRY4p5Fxgvx1SjLqLASX8OutDlSfCxwCimDXFhCzt99H40pIDsQ
-	 SlBS58zO2pPy8Cry/K9qvUKzTHUVN7pejWg23CcADpPPEO31sbVkqpYoOwI6xVY2Ye8uH
-	 0GFdfTE27Xd9fr/p3jUggBZTw4Q0tZ79dWPm/75ojoQz2ZfTmZ2RD+QTxP55kKBRr3vsd
-	 Iu/9Ui+MRKF1fGCSKJ71bJ9N3z1g2GLGRHsQQeeyZgyFBR0YDSpbvvfo6zjzQ92tEWlNL
-	 G+x7Mv1jRQyfIy9wk/qTuzC0KQpKUZWTS0O/9FeFbrGwYIZhlmj+pHG1tiql9MQkq1A==
+	bh=ij9R7bwOFSHGeJVlwCoQSm0AhUjVL2wM1tV1VWaEX7U=;
+	b=SmlP0Ti2r6BMKpf7gq2iXwXs/cE/l14dKPwkVKQWJ+4C9j6p4dCZV4DC7U/bs90DtzTg
+	 3Pf2Tma4xry0f8jqUxYtiBUvc2mKrTu7QTSS89g8gpCruv8jPl9sKqibCbZXoZMKLn1Yt
+	 ptkkyjVh9qlKWGDsFbhb2dXfzhKA9Rp8SApSB7EjPQWfT9kQf3irudWJdb1qomGd592LW
+	 As1qdvgj1fAZz0WBqmJvNRItHjN3qGjNnQdo4mSIVdwx+ZXnoYk6hDPXW83HTVQl2gyRn
+	 shhItWlNHZ9LEKgoUHQ4jly/5tT13Bd9Sd/AXY0JLrX6zftRE/9jKwi2MIsv096Zujg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1WUuPEOh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ivOQzq79;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CEC2606A325;
-	Wed, 18 Nov 2026 16:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91BA606A325;
+	Wed, 18 Nov 2026 16:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1WUuPEOh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E5FC1F000C4;
-	Wed, 18 Nov 2026 16:20:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ivOQzq79
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 373E91F000C4;
+	Wed, 18 Nov 2026 16:20:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018839;
-	bh=xLJ3h2OrHp7KRc4Xua6vaZ8mHksZ74u3mZaFae7OgEs=;
+	s=korg; t=1795018842;
+	bh=ij9R7bwOFSHGeJVlwCoQSm0AhUjVL2wM1tV1VWaEX7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1WUuPEOhSiWg1sswexhup2MngsHjXMBYYyFds2dKXywOuSwaUuXg6RNMZP1MRGcC8
-	 xj7OtAPdKDM8I5OJvzvVwxe/gQCtif4DMfF6KWd/pod3HKBE3nY7jcIJrD1MJp7D5c
-	 SJAutP2MbkYUmWbUleSqEgAfUbzvDedAkvKtNpsg=
+	b=ivOQzq79nJOJFkF/wGr3LdfyTjz1knYx1P3U14F9fNoNx+xtrD7aekedXOn36F+T9
+	 394HOiopYf5ht8mIleJYGDrufW7mWn39Wj/65stmObUOLxU4HlxXAfVb9k3SIa1QZW
+	 F98+StlY0H8+l6LQi1Z+FRkbMMKfHKr3WIbopaz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Schramm <t.schramm@manjaro.org>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Jonas Rebmann <jre@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
+	Roberto Bergantinos Corpas <rbergant@redhat.com>,
+	Prabhakar Pujeri <prabhakar.pujeri@dell.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1382/2651] spi: spi-sun4i: sun4i_spi_handler(): fix race condition between transfer completion and RX FIFO interrupt
-Date: Wed, 18 Nov 2026 15:43:42 +0100
-Message-ID: <20261118150337.774931078@linuxfoundation.org>
+Subject: [PATCH 7.3 1383/2651] NFS: return DENIED in decode_lock_denied if we cannot decode owner
+Date: Wed, 18 Nov 2026 15:43:43 +0100
+Message-ID: <20261118150337.809552847@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,126 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Roberto Bergantinos Corpas <rbergant@redhat.com>
 
-[ Upstream commit b8f09251da7871fbb9c62bd83516af422641d816 ]
+[ Upstream commit 4fdfe2312cbed99b1438dcf20b348e72393f9633 ]
 
-In commit 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO
-size"), support for transfers larger than the FIFO size was added.
+After commit 43502f6e8d1e ("NFS: fix open_owner_id_maxsz and related
+fields.") we dramatically changed the size of the LOCK/LOCKT reply buffer
+from 164 to 52 bytes. This made visible a situation on a buggy NFS
+server that sent oversized denied responses which led to us returning
+EIO instead of DENIED.
 
-This commit moves the draining of the RX-FIFO from
-sun4i_spi_transfer_one() (after completion of the transfer) to the IRQ
-handler when the IRQ "transfer complete" is handled. In addition, the
-IRQ "RX-FIFO 3/4 full" is activated for all transfers.
+Now, apart from buggy server issue, this poses an interesting question:
+what if other implementations have legitimate but bigger than we expect
+lock owner response, especially now that we have reduced the size we
+allocate for it (20 bytes for the lock owner part).
 
-However, this does not take into account that the RX-IRQ for transfers
-that exceed 3/4 of the FIFO size is still pending after the IRQ
-"transfer complete" has been processed. All interrupt sources are only
-deactivated after the wait_for_completion_timeout() in
-sun4i_spi_transfer_one().
+This change proposes to tackle that issue returning DENIED instead of
+EIO regardless of whether we manage to decode the owner or not:
 
-This opens a race window for "RX-FIFO 3/4 full" interrupts to come.
-The sequence is as follows:
+- At this point of decode_lock_denied we know there is an owner.
+- Server legitimately denied the lock request, with an owner that fits on
+  NFS4_OPAQUE_LIMIT but we returned EIO instead to userspace.
+- The owner data is decoded but actually never used, decode_lock path
+  simply retries, and decode_lockt turns it into 0 on file_lock and
+  returns it to userspace.
+- LOCK/LOCKT are the last operations on the compound so it's not relevant
+  if we didn't advance the pointer.
+- Also removes an inverted likely(!p) hint.
 
-| sun4i_spi_transfer_one()
-|     sun4i_spi_fill_fifo()       // fill TX-FIFO with 48 bytes
-|     // enable RX-FIFO 3/4 full IRQ
-|     wait_for_completion_timeout();
-|
-| // SPI controller transfers 48 bytes
-| // SPI controller issues "transfer complete" and "RX-FIFO 3/4 full" IRQ
-|
-| // IRQ handler start
-|     sun4i_spi_handler()
-|         // ACK "transfer complete" IRQ
-|         sun4i_spi_drain_fifo();
-|         complete();                         ----.
-|         return IRQ_HANDLED;                      \
-| // IRQ handler end                                \__ race
-|                                                   /   window
-|     // wait_for_completion_timeout() continues   /
-|     // disable all IRQ sources              ----'
-
-Avoid the race condition by disabling all interrupts when handling the
-"transfer complete" IRQ and before calling complete(). Also move the
-draining of the RX-FIFO back into sun4i_spi_transfer_one() where it
-was before commit 196737912da5 ("spi: sun4i: Allow transfers larger than
-FIFO size").
-
-This has the added benefit of spending a little less time in the IRQ
-handler.
-
-With all interrupts disabled once the transfer completed, omit the
-clearing of the Transfer Complete bit in sun4i_spi_handler. This is safe
-because sun4i_spi_transfer_one() takes care of this before enabling any
-interrupts again.
-
-Cc: Tobias Schramm <t.schramm@manjaro.org>
-Fixes: 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO size")
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
-Link: https://patch.msgid.link/20260914-spi-sun4i-fixes-v3-4-9fe919d5cecf@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 43502f6e8d1e ("NFS: fix open_owner_id_maxsz and related fields.")
+Signed-off-by: Roberto Bergantinos Corpas <rbergant@redhat.com>
+Reviewed-by: Prabhakar Pujeri <prabhakar.pujeri@dell.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sun4i.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ fs/nfs/nfs4xdr.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
-index 8a9dcd3b6b8f4..ea8be0170fbfd 100644
---- a/drivers/spi/spi-sun4i.c
-+++ b/drivers/spi/spi-sun4i.c
-@@ -82,6 +82,8 @@ struct sun4i_spi {
- 
- 	struct completion	done;
- 
-+	int			irq;
-+
- 	const u8		*tx_buf;
- 	u8			*rx_buf;
- 	int			len;
-@@ -333,6 +335,7 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
- 	start = jiffies;
- 	time_left = wait_for_completion_timeout(&sspi->done,
- 						msecs_to_jiffies(tx_time));
-+
- 	end = jiffies;
- 	if (!time_left) {
- 		dev_warn(&host->dev,
-@@ -340,12 +343,11 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
- 			 dev_name(&spi->dev), tfr->len, tfr->speed_hz,
- 			 jiffies_to_msecs(end - start), tx_time);
- 		ret = -ETIMEDOUT;
--		goto out;
-+		sun4i_spi_write(sspi, SUN4I_INT_CTL_REG, 0);
-+		synchronize_irq(sspi->irq);
- 	}
- 
--
--out:
--	sun4i_spi_write(sspi, SUN4I_INT_CTL_REG, 0);
-+	sun4i_spi_drain_fifo(sspi, SUN4I_FIFO_DEPTH);
- 
- 	return ret;
+diff --git a/fs/nfs/nfs4xdr.c b/fs/nfs/nfs4xdr.c
+index fc049ce4ba8ac..9d0f7ad7525a7 100644
+--- a/fs/nfs/nfs4xdr.c
++++ b/fs/nfs/nfs4xdr.c
+@@ -5169,8 +5169,7 @@ static int decode_lock_denied(struct xdr_stream *xdr, struct file_lock *fl)
+ 	p = xdr_decode_hyper(p, &clientid); /* read 8 bytes */
+ 	namelen = be32_to_cpup(p); /* read 4 bytes */  /* have read all 32 bytes now */
+ 	p = xdr_inline_decode(xdr, namelen); /* variable size field */
+-	if (likely(!p))
+-		return -EIO;
++	/* We have an owner here, return DENIED */
+ 	return -NFS4ERR_DENIED;
  }
-@@ -357,8 +359,7 @@ static irqreturn_t sun4i_spi_handler(int irq, void *dev_id)
  
- 	/* Transfer complete */
- 	if (status & SUN4I_INT_CTL_TC) {
--		sun4i_spi_write(sspi, SUN4I_INT_STA_REG, SUN4I_INT_CTL_TC);
--		sun4i_spi_drain_fifo(sspi, SUN4I_FIFO_DEPTH);
-+		sun4i_spi_write(sspi, SUN4I_INT_CTL_REG, 0);
- 		complete(&sspi->done);
- 		return IRQ_HANDLED;
- 	}
-@@ -456,6 +457,7 @@ static int sun4i_spi_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
-+	sspi->irq = irq;
- 	sspi->host = host;
- 	host->max_speed_hz = 100 * 1000 * 1000;
- 	host->min_speed_hz = 3 * 1000;
 -- 
 2.53.0
 
