@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028457;
-	b=NdpfQAxye3lgkqF+LmKMgkFiouEt2RtJ2BJRomWuTxGAcaFzDIbyjos66XE37Tg97hNT
-	 bYFwx/Wu+cL/5wFun20dlxX1OZmHO0CtNir6rg7Lt39ONqeISYjV2CkHi5cO31vOup8FF
-	 Drl9xrOVVPXgtvCF+ws5hxkwZW8VRcylXNLiNx1CFW4JlR4RN5ygelSn4zN7z8mzktqKL
-	 6hEw9k/eWaWsSZsN66hSC+XW19MPDadMh54X/kNmrA3dR3d58twh1MAZ8WkqYZW3pTzkD
-	 EX0TNRYjfflR+kU/M3FF98tXgvlFLUH2cbP9sxfHo8aGQzwDx4VakxcsVEOVCPWXGAQ==
+	t=1795028459;
+	b=XcW76IzCRIbo6vhbIbBc8AMgNdbPMd+2zQBpBcuEREk4LbJUcnYzaDGkkvvJkDiX287x
+	 3pPgjeZHPmfqOGy8NGJrBMduK2S7qdOBZYADGJppfqlSb0PQ4qMg0NkdVX5S4rNGm85eg
+	 WTuU1seJuPY8Bg2Sw6bsZZjc+TcJ4yJ9lxPcRQBp87YgKVbCBAJWtDWeDKaAdvtPqK/J3
+	 pzRBK7ca2GaX73jMUg3dwWiZ15VGAhlwcyGQLSUpT3CdrcBuslIhseXLCfIOuu8/VYaYc
+	 Kx/lBxbqlwqhrdQPua3gZ6IdQYDhSiPF00yBsnf+f9S0ACQmaVvQwAEcX+0iyMB/fEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028457;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028459;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4KDK2hB1U5Qj96oUS2GBvQBFxcP/JOavA17gLAgXbgw=;
-	b=H7DSqI2gjlIKnKM3h7aDlzjJN70l1SLDCu42sxZw2H1S03X4sSmZ9Ip78dmtGxrfqTbp
-	 +4wSaB8Nut+z1zt6k4G/2FWofJWC9ClHfxsaM6+zVGdwxzEKZEKWNSBGwD9Ebpp6yrQpH
-	 INjLOGVlq9HGNJ+4bSx67pHj8fkpT9Y9YcGTmkdXT8CI52DgaGlWecO7RcoNelkyi446S
-	 IlneGFINzdzOmEANqvOS6CY2qzLELOCgTj936YJxtiahOQuq53OSJTVCzdzsd70KzGCjc
-	 9Qw6/izfolFi/FVivt+BrXSfwVpjCz0Z8tyrou2UIUZK3rwVwDpmHO9PicYuMGueR2Q==
+	bh=SEtZ7HjPTbFa3r7r6uXrCZS4Ij3minuT/nMl257BWqs=;
+	b=WKNbVd4Mdc4n/BKzpU+UnWFCA09xIhfzW7/6h3rNLs7C7dSelQASp5DSv3cS0x6LAuN2
+	 R4eh1JNnD1wloNq5FVXZ6s1xiA60D5cXHeAmmqp+1+I6uq5+aKo/0SG9TgPT6HRPrQjW9
+	 haXlRHg6eVjFdgWwVB7XIitskHc28sPTarXUlG4qaB7hwlMtbDis/B8WLDFjN4qAznr1D
+	 7s86N2XMd1PdRXN9L5ZwnTUHIIvMai6E2WAN0a/OV02de3F0wq5fDXzLKdJ7eWkEIjAOK
+	 zVvfCQLdsVqNXxtmDb1lNAxQaDolUinbTBmKEOo6CO74aYU2ATBofZMgev+l+yywXJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pB5L3Ve5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uIPOqbXF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B75606A330;
-	Wed, 18 Nov 2026 19:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB4F606A336;
+	Wed, 18 Nov 2026 19:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pB5L3Ve5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F6D1F000C4;
-	Wed, 18 Nov 2026 19:00:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uIPOqbXF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2FE1F000C5;
+	Wed, 18 Nov 2026 19:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028456;
-	bh=4KDK2hB1U5Qj96oUS2GBvQBFxcP/JOavA17gLAgXbgw=;
+	s=korg; t=1795028459;
+	bh=SEtZ7HjPTbFa3r7r6uXrCZS4Ij3minuT/nMl257BWqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pB5L3Ve5Va9Z03CmZLbpDvnv7ooYDzEzPgsi7uFrD2196aPBzND7MwHRySEjETkp/
-	 iCS/3545z9W8haJSo7holhP2VtkqWCvDQHtaSFm4BwGZkrVrI/VjAVe+pTrneZuFd+
-	 FBlkJEN2k3gmn9g9G0NyQGeOJ/Ja64R9SM/09L/I=
+	b=uIPOqbXFbMay9AifIrp8C+PFvz8SzpngymJ1RLPIg7bO1sWG7XrMs3T+Odvc4I2Q3
+	 bjutYO/QuW2wTM8VP7ZNG/feHVnOIWKls2zcZfOPTmj5dmU4D1Gr6o8DfdFj89mtxc
+	 eUCKieK9rEIJSFKNr1soVD6uydzs2QRE9Ivieus4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giuseppe Piscitelli <ooonea@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.18 2151/2151] scsi: core: Balance the pseudo target reap reference
-Date: Wed, 18 Nov 2026 16:04:46 +0100
-Message-ID: <20261118150240.028659255@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Tejun Heo <tj@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.18 2134/2151] kernfs: avoid READ_ONCE() on a kgid_t in kernfs_new_node()
+Date: Wed, 18 Nov 2026 16:04:29 +0100
+Message-ID: <20261118150239.414280170@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,54 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giuseppe Piscitelli <ooonea@gmail.com>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-commit 8a832fb632da303cdf0704e0d56722ec47799f19 upstream.
+commit ef179363b04306dbc645c53207b9ad3516ebc75f upstream.
 
-With memory allocation profiling enabled, unloading scsi_debug reports
-allocations left at module unload. A stock Linux 7.2.11 VM without OpenZFS
-emitted the following on each of three load/unload cycles:
+kernfs_new_node() reads the parent's gid with READ_ONCE(attrs->ia_gid).
+That gid is a kgid_t, which is a struct.
 
-[    1.644665] drivers/scsi/scsi_debug.c:8863 module scsi_debug func:sdebug_add_host_helper has 1024 allocated at module unload
-[    1.656260] drivers/scsi/scsi_debug.c:1261 module scsi_debug func:sdebug_target_alloc has 16 allocated at module unload
+On SMP alpha, READ_ONCE() ends by casting the value it loaded back to
+the type of its argument. Here that is a cast from a struct to the same
+struct. GCC accepts that as an extension, but ISO C does not allow a
+cast to or from a struct type, so sparse warns:
 
-scsi_alloc_target() supplies a reap reference for its caller. The SCSI
-device initializer takes another reference, which device removal drops.
-scsi_get_pseudo_sdev() drops its caller reference only when device
-allocation fails. On success the target cannot be destroyed, retaining its
-driver-private data and its parent host and adapter.
+  fs/kernfs/dir.c:751:31: sparse: sparse: cast to non-scalar
+  fs/kernfs/dir.c:751:31: sparse: sparse: cast from non-scalar
 
-Drop the caller reference in the common cleanup path, as the other
-scsi_alloc_target() callers do.
+Read the gid_t inside the kgid_t instead, and wrap it back up with
+KGIDT_INIT(). This is still a single marked load of the same four bytes.
 
-Fixes: d630fbf6fc8c ("scsi: core: Support allocating a pseudo SCSI device")
-Signed-off-by: Giuseppe Piscitelli <ooonea@gmail.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20261027100859.1031135-1-ooonea@gmail.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+There is no functional change. With GCC 12 for alpha (the config from
+the report) and GCC 14 for x86-64 (with and without KCSAN),
+fs/kernfs/dir.o has the same object code before and after this change.
+
+Fixes: 81bdc85b4c08 ("kernfs: fix up the unlocked attribute reads on the creation paths")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202610261608.vItiXCGW-lkp@intel.com/
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20261027143247.3537239-1-shakeel.butt@linux.dev
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_scan.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/kernfs/dir.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/scsi_scan.c
-+++ b/drivers/scsi/scsi_scan.c
-@@ -2141,14 +2141,13 @@ struct scsi_device *scsi_get_pseudo_sdev
- 		goto out;
+--- a/fs/kernfs/dir.c
++++ b/fs/kernfs/dir.c
+@@ -714,7 +714,7 @@ struct kernfs_node *kernfs_new_node(stru
+ 		struct kernfs_iattrs *attrs = READ_ONCE(parent->iattr);
  
- 	sdev = scsi_alloc_sdev(starget, U64_MAX, NULL);
--	if (!sdev) {
--		scsi_target_reap(starget);
-+	if (!sdev)
- 		goto put_target;
--	}
+ 		if (attrs)
+-			gid = READ_ONCE(attrs->ia_gid);
++			gid = KGIDT_INIT(READ_ONCE(attrs->ia_gid.val));
  
- 	sdev->borken = 0;
- 
- put_target:
-+	scsi_target_reap(starget);
- 	/* See also the get_device(dev) call in scsi_alloc_target(). */
- 	put_device(&starget->dev);
- 
+ 		if (flags & KERNFS_DIR)
+ 			mode |= S_ISGID;
 
 
