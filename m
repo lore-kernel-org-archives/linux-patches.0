@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019113;
-	b=X0ge4/2gDDjP3PM1+tupXzZNJn8ehW0Ra6sB9wnV7daaHncItg2MnkJU6bKxjiYFA2Oe
-	 s63I8r4OSDPhQnu62JzI0E3DGM0JFq7IQycUbS6IgC0V6/kRZqsRc2ooRLw/tK8V5/v/0
-	 3vlWi+iqe0tPZ99HVD5OsUPCrU39MhAJ6GJNo8bWyoMBt8MX828snzHRfd6Pm0SJoFkCC
-	 +tE9mtDlcSjU9t1C/DwcUuJ6N/J+UD0Q8i1ceCQ5yg4yyB9uUfkTST/5lkJPTEG64q2cg
-	 ksvrg5efj7SdjHvCul4uSON5Ge8oVgrvVi0pdlFan7P1z0xrnBQF2L41XimWQ2jON2A==
+	t=1795019116;
+	b=fFKojCW6LZsofqTdyKOhJvO0X4p6G20rajd2XZ0tu7RF5IK+8g3X+nnswqa3XZt2kWO3
+	 ikU6Lsir1wlqQfKVkCuQ9nszYZEVFZwjywwNCUFYYeOkTxo6QlL3g+bKSVIObZw+OpYFa
+	 jVOTdXkSlZsa6Z5zxLXSnC+AYX9w028Kt2mYXACj27eJIOKy7rX2aHmyGHYpI1ioUtNrg
+	 4vxqox++wlRXRiPQv7LMbtg8B5InpnMIclG64f0I5mcwOgcp5MMdd9xNs++LGduLIpihj
+	 BnQAcHg0bJifOhnHx1wv+9sXpyyJo/aqUnyWF+IgAJsUzB44Y8SLf+1u2P47/vEoJfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019113;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019116;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RrCnbuCzrNmNWeAWpBlgx2lb9f2dsDc/Dd7FKTnmBA0=;
-	b=K+EqKRgJO9Q8MjtWEzPCa9B1GZnqLHlR4xLVAtEiaDPgmv5BvnKxZxz1gxFBIFpQiVmk
-	 HY2smYwmBN9cgq03zcQF15xRHQ5+ukg8KRUmjSno4dEo887VqO5tB8AUQxV+YkV6vOe5H
-	 symIH/yBvpA5HlUgKrpIfCdTjYiRuKTeEtv0eHkToKwPTJJKTiatNYoLTsqL0HWuJ6oyL
-	 /RfOepP250DIwB5eFnOI3E/zOO43CTFodzueQ8flN4chCEZdTOHCHRD0C7wGLPLY+vIJ/
-	 1GMlQ1jb9ZLkyumM/2BoL4c105uPLe8AQJs3sgtgwuvx5qD1Auh28ZTnLXQ63fi3d/g==
+	bh=J53+pkuMAE3yabyMGeYp9BI26SIXX4EFtw975M2m4VY=;
+	b=YgJ/jnusex3uqtQsIU7L8MDgteyJWXErbewwjTETlNfLr6pZD2bWEVb7KPuBbj9+JJtz
+	 tvcWVGvdH4YzJgs8ZwhnDIXM4OSjbiGN6hkoqVt/ALUNUDSKMV1GUcVWANX30KoMGorIh
+	 swJrsX4HjhrY4uqAdN5U57kXgRWwBO8s8v+D00vtjaXtRBAK0ar0ewToEgw5xIkoI6GQ9
+	 KjNECeXZtQWLYjTT6liFgYmXiSjcMJN9wpt8gyf/azMumuuy7K/7MAj3G30jkJBqBW0td
+	 7NQoS+A2P0GWOG82AMYtrV726jWRD0Aa219+WbUjhvzCDOvO6Eo0ugWffVVLwubK2ig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z+uK44Lg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bnm+bddY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DBD606A332;
-	Wed, 18 Nov 2026 16:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43DB7606A331;
+	Wed, 18 Nov 2026 16:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z+uK44Lg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93FDA1F000C4;
-	Wed, 18 Nov 2026 16:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bnm+bddY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 707901F000C4;
+	Wed, 18 Nov 2026 16:25:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019113;
-	bh=RrCnbuCzrNmNWeAWpBlgx2lb9f2dsDc/Dd7FKTnmBA0=;
+	s=korg; t=1795019116;
+	bh=J53+pkuMAE3yabyMGeYp9BI26SIXX4EFtw975M2m4VY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z+uK44LgGiQpl0LvEkM+KhGK+/nrsezK9wxN1Jiw6r2j2awOL5w79R/g63iaihh1I
-	 yiWJdj7cwyeaFY3GbgFheRoWkMhF4dzZ787MZ8PP6/PYd88yChZLz71WQSam7uZ9b5
-	 1sKiEhABjWiHcV5ME97OJNVGP+Gr20gt5/0jYU3g=
+	b=Bnm+bddYt88c4GqJ5zNK2/wB/B0S317uoNjoRxXCbOxM9BUldxvc52PvRPq5Qo0qp
+	 y3/EphynQc7YbTDjP+kRbFa6R6Ojxi04dMY6WN1p0JzEiCPfhuG/c3dCLgY2bhS1gC
+	 EPKO840ByFt/Or18VS8gC1apx94fVigc+k0wt98U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1478/2651] wifi: mt76: mt7996: do not reuse the deflink of a removed station link
-Date: Wed, 18 Nov 2026 15:45:18 +0100
-Message-ID: <20261118150341.237115304@linuxfoundation.org>
+Subject: [PATCH 7.3 1479/2651] wifi: mt76: mt7996: keep a returning link when adding station links fails
+Date: Wed, 18 Nov 2026 15:45:19 +0100
+Message-ID: <20261118150341.274015338@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,79 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 51773d5196a0b85884ad245aa788370c4c8ac58d ]
+[ Upstream commit 6541956cadc484eeed719e7a8e9e7d27e5900289 ]
 
-mt7996_mac_sta_init_link() puts a new link in msta->deflink whenever
-the station has no primary link. A removed link keeps its msta_link
-until the station is removed, and the station has no primary link
-after one mt7996_mac_sta_change_links() call removes all of its links
-and adds others. If the removed
-primary link was in msta->deflink, the new link then overwrites it:
-both link slots point to the same msta_link, and the WTBL index of the
-removed link is lost, so mt7996_mac_sta_remove() never returns it to
-wcid_mask.
+mt7996_mac_sta_add_links() removes all links that it was asked to add,
+with flush set, when one of them fails. A link that comes back after
+a removal kept its msta_link and may still have a firmware entry. The
+flush frees its msta_link and returns its WTBL index to wcid_mask, so a
+later station can be given an index whose entry still belongs to this
+station.
 
-Use msta->deflink only if no link slot of the station points to it,
-and allocate the msta_link otherwise. Choose the primary link as
-before.
+Flush only the links that this call created, and remove a returning
+link again without flush.
 
 Fixes: e8c819df0243 ("wifi: mt76: mt7996: Destroy active sta links in mt7996_mac_sta_remove()")
-Link: https://patch.msgid.link/20261006205936.669125-14-nbd@nbd.name
+Link: https://patch.msgid.link/20261006205936.669125-15-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7996/main.c  | 24 +++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/main.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index 7b9ec454b39ce..acd2d15649df5 100644
+index acd2d15649df5..8a00ab49d90dc 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -1150,6 +1150,20 @@ mt7996_sta_deflink_set(struct ieee80211_sta *sta, unsigned int link_id,
- 	mt7996_sta_init_txq_wcid(sta, idx);
- }
+@@ -1362,6 +1362,7 @@ mt7996_mac_sta_add_links(struct mt7996_dev *dev, struct ieee80211_vif *vif,
+ 			 struct ieee80211_sta *sta, unsigned long new_links)
+ {
+ 	struct mt7996_sta *msta = (struct mt7996_sta *)sta->drv_priv;
++	unsigned long created = 0, returned = 0;
+ 	unsigned int link_id;
+ 	int err = 0;
  
-+static bool
-+mt7996_sta_deflink_busy(struct mt7996_dev *dev, struct mt7996_sta *msta)
-+{
-+	unsigned int link_id;
-+
-+	for (link_id = 0; link_id < ARRAY_SIZE(msta->link); link_id++) {
-+		if (mt7996_sta_link_protected(dev, msta, link_id) ==
-+		    &msta->deflink)
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
- static void
- mt7996_sta_deflink_release(struct mt7996_dev *dev, struct ieee80211_sta *sta,
- 			   unsigned int link_id)
-@@ -1217,17 +1231,19 @@ mt7996_mac_sta_init_link(struct mt7996_dev *dev,
- 	if (idx < 0)
- 		return -ENOSPC;
- 
--	if (msta->deflink_id == IEEE80211_LINK_UNSPECIFIED) {
--		msta_link = &msta->deflink;
--		mt7996_sta_deflink_set(sta, link_id, idx);
--	} else {
-+	if (mt7996_sta_deflink_busy(dev, msta)) {
- 		msta_link = kzalloc_obj(*msta_link);
- 		if (!msta_link) {
- 			mt76_wcid_mask_clear(dev->mt76.wcid_mask, idx);
- 			return -ENOMEM;
+@@ -1379,6 +1380,7 @@ mt7996_mac_sta_add_links(struct mt7996_dev *dev, struct ieee80211_vif *vif,
+ 				mt7996_sta_deflink_set(sta, link_id,
+ 						       msta_link->wcid.idx);
+ 			msta->seclink_id = mt7996_sta_seclink_get(dev, msta);
++			returned |= BIT(link_id);
+ 			continue;
  		}
-+	} else {
-+		msta_link = &msta->deflink;
+ 
+@@ -1412,12 +1414,14 @@ mt7996_mac_sta_add_links(struct mt7996_dev *dev, struct ieee80211_vif *vif,
+ 			goto error_unlink;
+ 
+ 		mphy->num_sta++;
++		created |= BIT(link_id);
  	}
  
-+	if (msta->deflink_id == IEEE80211_LINK_UNSPECIFIED)
-+		mt7996_sta_deflink_set(sta, link_id, idx);
-+
- 	INIT_LIST_HEAD(&msta_link->rc_list);
- 	INIT_LIST_HEAD(&msta_link->wcid.poll_list);
- 	msta_link->sta = msta;
+ 	return 0;
+ 
+ error_unlink:
+-	mt7996_mac_sta_remove_links(dev, vif, sta, new_links, true);
++	mt7996_mac_sta_remove_links(dev, vif, sta, created, true);
++	mt7996_mac_sta_remove_links(dev, vif, sta, returned, false);
+ 
+ 	return err;
+ }
 -- 
 2.53.0
 
