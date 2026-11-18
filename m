@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020522;
-	b=RTvdi6//eCTPlxmoJHsiOfvg1mCwwq3ACQOgwWXiIe20Xu62m0aRUVzIm8+KwnpijQFR
-	 GFXTB02dmqXvM3tUTW7+SiFbDXPMAl/kD03T1i7wB04L4XsUscMXn71zRdk+9beiLBMEF
-	 MLtRhW+qmoPB/B16hEMxyVND4bNtgYHeg1dUgJJ7pU/gRayP3S68b4y0EnDXb+duywJj7
-	 /kA00SGf6MUprP2NET0f6k74kqs+4JsezikTdAH4gnMlbSR3Pdyzpe56opxtRXwJONI2Q
-	 rMcB3cT84z0my71m+GMpVdd3i9tb0cjk3cmJsHKNlZiF0/iAZ7SHvVB4/O9mBxGHfsA==
+	t=1795020524;
+	b=RXbULxrbLt/l3/Ct7c5nfdPqwMkgaqsQZQl4B+dUSdo0y6qZrP2cu/F5WBxb0YVy7BLr
+	 IhPB4SeecF67XVnko+74AbEphRlqK435CaAXo5q6VNd2s0a4Yq79bzPH5NnEZQDLjkPK/
+	 JcxxrttHD1zptTE9BCijbILAnWitn5HPc9TYxWDGHmwVWTKbA40jBLMKrBpcG8xpcjXn+
+	 hx8aZnnfVK3i+YnbGngVJMVPi3mM8O7E29iKy1/PLDnpEUupkjcI5n32l72B3OMtwaoij
+	 bJ0Qmsf3xAf/ItYxK94qObFnpC97NuNKimlkFphphrw4KIUgrYRu8ErM22pmayj391A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020522;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020524;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O1tOIQ4BDpgFitdERjhkx8/Salstuml4vx8TG4JyV8o=;
-	b=Wv7W8wGmC9tms8Hnsnli/Hkzbkt9iAk38TdPXYLizfW1mxKDOQUlivVB7D8hcRO4U2KT
-	 koFyhcgU1g993YGojtitP+nJnADayAaKmQB24+5qRQqqKWVdy35iPRGg50MNyHy3N9q03
-	 YI3J/xnUHzQkFRNl5wVZUq8FxwILJ2yiVoSsu8mqgK3ChNv1ocPXz2ye3DklUmg5kGDfn
-	 tZkTbrcak06zsDs0NdJN/G2QPwaWL4ogZqpAZF4J8AQBqsQv3DUfALi+D86pA6KE0D+ou
-	 Xj0GWm31qy+jdP6jG/DjnZsh1EA8fHPi4SLcVpWDrT7X2wkKKPJIuKYR6p3oFfQwLzQ==
+	bh=q9IItLIEbMnYP6dU4HjidN8jf8ToHHqGO5mUhn4HIM8=;
+	b=4DDS8bvI1IyBeJ3CXvoBfP0VeUdFnABxoK8gMQKAvWLl+TkQA0jg6B2ehVeRgP7lQez7
+	 sfA16uNQdWfJ9WAZ/lmh+U8laoPkxDDqqNuyM+DHHZDdMrQgBD/8JEbFjhYKYD42XaVeh
+	 z97+m2TYyDRXu0P3FeCLX7PgK+hipABqLC8P1eMa7LB8J6vlXLb5LGa6KKvGQ3vs6VRrR
+	 miHvxXrqDYMXCGOD1tJkDG+280SeW+dk6UnB+exhpCgUK1VOVF5NqDH+vU1Atp+hSyZA1
+	 GmLkKnjS6sTuXrE1NwSE/WxrH/cec4KPWtQ+4NCP0mFFfK7eSvS2GL6Una36sZgiQtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aiXZDf98;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pBqHvoX8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256C3606A31C;
-	Wed, 18 Nov 2026 16:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB138606A31C;
+	Wed, 18 Nov 2026 16:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aiXZDf98
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757CB1F000C5;
-	Wed, 18 Nov 2026 16:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pBqHvoX8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 303D91F000C4;
+	Wed, 18 Nov 2026 16:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020522;
-	bh=O1tOIQ4BDpgFitdERjhkx8/Salstuml4vx8TG4JyV8o=;
+	s=korg; t=1795020524;
+	bh=q9IItLIEbMnYP6dU4HjidN8jf8ToHHqGO5mUhn4HIM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aiXZDf98XQEfE2BQ/bygvAkjl4zhZGMWe54TE//xwE2XtvdPaxtgc8+1UcRZ0YzE3
-	 IJfpXTyXX3DCh6z6/Y2xY61nZg2foeOxZhbDQsFuvBlCNj+AinZDAztA3BELsXtiTi
-	 +T5cjuh/QJKVY/4w8EbJBLDXLt9kFQfOOPjNlyyc=
+	b=pBqHvoX8L1ThrSBkBRc+pHXstieKRuS0mocy7zycM1skoLSjUZVYAdHsGUnZvZww6
+	 eLTrSqo3hSMTn50K2weevnp+PAeiE3/SdqRFbgQCHedWXre2/hXJ7MCRza6Zx3yRxw
+	 /88uPiKyikWjKydSvLfl++Scxy+dhCTz30SbBtD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Auer <mick@yoxcu.de>,
+	Sasha Levin <sashal@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1982/2651] ASoC: qcom: sdm845: Disable the quaternary MI2S bit clock on shutdown
-Date: Wed, 18 Nov 2026 15:53:42 +0100
-Message-ID: <20261118150357.760438642@linuxfoundation.org>
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 7.3 1983/2651] selftests: keep the build status from wrapping to success
+Date: Wed, 18 Nov 2026 15:53:43 +0100
+Message-ID: <20261118150357.791012940@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,77 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Auer <mick@yoxcu.de>
+[ Upstream commit 907d138279ee3747efedc9f7403d8b0edb52aca2 ]
 
-[ Upstream commit cef5d087d6813d4c15847d0b71ecbd6c47c5f1d4 ]
+The top-level all and install rules return failure only when every
+selected target fails, which commit cad6f32665cb ("selftests: Deescalate
+error reporting") deliberately kept as the default. They implement this
+by multiplying the exit statuses of the targets:
 
-sdm845_snd_startup() enables the quaternary MI2S bit clock in the ADSP,
-but sdm845_snd_shutdown() never disables it. After the first stream on
-this port the clock stays on.
+  ret=$$((ret * $$?))
 
-On the OnePlus 6 the speaker amplifier is on this port. After the first
-playback the ADSP no longer power collapses: it slept under 9 s in 5
-hours. With this change it sleeps again when audio is idle (about 40 s
-of 45 s).
+A failing recursive make exits with status 2, so eight failing targets
+produce 256, and "exit 256" reports success. Building eight or more
+targets that all fail therefore succeeds, and install goes on to
+package an empty installation.
 
-Refcount the clock like the other MI2S and TDM ports and disable it
-when the last user is gone.
+Record a successful target instead of multiplying statuses. The rules
+still fail only when no target succeeds, and FORCE_TARGETS still stops
+at the first failure.
 
-Fixes: 5caf64c633a3 ("ASoC: qcom: sdm845: add support to DB845c and Lenovo Yoga")
-Assisted-by: LLM
-Signed-off-by: Michael Auer <mick@yoxcu.de>
-Link: https://patch.msgid.link/20261013204549.3115830-1-mick@yoxcu.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20261014200115.1363363-2-sashal@kernel.org
+Fixes: 5f70bde26a48 ("selftests: fix build behaviour on targets' failures")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/sdm845.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ tools/testing/selftests/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/qcom/sdm845.c b/sound/soc/qcom/sdm845.c
-index 6843ab8ba017e..a777b3b83775b 100644
---- a/sound/soc/qcom/sdm845.c
-+++ b/sound/soc/qcom/sdm845.c
-@@ -38,6 +38,7 @@ struct sdm845_snd_data {
- 	bool stream_prepared[AFE_PORT_MAX];
- 	uint32_t pri_mi2s_clk_count;
- 	uint32_t sec_mi2s_clk_count;
-+	uint32_t quat_mi2s_clk_count;
- 	uint32_t quat_tdm_clk_count;
- };
+diff --git a/tools/testing/selftests/Makefile b/tools/testing/selftests/Makefile
+index bc4fdb6f53375..45ab2d8eacffe 100644
+--- a/tools/testing/selftests/Makefile
++++ b/tools/testing/selftests/Makefile
+@@ -232,7 +232,7 @@ all:
+ 		$(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET	\
+ 				O=$(abs_objtree)		\
+ 				$(if $(FORCE_TARGETS),|| exit);	\
+-		ret=$$((ret * $$?));				\
++		[ $$? -eq 0 ] && ret=0;				\
+ 	done; exit $$ret;
  
-@@ -365,9 +366,11 @@ static int sdm845_snd_startup(struct snd_pcm_substream *substream)
- 		break;
- 	case QUATERNARY_MI2S_RX:
- 		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
--		snd_soc_dai_set_sysclk(cpu_dai,
--			Q6AFE_LPASS_CLK_ID_QUAD_MI2S_IBIT,
--			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
-+		if (++(data->quat_mi2s_clk_count) == 1) {
-+			snd_soc_dai_set_sysclk(cpu_dai,
-+				Q6AFE_LPASS_CLK_ID_QUAD_MI2S_IBIT,
-+				MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
-+		}
- 		snd_soc_dai_set_fmt(cpu_dai, fmt);
- 		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
- 		break;
-@@ -454,8 +457,16 @@ static void  sdm845_snd_shutdown(struct snd_pcm_substream *substream)
- 				0, SNDRV_PCM_STREAM_PLAYBACK);
- 		}
- 		break;
--	case SLIMBUS_0_RX...SLIMBUS_6_TX:
-+
- 	case QUATERNARY_MI2S_RX:
-+		if (--(data->quat_mi2s_clk_count) == 0) {
-+			snd_soc_dai_set_sysclk(cpu_dai,
-+				Q6AFE_LPASS_CLK_ID_QUAD_MI2S_IBIT,
-+				0, SNDRV_PCM_STREAM_PLAYBACK);
-+		}
-+		break;
-+
-+	case SLIMBUS_0_RX...SLIMBUS_6_TX:
- 		break;
+ run_tests: all
+@@ -299,7 +299,7 @@ ifdef INSTALL_PATH
+ 				OBJ_PATH=$(INSTALL_PATH) \
+ 				O=$(abs_objtree)		\
+ 				$(if $(FORCE_TARGETS),|| exit);	\
+-		ret=$$((ret * $$?));		\
++		[ $$? -eq 0 ] && ret=0;		\
+ 	done; exit $$ret;
  
- 	default:
+ 
 -- 
 2.53.0
 
