@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048370;
-	b=0sNRXa/nRvdqsEdX1+a1TaBvek1NLq9YjOWvFf8dLagmkDgah8k65UBez2ay9Fg70pop
-	 JV5gKwy5v52zOSDwAA2qJ0oYP90sXHqqtx508XBr5kTKAcDqBEQeocp72/j6l++wRZ9An
-	 C5/J+uTP+i6wnI6L6Wn0kmLde3IQlGqO1iwsUEp1HHhmxpneOr1G368A/nyJc+thks2s3
-	 sAgGC5Eg8S+W1kqvBU73VT5oFmvA9RT9Py7GWgsNjlIsMpdeLrst5+6A4Nh+qs7blU0MF
-	 ipofjKSS8u2w/MI7/JrYQyYVMx9PnEFqaSiDt3UyGQimvU8yP6/REyn0p8Qj72npBrg==
+	t=1795048373;
+	b=BZLtb9tKVV2mwY4o+sYT2OOWZ1PdEuMiJzy7v4ag8w2KBccCcBa7U7ieUnxzMaanIkQV
+	 FV+3fcDkShLspqsAv5GK8uCB7zjs9NFnUKkiyjxR1lApgiu2/5h/2kKljLh02ocbsa3t5
+	 BP8Nt1Eg4pLDzQJD8Rk4H/olNt4dboDnLeG283rkAZeGwlgw2Pamx7HHEY9JG2ivpyZdB
+	 UTQi7INpEpLm4qslAzdBxhSgLFjazepLem1yb7AmdrsHHmVN+NJgHgVJZJ1z0aWmVRx/9
+	 jXrNEfgb3NCY51H9bZDKK72ECPClCpKDPgGYOtL+k6EDWxKh2kf5l/Vz8GkQmF6eYGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048370;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048373;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lKrKvQfi4Mh+hPYEXHZv87SuVGzAeeNPPoqfjwo28Bk=;
-	b=aJD4DjIJP02lvb/hwB3AgF+nu1wJE4lBU9Y495eHOFKLPYJf+ixXYEPN74QTdME9oraZ
-	 wHPywAmTFwL3TCW0qvEEx0unKNq6tY6caXn8BqoUrLOzy+cCsmqaMtTfzUIyAKxrd1++y
-	 PPFB1L19UlLtvNkhXVddqCdc/VETKGB1gk8dJZnLVxIWlkhtUKTwpotqbM3LUNcYT2BEi
-	 fHbyNHBW06+w0q3mv+NyxIYyjyVD+wIMZLrB6FZokdO1bFHWZqBptd8HyVnI+QuH1JCsD
-	 RAaW+MfoBjHshDpVa9zAu/AjMA2TF58yS2BrzkkZ3PjoY1+HvHYGk32u+raNgZ8Htbg==
+	bh=631G+lF0Mz9t+4+3vuFgf9EwJvY9EiZ5p/DPilvukMY=;
+	b=nkAbfWKoa+UF0JxXciJXiBuwX/IIdQrnMsSYKXyEJnPUaf27WhWxesc7OnLnksZ917jx
+	 dYRAtsOSnGpcglUbpktCHA+wWha211PxCqN2du4nww2lxc3PrAPu/0fDEALO7CQ1/CJQW
+	 2dd2uOdv6VaCq0DTrbnpfa7Hmvqz3ANRnQjL6957D5iwyqbCPk4A1qXrU9wstFKCnhqIq
+	 cyVvnThdOXRIybsIziPgxyg0ADdtdTMKpZlaAsAY9Ti0c03WImlgPXvbgzABwkZ4qGt6S
+	 S8h6UZR8s2VEtzl5P0WhyTn6Ay6YkrBlrv64qCyAbjUD60MoHIF81bdNRJwkfJ/p/wA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HNyg0OBD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trhdLdPP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A2E606A31C;
-	Thu, 19 Nov 2026 00:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D68606A32C;
+	Thu, 19 Nov 2026 00:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HNyg0OBD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB7331F000C4;
-	Thu, 19 Nov 2026 00:32:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trhdLdPP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9540A1F000C4;
+	Thu, 19 Nov 2026 00:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048370;
-	bh=lKrKvQfi4Mh+hPYEXHZv87SuVGzAeeNPPoqfjwo28Bk=;
+	s=korg; t=1795048373;
+	bh=631G+lF0Mz9t+4+3vuFgf9EwJvY9EiZ5p/DPilvukMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HNyg0OBDM+YOI/BKwWalvi6wUsEaYa8jMUtk7DGW3kF58Q1cx9aBnSRsKM29a7QRF
-	 pe/DHy36ZbzatFC7K0naHH7RIBK8NkBqCtRhB1GJ+bYrk31hmmfceLDkLxOMGUfB1G
-	 e3pvJKNTQh7MX3AcvyI38w4GhBIbG6AzJ/bS8/RE=
+	b=trhdLdPPjTdy5eD8GngWZkzqhXh3Q/T7CDTOOChOm+Hur3fkCcLdDWXqXYSwU+Q6u
+	 kQQ+XlqCeWjQ21ZETiDj8DUdgvLFDv7c/EBRNZWNFBZHtnuzDYsQxQWzxiZy0Ul0nP
+	 R9C3XLCJGNTTnHO2G3QxFRhBnf9p9F4NJfz0bxvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Li RongQing <lirongqing@baidu.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1970/2857] RDMA/restrack: Dont set RESTRACK_DD mark after a failed xa_insert()
-Date: Wed, 18 Nov 2026 15:50:04 +0100
-Message-ID: <20261118150312.328663060@linuxfoundation.org>
+Subject: [PATCH 6.1 1971/2857] RDMA/uverbs: Drop restrack ref on ib_init_ucontext() failure in GET_CONTEXT
+Date: Wed, 18 Nov 2026 15:50:05 +0100
+Message-ID: <20261118150312.363065668@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,51 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 391c5d826fd0a5dacad54613dbef74c50e966f5c ]
+[ Upstream commit 9dcacdc41083cccff74292851bf9fde999e0731a ]
 
-When adding a QP to the restrack xarray, rdma_restrack_add() does:
+The UVERBS_METHOD_GET_CONTEXT handler allocates the ucontext via
+ib_alloc_ucontext(), which calls rdma_restrack_new() (initialising the
+kref to 1) and rdma_restrack_set_name(NULL), the latter attaching the
+current task and taking a task_struct reference.  When ib_init_ucontext()
+subsequently fails, the error path only does:
 
-	ret = xa_insert(&rt->xa, res->id, res, GFP_KERNEL);
-	if (ret)
-		res->id = 0;
+	kfree(attrs->context);
+	attrs->context = NULL;
 
-	if (qp->qp_type >= IB_QPT_DRIVER)
-		xa_set_mark(&rt->xa, res->id, RESTRACK_DD);
+without first calling rdma_restrack_put() on &attrs->context->res.  The
+kref therefore never reaches zero, restrack_release() is never invoked,
+and put_task_struct() is never called, so the task_struct reference taken
+during set_name is leaked permanently.
 
-The xa_set_mark() call is not guarded by "!ret".  When xa_insert() fails
-(possible on a qp_num collision or memory pressure), res->id is reset to
-0, yet the mark is still applied to index 0.  If a legitimate QP whose
-qp_num is 0 already occupies that slot - e.g. a normal QP or the SMI QP
-- it is spuriously tagged as driver-private (RESTRACK_DD), and the
-netlink dump path res_get_common_dumpit() then hides it from "rdma res"
-output whenever the caller does not request driver details.
+A local user with access to an RDMA device can repeat this path (e.g. by
+hitting an RDMA cgroup limit or supplying invalid ucaps) and leak one
+task_struct reference per attempt, eventually preventing those processes
+from being reaped or exhausting memory.
 
-Only set the mark when the insertion actually succeeded by folding the
-mark into the non-failure branch.
+The legacy ib_uverbs_get_context() path already handles this correctly
+at its err_ucontext label, where rdma_restrack_put() precedes kfree().
+Mirror that ordering here.
 
-Fixes: e18fa0bbcedf8 ("RDMA/core: Add an option to display driver-specific QPs in the rdmatool")
+Fixes: a1123418ba10 ("RDMA/uverbs: Add ioctl command to get a device context")
 Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260916073042.1746-1-lirongqing@baidu.com
+Link: https://patch.msgid.link/20260916085529.1838-1-lirongqing@baidu.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/restrack.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/infiniband/core/uverbs_std_types_device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/core/restrack.c b/drivers/infiniband/core/restrack.c
-index c03042dc1ca5a..c6ecc0d6628d4 100644
---- a/drivers/infiniband/core/restrack.c
-+++ b/drivers/infiniband/core/restrack.c
-@@ -246,8 +246,7 @@ void rdma_restrack_add(struct rdma_restrack_entry *res)
- 		ret = xa_insert(&rt->xa, res->id, res, GFP_KERNEL);
- 		if (ret)
- 			res->id = 0;
--
--		if (qp->qp_type >= IB_QPT_DRIVER)
-+		else if (qp->qp_type >= IB_QPT_DRIVER)
- 			xa_set_mark(&rt->xa, res->id, RESTRACK_DD);
- 	} else if (res->type == RDMA_RESTRACK_COUNTER) {
- 		/* Special case to ensure that cntn points to right counter */
+diff --git a/drivers/infiniband/core/uverbs_std_types_device.c b/drivers/infiniband/core/uverbs_std_types_device.c
+index 049684880ae03..05cc541c82090 100644
+--- a/drivers/infiniband/core/uverbs_std_types_device.c
++++ b/drivers/infiniband/core/uverbs_std_types_device.c
+@@ -230,6 +230,7 @@ static int UVERBS_HANDLER(UVERBS_METHOD_GET_CONTEXT)(
+ 		return ret;
+ 	ret = ib_init_ucontext(attrs);
+ 	if (ret) {
++		rdma_restrack_put(&attrs->context->res);
+ 		kfree(attrs->context);
+ 		attrs->context = NULL;
+ 		return ret;
 -- 
 2.53.0
 
