@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033351;
-	b=3tEtYZ15UFor9FsbQ4NoQRujO++5bEShpcAHDnkeX4GvhxEo+SEpZwEB0LTh1whEwX1o
-	 59jGmgvOw3qHW6YgHnT4KtLX/7m+4ntk7vgQel+uustv8husF7mAY3DzjtfBRqiYXov1w
-	 aA05HGcErLwLycwt2kBQpXYnB4AHOX6dZtaeAjmpVKrvknhAwz6SmYe/mOrOV4J0iTV1a
-	 mvpmHm/3a0E09HesWQsJll7NVJn8KnpLhP10xuP8il9DRl+oQNw7bZ/9UimJ5+6014peB
-	 m4a1/K7zMwt4YyIbD06rFLvhmDngTpbRV9zmwJf/wx6QaNEiRbfQ4RCDmruq4hDyY5w==
+	t=1795033354;
+	b=Is05TuCgtIH5ZCbXvtBbQzPFt1fEoD7uaht6de5IcbZF+4Gcaf9av/1cmWDat4XtB0Bl
+	 PbSp6SU8i8OpCuWzYqFETrigSn2duH1tr42vXpIdZncUbDCt/t8Q5WHpN9AkX4EA8aRSh
+	 myqy2dIxFGtZZ6ihsZtfns8iCwQqHqNi9rerUAx/oOTXfIF+9W5ukC12qgv71fy31HcJh
+	 yrtSYKEqABfxGdD1lGqUi2XM20ELtQDL/Y4UpTio6LDeItJjnRuHl6Kr0jjxpjRHfcxnv
+	 j8JWPINqnDsjf0XVqzmmhk/pr6vpKmfKAIYmY0sctV94Uqp50H4juOTw33TVbgJxBgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033351;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033354;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=TewA2nZs7DrhrJ3C7EvfEiMtkckdQKTf63Pqxen8Alw=;
-	b=hLBmrdoLaK6iY8aAXGAKgUXl8GYBeSm/SdHr2PCh2jLNZP5lkBoodMHr+gg/jFiEhW67
-	 MZ/ZGcjp3xgWOPCGUHfy8PfwdAQooNpjDSL4zacfD4Qo6Vi/FDdO5/QbGR5X6te9yWPWe
-	 Bg1YosEiFG4NZqVPxKrXdJhYF+/BbrGJB9SkzEAJ+6CRm+Kk2ywiZbnyf8NBnqPRtT7Ou
-	 0gcABE8SDHoXx69KCvvoKG+S0vLBEfwUU1s+WpYkENXA4XLeyjiuxyfPXDL+lV+WEuNl0
-	 hXv/heaH8ANSXs9RQg6J2CedYtFeief+4H0uGdFSYqi9kThCvKPJlNo4BLWF05AkFYQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=qzC6qB/XiWQPOjYR51qvCcYRGfxDHbBCz8xwynZh+z4=;
+	b=Cxud/RdWi0BVupPNgDBbapZ1mNmrfXwkHmD24img1p55XFSaizn8CLE+NajrM1le2oMp
+	 OFjUbnw6MtiqSvTxcObfaR0nKXQdgLvX2s4FYImUoBejvJTfQ1GBxLYnBVx4pCZYOOS+6
+	 x4aP7+mSCA0wo/m++L0+r1w1De1y668Odfk8wT3624ka4exae6a8SDxiPO593skuM0MpV
+	 rx+q0xHeYDxhORJlpvDWffaJI9Sw6qklgOx6bS9yR+lNA55UkrO/KjWk/8AKcPnq62WTD
+	 Vy2qWyYJsR22f2QikcRJCYd/kZrjUVHsn+TYpK2sSE3tvDIGv3myOo5qYb+O1nAIXwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t7VsoAWb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NzkZl1P0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CBB7606A31C;
-	Wed, 18 Nov 2026 20:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE25606A31C;
+	Wed, 18 Nov 2026 20:22:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t7VsoAWb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4D81F000C4;
-	Wed, 18 Nov 2026 20:22:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NzkZl1P0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831751F000C4;
+	Wed, 18 Nov 2026 20:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033351;
-	bh=TewA2nZs7DrhrJ3C7EvfEiMtkckdQKTf63Pqxen8Alw=;
+	s=korg; t=1795033354;
+	bh=qzC6qB/XiWQPOjYR51qvCcYRGfxDHbBCz8xwynZh+z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t7VsoAWbTiG8RIkDVZ6WkLEC/lK54T4zDKKOkpFC2ajhTGM99oDzE/gACFkS+nh81
-	 faE/f8k6OlQikvApvB24n9+jeR/dx5iz/Pko2CFisI6FA9e5Vvw1VctumophxQ3vDW
-	 7V68mrzZPnrzKIW9jNcuO9W55654MDUy5q6HQDnQ=
+	b=NzkZl1P0BuepzxljUfRgNdNb8A/HCnOEyPlUbOab9PgJX7n+gIvEKznj+g7zWP1wU
+	 rmPAsXeQ0wiDxS6JX5ZYgrf7N1rUNhZWzk313y9zj9aZVORbdz4ZNLEDupIWhMHcUr
+	 Dypndk5e5nbOLPY12gyN557a3rQ2/7KLP4OjR9IU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	John Johansen <john.johansen@canonical.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1695/1756] apparmor: check connect permission for SCTP
-Date: Wed, 18 Nov 2026 16:03:42 +0100
-Message-ID: <20261118150117.140018294@linuxfoundation.org>
+Subject: [PATCH 6.12 1696/1756] eth: bnxt: free XDP frags when xdp_do_redirect() fails
+Date: Wed, 18 Nov 2026 16:03:43 +0100
+Message-ID: <20261118150117.181985850@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,74 +62,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 2f764c08bb191a8c8f4051926dba0d25d195f39b ]
+[ Upstream commit c10f3420d59859df107838aa97b49357616d9b47 ]
 
-SCTP can start an association through sendmsg() or CONNECTX. These paths
-call the SCTP-specific sctp_bind_connect hook instead of the normal socket
-connect hook, but AppArmor does not register it. As a result, a profile can
-deny connect and allow send or setopt, yet a task can still create an SCTP
-association.
+When xdp_do_redirect() fails bnxt_rx_xdp() recycles the head page but
+not the frags of a multi-buffer frame. Their agg ring slots have
+already been refilled, so the pages leak, and the page pool can't be
+destroyed until they are returned, which will never happen. Redirect
+to an AF_XDP socket in copy mode fails this way with -ENOMEM whenever
+the socket's fill ring runs out of buffers.
+A socket bound without XDP_USE_SG also fails with -ENOSPC for every
+frame that doesn't fit in a single chunk.
 
-Register the SCTP hook. Ask for connect permission when SENDMSG_CONNECT
-or CONNECTX creates an association.
+All the other drop paths in this function free the frags.
 
-Fixes: 56974a6fcfef ("apparmor: add base infastructure for socket mediation")
-Assisted-by: LLM
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Pointed out in LLM review of the first patch of the series.
+Tested on a BCM57504 at MTU 9000 by redirecting 60k 8000B ICMPv6
+echo requests (a head and two agg buffers each) to lo, which can't
+transmit XDP frames. The page pools' inflight count stayed flat
+rather than growing by two pages per frame.
+
+Fixes: a7559bc8c17c ("bnxt: support transmit and free of aggregation buffers")
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20261027234940.1267225-5-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/lsm.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
-index 89c79fd241bad..47d772d36627e 100644
---- a/security/apparmor/lsm.c
-+++ b/security/apparmor/lsm.c
-@@ -15,6 +15,7 @@
- #include <linux/mount.h>
- #include <linux/namei.h>
- #include <linux/ptrace.h>
-+#include <linux/sctp.h>
- #include <linux/ctype.h>
- #include <linux/sysctl.h>
- #include <linux/audit.h>
-@@ -1164,6 +1165,18 @@ static int apparmor_socket_connect(struct socket *sock,
- 			 aa_sk_perm(OP_CONNECT, AA_MAY_CONNECT, sock->sk));
- }
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+index fcdffdc3ffa8c..0512b61c2cf69 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+@@ -306,6 +306,7 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
  
-+static int apparmor_sctp_bind_connect(struct sock *sk, int optname,
-+				      struct sockaddr *address, int addrlen)
-+{
-+	switch (optname) {
-+	case SCTP_SOCKOPT_CONNECTX:
-+	case SCTP_SENDMSG_CONNECT:
-+		return aa_sk_perm(OP_CONNECT, AA_MAY_CONNECT, sk);
-+	}
-+
-+	return 0;
-+}
-+
- static int apparmor_socket_listen(struct socket *sock, int backlog)
- {
- 	AA_BUG(!sock);
-@@ -1492,6 +1505,7 @@ static struct security_hook_list apparmor_hooks[] __ro_after_init = {
- 	LSM_HOOK_INIT(socket_getsockopt, apparmor_socket_getsockopt),
- 	LSM_HOOK_INIT(socket_setsockopt, apparmor_socket_setsockopt),
- 	LSM_HOOK_INIT(socket_shutdown, apparmor_socket_shutdown),
-+	LSM_HOOK_INIT(sctp_bind_connect, apparmor_sctp_bind_connect),
- #ifdef CONFIG_NETWORK_SECMARK
- 	LSM_HOOK_INIT(socket_sock_rcv_skb, apparmor_socket_sock_rcv_skb),
- #endif
+ 		if (xdp_do_redirect(bp->dev, xdp, xdp_prog)) {
+ 			trace_xdp_exception(bp->dev, xdp_prog, act);
++			bnxt_xdp_buff_frags_free(rxr, xdp);
+ 			page_pool_recycle_direct(rxr->page_pool, page);
+ 			return true;
+ 		}
 -- 
 2.53.0
 
