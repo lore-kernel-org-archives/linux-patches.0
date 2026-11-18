@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057287;
-	b=1kdLnnPZBBHD0AoChHFFqRy5/JR95pbfhhE7NwkEC/bUYSADE1qgFlkgWR4WHegtpIO/
-	 Ku71bJ7eML8HeXtpHmxB9hqa+Ai4QFwfh0GIKEzkgW520H9VJHTqUiooLZjVYVbcDYr9s
-	 K16cbp5rT2+8izgEgty/KRJ4EYMD2wSkPVcC74AGbYH62JdjIX8jQPmU+O5wK7PoJq45d
-	 F1/vaC/AqQFpZktIdnBSMX00P2Xa0fI81GmYBc1UdzFsN+d1ZVUU0T8LvwvynCOqFIH1M
-	 uVQ8EWoZIay7oSam8cE2EYU2dacqa4J5i8FchhntwJVyzjZ8/Z6BqOwl5iHNXPqEwkA==
+	t=1795057290;
+	b=Nz2clwSiQEK+gV5SqDte3b4YokdJahwy724rl47oDV38W8aC3nAqcoc0nCym70pgJIMp
+	 Yv0nuEwrRQvD4Qnvq9EVeK48AnuGorQHtDgebisWWph0vyMzmZHzpz90pmcsR9Gg3Ydey
+	 /5sLAnAbVG6+W+jq8pAI4qJNCCBH7BIERO48dDmXEscaTnIWrkSpYLbyMF4qr36mEP4er
+	 aP+IyhgTgHaLjvdp+/QYTUzWVY9N3ld27Ic/ZpGhtkAfmWw7+NG0sIThw98aLI2qboasP
+	 DZJug3ynBw5/YjwKEuGJDwax1JZirWhsX/Z8Z8sWvNc5OIXOL6CEQapT1pSqJ2QjfNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057287;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057290;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hNvFvQSpd8QXgRG8xaU7tWQE4Ibb19eADLV6WvvFJdA=;
-	b=JuanUt+ZvdQgySuSVg7FDEeUhKS7kyTCX6A21CRmiD/h/A3Lvvj7q/8YEcFQ6hMYWERw
-	 UqUNGLF8Yxpn0QYIY83Ui3keQ5cKSNHGlzSLCDUHexZFExAa6EOoK27J2fVE8atuMJsen
-	 2PxWPJqTknQlAJ6HVUa20JYHkEig2nZMOO9fx3yBFlr3RjHe7mQsdkX88p61PdBcSJeqp
-	 SIgg17t0Zn2F/E7ZS+vYUvl05JQtHSP5C7ZrfVGZyQmdaUd8zGYZ0T+mW5rkHHHNiSNm7
-	 qlvU1nt83mbH4rOzYwzhJX0trxFFnuGfSAo4CqHmDrswc5NEMjVzjC0cQuPnAB+XqbQ==
+	bh=/XG6I3s8FMnZuWjxGIISZTGCy/IKacDK/c/qQvwYHgg=;
+	b=BtcSkk9MgnYWydnMoaAA+Se8T25q6dV0xYrUePWYGGiR4XiNQbphHb9DLcxj1UJ3/bHp
+	 rSXKJFQWeDfyEl2qN6oOZSFs5MR9WfufNIX6De5mJdxUsBm36p3vyFdQKtf4KzF0dRFd9
+	 PxCvgefTVST9eyYuZ4sJBYdQliBl7bU16D0926/msDNqKk+dm/iEEAkIA9YpeIAdGhNGN
+	 CWOP8fVA45RjvjFjqmJXlH8vUTIr+JfpqJWkQZjOOdaM0f+Z3dEHsBdkK9STsS7gylOvL
+	 rId11sZ+xb4KBncNGtgWK13E53myd+1SQfEdKmfVT5UIaZCxmmbHzOxzXgCPPrmw2HA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IR12jX2o;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KaVQdqdY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E7060A262F;
-	Thu, 19 Nov 2026 03:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A9B60A2622;
+	Thu, 19 Nov 2026 03:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IR12jX2o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92DBE1F000D0;
-	Thu, 19 Nov 2026 03:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KaVQdqdY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA8B1F000C8;
+	Thu, 19 Nov 2026 03:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057287;
-	bh=hNvFvQSpd8QXgRG8xaU7tWQE4Ibb19eADLV6WvvFJdA=;
+	s=korg; t=1795057290;
+	bh=/XG6I3s8FMnZuWjxGIISZTGCy/IKacDK/c/qQvwYHgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IR12jX2okgjdtSn2SJoLxpyLKUwslP2zllOrmundSQyVNjYIdGd1i27SCKkTknzOL
-	 zM4VYTK2rW/WEuC3Nhp4H1E0+Li+C7sH0qZv0ZBh9ddC2r8eSzZlrbc1wjVyGDvZl8
-	 W79kgsP4/Bdfa5RTVQsXrhEzB2B7XGHqBrdHHDV4=
+	b=KaVQdqdYoYJQ5QSKm2XPdhYBItS2jFPsSbEOlDHs/BSzpw5Kd/cW1uZJnVNEK63Cy
+	 XoNxuJsiALi5JuwtXBLGhJuR35DM5iOuC9Khfkj7HlWUPy5cvfjHg6TpkT2yYCqg9W
+	 HXjRkHzezmbLTJN6zv7ALtLxeUwIV8QTnBRWxJUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Martins Alves <lucas.alves@lumal21.com.br>,
+	Oliver Neukum <oneukum@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0077/1848] usb: musb: host: clear stale RX interrupt on three-strikes error
-Date: Wed, 18 Nov 2026 15:35:15 +0100
-Message-ID: <20261118145914.358762199@linuxfoundation.org>
+Subject: [PATCH 5.10 0078/1848] usb: misc: cypress_cy7c63: check result of IO
+Date: Wed, 18 Nov 2026 15:35:16 +0100
+Message-ID: <20261118145914.394555144@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,60 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas Martins Alves <lucas.alves@lumal21.com.br>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 3a3a48487344a653f46a4aadc9ba296386eb3541 ]
+[ Upstream commit 0673b919e0933541ae56bb3f0253853f696d3773 ]
 
-Unplugging a busy USB Ethernet adapter can leave a stale RX interrupt
-pending while the host handles MUSB_RXCSR_H_ERROR. On AM335x/DSPS
-platforms this can retrigger the same three-strikes error before the
-disconnect path completes, flooding the log and potentially leaving the
-host port stuck until reboot.
+If the device returns a bogus short read, treat it as EIO.
+Actually check for IO errors.
 
-Clear the pending endpoint RX interrupt when aborting the transfer so
-the error storm is broken, and rate limit the error message to avoid
-spamming the log while the fault path completes.
-
-Signed-off-by: Lucas Martins Alves <lucas.alves@lumal21.com.br>
-Link: https://patch.msgid.link/20260714134941.18508-1-lucas.alves@lumal21.com.br
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://patch.msgid.link/20260710095523.1646308-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/musb/musb_host.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/usb/misc/cypress_cy7c63.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/musb/musb_host.c b/drivers/usb/musb/musb_host.c
-index a89011c946dd2..9148283e2f47b 100644
---- a/drivers/usb/musb/musb_host.c
-+++ b/drivers/usb/musb/musb_host.c
-@@ -1780,7 +1780,8 @@ void musb_host_rx(struct musb *musb, u8 epnum)
- 		status = -EPIPE;
+diff --git a/drivers/usb/misc/cypress_cy7c63.c b/drivers/usb/misc/cypress_cy7c63.c
+index 3be5551a98678..3def90646fdcd 100644
+--- a/drivers/usb/misc/cypress_cy7c63.c
++++ b/drivers/usb/misc/cypress_cy7c63.c
+@@ -89,8 +89,11 @@ static int vendor_command(struct cypress *dev, unsigned char request,
+ 				 address, data, iobuf, CYPRESS_MAX_REQSIZE,
+ 				 USB_CTRL_GET_TIMEOUT);
+ 	/* we must not process garbage */
+-	if (retval < 2)
++	if (retval < 2) {
++		if (retval >= 0)
++			retval = -EIO;
+ 		goto err_buf;
++	}
  
- 	} else if (rx_csr & MUSB_RXCSR_H_ERROR) {
--		dev_err(musb->controller, "ep%d RX three-strikes error", epnum);
-+		dev_err_ratelimited(musb->controller,
-+				    "ep%d RX three-strikes error\n", epnum);
+ 	/* store returned data (more READs to be added) */
+ 	switch (request) {
+@@ -175,8 +178,9 @@ static ssize_t read_port(struct device *dev, struct device_attribute *attr,
+ 	dev_dbg(&cyp->udev->dev, "READ_PORT%d called\n", port_num);
  
- 		/*
- 		 * The three-strikes error could only happen when the USB
-@@ -1794,6 +1795,17 @@ void musb_host_rx(struct musb *musb, u8 epnum)
- 		rx_csr &= ~MUSB_RXCSR_H_ERROR;
- 		musb_writew(epio, MUSB_RXCSR, rx_csr);
+ 	result = vendor_command(cyp, CYPRESS_READ_PORT, read_id, 0);
+-
+ 	dev_dbg(&cyp->udev->dev, "Result of vendor_command: %d\n\n", result);
++	if (result < 0)
++		return result;
  
-+		/*
-+		 * Unplugging a USB-Ethernet adapter while it is busy can make
-+		 * the controller keep re-asserting the three-strikes error for
-+		 * this endpoint before the disconnect is processed. That floods
-+		 * the log and can wedge the host port until reboot. Drop the
-+		 * stale pending RX interrupt on platforms that support it (e.g.
-+		 * AM335x/DSPS) to break the storm; the transfer is still
-+		 * aborted below via the fault path.
-+		 */
-+		musb_platform_clear_ep_rxintr(musb, epnum);
-+
- 	} else if (rx_csr & MUSB_RXCSR_DATAERROR) {
- 
- 		if (USB_ENDPOINT_XFER_ISOC != qh->type) {
+ 	return sprintf(buf, "%d", cyp->port[port_num]);
+ }
 -- 
 2.53.0
 
