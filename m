@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059303;
-	b=cP98I8Sg4LLZ6DYrVBFqbcsbuq+lYsFDGiMMXLjqsicKFWeMwWl5Jya8aoV4YSfg749n
-	 IPmU/tU2LbOROq5RXFmy8vGMg4YriKFYlio9Qv9nZZy9ysClxyngeW33MEZXR73YskDp2
-	 JUW0Qk3mK/s3c+CBZuXNbPN8pepIHcr5PwVkhuCMp6u6I6qythCXST8HE8IX+IqRy7hjj
-	 r+6UbiBS2g6vHE+yd0lVYIDGCmijVOgi+BBKyHvaMwpHqULFjqgCQ+HccvhlesErxBdon
-	 Z6xrZ38hJTFt5+YZxtyRA2hIuyJixFVV0Qe1y9h/JKNlAGjNysOcKRrcahWX+77UeIQ==
+	t=1795059306;
+	b=miEDBE8pkiYoamNkSwslgsunwwSKBWeWFC8r6pM9iOf4wG7vn6gYJOhHCSmiLzQq6VPv
+	 QLam28x/KRwKGscrSpOcSydHNBsN7vjzdTkvBxO5YfJ2cH01Bnv2E9vm6DBtms/GYF2XM
+	 21emuC/AC9eMNS66kw8VORsodts8iBlGUbIq8zj/3cDydcW6+1++LCFc486Zx90kN7fju
+	 n7AmmBGoQ1OpLqJYh7KwEfDVqd/wNxC0TGLM0MRVpa19lWy2y+J+gITggHb88SoCERIp6
+	 JarY4PbaK7WvdyGy/mKmivQNWS/YloTZSu2dGGcpSCYsXE336w60nyRXG6yNxT5PXAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059303;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059306;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bdZcvgqvSPjEOqYGeSSkw16LJOcwuWGKfxRphWoFpxc=;
-	b=5dDKYrRdAVxpxyQvSxCOanFPhu8ot2chDKNjaMNkPObBfOFAnB6dd69et8xhH/UfkUNy
-	 XBe5RpP0A4N4vBcnh1kYLKTqgtQapax0kRIMZWc3Rzqias7oZEPiXQfPDUym9q9vqs6sr
-	 tvo4CuJWPKi3iJx+yl7wqua//LznxcuFh7rksaExtJ5Y5zcOqRtpFO9EK76gjF/lS0P4s
-	 5QkAMbYQoIXNoAORWDS5bWP3NB8N/L8/XC1++7qn7VnqZE8cc+eVLguQV9+xqJ+Xc/FQA
-	 WVImC3lENgCuBz3TaeLGbX8UvK4anBiJDPH+zht1dsHSPGlDCcxY7rQy/m8yZS3Lp0A==
+	bh=LOM22M3kHel+tGm9XP+YNLEGo+zlTauJ6T2SC9RE+PA=;
+	b=xN6zFbup/XhPbefDjnYTIgqFNMKJHA58WMdSyhael7kBlDXbfRM3yCFv4YzE+cHYA92m
+	 m5Q1yOXoFypGShQk+cOiWuFlPxAgx44bbsPjEfT6yi4BYrx9YJkUkTG3sqq6Vww2MIhyO
+	 ZlQvC+21hSr2Mhrbc8Te3TTS1FhrKzVddDi0mTPerDkQ0EwSKOqwVIFLlIoRHYLYDqQ/I
+	 Xigcz2ynYdC5gI8+m5Z+LKQKsh9Lu/Uc2THKt18GkL4XfOTe1mXnQ2FP3OLFO5i8qZBwf
+	 qZz2seRuQTpJ8GKkXDFMyA7ZiXqEGWyfYKCR+5dMZcLiteACS5JvyCL/9X7enwqdkmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mUePPwyh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PQvFR0di;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07B9606A325;
-	Thu, 19 Nov 2026 03:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CDF606A336;
+	Thu, 19 Nov 2026 03:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mUePPwyh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB431F000C4;
-	Thu, 19 Nov 2026 03:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PQvFR0di
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742AF1F000C5;
+	Thu, 19 Nov 2026 03:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059303;
-	bh=bdZcvgqvSPjEOqYGeSSkw16LJOcwuWGKfxRphWoFpxc=;
+	s=korg; t=1795059306;
+	bh=LOM22M3kHel+tGm9XP+YNLEGo+zlTauJ6T2SC9RE+PA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mUePPwyhjK4nrT48LALAIIcYwj4K2fWlqeK0XypPwGAaZcOGluq1oyQ6quUgnaQgU
-	 uoMw0DRerQUJ7/39h0exjRzF1jtRMB1gR54Js4T+5Mvoc4E5WxSBcO3Uac6FG1bcbk
-	 kW3/OxwvwBmKqkISROuvl3xO1ZUCgbUH7SS8rXhw=
+	b=PQvFR0diUozAlzto0jGgMOTbcJwJYVaUngHZhSIVMK4Cmc1nXtn88sT1t2Ehet1VX
+	 PuhTbqZKwWsdZxasQ98xRIkZntKz/HWSs+hFNaoONmeMx9DcB0VckRwxNkPdbpvc6i
+	 C4iupokXq4LMF76beVowsuJSh33NzxAo/GVodFhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunpeng Tian <shionthanatos@gmail.com>,
-	Gongming Wang <gmwgg05@gmail.com>,
-	Mingda Zhang <npczmd@qq.com>,
-	Qinrun Dai <jupmouse@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0791/1848] udf: Make sure theres enough space for LVID implementation use field
-Date: Wed, 18 Nov 2026 15:47:09 +0100
-Message-ID: <20261118145949.537002390@linuxfoundation.org>
+Subject: [PATCH 5.10 0792/1848] crypto: algif_skcipher - rewind rounded output bytes
+Date: Wed, 18 Nov 2026 15:47:10 +0100
+Message-ID: <20261118145949.582376314@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,45 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit a61fb39759d719a4f4966742b4d28387e33d81c4 ]
+[ Upstream commit 2f90facc7b94934653eb7ebfadcc25d503b89196 ]
 
-udf_lvid_valid() verifies that the LVID has enough space for all the
-tables and the reported length of ImplementationUse field. However it
-doesn't make sure the reported length is large enough to contain
-logicalVolIntegrityDescImpUse structure which OSTA specification
-requires. This can thus lead to accesses beyond the end of LVID buffer
-for suitably corrupted UDF filesystem. Add the length check.
+af_alg_get_rsgl() advances the receive iterator by the unrounded RX
+scatterlist length.  For a continuing skcipher request,
+_skcipher_recvmsg() then rounds its local length down to a whole chunksize
+without restoring the iterator.
 
-Reported-by: Yunpeng Tian <shionthanatos@gmail.com>
-Reported-by: Gongming Wang <gmwgg05@gmail.com>
-Reported-by: Mingda Zhang <npczmd@qq.com>
-Reported-by: Qinrun Dai <jupmouse@gmail.com>
+A later chunk starts after bytes which the provider never wrote, while the
+syscall returns only the processed length.  When copy_splice_read()
+supplies non-zeroed pages and publishes that return as a dense prefix, the
+gap exposes stale bytes from a previous page lifetime.
+
+With unprivileged xts(aes), a 31-byte MSG_MORE request followed by one
+final byte advances a 47-byte destination while returning 32 bytes.  A
+hardened v7.2-rc5 image retained all 15 seeded stale bytes in 4,829 of
+4,829 records.  With init_on_alloc enabled, all 72,345 gap bytes observed
+were zero.
+
+Rewind the iterator by the tail excluded during rounding, before rejecting
+a zero processed length.  The crypto request uses only the rounded length;
+af_alg_free_resources() releases the entire RX list before another receive
+iteration.
+
+The fixed target-like kernel returned byte-identical dense 48-byte output
+in 4,771 of 4,771 rounds.  The unmodified kernel returned the vulnerable
+32-byte short record in 2,409 of 2,409 rounds.
+
+Fixes: e870456d8e7c ("crypto: algif_skcipher - overhaul memory management")
 Cc: stable@vger.kernel.org
-Fixes: 781d2a9a2fc7 ("udf: Check LVID earlier")
-Signed-off-by: Jan Kara <jack@suse.cz>
+Assisted-by: LLM
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ sashal: added the zero-length guard where no short-input check previously existed ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/super.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ crypto/algif_skcipher.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/fs/udf/super.c b/fs/udf/super.c
-index 58bc19b82afa4..6994cf6a09d66 100644
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -1581,7 +1581,10 @@ static bool udf_lvid_valid(struct super_block *sb,
+diff --git a/crypto/algif_skcipher.c b/crypto/algif_skcipher.c
+index 6a1a71284fe82..c037c3969e9d6 100644
+--- a/crypto/algif_skcipher.c
++++ b/crypto/algif_skcipher.c
+@@ -82,8 +82,17 @@ static int _skcipher_recvmsg(struct socket *sock, struct msghdr *msg,
+ 	 * If more buffers are to be expected to be processed, process only
+ 	 * full block size buffers.
+ 	 */
+-	if (ctx->more || len < ctx->used)
+-		len -= len % bs;
++	if (ctx->more || len < ctx->used) {
++		size_t excess = len % bs;
++
++		len -= excess;
++		iov_iter_revert(&msg->msg_iter, excess);
++
++		if (!len) {
++			err = -EINVAL;
++			goto free;
++		}
++	}
  
- 	parts = le32_to_cpu(lvid->numOfPartitions);
- 	impuselen = le32_to_cpu(lvid->lengthOfImpUse);
--	if (parts >= sb->s_blocksize || impuselen >= sb->s_blocksize ||
-+	if (sizeof(struct logicalVolIntegrityDescImpUse) > impuselen ||
-+	    impuselen >= sb->s_blocksize)
-+		return false;
-+	if (parts >= sb->s_blocksize ||
- 	    sizeof(struct logicalVolIntegrityDesc) + impuselen +
- 	    2 * parts * sizeof(u32) > sb->s_blocksize)
- 		return false;
+ 	/*
+ 	 * Create a per request TX SGL for this request which tracks the
 -- 
 2.53.0
 
