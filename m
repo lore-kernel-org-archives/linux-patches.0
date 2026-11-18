@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016175;
-	b=YiEZ9xfpWWGuuo/QsW3lQOh/1b14XUgowZn5uxLv2F95ftqTuak6NPiOV44RbHWyEqxT
-	 CVjq9pJ/47bmkYtrF+eimR7rw6nvns2QTlocXC2HcWoO0vslsv+w5i9V4c5//XGcT02mk
-	 u+BxqzoSuiUevOtn5PhjSejzivKnY7qWPVRUKORyCWejpST6wKRMWKDC9IEzTU56dVkxI
-	 rM8oIHHH7niMw0Vcf3nb10t7I93XBhdCvjtso1xTbxYDxTNZRp1uUOiHj/6+HxTW1I2Pc
-	 2vlUB4bcpYf/IjaMq3cmGJzEyoIUs7eEoIiIS5b+Liz0wIJh6GmZxEQkhGztOIVybfA==
+	t=1795016178;
+	b=KUVPSwELKRq15Fq5lneysXlJ2adC9nGEJdBV4uWG0DFg1L5OwzsU+ZoR33MGRA2OIYp5
+	 4KDf+ZfJbnLhEF4RO4BT/si7Bcb7+i+XB8+VsSCzb3N/JcnNJYMspxfTQWF2OPcmfcF56
+	 Q355PUDS54kx/X+sCpqmcDgaoOUpXgI3bRT+0RJSF/SP8gFJS33w3UPXG6ADPprOLSt7M
+	 XMHj7s77ujFhUZB68/zhFD3yi5h6RK0dtGPCQrZP6vvi87yPqjAggh3bcGfbNigYHrTvo
+	 qDdSXUKOD/Gz2ku5IToL+OL91oCENccZXgYnc0+29k7Q7+vBOdyuyg9ywNoffpBVQqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016175;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016178;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RquJmRFsmQhltKe023GDgLOHsOl1I4+ARtEuXj7N+rY=;
-	b=wIe1nuFL99l8ztjiqvVRnJkZzYJv60VISwah/m+YugW4m0cOJk4AWHhn+uVo3CTaH8tc
-	 LfSuZkDtpZLiEfgh4fQrqZYLHJI/vsdJw41r7yJ9LaFws/JFSYt4Nr669XeSoB1ivVb9Y
-	 q/IuHHaRtNtc89d4G6LaLZeJCgd4wPFxWRwkjdYCRGFmxYf24C6i8SwKnKyOQ+RnLEiGI
-	 Xx1FjlLib2HCleYNcbkP5WD0gGqFhNxjfZVsVcj71vI+1XMlS31i6KnsuNnlkx5HmgcE2
-	 dEs1xJD+Zqq+k+WPAxae/HV7Gji9Q7itE46fJ5kp3fhX/oIvV9sSGvgPjtLPiZUoLtg==
+	bh=ff5mIRbZrWMmQmD1qTpyJuCKDJnWWYO84B9gigQHWqw=;
+	b=QDDGJ4KVEZ0Pj7dAxnExXLYRtRkQQNVN9RgrWLUxWmEvkBwvrKh4UtvAYfrzDmEZ59pE
+	 Y1XlAGD9xngA1bpFCdBOMjEDY1tEzjWv76fwhRA++I9sWjW9pf7rAbXOXsNEABzpwlx5m
+	 c43RSdAY0sR4Z8PlGNsFW2AWD2xRXoDCxWqp1uoka/ftLtUqVWuSbNdynIwMEeTq6fnuL
+	 2+g90t0wdzE3wMNCYaqb5Jk6/tCntc2LSSZmTj0+aMh14pXzcnTemD0FCSFt4PnyUm+N7
+	 oS7ujK2tcBHlZ9W0ElFqJ20qhmMAc5PL4ZrlOU8cXCSSA93KpzOjMkNLhRl7Zz5nl9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Osg0hSnW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VzU4qPyO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48D6606A320;
-	Wed, 18 Nov 2026 15:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F36606A31C;
+	Wed, 18 Nov 2026 15:36:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Osg0hSnW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F5671F000C4;
-	Wed, 18 Nov 2026 15:36:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VzU4qPyO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8241F000C4;
+	Wed, 18 Nov 2026 15:36:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016175;
-	bh=RquJmRFsmQhltKe023GDgLOHsOl1I4+ARtEuXj7N+rY=;
+	s=korg; t=1795016178;
+	bh=ff5mIRbZrWMmQmD1qTpyJuCKDJnWWYO84B9gigQHWqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Osg0hSnWnhUpTPXWz1dMWqCXvuiiCF7Wqr0ciaQozRpjLbHyrf+W0T1YnPscNH45E
-	 f5JI02JeXVgTaxoZ9KT0wsITGZehT+hBEAdwKaje6KB82GKFrT91RmUMh2R6kytZG1
-	 YFoFWdFxihz4mi6tL8C/f0ADOAj1UZCqsODdyHEA=
+	b=VzU4qPyOBXJKCCw1TSOXuVzu3Cz8qem6Q6i5Zymn/rkNLDHzKzjMjaTtIioUa9D+B
+	 EwKuhXGH0pSC7KQj57DWH5rSAXeBN8MopfrSLZOaI46olJAONA2d2+qp9X3YXtdW1d
+	 NpG659kctqVpyIbgSFTH24UcvSoldCv6cAVy85ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jiri Pirko <jiri@resnulli.us>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0437/2651] virtio_pci_modern: move avq cleanup from reset to del_vqs
-Date: Wed, 18 Nov 2026 15:27:57 +0100
-Message-ID: <20261118150303.558974166@linuxfoundation.org>
+Subject: [PATCH 7.3 0438/2651] ALSA: control: Fix virtual master creation reference in kernel-doc
+Date: Wed, 18 Nov 2026 15:27:58 +0100
+Message-ID: <20261118150303.594760877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,76 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 2a12d96dd863cb23eadf07d8845e961580b5fcdf ]
+[ Upstream commit a347cc458d97ecd8adb5462b91559682a70aced6 ]
 
-vp_modern_avq_cleanup() detaches unused buffers from the admin
-virtqueue. Calling it from vp_reset() is incorrect:
-virtqueue_get_buf in the avq interrupt handler can race with
-virtqueue_detach_unused_buf in cleanup, and get_buf after
-detach is not documented as valid.
+The snd_ctl_add_follower() comment refers to
+snd_ctl_create_virtual_master(), but virtual master controls are created
+with snd_ctl_make_virtual_master(). Correct the helper name.
 
-The root cause is that detaching buffers does not belong in
-reset at all - reset quiesces the device, while cleanup belongs
-where the virtqueue is about to be destroyed, from del_vqs.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/virtualization/20260911125745.E0A2F1F00899@smtp.kernel.org/
-Fixes: 4c3b54af907e ("virtio_pci_modern: use completion instead of busy loop to wait on admin cmd result")
-Cc: Jiri Pirko <jiri@resnulli.us>
+Fixes: 79c7cdd5441f ("ALSA: Add kernel-doc comments to vmaster stuff")
 Assisted-by: LLM
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <21fe35ad7b66e2c30dbdba6fe4df4824d1c0db66.1789204858.git.mst@redhat.com>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260912100548.86134-1-kmehltretter@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_pci_modern.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ include/sound/control.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/virtio/virtio_pci_modern.c b/drivers/virtio/virtio_pci_modern.c
-index 6d8ae2a6a8caf..b4249afd7f580 100644
---- a/drivers/virtio/virtio_pci_modern.c
-+++ b/drivers/virtio/virtio_pci_modern.c
-@@ -364,6 +364,12 @@ static void vp_modern_avq_cleanup(struct virtio_device *vdev)
- 	}
- }
- 
-+static void vp_modern_del_vqs(struct virtio_device *vdev)
-+{
-+	vp_modern_avq_cleanup(vdev);
-+	vp_del_vqs(vdev);
-+}
-+
- static void vp_transport_features(struct virtio_device *vdev, u64 features)
- {
- 	struct virtio_pci_device *vp_dev = to_vp_device(vdev);
-@@ -558,8 +564,6 @@ static void vp_reset(struct virtio_device *vdev)
- 	while (vp_modern_get_status(mdev))
- 		msleep(1);
- 
--	vp_modern_avq_cleanup(vdev);
--
- 	/* Flush pending VQ/configuration callbacks. */
- 	vp_synchronize_vectors(vdev);
- }
-@@ -1232,7 +1236,7 @@ static const struct virtio_config_ops virtio_pci_config_nodev_ops = {
- 	.set_status	= vp_set_status,
- 	.reset		= vp_reset,
- 	.find_vqs	= vp_modern_find_vqs,
--	.del_vqs	= vp_del_vqs,
-+	.del_vqs	= vp_modern_del_vqs,
- 	.synchronize_cbs = vp_synchronize_vectors,
- 	.get_extended_features = vp_get_features,
- 	.finalize_features = vp_finalize_features,
-@@ -1252,7 +1256,7 @@ static const struct virtio_config_ops virtio_pci_config_ops = {
- 	.set_status	= vp_set_status,
- 	.reset		= vp_reset,
- 	.find_vqs	= vp_modern_find_vqs,
--	.del_vqs	= vp_del_vqs,
-+	.del_vqs	= vp_modern_del_vqs,
- 	.synchronize_cbs = vp_synchronize_vectors,
- 	.get_extended_features = vp_get_features,
- 	.finalize_features = vp_finalize_features,
+diff --git a/include/sound/control.h b/include/sound/control.h
+index 909db0d0485df..37e9c545503e5 100644
+--- a/include/sound/control.h
++++ b/include/sound/control.h
+@@ -244,7 +244,7 @@ int _snd_ctl_add_follower(struct snd_kcontrol *master,
+  * @follower: follower element to add
+  *
+  * Add a virtual follower control to the given master element created via
+- * snd_ctl_create_virtual_master() beforehand.
++ * snd_ctl_make_virtual_master() beforehand.
+  *
+  * All followers must be the same type (returning the same information
+  * via info callback).  The function doesn't check it, so it's your
 -- 
 2.53.0
 
