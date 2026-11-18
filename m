@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025565;
-	b=VYSccRVQFTm+Mj5pFhoZsY9OzRVkYd/rtxUhpSKlrR3B7jFgAurTezvaHTFwTaLnqz/w
-	 A2gO5a9CQREp8iDG1e0mJJy1/tmbmXNs0TEe1oSMpaXPJcBUsMnhESmzl8uiTW33t4Xkh
-	 zpaIbbCwJ7X4NMGEmIpqnkpnM3BQsNT2FwoiopfehBiePtjIiFLyaJuLTCudt2/fSZZ16
-	 yLsun8b1rIIm80vc7I8gkUve2drfPRqg4qA0oBhtiBsL72jEnfkPUaC8iiAPu7jvH2IyG
-	 bkhKPX52jN1+ahPtKIlSGsxfVb6mI1bt4Q4HFtrOPB8nxcmO8IFznrDN/xe0puA9ROA==
+	t=1795025568;
+	b=v0dpOwPKFQ7kRt+HJ64nU4GhGcQQg8hOCY06oxfeIpaAabG52SlhugSO+u3uvpbjXy8G
+	 at3CPc8akYq8FJrxcamIVVh8FZLOzwo7fgfrk7kz1Soca9n+E2YyTrKLQoqT+1mKYBfN+
+	 vMjmi/+plNIaVpIPjdNxsRepDJfFf+XIkQjgVELbWQ0vZ0Sg18cbo1efW4rQpufSno3aZ
+	 MNYNjKOakvKuZVZfGCPRsK2GzGcqPGGpR32jo4+yL0GDOrg7DsfnH9vlUyqaDTPf9+x07
+	 GWLKemApeTb990o57QkvDxw0AL3BpkThVgxkTBIp8aFRTMODYpyAr8qtc1sIkMdboyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025565;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025568;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oX+vPxDngns7eGe6JdO+PNwd9DbXn2EEVPCOxmiMZyM=;
-	b=zugH7sHtApCwIeVrGQ7LicaU7/s2JUaj+DW/kPt32+iF6N9ABq14kf+hNYnusrtpYRPQ
-	 q7/gNrFgGWCF3COsOQ9s9sk6AbcxojxLycvJBJ8MqYVYmRomaEOMjeqJHaaf5R6Tae37L
-	 EgW+O9oK0EO9exfLcb3DvmhCRF8KNrkb/G+u+SHdEZ2yuOXSTahPfcHHYISDNTmn4Yht3
-	 2iFYZvs2bkXm2vQOd6YyRuxHQeVgmHK7/ujQ97gEhda5IXTTfMAqeMLIMmCagqrRPNYx9
-	 ZYm9sTtFV/88PtQSK4j0Ij8tIbUsLmgAKE71vw8QwcoIbZCb4a38/wKgU5DnU/TRD6g==
+	bh=5j60J+QpwGFP1rn8CiHEaumhtvSKzAA2pbxQpJiVAvY=;
+	b=LnBoh/FAdzR5pFIGSWe9cwM03QOWzOPMxjkeHzCCIbJS08ZX4HwJPNEBJnPNvdH8cBkK
+	 tOkPE+gLLxoQsp2Moov5i9NQWALs7sonFCK41PwMDGTpvNO4T1s5zVfm0I3FLubi+tqjR
+	 qjAylRUdLdfXBmXvcVvAlnl/GlZOg/y/ERpK8Y8c1amWhMwDJhW83eZWaCpB8n6AZRcyC
+	 YNJsqD9l7awzJv/992gCx5OKqSkit00JGQ75xEHtPa4CFrwH8dYpt4jXeGurcXMGUvqV3
+	 iqBQO4lwTEi/I/ThnjtO6lPk2VsvKGZshx1xFxSMRT1OSZkwTUdeYDpVk2pY90VcIbg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sQ9Np47r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jkmSh+RA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFC6606A32A;
-	Wed, 18 Nov 2026 18:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD45606A320;
+	Wed, 18 Nov 2026 18:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sQ9Np47r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F4E1F000C5;
-	Wed, 18 Nov 2026 18:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jkmSh+RA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679701F000C4;
+	Wed, 18 Nov 2026 18:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025565;
-	bh=oX+vPxDngns7eGe6JdO+PNwd9DbXn2EEVPCOxmiMZyM=;
+	s=korg; t=1795025567;
+	bh=5j60J+QpwGFP1rn8CiHEaumhtvSKzAA2pbxQpJiVAvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sQ9Np47rpOb6mn52rKKDy9MEGCjuqvYl2D0VeO1NOORAXskwEokwZbYTOy1ynoLZ9
-	 ktyk9kENAVzd0ybpOQd7fUZ7ZLENye0QWA5Gl97sTtdNKyfFlx2OXPJMQU4P6XPfiO
-	 msJH2ly5balQP+iel/Dh68gI+Z+bm9AWClkueZ+o=
+	b=jkmSh+RAoiNJ0FeaOX543fw6fFtnwcBKUON2CVQocIQkUJ6odvBYYuA32obDm5LKm
+	 JxmTWqnuQtAd4pmq2ZBXIDDMNKxo5o9HPIiT/lYxYCdbc+5ShvGWCMJMOdCKRg4pk7
+	 WFmD8YFoI4Ha5ArrvUg2St/tb8HQ4xVxYxJjSSoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Julius Bairaktaris <julius@bairaktaris.de>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1125/2151] dmaengine: ste_dma40: Put the LCPA SRAM node
-Date: Wed, 18 Nov 2026 15:47:40 +0100
-Message-ID: <20261118150203.183543279@linuxfoundation.org>
+Subject: [PATCH 6.18 1108/2151] wifi: ath11k: fix unbalanced IRQ enable/disable during suspend/resume
+Date: Wed, 18 Nov 2026 15:47:23 +0100
+Message-ID: <20261118150202.605137260@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,40 +71,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 9a3762b470421658214baeb6cce3eed7344bb435 ]
+[ Upstream commit e56c9d429ba004d5416b03091fd7656187cdcaf1 ]
 
-of_parse_phandle() takes a reference to the LCPA SRAM node, but d40_probe()
-does not release it after translating the node into a resource. This leaks
-the node reference for the lifetime of the system.
+Commit f7a74e131d3f ("wifi: ath11k: disable interrupts during firmware
+crash recovery") added an unconditional ath11k_hif_irq_disable()/
+ath11k_hif_ce_irq_disable() pair inside
+ath11k_core_reconfigure_on_crash(), guarded by "if (!ab->is_reset)", to
+stop the DP NAPI from touching rings that have just been torn down. That
+fixes AHB device recovery, but breaks PCI device suspend/resume. During
+suspend, IRQs are disabled once in ath11k_core_suspend_late(). Then during
+resume, ath11k_core_reconfigure_on_crash() sees ab->is_reset clear and
+disables them a second time. Those IRQs are enabled only once during
+the following reinitialization, leaving the IRQ lines masked. As a result,
+HTC control responses never arrive, and resume fails:
 
-Put the node immediately after of_address_to_resource() so both the success
-and error paths release the reference.
+  failed to receive control response completion, polling..
+  failed to connect to HTT: -110
+  failed to reconfigure driver on crash recovery
+  failed to resume core: -110
 
-Fixes: 5a1a3b9c19dd ("dmaengine: ste_dma40: Get LCPA SRAM from SRAM node")
-Assisted-by: LLM
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-14-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fix this by disabling the IRQs unconditionally at the top of
+ath11k_core_reconfigure_on_crash(), and instead drop the disable
+calls from the two places that already disable IRQs before this
+function can run: ath11k_core_suspend_late() and ath11k_core_reset().
+This keeps a single disable per recovery/suspend cycle regardless of
+which path (recovery or suspend) triggers it, so the refcount on
+PCI parts stays balanced while AHB parts keep getting the disable
+that the original commit needed.
+
+Fixes: f7a74e131d3f ("wifi: ath11k: disable interrupts during firmware crash recovery")
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Closes: https://lore.kernel.org/linux-wireless/a068a857-a549-4cc2-ae0f-3ef119d3a859@samsung.com/
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Tested-by: Julius Bairaktaris <julius@bairaktaris.de>
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260928-ath11k-unbalanced-irq-enable-disable-v1-1-75166f534763@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ath/ath11k/core.c | 18 ++----------------
+ 1 file changed, 2 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 2dea28bdd5e8a..1e17a4fff6d54 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -3606,6 +3606,7 @@ static int __init d40_probe(struct platform_device *pdev)
- 	}
- 	/* This is no device so read the address directly from the node */
- 	ret = of_address_to_resource(np_lcpa, 0, &res_lcpa);
-+	of_node_put(np_lcpa);
- 	if (ret) {
- 		dev_err(dev, "no LCPA SRAM resource\n");
- 		goto report_failure;
+diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+index e8b130cd71d49..38ac5b820a2ce 100644
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -1254,9 +1254,6 @@ int ath11k_core_suspend_late(struct ath11k_base *ab)
+ 	if (ab->actual_pm_policy == ATH11K_PM_WOW)
+ 		return 0;
+ 
+-	ath11k_hif_irq_disable(ab);
+-	ath11k_hif_ce_irq_disable(ab);
+-
+ 	ath11k_hif_power_down(ab, true);
+ 
+ 	return 0;
+@@ -2303,17 +2300,9 @@ static int ath11k_core_reconfigure_on_crash(struct ath11k_base *ab)
+ 	int ret;
+ 
+ 	mutex_lock(&ab->core_lock);
++	ath11k_hif_irq_disable(ab);
++	ath11k_hif_ce_irq_disable(ab);
+ 	ath11k_thermal_unregister(ab);
+-
+-	/*
+-	 * ath11k_core_reset() already disabled the interrupts on the reset
+-	 * path; only the firmware crash path reaches here with them live.
+-	 */
+-	if (!ab->is_reset) {
+-		ath11k_hif_irq_disable(ab);
+-		ath11k_hif_ce_irq_disable(ab);
+-	}
+-
+ 	ath11k_dp_pdev_free(ab);
+ 	ath11k_spectral_deinit(ab);
+ 	ath11k_ce_cleanup_pipes(ab);
+@@ -2574,9 +2563,6 @@ static void ath11k_core_reset(struct work_struct *work)
+ 	time_left = wait_for_completion_timeout(&ab->recovery_start,
+ 						ATH11K_RECOVER_START_TIMEOUT_HZ);
+ 
+-	ath11k_hif_irq_disable(ab);
+-	ath11k_hif_ce_irq_disable(ab);
+-
+ 	ath11k_hif_power_down(ab, false);
+ 	ath11k_hif_power_up(ab);
+ 
 -- 
 2.53.0
 
