@@ -1,61 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047694;
-	b=b6dXeOI4BbVIVY4yIUAHu7zeTZ0qmZJSOVw52PvQBRcJAI/2d+PQhh0wGQ99a1o0c28K
-	 h7qOZFk3kf9+hAKfzqRQYAXdyFLZW8a9ZzZq1Qry9+WyY81OPXgrYXS6aXwpNskF+MD5O
-	 1T/2mc6zZxQM5dC+n3uU6lJVHioz9Rj8rEBXqFDWcHIskr8echraItOZtAaAzctMS3xaC
-	 ZOcphABpfC5QY/N2e/ABgWnG0nlKrot/ADbn3j3pMWVJZOutyZzxGtfaePSmONbd9aXWd
-	 i8RLLvbBle20Wqj7jH3Y7bikbAVOm3/x6XwfEF+APFHStXeEL4iu2uXauUe7rRG456g==
+	t=1795047696;
+	b=CmPlHHQkP5Y+jgOjdCGhL7rDGSn3t3oKu1opyBAKGBTJYAqdtsVv4K0lWImeJmMLeSLK
+	 LKnMVfxFk4gFlFZhGv1IKlg2TpTe7xgTdVLsX/wlzYrh7hNutcAK9rc/Gu4SB4ST9yruK
+	 4UsZiXKRjCemNyhYjkAkJh3yerOMJC2y9U6dSSuM1QQSvwiBsVZP3NK5Iq7FcYFWHnulT
+	 V3zj60t5CLlKTrGGYwjIVh0xfHEg7joN8ntuch/Pqj+9vW4SHW5HQ2vpZvFuwbKO57nEs
+	 Xp1DA6f+fiwf6JXedwSI+g3yfdh9DyUORg7U+1yUqiQ5mXR/AHY58hGOn0c9B92dvkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047694;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047696;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=rLTL7euSIPPRyDxaRxNt+M0Xd7dpgyMacUgAkAYenrM=;
-	b=FSFc4j8fYq+NSMhKBiod/yejykWs/29Q45M31b3eEeomi6aGRlAlFWkK6Fohx61dLsB0
-	 oMzBwXnh3VjLoDbPvybMI9tziMa5KN3PlWbpZ1Zf8oPpDI3CiSTMNy7J3kUQRt6vbEsuy
-	 93NIArH5WJaE4LdTkURDVSLFAqnkr5FspFVY/ErZ4LcbeR/9Jn3Y+iT5yh1xdatkM6eco
-	 jpRIX3IPb6XJ1ZDaMXsoAWbVnGNsNF6DzT2nJ9MAoZgvPDyiy9aDMwQDCFxoaeFj2tzvG
-	 LQz1zGfmtoJFkBh+zdZGAA1Jn/ovDf5SdDw0UnKXys7gzQtXJNzFNvJPJzTx/VtCLZw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=osMvnBGgIUh52Ud7GOtoX4x0rU4zosLDHyFeS+Rk3Uc=;
+	b=IerI0x77QV+R5ZqM5Nxd5lb4DpHfyUflcLLBr/+diOTklKGAagxgv9Gb22ccAXYr1Diz
+	 tGqX1oqPtDqMLR9dlMjXrAavuf6UoghfiC1U7w09xHvGtiApN1MhcvXTEcQ3AHkFSscay
+	 70iBP9a1ooWDfwjXH06tB0N8B0579FyM8Fm3t4reJ9cHpXV2xTF4m7RxKxZymzFTUL1eJ
+	 Mq6qiJBdvrrkj6HVTXYTWA1YlaG2QcaxVUNu6ayhrMN2wnfuzDSGQ+rLTjlBKfEVrsSzU
+	 /rxz9/l07ZIwA0pfCu5MWhTTzhCdwr+WtVL8b7prQJSCdH8fDu9/bPKYmYesxwhuz1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jlK6B9Ax;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W3dlSbJQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29387606A31C;
-	Thu, 19 Nov 2026 00:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94C6606A325;
+	Thu, 19 Nov 2026 00:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jlK6B9Ax
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F5951F000CC;
-	Thu, 19 Nov 2026 00:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W3dlSbJQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 393041F000CC;
+	Thu, 19 Nov 2026 00:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047694;
-	bh=rLTL7euSIPPRyDxaRxNt+M0Xd7dpgyMacUgAkAYenrM=;
+	s=korg; t=1795047696;
+	bh=osMvnBGgIUh52Ud7GOtoX4x0rU4zosLDHyFeS+Rk3Uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jlK6B9AxqasJKkdEA5g/SYEdV8KfGWvBzw/anG2sAASsOosTyUlpsgKKY5HY8QHOi
-	 tvmxeq0EKrU0rG7JAlTS0ysJDmBmnWX0EoO+sg6IdTRSTPF0xXAyoAPYRTb1xBbMTs
-	 QE4r6Hn1H+3dgQzi1Ha0NGpN8DlImdrdqsXUvkCU=
+	b=W3dlSbJQQqVfM+NYeDKQk4TXKWgNX3vbIEepDhQOMx1Af3WpUGMX4Znw2HkY3i1LL
+	 H73n0CsDpMYJu3J07tiqfz8/rz1+V90UArHIAzpGWTQ9734TygkpLETboWOgdG88D2
+	 z6Z7MaKFpmSQjsO3RQP6dE9PPbte6Puq+jVuo1BU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Rik van Riel <riel@surriel.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Harry Yoo (Meta)" <harry@kernel.org>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	SJ Park <sj@kernel.org>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	=?UTF-8?q?Asaf=20Nuri=20Bertizlio=C4=9Flu?= <ycistak@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1689/2857] fork: take mmap_lock before copying mm_struct
-Date: Wed, 18 Nov 2026 15:45:23 +0100
-Message-ID: <20261118150302.150524033@linuxfoundation.org>
+Subject: [PATCH 6.1 1690/2857] hwmon: (coretemp) Check for NULL platform device in hotplug callbacks
+Date: Wed, 18 Nov 2026 15:45:24 +0100
+Message-ID: <20261118150302.188752596@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,132 +63,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit ef694e2d210111cc08c52fd25da9ab130170bfa3 ]
+[ Upstream commit 0f9c7ed3b5009a037e5533eac03a0d4d45ecf1f0 ]
 
-dup_mm() copies the parent's mm_struct before dup_mmap() takes the
-mmap_lock. A concurrent brk() can leave the child with a stale mm->brk
-and newer heap mappings, causing later brk() requests to fail.
+coretemp_get_pdev() returns NULL when topology_logical_die_id(cpu) is
+negative (such as -ENODEV or -ERANGE from topology_get_logical_id() on a
+firmware/hardware APIC ID mismatch) or exceeds max_zones (for example,
+under asymmetric or anomalous ACPI die topologies where
+topology_max_packages() * topology_max_dies_per_package() is smaller
+than the logical die count).
 
-Other operations (e.g., PR_SET_MM) on the parent's mm_struct can similarly
-cause inconsistencies.
+Commit 6d03bbff456b ("hwmon: (coretemp) Simplify platform device
+handling") pre-allocated zone_devices[0 .. max_zones - 1] during module
+init and dropped the NULL checks on pdev in coretemp_cpu_online() and
+coretemp_cpu_offline(), passing pdev unconditionally to
+platform_get_drvdata(). When coretemp_get_pdev() returns NULL,
+platform_get_drvdata(pdev) dereferences &pdev->dev and triggers a kernel
+NULL pointer dereference.
 
-As a simple and robust fix, grab the parent's mmap_lock earlier. This
-way we don't need to update individual mm fields in dup_mmap() and
-keep missing ones. Stop updating the 4 existing members (total_vm, data_vm,
-exec_vm, stack_vm), as that is now no longer required.
+Check for a NULL pdev and return 0 in both coretemp_cpu_online() and
+coretemp_cpu_offline() before calling platform_get_drvdata(). Returning
+0 in coretemp_cpu_online() ignores the unmapped CPU without blocking CPU
+bringup or tearing down valid thermal zones on other dies.
 
-Keep releasing the parent's mmap_lock in dup_mmap(), before
-userfaultfd completion, to avoid moving the userfaultfd handling into the
-caller. This should get cleaned up later.
-
-Move uprobe_start_dup_mmap() to preserve the lock ordering.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 6d03bbff456b ("hwmon: (coretemp) Simplify platform device handling")
 Cc: stable@vger.kernel.org
-Reported-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
-Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-2-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: adapted uprobe error handling to account for cleanup already performed by dup_mmap() ]
+Tested-by: Asaf Nuri Bertizlioğlu <ycistak@gmail.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[ sashal: Placed the NULL check after the thermal-feature check because coretemp_cpu_online() lacks the upstream housekeeping check. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/fork.c | 29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ drivers/hwmon/coretemp.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/kernel/fork.c b/kernel/fork.c
-index 8a8d55a9ffa03..411c2b427ea85 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -591,11 +591,7 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
- 	MA_STATE(old_mas, &oldmm->mm_mt, 0, 0);
- 	MA_STATE(mas, &mm->mm_mt, 0, 0);
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index 8ad0ac882afb9..371eb3fb8e933 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -619,6 +619,9 @@ static int coretemp_cpu_online(unsigned int cpu)
+ 	if (!cpu_has(c, X86_FEATURE_DTHERM))
+ 		return -ENODEV;
  
--	uprobe_start_dup_mmap();
--	if (mmap_write_lock_killable(oldmm)) {
--		retval = -EINTR;
--		goto fail_uprobe_end;
--	}
-+	mmap_assert_write_locked(oldmm);
- 	flush_cache_dup_mm(oldmm);
- 	uprobe_dup_mmap(oldmm, mm);
- 	/*
-@@ -606,11 +602,6 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
- 	/* No ordering required: file already has been exposed. */
- 	dup_mm_exe_file(mm, oldmm);
- 
--	mm->total_vm = oldmm->total_vm;
--	mm->data_vm = oldmm->data_vm;
--	mm->exec_vm = oldmm->exec_vm;
--	mm->stack_vm = oldmm->stack_vm;
--
- 	retval = ksm_fork(mm, oldmm);
- 	if (retval)
- 		goto out;
-@@ -720,7 +711,6 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
- 	flush_tlb_mm(oldmm);
- 	mmap_write_unlock(oldmm);
- 	dup_userfaultfd_complete(&uf);
--fail_uprobe_end:
- 	uprobe_end_dup_mmap();
- 	return retval;
- 
-@@ -751,7 +741,7 @@ static inline void mm_free_pgd(struct mm_struct *mm)
- #else
- static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
- {
--	mmap_write_lock(oldmm);
-+	mmap_assert_write_locked(oldmm);
- 	dup_mm_exe_file(mm, oldmm);
- 	mmap_write_unlock(oldmm);
- 	return 0;
-@@ -1548,10 +1538,18 @@ static struct mm_struct *dup_mm(struct task_struct *tsk,
- 	if (!mm)
- 		goto fail_nomem;
- 
-+	uprobe_start_dup_mmap();
-+	if (mmap_write_lock_killable(oldmm)) {
-+		free_mm(mm);
-+		goto fail_uprobe;
-+	}
++	if (!pdev)
++		return 0;
 +
- 	memcpy(mm, oldmm, sizeof(*mm));
+ 	pdata = platform_get_drvdata(pdev);
+ 	if (!pdata->hwmon_dev) {
+ 		struct device *hwmon;
+@@ -670,6 +673,9 @@ static int coretemp_cpu_offline(unsigned int cpu)
+ 		return 0;
  
--	if (!mm_init(mm, tsk, mm->user_ns))
--		goto fail_nomem;
-+	if (!mm_init(mm, tsk, mm->user_ns)) {
-+		mmap_write_unlock(oldmm);
-+		goto fail_uprobe;
-+	}
- 
- 	err = dup_mmap(mm, oldmm);
- 	if (err)
-@@ -1570,7 +1568,10 @@ static struct mm_struct *dup_mm(struct task_struct *tsk,
- 	mm->binfmt = NULL;
- 	mm_init_owner(mm, NULL);
- 	mmput(mm);
-+	return NULL;
- 
-+fail_uprobe:
-+	uprobe_end_dup_mmap();
- fail_nomem:
- 	return NULL;
- }
+ 	/* If the physical CPU device does not exist, just return */
++	if (!pdev)
++		return 0;
++
+ 	pd = platform_get_drvdata(pdev);
+ 	if (!pd->hwmon_dev)
+ 		return 0;
 -- 
 2.53.0
 
