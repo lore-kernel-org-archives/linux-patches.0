@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056249;
-	b=kOe3K4b0EGES2t6M3t6BGTY7ieK9F0VC1fPcS1KghNoSwPqooo0yaQkNnr9FLvHa6T89
-	 AkdS653MS535bq7wjATH6gqqOMGDLii9A2nyB0VxkqJyqiB3vuZD0FOQvqFEyWcuhL1pS
-	 mI/L7iyEgPIRFXkyLKqvmXgxwo/AOMIIQbc5N4FbZDSh9rFnfa//Vo05AWCpOYm2IhkW0
-	 TC/9wJiIe7iJii0piu/kykrOyutg49gTr+Bp1IElRNmwKcH+9ySNp5O6kFMVVgjzYmgnq
-	 oPe815layf20Okn1vK2RhVGKFIfb689Lrzrl4rLiDxfXTqb5fXi1+fmNslbnHHWDkew==
+	t=1795056252;
+	b=FMJCaqhNiAOpxATLK4canp4b+yu2y/CSDU8jXReBYzANYWgeojnhwCwnIVhQaUYjcLg4
+	 0H9nfESq5agixHuThQSuVyVUF6OeocTZNQ1c/TxsOVe5iDWxsgbIbtZ/bJMCTsobrkLin
+	 ugA5Cyo9nCgsuQkd/3fPOUvI/VfMntDE778BcrPDsa+li38gDn8PQfLwZd4uxDi2tdPrX
+	 I1gXsELvgqrkCfoiWwBaODvuHVzbgWIR5e3kCr0M8JHcXYbCJqBIdz4QicgZPC0+4wsna
+	 auZiTgHcDH4QO9ZLiZA1HYiS0CcDGVELWqQ7t35quAjD8fBkfcFh+blvNd9kx68AEXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056249;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056252;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TLiNxdY8HRWvDJaYCuMOA1VW2lFH69+atGKGq746ErM=;
-	b=oBDDL9UH9GlFs2ETy1xvpGrXSDKYbhi/uSIkPUULwu0TI92mL2Qk2zsnGDu5w5HlYpG5
-	 IyeG906xNu9h2wjbEcBqNDrGYGNPaVXdTpnDBJpVymISquCnu4s69HQb59RkL5Ck3bZMo
-	 E32ZuSG3pF7NLgKUrbMLn66GD5yHZdngfvJhjmRCxYSUIHayqkVrysoqdwYOSNbDc7o6N
-	 K91wn8TMKIFfTC9SNmNiIv+91jlx3KC+/iL8HcuFRLxLKXyA8cwJPT+QNkahN4sc44caD
-	 pAh+h61rksTLv9cqBRmYJOx3qdtX1ZxGtL3d/7WdOQTPaTO32ahFb5wM8GIXPXmonFA==
+	bh=wulPjn0DqAo6JUT5OTNy9JNoDn+GyGXy1d6EOE5xqXI=;
+	b=dkTc9QzxBKyJbC/+eWJNzw+qY+WYeaM7I9YkJ90gMRNxcuV4IJcj+7NsXjPCOvq063qm
+	 2swbjSz9uNpjrzHqm0+0lCX4LTekk8UMF5xkEYc4gFnqj/iqpaNw0JYRMTEgzbW/BYw01
+	 pR4umLtVwlPCeOLAdhtg4P360rLjqN7eiU57xPbvXHahsDvR42yswG8ocgURY50+dKARe
+	 PjNlidKQ/9D+RVhZXABSU4SZKJiyjeaPxzTYoJ1W911J6it/WZKYntaTqM9u2kehJyUAT
+	 0GtM58ngQ9sgxjkgM9VX4OSGHyNpuV4VaNVsGPaDJcSdrwdxrtPROotr2w7kFP7njgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z0qfwRkq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=obfDbrZ6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71122606A325;
-	Thu, 19 Nov 2026 02:44:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37958606A330;
+	Thu, 19 Nov 2026 02:44:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z0qfwRkq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73191F000C4;
-	Thu, 19 Nov 2026 02:44:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=obfDbrZ6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B7571F000C8;
+	Thu, 19 Nov 2026 02:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056249;
-	bh=TLiNxdY8HRWvDJaYCuMOA1VW2lFH69+atGKGq746ErM=;
+	s=korg; t=1795056252;
+	bh=wulPjn0DqAo6JUT5OTNy9JNoDn+GyGXy1d6EOE5xqXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z0qfwRkqgVHocoT9a0FO7CIVjBqwwEoW7W9wUZts8rfKzRCFAf27xx9UjY0ZBsUQX
-	 Xhs1oMHi5thUWrOg1ZxZzdA+YQNj7hbEa3cg+Mt2lEJpQgNGKQw2+aVRBKZIcN8h22
-	 nLmGtdnqq1alX/pOWQAEOLpMXC77uYr7Vf2xYkZA=
+	b=obfDbrZ6R9CdDi/M9TICoWgV3aIA9MRvXGuITHbhg6xYLdse3dXCKkAI3BCiVOxcJ
+	 CD3TyLk3MDRZogqJKSJzEifiuFsMbpqqKwfel0D9GHakUBaTvKnu6GdhhRvXPs52mj
+	 0clYODAW+i3vLB7UfUmZsju8zcJaeiDUipicZEAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1920/2214] ASoC: codecs: wm8994: Fix definition of WM8958 noise gate hold time controls
-Date: Wed, 18 Nov 2026 15:59:56 +0100
-Message-ID: <20261118150127.859182207@linuxfoundation.org>
+Subject: [PATCH 5.15 1921/2214] ASoC: codecs: wm8955: Fix definition of Treble Cutoff control
+Date: Wed, 18 Nov 2026 15:59:57 +0100
+Message-ID: <20261118150127.896997333@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,48 +71,35 @@ Content-Transfer-Encoding: 8bit
 
 From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 291d81d628f3453026b029507a26b856056e4fdc ]
+[ Upstream commit 71911bf5bb3fe97da2124d17fc1dd3dbb9379e03 ]
 
-The noise gate hold time (NG_HLD) is at bits 6:5 of each WM8958 DAC
-noise gate register, not at bits 3:1, which hold the threshold
-(NG_THR).
+Treble cutoff (TC) is at bit 6 of Treble Control, not at bit 2, which
+is part of the treble volume (TRBL[3:0]).
 
-Fixes: 1ddc07d0f13a ("ASoC: Add WM8958 noise gate support")
+Fixes: 54db41c116c3 ("ASoC: wm8955: Use SOC_ENUM_SINGLE_DECL()")
 Assisted-by: Claude:claude-opus-5-5
 Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
 Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/8acff0f7314eef9eb3d290ca7855a87052d7e706.1791959026.git.sammiee5311@gmail.com
+Link: https://patch.msgid.link/b398bc6dcf8dc2b93504608cdf952823ca238cd5.1791959026.git.sammiee5311@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/codecs/wm8955.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index 8cd00e7d59b79..3d966f46bcac1 100644
---- a/sound/soc/codecs/wm8994.c
-+++ b/sound/soc/codecs/wm8994.c
-@@ -700,17 +700,17 @@ static const char *wm8958_ng_text[] = {
+diff --git a/sound/soc/codecs/wm8955.c b/sound/soc/codecs/wm8955.c
+index 513df47bd87d6..2b34a5d1100fb 100644
+--- a/sound/soc/codecs/wm8955.c
++++ b/sound/soc/codecs/wm8955.c
+@@ -426,7 +426,7 @@ static const char *treble_cutoff_text[] = {
+ 	"High", "Low"
+ };
  
- static SOC_ENUM_SINGLE_DECL(wm8958_aif1dac1_ng_hold,
- 			    WM8958_AIF1_DAC1_NOISE_GATE,
--			    WM8958_AIF1DAC1_NG_THR_SHIFT,
-+			    WM8958_AIF1DAC1_NG_HLD_SHIFT,
- 			    wm8958_ng_text);
+-static SOC_ENUM_SINGLE_DECL(treble_cutoff, WM8955_TREBLE_CONTROL, 2,
++static SOC_ENUM_SINGLE_DECL(treble_cutoff, WM8955_TREBLE_CONTROL, 6,
+ 			    treble_cutoff_text);
  
- static SOC_ENUM_SINGLE_DECL(wm8958_aif1dac2_ng_hold,
- 			    WM8958_AIF1_DAC2_NOISE_GATE,
--			    WM8958_AIF1DAC2_NG_THR_SHIFT,
-+			    WM8958_AIF1DAC2_NG_HLD_SHIFT,
- 			    wm8958_ng_text);
- 
- static SOC_ENUM_SINGLE_DECL(wm8958_aif2dac_ng_hold,
- 			    WM8958_AIF2_DAC_NOISE_GATE,
--			    WM8958_AIF2DAC_NG_THR_SHIFT,
-+			    WM8958_AIF2DAC_NG_HLD_SHIFT,
- 			    wm8958_ng_text);
- 
- static const struct snd_kcontrol_new wm8958_snd_controls[] = {
+ static const DECLARE_TLV_DB_SCALE(digital_tlv, -12750, 50, 1);
 -- 
 2.53.0
 
