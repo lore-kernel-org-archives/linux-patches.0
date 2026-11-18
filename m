@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058329;
-	b=JtSNO6gqdtsZUaWu5rxnNXr/Kg4cOEgooWMJRorJjLNdChwd0g1Sl8poQ5chQlASSplO
-	 XDQJJySO8NP6qgCZGm3EJJwijciPSGOnNBmWGguoNStj/4/lom5DbMD9PXD1oUMEHnx3U
-	 14iyoE+cI9d/TO5H2Jo0xFvdQbWgQUxu0qTA/nftgee/pevrX7gyoeNkBBjDOfn6kP2mX
-	 k+Xn37C+7D/PpJ4oe+MeKlry4UfL43BuWv8QHfma8iz7Gnwna7E63evRzmSY8ZYB5gxjY
-	 bcmUfUfJJFNW9RmlGibZbJWW8NZehPykbp3DvcgHjTSFlez9ZTx4ZpoSH4TIFfaUAWQ==
+	t=1795058332;
+	b=jrdo2Ly1TfyVqJrNjvJcrrEHQNc8s9iVOfBfcnZFONYOdspQ5C8NgJdYVsjH3r+tVWKr
+	 U1YvAy3l9qQLm5G0hETaLZ9HJmRhJGg/xKcH0UZJWIqxLBmW+wsTPTczP1O5u7280HIfL
+	 1j0g33Z+O54MEUF7E2zqYS9B9iDXuUfBV+04dv9ivQeTJRks8J2MNI7mY5b5dEANH6txQ
+	 6QO7yiEB664L+oR7aq79wjXN7qX334T+L2+NFl+d8Bw1Wxno7g9BeN/AhOij0nV7IOQeW
+	 1nyCeYsBY/MauM/XHckKmY9MuIixrXDt0AjdkvaIgQfhASbwZnUE3bB5kJ2EaG8OwKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058329;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058332;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vddHVhX9uUwlbwXe5l6dapsYnsX8h/Blj8xL+Yg6Y0c=;
-	b=zw8duLPzXJZUIhyzcJIJrxWAbptLW6CLXwuUCcPvbPmbHTsUgOBbkB3IeJGIHs4ZAt6Z
-	 Xs8lkGa22mgI+PTOPQok2eWDxBdbY3RwLt5RgCVJOtAsmS4xKsd8d5/QQd92bIPAlGG4m
-	 xOmjE/0REySy0TGgEwBZb1Rh1f9qG1RNgO/fHa4cN3z51qzcGQtpQnYsuXTI+KLXZkJlx
-	 PeaDW0SC0BlfxRbqIgJ2oGfDW0t/B4AWH58LOC61JDUh+XKnix/XJ3Ssqcr59G/xkIiyr
-	 TsWmN5r1y07y7FEN+UY59jxPDKLdexZZFvGf44lQg8Cpbd8yWgZCMh6amfOAn0LWmYw==
+	bh=BVyYONYIxSmFRpyyou7CnfPosHFzCdDHvM8wHr9f3Go=;
+	b=e91v2PndD/g8JKru5fawm2S5xS2NEnAADfGlkGnxltB/D/VFHFvPDMQmUnKAqCo+OxDi
+	 dZCxtDGDu2WzPyF5G7Ly2L/8/iyopZtZwT7/g3PpeKKxggRxLHjsiI4srE7OXv6DdaNUi
+	 hk/HAj6Z0HEJ+8hwFUyhYLjxajtqyFKtQbGP4RaD4x3/o/LxfwK0c7GWHDhRlkMLbFwQW
+	 chmZF3HaUAmBoX2XbSwMSBFFA4gqxpk9T5lD+XPxSG6DGaBHixo65HdmJiuiFPY3NoWUn
+	 q9Qt9AO+KRqpx7uc/FEXIPQXIvNyz96RgH8V9370APbi8B6nMIUYwoYMEn67H69+ugg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWkyUMnJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1l89cLkv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D910606A326;
-	Thu, 19 Nov 2026 03:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91803606A31C;
+	Thu, 19 Nov 2026 03:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWkyUMnJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82C61F000C4;
-	Thu, 19 Nov 2026 03:18:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1l89cLkv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FAF1F000C4;
+	Thu, 19 Nov 2026 03:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058329;
-	bh=vddHVhX9uUwlbwXe5l6dapsYnsX8h/Blj8xL+Yg6Y0c=;
+	s=korg; t=1795058332;
+	bh=BVyYONYIxSmFRpyyou7CnfPosHFzCdDHvM8wHr9f3Go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iWkyUMnJbohXTE2uZm5tpb8jWnr7pkOPTOM6jdZ76AZBdWwPo/tgbu5LSIyAYYURQ
-	 rZRPnuHPrwCH/072WKAEg2YpJX9IqNucEhl4PPXjsw++S1oaGDRIXuWEmCYhRFRa34
-	 tp/ThzDYaGdTL+hWxzcObJydIFjTWBBFLWntYBCM=
+	b=1l89cLkvNuAPE1H1jtFMZisfhJiqEcZ1uK+VzWD1209wqCmaNjlH0nYktznMEBeYf
+	 ohjwSUyvSlLn/ZNzqhRv3WPKKV/OxjAxgOBjG6V5OeVpUPtBwvDKek2zlmOpJJ/veL
+	 JJuSDnbBoggNyGq5UleJEN+a+A04WAhNhoOgXlOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Richard Weinberger <richard@nod.at>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0395/1848] ata: ahci_st: Do not ignore errors when getting the reset controls
-Date: Wed, 18 Nov 2026 15:40:33 +0100
-Message-ID: <20261118145930.352700346@linuxfoundation.org>
+Subject: [PATCH 5.10 0441/1848] mtd: Call get_wunit() on the master partition
+Date: Wed, 18 Nov 2026 15:41:19 +0100
+Message-ID: <20261118145932.690612943@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,86 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Richard Weinberger <richard@nod.at>
 
-[ Upstream commit c74ee9230a8d1d2f6fcbceff55f56f7dd9b9cccd ]
+[ Upstream commit 904f18430e8cce829cb9130eab7a93020e33fc89 ]
 
-st_ahci_probe_resets() treats any error from devm_reset_control_get() as
-"reset control not defined" and continues with a NULL reset control:
+The code checks whether master has get_wunit() but still calls
+it on the child. Fix this.
 
-	drv_data->pwr = devm_reset_control_get(dev, "pwr-dwn");
-	if (IS_ERR(drv_data->pwr)) {
-		dev_info(dev, "power reset control not defined\n");
-		drv_data->pwr = NULL;
-	}
-
-This also swallows -EPROBE_DEFER, which is returned when the reset
-controller providing the reset has not been probed yet. probe() then
-continues as if the device tree did not specify any reset, so the resets
-of the SATA IP are never deasserted, and st_ahci_configure_oob() and
-ahci_platform_init_host() access the MMIO of an IP which is still held in
-reset and powered down, which can result in an external abort.
-
-The resets are optional in the binding, as they are not part of its
-required properties, so use devm_reset_control_get_optional(), which
-returns NULL if the reset is not specified in the device tree, and
-propagate all other errors.
-
-Note that an absent reset is now indicated by a NULL reset control
-instead of an error, so the "reset control not defined" messages are
-dropped.
-
-Fixes: 76884cb2f7da ("ahci: st: Add support for ST's SATA IP")
+Fixes: 46b5889cc2c5 ("mtd: implement proper partition handling")
 Cc: stable@vger.kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20260915084127.692494-9-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci_st.c | 31 ++++++++++++++-----------------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ drivers/mtd/mtdcore.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/ahci_st.c b/drivers/ata/ahci_st.c
-index c268264c2129c..98ec746d4a2ca 100644
---- a/drivers/ata/ahci_st.c
-+++ b/drivers/ata/ahci_st.c
-@@ -105,23 +105,20 @@ static int st_ahci_probe_resets(struct ahci_host_priv *hpriv,
- {
- 	struct st_ahci_drv_data *drv_data = hpriv->plat_data;
+diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
+index b2d88ff90e936..1a9bec28c6f21 100644
+--- a/drivers/mtd/mtdcore.c
++++ b/drivers/mtd/mtdcore.c
+@@ -488,7 +488,7 @@ int mtd_pairing_info_to_wunit(struct mtd_info *mtd,
+ 		return -EINVAL;
  
--	drv_data->pwr = devm_reset_control_get(dev, "pwr-dwn");
--	if (IS_ERR(drv_data->pwr)) {
--		dev_info(dev, "power reset control not defined\n");
--		drv_data->pwr = NULL;
--	}
--
--	drv_data->sw_rst = devm_reset_control_get(dev, "sw-rst");
--	if (IS_ERR(drv_data->sw_rst)) {
--		dev_info(dev, "soft reset control not defined\n");
--		drv_data->sw_rst = NULL;
--	}
--
--	drv_data->pwr_rst = devm_reset_control_get(dev, "pwr-rst");
--	if (IS_ERR(drv_data->pwr_rst)) {
--		dev_dbg(dev, "power soft reset control not defined\n");
--		drv_data->pwr_rst = NULL;
--	}
-+	drv_data->pwr = devm_reset_control_get_optional(dev, "pwr-dwn");
-+	if (IS_ERR(drv_data->pwr))
-+		return dev_err_probe(dev, PTR_ERR(drv_data->pwr),
-+				     "failed to get pwr-dwn reset\n");
-+
-+	drv_data->sw_rst = devm_reset_control_get_optional(dev, "sw-rst");
-+	if (IS_ERR(drv_data->sw_rst))
-+		return dev_err_probe(dev, PTR_ERR(drv_data->sw_rst),
-+				     "failed to get sw-rst reset\n");
-+
-+	drv_data->pwr_rst = devm_reset_control_get_optional(dev, "pwr-rst");
-+	if (IS_ERR(drv_data->pwr_rst))
-+		return dev_err_probe(dev, PTR_ERR(drv_data->pwr_rst),
-+				     "failed to get pwr-rst reset\n");
+ 	if (master->pairing && master->pairing->get_wunit)
+-		return mtd->pairing->get_wunit(master, info);
++		return master->pairing->get_wunit(master, info);
  
- 	return st_ahci_deassert_resets(hpriv, dev);
+ 	return info->pair;
  }
 -- 
 2.53.0
