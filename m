@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059517;
-	b=5Ke7/G0JEcyMicphgwl+lf6WCeroNNRo2l2o9ihCjUh9OPl1rmpCsuGFiMhFoG77+UnE
-	 b13X3PNYdJSvkD6f0KqiiRCBkTVhbLGw1m58/rI3x/LEE1Z+EEUKYaGnOC1pgtRQZinQI
-	 K00HCsGvIxjN1NmhQPze0qgjCb9ouY5co/IWf6ZfYnBh5Sm+zpMWsljzh/Wzho7HdB/NV
-	 GIrRKfqP4FwIEnwrRk5tTLqKldk3nwpM+ODh63tUCKhfFoMZdWTiNNyuecInw21tQZp4k
-	 7ueDpXnTBlAQ1vT0FClQ6+TxYXTPpDaOe2cqhgfpaJ8cSUOKS5POouE9zTG4fYYYJrA==
+	t=1795059520;
+	b=lxhNYrzX5qOBG8p1iKr3bWarsLGYKclnjUhCVX5PsSkmf80C4BwrCW3heo/yjNsbNO3Z
+	 SNPs2ucgUOhczShAIb0Yo881MlFfqaEPcdFqsOMIb5ZjFJ3xq2HSvfYSs1cZNEtQFec0c
+	 KR3ks2qwwZkvBEM4e0W9EjN9BqKS72IcvwfVkLUok90vwsJ7qfeeHhcayS/b/bfKVOLfN
+	 PC5pc9+FYXZiSkLRwa9ps4yCtFjtcdH69tIptVoJKy1TEcaoWxbMvoRMnQJFJIPW0p0+h
+	 H5TjiBgil/iWl3WPrG7sZM1WkUaapfHEaJPX+iMDbMnrRhHCzm92Q5mhE0cxWItK67Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059517;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059520;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=onC3pjdXlkDzSXPWeAvi7Xudd8zi7ByjTMlogqq53eo=;
-	b=oy9mtDoqCbbATSs6bWQmENz6OheMBfcFfB5MZ5G7xWhnY5ScBo1nY3lWhwGkdEgFF12z
-	 kSFCyfDr2Rx/EcA+Xwuq9ForIIYAYZZxTlsBFH+jJpHp5bT1QnOnvoSnUQ9vfoPUG9RTO
-	 e2cmmTNBTvzmVCmW04ib+cPmO1WWbvQ108eg5qNHXjAUJKUiNmmZuWA0nEWFVz/wi+lQN
-	 cL08eT6w1lQei7IjshS4zKjsOZcHlhd5FAapOUfOx0ZTuESGQIBanKNKpLC2sc8uIQF83
-	 lM7HbrppcjTJIr40RWPXQqbE4vxuG5h7FqmqXCC81eoF4SLYRJSo5P+HXddzwBMFbdw==
+	bh=tc3uYj4UlDaLFSOdMsIlUvTTAwlh2K9TtlrMdRZtB9Q=;
+	b=4xcDsfynwbE/YAPg0r8zdp7r1J+DFl3Z4uuEFLTDcaOm/XvlLxIpuD9ihlq09S7+Ni/q
+	 7va1G6vopVDXDYsh4I/iRuuW+HqeC2Gfnatw2N1ZFlYMokJhGEXlkRnSACbq5ZmgPJxMQ
+	 dkYqbcQTVn/HM2DkDhG9LPu5vuNATiK+43UdFNqMJjCt9mgi6udaz9ndmzn7Kwk9f/cD7
+	 l8HYDZj+rBaQuFQjVNH7HaCzZI5SzLIYr5YuRDwaCOnqLFni4+tIoxpLVouV+yA0Z3xsx
+	 AYGm6sCVeM/Tr9CVcFMKLkEjjOJA1txsEZ57WvcUF3kt2QFjD6nPvZGuiDEG1ln5OUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZfciMPD1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Z4u/mq5y";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA33606A325;
-	Thu, 19 Nov 2026 03:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3D7606A32C;
+	Thu, 19 Nov 2026 03:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZfciMPD1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69BAB1F000C9;
-	Thu, 19 Nov 2026 03:38:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z4u/mq5y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358B61F000C4;
+	Thu, 19 Nov 2026 03:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059517;
-	bh=onC3pjdXlkDzSXPWeAvi7Xudd8zi7ByjTMlogqq53eo=;
+	s=korg; t=1795059519;
+	bh=tc3uYj4UlDaLFSOdMsIlUvTTAwlh2K9TtlrMdRZtB9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZfciMPD1nUQ41fpokS5imbZg4f4vxh5sB8/L7sIuivMluTHbnInoF8lRD8v1kRbZd
-	 V+BunFgj6JOqWeiyjqfgMA0eL2kgt1Vb8OytyWtFLeDu8oVxhPuQiDvNvX7QcEcFns
-	 mV+8beO9Y/jurQQCjSacGpiRgoSE3Ie3Z73ybMj0=
+	b=Z4u/mq5ywDVtgqfhWK/gCKUuj0N7HvU+LfMHWmRiLcwHHUSfgj+lRaSV/ZGL8R4ji
+	 0NoX4fEiW4QJ6zz0ti15dc02VXwcSl7JgB1sA9OzHAWOqSjrEtVgJFx3ROXO+lsI9f
+	 yvh0Z69BRWQ5156LuvXplQr6sijKlZT0Jkm8SaPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0870/1848] ASoC: stm: stm32_i2s: request IRQ after regmap initialization
-Date: Wed, 18 Nov 2026 15:48:28 +0100
-Message-ID: <20261118145952.872382764@linuxfoundation.org>
+Subject: [PATCH 5.10 0844/1848] platform/x86: Rename hp-wireless to wireless-hotkey
+Date: Wed, 18 Nov 2026 15:48:02 +0100
+Message-ID: <20261118145951.945942129@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,87 +68,293 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 1b207c85551fd74854d632116849295b2305245f ]
+[ Upstream commit a558ea42c0decd088df1950bb232ac2257929281 ]
 
-The ISR accesses the managed regmap, but probe requests the IRQ before
-creating it. An early interrupt can reach an uninitialized regmap.
-Reverse-order cleanup can free the regmap while the IRQ remains active.
+This driver was originally intended to support some HP laptops, but
+later support was added for Xioami and AMD laptops.
 
-Request the IRQ after regmap initialization so probe unwind and
-removal free and synchronize it before releasing the regmap.
+Rename it to make it clear that it supports a larger variety of
+systems.
 
-The teardown ordering issue was found by static analysis.
-
-Fixes: e4e6ec7b127c ("ASoC: stm32: Add I2S driver")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20261004043451.1138613-1-mhun512@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ sashal: Removed the unused ret declaration from stm32_i2s_parse_dt() because the newer clock setup code is absent. ]
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20210519174405.30155-1-mario.limonciello@amd.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Stable-dep-of: 6dea092b261f ("platform/x86: hp-wmi: fix heap OOB read and memory corruption in hp_wmi_perform_query()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/stm/stm32_i2s.c | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ drivers/platform/x86/Kconfig           |   9 ++-
+ drivers/platform/x86/Makefile          |   2 +-
+ drivers/platform/x86/hp-wireless.c     | 102 ------------------------
+ drivers/platform/x86/wireless-hotkey.c | 103 +++++++++++++++++++++++++
+ 4 files changed, 109 insertions(+), 107 deletions(-)
+ delete mode 100644 drivers/platform/x86/hp-wireless.c
+ create mode 100644 drivers/platform/x86/wireless-hotkey.c
 
-diff --git a/sound/soc/stm/stm32_i2s.c b/sound/soc/stm/stm32_i2s.c
-index 4a6869d535d4f..63fde986018c7 100644
---- a/sound/soc/stm/stm32_i2s.c
-+++ b/sound/soc/stm/stm32_i2s.c
-@@ -810,7 +810,6 @@ static int stm32_i2s_parse_dt(struct platform_device *pdev,
- 	const struct of_device_id *of_id;
- 	struct reset_control *rst;
- 	struct resource *res;
--	int irq, ret;
+diff --git a/drivers/platform/x86/Kconfig b/drivers/platform/x86/Kconfig
+index c14c145b88d80..b7bbe97b727eb 100644
+--- a/drivers/platform/x86/Kconfig
++++ b/drivers/platform/x86/Kconfig
+@@ -530,16 +530,17 @@ config HP_ACCEL
+ 	  To compile this driver as a module, choose M here: the module will
+ 	  be called hp_accel.
  
- 	if (!np)
- 		return -ENODEV;
-@@ -849,16 +848,6 @@ static int stm32_i2s_parse_dt(struct platform_device *pdev,
- 		return dev_err_probe(&pdev->dev, PTR_ERR(i2s->x11kclk),
- 				     "Could not get x11k parent clock\n");
+-config HP_WIRELESS
+-	tristate "HP wireless button"
++config WIRELESS_HOTKEY
++	tristate "Wireless hotkey button"
+ 	depends on ACPI
+ 	depends on INPUT
+ 	help
+-	 This driver provides supports for new HP wireless button for Windows 8.
++	 This driver provides supports for the wireless buttons found on some AMD,
++	 HP, & Xioami laptops.
+ 	 On such systems the driver should load automatically (via ACPI alias).
  
--	/* Get irqs */
--	irq = platform_get_irq(pdev, 0);
--	if (irq < 0)
--		return irq;
+ 	 To compile this driver as a module, choose M here: the module will
+-	 be called hp-wireless.
++	 be called wireless-hotkey.
+ 
+ config HP_WMI
+ 	tristate "HP WMI extras"
+diff --git a/drivers/platform/x86/Makefile b/drivers/platform/x86/Makefile
+index 5f823f7eff452..5779c9a061384 100644
+--- a/drivers/platform/x86/Makefile
++++ b/drivers/platform/x86/Makefile
+@@ -58,7 +58,6 @@ obj-$(CONFIG_GPD_POCKET_FAN)	+= gpd-pocket-fan.o
+ 
+ # Hewlett Packard
+ obj-$(CONFIG_HP_ACCEL)		+= hp_accel.o
+-obj-$(CONFIG_HP_WIRELESS)	+= hp-wireless.o
+ obj-$(CONFIG_HP_WMI)		+= hp-wmi.o
+ obj-$(CONFIG_TC1100_WMI)	+= tc1100-wmi.o
+ 
+@@ -124,6 +123,7 @@ obj-$(CONFIG_TOPSTAR_LAPTOP)	+= topstar-laptop.o
+ obj-$(CONFIG_I2C_MULTI_INSTANTIATE)	+= i2c-multi-instantiate.o
+ obj-$(CONFIG_MLX_PLATFORM)		+= mlx-platform.o
+ obj-$(CONFIG_TOUCHSCREEN_DMI)		+= touchscreen_dmi.o
++obj-$(CONFIG_WIRELESS_HOTKEY)		+= wireless-hotkey.o
+ 
+ # Intel uncore drivers
+ obj-$(CONFIG_INTEL_IPS)				+= intel_ips.o
+diff --git a/drivers/platform/x86/hp-wireless.c b/drivers/platform/x86/hp-wireless.c
+deleted file mode 100644
+index 0753ef18e7211..0000000000000
+--- a/drivers/platform/x86/hp-wireless.c
++++ /dev/null
+@@ -1,102 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-or-later
+-/*
+- *  Airplane mode button for HP & Xiaomi laptops
+- *
+- *  Copyright (C) 2014-2017 Alex Hung <alex.hung@canonical.com>
+- */
 -
--	ret = devm_request_irq(&pdev->dev, irq, stm32_i2s_isr, 0,
--			       dev_name(&pdev->dev), i2s);
--	if (ret)
--		return ret;
+-#include <linux/kernel.h>
+-#include <linux/module.h>
+-#include <linux/init.h>
+-#include <linux/input.h>
+-#include <linux/platform_device.h>
+-#include <linux/acpi.h>
+-#include <acpi/acpi_bus.h>
 -
- 	/* Reset */
- 	rst = devm_reset_control_get_optional_exclusive(&pdev->dev, NULL);
- 	if (IS_ERR(rst))
-@@ -884,7 +873,7 @@ static int stm32_i2s_probe(struct platform_device *pdev)
- {
- 	struct stm32_i2s_data *i2s;
- 	u32 val;
--	int ret;
-+	int irq, ret;
- 
- 	i2s = devm_kzalloc(&pdev->dev, sizeof(*i2s), GFP_KERNEL);
- 	if (!i2s)
-@@ -910,6 +899,15 @@ static int stm32_i2s_probe(struct platform_device *pdev)
- 		return dev_err_probe(&pdev->dev, PTR_ERR(i2s->regmap),
- 				     "Regmap init error\n");
- 
-+	irq = platform_get_irq(pdev, 0);
-+	if (irq < 0)
-+		return irq;
+-MODULE_LICENSE("GPL");
+-MODULE_AUTHOR("Alex Hung");
+-MODULE_ALIAS("acpi*:HPQ6001:*");
+-MODULE_ALIAS("acpi*:WSTADEF:*");
+-MODULE_ALIAS("acpi*:AMDI0051:*");
+-
+-static struct input_dev *hpwl_input_dev;
+-
+-static const struct acpi_device_id hpwl_ids[] = {
+-	{"HPQ6001", 0},
+-	{"WSTADEF", 0},
+-	{"AMDI0051", 0},
+-	{"", 0},
+-};
+-
+-static int hp_wireless_input_setup(void)
+-{
+-	int err;
+-
+-	hpwl_input_dev = input_allocate_device();
+-	if (!hpwl_input_dev)
+-		return -ENOMEM;
+-
+-	hpwl_input_dev->name = "HP Wireless hotkeys";
+-	hpwl_input_dev->phys = "hpq6001/input0";
+-	hpwl_input_dev->id.bustype = BUS_HOST;
+-	hpwl_input_dev->evbit[0] = BIT(EV_KEY);
+-	set_bit(KEY_RFKILL, hpwl_input_dev->keybit);
+-
+-	err = input_register_device(hpwl_input_dev);
+-	if (err)
+-		goto err_free_dev;
+-
+-	return 0;
+-
+-err_free_dev:
+-	input_free_device(hpwl_input_dev);
+-	return err;
+-}
+-
+-static void hp_wireless_input_destroy(void)
+-{
+-	input_unregister_device(hpwl_input_dev);
+-}
+-
+-static void hpwl_notify(struct acpi_device *acpi_dev, u32 event)
+-{
+-	if (event != 0x80) {
+-		pr_info("Received unknown event (0x%x)\n", event);
+-		return;
+-	}
+-
+-	input_report_key(hpwl_input_dev, KEY_RFKILL, 1);
+-	input_sync(hpwl_input_dev);
+-	input_report_key(hpwl_input_dev, KEY_RFKILL, 0);
+-	input_sync(hpwl_input_dev);
+-}
+-
+-static int hpwl_add(struct acpi_device *device)
+-{
+-	int err;
+-
+-	err = hp_wireless_input_setup();
+-	if (err)
+-		pr_err("Failed to setup hp wireless hotkeys\n");
+-
+-	return err;
+-}
+-
+-static int hpwl_remove(struct acpi_device *device)
+-{
+-	hp_wireless_input_destroy();
+-	return 0;
+-}
+-
+-static struct acpi_driver hpwl_driver = {
+-	.name	= "hp-wireless",
+-	.owner	= THIS_MODULE,
+-	.ids	= hpwl_ids,
+-	.ops	= {
+-		.add	= hpwl_add,
+-		.remove	= hpwl_remove,
+-		.notify	= hpwl_notify,
+-	},
+-};
+-
+-module_acpi_driver(hpwl_driver);
+diff --git a/drivers/platform/x86/wireless-hotkey.c b/drivers/platform/x86/wireless-hotkey.c
+new file mode 100644
+index 0000000000000..b010e4ca33831
+--- /dev/null
++++ b/drivers/platform/x86/wireless-hotkey.c
+@@ -0,0 +1,103 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ *  Airplane mode button for AMD, HP & Xiaomi laptops
++ *
++ *  Copyright (C) 2014-2017 Alex Hung <alex.hung@canonical.com>
++ *  Copyright (C) 2021 Advanced Micro Devices
++ */
 +
-+	ret = devm_request_irq(&pdev->dev, irq, stm32_i2s_isr, 0,
-+			       dev_name(&pdev->dev), i2s);
-+	if (ret)
-+		return ret;
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/init.h>
++#include <linux/input.h>
++#include <linux/platform_device.h>
++#include <linux/acpi.h>
++#include <acpi/acpi_bus.h>
 +
- 	ret = snd_dmaengine_pcm_register(&pdev->dev, &stm32_i2s_pcm_config, 0);
- 	if (ret)
- 		return ret;
++MODULE_LICENSE("GPL");
++MODULE_AUTHOR("Alex Hung");
++MODULE_ALIAS("acpi*:HPQ6001:*");
++MODULE_ALIAS("acpi*:WSTADEF:*");
++MODULE_ALIAS("acpi*:AMDI0051:*");
++
++static struct input_dev *wl_input_dev;
++
++static const struct acpi_device_id wl_ids[] = {
++	{"HPQ6001", 0},
++	{"WSTADEF", 0},
++	{"AMDI0051", 0},
++	{"", 0},
++};
++
++static int wireless_input_setup(void)
++{
++	int err;
++
++	wl_input_dev = input_allocate_device();
++	if (!wl_input_dev)
++		return -ENOMEM;
++
++	wl_input_dev->name = "Wireless hotkeys";
++	wl_input_dev->phys = "hpq6001/input0";
++	wl_input_dev->id.bustype = BUS_HOST;
++	wl_input_dev->evbit[0] = BIT(EV_KEY);
++	set_bit(KEY_RFKILL, wl_input_dev->keybit);
++
++	err = input_register_device(wl_input_dev);
++	if (err)
++		goto err_free_dev;
++
++	return 0;
++
++err_free_dev:
++	input_free_device(wl_input_dev);
++	return err;
++}
++
++static void wireless_input_destroy(void)
++{
++	input_unregister_device(wl_input_dev);
++}
++
++static void wl_notify(struct acpi_device *acpi_dev, u32 event)
++{
++	if (event != 0x80) {
++		pr_info("Received unknown event (0x%x)\n", event);
++		return;
++	}
++
++	input_report_key(wl_input_dev, KEY_RFKILL, 1);
++	input_sync(wl_input_dev);
++	input_report_key(wl_input_dev, KEY_RFKILL, 0);
++	input_sync(wl_input_dev);
++}
++
++static int wl_add(struct acpi_device *device)
++{
++	int err;
++
++	err = wireless_input_setup();
++	if (err)
++		pr_err("Failed to setup hp wireless hotkeys\n");
++
++	return err;
++}
++
++static int wl_remove(struct acpi_device *device)
++{
++	wireless_input_destroy();
++	return 0;
++}
++
++static struct acpi_driver wl_driver = {
++	.name	= "wireless-hotkey",
++	.owner	= THIS_MODULE,
++	.ids	= wl_ids,
++	.ops	= {
++		.add	= wl_add,
++		.remove	= wl_remove,
++		.notify	= wl_notify,
++	},
++};
++
++module_acpi_driver(wl_driver);
 -- 
 2.53.0
 
