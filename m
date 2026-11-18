@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038218;
-	b=aQ2VaULH99CUZh2EPD3l3auEYkAG0/ufeUgnz+49WzSlgKEloC6QQSEU0cVZCM2MMeGI
-	 NHhahoOeWvltxmCkEcIKaa3RoBu+u80tI6pggIZ+HuKHldpBP9VbE5wwRchZGnL7ogEaL
-	 c/Ew/pEjpCcdJA+ALvoAo/33SSD/ntLEZXmiqdYAm7hV63gVqBMYWMrvN2jyA3UvBEGnc
-	 DOSRtL+MEhP2w3V21zi8rGXTh08ih1A0GT/64sRwJNFHG4nSwT2N9bi3ThLwhwhMDpl+7
-	 zckgdSsSy6e/lfHsvuAhA8hIC8oKNqIBWlltwrHkxxiv9p2b1FibUKHpw9wRH8kUosQ==
+	t=1795038221;
+	b=vsRj7saoa4qa+iW7CgVYnR2plN45ueX4XXxMRI9KzTiKUGshgMK3kEU3Aj75AMY5MhZE
+	 PPcxp0bJgnXAdIvwuOLltdbk8cuH+kreGVlw5L4EC92WWwdah9eYYiHrSrysNG4zKnqfr
+	 4ACVCUPVNN0w+rcIK+E4xhzRweXub7FQx2nRbWf9e1WB9VolJXW9Us+WaWIqd0snBdupf
+	 mDmiCkhXTliHd5HgV+j4t09D0ry7eDUDGrnoOU2J44HEugzOFqITEQAsuq6SgrsujskMh
+	 u35IjkxWy+iYSOTimRc11EmO/hW5mRTOAg/T4z1HzSJ/XayVWV63wvlgT7kvvwiH3MA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038218;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038221;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6GeRZv0EK2wZVroPYGrzPSN5ya2p2k7M1dWYRdXJY6Y=;
-	b=ja7ehmEZ7Y/si9A1DLwRVGkQSO4nUpr8U+oNPaLFa10OS9xNOlCDA3ZNle+1wMG17+9y
-	 p2nWX+lDRFLUHnOC6QLQgMxLlOHG+qJZwJsOZwHC2rpJL/yHdIILs7Ko1UN1fXCvCUoH1
-	 H9iOuWc7VKGqIbXEn1vCIHecJqox+GFlloTJ2DlsHqkDiwmoZHxTQ5ulJemZCLOjkzPgr
-	 wZpX/YNYHV4inYxN9hdJ07X2tbdS7wDDTDy05w4nwxWoAvhrkQG8Sw1qsl4n8Wa5xalYc
-	 +Xw939NuoJoHKj1Ps0CE1qvn/P/PiBBn7VY5Eis5/xaoHnBu1rc2iG42EaHffFc78MA==
+	bh=bTUR/m3emV9i82TPECL/fcAF06ds3d8z+qvc/VqHgTA=;
+	b=s0AwQ00UcbL3KV0HmqfIsk21+7vzeCxO9/3xgysH1yG2Ee6JPJUqwI21eG/rOp8dlKlL
+	 hdv/v7CBsqYsWgBokYA8ZX5Nk47aW9gZDNt73wqcLVZaaHslur+2SkON7CX1oMswn/dR9
+	 4AjWYRUd+m05f32nMReakbxdq5miUyubTq4mn0/2aGaO4Je/yXUf2/iUa/9tfekYzsuqS
+	 g/iWxFaniyyv8AXZzkT0YMTmRsSdl80+kQ4tTX6Du0VFaOhAixWVrXevgo5CrogOyMlU4
+	 nOFp3i5QeiQMe9cl1wSW2Rh4vBPUP4LCFKRjc0KLmiL4SZwkjIyb+WEdUcWFFtv2bkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pWYSJoM4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mbgR9h4+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83014606A320;
-	Wed, 18 Nov 2026 21:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A185F606A325;
+	Wed, 18 Nov 2026 21:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pWYSJoM4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7D241F000C4;
-	Wed, 18 Nov 2026 21:43:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mbgR9h4+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9FD11F000C4;
+	Wed, 18 Nov 2026 21:43:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038218;
-	bh=6GeRZv0EK2wZVroPYGrzPSN5ya2p2k7M1dWYRdXJY6Y=;
+	s=korg; t=1795038221;
+	bh=bTUR/m3emV9i82TPECL/fcAF06ds3d8z+qvc/VqHgTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pWYSJoM4OrpKCcA0PcRv78m0xHIfJZutBEdNAg4VqHi8qKc8avjfUuaAy7GAOyIqE
-	 sfaSnbZXB+ob9XBD0g53jO1z3h7jyDuBRwl6/ybU2TT7aLZlCzEttONXYZFDEq6lC+
-	 UFFBoY53bjDTL5Xww88hpM+OzXAtnW7so/e7vh8o=
+	b=mbgR9h4+0jc69IRkYhmaCD20aLcCbfoEORA1B2P6K4RCJY34c2vPiR/cRtA9GYW+E
+	 qY/lq3FBeQkzZaFXdyexiwEyBS0TKTcdtwiLBtfl5p7ICAQaeMzTux1iQtHsRkDcNk
+	 iGMmSJ/wYpaANhn0rwQ9P5V9VbgcDS+Ty/Aj3yME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weibin Liu <liuwb@xiaopeng.com>,
-	Mark Brown <broonie@kernel.org>,
+	Mark ODonovan <shiftee@posteo.net>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1667/3318] spi: cadence-xspi: reject SDMA transfers larger than the requested length
-Date: Wed, 18 Nov 2026 15:38:09 +0100
-Message-ID: <20261118150411.793039627@linuxfoundation.org>
+Subject: [PATCH 6.6 1668/3318] nvme-auth: add flag for bi-directional auth
+Date: Wed, 18 Nov 2026 15:38:10 +0100
+Message-ID: <20261118150411.827593929@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,101 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weibin Liu <liuwb@xiaopeng.com>
+From: Mark O'Donovan <shiftee@posteo.net>
 
-[ Upstream commit ea9854a169e9c1437df8829bea21c2f2e80b137c ]
+[ Upstream commit fc1e03eacac8e5ff8664ce2ebadabba8604f09f4 ]
 
-The XSPI controller reports the size of the slave-DMA transaction
-through SDMA_SIZE_REG. Both SDMA handlers take this register at face
-value and copy the reported number of bytes between the SDMA FIFO and
-the transfer buffers, without checking it against the length of the
-transfer that was actually requested.
+Introduces an explicit variable for bi-directional auth.
+The currently used variable chap->s2 is incorrectly zeroed for
+uni-directional auth. That will be fixed in the next patch so this
+needs to change to avoid sending unexpected success2 messages
 
-While cdns_xspi_adjust_mem_op_size() clamps the size of the operations
-issued by the SPI core, the device can still report a bigger SDMA size
-than what was programmed, which makes the handlers read from or write
-to memory beyond the end of the transfer buffers.
-
-Track the number of bytes requested for the current data phase in a new
-sdma_xfer_len field, set by cdns_xspi_send_stig_command() and by the
-Marvell b0 transfer path, and reject any SDMA size that exceeds it.
-
-Fixes: a16cc8077627 ("spi: cadence: add support for Cadence XSPI controller")
-Cc: stable@vger.kernel.org # 5.16+
-Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
-Link: https://patch.msgid.link/20260929081146.41041-2-liuwb@xiaopeng.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ sashal: Replaced callback-based SDMA and interrupt dispatch with existing direct function calls. ]
+Signed-off-by: Mark O'Donovan <shiftee@posteo.net>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Stable-dep-of: f9e43d924bc7 ("nvme-auth: fail when the controller does not authenticate itself")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-xspi.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/nvme/host/auth.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-cadence-xspi.c b/drivers/spi/spi-cadence-xspi.c
-index ee342501b759f..407731d20c24d 100644
---- a/drivers/spi/spi-cadence-xspi.c
-+++ b/drivers/spi/spi-cadence-xspi.c
-@@ -220,6 +220,7 @@ struct cdns_xspi_dev {
- 	int irq;
- 	int cur_cs;
- 	unsigned int sdmasize;
-+	unsigned int sdma_xfer_len;
- 
- 	struct completion cmd_complete;
- 	struct completion auto_cmd_complete;
-@@ -326,7 +327,7 @@ static int cdns_xspi_controller_init(struct cdns_xspi_dev *cdns_xspi)
- 	return 0;
- }
- 
--static void cdns_xspi_sdma_handle(struct cdns_xspi_dev *cdns_xspi)
-+static int cdns_xspi_sdma_handle(struct cdns_xspi_dev *cdns_xspi)
- {
- 	u32 sdma_size, sdma_trd_info;
- 	u8 sdma_dir;
-@@ -335,6 +336,13 @@ static void cdns_xspi_sdma_handle(struct cdns_xspi_dev *cdns_xspi)
- 	sdma_trd_info = readl(cdns_xspi->iobase + CDNS_XSPI_SDMA_TRD_INFO_REG);
- 	sdma_dir = FIELD_GET(CDNS_XSPI_SDMA_DIR, sdma_trd_info);
- 
-+	if (sdma_size > cdns_xspi->sdma_xfer_len) {
-+		dev_err(cdns_xspi->dev,
-+			"SDMA size %u exceeds the requested length %u\n",
-+			sdma_size, cdns_xspi->sdma_xfer_len);
-+		return -EINVAL;
-+	}
-+
- 	switch (sdma_dir) {
- 	case CDNS_XSPI_SDMA_DIR_READ:
- 		ioread8_rep(cdns_xspi->sdmabase,
-@@ -346,6 +354,8 @@ static void cdns_xspi_sdma_handle(struct cdns_xspi_dev *cdns_xspi)
- 			     cdns_xspi->out_buffer, sdma_size);
- 		break;
- 	}
-+
-+	return 0;
- }
- 
- static int cdns_xspi_send_stig_command(struct cdns_xspi_dev *cdns_xspi,
-@@ -391,6 +401,7 @@ static int cdns_xspi_send_stig_command(struct cdns_xspi_dev *cdns_xspi,
- 
- 		cdns_xspi->in_buffer = op->data.buf.in;
- 		cdns_xspi->out_buffer = op->data.buf.out;
-+		cdns_xspi->sdma_xfer_len = op->data.nbytes;
- 
- 		cdns_xspi_trigger_command(cdns_xspi, cmd_regs);
- 
-@@ -399,7 +410,11 @@ static int cdns_xspi_send_stig_command(struct cdns_xspi_dev *cdns_xspi,
- 			cdns_xspi_set_interrupts(cdns_xspi, false);
- 			return -EIO;
- 		}
--		cdns_xspi_sdma_handle(cdns_xspi);
-+		ret = cdns_xspi_sdma_handle(cdns_xspi);
-+		if (ret) {
-+			cdns_xspi_set_interrupts(cdns_xspi, false);
-+			return ret;
-+		}
+diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
+index 9f2a6472802e7..6903c1a4e7692 100644
+--- a/drivers/nvme/host/auth.c
++++ b/drivers/nvme/host/auth.c
+@@ -29,6 +29,7 @@ struct nvme_dhchap_queue_context {
+ 	int error;
+ 	u32 s1;
+ 	u32 s2;
++	bool bi_directional;
+ 	u16 transaction;
+ 	u8 status;
+ 	u8 dhgroup_id;
+@@ -313,6 +314,7 @@ static int nvme_auth_set_dhchap_reply_data(struct nvme_ctrl *ctrl,
+ 	data->dhvlen = cpu_to_le16(chap->host_key_len);
+ 	memcpy(data->rval, chap->response, chap->hash_len);
+ 	if (ctrl->ctrl_key) {
++		chap->bi_directional = true;
+ 		get_random_bytes(chap->c2, chap->hash_len);
+ 		data->cvalid = 1;
+ 		chap->s2 = nvme_auth_get_seqnum();
+@@ -664,6 +666,7 @@ static void nvme_auth_reset_dhchap(struct nvme_dhchap_queue_context *chap)
+ 	chap->error = 0;
+ 	chap->s1 = 0;
+ 	chap->s2 = 0;
++	chap->bi_directional = false;
+ 	chap->transaction = 0;
+ 	memset(chap->c1, 0, sizeof(chap->c1));
+ 	memset(chap->c2, 0, sizeof(chap->c2));
+@@ -826,7 +829,7 @@ static void nvme_queue_auth_work(struct work_struct *work)
+ 		goto fail2;
  	}
  
- 	wait_for_completion(&cdns_xspi->cmd_complete);
+-	if (chap->s2) {
++	if (chap->bi_directional) {
+ 		/* DH-HMAC-CHAP Step 5: send success2 */
+ 		dev_dbg(ctrl->device, "%s: qid %d send success2\n",
+ 			__func__, chap->qid);
 -- 
 2.53.0
 
