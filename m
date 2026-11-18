@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054572;
-	b=jJ5ZdZ98FM5wbo6mHZZH/MMsc+cE0qHH/I1OE7IOI+cqt2gyCQJ2NXofhc8Q0vFqQoVO
-	 aEEucnrGddUDaPGFIvUPDHHR06ITJHC/Fw8l8heWSAPzLkZtelQZAaFPJSBnb77NsYVHe
-	 WYLSOrSi8PVVzMDyc5lHACQB/tdkWa+TZf2J78cmPHx6PSYWWMDkb9MbEZLktTbk5zQo3
-	 pWkTUrnOUfhPEm2RfKHXJb8rghAUo1nNIzT030YUbVejO6GYRBR5xkjVcyg8dK/ERgKeo
-	 kZG8q13MkdGFM7drC0GoeMdusJb1xKaFq1hIwmWrmRWVO+6WeGgUVteq2ykHtbqeVDg==
+	t=1795054575;
+	b=VyLvonmwnANQ+bxkVRnckmJXh5pluaIegcymVZcrw+RhTJJqqSt6JMx3YjEBdvx+Tm3C
+	 MUvR/VLYa6szRQBoNr1kuh75Cx7+cFEWcTohCaZfaCikPjwLQCDhu8yyGspWBkoE3i3tR
+	 5vRMTxU/MFx8yG7PyhGBhmqu0z/nSpup3g4LkbQc/GFeeZDHHOeJjyXMdc1lblhBErcEG
+	 cs+ajHepB1UqIPujrn8iPLkeio+5g5wnrJO+Aa43559iOZDXgPcOGjBNhOObTLOqL8mns
+	 MLTzKDsnat25VjjYppXFp4Ff4OrRXFSOF8D5gpONywqEwPvQKJ+T4EdAcxjw7Lu6gNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054572;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054575;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ktnd0Ch5ZZ2Naz/6toMbvq7X1ESeWsmq9UVIzSllQ2Q=;
-	b=vk869nbpxOdlbjIVyvA9s3budoZ07pOaQJo/DLodWEXjX12k2aFC2aeH39YAWkeuSUlB
-	 HSD0XmMnMesZOdTqno+J6MQzoadELDuFX1JxgdnzC6DZt2132bF06+qgD/U4plLksVuXN
-	 bAzFHjhFUgkHk9LTVnD6Gi2yHPia7eAqMcoWieeDhvlkVXoh5/tPg8qG+6ScYok0MSyfh
-	 73uaWgeaCh5vGFIDEeuOxrfG7X+uudolMOhNEN1rKpdGOcrqprcMzF+ERN3PWNwAPldD9
-	 SHKQPFVujv9loOTrwB/E06DyLzjPLMqWIpSd9ZLx0PxWhVwCVlIFEOd3UfdM8+2dF+A==
+	bh=Spv5q76Qkfsnq4DvVHcJUnrB+P7dYLLTGpDBwQOgNcE=;
+	b=sicX+ZeIGNE1D23P9ut1gRPNBBn1xYfiy7BIUDFdt41Tx3QV9kbFXVPKSuo5EcaeRusH
+	 k+NPO90goF/P5HGCz+Zip7XaYfI2yelYfsDObbolOH0Eec+TVulQ2/WD3iam/HZB8tr/C
+	 8mdQ6qEWpvQ/9iFy1FkaAa3BtOsKLQcK/W+Sf+JzuPyl1vgb2wblBVCvxuYw2JA17Wcf8
+	 jzjiL0H5iuBr77vQmbnP4Msr8xe19OMdcWY64Kwa9kcJ6ZhdfeypmvYqNhEDcQQ4lkVdK
+	 3oTpJEoD105oeQVk9fmsud0ASbXBLQI/nAsbtYxBOYrfiGCCffqXOLMQ8ihSp6CvhoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1CzEEe3u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="R3de2/Lw";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54549606A320;
-	Thu, 19 Nov 2026 02:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA6C606A335;
+	Thu, 19 Nov 2026 02:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1CzEEe3u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D521F000C4;
-	Thu, 19 Nov 2026 02:16:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R3de2/Lw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9AE1F000C5;
+	Thu, 19 Nov 2026 02:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054572;
-	bh=Ktnd0Ch5ZZ2Naz/6toMbvq7X1ESeWsmq9UVIzSllQ2Q=;
+	s=korg; t=1795054574;
+	bh=Spv5q76Qkfsnq4DvVHcJUnrB+P7dYLLTGpDBwQOgNcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1CzEEe3uF0RsZeiBwRvFagUaL59ilc/cvuvWWM/OuCDZT+fJAGdfgdcbcuOLNmu2X
-	 UkK/6O2QS4JBya29obTicCa6eSPwRQz9OfL94B6XtIjVfOsx2LAMQifG9QtmqV7lWM
-	 ZAVtcd3jECY3DSWBUr7bXzMv7UED6PcpV5aYd7NU=
+	b=R3de2/Lw6dxEiVBCCD+6EoBQxO0Ll9EjMfpgJ0RghYwIvJBXZb9m4fBXn/fk6NDuP
+	 HynVynRo/LUOGNHTRtvNzRXuikCkE0boncBrxS8otSXGilxX3KVataibHBOhNdAtTz
+	 pcj4nTfO20wDIxwbHAvxNxL5zBUiEOi8Laj0DBMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Teodorescu <fane@google.com>,
-	Oren Yomtov <thenameisoren@gmail.com>,
-	Chris Mason <mason@kernel.org>,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1321/2214] KVM: x86: Unconditionally reset MMU context when emulating INIT
-Date: Wed, 18 Nov 2026 15:49:57 +0100
-Message-ID: <20261118150104.306761243@linuxfoundation.org>
+	Jan Stancek <jstancek@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	Neal Gompa <neal@gompa.dev>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 5.15 1322/2214] sign-file,extract-cert: move common SSL helper functions to a header
+Date: Wed, 18 Nov 2026 15:49:58 +0100
+Message-ID: <20261118150104.342078893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,83 +71,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Jan Stancek <jstancek@redhat.com>
 
-[ Upstream commit c7c288d178cb0b78d3464a616b16b1aa0b316049 ]
+commit 300e6d4116f956b035281ec94297dc4dc8d4e1d3 upstream.
 
-Force an MMU reset when emulating an INIT even if paging was already
-disabled, as the MMU page role includes guest_mode (L2), i.e. an INIT while
-L2 is running with CR0.PG=0 will result in KVM running L1 with a stale MMU
-context.
+Couple error handling helpers are repeated in both tools, so
+move them to a common header.
 
-Alternatively, the reset could be scoped strictly to paging being enabled
-or L2 being active, but SMM is also encoded in the page role.  Even though
-it _should_ be impossible for the vCPU to be INIT'd while SMM is active,
-there's zero value in not handling SMM.  At that point, the only scenario
-where KVM _doesn't_ need to reset the MMU context is on an INIT with the
-vCPU running in Real Mode or Unpaged Protect Mode, and while INIT in those
-modes is somewhat common, it's far from a hot path and re-initializing the
-MMU is not expensive, especially when the role isn't changing (KVM elides
-most of the re-configuration in that case).
-
-Note, like the Fixes commit, this bug only affects nested SVM as INIT is an
-unconditional intercept on VMX, i.e. it's impossible to emulate INIT while
-L2 is active.
-
-Temporarily keep the guest TLB flush when CR0.PG is being cleared even
-though it is fully redundant with the flush that is emitted on all INIT
-events (KVM itself only does RESET when a vCPU is being created, i.e. when
-CR0.PG must be '0').
-
-Fixes: ed129ec9057f ("KVM: x86: forcibly leave nested mode on vCPU reset")
-Reported-by: Stefan Teodorescu <fane@google.com>
-Reported-by: Oren Yomtov <thenameisoren@gmail.com>
-Reported-by: Chris Mason <mason@kernel.org>
-Cc: stable@vger.kernel.org
-Cc: Yosry Ahmed <yosry@kernel.org>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20261022015407.279870-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-[ sashal: conflict in kvm_vcpu_reset() resolved by Sean, no prerequisites backported ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jan Stancek <jstancek@redhat.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[luca.weiss@fairphone.com: Backport to 5.15]
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ MAINTAINERS            |    1 +
+ scripts/extract-cert.c |   37 ++-----------------------------------
+ scripts/sign-file.c    |   37 ++-----------------------------------
+ scripts/ssl-common.h   |   39 +++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 44 insertions(+), 70 deletions(-)
 
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 34ca96e302c38..135073c128595 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -11374,15 +11374,19 @@ void kvm_vcpu_reset(struct kvm_vcpu *vcpu, bool init_event)
- 	static_call(kvm_x86_update_exception_bitmap)(vcpu);
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4347,6 +4347,7 @@ F:	Documentation/admin-guide/module-sign
+ F:	certs/
+ F:	scripts/extract-cert.c
+ F:	scripts/sign-file.c
++F:	scripts/ssl-common.h
  
- 	/*
--	 * Reset the MMU context if paging was enabled prior to INIT (which is
--	 * implied if CR0.PG=1 as CR0 will be '0' prior to RESET).  Unlike the
--	 * standard CR0/CR4/EFER modification paths, only CR0.PG needs to be
--	 * checked because it is unconditionally cleared on INIT and all other
--	 * paging related bits are ignored if paging is disabled, i.e. CR0.WP,
--	 * CR4, and EFER changes are all irrelevant if CR0.PG was '0'.
-+	 * Unconditionally reset the MMU, even though super strictly speaking,
-+	 * a MMU reset is only necessary if and only one of the page role bits
-+	 * is changing.  All of the CR0/CR4/EFER bits effectively get covered
-+	 * by checking CR0.PG=1, as CR0.WP and the paging-related bits in CR4
-+	 * and EFER are irrelevant if CR0.PG was '0'.  Subtly, if the vCPU was
-+	 * in guest mode (L2) or SMM (although emulating INIT in SMM _should_
-+	 * be impossible), an MMU reset is also necessary as "guest mode" and
-+	 * "smm" are both encoded in the shadow page role.  As a result, the
-+	 * only scenarios where an MMU reset is *not* needed is if the vCPU is
-+	 * in Real Mode or Unpaged Protected Mode, and micro-optimizing those
-+	 * paths are not worth the risk of running with a stale MMU context.
- 	 */
--	if (old_cr0 & X86_CR0_PG)
--		kvm_mmu_reset_context(vcpu);
-+	kvm_mmu_reset_context(vcpu);
+ CFAG12864B LCD DRIVER
+ M:	Miguel Ojeda <ojeda@kernel.org>
+--- a/scripts/extract-cert.c
++++ b/scripts/extract-cert.c
+@@ -23,6 +23,8 @@
+ #include <openssl/err.h>
+ #include <openssl/engine.h>
  
- 	/*
- 	 * Intel's SDM states that all TLB entries are flushed on INIT.  AMD's
--- 
-2.53.0
-
++#include "ssl-common.h"
++
+ /*
+  * OpenSSL 3.0 deprecates the OpenSSL's ENGINE API.
+  *
+@@ -40,41 +42,6 @@ void format(void)
+ 	exit(2);
+ }
+ 
+-static void display_openssl_errors(int l)
+-{
+-	const char *file;
+-	char buf[120];
+-	int e, line;
+-
+-	if (ERR_peek_error() == 0)
+-		return;
+-	fprintf(stderr, "At main.c:%d:\n", l);
+-
+-	while ((e = ERR_get_error_line(&file, &line))) {
+-		ERR_error_string(e, buf);
+-		fprintf(stderr, "- SSL %s: %s:%d\n", buf, file, line);
+-	}
+-}
+-
+-static void drain_openssl_errors(void)
+-{
+-	const char *file;
+-	int line;
+-
+-	if (ERR_peek_error() == 0)
+-		return;
+-	while (ERR_get_error_line(&file, &line)) {}
+-}
+-
+-#define ERR(cond, fmt, ...)				\
+-	do {						\
+-		bool __cond = (cond);			\
+-		display_openssl_errors(__LINE__);	\
+-		if (__cond) {				\
+-			err(1, fmt, ## __VA_ARGS__);	\
+-		}					\
+-	} while(0)
+-
+ static const char *key_pass;
+ static BIO *wb;
+ static char *cert_dst;
+--- a/scripts/sign-file.c
++++ b/scripts/sign-file.c
+@@ -29,6 +29,8 @@
+ #include <openssl/err.h>
+ #include <openssl/engine.h>
+ 
++#include "ssl-common.h"
++
+ /*
+  * OpenSSL 3.0 deprecates the OpenSSL's ENGINE API.
+  *
+@@ -83,41 +85,6 @@ void format(void)
+ 	exit(2);
+ }
+ 
+-static void display_openssl_errors(int l)
+-{
+-	const char *file;
+-	char buf[120];
+-	int e, line;
+-
+-	if (ERR_peek_error() == 0)
+-		return;
+-	fprintf(stderr, "At main.c:%d:\n", l);
+-
+-	while ((e = ERR_get_error_line(&file, &line))) {
+-		ERR_error_string(e, buf);
+-		fprintf(stderr, "- SSL %s: %s:%d\n", buf, file, line);
+-	}
+-}
+-
+-static void drain_openssl_errors(void)
+-{
+-	const char *file;
+-	int line;
+-
+-	if (ERR_peek_error() == 0)
+-		return;
+-	while (ERR_get_error_line(&file, &line)) {}
+-}
+-
+-#define ERR(cond, fmt, ...)				\
+-	do {						\
+-		bool __cond = (cond);			\
+-		display_openssl_errors(__LINE__);	\
+-		if (__cond) {				\
+-			err(1, fmt, ## __VA_ARGS__);	\
+-		}					\
+-	} while(0)
+-
+ static const char *key_pass;
+ 
+ static int pem_pw_cb(char *buf, int len, int w, void *v)
+--- /dev/null
++++ b/scripts/ssl-common.h
+@@ -0,0 +1,39 @@
++/* SPDX-License-Identifier: LGPL-2.1+ */
++/*
++ * SSL helper functions shared by sign-file and extract-cert.
++ */
++
++static void display_openssl_errors(int l)
++{
++	const char *file;
++	char buf[120];
++	int e, line;
++
++	if (ERR_peek_error() == 0)
++		return;
++	fprintf(stderr, "At main.c:%d:\n", l);
++
++	while ((e = ERR_get_error_line(&file, &line))) {
++		ERR_error_string(e, buf);
++		fprintf(stderr, "- SSL %s: %s:%d\n", buf, file, line);
++	}
++}
++
++static void drain_openssl_errors(void)
++{
++	const char *file;
++	int line;
++
++	if (ERR_peek_error() == 0)
++		return;
++	while (ERR_get_error_line(&file, &line)) {}
++}
++
++#define ERR(cond, fmt, ...)				\
++	do {						\
++		bool __cond = (cond);			\
++		display_openssl_errors(__LINE__);	\
++		if (__cond) {				\
++			errx(1, fmt, ## __VA_ARGS__);	\
++		}					\
++	} while (0)
 
 
