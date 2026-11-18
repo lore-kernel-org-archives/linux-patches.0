@@ -1,60 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059124;
-	b=DK3EyEO6TVNw+NPj6MoJSC0JI7AI57JvZ2Ke6Is1ZTcWhER/1F9+3JcgDtSpwxFddnAV
-	 D4+1K0waAqytTFGmwtR3xtg1S6feXuG0KxEmd5Y3+I1n4JT729ZZ83Qcd1OA2SN6Og7Aj
-	 ZM2LEw6MK6tnVMx8647UlAYkI/70m7XmNhUVxMH/28cuIaukhh+fE1eXHaobo0jndRXxF
-	 vm5lamrNSLuTFlMyX354fecWbsTB6+r8DmVxXPR75iMxRpSndfr5UzBWpae4kZFF15+8K
-	 xcRjhxeZXEVCDJfuyKUyxzMayguRhrqhrrHJC/FneIXcCSH87ZKQLYrWMntq648bY9g==
+	t=1795059126;
+	b=LSZxwmDgd11I/ewQDRdv92caIXJxI0m0QQC8f/Gw0IuQ+e6ExnizNg66vxAXEx8r0moQ
+	 aolYe80oRN23i9Jfjo8HISi65jUgQQGsXy0Y1lnuQP3CgaN6CRNSA8DJTmmGkbKM/I3rK
+	 r6Y+WXMhgB0g50PBPf3Ot0tarROY1jkOVjIBGMO2r7V3u8nkueuiPmh1T7iHDeeQ3hXU4
+	 XUjis2pjMtrEuIKme2Bv6lgumhuWGJNwUqOmlDVOpXFYmafIfgT0+MOUOJak2GGYut1mW
+	 lCtKj/DjIuU4nGLe9s5OmSD3TGdw4cqarF0PKhWoHGK9MTL/mbk0/7mLibHTtw93fIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059124;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059126;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gW4v3kQkojfA1TDo8GuQAjm9gAuiS1xCfVTOWA86bhY=;
-	b=3Nsf6I5fWi6rNfHF02WoKkxFK6jzYf0YPLtiHxQy+XWFGxPYDMfYjwJ1gURlff3dtWjC
-	 NgdD1JPaGKngojYyNFrdEH7Dg/8JvqEI/GW1lNhfJXlaX1Flvegc8ulgQ+sEfwAJkiviN
-	 BLjINWxTmm7gMplPSHvNoc2O9gDT19IyTZaHaJs8Q/XnGXmomEtpvrEIVpqcyuMS6x0WX
-	 iHz5NY++rL34SaEkPAO43C2pA0q4sXp2R+qe4owDI90l1+NqTFWne7J6g7BOf0ttJmTTw
-	 JBwkBqSL/t0dABSE24A5NLVc7w75HAskkB6uA1ni26YxyHVlgWEJjs4iWVFas1fOqAw==
+	bh=RCXCp9Et3LlDtW8arrNnnD26pJYVnGEALXAf5fZH4RY=;
+	b=ZGUvQVNVjbvQPXg+qXw400xGFPr7bW5Oz+WZ+ad95IeG1jzaIjo8Eyd4xYwxRc8KN99m
+	 hICSiAT3VFEKeQoGSUX7SQ5qeSfmvVoDb5+Nx4lceC6rIKInRSPouMiwYQ+rjVvxQll7o
+	 dw4CxiY5VZSPkym7+hLgyS6BfnMrysXxcZUCUIuJMFRev96D+oB80O4mWGug6xfOk2oPX
+	 xQ7+01r/nrIM/3EjFca1yJxNilQHZfznxuRQUCbQNjjEmvedhmUSCGfpu2FxmuevFfhUC
+	 4YPvsar63aoIPRWLH51OKv+dwWun85+BgJE/y6lh9HXV0adJnIMKOH2/aHJd/Jac2Bg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iG7OVceZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m5ar4yOU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286D2606A333;
-	Thu, 19 Nov 2026 03:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E20606A330;
+	Thu, 19 Nov 2026 03:32:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iG7OVceZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54901F000C4;
-	Thu, 19 Nov 2026 03:32:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m5ar4yOU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01DC1F000C4;
+	Thu, 19 Nov 2026 03:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059123;
-	bh=gW4v3kQkojfA1TDo8GuQAjm9gAuiS1xCfVTOWA86bhY=;
+	s=korg; t=1795059126;
+	bh=RCXCp9Et3LlDtW8arrNnnD26pJYVnGEALXAf5fZH4RY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iG7OVceZQMNpcP+KJU87+GTVgZQy7qtjH0I+7j+/iF2+Q0i2zoIIlF+SHIidHKWj0
-	 TIjF+xr6U8C/SBDGuabj47BNFUjHHtLIHtq5zeE9HosKwFZbaE+/Tp6usJ8QBvUpvu
-	 f6xhdlWFChfxCxTfD0r9XqpX5fnVWtlIE3qiPk6U=
+	b=m5ar4yOUT6L0kS/0OlSdyY2+yz5nKFhtM0Gb832PmetCAYK9vc4c+fnzrgn9vFuPr
+	 9h0BqMZtgBAtEkwiDVoF/Zmldu0HgkXxxtMHqUkGpqQBWSZ5xRjs76UIaEgFOTBdQo
+	 SyTyEpK5D2FHW3KaoPv65yC3A9vjCQj7vgWTMmXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Qi Zheng <qi.zheng@linux.dev>,
+	Chris Mason <mason@kernel.org>,
 	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Dev Jain <dev.jain@arm.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Pedro Falcato <pfalcato@suse.de>,
-	SJ Park <sj@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	Muhammad Usama Anjum <usama.anjum@arm.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0730/1848] mm/mmu_gather: fix flushing ranges with 4 GiB or larger
-Date: Wed, 18 Nov 2026 15:46:08 +0100
-Message-ID: <20261118145946.685076765@linuxfoundation.org>
+Subject: [PATCH 5.10 0731/1848] mm/mmu_notifier: set ->mm only after mmgrab()
+Date: Wed, 18 Nov 2026 15:46:09 +0100
+Message-ID: <20261118145946.746464506@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -76,60 +71,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 64ae7959a1df8af8eec504e31df2ec9670424a4e ]
+[ Upstream commit 5ad9e4b0f1104f5dbfb41125c34bb30ea6dc7a94 ]
 
-__tlb_adjust_range() takes the size of the range which has to be flushed
-as an unsigned int. Its callers, tlb_flush_{pte,pmd,pud,p4d}_range(), get
-and pass an unsigned long. Consequently, a range that is 4 GiB or larger
-gets truncated, possibly to 0.
+Radeon uses a non-NULL notifier->mm to decide whether to call
+mmu_interval_notifier_remove() when freeing a buffer object.
+__mmu_interval_notifier_insert() sets ->mm before validating the range,
+so a wrapping userptr range can leave ->mm set after insertion fails.
+Cleanup then tries to remove an unregistered notifier for which no mm
+reference was acquired.
 
-On arm64 with hugetlb, a 64k kernel can have 16 GiB hugetlb folios
-mapped contiguously at the PMD level and flush them when unmapping, and a
-16k kernel can flush 64 GiB PUDs through tlb_unshare_pmd_ptdesc(). So
-at least these two scenarios are affected.
+Set ->mm only after mmgrab(), once insertion can no longer fail. While
+we could fix radeon's code instead, setting ->mm on success only makes
+the code more robust.
 
-Fix it by flushing the proper range instead of the truncated one by
-properly using "unsigned long" for range_size.
+Fix generated by an LLM and sent by Chris Mason in private.
 
-Fix generated by an LLM and sent by Josef Bacik in private.
-
-Fixes: b528e4b6405b ("mm/hugetlb: add tlb_remove_hugetlb_entry for handling hugetlb pages")
-Fixes: 8ce720d5bd91 ("mm/hugetlb: fix excessive IPI broadcasts when unsharing PMD tables using mmu_gather")
+Fixes: 3506ff69c3ec ("drm/radeon: use mmu_interval_notifier_insert")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-[ david: use two-tab indent, simplify description ]
-Reviewed-by: Qi Zheng <qi.zheng@linux.dev>
+Signed-off-by: Chris Mason <mason@kernel.org>
+[ david: simplify description ]
 Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
 Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: SJ Park <sj@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-27-d6437171ecc3@kernel.org
+Link: https://patch.msgid.link/20261031-fixes_core-v3-29-d6437171ecc3@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/tlb.h | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ mm/mmu_notifier.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/asm-generic/tlb.h b/include/asm-generic/tlb.h
-index a80accdbcd255..b811f05d1e625 100644
---- a/include/asm-generic/tlb.h
-+++ b/include/asm-generic/tlb.h
-@@ -322,8 +322,7 @@ struct mmu_gather {
- void tlb_flush_mmu(struct mmu_gather *tlb);
- 
- static inline void __tlb_adjust_range(struct mmu_gather *tlb,
--				      unsigned long address,
--				      unsigned int range_size)
-+		unsigned long address, unsigned long range_size)
+diff --git a/mm/mmu_notifier.c b/mm/mmu_notifier.c
+index 9165ca619c8cf..b66b9ae21538f 100644
+--- a/mm/mmu_notifier.c
++++ b/mm/mmu_notifier.c
+@@ -922,7 +922,6 @@ static int __mmu_interval_notifier_insert(
+ 	struct mmu_notifier_subscriptions *subscriptions, unsigned long start,
+ 	unsigned long length, const struct mmu_interval_notifier_ops *ops)
  {
- 	tlb->start = min(tlb->start, address);
- 	tlb->end = max(tlb->end, address + range_size);
+-	interval_sub->mm = mm;
+ 	interval_sub->ops = ops;
+ 	RB_CLEAR_NODE(&interval_sub->interval_tree.rb);
+ 	interval_sub->interval_tree.start = start;
+@@ -939,8 +938,12 @@ static int __mmu_interval_notifier_insert(
+ 	if (WARN_ON(atomic_read(&mm->mm_users) <= 0))
+ 		return -EINVAL;
+ 
+-	/* pairs with mmdrop in mmu_interval_notifier_remove() */
++	/*
++	 * Pairs with mmdrop in mmu_interval_notifier_remove(). Drivers take a
++	 * non-NULL ->mm for "registered", so set it only with the reference.
++	 */
+ 	mmgrab(mm);
++	interval_sub->mm = mm;
+ 
+ 	/*
+ 	 * If some invalidate_range_start/end region is going on in parallel
 -- 
 2.53.0
 
