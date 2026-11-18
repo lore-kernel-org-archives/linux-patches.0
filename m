@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049812;
-	b=0/I71iFw/2yA3P0OoUXMY3dmzsKXQCXWChinJcBjUD+PrN4Qf+DuR2HHuabcHtaeGWwi
-	 jgy2kL/aWk7EG6aOXExX4FnzCuhLeIehPZEwIG6CrH+ADPrkn4LftL1vXPfpT4TaLZUiO
-	 06V0l+C2+opiLMuMc/Egvot86vaurOv1p+XnLps1rDDIR0zLW9APzB8neAXqhaBConIag
-	 zhXDjZbx3Urxz5mQePDLoism8xMgdyafho9ujn1mphdu3ElpMNSVdoQ3PVbB4zpJV8f+9
-	 ORHr3jRXEpzEMAxG7OZG2yfVRhSv+RPBBcqa1pKOjLABnKgJa3bIW61ATxEZie97GEw==
+	t=1795049815;
+	b=unb0XufexOmu2B3txLOK8UpIaRZj1X+WvdE5d/vIqHlQx+4vxe6rxSgrK7XpoMpJXD4e
+	 vrydyWyIF4iqp6UIyVlsEVfrrd0jWHasdzzIbejACmCJRNwl9zH0LHHCoh3+q3ZNi4Zjv
+	 k+iAgmhmyW+WnoA2Zf5pW46K0jKGHsDCwkqhJVUcCahrrj/KUNOBa37uFZdc0zFS37Lng
+	 9CULq+88VUXnFOVj6eZx1hhWxTiV5HOukyI9TGJK+G15OBYGbGbI6Wvh8wWGyj0RJH5Eh
+	 KpQz/miP3V24WQ1MYWAvZMYtCf4/iMux7AgonvPRsYnqVPfGCvPQlCCKMvgVzE9Is3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049812;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049815;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B0NEcDQMHReiH+GB8lRpnUlBEi+/wzLrinTRpDY0anY=;
-	b=eo+KIj2cD3MTw6eK6Pe8WrrCfw6Ar6JzDYfAIxZ6NmP0Zj5fVOXEjCdj7nVMdktkwYNz
-	 6PnPIY/CCuMrlqQ+pShef+bvABhyIkCmSOqTTlsLsiyRrCB++Z7U3I14xN0bOLKaGo/D8
-	 jBfuzhIwonXm6m+Ehq8z0uH6unDnXwnCGu6hS4wmAjBOju+VOf4CitFoYpzW3qlPCbGBJ
-	 6ETB4oQT+L3v9YAMK57wan50DvbQBOcq/xpe3fmQC2XRuM/t8+UgIePDcZhpfciZdpPfM
-	 3+WudRKXLee5dnx6iXguZjbL+vO6iyYnfL+57z3EMSTbArDM+9xiYiH0UcWECT5OiXg==
+	bh=VwvU9EhRWh4RNo1Zrkh7LCoovmOmoqkO95GkpKC6P0s=;
+	b=pBFEyhTt4GgebovIcMPzWJUwMJWdcKCaT+PeAEdHfY0ktXnEUvvrLpiC5aExvNHAfZLo
+	 KFvN8rmDNmdLPJda/c0XUwDRG/namWqKB1z+zgTYnLAQaeGZu2DmWobCRQZmOTYXAGO5B
+	 nOFoQAZOqb6e1ye20wlgOTHAOQa3ixDZ+vzKnNmMvrFH2iIuPf43cFN65ZvV6Cqr7o9IW
+	 WRAMet4OQFmyLrrhuwpIIcphpHQIuRVh31AHtrOcX7JPE1LUxTFVBP2M+UMA1/a2jjcGm
+	 dcOec/VTCD4TBpMpmL0VBJbJ+C+c0e7vA5bEQ/BBiZTydmwxjaY0sTayUbjdlS5r9Sg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dj0pz1E5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cTHPJ24x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2ADB606A31C;
-	Thu, 19 Nov 2026 00:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93483606A31C;
+	Thu, 19 Nov 2026 00:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dj0pz1E5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBDA1F000C4;
-	Thu, 19 Nov 2026 00:56:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cTHPJ24x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5CA61F000C4;
+	Thu, 19 Nov 2026 00:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049812;
-	bh=B0NEcDQMHReiH+GB8lRpnUlBEi+/wzLrinTRpDY0anY=;
+	s=korg; t=1795049815;
+	bh=VwvU9EhRWh4RNo1Zrkh7LCoovmOmoqkO95GkpKC6P0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dj0pz1E5PrA/E4OqPfK9Yoi2wc5l61bw7DEcz0pQGpwpbAl+sQt2BmgIZ/2WHH0g6
-	 MfLpkJ/FUM4eGZGrL/nDqIzVxZ0uGHEx+9RzIUf2XUr1OkRhva9mGBbbBq0IpzoOc8
-	 7ZAYRIH6ZxG/0U1xgH8D8xarPEwQdxPnkyl9bl6Q=
+	b=cTHPJ24xQZWa/mhvfWMzt5QoMbojugWpvRVqlyZbZskv9fTTroVYSo2CA3hF4PbLC
+	 2ldc11v+POlM4kLjRNu1xPkCZ16kvpPRHpFv7uiUIeBjH4sFgF9f5TvgENnpnMZvCk
+	 9DFNCxJqRAl0zNmEB4+iJPveU8WGkwpfpsaSq8I4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Russell King <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2484/2857] ARM: 9492/1: alignment: fix LSR #32 and ASR #32 offset decoding
-Date: Wed, 18 Nov 2026 15:58:38 +0100
-Message-ID: <20261118150331.003167457@linuxfoundation.org>
+Subject: [PATCH 6.1 2485/2857] ARM: 9519/1: dma-mapping: Fix wrong free function in __iommu_alloc_simple() error path
+Date: Wed, 18 Nov 2026 15:58:39 +0100
+Message-ID: <20261118150331.039712694@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,70 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 9f878a6c2207f0c12f34a715a6a05cfc95f47460 ]
+[ Upstream commit 74f79365839720bdb0c6bb4fe85c5b2a929ff5d1 ]
 
-The register-offset form of LDR/STR may apply a shift to Rm.  Per
-DecodeImmShift() (ARM ARM DDI0406C section A8.4.3, "Pseudocode details
-of instruction-specified shifts and rotates"), an imm5 of 0 encodes a
-shift of 32 for LSR and ASR; only LSL treats 0 as "no shift", and ROR
-with 0 encodes RRX.
+In __iommu_alloc_simple(), when IOMMU mapping creation fails, the error
+path unconditionally called __free_from_pool() regardless of the
+allocation path taken.
 
-do_alignment() special-cases RRX but not LSR or ASR, and IS_SHIFT() does
-not filter these encodings out, so the block is entered with
-shiftval == 0 and the offset becomes Rm instead of 0 (LSR #32) or the
-replicated sign of Rm (ASR #32).
+For the COHERENT case, memory is allocated via __alloc_simple_buffer(),
+which does not use the atomic pool. Calling __free_from_pool() on such
+memory silently returns without freeing, causing a page memory leak.
 
-do_alignment_finish_ldst() applies the offset to the base-register
-writeback of the post-indexed form, so the emulated access itself uses
-the correct faulting address but Rn is left holding the wrong value.
+Fix this by matching the free function to the allocation path:
+- COHERENT: use __dma_free_buffer(virt_to_page(addr), size)
+- non-COHERENT: use __free_from_pool(addr, size)
 
-Reproduced on ARM926EJ-S (versatile_defconfig, CONFIG_ALIGNMENT_TRAP=y,
-gcc 13.3.0) with a misaligned base and Rm = 0x1000:
-
-  ldr r0, [r1], r2, lsr #32   Rn advanced by 0x1000, must be unchanged
-  ldr r0, [r1], r2, asr #32   Rn advanced by 0x1000, must be unchanged
-  ldr r0, [r1], r2, asr #32   with Rm negative, Rn must decrease by 1
-
-All three are correct with the patch applied, while a lsr #1 control
-case is emulated correctly both before and after.
-
-Assisted-by: Claude:claude-fable-5
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Fixes: 565068221b905 ("ARM: 8561/4: dma-mapping: Fix the coherent case when iommu is used")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/alignment.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/arm/mm/dma-mapping.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mm/alignment.c b/arch/arm/mm/alignment.c
-index 41f1497e2fd28..291ba517f66df 100644
---- a/arch/arm/mm/alignment.c
-+++ b/arch/arm/mm/alignment.c
-@@ -915,11 +915,17 @@ do_alignment(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- 				break;
+diff --git a/arch/arm/mm/dma-mapping.c b/arch/arm/mm/dma-mapping.c
+index d7909091cf977..39463fdc82679 100644
+--- a/arch/arm/mm/dma-mapping.c
++++ b/arch/arm/mm/dma-mapping.c
+@@ -1064,7 +1064,10 @@ static void *__iommu_alloc_simple(struct device *dev, size_t size, gfp_t gfp,
+ 	return addr;
  
- 			case SHIFT_LSR:
--				offset.un >>= shiftval;
-+				if (shiftval == 0)
-+					offset.un = 0;
-+				else
-+					offset.un >>= shiftval;
- 				break;
+ err_mapping:
+-	__free_from_pool(addr, size);
++	if (coherent_flag == COHERENT)
++		__dma_free_buffer(virt_to_page(addr), size);
++	else
++		__free_from_pool(addr, size);
+ 	return NULL;
+ }
  
- 			case SHIFT_ASR:
--				offset.sn >>= shiftval;
-+				if (shiftval == 0)
-+					offset.sn >>= 31;
-+				else
-+					offset.sn >>= shiftval;
- 				break;
- 
- 			case SHIFT_RORRRX:
 -- 
 2.53.0
 
