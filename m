@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027606;
-	b=of6gA6xatb+terQey4A4pNu9c21txq83kmJsfZo8O7rU5BymP63r+no1my+tT29Gq++W
-	 Zdbr4kTmYZSeGsEs12BQvuw6lCKlt8phzIsNNPTX8aLPuGxiRD22SoDuuzDKk6B8uFJn3
-	 EggOZz+yLCnlqbcFJiureruiUxIta6lQEqzX31WAeHn6gpMIYiZeTcGqh800kmso4mEWz
-	 gaXfHzoOGYFhAxAM//2Dr3ZXiYFwfzzeSohSOZfe4Qu6K7c1T148m5gtXmSY5rbALgm7D
-	 YWHQuuoyVsyJXZpd450WYBMiGMsZH71scNhN+PGioBq0wBnRv4XArATmxM0DfJRT5iQ==
+	t=1795027609;
+	b=J4ckMV/SF9Zf80U8BtgoetvKi3yHCiyWFtrFiFf64MC2libSNUYy+WuRZSd8OOfxpr59
+	 SeQIIGtXLN3uN2TgQzbznmcunAx2arSiCSADuhUc1xgirwQqWAGWSfdbSZ14y+U5T8mqf
+	 X6Uvouet/jkej1AujU9vy//ZBF6mUscM+QzULQKycnnhBoEPBtmc6JcQlcEk7yY9J8Gy9
+	 LP4hNrRszMLvrOwXPjI/vCnH+iMSUWP/3iHxy2kOaU8HfmD7ZDSffmjOfo8ixsCZc6Cd1
+	 pGTTRATUoPN1RmyINqSmXUziv6zY6b53fdG2HyQyioqS6spRuvgYzZ2uDX0GUg1YlZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027606;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027609;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O1WDfGMb1YmhkOYfg7duM1zk2ysQedFDH353Cxy87TM=;
-	b=GJ3ujLAUgddVa+Z8zQEpEiM4wxLK5sAFJUgzOhHjNSPIvcB9vt7dLEx/uvr8VvIDgtIb
-	 LhCvEOMPGOS6p5Bk+ZhPd01Qk181oRY98Td9FT1JMxjApwG1YNVtVAD4IRbZ8IgavdD67
-	 uzUIBL6N20SqjcmdBk4D/pttTwNfHoNhGGwI7yXl++PS0DaQXJsuoD6cZRyy2u3Z4MTCe
-	 5C8oyqdER8NOErzpjNZM9dJ3cHNUnZ9SGiUYXkMlr1QFT7KZlp2tXC2h2hEhnxcUA7EeL
-	 Cb8Xgx8rnEEcEYrAqDkxzzlDe+mR53PxcIOg15jVoRcD6GKC4kST2/qRibjJXV37OUQ==
+	bh=ItGyPUEGqvi4NwiYltoUPGGPccYDv2to4qNBxh+fZXU=;
+	b=aafS8NhmRwOh8Q/erzik+r61k57xNw9TyeyG/mzm/L+fxUoGQr11ed/8hTG8N3JVE/cc
+	 b03d5+i0w96IcddmqX8lolV7u1hRdFJPgBCrZ2DKTfSn7LdjogG9elPORcdhbz8jhnUOC
+	 lMl9CkEIL3l+N86mpAwcmYaebWqXIM9uZevspL3KW7N3uyzXwL06evov/3pIzse7d3Cq+
+	 TmAzVe6j9QhuE6AucauMz7TP86ipP0RdHfaVjTZc9raTtARqiY4Ea/wJbkaL2zBHFKjEP
+	 D2WeZu39qZOHkeCVnIhFebHjMAbwAK+RjaIEL+y78tYqhw1Ig47JkGjIL6v2cOn+qGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1mergMXS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RR8zVunJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA396606A331;
-	Wed, 18 Nov 2026 18:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A069D606A31C;
+	Wed, 18 Nov 2026 18:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1mergMXS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375531F000C4;
-	Wed, 18 Nov 2026 18:46:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RR8zVunJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0157C1F000C4;
+	Wed, 18 Nov 2026 18:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027606;
-	bh=O1WDfGMb1YmhkOYfg7duM1zk2ysQedFDH353Cxy87TM=;
+	s=korg; t=1795027609;
+	bh=ItGyPUEGqvi4NwiYltoUPGGPccYDv2to4qNBxh+fZXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1mergMXSHO66oDdB7HP1J1TwQZcVOgZyWo4mxpNp65EUwTfttRlpVqSItwDPsffuS
-	 3p+AhczPG5ujC5bLLYXb+kbeqtJGihBOzzCqII5TQgyYZzuOnNDrb2qIcgH9Q0vWek
-	 1ZJbWDF99K8JN//I+G310oy4r3Loii2uw9pexRic=
+	b=RR8zVunJpNt3dGY10hLGhH2uVPGH+2tvkQFmXgrEkGhjaVni76iGIen9p1wvknguw
+	 4a7F4sef6KP//jv2X+SZxtSSKPs5N/Dwu4wma1eXjNoKTIYzTsthULbbvR1ufGPDJx
+	 tomDaKZtMtUlQ9JIw/Cc4vuf7G/5l849EsPY2mfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1849/2151] ksmbd: return requested create allocation size
-Date: Wed, 18 Nov 2026 15:59:44 +0100
-Message-ID: <20261118150229.154139117@linuxfoundation.org>
+Subject: [PATCH 6.18 1850/2151] ksmbd: stabilize allocation size after buffered writes
+Date: Wed, 18 Nov 2026 15:59:45 +0100
+Message-ID: <20261118150229.188863190@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,155 +69,133 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 3b41d8b05dc89b1f3c53ca7f1a084c7c93712ebf ]
+[ Upstream commit 84c41b731b019f1e5a97c21ac1a4a4c63b6be38f ]
 
-smb2.create.blob sends an SMB2_CREATE_ALLOCATION_SIZE create context with
-a 1MiB allocation size and expects the create response AllocationSize field
-to match the requested size.  smb2.create.open additionally compares the
-AllocationSize returned in the CREATE response with the AllocationSize
-returned by FILE_ALL_INFORMATION on the same handle.
+Ordinary opens initialize their allocation size from stat.blocks.
+Buffered writes can leave delayed allocation pending, so separate handles
+can cache different block counts for the same file.
 
-ksmbd applies the allocation with fallocate(), but then fills both the
-create response and handle-based information from stat.blocks << 9.  On
-filesystems such as ext4 this can include filesystem allocation rounding
-and metadata effects, causing a response larger than the SMB2 allocation
-size context and a disagreement between the two queries.
+This makes generic/568 fail when a zero write used for fallocate
+emulation is followed by an overwrite of the same range. The first query
+can report the pre-writeback block count, while the second query reports
+the block count after delayed allocation is completed.
 
-Remember the requested allocation size while processing the create context,
-store the reported allocation size in struct ksmbd_file, and use it for
-both the create response and handle-based allocation size responses. Update
-the stored value when FILE_ALLOCATION_INFORMATION changes it, and fall back
-to stat.blocks << 9 when no allocation size context was provided.
+Complete writeback and refresh the cached block count before returning
+allocation information for ordinary opens. Track client-specified
+allocation sizes separately so CREATE allocation contexts and
+FILE_ALLOCATION_INFORMATION continue to return the requested value.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
 Stable-dep-of: aad7d86a6651 ("ksmbd: round SetAllocation to the advertised allocation unit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c   | 34 +++++++++++++++++++++++-----------
+ fs/smb/server/smb2pdu.c   | 38 ++++++++++++++++++++++++++++++--------
  fs/smb/server/vfs_cache.h |  1 +
- 2 files changed, 24 insertions(+), 11 deletions(-)
+ 2 files changed, 31 insertions(+), 8 deletions(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 0b8fc36bd559c..9a63dd0df84d5 100644
+index 9a63dd0df84d5..e84f0cad2ec6a 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -2999,7 +2999,7 @@ int smb2_open(struct ksmbd_work *work)
- 	char *stream_name = NULL;
- 	bool file_present = false, created = false, already_permitted = false;
- 	int share_ret, need_truncate = 0;
--	u64 time;
-+	u64 time, alloc_size = 0;
- 	umode_t posix_mode = 0;
- 	__le32 daccess, maximal_access = 0;
- 	int iov_len = 0;
-@@ -3679,7 +3679,6 @@ int smb2_open(struct ksmbd_work *work)
- 			rc = PTR_ERR(az_req);
- 			goto err_out1;
- 		} else if (az_req) {
--			loff_t alloc_size;
- 			int err;
+@@ -3688,6 +3688,7 @@ int smb2_open(struct ksmbd_work *work)
+ 				goto err_out1;
+ 			}
+ 			alloc_size = le64_to_cpu(az_req->AllocationSize);
++			fp->allocation_size_set = true;
+ 			ksmbd_debug(SMB,
+ 				    "request smb2 create allocate size : %llu\n",
+ 				    alloc_size);
+@@ -5077,6 +5078,30 @@ static int get_file_basic_info(struct smb2_query_info_rsp *rsp,
+ 	return 0;
+ }
  
- 			if (le16_to_cpu(az_req->ccontext.DataOffset) +
-@@ -3738,6 +3737,8 @@ int smb2_open(struct ksmbd_work *work)
- 	else
- 		fp->create_time = ksmbd_UnixTimeToNT(stat.ctime);
- 	fp->change_time = ksmbd_UnixTimeToNT(stat.ctime);
-+	fp->allocation_size = S_ISDIR(stat.mode) ? 0 :
-+		(alloc_size ?: stat.blocks << 9);
- 	if (req->FileAttributes || fp->f_ci->m_fattr == 0)
- 		fp->f_ci->m_fattr =
- 			cpu_to_le32(smb2_get_dos_mode(&stat, le32_to_cpu(req->FileAttributes)));
-@@ -3788,8 +3789,19 @@ int smb2_open(struct ksmbd_work *work)
- 	time = ksmbd_UnixTimeToNT(stat.mtime);
- 	rsp->LastWriteTime = cpu_to_le64(time);
- 	rsp->ChangeTime = cpu_to_le64(fp->change_time);
--	rsp->AllocationSize = S_ISDIR(stat.mode) ? 0 :
--		cpu_to_le64(stat.blocks << 9);
-+	/*
-+	 * The cached allocation size hides filesystem rounding for the
-+	 * requested allocation, but it can go stale when the file grows past
-+	 * it via writes (e.g. across a durable reconnect). Refresh it once the
-+	 * file exceeds the cached value, rounding the end of file up to the
-+	 * volume allocation unit (the filesystem block size, matching the
-+	 * SectorsPerAllocationUnit/BytesPerSector ksmbd advertises) rather than
-+	 * using the raw on-disk block count, which can include filesystem
-+	 * preallocation and metadata rounding.
-+	 */
-+	if (!S_ISDIR(stat.mode) && stat.size > fp->allocation_size)
-+		fp->allocation_size = round_up(stat.size, stat.blksize);
-+	rsp->AllocationSize = cpu_to_le64(fp->allocation_size);
- 	rsp->EndofFile = S_ISDIR(stat.mode) ? 0 : cpu_to_le64(stat.size);
- 	rsp->FileAttributes = fp->f_ci->m_fattr;
- 
-@@ -5082,7 +5094,7 @@ static int get_file_standard_info(struct smb2_query_info_rsp *rsp,
- 	delete_pending = ksmbd_inode_pending_delete(fp);
- 
- 	if (ksmbd_stream_fd(fp) == false) {
--		sinfo->AllocationSize = cpu_to_le64(stat.blocks << 9);
-+		sinfo->AllocationSize = cpu_to_le64(fp->allocation_size);
- 		sinfo->EndOfFile = S_ISDIR(stat.mode) ? 0 : cpu_to_le64(stat.size);
- 	} else {
- 		sinfo->AllocationSize = cpu_to_le64(fp->stream.size);
-@@ -5161,8 +5173,7 @@ static int get_file_all_info(struct ksmbd_work *work,
- 	file_info->Attributes = fp->f_ci->m_fattr;
- 	file_info->Pad1 = 0;
- 	if (ksmbd_stream_fd(fp) == false) {
--		file_info->AllocationSize =
--			cpu_to_le64(stat.blocks << 9);
-+		file_info->AllocationSize = cpu_to_le64(fp->allocation_size);
- 		file_info->EndOfFile = S_ISDIR(stat.mode) ? 0 : cpu_to_le64(stat.size);
- 	} else {
- 		file_info->AllocationSize = cpu_to_le64(fp->stream.size);
-@@ -5372,7 +5383,7 @@ static int get_file_network_open_info(struct smb2_query_info_rsp *rsp,
- 	file_info->ChangeTime = cpu_to_le64(fp->change_time);
- 	file_info->Attributes = fp->f_ci->m_fattr;
- 	if (ksmbd_stream_fd(fp) == false) {
--		file_info->AllocationSize = cpu_to_le64(stat.blocks << 9);
-+		file_info->AllocationSize = cpu_to_le64(fp->allocation_size);
- 		file_info->EndOfFile = S_ISDIR(stat.mode) ? 0 : cpu_to_le64(stat.size);
- 	} else {
- 		file_info->AllocationSize = cpu_to_le64(fp->stream.size);
-@@ -5500,7 +5511,7 @@ static int find_file_posix_info(struct smb2_query_info_rsp *rsp,
- 	file_info->Inode = cpu_to_le64(stat.ino);
- 	if (ksmbd_stream_fd(fp) == false) {
- 		file_info->EndOfFile = cpu_to_le64(stat.size);
--		file_info->AllocationSize = cpu_to_le64(stat.blocks << 9);
-+		file_info->AllocationSize = cpu_to_le64(fp->allocation_size);
- 	} else {
- 		file_info->EndOfFile = cpu_to_le64(fp->stream.size);
- 		file_info->AllocationSize = cpu_to_le64(fp->stream.size);
-@@ -6241,8 +6252,7 @@ int smb2_close(struct ksmbd_work *work)
- 		}
- 
- 		rsp->Flags = SMB2_CLOSE_FLAG_POSTQUERY_ATTRIB;
--		rsp->AllocationSize = S_ISDIR(stat.mode) ? 0 :
--			cpu_to_le64(stat.blocks << 9);
-+		rsp->AllocationSize = cpu_to_le64(fp->allocation_size);
- 		rsp->EndOfFile = cpu_to_le64(stat.size);
- 		rsp->Attributes = fp->f_ci->m_fattr;
- 		rsp->CreationTime = cpu_to_le64(fp->create_time);
-@@ -6581,6 +6591,8 @@ static int set_file_allocation_info(struct ksmbd_work *work,
- 			return rc;
- 		}
- 	}
++static int get_file_allocation_stat(struct ksmbd_file *fp, struct kstat *stat)
++{
++	int ret;
 +
-+	fp->allocation_size = le64_to_cpu(file_alloc_info->AllocationSize);
++	/*
++	 * Buffered writes can leave delayed allocation in a state where two
++	 * consecutive queries report different block counts even when the
++	 * second write only overwrites the first one. Complete writeback before
++	 * reporting the filesystem allocation for an ordinary open.
++	 */
++	if (!fp->allocation_size_set) {
++		ret = file_write_and_wait(fp->filp);
++		if (ret)
++			return ret;
++	}
++
++	ret = vfs_getattr(&fp->filp->f_path, stat, STATX_BASIC_STATS,
++			  AT_STATX_SYNC_AS_STAT);
++	if (!ret && !fp->allocation_size_set)
++		fp->allocation_size = S_ISDIR(stat->mode) ? 0 : stat->blocks << 9;
++
++	return ret;
++}
++
+ static int get_file_standard_info(struct smb2_query_info_rsp *rsp,
+ 				  struct ksmbd_file *fp, void *rsp_org)
+ {
+@@ -5085,8 +5110,7 @@ static int get_file_standard_info(struct smb2_query_info_rsp *rsp,
+ 	struct kstat stat;
+ 	int ret;
+ 
+-	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
+-			  AT_STATX_SYNC_AS_STAT);
++	ret = get_file_allocation_stat(fp, &stat);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -5153,8 +5177,7 @@ static int get_file_all_info(struct ksmbd_work *work,
+ 		return -EINVAL;
+ 	}
+ 
+-	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
+-			  AT_STATX_SYNC_AS_STAT);
++	ret = get_file_allocation_stat(fp, &stat);
+ 	if (ret) {
+ 		kfree(filename);
+ 		return ret;
+@@ -5368,8 +5391,7 @@ static int get_file_network_open_info(struct smb2_query_info_rsp *rsp,
+ 		return -EACCES;
+ 	}
+ 
+-	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
+-			  AT_STATX_SYNC_AS_STAT);
++	ret = get_file_allocation_stat(fp, &stat);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -5495,8 +5517,7 @@ static int find_file_posix_info(struct smb2_query_info_rsp *rsp,
+ 		return -EACCES;
+ 	}
+ 
+-	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
+-			  AT_STATX_SYNC_AS_STAT);
++	ret = get_file_allocation_stat(fp, &stat);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -6593,6 +6614,7 @@ static int set_file_allocation_info(struct ksmbd_work *work,
+ 	}
+ 
+ 	fp->allocation_size = le64_to_cpu(file_alloc_info->AllocationSize);
++	fp->allocation_size_set = true;
  	return 0;
  }
  
 diff --git a/fs/smb/server/vfs_cache.h b/fs/smb/server/vfs_cache.h
-index 1530df617415e..7cfdc1140560c 100644
+index 7cfdc1140560c..03494f2627cd6 100644
 --- a/fs/smb/server/vfs_cache.h
 +++ b/fs/smb/server/vfs_cache.h
-@@ -102,6 +102,7 @@ struct ksmbd_file {
- 	__le32				cdoption;
- 	__u64				create_time;
- 	__u64				change_time;
-+	__u64				allocation_size;
- 	__u64				itime;
+@@ -107,6 +107,7 @@ struct ksmbd_file {
  
  	bool				is_nt_open;
+ 	bool				attrib_only;
++	bool				allocation_size_set;
+ 
+ 	char				client_guid[16];
+ 	char				create_guid[16];
 -- 
 2.53.0
 
