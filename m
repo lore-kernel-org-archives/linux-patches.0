@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058078;
-	b=uGNF82+aKCxhDJ+dFsOB2l1wc4L1EVNEdP/BOW5zVMGspedU21KapTQkutUvSvNCcTX7
-	 ToNSNrBTDGrbtjK1eGaVqO23RmuS5O5iAl7hGpjEuH8DcfvIS8mcDK20YEaeh5f3E2VLB
-	 P0HBwbiChJjHjIHELfBSON7lB/NMmWH65YjbV9KHDzOF6FlQ1tpGLthnUR5lUAwn4U4xG
-	 t9xHaifMfoaXICSk4IcUwOEx9QJBEFCXv+MVt2ugtMLTg8pjfMve/1QDBb1TOkoRncN2G
-	 8o67k5B+OyV/D0s6Lh8kwk9vvojK/iSmoG1+Lk1MQ8oRRC26xe+ea0SdhCZR6vrrD8g==
+	t=1795058080;
+	b=eNDLonR8ZFd9416EsPuz2rQCM6u+HzyhuQhh0/fqvC48Jnl7fEhTw4uub7QxyPF5Zl05
+	 RkcKFIR24rSa0Pegi0WWNPCMugLx/kVPaIZP/gqEIZaBjiOmoDqAfHYLTY34iHhZrgteR
+	 9YfSqqnIBClewfuI0Bujg2EJQ1wYOoZpgAEOkWQqUAJptqolqfak2vukhnlyV5heWwhIl
+	 61Wtk0nPhRQ21WmRJ2en+7REOZ95+xqgbEJGrkutqyhwlul46V6QyLqfRUceq9msiSRzG
+	 Tr1vcTl3VV9Kpqvs07favfNl1wmvEYR6DzA8vtQs1+PB/MLgK2TyMMmruqEtvdqVkYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058078;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058080;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WAgKQl0Hm3adsfo6aCDN009322ZDtEJj8gm9Wzv1mr4=;
-	b=A3Nz2hVN0I2CniGtpCaoYNaXtxXAg0FmXOQOzIsbtB8UXUqcLyL24EA6weuLgq8iMIgX
-	 0SLiAs6DRw2G1k5vkikZHCbZ1ZdOkzQ9uoyL6HXE92eb93yyWYe2CWxEp35ubRRbnBtBh
-	 kwSeVskoaMD4WmjvTV0abpfMTivv/cA9tV/CVoVkTLeiAxNhvB31SZKyKTuCO1j2rgbuF
-	 Ke2oQfaap7ValU9G6jaku6/aqUGpj7rTosRln9/X9oe0h+Yla8jsomJz+f1som1GDcgHQ
-	 kn6KcafvZfEuvK0o5TXTX8tqCqDMtm6YF9bQYlLWoc5qMt6vpcZkMIC80YEoK1izvSQ==
+	bh=il+yY9zOlptDwctXMkgP3JHladeDwQ2s04kB+YRkWVM=;
+	b=fdasP0V8TdM6kLL8oBz9HFWKpeBQJ9bXAvP6KpK2vHogt4uFNmNuUP1D0YrbViZY67B3
+	 T24W2ilUH1ENFeOHhZ/abJ7JUXp8T9mYX1BcaQK8kw/vRrS6Vv6unhAlIntrD5w+Gb6tU
+	 ohJ4ZJ5e2Y+ZqzNVXoaIydzalOkyM2SwoHqm9HpXMGJRmtIs+QxoMN3158116R4rfGFFY
+	 sXLHBn89RPdk1a3WMoc0qqiME+b9//Oo55/H469eRtNJRsmdUJIp2aXeVeu9TeM4zF8/S
+	 fom4QH310b8oAF1UIwh1ivvZVhmJdROdiBTin7NL3SQuIsmnROMdv5Jch4gARJsX9MQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ok5T3vt5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v0VN+vk+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F53606A331;
-	Thu, 19 Nov 2026 03:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F68606A325;
+	Thu, 19 Nov 2026 03:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ok5T3vt5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234F61F000C5;
-	Thu, 19 Nov 2026 03:14:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v0VN+vk+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD08E1F000C5;
+	Thu, 19 Nov 2026 03:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058077;
-	bh=WAgKQl0Hm3adsfo6aCDN009322ZDtEJj8gm9Wzv1mr4=;
+	s=korg; t=1795058080;
+	bh=il+yY9zOlptDwctXMkgP3JHladeDwQ2s04kB+YRkWVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ok5T3vt5ZUC9TFZL26H34CBH1E3k3bKZSOHys2AAZ0GAzyvhqiopRKGyaKnJIZjlz
-	 ADWDULzCYFOcVbtVL4RGy04cLhEenf3W4z3Zw/KuApgeehBwZRv4MWBa3G9qny3NED
-	 rg6+FEUFaiYEvnhkjIU9X3hb+OETBH/5VStWF78Y=
+	b=v0VN+vk+blZXOc333ee2mwNsys1UaBnGsJKdtY52asEEbEMVYUToLLP2+/1VDcq8y
+	 yDs/lpcfCh3UvJFDrbZIloTWNG/9AXrF+Z4vWA9ACnECQ77nj251hl67Q1/N17CeVh
+	 J81MQpOOjzMVhNSYC54hX48QrN+B3iLnrZczGURk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.10 0306/1848] HID: zydacron: validate key report length
-Date: Wed, 18 Nov 2026 15:39:04 +0100
-Message-ID: <20261118145924.978843707@linuxfoundation.org>
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 0351/1848] media: ir-hix5hd2: Ensure rdev is setup before interrupts are enabled
+Date: Wed, 18 Nov 2026 15:39:49 +0100
+Message-ID: <20261118145927.411832477@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,49 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Sean Young <sean@mess.org>
 
-commit 9932c9af185f8586e883d44ca562c12f4487c762 upstream.
+[ Upstream commit f7509d2567cf92eeccc31c363a2e2ae43188930c ]
 
-The HID core invokes raw_event callbacks before validating the report
-length.  zc_raw_event() verifies the report ID in byte zero and then reads
-the key code from byte one for report IDs 0x02 and 0x03 without checking
-that the second byte is present.
+Once the interrupt handler is enabled, priv->rdev can be used. Ensure
+it is setup correctly so there is no race condition.
 
-A one-byte report reproduced the issue under KASAN:
-
-  BUG: KASAN: slab-out-of-bounds in zc_raw_event+0x54c/0x580
-  Read of size 1 by task hidtrigger/93
-  Call Trace:
-   zc_raw_event+0x54c/0x580
-   __hid_input_report+0x2ef/0x3a0
-   inject_store+0x479/0x490 [faketrans]
-
-Require both the report ID and key code before processing the report.
-
-Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
-sequence") added the same kind of raw_event length validation to hid-asus.
-
-Fixes: d0742abaa1c3 ("HID: add omitted hid-zydacron.c file")
+Fixes: a84fcdaa9058 ("[media] rc: Introduce hix5hd2 IR transmitter driver")
+Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-zydacron.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/rc/ir-hix5hd2.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/hid-zydacron.c
-+++ b/drivers/hid/hid-zydacron.c
-@@ -114,6 +114,9 @@ static int zc_raw_event(struct hid_devic
- 	unsigned key;
- 	unsigned short index;
+diff --git a/drivers/media/rc/ir-hix5hd2.c b/drivers/media/rc/ir-hix5hd2.c
+index 0ffc27514fab8..f89dd3cb7ac38 100644
+--- a/drivers/media/rc/ir-hix5hd2.c
++++ b/drivers/media/rc/ir-hix5hd2.c
+@@ -318,6 +318,9 @@ static int hix5hd2_ir_probe(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		goto clkerr;
  
-+	if (size < 2)
-+		return 0;
++	priv->rdev = rdev;
++	priv->dev = dev;
 +
- 	if (report->id == data[0] && (hdev->claimed & HID_CLAIMED_INPUT)) {
+ 	if (devm_request_irq(dev, priv->irq, hix5hd2_ir_rx_interrupt,
+ 			     0, pdev->name, priv) < 0) {
+ 		dev_err(dev, "IRQ %d register failed\n", priv->irq);
+@@ -325,8 +328,6 @@ static int hix5hd2_ir_probe(struct platform_device *pdev)
+ 		goto regerr;
+ 	}
  
- 		/* break keys */
+-	priv->rdev = rdev;
+-	priv->dev = dev;
+ 	platform_set_drvdata(pdev, priv);
+ 
+ 	return ret;
+-- 
+2.53.0
+
 
 
