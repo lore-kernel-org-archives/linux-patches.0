@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049771;
-	b=FbCswcvbgT/AwbtVG7l/LPcIIFwJnZ4GjUqdHvqWLg3QO5LsYhIOdovKYNPtPNWiEXPt
-	 asUA9mZSOkuKhKJtUusH7HRtX26njximHMrPHRxpqiz9EZ7kqP/Apu1YuyWLOw8GEgz7i
-	 j8hVlE0RVXseBQux4ng7PQhZCWJ7eFRW55HEbhQoCXj0m7EEUShlTTbQHQQVECS6KF11i
-	 +pJyZJP6D67tuRHn1HO5usalzCIu9MtZi1f0ghtLp++hLwAAUzOr+92yALMY2KVCvt+SL
-	 90HheMCXAovCZIId7NC/IbZosORaTap0S3PPPp0i7PCS2RPnAtrM4SortslvMGaZg6w==
+	t=1795049774;
+	b=UFdaMeQ+QX7CUBNUdcqHnrALf9zeTNukvh1hs9tr+K9ZTCs986EJxgrJgDYABtXnBtU3
+	 PZCDwYXfoWFE2uORp/AxYZHKzd56nKS9mF0Whm5zAP5ryE/hBLCrmaG9JXOtUrSguhFsu
+	 E/7g1A+KRX5UYhayiOvwBzFDYZ+cE5mUdAFKK7lrXXdL4wfUwLNaiauGa5pLX0t0JJw2I
+	 Js3mk51nmfoX+OQuiH87g5WxTe9YCMcu9i1kSLF3kgKRRsd7I1DdxgH6JdNMde3BDbzTf
+	 GiL4T9EqzORL+DrEl/tTeJYrtnYQHLIH1XavkzbkUZOGZOPJ54/s/jKE1DpG0fJjVlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049771;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049774;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AMxkbFoq/wgLj+LXccPhvPTdb66utI/FVPatke5p5UI=;
-	b=I/juRHcXnqcpu998ZcXqLtU7+TKC5HEnM79wvL6qNGPs5z5T6d4eNlBMWod84oC4LqTk
-	 rWHMoVqxp8GrtW09HwM+5WvOC+rbZiYSt5pH/imdCXW/16qLD8BOgdctBsHJ4n+JqU5uy
-	 TmbXjx85pL+7uiqCAKrSoQsalnhxHJxR6i6Oj71tkfwthXQA5or58m7/ZWXhQCuTKP9Ar
-	 o3pXMQbwfzuJe7uEGq/VSW7rtY6BeW/DDAZitjJ1kq0qp08qT5RXK2CaohpkT8rzCJXpA
-	 WZwaCTkzJtmxa57cV3ovxhGFDeyp7TOzTWYv12V3gOTGabz8lsTnT94xtl/l2zBnGjA==
+	bh=4PHoU/UreMOHB7INtsWzkn7OhgBTqROwMlASlt1zCE8=;
+	b=flUp5Av4QRRSeE5+pwFIeebSOeMY70oZfWHhd4vqjFJv51L0aBmWWQNr0FrJp+jC7rQe
+	 BYM4Yub14ztD9QyjlE+d49QF2oq7GpnbunbQn4e26Ly20OCWY5tUqvknhUECfitRJ6fGq
+	 /ciqAl7y42MpnlxAgoZVvDmMA21BLMT3P0RLBEODDxW/8TpykxjhAGTueREOQqJuFh4hi
+	 mlwB0LpAjm6Vz7Kqlb6U2IgJr3bnUmfqUnp7j9xnBN/xjsmJlHMKKmIZOy9qM7qqOvTFj
+	 ZAqR1SU6xfup4Ic6djtjmUvwWVBe6DHggnuEdIKIS4eHo98JL+23lcSuER0RgY1UEoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NSCZdxj6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TSUvj7R0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE01606A325;
-	Thu, 19 Nov 2026 00:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0C2606A32A;
+	Thu, 19 Nov 2026 00:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NSCZdxj6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A2A01F000C4;
-	Thu, 19 Nov 2026 00:56:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TSUvj7R0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1443F1F000C4;
+	Thu, 19 Nov 2026 00:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049770;
-	bh=AMxkbFoq/wgLj+LXccPhvPTdb66utI/FVPatke5p5UI=;
+	s=korg; t=1795049773;
+	bh=4PHoU/UreMOHB7INtsWzkn7OhgBTqROwMlASlt1zCE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NSCZdxj6eJvE8QHjJMPtz+gz1Ik91DqcbXamc5z5xRPB+LfOMZocGK+6cPKS9n75i
-	 t52endowcCd3swyNBgTPTxqNYntSl69L3Cw68vVqGwDy8k305HIA5+qVjGsNZTK27K
-	 R2nTbYmU46lLWECF4YJWA+egiwGJBIdRqeVr7FDs=
+	b=TSUvj7R0zg79uejtNoMVdiRZN1WTiAznXASyvjLIKU5cZp+hJ5LWSd86hjsbp1SW2
+	 dKx8ICR4wr3rC0p48aooxhLZWfhcgL5Egx72AHzmjtha2YEgRodCybNAQAEGTPQhAl
+	 UsQRfM8G/tQHmoA9fXJWtietm5dSGBM5NsmieiqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2470/2857] ASoC: codecs: wm8991: Fix definition of LOMIX AINLMUX Bypass Volume control
-Date: Wed, 18 Nov 2026 15:58:24 +0100
-Message-ID: <20261118150330.499846106@linuxfoundation.org>
+Subject: [PATCH 6.1 2471/2857] ASoC: codecs: wm8983: Fix definition of ADC 128x Oversampling control
+Date: Wed, 18 Nov 2026 15:58:25 +0100
+Message-ID: <20261118150330.533630051@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,36 +71,35 @@ Content-Transfer-Encoding: 8bit
 
 From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit fee722db39c2a1f18c944f747271fd1e131910a6 ]
+[ Upstream commit c1af9e2272f025ff75be76e03413074d5e7801c9 ]
 
-The LOMIX AINLMUX bypass volume (LLBLOVOL) is at bits 2:0 of Output
-Mixer5, not at bits 5:3, which hold the AINRMUX bypass volume
-(LRBLOVOL).
+ADC 128x oversampling (ADCOSR128) is at bit 3 of ADC Control, not at
+bit 8, which is the high pass filter enable (HPFEN).
 
-Fixes: 203db220718c ("ASoC: WM8991: Add initial WM8991 driver")
+Fixes: 6b3860b0a20a ("ASoC: WM8983: Initial driver")
 Assisted-by: Claude:claude-opus-5-5
 Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
 Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/c6e230b0e7d7e3db2136cc751e0b563030dbc16d.1791959026.git.sammiee5311@gmail.com
+Link: https://patch.msgid.link/d6a5bbab35e1fd2bec5b13d30951546080d493a8.1791959026.git.sammiee5311@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8991.c | 2 +-
+ sound/soc/codecs/wm8983.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm8991.c b/sound/soc/codecs/wm8991.c
-index 72079b73f044a..f7bdd1a26a81f 100644
---- a/sound/soc/codecs/wm8991.c
-+++ b/sound/soc/codecs/wm8991.c
-@@ -184,7 +184,7 @@ static const struct snd_kcontrol_new wm8991_snd_controls[] = {
- 	SOC_SINGLE_TLV("LOMIX AINRMUX Bypass Volume", WM8991_OUTPUT_MIXER5,
- 		WM8991_LRBLOVOL_SHIFT, WM8991_LRBLOVOL_MASK, 1, out_mix_tlv),
- 	SOC_SINGLE_TLV("LOMIX AINLMUX Bypass Volume", WM8991_OUTPUT_MIXER5,
--		WM8991_LRBLOVOL_SHIFT, WM8991_LRBLOVOL_MASK, 1, out_mix_tlv),
-+		WM8991_LLBLOVOL_SHIFT, WM8991_LLBLOVOL_MASK, 1, out_mix_tlv),
+diff --git a/sound/soc/codecs/wm8983.c b/sound/soc/codecs/wm8983.c
+index 50e6ac6ccbe03..28665119e3051 100644
+--- a/sound/soc/codecs/wm8983.c
++++ b/sound/soc/codecs/wm8983.c
+@@ -234,7 +234,7 @@ static const struct snd_kcontrol_new wm8983_snd_controls[] = {
+ 			 8, 1, 0, pga_boost_tlv),
  
- 	/* ROMIX */
- 	SOC_SINGLE_TLV("ROMIX RIN3 Bypass Volume", WM8991_OUTPUT_MIXER4,
+ 	SOC_DOUBLE("ADC Inversion Switch", WM8983_ADC_CONTROL, 0, 1, 1, 0),
+-	SOC_SINGLE("ADC 128x Oversampling Switch", WM8983_ADC_CONTROL, 8, 1, 0),
++	SOC_SINGLE("ADC 128x Oversampling Switch", WM8983_ADC_CONTROL, 3, 1, 0),
+ 
+ 	SOC_DOUBLE_R_TLV("Playback Volume", WM8983_LEFT_DAC_DIGITAL_VOL,
+ 			 WM8983_RIGHT_DAC_DIGITAL_VOL, 0, 255, 0, dac_tlv),
 -- 
 2.53.0
 
