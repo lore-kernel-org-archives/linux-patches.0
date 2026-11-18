@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040389;
-	b=mxmQJIfd1NNqMou3QYu9H0Dsf4gkmnnwAOlc9kUojQr+Eh5CMQs08JkW28qSYuU7gmiO
-	 aZhS5xTxAldMHHJzfXtdR3yb1IEgyIAtTlZPoCBg6pcZhRwcDxz7NnaP4tZQf4pCNXhnn
-	 NKshpH0e6hp0vFFC1vA0Ob7W6LeLkzdtYsflCNrpYP9ZTntS0qVwzm7kcrZMxuA6G4tHO
-	 fcXDik2S8pXNWW17rY5ASkliV0T6oKzO1RWYBuKM6gOD9H05KB68f6DBMMlekXicffnwr
-	 l8btlUXmOhph3WtdiHygssuVT4g6wEy9peanoMgh57O5hKNiTyEkfl2/pNbnM5GVsYQ==
+	t=1795040391;
+	b=TnqA2MpxRZPx4jGeHTpXDm4pZMkxk5Smv1yg6qjIlXw17qHnSexAsYhwUBfniZujj2H0
+	 UhoXIwELwkc4fhTzxUhvu/tCaeq/BXJDyiX/ZKRY1KT4QU+0vQaySkI0AvFoDTysuZ2I6
+	 jQMZ8P1ZluQvwoyABGBJu5xPYTiXbkv47IueLm+YPLtWJ2jcB0vnrhl4w8FxcGbRI3qZ3
+	 /jNpkN6kXzQe/qfQsk3MveguS8lv6SQd9TdkL3JzbpszF1iJl6J9JlEJXl1r20sMYtRM7
+	 PlDyhPY5d5rlA/e9avEEIQa1jGT+lVP+xPibSv9zdLFcUOoK8IdbjCiSWblT9+Fa/zw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040389;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040391;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lqZ25Hrs8zxaFPYL3vSqi1OCx2b6dmGiXMVwD+DLAt4=;
-	b=md1+xrX5qnk4Gi2mzM4nGkilCHWYTjkPzsuKtVbSRVZ11HP6Vt12v7s7YHqdERFP0M0F
-	 zHWE+xQzSsMADccOPv21dLGIvrnTHms0WSGYyHvEmyq49v7nWAiyFsbxZMOKBvNBpLWo7
-	 ImITZoLdzJZpESoKGEH7feg5pTKUdQCXO0dJ0YG7iswQvVVDCRLEnCnN4tYYGfsW5ziHF
-	 1zK89OAcH2MFFk254qSSHRBxo+T8Ep0b5cFtUvmklzkJuviq4l8d/ufL6OhylrURKyq/o
-	 MtKODLteo1MjMKoLVe2bpNFqGY+pq3VrmI71RjO25P/jbrmCDrMvt8KMeW2KpALgc3w==
+	bh=xwZxIHRsTsf8H90TS3gGph3svyHP89GKff3hFEM2h+w=;
+	b=LVi0EkzL0voCS/uAccJsW7WVUijgSfuz53eEXvpRN8PEW5/tHNVT0Z8B/P5rCHqg9gsC
+	 bqkESBK4d+io95U2PXKf3WZgoUPgHUgTdHNOaBKR763iyZ35QNzdic7s5Pj/Mqx/BbtPS
+	 1Vsc40h1KpFsouJ8twGaeSa7GtWIQeFGY+v1nBz4P/+fWtwvBL+NXAw42+l7P0V9oPlh4
+	 WcXjyaA0Ujly5/UqV4AjE6nYkkTwpyryroxBIs07JaHnxjydP8+xijQG65FrJ6f9e36bE
+	 IjFL1gQ7d5Y0IaI9xC/cUnkWDjWEnVZSclfm9aY6YXphJeI5lTcWQttEQfHq9dF/pdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UVG6d3uW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q4nKUxzp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E4F606A325;
-	Wed, 18 Nov 2026 22:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B79606A31C;
+	Wed, 18 Nov 2026 22:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UVG6d3uW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229061F000C5;
-	Wed, 18 Nov 2026 22:19:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q4nKUxzp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9DD1F000C4;
+	Wed, 18 Nov 2026 22:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040388;
-	bh=lqZ25Hrs8zxaFPYL3vSqi1OCx2b6dmGiXMVwD+DLAt4=;
+	s=korg; t=1795040391;
+	bh=xwZxIHRsTsf8H90TS3gGph3svyHP89GKff3hFEM2h+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UVG6d3uWtPLlFNpvdF+SIynZMrBMN7PwSlA77FCIioVwiPwP90Xk0CMDEA5+qeVcI
-	 b6soPb6IuZn9Wdu9oobXDkWmbaPrn+PSIBVZRny8w562wWZPOUObuBa3EWQtfY/kMr
-	 Cj0CqxKE9M93zK8zq2CnHo8OR5CmKDjtfAqAOteA=
+	b=Q4nKUxzp93GWLYm01wylLyTIr9umBSYG2Sxl+viZ64PDkja//AIc9TbxvJq5Ameof
+	 iYVXc8PPBo9F+0gdl1T/wmng108CHe/N8MRHJRgKJJDvWxj06aEGRIZTxCqHplDC6u
+	 HCIpN9n/TA+nAdVVsn3QjcCPs6mXS6WOnzRSO6y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2438/3318] fs/ntfs3: fix slab-out-of-bounds write in attr_insert_range()
-Date: Wed, 18 Nov 2026 15:51:00 +0100
-Message-ID: <20261118150434.592032304@linuxfoundation.org>
+Subject: [PATCH 6.6 2439/3318] RDMA/mlx5: Restore mr->pi_mr after temporary stack-local assignment
+Date: Wed, 18 Nov 2026 15:51:01 +0100
+Message-ID: <20261118150434.620936522@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,57 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit bf9a6578e03b065335836e025356b4b9170b9449 ]
+[ Upstream commit 9728effe43d8fc4d58e12b697d0d6127355abdd5 ]
 
-When fallocate(FALLOC_FL_INSERT_RANGE) grows a still-resident ntfs3
-attribute, attr_insert_range() shifts the inline data using the insert
-length 'bytes' as both the destination offset and the copy size:
+In handle_reg_mr_integrity, when mr->pi_mr is NULL (physical-address
+optimization path), the code points mr->pi_mr at a stack-local pa_pi_mr
+so set_pi_umr_wr can read it during this call. The pointer is never
+restored, so after the function returns mr->pi_mr dangles at a freed stack
+frame. A second IB_WR_REG_MR_INTEGRITY posted on the same MR without
+remapping reads the stale pointer and dereferences it.
 
-  memmove(data + bytes, data, bytes);
+Save the original pi_mr (captured at function entry) and restore it on
+the out path.
 
-Both are wrong: the shift must start at the insertion point 'vbo' and
-move only the data past it (data_size - vbo). When bytes > data_size the
-memmove runs off the end of the data_size + bytes buffer and overflows
-the adjacent slab object.
-
-Since vbo < data_size is already enforced above, the reworked offsets stay
-within the data_size + bytes buffer and cannot under/overflow.
-
-  BUG: KASAN: slab-out-of-bounds in attr_insert_range (fs/ntfs3/attrib.c:2581)
-  Write of size 512 at addr ffff8880135e8b10 by task exploit/142
-   ...
-   __asan_memmove (mm/kasan/shadow.c:95)
-   attr_insert_range (fs/ntfs3/attrib.c:2581)
-   ntfs_fallocate (fs/ntfs3/file.c:618)
-   vfs_fallocate (fs/open.c:338)
-   __x64_sys_fallocate (fs/open.c:362)
-   ...
-
-Fixes: 9256ec35359f ("fs/ntfs3: Refactoring attr_insert_range to restore after errors")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 2563e2f30acb ("RDMA/mlx5: Use PA mapping for PI handover")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260919100848.2442-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrib.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/mlx5/wr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
-index 37c2b7e0e2835..104a1fb2327de 100644
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -2447,8 +2447,8 @@ int attr_insert_range(struct ntfs_inode *ni, u64 vbo, u64 bytes)
- 			char *data = Add2Ptr(attr_b,
- 					     le16_to_cpu(attr_b->res.data_off));
+diff --git a/drivers/infiniband/hw/mlx5/wr.c b/drivers/infiniband/hw/mlx5/wr.c
+index 9947feb7fb8a0..1748c633213ed 100644
+--- a/drivers/infiniband/hw/mlx5/wr.c
++++ b/drivers/infiniband/hw/mlx5/wr.c
+@@ -925,6 +925,7 @@ static int handle_reg_mr_integrity(struct mlx5_ib_dev *dev,
+ 	qp->next_fence = MLX5_FENCE_MODE_INITIATOR_SMALL;
  
--			memmove(data + bytes, data, bytes);
--			memset(data, 0, bytes);
-+			memmove(data + vbo + bytes, data + vbo, data_size - vbo);
-+			memset(data + vbo, 0, bytes);
- 			goto done;
- 		}
+ out:
++	mr->pi_mr = pi_mr;
+ 	return err;
+ }
  
 -- 
 2.53.0
