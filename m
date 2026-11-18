@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026818;
-	b=xz324gGQcjChkivKclGjutAq/kTuKfsZHG5fm1Jucp2tkJ/nZV0ABfJObFrLllU0mAdX
-	 vX21E51RKLpIhxaN5yaVfvdaybwlocO+yXaO8A8B5m3kF5GzVhQ6Irb9mj5o0xYagUuA3
-	 NBw3Vwpa7PHEBpYlD/6/ZQrVGL6TznPc1tdoSss+criUHUWZO1OjeG11EE3bHg/tK3o4o
-	 PN0U3ty6qr9TLk2athk+d3qGy3VCM1yIqW6CrjKCfuLY8V2F7hOFZMI6AM4zxUx0k9lzl
-	 lgx+ut2EGnjKc6AfGXRJDJcfOEIkiqCYM/D4FjMXsR08Qx0S81yL52s/f5WkcIsum4w==
+	t=1795026822;
+	b=aCZliGry/CbSP6woi7YMnT1xERrwJDC70KKSHqD0jQNFENBE5/BIUkzxGUuGpZql+tFe
+	 esP4e/5j2JPO3EU0x6Ifpvgxsquy5iWs2O8DLWnSXhoTfe43l3lMSMu66DSpdOqhQqqzp
+	 vONawvhO+qu5p0bGnZFL/TC8wf/r2O01TYDGjryzKRwqqrq93HbH9HJSHf/cYvfW5BUU9
+	 u5juHMS9muW5qblIoshehB+yK8Hfy3kq5cj8lOsGDZYC37wYfyGLIpJWwp5QRDkyzvyhm
+	 sms3LcWHP5WmiiLqvKGFFhsl8rGS++G3TwYQLG/r6PqCAr/Q1rVP4JN1EoB2D9rfTZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026818;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026822;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TTCvZZ4KDMk3oArObXqnKhg8uiEHC0Ni0w/lqMrR26Q=;
-	b=tG0FXbjd93LkSvByVp1OCvrLn14WbRjj0jB2xsbVyyzcOUDql6kiA4FFzBdZzmgXAQTM
-	 fR8P99wDz86xBgv+QkSHNef9ysy+xaqP+ugDk0tjCSrn4CrcRJJ0OUMicUg6bgFShC6Sm
-	 GUYIIrQRvznmwxZMkBfj9Pgl6JyC4gJ2JXgNCUdVHQanXoZyjAcbths1uevWGyy09x51m
-	 bVte4cUMK6mr96+LGzmr/8JD1fPGiHTf4uPZu477e64NZQnr7ZlWqcRS0GMBUDgX36ahQ
-	 R8jC9lKcFHc0Bh+hNH35BPFsCcgk9D/7sVkJlCbhsUYwlsY0zr/D9wBmJ9HyMwnqn8A==
+	bh=bvUPorIEMJZYwLcSPMszT1cfiMH88Xgf2sN6z+FNcmg=;
+	b=WSz2sCGvIOvMolxADsBIrAQYyYMJrblwB51ouJzXqzibWJmxsL79LdPnGps9ZRkLpEmR
+	 BULBgNJmly4+kWgB/2/bnssPqegaCka6eY7B3rj2K8jyRUHLi+ycZC+3vUhLnmehDX6KZ
+	 Ikme1nZtXa2B12TUGB38FCuPhwESstL8hsZwYTH13Lv9WyuSQwDymbSsluUyJKmJJSIMw
+	 mWytLEl+9bgM/q05C1tbzhL0O2Nf7KzfSTGhfQ/FhZQi0q2zwBQbMpZUWmOlfXKt1HdG6
+	 IofYrNP6tgvG1zJZ0PoY5MpKm+1UjlzM6f/lqsf9vDzt41P0Nh135AGiZugTDKbWuGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Tt/5g4PZ";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oiA28LAs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D235C606A32C;
-	Wed, 18 Nov 2026 18:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86E7606A32F;
+	Wed, 18 Nov 2026 18:33:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tt/5g4PZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9EC1F000C5;
-	Wed, 18 Nov 2026 18:33:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oiA28LAs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF111F000C9;
+	Wed, 18 Nov 2026 18:33:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026818;
-	bh=TTCvZZ4KDMk3oArObXqnKhg8uiEHC0Ni0w/lqMrR26Q=;
+	s=korg; t=1795026821;
+	bh=bvUPorIEMJZYwLcSPMszT1cfiMH88Xgf2sN6z+FNcmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tt/5g4PZRecWb/4dW0x7lQZxgmJcZxBpAiSHSusGJfQi45EIgSAP8USnf+BSwn0Gu
-	 ul3x8vFyStTfWbEN7jDSR+4F9yrBSbGRX7L77WJMMJIfFVo9b51dVDQKSs/sWwrec8
-	 WLg3wN3pv71U24W4i+62EyGfjTTPBbgDEW+SEhAw=
+	b=oiA28LAsQ++WDMt3/CcYRaGRKq4S88qQLKF8cT6NhMNgp8DAq6RP4F9/Wt0fcLX7r
+	 GbcqWX27XwqsZsz9cga9L3sJk1l8/MwMMFIRk22nxE1jDjUbSBXoBHCu4Z0SJVJ94R
+	 NuNtqNVbueTdANKleA8VB5pDHkHw2OUmWbZH/T9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1571/2151] ata: libata: Add ATA_QUIRK_MAX_SEC and convert all device quirks
-Date: Wed, 18 Nov 2026 15:55:06 +0100
-Message-ID: <20261118150219.113173612@linuxfoundation.org>
+Subject: [PATCH 6.18 1572/2151] ata: libata-core: Quirk INTEL SSDSC2KG480G8 max_sectors
+Date: Wed, 18 Nov 2026 15:55:07 +0100
+Message-ID: <20261118150219.149508775@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,199 +71,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 59b7bb3d48333889adb1dd2aac3ab0cf26714390 ]
+[ Upstream commit 5f64ae1ef639a2bab7e39497c55f76cc0682f108 ]
 
-Add a new quirk ATA_QUIRK_MAX_SEC, which has a separate table with device
-specific values.
+Commit 9b8b84879d4a ("block: Increase BLK_DEF_MAX_SECTORS_CAP") increased
+the default max_sectors_kb from 1280 KiB to 4096 KiB.
 
-Convert all existing ATA_QUIRK_MAX_SEC_XXX device quirks in
-__ata_dev_quirks to the new format.
+INTEL SSDSC2KG480G8 with FW rev XCV10120 times out when sending I/Os of
+size 4096 KiB.
 
-Quirks ATA_QUIRK_MAX_SEC_128 and ATA_QUIRK_MAX_SEC_1024 cannot be removed
-yet, since they are also used by libata.force, which functionally, is a
-separate user of the quirks. The quirks will be removed once all users
-have been converted to use the new format.
+Enable ATA_QUIRK_MAX_SEC, with value 8191 (sectors) for this device,
+since any I/O with more sectors than that lead to I/O timeouts.
 
-The quirk ATA_QUIRK_MAX_SEC_8191 can be removed since it has no equivalent
-libata.force parameter.
+With this, the INTEL SSDSC2KG480G8 is usable again.
 
+Link: https://lore.kernel.org/linux-ide/176839089913.2398366.61500945766820256@eldamar.lan/
+Fixes: 9b8b84879d4a ("block: Increase BLK_DEF_MAX_SECTORS_CAP")
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Stable-dep-of: 4153718a215e ("ata: libata-core: Fix NO_FUA quirks shadowed by earlier quirk entries")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-core.c | 68 +++++++++++++++++++++++++++++++++------
- include/linux/ata.h       |  1 -
- include/linux/libata.h    |  4 +--
- 3 files changed, 61 insertions(+), 12 deletions(-)
+ drivers/ata/libata-core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index 1034ba393456e..76e829ead608b 100644
+index 76e829ead608b..a4f50f7910964 100644
 --- a/drivers/ata/libata-core.c
 +++ b/drivers/ata/libata-core.c
-@@ -77,6 +77,7 @@ static unsigned int ata_dev_init_params(struct ata_device *dev,
- static unsigned int ata_dev_set_xfermode(struct ata_device *dev);
- static void ata_dev_xfermask(struct ata_device *dev);
- static unsigned int ata_dev_quirks(const struct ata_device *dev);
-+static u64 ata_dev_get_quirk_value(struct ata_device *dev, unsigned int quirk);
+@@ -4118,6 +4118,7 @@ static const struct ata_dev_quirk_value __ata_dev_max_sec_quirks[] = {
+ 	{ "LITEON CX1-JB*-HP",		NULL,		1024 },
+ 	{ "LITEON EP1-*",		NULL,		1024 },
+ 	{ "DELLBOSS VD",		"MV.R00-0",	8191 },
++	{ "INTEL SSDSC2KG480G8",	"XCV10120",	8191 },
+ 	{ },
+ };
  
- static DEFINE_IDA(ata_ida);
+@@ -4383,6 +4384,8 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
  
-@@ -3203,9 +3204,10 @@ int ata_dev_configure(struct ata_device *dev)
- 		dev->max_sectors = min_t(unsigned int, ATA_MAX_SECTORS_1024,
- 					 dev->max_sectors);
- 
--	if (dev->quirks & ATA_QUIRK_MAX_SEC_8191)
--		dev->max_sectors = min_t(unsigned int, ATA_MAX_SECTORS_8191,
--					 dev->max_sectors);
-+	if (dev->quirks & ATA_QUIRK_MAX_SEC)
-+		dev->max_sectors = min_t(unsigned int, dev->max_sectors,
-+					 ata_dev_get_quirk_value(dev,
-+							 ATA_QUIRK_MAX_SEC));
- 
- 	if (dev->quirks & ATA_QUIRK_MAX_SEC_LBA48)
- 		dev->max_sectors = ATA_MAX_SECTORS_LBA48;
-@@ -4059,7 +4061,7 @@ static const char * const ata_quirk_names[] = {
- 	[__ATA_QUIRK_NO_DMA_LOG]	= "nodmalog",
- 	[__ATA_QUIRK_NOTRIM]		= "notrim",
- 	[__ATA_QUIRK_MAX_SEC_1024]	= "maxsec1024",
--	[__ATA_QUIRK_MAX_SEC_8191]	= "maxsec8191",
-+	[__ATA_QUIRK_MAX_SEC]		= "maxsec",
- 	[__ATA_QUIRK_MAX_TRIM_128M]	= "maxtrim128m",
- 	[__ATA_QUIRK_NO_NCQ_ON_ATI]	= "noncqonati",
- 	[__ATA_QUIRK_NO_LPM_ON_ATI]	= "nolpmonati",
-@@ -4104,6 +4106,21 @@ static void ata_dev_print_quirks(const struct ata_device *dev,
- 	kfree(str);
- }
- 
-+struct ata_dev_quirk_value {
-+	const char	*model_num;
-+	const char	*model_rev;
-+	u64		val;
-+};
-+
-+static const struct ata_dev_quirk_value __ata_dev_max_sec_quirks[] = {
-+	{ "TORiSAN DVD-ROM DRD-N216",	NULL,		128 },
-+	{ "ST380013AS",			"3.20",		1024 },
-+	{ "LITEON CX1-JB*-HP",		NULL,		1024 },
-+	{ "LITEON EP1-*",		NULL,		1024 },
-+	{ "DELLBOSS VD",		"MV.R00-0",	8191 },
-+	{ },
-+};
-+
- struct ata_dev_quirks_entry {
- 	const char *model_num;
- 	const char *model_rev;
-@@ -4148,7 +4165,7 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
- 	{ "ASMT109x- Config",	NULL,		ATA_QUIRK_DISABLE },
- 
- 	/* Weird ATAPI devices */
--	{ "TORiSAN DVD-ROM DRD-N216", NULL,	ATA_QUIRK_MAX_SEC_128 },
-+	{ "TORiSAN DVD-ROM DRD-N216", NULL,	ATA_QUIRK_MAX_SEC },
- 	{ "QUANTUM DAT    DAT72-000", NULL,	ATA_QUIRK_ATAPI_MOD16_DMA },
- 	{ "Slimtype DVD A  DS8A8SH", NULL,	ATA_QUIRK_MAX_SEC_LBA48 },
- 	{ "Slimtype DVD A  DS8A9SH", NULL,	ATA_QUIRK_MAX_SEC_LBA48 },
-@@ -4157,20 +4174,20 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
- 	 * Causes silent data corruption with higher max sects.
- 	 * http://lkml.kernel.org/g/x49wpy40ysk.fsf@segfault.boston.devel.redhat.com
- 	 */
--	{ "ST380013AS",		"3.20",		ATA_QUIRK_MAX_SEC_1024 },
-+	{ "ST380013AS",		"3.20",		ATA_QUIRK_MAX_SEC },
- 
- 	/*
- 	 * These devices time out with higher max sects.
- 	 * https://bugzilla.kernel.org/show_bug.cgi?id=121671
- 	 */
--	{ "LITEON CX1-JB*-HP",	NULL,		ATA_QUIRK_MAX_SEC_1024 },
--	{ "LITEON EP1-*",	NULL,		ATA_QUIRK_MAX_SEC_1024 },
-+	{ "LITEON CX1-JB*-HP",	NULL,		ATA_QUIRK_MAX_SEC },
-+	{ "LITEON EP1-*",	NULL,		ATA_QUIRK_MAX_SEC },
- 
- 	/*
- 	 * These devices time out with higher max sects.
- 	 * https://bugzilla.kernel.org/show_bug.cgi?id=220693
- 	 */
--	{ "DELLBOSS VD",	"MV.R00-0",	ATA_QUIRK_MAX_SEC_8191 },
-+	{ "DELLBOSS VD",	"MV.R00-0",	ATA_QUIRK_MAX_SEC },
- 
- 	/* Devices we expect to fail diagnostics */
- 
-@@ -4441,6 +4458,39 @@ static unsigned int ata_dev_quirks(const struct ata_device *dev)
- 	return 0;
- }
- 
-+static u64 ata_dev_get_max_sec_quirk_value(struct ata_device *dev)
-+{
-+	unsigned char model_num[ATA_ID_PROD_LEN + 1];
-+	unsigned char model_rev[ATA_ID_FW_REV_LEN + 1];
-+	const struct ata_dev_quirk_value *ad = __ata_dev_max_sec_quirks;
-+	u64 val = 0;
-+
-+	ata_id_c_string(dev->id, model_num, ATA_ID_PROD, sizeof(model_num));
-+	ata_id_c_string(dev->id, model_rev, ATA_ID_FW_REV, sizeof(model_rev));
-+
-+	while (ad->model_num) {
-+		if (glob_match(ad->model_num, model_num) &&
-+		    (!ad->model_rev || glob_match(ad->model_rev, model_rev))) {
-+			val = ad->val;
-+			break;
-+		}
-+		ad++;
-+	}
-+
-+	ata_dev_warn(dev, "%s quirk is using value: %llu\n",
-+		     ata_quirk_names[__ATA_QUIRK_MAX_SEC], val);
-+
-+	return val;
-+}
-+
-+static u64 ata_dev_get_quirk_value(struct ata_device *dev, unsigned int quirk)
-+{
-+	if (quirk == ATA_QUIRK_MAX_SEC)
-+		return ata_dev_get_max_sec_quirk_value(dev);
-+
-+	return 0;
-+}
-+
- static bool ata_dev_nodma(const struct ata_device *dev)
- {
- 	/*
-diff --git a/include/linux/ata.h b/include/linux/ata.h
-index 54b416e269959..c9013e472aa3d 100644
---- a/include/linux/ata.h
-+++ b/include/linux/ata.h
-@@ -29,7 +29,6 @@ enum {
- 	ATA_MAX_SECTORS_128	= 128,
- 	ATA_MAX_SECTORS		= 256,
- 	ATA_MAX_SECTORS_1024    = 1024,
--	ATA_MAX_SECTORS_8191    = 8191,
- 	ATA_MAX_SECTORS_LBA48	= 65535,/* avoid count to be 0000h */
- 	ATA_MAX_SECTORS_TAPE	= 65535,
- 	ATA_MAX_TRIM_RNUM	= 64,	/* 512-byte payload / (6-byte LBA + 2-byte range per entry) */
-diff --git a/include/linux/libata.h b/include/linux/libata.h
-index 3a50f96d38403..77155535b2669 100644
---- a/include/linux/libata.h
-+++ b/include/linux/libata.h
-@@ -75,7 +75,7 @@ enum ata_quirks {
- 	__ATA_QUIRK_NO_DMA_LOG,		/* Do not use DMA for log read */
- 	__ATA_QUIRK_NOTRIM,		/* Do not use TRIM */
- 	__ATA_QUIRK_MAX_SEC_1024,	/* Limit max sects to 1024 */
--	__ATA_QUIRK_MAX_SEC_8191,	/* Limit max sects to 8191 */
-+	__ATA_QUIRK_MAX_SEC,		/* Limit max sectors */
- 	__ATA_QUIRK_MAX_TRIM_128M,	/* Limit max trim size to 128M */
- 	__ATA_QUIRK_NO_NCQ_ON_ATI,	/* Disable NCQ on ATI chipset */
- 	__ATA_QUIRK_NO_LPM_ON_ATI,	/* Disable LPM on ATI chipset */
-@@ -116,7 +116,7 @@ enum {
- 	ATA_QUIRK_NO_DMA_LOG		= (1U << __ATA_QUIRK_NO_DMA_LOG),
- 	ATA_QUIRK_NOTRIM		= (1U << __ATA_QUIRK_NOTRIM),
- 	ATA_QUIRK_MAX_SEC_1024		= (1U << __ATA_QUIRK_MAX_SEC_1024),
--	ATA_QUIRK_MAX_SEC_8191		= (1U << __ATA_QUIRK_MAX_SEC_8191),
-+	ATA_QUIRK_MAX_SEC		= (1U << __ATA_QUIRK_MAX_SEC),
- 	ATA_QUIRK_MAX_TRIM_128M		= (1U << __ATA_QUIRK_MAX_TRIM_128M),
- 	ATA_QUIRK_NO_NCQ_ON_ATI		= (1U << __ATA_QUIRK_NO_NCQ_ON_ATI),
- 	ATA_QUIRK_NO_LPM_ON_ATI		= (1U << __ATA_QUIRK_NO_LPM_ON_ATI),
+ 	{ "Micron*",			NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
+ 	{ "Crucial*",			NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
++	{ "INTEL SSDSC2KG480G8", "XCV10120",	ATA_QUIRK_ZERO_AFTER_TRIM |
++						ATA_QUIRK_MAX_SEC },
+ 	{ "INTEL*SSD*",			NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
+ 	{ "SSD*INTEL*",			NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
+ 	{ "Samsung*SSD*",		NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
 -- 
 2.53.0
 
