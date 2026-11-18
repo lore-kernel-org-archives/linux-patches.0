@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020369;
-	b=O3hUsQ/Na+IS8vN5MROmqOcNwj+vFvg3VH3ZSsaaz/H6xs8xqBmXBuTmO70ndJtoZ+YC
-	 877Q2icEPB8PoRyvqVSA8nkfW4LbfsMEbzOBmTqQ9FKHNO1BtC698QS9dOMV7JZGeEPOr
-	 LoIFZgz3Urq+XITjdEP3v5yw5D7FdjK/WCIKxafOp7M7eUV9vzX+7UnneEv26G4tN9t7k
-	 y2v9Vq0oeGi9IdCJFYjcDA11fYXTsUAeVWXc+tzHBPa7lpY47qA9cOE1PUN/W8psvhF0n
-	 7l9mTfowI91b1UhRnrNU8XZiFf/Lmt93frAxZs0BztedWGhg+w0rkLG0nICT2SB0I2g==
+	t=1795020372;
+	b=5a1v8Ul29O6/77bzuvfluZpd0W/WtJHGIy3sBe1ZRwgrd/6LMSMcvZSvPzmxHPPMCybt
+	 YZSBaGl4gh4RrSt0VCn/4Mc20zwU4ZEerf8ATksybTL+7IYu+97nniGsOYpM9TeNZu9jM
+	 R0VIc+YYJLGqOGf1ePaS+wbyMIcUmU3ml+bVEh/z69w0z1jcu8bvM/lZHYQMJfKwn4NlD
+	 RI/Z6E2sYTqMLfgw6rtADijHluKYjPBBep+MnS5pj8xM9MUODgCgvQw9ZpfFqIXxdZKt2
+	 bPIrO4W75xT+iiAlrhfyEWj/sZLoMl15t6/Cf/Few2H3i53o7yYOZFYHoLgMtl8CPFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020369;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020372;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u5fNLZ+ABuvRh0f3JVP6ww1eWNTZNf8isrom75ujobg=;
-	b=qLmgO4rsVz0eBiOyi5kX15rNIeBxlnOln3+arxhzE7NUUg4wQTFdIkbg3xcRyhMSELlg
-	 wx2X+KP6pJHnPk9g9WEZ8GaFxTb/i7Zej4aoRsCA6XAhdMAcbmvLUImHJ8jTdxCZ+nfuU
-	 AMnsqOsUTmSy4rEg5leB0GHq8i2NPATWp6MOVIlSvShSHjumrndQzPjEne956ZlQ0y657
-	 RJAxhb3bHkq9aejkjEW7E+GMHjlx3eqFFhvU6Q2igtcoImmvn70OUlBC20tEl8BbjNbum
-	 5ZbRJXSAlaPtSYqn4T5dyVirtvgtOTX02IjUOmWbIllU6/PRhRVGywjVMYQm/bOqW6g==
+	bh=RRtZpou3aDsdTPM77wkRU2BtBC3DMF1ndVe/ObUH/ug=;
+	b=KTC10gJolLb0wWGPrSlPZ+owmBz0NlFOXHYwHfFMNeOSS0AediFB8NY0K0ngTkIInUPv
+	 ocI5tszv7LDImX8Dnv1hmnvN/rXwu7HyDxkWWY3517H974oxgrY/FSxiPKi8mbh4fkVEH
+	 35K7nkdfLDDXEZYFuVeV5KFpvqL/BSLq+fVUmrme5kwUQFqE4WphZNbDdBC0smcxrhrlR
+	 p4hRE4pPFB3ff6R9XBlAy5PmcT1OXXJeQLJYQOnBI5euBaLxL84lvG8LwcG6pMaXDcJGL
+	 E3ppOCBr8CGlPnDD88SGQfAeT7YwBF2u7OSIGWzX4fUheiD6pjlvleXMMB47H/MeqqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H47doxFM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CXr/3Ga9";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB928606A32A;
-	Wed, 18 Nov 2026 16:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07D1606A320;
+	Wed, 18 Nov 2026 16:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H47doxFM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10D5F1F000C6;
-	Wed, 18 Nov 2026 16:46:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CXr/3Ga9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2D31F000C4;
+	Wed, 18 Nov 2026 16:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020369;
-	bh=u5fNLZ+ABuvRh0f3JVP6ww1eWNTZNf8isrom75ujobg=;
+	s=korg; t=1795020372;
+	bh=RRtZpou3aDsdTPM77wkRU2BtBC3DMF1ndVe/ObUH/ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H47doxFM02/o1Oj2RvbfxwU9nSfYF70SETIlLKhAYFPXxlj22fP4VWMPvz/jTwgSc
-	 0hn9tl3WpvDzmcXffMT0dASJsFM3uUfl4xAQSCmKqsWeuGRc3mVRRDC51v0NPUj6ty
-	 siLgxmAhOyh7fmsFLmkSInylFARDUqeSnCOqmDag=
+	b=CXr/3Ga93R4bpkgt71gYHz5b3k33KpEA5CZctn1cIDMu+SyjhtKRkkYCP7M3OBkoM
+	 BKv2M+BB/S5b10UURpXsPIjp54TA/Akd1Ta4mbT3XXJVrHnnU3c+OAtTbk3Za61isv
+	 0hZcfqR5VuNxZ952Ys7YSV7L0sol5rarHgHrTR0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravindra <ravindra@intel.com>,
-	Sergey Lebedev <lsa.uz@pm.me>,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1886/2651] Bluetooth: btintel_pcie: clear the GP0 cause with a W1C write
-Date: Wed, 18 Nov 2026 15:52:06 +0100
-Message-ID: <20261118150354.800272186@linuxfoundation.org>
+Subject: [PATCH 7.3 1877/2651] Bluetooth: L2CAP: hold chan in l2cap_ecred_conn_rsp()
+Date: Wed, 18 Nov 2026 15:51:57 +0100
+Message-ID: <20261118150354.514582797@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,48 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravindra <ravindra@intel.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit f2cee6e2aa35a6a701ce3f4bedf20273c808361f ]
+[ Upstream commit b508a2a2d846ccc4c8f691e4e3dfca6f97dfe85a ]
 
-MSIX_HW_INT_CAUSES is a write-one-to-clear register. Using a
-read-modify-write helper writes zero to GP0, leaving the cause uncleared,
-and can acknowledge unrelated pending causes through the read value.
+l2cap_chan_del() calls l2cap_chan_put() to drop the conn->chan_l
+reference.  If this was the last reference, UAF follows.
 
-Write only the GP0 bit directly, matching the interrupt handler's W1C
-acknowledgment convention.
+l2cap_ecred_conn_rsp() iterates chan_l list and calls l2cap_chan_del()
+on some members, without holding chan reference.
 
-Fixes: 88c6216a52ea ("Bluetooth: btintel_pcie: Suspend/Resume: Controller doorbell interrupt handling")
-Signed-off-by: Ravindra <ravindra@intel.com>
-Tested-by: Sergey Lebedev <lsa.uz@pm.me>
-Reviewed-by: Sergey Lebedev <lsa.uz@pm.me>
+Fix by holding refcount while using chan after l2cap_chan_del().
+
+Since orig is looked up by dcid provided by remote, it's also possible
+orig == chan, so reference needs to be held also after orig use.
+
+Fixes: 41c2713b204e ("Bluetooth: L2CAP: Fix possible crash on l2cap_ecred_conn_rsp")
+Assisted-by: deepseek-v4-flash
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel_pcie.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ net/bluetooth/l2cap_core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index 8bf9a9b4ae78e..85141532de602 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -3543,10 +3543,12 @@ static int btintel_pcie_set_dxstate(struct btintel_pcie_data *data, u32 dxstate)
- 				    "Timeout (%u ms) on alive interrupt for D%d entry, retry count %d",
- 				    dx_intr_timeout_ms, dxstate, retry);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 8fc38a9e02bf7..d694c307543a6 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5502,12 +5502,14 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 		    chan->state == BT_CONNECTED)
+ 			continue;
  
--			/* clear gp0 cause */
--			btintel_pcie_clr_reg_bits(data,
--						  BTINTEL_PCIE_CSR_MSIX_HW_INT_CAUSES,
--						  BTINTEL_PCIE_MSIX_HW_INT_CAUSES_GP0);
-+			/* MSIX_HW_INT_CAUSES is W1C. Write only GP0 so other
-+			 * pending causes are not acknowledged here.
-+			 */
-+			btintel_pcie_wr_reg32(data,
-+					      BTINTEL_PCIE_CSR_MSIX_HW_INT_CAUSES,
-+					      BTINTEL_PCIE_MSIX_HW_INT_CAUSES_GP0);
++		l2cap_chan_hold(chan);
+ 		l2cap_chan_lock(chan);
+ 
+ 		/* Check that there is a dcid for each pending channel */
+ 		if (cmd_len < sizeof(dcid)) {
+ 			l2cap_chan_del(chan, ECONNREFUSED);
+ 			l2cap_chan_unlock(chan);
++			l2cap_chan_put(chan);
+ 			continue;
  		}
  
- 		/* gp0_received is set at the top of the handler, before the switch on
+@@ -5546,6 +5548,8 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 				__set_chan_timer(orig, 0);
+ 				l2cap_chan_unlock(orig);
+ 			}
++
++			l2cap_chan_put(chan);
+ 			continue;
+ 		}
+ 
+@@ -5591,6 +5595,7 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 		}
+ 
+ 		l2cap_chan_unlock(chan);
++		l2cap_chan_put(chan);
+ 	}
+ 
+ 	return err;
 -- 
 2.53.0
 
