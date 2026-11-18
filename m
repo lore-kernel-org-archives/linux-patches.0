@@ -1,70 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046769;
-	b=uOLJ5qlTDDU8sMAGRayUcST4iAfZTUFdWL/McBIJmmHVKhh9hlpJN5ze2AJLeT2619y9
-	 U4JEmRFvnDeKnU9k7T7xw/BHsfIxH+V8a6vNKKhnP4XeiIkHpC8npeHlz7fy6O/e0Pi/K
-	 2ZJl5fx8kUoRA/LnVXz9UcaoEpfCoUFbz/SxhAr3CCjXSoL3UET2avajvsFUBUcBQl0Q6
-	 iMocEUvhwrhTofzAXoLDdkFyEjQerKTYA5kqu1bnQ1yuUs1Gocgt+OE5IyIP24VdJ6Fgw
-	 SSD+Y2ZSCYu8IPuICsa18NDg4JNTKH2K+a/ZndbN9QQmYrVCGUUGEi+zU8NxIGqBa8Q==
+	t=1795046772;
+	b=oFVYxhwVdFI2Y8/pMbsNGdjZNwUCfQ4SVI3VUZhDpopEOpvnGfdzpVOmgfsl7uhbLfEb
+	 VqlALoWfOUrNu3wiCsw2haqWoN0YxVeNaVNjASA1x8H/TVLk3wKmfg+UD0RiojhgEZVPm
+	 w/W55r2VJqZQknqFBm2A9zVUCdDi6YoIkUSAqEOZJMqkVA8rIdF1Ww8gvK4JwL9MTOrEa
+	 X5QanjoHXHtJ29oKGROEG4vWnV/uJTA1pQcZKvQJQu+zsrDntIu2T9TOx5KWQklhwBFtW
+	 3mmBqrjo1pRLxm3TbJdysbWfSBDQeKFgKBVqmh06OsHdoCk+AIKIEKOx7uZjUj5gXrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046769;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046772;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6oliW2jvNGNUcR5Pi4ZaNTEB7P7aLWISGRG6AGP2DUU=;
-	b=mCuPoTP/5ZQdV/OjxQfdzFKZHKObi03HErhG2pgzhR8Xoo4iAoBuLrn2q9Q+OvgyVrxM
-	 2a1bWDxDFVDLyr/kjdk1/KDLNM/1vLoFMpIFNMaOsIJFA5tFvgNakLsZGTJRQ5f1LScT7
-	 bnueCtVKOjiSGyf/trM9LdD5ZEGF6JUReEnHXfkynVoJWf1+rMEEzG3sjqtXFDXrBZVkm
-	 WTVQAC7viWbN4VAzz7AwJDoV5GNuqh8nz76WR1NGwF2ocD49NiWBns/4YMwMLSr8xKEAk
-	 tPQBKx7A+DXSAmiPHGgO7kfA/h/8BKUociTveMzjUgkiWAX9H8MFp6eb+b/QeUFfW6A==
+	bh=/19FsMEmZnZ6H9eUaUX4rKO133Nl3G4JtxLF6GfL/To=;
+	b=pj7q3WBcvi6j7iccamv0uqYLk9uJdAOALKA6WkP7R+XE5NlXh3JcLdk9d52Oac46W1AE
+	 yiH7NkoqR/Udyg02rEpZfxA0nDg/ux0fuS4Lgs7sODRocqTda+1WJuh20Ccw0iYTUxS1w
+	 XNfT1suvMwaxdHLEC+AxmSxmIPQk+C9cwlJijXkvbhK0yWyMEdC8ocuYrve5OUTpux5PP
+	 ooRoz81K25b7olsO4QugJMkDLo8tt87f2uVHfe3BqJM4OlbAEpvqwwB0E9D2v0EHB9zCy
+	 K2RGcI1x0i7BwV4NZZDIxcTSvUxjDFqdd1TY/CSSSmtBDbxJ317et9B6H9beD2bWkoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ECO0aeGs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UIVn5jJa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6538606A320;
-	Thu, 19 Nov 2026 00:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59131606A32C;
+	Thu, 19 Nov 2026 00:06:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ECO0aeGs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBCB31F000C4;
-	Thu, 19 Nov 2026 00:06:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UIVn5jJa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7611F000C4;
+	Thu, 19 Nov 2026 00:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046769;
-	bh=6oliW2jvNGNUcR5Pi4ZaNTEB7P7aLWISGRG6AGP2DUU=;
+	s=korg; t=1795046772;
+	bh=/19FsMEmZnZ6H9eUaUX4rKO133Nl3G4JtxLF6GfL/To=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ECO0aeGsTEaSB3BybXzr5fANtyWQLesoMpIZTZrRwJz60Yf2BruAXhn1vJbLTyoyP
-	 H8tztBq8PZqNG8sxGBU9e+Z7RacbDsaWexvXWlzziSOlVXGyBy9PXl6DvJ9dI6VZNm
-	 ULWSvCWEusyM9bn78AHrakwo0KDRcjf4tgGnuhSg=
+	b=UIVn5jJavHNFBn+/ccw67h17x83V/uLLlUtjhXJcwYt/7Ni5Ttkdqkf6/E5SJYdjL
+	 4eU3sjn0jfERwBHwkVUDVYfYQLWa2bCBpsjlNJfsyCuSgUirf5+ZjiV2nchU1F+Wbo
+	 6X3Idq8rX4cbU5oSOZCRm751cxqnOiHa/TAfTyKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Chris Mason <mason@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Oscar Salvador <osalvador@suse.de>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Adam Litke <agl@us.ibm.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Rik van Riel <riel@surriel.com>,
-	Peter Xu <peterx@redhat.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1399/2857] mm/hugetlb: unmap the page where the other VMA maps it
-Date: Wed, 18 Nov 2026 15:40:33 +0100
-Message-ID: <20261118150251.721001512@linuxfoundation.org>
+Subject: [PATCH 6.1 1400/2857] ipv4: tunnels: use DEV_STATS_INC()
+Date: Wed, 18 Nov 2026 15:40:34 +0100
+Message-ID: <20261118150251.757111180@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -86,151 +68,331 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ae99c503eb362b42cd5d24d80bc6cba669acc4c2 ]
+[ Upstream commit c4794d22251b979b12a6c8e2d3848b662a44fdb6 ]
 
-If the owner of a MAP_PRIVATE hugetlb mapping fails to allocate a page
-for CoW, unmap_ref_private() unmaps the old page from all other private
-VMAs that have no reservation of their own.  It finds them by the offset
-in the file, but then zaps each of them at the address of the faulting
-VMA.  Nothing says that another VMA maps the offset at that address: a
-child can have moved its copy of the VMA with mremap(), and a second
-mapping of the file is wherever mmap() has put it.
+Most of code paths in tunnels are lockless (eg NETIF_F_LLTX in tx).
 
-So __unmap_hugepage_range() walks the page tables of the other mm at an
-address outside of iter_vma, where i_mmap_rwsem of this file protects
-nothing and where anything can be mapped, and the page stays mapped where
-it really is.
+Adopt SMP safe DEV_STATS_INC() to update dev->stats fields.
 
-All of the following was seen on v7.3-rc6+ (g6c377d19d4a5) in KVM guests,
-as a user without any privilege.  It takes a pool of 2 MiB pages with no
-free page that is not reserved, so that the allocation fails: the user
-can take or reserve what is free itself.
-
- - The child moves its VMA away.  The page is never unmapped, the
-   mapcount stays 2, and the owner goes round retry_avoidcopy in
-   hugetlb_wp() until the child is gone or a page becomes free.  SIGKILL
-   to the owner does not end it.  5 of 5 runs.
-
- - The owner's mm has a second private mapping of the offset, made with
-   MAP_NORESERVE.  The owner zaps its own entry and reads zeroes where
-   its data was.  5 of 5 runs.
-
- - The child moves its VMA away and maps a 1 GiB hugetlb page at the old
-   address, so this one takes a pool with a 1 GiB page as well.
-   huge_pte_offset() for the 2 MiB size steps through the PUD
-   leaf, so the "PMD table" is the 1 GiB page itself and its "page table
-   lock" is folio->private of that page, which holds 2.  Kernels with
-   lock debugging oops in __unmap_hugepage_range(), 7 of 7 runs.  Others
-   spin on that word for ever with preemption disabled, 5 of 5 runs:
-
-     watchdog: BUG: soft lockup - CPU#0 stuck for 26s! [u_det3:130]
-     RIP: 0010:queued_spin_lock_slowpath+0x8a/0x290
-     RAX: 0000000000000002 RBX: ffffea0001000028
-     Call Trace:
-      __unmap_hugepage_range+0x154/0x6d0
-      unmap_hugepage_range+0xc1/0x140
-      hugetlb_wp+0x55c/0x700
-      hugetlb_fault+0x5f3/0x8f0
-
-   RCU stalls follow, and killing all tasks of the user changes nothing.
-   Four such owners, whose children share a single 1 GiB page, took down
-   the whole guest with its four CPUs, 2 of 2 runs: one reported soft
-   lockups on all four, the other gave no sign of life any more.
-
-   i_mmap_rwsem stays write locked.  With a MAP_PRIVATE mapping of a
-   hugetlbfs file that belongs to another user, and that the attacker
-   can only read, the next mmap() of that file by its owner sleeps
-   uninterruptibly in __mmap_region(), 4 of 4 runs.
-
-Compute the address from the offset for each VMA.  The tree walk returns
-only VMAs that cover pgoff, and vm_start, vm_end and vm_pgoff of a hugetlb
-VMA are aligned to the huge page size, as pgoff is, so the whole range
-lies inside iter_vma.  Its page tables can not go away there, since the
-VMA is unlinked from the file under i_mmap_rwsem first.
-
-With the right address the page is unmapped from all VMAs but the
-owner's, so the retry in hugetlb_wp() finds a mapcount of 1 and reuses the
-page.
-
-A child that has moved its copy of the VMA now loses the page, and gets
-SIGBUS when it faults on a missing page of that VMA.  That is what the
-comment above the function has always promised to those who do not own
-the reservation, and what already happens to a child that has left the
-VMA in place.
-
-The address has been wrong from the start, and the second case needs
-only mmap() and fork().  mremap() of hugetlb VMAs, which the other cases
-use, came with commit 550a7d60bd5e ("mm, hugepages: add mremap() support
-for hugepage backed vma") in v5.16.
-
-Original fix generated by an LLM and sent in private by Josef.
-
-[david@kernel.org: switch to vma_filebacked_address, add VM_WARN_ON_ONCE, refine comments]
-Link: https://lore.kernel.org/20261015-urgent_fixes-v1-4-42796911043b@kernel.org
-Fixes: 04f2cbe35699 ("hugetlb: guarantee that COW faults for a process that called mmap(MAP_PRIVATE) on hugetlbfs will succeed")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Chris Mason <mason@kernel.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Adam Litke <agl@us.ibm.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: adapted folio-based code to page pointers and replaced vma_filebacked_address() with vma_pgoff_address() ]
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: aa1799e93f5e ("ipmr, ip6mr: validate packets injected into the register vif on xmit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ net/ipv4/ip_gre.c    | 10 +++++-----
+ net/ipv4/ip_tunnel.c | 32 ++++++++++++++++----------------
+ net/ipv4/ip_vti.c    | 20 ++++++++++----------
+ net/ipv4/ipip.c      |  2 +-
+ net/ipv4/ipmr.c      | 12 ++++++------
+ 5 files changed, 38 insertions(+), 38 deletions(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index de805b385d06b..368e6286562f8 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -5500,6 +5500,8 @@ static void unmap_ref_private(struct mm_struct *mm, struct vm_area_struct *vma,
- 	struct address_space *mapping;
- 	pgoff_t pgoff;
+diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
+index 66c35ced1e887..3648b9ca74410 100644
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -515,7 +515,7 @@ static void gre_fb_xmit(struct sk_buff *skb, struct net_device *dev,
  
-+	VM_WARN_ON_ONCE(!folio_test_anon(page_folio(page)));
-+
- 	/*
- 	 * vm_pgoff is in PAGE_SIZE units, hence the different calculation
- 	 * from page cache lookup which is in HPAGE_SIZE units.
-@@ -5535,9 +5537,17 @@ static void unmap_ref_private(struct mm_struct *mm, struct vm_area_struct *vma,
- 		 * could insert a zeroed page instead of the data existing
- 		 * from the time of fork. This would look like data corruption
- 		 */
--		if (!is_vma_resv_set(iter_vma, HPAGE_RESV_OWNER))
--			unmap_hugepage_range(iter_vma, address,
--					     address + huge_page_size(h), page, 0);
-+		if (is_vma_resv_set(iter_vma, HPAGE_RESV_OWNER))
-+			continue;
-+
-+		/*
-+		 * The address in other VMAs can differ. Even though our old
-+		 * folio is anon, we always operate on the underlying hugetlb
-+		 * file.
-+		 */
-+		address = vma_pgoff_address(pgoff, 1, iter_vma);
-+		unmap_hugepage_range(iter_vma, address,
-+				     address + huge_page_size(h), page, 0);
- 	}
- 	i_mmap_unlock_write(mapping);
+ err_free_skb:
+ 	kfree_skb(skb);
+-	dev->stats.tx_dropped++;
++	DEV_STATS_INC(dev, tx_dropped);
  }
+ 
+ static void erspan_fb_xmit(struct sk_buff *skb, struct net_device *dev)
+@@ -597,7 +597,7 @@ static void erspan_fb_xmit(struct sk_buff *skb, struct net_device *dev)
+ 
+ err_free_skb:
+ 	kfree_skb(skb);
+-	dev->stats.tx_dropped++;
++	DEV_STATS_INC(dev, tx_dropped);
+ }
+ 
+ static int gre_fill_metadata_dst(struct net_device *dev, struct sk_buff *skb)
+@@ -671,7 +671,7 @@ static netdev_tx_t ipgre_xmit(struct sk_buff *skb,
+ 
+ free_skb:
+ 	kfree_skb(skb);
+-	dev->stats.tx_dropped++;
++	DEV_STATS_INC(dev, tx_dropped);
+ 	return NETDEV_TX_OK;
+ }
+ 
+@@ -725,7 +725,7 @@ static netdev_tx_t erspan_xmit(struct sk_buff *skb,
+ 
+ free_skb:
+ 	kfree_skb(skb);
+-	dev->stats.tx_dropped++;
++	DEV_STATS_INC(dev, tx_dropped);
+ 	return NETDEV_TX_OK;
+ }
+ 
+@@ -753,7 +753,7 @@ static netdev_tx_t gre_tap_xmit(struct sk_buff *skb,
+ 
+ free_skb:
+ 	kfree_skb(skb);
+-	dev->stats.tx_dropped++;
++	DEV_STATS_INC(dev, tx_dropped);
+ 	return NETDEV_TX_OK;
+ }
+ 
+diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
+index 826bd0487aedf..d250ed84f32b4 100644
+--- a/net/ipv4/ip_tunnel.c
++++ b/net/ipv4/ip_tunnel.c
+@@ -382,23 +382,23 @@ int ip_tunnel_rcv(struct ip_tunnel *tunnel, struct sk_buff *skb,
+ 
+ #ifdef CONFIG_NET_IPGRE_BROADCAST
+ 	if (ipv4_is_multicast(iph->daddr)) {
+-		tunnel->dev->stats.multicast++;
++		DEV_STATS_INC(tunnel->dev, multicast);
+ 		skb->pkt_type = PACKET_BROADCAST;
+ 	}
+ #endif
+ 
+ 	if ((!(tpi->flags&TUNNEL_CSUM) &&  (tunnel->parms.i_flags&TUNNEL_CSUM)) ||
+ 	     ((tpi->flags&TUNNEL_CSUM) && !(tunnel->parms.i_flags&TUNNEL_CSUM))) {
+-		tunnel->dev->stats.rx_crc_errors++;
+-		tunnel->dev->stats.rx_errors++;
++		DEV_STATS_INC(tunnel->dev, rx_crc_errors);
++		DEV_STATS_INC(tunnel->dev, rx_errors);
+ 		goto drop;
+ 	}
+ 
+ 	if (tunnel->parms.i_flags&TUNNEL_SEQ) {
+ 		if (!(tpi->flags&TUNNEL_SEQ) ||
+ 		    (tunnel->i_seqno && (s32)(ntohl(tpi->seq) - tunnel->i_seqno) < 0)) {
+-			tunnel->dev->stats.rx_fifo_errors++;
+-			tunnel->dev->stats.rx_errors++;
++			DEV_STATS_INC(tunnel->dev, rx_fifo_errors);
++			DEV_STATS_INC(tunnel->dev, rx_errors);
+ 			goto drop;
+ 		}
+ 		tunnel->i_seqno = ntohl(tpi->seq) + 1;
+@@ -425,8 +425,8 @@ int ip_tunnel_rcv(struct ip_tunnel *tunnel, struct sk_buff *skb,
+ 			net_info_ratelimited("non-ECT from %pI4 with TOS=%#x\n",
+ 					&iph->saddr, iph->tos);
+ 		if (err > 1) {
+-			++tunnel->dev->stats.rx_frame_errors;
+-			++tunnel->dev->stats.rx_errors;
++			DEV_STATS_INC(tunnel->dev, rx_frame_errors);
++			DEV_STATS_INC(tunnel->dev, rx_errors);
+ 			goto drop;
+ 		}
+ 	}
+@@ -612,7 +612,7 @@ void ip_md_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 	if (!rt) {
+ 		rt = ip_route_output_key(tunnel->net, &fl4);
+ 		if (IS_ERR(rt)) {
+-			dev->stats.tx_carrier_errors++;
++			DEV_STATS_INC(dev, tx_carrier_errors);
+ 			goto tx_error;
+ 		}
+ 		if (use_cache)
+@@ -621,7 +621,7 @@ void ip_md_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 	}
+ 	if (rt->dst.dev == dev) {
+ 		ip_rt_put(rt);
+-		dev->stats.collisions++;
++		DEV_STATS_INC(dev, collisions);
+ 		goto tx_error;
+ 	}
+ 
+@@ -656,10 +656,10 @@ void ip_md_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 		      df, !net_eq(tunnel->net, dev_net(dev)));
+ 	return;
+ tx_error:
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	goto kfree;
+ tx_dropped:
+-	dev->stats.tx_dropped++;
++	DEV_STATS_INC(dev, tx_dropped);
+ kfree:
+ 	kfree_skb(skb);
+ }
+@@ -693,7 +693,7 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 		/* NBMA tunnel */
+ 
+ 		if (!skb_dst(skb)) {
+-			dev->stats.tx_fifo_errors++;
++			DEV_STATS_INC(dev, tx_fifo_errors);
+ 			goto tx_error;
+ 		}
+ 
+@@ -780,7 +780,7 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 		rt = ip_route_output_key(tunnel->net, &fl4);
+ 
+ 		if (IS_ERR(rt)) {
+-			dev->stats.tx_carrier_errors++;
++			DEV_STATS_INC(dev, tx_carrier_errors);
+ 			goto tx_error;
+ 		}
+ 		if (use_cache)
+@@ -793,7 +793,7 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 
+ 	if (rt->dst.dev == dev) {
+ 		ip_rt_put(rt);
+-		dev->stats.collisions++;
++		DEV_STATS_INC(dev, collisions);
+ 		goto tx_error;
+ 	}
+ 
+@@ -834,7 +834,7 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 
+ 	if (skb_cow_head(skb, max_headroom)) {
+ 		ip_rt_put(rt);
+-		dev->stats.tx_dropped++;
++		DEV_STATS_INC(dev, tx_dropped);
+ 		kfree_skb(skb);
+ 		return;
+ 	}
+@@ -850,7 +850,7 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 	dst_link_failure(skb);
+ #endif
+ tx_error:
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	kfree_skb(skb);
+ }
+ EXPORT_SYMBOL_GPL(ip_tunnel_xmit);
+diff --git a/net/ipv4/ip_vti.c b/net/ipv4/ip_vti.c
+index 2e07592d8b966..cd61a417c44d9 100644
+--- a/net/ipv4/ip_vti.c
++++ b/net/ipv4/ip_vti.c
+@@ -107,8 +107,8 @@ static int vti_rcv_cb(struct sk_buff *skb, int err)
+ 	dev = tunnel->dev;
+ 
+ 	if (err) {
+-		dev->stats.rx_errors++;
+-		dev->stats.rx_dropped++;
++		DEV_STATS_INC(dev, rx_errors);
++		DEV_STATS_INC(dev, rx_dropped);
+ 
+ 		return 0;
+ 	}
+@@ -183,7 +183,7 @@ static netdev_tx_t vti_xmit(struct sk_buff *skb, struct net_device *dev,
+ 			fl->u.ip4.flowi4_flags |= FLOWI_FLAG_ANYSRC;
+ 			rt = __ip_route_output_key(dev_net(dev), &fl->u.ip4);
+ 			if (IS_ERR(rt)) {
+-				dev->stats.tx_carrier_errors++;
++				DEV_STATS_INC(dev, tx_carrier_errors);
+ 				goto tx_error_icmp;
+ 			}
+ 			dst = &rt->dst;
+@@ -198,14 +198,14 @@ static netdev_tx_t vti_xmit(struct sk_buff *skb, struct net_device *dev,
+ 			if (dst->error) {
+ 				dst_release(dst);
+ 				dst = NULL;
+-				dev->stats.tx_carrier_errors++;
++				DEV_STATS_INC(dev, tx_carrier_errors);
+ 				goto tx_error_icmp;
+ 			}
+ 			skb_dst_set(skb, dst);
+ 			break;
+ #endif
+ 		default:
+-			dev->stats.tx_carrier_errors++;
++			DEV_STATS_INC(dev, tx_carrier_errors);
+ 			goto tx_error_icmp;
+ 		}
+ 	}
+@@ -213,7 +213,7 @@ static netdev_tx_t vti_xmit(struct sk_buff *skb, struct net_device *dev,
+ 	dst_hold(dst);
+ 	dst = xfrm_lookup_route(tunnel->net, dst, fl, NULL, 0);
+ 	if (IS_ERR(dst)) {
+-		dev->stats.tx_carrier_errors++;
++		DEV_STATS_INC(dev, tx_carrier_errors);
+ 		goto tx_error_icmp;
+ 	}
+ 
+@@ -221,7 +221,7 @@ static netdev_tx_t vti_xmit(struct sk_buff *skb, struct net_device *dev,
+ 		goto xmit;
+ 
+ 	if (!vti_state_check(dst->xfrm, parms->iph.daddr, parms->iph.saddr)) {
+-		dev->stats.tx_carrier_errors++;
++		DEV_STATS_INC(dev, tx_carrier_errors);
+ 		dst_release(dst);
+ 		goto tx_error_icmp;
+ 	}
+@@ -230,7 +230,7 @@ static netdev_tx_t vti_xmit(struct sk_buff *skb, struct net_device *dev,
+ 
+ 	if (tdev == dev) {
+ 		dst_release(dst);
+-		dev->stats.collisions++;
++		DEV_STATS_INC(dev, collisions);
+ 		goto tx_error;
+ 	}
+ 
+@@ -267,7 +267,7 @@ static netdev_tx_t vti_xmit(struct sk_buff *skb, struct net_device *dev,
+ tx_error_icmp:
+ 	dst_link_failure(skb);
+ tx_error:
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	kfree_skb(skb);
+ 	return NETDEV_TX_OK;
+ }
+@@ -304,7 +304,7 @@ static netdev_tx_t vti_tunnel_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	return vti_xmit(skb, dev, &fl);
+ 
+ tx_err:
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	kfree_skb(skb);
+ 	return NETDEV_TX_OK;
+ }
+diff --git a/net/ipv4/ipip.c b/net/ipv4/ipip.c
+index ca853ab4591c5..4768904b1e620 100644
+--- a/net/ipv4/ipip.c
++++ b/net/ipv4/ipip.c
+@@ -311,7 +311,7 @@ static netdev_tx_t ipip_tunnel_xmit(struct sk_buff *skb,
+ tx_error:
+ 	kfree_skb(skb);
+ 
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	return NETDEV_TX_OK;
+ }
+ 
+diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
+index 948993a4f4157..f27f8b07a912e 100644
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -518,8 +518,8 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		return err;
+ 	}
+ 
+-	dev->stats.tx_bytes += skb->len;
+-	dev->stats.tx_packets++;
++	DEV_STATS_ADD(dev, tx_bytes, skb->len);
++	DEV_STATS_INC(dev, tx_packets);
+ 	rcu_read_lock();
+ 
+ 	/* Pairs with WRITE_ONCE() in vif_add() and vif_delete() */
+@@ -1852,8 +1852,8 @@ static void ipmr_queue_xmit(struct net *net, struct mr_table *mrt,
+ 	if (vif->flags & VIFF_REGISTER) {
+ 		WRITE_ONCE(vif->pkt_out, vif->pkt_out + 1);
+ 		WRITE_ONCE(vif->bytes_out, vif->bytes_out + skb->len);
+-		vif_dev->stats.tx_bytes += skb->len;
+-		vif_dev->stats.tx_packets++;
++		DEV_STATS_ADD(vif_dev, tx_bytes, skb->len);
++		DEV_STATS_INC(vif_dev, tx_packets);
+ 		ipmr_cache_report(mrt, skb, vifi, IGMPMSG_WHOLEPKT);
+ 		goto out_free;
+ 	}
+@@ -1911,8 +1911,8 @@ static void ipmr_queue_xmit(struct net *net, struct mr_table *mrt,
+ 	if (vif->flags & VIFF_TUNNEL) {
+ 		ip_encap(net, skb, vif->local, vif->remote);
+ 		/* FIXME: extra output firewall step used to be here. --RR */
+-		vif_dev->stats.tx_packets++;
+-		vif_dev->stats.tx_bytes += skb->len;
++		DEV_STATS_INC(vif_dev, tx_packets);
++		DEV_STATS_ADD(vif_dev, tx_bytes, skb->len);
+ 	}
+ 
+ 	IPCB(skb)->flags |= IPSKB_FORWARDED;
 -- 
 2.53.0
 
