@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027313;
-	b=w4vEkEBLwUvegpEDVkAw9pBwe1DM4pUG23pqm+vRX0PX9lBjer45Nmg8HEoeSA/APvAA
-	 EWw8Drt3YaV1DJrs9lei3VgdBfk7koH5g4TgGPliaw2VRrDZtnE8qIVTJNjnXNbgwbji5
-	 +oQh4CHD/w/wBzUsMqemKZ3TsIJ34ap3dUJYL6T653USrghkMW9LDZwGq8pvIHCZzZ/s6
-	 mCkCSlzAVdvQnn1/WZ8rhITYXDRpL0njl+CEPjjLhZtSdZqyeTrzwNmZQVSgQF4Nj86PI
-	 MCTXw3coxttr4D7zI3SxHVgMOfVnXD2zU2rwOnW0wPm611K+tEif+pxcyVgoR23Vyfw==
+	t=1795027316;
+	b=CppwvakWj3bymuMFyRAP7v0dioa4IWeu9TGaS08M7mw2+ziQSeSvux/nQbrBNpwKe5P9
+	 i4x8Iw7n/kuzxoHiCWK6JHmbOmhtFGlCU0SDo13lKQb4HJPqcCuAeiziwuVN1NYOWbgsV
+	 MocJ5sCW68Vf49/GGB0jfdWk9nwYw3zftUyK/SzSMiEGS2ol6jBJ1Ov5teagUo/2hQOav
+	 +Bq72r6PEcAIrxpb8ElFOanZDzAis2F8nFyz6MMNa4sWq6D0Ctpk3RGb6jPej/vmSRNei
+	 HeNcbjrDWJyQEW8cy8byw9QNzBhY1SEbCTwKbNK69zSgcdb6KmRIWTCSPf+DK0SeNLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027313;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027316;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LbP4h4ViuAW3gxRxn5sQjzRWXr1BPAyRbssg30nd5Z4=;
-	b=NgSMd/m/G7qz+BLHVZ8cbI4mgBsqHF1rmqnFVh2bWBVXKIRK6K63YipZvGcjBEN+LcQz
-	 dBVcE+e6t4iCucnBVfDOM+yMwMmVF0gwFpsDW056fg+Ajvc87qeBWFTrE8jTnLnu9Cw08
-	 rXQh3blqETmIWgenalaHFy5HzAKMBNR3Er1n5xSvxIR3DZKQ6tnCm+iQ/0/lVtsXlw6xM
-	 e9Aadbf3h5TSG1onyvReXAUo5YQbACB7XJFGgTxAyZciyVXAI2wTilqSs9AKvSRGEBWY1
-	 pPca63MoYs+VVpLbfb13A2Zp9vmEAn+h6Kvbsn4gxwulLMNnbH01o8C1ehit93FqgJQ==
+	bh=JdQCcYoAzWZkwI8lNMwbZ2OCRIuzmKXEBQzmJpVbOnM=;
+	b=Exo/8TNoNSTXNZVrTu7XmXHMX5qmZn5WPXbZtbOzLwOcJukkHZhkQWw7YviqWlWPViOq
+	 aivLPwcU8j381qpNo/aYwfopeOoTXcAUr/FZQDeHGbOgfxXJQBKIpCUnVIRQFup/IqbXF
+	 JDOy1uMSX2UHr38GBScSGLIHx6qHwOZq5SbEVcWi9rD6g78n27yq7FHY9qwDf8w5kYWTc
+	 vQH2VhzqnM+rJXpI8gDJ2Joj9CosPd9FiKHuyFH9rFP+1lwYnKx+0i0Jc6nPHtvMSu4qe
+	 ELqkTE2K5EFi0fOL9jbOjA1etOeG0/TLjAANFEtFToWrtW7Z1wTmbn2oQ/EMsJIW2VQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uvNz0vjM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=URe39xSg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF2B606A33B;
-	Wed, 18 Nov 2026 18:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B759606A333;
+	Wed, 18 Nov 2026 18:41:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uvNz0vjM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F631F000C5;
-	Wed, 18 Nov 2026 18:41:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=URe39xSg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50021F000C4;
+	Wed, 18 Nov 2026 18:41:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027313;
-	bh=LbP4h4ViuAW3gxRxn5sQjzRWXr1BPAyRbssg30nd5Z4=;
+	s=korg; t=1795027316;
+	bh=JdQCcYoAzWZkwI8lNMwbZ2OCRIuzmKXEBQzmJpVbOnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uvNz0vjMGYUw3RuyJzyeud6Hc2ojl/2UKKI8rqXkTvL4X/sFnVamtQXQLC7x+xP+D
-	 JaqZvDcPCSxFw2/xwtxQaYC7bEu2yrpfWRPaFod6179Pwl19NFsAeewc6ewd8vESRS
-	 2oZ63dtjQtTHvrI1uchXfsUsS+snxevQ3feV2j10=
+	b=URe39xSgSK99stoioQT+R9BthfhgVbZrDtutz9SbDiL9OtTflHDvzE60bcOrhWM18
+	 zcK1IM+ofN6HG1cjkDFhBzgGbDZ07HmGHA18EnEjWA6yX2erVLb0nn3SioKPbu2KJA
+	 PPjJMK0GfT1VzcLlCZIN1YSI/baFykjwPD0tWs4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1746/2151] bpf: Use memmove() to store bytes in an skb
-Date: Wed, 18 Nov 2026 15:58:01 +0100
-Message-ID: <20261118150225.461229086@linuxfoundation.org>
+Subject: [PATCH 6.18 1747/2151] bpf: Use memmove() to store bytes in an xdp_buff
+Date: Wed, 18 Nov 2026 15:58:02 +0100
+Message-ID: <20261118150225.493786695@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,40 +67,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 1db084f42884c5af881fedf3df4777fe2095b20b ]
+[ Upstream commit ab08863c58b1a96ff8378e373cb3d277cbe65b68 ]
 
-Through bpf_dynptr_write() and bpf_dynptr_copy() the source of
-bpf_skb_store_bytes() can be a slice of the same skb which overlaps the
-destination. memcpy() then reads bytes which it has overwritten already. On
-x86 with FSRM it repeats the first bytes of the source instead of copying
-it. Local, ringbuf and skb metadata dynptrs are written with memmove() for
-that reason.
+bpf_dynptr_write() to the dynptr of an xdp_buff ends in
+bpf_xdp_store_bytes(). The source can be a slice of the same xdp_buff which
+overlaps the destination, and the helper itself takes such a slice as well.
+memcpy() then reads bytes which it has overwritten already. On x86 with
+FSRM
+
+  p = bpf_dynptr_slice_rdwr(&ptr, 0, NULL, 64);
+  bpf_dynptr_write(&ptr, 8, p, 64, 0);
+
+repeats the first 8 bytes of the packet instead of moving 64.
+
+A write that crosses from the linear part into a fragment is copied piece
+by piece, where the first piece can overwrite what the second one has yet
+to read. That is not dealt with here.
 
 Fixes: 2012c867c800 ("bpf: verifier: Accept dynptr mem as mem in helpers")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017230950.802052-15-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017230950.802052-16-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  net/core/filter.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/net/core/filter.c b/net/core/filter.c
-index b6780339ae857..d79a51ba69824 100644
+index d79a51ba69824..17e5f9a23b8e9 100644
 --- a/net/core/filter.c
 +++ b/net/core/filter.c
-@@ -1751,7 +1751,8 @@ BPF_CALL_5(bpf_skb_store_bytes, struct sk_buff *, skb, u32, offset,
- 	if (flags & BPF_F_RECOMPUTE_CSUM)
- 		__skb_postpull_rcsum(skb, ptr, len, offset);
+@@ -4200,7 +4200,8 @@ BPF_CALL_4(bpf_xdp_store_bytes, struct xdp_buff *, xdp, u32, offset,
+ 	if (!ptr)
+ 		bpf_xdp_copy_buf(xdp, offset, buf, len, true);
+ 	else
+-		memcpy(ptr, buf, len);
++		/* through a dynptr the source may be an overlapping slice */
++		memmove(ptr, buf, len);
  
--	memcpy(ptr, from, len);
-+	/* through a dynptr the source may be an overlapping slice of the skb */
-+	memmove(ptr, from, len);
- 
- 	if (flags & BPF_F_RECOMPUTE_CSUM)
- 		__skb_postpush_rcsum(skb, ptr, len, offset);
+ 	return 0;
+ }
 -- 
 2.53.0
 
