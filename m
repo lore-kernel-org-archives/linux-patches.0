@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053243;
-	b=a7wVNfOgeoSMBYFzEMq0NaWLmLXFt+VzJftW9F55nnlRg5i3q0TI0ExmvsQO0pvzJKSn
-	 SSprqbZ0t4mDcERwTlCBK68KsPI6W8vcTYayxcoU+nvjuqSUjawTwaEhZ1d57JFvzir7k
-	 K8HT2AW19aJlc9mNufuiRzPIHwjkTdLHXHFrj/bjZBXU2JfopFYj55gYEu3RtiqumNZhB
-	 twa+UL1O7bQ94QuN0OATar65PUxCtEciHeXHcgxkpGJ63etkug5u58VlJQ+Bs8Xmaif2x
-	 crk8HVorNKxvANv7kxQrHWlTEbrvoRAHA2VBZC0f53ibIR79ZXQiYsaZJQ3Q+ZJpcHA==
+	t=1795053246;
+	b=aIuBrVrVIsu2UFVh+V3gFwBrAlqy0+vYKZR3jFFl8JRCc8v2RVcfzasV1PCTBvjfKpRi
+	 03UVDSYqLGLb5BHyMjC8s3K/OhlVckvk20U6Ur6ud1q/6u8e7VqsYBJaGePULTf1Oogqi
+	 GgXUnzpnlUWYaxPirBEdNowCZppDjuanDYuDayvqRGcKylIFqR22XdeUu0++/hg5qH7sy
+	 s5svexnCkyBGcO0LTHYq+06+if+O10SktD/l5Im8NvjSik758R52tqszsEEveQRxAWr6M
+	 OfBOL63CR3Gzbw/uVwc3vZuR4hIWqKnr9a2ZBEDf9ia8EThFdcrDEvXGmtKUL30csag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053243;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053246;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O/r/JQ66rGBShqnpkbj8wxpt6kSiOYDQfudrbtI/saY=;
-	b=CaMgCwTLG1SBLPyP2B+pfttkPJu5Clw8xfGQJt+Y08aZwyvXkfaGeg4EeoSrCSir/DnC
-	 VX3pcOcz6alIwgu4vc+zAp2GCuotnAkFe44mi2Wbc+rHd0aRDTBDxAnfVQ5XeQDnWWKky
-	 mU0aFjDcajbqYgCbtoFrbSZtVshGgV1fRJqCe2VsRJlHWubzGcqHYYTNC4tbHx4S28AXG
-	 YTOUWDwPn6UhBtwWx9FkmytgSrOjPVwhHtxOSVEM+7rn32MZcg44txlFxhkv6uses926L
-	 qH/b+Sb0EiAnf/hZsdWAEcP36ig6UYXjY57JCY+LvQwZEoJ9MqhIbG8QCfzsUDP3FQg==
+	bh=isV2TmILhglBJuTSA5c15vPGHlEqJhnvLlbWRl5fuuE=;
+	b=wYCFq5ijOVSILSsG5yMv54QQQ0PE6fIZrSscBenyv+6kfJuhpYH8OjbkU0ik8UFjV8Db
+	 4rUmXqzyTXjloCTEwHE2/jZY3okDFBwJF5O6To6uLwb9neNnvKpaiomP3jTt7uf+1lucT
+	 xfoc7zt5BV+BV/f/ooDQoo9BhESBMVwLEIg7B6KkL6ho+L1V0fvsaRvmOrD3vhxsZxoOx
+	 qxB6enBoAGAPOPUqKNi9xmS+m6aOazVrHY0Ku3rgIJi4E4zaKxkfiN/mR59sXWzZ0+iqX
+	 0PiCcb70yUeg0uK1oCkV8ULgJZMS2XmnKQ06Np9McOnxU/ZhbUAbJk+ZPBKZjBqJLsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uT87ZWq0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w3ytOLm5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8018260A2601;
-	Thu, 19 Nov 2026 01:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979E160A2602;
+	Thu, 19 Nov 2026 01:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uT87ZWq0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A81E1F000C5;
-	Thu, 19 Nov 2026 01:54:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w3ytOLm5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970BB1F000C4;
+	Thu, 19 Nov 2026 01:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053243;
-	bh=O/r/JQ66rGBShqnpkbj8wxpt6kSiOYDQfudrbtI/saY=;
+	s=korg; t=1795053246;
+	bh=isV2TmILhglBJuTSA5c15vPGHlEqJhnvLlbWRl5fuuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uT87ZWq0oDMALZrXOZqA7vLJ1j/9WR5cvFrbGhM7htvKqVzX0oyl6l98gpwi426dm
-	 InJkcpDQghuYZXLkrp80tFFZpNge0oE4b0Dp7uWA2MRMMuXiRLeyLrDGjOzVFzt639
-	 t+MZXkMlmqc+3qR/nIgkNhzomkPZwCeOiKlqk+8k=
+	b=w3ytOLm5EGFmjnIA7BEy1LyUW96JfnWPnbB8E7Ofoc0ZR//SDou5GfF9PfWHoM9yR
+	 NM1vjjqhb9fYEINs9vTGFuS03ZGplC9/gWHDc5FQsp1oid7yhDcNS8FVXz9A8oygPO
+	 RxUnTkG2LClibWESuPDHKMJjynJoAbYjPNrhU/rE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	guolingxing <guolingxing@tju.edu.cn>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Yingjie Wang <x-professor@outlook.com>,
+	Yang Xiuwei <yangxiuwei@kylinos.cn>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0851/2214] btrfs: sysfs: restore NOFS context on early return in btrfs_sysfs_add_block_group_type()
-Date: Wed, 18 Nov 2026 15:42:07 +0100
-Message-ID: <20261118150046.203521862@linuxfoundation.org>
+Subject: [PATCH 5.15 0852/2214] scsi: bsg: Report synchronous data copyback failures
+Date: Wed, 18 Nov 2026 15:42:08 +0100
+Message-ID: <20261118150046.238688308@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,48 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: guolingxing <guolingxing@tju.edu.cn>
+From: Yingjie Wang <x-professor@outlook.com>
 
-[ Upstream commit 4172be965c2ce887ebfb1117c634a68555be8c11 ]
+[ Upstream commit a52f2ad45726d788755b525adcf51f65a6b836ff ]
 
-btrfs_sysfs_add_block_group_type() sets up a NOFS context with
-memalloc_nofs_save() because kobject_add() performs GFP_KERNEL
-allocations deep in its call chain, and the function may be called
-while holding a transaction handle or a lock required for a
-transaction commit, where reclaim could deadlock.
+scsi_bsg_sg_io_fn() ignores the result of blk_rq_unmap_user(). For a
+data-in command that uses a bounce buffer, unmapping copies the completed
+data to userspace. If that copy fails, SG_IO can report success despite the
+copyback failure.
 
-Every other return path of this function calls memalloc_nofs_restore()
-except the early return taken when another thread has already created
-the kobject for the same raid index (this can happen when restriping).
-Taking that path leaves PF_MEMALLOC_NOFS set on the calling task, so
-all subsequent memory allocations performed by that task remain
-restricted to the NOFS scope, which may lead to unexpected allocation
-failures or deadlocks later on.
+Capture the unmap status. Preserve an earlier sense-buffer copy error and
+otherwise return the data copyback error. This matches the error precedence
+used by scsi_complete_sghdr_rq().
 
-Restore the NOFS context before returning from that path.
+On x86_64, a virtio-scsi INQUIRY with an unaligned PROT_NONE destination
+made ioctl() return 0 in 20/20 runs before this change and return -1 with
+errno EFAULT in 20/20 runs afterward. Writable controls succeeded in 20/20
+runs on both kernels.
 
-Fixes: 49ea112da0e6 ("btrfs: do not create raid sysfs entries under any locks")
-CC: stable@vger.kernel.org
-Signed-off-by: guolingxing <guolingxing@tju.edu.cn>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 10e8855b9451 ("bsg: add SG_IO to SG v4")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yingjie Wang <x-professor@outlook.com>
+Reviewed-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/2561d633cc8cef513d75eb1df260046a4971e783.1792772194.git.x-professor@outlook.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/sysfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/scsi_bsg.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/sysfs.c b/fs/btrfs/sysfs.c
-index 6f7f7231e34a0..c764650640392 100644
---- a/fs/btrfs/sysfs.c
-+++ b/fs/btrfs/sysfs.c
-@@ -1360,6 +1360,7 @@ void btrfs_sysfs_add_block_group_type(struct btrfs_block_group *cache)
- 	if (space_info->block_group_kobjs[index]) {
- 		spin_unlock(&space_info->lock);
- 		kobject_put(&rkobj->kobj);
-+		memalloc_nofs_restore(nofs_flag);
- 		return;
- 	} else {
- 		space_info->block_group_kobjs[index] = &rkobj->kobj;
+diff --git a/drivers/scsi/scsi_bsg.c b/drivers/scsi/scsi_bsg.c
+index 81c3853a2a800..e09b816dc0b1e 100644
+--- a/drivers/scsi/scsi_bsg.c
++++ b/drivers/scsi/scsi_bsg.c
+@@ -15,7 +15,7 @@ static int scsi_bsg_sg_io_fn(struct request_queue *q, struct sg_io_v4 *hdr,
+ 	struct scsi_request *sreq;
+ 	struct request *rq;
+ 	struct bio *bio;
+-	int ret;
++	int ret, unmap_ret;
+ 
+ 	if (hdr->protocol != BSG_PROTOCOL_SCSI  ||
+ 	    hdr->subprotocol != BSG_SUB_PROTOCOL_SCSI_CMD)
+@@ -90,7 +90,9 @@ static int scsi_bsg_sg_io_fn(struct request_queue *q, struct sg_io_v4 *hdr,
+ 	else
+ 		hdr->dout_resid = sreq->resid_len;
+ 
+-	blk_rq_unmap_user(bio);
++	unmap_ret = blk_rq_unmap_user(bio);
++	if (!ret)
++		ret = unmap_ret;
+ 
+ out_free_cmd:
+ 	scsi_req_free_cmd(scsi_req(rq));
 -- 
 2.53.0
 
