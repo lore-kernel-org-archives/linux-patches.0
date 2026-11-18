@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022958;
-	b=a/fIfpJtH8hopdte/cFcsgXOKAuU6wBG57IytXPV+0r8UoIZ+2WK49iy7oNNhLyasUO5
-	 srBQyPgZjr3n4PRd/4rdGi+hUqQ3dx5bl2BRvkR9cCyS4by6GPOi1spBWdbW4VdPx9Uu5
-	 AM98S+RgozNNFn7LYX45xQG3iU4DW7MFuQgPD9uHSGdY/PX8c6fNM6R/i3Y5RTzfDfvjJ
-	 CDdtFMkQ8FC+vrMz1xKgi2sbwYRGIPvIe/PGjRoxvWGmYj9NiaR8PKyWU5OYOyCh3/CA9
-	 qvfp9e0s5xtGz6DtZoISVSZNA8K42WWaJkGrUiBKjD2tkRuz/wSTfHaYrGqw7LEeRWQ==
+	t=1795022961;
+	b=J5ew8tGKVXqOLj+8qVwUHuIXAPE4dDLjzsQeFCcJ+mQW7PaNH/+o5zFRMfDdLOEdr7EE
+	 ZL2ffPk1UfICrNMk/CGkbvN4UsdNo2d/vTZlpwEVke7y/narCPBwS1Weq47oYOHA3IDnB
+	 U7mIvGNmkj2xPnbKJtlP9PivqAb4o9Tmmc4uHAiq/BSdE3+4JzoKiwWtrBwsqj1nPDFs4
+	 bCM9hH17ZEzCe3//P/fPAszuMMFeXPZ6ONLPbWtUpmBHna5StIbAizsgwK15tNZ9zEyE9
+	 PLaqcfgkHaGd76LZgJy+7nP5Ow8SOld3QMid6gSm5QmvVU6MelNZy/nedtqjG0mOjeQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022958;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022961;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JEgbPbWIvVZe/KeQ/oC0LWITxbHEoh+HK5ATcbyozds=;
-	b=O14QgsbeSeTT3+0aNd+44xWAnSQZCOxbC4GpnUSZm3vg1JCMmwGEzgu8ws6abnG+DFiA
-	 DnhZUGq8Kx/YGEEFHp8ozpZqCO46rLiYONHEmiBxcuDt6aM7DE3of9qDBXwS8hGTHFDyA
-	 JDLWB5vsUgUSdHd/JjkJR4Pc8cwNXMV060GMRqf2AlhUaJQUCKrpJpf1+lMmt0d8QZnVD
-	 TW3+Oj5UeLcqJAEDVbd9y4SchmY4b7ynj2sDzNRnKEnKJkPoPiq1IpCz1qIw2F06yom11
-	 u0xCjqKjOfLv9ba4WyfOOWdStoHSR9caGPRH4oYH3OnGwhBW5Hk/UbcXehxJgrxeq8g==
+	bh=6JSpKdoDecKFG8QPiiOkXEoiDbE7j/U4lP0O8ipccxg=;
+	b=cZaUM0i0V30+izVaEE9N/V05RhHzX94KBTBojqfjZhRSdWrCwfDv4ZTC/TAsYbqH12g0
+	 dVbFcHhp50IQe+KQAa9t3lKJ96Z8RCqwP57oC2e58aLjyHmvnLrIMjjGtHyjZsMnJ/mOL
+	 9hhBY2lW2QM4MROTRb5iQ78ciir3IQs6+frse3TLUIQNYY1LOk5qOfO18V22k4MfE1pQU
+	 hGqnwh3X0+BuODPefrSTTCTsmwzPmAmCjA8FtTMpv5tVHEG+aI4eCApIm00gRbBpwK6wa
+	 P/krGovIM2Kv2UHLpmdp0nApcxeJLU50VgGT4VmVWzXcDsAJxsBDy6ziFrIsoj/TDZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H+TF8IQP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jgU+bl1D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF7F606A74A;
-	Wed, 18 Nov 2026 17:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F337606A747;
+	Wed, 18 Nov 2026 17:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H+TF8IQP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E2F91F000C4;
-	Wed, 18 Nov 2026 17:29:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jgU+bl1D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E202A1F000C4;
+	Wed, 18 Nov 2026 17:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022958;
-	bh=JEgbPbWIvVZe/KeQ/oC0LWITxbHEoh+HK5ATcbyozds=;
+	s=korg; t=1795022961;
+	bh=6JSpKdoDecKFG8QPiiOkXEoiDbE7j/U4lP0O8ipccxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H+TF8IQPcrLqQ+cRoc70C438hZZYIMzByvLZNKy6X+AoeWl9IfogYGCqWsOXPmd51
-	 k2UvQquug0sjungRlVJMP7N0wXtMB9yII7s/bBhLTV5Sc+pdRWLDbPataAyP+Ikh/q
-	 DHkIoUgtcoOtJ6LUc+FBi1Rn/Z3zGFmkaW9ry8CE=
+	b=jgU+bl1DoXP+JuL/w3X2oE9PN2jzP5eMh7b/QuOaN4IhByDti3ZCEHuC7g2t6V6gx
+	 VzjpzZZn2szT7giQRk/AcVJJz4uw5avz14UAcNbcXGUzraeIXR0L0NDHvcvEUhc4Lq
+	 HNUPr7qoZDdCF6OJpn2rZIDpQ3MqkTFSOwbsmbug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Danila Chernetsov <listdansp@mail.ru>,
 	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0199/2151] dlm: validate lock modes in recovery messages
-Date: Wed, 18 Nov 2026 15:32:14 +0100
-Message-ID: <20261118150129.033302037@linuxfoundation.org>
+Subject: [PATCH 6.18 0200/2151] dlm: fix NULL pointer dereference in dlm_dump_rsb_name()
+Date: Wed, 18 Nov 2026 15:32:15 +0100
+Message-ID: <20261118150129.070121662@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,54 +71,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Danila Chernetsov <listdansp@mail.ru>
 
-[ Upstream commit 7bf1aca6d626944091a5cb218b4e487547edff0a ]
+[ Upstream commit 19982c99a302ab544c69f95d37ca3070c89762d3 ]
 
-The DLM recovery path restores lock state from rcom_lock messages
-received from remote nodes. The lock modes in these messages are
-copied directly into the local lkb state without validating that they
-are within the valid DLM lock mode range.
+The function dlm_dump_rsb_name() is called from receive_rcom_lookup()
+when a debug dump is requested via a special RCOM_LOOKUP message with
+rc_id == 0xFFFFFFFF.
 
-The rest of the DLM code assumes that lkb_rqmode and lkb_grmode
-contain valid lock modes. In particular, LVB callback handling in
-dlm_may_skip_callback() uses lock modes as indexes into the
-dlm_lvb_operations array:
+The resource name passed to dlm_dump_rsb_name() comes from the received
+message. There is no guarantee that an RSB with this name exists in the
+local hash table.
 
-    dlm_lvb_operations[prev_mode + 1][mode + 1]
+dlm_search_rsb_tree() returns 0 when the RSB is found and stores a valid
+pointer in r. When the lookup fails, it returns -EBADR and leaves r
+NULL.
 
-An invalid lock mode received during recovery could therefore result in
-an out-of-bounds read during subsequent LVB callback processing.
+The current error handling is inverted:
 
-Validate rl_rqmode and rl_grmode before storing them into the local LKB
-state. This preserves the lock mode invariant required by the rest of
-the DLM code.
+    if (!error)
+            goto out;
+
+As a result, dlm_dump_rsb() is called only when the lookup fails and r
+is NULL, resulting in a NULL pointer dereference.
 
 Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: e7fd41792fc0 ("[DLM] The core of the DLM for GFS2/CLVM")
+Fixes: 2d90354027ad ("dlm: merge toss and keep hash table lists into one list")
 Acked-by: Alexander Aring <aahringo@redhat.com>
 Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
 Signed-off-by: Alexander Aring <aahringo@redhat.com>
 Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/lock.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/dlm/lock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
-index a393ecaf3442a..9be5b26f75314 100644
+index 9be5b26f75314..58f3d885c6858 100644
 --- a/fs/dlm/lock.c
 +++ b/fs/dlm/lock.c
-@@ -5529,6 +5529,10 @@ static int receive_rcom_lock_args(struct dlm_ls *ls, struct dlm_lkb *lkb,
- {
- 	struct rcom_lock *rl = (struct rcom_lock *) rc->rc_buf;
+@@ -1421,7 +1421,7 @@ void dlm_dump_rsb_name(struct dlm_ls *ls, const char *name, int len)
  
-+	if (rl->rl_rqmode < DLM_LOCK_IV || rl->rl_rqmode > DLM_LOCK_EX ||
-+	    rl->rl_grmode < DLM_LOCK_IV || rl->rl_grmode > DLM_LOCK_EX)
-+		return -EINVAL;
-+
- 	lkb->lkb_nodeid = le32_to_cpu(rc->rc_header.h_nodeid);
- 	lkb->lkb_ownpid = le32_to_cpu(rl->rl_ownpid);
- 	lkb->lkb_remid = le32_to_cpu(rl->rl_lkid);
+ 	rcu_read_lock();
+ 	error = dlm_search_rsb_tree(&ls->ls_rsbtbl, name, len, &r);
+-	if (!error)
++	if (error)
+ 		goto out;
+ 
+ 	dlm_dump_rsb(r);
 -- 
 2.53.0
 
