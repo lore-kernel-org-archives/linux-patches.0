@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047470;
-	b=RGfjJ1jqIxnVq4h3aN1gf1+39pM5DoSpzOV6Dh13VJ+CJjK3srs0mUB+4l/J+4TrmnzD
-	 hMKJpramTWYwilRHE23Zxl4TPycnhpKoxiRPzHYeN+AeJpDeDVPgGtlfDXqfk2+PLT3pt
-	 /gUvQJ3Dm6bZi7/roZFUrJpwlgcDKA4w1JgFJfBLGGrLbDE6RCWm8WDTELrAqPtoH4IVT
-	 KTwV00qMEdqRdmFqatMmovDxdR9kCb1VzqCeaJHRKEHs0M+UIhf7tC1jfdmhh6hoSrg6K
-	 dnO4QZWe/dTB8edRmmACzsJS7LlwSwo6rCr+FZfeWVHIgJBr8zpkwaeBwlOcTWuADcw==
+	t=1795047472;
+	b=J8CHTHlL41jfemRxuCBcw7C847HcAt06Qrs/FSL9ymv20DqhMbHyjBRIIx5PetH/xWuK
+	 j+AQ3yBzxHzyJEAoCbFDHnV9OxY080FI7nB88A9NgdGH2WyT2T9S2euoGnMKXkpK06iCS
+	 wDjdFfp3lRwFV6N1ZdwC53vApSmOGKoCE1aPkLxoBd4cggalX7j/GAgI1IcoScLpojUpv
+	 KoEY/siziyykIcmqAlD25P8k+h9EtdqSPytGpykDK5mXyn+k5e6zS745Slq+ugq8JY/Bv
+	 n2qqrzm95IaKt7lsc8PXwpR96QZ2IOcrYP9CrpeyUfUe3LA7b+vHT+ZKTlFUM0fKl9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047470;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047472;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=907rF09PjvHw3U/GMreMWbz2EqAIuEeSi7weDZ103bU=;
-	b=gasx4ltERuJoCKisvI7b995jHBqkUw59aa32f0O+bpXQOICaTafCMZF7THGcFJCug/Ly
-	 eh9AtSHZlve92/tJtCvVJMuKISZP9vLN1kB0Iif6ZcbD+/xVzgWjpN06HRX/kSc4m+t6U
-	 WNkj6G/YaCYhoiaUV5EXKrGh91fzQeilcb90/wNTfD2wNUzKAoBnssTME4QZRZYXaPYyh
-	 5pF0L06uVHTiPyRg65Sy6tNnsDX1SchrjyKfDBK9jIT35c+thlCTYm4h7CruOf/kuh4W7
-	 iJ6LxeEx8/91iPzg1R9QaOyiS/gmKSPiqom00tTEGurwHUVIE17m6RIvIQgsuUCHEhw==
+	bh=c0uR/egapLuWlk9/50Hn7oCcWYG+AefqQY+TrHhd49A=;
+	b=3XitDLVlA6pLOK1xnq5QrcLU3xbqwm018c5bDU3g66xBizY/a7g6s+hPIt7nSlkLwMlv
+	 hTi67rzEN4VSHYHshJHCrrdP1WE5sgvrWTwVOmGeMhWOqb23BPjfoxJKzknuAf7tC3+xo
+	 uEvV1H5BEQ8zYGqTaYx9ri8wbzFe1e3gHat3g++ht1g5SVBOtJu8fIehSWrePBixVjCRM
+	 NiMEGk2PvYdDbZAhNu3GGOxT8DSLXOr7SrccUUAUjj4aqTj24SnD3yoJiSdMfSixf2zI/
+	 bm7WEcW0R655wMwifbuLnjFiSbqaFpYoFUC5GriCu2l1POXw8O8q/TTPAAipFdJYGdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QJYYYUCA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aAn1nr8a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6DF606A320;
-	Thu, 19 Nov 2026 00:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30A4606A330;
+	Thu, 19 Nov 2026 00:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QJYYYUCA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B001F000C4;
-	Thu, 19 Nov 2026 00:17:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aAn1nr8a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37EC51F000C4;
+	Thu, 19 Nov 2026 00:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047470;
-	bh=907rF09PjvHw3U/GMreMWbz2EqAIuEeSi7weDZ103bU=;
+	s=korg; t=1795047472;
+	bh=c0uR/egapLuWlk9/50Hn7oCcWYG+AefqQY+TrHhd49A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QJYYYUCAhMk+MNDFL/R/2i0DOIdWYHNHLGd9cKiVq8Rc7o2xDR3712PxZSiRoOa4t
-	 dzqkNJq1YkiRnclPdXpspxw4jKJrXU7JthpVTnqYGV2pTkm8uzaK5Ny1eKhHR24/Z/
-	 3mKUE997qLTi2OecKg6jENroWpYV1bqbmylxhAnc=
+	b=aAn1nr8a/KD89dtOT8u3EZGfKJDhiNbcQvW+0XcjEK6ammv3uJDMPl95pBSMsB2BM
+	 fppYnloCCWIvAJfhLzxjr8EFacl9bhq2xfqIDUo/Avld/vU4RMc5t1XC4yn7S+t9iB
+	 Fcz75JeXj4zU7WIBtK65siy+DyyzJEL/F6IEv3kQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Liu <leo.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chris Mason <mason@kernel.org>,
+	Amir Goldstein <amir73il@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1651/2857] drm/amdgpu: cancel idle work in hw_init failure paths for vcn/uvd/vce/jpeg
-Date: Wed, 18 Nov 2026 15:44:45 +0100
-Message-ID: <20261118150300.779162228@linuxfoundation.org>
+Subject: [PATCH 6.1 1652/2857] ovl: look up the index by the decoded origin
+Date: Wed, 18 Nov 2026 15:44:46 +0100
+Message-ID: <20261118150300.816604382@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,369 +68,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Liu <leo.liu@amd.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit a56c2536c399d57a9bb1c02fd411e0c25859af3b ]
+[ Upstream commit 520ef67f47f69255695859b0008281a384d0bc20 ]
 
-When hw_init() fails, amdgpu_device_ip_fini_early() skips hw_fini()
-because status.hw was never set.  For VCN, UVD (including UVD ENC), VCE,
-and JPEG, hw_fini() is where cancel_delayed_work_sync() is called.  Any
-idle work queued during the partial hw_init() is therefore left pending
-after sw_fini() frees the adev state the handler touches.
+A file opened by file handle on an overlay with nfs_export=on can show
+the stale lower data of a file that was copied up to the upper layer.
+While the file opened this way stays in the inode cache, a lookup of the
+copied up file by path fails with ESTALE for all users. The open can
+also succeed for a file that was removed, where it has to fail with
+ESTALE. This happens with a handle that has one byte changed. The handle
+comes from an NFS client, or from a process that calls
+open_by_handle_at() with CAP_DAC_READ_SEARCH in the initial user
+namespace.
 
-Cancel the idle work in each hw_init() error path, immediately before
-returning the error, so that hw_fini() remains the sole cancel site on
-the normal teardown path with no duplication.
+When a file in a lower layer is about to be modified, overlayfs first
+copies it to the upper layer (copy up). With nfs_export=on, each copy up
+also creates an entry in the index directory, a directory that overlayfs
+keeps for itself on the upper filesystem.
 
-Link: https://github.com/ROCm/amdgpu/issues/234
-Fixes: 416e1fab4752 ("drm/amdgpu: drop redundant cancel_delayed_work_sync call")
-Assisted-by: Claude:Claude-Sonnet-4.6
-Signed-off-by: Leo Liu <leo.liu@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7ff2327fde029e97d0050fcb94e3f4063c318547)
+The handle of an overlay file that comes from a lower layer wraps the
+handle of its lower inode. Overlayfs calls this lower inode the origin.
+The overlay handle stays valid after a copy up.
+
+To decode such a handle, ovl_lower_fh_to_d() first decodes the wrapped
+handle to the origin. If no overlay inode is cached for the origin, it
+looks in the index directory:
+
+- An index entry there leads to the upper file.
+- A whiteout, the marker that overlayfs uses for a removed file, means
+  that the overlay file was removed.
+
+The name of an index entry is the handle that copy up encoded for the
+origin, as a hex string.
+
+ovl_lower_fh_to_d() builds the name for this lookup from the bytes that
+the caller passed in. But handles with different bytes can decode to the
+same inode:
+
+- Overlayfs ignores some flag bits of the handle.
+- A lower filesystem can accept a different fid type, extra bytes, or
+  generation 0 for any generation.
+
+Such a handle decodes to the origin but misses the index entry or the
+whiteout. So the decode returns an overlay inode that has only the lower
+file.
+
+While that inode is cached, a path lookup of a copied up file fails with
+ESTALE, since the upper file that the lookup finds does not match the
+cached inode, which has none.
+
+Reproduced on tmpfs and on ext4 with open_by_handle_at(), after a copy
+up and a mount cycle. A handle in which one flag bit, the fid type, the
+length or the generation was changed read the old lower data, and path
+lookups returned ESTALE.
+
+Fix this by re-encoding the decoded origin and building the index name
+from that handle.
+
+Fixes: f71bd9cfb692 ("ovl: decode indexed non-dir file handles")
 Cc: stable@vger.kernel.org
-[ sashal: Replaced per-instance VCN cancellation loops with a single cancellation of the shared VCN idle worker. ]
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+[ sashal: adjusted context for direct ofs->indexdir access instead of ovl_indexdir(sb) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c |  4 +++-
- drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c |  8 ++++----
- drivers/gpu/drm/amd/amdgpu/jpeg_v4_0.c |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c  |  4 +++-
- drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c  |  4 +++-
- drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c  |  4 +++-
- drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c  |  4 +++-
- drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c  |  4 +++-
- drivers/gpu/drm/amd/amdgpu/vce_v2_0.c  |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/vce_v3_0.c  |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/vce_v4_0.c  |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/vcn_v1_0.c  | 17 ++++++++++-------
- drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c  |  4 +++-
- drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c  |  4 +++-
- drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c  |  4 +++-
- drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c  |  4 +++-
- 17 files changed, 69 insertions(+), 26 deletions(-)
+ Documentation/filesystems/overlayfs.rst |  3 ++-
+ fs/overlayfs/export.c                   |  4 ++--
+ fs/overlayfs/namei.c                    | 13 ++++++++++---
+ fs/overlayfs/overlayfs.h                |  2 +-
+ 4 files changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
-index af8f244e9c940..f54a3dc761fd4 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
-@@ -135,7 +135,9 @@ static int jpeg_v2_0_hw_init(void *handle)
- 		(adev->doorbell_index.vcn.vcn_ring0_1 << 1), 0);
+diff --git a/Documentation/filesystems/overlayfs.rst b/Documentation/filesystems/overlayfs.rst
+index 4c76fda076454..e5d38f0211e54 100644
+--- a/Documentation/filesystems/overlayfs.rst
++++ b/Documentation/filesystems/overlayfs.rst
+@@ -534,7 +534,8 @@ When decoding an overlay file handle, the following steps are followed:
  
- 	r = amdgpu_ring_test_helper(ring);
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+	else
- 		DRM_INFO("JPEG decode initialized successfully.\n");
- 
- 	return r;
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c
-index a094dd138c0d5..6e617209c082b 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c
-@@ -184,12 +184,16 @@ static int jpeg_v2_5_hw_init(void *handle)
- 
- 		r = amdgpu_ring_test_helper(ring);
- 		if (r)
--			return r;
-+			goto error;
- 	}
- 
- 	DRM_INFO("JPEG decode initialized successfully.\n");
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
-index 54cbf62a8deac..d003d8277c584 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
-@@ -151,11 +151,11 @@ static int jpeg_v3_0_hw_init(void *handle)
- 
- 	r = amdgpu_ring_test_helper(ring);
- 	if (r)
--		return r;
--
--	DRM_INFO("JPEG decode initialized successfully.\n");
-+		cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+	else
-+		DRM_INFO("JPEG decode initialized successfully.\n");
- 
--	return 0;
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0.c
-index ae9e390c8bf6b..5ebe2d42cb396 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0.c
-@@ -143,11 +143,15 @@ static int jpeg_v4_0_hw_init(void *handle)
- 
- 	r = amdgpu_ring_test_helper(ring);
- 	if (r)
--		return r;
-+		goto error;
- 
- 	DRM_DEV_INFO(adev->dev, "JPEG decode initialized successfully.\n");
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-index adb9f5cb95c23..13e50191d10ee 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-@@ -712,7 +712,9 @@ static int uvd_v3_1_hw_init(void *handle)
- 	amdgpu_ring_commit(ring);
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->uvd.idle_work);
-+	else
- 		DRM_INFO("UVD initialized successfully.\n");
- 
- 	return r;
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c b/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
-index 01d8e7d2caf97..abcdf37f0cb15 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
-@@ -195,7 +195,9 @@ static int uvd_v4_2_hw_init(void *handle)
- 	amdgpu_ring_commit(ring);
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->uvd.idle_work);
-+	else
- 		DRM_INFO("UVD initialized successfully.\n");
- 
- 	return r;
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c b/drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c
-index d7e31e48a2b8d..ae24b92e00d5b 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c
-@@ -192,7 +192,9 @@ static int uvd_v5_0_hw_init(void *handle)
- 	amdgpu_ring_commit(ring);
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->uvd.idle_work);
-+	else
- 		DRM_INFO("UVD initialized successfully.\n");
- 
- 	return r;
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c b/drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c
-index 5fe872f4bea7e..cc1c1949fe2f5 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c
-@@ -513,7 +513,9 @@ static int uvd_v6_0_hw_init(void *handle)
- 	}
- 
- done:
--	if (!r) {
-+	if (r) {
-+		cancel_delayed_work_sync(&adev->uvd.idle_work);
-+	} else {
- 		if (uvd_v6_0_enc_support(adev))
- 			DRM_INFO("UVD and UVD ENC initialized successfully.\n");
- 		else
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c b/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
-index 91ef914b4cdc7..3f370883de568 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
-@@ -581,7 +581,9 @@ static int uvd_v7_0_hw_init(void *handle)
+ 1. Find underlying layer by UUID and path type information.
+ 2. Decode the underlying filesystem file handle to underlying dentry.
+-3. For a lower file handle, lookup the handle in index directory by name.
++3. For a lower file handle, encode the decoded underlying inode again and
++   lookup that handle in index directory by name.
+ 4. If a whiteout is found in index, return ESTALE. This represents an
+    overlay object that was deleted after its file handle was encoded.
+ 5. For a non-directory, instantiate a disconnected overlay dentry from the
+diff --git a/fs/overlayfs/export.c b/fs/overlayfs/export.c
+index e55363d343dc6..d43af7c820cff 100644
+--- a/fs/overlayfs/export.c
++++ b/fs/overlayfs/export.c
+@@ -726,9 +726,9 @@ static struct dentry *ovl_lower_fh_to_d(struct super_block *sb,
  		}
  	}
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->uvd.idle_work);
-+	else
- 		DRM_INFO("UVD and UVD ENC initialized successfully.\n");
  
- 	return r;
-diff --git a/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
-index 479eb9382c77e..03e8543604dfd 100644
---- a/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
-@@ -469,12 +469,16 @@ static int vce_v2_0_hw_init(void *handle)
- 	for (i = 0; i < adev->vce.num_rings; i++) {
- 		r = amdgpu_ring_test_helper(&adev->vce.ring[i]);
- 		if (r)
--			return r;
-+			goto error;
- 	}
- 
- 	DRM_INFO("VCE initialized successfully.\n");
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->vce.idle_work);
-+	return r;
+-	/* Then lookup indexed upper/whiteout by origin fh */
++	/* Then lookup indexed upper/whiteout by origin */
+ 	if (ofs->indexdir) {
+-		index = ovl_get_index_fh(ofs, fh);
++		index = ovl_get_index_origin(ofs, origin.dentry);
+ 		err = PTR_ERR(index);
+ 		if (IS_ERR(index)) {
+ 			index = NULL;
+diff --git a/fs/overlayfs/namei.c b/fs/overlayfs/namei.c
+index cf805c99cfb9f..124c437e65e6a 100644
+--- a/fs/overlayfs/namei.c
++++ b/fs/overlayfs/namei.c
+@@ -667,14 +667,21 @@ int ovl_get_index_name(struct ovl_fs *ofs, struct dentry *origin,
+ 	return err;
  }
  
- static int vce_v2_0_hw_fini(void *handle)
-diff --git a/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c b/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-index 27b2c4c7c63ee..26a5744ac407d 100644
---- a/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-@@ -479,12 +479,16 @@ static int vce_v3_0_hw_init(void *handle)
- 	for (i = 0; i < adev->vce.num_rings; i++) {
- 		r = amdgpu_ring_test_helper(&adev->vce.ring[i]);
- 		if (r)
--			return r;
-+			goto error;
- 	}
+-/* Lookup index by file handle for NFS export */
+-struct dentry *ovl_get_index_fh(struct ovl_fs *ofs, struct ovl_fh *fh)
++/*
++ * Lookup index by decoded origin for NFS export.
++ *
++ * The name of an index is the hex of the file handle that copy up encoded.
++ * The bytes of the handle to decode cannot be used as the name, because a
++ * lower fs may decode many handles to the same inode.  For example, it may
++ * ignore the fid type, extra fid bytes or a zero generation.
++ */
++struct dentry *ovl_get_index_origin(struct ovl_fs *ofs, struct dentry *origin)
+ {
+ 	struct dentry *index;
+ 	struct qstr name;
+ 	int err;
  
- 	DRM_INFO("VCE initialized successfully.\n");
+-	err = ovl_get_index_name_fh(fh, &name);
++	err = ovl_get_index_name(ofs, origin, &name);
+ 	if (err)
+ 		return ERR_PTR(err);
  
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->vce.idle_work);
-+	return r;
- }
- 
- static int vce_v3_0_hw_fini(void *handle)
-diff --git a/drivers/gpu/drm/amd/amdgpu/vce_v4_0.c b/drivers/gpu/drm/amd/amdgpu/vce_v4_0.c
-index 66cd3d11aa4b8..28de74c9bd4e8 100644
---- a/drivers/gpu/drm/amd/amdgpu/vce_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vce_v4_0.c
-@@ -532,12 +532,16 @@ static int vce_v4_0_hw_init(void *handle)
- 	for (i = 0; i < adev->vce.num_rings; i++) {
- 		r = amdgpu_ring_test_helper(&adev->vce.ring[i]);
- 		if (r)
--			return r;
-+			goto error;
- 	}
- 
- 	DRM_INFO("VCE initialized successfully.\n");
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->vce.idle_work);
-+	return r;
- }
- 
- static int vce_v4_0_hw_fini(void *handle)
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v1_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v1_0.c
-index f0fbcda76f5e3..094cdb16d566a 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v1_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v1_0.c
-@@ -199,25 +199,28 @@ static int vcn_v1_0_hw_init(void *handle)
- 
- 	r = amdgpu_ring_test_helper(ring);
- 	if (r)
--		goto done;
-+		goto error_vcn;
- 
- 	for (i = 0; i < adev->vcn.num_enc_rings; ++i) {
- 		ring = &adev->vcn.inst->ring_enc[i];
- 		r = amdgpu_ring_test_helper(ring);
- 		if (r)
--			goto done;
-+			goto error_vcn;
- 	}
- 
- 	ring = &adev->jpeg.inst->ring_dec;
- 	r = amdgpu_ring_test_helper(ring);
- 	if (r)
--		goto done;
-+		goto error_both;
- 
--done:
--	if (!r)
--		DRM_INFO("VCN decode and encode initialized successfully(under %s).\n",
--			(adev->pg_flags & AMD_PG_SUPPORT_VCN_DPG)?"DPG Mode":"SPG Mode");
-+	DRM_INFO("VCN decode and encode initialized successfully(under %s).\n",
-+		(adev->pg_flags & AMD_PG_SUPPORT_VCN_DPG)?"DPG Mode":"SPG Mode");
-+	return 0;
- 
-+error_both:
-+	cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+error_vcn:
-+	cancel_delayed_work_sync(&adev->vcn.idle_work);
- 	return r;
- }
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-index c271f3f0c70a1..52d454126b9e6 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-@@ -248,7 +248,9 @@ static int vcn_v2_0_hw_init(void *handle)
- 	}
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->vcn.idle_work);
-+	else
- 		DRM_INFO("VCN decode and encode initialized successfully(under %s).\n",
- 			(adev->pg_flags & AMD_PG_SUPPORT_VCN_DPG)?"DPG Mode":"SPG Mode");
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
-index f2a07794a2868..067df13a36b29 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
-@@ -309,7 +309,9 @@ static int vcn_v2_5_hw_init(void *handle)
- 	}
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->vcn.idle_work);
-+	else
- 		DRM_INFO("VCN decode and encode initialized successfully(under %s).\n",
- 			(adev->pg_flags & AMD_PG_SUPPORT_VCN_DPG)?"DPG Mode":"SPG Mode");
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-index b73c642b7dc61..15e7ddce879dc 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-@@ -355,7 +355,9 @@ static int vcn_v3_0_hw_init(void *handle)
- 	}
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->vcn.idle_work);
-+	else
- 		DRM_INFO("VCN decode and encode initialized successfully(under %s).\n",
- 			(adev->pg_flags & AMD_PG_SUPPORT_VCN_DPG)?"DPG Mode":"SPG Mode");
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-index 608ee2a4d6275..83d997f8d500a 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-@@ -261,7 +261,9 @@ static int vcn_v4_0_hw_init(void *handle)
- 	}
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->vcn.idle_work);
-+	else
- 		DRM_INFO("VCN decode and encode initialized successfully(under %s).\n",
- 			(adev->pg_flags & AMD_PG_SUPPORT_VCN_DPG)?"DPG Mode":"SPG Mode");
- 
+diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
+index 18d8cd614ef20..8d15096a3f994 100644
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -537,7 +537,7 @@ struct dentry *ovl_index_upper(struct ovl_fs *ofs, struct dentry *index);
+ int ovl_verify_index(struct ovl_fs *ofs, struct dentry *index);
+ int ovl_get_index_name(struct ovl_fs *ofs, struct dentry *origin,
+ 		       struct qstr *name);
+-struct dentry *ovl_get_index_fh(struct ovl_fs *ofs, struct ovl_fh *fh);
++struct dentry *ovl_get_index_origin(struct ovl_fs *ofs, struct dentry *origin);
+ struct dentry *ovl_lookup_index(struct ovl_fs *ofs, struct dentry *upper,
+ 				struct dentry *origin, bool verify);
+ int ovl_path_next(int idx, struct dentry *dentry, struct path *path);
 -- 
 2.53.0
 
