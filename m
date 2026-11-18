@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047012;
-	b=zi+KuZKPnSHiMR8GgBiqdc6kHq3XI0QYGzG/A4krVsIVuzcGtt+Tf4ifYKcddZSfMnZu
-	 clO73uImBSBbfpG3L2I7Ms0vXg4kVrD92WcvXvsaQBA8DQdVZsPMoM3YGvg6BfEjN0mKL
-	 TzD+hjZD2cvqzeBmw+sXqrJwTAnUgW4ij14r377DQQKSc2JJhSdHWAGaXmxgImR2Yx6pM
-	 j1+xUimEA0IY0Ip+Vc32wHftTk29g4NO2Y1kADbRF9VU0WFCw+Ohy6F1ZaYj4R7X5GEiR
-	 2e/8R7Pr5Ukg7SvJ0QqjlpuC9PcgQ63ikIkuRXFelYiXLyIqt+ouCimMwOT8HelAfPA==
+	t=1795047015;
+	b=rOEJE4J10zVeczYyK6gUPvi9m+zuC7RVnJWCnZwWzev7lByIxOWYbvq/OKUly3eTclhg
+	 NPDji4glscdbyfHXtc6VXhu+gqVH2XSiWCq38VX/WOI3u4gLbAn2VFEsiWvzrfqMH0Ph/
+	 T/hpRFnLniurZ5fZUZruy31U1K2Tle62Lvt/aUU7x1d032NjVSjLlNgz7WVPhKpSMyYWQ
+	 sxWHVBM1Stc/AtB1aqXusbNBL5Kw69CYt+uR3R3YofclhiunMFjJHx75NAOgi06mDA0FW
+	 ut2Bay1dFD0i3rZgoQ45YvHxWn+Bt+yiswOrnZynx13iRIuLMheDlelyLCiHAGY37JA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047012;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047015;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fRNLPz72qMBmu0HxJXQ/Cto6Bi5A5DQc946H/3HYCHI=;
-	b=gJ8omMaFFDwVqkQ1WECKuscyRvPA/GQzYstO8cQBXuxeKU51EXxNHl8q4aU21/BSZcQt
-	 DSYOFwP2zK1ydj94t3MO/4JU65Mrp8O9lS0SIO44+eqmbrCo+uOBrdpMViv9kEbHacqig
-	 wdBipDuIwg18u9aOD7EBAGH6pIuEFHcIaYkIf4Pf8+GWEKrshZQQMfw2U7S6+uz1cUHVG
-	 3sxm6eHJYAOwcpg6izmz8KSThHkhgRT2ancvBWx6YKkmUB5fTgfBFv0Y8+mCfNQ+yswBR
-	 Illm+v1x60Z1qq/6MG3bUnPmmxpPvCJbwh56O7SHxDPEm/2zEw9f2bc3huS3NRYGK4g==
+	bh=6ch0/PNTVEPfh7iNLVlgzu0qQC//k7fFLMP29wHQlmc=;
+	b=VUhiGXoEU0eRVMLIvLb4RV8KBsRrxVlJAdphWpclTgn2UsU3JcKj8nzaGwR3rzJr4c04
+	 HJSr/+mL0k103cSkIDmFNQbRyX6v9AKp8CmJDw0KK84WZcOh7xBPhyqYDaZsWxgJG0YC+
+	 mkATQbXfhk/EsKgGhd5UTYr8owsTJhhXvbUZBQchN5+o+/miJpE3DFaPTtGuVnpn5sCuY
+	 /UdvC7JxF1o1sZaDvd+HkB8luI2th7UiohlJIl1w3+d9+6kOo0j/JQcmtrfg1NJ/2Xsx9
+	 G7WdHg13XSOylOIzEWHzR9E/APx1TSUo06BhPKB0XSJQDvX+Fml/8gFUWaOjj95LByw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HhY6Im14;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZZcnEAKV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB338606A32C;
-	Thu, 19 Nov 2026 00:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6125860A2617;
+	Thu, 19 Nov 2026 00:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HhY6Im14
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF781F000C5;
-	Thu, 19 Nov 2026 00:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZZcnEAKV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A52E1F000C8;
+	Thu, 19 Nov 2026 00:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047012;
-	bh=fRNLPz72qMBmu0HxJXQ/Cto6Bi5A5DQc946H/3HYCHI=;
+	s=korg; t=1795047015;
+	bh=6ch0/PNTVEPfh7iNLVlgzu0qQC//k7fFLMP29wHQlmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HhY6Im14ho74sHfKM94ZmX2B6OCHlnaRwayArApbeDkMxvGHwFeG2mqpD38uw88Mu
-	 OF5GQ8Mi+zxMgWUeRT/MkD0tlzjm7qTCWnEI7KkFp4o8s5rz9ZdMeDh+6rQQpZW9xz
-	 g3LK406GtR1e6CrN5G7R+Wbyyc8J8L84tezazusM=
+	b=ZZcnEAKVuwJlg75crqHr11rMEsUzTI8BWIjFdIUsSOGKNUCwsiTtyp9eo+3InGImz
+	 WjN7QEfDCJSg80B3l91gbU6fpENA24kA7e9Hmgh/jdOZSCB5YoPGNe4oMSKB5L8Ghw
+	 0+hGx/7awx7Cx39CtnbV6UnU11zne46Mf6xTjEAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Bean Huo <beanhuo@micron.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	Stanley Jhu <stanleyjhu@google.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	syzbot+e8200299b0556976e13c@syzkaller.appspotmail.com,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Horst Birthelmer <hbirthelmer@ddn.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1486/2857] scsi: ufs: core: Add a helper for clearing hba->outstanding_reqs
-Date: Wed, 18 Nov 2026 15:42:00 +0100
-Message-ID: <20261118150254.826886977@linuxfoundation.org>
+Subject: [PATCH 6.1 1487/2857] fuse: dont launder folios of a bad inode
+Date: Wed, 18 Nov 2026 15:42:01 +0100
+Message-ID: <20261118150254.862971037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,115 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Jhu <stanleyjhu@google.com>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit 22d14117ec1845a81acb3a5c4be325f7e8332f70 ]
+[ Upstream commit 01d0f3d294af126f517d92c11e100525537f8be4 ]
 
-ufshcd_poll() and ufshcd_abort() each have their own copy of the code that
-clears bits in hba->outstanding_reqs under hba->outstanding_lock.
+fuse_flush() and fuse_writepages() reject writing back dirty data for
+any inode that has been marked bad, but fuse_launder_folio() doesn't.
 
-Move that code into ufshcd_clear_outstanding_reqs() and its locked variant
-__ufshcd_clear_outstanding_reqs(), and use them in both functions. No
-functional change.
+This can cause the following warning in fuse_write_file_get() to
+trigger, as reported by syzbot:
 
+WARNING: fs/fuse/file.c:2043 at fuse_write_file_get fs/fuse/file.c:2043 [inline]
+WARNING: fs/fuse/file.c:2043 at fuse_iomap_writeback_range+0x7c8/0x18f0 fs/fuse/file.c:2227
+Call Trace:
+    iomap_writeback_folio+0x1526/0x2490 fs/iomap/buffered-io.c:2022
+    fuse_launder_folio+0x17b/0x240 fs/fuse/file.c:2331
+    folio_unmap_invalidate+0x4cd/0x830 mm/truncate.c:634
+    invalidate_inode_pages2_range+0x629/0xb30 mm/truncate.c:726
+    fuse_open+0x5a6/0x770 fs/fuse/file.c:297
+
+This can be hit on a writeback cache mount:
+1) a writeable file is open and a buffered write dirties some pages
+2) another thread opens the same file read-only. fuse_open() passes the
+   bad inode check and sends OPEN to the server.
+3) a SETATTR reply with the wrong file type marks the inode bad
+4) the writeable file is closed. Flush and release skip writeback
+   because the inode is bad. The pages stay dirty but the file gets
+   removed from write_files.
+5) server replies to the OPEN. The reply has no FOPEN_KEEP_CACHE, so
+   fuse_open() calls invalidate_inode_pages2().
+6) the invalidation finds the dirty pages and calls
+   fuse_launder_folio(), which finds no wriable file and hits the
+   WARN_ON in fuse_write_file_get().
+
+Instead of trying to write back dirty data for the bad inode,
+fuse_launder_folio() should return -EIO.
+
+Fixes: 5d069dbe8aaf ("fuse: fix bad inode")
+Reported-by: syzbot+e8200299b0556976e13c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e8200299b0556976e13c
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/3779e125-9acc-42c8-9489-51b9e3c6716d@acm.org
-Suggested-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20261022034443.3034432-3-stanleyjhu@google.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ sashal: adjusted context for the existing single-queue UFS implementation ]
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Reviewed-by: Horst Birthelmer <hbirthelmer@ddn.com>
+Tested-by: syzbot+e8200299b0556976e13c@syzkaller.appspotmail.com
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+[ sashal: adapted the bad-inode check to use folio->mapping->host instead of wpc.inode ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 48 +++++++++++++++++++++++++++++----------
- 1 file changed, 36 insertions(+), 12 deletions(-)
+ fs/fuse/file.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index c86f4d226fb3e..24d1321a9b519 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -5435,6 +5435,37 @@ static void ufshcd_clear_polled(struct ufs_hba *hba,
- 	}
- }
- 
-+/*
-+ * Return a bitmask of the transfer requests cleared from
-+ * @hba->outstanding_reqs.
-+ */
-+static unsigned long __ufshcd_clear_outstanding_reqs(struct ufs_hba *hba,
-+						     unsigned long mask,
-+						     bool from_irq)
-+	__must_hold(&hba->outstanding_lock)
-+{
-+	unsigned long completed_reqs = mask & hba->outstanding_reqs;
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index 56774b31d5ff6..b1b82e6a72b1b 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -2438,6 +2438,10 @@ static int fuse_write_end(struct file *file, struct address_space *mapping,
+ static int fuse_launder_folio(struct folio *folio)
+ {
+ 	int err = 0;
 +
-+	if (from_irq) {
-+		/* Do not complete polled requests from interrupt context. */
-+		ufshcd_clear_polled(hba, &completed_reqs);
-+	}
-+	hba->outstanding_reqs &= ~completed_reqs;
++	if (fuse_is_bad(folio->mapping->host))
++		return -EIO;
 +
-+	return completed_reqs;
-+}
-+
-+/*
-+ * Return a bitmask of the transfer requests cleared from
-+ * @hba->outstanding_reqs.
-+ */
-+static unsigned long ufshcd_clear_outstanding_reqs(struct ufs_hba *hba,
-+						   unsigned long mask)
-+{
-+	guard(spinlock_irqsave)(&hba->outstanding_lock);
-+	return __ufshcd_clear_outstanding_reqs(hba, mask, false);
-+}
-+
- /*
-  * Returns > 0 if one or more commands have been completed or 0 if no
-  * requests have been completed.
-@@ -5444,15 +5475,13 @@ static int ufshcd_poll(struct Scsi_Host *shost, unsigned int queue_num)
- 	struct ufs_hba *hba = shost_priv(shost);
- 	unsigned long completed_reqs, flags;
- 	u32 tr_doorbell;
-+	bool from_irq;
+ 	if (folio_clear_dirty_for_io(folio)) {
+ 		struct inode *inode = folio->mapping->host;
  
- 	spin_lock_irqsave(&hba->outstanding_lock, flags);
- 	tr_doorbell = ufshcd_readl(hba, REG_UTP_TRANSFER_REQ_DOOR_BELL);
--	completed_reqs = ~tr_doorbell & hba->outstanding_reqs;
--	if (queue_num == UFSHCD_POLL_FROM_INTERRUPT_CONTEXT) {
--		/* Do not complete polled requests from interrupt context. */
--		ufshcd_clear_polled(hba, &completed_reqs);
--	}
--	hba->outstanding_reqs &= ~completed_reqs;
-+	from_irq = queue_num == UFSHCD_POLL_FROM_INTERRUPT_CONTEXT;
-+	completed_reqs = __ufshcd_clear_outstanding_reqs(hba, ~tr_doorbell,
-+							 from_irq);
- 	spin_unlock_irqrestore(&hba->outstanding_lock, flags);
- 
- 	if (completed_reqs)
-@@ -7251,7 +7280,6 @@ static int ufshcd_abort(struct scsi_cmnd *cmd)
- 	struct ufshcd_lrb *lrbp = &hba->lrb[tag];
- 	unsigned long flags;
- 	int err = FAILED;
--	bool outstanding;
- 	u32 reg;
- 
- 	WARN_ONCE(tag < 0, "Invalid tag %d\n", tag);
-@@ -7333,11 +7361,7 @@ static int ufshcd_abort(struct scsi_cmnd *cmd)
- 	 * Clear the corresponding bit from outstanding_reqs since the command
- 	 * has been aborted successfully.
- 	 */
--	spin_lock_irqsave(&hba->outstanding_lock, flags);
--	outstanding = __test_and_clear_bit(tag, &hba->outstanding_reqs);
--	spin_unlock_irqrestore(&hba->outstanding_lock, flags);
--
--	if (outstanding)
-+	if (ufshcd_clear_outstanding_reqs(hba, BIT(tag)))
- 		ufshcd_release_scsi_cmd(hba, lrbp);
- 
- 	err = SUCCESS;
 -- 
 2.53.0
 
