@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018575;
-	b=ijOOKuQyvw3gsxkDMA++EFs9uDKKJeHSDcZC0vq9A1MkXAyLA5UZsBxamytdyF+H3X7J
-	 dPs4RkIvhQyYFo1Y0wVCmKrCb8RFWOL6iqRg8nLw8OZP3dY2rt++MUQhTQfwr+RzkXw7f
-	 4msyd7XV2EM6Po9Ky0MzIDcMyeRHpbs3bs6Vzz06+GBVo86nw2ByZduMZwNDllz2UaJVd
-	 NgF/w46RSPZ2Yy0Ey6A74kkAAxAgVYsRzJOUi3oTAoBnIhHTTRULn0UOC+0k3YywxJI98
-	 BiHTgalXluFOpPBVeAFMO+rCCHJYlIkHkPXzS+CVqCEdyhpeIh+MGb9x6iAGjZP1Fbg==
+	t=1795018577;
+	b=2Ny72vSph/981Fe8XtdSdkGDV/eJG+qHBezsAKjngwrz2YIdUiKey4c55ksN3IgxCFs3
+	 7idEdZFPtf+lAEPvG3tjpGfhv4uKBcAHH/ecPp6XDTAAtnkC/DU2rg0QGbrG5U9VdvcaE
+	 7JclukvqhysqnNJkkwIrr5H1ysRPsDMJ3ayoTvjOb3pT631RZzD67XI+3s9q+1/7FgTOC
+	 H2mlO8+S5GkHC4WNfXkAfNDJYFznwIo1JilmsrXs42iGIjomGE8RnNKrZlOtSZrLPeFZ/
+	 oQLkEucx4AErAvyYbujUyMnKdZ/WoQ6/Qo+ZQb28DL3jbSszadvx8LYrCas9FI+xm4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018575;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018577;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=auJPGP9R42Th4YJrojow5xGmFNVL43lEBwdLu0ZlbtE=;
-	b=n75MqmMjCm7znREXno+isEs5IRE6g8FE08UotZSIMeQW22kfIKmhI5rSeWZ1ODpVch2i
-	 UzC9KRkNgntrhh/TvteEWn4mt53ZeE5jECynk6pDTBLuAiA255WsunNJUEQWCVKyDD/Zm
-	 WA4RpvhNq2PH76WkyM3sRSeiMUfmzCUiZBiCRIpFAXF1GQp++H2ENsY0pOta8S6f5PQNX
-	 pXtHmK9LewM4ZBAj/tUPeZtsq3tMkKsZNNabZ0Jom3+AdgV1naCF0nMFmpikXqUs4ma/q
-	 0A/+yB4nFF9vAmHNuvf+ObcCcDnTgO3US3TEGqu+xoVh4MHmNMT+eGrvxWg7lSXkS6w==
+	bh=JBgS1zqmtEnRgSx4ivAFqjDioNTLoEurjKQm4sXXUkQ=;
+	b=WljymPQbR5viCa9kWcUVT+xOlSxsB5HSvt6v0/xEcH5HzgISqnjSJa32oS00j+tsMLfO
+	 R7k/zSNNbHbW+ChI0R1aPdY3t5cZmPodv8qRrwrUKDsUh8YuA+6hNJXfszYSbFpc2UpSy
+	 XvyguMOS+rSzeM5ZZfwf1acjAsMQ5Wda4oJJcvi6xzba0VAdC4FLxW0w448CaNfzuvth/
+	 5wZ6IZREHzn+yLGwuGZgFctrfEs4nUGFRYIFrrShC1aGrJxmDpVXxlcM4bdaMyWlP+aM4
+	 TcX26kEcf6iAR54CcPlgKcczSrzWg11ggNr+BizoDppmsiI+N3qv/m8mGLs9/pTj2mg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tjYuFfMQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XI/31Lk1";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0FC606A32A;
-	Wed, 18 Nov 2026 16:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1743606A31C;
+	Wed, 18 Nov 2026 16:16:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tjYuFfMQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC951F000C6;
-	Wed, 18 Nov 2026 16:16:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XI/31Lk1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F42A1F000C4;
+	Wed, 18 Nov 2026 16:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018574;
-	bh=auJPGP9R42Th4YJrojow5xGmFNVL43lEBwdLu0ZlbtE=;
+	s=korg; t=1795018577;
+	bh=JBgS1zqmtEnRgSx4ivAFqjDioNTLoEurjKQm4sXXUkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tjYuFfMQHQ2Ie5h4ek1r8SIFQ1CwysxYdctMmsHQQmv0AaQWP73Y4ybfEnGsI8i05
-	 wHl7n7xtSnj8ZSPBzh7yticAKKaFb9DeW8nm/PhwXrElJ7IwwoPuuuF2DvdgLqvcLx
-	 uYJcbzg5mD1Q6QazaFMG233yddZvLEr+U+lJGqtU=
+	b=XI/31Lk150/2j+6K4B3+R4uU8fGgRXa2HlYEq/UitJpWEpaxo3x4E2hf785FZXWmC
+	 g4RyYyiwNkKm0Q++h690BIVXOP8eyiJVa8ZjwkNBkYrNpsYthZ1uwYu7fGspYRmIEU
+	 tpneZERv20SYhDYSyRvgAyQ7SaoiEmm9r8RT9S4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Will Deacon <will@kernel.org>,
+	Joachim Eastwood <joachim.eastwood@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1262/2651] perf: marvell: avoid large stack variables
-Date: Wed, 18 Nov 2026 15:41:42 +0100
-Message-ID: <20261118150333.406056911@linuxfoundation.org>
+Subject: [PATCH 7.3 1289/2651] arm64: dts: rockchip: fix missing sdmmc cd pinctrl on rk3588s-nanopi-r6
+Date: Wed, 18 Nov 2026 15:42:09 +0100
+Message-ID: <20261118150334.346455151@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,141 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Joachim Eastwood <joachim.eastwood@gmail.com>
 
-[ Upstream commit 7e17084177aa6c76231c6ee8cdbbcd24f40c86cc ]
+[ Upstream commit 30fcc62cf5d27fe264145bb743407af62f8ff240 ]
 
-The probe function in this driver constructs multiple large structures
-on the stack, which ends up causing a size warning:
+The cd (card detect) pin is used, but not reserved through pinctrl.
 
-drivers/perf/marvell_cn10k_ddr_pmu.c:1168:12: error: stack frame size (1296) exceeds limit (1280) in 'cn10k_ddr_perf_probe' [-Werror,-Wframe-larger-than]
- 1168 | static int cn10k_ddr_perf_probe(struct platform_device *pdev)
-      |            ^
-
-Avoid this warning and simplify the code by turning these into static
-const structures and directly assigning them without the extra copy.
-
-Fixes: 9b551a2446b2 ("perf: marvell: Add CN20K DDR PMU support")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 95147bb42bc1 ("arm64: dts: rockchip: Fix the SD card detection on NanoPi R6C/R6S")
+Signed-off-by: Joachim Eastwood <joachim.eastwood@gmail.com>
+Link: https://patch.msgid.link/20260903-nanopi-m6-v6-2-37416bbd6862@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/marvell_cn10k_ddr_pmu.c | 85 +++++++++++++++-------------
- 1 file changed, 45 insertions(+), 40 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/perf/marvell_cn10k_ddr_pmu.c b/drivers/perf/marvell_cn10k_ddr_pmu.c
-index 0a8cb61664084..9b68d6c1c31cd 100644
---- a/drivers/perf/marvell_cn10k_ddr_pmu.c
-+++ b/drivers/perf/marvell_cn10k_ddr_pmu.c
-@@ -1165,6 +1165,47 @@ static const struct ddr_pmu_platform_data odyssey_ddr_pmu_pdata = {
- };
- #endif
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi b/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi
+index 91b6eefd7abf5..3ee6853b8752e 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi
+@@ -421,6 +421,10 @@ rtc_int: rtc-int {
+ 	};
  
-+static const struct pmu cn10k_pmu = {
-+	.module	      = THIS_MODULE,
-+	.capabilities = PERF_PMU_CAP_NO_EXCLUDE,
-+	.task_ctx_nr = perf_invalid_context,
-+	.attr_groups = cn10k_attr_groups,
-+	.event_init  = cn10k_ddr_perf_event_init,
-+	.add	     = cn10k_ddr_perf_event_add,
-+	.del	     = cn10k_ddr_perf_event_del,
-+	.start	     = cn10k_ddr_perf_event_start,
-+	.stop	     = cn10k_ddr_perf_event_stop,
-+	.read	     = cn10k_ddr_perf_event_update,
-+	.pmu_enable  = cn10k_ddr_perf_pmu_enable,
-+	.pmu_disable = cn10k_ddr_perf_pmu_disable,
-+};
+ 	sdmmc {
++		sdmmc_det_pin: sdmmc-det-pin {
++			rockchip,pins = <0 RK_PA4 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
 +
-+static const struct pmu ody_pmu = {
-+	.module       = THIS_MODULE,
-+	.capabilities = PERF_PMU_CAP_NO_EXCLUDE,
-+	.task_ctx_nr = perf_invalid_context,
-+	.attr_groups = odyssey_attr_groups,
-+	.event_init  = cn10k_ddr_perf_event_init,
-+	.add         = cn10k_ddr_perf_event_add,
-+	.del         = cn10k_ddr_perf_event_del,
-+	.start       = cn10k_ddr_perf_event_start,
-+	.stop        = cn10k_ddr_perf_event_stop,
-+	.read        = cn10k_ddr_perf_event_update,
-+};
-+
-+static const struct pmu cn20k_pmu = {
-+	.module       = THIS_MODULE,
-+	.capabilities = PERF_PMU_CAP_NO_EXCLUDE,
-+	.task_ctx_nr = perf_invalid_context,
-+	.attr_groups = cn20k_attr_groups,
-+	.event_init  = cn10k_ddr_perf_event_init,
-+	.add         = cn10k_ddr_perf_event_add,
-+	.del         = cn10k_ddr_perf_event_del,
-+	.start       = cn10k_ddr_perf_event_start,
-+	.stop        = cn10k_ddr_perf_event_stop,
-+	.read        = cn10k_ddr_perf_event_update,
-+};
-+
- static int cn10k_ddr_perf_probe(struct platform_device *pdev)
- {
- 	const struct ddr_pmu_platform_data *dev_data;
-@@ -1202,56 +1243,20 @@ static int cn10k_ddr_perf_probe(struct platform_device *pdev)
- 		/* Setup the PMU counter to work in manual mode */
- 		writeq_relaxed(OP_MODE_CTRL_VAL_MANUAL, ddr_pmu->base +
- 			       ddr_pmu->p_data->cnt_op_mode_ctrl);
-+		ddr_pmu->pmu = cn10k_pmu;
- 
--		ddr_pmu->pmu = (struct pmu) {
--			.module	      = THIS_MODULE,
--			.capabilities = PERF_PMU_CAP_NO_EXCLUDE,
--			.task_ctx_nr = perf_invalid_context,
--			.attr_groups = cn10k_attr_groups,
--			.event_init  = cn10k_ddr_perf_event_init,
--			.add	     = cn10k_ddr_perf_event_add,
--			.del	     = cn10k_ddr_perf_event_del,
--			.start	     = cn10k_ddr_perf_event_start,
--			.stop	     = cn10k_ddr_perf_event_stop,
--			.read	     = cn10k_ddr_perf_event_update,
--			.pmu_enable  = cn10k_ddr_perf_pmu_enable,
--			.pmu_disable = cn10k_ddr_perf_pmu_disable,
--		};
- 	}
- 
- 	if (silicon_flags & IS_ODY) {
- 		ddr_pmu->ops = &ddr_pmu_ody_ops;
--
--		ddr_pmu->pmu = (struct pmu) {
--			.module       = THIS_MODULE,
--			.capabilities = PERF_PMU_CAP_NO_EXCLUDE,
--			.task_ctx_nr = perf_invalid_context,
--			.attr_groups = odyssey_attr_groups,
--			.event_init  = cn10k_ddr_perf_event_init,
--			.add         = cn10k_ddr_perf_event_add,
--			.del         = cn10k_ddr_perf_event_del,
--			.start       = cn10k_ddr_perf_event_start,
--			.stop        = cn10k_ddr_perf_event_stop,
--			.read        = cn10k_ddr_perf_event_update,
--		};
-+		ddr_pmu->pmu = ody_pmu;
- 	}
- 
- 	if (silicon_flags & IS_CN20K) {
- 		ddr_pmu->ops = &ddr_pmu_ody_ops;
--
--		ddr_pmu->pmu = (struct pmu) {
--			.module       = THIS_MODULE,
--			.capabilities = PERF_PMU_CAP_NO_EXCLUDE,
--			.task_ctx_nr = perf_invalid_context,
--			.attr_groups = cn20k_attr_groups,
--			.event_init  = cn10k_ddr_perf_event_init,
--			.add         = cn10k_ddr_perf_event_add,
--			.del         = cn10k_ddr_perf_event_del,
--			.start       = cn10k_ddr_perf_event_start,
--			.stop        = cn10k_ddr_perf_event_stop,
--			.read        = cn10k_ddr_perf_event_update,
--		};
-+		ddr_pmu->pmu = cn20k_pmu;
- 	}
-+
- 	/* Choose this cpu to collect perf data */
- 	ddr_pmu->cpu = raw_smp_processor_id();
- 
+ 		sd_s0_pwr: sd-s0-pwr {
+ 			rockchip,pins = <4 RK_PB4 RK_FUNC_GPIO &pcfg_pull_up>;
+ 		};
+@@ -496,6 +500,8 @@ &sdmmc {
+ 	no-mmc;
+ 	no-sdio;
+ 	sd-uhs-sdr104;
++	pinctrl-names = "default";
++	pinctrl-0 = <&sdmmc_bus4 &sdmmc_clk &sdmmc_cmd &sdmmc_det_pin>;
+ 	vmmc-supply = <&vcc_3v3_sd_s0>;
+ 	vqmmc-supply = <&vccio_sd_s0>;
+ 	status = "okay";
 -- 
 2.53.0
 
