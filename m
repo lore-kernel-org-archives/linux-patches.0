@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051399;
-	b=ei5twgh1oQvIan0bNeOKO7GqY7rcpDb6mGfy+jiNihQtw6mEy9sfvSJC05wHqZPU/XOb
-	 7TNiAls9PYx7NyD4l2k1iKsHbxpGkXY1Mca/waIcuPbL3ixxzegNt2/hyeU5aA0zXNPNX
-	 /Ch+lplapYFxUAvkHoLVhXIkrW9xj/2PhRbqHfCYKuyTHWPDBpwcUTbDEAbfsLSAPxLXo
-	 WncgA2rCbq3sQdpzEMKOypjfNMdXCJkbs8LFDzgksyrykz21c2AjCDMNDgEtgDLwgvcnY
-	 LFcpFHMSMzCV4T0AXCn7FEy8HaMBtvf9oIkwC2STWSa3C7TdobAcLL7e/KADU3K4YKQ==
+	t=1795051402;
+	b=sPc45EXTV4cLMTYlZfAEnx18StS2CWly5OybGKnMi5wqQC8rvmECu8dq13POsxANeQk8
+	 /suilCf1SUsGNpKxsKVGG2YiykSzOPQr+m1CKm8/wRvCIl8w5W8S6SbIc0WhPPG6zO/kR
+	 dEZDR9MW0OhoI5X4d/zyG8X+B98RrBiPLccL08NOdN62Zd7bf6pt/Ep3RSVauPZbtOjeT
+	 7T9FaXfRUY2IJ9/KxUC3XWAu6vr4g8eOm7AE5UXiyRmJBmpgtk6NjKcQ5ic65ba2GsGda
+	 gezViTuOVNbKRm4edxWVqzDoMKUuO7rDp7GdWS1e2w6kHTKjMPxgV406THuT/CLXapQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051399;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051402;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4CCqYpuChICuzLKbE4Kb64WX2XugWwwH/ph3Gmp5MLQ=;
-	b=LOAXR3AAsDyOHmciCCfY+sC02a/Pjt+LROr63iyX+g94gR4FhWsELhFlCI/tVqj02WiS
-	 EimDv0EBckd3aUP/eEaQw2RA/EbtFKwGWPnYyGdxDajxBWyj6UrKiNrGlI/0jgSzVwXZX
-	 ATDXcnTTQUE5VEd59lKM8Rzhzx7tvox+qrW2Cu88Q7a90o97hXUcGFkvx13DL6hRFKsfj
-	 jePeJvxzhWD8bcGqaU9WSu55s+0PWoMQNb78YsOabepzEH5P1EQUmSPsLpN8Gt6YKueu5
-	 bMQlw/WdsuIF6J088K7BKmuY42ziDq7qfFpW2VNm4cMOJS1vQc75V0pcDW+7o+XU8LQ==
+	bh=4bLnb+VZ/+CvklQqQHvYh0YDkknM+uNEu4AL3ATBVvM=;
+	b=BL7XfH/VieHRqJZWL7wGhNdvEzPssB6uHMOkWrOa8vvM9Jxv8Hp4Ajtj6hzdCudD0duI
+	 PCyptEL9l45ARVMfUMK4IgBbI7D/SSH0O6tNmR4X6o0ZEVaJLiGWRgn/3UhtERBkA4NNg
+	 DvkmVDzU34lQotk8XmA2O//YgwSHKuE5W5QEQ23KFl/NdchGqVe1ESFzenW4eM6zEo0ap
+	 kUqa0A44WJ0EOuWTIMw8ezV635O6hb9rmH+uOIrPblmV0I3LP/zaaQ1vGGW3/jYIfliZJ
+	 p+6z2YtxJMa/6dCl4sLAxxThGmVE8kJ0DbdST5efJcnMSVJ1cbdj8cCw3cQd8/HioQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ApHB67L8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M7WLJh2B;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CBD606A31C;
-	Thu, 19 Nov 2026 01:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB89606A325;
+	Thu, 19 Nov 2026 01:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ApHB67L8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E591F000C4;
-	Thu, 19 Nov 2026 01:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M7WLJh2B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690FD1F000C5;
+	Thu, 19 Nov 2026 01:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051399;
-	bh=4CCqYpuChICuzLKbE4Kb64WX2XugWwwH/ph3Gmp5MLQ=;
+	s=korg; t=1795051402;
+	bh=4bLnb+VZ/+CvklQqQHvYh0YDkknM+uNEu4AL3ATBVvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ApHB67L8KjYQOlWVpqB8Bc+AbDw2CP4YqVnHOFMrZE69SAD3PmcEQFu5t3yifk/dq
-	 iA1WxVL7mRbMILh4B4Y6hwp0QN0a32AigbWqdqZ6R5qnmZl7tVXG/dwPZMKYiLBgCT
-	 /1d81epwS5eftjc+F7wvSY/Exo5KBwFrYJnST1Jo=
+	b=M7WLJh2BHtz46WsPZtpf5b50n91hThBGsaR9ByzFGMs+teD8TdA1HrWbt9L5zE6pA
+	 CS8LBzW//oiUIDVxaA4F+CGReqT9HImDhsZOPvg1lsLQ1/LZZt60Izca7PdSJPiytW
+	 eWzPwSVJ4k6gYTABU0W52yIq4FU9KmDHXl6P0hVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Simon Horman <horms@kernel.org>,
+	Brian Grech <bgrech@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0194/2214] ALSA: usx2y: Stop clearing urb->hcpriv before submission
-Date: Wed, 18 Nov 2026 15:31:10 +0100
-Message-ID: <20261118150017.957675468@linuxfoundation.org>
+Subject: [PATCH 5.15 0195/2214] selftests/net: fin_ack_lat: fix latency threshold typo
+Date: Wed, 18 Nov 2026 15:31:11 +0100
+Message-ID: <20261118150017.991411764@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,36 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Brian Grech <bgrech@redhat.com>
 
-[ Upstream commit fabae5548149ef5c8a056875d9ebdc38366db539 ]
+[ Upstream commit 2373107782a98ba15931a37bbd9dd46d7213e5aa ]
 
-This is managed by USB core and drivers aren't expected to touch it.
+The commit message for af8c8a450bf4 ("selftests: net: Add FIN_ACK
+processing order related latency spike test") states: "if the latency
+is larger than 1 second (spike), print a message". However the code
+uses a threshold of 100000 us (100 ms), not 1000000 us (1 s).
 
-It should only be not NULL on a submitted URB, in which case clearing
-defeats the "submitted while active" sanity check in usb_submit_urb()
-and may crash the HCD handling the URB and panic the kernel.
+The lower threshold causes false positives on slower hardware where
+normal connection latency occasionally exceeds 100 ms but never
+approaches the 1 s spike that indicates the actual FIN/ACK race bug.
 
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Link: https://patch.msgid.link/20260810075728.483c827e.michal.pecio@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fix the threshold to match the documented intent.
+
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Brian Grech <bgrech@redhat.com>
+Link: https://patch.msgid.link/20260806151645.4172900-1-bgrech@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/usbusx2yaudio.c | 1 -
- 1 file changed, 1 deletion(-)
+ tools/testing/selftests/net/fin_ack_lat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/usx2y/usbusx2yaudio.c b/sound/usb/usx2y/usbusx2yaudio.c
-index a6ed4f0230b7f..b44f951f006d2 100644
---- a/sound/usb/usx2y/usbusx2yaudio.c
-+++ b/sound/usb/usx2y/usbusx2yaudio.c
-@@ -165,7 +165,6 @@ static int usx2y_urb_submit(struct snd_usx2y_substream *subs, struct urb *urb, i
- 	if (!urb)
- 		return -ENODEV;
- 	urb->start_frame = frame + NRURBS * nr_of_packs();  // let hcd do rollover sanity checks
--	urb->hcpriv = NULL;
- 	urb->dev = subs->usx2y->dev; /* we need to set this at each time */
- 	err = usb_submit_urb(urb, GFP_ATOMIC);
- 	if (err < 0) {
+diff --git a/tools/testing/selftests/net/fin_ack_lat.c b/tools/testing/selftests/net/fin_ack_lat.c
+index 70187494b57af..4117332eb1a9c 100644
+--- a/tools/testing/selftests/net/fin_ack_lat.c
++++ b/tools/testing/selftests/net/fin_ack_lat.c
+@@ -69,7 +69,7 @@ static void client(int port)
+ 		lat = timediff(start, end);
+ 		sum_lat += lat;
+ 		nr_lat++;
+-		if (lat < 100000)
++		if (lat < 1000000)
+ 			goto close;
+ 
+ 		if (getsockname(sock, (struct sockaddr *)&laddr, &len) == -1)
 -- 
 2.53.0
 
