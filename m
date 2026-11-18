@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027798;
-	b=CGVhLmbhxfboGAIqr+eGWQXkHu1K1sCe0HQR+3nTGhDjSUsWWuvRVeLb+1SGZ3VWow5D
-	 F7reKozXyQ2ecPJP56j03RZKH0A7S0oc1X23jGpR8TWJVSzfUCCJOeFnxWyVnXvINXPAN
-	 GuMfSjrtnvJkhHAZPRbpesUBVl7JffLDIGiVj1q/CMpwrXUNEKMISAXvzI97E99zb/s0p
-	 fOuH8vnguzrKa/ssYRR+sezVcmdgXgbq1Cng3RAJDHKWSU1kd4cHhXzc4LxyYET8LNGbp
-	 NhRG2A7G1DFcrTLJjsMFT4ydtMk2FlEQ2DQCqT71U1BDqO7NDxpZrrThtv+xLIRW0Bw==
+	t=1795027800;
+	b=pycVRi+igiAr4jAElxLVAIJOBrJDg1H5GJJIhp7WrD0HW1MninZ1nRFg2MQJbkSgL7Bd
+	 4nlTA8Bs9Cfp6gxYd9Pj48yA8o4mGH0mTUjvGySHYxaE23LRgwlYvo1z/DwSwaD4qC8kS
+	 JK2RNOdzyOePc/MMtS5hV3Uf7FRZbMdmkA24mJxArmlbKbBgQhM2EtZ7QK9l8J9eIuJAo
+	 /jgyZJonaFfr4JaVzmrHK0GcSbMr3LnaVefVA8BVF2X3BhEkWmRplee29pGiSmby2EpxY
+	 VrJgqgJoeSeOLdbclf6AeMTvsPryI00ItZTSBQ5WbqwZ7HGdoCxiLTkM0kGhDgOGOHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027798;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027800;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uk+6FOgi7yuE/b51a3xLvcmD/Lfdl0RLnT8h0JzjlbU=;
-	b=rDIgrhY4PA8rjHgDknMUoVgF9AV8zhz4AQBoAKuYTYVkmG9Lboe52CwxAmJoALXIaHk6
-	 LqxpzyWV2l3YfvQbwAiclBfjH+Si9/bknMVd0jNXN7UcEukG2sokkTHYL4o6KOz8LJioQ
-	 9P2B2ulWt8FQfVbCODfU5x+uddOydfPIRe3ANhlaDFHJsk2yVXODkH4MOzqc4IjnFwZ9u
-	 XgAhrjxwXdsQUrqW9x78marpfRNiRt1P7gLJPWA2kzG95Pow6RJGdBnyCdXIvXJ6vTaSq
-	 diD30uSj3kbqmPPJhIqkI57BEnnMPxoh+iStcgdzM5noAGG42mQdgg7ea+RoGZ9qhpw==
+	bh=PGM9Gguu8i78Wq2mURp+7hG4GBzn/DsX0sPGEGQ2YG8=;
+	b=RLBIKkNRPTJvni8HsyeHkUajRWiiGTAYZcNB+mwRbqRprXoVrhoMqXFOjQQBAJaoNyIc
+	 TA78AIz4+nlfVS/+bHXykIojCyK//1M/nOKJN1Kt1EuL66JiFj+Xhw+rnCKjuc14h4tRI
+	 nqe5s7uT/TqRpqveAlyKEsPqDb83GkzDjE/QVr6IT/8fwZIzmwwh+kk9uLJZdpoFtD8Nj
+	 sqP/xDyyprxkn0ZLGZ1AeBDRpQJoWfZU7yU2kWd+EkEtYcZ48T21RQ4tHheQL+QMIjQ4z
+	 6duWNRNIJ5zKaaJP/+DtP35nwqjItUYsqhmy9YGpi7npI26sK+hVLeblvUik6c7xzCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lGaJknAu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KQLLu1H0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC6E606A31C;
-	Wed, 18 Nov 2026 18:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8BB606A325;
+	Wed, 18 Nov 2026 18:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lGaJknAu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7B71F000C6;
-	Wed, 18 Nov 2026 18:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KQLLu1H0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1177F1F000C4;
+	Wed, 18 Nov 2026 18:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027797;
-	bh=uk+6FOgi7yuE/b51a3xLvcmD/Lfdl0RLnT8h0JzjlbU=;
+	s=korg; t=1795027800;
+	bh=PGM9Gguu8i78Wq2mURp+7hG4GBzn/DsX0sPGEGQ2YG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lGaJknAuuj1vWpL9eTFGDt6HQfvXaIYyJgO7w23X+hbvzo+SKAAbAQKMg5Qc09dpN
-	 IXRD0AGKTHAqa79mM6HdxZ7JCBOlsefHhZ52XI6E0fJPCdlO2S5cNFflfqpQ5RIEJd
-	 64BkcuB81lXtg8a8dBq0YkNAohleneva0G1JyyRY=
+	b=KQLLu1H0N2/vUIM4oLOdY70vhBz3uBAa/w/8VlriqTgVUaOK2OCTyMyFlFgbBAaPQ
+	 DwOvUpfvr2DdOyxis5RzxJatCnOdS93fuJhss9Jtox9kP7FSmCmq53MRGZoDTcZCGj
+	 8H1xxJQnvb42/edTgcOrPd9eNQwlmH/iIhDrF7Zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jia Jie <mkofdwu@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	James Clark <jjc@jclark.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1910/2151] perf: Fix UAF in attach_task_ctx_data()
-Date: Wed, 18 Nov 2026 16:00:45 +0100
-Message-ID: <20261118150231.366232815@linuxfoundation.org>
+Subject: [PATCH 6.18 1919/2151] net: ethernet: ti: am65-cpts: fix support for PTP_EXTTS_REQUEST2 ioctl
+Date: Wed, 18 Nov 2026 16:00:54 +0100
+Message-ID: <20261118150231.687536216@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,57 +71,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jia Jie <mkofdwu@gmail.com>
+From: James Clark <jjc@jclark.com>
 
-[ Upstream commit 64ea0e8226ed98d14e0231af1beae10c3d5c043a ]
+[ Upstream commit e3aaeebbef56ceaa27001d1d5a0c1d73d648e6f4 ]
 
-struct perf_ctx_data is RCU protected. In attach_task_ctx_data(),
-the cmpxchg retry loop runs without holding rcu_read_lock(). If
-task->perf_ctx_data already holds a pointer (call it `cd1`), then
-try_cmpxchg(&task->perf_ctx_data, &old, cd) fails and loads old = cd1.
-A concurrent thread running detach_task_ctx_data() could free cd1
-leading to UAF and further memory corruption when cd1 is reclaimed by
-another thread.
+Commit 7c571ac57d9d ("net: ptp: introduce .supported_extts_flags to
+ptp_clock_info") modified the PTP core to validate the supported flags
+of external timestamp requests, rather than relying on each driver to
+check them.
 
-  CPU 0: attach_task_ctx_data()     CPU 1: detach_task_ctx_data()
-  -----------------------------     -----------------------------
-  try_cmpxchg(&task->perf_ctx_data,
-              &old, cd2)
-    -> fails; loads old = cd1
+am65_cpts_extts_enable() ignores the flags, and am65-cpts was not given
+any .supported_extts_flags. Since PTP_EXTTS_REQUEST2 always implies
+PTP_STRICT_FLAGS, the core now rejects every PTP_EXTTS_REQUEST2 for this
+driver with -EOPNOTSUPP, where before that commit the same requests
+succeeded. Only the PTP_EXTTS_REQUEST ioctl still works.
 
-                                    refcount_dec_and_test(&cd1->refcount)
-                                    try_cmpxchg(&task->perf_ctx_data,
-                                                &cd1, NULL)
-                                    perf_free_ctx_data_rcu(cd1)
-                                    [ RCU grace period -> kfree(cd1) ]
+Tests on a BeagleY-AI (J722S) show that the CPTS hardware timestamp push
+inputs timestamp just the rising edge. Encode this in
+.supported_extts_flags. A PTP_EXTTS_REQUEST2 for the rising edge then
+succeeds, and one for the falling edge or for both edges fails with
+-EOPNOTSUPP.
 
-  refcount_inc_not_zero(&old->refcount)
-    -> UAF on freed cd1
-
-Fix this by taking rcu_read_lock across the race window.
-
-Fixes: 506e64e710ff ("perf: attach/detach PMU specific data")
-Signed-off-by: Lee Jia Jie <mkofdwu@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Fixes: 7c571ac57d9d ("net: ptp: introduce .supported_extts_flags to ptp_clock_info")
+Signed-off-by: James Clark <jjc@jclark.com>
+Acked-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
+Link: https://patch.msgid.link/20261020003525.1237742-1-jjc@jclark.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/ti/am65-cpts.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index ec2d21af68f63..f6045a7f83283 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -5291,6 +5291,9 @@ attach_task_ctx_data(struct task_struct *task, struct kmem_cache *ctx_cache,
- 		return -ENOMEM;
- 
- 	for (;;) {
-+		/* Protect @old until inc_not_zero(&old->refcount) */
-+		guard(rcu)();
-+
- 		if (try_cmpxchg(&task->perf_ctx_data, &old, cd)) {
- 			if (old)
- 				perf_free_ctx_data_rcu(old);
+diff --git a/drivers/net/ethernet/ti/am65-cpts.c b/drivers/net/ethernet/ti/am65-cpts.c
+index 8ffbfaa3ab18c..73adb822bc075 100644
+--- a/drivers/net/ethernet/ti/am65-cpts.c
++++ b/drivers/net/ethernet/ti/am65-cpts.c
+@@ -779,6 +779,7 @@ static long am65_cpts_ts_work(struct ptp_clock_info *ptp);
+ static struct ptp_clock_info am65_ptp_info = {
+ 	.owner		= THIS_MODULE,
+ 	.name		= "CTPS timer",
++	.supported_extts_flags = PTP_RISING_EDGE | PTP_STRICT_FLAGS,
+ 	.adjfine	= am65_cpts_ptp_adjfine,
+ 	.adjtime	= am65_cpts_ptp_adjtime,
+ 	.gettimex64	= am65_cpts_ptp_gettimex,
 -- 
 2.53.0
 
