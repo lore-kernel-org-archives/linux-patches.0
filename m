@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022236;
-	b=2Jw2ocSDFLkoCZSMzCfWer6VMS5Zq0U0TWG+XKL/1Dw5fNULnZNe9pFldfrce/LMUnY1
-	 6pdtZ1Sf94NgeYBio21b7cHCAgbaHsoytxnygNfhTYhzswIQgsBUeU82xWAJM8aIjtWav
-	 lGojYoyHC44Ywh62apHVY7n+cvNMivuvng/qekwP05bmIFLoU5cpeE/rqbE1XzL9X1GC/
-	 oP9pVq1BTuEMdz5n6bguxDGjM6wa777Jxje/Ku9SUsNCQTch6UHPknUMW7qYYfHEImRqW
-	 0+nyGfZhp4gLpQE2V8aPbaE9TZKMpWBkTfIWwZbgRRNm4MJzfjuYuFPoJ7B1W/qVGzQ==
+	t=1795022239;
+	b=lzbLD3XB9GX4Ge66LdsGeY/Ah+E16d6PDrmr8NRVdI8ENvSqEntr/K2RXs2SAR63vnBm
+	 kfjpzY3QPLjCG45uiIruy1LoZXoSGNt/pD9+4C+/lda7cdjWgb79WBpVzjsJdF0488+yV
+	 midCNTXifIl4Xtt+8DNk0p/kvjZAsH/ycLFeCL0CwVwfFdmIEDW0LbQkTHu56CRyKiX+k
+	 FEo0RI1nDLV0gW4xL1K7tyDO9gVg5uV68pQmHue43lYm6aWLB02YCGygRxeE3iCAWLDEX
+	 GGRwkeQkoHDP3WNBUr5wfnpYu4poyoEGA2lv+d+3gDfYwu5jcpzYQCNMwc/qOS29QMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022236;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022239;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=qK3aPM/+2tRiRfJ/mvMgsM1uewSJ6EIQFfEP0VXTY64=;
-	b=DCqaUv3qte+sWiQggm/ruz1goi9pDYDXnAPqNK/63cTYCIlFFfZaoBK/C4Y7FcovWBMs
-	 OjXO3scbNZu/nk0IhDuB6U5WpGssSguOx+AtwSKvnpyVe4PII3aGBwfbfcZextTr+YxXp
-	 aXrrUQujYM0Av8j9rzz1EvzCL1JrJ8W1WvJzFfBReLobuP+yWGAijPYP0Ja5hFhw0mIpf
-	 a13jPjZ4XqF0SIjm+Q2G5jsu3ZQ1mmJ6twa4nz0RdaOY1Xsb4H8k6pgV8J950f/OMo8YS
-	 ljX309E148WeO6olpip/qM8XUpHJp2OGjx5WgCuPfAC5COhPDNSYKr73RC151HS6FIA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=NNsUrz6JaPgg0KF6xhk5YatfT/K3bLElLTBkhDUrERY=;
+	b=sLA5WFfDQyfi7UHU1irQoeCUGrOBgQc5lfxnDPT6fbb7IL56Fnjx+bjaXa9JCIhFBUmy
+	 BocqRd2OagicDMYAEYVPGJtIzw9e6r2iPSS0ZtcJPsrtUOg8sv6/8IgpPJFLPrEErniIt
+	 vnGD6uK5i3ZKNwt7Na/35QRJ+WZvWnIQvd56f4Y5bAONNXP6xT6I6I8uhMSeUCIEKcJfq
+	 CQBo03zz8GFpyyTkRc3AUkVN0ciaTSt4eSJLXcfBhbKjLUVrOvIPJKkn5fpO3SOPj3MLN
+	 g8xU8Qrft58b2xoqFXgqy2OisRWGdMU9Jz+64oDBOafUmO0a0uiECCGUxW7dKBwE3Xw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tB1Vp9iU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uQtd6JmI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC37606A32C;
-	Wed, 18 Nov 2026 17:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0599D606A31C;
+	Wed, 18 Nov 2026 17:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tB1Vp9iU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812571F000C6;
-	Wed, 18 Nov 2026 17:17:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uQtd6JmI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F1881F000C4;
+	Wed, 18 Nov 2026 17:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022236;
-	bh=qK3aPM/+2tRiRfJ/mvMgsM1uewSJ6EIQFfEP0VXTY64=;
+	s=korg; t=1795022238;
+	bh=NNsUrz6JaPgg0KF6xhk5YatfT/K3bLElLTBkhDUrERY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tB1Vp9iUTxnVbN7iTv363dKyWt798VJX/rOEN63Ch7H1HuEpSChsqlxVtURKVpJbi
-	 ENFS2WOyRCrYcPq3Wh9rEI83fnMfL8nnrjhIy0m5rj+pI3N6AzVoSsXwsrPt/MOAAO
-	 WkAd1n+RlKkSCga4XdmVcqUI1h6nb+KrhbhEwx18=
+	b=uQtd6JmIWxBiXOo3R2QT0M5b3LR8+P9Lq12f7gI9U9FnKMeNESOckMtHHADhpgKTP
+	 1VpDm5t9xaRYW3KxYYyW9fC2Yi72wjmhREDFMeY3w+iSIyVvhxEWKvhC8qpYlmB/zR
+	 8bIR4LUAKrSFCSa7jGL1PSU/uvTnxZqo8oYLDyd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Philipp Reisner <philipp.reisner@linbit.com>,
+	Lars Ellenberg <lars.ellenberg@linbit.com>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
 	Josef Bacik <josef@toxicpanda.com>,
-	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2591/2651] block: apply the segment size to the integrity buffer
-Date: Wed, 18 Nov 2026 16:03:51 +0100
-Message-ID: <20261118150417.546097817@linuxfoundation.org>
+Subject: [PATCH 7.3 2592/2651] drbd: stop the start_resync timer of a dying device
+Date: Wed, 18 Nov 2026 16:03:52 +0100
+Message-ID: <20261118150417.574394481@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,6 +65,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
@@ -71,49 +74,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 26edfdee11eb2afe08fb5f874edcdf0786d6b66c ]
+[ Upstream commit a439d3fe3ec2bfe0b4ccb77973ae97949bcf46ec ]
 
-The integrity buffer is a single segment and must not exceed
-max_segment_size. max_integrity_io_size() applies that limit to the data
-size instead, which is off by a factor of 64 for 8 bytes of PI per 512
-bytes of data. A SCSI host that doesn't set a maximum segment size gets
-64KiB, lpfc and qla2xxx among them, so a DIX disk behind one of those
-does no IO above 64KiB.
+start_resync_timer gets armed for up to a second and nothing ever
+deletes it, so drbd_destroy_device() can free the device with the timer
+pending. Shut it down where request_timer is shut down.
 
-Limit the buffer and derive the data size from that, which makes it 4MiB
-for that case.
-
-Fixes: ec7f31b2a2d3 ("block: make bio auto-integrity deadlock safe")
+Fixes: 370a43e7982d ("drbd: Work on the Ahead -> SyncSource transition")
+Cc: Philipp Reisner <philipp.reisner@linbit.com>
+Cc: Lars Ellenberg <lars.ellenberg@linbit.com>
+Cc: "Christoph Böhmwalder" <christoph.boehmwalder@linbit.com>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261028164415.1262013-45-axboe@kernel.dk
+Link: https://patch.msgid.link/20261028164415.1262013-13-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/blkdev.h | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/block/drbd/drbd_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index c8bcd6c570bd4..b5d247474e777 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -1814,11 +1814,12 @@ static inline int bio_split_rw_at(struct bio *bio,
-  */
- static inline unsigned int max_integrity_io_size(struct queue_limits *lim)
- {
--	u64 max_intervals;
-+	unsigned int buf_size = min_t(unsigned int, lim->max_segment_size,
-+				      BLK_INTEGRITY_MAX_SIZE);
+diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
+index a2a841c892011..099dff1ea2565 100644
+--- a/drivers/block/drbd/drbd_main.c
++++ b/drivers/block/drbd/drbd_main.c
+@@ -2163,6 +2163,7 @@ void drbd_destroy_device(struct kref *kref)
+ 	struct drbd_peer_device *peer_device, *tmp_peer_device;
  
--	max_intervals = BLK_INTEGRITY_MAX_SIZE / lim->integrity.metadata_size;
--	return min_t(u64, lim->max_segment_size,
--		max_intervals << lim->integrity.interval_exp);
-+	return min_t(u64, UINT_MAX,
-+		(u64)(buf_size / lim->integrity.metadata_size) <<
-+			lim->integrity.interval_exp);
- }
+ 	timer_shutdown_sync(&device->request_timer);
++	timer_shutdown_sync(&device->start_resync_timer);
  
- #define DEFINE_IO_COMP_BATCH(name)	struct io_comp_batch name = { }
+ 	/* paranoia asserts */
+ 	D_ASSERT(device, device->open_cnt == 0);
 -- 
 2.53.0
 
