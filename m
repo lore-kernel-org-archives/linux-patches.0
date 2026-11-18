@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037317;
-	b=HIKuki+fOHZxbD5evtNUUN8aTHOn4RnmCGMw27f01zfrWolcddKvCH/hXuW2vi42fN4X
-	 Zd+DzdsyJN6Q/Hvi/PKLlfxbyFL7FFC5PZcIq3xtmULBcv4NYtEvrPwf6AuXKxlGDQE8H
-	 CKIIYzgUfwm8/CC96kHESaigDpQ6aXJIAYSO+Nc45EQRniX48KooQ7g1sAk+5ER/2fr2F
-	 DHhe8hRLEJhR8Zvy9V01RnzEJYtzZij9XyKEhTCSKeqHy+rIsjxsF6Ocr307BbhEa5abG
-	 7eHRetx9uWD3IK8gRZny6PXwLVAcHBfhmgXTvyDjf+F0e+X/c4HuTj28rhEkbPiUl/A==
+	t=1795037320;
+	b=e+u20IfRTk7W3tiiaVQMrfb5M3137w47Cw65qrL1IlrriqdQgl1H2THX3fnVEPPbNWGw
+	 Y8puuT9Vu0GuQrWZABo+X9+inNua5ZKrU/NSX2O7TktItCurQ7a1UJvYnY7WdxzFrGa9v
+	 LmjVCpPUX4tk9HBLtdxAXQoPmLWYDyO841aXk1Ud2MO3a5FoHKO3t8Wxo4IJFkxazwQUi
+	 Pe8lbVNdWDeC7NUHjZABfqvTbSn2HBKrCBFSTpwr+UfacASRujjEZWy7Unp0XEQpN9wYH
+	 kTHjrepQngcHBgZW1cqbpUzCXAAxFKKViBZRHhlHjvscH8QpS/9dbVBrw8QC4kqzf0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037317;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037320;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5CpPRCqZC3x2YZL/IuW55WicifYfRUvKkNl6YzOn3hs=;
-	b=AXzjDakhTAAvxjiYB0lkT+ITuWu16hHpl4AW0oLrrhh1sq5fvxtNHvpFnQx/ZxltuChX
-	 +l1k/gJccnCHw5MEMJKv19VA/GksLks6qYNJ2itx31x8ayB4e+Ei4RthpFYKMGUz6QESX
-	 Yj0bWH1d0rwJRGY0V3nZdGul8QE5q7Lu8wd/kJQYamlqkubgdDXvsvNJlOReFU1JtTUwG
-	 tOaZDIIoxG0kCfNBF4TDmiKkutBmANL3DDzqKcqQRNYIqIKNyWCVBm/+DuljxODUZkg5S
-	 4mCcM5kFJD1fr/UIm/FYVWO0jKjWdUk8D6okKPXYLKWBi5KZzNyQIiJqAOdXVp4nGOg==
+	bh=K40jbtNKrGY11ax4Xc8PnB4e9peugsUw1IJYBkW3NG8=;
+	b=rzcvwvf9ShiTakFHg1+QhvkfFNUaYGTF36rA46hKIT0W/C7mO2DJbrpsL7N/t1oSBlbj
+	 uwktx7FcptOl+eH1KGnw6zQ7eH6GAcR3aIrBAHhREF9g92mK+kE/iSqpD/Vr9ExiCyauV
+	 DLnMRgdLy5I7RVGriWz0dk1fUl4+tvfHOcRLh/zC/RlK+zRX9Wh/o6Qnsg2Cmdg3auJMx
+	 aCYiqOUBnbnW7FqbZcjvwo+h+2t6Mp/WTVTii7eQnPunWKUr7oEDe5g0MHAm3mHZkydjj
+	 13yN5Za3y7Al9pLgarXO0KKbr0FaN3tK7YFGUrI89ku7kYgFbYjyD11iNMzwXYKgnuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MnJRQR90;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mGFUOnjK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B2B606A320;
-	Wed, 18 Nov 2026 21:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0A3606A320;
+	Wed, 18 Nov 2026 21:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MnJRQR90
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F4061F000C4;
-	Wed, 18 Nov 2026 21:28:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mGFUOnjK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C111F000C4;
+	Wed, 18 Nov 2026 21:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037317;
-	bh=5CpPRCqZC3x2YZL/IuW55WicifYfRUvKkNl6YzOn3hs=;
+	s=korg; t=1795037320;
+	bh=K40jbtNKrGY11ax4Xc8PnB4e9peugsUw1IJYBkW3NG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MnJRQR90t2ZbLGSFKzDplgebVFWOM42XOFmsj/bAACKGU53Xd0JelUdsFkgdOE9Kj
-	 ZUMrLmeoP8RRFwqVopSZefkschevePoR/E2Ese46CbiW9uJleISrfZHW2yzYysqXkt
-	 GneOre/vsNspyAe8JOBjirRpZM6+v3MB9jd6NuLE=
+	b=mGFUOnjKwn/O71DBXgtqjyybfOcnpAoCcdahnJfsgQDgEPnUPF4jfMByDvkFkPFvT
+	 h1p7IC66znMbeNCMUB8xMXoo3V20JZRIjltDNwF5SBqJi64bt1RXoodTOqQukHAyT8
+	 eLsrHH5wrWF2X+pA7NvVyNOPHfcuo7oVbf2WN6Yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Usama Arif <usamaarif642@gmail.com>,
+	Chris Mason <mason@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1363/3318] mm/damon/core: skip applying scheme if region split for quota fails
-Date: Wed, 18 Nov 2026 15:33:05 +0100
-Message-ID: <20261118150401.366556994@linuxfoundation.org>
+Subject: [PATCH 6.6 1337/3318] io_uring/cancel: drop sqd->lock while SQPOLL waits
+Date: Wed, 18 Nov 2026 15:32:39 +0100
+Message-ID: <20261118150400.468041434@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,106 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 90c2fa6adfed7abe0935506a43cdff3a05c1fff0 ]
+Commit cb0306c52ffae083a86fb283de67875ae7a9500e upstream.
 
-Patch series "mm/damon: fix DAMOS bugs in core, paddr and vaddr".
+An exiting SQPOLL thread calls io_uring_cancel_generic() with sqd->lock
+held, and keeps it across cond_resched() and the sleep until nothing is
+in flight anymore. A zero-copy send notification can't be canceled and
+stays pending as long as the peer doesn't read, so the lock is held for
+as long as a user cares to. io_ring_exit_work() needs it to park the
+thread, and so do IORING_REGISTER_IOWQ_AFF and IOWQ_MAX_WORKERS. With
+64 such rings sharing the thread, every iou_exit slot sleeps on the lock
+and no ring gets freed for anyone.
 
-Fix misc bugs of DAMOS.  Patch 1 makes DAMOS less stress memory allocator
-under extreme situation.  Patches 2 and 3 fix wrong folios walking in
-DAMON_PADDR.  Patches 4 and 5 fix wrong folios walking in DAMON_VADDR.
-Patches 6-8 handle extreme and unlikely memory situations that can cause
-divide by zero and underflow.
+Drop the lock around cond_resched() and the sleep, like the main loop of
+the thread does. Each walk of ctx_list is still under one hold, and
+nothing is kept across the unlock. The thread drops its io-wq, frees its
+tctx and clears sqd->thread under one hold after the loop, so whoever
+holds the lock and finds sqd->thread set can still use them.
 
-All bugs are discovered by Sashiko.
-
-This patch (of 8):
-
-damos_apply_scheme() splits a region and apply the action to the subregion
-if it is needed for not violating the quota.  The split operation
-(damon_split_region_at()) could fail for allocation failure.  In the case,
-the quota could be violated.  From the user's perspective, DAMOS becomes
-more aggressive than expected under the extreme situation.  Handle the
-failure.
-
-The user impact is not critical.  The failure of damon_split_region_at()
-is unlikely since it is arguably too small to fail.  Also DAMOS being
-aggressive is limited to the single region.  Users can set min_nr_regions
-to set the maximum size of each region.  If it is reasonably set, the
-transient overhead shouldn't be critical.
-
-The issue was discovered [1] by Sashiko.
-
-6.6.y porting notes.  Modify damon_split_region_at() to return failures.
-It is a part of commit c60874860762 ("mm/damon/core: handle region split
-failure in apply_min_nr_regions()").  Without it, build fails.
-
-Link: https://lore.kernel.org/20260901131850.98037-1-sj@kernel.org
-Link: https://lore.kernel.org/20260901131850.98037-2-sj@kernel.org
-Link: https://lore.kernel.org/20260718171523.87547-1-sj@kernel.org [1]
-Fixes: 2b8a248d5873 ("mm/damon/schemes: implement size quota for schemes application speed control")
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Usama Arif <usamaarif642@gmail.com>
-Cc: <stable@vger.kernel.org> # 5.16.x
-Signed-off-by: SJ Park <sj@kernel.org>
+Fixes: 63809137ebb5 ("io_uring: flush notifiers after sendzc")
+Signed-off-by: Chris Mason <mason@kernel.org>
+[axboe: adapted to the schedule_timeout() based loop]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[axboe: io_uring_cancel_generic() is in io_uring.c in 6.6, and uses a
+schedule() based wait loop]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ io_uring/io_uring.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index c106219d33dd9..1209d4a67ecc6 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -828,7 +828,7 @@ static void kdamond_reset_aggregated(struct damon_ctx *c)
- 	}
- }
- 
--static void damon_split_region_at(struct damon_target *t,
-+static int damon_split_region_at(struct damon_target *t,
- 				  struct damon_region *r, unsigned long sz_r);
- 
- static bool __damos_valid_target(struct damon_region *r, struct damos *s)
-@@ -1004,7 +1004,8 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 					DAMON_MIN_REGION);
- 			if (!sz)
- 				goto update_stat;
--			damon_split_region_at(t, r, sz);
-+			if (damon_split_region_at(t, r, sz))
-+				goto update_stat;
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index af349afeb4cb0..43860048d2bf3 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3566,7 +3566,16 @@ __cold void io_uring_cancel_generic(bool cancel_all, struct io_sq_data *sqd)
  		}
- 		if (damos_filter_out(c, t, r, s))
- 			return;
-@@ -1267,15 +1268,17 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
-  *
-  * r		the region to be split
-  * sz_r		size of the first sub-region that will be made
-+ *
-+ * Return: 0 on success, negative error code otherwise.
-  */
--static void damon_split_region_at(struct damon_target *t,
-+static int damon_split_region_at(struct damon_target *t,
- 				  struct damon_region *r, unsigned long sz_r)
- {
- 	struct damon_region *new;
  
- 	new = damon_new_region(r->ar.start + sz_r, r->ar.end);
- 	if (!new)
--		return;
-+		return -ENOMEM;
+ 		if (loop) {
++			/*
++			 * A request that runs in io-wq and doesn't end makes
++			 * each round come here. Don't hold sqd->lock for that
++			 * long either.
++			 */
++			if (sqd)
++				mutex_unlock(&sqd->lock);
+ 			cond_resched();
++			if (sqd)
++				mutex_lock(&sqd->lock);
+ 			continue;
+ 		}
  
- 	r->ar.end = new->ar.start;
- 
-@@ -1284,6 +1287,7 @@ static void damon_split_region_at(struct damon_target *t,
- 	new->nr_accesses = r->nr_accesses;
- 
- 	damon_insert_region(new, r, damon_next_region(r), t);
-+	return 0;
- }
- 
- /* Split every region in the given target into 'nr_subs' regions */
+@@ -3584,8 +3593,20 @@ __cold void io_uring_cancel_generic(bool cancel_all, struct io_sq_data *sqd)
+ 		 * avoids a race where a completion comes in before we did
+ 		 * prepare_to_wait().
+ 		 */
+-		if (inflight == tctx_inflight(tctx, !cancel_all))
++		if (inflight == tctx_inflight(tctx, !cancel_all)) {
++			/*
++			 * A zero-copy notification can't be canceled, and a
++			 * peer that doesn't read keeps it pending. Don't hold
++			 * sqd->lock while waiting for it, or whoever wants the
++			 * lock sleeps as long. No ring is used across this,
++			 * the next round walks ->ctx_list anew.
++			 */
++			if (sqd)
++				mutex_unlock(&sqd->lock);
+ 			schedule();
++			if (sqd)
++				mutex_lock(&sqd->lock);
++		}
+ end_wait:
+ 		finish_wait(&tctx->wait, &wait);
+ 	} while (1);
 -- 
 2.53.0
 
