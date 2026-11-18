@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029156;
-	b=4YZENzCDju+1MpdKRcAMk1og63sxlUMnN3tG8TwOde5Cays+hdRredtIf+m0aza8RWDg
-	 MoknpLOaZi77gKaJKtlxzT1USZZDr4yHKAfvZWtT655hARWpkviUTC1eCK9S/loO/eHpJ
-	 JhJLstO6fhmx/6cPiF8WlUWZfYCrQm0rgpfzuMTnPiSxYceJFY09LzozwwZ+2meX4wJs2
-	 rxnRKqMDZXukRinVzuMUxjnnZ4KJ/Cj2xoRWYwRZ0Stmx3oUYIOE5TXJNYcxX2OQG6Zjg
-	 xKW9Xv9Ex7DtYpkf0YIXtiAuykfssEI6WNfeNvazx7C23KMDxg2GxLZxSwZCfyaHlLw==
+	t=1795029159;
+	b=vX3uXq1SxOiJGEAQmn8lXoyGtGXQc/jyE1Uf9cIE7xv9Q7gqrkjlTwt0bq00jNHzNq4A
+	 IJvvxpm2IAhrFKanZex8UlMV8vchkhNC+wGi2FaqGqHl5ZMU3cmCMWvAhAKJHoK5mVTsP
+	 FR0Ft3hSnJhcBuBdEU0CKAA1Uq69iD8XJc6qA+IO5owW9fzTjc9Qts2PLqU6ZrUzbHk2v
+	 f49VZZ1fbp6qs9ntGM2Wpwxk/8W5a6rZIag8JSJPwmE333+RqZeZcDqYVCGZaKAWwVrtL
+	 PQB/YswGhsRLh1oG3hu64sKmHTJLYnmq8dEMcq4l+WB0qAI0KvZm3GWTN9aMs/tcWMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029156;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029159;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PpScJOBOtZlPaITRz860JnjRpnqpdJGLsT0pG0SjUnA=;
-	b=rIyUF3HIScWpTsjzF9j+WGHTR3RlLFd1Qtc2rCgbLzqlplUQYDSoPEDEcfWWED9RpGh7
-	 WnitPQIBTGgW9vdUTaVx6Bj+LwnzZU4C0lrgWkL4QWIm03b51pauuLqG848Z1QOuXGiP3
-	 GmN2ru+j+nHwWvfC7gKll3agJf998+j18D7Tn5+XrlDRiBOP5qFY2E/14WPbdjf4it7EM
-	 NReCqoIwmr5KVLFl7pNxXWFEw6FE+KFFegz89udMuG9B/QE8MsY3CIPrhncHzFpnwBAU8
-	 /HSBXHYhVu9Wgg2iUiGNIlmAHN49PX5P3n5X4xrS1G25FQP7zeIPW3Y+JqSP+f/kagQ==
+	bh=kzgKsP9UjVuo82re2sCD4hUHToIftCaKbIeV3fSzw4A=;
+	b=oHspXvOO3bk+vDL6Ol8VN+y0gOoB7VqpG1H93iXxPQykAs5abnyo0BW9q+nxS1TXpPw6
+	 kQcSG3DGZis0ntEKlzaq4d0XmQIZSCGNQpmQwWOTFLTx/JUx/VHstzbby6/M9LaCCIroZ
+	 bDddSlkfsmptfXCRoD0PFnFZxfSTdWf2CqRvu0PO+a+DY9s3/GP5AROkLcxa/KJkZmeIQ
+	 FVEpAOY8w9i5OhPvD3BXYC9pfrJO8lWMLJhXWxmZK7LkW7Q6p4wul3B2wg170dFrcj+5L
+	 yEecrcZIfhRPkoAX7ocDfa28VlxJKbi5eTyiy/C8oGlQuWLtOFpk8lhmvNucUOcE3Kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WCmsc5u+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c6gykhBF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DB6606A331;
-	Wed, 18 Nov 2026 19:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962CE606A31C;
+	Wed, 18 Nov 2026 19:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WCmsc5u+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA2A1F000C6;
-	Wed, 18 Nov 2026 19:12:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c6gykhBF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA99B1F000C6;
+	Wed, 18 Nov 2026 19:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029156;
-	bh=PpScJOBOtZlPaITRz860JnjRpnqpdJGLsT0pG0SjUnA=;
+	s=korg; t=1795029159;
+	bh=kzgKsP9UjVuo82re2sCD4hUHToIftCaKbIeV3fSzw4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WCmsc5u+knn6v8yBnDHH7VpBJPVdGQChbCGC8zdXdIkI2CQd+tqLm3WQlPDoLmShU
-	 cp0zKzJfn3n5nUdyTDMovMz/HGxBb38ciW+/+ZnlaT3PjScycpjvirLtRxkvz3e5TH
-	 NIwXue3Oyvhnu5Ih+EvExPQjA/fcI8S89Tz2G7Hg=
+	b=c6gykhBF/EH8V5rOcyQaZLu5wr6UmsoBg6m2gCNdVBVmGI4s65GswvLJCGcoOJ8WB
+	 j2xuMSyUBk6Xyl72V4azKELfxCqjeDyxwMhh/ioVJeXeD5Rfm+cfdHbrRoT1JwZOOw
+	 oznewN4xrjH56PS2ema4HEYsPzFjLXeOXZIV0KX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0249/1756] RDMA/irdma: Preserve fast-registration IOVA on 32-bit
-Date: Wed, 18 Nov 2026 15:39:36 +0100
-Message-ID: <20261118150018.298537305@linuxfoundation.org>
+Subject: [PATCH 6.12 0250/1756] gpio: crystalcove: add missing MODULE_ALIAS()
+Date: Wed, 18 Nov 2026 15:39:37 +0100
+Message-ID: <20261118150018.338527103@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,86 +69,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit c470050f2a7a7748ce35367e828885a8e658d712 ]
+[ Upstream commit 32c7f7f80e5f7f2764682fd456054478fc11c8d9 ]
 
-ib_mr::iova is u64, but the fast-registration path passes it through
-void * and uintptr_t. These conversions truncate the upper 32 bits on
-32-bit kernels before the WQE is built.
+The crystalcove GPIO driver lacks a MODULE_ALIAS() to allow it to be
+auto-loaded.
 
-Store the IOVA as u64 and write it directly to the WQE. The sole caller
-always uses VA-based addressing, so remove the unused FBO selection and
-set the VA-based bit unconditionally.
+Fix this by adding the missing platform alias.
 
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Link: https://patch.msgid.link/20260903-64-bit-iova-is-silently-truncated-to-v1-1-96e878ea6873@nvidia.com
-Reviewed-by: Jacob Moroni <jmoroni@google.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 104fb1d5153c ("gpio: Add support for Intel Crystal Cove PMIC")
+Assisted-by: LLM
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/ctrl.c  | 6 ++----
- drivers/infiniband/hw/irdma/type.h  | 4 +---
- drivers/infiniband/hw/irdma/verbs.c | 3 +--
- 3 files changed, 4 insertions(+), 9 deletions(-)
+ drivers/gpio/gpio-crystalcove.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
-index de1bd2b57414a..16dbb1d350425 100644
---- a/drivers/infiniband/hw/irdma/ctrl.c
-+++ b/drivers/infiniband/hw/irdma/ctrl.c
-@@ -1320,9 +1320,7 @@ int irdma_sc_mr_fast_register(struct irdma_sc_qp *qp,
- 		  info->wr_id, wqe_idx,
- 		  &qp->qp_uk.sq_wrtrk_array[wqe_idx].wrid);
- 
--	temp = (info->addr_type == IRDMA_ADDR_TYPE_VA_BASED) ?
--		(uintptr_t)info->va : info->fbo;
--	set_64bit_val(wqe, 0, temp);
-+	set_64bit_val(wqe, 0, info->va);
- 
- 	temp = FIELD_GET(IRDMAQPSQ_FIRSTPMPBLIDXHI,
- 			 info->first_pm_pbl_index >> 16);
-@@ -1339,7 +1337,7 @@ int irdma_sc_mr_fast_register(struct irdma_sc_qp *qp,
- 	      FIELD_PREP(IRDMAQPSQ_LPBLSIZE, info->chunk_size) |
- 	      FIELD_PREP(IRDMAQPSQ_HPAGESIZE, page_size) |
- 	      FIELD_PREP(IRDMAQPSQ_STAGRIGHTS, info->access_rights) |
--	      FIELD_PREP(IRDMAQPSQ_VABASEDTO, info->addr_type) |
-+	      IRDMAQPSQ_VABASEDTO |
- 	      FIELD_PREP(IRDMAQPSQ_READFENCE, info->read_fence) |
- 	      FIELD_PREP(IRDMAQPSQ_LOCALFENCE, info->local_fence) |
- 	      FIELD_PREP(IRDMAQPSQ_SIGCOMPL, info->signaled) |
-diff --git a/drivers/infiniband/hw/irdma/type.h b/drivers/infiniband/hw/irdma/type.h
-index 59b34afa867bd..45f5d6c211cf5 100644
---- a/drivers/infiniband/hw/irdma/type.h
-+++ b/drivers/infiniband/hw/irdma/type.h
-@@ -1005,13 +1005,11 @@ struct irdma_reg_ns_stag_info {
- struct irdma_fast_reg_stag_info {
- 	u64 wr_id;
- 	u64 reg_addr_pa;
--	u64 fbo;
--	void *va;
-+	u64 va;
- 	u64 total_len;
- 	u32 page_size;
- 	u32 chunk_size;
- 	u32 first_pm_pbl_index;
--	enum irdma_addressing_type addr_type;
- 	irdma_stag_index stag_idx;
- 	u16 access_rights;
- 	u32 pd_id;
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index f86249226b60e..8a3c08679953d 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -3566,8 +3566,7 @@ static int irdma_post_send(struct ib_qp *ibqp,
- 			stag_info.stag_idx = reg_wr(ib_wr)->key >> 8;
- 			stag_info.page_size = reg_wr(ib_wr)->mr->page_size;
- 			stag_info.wr_id = ib_wr->wr_id;
--			stag_info.addr_type = IRDMA_ADDR_TYPE_VA_BASED;
--			stag_info.va = (void *)(uintptr_t)iwmr->ibmr.iova;
-+			stag_info.va = iwmr->ibmr.iova;
- 			stag_info.total_len = iwmr->ibmr.length;
- 			stag_info.reg_addr_pa = *palloc->level1.addr;
- 			stag_info.first_pm_pbl_index = palloc->level1.idx;
+diff --git a/drivers/gpio/gpio-crystalcove.c b/drivers/gpio/gpio-crystalcove.c
+index 25db014494a4d..636e4d3f990b1 100644
+--- a/drivers/gpio/gpio-crystalcove.c
++++ b/drivers/gpio/gpio-crystalcove.c
+@@ -395,3 +395,4 @@ module_platform_driver(crystalcove_gpio_driver);
+ MODULE_AUTHOR("Yang, Bin <bin.yang@intel.com>");
+ MODULE_DESCRIPTION("Intel Crystal Cove GPIO Driver");
+ MODULE_LICENSE("GPL v2");
++MODULE_ALIAS("platform:crystal_cove_gpio");
 -- 
 2.53.0
 
