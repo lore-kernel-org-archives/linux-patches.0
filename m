@@ -1,78 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.128.211.58
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1795021281;
-	b=vtfpGgVRdxmmlt0WMaJip3WnyGhoPtBbJGGtlvqYhEZNqXt9ouMflKP3EE61OmQ6z15C
-	 sYtIUN2weZ+XVJ8JVF55uyhxXF5RoPucz6Uml/B6hPIpoHfYlfmaZZn/t8pX+0zMy30Xd
-	 7160GsZ9VQuDKvd6WsdLWXUGWjGra2wEqSgacroiR6CC1JVP8rJt853HJLClFD1tBr1qh
-	 AJr7qY1WXzwjQpjPOWMu8+kwljo1wQZJnmtgLG/Zjt+VQr7bqMTF0R6tSNi3rZIy1myB6
-	 pjXS3IK8hUECyOuaWwt4weH3M6KB84WLxmyr0brj/o5NdtJWq/dQYQ36NTwuFFtRhmA==
+	b=zy4l+XtlUbaUgInA/kZIKReRZp6HjUYTiL9ddbdY4URrRzf8nk+9PGK6M77YdLf0kWfW
+	 yPJVDqw7e3JasPmM7FkYOihouNl3Y0ynPrrfHVGlGRJ4j5CHgUrbktwuP+kZLGwjOKBXo
+	 bLOSk55kYzlNe5ypCQnh2700DC1jwf1VQVo67IGcMdKDAeZpjtUSiulHeE5BvpKEfoRK/
+	 p/0dXBahPxzcPgqPCL7MZyDvlo0BnT52ZFpo7i1YZmvGQP3UO5ZtLuwKsAwp6udtBNzk7
+	 nsNtompS9NKawUPVUnvzMReBPHx5l8oCB/ryZNARraSDfHJgY1TXRAmvDdVQmBovhrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795021281;
-	h=DMARC-Filter:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=8fc3rUrcD1IZLm8pPlhKV8zX4DnzQ+5myz6UfOSrlPY=;
-	b=KAfy989Tph2pEUdBzdeF9NJ9rAyjTE2HcibHnCiRoy0qyB3H55wdO28VQXOe4tsvsOC2
-	 JV5mL9A1OWRAWVjPY3BiU+QVykE2Y3EuEqBwSK0U/xLw1vGRkL8t49FMAPS092OoqYq/8
-	 9pxSMEfi0AH9ZV12ZTKUkToylYtN5xYj/Ed0GcNy3fZFVeRw5XuYoH8SZGtqq7emxclN7
-	 +F+re7e7SZ0RypD2H5W4fHYj4p0DdXRte24jtfwzlHArfCpWdCGIdJVWHDCjF8HkJlZU0
-	 RgBLYrP28XaETk+TvgwKVh/rw5aSbPQsIRtVcLokbXx+XRZCu67DbYKlexdpSSiOysw==
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=6eEiMfDcl1bGk0jwyB9PnCLBTGUmbjYT/O+9c+t+/7g=;
+	b=c+H3I4h9VbHmfPcH3cVr1ZYsPEHU1PXdaCUMSTFnzFq5+XcUISbqxp3LrGxo4q45ncRe
+	 AR8e6RTRODVvcqaN6EMo1RAohiIeEmhpZMDAXCaSoRgr0cVTs1ZUNnflKDD58SsQ9xCJ2
+	 3PNaAU3o9l3uHcB/HpYGa8Qc4R2pOv97lfuo+bBwvidH/vBynsbi1O4MaYp4PxD5+zsj1
+	 lqLZOc9MUlbJMpUgPkdAP354m8/6eeK83JzDYMcyWhOx6FRhE/LMHuOdiBpA8YrV5CUFc
+	 Zc2F+GaX7sS1WGZvXLQHCwn/ISwrR+h+93JZrtT7w6oLBKcRaAy9o87avBC6xOeBWXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=librecast.net;
-	spf=pass smtp.mailfrom=librecast.net;
-	dkim=pass header.d=librecast.net header.i=@librecast.net header.a=rsa-sha256 header.s=2026110900 header.b=WQEZyslY;
-	arc=none smtp.remote-ip=185.128.211.58
-Received: from bregans-1.gladserv.net (bregans-1.gladserv.net [185.128.211.58])
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ALPUnMMm;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F7D606A325;
-	Wed, 18 Nov 2026 17:01:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 98F7D606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=librecast.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6812B606A320;
+	Wed, 18 Nov 2026 17:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=librecast.net header.i=@librecast.net header.a=rsa-sha256 header.s=2026110900 header.b=WQEZyslY
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=librecast.net; s=2026110900; h=Content-Transfer-Encoding:MIME-Version:
-	References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:
-	Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=8fc3rUrcD1IZLm8pPlhKV8zX4DnzQ+5myz6UfOSrlPY=; t=1795021280; x=1795885280; 
-	b=WQEZyslYqoujDFz1UxV4Hk95wk+paxD1oUK4UAe6Qop8WDS7Kd4R5Nl1M5v6vhfbVC1lUqsiIK2
-	ERGT8HCHAKz8Q67c8QD0aMN4lXDwDSggnAi/qdSqmhS55+byTfQ0pLXsov4k49l5H809tu/NxZyN5
-	84aHinVU4c985rBjZAypaS3qcm4dXCk8KehbuWlTZlPR4rGn3dpXKwiywoqUYn5jf5JcCMNAPD2mO
-	FmOiyAwZcEbViHq/BGT8fZwIiDNvONDgT4r2h1/afG7eNd60sfNNS+vDCyHYWC4Xh7J2Q8IYQlo5v
-	YanwSPbMPSoa5RxHMpDrtir/HXpdPdpOASCQ==;
-From: Brett A C Sheffield <bacs@librecast.net>
-To: gregkh@linuxfoundation.org
-Cc: stable@vger.kernel.org,
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ALPUnMMm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4AC1F000C4;
+	Wed, 18 Nov 2026 17:01:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1795021281;
+	bh=6eEiMfDcl1bGk0jwyB9PnCLBTGUmbjYT/O+9c+t+/7g=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=ALPUnMMm5J9iqm+3ldKJwNYw9hGKBcx3Yq/Bgpp4NIPfBtIBZ+iSMt37EDAn4Gg9G
+	 3yxgCBAjB7G/3VgINSZ3rgBn9qAO9NDsJJnJYo8J5mGRCVK8pO3aZ8EJM9YfRWpznh
+	 ABt6UKD3Kl384Af3pHQ22mzLwSqj6bF7TdvrJfrQ=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com,
-	Brett A C Sheffield <bacs@librecast.net>
-Subject: Re: [PATCH 6.12 0000/1756] 6.12.119-rc1 review
-Date: Wed, 18 Nov 2026 16:58:56 +0000
-Message-ID: <20261118165901.35595-1-bacs@librecast.net>
-X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
-References: <20261118150007.957976754@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 2251/2651] net: hix5hd2: serialize timeout recovery with interface teardown
+Date: Wed, 18 Nov 2026 15:58:11 +0100
+Message-ID: <20261118150406.484695137@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
+References: <20261118150247.972732815@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -84,12 +66,90 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-# Librecast Test Results
+7.3-stable review patch.  If anyone has any objections, please let me know.
 
-044/044 [ OK ] liblcrq
-010/010 [ OK ] libmld
-120/120 [ OK ] liblibrecast
+------------------
 
-CPU/kernel: Linux auntie 6.12.119-rc1-g52008ba8d06c #1 SMP PREEMPT_DYNAMIC Wed Nov 18 16:47:02 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
+From: Myeonghun Pak <mhun512@gmail.com>
 
-Tested-by: Brett A C Sheffield <bacs@librecast.net>
+[ Upstream commit 87cce46329a811ea3fe108ac721e0a2400d0a3bb ]
+
+The timeout worker calls the driver's close and open methods without
+RTNL or a running-state check. A timeout queued before an interface is
+closed can call close again after ndo_stop has disabled NAPI. The second
+napi_disable() can then wait indefinitely. The worker can also race with
+an ongoing close.
+
+Take RTNL and skip recovery when the interface is no longer running.
+Use the netdev core close and open helpers so a failed reopen leaves the
+interface down, rather than leaving it marked running with NAPI disabled.
+
+After unregister_netdev() has stopped the watchdog, drain the worker
+before releasing its MDIO and descriptor resources. This wait is outside
+RTNL, allowing an already queued worker to take RTNL, observe the down
+state, and finish.
+
+This issue was identified as part of our ongoing research while
+reviewing kernel code.
+
+Fixes: 57c5bc9ad7d7 ("net: hisilicon: add hix5hd2 mac driver")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Jijie Shao <shaojijie@huawei.com>
+Link: https://patch.msgid.link/179203116093.2621539.3718842986255459438.G202@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/net/ethernet/hisilicon/hix5hd2_gmac.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c b/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
+index 02282dc86faf4..12a5657653f85 100644
+--- a/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
++++ b/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
+@@ -12,6 +12,7 @@
+ #include <linux/of_net.h>
+ #include <linux/of_mdio.h>
+ #include <linux/reset.h>
++#include <linux/rtnetlink.h>
+ #include <linux/clk.h>
+ #include <linux/circ_buf.h>
+ 
+@@ -890,8 +891,13 @@ static void hix5hd2_tx_timeout_task(struct work_struct *work)
+ 	struct hix5hd2_priv *priv;
+ 
+ 	priv = container_of(work, struct hix5hd2_priv, tx_timeout_task);
+-	hix5hd2_net_close(priv->netdev);
+-	hix5hd2_net_open(priv->netdev);
++
++	rtnl_lock();
++	if (netif_running(priv->netdev)) {
++		dev_close(priv->netdev);
++		dev_open(priv->netdev, NULL);
++	}
++	rtnl_unlock();
+ }
+ 
+ static void hix5hd2_net_timeout(struct net_device *dev, unsigned int txqueue)
+@@ -1283,6 +1289,7 @@ static void hix5hd2_dev_remove(struct platform_device *pdev)
+ 	struct hix5hd2_priv *priv = netdev_priv(ndev);
+ 
+ 	unregister_netdev(ndev);
++	cancel_work_sync(&priv->tx_timeout_task);
+ 	mdiobus_unregister(priv->bus);
+ 	mdiobus_free(priv->bus);
+ 
+@@ -1290,7 +1297,6 @@ static void hix5hd2_dev_remove(struct platform_device *pdev)
+ 		hix5hd2_destroy_sg_desc_queue(priv);
+ 	hix5hd2_destroy_hw_desc_queue(priv);
+ 	of_node_put(priv->phy_node);
+-	cancel_work_sync(&priv->tx_timeout_task);
+ 	free_netdev(ndev);
+ }
+ 
+-- 
+2.53.0
+
+
+
