@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053493;
-	b=E3dClWTOLSlfMuhhYbJbg6D2UXoQHDH3c/1mrm0Pu7VQf/K2EiITaQEzBSt5QvI40fPK
-	 IqG8+a9phiqVY9BkLjGb+TN7Kt03cQGP63ALjU8na2jx4LUN3/XIx+dumFFDCpAxi8UEv
-	 ZkT/2M3Dh3w04LqIjzW/CZUqAPJCsncHp2p1aWdA1eM0/1QvkUKEm2zHxfjZwCu4kRKzS
-	 7PE8O2eJXMKgItlpehVhG2h64SwN5tOnunONrRDIZI7qrODMeeuzbyJrBEho66hF4rpCD
-	 TJkCgFoU4tviXkfmLaqcGrRIoZEPOlfRnGntGSPb7P3E962hWjVfZsR1OlIV/nzsITQ==
+	t=1795053496;
+	b=DReT8a47r+7grqzgU0DrUOH6ZixYGrGJUJV4MBCtUIFEW83QPCDUkQ7lgdlv5yJfVGFr
+	 IGEH0UceGG9Ss58VXFI1I4tEV1oPBzOTb352SW/TwzzZ+Fg4HmHAagZupFlNnYq5C/ZGq
+	 XRWjvJTkV02AjVVHhp5ylCnNAStJp3zD+mw58eUmbDfaDn7PbPhkW7mqmg/iRANt9mUmF
+	 N9GxF4gp0l672TF7ofDYoguMVYgxTdyFjuDksndKX2RivfSjvJ2D+Cvdl0/8WxbudW6/X
+	 Wf+Z2QPVZrBqhLLN6WI4F0tzAZWb+Q6lCuNjxKMFmacR2GkD/TBceT6fjmU/3MiDXYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053493;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053496;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NYpvFokxpF2D+TACBzvuXEyoh/e3TPEADMBqERUlJgY=;
-	b=XbGXbSKbrSsKcDNWWg+L2Z2Bk/B9MjKEJGS55Oi7iuuYoP9oE5nT7nNdMCQvNyqtMVGi
-	 7e+XuS57Mj2fKSQA+a7w2VOM70qAbMdi6Y9s8n/WAwIwvZv1x5wxbM+z8Sxs6LUqD8/QI
-	 aQ/MsslOfzzZlgTvk5x+wu/48jzGjZ81YpwnbK6sAftTP2HFx8gLvfvOQHnBWmAqFEyhV
-	 afGxWG3reth9w99x6E7lxfuCVSTlzhMyLSNqtbvylHxQYl411TdjVpxWWRkI3JbfBMjSe
-	 qt2hBFFvdimKmLJP/5AqNx9/lqkl+6EpK9uAyWPfVXnw2GR7jrdUJQiymBL2nsZdBog==
+	bh=KdO81jxFwY2tTvb1XxTaHPDkwZlidL4sVlR6bek5jeU=;
+	b=zmVhgZieIfU9I8V8xSyakihmpVlWs2Xq3SXYUMQuaERHsL8qTP+mgSgu/kcEf8iMd41g
+	 K0+GybuB2aD+OHt7CSuReFq5IVT9U08NjR40rZjdTslT78J87rwYUY74qYb7Dj6WGytpg
+	 UKo3ZROVKXEXGBgEq8xxZw5UKbqiTsSLYaRnwuSyIb8hR+spSCW2MrKeugNXIA7aAgkW0
+	 vAdKdY0zBnvKPlrHQFoFvZEqQbUF8rylGnNkZHEuWh7qRQEq2wHN4tTgmQUaN2wWAPl5S
+	 gxeEODtwUVW7VuPOYCuvgeWfRLhOafVm4Bbh0okOUM7Ewo2RKPvtc93inB5MpuTbvrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ri7iwKJr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RKFqJOkO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2AF606A31C;
-	Thu, 19 Nov 2026 01:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1634F606A31C;
+	Thu, 19 Nov 2026 01:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ri7iwKJr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824B01F000C4;
-	Thu, 19 Nov 2026 01:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RKFqJOkO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D711F000C4;
+	Thu, 19 Nov 2026 01:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053493;
-	bh=NYpvFokxpF2D+TACBzvuXEyoh/e3TPEADMBqERUlJgY=;
+	s=korg; t=1795053495;
+	bh=KdO81jxFwY2tTvb1XxTaHPDkwZlidL4sVlR6bek5jeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ri7iwKJrp6D+55P80Mq5NdPQiziXv3HI9we5R5Zk99ROZmhspgPCPLlSqyRLCtd2r
-	 Kh5JDI1Mi82M9DvRkwcertGM6p8GET74p4fkb1u/+gI/uW863/R9Y8/+y+C525bTFt
-	 bW2Ri9iAIz50MPD+N4UDi+JNPZvmYuGa6e82mjfc=
+	b=RKFqJOkORtB4n7ngYFHLi6MtaNtqy8zYgSLkmCS4w18Kd/CGy4eqhlYAa0PNw9OSY
+	 nT30WKtMkLu/aljQ85Sn5lKomCJ7/ZiC6no2XI5QHH3wXrC1pQumxyItv5162kQiun
+	 ZFcPVcMXpz7WW0D7WdUaziHrP4fZ4hx5tvMCeiS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Esben Haabendal <esben@geanix.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0899/2214] can: proc: skip stats calculation after reset in can_stat_update()
-Date: Wed, 18 Nov 2026 15:42:55 +0100
-Message-ID: <20261118150048.250067011@linuxfoundation.org>
+Subject: [PATCH 5.15 0890/2214] drm/bridge: nwl-dsi: Limit LCDIF specific sync override
+Date: Wed, 18 Nov 2026 15:42:46 +0100
+Message-ID: <20261118150047.903930687@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,80 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Esben Haabendal <esben@geanix.com>
 
-[ Upstream commit 01b19ed9fa031a649f3dd103ebe6e0102602e542 ]
+[ Upstream commit 54a88d9afcca66221d14f438d0960472984968ec ]
 
-Commit 80b5f90158d1 ("can: statistics: use atomic access in hot path")
-introduced local snapshots of the statistics counters at the beginning
-of can_stat_update(). When can_init_stats() resets the statistics, these
-stale pre-reset snapshots are still used for the following total/current
-/max calculations and overwrite the freshly reset values. Additionally a
-jiffies tick between the snapshot and the reset could trigger a second
-can_init_stats() call.
+When using DCSS with NWL, overriding the mode flags to enforce active high
+sync is preventing the use of active low with downstream bridges, such as
+ti-sn65dsi83, which will not see such mode flags set by the panel.
 
-Merge the reset conditions into a single check and skip the calculation
-for the current interval when the statistics have been reset.
-
-Fixes: 80b5f90158d1 ("can: statistics: use atomic access in hot path")
+Fixes: 44cfc6233447 ("drm/bridge: Add NWL MIPI DSI host controller support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20261027-can-rx-lock-v12-6-eb5afc2d8b9b@hartkopp.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Esben Haabendal <esben@geanix.com>
+Link: https://patch.msgid.link/20261027-nwl-dsi-fixes-v5-2-b6d1d3d2d356@geanix.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/proc.c | 30 ++++++++++++------------------
- 1 file changed, 12 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/bridge/nwl-dsi.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/can/proc.c b/net/can/proc.c
-index 26f43911c51f7..34e567a3fa191 100644
---- a/net/can/proc.c
-+++ b/net/can/proc.c
-@@ -149,25 +149,18 @@ void can_stat_update(struct timer_list *t)
- 	long tx_frames_delta = atomic_long_xchg(&pkg_stats->tx_frames_delta, 0);
- 	long matches_delta = atomic_long_xchg(&pkg_stats->matches_delta, 0);
+diff --git a/drivers/gpu/drm/bridge/nwl-dsi.c b/drivers/gpu/drm/bridge/nwl-dsi.c
+index 3de8204230af3..194e00657ae92 100644
+--- a/drivers/gpu/drm/bridge/nwl-dsi.c
++++ b/drivers/gpu/drm/bridge/nwl-dsi.c
+@@ -823,10 +823,13 @@ static int nwl_dsi_bridge_atomic_check(struct drm_bridge *bridge,
+ 				       struct drm_connector_state *conn_state)
+ {
+ 	struct drm_display_mode *adjusted_mode = &crtc_state->adjusted_mode;
++	struct nwl_dsi *dsi = bridge_to_dsi(bridge);
  
--	/* restart counting in timer context on user request */
--	if (user_reset)
--		can_init_stats(net);
--
--	/* restart counting on jiffies overflow */
--	if (j < pkg_stats->jiffies_init)
--		can_init_stats(net);
--
--	/* prevent overflow in calc_rate() */
--	if (rx_frames > (LONG_MAX / HZ))
--		can_init_stats(net);
--
--	/* prevent overflow in calc_rate() */
--	if (tx_frames > (LONG_MAX / HZ))
--		can_init_stats(net);
--
--	/* matches overflow - very improbable */
--	if (matches > (LONG_MAX / 100))
-+	/*
-+	 * Restart counting in timer context on user request, on jiffies
-+	 * overflow or to prevent overflows in calc_rate() and in the
-+	 * match ratio calculation. The local snapshots are stale after
-+	 * the reset, so skip the calculation for this interval.
-+	 */
-+	if (user_reset || j < pkg_stats->jiffies_init ||
-+	    rx_frames > (LONG_MAX / HZ) || tx_frames > (LONG_MAX / HZ) ||
-+	    matches > (LONG_MAX / 100)) {
- 		can_init_stats(net);
-+		goto out;
+ 	/* At least LCDIF + NWL needs active high sync */
+-	adjusted_mode->flags |= (DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC);
+-	adjusted_mode->flags &= ~(DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC);
++	if (dsi->endpoint == NWL_DSI_ENDPOINT_LCDIF) {
++		adjusted_mode->flags |= (DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC);
++		adjusted_mode->flags &= ~(DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC);
 +	}
  
- 	/* calc total values */
- 	if (rx_frames)
-@@ -196,6 +189,7 @@ void can_stat_update(struct timer_list *t)
- 	if (pkg_stats->max_rx_match_ratio < pkg_stats->current_rx_match_ratio)
- 		pkg_stats->max_rx_match_ratio = pkg_stats->current_rx_match_ratio;
- 
-+out:
- 	/* restart timer (one second) */
- 	mod_timer(&net->can.stattimer, round_jiffies(jiffies + HZ));
- }
+ 	/*
+ 	 * Do a full modeset if crtc_state->active is changed to be true.
 -- 
 2.53.0
 
