@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024450;
-	b=IjBY3pj/CLeXlPwsIQe3z4J6V05P6uJKNi4ZRvciBw1Do7vx7NSif2xl42YJi/zt9mXG
-	 GgPy4/poEY2/iRn2CK37Oh8gzRvKMDwvo0NTXlyVy+Lhncjcoi1N/LbUV2Szdc0PcDe1Z
-	 M8b6DhDAUitej7kA2pYA8Ve5itO1UCDzuq2VNtlR/3qhKviuKnoTM8I2s6x2Q1YYokS9Y
-	 Xq3o5UWWQPuAjvZh3lofL8R9Ja7VTpNMidtY70Q3ChgT3eZJalSDYWmlv2NsTDF1k5xFs
-	 k28Evc0d4nLy1kdQCeZEONuF+ixwT2k4jH7BOqfMpeVid9N34yJXqdCOjZZngOKvBqg==
+	t=1795024453;
+	b=gLubqy9rdy3xt7IBAYJ5QzqQOLQGaTVafBsjXBB+7lb/QMyItyJx0wSWCxyLBJ6rucu4
+	 tVmBIo9oajhsEdtiXMNdI7cjA5eD2ty5om3S02HCZHjriuT4r0cTE/RnQAM1WqAnl3V10
+	 JJnUblFQVFwxPrf/o0sShjyXpA2XcylJ4BU55Uu7A4/q+moCB4aXNvu7tRVupWIg7OByP
+	 m7rzPxPWV+W5VPuxRW/RMeaYAlh3WKxywTw0HS8ofGZxeYrEFTc7NmJi2oQmdcMmnJRBv
+	 PNDc5ivW8ju8IXl0JwJMCIvfEPHQl6EwMEE5AZUIxw4jrzy5TlsXUL98qnKn3Ij8g4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024450;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024453;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=srYr0P+9Zibk/GHOxhh7q953nXGL7UiRi4tMs7MQRzQ=;
-	b=n7UDxZiAEgrE00GKcKTH4o9/EXfMLxiPWxUcMKN2rwaEjvQf4U8JLQej6xr8pXN5luCj
-	 WQ9U2evLaYWI8QJntiUe3KcaPWV8s56jkUIIeLrwgK04vGaOSWFjSVxzImnEPCfUR2VtB
-	 St7KU07Exq6WXMk5mKiuL0rKqZ5GVhDnqNVvaGGYu1f6P/CQwtVZa1XzJO6NJscXbiwRC
-	 HueIk/43iRVhhu+E83fbxWUadDfywWYywZXgHBWBHqtD/55NzgsbfOzRwvEZoaHfq9bLO
-	 DYkddWepBufXT0ZU1yLvdKmiPNd60g8apeotmgnFbJbVx13BfiAIv+70Am5Qa+M1CQQ==
+	bh=UveWj8/sh/1GTVYfMz+ffbkfLfJDThz4aAV875ztzL4=;
+	b=P8RNhXUraFs4VzdDpeEAfotCkDBl/ZrIwqyL7SIP+eLhCMiXRV9vZsGja3gKiqVwI1wG
+	 mXJWT2apFvt0CwVZKUJsRZCBhGjGb3wvOSbyXIvA/mYhdR9spg1LJNxA0V4CZ8t6z7hm3
+	 ka4+nAGGqMrvmiLdlZWhFV8njRjO/oLyL2cZOnwAZ8soxelCbiQWxxHZujoUYIfsDe1ok
+	 /xfc/PqOMAj1t4R0qpkOLkthhvyVQ+wcKhUTs3y5QvhR08cxhiqRNvCpqQqKMBkpxKV2i
+	 qvpxb4ymxbhIqZkeBktnsHvU/Zhkx753Q5kl3R0PFnCN4WbJ8iEQdCt3XyZ1GzIBVJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AoXIdDx0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A8iBlwfN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D5B606A31C;
-	Wed, 18 Nov 2026 17:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91EA606A320;
+	Wed, 18 Nov 2026 17:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AoXIdDx0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016791F000C4;
-	Wed, 18 Nov 2026 17:54:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A8iBlwfN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF781F000C4;
+	Wed, 18 Nov 2026 17:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024450;
-	bh=srYr0P+9Zibk/GHOxhh7q953nXGL7UiRi4tMs7MQRzQ=;
+	s=korg; t=1795024453;
+	bh=UveWj8/sh/1GTVYfMz+ffbkfLfJDThz4aAV875ztzL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AoXIdDx0GTplXIVGdVc69MwwjvNdObbZK/qzz3xROGNIz0IxCxRFuyYtpv7AligaJ
-	 D1iEhbI8vvpu+75gSIir6zCnuTf813qlUvlhDHRVEOap32nxpNYUd1I2vSrd49cJZA
-	 c27BAqpo7mYFzUczAkg1QWnR8JPretYmwbS42C1U=
+	b=A8iBlwfNroOc7DZ9UJxhLcPFMVbWLXQDbaX1311lTVx9mBAjzwfSkwSipjO+Fevx+
+	 U9yDC3zzFUbcAb2iZMOjUbmagfmvIVbqgxtaBghN+8exBS8J75+km9D1bQv3vFmKzS
+	 DAbOLOpkiSnkJ2Ac38LRTaxB0taN1V2J9rpgoV1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Slavin Liu <bolin.liu@seu.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0729/2151] arm64: dts: qcom: x1-asus-zenbook-a14: Mark the EC reset gpio as reserved
-Date: Wed, 18 Nov 2026 15:41:04 +0100
-Message-ID: <20261118150148.585463483@linuxfoundation.org>
+Subject: [PATCH 6.18 0694/2151] ASoC: fsl_asrc: check the second front-end DMA channel
+Date: Wed, 18 Nov 2026 15:40:29 +0100
+Message-ID: <20261118150147.065469205@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,39 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+From: Slavin Liu <bolin.liu@seu.edu.cn>
 
-[ Upstream commit 48213677c9173680de328785768ea56315bfdd53 ]
+[ Upstream commit b4136c0d69ead737197af741e20edd1c3574f6b4 ]
 
-GPIO 65 from TLMM is used by the embedded controller as its reset line.
+The temporary Front-End DMA request can fail independently of the
+persistent channel acquired earlier in fsl_asrc_dma_hw_params(). The
+returned NULL pointer is immediately used to read its private data.
 
-On some devices, toggling the embedded controller reset line makes the
-device not power up at all, unless the battery is unplugged.
+Check the temporary channel and release the previously acquired
+persistent Front-End channel on failure. Clear its slot so a later
+hw_free cannot release it twice. ASoC marks a component's hw_params
+only after success and skips unmarked components during rollback, so
+returning an error alone would leak the earlier channel.
 
-So reserve it in order to prevent Linux from requesting or
-reconfiguring it.
+Detected by static analysis and reviewed with AI-assisted source auditing.
 
-Fixes: 6516961352a1 ("arm64: dts: qcom: Add support for X1-based Asus Zenbook A14")
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260922-dts-qcom-hamoa-reserve-ec-reset-gpio-v3-10-fde7f8a53382@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Fixes: 3117bb3109dc ("ASoC: fsl_asrc: Add ASRC ASoC CPU DAI and platform drivers")
+Assisted-by: LLM
+Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
+Link: https://patch.msgid.link/20260913125147.109920-1-bolin.liu@seu.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/fsl/fsl_asrc_dma.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi b/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
-index 8e5c5575a5320..6ad2cf5f5ed07 100644
---- a/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
-@@ -1223,6 +1223,7 @@ wcd_tx: codec@0,3 {
+diff --git a/sound/soc/fsl/fsl_asrc_dma.c b/sound/soc/fsl/fsl_asrc_dma.c
+index c96369da6aec9..aba20404c7d71 100644
+--- a/sound/soc/fsl/fsl_asrc_dma.c
++++ b/sound/soc/fsl/fsl_asrc_dma.c
+@@ -246,6 +246,11 @@ static int fsl_asrc_dma_hw_params(struct snd_soc_component *component,
  
- &tlmm {
- 	gpio-reserved-ranges = <44 4>,  /* SPI11, TZ Protected */
-+			       <65 1>,  /* EC reset */
- 			       <90 1>;	/* Unknown, TZ Protected */
- 
- 	cam_indicator_en: cam-indicator-en-state {
+ 		/* Get DMA request of Front-End */
+ 		tmp_chan = asrc->get_dma_channel(pair, dir);
++		if (!tmp_chan) {
++			dma_release_channel(pair->dma_chan[!dir]);
++			pair->dma_chan[!dir] = NULL;
++			return -EINVAL;
++		}
+ 		tmp_data = tmp_chan->private;
+ 		pair->dma_data.dma_request2 = tmp_data->dma_request;
+ 		pair->dma_data.peripheral_type = tmp_data->peripheral_type;
 -- 
 2.53.0
 
