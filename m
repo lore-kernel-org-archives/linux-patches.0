@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031831;
-	b=K//jYFzDXIu7OYpzKxe7EaVSYYrNGhuL4RTjwJE1zldvgzzPcIvRP+VIR/ta/T4zJoqN
-	 9DwR2cg8wp4zPiZPf3h7ZWlR/izqoHtjfogfeCbh6VgrPodr8+U/ftNTYvtFrQtIGD0xv
-	 MSJ1sT1CSgfXN+UvAvjxTcEr1Rn2g18j+tAaNlNJ07AzVMXige7Bnv/zIFXoU7IlPtb6U
-	 4IWKH/psjjKe6MxOI9WkUftR3H2megidtatzOllHq03UNJIipuTKIP8xGpaIMBwOWjNa9
-	 G9tq8ogfUGv1KNUb29GkPoBwQU/935WNIUG4bVMSsfFU2IoJivhyCXoqwBlaQERasbw==
+	t=1795031834;
+	b=XAvvDolGYsFBqtHkFhxvirQcSzVcEQvCD1z/GRugEnRmJFJttSlgDP8Hx2tHqoGaUTh0
+	 bB6H7EMslhbfWB0lk2hPurXXpEYmE43o7gFPWKmJjG//dedglW//1az7qaPWFGORbPX2Q
+	 N9wgDp8UqDQ1B568WH5SL+oOk9mdgHhW7KtZ+mf60FgFSn7C5FXy9N5OnB9+ePW7ntHSs
+	 UuxbWSZ5AEZG5utn2nWHeVpzJCBn0UGIGzH2ri1OXE4st4ajD67pAOHVb0vk2dMjlR9GY
+	 dIKYfmn7u9Si0da1MO0CFZZp0JqkW1kM7ZN60oJtVtmDea7f2f++Q9xEDEYQN5uOtqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031831;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031834;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=M4tUc1ExQ2oGo3Ai351+Dr6nU3xAmb0LfxY53aVX2fc=;
-	b=R7bZg4j0nNlThWoN5EtHE66M3j8VSg5B2huA7dbDip3GAdv6ERdK0WSx83VusC2Apu1V
-	 7VrSiLNaA38+kh4o+ppKh8l2pM6CxWy3m8/R1h7CEm9mAhN8X6HT0tW3sAIcXIOGx5zYi
-	 yNlOLe122Tte11GXKcRq+HX+asqd42ZJ5EuMCcRMwU0+010VrlONC6tLWQDFwkCMD59AV
-	 3LhW35rUHQ0lnDK7Mei46s2DNCiCYJMDytcxlGo+O19zc+fblmvdFfjONWlR9StI+UTPL
-	 q6T5BsBLAq/2xuowxzf6oEXedJW8wbEhH3K6UY/s8Jufgb0CqE4sOJmoTZX5SOQYlGQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=4GL5FtQCn6FNsk3DunTrZVcWsHTt09chytMCUPqW5iQ=;
+	b=LUfIgiUSOfebJgIkYafQM+XjGiOb5iOAwbY293Xxavm49ywo8GdCGdotErPaoDg+R8IQ
+	 n+NCj0kqDZHWvjvFJq1mUXhzuilLAM33a5xtnaQ7s3HsF4VYgu7UjHVf5+0TWpa1Cs/SW
+	 +7AXc+NYmy5VTDHT/odaumATr99EZ8kQ4dw8euZwwc79adqN6aWPlLiWE1Km67xBt1VLa
+	 wUxsnNgTHPEF84qJTjn6VhZs8y7J8puyWGnn/4MJ21n8XiTRQonlfVvti6rmTpAUpkP2W
+	 vlch1yfZ5jHuwBegN3y9kTirNZSLN4C7l/N2wqlZxqcYFd6e6C3FcUZixrTx8VCQdkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T5AFdkr8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CdoRu9J4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF84C606A31C;
-	Wed, 18 Nov 2026 19:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426FB606A320;
+	Wed, 18 Nov 2026 19:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T5AFdkr8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA81D1F000C4;
-	Wed, 18 Nov 2026 19:57:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CdoRu9J4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA831F000C4;
+	Wed, 18 Nov 2026 19:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031831;
-	bh=M4tUc1ExQ2oGo3Ai351+Dr6nU3xAmb0LfxY53aVX2fc=;
+	s=korg; t=1795031834;
+	bh=4GL5FtQCn6FNsk3DunTrZVcWsHTt09chytMCUPqW5iQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T5AFdkr8hARGVqFky3zmzCG+G1QXBhcu/bj8HYEzvMbBuwzuz7Z2P5tQj/CppJtoe
-	 k77HVSi+KrkC1MIqmi42be1UDTUmoM441xsRZaDX+loxKOhzk5scaL+4daKMUQgIoM
-	 44pM12yWQYpwVueNjmxNOUtSZVlv5a/KBXYN9qn0=
+	b=CdoRu9J4W3S4X9RizvkUvdHx/hgKS43XTNQqx+Ukzzwb9lTEnY4elZxEQD7to5wp7
+	 DMrrAckM1F0ZAgS+y0MJWZwPgwYQKccE/Yh5UGlb060x8kcD1NaB915Gk+wUxXl0IH
+	 JFsMkjJPFQkUi3eP+8fhPmINPN4mf9gSyB5g7y54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Surabhi Gogte <sgogte@purestorage.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Muhammad Bilal <meatuni001@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1145/1756] nvme-tcp: store and use the callers network namespace
-Date: Wed, 18 Nov 2026 15:54:32 +0100
-Message-ID: <20261118150055.625309148@linuxfoundation.org>
+Subject: [PATCH 6.12 1191/1756] platform/x86: hp-bioscfg: validate SPM state returned by firmware
+Date: Wed, 18 Nov 2026 15:55:18 +0100
+Message-ID: <20261118150057.292879561@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -64,83 +62,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Surabhi Gogte <sgogte@purestorage.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit 87a1ac965502858f9207153a92c3aef8ecf6d4ae ]
+[ Upstream commit 35fb43f1576e1352077afc33a535007e0568480c ]
 
-nvme_tcp_alloc_queue() creates each socket using
-current->nsproxy->net_ns, which is correct for the initial connect that
-runs in userspace context. However, the reconnect and error recovery
-paths run from a workqueue where current netns is a kernel thread in
-init_net, so sockets created during reconnect end up in a different
-namespace than the one the controller was originally connected from.
+status_show() indexes the 3-entry spm_state_types[] with the state byte
+returned by firmware. update_spm_state() stores the same byte, which
+key_mechanism_show() uses to index the 3-entry spm_mechanism_types[].
+Neither is range checked, so a state above 2 makes the world-readable
+status and key_mechanism files print a string from a pointer read past
+the array.
 
-Fix this by capturing the caller's network namespace at controller
-allocation time. Use ctrl->net for all socket creation so that every
-queue, on initial connect, reset, or reconnect, is created in the same
-namespace.
+Return -EIO for an out of range state.
 
-Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
-Signed-off-by: Surabhi Gogte <sgogte@purestorage.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Compile tested only.
+
+Fixes: b2715aa2e135 ("platform/x86: hp-bioscfg: spmobj-attributes")
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://patch.msgid.link/20261007134711.473857-8-meatuni001@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 23d559d567d88..5a819d6b6abeb 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -222,6 +222,7 @@ struct nvme_tcp_ctrl {
- 	struct delayed_work	connect_work;
- 	struct nvme_tcp_request async_req;
- 	u32			io_queues[HCTX_MAX_TYPES];
-+	struct net		*net;
- };
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
+index 040964ed50ced..343b2356943e3 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
+@@ -6,6 +6,7 @@
+  * Copyright (c) 2022 HP Development Company, L.P.
+  */
  
- static LIST_HEAD(nvme_tcp_ctrl_list);
-@@ -2033,7 +2034,7 @@ static int nvme_tcp_alloc_queue(struct nvme_ctrl *nctrl, int qid,
- 		queue->cmnd_capsule_len = sizeof(struct nvme_command) +
- 						NVME_TCP_ADMIN_CCSZ;
++#include <linux/array_size.h>
+ #include "bioscfg.h"
  
--	ret = sock_create_kern(current->nsproxy->net_ns,
-+	ret = sock_create_kern(ctrl->net,
- 			ctrl->addr.ss_family, SOCK_STREAM,
- 			IPPROTO_TCP, &queue->sock);
- 	if (ret) {
-@@ -2780,6 +2781,7 @@ static void nvme_tcp_free_ctrl(struct nvme_ctrl *nctrl)
+ static const char * const spm_state_types[] = {
+@@ -115,6 +116,9 @@ static ssize_t update_spm_state(void)
+ 	if (ret < 0)
+ 		return ret;
  
- 	nvmf_free_options(nctrl->opts);
- free_ctrl:
-+	put_net(ctrl->net);
- 	kfree(ctrl->queues);
- 	kfree(ctrl);
- }
-@@ -3175,12 +3177,15 @@ static struct nvme_tcp_ctrl *nvme_tcp_alloc_ctrl(struct device *dev,
- 		goto out_free_ctrl;
- 	}
- 
-+	ctrl->net = get_net(current->nsproxy->net_ns);
++	if (data.state >= ARRAY_SIZE(spm_mechanism_types))
++		return -EIO;
 +
- 	ret = nvme_init_ctrl(&ctrl->ctrl, dev, &nvme_tcp_ctrl_ops, 0);
- 	if (ret)
- 		goto out_kfree_queues;
+ 	bioscfg_drv.spm_data.mechanism = data.state;
+ 	if (bioscfg_drv.spm_data.mechanism)
+ 		bioscfg_drv.spm_data.is_enabled = 1;
+@@ -150,6 +154,9 @@ static ssize_t status_show(struct kobject *kobj, struct kobj_attribute
+ 	if (ret < 0)
+ 		return ret;
  
- 	return ctrl;
- out_kfree_queues:
-+	put_net(ctrl->net);
- 	kfree(ctrl->queues);
- out_free_ctrl:
- 	kfree(ctrl);
++	if (data.state >= ARRAY_SIZE(spm_state_types))
++		return -EIO;
++
+ 	/*
+ 	 * 'status' is a read-only file that returns ASCII text in
+ 	 * JSON format reporting the status information.
 -- 
 2.53.0
 
