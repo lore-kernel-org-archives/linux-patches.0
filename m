@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050559;
-	b=Xq9eFfjce1l891iW9Dw0hZqnztr9YdkdkLgymVyfFvsVIAhI5V0UBC8EqydZM5k154ha
-	 EY2zEx32/cw/SVNj8fCut7bimklOrMNtWV0VGNP27Dcgy88DKaVgE19LZB96mNE/dFWO7
-	 aJ7S4J8MK8qUqFUZHCvFQB54+usc4yKZrx0Iyayj2pJwhbWDvNlmvA5aVVRSbRBrAjTbd
-	 870nxIi21P9v9mMGedvbKx7TCWl1Uv+tW3g9ECM9Z+nhZNobV3j7gUQoZsGHa+/0/zmMX
-	 3TGAJOxjOGHkUdV+BYrAWGzu1node4z+V8sh+v+QRt09ve/U7227uzavSC35QcyA2gw==
+	t=1795050562;
+	b=qA+IJd2pRlfyvqU01SsuyyANBL38leN9w+d1ssAjcOTm2DWaSVfyCyIWf0BM9evTA0E+
+	 lBCsJUtAXZnb8wIv60v8k5e5488KAj8Ab2Ocade26fLC3x34d42Q9XsYZvg547iv0NB8n
+	 wGIBSdwM2stNeTGuzXATXHpAC/hRsg+YQUPKtYWs8l9IljXqb5cZH4LsKDJRsycutjPeP
+	 Tzc0BcQi2/diOqNyFfSZD0T7XJY3U/J9APN79R0l6+u1hWoikbhd574LYgU9i4XKMCq8t
+	 j+nKF+3yRmxv5WBaYs/ShgATScQrmc4BV6mYn7xG8LeI7e457ie+kbwcMV3vR4mr/Rg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050559;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050562;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z9m8de/2FD7ZeCFhmkjZ7KpI66xSlSItt/wGKM0bo0Q=;
-	b=lB4wvDIPG4+DlwYhkNt+b9dDFXkMrH++RPeC6g4ArR7qM9vh3HmZOy/A3Ay9470vBSZn
-	 MMRE5GmRZ2LYG4t/y2sAKAkj+dqVYS0qcsG0as0u/TyBLIIia1eIy0RmVGHFqzc9/lGHw
-	 M/1OvttrWRxRYSoQINepQO93Di5N8F57oyM4M9VfeUC7NEd1cBMluKOvxEFiQ1KeHp4TQ
-	 ZeHgJz4fSKFMUBSVz7wDM0/swnn6+EWncRGIbHTQv3pO3d7FKlOBlm813baeyz7oxXAIh
-	 glS8s6zX1DiPGZz7Yzmw6rNXOd5HQu/OWwcxEXSAPHu5dx9FCZkwtqRPgRZKJol4yyw==
+	bh=QJOHccbY4lk3Nch9z7sbdClmAhNPtCHSUsmKX1vBz5o=;
+	b=m6RED6bb4kK+5L/hk/teTMF4FWd0qfrALubDC4k3tPtMmm06ThOvP7SaeeWjRj2BntMA
+	 32v5nPk3xWDgJK655X1cKNhY06uBNjfxB/RB/Plym5jLhMcOZ9px24sBHhVrftWrG2AuU
+	 UJLQwHPNhkPA5BrXkR1o2txOdtEMS25CWEGnr4w96ePkPGWddy0ZZJrDzEdDS+Pr8rkLZ
+	 qTlP5ifY2FHZveElMdnsGkiMKcpdbjW+oFkrIfLHjz6wchfDX3Gm4E08ahvq2+S8GeE7j
+	 +0xsaKrJ/ArUatgR1KzCLpee6/AdPZDDbPG0uL5t8lhqVM/hYE873n2mb5jsPXFYaaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l1Ia9pm+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uich7tW9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BB9606A325;
-	Thu, 19 Nov 2026 01:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B45D606A320;
+	Thu, 19 Nov 2026 01:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l1Ia9pm+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED521F000C4;
-	Thu, 19 Nov 2026 01:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uich7tW9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB6491F000C4;
+	Thu, 19 Nov 2026 01:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050559;
-	bh=z9m8de/2FD7ZeCFhmkjZ7KpI66xSlSItt/wGKM0bo0Q=;
+	s=korg; t=1795050562;
+	bh=QJOHccbY4lk3Nch9z7sbdClmAhNPtCHSUsmKX1vBz5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l1Ia9pm+xVptGYNBnHG0Bux617KxgRiK2lvdn65e3aTC+8h9ogh6kdpWeG63+aPlD
-	 TjcWzu7nEOZswWHU0bAbz3T4wvCcXhTEYWhMJIZkd1jznvhoxPpLuvZlqpvf6oF/V5
-	 7NLFZyCADOUy3uVpjkHi2sL/WBHT54uxdSq91GkM=
+	b=Uich7tW95LvSsByf7Jp2Z7ZCW/0b+pRhaynAlExrYE6SrjJJdHclrvY4HJhVhMsDk
+	 czHn2yLwp7+JOJmTiTBW0gyB3deJTgKjrSnfvh83/xmyyIXUvOsD7Qd5CykYmvjGVs
+	 0+gb1KtZtENt8jXXl2751N1lerh6/JZt98xX16yI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Yongkang <teel4res@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Hongfu Li <lihongfu@kylinos.cn>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Allison Henderson <allison.henderson@oracle.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2749/2857] net: tun: hold napi_mutex when deleting NAPI in tun_detach_all()
-Date: Wed, 18 Nov 2026 16:03:03 +0100
-Message-ID: <20261118150340.593535423@linuxfoundation.org>
+Subject: [PATCH 6.1 2750/2857] rds:Simplify the allocation of slab caches
+Date: Wed, 18 Nov 2026 16:03:04 +0100
+Message-ID: <20261118150340.629305613@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,73 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Yongkang <teel4res@gmail.com>
+From: Hongfu Li <lihongfu@kylinos.cn>
 
-[ Upstream commit 6c799b4998c87bb44574bb090b8728bb3b3dbc47 ]
+[ Upstream commit 9f1f70dd850038b37e8b103ef0cc6f5eaeb6a8fc ]
 
-With IFF_NAPI_FRAGS, tun_get_user() takes tfile->napi_mutex, gets the
-skb from napi_get_frags() and copies the user data into it before it
-enters the RCU read-side section around napi_gro_frags().
+Use the new KMEM_CACHE() macro instead of direct kmem_cache_create
+to simplify the creation of SLAB caches.
 
-tun_detach_all() waits with synchronize_net() and then calls
-tun_napi_del() without napi_mutex.  netif_napi_del() frees napi->skb
-through napi_free_frags().  A writer that is still copying has not yet
-entered its RCU section, so synchronize_net() does not wait for it, and
-deleting the device frees the skb while the writer is using it:
-
-  BUG: KASAN: slab-use-after-free in skb_copy_datagram_from_iter+0x175/0x720
-  Read of size 8 at addr ffff888077def990 by task br029-poc/9406
-  Call Trace:
-   skb_copy_datagram_from_iter+0x175/0x720
-   tun_get_user+0xb42/0x3d00
-   tun_chr_write_iter+0x113/0x200
-  ...
-  Freed by task 9405:
-   kmem_cache_free+0x184/0x670
-   __netif_napi_del_locked+0x2bb/0x3c0
-   tun_net_uninit+0x566/0xa70
-   unregister_netdevice_many_notify+0x1a26/0x2090
-   rtnl_dellink+0x514/0x710
-
-__tun_detach() also calls tun_napi_del() without the mutex, but only
-from tun_chr_close(), when no write on that file can be in flight.
-
-Take napi_mutex around tun_napi_del() in tun_detach_all() for both
-attached and disabled queues.
-
-Fixes: 90e33d459407 ("tun: enable napi_gro_frags() for TUN/TAP driver")
-Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/179268538303.70821.16548460883330758972@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Hongfu Li <lihongfu@kylinos.cn>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Reviewed-by: Allison Henderson <allison.henderson@oracle.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: ffbbc315b8b8 ("net/rds: do not initialize transports after rds_init() failed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/rds/tcp.c      | 4 +---
+ net/rds/tcp_recv.c | 4 +---
+ 2 files changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index e56cc1d9b1841..573e97b1880b9 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -736,14 +736,18 @@ static void tun_detach_all(struct net_device *dev)
- 	synchronize_net();
- 	for (i = 0; i < n; i++) {
- 		tfile = rtnl_dereference(tun->tfiles[i]);
-+		mutex_lock(&tfile->napi_mutex);
- 		tun_napi_del(tfile);
-+		mutex_unlock(&tfile->napi_mutex);
- 		/* Drop read queue */
- 		tun_queue_purge(tfile);
- 		xdp_rxq_info_unreg(&tfile->xdp_rxq);
- 		sock_put(&tfile->sk);
- 	}
- 	list_for_each_entry_safe(tfile, tmp, &tun->disabled, next) {
-+		mutex_lock(&tfile->napi_mutex);
- 		tun_napi_del(tfile);
-+		mutex_unlock(&tfile->napi_mutex);
- 		tun_enable_queue(tfile);
- 		tun_queue_purge(tfile);
- 		xdp_rxq_info_unreg(&tfile->xdp_rxq);
+diff --git a/net/rds/tcp.c b/net/rds/tcp.c
+index 0967540f90f6b..b0cb3ef9f0659 100644
+--- a/net/rds/tcp.c
++++ b/net/rds/tcp.c
+@@ -820,9 +820,7 @@ static int __init rds_tcp_init(void)
+ {
+ 	int ret;
+ 
+-	rds_tcp_conn_slab = kmem_cache_create("rds_tcp_connection",
+-					      sizeof(struct rds_tcp_connection),
+-					      0, 0, NULL);
++	rds_tcp_conn_slab = KMEM_CACHE(rds_tcp_connection, 0);
+ 	if (!rds_tcp_conn_slab) {
+ 		ret = -ENOMEM;
+ 		goto out;
+diff --git a/net/rds/tcp_recv.c b/net/rds/tcp_recv.c
+index f4ee13da90c70..dac500fd2bc84 100644
+--- a/net/rds/tcp_recv.c
++++ b/net/rds/tcp_recv.c
+@@ -335,9 +335,7 @@ void rds_tcp_data_ready(struct sock *sk)
+ 
+ int rds_tcp_recv_init(void)
+ {
+-	rds_tcp_incoming_slab = kmem_cache_create("rds_tcp_incoming",
+-					sizeof(struct rds_tcp_incoming),
+-					0, 0, NULL);
++	rds_tcp_incoming_slab = KMEM_CACHE(rds_tcp_incoming, 0);
+ 	if (!rds_tcp_incoming_slab)
+ 		return -ENOMEM;
+ 	return 0;
 -- 
 2.53.0
 
