@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048174;
-	b=oez7X5OgGkdhoUzMgjWvr8OqdEcRZkmdpkp4kJygWJnQ8emba2k1YYIW5Cpabxv8TGUw
-	 vko7knnKxq3sXe5giCWpZD75eVmuA1kDV8zY62o+8Wtxz4iwEgsJDbDhTWfVHxFB5ZLr4
-	 uGWiJcirzRBs26M0myciKoTavc3BabKmTPxFNkBcKWRQN9JGjkPkF2+ZBKm4BBk+lZCsK
-	 FEYpmlUmt8WBF/wnLyyrQGdIKZHRl7yH7xMa8HwK7cou6FLMA6xqLqHx6N+uiuPB5F5cd
-	 kU0vjMSgOdhIbN+Vykkue1mxa37H5zDvF9EREzK3da5Y+sUD8/KYaAdDSs3h+kqly9w==
+	t=1795048177;
+	b=fFTWx4zgQUFDXP2BQONL48FOb49iM56T++NMSd+Jkyst4Har7ZNnChEYEzzifk/Y4UIc
+	 9G95dQP8KIaCcdxvErw3Sa3TJkboVO7HQf+p35PiWVFNpnCZUuEh+JsSE3Kww42uIj0o6
+	 dkjZIMGZiQtFoS3f4j6jjkTFMPeMhVgwFvN7uk8BfO7kr/8FyuVMQaUNYU/GHX/A4NrnX
+	 AsSeCvok9jY9t4W2y5e1/CvdJvk9tadmOo2uabvdLKDcLzrvbPnEWVrQG7dsrM/5jgh7A
+	 qFmNe4oz/f6MIJttxY02jRTK0qKRtsvjCxTsPpJf0u2fAqa/9a95ubfDyW//C0sELgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048174;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048177;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aVcQvND/BkAWLP5bc9wfhewBHffZXoGCvqD5bv5pt8c=;
-	b=TUKSPaLjzqKwi3w0m3MSxWFrWNTDmQW17rCYnxen1fK7zGOCD8caR6LORSH/WwJIlWux
-	 v7+y52taRtE0SG/vHzb2BytRrTvOJEbPKrjuNdOfCzmv+A21NWghxsbh9FKWKmfWFwywL
-	 FOErn6Y3wxv1S6SoeioveJgknOuBNXfbKc7NYkFIrk9xBkhht2khSbf2DUeArtJg5z0wt
-	 gMVHG5xprLR+958O1oslSNAhacrH4fvvZe0znd6cGO06/un7kCRDfUWIffZtDqhmYxUhW
-	 rjHsLiI4KwjEmg0T7gw5XPWuU4QaAGketaSv4YT07WwGC+Zyn0lZQAjqCayAUVLUWMA==
+	bh=wGQD5FdUpOM8HUQvtKW0DiO5Rpp9pC4mCwSRYLGRSvc=;
+	b=vuvO7Yl8wqNtwJGiDUpYD/Hblrc6TJ/+lfI78eBI6+XCmqpHif8Hhq36uSY5OKX1pKC/
+	 CZLW040ds24VwjTWEboMr1t/JoJX1Tf0HQyt8LBdtGSueiQzo9L6Ued0MIAJOr6uQyYUW
+	 /cEpcfdC1BB3xg6BJYBP2mk1LbhFwuP17FXX4bYWBCC5VlfcXdVxH5BgCXhJlI5LEQ+Ka
+	 dPN+R9FY0vyI/AU98/SAFEb5H08nEg5lE7LXY5b3m4kGK1d/gOZ7veIs2Q8791IzeBCHw
+	 mRIcCTW+AOAvjVj3nv+FfGCclRQX7eMvYOyFpy2tdPjkoq3yvM3CLQ5ySoxqnmP747Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PZWdugQd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yosa1mFn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E42606A31C;
-	Thu, 19 Nov 2026 00:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B1A606A325;
+	Thu, 19 Nov 2026 00:29:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PZWdugQd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F1E1F000C4;
-	Thu, 19 Nov 2026 00:29:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yosa1mFn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4709E1F000C4;
+	Thu, 19 Nov 2026 00:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048174;
-	bh=aVcQvND/BkAWLP5bc9wfhewBHffZXoGCvqD5bv5pt8c=;
+	s=korg; t=1795048176;
+	bh=wGQD5FdUpOM8HUQvtKW0DiO5Rpp9pC4mCwSRYLGRSvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PZWdugQdQxE1XrdmDbEuxZXYTvueN6wAk8g0HgPubDeLOw8Jy/0c+c7xApneuigIR
-	 MSgipfVM5df5ueaEDWfQ04UDXkk+lud6pQyT4zUWF1PI4E6N/cpm4Cf0eitra6aNLT
-	 89eYutvV5khLwk/BqKspfteWrJwly2qY4e5Rfpn8=
+	b=yosa1mFnH6FMfMgWqKUNcafHMW8wQqI2RMpwIvwRQG+WXAXuJ1/UdYf0VmQF/jXo1
+	 ZGmGBlfgYK3DwB9y/EURpU6kcGQoZYL2EMPq5rEU10AzQzF02fhMRXRJu8UupTtL3g
+	 XzSaEJ4dL1vbUMnmbeEm9thG5p4f/LRmnB+Ie9l0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1861/2857] scsi: mpi3mr: Fix out-of-bounds phy array access on link change
-Date: Wed, 18 Nov 2026 15:48:15 +0100
-Message-ID: <20261118150308.245013762@linuxfoundation.org>
+Subject: [PATCH 6.1 1862/2857] scsi: mpi3mr: Fix buffer overflow in the BSG target device map
+Date: Wed, 18 Nov 2026 15:48:16 +0100
+Message-ID: <20261118150308.280006631@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,41 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit f67caaa2521a3c8f931d1e679d831ba5ca654794 ]
+[ Upstream commit 203b3072e7aa10d98b3f2b766693ea925cfc571d ]
 
-The phy number that comes with a link change is used to index the node's
-phy array without being compared against the number of phys allocated for
-that node.
+The size of the target device map buffer is held in a u16 while the number
+of devices it is derived from is not bounded to fit. With enough devices
+the size wraps, a short buffer is allocated, and the loop that fills it
+writes past the end.
 
-Check it first.
+Do the calculation in size_t.
 
-Fixes: 42fc9fee116f ("scsi: mpi3mr: Add helper functions to manage device's port")
+Fixes: fb428a2005fc ("scsi: mpi3mr: Fix issues in mpi3mr_get_all_tgt_info()")
 Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-13-chandrakanth.patil@broadcom.com
+Link: https://patch.msgid.link/20260825210411.301535-14-chandrakanth.patil@broadcom.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_transport.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/scsi/mpi3mr/mpi3mr_app.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
-index d6ac71e1d9e4e..a95fec5f6f4e0 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
-@@ -1070,6 +1070,13 @@ void mpi3mr_update_links(struct mpi3mr_ioc *mrioc,
- 		return;
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
+index 4d856e1a58028..29c91d6353e30 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_app.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
+@@ -309,7 +309,8 @@ static long mpi3mr_bsg_pel_enable(struct mpi3mr_ioc *mrioc,
+ static long mpi3mr_get_all_tgt_info(struct mpi3mr_ioc *mrioc,
+ 	struct bsg_job *job)
+ {
+-	u16 num_devices = 0, i = 0, size;
++	u16 num_devices = 0, i = 0;
++	size_t size;
+ 	unsigned long flags;
+ 	struct mpi3mr_tgt_dev *tgtdev;
+ 	struct mpi3mr_device_map_info *devmap_info = NULL;
+@@ -335,8 +336,8 @@ static long mpi3mr_get_all_tgt_info(struct mpi3mr_ioc *mrioc,
+ 		return 0;
  	}
  
-+	if (phy_number >= mr_sas_node->num_phys) {
-+		spin_unlock_irqrestore(&mrioc->sas_node_lock, flags);
-+		ioc_err(mrioc, "%s: phy_number(%d) >= num_phys(%d)\n",
-+			__func__, phy_number, mr_sas_node->num_phys);
-+		return;
-+	}
-+
- 	mr_sas_phy = &mr_sas_node->phy[phy_number];
- 	mr_sas_phy->attached_handle = handle;
- 	spin_unlock_irqrestore(&mrioc->sas_node_lock, flags);
+-	kern_entrylen = num_devices * sizeof(*devmap_info);
+-	size = sizeof(u64) + kern_entrylen;
++	kern_entrylen = (uint32_t)num_devices * sizeof(*devmap_info);
++	size = sizeof(u64) + (size_t)kern_entrylen;
+ 	alltgt_info = kzalloc(size, GFP_KERNEL);
+ 	if (!alltgt_info)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
