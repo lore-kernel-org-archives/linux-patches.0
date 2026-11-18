@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061615;
-	b=zerdEkpYu/+jz9STt9b5I1hJpc69K1b9YSZ7fuvrOW5kyOy3cbHAgaKajo9HK4uRPnrQ
-	 jA2RG5Buyb5kH2PRV7frLs0tnjq69qm/0mHdbIxWLdtcFuJK8zror4iO+gbrtf2aIksW6
-	 GT7+RLdNprip0Nv0aN5rM2ZPBD+ZhB6/bpGFA7Ac1e+1miWayhAGQh1/Up4YruTnhqHIU
-	 tpMmi4aBil7xB+Axrxc9vMPVlT8fcCE7C/VSfc0hI5P4jQ8ZdklbpY7T8W9AWQrNFpRUT
-	 hjizAecVi3p5Gv8yd0LzFk0kiE7/X5u+BhJTRPEwPjrUPhoa5E13LtVZ/4UnIPLw77A==
+	t=1795061618;
+	b=fimMmL4UX0ml/CHo9A0/CYMN1IkJSjsbM4PdZz1xPJe3iucCCqcuXMsJwmHPpyE7vTg6
+	 NA4uztbIshZQPiWi8xHantdCsg8mxwXnDeKz1w4TjeWw9B7yvLl/VuF+dDevqSy6UUGWZ
+	 7j3ypSfHbLT6BAqzrRcco5KYXhVtBY+lsvpgglC2IJkkvBtEfa8nbHdsvbebZIrchNpXo
+	 XPNdLDLK939dq2hA3l6QXYjo1MYsR2rexXuQOZoQD80ha/IfAx+Y65j/3GoQD1g1eP6LP
+	 JU7i2lot59TlfzS6y2o2sLtrHAr12JrDOUhR1Tbjb8W3jAlY1kWvWY4OJCzHDUE9CTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061615;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061618;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B3nDVphg8+v2BOLMRSSIm/1GVf4512imwIA2bkesX7Y=;
-	b=QLLQ3y2rhicD8OcrFM1tyo7I9kNNDSnCO/aHxEYKusKWIm3EL84tj0P/4Egamjb62lWK
-	 a4U/BRNmR5SXnPkosp1HPv9ygRwX+tRI/cj1jOTFpF2FhecQ0thoWUALOkXkXOlFG5fvR
-	 Nt6u8ntFUe6cjc1MPfwmjVLCxMz83xa+D1EGpcUQA5spuKrR6q1PhYEO/trjibm/xd3IR
-	 YVGECMLhh0HnttQrTFAHq1dGmDXIA+vyQtHdM8ht+uoeOCKyhrfVtn8AG911MUOp/LCIO
-	 uX77qIbX0E81UJdNLPv+7tlz6PGOnucGyYP2lkmDzkdQrvDJcN49Sn+mKyMkEiSdEJQ==
+	bh=FWlyPbnzXdWYXvn0+Vco4COq9e+21pzr5jo9hefOo4E=;
+	b=0t8Ysynmf1hpm9Fw7xxzqkojSbzKoGvINx1BvwUhvytL0LW+VvAFasHxCM3CxJv0aTBa
+	 FvTlSrtTEUb+MqB8IkQLbPv6L0cvNBqxNn0YhzEV0WIHssjE5mdVFOwxxz4vBqCl7dfjA
+	 S/+OXKG8v4NI/fadOQeNUhxZEtrk4ZEk2oc25hpuy93RYKOP+g3+eotgMEoBrT+x20v4D
+	 DID/0yIHItxTuuhG7RdKuqUQlX1NWFaxbtxXabtyB7yFZH+147tBr1sHd9ZASc2uoAnGM
+	 lJS73XYHSNxa18/N6M+uB8v9XTLDyym/SqvzZMjfJ7R8S7NGOHf58cTAo3QIOPpKoPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VY+lIP3o;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tuaXW5Op;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2483160A2605;
-	Thu, 19 Nov 2026 04:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051D960A2601;
+	Thu, 19 Nov 2026 04:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VY+lIP3o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7843E1F000C4;
-	Thu, 19 Nov 2026 04:13:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tuaXW5Op
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540FC1F000C4;
+	Thu, 19 Nov 2026 04:13:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061615;
-	bh=B3nDVphg8+v2BOLMRSSIm/1GVf4512imwIA2bkesX7Y=;
+	s=korg; t=1795061617;
+	bh=FWlyPbnzXdWYXvn0+Vco4COq9e+21pzr5jo9hefOo4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VY+lIP3osiE4I2evG8BuAJhVEutHKfs0h/T0F1HkMMS884FXKRa8wqEQzUflRT1HK
-	 y7Q9aIobvYrlM5L4nf8DJFqUASTkf0G39W2OfXO11Sq7a6tEb3IRsWqn3MnqJhYP6+
-	 8QFOxGk8bCP+avXu5xwFvnkl/06AbQZedReaNB1Q=
+	b=tuaXW5OpKxcq6hrNhdI8UI5R4VJd0c4Zxy/hY7ydbf4n0QBjFlI6m9LWSIBX/rVN1
+	 Xo2SCiWrB5ZHe8OG4ydAlA2szDWRad9UTNu/2ogylIrMMzN5GrViOkY4/tvR+vEA4w
+	 7vk8Xr++I3/09yWZxb2DpdgQz42AHb7tVQ9bEHkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1616/1848] ASoC: atmel-i2s: use optional API for gclk
-Date: Wed, 18 Nov 2026 16:00:54 +0100
-Message-ID: <20261118150027.176234314@linuxfoundation.org>
+Subject: [PATCH 5.10 1617/1848] sh: sh7785lcr: Register the PCA9564 controller as I2C bus 0
+Date: Wed, 18 Nov 2026 16:00:55 +0100
+Message-ID: <20261118150027.214546246@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,48 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit b431a055fb7688c0d3725fa3c55aeef852991178 ]
+[ Upstream commit 3b8386ffc0c33b6b5a6a8e64e1487c1adec57dc9 ]
 
-The gclk is an optional clock according to the device tree binding.
+Before commit 44454baa7ca7 ("i2c: Dynamically assign adapter id if it
+wasn't explictly specified"), a negative ID was replaced by zero, and
+I2C bus zero was instantiated. Since that commit, a negative ID is passed
+verbatim, instantiating an I2C bus with a dynamic number. As SH boards
+still use i2c_register_board_info(0, ...) to register I2C devices, they
+rely on the I2C bus being bus zero.
 
-Use devm_clk_get_optional() to handle the optional gclk directly.
+The SH7785LCR is the only SH board whose I2C adapter has a negative ID
+and its PCA9564 controller becomes i2c-1, causing registration of the
+R2025S/D RTC to fail and hwclock not detecting /dev/rtc0.
 
-Unlike the existing code, errors other than -EPROBE_DEFER are now
-returned instead of being silently ignored.
+Set the platform device ID to 0 so that the adapter is registered as
+bus zero again.
 
-Fixes: 73ad0df57290 ("ASoC: atmel-i2s: Remove unnecessary audio PLL clock (aclk)")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261002043856.97295-4-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 44454baa7ca7 ("i2c: Dynamically assign adapter id if it wasn't explictly specified")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Assisted-by: LLM
+Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/atmel/atmel-i2s.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ arch/sh/boards/board-sh7785lcr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/atmel/atmel-i2s.c b/sound/soc/atmel/atmel-i2s.c
-index 8fdfe8230e160..393b7b5a7d701 100644
---- a/sound/soc/atmel/atmel-i2s.c
-+++ b/sound/soc/atmel/atmel-i2s.c
-@@ -665,13 +665,10 @@ static int atmel_i2s_probe(struct platform_device *pdev)
- 	}
+diff --git a/arch/sh/boards/board-sh7785lcr.c b/arch/sh/boards/board-sh7785lcr.c
+index 77dad1e511b46..05e2678dfc678 100644
+--- a/arch/sh/boards/board-sh7785lcr.c
++++ b/arch/sh/boards/board-sh7785lcr.c
+@@ -256,7 +256,7 @@ static struct i2c_pca9564_pf_platform_data i2c_platform_data = {
  
- 	/* Get audio clock to generate the I2S Master Clock (I2S_MCK) */
--	dev->gclk = devm_clk_get(&pdev->dev, "gclk");
--	if (IS_ERR(dev->gclk)) {
--		if (PTR_ERR(dev->gclk) == -EPROBE_DEFER)
--			return -EPROBE_DEFER;
--		/* Master Mode not supported */
--		dev->gclk = NULL;
--	}
-+	dev->gclk = devm_clk_get_optional(&pdev->dev, "gclk");
-+	if (IS_ERR(dev->gclk))
-+		return PTR_ERR(dev->gclk);
-+
- 	dev->dev = &pdev->dev;
- 	dev->regmap = regmap;
- 	platform_set_drvdata(pdev, dev);
+ static struct platform_device i2c_device = {
+ 	.name		= "i2c-pca-platform",
+-	.id		= -1,
++	.id		= 0,
+ 	.dev		= {
+ 		.platform_data	= &i2c_platform_data,
+ 	},
 -- 
 2.53.0
 
