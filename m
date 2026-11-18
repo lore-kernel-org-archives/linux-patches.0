@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034294;
-	b=TYTh/A5zAYQOYOcbhYCMNayxdY+wxIhzAUN7ltUbv+QQtmopoYfkHfJWMWf0k37By0TD
-	 rtkT12TqVOAWgmmIOelrf3tuAGhGpd//EvlwDGgiMTSYIclKQhHSo81nrBYJ26N20QaCB
-	 mUegKNYLChfA4U0WE3CSeVcxqBa7XNf6iGqO+9Ur3ccuhi0JJ5Z/4MJKbSzRrudJaEFrs
-	 0T6jPyggRF2cCdqKe7khu7A+YKu68FDZ4sx2Id2yAHiD/mGY7a4YcLwr8jahq/p8D4FdK
-	 123WlwLl+eBTwhaqPO8V3lLT1pj8PeEcK9DUnce7mDGSZYjK2sRRCv6ByJtnkvJ9Xfg==
+	t=1795034297;
+	b=MK6g2MER5Y3BNHS/AOYOSeu0x+xjsitBwe6D1on5GmaozQYXK7NgyqjqTfz8JlLt82yk
+	 nxvHJGf887ahBjaFA1NrirKjzMJaRDHc5EhwD5qD8xo8yusrogdUmhGuxlGzjFiW/KXSM
+	 xsZept+PHLHn7yDSQhoIOyXxkKrBMcKSj+YGyZjxMwBrYNzsom4tfQwImsizK4o8jGtVY
+	 2QLJ4uc5hlVjdsLKIwh266DAWt+5bU2YYkv+ne/MlClA1OVm3xJsEqCLvvHUKkHcwxNWe
+	 Ik5V2cOxayrMH7YB/Ea2vtUB7FGe5YExasPzBZpjdojpoELCoSMcy99nAGmYSfdZ6fw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034294;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034297;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HtXRyrdfVfZraH2nUzpqgih58KS0295LV8nSFO/fbuU=;
-	b=o5kXpuZw+P8q/tpaPC8jb7i0vpurWLYiegX+55Kuo9+9un96gLRJqoqgmaluWFoeNGGM
-	 Bs1Yu6C1sOYOn6xDsJAITuziIaNKc3fVLgyJoRv0E04Uo3N+AETaQO7aQAZJVzCk2TYaW
-	 9fQxELn1N5vzVksiJGzloeSfA8y1pfm5xvrQyaKPtAHvFrlZqFZYNN8IqgrHkVqUkBtNe
-	 xXmKu6i7i7aOL0goICxXn1PrgwdOzWyKHqF0xyceHZmqmnuTbmCso8gXbPfNJxe6I9flS
-	 pTzrXYDzuEYN8MBbeEzWc/fhG8ZxZlkDHsPz9Cbw0owQQeTqZFNnqVqjy3p0zkpTVTA==
+	bh=iFQD7mdAnLxfaF0Cx22H+95mZdRpnbR/qj+G8l/eIJc=;
+	b=a3iZd4DLpEgO/niR36u3FwyNzwAkfeYRmgQgQZ8VwF2VYUFZXc1pU0ZoAo1VWsZsQvNP
+	 8xxDFRQGJUDMeKxsmmxYLbBlZtthkjbmsODOO2drWuUiqDdTGAOXPpIMWigibURgllBSN
+	 5iAdayCejqynejYygnCLZtthNzthOrM7xfx7v1+8J2F19mjYn8HLR2l9ziykc6VLoSWbq
+	 vg9eGcMOqDMCAg7AqOzQxxqP5asqMCKON6UqtyFGBROSgvOKv1IMrPcYKAftAkbBe8HjN
+	 19iYgR2a6257h3zXV2ge5m0/I7+DXTeYAfVDIXoGab7bf5bo1OXoetJOT+52Qha/rQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M2cctMfZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SS52DNC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E74606A32C;
-	Wed, 18 Nov 2026 20:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47433606A31C;
+	Wed, 18 Nov 2026 20:38:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M2cctMfZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B954B1F000C4;
-	Wed, 18 Nov 2026 20:38:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SS52DNC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 959901F000C4;
+	Wed, 18 Nov 2026 20:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034294;
-	bh=HtXRyrdfVfZraH2nUzpqgih58KS0295LV8nSFO/fbuU=;
+	s=korg; t=1795034297;
+	bh=iFQD7mdAnLxfaF0Cx22H+95mZdRpnbR/qj+G8l/eIJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M2cctMfZQmTZlYSmBJhRFg8FeaX3y2L4ISwJt1Ec/LVvdWR8hRmpKelLQiMdOL4AA
-	 INTySDj67rXAtqf00MXOi/bwM+x3ORKLQNy/iWkN59rYrvlqp3rbrTODLH5M3yk2aE
-	 CQdI+fHtfhyFJ0mW6rCf2s56kmiPMTo5+eLeg3GU=
+	b=2SS52DNCXCjwy2GqcfdQicknrIK3VGV4AAW8tC7t27r9t2hcgSDBzpyJqE3dSrp9x
+	 qykvaF7X8MEiW7+0dMucuSOMdQMQKqdxzfefcP8w1D38xWhNwVDws4lFz0DNvKODVv
+	 00jE8qM2fWObJDDwWrB2aVD25+l3++kQk41g1G/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Porter <mrwillporter@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Chen Changcheng <chenchangcheng@kylinos.cn>,
+	Narsimhulu Musini <nmusini@cisco.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0317/3318] ALSA: usb-audio: Add iD14 MkI to monitor-mix volume quirk
-Date: Wed, 18 Nov 2026 15:15:39 +0100
-Message-ID: <20261118150325.348808918@linuxfoundation.org>
+Subject: [PATCH 6.6 0318/3318] scsi: snic: Fix SCSI host leak on workqueue allocation failure
+Date: Wed, 18 Nov 2026 15:15:40 +0100
+Message-ID: <20261118150325.382495870@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,78 +69,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Porter <mrwillporter@gmail.com>
+From: Chen Changcheng <chenchangcheng@kylinos.cn>
 
-[ Upstream commit 17056a36d276a740f09dca723de1bc6aa3eb4ef9 ]
+[ Upstream commit 12e67eb89eb2b9516685c744d3f7de0a2d1bd701 ]
 
-Add the iD14 MkI USB ID to the existing audient_id14_map. This
-names feature unit 12 Monitor Mix Playback Volume.
+In snic_add_host(), if scsi_add_host() succeeds but
+alloc_ordered_workqueue() fails, the function returns -ENOMEM with
+shost->work_q left as NULL. The caller's error path then calls
+snic_del_host(), which returns early when !shost->work_q without calling
+scsi_remove_host(). The Scsi_Host remains registered in sysfs as a zombie
+device even after the probe has failed. This causes:
 
-Live meter A/B testing on MkI USB ID 2708:0002 reproduced the same
-asymmetric attenuation seen on MkII. At ALSA value 104, the right
-channel was 23.07 dB below the left. At 127, both channels were equal.
+ - The leaked host remains visible in /sys/class/scsi_host/ after probe
+   failure, with state "running".
 
-The misleading Speaker Playback Volume name causes PipeWire to adopt
-FU12 as the stream master. Reuse the existing map to keep the control
-available while preventing that selection.
+ - Subsequent SCSI host numbering is permanently shifted (the leaked host
+   ID from ida_alloc() is never reclaimed).
 
-Hardware-tested on Bazzite 7.2.0-ogc4.1.fc44.x86_64 with this change
-backported. ALSA exposed Monitor Mix Playback Volume after module load
-and USB reconnect. PipeWire volume changes from 100% to 35% and back
-left all four FU12 values at 127. Channel-isolated left/right playback
-remained balanced after reconnect.
+ - Memory leak: the Scsi_Host allocation can never be freed because
+   device_add() took a reference that can only be released by device_del()
+   inside scsi_remove_host().
 
-Build-tested with CONFIG_SND_USB_AUDIO=m using the focused sound/usb
-target.
+Fix by adding scsi_remove_host() in the workqueue allocation failure path
+inside snic_add_host(), undoing the successful scsi_add_host() before
+returning the error. This is cleaner than modifying snic_del_host() because
+snic_del_host() is called from a shared error label that also serves paths
+where snic_add_host() was never invoked.
 
-Assisted-by: Codex:gpt-5
-Signed-off-by: Will Porter <mrwillporter@gmail.com>
-Link: https://patch.msgid.link/20260823015353.686080-1-mrwillporter@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reproducer (requires no real SNIC hardware):
+
+ - Build CONFIG_SCSI_SNIC=y (built-in)
+
+ - Add snic.test_mode=1 snic.inject_wq_fail=1 to kernel cmdline
+
+ - Boot with a PCI device matching the snic driver (e.g. QEMU edu device,
+   PCI ID 0x1234:0x11e8, temporarily added to the driver's PCI ID table)
+
+Before the fix:
+
+  # /sys/class/scsi_host/ contains a zombie host0:
+  $ cat /sys/class/scsi_host/host0/proc_name
+  snic_scsi
+  $ cat /sys/class/scsi_host/host0/state
+  running
+  # ata_piix gets host1, host2 (host0 stuck):
+  scsi host1: ata_piix
+  scsi host2: ata_piix
+
+After the fix:
+
+  # host0 is properly freed and reused by ata_piix:
+  scsi host0: ata_piix
+  scsi host1: ata_piix
+  # No zombie host in /sys/class/scsi_host/
+
+Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+Acked-by: Narsimhulu Musini <nmusini@cisco.com>
+Link: https://patch.msgid.link/20260727073438.209673-1-chenchangcheng@kylinos.cn
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_maps.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ drivers/scsi/snic/snic_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
-index 8046d5987d5b1..ace4ccad8f51c 100644
---- a/sound/usb/mixer_maps.c
-+++ b/sound/usb/mixer_maps.c
-@@ -505,13 +505,13 @@ static const struct usbmix_connector_map gigabyte_b450_connector_map[] = {
- 	{}
- };
+diff --git a/drivers/scsi/snic/snic_main.c b/drivers/scsi/snic/snic_main.c
+index cc824dcfe7da4..e68388ae259e4 100644
+--- a/drivers/scsi/snic/snic_main.c
++++ b/drivers/scsi/snic/snic_main.c
+@@ -306,6 +306,7 @@ snic_add_host(struct Scsi_Host *shost, struct pci_dev *pdev)
+ 	if (!shost->work_q) {
+ 		SNIC_HOST_ERR(shost, "Failed to Create ScsiHost wq.\n");
  
--/* Audient iD14: FU 12 advertises Volume on only 4 of its 6 logical channels
-- * and sits on the monitor mixer branch, but it is traced through to the
-- * Speaker output terminal and gets named "Speaker Playback Volume".  Userspace
-- * then adopts it as the stream's hardware volume, and any setting below 0 dB
-- * attenuates some channels but not others (20 dB imbalance at 80%).  Give it a
-- * non-standard name so that it is no longer taken for the stream's master
-- * volume, while remaining reachable for anyone who wants the monitor gain.
-+/* Audient iD14 MkI and MkII: FU 12 sits on the monitor mixer branch but is
-+ * traced through to the Speaker output terminal, so it is named "Speaker
-+ * Playback Volume".  On MkII it controls only 4 of 6 playback channels.  MkI
-+ * testing found asymmetric attenuation within the main stereo pair.  Userspace
-+ * adopts this control as the stream's hardware volume, causing imbalance below
-+ * 0 dB.  Give it a non-standard name so that userspace no longer treats it as
-+ * the stream master, while keeping the monitor gain reachable.
-  */
- static const struct usbmix_name_map audient_id14_map[] = {
- 	{ 12, "Monitor Mix Playback" },	/* FU, partial coverage */
-@@ -602,7 +602,12 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
- 		.map = maya44_map,
- 	},
- 	{
--		/* Audient iD14 */
-+		/* Audient iD14 MkI */
-+		.id = USB_ID(0x2708, 0x0002),
-+		.map = audient_id14_map,
-+	},
-+	{
-+		/* Audient iD14 MkII */
- 		.id = USB_ID(0x2708, 0x0008),
- 		.map = audient_id14_map,
- 	},
++		scsi_remove_host(shost);
+ 		ret = -ENOMEM;
+ 	}
+ 
 -- 
 2.53.0
 
