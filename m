@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031065;
-	b=A8zwn+1iOcQBnXBT6pKnfK2mp9TM3zBPzjzb92f/NOdEeCG6wSt5a4/vqnXjiIuFe0IC
-	 leo0tpYCjpcBxXfrRVTzQyfnQdIlu5pKTqMDd7fgOGdLxNrFnliwo5KyHXD+Iiv6XK264
-	 8k/xfrt4y9nhvhmJFVfMmDX3FI2LPF/9D5DKrGsGELqFrMnG1YIpTvd/U8uPXmXwyd2un
-	 jrZFts7up1SUnnpfpxLU4Oq2oTKaSy6248rvzokiyopUyYIv3LvRIf3AJugcHbvNb2+a/
-	 V0vlUfHa+5pkEoWIqFcwKcD5ad4aYwDfWoIxtduoo823vXIxXYGYWLY3eEVrRpN409g==
+	t=1795031068;
+	b=QabgDwjhuQPnV6H4Xj7M9s2bjTY6ho3NPXPEk3wyajW3/EPcNtgjCL6LEt9xspMqHJiU
+	 gqw+fQGBYpOBJYG9ZtNbOkeAL5Dyy1qH1HPKOgnP7kz3B1xMIyvMTOsmkHQvgV/qDqHAa
+	 IHIE9Hx1xw8NYzs7Kb6GWqa5OyuVH9kn6Klics2HP13mck6646g8gurOwPs05NPJdUdVN
+	 pNnPH1XUBjRPROzSM+etG4bChgOEIWksOWtdUSlkTDC+6hiQmlqu+lHiNt/eG+tS64M6Q
+	 r7bblQETNrBBVn+KPzhDgb65JYEbxh1qhvVn1J8X/pBlE0caOUeLv40pSrmKGZwCQ8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031065;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031068;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K6rK6zxEptEB3VqPSU7rwFpyYy0M6FKlJpf+Kp/FzVo=;
-	b=D3ubKI0g/Swzj0qZ+XD9i2yM+1+BtPCqan7voLXe/BXYloUDg52uKt2ge87gKsKT/Xsy
-	 35pKbZ8sX8u2xS35BiZSR98JSQN5ibTRTJ4tkhTFa2CUeTUqUwB+9tW+X4MQ1pGlwG86R
-	 TYpnq0KWKdfTCGmhYGT9BXDnh2bmiwJNjUH7+xfLX5PdA4/MFjYn/5uXcE4GMOe3PrzHh
-	 XgdaAwhykAqbOTJfLSJLK2nBzLFgMHROEeRNumSpwo/+W4+t5vmA9FAMy97yb9iFb1VIg
-	 B2THEbYkCgoauyI/XKdXKZxtmCX48bcIRwZtcTaXHYMHOsDOTV365Q6+w+igp06/FUQ==
+	bh=2uAHtO+B7CS5xW94kfc4FI453XN1JExPHHmpfpn9D+s=;
+	b=Z97/vlIKtR1gldJ1bUp55PBSYmfyrtdaWFQe2YH3DG9HCSey2FOnt0qfSaGgo702dHUA
+	 4xvknfpO+53rs54RTP5VqqjVrMjsJ7fDCDWsup6Um5ul5TZHJD/nuC/h23m3KIYvgMeJC
+	 iNSgTtQUa+ACKdlg6OW0ppzvL48o/ZBNpf281Zv7yha5XCM1RCO0ZC1sSMvy356yprwez
+	 KPZwBWc5cLJcQ0fazvJsSgEsLxi6ahPIsXqwDj7yDbsf6C+hwBOtBpZSrVjBJOg9/Iba6
+	 RO5TQA9jqR1Sqz/2LXdhH7koOxN5hprRNOmFQbPZPjL0obFrJmZp032ebu3TJUntRig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zgx+5xr0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbTiOf72;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658F0606A320;
-	Wed, 18 Nov 2026 19:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39588606A31C;
+	Wed, 18 Nov 2026 19:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zgx+5xr0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70291F000C4;
-	Wed, 18 Nov 2026 19:44:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbTiOf72
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0E81F000C4;
+	Wed, 18 Nov 2026 19:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031065;
-	bh=K6rK6zxEptEB3VqPSU7rwFpyYy0M6FKlJpf+Kp/FzVo=;
+	s=korg; t=1795031068;
+	bh=2uAHtO+B7CS5xW94kfc4FI453XN1JExPHHmpfpn9D+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zgx+5xr00RKC0IzIExl7aDZG8I9K7CB8slk6l0KUxvLbhPojutnqkAmps2PghUvul
-	 KBA+ydXUzKbWaJi+42MKnhDtRGETG5HSe77UoG1ai5WWRdHz2d+fWkDLp09TDgWEyw
-	 kVdN67tp3Bn++l5NM2dUzJsnSwpyAY0XNwphK6rc=
+	b=tbTiOf72wmNG2NEhLRmRTGakK5pLJbWodB+embsUL2k1gHZDoGcyTdSuacvNBvOKj
+	 M3MAy8jKU7LLbme27PCw0AX4JEZ2N1VVlvRdc+Vx3RzhElggaAY+ZT77oIEzPUo83n
+	 yQydpfNsL2MjQlqOgOfo0d/gkRT5vDrX/2wmAwSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
+	sashiko-bot@kernel.org,
 	Linus Walleij <linusw@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0884/1756] dmaengine: ste_dma40: Return IRQ_NONE when no interrupt is pending
-Date: Wed, 18 Nov 2026 15:50:11 +0100
-Message-ID: <20261118150044.746490756@linuxfoundation.org>
+Subject: [PATCH 6.12 0885/1756] dmaengine: ste_dma40: Init hardware before registration
+Date: Wed, 18 Nov 2026 15:50:12 +0100
+Message-ID: <20261118150044.825351185@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,72 +72,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit b96967644c524d34b2fdd2e58c31e7b36e3469e6 ]
+[ Upstream commit ffd583a734dc4bdafb9e18d9aa48b6efafd1a628 ]
 
-d40_handle_interrupt() returns IRQ_HANDLED even when no terminal-count or
-error status bit is pending.
+d40_probe() enables the interrupt handler and registers DMAengine devices
+before calling d40_hw_init(). An interrupt pending from the bootloader can
+therefore reach the handler while the hardware interrupt state is not
+initialized and channel lookup entries are empty. The handler deliberately
+does not acknowledge an interrupt for an unknown channel, so a level IRQ
+can retrigger continuously.
 
-IRQ_NONE is not only used to identify a device on a shared interrupt.
-The generic IRQ core also counts it as unhandled for spurious IRQ
-detection. DMA40 does not request this IRQ with IRQF_SHARED, so interrupt
-sharing is not the purpose of this change.
+Initialize the hardware and set the DMA segment limit before requesting
+the IRQ or registering DMAengine devices. d40_hw_init() clears pending
+logical and physical interrupt status, so request_irq() can enable the
+line normally after the hardware state is initialized.
 
-If the line remains asserted without matching DMA40 status, returning
-IRQ_HANDLED hides the stuck interrupt and can leave the CPU servicing it
-indefinitely. Track whether any DMA40 status is pending and return IRQ_NONE
-when none is present, allowing the generic IRQ core to diagnose and
-eventually disable the faulty line.
-
-DMA40 channels can be owned by other SoC cores. Their status means that
-the interrupt is real, but Linux must not acknowledge it. Treat foreign
-status as handled and leave its acknowledgment to the owning core, while
-acknowledging and dispatching only registered Linux channels.
+This ensures that the handler and clients only observe initialized
+hardware.
 
 Fixes: 8d318a50b3d7 ("DMAENGINE: Support for ST-Ericssons DMA40 block v3")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/dmaengine/20260819225215.5EA2F1F000E9@smtp.kernel.org/
 Assisted-by: LLM
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-8-89f595e8851d@kernel.org
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-9-89f595e8851d@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/dma/ste_dma40.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index a1c126a3a499b..4e5907f6840fd 100644
+index 4e5907f6840fd..c88de0dc7c6eb 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -1685,6 +1685,7 @@ static void dma_tasklet(struct tasklet_struct *t)
+@@ -3670,20 +3670,19 @@ static int __init d40_probe(struct platform_device *pdev)
+ 	}
+ 	pm_runtime_use_autosuspend(base->dev);
  
- static irqreturn_t d40_handle_interrupt(int irq, void *data)
- {
-+	irqreturn_t handled = IRQ_NONE;
- 	int i;
- 	u32 idx;
- 	u32 row;
-@@ -1718,6 +1719,12 @@ static irqreturn_t d40_handle_interrupt(int irq, void *data)
- 		row = chan / BITS_PER_LONG;
- 		idx = chan & (BITS_PER_LONG - 1);
- 
-+		/*
-+		 * Status for a channel owned by another core still explains
-+		 * the interrupt, but only ACK Linux-owned channels below.
-+		 */
-+		handled = IRQ_HANDLED;
++	dma_set_max_seg_size(base->dev, STEDMA40_MAX_SEG_SIZE);
 +
- 		if (il[row].offset == D40_PHY_CHAN)
- 			d40c = base->lookup_phy_chans[idx];
- 		else
-@@ -1750,7 +1757,7 @@ static irqreturn_t d40_handle_interrupt(int irq, void *data)
- 	if (ret > 0)
- 		pm_runtime_put_autosuspend(base->dev);
++	d40_hw_init(base);
++
+ 	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
+ 	if (ret) {
+ 		d40_err(dev, "No IRQ defined\n");
+ 		goto destroy_cache;
+ 	}
+-
+ 	ret = d40_dmaengine_init(base, num_reserved_chans);
+ 	if (ret)
+ 		goto destroy_cache;
  
--	return IRQ_HANDLED;
-+	return handled;
- }
- 
- static int d40_validate_conf(struct d40_chan *d40c,
+-	dma_set_max_seg_size(base->dev, STEDMA40_MAX_SEG_SIZE);
+-
+-	d40_hw_init(base);
+-
+ 	ret = of_dma_controller_register(np, d40_xlate, NULL);
+ 	if (ret) {
+ 		dev_err(dev,
 -- 
 2.53.0
 
