@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042107;
-	b=bSUCAnaVGnsR9F0GeNqb/ZuwadcJW7CYgQ9SXpIg617w90j5zGsV5JlUtOqxs1Lwd5JT
-	 c5ke9z/DZboWjtEVqDTp5SacM8FMwM5IRnbx6pTZssd3lEUR6e4v9oa1I6xjzUNF0WeT1
-	 IsZUOpLQHxjuH389HrLXgVxUdraQ87wZnAx+DiXH2OwIR5BquYX+EoFEpR+j6e4yau0un
-	 dwO87uNn6fgJJD4h5WclMIzeKC86HPq6ELJ8Eux0WtMmXjTQwK8BrskpFGeD3hhSM0zZd
-	 rFhmpFAINEWUraaUvGH1JkeRT905k5Q6orUM8cHWKVxEsz4YkjFzpTRSic18ahXj1ng==
+	t=1795042110;
+	b=RRxfj6iHBtCPGEBWVA4H1Ex0yYju3OjqyMLGEtW2riQDqVNBJEDMMt+gJcUcVaDsi4PI
+	 HeNqZ8TpA2bQtxm+dSgQxw2S5AVnKt0AtAQGVqgPkLqoQ1Dkw8ThpO9MCQA4/Q9clXIYD
+	 ECkQZgDVtIbpnJnT9wvVlDd0XvMkHqgxSAvfsfAgv19gP4qHJl32F88yNQWCCeY/uJYKW
+	 dMyDSNo2mBe6j1QQ6rmSod7o8drphchq2rl70xXPwSa9wsRaCDZv1/d0Xp4mVA/fn3/Hw
+	 BbRfEkGqDXbRfi9Sy9hJC5mhs5v/Nu10mzNWEw8AFBvhJut3JmcxpPX9cEbcj8heKyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042107;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042110;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R3vGh5hGNj/vC7drnGTwSYE/1AFvB6mSdpDnjf4H0cw=;
-	b=eZUIeLtj85p5/Pm2nyUrHAjzMucu3AGwhMsZlSXobqZ03ZP2GdWqoGbXjVljxkWXZlGz
-	 1csxYgvtxwL73yMvf0QuBCVezXtVtJNnt9aE4Y7bLpCTGmr0/O8mlmcvJN8Xirzhem7CX
-	 o5LPqoiEOJZ6gXr48zXNfpC0W0r8QfpvpLMh4qoDgXOjhTcmbW5AjQGVItuJ1C6GLv3jH
-	 CC4s90zVXOwQOTu+51GskhT7tw0EJA6LAJ8BknqnsoKJi24LIf9pZYkkHb7Vk2cctF5vM
-	 Pfoz2g8FKDsL3a1bN2yUQvKsb+OVtISYfT2fJ9/8tWQeR1pcd6p/Aj0aPJctqkeMqDA==
+	bh=69/ni0kvzh9rju3NTtVmFM7mjZQa0fyLcJpsEDCEfEM=;
+	b=UplfOKQNjJYdfNDw00LJ8r2PVSNmJEltvNyXXrg2fW+aUfUkCNF3FHq5VIkLqt9KJXfx
+	 McGmIaiAeGE7RWB0es0JYp6DWrqE8rjFEH49AKgJIYsInp505IJxGP01eFmg0INuYpUeA
+	 am0kkoZUATzmIw9vFVry26Opdxy3cs5js0ISJDcxvt8+QngQfpMjqrB0sc40XWb1/SzSW
+	 wGVjYdeBTNTNFdSNDmUun0n+fXbFgvvK874yRlRrNVWZQVHbfW4k7fhIaJJ1l017tCQg4
+	 MSeT7x3OzUskO4M3J70YdX7l0FqiaVlP3jLI072/fu6CN6NzBUFT3iLFSo12zDur3Fg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QjnOxIHo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qHjazzTd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB2A606A31C;
-	Wed, 18 Nov 2026 22:48:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752BA606A32C;
+	Wed, 18 Nov 2026 22:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QjnOxIHo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171761F000C4;
-	Wed, 18 Nov 2026 22:48:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qHjazzTd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF56B1F000C4;
+	Wed, 18 Nov 2026 22:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042107;
-	bh=R3vGh5hGNj/vC7drnGTwSYE/1AFvB6mSdpDnjf4H0cw=;
+	s=korg; t=1795042110;
+	bh=69/ni0kvzh9rju3NTtVmFM7mjZQa0fyLcJpsEDCEfEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QjnOxIHoWsTbmdPRzqsOaYXj9HVBpvkkGC37abuN+zcwQRDLgMWVzSDDt81/ehZ5C
-	 Yl7+hHbCJ5CgyjrDY+L8UfEPJ/e/SvykE1vX4vPiDTRVA7Gb0jUcSyytQul7PDeXgH
-	 HZO/78R7QByXo2ZSg2Xwm+/3zXlnSvG6Rl3NlAxg=
+	b=qHjazzTdgIuaZYowwTkB7fgy7T4NmaKZppEbYtcTj4QNf+C9fryak2x1vEuVEB9zv
+	 +YnkKSbaNgVhLXs5BOE47TjF2lg8ghqVLOWI1NFPdQJtiLaHw/rmoNtqu3CdvC2yEh
+	 4w50Wcz0TnVF2PDO1Lz9bSWSMChGbX1Qj3g66nGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3052/3318] pNFS/flexfiles: make pg_init retry loops killable
-Date: Wed, 18 Nov 2026 16:01:14 +0100
-Message-ID: <20261118150451.711157838@linuxfoundation.org>
+Subject: [PATCH 6.6 3026/3318] RDMA/core: Reject LAG selection when source MAC lookup fails
+Date: Wed, 18 Nov 2026 16:00:48 +0100
+Message-ID: <20261118150450.977531412@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,108 +67,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit fde27289503beabe7e0856dac164a5ced4be0342 ]
+[ Upstream commit fdfd099222d9de9e2f1b8d69e94494c5489272cc ]
 
-When a task is killed while the pNFS client connects to a data server,
-nfs4_pnfs_ds_connect() fails with -ERESTARTSYS. If the layout has
-FF_FLAGS_NO_IO_THRU_MDS set, ff_layout_pg_init_read() cannot fall back
-to the MDS and retries after an uninterruptible ssleep. As the fatal
-signal stays pending, every new connect attempt is aborted the same
-way and the task loops forever without returning to user space:
+GID deletion can clear the source device association after LAG lookup
+retains the bonding master. Ignoring the resulting L2 lookup failure
+copies uninitialized source MAC bytes into the synthetic hash packet.
 
-  # grep -E 'SigPnd|ShdPnd' /proc/156021/status
-  SigPnd: 0000000000000100
-  ShdPnd: 0000000000000100
+Read the source MAC before allocating the packet and propagate lookup
+errors to the caller, so failed lookups cannot influence slave selection.
 
-  # cat /proc/156021/stack
-  msleep+0x2e/0x50
-  ff_layout_pg_init_read+0x267/0x310 [nfs_layout_flexfiles]
-  __nfs_pageio_add_request+0x1c1/0x480 [nfs]
-  nfs_pageio_add_request+0x21d/0x2c0 [nfs]
-  nfs_read_add_folio+0x143/0x200 [nfs]
-  nfs_readahead+0x204/0x290 [nfs]
-  read_pages+0x62/0x230
-  page_cache_ra_unbounded+0x136/0x180
-  filemap_get_pages+0xf2/0x350
-  filemap_read+0xd5/0x320
-  nfs_file_read+0x6d/0xc0 [nfs]
-  vfs_read+0x24f/0x3a0
-  __x64_sys_pread64+0x90/0xc0
-  do_syscall_64+0x5f/0xe0
-
-Previous attempt propagates the error from nfs4_ff_layout_prepare_ds(), but
-only ff_layout_{read,write}_pagelist() look at it. The pg_init functions
-test IS_ERR() and retry on any error.
-
-Check for a fatal signal or an exiting task before sleeping in
-ff_layout_pg_init_read() and ff_layout_pg_init_write() and fail the I/O
-instead of retrying.
-
-Fixes: f06bedfa62d5 ("pNFS/flexfiles: don't attempt pnfs on fatal DS errors")
-Signed-off-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Fixes: bd3920eac133 ("RDMA/core: Add LAG functionality")
+Link: https://patch.msgid.link/20261015-ib-core-fixes-v1-3-60f6da3ddec3@nvidia.com
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ drivers/infiniband/core/lag.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
-index f5cd447e9b13b..c6bc831b95413 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -819,6 +819,20 @@ ff_layout_get_ds_for_read(struct nfs_pageio_descriptor *pgio,
- 	return ff_layout_choose_best_ds_for_read(lseg, 0, best_idx);
- }
- 
-+/*
-+ * Wait before retrying pg_init. Returns false, with pgio->pg_error set,
-+ * if the task was killed or is exiting and must not retry.
-+ */
-+static bool ff_layout_pg_retry_wait(struct nfs_pageio_descriptor *pgio)
-+{
-+	if (fatal_signal_pending(current) || nfs_current_task_exiting()) {
-+		pgio->pg_error = -ERESTARTSYS;
-+		return false;
-+	}
-+	ssleep(1);
-+	return true;
-+}
+diff --git a/drivers/infiniband/core/lag.c b/drivers/infiniband/core/lag.c
+index 10e22648f8131..56967d349a20a 100644
+--- a/drivers/infiniband/core/lag.c
++++ b/drivers/infiniband/core/lag.c
+@@ -19,6 +19,11 @@ static struct sk_buff *rdma_build_skb(struct net_device *netdev,
+ 	u8 smac[ETH_ALEN];
+ 	bool is_ipv4;
+ 	int hdr_len;
++	int ret;
 +
- static void
- ff_layout_pg_get_read(struct nfs_pageio_descriptor *pgio,
- 		      struct nfs_page *req,
-@@ -877,7 +891,8 @@ ff_layout_pg_init_read(struct nfs_pageio_descriptor *pgio,
- 			goto out_mds;
- 		pnfs_generic_pg_cleanup(pgio);
- 		/* Sleep for 1 second before retrying */
--		ssleep(1);
-+		if (!ff_layout_pg_retry_wait(pgio))
-+			return;
- 		goto retry;
- 	}
++	ret = rdma_read_gid_l2_fields(ah_attr->grh.sgid_attr, NULL, smac);
++	if (ret)
++		return ERR_PTR(ret);
  
-@@ -916,7 +931,8 @@ ff_layout_pg_init_read(struct nfs_pageio_descriptor *pgio,
- 	}
- 	pgio->pg_error = 0;
- 	/* Sleep for 1 second before retrying */
--	ssleep(1);
-+	if (!ff_layout_pg_retry_wait(pgio))
-+		return;
- 	goto retry;
- out_mds:
- 	trace_pnfs_mds_fallback_pg_init_read(pgio->pg_inode,
-@@ -965,7 +981,8 @@ ff_layout_pg_init_write(struct nfs_pageio_descriptor *pgio,
- 				goto out_mds;
- 			pnfs_generic_pg_cleanup(pgio);
- 			/* Sleep for 1 second before retrying */
--			ssleep(1);
-+			if (!ff_layout_pg_retry_wait(pgio))
-+				return;
- 			goto retry;
- 		}
- 		pgm = &pgio->pg_mirrors[i];
+ 	is_ipv4 = ipv6_addr_v4mapped((struct in6_addr *)ah_attr->grh.dgid.raw);
+ 	hdr_len = ETH_HLEN + sizeof(struct udphdr) + LL_RESERVED_SPACE(netdev);
+@@ -26,7 +31,7 @@ static struct sk_buff *rdma_build_skb(struct net_device *netdev,
+ 
+ 	skb = alloc_skb(hdr_len, flags);
+ 	if (!skb)
+-		return NULL;
++		return ERR_PTR(-ENOMEM);
+ 
+ 	skb->dev = netdev;
+ 	skb_reserve(skb, hdr_len);
+@@ -70,7 +75,6 @@ static struct sk_buff *rdma_build_skb(struct net_device *netdev,
+ 	skb_reset_mac_header(skb);
+ 	eth = eth_hdr(skb);
+ 	skb->protocol = eth->h_proto = htons(is_ipv4 ? ETH_P_IP : ETH_P_IPV6);
+-	rdma_read_gid_l2_fields(ah_attr->grh.sgid_attr, NULL, smac);
+ 	memcpy(eth->h_source, smac, ETH_ALEN);
+ 	memcpy(eth->h_dest, ah_attr->roce.dmac, ETH_ALEN);
+ 
+@@ -86,8 +90,8 @@ static struct net_device *rdma_get_xmit_slave_udp(struct ib_device *device,
+ 	struct sk_buff *skb;
+ 
+ 	skb = rdma_build_skb(master, ah_attr, flags);
+-	if (!skb)
+-		return ERR_PTR(-ENOMEM);
++	if (IS_ERR(skb))
++		return ERR_CAST(skb);
+ 
+ 	rcu_read_lock();
+ 	slave = netdev_get_xmit_slave(master, skb,
 -- 
 2.53.0
 
