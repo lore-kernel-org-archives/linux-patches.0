@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015455;
-	b=OmvgWSOeEUkWKst08QKTtkKR9LgnG8lZGEXM7NKPt3wx1iGVGPZFI9JQ61uVSAv0DSBk
-	 Vb3odc8qavrAaEuoEPeq1vLzr7hU6yBPl+MZ6wxGgtmebnkQMpmqeNufdxX4J4lqFY4LM
-	 BDg5eLrd/qcmq5cqCRJX567EeRSMvmN6kcx0BVyEA18dLU5J2BQ4gsUU1OiTEybPnX6gR
-	 FlUrpZW2Sd65X93iOIrsxqnUaKZDJEm+JujXEQToFufeLK7mCIsbuaee0qQFlc2EsqzW/
-	 YzQuDzMJCKQEr2PE7a69V1QnjUyJzP4dKvhklYSEZCKKqS3CdpEkBEShvAs+I6qE3DQ==
+	t=1795015457;
+	b=dICyQLJgos0+JIknE/EJvR5HrKw/YL3N4F6ytm8FvHdGYISVJs1bZOLSGxmYvurATjiB
+	 9sRETpfC+aM8TEpo3hT7rgCUc1hcjbf0LJuavpyAGTVv71Hw2ppgvyfptO4FV0FuBhB/K
+	 mlv1iOhcKTvGdhg/9yP/PTiMrTmjvRE12gjL3oVCUKl8KFTeMB6rvhh4Re8bw7DDiNF7e
+	 uG6hPAUrlEh+0DiZn+ed32gm+Hrs3cCI06hldBTwdOSLcjLA3IzzIh60n8MFQaO+FlVte
+	 KCoEcDBGUq0Y9R84JDparGRujEwXbiCUAVFkeYEpTBpnF5IqumkfMPAbl2SPJOl5kEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015455;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015457;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=CPEHp+mOLFtV3w4FgrLjEAO9Nk8YvR+GrSXpAQ7n8tU=;
-	b=d+YqhP8mCUnV7ng3Z3yz+tDwex2vSGYuDGGz7KFiAgjr7fC3uv5HGZsc+5k3s+zWh9Z7
-	 vrek9nz5YqzIdmLHVjAYMpqfYNZDFV2hlVD7eze8mb+q9myQwzHvrJEPy1K6Qyjk+7B7I
-	 94K0SjaAgJx/Ww8zyTHSns+xZjZ1sCLBDOBEGJY+YcaBz3Wg8aKOCleawmXWzxHw8IX4+
-	 01ZwqhI7w4eXVvxE8BL/YqTq02gAWmib+/H87OrUkz5/vzpADhBFUzo7ekTEo07re5zMz
-	 dBIcDjSvG4EmVyXkc/pz3lnEJbeg5XqrRynSIRu6zCXLfTxr8mauA97ZpWbnBGszePg==
+	bh=2nE2u7dKvPJNB/Nz8+wDqbBAeDXMADipuouwqhxQ7aY=;
+	b=3TredCbaMfkdfvOoyRy7BVN68ebpHkDfK6UA0TNkJJ2cx0JcvN0UNNL4SjOsRlvQCBYa
+	 lIA2raKpDQbZnPDd9M+s98n6fcSl9h5H/CuWbsOPePJLmQ6B1h9WpIf0tdqVTzpzEvKwr
+	 5jw9ce1XqePX6VIhvovyPoLGFSYkQPXpZ/v4v0eTE0As4ujFNx8kBtLB2Vams4p0NBali
+	 9l7zUiNjRAkIJvWGjTKl2E0yJo9XbK++qg/o3jo7ZqYLz6zQDWd6US9rKenP9M5YmRCtZ
+	 JJce5Fo3iW4zMXIyDvOMjWNsW6BLc/13i9gNYQwPfeytjCuHSkYCBUWiCr5X6m071aw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CPBMDrOf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Da+Rsdbr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E9A606A325;
-	Wed, 18 Nov 2026 15:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79591606A31C;
+	Wed, 18 Nov 2026 15:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CPBMDrOf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57AC1F000C4;
-	Wed, 18 Nov 2026 15:24:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Da+Rsdbr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930B61F000C4;
+	Wed, 18 Nov 2026 15:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015454;
-	bh=CPEHp+mOLFtV3w4FgrLjEAO9Nk8YvR+GrSXpAQ7n8tU=;
+	s=korg; t=1795015457;
+	bh=2nE2u7dKvPJNB/Nz8+wDqbBAeDXMADipuouwqhxQ7aY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CPBMDrOfsP6kQdpnixlHSkLOTesnpzyNupNU0Pb21s9rqz1KIay+YbUAsxbGfgDks
-	 tOL3dKCL5LVr9IaWR7hz+I9l4zLGrJORHXeFJilfMLsK/fAf9TIg3bNhUECwUrcvo9
-	 dBjmdfTuk6QpxmWPHi9Ciwvf2RkYFLWFPqbzB0So=
+	b=Da+Rsdbrq+Y2cZUjgePkb4GPvcE13Xg43gYahnD4XSVXD4nvRSs1MlPyOONMMQx9x
+	 YdRkCJIuzIGWzjCgQpmHpgNxKF6NQes9sEgmMVqiQ5f+ayo5fO5EMVAh0s83FgDuUe
+	 nUkBxbhkmRKZNOmjR75a61Cvj0gltaBNH1VaNYKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0179/2651] bpftool: Set BPF_F_XDP_DEV_BOUND_ONLY flag non-destructively
-Date: Wed, 18 Nov 2026 15:23:39 +0100
-Message-ID: <20261118150254.310037450@linuxfoundation.org>
+Subject: [PATCH 7.3 0180/2651] libbpf: Move section-defined program flags to prog_flags
+Date: Wed, 18 Nov 2026 15:23:40 +0100
+Message-ID: <20261118150254.345143962@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,40 +71,93 @@ Content-Transfer-Encoding: 8bit
 
 From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-[ Upstream commit 06d6f845c4bda857a6ae864690f35321b878e827 ]
+[ Upstream commit d6b633b585f348053dd27044b1b39972c748c1fa ]
 
-When setting the XDP hints ifname, bpftool would set the
-BPF_F_XDP_DEV_BOUND_ONLY without looking at the existing program flags,
-overriding any other flag values. This was always a destructive action,
-but after we change libbpf to carry the frags section flag in
-prog_flags, this can impact bpftool loading of XDP frags programs.
+The libbpf section definition modifiers for XDP frags support and
+sleepable programs stores the flags bits only in the private section
+definition cookie from object open to load time. This has the
+unfortunate consequence that API consumers cannot see (or manipulate)
+the flag between object open and program load.
 
-Change the flag setting to be non-destructive by OR'ing it with the
-existing flags.
+In particular, libxdp has special handling of frags-enabled programs to
+make them compatible with the dispatcher. This doesn't work on XDP
+programs that enable frags through the 'xdp.frags' section definition
+because the flag is not visible through bpf_program__flags()[0].
 
-Fixes: f46392ee3dec ("bpftool: Specify XDP Hints ifname when loading program")
+Fix this by changing how libbpf loads the program flags from section
+definitions: instead of using the private section definition cookie, add
+a setup function to the default section definitions that stores the
+flags for sleepable and XDP frags programs in the prog_flags field of
+struct bpf_program.
+
+Exposing the flags this way means that any use of
+bpf_program__set_flags() will override the flags unless the caller takes
+care of updating flags in a non-destructive way. This is unavoidable
+with the set-only API, and any user setting flags unconditionally is
+already broken in the sense that they will also override any other
+current and future flags.
+
+In addition, prog_flags survives program type changes through
+bpf_program__set_type(). It is the responsibility of the caller to
+ensure the flags are cleared if they are incompatible with the new
+program type.
+
+[0] https://github.com/xdp-project/xdp-tools/issues/587
+
+Fixes: 082c4bfba4f7 ("libbpf: Add SEC name for xdp frags programs")
 Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Link: https://lore.kernel.org/bpf/20260901-libbpf-frags-flags-v3-1-4eb6f14968b0@redhat.com
+Link: https://lore.kernel.org/bpf/20260901-libbpf-frags-flags-v3-3-4eb6f14968b0@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/prog.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/lib/bpf/libbpf.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
-index a9f730d407a92..8c2f9255b36d7 100644
---- a/tools/bpf/bpftool/prog.c
-+++ b/tools/bpf/bpftool/prog.c
-@@ -1769,7 +1769,7 @@ static int load_with_options(int argc, char **argv, bool first_prog_only)
- 		}
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index bfa64ae6c94df..3bab7008f93e4 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -7886,6 +7886,19 @@ static int tracing_multi_mod_fd(struct bpf_program *prog, int *btf_obj_fd)
+ 	return 0;
+ }
  
- 		if (prog_type == BPF_PROG_TYPE_XDP && xdpmeta_ifindex) {
--			bpf_program__set_flags(pos, BPF_F_XDP_DEV_BOUND_ONLY);
-+			bpf_program__set_flags(pos, bpf_program__flags(pos) | BPF_F_XDP_DEV_BOUND_ONLY);
- 			bpf_program__set_ifindex(pos, xdpmeta_ifindex);
- 		} else {
- 			bpf_program__set_ifindex(pos, offload_ifindex);
++static int libbpf_setup_prog_flags(struct bpf_program *prog, long cookie)
++{
++	enum sec_def_flags def = cookie;
++
++	if (def & SEC_SLEEPABLE)
++		prog->prog_flags |= BPF_F_SLEEPABLE;
++
++	if (def & SEC_XDP_FRAGS)
++		prog->prog_flags |= BPF_F_XDP_HAS_FRAGS;
++
++	return 0;
++}
++
+ /* this is called as prog->sec_def->prog_prepare_load_fn for libbpf-supported sec_defs */
+ static int libbpf_prepare_prog_load(struct bpf_program *prog,
+ 				    struct bpf_prog_load_opts *opts, long cookie)
+@@ -7896,12 +7909,6 @@ static int libbpf_prepare_prog_load(struct bpf_program *prog,
+ 	if ((def & SEC_EXP_ATTACH_OPT) && !kernel_supports(prog->obj, FEAT_EXP_ATTACH_TYPE))
+ 		opts->expected_attach_type = 0;
+ 
+-	if (def & SEC_SLEEPABLE)
+-		opts->prog_flags |= BPF_F_SLEEPABLE;
+-
+-	if (prog->type == BPF_PROG_TYPE_XDP && (def & SEC_XDP_FRAGS))
+-		opts->prog_flags |= BPF_F_XDP_HAS_FRAGS;
+-
+ 	/* special check for usdt to use uprobe_multi link */
+ 	if ((def & SEC_USDT) && kernel_supports(prog->obj, FEAT_UPROBE_MULTI_LINK)) {
+ 		/* for BPF_TRACE_UPROBE_MULTI, user might want to query expected_attach_type
+@@ -10106,6 +10113,7 @@ int bpf_program__clone(struct bpf_program *prog, const struct bpf_prog_load_opts
+ 	.prog_type = BPF_PROG_TYPE_##ptype,				    \
+ 	.expected_attach_type = atype,					    \
+ 	.cookie = (long)(flags),					    \
++	.prog_setup_fn = libbpf_setup_prog_flags,			    \
+ 	.prog_prepare_load_fn = libbpf_prepare_prog_load,		    \
+ 	__VA_ARGS__							    \
+ }
 -- 
 2.53.0
 
