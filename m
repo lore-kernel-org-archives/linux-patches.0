@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058537;
-	b=3YYanalmEnYBkkBMaq+BXcSaCHI74aKvJWbzdndkRVUlMFaDk+gBpQ5c8F7YBvO+Sdku
-	 AuH/ZF8JLZCuit9lEcnD3FfP9bJrIm6DCzGm3zebRXg+dMJNErwY9O/3KdC+UsrtllJjr
-	 R6B9HsWEQVfn+yi3/Dvv1RGIU/OJ1UcPm/ypuNVY05blNWlLq35WzmbSQwgCFabmyxo8F
-	 AnP3ETPi/EJnxIfiawJbO7Wb1Tdhn213LUFdH6pHiU8ZHcZppPXDRiNjJTaTR80Od7tr+
-	 T0kVW/1nIBApMA1gY26sQIkpDLkqN8uvo4lhUA2x3N9kxtELz97MWHGxmMAXwuHMCSA==
+	t=1795058540;
+	b=IXDA2wRKBlHQkCuIGamh2X9Qf1DmQKuflIeD31yTMkiU1bghLywZA0sJGtijjqEiXn8e
+	 +xDd/CwfvP8x/H5skQN4ed3tML2JK00gKqaqicU6Urz3lGyO94LoRKM0r+A8Ep0DA4KmH
+	 M3qXnxc3hxZAQzOlePPpVLw/NIsBGhOIMznAkzkribaBL8Pgns/bFgfwnu4jxr/XHTxuP
+	 goQgcpKnHjfJUmrG4FiO2+tEMtiN9TxOc4O256lha1OLGH+EcDJzP40q8z3QmvRLmTgrx
+	 wEaDFTqcbDWjf/+uynJnV5Z4jP1P6dRud064mi5MtgYoOr+/kwacuh+8bFsvNj7Dtiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058537;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058540;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mw8xt1kX/N5neiu3j76LvRirtJ/HFwj2nYqHhqJ481g=;
-	b=v9d8Lm+9kscNUz8G0HRjklCUUVgKPmhrRBVcCV7ChGKOXKkMX6jeF6fXiN9k1KMWD1f2
-	 1jtXsWJGDel4A/CONEuR7fGgNdhbn4km+rgV5aJJG0Qi6wyPrMrM7zbbRSpDmhTmK+tFd
-	 8oHcnSWOoW+VSgwQxL/ylcuiA5fWtmqbkW/poQZxddLWBi7wGi77JKekF3ngoER7kB6Tf
-	 +vi1JCp6Dn/cybf6316wgc4dZghiutGEZQ9Yz0X7UBdQeo1fU/6sGeZZcmsMgMOg/fHSn
-	 ewd3ZZ2xwa3NHo2AqozKZdzFq38wFHGHuMg/J0VWXl6Ah4gEmCXSgq+vR7hVB00csvA==
+	bh=H8j+dTea/AMJF9pXEf3sv++C04lm/FJQmJPKs53HeL4=;
+	b=bXRxy1f9m1ZDHOjvEvv6qV6KZHxz/n820xQSo72c99RQGQXffJScKrjp0DVe5OpdtT63
+	 TmqDtaE1uw8fgeZw+5oWrfT/Je4ehv2nyatRYm3sUU3MaSyOWugBXT/tv/EfWJmx//h3u
+	 aq0RO873tjwEEMGiX0x9xusfFRZ4bJ2PQDaPUEnDRYaD3YduMoWllMgary/le+zaM+K7p
+	 ojcnPiyaRdtZKci1iq1NpjL04IRWYZ8+F9SCI5vX1Liey1ISO/PHwQC3+jhpBdVZuDldZ
+	 f6gjyzV5VCQn1bqkaPcqHlwhC0ml9H46kg3QiI43dCgsxNyHk03BYNbgqn6khrECLwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o63Qvc9t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=btanCGMk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8340F606A320;
-	Thu, 19 Nov 2026 03:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B68B606A31C;
+	Thu, 19 Nov 2026 03:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o63Qvc9t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48AE1F000C4;
-	Thu, 19 Nov 2026 03:22:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=btanCGMk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7711F000C4;
+	Thu, 19 Nov 2026 03:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058537;
-	bh=Mw8xt1kX/N5neiu3j76LvRirtJ/HFwj2nYqHhqJ481g=;
+	s=korg; t=1795058540;
+	bh=H8j+dTea/AMJF9pXEf3sv++C04lm/FJQmJPKs53HeL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o63Qvc9tGpK6/nyUTVS1dq4nRZq9r/ffzQsXQr4YR41KAoszrE6nlJGpmAI//nxEC
-	 d2OCzXNtgeakIPvhbGqK5Ni661onweoNEhcFGsOJ7Rt5DEM/xyT0Lx2RdQqUF10uOh
-	 FywafSMIm8mN2k3Sa56S16vdFEuJMJL1k8lZb1pE=
+	b=btanCGMk0fr+a3Zzx/pwisFlerUxaHrMZtn/OwR2owfAD0WiXxH8OVkqFWOfNi6gA
+	 e3YmJpBEweOmsEle7/mVYudRHDhtlTTLT18J7+Te8r0JMfXirs+d2aQZlLvgtjZEAa
+	 fdO6al8RJrDjLOoDIkCTUmLJznzxYzyd5UFqpxwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Siwei Zhang <oss@fourdim.xyz>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0520/1848] Bluetooth: L2CAP: Reject invalid TxWindow in configuration requests
-Date: Wed, 18 Nov 2026 15:42:38 +0100
-Message-ID: <20261118145936.465243129@linuxfoundation.org>
+Subject: [PATCH 5.10 0521/1848] Bluetooth: L2CAP: Use default TxWindow for zero socket option
+Date: Wed, 18 Nov 2026 15:42:39 +0100
+Message-ID: <20261118145936.533445265@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,97 +70,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Siwei Zhang <oss@fourdim.xyz>
 
-[ Upstream commit c5ebb0245fe927cf5fa33510a9cb2799c4a2dd01 ]
+[ Upstream commit 226fa3b676cbf2236f803bccd347462433ffc2c8 ]
 
-A peer can send an ERTM RFC option with a TxWindow
-of zero, which is out of spec. It is stored in
-remote_tx_win unchanged and later passed to
-l2cap_seq_list_init(), where roundup_pow_of_two(0)
-is undefined. On some architectures this results in
-a ZERO_SIZE_PTR list and a remote kernel oops.
+L2CAP_OPTIONS accepts a txwin_size of zero and
+stores it in tx_win. The zero is then sent to the
+peer in our configuration request, and if the
+channel ends up in ERTM mode it is passed to
+l2cap_seq_list_init().
 
-A TxWindow above 63 is out of spec as well. With
-6-bit sequence numbers we would then send more
-unacknowledged frames than the sequence space can
-tell apart.
+Use the default TxWindow instead, as the mode can
+still be changed to ERTM during configuration.
 
-Reply with L2CAP_CONF_UNACCEPT and propose the
-default TxWindow instead of accepting the value, so
-remote_tx_win always stays within 1 to 63. Keep the
-parameters of an earlier request then, and do not
-treat the request as done because an earlier one was.
-
-Also refuse a zero size in l2cap_seq_list_init(), so
-any other path that reaches it with a zero TxWindow
-fails the channel instead of the kernel.
-
-Fixes: f2fcfcd67025 ("Bluetooth: Add configuration support for ERTM and Streaming mode")
+Fixes: 14b5aa71ec50 ("Bluetooth: Add sockopt configuration for txWindow on L2CAP")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5-5
 Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 35 +++++++++++++++++++++++++++--------
- 1 file changed, 27 insertions(+), 8 deletions(-)
+ net/bluetooth/l2cap_sock.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 244cd0865df08..de97a746bb38c 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -347,6 +347,10 @@ static int l2cap_seq_list_init(struct l2cap_seq_list *seq_list, u16 size)
- {
- 	size_t alloc_size, i;
- 
-+	/* roundup_pow_of_two(0) is undefined */
-+	if (!size)
-+		return -EINVAL;
-+
- 	/* Allocated size is a power of 2 to map sequence numbers
- 	 * (which may be up to 14 bits) in to a smaller array that is
- 	 * sized for the negotiated ERTM transmit windows.
-@@ -3814,18 +3818,33 @@ static int l2cap_parse_conf_req(struct l2cap_chan *chan, void *data, size_t data
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index ca131b2267d8b..60b14d2cf8edb 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -801,6 +801,10 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
  			break;
+ 		}
  
- 		case L2CAP_MODE_ERTM:
--			if (!test_bit(CONF_EWS_RECV, &chan->conf_state))
--				chan->remote_tx_win = rfc.txwin_size;
--			else
--				rfc.txwin_size = L2CAP_DEFAULT_TX_WINDOW;
--
--			chan->remote_max_tx = rfc.max_transmit;
--
- 			size = min_t(u16, le16_to_cpu(rfc.max_pdu_size),
- 				     chan->conn->mtu - L2CAP_EXT_HDR_SIZE -
- 				     L2CAP_SDULEN_SIZE - L2CAP_FCS_SIZE);
- 			rfc.max_pdu_size = cpu_to_le16(size);
--			chan->remote_mps = size;
++		/* A zero TxWindow is invalid, use the default instead */
++		if (!opts.txwin_size)
++			opts.txwin_size = L2CAP_DEFAULT_TX_WINDOW;
 +
-+			/* The TxWindow must be within 1 to 63, otherwise
-+			 * propose the default one and keep the parameters of
-+			 * an earlier request. This overrides a PENDING result
-+			 * from the EFS check above, so the request is no
-+			 * longer pending, nor done if an earlier one was.
-+			 */
-+			if (!rfc.txwin_size ||
-+			    rfc.txwin_size > L2CAP_DEFAULT_TX_WINDOW) {
-+				result = L2CAP_CONF_UNACCEPT;
-+				clear_bit(CONF_LOC_CONF_PEND, &chan->conf_state);
-+				clear_bit(CONF_OUTPUT_DONE, &chan->conf_state);
-+				rfc.txwin_size = L2CAP_DEFAULT_TX_WINDOW;
-+				remote_efs = 0;
-+			} else {
-+				if (!test_bit(CONF_EWS_RECV, &chan->conf_state))
-+					chan->remote_tx_win = rfc.txwin_size;
-+				else
-+					rfc.txwin_size = L2CAP_DEFAULT_TX_WINDOW;
-+
-+				chan->remote_max_tx = rfc.max_transmit;
-+				chan->remote_mps = size;
-+			}
- 
- 			__l2cap_set_ertm_timeouts(chan, &rfc);
- 
+ 		if (!l2cap_valid_mtu(chan, opts.imtu)) {
+ 			err = -EINVAL;
+ 			break;
 -- 
 2.53.0
 
