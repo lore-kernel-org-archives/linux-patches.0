@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054021;
-	b=d3PZHEVPP7IXeEAxNRS1piWO+AaN8kybEECLrzjIQ3kZ1fm2uTdNOjwuGRACkktlni4Q
-	 gjNBUZBmHMFRxIsR9343TFBs9CxAdtcSTFpCaIjqtWunqGFW2uBEeOxfm6GAfcbUQp/I9
-	 91eodH4egIddlk79MSVM6FcDPaW7ilGW6kAw4STJf18vCA+FytbCVfXLCZ1LQGYjKYwkT
-	 FgM4DcxhGSrpUBLFkYTxG7Fqmw/Hc2UVhiTM31m2YhjDuc3s4Ct68ZuPoqi8HLDWQUED9
-	 97UCLaEyfEIAa3fYmEgDFZHYPB4ex0HEWjbuR7SRPDM60KJtxfWbgd3GkUkFg+nhAHQ==
+	t=1795054024;
+	b=y9DS10XtPQrjruIyFrO01V5fPR0Z4XhVdoxW1ZvAXNR7f8eOSx/HWtwe5Cqa1q+kLoaF
+	 ZakiJCEmBGesTitkD6iVEvWbCnDq/Uj3NPXoLUhS3jeniSJmv252npSrComcXLRogfKOm
+	 Qfh88sGaOhs3fX/LIsgfYkos326JyNlsM9zLUi4c+T/H1qxnrfIagvQeLYlDeuxJxFfxO
+	 9jy7+cUCS2g9U8fxxiRFAEe7O4fho973JjJceRdaq4+IGzB+auxxG4MuSHmtpXIdK5YbC
+	 zqpo5wVG8Z61IVWQCvJ+tztLweVra9sTbUnTlYDMiqbagcArMVyEgZDryk2uk83Ee/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054021;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054024;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H3d24QQcJYRb47pRo1CuIEzlc9oQulW05hHCWUkTeis=;
-	b=ipPi6UqbqF2UzEM/MxdBW26NgEUJepWr3GbwVmNrMpuyqPAKSlsYI5g9cdeWViEkgS0o
-	 3db7YfgAG3bPknhqvLbfm1zV8FqhJ+PxUt5J0nEfgGJkLElXCI5/s2mbOdC9ta2WKFsYv
-	 vHXMCIh4I4wqtA8bd3+mDix/Dk/LEyYKGTsJJaUXyxLd8/wc6e+uJEbC/zOUhu8qqgZ4I
-	 nOubgnPG6ukGJTr0So/+RjLfGqDTxNhPsD57GVknyfTr2DuFEFevEhBW15EYvyO0+bQLK
-	 YNGWM0qBRk2TcL6FOijivwsiCIfzjwQi6uZhLoY0RRStwsPY++H+TncuOawNGbxFMiA==
+	bh=oXG3eBK6YzkjaUsn+jDhkATiKn1OT97ouRzqLP2S7qg=;
+	b=ek/scN6uVm7Qr+nEcRhMJMzPv3JRZWsoDCagp2bDQCRAonUYqTn3VrR5Z4KKnjPz7ySX
+	 6LY50npL2rhaQLJGITSxFbvy2J7HbELadOOwJ0z7tRWj7L6bdLgA63cBts5NCEp7ckgYq
+	 NVnAnSzp8VSDIRu/AOjdNVPb+ptS8Lzh05TPmx6Zyb0XE643eO4yfa9duqVd4fai8T3St
+	 xvlYbyBcHQmdweu9LWOL+sjyNmeKxEPGB2hfkcNMyIhB5g/dNNdY0Plenv3V9WTDJ8R5j
+	 oYx89RR4xwEhSV9B9zmNDDOhuYLHzMyIfNR/UMvpH/XfBXhbk2uehpQllQrUnxU4oHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWrEMjMp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vtKRrxh6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F10E606A32C;
-	Thu, 19 Nov 2026 02:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB12606A31C;
+	Thu, 19 Nov 2026 02:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWrEMjMp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E74341F000C7;
-	Thu, 19 Nov 2026 02:07:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vtKRrxh6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0521F000C4;
+	Thu, 19 Nov 2026 02:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054021;
-	bh=H3d24QQcJYRb47pRo1CuIEzlc9oQulW05hHCWUkTeis=;
+	s=korg; t=1795054024;
+	bh=oXG3eBK6YzkjaUsn+jDhkATiKn1OT97ouRzqLP2S7qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xWrEMjMp53Kw7a4ThjVYXQY/6FyducD3jyCVSTz6Y0YtZNSsbSoiG18C8tQ3EuwXY
-	 3AMcsMa2dcfMYc/D0nNS6/r/bwCPcJtbn1A8LK/bOM+Ii0bhsj1JND2ORsyCNjWG7D
-	 PjMo4Zo2PVXj22L7zXBoHpFHr7C42amKmvQcbtww=
+	b=vtKRrxh6E4yNspbNm3QIIWahtjMPE7ltL/ybuyceNpbxTg0S1kd5uCP/0JHNPe0SC
+	 Ma11Qyh+MUg+u1EYb1GibD7D0uubBSEV2UtEaiCg0zGymIS3mYVjLglGvHc9cFZd/8
+	 +LoX+lfeBhYBpBAfD8xfsV4nC8gk28IneBfqXjoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Foss <robert.foss@linaro.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Grant Slater <github@firefishy.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1128/2214] media: camss: vfe: Rework vfe_hw_version_read() function definition
-Date: Wed, 18 Nov 2026 15:46:44 +0100
-Message-ID: <20261118150057.192732669@linuxfoundation.org>
+Subject: [PATCH 5.15 1111/2214] hwmon: (acpi_power_meter) Fix 18.45 TW bug
+Date: Wed, 18 Nov 2026 15:46:27 +0100
+Message-ID: <20261118150056.585803666@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,171 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Foss <robert.foss@linaro.org>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit d2e86540366e1701baf852ee0301323ff113459c ]
+[ Upstream commit 0b6eda22f9ab67ddb2a872b0c3fc578ad9f4e27e ]
 
-Expose the VFE version by returning the value read from the HW_VERSION
-register.
+The ACPI specification says:
 
-Secondly, change the name of this function to conform with the CSID
-equivalent.
+"If an error occurs while obtaining the meter reading or if the value
+is not available then an Integer with all bits set is returned"
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Stable-dep-of: e5d4b0e69a40 ("media: qcom: camss: vfe: Fix VFE reset while another line is streaming")
+This integer can also be 64-bit wide on ACPI 2.0 and later systems,
+so we have to check for that too.
+
+Compile-tested only.
+
+Reported-by: Grant Slater <github@firefishy.com>
+Closes: https://github.com/lm-sensors/lm-sensors/issues/460
+Fixes: 1fefca6c57fb ("hwmon: (acpi_power_meter) Fix 4.29 MW bug")
+Cc: stable@vger.kernel.org
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20261006234618.10943-1-W_Armin@gmx.de
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[ sashal: adapted the unknown-power check from power_meter_read() to show_power() using resource->power instead of res->power ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe-170.c | 6 ++++--
- drivers/media/platform/qcom/camss/camss-vfe-4-1.c | 6 ++++--
- drivers/media/platform/qcom/camss/camss-vfe-4-7.c | 6 ++++--
- drivers/media/platform/qcom/camss/camss-vfe-4-8.c | 6 ++++--
- drivers/media/platform/qcom/camss/camss-vfe.c     | 2 +-
- drivers/media/platform/qcom/camss/camss-vfe.h     | 2 +-
- 6 files changed, 18 insertions(+), 10 deletions(-)
+ drivers/hwmon/acpi_power_meter.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-170.c b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-index ad3c375a33fbf..e2ca0aec3a697 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-170.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-@@ -176,7 +176,7 @@
- #define VFE_BUS_WM_FRAME_INC(n)			(0x2258 + (n) * 0x100)
- #define VFE_BUS_WM_BURST_LIMIT(n)		(0x225c + (n) * 0x100)
+diff --git a/drivers/hwmon/acpi_power_meter.c b/drivers/hwmon/acpi_power_meter.c
+index 1336f77106177..874de8b82adc0 100644
+--- a/drivers/hwmon/acpi_power_meter.c
++++ b/drivers/hwmon/acpi_power_meter.c
+@@ -10,6 +10,7 @@
+ #include <linux/hwmon.h>
+ #include <linux/hwmon-sysfs.h>
+ #include <linux/jiffies.h>
++#include <linux/limits.h>
+ #include <linux/mutex.h>
+ #include <linux/dmi.h>
+ #include <linux/slab.h>
+@@ -31,7 +32,12 @@
+ #define POWER_METER_CAN_NOTIFY	(1 << 3)
+ #define POWER_METER_IS_BATTERY	(1 << 8)
+ #define UNKNOWN_HYSTERESIS	0xFFFFFFFF
+-#define UNKNOWN_POWER		0xFFFFFFFF
++/*
++ * ACPI integers can either be 32-bit or 64-bit wide, so
++ * we have to check for both values.
++ */
++#define UNKNOWN_POWER_32	U32_MAX
++#define UNKNOWN_POWER_64	U64_MAX
  
--static void vfe_hw_version_read(struct vfe_device *vfe)
-+static u32 vfe_hw_version(struct vfe_device *vfe)
- {
- 	u32 hw_version = readl_relaxed(vfe->base + VFE_HW_VERSION);
+ #define METER_NOTIFY_CONFIG	0x80
+ #define METER_NOTIFY_TRIP	0x81
+@@ -349,7 +355,7 @@ static ssize_t show_power(struct device *dev,
+ 	update_meter(resource);
+ 	mutex_unlock(&resource->lock);
  
-@@ -186,6 +186,8 @@ static void vfe_hw_version_read(struct vfe_device *vfe)
+-	if (resource->power == UNKNOWN_POWER)
++	if (resource->power == UNKNOWN_POWER_32 || resource->power == UNKNOWN_POWER_64)
+ 		return -ENODATA;
  
- 	dev_dbg(vfe->camss->dev, "VFE HW Version = %u.%u.%u\n",
- 		gen, rev, step);
-+
-+	return hw_version;
- }
- 
- static inline void vfe_reg_clr(struct vfe_device *vfe, u32 reg, u32 clr_bits)
-@@ -745,7 +747,7 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
- 
- const struct vfe_hw_ops vfe_ops_170 = {
- 	.global_reset = vfe_global_reset,
--	.hw_version_read = vfe_hw_version_read,
-+	.hw_version = vfe_hw_version,
- 	.isr_read = vfe_isr_read,
- 	.isr = vfe_isr,
- 	.pm_domain_off = vfe_pm_domain_off,
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
-index 614c266e8cd1f..7b7c9a0aaab28 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
-@@ -210,11 +210,13 @@
- #define MSM_VFE_VFE0_UB_SIZE 1023
- #define MSM_VFE_VFE0_UB_SIZE_RDI (MSM_VFE_VFE0_UB_SIZE / 3)
- 
--static void vfe_hw_version_read(struct vfe_device *vfe)
-+static u32 vfe_hw_version(struct vfe_device *vfe)
- {
- 	u32 hw_version = readl_relaxed(vfe->base + VFE_0_HW_VERSION);
- 
- 	dev_dbg(vfe->camss->dev, "VFE HW Version = 0x%08x\n", hw_version);
-+
-+	return hw_version;
- }
- 
- static u16 vfe_get_ub_size(u8 vfe_id)
-@@ -1004,7 +1006,7 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
- 
- const struct vfe_hw_ops vfe_ops_4_1 = {
- 	.global_reset = vfe_global_reset,
--	.hw_version_read = vfe_hw_version_read,
-+	.hw_version = vfe_hw_version,
- 	.isr_read = vfe_isr_read,
- 	.isr = vfe_isr,
- 	.pm_domain_off = vfe_pm_domain_off,
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
-index aa175e0f6331c..2836b12ec9891 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
-@@ -254,11 +254,13 @@
- #define MSM_VFE_VFE1_UB_SIZE 1535
- #define MSM_VFE_VFE1_UB_SIZE_RDI (MSM_VFE_VFE1_UB_SIZE / 3)
- 
--static void vfe_hw_version_read(struct vfe_device *vfe)
-+static u32 vfe_hw_version(struct vfe_device *vfe)
- {
- 	u32 hw_version = readl_relaxed(vfe->base + VFE_0_HW_VERSION);
- 
- 	dev_dbg(vfe->camss->dev, "VFE HW Version = 0x%08x\n", hw_version);
-+
-+	return hw_version;
- }
- 
- static u16 vfe_get_ub_size(u8 vfe_id)
-@@ -1196,7 +1198,7 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
- 
- const struct vfe_hw_ops vfe_ops_4_7 = {
- 	.global_reset = vfe_global_reset,
--	.hw_version_read = vfe_hw_version_read,
-+	.hw_version = vfe_hw_version,
- 	.isr_read = vfe_isr_read,
- 	.isr = vfe_isr,
- 	.pm_domain_off = vfe_pm_domain_off,
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
-index b897f5163c5da..19519234f727c 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
-@@ -247,11 +247,13 @@
- #define MSM_VFE_VFE1_UB_SIZE 1535
- #define MSM_VFE_VFE1_UB_SIZE_RDI (MSM_VFE_VFE1_UB_SIZE / 3)
- 
--static void vfe_hw_version_read(struct vfe_device *vfe)
-+static u32 vfe_hw_version(struct vfe_device *vfe)
- {
- 	u32 hw_version = readl_relaxed(vfe->base + VFE_0_HW_VERSION);
- 
- 	dev_dbg(vfe->camss->dev, "VFE HW Version = 0x%08x\n", hw_version);
-+
-+	return hw_version;
- }
- 
- static inline void vfe_reg_clr(struct vfe_device *vfe, u32 reg, u32 clr_bits)
-@@ -1180,7 +1182,7 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
- 
- const struct vfe_hw_ops vfe_ops_4_8 = {
- 	.global_reset = vfe_global_reset,
--	.hw_version_read = vfe_hw_version_read,
-+	.hw_version = vfe_hw_version,
- 	.isr_read = vfe_isr_read,
- 	.isr = vfe_isr,
- 	.pm_domain_off = vfe_pm_domain_off,
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index 8aeba618ad380..ce8c53f07ea70 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -1300,7 +1300,7 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
- 		return -EINVAL;
- 	}
- 	vfe->ops->subdev_init(dev, vfe);
--	vfe->ops->hw_version_read(vfe);
-+	vfe->ops->hw_version(vfe);
- 
- 	/* Memory */
- 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
-index cca251816d284..f166d176cb771 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.h
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.h
-@@ -103,7 +103,7 @@ struct vfe_device;
- struct vfe_hw_ops {
- 	void (*enable_irq_common)(struct vfe_device *vfe);
- 	void (*global_reset)(struct vfe_device *vfe);
--	void (*hw_version_read)(struct vfe_device *vfe);
-+	u32 (*hw_version)(struct vfe_device *vfe);
- 	irqreturn_t (*isr)(int irq, void *dev);
- 	void (*isr_read)(struct vfe_device *vfe, u32 *value0, u32 *value1);
- 	void (*pm_domain_off)(struct vfe_device *vfe);
+ 	return sprintf(buf, "%llu\n", resource->power * 1000);
 -- 
 2.53.0
 
