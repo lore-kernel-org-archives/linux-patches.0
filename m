@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019029;
-	b=b21q8U1nc19MnViZwJCVCBGF9lOrKcxlfvNnQCaWRp3KHClAHR2lzUMlzhWHVfhWi4mP
-	 n9dMJt+dAtB9RFy/6wCKMoi9ToE17t60EikkpEzs/zqnnTX2MPl9k6JApV+4QN30eA5Tx
-	 PFVKSPrjhTyk75IYEtz0hJfVq4Rxmwgsi2/BPr7BMYU8QjUo1r2aDkQ8/Qtq1onN2IAhc
-	 4fnuSp67ViE/4jbJ7AeyI8RSanY7T9nU3rCqIWrqh5PilSHujiTdB7xCjtjsJ+C+QWR/o
-	 h9G+W9p7aj7K6MdafwVYHOkRDO+xIswVO5Rfa7dcC65BwyvUTF8R8JD+4o4/692g4hg==
+	t=1795019032;
+	b=MyNLOORFtaI8duDCN2fHRcwarna7JMkO2hKAsJY3WLbLWT0FxSWwMdmA/q7qR2i65gzo
+	 lnKU2Lq8rjg4a159wZbBB4KsKDr+L1NDEsZfNnidzGTeB7XOVHg+8PnuMBy7KBSVtVpfv
+	 /vZ1Yl0fNf65yWfj4977otHGuPRXVBxwwnkswUX5cg9tl/7IyA9/Jod0SM5xljyk0tiGA
+	 JJB+xptEcYqv4TQPXadoFfa6y5+1FhqSlPpyO2HLLKas+hvMxX1sZsafx2LXu9Px+lMk5
+	 8zM4TbuyTwYNkPq8Fu89VBXtiZR0uFW0RrVit0QYivfrKYKeZlOsm7pnnwpIFvhIfTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019029;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019032;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FqWkb0sRNq3nHnqWP7/APxDpW1ehE6eaA1vkHLb87aI=;
-	b=luV+khjjPFrXFY8xhBtiPoxnMSLx2MZBhiD1wcENY1A2FkZuocqPWIT6W0NNwhznzy2e
-	 K64MTFqw8zv5J6Iilxyc0TZS6tW2/b4s0wPlWuk1ylAp8eM0pAn8P+tSV3RDyN8Elz+3t
-	 R2yZEmrf+ldbPIeuTERnWwvA6YhzPH0ZpBVrcmT6Pzau42hytnRnluDXQX5je9geBCzC7
-	 zmKHB0ysnaJ8d/DF1wo4wrVr+cwxmOBjvlYzhIQU2yGNiDAk8C47FmLQZR+oB3y0fRdwd
-	 FGEBAzN1wbqwgkOaCLAxHp6+WCTMPz60tq6SFLu4e5uJE3xXOxVwIU7GJZMwGkJLrhQ==
+	bh=gvUhB0JpaV6/axzk0BWKlBRNfvRdS4InJO0hPvduVmo=;
+	b=YA3/uxB7aGDAi2AcjB3uVtfvDgdqQ36PeLJQyHGlkQlJYrv1Pd7AYogs04ClOfQPE+pe
+	 lfvOKopjp5P+2t6OG+XhIxQB/93GlnXIg3YBgLzLA5Xes4AnUwwmCDRZDlUIRFlJmFILD
+	 O4z7yiW/Yzj+pdZrSkh3masSvKCYf9Nn37KvffOQ9JTI2l2gQcH8WmdK9w6B2nZoNOz2O
+	 hxn5Rir89eSp+JtFHg5+dsJvTgewb/8YA9PtYQKSztBeWHiWMgueeV/DWv9Uvhh+APc7a
+	 hPajKoBY0ZvJXagKz0GYjxQQmkMhqr5vPJRl8msAxxa2rCBBNXOUcIgs9layMHEn4Jg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O3E1mXKE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bMJROiPD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672E0606A320;
-	Wed, 18 Nov 2026 16:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150BA606A320;
+	Wed, 18 Nov 2026 16:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O3E1mXKE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA5401F000C4;
-	Wed, 18 Nov 2026 16:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bMJROiPD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FFEC1F000C4;
+	Wed, 18 Nov 2026 16:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019029;
-	bh=FqWkb0sRNq3nHnqWP7/APxDpW1ehE6eaA1vkHLb87aI=;
+	s=korg; t=1795019031;
+	bh=gvUhB0JpaV6/axzk0BWKlBRNfvRdS4InJO0hPvduVmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O3E1mXKEeNRHZYDD7QsDAdvNmxakKDfwnAUs4wVwegt/Kd7SO1l+UNDEIqYCQpZJK
-	 0x2bGxjM7JiSdp/i3dEpLgJnQxPja05yU6kFIwNhSSJUukBLtlFPPp28fEvBuWqoc6
-	 4WMLWSw9aVDBQdxz5DF2ieGI5WzuOylqvhEIY1hM=
+	b=bMJROiPDLKrsZRb4ZXLxD++1keqiuAf8QNHO0hK/mbS1sJdHTKRDt4UJYQEAAQH+J
+	 ZUN6UQRUSkBJYNA58v+k09VIkUZW2WkasTcslpzJ+ySEvX+can70yX9xnP/v80QGgF
+	 UnsX35pG0GoDPEFmG4VuvRoS/GYgjpIXvoLZzqdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eason Lai <eason.lai@mediatek.com>,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Jiale Yao <yaojiale02@163.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1451/2651] wifi: mt76: mt792x: defer the MCU shutdown past unregister on USB
-Date: Wed, 18 Nov 2026 15:44:51 +0100
-Message-ID: <20261118150340.276343310@linuxfoundation.org>
+Subject: [PATCH 7.3 1452/2651] wifi: mt76: usb: fix source overread in mt76u_copy
+Date: Wed, 18 Nov 2026 15:44:52 +0100
+Message-ID: <20261118150340.312787597@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,71 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 3c334603f0ecd0ce3db05c068ba775e6e37b7c72 ]
+[ Upstream commit d435130cdd064b901d8ce5ada0322298e6a86a49 ]
 
-The USB disconnect path abandons the MCU before it unregisters, so the
-teardown commands that follow cannot be answered. The response parser
-reads the silence as a timeout and starts a chip reset for each one,
-queueing the work that was cancelled nine lines earlier and reloading
-firmware onto a device being removed.
+mt76u_copy() rounds up len to a multiple of four and uses the rounded
+length as the bound for memcpy() from the source buffer. When the
+caller's length is not four-byte aligned, the final copy reads up to
+three bytes past the source buffer.
 
-Shut the MCU down after unregister instead. MT7921AU on a Pi 5, eight
-unload cycles per arm:
+Keep the original length for the source copy and zero the remaining
+bytes in the transmit buffer so that the hardware access width remains
+four-byte aligned.
 
-    unload         5.67 s -> 2.81 s
-    MCU timeouts   8      -> 0
-    reset queued   8/8    -> 0/8
-
-Deauthorizing the port with the link up, to cover a surprise removal,
-goes from 3.21 s to 0.33 s.
-
-Fixes: 7910bd565d8b ("wifi: mt76: mt792x: quiesce USB paths on disconnect")
-Tested-by: Eason Lai <eason.lai@mediatek.com>
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260923172424.24021-1-lucid_duck@justthetip.ca
+Fixes: 9446248669968 ("mt76: speed up usb bulk copy")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260925150556.2304003-2-yaojiale02@163.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt792x_usb.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/usb.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_usb.c b/drivers/net/wireless/mediatek/mt76/mt792x_usb.c
-index 850f6b2cfc4aa..5e19e64a9a009 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_usb.c
-@@ -502,21 +502,26 @@ void mt792xu_disconnect(struct usb_interface *usb_intf)
- 		return;
+diff --git a/drivers/net/wireless/mediatek/mt76/usb.c b/drivers/net/wireless/mediatek/mt76/usb.c
+index dfc12f6944a74..be48a88a3ad02 100644
+--- a/drivers/net/wireless/mediatek/mt76/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/usb.c
+@@ -171,8 +171,10 @@ static void mt76u_copy(struct mt76_dev *dev, u32 offset,
+ {
+ 	struct mt76_usb *usb = &dev->usb;
+ 	const u8 *val = data;
+-	int ret;
+ 	int current_batch_size;
++	int len_aligned;
++	int copy_len;
++	int ret;
+ 	int i = 0;
  
- 	set_bit(MT76_RESET, &dev->mphy.state);
--	set_bit(MT76_MCU_RESET, &dev->mphy.state);
- 	clear_bit(MT76_STATE_RUNNING, &dev->mphy.state);
--	wake_up(&dev->mt76.mcu.wait);
--	skb_queue_purge(&dev->mt76.mcu.res_q);
+ 	/* Assure that always a multiple of 4 bytes are copied,
+@@ -180,12 +182,16 @@ static void mt76u_copy(struct mt76_dev *dev, u32 offset,
+ 	 * See: "mt76: round up length on mt76_wr_copy"
+ 	 * Commit 850e8f6fbd5d0003b0
+ 	 */
+-	len = round_up(len, 4);
++	len_aligned = round_up(len, 4);
  
--	cancel_work_sync(&dev->reset_work);
- 	cancel_work_sync(&dev->init_work);
- 	mt76_worker_disable(&dev->mt76.tx_worker);
- 	mt792xu_reset_work_cleanup(dev);
- 	if (!test_bit(MT76_STATE_INITIALIZED, &dev->mphy.state)) {
-+		set_bit(MT76_MCU_RESET, &dev->mphy.state);
-+		wake_up(&dev->mt76.mcu.wait);
-+		skb_queue_purge(&dev->mt76.mcu.res_q);
-+		cancel_work_sync(&dev->reset_work);
- 		set_bit(MT76_REMOVED, &dev->mphy.state);
- 		return;
- 	}
- 
- 	mt76_unregister_device(&dev->mt76);
-+
-+	set_bit(MT76_MCU_RESET, &dev->mphy.state);
-+	wake_up(&dev->mt76.mcu.wait);
-+	skb_queue_purge(&dev->mt76.mcu.res_q);
-+	cancel_work_sync(&dev->reset_work);
- 	mt792xu_cleanup(dev);
- 	set_bit(MT76_REMOVED, &dev->mphy.state);
- 
+ 	mutex_lock(&usb->usb_ctrl_mtx);
+-	while (i < len) {
+-		current_batch_size = min_t(int, usb->data_len, len - i);
+-		memcpy(usb->data, val + i, current_batch_size);
++	while (i < len_aligned) {
++		current_batch_size = min_t(int, usb->data_len, len_aligned - i);
++		copy_len = min_t(int, current_batch_size, len - i);
++		memcpy(usb->data, val + i, copy_len);
++		if (copy_len < current_batch_size)
++			memset(usb->data + copy_len, 0,
++			       current_batch_size - copy_len);
+ 		ret = __mt76u_vendor_request(dev, MT_VEND_MULTI_WRITE,
+ 					     USB_DIR_OUT | USB_TYPE_VENDOR,
+ 					     0, offset + i, usb->data,
 -- 
 2.53.0
 
