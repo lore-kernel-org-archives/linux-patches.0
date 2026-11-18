@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040649;
-	b=FAhNikBMcSIkKDSPRIgKqd6POuBFHQXpQG9vyvDOKTTkNdliXq40cG1ef2Oru29me2CC
-	 4Jr2I1HFyuQ9oBBF6NnvMxGaDr1Zu5rkQOiwVXeH2rpebHvKwFTTXrYBEevcrkW9zjfrz
-	 WPLoHdsyn8NK0vVn+nZVMOComW8MSEjOrR0EOZFk52K5v5d4KdiYjljQsQEA50gZJg2LL
-	 UIxXhiCtLeyH9e2bDzHoeNQtVgBzRzfFMxNl2vUWiGEKLYcweIK8/mtJTppWKQBr6+vD+
-	 VQ+QqNP65bfTwlNTkGy7eyjMcqRMI4NdTuvWQd25/JmlOLE7mOuGzpz3JPAh8qXCCNw==
+	t=1795040652;
+	b=txcVT6ek6CsgtZhObneQY5PbajFHiSl+2M3lntq7fUfq1pumU6SkWzymqI8q99tVHChp
+	 fPCuvFwzc7s3kW+x2LYJBkzHsk8y2TNZCPz0HletePrWnjKqsl2RXULUpwldrdbVexBfj
+	 boBPIZWE6bvdUl+E6J2Vk/4cH56XzRXveUol/4rUhgOiUypehhgv9VFmOLz6ZWRVPPvpw
+	 MCREr7wbCyllxgMLqfJMlUyq7AE7cPUi1huqduZBbrQ8XjWZgMzcEzIKUlGZFKwOqGM5J
+	 KEZ5gK+g7yHmaWBBALrRHuEj6WUHlZz9FOSCsEGIly3bOwEOFcTqWCiuZXANfl+PDvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040649;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040652;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c5yCH+xYbKXDYymLhsvy0YycQJbGIQj9J9Z6PMxtZ3I=;
-	b=l75oI6EMKl156lYiRlSw/r8Km6sMx/Xzk7Q/gd9W5Ry+Fk/m3m2Wx8lSVbyLNq37YObr
-	 ldm/n4l1LXbPttHpPjGmpM0bIbtw84NWPK/tl9g1KeP5beguaktjHLueu9j5ma0Hq17qh
-	 IJDZW9RpyEST90CX2BGkpGVofVEvHFSivP5E6YpH/zww3twrgdbjUUW4OPAXQ3PskMMDj
-	 WGe/Hkx9nfiJNZTzaTxz8sPygTtP7GG4+vrSf2KiUCFDCiZ4Lo/JWflmLUWlZ99zTWKoB
-	 TYNEooNrw3YsygZ3N0waNPL41GQeO6KWiCs5ypZ4UHZvRKh4wBCnvcAUvpfAxXlxN5g==
+	bh=0JX0genVEPoDLTFuLPpOtO+It2dVjKzpyNr73gxaDvo=;
+	b=bbodOIsfDqYMr4e1esA1QaZekzV7CBQqo6d1uG1+cIrs44+ueV6kzCNSABof7tEiLDnC
+	 l5bVz1Zpru1ThcZ6sEPOyaTYun+RkjO/L9k2NVIH088sKb/HEuT7aSC1t72uVZAvVYewl
+	 6IQdDrAdet9xHbZ1b48mhYqzGBMEZlFaDj6WXKpWW1qRNfJXjiecv3XtxjaPTkLLLtHvL
+	 VjcHhF4DeGaMzpLKqUYVv0UJZ4LN2ardCnRwJfcPp8KpKZ+olRKnnU2EnlLmPandzboWK
+	 CPCD40H58F6VRL8L6pTxftWQFgnBEViXYI7ncdMgvflPADTnXsaJU2at5SBy6402qNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WOK18FBx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qCNBzaL0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66986606A31C;
-	Wed, 18 Nov 2026 22:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E51606A31C;
+	Wed, 18 Nov 2026 22:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WOK18FBx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7DC61F000C4;
-	Wed, 18 Nov 2026 22:24:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qCNBzaL0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA621F000C4;
+	Wed, 18 Nov 2026 22:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040649;
-	bh=c5yCH+xYbKXDYymLhsvy0YycQJbGIQj9J9Z6PMxtZ3I=;
+	s=korg; t=1795040652;
+	bh=0JX0genVEPoDLTFuLPpOtO+It2dVjKzpyNr73gxaDvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WOK18FBx/GfS7wBOz7FFeAmP+gNRNEajV3opW3RiVJglzcS6A9Q44DfoUhdaOzs0I
-	 dsz22r9uHBEQHyzJuwgdYdtav3e9MiLX5GpV3u5wCiS16XRNLA8DOnSCgOIOXMhwIJ
-	 iFOuFhcBIVrjdAYl2+vCZxYLKxUE9gdNYILc71m0=
+	b=qCNBzaL0Q+K3QW/+DMJXh0+WzUfz8x2wsmCwu73wgcOXb1hH+elRbTET1MSESu+70
+	 yOPFZk+7j3BGVZPDFsgleL8/NJnMQEPcWwBI0fi8ixkVP563qOIbZarhup29dSsqh0
+	 10rDzFpkjihITNDcfKTkDsj+Lk5a/KAwYbOyK2Jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akash Sukhavasi <akash.sukhavasi@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2531/3318] phy: HiSilicon: Fix error handling in hi3670_pcie_allclk_ctrl()
-Date: Wed, 18 Nov 2026 15:52:33 +0100
-Message-ID: <20261118150437.265333116@linuxfoundation.org>
+Subject: [PATCH 6.6 2532/3318] scsi: scsi_debug: Refuse a negative physblk_exp
+Date: Wed, 18 Nov 2026 15:52:34 +0100
+Message-ID: <20261118150437.291955692@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,42 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akash Sukhavasi <akash.sukhavasi@gmail.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 7540fc0a4f667b6773d10753a602a42a3113087b ]
+[ Upstream commit a349876633f7a583429367daf16f9a4282118255 ]
 
-When hi3670_pcie_pll_ctrl() fails, hi3670_pcie_allclk_ctrl() returns
--EINVAL directly, skipping the close_clocks cleanup path. This leaves
-the PLL with its power-down bit cleared.
+sdebug_init() refuses a physblk_exp above 15, but the parameter is a signed
+int, so a negative value is accepted. The driver then shifts by it when it
+builds the Block Limits VPD page, which is undefined behaviour, and READ
+CAPACITY (16) reports an exponent of 15 for -1.
 
-Use goto close_clocks instead, which disables the PLL and propagates
-the original error code from hi3670_pcie_pll_ctrl().
+Refuse a negative value as well, and print it as a signed value.
 
-Found while investigating a Smatch warning.
-
-Fixes: 73075011ffff ("phy: HiSilicon: Add driver for Kirin 970 PCIe PHY")
-Signed-off-by: Akash Sukhavasi <akash.sukhavasi@gmail.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260708-b4-hi3670-v1-1-f9236f3e585c@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Assisted-by: LLM
+Fixes: ea61fca58c13 ("scsi_debug: Add support for physical block exponent and alignment")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://patch.msgid.link/20260929082456.857423-18-cassel@kernel.org
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/hisilicon/phy-hi3670-pcie.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/scsi_debug.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/hisilicon/phy-hi3670-pcie.c b/drivers/phy/hisilicon/phy-hi3670-pcie.c
-index 6903148367dfc..e99ef06d41c81 100644
---- a/drivers/phy/hisilicon/phy-hi3670-pcie.c
-+++ b/drivers/phy/hisilicon/phy-hi3670-pcie.c
-@@ -476,7 +476,7 @@ static int hi3670_pcie_allclk_ctrl(struct hi3670_pcie_phy *phy, bool clk_on)
- 	ret = hi3670_pcie_pll_ctrl(phy, true);
- 	if (ret) {
- 		dev_err(dev, "Failed to enable pll\n");
--		return -EINVAL;
-+		goto close_clocks;
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 5d8561ec323b9..f7a3c20a4acf7 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -6863,8 +6863,8 @@ static int __init scsi_debug_init(void)
+ 		return -EINVAL;
  	}
- 	hi3670_pcie_hp_debounce_gt(phy, true);
- 	hi3670_pcie_phyref_gt(phy, true);
+ 
+-	if (sdebug_physblk_exp > 15) {
+-		pr_err("invalid physblk_exp %u\n", sdebug_physblk_exp);
++	if (sdebug_physblk_exp < 0 || sdebug_physblk_exp > 15) {
++		pr_err("invalid physblk_exp %d\n", sdebug_physblk_exp);
+ 		return -EINVAL;
+ 	}
+ 
 -- 
 2.53.0
 
