@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047046;
-	b=P78HidvgO6JW6Nch9uDvpejYLobDMhocpPTyuTTdmkJQEtLKB3NHsqU083kdAwW8ppYP
-	 rIyTirtkBKvt6/RcgizU3E8QMhsfwoZ6pTpf1vpMG3XcsJfpQYbsMtX7FeCMwivxFh5ev
-	 ubOJzEGAxzSVTdFWODDmK/S+vVlHphG/YTKoEx4NT1kRa8Z1tnSn1KN9WNXQAiSBd3pGq
-	 4HODaRBmY+GOu4xk9tcyFkPvieZV7/JLNqjIyKpLnZRZVkfeNaJBCeiSCfVVaer86V/bE
-	 3ISZi71Oj0bo2Kf7EM72BYJsCcALHmGNHKWZzF61S9AqdFMMruz3hGQBGkMq45WxAng==
+	t=1795047049;
+	b=KLyBMMeZNi/qqpNj4QokHJKOiqc4kzHvV1i+XRW4nE3T/KQGpNL3cAQZc5qwczMMvSkm
+	 /kw5ydvTIGenKfCpdhBu7iZcATNEO/ObSK/IE97SF1nuLhb7KKyZ/m+vehElD08kFIoyQ
+	 VA87CXYEkDPkr0Ae1N4XfB8NhAwfS9fLDUvWQ+kMRoel67rbSvrdNAsOtu9ReXrqDQTxf
+	 Rdb5Y1vpP0reiH1BlHWZG2AXbpMkOSuVUXpQg9OQHcUAho1F/xNf1Z2+9OdRcHlh3iFsW
+	 /E1xtpL0LEkgTrtCURFWO8hDfKCqmvmOcUKOYqWBj3mdnPYtZOo3vrIR7qt0sxbtotw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047046;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047049;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n5abIlZybKHeh79HD3DPwEqcdwoXc9zTt34ojCpbc9k=;
-	b=bHZ3d+2roBZl6xBup9DrKsy5f1NO7loj2ODSnVJFV+ka9Ut7+QEjmZQk4dHkBEV+qzyd
-	 fCMDl0Nse/6UYuZf39NQQqTgj8X+CvT8b3VYZl5HLMQSObAd6f/wU1lyPORLBNL1J3S8J
-	 PYO6P8u3kKHLdLUGpqd1XQ7qlKpIaEf0fBqjHvcYuhlQF6400OqT/zanbq5Vq9A1amOfL
-	 EmfbuTAvwD0iX4UrW2n5R8psi2wq+uRYeuDc1ARD3Iu6dPl236TqHXY9VgbHIk6/hPMRT
-	 Ai8h0mRxbBNIX1raww26bhwKwRFTd+FTGuFLMQ6BP9HCeR9h5TsW5F25WHMZ1wlwPIg==
+	bh=oVU1xXC0I/4jMCnvHNNFMwDCCkFTCfnkjXhFZlu6P9M=;
+	b=g4o8vGZ07+jHiryRTrFkhhnJWHwIlwGTwF4ZjQP3nD6OVCZCkSe2sGwe8rostgHl29o4
+	 K/sAXAHbiZETXU1N0rkaYqSplUH9ho5SpP+I3+OPJ+N1M0fKXhBFMMj7VAQPWlwE2T9HY
+	 pCoiMzVqklD+ibdNP0mSC5J/NNGLIhJwIMjw021eWlatBI2i1NVUtxttVFl41cFv1xqDU
+	 qEowrb7wjRRMC3esuRnrI3qYXAnxFuUFlSQSIthqXw24dUbrpscv5hNu/OSjABpWaiE4z
+	 miCeygJlf4B8xXYw+v+Al9CSJ6cTVQFzFSeWF4Ck4qbr0IfQUklMHFhLgyIKjqLaAww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GWzjMp2K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n2z21OlT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3B260A2617;
-	Thu, 19 Nov 2026 00:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D4060A2624;
+	Thu, 19 Nov 2026 00:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GWzjMp2K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 603961F000C7;
-	Thu, 19 Nov 2026 00:10:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n2z21OlT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 309921F000C5;
+	Thu, 19 Nov 2026 00:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047045;
-	bh=n5abIlZybKHeh79HD3DPwEqcdwoXc9zTt34ojCpbc9k=;
+	s=korg; t=1795047048;
+	bh=oVU1xXC0I/4jMCnvHNNFMwDCCkFTCfnkjXhFZlu6P9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GWzjMp2KP4b13auzHOiZcIHHssSl2yckVLddWQ61YUYwgZWs6aWbOFsuVLtJZJdRj
-	 JVB0YmwPnd1olscocPu0g7qDSRJPwBMoH5Qd/2aL2yt4/vlGMu2vtbAoomoGJbsRTa
-	 FLrfvdD1WWe9KfCVg4hR7hkNL4AA7D2/Ps5ZWRM4=
+	b=n2z21OlTq9wSDz9G6Of4yle+pSBTosoZZysc06JwbuGOMlFZM9+1+ER0Ntsylc6RI
+	 cTPJ08PVIdnWPOWHv4YyV8u6HfuopJxLM5ovqUvg1ik5Fix3op9hmPkOB3gJxD9c4B
+	 piLlicLvMJUmzh9UnR6T1ShzcxoJcI2tn4hzUTVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	James Seo <james@equiv.tech>,
+	Lukas Wunner <lukas@wunner.de>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1497/2857] driver core: device.h: add some missing kerneldocs
-Date: Wed, 18 Nov 2026 15:42:11 +0100
-Message-ID: <20261118150255.228712898@linuxfoundation.org>
+Subject: [PATCH 6.1 1498/2857] driver core: Add device_show_string() helper for sysfs attributes
+Date: Wed, 18 Nov 2026 15:42:12 +0100
+Message-ID: <20261118150255.271312651@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,196 +68,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Seo <james@equiv.tech>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit cd00bc2ca42705bf141a2bf6fb5224c7ae628dbe ]
+[ Upstream commit 3cc50d07be10f67aff836f8247a240ec132c6a67 ]
 
-struct device_attribute, struct dev_ext_attribute, dev_name(), and the
-DEVICE_ATTR() macros lack kerneldocs, preventing them from appearing in
-the driver core documentation and from being cross-referenced elsewhere.
+For drivers wishing to expose an unsigned long, int or bool at a static
+memory location in sysfs, the driver core provides ready-made helpers
+such as device_show_ulong() to be used as ->show() callback.
 
-Add the missing kerneldocs (except for DEVICE_ATTR_IGNORE_LOCKDEP(),
-which is only meaningful on debug builds with CONFIG_DEBUG_LOCK_ALLOC
-defined, and is aliased to DEVICE_ATTR() otherwise).
+Some drivers need to expose a string and so far they all provide their
+own ->show() implementation.  arch/powerpc/perf/hv-24x7.c went so far
+as to create a device_show_string() helper but kept it private.
 
-Tested-by: Randy Dunlap <rdunlap@infradead.org>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: James Seo <james@equiv.tech>
-Link: https://lore.kernel.org/r/20230509024702.1977991-1-james@equiv.tech
+Make it public for reuse by other drivers.  The pattern seems to be
+sufficiently frequent to merit a public helper.
+
+Add a DEVICE_STRING_ATTR_RO() macro in line with the existing
+DEVICE_ULONG_ATTR() and similar macros to ease declaration of string
+attributes.
+
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Acked-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/2e3eaaf2600bb55c0415c23ba301e809403a7aa2.1713608122.git.lukas@wunner.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 3d9a175707ee ("platform/x86: asus-wmi: fix TUF keyboard power state shutdown naming")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/device.h | 111 ++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 110 insertions(+), 1 deletion(-)
+ arch/powerpc/perf/hv-24x7.c | 10 ----------
+ drivers/base/core.c         |  9 +++++++++
+ include/linux/device.h      | 15 +++++++++++++++
+ 3 files changed, 24 insertions(+), 10 deletions(-)
 
+diff --git a/arch/powerpc/perf/hv-24x7.c b/arch/powerpc/perf/hv-24x7.c
+index 7dda59923ed6a..d33c4c9a145dc 100644
+--- a/arch/powerpc/perf/hv-24x7.c
++++ b/arch/powerpc/perf/hv-24x7.c
+@@ -438,16 +438,6 @@ static char *memdup_to_str(char *maybe_str, int max_len, gfp_t gfp)
+ 	return kasprintf(gfp, "%.*s", max_len, maybe_str);
+ }
+ 
+-static ssize_t device_show_string(struct device *dev,
+-		struct device_attribute *attr, char *buf)
+-{
+-	struct dev_ext_attribute *d;
+-
+-	d = container_of(attr, struct dev_ext_attribute, attr);
+-
+-	return sprintf(buf, "%s\n", (char *)d->var);
+-}
+-
+ static ssize_t cpumask_show(struct device *dev,
+ 			    struct device_attribute *attr, char *buf)
+ {
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index 84019bebd901b..32cb9ab16695a 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -2474,6 +2474,15 @@ ssize_t device_show_bool(struct device *dev, struct device_attribute *attr,
+ }
+ EXPORT_SYMBOL_GPL(device_show_bool);
+ 
++ssize_t device_show_string(struct device *dev,
++			   struct device_attribute *attr, char *buf)
++{
++	struct dev_ext_attribute *ea = to_ext_attr(attr);
++
++	return sysfs_emit(buf, "%s\n", (char *)ea->var);
++}
++EXPORT_SYMBOL_GPL(device_show_string);
++
+ /**
+  * device_release - free device structure.
+  * @kobj: device's kobject.
 diff --git a/include/linux/device.h b/include/linux/device.h
-index b35162a3ab8b3..da53172bf3c62 100644
+index da53172bf3c62..70fbcc437360b 100644
 --- a/include/linux/device.h
 +++ b/include/linux/device.h
-@@ -102,7 +102,12 @@ struct device_type {
- 	bool need_parent_lock;
- };
- 
--/* interface for exporting device attributes */
-+/**
-+ * struct device_attribute - Interface for exporting device attributes.
-+ * @attr: sysfs attribute definition.
-+ * @show: Show handler.
-+ * @store: Store handler.
-+ */
- struct device_attribute {
- 	struct attribute	attr;
- 	ssize_t (*show)(struct device *dev, struct device_attribute *attr,
-@@ -111,6 +116,11 @@ struct device_attribute {
- 			 const char *buf, size_t count);
- };
- 
-+/**
-+ * struct dev_ext_attribute - Exported device attribute with extra context.
-+ * @attr: Exported device attribute.
-+ * @var: Pointer to context.
-+ */
- struct dev_ext_attribute {
- 	struct device_attribute attr;
- 	void *var;
-@@ -129,30 +139,124 @@ ssize_t device_show_bool(struct device *dev, struct device_attribute *attr,
+@@ -138,6 +138,8 @@ ssize_t device_show_bool(struct device *dev, struct device_attribute *attr,
+ 			char *buf);
  ssize_t device_store_bool(struct device *dev, struct device_attribute *attr,
  			 const char *buf, size_t count);
++ssize_t device_show_string(struct device *dev, struct device_attribute *attr,
++			   char *buf);
  
-+/**
-+ * DEVICE_ATTR - Define a device attribute.
-+ * @_name: Attribute name.
-+ * @_mode: File mode.
-+ * @_show: Show handler. Optional, but mandatory if attribute is readable.
-+ * @_store: Store handler. Optional, but mandatory if attribute is writable.
-+ *
-+ * Convenience macro for defining a struct device_attribute.
-+ *
-+ * For example, ``DEVICE_ATTR(foo, 0644, foo_show, foo_store);`` expands to:
-+ *
-+ * .. code-block:: c
-+ *
-+ *	struct device_attribute dev_attr_foo = {
-+ *		.attr	= { .name = "foo", .mode = 0644 },
-+ *		.show	= foo_show,
-+ *		.store	= foo_store,
-+ *	};
-+ */
- #define DEVICE_ATTR(_name, _mode, _show, _store) \
- 	struct device_attribute dev_attr_##_name = __ATTR(_name, _mode, _show, _store)
-+
-+/**
-+ * DEVICE_ATTR_PREALLOC - Define a preallocated device attribute.
-+ * @_name: Attribute name.
-+ * @_mode: File mode.
-+ * @_show: Show handler. Optional, but mandatory if attribute is readable.
-+ * @_store: Store handler. Optional, but mandatory if attribute is writable.
-+ *
-+ * Like DEVICE_ATTR(), but ``SYSFS_PREALLOC`` is set on @_mode.
-+ */
- #define DEVICE_ATTR_PREALLOC(_name, _mode, _show, _store) \
- 	struct device_attribute dev_attr_##_name = \
- 		__ATTR_PREALLOC(_name, _mode, _show, _store)
-+
-+/**
-+ * DEVICE_ATTR_RW - Define a read-write device attribute.
-+ * @_name: Attribute name.
-+ *
-+ * Like DEVICE_ATTR(), but @_mode is 0644, @_show is <_name>_show,
-+ * and @_store is <_name>_store.
-+ */
- #define DEVICE_ATTR_RW(_name) \
- 	struct device_attribute dev_attr_##_name = __ATTR_RW(_name)
-+
-+/**
-+ * DEVICE_ATTR_ADMIN_RW - Define an admin-only read-write device attribute.
-+ * @_name: Attribute name.
-+ *
-+ * Like DEVICE_ATTR_RW(), but @_mode is 0600.
-+ */
- #define DEVICE_ATTR_ADMIN_RW(_name) \
- 	struct device_attribute dev_attr_##_name = __ATTR_RW_MODE(_name, 0600)
-+
-+/**
-+ * DEVICE_ATTR_RO - Define a readable device attribute.
-+ * @_name: Attribute name.
-+ *
-+ * Like DEVICE_ATTR(), but @_mode is 0444 and @_show is <_name>_show.
-+ */
- #define DEVICE_ATTR_RO(_name) \
- 	struct device_attribute dev_attr_##_name = __ATTR_RO(_name)
-+
-+/**
-+ * DEVICE_ATTR_ADMIN_RO - Define an admin-only readable device attribute.
-+ * @_name: Attribute name.
-+ *
-+ * Like DEVICE_ATTR_RO(), but @_mode is 0400.
-+ */
- #define DEVICE_ATTR_ADMIN_RO(_name) \
- 	struct device_attribute dev_attr_##_name = __ATTR_RO_MODE(_name, 0400)
-+
-+/**
-+ * DEVICE_ATTR_WO - Define an admin-only writable device attribute.
-+ * @_name: Attribute name.
-+ *
-+ * Like DEVICE_ATTR(), but @_mode is 0200 and @_store is <_name>_store.
-+ */
- #define DEVICE_ATTR_WO(_name) \
- 	struct device_attribute dev_attr_##_name = __ATTR_WO(_name)
-+
-+/**
-+ * DEVICE_ULONG_ATTR - Define a device attribute backed by an unsigned long.
-+ * @_name: Attribute name.
-+ * @_mode: File mode.
-+ * @_var: Identifier of unsigned long.
-+ *
-+ * Like DEVICE_ATTR(), but @_show and @_store are automatically provided
-+ * such that reads and writes to the attribute from userspace affect @_var.
-+ */
- #define DEVICE_ULONG_ATTR(_name, _mode, _var) \
- 	struct dev_ext_attribute dev_attr_##_name = \
- 		{ __ATTR(_name, _mode, device_show_ulong, device_store_ulong), &(_var) }
-+
-+/**
-+ * DEVICE_INT_ATTR - Define a device attribute backed by an int.
-+ * @_name: Attribute name.
-+ * @_mode: File mode.
-+ * @_var: Identifier of int.
-+ *
-+ * Like DEVICE_ULONG_ATTR(), but @_var is an int.
-+ */
- #define DEVICE_INT_ATTR(_name, _mode, _var) \
- 	struct dev_ext_attribute dev_attr_##_name = \
- 		{ __ATTR(_name, _mode, device_show_int, device_store_int), &(_var) }
-+
-+/**
-+ * DEVICE_BOOL_ATTR - Define a device attribute backed by a bool.
-+ * @_name: Attribute name.
-+ * @_mode: File mode.
-+ * @_var: Identifier of bool.
-+ *
-+ * Like DEVICE_ULONG_ATTR(), but @_var is a bool.
-+ */
- #define DEVICE_BOOL_ATTR(_name, _mode, _var) \
+ /**
+  * DEVICE_ATTR - Define a device attribute.
+@@ -257,6 +259,19 @@ ssize_t device_store_bool(struct device *dev, struct device_attribute *attr,
  	struct dev_ext_attribute dev_attr_##_name = \
  		{ __ATTR(_name, _mode, device_show_bool, device_store_bool), &(_var) }
+ 
++/**
++ * DEVICE_STRING_ATTR_RO - Define a device attribute backed by a r/o string.
++ * @_name: Attribute name.
++ * @_mode: File mode.
++ * @_var: Identifier of string.
++ *
++ * Like DEVICE_ULONG_ATTR(), but @_var is a string. Because the length of the
++ * string allocation is unknown, the attribute must be read-only.
++ */
++#define DEVICE_STRING_ATTR_RO(_name, _mode, _var) \
++	struct dev_ext_attribute dev_attr_##_name = \
++		{ __ATTR(_name, (_mode) & ~0222, device_show_string, NULL), (_var) }
 +
  #define DEVICE_ATTR_IGNORE_LOCKDEP(_name, _mode, _show, _store) \
  	struct device_attribute dev_attr_##_name =		\
  		__ATTR_IGNORE_LOCKDEP(_name, _mode, _show, _store)
-@@ -750,6 +854,11 @@ static inline bool device_iommu_mapped(struct device *dev)
- /* Get the wakeup routines, which depend on struct device */
- #include <linux/pm_wakeup.h>
- 
-+/**
-+ * dev_name - Return a device's name.
-+ * @dev: Device with name to get.
-+ * Return: The kobject name of the device, or its initial name if unavailable.
-+ */
- static inline const char *dev_name(const struct device *dev)
- {
- 	/* Use the init name until the kobject becomes available */
 -- 
 2.53.0
 
