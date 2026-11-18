@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025177;
-	b=gJXDHjZog36jSpTb/S0vtZgmHS7nJ4W/shreO1dpoSOBMPmMAGQr8ncMkJn/vUb6iHOt
-	 gnL3IkQvkonqJyw/gyrZSlb8OKwuZmd4JfYD+JB6i40hcId/uYYLPYnkC9nWVQ06V2Ern
-	 jz9rWaUiBUTOuRwhMLkT8Hj5aCTxl4bEWCkv+bhu7kyvcMA12egu265wAO3iAdhEfDlNj
-	 8VQRa0P32qIbKGbh3HDXzttny37HYBS2emGm0rGSqcz+89xdmX0NBHE59Xs61P/cpuOZh
-	 6m/dyFgE2ObLgk+4poqDtp6/q+Awh8IQ2Hy9M8D5Qu9MWcULyZTS28Aq7BcQ2GjsSxQ==
+	t=1795025180;
+	b=lvpvUFqc+wJ3+tM6X55EyahiY8JAGB1k2n4ExhPouJ6/Qau7Z7eBdwkP2J9hEkkPQ7u3
+	 qH7QHCsmej15s/KrEWr6rHqXhjuhUJ7/AuQpIfxXS+VjkzYcFjstPo5InGCSn4Pe7TPta
+	 bKrl3PDXNxp9PswHWZ0FTSOqi5EATZtA3iKdGHW04ftoKKhcGLs/kagaKqqxbPPMZIyCH
+	 IViJ5NJAD/HVT/d1h7JLVhNhTZhO1+IRqEe39jXCTaxdyvmtJV3a+xvISfertIMaFi9KI
+	 bfWJ9XjOjQIxqI+UWw26/hKuh26Qvo7g8qBYLQs3wL4h5jZVeIzPfFADAwBNATNzDmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025177;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025180;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E6sbPyA96KVlZh0NRhW8xu9f+sN+1r61FDp/FEBp9bI=;
-	b=gh/fq4IKFl0yF3iXqRuVWTG7XCL3xKE8teGdWvzfpLqCJ8DnAHNmi225UGe9EHalT4X0
-	 MEGGKpfiBAD973buXPoMp81QN/+fY/bIJwe/CVgMkgLye+vm+W4g3hTI1wRmv/BYBPsaH
-	 zXyQGplVaCCbtoK8M+qUU7uW5f6dkV7Ki1PzaGQZsqYgEEytCSsv/PshnMR8FqGtPrrzX
-	 gkeidmCP06JWwZgG6P381S+vYSsqmAashnKQwPtBPBhDCELi60MJYluNrYdfwE5jx9sxJ
-	 9I5LI1bEHeUO0xRQAJmI7HqxO8MQhzXzk6odNOiJYfAG9jALZVoxPzvlAoZou0MJKuA==
+	bh=Pyhr3Q3kaO4BjYirR1Y8RnAX+QpQMj0sXujuluZO3iU=;
+	b=efr1PaLlcpWK4oY63cx7SoOhWZ9+f0Xs1Dn7N3EN/QnDTJa6soR37ZFo45ot0yMHvPES
+	 YRr+dleqfM6GgL5LllEi4r451i4RS9bSjHT4A9Lf6rgBxX+y7+L9b66GgTLoHk6hgPdCq
+	 6nG9iikFlE1/0mrkf3MU2hMrrDc8dduGtbkbzx6W94MPI9ao1SwbbG+Y4i6p4uvwPlB+z
+	 kogPgUKuQFg8WpLNImqkZZ+dJCfwvcRyIHd+IWlk2+SrK8PT7Coj6HSBP8MWaeqKhHZs3
+	 2rZVlRzUwbsAMaIn7djvzj4iTH1SuesiD9ulaC0Lkst4zI5OL8JgCojcgh9mWrGbVyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lOgVYzVf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="p/jZ07aY";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD8A60A2621;
-	Wed, 18 Nov 2026 18:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD8D60A2600;
+	Wed, 18 Nov 2026 18:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lOgVYzVf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF341F000C6;
-	Wed, 18 Nov 2026 18:06:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p/jZ07aY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C481F000C5;
+	Wed, 18 Nov 2026 18:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025177;
-	bh=E6sbPyA96KVlZh0NRhW8xu9f+sN+1r61FDp/FEBp9bI=;
+	s=korg; t=1795025180;
+	bh=Pyhr3Q3kaO4BjYirR1Y8RnAX+QpQMj0sXujuluZO3iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lOgVYzVfTp+OA8WfKtg9ZxxPBzvJP2YnGs0uNT8GVsc/Ri3qU85wJYolZpOWS+e5U
-	 ZIadAIAqUOesmYWMLfSKDHTWzg0djwmpHCzPhw5qG5qvzBfmYJro7OFZnN5aiKy0j6
-	 L1i4XjRz7LiJrPxuu41kQJqKT5DC4a7QmzxchmMY=
+	b=p/jZ07aYkjGqJOBPH+TjQilVoJ+B5+UqLWQCV54v582JXLt3hfj8pEp/4ByR7JpYi
+	 G0Jh96sxJazNzI9sZLvawSQtsWRQhNjlbg6UK7tSp0pm8l/KNBWLYZ6+g5ltz8kVHU
+	 I42HZYQlDDBeRyEWxCK6xvlREAd2EoJujNU5v7P0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Leach <mike.leach@linaro.org>,
 	James Clark <james.clark@linaro.org>,
 	Yeoreum Yun <yeoreum.yun@arm.com>,
 	Jie Gan <jie.gan@oss.qualcomm.com>,
 	Leo Yan <leo.yan@arm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0988/2151] coresight: Take hotplug lock in enable_source_store() for Sysfs mode
-Date: Wed, 18 Nov 2026 15:45:23 +0100
-Message-ID: <20261118150158.461477376@linuxfoundation.org>
+Subject: [PATCH 6.18 0989/2151] coresight: etm3x: Set active path on target CPU
+Date: Wed, 18 Nov 2026 15:45:24 +0100
+Message-ID: <20261118150158.492889611@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -74,120 +73,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 2c7f786928c4319ee9c68207a28529e5226b9266 ]
+[ Upstream commit bc9907750718cdaad85870c93f2c72db5c85e345 ]
 
-The hotplug lock is acquired and released in etm{3|4}_disable_sysfs(),
-which are low-level functions.  This prevents us from a new solution for
-hotplug.
+Set the path pointer on the target CPU during ETM enable and disable.
 
-Firstly, hotplug callbacks cannot invoke etm{3|4}_disable_sysfs() to
-disable the source; otherwise, a deadlock issue occurs.  The reason is
-that, in the hotplug flow, the kernel acquires the hotplug lock before
-calling callbacks.  Subsequently, if coresight_disable_source() is
-invoked and it calls etm{3|4}_disable_sysfs(), the hotplug lock will be
-acquired twice, leading to a double lock issue.
+This ensures the device mode and path pointer are updated together and
+observed atomically by the CPU PM notifier.
 
-Secondly, when hotplugging a CPU on or off, if we want to manipulate all
-components on a path attached to the CPU, we need to maintain atomicity
-for the entire path.  Otherwise, a race condition may occur with users
-setting the same path via the Sysfs knobs, ultimately causing mess
-states in CoreSight components.
-
-This patch moves the hotplug locking from etm{3|4}_disable_sysfs() into
-enable_source_store().  As a result, when users control the Sysfs knobs,
-the whole flow is protected by hotplug locking, ensuring it is mutual
-exclusive with hotplug callbacks.
-
-Note, the paired function etm{3|4}_enable_sysfs() does not use hotplug
-locking, which is why this patch does not modify it.
-
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
 Tested-by: James Clark <james.clark@linaro.org>
 Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
 Reviewed-by: James Clark <james.clark@linaro.org>
 Tested-by: Jie Gan <jie.gan@oss.qualcomm.com>
 Signed-off-by: Leo Yan <leo.yan@arm.com>
 Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260515-arm_coresight_path_power_management_improvement-v14-6-f88c4a3ecfe9@arm.com
+Link: https://lore.kernel.org/r/20260515-arm_coresight_path_power_management_improvement-v14-21-f88c4a3ecfe9@arm.com
 Stable-dep-of: 950cca5352b0 ("coresight: etm3x: fix inconsistencies with sysfs configuration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm3x-core.c | 8 --------
- drivers/hwtracing/coresight/coresight-etm4x-core.c | 9 ---------
- drivers/hwtracing/coresight/coresight-sysfs.c      | 7 +++++++
- 3 files changed, 7 insertions(+), 17 deletions(-)
+ .../hwtracing/coresight/coresight-etm3x-core.c  | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/hwtracing/coresight/coresight-etm3x-core.c b/drivers/hwtracing/coresight/coresight-etm3x-core.c
-index 0c011b7041696..e71a6fb36fabf 100644
+index e71a6fb36fabf..258b6311f5c79 100644
 --- a/drivers/hwtracing/coresight/coresight-etm3x-core.c
 +++ b/drivers/hwtracing/coresight/coresight-etm3x-core.c
-@@ -622,13 +622,6 @@ static void etm_disable_sysfs(struct coresight_device *csdev)
- {
- 	struct etm_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+@@ -436,6 +436,7 @@ static int etm_enable_hw(struct etm_drvdata *drvdata)
  
--	/*
--	 * Taking hotplug lock here protects from clocks getting disabled
--	 * with tracing being left on (crash scenario) if user disable occurs
--	 * after cpu online mask indicates the cpu is offline but before the
--	 * DYING hotplug callback is serviced by the ETM driver.
--	 */
--	cpus_read_lock();
- 	spin_lock(&drvdata->spinlock);
+ struct etm_enable_arg {
+ 	struct etm_drvdata *drvdata;
++	struct coresight_path *path;
+ 	int rc;
+ };
  
- 	/*
-@@ -639,7 +632,6 @@ static void etm_disable_sysfs(struct coresight_device *csdev)
- 				 drvdata, 1);
+@@ -457,8 +458,12 @@ static void etm_enable_sysfs_smp_call(void *info)
+ 	arg->rc = etm_enable_hw(arg->drvdata);
  
- 	spin_unlock(&drvdata->spinlock);
--	cpus_read_unlock();
- 
- 	/*
- 	 * we only release trace IDs when resetting sysfs.
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index be05ef41fd734..37a244e68eb52 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -1117,13 +1117,6 @@ static void etm4_disable_sysfs(struct coresight_device *csdev)
- {
- 	struct etmv4_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
- 
--	/*
--	 * Taking hotplug lock here protects from clocks getting disabled
--	 * with tracing being left on (crash scenario) if user disable occurs
--	 * after cpu online mask indicates the cpu is offline but before the
--	 * DYING hotplug callback is serviced by the ETM driver.
--	 */
--	cpus_read_lock();
- 	raw_spin_lock(&drvdata->spinlock);
- 
- 	/*
-@@ -1137,8 +1130,6 @@ static void etm4_disable_sysfs(struct coresight_device *csdev)
- 
- 	cscfg_csdev_disable_active_config(csdev);
- 
--	cpus_read_unlock();
--
- 	/*
- 	 * we only release trace IDs when resetting sysfs.
- 	 * This permits sysfs users to read the trace ID after the trace
-diff --git a/drivers/hwtracing/coresight/coresight-sysfs.c b/drivers/hwtracing/coresight/coresight-sysfs.c
-index 958c0fe8837d5..a307852a72026 100644
---- a/drivers/hwtracing/coresight/coresight-sysfs.c
-+++ b/drivers/hwtracing/coresight/coresight-sysfs.c
-@@ -362,6 +362,13 @@ static ssize_t enable_source_store(struct device *dev,
- 	if (ret)
- 		return ret;
- 
-+	/*
-+	 * CoreSight hotplug callbacks in core layer control a activated path
-+	 * from its source to sink. Taking hotplug lock here protects a race
-+	 * condition with hotplug callbacks.
-+	 */
-+	guard(cpus_read_lock)();
+ 	/* The tracer didn't start */
+-	if (arg->rc)
++	if (arg->rc) {
+ 		coresight_set_mode(csdev, CS_MODE_DISABLED);
++		return;
++	}
 +
- 	if (val) {
- 		ret = coresight_enable_sysfs(csdev);
- 		if (ret)
++	csdev->path = arg->path;
+ }
+ 
+ static int etm_cpu_id(struct coresight_device *csdev)
+@@ -494,10 +499,13 @@ static int etm_enable_perf(struct coresight_device *csdev,
+ 	ret = etm_enable_hw(drvdata);
+ 
+ 	/* Failed to start tracer; roll back to DISABLED mode */
+-	if (ret)
++	if (ret) {
+ 		coresight_set_mode(csdev, CS_MODE_DISABLED);
++		return ret;
++	}
+ 
+-	return ret;
++	csdev->path = path;
++	return 0;
+ }
+ 
+ static int etm_enable_sysfs(struct coresight_device *csdev, struct coresight_path *path)
+@@ -516,6 +524,7 @@ static int etm_enable_sysfs(struct coresight_device *csdev, struct coresight_pat
+ 	 */
+ 	if (cpu_online(drvdata->cpu)) {
+ 		arg.drvdata = drvdata;
++		arg.path = path;
+ 		ret = smp_call_function_single(drvdata->cpu,
+ 					       etm_enable_sysfs_smp_call, &arg, 1);
+ 		if (!ret)
+@@ -585,6 +594,7 @@ static void etm_disable_sysfs_smp_call(void *info)
+ 
+ 	etm_disable_hw(drvdata);
+ 
++	drvdata->csdev->path = NULL;
+ 	coresight_set_mode(drvdata->csdev, CS_MODE_DISABLED);
+ }
+ 
+@@ -609,6 +619,7 @@ static void etm_disable_perf(struct coresight_device *csdev)
+ 
+ 	CS_LOCK(drvdata->csa.base);
+ 
++	drvdata->csdev->path = NULL;
+ 	coresight_set_mode(drvdata->csdev, CS_MODE_DISABLED);
+ 
+ 	/*
 -- 
 2.53.0
 
