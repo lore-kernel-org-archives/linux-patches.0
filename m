@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030848;
-	b=5UuHXd8uSTflmtO7TpmCVoBcuXNc/mYx0q73H/HSIVMQfujIRoHIXDve1kmthF6UGEnT
-	 dilnUF7qCev7Piu7K9D3CtQ4MY/nH7MlphCvGjQLJlYRqYi7CBFKRHkuEqOAAzeMP7PUm
-	 s0qYfHh26955p4HO62wa1N1XqT1HxntIV+xt2OVIOgZbioNsGt/clASHDod+AVwr2XJaq
-	 E4YFVGYtoX/+WqQth55ONsXhm0dq08KwJFTcm73HtIku1gmsrSV525Zz0k8FHr4s0u8X5
-	 jEcXKz2njVfKsFl8E39eKhCQF5OlnBcn2dtdvTau07yvE021YLVUF7dkuPFE8iVUM2w==
+	t=1795030851;
+	b=ZKkYR4vaE0C0U3RlNCH4RNwwwp9Gy/Q3XISzqKN2SJ+xVPZ0C2s+CJVinbuHICmC02bC
+	 DP05rRFWjFjMCkDSeKrMvFvXptBT231+M4wAsXI5740zLPh+HGmHTa9Bv4HehQqCofZaz
+	 phEMNVFKYflBASDV8LdqETvH4+qn1aOQWTXdECH3KBkyeK2P6M7IAgXsnvk+tGKDP3HoN
+	 B19JTNqlDGOCh/zteWKCU7GMKlZoa+6jF0v9DOR0AFAsmJ+ri8F26cG3WU0pPZkHGK8w8
+	 OE9zRdTpYInADJLBHFaLaoIDZbL1HqfU2K8tWf70/FcbKAu9z4tQZglgMjdqFl97vkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030848;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030851;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HSgGauMbux59OTyag8nB0V2EGntXl7xt5bAUS017yUI=;
-	b=f2QLUylW44MZX5IOOmGP39rzT4rkhkk37jqFkHrzMJuF50Iz+o/m2Z4OmHDu7elzGQBr
-	 S1CEhCZfGbBa2ybH+Z0npHuasByWel3ar+5gyNGYich90iIG0fTECQPiyr990Haa5s4iV
-	 3XYysqlcUqKwWpxtA7PLI5iGVPgZtXnpU5iDTy0DqcUMhPNC9H//bpo5xAzYjj3Jbpget
-	 nkJrpJEnd2wJH5JwVf6d7pn996/uuI0BXEj8z4zpLY23ctKt9PXmjNAHfsfxK0hSSeQ8S
-	 rIwWml9345FehMXNy7Gsvjquvr2TNbsdXnvcnO98mlnOGpNaN+TLOe80cGmJJXdW52Q==
+	bh=vObVqDQMX8SgcJVxk6jBep0tYhUxzIHTP1CTo4ciYAk=;
+	b=TuK49iQBNntlr0GJhjmNbejQK259HBQI1GAJH0z1enLNsM2QmInvRKd7VLIPqFYwkUZs
+	 36glg+3PYmk+TE9IS93WjLENGGLu5qpbhNnL1kuU4+f8VoZ9Ul4cnonGzIL3gm6+cCl0j
+	 iq3Jr0rUcIzOZOnBNWzuVlc+bUSQBww/qH0iPyilOwsAxmLkLDjmSe6p4BS1pUez49V4q
+	 DIIVYFoMMFOBfjz4wFRV2TVjUO+F4RqKtBH8yFDuPcHE+bUaa5Oxg0vRpxpU++w1FLhzs
+	 Gw7n4tvS+gCGOfydNQC53+gq9MOcFjoHIDtDXRbkee9xLt8UOBq1y15GvYZ4h3ZALUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rXURDyH+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t2TDfXgB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6FE606D344;
-	Wed, 18 Nov 2026 19:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B25606D34D;
+	Wed, 18 Nov 2026 19:40:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rXURDyH+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 883A91F000C4;
-	Wed, 18 Nov 2026 19:40:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t2TDfXgB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67DA51F000C5;
+	Wed, 18 Nov 2026 19:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030848;
-	bh=HSgGauMbux59OTyag8nB0V2EGntXl7xt5bAUS017yUI=;
+	s=korg; t=1795030850;
+	bh=vObVqDQMX8SgcJVxk6jBep0tYhUxzIHTP1CTo4ciYAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rXURDyH+rGRsxIvUcOhvrBsaTZtEp1yKZNZ2an5cEkdr11G4e4FpWpY4OzKXnuuH2
-	 lK8VSQ0BFntb0l1E+ELoEKpeHjXW63swYz8h5Uxdx7K+fZCRMlcdBXKtccvMCVLzQW
-	 NdrlWzmmBtVUHJCWvDQJCf90+e2OQdBhDUo5skOI=
+	b=t2TDfXgBtjCdtf8oySY2szwHZ1XLAbbf6D4FoFWY/UPU/nYMep9xSIcEnPRFRqEUS
+	 rCg+cE/muAP6fwb8r78OTOM6Y9OBpOyBqVPuM/obKbFYANrKu5rxMEp5hLbhEr5lGe
+	 csoKbSgIiXgKwuCRUKXG3I1M5MQNS1LFCoO0BeZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Yaozhong Li <yaozhonguwl@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0833/1756] power: supply: ab8500_charger: Respect AB8505 register layout
-Date: Wed, 18 Nov 2026 15:49:20 +0100
-Message-ID: <20261118150042.649319383@linuxfoundation.org>
+Subject: [PATCH 6.12 0851/1756] arm64: dts: rockchip: disable unused i2s0 on rk3399-firefly
+Date: Wed, 18 Nov 2026 15:49:38 +0100
+Message-ID: <20261118150043.264511078@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,110 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Yaozhong Li <yaozhonguwl@gmail.com>
 
-[ Upstream commit dcecf527632297011153f088573689a1ad1de790 ]
+[ Upstream commit 9416a641cfe5b75dd9178c15960ee741c1091b45 ]
 
-Several AB8505 charger fields differ from AB8500. Its long VBUS
-falling debounce is 300 ms rather than 100 ms, and its VBUS
-overvoltage selector has a different encoding programmed through OTP.
-Writing the AB8500 6.3 V value selects 9 V on AB8505.
+The board file enables i2s0, but no sound card references it: the
+on-board RT5640 is wired to i2s1 and the S/PDIF transmitter has its own
+controller. Keeping it enabled starves the other controllers, due to the
+pl330 instance that serves the audio block only having six channels.
 
-AB8505 revision 3 also defines SwControlFallback as reserved,
-correcting older documentation which led the driver to support
-autopower there. Preserve the AB8505 overvoltage setting, wait for its
-documented debounce, and reject the unsupported autopower setting.
+The i2s0 pin groups also lists GPIO4_A0, which carries SCLK_I2S_8CH_OUT,
+providing the MCLK the codec runs on.
 
-Fixes: 0ed5107fa860 ("ab8500-charger: Do not touch VBUSOVV bits")
-Fixes: b016322293c7 ("ab8500-charger: Add support for autopower on AB8505 and AB9540")
+So add the pinmux for the MCLK signal to the i2s1 node.
+
+The RT5640 and S/PDIF cards then register with no DMA errors, and a
+1 kHz tone measured through the codec's internal HPOL/HPOR loopback is
+unchanged (L 2135 -> 2138, R 2202 -> 2203), confirming that MCLK still
+reaches the codec.
+
+Fixes: 171582e00db1 ("arm64: dts: rockchip: add support for firefly-rk3399 board")
 Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-9-e986ed321cc6@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Yaozhong Li <yaozhonguwl@gmail.com>
+Link: https://patch.msgid.link/20260921063431.103-3-yaozhonguwl@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_charger.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-firefly.dts | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index 8715f54f0a3ca..9c81f79502870 100644
---- a/drivers/power/supply/ab8500_charger.c
-+++ b/drivers/power/supply/ab8500_charger.c
-@@ -52,7 +52,7 @@
- #define MAIN_CH_DET			0x01
- #define MAIN_CH_CV_ON			0x04
- #define USB_CH_CV_ON			0x08
--#define VBUS_DET_DBNC100		0x02
-+#define VBUS_DET_DBNC_LONG		0x02
- #define VBUS_DET_DBNC1			0x01
- #define OTP_ENABLE_WD			0x01
- #define DROP_COUNT_RESET		0x01
-@@ -383,6 +383,10 @@ static void ab8500_enable_disable_sw_fallback(struct ab8500_charger *di,
- 	u8 bit;
- 	int ret;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts b/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
+index 1dddc26efed95..7e5452cdceabd 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
+@@ -628,13 +628,9 @@ accelerometer@68 {
+ 	};
+ };
  
-+	/* SwControlFallback is reserved and must remain clear on AB8505. */
-+	if (is_ab8505(di->parent))
-+		return;
-+
- 	dev_dbg(di->dev, "SW Fallback: %d\n", fallback);
- 
- 	if (is_ab8500(di->parent)) {
-@@ -703,12 +707,16 @@ static int ab8500_charger_detect_chargers(struct ab8500_charger *di, bool probe)
- 
- 	if (!probe) {
- 		/*
--		 * AB8500 says VBUS_DET_DBNC1 & VBUS_DET_DBNC100
-+		 * AB8500 says VBUS_DET_DBNC1 & VBUS_DET_DBNC_LONG
- 		 * when disconnecting ACA even though no
- 		 * charger was connected. Try waiting a little
--		 * longer than the 100 ms of VBUS_DET_DBNC100...
-+		 * longer than its 100 ms debounce. AB8505 uses
-+		 * a 300 ms falling debounce for the same bit.
- 		 */
--		msleep(110);
-+		if (is_ab8505(di->parent))
-+			msleep(310);
-+		else
-+			msleep(110);
- 	}
- 	ret = abx500_get_register_interruptible(di->dev, AB8500_CHARGER,
- 		AB8500_CH_USBCH_STAT1_REG, &val);
-@@ -719,7 +727,7 @@ static int ab8500_charger_detect_chargers(struct ab8500_charger *di, bool probe)
- 	dev_dbg(di->dev,
- 		"%s AB8500_CH_USBCH_STAT1_REG %x\n", __func__,
- 		val);
--	if ((val & VBUS_DET_DBNC1) && (val & VBUS_DET_DBNC100))
-+	if ((val & VBUS_DET_DBNC1) && (val & VBUS_DET_DBNC_LONG))
- 		result |= USB_PW_CONN;
- 
- 	return result;
-@@ -3186,7 +3194,7 @@ static int ab8500_charger_init_hw_registers(struct ab8500_charger *di)
- 		}
- 	}
- 
--	if (is_ab8505_2p0(di->parent))
-+	if (is_ab8505(di->parent))
- 		ret = abx500_mask_and_set_register_interruptible(di->dev,
- 			AB8500_CHARGER,
- 			AB8500_USBCH_CTRL2_REG,
-@@ -3535,11 +3543,14 @@ static int ab8500_charger_probe(struct platform_device *pdev)
- 
- 	di->bm = &ab8500_bm_data;
- 
--	di->autopower_cfg = of_property_read_bool(np, "autopower_cfg");
+-&i2s0 {
+-	rockchip,playback-channels = <8>;
+-	rockchip,capture-channels = <8>;
+-	status = "okay";
+-};
 -
- 	/* get parent data */
- 	di->dev = dev;
- 	di->parent = dev_get_drvdata(pdev->dev.parent);
-+	di->autopower_cfg = of_property_read_bool(np, "autopower_cfg");
-+	if (di->autopower_cfg && is_ab8505(di->parent)) {
-+		dev_warn(dev, "autopower is not supported on AB8505\n");
-+		di->autopower_cfg = false;
-+	}
+ &i2s1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2s_8ch_mclk_pin>, <&i2s1_2ch_bus>;
+ 	rockchip,playback-channels = <2>;
+ 	rockchip,capture-channels = <2>;
+ 	status = "okay";
+@@ -689,6 +685,12 @@ ir_int: ir-int {
+ 		};
+ 	};
  
- 	/* Get ADC channels */
- 	if (!is_ab8505(di->parent)) {
++	i2s1 {
++		i2s_8ch_mclk_pin: i2s-8ch-mclk-pin {
++			rockchip,pins = <4 RK_PA0 1 &pcfg_pull_none>;
++		};
++	};
++
+ 	lcd-panel {
+ 		lcd_panel_reset: lcd-panel-reset {
+ 			rockchip,pins = <4 RK_PD6 RK_FUNC_GPIO &pcfg_pull_up>;
 -- 
 2.53.0
 
