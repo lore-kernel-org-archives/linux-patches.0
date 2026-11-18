@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019363;
-	b=K5bAERJCJOYrfSU6rY251sVLhiJpwoLAwEYEiXir/H1aMC+M8Z/2YYKPJgxnB86j35xc
-	 vwMpoF/XjcW6RorqGgTZHWpRJMDptooe0Di7cM2mGm4oR5CVNHW5qJ4QLWtNJOQ8qmrb4
-	 O1ACuSDeyAhKy1Ci2lHb2iA49pLuDbdb4FVh8cKZc8yu7sAkfOfIJDcNJdd8apAHZ/3ue
-	 Xl/ElGgWSXRsFiWUOxzpX9msC4Jh17au0WXeu9CCAmRUwibVTH12wXtdB0lbJMF9U2I4H
-	 akjqgE+OACjeowFJlDJ9OY5sTYxqFdoUcTu9tORBkIJh+xQm9gB6ELo1SqpC8s8bJ2g==
+	t=1795019366;
+	b=Q0goYoJZFPv0siVPMhLtKNIpWVn6FUsL+pXBo95Jh6ZynD2OayKsD0cmRoOjz7daacpm
+	 gT30xkAyew73Kczyhh/TLonySvdUkdHjOmahPNRW8W6fYPtJfSl8mJXu30XgD3lgNSh5H
+	 AKMgfZaSKtrAnAf0GEpbbKZmL5y+Yi0TjR1WqIYgDZGPrlHpAFDCgfSTjRfcq0nSGFCHA
+	 IYjkHBJ6Qj9qU7AuFEh3MTo/P/qEcoVsxBJy/jtJqhZFz/eQP+w0eR0UW5Q8gymXCur4p
+	 cBML8tYi+aRolwcm58wvYoA4TjnbSfHjl6d3P2UZ7x2FlJSnHfDbFewPwLna1ATvt2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019363;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019366;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1kb8cbDFVoChwllYPEweSiKdjff542TPhdhvObtFyi8=;
-	b=SPgLgAQhe4OAzWbJeWL71o9m+LW02pwrbJK+745mqTG/oXdDqSnOcHnvkT1nlbjOlVUV
-	 8KJd0dKLc+SjNZE+bm8F9iwZCHR7kBAcIoZJdWGE4nWNYqpSmJN7FVNqHqvcCIKlCztJC
-	 AGdkGvUGXPna978cUddm/vVqj1Sq1MUDLJFPvFQO2xO6l9rdBXmXdK5Cp6XBbMfQnZkZ/
-	 cpDfKVaFm+WYjEJZBtXVMxwp3PWYHb5i7vDd1riDBMvz8JH8kjj/KGjsFCSNttaNmeXQ/
-	 qSqVd6hwe2c+6n6LBaxkKfUjOcnPxeL4w6KEmb5ssMMSq+0XH3oSb0yNZqCcLfpDIxg==
+	bh=vvjMHHxNMCHGfIcre8bgbeP4qjjfbHDDUaPdDkn6Czc=;
+	b=QVze9qfIQmSIejeckE3Gxl/MYsoFhIcKADCrqABLzSG+7bhiVDqsUoNlSYUeEA+SJmPK
+	 8WetvdY8jspmz4UIuqXuL45wIQy/5oQVT+wc2zII5lfoToeJeiViHCo3RIHxnWii3NUIt
+	 QTNbGPqHfWJlQDSnSnkigSXghbu6zj99uVTZMu+QlBTpPdvgjldm0Vtf/loVL9p0z4lMT
+	 6j9QVqItY2hQRdQ1OghOtisGRw7+kYhO3cvc3uP0GQOCDsedprmKYXGa7fNeoqY0J460G
+	 DWlRPQ2wzlUliS4IM/J0q0tVVYmbKRttbFQD+lfIAwtQeKViflCR2YIKg1n5a+UNTVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qvC8nFF5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1zHkAefs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B6F606A33A;
-	Wed, 18 Nov 2026 16:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E3560A2609;
+	Wed, 18 Nov 2026 16:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qvC8nFF5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98C81F000C4;
-	Wed, 18 Nov 2026 16:29:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1zHkAefs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B89B31F000C4;
+	Wed, 18 Nov 2026 16:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019363;
-	bh=1kb8cbDFVoChwllYPEweSiKdjff542TPhdhvObtFyi8=;
+	s=korg; t=1795019366;
+	bh=vvjMHHxNMCHGfIcre8bgbeP4qjjfbHDDUaPdDkn6Czc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qvC8nFF5Jg1iOE0+CJACB42zkAPTGtFlxiEPVsYhs47bIs3uDQWYjBXe1D6+otlo4
-	 axg2l5MHiRZu7YPIUxe798ceOlq5YJbmAjRYmEwFHvvTKuIJYw2BL4zEgXKHb1U1Sl
-	 cJWxajTQaJy965QbfIxfz5BoNwdEbRe8db25C3es=
+	b=1zHkAefsuWbtFILNObKgunrQEVhp981gBZ62Dpxla93NShoeEjKd63gKDlHzRmsIW
+	 V5xZSy636X+iOf2zMtjPW8XbWFbHoWEApmDclFTlrg2zYkxCvGVelMeHk4mNCzf835
+	 IvvmXhodTGbqewznynL94gUaeCSbXZ0pLy8W7QtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiliang Yuan <odys.yuan@gmail.com>,
-	Ming Lei <tom.leiming@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Antoni Pokusinski <apokusinski01@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1567/2651] selftests: ublk: make the fault_inject delay a pure timeout
-Date: Wed, 18 Nov 2026 15:46:47 +0100
-Message-ID: <20261118150344.359356678@linuxfoundation.org>
+Subject: [PATCH 7.3 1568/2651] rtc: abx80x: fix error check after i2c_smbus_read in read_alarm()
+Date: Wed, 18 Nov 2026 15:46:48 +0100
+Message-ID: <20261118150344.393725653@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,52 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiliang Yuan <odys.yuan@gmail.com>
+From: Antoni Pokusinski <apokusinski01@gmail.com>
 
-[ Upstream commit 69ae59173a5668d015ab2733c8628ed542f00ccc ]
+[ Upstream commit 07c57022afb3afc0d7c20efef45a4d3c7389b1c0 ]
 
-ublk_fault_inject_queue_io() queues the delay of each I/O as an
-IORING_OP_TIMEOUT with a completion count of 1. Such a timeout also
-completes as soon as any other CQE is posted on the ring.
+i2c_smbus_read_i2c_block_data() returns the number of bytes read on
+success and a negative error code on failure. The existing code treated
+any non-zero return value as an error.
 
-With more than one I/O in flight, the completion of one I/O ends the
-delay of the others, and ublk_fault_inject_tgt_io_done() reports every
-early completion as "unexpected cqe res 0".
+Fix the error handling by checking only for negative return values.
 
-Pass a count of 0 so that only the expiry of the timer completes the
-timeout.
-
-fio 4k random reads for 10 s at queue depth 4 on a fault_inject device
-with --delay_us 1000000:
-
-                            before      after   expected
-  I/Os                     2263170         40         40
-  mean latency             16.3 us    1.000 s        1 s
-  "unexpected cqe res 0"   2263169          0          0
-
-Fixes: 81586652bb1f ("selftests: ublk: add generic_06 for covering fault inject")
-Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
-Reviewed-by: Ming Lei <tom.leiming@gmail.com>
-Link: https://patch.msgid.link/20261008-bug-ublk-selftest-fault-inject-delay-v1-2-a96af7ead06e@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 718a820a303c ("rtc: abx80x: add alarm support")
+Signed-off-by: Antoni Pokusinski <apokusinski01@gmail.com>
+Link: https://patch.msgid.link/20260916205138.16771-3-apokusinski01@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/ublk/fault_inject.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-abx80x.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/ublk/fault_inject.c b/tools/testing/selftests/ublk/fault_inject.c
-index e055f51a65447..4b59f17a918c0 100644
---- a/tools/testing/selftests/ublk/fault_inject.c
-+++ b/tools/testing/selftests/ublk/fault_inject.c
-@@ -92,7 +92,7 @@ static int ublk_fault_inject_queue_io(struct ublk_thread *t,
- 	 * reads it only when the SQE is submitted.
- 	 */
- 	ublk_io_alloc_sqes(t, &sqe, 1);
--	io_uring_prep_timeout(sqe, &opts->delay, 1, 0);
-+	io_uring_prep_timeout(sqe, &opts->delay, 0, 0);
- 	sqe->user_data = build_user_data(tag, ublksrv_get_op(iod), 0, q->q_id, 1);
+diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
+index 5486d9d0b1e5d..e4fd7b5d4b110 100644
+--- a/drivers/rtc/rtc-abx80x.c
++++ b/drivers/rtc/rtc-abx80x.c
+@@ -294,8 +294,10 @@ static int abx80x_read_alarm(struct device *dev, struct rtc_wkalrm *t)
  
- 	ublk_queued_tgt_io(t, q, tag, 1);
+ 	err = i2c_smbus_read_i2c_block_data(client, ABX8XX_REG_ASC,
+ 					    sizeof(buf), buf);
+-	if (err)
++	if (err < 0)
+ 		return err;
++	if (err < ARRAY_SIZE(buf))
++		return -EIO;
+ 
+ 	irq_mask = i2c_smbus_read_byte_data(client, ABX8XX_REG_IRQ);
+ 	if (irq_mask < 0)
+@@ -311,7 +313,7 @@ static int abx80x_read_alarm(struct device *dev, struct rtc_wkalrm *t)
+ 	t->enabled = !!(irq_mask & ABX8XX_IRQ_AIE);
+ 	t->pending = (buf[6] & ABX8XX_STATUS_AF) && t->enabled;
+ 
+-	return err;
++	return 0;
+ }
+ 
+ static int abx80x_set_alarm(struct device *dev, struct rtc_wkalrm *t)
 -- 
 2.53.0
 
