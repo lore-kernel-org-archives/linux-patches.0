@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049455;
-	b=gDQ59O0LQiw5XLiJeUrV5cb5qTM6IBE/I624FRH95/hB6+IhaVGjdWZ9bEJOiAuMYvdL
-	 +HPXCanbq8mXOS/nu6Lu5/+F4ZKlL4cmtqpF+65BtPtQcoJcILhV9X5b/nLCR8q/bpXmj
-	 /2FH68X5+oFT0yAw2uMTSEyj/IKCtgH4Nkej2bgyNwUxH3m9PTrUaPVeezz/XIMavBn+P
-	 0D9O0+f7LPm4pswMD+aHoKWonPSvNgFufG73pQG9S97ao7CFqyepSekhNsx651UvY6J+I
-	 cVpAdH0gOb1K3FM7hHDWhxGQO9n2nMAcL3y/SsxRD7kj1EPjME5uh4223hX9xX1UfUw==
+	t=1795049458;
+	b=ueLju7AvMhsP5etAquiQUC6BsUMTfBpKzcZvlRguEaoVISGhU0vGLv18PBcebwq7aBvq
+	 sVDjn5HJW4jq5Z4+yFoKkCezKkQ+7u+jL6TEmz1z6+2c2Ikg/hgfYijVO8zCRA8+WmiPl
+	 Dm6zLi0tvj5zosRtRg0vjJgyuk3BZj93VN9jkiYLXa+VDVQUi9U4FM11+WPlUwoUPMmml
+	 CwljdrkwDZM+JJFqBTHav2+s02c9zhrL10kiQ/YMg9cJOEtr8/Sg1okDPIrGdNuQ9VkPN
+	 1rfYPWj/HD3yfd2L1Int3rXRuOLl7OO04RdFqGH7t+BBtFomkWEhd8/SZ6v0uzqRi7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049455;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049458;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Pu0VBi3qbO9oJRQERKIpPOi3zDHyl0tSilns3NHVwsg=;
-	b=TWbwI6wUC4Qd417U/9W3IHzdtpARGFaQjFT5H79vj/gvAK67J/qccxVZK1Gkt7HxtzBm
-	 c6TKv4Tx5S8HTLeFEt/S9y7/y0LmSvv1u1CTEqKa/22haW2iIW+5hwTYZCABNn0Ae4VjP
-	 c7Vj3gVwnPyXsdyMp6ug4XMZpOoTx9gLGC0evr/bLT/PtwzbsUJ7NPYDBEPrxi4oECNGF
-	 F+sIOMbw57X4YZPXgf4FOkKYnJFxogvOYMIVh4CSyE2HRY3Hp15z3o85xilHUGtMMUwgB
-	 zOqkZYgkMaORKUuNtnYAzpvPQwa4ZfvSShayk6eoKhrbQHRi5I2xB/VPxw1veZpIUgg==
+	bh=qFqVHAv8khgRiyUxomthKjtfnpoyku8Wz5yHqKF6gCc=;
+	b=pwuaoyybo5i+El1gEx9zD1h901CSVjgYi69ed9z3moBUMtATKKpasUxi67//SqsHUnR0
+	 6FZ92IKMuDQwFm6NwNH1IU9l3uCrUIkZasGhJC31dJXFtOHtBlcyybjjOpT+S9WQfS4W9
+	 RGHYD43622UAFOK70x//eEtjO94ylVeyR+kVSAdNNaEb0GZnKGFYZ5UNCLmYpqAKiKW5x
+	 VSptpjeLWGCQxmlHwf1y7d3K/nWb1iUCYP6Gd6Jej7YvacNOMJYN/j/IFNbdGrWpRyZBK
+	 OlWt5TnkZ5xvcVKGp9Ut1+fcBdORl/2+ZDpPX6IfnKlHHBBCJPlCGJpE+samk1VzysQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X6mflEHO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="S9pHGL/C";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8262A606A31C;
-	Thu, 19 Nov 2026 00:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFA7606A325;
+	Thu, 19 Nov 2026 00:50:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X6mflEHO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87061F000C4;
-	Thu, 19 Nov 2026 00:50:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S9pHGL/C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888C11F000C4;
+	Thu, 19 Nov 2026 00:50:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049455;
-	bh=Pu0VBi3qbO9oJRQERKIpPOi3zDHyl0tSilns3NHVwsg=;
+	s=korg; t=1795049458;
+	bh=qFqVHAv8khgRiyUxomthKjtfnpoyku8Wz5yHqKF6gCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X6mflEHOM4ZYoD+ADwsVeakpyE+wHHZ+vfDvqZzXj65lVoGH4yPZWVpUC8nfdOuNC
-	 eNy51CEN3TsEnLA3CcbmKnYfgipkEpnPG5/PnZqkwDN3gsYIC3BXNQm5hi48pSWVKp
-	 WCvnoP1vvcdj5tYxaYwN7y9bgyaJxg4N+AKbedZY=
+	b=S9pHGL/CmycIsfQTocuUPvIz7hG8ln+o6tgyos3g4nBB3Muiu+nJsVYsukz8+xI3D
+	 dZbbd7+mM38wMph9j38Oj9sjggHkzgIHzVvQ/AdKqNCZ81IjFFCESjut0DHNVjH0vl
+	 Dz4E9gU70FJSkze0UDm71qKOSy0ND5SDsEMXkQm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Schier <n.schier@fritz.com>,
-	Kees Cook <kees@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Changyul Lee <lcy8047@gmail.com>,
+	Sang-Hoon Choi <csh0052@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2355/2857] kbuild: Mark the initcall ordering recipe as recursive
-Date: Wed, 18 Nov 2026 15:56:29 +0100
-Message-ID: <20261118150326.314921339@linuxfoundation.org>
+Subject: [PATCH 6.1 2356/2857] xhci: dbc: lock the minor IDR on registration failure
+Date: Wed, 18 Nov 2026 15:56:30 +0100
+Message-ID: <20261118150326.354043341@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,63 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Sang-Hoon Choi <csh0052@gmail.com>
 
-[ Upstream commit ae5f6044c4cdffe2b3361b15c1d6fc67b339f2a4 ]
+[ Upstream commit 47f4e983b5de7616fb11d5f537fc9a605387d136 ]
 
-generate_initcall_order.pl, which orders initcalls for Clang LTO, forks
-a child per input file, up to the job count scripts/jobserver-exec
-passes it in PARALLELISM. It used to run from link-vmlinux.sh, which
-the top-level Makefile invokes as a recursive recipe, but
-commit 5d45950dfbb15 ("kbuild: move vmlinux.o link to
-scripts/Makefile.vmlinux_o") moved it into a recipe without "+".
+dbc_tty_minors is protected by dbc_tty_minors_lock when entries are
+allocated and during normal device removal. The registration error path
+removes an entry without taking that lock. Different DbC instances have
+separate event work items, so this removal can race with an IDR update
+for another instance.
 
-GNU Make passes the jobserver pipe only to recipes it treats as
-recursive, and the make 4.3 in CentOS Stream 9 also hides it in
-sub-makes (a backport of the fix for GNU Make bug 58232), so
-jobserver-exec cannot open it and prints:
+Take the same mutex around the error-path removal.
 
-  WARNING: Unable to reopen jobserver read-side pipe: FileNotFoundError(2, 'No such file or directory')
-
-PARALLELISM is then left unset, and the script caps its children at the
-number of online CPUs instead of the free job slots.
-
-Mark the recipe as recursive again (this makes "make -n" runs the script
-again too, as it did from link-vmlinux.sh). Masahiro posted the same
-change and withdrew it because the script was given only vmlinux.a, and
-so never ran more than one child [1]. But on arm64, LoongArch, and RISC-V
-with CONFIG_EFI_STUB, KBUILD_VMLINUX_LIBS also gives it the EFI stub's
-lib.a. Either way, the warning is silenced.
-
-Tested ARCH=x86_64 defconfig with CONFIG_LTO_CLANG_THIN=y, LLVM=1
-(Clang 24.0.0git), and GNU Make 4.3 plus CentOS Stream 9's
-make-4.3-cloexec.patch.
-
-Fixes: 5d45950dfbb15 ("kbuild: move vmlinux.o link to scripts/Makefile.vmlinux_o")
-Link: https://lore.kernel.org/all/CAK7LNARCM=rUm8mA8GRQ7ufeyfneGf4OEvHmESKt=zuxs2KrHw@mail.gmail.com/ [1]
+Fixes: e1ec140f273e ("xhci: dbgtty: use IDR to support several dbc instances.")
+Reported-by: Changyul Lee <lcy8047@gmail.com>
 Assisted-by: LLM
-Reviewed-by: Nicolas Schier <n.schier@fritz.com>
-Signed-off-by: Kees Cook <kees@kernel.org>
-Tested-by: Paul E. McKenney <paulmck@kernel.org>
-Link: https://patch.msgid.link/20261010081914.540611-2-kees@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20261009151624.618967-6-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Makefile.vmlinux_o | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/xhci-dbgtty.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/scripts/Makefile.vmlinux_o b/scripts/Makefile.vmlinux_o
-index 0edfdb40364b8..ae52d3b3f0637 100644
---- a/scripts/Makefile.vmlinux_o
-+++ b/scripts/Makefile.vmlinux_o
-@@ -19,7 +19,7 @@ quiet_cmd_gen_initcalls_lds = GEN     $@
- 
- .tmp_initcalls.lds: $(srctree)/scripts/generate_initcall_order.pl \
- 		vmlinux.a $(KBUILD_VMLINUX_LIBS) FORCE
--	$(call if_changed,gen_initcalls_lds)
-+	+$(call if_changed,gen_initcalls_lds)
- 
- targets := .tmp_initcalls.lds
+diff --git a/drivers/usb/host/xhci-dbgtty.c b/drivers/usb/host/xhci-dbgtty.c
+index eac847efab2ea..713532453eacf 100644
+--- a/drivers/usb/host/xhci-dbgtty.c
++++ b/drivers/usb/host/xhci-dbgtty.c
+@@ -502,7 +502,9 @@ static int xhci_dbc_tty_register_device(struct xhci_dbc *dbc)
+ err_free_fifo:
+ 	kfifo_free(&port->port.xmit_fifo);
+ err_exit_port:
++	mutex_lock(&dbc_tty_minors_lock);
+ 	idr_remove(&dbc_tty_minors, port->minor);
++	mutex_unlock(&dbc_tty_minors_lock);
+ err_idr:
+ 	xhci_dbc_tty_exit_port(port);
  
 -- 
 2.53.0
