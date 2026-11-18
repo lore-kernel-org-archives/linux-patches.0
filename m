@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053410;
-	b=Dwxf6UOEoBqEuEyPjQID4uGbkfu/nrFtzI5Ex1i+daBMm9UG4gmipKc1744DKNTAZYER
-	 p+TQ4E0Nysy7dGsbo5BdHawFXL4I9wSx79HG91UBsIDnIkWqUbZv/dRhtHG5UBNnuJVJo
-	 vK7atePcJYUoUEZ2u4MHpt9ku1qmDiWXjO+Gi1a8kdU9KqRYetVBPL4JHTkOlvJ4Ucv3G
-	 G0duKRUqKrNwgbzJq2270j4TQODNa5CgpV5AntWDz7WepHW66fPP9+2QeOXJDH9oGJuzY
-	 Sb6JwbrzRFjlm8mcMXQ7+yU7t+QvcjuR4wKrjVKetD5HGf5mxrqz6hc/DQOSwP5cNkQ==
+	t=1795053413;
+	b=5teMFR7r1ZsnnbuxhFIWZVqnyOPWVyDPctKuffM+yvI4jWDnFtI3qE0t+xyOsbyu8BgF
+	 IAU8pbfRhJQ8HRpzBValmkfJ2lNAUOOxO7TmYiUDbwsmAk3YmhdZfglJvsPG24E7ArkEb
+	 Fx/I5ximC1PP70kQ+NQpnSOC4zJ2w5UY4EvQcAUEUGRNu/sJDqxq3cxFWXCGZ9LYlwfyf
+	 8WxFL4IjKmnXwxHdo9iQzktm8u4RxMKL+h2B6JmwP6vMxaOK20Ovc8XtPwLUi1gs8Lk6J
+	 t1U35uEcF2hmpysY1xH3MQLujg7sI/qRaJSadpXEM9gbjzipCzgn3Zi33YS0e3M4AnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053410;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053413;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kRqS8nn7duaDNq4UQLD0XOF6rkiuIsZGTqx+h1AwqFw=;
-	b=Sg54q8GFwvPLvaPtgS65vTkQKEqBAYlW4s4XleklKR4mxL1ABY/P2ogOWMBHDk2yEuzD
-	 wXaYMBgwzfA9rbFGqGont1anh71FsK8GmYe7+npXJXDgYRFvZqnRb5FsW8j+QTUMxqkZB
-	 vXp9hWAnGMdJ7Xm75PmFYUOp5D1+ly8J8PTlafS0I/3TGxyfx7VljwWy3n2hiBlbq0dNF
-	 JhKkaVmGo6mhIQEqnHTvomPTmtqjUy6fY/GLzgS7JiZdnzmDd4acOjOAF2MUE6iaR/ajg
-	 tJf1w2PChmgSsOjuHS+3uV9OJdlpgyLpdQ2TA52qt/Cl6GrrK0cDzGb3XjAbW+Rmmrw==
+	bh=reW0Pbmt6XP+/Sqq3vVNJXGTKPLruXUnE9OGBHOc7lE=;
+	b=O/wTbIUqU4xBr9RCD4C9cTNSQbW9jK2MElj+eD7fKT63C5rH0FsOpdLEgCg+DjHhgOar
+	 nJNpp/eCjk0N8zNSCFzho9A0XbJ866EQ2/qzhX6ZQWN0bOX+wn2+5XKJUDxuHAPvC4K2J
+	 6ax/XXXU8qTI5p/9O8FjLTNPg/8K8fmNIZ+VgWoLaypp+nSDJMuHpKy/4vGKy5WhiN+P5
+	 N5fDwTJfaNVaXugPM2TMf6FzjqYh01ogTbQOOZrXH6dqIj3/mEU7y/p7doxTqAN4luxRV
+	 XekBgJGwCVrD087EDW29BcTM8SvjsLXNdXwr+y8u4zUj86GmqvDp2fzJ/ev+UJPqRcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=liCCOJ3k;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vQyrULPD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641A3606A31C;
-	Thu, 19 Nov 2026 01:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357C3606A320;
+	Thu, 19 Nov 2026 01:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=liCCOJ3k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA6721F000C4;
-	Thu, 19 Nov 2026 01:56:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vQyrULPD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863CB1F000C4;
+	Thu, 19 Nov 2026 01:56:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053410;
-	bh=kRqS8nn7duaDNq4UQLD0XOF6rkiuIsZGTqx+h1AwqFw=;
+	s=korg; t=1795053413;
+	bh=reW0Pbmt6XP+/Sqq3vVNJXGTKPLruXUnE9OGBHOc7lE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=liCCOJ3ku3mKBUACnwLMy/Sv4uiY17aSWl+tioMywKLoTSmPdSO/1q3qDFPFqigpS
-	 aD6M66eVysVprUAQDh1UtUTktHSyrr7frYBZn6V1LxJw3kr6rEP635mMC7Wi5mP2G1
-	 Xvd56Sh/IBLRUWCUVcM1trzMG803dti9fjLXftuI=
+	b=vQyrULPD4AZJj7x6QL1TjrzE4cGMcu4anw4WHpPH67Senu2bySEKmK78NQS9FqI+m
+	 W/kqLSoRe4G7VTHsYd6+D/M4Yj6pEpx82akYkQqO59FhmiEzpjSzOrztiYjj2xFuQ7
+	 QsLby8ViAxzFlpUXOMt+4i93x2ue8YZQiiUc5p/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Gongyi <zhaogongyi@bytedance.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Ilia Mirkin <imirkin@alum.mit.edu>,
+	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0910/2214] arm64: mm: validate /dev/mem mmap ranges without overflow
-Date: Wed, 18 Nov 2026 15:43:06 +0100
-Message-ID: <20261118150048.734844781@linuxfoundation.org>
+Subject: [PATCH 5.15 0911/2214] drm/nouveau/devinit/gf100-: try to avoid double-running vbios scripts
+Date: Wed, 18 Nov 2026 15:43:07 +0100
+Message-ID: <20261118150048.772160149@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,53 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Gongyi <zhaogongyi@bytedance.com>
+From: Ilia Mirkin <imirkin@alum.mit.edu>
 
-[ Upstream commit b0958b1397fb5ffdb995c0ccc74349841929c08d ]
+[ Upstream commit 2139cb633d48ebbbaec88d2e5a8ebe8e774df4fb ]
 
-An arm64 syzkaller reproducer creates a FUSE character device with
-major:minor 1:1, so opening it uses the /dev/mem file operations. It
-maps one page from offset 0xfffffffffffff000 at user address zero.
-The next openat() with a NULL pathname triggers a synchronous external
-abort (SEA, ESR 0x96000010) in strncpy_from_user() via do_getname(),
-panicking the kernel.
+Turns out some VBIOSes don't actually set the bit in question in 2240c.
+Use the nv50-style detection to try avoiding running the vbios twice.
 
-valid_mmap_phys_addr_range() checks the exclusive end by adding the
-mapping size to the starting address. For this offset, the sum wraps
-to zero and passes the PHYS_MASK test, allowing an out-of-range PFN to
-reach remap_pfn_range(). The inclusive-end overflow check in
-mmap_mem_prepare() does not catch it because the end is ULONG_MAX.
-
-Reject starting PFNs outside PHYS_MASK and compare the inclusive length
-against the remaining physical range without overflowing. This also
-allows mappings that end exactly at PHYS_MASK, which the old check
-incorrectly rejects.
-
-Fixes: 1d18c47c735e ("arm64: MMU fault handling and page table management")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
-[catalin.marinas@arm.com: changed the check to look more like __access_ok()]
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: a6a0f67ca7aa ("drm/nouveau/devinit/gf100-: detect if BIOS invoked devinit")
+Link: https://bugs.freedesktop.org/show_bug.cgi?id=97620
+Cc: <stable@vger.kernel.org> # v4.6+
+Signed-off-by: Ilia Mirkin <imirkin@alum.mit.edu>
+Reviewed-by: Dave Airlie <airlied@redhat.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://patch.msgid.link/20170128205347.17453-1-imirkin@alum.mit.edu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/mmap.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../drm/nouveau/nvkm/subdev/devinit/gf100.c   | 20 +++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/arch/arm64/mm/mmap.c b/arch/arm64/mm/mmap.c
-index 77ada00280d93..8f55d3af7e07b 100644
---- a/arch/arm64/mm/mmap.c
-+++ b/arch/arm64/mm/mmap.c
-@@ -38,7 +38,9 @@ int valid_phys_addr_range(phys_addr_t addr, size_t size)
-  */
- int valid_mmap_phys_addr_range(unsigned long pfn, size_t size)
- {
--	return !(((pfn << PAGE_SHIFT) + size) & ~PHYS_MASK);
-+	const phys_addr_t limit = PHYS_MASK + 1;
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
+index 051cfd6a5caf5..f06556412c7bb 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
+@@ -27,6 +27,7 @@
+ #include <subdev/bios/init.h>
+ #include <subdev/bios/pll.h>
+ #include <subdev/clk/pll.h>
++#include <subdev/vga.h>
+ 
+ int
+ gf100_devinit_pll_set(struct nvkm_devinit *init, u32 type, u32 freq)
+@@ -102,6 +103,25 @@ gf100_devinit_preinit(struct nvkm_devinit *base)
+ 	 * can use it as a reliable way to know whether we should run devinit.
+ 	 */
+ 	base->post = ((nvkm_rd32(device, 0x2240c) & BIT(1)) == 0);
 +
-+	return size <= limit && pfn <= (limit - size) >> PAGE_SHIFT;
++	/*
++	 * However some VBIOS init sequences miss this bit. So fall back to
++	 * the nv50 method of checking if the bit is not set. Running the
++	 * VBIOS multiple times may have detrimental effects.
++	 */
++	if (base->post) {
++		u64 disable = nvkm_devinit_disable(base);
++		/* magic to detect whether or not x86 vbios code has
++		 * executed the devinit scripts to initialise the
++		 * board. only works if there's a display engine.
++		 */
++		if (!(disable & (1ULL << NVKM_ENGINE_DISP))) {
++			if (nvkm_rdvgac(device, 0, 0x00) ||
++			    nvkm_rdvgac(device, 0, 0x1a)) {
++				base->post = false;
++			}
++		}
++	}
  }
  
- static int __init adjust_protection_map(void)
+ static const struct nvkm_devinit_func
 -- 
 2.53.0
 
