@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046156;
-	b=KWdP2z7C+ziqFNQpnqUd/amJFjXnX1+nw4k6KqZkU6J12CMi2K6f2jGF+b3OEpO/Tgis
-	 gHJO2JO9g8IBrkhNS6adtf3L49nsmtUyLYNuQrphoRsFnmJ9jjsecYB0sia6wo2XPbIol
-	 elo6sDAt5fwLN7FQ7NI9wiV6YAz6DVEqqddFI1SZgihFB1opBjx441rXNKvaGr+Hc4sFR
-	 2Gon6Ingb1gsGPjCb2bSrTUiK5g0C87aBHN7BU2Jp1kPfOZtJKYZia7EAoPjCWudaTcys
-	 Ho45WbHXUQEhhlH7Qzu2sXdkc9mXzlwnzQ16PlPVzpAauFMfoek8ajc+nOwI9lGHQBw==
+	t=1795046159;
+	b=1i0pRl9vZPEVnN9sJPEoIdexHjxQ27PYOv5kU8W3vxRZxwfwXx/r0cyKWJGJPm1j91xB
+	 UKiGEbLUo07smQSRxJV+HNH65JWAMi1Pv5FHWhLMzY4NAPNfKFLZy6iFTIwFLdWyysJcu
+	 rH4KkdQChZKqiIY/X2pVejo4vcjPWVwZdizS+9mwSav5ImOVgK3bWg8mZsD+RmrE9a5Nu
+	 rabTbXXNZ+tFdRU3LOQ7INtxqIOYP/Z2P+FIQGlMFEYOJMt5+RVzOgToTHCVfXj3jI6GT
+	 oab/oFSD/LJSM90uEHanqTPvbCi9YpNQdQSIt06JJs5TpcR7lmuD+Ttw7lAp/wMUsCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046156;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046159;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IVizj6N2X7Lqa0oVer0dafC49LLQSS1z7ESAli+KDhw=;
-	b=k2GvUcLxxrrn2GyKR7ONqS48omLBeKvjUMsy6MwGP66ezWqMfWdvXHSW761dJmOyoq7e
-	 9pcMc0dU0Fev9BYd0OwPNu5ca2gR6ILtqWLbKYlB5rvc2GW1jQmPT6GuWxshB8Wv6FOLQ
-	 yt2K0tExJGpfF3kHZkJxORdIzB5MpybMza2CBuRlByi9/k6Zygh/IsQK6xZFon3YDjQn3
-	 3IzxemYZdRgv00SQwWtn0EgWFMlx52I+EjNc8xEEM6qry/K3JbrAva14TCLqUTdHGG+jZ
-	 I5esinsneUhlITWs8GdYxix2zUhnkQHbt+uIfTAOQyw53GnS6fPaNWQSsOAU+SBmGqw==
+	bh=w1ekFPg0LfrOj3/LdeqghNBKUmkhV+tofYnvdojPPh4=;
+	b=bgPlK4VJtmF1u4rUuKdebZ/B08JveWR6K9urotZD/Lf9oJyEpKwFPyQDjdhiDLuV0/4e
+	 qIcBMhDqzEvzhaZ3qtqi0nHO3U7gJBLErUndvpAHGIN5HkCIvOBxpTNuox1hpfvTAtNV5
+	 1fVSKeOt6VLvfdYcgVbH1mRuHyU6HBK8/hk5PipgWIyPuH/vIXEgGORmcQHouQQri5VUH
+	 9cMCnw1o0lbr1ZVJMht3OpjIO4CrQWWYaMRlWGpppn8v0T1rQ8Nv1jPHO5o6tRur9WBaT
+	 CWr4VbagkFJU1nM5uqJA9mwieVems5lx2ERzb/EtKrTrKLqfQmLR2NSKMbnsRt2ZH+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=quV5yrxM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZ+iWR2B;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4516B606A31C;
-	Wed, 18 Nov 2026 23:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F4A606A31C;
+	Wed, 18 Nov 2026 23:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=quV5yrxM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968381F000C5;
-	Wed, 18 Nov 2026 23:55:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZ+iWR2B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583DA1F000C5;
+	Wed, 18 Nov 2026 23:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046156;
-	bh=IVizj6N2X7Lqa0oVer0dafC49LLQSS1z7ESAli+KDhw=;
+	s=korg; t=1795046158;
+	bh=w1ekFPg0LfrOj3/LdeqghNBKUmkhV+tofYnvdojPPh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=quV5yrxMi9gQu4sRrJhBDvt+c/MwsWlq0ttRz95KaCd41YuiioHl8jrNZzNbcGWh3
-	 JA0f3/3bLfXVmSDw5VraGalsfF55YnA2fLPW5riCA/rEdtFFDPv7+tP0FeBM8zfqEK
-	 zFn5DAotsjrIHuc0ViYw7eil3NySymUXwHFteDlo=
+	b=kZ+iWR2ByrPZQ//Z6QY+2nafsCtW0YPI6PEm74MGy0VEZi1blirhZPx7owLhTXvbI
+	 1bO7MTGGCgexKehweg8OHr/SkFsqpLwt8bwaFHvVTT4nCk+3Q53TbLsjORUKXLtzTZ
+	 /j0ZERk1ZknMnBuyMjWW+xBintsdT8BRpmD5p9pU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diego Oliva <diego@bynar.io>,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1180/2857] smb: client: fix OOB read in the SMB_FIND_FILE_UNIX name scan
-Date: Wed, 18 Nov 2026 15:36:54 +0100
-Message-ID: <20261118150244.090792089@linuxfoundation.org>
+Subject: [PATCH 6.1 1181/2857] mfd: ab8500: Fix child device leaks on probe failure
+Date: Wed, 18 Nov 2026 15:36:55 +0100
+Message-ID: <20261118150244.126043393@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,178 +68,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diego Oliva <diego@bynar.io>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit fa0c2f082946917c3f07d2475c8ce73a8c96d0e2 ]
+[ Upstream commit 5bf2ae8b131d4ae9c0ed5f7aa02532645f512022 ]
 
-cifs_fill_dirent_unix() finds the length of an SMB_FIND_FILE_UNIX
-entry name by scanning for its terminating NUL, over up to PATH_MAX + 1
-UTF-16 units in cifs_unicode_bytelen() or PATH_MAX bytes in strnlen().
-Neither scan knows where the response ends. cifs_fill_dirent() only
-requires the fixed part of the entry to fit, so the name can start
-exactly at the end of the received data, and a name that holds no
-terminator is then scanned for 8194 bytes, or 4096 bytes without
-unicode, past the end of the received data. SendReceive() copies at
-most 16468 bytes into the 16588-byte cifs_request allocation, so for a
-response of that length up to 8074 of the bytes scanned lie past the
-end of the allocation. Before the preceding patches bounded where the
-entry starts, the entry itself could start up to 820 bytes past the
-end of the allocation at the default CIFSMaxBufSize, and its name 928
-bytes past it, so all 8194 scanned bytes would lie outside.
-cifs_fill_dirent() rejects the name afterwards because it extends past
-the end of the response, so nothing of what was read is used, but the
-out-of-bounds read itself remains.
+ab8500_probe() registers MFD child devices before completing the
+remaining device initialization. If a later MFD registration or sysfs
+group creation fails, previously registered child devices are not
+removed.
 
-SMB_FIND_FILE_UNIX is only used with SMB1 servers that offer the Unix
-extensions; SMB1 is not negotiated by default and requires an explicit
-vers=1.0 mount.
+Use devm_mfd_add_devices() so registered MFD child devices are removed
+when probe fails.
 
-Before the preceding patches, an entry placed past the buffer left the
-scan out of bounds from its first read. They bound where the entry
-starts, but nothing bounds the scan, so a name that holds no
-terminator still runs off the end of the allocation. Reproduced on
-the unpatched tree with KASAN enabled, for an entry that starts
-inside the response, which is the case the preceding patches leave
-open:
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
 
- ==================================================================
- BUG: KASAN: slab-out-of-bounds in cifs_save_resume_key.isra.0+0x75c/0x7f0
- Read of size 2 at addr ffff88807ee640cc by task ls/84
-
- CPU: 0 UID: 0 PID: 84 Comm: ls Not tainted 7.3.0-rc4-00457-gf14572c203d5 #69 PREEMPT(lazy)
- Call Trace:
-  <TASK>
-  kasan_report+0xdf/0x1a0
-  cifs_save_resume_key.isra.0+0x75c/0x7f0
-  cifs_readdir+0x1ed6/0x29c0
-  iterate_dir+0x1c0/0x570
-  __x64_sys_getdents64+0x133/0x270
-  do_syscall_64+0x109/0x5d0
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  </TASK>
-
- Allocated by task 84 on cpu 1 at 15.751078s:
-  cifs_buf_get+0x36/0x90
-  smb_init+0x4f/0x110
-  CIFSFindNext+0xf7/0x14c0
-  cifs_readdir+0xf51/0x29c0
-
- The buggy address belongs to the object at ffff88807ee60000
-  which belongs to the cache cifs_request of size 16588
- The buggy address is located 0 bytes to the right of
-  allocated 16588-byte region [ffff88807ee60000, ffff88807ee640cc)
- ==================================================================
-
-The two bytes read there are one UTF-16 unit of the scan, at the first
-byte past the end of the object. The scan carries on from there,
-reported again 2, 4 and 6 bytes to the right.
-
-Pass the number of bytes that follow the fixed part of the entry to
-cifs_fill_dirent_unix() and stop both scans there. A scan that reaches
-the end of the response without finding a terminator now fails: it
-returns a name that ends exactly at the end of the response and would
-otherwise pass the bound, so cifs_fill_dirent() requires the position
-of the terminator of an SMB_FIND_FILE_UNIX name to lie inside the
-response as well. Accepting such a name truncated at the end of the
-response would turn a malformed entry into a directory entry, or a
-resume name, that no server sent. A name longer than the PATH_MAX cap
-of the scans is still truncated there, as before, when the response
-extends past the cap. The message cifs_unicode_bytelen() logs when it
-finds no terminator now covers both limits.
-
-This patch depends on "smb: client: fix OOB read of the resume name
-sent in TRANS2_FIND_NEXT2", which adds the end argument of
-cifs_fill_dirent() and the length it derives from it; the backport
-note in that patch applies to this one as well.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: cca69b67b3ba ("mfd: Export ab8500 chip id to sysfs")
+Fixes: 9c717cf3fa16 ("mfd: ab8500-core: Add device for new RTC version for AB8540 cut2")
 Cc: stable@vger.kernel.org
-Assisted-by: Bynario AI
-Signed-off-by: Diego Oliva <diego@bynar.io>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260924144355.1604369-1-lgs201920130244@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/readdir.c | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ drivers/mfd/ab8500-core.c | 44 ++++++++++++++++++++-------------------
+ 1 file changed, 23 insertions(+), 21 deletions(-)
 
-diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
-index 3bbbf5375c0e0..264046f4ef114 100644
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -486,17 +486,20 @@ initiate_cifs_search(const unsigned int xid, struct file *file,
- }
+diff --git a/drivers/mfd/ab8500-core.c b/drivers/mfd/ab8500-core.c
+index 3052142d91953..fd3f855ba9b22 100644
+--- a/drivers/mfd/ab8500-core.c
++++ b/drivers/mfd/ab8500-core.c
+@@ -1196,39 +1196,41 @@ static int ab8500_probe(struct platform_device *pdev)
+ 		return ret;
  
- /* return length of unicode string in bytes */
--static int cifs_unicode_bytelen(const char *str)
-+static size_t cifs_unicode_bytelen(const char *str, size_t maxlen)
- {
--	int len;
- 	const __le16 *ustr = (const __le16 *)str;
-+	size_t len;
+ 	if (is_ab9540(ab8500))
+-		ret = mfd_add_devices(ab8500->dev, 0, ab9540_devs,
+-				ARRAY_SIZE(ab9540_devs), NULL,
+-				0, ab8500->domain);
++		ret = devm_mfd_add_devices(ab8500->dev, 0, ab9540_devs,
++					   ARRAY_SIZE(ab9540_devs), NULL,
++					   0, ab8500->domain);
+ 	else if (is_ab8540(ab8500)) {
+-		ret = mfd_add_devices(ab8500->dev, 0, ab8540_devs,
+-			      ARRAY_SIZE(ab8540_devs), NULL,
+-			      0, ab8500->domain);
++		ret = devm_mfd_add_devices(ab8500->dev, 0, ab8540_devs,
++					   ARRAY_SIZE(ab8540_devs), NULL,
++					   0, ab8500->domain);
+ 		if (ret)
+ 			return ret;
  
--	for (len = 0; len <= PATH_MAX; len++) {
-+	maxlen = umin(PATH_MAX + 1, maxlen / sizeof(__le16));
-+	for (len = 0; len < maxlen; len++) {
- 		if (ustr[len] == 0)
--			return len << 1;
-+			return len * sizeof(__le16);
- 	}
--	cifs_dbg(FYI, "Unicode string longer than PATH_MAX found\n");
--	return len << 1;
-+	len *= sizeof(__le16);
-+	cifs_dbg(FYI, "%s: Unicode string not terminated within %zu bytes\n",
-+		 __func__, len);
-+	return len;
- }
- 
- static char *nxt_dir_entry(char *old_entry, char *end_of_smb, int level)
-@@ -562,13 +565,13 @@ static void cifs_fill_dirent_posix(struct cifs_dirent *de,
- }
- 
- static void cifs_fill_dirent_unix(struct cifs_dirent *de,
--		const FILE_UNIX_INFO *info, bool is_unicode)
-+		const FILE_UNIX_INFO *info, bool is_unicode, size_t maxlen)
- {
- 	de->name = &info->FileName[0];
- 	if (is_unicode)
--		de->namelen = cifs_unicode_bytelen(de->name);
-+		de->namelen = cifs_unicode_bytelen(de->name, maxlen);
+ 		if (is_ab8540_1p2_or_earlier(ab8500))
+-			ret = mfd_add_devices(ab8500->dev, 0, ab8540_cut1_devs,
+-			      ARRAY_SIZE(ab8540_cut1_devs), NULL,
+-			      0, ab8500->domain);
++			ret = devm_mfd_add_devices(ab8500->dev, 0,
++						   ab8540_cut1_devs,
++						   ARRAY_SIZE(ab8540_cut1_devs),
++						   NULL, 0, ab8500->domain);
+ 		else /* ab8540 >= cut2 */
+-			ret = mfd_add_devices(ab8500->dev, 0, ab8540_cut2_devs,
+-			      ARRAY_SIZE(ab8540_cut2_devs), NULL,
+-			      0, ab8500->domain);
++			ret = devm_mfd_add_devices(ab8500->dev, 0,
++						   ab8540_cut2_devs,
++						   ARRAY_SIZE(ab8540_cut2_devs),
++						   NULL, 0, ab8500->domain);
+ 	} else if (is_ab8505(ab8500))
+-		ret = mfd_add_devices(ab8500->dev, 0, ab8505_devs,
+-			      ARRAY_SIZE(ab8505_devs), NULL,
+-			      0, ab8500->domain);
++		ret = devm_mfd_add_devices(ab8500->dev, 0, ab8505_devs,
++					   ARRAY_SIZE(ab8505_devs), NULL,
++					   0, ab8500->domain);
  	else
--		de->namelen = strnlen(de->name, PATH_MAX);
-+		de->namelen = strnlen(de->name, min_t(size_t, maxlen, PATH_MAX));
- 	de->resume_key = info->ResumeKey;
- 	de->ino = le64_to_cpu(info->basic.UniqueId);
- }
-@@ -619,6 +622,7 @@ static int cifs_fill_dirent(struct cifs_dirent *de, const void *info,
- 			    const char *end, u16 level, bool is_unicode)
- {
- 	size_t len = end > (const char *)info ? end - (const char *)info : 0;
-+	size_t nul_len = 0;
+-		ret = mfd_add_devices(ab8500->dev, 0, ab8500_devs,
+-				ARRAY_SIZE(ab8500_devs), NULL,
+-				0, ab8500->domain);
++		ret = devm_mfd_add_devices(ab8500->dev, 0, ab8500_devs,
++					   ARRAY_SIZE(ab8500_devs), NULL,
++					   0, ab8500->domain);
+ 	if (ret)
+ 		return ret;
  
- 	memset(de, 0, sizeof(*de));
+ 	/* Add battery management devices */
+-	ret = mfd_add_devices(ab8500->dev, 0, ab8500_bm_devs,
+-			      ARRAY_SIZE(ab8500_bm_devs), NULL,
+-			      0, ab8500->domain);
++	ret = devm_mfd_add_devices(ab8500->dev, 0, ab8500_bm_devs,
++				   ARRAY_SIZE(ab8500_bm_devs), NULL,
++				   0, ab8500->domain);
+ 	if (ret)
+ 		dev_err(ab8500->dev, "error adding bm devices\n");
  
-@@ -631,7 +635,9 @@ static int cifs_fill_dirent(struct cifs_dirent *de, const void *info,
- 	case SMB_FIND_FILE_UNIX:
- 		if (len < offsetof(FILE_UNIX_INFO, FileName))
- 			goto too_short;
--		cifs_fill_dirent_unix(de, info, is_unicode);
-+		cifs_fill_dirent_unix(de, info, is_unicode,
-+				      len - offsetof(FILE_UNIX_INFO, FileName));
-+		nul_len = is_unicode ? sizeof(__le16) : sizeof(__u8);
- 		break;
- 	case SMB_FIND_FILE_DIRECTORY_INFO:
- 		if (len < offsetof(FILE_DIRECTORY_INFO, FileName))
-@@ -664,7 +670,8 @@ static int cifs_fill_dirent(struct cifs_dirent *de, const void *info,
- 	}
- 
- 	if (de->name &&
--	    (end < de->name || (size_t)(end - de->name) < de->namelen)) {
-+	    (end < de->name ||
-+	     (size_t)(end - de->name) < de->namelen + nul_len)) {
- 		cifs_dbg(VFS, "%s: search entry name extends past end of SMB\n",
- 			 __func__);
- 		return -EINVAL;
 -- 
 2.53.0
 
