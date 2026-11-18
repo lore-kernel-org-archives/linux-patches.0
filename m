@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036037;
-	b=S48XuGwAUGcMZN5ytHe/jbTS1C6ZAP7dBVjTrwpB//yVxzAUqJTu+mnj2CN/qr0jbTBs
-	 QGR+8D3ExFK9ohxx/MrabWjZa/cX7fXlEp8rC2W0LvEjek0i+D27YLiK+H+dc6agORWdl
-	 GI9j+Mix9fqK2NV9xbaoFMls+UcI3Itp0HAajS0/Btz2Wp0xkjXuVR/khFwkTHHNNT42y
-	 rT5Og+xt4TBYgFshv9wZqaRFcG+9dKBZkt7oUF5p8ePEI92LE8UOwBZw06ir9CxVMKwlM
-	 k+/JWiw+W55io4ykjEqwwxCqP4V4tjUWlE1sN4upvxLxeik52eMOeo9Jxys+sLyZDYw==
+	t=1795036039;
+	b=PM4fmZsefw+WGIGI7vTykrCvkyEcx/JEbtt68FLkruRa274CzkovDZx2mlG8dJ8iQD5U
+	 Kc786OmfTbGCN5bdeao1V+Gmh3lwEH5Wk/691tFgqgtV2XsA+rpRlx8ccFbVXYDM8krVs
+	 hznqe1VkXSEyGy2UhJ1rWuRk2gE8Xo666t5m1M3RxElTX7LD0L5UETiHkVdUUw70pIy+k
+	 PTa6ZqAaJLhzmrq2Krg6LMTsqV2AzbLAgs8BBK62Ha/emtJX4gLBzICsmfFEgIUb5ERNS
+	 a8p7fH8Y2TkLyntFvsW7TC3NzQXkuRHRPF6N6jVDfvSNhMzZvbJStqAwatgVgpqBxOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036037;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036039;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=koEcso5kz9Fzgrj7aCybXxu/LOVN3VJ2zJQG4zh5B8I=;
-	b=miZPApitNmQCJ2T3TDuLwLZWMdm0W2IoprrREeZNMg9IgMNrmH/nUM4RZUrO5k7jQ36R
-	 ivbA2hfwWXu6xA/m3F4k/nfkfh13QdkM/8XqvOV8Ll3dc5TzwHZ9LmidVJOUZASN28alz
-	 1vBGu2TH/dxAIZk6fbsFCUiWtaUXRaQBp9LLyQRkvktbvFlULsuk+NtR4d1ljR6Oi13M2
-	 P8VpQHEGa2IIIG/Ne3bjH/ERPbI13Ux21HgF07qXU8MxTPchqw07988KY0PTHVoSFzggy
-	 k43uQSMbQNicVg6rie4/p0/BGXSHbGnQomPGbthkZUbCWheIafXW1JGmIeoXFcrn2Mg==
+	bh=5nW0ZhEwVL3j7Gn9eBPh9ifbLAVmtqjf9I9dSRvjVJI=;
+	b=lkIjpFnjVhOvPCyvYuSMPF0uq7ArB3rcAGi28t1h61ey0N4RXmhI4T7GJvURjdFCQKN6
+	 fzwGJ+NF8MfBa6ng49rGM9n26J0hApXT/JjeCNHeqrxrBA0vFapvffWOjXytY+jqVlhUJ
+	 Ay+5OdI6lQE4l3y9HFLpYZFIyPsHL7h/R0SKIIFpgclL0Pre8xObnuAMFM2hwNg7PGyer
+	 HzAFYKiPBqALkcJY08Rs3yM8Q3PEapPgg8NC12d6lI5Gp1r9kEGlTrtsDzWuG78FSE7Ks
+	 E6gLVGZUvgfA0Ns4xYsmTTF52Rk/B4wkoG2FF2lvkfS/q9jniMnVOnkmpZs/MxLfc4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vSo3MTQp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSf72NT6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8BE2606A31C;
-	Wed, 18 Nov 2026 21:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8EF8606A31C;
+	Wed, 18 Nov 2026 21:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vSo3MTQp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C6D1F000C4;
-	Wed, 18 Nov 2026 21:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSf72NT6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C601F000C4;
+	Wed, 18 Nov 2026 21:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036036;
-	bh=koEcso5kz9Fzgrj7aCybXxu/LOVN3VJ2zJQG4zh5B8I=;
+	s=korg; t=1795036039;
+	bh=5nW0ZhEwVL3j7Gn9eBPh9ifbLAVmtqjf9I9dSRvjVJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vSo3MTQpTwawt2STvwS5A4bgydbktq2Hy0e3hlQGuOe+RSTB4JLI09C/N77vb1tyA
-	 WhADIFLtMbks+fziO25B9wiWKiDnOJV15s2kfvu5gD4buCd1MfLXFXYDzxQTFjW2od
-	 h/jLTQP7oZtYpSngMt0zb43vGS3zvK815OFx8FLA=
+	b=CSf72NT61pRC6AKHeZ0qf9GMLBtI34HqtgSGfLTJkILk0vo6q7L0667DmQBrIrYYl
+	 h4vet1yXJJrku3t9nZMJr+uwrA9tNJ4AKYXXqRJWN0RD9pykG6V2n0+UAE7WiSliDb
+	 LNp+bA3CQWnmNwbSCOU979vaYudGcdTGcoR/v/qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Chao <liuc63@xiaopeng.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Weili Qian <qianweili@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0879/3318] usb: fotg210: validate endpoint index in ep0 handlers
-Date: Wed, 18 Nov 2026 15:25:01 +0100
-Message-ID: <20261118150345.688897370@linuxfoundation.org>
+Subject: [PATCH 6.6 0915/3318] crypto: hisilicon/hpre - fix GFP flags for dma_alloc_coherent
+Date: Wed, 18 Nov 2026 15:25:37 +0100
+Message-ID: <20261118150346.969419906@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,92 +68,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Chao <liuc63@xiaopeng.com>
+From: Weili Qian <qianweili@huawei.com>
 
-[ Upstream commit bbddb219b00af0792242a0ad1dc7fb3344f38733 ]
+[ Upstream commit 40ec9605cb195e065470f8f23ef94b1b541411a3 ]
 
-fotg210_set_feature(), fotg210_clear_feature() and fotg210_get_status()
-use wIndex from the USB setup packet to index the fotg210->ep[] array
-without verifying that the endpoint number falls below
-FOTG210_MAX_NUM_EP (5).  USB_ENDPOINT_NUMBER_MASK is 0x0f, so a
-malicious host can issue a setup packet with wIndex 5..15, resulting in
-an out-of-bounds array read.  The resulting wild pointer is then
-dereferenced in fotg210_set_epnstall() or fotg210_is_epnstall(), which
-compute an MMIO register offset from ep->epnum and perform iowrite32
-through it.
+The HPRE driver hard-codes GFP_ATOMIC for RSA/DH and GFP_KERNEL for
+ECDH. This may cause "scheduling while atomic" in atomic context or
+unnecessary allocation failures under memory pressure.
 
-fotg210_clear_feature() is especially problematic: the out-of-bounds
-access occurs at function entry (source-level) regardless of which
-USB_RECIP_* case is taken, because the ep pointer is computed before the
-switch statement.
+Select GFP flags dynamically based on CRYPTO_TFM_REQ_MAY_SLEEP and
+store them in hpre_asym_request::flags. The areq field is a union of
+rsa/dh/ecdh request pointers; reading base.flags through any union
+member other than the one that was written would be type-punning, so
+a dedicated flags field avoids that.
 
-Add upper-bound checks on the endpoint number derived from wIndex in
-all three functions.  Invalid endpoint numbers in clear_feature now
-trigger fotg210_request_error() (STALL) instead of silently falling
-through to fotg210_set_cxdone().  Also add the missing le16_to_cpu()
-conversion for ctrl->wIndex in fotg210_get_status() to fix a sparse
-endianness warning.
-
-Fixes: b84a8dee23fd ("usb: gadget: add Faraday fotg210_udc driver")
+Fixes: 98dfa9343f37 ("crypto: hisilicon/hpre - don't use GFP_KERNEL to alloc mem during softirq")
 Cc: stable@vger.kernel.org
-Signed-off-by: Liu Chao <liuc63@xiaopeng.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260913120458.1608186-1-liuc63@xiaopeng.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Weili Qian <qianweili@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/fotg210/fotg210-udc.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/crypto/hisilicon/hpre/hpre_crypto.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/fotg210/fotg210-udc.c b/drivers/usb/fotg210/fotg210-udc.c
-index f7ea84070554e..b68802ee53403 100644
---- a/drivers/usb/fotg210/fotg210-udc.c
-+++ b/drivers/usb/fotg210/fotg210-udc.c
-@@ -661,7 +661,7 @@ static void fotg210_set_feature(struct fotg210_udc *fotg210,
- 	case USB_RECIP_ENDPOINT: {
- 		u8 epnum;
- 		epnum = le16_to_cpu(ctrl->wIndex) & USB_ENDPOINT_NUMBER_MASK;
--		if (epnum)
-+		if (epnum && epnum < FOTG210_MAX_NUM_EP)
- 			fotg210_set_epnstall(fotg210->ep[epnum]);
- 		else
- 			fotg210_set_cxstall(fotg210);
-@@ -677,8 +677,8 @@ static void fotg210_set_feature(struct fotg210_udc *fotg210,
- static void fotg210_clear_feature(struct fotg210_udc *fotg210,
- 				struct usb_ctrlrequest *ctrl)
- {
--	struct fotg210_ep *ep =
--		fotg210->ep[ctrl->wIndex & USB_ENDPOINT_NUMBER_MASK];
-+	u8 epnum = le16_to_cpu(ctrl->wIndex) & USB_ENDPOINT_NUMBER_MASK;
-+	struct fotg210_ep *ep;
+diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+index 2d2dc969f40d8..81a3e0c8a358d 100644
+--- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
++++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+@@ -145,6 +145,7 @@ struct hpre_asym_request {
+ 	int req_id;
+ 	hpre_cb cb;
+ 	struct timespec64 req_time;
++	u32 flags;
+ };
  
- 	switch (ctrl->bRequestType & USB_RECIP_MASK) {
- 	case USB_RECIP_DEVICE:
-@@ -688,7 +688,12 @@ static void fotg210_clear_feature(struct fotg210_udc *fotg210,
- 		fotg210_set_cxdone(fotg210);
- 		break;
- 	case USB_RECIP_ENDPOINT:
--		if (ctrl->wIndex & USB_ENDPOINT_NUMBER_MASK) {
-+		if (epnum >= FOTG210_MAX_NUM_EP) {
-+			fotg210_request_error(fotg210);
-+			break;
-+		}
-+		if (epnum) {
-+			ep = fotg210->ep[epnum];
- 			if (ep->wedged) {
- 				fotg210_set_cxdone(fotg210);
- 				break;
-@@ -744,8 +749,8 @@ static void fotg210_get_status(struct fotg210_udc *fotg210,
- 		fotg210->ep0_data = cpu_to_le16(0);
- 		break;
- 	case USB_RECIP_ENDPOINT:
--		epnum = ctrl->wIndex & USB_ENDPOINT_NUMBER_MASK;
--		if (epnum)
-+		epnum = le16_to_cpu(ctrl->wIndex) & USB_ENDPOINT_NUMBER_MASK;
-+		if (epnum && epnum < FOTG210_MAX_NUM_EP)
- 			fotg210->ep0_data =
- 				cpu_to_le16(fotg210_is_epnstall(fotg210->ep[epnum])
- 					    << USB_ENDPOINT_HALT);
+ static inline unsigned int hpre_align_sz(void)
+@@ -259,6 +260,7 @@ static int hpre_prepare_dma_buf(struct hpre_asym_request *hpre_req,
+ 				struct scatterlist *data, unsigned int len,
+ 				int is_src, dma_addr_t *tmp)
+ {
++	gfp_t gfp = hpre_req->flags & CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL : GFP_ATOMIC;
+ 	struct hpre_ctx *ctx = hpre_req->ctx;
+ 	struct device *dev = ctx->dev;
+ 	void *ptr;
+@@ -268,7 +270,7 @@ static int hpre_prepare_dma_buf(struct hpre_asym_request *hpre_req,
+ 	if (unlikely(shift < 0))
+ 		return -EINVAL;
+ 
+-	ptr = dma_alloc_coherent(dev, ctx->key_sz, tmp, GFP_ATOMIC);
++	ptr = dma_alloc_coherent(dev, ctx->key_sz, tmp, gfp);
+ 	if (unlikely(!ptr))
+ 		return -ENOMEM;
+ 
+@@ -530,6 +532,7 @@ static int hpre_msg_request_set(struct hpre_ctx *ctx, void *req, bool is_rsa)
+ 		h_req = PTR_ALIGN(tmp, hpre_align_sz());
+ 		h_req->cb = hpre_rsa_cb;
+ 		h_req->areq.rsa = akreq;
++		h_req->flags = akreq->base.flags;
+ 		msg = &h_req->req;
+ 		memset(msg, 0, sizeof(*msg));
+ 	} else {
+@@ -544,6 +547,7 @@ static int hpre_msg_request_set(struct hpre_ctx *ctx, void *req, bool is_rsa)
+ 		h_req = PTR_ALIGN(tmp, hpre_align_sz());
+ 		h_req->cb = hpre_dh_cb;
+ 		h_req->areq.dh = kreq;
++		h_req->flags = kreq->base.flags;
+ 		msg = &h_req->req;
+ 		memset(msg, 0, sizeof(*msg));
+ 		msg->key = cpu_to_le64(ctx->dh.dma_xa_p);
+@@ -1511,6 +1515,7 @@ static int hpre_ecdh_msg_request_set(struct hpre_ctx *ctx,
+ 	h_req = PTR_ALIGN(tmp, hpre_align_sz());
+ 	h_req->cb = hpre_ecdh_cb;
+ 	h_req->areq.ecdh = req;
++	h_req->flags = req->base.flags;
+ 	msg = &h_req->req;
+ 	memset(msg, 0, sizeof(*msg));
+ 	msg->in = cpu_to_le64(DMA_MAPPING_ERROR);
+@@ -1532,6 +1537,7 @@ static int hpre_ecdh_msg_request_set(struct hpre_ctx *ctx,
+ static int hpre_ecdh_src_data_init(struct hpre_asym_request *hpre_req,
+ 				   struct scatterlist *data, unsigned int len)
+ {
++	gfp_t gfp = hpre_req->flags & CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL : GFP_ATOMIC;
+ 	struct hpre_sqe *msg = &hpre_req->req;
+ 	struct hpre_ctx *ctx = hpre_req->ctx;
+ 	struct device *dev = ctx->dev;
+@@ -1545,7 +1551,7 @@ static int hpre_ecdh_src_data_init(struct hpre_asym_request *hpre_req,
+ 	if (unlikely(shift < 0))
+ 		return -EINVAL;
+ 
+-	ptr = dma_alloc_coherent(dev, ctx->key_sz << 2, &dma, GFP_KERNEL);
++	ptr = dma_alloc_coherent(dev, ctx->key_sz << 2, &dma, gfp);
+ 	if (unlikely(!ptr))
+ 		return -ENOMEM;
+ 
 -- 
 2.53.0
 
