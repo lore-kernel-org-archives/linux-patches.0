@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061554;
-	b=F6TaUGRPheAuF9MIq9x8ibeIblJuH/eBcSNIdqREH/6wur4gYSIgqbi4LYL7ortuiXGp
-	 6Nhgw7rc4HyfE0QNuFuA+q0iHxYqge4TVNZukVwUIy2XCC6AM3aIoySQNksi5Y9RIKDo1
-	 D/RTcdP0dFHJ5A87awNMer29YLT6qbijPtv/wc4pRo2sW7y3prH8D7g0VryCnJzyy3Pak
-	 Zgsvs5KEOVfuweKkBjMdeptuMdpw3Fkj84/bXJKT9HfCqBHPngAOWU9Jm/Q0X/Nt42mNs
-	 zCdRbT36+JLX/gpWFl2ElaoYiTwMU3mbhQPbCpjpUQWif4fPiebDLV4v3qlEa0WGwVA==
+	t=1795061557;
+	b=nCDg+6MdB+G5JvrVi3xq5QIcXiufInA1wnKaxiQ8lIgqCxUByek+md6Z/0aY9T5F2YgQ
+	 5hhu1WzOA/zlIMqnsy2aE8Vk9trS4ycRif7p8b4cahtMyQG4syd8HKwqljphAVcztWHua
+	 +QxkLf1KMjoMwQylY6OCSVlH5aDQvkAr5cDbBfrbdeEvtC/ZWaKsV642E5m9rxrH87+U+
+	 n7m75g4KtNmbA52BRVdjjfjByNDtDSVHuzLIq6p69Z31n9O7aZdMXTYhwtjVyqeV2O6sR
+	 kUIYjaxHY9yVXzM7UiaD4XoYny9rLeyIlVXUDNGAs5ci+CWEA7SlG2Mu2pKYFym771g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061554;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061557;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fF+/2E9j16PCeSL3e16jJMaQ0W0xXGWY8JdSZQ6TQE4=;
-	b=1EMUZXDqtiqQ+oY2AIUpCyNLoNuFYO6+JkZKm4dVWvikpj6A9A4QtZdIyrer4s4m4uLe
-	 SAvtxPSLfDhR2TNLxDJAI0fFm8LAybtTTgdxKX8EJVx9O+RCoikpyrN6npMcXRQr0g0Lx
-	 ySotNdAAiXd6dLodq+pyMOToLuaYS1V7iL/PGEMdpEh/L68XNqvO6vnTPY9/1Voyd/fMw
-	 VjKSaf5/kxepMPrdLdkT8LMUr/bq1b/WnItYVKmNVkpIKqanricS7RkyPScEu7n578Hh/
-	 xi/xqeOK6ZWNLZC6l5Fd9IxvnpL4K63ECPVBA7L3xPN7R/itc4FXF6m2IMQw5qt9PMg==
+	bh=Bs7GCfWfYre2hJ0mdMCPqSCXbiWt9YSjwaNxg2QcYOc=;
+	b=CXsbzNQxcG2m42o9Z9Sxlgwojd+DT3SDPS9okP3VlybfJb6O9KaBSrVqrvmPpDA03QQL
+	 z7Z8DFK3FELbgykdU4kHxjGXacSZWYMZifNqa2zjwXHEB6qE/MEIf6z7Pn8dFFeM0vnPY
+	 GMY3/W7UJ9UI8qckHr3FVJ/Tjlq2VStQMx4zjxRtsiMcaq6YQ6D1R4h0TX8/I5IM4Habx
+	 Nht+ecvEy3/kHn+17LLTEGngbjn4gYAodqxZ5wPvi3nfxHjyS/pEA3CmllISiTPKC0Bad
+	 M7mf9XhPg9M/Heqr2utZ2Kh/RHb+3Z6JzBaL0WmWJ2D2QGrEOeRmJbmtKAvIiX3Nj7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVGIAL7g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OHpTCuXJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15608606A33D;
-	Thu, 19 Nov 2026 04:12:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFB7606A335;
+	Thu, 19 Nov 2026 04:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVGIAL7g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668021F000C4;
-	Thu, 19 Nov 2026 04:12:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OHpTCuXJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D291F000C4;
+	Thu, 19 Nov 2026 04:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061553;
-	bh=fF+/2E9j16PCeSL3e16jJMaQ0W0xXGWY8JdSZQ6TQE4=;
+	s=korg; t=1795061556;
+	bh=Bs7GCfWfYre2hJ0mdMCPqSCXbiWt9YSjwaNxg2QcYOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wVGIAL7gA2YTtrOeZpYs8NSCuXUfCZHRVAyEQDyOkQ/NXV2Vzc7ga/IkcDqGNYA7V
-	 gU8wLO1L/pE6Q7uZstdYPZAGrQzF/NXcUCQYnwmddI7b56gvd02/J2X238oMOuG41A
-	 l5Ffrrdo4rVSVsrTpi5fnCR8+FGqUO+q/KNYKuAQ=
+	b=OHpTCuXJtKFdlk7zmfiZ8pgjDT9+WHr3JtKWJRu4eQevh9fgh80Ztb92GFaIPiZtv
+	 Lr5B1lQ+BtGKpd6Akr8aNG6AeKvpUjgfZbkmk7KkdHydCylZEiIqBatmO6opW4XjOL
+	 sXmZJ9Ytmh4hUkK4seQ0RqmbT491h7pZKiApWBms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot+690d666eb12fca6e1e61@syzkaller.appspotmail.com,
+	Yogesh Gaur <yogeshgaur.83@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1592/1848] net: alacritech: fix dma_free_coherent() in error path
-Date: Wed, 18 Nov 2026 16:00:30 +0100
-Message-ID: <20261118150026.158014103@linuxfoundation.org>
+Subject: [PATCH 5.10 1593/1848] comedi: comedi_parport: validate the IRQ supplied by userspace
+Date: Wed, 18 Nov 2026 16:00:31 +0100
+Message-ID: <20261118150026.192525327@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,42 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Yogesh Gaur <yogeshgaur.83@gmail.com>
 
-[ Upstream commit 05b5019b01fb9443b09ae4ed34af1135a80a84c8 ]
+[ Upstream commit 790ea6844593bcd03b0379986fc821d8c511746e ]
 
-In slic_init_stat_queue(), a series of coherent buffers is allocated
-with the length size. The size is then stored in stq->mem_size for
-normal deallocation. However, in the error path, stq->mem_size is also
-used but is not initialized. This error may leave the freed buffers
-mapped, leaking a resource and allowing the device to access freed
-memory.
+comedi boards are configured through the COMEDI_DEVCONFIG ioctl, so
+it->options[1] is a number chosen by userspace. comedi_parport passes it to
+request_irq() without checking it first, which lets an interrupt owned by
+another irqdomain -- a PCI device's IO-APIC GSI, for instance -- be
+claimed for this board. When the owner of that interrupt is later
+released the descriptor is freed while this driver's handler is still
+installed on it.
 
-Change the length in error path to size.
+A parallel port asserts a legacy ISA interrupt, so the ISA range is the
+right bound; it is also sufficient, because mp_chip_data->isa_irq is set
+only by alloc_isa_irq_from_domain() and mp_unmap_irq() returns early when
+it is set.
 
-Fixes: 60c140df15db ("net: ethernet: slicoss: add slicoss gigabit ethernet driver")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261006140912.50828-2-fourier.thomas@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+syzbot hit this one:
+
+	remove_proc_entry: removing non-empty directory 'irq/20', leaking at least 'comedi_parport'
+	WARNING: fs/proc/generic.c:747 at remove_proc_entry+0x4e7/0x610 fs/proc/generic.c:747
+	Call Trace:
+	 <TASK>
+	 unregister_irq_proc+0x206/0x2a0 kernel/irq/proc.c:406
+	 free_desc+0x89/0x330 kernel/irq/irqdesc.c:482
+	 irq_free_descs+0x84/0xc0 kernel/irq/irqdesc.c:865
+	 irq_domain_free_irqs+0x46a/0x5c0 kernel/irq/irqdomain.c:1917
+	 mp_unmap_irq+0xf8/0x130 arch/x86/kernel/apic/io_apic.c:1061
+	 acpi_unregister_gsi_ioapic+0x40/0x60 arch/x86/kernel/acpi/boot.c:722
+	 acpi_pci_irq_disable+0x275/0x360 drivers/acpi/pci_irq.c:517
+	 pci_disable_device+0x130/0x270 drivers/pci/pci.c:2206
+	 pci_device_remove+0xb2/0x1d0 drivers/pci/pci-driver.c:512
+	 device_release_driver_internal+0x44e/0x620 drivers/base/dd.c:1372
+	 unbind_store+0xf8/0x110 drivers/base/bus.c:244
+	 </TASK>
+
+The leaked /proc entry the warning names is the mild part.
+mp_chip_data->count tracks GSI mappings rather than request_irq() users,
+and __setup_irq() takes no reference on the descriptor, so the irq_desc
+is freed with the comedi irqaction still attached to it.
+
+Bound the value before requesting it, as das16m1.c already does. An
+out-of-range value is ignored rather than rejected, so the board still
+attaches without interrupt support, exactly as it does today when
+request_irq() fails.
+
+Fixes: 241ab6ad7108 ("Staging: comedi: add comedi_parport driver")
+Reported-by: syzbot+690d666eb12fca6e1e61@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=690d666eb12fca6e1e61
+Assisted-by: LLM
+Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
+Link: https://patch.msgid.link/20260909104848.1763-2-yogeshgaur.83@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/alacritech/slicoss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/comedi/drivers/comedi_parport.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/alacritech/slicoss.c b/drivers/net/ethernet/alacritech/slicoss.c
-index 696517eae77f0..7b4af9303026b 100644
---- a/drivers/net/ethernet/alacritech/slicoss.c
-+++ b/drivers/net/ethernet/alacritech/slicoss.c
-@@ -813,7 +813,7 @@ static int slic_init_stat_queue(struct slic_device *sdev)
+diff --git a/drivers/staging/comedi/drivers/comedi_parport.c b/drivers/staging/comedi/drivers/comedi_parport.c
+index 1a7dd9c186ad7..782579692b1d3 100644
+--- a/drivers/staging/comedi/drivers/comedi_parport.c
++++ b/drivers/staging/comedi/drivers/comedi_parport.c
+@@ -241,7 +241,8 @@ static int parport_attach(struct comedi_device *dev,
+ 	outb(0, dev->iobase + PARPORT_DATA_REG);
+ 	outb(0, dev->iobase + PARPORT_CTRL_REG);
  
- free_descs:
- 	while (i--) {
--		dma_free_coherent(&sdev->pdev->dev, stq->mem_size,
-+		dma_free_coherent(&sdev->pdev->dev, size,
- 				  stq->descs[i] - stq->addr_offset[i],
- 				  stq->paddr[i] - stq->addr_offset[i]);
- 	}
+-	if (it->options[1]) {
++	/* only ISA interrupts are valid on a parallel port */
++	if (it->options[1] >= 1 && it->options[1] <= 15) {
+ 		ret = request_irq(it->options[1], parport_interrupt, 0,
+ 				  dev->board_name, dev);
+ 		if (ret == 0)
 -- 
 2.53.0
 
