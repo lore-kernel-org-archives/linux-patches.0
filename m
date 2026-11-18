@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059185;
-	b=qODc88S54DfhhZdxrqEQtxlMvE3pcGql8JZ5UER/4wiH/I/9mpKXhgmf1HWSI6CSRulv
-	 acFvdr0jMi+wa/VtTsyXZxPFkohSk1ACcEziJYQvir06Zq6IZIUgm8HwQel0hYOnVxIsD
-	 O+zjqwW2B5yQuvL0qFB+jBQ/Ya+jmfg/jLUQCKeBv7/b1DkmQjloMzyYEB+49ABSXfPdf
-	 16HL6Q57Ydw2LVWlQdXjzRG1q/cpYNQ2X988qUjGPZdyQ67cj+IrU9wqSYVidPwe7Qaku
-	 0jTxT/0XnlBUQYzA/2BQQKuoO972Bj2XBjo/JWgRPZW3ZYvyovf49Larhpb1MTl1nYg==
+	t=1795059188;
+	b=KTiQyRyGzUitExzOpLxvj9GEYamRpbxWpiD4wymShlhVlyZU36QHWiQAYBdWEVxoAj25
+	 FaUCtxRcjQBudI8i9E31vvqKBYuOB/RgFhmJojBeCDAjn2dMwTJJngYmsfDS8xnww8QML
+	 v2maf3CEzIxoMBUnXvg6/h1k5uF3W+WyTevG1gFH++ST3/nh7APweIq9Wgk5jom371o1D
+	 DPilwxqHloZ/XHrG/DKnWlhwBcyFupyT3IM7r7TUUs4Z17xzyGMMtzRloZFOjtX8bGylv
+	 zbovGr3fXdHIfmSUMdPJYAB1xGWV0Smcue7EQNfI08KhmaP4bPrP84QfFoZBzmuZNHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059185;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059188;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qUiXDEAzdGZYFfBRgavj02VySDj1nN98bQmz0TeHjiU=;
-	b=0GXBtDCRdiPAcgmf4wxA6++n3aMWS3ZCR6Xkd3KusDogg/epln7RGflsnSfaSPZGL4F8
-	 iQA+NJ7l9HGQJdWWAYrUTW84K7oL9P3q86MhBWuUTC7jgce7PWzbXcHOarEOtBqxxJYBU
-	 gEo5yaCxw3hAom4wdoboq8EgWbPs/Nd0z+Tb0oCskS+Ia0cck4Fc6EP+pYjniZdtQ9N28
-	 Uk7tEPPXtgMmtFjEHSX2iYYVX1BYB2wIp6hSiIsQgTIamAjGg3VNWa/7PMjkfB4hz3mZ+
-	 zJ25ch8Z+8q+F8AI/8QPmlDOfReIcrUamhLSvjhi4P2FFu8W+o3GR60GHEgSeIZ92/g==
+	bh=rCJ363f2Tmfmt0wMF7jYSgA8yja3tZuJXCzBuWdy9JU=;
+	b=e4yKyZZInLCRUkYeMnEFljMnqYUOVv3VyjC46wN24DD5/APXOZIK3aW7ZU1jtDQJZVVw
+	 kD6nU8ov4BOoQDFBViQ1gnUxiUrQApYkvP8MK7pqP8xiExOxlHvZy2ggizWEFNTU3zVU2
+	 ySacfHqd3ukJfKcDY1128JPK+/+EdNlQuEZJRcO+cQkGKn2BTKW9AORF4siYz2+m4inTt
+	 gt6BJZIMPfc+ATHe6a3v8kWb7B/r3rW9Zzn9fb8GbXBPO3rAX3t+RO5IifUJ3ZEjEg47P
+	 nKruhsRhJ+sJgCVcv9Aep58t6URThqBpj5oRXIbW0f5KJ1B+GyRLtzlQkxZdNPBnjbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pa84EUHB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JVvWYQa6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19DA606A31C;
-	Thu, 19 Nov 2026 03:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F09606A31C;
+	Thu, 19 Nov 2026 03:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pa84EUHB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8FF1F000C4;
-	Thu, 19 Nov 2026 03:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JVvWYQa6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23C21F000C4;
+	Thu, 19 Nov 2026 03:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059185;
-	bh=qUiXDEAzdGZYFfBRgavj02VySDj1nN98bQmz0TeHjiU=;
+	s=korg; t=1795059188;
+	bh=rCJ363f2Tmfmt0wMF7jYSgA8yja3tZuJXCzBuWdy9JU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pa84EUHBHDeRWLdUJ06+UstUTTjoSB0cKGSSWahIGx66mQyphcgavXpgvATq0u/yd
-	 VZC6etwbceWMIwUc1AVv9GU+wsV155eAZJQ4cuffLs9zrhBGcoYfD1CZNzeuZVB89P
-	 HGA7B2HkON1WEpDtf3CpmoT05x4IZqM5OY9czW08=
+	b=JVvWYQa6Elvgf4XRcB4w0ADg+Rm3IRj4QkaU3caB9N5s6R0Lc6DKqV6SVdvgw8Reg
+	 LNcGNUh3Tr2/bU1r0YtPGzrzYob1d7cPdSg47sKTyN08FvZ5dbwvGf6FciOOZOQalg
+	 BU2ghHJe6pp47v1WAyMNmunW8Uh6REpQKY2sVkyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0750/1848] MIPS: mm: Fix the cache error vector jump for XKPHYS kernels
-Date: Wed, 18 Nov 2026 15:46:28 +0100
-Message-ID: <20261118145947.924160363@linuxfoundation.org>
+Subject: [PATCH 5.10 0712/1848] ocfs2/dlm: serialize migration MLE cleanup on failure
+Date: Wed, 18 Nov 2026 15:45:50 +0100
+Message-ID: <20261118145945.682340089@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,59 +74,234 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 30b76362f80d39d80f1197c88b284d9fa7952356 ]
+[ Upstream commit 61469249aab03799b0d3294b7a0cd25dd303017a ]
 
-except_vec2_generic jumps to cache_parity_error with a j, which cannot
-leave the vector's 256MB region. An XKPHYS kernel such as IP30's, linked
-at 512MB, is outside it, so the j targets an unbacked address and its
-speculative fetch raises bus errors on unrelated fetches. Jump to the
-handler's uncached XKPHYS address instead.
+A migration MLE has a base reference for the mastering answer and an
+in-use reference held by dlm_migrate_lockres(). The finishing assertion
+consumes the base reference, but migration failure drops it again
+without checking whether the assertion already consumed it.
 
-Fixes: 7505576d1c1a ("MIPS: add support for SGI Octane (IP30)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+The target queues its migration worker before it acknowledges the
+ALL_DONE packet, so its finishing assertion can be handled while the
+sender still waits for the status. If the connection fails before the
+status arrives, dlm_send_one_lockres() returns an error for a migration
+that the target has already completed:
+
+  Old-master sender                  Finishing assertion
+  -----------------                  -------------------
+  publish MLE; take in-use reference
+  send ALL_DONE; wait for status
+                                     take lookup reference
+                                     unlink MLE
+                                     put lookup and base references
+  send returns a connection error
+  put base reference again; free MLE
+  put in-use reference; access freed MLE
+
+dlm_assert_master_handler() holds dlm->spinlock from the MLE lookup to
+the final puts, and it takes dlm->master_lock around the unlink and the
+puts. Decide under the same locks: if the MLE is already unhashed, the
+assertion consumed the base reference, so drop only the sender's in-use
+reference. Otherwise unlink it before consuming the base reference so a
+later assertion no longer finds it.
+
+An assertion that got there first has also made the target the owner
+and cleared DLM_LOCK_RES_MIGRATING. Treating the attempt as failed at
+that point would leave the lockres owned by the target while this node
+still holds the other nodes' locks and refmap bits, so it could neither
+be purged nor migrated again. Finish our side as a completed migration
+does instead: drop those locks under res->spinlock if the target still
+owns the lockres, and recalculate its usage.
+
+Use the same cleanup for the pre-send failure, the send failure and the
+target-death failure paths. The sender's in-use reference keeps the MLE
+alive until its final put outside the nested locks. Successful
+migration retains its existing in-use-only put.
+
+A target that has died cannot assert after the sender has seen its
+death. The o2net node-down callback runs before the DLM one; it
+disconnects the node and flushes the workqueue that runs the message
+handlers, so an assertion already received has been handled by the time
+the DLM removes the node from the domain map. A node that leaves the
+domain cleanly sends its exit message only after its assertions have
+been answered.
+
+Two windows of the hand-over itself are left as they are: the handler
+switches the owner and the sender drops the other nodes' locks moments
+later, and an assertion from a live target that arrives after the
+sender has given up still meets the owner check in the handler. Waiting
+for the target before giving up would only stretch the first window
+into the time in which recovery of the target can observe it.
+
+KASAN report, only the relevant frames are kept:
+
+BUG: KASAN: slab-use-after-free in dlm_put_mle_inuse+0xce/0xe0
+Read of size 8 at addr ffff8881190e3c20 by task umount/593
+
+Call Trace:
+ <TASK>
+ dlm_put_mle_inuse+0xce/0xe0
+ dlm_migrate_lockres+0x16af/0x20d0
+ dlm_empty_lockres+0x60a/0xbd0
+ dlm_unregister_domain+0x53b/0x11d0
+ o2cb_cluster_disconnect+0xa5/0x110
+ ocfs2_cluster_disconnect+0x73/0xc0
+ ocfs2_dlm_shutdown+0x311/0x440
+ ocfs2_dismount_volume+0x696/0x940
+ generic_shutdown_super+0x15f/0x490
+ kill_block_super+0x40/0xa0
+ deactivate_locked_super+0xae/0x120
+ deactivate_super+0xa2/0xc0
+ cleanup_mnt+0x217/0x450
+ task_work_run+0x144/0x230
+ </TASK>
+
+Allocated by task 593:
+ kmem_cache_alloc_noprof+0x20b/0x5c0
+ dlm_migrate_lockres+0x20e/0x20d0
+ dlm_empty_lockres+0x60a/0xbd0
+ dlm_unregister_domain+0x53b/0x11d0
+ o2cb_cluster_disconnect+0xa5/0x110
+ ocfs2_cluster_disconnect+0x73/0xc0
+ ocfs2_dlm_shutdown+0x311/0x440
+ ocfs2_dismount_volume+0x696/0x940
+
+Freed by task 593:
+ kmem_cache_free+0x242/0x580
+ __dlm_put_mle+0x4b2/0x660
+ dlm_migrate_lockres+0x1690/0x20d0
+ dlm_empty_lockres+0x60a/0xbd0
+ dlm_unregister_domain+0x53b/0x11d0
+ o2cb_cluster_disconnect+0xa5/0x110
+ ocfs2_cluster_disconnect+0x73/0xc0
+ ocfs2_dlm_shutdown+0x311/0x440
+
+The buggy address belongs to the object at ffff8881190e3c00
+ which belongs to the cache o2dlm_mle of size 480
+The buggy address is located 32 bytes inside of
+ freed 480-byte region [ffff8881190e3c00, ffff8881190e3de0)
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0038-v9-659f247ea980d5f3fbeb@gmail.com
+Fixes: 6714d8e86bf4 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/mm/cex-gen.S | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ fs/ocfs2/dlm/dlmmaster.c | 70 ++++++++++++++++++++++++++++++++++------
+ 1 file changed, 61 insertions(+), 9 deletions(-)
 
-diff --git a/arch/mips/mm/cex-gen.S b/arch/mips/mm/cex-gen.S
-index 45dff5cd4b8e7..b4c027b0421dc 100644
---- a/arch/mips/mm/cex-gen.S
-+++ b/arch/mips/mm/cex-gen.S
-@@ -8,6 +8,7 @@
-  *
-  * Cache error handler
+diff --git a/fs/ocfs2/dlm/dlmmaster.c b/fs/ocfs2/dlm/dlmmaster.c
+index b5726e4942ce3..5b04aadc7ac99 100644
+--- a/fs/ocfs2/dlm/dlmmaster.c
++++ b/fs/ocfs2/dlm/dlmmaster.c
+@@ -2539,6 +2539,52 @@ static int dlm_is_lockres_migratable(struct dlm_ctxt *dlm,
   */
-+#include <asm/addrspace.h>
- #include <asm/asm.h>
- #include <asm/regdef.h>
- #include <asm/mipsregs.h>
-@@ -37,6 +38,21 @@
- 	nop
- 	nop
  
-+#if defined(CONFIG_64BIT) && VMLINUX_LOAD_ADDRESS >= XKPHYS && \
-+    VMLINUX_LOAD_ADDRESS < XKSEG
-+	/*
-+	 * An XKPHYS kernel may lie outside the 256MB region a j from the
-+	 * vector reaches, so jump to the handler's uncached XKPHYS address.
-+	 */
-+	PTR_LA	k0, cache_parity_error
-+	PTR_LI	k1, TO_PHYS_MASK
-+	and	k0, k0, k1
-+	PTR_LI	k1, UNCAC_BASE
-+	or	k0, k0, k1
-+	jr	k0
-+	nop
-+#else
- 	j	cache_parity_error
- 	nop
-+#endif
- 	END(except_vec2_generic)
+ 
++/*
++ * Drop the sender's references on a migration MLE after the attempt has
++ * failed. The finishing assert from the target may already have unlinked
++ * the MLE and consumed its base reference; decide under the locks the
++ * assert handler holds, and only drop the base reference while the MLE is
++ * still hashed. Returns true when the assert got there first: the target
++ * has become the master, so the caller must complete the migration.
++ */
++static bool dlm_put_migration_mle(struct dlm_ctxt *dlm,
++				  struct dlm_master_list_entry *mle)
++{
++	bool asserted;
++
++	spin_lock(&dlm->spinlock);
++	spin_lock(&dlm->master_lock);
++	__dlm_mle_detach_hb_events(dlm, mle);
++	asserted = hlist_unhashed(&mle->master_hash_node);
++	if (!asserted) {
++		__dlm_unlink_mle(dlm, mle);
++		__dlm_put_mle(mle);
++	}
++	spin_unlock(&dlm->master_lock);
++	spin_unlock(&dlm->spinlock);
++
++	dlm_put_mle_inuse(mle);
++	return asserted;
++}
++
++/*
++ * The finishing assert got there first: it switched the owner to the
++ * target and cleared DLM_LOCK_RES_MIGRATING. Drop the other nodes' locks
++ * as a completed migration does, unless recovery has taken the lockres
++ * over since, and let the usage be recalculated.
++ */
++static void dlm_migrate_lockres_asserted(struct dlm_ctxt *dlm,
++					 struct dlm_lock_resource *res,
++					 u8 target)
++{
++	spin_lock(&res->spinlock);
++	if (res->owner == target)
++		dlm_remove_nonlocal_locks(dlm, res);
++	spin_unlock(&res->spinlock);
++
++	dlm_lockres_calc_usage(dlm, res);
++}
++
+ static int dlm_migrate_lockres(struct dlm_ctxt *dlm,
+ 			       struct dlm_lock_resource *res, u8 target)
+ {
+@@ -2623,9 +2669,10 @@ static int dlm_migrate_lockres(struct dlm_ctxt *dlm,
+ 
+ 	if (ret < 0) {
+ 		if (mle_added) {
+-			dlm_mle_detach_hb_events(dlm, mle);
+-			dlm_put_mle(mle);
+-			dlm_put_mle_inuse(mle);
++			if (dlm_put_migration_mle(dlm, mle)) {
++				dlm_migrate_lockres_asserted(dlm, res, target);
++				ret = 0;
++			}
+ 		} else if (mle) {
+ 			kmem_cache_free(dlm_mle_cache, mle);
+ 			mle = NULL;
+@@ -2654,9 +2701,11 @@ static int dlm_migrate_lockres(struct dlm_ctxt *dlm,
+ 		mlog(0, "migration to node %u failed with %d\n",
+ 		     target, ret);
+ 		/* migration failed, detach and clean up mle */
+-		dlm_mle_detach_hb_events(dlm, mle);
+-		dlm_put_mle(mle);
+-		dlm_put_mle_inuse(mle);
++		if (dlm_put_migration_mle(dlm, mle)) {
++			dlm_migrate_lockres_asserted(dlm, res, target);
++			ret = 0;
++			goto leave;
++		}
+ 		spin_lock(&res->spinlock);
+ 		res->state &= ~DLM_LOCK_RES_MIGRATING;
+ 		wake = 1;
+@@ -2700,9 +2749,12 @@ static int dlm_migrate_lockres(struct dlm_ctxt *dlm,
+ 				     res->lockname.name, target);
+ 				ret = -EINVAL;
+ 				/* migration failed, detach and clean up mle */
+-				dlm_mle_detach_hb_events(dlm, mle);
+-				dlm_put_mle(mle);
+-				dlm_put_mle_inuse(mle);
++				if (dlm_put_migration_mle(dlm, mle)) {
++					dlm_migrate_lockres_asserted(dlm, res,
++								     target);
++					ret = 0;
++					goto leave;
++				}
+ 				spin_lock(&res->spinlock);
+ 				res->state &= ~DLM_LOCK_RES_MIGRATING;
+ 				wake = 1;
 -- 
 2.53.0
 
