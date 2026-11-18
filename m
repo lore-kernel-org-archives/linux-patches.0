@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043760;
-	b=tHizsLaLQdmuFSlvINCw3uHhe5NAljthbOQccWCvMYpWVAqXoxdMYEvduuGv68645ISO
-	 sK+mTTs6JdE/XDI+rg6vF8T7Ui0bXyN2mE+ZTCWAPWybO2nU2viXkKNUb433gq54LqeXM
-	 FZ/nVluv07ry2PAZN0Q66N6cL/G4XPfafgDK83cZsZFxkzjSXIGzlOOLjn5IOhLxz5Kgn
-	 543CNqmOUlOBkEwDTUT6yEriMUUj45L8kQM6Av23X7oEGeOMu2cXGh+lzyfilligAwbz6
-	 Me7dfAZ738d+G/oFUma5KHsQx5dEmjsOiYmo+rP8DyuxDY4PU+/IHTedBGMm0rzv+Og==
+	t=1795043762;
+	b=1Ht/RZKPrzwRyiISVlP20WFXyDS2zs0GTn2JoMcfNO4x8AzEXs2P883i6lpmJaXVV2HF
+	 8QtLv5AJFOxTw7bP0Mx4L8DTAJrNuCEXkfLqaH3IA2UW9bNtdO/L0blgqJAimooZxG7c7
+	 +CtxwZ08RBNbFVLN0f+rhg8JCo5dHr0SaxKors65dXa8xFDqRO4UkDyuDDbtWXvIsfMOi
+	 Cuo1ZGANaoYc6SuuIqlWmBVS1uB6ktcR8h0icgdnn51KZ6TSyYseA25vpnKGnVB7X4MZS
+	 UwVJ0qMfVWdiJGKuxixbPM9yO5buDqq98e0zW7HZHp9YctwVwKxwnS/FeMLRAKftA5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043760;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043762;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8mgVmJtJ75Y/WCYpgp9OvvP8IZ+e2Qtys6HEiqlSzJA=;
-	b=RmGe5koNwtID9SO1eAElBXDBg0BfSRu03+xLWL47P/y1ilMQv+so3z9Aj4bDwE6q5OPy
-	 7uHi7xdcH78WOZpkDJxGxy9+3qv7AOq2xuEgL+KUlMGEFa8dqI/9aOqmtxGJBcOcFPKDE
-	 cbkm3HSQUl81CRIpKWCYTPCIloh+hxFhrwkGwOiEaXQFWo2PpWBwnOSLcpoGsix1XuhvE
-	 ev6TUNpCIANbGD8aGo/RdiwK5Ub9kR9mEyoUpLecxYJKl0tjXhbqjpMqukEQD4R/QDnvo
-	 6UMTbjkciD1yBp5uEGnxxAAWGu3UD2eCanABCWfISzZQMm51VbKAIErShhrIzV/wabw==
+	bh=Qup7RHTc3NkevNCONLT8tealbC/VnoUrymQj/qTTL/U=;
+	b=dARYTbnvjuUAPIClwqo/jXbrwIsLLjI80bJ/hBPXTiME0JdxEmDRwSlKpw8HBnJlqCXS
+	 jcZII6S4TZ/Le1HxkwLqSVSBQpvEukxdcCr31RhV0Uox8+7Yv9dS3DBiJFci9q9zx5RBe
+	 6v98fbemRTPOJmpu7YOCq9+eyzuoGVcwnjg6zJIQ/7FyO5y1zJRnN623lipsIMIAJB7O7
+	 Gpzj1HGa1vx/CYh7HXnjzVnvQGyqNZ8HXaXPz9Fbt50i7vk5ZfOOm/BboxonRpjieUV9p
+	 aqBep3MtjsiZjs5Wb8aBchCxRDLFdbarkViJOG9Nj0wHezSWIUd1CWZ9SBHrQBWYq6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ru+Ph0YX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SeeX6tJy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C0A606A331;
-	Wed, 18 Nov 2026 23:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67FF606A335;
+	Wed, 18 Nov 2026 23:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ru+Ph0YX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 707B41F000C4;
-	Wed, 18 Nov 2026 23:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SeeX6tJy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3A11F000C4;
+	Wed, 18 Nov 2026 23:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043760;
-	bh=8mgVmJtJ75Y/WCYpgp9OvvP8IZ+e2Qtys6HEiqlSzJA=;
+	s=korg; t=1795043762;
+	bh=Qup7RHTc3NkevNCONLT8tealbC/VnoUrymQj/qTTL/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ru+Ph0YXNNA6yk9tEM1+Icna2C20DxXHf96H1drz0xPvg7mr5N+LJu6AChrSZ3YQ6
-	 LQPFVSbao+AI4M8Ud60X4FBgpn0bojZkXQyEprDA31Q0gSb+H1mnd1DKDYiHeIdHPF
-	 ZaCm83cYLPRNuXfLFQeASXSHo7hvOENQXOeeiak4=
+	b=SeeX6tJy60LYyPxfbiqtQg2o1Yyt4FjWxBqFaOI9Dc7QJ+bo9XmqBE1tXlmO6REsR
+	 KebxRAZfOw9TuKZ2VUSPD7Mrj50A6PTxep20z1lh3DsGFfFXZEDY/NcVgt1kQITctt
+	 Cx6Ei+gklAd0HzotQIW5JcFC9TR04XyrYw9YvM9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youth Cao <cocoh2os08@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0284/2857] HID: i2c-hid: Add i2c-hid-quirk-bad-input-size quirk for 0911:5288 device
-Date: Wed, 18 Nov 2026 15:21:58 +0100
-Message-ID: <20261118150211.651093178@linuxfoundation.org>
+Subject: [PATCH 6.1 0275/2857] ALSA: hda/realtek: Add quirk for Lenovo IdeaPad Slim 3 15ABR8
+Date: Wed, 18 Nov 2026 15:21:49 +0100
+Message-ID: <20261118150211.328977768@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,43 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youth Cao <cocoh2os08@gmail.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 58d97b45f3f43af0afd9c74e8480d22d36fd3f72 ]
+[ Upstream commit be79a45e2ec289eb9fad519e8f5a3d4fc3789dd0 ]
 
-I have recently acquired a cheap Apollo Lake-based laptop that uses a
-Hynitron CST128-A touchpad controller. While booting from a Debian LiveCD,
-the kernel log is flooded with the following error (though the touchpad
-works well):
+The internal microphone on Lenovo IdeaPad Slim 3 15ABR8 (subsystem
+17aa:3862) exhibits severe distortion at default gain levels. The
+Capture Volume is fixed at 63 (max) and cannot be lowered without
+explicit userspace intervention. The existing fixup
+ALC269_FIXUP_LIMIT_INT_MIC_BOOST limits the gain range and resolves
+the issue.
 
-  i2c_hid_acpi i2c-ALPS0001:00: i2c_hid_get_input: incomplete report (27/42405)
-
-The CST128-A was identified via ACPI as ALPS0001:00, and the I2C HID
-device ID (0911:5288) was shared with the Hantick 5288.
-
-Add the I2C_HID_QUIRK_BAD_INPUT_SIZE quirk option to the existing Hantick
-5288 quirk entry to suppress the kernel log flood.
-
-Signed-off-by: Youth Cao <cocoh2os08@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221891
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260824123752.525173-1-zhangheng@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index d301dc5acd31e..7d151ceab1c84 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -125,7 +125,7 @@ static const struct i2c_hid_quirks {
- 	{ USB_VENDOR_ID_WEIDA, HID_ANY_ID,
- 		I2C_HID_QUIRK_SET_PWR_WAKEUP_DEV },
- 	{ I2C_VENDOR_ID_HANTICK, I2C_PRODUCT_ID_HANTICK_5288,
--		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET },
-+		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET | I2C_HID_QUIRK_BAD_INPUT_SIZE },
- 	{ I2C_VENDOR_ID_ITE, I2C_DEVICE_ID_ITE_VOYO_WINPAD_A15,
- 		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET },
- 	{ I2C_VENDOR_ID_RAYDIUM, I2C_PRODUCT_ID_RAYDIUM_3118,
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index de300e360ca93..0fb7607817e76 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10417,6 +10417,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3852, "Lenovo Yoga 7 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3853, "Lenovo Yoga 7 15ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3855, "Legion 7 16ITHG6", ALC287_FIXUP_LEGION_16ITHG6),
++	SND_PCI_QUIRK(0x17aa, 0x3862, "Lenovo IdeaPad Slim 3 15ABR8", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x17aa, 0x3865, "Lenovo 13X", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x3866, "Lenovo 13X", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x3869, "Lenovo Yoga7 14IAL7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
 -- 
 2.53.0
 
