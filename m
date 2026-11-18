@@ -1,61 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.170
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028985;
-	b=JYZMlHIvUcwCPaJVtv5nbcRkLonViALJ1WghkR/thNNGJASW/am3Kl/4JHvkpXOKvKk6
-	 5BONVUVhDGHPsO2uyM1xfOn6GYRe46kdH+w2bjdqv+WO7hkvfTxxicvvoZmgcc93FiyoK
-	 Un6wy+q3qcJfHu0rM8GbuzRYctKOBF4EiMOqN7zeH8HDkpYkjK1V5mqVefdMcyj8PYcir
-	 hS2CI0wgSMfPKy/l9BdSrozTX7X2Q6DYA+8/jYgxVPP1hcHk9x/xoKELkg/OkAsmo+bND
-	 //nmNqBCKxKVVqR16itVrmAVs8hW8pSDcujMguu5z+QAHFzbmdVUnSB1uVZUcb3Wjlw==
+	t=1795028986;
+	b=AqM98zqXnY0lR6IdA6q3UwvJLtQU1Gep1HDzyCgQ57AGkKUXAnKu6j9H4b+gQpCquIQX
+	 VBnJcHJJQkLGfMEzNuPTq+fTLnRpghW0KbVVKUVUCAnj6mfiCqkWWcjZJKq5BlBhvC7q2
+	 wlB6nM/JFTauGz3kvbDy3mHTqyiUEZg8B16IeFjpsAme14RH5Iy/rg5/PGvLZXKoTiRNi
+	 814tD2CDJPkHxadoZecZiQAHjIHI8x0usoe0mbhtFIxj3Prga5ur3kVPT5RMUPwd8sMDn
+	 X/QibakegUhrwObKQbXyFJODtL3nC/vSsXkNTZ7uj+8AFuVmW9fELXVhc6npmrJpIZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028985;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=GysozX5e36Ub/9JYqjCuQTE119ejwPtGgjyQoHyC1Wk=;
-	b=ysXOyqzy7XLTqbgHNTk0HCea4BZHYQgUcqCFf1IZe0Au4i/3X3emIlhpCX89Xy64dIaT
-	 x+MqIWAU3rBciOLmLCj5+Xyeh0cr7aok/5fZfnKl0JVrdfiQL1ZRB9RA5EQxixm2DHJCs
-	 o0Z4+wmehlEJiiGf+d7X9ioyAtgizl9wxgpW05KkYKyGrkQg5Gx5s0S+TUw1FVwJJwmrN
-	 gvjXWv7KJM1r/F6Bqu/nUjHDazh88/TgYzR+18VewCSnd0xnH8dWDhKxHk/QvQrSHDsfy
-	 hzcg5cO9kLKkW5UrYzW6mgkwQJ65s756K4i6frIS8kRLybZEGAhZg1e7EzNmyxS/GgQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028986;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=brrMobb22TVB7XAlElAFp7KL45XZpi3Q5Uug9IjkUY8=;
+	b=JaPxyz15R9CFJWkdt3WYbE3jnj7W3u+iXeIvxa0BKwXdPXfzwdHSeEGKJvH1PKaMqaZv
+	 oZpoFZ4rsVruciwWkjCJGMwdcAzOC5DXOZQF4em5hb8cwyVV7rb8G/ptorccI4AaY6zJW
+	 rWOFxIpKbLKWq3rJ5IOEM1dZW1xi7hZcnf+JwD3JL2Cea4FOoXLjR6PG8cIXyiX3W/PJp
+	 zNPjZ1/HZIkmW1sHkO31d13NfyP6XT29XFOmhj6J8oL0zkbByBy+Eu9Q+aP8jWC6AmKAz
+	 J6ESiFQ740PVCzcFI0P3iNBcp2cVBMThRtTZaDW26sVylO1SI+28UJjeH/Wj6huL6lA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MiukPNl0;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rNDOo1ox;
+	arc=none smtp.remote-ip=209.85.210.170
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1654606A31C;
-	Wed, 18 Nov 2026 19:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AE9606A31C
+	for <patches@lists.linux.dev>; Wed, 18 Nov 2026 19:09:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 81AE9606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MiukPNl0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424A11F000C7;
-	Wed, 18 Nov 2026 19:09:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028984;
-	bh=GysozX5e36Ub/9JYqjCuQTE119ejwPtGgjyQoHyC1Wk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MiukPNl0DqWzwH+EEF1Zs7YbvH7eYy2SlCCC9vzX7uSF0FdiYk1AA2gLSLxBnGNr+
-	 yKHg7dsPIfxUoZ/S6XkzLneue1lzl4n2KvQv8PuXVMoMAHaAp8rIjab93TplTyvX9s
-	 33oZD9QbBaBHUKaFkDIqdmKwwsQ0INqoOdBvA+wQ=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Stephane Eranian <eranian@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0162/1756] perf jitdump: Fix extended header read that always fails
-Date: Wed, 18 Nov 2026 15:38:09 +0100
-Message-ID: <20261118150014.643058705@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
-References: <20261118150007.957976754@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rNDOo1ox
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-8a070781f63so787959b3a.1
+        for <patches@lists.linux.dev>; Wed, 18 Nov 2026 11:09:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795028986; x=1795633786; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=brrMobb22TVB7XAlElAFp7KL45XZpi3Q5Uug9IjkUY8=;
+        b=rNDOo1ox4PCzvagK6n+7N2NKYXhWJxSPjbCe56KcfVk7QEH3GZ3pteBrqTUa9rCY4o
+         xp+QrTmzd5do/KjvsCWVTohy78LSNm7bAdV4VGIHsfX3NtDrM4WWaI4Dt5cSyzQobSpf
+         BbYyRLryDeWFd/sOaThefA7NH9hbJK1nscxVlNWi2aNRnYaiaV5EsB66a/ZR2fiaFSHn
+         amMnK0i4Qht9cHZBDMI1UXPjcn1oXvpoiN4IAr6dUbBATfQab20hJGu9UTGxZOgwVqQv
+         HMWc2Ii2++LKWC3Vq7d8E4F6nMCTF0an+8PQZbTY0l5IKXGgYNmPrZqpOEHo+szXB5S3
+         nEqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795028986; x=1795633786;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=brrMobb22TVB7XAlElAFp7KL45XZpi3Q5Uug9IjkUY8=;
+        b=bIww7F0sCzf+k3EOvdmaO/hN9B72yN+dkF8BhK0tmWkyChQd6B3OKT8t2Ze/Wqx8XT
+         hjsK7+MBqp25X2k7nbIwLLxLqXOvWqj9OjyJrIYaC+tGYQ6IpeYGi1Ilinmc7hfeZzI/
+         QalzaO3PmD6/pI+8+qm+9Z0XwpgEi/8lYwUe5usIJxIRHrh6ZL28Jz74NSuAEmV7a0sN
+         eCdpek+bHQGX7/s14TncLxM39md8aVsWQ3E+XOP/9nm5K++Ne/0JpPXpq2eQqoOxUZH5
+         2WotlgffWdrv3qDUwfobmLMmInMRGPYOI362AsMNOSUCe87fgpnpTZsDJEAUe7jvQ6DX
+         wC/A==
+X-Gm-Message-State: APuU4Z+1YwFwWvBkd5YsqZkDSvBJboKqj220OwzDk+12gqEKZQ+Ku8At
+	E5QeBQ7lv/SBfj6atn1od6rT5pVRk/FVwcShxR7rGnmc9mNCo5M+ZN+N
+X-Gm-Gg: AYBFou19EHWv1zeKU3Cx6/GESI0IzNr1msn6xLSKLG5A/uHc1n8H+tyOIjJfkbUfPcf
+	K0kIhRQvsd+Y1tQCsvjURQ43zpRZVzqxsiF/wguh+7R8nrr+D+W4lrB5UOHkHlQR76B/xExon/L
+	jEYMjwhI9XUmbg/JqujgZSZQxh9XEGTFJRYfPgiKcm4DADxN8TRtty4QmEcQvwtu9GhN/j444/I
+	mcWvgF+fy550xrWH+vbUPeZ18SP681DhfS0J0H/vclUYv6nUdrZ1E4Ex2nzPJAi84hSLJf8/jD2
+	poSb9/hwyfpTafIaGs77VxjlUh2kUi7N3zgU62Q2ECzCXlCM+acp5nzYZ5HTMjFcGrH8Fom8pww
+	KOXV3Q4qpOJf+uBwvur8Nqklw+E1ksh3YYzWQlQJihYtlRbN+UQpUyIeo3HZiFUvUU3Vhud4OQO
+	ASDFqu9Av5Cslx1BCGVGMt2+OWLgKRJfuh6bcasuDgt3rz0tzBVxTlFD2marsnblQU71CaRmB0d
+	xLO6yMo4aQPqAnr84bb5Vncu0O0YTj9V+2Daa5ByVSGQ6ErDDF3g03Vszk7R2j2IgIt3PjiI1pB
+	r0C2/u4vWo9jpBjB/jGj1qjvidUsVZUVL17GtuYZ1/zcGZ8TalG/xJyz
+X-Received: by 2002:a05:6a21:32a0:b0:3f5:ef59:3aaa with SMTP id adf61e73a8af0-3fe970fafc7mr3891623637.16.1795028985604;
+        Wed, 18 Nov 2026 11:09:45 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cde53462820sm453966a12.10.2026.11.18.11.09.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Nov 2026 11:09:44 -0800 (PST)
+Message-ID: <42cce255-f459-4386-a763-ff46e77d5f6f@gmail.com>
+Date: Wed, 18 Nov 2026 11:09:42 -0800
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -65,66 +90,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.10 0000/1848] 5.10.275-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20261118145911.150052362@linuxfoundation.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+On 11/18/26 06:33, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.275 release.
+> There are 1848 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 20 Nov 2026 14:55:32 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.275-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-------------------
+perf fails to build with:
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+util/jitdump.c: In function 'jr_entry_pid':
+util/jitdump.c:416:31: error: 'struct nsinfo' has no member named 'in_pidns'
+   416 |         if (jd->nsi && jd->nsi->in_pidns)
+       |                               ^~
+util/jitdump.c: In function 'jr_entry_tid':
+util/jitdump.c:423:31: error: 'struct nsinfo' has no member named 'in_pidns'
+   423 |         if (jd->nsi && jd->nsi->in_pidns)
+       |                               ^~
 
-[ Upstream commit 598e905931380f0714d5fd50cecfac615a1ec742 ]
-
-jit_open() sets bsz = bs before the fread() that uses bs - bsz as the
-read size, making the expression always evaluate to zero.  fread() with
-size 0 returns 0, which triggers the ret != 1 error path — so extended
-jitdump headers (total_size > sizeof(header)) have been silently broken
-since the original implementation.
-
-Additionally, when 0 < bs <= bsz the if (bs > bsz) block is skipped
-entirely, leaving extended header bytes unread in the stream.  Subsequent
-jit_get_next_entry() calls then parse those leftover bytes as a
-jr_prefix, corrupting the record stream.
-
-Fix by separating the buffer growth from the read: realloc only when
-bs > bsz, then unconditionally fread bs bytes when bs > 0.
-
-Fixes: 9b07e27f88b9cd78 ("perf inject: Add jitdump mmap injection support")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Stephane Eranian <eranian@google.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Assisted-by: LLM
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- tools/perf/util/jitdump.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index 346513e5e9b7a..0cb6705ab40d8 100644
---- a/tools/perf/util/jitdump.c
-+++ b/tools/perf/util/jitdump.c
-@@ -223,10 +223,12 @@ jit_open(struct jit_buf_desc *jd, const char *name)
- 		n = realloc(buf, bs);
- 		if (!n)
- 			goto error;
--		bsz = bs;
- 		buf = n;
--		/* read extra we do not know about */
--		ret = fread(buf, bs - bsz, 1, jd->in);
-+		bsz = bs;
-+	}
-+	if (bs > 0) {
-+		/* consume extended header bytes from the stream */
-+		ret = fread(buf, bs, 1, jd->in);
- 		if (ret != 1)
- 			goto error;
- 	}
+which is coming from 428d7a722786 ("perf inject jit: Add namespaces 
+support") we need to also back port 2b51c71be599 ("perf namespaces: Add 
+'in_pidns' to nsinfo struct") as a dependency.
 -- 
-2.53.0
-
-
-
+Florian
