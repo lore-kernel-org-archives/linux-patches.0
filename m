@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016120;
-	b=Wt6YN+e3UwxX+eetlizrIiWz729lyfL7ALIQkusG0VkU6Xvgm2GYPA9ky7tHNBizDVBh
-	 uNrLLR2z+xddvGy1FQgIjAr1VxEghbr6tgFPdRWQn7JBL3CUVC6HqtBKJ+9MfEzjrRmMn
-	 ZC/OpIJ2nLnPf1rJeAtfS5sp8oV+kvuCjPaiy+ZIClSbhH95cQh6LazEpn1kxX1d1/Jyl
-	 QuxWO9RBpiVKEhTDVsjctbAab5hmnDqD1ddqmgx3LZffAF5mgxm4smDJsOQZO7H6EBS8S
-	 a5m587oQ+2ejoceahaQusmaI6Fd/d/jm9iH+PuIMX0F9g/ctIUN0yhBodrla3VC2qiQ==
+	t=1795016123;
+	b=SwQ1wvfXG4DyMbqCQKPFgtB/BcQlBgBx0SPxmpIMl48RC5yN+nrneyXGDm+Yqidr9upG
+	 8xyzhrrLp4qm6Y28IXdFXtk5Q0nPF5MvVxeik1F0rvmBkaff1P1q0rWDSG4D9zNP4L886
+	 Hhou4QTCsqBz3BbMSpMPN0mCLMH6ncq0ZOUtlccowwVpaGxe3pMJ36586EYyiyBoOCqwI
+	 464pEtM0mJxUTsAOvNHl7dE3tbz1GkRPppPnhD2JTjN9Y4H8omYzTHGEK/MYGBDhNxSgC
+	 pJypJGnUNE2oTRY5aemKrUAnVIMFHC5sIiEsDiVWaZUkoly34J9zErh5buApzWT9jIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016120;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016123;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B6JZ2OxkoPubCpgXZLBvHOu0xpu/YybeaF7wLziuWx0=;
-	b=C7bbFoxGXKF4sMfy+F81iDeDI7dp4KRjsiYWdh4H2jnZNQRnp/ZdOlesCLj+fxQ1hLTJ
-	 5ooBcOnFivHwKYBQ7g4c9y/hJQNBsrBNK2D//jv4qIvj0ibg/bbw8gOD+pR+FhpBu++9g
-	 P27QkP0M++Z52Dlo7HqZSbq0cqnSq+7IeZQtVazZgUcWRcSXbyhDIYarSil9Hbtt9CmRc
-	 n9a26RCuet9Msi1Pjdya0e/8SLQzxFzLnCDOdSAgEO+NHLmPkeFz6QXizdgL6eq+lBRg/
-	 gyx+jpFJY/vQI5scMA9Lk3hKjA5MqHhsPs7oloh58QU9fn//NXaWqe3/Y1NGL0LYiWg==
+	bh=c+zd6IM1o7xGq7gXaneNQ3Y3qvbslkJqq0pE9xHACzg=;
+	b=SjK58wX9FGXcK0QDRM3RhZfGsSTDQaRZyjP2PU0wHlpdx91T77t9WtpmGBfmcNBJ7uFw
+	 qqO9nV/Z62pfa9Zbu8IfAt5qGXmYFG8IX5oWxmYsnz+kuNge2wo976TlZD8vQqzPeiEF3
+	 37EBbceXs4B6z66dNKWX1XtzAEfpUg32uj9uON3dvki++fFhrXlfWUhTE8WOw8STS/tGG
+	 v6EMDM/CECtZ8wWgzgg1puZIeqZhoVk6Z25xr3g9bNFn623ASZn5ik98fyf1ppmZ8HtwU
+	 WRqopHE/LowWPaR6GdtPQkQMM5OF9yiTIddQ5TkK9++cSawa3f37o1mZqJYWabR+Y5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SvJAfqmY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IWgJWNfc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4EA606A31C;
-	Wed, 18 Nov 2026 15:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8600B60A2605;
+	Wed, 18 Nov 2026 15:35:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SvJAfqmY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 003B51F000C4;
-	Wed, 18 Nov 2026 15:35:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IWgJWNfc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B741F000C4;
+	Wed, 18 Nov 2026 15:35:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016120;
-	bh=B6JZ2OxkoPubCpgXZLBvHOu0xpu/YybeaF7wLziuWx0=;
+	s=korg; t=1795016123;
+	bh=c+zd6IM1o7xGq7gXaneNQ3Y3qvbslkJqq0pE9xHACzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SvJAfqmYUZPsQI/3PdCp3AHJ6WKlZwIpUyZtyZXv6LIdC69E71Drb8YQ209Kr7IwJ
-	 qS04O9JWW26yS7Mqjaqu9Urf1wU2JWKj2S0UD5LQyVpTO3C2BNcadBGSdLa0D2czpl
-	 wXO9rG8KDbPqCi9vsvzCz3+kV8yhn5NxL2wrYjUM=
+	b=IWgJWNfcw1lf/LqdJlA8s0LC9zqZzryJhSb6kO/31cgem4K+fpmqEP0x9/0U1QHYS
+	 BBUvSchq9FHDt/dw/3qzMNVsR0a+Q8r3/WMHu0itzms0zqPsvZzLJ6vQYGPNxeq9Xh
+	 3Q7bJPAO58bEoOMT0jaPW0CQr3IO0Q+juSDONZFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xueqin Luo <luoxueqin@kylinos.cn>,
-	Christian Loehle <christian.loehle@arm.com>,
+	Brian Norris <briannorris@chromium.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0415/2651] cpuidle: teo: Do not return a disabled idle state
-Date: Wed, 18 Nov 2026 15:27:35 +0100
-Message-ID: <20261118150302.774880647@linuxfoundation.org>
+Subject: [PATCH 7.3 0416/2651] PM: runtime: Only queue an idle check for RPM-linked suppliers
+Date: Wed, 18 Nov 2026 15:27:36 +0100
+Message-ID: <20261118150302.810543957@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,55 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xueqin Luo <luoxueqin@kylinos.cn>
+From: Brian Norris <briannorris@chromium.org>
 
-[ Upstream commit 60d5fca628f94f8f23398ad62d80aa284dae6571 ]
+[ Upstream commit be5755f023e7e02ec90bbd1d4ca63a0abe594733 ]
 
-If idle state 0 is disabled and none of the enabled idle states satisfies
-the PM QoS latency constraint, constraint_idx in teo_select() stays at its
-initial value of 0, because the loop that updates it starts at state 1,
-and so the candidate state index is capped at state 0, which is disabled,
-and that state is returned to the caller.
+When a device RPM-suspends, it queues up an idle check for all of its
+suppliers, in case that device was the last consumer, and those
+suppliers are now able to suspend. Today, we do this for all suppliers,
+and not only for those suppliers that are marked for use by runtime PM.
+This isn't directly harmful, but it is a bit wasteful, and also may
+induce unexpected suspend attempts (e.g., if a device was purposely last
+touched with pm_runtime_put_noidle()).
 
-The cpuidle core does not validate the returned state index against the
-per-state disable flags, so the CPU ends up entering the disabled state 0.
+To avoid excess idle checks, only call pm_request_idle() on linked
+suppliers that opted into runtime PM.
 
-To address this, ensure that constraint_idx is at least equal to the index
-of the first enabled idle state (idx0), so that the candidate state is
-never capped to a disabled one.
+Noticed by inspection of trace logs.
 
-Fixes: c410a9a142f1 ("cpuidle: teo: Change the main idle state selection logic")
-Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/20260828032457.2317326-1-luoxueqin@kylinos.cn
+This is not expected to have a functional impact on systems that are
+using device links properly, and should only be considered an
+optimization.
+
+Fixes: 5244f5e2d801 ("PM: runtime: Defer suspending suppliers")
+Signed-off-by: Brian Norris <briannorris@chromium.org>
+Link: https://patch.msgid.link/20260901013341.1417232-1-briannorris@chromium.org
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/governors/teo.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/base/power/runtime.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpuidle/governors/teo.c b/drivers/cpuidle/governors/teo.c
-index ac43b9b013b3f..906f4f89e3659 100644
---- a/drivers/cpuidle/governors/teo.c
-+++ b/drivers/cpuidle/governors/teo.c
-@@ -426,6 +426,17 @@ static int teo_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
- 		}
- 	}
+diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+index fab38bc981139..4d84d97f09c4e 100644
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -361,7 +361,8 @@ static void rpm_suspend_suppliers(struct device *dev)
  
-+	/*
-+	 * If the latency constraint does not allow any of the enabled idle
-+	 * states to be used, the candidate state index will be capped to 0
-+	 * by the check below, but state 0 may be disabled.  To prevent the
-+	 * selection of a disabled state in that case, ensure that
-+	 * constraint_idx is at least equal to the index of the first
-+	 * enabled idle state.
-+	 */
-+	if (constraint_idx < idx0)
-+		constraint_idx = idx0;
-+
- 	/*
- 	 * If there is a latency constraint, it may be necessary to select an
- 	 * idle state shallower than the current candidate one.
+ 	list_for_each_entry_rcu(link, &dev->links.suppliers, c_node,
+ 				device_links_read_lock_held())
+-		pm_request_idle(link->supplier);
++		if (device_link_test(link, DL_FLAG_PM_RUNTIME))
++			pm_request_idle(link->supplier);
+ 
+ 	device_links_read_unlock(idx);
+ }
 -- 
 2.53.0
 
