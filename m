@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062166;
-	b=xvvWNFpnZ3b49/aybhN0n1TD7S530Ioa8tkXd6f+l18Ks4MnZiq5oW8bvpY/cfochait
-	 ac+c7D2BgGl9aCEL99+6ePbYr5WW26guzgFssjOzZS+Y0v2mvXHuB1wIuZ3wGNS7/Pdhu
-	 gWK3K1Ww18fGpbfiZ9MV1iaSHo+lF+RryN+UxKbypaPDtAcvTfFsHgcmKo9ItNt9xzkGv
-	 vZxDxlDkcE32G2yd9YeuxBiZeUnBWCZcrTiMb8hhQNfuBQTB92LWvSkOtkbEj5QglBJEQ
-	 RpdnVlLYlwlcD7a1drCon5QThvJaFgjaXoc9GrwdzunTPiqyX02SGG/kjPoN/muZpxA==
+	t=1795062169;
+	b=puuZWFHFY/AAibIuBaBh2iXy93Cj0h/1fROgYPI7DNBoK94AXCqqBgHfwsCgQVr1ux28
+	 cMeDhyqdBLtBJGkWR9gO45dKqrgm2h/F51Gkihe7fDraC4WA5hebecCBrlJnAjAJ2kthE
+	 vvbbd67TW6vhtQgZUDWNMrF6uSKc5yJNgDXCp/1kuDC37l96J7h92lxLotO/mh04DYBfZ
+	 hQy4AKtvSsn93kRPVf1srJ3ZIYfv6hjNQp5oSpUMgnj1I1ZFAPijTjPr9dxOXQU7SXyqt
+	 lEqYbK0XJ5LSgVC734541DZT0vcQcHUlA/E01BEN5PufQ2wzJzfzqnEJG4oLUmA2XJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062166;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062169;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=27YBaPufAYwK4vgErJ6X+UDlW9i+bm8gvHvVC2A2aJk=;
-	b=PZ5Bajygmb3BNaAyr0sTfH1U+UmvcmocTl8ZoOkWxsiDQEreMHN6Gi1qk5/2jqQbZErl
-	 iMtCvxpqfqaUwoXshtF40x+hIyox3Fj7mubHwFEVRj15wV1jjy8YAORwp9geVYYwcZn9w
-	 aT6OPRPRfiEjzH8U51Edhg514WUXs4Y5ocbklTtwSh8iydBQP2rA3unJdPaPfny0RloYU
-	 76VVijBm05SMnhwlg5mAiC1gjd+vu3WecULbLIwRyI1hY3rIfRly8db9s2KvdOCusHQdp
-	 NyJ7p1PRXse+ve1SAgQj+waSwk62xkNv3J/97tjIdax1gSOuvVpeqMpZPg7WVqOyFDw==
+	bh=kC4C2rtB22QO3drSm2IoGN13gK3B373UiekHX5HJMpE=;
+	b=As9zCJ5nxfbc3Rt03P8OxjeAWO5/Pd6KxWDjZWPsBTXu7+G+m+xfHxFRIQm1rp1kggez
+	 i/Wqf0az4iwkNZW5HPT+1tIHSiD6xUy+F2t3T0HcVfXtLXlGIFgoU63wqsgcQLgMPoory
+	 HAPu3uhzbVQuarq+7/1PyyBxEK+j/jF7IjfxZZ8nYQfM0lK0XymP2vke8XNJrzK51MiVK
+	 6nNiyB5B/SJEBK0OAKtW1HHiBC3WfRJqFsEyvcy1Omyj8jHwiEOLRbtgT+O9tpV5YKex7
+	 2XU+wUPDUYDw/9aidLVEa6LmsQ8+/6WWplYbaHMO43Me/95M52SynGIKNMgFitJA4wQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2eS8lUBS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xu6pChae;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871D9606A325;
-	Thu, 19 Nov 2026 04:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387A5606A32F;
+	Thu, 19 Nov 2026 04:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2eS8lUBS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A8C1F000C4;
-	Thu, 19 Nov 2026 04:22:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xu6pChae
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C1E21F000C5;
+	Thu, 19 Nov 2026 04:22:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062166;
-	bh=27YBaPufAYwK4vgErJ6X+UDlW9i+bm8gvHvVC2A2aJk=;
+	s=korg; t=1795062168;
+	bh=kC4C2rtB22QO3drSm2IoGN13gK3B373UiekHX5HJMpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2eS8lUBS19pi5VGv1v3VN4zbME8eHK7n4bPDGuuidESfgSVfAbvre4k91RbFAH+/n
-	 eacPwJj1Dn9BQ2soKmFMibYEP6WZX5VLO29TDo6JlVBF+TtoiXO7sm7hjrO0bbjCPd
-	 Y/rCYevCmUk5ErFtVaUoH6Z0JxV+me9Y+/+ZBFZU=
+	b=xu6pChaeOFhHfI/PCmQIveMhF5WXfAKQleKCM120cexxaf/Gk8WncRZltjTqopp+i
+	 OYQsAQm6PCmd/GwxUsT1p9wLiqejhpImmUU2JErVft3L3VLeYB6c5hscdhi9A+iZqE
+	 7Z0NfJDAUZbQkK0uCqh+bITrRgFbfmeC9TuUfwCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Dudu Lu <phx0fer@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1812/1848] blk-mq: keep sharing tags fairly after a queue update
-Date: Wed, 18 Nov 2026 16:04:10 +0100
-Message-ID: <20261118150035.281601333@linuxfoundation.org>
+Subject: [PATCH 5.10 1777/1848] net/sched: gred: keep the qdisc lock while updating the table
+Date: Wed, 18 Nov 2026 16:03:35 +0100
+Message-ID: <20261118150033.750694786@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,42 +70,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Dudu Lu <phx0fer@gmail.com>
 
-[ Upstream commit 620cfc7a664278a55d068ed88fff1242fddc4ef2 ]
+[ Upstream commit 306f788134a21a3d60c1eb872d0ec0ce7c7e09bc ]
 
-A hctx only gets BLK_MQ_F_TAG_QUEUE_SHARED from
-blk_mq_add_queue_tag_set(). The hctxs blk_mq_update_nr_hw_queues()
-allocates for queues that joined long ago never get it, so they aren't
-counted in active_queues and hctx_may_queue() lets them take all the
-tags. One NVMe namespace can starve the others after the first update.
+gred_change_table_def() publishes table->DPs/def/red_flags under
+sch_tree_lock(), drops the lock, and then keeps writing state the
+datapath reads without it:
 
-Set the flag on the new hctxs.
+  - gred_enable_rio_mode()/gred_disable_rio_mode()/gred_disable_wred_mode()
+    set/clear table->flags;
+  - the red_flags_changed loop writes table->tab[i]->red_flags;
+  - the shadowed-VQ loop frees table->tab[i] and clears the slot.
 
-Fixes: 868f2f0b7206 ("blk-mq: dynamic h/w context count")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261028164415.1262013-30-axboe@kernel.dk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+gred_enqueue() and gred_dequeue() read those same fields (test_bit on
+table->flags, q->red_flags, t->tab[]/t->DPs) under the same root lock on
+another CPU, so the post-unlock writes race with the enqueue path:
+
+  BUG: KCSAN: data-race in gred_change_table_def [sch_gred] / gred_enqueue [sch_gred]
+  read (marked) to 0xffff000007ad3b00 of 8 bytes by task 110 on cpu 0:
+   gred_enqueue+0x88/0xc60 [sch_gred]
+   dev_qdisc_enqueue+0x4c/0x19c
+   __dev_queue_xmit+0x10a4/0x1ea4
+
+The comment justifying the early unlock only covers the DP-vs-DPs check,
+which the shadowed-VQ free loop relies on; it does not cover the scalar
+mode bits and per-VQ red_flags written afterwards.  Move the unlock below
+those updates so everything the datapath reads is published under the
+lock that protects it.
+
+Fixes: 6639607ed9de ("[PKT_SCHED]: GRED: Use a central table definition change procedure")
+Signed-off-by: Dudu Lu <phx0fer@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261021155434.66572-1-phx0fer@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/sched/sch_gred.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index e81af96eb18a7..057de68ff219d 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -3776,6 +3776,9 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 			goto fallback;
+diff --git a/net/sched/sch_gred.c b/net/sched/sch_gred.c
+index db3b695d072be..ea1f7b35b853d 100644
+--- a/net/sched/sch_gred.c
++++ b/net/sched/sch_gred.c
+@@ -435,13 +435,6 @@ static int gred_change_table_def(struct Qdisc *sch, struct nlattr *dps,
+ 	red_flags_changed = table->red_flags != sopt->flags;
+ 	table->red_flags = sopt->flags;
+ 
+-	/*
+-	 * Every entry point to GRED is synchronized with the above code
+-	 * and the DP is checked against DPs, i.e. shadowed VQs can no
+-	 * longer be found so we can unlock right here.
+-	 */
+-	sch_tree_unlock(sch);
+-
+ 	if (sopt->grio) {
+ 		gred_enable_rio_mode(table);
+ 		gred_disable_wred_mode(table);
+@@ -467,6 +460,15 @@ static int gred_change_table_def(struct Qdisc *sch, struct nlattr *dps,
  		}
- 		blk_mq_map_swqueue(q);
-+		/* The new hctxs don't know yet that they share their tags */
-+		if (set->flags & BLK_MQ_F_TAG_QUEUE_SHARED)
-+			queue_set_hctx_shared(q, true);
  	}
  
- reregister:
++	/*
++	 * Keep the lock until every field the datapath reads (the
++	 * RIO/WRED mode bits, the per-VQ red_flags and the tab[] slots)
++	 * has been updated: gred_enqueue()/gred_dequeue() read them under
++	 * the same lock, so publishing them after the unlock races with
++	 * the enqueue path.
++	 */
++	sch_tree_unlock(sch);
++
+ 	gred_offload(sch, TC_GRED_REPLACE);
+ 	return 0;
+ }
 -- 
 2.53.0
 
