@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052067;
-	b=EhkbB3R47UIxt6IERl6h51a7tkYVq4i1bguPMZ7abZcA4vhJ2O+MWxip8oTfwr/YZUYI
-	 aVg6pJtvJXENTVAbH6tm5V1/EfRcLOJBwyGB1BYm9ysZCLnY3mL0N1FdLbDmI5tYoy0Mr
-	 BC1tf4IhIoFbdEdxzXF4UPB4+0zVtDsV+9cyxQN20IVAd8T0zDFXskg/w7ZJwXGBBLgHo
-	 bxg8HfK+Y4GOgod4dg3dZutJnMIaQfnZ5lU0eSMTnnik1ejPxqBWW0Z63ljTLaMGuOKnu
-	 sNZrYmbqDUacgDYlb6BFKG2eX/qvWyw0xIfydjpP2v279GeUYMH0VfINpa1cjLkQDxg==
+	t=1795052070;
+	b=o6EhTOafmmL8tLPTFaIGDMwFsdBWWDR5HwvsTSvZhnHwPR9u6TgUDpLRqd+ggXbT1f13
+	 NfIZCBZ38pcQdeVsZShmJymbemzEqJjNx327UkuNJX1jWa768WLypei+5cLVVYUqBwsoy
+	 18JLNgykOi8vx5s8NyREKA/PVI6WH9sTJq5jL7a0yUQrFa0KpR97/6KPVL60eJ58lJ4W0
+	 ISGSRZ+jAZa05Ad16RG7J4GaD9kgs32PNfh9+2JsTJ+FSQJI2FBLSU5M4ti6FmyT6b9u1
+	 kHOoCPvYzJRHJGuscV0DlDutP6Bm2RpQx1FOe/GdhJioFnkzq/dFMQzxhSQbxIhhJcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052067;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052070;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ojPZ6EB37vNDHP1i/nQMHVpFb52rVIdIij5tUfYP73w=;
-	b=is2kP8Yx5PAg62m9STg9A0/0eu+nRTMGnOvl2v556Gn9+5OL53WGDY663XPZjs3FuPuI
-	 zggldBrW6Oi34P2NbKspMHc2jjKSl+81v/q0RA1QTzbnC1WuXPUWJ1HFAerwjWszMSeHx
-	 3W8UsIKn42YRJymHScPJMirm/wm4wjXmDIRopR4z+wkwXIaTYkKAwAUg2vAy55E0bBhXk
-	 Jnpkcq0+Vo+KPzlXXTVqPWQ8TlKZxjbNMijIbl2uUwb3/PdISz4vzN1omGZzp+C/JhbPB
-	 h8uzlcHE4Bd3jXO26Izc3ZkPSiwCT74rLUBsIS/K1EpRNz/XfwH9cWKIXKQp9I2gc4g==
+	bh=ITlX+0tN3CvE7ERUSaWV9t0VkQrUH64cI30bQuDftNk=;
+	b=Q3yY4eM7EyCk27u+X91X31B1wsQyzzGG+FT0rKxuz85A/uIClnvnnQH6SlkYBgrZf4jM
+	 niRCTrvY0s+0XUVF6ha3EKtvQ05rbSqdeKFkjWU61vpBrXgCxLsK89RPI4k3jhvbK1vT5
+	 8tf7YrSm0IG5SY0tPXhbqUmWUB8Z15gAnm/LcGE+piV/wdBSA4xX+nlz2Mip2+KPMSXgt
+	 iylg/ii4KW4Eruwj7R2zhSBc/3uhzybJwwRa38NAiIG0LzZF3Jfd6xKHQb2ntCmx/ejiE
+	 B1QyO8TFKzWyCe5Vu4TLJQAJLhR33E85rh7otYKhqZZivnqgmoH8c+3f8NC+he3MCew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aEC6hpnF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y+ADeaiQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213C2606A320;
-	Thu, 19 Nov 2026 01:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04949606A320;
+	Thu, 19 Nov 2026 01:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aEC6hpnF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735D21F000C5;
-	Thu, 19 Nov 2026 01:34:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y+ADeaiQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522741F000C4;
+	Thu, 19 Nov 2026 01:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052067;
-	bh=ojPZ6EB37vNDHP1i/nQMHVpFb52rVIdIij5tUfYP73w=;
+	s=korg; t=1795052069;
+	bh=ITlX+0tN3CvE7ERUSaWV9t0VkQrUH64cI30bQuDftNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aEC6hpnFmXWK9hCQYPErfFX3A1TE687NFZd+wEC9BnFRyUJYwTUsDQBudcberlBz/
-	 rqqhu/a3KnfF9BXS9xsDrvNaqeNTgJKrsiNg0jiFj2nrhA2IGJr732ZEY6rb7HvDEB
-	 ls2QwjHTHzOJ6ucnUX3zcJEwPU2n7yQGw+o+Wh54=
+	b=Y+ADeaiQLuFOwFZ/wHgOvGcjgmgm2Wvtj54j72kqtx9M7B6TUcYXuj7cKmHf+l8cj
+	 8n4XEp8iOH/vsaRDvaR+12aBu+QAbSFzhFFf8t6tnlkZN+mki0Z5RwcVZeNwPmHcq6
+	 fCyvIPpqVXcDdK+7Slcd7FvKC0ZIzmFM7a01h8D8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamie Lenehan <lenehan@twibble.org>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0433/2214] scsi: dc395x: sync the waiting_timer before freeing the host
-Date: Wed, 18 Nov 2026 15:35:09 +0100
-Message-ID: <20261118150028.302319872@linuxfoundation.org>
+Subject: [PATCH 5.15 0434/2214] media: rc: Fix ABBA deadlock by making locks more fine grained
+Date: Wed, 18 Nov 2026 15:35:10 +0100
+Message-ID: <20261118150028.357836279@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,65 +68,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Sean Young <sean@mess.org>
 
-[ Upstream commit 0b1a79f2791a06f139dce5450e487307cf0e241f ]
+[ Upstream commit c6d68866ad8aa1e957a3e5a6ede971148f1e3d59 ]
 
-The waiting_timer callback re-arms itself and takes the host lock.
-adapter_uninit() currently stops it with timer_delete(), which does not
-wait for a callback already running on another CPU. The final
-scsi_host_put() that frees the host (and the host lock the callback
-dereferences) runs right after adapter_uninit(), so a concurrent or just
-re-armed callback can fire after the free, leaving a potential
-use-after-free window.
+The ir_raw_event_unregister() function takes the ir_raw_handler_lock
+first and then the rc_dev->lock. Other functions like change_protocol
+do this in the reverse order.
 
-Replace timer_delete() with timer_shutdown_sync() at the top of
-adapter_uninit(), before the host-lock section: the timer is dequeued,
-a running callback is waited for and rearming is blocked before the chip
-is halted, so it cannot fire at all once the adapter has ceased to
-function. Waiting outside the lock avoids the self-deadlock that would
-result from syncing a callback blocked on the lock we still hold.
+This means that an ir decoder module unload and writing to the protocol
+sysfs file can cause a deadlock.
 
-No shutdown is needed for selto_timer because it has no reachable armer
-or callback.
+ir_raw_handler_lock protects the client list, amongst other things.
+Split this out into a separate lock so we can ensure the locking
+order is always the same.
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 93cffffc18f6 ("[media] media: rc: fix decoder module unloading")
+Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
-Cc: Jamie Lenehan <lenehan@twibble.org>
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260911020544.42966-1-fanwu01@zju.edu.cn
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ sashal: adjusted context for del_timer() instead of timer_delete() ]
+Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ sashal: adjusted ir_raw_event_unregister() context for del_timer_sync() and the existing teardown sequence ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/dc395x.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/media/rc/rc-ir-raw.c | 38 +++++++++++++++++++++++-------------
+ 1 file changed, 24 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/scsi/dc395x.c b/drivers/scsi/dc395x.c
-index d5623253826f1..7b15b86e85879 100644
---- a/drivers/scsi/dc395x.c
-+++ b/drivers/scsi/dc395x.c
-@@ -4416,13 +4416,11 @@ static void adapter_uninit_chip(struct AdapterCtlBlk *acb)
- static void adapter_uninit(struct AdapterCtlBlk *acb)
+diff --git a/drivers/media/rc/rc-ir-raw.c b/drivers/media/rc/rc-ir-raw.c
+index c65bba4ec4739..304cc47e781ed 100644
+--- a/drivers/media/rc/rc-ir-raw.c
++++ b/drivers/media/rc/rc-ir-raw.c
+@@ -10,7 +10,8 @@
+ #include <linux/sched.h>
+ #include "rc-core-priv.h"
+ 
+-/* Used to keep track of IR raw clients, protected by ir_raw_handler_lock */
++/* Used to keep track of IR raw clients, protected by ir_raw_client_lock */
++static DEFINE_MUTEX(ir_raw_client_lock);
+ static LIST_HEAD(ir_raw_client_list);
+ 
+ /* Used to handle IR raw handler extensions */
+@@ -290,13 +291,6 @@ static int change_protocol(struct rc_dev *dev, u64 *rc_proto)
+ 	return 0;
+ }
+ 
+-static void ir_raw_disable_protocols(struct rc_dev *dev, u64 protocols)
+-{
+-	mutex_lock(&dev->lock);
+-	dev->enabled_protocols &= ~protocols;
+-	mutex_unlock(&dev->lock);
+-}
+-
+ /**
+  * ir_raw_gen_manchester() - Encode data with Manchester (bi-phase) modulation.
+  * @ev:		Pointer to pointer to next free event. *@ev is incremented for
+@@ -634,15 +628,18 @@ int ir_raw_event_register(struct rc_dev *dev)
  {
- 	unsigned long flags;
--	DC395x_LOCK_IO(acb->scsi_host, flags);
+ 	struct task_struct *thread;
  
--	/* remove timers */
--	if (timer_pending(&acb->waiting_timer))
--		del_timer(&acb->waiting_timer);
--	if (timer_pending(&acb->selto_timer))
--		del_timer(&acb->selto_timer);
-+	/* Drain the self-rearming timer; must not run under host_lock. */
-+	timer_shutdown_sync(&acb->waiting_timer);
++	/* Holding dev->lock could result in a dead-lock */
++	lockdep_assert_not_held(&dev->lock);
 +
-+	DC395x_LOCK_IO(acb->scsi_host, flags);
+ 	thread = kthread_run(ir_raw_event_thread, dev->raw, "rc%u", dev->minor);
+ 	if (IS_ERR(thread))
+ 		return PTR_ERR(thread);
  
- 	adapter_uninit_chip(acb);
- 	adapter_remove_and_free_all_devices(acb);
+ 	dev->raw->thread = thread;
+ 
+-	mutex_lock(&ir_raw_handler_lock);
++	mutex_lock(&ir_raw_client_lock);
+ 	list_add_tail(&dev->raw->list, &ir_raw_client_list);
+-	mutex_unlock(&ir_raw_handler_lock);
++	mutex_unlock(&ir_raw_client_lock);
+ 
+ 	return 0;
+ }
+@@ -666,8 +663,10 @@ void ir_raw_event_unregister(struct rc_dev *dev)
+ 	kthread_stop(dev->raw->thread);
+ 	del_timer_sync(&dev->raw->edge_handle);
+ 
+-	mutex_lock(&ir_raw_handler_lock);
++	mutex_lock(&ir_raw_client_lock);
+ 	list_del(&dev->raw->list);
++
++	mutex_lock(&ir_raw_handler_lock);
+ 	list_for_each_entry(handler, &ir_raw_handler_list, list)
+ 		if (handler->raw_unregister &&
+ 		    (handler->protocols & dev->enabled_protocols))
+@@ -683,6 +682,8 @@ void ir_raw_event_unregister(struct rc_dev *dev)
+ 	 * "device gone" is checked.
+ 	 */
+ 	mutex_unlock(&ir_raw_handler_lock);
++
++	mutex_unlock(&ir_raw_client_lock);
+ }
+ 
+ /*
+@@ -705,15 +706,24 @@ void ir_raw_handler_unregister(struct ir_raw_handler *ir_raw_handler)
+ 	struct ir_raw_event_ctrl *raw;
+ 	u64 protocols = ir_raw_handler->protocols;
+ 
++	mutex_lock(&ir_raw_client_lock);
++
+ 	mutex_lock(&ir_raw_handler_lock);
+ 	list_del(&ir_raw_handler->list);
++	atomic64_andnot(protocols, &available_protocols);
++	mutex_unlock(&ir_raw_handler_lock);
++
+ 	list_for_each_entry(raw, &ir_raw_client_list, list) {
++		mutex_lock(&raw->dev->lock);
++		mutex_lock(&ir_raw_handler_lock);
+ 		if (ir_raw_handler->raw_unregister &&
+ 		    (raw->dev->enabled_protocols & protocols))
+ 			ir_raw_handler->raw_unregister(raw->dev);
+-		ir_raw_disable_protocols(raw->dev, protocols);
++		raw->dev->enabled_protocols &= ~protocols;
++		mutex_unlock(&ir_raw_handler_lock);
++		mutex_unlock(&raw->dev->lock);
+ 	}
+-	atomic64_andnot(protocols, &available_protocols);
+-	mutex_unlock(&ir_raw_handler_lock);
++
++	mutex_unlock(&ir_raw_client_lock);
+ }
+ EXPORT_SYMBOL(ir_raw_handler_unregister);
 -- 
 2.53.0
 
