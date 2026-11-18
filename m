@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018812;
-	b=h6XgdvEwPTWrPSKIgqPuKOKhLSayy602wpPQNB0yc7jwqRGsJq7rzc/fSzQhR52bY1ZK
-	 VRXz37gpFez9cXTffYVsrhDSz3bafPOLJP1kQ6b3+tU281eOIrvyZqI+9wILW0Lpw/vR9
-	 HzFJQdQPdV9CXLOz2Ss3X7ANnBjk2De3fsE+WXWajSzAQ+cDhCuuXJho0Y/QMHb+MWkDT
-	 q4urb6pToQSdOXoCEiaLRIceHq1L63UVIBh12Lx3qvKCsxfDfswq7pgx06HOBwfwIGG/B
-	 x5hLJS2cLxqSMtHQuvgopG8WppWWGFGnjqYgc0qpASOSJ4vtfARnm9jl+ldyhUJ4bPw==
+	t=1795018815;
+	b=2BcoxQQc/RmoXbFEnVoiKoTw193OhmaqPDBUsOs6RcWp7dlAdZQjvTO7wZL8YeVMuRbe
+	 me8LRwniqMwPP331vi4QijQ3JdWIoErWD7oqiNEdr3EeeP8ILzA28FE/iKmhL90TR6V+n
+	 OiDwGGOr1j1he8QAhEQlRkwmJ4x+cFsNQ98V6BNnFTMk8qRW+M7NjUJmth4L/UrXi43Ql
+	 ExTL/eSjCWK14+VwHV8/K7S9EeQ2g9hVsvYwt0oKpP8Hh9MKZkPbbSLCbATCv3nK4ncpy
+	 bbpzVM0kFhBGwYHkBZ24+Hk9HLjW4Z1JKomUk25PnV1Aq5bj7rUphYnsRzqy5yHQqug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018812;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018815;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/HckA969+2QbD12tEdOlF1PjCGTOTd7mHM4fi5JdlTs=;
-	b=TiFDTtLo5FgI7/9Gr9va+STkNBxbvEflCRiOmEZ/91opfTP73c8xsINWf41kYIdSJyEU
-	 gmC8WH1JqSbeVtYdZ5q8MFjHaVAjYzP7Rz/jE9QXM+GU7CLFj8cuos9/cgFTs5A7V3anM
-	 elkmXqZxylxAOWjVdexxyyxYouzPlwtnLaNNtaNxR8bqaW2GYV9DyG8z8w8XxXytaABy0
-	 mF1nucDMbVqpjj8A6LMy2/G8+2T3kPcm+JQcWyl5ugoMnvhG/xhilVf3ffA6u3sepcWUK
-	 EdcWp5XKUADqcGEEwx23TZnBdd7sRl2Sk769jWQAtoKPHDZkYa1dSWaY645NcY2NpPg==
+	bh=Nd9duUAJIAirkiOE2J6AaGEp6NoYAaz9dQaOiLQ6nhU=;
+	b=384BCdVBi8oScvAy28ZHD+IAulnH7NSgvnPEYk0+C+OqSfT7evsakjPa1ktxRz5qGv3k
+	 8W+dRjGNvgw3S8Dwls9h8QEIsB3h+wlXScmCOWCy5tVroblhjwnrlNNRsMrouoTkoaX2E
+	 T/e0NpbrHbyTmjKXbwIPp5OUQiBFwow2sMSwOOFwBRVyus/LvTKqrkCDk23c+iozSyr5S
+	 QSmfWKA1LiW9mMJQd0YVxB8PRwBAGW06lxHVvlbbTrB0TQpMdz5ImXmolG9ZF4zl13mHw
+	 f8c/E0Mn0UcR/iQVfa/Ye50xUZ1sKggZiHKep/m7OgcwW6KV/4hFWZVWWg1w11ulejg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JXEPKoDi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LMqVpW9e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9CF60A260A;
-	Wed, 18 Nov 2026 16:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFC7606A325;
+	Wed, 18 Nov 2026 16:20:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JXEPKoDi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF86E1F000C4;
-	Wed, 18 Nov 2026 16:20:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LMqVpW9e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C7A1F000C4;
+	Wed, 18 Nov 2026 16:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018812;
-	bh=/HckA969+2QbD12tEdOlF1PjCGTOTd7mHM4fi5JdlTs=;
+	s=korg; t=1795018815;
+	bh=Nd9duUAJIAirkiOE2J6AaGEp6NoYAaz9dQaOiLQ6nhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JXEPKoDiozN9h02xlfOFdIqecNcefB0VPFSlA/+44yhCsvQo0Opl+tiqcGPDzFX4y
-	 iO0RtVTVThNU49AoKVe7x5V5/WnoNaEOXqJcmiS3Rclu2R00q83bKcnHqGTe9WiSO1
-	 qd19S+U/2qjTYmFApzFQ8QVtF3+t4KESomAp2518=
+	b=LMqVpW9e58Llxg1QBEDn85MFS/x5yvivm5IN/SKwnX/8KM7qps3JcRZV+ejO8fzAF
+	 pWfeqzwhoMD0AzrXYIrSMGKfd/1Ka+vCdo2mtcZjeIal6ZHj4FOdYiJLbb1xg0PGYg
+	 8EqL7nbxOUHMsSeJCUiePmJZ5ShqteQ189LCpFdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Vincent Mailhol <mailhol@kernel.org>,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1373/2651] efi/riscv: libstub: Dont set image_size in handle_kernel_image()
-Date: Wed, 18 Nov 2026 15:43:33 +0100
-Message-ID: <20261118150337.461500157@linuxfoundation.org>
+Subject: [PATCH 7.3 1374/2651] efi/libstub: make local GUID variables static
+Date: Wed, 18 Nov 2026 15:43:34 +0100
+Message-ID: <20261118150337.496562987@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,49 +68,378 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Vincent Mailhol <mailhol@kernel.org>
 
-[ Upstream commit fd4465f49b53c7379d10610f8edb71f77366a5b7 ]
+[ Upstream commit e57b05932a49b1ef54c6f116b9b044ce37db7dcc ]
 
-Sashiko points out the image_size should only be set if image_addr was
-reassigned to some allocated memory. If image_size is not zero then the
-caller will free the image_addr pointer.
+Local efi_guid_t variables with automatic storage produce assembly
+similar to passing the address of the GUID macro directly. For the same
+reason, make these GUID variables static.
 
-efi_kaslr_relocate_kernel() never works like that, if it changes
-image_addr to allocated memory the free is done through reserve_size.
+Put the static declarations first in their local declaration block to
+visually separate them from the automatic variables.
 
-Fixes: b7ac4b8ee73d ("riscv: libstub: Implement KASLR by using generic functions")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+For an x86_64 build with gcc 15.3.0, bloat-o-meter reports:
+
+  add/remove: 15/0 grow/shrink: 0/10 up/down: 336/-742 (-406)
+  Function                                     old     new   delta
+  tbl_guid                                       -      32     +32
+  rng_proto                                      -      32     +32
+  pci_proto                                      -      32     +32
+  guid                                           -      32     +32
+  fs_proto                                       -      32     +32
+  cc_guid                                        -      32     +32
+  tpm2_guid                                      -      16     +16
+  text_to_dp_guid                                -      16     +16
+  tcg2_guid                                      -      16     +16
+  rng_table_guid                                 -      16     +16
+  rng_algo_raw                                   -      16     +16
+  proto                                          -      16     +16
+  linux_eventlog_guid                            -      16     +16
+  lf2_proto_guid                                 -      16     +16
+  info_guid                                      -      16     +16
+  efi_get_memory_map                           707     696     -11
+  efi_pci_disable_bridge_busmaster            1199    1184     -15
+  efi_get_random_bytes                         216     188     -28
+  efi_remap_image                              357     328     -29
+  efi_load_initrd                             1113    1065     -48
+  efi_random_get_seed                         1368    1297     -71
+  efi_measure_tagged_event                     935     854     -81
+  efi_retrieve_eventlog                       1686    1570    -116
+  handle_cmdline_files                        2501    2341    -160
+  efi_stub_entry                              4136    3953    -183
+  Total: Before=28877, After=28471, chg -1.41%
+
+Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Stable-dep-of: 8ea857a2bb54 ("efi/libstub: Free cmdline_ptr in efi_pe_entry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/riscv-stub.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/firmware/efi/libstub/efi-stub-entry.c    |  2 +-
+ drivers/firmware/efi/libstub/efi-stub-helper.c   | 10 +++++-----
+ drivers/firmware/efi/libstub/efi-stub.c          |  2 +-
+ drivers/firmware/efi/libstub/file.c              |  8 ++++----
+ drivers/firmware/efi/libstub/kaslr.c             |  2 +-
+ drivers/firmware/efi/libstub/mem.c               |  2 +-
+ drivers/firmware/efi/libstub/pci.c               |  2 +-
+ drivers/firmware/efi/libstub/random.c            |  8 ++++----
+ drivers/firmware/efi/libstub/riscv.c             |  2 +-
+ drivers/firmware/efi/libstub/tpm.c               |  8 ++++----
+ drivers/firmware/efi/libstub/unaccepted_memory.c |  2 +-
+ drivers/firmware/efi/libstub/x86-stub.c          | 10 +++++-----
+ 12 files changed, 29 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/firmware/efi/libstub/riscv-stub.c b/drivers/firmware/efi/libstub/riscv-stub.c
-index e7d9204baee31..725b634c51791 100644
---- a/drivers/firmware/efi/libstub/riscv-stub.c
-+++ b/drivers/firmware/efi/libstub/riscv-stub.c
-@@ -37,17 +37,14 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
- 	kernel_codesize = __init_text_end - _start;
- 	kernel_memsize = kernel_size + (_end - _edata);
- 	*image_addr = (unsigned long)_start;
--	*image_size = kernel_memsize;
--	*reserve_size = *image_size;
-+	*reserve_size = kernel_memsize;
+diff --git a/drivers/firmware/efi/libstub/efi-stub-entry.c b/drivers/firmware/efi/libstub/efi-stub-entry.c
+index aa85e910fe595..8ecd8cd72561f 100644
+--- a/drivers/firmware/efi/libstub/efi-stub-entry.c
++++ b/drivers/firmware/efi/libstub/efi-stub-entry.c
+@@ -35,13 +35,13 @@ struct sysfb_display_info *alloc_primary_display(void)
+ efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
+ 				   efi_system_table_t *systab)
+ {
++	static efi_guid_t loaded_image_proto = LOADED_IMAGE_PROTOCOL_GUID;
+ 	efi_loaded_image_t *image;
+ 	efi_status_t status;
+ 	unsigned long image_addr;
+ 	unsigned long image_size = 0;
+ 	/* addr/point and size pairs for memory management*/
+ 	char *cmdline_ptr = NULL;
+-	efi_guid_t loaded_image_proto = LOADED_IMAGE_PROTOCOL_GUID;
+ 	unsigned long reserve_addr = 0;
+ 	unsigned long reserve_size = 0;
  
- 	status = efi_kaslr_relocate_kernel(image_addr,
- 					   reserve_addr, reserve_size,
- 					   kernel_size, kernel_codesize, kernel_memsize,
- 					   efi_kaslr_get_phys_seed(image_handle));
--	if (status != EFI_SUCCESS) {
-+	if (status != EFI_SUCCESS)
- 		efi_err("Failed to relocate kernel\n");
--		*image_size = 0;
--	}
+diff --git a/drivers/firmware/efi/libstub/efi-stub-helper.c b/drivers/firmware/efi/libstub/efi-stub-helper.c
+index f27f2e1f00199..48f93f7758e9e 100644
+--- a/drivers/firmware/efi/libstub/efi-stub-helper.c
++++ b/drivers/firmware/efi/libstub/efi-stub-helper.c
+@@ -248,6 +248,7 @@ static efi_status_t efi_measure_tagged_event(unsigned long load_addr,
+ 					     unsigned long load_size,
+ 					     enum efistub_event_type event)
+ {
++	static efi_guid_t tcg2_guid = EFI_TCG2_PROTOCOL_GUID;
+ 	union {
+ 		efi_status_t
+ 		(__efiapi *hash_log_extend_event)(void *, u64, efi_physical_addr_t,
+@@ -257,7 +258,6 @@ static efi_status_t efi_measure_tagged_event(unsigned long load_addr,
+ 	struct efistub_measured_event *evt __free(efi_pool) = NULL;
+ 	int size = struct_size(evt, tagged_event.tagged_event_data,
+ 			       events[event].event_data_len);
+-	efi_guid_t tcg2_guid = EFI_TCG2_PROTOCOL_GUID;
+ 	efi_tcg2_protocol_t *tcg2 = NULL;
+ 	union efistub_event ev;
+ 	efi_status_t status;
+@@ -276,7 +276,7 @@ static efi_status_t efi_measure_tagged_event(unsigned long load_addr,
+ 		method.hash_log_extend_event =
+ 			(void *)efi_table_attr(tcg2, hash_log_extend_event);
+ 	} else {
+-		efi_guid_t cc_guid = EFI_CC_MEASUREMENT_PROTOCOL_GUID;
++		static efi_guid_t cc_guid = EFI_CC_MEASUREMENT_PROTOCOL_GUID;
+ 		efi_cc_protocol_t *cc = NULL;
  
- 	return status;
- }
+ 		efi_bs_call(locate_protocol, &cc_guid, NULL, (void **)&cc);
+@@ -552,7 +552,7 @@ static
+ efi_status_t efi_load_initrd_dev_path(struct linux_efi_initrd *initrd,
+ 				      unsigned long max)
+ {
+-	efi_guid_t lf2_proto_guid = EFI_LOAD_FILE2_PROTOCOL_GUID;
++	static efi_guid_t lf2_proto_guid = EFI_LOAD_FILE2_PROTOCOL_GUID;
+ 	efi_device_path_protocol_t *dp;
+ 	efi_load_file2_protocol_t *lf2;
+ 	efi_handle_t handle;
+@@ -614,7 +614,7 @@ efi_status_t efi_load_initrd(efi_loaded_image_t *image,
+ 			     unsigned long hard_limit,
+ 			     const struct linux_efi_initrd **out)
+ {
+-	efi_guid_t tbl_guid = LINUX_EFI_INITRD_MEDIA_GUID;
++	static efi_guid_t tbl_guid = LINUX_EFI_INITRD_MEDIA_GUID;
+ 	efi_status_t status = EFI_SUCCESS;
+ 	struct linux_efi_initrd initrd, *tbl;
+ 
+@@ -725,7 +725,7 @@ efi_status_t efi_wait_for_key(unsigned long usec, efi_input_key_t *key)
+ void efi_remap_image(unsigned long image_base, unsigned alloc_size,
+ 		     unsigned long code_size)
+ {
+-	efi_guid_t guid = EFI_MEMORY_ATTRIBUTE_PROTOCOL_GUID;
++	static efi_guid_t guid = EFI_MEMORY_ATTRIBUTE_PROTOCOL_GUID;
+ 	efi_memory_attribute_protocol_t *memattr;
+ 	efi_status_t status;
+ 	u64 attr;
+diff --git a/drivers/firmware/efi/libstub/efi-stub.c b/drivers/firmware/efi/libstub/efi-stub.c
+index a4cb39656b031..f3f6f37921efe 100644
+--- a/drivers/firmware/efi/libstub/efi-stub.c
++++ b/drivers/firmware/efi/libstub/efi-stub.c
+@@ -79,8 +79,8 @@ static struct sysfb_display_info *setup_primary_display(void)
+ 
+ static void install_memreserve_table(void)
+ {
++	static efi_guid_t memreserve_table_guid = LINUX_EFI_MEMRESERVE_TABLE_GUID;
+ 	struct linux_efi_memreserve *rsv;
+-	efi_guid_t memreserve_table_guid = LINUX_EFI_MEMRESERVE_TABLE_GUID;
+ 	efi_status_t status;
+ 
+ 	/*
+diff --git a/drivers/firmware/efi/libstub/file.c b/drivers/firmware/efi/libstub/file.c
+index bd626d55dcbc2..0dff9e08d49ed 100644
+--- a/drivers/firmware/efi/libstub/file.c
++++ b/drivers/firmware/efi/libstub/file.c
+@@ -39,7 +39,7 @@ static efi_status_t efi_open_file(efi_file_protocol_t *volume,
+ 				  efi_file_protocol_t **handle,
+ 				  unsigned long *file_size)
+ {
+-	efi_guid_t info_guid = EFI_FILE_INFO_ID;
++	static efi_guid_t info_guid = EFI_FILE_INFO_ID;
+ 	efi_file_protocol_t *fh;
+ 	unsigned long info_sz;
+ 	efi_status_t status;
+@@ -74,7 +74,7 @@ static efi_status_t efi_open_file(efi_file_protocol_t *volume,
+ static efi_status_t efi_open_volume(efi_loaded_image_t *image,
+ 				    efi_file_protocol_t **fh)
+ {
+-	efi_guid_t fs_proto = EFI_FILE_SYSTEM_GUID;
++	static efi_guid_t fs_proto = EFI_FILE_SYSTEM_GUID;
+ 	efi_simple_file_system_protocol_t *io;
+ 	efi_status_t status;
+ 
+@@ -128,9 +128,9 @@ static int find_file_option(const efi_char16_t *cmdline, int cmdline_len,
+ static efi_status_t efi_open_device_path(efi_file_protocol_t **volume,
+ 					 struct finfo *fi)
+ {
+-	efi_guid_t text_to_dp_guid = EFI_DEVICE_PATH_FROM_TEXT_PROTOCOL_GUID;
++	static efi_guid_t text_to_dp_guid = EFI_DEVICE_PATH_FROM_TEXT_PROTOCOL_GUID;
++	static efi_guid_t fs_proto = EFI_FILE_SYSTEM_GUID;
+ 	static efi_device_path_from_text_protocol_t *text_to_dp = NULL;
+-	efi_guid_t fs_proto = EFI_FILE_SYSTEM_GUID;
+ 	efi_device_path_protocol_t *initrd_dp;
+ 	efi_simple_file_system_protocol_t *io;
+ 	struct efi_file_path_dev_path *fpath;
+diff --git a/drivers/firmware/efi/libstub/kaslr.c b/drivers/firmware/efi/libstub/kaslr.c
+index 4bc963e999eb9..f5074656457a6 100644
+--- a/drivers/firmware/efi/libstub/kaslr.c
++++ b/drivers/firmware/efi/libstub/kaslr.c
+@@ -18,7 +18,7 @@
+  */
+ u32 efi_kaslr_get_phys_seed(efi_handle_t image_handle)
+ {
+-	efi_guid_t li_fixed_proto = LINUX_EFI_LOADED_IMAGE_FIXED_GUID;
++	static efi_guid_t li_fixed_proto = LINUX_EFI_LOADED_IMAGE_FIXED_GUID;
+ 	void *p;
+ 
+ 	if (!IS_ENABLED(CONFIG_RANDOMIZE_BASE))
+diff --git a/drivers/firmware/efi/libstub/mem.c b/drivers/firmware/efi/libstub/mem.c
+index 59f3f83de50c2..fec561e3a7924 100644
+--- a/drivers/firmware/efi/libstub/mem.c
++++ b/drivers/firmware/efi/libstub/mem.c
+@@ -20,10 +20,10 @@
+ efi_status_t efi_get_memory_map(struct efi_boot_memmap **map,
+ 				bool install_cfg_tbl)
+ {
++	static efi_guid_t tbl_guid = LINUX_EFI_BOOT_MEMMAP_GUID;
+ 	struct efi_boot_memmap tmp, *m __free(efi_pool) = NULL;
+ 	int memtype = install_cfg_tbl ? EFI_ACPI_RECLAIM_MEMORY
+ 				      : EFI_LOADER_DATA;
+-	efi_guid_t tbl_guid = LINUX_EFI_BOOT_MEMMAP_GUID;
+ 	efi_status_t status;
+ 	unsigned long size;
+ 
+diff --git a/drivers/firmware/efi/libstub/pci.c b/drivers/firmware/efi/libstub/pci.c
+index 1dccf77958d3a..5daa7a0a0e87a 100644
+--- a/drivers/firmware/efi/libstub/pci.c
++++ b/drivers/firmware/efi/libstub/pci.c
+@@ -15,7 +15,7 @@
+ 
+ void efi_pci_disable_bridge_busmaster(void)
+ {
+-	efi_guid_t pci_proto = EFI_PCI_IO_PROTOCOL_GUID;
++	static efi_guid_t pci_proto = EFI_PCI_IO_PROTOCOL_GUID;
+ 	efi_handle_t *pci_handle __free(efi_pool) = NULL;
+ 	unsigned long pci_handle_num;
+ 	efi_handle_t handle;
+diff --git a/drivers/firmware/efi/libstub/random.c b/drivers/firmware/efi/libstub/random.c
+index 7109b8a2dcba8..3ca230fa7aa3e 100644
+--- a/drivers/firmware/efi/libstub/random.c
++++ b/drivers/firmware/efi/libstub/random.c
+@@ -38,7 +38,7 @@ union efi_rng_protocol {
+  */
+ efi_status_t efi_get_random_bytes(unsigned long size, u8 *out)
+ {
+-	efi_guid_t rng_proto = EFI_RNG_PROTOCOL_GUID;
++	static efi_guid_t rng_proto = EFI_RNG_PROTOCOL_GUID;
+ 	efi_status_t status;
+ 	efi_rng_protocol_t *rng = NULL;
+ 
+@@ -64,9 +64,9 @@ efi_status_t efi_get_random_bytes(unsigned long size, u8 *out)
+  */
+ efi_status_t efi_random_get_seed(void)
+ {
+-	efi_guid_t rng_proto = EFI_RNG_PROTOCOL_GUID;
+-	efi_guid_t rng_algo_raw = EFI_RNG_ALGORITHM_RAW;
+-	efi_guid_t rng_table_guid = LINUX_EFI_RANDOM_SEED_TABLE_GUID;
++	static efi_guid_t rng_proto = EFI_RNG_PROTOCOL_GUID;
++	static efi_guid_t rng_algo_raw = EFI_RNG_ALGORITHM_RAW;
++	static efi_guid_t rng_table_guid = LINUX_EFI_RANDOM_SEED_TABLE_GUID;
+ 	struct linux_efi_random_seed *prev_seed, *seed = NULL;
+ 	int prev_seed_size = 0, seed_size = EFI_RANDOM_SEED_SIZE;
+ 	unsigned long nv_seed_size = 0, offset = 0;
+diff --git a/drivers/firmware/efi/libstub/riscv.c b/drivers/firmware/efi/libstub/riscv.c
+index f66f33ceb99e3..49db47c05bfe9 100644
+--- a/drivers/firmware/efi/libstub/riscv.c
++++ b/drivers/firmware/efi/libstub/riscv.c
+@@ -45,7 +45,7 @@ static int get_boot_hartid_from_fdt(void)
+ 
+ static efi_status_t get_boot_hartid_from_efi(void)
+ {
+-	efi_guid_t boot_protocol_guid = RISCV_EFI_BOOT_PROTOCOL_GUID;
++	static efi_guid_t boot_protocol_guid = RISCV_EFI_BOOT_PROTOCOL_GUID;
+ 	struct riscv_efi_boot_protocol *boot_protocol;
+ 	efi_status_t status;
+ 
+diff --git a/drivers/firmware/efi/libstub/tpm.c b/drivers/firmware/efi/libstub/tpm.c
+index a5c6c4f163fce..73f0011147323 100644
+--- a/drivers/firmware/efi/libstub/tpm.c
++++ b/drivers/firmware/efi/libstub/tpm.c
+@@ -28,8 +28,8 @@ static const efi_char16_t efi_MemoryOverWriteRequest_name[] =
+  */
+ void efi_enable_reset_attack_mitigation(void)
+ {
++	static efi_guid_t var_guid = MEMORY_ONLY_RESET_CONTROL_GUID;
+ 	u8 val = 1;
+-	efi_guid_t var_guid = MEMORY_ONLY_RESET_CONTROL_GUID;
+ 	efi_status_t status;
+ 	unsigned long datasize = 0;
+ 
+@@ -52,7 +52,7 @@ static void efi_retrieve_tcg2_eventlog(int version, efi_physical_addr_t log_loca
+ 				       efi_bool_t truncated,
+ 				       struct efi_tcg2_final_events_table *final_events_table)
+ {
+-	efi_guid_t linux_eventlog_guid = LINUX_EFI_TPM_EVENT_LOG_GUID;
++	static efi_guid_t linux_eventlog_guid = LINUX_EFI_TPM_EVENT_LOG_GUID;
+ 	efi_status_t status;
+ 	struct linux_efi_tpm_eventlog *log_tbl = NULL;
+ 	unsigned long first_entry_addr, last_entry_addr;
+@@ -150,9 +150,9 @@ static void efi_retrieve_tcg2_eventlog(int version, efi_physical_addr_t log_loca
+ 
+ void efi_retrieve_eventlog(void)
+ {
++	static efi_guid_t tpm2_guid = EFI_TCG2_PROTOCOL_GUID;
+ 	struct efi_tcg2_final_events_table *final_events_table = NULL;
+ 	efi_physical_addr_t log_location = 0, log_last_entry = 0;
+-	efi_guid_t tpm2_guid = EFI_TCG2_PROTOCOL_GUID;
+ 	int version = EFI_TCG2_EVENT_LOG_FORMAT_TCG_2;
+ 	efi_tcg2_protocol_t *tpm2 = NULL;
+ 	efi_bool_t truncated;
+@@ -173,7 +173,7 @@ void efi_retrieve_eventlog(void)
+ 				get_efi_config_table(EFI_TCG2_FINAL_EVENTS_TABLE_GUID);
+ 		}
+ 	} else {
+-		efi_guid_t cc_guid = EFI_CC_MEASUREMENT_PROTOCOL_GUID;
++		static efi_guid_t cc_guid = EFI_CC_MEASUREMENT_PROTOCOL_GUID;
+ 		efi_cc_protocol_t *cc = NULL;
+ 
+ 		status = efi_bs_call(locate_protocol, &cc_guid, NULL, (void **)&cc);
+diff --git a/drivers/firmware/efi/libstub/unaccepted_memory.c b/drivers/firmware/efi/libstub/unaccepted_memory.c
+index 757dbe734a47a..2a7eac7fef862 100644
+--- a/drivers/firmware/efi/libstub/unaccepted_memory.c
++++ b/drivers/firmware/efi/libstub/unaccepted_memory.c
+@@ -9,7 +9,7 @@ struct efi_unaccepted_memory *unaccepted_table;
+ efi_status_t allocate_unaccepted_bitmap(__u32 nr_desc,
+ 					struct efi_boot_memmap *map)
+ {
+-	efi_guid_t unaccepted_table_guid = LINUX_EFI_UNACCEPTED_MEM_TABLE_GUID;
++	static efi_guid_t unaccepted_table_guid = LINUX_EFI_UNACCEPTED_MEM_TABLE_GUID;
+ 	u64 unaccepted_start = ULLONG_MAX, unaccepted_end = 0, bitmap_size;
+ 	efi_status_t status;
+ 	int i;
+diff --git a/drivers/firmware/efi/libstub/x86-stub.c b/drivers/firmware/efi/libstub/x86-stub.c
+index cef32e2c82d8f..7e0f5997072a6 100644
+--- a/drivers/firmware/efi/libstub/x86-stub.c
++++ b/drivers/firmware/efi/libstub/x86-stub.c
+@@ -114,9 +114,9 @@ preserve_pci_rom_image(efi_pci_io_protocol_t *pci, struct pci_setup_rom **__rom)
+  */
+ static void setup_efi_pci(struct boot_params *params)
+ {
++	static efi_guid_t pci_proto = EFI_PCI_IO_PROTOCOL_GUID;
+ 	efi_status_t status;
+ 	efi_handle_t *pci_handle __free(efi_pool) = NULL;
+-	efi_guid_t pci_proto = EFI_PCI_IO_PROTOCOL_GUID;
+ 	struct setup_data *data;
+ 	unsigned long num;
+ 	efi_handle_t h;
+@@ -155,7 +155,7 @@ static void setup_efi_pci(struct boot_params *params)
+ 
+ static void retrieve_apple_device_properties(struct boot_params *boot_params)
+ {
+-	efi_guid_t guid = APPLE_PROPERTIES_PROTOCOL_GUID;
++	static efi_guid_t guid = APPLE_PROPERTIES_PROTOCOL_GUID;
+ 	struct setup_data *data, *new;
+ 	efi_status_t status;
+ 	u32 size = 0;
+@@ -444,7 +444,7 @@ efi_status_t efi_adjust_memory_range_protection(unsigned long start,
+ 
+ static void setup_unaccepted_memory(void)
+ {
+-	efi_guid_t mem_acceptance_proto = OVMF_SEV_MEMORY_ACCEPTANCE_PROTOCOL_GUID;
++	static efi_guid_t mem_acceptance_proto = OVMF_SEV_MEMORY_ACCEPTANCE_PROTOCOL_GUID;
+ 	sev_memory_acceptance_protocol_t *proto;
+ 	efi_status_t status;
+ 
+@@ -507,7 +507,7 @@ static void __noreturn efi_exit(efi_handle_t handle, efi_status_t status)
+ static efi_status_t efi_allocate_bootparams(efi_handle_t handle,
+ 					    struct boot_params **bp)
+ {
+-	efi_guid_t proto = LOADED_IMAGE_PROTOCOL_GUID;
++	static efi_guid_t proto = LOADED_IMAGE_PROTOCOL_GUID;
+ 	struct boot_params *boot_params;
+ 	struct setup_header *hdr;
+ 	efi_status_t status;
+@@ -914,7 +914,7 @@ void __noreturn efi_stub_entry(efi_handle_t handle,
+ 			       struct boot_params *boot_params)
+ 
+ {
+-	efi_guid_t guid = EFI_MEMORY_ATTRIBUTE_PROTOCOL_GUID;
++	static efi_guid_t guid = EFI_MEMORY_ATTRIBUTE_PROTOCOL_GUID;
+ 	const struct linux_efi_initrd *initrd = NULL;
+ 	unsigned long kernel_entry;
+ 	struct setup_header *hdr;
 -- 
 2.53.0
 
