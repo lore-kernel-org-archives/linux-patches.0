@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032314;
-	b=d9q1BdWHD9VykUc20boq/uwNO074XXI4P2UDZntPs1V+G83TCKtSW+SjxtNLZq5IXyYU
-	 E6F4BYjN1s4nNJwybjJs8O+hTUob6m8axEvMKKkgdVsWhamlUTql6jasXokz5uNf0MkSy
-	 H80myRmhzObN7xIicV9SmMHC7fix++/BINBdlns/KOtj0C+GPVQeBij+uU2otpb2ZsFsO
-	 3/aj1tY+qUXHOL6567giUwgcAPbbdC4BBHCHFzQXZtcHbmI2VZbudFiOqAaXyCFYThS2r
-	 Xd3SrhQhCcu2CyCWbn0tll9F/DIZea8GTcSsKDKikRYaef1non6/aRgnVka/KeRyiuw==
+	t=1795032317;
+	b=uZqzoSlfafZiXv51d/DSNija9pDcwRqpstENeCojdhGa0e9ECZwKopoNot8G1tvK0P36
+	 4qhki7PQx9ub84dXj+q0HH57AjI5pFSqN55DCFiYvLpgALxew9XCyurkiMoPuOmPcGVQt
+	 C/58H277HU336jp8KukuhOT4a6/19uyC6rfcCRjKixS5T7L2RvhQt7uui6uTFbwGkCVIi
+	 wwbU4m2erxdtbAalFyxe4C4Fbwfi/vop0lXrbLiUi1Skg3PbXMHVFy//adeD36s464div
+	 QIWPGY96y71p+8WG31ddkcOfQBLdnKqNZn3hZ8Drc+v/85YF2QAUWkGCHyTKkE/GuvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032314;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032317;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/LyjhTeWSxoWPm+IhyZe2YUoC9nF/dNmuZD7JMlA3Nw=;
-	b=alFeKRLt6pBSrqGstGG5RPhRtCCWlWsEaUHoY3X7CpGogJHfNEUIgVFkgCmpTS9heT9S
-	 LrINVJ+ZaNN3Cy6AKc8e8iIJiue0/p0d3rWG9OuZfEH3Q3hD7NW6/98KV2r5YO0l54I33
-	 wUldfQjApoJI/eB4zOLPWJMFWVMHH06g5y2YGUMlbQmLiwd5iVeqD3Jt0DhXyZsiZ0IMg
-	 nsIh+lRnJleP/3TOqbKMcheRMow33UQj96xkLBJNZ/p6RjSd5bGeaosTSheHtOHYmKB8S
-	 4b68PF/6Hmw872kWXH2sqKjPyEdK0SxQ7VbBiFmuBP41D2E7U6CPsYcFsQQ0bd6W1VQ==
+	bh=E9YXbUdf0fF8NXjbTiol6OAshbe4LxJ2BNODzsBKneo=;
+	b=hI6Lim0NLPRG9iCk+n68rEn2EcClm2lgUE0DpwpKDRmb/Ot2D0MZJb6lcrCyg84cPhf6
+	 1oLYdYcBxudfE+Zz7iewBUKqBEBDpvj/+QvqJg1KnzEhdBql1FWoUm+nQxyxOOGxwCLBi
+	 hEHK3ir4UYb8yrbf8le9+ybZltN07GtC9VhgWLvm7p8Ox7UpypX3r7MVfPcNhKKoM8QhL
+	 /t03EEgJD5OneBF1CNk/0c1GZwhvqGFQ8YSzZQoxpX3/eq+rJDHnzWyOjqpiWr4uoLiOz
+	 yi11K/bCp5b6luXaqwNheBNVwapW8/6DiWSTEgl9ofwOFL2ngBVSbNG6vEuR0ZyJ9sQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQIKy73O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgrfHhfn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09853606A31C;
-	Wed, 18 Nov 2026 20:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FDAE606A337;
+	Wed, 18 Nov 2026 20:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQIKy73O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584721F000C6;
-	Wed, 18 Nov 2026 20:05:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgrfHhfn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318C31F000C8;
+	Wed, 18 Nov 2026 20:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032313;
-	bh=/LyjhTeWSxoWPm+IhyZe2YUoC9nF/dNmuZD7JMlA3Nw=;
+	s=korg; t=1795032316;
+	bh=E9YXbUdf0fF8NXjbTiol6OAshbe4LxJ2BNODzsBKneo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eQIKy73O5Mh/iseyZLewBxm6QG253BDQo4VODubI20tGNnGaNADhIgc/iwaVFLjt+
-	 Sn69Nd4ZBXRFl/dyuLI16cNTtyykLQmUFD65nV+2AXHNDisWdY0itRil/bsYcl3CFO
-	 ElpRhvXAXDxdUeLvQx3GP9i1tpdwBr5TxddgmOmk=
+	b=hgrfHhfn12wCkk93g+q0ZWO+PY7N9BBkSFL9GdDl6z4wHHYAdQobm6RF7OhqFJmwN
+	 o4z1c3C343lpvntIbjgxnOJSBIGie/CMNc2gkJ7y/K7T/lRtrCa1HmMbbmZfN8qX9J
+	 9DSRPf46jkBf1RJXDIHbddJbSyCGYJYjJxoz1vXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1366/1756] bpf: Pull the inner header for End.DT6 in End.BPF
-Date: Wed, 18 Nov 2026 15:58:13 +0100
-Message-ID: <20261118150103.632128003@linuxfoundation.org>
+Subject: [PATCH 6.12 1367/1756] bpf: Update the SRH state if End.B6 fails late
+Date: Wed, 18 Nov 2026 15:58:14 +0100
+Message-ID: <20261118150103.667607668@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,57 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 434324c611a98bc76dc850d45d67756dae5622cf ]
+[ Upstream commit 427e751a231aa781441d51c42e716905ee348099 ]
 
-bpf_lwt_seg6_action(SEG6_LOCAL_ACTION_END_DT6) pulls the outer headers off
-the packet and hands it to seg6_lookup_nexthop(), which reads the inner
-IPv6 header at skb->data. Nothing says that this header is in the head of
-the skb, or that there is one. If the head ends with the outer headers,
-the route is looked up for whatever lies behind the head, and the packet
-is dropped or leaves by the wrong route. If the program then pushes an SRH
-with SEG6_LOCAL_ACTION_END_B6, seg6_do_srh_inline() pulls an IPv6 header
-off a head which has none, and __skb_pull() hits its BUG(): the kernel
-panics on a packet from the network.
+For SEG6_LOCAL_ACTION_END_B6 and END_B6_ENCAP bpf_lwt_seg6_action() looks
+for the SRH again only if bpf_push_seg6_encap() has succeeded. That
+function pushes the new header, for which the head of the skb is
+reallocated if it has not got the room, and then looks up the route to the
+first segment. If there is none, it returns an error, and the pointer to
+the SRH in seg6_bpf_srh_states still points into the old head, which has
+been freed.
 
-GRO pulls the inner header of a plain IPv6 in IPv6 packet into the head. It
-takes a packet which GRO does not look into that far, one with a fragment
-header in front of the inner header for example, or a device without GRO,
-and a driver which leaves the inner header in a fragment.
+The program goes on behind the error. bpf_lwt_seg6_store_bytes() and
+bpf_lwt_seg6_adjust_srh() read the SRH through that pointer.
 
-Make sure of the inner header together with the outer ones. The program
-goes on behind an error of the helper, so do it before the packet is
-changed. A pull which fails can still have moved the head, so look for the
-SRH again.
+Look for the SRH whatever bpf_push_seg6_encap() says.
 
 Fixes: 486cdf21583e ("bpf: add End.DT6 action to bpf_lwt_seg6_action helper")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-13-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-14-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/core/filter.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/net/core/filter.c b/net/core/filter.c
-index 1b098f782799e..64fb3b3b03146 100644
+index 64fb3b3b03146..1dc436c4e0f8e 100644
 --- a/net/core/filter.c
 +++ b/net/core/filter.c
-@@ -6688,9 +6688,14 @@ BPF_CALL_4(bpf_lwt_seg6_action, struct sk_buff *, skb,
- 
- 		if (ipv6_find_hdr(skb, &hdroff, IPPROTO_IPV6, NULL, NULL) < 0)
+@@ -6709,8 +6709,8 @@ BPF_CALL_4(bpf_lwt_seg6_action, struct sk_buff *, skb,
  			return -EBADMSG;
--		if (!pskb_pull(skb, hdroff))
-+		/* As long as nothing has been changed, the program goes on */
-+		if (!pskb_may_pull(skb, hdroff + sizeof(struct ipv6hdr))) {
-+			/* but the head may have moved */
-+			bpf_update_srh_state(skb);
- 			return -EBADMSG;
-+		}
+ 		err = bpf_push_seg6_encap(skb, BPF_LWT_ENCAP_SEG6_INLINE,
+ 					  param, param_len);
+-		if (!err)
+-			bpf_update_srh_state(skb);
++		/* The header can be in place although err says otherwise */
++		bpf_update_srh_state(skb);
  
-+		__skb_pull(skb, hdroff);
- 		skb_postpull_rcsum(skb, skb_network_header(skb), hdroff);
- 		skb_reset_network_header(skb);
- 		skb_reset_transport_header(skb);
+ 		return err;
+ 	case SEG6_LOCAL_ACTION_END_B6_ENCAP:
+@@ -6718,8 +6718,8 @@ BPF_CALL_4(bpf_lwt_seg6_action, struct sk_buff *, skb,
+ 			return -EBADMSG;
+ 		err = bpf_push_seg6_encap(skb, BPF_LWT_ENCAP_SEG6,
+ 					  param, param_len);
+-		if (!err)
+-			bpf_update_srh_state(skb);
++		/* The header can be in place although err says otherwise */
++		bpf_update_srh_state(skb);
+ 
+ 		return err;
+ 	default:
 -- 
 2.53.0
 
