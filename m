@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058780;
-	b=w4L/n/+v5I4fGUhk/k+DeJfrQG79kjuKSx5cV/MHpBktIZ30gtYzZWqUEcgdFuRMXwWX
-	 J/wISly+97/gz/9Fs2WWsVGGn4IybgI8aQ4kiPWaPep6Jilgmxleqj3V+/F6eUUuLg6zb
-	 /1Qbn/Qu0xTu4GMmzsGJdxjw82rq34htY9VTBdylOrEy66MDIOwK/Jwtb3sE1dwt+MZN+
-	 aurhFi/qmRXw5bUsHwO1B+Nw1m+M/Nc8sR42LDyWyUjDnT9cNEb1J9tuBsREIK947f+Qt
-	 xCTHeGJ18wQj+LI9il2uUXo7lw4RymCKP6F+8DiBZokp7rwIPd6pbpPlF5d6V5lISOw==
+	t=1795058783;
+	b=T+MZf7F7UUmOEXO+1e0gktkj8DifPj2K1mzwhXoX045PixfDeT/tP88wP5s3DKt9PnFX
+	 FmRVfeN4eVCdSNNeTXwj/30JB2Ux2/GuDqDDdEDPWDBq92NdYBM6HZC3E2VhmjESW/HUD
+	 RhJuFlY6mv+EtGG8b/RbYUQ3ClkPx9kjavz2Z1IK50EJ6BJBffZMhPEf6rkCWpV7/01Bv
+	 4RP0V8AIPls5gfWaSQYON/w7n39i8XF+4AIldx8htYjjp9JIrBGbaaZ6NrvVydwwFJfoC
+	 sWyugJNBXZz7oFkIF6lVEZorf0nFwR125Jvt4MoBoThO4r5HsDXfp0AbIv3NIrqez0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058780;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058783;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BHCG+bFSVcCJtST2Oyb9UnayeBonYmIHbgF7vlyqdJM=;
-	b=lgPWkv4xspipgsjseS2q/2g8g7xCzj1s70PKad8rEBW+D5vmKvRa4fCC+6O3gMgqWvyF
-	 bYTX+CuW1HRVTV0yeR/PfHwLTHDpQzhceQ9GLQSK6UNajh9oQhSX05HkBBlMno4xCSCL0
-	 NZdtlbhtScnCQu6pbgM2rlyoHmlDB8DxCL3k7YrbDT5PW4Y+J6eifjfYEV7s/O8ZTtHVy
-	 /hx3hBSs1BxxRtEwcF5QJ7W0Dz0zVjFcDpgZwKAP6ItOIENWp8Add9Vq27D5EqTico96b
-	 iDCPZSVqJpSfNmvQS0tWclNJjxOEwlso1Ek/0fLrESxgpOD2o4QHPXQxBSwbYXSWIcA==
+	bh=dY6Or9rrPaSZl3vYbf/jW4VXkvAsnQoU3as+2MQMcCE=;
+	b=Gj/cnyWEDOzQB8sZULYaHybde7BBEK886wy7P7FgfZNep2VaWnrVyHFmw2mtg/UT6cMV
+	 H6h/hQ024Dzi6c2qmn45QljQNKq2D/KPT8GWj49Ryqqln7YLGrkypEvw7YNGpIn/juOJP
+	 o3ppW+Z3uIos2upC6GMOdhkMbMpQVM+bdT7KFdrpoTLdWOoJXMOAJb73bNljVRceculR4
+	 lX6qCYlQpsS0BZTxHg92INRN3IjzVWMMoYUZthxm4ps0Ip2uJuYI4tMCi2attdoKZm+yX
+	 idGrnrOk+BFRq+T0ICYJVOeyw0Sn88a+E1yUNJ6iYK4KpRe2xHEt9I1QFA/Aq0qDxwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v9KFh0HB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QREVsqTp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2A4606A325;
-	Thu, 19 Nov 2026 03:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4900D606A320;
+	Thu, 19 Nov 2026 03:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v9KFh0HB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 084E51F000C4;
-	Thu, 19 Nov 2026 03:26:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QREVsqTp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913971F000C4;
+	Thu, 19 Nov 2026 03:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058780;
-	bh=BHCG+bFSVcCJtST2Oyb9UnayeBonYmIHbgF7vlyqdJM=;
+	s=korg; t=1795058783;
+	bh=dY6Or9rrPaSZl3vYbf/jW4VXkvAsnQoU3as+2MQMcCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v9KFh0HBxpXXwYGfdKxZ4vypVINGHpH+PSWrKwWVTRW/FGmica6tDCAVFITbYKJa6
-	 gfEYXJ8MRwM4smqs7KvCPmJMy/TJh/yv5u/lDktJxtlfMgsFaYzHz/6dRO/gXs93u/
-	 BdQi1kokbCFcZZJpq/88IZH+P/pN8Fau9B/GRF4I=
+	b=QREVsqTpJnB+EximlJihTYtLlJ+BYpJe/01DBjEDam8B+8GY3wrsXDAZ5gaZzXHuu
+	 wOaiu/ayV6xOqSzY7kU4YCCBovFi1pASrqFSg5HGao2gkl8LN961lToMHGTEu2/WQd
+	 uLb8ZQzeyvSjleothjI9EiwmNJyAdh27AXWe87Q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Jason Perlow <jperlow@gmail.com>,
+	Aditya Garg <aditya.garg@linux.dev>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0607/1848] fs: skip copy_file_range write limits when there is no data
-Date: Wed, 18 Nov 2026 15:44:05 +0100
-Message-ID: <20261118145940.751398875@linuxfoundation.org>
+Subject: [PATCH 5.10 0608/1848] wifi: brcmfmac: map msgbuf RX packet IDs bidirectional
+Date: Wed, 18 Nov 2026 15:44:06 +0100
+Message-ID: <20261118145940.788984692@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,53 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Jason Perlow <jperlow@gmail.com>
 
-[ Upstream commit 81dfa035891f0502674332ee97db348a16486de0 ]
+[ Upstream commit 7ed5dce55fa8393972b1bf2bf5af1c818c5e7dc2 ]
 
-generic_copy_file_checks() reduces count to zero for a source offset at
-or beyond EOF, but still checks the destination write limits. If pos_out
-is at RLIMIT_FSIZE, this sends SIGXFSZ and returns -EFBIG even though
-there is no data to write.
+Commit f0ba5fd51ff2 ("wifi: brcmfmac: Set DMA direction for msgbuf
+packet IDs") maps the RX packet ID buffers DMA_FROM_DEVICE. The
+BCM4364 firmware also reads posted RX buffers, so with VT-d
+translation enabled every such read faults ("PTE Read access is not
+set") and the firmware crashes and resets in a loop.
 
-For example, GNU cat copying a 1024-byte regular file to another regular
-file with RLIMIT_FSIZE=1024 copies all bytes and is then killed by its
-next copy_file_range() call at EOF. A zero-length request can fail in
-the same way.
+Map the RX pool DMA_BIDIRECTIONAL again, as before that commit. TX
+keeps DMA_TO_DEVICE.
 
-Check write limits only when count is nonzero, as the ordinary write
-checks already do. Keep the other copy validation in place.
-
-Fixes: 96e6e8f4a68d ("vfs: add missing checks to copy_file_range")
+Fixes: f0ba5fd51ff2 ("wifi: brcmfmac: Set DMA direction for msgbuf packet IDs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Link: https://patch.msgid.link/20261026015738.46230-1-dennylin0707@gmail.com
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Jason Perlow <jperlow@gmail.com>
+Signed-off-by: Aditya Garg <aditya.garg@linux.dev>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20261021172238.10004-1-aditya.garg@linux.dev
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/read_write.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/read_write.c b/fs/read_write.c
-index 51387a6c8f4e8..1e02faeb652b5 100644
---- a/fs/read_write.c
-+++ b/fs/read_write.c
-@@ -1447,9 +1447,11 @@ static int generic_copy_file_checks(struct file *file_in, loff_t pos_in,
- 	else
- 		count = min(count, size_in - (uint64_t)pos_in);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+index f578ac00e5d1c..611c7a8f13785 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+@@ -1617,7 +1617,7 @@ int brcmf_proto_msgbuf_attach(struct brcmf_pub *drvr)
+ 	if (!msgbuf->tx_pktids)
+ 		goto fail;
+ 	msgbuf->rx_pktids = brcmf_msgbuf_init_pktids(NR_RX_PKTIDS,
+-						     DMA_FROM_DEVICE);
++						     DMA_BIDIRECTIONAL);
+ 	if (!msgbuf->rx_pktids)
+ 		goto fail;
  
--	ret = generic_write_check_limits(file_out, pos_out, &count);
--	if (ret)
--		return ret;
-+	if (count) {
-+		ret = generic_write_check_limits(file_out, pos_out, &count);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	/* Don't allow overlapped copying within the same file. */
- 	if (inode_in == inode_out &&
 -- 
 2.53.0
 
