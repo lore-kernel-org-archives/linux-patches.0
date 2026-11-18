@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033766;
-	b=ZNov7nJ1/4ovWuGd6DSojWtVI3EGNbhbCU0NGkR+HQDpS3WymID9HD4Cuhkoz0ei8A0z
-	 wN3yv+x/zT8lBdT+G7HvfouyO49FNLRCya2hkaOCXLT0FMl1RyTmRJNBzcacA/ARF1Rqn
-	 O/ojR3cLLmK6e6gUg3h5/ptbkCbkYbeM5dG6be1FGETiX7gWrAOKGyzct15MuoomlUWgf
-	 cMNGVVtTfQ04w2W72cAFdgBxG/jkmo7UzrsMdaRiKOscIgDL/ekHNN6Umo1RgK7DNZTQz
-	 2ojhZS331ZlUh3MAsX0Il+y0aU04aM8uqTz3JCwd4B3FsPEGmkyx3W9UCkq/cz1U3HQ==
+	t=1795033769;
+	b=cHS47WSuIQeF41okVC0yT6EBr1TYDVRKuKRFtz+JJQW6VwTVd2DF6zR+HIkrH73leyG4
+	 0CYm5iHB9oWmnMQnAjuqE2wo6ThV/ZS/dWvlQgevya3OztpV1IuCzQ2/5ICFjpJoOPzhC
+	 spMYGk4MvkvUZT6UPi01/WpAGloTrTFsaJZevDE2x+PoPhKWHzAOtDUOwyOHrjt/iL0xw
+	 opZOTLDnMFyd+KCvavA8JmXWlQc+2QqyeW2kpAcLg5hUbM4IA4y6ER+4rSYEUEg9muOfp
+	 9YHNDLna/Oqzv/uohq78Hwj0Ti9fWwoyfyykNmujoe8HSYnzbK+x61k3ip4I4cYCEIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033769;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UGNmZuQ3rIb6S9F0GDrP7aGUIyjhwdFqhBOyOsY4z3U=;
-	b=NbgWGuAnpZiCmzIbgNOFnEf4QqrPb2/zZa98vng/L7LQyD6vM8dXrZnnlj1DHGi97mak
-	 CEEH4ZnNJQuu0ejhnEv3R5lrebzL5y9ULULi50X2LW51l8ZYHhDKsos12QmnloLw9cAOf
-	 +eXAIfoatfd2vKzyDisNfTUYsWJ3LuoQ+gnJsN5CQr3HTS0Znv2ZMjqF2Z2MgHwfWGTO2
-	 CaYr4+2wUksU0R18VQ++Y8F4cNq9UkNDPlLnfQ6cTUA/t4m8LCObjhzEdTWscH5wcfObI
-	 FiyaB+XKsmT+NlUhE06ibl8c3B1gJZUFQvMaGhJTG/Gtjen8yv6BFaspcm5F1aU1uNQ==
+	bh=DuWbtBEx4dj4tAouLmhvI/2b8VbH70rjgIm4xQ+0LZ0=;
+	b=NuWD0CI4l99K5DDm6ubLcxbSmr9wU/1Sx3v6RUZtrnNqlgNhkSE2Tkwrdf8hDHdT1pet
+	 eunbmHcW3RZQS9KlEHOJ3gcXFjUxVMVysUTAu53bDUlgTIbeGpBx0/CNfLOzQJHlL3JjU
+	 oZgCzfctrdwO0HCEmQROOi5p2thW+NUOIrj5Jl/CbxQxI0WgByR0TLyjP1Fk4FGrDQhF9
+	 0wpXqankbvIZHrrjbod44LQEjCkCEzMRTgxP21dri7BuI7yVrwPzO5tFT+iztik67Xwe4
+	 uKHoZTLVPMdJLFbzLT2Qp90eZKWET09dGASbOMedf74GLOrdqQoDeQ9p2EmeHcOcoTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xc7zHLEf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aqvJA7cB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEF3606A320;
-	Wed, 18 Nov 2026 20:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E16B606A330;
+	Wed, 18 Nov 2026 20:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xc7zHLEf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E6661F000C4;
-	Wed, 18 Nov 2026 20:29:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aqvJA7cB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67A361F000C4;
+	Wed, 18 Nov 2026 20:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033766;
-	bh=UGNmZuQ3rIb6S9F0GDrP7aGUIyjhwdFqhBOyOsY4z3U=;
+	s=korg; t=1795033768;
+	bh=DuWbtBEx4dj4tAouLmhvI/2b8VbH70rjgIm4xQ+0LZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xc7zHLEf+6klyLMltFORJcfPPIzvILqpneVLdbs9YcA44ggXYUVJ76lpXaVUT9+4p
-	 +ru/DcTNsPObi+gjeJAAQraq8mf8wfuwPqAgANxmUHchupwrJZ2RKHAQ5qvklcEj0I
-	 WE40Kd5nI8g3J5/jW+bgdWFltgWVM5vAaKVuOh+w=
+	b=aqvJA7cBj/5SafRl7xtmkFmXoJOct/g2P/yIK7gCLyNbG/3gWi/ImKY5sXntyQ+hb
+	 FOhQD0Za8wk12STT25XDsYQ+NYJWxy6E0MhGwitcmpxpb8m68YGzQTywFXTwpky6zt
+	 0R9RUcwWSn6szMZ4KGC6Svi4pDEcBllmTsyzRsoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Abbott <abbotti@mev.co.uk>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0132/3318] comedi: pcmuio: Add sanity check to interrupt handler
-Date: Wed, 18 Nov 2026 15:12:34 +0100
-Message-ID: <20261118150318.358305020@linuxfoundation.org>
+Subject: [PATCH 6.6 0133/3318] misc: bcm-vk: validate write size before allocation
+Date: Wed, 18 Nov 2026 15:12:35 +0100
+Message-ID: <20261118150318.398291770@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,52 +67,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit 6f6f6644e011fa910db744e9978127a443b94001 ]
+[ Upstream commit f66c40cd90954f52809b3eabd386137f56bb6215 ]
 
-The driver requests an interrupt handler for the device, after setting
-device registers to disable interrupt generation.  The interrupt handler
-should not be called prematurely unless the user-configured I/O port
-base address and/or IRQ number are incorrect or the hardware is bad.
+bcm_vk_write() uses the user-supplied write count to size a
+flexible-array work entry and then copies count bytes into that array.
+The allocation expression is evaluated before any overflow check, so a
+very large count can wrap the allocation smaller than the subsequent
+copy.
 
-For safety, check the dev->attached flag in the interrupt handler
-pcmuio_interrupt() to ensure the device has been fully set up, avoiding
-a possible null pointer dereference of dev->subdevices by
-pcmuio_handle_asic_interrupt().
+Reject empty writes, check the allocation arithmetic before kzalloc(),
+and initialize the __counted_by field before copying into to_v_msg[].
 
-Also make use of the IRQ_HANDLED(x) macro for the normal return path of
-the interrupt handler.
-
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-11-abbotti@mev.co.uk
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Link: https://patch.msgid.link/20260629160605.29412-1-alhouseenyousef@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/pcmuio.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/misc/bcm-vk/bcm_vk_msg.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/comedi/drivers/pcmuio.c b/drivers/comedi/drivers/pcmuio.c
-index 33b24dbbb9199..1c5fe065a91f5 100644
---- a/drivers/comedi/drivers/pcmuio.c
-+++ b/drivers/comedi/drivers/pcmuio.c
-@@ -362,12 +362,15 @@ static irqreturn_t pcmuio_interrupt(int irq, void *d)
- 	struct pcmuio_private *devpriv = dev->private;
- 	int handled = 0;
+diff --git a/drivers/misc/bcm-vk/bcm_vk_msg.c b/drivers/misc/bcm-vk/bcm_vk_msg.c
+index c339a83e4f4fd..0cdc4aec56522 100644
+--- a/drivers/misc/bcm-vk/bcm_vk_msg.c
++++ b/drivers/misc/bcm-vk/bcm_vk_msg.c
+@@ -9,6 +9,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/list.h>
+ #include <linux/module.h>
++#include <linux/overflow.h>
+ #include <linux/poll.h>
+ #include <linux/sizes.h>
+ #include <linux/spinlock.h>
+@@ -1090,6 +1091,7 @@ ssize_t bcm_vk_write(struct file *p_file,
+ 	u32 q_num;
+ 	u32 msg_size;
+ 	u32 msgq_size;
++	size_t entry_size;
  
-+	if (!dev->attached)
-+		return IRQ_NONE;
+ 	if (!bcm_vk_drv_access_ok(vk))
+ 		return -EPERM;
+@@ -1097,20 +1099,26 @@ ssize_t bcm_vk_write(struct file *p_file,
+ 	dev_dbg(dev, "Msg count %zu\n", count);
+ 
+ 	/* first, do sanity check where count should be multiple of basic blk */
+-	if (count & (VK_MSGQ_BLK_SIZE - 1)) {
+-		dev_err(dev, "Failure with size %zu not multiple of %zu\n",
++	if (!count || count & (VK_MSGQ_BLK_SIZE - 1)) {
++		dev_err(dev, "Failure with size %zu not a positive multiple of %zu\n",
+ 			count, VK_MSGQ_BLK_SIZE);
+ 		rc = -EINVAL;
+ 		goto write_err;
+ 	}
+ 
++	if (check_add_overflow(sizeof(*entry), count, &entry_size) ||
++	    check_add_overflow(entry_size, vk->ib_sgl_size, &entry_size)) {
++		rc = -EOVERFLOW;
++		goto write_err;
++	}
 +
- 	if (irq == dev->irq)
- 		handled += pcmuio_handle_asic_interrupt(dev, 0);
- 	if (irq == devpriv->irq2)
- 		handled += pcmuio_handle_asic_interrupt(dev, 1);
+ 	/* allocate the work entry + buffer for size count and inband sgl */
+-	entry = kzalloc(sizeof(*entry) + count + vk->ib_sgl_size,
+-			GFP_KERNEL);
++	entry = kzalloc(entry_size, GFP_KERNEL);
+ 	if (!entry) {
+ 		rc = -ENOMEM;
+ 		goto write_err;
+ 	}
++	entry->to_v_blks = count >> VK_MSGQ_BLK_SZ_SHIFT;
  
--	return handled ? IRQ_HANDLED : IRQ_NONE;
-+	return IRQ_RETVAL(handled);
+ 	/* now copy msg from user space, and then formulate the work entry */
+ 	if (copy_from_user(&entry->to_v_msg[0], buf, count)) {
+@@ -1118,7 +1126,6 @@ ssize_t bcm_vk_write(struct file *p_file,
+ 		goto write_free_ent;
+ 	}
+ 
+-	entry->to_v_blks = count >> VK_MSGQ_BLK_SZ_SHIFT;
+ 	entry->ctx = ctx;
+ 
+ 	/* do a check on the blk size which could not exceed queue space */
+@@ -1355,4 +1362,3 @@ void bcm_vk_msg_remove(struct bcm_vk *vk)
+ 	bcm_vk_drain_all_pend(&vk->pdev->dev, &vk->to_v_msg_chan, NULL);
+ 	bcm_vk_drain_all_pend(&vk->pdev->dev, &vk->to_h_msg_chan, NULL);
  }
- 
- /* chip->spinlock is already locked */
+-
 -- 
 2.53.0
 
