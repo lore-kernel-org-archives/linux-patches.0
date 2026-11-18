@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049908;
-	b=lvnq7U2soAp4onS3Qo9SkMDXH3C+pWDfjKs7WCWOZ0BPQkht33LOjtF1YZ4p4NLwhWf3
-	 f0dVxGc/yXDBuLdKM2lPRdgob/oNn0+kdHff55WV347w0CwhjTtDEjODZVOXYme0TbWon
-	 34gSCZvuW5GGCyM44WRiOjDo4/AHPYDIdGiTQq8QMgGYoUvqL0oI0jVdxkMLffcLcWgkP
-	 bMHfTeaoSkYKN4bPfPiELtSJvEc+0aNYe0FvBvLpqeDI6hbB6mO3iGEgKGdfl1XM0FWmE
-	 cydyNai0gX9omT6bfp9DcbM8d+A8MOTznrg+yb/Sc4+fvMZGzFdIoDHZCCrO1knBD8Q==
+	t=1795049910;
+	b=f2B3EE3ZWsIk+J3GVLY7iFQzHlPYqLqDMV+t3C2VgV1YF/u9w9dlo0BnxUT/pt2VOCxz
+	 /C5R81jk9+UrlX5r2rRw+E53nfvLE34q/Z0gK55xzPEHXu+O3rsRB1uAJJqXyu7tWejwb
+	 kcXwAG6Gnuh3a/gFtAtBFO4xpkBIBZfV/EhHWZ0TaIuvVVbJkbr7BT4K7A9D9Jrr52mPq
+	 A7s5OYvT+uhXVk5GZ3PbnYCHsDyTalomMHV2WnOYzdIC18K4XhUEOsMU2XqOhtxPUMLaV
+	 a7p40UNQDNVG5BHT5cqgNZY0KmIv3Co9x/6UgVKlFnREvNqM1oDIFSc0j1uWAxiiv2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049908;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049910;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ztwd7fRVqgOIx2st+WKpY+DTzjZsIjT3TdEdEUyww18=;
-	b=ke68vJ1i4SGczYidemcjuWrtS9TzEQmRLgBhTV3tQQW9AjWBlZgmjFjH5Gj1Z3mfsAgA
-	 zKoVcUhCKBD303CdzYJVLsPAwB0nv46gwRzMbh0Mh2/y53EUlF/HeUsBXc1yYvgAq2Q7I
-	 7RjxeFFQ7PPIuX4SLeItw7I5UUfIYJRTcyokufd4jMmKJAcpBQokZNLD0rfQkh55eV2qD
-	 l1SlxJPY3gou7EnBJwrBiSvlwBpwqwPjy7slDknXBJZdIALYqtnjbeMErU/bXWrEuWto6
-	 MMAKwor1rCBwXfleG43TYSCXUD65QLC+OT44yuQqjZKcIgAMlYC6lIJZjeWqNLvyaDw==
+	bh=iaoWa95O/U5EQFHaWbtRPvG1+QrIBuhH2xb8o2+zOtc=;
+	b=zgjpk0RmPGbPp3eoxjwPa3HdL8k9mLyFMqYLy+3MkJ6CCoBZ5StnnjbP02ObVCyvrw6x
+	 jVNW/y+ZceevCH4frugSu4nJl7hpCeZfVBSv0mW4ydMEYaJ0FwznArKOp51pppFQNoOjm
+	 OZsscGh3BVoDW4tbkhOZ5ZkGCnCqBu3yAOwQ73TDydEOOHq0uXsXzK5UWHcmaRsNLor/R
+	 kl5TCwnlSptlIySu0VlFvzuSo4w7AzoINwtOxs96thk2ExLHiPpa6VBFJHLjRRcd6dXDf
+	 xgzO9Xa4aa9DBuOF3M5L0o+k9QF6QUwhmk0e6G+xvy9oV5V49cCy1hwC3yf+6337hUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="h8/+HAOm";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fumzwb3G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E546F606A31C;
-	Thu, 19 Nov 2026 00:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC50606A325;
+	Thu, 19 Nov 2026 00:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h8/+HAOm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3911F000C4;
-	Thu, 19 Nov 2026 00:58:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fumzwb3G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A839A1F000C6;
+	Thu, 19 Nov 2026 00:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049907;
-	bh=ztwd7fRVqgOIx2st+WKpY+DTzjZsIjT3TdEdEUyww18=;
+	s=korg; t=1795049910;
+	bh=iaoWa95O/U5EQFHaWbtRPvG1+QrIBuhH2xb8o2+zOtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h8/+HAOmMdZIHubMIROwDoy7+QJMtrgLLqaK1OKrf16QBQv+WDcrFud5Z22eU5IFJ
-	 prusm/T7/g1Q9hqDJ+Y9zPeDQhDFznwDgSzt5qYlh/RmPy7GvNb0Gs7fxeXnRt5Dah
-	 2FZIc3dxs81oMkI9od4f+94FxsQem75nF78yZhYo=
+	b=fumzwb3GHKsD4FfBvvpB3dyFcp65XmRsbSjBTBv/A/JxA+FnglDsX9l8bQNjHNiAJ
+	 CSSOTODVY8dV5qwBL5JfnfWqNzZAvP8TsBFmc+jZ6feq3yi8eB6CU0LxSZtU47LuJU
+	 yQ18UqCfAMt26vGyGPrz9WeB3HwJWw3yTbQhKzIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Will Deacon <will@kernel.org>,
 	Marc Zyngier <maz@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2519/2857] irqchip/gic-v3-its: Split allocation from initialisation of its_node
-Date: Wed, 18 Nov 2026 15:59:13 +0100
-Message-ID: <20261118150332.243689052@linuxfoundation.org>
+Subject: [PATCH 6.1 2520/2857] irqchip/gic-v3-its: Share ITS tables with a non-trusted hypervisor
+Date: Wed, 18 Nov 2026 15:59:14 +0100
+Message-ID: <20261118150332.280979741@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,324 +71,345 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Steven Price <steven.price@arm.com>
 
-[ Upstream commit 9585a495ac936049dba141e8f9d99159ca06d46a ]
+[ Upstream commit b08e2f42e86b5848add254da45b56fc672e2bced ]
 
-In order to pave the way for more fancy quirk handling without making
-more of a mess of this terrible driver, split the allocation of the
-ITS descriptor (its_node) from the actual probing.
+Within a realm guest the ITS is emulated by the host. This means the
+allocations must have been made available to the host by a call to
+set_memory_decrypted(). Introduce an allocation function which performs
+this extra call.
 
-This will allow firmware-specific hooks to be added between these
-two points.
+For the ITT use a custom genpool-based allocator that calls
+set_memory_decrypted() for each page allocated, but then suballocates the
+size needed for each ITT. Note that there is no mechanism implemented to
+return pages from the genpool, but it is unlikely that the peak number of
+devices will be much larger than the normal level - so this isn't expected
+to be an issue.
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20231006125929.48591-4-lpieralisi@kernel.org
+Co-developed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Will Deacon <will@kernel.org>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/all/20241002141630.433502-2-steven.price@arm.com
 Stable-dep-of: 32e056cc1d15 ("irqchip/gic-v3-its: Don't free a vPE table shared with another ITS")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 149 ++++++++++++++++++-------------
- 1 file changed, 89 insertions(+), 60 deletions(-)
+ drivers/irqchip/irq-gic-v3-its.c | 138 +++++++++++++++++++++++++------
+ 1 file changed, 115 insertions(+), 23 deletions(-)
 
 diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 3131c44fd8fd3..2d09f9daba4ed 100644
+index 2d09f9daba4ed..1c2f09778bfbf 100644
 --- a/drivers/irqchip/irq-gic-v3-its.c
 +++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -4919,7 +4919,7 @@ static void __init __iomem *its_map_one(struct resource *res, int *err)
- 	return NULL;
+@@ -12,12 +12,14 @@
+ #include <linux/crash_dump.h>
+ #include <linux/delay.h>
+ #include <linux/efi.h>
++#include <linux/genalloc.h>
+ #include <linux/interrupt.h>
+ #include <linux/iommu.h>
+ #include <linux/iopoll.h>
+ #include <linux/irqdomain.h>
+ #include <linux/list.h>
+ #include <linux/log2.h>
++#include <linux/mem_encrypt.h>
+ #include <linux/memblock.h>
+ #include <linux/mm.h>
+ #include <linux/msi.h>
+@@ -27,6 +29,7 @@
+ #include <linux/of_pci.h>
+ #include <linux/of_platform.h>
+ #include <linux/percpu.h>
++#include <linux/set_memory.h>
+ #include <linux/slab.h>
+ #include <linux/syscore_ops.h>
+ 
+@@ -165,6 +168,7 @@ struct its_device {
+ 	struct its_node		*its;
+ 	struct event_lpi_map	event_map;
+ 	void			*itt;
++	u32			itt_sz;
+ 	u32			nr_ites;
+ 	u32			device_id;
+ 	bool			shared;
+@@ -200,6 +204,87 @@ static DEFINE_IDA(its_vpeid_ida);
+ #define gic_data_rdist_rd_base()	(gic_data_rdist()->rd_base)
+ #define gic_data_rdist_vlpi_base()	(gic_data_rdist_rd_base() + SZ_128K)
+ 
++static struct page *its_alloc_pages_node(int node, gfp_t gfp,
++					 unsigned int order)
++{
++	struct page *page;
++	int ret = 0;
++
++	page = alloc_pages_node(node, gfp, order);
++
++	if (!page)
++		return NULL;
++
++	ret = set_memory_decrypted((unsigned long)page_address(page),
++				   1 << order);
++	/*
++	 * If set_memory_decrypted() fails then we don't know what state the
++	 * page is in, so we can't free it. Instead we leak it.
++	 * set_memory_decrypted() will already have WARNed.
++	 */
++	if (ret)
++		return NULL;
++
++	return page;
++}
++
++static struct page *its_alloc_pages(gfp_t gfp, unsigned int order)
++{
++	return its_alloc_pages_node(NUMA_NO_NODE, gfp, order);
++}
++
++static void its_free_pages(void *addr, unsigned int order)
++{
++	/*
++	 * If the memory cannot be encrypted again then we must leak the pages.
++	 * set_memory_encrypted() will already have WARNed.
++	 */
++	if (set_memory_encrypted((unsigned long)addr, 1 << order))
++		return;
++	free_pages((unsigned long)addr, order);
++}
++
++static struct gen_pool *itt_pool;
++
++static void *itt_alloc_pool(int node, int size)
++{
++	unsigned long addr;
++	struct page *page;
++
++	if (size >= PAGE_SIZE) {
++		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, get_order(size));
++
++		return page ? page_address(page) : NULL;
++	}
++
++	do {
++		addr = gen_pool_alloc(itt_pool, size);
++		if (addr)
++			break;
++
++		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, 1);
++		if (!page)
++			break;
++
++		gen_pool_add(itt_pool, (unsigned long)page_address(page), PAGE_SIZE, node);
++	} while (!addr);
++
++	return (void *)addr;
++}
++
++static void itt_free_pool(void *addr, int size)
++{
++	if (!addr)
++		return;
++
++	if (size >= PAGE_SIZE) {
++		its_free_pages(addr, get_order(size));
++		return;
++	}
++
++	gen_pool_free(itt_pool, (unsigned long)addr, size);
++}
++
+ /*
+  * Skip ITSs that have no vLPIs mapped, unless we're on GICv4.1, as we
+  * always have vSGIs mapped.
+@@ -2190,7 +2275,8 @@ static struct page *its_allocate_prop_table(gfp_t gfp_flags)
+ {
+ 	struct page *prop_page;
+ 
+-	prop_page = alloc_pages(gfp_flags, get_order(LPI_PROPBASE_SZ));
++	prop_page = its_alloc_pages(gfp_flags,
++				    get_order(LPI_PROPBASE_SZ));
+ 	if (!prop_page)
+ 		return NULL;
+ 
+@@ -2201,8 +2287,7 @@ static struct page *its_allocate_prop_table(gfp_t gfp_flags)
+ 
+ static void its_free_prop_table(struct page *prop_page)
+ {
+-	free_pages((unsigned long)page_address(prop_page),
+-		   get_order(LPI_PROPBASE_SZ));
++	its_free_pages(page_address(prop_page), get_order(LPI_PROPBASE_SZ));
  }
  
--static int its_init_domain(struct fwnode_handle *handle, struct its_node *its)
-+static int its_init_domain(struct its_node *its)
- {
- 	struct irq_domain *inner_domain;
- 	struct msi_domain_info *info;
-@@ -4933,7 +4933,7 @@ static int its_init_domain(struct fwnode_handle *handle, struct its_node *its)
- 
- 	inner_domain = irq_domain_create_hierarchy(its_parent,
- 						   its->msi_domain_flags, 0,
--						   handle, &its_domain_ops,
-+						   its->fwnode_handle, &its_domain_ops,
- 						   info);
- 	if (!inner_domain) {
- 		kfree(info);
-@@ -4984,8 +4984,7 @@ static int its_init_vpe_domain(void)
- 	return 0;
- }
- 
--static int __init its_compute_its_list_map(struct resource *res,
--					   void __iomem *its_base)
-+static int __init its_compute_its_list_map(struct its_node *its)
- {
- 	int its_number;
- 	u32 ctlr;
-@@ -4999,15 +4998,15 @@ static int __init its_compute_its_list_map(struct resource *res,
- 	its_number = find_first_zero_bit(&its_list_map, GICv4_ITS_LIST_MAX);
- 	if (its_number >= GICv4_ITS_LIST_MAX) {
- 		pr_err("ITS@%pa: No ITSList entry available!\n",
--		       &res->start);
-+		       &its->phys_base);
- 		return -EINVAL;
+ static bool gic_check_reserved_range(phys_addr_t addr, unsigned long size)
+@@ -2324,7 +2409,7 @@ static int its_setup_baser(struct its_node *its, struct its_baser *baser,
+ 		order = get_order(GITS_BASER_PAGES_MAX * psz);
  	}
  
--	ctlr = readl_relaxed(its_base + GITS_CTLR);
-+	ctlr = readl_relaxed(its->base + GITS_CTLR);
- 	ctlr &= ~GITS_CTLR_ITS_NUMBER;
- 	ctlr |= its_number << GITS_CTLR_ITS_NUMBER_SHIFT;
--	writel_relaxed(ctlr, its_base + GITS_CTLR);
--	ctlr = readl_relaxed(its_base + GITS_CTLR);
-+	writel_relaxed(ctlr, its->base + GITS_CTLR);
-+	ctlr = readl_relaxed(its->base + GITS_CTLR);
- 	if ((ctlr & GITS_CTLR_ITS_NUMBER) != (its_number << GITS_CTLR_ITS_NUMBER_SHIFT)) {
- 		its_number = ctlr & GITS_CTLR_ITS_NUMBER;
- 		its_number >>= GITS_CTLR_ITS_NUMBER_SHIFT;
-@@ -5015,75 +5014,50 @@ static int __init its_compute_its_list_map(struct resource *res,
+-	page = alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO, order);
++	page = its_alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO, order);
+ 	if (!page)
+ 		return -ENOMEM;
  
- 	if (test_and_set_bit(its_number, &its_list_map)) {
- 		pr_err("ITS@%pa: Duplicate ITSList entry %d\n",
--		       &res->start, its_number);
-+		       &its->phys_base, its_number);
- 		return -EINVAL;
- 	}
- 
- 	return its_number;
- }
- 
--static int __init its_probe_one(struct resource *res,
--				struct fwnode_handle *handle, int numa_node)
-+static int __init its_probe_one(struct its_node *its)
- {
--	struct its_node *its;
--	void __iomem *its_base;
--	u64 baser, tmp, typer;
-+	u64 baser, tmp;
- 	struct page *page;
- 	u32 ctlr;
- 	int err;
- 
--	its_base = its_map_one(res, &err);
--	if (!its_base)
--		return err;
--
--	pr_info("ITS %pR\n", res);
--
--	its = kzalloc(sizeof(*its), GFP_KERNEL);
--	if (!its) {
--		err = -ENOMEM;
--		goto out_unmap;
--	}
--
--	raw_spin_lock_init(&its->lock);
--	mutex_init(&its->dev_alloc_lock);
--	INIT_LIST_HEAD(&its->entry);
--	INIT_LIST_HEAD(&its->its_device_list);
--	typer = gic_read_typer(its_base + GITS_TYPER);
--	its->typer = typer;
--	its->base = its_base;
--	its->phys_base = res->start;
- 	if (is_v4(its)) {
--		if (!(typer & GITS_TYPER_VMOVP)) {
--			err = its_compute_its_list_map(res, its_base);
-+		if (!(its->typer & GITS_TYPER_VMOVP)) {
-+			err = its_compute_its_list_map(its);
- 			if (err < 0)
--				goto out_free_its;
-+				goto out;
- 
- 			its->list_nr = err;
- 
- 			pr_info("ITS@%pa: Using ITS number %d\n",
--				&res->start, err);
-+				&its->phys_base, err);
- 		} else {
--			pr_info("ITS@%pa: Single VMOVP capable\n", &res->start);
-+			pr_info("ITS@%pa: Single VMOVP capable\n", &its->phys_base);
+@@ -2337,7 +2422,7 @@ static int its_setup_baser(struct its_node *its, struct its_baser *baser,
+ 		/* 52bit PA is supported only when PageSize=64K */
+ 		if (psz != SZ_64K) {
+ 			pr_err("ITS: no 52bit PA support when psz=%d\n", psz);
+-			free_pages((unsigned long)base, order);
++			its_free_pages(base, order);
+ 			return -ENXIO;
  		}
  
- 		if (is_v4_1(its)) {
--			u32 svpet = FIELD_GET(GITS_TYPER_SVPET, typer);
-+			u32 svpet = FIELD_GET(GITS_TYPER_SVPET, its->typer);
+@@ -2391,7 +2476,7 @@ static int its_setup_baser(struct its_node *its, struct its_baser *baser,
+ 		pr_err("ITS@%pa: %s doesn't stick: %llx %llx\n",
+ 		       &its->phys_base, its_base_type_string[type],
+ 		       val, tmp);
+-		free_pages((unsigned long)base, order);
++		its_free_pages(base, order);
+ 		return -ENXIO;
+ 	}
  
--			its->sgir_base = ioremap(res->start + SZ_128K, SZ_64K);
-+			its->sgir_base = ioremap(its->phys_base + SZ_128K, SZ_64K);
- 			if (!its->sgir_base) {
- 				err = -ENOMEM;
--				goto out_free_its;
-+				goto out;
- 			}
+@@ -2530,8 +2615,7 @@ static void its_free_tables(struct its_node *its)
  
--			its->mpidr = readl_relaxed(its_base + GITS_MPIDR);
-+			its->mpidr = readl_relaxed(its->base + GITS_MPIDR);
+ 	for (i = 0; i < GITS_BASER_NR_REGS; i++) {
+ 		if (its->tables[i].base) {
+-			free_pages((unsigned long)its->tables[i].base,
+-				   its->tables[i].order);
++			its_free_pages(its->tables[i].base, its->tables[i].order);
+ 			its->tables[i].base = NULL;
+ 		}
+ 	}
+@@ -2790,7 +2874,7 @@ static bool allocate_vpe_l2_table(int cpu, u32 id)
  
- 			pr_info("ITS@%pa: Using GICv4.1 mode %08x %08x\n",
--				&res->start, its->mpidr, svpet);
-+				&its->phys_base, its->mpidr, svpet);
+ 	/* Allocate memory for 2nd level table */
+ 	if (!table[idx]) {
+-		page = alloc_pages(GFP_KERNEL | __GFP_ZERO, get_order(psz));
++		page = its_alloc_pages(GFP_KERNEL | __GFP_ZERO, get_order(psz));
+ 		if (!page)
+ 			return false;
+ 
+@@ -2909,7 +2993,7 @@ static int allocate_vpe_l1_table(void)
+ 
+ 	pr_debug("np = %d, npg = %lld, psz = %d, epp = %d, esz = %d\n",
+ 		 np, npg, psz, epp, esz);
+-	page = alloc_pages(GFP_ATOMIC | __GFP_ZERO, get_order(np * PAGE_SIZE));
++	page = its_alloc_pages(GFP_ATOMIC | __GFP_ZERO, get_order(np * PAGE_SIZE));
+ 	if (!page)
+ 		return -ENOMEM;
+ 
+@@ -2953,8 +3037,7 @@ static struct page *its_allocate_pending_table(gfp_t gfp_flags)
+ {
+ 	struct page *pend_page;
+ 
+-	pend_page = alloc_pages(gfp_flags | __GFP_ZERO,
+-				get_order(LPI_PENDBASE_SZ));
++	pend_page = its_alloc_pages(gfp_flags | __GFP_ZERO, get_order(LPI_PENDBASE_SZ));
+ 	if (!pend_page)
+ 		return NULL;
+ 
+@@ -2966,7 +3049,7 @@ static struct page *its_allocate_pending_table(gfp_t gfp_flags)
+ 
+ static void its_free_pending_table(struct page *pt)
+ {
+-	free_pages((unsigned long)page_address(pt), get_order(LPI_PENDBASE_SZ));
++	its_free_pages(page_address(pt), get_order(LPI_PENDBASE_SZ));
+ }
+ 
+ /*
+@@ -3293,8 +3376,8 @@ static bool its_alloc_table_entry(struct its_node *its,
+ 
+ 	/* Allocate memory for 2nd level table */
+ 	if (!table[idx]) {
+-		page = alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO,
+-					get_order(baser->psz));
++		page = its_alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO,
++					    get_order(baser->psz));
+ 		if (!page)
+ 			return false;
+ 
+@@ -3390,7 +3473,6 @@ static struct its_device *its_create_device(struct its_node *its, u32 dev_id,
+ 	if (WARN_ON(!is_power_of_2(nvecs)))
+ 		nvecs = roundup_pow_of_two(nvecs);
+ 
+-	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
+ 	/*
+ 	 * Even if the device wants a single LPI, the ITT must be
+ 	 * sized as a power of two (and you need at least one bit...).
+@@ -3401,7 +3483,11 @@ static struct its_device *its_create_device(struct its_node *its, u32 dev_id,
+ 	nr_ites = max(2, nvecs);
+ 	sz = nr_ites * (FIELD_GET(GITS_TYPER_ITT_ENTRY_SIZE, its->typer) + 1);
+ 	sz = max(sz, ITS_ITT_ALIGN) + ITS_ITT_ALIGN - 1;
+-	itt = kzalloc_node(sz, GFP_KERNEL, its->numa_node);
++
++	itt = itt_alloc_pool(its->numa_node, sz);
++
++	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
++
+ 	if (alloc_lpis) {
+ 		lpi_map = its_lpi_alloc(nvecs, &lpi_base, &nr_lpis);
+ 		if (lpi_map)
+@@ -3413,9 +3499,9 @@ static struct its_device *its_create_device(struct its_node *its, u32 dev_id,
+ 		lpi_base = 0;
+ 	}
+ 
+-	if (!dev || !itt ||  !col_map || (!lpi_map && alloc_lpis)) {
++	if (!dev || !itt || !col_map || (!lpi_map && alloc_lpis)) {
+ 		kfree(dev);
+-		kfree(itt);
++		itt_free_pool(itt, sz);
+ 		bitmap_free(lpi_map);
+ 		kfree(col_map);
+ 		return NULL;
+@@ -3425,6 +3511,7 @@ static struct its_device *its_create_device(struct its_node *its, u32 dev_id,
+ 
+ 	dev->its = its;
+ 	dev->itt = itt;
++	dev->itt_sz = sz;
+ 	dev->nr_ites = nr_ites;
+ 	dev->event_map.lpi_map = lpi_map;
+ 	dev->event_map.col_map = col_map;
+@@ -3452,7 +3539,7 @@ static void its_free_device(struct its_device *its_dev)
+ 	list_del(&its_dev->entry);
+ 	raw_spin_unlock_irqrestore(&its_dev->its->lock, flags);
+ 	kfree(its_dev->event_map.col_map);
+-	kfree(its_dev->itt);
++	itt_free_pool(its_dev->itt, its_dev->itt_sz);
+ 	kfree(its_dev);
+ }
+ 
+@@ -5058,8 +5145,9 @@ static int __init its_probe_one(struct its_node *its)
  		}
  	}
  
--	its->numa_node = numa_node;
--
- 	page = alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO,
- 				get_order(ITS_CMD_QUEUE_SZ));
+-	page = alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO,
+-				get_order(ITS_CMD_QUEUE_SZ));
++	page = its_alloc_pages_node(its->numa_node,
++				    GFP_KERNEL | __GFP_ZERO,
++				    get_order(ITS_CMD_QUEUE_SZ));
  	if (!page) {
-@@ -5092,12 +5066,9 @@ static int __init its_probe_one(struct resource *res,
- 	}
- 	its->cmd_base = (void *)page_address(page);
- 	its->cmd_write = its->cmd_base;
--	its->fwnode_handle = handle;
- 	its->get_msi_base = its_irq_get_msi_base;
- 	its->msi_domain_flags = IRQ_DOMAIN_FLAG_MSI_REMAP;
- 
--	its_enable_quirks(its);
--
- 	err = its_alloc_tables(its);
- 	if (err)
- 		goto out_free_cmd;
-@@ -5138,7 +5109,7 @@ static int __init its_probe_one(struct resource *res,
- 		ctlr |= GITS_CTLR_ImDe;
- 	writel_relaxed(ctlr, its->base + GITS_CTLR);
- 
--	err = its_init_domain(handle, its);
-+	err = its_init_domain(its);
- 	if (err)
- 		goto out_free_collection;
- 
-@@ -5157,11 +5128,8 @@ static int __init its_probe_one(struct resource *res,
+ 		err = -ENOMEM;
+ 		goto out_unmap_sgir;
+@@ -5124,7 +5212,7 @@ static int __init its_probe_one(struct its_node *its)
+ out_free_tables:
+ 	its_free_tables(its);
+ out_free_cmd:
+-	free_pages((unsigned long)its->cmd_base, get_order(ITS_CMD_QUEUE_SZ));
++	its_free_pages(its->cmd_base, get_order(ITS_CMD_QUEUE_SZ));
  out_unmap_sgir:
  	if (its->sgir_base)
  		iounmap(its->sgir_base);
--out_free_its:
--	kfree(its);
--out_unmap:
--	iounmap(its_base);
--	pr_err("ITS@%pa: failed probing (%d)\n", &res->start, err);
-+out:
-+	pr_err("ITS@%pa: failed probing (%d)\n", &its->phys_base, err);
- 	return err;
- }
- 
-@@ -5322,10 +5290,53 @@ static const struct of_device_id its_device_id[] = {
- 	{},
- };
- 
-+static struct its_node __init *its_node_init(struct resource *res,
-+					     struct fwnode_handle *handle, int numa_node)
-+{
-+	void __iomem *its_base;
-+	struct its_node *its;
-+	int err;
-+
-+	its_base = its_map_one(res, &err);
-+	if (!its_base)
-+		return NULL;
-+
-+	pr_info("ITS %pR\n", res);
-+
-+	its = kzalloc(sizeof(*its), GFP_KERNEL);
-+	if (!its)
-+		goto out_unmap;
-+
-+	raw_spin_lock_init(&its->lock);
-+	mutex_init(&its->dev_alloc_lock);
-+	INIT_LIST_HEAD(&its->entry);
-+	INIT_LIST_HEAD(&its->its_device_list);
-+
-+	its->typer = gic_read_typer(its_base + GITS_TYPER);
-+	its->base = its_base;
-+	its->phys_base = res->start;
-+
-+	its->numa_node = numa_node;
-+	its->fwnode_handle = handle;
-+
-+	return its;
-+
-+out_unmap:
-+	iounmap(its_base);
-+	return NULL;
-+}
-+
-+static void its_node_destroy(struct its_node *its)
-+{
-+	iounmap(its->base);
-+	kfree(its);
-+}
-+
- static int __init its_of_probe(struct device_node *node)
- {
- 	struct device_node *np;
- 	struct resource res;
-+	int err;
- 
- 	/*
- 	 * Make sure *all* the ITS are reset before we probe any, as
-@@ -5335,8 +5346,6 @@ static int __init its_of_probe(struct device_node *node)
- 	 */
- 	for (np = of_find_matching_node(node, its_device_id); np;
- 	     np = of_find_matching_node(np, its_device_id)) {
--		int err;
--
- 		if (!of_device_is_available(np) ||
- 		    !of_property_read_bool(np, "msi-controller") ||
- 		    of_address_to_resource(np, 0, &res))
-@@ -5349,6 +5358,8 @@ static int __init its_of_probe(struct device_node *node)
- 
- 	for (np = of_find_matching_node(node, its_device_id); np;
- 	     np = of_find_matching_node(np, its_device_id)) {
-+		struct its_node *its;
-+
- 		if (!of_device_is_available(np))
- 			continue;
- 		if (!of_property_read_bool(np, "msi-controller")) {
-@@ -5362,7 +5373,17 @@ static int __init its_of_probe(struct device_node *node)
- 			continue;
- 		}
- 
--		its_probe_one(&res, &np->fwnode, of_node_to_nid(np));
-+
-+		its = its_node_init(&res, &np->fwnode, of_node_to_nid(np));
-+		if (!its)
-+			return -ENOMEM;
-+
-+		its_enable_quirks(its);
-+		err = its_probe_one(its);
-+		if (err)  {
-+			its_node_destroy(its);
-+			return err;
-+		}
- 	}
- 	return 0;
- }
-@@ -5474,6 +5495,7 @@ static int __init gic_acpi_parse_madt_its(union acpi_subtable_headers *header,
- {
- 	struct acpi_madt_generic_translator *its_entry;
- 	struct fwnode_handle *dom_handle;
-+	struct its_node *its;
- 	struct resource res;
+@@ -5605,6 +5693,10 @@ int __init its_init(struct fwnode_handle *handle, struct rdists *rdists,
+ 	bool has_v4_1 = false;
  	int err;
  
-@@ -5498,11 +5520,18 @@ static int __init gic_acpi_parse_madt_its(union acpi_subtable_headers *header,
- 		goto dom_err;
- 	}
- 
--	err = its_probe_one(&res, dom_handle,
--			acpi_get_its_numa_node(its_entry->translation_id));
-+	its = its_node_init(&res, dom_handle,
-+			    acpi_get_its_numa_node(its_entry->translation_id));
-+	if (!its) {
-+		err = -ENOMEM;
-+		goto node_err;
-+	}
++	itt_pool = gen_pool_create(get_order(ITS_ITT_ALIGN), -1);
++	if (!itt_pool)
++		return -ENOMEM;
 +
-+	err = its_probe_one(its);
- 	if (!err)
- 		return 0;
+ 	gic_rdists = rdists;
  
-+node_err:
- 	iort_deregister_domain_token(its_entry->translation_id);
- dom_err:
- 	irq_domain_free_fwnode(dom_handle);
+ 	its_parent = parent_domain;
 -- 
 2.53.0
 
