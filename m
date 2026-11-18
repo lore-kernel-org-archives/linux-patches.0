@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022113;
-	b=4Y3lqIH6mTOz9T9aa0vclQUROLcuEro3U6PtAk9JKIFa+r3LYcYq3rORmWAdLNRTGh0Z
-	 x2tbCmMSKhZat2LL9gC8WyJLZoTEZXxcsnxVAcjYoC29IgnE1IfjXnrlexAURpoycuLgU
-	 Cx8ONYoc+nnRkQu1VtXx7nplnBEQpEwTFR7ToqyNAyylnzYr7UJIYrwhwOiKc4IjOFujW
-	 RWalMpR3ZYQ6Py3gGVZztBh0dNgZ7tgdGamIKYw5rhea7jPM/nS4Hyz6hRoqAyznFptAx
-	 KPWPLmDIyjoQSHjpGQxjjAZWTZQ477zV8tFVct0Oww5qnT82Rhej98S325x5j9kSxqQ==
+	t=1795022115;
+	b=B7gR5orfzD0LyFLjYIwuB6IwmTroXUjnYiiFKHoucG+yfQtBHFFCvBRv3ePu3aaVJVY4
+	 UeXhYJcXo2G1SDQ8OT/1At63/sM0ompmPPmlUqFg96f7kBRtBzxHnRmO3FJu/yM3zZ1H6
+	 ywJdT9p3OQNq2VgXl742hvTypPxMkD1C6hDeaPOm8MAAUzFrQY6bXokq7xk+fpSnr+gtB
+	 otjFpxf8xeBw2rMwWfXg/RhJQzfUxAtjaNqE6mdNLjK1RlMGsMWVnRBj2y5FZxUzIA8+D
+	 m4kgIAfWdWkpD/npCmrbJh8rN3POs3pKCwhz+sQoVYKcvUEvP2MgVH4+KCto5hRSCBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022113;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022115;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i5TfCq4PpkEiRNuwfhqzMeDXnXBFyn6QEBgx1T4ijSg=;
-	b=hjYgUUAJf7Xx0mCbTF6hykw9CDT7OOous1+b70lLKD20pN6u9TYJ8CZQXnJydYNWO7IN
-	 uu9zoeZ0ESWS57wrWSoEGaLwRvxdM+kGMaakFjDT8FQs3IsBK88SMTCOX8nBhHN6l4ftX
-	 XwOScT6MxOVKoGOGBBF9F7tXf2O4gw56arJ/5jGGim6nM8wjEHd4uyY9LN0zd6qF19neA
-	 5pu3vgQ3SquuCFP9okzCeY8mK4W3YTSDHZ9ETQs4w93VD1qOT/LYbZrkwfB0HEmS/F9TG
-	 T1zPFoHUhwPX9FPJHnUQBRihfXz/hcJ/Et5RmTdpD70V9O5qOXBfUApFKeXzfhmu0cw==
+	bh=mzTghHe5o55MviEl+Ih5c3micAuW5f1n3f7vyFlJVsU=;
+	b=hAcIeMHW31DqAL3vJUojO5G6tQpXJV1OySxIR/MDjkllh0Zp+NquPg25CgMdy+rcu5kE
+	 4M27gPOywVQOcV9fl2+KElIIiTZYiwFHacGwy6Nv2de0rPvrKtumJRqtKWZpIs3YoJicd
+	 CABXnTVc2XkKP1ADFxgSmLG2hWf/tNQ448nnpvxyLEZ6g/DbTZ8rTl8XOFVIaTRBuretg
+	 EvrlnPaMkZkPRVRkyrIFzqPfv/gW+K7W4rw5bFYrD/I0W1MfTJbzqDUnQLrz0cn9Ir8wD
+	 R+mdVd5fc9E2MQYRjS7nQbBxBB0CJ2etsTL7V6Bhx3rO/U0Xko+XdeiOdcp3Z4ay2Yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fzTWmCU9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q0pPJIA3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0FE606A320;
-	Wed, 18 Nov 2026 17:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4FB606A32C;
+	Wed, 18 Nov 2026 17:15:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fzTWmCU9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC2E41F000C6;
-	Wed, 18 Nov 2026 17:15:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q0pPJIA3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF9B1F000C4;
+	Wed, 18 Nov 2026 17:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022112;
-	bh=i5TfCq4PpkEiRNuwfhqzMeDXnXBFyn6QEBgx1T4ijSg=;
+	s=korg; t=1795022115;
+	bh=mzTghHe5o55MviEl+Ih5c3micAuW5f1n3f7vyFlJVsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fzTWmCU9TGf0d6N36OrKtYOoeiPIcobhA113r4rEVFhXkQl7v6MO9uOAfdyK/Hd3j
-	 SQA+byZ4+EgjG+NmPbxNvbdom8jHfH82zV1RcN+y0wPMTfQhPxZ5YDjCd2o4WQ+zDf
-	 h/wZxRGKm6BUqcBa86i1f5rXrsCDDJBw0VMcKOAY=
+	b=Q0pPJIA3KgVBuapX0a1W/cXS/spIYbpzPl97p+0avXCPQZfK5w+WwFvLLO0JfkDQg
+	 oYs5g3z/+mOFje0zS5AZOqm93GKDVufDDmh6MeXfkH5W+PAn91ChAuyV1yR7iC5ETc
+	 dOJ6CbuWxlhzKnujJyMWwCc3h0FcGBJihhnsxiLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2547/2651] blk-throttle: dont truncate the cgroup v1 iops limits
-Date: Wed, 18 Nov 2026 16:03:07 +0100
-Message-ID: <20261118150416.214576871@linuxfoundation.org>
+Subject: [PATCH 7.3 2548/2651] blk-cgroup: fix root io.stat byte counts on 32-bit
+Date: Wed, 18 Nov 2026 16:03:08 +0100
+Message-ID: <20261118150416.246156861@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,41 +71,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 7d96874ba80ba7a2ab578ea9139c2af79c353b88 ]
+[ Upstream commit e335b853d919f2c6246ca0993115285742a2acc1 ]
 
-tg_set_conf() parses the limit into a u64 and stores the iops ones
-through an unsigned int, so anything above UINT_MAX is truncated and a
-multiple of 2^32 becomes a limit of 0. The next IO of the group then
-divides by it in tg_within_iops_limit().
+blkcg_fill_root_iostats() shifts the unsigned long sector counts by 9
+before adding them to the u64 byte counts, so on 32-bit the contribution
+of a CPU wraps every 4GB. Widen before the shift.
 
-Clamp to UINT_MAX, which means no limit, like tg_set_limit() does on the
-default hierarchy.
-
-Fixes: af133ceb2610 ("blkcg: move blkio_group_conf->iops and ->bps to blk-throttle")
+Fixes: ef45fe470e1e ("blk-cgroup: show global disk stats in root cgroup io.stat")
 Cc: Tejun Heo <tj@kernel.org>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20261028164415.1262013-4-axboe@kernel.dk
+Link: https://patch.msgid.link/20261028164415.1262013-14-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-throttle.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ block/blk-cgroup.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/block/blk-throttle.c b/block/blk-throttle.c
-index ffc3b70065d4b..4f10fe05744be 100644
---- a/block/blk-throttle.c
-+++ b/block/blk-throttle.c
-@@ -1386,7 +1386,8 @@ static ssize_t tg_set_conf(struct kernfs_open_file *of,
- 	if (is_u64)
- 		*(u64 *)((void *)tg + of_cft(of)->private) = v;
- 	else
--		*(unsigned int *)((void *)tg + of_cft(of)->private) = v;
-+		*(unsigned int *)((void *)tg + of_cft(of)->private) =
-+			min_t(u64, v, UINT_MAX);
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index a39167228501d..1404e89147829 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -1118,11 +1118,11 @@ static void blkcg_fill_root_iostats(void)
+ 				cpu_dkstats->ios[STAT_DISCARD];
+ 			// convert sectors to bytes
+ 			tmp.bytes[BLKG_IOSTAT_READ] +=
+-				cpu_dkstats->sectors[STAT_READ] << 9;
++				(u64)cpu_dkstats->sectors[STAT_READ] << 9;
+ 			tmp.bytes[BLKG_IOSTAT_WRITE] +=
+-				cpu_dkstats->sectors[STAT_WRITE] << 9;
++				(u64)cpu_dkstats->sectors[STAT_WRITE] << 9;
+ 			tmp.bytes[BLKG_IOSTAT_DISCARD] +=
+-				cpu_dkstats->sectors[STAT_DISCARD] << 9;
++				(u64)cpu_dkstats->sectors[STAT_DISCARD] << 9;
+ 		}
  
- 	tg_conf_updated(tg, false);
- 	ret = 0;
+ 		flags = u64_stats_update_begin_irqsave(&blkg->iostat.sync);
 -- 
 2.53.0
 
