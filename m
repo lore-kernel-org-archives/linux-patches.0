@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055210;
-	b=k8TEBjbnoOI0fpDSLCAdANLzaMnpC7BiuNZS35jHZ1wRYM5hVJofXC7nDZLK7o/peemD
-	 pPCiJUh+GhSFwd/RsPOCqh4wZIx+v77luynLvZrvbZd5HKqznsyhRUZK/91ivNIq9WaxA
-	 5sJ56VqCgZ9fhkmtrK49uyBPwhhKoQobV8KFfiAHPPg41EPJs+/3ylzUc4OHYZVgNzXKP
-	 JF7AGLxN1oOhRgeQKmH1hPoNCyn581fsPUINi0p25OZh5izK5hDOvfo8sd8vUgSeAAXdO
-	 sO5v933C676aBIthJVGjA7H8NmdcJ2g0T/17iYCb92XqTk/ePdt9oqYTsONMzkd/U5A==
+	t=1795055213;
+	b=QIl+xUR5buMet6yV5Whtsdp5CglviQdg1ht9uXSUetb84iS5g37zYZud49QK0JgRqPGa
+	 nnsMD1jqqV3+wvjSq0uYkfCdIXG1bUUm46z/Ca5WEyYtXtYK21lFnIE70Y4bibzkrKBB8
+	 F7SuB/JWqpth1X1cK0IPV9EWcvfa84Gph/P3yavHT6iqXy9bspndBud1yaDgrj0bk1Iyu
+	 MmCq1LZ1K9fBACdj6Gq9fKzu+2vTzKUZrbOzMsBh55x++3ojqu/4PM5M2zJNFrq/jJtx1
+	 Flnw8M44e7lmqYYWkLKrfwqIZo1P8gIT0uMViIyey/DoCNkvuX59SOjw610w5UjXf5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055210;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055213;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zQrQtBssdj5izH/uWkB7Ucs4sj2TO23j5CjJO+cyHAI=;
-	b=uU1FeNGKdJlB8uhpTxavRdittQXzEcxMGDQlPb+jWr7PvaYFrKlRytOBu+mzV4dfFLMH
-	 5Gm65hls15oM5B6NIsTnXbiri51CxaFt3aNZEU6NCPrFV28IaM0FHnPiUdUBrsPUAipNL
-	 +SfdP8CyT3otRxZ0yz3k7KZVRAcWSBDQLLcrQF8qc0AXi0NwJ9Xmmrj/89k+Dx5jkiNqL
-	 5zkEWENI9jIQrbPln96spSGSZiFIJGudKUzgSs9ko/DDUyuJ5p6uhv8ftojDa9OVXqm6k
-	 IhFWL1Hpyn8CPgoGKgYWxZtM/KZKsiznPJ9WakORLLjo8o9T8KmKlXtXWtUz9czT9aw==
+	bh=QF4RXrIgYkTbVVvpqiVNgROjiGROOxsxflIqFmzWCVw=;
+	b=yHyeacymHeT1glFpCwrQURSG6kcUbvWJkcEj3pq4l3aJoLHs7I1rcXobkZA2F6j1nwve
+	 853DeDiG9vqDxZUIDgSNh0WnEaC0LTLetUtEbZP/4DFsAmHyCKzC5PnuZ5hnrwBFJkHND
+	 Vn1FHxeIeYvm1RvhI+KfrNR6+IN4yed2MRhy9yn7QSdbQlPUDgGhex+MR5NExJq7SISm0
+	 XjT30llt3Ej3dTPZLRDJhKmuy1jILQcNaWnrqWMlMm7HYY0BMDgJneDPGMd6cvKY3M6gv
+	 Jg9WFHeF2iczrkrPRCCZwYZ0IFVH+P5ekMEzS6JqXB05sx7Jm9ur/V7DFeHITY/TxYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X+19Jyjy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VkGcgQJS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D4A606A31C;
-	Thu, 19 Nov 2026 02:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA3A606A31C;
+	Thu, 19 Nov 2026 02:26:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X+19Jyjy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81A51F000C4;
-	Thu, 19 Nov 2026 02:26:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VkGcgQJS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08331F000C4;
+	Thu, 19 Nov 2026 02:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055210;
-	bh=zQrQtBssdj5izH/uWkB7Ucs4sj2TO23j5CjJO+cyHAI=;
+	s=korg; t=1795055213;
+	bh=QF4RXrIgYkTbVVvpqiVNgROjiGROOxsxflIqFmzWCVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X+19Jyjyyv066N2lSVK5FgptUkKklgbAm37dmFCHdvdEHzI92VjUNY+rG05rlq2Ln
-	 Ys8KhQ8U1qoiD1nm+2NxvZvqnTrunDoBBDaVDQyhFYfUDWUsiAWH5AW3eqtpqpe4Df
-	 koYMxwxv019QiTUaSAe/Fq0KpSKfQPT+MuJL7sf8=
+	b=VkGcgQJSVKCfY3XI1YOvlA+ZwY0OjZhRHlzTKGO+8DNcX5bw9TGa/ewGCUMy+Df1G
+	 N9mPHz+adHMoUJExn/+I63BXTqLzKzOp4ndYSBGhV46mfDd+oZGgLFCsJdfVd/ozaj
+	 8kA+ST4XIy972PJuqmS6Jk2f+Ep3BeYymy8Zc+vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1548/2214] RDMA/core: Fix partial copy of IPv6 flow_lbl in LAG hash skb
-Date: Wed, 18 Nov 2026 15:53:44 +0100
-Message-ID: <20261118150114.050815523@linuxfoundation.org>
+Subject: [PATCH 5.15 1510/2214] ntfs3: fix out-of-bounds read in ntfs_read_mft()
+Date: Wed, 18 Nov 2026 15:53:06 +0100
+Message-ID: <20261118150112.426290684@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,49 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit b63d21631f836528ef660d7b5a0d84890ff6dbd5 ]
+[ Upstream commit 7a374d9be8267834dc534e55f01e5e01765cab4c ]
 
-rdma_build_skb() constructs a synthetic IPv6 header for LAG slave
-selection and copies the flow label from the AH attribute:
+ntfs_read_mft() walks the attributes of an MFT record and, for each
+FILE_NAME attribute, compares the resident on-disk name with the name
+being looked up.  The only size check before the compare is
+rsize >= SIZEOF_ATTRIBUTE_FILENAME, which covers the fixed header up to
+and including name_len, but not the variable-length name that follows it.
 
-	memcpy(&ip6h->flow_lbl, &ah_attr->grh.flow_label,
-	       sizeof(*ip6h->flow_lbl));
+name_len comes straight from disk and is not validated against the
+resident data_size.  A crafted image can set name_len large while keeping
+data_size at the header size, so ntfs_cmp_names_cpu() reads name_len
+le16 characters past the end of the MFT record buffer:
 
-ipv6hdr.flow_lbl is __u8[3], so sizeof(*ip6h->flow_lbl) dereferences the
-array to a single __u8 and yields 1.  The memcpy therefore copies only
-the first byte of the flow label, leaving flow_lbl[1] and flow_lbl[2]
-uninitialised in the skb buffer (alloc_skb() does not zero the data).
-The resulting LAG hash is computed over one byte of real flow-label
-data and two bytes of kmalloc residue, so IPv6 RoCEv2 traffic on a
-bonded interface can be steered to the wrong slave.
+  BUG: KASAN: slab-out-of-bounds in ntfs_cmp_names_cpu (fs/ntfs3/upcase.c:84)
+  Read of size 2 at addr ffff888031879c00 by task a.out
+   ntfs_cmp_names_cpu (fs/ntfs3/upcase.c:84)
+   ntfs_iget5 (fs/ntfs3/inode.c:209)
+   dir_search_u (fs/ntfs3/dir.c:265)
+   ntfs_lookup (fs/ntfs3/namei.c:85)
+   __lookup_slow (fs/namei.c:1915)
+   lookup_slow (fs/namei.c:1932)
+   path_lookupat (fs/namei.c:2278)
+   vfs_statx (fs/stat.c)
+   vfs_fstatat (fs/stat.c)
+   __do_sys_newfstatat (fs/stat.c)
 
-Use sizeof(ip6h->flow_lbl) (the array, 3 bytes) so the whole flow label
-is copied.
+  Allocated by task:
+   mi_init (fs/ntfs3/record.c)
+   ntfs_iget5 (fs/ntfs3/inode.c)
+   dir_search_u (fs/ntfs3/dir.c)
+   ntfs_lookup (fs/ntfs3/namei.c)
 
-Fixes: bd3920eac1331 ("RDMA/core: Add LAG functionality")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260916120926.1761-1-lirongqing@baidu.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Check that the name fits in the resident data before using it.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/lag.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/inode.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/infiniband/core/lag.c b/drivers/infiniband/core/lag.c
-index 7063e41eaf261..fc1dd6b5bf5ef 100644
---- a/drivers/infiniband/core/lag.c
-+++ b/drivers/infiniband/core/lag.c
-@@ -60,7 +60,7 @@ static struct sk_buff *rdma_build_skb(struct ib_device *device,
- 		ip6h->version = 6;
- 		ip6h->nexthdr = IPPROTO_UDP;
- 		memcpy(&ip6h->flow_lbl, &ah_attr->grh.flow_label,
--		       sizeof(*ip6h->flow_lbl));
-+		       sizeof(ip6h->flow_lbl));
- 		memcpy(&ip6h->saddr, ah_attr->grh.sgid_attr->gid.raw,
- 		       sizeof(struct in6_addr));
- 		memcpy(&ip6h->daddr, ah_attr->grh.dgid.raw,
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index bccfd60db7de7..eb89fb3a7f4f1 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -198,6 +198,11 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 
+ 		names += 1;
+ 		fname = Add2Ptr(attr, roff);
++
++		/* Make sure the full name fits in the resident data. */
++		if (rsize < fname_full_size(fname))
++			goto out;
++
+ 		if (fname->type == FILE_NAME_DOS)
+ 			goto next_attr;
+ 
 -- 
 2.53.0
 
