@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052646;
-	b=M43+2GuirrpnZI4iLhyNzjn8Dk56t9Vu+uNCF0fmc0pxqMgl68Su0adl29Lbaklo8TQX
-	 HbVOdxljxfeUYS3ukyDPOv6eXUbuoGUxIObUQcVAYAbhGWxMOOwpcJvTPhz0K07nPwQVv
-	 EAqyt5AHtx9waXH/iWGKNhhPkoMFyb7QtzV/qC+0BRfo4hyoq/pg62O0yQWKUg87HFG+Y
-	 r9hyN95HHCAzRLdL2YIxL4FNBBco9mNcnPeurf3jIV5PNpIMKJ6WgSaH2CMI8z/4n4Bho
-	 Kz98hSQ1ajWSyzncGswTLzJqRi9wjlTkIlm1GV24N2tNynP1PkKO+TKan1g+r63OUiw==
+	t=1795052649;
+	b=ckpOfkK38HVG+6IMrKbQ/vM1jMA5PQGAWxTBhB661tLilvGq4fRAdzkb3gVDw0iXwdQg
+	 UTUDyooIordZYpZeC4VjFtKHpvude7sRJBa6cZ/Ydt2AYcUOIxg8nB/hvI0mtEYLudi/c
+	 a6Y6WqMr829U/DTCaIRo0ygWeQkoOjNO+S/3ot+hK0qrQ9NOdHN9m/CpnsOXz68YGmkay
+	 je7c1EZkVIrr7YZUbuNCdxmZYe36NqA2u37hLG7GIhnp8a55icrHcsF0IT5+ul4dr9fLl
+	 9RprxZ+Ew/+V3n8JWM0sQTCnB78Pgp+3YwaL/bhMLuj6irkoRrPPcIeWx6rPXUG9NLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052646;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052649;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jpbAcuhH5wFcDJQWfGjtl7NRPPs1gnJluVcqpvqHipc=;
-	b=Bjyg2bSkHyq99xmjSzuVU4LDd7hcITQ8a1NB2Y+jRxmaCwZ+VwlWd//aCmiCDl4PK49S
-	 vsjP3nY2BjN2znVo+vTJJOuHrh6QKgitCegg1ZbYttqGz7amrHdQ9NpLgaW0hgiZoTXCG
-	 8QDHA2N+NA/jZl5IeS483Ic7Z3GR2ewVOgnMv5Ui6nwc7WYlCEQ5auCfU1byZFhbxehb8
-	 5wq+it0Vj4ZfjczeoMZhX1acsFs/5xbEHZHyk5KkMJWUBLMvW4VAq+2SsfJIT63LH5tSB
-	 EJwesXeZNsGNccZ5Fbv/Lb1zkkveKdATYkgOto3LxmzGwibN9Y+nuen6gRN+Z5eeokg==
+	bh=Ijug4PaV6OtI3bRyTpf74vtA/G2YwPbmrdu9dMH15ME=;
+	b=eOlIgvkKFsmPN3BtjYsAwD/PFpkfbHqDE7CoP/MHTM0bwTKqXOT8eYAkb3RqVxEqDbv2
+	 72JyAqQNMVxab9NfnpD1WMVNLA3TWL5Nz02z9JVTfPExZM71SvcDncxHhZ/+RNBVQa0Qa
+	 nSIOTMYFEeza2ayzGqpnlWfkE9s8GNvm2HZv7RgXOg9PaSmvdo8OKHCF5u++jtJ1XFmbu
+	 Ri7YLqLjMUQ2id3szX7uMY1UFSbz2HggpXaT2fBsRnNFmGUxPVWIOHfVfQvhaBMogWQbw
+	 cAfNGtnu6FiCnllhR6z2L3c/I6V2OVKGeAu1ac8iCSJFL8p9dFbOfVpRBXzInlQ4LsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTIIyjLM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t6o3PcrE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B780E606A320;
-	Thu, 19 Nov 2026 01:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FF5606A325;
+	Thu, 19 Nov 2026 01:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTIIyjLM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D12D1F000C4;
-	Thu, 19 Nov 2026 01:44:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t6o3PcrE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39DF1F000C4;
+	Thu, 19 Nov 2026 01:44:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052646;
-	bh=jpbAcuhH5wFcDJQWfGjtl7NRPPs1gnJluVcqpvqHipc=;
+	s=korg; t=1795052649;
+	bh=Ijug4PaV6OtI3bRyTpf74vtA/G2YwPbmrdu9dMH15ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eTIIyjLMFUrdv1YqBURiABJcVaRK6FpjUUX9uAfZbL4F/2Ulrb2JokNWin1x8p3PI
-	 EC5l4QJpyRs3qAKCAn3kSsAbgXYb2LWvZ67Vxhz0YwaX900ofSb+7qdgtP81HXq1ph
-	 T9gPmH5solv+5pFyHlwbdA1WOb9GSAA/uUdbrQ9A=
+	b=t6o3PcrEAWCIFFI39gAHafTbfZ7fA2vL9KpwgLPisF6mH/mK+y7i1qFiNrn0MdRAn
+	 dNsHszaG+nzR2mhLCz2NzoPXJJHrF3InLpUEyAYCie2i5XBowDABSCS+TZuJnUBUDZ
+	 u6pX8ss7QjBpoqEDNG76gshZ0c3zIifx46HoiX4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
+	Bui Viet Dung <dungvn2345@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0639/2214] ARM: 9491/1: alignment: restore uaccess state on emulation fault
-Date: Wed, 18 Nov 2026 15:38:35 +0100
-Message-ID: <20261118150036.907996490@linuxfoundation.org>
+Subject: [PATCH 5.15 0640/2214] Bluetooth: 6lowpan: Pin module for 6lowpan_control debugfs file
+Date: Wed, 18 Nov 2026 15:38:36 +0100
+Message-ID: <20261118150036.944789265@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,200 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Bui Viet Dung <dungvn2345@gmail.com>
 
-[ Upstream commit 80dafbcb705cead6d25cb821cf29c47da8860c8c ]
+[ Upstream commit 8368f0c2cde48c09ed70644059f24172b0c59f52 ]
 
-The alignment handlers enable access to user memory while emulating
-unaligned instructions. If a checked access faults, its exception table
-fixup jumps to the handler's fault label and bypasses uaccess_restore().
-This leaves DOMAIN_USER as DOMAIN_CLIENT with SW domain PAN, or leaves
-TTBR0 page table walks enabled with TTBR0 PAN, while the fault is handled.
+An open debugfs file retains lowpan_control_fops in the debugfs proxy
+state. However, lowpan_control_fops has no .owner set to THIS_MODULE.
+As a result, full_proxy_open_regular() calls fops_get() which succeeds
+without taking a reference to the bluetooth_6lowpan module.
 
-An ARM926 QEMU test using LDMIA across an unmapped page boundary reports
-DOMAIN_USER=1 at TYPE_FAULT before this change and DOMAIN_USER=0 after it.
-SW domain PAN is the default on ARMv5, ARMv6, and non-LPAE ARMv7 builds.
+With CONFIG_BT_6LOWPAN=m, a userspace process can keep the debugfs file
+descriptor for 6lowpan_control open across module unload
+(delete_module / rmmod bluetooth_6lowpan). When the process subsequently
+closes the file descriptor, full_proxy_release() accesses the already
+freed and unmapped lowpan_control_fops table, causing a kernel page fault
+or oops.
 
-Keep the saved uaccess state at function scope and track whether it was
-saved. Restore it at the fault label only when needed. Paths that did not
-enable user access continue to skip the restore.
+The issue was discovered via manual code audit of
+net/bluetooth/6lowpan.c.
 
-Assisted-by: Codex:gpt-5.6-sol
+Set .owner = THIS_MODULE on lowpan_control_fops so that debugfs pins
+the module until all open file descriptors have finished.
 
-Fixes: 274e91b81ed2 ("ARM: alignment: fix alignment handling for uaccess changes")
+Fixes: 6b8d4a6a0314 ("Bluetooth: 6LoWPAN: Use connected oriented channel instead of fixed one")
 Cc: stable@vger.kernel.org
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Bui Viet Dung <dungvn2345@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/alignment.c | 51 ++++++++++++++++++++++++++++++-----------
- 1 file changed, 37 insertions(+), 14 deletions(-)
+ net/bluetooth/6lowpan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/mm/alignment.c b/arch/arm/mm/alignment.c
-index 758504a28c13f..2f76a04cd29d2 100644
---- a/arch/arm/mm/alignment.c
-+++ b/arch/arm/mm/alignment.c
-@@ -341,6 +341,8 @@ static int
- do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
- 	unsigned int rd = RD_BITS(instr);
-+	unsigned int ua_flags;
-+	bool ua_saved = false;
- 
- 	ai_half += 1;
- 
-@@ -364,10 +366,11 @@ do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
-  user:
- 	if (LDST_L_BIT(instr)) {
- 		unsigned long val;
--		unsigned int __ua_flags = uaccess_save_and_enable();
- 
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		get16t_unaligned_check(val, addr);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 
- 		/* signed half-word? */
- 		if (instr & 0x40)
-@@ -375,14 +378,17 @@ do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
- 
- 		regs->uregs[rd] = val;
- 	} else {
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		put16t_unaligned_check(regs->uregs[rd], addr);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 	}
- 
- 	return TYPE_LDST;
- 
-  fault:
-+	if (ua_saved)
-+		uaccess_restore(ua_flags);
- 	return TYPE_FAULT;
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index d0b1882f5b4b7..b5ddd88f411fb 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -1205,6 +1205,7 @@ static int lowpan_control_open(struct inode *inode, struct file *file)
  }
  
-@@ -391,6 +397,8 @@ do_alignment_ldrdstrd(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
- 	unsigned int rd = RD_BITS(instr);
- 	unsigned int rd2;
-+	unsigned int ua_flags;
-+	bool ua_saved = false;
- 	int load;
- 
- 	if ((instr & 0xfe000000) == 0xe8000000) {
-@@ -425,26 +433,30 @@ do_alignment_ldrdstrd(unsigned long addr, u32 instr, struct pt_regs *regs)
-  user:
- 	if (load) {
- 		unsigned long val, val2;
--		unsigned int __ua_flags = uaccess_save_and_enable();
- 
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		get32t_unaligned_check(val, addr);
- 		get32t_unaligned_check(val2, addr + 4);
- 
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 
- 		regs->uregs[rd] = val;
- 		regs->uregs[rd2] = val2;
- 	} else {
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		put32t_unaligned_check(regs->uregs[rd], addr);
- 		put32t_unaligned_check(regs->uregs[rd2], addr + 4);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 	}
- 
- 	return TYPE_LDST;
-  bad:
- 	return TYPE_ERROR;
-  fault:
-+	if (ua_saved)
-+		uaccess_restore(ua_flags);
- 	return TYPE_FAULT;
- }
- 
-@@ -452,6 +464,8 @@ static int
- do_alignment_ldrstr(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
- 	unsigned int rd = RD_BITS(instr);
-+	unsigned int ua_flags;
-+	bool ua_saved = false;
- 
- 	ai_word += 1;
- 
-@@ -469,18 +483,22 @@ do_alignment_ldrstr(unsigned long addr, u32 instr, struct pt_regs *regs)
-  trans:
- 	if (LDST_L_BIT(instr)) {
- 		unsigned int val;
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		get32t_unaligned_check(val, addr);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 		regs->uregs[rd] = val;
- 	} else {
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		put32t_unaligned_check(regs->uregs[rd], addr);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 	}
- 	return TYPE_LDST;
- 
-  fault:
-+	if (ua_saved)
-+		uaccess_restore(ua_flags);
- 	return TYPE_FAULT;
- }
- 
-@@ -502,6 +520,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
- 	unsigned int rd, rn, correction, nr_regs, regbits;
- 	unsigned long eaddr, newaddr;
-+	unsigned int ua_flags;
-+	bool ua_saved = false;
- 
- 	if (LDM_S_BIT(instr))
- 		goto bad;
-@@ -547,7 +567,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- #endif
- 
- 	if (user_mode(regs)) {
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		for (regbits = REGMASK_BITS(instr), rd = 0; regbits;
- 		     regbits >>= 1, rd += 1)
- 			if (regbits & 1) {
-@@ -559,7 +580,7 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- 					put32t_unaligned_check(regs->uregs[rd], eaddr);
- 				eaddr += 4;
- 			}
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 	} else {
- 		for (regbits = REGMASK_BITS(instr), rd = 0; regbits;
- 		     regbits >>= 1, rd += 1)
-@@ -581,6 +602,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- 	return TYPE_DONE;
- 
- fault:
-+	if (ua_saved)
-+		uaccess_restore(ua_flags);
- 	regs->ARM_pc -= correction;
- 	return TYPE_FAULT;
- 
+ static const struct file_operations lowpan_control_fops = {
++	.owner		= THIS_MODULE,
+ 	.open		= lowpan_control_open,
+ 	.read		= seq_read,
+ 	.write		= lowpan_control_write,
 -- 
 2.53.0
 
