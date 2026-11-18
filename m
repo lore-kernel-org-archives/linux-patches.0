@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047462;
-	b=JNN4IIhCpsNvVclAOSwNWuMOBtCccoD9BtpSTvoduXahmQqUZRy8NRDBNDe3GTNp76qJ
-	 pigNNvGYWf/Z5lqjcnAodsCrcX4Do7QSapgDvgb23bGDf1IKK2hnYmqI1n0dvgrrZHr28
-	 Jc777pnuhFbQWd5Cga46CwXD/yA68jOzZ7YCdgJEbMSExYN1HDahPpYZP5Z1FMu3+4B5b
-	 /C7RpZK4EhhnPatro9gdeRB5wjgaqH2zhkmkzyCvQ+Bd7QyPgoJIAd/ETtdKZFbTAV+uZ
-	 xI9+mLDrg98KpcoAVvx6OQoXagsupW/uwQ2OE476Iu+wpIFpYqwBgdk5ulyv44qe3yA==
+	t=1795047464;
+	b=ZuMKRxifkybWDKVNGrnAHRZBc8SYhkkyg38gMofNMdA4ZqXPozyy3BmZJMjh7mDNdvAY
+	 EYbIVjzVLy0fUK19M1ItvyBX71EbCw7Wkf0W7sRKLkWvGDAO8mWaIPUa4j/8+Ay4LoAsK
+	 eh/o94usanCvXa8OTyTU/o5MVE6s4QjtWTcAoD8E5dpUJVzFQmx0qpGihswMw3TVx5zvU
+	 CQM2zt4xIbyp6JueJBS5SgDlSRKJpfQOKHFHZ/uskZPEA606rpj14ahh0Uxlc1POx//Ey
+	 wC4FLBSwd3n1IQmvhmN8M+UvYo1IS9s1FH2QwJbrrhfPZZvqSkyfmz2sJLk0DViKhrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047462;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047464;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YQBn3Dw9vGbVSzc/nUvmYKN6bVl44C8I5lwFErvvAco=;
-	b=GvsqnFe8Hw3Zz+roMEEcWRQK4eixgTMUqjbE9jxxFsJzXk78Jd5NN5z58Q7JgtoeUIWA
-	 0YocE5JGI3WRnOS2XxDxtCPvRvBOt2YorE0ryKb2dxd+3+PvAK13kPY+VuPj0ZllO+lK7
-	 +FXdyQRB4beZXMNmlqGJTeDxUcPHEhe4PGoT00DZg0caxmhoA/tXHWTW2gbmaWh8M+CD+
-	 3a/dlPdV2zGcijN5qApMIPJU0ojbPN1tDF4u2LUp6HNNNdoNJHC4gObA4y6H+Em647o6w
-	 gR8HmzsDheamIBKBO/wMNaVKqtdzNl1bJbIbb6d3yuHbUK6mJD3aBG9e1bFosN3hWeg==
+	bh=ZwCHs2YWxSWaY9ca68RYSU/KLNgy9pg6SBVvJOvdQh4=;
+	b=lML6z5GHCRpcJFFwdwmVQhigsQcFVeklENI6RqHxxxYS97TJCQsYslUzHs6yVeNlHz5A
+	 cRoBXPVLVuIQ669cMkaFcNVFTVtXA4n3MGftzebokcJh9U8L1wEJvTXkCPgUxiSVIvNSw
+	 Y1OPBxzmzaYuRrOCHfNKrl6dSBWOmZS6iG+TB/SSOX1Q2nzedYN9EQbzuGG1IimmEvfC7
+	 Lp2mC2x/baXYLVwxVd+aVeu09Y6s0+ztB2Ag7lyA+3cz5+T4syK4dpw4KVQoXnNPF/gvK
+	 eFwV/YznI30PEVUpsTQi5KoTVVgc/qov1KEr8Qwu82lTERt852pnxJI7Tg49bM5rz+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HGixtyPc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="oDVP2/fj";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB27606A31C;
-	Thu, 19 Nov 2026 00:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD773606A32A;
+	Thu, 19 Nov 2026 00:17:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HGixtyPc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7132C1F000C4;
-	Thu, 19 Nov 2026 00:17:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oDVP2/fj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 347C61F000C4;
+	Thu, 19 Nov 2026 00:17:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047462;
-	bh=YQBn3Dw9vGbVSzc/nUvmYKN6bVl44C8I5lwFErvvAco=;
+	s=korg; t=1795047464;
+	bh=ZwCHs2YWxSWaY9ca68RYSU/KLNgy9pg6SBVvJOvdQh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HGixtyPclFCwf8l4dwOauREztaUdEvsVu/bifD2IqwKwoO+osFwm1EPEzSpf6zcZ4
-	 h5Vux1Tmv2FjljCJEHsekrGq8SIQudyxhFw717ya6dTESX4yvCcY0MlilN/RYqUlum
-	 HJUQYo3Au//8BRVjc1+PcDHi1SeZ1f5aT76/Pm3I=
+	b=oDVP2/fj2U9HyG/gymSjrE/7OmBeU0OZ+/ItjdVqcrqSO749yEZpL8s24rQHsulro
+	 ZwszkuLQ2c2lWBhxv5okRiYsLwNl695HB03BZkJNKPqfGBqXJrg8js+Qi5QN5BPbe3
+	 PmUsQYxfcRQ4tiFOpSaagxdeqI/AR3Fo0fSIGLvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	Pedro Falcato <pfalcato@suse.de>,
 	Muhammad Usama Anjum <usama.anjum@arm.com>,
 	Lance Yang <lance.yang@linux.dev>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1648/2857] mm/mremap: fix moving PUD leaves
-Date: Wed, 18 Nov 2026 15:44:42 +0100
-Message-ID: <20261118150300.672486411@linuxfoundation.org>
+Subject: [PATCH 6.1 1649/2857] mm/mremap: recheck PUDs under the page table lock
+Date: Wed, 18 Nov 2026 15:44:43 +0100
+Message-ID: <20261118150300.709668987@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -72,74 +71,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 440c8779757f09f290770b1d361dc1516a9d0b3e ]
+[ Upstream commit 402882943dfa8bab5c2bcc66189f9fb2828f248e ]
 
-pud_none_or_clear_bad() only really works on page tables. PUD leaves
-confuse the check and make us clear the page table entry and print a
-warning.
+Once get_old_pud() is fixed to accept PUD leaves, unmap_mapping_range() can
+clear a leaf between the lookup and the move. Holding mmap_lock in write
+mode does not prevent this.
 
-Since commit aed877c2b4257 ("device/dax: properly refcount device dax pages
-when mapping"), this also leaks device-DAX folio references, mapcounts
-and RSS accounting, resulting in "Bad rss-counter state" warnings on exit.
+If the zap happens before move_page_tables() tests the entry, an empty
+PUD can reach move_normal_pud(), where pud_populate() turns it into a
+present page table entry. If it happens after the test, move_huge_pud()
+can instead try to move an empty entry, triggering CONFIG_DEBUG_VM
+warnings on powerpc.
 
-Allow PUD leaves in get_old_pud(). If a PUD leaf cannot be moved as a
-whole or the move fails, split it. This unmaps it with proper accounting
-instead of treating the leaf entry as a PMD table.
+Recheck the source under the page table lock in both helpers. Treat an
+empty source in move_normal_pud() as a completed move, and use
+__pud_trans_huge_lock() in move_huge_pud().
 
-Keep using pud_trans_huge() for now, in the future this code should be
-cleaned up to just check for PUD leaves.
+In the future we should likely have the code lookup a PUD/PMD lockless
+once, instead of multiple times, because one of the problematic bits
+here is the:
 
-Fix generated by an LLM and sent by Josef Bacik in private.
+	pud_trans_huge(*old_pud)
 
-Fixes: a00cc7d9dd93 ("mm, x86: add support for PUD-sized transparent hugepages")
+Fixes: 0881ace292b6 ("mm/mremap: use pmd/pud_poplulate to update page table entries")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-[ david: fallthrough after splitting ]
 Reviewed-by: Pedro Falcato <pfalcato@suse.de>
 Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-32-d6437171ecc3@kernel.org
+Link: https://patch.msgid.link/20261031-fixes_core-v3-31-d6437171ecc3@kernel.org
 Reviewed-by: Lance Yang <lance.yang@linux.dev>
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: adapted PUD handling to explicit VMA and address arguments while preserving pud_devmap() support ]
+[ sashal: adjusted context for move helpers using direct vma and old_addr arguments instead of pagetable_move_control ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mremap.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ mm/mremap.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/mm/mremap.c b/mm/mremap.c
-index a13ad0e9c1f84..b60be8b941674 100644
+index b60be8b941674..dab123e521cda 100644
 --- a/mm/mremap.c
 +++ b/mm/mremap.c
-@@ -47,7 +47,8 @@ static pud_t *get_old_pud(struct mm_struct *mm, unsigned long addr)
- 		return NULL;
+@@ -346,14 +346,18 @@ static bool move_normal_pud(struct vm_area_struct *vma, unsigned long old_addr,
+ 	if (new_ptl != old_ptl)
+ 		spin_lock_nested(new_ptl, SINGLE_DEPTH_NESTING);
  
- 	pud = pud_offset(p4d, addr);
--	if (pud_none_or_clear_bad(pud))
-+	if (!pud_trans_huge(*pud) && !pud_devmap(*pud) &&
-+	    pud_none_or_clear_bad(pud))
- 		return NULL;
+-	/* Clear the pud */
+ 	pud = *old_pud;
++	if (unlikely(pud_none(pud)))
++		goto out_unlock;
++
++	/* Clear the pud */
+ 	pud_clear(old_pud);
  
- 	return pud;
-@@ -547,12 +548,11 @@ unsigned long move_page_tables(struct vm_area_struct *vma,
- 		if (!new_pud)
- 			break;
- 		if (pud_trans_huge(*old_pud) || pud_devmap(*old_pud)) {
--			if (extent == HPAGE_PUD_SIZE) {
--				move_pgt_entry(HPAGE_PUD, vma, old_addr, new_addr,
--					       old_pud, new_pud, need_rmap_locks);
--				/* We ignore and continue on error? */
-+			if (extent == HPAGE_PUD_SIZE &&
-+			    move_pgt_entry(HPAGE_PUD, vma, old_addr, new_addr,
-+					   old_pud, new_pud, need_rmap_locks))
- 				continue;
--			}
-+			split_huge_pud(vma, old_pud, old_addr);
- 		} else if (IS_ENABLED(CONFIG_HAVE_MOVE_PUD) && extent == PUD_SIZE) {
+ 	VM_BUG_ON(!pud_none(*new_pud));
  
- 			if (move_pgt_entry(NORMAL_PUD, vma, old_addr, new_addr,
+ 	pud_populate(mm, new_pud, pud_pgtable(pud));
+ 	flush_tlb_range(vma, old_addr, old_addr + PUD_SIZE);
++out_unlock:
+ 	if (new_ptl != old_ptl)
+ 		spin_unlock(new_ptl);
+ 	spin_unlock(old_ptl);
+@@ -388,7 +392,9 @@ static bool move_huge_pud(struct vm_area_struct *vma, unsigned long old_addr,
+ 	 * We don't have to worry about the ordering of src and dst
+ 	 * ptlocks because exclusive mmap_lock prevents deadlock.
+ 	 */
+-	old_ptl = pud_lock(vma->vm_mm, old_pud);
++	old_ptl = __pud_trans_huge_lock(old_pud, vma);
++	if (unlikely(!old_ptl))
++		return false;
+ 	new_ptl = pud_lockptr(mm, new_pud);
+ 	if (new_ptl != old_ptl)
+ 		spin_lock_nested(new_ptl, SINGLE_DEPTH_NESTING);
 -- 
 2.53.0
 
