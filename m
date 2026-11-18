@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057137;
-	b=Oc/eNIvpzfE1qizGUvqzLhCqDtHhhrw/bu5XznCDnPsa4HOttKzTCZWt8x/ONPl/wOKn
-	 IVwwSlOo827+Q3y0r6KqRhnKg/Sm/0FrvydK+rMecbKWgKg8nBrLyphc+4MWh/uwA/wXB
-	 vuMk7xX7KbB6y/3wgMf4knOfYxzckMpAFojMiYQrriinNI5IfOBqc+dHARx7AVEpkhT/J
-	 rHd0OyRee9H9EQfSTYYtnRhnCgwv3aKrfc7jOvkkFtsCUQzLYw0ygp2Sy+duP/k5QHUwc
-	 4/9cA/hOrosYkXf/PoMUeNfRrbWvMzs06ULoOI8PMIicmUs6Q2Kcmv/2BRlJNqwngSQ==
+	t=1795057140;
+	b=AckUU8h5LTa+/7ea3gkY6yD0t/eO6nS4Fy9MLV/lXDlUeg2twKh1aw5mWOT6576i16Nx
+	 jWb4nb4WjRMY99CIQYbqXVc6v4In8QSnyPpZrUB7lojCcwTlYNPZY+vyROYq69q4XnlAP
+	 128iMRbwe5B9mosH97692JExCxsoPaoAX2L15UsaEBrKjY5F1tHZFDvZiQRfYmL/++hN9
+	 g5ARsEiRDE9p/QPzEwPl1/7joAYzaZiDPqaJMxURxms1xBU5AKbGb+AyTr6I/ThH4RDFR
+	 +sQo7mnw6Ed6AuzQwBheUigaKeq84FHnm4VWmztxKwHGlS1FEK0a6+skeA2FXmk3bjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057137;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057140;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ptYkl1WPUAr6TklxOydCvVCxxG88R/w2IQK6ilRXWw0=;
-	b=4UQoy5Q+wY1lO8Q/ePe+d4rSDiVde/QMcSmjPQdd/InqXSQ7kinWzi3MNssuTccsLleU
-	 iP+aMIo84KG1XhCT+AeJxqPyAlPSd+4zJ7XSgZi/UJ3Og3NtygyGlPJzUkozc76SS89N3
-	 +oMn+JbbyV5pQk8nH620ZtUIQQjCdbd6PNzS60EiNK/gU3K9rp71oFmqH8XuNMslNqFQK
-	 KE7hqpCNZab2TQFBwr3/1AcsIlThm3A5Ay9uk6YMioNEq9yEY1Fk/woDnNavWAqUcnWoK
-	 anP/EGblCF60SA48kME68rl96wyql00h/ZFzqyBZGMvSs1ml+gu5FVukBTBVI0t5uLQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=wdYG6ec4TnSeSy3n0QkCzVHR4k6IsdZZxI8pfBUPLHU=;
+	b=Ql2eHRgSeKbALQBShFTfcTSttLjOLvMf0ky4b6T/JRTfoGhFcNJb26ukAHLsrIiodIWZ
+	 bJCD9P3YsEPv5BWgkXMS8GQQFd+oMGR90w1echqhPwGJ13IBGo8KtrGDQ3rQkzlrlsrG+
+	 JmH9aipDhtOh0Wk/NWL/feLiuHnHKzDlWx1suUV9oPzuHDITnflCZ6RBbPObwHMM7Gcww
+	 6D/mS+OLV5YRnc/9cqwW9MAFN9rpcw/+piJ9jCxgV+JoHaSYazJOKA5gKxCNa8Mmn1QoO
+	 GQipjxvus4F0FRLdCjbSJ1uE61A/l1NbIcPrZeaRH9DixzXoW8Kcf75YRXbha4ohnVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iHCgKPco;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rY3EUDUD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283CE606A320;
-	Thu, 19 Nov 2026 02:58:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D3B606A31C;
+	Thu, 19 Nov 2026 02:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iHCgKPco
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762981F000C4;
-	Thu, 19 Nov 2026 02:58:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rY3EUDUD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425141F000C4;
+	Thu, 19 Nov 2026 02:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057137;
-	bh=ptYkl1WPUAr6TklxOydCvVCxxG88R/w2IQK6ilRXWw0=;
+	s=korg; t=1795057139;
+	bh=wdYG6ec4TnSeSy3n0QkCzVHR4k6IsdZZxI8pfBUPLHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iHCgKPcon0dxf+XA1FOzKzck6gaffDdu7eA8qLspf/qjeTTrq2ZH5flrtcjnV6tES
-	 CPTQUZLUyiUjdHK9PaRhd17j92RtJ+CIqM2ekOELXXPOtDXcjI8AA/4MPehr3eipNY
-	 B6wjb/aEShxO3yRw7F7xN6/k/AAV4sOcDed2AZxU=
+	b=rY3EUDUDAscwnLHR2JsW5mSrbv/i6PpBILEN/z+F37xwd7iI3Hy4eJgTNkiDN18SA
+	 fZRtMfwPbpS21TwqKmRKDi46BXFBD6jz8Kig82JhgF46qsHWyUYiAvAx+q3Pmpgnn2
+	 SU9QDJ+5ctjCxAuusk58MfvEAQset9aSQD2+W+/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jesse Zhang <jesse.zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 5.10 0024/1848] drm/amdgpu: Use vmemdup_array_user in amdgpu_bo_create_list_entry_array
-Date: Wed, 18 Nov 2026 15:34:22 +0100
-Message-ID: <20261118145912.071611932@linuxfoundation.org>
+Subject: [PATCH 5.10 0025/1848] drm/amdgpu: Limit BO list entry count to prevent resource exhaustion
+Date: Wed, 18 Nov 2026 15:34:23 +0100
+Message-ID: <20261118145912.116752809@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,94 +63,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Jesse.Zhang <Jesse.Zhang@amd.com>
 
-commit c4ac100e9ae252b09986766ad23b1f83ca3a369d upstream.
+commit 6270b1a5dab94665d7adce3dc78bc9066ed28bdd upstream.
 
-Replace kvmalloc_array() + copy_from_user() with vmemdup_array_user() on
-the fast path.
+Userspace can pass an arbitrary number of BO list entries via the
+bo_number field. Although the previous multiplication overflow check
+prevents out-of-bounds allocation, a large number of entries could still
+cause excessive memory allocation (up to potentially gigabytes) and
+unnecessarily long list processing times.
 
-This shrinks the source code and improves separation between the kernel
-and userspace slabs.
+Introduce a hard limit of 128k entries per BO list, which is more than
+sufficient for any realistic use case (e.g., a single list containing all
+buffers in a large scene). This prevents memory exhaustion attacks and
+ensures predictable performance.
 
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Return -EINVAL if the requested entry count exceeds the limit
+
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: c833d6c7199c ("drm/amdgpu: Limit BO list entry count to prevent resource exhaustion")
+(cherry picked from commit 688b87d39e0aa8135105b40dc167d74b5ada5332)
+Cc: stable@vger.kernel.org
 Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c |   43 +++++++++++-----------------
- 1 file changed, 18 insertions(+), 25 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
-@@ -224,43 +224,36 @@ void amdgpu_bo_list_put(struct amdgpu_bo
- int amdgpu_bo_create_list_entry_array(struct drm_amdgpu_bo_list_in *in,
- 				      struct drm_amdgpu_bo_list_entry **info_param)
+@@ -35,6 +35,7 @@
+ 
+ #define AMDGPU_BO_LIST_MAX_PRIORITY	32u
+ #define AMDGPU_BO_LIST_NUM_BUCKETS	(AMDGPU_BO_LIST_MAX_PRIORITY + 1)
++#define AMDGPU_BO_LIST_MAX_ENTRIES	(128 * 1024)
+ 
+ static void amdgpu_bo_list_free_rcu(struct rcu_head *rcu)
  {
--	const void __user *uptr = u64_to_user_ptr(in->bo_info_ptr);
- 	const uint32_t info_size = sizeof(struct drm_amdgpu_bo_list_entry);
-+	const void __user *uptr = u64_to_user_ptr(in->bo_info_ptr);
-+	const uint32_t bo_info_size = in->bo_info_size;
-+	const uint32_t bo_number = in->bo_number;
+@@ -230,6 +231,9 @@ int amdgpu_bo_create_list_entry_array(st
+ 	const uint32_t bo_number = in->bo_number;
  	struct drm_amdgpu_bo_list_entry *info;
--	int r;
--
--	info = kvmalloc_array(in->bo_number, info_size, GFP_KERNEL);
--	if (!info)
--		return -ENOMEM;
  
- 	/* copy the handle array from userspace to a kernel buffer */
--	r = -EFAULT;
--	if (likely(info_size == in->bo_info_size)) {
--		unsigned long bytes = in->bo_number *
--			in->bo_info_size;
--
--		if (copy_from_user(info, uptr, bytes))
--			goto error_free;
--
-+	if (likely(info_size == bo_info_size)) {
-+		info = vmemdup_array_user(uptr, bo_number, info_size);
-+		if (IS_ERR(info))
-+			return PTR_ERR(info);
- 	} else {
--		unsigned long bytes = min(in->bo_info_size, info_size);
-+		const uint32_t bytes = min(bo_info_size, info_size);
- 		unsigned i;
- 
--		memset(info, 0, in->bo_number * info_size);
--		for (i = 0; i < in->bo_number; ++i) {
--			if (copy_from_user(&info[i], uptr, bytes))
--				goto error_free;
--
--			uptr += in->bo_info_size;
-+		info = kvmalloc_array(bo_number, info_size, GFP_KERNEL);
-+		if (!info)
-+			return -ENOMEM;
++	if (bo_number > AMDGPU_BO_LIST_MAX_ENTRIES)
++		return -EINVAL;
 +
-+		memset(info, 0, bo_number * info_size);
-+		for (i = 0; i < bo_number; ++i, uptr += bo_info_size) {
-+			if (copy_from_user(&info[i], uptr, bytes)) {
-+				kvfree(info);
-+				return -EFAULT;
-+			}
- 		}
- 	}
- 
- 	*info_param = info;
- 	return 0;
--
--error_free:
--	kvfree(info);
--	return r;
- }
- 
- int amdgpu_bo_list_ioctl(struct drm_device *dev, void *data,
+ 	/* copy the handle array from userspace to a kernel buffer */
+ 	if (likely(info_size == bo_info_size)) {
+ 		info = vmemdup_array_user(uptr, bo_number, info_size);
 
 
