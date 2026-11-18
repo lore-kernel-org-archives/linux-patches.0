@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035368;
-	b=Mg1UmHWHZ458k9ouQ3z77jJuhYEGG1vDIl4C/SqZuoG+J+/Zjotlc+MhhdofOTpdkrc6
-	 wccRImYog0ptsRGW0l+n/XHRoZifqBk/hGsazmVTdnk6cJExL5ZMfaxKJvEMSP/wsjo6D
-	 fGZmo9k8Bvils2fVQ7M/GQizYaj/TFbvrVDJtqM+yU73he6RzKjZrvQdPX6dPCD9Ye50J
-	 DZsy38HR/yB0NxxUnBmtH6RsPO6p+QYMnp2NPz5AKa1Z41kUEhuqXNnjkftGURW+3jpQM
-	 vFmvfoi1uMupFqxs7CFIItzCrP6stzy29cYZcoVmXmx30ybuRQEiBr70zGYO3oCe+BA==
+	t=1795035371;
+	b=1pmmBqGQPquvTwyRsId11kTF3EFt7HxVsDWj1vo3EjI8JSxtjjr7PYcvHRHyD2mX7FnF
+	 hkK3mt71TjYg/bRet1Af3nHr1UySCEBUFA6tnlC803zts+Omg0bJncTlKL2gFM4J38YUb
+	 GyNadhUT8KuJ46eixK92V07ET0xmOVX062qPagFSEup1IksMd8ssiyJoZ+UZryx/BP8aD
+	 i3iQlhrPBEK2iYytLJZfRD3+bv4NoFj0vJin7X/piDG+I+WDDcF/Dp71Eg1NNodGPnZw8
+	 5Px3QSo58W58GUN4vptBMgkhh++w53hPvMz8cItR6p+OZZ+aLMkl0LLLrhouHz+mzBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035368;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035371;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XD5TrkvA14svHxLdCL53SFsbK91IzIbB9TBKl/ckCaI=;
-	b=OwqNK3DehicOGrDTXIYMcBWSTubNoCQ6szGg8H8OjsLaAo4hWB6ZX4qrDOU4HGb0RwNA
-	 RXWNJtvYiFKb3H2DFUtaxx4Zo7SXiBKjn9vJ6jG+9hkSYhWK2u1UDF2tUM5VW27mFOjHZ
-	 DYdWqJ8draOfT1HqdcbD4VUKIq4Zxuw3JVVQ73FP7bdriM1YH7S6S9Nuupa56jQ4VYpYV
-	 BTnKTZ59tIBVhGYDMx9VQYRP9Oi4VjjhcTVAT+w+3x4ctTHY1IBbECU2ukFHRAOyH7DPO
-	 JSqqibYSXPlqia3RhlcZGeFTu8Un1fGYH8lwAY952B0LsCC3jaPThTuvIWbU1FENzrw==
+	bh=iMMVuPnsntkE2aBzlQSLeIlhG/PBPCzcxg8JAf60jes=;
+	b=DWkh1n4IKEFcS+dvSkNpfZB4/9+qXbU+8eJFjZCfmnPzMn96ystiZNNlXBHNzSn6M/VP
+	 FkIEjjOZOpBeGutRyy8xlh6awFGFr+N9l2cAAnR436cSVtLNM5/tkSyk2OkRU4drS8hJy
+	 JhjwsFxhwZOs7W0PgGwFndz0g7BwD2/pUX/5zLqQKNAEGQMMSZWhtbWRcSscGn3X6VP/m
+	 /Rha/a6iuBJ4y+ZQXoazVXUSlnt6VMizGF2pUmyE4uutmGMHPZ+Ao9Q9py3YfQj3KZuqf
+	 kOwKXyTloXcO2v/A6IebsO5FDary0ZGkkUF8v0t4fL+q9SZSmqic9nC3nnx4R/W39fg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rr0tpJp6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OoW4Q5zb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3535B606A31C;
-	Wed, 18 Nov 2026 20:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E41606A31C;
+	Wed, 18 Nov 2026 20:56:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rr0tpJp6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879961F000C4;
-	Wed, 18 Nov 2026 20:56:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OoW4Q5zb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555A21F000C4;
+	Wed, 18 Nov 2026 20:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035368;
-	bh=XD5TrkvA14svHxLdCL53SFsbK91IzIbB9TBKl/ckCaI=;
+	s=korg; t=1795035370;
+	bh=iMMVuPnsntkE2aBzlQSLeIlhG/PBPCzcxg8JAf60jes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rr0tpJp62PIzjMFNgPo45bO8vTgCtncYVu45Q/Iuy/64nOt1tlELfyQvxTWvrpPxF
-	 BrZ0UFrO/sghnTiJyvlCirOrAory9HeWDosEPMRwQwO/VwmSFXvAuZ/1thGIInT/T6
-	 5tilaxGdXxoTK/1/p8k8KJEI+HJQLOb5M2UCCu6o=
+	b=OoW4Q5zbwc/lVUakx4xJbarDj8Qpog98zz+81Jfwz22qajtV/EF2vTPTnFASKyq3r
+	 dK35eMQorDadBj8/16LgTZwoQVx9BdcSKPoX72znprRoWJyz4jiUsC/3Rt3uTuSWPx
+	 7JMueGJmEwdIH4tehOW28KDE1xleJvCPHeIFY1Q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdifatah Suruur <suruurism@gmail.com>,
+	Dominik Maier <dmnk@google.com>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.6 0678/3318] smb: client: fix fiemap wild read on empty truncated response
-Date: Wed, 18 Nov 2026 15:21:40 +0100
-Message-ID: <20261118150338.517041616@linuxfoundation.org>
+Subject: [PATCH 6.6 0679/3318] smb: client: fix slab-out-of-bounds write in id_mode_to_cifs_acl()
+Date: Wed, 18 Nov 2026 15:21:41 +0100
+Message-ID: <20261118150338.552695878@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,88 +67,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdifatah Suruur <suruurism@gmail.com>
+From: Dominik Maier <dmnk@google.com>
 
-commit f5baa17a0f316c235d61623ac8e8fb32c2b3c0cc upstream.
+commit a377a3645c7d0246af0bc4ef24db94bb2670bdde upstream.
 
-smb3_fiemap() treats -E2BIG from SMB2_ioctl() as a truncated range blob
-and loops for the next chunk. If the server reports
-STATUS_BUFFER_OVERFLOW with OutputCount == 0, SMB2_ioctl() returns
--E2BIG with out_data == NULL and out_data_len == 0, and the existing
-length checks accept the empty result. The loop then evaluates
+In id_mode_to_cifs_acl(), while the chown branch reserves
+sizeof(struct smb_ntsd) + 2 * sizeof(struct smb_sid) (plus
+sizeof(struct smb_acl) and the worst-case ACE space after
+commit 0ee150794c75 ("smb: client: fix heap overflow in DACL owner/group
+rewrite")), the chmod branch only adds 2 * sizeof(struct smb_ace) or
+5 * sizeof(struct smb_ace) to secdesclen (or 1 * sizeof(struct smb_ace)
+on posix).
 
-	next = out_data[num - 1].file_offset + ...
+However, the chmod branch also invokes build_sec_desc() ->
+copy_sec_desc(), which unconditionally writes the Owner SID at
+pnntsd + sidsoffset and the Group SID at
+pnntsd + sidsoffset + sizeof(struct smb_sid) (2 * 68 = 136 bytes total),
+and set_chmod_dacl() always writes a struct smb_acl header (8 bytes)
+even when the source descriptor has dacloffset == 0. When a security
+descriptor has compact or overlapping Owner/Group SIDs (or
+dacloffset == 0), calling chmod() under-allocates pnntsd and writes past
+the end of the slab buffer.
 
-with num == 0, reading 16 bytes before NULL.
+Reserve sizeof(struct smb_acl) + 2 * sizeof(struct smb_sid) (plus
+sizeof(struct smb_ntsd) on the posix path) in the chmod branch of
+id_mode_to_cifs_acl().
 
-Reject a truncated range blob that contains no range, so the resume
-offset is never computed from an empty response. Also require the last
-range in a truncated blob to advance the resume offset without
-overflowing, and to stay within the requested range; a malicious or
-broken server could otherwise make no progress or underflow len and loop
-forever. Free the previous response buffer before retrying.
-
-Reproduced on 6.6.87.2 with a malicious SMB2 server that answers
-FSCTL_QUERY_ALLOCATED_RANGES with STATUS_BUFFER_OVERFLOW and
-OutputCount == 0; an FS_IOC_FIEMAP ioctl on the mount oopses in
-cifs_fiemap() with CR2 = fffffffffffffff8. The code path is unchanged
-on mainline.
-
-Fixes: 2f3ebaba13ce ("cifs: add fiemap support")
+Fixes: 7ee0b4c635c0 ("cifs: fix hardcoded default security descriptor length")
+Fixes: f5065508897a ("cifs: Retain old ACEs when converting between mode bits and ACL.")
+Assisted-by: ARTIST LLM
+Signed-off-by: Dominik Maier <dmnk@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |   30 +++++++++++++++++++++++++++---
- 1 file changed, 27 insertions(+), 3 deletions(-)
+ fs/smb/client/cifsacl.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3988,6 +3988,15 @@ static int smb3_fiemap(struct cifs_tcon
- 		goto out;
- 	}
+--- a/fs/smb/client/cifsacl.c
++++ b/fs/smb/client/cifsacl.c
+@@ -1767,12 +1767,15 @@ id_mode_to_cifs_acl(struct inode *inode,
  
-+	/*
-+	 * A truncated range blob must contain at least one range, otherwise
-+	 * there is no offset to resume from and out_data is NULL.
-+	 */
-+	if (!last_blob && out_data_len == 0) {
-+		rc = -EINVAL;
-+		goto out;
-+	}
-+
- 	num = out_data_len / sizeof(struct file_allocated_range_buffer);
- 	for (i = 0; i < num; i++) {
- 		flags = 0;
-@@ -4008,10 +4017,25 @@ static int smb3_fiemap(struct cifs_tcon
- 	}
- 
- 	if (!last_blob) {
--		next = le64_to_cpu(out_data[num - 1].file_offset) +
--		  le64_to_cpu(out_data[num - 1].length);
--		len = len - (next - start);
-+		u64 last_start, last_len;
-+
-+		last_start = le64_to_cpu(out_data[num - 1].file_offset);
-+		last_len = le64_to_cpu(out_data[num - 1].length);
-+
-+		if (check_add_overflow(last_start, last_len, &next) ||
-+		    next <= start) {
-+			rc = -EINVAL;
-+			goto out;
-+		}
-+		if (next - start >= len) {
-+			rc = 0;
-+			goto out;
-+		}
-+
-+		len -= next - start;
- 		start = next;
-+		kfree(out_data);
-+		out_data = NULL;
- 		goto again;
- 	}
- 
+ 	/* Potentially, five new ACEs can be added to the ACL for U,G,O mapping */
+ 	if (pnmode && *pnmode != NO_CHANGE_64) { /* chmod */
++		nsecdesclen = sizeof(struct smb_acl) +
++			2 * sizeof(struct smb_sid);
+ 		if (posix)
+-			nsecdesclen = 1 * sizeof(struct smb_ace);
++			nsecdesclen += sizeof(struct smb_ntsd) +
++				       sizeof(struct smb_ace);
+ 		else if (mode_from_sid)
+-			nsecdesclen = secdesclen + (2 * sizeof(struct smb_ace));
++			nsecdesclen += secdesclen + 2 * sizeof(struct smb_ace);
+ 		else /* cifsacl */
+-			nsecdesclen = secdesclen + (5 * sizeof(struct smb_ace));
++			nsecdesclen += secdesclen + 5 * sizeof(struct smb_ace);
+ 	} else { /* chown */
+ 		/* When ownership changes, changes new owner sid length could be different */
+ 		nsecdesclen = sizeof(struct smb_ntsd) + (sizeof(struct smb_sid) * 2);
 
 
