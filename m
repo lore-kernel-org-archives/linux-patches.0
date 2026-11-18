@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058725;
-	b=HqFvw2n24e7JAO9SbEylcr5/FtTUkmrbqWhLm1cc07FnDSl68nK/6ppCO+0iI9BWzXSl
-	 nSkrf9xwuviIYkUbj/qiph5bQZYR+AOurAHPQUZ2EFryxZn2/wL99pj3IOFhPE+cruExB
-	 YxomWi1bo7aEqwm0S6lLnj8PppFbgGr/C2mNd09erLwyg5C+9l+39Xxnq6gYXQ/y8x+gu
-	 po9iZvWhz42twrTXA8T0/FzCUnSl9j2jPPZueUzVJfpj8j8Qk6o/xIJigXQTSD7OdHlBW
-	 W0q/iOIMjhoQbRCsRsbjcFGu3oN/cpkz0VFgylO7KFsgXAjzRsZmiXFDQm+nvIgdrhQ==
+	t=1795058728;
+	b=RYw4ai7JM6xeoiDVdu8fWG5HYlvGN4mKhQGO/dBi5ZTfulBk29FWVoi2IXdGA5Zdwa8Q
+	 HqEDH76gSrS/Nqp5DdEUYvoHzFzxq48PJBA/27ac4o1g/TRMIRVYwK3NeUekSD7Pfc1sY
+	 YzGCNxjDAZhTMnENkrjpWaPKpddv83iCjHZXKuUP9Sx+YZ/JRPWiCX9kB5M7sNFR34Xr/
+	 P53llLzeW3Tbn++qngQ/CBeJFQv/rHeLHa2V0Z6Zgm/1eKBitLrYOqbmBcF3VD0jw4eRz
+	 XEEbGuQbTfJJY7gTj2xjpp0Y9vv7VTGgTteSKecd0WRzkmBON2r3Z85ppsExtanaBdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058725;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058728;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y0vlkWJ+HXJA8DS8QzMxL8WrR3lXUBnaMnCqEh1Tzw4=;
-	b=HCVDHoWMsPHztg9dvmPiMf0vRf1hsMfd3gOrC5UQBVO5GPTGTJ4W8++ZgqEXUX7CDp1R
-	 Rrix/Tah/Yb0Tbu3Bjwai1kxMNY62iSjsc7b+EKsn5BQ8f2Y3wmBZf+rvG5uWdJY9rX03
-	 WYDHG0oxg7VIURv6UW5WAmdECdzqR+Av8BjPR6VdD/bYq0YgcEaADpoUnIlKeUDhWmRve
-	 nbqOcJBS1ziZCSQCyL/qZ4F/Ncx7av3uJI3mdgpwlYI7o1kvc+cF69QxFdJ1c8PhD3mqx
-	 WeXTog7UcYkWUV25Zd03rnz83AgFgxJX3Gm4s7YMRRXj9rRYKJUyXaD6BjxPtMtv+3g==
+	bh=2YyELCSYU1qviYcblmPSryZgsDbErGZDPhrjXpGsO+4=;
+	b=4+nyliig0LmxPllXSsy8o+rIwyJchggKc/d2rfF94GnHtfLwvl2qgZ7UL5zf1whKRJrq
+	 c+2o79tGPjsImhQz+LkZ62dTL8+oLowbLd4rFDhE5iNJHCJ/G5iw3AAAQVUFTW776lXqC
+	 bynSB2VUCrzIfI8Vy8nmirxjn8jD41w4ASBPKiH025mjzml8FrQ38s+UrPAEXAaSr9K9s
+	 eWLe72kURnZuRPEwtn0YLLXb/wNdb9e3OGnfnTTuWCvJQNF1nT1U67wIcr9eyHJszUijM
+	 y0UMsrePH0ZI9G41PfX5GKpaIHfch/m+Sh70ig9zCfr+WpOfrrGEBqoqP6Fp1wi4bjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wxk+T58y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u+QndIb7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F27606A320;
-	Thu, 19 Nov 2026 03:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4C5606A320;
+	Thu, 19 Nov 2026 03:25:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wxk+T58y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74D81F000C4;
-	Thu, 19 Nov 2026 03:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u+QndIb7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2021F000C4;
+	Thu, 19 Nov 2026 03:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058725;
-	bh=Y0vlkWJ+HXJA8DS8QzMxL8WrR3lXUBnaMnCqEh1Tzw4=;
+	s=korg; t=1795058728;
+	bh=2YyELCSYU1qviYcblmPSryZgsDbErGZDPhrjXpGsO+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wxk+T58yxQV26+YC0hQWtEkz3P6E1Y72W38rZUQRZQkLrBW8qu04IYEEC8ASzPchp
-	 /uD5zjvPEX97wdcbIhIL8rNfYQcnE+8J2RmE/QPze4Dx48f/AljWzSxNCKcS3IJ+qY
-	 5k/DzvjIQXr4JbPYCi8+d5TK+fhxpsnn5Dw+bGCE=
+	b=u+QndIb7YEywLNCc0muBLImk/04+iZGCXwou2RL4WFtA/xZ+L9jK/7dtVvUql1VSA
+	 Ir8+sTRfjSKkDPOKeITk9sP960UNAbjUz0YRd867Zs005WeoU8cfn0nt0MkIMJSyyx
+	 bO39g6NM+cx7Skn1Fc4hdlR/HMkuuS+q93LfbuO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <netdev-bot+sashiko@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0589/1848] ipmr: fully initialize the synthetic IP header in ipmr_get_route()
-Date: Wed, 18 Nov 2026 15:43:47 +0100
-Message-ID: <20261118145940.089325356@linuxfoundation.org>
+Subject: [PATCH 5.10 0590/1848] ALSA: hda: Reject codec reset on ASoC (ext_ops) buses
+Date: Wed, 18 Nov 2026 15:43:48 +0100
+Message-ID: <20261118145940.121776897@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,82 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 134351edc28e083c61012b6c69e8e54dd7fa5bcc ]
+[ Upstream commit a4311e9447bbb219044db38897f95be112f46a8a ]
 
-For an unresolved multicast route query, ipmr_get_route() builds a
-synthetic IP header in the headroom obtained from
-skb_realloc_headroom(), which does not zero the memory it allocates.
-Only a few fields are initialized, leaving others as stale heap
-contents.
+Writing to the reconfig or clear sysfs nodes of a codec handled by ASoC
+(SOF via hdac_hda, AVS via codecs/hda) hangs the writer.
 
-ipmr_cache_report() copies this header into the IGMPMSG_NOCACHE report
-that is queued to the mroute socket, so a recvmsg() on that socket leaks
-the uninitialized bytes to user space: the 'tos' field [1] and the 'id'
-and 'frag_off' fields [2].
+snd_hda_codec_reset() sets card->shutdown and calls
+device_release_driver(). With ext_ops the driver unbind unregisters the
+ASoC component, which unbinds and frees the whole ASoC card:
+- snd_card_disconnect() returns early as card->shutdown is already set,
+  so the card's child devices are not removed and snd_card_free() waits
+  for the card release forever.
+- Even without that, freeing the card removes the codec's hwdep device,
+  which owns the sysfs node the reset was issued from, deadlocking in
+  kernfs while waiting for the active write to finish.
 
-Fix by zeroing the IP header before filling in the few fields that are
-used, so that the entire header is initialized, as in ip6mr_get_route().
+The legacy HDA driver keeps the card across a driver rebind, ASoC does
+not, so the reset cannot be supported there. Return -EOPNOTSUPP and skip
+the misleading "codec is being used" messages in the callers.
 
-[1]
-BUG: KMSAN: kernel-infoleak in _copy_to_iter
- raw_recvmsg
-
-Uninit was stored to memory at:
- ipmr_cache_report
- ipmr_cache_unresolved
- ipmr_get_route
-
-Uninit was created at:
- pskb_expand_head
- skb_realloc_headroom
- ipmr_get_route
-
-Byte 1 of 28 is uninitialized
-
-[2]
-BUG: KMSAN: kernel-infoleak in _copy_to_iter
- raw_recvmsg
-
-Uninit was stored to memory at:
- ipmr_cache_report
- ipmr_cache_unresolved
- ipmr_get_route
-
-Uninit was created at:
- pskb_expand_head
- skb_realloc_headroom
- ipmr_get_route
-
-Bytes 4-7 of 28 are uninitialized
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 6bae5ea94989 ("ASoC: hdac_hda: add asoc extension for legacy HDA codec drivers")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/0545f0c83f5ee2f6696210f87268e811ef655715.1792476357.git.zhilinz%40nebusec.ai
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261025071729.34967-2-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=222182
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20261027072835.4796-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/hda_codec.c | 6 ++++++
+ sound/pci/hda/hda_sysfs.c | 4 ++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index ee5860cf76503..ad49b3a9f7a2e 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -2297,6 +2297,7 @@ int ipmr_get_route(struct net *net, struct sk_buff *skb,
- 		skb_push(skb2, sizeof(struct iphdr));
- 		skb_reset_network_header(skb2);
- 		iph = ip_hdr(skb2);
-+		memset(iph, 0, sizeof(*iph));
- 		iph->ihl = sizeof(struct iphdr) >> 2;
- 		iph->saddr = saddr;
- 		iph->daddr = daddr;
+diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
+index fc4a64a83ff2f..8801d866c9bfe 100644
+--- a/sound/pci/hda/hda_codec.c
++++ b/sound/pci/hda/hda_codec.c
+@@ -1802,6 +1802,12 @@ int snd_hda_codec_reset(struct hda_codec *codec)
+ {
+ 	struct hda_bus *bus = codec->bus;
+ 
++	/* ASoC: driver unbind frees the card, incl. the hwdep issuing the reset */
++	if (bus->core.ext_ops) {
++		codec_err(codec, "Codec reset is not supported with ASoC\n");
++		return -EOPNOTSUPP;
++	}
++
+ 	if (snd_hda_lock_devices(bus) < 0)
+ 		return -EBUSY;
+ 
+diff --git a/sound/pci/hda/hda_sysfs.c b/sound/pci/hda/hda_sysfs.c
+index d5ffcba794e50..7f04d43afc55d 100644
+--- a/sound/pci/hda/hda_sysfs.c
++++ b/sound/pci/hda/hda_sysfs.c
+@@ -119,6 +119,8 @@ static int clear_codec(struct hda_codec *codec)
+ 	int err;
+ 
+ 	err = snd_hda_codec_reset(codec);
++	if (err == -EOPNOTSUPP)
++		return err;
+ 	if (err < 0) {
+ 		codec_err(codec, "The codec is being used, can't free.\n");
+ 		return err;
+@@ -134,6 +136,8 @@ static int reconfig_codec(struct hda_codec *codec)
+ 	snd_hda_power_up(codec);
+ 	codec_info(codec, "hda-codec: reconfiguring\n");
+ 	err = snd_hda_codec_reset(codec);
++	if (err == -EOPNOTSUPP)
++		return err;
+ 	if (err < 0) {
+ 		codec_err(codec,
+ 			   "The codec is being used, can't reconfigure.\n");
 -- 
 2.53.0
 
