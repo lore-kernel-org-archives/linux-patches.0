@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056944;
-	b=DhUDdwiZboE3V+IV7wicTD0k4mrC9GizbBBP0UNoqC8TgO676plRabVoN4gshWJuaAkD
-	 2wRnsspfvFM2Bu6VElr24G7ZrP2w39q3dfRTzvcA2xV5rt/eXwioP1QwvhEa5cYhaUJHc
-	 AIJ7OmHYucDpN+dORGgJXsig8r5xmPgLAkJNJ4lk9Qu6ZCjpgH5IhywYmiBWiFeh1Y5gD
-	 VcVS9TNbhTBsJlXsgum2eGk3EtbRjOsPL7uWbVcGrFy450c1KlzrTNf7/lZosCfohmZYy
-	 r+qmcds3kUpIpZ1cEw2MePKm5UAtVDwv7mVzW488SpNvFjYf6yFLkUpvxMmkpNYtC/w==
+	t=1795056946;
+	b=WZYAyO5BJ7n75AmOaFkxJ2keze2/kPdpVZ4Rje8N2ncyDotg7lqsCdD7L7QW2J2bvHI0
+	 1YSFGUBrWg0fAtWYnVKup9aTQ4heSJ5GI2uFP7IVJw/Ye9/74Pe4ju5r/pDaZ9MuBGF9S
+	 wAOeV+xnV+cyOdmKhOOpJaLBb4ooH32bpQVBqB9Bv8roalMNvCDaM1bYY7+C7csjujUmD
+	 76ProNxEZgFYxb9K4eszpyAvAgfmdTWF8minA+H0aRxS7QgjfZbmLN6NuW79kDFYImhXR
+	 NkUsAAOA8vBLeSaFLvwe6CpKSMhhf0ZI5D9K26MJpQvVrK25UisDLavBKcxGs8P8+vg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056944;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056946;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vCaAh4gCY9DcqTq1KTi0+iLlbD5Gmt7Q/PZqsdZMQZo=;
-	b=Sl+4MH8hv6pb+577QRGf1R63rfnY55wmDwLjkv37ZW5Oo/7peCxtg3jIyJeakCPNQFcP
-	 j+rYAf7kgWo53Z1id2/L71QZZmi8iTNyZ2S/GBijZeoy6xhxDuXm9GIQjX0VTOMmKRdz2
-	 m74g5XFe7CiE0k9Y41A1Tt/9yj0lNpNJmZsKmTKtV2Ir/6NslEXZ0CaJccetsPGX0hocO
-	 0iQRTosXNiMasF6a/UmetI7NK2vAHmENB+qvt52I6KyWLwgqxR3Y80J3wb4537EuhmrVM
-	 CWSsKvtsIhQtpjDwUst3pLR4nyUPj4LPz04G1G2lgfkEcVcx7o4Ep7L9KHKkZ48Zu1Q==
+	bh=mprcanLn5jHEAzKAKeynWf/6pLc45uWaHoZB/ZUPK4k=;
+	b=sBKRtctPeI1y+i3CDMYAzHk7cnw40DrTSvP06DdRlcPR8eIrsr+C1YHFe5k3dgLr0B/y
+	 cz63+OsgtTBOhLUHtL4RePkCKoIMFsnt/27ttUlOLJaCO1kXKDm6mL3mph+JiP4hFLMUz
+	 /88LHUyY7x14lJ1TYN3BbdMu3Xxxe9tDc+PY/s4H7gbDfgOU07kBgbuIZ3y8EYlfNhvKV
+	 4o5Y1UjXqOMCgglfBxdMQ67SNJFzo5ieEwfdU7oZAQKZlLmu+nCxPV+cjJLOHsG9+vNvE
+	 dKOyg0CO6L3NtqwSPWr95KWLrB++cyFvu8YEypUs7KBJOjRmBaqkIcUWH8DlbkAAZWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oWYbdOMa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HjLi33Yi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1689E606A325;
-	Thu, 19 Nov 2026 02:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F02606A32A;
+	Thu, 19 Nov 2026 02:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oWYbdOMa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717B81F000C5;
-	Thu, 19 Nov 2026 02:55:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HjLi33Yi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BFB31F000C4;
+	Thu, 19 Nov 2026 02:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056943;
-	bh=vCaAh4gCY9DcqTq1KTi0+iLlbD5Gmt7Q/PZqsdZMQZo=;
+	s=korg; t=1795056946;
+	bh=mprcanLn5jHEAzKAKeynWf/6pLc45uWaHoZB/ZUPK4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oWYbdOMaw5+qVBDvvNobL0EmYFjbrzLqqwjyOlG4rx/oaqyxBtnzchW07ta4dZdVJ
-	 o6Ha4Iq4FJyqjkIoNPkbdr1LT/h3Xexh1UAG6uOX/jgkx16hL30wWhsOjSpPLU7qrE
-	 jTmuchEUbMMbmHkXbOJVKL3nSLIPpZbbBT89Antk=
+	b=HjLi33Yi6EZKpy+vSVyr8Swhf9+zE87rIbF+UIBV2pvJLXGtYhpoWFod1P0eJFKu7
+	 LXWftQOjzYeK19ZjlikAxtuX45oSF+OQF10QIDUnD7+ApsNN0pfYmC1So/ZcQWKztH
+	 VVCgO8fSVUSylIH4G80Vx2dX05hhNS3n8QNzeHIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dudu Lu <phx0fer@gmail.com>,
 	Simon Horman <horms@kernel.org>,
-	Daniel Machon <daniel.machon@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2127/2214] net/sched: gred: keep the qdisc lock while updating the table
-Date: Wed, 18 Nov 2026 16:03:23 +0100
-Message-ID: <20261118150135.640653610@linuxfoundation.org>
+Subject: [PATCH 5.15 2128/2214] net/sched: taprio: unwind the netdevice notifier if register_qdisc() fails
+Date: Wed, 18 Nov 2026 16:03:24 +0100
+Message-ID: <20261118150135.678548426@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,78 +71,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Dudu Lu <phx0fer@gmail.com>
 
-[ Upstream commit 306f788134a21a3d60c1eb872d0ec0ce7c7e09bc ]
+[ Upstream commit c5234f89d7cb311880ef218cb7a969794a106678 ]
 
-gred_change_table_def() publishes table->DPs/def/red_flags under
-sch_tree_lock(), drops the lock, and then keeps writing state the
-datapath reads without it:
+taprio_module_init() registers taprio_device_notifier and then returns
+register_qdisc()'s error directly.  When register_qdisc() fails the
+notifier stays registered, but the loader's failure path frees the module
+image without ever calling the __exit function, so netdev_chain is left
+pointing at taprio_device_notifier.notifier_call -- a function pointer
+that lives in text that has just been freed.
 
-  - gred_enable_rio_mode()/gred_disable_rio_mode()/gred_disable_wred_mode()
-    set/clear table->flags;
-  - the red_flags_changed loop writes table->tab[i]->red_flags;
-  - the shadowed-VQ loop frees table->tab[i] and clears the slot.
+register_qdisc() has two failure returns: -EEXIST (duplicate .id) and
+-EINVAL (malformed cl_ops).  taprio_class_ops satisfies every checked
+implication, so -EINVAL is unreachable and -EEXIST is the only reachable
+failure; it needs a pre-existing "taprio" entry in qdisc_base.  In-tree
+that is reachable only through bpf_qdisc_reg() (CONFIG_NET_SCH_BPF); a
+module calling the exported register_qdisc() reaches it as well.
 
-gred_enqueue() and gred_dequeue() read those same fields (test_bit on
-table->flags, q->red_flags, t->tab[]/t->DPs) under the same root lock on
-another CPU, so the post-unlock writes race with the enqueue path:
+Once the notifier is left dangling, the next netdevice event that walks
+netdev_chain calls through the stale pointer:
 
-  BUG: KCSAN: data-race in gred_change_table_def [sch_gred] / gred_enqueue [sch_gred]
-  read (marked) to 0xffff000007ad3b00 of 8 bytes by task 110 on cpu 0:
-   gred_enqueue+0x88/0xc60 [sch_gred]
-   dev_qdisc_enqueue+0x4c/0x19c
-   __dev_queue_xmit+0x10a4/0x1ea4
+  BUG: KASAN: vmalloc-out-of-bounds in notifier_call_chain+0x650/0xb5c
+  Read of size 8 at addr ffff80001fc5ab08 by task ip/110
+   notifier_call_chain+0x650/0xb5c
+   raw_notifier_call_chain+0x34/0x64
+   call_netdevice_notifiers_info+0xa8/0x198
+   __dev_close_many+0xe0/0x800
+   ...
+  >ffff80001fc5ab00: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
 
-The comment justifying the early unlock only covers the DP-vs-DPs check,
-which the shadowed-VQ free loop relies on; it does not cover the scalar
-mode bits and per-VQ red_flags written afterwards.  Move the unlock below
-those updates so everything the datapath reads is published under the
-lock that protects it.
+The shadow row is all f8 (KASAN_VMALLOC_INVALID): the read lands in
+vmalloc memory that was poisoned when the module image was freed, and the
+indirect call is unguarded because the only check, func_ptr_is_kernel_text(),
+is compiled out unless CONFIG_DEBUG_NOTIFIERS.
 
-Fixes: 6639607ed9de ("[PKT_SCHED]: GRED: Use a central table definition change procedure")
+Mirror the sibling sch_cbs.c and act_mirred.c, which unwind the notifier
+on this failure path.
+
+Fixes: 7b9eba7ba0c1 ("net/sched: taprio: fix picos_per_byte miscalculation")
 Signed-off-by: Dudu Lu <phx0fer@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261021155434.66572-1-phx0fer@gmail.com
+Link: https://patch.msgid.link/20261021155417.66254-1-phx0fer@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_gred.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ net/sched/sch_taprio.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_gred.c b/net/sched/sch_gred.c
-index 8caf9623f855f..7c42b3b75cd89 100644
---- a/net/sched/sch_gred.c
-+++ b/net/sched/sch_gred.c
-@@ -435,13 +435,6 @@ static int gred_change_table_def(struct Qdisc *sch, struct nlattr *dps,
- 	red_flags_changed = table->red_flags != sopt->flags;
- 	table->red_flags = sopt->flags;
+diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
+index 6c7f4ceeadcb2..391de5338fa0f 100644
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -2032,7 +2032,11 @@ static int __init taprio_module_init(void)
+ 	if (err)
+ 		return err;
  
--	/*
--	 * Every entry point to GRED is synchronized with the above code
--	 * and the DP is checked against DPs, i.e. shadowed VQs can no
--	 * longer be found so we can unlock right here.
--	 */
--	sch_tree_unlock(sch);
--
- 	if (sopt->grio) {
- 		gred_enable_rio_mode(table);
- 		gred_disable_wred_mode(table);
-@@ -467,6 +460,15 @@ static int gred_change_table_def(struct Qdisc *sch, struct nlattr *dps,
- 		}
- 	}
- 
-+	/*
-+	 * Keep the lock until every field the datapath reads (the
-+	 * RIO/WRED mode bits, the per-VQ red_flags and the tab[] slots)
-+	 * has been updated: gred_enqueue()/gred_dequeue() read them under
-+	 * the same lock, so publishing them after the unlock races with
-+	 * the enqueue path.
-+	 */
-+	sch_tree_unlock(sch);
+-	return register_qdisc(&taprio_qdisc_ops);
++	err = register_qdisc(&taprio_qdisc_ops);
++	if (err)
++		unregister_netdevice_notifier(&taprio_device_notifier);
 +
- 	gred_offload(sch, TC_GRED_REPLACE);
- 	return 0;
++	return err;
  }
+ 
+ static void __exit taprio_module_exit(void)
 -- 
 2.53.0
 
