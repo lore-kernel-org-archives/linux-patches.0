@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025966;
-	b=vE2IBS96q49cVhDbTlCYA4AIvY/+HcPt1UNpMXs7zlFS1Adf+EtqDk89/Nu4yARoeCsT
-	 io3tyUI9bV8HCWIxVeDckgGKlul4TF5GbZROmPYd+3ukSUadvmatAwlCpVAeaJEmoCXyZ
-	 +fj1lFf7xD66n5dIRt7FhbXiHnocBlQlI9Zx3LhbbP/N/OBJ/zyTU08viz9/Eswj5ZyVY
-	 lMKMk8A7eqSj0EbYUp+KncO0NL9xaGq09kpvrWqvlz9W+RpIt7R2+lyzyaA/Ov/k1vWP7
-	 iM0LeaXtI8t3gJHyEFlmJIvMWq78asJfbTRF4TobTxfHsMx7XQ6IRTCUQOD+7Kme6bQ==
+	t=1795025969;
+	b=rEt/fZW67WubyJiTxeKMVrluCQym2AxZSp1Jw4o4sqd+WP355fH7WIPK3WcGFj7Xdl5t
+	 IGRwnt2yGki/swQNz6HvPV0gH1a9B9elRaS9T1B+MyuCT4WAtmOQKjCTSau1uULahe/6v
+	 fk4EaVoGEwqpCfZ0aSHj8OH3EouxLwn2Ww5HjUtTKUsPiSXM3HDa5SEkO86VXD7b9BDCV
+	 mEbYuEC1O82uh8NPLR1n2fmIHaBtnC0Gemyj0Xe/B56UWCNPfdCbKz3DGlAnP5hhFl0/8
+	 BUuOhUCnj7mEsQMRtKDgVRUSi+ujEIjOwh6S4mfFdsFPjRCNO7QOQRWoXd0d721u7qw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025966;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025969;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=unXmMvZAixUrIqyAts8QKdyCxIy575OlpPwB5tkOp8A=;
-	b=PdTDSWdBgLZ2WxS6heeIjMvbltFUCiayxiXJneQf6tHxFAsqN7NvlCbPD7rtl0YBXx0+
-	 zqPCh1rKh2eh/bHHMrvBfq8PE1MEenhBF1UWXGsiBOt/40V6Tgpi22Z5kYxkSWmDEr3fr
-	 Fa2JEo3yX9Wa3fSbCEs66CIyatmE8v+cU14cw6jaBCTjFBC4QpXdGwebDl8Z+erhgplFs
-	 c5i2aMgwEzHkMr733pA6qqCaNX8qmXxYsvN+iRj0Z5X5x+Ry4sYPyC9irSZqFJ7/tag1u
-	 EBN+AODQWv45horY78i36lOHvB02J0UTstyDsJ9VoYVtphV6Dy3QjCkxrJzZHghJj0Q==
+	bh=V+03MADyRzjGt0voMmH6Lk4hxbJua+QNBqLBO+TqrQ0=;
+	b=q1OVt00MVDo2Cbebpuxy+7FKN5uAyZTMvTpf+4B0xgtVJN5BWE8doDlrSPxVdnuKA8bU
+	 v5jFWQDf/CnqYq60nsxmJDRRhjOCWWHwq8xuwDKRRCa48O5iX9+EG64D0NBQyKEC/1KIb
+	 n5zeSI6pYxdnOBMIsjGRMQodEZvGW6NjSE0n4Fn1kxHSp4KA4I5avKrwj79vnexsxzTxl
+	 /n0xzdIyuxJD0ekoexDvafeWZREX4UTe/+sJppcz+NLL9CMBH8pU8zbR07j2MkJ3vLiQE
+	 IpraeNyhdlUEzaVmEFC7vOAZQ2piCMqg6yOtx4sfT20/37ySkQ+YJKr2rChYngAC/Ug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uQcN7q4v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QPbMS6LW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DA3606A325;
-	Wed, 18 Nov 2026 18:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56421606A32A;
+	Wed, 18 Nov 2026 18:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uQcN7q4v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5EE91F000C4;
-	Wed, 18 Nov 2026 18:19:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QPbMS6LW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A89031F000C4;
+	Wed, 18 Nov 2026 18:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025966;
-	bh=unXmMvZAixUrIqyAts8QKdyCxIy575OlpPwB5tkOp8A=;
+	s=korg; t=1795025969;
+	bh=V+03MADyRzjGt0voMmH6Lk4hxbJua+QNBqLBO+TqrQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uQcN7q4vzJl5O1Zdlu5um64a9ModCZLsYC4HAGUnyMqi3RQZNBcOfgud/czOdWrO0
-	 TXGVGn7er9f4KmZvaEwwNE7EESA/epTXR7KNTEwFAYGlfmduCixWQTjvKkyuPE5Kbz
-	 MHb5q+wBjMEt+UAWEsHp903kJeu596KAsbIs+fLs=
+	b=QPbMS6LW551obkUVNZYEf1gmekRBhfzp69ppetu9voPS7kyk3pvsLmlEsYwrb7wQf
+	 EcNzdcbXCvn0Xi6hjWQeE7Bcs8LAMt+zsmDdqvES02DTPsC9cT0FKV/nuLk7z8MA15
+	 02YGUXMvIJfFlCZVMr6RYmH0Galw9v5ycKN5/JDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	George Abraham P <george.abraham.p@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1267/2151] ALSA: hda: Dont free card at probe error in vga_switcheroo handler
-Date: Wed, 18 Nov 2026 15:50:02 +0100
-Message-ID: <20261118150208.295264364@linuxfoundation.org>
+Subject: [PATCH 6.18 1268/2151] crypto: qat - force an edge when re-enabling all VF2PF interrupts
+Date: Wed, 18 Nov 2026 15:50:03 +0100
+Message-ID: <20261118150208.330071774@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,107 +69,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: George Abraham P <george.abraham.p@intel.com>
 
-[ Upstream commit 7e1ad3c55baa80399f1727dfd2303fa4d1558d9a ]
+[ Upstream commit 2b91570f72670054ddae5b11b8c70a79c340014a ]
 
-The vga_switcheroo handler azx_vs_set_state() calls
-azx_probe_contine() for enabling the audio, and if an error happens
-during the probe, azx_probe_continue() releases its associated sound
-card object at the error path.  The card release procedure includes
-the call of vga_switcheroo_unregister_client(), and this triggers the
-vgasr_mutex lock again that had been already held by the caller
-(vga_switcheroo_process_delayed_switch()) -- leading to a deadlock.
+VF2PF interrupts are edge-triggered: a source only fires on a
+masked -> unmasked transition of VM2PF_MSK, not by being unmasked.
+adf_enable_all_vf2pf_interrupts() does a plain read-modify-write
+unmask, assuming VM2PF_MSK still holds the all-masked value left by
+adf_disable_all_vf2pf_interrupts().
 
-(Moreover, the card release will cause a potential UAF at the error
-message in azx_vs_set_state() since the card object is already gone;
-this was the original report by Sashiko.)
+That breaks across a device reset: adf_dev_autoreset() (and AER
+recovery) FLR the PF while VFs stay alive, so a VF can latch a source
+in VM2PF_SOU with no vectors set up to deliver it. The FLR then resets
+VM2PF_MSK to its power-on default of 0 (unmasked) without a software
+write, so the following RMW unmask writes 0 over an already-0
+register: no edge occurs and the latched VF2PF message is never
+delivered.
 
-For avoiding the unneeded crash, it's better to avoid the card release
-in this error path, so we make azx_probe_continue() behaving
-conditionally.  In return, set hda->init_failed flag, so that any
-further (re-)attempts will be filtered after that point.
+Fix by having adf_enable_all_vf2pf_interrupts() mask all sources
+immediately before unmasking them, mirroring the idiom already used in
+adf_gen4_disable_pending_vf2pf_interrupts(), forcing the required edge
+regardless of the prior state of VM2PF_MSK.
 
-The check of hda->init_failed is dropped from azx_vs_can_switch().
-It's because otherwise vga_switcheroo can't be switched to turn off
-GPU once when a probe error happens at the audio side.
-
-Fixes: 39173303c838 ("ALSA: hda: Free card instance properly at probe errors")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20261007213728.155092-1-tiwai%40suse.de
-Link: https://patch.msgid.link/20261007223448.172443-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 575185000539 ("crypto: qat - keep VFs enabled during reset")
+Signed-off-by: George Abraham P <george.abraham.p@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/controllers/intel.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/crypto/intel/qat/qat_common/adf_isr.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/controllers/intel.c b/sound/hda/controllers/intel.c
-index c6e491298a859..523324a565c9c 100644
---- a/sound/hda/controllers/intel.c
-+++ b/sound/hda/controllers/intel.c
-@@ -1170,7 +1170,7 @@ static const struct dev_pm_ops azx_pm = {
- };
- 
- 
--static int azx_probe_continue(struct azx *chip);
-+static int azx_probe_continue(struct azx *chip, bool free_on_error);
- 
- #ifdef SUPPORT_VGA_SWITCHEROO
- static struct pci_dev *get_bound_vga(struct pci_dev *pci);
-@@ -1197,8 +1197,10 @@ static void azx_vs_set_state(struct pci_dev *pci,
- 		if (!disabled) {
- 			dev_info(chip->card->dev,
- 				 "Start delayed initialization\n");
--			if (azx_probe_continue(chip) < 0)
-+			if (azx_probe_continue(chip, false) < 0) {
-+				hda->init_failed = 1;
- 				dev_err(chip->card->dev, "initialization error\n");
-+			}
- 		}
- 	} else {
- 		dev_info(chip->card->dev, "%s via vga_switcheroo\n",
-@@ -1237,8 +1239,6 @@ static bool azx_vs_can_switch(struct pci_dev *pci)
- 	struct hda_intel *hda = container_of(chip, struct hda_intel, chip);
- 
- 	wait_for_completion(&hda->probe_wait);
--	if (hda->init_failed)
--		return false;
- 	if (chip->disabled || !hda->probe_continued)
- 		return true;
- 	if (snd_hda_lock_devices(&chip->bus))
-@@ -1723,7 +1723,7 @@ static void azx_check_snoop_available(struct azx *chip)
- static void azx_probe_work(struct work_struct *work)
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_isr.c b/drivers/crypto/intel/qat/qat_common/adf_isr.c
+index 7683f04adc582..3468149d393d9 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_isr.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_isr.c
+@@ -70,6 +70,7 @@ void adf_enable_vf2pf_interrupts(struct adf_accel_dev *accel_dev, u32 vf_mask)
+ void adf_enable_all_vf2pf_interrupts(struct adf_accel_dev *accel_dev, u32 num_vfs)
  {
- 	struct hda_intel *hda = container_of(work, struct hda_intel, probe_work.work);
--	azx_probe_continue(&hda->chip);
-+	azx_probe_continue(&hda->chip, true);
+ 	void __iomem *pmisc_addr = adf_get_pmisc_base(accel_dev);
++	struct adf_pfvf_ops *pfvf_ops = GET_PFVF_OPS(accel_dev);
+ 	unsigned long flags;
+ 	u32 vf_mask;
+ 
+@@ -79,7 +80,19 @@ void adf_enable_all_vf2pf_interrupts(struct adf_accel_dev *accel_dev, u32 num_vf
+ 
+ 	spin_lock_irqsave(&accel_dev->pf.vf2pf_ints_lock, flags);
+ 	WRITE_ONCE(accel_dev->pf.vf2pf_disabled, false);
+-	GET_PFVF_OPS(accel_dev)->enable_vf2pf_interrupts(pmisc_addr, vf_mask);
++	/*
++	 * A VF2PF interrupt is only generated when a source transitions from
++	 * masked to unmasked. A VF may write to its VF2PF CSR while the source
++	 * is masked or while the MSI-X vectors are torn down, for example
++	 * during a device reset, leaving the source latched with no interrupt
++	 * pending. The FLR performed as part of a device reset returns the mask
++	 * register to its default value, which leaves all the sources unmasked,
++	 * so simply unmasking is not guaranteed to be a transition. Mask all the
++	 * sources first, so that unmasking always generates an interrupt for
++	 * the sources latched in the meantime.
++	 */
++	pfvf_ops->disable_all_vf2pf_interrupts(pmisc_addr);
++	pfvf_ops->enable_vf2pf_interrupts(pmisc_addr, vf_mask);
+ 	spin_unlock_irqrestore(&accel_dev->pf.vf2pf_ints_lock, flags);
  }
- 
- static int default_bdl_pos_adj(struct azx *chip)
-@@ -2289,7 +2289,7 @@ static const unsigned int azx_max_codecs[AZX_NUM_DRIVERS] = {
- 	[AZX_DRIVER_TERA] = 1,
- };
- 
--static int azx_probe_continue(struct azx *chip)
-+static int azx_probe_continue(struct azx *chip, bool free_on_error)
- {
- 	struct hda_intel *hda = container_of(chip, struct hda_intel, chip);
- 	struct hdac_bus *bus = azx_bus(chip);
-@@ -2381,10 +2381,12 @@ static int azx_probe_continue(struct azx *chip)
- 
- out_free:
- 	if (err < 0) {
--		pci_set_drvdata(pci, NULL);
- 		if (hda->vga_switcheroo_registered)
- 			dev_warn(&pci->dev, "GPU sound probed, but not operational: please add a quirk to driver_denylist\n");
--		snd_card_free(chip->card);
-+		if (free_on_error) {
-+			pci_set_drvdata(pci, NULL);
-+			snd_card_free(chip->card);
-+		}
- 		return err;
- 	}
  
 -- 
 2.53.0
