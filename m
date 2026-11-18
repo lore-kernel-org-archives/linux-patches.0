@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022735;
-	b=D3x/hcOZfJJHMkbS/tnXBX6HsOi0mO7Wjw6m/D1kT6U54TuLMDQUZVBzoJiA7N0FflVN
-	 hR14yF5qOLFItRPlddDMBdcueuUyTS4g9xeIgt9cDLCkHEZqUAlvvePPG1mEKDCv8KDiJ
-	 r6t1ot5vgPtzgdUILHzF5GBEe7tFeFaUmtSOTx3eyEFO10KSUiGvDkDvJ6WkAbo+a6L4A
-	 KddHvPnutOfMYfA4K5M4GA1cFPea/pA0vJbNdTfiT9XJmeZ+b+wHfPLmeRZnhXFkotelN
-	 vvvagZX+GlheE80FmKeudqt++u1iZmFLnzLgYJ+fBPQXf081hypRs/KqkcYrmYWcdcA==
+	t=1795022738;
+	b=DQIjywpP03auN3ivFQMUfGZevRVfl93l9NPUfpfjn8/5IIwLi7MRo2gnJUOIdzYEbTgg
+	 6G7ZKx2rg4iLxcZgE2uObhF1tuKz53/h04+mxyUJKk+1AcNPgmvT+p8HnHoYYevMpgOWH
+	 G26vRq1jsJJSkL+Sipy6rMD5OD90NMNcubgkMfgaSugeW3eLoXSF/W0k6iB5tiST1zttH
+	 uvYykE0l/acDmtxhX4KSr2OGcdadIpf0kyBntkPCLNbaCeT3a6l4ohAO+OcW624Co4AlT
+	 BeNUSNRXGmQAdSsAVPc840+yuAO6bIISf1exWOwGVLfL6g4s96dBV7PWUdecptjRlYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022735;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022738;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1c8VetkSLGC2JJ9lmxAWo9NTgZ+zoRgJZcGefVG9FTs=;
-	b=c0xBZm+673M5yUktPQMwd+v+tDY00f9sdS0jgc0ZRP4Qs/eDez3GjJyg1as+9bnLfupq
-	 0oOyGqPl9Qh8hfeLrCvYfEfuwIlTW/kNEdL9Q3hzrQzihiymV/FVy6NbtzE5e76fp9J81
-	 4imLEKUyj9yTDKiyEkJHX05VblZZACg0nJLXezmhRWhWij5usX5kDjtuIC8RsmyL57OL3
-	 CbC519qN0kYn5qcKYW3cMRUuxhlhKYLjC5lEn+58lv91KC/K8cloD74TRpvEiSmrB4/UL
-	 /Hey6u1SCrLOPxbda9klYApSll7ipmxB8s/zypzXE2cGZjTwpQjVR0IHKurRruptUTw==
+	bh=wFN4w31tHXinTAR43ukLsU0ieuH6FCXec528C7b9sI0=;
+	b=a16DIMzammfVDOKr/Mybl92Nmf9U0WCFy8v0nyfunADIVMCioQFtUwKZ21x3HS5KwtwT
+	 AXc3U4IyJauiKr4e4uz2MhrlEIE7f+RJvkI/ZtHxM8VQdmgnWhvYMui4/B01E3mQqmCc0
+	 g5i/wr9jUZ0VcTUfvrEMesu/Spc/zbN0uX7T0s/8bHkTenTUU3WcBbDTgNEW9/nWqDhOD
+	 1odRJkc4/vnUFUq7F4oMXJ6B4mNYiuFuPfIoEe+liMgMASyry9jDG9ZGk8CMYUGbuNPLC
+	 rPduQm+MxPil+ejmW9lETbphGyu0ZfjY56heJxJaetctUARi6LblA6+zMIc3H8VlBxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DN3ooVwc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MFb908Xs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D933360A2606;
-	Wed, 18 Nov 2026 17:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8115960A2604;
+	Wed, 18 Nov 2026 17:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DN3ooVwc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C501F000CC;
-	Wed, 18 Nov 2026 17:25:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MFb908Xs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0B21F000C7;
+	Wed, 18 Nov 2026 17:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022735;
-	bh=1c8VetkSLGC2JJ9lmxAWo9NTgZ+zoRgJZcGefVG9FTs=;
+	s=korg; t=1795022738;
+	bh=wFN4w31tHXinTAR43ukLsU0ieuH6FCXec528C7b9sI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DN3ooVwcHEAS4y6A47EazIoARnE8LOQ5zdDC38bIovB3jrsKBMp6fnMUADRcBONgF
-	 /Hq0gqV7RnYi87hHUColoC2rTEAWRiruIXDZvZygGqqcUKBO6NUg7+1XTKYYgdkF61
-	 Nwqy+yrtN3ctU+MjkKoPLvhDvmIYI7gE0h680zzg=
+	b=MFb908XsJcjTU/1bBIiVhLx23wJU/HD9VAa8wA591lu+PhTxPPA8mZJKgPBexBVkj
+	 rG5Yu+Bu7mBoOvmik1s6hCo9ZnT5/5d34ftEE+MSJx/Rt8NSoQsjUHzwVggF/R2flR
+	 zl4HgTsUM28Jjau1JJ0sD7sg8DbkmX/Mii5Y15Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Edvard Conrad <edvard@tuta.io>,
+	Amir Goldstein <amir73il@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0119/2151] mm/shmem: fix accounting of swapin-error markers
-Date: Wed, 18 Nov 2026 15:30:54 +0100
-Message-ID: <20261118150126.126728038@linuxfoundation.org>
+Subject: [PATCH 6.18 0120/2151] ovl: inherit FMODE_NONOTIFY when reading directory layers
+Date: Wed, 18 Nov 2026 15:30:55 +0100
+Message-ID: <20261118150126.161633012@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,131 +68,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 66ce68a249f4ac56cd6968aa6d8ded20fb4b7d09 ]
+[ Upstream commit 9ff338af0e002fe217cfa16b1289b76f6b21fc72 ]
 
-A failed swap read replaces the swap entry with a swapin-error marker in
-the page-cache and subtracts its pages from "alloced" and "swapped";
-however, it leaves their block charge in place.
+Listing a merged or impure overlay directory opens the real layer
+directories from ovl_dir_read(), when the readdir cache is filled.
+Those opens use plain ovl_path_open(), so when the directory fd is
+one that fanotify created for a permission event, they can still raise
+FS_OPEN_PERM.  A listener that also marks the backing filesystem and
+calls getdents() on the event fd before answering then deadlocks the
+same way as with the directory open fixed by the previous commit.
 
-Removing the marker during truncate then subtracts from "swapped" again.
-This can underflow the counters or make swapped reach zero while other
-pages remain swapped out, causing swapoff to loop without finding them.
+Store the overlay user file in struct ovl_readdir_data and pass it to
+ovl_path_open_realfile() from ovl_dir_read(), for both the merged and
+the impure cache.  Internal readers such as ovl_check_empty_dir() and
+the mount-time workdir cleanup still pass no user file.
 
-When installing the marker, subtract only from "swapped" and let
-shmem_recalc_inode() reduce "alloced" and release the block charge.
+A note about severity and real world impact: The FAN_OPEN_PERM event is
+traditionally used by anti-malware protection agents and security/audit
+agents. The scope that is often used in those use cases is FAN_MARK_MOUNT
+and agents typically monitor multiple mounts in a mount namespace.
+FAN_OPEN_PERM from directory open requires user opt-in with FAN_ONDIR.
+It is often not the case that anti-malware agents monitor open of
+directories. Security/audit engines are more likely to opt-into
+FAN_OPEN_PERM on directories, but are less likely to list the content
+of a directory within the scope of FAN_OPEN_PERM event, so the real
+world impact of this bug is likely not significant.
 
-Make shmem_free_swap() report successful removal separately from the
-number of swap pages freed, so removing a swapin-error marker does not
-subtract from "swapped" again.
-
-It's a bit confusing, but replacing a swapped out page by a swapin-error
-marker in shmem_set_folio_swapin_error() behaves as follows:
-
-Initially:
-	alloced=1, swapped=1, nrpages=0
-Calling shmem_recalc_inode(inode, 0, -1)
-	-> swapped = 0
-	-> freed =  1 - 0 - 0 = 1
-	-> alloced -= freed
-	-> alloced=0, swapped=0, block charge released
-
-Fixes: 6cec2b95dadf ("mm/shmem: fix infinite loop when swap in shmem error at swapoff time")
+Reported-by: Edvard Conrad <edvard@tuta.io>
+Closes: https://lore.kernel.org/all/P5Qu3co--N-9@tuta.io/
 Cc: stable@vger.kernel.org
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-14-392fc715d8f6@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: adapted swap-entry handling to !non_swap_entry() and the existing swap-release APIs ]
+Tested-by: Edvard Conrad <edvard@tuta.io>
+Link: https://lore.kernel.org/ltp/P5WKBbq--F-9@tuta.io/
+Co-developed-by: Edvard Conrad <edvard@tuta.io>
+Signed-off-by: Edvard Conrad <edvard@tuta.io>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+[ sashal: Retained the dentry declaration still required by ovl_iterate(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 31 ++++++++++++++-----------------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ fs/overlayfs/readdir.c | 28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 63286a727fe4e..82216c44f67db 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -945,12 +945,11 @@ static void shmem_delete_from_page_cache(struct folio *folio, void *radswap)
+diff --git a/fs/overlayfs/readdir.c b/fs/overlayfs/readdir.c
+index 3c8fe45b06f12..efa3964041932 100644
+--- a/fs/overlayfs/readdir.c
++++ b/fs/overlayfs/readdir.c
+@@ -41,6 +41,7 @@ struct ovl_dir_cache {
+ 
+ struct ovl_readdir_data {
+ 	struct dir_context ctx;
++	const struct file *user_file;
+ 	struct dentry *dentry;
+ 	bool is_lowest;
+ 	struct rb_root *root;
+@@ -380,7 +381,8 @@ static inline int ovl_dir_read(const struct path *realpath,
+ 	struct file *realfile;
+ 	int err;
+ 
+-	realfile = ovl_path_open(realpath, O_RDONLY | O_LARGEFILE);
++	realfile = ovl_path_open_realfile(rdd->user_file, realpath,
++					  O_RDONLY | O_LARGEFILE);
+ 	if (IS_ERR(realfile))
+ 		return PTR_ERR(realfile);
+ 
+@@ -424,13 +426,14 @@ static void ovl_dir_reset(struct file *file)
  }
  
- /*
-- * Remove swap entry from page cache, free the swap and its page cache. Returns
-- * the number of pages being freed. 0 means entry not found in XArray (0 pages
-- * being freed).
-+ * Remove a swap entry or swapin-error marker wholly within [index, end].
-+ * Return whether it was removed, counting freed swap pages in nr_swaps_freed.
-  */
--static long shmem_free_swap(struct address_space *mapping,
--			    pgoff_t index, pgoff_t end, void *radswap)
-+static bool shmem_free_swap(struct address_space *mapping,
-+		pgoff_t index, pgoff_t end, void *radswap, long *nr_swaps_freed)
+ static int ovl_dir_read_merged(struct dentry *dentry, struct list_head *list,
+-	struct rb_root *root)
++	struct rb_root *root, const struct file *user_file)
  {
- 	XA_STATE(xas, &mapping->i_pages, index);
- 	const swp_entry_t swp = radix_to_swp_entry(radswap);
-@@ -971,8 +970,10 @@ static long shmem_free_swap(struct address_space *mapping,
- 	xas_unlock_irq(&xas);
- 
- 	/* A swapin-error marker holds no swap slot, so just drop it. */
--	if (nr_pages && !non_swap_entry(swp))
-+	if (nr_pages && !non_swap_entry(swp)) {
- 		free_swap_and_cache_nr(swp, nr_pages);
-+		*nr_swaps_freed += nr_pages;
-+	}
- 
- 	return nr_pages;
- }
-@@ -1125,8 +1126,8 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 			if (xa_is_value(folio)) {
- 				if (unfalloc)
- 					continue;
--				nr_swaps_freed += shmem_free_swap(mapping, indices[i],
--								  end - 1, folio);
-+				shmem_free_swap(mapping, indices[i], end - 1,
-+						folio, &nr_swaps_freed);
- 				continue;
- 			}
- 
-@@ -1193,13 +1194,11 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 
- 			if (xa_is_value(folio)) {
- 				int order;
--				long swaps_freed;
- 
- 				if (unfalloc)
- 					continue;
--				swaps_freed = shmem_free_swap(mapping, indices[i],
--							      end - 1, folio);
--				if (!swaps_freed) {
-+				if (!shmem_free_swap(mapping, indices[i], end - 1,
-+						     folio, &nr_swaps_freed)) {
- 					pgoff_t base = indices[i];
- 
- 					order = shmem_confirm_swap(mapping, indices[i],
-@@ -1220,7 +1219,6 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 					index = base;
- 					break;
- 				}
--				nr_swaps_freed += swaps_freed;
- 				continue;
- 			}
- 
-@@ -2243,11 +2241,10 @@ static void shmem_set_folio_swapin_error(struct inode *inode, pgoff_t index,
- 	if (!skip_swapcache)
- 		swap_cache_del_folio(folio);
- 	/*
--	 * Don't treat swapin error folio as alloced. Otherwise inode->i_blocks
--	 * won't be 0 when inode is released and thus trigger WARN_ON(i_blocks)
--	 * in shmem_evict_inode().
-+	 * Let shmem_recalc_inode() reduce alloced and release the block charge
-+	 * for the freed swap pages.
- 	 */
--	shmem_recalc_inode(inode, -nr_pages, -nr_pages);
-+	shmem_recalc_inode(inode, 0, -nr_pages);
- 	swap_free_nr(swap, nr_pages);
+ 	int err;
+ 	struct path realpath;
+ 	struct ovl_readdir_data rdd = {
+ 		.ctx.actor = ovl_fill_merge,
+ 		.ctx.count = INT_MAX,
++		.user_file = user_file,
+ 		.dentry = dentry,
+ 		.list = list,
+ 		.root = root,
+@@ -483,9 +486,10 @@ static void ovl_seek_cursor(struct ovl_dir_file *od, loff_t pos)
+ 	od->cursor = p;
  }
  
+-static struct ovl_dir_cache *ovl_cache_get(struct dentry *dentry)
++static struct ovl_dir_cache *ovl_dir_cache_get(struct file *file)
+ {
+ 	int res;
++	struct dentry *dentry = file->f_path.dentry;
+ 	struct ovl_dir_cache *cache;
+ 	struct inode *inode = d_inode(dentry);
+ 
+@@ -505,7 +509,7 @@ static struct ovl_dir_cache *ovl_cache_get(struct dentry *dentry)
+ 	INIT_LIST_HEAD(&cache->entries);
+ 	cache->root = RB_ROOT;
+ 
+-	res = ovl_dir_read_merged(dentry, &cache->entries, &cache->root);
++	res = ovl_dir_read_merged(dentry, &cache->entries, &cache->root, file);
+ 	if (res) {
+ 		ovl_cache_free(&cache->entries);
+ 		kfree(cache);
+@@ -649,8 +653,8 @@ static bool ovl_fill_plain(struct dir_context *ctx, const char *name,
+ 	return true;
+ }
+ 
+-static int ovl_dir_read_impure(const struct path *path,  struct list_head *list,
+-			       struct rb_root *root)
++static int ovl_dir_read_impure(const struct path *path, struct list_head *list,
++			       struct rb_root *root, const struct file *user_file)
+ {
+ 	int err;
+ 	struct path realpath;
+@@ -658,6 +662,7 @@ static int ovl_dir_read_impure(const struct path *path,  struct list_head *list,
+ 	struct ovl_readdir_data rdd = {
+ 		.ctx.actor = ovl_fill_plain,
+ 		.ctx.count = INT_MAX,
++		.user_file = user_file,
+ 		.list = list,
+ 		.root = root,
+ 	};
+@@ -695,9 +700,10 @@ static int ovl_dir_read_impure(const struct path *path,  struct list_head *list,
+ 	return 0;
+ }
+ 
+-static struct ovl_dir_cache *ovl_cache_get_impure(const struct path *path)
++static struct ovl_dir_cache *ovl_cache_get_impure(struct file *file)
+ {
+ 	int res;
++	const struct path *path = &file->f_path;
+ 	struct dentry *dentry = path->dentry;
+ 	struct inode *inode = d_inode(dentry);
+ 	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
+@@ -715,7 +721,7 @@ static struct ovl_dir_cache *ovl_cache_get_impure(const struct path *path)
+ 	if (!cache)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	res = ovl_dir_read_impure(path, &cache->entries, &cache->root);
++	res = ovl_dir_read_impure(path, &cache->entries, &cache->root, file);
+ 	if (res) {
+ 		ovl_cache_free(&cache->entries);
+ 		kfree(cache);
+@@ -836,7 +842,7 @@ static int ovl_iterate_real(struct file *file, struct dir_context *ctx)
+ 	dput(parent);
+ 
+ 	if (ovl_is_impure_dir(file)) {
+-		rdt.cache = ovl_cache_get_impure(&file->f_path);
++		rdt.cache = ovl_cache_get_impure(file);
+ 		if (IS_ERR(rdt.cache))
+ 			return PTR_ERR(rdt.cache);
+ 	}
+@@ -884,7 +890,7 @@ static int ovl_iterate(struct file *file, struct dir_context *ctx)
+ 	if (!od->cache) {
+ 		struct ovl_dir_cache *cache;
+ 
+-		cache = ovl_cache_get(dentry);
++		cache = ovl_dir_cache_get(file);
+ 		err = PTR_ERR(cache);
+ 		if (IS_ERR(cache))
+ 			goto out;
+@@ -1086,7 +1092,7 @@ int ovl_check_empty_dir(struct dentry *dentry, struct list_head *list)
+ 	const struct cred *old_cred;
+ 
+ 	old_cred = ovl_override_creds(dentry->d_sb);
+-	err = ovl_dir_read_merged(dentry, list, &root);
++	err = ovl_dir_read_merged(dentry, list, &root, NULL);
+ 	ovl_revert_creds(old_cred);
+ 	if (err)
+ 		return err;
 -- 
 2.53.0
 
