@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048935;
-	b=4xwD0aSN0rI9bgl8x2FUDGbV7g3FI0hh0mRzbZvBFAWDmvX9p4eWX47839zG5+M/0VBD
-	 12EPGTpoDdMX/lrYiOxu6ufbafGUzsJuH1gcUptpy26bJbF2te4X4yQSgfiL5B/XcKGRC
-	 Lit9ehsZ/JfJXRmad4d48p/BdIsU8P2Tl7KrQHE1jYXAMnhNYCus8maIMNeZs0nQmQQjx
-	 WPjK0HQO8fywSCqKdT53qvEXJFocrK1WagSGSyCu48OE0IeWXR89EJWG7cykdnZv3Tzrz
-	 zC2X1J3+YOQM5zNB6Dfzo9snCkbRWBkMxyk7JSoI2DLgT1KAWvqG98/bV6Bbipp+lDQ==
+	t=1795048938;
+	b=FWOdNt5fibgLjaJAeKpfs59eewLS49kHiMh3CnqO9smIq6QJHwU/xtOSAPn8PDxb7mNC
+	 9okhEndBhj7qEoCsvBk+jyDMxqTiJNACzTOEpTRtLX3SNNGHcQZJihFDuHMAwVSE7GY+2
+	 8chu9+8GTbUUJseXTL5ft19ircroiZdQZCDM4EaAA1I9e9bdgthHv2QHkKEkwJn3NP2pt
+	 gnSL3paOjxjt+6Ln3lcvAGlT3mWgEp3KmoHrE7qw+WSIvYmeFP6SlQzJY+yJ8Wkf44rz2
+	 MWZaXsaJsGNlHyUVyMzQm5HhhMcZNbN9Sn0vqyTOAx5Snr6bnA6eBwE+TeKfx0oVVNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048935;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048938;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eZmTMWZMZ8uXmGCemVito1oH09V2TjSW7B4NePpnwZU=;
-	b=bl9oXgvqLOz84wxZI3aTeX9rvuu+lBlVp/wpPH37C2GWRnBppVUJGNxny2FLTAwPb0fo
-	 EHMtdFYv/k7JSQw+7gWascBxJMNi0Yxr0fy5jV4pu8pK6bKvxtwWVCKhBr4ih1ZlQjdkc
-	 x/2UoqQesTeE42sF9APwgcs+VQlePxIxG+RX+tvFJ9iVpSQ/gQ1P47p55ig/XdYSo+JYN
-	 M/IWPE7+46y8NAI6vY9BWJ+djfE6rFtkgZNJCjGcKG49ghkT7w21hDHwHFI4vb4op1pfH
-	 ygUuYIUbapMTcCKioOxaKX1O/Yv6BOguEvYMZDMGpN8c4zAmdGbVRMcMTU+1Kfa9f3Q==
+	bh=wOjk1fZHXF1C4eghyRRWzRsxvJK1SpRfCj6Y1iy4zds=;
+	b=zswwpCP0d/SEn3kffqVyXaTZOrr7uqHe3BrFi+PFCGveJkzcQYtRvnkrA7DH9wXVxPtI
+	 LLJ//DLWSBIKliNMTcaOJsWMBVW6zmlNQ2P4TlsB9hWanHij7/v8hmkmQLhAiKmghvg4u
+	 TniPR+nHImAzn7N9zjdNIM+X93OmomNsw1iSxPgOX9EmIDiuIucbUtslzWaYprakUTnoq
+	 LpemTzpVcTWOjY2gZyb46A349tPu/jXhryJYRljGtb6zEtwPU8Q/+d2VtgAYRJlmDXoSc
+	 GLV7YNWE09wzPDr0lr1ZpjaXdEe/Pk36C2CYmDOAWf4SyBQbyXgD0wOOGHRSyUEtcLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YWr9Y1UY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZEtlGaiN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB70606A320;
-	Thu, 19 Nov 2026 00:42:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14EC606A320;
+	Thu, 19 Nov 2026 00:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YWr9Y1UY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CFF41F000C4;
-	Thu, 19 Nov 2026 00:42:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZEtlGaiN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A27D1F000C4;
+	Thu, 19 Nov 2026 00:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048935;
-	bh=eZmTMWZMZ8uXmGCemVito1oH09V2TjSW7B4NePpnwZU=;
+	s=korg; t=1795048938;
+	bh=wOjk1fZHXF1C4eghyRRWzRsxvJK1SpRfCj6Y1iy4zds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YWr9Y1UYZtVwMAxHN1nTu0oYllrhGCK9OFSGxpBtjHglXfUs+RDzfb31nrqeeumJp
-	 ZAglmaEcMlHhNWEw8WTE3Xl5qzDQijttqwn4JKcLIuyay7pcK9kB44odz0uICSp1Qx
-	 7i7dbzfORKeWqVZ/sgKH8g8V3c7+NmK9yqrzK8ao=
+	b=ZEtlGaiNKivfygWH2wOAzv6VKE6TJG6iB5IY3h+qjhYGhr9W78F+VyLQtOhIXOcJx
+	 esu5/tCTZmTJKGZ4cprFSmIT0yEd6Tb6r95ReEL7Y7DBZdfIgYR6533Fjpk3cPvBKF
+	 J0kpWcVeRrPQvleTHPf+2mYcZ2lyq9m66dE3iD8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Anirudh Venkataramanan <anirudh.venkataramanan@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2173/2857] crypto: atmel - handle authenc requests without plaintext
-Date: Wed, 18 Nov 2026 15:53:27 +0100
-Message-ID: <20261118150319.643872323@linuxfoundation.org>
+Subject: [PATCH 6.1 2174/2857] crypto: tcrypt - Use pr_info/pr_err
+Date: Wed, 18 Nov 2026 15:53:28 +0100
+Message-ID: <20261118150319.680564086@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,87 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Anirudh Venkataramanan <anirudh.venkataramanan@intel.com>
 
-[ Upstream commit ccbd95b3efbc0580b6abde2a905823417ca56022 ]
+[ Upstream commit 837a99f59043c3505d69761575172da1d09220b5 ]
 
-Authenc permits a nonempty associated-data string with no plaintext.  The
-Atmel driver accepts such a request, has SHA process the associated data,
-and then unconditionally asks AES DMA to transfer zero bytes.  The Atmel
-DMA engines reject the zero-length descriptor, so the valid request fails,
-normally with -ENOMEM.
+Currently, there's mixed use of printk() and pr_info()/pr_err(). The latter
+prints the module name (because pr_fmt() is defined so) but the former does
+not. As a result there's inconsistency in the printed output. For example:
 
-Skip the AES transfer when textlen is zero and proceed directly to SHA
-finalization.
+modprobe mode=211:
 
-Once an HMAC transform has cached its inner and outer states, SHA can
-complete this path synchronously.  The forced ahash completion callback
-then invokes the AES finalizer through a void function and discards its
-return value.  This loses -EBADMSG for a mismatched tag and reports
-successful decryption.
+[...] test 0 (160 bit key, 16 byte blocks): 1 operation in 2320 cycles (16 bytes)
+[...] test 1 (160 bit key, 64 byte blocks): 1 operation in 2336 cycles (64 bytes)
 
-For synchronous SHA completion, release the SHA device without invoking
-the ahash callback and call the AES finalizer directly.  Its result then
-propagates through the synchronous call chain.  Keep the existing callback
-path for asynchronous completion.
+modprobe mode=215:
 
-On a SAM9X75, the unpatched driver failed valid AAD-only requests and
-returned success for a bad tag after the transform had been used once. With
-this change, bad tags return -EBADMSG for both fresh and reused transforms.
+[...] tcrypt: test 0 (160 bit key, 16 byte blocks): 1 operation in 2173 cycles (16 bytes)
+[...] tcrypt: test 1 (160 bit key, 64 byte blocks): 1 operation in 2241 cycles (64 bytes)
 
-Fixes: 89a82ef87e01 ("crypto: atmel-authenc - add support to authenc(hmac(shaX), Y(aes)) modes")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Replace all instances of printk() with pr_info()/pr_err() so that the
+module name is printed consistently.
+
+Signed-off-by: Anirudh Venkataramanan <anirudh.venkataramanan@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 3a31a4baad67 ("crypto: tcrypt - Avoid reading req->base after submission")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/atmel-aes.c |  2 ++
- drivers/crypto/atmel-sha.c | 14 ++++++++++++++
- 2 files changed, 16 insertions(+)
+ crypto/tcrypt.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/crypto/atmel-aes.c b/drivers/crypto/atmel-aes.c
-index c6be40e02d7bf..792030a7e16cd 100644
---- a/drivers/crypto/atmel-aes.c
-+++ b/drivers/crypto/atmel-aes.c
-@@ -2029,6 +2029,8 @@ static int atmel_aes_authenc_transfer(struct atmel_aes_dev *dd, int err,
- 		dd->is_async = true;
- 	if (err)
- 		return atmel_aes_complete(dd, err);
-+	if (!rctx->textlen)
-+		return atmel_aes_authenc_digest(dd);
+diff --git a/crypto/tcrypt.c b/crypto/tcrypt.c
+index b23235d58a122..a1807652d1325 100644
+--- a/crypto/tcrypt.c
++++ b/crypto/tcrypt.c
+@@ -575,8 +575,8 @@ static void test_aead_speed(const char *algo, int enc, unsigned int secs,
+ 	}
  
- 	/* Prepare src and dst scatter-lists to transfer cipher/plain texts. */
- 	src = scatterwalk_ffwd(rctx->src, req->src, req->assoclen);
-diff --git a/drivers/crypto/atmel-sha.c b/drivers/crypto/atmel-sha.c
-index 2596ec2dd2dbb..ed23389c6eeea 100644
---- a/drivers/crypto/atmel-sha.c
-+++ b/drivers/crypto/atmel-sha.c
-@@ -2369,11 +2369,25 @@ static int atmel_sha_authenc_final_done(struct atmel_sha_dev *dd)
- {
- 	struct ahash_request *req = dd->req;
- 	struct atmel_sha_authenc_reqctx *authctx = ahash_request_ctx(req);
-+	atmel_aes_authenc_fn_t cb;
-+	struct atmel_aes_dev *aes_dev;
- 	size_t i, num_words = authctx->digestlen / sizeof(u32);
+ 	crypto_init_wait(&wait);
+-	printk(KERN_INFO "\ntesting speed of %s (%s) %s\n", algo,
+-			get_driver_name(crypto_aead, tfm), e);
++	pr_info("\ntesting speed of %s (%s) %s\n", algo,
++		get_driver_name(crypto_aead, tfm), e);
  
- 	for (i = 0; i < num_words; ++i)
- 		authctx->digest[i] = atmel_sha_read(dd, SHA_REG_DIGEST(i));
+ 	req = aead_request_alloc(tfm, GFP_KERNEL);
+ 	if (!req) {
+@@ -624,8 +624,8 @@ static void test_aead_speed(const char *algo, int enc, unsigned int secs,
+ 				memset(iv, 0xff, iv_len);
  
-+	if (!dd->is_async) {
-+		/*
-+		 * Return the AES finalizer's status directly for synchronous requests.
-+		 * The ahash callback cannot propagate it.
-+		 */
-+		cb = authctx->cb;
-+		aes_dev = authctx->aes_dev;
-+		dd->force_complete = false;
-+		(void)atmel_sha_complete(dd, 0);
-+		return cb(aes_dev, 0, false);
-+	}
-+
- 	return atmel_sha_complete(dd, 0);
- }
+ 			crypto_aead_clear_flags(tfm, ~0);
+-			printk(KERN_INFO "test %u (%d bit key, %d byte blocks): ",
+-					i, *keysize * 8, bs);
++			pr_info("test %u (%d bit key, %d byte blocks): ",
++				i, *keysize * 8, bs);
  
+ 			memset(tvmem[0], 0xff, PAGE_SIZE);
+ 
+@@ -877,8 +877,8 @@ static void test_ahash_speed_common(const char *algo, unsigned int secs,
+ 		return;
+ 	}
+ 
+-	printk(KERN_INFO "\ntesting speed of async %s (%s)\n", algo,
+-			get_driver_name(crypto_ahash, tfm));
++	pr_info("\ntesting speed of async %s (%s)\n", algo,
++		get_driver_name(crypto_ahash, tfm));
+ 
+ 	if (crypto_ahash_digestsize(tfm) > MAX_DIGEST_SIZE) {
+ 		pr_err("digestsize(%u) > %d\n", crypto_ahash_digestsize(tfm),
+@@ -2876,7 +2876,7 @@ static int __init tcrypt_mod_init(void)
+ 	err = do_test(alg, type, mask, mode, num_mb);
+ 
+ 	if (err) {
+-		printk(KERN_ERR "tcrypt: one or more tests failed!\n");
++		pr_err("one or more tests failed!\n");
+ 		goto err_free_tv;
+ 	} else {
+ 		pr_debug("all tests passed\n");
 -- 
 2.53.0
 
