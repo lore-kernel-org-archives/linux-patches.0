@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035617;
-	b=5BVFAfRn8ZC9QxRWrZZtvi3lqZqu6ZXmF5KmOBZ5z/KWVUJnoV3prIE64pVw8kw3mC7j
-	 6vfX6cRWPURRWZl+FawgKT/SnjTfJHNlheitks7tvdID39F/KJvF5ubK9OZ8RSUkWUPch
-	 +JkH28+23ZiirYcQ94SH6IbumtqdoXlOJslffja52pHIRyBmJjMFsGcC42E7s0SMHO4d6
-	 bhFRGuZRImj01WwPrvQml4/2Nuw4+FbmYVikEloD8sl1qJXtwfqpIwFhUfjxHysIyZ0Fp
-	 8Ep6iaFTL9gykRDYTi6O++6slpVVd3toUGy7kvy3vaPLBwl/v92DeaYi7m/vOda+jIw==
+	t=1795035620;
+	b=WSQZyGJRONfQEB2eFw5DofUIrcFbVJI0EVeQPcGLTpSzkRgl266PnL161LtPSkTu8r29
+	 3+FStugcI9H47dvnZbWNTEQGJGMs6nonZhGv6ck0SA7KkRVhoHTBAI/ue2BPVfBfuovw1
+	 trA6RhgeIYcBsixyZjLcDIctykqberYL5FIP07EcTxQyWhhoMlnCYshF341tsiPhiXSWc
+	 3OraO+vHJH2RqwXNAoaZMFlbRnEP8teKKM2l83WhHa3OGjLvaVqru5GnJmcE+wsc7s8Cu
+	 8VlbzWba5jCCV52OqdFMG3rtg5SuUaPFLo3zBu5Sil+hzcdgzlHhVbUMfX7QNeT+6/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035617;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035620;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BtLV3I7H+T5vLXTXvKehmNwbKId06Q9gkOZ3Ql4O5Ko=;
-	b=wD7C1x/tgy41VOh5VaqBFlKTmxAUYa9xc/d8RR//1wT9XWPKPPFSYAD0D3bsfU0DaNtx
-	 3j/BxBGf6JhwvxdV3gmhxaL9tDL6Zsv3fuDERCVEmj9H6Eq7JZSBjXVbJMhpiYCZP5Y6G
-	 CpZMGW6nRvaHWO+h3/25DPn8uGqYFuFDUiIJ8k7/6j1fQa+nmSVv2PdaaT/uxGcN+/Ra5
-	 QFCBDk2o0myO/Epl5iZhvBYCs4UVn1fwrloiph8E+l29aWHrKMWegHMFB3uldJXNy/L3U
-	 Uoz6Ah+I28Oahf0ZgfO5Uhh++1U6gKo7SNdNJXEgw2lDSDb9CF4rUlDKrWOVHnpkjZw==
+	bh=vbUfW+ZpkeEZUHTKZdpJ8j7Cfe/VQe/mzrVxceW0WOk=;
+	b=cShHgeqV5xNm6a1vY+FRviyf+rfQb/SpLhuIb88JBm+ybR2L3/B5Zy14iUcpkPC2qgqk
+	 WJE/M5tBNFRSRxN6GdImpSLGBWw7dpUXBvjFs063yPsnpbWVQXW1SITrJo4pCAC6oy63f
+	 7p8PP0vi5VQSJ1KDKcuQHvQ4u7qyzS178yeO0MHF0fFnmMj66VrWraR318N0U2Wr4hAAO
+	 1gZLqZ4aJ/k9rTWvhNKhJwIEOdKK+RHKWldeEdFDUj+XTO9oWYKfmkHFryIb8aMeJm7m7
+	 vNo08WuL3sGcyqGquFF2Plz4l94JsvsRhT4d+oMDpBCWlrRU/67ClfwqjhunucBIAVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wmL/3NHY";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A7Iq0No7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB6A606A32A;
-	Wed, 18 Nov 2026 21:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D706606A331;
+	Wed, 18 Nov 2026 21:00:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wmL/3NHY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9801F000C6;
-	Wed, 18 Nov 2026 21:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A7Iq0No7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4027B1F000C6;
+	Wed, 18 Nov 2026 21:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035616;
-	bh=BtLV3I7H+T5vLXTXvKehmNwbKId06Q9gkOZ3Ql4O5Ko=;
+	s=korg; t=1795035619;
+	bh=vbUfW+ZpkeEZUHTKZdpJ8j7Cfe/VQe/mzrVxceW0WOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wmL/3NHY7xT1RaE2DLcSXn01K1h3qqd0G7z6zdcKtM3V+RpSKiay+2xJ4s8nWGgdR
-	 wewRebmTAuAv23+IoQf45OEE+6VTYZcyOdmprsT667blwJKue4bJb/SsULDSMXrGJK
-	 F2BGCeQdvYgrj2mJwbraHWQn49NG4x/ltH5IYyCo=
+	b=A7Iq0No7WbV88yRqtCrcIbKQCYi98sIzR+fZlokjSiDKsA3Ho6viWObZuVhAeV7Ni
+	 Jj1uJFnsUUD5/vOpTuiKbi0CHbThE3PC0hC0kfsvnoGtbP0S4W1dfKKo/4MvvXBjW5
+	 b/+l1o1ZnjGnN2shnsDNTPEpd0386vKxAtOJhK1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Peter <mario.peter@leica-geosystems.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Ian Bridges <icb@fastmail.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0767/3318] driver core: take parent lock in async device attach
-Date: Wed, 18 Nov 2026 15:23:09 +0100
-Message-ID: <20261118150341.750534543@linuxfoundation.org>
+Subject: [PATCH 6.6 0768/3318] ksmbd: fix session reference leak on compounded SESSION_SETUP
+Date: Wed, 18 Nov 2026 15:23:10 +0100
+Message-ID: <20261118150341.790285840@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,218 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Peter <mario.peter@leica-geosystems.com>
+From: Ian Bridges <icb@fastmail.org>
 
-[ Upstream commit 187a62f99da29b1a55602b0d401a783d8dc86161 ]
+[ Upstream commit 03bd8f5279e490e15e0c0f0fa388ffbd2fbacd65 ]
 
-For device types with need_parent_lock set (only USB interfaces),
-probe() must run with the parent device locked. A synchronous attach
-after device_add() gets this from the caller, e.g.
-usb_set_configuration() holds the udev lock while adding interfaces.
-__device_attach_async_helper() runs the probe from an async worker
-instead, where that lock isn't held, and only takes device_lock(dev).
+A compound request can place SESSION_SETUP after another command. That
+earlier command leaves a reference to its session in work->sess.
+smb2_sess_setup() then overwrites work->sess with the session it looks up
+or creates, and the dispatcher later puts work->sess only once. The
+inherited reference is never dropped. That leaks the session, together
+with its setup connection and socket, and every repeat of the compound
+leaks another.
 
-With async probing enabled for the hub driver (e.g. driver_async_probe=*
-or driver_async_probe=hub), this races when a multi-TT hub is
-configured. For multi-TT hubs, hub_probe() calls
-usb_set_interface(hdev, 0, 1) to select the TT-per-port altsetting, and
-usb_set_interface() creates the endpoint devices of the interface a
-second time:
+  unreferenced object (size 512):
+    __kmalloc_cache_noprof+0x32c/0x3a0
+    ksmbd_smb2_session_create+0xf6/0x9c0 [ksmbd]
+    smb2_sess_setup+0xda4/0x6280 [ksmbd]
+    handle_ksmbd_work+0x88c/0x1cb0 [ksmbd]
 
-  usb_set_configuration()           async worker
-    [udev locked]
-    device_add(intf)
-      queues the probe  ----------> __device_attach_async_helper()
-                                      [intf locked, udev not locked]
-                                      hub_probe()
-                                        usb_set_interface(hdev, 0, 1)
-    create_intf_ep_devs(intf)             create_intf_ep_devs(intf)
+Save the inherited session on entry. After the request has been
+processed, release it once, but only when smb2_sess_setup() has replaced
+work->sess with its own session or cleared it. Do this after
+ksmbd_conn_unlock() so the put does not run under srv_mutex. An error path
+may instead leave the inherited session in work->sess. Keep it there, so
+the dispatcher still puts it and the error response is still signed or
+encrypted with it as before.
 
-create_intf_ep_devs() checks and sets intf->ep_devs_created without a
-lock of its own. If usb_set_configuration() has created ep_81 but not
-yet set the flag, usb_set_interface() skips removing the endpoint
-devices of the old altsetting and creates ep_81 again. With a
-synchronous probe, hub_probe() runs inside device_add() with the udev
-lock held, and usb_set_configuration() then finds ep_devs_created
-already set.
-
-Single-TT hubs don't call usb_set_interface() from hub_probe() and
-don't show this warning, but their probe runs without the udev lock as
-well.
-
-On an i.MX8MM board with an onboard USB2514 hub this hit 11 of 100
-boots:
-
-  sysfs: cannot create duplicate filename '.../1-1/1-1:1.0/ep_81'
-  Call trace:
-   sysfs_warn_dup
-   usb_create_ep_devs
-   create_intf_ep_devs
-   usb_set_interface
-   hub_probe
-   usb_probe_interface
-   really_probe
-   __device_attach_async_helper
-   async_run_entry_fn
-
-It also shows on v7.3-rc6 in QEMU, with dummy_hcd and a raw-gadget
-program emulating a multi-TT hub: re-authorizing the hub in a loop,
-while a SCHED_FIFO task preempts the writing task at random points for
-3 ms, hit the warning in 29 of 6000 iterations.
-
-Take the parent lock in __device_attach_async_helper() as well, like
-__driver_attach_async_helper() does, and move
-__device_driver_lock/unlock() up for that. With this the warning was
-gone in 300 boots on the board and in 6000 iterations in QEMU.
-
-Fixes: 765230b5f084 ("driver-core: add asynchronous probing support for drivers")
-Signed-off-by: Mario Peter <mario.peter@leica-geosystems.com>
-Cc: stable@vger.kernel.org	# 4.2
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-[ johan: switch to async_schedule_dev_nocall() to avoid deadlock if
-         async_schedule_dev() runs synchronously when parent lock is
-	 held ]
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20261014133109.1392265-4-johan@kernel.org
-[ Fold the nested conditions into a single if statement; correct commit
-  message to mention "device types" rather than "buses" for
-  "need_parent_lock". - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: 7aa8804c0b67 ("ksmbd: fix user-after-free from session log off")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: omitted the installed flag update in the absent session binding signature check block ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/dd.c | 83 +++++++++++++++++++++++++----------------------
- 1 file changed, 45 insertions(+), 38 deletions(-)
+ fs/smb/server/smb2pdu.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index 4accc885a9d44..eaee6121c9475 100644
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -1041,6 +1041,38 @@ static int __device_attach_driver(struct device_driver *drv, void *_data)
- 	return ret == 0;
- }
- 
-+/*
-+ * __device_driver_lock - acquire locks needed to manipulate dev->drv
-+ * @dev: Device we will update driver info for
-+ * @parent: Parent device. Needed if the device type requires parent lock
-+ *
-+ * This function will take the required locks for manipulating dev->drv.
-+ * Normally this will just be the @dev lock, but when called for a USB
-+ * interface, @parent lock will be held as well.
-+ */
-+static void __device_driver_lock(struct device *dev, struct device *parent)
-+{
-+	if (dev->type && dev->type->need_parent_lock && parent)
-+		device_lock(parent);
-+	device_lock(dev);
-+}
-+
-+/*
-+ * __device_driver_unlock - release locks needed to manipulate dev->drv
-+ * @dev: Device we will update driver info for
-+ * @parent: Parent device. Needed if the device type requires parent lock
-+ *
-+ * This function will release the required locks for manipulating dev->drv.
-+ * Normally this will just be the @dev lock, but when called for a
-+ * USB interface, @parent lock will be released as well.
-+ */
-+static void __device_driver_unlock(struct device *dev, struct device *parent)
-+{
-+	device_unlock(dev);
-+	if (dev->type && dev->type->need_parent_lock && parent)
-+		device_unlock(parent);
-+}
-+
- static void __device_attach_async_helper(void *_dev, async_cookie_t cookie)
- {
- 	struct device *dev = _dev;
-@@ -1050,7 +1082,7 @@ static void __device_attach_async_helper(void *_dev, async_cookie_t cookie)
- 		.want_async	= true,
- 	};
- 
--	device_lock(dev);
-+	__device_driver_lock(dev, dev->parent);
- 
- 	/*
- 	 * Check if device has already been removed or claimed. This may
-@@ -1072,7 +1104,7 @@ static void __device_attach_async_helper(void *_dev, async_cookie_t cookie)
- 	if (dev->parent)
- 		pm_runtime_put(dev->parent);
- out_unlock:
--	device_unlock(dev);
-+	__device_driver_unlock(dev, dev->parent);
- 
- 	put_device(dev);
- }
-@@ -1129,8 +1161,11 @@ static int __device_attach(struct device *dev, bool allow_async)
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index be86f1fbde1fd..a454663bc538c 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1704,6 +1704,8 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 	struct smb2_sess_setup_req *req;
+ 	struct smb2_sess_setup_rsp *rsp;
+ 	struct ksmbd_session *sess;
++	struct ksmbd_session *prev_sess = work->sess;
++	bool installed = false;
+ 	struct negotiate_message *negblob;
+ 	unsigned int negblob_len, negblob_off;
+ 	int rc = 0;
+@@ -1826,6 +1828,7 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 		conn->binding = false;
  	}
- out_unlock:
- 	device_unlock(dev);
--	if (async)
--		async_schedule_dev(__device_attach_async_helper, dev);
-+	if (async && !async_schedule_dev_nocall(__device_attach_async_helper, dev)) {
-+		put_device(dev);
-+		ret = 2;	/* retry synchronously */
-+	}
+ 	work->sess = sess;
++	installed = true;
+ 
+ 	negblob_off = le16_to_cpu(req->SecurityBufferOffset);
+ 	negblob_len = le16_to_cpu(req->SecurityBufferLength);
+@@ -1979,6 +1982,14 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 	}
+ 
+ 	ksmbd_conn_unlock(conn);
 +
- 	return ret;
++	/*
++	 * Later in a compound, work->sess holds the reference that an
++	 * earlier command took. Drop it once this request has installed
++	 * its own session there or cleared it.
++	 */
++	if (prev_sess && (installed || !work->sess))
++		ksmbd_user_session_put(prev_sess);
+ 	return rc;
  }
  
-@@ -1157,48 +1192,20 @@ EXPORT_SYMBOL_GPL(device_attach);
- void device_initial_probe(struct device *dev)
- {
- 	struct subsys_private *sp = bus_to_subsys(dev->bus);
-+	int ret;
- 
- 	if (!sp)
- 		return;
- 
--	if (sp->drivers_autoprobe)
--		__device_attach(dev, true);
-+	if (sp->drivers_autoprobe) {
-+		ret = __device_attach(dev, true);
-+		if (ret == 2)
-+			__device_attach(dev, false);
-+	}
- 
- 	subsys_put(sp);
- }
- 
--/*
-- * __device_driver_lock - acquire locks needed to manipulate dev->drv
-- * @dev: Device we will update driver info for
-- * @parent: Parent device. Needed if the device type requires parent lock
-- *
-- * This function will take the required locks for manipulating dev->drv.
-- * Normally this will just be the @dev lock, but when called for a USB
-- * interface, @parent lock will be held as well.
-- */
--static void __device_driver_lock(struct device *dev, struct device *parent)
--{
--	if (dev->type && dev->type->need_parent_lock && parent)
--		device_lock(parent);
--	device_lock(dev);
--}
--
--/*
-- * __device_driver_unlock - release locks needed to manipulate dev->drv
-- * @dev: Device we will update driver info for
-- * @parent: Parent device. Needed if the device type requires parent lock
-- *
-- * This function will release the required locks for manipulating dev->drv.
-- * Normally this will just be the @dev lock, but when called for a
-- * USB interface, @parent lock will be released as well.
-- */
--static void __device_driver_unlock(struct device *dev, struct device *parent)
--{
--	device_unlock(dev);
--	if (dev->type && dev->type->need_parent_lock && parent)
--		device_unlock(parent);
--}
--
- /**
-  * device_driver_attach - attach a specific driver to a specific device
-  * @drv: Driver to attach
 -- 
 2.53.0
 
