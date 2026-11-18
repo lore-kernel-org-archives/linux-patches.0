@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017987;
-	b=yt67NgC2KB9lr86ZlOwBRNM0VQaOviENYfqDaYp3CatCm9lThLcma4KUYx/3B4im5cRd
-	 9aInDQPxQ6zqPZa/8x555naWOff6YHfJNwXfXN0CVpGPB0lgm9LAdSxCAI2khKaD4FKOb
-	 0er+x/IRDkLs/DUxUgkjNDqTdqKyrQt+gRIZumWR4dsevlcX2r3xhKrJDWq4u/lgN+/A+
-	 v8PxcmL7vJQgP3BcooFf143mr8nmChpN7X0MWCtofsSQ+Yw3FSzqkuVQQyOP9eyATUDJM
-	 D4cUEWlTysu74bFANzQqWm3LetcoNxO3/mluC3FozbGi7vlbpng+e0rs2QEEXyHrq1Q==
+	t=1795017990;
+	b=4M4Jd+IyxuBlLZ1jeCud/VA1o5Qz2vMWJCc0Iuioy9lU32tRHxTAVsWqljdHY9d+Dbnw
+	 Rlp+87ASW1GTHQymElKgG9NKWrCKfbu6/FioAHDXM0t2p49U1GgJuLL0lInGimE400xH4
+	 q9DwKF/A4lL1Xk6m0E6TEH52d+ovNPQ6RZp8DaW9MAGXjaK0MOTyRKYZZMkSg6uRnjunO
+	 tLmiGGO8wl9nIw5wAPgQbM7WclLZoKzyCiilEREXCjelA5uZVpwIO+mW/yrHlE0rNR4Gm
+	 ZAhYwIvx2cqYR2NYJUZuRQKrrUB20w3I4WCZERROky9nYqVIz0/4KP/TMY+po/72iDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017987;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017990;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TZXuHyxDsDSVoCxXWL5MLWYGoA4/aA7Y/49lwMzYsZs=;
-	b=epPdifZ3h2yfSI8/S/jm/b5lizmSw301ZsIPSwkDqUZJZSqFpYfUbQv+tndryFQTfjid
-	 SZnqrCIn6tBLKpdUvPtEkHhcRWZq++35csJKuhibXKrQh66LFNNcPsmhpef2Zdoiq8Ias
-	 CuSkbFY6N6IQkmIGLYl6hwlF7FAUjHFSEpnunhOqrN0eAxxll3Njw4k5q5b09S4vE2fRv
-	 HjQjZ6xlLIkubnDvNbdG8cUn6i4FwFEk4gaGX3mgTEvfdsMAIA6y7mnNwwHV5+1exw9/y
-	 dgNHAJcwTyuuq3PTVkPw81yXUe9/sVvb19GvFzHqtlVp4Zs9KwDNkIjmhaQWO+xQOoA==
+	bh=GFg9ZPqLpReq4L3o0UCrBmVN8+xtYrNl4O07n2sKZn8=;
+	b=1g35gYphn481iXyYZpThYaN5W1T7vZK7ROALB/f6YgQshQ/wKFnSOP91e1k65sTv+c9D
+	 68uhn/bPowMQttha9egF3KFkDnzAPad0lPNMJdZKHVQ4yRs60S9Cv61wvYKyOJXzN8YJT
+	 KhZNk5QDTFVFfS6PhpGO2hQqN7Cii9LTOpyQw7F+1fq/Fwv/g29GPTd4uKCSe4SOoIEba
+	 jCRB8pZMexLJ2mhRJF7GDeboJVzFswvPMoFsIYRU4ljLa0kTO/SpUWMVL9PzY4VpbspU8
+	 egJOyjtXFJ+nCKPQpZUHteeCF22fc+1hw7FbA3EHaWEvCEr86IcY4K5w2JkYKcgw7qA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TO25c+X4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tccyr7dU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6254B606A31C;
-	Wed, 18 Nov 2026 16:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D04606A320;
+	Wed, 18 Nov 2026 16:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TO25c+X4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42021F000C4;
-	Wed, 18 Nov 2026 16:06:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tccyr7dU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893101F000C4;
+	Wed, 18 Nov 2026 16:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017987;
-	bh=TZXuHyxDsDSVoCxXWL5MLWYGoA4/aA7Y/49lwMzYsZs=;
+	s=korg; t=1795017990;
+	bh=GFg9ZPqLpReq4L3o0UCrBmVN8+xtYrNl4O07n2sKZn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TO25c+X4xmHQKsYGET24towwbel4ZVFnxZK+iN283RC6126bzqu/EvF6Yis5i92rd
-	 caBSEVUMh3frZsPj8DXVVqukTwbPiGGQY2lsKvJIwkGFGdK85348ao53Ef6/yRb54T
-	 BOMFyohH8Bow6RuFXQwi+/6BK0wsRgaFHI6pGpsE=
+	b=Tccyr7dUnEo3/LVDN+YlGjYXVNaSRlAGGAizY9IdUGcKG5GyLHon3CFLmQrYy7GWw
+	 QYE1j0s57U8LZtRQTla147zjvVh+kEmEwzNKXoxfre0zHTC28Mt3jQ+ZTIVFtglCIZ
+	 JR+u/O+XUxKoY2xOf3Z+OQCOiZm0KWH9Pox5asPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	George Zhang <george.zhang@amd.com>,
+	Lu Yao <yaolu@kylinos.cn>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1079/2651] ARM: mvebu: fix Cortex-A9 errata selection for Armada 38x
-Date: Wed, 18 Nov 2026 15:38:39 +0100
-Message-ID: <20261118150326.841356277@linuxfoundation.org>
+Subject: [PATCH 7.3 1080/2651] drm/amd/display: Fix wrong plane index in dcn6 writeback latency loop
+Date: Wed, 18 Nov 2026 15:38:40 +0100
+Message-ID: <20261118150326.877371337@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,47 +70,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Lu Yao <yaolu@kylinos.cn>
 
-[ Upstream commit 76e67df8bc1cb72157368c3669119e64cdb0a6a6 ]
+[ Upstream commit 2c3ed158087d2971cad00faab24e2143eef49944 ]
 
-Armada 38x uses Cortex-A9 r4p1, but MACH_ARMADA_38X selects the
-workaround for erratum 720789, which was fixed in r2p0, and omits
-workarounds for errata that still affect r4p1.
+Use plane_descriptors[k] for the loop bound, matching the loop body.
 
-Drop ARM_ERRATA_720789 and select ARM_ERRATA_754322 for faulty MMU
-translations following an ASID switch and ARM_ERRATA_764319 for
-unexpected undefined instruction exceptions when reading debug
-registers. Also select ARM_ERRATA_764369 when SMP is enabled to work
-around cache maintenance by MVA failing to reach other agents.
-
-The Cortex-A9 r4 Software Developers Errata Notice (ARM UAN 0009D)
-lists these errata in sections 2.3.3, 2.5.10 and 2.3.4, respectively.
-
-Link: https://documentation-service.arm.com/static/608118675e70d934bc69f143
-Fixes: 9aa30f1c13d1 ("ARM: mvebu: add initial support for the Armada 380/385 SOCs")
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Fixes: 7f7d7ea1fa51 ("drm/amd/display: Add new sources for DCN6")
+Reviewed-by: George Zhang <george.zhang@amd.com>
+Signed-off-by: Lu Yao <yaolu@kylinos.cn>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-mvebu/Kconfig | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn6_calcs_dchub.c  | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-mvebu/Kconfig b/arch/arm/mach-mvebu/Kconfig
-index 9f60a6fe0eafb..5203b5cfa4577 100644
---- a/arch/arm/mach-mvebu/Kconfig
-+++ b/arch/arm/mach-mvebu/Kconfig
-@@ -55,7 +55,9 @@ config MACH_ARMADA_375
- config MACH_ARMADA_38X
- 	bool "Marvell Armada 380/385 boards"
- 	depends on ARCH_MULTI_V7
--	select ARM_ERRATA_720789
-+	select ARM_ERRATA_754322
-+	select ARM_ERRATA_764319
-+	select ARM_ERRATA_764369 if SMP
- 	select PL310_ERRATA_753970
- 	select ARM_GIC
- 	select ARM_GLOBAL_TIMER
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn6_calcs_dchub.c b/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn6_calcs_dchub.c
+index a4e2f8604650f..60e873edf13c3 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn6_calcs_dchub.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn6_calcs_dchub.c
+@@ -1252,7 +1252,7 @@ void dcn6_calculate_watermarks_and_dram_speed_change_support(
+ 			DML_LOG_VERBOSE("DML::%s: k=%u, VActiveLatencyHidingUs = %f\n", __func__, k, p->VActiveLatencyHidingUs[k]);
+ 		}
+ 
+-		for (unsigned int j = 0; j < p->display_cfg->stream_descriptors[p->display_cfg->plane_descriptors[j].stream_index].writeback.active_writebacks_per_stream; ++j) {
++		for (unsigned int j = 0; j < p->display_cfg->stream_descriptors[p->display_cfg->plane_descriptors[k].stream_index].writeback.active_writebacks_per_stream; ++j) {
+ 			double byte_per_pixel_luma_in_buffer = 1.0;
+ 			double buffer_for_luma = (double)p->WritebackInterfaceBufferSize * 1024.0 / 2.0;
+ 			if (p->display_cfg->stream_descriptors[p->display_cfg->plane_descriptors[k].stream_index].writeback.writeback_stream[j].pixel_format == dml2_444_64) {
 -- 
 2.53.0
 
