@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025991;
-	b=P3eh7nLxX7stTPMcZWgn1+7+ctyadHgPqT5pjEnlRUcKtbCQMHnTFIXh8PsGG/l3iec5
-	 SH/Uy+MFDlR+pbm2nY8z0l09vhLvakMPmNR0s8133mwYC3b9AKAgRcKORX4pLU4ficRU4
-	 rTs1EHi8+XIdi39l6PV3OX6dvVSmTvBn5hPqOZp0NqPfgNvf9pX1Ey5XnkGLxLJCQIgb4
-	 oGd7Qkn3bfQqupy8p+iMhbgQGFuzDEIyyp+tRqAcRkya4teOdx1hbUqEqZHANk134hEAW
-	 ECjYb3+0hHzKYh7vMS8ORM3KNRjtPdRwKoeWhNd+dXXYTmsHR+DYtfaf4+4nUqh7BJw==
+	t=1795025994;
+	b=41sAb7XcECyHFyJUUOxpj4VGmh0YhGqObPv+2Mbl7IfgUOMUSBu2UyQlEIEhV4VHt7a+
+	 4Xws9KsX4SthumxFbRS3x9Be9ofh0xD5qv0soAqjrgiSO3a21wx1UMgfWMCiuMpI3WCWd
+	 he6e7zD9f4pyH4EdwtLUORaDPzcauKpebm4lLOxFrV4OiHng/9XRa7VH9Nn9cryimB/mH
+	 kMMUpbKrnmhFWbHXQeers4MyHNAlFKyHxjIVoQkb7eJfW/KjqfCdyW2ux3aSW0lH4FtUS
+	 wuzJxv0tQZsjWUfFqKbHEnYkgHJn7EJe8DjrRWYBtKLs+4Z1VEVrDsLhp+kUy0podmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025991;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025994;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4ZF/m5OyAVHuwkXM+WfoN69sm7lPbJdkoBwJBSPBdNc=;
-	b=nCE1XI8hfh4GwOut4kQNPpWCilcOlqwtTu5svBYRp7NgdG2cPU8k9wpzeRWIPKmODt+M
-	 R/h3p7VGq7NkXedqQin6a+sgkppIkv0cfqHavgdDipjsrdRiAZWS17A62ENuplKmsiZFV
-	 MVb22oKlfHK24MBhYuRNuLMepYEYPDZ8hYKju/wRvuVcj4pcj0gWCJit/CVXI+lrk8d1y
-	 p3w6KY9UrkZKKp6D4PnSDF+FIxaoi9cxdOLy1xvTSYLGQVx0q8E7wAsqQPnYlA5n8dghB
-	 OE2wEmHceG0d1pf4XHLjONcRwyinGy6FuDMjHPISRrd6MoGXRGWwI2LNwSHsKC77ymg==
+	bh=bz6GhSILRFVkxyobe9TjI1VAwxZHhVCXhcRLm0wwhBw=;
+	b=HKkwBALvpBidl6skWO3w/xM0/e8azKca6i4ea14MQ5+nPIZITrdiEyvGmszu5/IDhBQb
+	 B9QQYNknJgaHAyXHGcAhoMpMbiw03c0uCsmE/vhm6tVu+pJR2ln+nu38Uug0cJ7suN1wt
+	 VYSp8BRHy2dsvYqJ25jRO0osRfIgITRc0WXagorS/v5eCGL6LuQDR7a4kDEj4YJ55yhsW
+	 VI3CpLTDO8/FWfJSds1OCfuBhDWCgBppKErgtub4ixIv89e5FsyZ1VxKi4pNOhWnG9Xkp
+	 YgnymY1NGqCjEifXoNZbCZkgBQ2LKyoJdLRSBnLdCnWMPARPpMNxnh0BCXKE493Dpeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Wiuwbw/z";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bv64o8X2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE06606A325;
-	Wed, 18 Nov 2026 18:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F73A606A330;
+	Wed, 18 Nov 2026 18:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wiuwbw/z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92DC1F000C4;
-	Wed, 18 Nov 2026 18:19:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bv64o8X2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99591F000C4;
+	Wed, 18 Nov 2026 18:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025991;
-	bh=4ZF/m5OyAVHuwkXM+WfoN69sm7lPbJdkoBwJBSPBdNc=;
+	s=korg; t=1795025994;
+	bh=bz6GhSILRFVkxyobe9TjI1VAwxZHhVCXhcRLm0wwhBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wiuwbw/zEB6YHBH8HYhMgiKLj6e9TuoHRcee4CbxGF/Fbj2wRapKZ3uHJXcQpul4a
-	 jDFFO//W5IvYgEeDhzv+HQGnrKSJuKuctZNFhRnEX7ksLGBZ37F+HO1SzpOD7n9dKg
-	 7ci4kSmfto2hV210tGDfez71xNd7aZF9UrQ+E1UY=
+	b=Bv64o8X2ePTstVpRFKZly29nKxeEU284xIV0jmG1WEPyMICf5DafO7PXm5hA5hAbM
+	 BfAKZolEgqceCXhi00aikqhyssVSaS8Lr/NBd/ncvP+d9iV8086hIvuNQO8z3wMUbn
+	 b26JJoSj1G3F/ZK27B0jBoL1LqIclqD+emfc1BE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jake Labelle <southampton.jake.labelle@gmail.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1275/2151] nilfs2: reject non-regular inodes in dsync recovery
-Date: Wed, 18 Nov 2026 15:50:10 +0100
-Message-ID: <20261118150208.570334069@linuxfoundation.org>
+Subject: [PATCH 6.18 1276/2151] cpufreq: qcom-cpufreq-hw: fix device node refcount leak in phandle parsing
+Date: Wed, 18 Nov 2026 15:50:11 +0100
+Message-ID: <20261118150208.605927958@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,63 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jake Labelle <southampton.jake.labelle@gmail.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit ef2ccb1554df254eb4066171ce93e6d5fb1af2e3 ]
+[ Upstream commit 6fa50b1988b8dfd2e92a9cecba073fe4347a5e23 ]
 
-During roll-forward recovery, nilfs_recover_dsync_blocks() obtains the
-inode designated by fi_ino of a dsync log without checking its type.
-If a corrupted image designates a special inode (e.g. a device node)
-there, the inode's embedded bmap was never initialized:
-__nilfs_read_inode() calls nilfs_bmap_read() only for regular files,
-directories and symlinks.  The subsequent nilfs_get_block() then
-dereferences the uninitialized bmap->b_ops and jumps through it,
-crashing the kernel or worse.
+of_parse_phandle_with_args() transfers a reference to the provider node
+in out_args->np, which the caller is responsible for releasing with
+of_node_put().  Neither qcom_get_related_cpus() nor
+qcom_cpufreq_hw_cpu_init() ever puts args.np: they only put cpu_np, which
+is a different node obtained from of_cpu_device_node_get().  The
+reference is therefore leaked on every successful call, and
+qcom_get_related_cpus() leaks one per present CPU.
 
-Regular files, directories, and symlinks are the only inode types
-with data blocks to recover; reject anything else before touching
-its block mapping.
+Release args.np after the parsed index has been read in both call sites.
 
-[ryusuke: conformed AI tag to guidelines]
-
-Fixes: 0f3e1c7f23f8 ("nilfs2: recovery functions")
-Assisted-by: Claude:claude-mythos-5
-Signed-off-by: Jake Labelle <southampton.jake.labelle@gmail.com>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: 2849dd8bc72b ("cpufreq: qcom-hw: Add support for QCOM cpufreq HW driver")
+Assisted-by: DeepSeek-V4.1-Flash
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/recovery.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/cpufreq/qcom-cpufreq-hw.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/nilfs2/recovery.c b/fs/nilfs2/recovery.c
-index dfff3bc84bcd3..88c7386c7a964 100644
---- a/fs/nilfs2/recovery.c
-+++ b/fs/nilfs2/recovery.c
-@@ -540,6 +540,23 @@ static int nilfs_recover_dsync_blocks(struct the_nilfs *nilfs,
- 			goto failed_inode;
- 		}
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index 4f14573e88a4d..987222de7033a 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -320,6 +320,8 @@ static void qcom_get_related_cpus(int index, struct cpumask *m)
  
-+		/*
-+		 * Regular files, directories, and symlinks are the only
-+		 * inode types with data blocks and an initialized bmap;
-+		 * a crafted image can reference some other inode type
-+		 * here, whose i_bmap_data was never set up by
-+		 * __nilfs_read_inode().
-+		 */
-+		if (!likely(S_ISREG(inode->i_mode) || S_ISDIR(inode->i_mode) ||
-+			    S_ISLNK(inode->i_mode))) {
-+			nilfs_warn(sb,
-+				   "%s: invalid inode type (ino=%lu, mode=0%o)",
-+				   __func__, (unsigned long)rb->ino,
-+				   inode->i_mode);
-+			err = -EINVAL;
-+			goto failed_inode;
-+		}
+ 		if (index == args.args[0])
+ 			cpumask_set_cpu(cpu, m);
 +
- 		pos = rb->blkoff << inode->i_blkbits;
- 		err = block_write_begin(inode->i_mapping, pos, blocksize,
- 					&folio, nilfs_get_block);
++		of_node_put(args.np);
+ 	}
+ }
+ 
+@@ -537,6 +539,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
+ 		return ret;
+ 
+ 	index = args.args[0];
++	of_node_put(args.np);
+ 	data = &qcom_cpufreq.data[index];
+ 
+ 	/* HW should be in enabled state to proceed */
 -- 
 2.53.0
 
