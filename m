@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027218;
-	b=oxiq2HxxjgRL5Qs91gJ/wl3C3OQqkdViZrT+spqoFKeK4No8ALu9OMfhURddBxg7nHQH
-	 9CmACKZZP5M+UPIf3OzRgRMbKj3QTM+m0HiLM3YWEOfQPv3siJ2XBrtQo8d6bHyLCw6+/
-	 7NOefrMbGHoUxfX0Fc4Qt91Kvw3K1PYHEt58JHGECa8iXOapZe247CDrN+3PwBISKzYYp
-	 9tRtg2rG4dsEMUUYHgk5QiI554RBJaGFcGTOn9peV/eiaHImbHPFtshpfAZs85vLz2+FZ
-	 9wG0Tzd/eIsZEw87r5FzhyM8JDJJcFEwRDh/7Arzbh2ZXsNyO8VW5aN1/HJl8mkHinQ==
+	t=1795027221;
+	b=nKmAznuu/oMTbFppyxo7NU66YAndcx+Q8ZTM7CdVxKiI3XUnmwIPLUrAipv7w2pi+ZFa
+	 SHKrLtnlJF4ovGwA8RrTGpUErzeJ3xG6zSlh78kGZbwMhQAs+IINxUJQ5AHM9n61yT5Gf
+	 o3cJr1SsePm4dbiXwl4UYsLi4R0XNd1uN7y3N6VZBa1rS1nLmsuZU/5+2+zKw8HlVJU64
+	 x5ib/6sGdljhGGa57V1ndXWjDxZT3F5a5zrp7m2F7y3PNjapENmkylVDckb3KjSZ+k9oO
+	 QRy4QEBMXKnGlXpQ7TytRKmaOOSc+hYMtEA9qd7NEfPOUnMfnp+AdkAhMP8PE0BldRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027218;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027221;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Bsm8OSvLAwuDR0OP7gMW9+6l6JSHRuZSxi4dRJ+iXfI=;
-	b=UWDnJUZBXsbyTAVUo9Suk+/LQCheqMFg/Wo+vCArhpGyVIDdKWg9Vp6x8ZV8axA6nY8R
-	 2/G8lWAsLxvFX/TxDYHvgnmwouw9fgrk6Fnhe7mfvA5LkDoTO2CGhlfjenGI1AzaWDUWu
-	 uU/QlqfYQMzkXrZWpFr4lKBT/FryPXdy0GtvyHf6sdHNfI4XWVaRcW/HNMbP+VQ59mz9e
-	 qD3E721Qnh0kZDwOj2WnGpjESoAhxy+k8obEls63O0g0GnSMOzPBX3lthnUOMxqJ3ntgr
-	 fh5XJ9UHDFaoVfOCKgJryuD64pHmhkUket+PuJEE04EeVZFRCfF5dJKBavplEcgwj8Q==
+	bh=dYOC0qmnjR3ZHpIgCqCP7zPGLmDC/Bio8gu60ulxQDE=;
+	b=FKtQi55fH77yCt6EKfhsR8ZSNCiVkoI+lMzNVNMXr8uuN7c9MqH5AfiUopdUbRFk8CXj
+	 Pw0uEkDG4jEzO3aqGR8R+0kgWWUqba8sSXQ+sMoS6hUYrw/CBcVpq8CQY1gTpXuKMwaHe
+	 9wYiPa+ronjPnm4ctFX+4ReWFCCsEtgyBTz+X7QVIxyADWg001tYyqsWgbxb0YlTcV6x4
+	 7DW8jyyaYn3KZ24EN/9Rs5D46yCTmkXTdiJK5d5fwySQGRnEErtBVVxY0VQpZ5gLnf+YV
+	 b9oC8Tp4lhD1eHHvqGZp9YdhqloQv07Rcf0gp3eVoaITRtN7tiCI74KxvYWoMEfbihg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BO1RMe1z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bnAHO21o;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C750860A260F;
-	Wed, 18 Nov 2026 18:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40D6606A335;
+	Wed, 18 Nov 2026 18:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BO1RMe1z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B081F000C4;
-	Wed, 18 Nov 2026 18:40:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bnAHO21o
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1841F000C5;
+	Wed, 18 Nov 2026 18:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027218;
-	bh=Bsm8OSvLAwuDR0OP7gMW9+6l6JSHRuZSxi4dRJ+iXfI=;
+	s=korg; t=1795027221;
+	bh=dYOC0qmnjR3ZHpIgCqCP7zPGLmDC/Bio8gu60ulxQDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BO1RMe1zTogTi+mZHFGOzPKig2E11zRHqmSFFrU2mXigzUFd0PY5lti+azesU7HhZ
-	 R7GP1JdR1d0BzPgiJtLDKmmkW0ypBS8pnjjfqsNnkxlxRwMM9/i37UAAg3T2flhWVH
-	 QZUh4mK+m4nA+vagIXDeCVsWDPPIHP/f5SNG8d4I=
+	b=bnAHO21o8++FEEAjRoCAUwoXXe1MpPkaVrIO0m+O8mu1w7MnSCOYhP84FckaTcduY
+	 WPJXhBQ4MYCg1tRntZfDh/c5WzFfrLQJ8412rYVEOahOm3Rp38mZjcaa33kYRBUZs+
+	 eGCgahCQKCnJfn7XGN+3CdeFo+Uvh/u+7yaWloE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1712/2151] ALSA: jack: Protect the index scan against control removal
-Date: Wed, 18 Nov 2026 15:57:27 +0100
-Message-ID: <20261118150224.186623760@linuxfoundation.org>
+Subject: [PATCH 6.18 1713/2151] perf evsel: Mark the event as supported when retrying an open
+Date: Wed, 18 Nov 2026 15:57:28 +0100
+Message-ID: <20261118150224.222536117@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,70 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit ba8c3d5fc27ac3f86962641dd3b6600906234bab ]
+[ Upstream commit cc956e0cd6a405fbc6ad3055cbbdb178562ef27d ]
 
-A control found during a jack-name index scan must remain alive until
-snd_ctl_find_id() finishes comparing its ID and count. However,
-get_available_index() calls it without holding card->controls_rwsem.
-With CONFIG_SND_CTL_FAST_LOOKUP enabled, the lookup loads a raw control
-pointer from ctl_hash and dereferences it in elem_id_matches() without
-any lock that excludes removal.
+Opening a group with perf record on a machine with perf_event_paranoid >
+1 and no CAP_PERFMON fails the first perf_event_open() with EACCES, after
+which evsel__open_cpu() clears evsel->supported; evsel__fallback() then
+adds exclude_kernel and record__open() retries, and the retry succeeds
+with supported left false.  get_group_fd() treats unsupported events as
+ungroupable, so the retry opens the group members without their leader:
 
-This can happen when a jack is created while a different jack owner on
-the same card removes an existing control with the same name and index.
-For example, probe and unbind of different HDA codecs can reach these
-paths on a shared card if their generated jack names match.
-The codec device locks do not serialize operations on different
-codecs. The unbind path can free the control during the index scan:
+  sys_perf_event_open: pid 12345 cpu 0 group_fd -1
+  FAILED '.../test-record-group-sampling1' - group failure
 
-  Codec A: probe                  Codec B: unbind
-  --------------                  ---------------
-  get_available_index()
-    snd_ctl_find_id()
-      kctl = xa_load(...)
-                                  hda_codec_driver_remove()
-                                    snd_hda_codec_cleanup_for_unbind()
-                                      snd_hda_jack_tbl_clear()
-                                        snd_device_free()
-                                          __snd_device_free()
-                                            snd_jack_dev_free()
-                                              snd_ctl_remove()
-                                                snd_ctl_remove_locked()
-                                                  __snd_ctl_remove()
-                                                    snd_ctl_free_one()
-                                                      kfree(kctl)
-      elem_id_matches(kctl, ...)
-        read freed id/count -> UAF
+which fails the group subtests of "perf test 82", the Perf attribute
+expectations test, when it is run as a regular user, while it passes as
+root or with CAP_PERFMON, where the first open doesn't fail.
 
-Hold controls_rwsem for read across the index scan so removal cannot
-free a control until the lookup has finished using it. Release the lock
-when get_available_index() returns, before the caller adds the new
-control under the write lock.
+commit 2cc7aa995ce9 ("perf stat: Refactor retry/skip/fatal error handling")
+dropped the pos->supported = true that record__open() did after a
+successful open and moved the resets into the stat code only, while
+saying "When an event is tried the supported is set to true again".  Do
+that in evsel__open_cpu(), which every open entry point funnels through,
+so that a retry describes its own try instead of the previous failure.
 
-Fixes: 38ea4c3dc306 ("ALSA: control: Optimize locking for look-up")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Fixes: 2cc7aa995ce9ecd8 ("perf stat: Refactor retry/skip/fatal error handling")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Tested-by: Ian Rogers <irogers@google.com>
+Cc: Ian Rogers <irogers@google.com>
 Assisted-by: LLM
-Link: https://patch.msgid.link/pm-pmb-f08c844bb1163c8d4fa1-v2-2f3c99e40f90134846ee@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/ctljack.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/util/evsel.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/core/ctljack.c b/sound/core/ctljack.c
-index 709b1a9c2caa3..e6b0d98ca480e 100644
---- a/sound/core/ctljack.c
-+++ b/sound/core/ctljack.c
-@@ -37,6 +37,7 @@ static int get_available_index(struct snd_card *card, const char *name)
- 	sid.iface = SNDRV_CTL_ELEM_IFACE_CARD;
- 	strscpy(sid.name, name, sizeof(sid.name));
+diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
+index 0da2c56745c10..11b74d56d0601 100644
+--- a/tools/perf/util/evsel.c
++++ b/tools/perf/util/evsel.c
+@@ -2665,6 +2665,12 @@ static int evsel__open_cpu(struct evsel *evsel, struct perf_cpu_map *cpus,
+ 	enum rlimit_action set_rlimit = NO_CHANGE;
+ 	struct perf_cpu cpu;
  
-+	guard(rwsem_read)(&card->controls_rwsem);
- 	while (snd_ctl_find_id(card, &sid)) {
- 		sid.index++;
- 		/* reset numid; otherwise snd_ctl_find_id() hits this again */
++	/*
++	 * A failed attempt being retried after evsel__fallback() would
++	 * otherwise keep group members out of their group in get_group_fd().
++	 */
++	evsel->supported = true;
++
+ 	if (evsel__is_retire_lat(evsel)) {
+ 		err = evsel__tpebs_open(evsel);
+ 		goto out;
 -- 
 2.53.0
 
