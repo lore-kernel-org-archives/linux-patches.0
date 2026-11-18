@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026753;
-	b=UGTHOT1uWsCLPfj9Ct3dhJjHk974RAXTKV0pqgREBfwb8+EBxZk20358D0k8ZqtWPnHv
-	 UhDGQ7KezBxiSl1RjR7P/yuFQmtdSCYFFE73ax+jkuwKWeyYCOicl2jP0fDPGNgJO/Tbv
-	 /3AN44vbfnbIe4nxJ25V3jYurtJ9UbbU5tSeWIqco9uN78ISTpsl2OlhNHGYY2TpTkRrM
-	 v8gRmEsj3Q3Dx4TeeTZdp7f0qew+6FvcpDmD2qLKX+/VCprSd1naCbuG8rPwryHazgutI
-	 uuqGw0N94JdIc4WGrxl5YiTDtFf2Uq2MfrpTSR48D8C7Im5MA47Kp/o1JNYwAYR68CA==
+	t=1795026756;
+	b=p22i4W9cayYHDr081X4XsUxbTkCX7SlKYbmjPV4dtoIUijVzgFw9xEYVXcemT6RAeU8l
+	 tQPOgT/HoluBR6d+PXey07qyYDlXiCHIJN/0DNiesS2z0C5wMYKI7kcWTR4zKhraE/4ZQ
+	 lsXISIg9R+RpOnMjPDLCiXnm/YMiK5iNls1zC7t0pum2AFjNF7aOp7RkgOF5eWzEL0y1e
+	 ld4tMi7V65Pz5kcpXYWGFCsB/xrOtRwKEMTyURUhans3uPAN7nb7jxYmILzA+AcD6jPiV
+	 k2x+kJozsMkrkeX9KwXtfHBbVBa8L7DastPd+JbJ7b2maHzYayRiqmGLF4s0uQ7rAkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026753;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026756;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YWuhO4YVfamUL8Ct0I4zmHznZi4LTtHxt0gSnAebp1E=;
-	b=KfgPXbFr4IuVYhGqhpUnRy9aLV/GjUkDvZdgu/Hx1Rfx+4zAF0mH4PToNmBZODtrWvAF
-	 949vVPvfpoc4sX3IunWLWilgL/bl0zu++YAMoADm+u5JsDVm0GyXv4vOYqIiV4sRoJy19
-	 MDif3Wf19DaMKGl3tbFcHSppUQP5WPn2eifwFoT7qTo4/iWbf46H0jbLEuQrxH1QytzJP
-	 ONfQzalb0OzsHBmNVBEZWY8cKBBx9YHXysDjgfw9gorBVOucIPGM0NlowTkKiibfi2ec+
-	 d6bAXQxF813OI3UpvYz0PsSLJVoEJ1QhY/zKFrJ1yH2+wmSYgUdGNbMWYB9g3Oon6zA==
+	bh=zcQ/J93QMKAec2yUyWqpg5DclQ3OS9CxJYUt6MjyyoA=;
+	b=B9C4XZlTu2ZyLpwrfDXhwljUQXsmxw+wZVPzWHoyAm0xPqbK0Q43k7W06wlCtg09Uz9y
+	 fRhA7qShBYEyFF4f9Yro2zqUeGNqFqZeprqEgAIIW5WjXCX6TnmVnzgRsXVpP3qGenJ9F
+	 CXRaasdQz1QycfaqMakVFJNYyElqss2p9iPo15ymueQ40WgYrvGHgFXDvMgWTW8QYnG6F
+	 XBZOK2DEg+9LiEL+gSxSf6UTuTEKQziFHL1OSOIZCYrb1j4Au4LDWzrDomUC3rlEeFsmu
+	 1L7VviP8spSy5WOp7W1VSCVVmdSMu6bPMomq+4exGWpgDzIAB1GAlgOcBHp8I3fOFSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jRbid3G1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fUzSq7Ki;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF2D606A31C;
-	Wed, 18 Nov 2026 18:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8553606A31C;
+	Wed, 18 Nov 2026 18:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jRbid3G1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257341F000C4;
-	Wed, 18 Nov 2026 18:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fUzSq7Ki
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11DD11F000C4;
+	Wed, 18 Nov 2026 18:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026753;
-	bh=YWuhO4YVfamUL8Ct0I4zmHznZi4LTtHxt0gSnAebp1E=;
+	s=korg; t=1795026756;
+	bh=zcQ/J93QMKAec2yUyWqpg5DclQ3OS9CxJYUt6MjyyoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jRbid3G1ShAHCLJGISkxDomJD6TFXqhzkYxquGK6sqgM77oELSe9ItVov016HntGG
-	 EBWD4r1+gWCrNACirUZtVNQiP5YCLqYKHw7cK2BelPDvq18LyVdzF1ugBjg5M0pbdx
-	 TsNfR46RqNboSD9sr20Vko1emWuRUewZnaM60kIY=
+	b=fUzSq7KiiGlmmhwuhM9T9RmUd7xKhLx6i1Hvi3Pe5OORxgxSy5/LkR04ea4N6uFBx
+	 fySvZlU7tjEOYI9TFIs5B6H62h/qqPkD3EmIKhgLWWd1y9rK0yAQ7cDsb/ipdKw9op
+	 WR8K9ZIjRpoFKQ63tiHSRlXh0Ols/eF4DwlyfnOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Kiran K <kiran.k@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1546/2151] Bluetooth: hci_sync: Protect IRK identity reads with RCU
-Date: Wed, 18 Nov 2026 15:54:41 +0100
-Message-ID: <20261118150218.219378145@linuxfoundation.org>
+Subject: [PATCH 6.18 1547/2151] Bluetooth: btintel: propagate version TLV parsing errors
+Date: Wed, 18 Nov 2026 15:54:42 +0100
+Message-ID: <20261118150218.254319577@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,187 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-[ Upstream commit 4b76fa362110cf1b74a0263c14406b71de99894c ]
+[ Upstream commit 3a74624b5deae7f5e2b98e638687fbf9594a9781 ]
 
-hci_le_set_privacy_mode_sync() needs the IRK returned by
-hci_find_irk_by_addr() to remain allocated until its identity address
-and type have been copied into the command. The finder drops its RCU
-read lock before returning this borrowed pointer, leaving the later
-field reads unprotected.
+btintel_read_version_tlv() ignores the parser return value, so setup
+continues with partially initialized version data after a malformed TLV
+causes parsing to stop.
 
-When a privacy-capable controller has a pending peer with address
-resolution and device privacy enabled, accept-list programming can
-reach this helper while management reloads the IRKs. The request
-worker holds hdev->req_lock, whereas load_irks() takes hdev->lock,
-allowing the following ordering:
+Return the parser error to the caller so an invalid response fails setup
+instead of being treated as successful. Keep this behavioral change
+separate from the bounds checks so it can be reverted independently if
+an existing controller sends malformed data.
 
-  Request worker                     Management / RCU reclaim
-  hci_le_set_privacy_mode_sync()
-    hci_find_irk_by_addr()
-      rcu_read_lock()
-      find matching IRK
-      rcu_read_unlock()
-      return borrowed IRK
-                                     load_irks()
-                                       hci_dev_lock(hdev)
-                                       hci_smp_irks_clear()
-                                         list_del_rcu()
-                                         kfree_rcu()
-                                       hci_dev_unlock(hdev)
-                                     RCU grace period and IRK free
-    read irk->addr_type
-    copy irk->bdaddr
-
-The request then accesses a freed IRK. KASAN reports a one-byte
-use-after-free read of addr_type on this path.
-
-Keep an outer RCU read-side critical section across the lookup and
-both identity-field copies. The finder's nested unlock then leaves
-the IRK protected until the caller finishes copying it. Release RCU
-on a lookup miss and after copying the fields, before the synchronous
-HCI command can sleep.
-
-KASAN report as below:
-
-    ==================================================================
-        BUG: KASAN: slab-use-after-free in
-    hci_le_add_accept_list_sync+0x90f/0x940
-    Read of size 1 at addr ffff88810aa6072c by task kworker/u17:0/493
-
-    Workqueue: hci0 hci_cmd_sync_work
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? hci_le_add_accept_list_sync+0x90f/0x940
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? hci_le_add_accept_list_sync+0x90f/0x940
-     kasan_report+0xe0/0x110
-     ? hci_le_add_accept_list_sync+0x90f/0x940
-     hci_le_add_accept_list_sync+0x90f/0x940
-     ? __pfx_hci_le_add_accept_list_sync+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? conn_params_copy+0x3a0/0x650
-     hci_passive_scan_sync+0x8c9/0x1e80
-     ? __pfx_hci_passive_scan_sync+0x10/0x10
-     ? find_held_lock+0x2b/0x80
-     ? hci_lookup_le_connect+0x181/0x3c0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? find_held_lock+0x2b/0x80
-     ? hci_update_passive_scan_sync+0x437/0x950
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x280
-     hci_update_passive_scan_sync+0x461/0x950
-     hci_cmd_sync_work+0x1b3/0x450
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     process_one_work+0x908/0x19c0
-     ? __pfx_process_one_work+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_is_held_type+0x8f/0x100
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     worker_thread+0x65c/0xe40
-     ? __pfx_worker_thread+0x10/0x10
-     kthread+0x34f/0x460
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork+0x659/0x940
-     ? __pfx_ret_from_fork+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __switch_to+0x74f/0xf80
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork_asm+0x1a/0x30
-     </TASK>
-
-    Allocated by task 507:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x251/0x610
-     hci_add_irk+0xb6/0x220
-     load_irks+0x5ef/0x7e0
-     hci_sock_sendmsg+0x128b/0x22e0
-     __sys_sendto+0x425/0x470
-     __x64_sys_sendto+0xe5/0x1c0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 0:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     __rcu_free_sheaf_prepare+0x65/0x2a0
-     rcu_free_sheaf+0x1f/0xe0
-     rcu_core+0x661/0x1d10
-     handle_softirqs+0x201/0x930
-     __irq_exit_rcu+0x110/0x1e0
-     irq_exit_rcu+0xe/0x20
-     sysvec_apic_timer_interrupt+0x6c/0x80
-     asm_sysvec_apic_timer_interrupt+0x1a/0x20
-
-    The buggy address belongs to the object at ffff88810aa60700
-     which belongs to the cache kmalloc-64 of size 64
-    The buggy address is located 44 bytes inside of
-     freed 64-byte region [ffff88810aa60700, ffff88810aa60740)
-
-    The buggy address belongs to the physical page:
-        page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0
-    pfn:0x10aa60
-    flags: 0x200000000000000(node=0|zone=2)
-    page_type: f5(slab)
-        raw: 0200000000000000 ffff8881000428c0 dead000000000100
-    dead000000000122
-        raw: 0000000000000000 0000000000200020 00000000f5000000
-    0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff88810aa60600: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff88810aa60680: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    >ffff88810aa60700: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-                                      ^
-     ffff88810aa60780: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff88810aa60800: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    ==================================================================
-    Disabling lock debugging due to kernel taint
-
-Fixes: adae20cb2d20 ("Bluetooth: Convert IRK list to RCU")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+Reviewed-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Tested-by: Kiran K <kiran.k@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: cf87709d7ff8 ("Bluetooth: btintel: Zero version data before parsing TLVs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btintel.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index bff27bcf9d4e6..a5a6708b93cbd 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -2612,13 +2612,19 @@ static int hci_le_set_privacy_mode_sync(struct hci_dev *hdev,
- 	if (!(params->flags & HCI_CONN_FLAG_DEVICE_PRIVACY))
- 		return 0;
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index cdcd3b20f1b4c..704feeee3233f 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -713,6 +713,7 @@ static int btintel_read_version_tlv(struct hci_dev *hdev,
+ {
+ 	struct sk_buff *skb;
+ 	const u8 param[1] = { 0xFF };
++	int err;
  
-+	rcu_read_lock();
-+
- 	irk = hci_find_irk_by_addr(hdev, &params->addr, params->addr_type);
--	if (!irk)
-+	if (!irk) {
-+		rcu_read_unlock();
- 		return 0;
-+	}
+ 	if (!version)
+ 		return -EINVAL;
+@@ -731,10 +732,10 @@ static int btintel_read_version_tlv(struct hci_dev *hdev,
+ 		return -EIO;
+ 	}
  
- 	memset(&cp, 0, sizeof(cp));
- 	cp.bdaddr_type = irk->addr_type;
- 	bacpy(&cp.bdaddr, &irk->bdaddr);
-+	rcu_read_unlock();
-+
- 	cp.mode = HCI_DEVICE_PRIVACY;
+-	btintel_parse_version_tlv(hdev, version, skb);
++	err = btintel_parse_version_tlv(hdev, version, skb);
  
- 	/* Note: params->privacy_mode is not updated since it is a copy */
+ 	kfree_skb(skb);
+-	return 0;
++	return err;
+ }
+ 
+ /* ------- REGMAP IBT SUPPORT ------- */
 -- 
 2.53.0
 
