@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042044;
-	b=V1OUBSgZaPSr7rSfQj1/4qOmb/ewXQbFF0xiGzpQxy+gMr9clW01WuU5x8VS/5fFEzKz
-	 HdbC0ms2P9Mb1EIzdFUkBcUCBgvGNV10HZ8++5/XdogKsTC+zeKuJkUw7PBqGLaLry91E
-	 kj0CVnF51NzcSVzIzuLYGYyNA6zQW6lnkNZRvQ2Vear/15yB9kqcWwCJ8HzZEAFidkb4L
-	 1TmazFWysUceKKuGV1HNc3LDlqev7wUnV5pq0UjOlIutpb+NFUZmSpVnl+A2NiZtjx1vK
-	 mTBU83SEFQ1D0MINSB4tch1cm8aed1AcCQiRuOUEGOtZCRUsiJDRl5GH12fvr+IniPA==
+	t=1795042047;
+	b=KjOtaCvaY/5oPoVhiLjuU8MyUZz7I5v2EkaPV47EdJ5uklN7rtwhSU7KbKqqxkaUhq3a
+	 h54kiMaiGs/+4bXbw7oPU7BlaHlV8ADfsSdCdBAN56qqaXCClh0LjlEkmaummHvaWTd4w
+	 VrOuL7WVWks03t1llJiAZjAz4iNEJ+3QH582svanoNpzwn8sxnUEk8jYj4mcS02ZyNErU
+	 3AaoUNm8KAk3+FJjgBzgzfLPwRUrcWSEpaLkoTSNYSrp5lVOrGxKj2FB63gczFkOuZPbd
+	 +RzR6xtz1W1dPleA3DW+Lo1cHTgCYJQlqFlAj9WWYl0sjIjXVrTuMmy6m+Oeqppxddg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042044;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042047;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UbKAc9PKquHVGGzTnL8c+spBODUA+NsrTbhfzZI+/kU=;
-	b=MNMJp1P08EGAgdt/SyNyIWOzxR2EP57Tn1iIlfEwagF/y5bMG0TLiPc2gWgnycX65Yz0
-	 FLkNqMuCe1emjxtrhhmAJyO+bNGqq2Da1GgWAWkV6OxAP5ckyKmDrMHOuz7SNlVISuypV
-	 lT/IAXacjdRNhDy/nQvEMEo2BFjXihZ046ExDpuvW4btYa0IprjZw1Bnpq4IFLKNGujFB
-	 fX4omS8ozlqJSeFc/pSl5xd9XGlheMKxbXOZDJW9QGB6kMLvtku4R4FqJd04mgXE7HJJY
-	 ucM1fGH0FOKRDSTOoCJqavIDZ9Q+earX3PK6aoBlezQJOu2vHcdH8zcqxzaTbwN5bSw==
+	bh=WM1ENrQMrSPtmY9eWgjKghtnGSnUwj06uVkE/qms2Q8=;
+	b=Gmbie4FbYQD1dwoTziuhT0ZyWaLrqGuINVZZaOFLbj727RLZDfVzofXq2p7G2JXZyG9O
+	 /wjtt42yjGkUxMGAcqusVmeP+U6LaSdHUl22humnUBPy1dxQQCrWSQpKFvtk4BqJvn9v1
+	 q3jUBZEZ4OuQhc1AVwNp+zKzncK6+mke2BNQTejH03M0fKdpbE/D7KJ3y4cnreqtOEB2l
+	 rPRA9jkHWgq3u7/zq0le1dLNLoxFge1SqENnXLCo2FhBT3/0cXDWSBzWYkSipf6YCg54j
+	 IV6ynoOpJil5KhVOa6wlBUftWzVStEybmdmn3lfkiZqg0+vgZh5mI5wQUlArNdGVG3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DCsFfDy3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ye7Jn5g8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D90D606A31C;
-	Wed, 18 Nov 2026 22:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE2B606A32A;
+	Wed, 18 Nov 2026 22:47:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DCsFfDy3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD231F000C4;
-	Wed, 18 Nov 2026 22:47:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ye7Jn5g8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818C11F000C4;
+	Wed, 18 Nov 2026 22:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042044;
-	bh=UbKAc9PKquHVGGzTnL8c+spBODUA+NsrTbhfzZI+/kU=;
+	s=korg; t=1795042047;
+	bh=WM1ENrQMrSPtmY9eWgjKghtnGSnUwj06uVkE/qms2Q8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DCsFfDy3MM/ZIQy9FqNsD27FlnWTS+/pH2B1kaaXzFtCVUyMx3slAvRNt94sW0+CH
-	 4M7MrtSZu8JZp/90ehYZ0p9OhpJkPG10clwuodY7pnNH8Ylh7d/b/tHAYMAlPj5Sbe
-	 GOPqAHdepD20ur2emYD4p/V0catGMb1W2UhDa/xc=
+	b=Ye7Jn5g8rzxtlZb/6nhgXjM/DGk6Mx4UEtgs4APZnnPzSTB/QRzFjpUO+HQT0IzDW
+	 LBt6EgzeR2dmJFUELVbcRrqYg8wMmOtq0SOyXY9+4Cc2ySN3odmoHG5XJK4MwhIoLb
+	 EjI0blmi68ePMMKeBsmcIg8gpW3ijey8tTK/6lts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Cui <cuitao@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2979/3318] blk-iocost: charge zone appends as writes
-Date: Wed, 18 Nov 2026 16:00:01 +0100
-Message-ID: <20261118150449.646153187@linuxfoundation.org>
+Subject: [PATCH 6.6 3024/3318] RDMA/core: Preserve the selected source GID on failed AH modification
+Date: Wed, 18 Nov 2026 16:00:46 +0100
+Message-ID: <20261118150450.922774556@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,40 +67,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Cui <cuitao@kylinos.cn>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit febdbf5682fa7e8f325b07a2c115e7632c4252bd ]
+[ Upstream commit d01ee4c84193196b6e4be4caf1ff8fdcc441ed96 ]
 
-Zone append is a primary write operation for zoned devices; zoned xfs
-and btrfs use it for data writes.  It is priced at zero, so the zone
-append portion of zoned workloads runs outside the controller: a
-1%-weight cgroup issued 16000 appends at zero cost on a zoned null_blk.
+When an address-handle modification fails, the core replaces its source-GID
+reference. The old address then loses the reference which keeps its source
+entry alive.
 
-Treat REQ_OP_ZONE_APPEND the same as REQ_OP_WRITE so it goes through
-the existing seq/rand classification and charging.
-
-Fixes: 0512a75b98f8 ("block: Introduce REQ_OP_ZONE_APPEND")
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20260922043856.2020116-3-cui.tao@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 1a1f460ff151 ("RDMA: Hold the sgid_attr inside the struct ib_ah/qp")
+Link: https://patch.msgid.link/20261015-ib-core-fixes-v1-1-60f6da3ddec3@nvidia.com
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/core/verbs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 874618b6e1769..6e3082cb90dab 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -2548,6 +2548,7 @@ static void calc_vtime_cost_builtin(struct bio *bio, struct ioc_gq *iocg,
- 		coef_randio	= ioc->params.lcoefs[LCOEF_RRANDIO];
- 		coef_page	= ioc->params.lcoefs[LCOEF_RPAGE];
- 		break;
-+	case REQ_OP_ZONE_APPEND:
- 	case REQ_OP_WRITE:
- 		coef_seqio	= ioc->params.lcoefs[LCOEF_WSEQIO];
- 		coef_randio	= ioc->params.lcoefs[LCOEF_WRANDIO];
+diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
+index 55d985441a3c6..74ff967f1a589 100644
+--- a/drivers/infiniband/core/verbs.c
++++ b/drivers/infiniband/core/verbs.c
+@@ -954,7 +954,8 @@ int rdma_modify_ah(struct ib_ah *ah, struct rdma_ah_attr *ah_attr)
+ 		ah->device->ops.modify_ah(ah, ah_attr) :
+ 		-EOPNOTSUPP;
+ 
+-	ah->sgid_attr = rdma_update_sgid_attr(ah_attr, ah->sgid_attr);
++	if (!ret)
++		ah->sgid_attr = rdma_update_sgid_attr(ah_attr, ah->sgid_attr);
+ 	rdma_unfill_sgid_attr(ah_attr, old_sgid_attr);
+ 	return ret;
+ }
 -- 
 2.53.0
 
