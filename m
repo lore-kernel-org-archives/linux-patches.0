@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052118;
-	b=Yb136EzJcikqniXBsLOonHj6CbSILbzf44PpJQkP2tIZuCtaqT7uANvNFvU90UJyAEH7
-	 x/NOJNA2boG2ph0bHK9wyRSOJteCQUHB3BOQL4DSqKH4IgbSPlO0ibHS+1behAcIw0IXT
-	 qdmA6MP5Z6XiGsTD0An0P+z+od7YuhdXn8OwWEA8TaqND9dKUzFD9u9eq2HcaY/dhjtM/
-	 /zzGXTlCQsHccQQP0qBLCJi9gkk0DGFxok+vT2T9rBGcjBHqbOigKqsiXLbuusNCztcYd
-	 EExW4hzVwhi1NR3iTNE9G3O1ETCAMSFCbjk/28aVk57Q7yCY8BBAG8VfbGKiSPnf/6w==
+	t=1795052121;
+	b=qtr36YfxA/hK3k5+hq41rAQT7SfDy6em9kd1VpDVXhwe63i6tTGrlRy6F7n1qSS8i1QZ
+	 8wOReUCfjJCOGiYac3uZSb7nzwIscu6CAAiLXUIC5mIQe/1dWm3c1+vZMHC/Jg0RXBjsI
+	 GXyOxhlmZPhGLHU+AM/WGTcdvz4HGLxoFDjSzAwHmmdYksoWFnshU5oOaN41+TOz7V6p+
+	 WxhIPjQ7FpKn2yJzBYlOuY0AitNvuap5FCzGqVMPavkZzg4X94sqtOaO5HUkzQRKu9qbH
+	 l/nuONUUs8pUxHfFbk6TdvtTSQJzl9/f6nZNSY9oxlSRWAS1qe6OX/r7gkbP3r6cfYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052118;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052121;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Di2y2tSTsWzuf5goypruEUqKHwjoxTqt6iuH65PYDhs=;
-	b=2NroKi6/g7JyX2zUwpqzTiOdAuby32ifnWsEsCHxyDwWxbNqu05kPWmXgF1F6aDfozZI
-	 o84fuX/WCqPDU6UQWs1I8bxDvbzoTg6pSC4kfrnt3tCZIJ65gr7CpD1wX56FKb2JYk8Hw
-	 a8lm2FknAnc6UnAb8Tk1XVZ4QLUWoxzIm6qP3yv4lC9t+6QzBXJQG5Mx66ub+dIOt8jXL
-	 yZYPAdJ1D2d3bbtZRdYf3JLbE0Nm4CctXj24vD/CAdm5D1hSzPXfljQPHElRHZMNKCVz8
-	 lmdpx5OZY84mv33k99qMwwS0DL5WK4j3AOaWPP9I5MAK6rYDvXhBTsWWwfZy0SPpAEQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=gl4gcGfqwcz0RLPdeYcRuag+yQ07Aqs2ZWzSjkGr6qU=;
+	b=cXg5kuxrpXLRK6TNRPSziLyjwxELimivuzn76TwENTGS2u9hSu+3QINcq4vdHqbWQJje
+	 1SC6dDnlotei6gP7D3EAJOUBszCeHwP8JR2PPxitwQVy3Wx+gncYjnRSTsMomfwdTkjjN
+	 z60a8p6nK/jt54ohHnH95RyOJUDwNmzr2veLZ+zsmDsbj6Qhp7rBMvuZGOj6ConpsyZKC
+	 CcQfipzW0/OORXiSgn8FpJPcO1X9e39HAMjBxQKKO2JiGUVfiRpfNLKozNszv6rD+LiCh
+	 BoG2CEEcc7fNmtVcEVaHg4pBuc7cxtXOSHhFAnbrUTgoi5J5MVmEoZzBvzrx0SsXOfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="q/Sil15E";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Qa8aPqv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBDF606A325;
-	Thu, 19 Nov 2026 01:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1949A606A320;
+	Thu, 19 Nov 2026 01:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q/Sil15E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3A91F000C5;
-	Thu, 19 Nov 2026 01:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Qa8aPqv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7042E1F000C5;
+	Thu, 19 Nov 2026 01:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052118;
-	bh=Di2y2tSTsWzuf5goypruEUqKHwjoxTqt6iuH65PYDhs=;
+	s=korg; t=1795052121;
+	bh=gl4gcGfqwcz0RLPdeYcRuag+yQ07Aqs2ZWzSjkGr6qU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q/Sil15EOyWXuRTTPLgm4cDcM+1AkFJ3ccvx7BrUsHt8zC2ICFsNr/cNBKZadrtU5
-	 qsFKnZJxBxr86sc1boiXTtZM3buKdvyoanMcbPzW9p6RjoO1NQPqMgiRgmS59wynCc
-	 3JF5sjKdsDwbOuduLPZM2g9RgMFbiJUpPpp+28f8=
+	b=2Qa8aPqvTPSkyiGb1fdaGVVSo7juWQZLXFAhPEkWIT63kqHv2pvxNveaqSggGTYbR
+	 TGBeQjaKgRnHcRHl6wmIoJHCAzW01n+GOGDD2Qe51JTGehDX6Qb4tq1M1Th+nILv/L
+	 Hl7TOQpNwa0hCTNgiNGhs4v7YRuGl12c6r6mjvpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Danesh Petigara <danesh.petigara@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	=?UTF-8?q?=E3=82=A4=E3=83=A0=E3=83=86=E3=82=A3=E3=83=A4=E3=82=BA?= <reza1234khan1234@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0449/2214] memory: brcmstb_dpfe: Bounds check DCPU-supplied MSG_ARG_COUNT
-Date: Wed, 18 Nov 2026 15:35:25 +0100
-Message-ID: <20261118150029.027904733@linuxfoundation.org>
+Subject: [PATCH 5.15 0450/2214] wifi: rtw88: fix out-of-bounds CAM write when key table is full
+Date: Wed, 18 Nov 2026 15:35:26 +0100
+Message-ID: <20261118150029.066905710@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -64,48 +62,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: イムティヤズ <reza1234khan1234@gmail.com>
 
-[ Upstream commit 6b07f8c06caca015a0db69e3f323b5186469bc66 ]
+[ Upstream commit 10d58823cb44681466c022054030b8e68d94ce2f ]
 
-A compromised or buggy DCPU coprocessor can make any user who reads
-world-readable /sys/devices/.../dpfe_info|dpfe_dram trigger a kernel
-stack out-of-bounds read of arbitrary extent. This bounds checks
-chksum_idx against MSG_FIELD_MAX after reading the response from DCPU
-message RAM.
+In rtw_ops_set_key(), when the CAM table is full,
+rtw_sec_get_free_cam() returns RTW_MAX_SEC_CAM_NUM (32) because
+find_next_zero_bit()/find_first_zero_bit() return the bitmap size
+when no free slot exists. The bounds check compares the returned
+index with ">" against total_cam_num (32), so the invalid index 32
+passes the check.
 
-Fixes: 5d06f53d9509 ("memory: brcmstb: dpfe: Compute checksum at __send_command() time")
+rtw_sec_write_cam() then indexes cam_table[32], an array declared
+with RTW_MAX_SEC_CAM_NUM (32) entries, causing an out-of-bounds
+write that corrupts the cam_map allocation bitmap. The write also
+sets bit 32 of cam_map, which overruns the bitmap as well.
+
+Fix the off-by-one by rejecting indices >= total_cam_num.
+
+Tested on: RTL8821CE (PCIe) on kernel
+7.2.0-rc6-rtw88test-00059-g0d8395707651. The patched module loaded
+and associated to a WPA2 network; ping traffic passed with 0% packet
+loss. Reassociation and disconnect/reconnect cycles completed
+without errors, and the CAM table (debugfs dump_cam) showed valid
+key entries. The CAM-full boundary (28+ pairwise keys) requires an
+access point with 28+ clients and is not reachable in a
+single-client setup, so that path was verified by code inspection.
+
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Assisted-by: Gemini:gemini-3.1-pro-preview cursor
-Signed-off-by: Danesh Petigara <danesh.petigara@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260826201500.3000125-3-danesh.petigara@broadcom.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Tested-by: イムティヤズ <reza1234khan1234@gmail.com>
+Signed-off-by: イムティヤズ <reza1234khan1234@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260805210941.75136-1-reza1234khan1234@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/brcmstb_dpfe.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/realtek/rtw88/mac80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/memory/brcmstb_dpfe.c b/drivers/memory/brcmstb_dpfe.c
-index 86aed3a31e3a0..1c8ed138b93ad 100644
---- a/drivers/memory/brcmstb_dpfe.c
-+++ b/drivers/memory/brcmstb_dpfe.c
-@@ -504,6 +504,8 @@ static int __send_command(struct brcmstb_dpfe_priv *priv, unsigned int cmd,
- 		for (i = 0; i < MSG_FIELD_MAX; i++)
- 			result[i] = readl_relaxed(regs + DCPU_MSG_RAM(i));
- 		chksum_idx = result[MSG_ARG_COUNT] + MSG_ARG_COUNT + 1;
-+		if (chksum_idx >= MSG_FIELD_MAX)
-+			ret = -EINVAL;
+diff --git a/drivers/net/wireless/realtek/rtw88/mac80211.c b/drivers/net/wireless/realtek/rtw88/mac80211.c
+index 942bb2ab8b50f..29244e58161a8 100644
+--- a/drivers/net/wireless/realtek/rtw88/mac80211.c
++++ b/drivers/net/wireless/realtek/rtw88/mac80211.c
+@@ -512,7 +512,7 @@ static int rtw_ops_set_key(struct ieee80211_hw *hw, enum set_key_cmd cmd,
+ 		hw_key_idx = key->keyidx;
  	}
  
- 	/* Tell DCPU we are done */
+-	if (hw_key_idx > sec->total_cam_num) {
++	if (hw_key_idx >= sec->total_cam_num) {
+ 		ret = -ENOSPC;
+ 		goto out;
+ 	}
 -- 
 2.53.0
 
