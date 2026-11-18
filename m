@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056927;
-	b=DTsTKLNuUt5d3p0OdydOd6y10mgyxcPO9/f+5aWSPPR60793w7jXs0pteZ04hqZ6vnjL
-	 vWGPkxMjYaQ3R1/A5jZ7Wc8qQKYsz8QtPokj7K6bFq22DhN5fm7fPjsTn1usNx3+H/eGk
-	 Jfwb9AE8TLvOfy1jOOa3Am7TOqe8obmfz/pxZ4DVu70wwEYeIQ6PspmvWKkNCOcMNzA4V
-	 eTY5GZ3i8XG6zByozgEcGBnDG8vNjW03HGiMy8EbSbCnuPQkxi9dOMJuPrXK5EDY9zdQx
-	 NuI0eDaxxB91ZJ47WWMLjDSWldXGKXUt+VPT5iBXrq4BTjAC4I7WL+6mfGUBmjuUJ+w==
+	t=1795056930;
+	b=gF710xCZgfF8YrjZfbAZJSpc9GY87q7jjIlBwF5d2Z+GNgPQmUtF2HEalIkvJyaePYZA
+	 o9epq21OLSEXYQBsMCAXePJFOJ312VGaggh8ZtOS2T/PPXHM7E5SY1JfzpoumCONx6v9Y
+	 6uWxZiAVBrwINvmaaOLsBoKqUae3bba+bCIC+A7Zspq4kb/NufkOU770VVVLlMB2nubR+
+	 1FwJEE55fY0MyjxID9x/POvKtq5+d36Q4SKmaP5yj1mmIc8cJti58RfQ7kOF75yI/GaRx
+	 ZatccGHHJdYO7SzoGvX0ZcWD8L24qdRgahyX0I1NAa6zb/X3CLBa/lZfy66dzSwFvCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056927;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056930;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m0MBAznIscZBOCFyrFALRYW2cIkiUGyDmEOsqli5+og=;
-	b=4RUGGmLal7k1LJXqk77FCkNkEMq+LtUXRrADW3AouypwDwOlXR2wxefutweMiu9HDeGP
-	 uY9yJlmAutTSUDRM8TMeD0OYzWvMs65t9vgkxuar7TMNJW97+l+fJwNsr4ve5KLl2PcVi
-	 bmgaoIZISSGygZNMNcIpa+SvY/p8jRTYqX/XkhdBYZf5DCfuqclHtlhgveBGOxPkaKO0p
-	 PAeBTFNyVgV9drsdPHF7YknOj/S3o//xhyZptu6bZyYH+uYI3kZvcoeylXgwUEeMC+ASe
-	 JCzVEU3Et5lweOfuCneh2EioQthtYkBuKU9zIpy97ttrdlD6PkdpHUJWJ3YgD1Gt89A==
+	bh=zEXOvJHuoamxcxnAre8ccGGVwTmrXTP4HpWfFq5hPGk=;
+	b=luJfFyVjGr6EDgl1ldAuTbgAusNPAruUzaIy67B3ioqPWv9u8unxxVTX7MMtfUzTYRNG
+	 1YjI29Oa9xrJXEf0VmaFGpWRLqD7e1lh4cQgFWzJ05zB+KqgN95xP0swvUuZxIl1TEJCe
+	 FErt/hqnmol81TNlPyvXC6b8+V5sSuDn0Ir/o+9oWTpzBs1WhQohAfx+OWcuCdvrNewxe
+	 FZc0gBKlCwJP9qIV0Yj3dGW7aJwRo8vv/nwiW0nM7yAz5El/qRn4ylgs+BCQ30uwT6bBb
+	 ScSxRSMbuaQBzS+74/+WSxKTq9KhU21Q2F8lxsL+8i8BTDpcIMKtYgHuG4mu7p9WrOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XPZev/62";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vin1uq4g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBA7606A31C;
-	Thu, 19 Nov 2026 02:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788BB606A31C;
+	Thu, 19 Nov 2026 02:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XPZev/62
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA711F000C5;
-	Thu, 19 Nov 2026 02:55:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vin1uq4g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB38D1F000C4;
+	Thu, 19 Nov 2026 02:55:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056927;
-	bh=m0MBAznIscZBOCFyrFALRYW2cIkiUGyDmEOsqli5+og=;
+	s=korg; t=1795056930;
+	bh=zEXOvJHuoamxcxnAre8ccGGVwTmrXTP4HpWfFq5hPGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XPZev/62wZXilodeceIJcFjyP+S6vzg/x4WTM51A7c4qkuGnmdGmliD/HYGxprR+z
-	 /hJT/RynvskwRPgmd0zZ/9HRRBTPvSsvT2QRD3WKH/l1E0O33tm/yolgHZy7sRRY+z
-	 tzFxvnSB0EWOVxz1vTxTBwu7MrHKkS/bsg/1yaGI=
+	b=vin1uq4g1iWORBPMTe42fuOgL1cwf8Pnw4ghnsmLAsp8OXeG9n8iABXVrZjB/rO/Z
+	 kVDmLWaEsgS/pYMFD6pN4TWFgbke9Z8Wl9NLzmKQkxUc1gKMhmGzBH+DGbI/av6wvP
+	 zqY+H1E+/5VcmNTsla55icF/9AdAtJKQiF9i97gY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+21f8628595b2061c438d@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Chris Mason <mason@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2125/2214] libceph: reject bad connect_seq in msgr1 READY reply
-Date: Wed, 18 Nov 2026 16:03:21 +0100
-Message-ID: <20261118150135.572610515@linuxfoundation.org>
+Subject: [PATCH 5.15 2161/2214] nvmet: dont clear sq->ctrl for a Connect with sqsize 0
+Date: Wed, 18 Nov 2026 16:03:57 +0100
+Message-ID: <20261118150136.891761574@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,55 +72,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 6dfc1b1a99da4909aee07a906352be5c3fc9baba ]
+[ Upstream commit 89480d137bf0d943a82c64f86ae2407a15276b5e ]
 
-process_connect() WARN_ON()s when the peer's READY/SEQ reply carries a
-connect_seq other than ours + 1. That value comes off the wire, so a
-misbehaving or malicious server can trigger the warning at will (and
-panic machines running with panic_on_warn).
+nvmet_install_queue() checks sqsize first and jumps to err on zero,
+where sq->ctrl is set to NULL. Since commit b71df12605ca the cmpxchg()
+that sets sq->ctrl comes after the checks, so err now undoes a bind
+that this call never made. Over RDMA a host can send two Connects
+together and the second is parsed before the first executes, so a
+second Connect with sqsize 0 clears the sq->ctrl the first one set.
+The reference it held is never dropped and the controller leaks, with
+its cntlid, until reboot. The discovery subsystem lets any host do
+that, 20 connections leak around 10 controllers. A pending AER on such
+a queue hangs nvmet_sq_destroy() forever, and a queue can keep its
+"authenticated" mark across a rebind.
 
-Check it before touching connection state and fail the connection with
-a protocol error instead, like the other bad-reply cases here.
+Return the status directly, as the two checks after it do, so err is
+only reached after this call's cmpxchg() succeeded.
 
-Fixes: 31b8006e10a4 ("ceph: messenger library")
-Reported-by: syzbot+21f8628595b2061c438d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=21f8628595b2061c438d
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: b71df12605ca ("nvmet: avoid duplicate qid in connect cmd")
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Sagi Grimberg <sagi@grimberg.me>
+Cc: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/messenger_v1.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/nvme/target/fabrics-cmd.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ceph/messenger_v1.c b/net/ceph/messenger_v1.c
-index 6290b062d631d..dc5534c7d36f4 100644
---- a/net/ceph/messenger_v1.c
-+++ b/net/ceph/messenger_v1.c
-@@ -897,6 +897,12 @@ static int process_connect(struct ceph_connection *con)
- 			return -1;
- 		}
+diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
+index cfc3e979aed25..200521d589576 100644
+--- a/drivers/nvme/target/fabrics-cmd.c
++++ b/drivers/nvme/target/fabrics-cmd.c
+@@ -116,8 +116,7 @@ static u16 nvmet_install_queue(struct nvmet_ctrl *ctrl, struct nvmet_req *req)
+ 		pr_warn("queue size zero!\n");
+ 		req->error_loc = offsetof(struct nvmf_connect_command, sqsize);
+ 		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(sqsize);
+-		ret = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+-		goto err;
++		return NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+ 	}
  
-+		if (le32_to_cpu(con->v1.in_reply.connect_seq) !=
-+		    con->v1.connect_seq + 1) {
-+			con->error_msg = "protocol error, bad connect_seq";
-+			return -1;
-+		}
-+
- 		WARN_ON(con->state != CEPH_CON_S_V1_CONNECT_MSG);
- 		con->state = CEPH_CON_S_OPEN;
- 		con->v1.auth_retry = 0;    /* we authenticated; clear flag */
-@@ -908,8 +914,6 @@ static int process_connect(struct ceph_connection *con)
- 		     con->v1.peer_global_seq,
- 		     le32_to_cpu(con->v1.in_reply.connect_seq),
- 		     con->v1.connect_seq);
--		WARN_ON(con->v1.connect_seq !=
--			le32_to_cpu(con->v1.in_reply.connect_seq));
- 
- 		if (con->v1.in_reply.flags & CEPH_MSG_CONNECT_LOSSY)
- 			ceph_con_flag_set(con, CEPH_CON_F_LOSSYTX);
+ 	if (ctrl->sqs[qid] != NULL) {
 -- 
 2.53.0
 
