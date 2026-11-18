@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038734;
-	b=cdDtaPRSAO1XKuG2b381lPEIXCLR/HoeoFbVsTCoC4yPegRvyW2W+TOnb9dTpgYrh0iG
-	 YJsCDDE3ryEt/gX8rhURtfwrHHxa69O9Y6zv7sATnVZDK8cAwXy6gALfVhPBcMgjlpwbS
-	 Ds/igLujtvXM5ml44Q1OCcboNzsDWOIzwGSJFegpHjz1FMoJ/BvdfrxLITSeIOxNRYwTJ
-	 MYqLEgU3vsKJPC8RKIQHmxL9z6HiXgiXJvOORB28FS0Jfrad6scDCsonPpMih4alNdf3X
-	 A5qV/Qq1fpRiF0CwA8bubxzh22aF3xnUy1HPx9S0I45hLyn302VivxGSjlMZyqmaVhA==
+	t=1795038737;
+	b=4EhPrCC8z1mrfmUfzw3rWM8iGx09PaFsc+tshweRMRYpgKjTlZivuhZsm2nkXt9K2qT3
+	 2Pdiy4Ke99pUuKc7rPG83RixMV0t4sogITxcPbYK2SzdNHQCqXTus8L2h7EkIv2aKlCph
+	 h0lasbhfNbFNnbZ40ebgYIkANFgYql6yCXfZLK5y1OJxH0ZrTNnKoM25gq8P8yBPKu8AQ
+	 JzN8QvmGZYyNTbiV8IYlUbqBb0St5pvQuHLjtPcCcHl7n3kc4Ya7vQOQE2g8RLt62uvww
+	 lDvDOEq+yuI5dDSN6yca97qPx6kxVK1VZoH7MdhryEkwRDbZc/VPOrKLx9LOAVblWig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038734;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038737;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=14c47VTBWAp4BcONKzrftPdQiP8RipSGYdasjvZaams=;
-	b=BGVqbVPsCPumn7WLPmL+H1bD3jVB9oF9o+ss6dzkoS0op4U6VPswWApFd5aSgDNJ10er
-	 +6WyORFTQJFQqPIETrfdlG33jWy1NKEMkZF4dknA8OMmIB6Huy0DJAnTqv+untdv0tckt
-	 rw6ijfd6iTscGBhLlceNrRM6P98nymqvW8x4QQKHEsLLNI/506/8D8OffAT7rumZ7k4nd
-	 qGlnu9eLDdi6I/Epw+Guq1qm++x9uYaMna6GeHjbIEslqPgenvNmGysAx/Lo4SQrqCQRb
-	 x5GfjEx+RhXMDyf6KaePpT+OCAa4I87vzZNiEFlkCccvdhDEnHWjipj0VCpsALW1IfQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Io7IV4xNjN42ztqWU8RbL1LO3OAkqcPqFrKx1tGwl9Y=;
+	b=bbn38YXGsuvl72kNtLXhY6ZHIvJSvJFzJdVCz0EmLCAuzY3A+r78L5KHY0da+oZWmwMX
+	 YvrG3Q+0bl46kbTJTk4Xp9cOQgHOG5HekyEbCAeoWmc3WuZK7OIlZaQHR6iuT4Xmb3kax
+	 wr51+MC/aUMV40jwdTDExTbJ8iWVxOgL2GENx0h/v4a9dIgOG7In7vuxuK8jrsLGy1rh+
+	 gpfjSzIMGW+ekxRdfAYE6w5BwuP7XopBj/u2B23Eopij2iyPXHX+GaB3sVZNyGxnY93J/
+	 PbII0ZCnWqSuxXFL/p4f+uC6OMjknoaRJrXpG0l7eCkFqyfKOk7cateUvC6Ur9GROqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M1Amec6I;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S5qoLo3h;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61624606A31C;
-	Wed, 18 Nov 2026 21:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F261606A325;
+	Wed, 18 Nov 2026 21:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M1Amec6I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C231F000C4;
-	Wed, 18 Nov 2026 21:52:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S5qoLo3h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE19D1F000C4;
+	Wed, 18 Nov 2026 21:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038734;
-	bh=14c47VTBWAp4BcONKzrftPdQiP8RipSGYdasjvZaams=;
+	s=korg; t=1795038737;
+	bh=Io7IV4xNjN42ztqWU8RbL1LO3OAkqcPqFrKx1tGwl9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M1Amec6Ia7dmRfRdfu35Me6+zPdeNX80GTqk31n/AWdIsVk6JJ8rZbKcbSGVKqciy
-	 W6caQGnxeG2B0T74b01jAPJzjNnvREjli9ktpt6rlwR9zMxyXGfuBV4qIIVvoL1FI0
-	 Ddt8wSYWrGzina2Qhegh4xbvhb0Qkr7E8nrIbpsw=
+	b=S5qoLo3hRpluiX6Up7+EKmUzJa9EFFkI/NNdgoRagVfLZB9GWmNvhlDNKjrUmyzUG
+	 tAjP3+2RZY/ydPM2Kl4d5Paxvj1oOhBBccSg4Ot4h1eK4hvuxTdlKp43HyhV/1oP1P
+	 V6yA8JtAHYaP8WsM0zETru47Tqib1vIYSGhidhXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gianluca Balboni <gianluca.balboni06@gmail.com>,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zeng Heng <zengheng4@huawei.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1848/3318] ASoC: amd: yc: Add DMI quirk for HP OmniBook 3 Laptop 16-by0xxx
-Date: Wed, 18 Nov 2026 15:41:10 +0100
-Message-ID: <20261118150417.304364173@linuxfoundation.org>
+Subject: [PATCH 6.6 1849/3318] f2fs: Fix not used variable index
+Date: Wed, 18 Nov 2026 15:41:11 +0100
+Message-ID: <20261118150417.336517480@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,53 +63,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gianluca Balboni <gianluca.balboni06@gmail.com>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit 1e73257dff33ff851af60d5bb00d73893a8b6dc8 ]
+[ Upstream commit 0c3a38a4b442893f8baca72e44a2a27d52d6cc75 ]
 
-The HP OmniBook 3 Laptop 16-by0xxx (board ID 8EE3) has an internal DMIC
-connected to the AMD ACP6x audio coprocessor. The BIOS does not set the
-AcpDmicConnected _DSD property or the _WOV method, and the board is missing
-from yc_acp_quirk_table[], so acp6x_probe() returns -ENODEV and no DMIC
-capture device is registered.
+Fix the following compilation warning:
+fs/f2fs/data.c:2391:10: warning: variable ‘index’ set but not used
+[-Wunused-but-set-variable]
+ 2391 |  pgoff_t index;
 
-Add a DMI quirk entry for this model to enable ACP DMIC support.
+Only define and set the variable index when the CONFIG_F2FS_FS_COMPRESSION
+is enabled.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Gianluca Balboni <gianluca.balboni06@gmail.com>
-Reviewed-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://patch.msgid.link/20261031102136.24600-1-gianluca.balboni06@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ sashal: adjusted insertion context from board 8DC2 to board 8BD6 ]
+Fixes: db92e6c729d8 ("f2fs: convert f2fs_mpage_readpages() to use folio")
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/f2fs/data.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 73bff3a22fe21..4b86d1cf3c1a2 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -675,6 +675,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "8BD6"),
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 29c371a04b300..8c8d7980f1952 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2392,10 +2392,10 @@ static int f2fs_mpage_readpages(struct inode *inode,
+ 		.nr_cpages = 0,
+ 	};
+ 	pgoff_t nc_cluster_idx = NULL_CLUSTER;
++	pgoff_t index;
+ #endif
+ 	unsigned nr_pages = rac ? readahead_count(rac) : 1;
+ 	unsigned max_nr_pages = nr_pages;
+-	pgoff_t index;
+ 	int ret = 0;
+ 
+ 	map.m_pblk = 0;
+@@ -2413,9 +2413,9 @@ static int f2fs_mpage_readpages(struct inode *inode,
+ 			prefetchw(&folio->flags);
  		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+			DMI_MATCH(DMI_BOARD_NAME, "8EE3"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+ 
++#ifdef CONFIG_F2FS_FS_COMPRESSION
+ 		index = folio_index(folio);
+ 
+-#ifdef CONFIG_F2FS_FS_COMPRESSION
+ 		if (!f2fs_compressed_file(inode))
+ 			goto read_single_page;
+ 
 -- 
 2.53.0
 
