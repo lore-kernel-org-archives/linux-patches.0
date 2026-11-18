@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036003;
-	b=jG3IinTS1mZ4fIZptgIst9G8XZDQNMyCi9F3yOj2ze3QdCA+L5Vvo9Ksg7L0LekhHr/N
-	 TU8UisVQYkw5CCtbh2iVfYEHPU7uxWU3f06K7lIR9mNBkio6k/60ydisOq82mG7JmseWp
-	 nwRT5KBQ4YTzYqED7A2JWil50RRKm/8owDNExxWMHAXKbaNmW/CQZWk1bnf/tItJrqyIj
-	 PbBjNAni6VBl4RA3HQxDNQGLkoWOtyExBedIdMr1y9L5jUIsvFoGsAnsdkpY8dYuZoCyV
-	 /++uf91TQg2rTZ9meiuJFO8SjYMCw56ODmHjzR8iWEzOWnmYO+VcI21LrRqfiKCB2Tw==
+	t=1795036006;
+	b=ur3GW1tb412FmksQwAZFSxSWzL7sVQq/GG4RDMFJBB1tT9WwzYFWrib0QfTF3D2c8yWW
+	 fWOrsE6JZGeOdOVTvK/5G4zxmNaM7Y1NcJBCs/Wzex/m1a9WDFBRKZtjYqLwYQlK5HlAN
+	 5/DfLbTiK2hO2dzcUHuxe6btm2uf1ht+TePgxba6YxK4qwLHb2SmIOlk+j8FH7QwwerTa
+	 zTQFMIy9zKAnPv8tHJSu8NZzfXYWUpGp1bhqsRo40RzrxPkNfNRv9Istb78i5EnTKgHq+
+	 aTD313c+Cg+YO6JYSnbzUD/FAsFEQsnxNEdRF7PFx9LyE5TZpowFxbCYBj21qQfblcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036003;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036006;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PgsO4qtSbQFQrT1G8e3q/c4RGMJSBMyZquf24WZJRww=;
-	b=mat9SSfgFK34ow22PlCot41sJuUJ+oN/WDNrVuxFwpSDiPC0QhF42uJhXP/mCAiSw86r
-	 N4TP9xiqHAPHeLBf2yw5CK4Aqskot9k/eMjV0mbJ/F49gBkVy1NCfCjM6N8T3h5ckJBJm
-	 aguY6SqFJZd2K/iI4QEvSsbroWAx3La87w56r+nA3GWEav4HqIwIV5h1mXMx02O3B6xSW
-	 nbWySc9Eki1VyDll/+ydfRqgbAkoTJdHNpm7TFW5G5BBz++bKa0R+7JKsIH1//hS3CCHs
-	 ADK56uoz5lNnGDfxvJUPexoDeJqy5FFgwXyGZbgmc4rWF9Apy7abYd6+tkzHP6YaLSw==
+	bh=tB42ndD2v+kwSqnVyO9goMKFgpeL8MYxLqPGXN+XudY=;
+	b=EvKJveZCLgQfx4cyQ8ReJAvzodhSVGN3Qh1qDobkRf/8OA2oyoYAdu0M4HZF3+lGrCPp
+	 Y7SuCWk11tBL9GfCkdujOjDDFucmehZ34T230N9hQ9CXK4Wx2WfifeUQ52HvHQKO2L2tI
+	 QogQVDY8Lh7QLBrYr0REPD2IjBNL/jxAe6jAhs/D47u939ioVnzlr1HX0+bTz/Sfd0kfr
+	 bmk038ZkoWrHeBALOBKvPYvOGMY2Ur0kYSZNfXQcXo6LfsqcR6ftMQMGdcGUb5fO/XsbS
+	 xu+zkS0Gc4XtzSq+HDboiRSjMegrrz5UY1cCNlFAjFSAg5oQm1aEbBg/o0HXtS3Mtbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=afk4FDr3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=avE9s5VI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5410606A325;
-	Wed, 18 Nov 2026 21:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F0A60A2601;
+	Wed, 18 Nov 2026 21:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=afk4FDr3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186B81F000C4;
-	Wed, 18 Nov 2026 21:06:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=avE9s5VI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D85AD1F000C5;
+	Wed, 18 Nov 2026 21:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036003;
-	bh=PgsO4qtSbQFQrT1G8e3q/c4RGMJSBMyZquf24WZJRww=;
+	s=korg; t=1795036006;
+	bh=tB42ndD2v+kwSqnVyO9goMKFgpeL8MYxLqPGXN+XudY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=afk4FDr3mVcETF5jVfnOp4ltP+ttz5e/w2bW5vJmKL9kWzB6Cca+1U62rdixaA8pk
-	 NagRGvZ/zhH+aWm+liV1lbFtBtSnT8YtCGVsunxRzh1zJGuh6l8Pc/len+xFgBDAow
-	 IlxjkMavcqIe+lGT0DNHryRGPx6PITGz88ozVdoY=
+	b=avE9s5VISc9eJBLM11znwqnhQ9Krd0m002um1e2HzLI5e6wt07Rqn0gTzBJsVNexr
+	 sinbsZgV5e6UP/BVLoT7enks89TwwoLyoFOtudTblptAMlaMUElkTrbmWJuFW4qy77
+	 dWN7KfzXTGIJcUx+gD4HFTYE+q5m++nw0ufEOBfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Moteen Shah <m-shah@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Thorsten Blum <blum@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0904/3318] arm64: dts: ti: k3-am625-beagleplay: Set MMC clock pins as OUTPUT
-Date: Wed, 18 Nov 2026 15:25:26 +0100
-Message-ID: <20261118150346.616523728@linuxfoundation.org>
+Subject: [PATCH 6.6 0878/3318] crypto: atmel-tdes - sync output bounce buffer before DMA
+Date: Wed, 18 Nov 2026 15:25:00 +0100
+Message-ID: <20261118150345.652183585@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,58 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit c074abebc76f0e59d13dea499f582806c6a3d94d ]
+[ Upstream commit a38fdcb9c944525ca71e6aaf35e708586d0ae87d ]
 
-MMC clock pins must be configured as OUTPUT-only per TRM [0] with
-receiver disabled (RXACTIVE bit = 0). Change MMC CLK pins from
-PIN_INPUT to PIN_OUTPUT to match documentation.
+The slow path maps its output bounce buffer once at probe time with
+dma_map_single() and DMA_FROM_DEVICE, then reuses the mapping for every
+request.  After the CPU copies a result from the buffer,
+dma_sync_single_for_device() must hand the buffer back to the device before
+the next DMA transfer.  The driver omits this call, so cache lines from the
+previous result can remain valid while the device writes the next one.
 
-[0] https://www.ti.com/lit/pdf/spruiv7 Rev. C: Table 12-246. MMCSDi I/O Signals
+This bug was masked by the completion paths calling
+dma_sync_single_for_device() immediately before the CPU copied the output,
+where dma_sync_single_for_cpu() was required.  For DMA_FROM_DEVICE on
+ARM926, dma_sync_single_for_device() invokes arm926_dma_map_area(), which
+invalidates the cache lines.  The misplaced call therefore discarded the
+stale lines before every copy-out.
 
-Fixes: f5a731f0787f ("arm64: dts: ti: Add k3-am625-beagleplay")
+Commit c8a9a647532f ("crypto: atmel-tdes - fix DMA sync direction")
+correctly changed the completion paths to call dma_sync_single_for_cpu().
+On ARM926, that function invokes arm926_dma_unmap_area(), which is a no-op.
+The missing pre-DMA dma_sync_single_for_device() was therefore exposed on
+ARM926-based SAM9X60 and SAM9X7 SoCs.
+
+With CONFIG_CRYPTO_SELFTESTS=y all four DES/TDES algorithms fail on
+SAM9X75:
+
+  alg: skcipher: atmel-ecb-tdes encryption test failed (wrong result) on
+  test vector 2, cfg="unaligned buffer, offset=1"
+
+Call dma_sync_single_for_device() for the output buffer before starting DMA
+in both atmel_tdes_crypt_pdc() and atmel_tdes_crypt_dma().
+
+Fixes: c8a9a647532f ("crypto: atmel-tdes - fix DMA sync direction")
 Cc: stable@vger.kernel.org
-Signed-off-by: Judith Mendez <jm@ti.com>
-Reviewed-by: Moteen Shah <m-shah@ti.com>
-Link: https://patch.msgid.link/20260909214743.899477-9-jm@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Thorsten Blum <blum@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/crypto/atmel-tdes.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts b/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts
-index 3560349d63051..fbcb6cfa9db55 100644
---- a/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts
-@@ -323,7 +323,7 @@ AM62X_IOPAD(0x012c, PIN_OUTPUT, 0) /* (AD19) RGMII1_TX_CTL */
- 	emmc_pins_default: emmc-default-pins {
- 		pinctrl-single,pins = <
- 			AM62X_IOPAD(0x0220, PIN_INPUT, 0) /* (Y3) MMC0_CMD */
--			AM62X_IOPAD(0x0218, PIN_INPUT, 0) /* (AB1) MMC0_CLK */
-+			AM62X_IOPAD(0x0218, PIN_OUTPUT, 0) /* (AB1) MMC0_CLK */
- 			AM62X_IOPAD(0x0214, PIN_INPUT, 0) /* (AA2) MMC0_DAT0 */
- 			AM62X_IOPAD(0x0210, PIN_INPUT, 0) /* (AA1) MMC0_DAT1 */
- 			AM62X_IOPAD(0x020c, PIN_INPUT, 0) /* (AA3) MMC0_DAT2 */
-@@ -344,7 +344,7 @@ AM62X_IOPAD(0x01c4, PIN_INPUT, 7) /* (B14) SPI0_D1_GPIO1_19 */
- 	sd_pins_default: sd-default-pins {
- 		pinctrl-single,pins = <
- 			AM62X_IOPAD(0x023c, PIN_INPUT, 0) /* (A21) MMC1_CMD */
--			AM62X_IOPAD(0x0234, PIN_INPUT, 0) /* (B22) MMC1_CLK */
-+			AM62X_IOPAD(0x0234, PIN_OUTPUT, 0) /* (B22) MMC1_CLK */
- 			AM62X_IOPAD(0x0230, PIN_INPUT, 0) /* (A22) MMC1_DAT0 */
- 			AM62X_IOPAD(0x022c, PIN_INPUT, 0) /* (B21) MMC1_DAT1 */
- 			AM62X_IOPAD(0x0228, PIN_INPUT, 0) /* (C21) MMC1_DAT2 */
-@@ -356,7 +356,7 @@ AM62X_IOPAD(0x0240, PIN_INPUT, 7) /* (D17) MMC1_SDCD.GPIO1_48 */
- 	wifi_pins_default: wifi-default-pins {
- 		pinctrl-single,pins = <
- 			AM62X_IOPAD(0x0120, PIN_INPUT, 0) /* (C24) MMC2_CMD */
--			AM62X_IOPAD(0x0118, PIN_INPUT, 0) /* (D25) MMC2_CLK */
-+			AM62X_IOPAD(0x0118, PIN_OUTPUT, 0) /* (D25) MMC2_CLK */
- 			AM62X_IOPAD(0x0114, PIN_INPUT, 0) /* (B24) MMC2_DAT0 */
- 			AM62X_IOPAD(0x0110, PIN_INPUT, 0) /* (C25) MMC2_DAT1 */
- 			AM62X_IOPAD(0x010c, PIN_INPUT, 0) /* (E23) MMC2_DAT2 */
+diff --git a/drivers/crypto/atmel-tdes.c b/drivers/crypto/atmel-tdes.c
+index 0d47022db9488..002a05d73aeb7 100644
+--- a/drivers/crypto/atmel-tdes.c
++++ b/drivers/crypto/atmel-tdes.c
+@@ -373,6 +373,8 @@ static int atmel_tdes_crypt_pdc(struct atmel_tdes_dev *dd,
+ 	if (!(dd->flags & TDES_FLAGS_FAST)) {
+ 		dma_sync_single_for_device(dd->dev, dma_addr_in, length,
+ 					   DMA_TO_DEVICE);
++		dma_sync_single_for_device(dd->dev, dma_addr_out, length,
++					   DMA_FROM_DEVICE);
+ 	}
+ 
+ 	len32 = DIV_ROUND_UP(length, sizeof(u32));
+@@ -405,6 +407,8 @@ static int atmel_tdes_crypt_dma(struct atmel_tdes_dev *dd,
+ 	if (!(dd->flags & TDES_FLAGS_FAST)) {
+ 		dma_sync_single_for_device(dd->dev, dma_addr_in, length,
+ 					   DMA_TO_DEVICE);
++		dma_sync_single_for_device(dd->dev, dma_addr_out, length,
++					   DMA_FROM_DEVICE);
+ 	}
+ 
+ 	addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
 -- 
 2.53.0
 
