@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045713;
-	b=FOWl3V4Xbpkw8QkJ7WBDNk/G3sGVfmz7U3zdVeSbCx2NdpD51MaxaPbeKVdkj82BffK+
-	 5EDBsJ3z2gr2ulMeiROA/gan+hmoP0Ik0uybbkE4MWPSZrIY1lQztQILjjZx3jRppZIrr
-	 mpkrqo56yx+wMYVY9ptjimJKdBG5gsCpu4JzI2aFPB/NFnl4/1alEJTLoWtwryZbsrub5
-	 GkeliOgTvAJWY+8LOKEqSZyF3BglNY1XZ2PtX2DZI/JXF5jqFGChh51+xoKe2KlmDQ/d9
-	 65YRW6OCZOBmXRgJUTiRdCy8BuzWP+DUbmwf5XK/hLvwpXiUi+GoKnd/v6dknvwciQw==
+	t=1795045716;
+	b=fVu/SW2i/ET4Yvb0DjJNxZjagpIwu7YTZr11eISRwHMgyvRa3038sAVIdq9tT5zDsh66
+	 MJA6NIlZoOHb7deuI865jL9VVMGyrK38bORUjuTjopCuxf59O25vknLH/m0iB3YJhchfN
+	 cyH7c2fMSzfI3K2VdltyEqMTeANEQzk+RTDBKhcnZCesSq8uq79AS3TettFRUMIoXZkJN
+	 1RLCprza97zd0V14uhPGD73xkok/m3yAHhHD9uyPvgirLeEAYYIPfETPNEfzY3f7QMz/o
+	 s6KsiVll54zlp34EgyCh7vxRuUwv7VlMOB9pmXGOmVahkillCqmee1RDXvvCaILBgGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045713;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045716;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=haf222wHiutrRXL+7Pf7Dq0CcRtMLFkt2ILkPcPy3+o=;
-	b=TlUUuEN6KJcquh/EWgcbQXXaa3x8e5VETUkY6UelUuKJab+IzK2O7OzBifpt6M/H9In0
-	 JUe8F/ls5XdnY06KzFlnYq8aib+E9L0dkTGrh+V37H9DuT77XZElpu5dHok70/oYAlnAn
-	 oIsUm4CE0Waosjfgozl1nqYYAHO1MPQmgmIWZdrjCAO32BvoQ7HtH3dJbSusVVKO4rV8m
-	 7PMRnLWupOhpdDcSv+yBZAvSzGwKZneY737x+5XNFnAMrPhT94s6P0IufDjINbV3imM6V
-	 E3FRjd5ZISgEf40gi7XLFHEVMFTf+b36PsAkL+dCOkubqYETHlPd1I+MoUEIzhER0UA==
+	bh=+eQ50HahSVtHQOTZAENP1czWOmWDTWTZYPen+BaFUqs=;
+	b=EHu9OXT77p1WLKzchg/E7YFddAaqs9HP6U4OLWBMZ58AMlxXgZ/sJM7a/wXBk6uRPUiW
+	 HJZtyAALJ8C2bbD+ylG2XoaFIx8hWmE55otd0JW/N7KwOL6G56KqFerKfYce1f6wh7Vkt
+	 Ri2wPLfZxRl2vGlSO4gzr93tTLsOafxJ+fpoqJOE68wHA7PiCWPUKGx2JeqvcvDQWkypt
+	 7oUrwdow9/E6R57YtDLtYUToDRqJp9m2N2faOl3Yx/CXZY4CxafF+2jw2cZMZZLDRsDLh
+	 gORRt82KT/uNKXKewufjqe98q5IKRnq1Sn5/9OxTPvGX9zbaE2hVUPfAicd7v+gT2kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i+jkMtbk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QOx7+NMv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD547606A320;
-	Wed, 18 Nov 2026 23:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903DF606A32A;
+	Wed, 18 Nov 2026 23:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i+jkMtbk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E97D1F000C4;
-	Wed, 18 Nov 2026 23:48:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QOx7+NMv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDCE81F000C4;
+	Wed, 18 Nov 2026 23:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045713;
-	bh=haf222wHiutrRXL+7Pf7Dq0CcRtMLFkt2ILkPcPy3+o=;
+	s=korg; t=1795045716;
+	bh=+eQ50HahSVtHQOTZAENP1czWOmWDTWTZYPen+BaFUqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i+jkMtbkUbAHO5xjZrhE1Uxb2J6+3axF1Dc0kiZaROR9sTJCMOzrVDN50tmloqMlA
-	 6/vgPC0z3jac3oEU1imvYRV2YBlIfcollY5bRSdlp+RuKmFx7zR/0GtaPOQjnR6/HC
-	 p3y8xT6Pz7ZlDhKLhF6rq+9O3lXmsIztrC4oQDbw=
+	b=QOx7+NMvmd5WyV1LtGYz4q+8ciMxdjuC2nMtwk6H2lIGekZjOu6E0MsOCwvFOB69i
+	 Vq0jFWYio6HaKEcbuR3r2N/5nf137ApasWHWCMOIM7pKhq8PudHyxmHJ1FSqfKUvna
+	 hBFgcV10IcuqCxcPkQZYnZwchRJiIfZUY4aIZPhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	Alexey Gladkov <legion@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1021/2857] tipc: fix broadcast sender hang on last acker departure
-Date: Wed, 18 Nov 2026 15:34:15 +0100
-Message-ID: <20261118150238.361705284@linuxfoundation.org>
+Subject: [PATCH 6.1 1022/2857] ucount: take the rlimit reference before checking the limit
+Date: Wed, 18 Nov 2026 15:34:16 +0100
+Message-ID: <20261118150238.396903008@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,151 +69,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-[ Upstream commit f4377bf85887f57b59abb5479f7660a81ffe4449 ]
+[ Upstream commit b14fcabd34e02c40f72d3cd1e9bd4fd18df40ff1 ]
 
-TIPC group broadcast senders are blocked while a replicast still has
-outstanding member acks: tipc_group_bc_cong() returns true as long as
-grp->bc_ackers is non-zero, and clears *grp->open, which is what
-tipc_poll() uses to report EPOLLOUT (via tsk->group_is_open).
+inc_rlimit_get_ucounts() takes the reference that pins a ucounts level
+while its rlimit count is non-zero only in the walk whose increment is
+the 0 -> 1 transition, and only after that walk passed the limit check.
+A walk that raises the count from zero and then fails the limit backs
+out without the reference, while a concurrent walk that raised it past
+one keeps its increment and never takes one either:
 
-When the last outstanding acker departs before acking,
-tipc_group_delete_member() decrements grp->bc_ackers to zero but
-never restores *grp->open.  As a result poll(EPOLLOUT) never fires
-again.  A writer blocked in sendmsg() is only released if some other
-wakeup happens after the deletion: with TIPC_GROUP_MEMBER_EVTS the
-leave event delivery calls sk_data_ready() and wakes it, but without
-member events nothing does and it sleeps indefinitely, since the
-default send timeout is MAX_SCHEDULE_TIMEOUT.
+  CPU0 (obeys the limit)              CPU1 (overrides it)
+  new = add_return(1) -> 1
+                                      new = add_return(1) -> 2
+                                      new != 1, no get_ucounts()
+  new > max -> dec_unwind
+  sub_return(1) -> 1   (no put)
 
-Commit 99cc2a62e07a ("tipc: reject invalid and unexpected
-GRP_ACK_MSG to prevent bc_ackers underflow") already calls this out
-in its changelog as a pre-existing issue.
+The count is 1 with no reference held. When CPU1 drops its charge,
+dec_rlimit_put_ucounts() takes the count to 0 and puts a reference
+nobody took, which frees the live struct ucounts, and the user_namespace
+it pins, with kfree_rcu(). The mirror interleaving leaks the reference
+instead.
 
-Restore the open state exactly on the 1->0 transition in the delete
-path, mirroring the GRP_ACK_MSG completion path, and invoke
-sk->sk_write_space() from tipc_sk_filter_rcv() when the group just
-became writable again.
+An unprivileged user reaches this on a kernel with CONFIG_USER_NS=y: in
+a user namespace with RLIMIT_SIGPENDING 0, one process taking
+synchronous SIGSEGVs (forced, so override_rlimit is set) races a second
+process in the same namespace and uid that queues real-time signals,
+which obey the limit. The two hold different sighand->siglock but charge
+the same per-namespace SIGPENDING ucounts. Unpatched, with rcuref
+debugging:
 
-Also make the ack accounting precise.  The delete path used to test
-less(m->bc_acked, grp->bc_snd_nxt - 1), which also matches members
-that were never counted for the current replicast (JOINING/LEAVING
-members keep a stale bc_acked), and the GRP_ACK_MSG handler accepted
-an ack from any member whose bc_acked differed from the expected
-value.  Either could zero bc_ackers on behalf of a member that owes
-nothing and silently void an ack still owed by a real acker.  Track
-whether a member owes an ack for the current replicast in a new
-per-member bc_pending flag, set when the member is counted and
-cleared when its ack arrives, and use it both to accept an ack and
-to decide on deletion.  bc_acked has no remaining user and is
-removed.  Suggested by Tung Quang Nguyen.
+  rcuref - imbalanced put()
+  WARNING: lib/rcuref.c:266 at rcuref_put_slowpath+0xf4/0x120
+   put_ucounts+0x5a/0x180
+   do_dec_rlimit_put_ucounts+0x70/0x90
+   __sigqueue_free+0x33/0xc0
+   get_signal+0x56f/0xd20
+   arch_do_signal_or_restart+0x87/0x380
+   irqentry_exit+0x243/0x650
+   asm_exc_page_fault+0x26/0x30
 
-This issue was discovered by Tencent CodeBuddy Security.
+Take the reference on the 0 -> 1 transition before the limit is checked,
+so the walk that raises the count from zero owns that level's reference
+even when its request is rejected, and unwind a rejected level through
+do_dec_rlimit_put_ucounts(), which releases the reference when the count
+returns to 0. The get_ucounts() failure path is unchanged. With the
+patch the same interleaving, forced some 80000 times in a KASAN build,
+produces no warning and no KASAN report.
 
+Fixes: 15bc01effefe ("ucounts: Fix signal ucount refcounting")
 Cc: stable@vger.kernel.org
-Fixes: 2f487712b893 ("tipc: guarantee that group broadcast doesn't bypass group unicast")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20261019115859.3471295-1-bsdhenrymartin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+Link: https://patch.msgid.link/20261019185913.805378-1-nickolai@csail.mit.edu
+Acked-by: Alexey Gladkov <legion@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/group.c  | 19 ++++++++++---------
- net/tipc/socket.c | 12 +++++++++++-
- 2 files changed, 21 insertions(+), 10 deletions(-)
+ kernel/ucount.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/net/tipc/group.c b/net/tipc/group.c
-index 0da7b27133949..a9ce1c7018b6c 100644
---- a/net/tipc/group.c
-+++ b/net/tipc/group.c
-@@ -74,7 +74,7 @@ struct tipc_member {
- 	u16 window;
- 	u16 bc_rcv_nxt;
- 	u16 bc_syncpt;
--	u16 bc_acked;
-+	bool bc_pending;
- };
+diff --git a/kernel/ucount.c b/kernel/ucount.c
+index 7f29cc9728189..e218ea54af92f 100644
+--- a/kernel/ucount.c
++++ b/kernel/ucount.c
+@@ -317,23 +317,26 @@ long inc_rlimit_get_ucounts(struct ucounts *ucounts, enum rlimit_type type,
  
- struct tipc_group {
-@@ -316,7 +316,6 @@ static struct tipc_member *tipc_group_create_member(struct tipc_group *grp,
- 	m->node = node;
- 	m->port = port;
- 	m->instance = instance;
--	m->bc_acked = grp->bc_snd_nxt - 1;
- 	ret = tipc_group_add_to_tree(grp, m);
- 	if (ret < 0) {
- 		kfree(m);
-@@ -340,9 +339,12 @@ static void tipc_group_delete_member(struct tipc_group *grp,
- 	rb_erase(&m->tree_node, &grp->members);
- 	grp->member_cnt--;
- 
--	/* Check if we were waiting for replicast ack from this member */
--	if (grp->bc_ackers && less(m->bc_acked, grp->bc_snd_nxt - 1))
--		grp->bc_ackers--;
-+	/* If this member owed an ack for the current replicast and it
-+	 * was the last one, restore the open state so blocked broadcast
-+	 * senders can proceed.
-+	 */
-+	if (grp->bc_ackers && m->bc_pending && !--grp->bc_ackers)
-+		*grp->open = true;
- 
- 	list_del_init(&m->list);
- 	list_del_init(&m->small_win);
-@@ -394,7 +396,6 @@ void tipc_group_update_member(struct tipc_member *m, int len)
- 
- void tipc_group_update_bc_members(struct tipc_group *grp, int len, bool ack)
- {
--	u16 prev = grp->bc_snd_nxt - 1;
- 	struct tipc_member *m;
- 	struct rb_node *n;
- 	u16 ackers = 0;
-@@ -403,8 +404,8 @@ void tipc_group_update_bc_members(struct tipc_group *grp, int len, bool ack)
- 		m = container_of(n, struct tipc_member, tree_node);
- 		if (tipc_group_is_receiver(m)) {
- 			tipc_group_update_member(m, len);
--			m->bc_acked = prev;
- 			ackers++;
-+			m->bc_pending = ack;
- 		}
- 	}
- 
-@@ -800,9 +801,9 @@ void tipc_group_proto_rcv(struct tipc_group *grp, bool *usr_wakeup,
- 		if (!m || !grp->bc_ackers)
- 			return;
- 		acked = msg_grp_bc_acked(hdr);
--		if (acked != grp->bc_snd_nxt || m->bc_acked == acked)
-+		if (acked != grp->bc_snd_nxt || !m->bc_pending)
- 			return;
--		m->bc_acked = acked;
-+		m->bc_pending = false;
- 		if (--grp->bc_ackers)
- 			return;
- 		list_del_init(&m->small_win);
-diff --git a/net/tipc/socket.c b/net/tipc/socket.c
-index 7b8cac8b3b994..f636b46d5c9ba 100644
---- a/net/tipc/socket.c
-+++ b/net/tipc/socket.c
-@@ -2357,8 +2357,18 @@ static void tipc_sk_filter_rcv(struct sock *sk, struct sk_buff *skb,
- 	if (unlikely(!msg_isdata(hdr)))
- 		tipc_sk_proto_rcv(sk, &inputq, xmitq);
- 
--	if (unlikely(grp))
-+	if (unlikely(grp)) {
-+		bool was_open = tsk->group_is_open;
-+
- 		tipc_group_filter_msg(grp, &inputq, xmitq);
-+		/* A departing member may have held the last outstanding
-+		 * replicast ack, which can restore the open state inside
-+		 * tipc_group_filter_msg(); wake up senders blocked in
-+		 * poll()/write() if the group just became writable.
+ 	for (iter = ucounts; iter; iter = iter->ns->ucounts) {
+ 		long new = atomic_long_add_return(1, &iter->rlimit[type]);
+-		if (new < 0 || new > max)
++		/*
++		 * Take the extra reference on the 0 -> 1 transition before the
++		 * limit check: a rejected walk must not leave a concurrent one
++		 * holding the surviving increment with no reference.
 +		 */
-+		if (!was_open && tsk->group_is_open)
-+			sk->sk_write_space(sk);
-+	}
- 
- 	if (unlikely(!grp) && mtyp == TIPC_MCAST_MSG)
- 		tipc_mcast_filter_msg(net, &tsk->mc_method.deferredq, &inputq);
++		if (new == 1 && !get_ucounts(iter))
+ 			goto dec_unwind;
++		if (new < 0 || new > max) {
++			/* undo iter too, releasing the reference taken above */
++			do_dec_rlimit_put_ucounts(ucounts, iter->ns->ucounts, type);
++			return 0;
++		}
+ 		if (iter == ucounts)
+ 			ret = new;
+ 		if (!override_rlimit)
+ 			max = get_userns_rlimit_max(iter->ns, type);
+-		/*
+-		 * Grab an extra ucount reference for the caller when
+-		 * the rlimit count was previously 0.
+-		 */
+-		if (new != 1)
+-			continue;
+-		if (!get_ucounts(iter))
+-			goto dec_unwind;
+ 	}
+ 	return ret;
+ dec_unwind:
++	/* get_ucounts() failed for iter: undo iter without a put */
+ 	dec = atomic_long_sub_return(1, &iter->rlimit[type]);
+ 	WARN_ON_ONCE(dec < 0);
+ 	do_dec_rlimit_put_ucounts(ucounts, iter, type);
 -- 
 2.53.0
 
