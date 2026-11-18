@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025882;
-	b=V/CRzDtNlRgQzCSS/xfWvE5E924R1DtI4xg8yGotbNmGTvaPG9uA8YL49N2vy5XFFHzU
-	 D8lq3lfBh9ayN9oq/fvYfizEK1mLdYOSUPU1fKqcrwSWWywsBEojxkSobOBEkAbM74GtL
-	 oCvyjvLxwTHyqYzdjjaFvSPDvrmBQI48Wk9e4f1mYq2rNWat2CZZ3N4dr0LaS9KW5S5gS
-	 TTYZf28sC7QSW7dsOX2BJYp/jOey29nF3Ms7qVz6NF3Fr4uPkyErBNReDrUKHK8X8Taw/
-	 OHZfakk0iP91dIqBAjId935WD4xXBp49Q8e3exbf7I3zTvCQwR9Nft4ZkHEnuIj4bGw==
+	t=1795025885;
+	b=g+pHDBY0qUDQFibrwFXGH218QcdnWwfcp/cvzmdtcLxwI4KmrLDNMnKquahJkOeQsUgw
+	 pVH+R2Lv4xPOFflm0R4SCOFHNlIioX1nMjVgi1Cp/MjiYZPgjKspZYa/n84jT/BHFWt/W
+	 WtgRX8TzWHmRaswD747RKowFYHclSOQy57umNHTSlCI3ygrTkVxgQmmufIyfq4Fx0w3IV
+	 7hC3WK5d0V4vPnrw8edtk8KCFZh+qcBONqrD5PpEmfwSqBDN6NNQ90k3aru2BJkLxkYkZ
+	 xz6Yd+wJaQl3tGJK+S+4T9GQC/8EQLQ21wIMmOwHVi8yWGM9w7FYvIsc41S9n8JkBNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025882;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025885;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=veyBZYByrmaLCKdf/3QWV7E3A/qTJNPHq/RajG51boI=;
-	b=mcZKktMcY4fJkli5ZsJM/++Xget5svDM2/A4gQ5NnqlgLTOqXqEGrG/Wdm02w8GLB+kG
-	 xXmhSMDksHmly8p3wgNiy1db31/+k3fRF4hU6jnrV46T7uwbJIFfkut8eSsw1Y1bKQD4o
-	 12nbtb722nRE6o9QhALBXd0JYEf7XGt9FXFhRQtmsVKcLaqCW54SoEcsQ3WoMuXF9iYxm
-	 ZgRtDR46O0eIRQfLwPSYI6eGNQBMbdSjsI9ViG4lnDkl9z9QpCdsiGTg0WVYygfwoF+hx
-	 cOxEylViOIeoMFyT9ksReVsxvZiUEUaZ52W1GLDkM/83SoIUV3NlJg3q0EwEA/VD76A==
+	bh=54yJS8m+iS0MtMS2fwOZ/V+pefcoM2Vf5wpZ1GRK5+8=;
+	b=sHfMNqmnoFoYFZdKgD4lc/nA+nKBvbsYhP3qvATDhIvQa6TViYobVe0p2E+qKp5Lylbg
+	 6qj0P3bowoFnnd/JIAeeLwt1GkB7Sw3qHNl5dUHbw/aaMQsHKD7KM619rszZ9Y+YD7Bsc
+	 CPEOcKuRWsL+EG1A/GZoB5exqo2/fREViUenF9VGuhGpBS8nDQ8AI3V7+L6mRGacSkKWw
+	 otI96XW636JvmmAemSyzDHJ6UOVR4SK7kEpoT/n5jUa5mUFfCJP3iDIyC7hmflHnQCQC7
+	 1XByRR0OL2sQQam2X2BRXD2zbpbcsGrWsy2zfyFXuMYVUBDy6QID4wxG50QK8FrUUwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Dp0nG7s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0pnv1yTm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94235606A31C;
-	Wed, 18 Nov 2026 18:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20B2606A31C;
+	Wed, 18 Nov 2026 18:18:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Dp0nG7s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97A81F000C4;
-	Wed, 18 Nov 2026 18:18:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0pnv1yTm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF5291F000C4;
+	Wed, 18 Nov 2026 18:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025882;
-	bh=veyBZYByrmaLCKdf/3QWV7E3A/qTJNPHq/RajG51boI=;
+	s=korg; t=1795025885;
+	bh=54yJS8m+iS0MtMS2fwOZ/V+pefcoM2Vf5wpZ1GRK5+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Dp0nG7sdqZ9WVJVkZPYj/0Hp7iySlrRz6ppYV4L93gHgVuJzImvjRkB76VMcS4Nk
-	 G2WXTeRqtsyOVZY5HeCBOTXB3yQSSR7Ay51fr3MmIDR3GE7pxV3hPnxqj3+7dCt+v6
-	 arRrEvPBYB6S+Lien2VMAsnAuGyxf7X7aIxYn06g=
+	b=0pnv1yTmdawhlZUao8pkUP+gh+tiK3RAtfM3Mv6T6Sb2AAICD/ZWAToMBtbxudGgJ
+	 HgnMxdw+Et+Qd2XdmAgbgUDh3QWZshab/b8t3WSggk0hMzs4EStJuA8CLf8+RanAP4
+	 cm7uncqZIS3n71xt5r0bA+M74cQ8uofPO/LCF8RQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Felix Fietkau <nbd@nbd.name>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1200/2151] wifi: mt76: mt7921: fix lock inversion between dev->mutex and iflist_mtx
-Date: Wed, 18 Nov 2026 15:48:55 +0100
-Message-ID: <20261118150205.920786647@linuxfoundation.org>
+Subject: [PATCH 6.18 1236/2151] ASoC: rockchip: rockchip_i2s: Handle runtime PM resume failures in set_fmt
+Date: Wed, 18 Nov 2026 15:49:31 +0100
+Message-ID: <20261118150207.202872217@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,57 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 3dcb98c5cb51a70750ae8dc006d6d787ca09f425 ]
+[ Upstream commit e9eb1854d16136006c6fe94c927b54b2b264b429 ]
 
-mt7921_config() holds dev->mutex across
-ieee80211_iterate_active_interfaces(), which takes local->iflist_mtx.
-mac80211 uses the opposite order: ieee80211_del_virtual_monitor() holds
-iflist_mtx while calling drv_unassign_vif_chanctx(), and
-mt792x_unassign_vif_chanctx() takes dev->mutex.
+rockchip_i2s_set_fmt() calls pm_runtime_get_sync() before accessing
+hardware registers, but ignores its return value.
+If the runtime resume fails, the function continues to perform register
+accesses while the device state is undefined.
+Replace pm_runtime_get_sync() with pm_runtime_resume_and_get() and
+return early on failure to avoid unpowered register accesses.
 
-Deleting a monitor interface that has a channel assigned reaches the
-second order and lockdep reports the cycle. The driver side of it:
-
-  -> #1 (&local->iflist_mtx){+.+.}-{4:4}:
-         __mutex_lock+0xda/0x1070
-         ieee80211_iterate_interfaces+0x34/0x70 [mac80211]
-         mt7921_config+0xb8/0xe0 [mt7921_common]
-         drv_config+0x63/0x1d0 [mac80211]
-
-.config is only reached through drv_config(), which asserts the wiphy
-mutex, so ieee80211_iterate_active_interfaces_mtx() can be used. It walks
-the same list under the wiphy mutex and never takes iflist_mtx, which
-drops the driver's dev->mutex -> iflist_mtx edge.
-
-Fixes: cbaa0a404f8d ("mt76: mt7921: fix up the monitor mode")
-Link: https://lore.kernel.org/linux-wireless/20260730053916.109426-1-lucid_duck@justthetip.ca/
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260810045338.118923-2-lucid_duck@justthetip.ca
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 53ca9b9777b9 ("ASoC: rockchip: i2s: Fix regmap_ops hang")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260903112739.373621-2-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/rockchip/rockchip_i2s.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-index 26595de275bff..1bc596db5af85 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-@@ -651,9 +651,9 @@ static int mt7921_config(struct ieee80211_hw *hw, int radio_idx, u32 changed)
- 	}
+diff --git a/sound/soc/rockchip/rockchip_i2s.c b/sound/soc/rockchip/rockchip_i2s.c
+index 0a0a95b4f5204..6b0d8eb5fa3c1 100644
+--- a/sound/soc/rockchip/rockchip_i2s.c
++++ b/sound/soc/rockchip/rockchip_i2s.c
+@@ -244,7 +244,9 @@ static int rockchip_i2s_set_fmt(struct snd_soc_dai *cpu_dai,
+ 	unsigned int mask = 0, val = 0;
+ 	int ret = 0;
  
- 	if (changed & IEEE80211_CONF_CHANGE_MONITOR) {
--		ieee80211_iterate_active_interfaces(hw,
--						    IEEE80211_IFACE_ITER_RESUME_ALL,
--						    mt7921_sniffer_interface_iter, dev);
-+		ieee80211_iterate_active_interfaces_mtx(hw,
-+							IEEE80211_IFACE_ITER_RESUME_ALL,
-+							mt7921_sniffer_interface_iter, dev);
- 	}
- 
- out:
+-	pm_runtime_get_sync(cpu_dai->dev);
++	ret = pm_runtime_resume_and_get(cpu_dai->dev);
++	if (ret)
++		return ret;
+ 	mask = I2S_CKR_MSS_MASK;
+ 	switch (fmt & SND_SOC_DAIFMT_CLOCK_PROVIDER_MASK) {
+ 	case SND_SOC_DAIFMT_BP_FP:
 -- 
 2.53.0
 
