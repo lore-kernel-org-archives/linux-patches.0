@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060980;
-	b=Rj6eIlgN/lptX4LIW4J0wAAQbFTGYKh1BnfAPwE+U1akapkM5Pv1KrfthC8uYvTczNIb
-	 CPnZsmA09fsaTQWWyGQfyGgrDd8JoIuYAi6tzezwAmuOlqFDQf+vfneefiEt9Glz51oxn
-	 QxWEyfw4Cu571EJTf9yH0uMaxpZm3KZTdY9oDyyOmjkZEvmd9DD3DHzFdxXn4T64nIdfm
-	 lnX8qVY0TvR8pY4xYNTUe+76+mdwjW6VPE3yNQShYbW3gSb7KW3tfCuEGnuzu3NjkpWj8
-	 8HbYJt6CSbnBS6alhctdXKOHwO0CFKl0I+bKSDTNEWxoAUDW+v2WXKOkTgIGNCeiRfA==
+	t=1795060983;
+	b=N2GFgRCQnIFzkf8LQbGm11I2BF25Wzaxd12VWwzvjQf3ffRNvE57lYa8aWY75UQ34WMI
+	 8tgGFyXFtBAxla5m+tktnZsLjESWZ3IdRoqh83Mou9zJ6EOOj8mflvScDA9D9xh3OeVzT
+	 XbET3rRxzspHhCStpRsjWnVViRHIFO8oBkp4lW2rUbM6dDwa3j1oAxPAonErjMRpTmWd1
+	 GwiettWJajfb6bht9CsMMeQyWTqFkxEivImc7DVxLoVSIg2lowk5LJSafjiAB1K28u+2+
+	 M2DuANdYk6W31vll3P7xjcdYHjfh2XBrpQKID6ANkcgqSxmg0cOvp92Gmm/OqQsDJwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060980;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060983;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4//owhSGWV76gBln3P7FMoTFOh5ruo8kJWpsSveD/ZQ=;
-	b=pEw4xfbF6ehsvM0b6KXBXDSee+iOT9K6HhXJKUfvYOXHYxAZKyNe3Rt93K8ou0I12l6M
-	 PPFRO9+PkW1Wk94GVEDDG7n6HLbhlSLa6fPNkfa4XzXnOlMOKKvc0mTmYmxRpkEb6WgdB
-	 4ninIWUMVzf5hG5IJmM/cgwvPhh6qQD8boZOPqBgRrOGSwEqdzOdsWQ31agZfeQfph1UC
-	 smEqQTXpdagIZ0LrxPZ4HWB0AQ6TN/PVzOGu6XGABtBEfuuO8BLII1TfEnzRXppyAaQGI
-	 SRk+KhiTgbrGmRikuc8aHywd5uOgG9kRsyNNd3rW3by44uQS+npFw8HSYB9qyBVnOuQ==
+	bh=2FnqxXptTo8N+XyCyH7bB/59808O3rZ7UxGx5QBcz00=;
+	b=adpVOuqAybEdzYvpINiI1EaUaajvHk3ObGlfd3UeNk4281mWY7hzCq51I2jYX13GI+DN
+	 sJ2qEQByJMoDIp/AztN5tCx/x7WpJSq2xKZrXaRxfccjwT5UUOFY7bMfzcfCk4r+IzpX1
+	 f9470nkE/2kKN9aovkgV9q92YZ9/Q6saX5zG7D33eJVTr6TsULkhBd4UcRs192vmWVkEm
+	 St85Y8guWGbVP4opxZkWfVJnyug5pZlCHepkIwcSZVrgdzL9C5kEEaNP+TXH43lA17mZQ
+	 vHXzVnQyF9AKzCxRNs9oIJRt2LqkD81+CvAJmRyidQJgMNr7Tc9kkQ4HGMIiJ3ZjH1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2azZhuP0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZCT2bKQS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FA0606A32C;
-	Thu, 19 Nov 2026 04:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D01E606A338;
+	Thu, 19 Nov 2026 04:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2azZhuP0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A373B1F000C5;
-	Thu, 19 Nov 2026 04:02:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZCT2bKQS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD5A1F000C5;
+	Thu, 19 Nov 2026 04:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060980;
-	bh=4//owhSGWV76gBln3P7FMoTFOh5ruo8kJWpsSveD/ZQ=;
+	s=korg; t=1795060983;
+	bh=2FnqxXptTo8N+XyCyH7bB/59808O3rZ7UxGx5QBcz00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2azZhuP0RsuSXq7eHtXrDAqTjzPg0NLxyu6t7MGqSzWGUZNac8PY6I6rgkH3Go2jQ
-	 t+LQvMH8TD5dsk7ILZ1F9i4QXKzu6KhbkvFGdWrSJAzgWqe6zN6snPkRQXfvICCOZM
-	 YtymIhFSnqnfZEitVigOsVC+i2O9JSWSDdRM8BjA=
+	b=ZCT2bKQSdLytC1+v996/p2lwriXVHTzfsH1nCMWkM9w0cwHcVuY4r9rhLHt05IwTX
+	 zvy85yTGRhmrgiE6vAFFf651pkYTcFpQeP7CmNGwXj6AShXi89UBlxo9v5tYmoYCq+
+	 oVg1Nj6PWzoyeT2uFOAlG/Iz8h9ICbv81uj1QjAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Logan Odell <loganodell@google.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1393/1848] IB/isert: Dont share drop_cmd_list across concurrent connection teardowns
-Date: Wed, 18 Nov 2026 15:57:11 +0100
-Message-ID: <20261118150017.787975469@linuxfoundation.org>
+Subject: [PATCH 5.10 1394/1848] PCI/IOV: Read VF config values that need not match PF
+Date: Wed, 18 Nov 2026 15:57:12 +0100
+Message-ID: <20261118150017.882127166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,47 +68,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Logan Odell <loganodell@google.com>
 
-[ Upstream commit d30e9b1bc47bd9be4b2fc97b0e4074bc02c4203a ]
+[ Upstream commit ae43799529c480510dcc14bd0ed141a1d85b9259 ]
 
-isert_put_unsol_pending_cmds() declares drop_cmd_list as a static
-LIST_HEAD, so the list is shared across all invocations of the function.
-It is called from isert_wait_conn(), the per-connection .iscsit_wait_conn
-transport callback, which runs independently for each connection during
-teardown.
+Per PCIe r7.0, sec 7.5.1.1.5 and 7.5.1.2.3, VF Revision IDs and Subsystem
+IDs may differ from the PF's.  Read these values from VF config space
+instead of using cached values from VF 0.
 
-conn->cmd_lock only protects each connection's own conn_cmd_list, not the
-shared drop_cmd_list.  If two connections tear down at the same time, both
-threads list_move_tail() commands into the same drop_cmd_list without any
-mutual exclusion, and then both iterate and list_del/put it concurrently.
-This corrupts the linked list and can double-free iscsit_cmd structures.
+Per 7.5.1.1.6 and 7.5.1.2.3, VF Class Codes and Subsystem Vendor IDs must
+be the same as the PF's.  Use the PF's value instead of reading from VF
+config space.
 
-Make drop_cmd_list a stack-local list, matching the pattern already used
-in isert_free_np().
+Per 7.5.1.1.9, the Header Type for a VF must be 0, so hardcode that
+assignment.
 
-Fixes: 3e03c4b01da3 ("iser-target: Put the reference on commands waiting for unsol data")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260921031100.2199-1-lirongqing@baidu.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: cf0921bea66c ("PCI/IOV: Use VF0 cached config registers for other VFs")
+Signed-off-by: Logan Odell <loganodell@google.com>
+[bhelgaas: commit log, move "rev" decl inside block that uses it]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260910173648.1304517-1-loganodell@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/isert/ib_isert.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/iov.c   | 25 -------------------------
+ drivers/pci/pci.h   |  4 ----
+ drivers/pci/probe.c | 15 ++++++++++-----
+ 3 files changed, 10 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/isert/ib_isert.c b/drivers/infiniband/ulp/isert/ib_isert.c
-index b7efdc63f4a72..3c04da84e3ffb 100644
---- a/drivers/infiniband/ulp/isert/ib_isert.c
-+++ b/drivers/infiniband/ulp/isert/ib_isert.c
-@@ -2579,7 +2579,7 @@ static void
- isert_put_unsol_pending_cmds(struct iscsi_conn *conn)
- {
- 	struct iscsit_cmd *cmd, *tmp;
--	static LIST_HEAD(drop_cmd_list);
-+	LIST_HEAD(drop_cmd_list);
+diff --git a/drivers/pci/iov.c b/drivers/pci/iov.c
+index f939cbada3755..9a7780b30e5fb 100644
+--- a/drivers/pci/iov.c
++++ b/drivers/pci/iov.c
+@@ -110,29 +110,6 @@ resource_size_t pci_iov_resource_size(struct pci_dev *dev, int resno)
+ 	return dev->sriov->barsz[resno - PCI_IOV_RESOURCES];
+ }
  
- 	spin_lock_bh(&conn->cmd_lock);
- 	list_for_each_entry_safe(cmd, tmp, &conn->conn_cmd_list, i_conn_node) {
+-static void pci_read_vf_config_common(struct pci_dev *virtfn)
+-{
+-	struct pci_dev *physfn = virtfn->physfn;
+-
+-	/*
+-	 * Some config registers are the same across all associated VFs.
+-	 * Read them once from VF0 so we can skip reading them from the
+-	 * other VFs.
+-	 *
+-	 * PCIe r4.0, sec 9.3.4.1, technically doesn't require all VFs to
+-	 * have the same Revision ID and Subsystem ID, but we assume they
+-	 * do.
+-	 */
+-	pci_read_config_dword(virtfn, PCI_CLASS_REVISION,
+-			      &physfn->sriov->class);
+-	pci_read_config_byte(virtfn, PCI_HEADER_TYPE,
+-			     &physfn->sriov->hdr_type);
+-	pci_read_config_word(virtfn, PCI_SUBSYSTEM_VENDOR_ID,
+-			     &physfn->sriov->subsystem_vendor);
+-	pci_read_config_word(virtfn, PCI_SUBSYSTEM_ID,
+-			     &physfn->sriov->subsystem_device);
+-}
+-
+ int pci_iov_sysfs_link(struct pci_dev *dev,
+ 		struct pci_dev *virtfn, int id)
+ {
+@@ -182,8 +159,6 @@ int pci_iov_add_virtfn(struct pci_dev *dev, int id)
+ 	virtfn->physfn = pci_dev_get(dev);
+ 	virtfn->no_command_memory = 1;
+ 
+-	if (id == 0)
+-		pci_read_vf_config_common(virtfn);
+ 
+ 	rc = pci_setup_device(virtfn);
+ 	if (rc)
+diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+index 8802bf0f48b46..0b31b914adc08 100644
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -355,10 +355,6 @@ struct pci_sriov {
+ 	u16		driver_max_VFs;	/* Max num VFs driver supports */
+ 	struct pci_dev	*dev;		/* Lowest numbered PF */
+ 	struct pci_dev	*self;		/* This PF */
+-	u32		class;		/* VF device */
+-	u8		hdr_type;	/* VF header type */
+-	u16		subsystem_vendor; /* VF subsystem vendor */
+-	u16		subsystem_device; /* VF subsystem device */
+ 	resource_size_t	barsz[PCI_SRIOV_NUM_BARS];	/* VF BAR size */
+ 	bool		drivers_autoprobe; /* Auto probing of VFs by driver */
+ };
+diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+index c8dc988df4c39..030b7d71505c6 100644
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -1724,8 +1724,13 @@ static u32 pci_class(struct pci_dev *dev)
+ 	u32 class;
+ 
+ #ifdef CONFIG_PCI_IOV
+-	if (dev->is_virtfn)
+-		return dev->physfn->sriov->class;
++	if (dev->is_virtfn) {
++		u8 rev;
++
++		if (pci_read_config_byte(dev, PCI_REVISION_ID, &rev))
++			rev = 0;
++		return (dev->physfn->class << 8) | rev;
++	}
+ #endif
+ 	pci_read_config_dword(dev, PCI_CLASS_REVISION, &class);
+ 	return class;
+@@ -1735,8 +1740,8 @@ static void pci_subsystem_ids(struct pci_dev *dev, u16 *vendor, u16 *device)
+ {
+ #ifdef CONFIG_PCI_IOV
+ 	if (dev->is_virtfn) {
+-		*vendor = dev->physfn->sriov->subsystem_vendor;
+-		*device = dev->physfn->sriov->subsystem_device;
++		*vendor = dev->physfn->subsystem_vendor;
++		pci_read_config_word(dev, PCI_SUBSYSTEM_ID, device);
+ 		return;
+ 	}
+ #endif
+@@ -1750,7 +1755,7 @@ static u8 pci_hdr_type(struct pci_dev *dev)
+ 
+ #ifdef CONFIG_PCI_IOV
+ 	if (dev->is_virtfn)
+-		return dev->physfn->sriov->hdr_type;
++		return 0;
+ #endif
+ 	pci_read_config_byte(dev, PCI_HEADER_TYPE, &hdr_type);
+ 	return hdr_type;
 -- 
 2.53.0
 
