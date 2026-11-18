@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021603;
-	b=4s9PlPe54NZTAytgnUFt5GB0XgdB+tNMwK0BHR8aOqT+KIC07lkL86h09JRmGoAcAcAo
-	 xAMCs3+dxMXkhcEx6q2IKUBDXhQDvfeVjHfbKiHNLWuwofCp2IxeNASuToDj719FRDrfz
-	 W5wXn7IiAEAJ4owin5DmTEUsBR1IGnDtqaw7PSZRVjAsft22gEVXZnGWNId1kjbtaA9ni
-	 S+3zOtJaMMG+PXaswFDdAshoGi2SOLlwMlBgd0jPFdd9BIVnlcysvyzasDtgNPhjA0J7D
-	 WUq1pVFLw9O1e0TMX6Yv4FxbGwBO7CQVszDBzmmqTIg8YBaqvmA2/pYCI9MrWtZp/5w==
+	t=1795021606;
+	b=aNJAGFAvuj9gJbfHUVlKSd4u+ntm9STPk5VXRDPDP1enL66eyT1BZ6MZIr35prDMHJJn
+	 Uby1OniRTTez6RufiRO4mz11IOg8+G+CkMHENRRVPdJFscaSNJv0eY2TI0kRBqezjjSxY
+	 ji1Bg5batI/u/u+QERT6VE+c5Sclt5Lhq/9qfDX+R2aDCtb+AolMTHkkxyGMaNi9erfb1
+	 AEyNDgA2wj56LPuzF0/tBxBwNxXY07VV6AI7w4Yi9zUp2t49JJ0f32ZruCZ9Lk9ld5HDr
+	 H7xTqE69GpB8qz18MNhovtfSdOQcSWTH9zhgurx5B5f5TBlMS/xXIlqBoqPxNgzOxoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021603;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021606;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=OS+RhHK/JPkd+OwXy2igRkkK0f4GFNGvvYRKE6nldGU=;
-	b=mFJkwSJ1aLfZup3ya59T51DCQTKrLVwSUYpPjeCVxyTN9XqA4AyGJTp/VuuUUk1fHU+c
-	 tXNqSRKjcRam6WUYs7W/zRQaZt6DSUaUph3rKUzpEzwnbasIUw0WmYhwcVRmbYz8L9+NC
-	 Rxq0tQiXO4l+vhUc/tj24KTwxiRrcFmG212JL2mRlDnuP0uVVhs4tKjNQoykECeRe+6LY
-	 XtyjlPvX+b2awoZwtkdHSck0uBIZwbWihT7WESxW9w8uP/xjDeej31VYyURXa6+roCiAN
-	 5KPWyE2E9S+KxAhII5Z/9WZPOgnGisFocXQkB2dsb6MK46WhEDQmYXG+SkrGQnVZpEQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=TjugvHD9xDWC7pCuOggHYh+xK87KfDNxX+WbeUG142Y=;
+	b=eEaLdybZNWYveS3BuxuOzqAsliHoQ4iTfovFuSOm3JxjFdFxnwRyrBHZXB6ilic6AZcz
+	 j4f8WNZQasmcFsR1z02bB5FftHn2+i1PvclpY01r/0D3RkWQDlma5gW2IYlsYJbX8DqRW
+	 GQ+6Kpwac58oVh4NYZxjIDpD3xvzwtc0+IKhj+awivkrfl53jaqYmqip2EDVF334/rnRd
+	 loBkkXhYJKdTK3gQubfIO0rChgC9vLymoZvmqlIDy1WZ0TkWng5A4pkAtkqompeJDRzUF
+	 qIXdKCjbbZOfUYeVHxvSDXMc31xn7jv3oRyHEHxVKzprm5K7HOMhE8xGUnn+6Xs62/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fExgxk/H";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pH2yaaJp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC6160A380E;
-	Wed, 18 Nov 2026 17:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C55606A330;
+	Wed, 18 Nov 2026 17:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fExgxk/H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C25D1F000C6;
-	Wed, 18 Nov 2026 17:06:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pH2yaaJp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7581F000C4;
+	Wed, 18 Nov 2026 17:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021603;
-	bh=OS+RhHK/JPkd+OwXy2igRkkK0f4GFNGvvYRKE6nldGU=;
+	s=korg; t=1795021606;
+	bh=TjugvHD9xDWC7pCuOggHYh+xK87KfDNxX+WbeUG142Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fExgxk/HcHRNYhIKuyqlpnFhwcFV+1QUldPr3pn89gfecpxHBQqmAN2BNsC5OwDY4
-	 rZqvI3i0zjuDdpEhouF9+vkx7xodbi1fDTr5VKLrs4bar0tUzPES2Ep3t2rxSik3AT
-	 K79HemPYpDNK+euqZbnrnrXXw+wrr8+WiC7X2Ijc=
+	b=pH2yaaJp+nOHvPqRSTnxSl+d1lfX9BSTf6AX/rSCsjsYYCe4PqNe7PEfZOMxby5/r
+	 tor87yvlnXhV1JQeattUUT9R386UKw9jRgV3Ollt4MVh0PlBLYD+xfF0ka2o+tVkMH
+	 vAmwNkwmIousu7v1FmLGFgaSKs7xsu2yigHCzQ+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Alexandre Cassen <acassen@corp.free.fr>,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2315/2651] net/mlx5: HWS, fix modify header pattern compare on big-endian
-Date: Wed, 18 Nov 2026 15:59:15 +0100
-Message-ID: <20261118150408.544064687@linuxfoundation.org>
+Subject: [PATCH 7.3 2360/2651] ACPI: platform_profile: Separate handler locking from sysfs lifetime
+Date: Wed, 18 Nov 2026 16:00:00 +0100
+Message-ID: <20261118150410.521068609@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -64,57 +64,294 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Cassen <acassen@corp.free.fr>
+From: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
 
-[ Upstream commit 7eed173447fba937a19e2f5f2dc79780793f72e7 ]
+[ Upstream commit b66621ad2a8fb553c4cb75b9d69fead4f0532933 ]
 
-mlx5hws_pat_compare_pattern() casts each __be64 action to __be32 to
-compare only its control dword. On big-endian this keeps the data dword
-instead, which HWS clears from the pattern of set and add actions. Two
-such actions writing the same value into different fields then share a
-pattern and the second rule modifies the wrong field.
+Registration and removal currently hold profile_lock across
+device_unregister() and sysfs_update_group(). These operations can remove
+sysfs attributes and wait for their active callbacks to finish. The
+profile read and write callbacks acquire profile_lock themselves, so a
+concurrent access can deadlock:
 
-Read the first dword of each action from memory instead. Little-endian
-behavior is unchanged.
+  Removal/update path             Active sysfs callback
+  -------------------             ---------------------
+  acquire profile_lock            hold kernfs active reference
+  remove a sysfs attribute         wait for profile_lock
+  wait for its active references
 
-Discovered by an AI code review agent [1] and confirmed by code
-inspection. Not reproduced for lack of big-endian hardware running HWS.
-Tested for regressions on ConnectX-7 with firmware 28.48.1000 on a
-little-endian host.
+The removal path cannot finish until the callback returns, and the
+callback cannot return until the removal path releases profile_lock.
+This applies both to per-provider device teardown and to updates of the
+legacy aggregate attribute group.
 
-Fixes: aefc15a0fa1c ("net/mlx5: HWS, added modify header pattern and args handling")
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261010120147.135825-1-acassen%40corp.free.fr [1]
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
-Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Link: https://patch.msgid.link/20261019133159.1742411-2-acassen@corp.free.fr
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Commit 041142d7d252 ("ACPI: platform-profile: Fix possible deadlock in
+platform_profile_remove()") previously fixed this lock ordering by moving
+sysfs_remove_group() outside profile_lock. Commit 55b1e68134bf ("ACPI:
+platform_profile: Use guard(mutex) for register/unregister") reintroduced
+the issue by extending the mutex guard over sysfs_remove_group(). Later,
+commit 77be5cacb2c2 ("ACPI: platform_profile: Create class for ACPI
+platform profile") replaced that teardown with device_unregister() and
+sysfs_update_group(), still under the same mutex, extending the problem
+to class-device teardown and aggregate attribute updates.
+
+Simply dropping profile_lock around these operations is insufficient.
+Aggregate operations currently discover providers through the class
+device list. A provider being unregistered could therefore still be
+selected for an aggregate read, write or cycle while its sysfs files are
+being torn down. Concurrent registrations and removals would also race
+when updating aggregate attribute visibility.
+
+Introduce profile_registration_lock to serialize registration, removal
+and aggregate sysfs updates. Sysfs callbacks never acquire this mutex.
+Retain profile_lock for profile operations and use it to protect an
+explicit list of handlers participating in the aggregate interface.
+
+Add a handler to that list only after device_register() succeeds. On
+removal, unlink it under profile_lock before calling device_unregister().
+Acquiring profile_lock first waits for any aggregate operation already
+using the handler to complete; unlinking prevents later aggregate
+operations from finding it. Release profile_lock before draining sysfs
+callbacks, allowing active per-provider callbacks to complete before the
+device is released. Apply the same unlink-before-unregister ordering to
+registration error cleanup.
+
+Walk this list for aggregate reads, writes and profile cycling, and use
+its emptiness to determine aggregate attribute visibility. The class
+devices remain the per-provider userspace interface.
+
+There can now be an interval between removing the last handler from the
+list and removing the aggregate attributes. Explicitly reject choices
+reads and writes during that interval: the intersection bitmap starts
+with every bit set, so an empty traversal must not advertise all profiles
+or report a successful write without updating a provider.
+
+This separates aggregate membership from class device teardown while
+preserving the existing class and ACPI sysfs interfaces.
+
+Fixes: 55b1e68134bf ("ACPI: platform_profile: Use guard(mutex) for register/unregister")
+Fixes: 77be5cacb2c2 ("ACPI: platform_profile: Create class for ACPI platform profile")
+Signed-off-by: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+[ rjw: Subject adjustment, added two empty code lines ]
+[ rjw: Renamed profile_walk_handlers() to profile_for_each_handler() ]
+Link: https://patch.msgid.link/20261020144525.3265851-1-daniel.lezcano@oss.qualcomm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c    | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/platform_profile.c | 82 ++++++++++++++++++++-------------
+ 1 file changed, 49 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c
-index 9af449c2b4d5a..512299b59fd0d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c
-@@ -116,8 +116,8 @@ static bool mlx5hws_pat_compare_pattern(int cur_num_of_actions,
- 				return false;
- 		} else {
- 			/* Compare just the control, not the values */
--			if ((__force __be32)actions[i] !=
--			    (__force __be32)cur_actions[i])
-+			if (*(__be32 *)&actions[i] !=
-+			    *(__be32 *)&cur_actions[i])
- 				return false;
+diff --git a/drivers/acpi/platform_profile.c b/drivers/acpi/platform_profile.c
+index 79d2e92e5c28d..b4c91d57f3d48 100644
+--- a/drivers/acpi/platform_profile.c
++++ b/drivers/acpi/platform_profile.c
+@@ -8,15 +8,25 @@
+ #include <linux/bits.h>
+ #include <linux/cleanup.h>
+ #include <linux/init.h>
++#include <linux/list.h>
+ #include <linux/mutex.h>
+ #include <linux/platform_profile.h>
+ #include <linux/sysfs.h>
+ 
+ #define to_pprof_handler(d)	(container_of(d, struct platform_profile_handler, dev))
+ 
++/*
++ * Protects profile_handlers membership and serializes profile operations
++ * against each other and handler removal. Never held across sysfs teardown,
++ * which can wait for callbacks that acquire this lock.
++ */
+ static DEFINE_MUTEX(profile_lock);
++/* Serialize registration and sysfs updates without blocking sysfs callbacks. */
++static DEFINE_MUTEX(profile_registration_lock);
++static LIST_HEAD(profile_handlers);
+ 
+ struct platform_profile_handler {
++	struct list_head node;
+ 	const char *name;
+ 	struct device dev;
+ 	int minor;
+@@ -44,6 +54,23 @@ static_assert(ARRAY_SIZE(profile_names) == PLATFORM_PROFILE_LAST);
+ 
+ static DEFINE_IDA(platform_profile_ida);
+ 
++static int profile_for_each_handler(void *data,
++				    int (*fn)(struct device *dev, void *data))
++{
++	struct platform_profile_handler *handler;
++	int ret;
++
++	lockdep_assert_held(&profile_lock);
++
++	list_for_each_entry(handler, &profile_handlers, node) {
++		ret = fn(&handler->dev, data);
++		if (ret)
++			return ret;
++	}
++
++	return 0;
++}
++
+ /**
+  * _commmon_choices_show - Show the available profile choices
+  * @choices: The available profile choices
+@@ -306,20 +333,18 @@ static ssize_t platform_profile_choices_show(struct kobject *kobj,
+ 	int err;
+ 
+ 	scoped_cond_guard(mutex_intr, return -ERESTARTSYS, &profile_lock) {
+-		err = class_for_each_device(&platform_profile_class, NULL,
+-					    &data, _aggregate_choices);
++		err = profile_for_each_handler(&data, _aggregate_choices);
+ 		if (err)
+ 			return err;
+ 		if (data.count == 1) {
+-			err = class_for_each_device(&platform_profile_class, NULL,
+-						    &data, _remove_hidden_choices);
++			err = profile_for_each_handler(&data, _remove_hidden_choices);
+ 			if (err)
+ 				return err;
  		}
  	}
+ 
+ 	/* no profile handler registered any more */
+-	if (bitmap_empty(data.aggregate, PLATFORM_PROFILE_LAST))
++	if (!data.count || bitmap_empty(data.aggregate, PLATFORM_PROFILE_LAST))
+ 		return -EINVAL;
+ 
+ 	return _commmon_choices_show(data.aggregate, buf);
+@@ -384,8 +409,7 @@ static ssize_t platform_profile_show(struct kobject *kobj,
+ 	int err;
+ 
+ 	scoped_cond_guard(mutex_intr, return -ERESTARTSYS, &profile_lock) {
+-		err = class_for_each_device(&platform_profile_class, NULL,
+-					    &profile, _aggregate_profiles);
++		err = profile_for_each_handler(&profile, _aggregate_profiles);
+ 		if (err)
+ 			return err;
+ 	}
+@@ -423,15 +447,13 @@ static ssize_t platform_profile_store(struct kobject *kobj,
+ 		return -EINVAL;
+ 
+ 	scoped_cond_guard(mutex_intr, return -ERESTARTSYS, &profile_lock) {
+-		ret = class_for_each_device(&platform_profile_class, NULL,
+-					    &data, _aggregate_choices);
++		ret = profile_for_each_handler(&data, _aggregate_choices);
+ 		if (ret)
+ 			return ret;
+-		if (!test_bit(i, data.aggregate))
++		if (!data.count || !test_bit(i, data.aggregate))
+ 			return -EOPNOTSUPP;
+ 
+-		ret = class_for_each_device(&platform_profile_class, NULL, &i,
+-					    _store_and_notify);
++		ret = profile_for_each_handler(&i, _store_and_notify);
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -450,22 +472,11 @@ static struct attribute *platform_profile_attrs[] = {
+ 	NULL
+ };
+ 
+-static int profile_class_registered(struct device *dev, const void *data)
+-{
+-	return 1;
+-}
+-
+ static umode_t profile_class_is_visible(struct kobject *kobj, struct attribute *attr, int idx)
+ {
+-	struct device *dev;
+-
+-	dev = class_find_device(&platform_profile_class, NULL, NULL, profile_class_registered);
+-	if (!dev)
+-		return 0;
+-
+-	put_device(dev);
++	guard(mutex)(&profile_lock);
+ 
+-	return attr->mode;
++	return list_empty(&profile_handlers) ? 0 : attr->mode;
+ }
+ 
+ static const struct attribute_group platform_profile_group = {
+@@ -502,8 +513,7 @@ int platform_profile_cycle(void)
+ 	int err;
+ 
+ 	scoped_cond_guard(mutex_intr, return -ERESTARTSYS, &profile_lock) {
+-		err = class_for_each_device(&platform_profile_class, NULL,
+-					    &profile, _aggregate_profiles);
++		err = profile_for_each_handler(&profile, _aggregate_profiles);
+ 		if (err)
+ 			return err;
+ 
+@@ -512,8 +522,7 @@ int platform_profile_cycle(void)
+ 		    profile == PLATFORM_PROFILE_LAST)
+ 			return -EINVAL;
+ 
+-		err = class_for_each_device(&platform_profile_class, NULL,
+-					    &data, _aggregate_choices);
++		err = profile_for_each_handler(&data, _aggregate_choices);
+ 		if (err)
+ 			return err;
+ 
+@@ -525,8 +534,7 @@ int platform_profile_cycle(void)
+ 					  PLATFORM_PROFILE_LAST,
+ 					  profile + 1);
+ 
+-		err = class_for_each_device(&platform_profile_class, NULL, &next,
+-					    _store_and_notify);
++		err = profile_for_each_handler(&next, _store_and_notify);
+ 
+ 		if (err)
+ 			return err;
+@@ -583,7 +591,7 @@ struct device *platform_profile_register(struct device *dev, const char *name,
+ 		}
+ 	}
+ 
+-	guard(mutex)(&profile_lock);
++	guard(mutex)(&profile_registration_lock);
+ 
+ 	/* create class interface for individual handler */
+ 	minor = ida_alloc(&platform_profile_ida, GFP_KERNEL);
+@@ -604,6 +612,8 @@ struct device *platform_profile_register(struct device *dev, const char *name,
+ 		put_device(ppdev);
+ 		goto cleanup_ida;
+ 	}
++	scoped_guard(mutex, &profile_lock)
++		list_add_tail(&to_pprof_handler(ppdev)->node, &profile_handlers);
+ 
+ 	sysfs_notify(acpi_kobj, NULL, "platform_profile");
+ 
+@@ -614,6 +624,9 @@ struct device *platform_profile_register(struct device *dev, const char *name,
+ 	return ppdev;
+ 
+ cleanup_cur:
++	scoped_guard(mutex, &profile_lock)
++		list_del(&to_pprof_handler(ppdev)->node);
++
+ 	device_unregister(ppdev);
+ 
+ cleanup_ida:
+@@ -636,7 +649,10 @@ void platform_profile_remove(struct device *dev)
+ 
+ 	pprof = to_pprof_handler(dev);
+ 
+-	guard(mutex)(&profile_lock);
++	guard(mutex)(&profile_registration_lock);
++
++	scoped_guard(mutex, &profile_lock)
++		list_del(&pprof->node);
+ 
+ 	ida_free(&platform_profile_ida, pprof->minor);
+ 	device_unregister(&pprof->dev);
 -- 
 2.53.0
 
