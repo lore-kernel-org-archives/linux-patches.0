@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061198;
-	b=bdo6TzHBUmdQG0Jgv9x+O6ACoP9IALjaYBelU2myopKEcVozDs2jE7IF4semDduoTf7J
-	 6dBSNmqcFEP4Q53NbzUZz7/JvANXYEkHY2dBXigiuMfQjAsQ5dA3ZrjNhImpDO1u+/Cjg
-	 Sy1zkDJQATjsMuTJbgPetdg7pLLCNj2gqtdThvWF0XN2B5pgCrK4KU6OIKBtJ0qgKT9q6
-	 Ws6k06BPhiNT5/YFmAoc5YTwY8CHK/odY/l1zRQ6S7X6f8IyMDmY4ZkZGurMVqLJ18UBC
-	 bO2KxtVxoYvrMM26tY9lBb5RNS9VmoEQ2QEvDctryeaCTxIOKWcsE8xQ5RuOWy3qNDA==
+	t=1795061202;
+	b=sf+WSou6ELpmilOha2hXVLYYrefKTUDZoN+wI9Kvbvn2XzhSabTeyxiH/MeVQFBeg71I
+	 uBQ/ueq+rmYC/CNKg0hVltBffgxnUAqtrkhGY89XoXwOLnyhQ24OdWSqHRkIdvuRFqxlb
+	 6D5BstXO76C88D+cLpqZgoBxL+OYqQllP827948nuAX3iEL/SLR1meXzy4sD1gTNG5CNd
+	 kxIm46U61CdHSSx4CvbGoFQHc/079fPO1TiMJmjrrIfP+6/I2KQ1vpnRIaFsUitG7cYRS
+	 vDnBn8NhvFiqcYkjinZieCUR97lL9Q6B3YRI1C5F6RP1lO190Wt7s2b5LV4oadR842g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061198;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061202;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lxVUiwGLzR3Lf9AHvrzsn56ZYjr3ErKk+ob5o+kvBsk=;
-	b=obHMhlqz0s8sPv0300Xx6x6oMC02UkZn2UAHlYZ04kNu2BelXIitMTJzLrEdY4RCnnRC
-	 y8yte6GLmLRIDXAFxnjrjZucEqPgtaPF5+5P2jWK2R1E9JOoMYwqPAfitDFox1xCZDssX
-	 kJhRLB/QXGNjFtf9RDU+4dx3k+QSfb5mIYB2QMtAgptOcZuj1b6jTdW/hM2GpSYn5W41j
-	 xI3532/mUK8YIHJPFvfAsHM8lOw9rVqbYGHYmKrZSLj1hadws5bMsuMqyl2n/g/5koLNz
-	 gf+ACz+xbOuKc7L6dcJ6ixxSPUX3k3M7TKKAw2iaYwO52suP36e3TveHfV64yr7NXYA==
+	bh=0PHH+xEkzMWRR5K8aieCCU/0R4SJZiokrDJZcllRRkw=;
+	b=KykiuAjklb3UmZCVXi7di1VLRop6L6K32HZSmLYwZBx7b4wvzYzjHZvme4Ck8b3kjz8a
+	 BLmLOlC6hnyezVmDx7rRS4FSZJ594deoQLVZZnMPXDy/29WPDdrkMTSXN2V9vjYkkrg7x
+	 C01VtqkfyJEjgov+L893S9QVqjK9dfU1o/HXPNktmKUQnrp67kZZW6qUMB2R/xqN6GTxP
+	 zgk+Be2mL8oqKZDbtPm0TxeIV3lQkI4Yzj7zNdpczp7mm/L1PxmPBKdbxyBmYMVIcSB8C
+	 FcwW2SPAqTJxS9ylIwIeDvqf6XCfpB3+LW6sh+6F5GXh03PzQ2K1qrMyJU/GlPXr5mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RiZZ/WzU";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W9gGqsD4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B0E606A325;
-	Thu, 19 Nov 2026 04:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0CD606A320;
+	Thu, 19 Nov 2026 04:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RiZZ/WzU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B371F000C4;
-	Thu, 19 Nov 2026 04:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W9gGqsD4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A8E1F000C4;
+	Thu, 19 Nov 2026 04:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061198;
-	bh=lxVUiwGLzR3Lf9AHvrzsn56ZYjr3ErKk+ob5o+kvBsk=;
+	s=korg; t=1795061201;
+	bh=0PHH+xEkzMWRR5K8aieCCU/0R4SJZiokrDJZcllRRkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RiZZ/WzUPf1troV7GJRqGF9qsEWvyjBSYV/AOTUZ2bqxPd84PBl79N+T21I2BkSLs
-	 2Z9xF51FFOURXV3YxhQL7f0BvRye1+bErL0UpUE14zSJ5TJEFsqf2Dg+QIglf3Fpwi
-	 J2gMdJNQgCAN3GIsuSB7cfHjQy+RKqmaJhwL0F6w=
+	b=W9gGqsD4dG/4IhZlxV5Vi8kalG2Yu+8d7JCv61K4LU03ac09E89Vr7+n4Dpfa/fv0
+	 ZaQB51dT4u9/FbP+uobaTeg+TUwmXeziviaQaq0bwdkANDIIx0Nrog6jMSvTQfhK7M
+	 cmWGm98ajdye7HWqoHnMYLd769Oia7OAjuGEvqWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
+	Guo Ren <guoren@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Chao Wei <chao.wei@sophgo.com>,
+	Chen Wang <unicorn_wang@outlook.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1426/1848] misc: enclosure: fix UAF on device_register() failure
-Date: Wed, 18 Nov 2026 15:57:44 +0100
-Message-ID: <20261118150019.237188987@linuxfoundation.org>
+Subject: [PATCH 5.10 1417/1848] dt-bindings: vendor-prefixes: add milkv/sophgo
+Date: Wed, 18 Nov 2026 15:57:35 +0100
+Message-ID: <20261118150018.815832215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,41 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Chen Wang <unicorn_wang@outlook.com>
 
-[ Upstream commit 0f3b12bab74e13a2b8686a49c5b83099da61e032 ]
+[ Upstream commit 07f9b764062904f0c0fd6e54e58535f34ac3ac6f ]
 
-After device_register() fails, the embedded struct device has already been
-initialized and must be released with put_device() so that
-enclosure_release() can drop the parent reference and free edev.
+Add new vendor strings to dt bindings.
+These new vendor strings are used by
+- SOPHGO's SG2042 SoC [1]
+- Milk-V Pioneer board [2], which uses SG2042 chip.
 
-The error path currently does put_device(parent) + kfree(edev), which
-skips the device lifetime rules and can free the object while the device
-core still owns a reference (use-after-free).
+Link: https://en.sophgo.com/product/introduce/sg2042.html [1]
+Link: https://milkv.io/pioneer [2]
 
-Fixes: d569d5bb3fd9 ("[SCSI] enclosure: add support for enclosure services")
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
-Link: https://patch.msgid.link/20260806070358.1599627-1-gonglinkai@kylinos.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Guo Ren <guoren@kernel.org>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Acked-by: Chao Wei <chao.wei@sophgo.com>
+Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Stable-dep-of: 538f8ec6b9c7 ("dt-bindings: vendor-prefixes: Add Sophos")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/enclosure.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/misc/enclosure.c b/drivers/misc/enclosure.c
-index f950d0155876a..6ac14c2e614b5 100644
---- a/drivers/misc/enclosure.c
-+++ b/drivers/misc/enclosure.c
-@@ -147,8 +147,7 @@ enclosure_register(struct device *dev, const char *name, int components,
- 	return edev;
- 
-  err:
--	put_device(edev->edev.parent);
--	kfree(edev);
-+	put_device(&edev->edev);
- 	return ERR_PTR(err);
- }
- EXPORT_SYMBOL_GPL(enclosure_register);
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index a29d31cf7d078..307700c3b2aaa 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -705,6 +705,8 @@ patternProperties:
+     description: MikroElektronika d.o.o.
+   "^mikrotik,.*":
+     description: MikroTik
++  "^milkv,.*":
++    description: MilkV Technology Co., Ltd
+   "^miniand,.*":
+     description: Miniand Tech
+   "^minix,.*":
+@@ -1052,6 +1054,8 @@ patternProperties:
+     description: Solomon Systech Limited
+   "^sony,.*":
+     description: Sony Corporation
++  "^sophgo,.*":
++    description: Sophgo Technology Inc.
+   "^sourceparts,.*":
+     description: Source Parts Inc.
+   "^spansion,.*":
 -- 
 2.53.0
 
