@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020342;
-	b=uujAx58EYncrL7OATp/8ib/Zi1wUu5FfLoYp3AnQ5rzzEiSNYRyLXBFo5seaTmEQw0Y7
-	 3+rZWNq/OsGMBNsfEWPyKyNr7yTK6dB2W5EK99GH0C6Fvg5oUu8yUzMKzpzfwyHS4JHOX
-	 g6HCUS6QcchTJtO1B7ITNSw9MscG328giz4c3sfTPQtLoIq77cKo6933XBZUht30BMr3O
-	 cbNJero0g/51wyi+F2VZf3F3sx66AO2sA3V006kro1Cpf1loW7XbKEoUKWmgGbSij3wu1
-	 AxY5vLsgzVRH2koEWrWKurTON0wmVxUSJV+LUQwT0eThwKcUSJHe6xRCqEVRrnPzzBg==
+	t=1795020344;
+	b=j4HEt2fKVG6rLVTVs1J5Xpld2hx03PRcg+yaLxg8/lYHwLVWcHp5hKO7hzUNkgKsCLgT
+	 vOouLntQzNHgDqkuSislerk5bz54XggC0Jx/OODrLT04TEbZy6Ux4Rejx/ZwRdKIydExc
+	 AEBUAsdyZpBFt21pWUo+FxMoGr9Wc2wiPkfV28GD3HkHSJmOaPB6aAFs9v45DVhSy5HE8
+	 yQl492tJx+W+seppTacC73k/uvvFn7tKz8td//Z1o8aaG7rPLVtDgLfD1ULO+XP/dEO4i
+	 p7XSPs84jE+P/G5Vp+MqVGhCOtjS6J9TjMYbmxg10+f+Mcm8W8rOVCl2lOZzf/mqmiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020342;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020344;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QlRfoJ2OcEtEM+KOUU4q0Q+pkD1G41NOEtnIqfZ96/s=;
-	b=q3bl9+siqJA/+2JMNHCNRJlB0qFw8rcrPoKgDujefneFVvo8NegYr0ViRDAP1/m/xxlf
-	 dMgaFFai0KfZIoq1MfB0fq6Q/24G/oRI5ibWCAiS+1jPr/8r3mHZtUS8F21kR6lgbbHfI
-	 R9p+2tMZGz69zza48+TSd4jfl84uO4MxVHpm7tRslIN/X57qvLeOpXClRYMjOYP3h3Giu
-	 IFMh8a2R4VGhDppFovtYmFvkBsLT8s0OYjTA6cdc3JWQ8gEdWDafBsC9m/vdND0VquJpl
-	 ibmWBVSQsYibl1L/hgoXglWRUPIc66LmIfvR8KDUTKESr/O9dEH+MYXzcg/8gA9MpRQ==
+	bh=d+Gap2eIiyYW3Jb2/4I3aYhk7fAuzLDll6eTxddNfqU=;
+	b=12wVKulbupLd03JUFjs+s3S4ZgIP67Y2yMb1/UbRAxk7md6YWRuuFL+rT2x0ZxuiBSvu
+	 iSez4OCiraSWAc5Ka0imjKsPQ/5hT1pxEdi74OT+f6WHuzeHAIJDQFJWZQjI1qBV1sUJO
+	 VkSzCtLgrkTQi/IXMaChBfYLJ15ni4ZWpJMB3OcKXek+3wAAzcBjvjZPklsCBsN7zguck
+	 ftqIXs7jmGR8O6wgqBGcHGeSx2OcXQ0h3a/IAIJgI7NNka7aQ26Wwp0beqhmpnmWYb8xz
+	 GbpkieA/WyATKIJz3YtKixiVJcrxDA5Gn1lZD+zVFUI5FpbP6kzZLiEwp1ypVElCsbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aX3k7m10;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yfnZKbpa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54BB606A32F;
-	Wed, 18 Nov 2026 16:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96400606A32C;
+	Wed, 18 Nov 2026 16:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aX3k7m10
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 446171F000C4;
-	Wed, 18 Nov 2026 16:45:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yfnZKbpa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D8C1F000C6;
+	Wed, 18 Nov 2026 16:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020341;
-	bh=QlRfoJ2OcEtEM+KOUU4q0Q+pkD1G41NOEtnIqfZ96/s=;
+	s=korg; t=1795020344;
+	bh=d+Gap2eIiyYW3Jb2/4I3aYhk7fAuzLDll6eTxddNfqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aX3k7m10e9qCYmPocgi/2CpBnYzhoppV4AwGp2OYMt8MgsLTdCuDNXxZCdsiWCVhQ
-	 X2YD7zMD24mpaaVAl0RHwIUjutE1YReGjk0xG3NV/dJyYTo5TBwUZe58G/lPImtS6G
-	 PsfORwxmJG9DkyCG58Mj3hGvUTr0z1rgRckmjKZk=
+	b=yfnZKbpa+t6Wlt3qeS+TNVjU4j6V/kKAo39Ofq/R7Py9jQKX3BIl5rKc8gyyScUSf
+	 IiO56oxyKTUkIw8M7Gol55C9qj55zszV7B9itInJJWusmK+XN1XA/swjqBj5UaG73R
+	 ADmDQ8HULJwVcxyPUZ2HCQZh76gwKPGkA2TxoqQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Chris Lu <chris.lu@mediatek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1916/2651] iommufd: Keep reserved IOVA ranges when a replace within one IOAS fails
-Date: Wed, 18 Nov 2026 15:52:36 +0100
-Message-ID: <20261118150355.742618114@linuxfoundation.org>
+Subject: [PATCH 7.3 1881/2651] Bluetooth: btmtk: Improve BT firmware logging
+Date: Wed, 18 Nov 2026 15:52:01 +0100
+Message-ID: <20261118150354.644769627@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,84 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit 1e67cca28490f897788c128c650a6f2cbb565403 ]
+[ Upstream commit 046fa20e9c7abbafb166b431fe446c49b71cb15a ]
 
-iommufd_device_do_replace() installs the group's reserved IOVA ranges in
-the new hwpt's IOAS only when it differs from the old hwpt's IOAS. If the
-replace fails in iommufd_device_do_replace() or
-iommufd_group_do_replace_reserved_iova(), the error paths remove the
-ranges from the new hwpt's IOAS whether or not the IOAS is shared
-between the old and new hwpt, which removes the ranges that the old hwpt
-still needs.
+The firmware log line in btmtk_setup_firmware_79xx() never says which
+file was requested, which matters because btmtk_fw_get_filename() derives
+the name from the device id and firmware version at runtime. It reports
+the firmware's own hwver field as the HW version, when the device id the
+driver read from the chip is the more useful value and is already
+available as dev_id. And it prints datetime, a u8[16] with no guaranteed
+NUL terminator, with %s.
 
-For example, on x86 with intel-iommu, after a replace within a shared
-IOAS fails with -ENODEV, IOMMU_IOAS_IOVA_RANGES goes from
+Log the filename before the image is parsed, so a file that fails
+validation still says which file it was, report dev_id as the HW version,
+and bound datetime with %.16s.
 
-  0x0-0xfedfffff
-  0xfef00000-0xffffffffffff
+The datetime change is hardening rather than a fix, hence no Fixes: tag:
+every file in linux-firmware terminates the field, and provoking the
+over-read needs a malformed file in /lib/firmware.
 
-to
+Log output on MT7922 after the change:
 
-  0x0-0xffffffffffff
+  [  365.245951] Bluetooth: hci0: Loading BT firmware: mediatek/BT_RAM_CODE_MT7922_1_1_hdr.bin
+  [  365.245956] Bluetooth: hci0: BT HW ver: 0x7922, SW ver: 0x008a, Build Time: 20260605203811
 
-and IOMMU_IOAS_MAP at 0xfee00000 succeeds.
-
-Remove the ranges on failure only when the replace installed them, and
-look up the old hwpt_paging before the replace so that the error path
-can compare the IOAS.
-
-Fixes: e88d4ec154a8 ("iommufd: Add iommufd_device_replace()")
-Assisted-by: LLM
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Link: https://patch.msgid.link/20260929031402.1998253-1-donggeunyoo.kernel@gmail.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/device.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btmtk.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/iommufd/device.c b/drivers/iommu/iommufd/device.c
-index a664c70a6fe73..1b0bdf57ac8ab 100644
---- a/drivers/iommu/iommufd/device.c
-+++ b/drivers/iommu/iommufd/device.c
-@@ -849,7 +849,8 @@ iommufd_group_do_replace_reserved_iova(struct iommufd_group *igroup,
- 	return 0;
- 
- err_unresv:
--	iommufd_group_remove_reserved_iova(igroup, hwpt_paging);
-+	if (!old_hwpt_paging || hwpt_paging->ioas != old_hwpt_paging->ioas)
-+		iommufd_group_remove_reserved_iova(igroup, hwpt_paging);
- 	return rc;
- }
- 
-@@ -889,6 +890,7 @@ iommufd_device_do_replace(struct iommufd_device *idev, ioasid_t pasid,
- 		return NULL;
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index 4ae545cf065b1..54cfc83032fb4 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -214,6 +214,8 @@ int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
+ 		return err;
  	}
  
-+	old_hwpt_paging = find_hwpt_paging(old_hwpt);
- 	if (attach_resv) {
- 		rc = iommufd_group_do_replace_reserved_iova(igroup, hwpt_paging);
- 		if (rc)
-@@ -899,7 +901,6 @@ iommufd_device_do_replace(struct iommufd_device *idev, ioasid_t pasid,
- 	if (rc)
- 		goto err_unresv;
++	bt_dev_info(hdev, "Loading BT firmware: %s", fwname);
++
+ 	err = btmtk_fw_validate_layout(hdev, fw, &section_num);
+ 	if (err < 0)
+ 		goto err_release_fw;
+@@ -222,8 +224,8 @@ int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
+ 	fw_bin_ptr = fw_ptr;
+ 	hdr = (struct btmtk_patch_header *)fw_ptr;
  
--	old_hwpt_paging = find_hwpt_paging(old_hwpt);
- 	if (old_hwpt_paging && pasid == IOMMU_NO_PASID &&
- 	    (!hwpt_paging || hwpt_paging->ioas != old_hwpt_paging->ioas))
- 		iommufd_group_remove_reserved_iova(igroup, old_hwpt_paging);
-@@ -920,7 +921,8 @@ iommufd_device_do_replace(struct iommufd_device *idev, ioasid_t pasid,
- 	/* Caller must destroy old_hwpt */
- 	return old_hwpt;
- err_unresv:
--	if (attach_resv)
-+	if (attach_resv &&
-+	    (!old_hwpt_paging || hwpt_paging->ioas != old_hwpt_paging->ioas))
- 		iommufd_group_remove_reserved_iova(igroup, hwpt_paging);
- err_unlock:
- 	mutex_unlock(&igroup->lock);
+-	bt_dev_info(hdev, "HW/SW Version: 0x%04x%04x, Build Time: %s",
+-		    le16_to_cpu(hdr->hwver), le16_to_cpu(hdr->swver), hdr->datetime);
++	bt_dev_info(hdev, "BT HW ver: 0x%04x, SW ver: 0x%04x, Build Time: %.16s",
++		    dev_id & 0xffff, le16_to_cpu(hdr->swver), hdr->datetime);
+ 
+ 	for (i = 0; i < section_num; i++) {
+ 		first_block = 1;
 -- 
 2.53.0
 
