@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061646;
-	b=F4agr+tzt1lBeSqFihZ0E7O3pGrD0ZBa305Gv/nUAZ7Tb9MgJkhCgE2/gqxW7CR9tf2s
-	 qMwAUv5j5D7alxtQj3aBVnbYRK28MF+sLy1KasgJRADCBz7GLvmYkZHf/X84o1ijs7vpd
-	 uSpQEfY+71fi9Io80I6cnqCeT886nH0dCndEjWjg1sOXvs0NtAs++dGuGwD58piUR/7U6
-	 dqkfjmJfAOShLgHdAtOM+qvg+15JJL8qeHFYO/rbM5Jc73Gd+tCTfjmNEKgoHYaTRZDrn
-	 +Qz4w/2u59zLafkfAFVVXnpXMbDyim3ATunyp6jopsA5ocJ4OlGG04LuMeWzFLWVXfQ==
+	t=1795061649;
+	b=BnXSboQXzgvrRalozTxPtcxpdQV+Om+kem3zrqON8iQacJ4Pq35ZWCcmIaFoBFSIv3h2
+	 ckxUwffo1yjOGsAjBbSpF+yrCS0bSL2mRdrAufr9bYgiesZR16ki+HxC1Q6XukmrHdd19
+	 dBPh3Rm0w1iso/Eu3na8HwGRUUtBKvyGa8axa+/92VJsFj92c350bgIscDKlfbgRuaB2G
+	 lmWLiIP8kZVTPzjOp+B705ACTHURiTNVrklrArrnG1eexbyMhwuHSIjd3ezHxdd4T07sl
+	 jVaw4r0fq6/qKXGUlvPgz++2ijjMW8CyqQ8PibfOgYAkaCEh8wvR/Y44YiqgVENsTtg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061646;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061649;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=wg5EHI7qwGFxvFXPuCqTem7xF/N6Mk3NAvhGXN7xmvU=;
-	b=D7JJx+Bx68DiAgqaBk61waqPi4eK38GagphYNun1GyVifZoKVTRh3n49pHAAv+8PVyPG
-	 PEOPbN/xC7hlVKwcsW+xywyFbcexEhM4tAAYP/1iHXJX2EJKlyas/crhFtVhXq3xSnYLj
-	 aubbS9PEBmu0PCZ5Irb4CBFKzbGJMf6jwBv+nlFpKpF9SydllLAjIXslOaW1dn7p5B7+G
-	 bzv9+C1BGIOoAe8DMWUVdbnVAqDact+Luj0CyXJfdTJJtFMIVPjh6QKkzUMsKKtAKEQlT
-	 ZJI4vkxjQ8MEBGIAvhNQAGzMMYBkZlOTQ5XtoEgMLUByj0gisjRtDPvFhbt75VV734g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=fQuZGhQ0NX7/QHRvb4128lTXIYP6Y6DdFqu15qzDhHU=;
+	b=ixaEHjn7pmINI0cKM7RpBfi2HF3C74Y9rpfwqJGqz5uBew7qLBBSlXYaSQJG/a5aUZDP
+	 I3dMCiQdVaykQSwKwplRU6Crp56MWzn0do08Lb1yIr2v1gz1RNZ5bt2f13BJTDEfxqoHC
+	 X+swU4+JzTiwO6hal7ZVJMlDNjfA0zStaPYn37QhIQaFUWSE4Nig8iJ4ZitJM9FiVOCxT
+	 0TOixfpv8F9Vl+3InwJ8LSaM/+KQORg25hW5LEj9zsUzRvvxmDmiZ0d7Lt0Qoyhp4U9sz
+	 oSb6jTFpkt3XMPisiU9etXQsH621/LCwo6Oygg7HbY0OKYhYQA2FxQx9I/LwCxWsiOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uh4lnj4R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MpRbuu8z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB02606A320;
-	Thu, 19 Nov 2026 04:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED993606A325;
+	Thu, 19 Nov 2026 04:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uh4lnj4R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB701F000C4;
-	Thu, 19 Nov 2026 04:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MpRbuu8z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B341F000C4;
+	Thu, 19 Nov 2026 04:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061645;
-	bh=wg5EHI7qwGFxvFXPuCqTem7xF/N6Mk3NAvhGXN7xmvU=;
+	s=korg; t=1795061648;
+	bh=fQuZGhQ0NX7/QHRvb4128lTXIYP6Y6DdFqu15qzDhHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uh4lnj4RBgHJuhCz2kkk1xqLCqZC5BMtkxNNgZnFSsA6l6p7ilkKzuDiWxgbTTr3g
-	 Jz0Cz45YFM1mMJ+oFmU/grQySMeMQRVLlVswrzlnPZXaDZjS/4BqPRh13ZfkvJXzc5
-	 85m0CA7ODkGRqsv2GyFOBDgyzLeetrENo4sYnDcM=
+	b=MpRbuu8zYKBphOjGA5dIszQ8SC3437lSO1yKOg2Tx7d11iM9kPrwrjL32hiHdNIDf
+	 wW2i8mi0gWtJqmfXidJaaK9eZu4B6IIl5ZmNy4M13dDh/oxUsNFajNzic7/uL+VRAH
+	 DupXoCCQ6ZNv8YL/JTYUIW+fuYTxZJ5yGHb0DjZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weigang He <geoffreyhe2@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1626/1848] thermal/drivers/sprd: validate the sensor id from the device tree
-Date: Wed, 18 Nov 2026 16:01:04 +0100
-Message-ID: <20261118150027.633419175@linuxfoundation.org>
+Subject: [PATCH 5.10 1627/1848] tools/thermal/tmon: Fix string truncation warning in optarg copy
+Date: Wed, 18 Nov 2026 16:01:05 +0100
+Message-ID: <20261118150027.671179890@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,67 +62,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit b17d799ce49bfaad68be5ff3df995b3bd021a9d7 ]
+[ Upstream commit 602da762f7a7c494a95cb204ac005965b214e556 ]
 
-sprd_thm_probe() reads each sensor child node's "reg" property into
-sen->id and uses it without validation: to compute the sensor's
-register offsets in sprd_thm_sensor_init(), as the thermal zone id, and
-finally as an index into thm->sensor[], which has SPRD_THM_MAX_SENSOR
-(8) entries:
+GCC warns about possible string truncation with -Wstringop-truncation:
 
-	ret = of_property_read_u32(sen_child, "reg", &sen->id);
-	...
-	thm->sensor[sen->id] = sen;
+  tmon.c: In function ‘main’:
+  tmon.c:233:25: warning: ‘__builtin_strncpy’ specified bound 20 equals
+destination size [-Wstringop-truncation]
+    233 |                         strncpy(ctrl_cdev, optarg,
+	CDEV_NAME_SIZE);
+        |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Only the number of sensor nodes is checked against SPRD_THM_MAX_SENSOR.
-A "reg" value of 8 or more, or one that is negative once stored in the
-int sen->id, makes the register offsets point outside the sensor range
-and the final store land outside thm->sensor[], overwriting the fields
-that follow it in struct sprd_thermal_data or other memory.
+Replace strncpy() with snprintf() to guarantee NUL-termination and
+silence the compiler warning.
 
-Reject an out-of-range id right after reading it, before it is used.
-
-This does not address sparse ids, such as a single sensor with id 7:
-they leave holes in thm->sensor[] that the later loops over
-0..nr_sensors-1 dereference. That needs a separate fix.
-
-Found by static analysis tool CodeQL.
-
-Fixes: 554fdbaf19b1 ("thermal: sprd: Add Spreadtrum thermal driver support")
-Assisted-by: LLM codeql
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Fixes: 94f69966faf8 ("tools/thermal: Introduce tmon, a tool for thermal subsystem")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20260926042757.2109927-1-geoffreyhe2@gmail.com
+Link: https://patch.msgid.link/20260929201951.408456-1-florian.fainelli@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/sprd_thermal.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/thermal/tmon/tmon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/sprd_thermal.c b/drivers/thermal/sprd_thermal.c
-index 2dd54b72ab0b8..40bd16d7695e5 100644
---- a/drivers/thermal/sprd_thermal.c
-+++ b/drivers/thermal/sprd_thermal.c
-@@ -400,6 +400,12 @@ static int sprd_thm_probe(struct platform_device *pdev)
- 			goto of_put;
- 		}
- 
-+		if (sen->id < 0 || sen->id >= SPRD_THM_MAX_SENSOR) {
-+			dev_err(&pdev->dev, "invalid sensor id %d\n", sen->id);
-+			ret = -EINVAL;
-+			goto of_put;
-+		}
-+
- 		ret = sprd_thm_sensor_calibration(sen_child, thm, sen);
- 		if (ret) {
- 			dev_err(&pdev->dev, "efuse cal analysis failed");
+diff --git a/tools/thermal/tmon/tmon.c b/tools/thermal/tmon/tmon.c
+index 7eb3216a27f45..0c8deee4652e2 100644
+--- a/tools/thermal/tmon/tmon.c
++++ b/tools/thermal/tmon/tmon.c
+@@ -230,7 +230,7 @@ int main(int argc, char **argv)
+ 		switch (c) {
+ 		case 'c':
+ 			no_control = 0;
+-			strncpy(ctrl_cdev, optarg, CDEV_NAME_SIZE);
++			snprintf(ctrl_cdev, sizeof(ctrl_cdev), "%s", optarg);
+ 			break;
+ 		case 'd':
+ 			start_daemon_mode();
 -- 
 2.53.0
 
