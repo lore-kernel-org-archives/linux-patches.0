@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021174;
-	b=OLic0QGesHnTzMn4HO4k0PKua7E2O3ufsaxy8JgPR/B5nJJ0CEGFCofxkyJgs+Rtgt05
-	 Yvdl/I1nvHr6NOun69pTtTpg75u573pU8uA7aLpMzz8HUoe5rtFxT6EctjD3daHyGbhUQ
-	 UZ5hbymkgsYKutJntr8dDWGnungImIeeifS6a9Wm7LyYJUyq3Q+xUy66WQ1Fv7QqObx49
-	 E/n6f/YBszEb8N40U4mqM+/ISIjpgk6hJHnJH3AoqlJz1rkJdKMem1G4RBjXH0eBxXvb3
-	 pq2rj6iLtAVLbzEGWUu0V6SOCSTuvX7LxyvtRCoULgc9y6L0KH6RF2jHaEXhjKuRZJw==
+	t=1795021166;
+	b=JfVIALYaKQDlCeKrkm9AGnEtaZB3egoFLRBXAJOsDWRgU3qF1pGDHT00pJWYM+DtaTkj
+	 2HxhnIoPFjT1jzZgG+wO9fAWrPVwEDews5AfVBn7ZKNueRE7gYN6ELCriFzMwzZCFRYk2
+	 cTMNx0MBV2JFQDZENGsNPhT5l9R+MhmrzQsT/FmQgOV1ashO/2fyarXoYuKau1EPwCF3f
+	 dKi93+fkk0pvApdk7NTtZgUU2oui4sdLWLbMAN1Q8k6ljxLXLmesve393Tzjt3mwPcMgZ
+	 w2uOXo4WFaDCs6rDKbD3nWsfIwFcqfSBsF4NR83ILnzv4zmdbGTDU+FEPbcNK/JahKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021174;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021166;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F7fKmBR5mIdS8aqknHWRGprioJPAr4c23sWZuqI1PwY=;
-	b=Egngjjf4MBqodQB1GLlRJtds8lF/yD//c03fc5m16XLTldR4RVTTj7fYMOipgenH+9Za
-	 fytdXwAWBBeozKgmXrHPQJG74nQjb2oAQwoJwtcpJVXtiyUdv+duSRfkJ3ylGGkhajlN+
-	 r4+7AxQv9l3//YV9vzpszj3L1N546lO91skqITZyh8qRP5dOYE7UddM3bPhwIMaXPcEN4
-	 muRteZiWVdzOLJ1C6dW0nvAA7WZFeNLhymweuN9FwbAqNLk+/tnY7gdbAFtdzNOAOlMru
-	 3d5A796plbFudMcGoGSZnOZTnnrrcmLWpCvyjGZfSJKtdQj5mm5JHt3Wbp2dGX7PfXQ==
+	bh=/qiVsI1JklzFbb9crDPEEA6Ns12HfEBxBuxOQ6R31dU=;
+	b=nk1WLWcikUzsCM0q3kgo/qOcWzZEU/KGqqb7USWaOJn/vM5PlY/18tDYjicMHZ8yTVJZ
+	 gjcyphDXFx9XGKoyLbO/JGRJ5HJGGQwo2Ty3SbbMeoszBEvg532egqj12ZqePXX/TH1CS
+	 WXRurT0jzBwUV3poQTcoJAhhZleAjDcVw0DhpmXZSTIVYbB3/FSmLnkGuPjIKtDj/lCw9
+	 h0m95/ynIXPXU9216TZ2+EUx+efrAUJi1U8dg4VWKSN+mKRZ2GVfdk+0lTASSksIAOvHK
+	 zpKEgcg/82ov07u7pbyflQa3qvxOeUQ95XOm6GS3xNvNzwKDFnKQduf2HcLh1Me7lrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mb/QqY9N";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rhKGwaC9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFA2606A320;
-	Wed, 18 Nov 2026 16:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28199606A337;
+	Wed, 18 Nov 2026 16:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mb/QqY9N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A641F000C9;
-	Wed, 18 Nov 2026 16:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rhKGwaC9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1841F000C5;
+	Wed, 18 Nov 2026 16:59:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021174;
-	bh=F7fKmBR5mIdS8aqknHWRGprioJPAr4c23sWZuqI1PwY=;
+	s=korg; t=1795021165;
+	bh=/qiVsI1JklzFbb9crDPEEA6Ns12HfEBxBuxOQ6R31dU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mb/QqY9N4lqjZXqGSzg0+qbJCt4yr/HXUNF/B+1rezQvuKfbk54RXQhnqLtv87yaF
-	 5qBj5bbOiMu8mD2hxyuN/HTA+3TunFYi0ogUzQQMxDoaTKrP1k7MaNbt36Hv6ob7u2
-	 PdDq7EdkqAxWiHc8wgx7Bf9N5KoW1Rh3o+9GXdNc=
+	b=rhKGwaC9nXWPxrZdedMJ/qIe4atbCVaNawW0UBQKLJ5Zfavq3I2EUdtpcJBBenP/x
+	 xtlCw8cD3NK1ADKDI3FNra9WzMB3v2jtkmG43io/LQv+7hPe5MplYK904cYzSB5PWa
+	 PvGithesnmaAVZ1HMt/6+lIZ7u9uWrdIoh9yWr7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Baolin Liu <liubaolin@kylinos.cn>,
+	Xuewen Wang <wangxuewen@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2186/2651] cgroup/cpuset: Do housekeeping check before converting invalid partition to valid
-Date: Wed, 18 Nov 2026 15:57:06 +0100
-Message-ID: <20261118150404.453763306@linuxfoundation.org>
+Subject: [PATCH 7.3 2210/2651] ntfs: wait for the bitmap scan before MFT bitmap extension
+Date: Wed, 18 Nov 2026 15:57:30 +0100
+Message-ID: <20261118150405.213572674@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,47 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Xuewen Wang <wangxuewen@kylinos.cn>
 
-[ Upstream commit 2c0a5742fc459cd8416607acff4a38a1abcb2e1b ]
+[ Upstream commit 0c3f2944e9060c31a221f32906267b827659b0c7 ]
 
-When a hotplug event happens or when update_cpumasks_hier() is called, an
-invalid partition may be converted back to valid. However check against
-housekeeping conflict isn't being done which can lead to a partition
-state that violates the housekeeping rules. Update the code to allow
-reviving an invalid partition only if it can pass the housekeeping check.
+If MFT bitmap extension fails before the initial $Bitmap scan completes,
+rollback calls ntfs_bitmap_clear_bit(), which holds a folio lock while
+ntfs_set_lcn_empty_bits() waits for the scan. The scanner deadlocks if it
+still needs that folio.
 
-Fixes: 4a74e418881f ("cgroup/cpuset: Check partition conflict with housekeeping setup")
-Reviewed-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Wait for the initial scan before taking the runlist or bitmap folio locks
+and attempting allocation.
+
+Fixes: 11ccc9107dc4 ("ntfs: update runlist handling and cluster allocator")
+Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
+Signed-off-by: Xuewen Wang <wangxuewen@kylinos.cn>
+Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/ntfs/mft.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 4080e08428c4e..7443ee44d4d4e 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -2006,9 +2006,15 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 			bool exclusive = true;
+diff --git a/fs/ntfs/mft.c b/fs/ntfs/mft.c
+index 482a216ade2cb..3192c018653b3 100644
+--- a/fs/ntfs/mft.c
++++ b/fs/ntfs/mft.c
+@@ -1352,6 +1352,10 @@ static int ntfs_mft_bitmap_extend_allocation_nolock(struct ntfs_volume *vol)
+ 	size_t new_rl_count;
  
- 			/*
--			 * Convert invalid partition to valid has to
--			 * pass the cpu exclusivity test.
-+			 * Convert invalid partition to valid has to pass the
-+			 * cpu exclusivity test as well as the housekeeping
-+			 * check.
- 			 */
-+			if (prstate_housekeeping_conflict(cs->partition_root_state,
-+							  parent_prs, xcpus, NULL)) {
-+				part_error = PERR_HKEEPING;
-+				goto write_error;
-+			}
- 			rcu_read_lock();
- 			cpuset_for_each_child(child, css, parent) {
- 				if (child == cs)
+ 	ntfs_debug("Extending mft bitmap allocation.");
++	/* The initial bitmap scan must finish before we lock or change a folio. */
++	if (!NVolFreeClusterKnown(vol))
++		wait_event(vol->free_waitq, NVolFreeClusterKnown(vol));
++
+ 	mft_ni = NTFS_I(vol->mft_ino);
+ 	mftbmp_ni = NTFS_I(vol->mftbmp_ino);
+ 	/*
 -- 
 2.53.0
 
