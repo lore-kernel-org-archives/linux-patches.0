@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025511;
-	b=G1s05Ws0CJ0H1KGUQRXO44jPwVWOjfKgT/2GR8Ovjdcu/lcQCVNdgyNpJ8HNozLSgkAV
-	 JxuQLeKAuwmQqgfagIjvgJyZFAU0g4eoW1XDdOlQcNWczTV62s2jrhp2PZKZJBUpMqhET
-	 Mxzkth4SpqN+nHuzPf7Y3jq+N4iL+crhvRjprIDBZQlu4X5PyrkHygHrJLaqqdMS/uIe/
-	 NkWzn1X+SuSB4LTHCBx+68DaK2nQlO/NyFDuDJxh4nWt9Z137H8SQtL8/EHvovP5zJJ4x
-	 4M5wzGwd5lHg2jp8PCjUH8m4DO+/R8b4/+Ki1/XNH5qEzP0IziDbGNbx+PO4S+ZuDRQ==
+	t=1795025514;
+	b=YipaquRdbpz6Z1QQSbvCCDMK/vNDABskZ4shEHHN+8M3o/8EbYOoyY/3WF9yzOLQiXOH
+	 T/GYYCjQ4Vrfd2wy/wyRJNR1uw79xQRrXnQcJ6+FFfwfx6Wq/ILj3q6c+AeDFmVVwSpQ1
+	 G7b75hvzfYRriNM3NRzpw9DQXXlA+lZOD2PqGLX+EUs5bQd5cSrZjMBHXO4Rc4eiKkCjS
+	 JVt6BTpwydjyAKKoX7wYse8F/dai75VKAcFT3y9q7ttxayrgZxoPHJZeHGTbJBdAFOXNn
+	 uVc87/zswsvWifV9GUDyslOsZf65C5ipKH+pwKA1NsZ52KIib9CbgWt+4R2U5+XXznw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025511;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025514;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=X2x2FGkaL1tQSZe08qWOgvzjLaXvA45yiES8BfyMb30=;
-	b=4a4flWmBp+0Edw9vmohKIOYFHLLyi3DgR67HETfs4oBSP6ZLBJ/Xo4X4QHhWV0Wf0YK9
-	 D/qQV16As3zciVKK97ZFxIxPEqObZIULaHRqeFAe0r9TunSdNNKLKxTARXU2EOlE5U3M2
-	 9oOPFdIKCNXIt4DS1F8BOSuwn1wQLYfFfeEPpuS6nv8j7ucyxmB4kbfhe+He6jv0vM6KZ
-	 RQspz74ZPv+BOnCD5s67u4FtQoI0XLkTwlHkFDtP6Gg/ELXHfNN9JgU36mz4s7sL4etug
-	 HZ/xuEiYzNXt+/1W/RlesfcmR2STDhZg3vSxdFphp/tNitFKkj0Ral22g0VP1HaYzRQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=TXk3CzrzcpClRYp1zx0vT+3hTiXMf+apM1J+uggRQPw=;
+	b=H3n8hNDkMHlQCuTEFmCdWXzxVodo/L+edpcRYC7eytKKrb7A21rq3Mihpuae6G5F6Qwx
+	 vU8G5qyj22JlTINVE5/Aj96ALGAJ4YWWaff92VGny2IHVTlP4jgrRZw/o4FBgZJFHxU/E
+	 /aEJCnnY3PpCsussjDY/fbMt2nSBY6ctnL9Lajq0LOp6NgPJAT6uIJxjpyVCEdMbze8R0
+	 vZ33FAmYtKtD0IOEpbctvcqjfmshvDhsjX19lkPhLTPBcG/q5LHvv4qYy+Ggj+NOMkV9u
+	 iVDK4Ig5PtxhFUJ1YBw235dZSjeKszEcOQxrWMk+TbKoi1+W89+PltImaJCSR6O7zSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ocLDG2QD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=djdShzCG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81414606A32C;
-	Wed, 18 Nov 2026 18:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DA3606A31C;
+	Wed, 18 Nov 2026 18:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ocLDG2QD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98EF1F000C4;
-	Wed, 18 Nov 2026 18:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=djdShzCG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F63F1F000C4;
+	Wed, 18 Nov 2026 18:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025511;
-	bh=X2x2FGkaL1tQSZe08qWOgvzjLaXvA45yiES8BfyMb30=;
+	s=korg; t=1795025514;
+	bh=TXk3CzrzcpClRYp1zx0vT+3hTiXMf+apM1J+uggRQPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ocLDG2QDv36eka5j017vDp3xVh6kMAig55zCfQFkyOhg2C9OYtjRBqaKSmrPLugg9
-	 tleCI8Yot2QnVrYVggE1qf9ywBbcfK1oBWLzbVMdtU8EGRfYhJTWWuB8IojmZMoxam
-	 G7EP4xUoOJ1dVmRbqn6dbY/lZ401Jla1LE20XyEA=
+	b=djdShzCGqKvxtPaAbBCnXwPL4F6wdEg2GU8yk59mOo1kHGiwUI1F5CDBVxL8nLv5J
+	 ufwlePEV7Ya/PYkthDae/xkiQ8J4k2As6+igxxIoSJPVd3HgNr6yMewyLXICEzrMtd
+	 S9kgM2DC7FHpVSf8Z4XVAVD/TbFYvUvSf0QNF2xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <cel@kernel.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1103/2151] SUNRPC: treat every client-side TLS error alert as fatal
-Date: Wed, 18 Nov 2026 15:47:18 +0100
-Message-ID: <20261118150202.429784806@linuxfoundation.org>
+Subject: [PATCH 6.18 1104/2151] NFS: filelayout: calculate dense stripe width in 64 bits
+Date: Wed, 18 Nov 2026 15:47:19 +0100
+Message-ID: <20261118150202.463080053@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,64 +62,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 9b7b1f89b93a3ec1ed121e1ab28450acde815bff ]
+[ Upstream commit 9ba13ef0e3ad033d3ddbaeb740b12d135a88363d ]
 
-xs_sock_process_cmsg() decides whether an alert ends the session by
-reading the alert's level octet. RFC 8446 Section 6 retired that
-field. The severity is implicit in the description, and a receiver
-treats every alert listed in Section 6.2 as an error alert
-"regardless of the AlertLevel in the message". A peer that aborts
-with unexpected_message but leaves the legacy octet set to warning
-makes the client return -EAGAIN. xs_stream_data_receive() wakes no
-pending task for that error, so RPC Calls queued on a dead TLS
-session wait for their timeouts to expire.
+filelayout_get_dense_offset() calculates the stripe width from the
+stripe unit and count, where both values are provided by the server.
+Their product is stored on 32 bits, and can wrap to zero despite
+passing individual checks. For example, a 1 GiB stripe unit (0x40000000)
+and four stripes (4) cause the following div_u64() to raise a divide
+error during the first read through the dense layout.
 
-Decide from the alert description instead. close_notify and
-user_canceled are the closure alerts (RFC 8446 Section 6.1). Every
-other description ends the session, including one this kernel does
-not recognize.
+Update u32 to u64 and use div64_u64() instead of div_u64().
+stripe_unit is a u32 and stripe_count is limited to 4096, so the
+product cannot overflow a u64.
 
-Fixes: 39067dda1d86 ("SUNRPC: Use new helpers to handle TLS Alerts")
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Fixes: cfe7f4120f8b ("NFSv4.1: filelayout i/o helpers")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtsock.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ fs/nfs/filelayout/filelayout.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index 04e0052c565b8..e2318100d8110 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -375,8 +375,18 @@ xs_sock_process_cmsg(struct socket *sock, struct msghdr *msg,
- 		break;
- 	case TLS_RECORD_TYPE_ALERT:
- 		tls_alert_recv(sock->sk, msg, &level, &description);
--		ret = (level == TLS_ALERT_LEVEL_FATAL) ?
--			-EACCES : -EAGAIN;
-+		/* RFC 8446 Section 6: every alert but a closure alert is
-+		 * an error alert, whatever the legacy AlertLevel octet
-+		 * says.
-+		 */
-+		switch (description) {
-+		case TLS_ALERT_DESC_CLOSE_NOTIFY:
-+		case TLS_ALERT_DESC_USER_CANCELED:
-+			ret = -EAGAIN;
-+			break;
-+		default:
-+			ret = -EACCES;
-+		}
- 		break;
- 	default:
- 		/* discard this record type */
+diff --git a/fs/nfs/filelayout/filelayout.c b/fs/nfs/filelayout/filelayout.c
+index 90924129b4e83..0c5b56e346005 100644
+--- a/fs/nfs/filelayout/filelayout.c
++++ b/fs/nfs/filelayout/filelayout.c
+@@ -55,12 +55,13 @@ static loff_t
+ filelayout_get_dense_offset(struct nfs4_filelayout_segment *flseg,
+ 			    loff_t offset)
+ {
+-	u32 stripe_width = flseg->stripe_unit * flseg->dsaddr->stripe_count;
++	u64 stripe_width = (u64)flseg->stripe_unit *
++			   flseg->dsaddr->stripe_count;
+ 	u64 stripe_no;
+ 	u32 rem;
+ 
+ 	offset -= flseg->pattern_offset;
+-	stripe_no = div_u64(offset, stripe_width);
++	stripe_no = div64_u64(offset, stripe_width);
+ 	div_u64_rem(offset, flseg->stripe_unit, &rem);
+ 
+ 	return stripe_no * flseg->stripe_unit + rem;
 -- 
 2.53.0
 
