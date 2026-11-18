@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039851;
-	b=pkw6w2O5C9MncbeoTbRVNsr2GK090xQPfSQbQJiTYFCpRb2Y+NUvZVJ8OHWfCC1uZ1re
-	 en1R6dvXtqBQT81uDBmucbBh/pFXppAPV1Wg2n74JDD83ZcJOnQV3prT242P9Wbbw+tW3
-	 lOPPRJlK9Waoalq8P2cNiWhfjiie4joS9NJEzzIkLZROe0llmTIK2GiD5DjZVbp8OD4fs
-	 iV5GqbY7aRT6S5Q6ouk/S2MfGgP340tey3nmUIFtYbbf9ge7yeSe5BipaoKi3XSG4N1OE
-	 jsUDtN+lVa0fUhs2Q3D+RUfYvL5CAl73niXhxkdw1WKTKqHlvmEQtI6jV+Z4lle4dfA==
+	t=1795039854;
+	b=uKhWItZ9WRV/SO38kxaAclSkHIrrHji5fH6v5pysrS+XrQHFwfc6PoHhl1pob1cIUEOt
+	 L7XZiaC0S3YiQn7V+36XY0x0l81A6vSpEJMp4FeC00FPr7WmVs6S2TOyWfuHJvtsTkr7f
+	 U01yYSvbsNusTrY3L1U6zzAnD/vs6veLsU6D+a2n6h2rqpMwDYUVp2J6oK+ABjcnQuz0l
+	 u5yc7ytZr3A3L+vYhDIdxU2R/Ea4PDwCt+GC3nVnnWVGerMom9EnEM3Dos1WxULWIhCqi
+	 RHLyVyg2JpCEU+eJvcoa20tGuXmrgMR60/k81vtrTdw6BVtocRXiibVK5lGoWVRyl2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039851;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039854;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Lx+rlwNSxzWi/Z9I+9mXRXQgWcjZ2lDsb94yXPFdCUI=;
-	b=XzmiBnnx0eXQki+/49VF9CTVgBjKvUsd7Pz7AMdy11sE1XhxRqc5ELeP8Y3RkoxsOgml
-	 BRHY+0FOEtn+c9rFoWTobclvLaZ5Y0lDWp1+BYNwuKs+/UL4cP7YdGRCxPeErdaMA7LA3
-	 vjuSUrNjIhSeYacbb8j2ZBAS5Epn80y1ePK/csTWIl4JjEfjvrj42af3y2yfGR5Y7Sxst
-	 E/wxhoh6dCNpTSMNoN+t4kPPqmGhZhyNjn/+RlVQsZArwbymRgPk7pHvyrjXVXUxfxTc7
-	 Lx4APMBsbCPcq22lz6nRmhpNhLYFEgOvEbWwLwzl6KmhGIdTw6EKmbBF6uIgnY5x+KQ==
+	bh=abxvoIIc0EOU1ihLVekSKKuqW3rO4VIjcPPdjWDHOVE=;
+	b=VDaDAWHxiELb0rVWGuEv+4DB6TWL49sQ4swAxvxYLp9MLwVej1rn1gRn18us+utLv1Rd
+	 +7Hvhwdq9OZiv3BRdogtpuxCpSRahTktitb6HqPQFYlv1JukaKuOkceZQd7YMmElef1Gy
+	 f/VKwRtu4vRHYsrvhe902C5VxOfpYqNp6jBtNML7hOoFIA6fQTweqLes5A/hpd2NLjmrP
+	 DNpaGrM2bpmq4hj9TEAFYidDS5CO+g0DJT4LJfiY6nGn/vY/z3tyRvWiXtmSMB5XvQYMB
+	 Gf0IYFuVa0wqAn+NrjNnlvUjM33V+T8tufA4BQ39P3vk70n0iQaSc6ItrqnzUWHdrWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gaJzZEtM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wAbEyZqa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9CDC606A320;
-	Wed, 18 Nov 2026 22:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73963606A31C;
+	Wed, 18 Nov 2026 22:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gaJzZEtM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52781F000C5;
-	Wed, 18 Nov 2026 22:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wAbEyZqa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D63E1F000C4;
+	Wed, 18 Nov 2026 22:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039851;
-	bh=Lx+rlwNSxzWi/Z9I+9mXRXQgWcjZ2lDsb94yXPFdCUI=;
+	s=korg; t=1795039854;
+	bh=abxvoIIc0EOU1ihLVekSKKuqW3rO4VIjcPPdjWDHOVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gaJzZEtMCkPzsDLlV+yt9Chg9H0+QirWggJlsCH3SzuMq+vPFSpbb9QtVASirpp5D
-	 CKK9lukYurUGO8pF8/5Z3uhAQOiaIA9bNmWeeEQzRHeCtTWp4Y7bv+al+9i+eoEHWe
-	 YphMEEKTVRItstGu4qqb+Z1aFXncjs74KjdSGtNw=
+	b=wAbEyZqaGrDqBDAXo6kLYMjuDUdxuvD5VMcBnztxKN2oqO9s7IeVa5eluA4SLlLm4
+	 k2VnwtO+i5Zab1pDdgzIDflfusdLNwvUEyo6cn3FYlnq8kKpkrRBqMmJ0MfhoP06rU
+	 OxB5tAAdWzVQuXZwlVcISsnpBhfJhAwU1nxHU4Ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Borisov <nik.borisov@suse.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	Zqiang <qiang.zhang1211@gmail.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2248/3318] ata: sata_dwc_460ex: Dont enable interrupt if libATA core registration fails
-Date: Wed, 18 Nov 2026 15:47:50 +0100
-Message-ID: <20261118150429.277833924@linuxfoundation.org>
+Subject: [PATCH 6.6 2249/3318] rcu/nocb: Check rdp_gp->nocb_timer in __call_rcu_nocb_wake()
+Date: Wed, 18 Nov 2026 15:47:51 +0100
+Message-ID: <20261118150429.305289317@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,47 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Borisov <nik.borisov@suse.com>
+From: Zqiang <qiang.zhang1211@gmail.com>
 
-[ Upstream commit e137035fcd66cb454c479bb989968561bbc60341 ]
+[ Upstream commit f3c4c00784b5f7499d9cb6d31b661370c9a1ce7f ]
 
-Recent 4bbc16a353a9 commit changed the timing when interrupts are
-enabled. However it didn't account for the libATA registration step. So
-it's possible that interrupts are enabled when the device is not
-registered with libATA core.
+Currently, only rdp_gp->nocb_timer is used, for nocb_timer of
+no-rdp_gp structure, the timer_pending() is always return false,
+this commit therefore need to check rdp_gp->nocb_timer in
+__call_rcu_nocb_wake().
 
-Resolve the issue by failing the entire registration process in case of
-failure to register with libATA.
-
-Fixes: 4bbc16a353a9 ("ata: sata_dwc_460ex: enable SATA interrupts only after IRQ handler is registered")
-Signed-off-by: Nikolay Borisov <nik.borisov@suse.com>
-Link: https://lore.kernel.org/r/20260917150707.1643330-1-nik.borisov@suse.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Stable-dep-of: 4c714f015d9e ("rcu: fix shrink budget underflow in lazy_rcu_shrink_scan")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_dwc_460ex.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/rcu/tree_nocb.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ata/sata_dwc_460ex.c b/drivers/ata/sata_dwc_460ex.c
-index 66db8dd8ec267..73c1c499c258b 100644
---- a/drivers/ata/sata_dwc_460ex.c
-+++ b/drivers/ata/sata_dwc_460ex.c
-@@ -1184,11 +1184,14 @@ static int sata_dwc_probe(struct platform_device *ofdev)
- 	 * error_handler() to execute a dummy Softreset EH session
- 	 */
- 	err = ata_host_activate(host, irq, sata_dwc_isr, 0, &sata_dwc_sht);
--	if (err)
-+	if (err) {
- 		dev_err(dev, "failed to activate host");
-+		goto error_out;
-+	}
+diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
+index 42b7f0d4d4d8d..b266a64a7e1e2 100644
+--- a/kernel/rcu/tree_nocb.h
++++ b/kernel/rcu/tree_nocb.h
+@@ -548,6 +548,7 @@ static void __call_rcu_nocb_wake(struct rcu_data *rdp, bool was_alldone,
+ 	long lazy_len;
+ 	long len;
+ 	struct task_struct *t;
++	struct rcu_data *rdp_gp = rdp->nocb_gp_rdp;
  
- 	/* Enable SATA Interrupts */
- 	sata_dwc_enable_interrupts(hsdev);
-+
- 	return 0;
- 
- error_out:
+ 	// If we are being polled or there is no kthread, just leave.
+ 	t = READ_ONCE(rdp->nocb_gp_kthread);
+@@ -598,7 +599,7 @@ static void __call_rcu_nocb_wake(struct rcu_data *rdp, bool was_alldone,
+ 		smp_mb(); /* Enqueue before timer_pending(). */
+ 		if ((rdp->nocb_cb_sleep ||
+ 		     !rcu_segcblist_ready_cbs(&rdp->cblist)) &&
+-		    !timer_pending(&rdp->nocb_timer)) {
++		    !timer_pending(&rdp_gp->nocb_timer)) {
+ 			rcu_nocb_unlock(rdp);
+ 			wake_nocb_gp_defer(rdp, RCU_NOCB_WAKE_FORCE,
+ 					   TPS("WakeOvfIsDeferred"));
 -- 
 2.53.0
 
