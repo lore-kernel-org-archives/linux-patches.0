@@ -1,60 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056818;
-	b=giHG3akP5h0h2jVT1Y7p5xKgOx1NmVEWV6xzFsUpLdw2lUh5mxDz7aLdi+8cw4DMLiya
-	 4/CBrHp0i+oxwahz/eokyuQoqCQsCkyiPBw2djsvDAh+FGszdOV2HYTA8xdASC/606qRb
-	 bh64oflNUDimbilPbcduzjVw/28M9ZeFhezexk8uLeYqtEtxi022GQzylNDXeWgi84/La
-	 F+KHoRFbH94/TfsXTiEmfN5GqZymA8w69S/LcNQCq6EDLxF9pEEPBe4E+b6SZXqhXZ69y
-	 vL8S9ZHccfo9WAQp9TGywWJtj+HuTtJgWFT1DahuHAH84Uy/lluGX3/CkyuE5SGA2Qg==
+	t=1795056821;
+	b=2P6VMqVd0xNkEFKw3ai6ggUnny0wD1CEaI5SvcThh3YlhUioKhXlXbq6/S1DFYN9iUX+
+	 oNVu9tnwwuT3RmXoOrmbrQZ8BoCE93wSvCB8/CxDVuUd5Ms23mnIReV/Us1HBga25M/I/
+	 tXhMZzJzmCTC2C6SYv1dl9C729FmawuuHsc7J5ZN6exzWEosRWAiYavTbeR8F0ZFV5uh2
+	 1CX6lV2eMpYbSpHLCXOfC0EnhUdUsxZjV8mjdtp/OLFli86gLlN6sgTrXjaudvmQ5CKkT
+	 UMUJ3VongzZ29xRWmfwmRMflFT2ImvmKua2nJywJzu57svxp/9M5TquietQvCVAe1Jg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056818;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056821;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=BDJNFI453z5igTqzve1GP76gyzWU+pj2ANWaqYV46zw=;
-	b=mAd14BMEI8jXvFtH5xfm51NQjGnWAziqCswHoupTSfhhdaXulwjU5bpjDWXv7pO0p6Ko
-	 IOBekAYkOeD6DK3hcFbv7mnJq/I1xJ2jWnmACX2SHaS2PYgZzv7twufaKFBoZaeEBjRre
-	 EUg5fZh+LqPntWzggLW1+qJ9f3F3bTBg2RdQj2lAwGPSex4lpxcrrhvaF5fQUcfuCpDHn
-	 qqE1Q4cMOob7++Q69BwMUY8xri7MojUfSP47RwSEQ1xGSpGlEVEisq2+ka9CeY2omL+p0
-	 +H7QirVN+R/3S7RAdv7teoK/RKfwMfgDeeMp7vdkOrQ4g73YXHbZ/HX1/BpdTYcWNMQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=YprnZxpUk1QQJQR7065KqJHXNSvxFaq3jjXmXN1ayQQ=;
+	b=22S7wxMdaTbjZmkG4+W84biWX/gGvotWGrxobfzWqe6T2LpQd80h+/RJDc4EYWRDbPgW
+	 sUqjLscET4qSFEcS4ErJ5ljd4qfz8FJ0DBz/Suo5mhO/rpsU62qJ+P51hCuMHuqN/4MoZ
+	 s86/kmrGm6Vj4E/jaa5J7xHStp2mCQc7HcL5ZCnKlimpBkfvZvAYLlvc6qo7KicBPIjR4
+	 Ch/jDESihq1O1NuCF60JAUN++qjnCDFalpCKRPhLqSoBCezudKZGSsyo1pRJ2O0oWnBo/
+	 lw6r20DrB72IYvNQnLnGF8DVjNz/yYUNf4d/CpINLJC+l6AJLLK8G99SNqLwpFBavMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HzFH0eSy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AUOGcmCD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A92606A325;
-	Thu, 19 Nov 2026 02:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E4960A2608;
+	Thu, 19 Nov 2026 02:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HzFH0eSy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1401F000C4;
-	Thu, 19 Nov 2026 02:53:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AUOGcmCD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8C11F000C7;
+	Thu, 19 Nov 2026 02:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056818;
-	bh=BDJNFI453z5igTqzve1GP76gyzWU+pj2ANWaqYV46zw=;
+	s=korg; t=1795056821;
+	bh=YprnZxpUk1QQJQR7065KqJHXNSvxFaq3jjXmXN1ayQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HzFH0eSyCRqSkJ2drqCnADyqncVZtcAjX6AGZJkuRarQ4ppwDibC87qRf750vjCiF
-	 HwTyISt29mCIHvXh+n5roQIhp7tHIxNfr2XaNKICPBd3RN1y6OQZc43UToECzwRtF7
-	 gIvwMtUK0PwFQmYlQl56ZaIlTo41M95xBoEFKbA0=
+	b=AUOGcmCDGAA0XIZpo0zitP4qkMzZriygK5dmeeqvbmg11K+Q4TiUfKq0RqxMBOzru
+	 ik2sNhZqMLFSprYqyJVewfuTz0PwRzlhN6mR6K0RKB9tWmH9bLFlrGZZCl96vwb6gC
+	 TSZ72rs4U9Q27p00obYATKZj9qqYlWV/pur/1iFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Kees Cook <kees@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Kurt Hackel <kurt.hackel@oracle.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2082/2214] ocfs2: initialize status waiters before publishing them
-Date: Wed, 18 Nov 2026 16:02:38 +0100
-Message-ID: <20261118150133.929345804@linuxfoundation.org>
+Subject: [PATCH 5.15 2083/2214] platform/x86: ibm_rtl: Fix potential OOB read at signature search
+Date: Wed, 18 Nov 2026 16:02:39 +0100
+Message-ID: <20261118150133.967541035@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,93 +62,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit f6bfa6c458288d72948af95391b205f3eb775721 ]
+[ Upstream commit f1d81af2521ad504a20481fef12c358d26e6c3a6 ]
 
-o2net_prep_nsw() publishes its stack waiter in nn_status_idr and
-nn_status_list under nn_lock, then initializes the wait queue and
-completion status after releasing the lock.  A concurrent disconnect can
-find that waiter through o2net_complete_nodes_nsw() and call wake_up()
-before the wait queue has a valid lock and list head.  The sender can also
-overwrite a completion status with its initial value.
+The loop for signature search fetches 22 bytes of struct ibm_rtl_table
+at each check, while the loop count is calculated in 4 bytes unit,
+which means that, at the last entry, it fetches over the limit.
 
-Initialize the wait queue and status before publishing the waiter.
-nn_lock then orders publication against completion, and no reader can
-observe a partially initialized object.  Leave the IDR allocation and its
-failure handling unchanged.
+Rewrite the loop to use the byte offset and correct the boundary
+condition check for avoiding the potential OOB access.
 
-A controlled case-modified test kernel used a synthetic connection to
-enter the real send path and overlap publication with disconnect.  The
-candidate completion and wake-up code were unchanged.  Its Oops includes:
-
-  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-  RIP: 0010:__wake_up_common+0xa0/0x1f0
-  Call Trace:
-   <TASK>
-   __wake_up+0x36/0x60
-   o2net_complete_nsw_locked+0x222/0x370
-   o2net_set_nn_state+0x917/0xea0
-   o2net_disconnect_node+0xd0/0x190
-   o2net_validate_control_write+0x454/0x500
-   full_proxy_write+0x11f/0x180
-   vfs_write+0x25a/0x1010
-   ksys_write+0x111/0x200
-   do_syscall_64+0x114/0x620
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-  Modules linked in:
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0066-v1-437a0422801b292a2879@gmail.com
-Fixes: 98211489d414 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Kurt Hackel <kurt.hackel@oracle.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
+Fixes: 15dd100349b8 ("platform/x86: ibm_rtl: fix EBDA signature search pointer arithmetic")
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261021064012.457870-1-tiwai@suse.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/tcp.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/platform/x86/ibm_rtl.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ocfs2/cluster/tcp.c b/fs/ocfs2/cluster/tcp.c
-index edc2976aa3c56..3558bbdb5bff4 100644
---- a/fs/ocfs2/cluster/tcp.c
-+++ b/fs/ocfs2/cluster/tcp.c
-@@ -293,6 +293,11 @@ static int o2net_prep_nsw(struct o2net_node *nn, struct o2net_status_wait *nsw)
- {
- 	int ret;
+diff --git a/drivers/platform/x86/ibm_rtl.c b/drivers/platform/x86/ibm_rtl.c
+index 10cab7bdfe150..d358d684dfb05 100644
+--- a/drivers/platform/x86/ibm_rtl.c
++++ b/drivers/platform/x86/ibm_rtl.c
+@@ -223,9 +223,9 @@ static const struct dmi_system_id ibm_rtl_dmi_table[] __initconst = {
+ };
  
-+	/* Initialize all completion-visible state before publishing the waiter. */
-+	init_waitqueue_head(&nsw->ns_wq);
-+	nsw->ns_sys_status = O2NET_ERR_NONE;
-+	nsw->ns_status = 0;
-+
- 	spin_lock(&nn->nn_lock);
- 	ret = idr_alloc(&nn->nn_status_idr, nsw, 0, 0, GFP_ATOMIC);
- 	if (ret >= 0) {
-@@ -303,9 +308,6 @@ static int o2net_prep_nsw(struct o2net_node *nn, struct o2net_status_wait *nsw)
- 	if (ret < 0)
- 		return ret;
+ static int __init ibm_rtl_init(void) {
+-	unsigned long ebda_addr, ebda_size;
++	unsigned long ebda_addr, ebda_size, offset;
+ 	unsigned int ebda_kb;
+-	int ret = -ENODEV, i;
++	int ret = -ENODEV;
  
--	init_waitqueue_head(&nsw->ns_wq);
--	nsw->ns_sys_status = O2NET_ERR_NONE;
--	nsw->ns_status = 0;
- 	return 0;
- }
+ 	if (force)
+ 		pr_warn("module loaded by force\n");
+@@ -260,9 +260,9 @@ static int __init ibm_rtl_init(void) {
+ 		return -ENOMEM;
  
+ 	/* search for the _RTL_ signature at the start of the table */
+-	for (i = 0 ; i < ebda_size/sizeof(unsigned int); i++) {
++	for (offset = 0; offset + sizeof(*rtl_table) <= ebda_size; offset += 4) {
+ 		struct ibm_rtl_table __iomem * tmp;
+-		tmp = (struct ibm_rtl_table __iomem *) (ebda_map + i*sizeof(unsigned int));
++		tmp = (struct ibm_rtl_table __iomem *) (ebda_map + offset);
+ 		if ((readq(&tmp->signature) & RTL_MASK) == RTL_SIGNATURE) {
+ 			phys_addr_t addr;
+ 			unsigned int plen;
 -- 
 2.53.0
 
