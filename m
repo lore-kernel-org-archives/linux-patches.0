@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026343;
-	b=pyEshnsqjt4EKI0CMSaLlr3sfOnlR6myPH/mN13eKxzDhNyGFMufKd87ybB4+rCeyKYD
-	 JO17dpSRoNUqYf3pAHOT9Vu/d0V98U46pQdQd+jhAwA1F/bnwsPZ5pJdPqDO5LwplClM7
-	 kZdJwvSA6C+y7fsF7Pq77WFu2G5bMnORepT0YMsjsvEQE1OF5A1BclUi8lqet2+rOopZQ
-	 436end8+ba1uz5TorO1FAvzRxXfcB+wrWzm8J77/haTpRLfESJxdgaBMqmcX7s639uBct
-	 4G063din+1mxfluTobhVsmys2ybF/XMWvwErYu1B80apUV2+/TzWUTL/KCe2RHSLB8A==
+	t=1795026345;
+	b=QfgjnMfnKk6ea1n2TMPU5+FUSnb0JnRICBK3g3NYH2bF7L9+9eUnTwvkw+T2NtxfahVx
+	 Vh8RpWzsCqbKZ1JsJS0xfQUhcU+L0NbMxXMmR/hfJSb1H1UWNccsI4lrE2IKUUpXWxIkI
+	 dlYlzzTBqIBKyIU59m8FKvnJQstpFwVhjz0jIT21HEqv7KJ62dIx6v3VWMbbds1xsWFDl
+	 Qee71ZzBWE8Mt1gdfumeMiyRR4iJcwQlruWZAldRMLzSRw43KTJ9cfeQApjw1OL5cLNia
+	 hgXuRFJXA2BIAo1v6xi3h0kjRYpvtr4duqqNLlFGxcDT3jKcPQdSWebC3w7NNhaUpOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026343;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026345;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4UzPaRRR/u7N2sBJbVe8Qjo8DbQ6ZkG6GdoDgSV7RiI=;
-	b=d2oxJoAisah7Vc5wL7Emm1+KiaKcLCQbEYCoJD1cXuC/O7PXzra0C3pVyQu8nc6niTxL
-	 2kelrA2Tbx8w9pbmpsLwveVDXo3sR45Cy4tMUakHPmR1oqHs8GJuYq7Z9RW4rB36SPZGe
-	 P3b+OFdNXc2wsRgHJpp8E8uPDZzJjU+zA0Xzp8qfs/+oH7iTOEJt9Owyvz7MxOJJUUgNB
-	 F7+B/wcjYq+5lrnv1T7dxdmNkPag7UCBugj//fObYdqVtrEGkvz1ER3TgJU7Q+DbdBWGJ
-	 KCGfAEa4RcHTkKPa1vb+Rarm534GF8D3w2+39twQRt/QtuAVYVii9akXNSIDDCJuLIw==
+	bh=IDwgFlaobnrLRX1fhL9JcnbOyvH28R2YZXPcUoVb1ZE=;
+	b=kbv63zSNXW5c/v9Dz4fbazDo0GdMJmox2GI407KWGjrWKDticn2QAY/kZRLf7VSQ7l31
+	 tBBJMctFJ8fm/IcmvOmcZBOESOoeFh5CsB/O96XnkHBjD48sEE2F5tsy/HheUSbNxBmzs
+	 tsglshudmuDsYF0Pt034ygzorwEavlIvx+Y2z92SvyLezQEr6KCz3wIxF3JP0bGshx6z2
+	 LkYmPWFhsdXnRmeKImkBrqzayrdD50HVAQXJjd32nxBR/Y4CcnJV7NlJ9iJu44W9LkXKY
+	 w94fI5KCIGdloae0OJfnmqxjZIsG1xNlbCexJjx75k8prLAyxqZIM12+KsjYLk4AQVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bqb6Fxcf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jvb3SzeN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F091B606A320;
-	Wed, 18 Nov 2026 18:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB4B606A31C;
+	Wed, 18 Nov 2026 18:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bqb6Fxcf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0561F000C6;
-	Wed, 18 Nov 2026 18:25:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jvb3SzeN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 124171F000C4;
+	Wed, 18 Nov 2026 18:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026342;
-	bh=4UzPaRRR/u7N2sBJbVe8Qjo8DbQ6ZkG6GdoDgSV7RiI=;
+	s=korg; t=1795026345;
+	bh=IDwgFlaobnrLRX1fhL9JcnbOyvH28R2YZXPcUoVb1ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bqb6FxcfiDhow6LvPAF6ur1svnAgUYrCJjYlivl0GNujWfVFuKNyFYAfVHK0JyvIq
-	 LyH+ixAyQTwR3z3EBcWwB3Hkhqud1HfJfRAx7tCHh7AiCNL9EcfRFWRJUanwOGLlT1
-	 qaI5kbMu+zBwfIei4zbwirKq4VwtUI7Rxzf6lsHU=
+	b=jvb3SzeNdXW4OrKnwrFsgQlTsLMYStIX4PS9XeraUH7sU3es4vWLtXac+v+6Ay+tC
+	 Z+NEAn7vRw0qF07zR6IhWBrzB2YnJYme47Szr/KRVe3Vdi0qvtg0v3TELSrLJjcXq8
+	 l1z++gm+BDCN7Kp+D1dBs9lJ8j+LiDOeQtlFroOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tapio Reijonen <tapio.reijonen@vaisala.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1401/2151] serial: max310x: dont clobber the TX break bit in set_termios
-Date: Wed, 18 Nov 2026 15:52:16 +0100
-Message-ID: <20261118150213.026304811@linuxfoundation.org>
+Subject: [PATCH 6.18 1402/2151] serial: max310x: fix breaks not reaching the wire in RS485 mode
+Date: Wed, 18 Nov 2026 15:52:17 +0100
+Message-ID: <20261118150213.059322315@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,72 +69,146 @@ Content-Transfer-Encoding: 8bit
 
 From: Tapio Reijonen <tapio.reijonen@vaisala.com>
 
-[ Upstream commit 3b2de448ec0332c1cb8c38b4c5ff0c8e860befbc ]
+[ Upstream commit 4efacb600bf98b13e0659f05afa4549795277e35 ]
 
-A TX break asserted with TIOCSBRK ends early, with no error reported,
-as soon as any termios change lands on the port: a break is a state
-that must hold until TIOCCBRK, but max310x_set_termios() overwrites
-the whole LCR register, and LCR also carries the TX break bit that
-break_ctl() drives. No concurrency is required - a baud or parity
-change from the same process ends the break just as well, and
-break-led protocols lose their break with nothing in the logs.
+The chip's auto-RTS (MODE1.TRNSCVCTRL) asserts the RS485 transceiver
+only while FIFO data is shifting out, and a break is not FIFO data: on
+an RS485 port a requested break sets the TX break bit but the
+transceiver is never enabled, so the break never reaches the wire.
+Break-led protocols cannot work at all.
 
-Update only the LCR bits that are derived from termios and leave the
-TX break and RTS pin control bits untouched. Since nothing clears a
-break when a port is closed with the break still asserted - the tty
-core sends no break-off on release, and the unconditional write here
-was the accidental recovery - clear TXBREAK in startup(), the same way
-8250 does.
+Disable auto-RTS for the break duration and drive RTS manually via the
+LCR RTS bit, then restore auto-RTS when the break ends. Track the break
+in tx_break and leave MODE1 alone in the rs485-config worker while it
+is set - a TIOCSRS485 arriving mid-break would otherwise re-enable
+auto-RTS on top of the manual RTS and release the transceiver before
+the break ends; break_ctl() restores auto-RTS from the then-current
+configuration when the break completes. The worker runs under
+port->mutex - break_ctl() and set_termios() already do - so the
+tx_break test and the MODE1 write cannot straddle a break starting or
+ending, and startup() clears tx_break alongside the latched TXBREAK
+bit, since a port can be closed with a break still asserted.
 
-Fixes: f65444187a66 ("serial: New serial driver MAX310X")
+Only the break assertion is gated on RS485 being enabled; the restore
+at break end runs unconditionally and derives MODE1 from the current
+configuration. Returning early for a port whose RS485 was disabled
+mid-break - that reconfigure is deferred like any other - would leak
+the manually driven RTS and leave the transceiver holding the bus
+indefinitely after the break ends. On a non-RS485 port the restore is
+a no-op: nothing else writes the LCR RTS bit.
+
+Fixes: 55367c620aed ("serial: max310x: Add support for RS-485 mode")
 Assisted-by: Claude:claude-fable-5
 Signed-off-by: Tapio Reijonen <tapio.reijonen@vaisala.com>
-Link: https://patch.msgid.link/20261008-max310x-rs485-sw-delay-v8-1-6ba881f81e1f@vaisala.com
+Link: https://patch.msgid.link/20261008-max310x-rs485-sw-delay-v8-2-6ba881f81e1f@vaisala.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max310x.c |   17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/tty/serial/max310x.c |   49 +++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 47 insertions(+), 2 deletions(-)
 
 --- a/drivers/tty/serial/max310x.c
 +++ b/drivers/tty/serial/max310x.c
-@@ -156,6 +156,8 @@
- #define MAX310X_LCR_FORCEPARITY_BIT	(1 << 5) /* 9-bit multidrop parity */
- #define MAX310X_LCR_TXBREAK_BIT		(1 << 6) /* TX break enable */
- #define MAX310X_LCR_RTS_BIT		(1 << 7) /* RTS pin control */
-+/* LCR bits owned by termios; TX break and RTS are driven elsewhere */
-+#define MAX310X_LCR_TERMIOS_MASK	GENMASK(5, 0)
+@@ -285,6 +285,7 @@ struct max310x_one {
+ 	struct work_struct	md_work;
+ 	struct work_struct	rs_work;
+ 	struct regmap		*regmap;
++	bool			tx_break;	/* break_ctl() owns the transceiver */
  
- /* IRDA register bits */
- #define MAX310X_IRDA_IRDAEN_BIT		(1 << 0) /* IRDA mode enable */
-@@ -941,8 +943,12 @@ static void max310x_set_termios(struct u
- 	if (termios->c_cflag & CSTOPB)
- 		lcr |= MAX310X_LCR_STOPLEN_BIT; /* 2 stops */
+ 	u8 rx_buf[MAX310X_FIFO_SIZE];
+ };
+@@ -651,6 +652,12 @@ static void max310x_batch_read(struct ua
+ 	regmap_noinc_read(one->regmap, MAX310X_RHR_REG, rxbuf, len);
+ }
  
--	/* Update LCR register */
--	max310x_port_write(port, MAX310X_LCR_REG, lcr);
++static void max310x_rts_ctl(struct uart_port *port, bool rts_state)
++{
++	max310x_port_update(port, MAX310X_LCR_REG, MAX310X_LCR_RTS_BIT,
++			    rts_state ? MAX310X_LCR_RTS_BIT : 0);
++}
++
+ static void max310x_handle_rx(struct uart_port *port, unsigned int rxlen)
+ {
+ 	struct max310x_one *one = to_max310x_port(port);
+@@ -901,9 +908,32 @@ static void max310x_set_mctrl(struct uar
+ 
+ static void max310x_break_ctl(struct uart_port *port, int break_state)
+ {
++	struct max310x_one *one = to_max310x_port(port);
++
++	one->tx_break = break_state;
++
+ 	max310x_port_update(port, MAX310X_LCR_REG,
+ 			    MAX310X_LCR_TXBREAK_BIT,
+ 			    break_state ? MAX310X_LCR_TXBREAK_BIT : 0);
++
 +	/*
-+	 * Update LCR register. Leave the TX break bit alone: it is driven by
-+	 * break_ctl(), and a whole-register write here would end a break in
-+	 * progress.
++	 * The chip's auto-RTS asserts the transceiver only while FIFO data is
++	 * shifting out, and a break is not FIFO data. Disable auto-RTS for the
++	 * break duration and drive RTS manually so the break reaches the wire;
++	 * restore auto-RTS when the break ends.
 +	 */
-+	max310x_port_update(port, MAX310X_LCR_REG, MAX310X_LCR_TERMIOS_MASK, lcr);
++	if (break_state) {
++		if (!(port->rs485.flags & SER_RS485_ENABLED))
++			return;
++		max310x_port_update(port, MAX310X_MODE1_REG,
++				    MAX310X_MODE1_TRNSCVCTRL_BIT, 0);
++	} else {
++		max310x_port_update(port, MAX310X_MODE1_REG,
++				    MAX310X_MODE1_TRNSCVCTRL_BIT,
++				    (port->rs485.flags & SER_RS485_ENABLED) ?
++				    MAX310X_MODE1_TRNSCVCTRL_BIT : 0);
++	}
++	max310x_rts_ctl(port, break_state);
+ }
  
- 	/* Set read status mask */
- 	port->read_status_mask = MAX310X_LSR_RXOVR_BIT;
-@@ -1060,6 +1066,13 @@ static int max310x_startup(struct uart_p
+ static void max310x_set_termios(struct uart_port *port,
+@@ -1027,6 +1057,13 @@ static void max310x_rs_proc(struct work_
+ 	struct max310x_one *one = container_of(ws, struct max310x_one, rs_work);
+ 	unsigned int delay, mode1 = 0, mode2 = 0;
+ 
++	/*
++	 * Serialize against break_ctl() and set_termios(), which run under
++	 * port->mutex: the tx_break test below and the MODE1 write must not
++	 * straddle a break starting or ending.
++	 */
++	guard(mutex)(&one->port.state->port.mutex);
++
+ 	delay = (one->port.rs485.delay_rts_before_send << 4) |
+ 		one->port.rs485.delay_rts_after_send;
+ 	max310x_port_write(&one->port, MAX310X_HDPIXDELAY_REG, delay);
+@@ -1038,8 +1075,14 @@ static void max310x_rs_proc(struct work_
+ 			mode2 = MAX310X_MODE2_ECHOSUPR_BIT;
+ 	}
+ 
+-	max310x_port_update(&one->port, MAX310X_MODE1_REG,
+-			MAX310X_MODE1_TRNSCVCTRL_BIT, mode1);
++	/*
++	 * A break owns the transceiver: break_ctl() disabled auto-RTS and
++	 * drives RTS manually, and restores it when the break ends. Leave
++	 * MODE1 alone meanwhile or the break goes undriven mid-way.
++	 */
++	if (!one->tx_break)
++		max310x_port_update(&one->port, MAX310X_MODE1_REG,
++				    MAX310X_MODE1_TRNSCVCTRL_BIT, mode1);
+ 	max310x_port_update(&one->port, MAX310X_MODE2_REG,
+ 			MAX310X_MODE2_ECHOSUPR_BIT, mode2);
+ }
+@@ -1062,6 +1105,7 @@ static int max310x_rs485_config(struct u
+ 
+ static int max310x_startup(struct uart_port *port)
+ {
++	struct max310x_one *one = to_max310x_port(port);
+ 	unsigned int val;
  
  	max310x_power(port, 1);
+@@ -1071,6 +1115,7 @@ static int max310x_startup(struct uart_p
+ 	 * closed with a break still asserted, and set_termios() no longer
+ 	 * rewrites it.
+ 	 */
++	one->tx_break = false;
+ 	max310x_port_update(port, MAX310X_LCR_REG, MAX310X_LCR_TXBREAK_BIT, 0);
  
-+	/*
-+	 * Clear a latched break: nothing clears TXBREAK when a port is
-+	 * closed with a break still asserted, and set_termios() no longer
-+	 * rewrites it.
-+	 */
-+	max310x_port_update(port, MAX310X_LCR_REG, MAX310X_LCR_TXBREAK_BIT, 0);
-+
  	/* Configure MODE1 register */
- 	max310x_port_update(port, MAX310X_MODE1_REG,
- 			    MAX310X_MODE1_TRNSCVCTRL_BIT, 0);
 
 
