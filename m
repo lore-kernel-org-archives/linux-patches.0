@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047486;
-	b=fExNzrYsI36UQVV4GumL4ZOJK9R09fd7d2mlLX8xYKCkCUovorTrZNxYzMZ3cXohpiYn
-	 QLsgGhZ6a4kP0+6mnsYWXo04NrWrvpsVVc41HYhEADySJhMrKwYvfq0MfnBJbas3sGfag
-	 mP64/DcnEihOzASUnS1Cw+zvSHNW9ikyJSi+i/ixWwMWD4S7wWNPiBbYaYnDjoDYKoUTb
-	 KlYtbymTfYghWRv70AIChahmEKBHuqAYsjmqUbufZmd13k+1OQjukdtazGJxF1pwymklV
-	 uOQ/ZVafHB3/Pm2WmVmC1hd8m496Nu0c9vk0aXIjnsDaxyp55XUW6cHtxq6Esn0MRlg==
+	t=1795047489;
+	b=uzfBc1s4QqY0PuRgcxGI7P6QF1+JLXmPJxLtzxLEHOkQq2C03LR0ot7gYQHvz4pIleWx
+	 MZr/awW267bY/Zd+bSHepcPsSHjsG/Xy2h/2820DFj0+TosyFbTYE+hWGghamrg4J8pbr
+	 i28F4631BScGXnoPUDXXtadPeI4eulGG2BvxI2FFIY2KBNSZ8i/mKTS/wpNT+N9+abO1e
+	 FW7dOKdHrUnB/4IHO7LATx7MUuZlEATLFizj3KmubDnbrD746xkr/eOf2vNw5r4AKuhqM
+	 bkawLxQowDNTAffJ0piuqAJG+oNlHu+sjqquaZNSNwOlIMOXQqcwxlUCE4FN2DqGVGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047486;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047489;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C7ZD7fcHsva/zU68YRCotIx3KhfuFNX54ks8uKi8Hxs=;
-	b=x9cAhGLIh7RbAg3TUMnvCuJo1RGnKkNQJHgok+AZVMNgwwT713zMKgpYCMEGs3VIwmmg
-	 +9O6H3u1WVbPC8fiJKaukNyqlsEptNXOebGO4+D6diE+iVWYH/2oszc1pnggm+X2gjFo8
-	 c1FXS3jB0/v6rKPOqxUTdFCj+R1Wdvg/67m+QU1WqAJoH30/i2k8CPuZ6r/khZf874VNg
-	 PdeZnw79m7huajglZmlDnpEkO9EkhZiD++LEB7uASpYleRxZ7qTGmivykCGEehMbEzgkz
-	 I3AkReH2r30WqV2zC++8yhBcorIOu0MBJiiwsEtQH4bWEmwOV8uDmh998VzUZloLdbQ==
+	bh=msfYeQoFYox4tRCBVlzjGaxx9d8LfpwaNVWZcOGBqhs=;
+	b=McDEPb3AcT9G8i1QAbcTpmYipWGxxTYAyjdfHrfbdBgC+gj29DCwlic+GNtlr1RRMZCG
+	 7BSxWw7+RK2aqXa5yBRz84n+/b4RkPzGIlsJwWC6HxQR9j+2KNLCTVhZmjyhGqTd/z2dF
+	 1/H8vCpbQ2r7tgmMPPsaCShn8Ao9MwfWhhmXXugZVVUzYOXWHFyq/svb6F5R3vHONEhzd
+	 0yGy0VE7nYx6JS1iuW57xSxY3NS5pRkRHekY76M2UVp4NeHm3z/wGsHcBt+GFktwdxIZS
+	 Qa4YSb73zW572ssB2q9L9kGn3rvGDmlblYPgSJTNuDDZrGdJ3M7CezI8KjlmbHWFBAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xje7BwNE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v94wP3gj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E24606A32A;
-	Thu, 19 Nov 2026 00:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83ACD606A31C;
+	Thu, 19 Nov 2026 00:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xje7BwNE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F0EC1F000C4;
-	Thu, 19 Nov 2026 00:18:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v94wP3gj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97C11F000C4;
+	Thu, 19 Nov 2026 00:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047486;
-	bh=C7ZD7fcHsva/zU68YRCotIx3KhfuFNX54ks8uKi8Hxs=;
+	s=korg; t=1795047489;
+	bh=msfYeQoFYox4tRCBVlzjGaxx9d8LfpwaNVWZcOGBqhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xje7BwNEDFOE4Q3HuXsLsbUWgMo8GIlJ7UJVYaS7QqvhDCGmT6JxVFis6Zx54uYxY
-	 HvLs6ZlXdu5VZ4YQd1QaOpn4LAGisOH1U0kK0ykKxXt2u/F5Gv3HE1CGTciL4X2YU3
-	 EWKIjeBDybpSiUVhXE7jsEvj4Ie4Zai1akzRIO/E=
+	b=v94wP3gjqd6/x1QdQaONeDlUptDOMNH4gj/RMLHUQHrOj2b626LgUpD6/ps7stUMJ
+	 VZ6y8Oj8n4dVQV0KLClofS/pqcOLdK087mHZJId3JRgQ7vRq6QLljrPKv0KPRyJVEQ
+	 Q7zBgnY7wuoFKwPaorweGa23wWDM80yUFQINm3cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Khorenko <khorenko@virtuozzo.com>,
-	Eva Kurchatova <eva.kurchatova@virtuozzo.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Wei Yang <richard.weiyang@gmail.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	Hannes Reinecke <hare@suse.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1639/2857] selftests/core: fix unshare_test with large fs.nr_open
-Date: Wed, 18 Nov 2026 15:44:33 +0100
-Message-ID: <20261118150300.350186899@linuxfoundation.org>
+Subject: [PATCH 6.1 1657/2857] scsi: target: Move I/O path stats to per CPU
+Date: Wed, 18 Nov 2026 15:44:51 +0100
+Message-ID: <20261118150300.994011457@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,86 +69,392 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Khorenko <khorenko@virtuozzo.com>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit df0b7e0ea59c43708cff8c7e34da5e2f8d430e5e ]
+[ Upstream commit 9cf2317b795d6cde0fccb8744b5a080a9586020e ]
 
-The test assumes fs.nr_open is close to the default 1048576, but some
-systems set it much higher (e.g.  1073741816).  This is systemd's doing:
-since systemd v240 (2018), PID 1 bumps fs.nr_open and fs.file-max to their
-largest possible values on boot, as file descriptors are already accounted
-for by memcg [1].
+The atomic use in the main I/O path is causing perf issues when using
+higher performance backend devices and multiple queues. This moves the
+stats to per CPU. Combined with the next patch that moves the
+non_ordered/delayed_cmd_count to per CPU, IOPS by up to 33% for 8K IOS
+when using 4 or more queues.
 
-In that case, dup2() to nr_open + 64 requires the kernel to allocate a
-file descriptor table with ~1 billion entries, which fails with ENOMEM.
-
-On a kernel that already carries 04a2c4b4511d1, dup2() no longer fails
-with ENOMEM.  The allocation is now rejected up front and the caller
-gets EMFILE instead, without the WARNING, but the test still fails.
-
-Cap the nr_open value used for the test's own arithmetic to a known
-reasonable base value (1048576) and restore the true original value once
-the test has completed.
-
-Link: https://lore.kernel.org/20260814165709.513263-1-khorenko@virtuozzo.com
-Link: https://github.com/systemd/systemd/commit/a8b627aaed409a15260c25988970c795bf963812 [1]
-Signed-off-by: Konstantin Khorenko <khorenko@virtuozzo.com>
-Signed-off-by: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Wei Yang <richard.weiyang@gmail.com>
-Cc: <stable@vger.kernel.org>
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Link: https://lore.kernel.org/r/20250424032741.16216-2-michael.christie@oracle.com
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 6a6e7d7230cd ("scsi: target: Fix demo-mode dynamic ACL dev-entry UAF vs LUN teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/core/unshare_test.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/target/target_core_device.c | 69 +++++++++++++++++++++--------
+ drivers/target/target_core_stat.c   | 69 ++++++++++++++++++++++++-----
+ include/target/target_core_base.h   | 20 ++++++---
+ 3 files changed, 121 insertions(+), 37 deletions(-)
 
-diff --git a/tools/testing/selftests/core/unshare_test.c b/tools/testing/selftests/core/unshare_test.c
-index 7fec9dfb1b0e3..6716e0f74d7da 100644
---- a/tools/testing/selftests/core/unshare_test.c
-+++ b/tools/testing/selftests/core/unshare_test.c
-@@ -40,6 +40,14 @@ TEST(unshare_EMFILE)
+diff --git a/drivers/target/target_core_device.c b/drivers/target/target_core_device.c
+index 7be48bfbd42e4..dd5b7e324702a 100644
+--- a/drivers/target/target_core_device.c
++++ b/drivers/target/target_core_device.c
+@@ -56,14 +56,14 @@ transport_lookup_cmd_lun(struct se_cmd *se_cmd)
+ 	rcu_read_lock();
+ 	deve = target_nacl_find_deve(nacl, se_cmd->orig_fe_lun);
+ 	if (deve) {
+-		atomic_long_inc(&deve->total_cmds);
++		this_cpu_inc(deve->stats->total_cmds);
  
- 	ASSERT_EQ(sscanf(buf, "%d", &nr_open), 1);
+ 		if (se_cmd->data_direction == DMA_TO_DEVICE)
+-			atomic_long_add(se_cmd->data_length,
+-					&deve->write_bytes);
++			this_cpu_add(deve->stats->write_bytes,
++				     se_cmd->data_length);
+ 		else if (se_cmd->data_direction == DMA_FROM_DEVICE)
+-			atomic_long_add(se_cmd->data_length,
+-					&deve->read_bytes);
++			this_cpu_add(deve->stats->read_bytes,
++				     se_cmd->data_length);
  
-+	/*
-+	 * Cap nr_open for the duration of the test to avoid ENOMEM from a
-+	 * huge fd table allocation; buf/n keep the real original value so
-+	 * fs.nr_open can be restored to it once the test is done.
-+	 */
-+	if (nr_open > 1024 * 1024)
-+		nr_open = 1024 * 1024;
+ 		if ((se_cmd->data_direction == DMA_TO_DEVICE) &&
+ 		    deve->lun_access_ro) {
+@@ -127,14 +127,14 @@ transport_lookup_cmd_lun(struct se_cmd *se_cmd)
+ 	 * target_core_fabric_configfs.c:target_fabric_port_release
+ 	 */
+ 	se_cmd->se_dev = rcu_dereference_raw(se_lun->lun_se_dev);
+-	atomic_long_inc(&se_cmd->se_dev->num_cmds);
++	this_cpu_inc(se_cmd->se_dev->stats->total_cmds);
+ 
+ 	if (se_cmd->data_direction == DMA_TO_DEVICE)
+-		atomic_long_add(se_cmd->data_length,
+-				&se_cmd->se_dev->write_bytes);
++		this_cpu_add(se_cmd->se_dev->stats->write_bytes,
++			     se_cmd->data_length);
+ 	else if (se_cmd->data_direction == DMA_FROM_DEVICE)
+-		atomic_long_add(se_cmd->data_length,
+-				&se_cmd->se_dev->read_bytes);
++		this_cpu_add(se_cmd->se_dev->stats->read_bytes,
++			     se_cmd->data_length);
+ 
+ 	return ret;
+ }
+@@ -323,6 +323,7 @@ int core_enable_device_list_for_node(
+ 	struct se_portal_group *tpg)
+ {
+ 	struct se_dev_entry *orig, *new;
++	int ret = 0;
+ 
+ 	new = kzalloc(sizeof(*new), GFP_KERNEL);
+ 	if (!new) {
+@@ -330,6 +331,12 @@ int core_enable_device_list_for_node(
+ 		return -ENOMEM;
+ 	}
+ 
++	new->stats = alloc_percpu(struct se_dev_entry_io_stats);
++	if (!new->stats) {
++		ret = -ENOMEM;
++		goto free_deve;
++	}
 +
- 	ASSERT_EQ(0, getrlimit(RLIMIT_NOFILE, &rlimit));
+ 	spin_lock_init(&new->ua_lock);
+ 	INIT_LIST_HEAD(&new->ua_list);
+ 	INIT_LIST_HEAD(&new->lun_link);
+@@ -352,8 +359,8 @@ int core_enable_device_list_for_node(
+ 			       " for dynamic -> explicit NodeACL conversion:"
+ 				" %s\n", nacl->initiatorname);
+ 			mutex_unlock(&nacl->lun_entry_mutex);
+-			kfree(new);
+-			return -EINVAL;
++			ret = -EINVAL;
++			goto free_stats;
+ 		}
+ 		if (orig->se_lun_acl != NULL) {
+ 			pr_warn_ratelimited("Detected existing explicit"
+@@ -361,8 +368,8 @@ int core_enable_device_list_for_node(
+ 				" mapped_lun: %llu, failing\n",
+ 				 nacl->initiatorname, mapped_lun);
+ 			mutex_unlock(&nacl->lun_entry_mutex);
+-			kfree(new);
+-			return -EINVAL;
++			ret = -EINVAL;
++			goto free_stats;
+ 		}
  
- 	/* bump fs.nr_open */
-@@ -73,10 +81,13 @@ TEST(unshare_EMFILE)
+ 		new->se_lun = lun;
+@@ -395,6 +402,20 @@ int core_enable_device_list_for_node(
  
- 	if (pid == 0) {
- 		int err;
-+		char buf3[32];
-+		ssize_t n3;
- 
--		/* restore fs.nr_open */
-+		/* restore fs.nr_open to the (possibly capped) test baseline */
-+		n3 = sprintf(buf3, "%d\n", nr_open);
- 		lseek(fd, 0, SEEK_SET);
--		write(fd, buf, n);
-+		write(fd, buf3, n3);
- 		/* ... and now unshare(CLONE_FILES) must fail with EMFILE */
- 		err = unshare(CLONE_FILES);
- 		EXPECT_EQ(err, -1)
-@@ -89,6 +100,10 @@ TEST(unshare_EMFILE)
- 	EXPECT_EQ(waitpid(pid, &status, 0), pid);
- 	EXPECT_EQ(true, WIFEXITED(status));
- 	EXPECT_EQ(0, WEXITSTATUS(status));
+ 	target_luns_data_has_changed(nacl, new, true);
+ 	return 0;
 +
-+	/* restore the real fs.nr_open value */
-+	lseek(fd, 0, SEEK_SET);
-+	write(fd, buf, n);
++free_stats:
++	free_percpu(new->stats);
++free_deve:
++	kfree(new);
++	return ret;
++}
++
++static void target_free_dev_entry(struct rcu_head *head)
++{
++	struct se_dev_entry *deve = container_of(head, struct se_dev_entry,
++						 rcu_head);
++	free_percpu(deve->stats);
++	kfree(deve);
  }
  
- TEST_HARNESS_MAIN
+ void core_disable_device_list_for_node(
+@@ -444,7 +465,7 @@ void core_disable_device_list_for_node(
+ 	kref_put(&orig->pr_kref, target_pr_kref_release);
+ 	wait_for_completion(&orig->pr_comp);
+ 
+-	kfree_rcu(orig, rcu_head);
++	call_rcu(&orig->rcu_head, target_free_dev_entry);
+ 
+ 	core_scsi3_free_pr_reg_from_nacl(dev, nacl);
+ 	target_luns_data_has_changed(nacl, NULL, false);
+@@ -731,11 +752,13 @@ struct se_device *target_alloc_device(struct se_hba *hba, const char *name)
+ 	if (!dev)
+ 		return NULL;
+ 
++	dev->stats = alloc_percpu(struct se_dev_io_stats);
++	if (!dev->stats)
++		goto free_device;
++
+ 	dev->queues = kcalloc(nr_cpu_ids, sizeof(*dev->queues), GFP_KERNEL);
+-	if (!dev->queues) {
+-		hba->backend->ops->free_device(dev);
+-		return NULL;
+-	}
++	if (!dev->queues)
++		goto free_stats;
+ 
+ 	dev->queue_cnt = nr_cpu_ids;
+ 	for (i = 0; i < dev->queue_cnt; i++) {
+@@ -749,6 +772,7 @@ struct se_device *target_alloc_device(struct se_hba *hba, const char *name)
+ 		INIT_WORK(&q->sq.work, target_queued_submit_work);
+ 	}
+ 
++
+ 	dev->se_hba = hba;
+ 	dev->transport = hba->backend->ops;
+ 	dev->transport_flags = dev->transport->transport_flags_default;
+@@ -831,6 +855,12 @@ struct se_device *target_alloc_device(struct se_hba *hba, const char *name)
+ 		sizeof(dev->t10_wwn.revision));
+ 
+ 	return dev;
++
++free_stats:
++	free_percpu(dev->stats);
++free_device:
++	hba->backend->ops->free_device(dev);
++	return NULL;
+ }
+ 
+ /*
+@@ -1041,6 +1071,7 @@ void target_free_device(struct se_device *dev)
+ 		dev->transport->free_prot(dev);
+ 
+ 	kfree(dev->queues);
++	free_percpu(dev->stats);
+ 	dev->transport->free_device(dev);
+ }
+ 
+diff --git a/drivers/target/target_core_stat.c b/drivers/target/target_core_stat.c
+index f85ee5b0fd800..57ec5e3d4e941 100644
+--- a/drivers/target/target_core_stat.c
++++ b/drivers/target/target_core_stat.c
+@@ -280,30 +280,51 @@ static ssize_t target_stat_lu_num_cmds_show(struct config_item *item,
+ 		char *page)
+ {
+ 	struct se_device *dev = to_stat_lu_dev(item);
++	struct se_dev_io_stats *stats;
++	unsigned int cpu;
++	u32 cmds = 0;
++
++	for_each_possible_cpu(cpu) {
++		stats = per_cpu_ptr(dev->stats, cpu);
++		cmds += stats->total_cmds;
++	}
+ 
+ 	/* scsiLuNumCommands */
+-	return snprintf(page, PAGE_SIZE, "%lu\n",
+-			atomic_long_read(&dev->num_cmds));
++	return snprintf(page, PAGE_SIZE, "%u\n", cmds);
+ }
+ 
+ static ssize_t target_stat_lu_read_mbytes_show(struct config_item *item,
+ 		char *page)
+ {
+ 	struct se_device *dev = to_stat_lu_dev(item);
++	struct se_dev_io_stats *stats;
++	unsigned int cpu;
++	u32 bytes = 0;
++
++	for_each_possible_cpu(cpu) {
++		stats = per_cpu_ptr(dev->stats, cpu);
++		bytes += stats->read_bytes;
++	}
+ 
+ 	/* scsiLuReadMegaBytes */
+-	return snprintf(page, PAGE_SIZE, "%lu\n",
+-			atomic_long_read(&dev->read_bytes) >> 20);
++	return snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
+ }
+ 
+ static ssize_t target_stat_lu_write_mbytes_show(struct config_item *item,
+ 		char *page)
+ {
+ 	struct se_device *dev = to_stat_lu_dev(item);
++	struct se_dev_io_stats *stats;
++	unsigned int cpu;
++	u32 bytes = 0;
++
++	for_each_possible_cpu(cpu) {
++		stats = per_cpu_ptr(dev->stats, cpu);
++		bytes += stats->write_bytes;
++	}
+ 
+ 	/* scsiLuWrittenMegaBytes */
+-	return snprintf(page, PAGE_SIZE, "%lu\n",
+-			atomic_long_read(&dev->write_bytes) >> 20);
++	return snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
+ }
+ 
+ static ssize_t target_stat_lu_resets_show(struct config_item *item, char *page)
+@@ -1019,8 +1040,11 @@ static ssize_t target_stat_auth_num_cmds_show(struct config_item *item,
+ {
+ 	struct se_lun_acl *lacl = auth_to_lacl(item);
+ 	struct se_node_acl *nacl = lacl->se_lun_nacl;
++	struct se_dev_entry_io_stats *stats;
+ 	struct se_dev_entry *deve;
++	unsigned int cpu;
+ 	ssize_t ret;
++	u32 cmds = 0;
+ 
+ 	rcu_read_lock();
+ 	deve = target_nacl_find_deve(nacl, lacl->mapped_lun);
+@@ -1028,9 +1052,14 @@ static ssize_t target_stat_auth_num_cmds_show(struct config_item *item,
+ 		rcu_read_unlock();
+ 		return -ENODEV;
+ 	}
++
++	for_each_possible_cpu(cpu) {
++		stats = per_cpu_ptr(deve->stats, cpu);
++		cmds += stats->total_cmds;
++	}
++
+ 	/* scsiAuthIntrOutCommands */
+-	ret = snprintf(page, PAGE_SIZE, "%lu\n",
+-		       atomic_long_read(&deve->total_cmds));
++	ret = snprintf(page, PAGE_SIZE, "%u\n", cmds);
+ 	rcu_read_unlock();
+ 	return ret;
+ }
+@@ -1040,8 +1069,11 @@ static ssize_t target_stat_auth_read_mbytes_show(struct config_item *item,
+ {
+ 	struct se_lun_acl *lacl = auth_to_lacl(item);
+ 	struct se_node_acl *nacl = lacl->se_lun_nacl;
++	struct se_dev_entry_io_stats *stats;
+ 	struct se_dev_entry *deve;
++	unsigned int cpu;
+ 	ssize_t ret;
++	u32 bytes = 0;
+ 
+ 	rcu_read_lock();
+ 	deve = target_nacl_find_deve(nacl, lacl->mapped_lun);
+@@ -1049,9 +1081,14 @@ static ssize_t target_stat_auth_read_mbytes_show(struct config_item *item,
+ 		rcu_read_unlock();
+ 		return -ENODEV;
+ 	}
++
++	for_each_possible_cpu(cpu) {
++		stats = per_cpu_ptr(deve->stats, cpu);
++		bytes += stats->read_bytes;
++	}
++
+ 	/* scsiAuthIntrReadMegaBytes */
+-	ret = snprintf(page, PAGE_SIZE, "%u\n",
+-		      (u32)(atomic_long_read(&deve->read_bytes) >> 20));
++	ret = snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
+ 	rcu_read_unlock();
+ 	return ret;
+ }
+@@ -1061,8 +1098,11 @@ static ssize_t target_stat_auth_write_mbytes_show(struct config_item *item,
+ {
+ 	struct se_lun_acl *lacl = auth_to_lacl(item);
+ 	struct se_node_acl *nacl = lacl->se_lun_nacl;
++	struct se_dev_entry_io_stats *stats;
+ 	struct se_dev_entry *deve;
++	unsigned int cpu;
+ 	ssize_t ret;
++	u32 bytes = 0;
+ 
+ 	rcu_read_lock();
+ 	deve = target_nacl_find_deve(nacl, lacl->mapped_lun);
+@@ -1070,9 +1110,14 @@ static ssize_t target_stat_auth_write_mbytes_show(struct config_item *item,
+ 		rcu_read_unlock();
+ 		return -ENODEV;
+ 	}
++
++	for_each_possible_cpu(cpu) {
++		stats = per_cpu_ptr(deve->stats, cpu);
++		bytes += stats->write_bytes;
++	}
++
+ 	/* scsiAuthIntrWrittenMegaBytes */
+-	ret = snprintf(page, PAGE_SIZE, "%u\n",
+-		      (u32)(atomic_long_read(&deve->write_bytes) >> 20));
++	ret = snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
+ 	rcu_read_unlock();
+ 	return ret;
+ }
+diff --git a/include/target/target_core_base.h b/include/target/target_core_base.h
+index 010e966aee0a5..70ea2748df2bf 100644
+--- a/include/target/target_core_base.h
++++ b/include/target/target_core_base.h
+@@ -658,15 +658,19 @@ struct se_lun_acl {
+ 	struct se_ml_stat_grps	ml_stat_grps;
+ };
+ 
++struct se_dev_entry_io_stats {
++	u32			total_cmds;
++	u32			read_bytes;
++	u32			write_bytes;
++};
++
+ struct se_dev_entry {
+ 	u64			mapped_lun;
+ 	u64			pr_res_key;
+ 	u64			creation_time;
+ 	bool			lun_access_ro;
+ 	u32			attach_count;
+-	atomic_long_t		total_cmds;
+-	atomic_long_t		read_bytes;
+-	atomic_long_t		write_bytes;
++	struct se_dev_entry_io_stats __percpu	*stats;
+ 	/* Used for PR SPEC_I_PT=1 and REGISTER_AND_MOVE */
+ 	struct kref		pr_kref;
+ 	struct completion	pr_comp;
+@@ -790,6 +794,12 @@ struct se_device_queue {
+ 	struct se_cmd_queue	sq;
+ };
+ 
++struct se_dev_io_stats {
++	u32			total_cmds;
++	u32			read_bytes;
++	u32			write_bytes;
++};
++
+ struct se_device {
+ 	/* RELATIVE TARGET PORT IDENTIFER Counter */
+ 	u16			dev_rpti_counter;
+@@ -813,9 +823,7 @@ struct se_device {
+ 	atomic_long_t		num_resets;
+ 	atomic_long_t		aborts_complete;
+ 	atomic_long_t		aborts_no_task;
+-	atomic_long_t		num_cmds;
+-	atomic_long_t		read_bytes;
+-	atomic_long_t		write_bytes;
++	struct se_dev_io_stats __percpu	*stats;
+ 	/* Active commands on this virtual SE device */
+ 	atomic_t		non_ordered;
+ 	bool			ordered_sync_in_progress;
 -- 
 2.53.0
 
