@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015384;
-	b=1Qg5+DGMfqQlsN91Cw15k34zwiBk37gKXGWSYssqsSPchHV2sjoCfPj0OwitzEgKSpwl
-	 +cSZNmHo89bSu049Gz+6TbSmZaXm+lOn9klvpCdSOBJnLuLDleORH4ZcaevLStRjupi7d
-	 s0CVvVlCoocF6q/JC+hcI08bIhIU2QI/H2eCYnqQF7KT2S+Omen6mZeZPK8MbGcbtk83h
-	 b/DFks8zgGop8AqQCmIAVOs8yB4iAZVOhE4SEYk9ysjLaBB05i+fP9DLv80gwHhOgHK8G
-	 u6O6lDy7ZTxZIZsjz33FReKmP9+KNKc1ltysiZlZfUwtazG3WG233Vn/PbSZ4phFB8A==
+	t=1795015387;
+	b=2bZcxzQFbH0LnqclkTkSbtU3ghIB+2nZ9Xa43MmLVAjeQgonqdP7uJWLuOG5l93Ts9id
+	 3iJxtYnXnzndK7iXB0VEGoFDThpkrBAY3HkajKBTmfnUOGFj+uld07QcCpPwUTFMk6eJ5
+	 fdiliWhHckC1moeitB6v8XgBzVsiBSTGMO0w7LgdzrGHEFTF3CuHcZEBHm52N8v96tOy3
+	 qwY4Q1MybSaUXkZDvux0PEUK94Fzil/hgyCkcN7JMmUzQ0IjhkFZigOYIcrFuTUrUeLgF
+	 QrCRqg1jaKLnxNcQsYCCct8lttV6iSQb5RA1Q4i0yaRtsL7kaMF5rJzT26o+ZYTEgWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015384;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015387;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hT2xBy6MgUMNglyW3cmNwzrwLYWDCi/6L+CYYGNmCyk=;
-	b=Wzl0GZAEaDWHPz8K84qdHpVm6S5mZb5cPu/Q8p0SBLcXOKPPVZFsclqrFgeDSD3aThL7
-	 /gs9YMiBURX/KgjqvWrUEgqia5d+M70LsYmNjGdjwrrEDza05xHJk1P/eHliG6TLDEi39
-	 H7M9zVswXsLrAEdtJDtOBpwru+aOl2MzVXtPOLXxWTheHcOGLyFWLgAKS91QeZlhAk23V
-	 80JDfU5NneUijuG6zeoM28ozNO+SIM6/6+dYKYGlo5QWK/+cAulXRcwOk7icUQQJ5MT7d
-	 AJmX5Oqi7xaXpK+TOicusIT28GjtYkN3N4HLrK55PmWtJH+GgLvD139dThJrWwd7ccw==
+	bh=IV4VMM4GRcFjASL9hAWA1DADjuksYx7vCTaqZExvp3Q=;
+	b=ZN11Zp73Esg/exytp1wprbcVCMyGOi1aJJEilOh9/nZ0mobiACszzInAjb1lco2bKg5i
+	 hjILF30xo5olZk42QTOs0KhBVwEKnRzrrPQAaxHvoVHVEMbnXr/vDMAxIYNJqrVX8ac75
+	 B0x8rJ1XmB+mTAy/GvKRlBelYadI3B63Bq+0XiW0pQe3419Brq0pP1VV0Mif85OoLTJck
+	 XZhTf/jUx01lXkS7jm4m0eDHJUAXcNnggRXIwnO+aRUWD1OjZYyptp01m1KYKlO/QudIH
+	 Wf9pMLblrcrAxZRrRsleVmzM6z5VsgAo/Xv9NkousR5AQXQbYj1fYKSPvAjyqq3W8Pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LjTEaULm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ReoO+QDR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34641606A31C;
-	Wed, 18 Nov 2026 15:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074B8606A31C;
+	Wed, 18 Nov 2026 15:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LjTEaULm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E01B1F000C4;
-	Wed, 18 Nov 2026 15:23:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ReoO+QDR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B1BE1F000C6;
+	Wed, 18 Nov 2026 15:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015384;
-	bh=hT2xBy6MgUMNglyW3cmNwzrwLYWDCi/6L+CYYGNmCyk=;
+	s=korg; t=1795015386;
+	bh=IV4VMM4GRcFjASL9hAWA1DADjuksYx7vCTaqZExvp3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LjTEaULms1hQ4yHLFV+qvmPHQW+UNpt7yNhC4Ms8YtRRIhwq2i3mG070d0njxkiue
-	 GaRpPfzHWpHs7kdyiWTVZQUIeZG3xLFI/Yr2HWiqQEQRkf9Fm/GcLei+ddJpRJLTBB
-	 zEHRj826MozH48vB7zYdAUQQWbeqwWKhmS94rlo4=
+	b=ReoO+QDR1eFeDs+biyWjo7ELbAAoN07g3fmsjyRqmo568s1EaFU829znOTms8O5WI
+	 NCJbR+NUqtUs31ph6Jy4wDgy+uCcHgXAUt5JrwhfJtFAlnOsH39mkNaIx5CVcFYHsg
+	 33V6+Ub/WxCdzBVXqDN3EKlXDsDKl0Bbd3mhWXHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	Terry Bowman <terry.bowman@amd.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Gongwei Li <ligongwei@kylinos.cn>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0153/2651] cxl/ras: Pass the PCI devices struct device to match_memdev_by_parent()
-Date: Wed, 18 Nov 2026 15:23:13 +0100
-Message-ID: <20261118150253.362162980@linuxfoundation.org>
+Subject: [PATCH 7.3 0154/2651] wifi: rtw89: coex: Fix wrong constant check of GPIO MUX signal
+Date: Wed, 18 Nov 2026 15:23:14 +0100
+Message-ID: <20261118150253.397139968@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,53 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Gongwei Li <ligongwei@kylinos.cn>
 
-[ Upstream commit 977eaad352bad4c4aac7cd15683800196c2ead57 ]
+[ Upstream commit fc17fd87d9f210850f81e547ee88eba89d6f2d50 ]
 
-cxl_cper_handle_prot_err() hands bus_find_device() the 'struct pci_dev'
-where match_memdev_by_parent() expects the embedded 'struct device'. The
-comparison never matches. The lookup always fails and CXL endpoint
-protocol errors reported via CPER are dropped without a trace event,
-leaving only the root port, downstream and upstream cases reporting.
+In _fw_set_gpio(), the check for an invalid GPIO signal uses `sig == 0xff`.
+However, _get_gpiosig_for_ver() never returns 0xff. Both of its failure
+branches return BTC_DBG_NUM (defined as 32) when the requested signal is
+unsupported for the current firmware version.
 
-Pass &pdev->dev, and rename the callback parameter to match what it is.
+Check the result against BTC_DBG_NUM instead, the same as _show_gpio_dbg()
+already does.
 
-Fixes: 3c70ec71abda ("cxl/ras: Fix CPER handler device confusion")
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Terry Bowman <terry.bowman@amd.com>
-Link: https://patch.msgid.link/20260828215726.1077498-1-dave.jiang@intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: 5c90259b9748 ("wifi: rtw89: coex: complete GPIO debug configuration handler")
+Signed-off-by: Gongwei Li <ligongwei@kylinos.cn>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260826031959.2555359-1-13875017792@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/ras.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/realtek/rtw89/coex.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cxl/core/ras.c b/drivers/cxl/core/ras.c
-index e307361bb39e4..0759fc9b07de0 100644
---- a/drivers/cxl/core/ras.c
-+++ b/drivers/cxl/core/ras.c
-@@ -70,9 +70,9 @@ cxl_cper_trace_uncorr_prot_err(struct cxl_memdev *cxlmd,
- 	trace_cxl_aer_uncorrectable_error(cxlmd, status, fe, hl);
- }
- 
--static int match_memdev_by_parent(struct device *dev, const void *uport)
-+static int match_memdev_by_parent(struct device *dev, const void *parent)
- {
--	if (is_cxl_memdev(dev) && dev->parent == uport)
-+	if (is_cxl_memdev(dev) && dev->parent == parent)
- 		return 1;
- 	return 0;
- }
-@@ -108,7 +108,7 @@ void cxl_cper_handle_prot_err(struct cxl_cper_prot_err_work_data *data)
- 		return;
- 
- 	struct device *mem_dev __free(put_device) = bus_find_device(
--		&cxl_bus_type, NULL, pdev, match_memdev_by_parent);
-+		&cxl_bus_type, NULL, &pdev->dev, match_memdev_by_parent);
- 	if (!mem_dev)
- 		return;
- 
+diff --git a/drivers/net/wireless/realtek/rtw89/coex.c b/drivers/net/wireless/realtek/rtw89/coex.c
+index 5a9dc4d8a00ba..12bd5539e8c6d 100644
+--- a/drivers/net/wireless/realtek/rtw89/coex.c
++++ b/drivers/net/wireless/realtek/rtw89/coex.c
+@@ -3365,7 +3365,7 @@ static void _fw_set_gpio(struct rtw89_dev *rtwdev, u8 type, u32 val)
+ 		gpio->mux.data.dlen = CXDGPIO_SET_L2;
+ 		gpio->mux.data.sig = _get_gpiosig_for_ver(rtwdev,
+ 							  FIELD_GET(GENMASK(7, 0), val));
+-		if (gpio->mux.data.sig == 0xff)
++		if (gpio->mux.data.sig >= BTC_DBG_NUM)
+ 			return;
+ 		gpio->mux.data.gpio = FIELD_GET(GENMASK(15, 8), val);
+ 		l2_h2c = gpio->mux.fmt;
 -- 
 2.53.0
 
