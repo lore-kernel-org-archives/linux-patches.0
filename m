@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025785;
-	b=tgUxfIS34gKcAL20YTbDa0dlodhNXmi9Xb/mWvz7ggsJevB+KLc9/sdRFm1ZZfaqlop8
-	 LHibfmN1YuDZfAgxsAOrr/fGVFT5nR1zJ1RqtJ1o/P0DgN7A44R+97Fj1rdtSJdJzyEN5
-	 WGQ5xY3nxdeTho/bcT14bQmLF062osPK49L0kDmXYWcXrKwA13V5kGVU4wKIY9tWA+ELb
-	 j8dyd94QlmtBGDLupnLTpyJVSlD7/k935f+Nj4a5OiA+bXFaD3ozKIWyQmrbek8seCf4e
-	 v8nyXV4JtN40W79ZST557xc2Wi2LamjqLcQ6qVNBSDq8i/e0NFbdnMKCWaAVY9TI50Q==
+	t=1795025788;
+	b=HMBY03C32SEHFFa2HWQKau77ezhEh+i9l0nCceYcWVSBqbh7dZrns+X1Vwdl6nwTU4ok
+	 T8iCM5QLv9FH8wTe+dBEcP1ifyfPfTL31J8ZGWTZ08/moxcKVoSI8yPUY1JsFHLEyUj6K
+	 e81PKu94PERUzABI+QfCGB+Suy0A1rRG/kcweRX5QkuxwefpACmTTJjHI7fAZ7l1dRzlu
+	 4t1OwZGtLoqOiwBs5QbLARPqyznpX6tKyaEhj/DpWcMUOPI3L7LdtYxdscqaqQ+fXsTVt
+	 eWhkhQ3PPQ1mNcDl8Syzf1vG9WS/Jry/b88d03BUwYn0n6UBZEvSEVJ4o9yMEMuSyaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025785;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025788;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1KtF4SY7CuMAclqI2ff8S112HuMYO4045xEvybcC5Bc=;
-	b=T1ypADe58hQ9vn+psJNWnFAtUMov3xygfnsy3c5sW2wpcKn/QGQ9AG/R/EkE6NaHfYe1
-	 pjTXHjnYrEH1PZiwdQvFSlfdi1xKkhsOOblfyWVRy65n7mf43yrf4wpZfXgmITSOZov0H
-	 9KGWts5/AkOC4t2g/YTMNdczvzzr2eh4LqH0cX6XCuzTCapGQboxptTgmO/9puNYr2X5w
-	 BTpdf9GeiyKGLS4f4PCURi4fULDVlqfoU8qKYpch5qtS2y+r6qDzLco9nULVTALI5Ma4j
-	 biGE1QPzX7fjG4UrUcZDudxBkcMMd1kNb604w8OdXLG9c3pu9iPmUZCK4zb8AApO28g==
+	bh=SPoxIvi7jzEv2eRfypoBv3VctZsaXprY4gMyNj5OnjE=;
+	b=PTMF0bAMFVGclci75Rj7pzSKJKUfa5l0A4+bBdGtWQbDdYrjLw/yPftp1GuKl+fN+Asy
+	 azjosB8rgQ1unvH1WtRoQVXhuKGGrv2/oaJuTTZV1aGchlb6PNVGJd70oH7zUNSBOl99E
+	 nShjCQabxjA72asQeyIjT61M1WGNnOsAimznNrca9Ri8s7tVLhUSf+VGlfBlq0mbSiEfI
+	 CcQh5I9AQQaM4d1EsFLknFlGZ4JXYXw0DnW3QsNWVRSyQNk/k4yiazGhTDr+N9dqZnwmb
+	 txOg9hNYPLUT2KBb1VY0iiYVEd7wL2xtIF6oXV72/hAIg2lQDYpCOzjN50fANj3bykQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R1MFiTpM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aZMTshgq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55273606A32F;
-	Wed, 18 Nov 2026 18:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A5760A260E;
+	Wed, 18 Nov 2026 18:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R1MFiTpM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B2B1F000C5;
-	Wed, 18 Nov 2026 18:16:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aZMTshgq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F4451F000C9;
+	Wed, 18 Nov 2026 18:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025785;
-	bh=1KtF4SY7CuMAclqI2ff8S112HuMYO4045xEvybcC5Bc=;
+	s=korg; t=1795025787;
+	bh=SPoxIvi7jzEv2eRfypoBv3VctZsaXprY4gMyNj5OnjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R1MFiTpMY+AHEISzZo/LeP9e82RBzp9Wq+doQBCCz7sK6eua1hXWvsFl6gsf1v+Fc
-	 48te5zMQMVx0LwGRgBor/w28hf/rVoNSbWoid2lABqTuHOQlyP/fCpPHiazyHFBB0z
-	 5th2MZVNLIrzmGD7ko7vnbQoJ7LQHSHGFTAFbyks=
+	b=aZMTshgql4VxwCkqNr1bB6d2ZWZ4kBOignQi0YX0WXk91pZuE04pkfVkMU3payABN
+	 CgSSnYZV37Ccg2ftzVQxdypXp1153v0Ry78gP513Dmeyi+QFMwEa6B53jeBjP77wHJ
+	 U/bOOgP1zODFpu90ao3tz8bWjnK8xMDE/D/m2dBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Jonas Rebmann <jre@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
+	Florian Fuchs <fuchsfl@gmail.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1160/2151] spi: spi-sun4i: sun4i_spi_transfer_one(): fix transfers for SUN4I_FIFO_DEPTH
-Date: Wed, 18 Nov 2026 15:48:15 +0100
-Message-ID: <20261118150204.426197786@linuxfoundation.org>
+Subject: [PATCH 6.18 1151/2151] sh: uaccess: Require offsettable operands for 64-bit user access
+Date: Wed, 18 Nov 2026 15:48:06 +0100
+Message-ID: <20261118150204.111541933@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,56 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Florian Fuchs <fuchsfl@gmail.com>
 
-[ Upstream commit f3ce7a3ca82bd9cda9ef61250aeff65fe6b44809 ]
+[ Upstream commit 8b5dba9ea4a3f5ed994f03d6ca7686c49491b426 ]
 
-In commit 6d9fe44bd73d ("spi: sun4i: fix FIFO limit"), the TX-FIFO is
-filled max to SUN4I_FIFO_DEPTH - 1 (= 63) bytes to work around timeouts
-observed on A10s SoCs.
+The 64-bit __get_user_u64()/__put_user_u64() paths address the memory
+operand as %T2 (base+4). This base+4 requires an offsettable address,
+but "m" also allows the indexed mode @(R0,Rn) (e.g. for a variable-
+indexed array element), which has no displacement field for the +4.
+Depending on optimization this build fails with "invalid 'asm'" or an
+ICE in GCC's change_address_1.
 
-Commit 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO
-size") added support for transfers larger than the FIFO size. But this
-commit only enabled the TX-FIFO empty interrupt for transfers larger
-than the FIFO (= 64) bytes.
+Require an offsettable memory operand, allowing GCC to reload an
+unsuitable indexed address into an appropriate form.
 
-This breaks transfers with exactly 64 bytes: the TX-FIFO is only filled
-with 63 bytes but the interrupt to refill the FIFO is not triggered. The
-problem can be reproduced with the following command:
-
-| spidev_test -D /dev/spidev0.1 -S 64 -s 20000000 -I 1
-|
-| [ 7797.548745] spi_master spi0: spi0.1: timeout transferring 64 bytes@20000000Hz for 110(100)ms
-| [ 7797.557237] spidev spi0.1: SPI transfer failed: -110
-| [ 7797.562308] spi_master spi0: failed to transfer one message from queue
-| [ 7797.568936] spi_master spi0: noqueue transfer failed
-
-To fix the problem enable the TX-FIFO interrupt if the total TX length
-is larger than SUN4I_FIFO_DEPTH - 1 (= 63) bytes.
-
-Fixes: 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO size")
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
-Link: https://patch.msgid.link/20260914-spi-sun4i-fixes-v3-1-9fe919d5cecf@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 2d2b308a8b7d ("sh: Implement __get_user_u64() required for 64-bit get_user()")
+Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sun4i.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/sh/include/asm/uaccess_32.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
-index 280b0fb909e98..9f0761b0ecdfe 100644
---- a/drivers/spi/spi-sun4i.c
-+++ b/drivers/spi/spi-sun4i.c
-@@ -322,7 +322,7 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
- 	sun4i_spi_enable_interrupt(sspi, SUN4I_INT_CTL_TC |
- 					 SUN4I_INT_CTL_RF_F34);
- 	/* Only enable Tx FIFO interrupt if we really need it */
--	if (tx_len > SUN4I_FIFO_DEPTH)
-+	if (tx_len > SUN4I_FIFO_DEPTH - 1)
- 		sun4i_spi_enable_interrupt(sspi, SUN4I_INT_CTL_TF_E34);
+diff --git a/arch/sh/include/asm/uaccess_32.h b/arch/sh/include/asm/uaccess_32.h
+index 5d7ddc092afd7..cef40414bfb13 100644
+--- a/arch/sh/include/asm/uaccess_32.h
++++ b/arch/sh/include/asm/uaccess_32.h
+@@ -92,7 +92,7 @@ __asm__ __volatile__( \
+ 	".long	1b + 2, 3b\n\t" \
+ 	".previous" \
+ 	:"=&r" (err), "=&r" (x) \
+-	:"m" (__m(addr)), "i" (-EFAULT), "0" (err)); })
++	:"o" (__m(addr)), "i" (-EFAULT), "0" (err)); })
+ #else
+ #define __get_user_u64(x, addr, err) \
+ ({ \
+@@ -116,7 +116,7 @@ __asm__ __volatile__( \
+ 	".long	1b + 2, 3b\n\t" \
+ 	".previous" \
+ 	:"=&r" (err), "=&r" (x) \
+-	:"m" (__m(addr)), "i" (-EFAULT), "0" (err)); })
++	:"o" (__m(addr)), "i" (-EFAULT), "0" (err)); })
+ #endif
  
- 	/* Start the transfer */
+ #define __put_user_size(x,ptr,size,retval)		\
+@@ -196,7 +196,7 @@ __asm__ __volatile__( \
+ 	".long	1b, 3b\n\t" \
+ 	".previous" \
+ 	: "=r" (retval) \
+-	: "r" (val), "m" (__m(addr)), "i" (-EFAULT), "0" (retval) \
++	: "r" (val), "o" (__m(addr)), "i" (-EFAULT), "0" (retval) \
+         : "memory"); })
+ #else
+ #define __put_user_u64(val,addr,retval) \
+@@ -218,7 +218,7 @@ __asm__ __volatile__( \
+ 	".long	1b, 3b\n\t" \
+ 	".previous" \
+ 	: "=r" (retval) \
+-	: "r" (val), "m" (__m(addr)), "i" (-EFAULT), "0" (retval) \
++	: "r" (val), "o" (__m(addr)), "i" (-EFAULT), "0" (retval) \
+         : "memory"); })
+ #endif
+ 
 -- 
 2.53.0
 
