@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017003;
-	b=onrk1Sd8ii+a5m5Xoj49sDNhrdXhNJXq1tmCfnn9XaYY7TyrTE6aeGEMqDxn4BxpC/Tp
-	 gq97fBlo+QmIaizBflNkGyLe+d9zUEnigxRodQgXOIpErYmr1qlDhhIrHAAQ+DS92f6xG
-	 PVGOW8eax9mjz3Ql7Ky1yxIGdrxtVdTOtd7/AS3XeL/8Cc48D05ibRX1nY/Pamj0PG5Vd
-	 LX2K4V6t34T4LG6sqg6Axx6kN4hyIGfvce+gQHdqxk8ZHszfzHlsIIXVKNX25HjOevvYp
-	 ZD2ikamDC5/tPQJdor+sJptQnstJ/oBMBK/0GTHKIEK/WRv9RwyzVQiAAXyLk73az/A==
+	t=1795017005;
+	b=usf7O2dAHLYJiCqn9tmjRgzM29dRC+c0YZXuVVnsiCTbbH94qeHB3Sle8/YsABFC2Xmc
+	 eG96bJF9QU7hEZ0JNTOzSEWyiIy1DkuP6ozeM23g6/qIQNQVjV3seMcNEyQYI9tKEgz1O
+	 rQZXQqNHZhxBk23ua3IUw3pRZistZx8flMdIn+Ei+FhFyrJ2R5Wdg7lP+oKK5dc7duJtO
+	 C48GaIXE4aPBRj6e+knAP+rfBRWF/JlXmE9UNpGcIxrjcuooOcbLgx22QJDLnKG8qHhsw
+	 bjX/hdvrsRPoQKcWZurHIGRmt2QjDsTmhIfggXDlPRhXZvm/os/sZqu/iN5iQbMkHqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017003;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017005;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=enRoYUYCjKVodea04y4HmlqgQcLZQqH9IwfiWOaGeHM=;
-	b=ntWIXnlOcWaadSAt4IH3qAEFrt0geUQW2xFb1M2HXlEUGuXAq91nNRRIqwl3bq0r7RQI
-	 CMaB6c9zC6obyPepdcYExn9nnBCPFYrvv1SYlsNS2mTTj5LEC7dWNxzfKOCIneWo/Iesd
-	 /HioSFh14YM0voMn43QtuoODGzv+n9IEzeaWtwQYNFjXZ7MPxyHEnAL70TCw5Z7g+Nc1r
-	 YwVByAZ/8vFAcmcfJST9TVVn/sv9pQg5oddOWdtyGPb2NWdZxznJ1FI5HXjrzgQ8kM0nu
-	 /wxviR/9xwalIJBPIovjhLHNdKhqemI7RM7G+lwC9qBkInuzeWZaCeHmG3EtwnFYwYQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=9tInXJsEBwF2in+Smmk73UGboke9kNOAuIqtZQF0Pdw=;
+	b=pmkmJqq7m2nldusoIPP4/bR/LRRJbRbdiAGZ5Tuvu+XGUW76ml14RhFz7/0CXx1ZqYao
+	 gV6+etOG4BgJav3nu83PmN4gSfyod5PPC3Ln7mLTOOxZQojhCSBWdFeQdVQnT5YPf3Ooc
+	 eP/FR4JpY/1M/I31Pp70H4aQxwSxtkWlLY55LkeB2LQn7owZKDF8USwd7uqMDwKz3Mz0+
+	 jp/w/1FOmslD3jc+5Hm3fgGEuJUQiwEXGoAU9EI0kmZhd72B2iYGi73VDXsnOeattIeV/
+	 r1SE3f7R+sge1UvSmmtOtvvrgeos2AVuBW2Mc54i2M+7i4zdBsOV8LvTt91APpH5ntw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wmQC2Y5O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HxW1iWm5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B03606A31C;
-	Wed, 18 Nov 2026 15:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6DF606A31C;
+	Wed, 18 Nov 2026 15:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wmQC2Y5O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0661F000C4;
-	Wed, 18 Nov 2026 15:50:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HxW1iWm5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7B31F000C4;
+	Wed, 18 Nov 2026 15:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017002;
-	bh=enRoYUYCjKVodea04y4HmlqgQcLZQqH9IwfiWOaGeHM=;
+	s=korg; t=1795017005;
+	bh=9tInXJsEBwF2in+Smmk73UGboke9kNOAuIqtZQF0Pdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wmQC2Y5OvraIIyqv5LCzLhedIPrrCyBhj01UiNWMa+aYKwnbv8mtmkuQPh6CWkj08
-	 Ss4Cu1338fqw3qTmlqV1DScKh1O9VqVoPSbk3Ad0T11qIZZNWpzTZrcd4L+nPtw43i
-	 e5dIban+TtrpbtK0Yzhy5perOm8xEpeHterGDxmY=
+	b=HxW1iWm5mWeivQdARpiI/XBMzVpH4J2+pab/ZNn1wVDXiQ1mXU3cStsZp2Ixo2hkR
+	 /CoEiwWIHosQNEaOIIDHarjSY2zKUXElSe8B+t2FnrBq+otXy5sMjgv/dbjO+BdOZS
+	 gn3ElzxAb6nucPas4uGnQij9n5qxceWuhWJGBkUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20 ?= <u.kleine-koenig@baylibre.com>,
+	Tate Whiteberg <whiteberg@arista.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0728/2651] serial: 8250: hub6: Add cleanup code
-Date: Wed, 18 Nov 2026 15:32:48 +0100
-Message-ID: <20261118150314.078006839@linuxfoundation.org>
+Subject: [PATCH 7.3 0729/2651] serial: 8250: export and rename wait_for_xmitr()
+Date: Wed, 18 Nov 2026 15:32:49 +0100
+Message-ID: <20261118150314.113247693@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,90 +62,107 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
+From: Tate Whiteberg <whiteberg@arista.com>
 
-[ Upstream commit a300273c458ca32666f5bc6c1b3eb3a7cca206ce ]
+[ Upstream commit 2c5942fd0300cb966339dd0366890be626b405e8 ]
 
-At module load time a platform device is registered. That should be
-undone when the module is unloaded.
+Export wait_for_xmitr() and rename it to follow naming convention.
 
-Fixes: ec9f47cd6a14 ("[PATCH] Serial: Split 8250 port table")
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/4f1903ff2907f3e8bbabce345f628771e0bbd4e1.1786697789.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Tate Whiteberg <whiteberg@arista.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Link: https://patch.msgid.link/20260831165911.2029839-2-whiteberg@arista.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 1c305d5f1daa ("serial: 8250_mid: wait for LSR tx empty before setting termios")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250.h          | 2 ++
- drivers/tty/serial/8250/8250_hub6.c     | 5 +++++
- drivers/tty/serial/8250/8250_platform.c | 5 ++++-
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250.h      |  1 +
+ drivers/tty/serial/8250/8250_port.c | 13 +++++++------
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/tty/serial/8250/8250.h b/drivers/tty/serial/8250/8250.h
-index 3fd25b7a7b81c..f197db78c60c2 100644
+index f197db78c60c2..cc7e1d76c2b82 100644
 --- a/drivers/tty/serial/8250/8250.h
 +++ b/drivers/tty/serial/8250/8250.h
-@@ -318,8 +318,10 @@ static inline void serial8250_pnp_exit(void) { }
+@@ -180,6 +180,7 @@ void serial8250_clear_and_reinit_fifos(struct uart_8250_port *p);
+ void serial8250_fifo_wait_for_lsr_thre(struct uart_8250_port *up,
+ 				       struct nbcon_write_context *wctxt,
+ 				       unsigned int count);
++void serial8250_wait_for_xmitr(struct uart_8250_port *up, int bits);
  
- #ifdef CONFIG_SERIAL_8250_HUB6
- int serial8250_hub6_init(void);
-+void serial8250_hub6_exit(void);
- #else
- static inline int serial8250_hub6_init(void) { return 0; }
-+static inline void serial8250_hub6_exit(void) { }
- #endif
- 
- #ifdef CONFIG_SERIAL_8250_RSA
-diff --git a/drivers/tty/serial/8250/8250_hub6.c b/drivers/tty/serial/8250/8250_hub6.c
-index 3e548530ec4e3..4d4c54c951cb9 100644
---- a/drivers/tty/serial/8250/8250_hub6.c
-+++ b/drivers/tty/serial/8250/8250_hub6.c
-@@ -53,3 +53,8 @@ int __init serial8250_hub6_init(void)
- {
- 	return platform_device_register(&hub6_device);
+ void serial8250_rpm_get(struct uart_8250_port *p);
+ void serial8250_rpm_put(struct uart_8250_port *p);
+diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
+index c961b969021ec..434ba234eb9fb 100644
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -2024,7 +2024,7 @@ static bool wait_for_lsr(struct uart_8250_port *up, int bits)
  }
-+
-+void __init_or_module serial8250_hub6_exit(void)
-+{
-+	platform_device_unregister(&hub6_device);
-+}
-diff --git a/drivers/tty/serial/8250/8250_platform.c b/drivers/tty/serial/8250/8250_platform.c
-index 3a2dff9ce7b76..0570366a71d02 100644
---- a/drivers/tty/serial/8250/8250_platform.c
-+++ b/drivers/tty/serial/8250/8250_platform.c
-@@ -326,7 +326,7 @@ static int __init serial8250_init(void)
- 	serial8250_isa_devs = platform_device_alloc("serial8250", PLAT8250_DEV_LEGACY);
- 	if (!serial8250_isa_devs) {
- 		ret = -ENOMEM;
--		goto unreg_pnp;
-+		goto unreg_hub6;
+ 
+ /* Wait for transmitter and holding register to empty with timeout */
+-static void wait_for_xmitr(struct uart_8250_port *up, int bits)
++void serial8250_wait_for_xmitr(struct uart_8250_port *up, int bits)
+ {
+ 	unsigned int tmout;
+ 	bool tx_ready;
+@@ -2052,6 +2052,7 @@ static void wait_for_xmitr(struct uart_8250_port *up, int bits)
+ 		}
  	}
+ }
++EXPORT_SYMBOL_NS_GPL(serial8250_wait_for_xmitr, "SERIAL_8250");
  
- 	ret = platform_device_add(serial8250_isa_devs);
-@@ -342,6 +342,8 @@ static int __init serial8250_init(void)
- 	platform_device_del(serial8250_isa_devs);
- put_dev:
- 	platform_device_put(serial8250_isa_devs);
-+unreg_hub6:
-+	serial8250_hub6_exit();
- unreg_pnp:
- 	serial8250_pnp_exit();
- unreg_uart_drv:
-@@ -369,6 +371,7 @@ static void __exit serial8250_exit(void)
- 	platform_driver_unregister(&serial8250_isa_driver);
- 	platform_device_unregister(isa_dev);
+ #ifdef CONFIG_CONSOLE_POLL
+ /*
+@@ -2098,7 +2099,7 @@ static void serial8250_put_poll_char(struct uart_port *port,
+ 	ier = serial_port_in(port, UART_IER);
+ 	__serial8250_clear_IER(up);
  
-+	serial8250_hub6_exit();
- 	serial8250_pnp_exit();
+-	wait_for_xmitr(up, UART_LSR_BOTH_EMPTY);
++	serial8250_wait_for_xmitr(up, UART_LSR_BOTH_EMPTY);
+ 	/*
+ 	 *	Send the character out.
+ 	 */
+@@ -2108,7 +2109,7 @@ static void serial8250_put_poll_char(struct uart_port *port,
+ 	 *	Finally, wait for transmitter to become empty
+ 	 *	and restore the IER
+ 	 */
+-	wait_for_xmitr(up, UART_LSR_BOTH_EMPTY);
++	serial8250_wait_for_xmitr(up, UART_LSR_BOTH_EMPTY);
+ 	serial_port_out(port, UART_IER, ier);
+ }
  
- #ifdef CONFIG_SPARC
+@@ -2223,7 +2224,7 @@ static void serial8250_THRE_test(struct uart_port *port)
+ 	 * Synchronize UART_IER access against the console.
+ 	 */
+ 	scoped_guard(uart_port_lock_irqsave, port) {
+-		wait_for_xmitr(up, UART_LSR_THRE);
++		serial8250_wait_for_xmitr(up, UART_LSR_THRE);
+ 		serial_port_out_sync(port, UART_IER, UART_IER_THRI);
+ 		udelay(1); /* allow THRE to set */
+ 		iir_noint1 = serial_port_in(port, UART_IIR) & UART_IIR_NO_INT;
+@@ -3293,7 +3294,7 @@ static void serial8250_console_wait_putchar(struct uart_port *port, unsigned cha
+ {
+ 	struct uart_8250_port *up = up_to_u8250p(port);
+ 
+-	wait_for_xmitr(up, UART_LSR_THRE);
++	serial8250_wait_for_xmitr(up, UART_LSR_THRE);
+ 	serial8250_console_putchar(port, ch);
+ }
+ 
+@@ -3507,7 +3508,7 @@ void serial8250_console_write(struct uart_8250_port *up,
+ 	 *	Finally, wait for transmitter to become empty
+ 	 *	and restore the IER
+ 	 */
+-	wait_for_xmitr(up, UART_LSR_BOTH_EMPTY);
++	serial8250_wait_for_xmitr(up, UART_LSR_BOTH_EMPTY);
+ 
+ 	if (em485) {
+ 		mdelay(port->rs485.delay_rts_after_send);
 -- 
 2.53.0
 
