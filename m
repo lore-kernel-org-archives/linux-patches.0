@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038060;
-	b=NpYASaCBrJChciVeAs4fHZbVauZOPeVafYa82IFSUPCCGHeaz0TTRqRJuh4d65zjpO5O
-	 L9lPwRs+pVYzZ/wPkXEs+AIdS2LuPgAqJuWahPCv8KjbVaPb5to76sY51YRVqMQWuzBDi
-	 QHz6epJUTR1eOlrDO0t5/ARbId9cvJGsDujSh6BG+fzYEMpwThfNLEK+v6VJT0EkO3/vC
-	 MppCgPej5U9dC6tSE9zF5eaTDGdd6CnItkFmgBVebqEhp0ft7JSV9TZj2YeZ9ypskqVIl
-	 m4KPGRnFVbPsiXpi6D6BFu9S/xP4cKl2wzA3cv9Y85U8FVUZDRtVvepAYfxntzzL/2Q==
+	t=1795038063;
+	b=oAuRR3+7VCi+1lJ9f7/UFJAA9BKEQfZZ6zfMn/5bRpg+Nw0SZmMiYlmxc5z8/5ajqfX1
+	 59bSnXr3EULksXSaNn4zhy65GeENoWtmz4IEJq6/S1ZAJyudHaPEBurGkXkVv2r3nhGJY
+	 R3adLeK0tKgpg0dHkj3iRmUj0QjvymDN8jAblgilGIxL+7baNySSHGSbmpDEDNtr4EJ+Z
+	 jMkAR879Zz6BYxcM5ShgBtU+mSJ1ldHbGgN78Lpc4Af3kd5/5uqRSfjLJxN3/Wj4gh0d2
+	 UGfgDErhdy0Hrg4DuoyqMKt1DEr7h+gJMsePUBh+0kwKOOmZnos5qDRSUlqyrrq+BuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038060;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038063;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4AB5aLGM63O6SiQnkn1JHQyjL7PN811HzMSSM8dimuw=;
-	b=Yrq1MtACf/gaTnFsIialN0GwHyl9C9SNRmYy+fiXPpBmKZl1iTp0PiJmZDPk8mcTD6ZD
-	 jtXCXAd+F7K27ucI/FTEsxESVOt17cxKZVC9xEYpd+nVw4KwkpekVnLew2KJ3yjeNTsKE
-	 VTpi6ZxhdqAejiKaFy8Aa/zWRKlDT+gxjNn6n7hCkkZwsy/XJTBdTkqK9+B0Nov6QowZ1
-	 jZ0iT/XoIHhOFjuDob+F60vsANI7HOv6KFpVVT8t0ekkg+rKHpqij9RNCbtpqLmFcvi5A
-	 XwuWi2mFoWg8+prDioqYakqguLUpNYvcVTVy+2Hhe1YWFPA+RLtC+R5kpPh+VyNjJOg==
+	bh=NDokLJQpmxu6Ifn/sNwecgSC3wXNOBqDq1yq0hoilBY=;
+	b=zuvLY27RiS0zWYn5xIHrrmTsFzt7CQq3r4+g0EWjm3sp0jx68jer90bpIxeCrNn1IF/R
+	 5dgO8OIo6LSsW/PLbd6iVMF2jm3KXBjEzKnJzJcfFG+fWN15e2/8TZ9tDqvGVxeqoFpIu
+	 05By4Zq08qn/CnIkRWpWWV7cP61LFr1KNdsk9Q5LJKREo7RmiQpJ23hfL0ZlbPolwOrzx
+	 5SikszGhBeOxOuKVlutTlhpCoFVMO3P/TsoBfAY6bU3djCMGF9AFksQgYr9JCJAN38XED
+	 CreG2IM2qxPUhlDxhky5sQWcGuezNLkOcx+YlOye41St52i6dARwLuUNfEMH+MCohxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KBu5rG86;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tf0TxTwG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93FD0606A32C;
-	Wed, 18 Nov 2026 21:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908FB606A32A;
+	Wed, 18 Nov 2026 21:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KBu5rG86
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0D91F000C4;
-	Wed, 18 Nov 2026 21:40:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tf0TxTwG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEF281F000C4;
+	Wed, 18 Nov 2026 21:41:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038060;
-	bh=4AB5aLGM63O6SiQnkn1JHQyjL7PN811HzMSSM8dimuw=;
+	s=korg; t=1795038063;
+	bh=NDokLJQpmxu6Ifn/sNwecgSC3wXNOBqDq1yq0hoilBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KBu5rG86y7OwIC3ocIArKSRdlwfH9Z02zr665CdvswUAIemYGHmOWGtCrdXaeuOx9
-	 BuV2Qr1fBCjkIfi/wrern8EnmE3Q57B9Iyg1lNd3fpmM0Asb3HJMkc+R8r4nF8vmuu
-	 KgbGfSONr6NGxfLVS45Fr2nVNgKvo6AxAQzOv6b4=
+	b=tf0TxTwG2WVdj6FkbSsMrlbEqooQJGokd3C1tBqLgzah5kwMVt33VnEdDqEFluakl
+	 aaoar2uCOfrLhgjAdrd9nK+xbE/Z/aVXITbxPogkvvjKCYmVJ/uwcudZQsSAx19HM4
+	 Br3F/R9UtAS6k8uBNPOFhKmIWfjDVfDiWi5WniLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugen Hristev <ehristev@kernel.org>,
-	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Judith Mendez <jm@ti.com>,
+	Moteen Shah <m-shah@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1613/3318] media: microchip-isc: fix WB offset and gain register field masking
-Date: Wed, 18 Nov 2026 15:37:15 +0100
-Message-ID: <20261118150409.578286644@linuxfoundation.org>
+Subject: [PATCH 6.6 1614/3318] arm64: dts: ti: k3-am625-sk-common: Set eMMC clock pin as OUTPUT
+Date: Wed, 18 Nov 2026 15:37:16 +0100
+Message-ID: <20261118150409.609241358@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,73 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+From: Judith Mendez <jm@ti.com>
 
-[ Upstream commit 6e9eaa3b93870e4edac1bd2539fe113c24663eaf ]
+[ Upstream commit 8ef8a0e38d1377c6d51c06f95c64d87641b2c717 ]
 
-ISC_WB_O_* and ISC_WB_G_* each pack two 13-bit fields. A negative offset
-sign-extends and corrupts the adjacent field. Add masks for the two
-fields and write them with FIELD_PREP(), which masks each value into its
-field, so sign extension can no longer bleed across.
+MMC clock pins must be configured as OUTPUT-only per TRM [0] with
+receiver disabled (RXACTIVE bit = 0). Change MMC CLK pins from
+PIN_INPUT to PIN_OUTPUT to match documentation.
 
-Fixes: 73c1a577b839 ("media: atmel: atmel-isc: reworked white balance feature")
+[0] https://www.ti.com/lit/pdf/spruiv7 Rev. C: Table 12-246. MMCSDi I/O Signals
+
+Fixes: d19a66ae488a ("arm64: dts: ti: k3-am625-sk: Enable on board peripherals")
 Cc: stable@vger.kernel.org
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
-Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Judith Mendez <jm@ti.com>
+Reviewed-by: Moteen Shah <m-shah@ti.com>
+Link: https://patch.msgid.link/20260909214743.899477-11-jm@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
+[ sashal: adapted to the older shared device-tree layout, where AM625 SK and AM62 LP SK share the pinmux block ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/microchip/microchip-isc-base.c      | 16 ++++++++--------
- .../platform/microchip/microchip-isc-regs.h      |  6 ++++++
- 2 files changed, 14 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/microchip/microchip-isc-base.c b/drivers/media/platform/microchip/microchip-isc-base.c
-index 8a1ebb1a74e00..1131e91546e2a 100644
---- a/drivers/media/platform/microchip/microchip-isc-base.c
-+++ b/drivers/media/platform/microchip/microchip-isc-base.c
-@@ -63,17 +63,17 @@ static inline void isc_update_awb_ctrls(struct isc_device *isc)
- 	/* In here we set our actual hw pipeline config */
- 
- 	regmap_write(isc->regmap, ISC_WB_O_RGR,
--		     ((ctrls->offset[ISC_HIS_CFG_MODE_R])) |
--		     ((ctrls->offset[ISC_HIS_CFG_MODE_GR]) << 16));
-+		     FIELD_PREP(ISC_WB_O_LO, ctrls->offset[ISC_HIS_CFG_MODE_R]) |
-+		     FIELD_PREP(ISC_WB_O_HI, ctrls->offset[ISC_HIS_CFG_MODE_GR]));
- 	regmap_write(isc->regmap, ISC_WB_O_BGB,
--		     ((ctrls->offset[ISC_HIS_CFG_MODE_B])) |
--		     ((ctrls->offset[ISC_HIS_CFG_MODE_GB]) << 16));
-+		     FIELD_PREP(ISC_WB_O_LO, ctrls->offset[ISC_HIS_CFG_MODE_B]) |
-+		     FIELD_PREP(ISC_WB_O_HI, ctrls->offset[ISC_HIS_CFG_MODE_GB]));
- 	regmap_write(isc->regmap, ISC_WB_G_RGR,
--		     ctrls->gain[ISC_HIS_CFG_MODE_R] |
--		     (ctrls->gain[ISC_HIS_CFG_MODE_GR] << 16));
-+		     FIELD_PREP(ISC_WB_G_LO, ctrls->gain[ISC_HIS_CFG_MODE_R]) |
-+		     FIELD_PREP(ISC_WB_G_HI, ctrls->gain[ISC_HIS_CFG_MODE_GR]));
- 	regmap_write(isc->regmap, ISC_WB_G_BGB,
--		     ctrls->gain[ISC_HIS_CFG_MODE_B] |
--		     (ctrls->gain[ISC_HIS_CFG_MODE_GB] << 16));
-+		     FIELD_PREP(ISC_WB_G_LO, ctrls->gain[ISC_HIS_CFG_MODE_B]) |
-+		     FIELD_PREP(ISC_WB_G_HI, ctrls->gain[ISC_HIS_CFG_MODE_GB]));
- }
- 
- static inline void isc_reset_awb_ctrls(struct isc_device *isc)
-diff --git a/drivers/media/platform/microchip/microchip-isc-regs.h b/drivers/media/platform/microchip/microchip-isc-regs.h
-index 185ef0eab7ad3..cabecf128b37a 100644
---- a/drivers/media/platform/microchip/microchip-isc-regs.h
-+++ b/drivers/media/platform/microchip/microchip-isc-regs.h
-@@ -149,6 +149,12 @@
- /* ISC White Balance Gain for B, GB Register */
- #define ISC_WB_G_BGB	0x0000006c
- 
-+/* Each WB offset/gain register packs two 13-bit fields, low and high */
-+#define ISC_WB_O_LO	GENMASK(12, 0)	/* R or B  offset [12:0]  */
-+#define ISC_WB_O_HI	GENMASK(28, 16)	/* GR or GB offset [28:16] */
-+#define ISC_WB_G_LO	GENMASK(12, 0)	/* R or B  gain [12:0]  */
-+#define ISC_WB_G_HI	GENMASK(28, 16)	/* GR or GB gain [28:16] */
-+
- /* ISC Color Filter Array Control Register */
- #define ISC_CFA_CTRL    0x00000070
- 
+diff --git a/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi b/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
+index 8d608c7ee2b12..1483c361807eb 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
+@@ -169,7 +169,7 @@ AM62X_IOPAD(0x0b4, PIN_INPUT_PULLUP, 1) /* (K24/H19) GPMC0_CSn3.I2C2_SDA */
+ 	main_mmc0_pins_default: main-mmc0-default-pins {
+ 		pinctrl-single,pins = <
+ 			AM62X_IOPAD(0x220, PIN_INPUT, 0) /* (Y3/V3) MMC0_CMD */
+-			AM62X_IOPAD(0x218, PIN_INPUT, 0) /* (AB1/Y1) MMC0_CLK */
++			AM62X_IOPAD(0x218, PIN_OUTPUT, 0) /* (AB1/Y1) MMC0_CLK */
+ 			AM62X_IOPAD(0x214, PIN_INPUT, 0) /* (AA2/V2) MMC0_DAT0 */
+ 			AM62X_IOPAD(0x210, PIN_INPUT, 0) /* (AA1/V1) MMC0_DAT1 */
+ 			AM62X_IOPAD(0x20c, PIN_INPUT, 0) /* (AA3/W2) MMC0_DAT2 */
 -- 
 2.53.0
 
