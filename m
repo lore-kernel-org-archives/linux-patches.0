@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034126;
-	b=TFASAURS4QEhvOpUZCod0dB0LmAGE1JnN1ae1P+CT+P3T4aIaP1f5l0UQjaumMhvu1Uq
-	 fFChSUgc+QTAiuQtsqpsjeTo5rVLXH5oCoQBSaW1o0BdNkY0MVhLiTO30MR5UTUJXihE6
-	 GTU40EbfRXUxFQLYTWS3sk69l2ARdlxaDqFGr6TyywBq0Xt1mbtUNd5cJg38jkwYiIdiI
-	 8N/DUPLCuYjGl/oxLYYgUqVw8T8qjXSuegZuqNiycsiSAvZgfIw4wWYkYRRFr0kUZ5nUw
-	 4wwf/t/5K6Ks0tXdbhnvKHbypLxZ8JaS/TniImrL3RXZ58Frjn69SgHo5PGG46X5aNg==
+	t=1795034129;
+	b=xHrfI2W8iBerbK0Qh7ciafvjsh030bW5zzZcYMMM5X0UET/nxwUW5egTUAehYa6L8aVY
+	 Cx8Dke+RJZFLIMBuIkmH4KhSguUHH8SPNFiQ5mDXiIElCWKMMB489r9ZdpUCjK91Qa940
+	 CJWDOms6XXno65cGCY3esk8QlvBmTA7GfrUCK3F9g+HuxVHTt3MdM/Rwdq+JMvXdFXEXo
+	 8Iaf2M1+ycgIJzjhLB2gGH8bMzH4PkxTKnSQLWm50egDinDqTNFYc7ToLHlxoqM49S8Fq
+	 cagE0H4TjvlnlMCGqJZIbDt2ETcMUlurQ4JFSKxRoznBUmXvuXQdT4M5OjIkI5sdAGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034126;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034129;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sGjFq2Fha7LvTDCIh9ZM8zxt2zj37m+ZAp++MorT0RI=;
-	b=dSoPNqZQxsrD2GmHw4/a0xyy8DhBwz7xVcN3uzHTVo4RCGDxodG33fuLH6EnVExTmWJ/
-	 /TwQQBqCqNwuuGdspEX1c6LlkBP2tSdcIxhiIMn5mPRwjZYqIEGpuRYBgkJF76YAoHJM8
-	 njNot2DNa9NXGv+pR91lMmIg/825HmbTuo2X+W7G5dp4AYK6T78M5Z4crd8/dUvIgZJPe
-	 +jEGAWiBzBSAnvhqARF1DNgixdvhHsx4Fc9SmxvUNVwTnnKR8/F67Y6Q2/8wT+3rpgA9j
-	 HS+NLQW3UEvZWm7dHNJa06B8X6n9cRi37VzFbfN/+8AofTqxZz+80zkgS+Hp4BfAV9g==
+	bh=4O0c3vQVXBi6Cp09sZLffLN/PLQcty6Axt6SGudRS9k=;
+	b=UR2yuTf3npT1+vEH+yTSNU4jt3lnlDPW/HBVlmENINc/eLnadLORtCdKTFYRNKMDlrET
+	 GB0h0IHa23AAcNQhsG9a4E8i8EfPscbyP8PDwwgjcACNRC472nWNkli5Af35pp5QZpUSs
+	 ohVswphmSyGV+f9GU8V8S/w4fDGhKo4UN9egl9nHHTEJ3W2nFOqBFkGG2KEyQ/AVmcbSz
+	 GxzydFoNbNEfFox3q8Ft9HeFOMxr8XpxLbrmScRghfmS3zEruT6g/+gvKe28aJ9+GzJtj
+	 uAGifihfyEsglxgMsqPrrJctmfsCf6d2sXJAK53O/eNG34XfvHl1eNfGdtl3xE6gjLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XhnM+xK9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z+dal4it;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04B7606A325;
-	Wed, 18 Nov 2026 20:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1683606A33D;
+	Wed, 18 Nov 2026 20:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XhnM+xK9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D1951F000C9;
-	Wed, 18 Nov 2026 20:35:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z+dal4it
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B031F000C4;
+	Wed, 18 Nov 2026 20:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034126;
-	bh=sGjFq2Fha7LvTDCIh9ZM8zxt2zj37m+ZAp++MorT0RI=;
+	s=korg; t=1795034129;
+	bh=4O0c3vQVXBi6Cp09sZLffLN/PLQcty6Axt6SGudRS9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XhnM+xK9h4l0roJOkXGXxg5E5z00z0CfZPr0h1t0lfuHkDbLH/CPlSYn/u+BY5qTW
-	 Gvh6CAnfDGTF/9d376ab6UaSoINNnDy3kQtz9WH99aGU5SZjDveKQPuvLdH1Z7+l3P
-	 /bJwtwyBpiaMxuA+mpaY5cMK6YpZ4PgkXyKjO1x0=
+	b=z+dal4itD0juDJySU+H6cWqDj/6YN+Msx0a088quwXFijeyE/sc98xs2BgLwRfHpB
+	 82HHXqnFGKW/MM1PW4Bs4HiWMOB3Dxy9EVHGjEIrmD8c423AD2/aWq7/ptjLIjYPU4
+	 HCVnPgCmI2E6CnBsjz690db7wpa5LDe0nmZAYsgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Mishal <harimishal1@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Brian Grech <bgrech@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0260/3318] nvmet: passthru: fix OOB reads when parsing ns id descriptor list
-Date: Wed, 18 Nov 2026 15:14:42 +0100
-Message-ID: <20261118150323.169394729@linuxfoundation.org>
+Subject: [PATCH 6.6 0261/3318] selftests/net: fin_ack_lat: fix latency threshold typo
+Date: Wed, 18 Nov 2026 15:14:43 +0100
+Message-ID: <20261118150323.207450327@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,62 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Mishal <harimishal1@gmail.com>
+From: Brian Grech <bgrech@redhat.com>
 
-[ Upstream commit bc7f75eba50012ed447654d8ce169ebaba695193 ]
+[ Upstream commit 2373107782a98ba15931a37bbd9dd46d7213e5aa ]
 
-nvmet_passthru_override_id_descs() walks a namespace identification
-descriptor list populated from the underlying passthru controller's
-Identify response, which is device reported. The loop advanced pos by
-device controlled amounts (sizeof(*cur) + nidl) without checking that
-the next descriptor header actually fits inside the buffer, so a
-malicious device could push pos to within a few bytes of the buffer end
-and cause cur->nidl, cur->nidt or the reserved field to be read past the
-allocation.
+The commit message for af8c8a450bf4 ("selftests: net: Add FIN_ACK
+processing order related latency spike test") states: "if the latency
+is larger than 1 second (spike), print a message". However the code
+uses a threshold of 100000 us (100 ms), not 1000000 us (1 s).
 
-Additionally, when a CSI descriptor lands exactly at the last valid
-header offset, cur + 1 points one byte past the end of the buffer.
-The unconditional memcpy(&csi, cur + 1, NVME_NIDT_CSI_LEN) could read
-that out-of-bounds byte and copy it back to the initiator via
-nvmet_copy_to_sgl(), leaking adjacent heap memory.
+The lower threshold causes false positives on slower hardware where
+normal connection latency occasionally exceeds 100 ms but never
+approaches the 1 s spike that indicates the actual FIN/ACK race bug.
 
-Bounds check both the descriptor header and the CSI value before
-dereferencing them.
+Fix the threshold to match the documented intent.
 
-Signed-off-by: Hari Mishal <harimishal1@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Brian Grech <bgrech@redhat.com>
+Link: https://patch.msgid.link/20260806151645.4172900-1-bgrech@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/passthru.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ tools/testing/selftests/net/fin_ack_lat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/passthru.c b/drivers/nvme/target/passthru.c
-index 05febc5e6b21d..590eb36950628 100644
---- a/drivers/nvme/target/passthru.c
-+++ b/drivers/nvme/target/passthru.c
-@@ -53,13 +53,22 @@ static u16 nvmet_passthru_override_id_descs(struct nvmet_req *req)
- 	for (pos = 0; pos < NVME_IDENTIFY_DATA_SIZE; pos += len) {
- 		struct nvme_ns_id_desc *cur = data + pos;
+diff --git a/tools/testing/selftests/net/fin_ack_lat.c b/tools/testing/selftests/net/fin_ack_lat.c
+index 70187494b57af..4117332eb1a9c 100644
+--- a/tools/testing/selftests/net/fin_ack_lat.c
++++ b/tools/testing/selftests/net/fin_ack_lat.c
+@@ -69,7 +69,7 @@ static void client(int port)
+ 		lat = timediff(start, end);
+ 		sum_lat += lat;
+ 		nr_lat++;
+-		if (lat < 100000)
++		if (lat < 1000000)
+ 			goto close;
  
-+		if (pos + sizeof(*cur) > NVME_IDENTIFY_DATA_SIZE)
-+			break;
-+
- 		if (cur->nidl == 0)
- 			break;
-+
- 		if (cur->nidt == NVME_NIDT_CSI) {
-+			if (pos + sizeof(*cur) + NVME_NIDT_CSI_LEN >
-+						NVME_IDENTIFY_DATA_SIZE)
-+				break;
-+
- 			memcpy(&csi, cur + 1, NVME_NIDT_CSI_LEN);
- 			csi_seen = true;
- 			break;
- 		}
-+
- 		len = sizeof(struct nvme_ns_id_desc) + cur->nidl;
- 	}
- 
+ 		if (getsockname(sock, (struct sockaddr *)&laddr, &len) == -1)
 -- 
 2.53.0
 
