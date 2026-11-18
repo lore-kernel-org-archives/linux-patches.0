@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047206;
-	b=PPMWAgHyfq/Gg+gJHGAF1Yq+k60jNYopBIeMBsz6A4s2O5fR0ayjumGvLGimjXti0zLx
-	 n3arptx++isYdZR+HxAGJkokwhEopXyt1UlRiN1nMV29qtSCJGoOGZsuaAOgzc9jusR5T
-	 w0ACyf+2FtK0raJDgZKxgBwe7vEfHCKcgCT67EvwJ8aMn9a4HXbqnmqT/qbze5rVOMy8f
-	 4MgElTl/xtt8jBDE/D1PreBFMYX7xwyC9TLfDV6iKilMHEJ4ODz5Dwv2sU/9dEwu3dQM8
-	 63CxTkf36V7G0iV+q8fx/3Vxw0GqOJzMdIoaDldReAUzJS/A+2HSKQDjT/FCzn1o5HQ==
+	t=1795047209;
+	b=zJuXAlA2dhLUW6hPOukfgJ6NC9VXHzJ9gszsmauAnZvm8xXtbNq0FXAaY8xKLi30TvAs
+	 u6OR86z+9BoS2UpCTL8IwTo4FvWxt/IpcPTkJNv9bkAdMGwDhNPhyU8hCbrZ3qJHnJXsV
+	 4hPH8xZEn8U2Orx8/sy9ZJYGulvEumaTmcRKMnFrJaEl04OB9Op18twv/HOKcICIk6SGT
+	 EUU2LcCAl2N4RHwFOAJNTzfMqsGi+m1UazAZIZMLVnqsGf5sg9aufhVw4ncXBlBKhJWwH
+	 ScEJMKUUxjPLO0af1MmXsPGVvSeyXhtkwSlTcjF3rSEWkZjnSxFe87RVDhFBER0Rw2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047206;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047209;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UtSiuCY5ZHRzndgHJz29NfcG1sT6QFLU/2AhMg9FbJA=;
-	b=F2adoqNUzQknhBfRpy6V45QNSuT5YXIdB3G6Ti01De7tgnnEFfZ9/sqxlcqnj1psDEtq
-	 2x1tUsVjjGOCkkKOhTyR2JsxrjdYl/vPVgPIBTfQAyNBbTkX0/nT0+Wvj9rBSMflbk/wA
-	 TJPlWgMqnhzAzRxatGs2WIuzN6ymHy5pIck9YxS1bNlQWPht77zrJBGSXsd5HB4oVu9aW
-	 LmdtnxDHynzwsGruQr5f7/jwTy1W3lAQd9lbko997NOC9K7EtpPl5mjtyZ4XGFZccPSaF
-	 LsXbTMEGoie/bzvLmcyDV6OClDC1GEmVVBDW9UHnYQjR7dRK8oZbT/UYcTxJsBA07Cw==
+	bh=xcZzEDxlYFuQWkY4fQZlgtC7j/NZNGC3qk4LLvrXP38=;
+	b=VhtymChmMfoiZmypO0uqa2HwNSNIQVSpmrnUulwIHosd76F2ESIqlEAQpWxptPYjavSw
+	 1prOI+zxaOXL8UoaGTXFs197f9xnnACiWdV1jyGSd5yPUcjXuBeFROJufPsVjqUqmnvn4
+	 5rliiJZNM3k7NeLHhZ5MBuGyj5xAb3Wo7Vs/+lMFzck3UtBPJJr40WJsSR6RvE4fiIHQQ
+	 0U3+Lk9uhM/7ae5Wn9lJDPRY9StB64y/RQc8TSznM1CLhBcNfYR9fFsQ1dkt11H7QRTEI
+	 d3UFGy+EV+XUwyBFuULl30pxs/ghEIXwMYhz6lo/8TjrikHXylXKAs0I0u++2uetiog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jjP0f+WU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lO3rfo76;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF29160A2609;
-	Thu, 19 Nov 2026 00:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BFB606A33B;
+	Thu, 19 Nov 2026 00:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jjP0f+WU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8361F000C4;
-	Thu, 19 Nov 2026 00:13:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lO3rfo76
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1D51F000C4;
+	Thu, 19 Nov 2026 00:13:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047206;
-	bh=UtSiuCY5ZHRzndgHJz29NfcG1sT6QFLU/2AhMg9FbJA=;
+	s=korg; t=1795047209;
+	bh=xcZzEDxlYFuQWkY4fQZlgtC7j/NZNGC3qk4LLvrXP38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jjP0f+WU+icmXuyznAxbJQzLMT964zPyT9zORMZx2brD5kArVmeEZqaJQHU4v5msc
-	 Jwe/oU85UNwLTUK9m5zptzae2BlXR2sTtfadm1fE8O4Od3gUHJoIsnXcCeaDfK1b8F
-	 zBdUFKiwaDasicW1tDyX6wciELUAzIy6JRz16LSE=
+	b=lO3rfo76koRGgQh8SGa5tZ8pgvCri4VUzoZoNYQSk/lilEticaAsqKzhcmP4+dVkS
+	 lgEVzi65isRqzP6XsoOa/HvVmErMcEqPFpYCPBeSzqSc628E88zuFblgbO6oeZNkx+
+	 A7aAsP3L806LbFffQ/z2ECbqDtSCbKPgaTqhx2Vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1506/2857] drm/amdgpu: Use (v)memdup_array_user in amdgpu_cs_pass1
-Date: Wed, 18 Nov 2026 15:42:20 +0100
-Message-ID: <20261118150255.557322938@linuxfoundation.org>
+Subject: [PATCH 6.1 1550/2857] PCI: cadence: Preserve all error codes in cdns_plat_pcie_probe()
+Date: Wed, 18 Nov 2026 15:43:04 +0100
+Message-ID: <20261118150257.139338383@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,92 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit d4b6274cbf0b0ee92294d699f138b63aa4796ad0 ]
+[ Upstream commit fe108800a865b268eec103e4940c248c85a86e9f ]
 
-Replace k(v)malloc_array() + copy_from_user() with (v)memdup_array_user().
+The blamed commit functionally changed the error path of
+cdns_pcie_host_probe(), now cdns_plat_pcie_probe().
 
-This shrinks the source code and improves separation between the kernel
-and userspace slabs.
+When the old code path executed "goto err_get_sync", the PCIe controller
+probe function propagated the pm_runtime_get_sync() error code. The new
+code doesn't, and returns 0.
 
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: ba4c3c202919 ("drm/amdgpu: reject CS chunks too large for kvmalloc()")
+Similarly for the "goto err_init" previously triggered by
+cdns_pcie_host_init() errors, and now triggered by
+cdns_pcie_host_setup() and cdns_pcie_ep_setup() errors. These are not
+propagated and will result in probing success, which is incorrect.
+
+Fixes: bd22885aa188 ("PCI: cadence: Refactor driver to use as a core library")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260810124315.433448-2-vladimir.oltean@nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 33 ++++++++------------------
- 1 file changed, 10 insertions(+), 23 deletions(-)
+ drivers/pci/controller/cadence/pcie-cadence-plat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index 0a5fa026d595e..37782e2b6cf18 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -191,25 +191,17 @@ static int amdgpu_cs_pass1(struct amdgpu_cs_parser *p,
- 	struct amdgpu_fpriv *fpriv = p->filp->driver_priv;
- 	unsigned int num_ibs[AMDGPU_CS_GANG_SIZE] = { };
- 	struct amdgpu_vm *vm = &fpriv->vm;
--	uint64_t *chunk_array_user;
- 	uint64_t *chunk_array;
- 	uint32_t uf_offset = 0;
- 	size_t size;
- 	int ret;
- 	int i;
+diff --git a/drivers/pci/controller/cadence/pcie-cadence-plat.c b/drivers/pci/controller/cadence/pcie-cadence-plat.c
+index db38246d2c9ae..eb7037f7232ef 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence-plat.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-plat.c
+@@ -120,7 +120,7 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
+ 	while (phy_count--)
+ 		device_link_del(pcie->link[phy_count]);
  
--	chunk_array = kvmalloc_array(cs->in.num_chunks, sizeof(uint64_t),
--				     GFP_KERNEL);
--	if (!chunk_array)
--		return -ENOMEM;
--
--	/* get chunks */
--	chunk_array_user = u64_to_user_ptr(cs->in.chunks);
--	if (copy_from_user(chunk_array, chunk_array_user,
--			   sizeof(uint64_t)*cs->in.num_chunks)) {
--		ret = -EFAULT;
--		goto free_chunk;
--	}
-+	chunk_array = memdup_array_user(u64_to_user_ptr(cs->in.chunks),
-+					cs->in.num_chunks,
-+					sizeof(uint64_t));
-+	if (IS_ERR(chunk_array))
-+		return PTR_ERR(chunk_array);
+-	return 0;
++	return ret;
+ }
  
- 	p->nchunks = cs->in.num_chunks;
- 	p->chunks = kvmalloc_array(p->nchunks, sizeof(struct amdgpu_cs_chunk),
-@@ -222,7 +214,6 @@ static int amdgpu_cs_pass1(struct amdgpu_cs_parser *p,
- 	for (i = 0; i < p->nchunks; i++) {
- 		struct drm_amdgpu_cs_chunk __user *chunk_ptr = NULL;
- 		struct drm_amdgpu_cs_chunk user_chunk;
--		uint32_t __user *cdata;
- 
- 		chunk_ptr = u64_to_user_ptr(chunk_array[i]);
- 		if (copy_from_user(&user_chunk, chunk_ptr,
-@@ -235,20 +226,16 @@ static int amdgpu_cs_pass1(struct amdgpu_cs_parser *p,
- 		p->chunks[i].length_dw = user_chunk.length_dw;
- 
- 		size = p->chunks[i].length_dw;
--		cdata = u64_to_user_ptr(user_chunk.chunk_data);
- 
--		p->chunks[i].kdata = kvmalloc_array(size, sizeof(uint32_t),
--						    GFP_KERNEL);
--		if (p->chunks[i].kdata == NULL) {
--			ret = -ENOMEM;
-+		p->chunks[i].kdata = vmemdup_array_user(u64_to_user_ptr(user_chunk.chunk_data),
-+							size,
-+							sizeof(uint32_t));
-+		if (IS_ERR(p->chunks[i].kdata)) {
-+			ret = PTR_ERR(p->chunks[i].kdata);
- 			i--;
- 			goto free_partial_kdata;
- 		}
- 		size *= sizeof(uint32_t);
--		if (copy_from_user(p->chunks[i].kdata, cdata, size)) {
--			ret = -EFAULT;
--			goto free_partial_kdata;
--		}
- 
- 		/* Assume the worst on the following checks */
- 		ret = -EINVAL;
+ static void cdns_plat_pcie_shutdown(struct platform_device *pdev)
 -- 
 2.53.0
 
