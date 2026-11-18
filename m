@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032010;
-	b=Hsat1IBqZuF7gjKxSzghe0H0yW8Be79zsh4NicyCnNtxOVnPHJeaYR9dFTDicz5TGIBm
-	 R7s38t/y5lh/aEPEKPSvtruMjHBrZR5Suoqp0SDIwNvHJAbneGA/+9J5z5JMqio9msFKM
-	 Goo1MNfS/YuPe+qEw5mjxZ5084SKs5lYHjj4pM0T2DS35S2c6O4DmcjzGxKocofbIJ9/S
-	 hoJsdd/kGFNHEM9GXDQmekazDLM1pzB0i2KAsotlFzSGOFL2M3IJJDEJXaT8ksT8ulZot
-	 8LOmcDfDegK/cEuPR8ZmRdhVMr4I9aj/dz6+F44pK8Ppm2FuYPyDJcJmjkFj9XRwmnA==
+	t=1795032013;
+	b=H2AYAZeVmXn8iEMbEtkV6vQC62f1cq3YCJF/kldUCrvamVBdJgVF6va+kkQScDXWsO1Q
+	 5MG6dOdlUMaAWvSRDGP55Lo1RdaWfqC+hKXfKzKRgZyXMOYlzzO6tzJA+EWzdARenjxHh
+	 pBg25iqtrOamRW+mBVb5Z7ZcJi0dePZ7IMklMgwyofiH16RKtLiTDkfbcaqeUx0dyKa9I
+	 4EmEeOM8f6sMSEqXNqvgDr4qXo4InrK3dqnm/ATMMWIAhHdUfm3o40x0KzOv2zkIudiPb
+	 bwGpd1i6fWLvwXzJR7RaXU5rQKT6fOVuYUhPyR/JvXwYhqYIM6oO9/gYZYpawDGn3Lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032010;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032013;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=WKuvAweNmgMSYn8qJKQhGxnJmku2lXrb+MFD5zyqW38=;
-	b=A3ggyQbU/hHHnm2ZJNruli44t2O0u9bMNc4TJs1c8o+QDA6tTEDorxXQrVZ6cWQjiO8u
-	 GPywuxZrXit7pbHyTTYxhVDtsfEa/IL3ixstHuj9FKNmK3Y1Rlp4XqGHkZLr9Ln4Yx7LO
-	 TYz9NQXFBMo+OhudQ8Epx5J2YGD1sQbVPee+1DpFdSwYAuBhJcz9GN5VeJPCCf44S8IjB
-	 I7sXApyMXPn4qM6UCaEkIk6kqsYG/7n9Ap+M3nH1DJRuSbn6zxSpLzUn8RnA1YPb5gAEc
-	 Zmh8j2ysCVNZunvwl8HkdHAgzgsA64aTQLPCbDU7HH9zSz+EJAFVABJq5A8VQg560QQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=PJmFa2Qrd3bogCGuljWS8dF3tYtNooe/gcx36zX61iE=;
+	b=QhbJa+BeT5yICpnBkiBTRKstV0ONApFwV5Rs/3aujrh6UvQt5sA9p8uP88YCaBG/utdU
+	 FGgiTjsv6mpCl8z+nhjNEOv+KrFEXYcFnoOf5Mj7tarN+ak3Ecv5xzdceKsQix248XJSH
+	 +NQh3nzoxQOGg7QoHrMuIgjVF1ZVmKnu56V1tL4QWRoWkWgshyvmWvYjbhrhNmOdCsj/1
+	 Ijb5hiYorWQBiX75XKhHBSHI5qJKH56ZatuWdHVdorGNOaX0C2+klhpVrN0GYJkjVhgP+
+	 QTHd6wxs4ekRUr6VfG8+/O1KkMM7b6Tf1SSO4taUVMR5wk6cnJAqmNaj7Y9mt/56QCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TkGk7jHP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lLfs3SlZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F32606A320;
-	Wed, 18 Nov 2026 20:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AC5606A32A;
+	Wed, 18 Nov 2026 20:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TkGk7jHP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE741F000C4;
-	Wed, 18 Nov 2026 20:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lLfs3SlZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B301E1F000C4;
+	Wed, 18 Nov 2026 20:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032010;
-	bh=WKuvAweNmgMSYn8qJKQhGxnJmku2lXrb+MFD5zyqW38=;
+	s=korg; t=1795032013;
+	bh=PJmFa2Qrd3bogCGuljWS8dF3tYtNooe/gcx36zX61iE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TkGk7jHPbnOBu/zi/HJA3HilkGa/nt8MWEr8DMX5bp5e49VlvCUMs/2dfMZTrv1ZS
-	 uFBK0lNnwL7oL2rhYnSsifHvoWxkxR2EeZfUMuKqUjg2HO8W2QmESM9BTXjo1IRIk0
-	 RpMrAII21eMdbded/yW9VDvbeBRLLwuvoWTrdGkU=
+	b=lLfs3SlZSmbjoGp9CPiuTGsXguXGRomQOWqFPiWLPjH16z/1uMWwUB2SHiduhgpTn
+	 245b/TwACBtN3+pLaUJfWKlw+V19u+TcUTtwNrM0ltpJ9Pnb48OTgk9GysLKR1l88J
+	 /S/NCq1Dlh+oZfO8GLHoBxkaErWX7IZriOc2KtaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
-	Toshiaki Makita <toshiaki.makita1@gmail.com>,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	John Popplewell <john.popplewell@nmc2.ai>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1260/1756] veth: clear rx queue hint in veth_xmit
-Date: Wed, 18 Nov 2026 15:56:27 +0100
-Message-ID: <20261118150059.834627937@linuxfoundation.org>
+Subject: [PATCH 6.12 1261/1756] IB/IPoIB: Cancel normal flush work on device stop
+Date: Wed, 18 Nov 2026 15:56:28 +0100
+Message-ID: <20261118150059.874176465@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -65,102 +65,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 1b1c0e87cfe78d731bbab99c9c018655980b6790 ]
+[ Upstream commit 66196a559be5963b1ced18418c876caf9bfb76e6 ]
 
-With more tx queues on one end of a veth pair than rx queues on the
-other, and RPS or generic XDP enabled on the receiving end, we get:
+ipoib_ib_dev_flush_normal() can race with ipoib_stop() because the normal
+flush work does not run under RTNL.
 
-    veth1 received packet on queue 2, but number of RX queues is 2
-    WARNING: net/core/dev.c:5212 at get_rps_cpu+0x560/0x1360
-    Call Trace:
-     <TASK>
-     netif_rx_internal+0x1af/0x4c0
-     __netif_rx+0x99/0x350
-     veth_xmit+0x713/0xca0
-     dev_hard_start_xmit+0x166/0x5f0
-     __dev_queue_xmit+0x1797/0x42d0
-     ip_finish_output2+0xa34/0x1f40
-     __ip_finish_output+0x510/0x7e0
-     ip_finish_output+0x2f/0x320
-     ip_output+0x17a/0x3f0
-     ip_send_skb+0x1bc/0x220
-     ......
+Before commit a77a57a1a22a ("IPoIB: Fix deadlock on RTNL in
+ipoib_stop()"), ipoib_stop() flushed ipoib_workqueue after clearing
+IPOIB_FLAG_ADMIN_UP and before calling ipoib_ib_dev_down(). This ensured
+that any in-flight flush work completed before ipoib_ib_dev_down()
+performed the final clear of IPOIB_FLAG_OPER_UP.
 
-Easy to hit with "ethtool -L veth0 tx 4", "ethtool -L veth1 rx 2",
-rps_cpus set on veth1 and a few flows sent over the pair [1].
+After that commit removed the workqueue flush to avoid a deadlock with
+workqueue tasks taking RTNL, a normal flush can continue running
+concurrently with ipoib_stop() after IPOIB_FLAG_ADMIN_UP has been
+cleared.
 
-veth_xmit() uses skb->queue_mapping to pick the peer rq, but never
-clears it before veth_forward_skb(), so the rx side still sees the tx
-queue index. Everything on the rx side that goes through
-skb_get_rx_queue(), like get_rps_cpu() and netif_get_rxqueue() for
-generic XDP, takes it as a recorded rx queue and warns once it is out
-of range.
+The flush may observe IPOIB_FLAG_ADMIN_UP set and continue running while
+ipoib_stop() clears IPOIB_FLAG_ADMIN_UP and brings the device down. The
+flush can then call ipoib_ib_dev_up() and set IPOIB_FLAG_OPER_UP again
+after the device has already been stopped:
 
-Clear it before handing the skb to the peer:
+  flush_normal (ipoib_workqueue)    ipoib_stop() (RTNL held)
+  ------------------------------    ------------------------
+  test_bit(ADMIN_UP) == 1
+                                    clear_bit(ADMIN_UP)
+                                    ipoib_ib_dev_down()
+                                      clear_bit(OPER_UP)
+  ipoib_ib_dev_up()
+    set_bit(OPER_UP)
 
-- It is the tx queue index of this device, it says nothing about the
-  rx queue of the peer.
+This leaves the interface with ADMIN_UP clear and OPER_UP set. During
+device removal, ipoib_ndo_uninit() waits in destroy_workqueue() while
+holding RTNL, while ipoib_mcast_carrier_on_task() may keep retrying
+rtnl_trylock() as long as OPER_UP remains set, resulting in a deadlock.
 
-- The two sides don't even agree on the encoding. The tx side stores
-  the index as is, the rx side stores index + 1 so that 0 can mean
-  "not recorded". So tx queue k is read back as rx queue k - 1, and
-  tx queue 0 as "not recorded".
+Cancel the normal flush work from ipoib_stop() after clearing
+IPOIB_FLAG_ADMIN_UP and before bringing the device down. A pending normal
+flush is canceled, while an already running flush is allowed to finish
+before ipoib_ib_dev_down() performs the final transition to OPER_UP
+clear.
 
-- Commit 710ad98c363a ("veth: Do not record rx queue hint in
-  veth_xmit") already decided that veth should not pass any queue
-  hint to the peer. There is no tx->rx queue mapping to preserve, so
-  nothing is lost by clearing it.
+Only the normal flush needs this synchronization. The heavy flush is
+already serialized with ipoib_stop() by RTNL, while the light flush does
+not bring the device back up and therefore cannot recreate this race.
 
-On NETDEV_TX_BUSY the skb goes back to the qdisc, which looks up the
-txq from skb->queue_mapping to decide when to retry, so restore it
-there, next to the existing __skb_push().
-
-[1]: https://lore.kernel.org/netdev/156834bb-8e40-496e-9443-9d515fa18eab@linux.dev/
-
-Fixes: 76ff5cc91935 ("rtnl: allow to specify number of rx and tx queues on device creation")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Reviewed-by: Toshiaki Makita <toshiaki.makita1@gmail.com>
-Reviewed-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261009040412.14571-1-jiayuan.chen@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: a77a57a1a22a ("IPoIB: Fix deadlock on RTNL in ipoib_stop()")
+Reported-by: John Popplewell <john.popplewell@nmc2.ai>
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/20261014-ipoib-cancel-work-v1-1-6c0faac016b8@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/infiniband/ulp/ipoib/ipoib_main.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 22387f66bf90d..0fc14b73d24a2 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -375,6 +375,9 @@ static netdev_tx_t veth_xmit(struct sk_buff *skb, struct net_device *dev)
+diff --git a/drivers/infiniband/ulp/ipoib/ipoib_main.c b/drivers/infiniband/ulp/ipoib/ipoib_main.c
+index bbb00fdc12db3..e76770865e840 100644
+--- a/drivers/infiniband/ulp/ipoib/ipoib_main.c
++++ b/drivers/infiniband/ulp/ipoib/ipoib_main.c
+@@ -189,6 +189,13 @@ static int ipoib_stop(struct net_device *dev)
  
- 	skb_tx_timestamp(skb);
+ 	clear_bit(IPOIB_FLAG_ADMIN_UP, &priv->flags);
  
-+	/* tx queue index of this device, meaningless as rx queue of the peer */
-+	skb_set_queue_mapping(skb, 0);
++	/* Normal flush runs without RTNL and may bring the device back
++	 * up. Cancel it before the device down transition.
++	 * Heavy flush is already serialized by RTNL and must not be
++	 * waited on here while RTNL is held.
++	 */
++	cancel_work_sync(&priv->flush_normal);
 +
- 	ret = veth_forward_skb(rcv, skb, rq, use_napi);
- 	switch (ret) {
- 	case NET_RX_SUCCESS: /* same as NETDEV_TX_OK */
-@@ -395,6 +398,8 @@ static netdev_tx_t veth_xmit(struct sk_buff *skb, struct net_device *dev)
- 		}
- 		/* Restore Eth hdr pulled by dev_forward_skb/eth_type_trans */
- 		__skb_push(skb, ETH_HLEN);
-+		/* qdisc requeues the skb on the txq it points to */
-+		skb_set_queue_mapping(skb, rxq);
- 		netif_tx_stop_queue(txq);
- 		/* Makes sure NAPI peer consumer runs. Consumer is responsible
- 		 * for starting txq again, until then ndo_start_xmit (this
+ 	netif_stop_queue(dev);
+ 
+ 	ipoib_ib_dev_down(dev);
 -- 
 2.53.0
 
