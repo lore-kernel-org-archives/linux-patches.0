@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055976;
-	b=fwYFlMMd9RYIpQzo5KPGTaGzGBPWRa1bYXPy5Sh8nBENJ9zn2mA7y73ZSONiJRjsymDF
-	 9S7z5Rz0GLaQ54DCGBmIvzo78GUsMhy+qZ8kMvm5xaFff0au8HSbEVvfx9PF0Nd7hsGC7
-	 CO2vpHLcDFfsC2P7GyVErs52iowq4leiiYPnG7amsazWfG1Xet7mcKfM7h3PqYi7t68jw
-	 tvw3GatZ5rF77QJiUVmbgaMGdIePMKB34FhjYN2lJQgufCDNue81jPyfsRoKwjeaW9wup
-	 ZzX44CoIm5Fzjat8YkAze6GzA/jZt1F8H5L/3MlGdZOC3kC+clanjGI0VxjG7ntsGWg==
+	t=1795055979;
+	b=r3j8yf0qUQaGuzwdqpr9edh3n0v1KBrlGxH6FWrrfPoukL2QCofKFerhGdpuLf+S/JiF
+	 nj//j1Xdt33O2lV0uypU6CA/+CW9CCELpeoKhAMCnY+KLwc+0+noWQ1hcIxR0DkEnP80a
+	 z9SPSCMefbfbhVB4Kqb+TNFsT+boLve4DM2MjVVatJWfVBTUu8jAIwJ6zpFhNVEzEvu6g
+	 YvvTjZhOBAIYqeZiT2ACKD9W36rzZsmumRCkRO79/TbddsRsCpwHbCXA4cBDda7DNGYHu
+	 Z1sA93aRWqOq/tzvivdXH6L7UONIVP+VlN+p1hgyKeZ0ADaWwGzVkxh6w9YhyvQFTtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055976;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055979;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PSpl55FUY+ewRt7eghqEpDJRNkkSJSKKTbSDduaMhV8=;
-	b=bLw7IQt8Q9cvtgdHaV8RSCsB8ZI8OzhmN7IWrHNykc//tzVnD1Z2hQ5WYfv+7dBRj17s
-	 xFJ0ky2Z0oLKpPyQrUGmsR03Slaw10qKrmlklHYckfRTqekDOAVz9vVmLmRZvwWlbGZ+a
-	 d1IXqPrYpfysTIeQ2rbZf2N5tRgv/HZqQTF+sgkKsaRsisqXBw5nAYMABz7QiYt6p1YKh
-	 0Bk0aujAL1vt8AHLVOojm1CX20jE8aw+Jn9TZVOSL3d4sV2s7+yg/GcSghPLRwAHWuUXM
-	 l55EwzkBLEDm0OZn2xS9G1R8rC0WWdfN2r8UdWxLMfO1Z+OtYmJuYlTRuO0T13zClww==
+	bh=+WbyUHiTVr2oP7NsQ6Rm3O7xGFNHmvZoRIbUCljAMG8=;
+	b=bPzLrlkE9uWRmf3L55kRjniSDExiVbzP3J9BqoHd11MwNj+mtTYi/OyS9h903h0CCJcJ
+	 2oTqVzW3M9ajzQBKPBF6M421hlNJGQX3JW1aDmRoLVmd+MvsHB9bSUALq7BrbQNJL/LBL
+	 0fGpcwYrCZpui9ygOg1kdMqnC+2QFVRf+6PeSlqxZyrOX8KviKQAnPa54q41GX6/Q0jT1
+	 69PQ5jtzyIsok2U+GkAqx62hohUWXs+eoboMu0ppKsDh6o7Rr4r+aj7zEUS7x4PJ49psv
+	 qUX8SSG11B/LGJTmi3Cn1efV2OkX6Ame3YLv0w2GaujeGinJAJLfopBf1caZ4BePtnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wQAhBQ1u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ma3yMnbB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759B2606A31C;
-	Thu, 19 Nov 2026 02:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29806606A32A;
+	Thu, 19 Nov 2026 02:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wQAhBQ1u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C151F000C4;
-	Thu, 19 Nov 2026 02:39:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ma3yMnbB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832431F000C4;
+	Thu, 19 Nov 2026 02:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055976;
-	bh=PSpl55FUY+ewRt7eghqEpDJRNkkSJSKKTbSDduaMhV8=;
+	s=korg; t=1795055979;
+	bh=+WbyUHiTVr2oP7NsQ6Rm3O7xGFNHmvZoRIbUCljAMG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wQAhBQ1uUdNBt3UAqrS3VEw77AMniUozy2VwYRtFi2/NI77UbD3r/Us9xGW0S2XmM
-	 5lY0YnjI8FbQzHmriWi9TmK5BsOCRihroHKsoHkLhnShwPFEXg/70lETUO+rmIdjfm
-	 p/wL276X73neZuJBPyY9NK1H5O92TVc52MEV4FB8=
+	b=ma3yMnbB6EFDhskk8Rs3L8y49va+eWaR5xemylZrt6DvN5TFSiq/PfKrSapueHpbh
+	 zlLYZIbDBSAXZT2YJfE74nQ1P666CN3o1U0kxgvoXaS75YRqsVQCt+1wsIhQCuK+XM
+	 pcFKpU6iAYk6vNlXg6tbt6M8u4JrZmhZpHWH6L+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1824/2214] ALSA: line6: Fix potential OOB write in line6_capture_copy()
-Date: Wed, 18 Nov 2026 15:58:20 +0100
-Message-ID: <20261118150124.419925409@linuxfoundation.org>
+Subject: [PATCH 5.15 1825/2214] ALSA: hda: intel: Cancel delayed work at shutdown, too
+Date: Wed, 18 Nov 2026 15:58:21 +0100
+Message-ID: <20261118150124.456672999@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,39 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit d69798357b5d562bcda1af488cda3ead4d039f8f ]
+[ Upstream commit b83b78df0e53d9dd872d24e49a99658815b12770 ]
 
-line6_capture_copy() copies the data for the original byte size, but
-the buffer overwrap is checked against the frame size.  Because of it,
-when the data size isn't aligned in frames, the remaining bytes might
-be still copied above the buffer size.
+The shutdown procedure needs to cancel the delayed probe work in case
+where the probe work stalls or is slow but still possible to
+reactivated.
 
-For avoiding the potential OOB write, correct the copied data size in
-line6_capture_copy() to be aligned with frames.
-
-Fixes: 1027f476f507 ("staging: line6: sync with upstream")
+Fixes: c0f1886de7e1 ("ALSA: hda: intel: Allow repeatedly probing on codec configuration errors")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20261008192553.300025-11-tiwai@suse.de
+Link: https://patch.msgid.link/20261008192553.300025-2-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/line6/capture.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/hda/hda_intel.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/line6/capture.c b/sound/usb/line6/capture.c
-index 2f7490c8693fa..5d63a329b3b10 100644
---- a/sound/usb/line6/capture.c
-+++ b/sound/usb/line6/capture.c
-@@ -129,7 +129,8 @@ void line6_capture_copy(struct snd_line6_pcm *line6pcm, char *fbuf, int fsize)
- 	} else {
- 		/* copy single chunk */
- 		memcpy(runtime->dma_area +
--		       line6pcm->in.pos_done * bytes_per_frame, fbuf, fsize);
-+		       line6pcm->in.pos_done * bytes_per_frame, fbuf,
-+		       frames * bytes_per_frame);
- 	}
+diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
+index 1a675dcce235d..0a12ba8165824 100644
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2422,12 +2422,17 @@ static void azx_remove(struct pci_dev *pci)
+ static void azx_shutdown(struct pci_dev *pci)
+ {
+ 	struct snd_card *card = pci_get_drvdata(pci);
++	struct hda_intel *hda;
+ 	struct azx *chip;
  
- 	line6pcm->in.pos_done += frames;
+ 	if (!card)
+ 		return;
+ 	chip = card->private_data;
+-	if (chip && chip->running)
++	if (!chip)
++		return;
++	hda = container_of(chip, struct hda_intel, chip);
++	cancel_delayed_work_sync(&hda->probe_work);
++	if (chip->running)
+ 		__azx_shutdown_chip(chip, true);
+ }
+ 
 -- 
 2.53.0
 
