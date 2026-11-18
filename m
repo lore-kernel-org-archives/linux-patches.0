@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035393;
-	b=2UZ4QvPyQDu4TQRRWQVfuz6Jp0uDZKNhIpLT6rotOcxZJbZwJBxvdCtiQRQfcVZ0KzLl
-	 /T7Feas8J81FwvtjdCQzUax/O1R+6ceE2681aIS7TtpWGdyRQq0WZpbaroL46xU6sD4z+
-	 H953yKQ8T4suplJI5vf/GoiZuGXsR8RV3kotbZV7TyO7WjTzboZ/Z7GkzL9Hc/WDysTae
-	 fwEe1e3bRAlcB5yHnJmZ2PRz4tsd5GEBjzipWrSZ0h4xdoB53BJQdZLg+hF7nf0+NqOIU
-	 Jv23Kh6dDBoTSwWHbydR4AMnl2hpzSjlufozCW8TGkm9pEne1hZmbI4mKcwncv1/piQ==
+	t=1795035396;
+	b=fI3fZokuGvBYdJVfSv1Rx5kH8CqNey+BTEIUyUw6V4cjjkeXRHyKm6RdRLzT1ifiBEN0
+	 hOEoW2+Q1HpeVnKuKvi+s9v/dd3FBxTznf4HDi55sZuJ0F7p1EOcwyn03EMe3crBlR8Ro
+	 5+4e71ITaQorKp5rEQqn+s+tnb9KCAT2oNqOt42ET4qHvLCbveqJKdF1tMG9zN0aGFe4N
+	 inCnP9ZIiQpYu1gOdRTrS/6FNDNG2Xmagncg01SSa6kJKvFi3hYHCNAgDUM/639YD+hNT
+	 Ax9GnkXu6NY/iGcTYhZTZP5j7NCJr9OjGJ5nZxoqyszxVdSjH9yovFtgioP5b8R10zA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035393;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035396;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uExK1Ng1YcicpsWieMQO967o2XN9qNEe419HEoW61N0=;
-	b=A4cJK3MpNARlLFpCqoVFU9kvrdv5gF4W3P36CXZIcGunrySFLp52De50hs+YFpHUQryF
-	 BViqUcPIE8X1jtDVzRayv8oHCdGhL7rmI0eYwSKYI8IVCPksS50/p8J/o82zKVQWnuIjy
-	 nS/dPF8X8tWaiSPz0X7LuhPlaQdWzRwhy2Iwnc0tZqmOwstt4uGpCGGpNMJyIJzfgM9/F
-	 ++JlYVhZLyLQJ5O7DelHAPSZw8E+qXl6oePY0a5Cvu3AQntS2HUhT40432m8p3ccX3M9d
-	 ADaDLUIrRgaaLGkPl5Z3WR2aEpZjTVa4zE0fxOWuo7/bfRLzmRT/01t3htCSYR0kQgQ==
+	bh=lNrNjHN6EzxXaKO/xMr63qKF6pfZmCe7CGKYy0eoFZs=;
+	b=nst6Yf/1q2yC67OQVDZ4ywXudSMr87hVNSTVJlP8jXTTM7L5gaXVHoqS+QCe9BWxRALP
+	 ruyvwI7kN/pyuoKU9kczBqcTMlE3+2TpCX3UNY5Xd2fVf0FIrt9xS+6xxSingI18i2Nm3
+	 4adi5IaImlvi0jAwG/HC5G64+P4pM8pg8S/WdEDnGKOb5T0jYi8gjsjXy8H6942VSaVr1
+	 v2MzqmB7CeTkdadiy225DxIodToHXP5Knk6e2oRnXhaYhP7swx4oJ0Ew5h3PehGbMe7as
+	 cNpg0WU+XAXngQdf6sEgqSHBDMVI9htEX5GEO1LdH02ij4hFwT46JJAVXHYM+Uzglrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B1zzSifV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S+5+yxxK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716DC606A31C;
-	Wed, 18 Nov 2026 20:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C560606A31C;
+	Wed, 18 Nov 2026 20:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B1zzSifV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDE81F000C4;
-	Wed, 18 Nov 2026 20:56:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S+5+yxxK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827061F000C4;
+	Wed, 18 Nov 2026 20:56:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035393;
-	bh=uExK1Ng1YcicpsWieMQO967o2XN9qNEe419HEoW61N0=;
+	s=korg; t=1795035396;
+	bh=lNrNjHN6EzxXaKO/xMr63qKF6pfZmCe7CGKYy0eoFZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B1zzSifVTrVPTKjqOB2bBJS2VbjeErP4vhc17/iSt4oQ4lfEHiqN9dHRPuapMNMGo
-	 hmRqrEaitwKfve+Tb7JlOphhEn8FnNalKtlQOsiCIgEcGuphuwVhKo5uO/mJPBbmcE
-	 kehcNEUr3WEdEi3zSLSt7t3QP82hxylhFRwrGKvI=
+	b=S+5+yxxKp1Cb2NscrVIN+xfKYK9EZ7PhLjhQlMO+c3CBvxUOvTZyk6fqULphbiUp3
+	 OvaHfSXcEgMbmbeTUgkXFBRUgjRHulXcBky4qSnA3R8sQV9kjhZMQRUtxm4eatiEsp
+	 L23JOvllIQBD2P2S9bPjnwsiB0xsBBso9qpjd65A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.6 0686/3318] NFSD: copy SETXATTR data from all XDR buffer segments
-Date: Wed, 18 Nov 2026 15:21:48 +0100
-Message-ID: <20261118150338.800435789@linuxfoundation.org>
+Subject: [PATCH 6.6 0687/3318] NFSD: Do not send CB_RECALL_ANY to NFSv4.0 clients
+Date: Wed, 18 Nov 2026 15:21:49 +0100
+Message-ID: <20261118150338.834261982@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,70 +67,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Chuck Lever <cel@kernel.org>
 
-commit b01319947c69b0e3ea0fcd4b675eb892f9cad8a0 upstream.
+commit 95ff0c079b9cab91f2327beb4197a3bc48c71f55 upstream.
 
-nfsd4_vbuf_from_vector() manually copies the head followed by whole
-pages starting at offset zero. This assumes that all remaining data
-starts at the beginning of the page array and that no data is stored
-in the tail.
+deleg_reaper() sends CB_RECALL_ANY to every ACTIVE client holding
+delegations, but CB_RECALL_ANY is an NFSv4.1 operation. An NFSv4.0
+client's callback service accepts only CB_GETATTR and CB_RECALL, so it
+replies OP_ILLEGAL. The decoder maps the unexpected opnum to -EIO, and
+nfsd4_cb_done() marks the client's callback channel down.
 
-However, nfsd4_decode_setxattr() passes an xdr_buf returned by
-xdr_stream_subsegment(). Such a sub-buffer can have a nonzero
-page_base and can span its page and tail segments. Ignoring that
-layout can copy the wrong bytes into the value passed to
-vfs_setxattr().
+Nothing brings the channel back. nfsd4_run_cb_work() sets NFSD4_CB_UP
+only for a minor version above zero, and the only nfsd4_probe_callback()
+call site an NFSv4.0 client reaches is nfsd4_setclientid_confirm(). One
+visit from the reaper therefore leaves the channel marked down until the
+client re-establishes its clientid. RENEW then returns
+NFS4ERR_CB_PATH_DOWN for as long as the client holds delegations.
+nfsd4_cb_channel_good() stops returning true, so the client is granted
+no further delegations.
 
-Use read_bytes_from_xdr_buf(), which observes the complete xdr_buf
-layout.
+Skip clients at minor version zero.
 
-Fixes: c1346a1216ab ("NFSD: Replace the internals of the READ_BUF() macro")
+Fixes: 44df6f439a17 ("NFSD: add delegation reaper to react to low memory condition")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260915160022.3105295-1-qwe.aldo@gmail.com
+Link: https://patch.msgid.link/20260817-recall-any-keep-count-v5-1-3b2cffce701e@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |   19 +++----------------
- 1 file changed, 3 insertions(+), 16 deletions(-)
+ fs/nfsd/nfs4state.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -2117,10 +2117,8 @@ static __be32
- nfsd4_vbuf_from_vector(struct nfsd4_compoundargs *argp, struct xdr_buf *xdr,
- 		       char **bufp, u32 buflen)
- {
--	struct page **pages = xdr->pages;
- 	struct kvec *head = xdr->head;
--	char *tmp, *dp;
--	u32 len;
-+	char *tmp;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -6498,6 +6498,8 @@ deleg_reaper(struct nfsd_net *nn)
+ 	list_for_each_safe(pos, next, &nn->client_lru) {
+ 		clp = list_entry(pos, struct nfs4_client, cl_lru);
  
- 	if (buflen <= head->iov_len) {
- 		/*
-@@ -2135,19 +2133,8 @@ nfsd4_vbuf_from_vector(struct nfsd4_comp
- 	if (tmp == NULL)
- 		return nfserr_jukebox;
- 
--	dp = tmp;
--	memcpy(dp, head->iov_base, head->iov_len);
--	buflen -= head->iov_len;
--	dp += head->iov_len;
--
--	while (buflen > 0) {
--		len = min_t(u32, buflen, PAGE_SIZE);
--		memcpy(dp, page_address(*pages), len);
--
--		buflen -= len;
--		dp += len;
--		pages++;
--	}
-+	if (read_bytes_from_xdr_buf(xdr, 0, tmp, buflen))
-+		return nfserr_bad_xdr;
- 
- 	*bufp = tmp;
- 	return 0;
++		if (clp->cl_minorversion == 0)
++			continue;
+ 		if (clp->cl_state != NFSD4_ACTIVE)
+ 			continue;
+ 		if (list_empty(&clp->cl_delegations))
 
 
