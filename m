@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036774;
-	b=uYi+KmxvXkftxt8JXvPonxKHDBwq4qmGzqn5sAJ3KPTiLlQ5l+sYxpNp5MwlBgLiRTPj
-	 Pq0TdDd0BtnlRyY2VRfWhuikUFbCMHa2v4RPlUpw3M70M20nG8vlbfHGmJaitbuWdFVgQ
-	 SjvAgL2Qtfa6/XMOIrPJnaHly2aLjQjRLgUAK9kiNYmwiNYumbt47QEKX28/f7xx981ZO
-	 J/xLGgQp89vXK4C0C1RRsrH2QAxrrk8RFRpAa6Pi19uZScISo0Zj2ALOenDUqAILia6c3
-	 qncLMbXqxvkaVhyYcpvUVSzLAiSke+NzZrZX2PTxtrxw0OqEAMoQ6O+1u/S4NkI9ipw==
+	t=1795036777;
+	b=vP4NJ5L+PA/f2Q7upkFh2dtf0sVAYa2FObmLT/0fyRDzgGnao0vq04NbvlxJdxyOpdOi
+	 vwp/bHmZFJhp8xrZarUZxTiD7NbA4nzkqihhIoH1WNi+PQpLyzcdQD1HlwvIqHNLWRp2c
+	 h1JBhcIURiA4bCBuGBCCiPFbpDikIiBP/XoppDuspXllLlGc6x9W3aS+P++wShsUocNPl
+	 uS9N/iZ/DMK49ZKIT9KxdjQvsSw3UzOlBfwTkRjvNfz8P9rkw+Zc9ujHo8gq60Hrr1hL6
+	 h1znJozYmrESo3K2qr0opEjoHHEHhISvkYPmoftm9lqZpcjp4Jw7qRrGnXVs9IFBp5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036774;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036777;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=250iuLY58ba3F6/10cXlYF7CDCyq1AuLex7Kw1fGJ9c=;
-	b=PTGybJEdjlPWyJ7eESQHsDxKssBKLku6VPsvMy/U0Xx4a/JdhkB7E0kbc261AqExkHCa
-	 PnorT6rWCDqa7tU93oMhtQoUMFJDLT72qo5yE6suz/PHGn7GVW5zHoQU280Fv6qC+U8n8
-	 2y3MTNe6fol/ixmmX3UhPK06451IsZFnXnV7PWVN6o1luV/H5A904TbN3r/skQ49mWE+5
-	 y+e331ZjEKFEdg71hSgQbNR1szFhlKTZv/Ez48gscGPiS8cOYRSPlp35AjQHt0r5jHuIk
-	 2uU6qj5eGWSUKIYopke+Es4ZZA2tOAozzn35bi2Qs0gn8NZipR/ajZh70kze5ME8K7Q==
+	bh=5P1ID2EDAsRcqveULf5iBWbpe6wT+7N64HDVrOYwHtw=;
+	b=zZu2s9GrmKFE8QcJxGwoqcjs743lKyweYIAnHvJghFYfGJFjG24zWP14J+VsrqZ6NKfb
+	 ObmJEddVbgb1CDjrXii372fIw7pZ9QUbTDJ+wjGlLbTowc/V0usTIXCu5eeyiWOkGL+pY
+	 i44dK7RCIPc9kUEW+cP5aW3dezKHsL0Ej23lE9rcxc1o5V9FQcgI1zdbo3XeVaTFe3NJm
+	 UWIyplUSGrgkNDPQ0S8xvqaEBuB8XjanVtPiPioM8ZV92/nAp7AMcJtLV2NGm1Nf7P3oS
+	 HU9GT4TH0WHuqh/ualzXZZWG3ek6mWCGAV70/sLBn31GHKipzmHXRFsr6pN0ABGykCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xW3dxkHJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="IQ1LcN/N";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B775606A320;
-	Wed, 18 Nov 2026 21:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684D4606A32A;
+	Wed, 18 Nov 2026 21:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xW3dxkHJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA71D1F000C4;
-	Wed, 18 Nov 2026 21:19:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQ1LcN/N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62F01F000C4;
+	Wed, 18 Nov 2026 21:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036774;
-	bh=250iuLY58ba3F6/10cXlYF7CDCyq1AuLex7Kw1fGJ9c=;
+	s=korg; t=1795036777;
+	bh=5P1ID2EDAsRcqveULf5iBWbpe6wT+7N64HDVrOYwHtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xW3dxkHJVdYxHfo0q0JwDQgsZiRcAX/BBy9fDujXwGsU4J2n8o66SKpsXhMNymZmj
-	 qklIQ1AQ/UyHoW88HsVPRKrSgZFfFE+ZHQ6ciy36cg940Yeg3rRH5pusBOymXnQ8fA
-	 5HbpH/SEHtIEUcBE+H9rQafRhRjk+EZBC6+H67TA=
+	b=IQ1LcN/NrLE+w98uMZQtvD6PDz8ZpviLLWMlyqitT75pjbw7NGhnGcyHft4OqYVnS
+	 hZUVzEMxEErdc7YSE5TdWRCz7KlnIq8eFfAmEK6uPqfMljri9kA8uPx1d6FPHkafhW
+	 A8gyASJK2MrOqNyNnNq+qtWNvWIHfsTdm6R/icCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Tingjie Zhong <catme0w@live.cn>,
-	Helge Deller <deller@gmx.de>,
+	syzbot+c3741bb338b5c6d6a4aa@syzkaller.appspotmail.com,
+	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1179/3318] fbdev: bitblit: Fix glyph clipping when fbcon pans
-Date: Wed, 18 Nov 2026 15:30:01 +0100
-Message-ID: <20261118150355.510699116@linuxfoundation.org>
+Subject: [PATCH 6.6 1180/3318] net/rds: ib: dont enable IRQs in rds_ib_conn_free()
+Date: Wed, 18 Nov 2026 15:30:02 +0100
+Message-ID: <20261118150355.542723632@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,71 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tingjie Zhong <catme0w@live.cn>
+From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
 
-[ Upstream commit 06fccf840640d8f6b0e08a1756f8d2f0435b4cbe ]
+[ Upstream commit f6fa1d60ec3ceb7e6c26aa91eadfef34f94014e1 ]
 
-Commit 3637d34b35b2 ("fbdev: Add bounds checking in bit_putcs to fix
-vmalloc-out-of-bounds") made bit_putcs() clip glyphs to var.yres. When
-fbcon scrolls by panning, it draws text rows up to var.yres_virtual,
-so after the first pan most new text is not drawn until the next full
-redraw. This affects fbdev drivers that set FBINFO_HWACCEL_YPAN or
-FBINFO_HWACCEL_YWRAP, such as vesafb with the ypan option, when
-CONFIG_FRAMEBUFFER_CONSOLE_LEGACY_ACCELERATION=y.
+__rds_conn_create() calls trans->conn_free() with rds_conn_lock held
+and IRQs disabled when it loses the race to insert a connection.
+rds_ib_conn_free() takes the device list lock with spin_lock_irq() and
+releases it with spin_unlock_irq(), so IRQs are turned on while
+rds_conn_lock is still held:
 
-Clip to GETVYRES() instead, which fbcon_ud.c and fbcon_ccw.c already
-use as the drawing area height. When fbcon does not pan, GETVYRES()
-returns var.yres, keeping the existing bound. When fbcon pans, it
-returns var.yres_virtual, which the framebuffer memory must cover
-anyway for panning to work.
+  raw_local_irq_restore() called with IRQs enabled
+  WARNING: kernel/locking/irqflag-debug.c:10 at warn_bogus_irq_restore+0xc/0x20
+   _raw_spin_unlock_irqrestore+0x67/0x80
+   __rds_conn_create+0x1de5/0x2290
+   rds_conn_create_outgoing+0x43/0x60
+   rds_sendmsg+0xfca/0x20e0
+   __sys_sendto+0x408/0x5a0
 
-Fixes: 3637d34b35b2 ("fbdev: Add bounds checking in bit_putcs to fix vmalloc-out-of-bounds")
-Reported-by: Thomas Zimmermann <tzimmermann@suse.de>
-Closes: https://lore.kernel.org/linux-fbdev/b8b52ffd-ecec-4fba-b432-ba32135c2f99@suse.de/
-Tested-by: Thomas Zimmermann <tzimmermann@suse.de>
+It needs an RDS socket bound to an address on an RDMA device (e.g. rxe)
+and two concurrent sendto() calls to the same new destination.
+
+The TCP and loopback ->conn_free() callbacks already use irqsave, so
+do the same here.
+
+Fixes: 745cbccac3fe ("RDS: Rewrite connection cleanup, fixing oops on rmmod")
+Reported-by: syzbot+c3741bb338b5c6d6a4aa@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c3741bb338b5c6d6a4aa
 Cc: stable@vger.kernel.org
-Signed-off-by: Tingjie Zhong <catme0w@live.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/bitblit.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/rds/ib_cm.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/bitblit.c b/drivers/video/fbdev/core/bitblit.c
-index 8b58f94ce44c5..3d748916d2e9a 100644
---- a/drivers/video/fbdev/core/bitblit.c
-+++ b/drivers/video/fbdev/core/bitblit.c
-@@ -18,6 +18,7 @@
- #include <linux/console.h>
- #include <asm/types.h>
- #include "fbcon.h"
-+#include "fbcon_rotate.h"
- 
- /*
-  * Accelerated handlers.
-@@ -151,7 +152,9 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
- 		      const unsigned short *s, int count, int yy, int xx,
- 		      int fg, int bg)
+diff --git a/net/rds/ib_cm.c b/net/rds/ib_cm.c
+index 1c6e3b3f39d00..c8771aa7df53a 100644
+--- a/net/rds/ib_cm.c
++++ b/net/rds/ib_cm.c
+@@ -1271,6 +1271,7 @@ void rds_ib_conn_free(void *arg)
  {
-+	struct fbcon_par *par = info->fbcon_par;
- 	struct fb_image image;
-+	u32 vyres = GETVYRES(par->p, info);
- 	u32 width = DIV_ROUND_UP(vc->vc_font.width, 8);
- 	u32 cellsize = width * vc->vc_font.height;
- 	u32 maxcnt = info->pixmap.size/cellsize;
-@@ -168,10 +171,10 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
- 	image.height = vc->vc_font.height;
- 	image.depth = 1;
+ 	struct rds_ib_connection *ic = arg;
+ 	spinlock_t	*lock_ptr;
++	unsigned long flags;
  
--	if (image.dy >= info->var.yres)
-+	if (image.dy >= vyres)
- 		return;
+ 	rdsdebug("ic %p\n", ic);
  
--	image.height = min(image.height, info->var.yres - image.dy);
-+	image.height = min(image.height, vyres - image.dy);
+@@ -1281,9 +1282,10 @@ void rds_ib_conn_free(void *arg)
+ 	 */
+ 	lock_ptr = ic->rds_ibdev ? &ic->rds_ibdev->spinlock : &ib_nodev_conns_lock;
  
- 	if (attribute) {
- 		buf = kmalloc(cellsize, GFP_ATOMIC);
+-	spin_lock_irq(lock_ptr);
++	/* May be called with IRQs already disabled (see __rds_conn_create()) */
++	spin_lock_irqsave(lock_ptr, flags);
+ 	list_del(&ic->ib_node);
+-	spin_unlock_irq(lock_ptr);
++	spin_unlock_irqrestore(lock_ptr, flags);
+ 
+ 	rds_ib_recv_free_caches(ic);
+ 
 -- 
 2.53.0
 
