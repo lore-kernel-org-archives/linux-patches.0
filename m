@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017853;
-	b=AokP1KtrgUSEDG4s+Pm/ha0f6Axx1dA1jgMPYaIDtzjkTwnrj1vtYVVC7nVBoh+SwVbZ
-	 qhbiFGD7rsQQA+cC7quj3iAhY9POC4FSUFyrLYkylA9pOQrOSabkydzRIRho7h9Dlbw8N
-	 s4BwGDS4He3GukLoXUOsacy82HtIEpdHD5AX+wjh4tZDjLLE0/xAOUtp0+0YmiBtsXW67
-	 PNwFUMx5cQdogTckLHPsDZa5WUGOilX6ZTsmDH39ky8bXwDpreyB8vMX3aXUNsR97fFl0
-	 GX6k3PeWghnVFDiELmYEx8dvISxhN8m7HEfuf9l18J/SyUUzmZeqbSHVk6hpffKZOtA==
+	t=1795017856;
+	b=Qrkoz0Xm6xLTTJvAs3LLYqITtS7cmyZHATWUsUP6Puom04jZwpNns3x3J/Ti2y1Zajlt
+	 /PMI+tQDUZnAw0vW7P2WNimOl2iP9HiGstaoQ/aSrVx9OYAFXcvl+NRPNuIJxcfich67D
+	 R6QI5iCZTc0AWwUycDOkhnsjEnNaO/Bayp2aWhE5xADCHGgUPriVwl10ZCohc4L7mz/1y
+	 /25TJSYgSz9CspktarRo0S0go/PSg1FOyASBrq3qFKJtVpX/z4s+5DseDBoXK5vq8Xo/V
+	 LFCVIJrr60hUlhJKYHHyXGw8b3KllYm7D8UtUd9GID3qxrccJUTcDelw65K/Ess9xfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017853;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017856;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GbDkHa8Bp8zl70wWrzRrp/0TaMz3l6bOdEKauTFq9zg=;
-	b=oUDkyY1YrOFjkhEseMCl9hRIIjFTzRbIQyUS5RHxEq0/x0ZAsLpM1JFuJPnyAnrJnXTP
-	 ni3nGGC0GvGqsh7OLh9WNSvR1E2hvVDpIJNUmm/mzAOYL1EcxrO0BNwRaB6uartPgORfP
-	 9zUddyDfs9MdrwN7fq+6NNkRh9Kmi8Z2yCmZW4JzrvlhJhgPwgmL3hg287Fr57lGx0zhM
-	 nHrE0VSXtVBqeiXQr17SIe0W+k433XOJVVQOdVZEtrMTZ8UMM38YFKVEaVi+uAG7m9XKa
-	 11wpcyH7uKDicvcOclr7dHy03B3SsA2/0vXbGz2ibSfuP+wuAWEiUzKmqz7HQcYbxog==
+	bh=mXWHb5ETncfJQfxsLo19cZ95DvseVY6toDPeaMdoXj0=;
+	b=GrIh2sTBczS62hb6CxmTxwlMOZbcmvUW542iEgyD2F+WF4B/Z7n42RcMfcqym/9bs28/
+	 Fl2JflSLUeDYUr3dYxr852BdQE/sUX2Wo+LH9lYY1EM5O4ma43lsZCDuAk1yT1lnpbDqp
+	 akQj6Yf5zK9691N7BA8jLjhoZFtyTh38mkf9EIA6REfa20ZJ0ZhVu9bNqkcu7crCpPzp3
+	 5fIeXuXf6TuSsN260kY35XwhLqG/j6RO8smh6Wj6+jMGwzt2ofP1Lp5lvTVBzuYaqDX8L
+	 W0DOt5EoBXjlAlWml0bev6opuaJtZ2nzVN+PcXJ9TSpBsHbW62G1H5c0+zW24BH7Hvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="xJR2M/5O";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CUWUCgns;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B90A606A31C;
-	Wed, 18 Nov 2026 16:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EFA606A31C;
+	Wed, 18 Nov 2026 16:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJR2M/5O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D3AF1F000C4;
-	Wed, 18 Nov 2026 16:04:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CUWUCgns
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B3C1F000C4;
+	Wed, 18 Nov 2026 16:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017853;
-	bh=GbDkHa8Bp8zl70wWrzRrp/0TaMz3l6bOdEKauTFq9zg=;
+	s=korg; t=1795017856;
+	bh=mXWHb5ETncfJQfxsLo19cZ95DvseVY6toDPeaMdoXj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xJR2M/5ODNNYUX6Ym/EWZQkYSHiIXPYOPMXTsQokV0aokiDYoRngwcqzacB49MMxc
-	 ZDNEj6hnGpqnlkt2MrDEbJbl0uo6uJuntQHszyF7HOAHsTXRoQ+q/F5N4oDTI/8oWM
-	 866Lfp0aOeluJ+1M8mWPiIHBe21/adR5oiimEt0A=
+	b=CUWUCgns5mpc5rfzFuZgpA6bWa3tICakyPFNH9j6dsCXq+kB3SrzbCQ1ag+BCWyHl
+	 C+OVSTznMRlPtWXLGqKZNZBxIcBuO5QZNLGSpk7cj37PaVeBoAoO3CUZ0LxGB75lKx
+	 Zmp9eDgfe8tXS9BatEJ3XuoZI36JHBeOSIrIhUs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Mukesh Kumar Chaurasiya <mkchauras@gmail.com>,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1031/2651] powerpc/interrupt: Use early_radix_enabled() in NMI real-mode guard
-Date: Wed, 18 Nov 2026 15:37:51 +0100
-Message-ID: <20261118150325.081509352@linuxfoundation.org>
+Subject: [PATCH 7.3 1032/2651] clk: validate spread spectrum configuration
+Date: Wed, 18 Nov 2026 15:37:52 +0100
+Message-ID: <20261118150325.118206976@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,92 +70,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit 644ffb02746690c0ebfe143e066f81c9bde2975e ]
+[ Upstream commit 109124b8ff43fb911d5b8790bb5e4c5684f72d88 ]
 
-radix_enabled() uses a jump label which is only valid after
-setup_feature_keys() is called. Before that point, on a pSeries
-hash guest, early_check_vec5() clears MMU_FTR_TYPE_RADIX in
-cur_cpu_spec->mmu_features, but the jump label has not yet been patched,
-so radix_enabled() incorrectly returns true.
+The spread spectrum configuration is passed to the provider's
+set_spread_spectrum() callback without any validation, as clk-conf.c
+only skips all-zero triplets from "assigned-clock-sscs". An invalid
+device tree can hand providers a zero modulation frequency or a spread
+ratio above 100%, and each provider would have to add the same checks
+to protect e.g. divisions in its rate computations.
 
-The dangerous usage window where it goes wrong in early_setup():
+The KUnit test data for assigned-clock-sscs uses spread values of 30000
+and 40000 permyriad (300% and 400%), which the new check rejects, as
+reported by Sashiko, so fix them to 300 and 400 (3% and 4%). Also use
+a realistic 6% value for the initial settings of the skip tests, for
+consistency.
 
-    early_setup:
-        configure_exceptions();
-        <exceptions can happen now, and handler enter/exit can be invoked>
-        <those could use radix_enabled(), which returns stale true>
-        setup_feature_keys();
-        <jump labels set up; post this it is safe to use radix_enabled()>
-
-If an NMI occurs in this window, !radix_enabled() evaluates to false in
-DEFINE_INTERRUPT_HANDLER_NMI. The handler fails to skip NMI entry in real
-mode and attempts to access memory outside the Real Mode Area (RMA),
-hanging the boot.
-
-Since common interrupt wrappers do not have the context of early or late,
-using early_radix_enabled() is the safer option. It does a plain bitmask
-check against cur_cpu_spec->mmu_features and is correct at all times.
-
-Console logs from a pSeries HASH guest showing values across boot stages:
-
-[    0.000000] DEBUG: after early_init_devtree: early_radix_enabled=0 radix_enabled=1 (mismatch means NMI real-mode check is unsafe!)
-[    0.000000] DEBUG: after configure_exceptions (DANGEROUS WINDOW): early_radix_enabled=0 radix_enabled=1
-[    0.000000] DEBUG: after setup_feature_keys (jump labels initialized): early_radix_enabled=0 radix_enabled=0 (should now match!)
-[    0.057124] DEBUG: post secondary CPU bringup: early_radix_enabled=0 radix_enabled=0 (should match!)
-
-Console logs from a RADIX guest showing values across boot stages:
-
-[    0.000000] DEBUG: after early_init_devtree: early_radix_enabled=1 radix_enabled=1 (mismatch means NMI real-mode check is unsafe!)
-[    0.000000] DEBUG: after configure_exceptions (DANGEROUS WINDOW): early_radix_enabled=1 radix_enabled=1
-[    0.000000] DEBUG: after setup_feature_keys (jump labels initialized): early_radix_enabled=1 radix_enabled=1 (should now match!)
-[    0.057016] DEBUG: post secondary CPU bringup: early_radix_enabled=1 radix_enabled=1 (should match!)
-
-Add the missing #include <asm/mmu.h> in alphabetical order since
-early_radix_enabled() is declared there.
-
-Fixes: 8d0e21012743 ("powerpc/mce: Avoid nmi_enter/exit in real mode on pseries hash")
-Signed-off-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Reviewed-by: Mukesh Kumar Chaurasiya <mkchauras@gmail.com>
-Reviewed-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260909123240.58786-1-venkat88@linux.ibm.com
+Fixes: c86814e70390 ("clk: Introduce clk_hw_set_spread_spectrum")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/r/20260901155657.6A5981F00A3A@smtp.kernel.org
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/interrupt.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/clk/clk.c                      | 14 ++++++++++++++
+ drivers/clk/clk_test.c                 | 12 ++++++------
+ drivers/clk/kunit_clk_assigned_rates.h |  4 ++--
+ 3 files changed, 22 insertions(+), 8 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/interrupt.h b/arch/powerpc/include/asm/interrupt.h
-index 1b45a49e9bed5..355f6bbf9894d 100644
---- a/arch/powerpc/include/asm/interrupt.h
-+++ b/arch/powerpc/include/asm/interrupt.h
-@@ -70,6 +70,7 @@
- #include <linux/irq-entry-common.h>
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index 8cb2c450ebd34..d045e8d3222b7 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -2852,6 +2852,20 @@ int clk_hw_set_spread_spectrum(struct clk_hw *hw, const struct clk_spread_spectr
+ 	if (!hw)
+ 		return 0;
  
- #include <asm/kprobes.h>
-+#include <asm/mmu.h>
- #include <asm/runlatch.h>
++	switch (ss_conf->method) {
++	case CLK_SPREAD_NO:
++		break;
++	case CLK_SPREAD_CENTER:
++	case CLK_SPREAD_UP:
++	case CLK_SPREAD_DOWN:
++		if (!ss_conf->modfreq_hz || !ss_conf->spread_bp ||
++		    ss_conf->spread_bp > 10000)
++			return -EINVAL;
++		break;
++	default:
++		return -EINVAL;
++	}
++
+ 	core = hw->core;
  
- #ifdef CONFIG_PPC_IRQ_SOFT_MASK_DEBUG
-@@ -290,7 +291,7 @@ interrupt_handler long func(struct pt_regs *regs)			\
- 		state = irqentry_nmi_enter(regs);			\
- 	} else if (IS_ENABLED(CONFIG_PPC_BOOK3S_64) &&			\
- 		   firmware_has_feature(FW_FEATURE_LPAR) &&		\
--		   !radix_enabled()) {					\
-+		   !early_radix_enabled()) {				\
- 		/* no nmi_entry for a pseries hash guest		\
- 		 * taking a real mode exception */			\
- 	} else if (IS_ENABLED(CONFIG_KASAN)) {				\
-@@ -307,7 +308,7 @@ interrupt_handler long func(struct pt_regs *regs)			\
- 		irqentry_nmi_exit(regs, state);				\
- 	} else if (IS_ENABLED(CONFIG_PPC_BOOK3S_64) &&			\
- 		   firmware_has_feature(FW_FEATURE_LPAR) &&		\
--		   !radix_enabled()) {					\
-+		   !early_radix_enabled()) {				\
- 		/* no nmi_exit for a pseries hash guest			\
- 		 * taking a real mode exception */			\
- 	} else if (IS_ENABLED(CONFIG_KASAN)) {				\
+ 	clk_prepare_lock();
+diff --git a/drivers/clk/clk_test.c b/drivers/clk/clk_test.c
+index 1c5c8b7c1f3c1..21e62d68f87fa 100644
+--- a/drivers/clk/clk_test.c
++++ b/drivers/clk/clk_test.c
+@@ -3526,7 +3526,7 @@ static const struct clk_assigned_rates_test_param clk_assigned_sscs_skips_test_p
+ 		 */
+ 		.desc = "provider missing assigned-clocks",
+ 		TEST_PARAM_OVERLAY(kunit_clk_assigned_sscs_without),
+-		.sscs = {50000, 60000, 3},
++		.sscs = {50000, 600, 3},
+ 	},
+ 	{
+ 		/*
+@@ -3535,7 +3535,7 @@ static const struct clk_assigned_rates_test_param clk_assigned_sscs_skips_test_p
+ 		 */
+ 		.desc = "consumer missing assigned-clocks",
+ 		TEST_PARAM_OVERLAY(kunit_clk_assigned_sscs_without_consumer),
+-		.sscs = {50000, 60000, 3},
++		.sscs = {50000, 600, 3},
+ 		.consumer_test = true,
+ 	},
+ 	{
+@@ -3545,7 +3545,7 @@ static const struct clk_assigned_rates_test_param clk_assigned_sscs_skips_test_p
+ 		 */
+ 		.desc = "provider assigned-clock-sscs of zero",
+ 		TEST_PARAM_OVERLAY(kunit_clk_assigned_sscs_zero),
+-		.sscs = {50000, 60000, 3},
++		.sscs = {50000, 600, 3},
+ 	},
+ 	{
+ 		/*
+@@ -3554,7 +3554,7 @@ static const struct clk_assigned_rates_test_param clk_assigned_sscs_skips_test_p
+ 		 */
+ 		.desc = "consumer assigned-clock-sscs of zero",
+ 		TEST_PARAM_OVERLAY(kunit_clk_assigned_sscs_zero_consumer),
+-		.sscs = {50000, 60000, 3},
++		.sscs = {50000, 600, 3},
+ 		.consumer_test = true,
+ 	},
+ 	{
+@@ -3564,7 +3564,7 @@ static const struct clk_assigned_rates_test_param clk_assigned_sscs_skips_test_p
+ 		 */
+ 		.desc = "provider assigned-clocks null phandle",
+ 		TEST_PARAM_OVERLAY(kunit_clk_assigned_sscs_null),
+-		.sscs = {50000, 60000, 3},
++		.sscs = {50000, 600, 3},
+ 	},
+ 	{
+ 		/*
+@@ -3573,7 +3573,7 @@ static const struct clk_assigned_rates_test_param clk_assigned_sscs_skips_test_p
+ 		 */
+ 		.desc = "consumer assigned-clocks null phandle",
+ 		TEST_PARAM_OVERLAY(kunit_clk_assigned_sscs_null_consumer),
+-		.sscs = {50000, 60000, 3},
++		.sscs = {50000, 600, 3},
+ 		.consumer_test = true,
+ 	},
+ };
+diff --git a/drivers/clk/kunit_clk_assigned_rates.h b/drivers/clk/kunit_clk_assigned_rates.h
+index d7ae5ec2d25be..c5d9f004ee815 100644
+--- a/drivers/clk/kunit_clk_assigned_rates.h
++++ b/drivers/clk/kunit_clk_assigned_rates.h
+@@ -9,10 +9,10 @@
+ #define ASSIGNED_RATES_1_RATE		9700000
+ 
+ #define ASSIGNED_SSCS_0_MODFREQ		10000
+-#define ASSIGNED_SSCS_0_SPREAD		30000
++#define ASSIGNED_SSCS_0_SPREAD		300
+ #define ASSIGNED_SSCS_0_METHOD		CLK_SSC_CENTER_SPREAD
+ #define ASSIGNED_SSCS_1_MODFREQ		20000
+-#define ASSIGNED_SSCS_1_SPREAD		40000
++#define ASSIGNED_SSCS_1_SPREAD		400
+ #define ASSIGNED_SSCS_1_METHOD		CLK_SSC_UP_SPREAD
+ 
+ #endif
 -- 
 2.53.0
 
