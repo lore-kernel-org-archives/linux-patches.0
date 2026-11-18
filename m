@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033160;
-	b=gT94xofnBy7r039cNBPYxWmnylHKbmgKybDAm497e7df3hAAD+oEm5Eg26QJdZjMwTpE
-	 PifyogPwTn6m1nsg/BdO/Cppyi3SWJaefBYVjODahpEiYeUixzuHo5VueCoSVFAo7tTkw
-	 y1QIfyHdK/LPpwh2vP8K4EKFA9ECUNo4mxo3mdXvutjf48ajH15cZqFmLawkar1UgWjuD
-	 eDMVhyXdq429SAEuWku23yAhr60XhmKJCpN+C5q31pIctAjDIxFWc5Fv5avU767HpzJ9j
-	 02w6CMCUnl7Sbr4g0SxgPD4FO7xQ5RlOl5f1oM+gutMMznLgPPwSvd86n9o+SeomYNw==
+	t=1795033163;
+	b=zHzz9b/6q89SxuN9n1RIzNxdqJ4Qqm2DeIUX292/BxDhm9S3Rh9qNYdqrKiBZ3bmQPC/
+	 rJ3r+FYDBa3UOXTYFvSpz7w7+9Ur9B76HygX4NDAGx5VxUnoE+YWyQMklcBxkLqhTvT/C
+	 RfwsNEbPsM4gwihkf1iXcH9/5rp9KpEfQ6Oja8RnK1uCSZliZq5lKhzaszu0SqVaDZFQ2
+	 TxBA5ff+GHl7b5lScrDoiy/zd2vNBfVJ0DfeVJ95kFk8tJIVDth0M31TNuxNsAv1XLZR5
+	 b0dxdGd4nvr8HAo6yteZzdSl+UWW2f7mpXynq/MOe4jDysyXgMX1hXHKMD3VHKln+cg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033160;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033163;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0dVxlvkrg8Ntg3neielMorOaPdYeoQnOLWJQTNw62Co=;
-	b=Uq9fXEMWxVKmy+4jU2orFUaMvX04XlM7DF39TN6hslQI3SOzb3nE/ekSj3ugZoyBZc6H
-	 1VBp3ZHvhbfyDPsLEMfrxqatCmg3/lbYRHjKgMVJ+K16mrx40E9CEYNsIA2urrgdqX9GB
-	 kzbGA4UwHYUmLWbF4BqoKq4MeuCRketcjuUolklSIWK/epswc2ffSIrCLD7D7xed2TOSk
-	 noPzFpNCXf3lzVzqKmuFLmwUHfn5gC2V/xyv7TCVRRtCZmt+HQZquqt26J0OjTI9h3wn9
-	 jJ468gyvmg6mTLV+DR4JHDu30mx9kOdwg4rZkl51y4GDiy5PNSG9CsdKGD4PP+Bp8xw==
+	bh=FaqV6CP08LDqz5gQLbG4tD/KBC/o/kxbmYmbboj6wp4=;
+	b=oPBUYTjLLf1VKD0vEnOa1mosKlps3QYjbbZ0ge/83Y1JN3WaHanijjQLYX8myflgdeyF
+	 8GwCJdTS4+Tl9ViGVNqOxG69YPFIGGo4pFpJXlqp3q5SCVaG++korUlYNuFwF1++bVN43
+	 J4BfPkebuGKdjcDv1gd371Rq4xiSBnhzHa9f87+CnI0IreZrosfJ45fGuqveZXEer2oj7
+	 toAxb8PyrrMYWFtRKznwpCnbvrX0qTMMF/kvJDrDv/rV56OreyEAFotzpa1GpuMft0049
+	 VNB+uGpj/uA1T2Fapn3SAY2pek+mD873nk+bI4FxykIH4NCK88AUZ08boYD6+DSoI7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jr0mGoy8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zyaBYxzS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C840C606A31C;
-	Wed, 18 Nov 2026 20:19:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4721606A31C;
+	Wed, 18 Nov 2026 20:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jr0mGoy8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253201F000C8;
-	Wed, 18 Nov 2026 20:19:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zyaBYxzS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F312B1F000C4;
+	Wed, 18 Nov 2026 20:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033160;
-	bh=0dVxlvkrg8Ntg3neielMorOaPdYeoQnOLWJQTNw62Co=;
+	s=korg; t=1795033163;
+	bh=FaqV6CP08LDqz5gQLbG4tD/KBC/o/kxbmYmbboj6wp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jr0mGoy8rSXQsjd90JW/qRdIam9vAXFCRESdRIykdkhK1punQGEGyZNSmkrEk5oS7
-	 MQyz/UkuMeyIMKHVZeS2Ytc2B6qNcoENlYHqWenJO/JRozByEN49yASKg+HkAVZk0Q
-	 BV4bF0S566z8YFsRGfWtiDgZyYkQdEEtafbAJcSs=
+	b=zyaBYxzS4EuGVaWL1Dx/99iA4jnC25CdONP7gbeCBjgitDRBT7kIXOgaf68mjNbO5
+	 DokdVWkvrntbQEMIkLIrbGtWvd2etglwadPS2HyB92UnqG3IPVQ49XAc6Vxak9JrNQ
+	 ONOjLiz96qfVCiFDYUB09y3pmdcfCyE66nTmTEQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1669/1756] block: fix use-after-free of the disk in sync_bdevs()
-Date: Wed, 18 Nov 2026 16:03:16 +0100
-Message-ID: <20261118150116.143840585@linuxfoundation.org>
+Subject: [PATCH 6.12 1670/1756] block: dont lose the status of a failed flush request
+Date: Wed, 18 Nov 2026 16:03:17 +0100
+Message-ID: <20261118150116.179445475@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,55 +71,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit cebb1c2331c2af1b7f1c822ac672a7f77b54bd90 ]
+[ Upstream commit 67c43ceaa29e9b904216651697adf20445b219fc ]
 
-sync_bdevs() holds a reference to the bdev inode while it takes
-bd_disk->open_mutex. For a partition the inode doesn't keep the gendisk
-alive, the device reference does: part_release() drops the disk as soon
-as the last reference to the partition device is gone. A sync(2) racing
-with the last close of a partition of an already deleted disk locks a
-freed open_mutex.
+flush_end_io() stores the status in fq->rq_status for whoever drops the
+last reference to finish the flush sequence. blk_mq_put_rq_ref() calls
+it with BLK_STS_OK from tag iterators and the timeout handler and
+overwrites an error the real completion stored. With two extra
+references, reading /sys/block/<disk>/inflight is enough for that, a
+failed flush completes everything waiting on it with success and fsync()
+lies to the application.
 
-Take a device reference before touching the disk, like
-blkdev_get_no_open() does, and skip the bdev if it's on its way out.
+Only store a status that is an error.
 
-Fixes: a8698707a183 ("block: move bd_mutex to struct gendisk")
+Fixes: 2e315dc07df0 ("blk-mq: grab rq->refcount before calling ->fn in blk_mq_tagset_busy_iter")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261028164415.1262013-5-axboe@kernel.dk
+Link: https://patch.msgid.link/20261028164415.1262013-6-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bdev.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ block/blk-flush.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/block/bdev.c b/block/bdev.c
-index 57aa344dc04a5..dc66a9bec5e33 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -1274,6 +1274,15 @@ void sync_bdevs(bool wait)
- 		old_inode = inode;
- 		bdev = I_BDEV(inode);
+diff --git a/block/blk-flush.c b/block/blk-flush.c
+index a72e2a83d075f..86d064c0958fc 100644
+--- a/block/blk-flush.c
++++ b/block/blk-flush.c
+@@ -211,7 +211,13 @@ static enum rq_end_io_ret flush_end_io(struct request *flush_rq,
+ 	spin_lock_irqsave(&fq->mq_flush_lock, flags);
  
+ 	if (!req_ref_put_and_test(flush_rq)) {
+-		fq->rq_status = error;
 +		/*
-+		 * The inode does not keep the gendisk of a partition alive, the
-+		 * device does.
++		 * Remember the status of the flush for whoever drops the last
++		 * reference. blk_mq_put_rq_ref() gets here with BLK_STS_OK and
++		 * must not wipe it out.
 +		 */
-+		if (!kobject_get_unless_zero(&bdev->bd_device.kobj)) {
-+			spin_lock(&blockdev_superblock->s_inode_list_lock);
-+			continue;
-+		}
-+
- 		mutex_lock(&bdev->bd_disk->open_mutex);
- 		if (!atomic_read(&bdev->bd_openers)) {
- 			; /* skip */
-@@ -1289,6 +1298,7 @@ void sync_bdevs(bool wait)
- 			filemap_fdatawrite(inode->i_mapping);
- 		}
- 		mutex_unlock(&bdev->bd_disk->open_mutex);
-+		put_device(&bdev->bd_device);
- 
- 		spin_lock(&blockdev_superblock->s_inode_list_lock);
++		if (error != BLK_STS_OK)
++			fq->rq_status = error;
+ 		spin_unlock_irqrestore(&fq->mq_flush_lock, flags);
+ 		return RQ_END_IO_NONE;
  	}
 -- 
 2.53.0
