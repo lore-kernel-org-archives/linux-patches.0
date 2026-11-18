@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052461;
-	b=MxUxgZOFcB1E7EeQ1NB1S+2c9iHDRHno36DQPRKMoRTz4TdgbvmeaI5WHlr27BjpMueW
-	 GeWY6PfszksKWe2D/ukul70AYFMbtfSyrwdc6aak8snKnb2MNjyJ7Zw1PJ5GpSKoG5VAo
-	 2be6WX19/E4dWYLBs0Q34htQPkMoh1/fimVVTIqQIItzZjEFRuJlfIlYCv9DaFiCxTl9j
-	 Rn2P9dPyu1pkBP5wsIvSU+Myx5O7wIyOA8SbnEiJ00S4c90/IfvZn37tBhfQqf32u0em+
-	 cBgbBddayWrlNWmZrh85URC5xSsbohBsG5jpUN5L/4XHS3BSweESxC8fFCD5YMtqwIQ==
+	t=1795052463;
+	b=OAuvSW5OZBT5EwumNc+3AVa7oCpqlh5nn7fbDe79Hevx5XKSjx/X1o3P4m5DikW+LgZm
+	 tX8uJENZlVKVvOD6F6CwA+PscWnI4RNaTubWU2xMgUuZGevpOfvygmYy4Ze7p367sCWvh
+	 KeS0mNOViSAifQfMQN8R8RdMwfXIgm2YrFAYAbj1qwdrnLXbENgy3gATX2uVvM/Qd6A/E
+	 TeEWHiyf+eb1OFtNlQEm+YGmpjxjJ/oz9JyREjeI3ff3A9CNg/8fYRZ1mAlGaORCBK+0I
+	 nlgWrYTLGiootIthisGDqnTztuHuV4D3bilP4Dd8AWSBtyzarN6zLIXGl22eX1Xu3tA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052461;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052463;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d4KyjKsCabi44QAnrF8lNgEfY2j22tXvLkr6Cqknz+A=;
-	b=WbIi3Au3Tu+xy0BQxnnhLITGq9h3rMo+bu7FD4ckA72fXi2BE4YHYX9M980kHmaA58lP
-	 265jUmUx7BLYGntbmMVAzUUQmVrXzBtcDVBQm7oAWRGYNAJfs1tZbB1vKsnKLUj4YuDWO
-	 oexsMJZ99wVJy7OccZmWGzoayEdbqZW4/Td1uKIh8s/WUv5Sa3NzDHW3umIvLHLdJyxSm
-	 +s8petxwqR8w7rrOFBCTGwEAxdpM4EyKbFfW31ij42wpOUjWgoD7sjLjP33sTV2qyySj1
-	 6AUgRiEKMGH0DktCIXMTt7RTvfxIDvKKG176KMPAl8jpj1Y/1/Ad6TfOTwMOGm5ZDvA==
+	bh=zcjoruaI3iaBUQzBdjf4xzQPGYw8+5KDz0Exsnys7mY=;
+	b=h1RLMTc5Lobd63Hh/NmCm+EMDkQDUjLe1T/Sgvu/AosJg3C9qNMAiA+GDZNZHblE9o4L
+	 Og2SXx7fbWJQSfavFF1D1dj9g2Augk6w8vQYcpK72wE91tkPLVfZ+PxwQMeewkyZBxef+
+	 VFG1ivAbql3Az2l0pwoz/LUcFyhP8CeyD7oC8NX03WbMgBnJkYgTZhONxpHt+/J3p8bmP
+	 epNhMbgvXc9swOtkgx03hy9U3sARMhHIfSJizoOgUmJ9xwssTylJFP5CZCI29WsxWWwky
+	 kQND8Pl0Y3NrlwFsOy87bidQgzRsnEYNgaic/V1toF1ChBD8W0GceSQk6BaNPdhAGWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="hDyop/VI";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="H0NH/wJ8";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21288606A320;
-	Thu, 19 Nov 2026 01:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24CB606A32A;
+	Thu, 19 Nov 2026 01:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hDyop/VI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9001F000C4;
-	Thu, 19 Nov 2026 01:41:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H0NH/wJ8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28FB81F000C4;
+	Thu, 19 Nov 2026 01:41:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052461;
-	bh=d4KyjKsCabi44QAnrF8lNgEfY2j22tXvLkr6Cqknz+A=;
+	s=korg; t=1795052463;
+	bh=zcjoruaI3iaBUQzBdjf4xzQPGYw8+5KDz0Exsnys7mY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hDyop/VINIHPIZGn8PGtRoEn1otooTozU0PTzLMAc0BVfXbEDySuEVwyhYIcQkxgg
-	 NRjdZDpRBw2LrbIYb+CMN1DNOPAXNjRo4ChSZHmKFQcl4LCHK7OYGSiVh23SB65rfA
-	 o7waBG+kwhSzvmO6u+wv9fBmhJ3dmLvlNAPXkyto=
+	b=H0NH/wJ8MKLG5PKJCiH/aOjGL6dmkFnHfbi7WKLy1aHsy2wdjxTIL271pllZQeSUR
+	 RKG0zLqmNaVRNEWvfSqus2+yIIytQZzwlEMcKwKdYJL8CeFh8YMUxHv2T9fKAVRU40
+	 DwwF80McuTvtnIy9U/6MxS+0pNSB18q1ZPyNkAUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Freidkin <freidkin@gmail.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0570/2214] media: meson: vdec: size capture planes from the aligned canvas
-Date: Wed, 18 Nov 2026 15:37:26 +0100
-Message-ID: <20261118150033.767783585@linuxfoundation.org>
+Subject: [PATCH 5.15 0526/2214] media: tw68: balance PCI enable on cleanup
+Date: Wed, 18 Nov 2026 15:36:42 +0100
+Message-ID: <20261118150032.120638532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,51 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Freidkin <freidkin@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit b3a805dd5a83ba8c85e2085d3411eb9975e0aea4 ]
+[ Upstream commit fc02261fdca3ea95e4dcb6b38ab77f0f197c3750 ]
 
-The decoder writes a whole canvas of ALIGN(width, 32) x ALIGN(height, 32)
-(amvdec_set_canvases()) and reports bytesperline = ALIGN(width, 32), but
-get_output_size() derives sizeimage from the raw width x height.
+tw68_initdev() leaves the PCI device enabled after a later probe failure
+or tw68_finidev(). Use pcim_enable_device() to balance the enable reference
+when the driver is detached or probe fails.
 
-When the width is not a multiple of 32 the planes are too small for the
-advertised stride: for 720x360 NV12M the luma plane is 262144 bytes while
-736 * 360 = 264960 are needed (282624 for the canvas the firmware fills).
-The decoder writes past the buffer, and importing the capture dma-buf
-into DRM fails: drmModeAddFB2() returns -EINVAL, so e.g. Kodi plays the
-sound over a black screen. 1280x720 and 1920x1080 are not affected.
+The managed disable runs after the managed IRQ has been released.
 
-Size the planes from the aligned canvas the hardware actually uses.
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
 
-Tested on an S905X (GXL p212) board with LibreELEC 12 (6.16.0-rc3):
-720x360 and 1920x1080 H.264 play through V4L2 m2m + DRM PRIME with no
-AddFB2 errors.
-
-Fixes: 3e7f51bd9607 ("media: meson: add v4l2 m2m video decoder driver")
+Fixes: e15d1c12c587 ("[media] tw68: refactor and cleanup the tw68 driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Freidkin <freidkin@gmail.com>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/meson/vdec/vdec.c | 2 +-
+ drivers/media/pci/tw68/tw68-core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/meson/vdec/vdec.c b/drivers/staging/media/meson/vdec/vdec.c
-index 162a07d753150..a810f8152d774 100644
---- a/drivers/staging/media/meson/vdec/vdec.c
-+++ b/drivers/staging/media/meson/vdec/vdec.c
-@@ -34,7 +34,7 @@ struct dummy_buf {
+diff --git a/drivers/media/pci/tw68/tw68-core.c b/drivers/media/pci/tw68/tw68-core.c
+index 35dd19b2427ec..577035fdd7c2d 100644
+--- a/drivers/media/pci/tw68/tw68-core.c
++++ b/drivers/media/pci/tw68/tw68-core.c
+@@ -228,7 +228,7 @@ static int tw68_initdev(struct pci_dev *pci_dev,
  
- static u32 get_output_size(u32 width, u32 height)
- {
--	return ALIGN(width * height, SZ_64K);
-+	return ALIGN(ALIGN(width, 32) * ALIGN(height, 32), SZ_64K);
- }
- 
- u32 amvdec_get_output_size(struct amvdec_session *sess)
+ 	/* pci init */
+ 	dev->pci = pci_dev;
+-	if (pci_enable_device(pci_dev)) {
++	if (pcim_enable_device(pci_dev)) {
+ 		err = -EIO;
+ 		goto fail1;
+ 	}
 -- 
 2.53.0
 
