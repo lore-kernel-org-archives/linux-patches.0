@@ -1,54 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043895;
-	b=UFPMov8fpHA6QN7oqiLvGXFqcvwpZWfG8aQPOPbRIpbJRtFhIW+hrzrgad2IQ/xio+Rm
-	 garfAZ9IMjkppvF3hV+txlSYILRWy+WaYsD1jFXhJul/pNUmiqQs26U1bKVSTr3i9y531
-	 P4UDuuu+KYZqYjBrEX3Z7HiBESMIk1jOo3/vZp77vMJLBnYk1GX2wp10krb+UpP5c7pq3
-	 Wm69rcdmb60J2th0bl8bEtBF2/H3vaBwWC8ZCOJJ4FgKroATdsYNQZOSsOit4Ypf0bjwF
-	 C00JCfVb6fqzYH7/JYLwIJUpccng9KEW5pgNJ9TdvqzigRlLH6sCHh7LbWbZz2xNDHg==
+	t=1795043898;
+	b=0HtfcO8zyJGlnHVWiL0TNadX5myl+A9NlJne8iEyROlGvA8Ix16w77I9RC7yut3CbeyC
+	 aY5TWBqCTUo7eeXRS/sQAdFR+BGP+utBU9E0wPHHi2trR/07ryjyXDi/Nf4T/oqiYZek2
+	 1VFCKUKpcENWTomqlUENCGY5qFsqj+FZQf5/xYNOM726HZDkQs6w0xypiH0L7eUeL6lme
+	 nlenruskFc6uMrdNyVlhD893EUs3n6c9bAazFzK9nOusw6JUYdV456gXzAvxIz9sBobSE
+	 1/vWIrT+aN2ay4kUonlRib+Irt19YoZHcLv8Fe+n8k6A7jXi9UOmqf1u/jXTJ7civFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043895;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043898;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BmGL++dQUfm4jlNEsuus2iKDhmKEcko4WyUbrRioli0=;
-	b=4YTgACzPY3UcmBo0DZfj7E4Tdu2TSNydHkTYJvGX8kN6xQYQcu18MtR83g49ukqsnRBN
-	 nfEhA1HsaSjsAJ6VRSHxNAqaj0CEQgC42v75IYxx1UaujXytO1+gIBhx7Rv3uPJv3/yA2
-	 PAGSDzoFVg9grB100MWiMv8spEqEAaHe2HziSNedxx1OrizVJ34G5iJo6Ds1Eq07cMD9P
-	 SBJYDINl2QDg7CnM62dxRy5qYcCPkwnmoIpoZyr6URJAXlUHMZ/XDS9UkFiK/pP0AgHbQ
-	 w96jrey8xL9VOspg9kUlKyEY0dofA92R4k83H9Rgq7MOoC90NoEaqZ4hwhV1tSA+IGA==
+	bh=PCXZw1slZgiOBZFsgMKLmS8gkOHsn0kip8OAnW+Yj4Q=;
+	b=mt/aLhGijg22caqzW1JwfbovDeDaOuy/OiDjUNdHUEEdbZ7xwqbkOVkPUi980pj9x9U2
+	 W7wrO9Z7r+L5KFRx+OQ9jJZ2ilYUmRQCsE3Pc0P+h5mtu2nbgbBTsNlGDWbZyyntt5Q68
+	 rvyoprHtp9fvN612ZtzDcxqFPrF2qNs1BN1P8aM0oQTNrM4CBupFYnaAO+5Xjvw9kKif+
+	 CYLQ62fSkNYv2zAriodOK/CYI3AsZekPEiQH183i5+ccGuODO5IGMHErB3aKGsP3cUTK0
+	 oRoPEFfI/LwLpx2Qo1dTMrCGLRueNUqw4kqWrbKcBOKZ9BuRjs6TxvI9cjEb7/y31GQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pH3YDRix;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KP4S5TYt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D45606A31C;
-	Wed, 18 Nov 2026 23:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CFF606A31C;
+	Wed, 18 Nov 2026 23:18:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pH3YDRix
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147E71F000C4;
-	Wed, 18 Nov 2026 23:18:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KP4S5TYt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4BA21F000C4;
+	Wed, 18 Nov 2026 23:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043895;
-	bh=BmGL++dQUfm4jlNEsuus2iKDhmKEcko4WyUbrRioli0=;
+	s=korg; t=1795043898;
+	bh=PCXZw1slZgiOBZFsgMKLmS8gkOHsn0kip8OAnW+Yj4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pH3YDRixTPm7OzM3hOa3KuW0DvX9Lg5t8nhcDEWh2mKaKcLOrr6cCT07oPZD7EStx
-	 M3wnKD2aNHyxwp+w0miX2WrqNf/hi3sh7IuW4lUiE14ByfmMycRgD9Sw20h5x5AC6a
-	 Qt9IrIvyX5Oyqajh8LQmK/V3L+GNbtVUdgzR16t4=
+	b=KP4S5TYtBUMT7KtUQaY/HKdXQc9sKca9pG7QgfnZtwGtNsDvyMXD9cPwxxS1jfGPv
+	 shJIiAqrviaZTPO0veb8EMCrhmu8dkZQjak1IRIuvBwpbYUOyzxEFSKx4tK16PjBT4
+	 qs0+uqeh2jBJ9tvPw6hIctsmDkjMmFoOL6CHJLkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Alexander Potapenko <glider@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Marco Elver <elver@google.com>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0375/2857] i2c: qcom-cci: fix autosuspend cleanup
-Date: Wed, 18 Nov 2026 15:23:29 +0100
-Message-ID: <20261118150214.913878568@linuxfoundation.org>
+Subject: [PATCH 6.1 0376/2857] lib/vsprintf: split out sprintf() and friends
+Date: Wed, 18 Nov 2026 15:23:30 +0100
+Message-ID: <20261118150214.948523493@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,90 +75,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit f98d4986482151a835b521a734722fe8dc5ca37d ]
+[ Upstream commit 39ced19b9e60f6f5b80db6b72965a8cf1982439d ]
 
-cci_probe() calls pm_runtime_use_autosuspend(), but the remove path
-does not call the matching pm_runtime_dont_use_autosuspend() before
-disabling runtime PM.
+Patch series "lib/vsprintf: Rework header inclusions", v3.
 
-If the autosuspend delay is set to a negative value while autosuspend
-is enabled, the runtime PM core increments usage_count to prevent
-runtime suspend. Without undoing the autosuspend setting during
-teardown, this reference is not dropped and usage_count remains
-unbalanced.
+Some patches that reduce the mess with the header inclusions related to
+vsprintf.c module.  Each patch has its own description, and has no
+dependencies to each other, except the collisions over modifications of
+the same places.  Hence the series.
 
-Use devm_pm_runtime_set_active_enabled() to manage the runtime PM
-state. Its managed cleanup disables autosuspend and runtime PM and
-restores the suspended state on probe failure and driver removal.
-Remove the now redundant manual runtime PM cleanup.
+This patch (of 2):
 
-This issue was found by manual code inspection.
+kernel.h is being used as a dump for all kinds of stuff for a long time.
+sprintf() and friends are used in many drivers without need of the full
+kernel.h dependency train with it.
 
-Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Cc: <stable@vger.kernel.org> # v5.8+
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260812094425.3515179-1-lgs201920130244@gmail.com
-[ sashal: Rewrote the error_i2c probe path to unwind adapters and disable the IRQ, calling cci_disable_clocks() only when CONFIG_PM is off, and adapted cci_remove() and probe labels to the older context. ]
+Here is the attempt on cleaning it up by splitting out sprintf() and
+friends.
+
+Link: https://lkml.kernel.org/r/20230814163344.17429-1-andriy.shevchenko@linux.intel.com
+Link: https://lkml.kernel.org/r/20230814163344.17429-2-andriy.shevchenko@linux.intel.com
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: f0ea4824deeb ("iio: health: max30102: fix NULL dereference in interrupt handler")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-qcom-cci.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ include/linux/kernel.h  | 30 +-----------------------------
+ include/linux/sprintf.h | 25 +++++++++++++++++++++++++
+ lib/test_printf.c       |  1 +
+ lib/vsprintf.c          |  1 +
+ 4 files changed, 28 insertions(+), 29 deletions(-)
+ create mode 100644 include/linux/sprintf.h
 
-diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
-index f64622e725d5c..6c7e4eb95efcc 100644
---- a/drivers/i2c/busses/i2c-qcom-cci.c
-+++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -640,9 +640,11 @@ static int cci_probe(struct platform_device *pdev)
- 		goto error;
+diff --git a/include/linux/kernel.h b/include/linux/kernel.h
+index 50254bb6b7a98..1dcaf5b067339 100644
+--- a/include/linux/kernel.h
++++ b/include/linux/kernel.h
+@@ -29,6 +29,7 @@
+ #include <linux/panic.h>
+ #include <linux/printk.h>
+ #include <linux/build_bug.h>
++#include <linux/sprintf.h>
+ #include <linux/static_call_types.h>
+ #include <linux/instruction_pointer.h>
+ #include <asm/byteorder.h>
+@@ -197,35 +198,6 @@ static inline void might_fault(void) { }
  
- 	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
-+	ret = devm_pm_runtime_set_active_enabled(dev);
-+	if (ret)
-+		goto disable_clocks;
+ void do_exit(long error_code) __noreturn;
+ 
+-extern int num_to_str(char *buf, int size,
+-		      unsigned long long num, unsigned int width);
+-
+-/* lib/printf utilities */
+-
+-extern __printf(2, 3) int sprintf(char *buf, const char * fmt, ...);
+-extern __printf(2, 0) int vsprintf(char *buf, const char *, va_list);
+-extern __printf(3, 4)
+-int snprintf(char *buf, size_t size, const char *fmt, ...);
+-extern __printf(3, 0)
+-int vsnprintf(char *buf, size_t size, const char *fmt, va_list args);
+-extern __printf(3, 4)
+-int scnprintf(char *buf, size_t size, const char *fmt, ...);
+-extern __printf(3, 0)
+-int vscnprintf(char *buf, size_t size, const char *fmt, va_list args);
+-extern __printf(2, 3) __malloc
+-char *kasprintf(gfp_t gfp, const char *fmt, ...);
+-extern __printf(2, 0) __malloc
+-char *kvasprintf(gfp_t gfp, const char *fmt, va_list args);
+-extern __printf(2, 0)
+-const char *kvasprintf_const(gfp_t gfp, const char *fmt, va_list args);
+-
+-extern __scanf(2, 3)
+-int sscanf(const char *, const char *, ...);
+-extern __scanf(2, 0)
+-int vsscanf(const char *, const char *, va_list);
+-
+-extern int no_hash_pointers_enable(char *str);
+-
+ extern int get_option(char **str, int *pint);
+ extern char *get_options(const char *str, int nints, int *ints);
+ extern unsigned long long memparse(const char *ptr, char **retptr);
+diff --git a/include/linux/sprintf.h b/include/linux/sprintf.h
+new file mode 100644
+index 0000000000000..9ca23bcf9f42e
+--- /dev/null
++++ b/include/linux/sprintf.h
+@@ -0,0 +1,25 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _LINUX_KERNEL_SPRINTF_H_
++#define _LINUX_KERNEL_SPRINTF_H_
 +
- 	pm_runtime_use_autosuspend(dev);
--	pm_runtime_set_active(dev);
--	pm_runtime_enable(dev);
- 
- 	for (i = 0; i < cci->data->num_masters; i++) {
- 		if (!cci->master[i].cci)
-@@ -658,8 +660,6 @@ static int cci_probe(struct platform_device *pdev)
- 	return 0;
- 
- error_i2c:
--	pm_runtime_disable(dev);
--	pm_runtime_dont_use_autosuspend(dev);
- 
- 	for (--i ; i >= 0; i--) {
- 		if (cci->master[i].cci) {
-@@ -667,6 +667,13 @@ static int cci_probe(struct platform_device *pdev)
- 			of_node_put(cci->master[i].adap.dev.of_node);
- 		}
- 	}
++#include <linux/compiler_attributes.h>
++#include <linux/types.h>
 +
-+	disable_irq(cci->irq);
-+	if (!IS_ENABLED(CONFIG_PM))
-+		cci_disable_clocks(cci);
++int num_to_str(char *buf, int size, unsigned long long num, unsigned int width);
 +
-+	return ret;
++__printf(2, 3) int sprintf(char *buf, const char * fmt, ...);
++__printf(2, 0) int vsprintf(char *buf, const char *, va_list);
++__printf(3, 4) int snprintf(char *buf, size_t size, const char *fmt, ...);
++__printf(3, 0) int vsnprintf(char *buf, size_t size, const char *fmt, va_list args);
++__printf(3, 4) int scnprintf(char *buf, size_t size, const char *fmt, ...);
++__printf(3, 0) int vscnprintf(char *buf, size_t size, const char *fmt, va_list args);
++__printf(2, 3) __malloc char *kasprintf(gfp_t gfp, const char *fmt, ...);
++__printf(2, 0) __malloc char *kvasprintf(gfp_t gfp, const char *fmt, va_list args);
++__printf(2, 0) const char *kvasprintf_const(gfp_t gfp, const char *fmt, va_list args);
 +
- error:
- 	disable_irq(cci->irq);
- disable_clocks:
-@@ -689,8 +696,6 @@ static int cci_remove(struct platform_device *pdev)
- 	}
++__scanf(2, 3) int sscanf(const char *, const char *, ...);
++__scanf(2, 0) int vsscanf(const char *, const char *, va_list);
++
++int no_hash_pointers_enable(char *str);
++
++#endif	/* _LINUX_KERNEL_SPRINTF_H */
+diff --git a/lib/test_printf.c b/lib/test_printf.c
+index 4bd15a593fbd9..15768af432c91 100644
+--- a/lib/test_printf.c
++++ b/lib/test_printf.c
+@@ -12,6 +12,7 @@
+ #include <linux/random.h>
+ #include <linux/rtc.h>
+ #include <linux/slab.h>
++#include <linux/sprintf.h>
+ #include <linux/string.h>
  
- 	disable_irq(cci->irq);
--	pm_runtime_disable(&pdev->dev);
--	pm_runtime_set_suspended(&pdev->dev);
- 
- 	return 0;
- }
+ #include <linux/bitmap.h>
+diff --git a/lib/vsprintf.c b/lib/vsprintf.c
+index f039d5cae3756..0b80f0ba1fc82 100644
+--- a/lib/vsprintf.c
++++ b/lib/vsprintf.c
+@@ -34,6 +34,7 @@
+ #include <linux/dcache.h>
+ #include <linux/cred.h>
+ #include <linux/rtc.h>
++#include <linux/sprintf.h>
+ #include <linux/time.h>
+ #include <linux/uuid.h>
+ #include <linux/of.h>
 -- 
 2.53.0
 
