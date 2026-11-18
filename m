@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058298;
-	b=mBZeEdJWtKlTZkzVCAG/qUiJZn+Kt8zckCZPs43R1pHeNVHTwnwNElMe/mHyDT0MdhLN
-	 YjpLNDrnNsU7DPUt6uwvEoSgAFNCMguvphGL9o20wjVt5WwaEBtkXmeqgWX5wZDvm8D3k
-	 by121WlGi1Nv8a3e2MWtSgCeukttgS8hYboWaYS00nLPxW8hWKWHRW7x+RD1qAbRPXx6w
-	 CQf/XIHnyu+KZuAS86kfcsUVCNMiTH+hfVGhUNg80cVvGxfMLW+t8hoX88/uWvZtvjraJ
-	 eDb5N/Nf9bPilZ8NCMbfz8+3CxGHDyhTEy90oOJcduB3sv0LcOdygpyojt4c0zitVHA==
+	t=1795058301;
+	b=hTsNt1ExR7MaKXDZ0x5TzjLlQTM0qHpcgM6ijJeWg2SsK2lN9Z7UxnGH/z/NFPO/RSfN
+	 3NcIl/mQY8AAfLA6aAaOUwdIuh8qsGg8kzxAphjZYx/n+zFlzD8xiiPHNdLAq/cGYhZ5r
+	 WKLo/dllGeT9S0ujXe9FDa6gKTeT0IkaiVEKdU/OPCDujeHi2Z2IazRYNYwzFdaP6GnyB
+	 5BnW5yaZkLku2p1qEqml3Y5cyJJeypssdGoX7iUJB1yJ+nP3SY2Vzs6Z/X1x6KpiaV1Eq
+	 seA/dv2zXtXiyM/KqcpmyOgxtr8iM1W5HFU8bYSiFW6CjyCasSkILrY2lUdCTnTICZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058298;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058301;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rKKY9MsvVXXwS8XVsvhP0FEk9rn2WJH0aP2aMjLRIkg=;
-	b=a8m16YcFR8FhxkiRzxCTS/w5MSxQm86VGgDpVTu/gLO+OLyFklAiZ+FQzJL/xeCISTwy
-	 yYmNo9IqaqewWaOHQPHgjtfoKcsZAhFavQ0oPGmzT5ICPJqr+CZUSDOB8cLo4iX3bCfKo
-	 y+JAXCTWlEfg1OP7lV7rFPTU2mhRqBOGz2alwaU8dLqPUErLwW8OZ34JqtYM2HPHjTt91
-	 ZBPppH71cqnmPyEBiEvVNARBw6gZWCvH/JHLSbQNTT83mPMuiuD2y82fBm1zV0MjKM00O
-	 ugqomZYLq311VrOv81qOVOG+kCyW5+2jV5XchpyxxCQu1vVs9VwTtZ7D0pd4u4nDHcQ==
+	bh=2OoYocbOTqa65vary8EWQ3s+oeATa9mXDmFYwV7z3Qc=;
+	b=zNFQpESaRffQD2E56u5bttJUE/eD4OEEhyPJycFE07gcryNf0KmkmzF6NO16o9DG8Iot
+	 quIouhLkcUPKwxbdNGYxNA+098J1tuV2cbbsaX3H6QY14RgjB3Uuawi8W9lVx9Bz+Xtjf
+	 4fSdkXgvCseJjOGX/FrufcAYP9B5qgDasfKnwWSUJ3xNKnLXg89+4aXjMavPowI6Zw+yK
+	 n2MFhzwrcYRWZeIm10G5q9U9zt1rAWy6GzJnopJvJhCPf91/P5wl1bhy7rjBEb93ggdfE
+	 2T1Vj+I9w8k2hEspBAAe42o0q07etWyYSE8zuGdvme4VmKx8VBchp/ZGZMMQ+z5ddhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kBi8mLhu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o7f3hVyC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9B7606A32C;
-	Thu, 19 Nov 2026 03:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB95606A31C;
+	Thu, 19 Nov 2026 03:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kBi8mLhu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 300611F000C4;
-	Thu, 19 Nov 2026 03:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o7f3hVyC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46A11F000C4;
+	Thu, 19 Nov 2026 03:18:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058298;
-	bh=rKKY9MsvVXXwS8XVsvhP0FEk9rn2WJH0aP2aMjLRIkg=;
+	s=korg; t=1795058301;
+	bh=2OoYocbOTqa65vary8EWQ3s+oeATa9mXDmFYwV7z3Qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kBi8mLhuzMmf6+cjiYLSOGs72erNhCOCMAXLxUA9hHLXvllQuALUoymXaxFKgAXf0
-	 OFzAotvJuWYp8oBrmMsdaxaNCccdTfxuCe3pblHxx+oJPha9RGIReuykDXI/SAJu1X
-	 qla+fJGmFd+j+hE1kEpUC7aey3KKLOA9NqNRoSvw=
+	b=o7f3hVyCqu6qa3NExcCsneufgOqwOitKKiq6cNkmC/nxJHYCsKXVQ0QP2RHigMZFq
+	 J6QcNpqQKAdyJoa0esMlJhRuZcgvHj7uDYb5c9NVgwIUaklReqEgybEn4MGN8CN25p
+	 FhFP2b9tYLrfa2g8MDplqk77Eo4XNLpV8okmBI0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wentao Liang <vulab@iscas.ac.cn>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0399/1848] ASoC: wm8994: Fix runtime PM imbalance in wm8994_component_probe()
-Date: Wed, 18 Nov 2026 15:40:37 +0100
-Message-ID: <20261118145930.514987106@linuxfoundation.org>
+Subject: [PATCH 5.10 0435/1848] mtd: rawnand: atmel: Fix MCK clock leak in atmel_nand_controller_init()
+Date: Wed, 18 Nov 2026 15:41:13 +0100
+Message-ID: <20261118145932.325009278@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,47 +70,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 480a5528cb6268d626632d45d4a1f29b4c0c11df ]
+[ Upstream commit 94edcda45d888c3bb1310de11e10e4537c166f00 ]
 
-In wm8994_component_probe(), pm_runtime_get_sync() is invoked before
-reading the GPIO configuration registers. If either regmap_read() fails,
-the function jumps to err_irq without calling pm_runtime_put(), leaving
-the runtime PM usage count incremented and causing a leak.
+atmel_nand_controller_init() takes a reference to the MCK clock with
+of_clk_get() and keeps it in nc->mck for the lifetime of the
+controller.  If the "atmel,smc" phandle is missing or the SMC regmap
+cannot be obtained afterwards, the error path jumps to out_release_dma
+which only releases the DMA channel, so the clock reference is leaked.
+The callers return the error directly and never run
+atmel_nand_controller_cleanup(), where the clock is normally put.
 
-Add pm_runtime_put() on both GPIO read failure paths before jumping to
-err_irq.
+Release the reference on those error paths.  The path on which
+of_clk_get() itself fails keeps jumping to out_release_dma, as nc->mck
+only holds an error pointer there.
 
-Fixes: f5a2cda4f1db ("ASoC: wm8994: Ensure the device is resumed in wm89xx_mic_detect functions")
+Fixes: f9ce2eddf176 ("mtd: nand: atmel: Add ->setup_data_interface() hooks")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260916072737.1970990-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mtd/nand/raw/atmel/nand-controller.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index d3a7480fda435..0b4c3c37c7e99 100644
---- a/sound/soc/codecs/wm8994.c
-+++ b/sound/soc/codecs/wm8994.c
-@@ -4352,6 +4352,7 @@ static int wm8994_component_probe(struct snd_soc_component *component)
- 	ret = regmap_read(control->regmap, WM8994_GPIO_1, &reg);
- 	if (ret < 0) {
- 		dev_err(component->dev, "Failed to read GPIO1 state: %d\n", ret);
-+		pm_runtime_put(component->dev);
- 		goto err_irq;
+diff --git a/drivers/mtd/nand/raw/atmel/nand-controller.c b/drivers/mtd/nand/raw/atmel/nand-controller.c
+index 179696ea6f573..ec5bcc3f6cf77 100644
+--- a/drivers/mtd/nand/raw/atmel/nand-controller.c
++++ b/drivers/mtd/nand/raw/atmel/nand-controller.c
+@@ -2076,7 +2076,7 @@ static int atmel_nand_controller_init(struct atmel_nand_controller *nc,
+ 	if (!np) {
+ 		dev_err(dev, "Missing or invalid atmel,smc property\n");
+ 		ret = -EINVAL;
+-		goto out_release_dma;
++		goto out_put_mck;
  	}
- 	if ((reg & WM8994_GPN_FN_MASK) != WM8994_GP_FN_PIN_SPECIFIC) {
-@@ -4364,6 +4365,7 @@ static int wm8994_component_probe(struct snd_soc_component *component)
- 	ret = regmap_read(control->regmap, WM8994_GPIO_6, &reg);
- 	if (ret < 0) {
- 		dev_err(component->dev, "Failed to read GPIO6 state: %d\n", ret);
-+		pm_runtime_put(component->dev);
- 		goto err_irq;
+ 
+ 	nc->smc = syscon_node_to_regmap(np);
+@@ -2084,11 +2084,13 @@ static int atmel_nand_controller_init(struct atmel_nand_controller *nc,
+ 	if (IS_ERR(nc->smc)) {
+ 		ret = PTR_ERR(nc->smc);
+ 		dev_err(dev, "Could not get SMC regmap (err = %d)\n", ret);
+-		goto out_release_dma;
++		goto out_put_mck;
  	}
- 	if ((reg & WM8994_GPN_FN_MASK) != WM8994_GP_FN_PIN_SPECIFIC) {
+ 
+ 	return 0;
+ 
++out_put_mck:
++	clk_put(nc->mck);
+ out_release_dma:
+ 	if (nc->dmac)
+ 		dma_release_channel(nc->dmac);
 -- 
 2.53.0
 
