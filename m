@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051742;
-	b=Kgq6kFy1Yxl60pmwK/y5NeFFKB/a3WvlnvNZOJ2QZ6cHGUoYP0TczWRNSwVx+4hUctH2
-	 X03BCOPcpS/jiXkJ5UDXA6asDGtjHuqKblGWYw2gtDE4aIuQO+ygfHs10k4ijB9t5uQcb
-	 F7CfDQD90n0LTZ73I90Yc1opkLOFFBrQaUPC8fp1/corA6wWtYYJLU16Y/RYLLLB2ywAp
-	 2S+hw9sQYvUQ17v0/RTyXGjs0gRuYO0cx2/MGR+GV5D7yKXb4gvng/VIJI85bfgW52N2I
-	 0vhGStbIqhaLMZge3sFKbb8nqRqJl2JgEX3v42acOb9WX16ljdhjZiOfWNHvAtON4FQ==
+	t=1795051744;
+	b=vB/pq9BR8U4UZFaTWhqDMENcCWKL4d3XwjdYiNZLShUnoGSh0uwmpzokRwi0x6KCjfJm
+	 G3GfQxKxmxiar/mMyXLZx5We3P8RwABAQLnm/pCtfqpeTP6hEXLC2Ay1MbqtmPmmh9Jwe
+	 c0ihU8abgf0H2kf+Bsa/6u0Lw39c1dmdxFlX7u70MImZfBc924hQEy1wKVT8VDTFtPqgc
+	 FNU+WYOPWsGYz4D3j2i6Op2GnYmuXKl3khYMjXN+2uqAWI6gwXwIguaD/0F9WBZSBY96a
+	 iRuY+AZnTCwFNndu6xviDYUFc2ZiZFHyJ4rMmxYFdiIa8rAenEN+7u1+W2cbLV3UN3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051742;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051744;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=HZ894K/X/CY0a0ev55A1zTM7lgv05sDXotyZ7lXlwmI=;
-	b=WFBw8uyzMviF/t3QIWclAEeuvlvKdjmev+CoOYrrUPQ/vAwrqxaIde+rulN5ZcDj4rCc
-	 8Aik0gpuOauzNkgrjmREj9V9AI5Y1iPuG9eCwv4BQ06/ZNcnaZCGbG44AP3l+m3aSXOFE
-	 KC1rB3Obi4mrru2+qiECoiV6yj2ZCm2602q3nIYB30qn0QmVTN+Ku068qQnaD6Ukegw3m
-	 cb1btY4yC6syq/ROnO6mHrrgX2swpAsoRBOsR3kMtzCOfjMLXHBcjUF0w7XMnAyTac9Y4
-	 QdMWVIFwpY4GLw3OEywYoPrYf6SZCUnb5zGr1HCnJwSQbsehkPOZJ4G04U1X+mAAHmw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=FaZ7pkU7UHgHSUHaQrh+1Vkn2BWog7520OJqKfPhjmg=;
+	b=Tfa9cZd1LzmCCxB9Ng5RRHGpTtQwIdbn+KZtqWKFXCzVYHataEL88QULJKEm+Zdv5nFH
+	 UujvKUr6sml3ybno0YNDy9oM3kKy1OwXwQ5krWtUHPhtsd34QJc2cl5b4m+IlbRS8bCHB
+	 9RdjsCxeSXf3+QT433nxpy6Q+kfmbAMjOC3gCQYLE10rCFFDiyonqkRB1ebSuVI5mR96f
+	 DzICtDjKvyxHLZYSnduX5BEQWyCQ1KMxWaX61cA5lj3H6Xs9kkupFpNsx8Ko4a31iS5Cw
+	 o3Rc1uCBAO/uRkBr0PA+AkCZGKApU4DlNdiSkdiK1XQN1QIMC3Nl4WIwaFZcEJyBCmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bCTJI7Wm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DjyS8HtE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10433606A31C;
-	Thu, 19 Nov 2026 01:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9CD606A32A;
+	Thu, 19 Nov 2026 01:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bCTJI7Wm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F24D1F000C4;
-	Thu, 19 Nov 2026 01:29:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DjyS8HtE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 372C81F000C4;
+	Thu, 19 Nov 2026 01:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051741;
-	bh=HZ894K/X/CY0a0ev55A1zTM7lgv05sDXotyZ7lXlwmI=;
+	s=korg; t=1795051744;
+	bh=FaZ7pkU7UHgHSUHaQrh+1Vkn2BWog7520OJqKfPhjmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bCTJI7Wmp+sCc0yVxrx6rTAZ37ZpBpysztbsC2G+hPKYYagTqstnsc0QhzuGhNfi5
-	 daL64BaafTH8g6zbRaKUCxBn6UuyELphtryqE8cO2UD6NQgWlERqEAJfijOJ5CKev1
-	 2OUigXmUCfZaiXff365nq+wINsdwvQUbTDt1HuVc=
+	b=DjyS8HtEBdEso4z4PPJHR5c/7u4dOcvLhVzhxA+xpb2RkdMxoT0q3UePxNRJvdl8q
+	 JmLjhC85i4vzZT++G2uRVWNf42TkjFtfIJwAnK+BB+zAvUpYaf554JOQV3Sa0bNCVB
+	 N8fDeQBAk4zZ58g/Lskb0J+dlceAMwSyGh9jh16c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fang Xieyan <fangxy@xiaopeng.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Marco Elver <elver@google.com>,
-	Victor Chibotaru <tchibo@google.com>
-Subject: [PATCH 5.15 0257/2214] kcov: ignore an out-of-range comparison count in write_comp_data()
-Date: Wed, 18 Nov 2026 15:32:13 +0100
-Message-ID: <20261118150020.410569634@linuxfoundation.org>
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 5.15 0310/2214] KVM: PPC: Book3S HV: Add SRCU protection for virtual-mode HPT hcalls
+Date: Wed, 18 Nov 2026 15:33:06 +0100
+Message-ID: <20261118150022.552082916@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -66,88 +62,149 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fang Xieyan <fangxy@xiaopeng.com>
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-commit f5263bee9eb84d2388fd7555a18d518e17226894 upstream.
+commit 61a39797bb136243c48b46e2586d8a9e2cea6a89 upstream.
 
-write_comp_data() reads the comparison record count from area[0] and uses
-it to index the coverage buffer:
+The virtual-mode HPT hcall handlers (H_ENTER, H_REMOVE, H_BULK_REMOVE,
+H_CLEAR_REF, H_CLEAR_MOD) call into book3s_hv_rm_mmu.c, which accesses
+memslots via kvm_memslots_raw().  kvm_memslots_raw() uses
+rcu_dereference_raw_check() to bypass SRCU lockdep annotation checking.
+This is safe in real mode because the entire guest entry/exit is wrapped
+in srcu_read_lock/unlock inside kvmppc_run_core() and
+kvmhv_run_single_vcpu().
 
-	area = (u64 *)t->kcov_area;
-	max_pos = t->kcov_size * sizeof(unsigned long);
+However, since commit 6165d5dd99db ("KVM: PPC: Book3S HV: add virtual
+mode handlers for HPT hcalls and page faults"), these same handlers are
+also executed in virtual mode via kvmppc_pseries_do_hcall(), which runs
+after SRCU has already been released on guest exit.
 
-	count = READ_ONCE(area[0]);
+A concurrent KVM_SET_USER_MEMORY_REGION deletion or move can therefore
+call synchronize_srcu_expedited() — which does not wait for this thread —
+and then kfree(slot) and vfree(slot->arch.rmap) while the hcall handler
+still holds a raw pointer to the memslot.  lock_rmap() then writes to
+freed vmalloc memory, leading to use-after-free and memory corruption.
+Because kvm_memslots_raw() suppresses lockdep checks, this race is
+entirely silent.
 
-	/* Every record is KCOV_WORDS_PER_CMP 64-bit words. */
-	start_index = 1 + count * KCOV_WORDS_PER_CMP;
-	end_pos = (start_index + KCOV_WORDS_PER_CMP) * sizeof(u64);
-	if (likely(end_pos <= max_pos)) {
+Fix this by factoring out the 7 HPT hcall handlers (H_REMOVE, H_ENTER,
+H_READ, H_CLEAR_MOD, H_CLEAR_REF, H_PROTECT, H_BULK_REMOVE) into a
+helper function, kvmppc_pseries_do_hpt_hcall(), and wrapping its call
+site in srcu_read_lock(&kvm->srcu) / srcu_read_unlock(&kvm->srcu, idx).
+Targeting only the HPT hcalls avoids wrapping non-HPT hcalls that sleep
+(such as H_CONFER, H_REGISTER_VPA, H_PAGE_INIT) or handlers that already
+acquire SRCU internally (such as H_RTAS).
 
-The buffer is mmap'd writable into the collecting process, so count is
-under its control and end_pos <= max_pos is its only bound.  A count that
-wraps the u64 multiply leaves end_pos below max_pos, so the check passes
-while the record store lands 24 bytes before the buffer, in the unmapped
-vmalloc guard page, and faults:
-
-  BUG: unable to handle page fault for address: ffa0000000b60fe8
-  #PF: supervisor write access in kernel mode
-  #PF: error_code(0x0002) - not-present page
-  Oops: 0002 [#1] SMP KASAN NOPTI
-  RIP: 0010:write_comp_data+0x7e/0xa0
-  ...
-  Kernel panic - not syncing: Fatal exception
-
-Bound count first: only max_pos / (sizeof(u64) * KCOV_WORDS_PER_CMP)
-records fit, so a larger count is not a valid index and is dropped.
-kcov_move_area() bounds the same untrusted count this way, and no count
-the end_pos <= max_pos check accepts reaches that limit, so no valid
-record is lost.
-
-kcov is a root-only debugfs file (debugfs_create_file_unsafe("kcov", 0600,
-...)) and write_comp_data() exists only under
-CONFIG_KCOV_ENABLE_COMPARISONS, so this is a local, debug-kernel
-robustness fix: the process corrupts its own buffer and the kernel oopses.
-It crosses no privilege boundary.  Additional details at [1]
-
-Link: https://lore.kernel.org/20260917104306.22145-1-fangxy@xiaopeng.com [1]
-Fixes: ded97d2c2b2c ("kcov: support comparison operands collection")
-Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Assisted-by: Hawkeye:GLM-5.3-flash
-Assisted-by: Qoder:Qwen3.8-Max
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Victor Chibotaru <tchibo@google.com>
-Cc: <stable@vger.kernel.org>
+Fixes: 6165d5dd99db ("KVM: PPC: Book3S HV: add virtual mode handlers for HPT hcalls and page faults")
+Cc: stable@vger.kernel.org # v5.14+
+Suggested-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260928122837.8782-2-amachhiw@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kcov.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/powerpc/kvm/book3s_hv.c |   70 +++++++++++++++++++++----------------------
+ 1 file changed, 35 insertions(+), 35 deletions(-)
 
---- a/kernel/kcov.c
-+++ b/kernel/kcov.c
-@@ -237,6 +237,14 @@ static void notrace write_comp_data(u64
+--- a/arch/powerpc/kvm/book3s_hv.c
++++ b/arch/powerpc/kvm/book3s_hv.c
+@@ -986,6 +986,38 @@ static long kvmppc_h_rpt_invalidate(stru
+ 	return H_SUCCESS;
+ }
  
- 	count = READ_ONCE(area[0]);
- 
-+	/*
-+	 * area[0] is writable by the collecting process, so count cannot be
-+	 * trusted. Bound it to the records that fit, as kcov_move_area()
-+	 * does, so the end_pos multiply below cannot wrap past its check.
-+	 */
-+	if (count >= max_pos / (sizeof(u64) * KCOV_WORDS_PER_CMP))
-+		return;
++static long kvmppc_pseries_do_hpt_hcall(struct kvm_vcpu *vcpu, unsigned long req)
++{
++	switch (req) {
++	case H_REMOVE:
++		return kvmppc_h_remove(vcpu, kvmppc_get_gpr(vcpu, 4),
++				       kvmppc_get_gpr(vcpu, 5),
++				       kvmppc_get_gpr(vcpu, 6));
++	case H_ENTER:
++		return kvmppc_h_enter(vcpu, kvmppc_get_gpr(vcpu, 4),
++				      kvmppc_get_gpr(vcpu, 5),
++				      kvmppc_get_gpr(vcpu, 6),
++				      kvmppc_get_gpr(vcpu, 7));
++	case H_READ:
++		return kvmppc_h_read(vcpu, kvmppc_get_gpr(vcpu, 4),
++				     kvmppc_get_gpr(vcpu, 5));
++	case H_CLEAR_MOD:
++		return kvmppc_h_clear_mod(vcpu, kvmppc_get_gpr(vcpu, 4),
++					  kvmppc_get_gpr(vcpu, 5));
++	case H_CLEAR_REF:
++		return kvmppc_h_clear_ref(vcpu, kvmppc_get_gpr(vcpu, 4),
++					  kvmppc_get_gpr(vcpu, 5));
++	case H_PROTECT:
++		return kvmppc_h_protect(vcpu, kvmppc_get_gpr(vcpu, 4),
++					kvmppc_get_gpr(vcpu, 5),
++					kvmppc_get_gpr(vcpu, 6));
++	case H_BULK_REMOVE:
++		return kvmppc_h_bulk_remove(vcpu);
++	}
 +
- 	/* Every record is KCOV_WORDS_PER_CMP 64-bit words. */
- 	start_index = 1 + count * KCOV_WORDS_PER_CMP;
- 	end_pos = (start_index + KCOV_WORDS_PER_CMP) * sizeof(u64);
++	return H_FUNCTION;
++}
++
+ int kvmppc_pseries_do_hcall(struct kvm_vcpu *vcpu)
+ {
+ 	struct kvm *kvm = vcpu->kvm;
+@@ -1001,47 +1033,15 @@ int kvmppc_pseries_do_hcall(struct kvm_v
+ 
+ 	switch (req) {
+ 	case H_REMOVE:
+-		ret = kvmppc_h_remove(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5),
+-					kvmppc_get_gpr(vcpu, 6));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_ENTER:
+-		ret = kvmppc_h_enter(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5),
+-					kvmppc_get_gpr(vcpu, 6),
+-					kvmppc_get_gpr(vcpu, 7));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_READ:
+-		ret = kvmppc_h_read(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_CLEAR_MOD:
+-		ret = kvmppc_h_clear_mod(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_CLEAR_REF:
+-		ret = kvmppc_h_clear_ref(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_PROTECT:
+-		ret = kvmppc_h_protect(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5),
+-					kvmppc_get_gpr(vcpu, 6));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_BULK_REMOVE:
+-		ret = kvmppc_h_bulk_remove(vcpu);
++		idx = srcu_read_lock(&kvm->srcu);
++		ret = kvmppc_pseries_do_hpt_hcall(vcpu, req);
++		srcu_read_unlock(&kvm->srcu, idx);
+ 		if (ret == H_TOO_HARD)
+ 			return RESUME_HOST;
+ 		break;
 
 
