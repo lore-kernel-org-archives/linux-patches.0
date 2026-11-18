@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026102;
-	b=C554hBedm6aAZjfYDzyPCYbplRHndZ4HBnmvmM1SaBc6yiag4R3eGJcAuv7ozxz4wnvD
-	 H+8yWVJjatCEijcLer+EpUFj54OtYSHCFmXIVD1InsO2stAj8v1slbBHMEeu80N4n6tar
-	 vopOj38HQuD0n/7dNAfNJSsYUDrVGzoGoxLQk/GJmMSPhW7+6p2Ej/Y5vSqJnYCQiaL7O
-	 D7w4aU+oGNUhefj33rbb3aCNbgnm/hQU4i4voEPbZdH/zcIKYLol2uwC2vrWtS+Rd8tye
-	 88LNsMhsCHQRzefNWZUeMT9g5lNEbp9o97PhouVvO6SVkMpAHynTM56fvFO5+Mk+N6w==
+	t=1795026105;
+	b=G6d6F6OFQ7YezeAK+G19TIymUiGnVkATOYc1FqTLibxGF36oQZxtzoN4GQcadxYazs/n
+	 2DPOB6IiHgaoduAHMfZuWBmZWlD+p/Ts4XQ3MAXe3vq3u/JDFYTla68dz6VJZVAvTrjx+
+	 YDSjfH/EsaFo6cI4NM1gQhlDUtRU7K2luEZf2cirkyY9nsdPvROmT695CD4NFpHT9WDC5
+	 Ii+Jl2zMAAKjv62SV65xB++VpoDuJkpLByDidhkmeQh2L0X0bJrq47Kcwo+lt8qNqdi1X
+	 P9Z/aRGOJBWW80K74TIcr9JFYW4xfH3hw3XRXnnwticCSDV+YkAC1kYgIiaZ4rz+sBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026102;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026105;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NA34dY1VgDfLT+U1w60+/2bazq5A2iUuDl6y4OUJ86Y=;
-	b=l4/8uc+K7iV+c7jUw2l+LC5dFnKIAo/Tgxd+zQtbTl2BFgSWwaw1lrIYsQiEW5RufRaW
-	 B6z5FFET0y7S3pw10oMhTiJXZUmJ9HUziSmPsC99h+Dl5xGZcS2lZoAB3XlthtNyQjGku
-	 V3YHaKl26+dmmc77At62j6SvwjK5veEdLs5pYKuMGTzyPJduIgHwcD95f63zhrhlfbSHd
-	 Z38nfy8IfJ9a8Nb4qHtgKRFN6GEqRtyGVM/zKtmic5fQGh2XuHpT/k5oxiBhxGYyBGNuM
-	 CF65ns61d+i8KIztQ6zS3K9G1dlYqFLM+aAo1yfCxkhjkQ6hS42bUMv+jP3/DiL7LHA==
+	bh=lTCt5n23+7sVk302yDYeZ2LtWGGjhkoC/b2OKPfgGw4=;
+	b=S1X8kBHaj8wEC9B4wn+zoXE/KtB3OUuvmToAvV+0VTsJYi1zkolSO95ChKQ5I5dbtCp0
+	 GLiD0va373sMfNN1hLbEycwLByF6up7lEuWSaKiyURHFVCBB49rwtoz1HQwNRGi3lYgpS
+	 PpCF0KKGkRTXHVQLdbMd1Md5st7KF1IgxXWCZ52obtgBxIz3r76pvhVZnyVQed+Cvvfw8
+	 PClwwPJtbUVCvm2cf84F8xDiX1bPcjHoK8nDghbc0tilFW2K/Kn5RDh/8KvegZHtcbDp0
+	 MHhf3rq0WMp1Yc0NudGQN/bWZ4W9vwfC56XCqP813V2QT2Z384zgbmPOqYUP+t9zEFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PwIJdZf8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zzRUX/io";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53726606A31C;
-	Wed, 18 Nov 2026 18:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A752606A32A;
+	Wed, 18 Nov 2026 18:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PwIJdZf8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A306E1F000C4;
-	Wed, 18 Nov 2026 18:21:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zzRUX/io
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E90C1F000C4;
+	Wed, 18 Nov 2026 18:21:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026102;
-	bh=NA34dY1VgDfLT+U1w60+/2bazq5A2iUuDl6y4OUJ86Y=;
+	s=korg; t=1795026104;
+	bh=lTCt5n23+7sVk302yDYeZ2LtWGGjhkoC/b2OKPfgGw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PwIJdZf8qaOnVRKKaNOhxMPzIbdkq7VfpfWGs1DoupfZmuY52Ohu/g50Nbfvd34K9
-	 Jz7UavIMThaLAkjyS11D2hEZCWiPRhRO/A2W18XNrGogakMbSqh6vhA1u7tJjgUzN0
-	 f4VhdDwLt4d9Lg2Y7EAiOblGQY7OSzxOfZwf1Awg=
+	b=zzRUX/ioJd1wDswsHaggoVxvn1nTltU3tPcOTz+0cf+Hoi62/EvmRXkOezvPNZu3b
+	 mLeD1BzrBDJOr/IhKPF42MIjIhOfla4thiYYhPFkaHvECSwD2gKz77XhGBR0V8XO5d
+	 bE9hh+W/113qKFDxU0sOM7Nr/aMNkfi4XkXwhg9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1315/2151] ALSA: hda: Add NULL check for the driver pointer at unsol event work
-Date: Wed, 18 Nov 2026 15:50:50 +0100
-Message-ID: <20261118150209.994090388@linuxfoundation.org>
+Subject: [PATCH 6.18 1289/2151] wifi: mac80211: clear fragment cache entry is_protected
+Date: Wed, 18 Nov 2026 15:50:24 +0100
+Message-ID: <20261118150209.084035371@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -67,48 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 8cbf75d115e97b7f5ba7859d30d0ce74d1af6c19 ]
+[ Upstream commit f3d29dc9224b0881d10d34664456adf113bc4777 ]
 
-snd_hdac_bus_process_unsol_events() assumes that the codec driver is
-always set when it's accessible from the codec table.  It's true in
-general, but in a sheer timing, it might have been already NULLified
-at the driver unbinding.
+In practice, we probably shouldn't end up with a fragmented
+frame that's protected, filled into the cache, finished or
+dropped and then the next frame is unprotected, since only
+unicast data frames can be fragmented.
 
-Although the codec removal should have been done properly by the
-previous fixes, just for more safety, let's add a NULL check before
-dereferencing and calling the driver's unsol_event callback.
+However, tools complain and it's more correct to be able to
+do this (e.g. an unencrypted fragmented EAPOL _could_, at
+least in theory, happen), so clear the flag when the entry
+is reused.
 
-Fixes: e7255c00b10e ("ALSA: hda: Skip event processing for unregistered codecs")
-Link: https://patch.msgid.link/20261009133341.440917-6-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Assisted-by: LLM
+Fixes: 7e44a0b597f0 ("mac80211: prevent attacks on TKIP/WEP as well")
+Link: https://patch.msgid.link/20261005224950.c3e4106f34d5.I866c0862db031c3a810d2333acdd22e2733d2b8c@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/core/bus.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/mac80211/rx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/hda/core/bus.c b/sound/hda/core/bus.c
-index e9c3751a15395..814c90558f042 100644
---- a/sound/hda/core/bus.c
-+++ b/sound/hda/core/bus.c
-@@ -181,10 +181,13 @@ static void snd_hdac_bus_process_unsol_events(struct work_struct *work)
- 		codec = bus->caddr_tbl[caddr & 0x0f];
- 		if (!codec || !codec->registered || codec->unsol_disabled)
- 			continue;
--		spin_unlock_irq(&bus->reg_lock);
-+		if (!codec->dev.driver)
-+			continue;
- 		drv = drv_to_hdac_driver(codec->dev.driver);
--		if (drv->unsol_event)
--			drv->unsol_event(codec, res);
-+		if (!drv->unsol_event)
-+			continue;
-+		spin_unlock_irq(&bus->reg_lock);
-+		drv->unsol_event(codec, res);
- 		spin_lock_irq(&bus->reg_lock);
- 	}
- 	spin_unlock_irq(&bus->reg_lock);
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 3567544c34044..1f1b1e4f0df70 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -2205,6 +2205,7 @@ ieee80211_reassemble_add(struct ieee80211_fragment_cache *cache,
+ 	entry->rx_queue = rx_queue;
+ 	entry->last_frag = frag;
+ 	entry->check_sequential_pn = false;
++	entry->is_protected = false;
+ 	entry->extra_len = 0;
+ 
+ 	return entry;
 -- 
 2.53.0
 
