@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028886;
-	b=zJHrgvoLZbCm/1WlWvF/J9GrRxAzWCW+68Wk0IUuGODtXd/3ybGTw8BV+qUUK1U3x896
-	 ep53jGztmN1LED0g3WgNNyC3NXH02rgvJ996VKBhxRKWXTzn9m4E9N6pXQnCdOy5O10oW
-	 4kIb4D63Dms/fTJmqiSKD+GW4D4Tw7cARZG9S8zn9yXRxoN49y2w2EOts5FqG3TuqYJLq
-	 I1KdkG/urId+zQSZ/tOhIniQrNSlPqB8iQ1fLNlhTLJ8o4Xud6aNx4jvOLfmF/fXWPInC
-	 H2bA9sVtexVvdI2q+RvywIbM1ZOBxBckyrdQMh99hWZEmir3Ol8nZ06S4uDOn6PcFpA==
+	t=1795028889;
+	b=TrT3z8O0y/gRE85nq4AAirjOt5Jry0rVwGoHvp6CUBiTYnLAC5SJEgIUwG1id12W46wm
+	 jm9GGKsHU0SlcBXa7ub+8ejAa3UTmfwbXNed4pRvcT2EXnJgiAu1hWBwlDubF71luBRwc
+	 Jcf7XMrHlFnAaN3Po8hLCx/DKgpLDgf4LvB9hU58jxGQauQb3ne3FrODmOEJ1rWdajZ+d
+	 j4VNQCzzu7b8tfU983pbTRFTT4xmy9NmjhNf9MIgAshB32qbnTJj6OK0fZbIu+wTVcp83
+	 lnWiXqWLUznWZesp0pZTBghegvNJOMPn07u9oGXdV1hatYEkYUszvqi+cJ8qrggfFlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028886;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028889;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ed+1negK4STS8hLLTbFRf4zAsCDL6i1+HDGQ/pPlbS0=;
-	b=icw0kjaFEygNqI19aRZ+BjRdyJ87+J0RSYakVmg12RGyaiV8UZC4X5f/8eJzch4b2laV
-	 evGnkpXrW9KkMZMmaUnskh6A5hfgEfz/o7vSWNofGT0BqKkGb1c+/axKem+C1JN16NJmV
-	 ZlTjOlLuD4xemWPqSB+vgi28Dh7bnWQnObnCuRlyMVTLdUlZls5baWl9qUsviOA1SEzEC
-	 KVr+ydIBX3gz5krKyFD5Y86pV5g0zivurrrvAQnylQM7V0iHecMnPd4MUUlxLtBI0bfBd
-	 FEY8+rBqqNcftFz6SX/9lvBXaOAlGYfY65nxDF5RA1+YTPSg9j7rOPm1VS6KhwNrOkw==
+	bh=rI+hyovm3HK5YVTw259SiCX0oIOlaiw7XQvBfNHy8Nk=;
+	b=xgBSbb2qg/DJuiFCetQ6QJVj/vUA766ODWlHA+bUqzilAZpl9Y8G71mW9lbhiopiT9Ej
+	 FXdRTnV6ZyjNha4qSwQPEuT/m7vQSb4mqPgOlKq3KiSB792ydB9vW3pXi9E3tUB2nbyo4
+	 jTMez+lZqUrEHsPlrjHWK4tgOEDkko75u0COsNLg+AajW7Se2FI13HLfGSdng2nOl9A4P
+	 sJyBwThfAZhgKSn1azJ/xkSwIIWxTM8+erfRA1lS4Lo6HBk0gHC8het2JlDzb+XZvTfkx
+	 mq4tCpIOoxQmx5ZZB2m6jNZZKtY90P1N1NCRLI43uf9H4UH9nYRNYeF5F10OndRVVLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="A/uHB3Px";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pVScy8Ij;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87578606A325;
-	Wed, 18 Nov 2026 19:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40970606A334;
+	Wed, 18 Nov 2026 19:08:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A/uHB3Px
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856751F000C4;
-	Wed, 18 Nov 2026 19:08:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pVScy8Ij
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56FE41F000C4;
+	Wed, 18 Nov 2026 19:08:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028886;
-	bh=Ed+1negK4STS8hLLTbFRf4zAsCDL6i1+HDGQ/pPlbS0=;
+	s=korg; t=1795028888;
+	bh=rI+hyovm3HK5YVTw259SiCX0oIOlaiw7XQvBfNHy8Nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A/uHB3PxGBoJE/Ft3SXsb7XZuT0YP0jXrHne/rvm7Gm+OfK4Br8HEn+ic7i8NGTG6
-	 Jcd/lzH/zEmzt+4wNh7bDAVpySnxKOEcI1d3vQQxVM3nPuOEtkKv2ZFhVkx/m5bHO/
-	 jKem07JA9T/8tLry1D8aSXwEh0VQIIeQG8Ra5U2s=
+	b=pVScy8IjZ+qZLx6qHNTUCRbN/MFGnLE+kx8mFlZyDPwwyYbmxKibuJ23yycb+cYjF
+	 /wssltwBGZ1Bs/Q6BUgbW6ARswfeV2mdyPKoLyryAmAqqHHAEQ3wZyIjF628YX/Mvq
+	 RgzFwLTP8oxtPxolgfnBiV0XTZpoZAOr9XIgdY/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0152/1756] iio: temperature: tmp117: fix calibbias cache update on I2C write failure
-Date: Wed, 18 Nov 2026 15:37:59 +0100
-Message-ID: <20261118150014.180847749@linuxfoundation.org>
+Subject: [PATCH 6.12 0153/1756] iio: pressure: rohm-bm1390: Fix AVE_NUM initialization
+Date: Wed, 18 Nov 2026 15:38:00 +0100
+Message-ID: <20261118150014.223854831@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,62 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 61fff9cebbfdf39bbd04d366882476d1def14047 ]
+[ Upstream commit 64f4173ad1a7f1b247296c84e624f5095be170c7 ]
 
-The calibbias cache (data->calibbias) was updated before the I2C
-write to TMP117_REG_TEMP_OFFSET was known to succeed. If the write
-failed, the function correctly returned an error, but the driver's
-internal cache had already been updated to the new value.
+The BM1390 tries to initialize the AVE_NUM to 110b at the start-up. The
+field location is not taken into account, and value is written unsifted.
+This causes the AVE_NUM to be initialized to zero.
 
-This causes the cache and the actual hardware register to go out of
-sync: a subsequent write of the same value would be silently
-skipped by the early "if (off == data->calibbias) return 0;" check,
-since the cache matches even though the register was never
-successfully updated.
+Use FIELD_PREP() to shift the intended AVE_NUM value to correct field.
 
-Update data->calibbias only after confirming the I2C write
-succeeded, so the cache always reflects the actual state of the
-device.
-
-Found by code inspection.
-
-Fixes: df041e737a38 ("iio: temperature: add driver support for ti tmp117")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: 81ca5979b6ed ("iio: pressure: Support ROHM BU1390")
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/temperature/tmp117.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/iio/pressure/rohm-bm1390.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/temperature/tmp117.c b/drivers/iio/temperature/tmp117.c
-index 8972083d903a2..ea2d4e0bae871 100644
---- a/drivers/iio/temperature/tmp117.c
-+++ b/drivers/iio/temperature/tmp117.c
-@@ -95,15 +95,20 @@ static int tmp117_write_raw(struct iio_dev *indio_dev, struct iio_chan_spec
+diff --git a/drivers/iio/pressure/rohm-bm1390.c b/drivers/iio/pressure/rohm-bm1390.c
+index ccaa07a569c9a..8008da21d021a 100644
+--- a/drivers/iio/pressure/rohm-bm1390.c
++++ b/drivers/iio/pressure/rohm-bm1390.c
+@@ -484,6 +484,7 @@ static const struct iio_info bm1390_info = {
+ 
+ static int bm1390_chip_init(struct bm1390_data *data)
  {
- 	struct tmp117_data *data = iio_priv(indio_dev);
- 	s16 off;
-+	int ret;
++	u8 regval;
+ 	int ret;
  
- 	switch (mask) {
- 	case IIO_CHAN_INFO_CALIBBIAS:
- 		off = clamp_t(int, val, S16_MIN, S16_MAX);
- 		if (off == data->calibbias)
- 			return 0;
-+
-+		ret = i2c_smbus_write_word_swapped(data->client, TMP117_REG_TEMP_OFFSET, off);
-+		if (ret)
-+			return ret;
-+
- 		data->calibbias = off;
--		return i2c_smbus_write_word_swapped(data->client,
--						TMP117_REG_TEMP_OFFSET, off);
-+		return 0;
+ 	ret = regmap_write_bits(data->regmap, BM1390_REG_POWER,
+@@ -517,8 +518,9 @@ static int bm1390_chip_init(struct bm1390_data *data)
+ 	 * Default to use IIR filter in "middle" mode. Also the AVE_NUM must
+ 	 * be fixed when IIR is in use.
+ 	 */
++	regval = FIELD_PREP(BM1390_MASK_AVE_NUM, BM1390_IIR_AVE_NUM);
+ 	ret = regmap_update_bits(data->regmap, BM1390_REG_MODE_CTRL,
+-				 BM1390_MASK_AVE_NUM, BM1390_IIR_AVE_NUM);
++				 BM1390_MASK_AVE_NUM, regval);
+ 	if (ret)
+ 		return ret;
  
- 	default:
- 		return -EINVAL;
 -- 
 2.53.0
 
