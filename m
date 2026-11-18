@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026272;
-	b=0ixylYeG7uJFTNJqP0jBt2n74ZxBtEAXxSv3getm3jIoKxX2jwt43D4BDEoIs7gRL0fu
-	 NolUug8EDGuhtLXLLJaO98f5AWomRkiYjlNSf/W51Nj/OK3M+ON3R9g43eSpEP4tFu8fh
-	 z1H/ETO2g+Db3+EoIEOS7l0Buzc63eZxFEdaHWuNjRZRbaTcHCg8gzvJ3X3utj61gXuXB
-	 NYYXdlnTcMr4LYzI+1zTnMi89bmuJG2E99zG5Z2A4q61ee2O8urOGHoKc1D7PkQLq2puG
-	 rJKCPQICpIs7sGIU2ZylyUi3xTHjr66LCjqotOac59P3scdVgUyRNt5xw1tWC2yw8YA==
+	t=1795026274;
+	b=zbhay5Ku7/38WAyi2vVs84IoNZK30GW00e0V56HFPgVzn8HjtIKkcEaG94OcmRDRomrb
+	 X225pW6Wvf+6prw9ig/UdTi2/HRL4uT8/qSZlikhGDl07vaiBuW+jcOtKYS7h6n1sdnzP
+	 B/24zeJ/scmcw6E0sJPyA/1CwBVSsk9aHVDyP42so9mm2azb3AUCMA3VgfjhkXVzG//bU
+	 bCDRn7vU+a5avtrV7kRprkVNzUErn868xSLxkPHUPiyGspVn+nsROa87L3iOF+RLJhrEi
+	 7QXiHUz9Ei2LDNYEQlRnrX+Ocgw5H6bEW1noXVs0PUK7Xa5Q996p2lapSuDVT1R4Y7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026272;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026274;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MuGYXyPeE5ckrK1eF9tkKOxB1g+XbHWiDPjt5yqwXDM=;
-	b=1pCSnEdAwJuKwgT8cJb7kFqnrlOwhU5QLu45UB6QMi6jJJROHa+cqlhy1P5g8i8ZUZfl
-	 EVRZYOEWhR9rOi4kN8ziF+GxK+bA4Ey2kW1hfLV45Bi1FPWbpvIX5i01x03nxvhdNHIdd
-	 uDEzrkhQpoJUvEgJZcXCPr7OToHkuCAg9kpdQrj9/VFOIxzrd2jNF/3pSeJxUIqvmMpep
-	 SuQAJePJyJiJO72VPGqkf5EdVUwsA7Wcml768dwIP58X3qTvs7rz9jCXuOiLCu8SnRrAD
-	 nj3lgprBC0XfrOsGMUT6zeBpOWZWrRITP0zYpsG3S4SH9q2/8UjgwBry3frvq86bHaQ==
+	bh=edt7XMHJmqn56vwDnaMgySMb1+WBhRyuMmNlE/j4Mfc=;
+	b=p/9uXo5IbZEdSlwkBkhUFrNUv182SuJs2vdbBLEA/MrGig1mvdqCDFZo1A2x0PeSgEWX
+	 NJQPEBj3NwdZxNSXM6/pFag6TP5Q5kh28MpX0g5KZzkJh7kmYeTKsBX2vixmV/P+WrMiM
+	 wVZ9GLJ+jMhkbkEaox1brTFIaR03Pjr6mqgyEF5sAzAp+lyd1FWkZwxnLf2hvNYeqlV31
+	 kKkG2Rmx/KKZue2xFdr69/Zs3KrFRCsZLPPjeAGI9SoZgm9w5v6sMiKiwMIae9DcXiH99
+	 29OaDfozZzPy7oHsxXO7g4ok4yR8VvvmhWLQLfFwK5TpjREYQSIwClTo6go1hFFgwiw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JMZnPqsR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TKnIBsBx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2727606A32A;
-	Wed, 18 Nov 2026 18:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C37606A32F;
+	Wed, 18 Nov 2026 18:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JMZnPqsR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC2E1F000C6;
-	Wed, 18 Nov 2026 18:24:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TKnIBsBx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ABA01F000C4;
+	Wed, 18 Nov 2026 18:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026271;
-	bh=MuGYXyPeE5ckrK1eF9tkKOxB1g+XbHWiDPjt5yqwXDM=;
+	s=korg; t=1795026274;
+	bh=edt7XMHJmqn56vwDnaMgySMb1+WBhRyuMmNlE/j4Mfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JMZnPqsRVwbqWJ25X9ZJEcQy4VvneyyGK1/sH0T9TZ5qQ5RveoLvzOAi/+7GGw3xT
-	 a6Muu/AK04GbwGFXd7Tv6O2wFr4ymj8y6Hjj1EYV2FekrhzivoA/2ptBjBjgW+VLPa
-	 KOAZr+p0CCepYZchBpq/RJ2xM1Txg5RIkwknEC0g=
+	b=TKnIBsBxT232pD9Y0veMXOc43d8o27M3FTymnLLA/LUBHRSCh39epeYPr3ZpAkaJl
+	 K0aiv89b6jgXmrUvaxIr17AsUK3iYM/sW/swaN7iLW6ekU2rCKZHErMJHhwOLmScJh
+	 Xg4K8rU4RetlUQl8ulUTIcGPZYAwvyPCBEEYRGkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Quentin Monnet <qmo@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1374/2151] wifi: ath11k: avoid IDR mutation during vif mgmt TX cleanup
-Date: Wed, 18 Nov 2026 15:51:49 +0100
-Message-ID: <20261118150212.069221733@linuxfoundation.org>
+Subject: [PATCH 6.18 1335/2151] bpftool: Fix out-of-bounds read in kprobe_multi link info dump
+Date: Wed, 18 Nov 2026 15:51:10 +0100
+Message-ID: <20261118150210.687980219@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,72 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit dc29226dada34a6d19af77b4b51e90f8a3a8de34 ]
+[ Upstream commit 0d5e3fc78a6f2522e6339743b8e5ecc02351a9dd ]
 
-ath11k_mac_op_remove_interface() walks txmgmt_idr with idr_for_each(),
-and its callback removes each entry belonging to the interface. Removing
-the current entry can invalidate the radix-tree iterator retained by
-idr_for_each().
+show_kprobe_multi_{plain,json}() walk the sorted kallsyms array against
+the sorted addr/cookie array with j as a cursor into the latter. The
+loop terminating condition is checked after the cursor has already been
+used to access the array:
 
-Move the walk into a helper that uses idr_for_each_entry(). It performs a
-fresh lookup for every iteration, so each matching entry can be removed
-through the locked removal helper without retaining iterator state across
-the removal.
+    if (j++ == info->kprobe_multi.count)
+            break;
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261003092104.520135-4-yaojiale02@163.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+After all count entries have been printed, j has been bumped to count,
+but the loop keeps running and dereferences data[count] -- one element
+past the end of the calloc(count, sizeof(*data)) allocation -- while
+comparing every remaining kallsyms symbol. If the out-of-bounds value
+happens to match a symbol address, a bogus entry with a garbage
+addr/cookie pair is printed to boot.
+
+Fix the off-by-one by advancing the cursor before the comparison, so the
+loop terminates as soon as the last entry has been printed.
+
+Verified with an ASAN build of bpftool against a live kprobe_multi link
+of 3 symbols:
+
+  before: ERROR: AddressSanitizer: heap-buffer-overflow READ of size 8
+          at link.c:860 (show_kprobe_multi_plain) and link.c:352
+          (show_kprobe_multi_json), 0 bytes after the 48-byte
+          get_addr_cookie_array() allocation
+  after:  clean output, no ASAN report
+
+Fixes: edd7f49bb884 ("bpftool: Show kprobe_multi link info")
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Acked-by: Yafang Shao <laoar.shao@gmail.com>
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/bpf/20261010074435.1415234-1-chenyuan_fl@163.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/mac.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ tools/bpf/bpftool/link.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 6f620265bf924..b47e86201a3b9 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -6041,16 +6041,18 @@ void ath11k_mac_tx_mgmt_pending_free(struct ath11k *ar)
- 		ath11k_mac_tx_mgmt_free(ar, buf_id);
- }
+diff --git a/tools/bpf/bpftool/link.c b/tools/bpf/bpftool/link.c
+index bdcd717b0348f..ddcdd8754add7 100644
+--- a/tools/bpf/bpftool/link.c
++++ b/tools/bpf/bpftool/link.c
+@@ -364,7 +364,7 @@ show_kprobe_multi_json(struct bpf_link_info *info, json_writer_t *wtr)
+ 		}
+ 		jsonw_uint_field(json_wtr, "cookie", data[j].cookie);
+ 		jsonw_end_object(json_wtr);
+-		if (j++ == info->kprobe_multi.count)
++		if (++j == info->kprobe_multi.count)
+ 			break;
+ 	}
+ 	jsonw_end_array(json_wtr);
+@@ -799,7 +799,7 @@ static void show_kprobe_multi_plain(struct bpf_link_info *info)
+ 		else
+ 			printf("  ");
  
--static int ath11k_mac_vif_txmgmt_idr_remove(int buf_id, void *skb, void *ctx)
-+static void ath11k_mac_vif_txmgmt_cleanup(struct ath11k *ar,
-+					  struct ieee80211_vif *vif)
- {
--	struct ieee80211_vif *vif = ctx;
--	struct ath11k_skb_cb *skb_cb = ATH11K_SKB_CB((struct sk_buff *)skb);
--	struct ath11k *ar = skb_cb->ar;
--
--	if (skb_cb->vif == vif)
--		ath11k_mac_tx_mgmt_free(ar, buf_id);
-+	struct ath11k_skb_cb *skb_cb;
-+	struct sk_buff *skb;
-+	int buf_id;
- 
--	return 0;
-+	idr_for_each_entry(&ar->txmgmt_idr, skb, buf_id) {
-+		skb_cb = ATH11K_SKB_CB(skb);
-+		if (skb_cb->vif == vif)
-+			ath11k_mac_tx_mgmt_free(ar, buf_id);
-+	}
- }
- 
- static int ath11k_mac_mgmt_tx_wmi(struct ath11k *ar, struct ath11k_vif *arvif,
-@@ -7103,8 +7105,7 @@ static void ath11k_mac_op_remove_interface(struct ieee80211_hw *hw,
- 
- 	ath11k_peer_cleanup(ar, arvif->vdev_id);
- 
--	idr_for_each(&ar->txmgmt_idr,
--		     ath11k_mac_vif_txmgmt_idr_remove, vif);
-+	ath11k_mac_vif_txmgmt_cleanup(ar, vif);
- 
- 	for (i = 0; i < ab->hw_params.max_tx_ring; i++) {
- 		spin_lock_bh(&ab->dp.tx_ring[i].tx_idr_lock);
+-		if (j++ == info->kprobe_multi.count)
++		if (++j == info->kprobe_multi.count)
+ 			break;
+ 	}
+ error:
 -- 
 2.53.0
 
