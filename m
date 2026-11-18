@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058802;
-	b=alqIpZLo8eImaNSiZpa4QsRQMzFWSxNGe+a5Oj5NxomtIGnHzeaMJu1OTv9T+ZvlsSRo
-	 JqdEdhDnyOB4BqXu1tW9EXroHlH4bIp34CgcSkXLY3mnwGWUytdEeSHxUYE/voMiZOMKW
-	 ZJiueOyOyAEAqvLKXD7s1w0Nh+tS6Uk4Y2rqmnr1aTW/MYnlG46klSF6jcbrGeKXg+Nk1
-	 Meo1m/kuaKXZhozsrFNgnC+ccRKMAY0t/Cp0v/xlqENU7WiI1q+gysFVEcs26BKKg2Pb+
-	 1PcgbhiDqps8ZbLazH0DXq6d3LiBxJ22Qd+ecX927H5m+EF8SFzUcG0MJMMPvjYYk8g==
+	t=1795058805;
+	b=ImWK8K4xvTLP4wogLv4d+PqneW+6XA5hmTLe6fKDHfFjfmovTdYFRMHibDz0e3VlP4Ra
+	 TEIxL1qrY/ylznV7YaQa0BERCOcp3KtwMYI6ynVvhFPVIe9ohoSNy3Ur/J6YfxURzJrUE
+	 MxMPJsxBcf5dydTsaxlb5bKeDwgFESDhAsuEms6BulwlGjdJHpF0OCDq70FEG2xVKS8UC
+	 8Sc9Yd7gq6UQ1wSlv+pNLdt/Sw36RDdnKC4M95FgzuBVPRgfEh0BCvMvxt9Z//zJwtf5K
+	 OfcnzijyE1PrEOZuA+XFOPkrr6In3dWmptR/th/OINVO/EGFXe5wm/w5y5Q2qYzGrxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058802;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058805;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T8qj4tKHwjSMUeKjQxgJbpQ5cHcttVufc87co8IBVMI=;
-	b=fgdyWoq2up+/DnjCA9tMogQ0LUVyKYcADC+Ebaqj2jHsbB/oasAt5f8WUsXKhYnHutp4
-	 zjgH0OQ2QXH0HXh1VCdVECoOcInMvc4+IF+5WOJUru/fWvRLl3aKc8oHb177xQbGcWSKI
-	 2V/OTk2jw/fCDjaQk+opgGAQurf5sFF2jduVIwySj8QzaNoMGbGniFcO7gH5UqgC8ttJI
-	 LZlHj+gfVEbpCH9hhgaSIaFvh8RVR6n49btSFE7YB0AD7o1fT/pOwsZRi6ZZk3+9Y7owV
-	 2taWN4WUag7GsCRg75d7CAbX6DBIuKsy4arWshWGRb3q/+xNNKhIhxjBHzCKrH4lmkg==
+	bh=t1Fa+jUhQ4DxAGPOG2FcYE6XIOo5ajMVkBiWd6gjz4Y=;
+	b=ey4U4trHBPIJe6NDzYHNCiexQ9maLaWpMYHwaYWuhmdzv8Kj58Ey9bUKp5rq0wmvRDOR
+	 t7mm0FKwNywlNTPLWxQpE4GiGroJajimIMgqAUv1nhpZMQNCHYpVriGETnC+5NFwTlCUO
+	 H873QyUpGRJAUO3dxs5IiSXc72v3DdMj8EOBJiSbNyqSUtiSJFdaRVaXK/FuooM6r99wa
+	 XFlB0/UxDVPTeJgmGAjNHLkhgwD9VkEnASrbAFYZBHSIdNGZHnEPHRGDGANVu/OsNXoJZ
+	 53K3MXMmA/vuumrvcUju96LwK6Hu962xP/xeBluDMpPHSQydZsibRmrgkOI37nlN5+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zYbdjgcp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hC471QWA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A9A606A31C;
-	Thu, 19 Nov 2026 03:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4472E606A320;
+	Thu, 19 Nov 2026 03:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zYbdjgcp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF79B1F000C4;
-	Thu, 19 Nov 2026 03:26:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hC471QWA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BBD11F000C4;
+	Thu, 19 Nov 2026 03:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058802;
-	bh=T8qj4tKHwjSMUeKjQxgJbpQ5cHcttVufc87co8IBVMI=;
+	s=korg; t=1795058805;
+	bh=t1Fa+jUhQ4DxAGPOG2FcYE6XIOo5ajMVkBiWd6gjz4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zYbdjgcpkdePxy8OMw8PaWemuVW3fDqL4QY2935sqFrioYPpNciWbq1e89jfwM6MX
-	 lNbuMPz2ZVFm28o3wtpSI5CnYGyGLs3squxnW7gntMIXWT3ZxTNVBmlf3XQbATn0bD
-	 7fSI/eUaTggoKB7mOnmxcjatTnohm/shaGeZmaQY=
+	b=hC471QWAwdx/gxkqJ6o7T2bVsEG6M62z6sfzaRZv4Ws/GccW4ym0QsTb+4qt3uxCc
+	 0Ucye/BWFJ+id+DccIY1rjIOSswoOE2Eqza7o/tpyaX3IeXxKoosr6PhhVUcCBnHb9
+	 tSkxnc6goRZYJLdRpSnib1rDSdN50j6PdD8bsqbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Keith Busch <kbusch@kernel.org>,
-	Andrew Stellman <astellman@stellman-greene.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Kamil Sawicki <user148783812897@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0614/1848] nvmet-rdma: fix out-of-bounds write in nvmet_rdma_map_sgl_inline()
-Date: Wed, 18 Nov 2026 15:44:12 +0100
-Message-ID: <20261118145940.991215273@linuxfoundation.org>
+Subject: [PATCH 5.10 0615/1848] net: limit priority VLAN untag depth
+Date: Wed, 18 Nov 2026 15:44:13 +0100
+Message-ID: <20261118145941.022987487@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,66 +71,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Stellman <astellman@stellman-greene.com>
+From: Kamil Sawicki <user148783812897@gmail.com>
 
-[ Upstream commit d1512773a0d539669440bd9f6d050b8e12923b5f ]
+[ Upstream commit d3ff07f5acc573e5f72bf1c581bae5d05191ba61 ]
 
-nvmet_rdma_map_sgl_inline() bounds the host-supplied in-capsule SGL
-offset with "off + len > inline_data_size", evaluated in 64-bit
-arithmetic. off is taken straight from the host SGL descriptor
-(le64_to_cpu(sgl->addr)) and len is promoted to 64-bit, so the sum
-wraps: an off within len of 2^64 makes it small and the check passes.
-off is then used as page_idx = off / PAGE_SIZE to index the fixed-size
-rsp->cmd->inline_sg[] array (NVMET_RDMA_MAX_INLINE_SGE entries), so a
-crafted offset yields an out-of-bounds scatterlist index that is written
-through in nvmet_rdma_use_inline_sg().
+The priority VLAN receive path can repeatedly remove VID 0 tags and retry
+packet processing. Unlike the read-only VLAN protocol parser, this path has
+no limit on the number of nested tags it consumes.
 
-The mapping runs while handling a received capsule, before the command
-executes, so a remote RDMA peer can reach it (the Connect capsule is a
-write and takes this path on a queue that has no controller yet). The
-host controls only the low bits of the resulting displacement, so the
-expected impact is an out-of-bounds write that faults the target
-(remote denial of service).
+Each skb_vlan_untag() advances skb->data and resets header offsets. The
+offsets are stored in 16-bit fields. With enough nested tags, the network
+or transport offset can wrap. A later protocol handler can then derive a
+large pull length from the wrapped offsets and access memory outside the
+skb allocation.
 
-This wrap was reported, with a KASAN reproduction, on linux-nvme in May,
-and the check below was suggested in that thread. The fix that was
-applied, 48c0162f647b, reworked how the offset is mapped but kept the
-original check, and its page index turns a wrapped offset into an
-out-of-bounds index into inline_sg[].
+Apply the existing VLAN_MAX_DEPTH limit to the exceptional VID 0 retry.
+Count the tag already stored in skb VLAN metadata as the first level, then
+stop before untagging a ninth level. Keep the accounting inside this
+uncommon branch so the regular VLAN receive path is unaffected.
 
-Reject the offset before it can wrap.
+A single VID 0 priority tag before a real VLAN tag is valid. No normal
+deployment was found that intentionally emits multiple consecutive VID 0
+tags; permitting eight levels is therefore conservative.
 
-Found independently by static analysis with AI assistance, not
-reproduced at runtime.
+The issue was found while researching the Linux network receive path for
+Google kvmCTF, with OpenAI Codex (gpt-5.6-sol) assisting the analysis. The
+affected path, reproducer and fix were manually reviewed and tested.
 
-Fixes: 0d5ee2b2ab4f ("nvmet-rdma: support max(16KB, PAGE_SIZE) inline data")
-Fixes: 48c0162f647b ("nvmet-rdma: handle inline data with a nonzero offset")
-Reported-by: Bryam Vargas <hexlabsecurity@proton.me>
-Closes: https://lore.kernel.org/all/LM21QIR-1-qJb7PViyJKCnGBnUzizeiNJVWQ3wb7ZwGezodjgKg3f-iobqOyequ-sT1jFCKJImfqNO_BKU3KO80xFITnaI5GTV_GxLUNDDc=@proton.me/
-Suggested-by: Keith Busch <kbusch@kernel.org>
+Fixes: 36b2f61a42c2 ("net: handle 802.1P vlan 0 packets properly")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Andrew Stellman <astellman@stellman-greene.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Kamil Sawicki <user148783812897@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261024004835.17862-1-user148783812897@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+
+[ Backport to 5.10.y: __netif_receive_skb_core() has no local
+  drop_reason variable, and this branch does not define
+  SKB_DROP_REASON_RECURSION_LIMIT. Omit the upstream assignment
+  and keep the existing drop path, which frees the skb with
+  kfree_skb(). ]
+Signed-off-by: Kamil Sawicki <user148783812897@gmail.com>
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/core/dev.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index 521208929339a..4a28767ec3ef1 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -862,7 +862,8 @@ static u16 nvmet_rdma_map_sgl_inline(struct nvmet_rdma_rsp *rsp)
- 		return NVME_SC_INVALID_FIELD | NVME_SC_DNR;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index b39f31890fce2..8d286a64d2c8f 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -5315,6 +5315,8 @@ static int __netif_receive_skb_core(struct sk_buff **pskb, bool pfmemalloc,
  	}
  
--	if (off + len > rsp->queue->dev->inline_data_size) {
-+	if (off > (u64)rsp->queue->dev->inline_data_size ||
-+	    len > (u64)rsp->queue->dev->inline_data_size - off) {
- 		pr_err("invalid inline data offset!\n");
- 		return NVME_SC_SGL_INVALID_OFFSET | NVME_SC_DNR;
- 	}
+ 	if (unlikely(skb_vlan_tag_present(skb)) && !netdev_uses_dsa(skb->dev)) {
++		unsigned int priority_tag_depth = 1;
++
+ check_vlan_id:
+ 		if (skb_vlan_tag_get_id(skb)) {
+ 			/* Vlan id is non 0 and vlan_do_receive() above couldn't
+@@ -5327,6 +5329,10 @@ static int __netif_receive_skb_core(struct sk_buff **pskb, bool pfmemalloc,
+ 			 * 802.1Q or 802.1AD and vlan_do_receive() above could
+ 			 * not find vlan dev for vlan id 0.
+ 			 */
++			if (unlikely(priority_tag_depth >= VLAN_MAX_DEPTH))
++				goto drop;
++
++			priority_tag_depth++;
+ 			__vlan_hwaccel_clear_tag(skb);
+ 			skb = skb_vlan_untag(skb);
+ 			if (unlikely(!skb))
 -- 
 2.53.0
 
