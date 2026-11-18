@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048220;
-	b=tk2okdCktmcDsSokj3APDsCvIS+tZA7uTSCpPcssQ1RtYjs1CyeNKBIADK04EFLoZXBF
-	 JajMPi+5rLsQmay+4Mn3Nt5pGUkS4Fxtoiif2f1ruEfgod1KYhcSoClHhcnSQLII/wRR2
-	 r0bNMZt83HEVIScuhYc579z7b4nyCh8gs8G2W8Yf4LowIi+UmyuR3cDMLzLOpoJ5IREjK
-	 ple8uyzme6TnAdMRFKTJ0/kqzLIPKocW0TGoybkhB2cE9a0HaZu6UtbazStjlQyw1PuEu
-	 /1gcDoEHoJGwPY+Z6lyfjPYB4EcvHrKYz48uUx7qiSTMxb0JGWiKw76oynutNSlV2PA==
+	t=1795048223;
+	b=UlUK30R3i33v+GO6osA+4DOk0+AfIBMRZYTlRZkgPHW8ZXPgCPONSUrN+aHN3zXWruwG
+	 iw3oG1WZB+Vl/9lA+Uy/yPBjY2mJAvR7HbYzdtm8h+lB3Vvmxi4v4fWQo8CmVnX/vdQlS
+	 UrSF2prtw0XZkACiKsnM2d1lWs49mdKFYWjmv7jp6Tpv3v7KhgVYxuElc0nm3IslwXyHD
+	 7VvDf8kg66ldujp0FGcZ7ch85I2rj0rQ7/HQyXjCssiTxDv/Yi0clUyT5DIkkksUYgp3H
+	 iIgs72+2CxmthBNPXtsxoezLMRufRgTBd0k2XCs2Pu3zucU0Lh0q1YH3YZ9JTUW8k6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048220;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048223;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2BwtDKJp5zP7EGUPA2yapWsyeOMxs18+toz8kTFR5Aw=;
-	b=kTmTB8ndRjnaXbqZMPFKPZZbhiDS9qnmahj5v+QtQvWj06XyNtS1Oz2a5Muz7CL0lPSL
-	 IwYY4har0hRtmxM9glehoMzzW6ZQ/9XytAeXXGrC32rMmBK3Y/gckz9yaQW5NhEr22P/M
-	 hQhY9Vaq2IDD7cwh2zB5trB+RjbtmY9+w1GUA7PuDlNgUsruZoVwnzhWWEb+vL5pDZDDT
-	 ME/oqIc4ZTuFmsbb1InLMls2sSaki+oDCbaYHKbrNNXv+vJpR867PbYBsT2NRFu47566T
-	 ONNlqZSwAbhh3TwiqHm80OH7/hPy+K3oNndCIdknm+3g68kd71TOCvbXft5s9/bE8kA==
+	bh=0rLrciiCm+HnVgj3RkdXixl93E1P+/LNb50qsQr+3Gk=;
+	b=US3llJyhvpztLuJNTYhT4JnJjLPaKDdZs8zuo25JzFae4Mv6qvWTEreTWohssc3hfxH8
+	 oJwIaaUYl/S8AWqZHK7AgS9tM73SiI8YwSoimpjD80xvvx4HOEMLajFtKWdEia011+qyy
+	 1wFTDHp0kFLNkTqqNOYEvTp5nHSuBaznuvRB7qmysC18N6DL+9Zw7WGNNUtf2qmb2/81r
+	 8aWJPXMpgY4VlBpAeveH83otxLuag131at/wqxlKRY1br/8Dg1ahxo4m8+iqcWtkqY9kw
+	 q4nKECTccdwOA1+yehfBzZ0QMKRPJhmmnFO9Va2sOn/G8Qezjmisv+wGCJhXZfNVGOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=10Az7ZVf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0iu+GPSI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C8160A263D;
-	Thu, 19 Nov 2026 00:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 041AC606A339;
+	Thu, 19 Nov 2026 00:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=10Az7ZVf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126071F000C5;
-	Thu, 19 Nov 2026 00:30:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0iu+GPSI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB1E1F000C4;
+	Thu, 19 Nov 2026 00:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048219;
-	bh=2BwtDKJp5zP7EGUPA2yapWsyeOMxs18+toz8kTFR5Aw=;
+	s=korg; t=1795048222;
+	bh=0rLrciiCm+HnVgj3RkdXixl93E1P+/LNb50qsQr+3Gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=10Az7ZVf8LU5McyBk72a0IdzzLfIN7de0ELeO2CZTUojd7fMGraGIJmGK/lSRtMZX
-	 UGtkUomxEW5BXAktv1ZogNuHojRbcRGnAact74pl8f8psBO8vrdvZvKZHNSVRrWBpb
-	 AMQDWp4HNwpO/r1gmlQuEl0QIcYasNoieYrcZVT8=
+	b=0iu+GPSIW3ZGEgOQVDXqhy0iSVsQvUP1MIixF3ugnRgJuv6H+17YlPxkYY8bCr5WD
+	 pTY4enzPKUyvGwcGwWDLVuu4RP1hsaurreVSmzLenHtbx1SvOBgebf0RreboXWQlPL
+	 CzKhjQpN6L7la15yUZUnemyd+wkMnB/OOStyAP2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1918/2857] regulator: fixed: add support for under-voltage IRQ
-Date: Wed, 18 Nov 2026 15:49:12 +0100
-Message-ID: <20261118150310.272679209@linuxfoundation.org>
+Subject: [PATCH 6.1 1901/2857] cpuidle: menu: Remove incorrect unlikely() annotation
+Date: Wed, 18 Nov 2026 15:48:55 +0100
+Message-ID: <20261118150309.677027719@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,108 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit ecb6f1f456144e9ade5a492192287decbeef4cfe ]
+[ Upstream commit fcbd7897b871e157ee5c595e950c8466d86c0cd5 ]
 
-Add interrupt support for under-voltage notification. This functionality
-can be used on systems capable to detect under-voltage state and having
-enough capacity to let the SoC do some emergency preparation.
+The unlikely() annotation on the early-return condition in menu_select()
+is incorrect on systems with only one idle state (e.g., ARM64 servers
+with a single ACPI LPI state). Branch profiling shows 100% misprediction
+on such systems since drv->state_count <= 1 is always true.
 
-This change enforce default policy to shutdown system as soon as
-interrupt is triggered.
+On platforms where only state0 is available, this path is the common
+case, not an unlikely edge case. Remove the misleading annotation to
+let the branch predictor learn the actual behavior.
 
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/r/20231025084614.3092295-6-o.rempel@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 51d6888b51e0 ("regulator: qcom-rpmh: Fix the return value in rpmh_regulator_vrm_get_optimum_mode() kernel-doc")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260105-annotated_idle-v1-1-10ddf0771b58@debian.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: d594187cafd5 ("cpuidle: menu: Do not return a disabled idle state")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/fixed.c | 50 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+ drivers/cpuidle/governors/menu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/fixed.c b/drivers/regulator/fixed.c
-index ddaff8579c889..35ee43bf275ba 100644
---- a/drivers/regulator/fixed.c
-+++ b/drivers/regulator/fixed.c
-@@ -20,6 +20,7 @@
- #include <linux/platform_device.h>
- #include <linux/pm_domain.h>
- #include <linux/pm_opp.h>
-+#include <linux/reboot.h>
- #include <linux/regulator/driver.h>
- #include <linux/regulator/fixed.h>
- #include <linux/gpio/consumer.h>
-@@ -31,6 +32,8 @@
- #include <linux/clk.h>
- #include <linux/string.h>
+diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
+index 2aa87ce37a904..5bdef6470ca12 100644
+--- a/drivers/cpuidle/governors/menu.c
++++ b/drivers/cpuidle/governors/menu.c
+@@ -314,7 +314,7 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 	nr_iowaiters = nr_iowait_cpu(dev->cpu);
+ 	data->bucket = which_bucket(data->next_timer_ns, nr_iowaiters);
  
-+/* Default time in millisecond to wait for emergency shutdown */
-+#define FV_DEF_EMERG_SHUTDWN_TMO	10
- 
- struct fixed_voltage_data {
- 	struct regulator_desc desc;
-@@ -107,6 +110,49 @@ static int reg_is_enabled(struct regulator_dev *rdev)
- 	return priv->enable_counter > 0;
- }
- 
-+static irqreturn_t reg_fixed_under_voltage_irq_handler(int irq, void *data)
-+{
-+	struct fixed_voltage_data *priv = data;
-+	struct regulator_dev *rdev = priv->dev;
-+
-+	regulator_notifier_call_chain(rdev, REGULATOR_EVENT_UNDER_VOLTAGE,
-+				      NULL);
-+
-+	return IRQ_HANDLED;
-+}
-+
-+/**
-+ * reg_fixed_get_irqs - Get and register the optional IRQ for fixed voltage
-+ *                      regulator.
-+ * @dev: Pointer to the device structure.
-+ * @priv: Pointer to fixed_voltage_data structure containing private data.
-+ *
-+ * This function tries to get the IRQ from the device firmware node.
-+ * If it's an optional IRQ and not found, it returns 0.
-+ * Otherwise, it attempts to request the threaded IRQ.
-+ *
-+ * Return: 0 on success, or error code on failure.
-+ */
-+static int reg_fixed_get_irqs(struct device *dev,
-+			      struct fixed_voltage_data *priv)
-+{
-+	int ret;
-+
-+	ret = fwnode_irq_get(dev_fwnode(dev), 0);
-+	/* This is optional IRQ. If not found we will get -EINVAL */
-+	if (ret == -EINVAL)
-+		return 0;
-+	if (ret < 0)
-+		return dev_err_probe(dev, ret, "Failed to get IRQ\n");
-+
-+	ret = devm_request_threaded_irq(dev, ret, NULL,
-+					reg_fixed_under_voltage_irq_handler,
-+					IRQF_ONESHOT, "under-voltage", priv);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to request IRQ\n");
-+
-+	return 0;
-+}
- 
- /**
-  * of_get_fixed_voltage_config - extract fixed_voltage_config structure info
-@@ -300,6 +346,10 @@ static int reg_fixed_voltage_probe(struct platform_device *pdev)
- 	dev_dbg(&pdev->dev, "%s supplying %duV\n", drvdata->desc.name,
- 		drvdata->desc.fixed_uV);
- 
-+	ret = reg_fixed_get_irqs(dev, drvdata);
-+	if (ret)
-+		return ret;
-+
- 	return 0;
- }
- 
+-	if (unlikely(drv->state_count <= 1 || latency_req == 0) ||
++	if (drv->state_count <= 1 || latency_req == 0 ||
+ 	    ((data->next_timer_ns < drv->states[1].target_residency_ns ||
+ 	      latency_req < drv->states[1].exit_latency_ns) &&
+ 	     !dev->states_usage[0].disable)) {
 -- 
 2.53.0
 
