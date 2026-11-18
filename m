@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039445;
-	b=W+mkR9lBKiTQBOcrcZp/vtFhNVWJeh5kpU2jPrEDTx2y/iclbf9DZ6lUDDF+l6BfN6FJ
-	 cacpMHuQ1XQlN1ZRk5q/pYR5ANbjGvvwhIP92caI7qe7ehZSffgqD+aYTaPjtARDTC47t
-	 +xrZimX7Swu+H/iu/AIJ4H+iXXA9B7mG6SvTPu9/fhCaUNCd6wKkJ3FwOrq3VDZViPROR
-	 F6hEi8z7BERBZL66Y0gRQp8sardcA/fvN4+CAe8HivsZhKf7A2LGkXlrAJYO8fAa8ezrL
-	 TbG33X3T6sqnothZOksS8Usmppb9he0JlEeMwxwe9SfwAf78DVK00F1VEoEmAhQ9AjQ==
+	t=1795039448;
+	b=KOj2EfXqCTqEmFvqjfZS3cs6hgumdBUjEfKqToE6y2mbRNlw1aOAFG6zCp36ZbxxMUY6
+	 UmBWQ8hYOcDUC2QVzNq6zrONT7SoxgUjxd8V/SP4swJN8k0hlgNWmp1tUp72XBoqEdLEH
+	 a8/rywF5ihQBeGsXWy3hhfQ36o56vFAx+rGjm9DdfFuGYJRdrOdSDOVfkiQKvL0Ft2bDi
+	 GNmYTDYw9C/eghqy/i/Li0IMLVX3oNhiHpR8JX93ZdVSY/FRPnKC3GF7sI7iIWeOXFTXL
+	 /D2TVHbLPZn0TpVIvdQwm2118XqpTl5xucqGpam93I+dSrpEpA+EOLM5ElwYA21uO0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039445;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039448;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6qrOYarSE4fzGHZiyzXD0zLZKaZf+Znlir+kVHpXGMQ=;
-	b=kngPRmHtmUg7P6+vBOQXUuM9ni8MpkD75h8PICtG6DHl5S31xRl9hdtATDPYegw8Eq7Y
-	 Ds+KcADwGkEf+NdSTPEUM6+jmcMdgfogezOyjTI3KBQWGE0s0MsbmpTmjav2uC40SaBi7
-	 pGIFlU/bRYPuS8pMOtmMxP7r2ZIYVI0qUUAqhdQ0N5vbU0n6dO/3aVqRcP5qBUXlmLqAk
-	 gJWOLuJ0+/gxfoC8qam3tGLjYS9Sx+uboTs7THEx/zppwFASOb6MjK6TRjJlht41/Be2a
-	 Jbeoz2ALOyMI9eGzwjVUzuCo0NDK8MpSAjLI8SeyRrrTq5ueNT5gj8QbcocVp3zwE0Q==
+	bh=KBy7mRxeryh672nljBEY3NoPlvLqxs6G3RaRTyPF1Io=;
+	b=KjpvVnODpHAX1gimsqGBDmDFxBLjzijH/7GQcv4iHk2S2kmHN4bCVw52SAAg1o2XdiDi
+	 6gzsKLOpIeJCGkwPkE1BVA2+aawsQRf4Mp8kea0evxRF07wydDdEgeN/a+bhdf3Jf4mIY
+	 MwZEV9ztY+363oqxaebseN6MxNHZ7UV1wilAua2rgmmSxgZZB4YOPe+bCKc4mb+Q6oU0D
+	 OtNX4hamX1xi6D+ovVLHCq7OFZ3zctYwI/MS0evEUrNSlqdWB2VGcVddVFcpMKNcwQaa/
+	 Tek2w2l231JRZwNyE2r8VxzYd9ksSzaW/RdVonH2W5MVzREw9PEYYozLd6enNsBefHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CXgdY0cy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E2m7L9cp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF75B606A31C;
-	Wed, 18 Nov 2026 22:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528E9606A31C;
+	Wed, 18 Nov 2026 22:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CXgdY0cy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC11F1F000C4;
-	Wed, 18 Nov 2026 22:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E2m7L9cp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE9F1F000C4;
+	Wed, 18 Nov 2026 22:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039445;
-	bh=6qrOYarSE4fzGHZiyzXD0zLZKaZf+Znlir+kVHpXGMQ=;
+	s=korg; t=1795039448;
+	bh=KBy7mRxeryh672nljBEY3NoPlvLqxs6G3RaRTyPF1Io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CXgdY0cy9Lsva6AkMXezktN3Jy+HOqcfsuP2Gt7aMbtSXxVmHM4FByFiqSlYz8se4
-	 U0lilQ0z7g2pjgiL7nqCmDk/L6jHKG+dbWt/h3b0w9RE+SB8EOc4UyZJ2z/Jkg6Gjh
-	 gC7CZIuG0EIUsbOV59Yu9Y9fotBpEOhYgh2IRngI=
+	b=E2m7L9cp9+UWrqR00Ax6ytaAdhEIJHpmos71v62Z162RX2r9abU/NTnMK2QTU54hO
+	 4Wrxu37S5a4IYRAss2rACoMcPdjNIiCplXYDsNX1vBcpdfhU/PwfGwq0SeINujrIee
+	 cuZPaD4HF4z+wwYXsunwdaVh8kZUpn9aorPD2ZEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mikhail Lobanov <m.lobanov@rosalinux.ru>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2104/3318] ACPI: utils: Adjust message printing macros for ACPI objects
-Date: Wed, 18 Nov 2026 15:45:26 +0100
-Message-ID: <20261118150425.201315683@linuxfoundation.org>
+Subject: [PATCH 6.6 2105/3318] wifi: ath11k: modify null check logic in ath11k_ce_rx_post_pipe()
+Date: Wed, 18 Nov 2026 15:45:27 +0100
+Message-ID: <20261118150425.230076310@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,83 +71,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Mikhail Lobanov <m.lobanov@rosalinux.ru>
 
-[ Upstream commit 78ddbfaa72d68acc98cd5ba12eca071d452702c4 ]
+[ Upstream commit 52953d149ab4da0432d54b09f3c8add42b4d4a82 ]
 
-The majority of acpi_handle_<level>() macros use neither pr_fmt() nor
-dev_fmt() and acpi_handle_debug() uses pr_fmt() like dev_fmt(), but
-only if dynamic debug is compiled in.
+The previous logic in ath11k_ce_rx_post_pipe() incorrectly required both
+dest_ring and status_ring to be NULL in order to exit the function.
+This caused the function to continue even if only one of the pointers
+was NULL, potentially leading to null pointer dereferences in
+ath11k_ce_rx_buf_enqueue_pipe().
 
-For more consistency, redefine all of the macros in question to use
-dev_fmt() because they are more similar to the analogous dev_*()
-family of macros than to the pr_*() ones and make all of them use it
-in the same way.
+Fix the condition by modifying the logic so that the function returns
+early if either dest_ring or status_ring is NULL.
 
-While at it, rephrase the comment documenting those macros for more
-clarity.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 45fef5b88d1f ("ACPI: add dynamic_debug support")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/2300525.irdbgypaU6@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Link: https://patch.msgid.link/20240909150824.28195-1-m.lobanov@rosalinux.ru
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/acpi.h | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/net/wireless/ath/ath11k/ce.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/acpi.h b/include/linux/acpi.h
-index 7c6f4006389da..7686849eb5822 100644
---- a/include/linux/acpi.h
-+++ b/include/linux/acpi.h
-@@ -1202,34 +1202,34 @@ void __acpi_handle_debug(struct _ddebug *descriptor, acpi_handle handle, const c
- #endif
+diff --git a/drivers/net/wireless/ath/ath11k/ce.c b/drivers/net/wireless/ath/ath11k/ce.c
+index 39d9aad33bc69..7f2c91fd7ab3a 100644
+--- a/drivers/net/wireless/ath/ath11k/ce.c
++++ b/drivers/net/wireless/ath/ath11k/ce.c
+@@ -324,7 +324,7 @@ static int ath11k_ce_rx_post_pipe(struct ath11k_ce_pipe *pipe)
+ 	dma_addr_t paddr;
+ 	int ret = 0;
  
- /*
-- * acpi_handle_<level>: Print message with ACPI prefix and object path
-+ * acpi_handle_<level> - Print a message with ACPI prefix and object path
-  *
-- * These interfaces acquire the global namespace mutex to obtain an object
-- * path.  In interrupt context, it shows the object path as <n/a>.
-+ * In thread context, the global namespace mutex is acquired to obtain the
-+ * object path.  In interrupt context, the object path is shown as <n/a>.
-  */
- #define acpi_handle_emerg(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_EMERG, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_EMERG, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_alert(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_ALERT, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_ALERT, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_crit(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_CRIT, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_CRIT, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_err(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_ERR, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_ERR, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_warn(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_WARNING, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_WARNING, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_notice(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_NOTICE, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_NOTICE, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_info(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_INFO, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_INFO, handle, dev_fmt(fmt), ##__VA_ARGS__)
+-	if (!(pipe->dest_ring || pipe->status_ring))
++	if (!pipe->dest_ring || !pipe->status_ring)
+ 		return 0;
  
- #if defined(DEBUG)
- #define acpi_handle_debug(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_DEBUG, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_DEBUG, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #else
- #if defined(CONFIG_DYNAMIC_DEBUG)
- #define acpi_handle_debug(handle, fmt, ...)				\
- 	_dynamic_func_call(fmt, __acpi_handle_debug,			\
--			   handle, pr_fmt(fmt), ##__VA_ARGS__)
-+			   handle, dev_fmt(fmt), ##__VA_ARGS__)
- #else
- #define acpi_handle_debug(handle, fmt, ...)				\
- ({									\
+ 	spin_lock_bh(&ab->ce.ce_lock);
 -- 
 2.53.0
 
