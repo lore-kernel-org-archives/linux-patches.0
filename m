@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060089;
-	b=z0PKMBww+QJj+pDLKxIVmbXCITALWaxEvpHO31LaHsBL2v4hMA9HHF5mnpkHlaWngAj7
-	 Bfu7fpsFL1jtYK9yVJuIY9SuqVCHQ9uBZf0zGMexh1rNwOQjb9TQGpMdE6aFGk+7COOD/
-	 G198i9TrMpVXKs6foRvORBo3XdLAu2nbwQQoH8A/uVtyxgaDJsVVK+abD90hVz6/opE2R
-	 ian9nJaOKYWkFgBaU508PgWT8tUASWABvhqZP//2mF6CoRwWIYG1STdESmgx04+43Sv+t
-	 ryf5Om54UQ/g6ua9tM32L8mX73OWM7H/BKzM30qZMU/ZGhBBlvlF1Jq4bHUHmxKzTVQ==
+	t=1795060091;
+	b=QhDhTKAG2PJH+YZozmEdMe/cQZa/A2LqjDAp+7XcZFEcwVJLuWmpHYTmSEOm2jOgwCYB
+	 WFy7yxunmc9VJzRs4Je46m2QOfjR8JWdqka7s8WVhKZgGzCZ8wfFwgfRf7pbBbrOqObGY
+	 VnnVlW0/xSq/7gF2oKSpr2kUMmMzTSjdqN62vE9jyC0njiA6pPfihJjLWwBWuAc+GQhj5
+	 YeWe9BP6gEatlZp7cE72VSRP74c4DECj1unn77leDkxPszFjqdMO7PBNyHlCp+ZwOowGm
+	 6vXG0pcNYUw9zE4j82nRSyOQYdWQXdDwUFL+tP69UvkbfrYk02AcjW68kDd4zAHg4Qg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060089;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060091;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ksFIthFuClpzOkbk5pjx0YU1r5LhBVtI3keIHMYRB04=;
-	b=3XkSf2RU9zRK5VeLbqQTi+9xS7YpKI0JJrJQdPpAUmqY0ZWir3HeQYsmMeSakpsfTDRg
-	 CnDZ622QhvVjkEwf1+c1muNwVBzotZrV+fewNDjGubJ9t1bLUg7pF6KdNU9pxkPTlRk1c
-	 qXOUgfN8NJ4TsKmnF85/V2wuvc/E/X4eCf/vJPhZDDUPF32yZt1cCPTfocxdlcMQoijBm
-	 gm6jAhuWdPgSZotu641tMMe+AYOOGC4+9eZTVeEE6kBx9WKrbFX7BuamNecTpMmGrjPom
-	 GKkPU4vM6e/8w7g3TUvwzEXVr42yj+14tPJrQEFQDaHFrayJyvlm188BGRoAYlnWLng==
+	bh=E414nUUn4lm1Qy5BRZeoEYA2Gv0Z51cnNTgJCe13GPY=;
+	b=2+VnHmeMs0CaEdfv721E4ZTQa29ieXKu61YeYuJiD0fhz3VZFEzZ+dfCKxgkr2yPZoB7
+	 rLL6gw1OD1OUz6n9BJ3CiMwsPYj6bU6XF+7ChHUXqvOCRLfJKadx7/4cBgvUpNBAYb6z0
+	 bqy9E/eIwoBTytAPeuh/CwTAUxYyV20l1n6QuigQfST9OtbxTJxBqq9bwAf7LzboBIb2Z
+	 /B4a2u3vBD8F5SNZ/1y2cJlfjbdbLl+4S7a3EUDElcvSfRmiKn1PgmO5RKm36/mrt+Qhk
+	 JbA/bINQWRF9rTbquJ0NcUAdIug+S72R1/LntiKziNOt/9aSSZbrGlBOSmPTavDEbrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u2F/yTjA";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fy7oIgD2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202CB606A320;
-	Thu, 19 Nov 2026 03:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4654606A32C;
+	Thu, 19 Nov 2026 03:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u2F/yTjA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79FD61F000C4;
-	Thu, 19 Nov 2026 03:48:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fy7oIgD2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365BD1F000C4;
+	Thu, 19 Nov 2026 03:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060089;
-	bh=ksFIthFuClpzOkbk5pjx0YU1r5LhBVtI3keIHMYRB04=;
+	s=korg; t=1795060091;
+	bh=E414nUUn4lm1Qy5BRZeoEYA2Gv0Z51cnNTgJCe13GPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u2F/yTjA1f+FZ/Czp+aQylAx9FFWiOXgzGP/OgNP3SGE+AA46iBbfI+sX+cAkQLPn
-	 Q5kOglWVKvcDVLQAuQ8ZnJBsTPQXZq24nxxF/E36zW3iHVHhh+YdKfJX8bdlF8c494
-	 Gg9VqeiT+vM1l6fFzi9w+bCUUm9FoX8xkWo48sGE=
+	b=fy7oIgD2ubN73hkfhmQvSZ8nLdXt86TRIsJqZuGEBZmiClO6en0hXtgOLItMuCFyd
+	 g+oOvBJ+1iBRCCMCJ2VDLIRBJbepB6QU050Mgxl1A5B6RdsXXyj/DQlqxqx25SSign
+	 S50z4sXakbrKqOrUZRkTeUAx4G6oWCTQMyi0ZA/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
 	Muhammad Usama Anjum <usama.anjum@arm.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1075/1848] mm/memory: reject remote COW faults on PFN mappings
-Date: Wed, 18 Nov 2026 15:51:53 +0100
-Message-ID: <20261118150003.055431075@linuxfoundation.org>
+Subject: [PATCH 5.10 1076/1848] mm/userfaultfd: compare exact registration modes before skipping
+Date: Wed, 18 Nov 2026 15:51:54 +0100
+Message-ID: <20261118150003.145262218@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,134 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Gregory Price <gourry@gourry.net>
 
-[ Upstream commit 8db6921cc07b74197a3866d62ed262b68aeadcf3 ]
+[ Upstream commit 05f64f211a25f7d9771d4fde109aad97174a1cf3 ]
 
-When handling a COW fault without a normal source page (PFN mappings),
-__wp_page_copy_user() copies from the faulting user address. For remote
-faults, this accesses the wrong address space, resulting in wrong data
-getting copied.
+Changing registration from MISSING|WP to WP returns success but leaves
+MISSING enabled. The no-op check sees that WP is already set and skips
+the update, so later accesses to missing pages still wait for userspace.
 
-For example, user_events updates an enable bit in the registering
-process's memory. If that memory needs to be faulted in,
-user_event_enabler_fault_fixup() calls fixup_user_fault() from a work
-item. Placing the enable bit in a private PFN mapping can trigger this
-remote COW path.
+Skip the update only when the current and requested UFFD modes match
+exactly.
 
-Reject these faults with VM_FAULT_SIGBUS when the target mm differs from
-current->mm: remote faults. Ordinary (non-PFN) mappings are not affected.
-
-The user-address copy dates back to commit 6aab341e0a28 ("mm: re-architect
-the VM_UNPAGED logic"); likely, actual ways to get remote faults in
-there on COW PFN mappings appeared afterwards. But the fix is simple and
-straight forward.
-
-Fix generated by an LLM and sent by Chris Mason in private.
-
-Fixes: 6aab341e0a28 ("mm: re-architect the VM_UNPAGED logic")
+Fixes: 63b2d4174c4a ("userfaultfd: wp: add the writeprotect API to userfaultfd ioctl")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-[ david: simplify comment and description ]
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+[ david: apply fixup from Lorenzo ]
 Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-35-d6437171ecc3@kernel.org
+Link: https://patch.msgid.link/20261031-fixes_core-v3-26-d6437171ecc3@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: converted cow_user_page() from boolean to errno returns to match the upstream __wp_page_copy_user() interface ]
+[ sashal: Replaced newer VMA bitmap helpers with an inline integer flag comparison using the VM_UFFD_MISSING | VM_UFFD_WP mask. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c | 26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ fs/userfaultfd.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/mm/memory.c b/mm/memory.c
-index ad8184041a75b..ba72c16b1fb46 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -2648,10 +2648,10 @@ static inline int pte_unmap_same(struct mm_struct *mm, pmd_t *pmd,
- 	return same;
- }
+diff --git a/fs/userfaultfd.c b/fs/userfaultfd.c
+index 21c32d941f4a9..23230321c7756 100644
+--- a/fs/userfaultfd.c
++++ b/fs/userfaultfd.c
+@@ -1409,7 +1409,8 @@ static int userfaultfd_register(struct userfaultfd_ctx *ctx,
+ 		 * userfaultfd and with the right tracking mode too.
+ 		 */
+ 		if (vma->vm_userfaultfd_ctx.ctx == ctx &&
+-		    (vma->vm_flags & vm_flags) == vm_flags)
++		    (vma->vm_flags & (VM_UFFD_MISSING | VM_UFFD_WP)) ==
++		    vm_flags)
+ 			goto skip;
  
--static inline bool cow_user_page(struct page *dst, struct page *src,
-+static inline int cow_user_page(struct page *dst, struct page *src,
- 				 struct vm_fault *vmf)
- {
--	bool ret;
-+	int ret;
- 	void *kaddr;
- 	void __user *uaddr;
- 	bool locked = false;
-@@ -2661,9 +2661,16 @@ static inline bool cow_user_page(struct page *dst, struct page *src,
- 
- 	if (likely(src)) {
- 		copy_user_highpage(dst, src, addr, vma);
--		return true;
-+		return 0;
- 	}
- 
-+	/*
-+	 * __copy_from_user_inatomic() only works as expected for local faults.
-+	 * Reject remote faults.
-+	 */
-+	if (unlikely(mm != current->mm))
-+		return -EFAULT;
-+
- 	/*
- 	 * If the source page was a PFN mapping, we don't have
- 	 * a "struct page" for it. We do a best-effort copy by
-@@ -2688,7 +2695,7 @@ static inline bool cow_user_page(struct page *dst, struct page *src,
- 			 * and update local tlb only
- 			 */
- 			update_mmu_tlb(vma, addr, vmf->pte);
--			ret = false;
-+			ret = -EAGAIN;
- 			goto pte_unlock;
- 		}
- 
-@@ -2713,7 +2720,7 @@ static inline bool cow_user_page(struct page *dst, struct page *src,
- 		if (!likely(pte_same(*vmf->pte, vmf->orig_pte))) {
- 			/* The PTE changed under us, update local tlb */
- 			update_mmu_tlb(vma, addr, vmf->pte);
--			ret = false;
-+			ret = -EAGAIN;
- 			goto pte_unlock;
- 		}
- 
-@@ -2732,7 +2739,7 @@ static inline bool cow_user_page(struct page *dst, struct page *src,
- 		}
- 	}
- 
--	ret = true;
-+	ret = 0;
- 
- pte_unlock:
- 	if (locked)
-@@ -2908,12 +2915,15 @@ static vm_fault_t wp_page_copy(struct vm_fault *vmf)
- 		if (!new_page)
- 			goto oom;
- 	} else {
-+		int err;
-+
- 		new_page = alloc_page_vma(GFP_HIGHUSER_MOVABLE, vma,
- 				vmf->address);
- 		if (!new_page)
- 			goto oom;
- 
--		if (!cow_user_page(new_page, old_page, vmf)) {
-+		err = cow_user_page(new_page, old_page, vmf);
-+		if (err) {
- 			/*
- 			 * COW failed, if the fault was solved by other,
- 			 * it's fine. If not, userspace would re-fault on
-@@ -2923,6 +2933,8 @@ static vm_fault_t wp_page_copy(struct vm_fault *vmf)
- 			put_page(new_page);
- 			if (old_page)
- 				put_page(old_page);
-+			if (err == -EFAULT)
-+				return VM_FAULT_SIGBUS;
- 			return 0;
- 		}
- 	}
+ 		if (vma->vm_start > start)
 -- 
 2.53.0
 
