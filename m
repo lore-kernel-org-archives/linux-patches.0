@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034534;
-	b=T+W5cgEugKcvG8y5ZKvu6rUq227s3zT55RvRuaA/kGLRut/c5wxUf90drz6mbFCDwyyV
-	 sVCrNatnBEW6WfVXJbAvJoqK6pGwNm2CVv0n9b9QcIks+oIunLN91KtVBUvFoQL0JuBWi
-	 egad3W+2mtV2JqXNcKzmlT1GIKtH+lKOL/UNo0ZTkg5GPlqoYUe+d+iiXp0dw8Zi274F1
-	 jgUmfSXcVX+6j4Ye41qOSEGCdnsWXMmF0TI+OEGnkIgZVrsk2GzXZvC8IEHpkXo0FHYLn
-	 ZJh8pK0n5S2qcNX4VZ5WV3OSO2B32o/6VM9UID1n5Fqc2CaPyPPXf++WVzkjCHvlGXA==
+	t=1795034537;
+	b=PhYGhy3Q1tQfqd7ldUnxSdWpqJSxclQ5XApr/FSoxve/Kfb+Au1wd8MD6c35kNeOqVf+
+	 3/xUN3Qqqvou7wKugxW/w2cRe44g7nli8GCKgS6wzxIYWLVRYg5rrIN/595fhyWlEVouc
+	 H20n5nzHhw2+net62ZmK/rVdiDcIwsvYBghC5IyiKQzKh3ZiO6aSv45Df0u0OSf3DJV5O
+	 l2iM28viR+mVlt0DNoDVXN6VSZPN0NoJjV7v0hEIpP6QGOEhnbsmRmxbCSnrHeDEjvPOL
+	 hHy2ZVN4f0B6Zj3506qSMxQzAt+/mDS7oAuxwKW4qOslQnZx/LHqDAfEgrTTdU8WunA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034534;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034537;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NcQZ8dC1ggqWfSkqcozjkMUyyO5ADJnHvbRrWCvJ7Og=;
-	b=gooAbgA9mCzHDWZWBb+5V8Sr3zGewqCG7fxKIBuZWem9G4P7e7Icgx1kNQB4AwwutR5V
-	 d05eXA14QRlEOZ7IuWKTqlDX6XPv2AvPCAauuGPQzqO/EEpWbHFjasaZuIZF/2SsFYI3J
-	 7LLLJDTVQXfLvj7Yp9kNt2nBWmgJyeoPF0+ypzLGaUJQR9NqpQPTctjT8yIl9AfJTZAIG
-	 ix3Vi/1gTVYzVShL9q412KvIbg5P2LGl+Cn1RWeAb500IHIxcFa4wkH98luYspgjoDdDz
-	 dqhLB6aY0sI6cVMm8OQ1sCrAXaCw239v0fbG3PAXmj8OPpzR/el1Iy5o7Sz0Rzhu2TA==
+	bh=bcPSHe13JFhJHt//3mWQQ6vgGbAFmMayJlwsTSK/J4o=;
+	b=keHvJ5QbzeNTn4lhRWyfJti/PBAvy8S3lHLzRs42CYzJirlfpe5y+mLwnfMKepwq5Tne
+	 0j+eTUOGJJ/lDTnt/8jr9t+quG4OoKpwtTWxEiwxA+gUysL7s1rs+HvWEmhtS3gEuu7+n
+	 lFdaWKVIly6vb1a5tBsfvjZolyBfx71dZ2/quk8A7DPXZMpRr/JXIKxcGTQ8TVE9GwPN+
+	 zwhBhJ48UnxUR/PprXCpSiCVRcYIhJhogC+jGuRYmKjV88Xpjf02MIhKx6/QZvzeEuWWW
+	 IM2oFox9z4QrkGSU8Ut1/+2wvjbpp9BpG78PcrwvbDvtH55p8cybA+GNgO+Kt3H/L2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="le/EV11F";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="tBTg/hXl";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24B3606A31C;
-	Wed, 18 Nov 2026 20:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00B260A2609;
+	Wed, 18 Nov 2026 20:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=le/EV11F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2651C1F000C6;
-	Wed, 18 Nov 2026 20:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tBTg/hXl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA10B1F000C5;
+	Wed, 18 Nov 2026 20:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034534;
-	bh=NcQZ8dC1ggqWfSkqcozjkMUyyO5ADJnHvbRrWCvJ7Og=;
+	s=korg; t=1795034537;
+	bh=bcPSHe13JFhJHt//3mWQQ6vgGbAFmMayJlwsTSK/J4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=le/EV11FeFAZFZga2TtbFA4pRSgAXU7tHh1Cz5lOMWBEe9RC7ul6pNH4uyL4y2qUd
-	 ssY7D05onrB29QN+C2k2ord2Y6iH1NQYCXBHMEPvqT2cpZEZTAsOcpekGK2FT6e0nQ
-	 3u+E1J/V9R6jEFZvt9IuXG0GWNjBqINF6dITapsk=
+	b=tBTg/hXlEYepfgeJXdJoBXnqkxOf5bisXVohhjTZgaSeha2L2EaJlIobYqamuFqRU
+	 xWmqOn4V9wIeJf7N5wvG8s+wVRTk0shgZNdkzWbRU2Cyt2UzE8OoiDoZ8mhQ+QX1xO
+	 FcsHto0Up9ow0tPPfdsfvPwb5g166acAAi9n72OA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0404/3318] btrfs: do not overwrite NODATASUM flag when removing NODATACOW flag
-Date: Wed, 18 Nov 2026 15:17:06 +0100
-Message-ID: <20261118150328.559732592@linuxfoundation.org>
+Subject: [PATCH 6.6 0405/3318] i3c: master: Fix potential UAF in i3c_device_uevent()
+Date: Wed, 18 Nov 2026 15:17:07 +0100
+Message-ID: <20261118150328.601736474@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,135 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 15f7c86215e8d5f14b24127fa88af6c79363d50e ]
+[ Upstream commit e5e8dd2e959f470524c16ca444d001c90d6bb3ad ]
 
-[TEST FAILURE]
-The test case generic/628 will fail if MOUNT_OPTIONS is set to
-"-o nodatasum":
+i3c_device_uevent() dereferences i3cdev->desc without holding the bus
+normal-use lock.  Since the descriptor pointer can be replaced
+concurrently, including when a uevent is generated from sysfs, this can
+result in dereferencing a stale descriptor and lead to a use-after-free.
 
-  FSTYP         -- btrfs
-  PLATFORM      -- Linux/x86_64 btrfs-vm 7.1.0-rc4-custom+ #383 SMP PREEMPT_DYNAMIC Sat May 30 07:35:42 ACST 2026
-  MKFS_OPTIONS  -- -O bgt -K /dev/mapper/test-scratch1
-  MOUNT_OPTIONS -- -o nodatasum /dev/mapper/test-scratch1 /mnt/scratch
+Use i3c_device_get_info() instead, which protects access to the
+descriptor with the normal-use lock.
 
-#  generic/628  1s ... - output mismatch (see /home/adam/xfstests/results//generic/628.out.bad)
-#     --- tests/generic/628.out	2022-05-11 11:25:30.816666664 +0930
-#     +++ /home/adam/xfstests/results//generic/628.out.bad	2026-06-08 18:56:49.878542927 +0930
-#     @@ -8,8 +8,9 @@
-#      310f146ce52077fcd3308dcbe7632bb2  SCRATCH_MNT/a
-#      310f146ce52077fcd3308dcbe7632bb2  SCRATCH_MNT/d
-#      test reflink flag not set iflag
-#     +XFS_IOC_CLONE: Invalid argument
-#      310f146ce52077fcd3308dcbe7632bb2  SCRATCH_MNT/a
-#     -310f146ce52077fcd3308dcbe7632bb2  SCRATCH_MNT/b
-#     +d41d8cd98f00b204e9800998ecf8427e  SCRATCH_MNT/b
-#     ...
+Commit 6cf7b65f7029 ("i3c: Use i3cdev->desc->info instead of calling
+i3c_device_get_info() to avoid deadlock") replaced the accessor with a
+direct descriptor dereference because i3c_device_get_info() would
+recursively acquire bus->lock during device registration.
 
-[CAUSE]
-The direct cause is that after "chattr +S", the btrfs inode will lose its
-NODATASUM flag inherited from the mount option. E.g.:
+This change depends on "i3c: master: Fix recursive locking during device
+registration", which moves device registration out from under bus->lock
+and removes the possibility of that deadlock.  Without that change,
+restoring the i3c_device_get_info() call would reintroduce the deadlock.
 
-  # mkfs.btrfs -f $dev
-  # mount $dev $mnt -o nodatasum
-  # touch $mnt/foobar
-  # sync
-  # btrfs ins dump-tree -t 5 $dev | grep "(257 INODE_ITEM 0) itemoff" -A 3
-         item 4 key (257 INODE_ITEM 0) itemoff 15879 itemsize 160
-         	generation 9 transid 9 size 0 nbytes 0
-         	block group 0 mode 100644 links 1 uid 0 gid 0 rdev 0
-         	sequence 1 flags 0x1(NODATASUM)
-         	                     ^^^^^^^^^ Proper NODATASUM flag
-
-  # chattr +S $mnt/foobar
-  # sync
-  # btrfs ins dump-tree -t 5 $dev | grep "(257 INODE_ITEM 0) itemoff" -A 3
-  	item 4 key (257 INODE_ITEM 0) itemoff 15879 itemsize 160
-         	generation 9 transid 10 size 0 nbytes 0
-         	block group 0 mode 100644 links 1 uid 0 gid 0 rdev 0
-         	sequence 2 flags 0x20(SYNC)
-         	                      ^^^^ Only the new SYNC flag
-
-This makes the inode drop the old NODATASUM flag, while the new reflink
-destination will still inherit the NODATASUM flag.  The mismatching
-NODATASUM flags will cause the reflink to fail.
-
-The root cause is that, inside btrfs_fileattr_set() if no FS_NOCOW_FL is
-set, we remove both NODATASUM and NODATACOW flag.
-
-However we should not touch NODATASUM flag, as data COW doesn't require
-checksum.  Only NODATACOW implies NODATASUM, but DATACOW doesn't imply
-DATASUM.
-
-The deeper problems are:
-
-- Fileattr API is too binary
-  It either clears or sets a flag, there is no "do not change" option.
-  So that why "chattr +S" implies "chattr -C", and is forcing us to
-  change NODATACOW along with NODATASUM flag.
-
-- No way to change NODATASUM through fileattr API
-  In fact NODATASUM can only be modified through mount option.
-
-The deeper problems are much harder to attack.
-
-[FIX]
-Remove NODATACOW flag when FS_NOCOW_FL is not set, but only remove
-NODATASUM if "nodatasum" mount option is not set.
-
-This allows the existing "chattr +C" then "chattr -C" to remove
-both NODATACOW and NODATASUM flags on a default mount.
-
-But for a mount with "nodatasum" option, the NODATASUM inode flag will
-persist through either "chattr +C" and "chattr -C".
-
-Fixes: 7e97b8daf634 ("btrfs: allow setting NOCOW for a zero sized file via ioctl")
-Cc: stable@vger.kernel.org
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ sashal: Renamed inode_flags to binode_flags and inode->vfs_inode.i_mode/i_size to inode->i_mode/i_size, because this tree's older code uses the VFS inode directly. ]
+Fixes: 6cf7b65f7029 ("i3c: Use i3cdev->desc->info instead of calling i3c_device_get_info() to avoid deadlock")
+Cc: stable@vger.kernel.org # requires "i3c: master: Fix recursive locking during device registration"
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Acked-by: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260807145638.168865-7-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ drivers/i3c/master.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index e4df4f5daefd7..54e3ec0685834 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -321,14 +321,21 @@ int btrfs_fileattr_set(struct mnt_idmap *idmap,
- 			binode_flags |= BTRFS_INODE_NODATACOW;
- 		}
- 	} else {
--		/*
--		 * Revert back under same assumptions as above
--		 */
--		if (S_ISREG(inode->i_mode)) {
--			if (inode->i_size == 0)
--				binode_flags &= ~(BTRFS_INODE_NODATACOW |
--						  BTRFS_INODE_NODATASUM);
--		} else {
-+		/* We can only change NODATACOW for zero-sized regular file. */
-+		if (S_ISREG(inode->i_mode) && (inode->i_size == 0)) {
-+			binode_flags &= ~BTRFS_INODE_NODATACOW;
-+			/*
-+			 * There is currently no way to change NODATASUM flag
-+			 * through fileattr API.  If we unconditionally keep the
-+			 * current NODATASUM flag, chattr +C then chattr -C will
-+			 * keep the NODATASUM flag, and no way to remove that
-+			 * flag.
-+			 *
-+			 * So respect the current mount option for NODATASUM flag.
-+			 */
-+			if (!btrfs_test_opt(fs_info, NODATASUM))
-+				binode_flags &= ~BTRFS_INODE_NODATASUM;
-+		} else if (!S_ISREG(inode->i_mode)) {
- 			binode_flags &= ~BTRFS_INODE_NODATACOW;
- 		}
- 	}
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index 35d02234471b6..51fbff1e33890 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -280,8 +280,7 @@ static int i3c_device_uevent(const struct device *dev, struct kobj_uevent_env *e
+ 	struct i3c_device_info devinfo;
+ 	u16 manuf, part, ext;
+ 
+-	if (i3cdev->desc)
+-		devinfo = i3cdev->desc->info;
++	i3c_device_get_info(i3cdev, &devinfo);
+ 	manuf = I3C_PID_MANUF_ID(devinfo.pid);
+ 	part = I3C_PID_PART_ID(devinfo.pid);
+ 	ext = I3C_PID_EXTRA_INFO(devinfo.pid);
 -- 
 2.53.0
 
