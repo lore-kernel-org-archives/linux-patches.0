@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031975;
-	b=lJM5HUJtKxZ744l9qkVgviz2TVPMw2lYKC/HO33+EclfuW0v9L6NgYFoPcHEUPc+704g
-	 5BPD0zvx5/thos3q8fKOjR0yVjLPyDHOf1uRFusyFSP5Y71jXvF0ZCB9A8eaXe8ynwOC4
-	 lbNSWD9NIeQBYOWj4Pg//zEyNNDePTvJUMDKzwaciulgF5goNloxWSYVN3PzJiQXGUInq
-	 VS4v/uaH/MwW/nXrnN541bMa79Aex7NG66TFb1HDPRBLWC2ASkrMYlETd25R5VunQqI3w
-	 Y61yT+t05GeJ1aJfllZSwkK5PDkI8n3W9adzV8HO/PJ8IMqCyyyjB24uvlT0tcBWVXA==
+	t=1795031978;
+	b=5lmhPZmA/FhS53/uerwalHkzoedmfgi9qdzJp+GT/ejb70V3q0dn45Z/iVHHxkmBd0zO
+	 QRMHG/C3pFxHxNIeKggi88yCm5G86VQsf7vdazoNw5028hoTHi5aktsQoZ5TI14T2FFA2
+	 8IsWYVCmWmOT4a7jWhuxOpo4hPGhAbKsbzkM/btRvEJBWZOMxKDEJNTNwis15oOdiP8t5
+	 sMCtgVj3Fn3QIuKcDswwZycH+RfiBMa39+kDUswqkStBFNHxlv3JYc5SSXuhRaV8dEt8z
+	 SOhSPeRl6u0EaYMBpCqKWpgOnT+fENXQY0ezSms9+EwW5Faf6bl3uZApI+AN9IdUVDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031975;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031978;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GL1dyDMAKBu8H4NjeeycYNtD6662PqjezkUQ+F/NAnA=;
-	b=BEBET9j68LHHinetGjI3TmsxHuEaVckos6QcK71441sNvSXRqHQBx3NMDfaVs1qgTjEf
-	 aTEDx1c7ie+v3VeXJRKjeadLE+BFpY3TRMexF5F4jZORgmoWMbif0fNtyGh+DhaIOQo9r
-	 7sGRPtGxnRIL4QIDlA9eitvZtMsVHdYqeXdnQJPbXyw0IlYAcgfSUse6TIKX4Jfjq4Xeg
-	 wUypIG1uDihP+X6jZkwQQel/qN9Bj3LtZvHwlExIm3D+Exj+5B4MpAk0pAsRvrXeqxTeF
-	 xS5TM4xVuw/GC9RSg8UoHaPPJYIeKxolvchkBMoLt3jMJcmFQYVuOW9NoD083SLFghA==
+	bh=K06Aj2GVoEzKJ3OWpafbYaxxBE1Duix8jLVvk4D47hY=;
+	b=DjYuiNcdVYnh0pJAPdvnVWrPXug6rGKRJw1OwsVfQoT3h/UxsB8/mc5P9yfCPOGifAZC
+	 2LR0Fnp11e+9BuIPy0pM4feWwxZs5j+3wrU0PxpBpesNQ09RVnwp1pHND21Y7Dg0KdV8y
+	 /BwddujDfnahFjqDq07bSpoweZmu9CjJqQ7ItKr83MuR079h/6TQal+DrZUhsEwo7N+NS
+	 rIEaid8KhCS51qXhYKId7bt8c0hbKoOH/PAPI/+SaMSbulOkV4ZJzc6eQlj2ACDVT+xJC
+	 zfeOYrHAzd5Qu94Ph42i+aauzAXsgHIfrNXjHEuZShhTO6J8DQFdY1QYSvZbqnwp6xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SK8tmnZQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rsYed8sw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F424606A320;
-	Wed, 18 Nov 2026 19:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766A8606A32F;
+	Wed, 18 Nov 2026 19:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SK8tmnZQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7EC51F000C4;
-	Wed, 18 Nov 2026 19:59:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rsYed8sw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C5E1F000C4;
+	Wed, 18 Nov 2026 19:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031975;
-	bh=GL1dyDMAKBu8H4NjeeycYNtD6662PqjezkUQ+F/NAnA=;
+	s=korg; t=1795031978;
+	bh=K06Aj2GVoEzKJ3OWpafbYaxxBE1Duix8jLVvk4D47hY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SK8tmnZQWJlEP7b8zG62iochBvzYzR/cOuhDOTb0pKIVHh9INMP2MD88HjwuhN1YC
-	 +WdfWe+MGWEHJDZx1c35mx345mmhIz1kUlDldbvRmqbZ3sLGoCVHKoKVH12JYRZnnU
-	 j6SO8nl9NC4QWcGxKPaWL6ei/pdPmM1fxTQljCdQ=
+	b=rsYed8swHS4uM3Jf9lAZNN8RWf5sAFZLusGNFd4JP0ep5/LS/CzuK2vDT15cjLO5I
+	 ocMIt7IAlCLCZUc2Uv/VuKp9Eq6H0rB6Pldd2AarSqiyfBvvqLTSMTTSPC62R0oOIH
+	 xCJBBttPEBw9kelJ2VGnxyuNs3MW8aZB4xtLsoWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Jason Yan <yanaijie@huawei.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1249/1756] scsi: libsas: Add dev_parent_is_expander() helper
-Date: Wed, 18 Nov 2026 15:56:16 +0100
-Message-ID: <20261118150059.438822535@linuxfoundation.org>
+Subject: [PATCH 6.12 1250/1756] scsi: scsi_debug: move ASC and ASCQ definitions to scsi_proto.h
+Date: Wed, 18 Nov 2026 15:56:17 +0100
+Message-ID: <20261118150059.478113437@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,62 +68,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit e5eb72c92eb724aa14c50c7d92d1a576dd50d7e6 ]
+[ Upstream commit 7c8b3f6578bb874ba9d334aef0e51fe931ce6c04 ]
 
-Many libsas drivers check if the parent of the device is an expander.
-Create a helper that the libsas drivers will use in follow up commits.
+The scsi_debug driver internally defines lots of SCSI additional sense
+codes (ASC) and additional sense code qualifiers (ASCQ). Move these
+definitions to include/scsi/scsi_proto.h so that they can be reused
+elsewhere in the SCSI and ATA code. This also makes the scsi_debug.c file
+a little smaller.
 
-Suggested-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Link: https://lore.kernel.org/r/20250814173215.1765055-15-cassel@kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: 92821c2358c7 ("scsi: hisi_sas: Fix spinup failure for SAS SSP devices in Active_Wait state")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/libsas/sas_expander.c | 5 +----
- include/scsi/libsas.h              | 8 ++++++++
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/scsi/scsi_debug.c | 46 -----------------------------------
+ include/scsi/scsi_proto.h | 51 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+), 46 deletions(-)
 
-diff --git a/drivers/scsi/libsas/sas_expander.c b/drivers/scsi/libsas/sas_expander.c
-index 165c0c588c68b..0fb4f96bf8f4b 100644
---- a/drivers/scsi/libsas/sas_expander.c
-+++ b/drivers/scsi/libsas/sas_expander.c
-@@ -1317,10 +1317,7 @@ static int sas_check_parent_topology(struct domain_device *child)
- 	int i;
- 	int res = 0;
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 5836995d42686..27e882a6244d9 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -67,52 +67,6 @@ static const char *sdebug_version_date = "20210520";
  
--	if (!child->parent)
--		return 0;
+ #define MY_NAME "scsi_debug"
+ 
+-/* Additional Sense Code (ASC) */
+-#define NO_ADDITIONAL_SENSE 0x0
+-#define OVERLAP_ATOMIC_COMMAND_ASC 0x0
+-#define OVERLAP_ATOMIC_COMMAND_ASCQ 0x23
+-#define FILEMARK_DETECTED_ASCQ 0x1
+-#define EOP_EOM_DETECTED_ASCQ 0x2
+-#define BEGINNING_OF_P_M_DETECTED_ASCQ 0x4
+-#define EOD_DETECTED_ASCQ 0x5
+-#define LOGICAL_UNIT_NOT_READY 0x4
+-#define LOGICAL_UNIT_COMMUNICATION_FAILURE 0x8
+-#define UNRECOVERED_READ_ERR 0x11
+-#define PARAMETER_LIST_LENGTH_ERR 0x1a
+-#define INVALID_OPCODE 0x20
+-#define LBA_OUT_OF_RANGE 0x21
+-#define INVALID_FIELD_IN_CDB 0x24
+-#define INVALID_FIELD_IN_PARAM_LIST 0x26
+-#define WRITE_PROTECTED 0x27
+-#define UA_READY_ASC 0x28
+-#define UA_RESET_ASC 0x29
+-#define UA_CHANGED_ASC 0x2a
+-#define TOO_MANY_IN_PARTITION_ASC 0x3b
+-#define TARGET_CHANGED_ASC 0x3f
+-#define LUNS_CHANGED_ASCQ 0x0e
+-#define INSUFF_RES_ASC 0x55
+-#define INSUFF_RES_ASCQ 0x3
+-#define POWER_ON_RESET_ASCQ 0x0
+-#define POWER_ON_OCCURRED_ASCQ 0x1
+-#define BUS_RESET_ASCQ 0x2	/* scsi bus reset occurred */
+-#define MODE_CHANGED_ASCQ 0x1	/* mode parameters changed */
+-#define CAPACITY_CHANGED_ASCQ 0x9
+-#define SAVING_PARAMS_UNSUP 0x39
+-#define TRANSPORT_PROBLEM 0x4b
+-#define THRESHOLD_EXCEEDED 0x5d
+-#define LOW_POWER_COND_ON 0x5e
+-#define MISCOMPARE_VERIFY_ASC 0x1d
+-#define MICROCODE_CHANGED_ASCQ 0x1	/* with TARGET_CHANGED_ASC */
+-#define MICROCODE_CHANGED_WO_RESET_ASCQ 0x16
+-#define WRITE_ERROR_ASC 0xc
+-#define UNALIGNED_WRITE_ASCQ 0x4
+-#define WRITE_BOUNDARY_ASCQ 0x5
+-#define READ_INVDATA_ASCQ 0x6
+-#define READ_BOUNDARY_ASCQ 0x7
+-#define ATTEMPT_ACCESS_GAP 0x9
+-#define INSUFF_ZONE_ASCQ 0xe
+-/* see drivers/scsi/sense_codes.h */
 -
--	if (!dev_is_expander(child->parent->dev_type))
-+	if (!dev_parent_is_expander(child))
- 		return 0;
+ /* Additional Sense Code Qualifier (ASCQ) */
+ #define ACK_NAK_TO 0x3
  
- 	parent_ex = &child->parent->ex_dev;
-diff --git a/include/scsi/libsas.h b/include/scsi/libsas.h
-index 2e3fcae62e27e..330ed7b7eedef 100644
---- a/include/scsi/libsas.h
-+++ b/include/scsi/libsas.h
-@@ -203,6 +203,14 @@ static inline bool dev_is_expander(enum sas_device_type type)
- 	       type == SAS_FANOUT_EXPANDER_DEVICE;
- }
+diff --git a/include/scsi/scsi_proto.h b/include/scsi/scsi_proto.h
+index 70e1262b2e202..39009f50d6c01 100644
+--- a/include/scsi/scsi_proto.h
++++ b/include/scsi/scsi_proto.h
+@@ -233,6 +233,57 @@ enum sam_status {
+ #define MISCOMPARE          0x0e
+ #define COMPLETED	    0x0f
  
-+static inline bool dev_parent_is_expander(struct domain_device *dev)
-+{
-+	if (!dev->parent)
-+		return false;
++/*
++ * Additional Sense Codes (ASC).
++ */
++#define NO_ADDITIONAL_SENSE		0x00
++#define OVERLAP_ATOMIC_COMMAND_ASC	0x00
++#define LOGICAL_UNIT_NOT_READY		0x04
++#define LOGICAL_UNIT_COMMUNICATION_FAILURE 0x8
++#define WRITE_ERROR_ASC			0x0c
++#define UNRECOVERED_READ_ERR		0x11
++#define PARAMETER_LIST_LENGTH_ERR	0x1a
++#define MISCOMPARE_VERIFY_ASC		0x1d
++#define INVALID_OPCODE			0x20
++#define LBA_OUT_OF_RANGE		0x21
++#define INVALID_FIELD_IN_CDB		0x24
++#define INVALID_FIELD_IN_PARAM_LIST	0x26
++#define WRITE_PROTECTED			0x27
++#define UA_READY_ASC			0x28
++#define UA_RESET_ASC			0x29
++#define UA_CHANGED_ASC			0x2a
++#define TOO_MANY_IN_PARTITION_ASC	0x3b
++#define TARGET_CHANGED_ASC		0x3f
++#define SAVING_PARAMS_UNSUP		0x39
++#define TRANSPORT_PROBLEM		0x4b
++#define INSUFF_RES_ASC			0x55
++#define LOW_POWER_COND_ON		0x5e
++#define THRESHOLD_EXCEEDED		0x5d
 +
-+	return dev_is_expander(dev->parent->dev_type);
-+}
++/*
++ * Additional Sense Code Qualifiers (ASCQ).
++ */
++#define POWER_ON_RESET_ASCQ		0x00
++#define MODE_CHANGED_ASCQ		0x01	/* mode parameters changed */
++#define FILEMARK_DETECTED_ASCQ		0x01
++#define POWER_ON_OCCURRED_ASCQ		0x01
++#define MICROCODE_CHANGED_ASCQ		0x01	/* with TARGET_CHANGED_ASC */
++#define BUS_RESET_ASCQ			0x02	/* scsi bus reset occurred */
++#define EOP_EOM_DETECTED_ASCQ		0x02
++#define INSUFF_RES_ASCQ			0x03
++#define BEGINNING_OF_P_M_DETECTED_ASCQ	0x04
++#define UNALIGNED_WRITE_ASCQ		0x04
++#define EOD_DETECTED_ASCQ		0x05
++#define WRITE_BOUNDARY_ASCQ		0x05
++#define READ_INVDATA_ASCQ		0x06
++#define READ_BOUNDARY_ASCQ		0x07
++#define CAPACITY_CHANGED_ASCQ		0x09
++#define ATTEMPT_ACCESS_GAP		0x09
++#define LUNS_CHANGED_ASCQ		0x0e
++#define INSUFF_ZONE_ASCQ		0x0e
++#define MICROCODE_CHANGED_WO_RESET_ASCQ 0x16
++#define OVERLAP_ATOMIC_COMMAND_ASCQ	0x23
 +
- static inline void INIT_SAS_WORK(struct sas_work *sw, void (*fn)(struct work_struct *))
- {
- 	INIT_WORK(&sw->work, fn);
+ /*
+  *  DEVICE TYPES
+  *  Please keep them in 0x%02x format for $MODALIAS to work
 -- 
 2.53.0
 
