@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033786;
-	b=adgaAjIVnqJ+zvg60SKjobHP54DkQZfXRR0iT+ktorqjlij+/NRd3GH0bAYfHh9dfC+w
-	 WlhndvoWd9ik935HkW+aHGYLw7RETZg5lUoLijOaCLQyjhEcU+b3steekRay2kV2Pa6wP
-	 CA8FU1oxi2emZCqCAI8SWzqKM10DFRppH1GfR+oQkoKi8BKRYgA2/GiruYGdLNBtqYc91
-	 QEF/RAk+T6eK1QpmlvysCQQ9+1HSj7/NoqTp18b6BOYqAPYtpgv+tH97uNjAMU0BzcFJW
-	 2YblK4sYsvFDSLpD6sRQnkpI6MEydRLRMg5tepHbiHE7Pi2JN7K8qeu3PkEJIoUTrcg==
+	t=1795033789;
+	b=DdOLVeaseGtp5DQOXNAX8WhjVoB4Q4ptpyBl36BdSOHFM5U7B8TRcJenGZZVmHU/1tnM
+	 QJn/LUmvXNTR2FqV3VYXYYboe6UZQmbZ/uXIgOwXwrmOS2DkLrSG4Me7aVBdJaM2bQeDZ
+	 9rAGJx8E7Gwn8TgffhUGlWrhygQGnqmnES6Ko8ew6YKD0IhSKbUgxbjxqv81zspalCmdE
+	 W4g6x35U5fU6qPf0hlWV1MXtmXIUdRlkL+vWDj92OumXBkDid7AFgWh3oLKbHkE5hUfAe
+	 HL04kceMoudy/pmbhsmK+HDz8BauJ82QBci3flSqnKTk2LibljYiWGiAIGhHnfo8i1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033786;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033789;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RLk190App9SLRKCCxnNvWA9JRHld+SDHJJDXB7wdEq4=;
-	b=H16BN7SRBJXO6fIA1+qQSQBefBeW6SZloBsKAoC3POqUk1MVYTlvHkb5ym6QPQmZBqa8
-	 mZe/6cZ7gl7yXi9k1jGbRqfv8Gw3jlmlotBUokhGLDmftGGpsQrLklRNARsfmALV61sJ3
-	 ACjH7F3Buweu4KMkDhOzcVhcmxcE3OFKGrxLGD0WGPd+7tFpLjmN2VT4op2z+vZwGU/kc
-	 yaA/Z7ityyboPV2ZQhuw5+8vedRhQ0b/09b5dwUJNEjrHDM020AVebpbWN2wfJxFQjuPv
-	 28625k2hogAgCVQ1pxM4V1ifsnGmJ5JFNl+V4xd1GATvm4JKqW5sk5suCeHUi22X2tg==
+	bh=YEY4eZ07lDnVjDjxjAaJ8xLoRKyfnponPUWbaaADLfQ=;
+	b=HZOqr7KsCbC+AiP2hHdVK1ksp3zgoz7NyVr+0UQgY+fPL8N8+yZSVkbBu4LOScOXN8KE
+	 LlX/Lyy84yJFOHEGAZGa3sMk/TpOwGmqfDoRZqUmqQB/mc9ocZB4hq++5pzsMgtPYAnWD
+	 KhgMsqpq9sYlJ7KRXz/xiWB9H7fepTDnFbjPfSVreTkAcXBCZd4JUxOQ95S6SSa30nPMK
+	 zw9sK5/1wTb2pP0EaGaxLDJNdj4C6NHck9FA8+hcOWUrDaoGqVWGb94TCEIHY7J5u2Wc2
+	 GxPY2gWzTDP82Oy77bq5gylbmAGpFFCahUGjDiyi9pEb57kJO72PQbv+Q/qdflWDTzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ff3KkqMF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVhg2RLa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1486F606A325;
-	Wed, 18 Nov 2026 20:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F055606A31C;
+	Wed, 18 Nov 2026 20:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ff3KkqMF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F5D1F000C4;
-	Wed, 18 Nov 2026 20:29:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVhg2RLa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F551F000C4;
+	Wed, 18 Nov 2026 20:29:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033785;
-	bh=RLk190App9SLRKCCxnNvWA9JRHld+SDHJJDXB7wdEq4=;
+	s=korg; t=1795033788;
+	bh=YEY4eZ07lDnVjDjxjAaJ8xLoRKyfnponPUWbaaADLfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ff3KkqMFrSW8tWEiSuWw9ioBOORYFMWHXsmrGNyTo4RU4Bts/umNUZaiqtbBTkZJw
-	 DzuDrD6Y1bu2IIpgUtubYTWEGAcXVPejG6wp9YardWVynnjysMdA83eW1Nl0mPoyTI
-	 8AV8P9JKXNkczXEspITK1S+r0qzvmucrK9u37yLA=
+	b=wVhg2RLahXidpUfRakVsQQc4NBv0x06WVk0H6TWhY7RNpgZS4zg0vbfknt0Us/LOj
+	 xoyAg7AHW0cMvBEQyvRxZxis9cSSoesKoZ7e7DV2ol2Fctyhmx9gbpvovQXglTV38E
+	 v6FEGOVoYTwvr7bkVjritR7DOHJfrkuOXwlmKDdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0138/3318] ipack: ipoctal: add rwsem to guard against TOCTOU in remove path
-Date: Wed, 18 Nov 2026 15:12:40 +0100
-Message-ID: <20261118150318.581086857@linuxfoundation.org>
+Subject: [PATCH 6.6 0139/3318] misc: ibmvmc: reject oversized inbound messages
+Date: Wed, 18 Nov 2026 15:12:41 +0100
+Message-ID: <20261118150318.615764612@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,114 +67,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit 7d3a708af7f4e2af9e114d731bd60d30c1ec884e ]
+[ Upstream commit 18189e5d84aa0b3bc89189cba13b9105634cb6fb ]
 
-The "removed" flag check in each tty op has a TOCTOU race with
-__ipoctal_remove(): the device could be removed between the flag
-check and the subsequent access to hardware resources (channel
-registers via iowrite8, or xmit_buf in write_tty).
+ibmvmc_recv_msg() trusts the message length from the CRQ.
 
-Close this race by introducing a read-write semaphore (remove_sem).
-The tty ops acquire the read lock via guard(rwsem_read) for the
-full duration of the operation, while __ipoctal_remove() acquires
-the write lock via scoped_guard(rwsem_write) when setting the
-removed flag.  This ensures that once removed is true, no in-flight
-tty op can still be accessing resources that are about to be freed
-by the remove path.
+It passes that length directly to h_copy_rdma().
 
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Link: https://patch.msgid.link/fbce75010a0f0a3a3709a5e06fd0ffd19ca0a0ed.1782870760.git.xiaopei01@kylinos.cn
+The destination buffer is only max_mtu bytes.
+
+A larger length can overrun it before userspace reads the message.
+
+Validate the CRQ length before issuing the RDMA copy.
+
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Link: https://patch.msgid.link/20260624175139.7981-1-alhouseenyousef@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ipack/devices/ipoctal.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/misc/ibmvmc.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/ipack/devices/ipoctal.c b/drivers/ipack/devices/ipoctal.c
-index 474b58858dca6..aab303c4a9837 100644
---- a/drivers/ipack/devices/ipoctal.c
-+++ b/drivers/ipack/devices/ipoctal.c
-@@ -11,6 +11,7 @@
- #include <linux/module.h>
- #include <linux/interrupt.h>
- #include <linux/kref.h>
-+#include <linux/rwsem.h>
- #include <linux/sched.h>
- #include <linux/tty.h>
- #include <linux/serial.h>
-@@ -54,6 +55,7 @@ struct ipoctal {
- 	u8 __iomem			*int_space;
- 	struct kref			kref;
- 	struct module			*carrier_owner;
-+	struct rw_semaphore		remove_sem;
- 	bool				removed;
- };
+diff --git a/drivers/misc/ibmvmc.c b/drivers/misc/ibmvmc.c
+index 06eae39bfafe5..e881f326b1025 100644
+--- a/drivers/misc/ibmvmc.c
++++ b/drivers/misc/ibmvmc.c
+@@ -1661,6 +1661,13 @@ static int ibmvmc_recv_msg(struct crq_server_adapter *adapter,
+ 		return -1;
+ 	}
  
-@@ -81,7 +83,7 @@ static int ipoctal_port_activate(struct tty_port *port, struct tty_struct *tty)
- 	channel = dev_get_drvdata(tty->dev);
- 	ipoctal = chan_to_ipoctal(channel, tty->index);
- 
--
-+	guard(rwsem_read)(&ipoctal->remove_sem);
- 	if (ipoctal->removed)
- 		return -ENODEV;
- 
-@@ -476,7 +478,7 @@ static ssize_t ipoctal_write_tty(struct tty_struct *tty, const u8 *buf,
- 	struct ipoctal *ipoctal = chan_to_ipoctal(channel, tty->index);
- 	size_t char_copied;
- 
--
-+	guard(rwsem_read)(&ipoctal->remove_sem);
- 	if (ipoctal->removed || !channel->tty_port.xmit_buf)
- 		return 0;
- 
-@@ -522,7 +524,7 @@ static void ipoctal_set_termios(struct tty_struct *tty,
- 	struct ipoctal *ipoctal = chan_to_ipoctal(channel, tty->index);
- 	speed_t baud;
- 
--
-+	guard(rwsem_read)(&ipoctal->remove_sem);
- 	if (ipoctal->removed)
- 		return;
- 
-@@ -660,7 +662,7 @@ static void ipoctal_hangup(struct tty_struct *tty)
- 		return;
- 
- 	ipoctal = chan_to_ipoctal(channel, tty->index);
--
-+	guard(rwsem_read)(&ipoctal->remove_sem);
- 	if (ipoctal->removed)
- 		return;
- 
-@@ -686,7 +688,7 @@ static void ipoctal_shutdown(struct tty_struct *tty)
- 		return;
- 
- 	ipoctal = chan_to_ipoctal(channel, tty->index);
--
-+	guard(rwsem_read)(&ipoctal->remove_sem);
- 	if (ipoctal->removed)
- 		return;
- 
-@@ -736,6 +738,7 @@ static int ipoctal_probe(struct ipack_device *dev)
- 		return -ENOMEM;
- 
- 	kref_init(&ipoctal->kref);
-+	init_rwsem(&ipoctal->remove_sem);
- 
- 	ipoctal->dev = dev;
- 	ipoctal->carrier_owner = dev->bus->owner;
-@@ -755,7 +758,8 @@ static void __ipoctal_remove(struct ipoctal *ipoctal)
- {
- 	int i;
- 
--	ipoctal->removed = true;
-+	scoped_guard(rwsem_write, &ipoctal->remove_sem)
-+		ipoctal->removed = true;
- 
- 	ipoctal->dev->bus->ops->free_irq(ipoctal->dev);
- 
++	if (msg_len > buffer->size) {
++		dev_err(adapter->dev, "Recv_msg: msg_len 0x%lx exceeds buffer size 0x%x\n",
++			msg_len, buffer->size);
++		spin_unlock_irqrestore(&hmc->lock, flags);
++		return -1;
++	}
++
+ 	/* RDMA the data into the partition. */
+ 	rc = h_copy_rdma(msg_len,
+ 			 adapter->riobn,
 -- 
 2.53.0
 
