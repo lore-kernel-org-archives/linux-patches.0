@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031207;
-	b=S5TbKpnkMKQA2BvtJmhLEbzm/MjyFsexv2wOOmuEOBwe9qTMbuPPgZMlmwyU1Q23Le2u
-	 BLYtcCLK9yKN6FhLhV/NDclX92dU391Vu7PNAsMjk2YnVEXr+jS0f6qOjiNROnXM321h5
-	 4pZf68ULWRHg6BSc8P11eA14YQ22J3CdxI1RAwSlG0+C63rpn2PUqidRmPGV6lN7dEpHY
-	 RND/64m0oQ4jPy2r+AD/h5VyqDjtybWliACAI7JrYSkN5yM8kaxWu/scpTTP3tnQ/vi5s
-	 lY5s1pj1oddTTCfk/w8CS2JCP6gIWFbmQWCr9LaYo+BnIZt4a1AROVzJI/UVzD4/W8g==
+	t=1795031210;
+	b=m8coGP447JEbDlc5SH1RvWNZOD55C7mf8dR8Cz6jTL8RE2a0kw6RkVNAFJtxymv8VvyW
+	 2bN0NNRTgeB3EMAosABhghb7HLdmMDPUF7YchIbtcaLSsq5t4UleouHE3k3Aog002kLNe
+	 25R+11PMEFfstOk3gKAjhWwvQdxhfECaTzoLfI3y1WB2o0LEZ/2LdNl3xtB2TW6UU8K4s
+	 WUoJlV9xu1N0rINUPPkNzCwUoq9ylF6x1g7vD2fMFcBa8m9V5y+oWHaZLZ+jzbzhnSTxL
+	 kLd4M3ZYOs9RwhliiM72Rq7hxSuGtA60H9sDyOfzmFek9/8iKv9lT6NT/BIho9WkGzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031207;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031210;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nxoPtc0P+mVj3o/8CxeH6izQZ3rSWbIKlBgN3o6GyxU=;
-	b=nl5G1V5JgpH1VAScwiQsjRQ1C4qFASliTEYv7r5RW1yVBOjEZZJI0jfkXt2n0AjzZ25f
-	 ksXs2BtpkUc239xypnGIvZqZquJ2KLpEJ5TUtpAbyq/ubR/72987TWvaPH85nhl/YhhTb
-	 OamZ7zK0nvMFV3sIDcZdyj05gR5KGYLwYC4iInp54wG7Tn1lj6/tW6d/QqtIntnGTrr7q
-	 ocfl9RxvgheRiFnz0X2sFbEFhZoso027IWbwW+WDyxrKcva/GN9cOTgHSZbjr9KBSI41h
-	 +4eKzcQIl+p1pZBg2TsTH22hj8SFAIRM6/qtgfvdGi7Mb0964T0L+I/dD9igC7UheKw==
+	bh=lpGFnpzFO5Kj6ggxyPXGbdLEwE+UwGuyVtjtWbAy0Tk=;
+	b=gvfR09bDALdLcQ8twmWKPrVhi2IvTX7oOJf2zEXIk8gOwUzIJ/fF5oQzVxEvE374eFLK
+	 CZWLV9gscSKo0dsWkNDDWis7Z0o7uJ91HmPMTFGTjgVisIeEAhEJKjwyfxMWjfDGATGWX
+	 pyLP5cPPhUycq3mQwHCptr59Y6qXFXVIfcuSU1cXtzsgLe9xUkC3G7WS3AMoB5g+m77Tl
+	 z+MvJuhL/xIiq+XqZ/UcxoVjwV8SUCJFMYmSi6TZ7Ftg/bilWeige9I6nRnFVp43uIpyR
+	 lJdqph+HVsQ1ky4JBMnTU/fbLuhY0AVl+23wV4CHcaEaEWbkM48FUYeQw/B4CTEPX5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ThKTeEBO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TvNn+zgB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B0F606A32A;
-	Wed, 18 Nov 2026 19:46:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47912606A32C;
+	Wed, 18 Nov 2026 19:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ThKTeEBO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BBA1F000C5;
-	Wed, 18 Nov 2026 19:46:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TvNn+zgB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0091F000C5;
+	Wed, 18 Nov 2026 19:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031207;
-	bh=nxoPtc0P+mVj3o/8CxeH6izQZ3rSWbIKlBgN3o6GyxU=;
+	s=korg; t=1795031210;
+	bh=lpGFnpzFO5Kj6ggxyPXGbdLEwE+UwGuyVtjtWbAy0Tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ThKTeEBOYurP+ISKck53maVM5thnjAtciHoj31hyve2sepBaJDtHjClqs45SoolYj
-	 wkTbVaXQucZHZ/7eFijoN9JFnh66pS98hA23QJljtlqzWYgU8qMnSXpLMADZ/HXW6X
-	 5V8jztD7GQF9AJXz25EygnKr6/Cl6f9yA7zxAnUw=
+	b=TvNn+zgB7+8RrizecMHXRnBgmZ0yvNOHwh7ZPedW6CHy8Mg413XwISmnQZz9m9cJc
+	 Pan9Nb4jm44L8+rRP694hOMrdHkDaOz4OD8BF96IUO5v7xwFMprzXD/AM8HnezI8V5
+	 dYuu+Ob7rA7DojITkcM3lsyNzMXT1jcJooRe6i1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Ting-Han Hou <ue081723@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0978/1756] wifi: mt76: mt792x: compute the assoc RSSI from the chain signals
-Date: Wed, 18 Nov 2026 15:51:45 +0100
-Message-ID: <20261118150049.089994696@linuxfoundation.org>
+Subject: [PATCH 6.12 0979/1756] checkkconfigsymbols.py: Parse Git status output line by line
+Date: Wed, 18 Nov 2026 15:51:46 +0100
+Message-ID: <20261118150049.139216957@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,52 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Ting-Han Hou <ue081723@gmail.com>
 
-[ Upstream commit 2d12f56631ef307e58651b560ccda1f324a059f9 ]
+[ Upstream commit 72a61a7fef954152abd9df9def4f94816eb344ca ]
 
-mt792x_mac_rssi_iter() adds status->signal of auth and assoc response
-frames to the BSS RSSI average, which mt7921_mcu_sta_update() and
-mt7925_mcu_sta_update() send to the firmware as the station RCPI.
-mt7925 never sets status->signal, since mt76_rx_convert() computes it
-from the chain values later. The average is thus fed 0 dBm on mt7925.
+tree_is_dirty() iterates over the string returned by execute() one
+character at a time. Its status check therefore examines filenames as
+well as the two status columns.
 
-Compute the signal from the chain values, as mt76_rx_convert() and
-mt76_check_sta() do, and skip a frame without a valid chain signal. On
-mt7921, the average now follows the combined value instead of the
-strongest chain.
+An otherwise clean tree containing an untracked README is reported as
+dirty because its name contains letters matched by [URMADC]. This
+prevents --commit and --diff from running, whereas an untracked
+notes.txt does not trigger the check.
 
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Link: https://patch.msgid.link/20261007112419.1277594-4-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Split the output into lines before examining the two status columns so
+that filenames do not affect the dirty-tree check.
+
+Fixes: b1a3f243485f ("checkkconfigsymbols.py: make it Git aware")
+Assisted-by: LLM
+Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
+Link: https://patch.msgid.link/CA+NtrhQqXgjT+4eg6W4P94Hc=DqdV3gQXz3EKKCxWvdWzfND6A@mail.gmail.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt792x_mac.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ scripts/checkkconfigsymbols.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
-index 05978d9c7b916..d559b8a008c0f 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
-@@ -168,14 +168,16 @@ mt792x_mac_rssi_iter(void *priv, u8 *mac, struct ieee80211_vif *vif)
- 	struct mt76_rx_status *status = (struct mt76_rx_status *)skb->cb;
- 	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
- 	struct ieee80211_hdr *hdr = mt76_skb_get_hdr(skb);
-+	int signal;
- 
--	if (status->signal > 0)
-+	signal = mt76_rx_signal(status->chains, status->chain_signal);
-+	if (signal > 0 || signal <= -128)
- 		return;
- 
- 	if (!ether_addr_equal(vif->addr, hdr->addr1))
- 		return;
- 
--	ewma_rssi_add(&mvif->bss_conf.rssi, -status->signal);
-+	ewma_rssi_add(&mvif->bss_conf.rssi, -signal);
- }
- 
- void mt792x_mac_assoc_rssi(struct mt792x_dev *dev, struct sk_buff *skb)
+diff --git a/scripts/checkkconfigsymbols.py b/scripts/checkkconfigsymbols.py
+index 36c920e713137..9f7aed98d91c0 100755
+--- a/scripts/checkkconfigsymbols.py
++++ b/scripts/checkkconfigsymbols.py
+@@ -245,7 +245,7 @@ def tree_is_dirty():
+     """Return true if the current working tree is dirty (i.e., if any file has
+     been added, deleted, modified, renamed or copied but not committed)."""
+     stdout = execute(["git", "status", "--porcelain"])
+-    for line in stdout:
++    for line in stdout.splitlines():
+         if re.findall(r"[URMADC]{1}", line[:2]):
+             return True
+     return False
 -- 
 2.53.0
 
