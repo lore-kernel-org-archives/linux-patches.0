@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038543;
-	b=tK1DJPgA7UkjGQnUlZ1Vil0yp920Ce1w6Z4DFDsuXIMpaVZotpT6O0MAxEKC9ArEj/Ce
-	 yGWKXNSyv0EQhT1t6bTiOcOwreoPocZwl27Ktr/nNCJ8Mu8HblptmuZJ/BHffwR7eIVbi
-	 I0I2k4U25YR6eQqlbxbuuDtAbuUhRpcL1197sr0tKUB2KOSnbkBMqDepWEl7x/lQTMyax
-	 0LZf3H1O3pKcQSfHoV+ypiUDT12e99rihkQsyD8CiCXEzW7yf7bT7SCVLa9lcAfRlREqZ
-	 UJPe3kG1xq1k/8WVNXJZIgpqPpeMhknwUCQaX2kCqk6O723JYSa6AsGAx+i/v/05s8Q==
+	t=1795038546;
+	b=qYoTz9LQWHpBvHteI28LvsDsQzg1xU/zo4IU7ZgjvKolidOg+8fX543sbLCmxCF2qPHO
+	 c3sF+c4ZyZ9sl4YzXqm59Jf2yE9+j5ge3UHMtSX2B+KmOO8yl0twv7LCwiqLmJpElgOmD
+	 azfI3OAYz+D790NsDkqqCFTGtKZGpSEctAmGdTQb5teYuOSdZNA6PpsVSWiAbnR2GPKHM
+	 uOfpz81yZrqo1OlvQ/O6wjUZyPDCapUFhjCKw5DqsEjIrgHdvc6jzDSZBUgN9grslvnuN
+	 F323eA5PAapw+pLrBM4mor4CiZ2vsWXgBpp/fPLvc4LpIGwq1VzucEhAzgSvImM/f5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038543;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038546;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NCWiUXHCRBO+zaoEom8gXVNajcu5aaxFWqLjmGzO8Ps=;
-	b=xDRWqXS6rSZ9GzXfSFhiA7uCHLmlRn0K52PijEQiy0Vm9uRbEIzi+XKjFnCWJbIRsukU
-	 cjMcYJfa7pcgg16pXfdA7vneEveBuSOpXImK/0Wi4v/Zp+2eQbUJ5j8ZgDY333Z3NU+Yz
-	 jIKlNErlK8FGAeEriOgSJ5BAkb4YD05FQpsHzaaHdjjQg1FXooRPlNtlq7rnbUUyoFwXE
-	 5TEk59nIbEAPbQrrtViilPVECmb3YfcM9iLp+iR0cXUyqymvrXKjG6OxJBPkC2RFriK+j
-	 MKfczbk79osLjHp4vY2UKpXdQwkeSW9Nce1x4FVifgitWBmskq6gX0wX18JAwVzpyeg==
+	bh=rvNVyZ8F69ShkN39WL+nWnBKzTUTYIZNjchA91coZAw=;
+	b=QEX24N2zTzBRLyBabl65PwilgcGtsNOsWxOgB1L3VN7+UYcNnBtxCkXORTXzQX3A1vvy
+	 ASIQqGDuSoOpfZJrK5chTrOY8W9cyZZ0dratWqOHpIpGcvDB2iHkA3RnSpLY/Fqg8jB+b
+	 F6Cp8kybmR4ZDqmn1i9iuhUHbMsmo7k8SRmBTsPlRBKcqZ7DckoNn5ChculW8Pho3/RJ1
+	 HoIPiPMAM3e/IWgZzDITb0r5d9+AOTW+C0c5/NibtK2wcfZQWjF4Do033xF8YNKTtIl8t
+	 WMPbHAGMMcO34CYnSaBiG5jJNCbpz988Ki5cpSAQ0XivtX3yvkl00hJAsNWZCvrRcHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ehMYqSF+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FHQIQmJa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806AC606A320;
-	Wed, 18 Nov 2026 21:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4CA606A333;
+	Wed, 18 Nov 2026 21:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ehMYqSF+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A89971F000C4;
-	Wed, 18 Nov 2026 21:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FHQIQmJa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A591F000C4;
+	Wed, 18 Nov 2026 21:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038543;
-	bh=NCWiUXHCRBO+zaoEom8gXVNajcu5aaxFWqLjmGzO8Ps=;
+	s=korg; t=1795038546;
+	bh=rvNVyZ8F69ShkN39WL+nWnBKzTUTYIZNjchA91coZAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ehMYqSF+z/uBHS4/SnrNbIuVYRdc2YLG6h5XcxaNaso1Saqy+E+ZRhYlMMQ2sev8J
-	 8Mw7d6TjxShfGej/ODbueQ3UUJJQI4l9/M2Lll5mofFyCbFcE429mkGUJteRlwzn4g
-	 fOAOSHTNpmbw2q5xxTzii3NwNjYbiDaxgBok0SQ4=
+	b=FHQIQmJaHq2oukktJz0YfDkTDlm4FbiZSmL6zgb1T1jG25iP3FJzO/eXwoBxZmYI0
+	 P0FzYny5WyyiTwe2cuX6KYhDCxxA0mkXMZl6sWoqgkiQXFQ2qvcoEQclLMiCsH3ts7
+	 MvZsBhOPhid7W6vmJw55sMqMa+TnO8beQLdfYejw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Kochetkov <al.kochet@gmail.com>,
-	Siarhei Volkau <lis8215@gmail.com>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1778/3318] Revert "Input: matrix_keypad - force switch rows to input mode"
-Date: Wed, 18 Nov 2026 15:40:00 +0100
-Message-ID: <20261118150415.199611991@linuxfoundation.org>
+Subject: [PATCH 6.6 1779/3318] tpm: tpm2_probe: propagate transport errors
+Date: Wed, 18 Nov 2026 15:40:01 +0100
+Message-ID: <20261118150415.229283882@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,51 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Kochetkov <al.kochet@gmail.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit 1527451f87dfe368b8ddeeb501c24ac9bde6b589 ]
+[ Upstream commit 7d4f1cbfe063af5581dac66abe9e9c965e1031cc ]
 
-This reverts commit 01c84b03d80aab9f04c4e3e1f9085f4202ff7c29.
+tpm2_probe() reads the protocol version from the response tag and is
+documented to return -errno on failure, but it always returns 0.  A
+transport error (tpm_transmit_cmd() < 0) is thus swallowed together with
+the intentionally ignored TPM response code, leaving TPM_CHIP_FLAG_TPM2
+unset. A transient bus failure on the first command then misdetects a
+TPM 2.0 as a 1.2 and the probe fails on the TPM 1.2 path:
 
-The commit makes every scan call gpiod_direction_input() on the row
-GPIOs. On pin controllers where GPIO input and interrupt are separate
-pinmux functions this switches the row pins out of interrupt mode, and
-enable_row_irqs() does not switch them back: it only unmasks the
-interrupts. Row interrupts then never arrive and the keypad stops
-working. Seen with a matrix keypad on an Allwinner A64 board (PINE
-A64-LTS); it works again with the commit reverted.
+  tpm_tis_i2c 0-002e: 1.2 TPM (device-id 0x1C, rev-id 22)
+  tpm tpm0: A TPM error (-62) occurred attempting to determine the timeouts
 
-The workaround is not needed on Ingenic either: the author of the
-reverted commit re-tested all available JZ47xx SoCs and they all report
-the live pin state in interrupt mode, see the thread in Link.
+Return the transport error instead; rc >= 0 still means a valid header was
+received and the TPM's own response code is still ignored.
 
-Fixes: 01c84b03d80a ("Input: matrix_keypad - force switch rows to input mode")
-Link: https://lore.kernel.org/all/4130C026-2A83-408B-836A-ECA044491C47@gmail.com/
+Fixes: 94e266ba1fa3 ("tpm: migrate tpm2_probe() to use struct tpm_buf")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Kochetkov <al.kochet@gmail.com>
-Acked-by: Siarhei Volkau <lis8215@gmail.com>
-Acked-by: Paul Cercueil <paul@crapouillou.net>
-Link: https://patch.msgid.link/20261002100935.449473-1-al.kochet@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-[ sashal: Adapted the loop removal from gpiod_direction_input() with keypad fields to gpio_direction_input() with pdata fields. ]
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20261001060114.1582092-1-alexander.sverdlin@siemens.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+[ sashal: Replaced the early return with rc = 0 to preserve cleanup of the stack-allocated buffer. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/keyboard/matrix_keypad.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/char/tpm/tpm2-cmd.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/input/keyboard/matrix_keypad.c b/drivers/input/keyboard/matrix_keypad.c
-index 9e6837217f441..d0787a568058d 100644
---- a/drivers/input/keyboard/matrix_keypad.c
-+++ b/drivers/input/keyboard/matrix_keypad.c
-@@ -118,9 +118,6 @@ static void matrix_keypad_scan(struct work_struct *work)
- 
- 	memset(new_state, 0, sizeof(new_state));
- 
--	for (row = 0; row < pdata->num_row_gpios; row++)
--		gpio_direction_input(pdata->row_gpios[row]);
--
- 	/* assert each column and read the row status out */
- 	for (col = 0; col < pdata->num_col_gpios; col++) {
+diff --git a/drivers/char/tpm/tpm2-cmd.c b/drivers/char/tpm/tpm2-cmd.c
+index 57bb3e34b770f..d01d90beab788 100644
+--- a/drivers/char/tpm/tpm2-cmd.c
++++ b/drivers/char/tpm/tpm2-cmd.c
+@@ -507,9 +507,10 @@ int tpm2_probe(struct tpm_chip *chip)
+ 		out = (struct tpm_header *)buf.data;
+ 		if (be16_to_cpu(out->tag) == TPM2_ST_NO_SESSIONS)
+ 			chip->flags |= TPM_CHIP_FLAG_TPM2;
++		rc = 0;
+ 	}
+ 	tpm_buf_destroy(&buf);
+-	return 0;
++	return rc;
+ }
+ EXPORT_SYMBOL_GPL(tpm2_probe);
  
 -- 
 2.53.0
