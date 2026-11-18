@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020317;
-	b=aBHu81QLtluXSmUru/EhjfDbiuO6s18BM/C3AbX5p+IOQmolmZaJq3vvXq+bGiVnltmW
-	 uOI9FX4NOBbaC04A0HtsHZFWKNqk0YzDY1+fOqj3vsFp/rdE88Mh2TtqJgO7qN//kLTHZ
-	 vA4fk1ejkzYMv4/sd5T6CAUlsWUVF3U4DSHfxihjUF/aqcPsjYQP0xssMGNIm1n1GOyV4
-	 Oa7eK3XK18wwt1jzTR35OC5ApfT4clGNXA80gMhHSyMQ3i8qZVoyS3HAOOK/aEmT/m5xL
-	 x7spSqSDKTZ45iXWhEIaKK4IJwW4zeIu/mXO1ZjYyxP3JhDHSZ3goy+nta9eGQNMF5g==
+	t=1795020319;
+	b=aSVF433XEw086z42v78dT+srDKa8Z565cW7TuFY/4nejzLiyzM5DZ4B2WUuFV0wSYuHY
+	 B4k6NieQivFBqFmai0qDaSAgjFs6gGKWvi1Pe7QPtaGqpDTtJxPGLkOpoGAvDjUF2MjVp
+	 lInpbIP6vzI0g4gT9IvObqFXVzMIunoMw+gCi1p/9Wo0SuY7YeBbkUXKx56A03OjVhgWL
+	 UsMSNS6Yqvmv1x4d6WF2k9cL7cjrY+D3I8rhvAn5NJG/OIn7E6TQxRHICBv/9XwNEzBGD
+	 jKWkJAYcZXxOPTnUPaxrXa96+mtfLQ4hDDd7QcaGQUW4dOX10OESPIPLZgvGWZgv0/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020317;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020319;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O4493bqCnLMHxGZxuf0PCG36Qhr9mjjEAZvBHB15bNY=;
-	b=lDnd/q0Ed6X7zQ3xLsbH53aHBYxGIO+wP+diz8Hc8sKQphYf1ARgD22Q/+IYVs6HaQYJ
-	 8aJCXGFTbEXX5UhmiObME7591uNCJLMyAd+U7cqi5htI8rWQ0meWOa72DvhFldnD1+LBf
-	 +DN1XsLjxzb7HYrIzYI7ulUPDS3tZCj7a/oBJEiiyvTjKO2lIKnhha3SbhO7wQet8zIdd
-	 kSAozZ06A1O2kVa5lJl1NmO5oDVfTvw6UyMRBJNodYr3zDEfbzmxSXgYOW0Woske3VuSm
-	 YMF+GYOmYVs40+BUG1YopTxUYXorGZRhXn5E3wruO/KnkP50Htg6tmofnv8+OwNn9QA==
+	bh=xoSPd/02Cuqr+sCfLQhRTpw6yMW42pWq118abdDlZGM=;
+	b=CCGnaDjHUtaFVV/WdjKI+yfgkCeu2nLt9V/fW03LgR5XbcRaYC7ke99ZDWBBpn0l6+4A
+	 Pe787AkuiHHyAQmoUXTtJ34Sk3Me8kNrplfx3+uJX3+oPbabLcupC2qIFfQ07CHOqXiBe
+	 QD4rJJbnfFDu7k4xlHF0/3GNBw6wJ07cOwSJ6ZBCQhhjKCKy+pv64yjLkhrUNEvJYrmvK
+	 uyjBve4FYZ79cMtNgRIMhahJmO5zTxdSZBffnkRam1Xwi5wArDFJX2BwWHAlH5Aiammoe
+	 iwaXT8fSteyNUoMzfTDLkjRRCSp2nsxtHt4WjHZxSO3m16iG9UZuSzJBEBoavf8NJ/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cVn8IXVO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kKf/9ZWm";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08430606A320;
-	Wed, 18 Nov 2026 16:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0D6606A320;
+	Wed, 18 Nov 2026 16:45:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cVn8IXVO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CA01F000C4;
-	Wed, 18 Nov 2026 16:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kKf/9ZWm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134C61F000C4;
+	Wed, 18 Nov 2026 16:45:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020316;
-	bh=O4493bqCnLMHxGZxuf0PCG36Qhr9mjjEAZvBHB15bNY=;
+	s=korg; t=1795020319;
+	bh=xoSPd/02Cuqr+sCfLQhRTpw6yMW42pWq118abdDlZGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cVn8IXVOwTS65U3gG77M/mOiLRUb2UVm20C7kCDySPCcIn8JBRp6I/3xcnh3Ukd1H
-	 J/BdzaP2NFeL7bEm4z5iJwqkTsYDYhcpbyvkq6GV8Qi06n7kEMkUpNbZAu/QsGsXG2
-	 oR5RxZrbJ+ZNeHJGQzuQnxcAzr6zG4HKULAmfsaY=
+	b=kKf/9ZWmhBacL2gQQFpaCmVOrPz2LNgKgN4kQwOzG2xKV2yxqQRtiegoxx+IJd/9C
+	 ZBDQGa6DQVz+HGqMzmF4N+O470jSMry8JGc1qCCpV2rLmkVQEHw3JplC1xcNUogV5B
+	 hH75YJX1Z2Ro/AWx2W/ZORcpHmB4L21SuNn7gnOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kyle Pepper <cochcoder@proton.me>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1907/2651] Bluetooth: Fix the LE Read Connection Interval response layout
-Date: Wed, 18 Nov 2026 15:52:27 +0100
-Message-ID: <20261118150355.459899372@linuxfoundation.org>
+Subject: [PATCH 7.3 1908/2651] Bluetooth: hci_sync: scan unfiltered for host-resolved RPAs
+Date: Wed, 18 Nov 2026 15:52:28 +0100
+Message-ID: <20261118150355.490782391@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,76 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Kyle Pepper <cochcoder@proton.me>
 
-[ Upstream commit 5874f8d03268d34189c6c12c56586b64d26a8bcc ]
+[ Upstream commit 397464709a204da9b8dc3b01d6ea42539d951cd2 ]
 
-The response to HCI_OP_LE_READ_CONN_INTERVAL carries a
-Minimum_Supported_Connection_Interval octet between the status and
-Num_Groups, which was missing from the structure. Without it the minimum
-interval was read as the number of groups, and every group after it
-from one octet off.
+Restore unfiltered scanning for pending IRK peers when the controller
+cannot resolve private addresses. Keep accept-list filtering while
+suspended and when forced by periodic advertising synchronization.
 
-Take the minimum interval used to clamp the default rate parameters from
-that field rather than the smallest group minimum, as the number of
-groups can be zero, which left it unset.
-
-Fixes: 2f8784cfe8a9 ("Bluetooth: Add support for Shorter Connection Interval (SCI) feature")
-Assisted-by: OpenCode:claude-opus-5.5
+Fixes: e209e5ccc5ac ("Bluetooth: MGMT: Mark LL Privacy as stable")
+Assisted-by: OpenCode:gpt-6.1-sol
+Signed-off-by: Kyle Pepper <cochcoder@proton.me>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci.h |  1 +
- net/bluetooth/hci_event.c   | 16 ++++------------
- 2 files changed, 5 insertions(+), 12 deletions(-)
+ net/bluetooth/hci_sync.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index 1641d879dbda9..9dc714d9145ee 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -2527,6 +2527,7 @@ struct hci_le_conn_interval_group {
- 
- struct hci_rp_le_read_conn_interval {
- 	__u8	status;
-+	__u8	min;
- 	__u8	num_grps;
- 	struct hci_le_conn_interval_group grps[];
- } __packed;
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 3ea6c06adaaf0..3288f92fe41bf 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -1247,8 +1247,6 @@ static u8 hci_cc_le_read_conn_interval(struct hci_dev *hdev, void *data,
- 				       struct sk_buff *skb)
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 789939fbaf1cf..4e5c47872c30b 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -2618,7 +2618,7 @@ static int hci_le_set_privacy_mode_sync(struct hci_dev *hdev,
+  */
+ static int hci_le_add_accept_list_sync(struct hci_dev *hdev,
+ 				       struct conn_params *params,
+-				       u8 *num_entries)
++				       u8 *num_entries, bool force_filter)
  {
- 	struct hci_rp_le_read_conn_interval *rp = data;
--	u16 min_interval = 0;
--	int i;
- 
- 	bt_dev_dbg(hdev, "status 0x%2.2x", rp->status);
- 
-@@ -1261,17 +1259,11 @@ static u8 hci_cc_le_read_conn_interval(struct hci_dev *hdev, void *data,
- 		return HCI_ERROR_UNSPECIFIED;
+ 	struct hci_cp_le_add_to_accept_list cp;
+ 	int err;
+@@ -2631,6 +2631,11 @@ static int hci_le_add_accept_list_sync(struct hci_dev *hdev,
+ 		return 0;
  	}
  
--	/* Store the smallest minimum supported connection interval reported by
--	 * the controller so the default rate parameters can be clamped to it.
-+	/* Store the minimum supported connection interval so the default rate
-+	 * parameters can be clamped to it. It is reported on its own rather
-+	 * than derived from the groups, as there may be none.
- 	 */
--	for (i = 0; i < rp->num_grps; i++) {
--		u16 min = le16_to_cpu(rp->grps[i].min);
--
--		if (!min_interval || min < min_interval)
--			min_interval = min;
--	}
--
--	hdev->le_min_rate_interval = min_interval;
-+	hdev->le_min_rate_interval = rp->min;
++	/* Host-resolved peers need unfiltered scanning while awake. */
++	if (!force_filter && !hdev->suspended && !ll_privacy_capable(hdev) &&
++	    hci_find_irk_by_addr(hdev, &params->addr, params->addr_type))
++		return -EINVAL;
++
+ 	/* Select filter policy to accept all advertising */
+ 	if (*num_entries >= hdev->le_accept_list_size)
+ 		return -ENOSPC;
+@@ -2962,7 +2967,7 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
  
- 	return rp->status;
- }
+ 			num_entries = 1;
+ 			err = hci_le_add_accept_list_sync(hdev, &pa,
+-							  &num_entries);
++							  &num_entries, true);
+ 			goto done;
+ 		} else {
+ 			rcu_read_unlock();
+@@ -3026,7 +3031,7 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
+ 
+ 	for (i = 0; i < n; ++i) {
+ 		err = hci_le_add_accept_list_sync(hdev, &params[i],
+-						  &num_entries);
++								&num_entries, false);
+ 		if (err) {
+ 			kvfree(params);
+ 			goto done;
+@@ -3048,7 +3053,7 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
+ 
+ 	for (i = 0; i < n; ++i) {
+ 		err = hci_le_add_accept_list_sync(hdev, &params[i],
+-						  &num_entries);
++								&num_entries, false);
+ 		if (err) {
+ 			kvfree(params);
+ 			goto done;
 -- 
 2.53.0
 
