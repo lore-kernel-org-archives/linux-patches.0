@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021458;
-	b=ZMc0z1PZo6zGX8A+5oZmnZC4eOPYiOBKpx1MlswZw/PRNYtjxQMqWR6XfKhPI2owUtSD
-	 p85LcF0+f7dWDrTaeCsOt+yL2Yvd1uGnSPUe5rUX7VotSQw6ohXUJyqyZ37vhJ1cCZlFD
-	 tsRsctrBEprW/skhJJN7hRIgyGkTOVNzMNyrlX7ImDwIjBVDwi/MNVdqhOxV54UUEzDG4
-	 EOB49EmA3La9jUnDTWHbb+n2N0i8vt14/XkjLW7iWryMVFKCqAf7hsrCEpfSCFb0zzZcq
-	 ag44z6VTj5FJtramQwzKgH0EJu3ZnO06+iQAGb4PMT+Kxl6EB02ztb2qjG700QqGQ9g==
+	t=1795021461;
+	b=1Jq5JcyO5crRP0KnJ6teS1KhK+wY1XU6PCJq/9bWkDBsEiSofVmbWd7B2YcSlAF/5aJl
+	 NVtdjJroc79+ZsczkNX+5ntVqIk+3w5Cdftd99/QC6OJDvUcwOdCJoNiudkQ9ptdAZJEA
+	 UDi5+i5Z5sS2Gm0qOI5x2IiKDDkZnxAQEos6t38VRdttIkeJEfAvf29GqV9rQ2xwJezex
+	 b/tXu+6rgR/19VTl13N4rkOYI/dFfCsjRoHsypBhoTgUYKlYg/mDrEPR3Mo7byhSbx2gu
+	 0+YmtkwmL8bfghEkYpp5sw+CPT9weM+IKhdptOTGIxgZv00PkcGjkHkXc7hSs2GGpnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021458;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021461;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vCQhyvja78BKqH9uX8SQ4LnZGirBIK37oEido4j1sQs=;
-	b=j2TgEiCI9jyXb7iTxhDwFMcp6ZbwCxkNQYy26+I+Y8O2dkJUvNwaLLXPFG0Ot3KkjWEb
-	 WIThinY0GrJBmZ3HNQ5DhGfpuv7bZhUCyxGLWfpriKGI+eVyqK4RjGOObPhlSNYR9QYNU
-	 UfGncLotbMovBabj+zwGm7Tl5OuiMmrKwYqxryXnk4pKIQFz9Or2W+cHs0BO8R+oMVnz0
-	 CINrTm4Kcnm26+oSYA7lfRdceerXFyYIGufZW25M0EArX8p915OYvA4vkT1qvZ86y+exv
-	 drgcu2mcY9mTKezDCjl4uFVBvhja3ryRgLmRdSnjXbWLeK5an4r93puXppFfG3nZNVw==
+	bh=HdDrbeDpkcXegxLKmbuNC30pQce1T0a/t8g0OVRiq8Q=;
+	b=GU6hdy2qLTqUtw7UnKufKRJtX4F75OsIwlxlSB65AMOK1NqgFDBpO7nc1kXkqliixA43
+	 Ni/dVUNokyXZtgL4rZBVELxDJ2zLrtn0CtDR0RflPMKesIWuzg2FR6Z9m/jsGw37iygyO
+	 TmYkfRKCGHFkhK2twy6WvN2Y+sadFP64bfHfXmi6OEuLGJe3KJG1KVIuo7j8mV8wmucri
+	 ZPVWCDGsLGkyQhshMjMpGUrFXz8vDdltIbdrrDdCoPWSBS/eBJ4bdXrxr8lDWM08gMzk1
+	 iQZzi+5vRdoTjGxB/IeSKeEnAgdRihucqd1qWmv/P6hLNFAgPspB2imLd+9esjJN9Cw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vxq1Skve;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fFQBwif/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DCC60A2634;
-	Wed, 18 Nov 2026 17:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CC560A3810;
+	Wed, 18 Nov 2026 17:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vxq1Skve
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A2891F000C5;
-	Wed, 18 Nov 2026 17:04:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fFQBwif/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7EC1F000C8;
+	Wed, 18 Nov 2026 17:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021457;
-	bh=vCQhyvja78BKqH9uX8SQ4LnZGirBIK37oEido4j1sQs=;
+	s=korg; t=1795021460;
+	bh=HdDrbeDpkcXegxLKmbuNC30pQce1T0a/t8g0OVRiq8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vxq1SkvenAK8XbalwHzp2O1krbR9f/+oDGKmGw0IuPr9FOTbTWGNQ9EM42AU2maH0
-	 hz51+pT/ubCFYOBzEVJJ4lV3biFDIoa1oRCx2vNyXds3sAWJYG0cmqTyCHNgIbS0Ar
-	 xxsFrVVwtp/ItLWiSx2RTreopO3fhZDiwu+fp9yQ=
+	b=fFQBwif/kbOTxg7u750QgN9YMmSrK5FR1ssg8m0gUXSsWwKNzdR9jYnSTZ55rBho2
+	 jx8/Ckd7kd5QiakBUQSbJh0hPF0SYgsEj/jb2qVJDoq4js2VT8zUckW8oPZZVI2JJw
+	 3dhZY48H+lOKgFV3N6MycZmSBXIZ/o1aiVSxgBZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Anil Kaushik <anilkaushikwireless@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2312/2651] selftests: ALSA: pcmtest: Make room for the longest fill pattern
-Date: Wed, 18 Nov 2026 15:59:12 +0100
-Message-ID: <20261118150408.455680823@linuxfoundation.org>
+Subject: [PATCH 7.3 2313/2651] gtp: set a valid genl command in PDP context get and dump replies
+Date: Wed, 18 Nov 2026 15:59:13 +0100
+Message-ID: <20261118150408.484892568@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,44 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Anil Kaushik <anilkaushikwireless@gmail.com>
 
-[ Upstream commit c338e77291d6b1b6aee6d45b3cc523f97199a011 ]
+[ Upstream commit 758d8928d2c5d6703da827577cef86d643155236 ]
 
-The driver accepts fill patterns of up to 4096 bytes, as pcmtest.rst
-documents. The test reads each pattern into a 1024-byte buffer, using
-the length the driver reports. So a pattern longer than 1024 bytes
-overflows the buffer into the next pattern and past the array.
+gtp_genl_fill_info() stamps the reply with the command its callers pass
+in. gtp_genl_get_pdp() and gtp_genl_dump_pdp() pass nlmsg_type, which in
+a genl message is the dynamically assigned family id rather than a
+GTP_CMD_* value, so replies to a PDP context get or dump carry a
+meaningless command number.
 
-Size the buffer to the driver's maximum.
+libgtpnl ignores the command and is unaffected, but parsers that check
+it (for example the ynl tooling) treat the reply as an unknown command
+and discard it. Pass GTP_CMD_GETPDP, as gtp_tunnel_notify() already
+passes a real command on the notification path. No uapi change.
 
-Fixes: 10b98a4db11a ("selftests: ALSA: Add test for the 'pcmtest' driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/7cbbcef84d2c14a2f0ec0ad2ba55c6ba0a15a8d8.1792390197.git.sammiee5311@gmail.com
+Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
+Signed-off-by: Anil Kaushik <anilkaushikwireless@gmail.com>
+Link: https://patch.msgid.link/20261016093225.1036375-2-anilkaushikwireless@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/alsa/test-pcmtest-driver.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/gtp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/alsa/test-pcmtest-driver.c b/tools/testing/selftests/alsa/test-pcmtest-driver.c
-index 5bba17434a6bc..e025a7bac26b7 100644
---- a/tools/testing/selftests/alsa/test-pcmtest-driver.c
-+++ b/tools/testing/selftests/alsa/test-pcmtest-driver.c
-@@ -10,9 +10,11 @@
- #include "kselftest_harness.h"
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index 69fe5717846b5..3dd97d75551ce 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -2279,7 +2279,7 @@ static int gtp_genl_get_pdp(struct sk_buff *skb, struct genl_info *info)
+ 	}
  
- #define CH_NUM 4
-+/* The driver accepts patterns of up to 4096 bytes */
-+#define MAX_PATTERN_LEN 4096
+ 	err = gtp_genl_fill_info(skb2, NETLINK_CB(skb).portid, info->snd_seq,
+-				 0, info->nlhdr->nlmsg_type, pctx);
++				 0, GTP_CMD_GETPDP, pctx);
+ 	if (err < 0)
+ 		goto err_unlock_free;
  
- struct pattern_buf {
--	char buf[1024];
-+	char buf[MAX_PATTERN_LEN];
- 	int len;
- };
- 
+@@ -2326,7 +2326,7 @@ static int gtp_genl_dump_pdp(struct sk_buff *skb,
+ 					    NETLINK_CB(cb->skb).portid,
+ 					    cb->nlh->nlmsg_seq,
+ 					    NLM_F_MULTI,
+-					    cb->nlh->nlmsg_type, pctx)) {
++					    GTP_CMD_GETPDP, pctx)) {
+ 					cb->args[0] = i;
+ 					cb->args[1] = j;
+ 					cb->args[2] = (unsigned long)gtp;
 -- 
 2.53.0
 
