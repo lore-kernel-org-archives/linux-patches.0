@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043153;
-	b=oTP8HNwlEfTZK8EksQq54PxgqXXVJYkKjMFn4kwU+MOI3uxZf30WlSbqDe8Ns7vUxpRR
-	 Nms1w9PCTfYifkAq/UoUQH6yvCSm6LqD1G8cAN8g9zabDcdoUi9XdRX/XoBcJECeEepWw
-	 ZwmvFcBqogYGjv8zi4P6LJtzylUmbxbvjW/SDELYwx6jwj7X/KC92lKNsLR2KbWVQMieW
-	 iBlc+hWFjAfnTq7jo28QdJh87sKXwnyZB/tUUT4rff2pVJYi7k1PaZWySsUWITBwNjmBa
-	 F2XqPJohKJ1rODRMcUE/ri0VHUiftHH1wS8c9xVanvFGt4qC23yd20iOzY+GHCoCpkA==
+	t=1795043156;
+	b=5Kw/rjPkrP1Kvb87b3O8VQiIujqqhvlNgQpgzovQOWZ1spKnhs5zPkfmicKZttYEGfYD
+	 r8RIHnDlm+p8RSzoirJyVr/8x2oJK2OOScM4jrmOy1D29ydcHqXO46ZarcQACnIs5kT1P
+	 AeVyP/6NZ+4t+uwtDvRclQLWaAoNcmVv1SaNiRClA2wve5Z+ZyhJWKVrcfAivbE8oInDn
+	 upCYS3+/AwmbIiBTARYHrt2smpcJw/WT/i24DRuVuMftRS22qja/FVAQkguFw4AxgfaP7
+	 09OySjWdfkBJFDOGZrnIC4EfAUpO/u629bO0Fe8bE5UmIJpVbgz9eVZAdz4i9YK44yw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043153;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043156;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gh6nyXSNf5strJOYu1Rm2StlPdzSQ2zU94vLYm4G8Ss=;
-	b=j22h81PSvv38AQik2UOFMPU0SEaHP+ixx6TicTkufjmQIwTTZwYhuDq5vW4lJWlitPD1
-	 WnaHyhcgtMxQTeFN7specksXMWpu1BcvpCYt/wWVdIYt4+EQfHi7LaqfH7HnsKuzLL4pK
-	 ZD4zaMBF0jwyoFUU1Iam3HvCaIp/AtCKlssGk+UKfbft7TFzKulV6N2d4PLvNlcLmkVHJ
-	 e4tI+02mJEQPt58Im5wsfRgR2tSy1PLt1MZV4JpljxpcpfvXMPdhbSUanF1s9m7lQCPPX
-	 /AsPDdDWXDq7OcgMs9b4UwEROfX6mS9h4MgB8KpOFDNgfzSDTP7shTf4ZlmSj4ansiw==
+	bh=Y3wmmcjg/1EAvl6uwN96YqwEnnIgnKUeQHenRTfA7ys=;
+	b=LKKKkK7WoA6Mvr45MMLfGrxaLOLFTxUBoIhDY3xgVIcubxgN1bVTu75mxD1Ww9T4zGky
+	 r4EA8ArYWYfHdDjMxGEXKr6lpRO2PlKQN94f4IBWSyTmMgd8GxAqAFK+MUO97ULEmJ3Wi
+	 9+fSnS9TtEEfmXkbcYa8JZe0QAHpnCxFjHfFVS7Kme0uK3Klfwkxdsz4sVO5bUfIB9RWW
+	 LP+NvfaOgBLNavlY6I4CljAXGIUoNHGT5Xh0LKMigKd4WtQlmLIGuzDAzchOqngVdRcQA
+	 fD9KmkQD1ABusEKPn0bmxp0J5+FIkyvcSDZ2KmKvka3efiq+/uD6knu8hhFzytLK+nA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="p/OXDBkr";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dOX+sI5r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D34606A31C;
-	Wed, 18 Nov 2026 23:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598C4606A32A;
+	Wed, 18 Nov 2026 23:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p/OXDBkr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827491F000C4;
-	Wed, 18 Nov 2026 23:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dOX+sI5r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C1C1F000C6;
+	Wed, 18 Nov 2026 23:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043153;
-	bh=gh6nyXSNf5strJOYu1Rm2StlPdzSQ2zU94vLYm4G8Ss=;
+	s=korg; t=1795043155;
+	bh=Y3wmmcjg/1EAvl6uwN96YqwEnnIgnKUeQHenRTfA7ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p/OXDBkrEiVIiV45X7ddJOCvWLIWWhel00eH/nfRbn5E36WZWql9MUKF459ZmWWiw
-	 HyJfW6FY/NmwvlazJYgFEWZT/APM9g5sOT0tsJ532bi7ERMnyRDS6yYt0HRtMkxBHY
-	 7YSXBi1Zt0WjSzPCr0p3SPScTnve6hwuoJA/lqJY=
+	b=dOX+sI5rlbhik33/gnXt8UwZKLGuHvBaKP4KanM4iZ3Dt+7aKDrJO0iTDyykuHNjB
+	 mG5aNMFIMEue8LTmVcCm8Vpe011ng0jQ9AdMwByPeXMHnlyBNqEzE8U9WQQN+pFKqD
+	 Nwg7CAuydbV1au+NHpi/S24mLPfeEH5bcANzuesE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Ben Dooks <ben.dooks@codethink.co.uk>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0067/2857] ASoC: codecs: max98396: Unwind supplies on resume failure
-Date: Wed, 18 Nov 2026 15:18:21 +0100
-Message-ID: <20261118150203.738176871@linuxfoundation.org>
+Subject: [PATCH 6.1 0058/2857] mmc: cqhci: fix to missed endian conversions
+Date: Wed, 18 Nov 2026 15:18:12 +0100
+Message-ID: <20261118150203.395907939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,74 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-[ Upstream commit d20de7409dfa8e3341af7f157cd42130bd4ba3a7 ]
+[ Upstream commit 0aae2c73175821a71c0e20607f8e333be5b71940 ]
 
-max98396_resume() enables the core, pvdd, and vbat supplies before
-leaving cache-only mode, resetting the device, and replaying cached
-register state. The function currently ignores regcache_sync() failures,
-and the optional pvdd/vbat enable failures return without unwinding
-supplies that were already enabled in this resume attempt.
+Fix two places where the wrong type or conversion of little-endian
+types to fix the following sparse warnings:
 
-Rework the function to use common error labels. This propagates sync
-failures, restores cache-only/dirty state on failed cache replay, and
-disables each supply acquired by this resume path before returning the
-error.
+drivers/mmc/host/cqhci-core.c:487:15: warning: incorrect type in assignment (different base types)
+drivers/mmc/host/cqhci-core.c:487:15:    expected restricted __le32 [usertype]
+drivers/mmc/host/cqhci-core.c:487:15:    got int
+drivers/mmc/host/cqhci-core.c:566:19: warning: incorrect type in assignment (different base types)
+drivers/mmc/host/cqhci-core.c:566:19:    expected unsigned long long [usertype] *task_desc
+drivers/mmc/host/cqhci-core.c:566:19:    got restricted __le64 [usertype] *
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704040651.47558-1-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/max98396.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/mmc/host/cqhci-core.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/codecs/max98396.c b/sound/soc/codecs/max98396.c
-index a7b6a23f2cd86..94bdeef156e38 100644
---- a/sound/soc/codecs/max98396.c
-+++ b/sound/soc/codecs/max98396.c
-@@ -1603,19 +1603,37 @@ static int max98396_resume(struct device *dev)
- 	if (max98396->pvdd) {
- 		ret = regulator_enable(max98396->pvdd);
- 		if (ret < 0)
--			return ret;
-+			goto err_core_supplies;
- 	}
+diff --git a/drivers/mmc/host/cqhci-core.c b/drivers/mmc/host/cqhci-core.c
+index fe7a4eac9595c..d942f3fe95abe 100644
+--- a/drivers/mmc/host/cqhci-core.c
++++ b/drivers/mmc/host/cqhci-core.c
+@@ -479,11 +479,11 @@ static void cqhci_set_tran_desc(u8 *desc, dma_addr_t addr, int len, bool end,
+ {
+ 	__le32 *attr = (__le32 __force *)desc;
  
- 	if (max98396->vbat) {
- 		ret = regulator_enable(max98396->vbat);
- 		if (ret < 0)
--			return ret;
-+			goto err_pvdd;
- 	}
+-	*attr = (CQHCI_VALID(1) |
+-		 CQHCI_END(end ? 1 : 0) |
+-		 CQHCI_INT(0) |
+-		 CQHCI_ACT(0x4) |
+-		 CQHCI_DAT_LENGTH(len));
++	*attr = cpu_to_le32((CQHCI_VALID(1) |
++			     CQHCI_END(end ? 1 : 0) |
++			     CQHCI_INT(0) |
++			     CQHCI_ACT(0x4) |
++			     CQHCI_DAT_LENGTH(len)));
  
- 	regcache_cache_only(max98396->regmap, false);
- 	max98396_reset(max98396, dev);
--	regcache_sync(max98396->regmap);
-+	ret = regcache_sync(max98396->regmap);
-+	if (ret < 0) {
-+		regcache_cache_only(max98396->regmap, true);
-+		regcache_mark_dirty(max98396->regmap);
-+		goto err_vbat;
-+	}
-+
- 	return 0;
-+
-+err_vbat:
-+	if (max98396->vbat)
-+		regulator_disable(max98396->vbat);
-+err_pvdd:
-+	if (max98396->pvdd)
-+		regulator_disable(max98396->pvdd);
-+err_core_supplies:
-+	regulator_bulk_disable(MAX98396_NUM_CORE_SUPPLIES,
-+			       max98396->core_supplies);
-+
-+	return ret;
- }
- #endif
- 
+ 	if (dma64) {
+ 		__le64 *dataddr = (__le64 __force *)(desc + 4);
+@@ -532,7 +532,7 @@ static int cqhci_prep_tran_desc(struct mmc_request *mrq,
+ static void cqhci_prep_dcmd_desc(struct mmc_host *mmc,
+ 				   struct mmc_request *mrq)
+ {
+-	u64 *task_desc = NULL;
++	__le64 *task_desc = NULL;
+ 	u64 data = 0;
+ 	u8 resp_type;
+ 	u8 *desc;
+@@ -564,7 +564,7 @@ static void cqhci_prep_dcmd_desc(struct mmc_host *mmc,
+ 		 CQHCI_CMD_TIMING(timing) | CQHCI_RESP_TYPE(resp_type));
+ 	if (cq_host->ops->update_dcmd_desc)
+ 		cq_host->ops->update_dcmd_desc(mmc, mrq, &data);
+-	*task_desc |= data;
++	*task_desc |= cpu_to_le64(data);
+ 	desc = (u8 *)task_desc;
+ 	pr_debug("%s: cqhci: dcmd: cmd: %d timing: %d resp: %d\n",
+ 		 mmc_hostname(mmc), mrq->cmd->opcode, timing, resp_type);
 -- 
 2.53.0
 
