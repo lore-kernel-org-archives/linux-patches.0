@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023861;
-	b=UWbbPw32En9gUq4l2L6/I2BO9J0t4j9hA7OxZZXS/32Ok0GxFEW+6xtwY3iqqZqLtm2o
-	 2F0dypiVUDRUn0EnSZ/adidbOrs1858j9FHYoqdwsHzqFCJsdnkGtuDiJy8yt9s3DjmkW
-	 7DhYSeI6uoWcI1T/Ex2k9z4QzXJH2NNGQMTV4mRJyD7MVPE5wPf/UVmZlSqV4A3BX4AMY
-	 JrMbiJeK1DgiqNq3E6Q4L4+FO0mmcSodBSTQHNRM3Tg0EOSZSK/S6UsjcM9BR/lecg9ye
-	 v1xWFxHhXGIfODjX6K+VYpw8GNTmh4+RFzYlW1/uuXm2tQBFkVQjcw2Q3ZmIcHay+PQ==
+	t=1795023864;
+	b=M/PWF0YHWPTkO5a4OpviQJXkaPXWBPa49jjIrMyRaHKLyvNwIGMFVdhuERVhgFR2PEaa
+	 gSd06TGyq0g/sHITLuKAI5m9mMS57D5Eo9f9xOx8fe5JzS0FnwEAbOn2n0tCE2KMAe6/Q
+	 lkBz5/p34Tn3vvBNXl0GMacJz+TJJkJ7Ov+AU//pDllaaWnBZ5t0udGl1ii7F8Z0dhpYy
+	 9Y+Xh5vdIL/Sue7eZT9kFm/rNJhwOgphPahhK75ljZPwZs9Cl5nmc2syLK/NOY9/jsMYT
+	 BzIeXXI1tJVID/cXQM60nF15rBrCuCk/31ra9VXpkytXXfeXs5RE1j9BlFa1pCArvCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023861;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023864;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=k947mV2DaygqV0wreWrYQYjS0WnTH7JcfUjY2ichPp8=;
-	b=QkgkiEeAzomWH+lSYnYSv/gK9p1Yj0YDrONcNdkIU/AiQV46eWERMAgzbBnAx//R+mGM
-	 k8r5cRHVBC9K+zHBES5CFHuIMNpY9qvFGpPhwht7GVgLeo2MdANwxiiORziNb+cqLivEx
-	 2pjQrWbnCCFJZqBJ+NE1q1Q6PUm0fSTG4CD1SQQ3UalnP6T7P0p/FvsSFm6nTTGdn06T2
-	 ULVkPcCUrI9cdFqv4r3ddQfM3VxRy+wZlbYkITO4PVv1mE7qLDPkozeWn22Sm9coQ/vH3
-	 VUyLUyLFIuvqOvp93KncygQ8Zw/jpoCmIylYem6A6wFBB62ZPnA4irSwGl/d/09rcmg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=3JCCLARrWlVCJssGX3IVaJcT1SYONTWWpAY7daCvYtM=;
+	b=bGbFwqYjVIdgjQtpSZEYbsxMHpGfMmEHurICHS7omS7w6pPjwSZFlD5NmL6AxgjgPPH3
+	 ZTVxbyKl49y0KIRdYQC+DH83ME0jckGeFA3pPrJT3OLhsbL1sUbPBQ34ulj3marXOGLvg
+	 AasEkxbwsbG1S6JKAVMYrHnFsQamMecPCf+T0CPw7uqAs75XoKortpHEOoffdW5S94AqG
+	 R7+q+PL5nqTTmRidpdv1bTpGOJ2MNQKqUeblzGMwd6p0YbaJ9b/BnE+zpRSeRNCgIPs0J
+	 qMpM12fbV7HeMbBOcroxT4oEicr7KdQ20xWaYDpMbV8TnnqQSzS3g9wzscx0YPLSLrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kl8FZGC7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nTgK4oby;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E38A606A31C;
-	Wed, 18 Nov 2026 17:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2EE606A32C;
+	Wed, 18 Nov 2026 17:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kl8FZGC7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395DE1F000C4;
-	Wed, 18 Nov 2026 17:44:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nTgK4oby
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8959C1F000C4;
+	Wed, 18 Nov 2026 17:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023860;
-	bh=k947mV2DaygqV0wreWrYQYjS0WnTH7JcfUjY2ichPp8=;
+	s=korg; t=1795023864;
+	bh=3JCCLARrWlVCJssGX3IVaJcT1SYONTWWpAY7daCvYtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kl8FZGC7Dyr7W/ReGU5fGMlbwPzzMOgKvW51eKwd80RNZXSeh88AetPPTmPiWJ311
-	 VnAWnfu/4iQN0kc3YTzImi3ulzdYJ+63DmMDxMlUCsMRcvMr0wc6BkGQgz8jRqTBkJ
-	 qPiBBTUGt/oQHr3xskPUtXrm5MrsxRl2CMUPQpvs=
+	b=nTgK4obycSQyEsHVYWYT+ZbEjbF2L+krmOgQcpDOVhWRCroYviustZ2BHlwCbdLbt
+	 Hwj+Te0b5y9I8OUy3QxCHBu2x5JMl1HopwbqvIwH2cuuGiitTVyfoDr0SWIa2Nxjyl
+	 zTdYEbSlb6JueRfO4I941ZzwRQ6hoxIv8R3dCm4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Yu Kuai <yukuai@fygo.io>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Li Ming <ming.li@zohomail.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0479/2151] md: reject v0.90 arrays with too many devices
-Date: Wed, 18 Nov 2026 15:36:54 +0100
-Message-ID: <20261118150139.467083598@linuxfoundation.org>
+Subject: [PATCH 6.18 0470/2151] cxl/port: Bound switch decoder target array access by nr_targets
+Date: Wed, 18 Nov 2026 15:36:45 +0100
+Message-ID: <20261118150139.130682319@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,53 +63,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit 1a33a379e67853d6d778e6e80b214bdf1208f6f8 ]
+[ Upstream commit 4e42c398af136d62fac8c19c9f410ec83a8dd34a ]
 
-The v0.90 superblock has room for MD_SB_DISKS device descriptors, but
-super_90_load() only rejects nonpositive raid_disks values. A crafted
-superblock can therefore copy a larger value into mddev->raid_disks. When
-metadata is next updated, super_90_sync() walks sb->disks[] up to that
-count and reads and writes beyond the 4 KiB superblock buffer.
+Switch decoder target lookups walk the target array using interleave
+ways as the bound. The array is allocated with nr_targets entries, so a
+decoder whose interleave ways exceeds nr_targets reads and writes past
+the end of it. That happens during dport activation, during decoder
+target population, and when userspace reads the target_list attribute.
 
-A checksum-valid RAID1 member advertising 64 devices can be assembled by
-mdadm --incremental --run. The first write to the array then produces
-out-of-bounds writes from super_90_sync() under KASAN.
+Bounding by nr_targets alone is not correct either. Commit d6488fee6647
+("cxl/port: Fix decoder initialization when nr_targets > interleave_ways")
+moved target population to interleave ways precisely so that targets a
+decoder does not use are left unpopulated. Neither field alone is a safe
+bound, so add a helper that returns the minimum of the two and use it at
+every walk of the target array.
 
-Reject device counts that cannot be represented by the v0.90 format while
-loading the superblock.
+Valid configurations keep interleave ways within nr_targets, so this is
+not a behavior change for them.
 
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://patch.msgid.link/20260820210703.3035608-2-Jeremy.Jean@oss.cyber.gouv.fr
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 40ba17afdfab ("cxl/acpi: Introduce cxl_decoder objects")
+Fixes: d6488fee6647 ("cxl/port: Fix decoder initialization when nr_targets > interleave_ways")
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Li Ming <ming.li@zohomail.com>
+Link: https://patch.msgid.link/d7577652cc6d414e1de0ee4045d4d6b2808172ce.1786143520.git.alison.schofield@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cxl/core/port.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 937a2f4da84ba..8b750af486b69 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -1393,7 +1393,7 @@ static int super_90_load(struct md_rdev *rdev, struct md_rdev *refdev, int minor
- 		goto abort;
- 	}
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 67dfebe123ca4..2416a72e38ac0 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -147,20 +147,29 @@ static ssize_t target_type_show(struct device *dev,
+ }
+ static DEVICE_ATTR_RO(target_type);
  
--	if (sb->raid_disks <= 0)
-+	if (sb->raid_disks <= 0 || sb->raid_disks > MD_SB_DISKS)
- 		goto abort;
++/*
++ * Interleave ways selects how many targets a decoder uses, but the target
++ * array is only nr_targets long. Bound array access by both.
++ */
++static int cxlsd_nr_used_targets(struct cxl_switch_decoder *cxlsd)
++{
++	return min(cxlsd->cxld.interleave_ways, cxlsd->nr_targets);
++}
++
+ static ssize_t emit_target_list(struct cxl_switch_decoder *cxlsd, char *buf)
+ {
+-	struct cxl_decoder *cxld = &cxlsd->cxld;
++	int nr_used = cxlsd_nr_used_targets(cxlsd);
+ 	ssize_t offset = 0;
+ 	int i, rc = 0;
  
- 	if (md_csum_fold(calc_sb_csum(sb)) != md_csum_fold(sb->sb_csum)) {
+-	for (i = 0; i < cxld->interleave_ways; i++) {
++	for (i = 0; i < nr_used; i++) {
+ 		struct cxl_dport *dport = cxlsd->target[i];
+ 		struct cxl_dport *next = NULL;
+ 
+ 		if (!dport)
+ 			break;
+ 
+-		if (i + 1 < cxld->interleave_ways)
++		if (i + 1 < nr_used)
+ 			next = cxlsd->target[i + 1];
+ 		rc = sysfs_emit_at(buf, offset, "%d%s", dport->port_id,
+ 				   next ? "," : "");
+@@ -1602,7 +1611,7 @@ static int update_decoder_targets(struct device *dev, void *data)
+ 	struct cxl_dport *dport = data;
+ 	struct cxl_switch_decoder *cxlsd;
+ 	struct cxl_decoder *cxld;
+-	int i;
++	int i, nr_used;
+ 
+ 	if (!is_switch_decoder(dev))
+ 		return 0;
+@@ -1610,8 +1619,9 @@ static int update_decoder_targets(struct device *dev, void *data)
+ 	cxlsd = to_cxl_switch_decoder(dev);
+ 	cxld = &cxlsd->cxld;
+ 	guard(rwsem_write)(&cxl_rwsem.region);
++	nr_used = cxlsd_nr_used_targets(cxlsd);
+ 
+-	for (i = 0; i < cxld->interleave_ways; i++) {
++	for (i = 0; i < nr_used; i++) {
+ 		if (cxld->target_map[i] == dport->port_id) {
+ 			cxlsd->target[i] = dport;
+ 			dev_dbg(dev, "dport%d found in target list, index %d\n",
+@@ -1914,7 +1924,7 @@ static int decoder_populate_targets(struct cxl_switch_decoder *cxlsd,
+ 				    struct cxl_port *port)
+ {
+ 	struct cxl_decoder *cxld = &cxlsd->cxld;
+-	int i;
++	int i, nr_used;
+ 
+ 	device_lock_assert(&port->dev);
+ 
+@@ -1922,7 +1932,8 @@ static int decoder_populate_targets(struct cxl_switch_decoder *cxlsd,
+ 		return 0;
+ 
+ 	guard(rwsem_write)(&cxl_rwsem.region);
+-	for (i = 0; i < cxlsd->cxld.interleave_ways; i++) {
++	nr_used = cxlsd_nr_used_targets(cxlsd);
++	for (i = 0; i < nr_used; i++) {
+ 		struct cxl_dport *dport = find_dport(port, cxld->target_map[i]);
+ 
+ 		if (!dport) {
 -- 
 2.53.0
 
