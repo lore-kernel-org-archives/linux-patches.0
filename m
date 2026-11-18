@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024277;
-	b=KypWxdnI9X0XMxrb3V0vnF0dCdtZbggKy7IQCgqDCaXePhw29/hrhn3xAz1yPn+tgtVX
-	 jKTcAF4qEntdwu6zIPNUy/8dnHLTmsC9D+FBLEY+7jxDNqPpRxwT0hCNkUhtUOG3k0WBD
-	 fkoZijDy9+V4D0r+n1aidpGOIC9jTxcO1anp9ztuCFsqRmoSWCNWwYeHW/3YTbUoBWv9u
-	 O1N4ROfFxZuYYB4sRn0W0jFIaeIJKOUv95LHvX005lf9ABOF7nixRKB/tsEC50SaHrPzw
-	 nTtCpafJJaCYNb/ImwqfZ0o0lfctDSipghLvdtajUrvJ2rN7vGmZBRVPZ3/xd6oHF9w==
+	t=1795024280;
+	b=20e/oGqt+lbgdLZuL08QGWm9fUbHXJ7hrx87BijYg+pwEOH+MCxHRGRNCl+LoTPWbWSx
+	 0/LN9WQeBFLx5DEOqEYhufYgiPMU2yTS3vN3J2wAmmYO1U2Dh1+GTwVjCc/Iz2jsMrlor
+	 z2E8Drkxm5tZ1uFCK0oQw3oWTL6AVRHnfC900S3AQ6qzP4689PDcsTzaDlu4ivUSDQ9Yg
+	 MMnQFgPlPqitlDGobcC2QJp8+xjiez/xSDbenaMHfACAxKMBPZZ8QuIFK1YaWYmlEcOPu
+	 aE81tAM+uAebrn+F0MWaAgpYe3b6acLOpq5vVSzg8GA2WvZviNVOFr/1QnAz3awhiOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024277;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024280;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/93brYvZca6qRMuwafQrdzoQVnTB9/VMe7heGczdfTs=;
-	b=Y4sZUR4L9V9BMFUc2eS8QxbskAH7FsyGlNoouijotX7A7JkZUhhQRcdHXUpRpNY4fplm
-	 wxEqr4AHxr8TO+o+8rMFdETFT/1eNztzcJ6SPN0nN+gp+PET92HAAeuOe4Re1whGkvUss
-	 xB8dQi7Rk8rgBmaXpe/QI1jb/FBQV0HE5Gbk6Xj+vkEUAXESD021v4hka7vcuem3L7rPf
-	 5Q5tCsduvbYkWGM7hOxmDW9WTW0ovq5emSLP6L9mMJ0i82wPD4O4DvcxkMUFKU/PtonYN
-	 2QUeT1lJ4wBe6/sy+9v8QLvgc6fLyFvKjgKMNcCs+PryMR0TcTU5ATJw3CLFgYdOE8Q==
+	bh=WbRWVz1WpM4yAubmo2N2EF7HqM1ZNrTSwE32OaycNEc=;
+	b=xQEWvC/r+rxd2IDVb7o054hjheK5vQvT/WAuiVStz87+byeMOgEOPkb2eOT3xkQf9ej7
+	 kgFdlERBQqS4/wN1PP5iS4smFWlUKDF9WUqq3oxIaJqOphd4SFCGUoJ3FKOo/QCzNFqNP
+	 GOskAwEfVfFdqBoTgg8cWA6py33XEMEcXud7GczAACYVl+cbx2g2qPPmdxXtIhUkJzazr
+	 /jP3CLxq96HP1If3gbi4UvlATjovgLqSh617tyTTmHYYmmJH2EnOItSY5odw9SrBlJ9QK
+	 qLUtiams1cKu+NYpm6oVRJ7ZqfJLH34mIxzgf5urI5NetS9JdWgzoEAQJgSnaIZ7Y/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VGkF2vu5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y0AXZr0C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B36606A32F;
-	Wed, 18 Nov 2026 17:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E38E606A32C;
+	Wed, 18 Nov 2026 17:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VGkF2vu5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E0A1F000C4;
-	Wed, 18 Nov 2026 17:51:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y0AXZr0C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432271F000C4;
+	Wed, 18 Nov 2026 17:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024276;
-	bh=/93brYvZca6qRMuwafQrdzoQVnTB9/VMe7heGczdfTs=;
+	s=korg; t=1795024279;
+	bh=WbRWVz1WpM4yAubmo2N2EF7HqM1ZNrTSwE32OaycNEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VGkF2vu5zK8j3lFTusy28WOUdvGKYnO5HFizh3IA74kw4x21XmkJtLsEDI5KLXa5t
-	 /4JivFsVwJjRp4ouDHuA4OWkdMWqCLgk4a+jJ8fr2nUr3LxvnANz3qyJ7JWLVtRPNx
-	 HroR+mDELijiQ1Sgwv1r5pSlMq1qVn3tyFmGyEQU=
+	b=Y0AXZr0ClGA1R2256z7I5AHzydtKJhyuTsjVUzLwQOptO2wgI8fNI30BHpYntVjCz
+	 V1L6kdp4oUhUiPI0f9axfo3gJ+nS++dqnuGCDPk/DV7OeBYnw5VquKyIozfmSXnt16
+	 Sy0IT5ZSBylgHmTkGPX1DXYZEQK0D9VGHIGECMao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgios Androutsopoulos <georgeandrout13@gmail.com>,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Brian Masney <bmasney@redhat.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Vincent Jardin <vjardin@free.fr>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0668/2151] rust: clk: document overflow panics in `Hertz` constructors
-Date: Wed, 18 Nov 2026 15:40:03 +0100
-Message-ID: <20261118150146.157399846@linuxfoundation.org>
+Subject: [PATCH 6.18 0669/2151] dt-bindings: vendor-prefixes: add Free Mobile
+Date: Wed, 18 Nov 2026 15:40:04 +0100
+Message-ID: <20261118150146.194044421@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,65 +69,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georgios Androutsopoulos <georgeandrout13@gmail.com>
+From: Vincent Jardin <vjardin@free.fr>
 
-[ Upstream commit 45a68afbd4b632538a0956ba783fca45b8ceb446 ]
+[ Upstream commit aa906abf611c7f37c0fe9171c1d33c40270aa5fe ]
 
-`Hertz::from_khz()`, `from_mhz()` and `from_ghz()` multiply their
-argument by 1_000, 1_000_000 and 1_000_000_000 respectively without
-checking for overflow. When `CONFIG_RUST_OVERFLOW_CHECKS` is enabled,
-each panics once its argument exceeds `c_ulong::MAX` divided by that
-factor. None of the three documents this. The panic occurs only at
-runtime, when the argument is not a constant expression.
+Free Mobile is a French mobile network operator. Add its vendor
+prefix, used by the Nodebox v3 CPU Module (freemobile,nbxv3).
 
-Add the missing `# Panics` sections stating the bound for each unit.
-
-Fixes: d01d70205601 ("rust: clk: Add initial abstractions")
-Signed-off-by: Georgios Androutsopoulos <georgeandrout13@gmail.com>
-Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Vincent Jardin <vjardin@free.fr>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/clk.rs | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/rust/kernel/clk.rs b/rust/kernel/clk.rs
-index 1e6c8c42fb3a3..14726ff9c9396 100644
---- a/rust/kernel/clk.rs
-+++ b/rust/kernel/clk.rs
-@@ -35,16 +35,31 @@ impl Hertz {
-     const GHZ_TO_HZ: c_ulong = 1_000_000_000;
- 
-     /// Create a new instance from kilohertz (kHz)
-+    ///
-+    /// # Panics
-+    ///
-+    /// Panics if `CONFIG_RUST_OVERFLOW_CHECKS` is enabled and `khz` is greater
-+    /// than `c_ulong::MAX / 1_000`.
-     pub const fn from_khz(khz: c_ulong) -> Self {
-         Self(khz * Self::KHZ_TO_HZ)
-     }
- 
-     /// Create a new instance from megahertz (MHz)
-+    ///
-+    /// # Panics
-+    ///
-+    /// Panics if `CONFIG_RUST_OVERFLOW_CHECKS` is enabled and `mhz` is greater
-+    /// than `c_ulong::MAX / 1_000_000`.
-     pub const fn from_mhz(mhz: c_ulong) -> Self {
-         Self(mhz * Self::MHZ_TO_HZ)
-     }
- 
-     /// Create a new instance from gigahertz (GHz)
-+    ///
-+    /// # Panics
-+    ///
-+    /// Panics if `CONFIG_RUST_OVERFLOW_CHECKS` is enabled and `ghz` is greater
-+    /// than `c_ulong::MAX / 1_000_000_000`.
-     pub const fn from_ghz(ghz: c_ulong) -> Self {
-         Self(ghz * Self::GHZ_TO_HZ)
-     }
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 9066860061f66..e6fa43a510329 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -588,6 +588,8 @@ patternProperties:
+     description: Freebox SAS
+   "^freecom,.*":
+     description: Freecom Gmbh
++  "^freemobile,.*":
++    description: Free Mobile
+   "^frida,.*":
+     description: Shenzhen Frida LCD Co., Ltd.
+   "^friendlyarm,.*":
 -- 
 2.53.0
 
