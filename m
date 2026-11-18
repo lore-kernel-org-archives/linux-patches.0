@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026079;
-	b=CdMV2RmzThDV+z+bwVC1U3Vc3zNy4th08/yaHNa0m+D6ANnFPr3Sp3qsmrwA3LNdS3N3
-	 1ITNRZ5ZnvrgUFw4dC556EZgqGbhh+idYAOGEVbKgyfQ1lY3ole6BIy+14GE+iu+NA67z
-	 /+2csi+V23LiF+rLec2R8LRSM+EyM3R+pRZSsjC3iGbDWRrkZFVakFW/awiTyjUV3dB1M
-	 nR6snbpr1OkXkzKUIciSbnPlRy/cbiQ1GKb925qi2RFnrKHxeB+AtSpNc31+BtZ+EhfuZ
-	 uNxuOporZn/5sextVGrscg9J6CzY9DmWucI4l96RLjcLILXzgOM8bG3wLBcTJUmJd8A==
+	t=1795026082;
+	b=tprEMVIWAwPFNKgPhODGt5F50FYzlC7/eoQLt1O6y6eXOEp1aZNYoBQo52IuhRXtrZiV
+	 s/oR/Gw+NMjHTiATl8nYgKjVeFiB4CSfhNvVWF/F4OYL+BAILj2QeTPZ+oG9OZV3xLdtH
+	 3RBGd235+vFrG4UKA1GlOZaAhOx7jolMF1Zh4u8JWRzwt/py1zPmKAm60htNuLSdJWLK8
+	 OHfNvx0fw5Of9o2XCBSrLXZPylsKaojUTVRNh19Tn4mD35wTyrHb9oeCYq+jL7AGvejHy
+	 nNh8x+zjXhtaVIGR/LOJ4iWjAkgrCHHD7Yjt4aJ/uKS/JW7dYQuWEOD8qqqJhySTuxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026079;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026082;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YHo4ATWGPxB/dqjHPVpBwt0v4u6Kgql7xuKrBs46iw8=;
-	b=yLMS80aWq9D4TqD+MICF55nIxPr0LEBoRQKzdhjuIwenisYfLeU+YeNPhGDR+EVIOGdc
-	 vP7lL1qLMFsXNCcOlnNM92IFNkFcwSg6mSaIPhuLovZuIrS0ZVOaBX9ElwilV/MVQ4wSO
-	 ZSoDcETi9lHutyIFYbwFRKg1RBksYWIm2+QyKHgsQ9EINe0DzO9uZhGtA8wFqVwPomQAF
-	 hL5poY98DhEuVu+LNiNA7da582jr7AsR/nydoNY/UczU6z6+GjYL+I41GKc8Ijs7TkBTo
-	 kLsw5sDsRE4mz5CEIX/fggreXMC0RtDpTNpY/5oceNYJEz4xDxrK+A85F+aJd3JSbZQ==
+	bh=Uo8xr1g1Qc89Gx7znFBmw7jgxSIl6JIYprmc3SzRWRw=;
+	b=wJsJplCM95NNPExoHQxIPm8kcNGxkwDkvUPBTfhZe9FUWFUbvFIENIR/fxFhfRbuItqH
+	 cxs1HWhDX7krTaoMlkHuhoduE62RQUFbK4bb4nhcihlVmhj1+mkPPg6MrLMadR2HiNQQY
+	 lZaIUj1hpvHYxxEUl3+nwSwC/9rkPlfQaMQKlGuqfaQdNSHyZfYQYmWXuOv06pbiv75cP
+	 XzJ+qzUeZaefAcftdNF3zHP8lJEO0HW/WFs0FxVKuN7IE0tAIL8SEak9XmuQ5eZjC+UXk
+	 immrbfhHjvFcMAZLhiuoUJ+cy1WNkRRvEk7Zz0TmVyWquksc32Lk42Leb53m33J1H4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VBlm4T+J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x2KdKQ+E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A98606A332;
-	Wed, 18 Nov 2026 18:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFD0606A31C;
+	Wed, 18 Nov 2026 18:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VBlm4T+J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B2D1F000C4;
-	Wed, 18 Nov 2026 18:21:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x2KdKQ+E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158AD1F000C4;
+	Wed, 18 Nov 2026 18:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026079;
-	bh=YHo4ATWGPxB/dqjHPVpBwt0v4u6Kgql7xuKrBs46iw8=;
+	s=korg; t=1795026082;
+	bh=Uo8xr1g1Qc89Gx7znFBmw7jgxSIl6JIYprmc3SzRWRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VBlm4T+JbXGd97fzZFDoRbzFhiMGq/l9p2FkGqcoHibeKSBDU603R5d287crqvT/p
-	 kR1ojmITsUlWANsDzkBPhktGTFmKebh36hSL8ZI7CxUl74ajyb9yivWCnos5FMZpQl
-	 7Qdn36wVT7oRMy/4HWFLzcjX01NdD2NSSjjKO9Us=
+	b=x2KdKQ+EgH9pgCIXijjazy+ZHU7u8Jpqz7eM0Ji+aCIJWqcu7ilvjFMcL1eyVz/Bl
+	 Z9BSZF2/MmHGUdSQunHiFMJsbuCZpoAYbjBJy77DpCd1/fZxRovYbJdCPUemb0ds2L
+	 +STJNB8Goie6bgR4LrYILDALJgxLOAeduZwVSl3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leizhen Zhang <lzsx618@gmail.com>,
-	Julian Braha <julianbraha@gmail.com>,
+	Ting-Han Hou <ue081723@gmail.com>,
 	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1307/2151] kconfig: fix infinite loop in conf_choice() when no choice value is visible
-Date: Wed, 18 Nov 2026 15:50:42 +0100
-Message-ID: <20261118150209.709617590@linuxfoundation.org>
+Subject: [PATCH 6.18 1308/2151] clang-tools: Import os for broken pipe handling
+Date: Wed, 18 Nov 2026 15:50:43 +0100
+Message-ID: <20261118150209.746766263@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,56 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leizhen Zhang <lzsx618@gmail.com>
+From: Ting-Han Hou <ue081723@gmail.com>
 
-[ Upstream commit 52f26261e27dbdb7c6dea75d8f1a92ea805b2c58 ]
+[ Upstream commit d26ab84593e63bc5395ed9b518502830fda3367c ]
 
-If a choice is visible but none of its choice values is, conf_choice()
-counts cnt == 0 visible values and finds no default. When the choice has
-to be asked, e.g. because a new symbol was added to the same menu
-(oldconfig, syncconfig) or because stdin is at EOF (oldaskconfig), the
-loop that maps the answer to a menu entry never finds one and the
-while (1) loop repeats forever, printing "choice[1-0?]: 0" each time.
+The BrokenPipeError handler in run-clang-tools.py calls os.open() and
+os.dup2() without importing os. If this handler is reached, it raises
+NameError instead of redirecting stdout and exiting with status 1.
 
-This happens in the tree for s390 when the compiler supports none of the
--march=z* options (e.g. a non-s390 host compiler), so that all values of
-the "Processor type" choice are invisible:
+Import os so the handler can work as intended.
 
-  $ make ARCH=s390 defconfig
-  $ sed -i '/^CONFIG_NR_CPUS=/d' .config
-  $ make ARCH=s390 oldconfig     # hangs
-
-Before the removal of tristate choice support, conf_choice() returned
-early in this case. Do the same when there is no visible choice value.
-
-Found by fuzzing Kconfig input with ASan/UBSan.
-
-Fixes: fde192511bdb ("kconfig: remove tristate choice support")
-Assisted-by: Claude:claude-opus-5-5 libFuzzer
-Signed-off-by: Leizhen Zhang <lzsx618@gmail.com>
-Reviewed-by: Julian Braha <julianbraha@gmail.com>
-Tested-by: Julian Braha <julianbraha@gmail.com>
-Link: https://patch.msgid.link/20261008164521.3684735-1-lzsx618@gmail.com
+Fixes: 87c7ee67deb7 ("scripts: handle BrokenPipeError for python scripts")
+Assisted-by: LLM
+Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
+Link: https://patch.msgid.link/20261009175836.2277-1-ue081723@gmail.com
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/conf.c | 3 +++
- 1 file changed, 3 insertions(+)
+ scripts/clang-tools/run-clang-tools.py | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/scripts/kconfig/conf.c b/scripts/kconfig/conf.c
-index ca6d9d735922f..31c6fd25e6ecd 100644
---- a/scripts/kconfig/conf.c
-+++ b/scripts/kconfig/conf.c
-@@ -483,6 +483,9 @@ static void conf_choice(struct menu *menu)
- 			}
- 			printf("\n");
- 		}
-+		/* Nothing to ask if none of the choice values is visible. */
-+		if (!cnt)
-+			return;
- 		printf("%*schoice", indent - 1, "");
- 		if (cnt == 1) {
- 			printf("[1]: 1\n");
+diff --git a/scripts/clang-tools/run-clang-tools.py b/scripts/clang-tools/run-clang-tools.py
+index f31ffd09e1eab..116deb66cfad2 100755
+--- a/scripts/clang-tools/run-clang-tools.py
++++ b/scripts/clang-tools/run-clang-tools.py
+@@ -12,6 +12,7 @@ compile_commands.json.
+ import argparse
+ import json
+ import multiprocessing
++import os
+ import subprocess
+ import sys
+ 
 -- 
 2.53.0
 
