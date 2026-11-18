@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029723;
-	b=L7Mps07XZrWX5pG9RSU4oUF8cy6YplU7Z9mm7X9R4f912YJJOgi2JREO9K182S7qKVXi
-	 Mu2gG6Yfy+lKRbhb/a/g+myz1WG/E7Ix7LSD4sOKD1H4X/AkLYkgqOG1l6U/7tLSjyAG0
-	 DZ7eMAqXryyo8B/QECTecVNwPrufRVgyHvQGrO1f1bVTCI2igj133yE1VAShBXaA3KlhT
-	 yo2UORUVUBYTZ2DuY4Xlv7g5wp3slz9G8y+U+wxoJ8SgoHcIdm7HoiP5w5c+bHPta9Y+Q
-	 IJAmvJm3nlWJZq1x8TNwjWXH4GOByFA7GhIPRaKzKejVJ7txR01cd+3pqdGMORGvIUQ==
+	t=1795029726;
+	b=p4LrElDBBVJuKlktY/PEYCw6TRi1S3I5d6m8FLxpOwpQ7efNGFdwwbBZsSb++wc6LV1j
+	 eUflc2taAHgKETSDJ1+rmwp74d310DXCr3NRi49FETUlB6G5n5aL02/6pPBCQGExPIavR
+	 0+oSS7YNRNK6VqVfjWh85ubJyqGbkDDHr5+FRZY71GFn26CIVM3XUnfHAsPszk6PXzy6j
+	 jlSUnc354FQgUmEIor5KiOunQSihSfknJN+3fDVKMz5KneTejBs4NQDZL62P3l/+CVC8U
+	 FmIctB8vlBUN28YamnO+cJz1BqhlO76k1YOxLpXZgA+Ve0EPeJv8fEQ3/q0GG3nnJiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029723;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029726;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HdZ+SCU/3TaVhq6s6Jvyv3bKySVd31ylOcXNdp43h8s=;
-	b=jcvhGhyetCeLGOSXSfF2bTYT+U/GAWpdNW7czV9vXf3nwKI0c/V1626Xn6wzQtmPI+23
-	 PuSUVoAZM6cSWuQnXPS8cbzt88CLjLTHkZFYq18IywCMzhN9HuXItPdq2T8rCooRmr8Jf
-	 +sarlL91RwTeypoG1D3FxNALl2c+nxoRopGUUaFBmzD9OOzz/6Un/SYH3HXu1ZgEIcoJf
-	 q7byEZqEZRr9i5ZhPwJ3ilEyIs6DZxEyQBH+jiVYhX4mq79lS2fwOSNXqbKElo4wr+l4/
-	 J/dPOFeMjsF+/S8oeHWji34+wW9FEy9kvfA2asdYB339qH/OYd2Avu9dqaQTY3CqklQ==
+	bh=y4qj1N1KRAwtL5COyYpC6GFzx4sjUjqB3v7T67ANh6Y=;
+	b=p7scXCN8g8gsZdYeA30lBJ5OjAtr46UlOFiOeR+A+7ke+iEFQNUQZ5u6oXq/C33JlC1r
+	 P3W3+XNYyv01x4SWJjBs4eE8CK2VoxA4G+cG8KN0L0aZ9/1NnTi498u6q4Nc3SY3W908v
+	 UfiQ0fnh7xvvCKhM8dvg5/EQJpGSh+gWscBle37kOFF/wMsWl0vSsdgVYSIiTi6qZMZvM
+	 dp0GLh5dg+nXARSZKAbjbwjH3/llfKm1uFwDR+G+iuzAp8VBIGSnnUxuWmhhH7VOe7PT1
+	 BubwRTOKuSw0nPRvtBBvLbq8/TOm6oiVXaX0bOOwIPyZ748uAC/wwRwfx17a1k/Eoww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="JR+uc/ud";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oRMBVjXp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF9F606A32A;
-	Wed, 18 Nov 2026 19:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B30A606A31C;
+	Wed, 18 Nov 2026 19:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JR+uc/ud
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CAE1F000C5;
-	Wed, 18 Nov 2026 19:22:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oRMBVjXp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 811F71F000C4;
+	Wed, 18 Nov 2026 19:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029723;
-	bh=HdZ+SCU/3TaVhq6s6Jvyv3bKySVd31ylOcXNdp43h8s=;
+	s=korg; t=1795029726;
+	bh=y4qj1N1KRAwtL5COyYpC6GFzx4sjUjqB3v7T67ANh6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JR+uc/udCRIJlV3fxUCyPhzesyqd8nfutxlAqLMhpgWr4hOvZ9mtSRykx7JCva4dm
-	 mRU4XUl6JL5j14SmBVRLp1fDTsmLGP1yIEGZBvyxRb+6QAFslmH8VrTc3HMeR4to2D
-	 Xe7Dj8BOJfUYv6n26S6F8UDuPWAkAr2yvfVjk2us=
+	b=oRMBVjXpGNDIcYd0z3+bSMeuzuYCY7TSct3j0nh8jccaLJBxjmrt7mNFPwByTPqRr
+	 3/pbzbgaVNSloPpGlE+foOv7db/P/MnmDdgp2p3dnPd1dUwaFD/JKlE5jCZnUikN0w
+	 oUXPdYOWxCJskbIrAChtf7aLd1ipTT/v21iTMKNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slavin Liu <bolin.liu@seu.edu.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0424/1756] ACPI: tables: handle failed initrd override mappings
-Date: Wed, 18 Nov 2026 15:42:31 +0100
-Message-ID: <20261118150025.640795429@linuxfoundation.org>
+Subject: [PATCH 6.12 0451/1756] rcu/nocb: Remove unnecessary WakeOvfIsDeferred wake path
+Date: Wed, 18 Nov 2026 15:42:58 +0100
+Message-ID: <20261118150026.754993091@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,43 +70,234 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slavin Liu <bolin.liu@seu.edu.cn>
+From: Joel Fernandes <joelagnelf@nvidia.com>
 
-[ Upstream commit 047c834d939df75386cfc0603c7ddeaa23a349a4 ]
+[ Upstream commit d92eca60fea944b2e9272603308a0fde8b6ae447 ]
 
-The runtime AML table-loading path can invoke initrd override after
-permanent mappings are enabled. Mapping bookkeeping can then fail.
+The WakeOvfIsDeferred code path in __call_rcu_nocb_wake() attempts to
+wake rcuog when the callback count exceeds qhimark and callbacks aren't
+done with their GP (newly queued or awaiting GP). However, a lot of
+testing proves this wake is always redundant or useless.
 
-Return AE_NO_MEMORY in that case to prevent a NULL pointer dereference
-when attempting to read the table length.
+In the flooding case, rcuog is always waiting for a GP to finish. So
+waking up the rcuog thread is pointless. The timer wakeup adds overhead,
+rcuog simply wakes up and goes back to sleep achieving nothing.
 
-Detected by static analysis and reviewed with AI-assisted source auditing.
+This path also adds a full memory barrier, and additional timer expiry
+modifications unnecessarily.
 
-Fixes: b2a35003dfbc ("ACPI: Implement physical address table override")
-Assisted-by: LLM
-Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
-[ rjw: Added empty code line after conditional, changelog edits ]
-Link: https://patch.msgid.link/20260913125123.109803-1-bolin.liu@seu.edu.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+The root cause is that WakeOvfIsDeferred fires when
+!rcu_segcblist_ready_cbs() (GP not complete), but waking rcuog cannot
+accelerate GP completion.
+
+This commit therefore removes this path.
+
+Tested with rcutorture scenarios: TREE01, TREE05, TREE08 (all NOCB
+configurations) - all pass. Also stress tested using a kernel module
+that floods call_rcu() to trigger the overload conditions and made the
+observations confirming the findings.
+
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Stable-dep-of: 4c714f015d9e ("rcu: fix shrink budget underflow in lazy_rcu_shrink_scan")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/tables.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/rcu/tree.c      |  2 +-
+ kernel/rcu/tree.h      |  3 +--
+ kernel/rcu/tree_nocb.h | 49 ++++++++++++++----------------------------
+ 3 files changed, 18 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/acpi/tables.c b/drivers/acpi/tables.c
-index 9e1b01c350702..75f570d66ece7 100644
---- a/drivers/acpi/tables.c
-+++ b/drivers/acpi/tables.c
-@@ -559,6 +559,9 @@ acpi_table_initrd_override(struct acpi_table_header *existing_table,
- 	while (table_offset + ACPI_HEADER_SIZE <= all_tables_size) {
- 		table = acpi_os_map_memory(acpi_tables_addr + table_offset,
- 					   ACPI_HEADER_SIZE);
-+		if (!table)
-+			return AE_NO_MEMORY;
+diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
+index 7b073b8b5e91a..517850c738dc9 100644
+--- a/kernel/rcu/tree.c
++++ b/kernel/rcu/tree.c
+@@ -4547,7 +4547,7 @@ static void rcu_barrier_entrain(struct rcu_data *rdp)
+ 	}
+ 	rcu_nocb_unlock(rdp);
+ 	if (wake_nocb)
+-		wake_nocb_gp(rdp, false);
++		wake_nocb_gp(rdp);
+ 	smp_store_release(&rdp->barrier_seq_snap, gseq);
+ }
+ 
+diff --git a/kernel/rcu/tree.h b/kernel/rcu/tree.h
+index 08c020e01425d..98856a64a266d 100644
+--- a/kernel/rcu/tree.h
++++ b/kernel/rcu/tree.h
+@@ -300,7 +300,6 @@ struct rcu_data {
+ #define RCU_NOCB_WAKE_BYPASS	1
+ #define RCU_NOCB_WAKE_LAZY	2
+ #define RCU_NOCB_WAKE		3
+-#define RCU_NOCB_WAKE_FORCE	4
+ 
+ #define RCU_JIFFIES_TILL_FORCE_QS (1 + (HZ > 250) + (HZ > 500))
+ 					/* For jiffies_till_first_fqs and */
+@@ -499,7 +498,7 @@ static void zero_cpu_stall_ticks(struct rcu_data *rdp);
+ static struct swait_queue_head *rcu_nocb_gp_get(struct rcu_node *rnp);
+ static void rcu_nocb_gp_cleanup(struct swait_queue_head *sq);
+ static void rcu_init_one_nocb(struct rcu_node *rnp);
+-static bool wake_nocb_gp(struct rcu_data *rdp, bool force);
++static bool wake_nocb_gp(struct rcu_data *rdp);
+ static bool rcu_nocb_flush_bypass(struct rcu_data *rdp, struct rcu_head *rhp,
+ 				  unsigned long j, bool lazy);
+ static void call_rcu_nocb(struct rcu_data *rdp, struct rcu_head *head,
+diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
+index 9db8a88e9e6dc..6e80285872f1e 100644
+--- a/kernel/rcu/tree_nocb.h
++++ b/kernel/rcu/tree_nocb.h
+@@ -192,7 +192,7 @@ static void rcu_init_one_nocb(struct rcu_node *rnp)
+ 
+ static bool __wake_nocb_gp(struct rcu_data *rdp_gp,
+ 			   struct rcu_data *rdp,
+-			   bool force, unsigned long flags)
++			   unsigned long flags)
+ 	__releases(rdp_gp->nocb_gp_lock)
+ {
+ 	bool needwake = false;
+@@ -209,7 +209,7 @@ static bool __wake_nocb_gp(struct rcu_data *rdp_gp,
+ 		del_timer(&rdp_gp->nocb_timer);
+ 	}
+ 
+-	if (force || READ_ONCE(rdp_gp->nocb_gp_sleep)) {
++	if (READ_ONCE(rdp_gp->nocb_gp_sleep)) {
+ 		WRITE_ONCE(rdp_gp->nocb_gp_sleep, false);
+ 		needwake = true;
+ 	}
+@@ -225,13 +225,13 @@ static bool __wake_nocb_gp(struct rcu_data *rdp_gp,
+ /*
+  * Kick the GP kthread for this NOCB group.
+  */
+-static bool wake_nocb_gp(struct rcu_data *rdp, bool force)
++static bool wake_nocb_gp(struct rcu_data *rdp)
+ {
+ 	unsigned long flags;
+ 	struct rcu_data *rdp_gp = rdp->nocb_gp_rdp;
+ 
+ 	raw_spin_lock_irqsave(&rdp_gp->nocb_gp_lock, flags);
+-	return __wake_nocb_gp(rdp_gp, rdp, force, flags);
++	return __wake_nocb_gp(rdp_gp, rdp, flags);
+ }
+ 
+ #ifdef CONFIG_RCU_LAZY
+@@ -518,10 +518,8 @@ static bool rcu_nocb_try_bypass(struct rcu_data *rdp, struct rcu_head *rhp,
+ }
+ 
+ /*
+- * Awaken the no-CBs grace-period kthread if needed, either due to it
+- * legitimately being asleep or due to overload conditions.
+- *
+- * If warranted, also wake up the kthread servicing this CPUs queues.
++ * Awaken the no-CBs grace-period kthread if needed due to it legitimately
++ * being asleep.
+  */
+ static void __call_rcu_nocb_wake(struct rcu_data *rdp, bool was_alldone,
+ 				 unsigned long flags)
+@@ -533,7 +531,6 @@ static void __call_rcu_nocb_wake(struct rcu_data *rdp, bool was_alldone,
+ 	long lazy_len;
+ 	long len;
+ 	struct task_struct *t;
+-	struct rcu_data *rdp_gp = rdp->nocb_gp_rdp;
+ 
+ 	// If we are being polled or there is no kthread, just leave.
+ 	t = READ_ONCE(rdp->nocb_gp_kthread);
+@@ -549,22 +546,22 @@ static void __call_rcu_nocb_wake(struct rcu_data *rdp, bool was_alldone,
+ 	lazy_len = READ_ONCE(rdp->lazy_len);
+ 	if (was_alldone) {
+ 		rdp->qlen_last_fqs_check = len;
++		rcu_nocb_unlock(rdp);
+ 		// Only lazy CBs in bypass list
+ 		if (lazy_len && bypass_len == lazy_len) {
+-			rcu_nocb_unlock(rdp);
+ 			wake_nocb_gp_defer(rdp, RCU_NOCB_WAKE_LAZY,
+ 					   TPS("WakeLazy"));
+ 		} else if (!irqs_disabled_flags(flags)) {
+ 			/* ... if queue was empty ... */
+-			rcu_nocb_unlock(rdp);
+-			wake_nocb_gp(rdp, false);
++			wake_nocb_gp(rdp);
+ 			trace_rcu_nocb_wake(rcu_state.name, rdp->cpu,
+ 					    TPS("WakeEmpty"));
+ 		} else {
+-			rcu_nocb_unlock(rdp);
+ 			wake_nocb_gp_defer(rdp, RCU_NOCB_WAKE,
+ 					   TPS("WakeEmptyIsDeferred"));
+ 		}
 +
- 		if (table_offset + table->length > all_tables_size) {
- 			acpi_os_unmap_memory(table, ACPI_HEADER_SIZE);
- 			WARN_ON(1);
++		return;
+ 	} else if (len > rdp->qlen_last_fqs_check + qhimark) {
+ 		/* ... or if many callbacks queued. */
+ 		rdp->qlen_last_fqs_check = len;
+@@ -575,21 +572,10 @@ static void __call_rcu_nocb_wake(struct rcu_data *rdp, bool was_alldone,
+ 			rcu_advance_cbs_nowake(rdp->mynode, rdp);
+ 			rdp->nocb_gp_adv_time = j;
+ 		}
+-		smp_mb(); /* Enqueue before timer_pending(). */
+-		if ((rdp->nocb_cb_sleep ||
+-		     !rcu_segcblist_ready_cbs(&rdp->cblist)) &&
+-		    !timer_pending(&rdp_gp->nocb_timer)) {
+-			rcu_nocb_unlock(rdp);
+-			wake_nocb_gp_defer(rdp, RCU_NOCB_WAKE_FORCE,
+-					   TPS("WakeOvfIsDeferred"));
+-		} else {
+-			rcu_nocb_unlock(rdp);
+-			trace_rcu_nocb_wake(rcu_state.name, rdp->cpu, TPS("WakeNot"));
+-		}
+-	} else {
+-		rcu_nocb_unlock(rdp);
+-		trace_rcu_nocb_wake(rcu_state.name, rdp->cpu, TPS("WakeNot"));
+ 	}
++
++	rcu_nocb_unlock(rdp);
++	trace_rcu_nocb_wake(rcu_state.name, rdp->cpu, TPS("WakeNot"));
+ }
+ 
+ static void call_rcu_nocb(struct rcu_data *rdp, struct rcu_head *head,
+@@ -966,7 +952,6 @@ static bool do_nocb_deferred_wakeup_common(struct rcu_data *rdp_gp,
+ 					   unsigned long flags)
+ 	__releases(rdp_gp->nocb_gp_lock)
+ {
+-	int ndw;
+ 	int ret;
+ 
+ 	if (!rcu_nocb_need_deferred_wakeup(rdp_gp, level)) {
+@@ -974,8 +959,7 @@ static bool do_nocb_deferred_wakeup_common(struct rcu_data *rdp_gp,
+ 		return false;
+ 	}
+ 
+-	ndw = rdp_gp->nocb_defer_wakeup;
+-	ret = __wake_nocb_gp(rdp_gp, rdp, ndw == RCU_NOCB_WAKE_FORCE, flags);
++	ret = __wake_nocb_gp(rdp_gp, rdp, flags);
+ 	trace_rcu_nocb_wake(rcu_state.name, rdp->cpu, TPS("DeferredWake"));
+ 
+ 	return ret;
+@@ -991,7 +975,6 @@ static void do_nocb_deferred_wakeup_timer(struct timer_list *t)
+ 	trace_rcu_nocb_wake(rcu_state.name, rdp->cpu, TPS("Timer"));
+ 
+ 	raw_spin_lock_irqsave(&rdp->nocb_gp_lock, flags);
+-	smp_mb__after_spinlock(); /* Timer expire before wakeup. */
+ 	do_nocb_deferred_wakeup_common(rdp, rdp, RCU_NOCB_WAKE_BYPASS, flags);
+ }
+ 
+@@ -1272,7 +1255,7 @@ lazy_rcu_shrink_scan(struct shrinker *shrink, struct shrink_control *sc)
+ 		}
+ 		rcu_nocb_try_flush_bypass(rdp, jiffies);
+ 		rcu_nocb_unlock_irqrestore(rdp, flags);
+-		wake_nocb_gp(rdp, false);
++		wake_nocb_gp(rdp);
+ 		sc->nr_to_scan -= _count;
+ 		count += _count;
+ 		if (sc->nr_to_scan <= 0)
+@@ -1644,7 +1627,7 @@ static void rcu_init_one_nocb(struct rcu_node *rnp)
+ {
+ }
+ 
+-static bool wake_nocb_gp(struct rcu_data *rdp, bool force)
++static bool wake_nocb_gp(struct rcu_data *rdp)
+ {
+ 	return false;
+ }
 -- 
 2.53.0
 
