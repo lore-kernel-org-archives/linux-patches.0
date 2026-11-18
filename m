@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020931;
-	b=sDWaXe7oaHRw9xKNgnc/mkgnmII8cy2EGsHhJThI2uYEG1B+a2ZPqhWrsQyHY9Fr1Kmw
-	 vjd1h9fNGpyImIqvn3EKP7QSA/wXaNfeMIS1UlAFntlrxiVgkD2vnvceiimPb0rgRzIPR
-	 aJufcXV06b5OFCoCK7WKovT9g36bBbkM9OSXGz0NudAmAjyJhqPgzBB23h/rtMH5m2mrb
-	 YwGxpIo+8TiQdn69de1kNAXPVhxYqPnsfjG3euzGNOYugytoZZESXy2nCJeYY/TFSB7np
-	 JUUJaaRqjJhebpjsJAgzE8GwQ+Lun8b/W7fCzDa//88QOKoNplEyy/lLAwp9qC4HLew==
+	t=1795020934;
+	b=c3obT1fFDSU2jDFvi0VfxcT7uxa46alqJWwDzBeO3sOq1FwJXT5Lomayjzr4bRL6Be/S
+	 MI8eHxDe5vGlaGjennbOGRusOScnLD1JDyA3gFYaocvfMkWMrwYhfaEqlZPnYgdxmlCSM
+	 /Zu/OpKrl/AZSAo/nequxKjUB9h5mLlBcFDfeA1fKVY/gjeVfro7KzghwrmNW+OPs7sXM
+	 ARCvKbrBX6nSpuM4NOTCBf7RsscHJFozpwbsP3Lco0y064frvDiqaYC6F1GxBUuEKXqWT
+	 rKfsq8VOIE0gLqDvz+4keCyyUFgjnB9rYJCgYGobyP4eB8Z0YfrPzQ20zC3R2+h/U6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020931;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020934;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NgAvmyI55Ld9NXF1uldw+Bge/MKO27MQnXJ9hvD6mIk=;
-	b=sMRdo2sfKWgrzcv9RJy/W0eIt57ZxPnsUqQI53K8s/mKYF2gBoMZyqS7GaJcvwBbjuIP
-	 6zsFmUYzKal7GM1EKJa1ZFBtcONiTlEFPAbwnF++sa4vzd6b/5CQEg4qdtbyq/JslE8BL
-	 JWwvjyscPLuLdYipSz2cbePOhY+xFOvCRNDN6Qcy/W8f0FtRYfj+hFyAB1WaxLKHfDd7F
-	 GEmxzSOG29w/Voi9SW9k5x7HsQRu5vwnKCpVWNsg9eJXVvvNldmTuKqEQrt0FbjRygJjg
-	 tMhVJFe9oIgSToOuFRw/GBPGUORenY+nKJSRzIntiYlURMfzlhoLW9+sZuMiE3z59Iw==
+	bh=cNF/NjHMZmvAQdRdEzf9/OsZ2moTQSev5pI9OWOrj/g=;
+	b=bV3YZ4UQ4TAzwlmWPljFve+B7rFLIMaSFzkniftkBqTpWwP3+sGRbcOK+qaEWoaS2uUo
+	 CvEyLg85Ko0w9BCFJ+85VsEKDEm5QjSMVtF2f2oaqL8g7Z3XfxaeTZvG7yL0XhBpkIvoI
+	 IpsU3mh+bO2Wkf2ABRZWEjJgPhvYOK/XO+p0IjiWuRD7/3xzxz3blt3w5N0++E0C7BqS0
+	 vsi93v2AvLsbmv48Bjw5Z0iExcSyhY8YLyMuU6wdIUKONYt+HaVY/zfDk/uaIvLl4N6XP
+	 Y8a5QUmS8o5B0RoyInvoyRTwmYpVbz8TN7kX4GmU3346r/27yQW6c4NdJ8VPkivAp2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IhKGeSQC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sa8ymq0l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7C8606A32F;
-	Wed, 18 Nov 2026 16:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACE0606B59A;
+	Wed, 18 Nov 2026 16:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IhKGeSQC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB1211F000C4;
-	Wed, 18 Nov 2026 16:55:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sa8ymq0l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8991F000CA;
+	Wed, 18 Nov 2026 16:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020931;
-	bh=NgAvmyI55Ld9NXF1uldw+Bge/MKO27MQnXJ9hvD6mIk=;
+	s=korg; t=1795020934;
+	bh=cNF/NjHMZmvAQdRdEzf9/OsZ2moTQSev5pI9OWOrj/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IhKGeSQCKPCFutp1692/FR+qW7HVrncaQYY+zZAhRwUJdPMU/egbub6yrbdPMpDC2
-	 z8bbp9sXeDJL82lNOoKwpbszLQ3u/FPOwr4UADE96YNRDj5NyvgIIUcGhOBZL8breD
-	 sSIS7mpqYIKvbgn5lsG7VGCaTb3+Edo/2N936jk8=
+	b=sa8ymq0laetHIClBD3ULJsZKMUuqqA72fuIP4PW1TzzuiBsXp6cliIVbVVXBrl9LJ
+	 de/d4tI0WW3Ukq/2zQnmG2q9hmkuCQKONnDr0nVxpygoHtcRhT0T5F+NTlRuv6UMb6
+	 sLTU3oUyfVCGBf21DGjmdMlNh5KEtSS9h+dZXEdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2126/2651] bpf, cpumap: Hold the device of frames in the queue
-Date: Wed, 18 Nov 2026 15:56:06 +0100
-Message-ID: <20261118150402.441064594@linuxfoundation.org>
+Subject: [PATCH 7.3 2127/2651] bpf: Let bpf_dynptr_write() mark a global function
+Date: Wed, 18 Nov 2026 15:56:07 +0100
+Message-ID: <20261118150402.472911044@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,150 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit f99351272933ba2e1221484a5e53b7a5d2c035f0 ]
+[ Upstream commit 589998616e0f9190ba6f6644a19532c5b2ba66d0 ]
 
-A frame that is redirected to another CPU waits in the queue of the cpumap
-entry with a plain pointer to the device it came from, and an skb from
-generic XDP with skb->dev.  Nothing keeps that device.  Closing and
-unregistering it waits for its NAPI and for RCU, but not for the kthread
-of the entry.  If the kthread is late by more than that, since its CPU is
-busy with something of a higher priority, it builds skbs for a device that
-has been freed and hands them to the stack:
+The caller of a global function loses its packet pointers if the function
+may change packet data. That is found out by a scan for calls of the
+helpers which bpf_helper_changes_pkt_data() lists.
 
-  BUG: KASAN: use-after-free in dev_gro_receive+0x1f51/0x2b30
-  Read of size 8 at addr ffff88800a7340b0 by task cpumap/1/map:1/54
+bpf_dynptr_write() is not on the list, because it depends on the type of
+the dynptr: check_helper_call() looks at it. The scan cannot do that, and
+so a global function which makes a dynptr from the skb, or gets one as an
+argument, and writes through it counts as harmless. The write can
+reallocate the head of the skb, and the caller goes on with pointers into
+the old one, which has been freed.
 
-Take a reference to the device for each entry of the queue.  The kthread
-cannot drop it at the end of the batch, since its GRO node may keep the skb
-for longer.  Let it note the devices and drop the references behind a full
-GRO flush, which it does whenever the queue is empty, and from now on also
-when it has noted about 2048 of them.
+Let every call of bpf_dynptr_write() mark the function, as a tail call
+does. The same mark decides whether a program may replace a function.
 
-A device whose frames are stuck in a queue is now unregistered only when
-the kthread has got to them.  RTNL is not held meanwhile, but if the device
-goes with its network namespace, the cleanup of all namespaces waits.
-
-Fixes: 1c601d829ab0 ("bpf: cpumap xdp_buff to skb conversion and allocation")
-Fixes: 11941f8a8536 ("bpf: cpumap: Implement generic cpumap")
+Fixes: 51081a3f25c7 ("bpf: track changes_pkt_data property for global functions")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017230950.802052-8-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017230950.802052-10-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cpumap.c | 35 ++++++++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 7 deletions(-)
+ kernel/bpf/cfg.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/cpumap.c b/kernel/bpf/cpumap.c
-index 5e59ab896f058..eb87131b1bef5 100644
---- a/kernel/bpf/cpumap.c
-+++ b/kernel/bpf/cpumap.c
-@@ -45,6 +45,7 @@
-  */
- 
- #define CPU_MAP_BULK_SIZE 8  /* 8 == one cacheline on 64-bit archs */
-+#define CPU_MAP_HELD_DEVS 2048
- struct bpf_cpu_map_entry;
- struct bpf_cpu_map;
- 
-@@ -74,6 +75,13 @@ struct bpf_cpu_map_entry {
- 
- 	struct completion kthread_running;
- 	struct rcu_work free_work;
-+
-+	/*
-+	 * Every frame and skb in the queue holds a reference to its device.
-+	 * The kthread keeps it until nothing is left in GRO.
-+	 */
-+	struct net_device *held[CPU_MAP_HELD_DEVS];
-+	u32 nr_held;
- };
- 
- struct bpf_cpu_map {
-@@ -129,9 +137,11 @@ static void __cpu_map_ring_cleanup(struct ptr_ring *ring)
- 		WARN_ON_ONCE(1);
- 		if (unlikely(__ptr_test_bit(0, &ptr))) {
- 			__ptr_clear_bit(0, &ptr);
-+			dev_put(((struct sk_buff *)ptr)->dev);
- 			kfree_skb(ptr);
- 			continue;
- 		}
-+		dev_put(((struct xdp_frame *)ptr)->dev_rx);
- 		xdp_return_frame(ptr);
- 	}
- }
-@@ -311,7 +321,7 @@ static int cpu_map_kthread_run(void *data)
- 		void *frames[CPUMAP_BATCH];
- 		void *skbs[CPUMAP_BATCH];
- 		u32 i, n, m;
--		bool empty;
-+		bool empty, full;
- 
- 		/* Release CPU reschedule checks */
- 		if (__ptr_ring_empty(rcpu->queue)) {
-@@ -344,10 +354,12 @@ static int cpu_map_kthread_run(void *data)
- 				struct sk_buff *skb = f;
- 
- 				__ptr_clear_bit(0, &skb);
-+				rcpu->held[rcpu->nr_held++] = skb->dev;
- 				skbs[ret.skb_n++] = skb;
- 				continue;
- 			}
- 
-+			rcpu->held[rcpu->nr_held++] = ((struct xdp_frame *)f)->dev_rx;
- 			frames[ret.xdp_n++] = f;
- 			page = virt_to_page(f);
- 
-@@ -398,10 +410,13 @@ static int cpu_map_kthread_run(void *data)
- 		/* Flush either every 64 packets or in case of empty ring */
- 		packets += n;
- 		empty = __ptr_ring_empty(rcpu->queue);
--		if (packets >= NAPI_POLL_WEIGHT || empty) {
--			cpu_map_gro_flush(rcpu, empty);
-+		full = empty || rcpu->nr_held > CPU_MAP_HELD_DEVS - CPUMAP_BATCH;
-+		if (packets >= NAPI_POLL_WEIGHT || full) {
-+			cpu_map_gro_flush(rcpu, full);
- 			packets = 0;
- 		}
-+		while (full && rcpu->nr_held)
-+			dev_put(rcpu->held[--rcpu->nr_held]);
- 
- 		local_bh_enable(); /* resched point, may call do_softirq() */
- 	}
-@@ -738,12 +753,14 @@ static void bq_flush_to_queue(struct xdp_bulk_queue *bq)
- 
- 	for (i = 0; i < bq->count; i++) {
- 		struct xdp_frame *xdpf = bq->q[i];
--		int err;
- 
--		err = __ptr_ring_produce(q, xdpf);
--		if (err) {
-+		if (__ptr_ring_full(q)) {
- 			drops++;
- 			xdp_return_frame_rx_napi(xdpf);
-+		} else {
-+			/* The device cannot go before the flush, from now on it can */
-+			dev_hold(xdpf->dev_rx);
-+			__ptr_ring_produce(q, xdpf);
- 		}
- 		processed++;
- 	}
-@@ -807,11 +824,15 @@ int cpu_map_generic_redirect(struct bpf_cpu_map_entry *rcpu,
- 
- 	__skb_pull(skb, skb->mac_len);
- 	skb_set_redirected(skb, false);
-+	dev_hold(skb->dev);
- 	__ptr_set_bit(0, &skb);
- 
- 	ret = ptr_ring_produce(rcpu->queue, skb);
--	if (ret < 0)
-+	if (ret < 0) {
-+		__ptr_clear_bit(0, &skb);
-+		dev_put(skb->dev);
- 		goto trace;
-+	}
- 
- 	wake_up_process(rcpu->kthread);
- trace:
+diff --git a/kernel/bpf/cfg.c b/kernel/bpf/cfg.c
+index c4c3badde6c9c..5501ccc6649f8 100644
+--- a/kernel/bpf/cfg.c
++++ b/kernel/bpf/cfg.c
+@@ -529,7 +529,9 @@ static int visit_insn(int t, struct bpf_verifier_env *env)
+ 			 */
+ 			if (ret == 0 && fp->might_sleep)
+ 				mark_subprog_might_sleep(env, t);
+-			if (bpf_helper_changes_pkt_data(insn->imm))
++			/* nobody knows yet whether the dynptr is that of an skb */
++			if (bpf_helper_changes_pkt_data(insn->imm) ||
++			    insn->imm == BPF_FUNC_dynptr_write)
+ 				mark_subprog_changes_pkt_data(env, t);
+ 			if (insn->imm == BPF_FUNC_tail_call) {
+ 				ret = visit_abnormal_return_insn(env, t);
 -- 
 2.53.0
 
