@@ -1,59 +1,78 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.128.211.58
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021278;
-	b=jkc77dQ9KIRtCmT2lRIORVz340k8uaLhQb/OOT/bM90mfEYfruyC0HTLqGuNvmPflLrE
-	 Lrz3Hafk/ZVFyH+CgZR0VN6kgw0twJri3+h7kqpLsgipPCd55Tmm5Xk/sS69T0f38YDrV
-	 3cjFtzaXyc2TrxucS+vO5ErV3XQ0wvTL3eyG91gdXEPa9apgsLdzP8y++TRR5Cqj297bM
-	 i8KXlAgS+RGF3VjWX0SjwiJYg+KmS9BvMJuEZba0CFj3RzwjiT5WjsSjqyCByMcoq2LQu
-	 9RwsJRH4WFDnB1uW0LhIi9ZSHnHeJCfGA2o/iE/hnaIbo5dh+nm26sEuBAlU+o9MTYg==
+	t=1795021281;
+	b=vtfpGgVRdxmmlt0WMaJip3WnyGhoPtBbJGGtlvqYhEZNqXt9ouMflKP3EE61OmQ6z15C
+	 sYtIUN2weZ+XVJ8JVF55uyhxXF5RoPucz6Uml/B6hPIpoHfYlfmaZZn/t8pX+0zMy30Xd
+	 7160GsZ9VQuDKvd6WsdLWXUGWjGra2wEqSgacroiR6CC1JVP8rJt853HJLClFD1tBr1qh
+	 AJr7qY1WXzwjQpjPOWMu8+kwljo1wQZJnmtgLG/Zjt+VQr7bqMTF0R6tSNi3rZIy1myB6
+	 pjXS3IK8hUECyOuaWwt4weH3M6KB84WLxmyr0brj/o5NdtJWq/dQYQ36NTwuFFtRhmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021278;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=8FWUT++DtN/Sv7GUgiujzG44UUp0GIVzNNyfrdufMZY=;
-	b=o0zdRTlaC+qmtBiKTCFynyz8T6Lx/BcQ5dhmIu/ej7FvtZ9boEyKTQR7MK0Og4o86Wt+
-	 8tE4WEW40IjIajA9iC8I1LdDUgdXlk+cNnJsTLMc+tBU4shceuEl/xyTMuTaQOLUFUNW/
-	 fbKbYUODXb+bMlV2zu5reeRZ8uhzhiwlV0ZYkMvyrxF/QemmTOx1jSMTDqHJVhR8NBp5u
-	 D91OA5ZguMNXErPX4SFQozDoKtsGEkJujOvg0AovLla5GeLX2HZ/EsrGNZ2qoOQr0Z413
-	 0MuDFW0Vx0OHTC6BVxNQeVmr/I0QVFq5iBvk0DelQjqKF0pRZDQxAAO4fQrpZrI3cGA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021281;
+	h=DMARC-Filter:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=8fc3rUrcD1IZLm8pPlhKV8zX4DnzQ+5myz6UfOSrlPY=;
+	b=KAfy989Tph2pEUdBzdeF9NJ9rAyjTE2HcibHnCiRoy0qyB3H55wdO28VQXOe4tsvsOC2
+	 JV5mL9A1OWRAWVjPY3BiU+QVykE2Y3EuEqBwSK0U/xLw1vGRkL8t49FMAPS092OoqYq/8
+	 9pxSMEfi0AH9ZV12ZTKUkToylYtN5xYj/Ed0GcNy3fZFVeRw5XuYoH8SZGtqq7emxclN7
+	 +F+re7e7SZ0RypD2H5W4fHYj4p0DdXRte24jtfwzlHArfCpWdCGIdJVWHDCjF8HkJlZU0
+	 RgBLYrP28XaETk+TvgwKVh/rw5aSbPQsIRtVcLokbXx+XRZCu67DbYKlexdpSSiOysw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZZUjQOaM;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=librecast.net;
+	spf=pass smtp.mailfrom=librecast.net;
+	dkim=pass header.d=librecast.net header.i=@librecast.net header.a=rsa-sha256 header.s=2026110900 header.b=WQEZyslY;
+	arc=none smtp.remote-ip=185.128.211.58
+Received: from bregans-1.gladserv.net (bregans-1.gladserv.net [185.128.211.58])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF62606A31C;
-	Wed, 18 Nov 2026 17:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F7D606A325;
+	Wed, 18 Nov 2026 17:01:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 98F7D606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZZUjQOaM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF221F000C6;
-	Wed, 18 Nov 2026 17:01:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021278;
-	bh=8FWUT++DtN/Sv7GUgiujzG44UUp0GIVzNNyfrdufMZY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZZUjQOaM/6ZjlTdgmzC++cJXGz48GhOkg/6KH2ELs+1YieCNbgt8cZpEUrRQrgdqK
-	 6tY0xv88TkT96QwpJ4V1cooNdCbCwAuioG74/1jCX7eEy29zLRafvBK+hNtAAw4Hrn
-	 fLk2bD+LVYVtfGTbBxDmNK0or0qNM2GZqZkgusGk=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	dkim=pass (2048-bit key, unprotected) header.d=librecast.net header.i=@librecast.net header.a=rsa-sha256 header.s=2026110900 header.b=WQEZyslY
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=librecast.net; s=2026110900; h=Content-Transfer-Encoding:MIME-Version:
+	References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:
+	Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=8fc3rUrcD1IZLm8pPlhKV8zX4DnzQ+5myz6UfOSrlPY=; t=1795021280; x=1795885280; 
+	b=WQEZyslYqoujDFz1UxV4Hk95wk+paxD1oUK4UAe6Qop8WDS7Kd4R5Nl1M5v6vhfbVC1lUqsiIK2
+	ERGT8HCHAKz8Q67c8QD0aMN4lXDwDSggnAi/qdSqmhS55+byTfQ0pLXsov4k49l5H809tu/NxZyN5
+	84aHinVU4c985rBjZAypaS3qcm4dXCk8KehbuWlTZlPR4rGn3dpXKwiywoqUYn5jf5JcCMNAPD2mO
+	FmOiyAwZcEbViHq/BGT8fZwIiDNvONDgT4r2h1/afG7eNd60sfNNS+vDCyHYWC4Xh7J2Q8IYQlo5v
+	YanwSPbMPSoa5RxHMpDrtir/HXpdPdpOASCQ==;
+From: Brett A C Sheffield <bacs@librecast.net>
+To: gregkh@linuxfoundation.org
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2250/2651] net: phy: realtek: restore RTL8211F RGMII delays on resume
-Date: Wed, 18 Nov 2026 15:58:10 +0100
-Message-ID: <20261118150406.452036500@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
-References: <20261118150247.972732815@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Brett A C Sheffield <bacs@librecast.net>
+Subject: Re: [PATCH 6.12 0000/1756] 6.12.119-rc1 review
+Date: Wed, 18 Nov 2026 16:58:56 +0000
+Message-ID: <20261118165901.35595-1-bacs@librecast.net>
+X-Mailer: git-send-email 2.56.1
+In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
+References: <20261118150007.957976754@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -65,55 +84,12 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.3-stable review patch.  If anyone has any objections, please let me know.
+# Librecast Test Results
 
-------------------
+044/044 [ OK ] liblcrq
+010/010 [ OK ] libmld
+120/120 [ OK ] liblibrecast
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+CPU/kernel: Linux auntie 6.12.119-rc1-g52008ba8d06c #1 SMP PREEMPT_DYNAMIC Wed Nov 18 16:47:02 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
 
-[ Upstream commit 20c0c677362468b0af23e26e5fdb871ea911bc25 ]
-
-RTL8211F and RTL8211F-VD both use rtl8211f_config_rgmii_delay() during
-initialization and share rtl821x_resume(). The RTL8211F-VD loses its
-RGMII TX and RX delay enable bits across a software power-down, but the
-shared resume path only clears BMCR_PDOWN and waits for the receive clock
-to stabilize.
-
-On a BeagleV Ahead configured for rgmii-id, carrier and the negotiated
-speed return after an interface close/open, but the receive path does not
-work. At 100 Mbit/s no frames were received. At 1000 Mbit/s all 11
-observed frames had CRC errors.
-
-Reapply the RGMII delay configuration after the existing resume delay.
-
-Tested on a BeagleV Ahead with an RTL8211F-VD at 100 and 1000 Mbit/s,
-including close/open without a link partner.
-
-Fixes: bb726b753f75 ("net: phy: realtek: add support for RTL8211F(D)(I)-VD-CG")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20261015045001.83986-1-kmehltretter@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/phy/realtek/realtek_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
-index 177b62a7b2d16..c867e5213216b 100644
---- a/drivers/net/phy/realtek/realtek_main.c
-+++ b/drivers/net/phy/realtek/realtek_main.c
-@@ -1375,7 +1375,7 @@ static int rtl821x_resume(struct phy_device *phydev)
- 
- 	msleep(20);
- 
--	return 0;
-+	return rtl8211f_config_rgmii_delay(phydev);
- }
- 
- static int rtl8211f_resume(struct phy_device *phydev)
--- 
-2.53.0
-
-
-
+Tested-by: Brett A C Sheffield <bacs@librecast.net>
