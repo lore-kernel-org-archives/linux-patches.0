@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029582;
-	b=S37TdtMtp3nvcRXn/S9Rn8LVW+lJaEHwo6TROGGvoTYKpz6tDXWHSw3c28PP1icWtiDp
-	 9WqRj3fN+LXSzFmiNr2OS02zjYLOkYtAUcl0N7ZUQuV22EbQIEDfSxlBIYNw2D4pf8DDn
-	 Bhk/M8u4hHjFhAklHKIG5y5FJAu8wo481xJlhLF8UuYtCi2a+JyLJ90v9iFx/d0oKf2+E
-	 iPyxJHsiSaN4PcxDBYq+0TNLCwXy/fGQBPdrHCrF+16DUGl/KBNTKRij5gOJF77ZVxIXb
-	 841cZXdQSFzvkhdK3LZHalOtO1VXH+jvNlePR/nbhvqbYcHTiskhLYfJUcCBPcMCFxg==
+	t=1795029584;
+	b=LAr7vLzco8tokzdznPWyzX+/M8DAQud6XZgyZhYLVGs3Cmj67iTOO0S37SLuphv7qUtG
+	 NCvRUvQXYj06dYYs6UUHlgPsXA3wwCl/ILKnzJdzFszy1GDTdHI/hj0Bk7M0OIeBwW6cT
+	 lGPaxGhkgmhf5Pm5tOyILLXpM14ufko7VbFhjTWASLE5+H4Yf9dnI8Tql4yx8bKSMY2DM
+	 UtM/x2uqYzQZVac7IGrk7GblkCI72xwqvIKFXhG07E9BVh2mL9qMlqd9yPiIl88R5/16M
+	 Ifg3jK6UaDb+UCvSJai+Fn65DhqUMOa7d7wJi7kNXeOQH5omz/EvZ4thlYgbY/TdT1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029582;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029584;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4UvlmhAXVXQlOW5gw56rhLWKRxuPYJq267WUcmQAJVQ=;
-	b=lWHVFucM26LbOTQnkK3ZxzsB1JxeVgF5x19LYi/eOwvf2yIafQBA9YgzSPOBoGqVTP6a
-	 2hRFfZxgtoC7YXn39O2dpK8H7T0SfBULhk5lwugGAZSv9xEToRrsIs/Tcn38hRRz8l9ez
-	 qdBslW4iVCpPb+Yzh9dPh0rCwk8LusyRXHnv32hNw65X2qwmfUqDNLZKOWUPPBMcXzhUy
-	 RuoA4kAcAdU0LmHaOj6LC6bPLxarVpyVT+JlCiqTVtbfx3U8oklg4ZfZ3IRf/SzW2BMSP
-	 eTlvuK8gw/zpR7qk38o2FthS26k22PGPF5dBUvJJhaGJUhb/IXPVzd6Qxw6N7fr5Gtw==
+	bh=EsfDsTYGCSbqM0MaSmKb3Y+c55NMrymGdlkPsorJfwE=;
+	b=f6lyP0gnlu65OBtA0DO0zkFGxn5ui9KBvASqHeZ0fLJe9nprBva0z55CaSthwf6sZDBv
+	 5PoUXCsKKAQhpcoXsTr2y6gMPc35dEbDfhjrFVuVfrucYEGPPkgZ9VUAxLP/jEHir/iQY
+	 NnW1xPBM/c47r+qPCiw74kXhMOELqKmnxofbe+PjFcEt/k6RPUAgVLPa4NgZLD2w1xx52
+	 4+XlIP7/a/PowsmO2SAoYoWn8vdaCuRHe2mxwDGI1UQzEhrQZF/nvKw9MiXNaba1ntMvb
+	 xqCV0iAXijzoz0uJQxh8/KI/gtAMYe7cV+lswAV8RvZVt67bDj8pSFgjuH4QkMYE1SQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XEzDy7zx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qvPNu9+/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F31860A2600;
-	Wed, 18 Nov 2026 19:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0F0606A32C;
+	Wed, 18 Nov 2026 19:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XEzDy7zx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686781F000C7;
-	Wed, 18 Nov 2026 19:19:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qvPNu9+/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F99A1F000C4;
+	Wed, 18 Nov 2026 19:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029581;
-	bh=4UvlmhAXVXQlOW5gw56rhLWKRxuPYJq267WUcmQAJVQ=;
+	s=korg; t=1795029584;
+	bh=EsfDsTYGCSbqM0MaSmKb3Y+c55NMrymGdlkPsorJfwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XEzDy7zxFCWcf7e8TxTki+xAzSGj+rIUN8I4ryPC3ZR1RLtvdwWaJ/U9+0bP1pVmG
-	 fRZJ9UZzUuMZSRgI8/DgneKVjZK2+NN02vt5m6JtamfHQMZDOQ9Uayl/k6UgpDJZEc
-	 nYxs5+AbDECR0Y1KGU+2+D77lQyPMzlguOh76xUI=
+	b=qvPNu9+/rxCfFue4DbMta6xhfuGmcOYBCUz2COLydvaAbgPdRN8TEx3FwINTNdS7L
+	 y+yxXEqzyw+gitFcEUs0NtvkMeFl0ayTNh/TpJ7vk2WTFC2KEZVasL7exOJTChND2g
+	 03uQ0FfnY2kEAm0JpRpTUl76KA2vvD8rbOCLuYLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0401/1756] arm64: pi: Run the source checker on the libfdt objects under C=2
-Date: Wed, 18 Nov 2026 15:42:08 +0100
-Message-ID: <20261118150024.728694343@linuxfoundation.org>
+Subject: [PATCH 6.12 0402/1756] wifi: mac80211: Fix the return value in mesh_path_add() kernel-doc
+Date: Wed, 18 Nov 2026 15:42:09 +0100
+Message-ID: <20261118150024.768757358@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,38 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 44b14ff4aebeae98663d0fd424b4ef88237ee981 ]
+[ Upstream commit 5c7b043cb1ef4bca9aa2e793dab862c0989d59c3 ]
 
-The custom lib-%.o rule reuses rule_cc_o_c, which hooks the source
-checker only for C=1, and that only when the object is rebuilt. The
-C=2 hook, cmd_force_checksrc, hangs off the standard %.o rule, so
-"make C=2" silently skips the two libfdt objects. Call
-cmd_force_checksrc after the compile rule, as the standard rule does.
+mesh_path_add() has returned the new (or the already existing) struct
+mesh_path, or an ERR_PTR(), since commit ae76eef027f7 ("mac80211: return
+new mpath from mesh_path_add()"), but its kernel-doc still says
+"Returns: 0 on success". Describe the pointer.
 
-Fixes: aacd149b6238 ("arm64: head: avoid relocating the kernel twice for KASLR")
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20260901140326.3812068-7-fuad.tabba@linux.dev
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Fixes: ae76eef027f7 ("mac80211: return new mpath from mesh_path_add()")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260912072840.50710-1-kmehltretter@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/pi/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ net/mac80211/mesh_pathtbl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/pi/Makefile b/arch/arm64/kernel/pi/Makefile
-index 4d11a8c291816..8a475ef279fa1 100644
---- a/arch/arm64/kernel/pi/Makefile
-+++ b/arch/arm64/kernel/pi/Makefile
-@@ -34,6 +34,7 @@ $(obj)/lib-%.pi.o: OBJCOPYFLAGS += --prefix-alloc-sections=.init
- 
- $(obj)/lib-%.o: $(srctree)/lib/%.c FORCE
- 	$(call if_changed_rule,cc_o_c)
-+	$(call cmd,force_checksrc)
- 
- obj-y					:= idreg-override.pi.o \
- 					   map_kernel.pi.o map_range.pi.o \
+diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
+index 0aae70e957c92..9f1b5c6a15840 100644
+--- a/net/mac80211/mesh_pathtbl.c
++++ b/net/mac80211/mesh_pathtbl.c
+@@ -679,7 +679,7 @@ void mesh_fast_tx_flush_addr(struct ieee80211_sub_if_data *sdata,
+  * @dst: destination address of the path (ETH_ALEN length)
+  * @sdata: local subif
+  *
+- * Returns: 0 on success
++ * Returns: the new or the existing path on success, an ERR_PTR() on failure
+  *
+  * State: the initial state of the new path is set to 0
+  */
 -- 
 2.53.0
 
