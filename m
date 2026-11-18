@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032007;
-	b=u1nUeF6ebUKam1Q5hUcYgjKDtdvfBhmUy6v1VAwAsN0SgwYxGV4U6ZTQAlMqLLAB22vV
-	 zr9zR7C9m32d+7Aws4zJw8i89UE+IuVD4FhiN+wpyYnWbJJT7Kc/en5yV/L+7QZrEEUxW
-	 qYCOLw2LySF+xtp0IjZL6qX6lHhHMOs8Mx9J2r9NLLkfIWFVxNE/VYR8Xq6Cb+0kdzQg/
-	 1CGlkLi0E2IPsZSEiHCQYCH0tbvDFwKsWDwt1Jw+6kfqXTphKc0S2ViLtm22rm+BeE+gV
-	 /Ufsm/PmctLSoddx89d34lU5oUur+1Z44480CjVAdMz9Id/RdlHbse8iRU3AIaAAUFQ==
+	t=1795032010;
+	b=Hsat1IBqZuF7gjKxSzghe0H0yW8Be79zsh4NicyCnNtxOVnPHJeaYR9dFTDicz5TGIBm
+	 R7s38t/y5lh/aEPEKPSvtruMjHBrZR5Suoqp0SDIwNvHJAbneGA/+9J5z5JMqio9msFKM
+	 Goo1MNfS/YuPe+qEw5mjxZ5084SKs5lYHjj4pM0T2DS35S2c6O4DmcjzGxKocofbIJ9/S
+	 hoJsdd/kGFNHEM9GXDQmekazDLM1pzB0i2KAsotlFzSGOFL2M3IJJDEJXaT8ksT8ulZot
+	 8LOmcDfDegK/cEuPR8ZmRdhVMr4I9aj/dz6+F44pK8Ppm2FuYPyDJcJmjkFj9XRwmnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032007;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032010;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=cGdP+9ONFbbi42dbeo/eBIwbxg+RcDl4v6xUChaCjPA=;
-	b=zZR1fBDWcYdg29GfT6FIwwRZM8tj66ZOock/yPYSgJl+3/RwyGEKlOQy63yvsDqfhd8R
-	 2eDmeHwB6+mpGuxr17qU8mRqeE5Trrn9sLW8W1PFqPSEQxv7z38VV7YOWAtZBxuJI2/UU
-	 v1Lu9F++sVtT5RV55YgR7x5POsoET7IYmILiFf2YWyqr7eQmlaXZpZX+DAMJSWJceBMys
-	 wTroR7sNj+gy5eUa76rlVXcli3rYCZw/7sw2BcJgvNKND/qqW0C27Jy9hoKJ0KRy/B+Dd
-	 6/c2xzIBVvbYlePm7uk/mUU3VEjO+WktdY4ok8Gb0tbZasPTx9zbWNsVpm7xLqQfQGw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=WKuvAweNmgMSYn8qJKQhGxnJmku2lXrb+MFD5zyqW38=;
+	b=A3ggyQbU/hHHnm2ZJNruli44t2O0u9bMNc4TJs1c8o+QDA6tTEDorxXQrVZ6cWQjiO8u
+	 GPywuxZrXit7pbHyTTYxhVDtsfEa/IL3ixstHuj9FKNmK3Y1Rlp4XqGHkZLr9Ln4Yx7LO
+	 TYz9NQXFBMo+OhudQ8Epx5J2YGD1sQbVPee+1DpFdSwYAuBhJcz9GN5VeJPCCf44S8IjB
+	 I7sXApyMXPn4qM6UCaEkIk6kqsYG/7n9Ap+M3nH1DJRuSbn6zxSpLzUn8RnA1YPb5gAEc
+	 Zmh8j2ysCVNZunvwl8HkdHAgzgsA64aTQLPCbDU7HH9zSz+EJAFVABJq5A8VQg560QQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhDZTGxr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TkGk7jHP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A11606A31C;
-	Wed, 18 Nov 2026 20:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F32606A320;
+	Wed, 18 Nov 2026 20:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhDZTGxr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1181B1F000C4;
-	Wed, 18 Nov 2026 20:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TkGk7jHP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE741F000C4;
+	Wed, 18 Nov 2026 20:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032007;
-	bh=cGdP+9ONFbbi42dbeo/eBIwbxg+RcDl4v6xUChaCjPA=;
+	s=korg; t=1795032010;
+	bh=WKuvAweNmgMSYn8qJKQhGxnJmku2lXrb+MFD5zyqW38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PhDZTGxr16eonw5HFPnvJnsOUQEvAnmOOtADWZIjP+oUUlkrn2OsYSDRGsehqjBR6
-	 FEQLTYjkJ6CwgqQGH+064rwi8+vYWuTXeLDeqglsKMJmnlgvi59jOX5s9ePUILCtc3
-	 RVlz598KeuPiLXy6S4ClZWVPeUe/2QeAG1ZPlymQ=
+	b=TkGk7jHPbnOBu/zi/HJA3HilkGa/nt8MWEr8DMX5bp5e49VlvCUMs/2dfMZTrv1ZS
+	 uFBK0lNnwL7oL2rhYnSsifHvoWxkxR2EeZfUMuKqUjg2HO8W2QmESM9BTXjo1IRIk0
+	 RpMrAII21eMdbded/yW9VDvbeBRLLwuvoWTrdGkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiliang Yuan <odys.yuan@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Toshiaki Makita <toshiaki.makita1@gmail.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1259/1756] selftests/bpf: Expect at least one tp_recursion miss in missed
-Date: Wed, 18 Nov 2026 15:56:26 +0100
-Message-ID: <20261118150059.798701783@linuxfoundation.org>
+Subject: [PATCH 6.12 1260/1756] veth: clear rx queue hint in veth_xmit
+Date: Wed, 18 Nov 2026 15:56:27 +0100
+Message-ID: <20261118150059.834627937@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,66 +65,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qiliang Yuan <odys.yuan@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit a5e144985d6855c84b56ea5443fd6333490ce8ec ]
+[ Upstream commit 1b1c0e87cfe78d731bbab99c9c018655980b6790 ]
 
-missed_tp_recursion attaches its tp programs to bpf_trace_printk and
-expects each of them to miss exactly one run, the one that its kprobe
-program on bpf_fentry_test1 triggers by calling bpf_printk().
+With more tx queues on one end of a veth pair than rx queues on the
+other, and RPS or generic XDP enabled on the receiving end, we get:
 
-The test is not serial, so tests running in parallel can add misses
-to the tp programs while they are attached:
+    veth1 received packet on queue 2, but number of RX queues is 2
+    WARNING: net/core/dev.c:5212 at get_rps_cpu+0x560/0x1360
+    Call Trace:
+     <TASK>
+     netif_rx_internal+0x1af/0x4c0
+     __netif_rx+0x99/0x350
+     veth_xmit+0x713/0xca0
+     dev_hard_start_xmit+0x166/0x5f0
+     __dev_queue_xmit+0x1797/0x42d0
+     ip_finish_output2+0xa34/0x1f40
+     __ip_finish_output+0x510/0x7e0
+     ip_finish_output+0x2f/0x320
+     ip_output+0x17a/0x3f0
+     ip_send_skb+0x1bc/0x220
+     ......
 
-  - The kprobe on bpf_fentry_test1 is global. Any other test that
-    does bpf_prog_test_run() on a fentry/fexit program calls
-    bpf_fentry_test1() and thereby fires the kprobe program, which
-    calls bpf_printk() from kprobe context and makes the tp programs
-    fail the bpf_prog_active check once more.
+Easy to hit with "ethtool -L veth0 tx 4", "ethtool -L veth1 rx 2",
+rps_cpus set on veth1 and a few flows sent over the pair [1].
 
-  - Any other program that runs under the bpf_prog_active check, such
-    as a kprobe program or the perf event tracepoint program in
-    legacy_printk, and calls bpf_printk() hits bpf_trace_printk the
-    same way.
+veth_xmit() uses skb->queue_mapping to pick the peer rq, but never
+clears it before veth_forward_skb(), so the rx side still sees the tx
+queue index. Everything on the rx side that goes through
+skb_get_rx_queue(), like get_rps_cpu() and netif_get_rxqueue() for
+generic XDP, takes it as a recorded rx queue and warns once it is out
+of range.
 
-Either way, test2_recursion_misses comes out as 2 instead of 1.
+Clear it before handing the skb to the peer:
 
-Expect at least one miss, as missed_kprobe_recursion does since commit
-08a7078feacf ("selftests/bpf: Improve missed_kprobe_recursion test
-robustness").
+- It is the tx queue index of this device, it says nothing about the
+  rx queue of the peer.
 
-Fixes: 85981e0f9e9f ("selftests/bpf: Add test for recursion counts of perf event link tracepoint")
-Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20261008-selftests-bpf-missed-tp-recursion-v1-1-0dd60471d655@gmail.com
+- The two sides don't even agree on the encoding. The tx side stores
+  the index as is, the rx side stores index + 1 so that 0 can mean
+  "not recorded". So tx queue k is read back as rx queue k - 1, and
+  tx queue 0 as "not recorded".
+
+- Commit 710ad98c363a ("veth: Do not record rx queue hint in
+  veth_xmit") already decided that veth should not pass any queue
+  hint to the peer. There is no tx->rx queue mapping to preserve, so
+  nothing is lost by clearing it.
+
+On NETDEV_TX_BUSY the skb goes back to the qdisc, which looks up the
+txq from skb->queue_mapping to decide when to retry, so restore it
+there, next to the existing __skb_push().
+
+[1]: https://lore.kernel.org/netdev/156834bb-8e40-496e-9443-9d515fa18eab@linux.dev/
+
+Fixes: 76ff5cc91935 ("rtnl: allow to specify number of rx and tx queues on device creation")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Björn Töpel <bjorn@kernel.org>
+Reviewed-by: Toshiaki Makita <toshiaki.makita1@gmail.com>
+Reviewed-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261009040412.14571-1-jiayuan.chen@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/missed.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/veth.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/missed.c b/tools/testing/selftests/bpf/prog_tests/missed.c
-index 70d90c43537c1..03dfae9ab014e 100644
---- a/tools/testing/selftests/bpf/prog_tests/missed.c
-+++ b/tools/testing/selftests/bpf/prog_tests/missed.c
-@@ -119,9 +119,9 @@ static void test_missed_tp_recursion(void)
- 	ASSERT_EQ(topts.retval, 0, "test_run");
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index 22387f66bf90d..0fc14b73d24a2 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -375,6 +375,9 @@ static netdev_tx_t veth_xmit(struct sk_buff *skb, struct net_device *dev)
  
- 	ASSERT_EQ(get_missed_count(bpf_program__fd(skel->progs.test1)), 0, "test1_recursion_misses");
--	ASSERT_EQ(get_missed_count(bpf_program__fd(skel->progs.test2)), 1, "test2_recursion_misses");
--	ASSERT_EQ(get_missed_count(bpf_program__fd(skel->progs.test3)), 1, "test3_recursion_misses");
--	ASSERT_EQ(get_missed_count(bpf_program__fd(skel->progs.test4)), 1, "test4_recursion_misses");
-+	ASSERT_GE(get_missed_count(bpf_program__fd(skel->progs.test2)), 1, "test2_recursion_misses");
-+	ASSERT_GE(get_missed_count(bpf_program__fd(skel->progs.test3)), 1, "test3_recursion_misses");
-+	ASSERT_GE(get_missed_count(bpf_program__fd(skel->progs.test4)), 1, "test4_recursion_misses");
+ 	skb_tx_timestamp(skb);
  
- cleanup:
- 	missed_tp_recursion__destroy(skel);
++	/* tx queue index of this device, meaningless as rx queue of the peer */
++	skb_set_queue_mapping(skb, 0);
++
+ 	ret = veth_forward_skb(rcv, skb, rq, use_napi);
+ 	switch (ret) {
+ 	case NET_RX_SUCCESS: /* same as NETDEV_TX_OK */
+@@ -395,6 +398,8 @@ static netdev_tx_t veth_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		}
+ 		/* Restore Eth hdr pulled by dev_forward_skb/eth_type_trans */
+ 		__skb_push(skb, ETH_HLEN);
++		/* qdisc requeues the skb on the txq it points to */
++		skb_set_queue_mapping(skb, rxq);
+ 		netif_tx_stop_queue(txq);
+ 		/* Makes sure NAPI peer consumer runs. Consumer is responsible
+ 		 * for starting txq again, until then ndo_start_xmit (this
 -- 
 2.53.0
 
