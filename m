@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042263;
-	b=F0FrfGc5Z0OwK+DrqTTf3iFs/jDFJ+6lnrVG9RQdBOTz9YbQAt0OhEpcJugVl6clXFVk
-	 wBERUUu6Oi/ktGVaj1ZvVxZlr1i8sn9dGuwPQv1YnJiq0AdVz/8YMfaYB4nejfzUVBE4k
-	 j4UGDYK/9qHqdbWeKN1qghV0t2qOXzvWfnzV1UbFcN8xLW9X85fYG+nx+z38A6+SaLgkP
-	 rxtcrMFgqiX7NGdmcQesn8FG4iGvUgseDP7GABg5PaatmJ0J8i6olQbCP9mvfUCTAm44t
-	 I0tU8yuR5w8SqU/KTz7MJJ9mcWDEFw4dqp536zTHefAPu+wrfbKU1KbU23NTZw9BLrg==
+	t=1795042266;
+	b=OlPVAsqbL7wKabXM7s4hsgKoSpbLg5fjKRz8QfNxBn4CIk/afkhFvnPtE5j80cpHMB1P
+	 lXI2zSGAFvYMtUPLEJJrlmnysxCIcwrnnbA9QUg1smUq6nsXtGFVppqeJ4RCa2VhPaZsV
+	 7EyNqj5thhmruSM61jBWq60i6vth3fWo3b8j+/yT/dPfso7R5q5NFxlpXKiDXEGK8ounW
+	 hwWE2qtRzTn4iB7JTTOyO+tAS6JW4R3p0QO7uiZIsPYt3NTqWsXz5I0yA7V8DpBv/rIsj
+	 7CCQ2zOG/XkJeQJtkoSmBXyQ7ElEAlBNY/pqv6DGhb515JueOfoFcGo9b1IAP1VN7RQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042263;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042266;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I03Zlx+Oreh0XIKZtnZmEhTiSOzaS6q1WcsCt0JPmug=;
-	b=gQ9KwVZ1rYZ/TzHIMZ2u+VfTbQZC52MtuMTWTKrE3d4u+eGimPM6WAEwlE1S9SI2lq2j
-	 HpNm4zHEG+iZD/0KBMvp+GFGr11iLgfiutFIvJim5nNfrcZCeWz8sGUaXhpvCWeIWu4Xl
-	 3i6EWqE+zSGYkqJ83CzxKSEnNqDfJGuHB5g9/QkV6tFyanSDk3okzVP0OgW1Y3dVsgZzc
-	 jrTOwd+tLG1EFKXpe4wHxjLImUCXM0cyCwh9T3P9EMgvFWRHSOvGv7X7i17oan1Ayakpm
-	 qaQRoXKm9S0rzy88OaRSnuCcYJETRFkxNCKuh1ci4HwWaodD0L6L+dRWDHg1uqiJ+gQ==
+	bh=XH5YXtTFOL1mJF3a/IbfgUKIhUeHI3or4DJPiupqVQs=;
+	b=Kb39l5/Xcft0YYq6qdrzHiOcgLLC3abTRi+OUvD8IiWScDCvIWdqycYqb8GvDhmpB2jf
+	 vySSS4pCGIur3nnroIfDmxV60nMnjM/pqnwbbSnQS7hPj9qFeyNh6AjkfeLojb3bXE9MH
+	 3DXl+yZlBzvFZxKTe5umLbDMVu2wVS3RZL2r/0OsGuz9yguo+0a6c8slsWbrsy7aOKLFZ
+	 Xeun0JRq2z1MAaWC7SFtT7WccSAxSVRw3iS6gnfUpEHjTQ9COoEwstJ2aYo3CFwLjBTFx
+	 HNLR8RJ8GrlNpSh+MNW3nqRQ9XhBkPAR9Y/+A+6vHmiS3LuovmWL9FPceAkdmEcTUsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l43fafOL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mNryxCtk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF53606A32A;
-	Wed, 18 Nov 2026 22:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F91F606A320;
+	Wed, 18 Nov 2026 22:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l43fafOL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC59C1F000C5;
-	Wed, 18 Nov 2026 22:51:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mNryxCtk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF911F000C4;
+	Wed, 18 Nov 2026 22:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042263;
-	bh=I03Zlx+Oreh0XIKZtnZmEhTiSOzaS6q1WcsCt0JPmug=;
+	s=korg; t=1795042266;
+	bh=XH5YXtTFOL1mJF3a/IbfgUKIhUeHI3or4DJPiupqVQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l43fafOLcRVr5ix2CswN2QEefyBB8K6jF7rCt3+/ofFCNc2G4/9+0kXbH0J8VHzwX
-	 UkFwASVlcrq83UFLB01mgiN9SgJSzTlH2Rg9LHbU/uwKkejShIU7HQD1fmOvshtLkb
-	 oUYvJObhVJBZUeEbTu2cjr65L1vBZBP0P92NzZ/Y=
+	b=mNryxCtk7vPvje4A4if8vEtosgiAEQWm6VIaUagg5tGNDduLBmnfkW4cKSrVBkr/E
+	 ZGyLa51+vBL1mKGCJL9rGy+rzfSeyefg/WZQ1lX9GU5BbNsFprQwgltx8QHImnupB4
+	 +QPXfD4Ij/D6V95vD2c8z6jqgH3ifD/3sZ60j2e0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rishikesh Jethwani <rjethwani@purestorage.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3071/3318] tls: device: protect async RX resync state during device-down
-Date: Wed, 18 Nov 2026 16:01:33 +0100
-Message-ID: <20261118150452.234243718@linuxfoundation.org>
+Subject: [PATCH 6.6 3107/3318] selftests: ALSA: pcmtest: Check the frame count of each transfer
+Date: Wed, 18 Nov 2026 16:02:09 +0100
+Message-ID: <20261118150453.194321100@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,105 +68,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rishikesh Jethwani <rjethwani@purestorage.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit f89a228125238f8d4c7e2b8161e2a85fe35307b6 ]
+[ Upstream commit 317f2ddb6662fca8954e381a1bc632667872c4a3 ]
 
-tls_device_rx_resync_new_rec() can run in process context with the
-socket lock held, but without an RCU read lock: from the strparser work
-item (tls_strp_work()) and from the receive paths (tls_rx_rec_wait(),
-tls_rx_rec_done()). The resync_async pointer belongs to the driver RX
-context, which tls_device_down() tears down from the netdev notifier
-without taking the socket lock; only the softirq entry to the parser is
-implicitly inside an RCU section.
+The tests keep the result of snd_pcm_writei(), snd_pcm_readi() and
+their non-interleaved forms in a size_t. A size_t is never negative, so
+ASSERT_GE(res, 0) always passes.
 
-If the parser passes the TLS_RX_DEV_DEGRADED check before device-down
-sets it, tls_device_down() can complete synchronize_net() and delete the
-driver context before the parser accesses resync_async->req or its
-record log. In the asynchronous stage the parser also writes the record
-log, so this is a write to freed memory, not only a stale read. The RCU
-section in tls_device_resync_rx() starts after those accesses and
-therefore does not prevent the use-after-free.
+The capture tests still catch a failed read when they compare the data.
+But the playback tests do not. The driver sets pc_test to 1 when it saw
+no corrupted data, and that is also true when it saw no data at all. So
+a playback test passes even when every write fails.
 
-Found by code inspection; not reproduced. Hitting the window requires
-the parser to be preempted between the DEGRADED check and the
-resync_async access across the device-down grace period and the
-driver's teardown.
+Store the result as snd_pcm_sframes_t and check that the whole request
+was transferred. The calls block, so a short count means an error.
 
-Fixes: ed9b7646b06a ("net/tls: Add asynchronous resync")
-Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
-Link: https://patch.msgid.link/20261013213517.2219663-1-rjethwani@purestorage.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 10b98a4db11a ("selftests: ALSA: Add test for the 'pcmtest' driver")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/6f16e2a01f18c0ea069164bab31999182ff6d49e.1792390197.git.sammiee5311@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_device.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ .../selftests/alsa/test-pcmtest-driver.c      | 21 +++++++++++--------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
-index bb7057aa828e1..ea4f19d09b832 100644
---- a/net/tls/tls_device.c
-+++ b/net/tls/tls_device.c
-@@ -788,8 +788,15 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
+diff --git a/tools/testing/selftests/alsa/test-pcmtest-driver.c b/tools/testing/selftests/alsa/test-pcmtest-driver.c
+index a52ecd43dbe30..306446bb70927 100644
+--- a/tools/testing/selftests/alsa/test-pcmtest-driver.c
++++ b/tools/testing/selftests/alsa/test-pcmtest-driver.c
+@@ -166,7 +166,7 @@ FIXTURE_SETUP(pcmtest) {
+ TEST_F(pcmtest, playback) {
+ 	snd_pcm_t *handle;
+ 	unsigned char *it;
+-	size_t write_res;
++	snd_pcm_sframes_t write_res;
+ 	int test_results;
+ 	int i, cur_ch, pos_in_ch;
+ 	void *samples;
+@@ -190,7 +190,7 @@ TEST_F(pcmtest, playback) {
+ 		it[i] = patterns[cur_ch].buf[pos_in_ch % patterns[cur_ch].len];
+ 	}
+ 	write_res = snd_pcm_writei(handle, samples, params->rate * params->time);
+-	ASSERT_GE(write_res, 0);
++	ASSERT_EQ(write_res, params->rate * params->time);
  
- 	if (tls_ctx->rx_conf != TLS_HW)
- 		return;
-+
-+	/* The parser also runs in process context, without an RCU read lock.
-+	 * Protect the driver's resync_async state before checking the flags:
-+	 * device-down sets DEGRADED and waits for synchronize_net() before
-+	 * freeing it, without taking the socket lock.
-+	 */
-+	rcu_read_lock();
- 	if (unlikely(test_bit(TLS_RX_DEV_DEGRADED, &tls_ctx->flags)))
--		return;
-+		goto out;
+ 	snd_pcm_close(handle);
+ 	free(samples);
+@@ -206,7 +206,7 @@ TEST_F(pcmtest, playback) {
+ TEST_F(pcmtest, capture) {
+ 	snd_pcm_t *handle;
+ 	unsigned char *it;
+-	size_t read_res;
++	snd_pcm_sframes_t read_res;
+ 	int i, cur_ch, pos_in_ch;
+ 	void *samples;
+ 	struct pcmtest_test_params *params = &self->params;
+@@ -222,7 +222,7 @@ TEST_F(pcmtest, capture) {
+ 	snd_pcm_format_set_silence(params->format, samples,
+ 				   params->rate * params->channels * params->time);
+ 	read_res = snd_pcm_readi(handle, samples, params->rate * params->time);
+-	ASSERT_GE(read_res, 0);
++	ASSERT_EQ(read_res, params->rate * params->time);
+ 	snd_pcm_close(handle);
+ 	it = (unsigned char *)samples;
+ 	for (i = 0; i < self->params.sec_buf_len * self->params.time; i++) {
+@@ -239,7 +239,8 @@ TEST_F(pcmtest, ni_capture) {
+ 	snd_pcm_t *handle;
+ 	struct pcmtest_test_params params = self->params;
+ 	char **chan_samples;
+-	size_t i, j, read_res;
++	snd_pcm_sframes_t read_res;
++	size_t i, j;
  
- 	prot = &tls_ctx->prot_info;
- 	rx_ctx = tls_offload_ctx_rx(tls_ctx);
-@@ -804,11 +811,11 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
+ 	chan_samples = calloc(CH_NUM, sizeof(*chan_samples));
+ 	ASSERT_NE(chan_samples, NULL);
+@@ -257,7 +258,7 @@ TEST_F(pcmtest, ni_capture) {
  
- 		if (likely(!is_req_pending) || req_seq != seq ||
- 		    !atomic64_try_cmpxchg(&rx_ctx->resync_req, &resync_req, 0))
--			return;
-+			goto out;
- 		break;
- 	case TLS_OFFLOAD_SYNC_TYPE_CORE_NEXT_HINT:
- 		if (likely(!rx_ctx->resync_nh_do_now))
--			return;
-+			goto out;
+ 	for (i = 0; i < 1; i++) {
+ 		read_res = snd_pcm_readn(handle, (void **)chan_samples, params.rate * params.time);
+-		ASSERT_GE(read_res, 0);
++		ASSERT_EQ(read_res, params.rate * params.time);
+ 	}
+ 	snd_pcm_close(handle);
  
- 		/* head of next rec is already in, note that the sock_inq will
- 		 * include the currently parsed message when called from parser
-@@ -817,7 +824,7 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
- 		if (sock_data > rcd_len) {
- 			trace_tls_device_rx_resync_nh_delay(sk, sock_data,
- 							    rcd_len);
--			return;
-+			goto out;
- 		}
+@@ -273,7 +274,8 @@ TEST_F(pcmtest, ni_playback) {
+ 	snd_pcm_t *handle;
+ 	struct pcmtest_test_params params = self->params;
+ 	char **chan_samples;
+-	size_t i, j, read_res;
++	snd_pcm_sframes_t write_res;
++	size_t i, j;
+ 	int test_res;
  
- 		rx_ctx->resync_nh_do_now = 0;
-@@ -828,16 +835,18 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
- 		resync_req = atomic64_read(&rx_ctx->resync_async->req);
- 		is_req_pending = resync_req;
- 		if (likely(!is_req_pending))
--			return;
-+			goto out;
- 
- 		if (!tls_device_rx_resync_async(rx_ctx->resync_async,
- 						resync_req, &seq, &rcd_delta))
--			return;
-+			goto out;
- 		tls_bigint_subtract(rcd_sn, rcd_delta);
- 		break;
+ 	chan_samples = calloc(CH_NUM, sizeof(*chan_samples));
+@@ -294,8 +296,9 @@ TEST_F(pcmtest, ni_playback) {
  	}
  
- 	tls_device_resync_rx(tls_ctx, sk, seq, rcd_sn);
-+out:
-+	rcu_read_unlock();
- }
+ 	for (i = 0; i < 1; i++) {
+-		read_res = snd_pcm_writen(handle, (void **)chan_samples, params.rate * params.time);
+-		ASSERT_GE(read_res, 0);
++		write_res = snd_pcm_writen(handle, (void **)chan_samples,
++					   params.rate * params.time);
++		ASSERT_EQ(write_res, params.rate * params.time);
+ 	}
  
- static void tls_device_core_ctrl_rx_resync(struct tls_context *tls_ctx,
+ 	snd_pcm_close(handle);
 -- 
 2.53.0
 
