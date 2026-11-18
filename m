@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025596;
-	b=v39sIB3SjXs45DuuDg1mj0LUOUyCwx0zj0QlUhKWLT0YGiA+OJj5h+jQ1AVreOjuxrls
-	 1IT1abpFIDm3zoztMkFRFjgStQ8FwXwN3WYj3o+MoBAHrDj2XffHlkem7Njyql6Gt03s+
-	 LHLCAJZVjF1IY1n2t20E+NX4/fHUt2LVFG21dJpJ/KP/zA5Pxl/wMZ56hZ0HCdqyrvIHE
-	 Ig5svxOxMUnemb6KUoCKvyIpvELzN6g8ttWE+ZoDPZvkkFj6p5dYpG2FpbX5cqGwLdxvh
-	 ZiAgeScOETklYCFZnpwPKhK316uaDZv0WRRonHCsKqK7d1x0Yk0v3j76OiX0sdMFF8Q==
+	t=1795025599;
+	b=pRJrs0niajP4ifzC1gf3q2OP7ld0zr0+GpU5I1B4cg+VVoPiHHZdqSfghSv0xq8VUUmU
+	 S/Ugy1rAc4/F2okOyMqNjGQWzLGQbFc6WIkELp88AD4hbW8Ud5QCw28PxqViNkrzM4VYj
+	 FqHadxoghzdTStWi27Hm7mdlxxA5ZGDBjOgwQtj41+YtyyH/gvP2lZ4G97AkQc1nQaK1A
+	 rLohNC4T/NjL5HMi4VGin3La6ewB7whkqOj965s8I26bmivW3dnP/e189ou94NeZAAyr6
+	 JyVrk5vHkW3DZZilBI9GKaCr/DJOhfXcIh5UmeqivhD0/JCI2ssdSUkEyKs6bEWzGmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025596;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025599;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZiLPjkDFxylCSmE7kDd4XFYdvTdP76a5u3RS4A1GtJ8=;
-	b=jR5LtqHn0qLgUQWqdQP6rv43KuQWTNdYgz92tBjDFgbXXbrviIxbbLbqfQwItP97+Umo
-	 cIsLyT8H1ow+0btlySh9DN+sm4NafpMoU0X0+B/uT64GodScoXwtupRDbCbaq9FuC+zG2
-	 Jjv4vMc3mHBtk2s0obKRS+KEQXterqCzSVyCXVSiZAnjhd56EXTyUXttniSXyEvtev9uQ
-	 KMGg+ThYVmYm5H3w8BHqWcB6yQsPdMxGGHjRIvP7eiKcFRJyZieO7RIhecSZumgEV66Jq
-	 JD3qJi0HWEtYef5YpYIOi8C3UTvqik/2+dV6XGTpapJG1whsRfGlOtKIYAzgOm8561A==
+	bh=eSucJTDjha3sJElsbWXMlJb/xqycTx57BFnvNGLOW1g=;
+	b=4Rf9gZjLlAEcucY7HfBJcW/nE08+TO9eNxgKB610d+JA9zHKam7chIDYVAeDltGMs1eD
+	 0VbaRTgs3s2D5ZuyV0JL9m1DcmRBUANdbFbfMX/EirqQejvhaMxXvLEKZkjfoAaFC7VwR
+	 iWx3RA5m6rUMHmSBR5rkIHY3bGlWYtw6igrLa0SdjDmgiy3JKY/PLzI0v0RVFH66S8hl1
+	 9SSX7yxfdJiK6AhG2p1so5A/BgWMrWuXcC0mEPCmbXNF+seJcVU32d+LbX78SKJ5hSYNR
+	 MRY9fcMBNlpY8YDbbOEjkyOHafULLMWLoxKH4cilWBM9zz0eviFNhZeFgLcdnSHPWow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NQxVsop9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sKl4kCWg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504A1606A31C;
-	Wed, 18 Nov 2026 18:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5945C606A31C;
+	Wed, 18 Nov 2026 18:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NQxVsop9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C521F000C4;
-	Wed, 18 Nov 2026 18:13:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sKl4kCWg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADA31F000C4;
+	Wed, 18 Nov 2026 18:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025596;
-	bh=ZiLPjkDFxylCSmE7kDd4XFYdvTdP76a5u3RS4A1GtJ8=;
+	s=korg; t=1795025598;
+	bh=eSucJTDjha3sJElsbWXMlJb/xqycTx57BFnvNGLOW1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NQxVsop93oQIFEwdSAEJfCB5hxPUQeivVEFEpHFlwklBB2jOM+BLtPgaXfYwB6E1h
-	 NhfBXraOeTVdXTDgXBaE7UZNgaefIrKVo88Z+pDI+s7PziSAsp+2czR28GP5mzdeHn
-	 26QfItqxNQ5bRteH4OaShKRlW1x0MprfgWI0Jxeo=
+	b=sKl4kCWgZDxtjjsXeNR2/guhWh8TM193wAZrYOtjCRAqgR6pvUMFxR29lO/GRlpfL
+	 P6x5Jp5Yn5sFrXh+/VjMNAO5gonIn/cxfCsA712r0PbchiHe3ksCX2czSiyWgGYacu
+	 Gmv162+LJdZjXPddh0fTgquPPJKZjQU3sZ1T6ty8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Frank Li <Frank.Li@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1135/2151] dmaengine: ste_dma40: Validate memcpy configuration
-Date: Wed, 18 Nov 2026 15:47:50 +0100
-Message-ID: <20261118150203.537421835@linuxfoundation.org>
+Subject: [PATCH 6.18 1109/2151] wifi: ath12k: Reserve space for a string terminator
+Date: Wed, 18 Nov 2026 15:47:24 +0100
+Message-ID: <20261118150202.640138324@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,79 +71,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 0ac4a90c4805b41013044fdefff051ae59a54302 ]
+[ Upstream commit 13b15eabe2c541b80406166964cdc8ccb5e9c32a ]
 
-d40_config_memcpy() builds a default memcpy configuration without passing
-it through d40_validate_conf(). A dev_type supplied through the
-memcpy-channels device tree property can therefore bypass the bounds
-checks added for client configurations.
+ath12k_write_htt_stats_type() accepts count == size, which fills the
+zero-initialized buffer without a terminating NUL. sscanf() then reads
+beyond the buffer.
 
-The generic DMA direction enum assigns zero to DMA_MEM_TO_MEM, unlike
-DMA40's old private enum. Allow memory-to-memory directions in the
-validator so checking the generated configuration does not reject all
-memcpy channels.
+Reject input that leaves no room for the trailing NUL.
 
-Validate the generated memcpy configuration before deriving logical
-channel registers or allocating the channel.
-
-Fixes: 2c2b62d5d911 ("dmaengine: ste_dma40: Replace ST-E's home-brew DMA direction defs with generic ones")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
-Assisted-by: LLM
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-24-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 8c7a5031a6b0 ("wifi: ath12k: Fix buffer overflow in debugfs")
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20261003095913.575108-1-yaojiale02@163.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/debugfs_htt_stats.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 6fb0d8f61261f..21469034495d7 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -1764,7 +1764,8 @@ static int d40_validate_conf(struct d40_chan *d40c,
- 	    d40c->base->gen_dmac.num_event_groups)
- 		invalid_dev_type = true;
+diff --git a/drivers/net/wireless/ath/ath12k/debugfs_htt_stats.c b/drivers/net/wireless/ath/ath12k/debugfs_htt_stats.c
+index 4f749d473d0e1..e120a0e2f9be6 100644
+--- a/drivers/net/wireless/ath/ath12k/debugfs_htt_stats.c
++++ b/drivers/net/wireless/ath/ath12k/debugfs_htt_stats.c
+@@ -5929,7 +5929,7 @@ static ssize_t ath12k_write_htt_stats_type(struct file *file,
+ 	const int size = 32;
+ 	int num_args;
  
--	if (!conf->dir) {
-+	if (conf->dir != DMA_MEM_TO_MEM &&
-+	    !is_slave_direction(conf->dir)) {
- 		chan_err(d40c, "Invalid direction.\n");
- 		res = -EINVAL;
- 	}
-@@ -2059,12 +2060,17 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- static int d40_config_memcpy(struct d40_chan *d40c)
- {
- 	dma_cap_mask_t cap = d40c->chan.device->cap_mask;
-+	int ret;
+-	if (count > size)
++	if (count >= size)
+ 		return -EINVAL;
  
- 	if (dma_has_cap(DMA_MEMCPY, cap) && !dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_log;
- 		d40c->dma_cfg.dev_type =
- 			d40c->base->plat_data->memcpy_channels[d40c->chan.chan_id];
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
-+
- 		d40_log_cfg(&d40c->dma_cfg,
- 			    &d40c->log_def.lcsp1, &d40c->log_def.lcsp3);
- 
-@@ -2072,6 +2078,10 @@ static int d40_config_memcpy(struct d40_chan *d40c)
- 		   dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_phy;
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
-+
- 		/* Generate interrupt at end of transfer or relink. */
- 		d40c->dst_def_cfg |= BIT(D40_SREG_CFG_TIM_POS);
- 
+ 	char *buf __free(kfree) = kzalloc(size, GFP_KERNEL);
 -- 
 2.53.0
 
