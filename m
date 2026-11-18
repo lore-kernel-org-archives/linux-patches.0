@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039645;
-	b=Xo/JKlpHUYUDaBTPFgi1Mq/KnHsv/XH8iPGBY9vpmgp6Ei/chQZ9yVtFbLNfRrByZWeo
-	 bAOUM2AZ+vKDS1TiGG7of58obHf/g31ESwNnrV33pRU8bzDZj5dwjXhAEOZKxl+C0Gukq
-	 eDBN8jvpeQRIhZt6y+yGeBch0jprZK9K87vdCcQztKCISzZVpl0ds6qgRki7lo+KePMLL
-	 4kvPWHjxh5HiOv9WiOXeo2aAurWesstudvyqlfPHkJbR3dIsFou8oVsZxQBQ7hIZajbdZ
-	 xmS3i0yz1GcIjXJ6jtLO93LehgNnOgyqN9dAU3Qpc0QkU/xRlCfL0QnWidQNMYyQvcg==
+	t=1795039648;
+	b=VgasPY3RJklf6eyqscPoczO3Dv+fSw4NLnaZgfikEsVzVuTNROPqdoWBnxQFgPs+Z5l7
+	 5mHjUnHiPErXdiFMG2TnUuuRBIEgEMitpjC6YiU2rowjUxxcvGbNf8iCB9kIPzbmR26va
+	 B4Qj6q8UPWj5RtEVvIyqdkGuXphg0lsJp2LJcOO5xK9ymdxEWwMoRYJsLKxYKyg3Gm339
+	 62xhwexC5MnST7xPomjKNgKUT0Knu8M2dVk1JspJQJ2rSqkPTU3j0Gl4ZRhPeJ7wytkNl
+	 LbPMJ03/2+h2EAV+IDUXx7l/msrauJbHjimHhdtbbeZ13hQoZwzv7qcWx2KyF0r2pag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039645;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039648;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dJ/aJmY2VO2Jx6XHz5/c9OA6vzbJSiDG2QvxBbIrIEM=;
-	b=VNRrUAi7F7e/18HI7PO1ss1i/c2HoH0aKfhmPkaRdT54sNqA1E1BWmymhRGUpDCtpTtz
-	 Z+M4BFcSqi1K1VemSOwnEn7wsiV1G6ac/A23LRcZZ6aPXnmiHeZ4ze5aEH/bGikSgltQt
-	 oWlYvvvMiXSZOQI1qyqLtXquryfZQ+V7VjyGbPpmOzGe63gb4DaJ/ANlWnWMOyw8RH4sv
-	 xLdVlPC72m/n8Cap1pzUvAXgFIwkOvH3sK00cOCulNjR6dDGvBpMCH/U2ZztrP7dgyT1k
-	 jJKTgrQrFKXpYo22msLHoXh6bTOa2MGjn2tfx3pyLePr1bhNWbIZDarXTxZ48NcgQ4g==
+	bh=ZwnpJX+qlQedEF7xAIQ6SaR61sUNtFhbl8+8++cqZg8=;
+	b=GvWMSRF6aCLvS3ZFAxuSQPylof4SqXxXH5z8hNqKoN7czqmLLtAO1r37UT6tvBIZTS6c
+	 6OJ/VwBjJ6heWKNVJCVxdjBkD4PYtuydhP1qQB4tSy6/iAMbIjmpQ8CrO6hvznN2BEnPi
+	 WLAVMio02uQYoU8hM/NSlllWnk4X5LtseZDfWVnpUuzjGpJ2Fn3ljWy7bbPtecj8zDO1D
+	 wgCskNjdD+2hvzuIDJiV2XjPltm6SYF8LXyim3lrtWMfULIeqXJ78aGOkunzlUe5QA9rj
+	 Sr298TIEsCBrWL00el+apfq0zirmeIbkzYlDNR+pgXnEu4U5lEXWZ2RFd2Zjum7FtIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=csqfrQPi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IuQ+RQDL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97989606A31C;
-	Wed, 18 Nov 2026 22:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F34606A320;
+	Wed, 18 Nov 2026 22:07:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=csqfrQPi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABF81F000C4;
-	Wed, 18 Nov 2026 22:07:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IuQ+RQDL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1D61F000C4;
+	Wed, 18 Nov 2026 22:07:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039645;
-	bh=dJ/aJmY2VO2Jx6XHz5/c9OA6vzbJSiDG2QvxBbIrIEM=;
+	s=korg; t=1795039648;
+	bh=ZwnpJX+qlQedEF7xAIQ6SaR61sUNtFhbl8+8++cqZg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=csqfrQPi+1uBsDFXuKGkUKdjytIpjXI4NaA3k64EkgBHcrQEcXFOVK0SKB1zVkRr5
-	 v/vEsj6AtuUv6V1gr3+H3nzabkMJcOwNP0SG8hJabhpJI3MJFxT6jTicFrEkyLZ39l
-	 IiIkZztk0f6NAHUok2vObkbAI0Z9w0GXwFQnSqU4=
+	b=IuQ+RQDLJGMFQ7CKfsen3clE59nDAcpP4aixjdSIg72x8xb1jYIHtGD948zPyJRRO
+	 9zrb+mtK1d0WaUL5KRwh6uVt398aIhevUjW5XkJCpjXu3s0oeC1Ig9TigxoApgRzFp
+	 EfCdA6JBar0r+08STh795R2EhRpm3B70WVfPGkyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2173/3318] ACPI: glue: Fix up and adjust acpi_unbind_one()
-Date: Wed, 18 Nov 2026 15:46:35 +0100
-Message-ID: <20261118150427.172082599@linuxfoundation.org>
+Subject: [PATCH 6.6 2174/3318] firewire: cdev: Fix FW_CDEV_IOC_CREATE_ISO_CONTEXT references in kernel-doc
+Date: Wed, 18 Nov 2026 15:46:36 +0100
+Message-ID: <20261118150427.198462057@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,80 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 693546852656075e0247ac637b05625ead134eff ]
+[ Upstream commit 0a6cf2b7adcbd362039e9d282f73aff3f24022ca ]
 
-Since none of the acpi_unbind_one() callers check its return value and
-it always returns 0 anyway, make it void.
+The fw_cdev_event_iso_interrupt and fw_cdev_event_iso_interrupt_mc
+comments refer to FW_CDEV_CREATE_ISO_CONTEXT, but the ioctl is named
+FW_CDEV_IOC_CREATE_ISO_CONTEXT.
 
-Also notice that unlocking physical_node_lock for the given ACPI device
-should be carried out before dropping the reference to it in case that
-reference is the last one (highly unlikely), so rearrange the code to
-make that happen.
+Correct both references. The misspellings were introduced separately
+with the userspace interface documentation and multichannel reception
+support.
 
-Fixes: 3e3327837c18 ("ACPI: Use list_for_each_entry() in acpi_unbind_one()")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/10940500.nUPlyArG6x@rafael.j.wysocki
+Fixes: 7ada60e36764 ("firewire: Document userspace ioctl interface.")
+Fixes: 872e330e3880 ("firewire: add isochronous multichannel reception")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/r/20260911222807.7673-1-kmehltretter@gmail.com
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/glue.c     | 10 ++++++----
- include/acpi/acpi_bus.h |  2 +-
- 2 files changed, 7 insertions(+), 5 deletions(-)
+ include/uapi/linux/firewire-cdev.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/glue.c b/drivers/acpi/glue.c
-index a194f30876c59..cc9ee8cb820fc 100644
---- a/drivers/acpi/glue.c
-+++ b/drivers/acpi/glue.c
-@@ -316,13 +316,13 @@ int acpi_bind_one(struct device *dev, struct acpi_device *acpi_dev)
- }
- EXPORT_SYMBOL_GPL(acpi_bind_one);
- 
--int acpi_unbind_one(struct device *dev)
-+void acpi_unbind_one(struct device *dev)
- {
- 	struct acpi_device *acpi_dev = ACPI_COMPANION(dev);
- 	struct acpi_device_physical_node *entry;
- 
- 	if (!acpi_dev)
--		return 0;
-+		return;
- 
- 	mutex_lock(&acpi_dev->physical_node_lock);
- 
-@@ -337,15 +337,17 @@ int acpi_unbind_one(struct device *dev)
- 			sysfs_remove_link(&acpi_dev->dev.kobj, physnode_name);
- 			sysfs_remove_link(&dev->kobj, "firmware_node");
- 			ACPI_COMPANION_SET(dev, NULL);
-+
-+			mutex_unlock(&acpi_dev->physical_node_lock);
-+
- 			/* Drop references taken by acpi_bind_one(). */
- 			put_device(dev);
- 			acpi_dev_put(acpi_dev);
- 			kfree(entry);
--			break;
-+			return;
- 		}
- 
- 	mutex_unlock(&acpi_dev->physical_node_lock);
--	return 0;
- }
- EXPORT_SYMBOL_GPL(acpi_unbind_one);
- 
-diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
-index 36d5a61d04e98..6e47b6f44c4b3 100644
---- a/include/acpi/acpi_bus.h
-+++ b/include/acpi/acpi_bus.h
-@@ -604,7 +604,7 @@ struct acpi_bus_type {
- int register_acpi_bus_type(struct acpi_bus_type *);
- int unregister_acpi_bus_type(struct acpi_bus_type *);
- int acpi_bind_one(struct device *dev, struct acpi_device *adev);
--int acpi_unbind_one(struct device *dev);
-+void acpi_unbind_one(struct device *dev);
- 
- enum acpi_bridge_type {
- 	ACPI_BRIDGE_TYPE_PCIE = 1,
+diff --git a/include/uapi/linux/firewire-cdev.h b/include/uapi/linux/firewire-cdev.h
+index 1f2c9469f9214..48dd3619adaa7 100644
+--- a/include/uapi/linux/firewire-cdev.h
++++ b/include/uapi/linux/firewire-cdev.h
+@@ -293,7 +293,7 @@ struct fw_cdev_event_request3 {
+ /**
+  * struct fw_cdev_event_iso_interrupt - Sent when an iso packet was completed
+  * @closure:	See &fw_cdev_event_common;
+- *		set by %FW_CDEV_CREATE_ISO_CONTEXT ioctl
++ *		set by %FW_CDEV_IOC_CREATE_ISO_CONTEXT ioctl
+  * @type:	See &fw_cdev_event_common; always %FW_CDEV_EVENT_ISO_INTERRUPT
+  * @cycle:	Cycle counter of the last completed packet
+  * @header_length: Total length of following headers, in bytes
+@@ -353,7 +353,7 @@ struct fw_cdev_event_iso_interrupt {
+ /**
+  * struct fw_cdev_event_iso_interrupt_mc - An iso buffer chunk was completed
+  * @closure:	See &fw_cdev_event_common;
+- *		set by %FW_CDEV_CREATE_ISO_CONTEXT ioctl
++ *		set by %FW_CDEV_IOC_CREATE_ISO_CONTEXT ioctl
+  * @type:	%FW_CDEV_EVENT_ISO_INTERRUPT_MULTICHANNEL
+  * @completed:	Offset into the receive buffer; data before this offset is valid
+  *
 -- 
 2.53.0
 
