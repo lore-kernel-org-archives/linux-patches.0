@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030017;
-	b=37gacHRCmY8h0ExIyMlJ2kBmNzE8dOCNUDicK9ShxFNYwdXQ5ilMZ+t66BQKRE+aHcKT
-	 Ofgc7q1+LVXB/DpEHiriEq66Nj+FOKKl3EYCAfDvaIoTataz/x+ijBCy84nhstOhvZ5IX
-	 cuPH0DI2e3ghBmSSAAF+QRWj/cbSXezMX0gD5RtWTP+oD5cLaOnzH7ake+fSPoFjWZcUl
-	 ODZPw00ZGcuA2Z9zsf+VyArnne4jel3d7qV9zcxPvVYWS32y/ZSWO1OEagTj6VcgUNoLi
-	 FSsGSmW6Amg2s46srxqZGrxOIhbJofNg00DkDaVhUx6QbRK+FXcs/h6qEgaMKa73zlA==
+	t=1795030020;
+	b=MHTeVVHq1TrucsKna2j8rZln8sz1za2Iq9AOBx7VJpey6lWEu2UI57moJDRoOnGnQtbl
+	 ugPIJigTmbaRsftTudVrXVmTiWOzbI5KXEk6an8qbJfknrgkAXrsUReThzeI76pSVVSx2
+	 ZOgJHRVBp451++RcoEDBvaSY2B9ttj3Os2w8PH8Tq+QdBpdmsNIRUm6LdbmK1xbR27M2H
+	 +/d4gUFo7+9m0eYBWaM0KQyYctpHZX4oomvD16iPne3ZebQjJhlSKzQXiDdgIdwxrGCbo
+	 Z5Yl5HaToGqlAijM4xx5ZE9YH8kunfoiWbqqO+1omgaIPB1UXNCCQe6JQvs7yS6mOdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030017;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030020;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lX7cyGbSD5n1f/tgBFWKSWq1q7R5jQLtY86kOZGoJiY=;
-	b=ocnpQfbm/6cozdf6i+oNK3gwNbLK7CGOSmV4IOVGKL9M33lwAyhYjyhjEYHYDxVI7Fwk
-	 1gr4nFAThsk+S1som8ZB5bfQUM8WvbmVTaIWqZi1g4jd9SMM8jegt0S9yzVbgl4H4H6b1
-	 f9CVz5Q3nS9qa8OfgRbalDiiWvwQlNZpkdBzXNJ0sg0hanE1HAIU4P2bQXpozyWkjnaR3
-	 1sbDadKBLrqj/P+5hrY19UAhxuetozIaWa20TdQzT/M+rmJv6LXGbgeNE73gWHK824zZX
-	 fkbhg32Ruggy0DWFTruE9SAQR2P/zcUBHn2bOTkKR7o45eCpsaYXv73VoKiiSnbl5NA==
+	bh=gx/s4QVMMaibRILgjdDI8sRmSVzIYqBlAU6Fyifzpt4=;
+	b=BIovbSX7tK25XrjMTdOJ8SPU8E2eYv9p4EDy48A2jyktfwqyj4deDxcAoS+j9tXUU5B0
+	 uEoNlMXmSD0jufOGkyT4a1WfyOHWnEJ2kvygT8230OCvLVCSzG/XAH7/hSSdW6QaXbQNg
+	 BOGpU/rZpL2lVQoH6Tw/MRXL1tuHe4L7C7uoEqtBCA/H9T2hp6ACY8SvS3QcoBK4SEuYP
+	 mr4/Rg3La1xy1ZaJrdPWbVwejY1z+Zm+Aw8zklMOKF09UIRemXHk2/DWQ3haRkpBve+qJ
+	 AmyQ98Qmskxkeif7HoiedeuV8WspqLk/ePs/LYXCHxUewjhnUiNbtkdDlIeb7IKu9yA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IySkAVRc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UPTqrZ8E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC298606A31C;
-	Wed, 18 Nov 2026 19:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395C5606A31C;
+	Wed, 18 Nov 2026 19:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IySkAVRc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E041F000C5;
-	Wed, 18 Nov 2026 19:26:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UPTqrZ8E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FBB21F000C4;
+	Wed, 18 Nov 2026 19:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030017;
-	bh=lX7cyGbSD5n1f/tgBFWKSWq1q7R5jQLtY86kOZGoJiY=;
+	s=korg; t=1795030020;
+	bh=gx/s4QVMMaibRILgjdDI8sRmSVzIYqBlAU6Fyifzpt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IySkAVRce/ZwbekrY5Otv5LlwXUXp9PK+3WKLaIkjIPb3mnK0JlE/C+VZpKb6BFwr
-	 Xr4vqX2iv9HHoUGoXUjfwZOFEXDuHOcHA1sZCjvFAEbd79h7aWK12s9nVoyP3+TBWR
-	 +kpqsIuyWo5VBTv0DhEqjYESi6ZNkKmcS7SbI0TM=
+	b=UPTqrZ8EnMf2jnVBOy7ZQObvGrz+XMKjniDEEiaYKQGTc311BYfn6xaNSDs57OZ00
+	 oG5uzJklhpTxR8rsZCUPPy2GH3OGtR7L3S1lj9nBBVpwzGwgWJG4hoB/rcXyiXDH/+
+	 Jmpq3NwuUz5Ttch9HAbC4ejDBrvX7ogUhHaVzTV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0553/1756] iommufd: Fix iommufd_hw_capabilities reference in kernel-doc
-Date: Wed, 18 Nov 2026 15:44:40 +0100
-Message-ID: <20261118150031.127784839@linuxfoundation.org>
+Subject: [PATCH 6.12 0554/1756] ext2: drain in-flight DIO before buffered write fallback
+Date: Wed, 18 Nov 2026 15:44:41 +0100
+Message-ID: <20261118150031.168252345@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,38 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 54dadb030c7e2350957855d3995de05ae02c2e66 ]
+[ Upstream commit 1e2ef9f221e142ed19d874a71b2cae7fabbaf138 ]
 
-The kernel-doc comment of struct iommu_hw_info refers to
-iommu_hw_capabilities, which does not exist. The name is
-iommufd_hw_capabilities. Say iommufd_hw_capabilities.
+An asynchronous direct write can remain in flight after the inode lock is
+released.  If another direct write falls back to buffered I/O while the
+first write is still pending, generic_perform_write() can dirty pages
+before the first write completes its post-I/O page cache invalidation.
+The invalidation then finds dirty pages, reports a page cache invalidation
+failure, and records -EIO in the mapping error sequence.  A later fsync()
+therefore returns -EIO.
 
-Fixes: 7623683857e5 ("iommufd: Add capabilities to IOMMU_GET_HW_INFO")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260911231850.20737-1-kmehltretter@gmail.com
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Commit 15cdefd0c0522f9d5e12d947fa04f4c11649b699 ("ext4: drain
+in-flight DIO before buffered write fallback") fixed the same race in
+ext4.  Ext2 has an equivalent fallback after iomap_dio_rw() returns
+-ENOTBLK or a short write, but does not drain other in-flight DIO before
+dirtying the page cache.
+
+Wait for in-flight DIO before calling generic_perform_write() in the
+fallback path.
+
+A reproducer using concurrent AIO direct writes and buffered fallback
+triggered the following warning and made a subsequent fsync() return
+-EIO:
+
+  Page cache invalidation failure on direct I/O.  Possible data corruption
+  due to collision with buffered I/O!
+
+Fixes: fb5de4358e1a ("ext2: Move direct-io to use iomap")
+Link: https://lore.kernel.org/r/20260629113827.4074335-3-libaokun@linux.alibaba.com
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260924105125.577714-2-yaojiale02@163.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/iommufd.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext2/file.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/include/uapi/linux/iommufd.h b/include/uapi/linux/iommufd.h
-index e245fa295662a..e0533364ba340 100644
---- a/include/uapi/linux/iommufd.h
-+++ b/include/uapi/linux/iommufd.h
-@@ -529,7 +529,7 @@ enum iommufd_hw_capabilities {
-  * @out_data_type: Output the iommu hardware info type as defined in the enum
-  *                 iommu_hw_info_type.
-  * @out_capabilities: Output the generic iommu capability info type as defined
-- *                    in the enum iommu_hw_capabilities.
-+ *                    in the enum iommufd_hw_capabilities.
-  * @out_max_pasid_log2: Output the width of PASIDs. 0 means no PASID support.
-  *                      PCI devices turn to out_capabilities to check if the
-  *                      specific capabilities is supported or not.
+diff --git a/fs/ext2/file.c b/fs/ext2/file.c
+index 0f047c33e0feb..ca5466fbc79d0 100644
+--- a/fs/ext2/file.c
++++ b/fs/ext2/file.c
+@@ -251,6 +251,13 @@ static ssize_t ext2_dio_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 		int ret2;
+ 
+ 		iocb->ki_flags &= ~IOCB_DIRECT;
++
++		/*
++		 * Prevent concurrent direct I/O and buffered I/O to the same file
++		 * range. Wait for in-flight DIO to finish before dirtying pages.
++		 */
++		inode_dio_wait(inode);
++
+ 		pos = iocb->ki_pos;
+ 		status = generic_perform_write(iocb, from);
+ 		if (unlikely(status < 0)) {
 -- 
 2.53.0
 
