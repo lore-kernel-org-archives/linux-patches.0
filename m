@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019996;
-	b=uol6lnLnvSforR/PLAiRN3ni2JvTAoJzf35BP/8dLb/+rSMNkXbLFwplt7RR54tdF1N8
-	 vucQGjmKXpzO9A3CC+CErqBOpv6BhZnqGsEWc3Hvzo019nAcLbqTnrvzovyCIFCcLdu3N
-	 XcngISSW75mNSyv4xRD/hG310QNwFMhpjgmCnAr4QMIvycsYYoFR8JIRHWXffQwr8Y6AF
-	 08+bb+F+wtpeyITNYpfPMo5m/OoC1RKyFeAjuPM9tE6FDcIw7JdeN9adpqYQRZMYaFVIl
-	 z39HgGwOYMEj9WbljcN6Dzz5g4Fe0q2KkeyzqmXQGAyO8LNQc7q+raonkgM9EbCy0Yg==
+	t=1795019998;
+	b=OGKH1VbjBMMsdIyL6Gmr9CE5t9+hnBoWewy5dq5aDdvULM9/PYb9eFMJVE1XcUo8sV79
+	 5YFLAPQ1ZgSg/2ryGRfcMGOMkPp3ApuOGCGyzOyUDuzk7wdXWmcGaf1Vmk0Qj3urrBBAM
+	 otdSDDuVkedQIVxNViRcKPmWJqotYWjH6PeL+6S/rN/CYk6B++JOSqM0E/C8IJIF9iQNf
+	 BfcF0kiPh5ygMdTAu5vLOORuDPaHDs1dWbCSWorimkkN6otDxues1EVIkt+aBLROrOjQH
+	 eQhG7u8WVWBfTVZjOrfaLIU+fS/DF2AwTzi3zby4ZkbLFLGiT4KrE6wM7czWrodKaOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019996;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019998;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f+6ha8oJZsFpuoKAFpvMrVC/vCFg+FrfKHhUot8fPko=;
-	b=IynDq8P1bbby764Hotmp4R/GCMom5GUTq87vj6lB/B7MpZI3pggAkxTS9WV6Tn4rZ1rt
-	 BvNsGBtiueJMb0+1xFfLUwv7D8kvbc8YGQtmVolSXUTNXl3iINiklmA6pHIW0YJTSct+6
-	 X24VazKX6nOQdLFM0Hh3gGF17BW9slOds7a++G10HEOGfm5j9DFQ9RTbQp4MRgrwamM36
-	 kXtULHVf2OnY3TgrFQZn3bGTcZZJdK7KoKyXo9J4KUAv7ximN6ebPgoteiPOaa+QJUAyJ
-	 1VXHt95L90Lxjkd+sUwR8/18684iLhM8QkrzGuQ/x9Hv/d68ealgpgkRaNbM+FdNpZA==
+	bh=jd5aNF1vX+L03AI+mbCnQAtNBn3hS+2kU0xreSnG8b4=;
+	b=FNH+KfTrTm5XCAfw9sc+wMSHFnnalZeWAsljuLND4cVpcUk0NCIJTfE7QnYa+wrbntm2
+	 dm5OWQo50crDKyqJ+FJraNmTeA516JksWWK/1SPUOM9FeagXzW5zkf3xsW0lIYwuiFnIX
+	 bei+riBwTn3yNgAAyQY2xmBOIDrbHf4bYA/FUH0eOTS3bWSBPh/9aKrsMonX/fbwCtrY0
+	 SxOJq1hR8XgAIpKXylIrgePtlacwXX8DwwGdUZ92ysAOOSX6n/bQsl32jtRsMIOdNsF4/
+	 F2oPPciH8BIlAxWZ6mTPkKPL1CNC4zKX1ibc/l//FFHbDffBcyUF8fgSafjY8EAHhsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QH5ktVvJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nX84P7BI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D1F606A31C;
-	Wed, 18 Nov 2026 16:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE701606A320;
+	Wed, 18 Nov 2026 16:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QH5ktVvJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B85E1F000C5;
-	Wed, 18 Nov 2026 16:39:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nX84P7BI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325271F000C4;
+	Wed, 18 Nov 2026 16:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019996;
-	bh=f+6ha8oJZsFpuoKAFpvMrVC/vCFg+FrfKHhUot8fPko=;
+	s=korg; t=1795019998;
+	bh=jd5aNF1vX+L03AI+mbCnQAtNBn3hS+2kU0xreSnG8b4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QH5ktVvJFQDnws1OfTo7f7QtdPxrhXSMEdAP918aMGHM2b9vcO/JvtwlRaIrwuSmH
-	 9Bmuiwj2N6BDNvbUaEVdIoDe3my1u1cPUYE7xY65z5qrUBrNF9PXRsdvKH1CHHXm+5
-	 C78I2eoVYtJc98CaP11h7GYwInHAHbJACk5W717w=
+	b=nX84P7BIIgQ/FkfIA6/H5kM6rdii+u3NZ1N2nuJuxEMbXAwXMCCcYjgKFZXvrkEFz
+	 rC09ex5yaU9tH+34bVFBdJp8JCPHXFvLopBmL3g2sJIVUHuttaij9M2fbTIdU+WVHH
+	 StKL9NCcwD0JVzKIkPXW9yW0W2accp6bERo7iNgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
 	Taniya Das <taniya.das@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1753/2651] clk: qcom: Fix camera rivian PLL configuration settings
-Date: Wed, 18 Nov 2026 15:49:53 +0100
-Message-ID: <20261118150350.603187144@linuxfoundation.org>
+Subject: [PATCH 7.3 1744/2651] clk: qcom: gcc-glymur: Use clk_regmap_phy_mux_ops for GCC UFS muxes
+Date: Wed, 18 Nov 2026 15:49:44 +0100
+Message-ID: <20261118150350.334933565@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,99 +73,131 @@ Content-Transfer-Encoding: 8bit
 
 From: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
 
-[ Upstream commit 6666c03f2348886774d6441350fbe0e7a782f471 ]
+[ Upstream commit 20b77a88fc6e410b69bc98d3d61c035a8618fb90 ]
 
-clk_alpha_pll_write_config() in the PLL configure function skips writes
-to PLL registers when the configured value is 0. However, hardware
-requires USER_CTL_U and CONFIG_CTL_U2 to be explicitly programmed to 0
-for a few rivian PLLs.
+Use clk_regmap_phy_mux_ops for GCC UFS muxes so these muxes are
+automatically switched to UFS external symbol clocks during enable and
+safely parked at XO clk during disable.
 
-Add a clk_regs_configure() callback to ensure these rivian PLL registers
-are correctly initialized on Glymur, SM8750, and Kaanapali platforms.
-
-Fixes: 97255eedd690 ("clk: qcom: camcc-glymur: Add camera clock controller driver")
-Fixes: f9580bafd39c ("clk: qcom: camcc: Add camera clock controller driver for SM8750 SoC")
-Fixes: 92aae35f667c ("clk: qcom: camcc: Add support for camera clock controller for Kaanapali")
+Fixes: efe504300a17 ("clk: qcom: gcc: Add support for Global Clock Controller")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
 Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260801-cam-rivian-pll-config-fix-v1-1-6918d58cd823@oss.qualcomm.com
+Link: https://patch.msgid.link/20260915-glymur-ufs-clk-changes-v2-2-d0aa1c60c269@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/cambistmclkcc-kaanapali.c | 7 +++++++
- drivers/clk/qcom/cambistmclkcc-sm8750.c    | 7 +++++++
- drivers/clk/qcom/camcc-glymur.c            | 7 +++++++
- 3 files changed, 21 insertions(+)
+ drivers/clk/qcom/gcc-glymur.c | 69 +++++++++--------------------------
+ 1 file changed, 18 insertions(+), 51 deletions(-)
 
-diff --git a/drivers/clk/qcom/cambistmclkcc-kaanapali.c b/drivers/clk/qcom/cambistmclkcc-kaanapali.c
-index c96e9196d908e..b5bafc1e7d428 100644
---- a/drivers/clk/qcom/cambistmclkcc-kaanapali.c
-+++ b/drivers/clk/qcom/cambistmclkcc-kaanapali.c
-@@ -394,11 +394,18 @@ static const struct regmap_config cam_bist_mclk_cc_kaanapali_regmap_config = {
- 	.fast_io = true,
+diff --git a/drivers/clk/qcom/gcc-glymur.c b/drivers/clk/qcom/gcc-glymur.c
+index 2ee4820b6fdfb..a47a2c6b961ba 100644
+--- a/drivers/clk/qcom/gcc-glymur.c
++++ b/drivers/clk/qcom/gcc-glymur.c
+@@ -481,36 +481,6 @@ static const struct clk_parent_data gcc_parent_data_17[] = {
+ 	{ .hw = &gcc_gpll0_out_even.clkr.hw },
  };
  
-+static void cam_bist_mclk_cc_kaanapali_regs_configure(struct device *dev, struct regmap *regmap)
-+{
-+	regmap_write(regmap, 0x18, 0); /* CAM_BIST_MCLK_CC_PLL0_USER_CTL_U */
-+	regmap_write(regmap, 0x28, 0); /* CAM_BIST_MCLK_CC_PLL0_CONFIG_CTL_U2 */
-+}
-+
- static const struct qcom_cc_driver_data cam_bist_mclk_cc_kaanapali_driver_data = {
- 	.alpha_plls = cam_bist_mclk_cc_kaanapali_plls,
- 	.num_alpha_plls = ARRAY_SIZE(cam_bist_mclk_cc_kaanapali_plls),
- 	.clk_cbcrs = cam_bist_mclk_cc_kaanapali_critical_cbcrs,
- 	.num_clk_cbcrs = ARRAY_SIZE(cam_bist_mclk_cc_kaanapali_critical_cbcrs),
-+	.clk_regs_configure = cam_bist_mclk_cc_kaanapali_regs_configure,
+-static const struct parent_map gcc_parent_map_18[] = {
+-	{ P_UFS_PHY_RX_SYMBOL_0_CLK, 0 },
+-	{ P_BI_TCXO, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_parent_data_18[] = {
+-	{ .index = DT_UFS_PHY_RX_SYMBOL_0_CLK },
+-	{ .index = DT_BI_TCXO },
+-};
+-
+-static const struct parent_map gcc_parent_map_19[] = {
+-	{ P_UFS_PHY_RX_SYMBOL_1_CLK, 0 },
+-	{ P_BI_TCXO, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_parent_data_19[] = {
+-	{ .index = DT_UFS_PHY_RX_SYMBOL_1_CLK },
+-	{ .index = DT_BI_TCXO },
+-};
+-
+-static const struct parent_map gcc_parent_map_20[] = {
+-	{ P_UFS_PHY_TX_SYMBOL_0_CLK, 0 },
+-	{ P_BI_TCXO, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_parent_data_20[] = {
+-	{ .index = DT_UFS_PHY_TX_SYMBOL_0_CLK },
+-	{ .index = DT_BI_TCXO },
+-};
+-
+ static const struct parent_map gcc_parent_map_21[] = {
+ 	{ P_GCC_USB3_PRIM_PHY_PIPE_CLK_SRC, 0 },
+ 	{ P_USB4_0_PHY_GCC_USB4RTR_MAX_PIPE_CLK, 1 },
+@@ -907,47 +877,44 @@ static struct clk_regmap_phy_mux gcc_pcie_6_pipe_clk_src = {
+ 	},
  };
  
- static const struct qcom_cc_desc cam_bist_mclk_cc_kaanapali_desc = {
-diff --git a/drivers/clk/qcom/cambistmclkcc-sm8750.c b/drivers/clk/qcom/cambistmclkcc-sm8750.c
-index 69abb756c04f2..45788ddb9dcc6 100644
---- a/drivers/clk/qcom/cambistmclkcc-sm8750.c
-+++ b/drivers/clk/qcom/cambistmclkcc-sm8750.c
-@@ -413,11 +413,18 @@ static const struct regmap_config cam_bist_mclk_cc_sm8750_regmap_config = {
- 	.fast_io = true,
+-static struct clk_regmap_mux gcc_ufs_phy_rx_symbol_0_clk_src = {
++static struct clk_regmap_phy_mux gcc_ufs_phy_rx_symbol_0_clk_src = {
+ 	.reg = 0x7706c,
+-	.shift = 0,
+-	.width = 2,
+-	.parent_map = gcc_parent_map_18,
+ 	.clkr = {
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "gcc_ufs_phy_rx_symbol_0_clk_src",
+-			.parent_data = gcc_parent_data_18,
+-			.num_parents = ARRAY_SIZE(gcc_parent_data_18),
+-			.ops = &clk_regmap_mux_closest_ops,
++			.parent_data = &(const struct clk_parent_data){
++				.index = DT_UFS_PHY_RX_SYMBOL_0_CLK,
++			},
++			.num_parents = 1,
++			.ops = &clk_regmap_phy_mux_ops,
+ 		},
+ 	},
  };
  
-+static void cam_bist_mclk_cc_sm8750_regs_configure(struct device *dev, struct regmap *regmap)
-+{
-+	regmap_write(regmap, 0x18, 0); /* CAM_BIST_MCLK_CC_PLL0_USER_CTL_U */
-+	regmap_write(regmap, 0x28, 0); /* CAM_BIST_MCLK_CC_PLL0_CONFIG_CTL_U2 */
-+}
-+
- static const struct qcom_cc_driver_data cam_bist_mclk_cc_sm8750_driver_data = {
- 	.alpha_plls = cam_bist_mclk_cc_sm8750_plls,
- 	.num_alpha_plls = ARRAY_SIZE(cam_bist_mclk_cc_sm8750_plls),
- 	.clk_cbcrs = cam_bist_mclk_cc_sm8750_critical_cbcrs,
- 	.num_clk_cbcrs = ARRAY_SIZE(cam_bist_mclk_cc_sm8750_critical_cbcrs),
-+	.clk_regs_configure = cam_bist_mclk_cc_sm8750_regs_configure,
+-static struct clk_regmap_mux gcc_ufs_phy_rx_symbol_1_clk_src = {
++static struct clk_regmap_phy_mux gcc_ufs_phy_rx_symbol_1_clk_src = {
+ 	.reg = 0x770f0,
+-	.shift = 0,
+-	.width = 2,
+-	.parent_map = gcc_parent_map_19,
+ 	.clkr = {
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "gcc_ufs_phy_rx_symbol_1_clk_src",
+-			.parent_data = gcc_parent_data_19,
+-			.num_parents = ARRAY_SIZE(gcc_parent_data_19),
+-			.ops = &clk_regmap_mux_closest_ops,
++			.parent_data = &(const struct clk_parent_data){
++				.index = DT_UFS_PHY_RX_SYMBOL_1_CLK,
++			},
++			.num_parents = 1,
++			.ops = &clk_regmap_phy_mux_ops,
+ 		},
+ 	},
  };
  
- static const struct qcom_cc_desc cam_bist_mclk_cc_sm8750_desc = {
-diff --git a/drivers/clk/qcom/camcc-glymur.c b/drivers/clk/qcom/camcc-glymur.c
-index 81c1e102b110e..6d022bbd2ce2e 100644
---- a/drivers/clk/qcom/camcc-glymur.c
-+++ b/drivers/clk/qcom/camcc-glymur.c
-@@ -2235,11 +2235,18 @@ static const struct regmap_config cam_cc_glymur_regmap_config = {
- 	.fast_io = true,
+-static struct clk_regmap_mux gcc_ufs_phy_tx_symbol_0_clk_src = {
++static struct clk_regmap_phy_mux gcc_ufs_phy_tx_symbol_0_clk_src = {
+ 	.reg = 0x7705c,
+-	.shift = 0,
+-	.width = 2,
+-	.parent_map = gcc_parent_map_20,
+ 	.clkr = {
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "gcc_ufs_phy_tx_symbol_0_clk_src",
+-			.parent_data = gcc_parent_data_20,
+-			.num_parents = ARRAY_SIZE(gcc_parent_data_20),
+-			.ops = &clk_regmap_mux_closest_ops,
++			.parent_data = &(const struct clk_parent_data){
++				.index = DT_UFS_PHY_TX_SYMBOL_0_CLK,
++			},
++			.num_parents = 1,
++			.ops = &clk_regmap_phy_mux_ops,
+ 		},
+ 	},
  };
- 
-+static void cam_cc_glymur_regs_configure(struct device *dev, struct regmap *regmap)
-+{
-+	regmap_write(regmap, 0x2018, 0); /* CAM_CC_PLL2_PLL_USER_CTL_U */
-+	regmap_write(regmap, 0x2028, 0); /* CAM_CC_PLL2_PLL_CONFIG_CTL_U2 */
-+}
-+
- static const struct qcom_cc_driver_data cam_cc_glymur_driver_data = {
- 	.alpha_plls = cam_cc_glymur_plls,
- 	.num_alpha_plls = ARRAY_SIZE(cam_cc_glymur_plls),
- 	.clk_cbcrs = cam_cc_glymur_critical_cbcrs,
- 	.num_clk_cbcrs = ARRAY_SIZE(cam_cc_glymur_critical_cbcrs),
-+	.clk_regs_configure = cam_cc_glymur_regs_configure,
- };
- 
- static const struct qcom_cc_desc cam_cc_glymur_desc = {
 -- 
 2.53.0
 
