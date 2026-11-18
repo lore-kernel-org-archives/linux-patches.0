@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052742;
-	b=N/sOGGbvwBPzMsOgydrCgFIvaMfG0/ZPqD27FhSwD1v/8OyJAFr7qNXODF1G60E1DzFy
-	 XL6hNZlDZ5DtY8uNKOgIAiug797oNbTo/DQsm9BnrHQOfePE/MdIMMV1rqnZV/tBLm9ch
-	 pyL2Rb4FiLeJp1jCnAeR72eXj9aoR0HTfjMldTQ0ktFn7/usk7JjJxJunT9o3kmXCKphO
-	 nL7cotUHv+kwWD5PRHIupCHEGoKuUC0hysKmS6eLHIYFt9LIK4Qctu4VnfX6dKfRxDSPC
-	 wiCSJQk447Yw6uIWdrHfWw8xBJoMaoHH7Q+JaNd8OfRKjp0SmFohv/rL6MfsWeR4iZw==
+	t=1795052744;
+	b=1m4sLs5cCnXCEF1caiZBz0txIEvMhNYk0OEn4U888EB1ceukfkRF46qBdSzzGk3sfrkU
+	 XqJc6c42asrCgdy4R/LFKC7LRWkXJEEAs0OQyn/lzynQ+X1zyBp7uqCewYUzjozx9Yo7Q
+	 KzP2056imh5Vhke6ImJaLq2J4T6DboH6LtW4+VgAh1lDJ9lJ+LKkfOBXFJqpv2CtDsqk1
+	 NghObZpI1dpNlCsoNKKF9t8JUQehSD4dO8h11s+TmWN2Z21bHl6wdteI+XsVXTcOhdZfI
+	 XHsa+w2VUYpTM6ZsfF3kPk5yNwt7fPZ7xkN8tnAyiiJQeFsBeRqEqxboiDfI/SOmFTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052742;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052744;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=p83Hy98B4xpG5ecWAmHoDUEUmCeYCN4pChv1jGh19Qs=;
-	b=3cBfm4L+McBxmevwCgY3XAY/dF8G6uGRy/J9mDyFc+6L7oNn9uaF4OH194ky5GtWUs1j
-	 hapkJg0OAIYddTBWE0k98hMyGHF9WWQ14GozgMoKp3Gjw/SPjN6y+vdVmp0Hb5mE25Vs8
-	 QavD8hR6Ca/SBeQRaJjW9LkALycPGMVX2XqNKBvHlaQL8eYTzqTpSkaHnk/xUMwkqzJ+1
-	 duC4+s/T9AJ9curlPhMKuwxgdmlCHitpjAA13vKsZxrDIrkTxp6XbICccqS7hrcPTdC+r
-	 5QeyEkkeuprUS4Y0LCs++ZxDMKFuViKyo1ZXi/ZgmUkIxEzRT2Ek78k3hnVSVxE17bQ==
+	bh=0rjXLiYMKMIuigJiykhhq/s434gnBGU2dm9eBKl5FyU=;
+	b=ZIy15pSRzXGC/G08Dn6LXbCi0zZbr4lUHOEtZdKDEzyqlsZM0zUbOS2MLDciBxCJWbok
+	 x0i7Go42DwXvXNy0N2Czu8gdzQcp/xCuM083+XAN/QciGmcBzKrjl42ANRqNXk3bHMw/q
+	 M1gWn79CviX/bHopoSpg/xEwD6EiHFqQn7cZFy+Tu8orVuihBCEKFSi34eYZWkYPsqDnM
+	 FJhTuqhK4L5Fz1koz645oa3VVXw2sCr4WTku8R+W9PkwnGM7t68Dyqoa9SxezOa7tEo41
+	 FjgdTTkx574d+PZ4q20CMjS8V/O0va/EyOvsKv32khMNG1rkj5b6kS+iOOPeKyL7sJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QB77+jlE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tYVbaxaR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67079606A32A;
-	Thu, 19 Nov 2026 01:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AA0606A32A;
+	Thu, 19 Nov 2026 01:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QB77+jlE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2591F000C4;
-	Thu, 19 Nov 2026 01:45:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tYVbaxaR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB151F000C4;
+	Thu, 19 Nov 2026 01:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052741;
-	bh=p83Hy98B4xpG5ecWAmHoDUEUmCeYCN4pChv1jGh19Qs=;
+	s=korg; t=1795052744;
+	bh=0rjXLiYMKMIuigJiykhhq/s434gnBGU2dm9eBKl5FyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QB77+jlEyTmah9XCdhJmpclnJ+QWXkJArnBbvvC656yTwy0px/oyxzg9s68f5g57p
-	 BXwknms091Ysl1bLYV06LHyyZ+wHCLinuzt/0zYjkLWryK4RyatZjrLzY299o7HcuS
-	 R6stlYKLCrbGHke+kGPBypkHW7lceexpikVcw2v4=
+	b=tYVbaxaRUn0sDHVg3K05P/KgrPlsyhpuLlXJxz1VECMLGbuGoOt0nuaEUXvMnW1B6
+	 f2Tzk5jRapuIKIaUOe9Lyyoodrl08Pq0xB85wdwVU3z7TKnJ2wv76QB7ZQfkOVoVQ3
+	 5WBXXwiePEwmXxhI9lnlMhLEDdMDIx5OxCtEBNCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kir Kolyshkin <kolyshkin@gmail.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0670/2214] cgroup: fix cgroup.kill for exited thread group leader
-Date: Wed, 18 Nov 2026 15:39:06 +0100
-Message-ID: <20261118150038.631208917@linuxfoundation.org>
+Subject: [PATCH 5.15 0671/2214] netdevsim: reject cls_bpf programs bound to another device
+Date: Wed, 18 Nov 2026 15:39:07 +0100
+Message-ID: <20261118150038.669124564@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,86 +71,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kir Kolyshkin <kolyshkin@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit da13e0e72a7329c95642c44b2d03d194ab071e04 ]
+[ Upstream commit 5820ca58b409402505b9e904d1ded4908e0b6b81 ]
 
-cgroup.kill does not work in case a process' thread group leader is gone
-but other threads are still running. This is because __cgroup_kill()
-only walks the thread group leaders and sends SIGKILL to each of them
-with send_sig(), which uses PIDTYPE_PID:
+The issue:
+nsim_bpf_setup_tc_block_cb() installs any device-bound SCHED_CLS program
+without checking that its offload device matches the target netdev.  The
+core cls_bpf attach path rejects a mismatching program, but a netdev that
+joins a shared block later is replayed the stored filter by
+cls_bpf_reoffload() before it is inserted into block->ports, so the
+attach-time check cannot see it.  The driver callback is the
+authoritative per-device acceptance boundary and must enforce the match
+itself, as nfp already does in nfp_net_bpf_offload().
 
-1. The exited leader is still listed by CSS_TASK_ITER_PROCS as long as
-   the process has live threads, but a signal directed at a single
-   exiting task never takes effect: complete_signal() does not look for
-   another thread to deliver it to, and __send_signal_locked() now drops
-   it altogether.  The process keeps running.
+Without the check, replaying a device-bound program onto a different
+bpf_offload_dev installs it into that device's netdevsim state, which
+trips the WARN in nsim_bpf_uninit() (ns->bpf_offloaded set on a foreign
+device) and can dereference a NULL prog->aux->offload in
+nsim_prog_set_loaded().
 
-2. The live threads of such a process can be migrated to another cgroup
-   by writing any of their IDs to cgroup.procs, while the exited leader
-   stays behind.  The destination cgroup has no thread group leader to
-   iterate, so writing to its cgroup.kill does nothing at all.
+The Fix:
+Reject a device-bound program whose offload device does not match the
+target netdev, with -EINVAL and an extack so the rejected replay is not
+silent.  The check is intentionally narrower than nfp's: it fires only
+for a dev-bound program, so nsim's bpf_tc_non_bound_accept mode (which
+admits an unbound program onto the device) is unaffected.  Teardown is
+never blocked: the guard is on the program being installed and an unbind
+passes cls_bpf.prog = NULL.
 
-In both cases the cgroup stays populated after cgroup.kill, and a
-process inside a container can use this to survive the container being
-killed.  This also works with a private PID namespace when the init of
-the container is the process, as the PID namespace is not torn down
-while init has live threads.
+Conditions to recreate the bug:
+  - CONFIG_NETDEVSIM=y, CONFIG_NET_CLS_BPF=y
+  - load and pin a dev-bound SCHED_CLS program for netdevsim device B
+  - install the program on a shared block owned by B
+  - add an independently backed netdevsim device C to that block; the
+    bind replays the filter to C's callback, and C's
+    ports/0/bpf_offloaded_id takes the B-bound program id.
 
-Case 1 can be fixed by using do_send_sig_info(..., PIDTYPE_TGID) instead
-of send_sig(), so that the signal is taken by a live thread even if the
-task found by the iterator is exiting. Note it was pointed out by Eric
-in [1] while reviewing v2 of cgroup.kill patchset, and v3 was meant to
-switch to it, but the change was only made in cgroup_post_fork(),
-leaving __cgroup_kill() with send_sig().
+The reported Sashiko review is at
+https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260809094418.901607-1-jhs@mojatatu.com
 
-Case 2 can only be fixed by iterating over all threads, so this is what
-the fix also does. Once a thread group is being killed, its other
-threads are skipped since they already have a fatal signal pending.
-
-I ran some performance checks and the added cost is ~60 ns per every
-thread on my laptop (and less than a millisecond for 10K threads),
-which seems low. The time to "populated 0" seems unchanged.
-
-The issue was found in crun by Anthropic's OSS Scanner, and crun is
-getting a workaround for it [2] (which does what we needed to do
-before cgroup.kill was added).
-
-[1] https://lore.kernel.org/all/m1v97x6niq.fsf@fess.ebiederm.org/
-[2] https://github.com/containers/crun/pull/2351
-
-Fixes: 661ee6280931 ("cgroup: introduce cgroup.kill")
-Cc: stable@vger.kernel.org # v5.14+
-Signed-off-by: Kir Kolyshkin <kolyshkin@gmail.com>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 31d3ad832948 ("netdevsim: add bpf offload support")
+Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/netdev/20260809094418.901607-1-jhs@mojatatu.com/
+Link: https://lore.kernel.org/netdev/QDISC-PYC7.v1.20261003103747@mojatatu.com/
+Cc: stable@vger.kernel.org
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/QDISC-PYC7.v2.20261010165947-2@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/netdevsim/bpf.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index 47d7fd21f9b26..93ea53974e312 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -3845,7 +3845,7 @@ static void __cgroup_kill(struct cgroup *cgrp)
- 	cgrp->kill_seq++;
- 	spin_unlock_irq(&css_set_lock);
- 
--	css_task_iter_start(&cgrp->self, CSS_TASK_ITER_PROCS | CSS_TASK_ITER_THREADED, &it);
-+	css_task_iter_start(&cgrp->self, CSS_TASK_ITER_THREADED, &it);
- 	while ((task = css_task_iter_next(&it))) {
- 		/* Ignore kernel threads here. */
- 		if (task->flags & PF_KTHREAD)
-@@ -3855,7 +3855,7 @@ static void __cgroup_kill(struct cgroup *cgrp)
- 		if (__fatal_signal_pending(task))
- 			continue;
- 
--		send_sig(SIGKILL, task, 0);
-+		do_send_sig_info(SIGKILL, SEND_SIG_NOINFO, task, PIDTYPE_TGID);
+diff --git a/drivers/net/netdevsim/bpf.c b/drivers/net/netdevsim/bpf.c
+index 50854265864d1..879ac48027af3 100644
+--- a/drivers/net/netdevsim/bpf.c
++++ b/drivers/net/netdevsim/bpf.c
+@@ -150,6 +150,17 @@ int nsim_bpf_setup_tc_block_cb(enum tc_setup_type type,
+ 		return -EOPNOTSUPP;
  	}
- 	css_task_iter_end(&it);
- }
+ 
++	/* A dev-bound program can be replayed here when a netdev joins
++	 * a shared block, after the core attach-time check has run;
++	 * enforce the device match as nfp does.
++	 */
++	if (prog && bpf_prog_is_dev_bound(prog->aux) &&
++	    !bpf_offload_dev_match(prog, ns->netdev)) {
++		NSIM_EA(cls_bpf->common.extack,
++			"program bound to a different device");
++		return -EINVAL;
++	}
++
+ 	if (cls_bpf->command != TC_CLSBPF_OFFLOAD)
+ 		return -EOPNOTSUPP;
+ 
 -- 
 2.53.0
 
