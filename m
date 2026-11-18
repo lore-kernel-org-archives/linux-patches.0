@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049409;
-	b=e03WNu85TS3vmI9+oRftkUNCxZXON74WS4IMTWJhcG0lWi3y6MV1Une5xpxjt60HfSQ1
-	 2I7alRC1LVpnymUg2v9QMElG+6HNq5V3QP0VSiCU1gNu1h+yeJDUzeEpTFOpbnsiazzKj
-	 2v7VkjtpRb/NjvoP6o6Uq5WQWTHzmV0suFxP3k+NYaN3QOJxI3JYK6oPoP9HC3xhW4oh2
-	 31S+zAxtgyP/DAzB5bI/wHY9tF4cidy7Gs8Usb0RhXfGtaFo751CgBGbrVixC7uc0yrwp
-	 udCL+sy06FIPnBpcM6Hp+WnqLG/3CZYe8YcAE/0QEtvzo/lCNupIt/pFQd+hkY5F6zQ==
+	t=1795049411;
+	b=12rnFXteYe77lPr5uzJtP0qNuONXHQ0PyWm9bJmpJLvDLgngVH+aID6V6zXC3TS86F+v
+	 0x5rvBMrZ7fgbPzB4q04tHQTs3rxXaav9DCidT5VEfqb73KYHNmng/W/xxhEh5JzirFno
+	 hBv8Wa3ppNukTSrnI4uNrMDvUgYTD/ZfCqnMmKAXB+SdkMUJs1xlEP1trCRTLBxEm7fls
+	 gZaSivzFfVb0lg2iyej1iZblJJ+uBXI4fsLO8A3h2V2goe/Pti3jBUu8/m3+bRWc4TsXk
+	 Kf62qkk1OAmtIWPJ46tncgoY97BxWMepH4gYrxYuR6QaVS6SgLBY9XD+PItQLPj+YyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049409;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049411;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xrRtTLfMVnNCVa2tp3Po4NaLdlyqy6tVTSuwdeaNDB8=;
-	b=xXkEumj4pmfX1AhY1GNLTZ+DFA37l78hsaQ0UlXttdkEEsx80jEtn82ntipB/CIo0Cnj
-	 QmWwq1oJp4DBrPJ5BJVuZugCjXx5O9tbBN3m4xwX6s4EdZNsH7vjrOt+e9VsZyQLDoLVo
-	 Gqy2uc5+yz5u8DKFAwf0g6vkCn85rw+iQsUgdKDLVhyPYXq9DDQsJXbkV9FjBtaFkbgqE
-	 /tz7epCUP3bXBiHKhIdr1CfLYywKblLgAzO7ZRsGWBalhsmBAMPMRHs8ROW/hsC5aXDxf
-	 9KETfb8xK+xnpuFa8YLXUxxQOOsRjbtZuae5FuYcMac815jkzBuv9Qsrc+StV5poR1A==
+	bh=QCzC+Rnr27giLxfOA5KXGNzC0pupnn+ju+87OswN8Ho=;
+	b=r0fwDSXBY9YUqotQp9mxCVJ5UureOUpXCPycTtY9mrGiVRkiglcMgKMfilUB5pAoND9l
+	 Ob1zHn4zrug9FczfxuGU6OSB4T8PJIP/F3K7dRJ9hx/uSHdmOsLamGGHMKUvvBuAxx7NV
+	 ld2RyBCqzGVwJm9x4Z6/VVELP/sy5wOM6Z2U0pvOB5SDMGmhg8qfq7Vasdt0GUV0rF18h
+	 MClyiX3gJEqoQl2SppdgoQVOfZrWBb64VFCZNz6dgL+A+VPqI9J+W0VAgEvJ88gyMR1Pd
+	 HGrqHU97YdcLgZuaTwAEx7vEU3FvSoZ2TpRNMjDHbu16WyGWvSohZET1eWOjp3zZsLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VlRqLKZj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ja3XHQFn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE32F606A325;
-	Thu, 19 Nov 2026 00:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F04606A31C;
+	Thu, 19 Nov 2026 00:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VlRqLKZj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334601F000C4;
-	Thu, 19 Nov 2026 00:50:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ja3XHQFn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0321F000C5;
+	Thu, 19 Nov 2026 00:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049408;
-	bh=xrRtTLfMVnNCVa2tp3Po4NaLdlyqy6tVTSuwdeaNDB8=;
+	s=korg; t=1795049411;
+	bh=QCzC+Rnr27giLxfOA5KXGNzC0pupnn+ju+87OswN8Ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VlRqLKZjEpsqHkW5x3fJmtts52EhFbqnrd1mItOuNYqZbBEubqRKeFNn+ctBmpns0
-	 DRjdTWUMZVzvJp/wnXw4uz1A9IY+DM1xogolt+hRqQ4/68FssDg8Z0XUwndWXkIFZD
-	 z4zKUDVPKC3fxj1iZ+QRH3uymrqZajEPE3LE1fqs=
+	b=Ja3XHQFnLuqD8bNuW6kM1sWJMixp1sH3vR5m4NtFBjA8yrnWaXwYVBPJnn+/zc3Sb
+	 jHPcePTZsT72MQf4IKrYcFkClTV6spsB7FeXgCIrrMZi9cWkNOIotTrA7iO3DGPbt4
+	 v+QnWc2qko4Yw4SeaQfcgV2RTQEdXGIrnAyO2QCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2341/2857] wifi: mac80211: clear fragment cache entry is_protected
-Date: Wed, 18 Nov 2026 15:56:15 +0100
-Message-ID: <20261118150325.822906250@linuxfoundation.org>
+Subject: [PATCH 6.1 2342/2857] wifi: mac80211: mesh: use hlist_add_head_rcu()
+Date: Wed, 18 Nov 2026 15:56:16 +0100
+Message-ID: <20261118150325.858327283@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,39 +69,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit f3d29dc9224b0881d10d34664456adf113bc4777 ]
+[ Upstream commit 2ce8b78102e91c9d6536630cdef96491121c84d3 ]
 
-In practice, we probably shouldn't end up with a fragmented
-frame that's protected, filled into the cache, finished or
-dropped and then the next frame is unprotected, since only
-unicast data frames can be fragmented.
-
-However, tools complain and it's more correct to be able to
-do this (e.g. an unencrypted fragmented EAPOL _could_, at
-least in theory, happen), so clear the flag when the entry
-is reused.
+The mesh paths walk list used under RCU, so we must use
+hlist_add_head_rcu() to publish an entry. Fix one place
+that didn't do that.
 
 Assisted-by: LLM
-Fixes: 7e44a0b597f0 ("mac80211: prevent attacks on TKIP/WEP as well")
-Link: https://patch.msgid.link/20261005224950.c3e4106f34d5.I866c0862db031c3a810d2333acdd22e2733d2b8c@changeid
+Fixes: b4c3fbe63601 ("mac80211: Use linked list instead of rhashtable walk for mesh tables")
+Link: https://patch.msgid.link/20261005224950.e0db543145e1.Ieaf30d3546e8ff63ccf400f6fb26e027c218721f@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/rx.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/mac80211/mesh_pathtbl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index 1fbccdb37166a..76a1a46fc18ad 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -2180,6 +2180,7 @@ ieee80211_reassemble_add(struct ieee80211_fragment_cache *cache,
- 	entry->rx_queue = rx_queue;
- 	entry->last_frag = frag;
- 	entry->check_sequential_pn = false;
-+	entry->is_protected = false;
- 	entry->extra_len = 0;
+diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
+index a5ea7bc2065b9..bdbe2f9b83b7b 100644
+--- a/net/mac80211/mesh_pathtbl.c
++++ b/net/mac80211/mesh_pathtbl.c
+@@ -419,7 +419,7 @@ struct mesh_path *mesh_path_add(struct ieee80211_sub_if_data *sdata,
+ 						  &new_mpath->rhash,
+ 						  mesh_rht_params);
+ 	if (!mpath)
+-		hlist_add_head(&new_mpath->walk_list, &tbl->walk_head);
++		hlist_add_head_rcu(&new_mpath->walk_list, &tbl->walk_head);
+ 	spin_unlock_bh(&tbl->walk_lock);
  
- 	return entry;
+ 	if (mpath) {
 -- 
 2.53.0
 
