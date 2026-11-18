@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020750;
-	b=GHiVONDy4Cqb0pYgRHAFg5TNIyAR0DXxRNpA/9LDF3XNNKWzfqq10BSlV+bU6jHWctva
-	 d+5bJFoo7Nvm7Sd7Ny0iSsm9CH8rHOq8fEktLFcC7bEpFBdenxS576wLYgbdLr5eyulO5
-	 9ZUIOzFTvConTxMpq4B1ar4iYbnW9iQ4MizomrdFTn+yZsR6f7lYvhbdhF23atUW1PSd7
-	 Sg0I0pATT+0uIuGk4+Tc2EgXdgv66YISMf49HZhXsK+nVMhly6dX2iYTd5pIJ1KbMLQ3r
-	 iN9sE0seNm8xlEFkSQSsw1BBdU/YD9KWkSCaYGJ4Af4uZuPOcJq2VRDnAqMs32r9mGA==
+	t=1795020753;
+	b=48wEX3cK1j0IRtSX+4N0nvSNO+25Cp9jUE+Ybp91KVvo1sIGS2RTN+Zn6fXwEJu6E9/Y
+	 QgS4KA1uqAK43yHb2OIOGK9gswDCD/X6e1cLvd/AGbQN2A3so/rJdEwNxEw7+pAn6vvzu
+	 gHxJReyD7s9yR9tyyRQqg9v2enRoeWZDWTVYqPfr/vIEUOIMQGYRawTs98R6cV0hESH0c
+	 pBuv2C4lxkTR3w/2mmp0qFbwMJb0gtxDCDqAw936UqbjUwYTqjImKJr99kYy+yGuXSWid
+	 axHY0dwDqWFKC6KdU6yIlDw65S4wFR68IoYYRhfx8g4hrioYGtvIuYZonTvlsKElBEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020750;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020753;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3+b6aAkEmgclwzEL2/6K1lazgNJJu7fmeTqeQkOfLM8=;
-	b=D0gTJRoEcAKZbcrS6aXJA1W4DM2ysi3BTbNGbvHkrxYlm4YzKqiNKsbokbSuX9Z6okTE
-	 A7jeYcITcnO5motrifHHuTqI2mOVAI3Y6RvzcUw/fCjDzwTnhLkGpPgb8ws5Khy4nvV29
-	 IxQz5IRLBUas9GQ1jswUZLGb3pnUWlbrABpSklCG2wFjabAW6JhfMTWkZHSY2zJIyCtNc
-	 HJMe6AoULfO64K9wwHBbnZzBNPwDI1lmhmXPn6vFwaPhwO6EYCdudWv7BjHPyDarFWmcj
-	 yH29weg+B7Z9VCLLIUosIWrrkaJO4L0gBEjHJiAuGMFBFqa7G2O1LV/kWN5zozeteFA==
+	bh=jnHwb0MLq55KjDY/b7IU68FQSyj0oJC+sqbrFYRN7uM=;
+	b=5kUcMCdjrl11CyfpPak5CmADcQ+yKeN7p8oBIOIo20QOmdiy+nwSm39hCtBfnGcKvvKW
+	 3/HHUID2tJobG3tDRfFaE1dRZJCIX0w8YUBzkgtxs14SPHHg01ngh5vOLRZR+kViuDBhW
+	 rJtYnK4H8Hz1qpc3LHnsNYNdzXiVw9v854dn1L1ke7xU25ue78Q6JL7SLsDQRiXInTJqA
+	 T28W8jyVEF9SbXtcxqSrPwLoQ6feQ/Whi01la6s49TbU7aXJjeGrf3Bh2qQ98yoNe1sMt
+	 He/L/jMrmz38q81J1DPgmEQqi4t15smtbQVlcl/wtFa7JYqMvXkj4ePnPcyO0qOIYpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zuakLEAm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f5vg5nov;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63F3606A325;
-	Wed, 18 Nov 2026 16:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562D7606A325;
+	Wed, 18 Nov 2026 16:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zuakLEAm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03B9E1F000C4;
-	Wed, 18 Nov 2026 16:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f5vg5nov
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07681F000C4;
+	Wed, 18 Nov 2026 16:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020750;
-	bh=3+b6aAkEmgclwzEL2/6K1lazgNJJu7fmeTqeQkOfLM8=;
+	s=korg; t=1795020753;
+	bh=jnHwb0MLq55KjDY/b7IU68FQSyj0oJC+sqbrFYRN7uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zuakLEAmPG/k6Qtbd5up5gCjx2/YcjfAWJBJMgy40LB0/t7Ce51EokxFMF9BJ7vsO
-	 AYs89Hp4ONMUY9SkmW0xtthQOaC7GuY825XyWQbgdh2M9uV+yrLF7/I4GKC/msu8D+
-	 YhxEx1eWABz8f0znZapLELrIh5E5ElepuFd4KWbQ=
+	b=f5vg5novCSWyUUdAZoFjC2gMa7EVPjo7HZ+8vPyP2FFrk52Hpq41X4IOQW+98rpAq
+	 3ntCeWjxQdBGivnsZ8jEsyxCO0UDXpAK5ByAESJV2GnGoaOxvWb9VJT0hEaSoFv7rO
+	 CtvsZjlTa/HiXRDdyEBr2LE+cUQ1lefUWETmtSkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2064/2651] ASoC: codecs: sta350: Fix definition of Ch2 and Ch3 Volume Bypass controls
-Date: Wed, 18 Nov 2026 15:55:04 +0100
-Message-ID: <20261118150400.359419610@linuxfoundation.org>
+Subject: [PATCH 7.3 2065/2651] calipso: update payload_len when removing the CALIPSO option
+Date: Wed, 18 Nov 2026 15:55:05 +0100
+Message-ID: <20261118150400.390250310@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,40 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-[ Upstream commit 7308ce7c8459e994a36a22607e974e3e132a9275 ]
+[ Upstream commit 00accbd9d5021b942a16078bd5717d7865f6971c ]
 
-Each channel's master volume bypass (CxVBP) is in its own
-configuration register, C2CFG and C3CFG, not in C1CFG, which holds the
-channel 1 bit.
+calipso_skbuff_delattr() removes the CALIPSO option from the hop-by-hop
+extension header, or the whole extension header if CALIPSO is its only
+option, and pulls the skb by the removed length.  It never updates
+ipv6hdr->payload_len, so after a successful removal the header still
+claims the original length.
 
-Fixes: 2439ea1f0f8f ("ASoC: sta350: Add codec driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/1107a42a563459b26038bdff4d8f6e2423816d0a.1792135144.git.sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+calipso_skbuff_setattr() already adjusts payload_len by the length it
+adds; the delete path was missed.
+
+This is reached on the forward path when a packet carrying CALIPSO is
+sent to a destination mapped to an unlabeled NetLabel domain.  The
+forwarded packet then has a payload_len larger than its real payload
+by the removed length (8 to 264 bytes), and the receiver drops it as
+truncated.  So removing the label on the forward path has been broken
+for every packet that is not resegmented later (SYN, UDP, ICMPv6...).
+
+Adjust payload_len after the header is moved.  BIG TCP packets carry
+payload_len == 0 (see ipv6_set_payload_len()), and ipv6_payload_len()
+then falls back to skb->len, so leave them alone.
+
+Tested with client, router and server network namespaces on one kernel
+(arm64, QEMU): SELinux permissive with a minimal mdp-generated policy
+(network_peer_controls=1), "netlabelctl calipso add pass doi:16", the
+default NetLabel mapping left unlabeled, IPv6 forwarding on the router.
+The client sends 5 UDP datagrams with a CALIPSO hop-by-hop option
+(DOI 16, set through IPV6_HOPOPTS) to the server through the router:
+
+  before: router Ip6OutForwDatagrams 5, server receives 0,
+          server Ip6InTruncatedPkts 5
+  after:  router Ip6OutForwDatagrams 5, server receives 5,
+          server Ip6InTruncatedPkts 0
+
+Fixes: 2917f57b6bc1 ("calipso: Allow the lsm to label the skbuff directly.")
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Link: https://patch.msgid.link/179147329205.58079.5847298721173675285@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/sta350.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/calipso.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/codecs/sta350.c b/sound/soc/codecs/sta350.c
-index 2ba35076732b0..464ef292c9067 100644
---- a/sound/soc/codecs/sta350.c
-+++ b/sound/soc/codecs/sta350.c
-@@ -477,9 +477,9 @@ SOC_SINGLE("Ch2 EQ Bypass Switch",
- SOC_SINGLE("Ch1 Master Volume Bypass Switch",
- 	   STA350_C1CFG, STA350_CxCFG_VBP_SHIFT, 1, 0),
- SOC_SINGLE("Ch2 Master Volume Bypass Switch",
--	   STA350_C1CFG, STA350_CxCFG_VBP_SHIFT, 1, 0),
-+	   STA350_C2CFG, STA350_CxCFG_VBP_SHIFT, 1, 0),
- SOC_SINGLE("Ch3 Master Volume Bypass Switch",
--	   STA350_C1CFG, STA350_CxCFG_VBP_SHIFT, 1, 0),
-+	   STA350_C3CFG, STA350_CxCFG_VBP_SHIFT, 1, 0),
- SOC_ENUM("Ch1 Binary Output Select", sta350_binary_output_ch1_enum),
- SOC_ENUM("Ch2 Binary Output Select", sta350_binary_output_ch2_enum),
- SOC_ENUM("Ch3 Binary Output Select", sta350_binary_output_ch3_enum),
+diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
+index 3017a456d289a..e399a42e30839 100644
+--- a/net/ipv6/calipso.c
++++ b/net/ipv6/calipso.c
+@@ -1428,6 +1428,10 @@ static int calipso_skbuff_delattr(struct sk_buff *skb)
+ 		skb_pull(skb, delta);
+ 		memmove((char *)ip6_hdr + delta, ip6_hdr, size);
+ 		skb_reset_network_header(skb);
++		ip6_hdr = ipv6_hdr(skb);
++		/* BIG TCP packets have payload_len == 0 */
++		if (ip6_hdr->payload_len)
++			be16_add_cpu(&ip6_hdr->payload_len, -delta);
+ 	}
+ 
+ 	return 0;
 -- 
 2.53.0
 
