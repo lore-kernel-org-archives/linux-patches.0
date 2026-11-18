@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022314;
-	b=UyTLppHwVJzRb2ZKELWiEaLacBT+e79Kl3v8wKo1foT1hL9XMrYct6t6j9Dt0aCh1qvN
-	 h6OY4EBKfUysFNLpZF1xZF7irCTKVBH15whmbBKMh47KBXBV/T1bvZxGBoz50QrhxpFhc
-	 XOyqzfm+FWpWH5ZX5acZzIm+8VhgV3GYe7s9o4aK+CsdeeSEENzSHQeDDB21gGxsb3Zv4
-	 1fUu+qFDbxd8CCZdVl482H8hdNCnQ43T6UIBlA7iqbY9plHRcXTLtT97vIOohGkd0XoWQ
-	 DxXBkNBTpd89Id1oNm7ZIjiwZ7f14AEqvFIntpGzPMxqoSYbkivmpDSdc/WxXk5wpdA==
+	t=1795022317;
+	b=dMyadfg5FMMM0/VfiRf7niRI6ZTSwgSknTXUWO4zRk/mT5l00XFT7mIYGyv0SACWzmHB
+	 KKsOXtAfaAyVJd8beIKhjCfAs2wi5PsYZty/9cug1xeLjbA0Uhbm+Vc9OYO5ygfusP4CN
+	 hwTuXyw2d4kx4mw+iULd6bRUB8C1unL2Qcoru06m0lTqbGPK714Br/OUyZjHYv2R3ANnR
+	 MoRRV9prDj7DOMsnd6J7FsUxVG+4otWzXjaW78AX2vIIp3H15qCoLysPVTmJDh6VSfdjz
+	 zYzYCWKErji+PAqVzVq5z+6g+4LmtFA7ExZ2CjlEof7/E8oZT7CwTUqFp7ZJwA7OzAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022314;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022317;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kwqJDrRV7CCsvMx8ewc3b5XyCK+G5XWHi8b3fb610T0=;
-	b=oTsHm1K1Qq2hs/ZjfX4+dQhhQHjGHLtAvduGimno68+qKPSn+fmFalZ7OdroN4KNZbNF
-	 RVBwc64NMQhRmilPiFyc1o8zO0RPDqgo7UKZnlcuy8uv5xpj05jFqVqS6BNDkSEvYW1Jx
-	 pKNQ7NKf9GQKbqVW6tJEDvgPDXTEla1GqpFEbEcqfiqcPKuct3Hojyh6JgLB90vtWUEy+
-	 9nOhk7O85+6ShObUFQn5beYCLGKtEYpcUJS0iPbZSuwbyDTucSiuObd6ydc99dJTpwsvg
-	 5UCC6nC+UVAGNcki656wmTivdV0MeVLucI45MtfADgRpi0xz249loXClONFPJBSVaUw==
+	bh=pQzKPQhbhISphn08r8Pke2x3KulHv111gav6XOtYA8A=;
+	b=tpdAC14Lxe4NnR9eI9mzQEaD1cAA/pNTGvhfi12gFtycb+fxBxpW7o5Af2TdWgbhdWMe
+	 b2BQZTv0ncBkPJk20byXIlkcRmVXjZpoT32paqVf9KYCQG4QTRei+MP+x0T5tivA+PEjP
+	 SrjttKG5wgolN92qJ0kJZ494AS6BdaqZF1DIwT9P+Ev1syhxgQa6hCS0NvbmZfdKvSTV9
+	 3f/N+Rr5CJ+j+ehZmBSQ6VdMl5M8ro7h77Bv23WHvVgUh9K6woO8Bs61yF+01IKrs9gFj
+	 lsnlCTXdeitRmBIk/RzfKjhmKICrHnZUl9gjJ+4FQccqf2GdMJBuTDe/QbLiU2J8xZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rEJB42YS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xchIdlp1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54866606A31C;
-	Wed, 18 Nov 2026 17:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B7C606A31C;
+	Wed, 18 Nov 2026 17:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rEJB42YS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954D41F000C4;
-	Wed, 18 Nov 2026 17:18:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xchIdlp1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6830F1F000C6;
+	Wed, 18 Nov 2026 17:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022314;
-	bh=kwqJDrRV7CCsvMx8ewc3b5XyCK+G5XWHi8b3fb610T0=;
+	s=korg; t=1795022317;
+	bh=pQzKPQhbhISphn08r8Pke2x3KulHv111gav6XOtYA8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rEJB42YSZYeT/C9iih6UZirMxMYC7tiGnEu9gAZm1K4hpXLlX7yhZRhW/BSZJFWfD
-	 UsgqHRF9Db+k7Z2TR4uu4dytnvQSqvYqGSzTydYrFaEzhLE0FXSasC1h4TyRw74s+X
-	 R2X2wGd5/oJpw69wMDC+7aTcNfCkTx0GGFSP8a9I=
+	b=xchIdlp1L2DK0IA+IhQ2p0CBudVzCc+gvzFzuz23z5zwAt+/XSuFd5PfK+zHYWMJ8
+	 RRoxBH+vt2epjJ2AsycsdMMrNrzTl1VDRQaRnUqGOW081hxP5PPubxWcAjCRgC24dv
+	 aQGfR+lzX4kBcfPjrRTwvzAIEqO7/ydp0sg9e3/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2617/2651] eth: bnxt: free XDP frags when xdp_do_redirect() fails
-Date: Wed, 18 Nov 2026 16:04:17 +0100
-Message-ID: <20261118150418.441678273@linuxfoundation.org>
+Subject: [PATCH 7.3 2582/2651] blk-mq: keep sharing tags fairly after a queue update
+Date: Wed, 18 Nov 2026 16:03:42 +0100
+Message-ID: <20261118150417.276721007@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,48 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit c10f3420d59859df107838aa97b49357616d9b47 ]
+[ Upstream commit 620cfc7a664278a55d068ed88fff1242fddc4ef2 ]
 
-When xdp_do_redirect() fails bnxt_rx_xdp() recycles the head page but
-not the frags of a multi-buffer frame. Their agg ring slots have
-already been refilled, so the pages leak, and the page pool can't be
-destroyed until they are returned, which will never happen. Redirect
-to an AF_XDP socket in copy mode fails this way with -ENOMEM whenever
-the socket's fill ring runs out of buffers.
-A socket bound without XDP_USE_SG also fails with -ENOSPC for every
-frame that doesn't fit in a single chunk.
+A hctx only gets BLK_MQ_F_TAG_QUEUE_SHARED from
+blk_mq_add_queue_tag_set(). The hctxs blk_mq_update_nr_hw_queues()
+allocates for queues that joined long ago never get it, so they aren't
+counted in active_queues and hctx_may_queue() lets them take all the
+tags. One NVMe namespace can starve the others after the first update.
 
-All the other drop paths in this function free the frags.
+Set the flag on the new hctxs.
 
-Pointed out in LLM review of the first patch of the series.
-Tested on a BCM57504 at MTU 9000 by redirecting 60k 8000B ICMPv6
-echo requests (a head and two agg buffers each) to lo, which can't
-transmit XDP frames. The page pools' inflight count stayed flat
-rather than growing by two pages per frame.
-
-Fixes: a7559bc8c17c ("bnxt: support transmit and free of aggregation buffers")
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20261027234940.1267225-5-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 868f2f0b7206 ("blk-mq: dynamic h/w context count")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20261028164415.1262013-30-axboe@kernel.dk
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/blk-mq.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index 96845c8646e06..161e0dd62be60 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -307,6 +307,7 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
- 
- 		if (xdp_do_redirect(bp->dev, xdp, xdp_prog)) {
- 			trace_xdp_exception(bp->dev, xdp_prog, act);
-+			bnxt_xdp_buff_frags_free(rxr, xdp);
- 			page_pool_recycle_direct(rxr->page_pool, page);
- 			return true;
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 7a07ae9dc6fa6..9f0e3af0f3366 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -5184,6 +5184,9 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
+ 			goto fallback;
  		}
+ 		blk_mq_map_swqueue(q);
++		/* The new hctxs don't know yet that they share their tags */
++		if (set->flags & BLK_MQ_F_TAG_QUEUE_SHARED)
++			queue_set_hctx_shared(q, true);
+ 	}
+ switch_back:
+ 	/* The blk_mq_elv_switch_back unfreezes queue for us. */
 -- 
 2.53.0
 
