@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050840;
-	b=wytRJNnTBt7l9R7aAqU0B6hdZFzuyI6fx8vBQracp1cEexMX0A3rbFJgZ3x6xZPnwVxI
-	 jAEsgpHGSivScNqUE346Os8MlufjWUQ4XkDgqMCK4RvPCONHuMR6ehKDmGRL+dvhXkoQL
-	 sKOFpJ4he7PHq7+vXN0ysujEmn9TQspmLmX5Rx0cHTh4HHd7QcjGpgLRBtkPf6Ko7gCev
-	 KZhElyhNfvMZe5tMD+whEhI5GfC97jrN6LLKDRnbkOCTg36+cVBZgv1kMKTwjROyQHcX/
-	 xYEeNZTZATUxfHmI1Iso0wdH2kHqlvaS8EJCxBZSzI6eGvfvIQbcD8QbZnkkaNwab6A==
+	t=1795050842;
+	b=iZQCa/puHY4YiV+GisxVQ1J3neG2QdOMwiU2PokZYyZrdf+qOyFJdtDTDcp/rPMPMGq5
+	 rOtgDbb2raeY0fZfzMnu3uaD6neFeBEALT7BgJn6rUxnOb9Ik2ElJ9z78eccRgglDjY9x
+	 UTU3WMVpSG+c7wN+T9nyyRpgHTwBED8TfGOKQ9+tb5d/SQ9IBfv/TY/PhsKn3WDLzwDlJ
+	 EQrqP0Zlm2pOrcubebkXmuLxRXOIbf4sEKBDKJwFM1jp/FG7U30PZdnPaFoY/hmXd18Nq
+	 vM5t9oupFu3Ff0gH2U+JUws12UGYaQnVOGacQlNHsASkunftpe0NKXC1aygcJnCKDVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050840;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050842;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jL/7s24jgcSQxeqew0RhksvyB40HFT4bFdW8NFtDRMs=;
-	b=Nem8wTxIg235+w7zxo0jxc+J1WDgfdleHieYpvQVdV0XaQOBoH2WY+qKOeKzGLV/C5+l
-	 PdY4vhiYQUrs53OZA4ZRWmb4rWtVGBgGp3M7qCY6nBdozQAn2wTp/CYo15B4t2S2JzkuE
-	 EiHSd+/8hITgTOQlO6ovzW0g62V1Qi2ymIs/cpUgmu49E7PsERUmkJJe/HWpLHwlKDM7X
-	 RqDj4nhhWj+ZANA0DIadHchczDGDP77mJOTzMmMgb1EPMDVjGDHgdRTR/U3cTlmC+V978
-	 Kxek0FvO3Jd03qKONWcpgGwz945NCDQwkgZa6B0qcWrkNZwdi4536h9oPC2+M53ajdg==
+	bh=tA9zSy9HhfXJXBT0BFVC+9/9v5r3zQdQylFT+Asyr4Q=;
+	b=N8FJbfNe6ok3Vzy4ZIQVD1Y2xY/bGpX8cFzcTPztTGJPuZD0IalVEgmphf5cBWkoLWJf
+	 auDVGspLI5GY1PWd4EOi6V/zYBn04BOXnuf63ce58sLd3JE8zrAQ8QCHFGh1184LG6HR9
+	 ibGP5hNtcFrW0iSQwv5KfnQ1YMJ/SC3j/T/5NtcawXViCzENUCiPs3euNJZUB77xoMYKw
+	 iBLgmecM3Luh/PO/Y1C22cruEpVTtH9TlHIsODRiT14jjRWbcpceNtlGamNcB5AyKxE5r
+	 nHUHR9FnPYgJnmhK0RIipwKeQp315YEzaIicXLBwQ0md6vtpM/AMwuxgzc59EiUaO9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rsO6BEnQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GICx8pr8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B571606A32C;
-	Thu, 19 Nov 2026 01:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB701606A32F;
+	Thu, 19 Nov 2026 01:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rsO6BEnQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912AC1F000C4;
-	Thu, 19 Nov 2026 01:13:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GICx8pr8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671971F000C4;
+	Thu, 19 Nov 2026 01:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050840;
-	bh=jL/7s24jgcSQxeqew0RhksvyB40HFT4bFdW8NFtDRMs=;
+	s=korg; t=1795050842;
+	bh=tA9zSy9HhfXJXBT0BFVC+9/9v5r3zQdQylFT+Asyr4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rsO6BEnQIivyTVoMaAldwuBg3OzD0w/F1rja/NjcDtVaNLvkrRhJCYfHffrz22dzF
-	 Cb9ZFBa6T+muRr7AmEXcftQDwA2Z0IBSye6qP/ywWaila5poAgLCEJ8tisCSj0ggTW
-	 Km8TOYJYX4+5adoXhvwHx65Z6aZMWC6OROAO9Gh4=
+	b=GICx8pr8Vvx/D0KZKDsWE+e2f0piilhJfL5xlgcpmnUNO4j282omvsSfxqrwal+Qe
+	 KEA0QMaZ49NPzgaa3LfjyremhKuFOwPSmRaLIvH9i01YtQy4u2tHVuJQWc6hQN2Pgx
+	 45XMJHFFSKPMlqK/ixic+5x4W8L3gCYLadSpGYZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 2852/2857] nvmet: do not return reserved for empty TSAS values
-Date: Wed, 18 Nov 2026 16:04:46 +0100
-Message-ID: <20261118150344.272209509@linuxfoundation.org>
+	Uros Bizjak <ubizjak@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.1 2853/2857] cleanup: Remove address space of returned pointer
+Date: Wed, 18 Nov 2026 16:04:47 +0100
+Message-ID: <20261118150344.307284842@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,35 +67,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Reinecke <hare@kernel.org>
+From: Uros Bizjak <ubizjak@gmail.com>
 
-commit f31e85a4d7c6ac4a3e014129c9cdc31592ea29f3 upstream.
+commit f730fd535fc51573f982fad629f2fc6b4a0cde2f upstream.
 
-The 'TSAS' value is only defined for TCP and RDMA, but returning
-'reserved' for undefined values tricked nvmetcli to try to write
-'reserved' when restoring from a config file. This caused an error
-and the configuration would not be applied.
+Guard functions in local_lock.h are defined using DEFINE_GUARD() and
+DEFINE_LOCK_GUARD_1() macros having lock type defined as pointer in
+the percpu address space. The functions, defined by these macros
+return value in generic address space, causing:
 
-Fixes: 3f123494db72 ("nvmet: make TCP sectype settable via configfs")
-Signed-off-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+cleanup.h:157:18: error: return from pointer to non-enclosed address space
+
+and
+
+cleanup.h:214:18: error: return from pointer to non-enclosed address space
+
+when strict percpu checks are enabled.
+
+Add explicit casts to remove address space of the returned pointer.
+
+Found by GCC's named address space checks.
+
+Fixes: e4ab322fbaaa ("cleanup: Add conditional guard support")
+Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20240819074124.143565-1-ubizjak@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/configfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/cleanup.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/nvme/target/configfs.c
-+++ b/drivers/nvme/target/configfs.c
-@@ -377,7 +377,7 @@ static ssize_t nvmet_addr_tsas_show(stru
- 				return sprintf(page, "%s\n", nvmet_addr_tsas_rdma[i].name);
- 		}
- 	}
--	return sprintf(page, "reserved\n");
-+	return sprintf(page, "\n");
+--- a/include/linux/cleanup.h
++++ b/include/linux/cleanup.h
+@@ -118,7 +118,7 @@ static inline class_##_name##_t class_##
+ #define DEFINE_GUARD(_name, _type, _lock, _unlock) \
+ 	DEFINE_CLASS(_name, _type, if (_T) { _unlock; }, ({ _lock; _T; }), _type _T); \
+ 	static inline void * class_##_name##_lock_ptr(class_##_name##_t *_T) \
+-	{ return *_T; }
++	{ return (void *)(__force unsigned long)*_T; }
+ 
+ #define DEFINE_GUARD_COND(_name, _ext, _condlock) \
+ 	EXTEND_CLASS(_name, _ext, \
+@@ -175,7 +175,7 @@ static inline void class_##_name##_destr
+ 									\
+ static inline void *class_##_name##_lock_ptr(class_##_name##_t *_T)	\
+ {									\
+-	return _T->lock;						\
++	return (void *)(__force unsigned long)_T->lock;			\
  }
  
- static ssize_t nvmet_addr_tsas_store(struct config_item *item,
+ 
 
 
