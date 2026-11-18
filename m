@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021367;
-	b=E+TdTTJCwhBFaAKp9tbqEHJqhwlTLlJeNwxqn/ym8zK19YvnDPO4PKKrsGL1mrO/2YUn
-	 bhXP8bn/wddKW2D9cpwZSCGouSt/9JT/WY+hD5HW+oCN2WnvrwcFYY/+7B9R8y0OiRk9V
-	 f4hVQzZ9M3Iy74Q8N3oxXX1UK5AvTPyoJ4rpsG7bwcO6Knki3w5peyzfUqwt4eMAodVuX
-	 xNQ+g4+2C4kHNFtTIclmN/uIiBsOwJCHgnMmtoMCm/4Vy13WigFMWd3jxUxYY+Ljbsjig
-	 14kN0J0D8bINfdnyzuVLzUjhHE9KTrJNMu35J3CXFxfOpQqeHrhPWXXayURakX2fW1g==
+	t=1795021370;
+	b=Fa9M+UEWomLP11qAzNTKNA6bTN68CHlPveV/ud1Cm0/WTTl+AKJvEVV6R1uv/u2QTdiO
+	 33ts7ZEiV1aEOogWU0ElIRiyV+HnZ3k/vUlzVNCAXd87YtRz7pXCaAujGB4kJYsmbtpBP
+	 Ybx2Zlzraj1nOFD2EF7Gq8xbDqWq4LwLj93Z/g2ncS9ifRrAFlUykatQb2ftx0eiiLfTv
+	 AEsS5Ydp+H5ylylQdZsEKlSwNZfvcIcwjyTUk/CWdgFDJBGuxxUHlWvK9RQ6HEKHxwYmJ
+	 6YKUMvl9Dz18m4RgvrJlrCa9R6Fmf3yPgpxnbjf0JipY0158MgAWknrQeRThtzS9Wag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021367;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021370;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=svcFdLpFivdgvXvQm6U39nSUp3+5uKLlReDKotZoB08=;
-	b=Bp9IqUUiB0bOHKSlwKix5YUZy+b1bWndN3XCQLPvJJ8/aQgZVUthtjS/HIl3yNSSlVsI
-	 3N1FrUhgbvqDLopiIVS1j1Qj8//9/bwZzmovIxQaYOMO+4bVumvM/gm0mERvSlM0welGi
-	 lQVJoc9vVnwSK6X/bGDV7ymO32JJfQixXzPtvM1wYKXeuy6Eh9zzbbBwnOYrN7FeaBkY0
-	 ehEQJb88XL5WZTPmHpm+/PGHvLq8P5UTFPzZJC467QS3eapPi0FXZE7iur/aX4iiicNNW
-	 W7o5opuCsxn2f76ub+BYXMMCmcvtYqZTWm4Qg75YT87pIwj0TEu8/cLvUMWfPQr9WUw==
+	bh=vJZIlPJ9iViDYvtFxK31PdCKL7TZPQOuZFpULpkxBMQ=;
+	b=mQ0xe3Cz1EIRKrQvW5mO4LOAJznd8oWAfApPLyYtbX5GgfyhIsjjSNkx5MuFYvFkDErl
+	 YAdlGBVxdUd+EiPI27njtJGuqQ8oUFGWBWKiuWNqKZeAuirNhl+til6q/h/WW40xkhlq8
+	 SmOuTEVY1n2ImFcZ6OrecGPE4GUL69t6g0DeTHz6gkDJ53FosavkdVnSXNwFKWrGqx7TE
+	 Mxq7t8rFAj+NC2lWuq1ry6H6SRh3Z7zQBCxTChXU0s2WXmcia2vGgPxBbjouEnLOD+gtD
+	 AVNl+RmgqZVzvAtPB4y04OoD/O+hECP5Pw7TsrCkMH0XmmRkD69M8rN11Ifhy69ZYhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WOCQc2Te;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jzCuIA/n";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AA7C606A325;
-	Wed, 18 Nov 2026 17:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C239606A320;
+	Wed, 18 Nov 2026 17:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WOCQc2Te
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADCFE1F000C4;
-	Wed, 18 Nov 2026 17:02:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jzCuIA/n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 675B91F000C4;
+	Wed, 18 Nov 2026 17:02:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021367;
-	bh=svcFdLpFivdgvXvQm6U39nSUp3+5uKLlReDKotZoB08=;
+	s=korg; t=1795021369;
+	bh=vJZIlPJ9iViDYvtFxK31PdCKL7TZPQOuZFpULpkxBMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WOCQc2Team13lnip+P/nIZLvT9HsxLuhRtg/BfiHLJqmpdn/7ejlyqFo/bsrd8Ode
-	 gZgp8gRUtDrBCFQWhOChH2LHVpV90qchXTmixiUuUvt519WXuvG9bh6l+J278UwoLe
-	 r3d5KEXgTL/JqXuU96z0cpDvn67pv2XmLn88nNxE=
+	b=jzCuIA/nmAfghdoxKFRkWz26dYYrNF5ufU4jXITudqeOnMtontCle0775lFFV0YYi
+	 1kDvVFlovPy7DseWjetSB0h/1GcPIgXChmdK6JWm3n4YSuguYqRgtYnZ48k925OVDW
+	 0pq3bjKIl2GqTEJpWOj/qp/Vt/QxT5f+d41KbOFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot+sashiko@kernel.org>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
 	Henry Hu <huhai@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2283/2651] ksmbd: fix link speed query in fsctl_query_iface_info_ioctl()
-Date: Wed, 18 Nov 2026 15:58:43 +0100
-Message-ID: <20261118150407.492598991@linuxfoundation.org>
+Subject: [PATCH 7.3 2284/2651] ksmbd: fix unlocked IPv6 addr_list walk in fsctl_query_iface_info_ioctl()
+Date: Wed, 18 Nov 2026 15:58:44 +0100
+Message-ID: <20261118150407.525785512@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,51 +72,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Henry Hu <huhai@kylinos.cn>
 
-[ Upstream commit 2bc1d25fc8597fa6cbf6b1ff92653881939a6436 ]
+[ Upstream commit a63bb4d91c784f63ad7c063717dff7920d8445be ]
 
-fsctl_query_iface_info_ioctl() used to call
-netdev->ethtool_ops->get_link_ksettings() directly and never checked the
-return value. If the callback fails, cmd.base.speed may be left
-uninitialized. Also, SPEED_UNKNOWN (-1) is treated as a numeric link speed
-and would be converted into a bogus link speed.
+fsctl_query_iface_info_ioctl() walks idev6->addr_list with a plain
+list_for_each_entry() while holding only rtnl_lock(). rtnl does not
+serialize all writers of this list: the DAD-failure path
+(addrconf_dad_failure -> ipv6_add_addr) can insert addresses without
+holding RTNL. It updates idev->addr_list with list_add_tail_rcu() under
+write_lock_bh(&idev->lock), so it can race with the unlocked walk.
 
-Use __ethtool_get_link_ksettings() to acquire the per-netdev ops lock when
-needed. Fall back to 1Gbps when the query fails, or when the reported speed
-is 0 or SPEED_UNKNOWN.
+addr_list is RCU managed, so walk it with list_for_each_entry_rcu()
+under rcu_read_lock(), matching the other lockless readers of the list.
 
 Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260910090818.24479-1-15815827059%40163.com
+Co-developed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 Signed-off-by: Henry Hu <huhai@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ fs/smb/server/smb2pdu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 1c8037c85de95..26dc8933e2a0f 100644
+index 26dc8933e2a0f..efc3723389c5a 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -10683,6 +10683,7 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
- 	struct sockaddr_storage_rsp *sockaddr_storage;
- 	unsigned int flags;
- 	unsigned long long speed;
-+	struct ethtool_link_ksettings cmd;
+@@ -10761,13 +10761,15 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
+ 			if (!idev6)
+ 				continue;
  
- 	rtnl_lock();
- 	for_each_netdev(&init_net, netdev) {
-@@ -10717,10 +10718,8 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
- 		nii_rsp->Next = cpu_to_le32(152);
- 		nii_rsp->Reserved = 0;
- 
--		if (netdev->ethtool_ops->get_link_ksettings) {
--			struct ethtool_link_ksettings cmd;
--
--			netdev->ethtool_ops->get_link_ksettings(netdev, &cmd);
-+		if (!__ethtool_get_link_ksettings(netdev, &cmd) &&
-+		    cmd.base.speed && cmd.base.speed != SPEED_UNKNOWN) {
- 			speed = cmd.base.speed;
- 		} else {
- 			ksmbd_debug(SMB, "%s %s\n", netdev->name,
+-			list_for_each_entry(ifa, &idev6->addr_list, if_list) {
++			rcu_read_lock();
++			list_for_each_entry_rcu(ifa, &idev6->addr_list, if_list) {
+ 				if (ifa->flags & (IFA_F_TENTATIVE |
+ 							IFA_F_DEPRECATED))
+ 					continue;
+ 				memcpy(ipv6_addr, ifa->addr.s6_addr, 16);
+ 				break;
+ 			}
++			rcu_read_unlock();
+ 			sockaddr_storage->addr6.ScopeId = 0;
+ 			nbytes += sizeof(struct network_interface_info_ioctl_rsp);
+ 		}
 -- 
 2.53.0
 
