@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030250;
-	b=ZeWWIukoXd0sA0ImK9vltgkdq/yqXpMjQqfuhiR+A6qh4yApGZ33kLUnYhqD2ayFcVMT
-	 XvQhOIdaFuRXPkuMOtQlZLlkBOvFdxYx2k2aO0uTkPXKHpib+X0ptdaBj+AhY1ew/AMCz
-	 CDcnnqhwoScP5p8ue4x82CinvppoY4n2vpzB3CJDjQriJCJJ+gVxCpP2oILLqwd7Smwsu
-	 rUwHwZpcGt7OYuQC8RzoiCSVEDYctGsJgHLvGbfQXxt/dbb5HOZUUUAVNuStbCVByWine
-	 83XoEH5zf2fdR27lPacQXJQ6rc/WXRB+vMMB+rFg86YClaxhIvpFuTDpG7ZOYwvqJ4Q==
+	t=1795030253;
+	b=KDQamt0FAAB/q0iHaTWayIhht/ZxHGGqpaBlyWay/QAGw9vd38NPWMPf6XmSSI27/tkb
+	 pe+VVECX2CminiwjppPoA+RbAQCjvXDNzWCaR2v8SOPBjNY6cjgr+APDVRcZ8OPjTdAZm
+	 tzpNFaraXehoMp0FMBsys6bu4unPc4iQDvbB3Fr3qIfyJ2b9z4xc1NZ9wNxUy0CeMufY5
+	 TQb/E/xuN0F72QMyv1LgsysC9vXQRLo9x/GmC8yk69d2pGz1bQwMpzheGHiN3rqi16KBv
+	 bkHR/nt95+FiyYfn3ubQ+3kgQxn552ykX4hDQG+yJXWj1wwZesNP5FMS+zn1cvoeztQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030250;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030253;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mBccOu2zCNvyt9zXEmTrKmhn4n3/o3QoYYOtOx76GxI=;
-	b=neHCCxMJ6/ZRaQj9ZwNE2b0GonQ7L5k9nAC9POLpE8jxefcEJ/ikt5eownTYz8OoPHpe
-	 981o0CoQTV9cPxZdPAg6epHDAXj+xu0Z6iz38WeTG61kSA2IdNbi+ktbQvKfkXkTjkViE
-	 DRmyWjQEggBSLMOVQJ7HGZt/2gBgSq5nNeVEBBbZqukMFKnctkIrWW/cqkX3VT4wZOFCE
-	 rROcdoqV1XivPq0T+dUSY51AVEgftalu/GlmjU0OSbVBpZwffEu5XfbM+8FXPwBj8BgxO
-	 KLJxSHbkBN4E7PzTLOFkxTfWfm9OpjhnFiJiAc7HUGhv0w2HJAsvICQO8jhB4cvfOdA==
+	bh=VI9fHvN+prz4gclt7kZzgy1Gb5mlWWrlnKQo62hm5mo=;
+	b=xrl0Gcm+b0G1ZUmk87X0SZ9tPnrc62huMfJapes+sCEexs78SpRjkQ/X8/se/venA3z2
+	 +++4dZJ4P4+2Ob0wRquzB6kbEwEosZ0yfH6cQkmlLA0bE8wutMfpeCoTN+9nN34sdA1cJ
+	 HHXOYLn5j5OrFUpkWX5jr7ErIGWYbVu0jbGWooDH66SSbF0vKNPDOFPB9letMBo6gQa4w
+	 GViAFswY6uISW49gMXaOKDbGs9jhGIy88I7yWxUh8LoK8daYg3y6DGDcUUc7xGTIiC7Xe
+	 WJiHuRMrDfhxbgaLN5QEf9UsqsNxQZ76qTh786znyN1PjOl7PqNS9hjwNbFxxmbKBWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v1ge49EG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Crrh/xHO";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70E7606E7D0;
-	Wed, 18 Nov 2026 19:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A82606A331;
+	Wed, 18 Nov 2026 19:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v1ge49EG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72D51F000C4;
-	Wed, 18 Nov 2026 19:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Crrh/xHO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F641F000C4;
+	Wed, 18 Nov 2026 19:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030250;
-	bh=mBccOu2zCNvyt9zXEmTrKmhn4n3/o3QoYYOtOx76GxI=;
+	s=korg; t=1795030253;
+	bh=VI9fHvN+prz4gclt7kZzgy1Gb5mlWWrlnKQo62hm5mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v1ge49EGBWQGEyvq/dI+6RZyo/2AdpwzMFe8eJ+grSbPq8Y3b0bXbhrV/8fshX7eG
-	 bG4qmETCMvcr5RYheI5vtqyUTzJwTBdpk5vhQ7GK1gNCHFLK+KI3ZHK0gqcg+gHs7h
-	 N8AUwG7/kt67cnnfV3WVJcX3jJqtPFiHDpmeb+Wo=
+	b=Crrh/xHOd4Q7txGW6E7gN3RMz0wpl5EoPuIZa60k8N3E/EihRnk9WO2o6YyEG01Zq
+	 GxhyQKt34L9OwzRURvRtUhnkGgvPnzYwogS/8WYR4Mt23eDNh4pSGNCpWhZwrewNnn
+	 LK+hSvqU2fSpNqfG3ZYLjGfEGIPb/7382d2XDGrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdelnasser Hussein <abdelnasserhussein11@gmail.com>,
-	Maxwell Doose <maxwell@maxwelld.cc>,
 	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Abdelnasser Hussein <abdelnasserhussein11@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0637/1756] staging: iio: adc: ad7816: Serialize SPI operations
-Date: Wed, 18 Nov 2026 15:46:04 +0100
-Message-ID: <20261118150034.210223564@linuxfoundation.org>
+Subject: [PATCH 6.12 0638/1756] staging: iio: adc: ad7816: Protect sysfs attributes with mutex
+Date: Wed, 18 Nov 2026 15:46:05 +0100
+Message-ID: <20261118150034.249186150@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,85 +71,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdelnasser Hussein <abdelnasserhussein11@gmail.com>
 
-[ Upstream commit 8f99c766605a484663764b52da56a0b160f9d9c3 ]
+[ Upstream commit b96187644664d10b641dddeb7ca2eeef97a77c41 ]
 
-The ad7816_spi_read() and ad7816_spi_write() functions perform a
-sequence of GPIO state changes followed by an SPI transfer. If multiple
-operations occur simultaneously, the GPIO state could be changed by one
-thread while another is in the middle of a transfer, leading to a race
-condition.
+The sysfs store functions modify driver state that is critical during
+SPI transactions. ad7816_store_mode toggles hardware GPIO pins, while
+ad7816_store_channel updates the internal software state
+(chip->channel_id).
 
-Introduce a mutex to serialize the operations, ensuring that the GPIO
-toggling and the SPI transfer are treated as a single atomic operation.
-The mutex is placed right after the pointers in the device state
-structure to avoid padding holes.
+If these are modified concurrently by userspace while an SPI transfer
+is in progress, it could corrupt the hardware transaction or cause the
+driver to communicate with the wrong channel.
 
-Signed-off-by: Abdelnasser Hussein <abdelnasserhussein11@gmail.com>
-Reviewed-by: Maxwell Doose <maxwell@maxwelld.cc>
+Add the existing chip->lock guard to these functions to serialize
+access and prevent these race conditions.
+
+Fixes: 7924425db04a ("staging: iio: adc: new driver for AD7816 devices")
+Suggested-by: Joshua Crofts <joshua.crofts1@gmail.com>
 Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Signed-off-by: Abdelnasser Hussein <abdelnasserhussein11@gmail.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Stable-dep-of: b96187644664 ("staging: iio: adc: ad7816: Protect sysfs attributes with mutex")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/iio/adc/ad7816.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/staging/iio/adc/ad7816.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/drivers/staging/iio/adc/ad7816.c b/drivers/staging/iio/adc/ad7816.c
-index 6a402e8877605..ade1b8db197d4 100644
+index ade1b8db197d4..aac3de84e0a87 100644
 --- a/drivers/staging/iio/adc/ad7816.c
 +++ b/drivers/staging/iio/adc/ad7816.c
-@@ -5,12 +5,14 @@
-  * Copyright 2010 Analog Devices Inc.
-  */
- 
-+#include <linux/cleanup.h>
- #include <linux/device.h>
- #include <linux/gpio/consumer.h>
- #include <linux/interrupt.h>
- #include <linux/kernel.h>
- #include <linux/list.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/slab.h>
- #include <linux/spi/spi.h>
- #include <linux/sysfs.h>
-@@ -47,6 +49,7 @@ struct ad7816_chip_info {
- 	struct gpio_desc *rdwr_pin;
- 	struct gpio_desc *convert_pin;
- 	struct gpio_desc *busy_pin;
-+	struct mutex lock; /* protect device state during SPI transfers */
- 	u8  oti_data[AD7816_CS_MAX + 1];
- 	u8  channel_id;	/* 0 always be temperature */
- 	u8  mode;
-@@ -67,6 +70,8 @@ static int ad7816_spi_read(struct ad7816_chip_info *chip, u16 *data)
- 	int ret;
- 	__be16 buf;
+@@ -143,6 +143,8 @@ static ssize_t ad7816_store_mode(struct device *dev,
+ 	struct iio_dev *indio_dev = dev_to_iio_dev(dev);
+ 	struct ad7816_chip_info *chip = iio_priv(indio_dev);
  
 +	guard(mutex)(&chip->lock);
 +
- 	gpiod_set_value(chip->rdwr_pin, 1);
- 	gpiod_set_value(chip->rdwr_pin, 0);
- 	ret = spi_write_then_read(spi_dev, &chip->channel_id, sizeof(chip->channel_id), NULL, 0);
-@@ -107,6 +112,8 @@ static int ad7816_spi_write(struct ad7816_chip_info *chip, u8 data)
- 	struct spi_device *spi_dev = chip->spi_dev;
- 	int ret;
+ 	if (strcmp(buf, "full") == 0) {
+ 		gpiod_set_value(chip->rdwr_pin, 1);
+ 		chip->mode = AD7816_FULL;
+@@ -207,6 +209,8 @@ static ssize_t ad7816_store_channel(struct device *dev,
+ 		return -EINVAL;
+ 	}
  
 +	guard(mutex)(&chip->lock);
 +
- 	gpiod_set_value(chip->rdwr_pin, 1);
- 	gpiod_set_value(chip->rdwr_pin, 0);
- 	ret = spi_write_then_read(spi_dev, &data, sizeof(data), NULL, 0);
-@@ -362,6 +369,10 @@ static int ad7816_probe(struct spi_device *spi_dev)
- 	/* this is only used for device removal purposes */
- 	dev_set_drvdata(&spi_dev->dev, indio_dev);
+ 	chip->channel_id = data;
  
-+	ret = devm_mutex_init(&spi_dev->dev, &chip->lock);
-+	if (ret)
-+		return ret;
-+
- 	chip->spi_dev = spi_dev;
- 	for (i = 0; i <= AD7816_CS_MAX; i++)
- 		chip->oti_data[i] = 203;
+ 	return len;
 -- 
 2.53.0
 
