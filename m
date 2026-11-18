@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060733;
-	b=wtqJIVzUFzo1SfrekXV6vxHzj9iT+Bl3hk1biPUFVL3Oihsd3rM9gEvrZ94JlXcRLhAl
-	 NeH8OoFb/2KR8ZWpiZqvGEe9DhPAR5RPXKyb2ZgR5vciJNbxQZPeGWf1t1CdXRSjK70Uz
-	 kCp7XfqQ+P+5GSCEbSnzMypJxOCGbiSHXT2UZezn182vmu1H9hR2w2uu0/yp+LaN6Jcmr
-	 oTal1AwHWz3Nbf9MT6Uqqr/WIjldB86RMs8L+AvuzNDvlz+R+JwpdzYwyu9eS/6hsutA4
-	 UEXiI+JRbJi+FtRa4ozCAIaq7y/t7MIr6EDFiiQRDVIopkkRLN2+KIVyXI5X8rFIAGA==
+	t=1795060736;
+	b=J2+e46zx3k5VClxmrStcjPJ5UJIOVk9Aq/Bbl/6uEhHxOt/F0W/OZi26+Fd53PBUId53
+	 5tyTj+AntjkYrCP4TkOu/AHJUpUc2cpA4ruPq1pRjPtZi5wnd/cKpaav5P0zZOVmq5PDK
+	 ja18s1QCRs76Maa3Q5kCoHGaLZJB+1b9jXv9TWtJJFmRC/lVgmmlB1WPkoG9dq0hDCb7T
+	 80IwLvCLWIyHlGTZkkOFg4vOPy74AsE4Xfj+SMpERiWHW/cx5eYph22YgCsAxfI7ahqU5
+	 Dzu6mzEQdHfMhROrXDaL1twqto+Ig2x/j7Y2M28n2uJwWVFGnHnbWNEfmmW5oat2spw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060733;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060736;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=foYHW9zxK3mKhslqd7yJv8QIcwOmn7nN7WlymE4274k=;
-	b=csVHYrS7c9+7XwxWpFGaFEC0hoKzyKO0nW1+dAQYaI+EPFIg9LsPkxRVXXLthKRKE9S2
-	 6RjRvjviFpGxRw2KVm/Z4z9y2nOT0P6cTed4wHZEsQ6089Cz9Syjgg4fw0OnYbIDf+K2U
-	 anxS6wOjuVN8PZGz8lUKGM/wCetTUonO36NTF8SdyLXc25obXntzJNIO4Aj8vjxol1HxK
-	 c79YTobH08i/g+fGUOG/s6wACr0FRuD4YzXRA867NVWL1DunKB7h9u1jIOXNVDfNkCBGE
-	 pzlfwkTTnoN2a5TTTPGK7u16SrItpd4C5a7HTdoGaqbYob5r6uDqvK0dtSgZ0DxKrow==
+	bh=L/7t2my/OnL9VNaBp559L1LjiwNltDQw8eozh24E9Kw=;
+	b=iD4/ZfSUWoIRqSEmBV/1b3G9QsNlQCRqVUpx2Tgrc+nJoQePEds/siEV+WTde1PsAAlW
+	 +3M2I7g/nSPvzAbnLAZVimwVuyvlwanaOGL/X8hda56kPyXBRWsShh0XNveSj3yu0xzbV
+	 gq/9oWNkvUkvoLUsDm/hk/IYegG8kuZmzeZHGSaza++Ig3rpuCM3rVTC/Hlmo6UyvEpt9
+	 5Hy8VXi5SD5gfVNuSiMY8DKZNivJRJzYRHBZhhFyhnCngaV+u6NaxEB+ceEDNrlNkkMvq
+	 IX/z4/NyVGZqQsc14Kt5EVKl9kzXOi3/hY7v/9MzpudtX587Zeqfp5ekh2DI2BWy7bg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tKc+g7qs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oBZmpjE2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57DF606A320;
-	Thu, 19 Nov 2026 03:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7D8606A320;
+	Thu, 19 Nov 2026 03:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tKc+g7qs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 373191F000C4;
-	Thu, 19 Nov 2026 03:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oBZmpjE2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05BF31F000C4;
+	Thu, 19 Nov 2026 03:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060733;
-	bh=foYHW9zxK3mKhslqd7yJv8QIcwOmn7nN7WlymE4274k=;
+	s=korg; t=1795060736;
+	bh=L/7t2my/OnL9VNaBp559L1LjiwNltDQw8eozh24E9Kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tKc+g7qsQkGYMn9B7gvLwNYydTrr4+BQ7srK+ATpld8ydNNLKr+kvWlOxWhgIje0z
-	 /AKjIDNM4A7d0F2ol0B1OrGvUVDDFswjEc1/pm3aDK5Er28P0OVkd/VS+sxg0L/bQH
-	 6BpFIaO0fsTydba7nkZAyT4ofgVLeUV9kHnDlX2Q=
+	b=oBZmpjE2+eNQSrIXmK52kxhDThMkinspWYy2gCj7xT+A+00xSGTQCRG3TiRIo2tuB
+	 1vlOUwd/3OJ54nHlhAhCLlxFltqLwSPB1wnUr+dQc2FpbqTe5lmZ5qWodq1Dl1SRhL
+	 IFcZS9mSjXZOrUXX04I5vUPCqWaH1pljXwfnggdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Vivier <laurent@vivier.eu>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Stan Johnson <userm57@yahoo.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1305/1848] swim: Perform ISM/IWM mode switching according to specs
-Date: Wed, 18 Nov 2026 15:55:43 +0100
-Message-ID: <20261118150014.117314885@linuxfoundation.org>
+Subject: [PATCH 5.10 1306/1848] swim: dont call blk_queue_bounce_limit
+Date: Wed, 18 Nov 2026 15:55:44 +0100
+Message-ID: <20261118150014.158520369@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,67 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 52981bb358d1b5c38040b00f81e2cf973f9148ad ]
+[ Upstream commit 4c6e5bc8c05f7d9a8da6da8d1811a7577f3f404b ]
 
-The SWIM spec says, "MOTOREN must be low to switch modes" and "after
-switching from ISM to IWM, the very first command must be a clear L7".
+m68k doesn't support highmem, so don't bother enabling the block layer
+bounce buffer code.  Just for safety throw in a depend on !HIGHMEM.
 
-The ISM spec says, MOTOREN "must not be cleared until after the Action
-bit is cleared". Perform those operations in the correct sequence.
-
-When switching to ISM mode, the Mode register has to be selected with a
-particular sequence of bit flips. Set q7 low then q6 low then mtrOff.
-
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/75714ecc9a12d59511967dc9e24163dc8f3bbdd8.1788513996.git.fthain@linux-m68k.org
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20210406061725.811389-1-hch@lst.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 994a778d9665 ("swim: Configure parameter memory")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/block/Kconfig | 2 +-
+ drivers/block/swim.c  | 2 --
+ 2 files changed, 1 insertion(+), 3 deletions(-)
 
+diff --git a/drivers/block/Kconfig b/drivers/block/Kconfig
+index 408c7428cca5e..d8fd44c6ba62e 100644
+--- a/drivers/block/Kconfig
++++ b/drivers/block/Kconfig
+@@ -66,7 +66,7 @@ config MAC_FLOPPY
+ 
+ config BLK_DEV_SWIM
+ 	tristate "Support for SWIM Macintosh floppy"
+-	depends on M68K && MAC
++	depends on M68K && MAC && !HIGHMEM
+ 	help
+ 	  You should select this option if you want floppy support
+ 	  and you don't have a II, IIfx, Q900, Q950 or AV series.
 diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index 59dbd2734824a..2239ed5af368b 100644
+index 2239ed5af368b..b10052eacce77 100644
 --- a/drivers/block/swim.c
 +++ b/drivers/block/swim.c
-@@ -148,6 +148,7 @@ struct iwm {
- #define ACTION		0x08
- #define WRITE_MODE	0x10
- #define HEDSEL		0x20
-+#define ISM_SELECT	0x40
- #define MOTON		0x80
+@@ -840,8 +840,6 @@ static int swim_floppy_init(struct swim_priv *swd)
+ 		}
  
- /*----------------------------------------------------------------------------*/
-@@ -221,18 +222,21 @@ extern int swim_read_sector_data(struct swim __iomem *base,
- static DEFINE_MUTEX(swim_mutex);
- static inline void set_swim_mode(struct swim __iomem *base, int enable)
- {
--	struct iwm __iomem *iwm_base;
-+	struct iwm __iomem *iwm_base = (struct iwm __iomem *)base;
- 	unsigned long flags;
- 
- 	if (!enable) {
--		swim_write(base, mode0, 0xf8);
-+		swim_write(base, mode0, ACTION);
-+		swim_write(base, mode0, ENBL1 | ENBL2 | MOTON);
-+		swim_write(base, mode0, ISM_SELECT);
-+		iwm_read(iwm_base, q7L);
- 		return;
+ 		swd->unit[drive].disk->queue = q;
+-		blk_queue_bounce_limit(swd->unit[drive].disk->queue,
+-				BLK_BOUNCE_HIGH);
+ 		swd->unit[drive].disk->queue->queuedata = &swd->unit[drive];
+ 		swd->unit[drive].swd = swd;
  	}
- 
--	iwm_base = (struct iwm __iomem *)base;
- 	local_irq_save(flags);
- 
- 	iwm_read(iwm_base, q7L);
-+	iwm_read(iwm_base, q6L);
- 	iwm_read(iwm_base, mtrOff);
- 	iwm_read(iwm_base, q6H);
- 
 -- 
 2.53.0
 
