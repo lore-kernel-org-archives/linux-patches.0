@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017749;
-	b=uyMfjWQJl+UcfkyyqYRhqCFv1TQJgNnTRm9BoMnmXfMl7qXpYVxXWotblEeo5fjaEzXu
-	 LaJ/PPAC7cFB8eZSpaYhG9PSPn6s+/Q0fA9Syao+Ary4ZUKZgSGabtqvwpggrbkyU+iZM
-	 7HE5P7SHvcVO6JkZS/R2Mx728HZJZteHCJrZnIJmVsLcIVS0AQCw767OGLRIMNaWov8qI
-	 QDMjQjXTetKxzeNaoYVW9iphDZLA1JA3aDh8oUrLLHjq4oEq8hbbpUqfzf4CbXutW9yrK
-	 vZ0jHs9+FEnoO74BCwHW3mu7Tt0jXzDrftrgQJVdFfrlGp7yrFlHGNllJ1jLPsI40CA==
+	t=1795017752;
+	b=jyIRtiCVjFZLAK1mJX/OP1EJdkW051yYJoJnJW5fX3GldM/3XLZ4KQJibwL238+GkgIs
+	 OqrrzHRH/oWZFEp9vvweJcMGqs0yHs+qZF73rqkIpo2iCnkg5cNBuflWly8YeLMUZFOdJ
+	 7Pe6GXBH6t/vPyYZS3u2aoOT8s0MIVRT5epylJiNhDYD8jBbdo14AQUtsNq+VC09qlW5M
+	 n+t3WQ5P5nyOgO8QLvtLGU12Q6h/I3xpi92p1Ic446HUUzPrDXOhk/QyzItb6B+ikBkyJ
+	 6vlPJDFvcuhTN4SxTxAUaAii2DipWT9tYj7MURmWQocxbqU1ZIP/ddk3oAm6/QJs8Rg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017749;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017752;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=we0w/DRk6kgpkChW3fwM8UrwyKe2Rorm3njQTQ7fG7A=;
-	b=OsfaXUca/wT/DY0AfMgeE+zXVNYJOGsxpK+T1NQI0BdFIpS+CmMBnNTyjFJlLB1r0HmJ
-	 7QLuHwNpaH2g+WDWC5FmiSjpx2SWLnKvKj+KVKEh4zV+A2N5re9EGdmSmdhtq/+VzCe3i
-	 e895g0mV7I2N/ZNwsGbIb4vfaa6ZcTprMFAp5oUSba6mTSkta5NFsnlUoIEHFsRFmI1CX
-	 7ZDb1K4HFXtA7CWauyzxlyIuyHxuxQa0JsoMBgAlUrSystxjYPlGsgOjSmWggNjtdmnss
-	 GcRDFXmfSaUtZLE+iRAmZSaTkWZUrGWnchVN2oFiuiYh8oeBfaIhxS4YKgSWQX7dHAw==
+	bh=QtTBiKwF59ww2PYks0BbR274qlRU4ZWPmYDhkdelBbY=;
+	b=tR+X6WhUU8bUf0M1w5jUJozJy3sLflD7GG93Pzupz0lBYSDF2Xx7z1KLcfcppNBuG4NE
+	 v12lqM5ihTpeCQ2EAyCgpXsiZ/FxgqA5eBp430EZ4sJsvi9QJHljOjqBuQ9M5gzN+UagW
+	 cTfOWxqL7wJHY3cbToWRMJtGB8OQzSvWlN+amV9Cq6CFR5G4IjsiPJLP7xv3ZBvTPKpx6
+	 VDPZkQPT+xrop6OrO+a6OFlLktiC/LAMZ8dNRKk9AUlfO9zcvsVzO/IvESVgHblCQTOlH
+	 PcxZIEvcvCyXh8HquhUBbwwq5Qsy5FiGA9B4YBM4TMw1oLzVScDcDitHGq/NRmo5VPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQPcUWZT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zxwcthRj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F87606A333;
-	Wed, 18 Nov 2026 16:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94DC606A331;
+	Wed, 18 Nov 2026 16:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQPcUWZT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149711F000C9;
-	Wed, 18 Nov 2026 16:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zxwcthRj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5EE11F000C9;
+	Wed, 18 Nov 2026 16:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017749;
-	bh=we0w/DRk6kgpkChW3fwM8UrwyKe2Rorm3njQTQ7fG7A=;
+	s=korg; t=1795017752;
+	bh=QtTBiKwF59ww2PYks0BbR274qlRU4ZWPmYDhkdelBbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JQPcUWZTl00AXKg+BhNqPGpEEk9nDAX++JQAhiqSlzhsKQJphO7v4efY/AIMYOMnQ
-	 QGGQeWP95jUAdRlwrAhlIhhY3Wza2km6ZeEvoYz3EYD63zf+GSe/2asi78amMvmoxX
-	 Y5E10SZdAUlSLORKX9TgrhBxO9eeCZs/+LVOC3Ag=
+	b=zxwcthRj67H7o1oSPMjMj6mF6H9aYWYsNMXKQUBmwk+R5mj/ZDjAKddB1kLzXR4RB
+	 6RnYReRxZ5dBeNeiyLNoGd+sbMxrrYBkHSYol1e8wwO8fBzVu9s310FvZ2e6QEj7QE
+	 cC5aLXMmIBt5cJkzg1xMHds10Pa+5jFXZQl51IKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niko Huuskonen <niko.huuskonen.00@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Peng Fan <peng.fan@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0958/2651] ALSA: caiaq: Serialize access to the EP1 command buffer
-Date: Wed, 18 Nov 2026 15:36:38 +0100
-Message-ID: <20261118150322.390329992@linuxfoundation.org>
+Subject: [PATCH 7.3 0994/2651] arm64: dts: imx8qxp-mek: fix reserved memory node names for remoteproc
+Date: Wed, 18 Nov 2026 15:37:14 +0100
+Message-ID: <20261118150323.685248880@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,88 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niko Huuskonen <niko.huuskonen.00@gmail.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit a718fd03e1e00211cf4662f5ab82d33f4c18e2a7 ]
+[ Upstream commit a9f3cf4354022ca0b4a0d12eab7af9858f71c9f7 ]
 
-snd_usb_caiaq_send_command() and snd_usb_caiaq_send_command_bank() copy
-the command into cdev->ep1_out_buf and send it with a synchronous bulk
-transfer. Nothing serializes their callers. An ALSA control write, which
-sets the LEDs on the Kore controllers and several other devices, can run
-at the same time as a PCM prepare, which sends the audio parameters
-through the same buffer. One caller can then overwrite the buffer while
-the transfer of the other is still in flight, and the device receives a
-mix of both commands.
+The imx_rproc driver uses node names to identify reserved memory regions.
+It checks for "vdev0buffer" to skip mapping, "rsc-table" to locate the
+resource table, and "vdev" prefix to filter vdev regions.
 
-Protect the buffer with a mutex. All callers run in process context and
-already sleep in usb_bulk_msg().
+Rename the reserved memory nodes to use the expected names so the driver
+can correctly identify and handle each region.
 
-The problem was found by code review while adding another user of the
-buffer, the Kore LCD support later in this series. It has not been
-observed or reproduced.
-
-Fixes: 8e3cd08ed8e5 ("[ALSA] caiaq - add control API and more input features")
-Assisted-by: LLM
-Signed-off-by: Niko Huuskonen <niko.huuskonen.00@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260927003532.289468-2-niko.huuskonen.00@gmail.com
+Fixes: 5fa302590f17 ("arm64: dts: imx8qxp-mek: add cm4 and related nodes")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/device.c | 5 +++++
- sound/usb/caiaq/device.h | 3 +++
- 2 files changed, 8 insertions(+)
+ arch/arm64/boot/dts/freescale/imx8qxp-mek.dts | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/sound/usb/caiaq/device.c b/sound/usb/caiaq/device.c
-index f604846ec6e6f..e8619bb743581 100644
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -212,6 +212,8 @@ int snd_usb_caiaq_send_command(struct snd_usb_caiaqdev *cdev,
- 	if (len > EP1_BUFSIZE - 1)
- 		len = EP1_BUFSIZE - 1;
+diff --git a/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts b/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts
+index 857a6e5122283..6322ff471175c 100644
+--- a/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts
++++ b/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts
+@@ -27,7 +27,7 @@ imx8x_cm4: imx8x-cm4 {
+ 		mboxes = <&lsio_mu5 0 1
+ 			  &lsio_mu5 1 1
+ 			  &lsio_mu5 3 1>;
+-		memory-region = <&vdevbuffer>, <&vdev0vring0>, <&vdev0vring1>,
++		memory-region = <&vdev0buffer>, <&vdev0vring0>, <&vdev0vring1>,
+ 				<&vdev1vring0>, <&vdev1vring1>, <&rsc_table>;
+ 		power-domains = <&pd IMX_SC_R_M4_0_PID0>,
+ 				<&pd IMX_SC_R_M4_0_MU_1A>;
+@@ -242,32 +242,32 @@ reserved-memory {
+ 		#size-cells = <2>;
+ 		ranges;
  
-+	guard(mutex)(&cdev->ep1_out_mutex);
-+
- 	if (buffer && len > 0)
- 		memcpy(cdev->ep1_out_buf+1, buffer, len);
+-		vdev0vring0: memory@90000000 {
++		vdev0vring0: vdev0vring0@90000000 {
+ 			reg = <0 0x90000000 0 0x8000>;
+ 			no-map;
+ 		};
  
-@@ -235,6 +237,8 @@ int snd_usb_caiaq_send_command_bank(struct snd_usb_caiaqdev *cdev,
- 	if (len > EP1_BUFSIZE - 2)
- 		len = EP1_BUFSIZE - 2;
+-		vdev0vring1: memory@90008000 {
++		vdev0vring1: vdev0vring1@90008000 {
+ 			reg = <0 0x90008000 0 0x8000>;
+ 			no-map;
+ 		};
  
-+	guard(mutex)(&cdev->ep1_out_mutex);
-+
- 	if (buffer && len > 0)
- 		memcpy(cdev->ep1_out_buf+2, buffer, len);
+-		vdev1vring0: memory@90010000 {
++		vdev1vring0: vdev1vring0@90010000 {
+ 			reg = <0 0x90010000 0 0x8000>;
+ 			no-map;
+ 		};
  
-@@ -443,6 +447,7 @@ static int create_card(struct usb_device *usb_dev,
- 	cdev->chip.usb_id = USB_ID(le16_to_cpu(usb_dev->descriptor.idVendor),
- 				  le16_to_cpu(usb_dev->descriptor.idProduct));
- 	spin_lock_init(&cdev->spinlock);
-+	mutex_init(&cdev->ep1_out_mutex);
+-		vdev1vring1: memory@90018000 {
++		vdev1vring1: vdev1vring1@90018000 {
+ 			reg = <0 0x90018000 0 0x8000>;
+ 			no-map;
+ 		};
  
- 	*cardp = card;
- 	return 0;
-diff --git a/sound/usb/caiaq/device.h b/sound/usb/caiaq/device.h
-index 1c6f34693fa81..822d872c8ad1a 100644
---- a/sound/usb/caiaq/device.h
-+++ b/sound/usb/caiaq/device.h
-@@ -2,6 +2,8 @@
- #ifndef CAIAQ_DEVICE_H
- #define CAIAQ_DEVICE_H
+-		rsc_table: memory@900ff000 {
++		rsc_table: rsc-table@900ff000 {
+ 			reg = <0 0x900ff000 0 0x1000>;
+ 			no-map;
+ 		};
  
-+#include <linux/mutex.h>
-+
- #include "../usbaudio.h"
- 
- #define USB_VID_NATIVEINSTRUMENTS 0x17cc
-@@ -68,6 +70,7 @@ struct snd_usb_caiaqdev {
- 
- 	unsigned char ep1_in_buf[EP1_BUFSIZE];
- 	unsigned char ep1_out_buf[EP1_BUFSIZE];
-+	struct mutex ep1_out_mutex;	/* protects ep1_out_buf */
- 	unsigned char midi_out_buf[EP1_BUFSIZE];
- 
- 	struct caiaq_device_spec spec;
+-		vdevbuffer: memory@90400000 {
++		vdev0buffer: vdev0buffer@90400000 {
+ 			compatible = "shared-dma-pool";
+ 			reg = <0 0x90400000 0 0x100000>;
+ 			no-map;
 -- 
 2.53.0
 
