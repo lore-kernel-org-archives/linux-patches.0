@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038086;
-	b=thyizFDbFqZpaq1G9sKi3sC5fR1GsrSXBEUq4+p5NUGErZeun2RXqLHosFc3fcQOu2YT
-	 Cy7VxKIR8QuoE1H3kJOZXIHlkLh5ZPUAR795KjHZ08x/OvP//4Il/RMFzrDAIZLvDdrtT
-	 B9YBcHNSNayWvXW1ZKgBs+KoJAOPjJHK73CESHsBZlUuDQ+onUftWFzpILHU289C5bNm/
-	 Z9QqpzEe+xkHbj/5na0LD/hzlQ7U9rBbpbZURPY148HdZFMQ0wHKK3EDtLSfA9AKXEBJo
-	 XW8dP769edvs/nJgxwTejOWqg3AwALlIyaq9xd3sb/2AMzoq+7SUq+lZ0D9xuUgql+g==
+	t=1795038088;
+	b=l1AfyIfvbAmEGMgvq6Ogpj+VbuvOoa6vhda0cO6ohZF9R2p1UAWsax68GBMKTwRRKrT+
+	 /DpOT/HGperYITYVlvxPcDkyUGcihGyQhyQTv6G7Ct9qAgtpYIMsEAJTsme5JljncWoHL
+	 USX4Y4ErwMmpuW52ZheksR/fxDmsWglsASi1cF7xtNUpM8fmMpGuAnfkWMJs+WmswDQpG
+	 klgh2Wtmk4EBIea7dIlYRxgQP3zkXzL86ssqwOubZg+PJxbivyvHVtW4F+MApDWDuyt/h
+	 tzP+FzODC+37bqasi78ZXaOyID2L9Vx9O2TsITZDHr1sSJgaivynhx6joMVZfHQBGOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038086;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038088;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5HBDmqC1TcB8x7S9VyBIwXHWJ9L6Po+2zRl8nRf+uRo=;
-	b=A5wNr128dy+yaMCrn5wS8tHLyh6w3Mj5War6dj55PjgLEpU1Gvj6fBRd50C+dKJFe/Se
-	 Bqu++XKQLF01S3grX0KEDMnqUMn7wEw67XIRHUk9UXR5tBWYDno1fDs5WFdmE3Rkb9kZx
-	 4lHrO1Dp6K7LzoNSMHblgCmi215m8hzTdFyjuUNE9hc7zKokPPeObTAc2Pj+sjGQx47+2
-	 FT55qTbKKZzs2CrLZ+gBRz4DVBNwpVCJnIkoIsWC4zvbjfSkHtb24mAhpN0n4Bn8ZDcsL
-	 RkVBu/u9w+VSWjrf3fd661ut/WpScuw7ME8q4zJFZEs2JVcZRqBjvo6wG6Y2eknpcnw==
+	bh=106KBRTosYnTF5lO55w2Au5+WlKBKnhWPCB2z32c3Ek=;
+	b=l0PftB0nZrkqMwBmYYGysp/3X+PnEfzJnpJXL4/Qi+fH+FZ9eGoS+BetUgPBdTkilGXW
+	 FVts1bbLgvZ5qCzdGwN5HVocbLaSzV/CN3lwPd6BoKnnYlhflPY9QVwbAQEVZlrPOlqPr
+	 bAX9bpNybpm94j/2Ioi10x5x1bGp/q9ZKpqWKysd9C1KuiWhshJHepzDeD6gmR7ZO4diN
+	 m8cVfQE+rXRqwiGo8BeJYMhdULWd1OuB/m2paWUXtGqOrnjNScr2OkL+LUPGERc107w1k
+	 0Goq7CjIKVPXQFWBKXkxTidi+eG/vO48OgLWf7/26TgkRPAep05ZnW/mHxwPDGosi8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oM7Y+Xoe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0M/ltTOk";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24EF606A320;
-	Wed, 18 Nov 2026 21:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A36606A31C;
+	Wed, 18 Nov 2026 21:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oM7Y+Xoe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08EA1F000C4;
-	Wed, 18 Nov 2026 21:41:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0M/ltTOk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38631F000C4;
+	Wed, 18 Nov 2026 21:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038085;
-	bh=5HBDmqC1TcB8x7S9VyBIwXHWJ9L6Po+2zRl8nRf+uRo=;
+	s=korg; t=1795038088;
+	bh=106KBRTosYnTF5lO55w2Au5+WlKBKnhWPCB2z32c3Ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oM7Y+Xoe0RFaXScj/bBiHgtONA+Ai/TRhswq0XuTiyldY7/fEGTL3lq8VvyNWZhpw
-	 prjqOhgTQca1M3E3ZGlEflbcWnkZx08pNNBjjFOnwQmX3NuXA25ba8s9b0N94UuYVy
-	 M7JD9Ch0n3zfv/s4IuquFIIvX4Mt+gnPhiByXzXw=
+	b=0M/ltTOkLL8CL7QWYGo8VwWeCKdPbU8bVuoMWrhzScgJV0VHdpU1n6pU95+PkbJfO
+	 ocq1RFussjO/3VBtFiKVtH2HI/SxEjWmPTY3pasaSa4+rihVdxHzfcRkURC/Ndr4Tz
+	 KxSSaiCanMejh1FMEPTZ/KjMvcM+32s9O0A1n0ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Snyders <robin@snyders.xyz>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Jakub Szczudlo <jakubszczudlo40@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1622/3318] power: supply: qcom_smbx: validate battery float voltage
-Date: Wed, 18 Nov 2026 15:37:24 +0100
-Message-ID: <20261118150410.391445450@linuxfoundation.org>
+Subject: [PATCH 6.6 1605/3318] iio: adc: ti-ads1100: Fix incorrect reading when datarate changed in single mode
+Date: Wed, 18 Nov 2026 15:37:07 +0100
+Message-ID: <20261118150409.331802286@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,162 +70,209 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Snyders <robin@snyders.xyz>
+From: Jakub Szczudlo <jakubszczudlo40@gmail.com>
 
-[ Upstream commit a2d7dc538da2cb4a7426f0742197e762cb635f38 ]
+[ Upstream commit 38dbf24dfbd0a73b89fa2871a7148429aef05531 ]
 
-power_supply_get_battery_info() leaves absent optional properties at
--EINVAL. The driver uses voltage_max_design_uv without checking it, so a
-missing or out-of-range value can become an invalid float-voltage
-selector.
+When device is suspended and it is in single mode then changing
+datarate doesn't make it actually wait for new measurement, so to
+be sure that read after change is correct, functions that changes
+datarate and gain will wait for a new data.
 
-Prefer the constant-charge voltage because it describes the charger's CV
-target, then fall back to the battery design voltage. Both properties are
-optional in the simple-battery binding, so preserve the hardware setting
-when neither is present. Reject a supplied target outside the SMB2 range.
-
-smb_init_hw() enables charging before battery data is parsed and before
-the remaining fallible probe steps. Save the initial charging-enable bit
-and install a managed rollback before initialization. Keep the rollback
-active across battery-info, voltage, IRQ and wake-IRQ setup, then remove it
-only after probe can no longer fail.
-
-Fixes: 8648aeb5d7b7 ("power: supply: add Qualcomm PMI8998 SMB2 Charger driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Robin Snyders <robin@snyders.xyz>
-Link: https://patch.msgid.link/20260812-qcom-smbx-fixes-v1-4-eb48246be599@snyders.xyz
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-[ sashal: adapted smb_ identifiers to the existing smb2_ naming convention ]
+Fixes: 541880542f2b ("iio: adc: Add TI ADS1100 and ADS1000")
+Signed-off-by: Jakub Szczudlo <jakubszczudlo40@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+[ sashal: Replaced unavailable runtime-PM guards with explicit reference management that calls pm_runtime_mark_last_busy() before autosuspend. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/qcom_pmi8998_charger.c | 61 ++++++++++++++++++++-
- 1 file changed, 58 insertions(+), 3 deletions(-)
+ drivers/iio/adc/ti-ads1100.c | 121 +++++++++++++++++++++++++++++++++--
+ 1 file changed, 115 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/power/supply/qcom_pmi8998_charger.c b/drivers/power/supply/qcom_pmi8998_charger.c
-index 2ad6b87eba762..3c91d5a0c8c94 100644
---- a/drivers/power/supply/qcom_pmi8998_charger.c
-+++ b/drivers/power/supply/qcom_pmi8998_charger.c
-@@ -350,6 +350,7 @@
- /* pmi8998 registers represent current in increments of 1/40th of an amp */
- #define CURRENT_SCALE_FACTOR				25000
- #define SMB2_FLOAT_VOLTAGE_MIN_UV			3487500
-+#define SMB2_FLOAT_VOLTAGE_MAX_UV			4920000
- #define SMB2_FLOAT_VOLTAGE_STEP_UV			7500
- /* clang-format on */
+diff --git a/drivers/iio/adc/ti-ads1100.c b/drivers/iio/adc/ti-ads1100.c
+index 1e46f07a9ca6a..bea727ff9d6ee 100644
+--- a/drivers/iio/adc/ti-ads1100.c
++++ b/drivers/iio/adc/ti-ads1100.c
+@@ -14,10 +14,12 @@
+ #include <linux/module.h>
+ #include <linux/init.h>
+ #include <linux/i2c.h>
++#include <linux/iopoll.h>
+ #include <linux/mutex.h>
+ #include <linux/property.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/regulator/consumer.h>
++#include <linux/time.h>
+ #include <linux/units.h>
  
-@@ -377,6 +378,7 @@ struct smb2_register {
-  * @base:		Base address for smb2 registers
-  * @regmap:		Register map
-  * @batt_info:		Battery data from DT
-+ * @initial_charge_enable: Charging enable state before hardware setup
-  * @status_change_work: Worker to handle plug/unplug events
-  * @cable_irq:		USB plugin IRQ
-  * @wakeup_enabled:	If the cable IRQ will cause a wakeup
-@@ -390,6 +392,7 @@ struct smb2_chip {
- 	unsigned int base;
- 	struct regmap *regmap;
- 	struct power_supply_battery_info *batt_info;
-+	u8 initial_charge_enable;
+ #include <linux/iio/iio.h>
+@@ -42,6 +44,9 @@
+ static const int ads1100_data_rate[] = { 128, 32, 16, 8 };
+ static const int ads1100_data_rate_bits[] = { 12, 14, 15, 16 };
  
- 	struct delayed_work status_change_work;
- 	int cable_irq;
-@@ -909,6 +912,19 @@ static int smb2_init_hw(struct smb2_chip *chip)
++/* Timeout based on the minimum sample rate of 8 SPS (7500ms) */
++#define ADS1100_MAX_DRDY_TIMEOUT_US	(7500 * USEC_PER_MSEC)
++
+ struct ads1100_data {
+ 	struct i2c_client *client;
+ 	struct regulator *reg_vdd;
+@@ -123,10 +128,86 @@ static int ads1100_get_adc_result(struct ads1100_data *data, int chan, int *val)
  	return 0;
  }
  
-+static void smb2_restore_charge_enable(void *data)
++static int ads1100_conversion_busy(struct ads1100_data *data)
 +{
-+	struct smb2_chip *chip = data;
-+	int rc;
++	u8 buffer[3];
++	int ret;
 +
-+	rc = regmap_update_bits(chip->regmap,
-+				chip->base + CHARGING_ENABLE_CMD,
-+				CHARGING_ENABLE_CMD_BIT,
-+				chip->initial_charge_enable);
-+	if (rc < 0)
-+		dev_err(chip->dev, "Couldn't restore charging state: %d\n", rc);
-+}
-+
- static int smb2_init_irq(struct smb2_chip *chip, int *irq, const char *name,
- 			 irqreturn_t (*handler)(int irq, void *data))
- {
-@@ -937,6 +953,9 @@ static int smb2_probe(struct platform_device *pdev)
- 	struct power_supply_config supply_config = {};
- 	struct power_supply_desc *desc;
- 	struct smb2_chip *chip;
-+	unsigned int charge_enable;
-+	unsigned int float_voltage_sel;
-+	int float_voltage_uv;
- 	int rc, irq;
- 
- 	chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
-@@ -967,6 +986,18 @@ static int smb2_probe(struct platform_device *pdev)
- 				     "Couldn't get usbin_i IIO channel\n");
- 	}
- 
-+	rc = regmap_read(chip->regmap, chip->base + CHARGING_ENABLE_CMD,
-+			 &charge_enable);
-+	if (rc < 0)
-+		return dev_err_probe(chip->dev, rc,
-+				     "Couldn't read charging state\n");
-+
-+	chip->initial_charge_enable = charge_enable & CHARGING_ENABLE_CMD_BIT;
-+	rc = devm_add_action_or_reset(chip->dev, smb2_restore_charge_enable, chip);
-+	if (rc)
-+		return dev_err_probe(chip->dev, rc,
-+				     "Couldn't register charging state rollback\n");
-+
- 	rc = smb2_init_hw(chip);
- 	if (rc < 0)
- 		return rc;
-@@ -1001,13 +1032,35 @@ static int smb2_probe(struct platform_device *pdev)
- 		return dev_err_probe(chip->dev, rc,
- 				     "Failed to init status change work\n");
- 
--	rc = (chip->batt_info->voltage_max_design_uv -
--	      SMB2_FLOAT_VOLTAGE_MIN_UV) / SMB2_FLOAT_VOLTAGE_STEP_UV;
-+	if (power_supply_battery_info_has_prop(chip->batt_info,
-+					       POWER_SUPPLY_PROP_CONSTANT_CHARGE_VOLTAGE_MAX)) {
-+		float_voltage_uv =
-+			chip->batt_info->constant_charge_voltage_max_uv;
-+	} else if (power_supply_battery_info_has_prop(chip->batt_info,
-+					      POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN)) {
-+		float_voltage_uv = chip->batt_info->voltage_max_design_uv;
-+	} else {
-+		dev_warn(chip->dev, "No battery float voltage; preserving hardware setting\n");
-+		goto skip_float_voltage;
++	ret = i2c_master_recv(data->client, (char *)&buffer, sizeof(buffer));
++	if (ret < 0) {
++		dev_err(&data->client->dev, "I2C read fail: %d\n", ret);
++		return ret;
 +	}
 +
-+	if (float_voltage_uv < SMB2_FLOAT_VOLTAGE_MIN_UV ||
-+	    float_voltage_uv > SMB2_FLOAT_VOLTAGE_MAX_UV)
-+		return dev_err_probe(chip->dev, -EINVAL,
-+				     "float voltage %d uV outside %d-%d uV\n",
-+				     float_voltage_uv,
-+				     SMB2_FLOAT_VOLTAGE_MIN_UV,
-+				     SMB2_FLOAT_VOLTAGE_MAX_UV);
++	return FIELD_GET(ADS1100_CFG_ST_BSY, buffer[2]);
++}
 +
-+	float_voltage_sel =
-+		(float_voltage_uv - SMB2_FLOAT_VOLTAGE_MIN_UV) /
-+		SMB2_FLOAT_VOLTAGE_STEP_UV;
- 	rc = regmap_update_bits(chip->regmap, chip->base + FLOAT_VOLTAGE_CFG,
--				FLOAT_VOLTAGE_SETTING_MASK, rc);
-+				FLOAT_VOLTAGE_SETTING_MASK, float_voltage_sel);
- 	if (rc < 0)
- 		return dev_err_probe(chip->dev, rc, "Couldn't set vbat max\n");
- 
-+skip_float_voltage:
- 	rc = smb2_init_irq(chip, &irq, "bat-ov", smb2_handle_batt_overvoltage);
- 	if (rc < 0)
- 		return rc;
-@@ -1029,6 +1082,8 @@ static int smb2_probe(struct platform_device *pdev)
- 	if (rc < 0)
- 		return dev_err_probe(chip->dev, rc, "Couldn't set wake irq\n");
- 
-+	devm_remove_action(chip->dev, smb2_restore_charge_enable, chip);
++static int ads1100_wait_single_conversion(struct ads1100_data *data)
++{
++	int data_rate_index = FIELD_GET(ADS1100_DR_MASK, data->config);
++	int data_rate_Hz = ads1100_data_rate[data_rate_index];
++	unsigned long poll_us = DIV_ROUND_CLOSEST(USEC_PER_SEC, data_rate_Hz) / 4;
++	int busy;
++	int ret;
 +
- 	platform_set_drvdata(pdev, chip);
++	ret = readx_poll_timeout(ads1100_conversion_busy, data,
++				 busy, busy <= 0,
++				 poll_us, ADS1100_MAX_DRDY_TIMEOUT_US);
++	if (busy < 0)
++		return busy;
++
++	return ret;
++}
++
++static int ads1100_start_single_conversion(struct ads1100_data *data)
++{
++	u8 config = data->config | ADS1100_CFG_SC;
++	int ret;
++
++	ret = i2c_master_send(data->client, &config, sizeof(config));
++	if (ret < 0) {
++		dev_err(&data->client->dev, "I2C write fail: %d\n", ret);
++		return ret;
++	}
++	/* Need to wait because of change from continuous to single mode */
++	ret = ads1100_wait_single_conversion(data);
++	if (ret)
++		return ret;
++
++	config |= ADS1100_CFG_ST_BSY;
++
++	ret = i2c_master_send(data->client, &config, sizeof(config));
++	if (ret < 0) {
++		dev_err(&data->client->dev, "I2C write fail: %d\n", ret);
++		return ret;
++	}
++
++	/* No need to cache it, it's status bit */
++	data->config = config & ~ADS1100_CFG_ST_BSY;
++
++	return 0;
++}
++
++static int ads1100_poll_data_ready(struct ads1100_data *data)
++{
++	int ret;
++
++	ret = ads1100_start_single_conversion(data);
++	if (ret)
++		return ret;
++
++	ret = ads1100_wait_single_conversion(data);
++	if (ret)
++		return ret;
++
++	return ads1100_set_config_bits(data, ADS1100_CFG_SC, ADS1100_CONTINUOUS);
++}
++
+ static int ads1100_set_scale(struct ads1100_data *data, int val, int val2)
+ {
+ 	int microvolts;
+ 	int gain;
++	int ret;
  
- 	/* Initialise charger state */
+ 	/* With Vdd between 2.7 and 5V, the scale is always below 1 */
+ 	if (val)
+@@ -135,6 +216,10 @@ static int ads1100_set_scale(struct ads1100_data *data, int val, int val2)
+ 	if (!val2)
+ 		return -EINVAL;
+ 
++	ret = pm_runtime_resume_and_get(&data->client->dev);
++	if (ret)
++		return ret;
++
+ 	microvolts = regulator_get_voltage(data->reg_vdd);
+ 	/*
+ 	 * val2 is in 'micro' units, n = val2 / 1000000
+@@ -144,27 +229,51 @@ static int ads1100_set_scale(struct ads1100_data *data, int val, int val2)
+ 	 * bitshift so everything fits in 32-bits yields this formula.
+ 	 */
+ 	gain = DIV_ROUND_CLOSEST(microvolts, BIT(15)) * MILLI / val2;
+-	if (gain < BIT(0) || gain > BIT(3))
+-		return -EINVAL;
++	if (gain < BIT(0) || gain > BIT(3)) {
++		ret = -EINVAL;
++		goto out;
++	}
+ 
+ 	ads1100_set_config_bits(data, ADS1100_PGA_MASK, ffs(gain) - 1);
+ 
+-	return 0;
++	ret = ads1100_poll_data_ready(data);
++out:
++	pm_runtime_mark_last_busy(&data->client->dev);
++	pm_runtime_put_autosuspend(&data->client->dev);
++
++	return ret;
+ }
+ 
+ static int ads1100_set_data_rate(struct ads1100_data *data, int chan, int rate)
+ {
+ 	unsigned int i;
+ 	unsigned int size;
++	int ret;
+ 
+ 	size = data->supports_data_rate ? ARRAY_SIZE(ads1100_data_rate) : 1;
+ 	for (i = 0; i < size; i++) {
+ 		if (ads1100_data_rate[i] == rate)
+-			return ads1100_set_config_bits(data, ADS1100_DR_MASK,
+-						       FIELD_PREP(ADS1100_DR_MASK, i));
++			break;
+ 	}
+ 
+-	return -EINVAL;
++	if (i == size)
++		return -EINVAL;
++
++	ret = pm_runtime_resume_and_get(&data->client->dev);
++	if (ret)
++		return ret;
++
++	ret = ads1100_set_config_bits(data, ADS1100_DR_MASK,
++				      FIELD_PREP(ADS1100_DR_MASK, i));
++	if (ret)
++		goto out;
++
++	ret = ads1100_poll_data_ready(data);
++out:
++	pm_runtime_mark_last_busy(&data->client->dev);
++	pm_runtime_put_autosuspend(&data->client->dev);
++
++	return ret;
+ }
+ 
+ static int ads1100_get_vdd_millivolts(struct ads1100_data *data)
 -- 
 2.53.0
 
