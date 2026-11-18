@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030468;
-	b=ZvABmh9uW2V5t7Fm1umbab7ewMQg87l3vvMUu5274J4kSwh3whv4WvTiHLESAEVtKnJq
-	 0X1i9FKNOWV/WdQlInbbRjRmSfN+RBp4jlorb9zwESpbSFQYaTCkn3uaLRdKm26B32sgE
-	 o+m8UdLFn1SkEi82rX6xeW+Rp24aKB498Nqc61RDg22yPVgKQc4Yw6SztIroQlfbRWKls
-	 dm5uMmVdEYQTirSaZ5TcqTLfG+wwBPgM+GTn9XC1YYNJxB3kwzdtuP47CQF/IEcTqR/fP
-	 Ou/TgFrvjxuTYEP+MpjHZfOZe3NGuz5ESsnFP1jW1teISrEqLIbSH2bmKYfTI6YZQdQ==
+	t=1795030470;
+	b=PleetAnqIs9aSBO7KuCfq/w56p7Z0tziQZhn+su0Uk/N/F273MG/cuz/YYUg+RNt8+0Q
+	 xQqZXjOkt6cAxZ0Hp48cfx4KzRvdmnGrGXN+7A3Reo0AurpfkH+41clrPhXOUCCs4sj9s
+	 DSOK743KZqR9xvNnuC2rG6xCIiYNQNeDA161/iuCTxXNfK7ifRrjOe5Nd8mzSsZ+3ghBC
+	 4YiZRKZPGa+FS41vktV0jmP9dbA/a42L8/+Qdn5HC6WJE5SEo21gml1NYjnh8gODYI59o
+	 2fHfP5eSLpr8tmiZNfMRpMwSreJG/kqrsXADt1KVsS8pzLqIcZbJh/JpOrnB7vdaZMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030468;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030470;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=HlawSS5Qw3secBYWf4sFvp7rcyJOCAQyL6gQXJQC85M=;
-	b=iUGrWhqnFk7wGLjtrtsQtSi5aM+ThlrBF+aQyreBEvFjJ/ZLKFxhaO7CkbMXbdJ8q3Kr
-	 YfJsFB6GVkQZAqkh4655m9kM9/Ntmw/34JclCtYzVRkhnXrUfTemiu8hmS4FcoIHmacMn
-	 UfyFagb5uEv8WDWUuI29H3iQYtVKNFZ9oP6F8Ae0t4rieUWZAQ7LVwVA319ESftkOPq4Q
-	 vajFMHKgzO3GzEE4uWM8rlQFTGzpYU4FyNowkrf6c4y7bMNULpQC5/qzWV9C1cqQjW8iR
-	 8rJRnZLczWdvqtX3h4lKr/kcs+sf2EEYXQmv5nsxI2k87Ed/U0EUWRWhdqNy3cKrLtA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=7BLM8H0s1Jt3ioMO6Rg/WW+s787JNHp0eI3X3luTeCE=;
+	b=XaREdWn1mMSi+nsjuK2XTbyafMiBsGGlekxNRLLhTtM2cTyaSCkSnKurbxwjtx406psR
+	 TaAcjysU4AHbZd4ddqJN7TjxqZ8TN1pGJ5ZCTgREyQmDFYD3J4tv6djTTY48KzNK5LcyD
+	 Fq8RU1ZDmvhMdMaQZD2t80nBLH9BYNodbEs6GkLgVzA3iR6ZGIbx5mJPUQwjdVzfe6LmX
+	 wBT5XUTT3I5bP86S4gFyDfRmdF+A5Bdz0Z+3pPHKPCricEMbzA/8yjUpGCUYndL1Zsggq
+	 UDFeT78i+b2HawXjb3YqbOIUT3ZOsJn7iGeRoSl4li5ED/7sObjV2n5IZ3GygDOu5Dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jgh6KWQv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTZKMKfM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C126606A33D;
-	Wed, 18 Nov 2026 19:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87331606A33D;
+	Wed, 18 Nov 2026 19:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jgh6KWQv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350001F000C4;
-	Wed, 18 Nov 2026 19:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTZKMKfM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E7B1F000C4;
+	Wed, 18 Nov 2026 19:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030467;
-	bh=HlawSS5Qw3secBYWf4sFvp7rcyJOCAQyL6gQXJQC85M=;
+	s=korg; t=1795030470;
+	bh=7BLM8H0s1Jt3ioMO6Rg/WW+s787JNHp0eI3X3luTeCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jgh6KWQv4HcnF6aF4igTd0aqRS2nEyeUuCeGouR5wSv+igMbX6N2zynkkc+qB4HhN
-	 O77wPDbgKAb8dFdgj0JpdcF5r4u3sKh7V2jy9MOx5op6fbAfmRDWamgbTQ7I9JnmFk
-	 tlfdwwyCkYJaokmK7Pfb5mbhsOfJ/i0mKpn/SfAU=
+	b=eTZKMKfMavU9A5P16lf25MIp/QCRJE0notJ0/K1K6ofpKoJ2ZFrdof+Nufoim6saF
+	 ds9It3m1Jas8A+jptxnYGdceT8WahtYNHsvvrXmi/kY85mTrNmBz+NpWeM0eRx9VxI
+	 vzd0S8ro9qNbUox4C7b9DkQlQybNP6Qy/4uaNxds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Danish Khateeb <danishkhateeb03@gmail.com>,
+	Willy Tarreau <w@1wt.eu>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0715/1756] f2fs: quota: fix unused-label warning
-Date: Wed, 18 Nov 2026 15:47:22 +0100
-Message-ID: <20261118150037.995320678@linuxfoundation.org>
+Subject: [PATCH 6.12 0716/1756] tools/nolibc: stop rounding malloc() sizes up to 4096 bytes
+Date: Wed, 18 Nov 2026 15:47:23 +0100
+Message-ID: <20261118150038.043538970@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -64,48 +63,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Danish Khateeb <danishkhateeb03@gmail.com>
 
-[ Upstream commit 4faeea625cf730bb20f609f061ff81c9b6852931 ]
+[ Upstream commit b7db3ba9434cbad3d15f62500104525bfa28a304 ]
 
-The newly added label causes a warning when QUOTA is turned off:
+malloc() rounds the size of each mapping up to a multiple of 4096,
+presumably to align it to a page boundary. But the page size is not 4096
+on all architectures, and mmap() and munmap() round the length up to the
+page size themselves.
 
-fs/f2fs/super.c: In function '__f2fs_remount':
-fs/f2fs/super.c:3142:1: error: label 'restore_holder' defined but not used [-Werror=unused-label]
- 3142 | restore_holder:
-      | ^~~~~~~~~~~~~~
+Drop the rounding. As heap->len is no longer rounded up, growing a block
+with realloc() now always creates a new mapping.
 
-Fixes: 3f140a60c92a ("f2fs: quota: fix stale lock holder on remount failure")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
+Reviewed-by: Willy Tarreau <w@1wt.eu>
+Link: https://patch.msgid.link/20260926152414.251214-2-danishkhateeb03@gmail.com
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Stable-dep-of: 2111eb4273e7 ("tools/nolibc: check for overflow in malloc()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/include/nolibc/stdlib.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 7f81ac832a858..acf6bdea8a451 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -2646,7 +2646,9 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
- 	sbi->mount_opt = org_mount_opt;
- 	sb->s_flags = old_sb_flags;
+diff --git a/tools/include/nolibc/stdlib.h b/tools/include/nolibc/stdlib.h
+index 75aa273c23a61..4c2da9731b1e7 100644
+--- a/tools/include/nolibc/stdlib.h
++++ b/tools/include/nolibc/stdlib.h
+@@ -132,9 +132,7 @@ void *malloc(size_t len)
+ {
+ 	struct nolibc_heap *heap;
  
-+#ifdef CONFIG_QUOTA
- restore_holder:
-+#endif
- 	sbi->umount_lock_holder = NULL;
- 	return err;
- }
+-	/* Always allocate memory with size multiple of 4096. */
+ 	len  = sizeof(*heap) + len;
+-	len  = (len + 4095UL) & -4096UL;
+ 	heap = mmap(NULL, len, PROT_READ|PROT_WRITE, MAP_ANONYMOUS|MAP_PRIVATE,
+ 		    -1, 0);
+ 	if (__builtin_expect(heap == MAP_FAILED, 0))
 -- 
 2.53.0
 
