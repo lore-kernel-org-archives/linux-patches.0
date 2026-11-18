@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028813;
-	b=YEb7j2cjkbt/kAK86+UjHVQ2g5d7NrPaWgQYAMQnG9j9ysDKBmceF29qoFW7FRTFyGQl
-	 8pkCt6vTpuQBUGs1pW+0DPPQ9tGuCn71mhSeD4vHkwLWR8hOYNccbUg7abNglYYN0DSlz
-	 5kbbKUKIpciISpodm56n4U7Q3Jhp5Ss4KaYjYcP69qW+LxrmUxZ+DAQ1Nn/KBjPvXqdCD
-	 ShPhx0dJx0Iz0KOo8tjSBByeUKsEXdLhPaGvIHPreWWH/ULpZBBVXzNluj8yjMiGMJOZW
-	 5Ke/Xl4YTwrvTWMg0s5nH+taOYgC5822qDS1cr/mLlr6o4CuX8++kohZSilkbG5qcfg==
+	t=1795028816;
+	b=iWOupX1x6LFKQ3jhAvyuDWUt6WJ2PCU8S5Hz7pPD8oJ0JtYlktgb8vzlK4O5R12bGbyD
+	 9RwngMUwvwOLlH+W72YyfRSJlLSi5PzZapylj8XjuFh8CGxt2T5GKh+0IICUk/zY4q359
+	 Z2UD08VO+w/xYVNfDzpcvQXrIF/5ppQWYXUkGXtRhrjmsJln2BVoTRO3EyXQdLsYbm6NQ
+	 5ASmbFuE8zq6cM6oQ4mIz5jYl2M15Wd205ynDJEtPI0i2/z3JG/vDwwxNovBCmHmGB38/
+	 DGT/am54EPLcCEYTOL4P5mam7DOszYswXaNu46oLjp768mK7U4rfN4z8MLHkyQI56BQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028813;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028816;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zIhtI0DyD/bqkjW8lPloE/xbXqF6v3xTQI8n2pUkdyY=;
-	b=PwI7PSe1e8UHNCLC+30PhtL5uPeFbXLxOFrEuU/xYdXV9khfcKp6wp3GAXNupWOXeO5X
-	 ack3vQPP8M/evsvLWKbwGC4WUcx0yAHP3xQJcQoGMNkfRNUqcCLU0TulbQyEzq9vcDw36
-	 +/MST+myWvzjz1PGIKku3WhXDpmI2H/nQ/061aWX0Cv6U43eWfVrNqOEx20vsyJtRkjfi
-	 GxkjD5rXal9oqPOrA8zMy/ldRfYKTow2Bm135Bz9Vp5KaTDAE4xAP3NCmNa3peikFF//u
-	 m6bEUYrPsjuA/qqQeVRrZJHx1Zk8lwyXjPGDfKYC1P0VoxPEidP/h0tEi7EKbAx4FKA==
+	bh=s5OHZ1w7P1rVcrCDUmJPqe1fVStxg1abSgHB8kZSCJI=;
+	b=TpvTL/g/hxvD1Y7F7I+kBLHCfgXp9k8LV26CtWXSL22eE05k5SCpMp/vAonF1bZKvr4X
+	 yNKjFDjtBk9rDiSq+kKf8qnn7zUPxrMDXPGIzecVfJPycvYlnq4Rek+tqpC0wZkETHJn5
+	 Ri1IPFIzEdtzxdMU4SZZqpeePtfG5M7wfs3eMz1qEQ1yvszmKQqar0LKw+T5FaLECpxaV
+	 HK+YrVX3wI72YmK3E3k2/zNZTRKHySCtTfaxAn4wC7Oc9nnY0EDOPY9O+Oz1aBLPBIvDY
+	 /qinxLugmwWw/EY93yhykK7nnX7QsQFQZn27NO4xYXPQOP2Co3YGqdq5tdwJ8xfgmOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="A/EMIBWI";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k1JUcHly;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD64606A33E;
-	Wed, 18 Nov 2026 19:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED267606A33A;
+	Wed, 18 Nov 2026 19:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A/EMIBWI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE241F000C6;
-	Wed, 18 Nov 2026 19:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k1JUcHly
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE211F000C6;
+	Wed, 18 Nov 2026 19:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028813;
-	bh=zIhtI0DyD/bqkjW8lPloE/xbXqF6v3xTQI8n2pUkdyY=;
+	s=korg; t=1795028815;
+	bh=s5OHZ1w7P1rVcrCDUmJPqe1fVStxg1abSgHB8kZSCJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A/EMIBWIrvn1rAKSsbr6Is+1xSl8XB5IG0LTW1vquvIFz15aqw0OSuskj60/uD8UX
-	 9dLgsA+OySXACuo+MSCoC/kSXfsnIzOnbVKGqwi7ELjqY6WRe/ha6RricNCJ9I1Ewh
-	 z1o8FzF2URobejJEHvxPFdWDt4Dnl9Dma4NQCS/k=
+	b=k1JUcHlyLUq+3KWgP2L383Daj2u30avSpUYONwacUvj+/LhvgBk0GDaXTlWfKY9Kb
+	 JHcZfq85ik0ZYo/Pqf9QGbpPqSFGaWA/vR04ZAEAXJyVIHOXO+CAbVqwmsh1nczX1O
+	 RMaJDWQkv8WBSj0ID+WtnIcQ6MgacqQDdyAWRcTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0111/1756] rose: refuse an empty message when the Q bit is included
-Date: Wed, 18 Nov 2026 15:37:18 +0100
-Message-ID: <20261118150012.618981276@linuxfoundation.org>
+Subject: [PATCH 6.12 0129/1756] x86/microcode/AMD: Move the no-revision fixup to get_patch_level()
+Date: Wed, 18 Nov 2026 15:37:36 +0100
+Message-ID: <20261118150013.330426929@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,42 +67,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-With the ROSE_QBITINCL socket option set, rose_sendmsg() takes the Q
-bit from the first byte of the message and pulls that byte off.
-Nothing checks that there is a first byte: a send() of zero bytes
-reads the Q bit from beyond the data copied from the user, skb_pull()
-fails without a word, and an empty data frame goes out with a Q bit
-taken from uninitialised memory.
+[ Upstream commit 098bcea71b8d257d80b0037b97b66070806600a5 ]
 
-Refuse such a message with EINVAL before anything is allocated.
-x25_sendmsg() checks for that byte too, with pskb_may_pull().
+On machines which don't have microcode applied yet, the revision is 0.
+However, this doesn't work with the Zen family/model/stepping patch
+arithmetic. So move the fixup to the patch level getter function and
+this way make sure the patch level is always proper and thus the
+arithmetic always works.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit fd8a23b811b7c46d0b9aefc2a45955ea8f685a8e)
+And now that it can be called on any family, make this Zen-only.
+
+Assisted-by: claude/claude-opus-4-6
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20260530024213.86137-1-bp@kernel.org
+[ sashal: get_patch_level() here lacks the upstream debug/hypervisor branch; the fixup goes right after native_rdmsr() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/kernel/cpu/microcode/amd.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 1b5230ed4a452..2cb096068e5ed 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -1286,6 +1286,10 @@ static int rose_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 	if (len > 65535)
- 		return -EMSGSIZE;
+diff --git a/arch/x86/kernel/cpu/microcode/amd.c b/arch/x86/kernel/cpu/microcode/amd.c
+index 24709a5589633..a846864ba89f8 100644
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -221,11 +221,6 @@ static bool need_sha_check(u32 cur_rev)
+ {
+ 	u32 cutoff;
  
-+	/* With the Q bit included, the first byte of the data holds it */
-+	if (rose->qbitincl && len < 1)
-+		return -EINVAL;
+-	if (!cur_rev) {
+-		cur_rev = cpuid_to_ucode_rev(bsp_cpuid_1_eax);
+-		pr_info_once("No current revision, generating the lowest one: 0x%x\n", cur_rev);
+-	}
+-
+ 	cutoff = get_cutoff_revision(cur_rev);
+ 	if (cutoff)
+ 		return cur_rev <= cutoff;
+@@ -297,6 +292,13 @@ static u32 get_patch_level(void)
+ 	u32 rev, dummy __always_unused;
+ 
+ 	native_rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
++	if (!rev) {
++		if (x86_family(bsp_cpuid_1_eax) < 0x17)
++			return rev;
 +
- 	size = len + AX25_BPQ_HEADER_LEN + AX25_MAX_HEADER_LEN + ROSE_MIN_LEN;
++		rev = cpuid_to_ucode_rev(bsp_cpuid_1_eax);
++		pr_info_once("No current revision, generating the lowest one: 0x%x\n", rev);
++	}
  
- 	if ((skb = sock_alloc_send_skb(sk, size, msg->msg_flags & MSG_DONTWAIT, &err)) == NULL)
+ 	return rev;
+ }
 -- 
 2.53.0
 
