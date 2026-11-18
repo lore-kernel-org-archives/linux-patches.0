@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054583;
-	b=HqvY9SQV9zbzmVRZxkflq/1Jn2GjM2vnMIxInbU+gY2c5QGCQX1uMMplsXHVHEmgoC4a
-	 +14ztAykL046gjB2rGA9tL5WDQS/oZS9Z3mPfaoK91Ndtv3oxOgdinFHDlxT1rxE1zblM
-	 azDdFBe3lXQtVT/+lYUg70JIvAMe9tru7bueyI/mayc373Bf8J1ecGeUc3b0PLxPGmC8r
-	 nlScaNpswOeyqQklIU7/5DVhRkkMEEWgpODluqR0aZasdPoh+g9DCldQl9KYUZx2gR+cY
-	 VbIN3i4Kj28+/GtaDAUcb7JWIk+lO1W4X82YnpmnY9lcd9UivIDPSaSdy+eYB7/LkMw==
+	t=1795054586;
+	b=dCEM3XxE4RvUHXXU1q5O4jfSJLUdXp1zp8ZcXp40443kWPnjuxnqwUOGQD8U6d81ob0T
+	 E/jQoLa8qNkvk0mrjv3NU61V3a/yVT2ebBG3TbdQCXYzmBchm67CA930b7Dkj7dO01PFq
+	 pct3suJ4n+/YkBPc41I1eYDPypSZRiOLweNqo5RRyIndCFYfW/8K1WjkDbv5Ux2wo3h+N
+	 B+oNwYPIQdFjgHROt7QOLEdKeeDdETdcFvykShiB8rxTM29evJqrF3xi+COt0H6k4AWFd
+	 wyGZ3P8UkNW61SvCfWU5xDC3pfgYUoIA/cSDOCC9sRcLfBoA1J0ItzBPPTVQRcRcJ/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054583;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054586;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A/s8n8ZyfH3zw03NFT5JLSKBEtsHVnKBiOwFmBbLwLw=;
-	b=f3O5IiXdrCQNOXWEiaeyNcK9n9ydwFlJdjft5xMDuYv8th85wNOaI7TPw/2QxoWxM96r
-	 GOqjLvRElDDvTddm6X9NPXpy/tJLcXFzThmyIOe5Io3j3anr3P2Z0a6aWERgfLVun2axK
-	 CtuMmpS5xwOUaAPsyBaVFeJY/ic2DOQgzQMTifDCRelxZbWK5GLjWVl5BjRCB2gU3+r0P
-	 iTt2I2BRbDegGGL8ZcyYLZ77wLjw/lg9omPWu7/BuKwybkpKY0h79MvTUQYOKxFT9UoKH
-	 hs6HR6jp0iQ4PBOBjE9OTANFiYlZY1gbaHWjoedhkx+T0g/j7yjgoSPOac4nu64AM4w==
+	bh=NZk5fcNFAu0R4NgdQphDE1LRU6Co4P3pP5z28WbrIJ4=;
+	b=aopksqfPzBhWWhJrbhh89VPGf2xgUdVjf8SBrnrtpIOpdqdnGtNa5qYxAJ7EmXbXZQU4
+	 8Mp0yryN9bLGAFvhBPuPloPAel+3Z40vkYd56NDgeNJ1DvYVWtVBfSxN+tQpf6vTav8oD
+	 QlvGsMydTgUiz2ic6f77HItxQk8KEHz0xlIDhkLKuBTbqyw75VBZK45FexrjS2VilPtpM
+	 721rRgyPUwh4UOXCK5S36CaZ2NotRELx4EZIM/PRNlAV9OX5iUH8rk+n6h8NHOcjJpJdH
+	 Rj0U2SJ5uZ7UZOk52oOdTAa8AcCrLBxK7021II/M70ZfPGDxTozO8jBh7f8xbXAJAwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ysivRLOp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T3hLlPfK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D648606A31C;
-	Thu, 19 Nov 2026 02:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0648606A32C;
+	Thu, 19 Nov 2026 02:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ysivRLOp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776A21F000C4;
-	Thu, 19 Nov 2026 02:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T3hLlPfK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA541F000C4;
+	Thu, 19 Nov 2026 02:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054583;
-	bh=A/s8n8ZyfH3zw03NFT5JLSKBEtsHVnKBiOwFmBbLwLw=;
+	s=korg; t=1795054585;
+	bh=NZk5fcNFAu0R4NgdQphDE1LRU6Co4P3pP5z28WbrIJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ysivRLOp0wkZEj9DXwkOgPYpFaIcvnHb3C0GaIeITqh4nSc2BAZ1P+/XjQJ8pWf5D
-	 wud46Baduw2K/e+VPOXMaXLVX/HYnE04cDtqnyIwjYXiyazlDtrRRtCp1i+fIRzykJ
-	 lFqjrolZ0PqZBIm/34Xv7hQJiaYpgRXi0eRUn1Ks=
+	b=T3hLlPfKSjbGLkJlbXjV7KHvGcag8M5stItLkb798S1rPiKvccgJV8+Kog6dn08ds
+	 gNRrnpoTEy9v+43VSnD9Islb0TzkCKK6r5J1vyc91BKFUHG2Z0oSSGvonL/D4p8xHp
+	 vf3YesoXGne98brpreMuAZMLQWl9RPSqx6oQvmrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 5.15 1325/2214] extract-cert: Wrap key_pass with #ifdef USE_PKCS11_ENGINE
-Date: Wed, 18 Nov 2026 15:50:01 +0100
-Message-ID: <20261118150104.443875256@linuxfoundation.org>
+	Raveendra Talabattula <raveendra.talabattula@arm.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 1326/2214] drm/komeda: Fix bits parsing of GLB_CORE_ID
+Date: Wed, 18 Nov 2026 15:50:02 +0100
+Message-ID: <20261118150104.479930243@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,63 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Raveendra Talabattula <raveendra.talabattula@arm.com>
 
-commit 4f96b7c68a9904e01049ef610d701b382dca9574 upstream.
+[ Upstream commit ec902de0221747094f9ccbb61454e9633fbf282f ]
 
-A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
-in clang under a new subwarning, -Wunused-but-set-global, points out an
-unused static global variable in certs/extract-cert.c:
+GLB_CORE_ID contains the product and version information returned by the
+hardware. The current macros parses VERSION_MINOR as a 4-bit field and
+VERSION_STATUS as an 8-bit field, which does not match the register
+layout. As a result, the driver reports an incorrect version number.
 
-  certs/extract-cert.c:46:20: error: variable 'key_pass' set but not used [-Werror,-Wunused-but-set-global]
-     46 | static const char *key_pass;
-        |                    ^
+Fix the parsing macros to match the hardware specification:
+- VERSION_MINOR is 8 bits at [11:4]
+- VERSION_STATUS is 4 bits at [3:0]
 
-After commit 558bdc45dfb2 ("sign-file,extract-cert: use pkcs11 provider
-for OPENSSL MAJOR >= 3"), key_pass is only used with the OpenSSL engine
-API, not the new provider API. Wrap key_pass's declaration and
-assignment with '#ifdef USE_PKCS11_ENGINE' so that it is only included
-with its use to clear up the warning. While this is a little uglier than
-just marking key_pass with the unused attribute, this will make it
-easier to clean up all code associated with the use of the engine API if
-it were ever removed in the future. While in the area, use a tab for
-the key_pass assignment line to match the rest of the file.
-
-Cc: stable@vger.kernel.org
-Fixes: 558bdc45dfb2 ("sign-file,extract-cert: use pkcs11 provider for OPENSSL MAJOR >= 3")
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Tested-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://patch.msgid.link/20260325-certs-extract-cert-key_pass-unused-but-set-global-v1-1-ecf94326d532@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bd628c1bed79 ("drm/komeda: komeda_dev/pipeline/component definition and initialzation")
+Signed-off-by: Raveendra Talabattula <raveendra.talabattula@arm.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260803142122.4127851-2-raveendra.talabattula@arm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/extract-cert.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/arm/display/include/malidp_product.h | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/scripts/extract-cert.c
-+++ b/scripts/extract-cert.c
-@@ -43,7 +43,9 @@ void format(void)
- 	exit(2);
- }
+diff --git a/drivers/gpu/drm/arm/display/include/malidp_product.h b/drivers/gpu/drm/arm/display/include/malidp_product.h
+index 16a8a2c22c423..f0c34eff523f1 100644
+--- a/drivers/gpu/drm/arm/display/include/malidp_product.h
++++ b/drivers/gpu/drm/arm/display/include/malidp_product.h
+@@ -8,14 +8,18 @@
+ #define _MALIDP_PRODUCT_H_
  
-+#ifdef USE_PKCS11_ENGINE
- static const char *key_pass;
-+#endif
- static BIO *wb;
- static char *cert_dst;
- static int kbuild_verbose;
-@@ -132,7 +134,9 @@ int main(int argc, char **argv)
+ /* Product identification */
++/* GLB_CORE_ID fields as per HW specification:
++ * MINOR is 8 bits ([11:4]) and STATUS is 4 bits ([3:0]).
++ * Update masks/shifts accordingly.
++ */
+ #define MALIDP_CORE_ID(__product, __major, __minor, __status) \
+ 	((((__product) & 0xFFFF) << 16) | (((__major) & 0xF) << 12) | \
+-	(((__minor) & 0xF) << 8) | ((__status) & 0xFF))
++	(((__minor) & 0xFF) << 4) | ((__status) & 0xF))
  
- 	kbuild_verbose = atoi(getenv("KBUILD_VERBOSE")?:"0");
+ #define MALIDP_CORE_ID_PRODUCT_ID(__core_id) ((__u32)(__core_id) >> 16)
+ #define MALIDP_CORE_ID_MAJOR(__core_id)      (((__u32)(__core_id) >> 12) & 0xF)
+-#define MALIDP_CORE_ID_MINOR(__core_id)      (((__u32)(__core_id) >> 8) & 0xF)
+-#define MALIDP_CORE_ID_STATUS(__core_id)     (((__u32)(__core_id)) & 0xFF)
++#define MALIDP_CORE_ID_MINOR(__core_id)      (((__u32)(__core_id) >>  4) & 0xFF)
++#define MALIDP_CORE_ID_STATUS(__core_id)     ((__u32)(__core_id) & 0xF)
  
--        key_pass = getenv("KBUILD_SIGN_PIN");
-+#ifdef USE_PKCS11_ENGINE
-+	key_pass = getenv("KBUILD_SIGN_PIN");
-+#endif
- 
- 	if (argc != 3)
- 		format();
+ /* Mali-display product IDs */
+ #define MALIDP_D71_PRODUCT_ID	0x0071
+-- 
+2.53.0
+
 
 
