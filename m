@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051594;
-	b=Zs+trSu8V7mXi8Mlx+ulW5aLD+iwsvYk84941AWEQUMzhuF6IADjfdMn4MUpWqHuBizP
-	 s/mm3mN2V1eM/qZ/aC+XT3Z5WdsmKMpU5+hY3Dwf1aWDUPa4beG6EYrvgvXMImPgzFXO1
-	 fe1/b1j0dqIAXazgcequ328mSuCE/BOfFVeJOboc6rRGQFqqqbDvHh31iIGS+D+5J67zE
-	 kTYmCqptslAMZPIil/JilxHvTDBL6kp5qFV2XAyjJKUbSkSt5jMxh8UWn4KHBRm43fIbs
-	 RUgXZDemvLMY6dpA8d8koHIgfrFHAl2t+OmoWeFTylcSyfiAUsmYJJEWLe1F81K6i4w==
+	t=1795051597;
+	b=W1YGNcRNyDRLNYIuzwmzdwrM9Pgv5Yj9Tu8bfZuNuZ+DESzrdS5FEBfU+OMh07qNepJ5
+	 E3nhabipHwRAAfxKa5f1WFC+mxokDVjSIboIvejzq2pbY7+GYBraj7g//YcZkiEySM7cm
+	 waAh84aOyAa+YbyFn4x1q7OK+RXAKBWbfImeGOE3k4iRIzXlVfXbV9+U4tTkVCYB6QHO1
+	 DlLXyt/vffJSPtUHMZgnTQL5AL0dTZUUqpFqNEDN0zBe/MctYy/SSvxEYkYRPtVzkhjL8
+	 059ElpdacNgA6HNf1bOyv1pZA/49d/0NTyHqQcHj8ta3CPI0Ylp9QO/vCMQLk+kHenw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051594;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051597;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=GXWs9GIdMJo55QJkWfA3uyT7BtcwpV2fY/coDI0+nBY=;
-	b=2tv3pfcIHL7o3t0AtsdbC0X8nF+JDi9bO1ygHpnATTvsq2Zqg54lxjQnkc3b/9OuJ+nA
-	 ckGYvvXZPQ/w96YVivjAkHQp17MxzCN4CVKCc9QU3cn75CLqNaVdJd5Vc04btk7RediSB
-	 VZsBbyr4c2j9nwo+pV0exPjiZlxv0wjcJUyVf1jbDrpJxdOEThztZHtVGi42HxLELw+wI
-	 6ODC1jBr9phsW0RqaFsPmiCZvCDcv8A4lG7RhmS2NQljEm4My0mf3ljGeFDknThbH9VON
-	 UVYnTpO73Cpg7TpbNHgLVfDL2idsxrqpkmg7zQuVjG05pK2tQbBkubHqDnTsYFNTg5A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=OGNtLxle6WMgUfngtndqpT7jF/0Tz/DcB3mCk3n6CLs=;
+	b=eBb2EQcPYsygvDBrMFCDWGyzcA9WnST0u8whmLpDbtWBkwSlfT6WdbAPn37Vhy2KSdvR
+	 UB9EMbVrGUkO8fczWV9IT+I+Z7GuhV9mICMsaUfSUka3UkRBZOTE/br96gFvS0PpGA7/M
+	 Z0cEuF2gP3dBK94VhK7NUB01DzqYmFjk4888LbawP8FYbv6uwdoNywhra7Enh5chbVRRu
+	 ADMoHXj3WkZ+5PRtDCYKY70df++B+eLIcMfdttePFr9tqfoGnr/17cyBNshSJ+MoG6tD0
+	 Y2H0h3Kzs3NZvYGxH+YrcRPBg131+EGapMbpXuIE7e1ideCO7wo954stmq/sRfabo9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NvScpbyx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eSUIgvtj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C36606A325;
-	Thu, 19 Nov 2026 01:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F0A606A320;
+	Thu, 19 Nov 2026 01:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NvScpbyx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C048D1F000C4;
-	Thu, 19 Nov 2026 01:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eSUIgvtj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7E21F000C4;
+	Thu, 19 Nov 2026 01:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051594;
-	bh=GXWs9GIdMJo55QJkWfA3uyT7BtcwpV2fY/coDI0+nBY=;
+	s=korg; t=1795051597;
+	bh=OGNtLxle6WMgUfngtndqpT7jF/0Tz/DcB3mCk3n6CLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NvScpbyxa+N/Mzv0zQeu4rqK+kfqj5JWMWEKXgqZ4W3j9DnP1ekp8tcrxretUeW1D
-	 CeLoOKSiOEQe0dn0F+gCcx9S+QnNK7vfqn2mOWgzQYJKOnDFf5CSr8LK36UTMrVZG3
-	 CBc0txbwCki5XHmK+aUkvU+hd2K8dyOY3eLkdTUQ=
+	b=eSUIgvtjT3iHKH2zKMF7Y+rvuWx0UWJJmiZz6lOrstRF1suN1k85lQ5utYVhXKDnA
+	 xonTj2tOVx4yd6Xn7PRAOTb/I1tJmzkMdxpoNDHlY8WU1FnKjeOUuyqc2KFDxPhkui
+	 suIS/Y4S1zTdsvlRpawkrWPAPcheCahsrVnf2hwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Israel=20T=C3=A9llez=20Garc=C3=ADa?= <i.tellez@btesa.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0207/2214] libbpf: Fix ring buffer consumer loop on 32-bit position wrap
-Date: Wed, 18 Nov 2026 15:31:23 +0100
-Message-ID: <20261118150018.485890815@linuxfoundation.org>
+	Marco Elver <elver@google.com>,
+	Andrea Parri <parri.andrea@gmail.com>
+Subject: [PATCH 5.15 0258/2214] kcsan: Avoid division by zero in kcsan_prandom_u32_max()
+Date: Wed, 18 Nov 2026 15:32:14 +0100
+Message-ID: <20261118150020.446955294@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,63 +61,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Israel Téllez García <i.tellez@btesa.com>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit fdd4fad0bbbd08501465c5f9b556963093c5d58a ]
+commit 99b6fcce87037cfb6b5e177848342e97f5141205 upstream.
 
-ringbuf_process_ring() walks the records between the consumer and the
-producer with an ordering comparison:
+KCSAN's skip_watch, udelay_task and udelay_interrupt parameters can be
+changed at runtime through /sys/module/kcsan/parameters/, where 0 means
+watching every access or not delaying at all. With the default
+CONFIG_KCSAN_SKIP_WATCH_RANDOMIZE=y and CONFIG_KCSAN_DELAY_RANDOMIZE=y,
+writing 0 to any of them makes the next watchpoint setup divide by zero:
 
-	while (cons_pos < prod_pos) {
+  # echo 0 > /sys/module/kcsan/parameters/udelay_task
+  Oops: divide error: 0000 [#1] SMP NOPTI
+  CPU: 0 UID: 0 PID: 93 Comm: sh Not tainted 7.3.0-rc5 #3 PREEMPT(lazy)
+  RIP: 0010:kcsan_setup_watchpoint+0x1b5/0x410
+  Code: ... 65 89 05 ad 8d 98 02 d3 ee <f7> f6 29 d7 e8 22 0e 0f 01 ...
+  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+  ...
+   __show_trace_log_lvl+0x1bd/0x315
+   __die_body.cold+0x19/0x2b
+   die+0x34/0x50
+  ...
+  BUG: TASK stack guard page was hit at ffffd3ab001fbfe8 (...)
 
-cons_pos and prod_pos mirror the kernel's ring positions and are
-unsigned long here too, so on 32-bit they wrap at 2^32 bytes of traffic.
-When producer_pos has wrapped and consumer_pos has not, prod_pos is the
-smaller of the two, the loop body never runs and no record is consumed.
-Since consumer_pos only advances inside that loop, it never wraps either
-and the consumer stops delivering samples for good, with no error
-returned to the caller: ring_buffer__poll() keeps reporting zero
-records while the kernel side fills up and starts dropping.
+reset_kcsan_skip() and delay_access() pass these values unchecked to
+kcsan_prandom_u32_max(), which returns "state % ep_ro". delay_access()
+halves the delay for compound and assert accesses, so
+udelay_interrupt=1 is enough there.
 
-Compare the distance instead. The consumer never runs ahead of the
-producer, so prod_pos - cons_pos is the amount of unconsumed data and
-stays correct across the wrap.
+The oops path runs instrumented code, which faults again until the stack
+overflows. With skip_watch=0 the guest hangs without printing anything.
 
-64-bit hosts are unaffected in practice: the counters would need 16 EiB
-to wrap. This is the userspace counterpart of the kernel-side walk fixed
-in "bpf: Fix pending_pos walk on 32-bit ring position wrap"; a 32-bit
-consumer hits whichever of the two comes first.
+The division came in with commit 71a076f4a61a ("kcsan: Rewrite
+kcsan_prandom_u32_max() without prandom_u32_state()"). Before it, the
+helper scaled the random value with a multiply-shift, which yields 0 for
+ep_ro == 0. Go back to that via reciprocal_scale().
 
-Signed-off-by: Israel Téllez García <i.tellez@btesa.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260814124843.22041-5-i.tellez@btesa.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Tested in an x86-64 KCSAN guest with virtme-ng: after this patch,
+writing 0 to each parameter, or 1 to udelay_interrupt, no longer
+oopses. skip_watch=0 now watches every access, which is very slow with
+the default delays but completes when they are set to 0.
+
+Fixes: 71a076f4a61a ("kcsan: Rewrite kcsan_prandom_u32_max() without prandom_u32_state()")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Reviewed-by: Marco Elver <elver@google.com>
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Signed-off-by: Marco Elver <elver@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/bpf/ringbuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/kcsan/core.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/tools/lib/bpf/ringbuf.c b/tools/lib/bpf/ringbuf.c
-index c42ba9358d8ce..f04956f2cdffe 100644
---- a/tools/lib/bpf/ringbuf.c
-+++ b/tools/lib/bpf/ringbuf.c
-@@ -219,7 +219,7 @@ static int64_t ringbuf_process_ring(struct ring* r)
- 	do {
- 		got_new_data = false;
- 		prod_pos = smp_load_acquire(r->producer_pos);
--		while (cons_pos < prod_pos) {
-+		while (prod_pos - cons_pos > 0) {
- 			len_ptr = r->data + (cons_pos & r->mask);
- 			len = smp_load_acquire(len_ptr);
+--- a/kernel/kcsan/core.c
++++ b/kernel/kcsan/core.c
+@@ -281,8 +281,9 @@ should_watch(const volatile void *ptr, s
+ }
  
--- 
-2.53.0
-
+ /*
+- * Returns a pseudo-random number in interval [0, ep_ro). Simple linear
+- * congruential generator, using constants from "Numerical Recipes".
++ * Returns a pseudo-random number in interval [0, ep_ro), or 0 if ep_ro is 0,
++ * which the runtime-tunable callers may pass. Simple linear congruential
++ * generator, using constants from "Numerical Recipes".
+  */
+ static u32 kcsan_prandom_u32_max(u32 ep_ro)
+ {
+@@ -291,7 +292,7 @@ static u32 kcsan_prandom_u32_max(u32 ep_
+ 	state = 1664525 * state + 1013904223;
+ 	this_cpu_write(kcsan_rand_state, state);
+ 
+-	return state % ep_ro;
++	return reciprocal_scale(state, ep_ro);
+ }
+ 
+ static inline void reset_kcsan_skip(void)
 
 
