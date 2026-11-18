@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056655;
-	b=FVLgtf+LC+8xDYigxHt3XcT9zqWvDBsFHLYaBtRJFA6YEhYnZLwyBAMEcogvsYd6Eskg
-	 lTn2bgjq+Bejor4QqKlujF9gGqNcjjMdlq/4rDKP3ZjqLBVGkP+GN5zbddzz3pp6E/Ssg
-	 1PBWlPSKske3eG7pxpX/AHecwU+ZFUOajGOfuq/JXOEIv/jDKcUijkev3sey2K4RYCvtr
-	 A4GIr6xkm5HNkjE+/k86/F+vPFOyOJZJ3SFtllJ6uLSfyFNvhiDAwX44WTvkahLgaiRcn
-	 sd3ykqiX5znFjgEGCSXM+qXxUFuoqipKoSAkbtONcEiFvutiw2kywngLjB3g5cjCUnQ==
+	t=1795056658;
+	b=3FiarEQku24Pv4k30WA3VWnL7Xu61o292qgngtqJQ9vqg9psoy4XzPUgRU6vGqU0pLa3
+	 EHmInfsmscd83/3C/mIT4d84ebf6YndRS9G+CByee8exsGFb2Gup3lzAYExgQ87Zqvg7j
+	 gvIK3ZSbPQeIPxvdRxAqIrQtAb+RwOyFbC9jih2bwWoiSkTkkkzbvw0p+fAhhcYBDYQhI
+	 lpX+3iygBvl6ntVqMwsTm+B3mzXEin0M4cN1H77238QMd18VHTgp53wOXJg1I/Upu0hmA
+	 iC585Sl1913JjFir8daVNvFXiDRQcZpQwygkUfdTFv3tczexll+YMJ8UPOtlimkuAOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056655;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056658;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SKpm7pPcUbCg804/5+OzO8RWE8z4kYO1oKPMzLlTESc=;
-	b=XcNxxETqk0MCyHvA65BweXimE2SnRkFrunF8iTYUIAorsm0y6/5CQhad1tpVKwG+NeFR
-	 HXK5a5Hl/yHnizrDx2QKgzp21wiqLSxh19kRrSFabThnX6Kys327Dcn4K04AuTqITI3Oi
-	 ndpeZJ+QA5U1Bl7KqGLDqZsnsK8GuIat5B7yYZQIURtrZDY0/5fhxes6Pp3+GgWmmEXMh
-	 h6id4acR5bAGX6yKfKYD53SCtTih1EF7UPirui252QSpfrNsC1aJInIwllBKIgU9LQ2PW
-	 fiDhk0ZvolJceFFIMmZ8X6awbZaAFIgt4JJ6nBz021Na07/eT28g0nLR+jJWUeDvWcQ==
+	bh=pYE1e7Hbflcpw2EP8JLwNvukDagrQ3wY8m4omh3LRYU=;
+	b=vVvc1TP9dkkCu1XD/1pyo8/D6DdUTwYltAyjP9sRdpW8CIJ71G/dEStm/7uy2k9+6QAa
+	 fAM9DsbBp2eb8YBFgPoXQYwxvXjvtso6xusSpMnYVoaRNXn/rNzbf330gZBlpKndJ7ZD8
+	 KjZNZxABCkc8EO6Wycmd9AStWeQiioB4IBcriKWMv6rJb3GN3eY9MX6HPzY8a6aSMEXVB
+	 h5o+PTSxz8xFqVmOG6YhPvGmxNvYNZK1216K96F9jTNfp/aPZgCSUJf9KOQyk5+eJMkXO
+	 no/qoUN8aFCrBVwWfOxKOlLx43yZJW2PKMX4jIr+vJr2cgaHpBK6Bo/dmwGnkXJoAHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gmwgkgU/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gz2IvM82;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61ADB606A320;
-	Thu, 19 Nov 2026 02:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3776D606A320;
+	Thu, 19 Nov 2026 02:50:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gmwgkgU/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B137E1F000C4;
-	Thu, 19 Nov 2026 02:50:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gz2IvM82
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0381F000C5;
+	Thu, 19 Nov 2026 02:50:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056655;
-	bh=SKpm7pPcUbCg804/5+OzO8RWE8z4kYO1oKPMzLlTESc=;
+	s=korg; t=1795056658;
+	bh=pYE1e7Hbflcpw2EP8JLwNvukDagrQ3wY8m4omh3LRYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gmwgkgU/GRXu31s8lmRlf2D3hlQHhXTcAsjT1lS7N4wdg54g6GFXRqYmuT1GYJD61
-	 z8gVRoop44he290xYK8tLWmCmI3ZWKlLUUiQz8CqVHBdzfzclUMVYzf+SknepnfDNX
-	 urzmoqJiT08rjDnhMeiXBDqtNyDr17usL1AVabqY=
+	b=gz2IvM821C9T3deVV1/evzCFSfvO7/gjY5gJOw7uAxMV1zRFy5tbJRjGy6SDvwix4
+	 CuVGPj/b8VG8gFFfy7TkM4K+z3IAFo+lxn1nrr43b6yG+YlPj/MuL70tl2q+UPLmet
+	 U3VIAm9SWegPzVwh+DTbQ+Z3Ls/zQPjaGeHWQlWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2064/2214] ASoC: cs42l56: Remove the ADC Mute Switch control
-Date: Wed, 18 Nov 2026 16:02:20 +0100
-Message-ID: <20261118150133.222099217@linuxfoundation.org>
+Subject: [PATCH 5.15 2065/2214] net: openvswitch: skip IPv4 later fragments on TCP/UDP set actions
+Date: Wed, 18 Nov 2026 16:02:21 +0100
+Message-ID: <20261118150133.258042082@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,44 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit ff404ef11b975baf38c4472c51a6674c239e8021 ]
+[ Upstream commit 14c0350142ab0a10ebeefed03b779df23749e16a ]
 
-The ADC Mute Switch control writes bits 2 and 3 of the Misc ADC Control
-register. These are the ADCA Invert and ADCB Invert bits, which have
-their own controls. The ADC mute bits are bits 0 and 1, and the DAI mute
-callback already sets them.
+An IPv4 later fragment carries no L4 header, but key extraction leaves
+ip.proto set to the real protocol and the flow may wildcard the frag
+field, so validate_set() accepts such packets. set_tcp() and set_udp()
+then treat the first bytes of the fragment payload as an L4 header,
+rewrite them as ports and patch the bytes at the checksum offset,
+corrupting the packet.
 
-So the control has never muted the ADCs, and nobody can be relying on
-it. Remove it rather than point it at the mute bits, so the ADCs are
-muted in one place only.
+Skip these actions for OVS_FRAG_TYPE_LATER. IPv6 later fragments are not
+affected, since their ip.proto is NEXTHDR_FRAGMENT and validate_set()
+rejects L4 set actions for them.
 
-Fixes: 272b5edd3b8f ("ASoC: Add support for CS42L56 CODEC")
-Suggested-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/all/atXh3Br+fuH83S0q@opensource.cirrus.com/
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20261019124022.3410793-1-sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: ccb1352e76cf ("net: Add Open vSwitch kernel components.")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20261015124749.4694-1-fmancera@suse.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs42l56.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/openvswitch/actions.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/codecs/cs42l56.c b/sound/soc/codecs/cs42l56.c
-index 7e75b98a40059..bac26ea6729fa 100644
---- a/sound/soc/codecs/cs42l56.c
-+++ b/sound/soc/codecs/cs42l56.c
-@@ -387,7 +387,6 @@ static const struct snd_kcontrol_new cs42l56_snd_controls[] = {
- 			      CS42L56_PGAB_MUX_VOLUME, 0, 0x34, 0x24, pga_tlv),
- 	SOC_DOUBLE_R_TLV("ADC Volume", CS42L56_ADCA_ATTENUATOR,
- 			      CS42L56_ADCB_ATTENUATOR, 0, 0x00, 1, adc_tlv),
--	SOC_DOUBLE("ADC Mute Switch", CS42L56_MISC_ADC_CTL, 2, 3, 1, 1),
- 	SOC_DOUBLE("ADC Boost Switch", CS42L56_GAIN_BIAS_CTL, 3, 2, 1, 1),
+diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
+index aea8a4eb9cded..b7f2120cc45b6 100644
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -617,6 +617,9 @@ static int set_udp(struct sk_buff *skb, struct sw_flow_key *flow_key,
+ 	__be16 src, dst;
+ 	int err;
  
- 	SOC_DOUBLE_R_SX_TLV("Headphone Volume", CS42L56_HPA_VOLUME,
++	if (flow_key->ip.frag == OVS_FRAG_TYPE_LATER)
++		return 0;
++
+ 	err = skb_ensure_writable(skb, skb_transport_offset(skb) +
+ 				  sizeof(struct udphdr));
+ 	if (unlikely(err))
+@@ -660,6 +663,9 @@ static int set_tcp(struct sk_buff *skb, struct sw_flow_key *flow_key,
+ 	__be16 src, dst;
+ 	int err;
+ 
++	if (flow_key->ip.frag == OVS_FRAG_TYPE_LATER)
++		return 0;
++
+ 	err = skb_ensure_writable(skb, skb_transport_offset(skb) +
+ 				  sizeof(struct tcphdr));
+ 	if (unlikely(err))
 -- 
 2.53.0
 
