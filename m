@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039009;
-	b=CwQVelGpm500SqK7WebssD4Xjvrn883OIKCrl19845vHikwhP1yPHiO2w/w0XwMKdll3
-	 4XrpxMUErZlbfdZdXNi5+LGSIQkusAjkkSW9dBm8XdT2IkWzSHiuG8B6SxQHHFB0TX6QL
-	 Q/ZlRE+NMtQHzq5I1XGKivYsiRqdXQQ1cp+miBgH+JVZmmoZHwCdk4Ja4U/VTcRmlKDAs
-	 dtSHkPEVo7+O4k4rMTgP2AVP1+YEG1dckOAJVo87IJAbDKeof4YZ1QG0YIkm4wpJtVP5m
-	 8b3EfXT+Ps8N6FoplOc1fab8D6ozZ7+BqMVT5joUVX7ENYhWRwB0kp5ph0oRLgykhmA==
+	t=1795039012;
+	b=IsV8UYT5k+BDjXTgOmSMUBqiU/h/m5D0h4jHiUYo26QoUVF8avkafYe5v4e1/XNq4zEa
+	 450LISdZhLRbbaB33Y7lhXvWbnfzgIoncZpbUuIb7aUz6FYyxdCwgQdnE6wuId1/mgkmR
+	 UUIQjZkRR/sC4vnC8WDJnlmvWyAQZ1OZVFTUJGXjY6MGcUIXlE/2QTAm8Vx0VwigOYRIG
+	 eGCzhadtt2PFHSotNyaRNK+++B2NEYwPgTxN0P1zeU0Rk1ZeQ7o3WgwSVySDxUZ9SlxEF
+	 ScOTFTubwTnwoV1FwGS3WkmbdB3HX3sy1j3LWVyQri6o4tzDGznnufsbeDAxygawb1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039009;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039012;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VBhJ3yfEPMK3s98LjOHgTNic6UVsbiRslqbUyJUNeDs=;
-	b=QpHOvEGa3TYz1fiaDyU7jyoBBWOK1kpB02aVC0NAJWuohtXIlwdmoKSdIPfT1cuNBwpe
-	 NVhV9Eg31Dk1qxacEaf4UYoGMD4CLzHl0dHGTM6WWru0IF6N/0zn3MGCUd4ThCiybxQMt
-	 zt1cvwgRSfKjn6GcWHBpyU1yw8lkBEPh+RPXc3aojF8XbOflK5Fv4Hw7EBNv2o9FIBng6
-	 eodWD6xlAtTH0XWKMAqS2zAgMJysge7Plb65IIA/JWCN2JVS02dWdCNfHaPk4cens4OVD
-	 4PMU7YLxhFEHGl2omx0GK/zQrofWXygfkBb2cbPhfko6Eh6EeZcrurgsV0gvToMRmAw==
+	bh=OpiyOWZ+heMvURECJ3Mdx69KrSzPV1FQpI1vih1/BI8=;
+	b=h9NfMSBCRkurWeSRMAPxaGW5CbeLVyjy0AgsUCAgfmgphl6cCB6ikdts87bDWTOOC/mR
+	 mL9PYkx5oek+IdxE+ZiefSDXyQ/0t7YGlF6euIZyVYuvxwi0L8F7l64l97MjvL3OQ32Up
+	 Vi3OOMDqTnwMa8S1m9GJJHr0kXWCvhrmtN562r/0vjFlIkuIT1OGB/t7x+XzdQOQgmPsz
+	 HQcijaq24rraz6dv3l4XnlkStw9+cVq4NQpwWBItcvYq0Z1ATsdjbhDWyjmVr4gWHMsta
+	 Vtl/Rp8vgvmsRIGmNYB5Zh9yh+sXbFHHJ1Fp0pYqb9T3hLdj1i0DcQuRULOEho8Y1Cg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nm6WKiFo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fMC2z9xz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D52606A332;
-	Wed, 18 Nov 2026 21:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3053606A331;
+	Wed, 18 Nov 2026 21:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nm6WKiFo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D361F000C7;
-	Wed, 18 Nov 2026 21:56:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fMC2z9xz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD061F000C7;
+	Wed, 18 Nov 2026 21:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039009;
-	bh=VBhJ3yfEPMK3s98LjOHgTNic6UVsbiRslqbUyJUNeDs=;
+	s=korg; t=1795039012;
+	bh=OpiyOWZ+heMvURECJ3Mdx69KrSzPV1FQpI1vih1/BI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nm6WKiFoPoumF8p4srT+iVa3tbKBt04cRY0mv6KJ7PsDVY24KSDJPKJ/6hzZvvJgH
-	 jwxFTWeEC2M19xVFRRWDTuNPEYu2l+9KTuJ8Zhh42on7qmbAYStjHZH6qs5Jq/sUJI
-	 ZhwGNYzAZE/ClM1iVFbIRiF50T5QiEDsmS8fefD8=
+	b=fMC2z9xzvOGSw+wsGDDbq33c4avJdd4PLONRnDg7iAPPjD0jSU40UrE82Mv687vlx
+	 VtnaVrrBGysm8ThCA4hZtdBuungxW3euSclonTugDQqYcoeBxUAYa2JuXGz6lM2Vdm
+	 D3IcRe74wHkstJ7yviZGtxaofmlkznP8mf8jmtnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <jasowangio@gmail.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Cong Zhang <cong.zhang@oss.qualcomm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Misha Nasledov <misha@nasledov.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1946/3318] virtio_blk: use synchronous quiesce in virtblk_freeze_priv()
-Date: Wed, 18 Nov 2026 15:42:48 +0100
-Message-ID: <20261118150420.436695056@linuxfoundation.org>
+Subject: [PATCH 6.6 1947/3318] drm/amd/display: Drop clock requirements on DCN32 when no displays are active
+Date: Wed, 18 Nov 2026 15:42:49 +0100
+Message-ID: <20261118150420.468004446@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,56 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Zhang <cong.zhang@oss.qualcomm.com>
+From: Misha Nasledov <misha@nasledov.com>
 
-[ Upstream commit 6c6dec7883f8eb10b326bc9d109a4990c885d949 ]
+[ Upstream commit bba4dc3306483335ddbe065c05b2d8359ec387a4 ]
 
-blk_mq_run_work_fn() can call blk_mq_sched_dispatch_requests() through
-blk_mq_run_dispatch_ops(). The dispatcher checks QUEUE_FLAG_QUIESCED
-while the flag is clear. It can then be preempted before it gets a
-request. At that time, it has no queue usage reference, so
-blk_mq_freeze_queue() does not wait for it.
+amdgpu_dm builds the new dc_state as a copy of the old one. When the last
+stream is removed, dml1_validate() returns early on pipe_cnt == 0 and
+never reaches dcn32_calculate_dlg_params(), so bw.dcn.clk keeps the
+dramclk/dcfclk/fclk requirements of the display that was just turned off.
+dcn32_update_clocks() then keeps those hard minimums applied.
 
-virtblk_freeze_priv() then calls blk_mq_quiesce_queue_nowait() and
-blk_mq_unfreeze_queue(). A new request can enter the queue. The old
-dispatcher can run again, use its old flag check, get the new request,
-and call virtio_queue_rq(). At the same time, virtblk_freeze_priv() can
-reset the device, delete the virtqueues, and free vblk->vqs. The old
-dispatcher can then use a deleted virtqueue or a NULL vblk->vqs, and the
-kernel can crash.
+On an RX 7900 XTX this leaves UCLK at 456 MHz and DCFCLK at 637 MHz with
+the monitor off, and the board idles at 28.4 W. With this change they
+drop to 96 MHz and 145 MHz and board power falls to 15.3 W.
 
-Fix this by using blk_mq_quiesce_queue(), which waits for dispatch code
-that was already running. Keep the existing freeze and unfreeze order.
-The queue remains quiesced until virtblk_restore_priv() calls
-blk_mq_unquiesce_queue().
+Reset the clock requirements in that case, as calculate_dlg_params()
+already does when no HUBP is active and as the DML2 path does for
+stream_count == 0.
 
-Fixes: 7678abee0867 ("virtio-blk: don't keep queue frozen during system suspend")
+Signed-off-by: Misha Nasledov <misha@nasledov.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 0261a0ef89f37ef962fbc9dbc724ebf65fe681cf)
 Cc: stable@vger.kernel.org
-Acked-by: Jason Wang <jasowangio@gmail.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
-Link: https://lore.kernel.org/20260911-virtblk_sync_quiesce-v1-1-a883f8f31258@oss.qualcomm.com
-Link: https://patch.msgid.link/20261103-virtblk_sync_quiesce-v3-1-f40233f9bdd9@oss.qualcomm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ sashal: adapted the change to virtblk_freeze(), where queue freeze/unfreeze calls do not use memflags ]
+[ sashal: Adapted the dml1_validate() change to dcn32_validate_bandwidth() after its existing MALL state restore. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/virtio_blk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../gpu/drm/amd/display/dc/dcn32/dcn32_resource.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index 65a1f1576e55f..1aeb44304f37a 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -1628,7 +1628,7 @@ static int virtblk_freeze(struct virtio_device *vdev)
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+index ab6b4f44f537c..f85672062af30 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+@@ -1860,8 +1860,21 @@ bool dcn32_validate_bandwidth(struct dc *dc,
+ 	if (fast_validate)
+ 		dcn32_restore_mall_state(dc, context, &mall_temp_config);
  
- 	/* Ensure no requests in virtqueues before deleting vqs. */
- 	blk_mq_freeze_queue(q);
--	blk_mq_quiesce_queue_nowait(q);
-+	blk_mq_quiesce_queue(q);
- 	blk_mq_unfreeze_queue(q);
+-	if (pipe_cnt == 0)
++	if (pipe_cnt == 0) {
++		/* The context is a copy of the previous state, so without this the
++		 * clocks the last display needed stay applied with all displays off.
++		 */
++		context->bw_ctx.bw.dcn.clk.socclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dppclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dcfclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dcfclk_deep_sleep_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dramclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.fclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.p_state_change_support = true;
++		context->bw_ctx.bw.dcn.clk.fclk_p_state_change_support = true;
++		context->bw_ctx.bw.dcn.clk.num_ways = 0;
+ 		goto validate_out;
++	}
  
- 	/* Ensure we don't receive any more interrupts */
+ 	if (!out)
+ 		goto validate_fail;
 -- 
 2.53.0
 
