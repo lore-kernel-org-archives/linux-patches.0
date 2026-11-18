@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015535;
-	b=Yd23QqSxZkPZi9u9Q2dsxCnz8cpSfJWWKKqeHD8XUgtxEmWN/+OQOkGhQkiT0Gtf4HKk
-	 rKQSWLILaFKAwKQ12bEzgBbpk9cIfsuI9bcHXneFfIUKIqLWl6VlkIxciGGCKJRfxPX6f
-	 H+MEMccRxvnYKImwrwlYgb+LuLC0Jr6CD/VurN/wKK6c0Mqae3XKguGINZaWg5cWyBLj0
-	 U1eB0Moc3UQI8cDwg8bf6RKYK+ltvQ0mtNR3TJRwxxsbfGnWYpWXo8FXAT5u+5DxhsKnz
-	 jNtC92MGZZtvfMupbMzNP22W6RI0YnVmz6qW/+q7SXPDIKsk2iErpQyE7S8Oej59Htg==
+	t=1795015538;
+	b=Vsh/P6At3TJbhPmDT8ZB2T8U5FNDULPO0zFrA5xdBXAC6ANqiAaorFewlYTNAEfWghL7
+	 r/iiiVHUgJF18gfpP410K1QceU5cd7snxq/tuTi5u9X84v3A0QXj5ZWu6kUWMoCxUrWvl
+	 FaTKBz757SVw9ZSFpHP/i0UQ7KTYrEjNF04sRjEfH+NY8vAh3YWu6s/Z1B00duMJPGGxz
+	 Mto3NpAhzqDQnV6KbAOOVRO32gEmRag/vDnEed4ZBMw4EtDX4BSR0JOKtnFL+TQQSKJ9x
+	 TlJXxwTjRY3FAkN00FB8AnWFES25ArfnodC64ykIP7HdUkViwGTUXa/tarNC98QTHNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015538;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LOuonjO7Ui+SB1kJ5ssEsFQX+Io59peI2punyDwP6Zk=;
-	b=sBYIdXzlcuYi+X/5poYjCX/eE4OgFQqpm1DPqUeGVt+0J+Lcbuh3Ju2D+oB0GGvRRK/z
-	 6zTTZ6r/DdtD9kRrbPsuZONVT1B51RamS/rWRLGBwBAEN+TMElbyvWbnskAcEuZBqk6vk
-	 9y1GiKnNEN639CKurG4NrVtrHgIGKIS78mvRSjm0/qIa3nbWnCYyXz+qjQY1rrBH16FQC
-	 BstxZIOJMeK+TDOG3Z1UjAboUeox9AuT/0NHoBCeGprP3KAOdmWsCVGo7L85dIUrWaHKZ
-	 SX+L1QIlQ85Ih7vI6IFiOT+V+RhfzZWzypOsddT2EGj+uLIHMF0q1mxSZvQSMBY2guQ==
+	bh=vG/aj9R3DLoMZQVAkeM1vq+oIX183vr0flLm1Di/r7w=;
+	b=iP+3cEUTpUX/bM46suYNm1kfCUDaJmVkE9ZgEKk2x4XQ3778wFq5hh0ZQAhLD9aR5S4B
+	 DOcGp/hWUEprNN4jHSCD5FRorFg38H0BEb5wJH+QHPFv91xbHeSFW+1YQO56jXVn/2g53
+	 2qHD6XvLAX5PV5x/f05QEkOiOfgKEP9CDXCB4t4RPD41+W1YPoL9nAM/IpQ6nnGFcy0qA
+	 28MiU8pHJ1BAvNo2HoEFUTMS/pbUAL18Ye7waEcWdAVxPqM5PBZFNYRhFMkA6vuCNhJw4
+	 7U3fe+MCWymzh0dSklqaBebeWgT+CZplNGQWxGWd6Ls/r+WRdP7uaql/ChZNwDC99Cw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0f9n09Wk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O5zLX3C+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0FF606A32A;
-	Wed, 18 Nov 2026 15:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05475606A32A;
+	Wed, 18 Nov 2026 15:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0f9n09Wk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C3A1F000C5;
-	Wed, 18 Nov 2026 15:25:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O5zLX3C+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4C51F000C4;
+	Wed, 18 Nov 2026 15:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015535;
-	bh=LOuonjO7Ui+SB1kJ5ssEsFQX+Io59peI2punyDwP6Zk=;
+	s=korg; t=1795015537;
+	bh=vG/aj9R3DLoMZQVAkeM1vq+oIX183vr0flLm1Di/r7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0f9n09WkHA8+hqZ3L+/hnRuYsMGhBAxPVfsDC3TgFljlENHQDKjE7bLtv0Moabfr8
-	 90rnL6Q4s1Ulbgj9kmS/+WCnROOtXcCvQPo+uFW4nOhVs1u/AzRoMZrbnfcu4gs0/e
-	 3mPN1RTkmZtpzdxG61AQXjQVRvR9a4FB5NuFrzP4=
+	b=O5zLX3C+Z12RukbMAoqA1Fazm8raK+zdrMZPF0yKUn+TOlkZUbTdohtl38VjOlc+l
+	 qoF2K4NZXURZD2D3QCw3dDIJm2NrYRwQTgd1RxgwcSlTva2RmeQlcmpBIDlTD7tHN5
+	 MYjNksvUBusi3i4fLs9WApRE5A+Nnv8106S2HrB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexander Aring <aahringo@redhat.com>,
-	Danila Chernetsov <listdansp@mail.ru>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0167/2651] dlm: fix NULL pointer dereference in dlm_dump_rsb_name()
-Date: Wed, 18 Nov 2026 15:23:27 +0100
-Message-ID: <20261118150253.861261113@linuxfoundation.org>
+Subject: [PATCH 7.3 0168/2651] dlm: fix buffer overflow from negative len in dlm_search_rsb_tree
+Date: Wed, 18 Nov 2026 15:23:28 +0100
+Message-ID: <20261118150253.899092620@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,55 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danila Chernetsov <listdansp@mail.ru>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 19982c99a302ab544c69f95d37ca3070c89762d3 ]
+[ Upstream commit d785f7d92f197b72d496bbcf54a160cd54f00263 ]
 
-The function dlm_dump_rsb_name() is called from receive_rcom_lookup()
-when a debug dump is requested via a special RCOM_LOOKUP message with
-rc_id == 0xFFFFFFFF.
+commit 080e5563f878c ("dlm: validate length in dlm_search_rsb_tree")
+only checks for len > DLM_RESNAME_MAXLEN, which does not catch negative
+values. While the input 'len' can be negative and a negative int passed
+to memcpy() is implicitly converted to a large size_t, causing a stack
+buffer overflow on the key[] array.
 
-The resource name passed to dlm_dump_rsb_name() comes from the received
-message. There is no guarantee that an RSB with this name exists in the
-local hash table.
+Fix this by changing the 'len' parameter type from int to unsigned int.
+This ensures negative values from callers are implicitly converted to
+large unsigned values that are caught by the existing
+len > DLM_RESNAME_MAXLEN check.
 
-dlm_search_rsb_tree() returns 0 when the RSB is found and stores a valid
-pointer in r. When the lookup fails, it returns -EBADR and leaves r
-NULL.
-
-The current error handling is inverted:
-
-    if (!error)
-            goto out;
-
-As a result, dlm_dump_rsb() is called only when the lookup fails and r
-is NULL, resulting in a NULL pointer dereference.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 2d90354027ad ("dlm: merge toss and keep hash table lists into one list")
 Acked-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Signed-off-by: Alexander Aring <aahringo@redhat.com>
 Signed-off-by: David Teigland <teigland@redhat.com>
+Stable-dep-of: b4e6ae7ba711 ("dlm: fix variable key length lookup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/lock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/dlm/lock.c | 6 ++++--
+ fs/dlm/lock.h | 4 ++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
-index 3be1d6007e359..9aa4f7a190742 100644
+index 9aa4f7a190742..d73c4aed1f8ac 100644
 --- a/fs/dlm/lock.c
 +++ b/fs/dlm/lock.c
-@@ -1421,7 +1421,7 @@ void dlm_dump_rsb_name(struct dlm_ls *ls, const char *name, int len)
+@@ -622,12 +622,14 @@ static int get_rsb_struct(struct dlm_ls *ls, const void *name, int len,
+ 	return 0;
+ }
  
- 	rcu_read_lock();
- 	error = dlm_search_rsb_tree(&ls->ls_rsbtbl, name, len, &r);
--	if (!error)
-+	if (error)
- 		goto out;
+-int dlm_search_rsb_tree(struct rhashtable *rhash, const void *name, int len,
+-			struct dlm_rsb **r_ret)
++int dlm_search_rsb_tree(struct rhashtable *rhash, const void *name,
++			unsigned int len, struct dlm_rsb **r_ret)
+ {
+ 	char key[DLM_RESNAME_MAXLEN] = {};
++
+ 	if (len > DLM_RESNAME_MAXLEN)
+ 		return -EINVAL;
++
+ 	memcpy(key, name, len);
+ 	*r_ret = rhashtable_lookup_fast(rhash, &key, dlm_rhash_rsb_params);
+ 	if (*r_ret)
+diff --git a/fs/dlm/lock.h b/fs/dlm/lock.h
+index b23d7b854ed46..c75975937331c 100644
+--- a/fs/dlm/lock.h
++++ b/fs/dlm/lock.h
+@@ -31,8 +31,8 @@ void resume_scan_timer(struct dlm_ls *ls);
+ int dlm_master_lookup(struct dlm_ls *ls, int from_nodeid, const char *name,
+ 		      int len, unsigned int flags, int *r_nodeid, int *result);
  
- 	dlm_dump_rsb(r);
+-int dlm_search_rsb_tree(struct rhashtable *rhash, const void *name, int len,
+-			struct dlm_rsb **r_ret);
++int dlm_search_rsb_tree(struct rhashtable *rhash, const void *name,
++			unsigned int len, struct dlm_rsb **r_ret);
+ 
+ void dlm_recover_purge(struct dlm_ls *ls, const struct list_head *root_list);
+ void dlm_purge_mstcpy_locks(struct dlm_rsb *r);
 -- 
 2.53.0
 
