@@ -1,55 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054486;
-	b=1tMQIyfWjhtewHRhnNbdaYij+NNBXlGGxehcKGqq8U1Xs7URL3oBoBcQzwTtsI+VD4eZ
-	 5OmsxoeBqrOGDaLZ29kVUBI57HSBcUnQEJaJGQAiRPiUmhnSixSF6U3VBwyXmay2yooWQ
-	 3abTFdZ7sjFKV7aHbEcpxjWlSP6p8tBkaK7R4tLaxAOTYo2VvW2ox2Xi7OYiMW089i0/n
-	 /Km8QMCw56OCnetToDLDtLyAVkkmo2BwIp9IMwjrB80y0SlIWHpJwbjh9Ty9YVRSvPXhS
-	 Pk9xLzP1Ay5LUzXZopi5DZg2P+ow8qEJ4ln637O5a/2hO9myECz3arQFKFynlGm4ahQ==
+	t=1795054489;
+	b=swck087yD21V834c22yzGqzQU0UFEQwGMsuSspQWXyIDxRLm3Wo0rgHFLv0rVtRVy22X
+	 D1jyFJ8WTyF7vdlIWYVDmBJ+eCQ2Q1XDESp0ZW4Sx6+bzVSoWTATquqUQuhob8dh9W3e/
+	 FaXYk0d8XomVlJ3s9l9N04YH2ItJMz351T8H2DnQyrOyY2yrx+YR5oSF0uK1aPeoH3ke7
+	 nbOitMvlMEhMShPEke4Hnj81tmuWfIUVMGE68PrTma6V+9SDI2uMMhIoFSf0/AV+aWqgi
+	 xPjWjg2qXc/FK2ErIGAK1WP2v4/+f4Y9bnHjea2Sx3M18IZxfD/t3y2IP1SEBgF/UwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054486;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054489;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cV9ywiWYEOBu5Z/peR8gvZz9rMPUXVuEDsRHaDRANmU=;
-	b=sPqz9TUwJ2v8BcFyGPi+L644Z3e5k1wFn3IcE6goP6xlnvmHKKvgyjxL1eAKYLYEGYrt
-	 +QwftXcsnwIKhE/E3Aivakl8693WcSlmzBrBwoc0ziqbRi/ChQnsiv76ujTUB7T+GDCfN
-	 ifWAF2aAz0CNk+wlSxd+Cl6OZfgsMV6j1kmvmoqedq3bb9CFa9XHrlyDDHGQnj4fE9JTY
-	 +3WJ8BMmcOdJEu0g25SoWmBBCqhs02srdoHBsbwo5+YjtctRTdqGwgJYYPZ4EeBSYSKqZ
-	 pXt8QJwB8S9u4L71OSRYaF+w7eszLsNCHEhy7z67snq8mMvEo3KWrEDu2t9HimhJz8Q==
+	bh=CmLAlweRKrRW4nE5hrEg78p26R54LSwNIo6n2lBERHU=;
+	b=KGPkVYXeZ4ujgVwG2qkPhr9RRvGqh49FNebH4rJaf6+kqFqOipNnGAYTc8+ajiNQnEg+
+	 2Dv1KXnILh58aQMYAjldOSj7lk9NJlfSvs2FOCzI8cINe0cnprZnCeYhDbRTCj1heVgco
+	 Ynz2pL9W1xO7iM+C65DnspVg0bWPMfi6+WJBXcpvgH2/4BbjmLjncnsCdVCuOpSbjf69P
+	 iHTky07eKNTt9+FIaEsyFTnxSo5g861+UKUqvEywtSIEQ15cTi7xzTSc6LB5gNllsGRqN
+	 tQZTa9VtAjhCyoKEZQ+4/7QR/EXSkv8xZIT5RS9k6IN1N7N7P4WXChDvfX0RG7W9jNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TfqDrTM3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lj+wh+fC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5D2606A320;
-	Thu, 19 Nov 2026 02:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284B7606A32A;
+	Thu, 19 Nov 2026 02:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TfqDrTM3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB5351F000C5;
-	Thu, 19 Nov 2026 02:14:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lj+wh+fC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7641F000C4;
+	Thu, 19 Nov 2026 02:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054486;
-	bh=cV9ywiWYEOBu5Z/peR8gvZz9rMPUXVuEDsRHaDRANmU=;
+	s=korg; t=1795054489;
+	bh=CmLAlweRKrRW4nE5hrEg78p26R54LSwNIo6n2lBERHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TfqDrTM3X58+K4F09ydUF0xyVVuWOLlyWp8eUTuWoKtY1OVvLIIZVYHt3qZgW5nZj
-	 ec6ANtr513TpCjujeBPhj/D4xiybvfAKIS1/Hd9IKs3IHtu9asLdyBrLqpzEjbHJCh
-	 8Xk4RSm3aHX1ldUIbRHkEWZvYgFtqLIRzi3KUqGk=
+	b=lj+wh+fCmaQ/HnE2HJVSkbOTCrA+rchjSxlPhPAEzVbgBedDMEudNdLn/ebyv0MpS
+	 8lP97xH0uvGnGuI3ipg9dOuuka93WWyohsTuQrKkjmRnDnGOuNlb/mBrbbDXazK9C5
+	 bTKiOBS8rWKFxUUG+9TDieIkD3BbqbjHgKli5EYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Balbir Singh <balbirs@nvidia.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Salvatore Dipietro <dipiets@amazon.it>,
+	Christoph Hellwig <hch@lst.de>,
+	Dave Chinner <dgc@kernel.org>,
+	Matt Fleming <matt@readmodwrite.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Michal Hocko <mhocko@suse.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Brendan Jackman <brendan.jackman@linux.dev>,
+	Zi Yan <ziy@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1251/2214] mm/mremap: recheck PUDs under the page table lock
-Date: Wed, 18 Nov 2026 15:48:47 +0100
-Message-ID: <20261118150101.721156922@linuxfoundation.org>
+Subject: [PATCH 5.15 1252/2214] mm: page_alloc: do not give all non-blocking requests reserve access
+Date: Wed, 18 Nov 2026 15:48:48 +0100
+Message-ID: <20261118150101.763143514@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,79 +81,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Johannes Weiner <hannes@cmpxchg.org>
 
-[ Upstream commit 402882943dfa8bab5c2bcc66189f9fb2828f248e ]
+[ Upstream commit 6ee3d87b940848aaed5d4e8d005c5f674bf2637a ]
 
-Once get_old_pud() is fixed to accept PUD leaves, unmap_mapping_range() can
-clear a leaf between the lookup and the move. Holding mmap_lock in write
-mode does not prevent this.
+Patch series "mm: page_alloc: fix reserve access for non-blocking
+requests", v2.
 
-If the zap happens before move_page_tables() tests the entry, an empty
-PUD can reach move_normal_pud(), where pud_populate() turns it into a
-present page table entry. If it happens after the test, move_huge_pud()
-can instead try to move an empty entry, triggering CONFIG_DEBUG_VM
-warnings on powerpc.
+Two fixes for how non-blocking allocations interact with the highatomic
+reserve.  There are prerequisites for Salvatore's "mm/page_alloc: avoid
+direct reclaim and compaction for costly __GFP_NORETRY allocations" [0].
 
-Recheck the source under the page table lock in both helpers. Treat an
-empty source in move_normal_pud() as a completed move, and use
-__pud_trans_huge_lock() in move_huge_pud().
+Patch 1 narrows which requests may physically take highatomic pages,
+patch 2 narrows which requests may count them in their watermark check.
 
-In the future we should likely have the code lookup a PUD/PMD lockless
-once, instead of multiple times, because one of the problematic bits
-here is the:
+Both are prerequisites for Salvatore's patch: it clears
+__GFP_DIRECT_RECLAIM for costly __GFP_NORETRY requests, which turns every
+large page cache folio allocation that reaches the slowpath into a
+non-blocking one.  Without patch 1, those requests may fall back to the
+highatomic freelists reserved for atomic requests.  Without patch 2, they
+count the free highatomic pages in their watermark check while being
+served from regular memory, so they can consume regular high-order blocks
+below the min watermark by the size of the reserve.  GFP_NOWAIT requests
+hit both paths today, so these are existing problems worthy of their own
+stable backports; but Salvatore's patch would widen them significantly.
 
-	pud_trans_huge(*old_pud)
+Patch 2 reproduction: a GFP_NOWAIT burst under memory pressure can drain
+regular free memory to zero while the highatomic reserve sits idle.
+Measured on a 32G box with an anonymous working set, swap, and a full 290M
+reserve, three synthetic bursts drove the 28G Normal zone's regular free
+memory to 28M, 0.8M and 0.6M against a 60M min watermark.  Swapout failed
+its swap table allocation inside reclaim, reclaim scanned 13M pages to
+free 200k, and page faults stalled for tens to hundreds of milliseconds.
+With the fix the burst stops at the min watermark and nothing else
+happens.  This was found in review and reproduced synthetically; it has
+not been observed in production.
 
-Fixes: 0881ace292b6 ("mm/mremap: use pmd/pud_poplulate to update page table entries")
-Cc: stable@vger.kernel.org
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-31-d6437171ecc3@kernel.org
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: adjusted context for separate vma and old_addr parameters instead of pagetable_move_control ]
+GFP_ATOMIC order-0 requests have a milder version of the same problem:
+They are entitled to the reserve but are served regular memory first, so
+the fix there has to change the watermark check and the freelist order
+together.  Salvatore's change doesn't interact with this, though; fixing
+that is left for a separate patch.
+
+This patch (of 2):
+
+281dd25c1a01 ("mm/page_alloc: let GFP_ATOMIC order-0 allocs access
+highatomic reserves") accidentally gave all non-blocking allocation
+requests access to highatomic reserves, which includes GFP_NOWAIT and
+other sites clearing __GFP_DIRECT_RECLAIM.
+
+While this improved atomic request success rate, it's unintentionally
+broad and can actually worsen highatomic requests by squandering the
+reserves on requests that don't need it.
+
+There are concurrent efforts to clear __GFP_DIRECT_RECLAIM altogether
+for costly order __GFP_NORETRY requests, which would then also fall
+into this exemption and deplete reserves even faster.
+
+What GFP_ATOMIC has over the others is __GFP_HIGH, which
+alloc_flags_slowpath() translates to ALLOC_MIN_RESERVE.
+
+Narrow the exemption to contexts that have both ALLOC_NON_BLOCK |
+ALLOC_MIN_RESERVE.
+
+Link: https://lore.kernel.org/20261001082152.2879289-1-dipiets@amazon.it [0]
+Link: https://lore.kernel.org/linux-mm/arFBWvzXPYrKuIYi@cmpxchg.org/ [1]
+Link: https://lore.kernel.org/linux-mm/20261001082152.2879289-1-dipiets@amazon.it/ [2]
+Link: https://lore.kernel.org/20261028171719.2043421-1-hannes@cmpxchg.org
+Link: https://lore.kernel.org/20261028171719.2043421-2-hannes@cmpxchg.org
+Fixes: 281dd25c1a01 ("mm/page_alloc: let GFP_ATOMIC order-0 allocs access highatomic reserves")
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260904115629.3993331-1-dipiets@amazon.it
+Acked-by: Balbir Singh <balbirs@nvidia.com>
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Salvatore Dipietro <dipiets@amazon.it>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Dave Chinner <dgc@kernel.org>
+Cc: Matt Fleming <matt@readmodwrite.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Brendan Jackman <brendan.jackman@linux.dev>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: placed ALLOC_MASK_ATOMIC in the existing internal header instead of the dedicated page allocator header ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mremap.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ mm/internal.h   | 3 +++
+ mm/page_alloc.c | 4 +++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/mm/mremap.c b/mm/mremap.c
-index 518d9d36fc9ab..a5dcc91ee93c1 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -314,14 +314,18 @@ static bool move_normal_pud(struct vm_area_struct *vma, unsigned long old_addr,
- 	if (new_ptl != old_ptl)
- 		spin_lock_nested(new_ptl, SINGLE_DEPTH_NESTING);
+diff --git a/mm/internal.h b/mm/internal.h
+index 34b3a16aa01f3..fa8f43cdc39e2 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -631,6 +631,9 @@ unsigned int reclaim_clean_pages_from_list(struct zone *zone,
+ /* Flags that allow allocations below the min watermark. */
+ #define ALLOC_RESERVES (ALLOC_NON_BLOCK|ALLOC_MIN_RESERVE|ALLOC_HIGHATOMIC|ALLOC_OOM)
  
--	/* Clear the pud */
- 	pud = *old_pud;
-+	if (unlikely(pud_none(pud)))
-+		goto out_unlock;
++/* Flags that mean GFP_ATOMIC */
++#define ALLOC_MASK_ATOMIC (ALLOC_NON_BLOCK|ALLOC_MIN_RESERVE)
 +
-+	/* Clear the pud */
- 	pud_clear(old_pud);
+ enum ttu_flags;
+ struct tlbflush_unmap_batch;
  
- 	VM_BUG_ON(!pud_none(*new_pud));
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index 396961cdf93be..b31f50daad319 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -3633,7 +3633,9 @@ struct page *rmqueue_buddy(struct zone *preferred_zone, struct zone *zone,
+ 			 * reserves as failing now is worse than failing a
+ 			 * high-order atomic allocation in the future.
+ 			 */
+-			if (!page && (alloc_flags & (ALLOC_OOM|ALLOC_NON_BLOCK)))
++			if (!page &&
++			    ((alloc_flags & ALLOC_OOM) ||
++			     (alloc_flags & ALLOC_MASK_ATOMIC) == ALLOC_MASK_ATOMIC))
+ 				page = __rmqueue_smallest(zone, order, MIGRATE_HIGHATOMIC);
  
- 	pud_populate(mm, new_pud, pud_pgtable(pud));
- 	flush_tlb_range(vma, old_addr, old_addr + PUD_SIZE);
-+out_unlock:
- 	if (new_ptl != old_ptl)
- 		spin_unlock(new_ptl);
- 	spin_unlock(old_ptl);
-@@ -356,7 +360,9 @@ static bool move_huge_pud(struct vm_area_struct *vma, unsigned long old_addr,
- 	 * We don't have to worry about the ordering of src and dst
- 	 * ptlocks because exclusive mmap_lock prevents deadlock.
- 	 */
--	old_ptl = pud_lock(vma->vm_mm, old_pud);
-+	old_ptl = __pud_trans_huge_lock(old_pud, vma);
-+	if (unlikely(!old_ptl))
-+		return false;
- 	new_ptl = pud_lockptr(mm, new_pud);
- 	if (new_ptl != old_ptl)
- 		spin_lock_nested(new_ptl, SINGLE_DEPTH_NESTING);
+ 			if (!page) {
 -- 
 2.53.0
 
