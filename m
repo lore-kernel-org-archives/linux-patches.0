@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025821;
-	b=SpY0la589Ua+0TH2cm1+ajDR8zYDqS4DyMgjeb8A2Hsut5k74rDVbnLnhfSuxUDKTMVk
-	 ST9oRB/+03n3+S04DUpttmCmZoPTSOAK+9/iU5DqfqCsWLKRwEPENKIvdyg4wG5kp04AT
-	 cJUys9FnNMXXLtGkHx72dUTZROXIMmKlZdujOPUewd6Bilq6+p5TwF+8FmQV0d7M3yk5x
-	 dSy+uWKn2xN/RDKRuU3zAaGTEpK+gjtO7kiNIqrWqeR0TPhfKpPn14up/Etjk9sSZzIMw
-	 KUdvKQUirHmLcvWC3WiV27x37WviCwbfiWBGB88Bz/Nwfivf0oQ/YNzMfy+UqPVXLEg==
+	t=1795025824;
+	b=yNIw5Ga4WjXTpWRiijU4vsP+ErfH18lHIJnHxwcEWrlYtQfUJmprPxu7GMiWRoENn2et
+	 ZCxVyPAP/lkQX3jrJhKOtKGtSQq6jKeXoUAb3tVAupgI0b7KAHzf0+8980bwJeNryzbwE
+	 osOL5qhhbNP1dmFfhQkKHx1DjwN3uQ0LatyRD589k8YNpW578vFZvgLwbaWrZXia/37MC
+	 QU4yGts1Q4fzIurbgQBgeZ39jtKgpAmyyRMDVhhW5n7xlyfvdMExccx7M+uE8qUj5c9BD
+	 EjG/Sp5Bhu95KzWbZa4WpXgxMbs8BM2bJv81bVKT9NVyYpMyuytGHjeLLqsgSqtBClQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025821;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025824;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4/soiJNd3jBoolWXTByeWLPdzA7aRr3KqyaqQM0CqVc=;
-	b=d9wm88seLG8WqdCNyB9Powqh5gT5cXef05XqZcZw+X0ykKnjr3E11p+9WDrAmpuaj6+W
-	 030JTD1b9MqQETStdI9jO1FYjlyO0oYXPMD0crgaWt8u2pLsipVnIO/ckL5EmO/RRX1l2
-	 MTCbaotPSB3rpLVxbZZQM8knStzjDYvg8aLU9LseyX+tkrOvfDkWIYL98s4ospCeJDiE7
-	 aIKZqgJkzhNkdDlfu70tWwGMwcvYEcbu/wYTnDdroVoXKwAajpZJFcd/or8SJBnMmtMmq
-	 svz1gJd/TGhIrS3cvaYmLx9fh3ui7IIIuWpowf0R36EZw1Hz5QMCoqi/hG0H+VSeulw==
+	bh=DvmR9QcHsisOho0jQPGZhx2O2UxrARMZLrfJu/jrEnY=;
+	b=QSiQreFmwsHxZOwhnWpjI29h0u7e3dVHq0V6wTO+6mH1TKxNAld0NmK6uIwdxWquizZQ
+	 NJLbbfbzWbKCApKvknd3+TFr72ot/MeDAT8lEf905bhsUksHJdg5IVPjLUi3rKizpS4gM
+	 zRofi2xGGMH1tRyh7Gze4IIAzcw0O9dzZNfp3XoPZ+/lIQljcQrGVZYyqTwqgevDgcwfO
+	 5uc5GQBy5C/sU/UNit60uTtjLT65LW9cyAfyr7pKFGFfCG3uo6Oke13dbhLZq11inPUrM
+	 /QhWFbjp8Kej2NP1AimHoELOpN1RaODmx3ebEAe5mwieuyWCFSKC/bXpV2fg5aeMn/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s+rsQ6jv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cesvlapK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F83F606A32F;
-	Wed, 18 Nov 2026 18:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E447A606A31C;
+	Wed, 18 Nov 2026 18:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s+rsQ6jv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1AA1F000C6;
-	Wed, 18 Nov 2026 18:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cesvlapK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A6B1F000C6;
+	Wed, 18 Nov 2026 18:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025821;
-	bh=4/soiJNd3jBoolWXTByeWLPdzA7aRr3KqyaqQM0CqVc=;
+	s=korg; t=1795025823;
+	bh=DvmR9QcHsisOho0jQPGZhx2O2UxrARMZLrfJu/jrEnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s+rsQ6jvd6sGv9Us9JK7PkpiqwSEPs7k5qsLi2eXy4ezpjD3o3GQVzRDdtdZosCIz
-	 Mt6iLQP+EoqcBXmeQef1HFG5KGDNA+euKEDuHzibR3XeAuQ48rhD52ieq/qZ6jNVMG
-	 s6q/MElZYLBkO+YaAEmCuxQMnP9b0HN7Prv3UEs0=
+	b=cesvlapK2+Hhb8/pZtJy/KxBwMoUDN9taxE11jmLaT0+ezrYlkmXLYKzJvQh75y7J
+	 zqJhLdOXOew3Ns1Wn/9Jhbzeqpdim2OmlSeae03FLoEC+3rbpURP3Zqc4gazyKw8Ay
+	 rlnYdaDwGv/i7a8yi6Y4G9Cgja9pOWLKzTgxmZ90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jiale Yao <yaojiale02@163.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1198/2151] wifi: mt76: mt7915: guard firmware memory dump write on disabled memdump
-Date: Wed, 18 Nov 2026 15:48:53 +0100
-Message-ID: <20261118150205.848807871@linuxfoundation.org>
+Subject: [PATCH 6.18 1216/2151] wifi: mt76: mt7615: usb: fix source overread in mt7663u_copy
+Date: Wed, 18 Nov 2026 15:49:11 +0100
+Message-ID: <20261118150206.496944618@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -67,66 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit decf5142c2d4c295684da8644d4cb93dcf956c5d ]
+[ Upstream commit 0c2fcb5225361f71905697ef9db287b24bcc67cf ]
 
-mt7915_coredump_build()/mt7996_coredump_build() wrote dump_mem->len
-unconditionally, but the allocation only reserves room for the memory
-dump header when coredump_memdump is enabled and memdump_buf_len is
-non-zero. In the default configuration the allocation ends right after
-the fixed header, so the write landed one struct past the buffer. Only
-populate the memory-dump section when it was actually allocated.
+mt7663u_copy() rounds up len to a multiple of four and uses the rounded
+length as the bound for memcpy() from the source buffer. When the
+caller's length is not four-byte aligned, the final copy reads up to
+three bytes past the source buffer.
 
-Fixes: 4dbcb9125cc3 ("wifi: mt76: mt7915: enable coredump support")
-Fixes: 878161d5d4a4 ("wifi: mt76: mt7996: enable coredump support")
+Keep the original length for the source copy and zero the remaining
+bytes in the transmit buffer so that the hardware access width remains
+four-byte aligned.
+
+Fixes: 6cb596ba84e3 ("mt76: usb: introduce __mt76u_init utility routine")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260925150556.2304003-3-yaojiale02@163.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/coredump.c | 7 ++++---
- drivers/net/wireless/mediatek/mt76/mt7996/coredump.c | 7 ++++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7615/usb.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/coredump.c b/drivers/net/wireless/mediatek/mt76/mt7915/coredump.c
-index 5daf2258dfe6f..56d9b64ec6b06 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/coredump.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/coredump.c
-@@ -345,11 +345,12 @@ static struct mt7915_coredump *mt7915_coredump_build(struct mt7915_dev *dev)
- 	mt7915_coredump_fw_stack(dev, dump, exception);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/usb.c b/drivers/net/wireless/mediatek/mt76/mt7615/usb.c
+index d96e06b4fee18..a64ddd82b2164 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/usb.c
+@@ -58,15 +58,22 @@ static void mt7663u_copy(struct mt76_dev *dev, u32 offset,
+ 			 const void *data, int len)
+ {
+ 	struct mt76_usb *usb = &dev->usb;
+-	int ret, i = 0, batch_len;
+ 	const u8 *val = data;
++	int len_aligned;
++	int batch_len;
++	int copy_len;
++	int ret;
++	int i = 0;
  
- 	/* gather memory content */
--	dump_mem = (struct mt7915_coredump_mem *)(buf + sofar);
--	dump_mem->len = crash_data->memdump_buf_len;
--	if (coredump_memdump && crash_data->memdump_buf_len)
-+	if (coredump_memdump && crash_data->memdump_buf_len) {
-+		dump_mem = (struct mt7915_coredump_mem *)(buf + sofar);
-+		dump_mem->len = crash_data->memdump_buf_len;
- 		memcpy(dump_mem->data, crash_data->memdump_buf,
- 		       crash_data->memdump_buf_len);
-+	}
+-	len = round_up(len, 4);
++	len_aligned = round_up(len, 4);
  
- 	mutex_unlock(&dev->dump_mutex);
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/coredump.c b/drivers/net/wireless/mediatek/mt76/mt7996/coredump.c
-index 303d6e80a6662..63900dfb82cfa 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/coredump.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/coredump.c
-@@ -202,11 +202,12 @@ static struct mt7996_coredump *mt7996_coredump_build(struct mt7996_dev *dev)
- 	mt7996_coredump_fw_stack(dev, dump, exception);
- 
- 	/* gather memory content */
--	dump_mem = (struct mt7996_coredump_mem *)(buf + sofar);
--	dump_mem->len = crash_data->memdump_buf_len;
--	if (coredump_memdump && crash_data->memdump_buf_len)
-+	if (coredump_memdump && crash_data->memdump_buf_len) {
-+		dump_mem = (struct mt7996_coredump_mem *)(buf + sofar);
-+		dump_mem->len = crash_data->memdump_buf_len;
- 		memcpy(dump_mem->data, crash_data->memdump_buf,
- 		       crash_data->memdump_buf_len);
-+	}
- 
- 	mutex_unlock(&dev->dump_mutex);
- 
+ 	mutex_lock(&usb->usb_ctrl_mtx);
+-	while (i < len) {
+-		batch_len = min_t(int, usb->data_len, len - i);
+-		memcpy(usb->data, val + i, batch_len);
++	while (i < len_aligned) {
++		batch_len = min_t(int, usb->data_len, len_aligned - i);
++		copy_len = min_t(int, batch_len, len - i);
++		memcpy(usb->data, val + i, copy_len);
++		if (copy_len < batch_len)
++			memset(usb->data + copy_len, 0, batch_len - copy_len);
+ 		ret = __mt76u_vendor_request(dev, MT_VEND_WRITE_EXT,
+ 					     USB_DIR_OUT | USB_TYPE_VENDOR,
+ 					     (offset + i) >> 16, offset + i,
 -- 
 2.53.0
 
