@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053971;
-	b=FcpZcrzjGxwnqwvcWP4sW8OF/IWNcjk5Yq2OpczT7Pg7WIDbka6Ztl21wAs28WPt0gRt
-	 Q8gyuhtLIIKPLiFrbcrnxu30dbxOm1Bn0t69mhZ2RIrfw1I6b/K0v3trWxIzfTUgc+fX8
-	 enfgllvOcmRc02ADvS2ClKsPXhJeli+HVCYS5bYHnCJrjByuM4bLrnY21dku7LbnHMo+G
-	 81gB8ZnbGdVYScpoWi/0etB/yjLMPrDNtmSRl1XLKltZUYtPFZmMSnwvM+CGb/Bt95tWC
-	 cAMM09nIQGI/S7Zk4v0hM+6IJ+k5AzAfwVB4fKhlJEca5G/ZyPinbYYQSAnbmCcwXtQ==
+	t=1795053974;
+	b=wLrrQAFmLZBtpRb/0mNasXbjOPsAMGKOF/OrdO4xZPqAIPJ1IlX4Wog/fKa65t/8OdtY
+	 FT3dnFQJI1Q8S1ahO/mYR6J46btxuRghdMNWbNNzhKLF+WIDair+VJAuS5drP/dkkbswh
+	 5FvgkhfgBENgd86z2AkTkOLRn2F5hx0WV3mC6YLLFT2MlROzEX0iEoHQsNyaqYvk2WABf
+	 YjLa6HLzLvm4sQPOcyIQjuUYbLml3lafWR/loAyMp4Zf20kVCVrPUtqKUTie0pLZve+pz
+	 MqsN0XYyA3S92jB1UB/ywWCjf4ihkLavTiXE+PT1j6b3/OGcYfKRrKs58is75CYa4CQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053971;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053974;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OEZI8nBMQFOUHUCNXO8rrIMS289BtiRObKLwKnSShFE=;
-	b=mZVgk+U8IEg8pDWa+SbdCI9aFPyYmULRf+lGFt5HPcex+pV3pY18jOtMQpHxWHC2EaLR
-	 54Gw6hlIqzY+vAKw/AI8hfG7WVzKZy78ryv0irF40Pqj2nhAf/BSQ1HX2nZmoSGUtH6Pf
-	 edq9FwVAXPpnjt7mhZTgMFVknZBwVi5jNReSLvXZypshRmC/0l1azLWzTLHMjB4QRxIWM
-	 s+5HtzePTgyXxUJYaPoktUQwL8vyxebocPFhkc+XW6jUYKe5wKfiEjl1hhg1YKS4zqNbp
-	 b9xW+L77SlA9W7mhHcCaqaPqIQL/AslxgOfD7o9J+7hy9Yx2U6acvPj7molnSLGNFgw==
+	bh=I4HeKt6p9n373yIcFj674oHXIVM9amZg4WZOBVxncoo=;
+	b=PSFDiILhRPjSQ9sLZdbO0KfCJDswOpGkW6gYu5wjs1egozbwhZgKdsxJy5yqjBu77lpv
+	 /x5S6jYZcDtDfV9VuisysIcwgM+FivNOUkb+JadstTLxnyQ/AzBsmdYfVxO+peLj0Btig
+	 pl6iIlIxvg/mNpSCENHNRBGGDkLU+ROjxftwRlaeSU3lRw5jA8tl8/OQQ121O+i6QavOn
+	 0SNsFyNnOP6xsuVMZaZoGoBTecAoie5jznbs0NK0iSepJR+/4ETm4wATHNMPPz+TVLJIO
+	 8TGu7ykQIFt7ePVIgALZvdHhVadOoO4aQAD0xX2z1zF10tYwmN2KFGPEW3ExL0XlBmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0hslkrmu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=epUqbAmp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7E2606A31C;
-	Thu, 19 Nov 2026 02:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67412606A325;
+	Thu, 19 Nov 2026 02:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0hslkrmu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF491F000C4;
-	Thu, 19 Nov 2026 02:06:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=epUqbAmp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C851F000C4;
+	Thu, 19 Nov 2026 02:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053971;
-	bh=OEZI8nBMQFOUHUCNXO8rrIMS289BtiRObKLwKnSShFE=;
+	s=korg; t=1795053974;
+	bh=I4HeKt6p9n373yIcFj674oHXIVM9amZg4WZOBVxncoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0hslkrmulQtZcD1kk+/OKhq3YZjkdi3694iLYnUKRArDRlDQMboItJt0yq/37Gtio
-	 HtE101etmNOh5TO/5FoPYAfKje/bEwAlfm4i+AaBl7msyjJizfhg9Sz0URe4DiEGJT
-	 uqQY32QdOjW+o0+WlfKrL96dyMssMhiisP1iDD4U=
+	b=epUqbAmpR0d+aiHo6+f2vdSg43ADVKdsEgZo4b6RDN9uBsMA8CGSuYQS1xViA18oI
+	 D6wTKGhYsScF2Qa2/fVr8NkOdz487bk3Fhmf/es2b0pr0hEV9FVQ2eMXLBAFPEhlSb
+	 japUZKrobFu0v6Xd2LIHQtFx+kDGkRl9RQPZfpZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Vincent Legoll <vincent.legoll@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1107/2214] dm-writecache: fix REQ_FUA processing
-Date: Wed, 18 Nov 2026 15:46:23 +0100
-Message-ID: <20261118150056.444971028@linuxfoundation.org>
+Subject: [PATCH 5.15 1108/2214] nvmem: rockchip-otp: Add clks and reg_read to rockchip_data
+Date: Wed, 18 Nov 2026 15:46:24 +0100
+Message-ID: <20261118150056.475057791@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,161 +70,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit c0df022cb0fa2bbee74bd9b90c66790bcd4e3050 ]
+[ Upstream commit 8dc61364164e79e44c07fa2ac0a7b6939f00d5db ]
 
-REQ_FUA did not flush metadata in SSD mode, this commit fixes it.
+In preparation to support new Rockchip OTP memory devices with different
+clock configurations and register layout, extend rockchip_data struct
+with the related members: clks, num_clks, reg_read.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org
-Fixes: c1005322ff02 ("dm writecache: handle REQ_FUA")
-Assisted-by: Claude:claude-opus-5
-Assisted-by: Codex:gpt-6-sol
-[ sashal: added a blank line after the bool fua declaration in writecache_end_io() ]
+Additionally, to avoid managing redundant driver data, drop num_clks
+member from rockchip_otp struct and update all references to point to
+the equivalent member in rockchip_data.
+
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Tested-by: Vincent Legoll <vincent.legoll@gmail.com>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <20230611140330.154222-10-srinivas.kandagatla@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 9fc6a1592d84 ("nvmem: rockchip-otp: Serialize reads")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-writecache.c | 46 +++++++++++++++++++++++++++++---------
- 1 file changed, 36 insertions(+), 10 deletions(-)
+ drivers/nvmem/rockchip-otp.c | 79 ++++++++++++++++++++++--------------
+ 1 file changed, 49 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/md/dm-writecache.c b/drivers/md/dm-writecache.c
-index b0d827b84cdb5..7c1825de25f8d 100644
---- a/drivers/md/dm-writecache.c
-+++ b/drivers/md/dm-writecache.c
-@@ -198,6 +198,7 @@ struct dm_writecache {
- 	struct task_struct *endio_thread;
+diff --git a/drivers/nvmem/rockchip-otp.c b/drivers/nvmem/rockchip-otp.c
+index 9f53bcce2f877..b5a84b379da40 100644
+--- a/drivers/nvmem/rockchip-otp.c
++++ b/drivers/nvmem/rockchip-otp.c
+@@ -54,21 +54,19 @@
  
- 	struct task_struct *flush_thread;
-+	spinlock_t flush_list_lock;
- 	struct bio_list flush_list;
+ #define OTPC_TIMEOUT			10000
  
- 	struct dm_kcopyd_client *dm_kcopyd;
-@@ -1279,9 +1280,11 @@ static int writecache_flush_thread(void *data)
- 		struct bio *bio;
++struct rockchip_data {
++	int size;
++	const char * const *clks;
++	int num_clks;
++	nvmem_reg_read_t reg_read;
++};
++
+ struct rockchip_otp {
+ 	struct device *dev;
+ 	void __iomem *base;
+-	struct clk_bulk_data	*clks;
+-	int num_clks;
++	struct clk_bulk_data *clks;
+ 	struct reset_control *rst;
+-};
+-
+-/* list of required clocks */
+-static const char * const rockchip_otp_clocks[] = {
+-	"otp", "apb_pclk", "phy",
+-};
+-
+-struct rockchip_data {
+-	int size;
++	const struct rockchip_data *data;
+ };
  
- 		wc_lock(wc);
-+		spin_lock_irq(&wc->flush_list_lock);
- 		bio = bio_list_pop(&wc->flush_list);
- 		if (!bio) {
- 			set_current_state(TASK_INTERRUPTIBLE);
-+			spin_unlock_irq(&wc->flush_list_lock);
- 			wc_unlock(wc);
- 
- 			if (unlikely(kthread_should_stop())) {
-@@ -1292,6 +1295,7 @@ static int writecache_flush_thread(void *data)
- 			schedule();
- 			continue;
- 		}
-+		spin_unlock_irq(&wc->flush_list_lock);
- 
- 		if (bio_op(bio) == REQ_OP_DISCARD) {
- 			writecache_discard(wc, bio->bi_iter.bi_sector,
-@@ -1313,9 +1317,12 @@ static int writecache_flush_thread(void *data)
- 
- static void writecache_offload_bio(struct dm_writecache *wc, struct bio *bio)
- {
-+	unsigned long flags;
-+	spin_lock_irqsave(&wc->flush_list_lock, flags);
- 	if (bio_list_empty(&wc->flush_list))
- 		wake_up_process(wc->flush_thread);
- 	bio_list_add(&wc->flush_list, bio);
-+	spin_unlock_irqrestore(&wc->flush_list_lock, flags);
+ static int rockchip_otp_reset(struct rockchip_otp *otp)
+@@ -132,29 +130,23 @@ static int rockchip_otp_ecc_enable(struct rockchip_otp *otp, bool enable)
+ 	return ret;
  }
  
- enum wc_map_op {
-@@ -1425,6 +1432,8 @@ static void writecache_bio_copy_ssd(struct dm_writecache *wc, struct bio *bio,
- static enum wc_map_op writecache_map_write(struct dm_writecache *wc, struct bio *bio)
+-static int rockchip_otp_read(void *context, unsigned int offset,
+-			     void *val, size_t bytes)
++static int px30_otp_read(void *context, unsigned int offset,
++			 void *val, size_t bytes)
  {
- 	struct wc_entry *e;
-+	enum wc_map_op ret = WC_MAP_SUBMIT;
-+	bool need_flush = false;
+ 	struct rockchip_otp *otp = context;
+ 	u8 *buf = val;
+-	int ret = 0;
+-
+-	ret = clk_bulk_prepare_enable(otp->num_clks, otp->clks);
+-	if (ret < 0) {
+-		dev_err(otp->dev, "failed to prepare/enable clks\n");
+-		return ret;
+-	}
++	int ret;
  
- 	do {
- 		bool found_entry = false;
-@@ -1460,7 +1469,8 @@ static enum wc_map_op writecache_map_write(struct dm_writecache *wc, struct bio
- 				writecache_map_remap_origin(wc, bio, e);
- 				wc->stats.writes_around += bio->bi_iter.bi_size >> wc->block_size_bits;
- 				wc->stats.writes += bio->bi_iter.bi_size >> wc->block_size_bits;
--				return WC_MAP_REMAP_ORIGIN;
-+				ret = WC_MAP_REMAP_ORIGIN;
-+				goto flush_pmem_and_ret;
- 			}
- 			wc->stats.writes_blocked_on_freelist++;
- 			writecache_wait_on_freelist(wc);
-@@ -1474,21 +1484,25 @@ static enum wc_map_op writecache_map_write(struct dm_writecache *wc, struct bio
- 		if (WC_MODE_PMEM(wc)) {
- 			bio_copy_block(wc, bio, memory_data(wc, e));
- 			wc->stats.writes++;
-+			need_flush = true;
- 		} else {
- 			writecache_bio_copy_ssd(wc, bio, e, search_used);
- 			return WC_MAP_REMAP;
- 		}
- 	} while (bio->bi_iter.bi_size);
- 
--	if (unlikely(bio->bi_opf & REQ_FUA || wc->uncommitted_blocks >= wc->autocommit_blocks)) {
--		writecache_flush(wc);
--		if (writecache_has_error(wc))
--			bio->bi_status = BLK_STS_IOERR;
--	} else {
--		writecache_schedule_autocommit(wc);
-+flush_pmem_and_ret:
-+	if (need_flush) {
-+		if (unlikely(bio->bi_opf & REQ_FUA || wc->uncommitted_blocks >= wc->autocommit_blocks)) {
-+			writecache_flush(wc);
-+			if (writecache_has_error(wc))
-+				ret = WC_MAP_ERROR;
-+		} else {
-+			writecache_schedule_autocommit(wc);
-+		}
+ 	ret = rockchip_otp_reset(otp);
+ 	if (ret) {
+ 		dev_err(otp->dev, "failed to reset otp phy\n");
+-		goto disable_clks;
++		return ret;
  	}
  
--	return WC_MAP_SUBMIT;
+ 	ret = rockchip_otp_ecc_enable(otp, false);
+ 	if (ret < 0) {
+ 		dev_err(otp->dev, "rockchip_otp_ecc_enable err\n");
+-		goto disable_clks;
++		return ret;
+ 	}
+ 
+ 	writel(OTPC_USE_USER | OTPC_USE_USER_MASK, otp->base + OTPC_USER_CTRL);
+@@ -174,8 +166,28 @@ static int rockchip_otp_read(void *context, unsigned int offset,
+ 
+ read_end:
+ 	writel(0x0 | OTPC_USE_USER_MASK, otp->base + OTPC_USER_CTRL);
+-disable_clks:
+-	clk_bulk_disable_unprepare(otp->num_clks, otp->clks);
++
 +	return ret;
++}
++
++static int rockchip_otp_read(void *context, unsigned int offset,
++			     void *val, size_t bytes)
++{
++	struct rockchip_otp *otp = context;
++	int ret;
++
++	if (!otp->data || !otp->data->reg_read)
++		return -EINVAL;
++
++	ret = clk_bulk_prepare_enable(otp->data->num_clks, otp->clks);
++	if (ret < 0) {
++		dev_err(otp->dev, "failed to prepare/enable clks\n");
++		return ret;
++	}
++
++	ret = otp->data->reg_read(context, offset, val, bytes);
++
++	clk_bulk_disable_unprepare(otp->data->num_clks, otp->clks);
+ 
+ 	return ret;
  }
+@@ -189,8 +201,15 @@ static struct nvmem_config otp_config = {
+ 	.reg_read = rockchip_otp_read,
+ };
  
- static enum wc_map_op writecache_map_flush(struct dm_writecache *wc, struct bio *bio)
-@@ -1578,7 +1592,10 @@ static int writecache_map(struct dm_target *ti, struct bio *bio)
- 
- 	case WC_MAP_REMAP:
- 		/* make sure that writecache_end_io decrements bio_in_progress: */
--		bio->bi_private = (void *)1;
-+		if (unlikely(bio->bi_opf & REQ_FUA) && bio_op(bio) == REQ_OP_WRITE)
-+			bio->bi_private = (void *)3;
-+		else
-+			bio->bi_private = (void *)1;
- 		atomic_inc(&wc->bio_in_progress[bio_data_dir(bio)]);
- 		wc_unlock(wc);
- 		return DM_MAPIO_REMAPPED;
-@@ -1607,11 +1624,19 @@ static int writecache_end_io(struct dm_target *ti, struct bio *bio, blk_status_t
- {
- 	struct dm_writecache *wc = ti->private;
- 
--	if (bio->bi_private == (void *)1) {
-+	if (bio->bi_private == (void *)1 || bio->bi_private == (void *)3) {
- 		int dir = bio_data_dir(bio);
-+		bool fua = bio->bi_private == (void *)3;
++static const char * const px30_otp_clocks[] = {
++	"otp", "apb_pclk", "phy",
++};
 +
- 		if (atomic_dec_and_test(&wc->bio_in_progress[dir]))
- 			if (unlikely(waitqueue_active(&wc->bio_in_progress_wait[dir])))
- 				wake_up(&wc->bio_in_progress_wait[dir]);
-+
-+		if (fua && likely(*status == BLK_STS_OK)) {
-+			bio->bi_private = NULL;
-+			writecache_offload_bio(wc, bio);
-+			return DM_ENDIO_INCOMPLETE;
-+		}
- 	} else if (bio->bi_private == (void *)2) {
- 		dm_iot_io_end(&wc->iot, 1);
- 	}
-@@ -2506,6 +2531,7 @@ static int writecache_ctr(struct dm_target *ti, unsigned argc, char **argv)
+ static const struct rockchip_data px30_data = {
+ 	.size = 0x40,
++	.clks = px30_otp_clocks,
++	.num_clks = ARRAY_SIZE(px30_otp_clocks),
++	.reg_read = px30_otp_read,
+ };
  
- 		wc->memory_map_size -= (uint64_t)wc->start_sector << SECTOR_SHIFT;
+ static const struct of_device_id rockchip_otp_match[] = {
+@@ -225,21 +244,21 @@ static int rockchip_otp_probe(struct platform_device *pdev)
+ 	if (!otp)
+ 		return -ENOMEM;
  
-+		spin_lock_init(&wc->flush_list_lock);
- 		bio_list_init(&wc->flush_list);
- 		wc->flush_thread = kthread_create(writecache_flush_thread, wc, "dm_writecache_flush");
- 		if (IS_ERR(wc->flush_thread)) {
++	otp->data = data;
+ 	otp->dev = dev;
+ 	otp->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(otp->base))
+ 		return PTR_ERR(otp->base);
+ 
+-	otp->num_clks = ARRAY_SIZE(rockchip_otp_clocks);
+-	otp->clks = devm_kcalloc(dev, otp->num_clks,
+-				     sizeof(*otp->clks), GFP_KERNEL);
++	otp->clks = devm_kcalloc(dev, data->num_clks, sizeof(*otp->clks),
++				 GFP_KERNEL);
+ 	if (!otp->clks)
+ 		return -ENOMEM;
+ 
+-	for (i = 0; i < otp->num_clks; ++i)
+-		otp->clks[i].id = rockchip_otp_clocks[i];
++	for (i = 0; i < data->num_clks; ++i)
++		otp->clks[i].id = data->clks[i];
+ 
+-	ret = devm_clk_bulk_get(dev, otp->num_clks, otp->clks);
++	ret = devm_clk_bulk_get(dev, data->num_clks, otp->clks);
+ 	if (ret)
+ 		return ret;
+ 
 -- 
 2.53.0
 
