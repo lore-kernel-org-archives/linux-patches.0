@@ -1,53 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038854;
-	b=ehgBpd2pN6tgxPYfoPEVzhjidPQFIc3VR9JlSfmAms8LfX1eJHXzFVPeWkF+KDUN37rY
-	 2B2NP2ZRjc8nttLFse3mM1pNV95PQAr8S1s9GYIO1cs+uX1t+WRig+5NIseGZjkN/Fy1k
-	 1jUjW3Fmp78HJJ3cpJLeDRa6uz999Kw11t9bPlBHLMbiFk/HTZrjq6os1jbsBSpoCt3oZ
-	 hFDgsDgySHqdlA+skFTG1qQ2Qr1xfXZHiIU0ulFvtjB7e+NtrsQmLwQINA8xudcEWCNot
-	 Q/oR+wPvqt5HtaXfxiOV/sN/FJj502IJ3DEsvZJ/JycfLPwPfXAD2fs6+mfKsDZIWAQ==
+	t=1795038857;
+	b=gn/U/CZpeRmpX09AR3tj/XmlcjhwDm+iLkEx6FB6f4Y1ERCcTDYGM6s5PKaOvDzIhtJa
+	 s07FsNHQ4iUbZLhv5potSUczyPTETThYrTn7ci6Xgg//p1flUtpPYQTvk4bgqyeYAMIZO
+	 DMem/We6CwY7DcHXCKmBSknyPviY8sndZH/rvvQZnm7X0Kq7BoIUWfxVU1LHiPJjYK6nL
+	 V04QrdCDu6BcubzXc4NB1f96WEoqg+iHQjg/BJ4hqEsdHrjz7XSqBoF4WpamoFesXTMc+
+	 xLdT/SnmiKEpTA5MibuPqc7GJ6bXA3NWxzs/bsuaytWJj+PbTi+m546gwlnWYpSFo3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038854;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038857;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1wwwe6eMqCmOqopz5clAspLVJBdoFRJ2PTGrchlAba0=;
-	b=xWFeL19Uemf9YPyKtPWCLPM6XmWQqDS9EXdN3CDKrpe9NAIpUN9lBUSWqDPmgTyR96Sb
-	 Hu9EOdY+VsD1s073n1evyKLiYHAN+LHQJwomuWdFecEdUV9iYECc67eZXlJdfqszhf5Y4
-	 1U2RSwqz54EGTODauY6VDmav9Vm/Cba8bj40i475Ly6A/lMd5ck0VWAmJrDnXKUR7MkOW
-	 YRt8nft5QZYwgWbGV6QvTy76CcjtxlP+JBN5xiW8BgWYgV2GjK+fZdjqcIFUWfws/sKlV
-	 0jNbUdaNF62rWyqFwl96SBOriSpGJIa+UYJbk0xvxdX1RUlU/1cgvraizuP4EcwS/NQ==
+	bh=j4gNsQKV4h2/mQ/BH0FGLkeQfQ+kMubNRZLkBSo7iq0=;
+	b=giz+SIHz/qBkoe7iJeciRLWlCpYQf7ax4srpdc5ZL/n5rKP/FrBnIwRjgWlPZUx3x+xi
+	 4d+TWsVXq2MlxLj60uE/+uBvpI3FoQwQHqakUEt+INrXQjnNKY6ExjQh6YRxeULiIdXxu
+	 4ZD/ioNrHhKbJ0zjI/t7ocRX+iV1Fz4lUyMxtonuzDT5XryiT2SS84pM7PByDiQO+POvg
+	 EzG6QnfWmPdT4FkdLWYDJcTSDNochaSntUk9xPcLV7zpWJtMOxzfzx0EeH+riGXnkNcGQ
+	 5t/ll7eKc9fatH24oYIlBlnge7T4GvVyf5cvjSr5TG0j4SnQVd/cqeHNLU2LbS3ynIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x5wNW7Q2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j3DHoPXF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD25E606A325;
-	Wed, 18 Nov 2026 21:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DDA6606A320;
+	Wed, 18 Nov 2026 21:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x5wNW7Q2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1C91F000C4;
-	Wed, 18 Nov 2026 21:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j3DHoPXF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 864A61F000C4;
+	Wed, 18 Nov 2026 21:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038854;
-	bh=1wwwe6eMqCmOqopz5clAspLVJBdoFRJ2PTGrchlAba0=;
+	s=korg; t=1795038857;
+	bh=j4gNsQKV4h2/mQ/BH0FGLkeQfQ+kMubNRZLkBSo7iq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x5wNW7Q2E7erEA0uNUImAw1ct3D7AEn67xRGtgoOcaJOpzYt5xTxKrDJOd2Um87Rl
-	 h8T/dBOXPH42nlKYXNb9lQ1WHzAE4okxI2eOYxc6D4YB2iWUso3KfnaF9un7eM1qER
-	 CFayT7GTG7EFFyg8DbwGLD0pUqvwX2o/ECEFb224=
+	b=j3DHoPXFflsp1Gxe0vUNnJRwxndFu33SZWji+Vv3/g2L/X4pbH3x2w5oncOkgGdy3
+	 SCQ/D//5TzyWtPBFt5sDvp6dW9Rjt5uoBLzEs3BisPTzhCKN68L5T/xDGYh/BPWc8H
+	 JXt/bihHwatdsnJE3SaAExXPs3oXvRL0OgEJ2TdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Heming Zhao <heming.zhao@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1891/3318] inet: frags: bound the wmem charge of the socket completing a reassembly
-Date: Wed, 18 Nov 2026 15:41:53 +0100
-Message-ID: <20261118150418.732300496@linuxfoundation.org>
+Subject: [PATCH 6.6 1892/3318] ocfs2/cluster: hold a reference on the heartbeat thread
+Date: Wed, 18 Nov 2026 15:41:54 +0100
+Message-ID: <20261118150418.763708753@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,262 +75,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit b71c101bbb9814d163c00234d43c41f0a17907d4 ]
+[ Upstream commit aa2e38aabaae87236290e486a2b77cfa3adfbebe ]
 
-When a socket owned fragment completes a reassembly queue,
-inet_frag_reasm_prepare() and inet_frag_reasm_finish() charge the
-truesize of all other fragments to its sk_wmem_alloc. These fragments
-were orphaned when queued, and might have been sent by someone else,
-for instance padded TUN packets.
+Since commit 688bc88e2046 ("ocfs2/cluster: keep heartbeat local node
+stable"), o2hb_thread() leaves its loop and returns when the local node
+changes, for example after "echo 0 > node/<name>/local".  The thread was
+started with kthread_run() and nothing holds a reference to its
+task_struct, so the task is freed once it exits, while reg->hr_task still
+points to it.
 
-Commit 3ae20e4697eb ("inet: frags: limit the truesize of a reassembly
-queue") bounds this charge to INT_MAX / 2 per queue, but a socket can
-complete several queues while the reassembled skbs are still alive,
-for instance held in a qdisc. sk_wmem_alloc can then go past INT_MAX,
-refcount_add() saturates it with a WARN, and the socket is leaked.
+Reading the region's pid attribute then reads the freed task, and removing
+the region calls kthread_stop() on it:
 
-This is reachable from an unprivileged user/network namespace, by
-raising ipfrag_high_thresh.
+  BUG: KASAN: slab-use-after-free in o2hb_region_pid_show+0xb3/0xc0
+  refcount_t: addition on 0; use-after-free.
+  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:kthread_stop+0xb1/0x390
 
-Refuse the reassembly if the charge would push sk_wmem_alloc above
-2 * sk_sndbuf, the bound ip_append_data() uses, plus 4MB of slack for
-fragments inflated by a refragmentation with a small MTU, and never
-above INT_MAX / 2. The cap matters for tun sockets, which use
-sk_sndbuf = INT_MAX, and whose skbs are still owned when act_ct or
-openvswitch reassemble them at ingress.
+The thread could already return by itself before, when heartbeat start was
+aborted or on an unclean stop, but the local node change makes it
+reachable from userspace at any time.
 
-Several queues can complete at the same time on different cpus for
-the same socket, so the charge is reserved with a cmpxchg() loop in
-inet_frag_reasm_prepare(), before it modifies the queue, and settled
-in inet_frag_reasm_finish(). Move the size checks of ip_frag_reasm(),
-ip6_frag_reasm() and nf_ct_frag6_reasm() before
-inet_frag_reasm_prepare(), using the first fragment which becomes the
-head, so that a successful inet_frag_reasm_prepare() is always followed
-by inet_frag_reasm_finish(). All callers already kill the queue when
-inet_frag_reasm_prepare() returns NULL.
+Create the thread, take a reference on it and only then wake it, so the
+reference cannot race with the thread exiting.  Drop it with
+kthread_stop_put().
 
-Found by code inspection (AI review), not reproduced.
-
-Fixes: 18685451fc4e ("inet: inet_defrag: prevent sk release while still in use")
-Reported-by: Paolo Abeni <pabeni@redhat.com>
-Closes: https://lore.kernel.org/netdev/24feda7d-ae49-45af-9596-2cc5f149f28e@redhat.com/
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261104122927.1033747-1-edumazet@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/20260923010149.14391-1-kmehltretter@gmail.com
+Fixes: 688bc88e2046 ("ocfs2/cluster: keep heartbeat local node stable")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260616074931.3774929-1-zzzccc427%40gmail.com
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Cen Zhang <zzzccc427@gmail.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+[ sashal: adjusted context to keep the existing mutex_unlock() before the wait, placing wake_up_process() ahead of it, and the error path goes to out3 instead of out. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_fragment.c                | 61 ++++++++++++++++++++++---
- net/ipv4/ip_fragment.c                  | 13 ++++--
- net/ipv6/netfilter/nf_conntrack_reasm.c | 13 ++++--
- net/ipv6/reassembly.c                   | 13 ++++--
- 4 files changed, 78 insertions(+), 22 deletions(-)
+ fs/ocfs2/cluster/heartbeat.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
-index c7be3060698ba..040621c6b2a06 100644
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -17,6 +17,7 @@
- #include <linux/rtnetlink.h>
- #include <linux/slab.h>
- #include <linux/rhashtable.h>
-+#include <linux/sizes.h>
+diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
+index 8f089d0b03c5b..536bfa59201e0 100644
+--- a/fs/ocfs2/cluster/heartbeat.c
++++ b/fs/ocfs2/cluster/heartbeat.c
+@@ -1956,18 +1956,22 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
+ 	atomic_set(&reg->hr_unsteady_iterations, (live_threshold * 3));
+ 	o2hb_set_region_stopping(reg, false);
  
- #include <net/sock.h>
- #include <net/inet_frag.h>
-@@ -512,6 +513,43 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
- }
- EXPORT_SYMBOL(inet_frag_queue_insert);
- 
-+/* When a socket owned fragment completes a queue, the truesize of all
-+ * other fragments is charged to its sk_wmem_alloc, although they were
-+ * orphaned when queued and possibly sent by someone else.
-+ * Bound this like ip_append_data() bounds the memory a socket can
-+ * allocate (2 * sk_sndbuf), plus slack for fragments inflated by a
-+ * refragmentation using a small MTU. Otherwise, several reassembled skbs
-+ * alive at the same time can saturate sk_wmem_alloc, and leak the socket.
-+ *
-+ * Several queues can complete at the same time for the same socket,
-+ * and some sockets (tun) use sk_sndbuf = INT_MAX. The charge is reserved
-+ * with a cmpxchg() loop, a refcount_t has no helper for this.
-+ */
-+#define INET_FRAG_WMEM_SLACK	SZ_4M
-+
-+static bool inet_frag_wmem_reserve(struct sock *sk, unsigned int charge)
-+{
-+	u64 limit = 2ULL * READ_ONCE(sk->sk_sndbuf) + INET_FRAG_WMEM_SLACK;
-+	int old = refcount_read(&sk->sk_wmem_alloc);
-+
-+	limit = min_t(u64, limit, INET_FRAG_MAX_TRUESIZE);
-+	do {
-+		if (old <= 0 || (u64)old + charge > limit)
-+			return false;
-+	} while (!atomic_try_cmpxchg(&sk->sk_wmem_alloc.refs, &old,
-+				     old + charge));
-+
-+	return true;
-+}
-+
-+static void inet_frag_wmem_adjust(struct sock *sk, int delta)
-+{
-+	if (delta >= 0)
-+		refcount_add(delta, &sk->sk_wmem_alloc);
-+	else
-+		WARN_ON_ONCE(refcount_sub_and_test(-delta, &sk->sk_wmem_alloc));
-+}
-+
- void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
- 			      struct sk_buff *parent)
- {
-@@ -523,6 +561,11 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
- 	int delta;
- 
- 	if (sk && is_skb_wmem(skb)) {
-+		/* skb->truesize is already charged to sk, and is part of
-+		 * q->truesize. inet_frag_reasm_finish() settles the charge.
-+		 */
-+		if (!inet_frag_wmem_reserve(sk, q->truesize - skb->truesize))
-+			return NULL;
- 		/* TX: skb->sk might have been passed as argument to
- 		 * dst->output and must remain valid until tx completes.
- 		 *
-@@ -600,17 +643,18 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
- 
- out_restore_sk:
- 	if (orig_truesize) {
--		int ts_delta = head->truesize - orig_truesize;
--
- 		/* if this reassembled skb is fragmented later,
- 		 * fraglist skbs will get skb->sk assigned from head->sk,
- 		 * and each frag skb will be released via sock_wfree.
--		 *
--		 * Update sk_wmem_alloc.
- 		 */
- 		head->sk = sk;
- 		head->destructor = destructor;
--		refcount_add(ts_delta, &sk->sk_wmem_alloc);
-+		/* On failure, head stays in the queue and will be freed
-+		 * with the queue: only charge its truesize.
-+		 */
-+		if (!nextp)
-+			inet_frag_wmem_adjust(sk, (int)head->truesize -
-+						  (int)q->truesize);
+-	hb_task = kthread_run(o2hb_thread, reg, "o2hb-%s",
+-			      reg->hr_item.ci_name);
++	hb_task = kthread_create(o2hb_thread, reg, "o2hb-%s",
++				 reg->hr_item.ci_name);
+ 	if (IS_ERR(hb_task)) {
+ 		ret = PTR_ERR(hb_task);
+ 		mlog_errno(ret);
+ 		goto out3;
  	}
++	/* The thread may exit on its own, so pin it before it can run. */
++	get_task_struct(hb_task);
  
- 	return nextp;
-@@ -621,7 +665,6 @@ void inet_frag_reasm_finish(struct inet_frag_queue *q, struct sk_buff *head,
- 			    void *reasm_data, bool try_coalesce)
- {
- 	struct sock *sk = is_skb_wmem(head) ? head->sk : NULL;
--	const unsigned int head_truesize = head->truesize;
- 	struct sk_buff **nextp = reasm_data;
- 	struct rb_node *rbn;
- 	struct sk_buff *fp;
-@@ -686,8 +729,12 @@ void inet_frag_reasm_finish(struct inet_frag_queue *q, struct sk_buff *head,
- 	head->tstamp = q->stamp;
- 	head->tstamp_type = q->tstamp_type;
+ 	spin_lock(&o2hb_live_lock);
+ 	reg->hr_task = hb_task;
+ 	spin_unlock(&o2hb_live_lock);
  
-+	/* After inet_frag_reasm_prepare(), q->truesize is charged to sk.
-+	 * sum_truesize also includes what it added (skb_unclone() and
-+	 * frag_list clone).
-+	 */
- 	if (sk)
--		refcount_add(sum_truesize - head_truesize, &sk->sk_wmem_alloc);
-+		inet_frag_wmem_adjust(sk, sum_truesize - (int)q->truesize);
- }
- EXPORT_SYMBOL(inet_frag_reasm_finish);
- 
-diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
-index e79ebe911548a..0dd8baacc0c89 100644
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -413,16 +413,19 @@ static int ip_frag_reasm(struct ipq *qp, struct sk_buff *skb,
- 		goto out_fail;
- 	}
- 
-+	/* Check the size on the first fragment, which will become the head:
-+	 * inet_frag_reasm_finish() must follow inet_frag_reasm_prepare().
-+	 */
-+	len = ip_hdrlen(skb_rb_first(&qp->q.rb_fragments)) + qp->q.len;
-+	err = -E2BIG;
-+	if (len > 65535)
-+		goto out_oversize;
++	wake_up_process(hb_task);
 +
- 	/* Make the one we just received the head. */
- 	reasm_data = inet_frag_reasm_prepare(&qp->q, skb, prev_tail);
- 	if (!reasm_data)
- 		goto out_nomem;
+ 	/*
+ 	 * Don't hold hr_dev_mutex across the wait, which can take seconds.
+ 	 * hr_bdev is already set, so other writers still get -EINVAL.
+@@ -2018,7 +2022,7 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
+ 		spin_unlock(&o2hb_live_lock);
  
--	len = ip_hdrlen(skb) + qp->q.len;
--	err = -E2BIG;
--	if (len > 65535)
--		goto out_oversize;
--
- 	inet_frag_reasm_finish(&qp->q, skb, reasm_data,
- 			       ip_frag_coalesce_ok(qp));
+ 		if (hb_task)
+-			kthread_stop(hb_task);
++			kthread_stop_put(hb_task);
  
-diff --git a/net/ipv6/netfilter/nf_conntrack_reasm.c b/net/ipv6/netfilter/nf_conntrack_reasm.c
-index 0d19974e85cf7..19d5a1370ae6a 100644
---- a/net/ipv6/netfilter/nf_conntrack_reasm.c
-+++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
-@@ -331,11 +331,10 @@ static int nf_ct_frag6_reasm(struct frag_queue *fq, struct sk_buff *skb,
- 	if (unlikely(ecn == 0xff))
- 		goto err;
+ 		o2hb_unmap_slot_data(reg);
  
--	reasm_data = inet_frag_reasm_prepare(&fq->q, skb, prev_tail);
--	if (!reasm_data)
--		goto err;
--
--	payload_len = -skb_network_offset(skb) -
-+	/* Check the size on the first fragment, which will become the head:
-+	 * inet_frag_reasm_finish() must follow inet_frag_reasm_prepare().
-+	 */
-+	payload_len = -skb_network_offset(skb_rb_first(&fq->q.rb_fragments)) -
- 		       sizeof(struct ipv6hdr) + fq->q.len -
- 		       sizeof(struct frag_hdr);
- 	if (payload_len > IPV6_MAXPLEN) {
-@@ -344,6 +343,10 @@ static int nf_ct_frag6_reasm(struct frag_queue *fq, struct sk_buff *skb,
- 		goto err;
- 	}
+@@ -2217,7 +2221,7 @@ static void o2hb_heartbeat_group_drop_item(struct config_group *group,
+ 	spin_unlock(&o2hb_live_lock);
  
-+	reasm_data = inet_frag_reasm_prepare(&fq->q, skb, prev_tail);
-+	if (!reasm_data)
-+		goto err;
-+
- 	/* We have to remove fragment header from datagram and to relocate
- 	 * header in order to calculate ICV correctly. */
- 	skb_network_header(skb)[fq->nhoffset] = skb_transport_header(skb)[0];
-diff --git a/net/ipv6/reassembly.c b/net/ipv6/reassembly.c
-index 05dbf8144805c..a0a5c03c16f35 100644
---- a/net/ipv6/reassembly.c
-+++ b/net/ipv6/reassembly.c
-@@ -271,16 +271,19 @@ static int ip6_frag_reasm(struct frag_queue *fq, struct sk_buff *skb,
- 	if (unlikely(ecn == 0xff))
- 		goto out_fail;
+ 	if (hb_task)
+-		kthread_stop(hb_task);
++		kthread_stop_put(hb_task);
  
--	reasm_data = inet_frag_reasm_prepare(&fq->q, skb, prev_tail);
--	if (!reasm_data)
--		goto out_oom;
--
--	payload_len = -skb_network_offset(skb) -
-+	/* Check the size on the first fragment, which will become the head:
-+	 * inet_frag_reasm_finish() must follow inet_frag_reasm_prepare().
-+	 */
-+	payload_len = -skb_network_offset(skb_rb_first(&fq->q.rb_fragments)) -
- 		       sizeof(struct ipv6hdr) + fq->q.len -
- 		       sizeof(struct frag_hdr);
- 	if (payload_len > IPV6_MAXPLEN)
- 		goto out_oversize;
- 
-+	reasm_data = inet_frag_reasm_prepare(&fq->q, skb, prev_tail);
-+	if (!reasm_data)
-+		goto out_oom;
-+
- 	/* We have to remove fragment header from datagram and to relocate
- 	 * header in order to calculate ICV correctly. */
- 	nhoff = fq->nhoffset;
+ 	if (o2hb_global_heartbeat_active()) {
+ 		spin_lock(&o2hb_live_lock);
 -- 
 2.53.0
 
