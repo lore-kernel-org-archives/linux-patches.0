@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054269;
-	b=eHnFNB2cB2JOfBNnebJDhfx4iwsQwmJb1xC4/u973Hy8d/Qw/OoGwatAvqr8YKmcpRRd
-	 uqwEK/4RJw4FFOSg+Sx/ZlfT1xQj0Sy6m4R9Cw7FTzTIsMOUHq00VCeYoh9e4LkN3jI3V
-	 mB36p/adQUks40/a1+n8A4f19FbsClETjnEr0W5jN2qyiBQcdyJs8nukylWABldMxRDv5
-	 p9FYy+pMzMN3xb9BxQGYPDJHPPCViG4cegNtnhpIrzE2Y+4JCjXr0C8ojqjRl3ovIAx/g
-	 EODMYD4ln4JYaSpv2LDzWcQihDidee6VPtFCxTjYcMoX5LnC0p5YuOhG6HYgl9IkGAQ==
+	t=1795054272;
+	b=m2UR5tioPpybBKdcaawvgxnexoyAsTvamLxTX8IxvNLKpsCFGS4Fr+3WI2p9cxco5t8V
+	 83tqdgP5g0iyZZYPTtfXwSCsaLvjZ9nLeAerWlMyoOJ95W30Ynzrhy8vcWsTK5p0V6yI1
+	 ZfWXbJaploZEDNzHMQn1YJDC0UxyR2SoBK1n4yGel3RSIbRltUp9lV3fRsDWMOLIiZrr0
+	 nPC/QBLnAvX2AtS95Vv7vexd4/RBkZgscrRCAwIpJz4cmg9/wtFa9IgRotTDJHNPtNLLE
+	 MhJqY68DI79o71fSSRytR7Sb0byGMS5/DERdd/DjkGTfBjCXECG3PBqs8aJFxdL6OPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054269;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054272;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3ise3hdIQMN0y+dNV+EhpsIK7n1KFb6nsPaUEzPr5h8=;
-	b=DKdtNxW1E0HhJ1agFeyvBHUmlFxkIU1iHmkF5s2b4TMc3YrnGDbfvDLFuhEzlKxVShMX
-	 b7TwUVtyAVglFarIU0c0OkjLPpY0SUeMMXvEKC317d57ZCETXyyhnPTi7wnWedZXsmVbp
-	 47w4Zky+Es7C894ai0GKnSkUwdFd0h0jSAMYaMHl+DCDMsqK9erx5COFZNV/XGt0Ra1f/
-	 lXrMWR5JbYe2jBcbwkJ5Dv4fnO7Ytcf6yljP5cgRyP5XRluulutWs6i6geRjZB7IfzzVR
-	 yE0wCy/a8YD6c1yXxRWlYcQ5NXWUPhUQdmiTQlnCSNpuHjY5Ybnghxc0qkNQUJm2eig==
+	bh=px3Gj+I8gi65gzUSlo2leTKUyiCyyzWHpVouFcmMSMU=;
+	b=R5PJTbIX7tPaq3mbaaQ0XnOzfMKs2dWDtpUndrgkdo/TM6tfiYkBy0KT+S56HXZkRMKG
+	 97pVdpwxzNWypAJfDp9c6mJUJ5WnGctDPD6Whykj5wl6biM9da4woib16v51+W+VFedRs
+	 yb2anwW+hjsVpY3N0+XhEJeeQghlrE6suDm+apb67WB4ZtEf7B3dArxCxd6taPEAPARfz
+	 1WLC49VDWpb7mMjfS8VHQMHmwToGCvLygd3Q+lLpkbMMDiNPtXSBCPP9UrBOvVkHx2c4Y
+	 hPqQMQsZBRS02TjFxc1SnvoA6aYFY+DTO4IUG0C2Ni6fIHvPzNma4FxshPVrQC5Pkzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qFdLXayZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eyO3To3+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA75606A325;
-	Thu, 19 Nov 2026 02:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95964606A320;
+	Thu, 19 Nov 2026 02:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qFdLXayZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C1C41F000C4;
-	Thu, 19 Nov 2026 02:11:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eyO3To3+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66761F000C4;
+	Thu, 19 Nov 2026 02:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054269;
-	bh=3ise3hdIQMN0y+dNV+EhpsIK7n1KFb6nsPaUEzPr5h8=;
+	s=korg; t=1795054272;
+	bh=px3Gj+I8gi65gzUSlo2leTKUyiCyyzWHpVouFcmMSMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qFdLXayZ01ez+YqHlzrLEsBTvOi8mIC2lic+hcwgx9uPoCCnMegiqqqZS1yGzeSFY
-	 3Z6HmzipKCuccosexFlEp8RIPG+KhhI6yFLrCmid5mQL0Z49LCQf9XsfDi5rBmbNo7
-	 BixedKS/LHFSA8UM5XhRhP5FxDdS8oPdgoTCiE64=
+	b=eyO3To3+lUF3NRf0rEnw7OFAqXD8IX3eTs8QmFyHnFzeJm+n4AnUM9/odThiTXNjQ
+	 TgvK1TtlsiKA329JMm9624Tnk44TrmkHqmw5XaLBTzoaMZdKCoanTxi0tjrGO765B9
+	 kHlm2cuT0GzLVQssryHb76SiGHKRGjziGKXw1bBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Yao Yiqi <yaoyiqi3@huawei.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1216/2214] ksmbd: enforce the read-only share flag when creating a stream
-Date: Wed, 18 Nov 2026 15:48:12 +0100
-Message-ID: <20261118150100.434991733@linuxfoundation.org>
+Subject: [PATCH 5.15 1217/2214] fbcon: Rebuild rotated font buffer on font change
+Date: Wed, 18 Nov 2026 15:48:13 +0100
+Message-ID: <20261118150100.471639765@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,47 +69,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Yao Yiqi <yaoyiqi3@huawei.com>
 
-[ Upstream commit 09139429fab3a5114c18d7c15fb161511d4d66c9 ]
+[ Upstream commit e4b6b865d45d8dafb6c6f28c8a993a5b4431d25a ]
 
-When a share is read-only, smb2_open() rejects opens that would create
-or truncate a file. Creating a named stream on an existing file with
-streams_xattr sets neither O_CREAT nor O_TRUNC, so it passes this check,
-and smb2_set_stream_name_xattr() then creates the stream. On a Time
-Machine share, opening a missing AFP_AfpInfo stream also writes one. A
-user who can write a file at the filesystem level can therefore add
-streams to it through a read-only share.
+fbcon_rotate_font() caches a rotated copy of the console font in
+par->rotated.buf. The buffer is sized from the font's width, height
+and charcount, and is rebuilt in fbcon_init(), fbcon_switch() and
+fbcon_modechanged(), but not in fbcon_do_set_font().
 
-Do not create a stream or synthesize AFP_AfpInfo when the share is not
-writable. Existing streams still open normally, and a missing stream
-opened with FILE_OPEN still returns STATUS_OBJECT_NAME_NOT_FOUND.
+When the font is changed through KDFONTOP, the new geometry is
+installed and vc_resize() redraws before the buffer is rebuilt. The
+rotated putcs/cursor ops then index the old buffer with the new cell
+size; KASAN reports a slab-out-of-bounds read in soft_cursor().
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Fixes: eaff8e924f60 ("ksmbd: synthesize empty AFP_AfpInfo xattr on first probe")
+Rebuild the buffer for the visible console before the redraw, as the
+other callers do: select the console's blitting state with
+set_blitting_type() (which also uploads the new font's map on
+tile-blitting hardware), then rebuild. Background consoles keep
+their rebuild at fbcon_switch() time, as the buffer is shared per
+framebuffer and must not be updated for a console that is not being
+displayed.
+
+To ensure a correct rollback when the rebuild or the following
+vc_resize() fails, save the rotated font state, clear it before
+rebuilding, and restore it in the error path of
+fbcon_do_set_font().
+
+Fixes: 6cc50e1c5b57 ("[PATCH] fbcon: Console Rotation - Add support to rotate font bitmap")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: omitted the AFP_AfpInfo synthesis guard because that synthesis branch is absent ]
+Signed-off-by: Yao Yiqi <yaoyiqi3@huawei.com>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+[ sashal: adapted rotated font handling to separate fbcon_par fields and the direct par->rotate_font callback ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smb2pdu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/video/fbdev/core/fbcon.c | 57 ++++++++++++++++++++++++++++++++
+ 1 file changed, 57 insertions(+)
 
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index 74a0c3b68633f..da69dd9488f2e 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -2538,6 +2538,9 @@ static noinline int smb2_set_stream_name_xattr(const struct path *path,
- 		return -EBADF;
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index efefa73451a0b..a47b98c269cf3 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2389,6 +2389,12 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
+ 	int resize, ret, old_userfont, old_width, old_height, old_charcount;
+ 	u8 *old_data = vc->vc_font.data;
+ 	unsigned short old_hi_font_mask = vc->vc_hi_font_mask;
++#ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
++	u8 *saved_fontdata = NULL, *saved_fontbuffer = NULL;
++	u32 saved_fd_size = 0;
++	int saved_cur_rotate = 0;
++	bool rotated_saved = false;
++#endif
+ 
+ 	resize = (w != vc->vc_font.width) || (h != vc->vc_font.height);
+ 	vc->vc_font.data = (void *)(p->fontdata = data);
+@@ -2408,6 +2414,33 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
+ 	else if (!vc->vc_hi_font_mask && charcount == 512)
+ 		set_vc_hi_font(vc, true);
+ 
++	/*
++	 * Select the console's blitting state and update the rotated font buffer
++	 * to match the new font, so that the rendering below does not use a
++	 * cache that was built for the old font. Clear the cached state so
++	 * the rebuild allocates a fresh buffer; the old state is kept until
++	 * the font change can no longer fail.
++	 */
++	if (con_is_visible(vc)) {
++		set_blitting_type(vc, info);
++		if (par->rotate_font) {
++#ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
++			saved_fontdata = par->fontdata;
++			saved_fontbuffer = par->fontbuffer;
++			saved_fd_size = par->fd_size;
++			saved_cur_rotate = par->cur_rotate;
++			par->fontdata = NULL;
++			par->fontbuffer = NULL;
++			par->fd_size = 0;
++			par->cur_rotate = 0;
++			rotated_saved = true;
++#endif
++			ret = par->rotate_font(info, vc);
++			if (ret)
++				goto err_out;
++		}
++	}
++
+ 	if (resize) {
+ 		int cols, rows;
+ 
+@@ -2424,11 +2457,28 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
+ 		update_screen(vc);
  	}
  
-+	if (!test_tree_conn_flag(fp->tcon, KSMBD_TREE_CONN_FLAG_WRITABLE))
-+		return -EACCES;
++#ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
++	if (rotated_saved)
++		kfree(saved_fontbuffer);
++#endif
+ 	if (old_userfont && (--REFCOUNT(old_data) == 0))
+ 		kfree(old_data - FONT_EXTRA_WORDS * sizeof(int));
+ 	return 0;
+ 
+ err_out:
++#ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
++	/*
++	 * Drop the buffer built for the new font and restore the saved
++	 * state.
++	 */
++	if (rotated_saved) {
++		kfree(par->fontbuffer);
++		par->fontdata = saved_fontdata;
++		par->fontbuffer = saved_fontbuffer;
++		par->fd_size = saved_fd_size;
++		par->cur_rotate = saved_cur_rotate;
++	}
++#endif
+ 	p->fontdata = old_data;
+ 	vc->vc_font.data = old_data;
+ 
+@@ -2448,6 +2498,13 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
+ 	else if (!old_hi_font_mask && vc->vc_hi_font_mask)
+ 		set_vc_hi_font(vc, false);
+ 
++	/*
++	 * Re-select the blitting type, which re-uploads the font map on
++	 * tile-blitting hardware.
++	 */
++	if (con_is_visible(vc))
++		set_blitting_type(vc, info);
 +
- 	rc = ksmbd_vfs_setxattr(user_ns, path, xattr_stream_name, NULL, 0, 0, false);
- 	if (rc < 0)
- 		pr_err("Failed to store XATTR stream name :%d\n", rc);
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
