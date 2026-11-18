@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025916;
-	b=OaBxvWH6xmXMmVaZG4d/c0DkKGOC+CLxXY/LjCbhHyaqvtzPRNUr4dBUC3OrL12HCx/N
-	 CY+5rHTi9dqutOxC1p30TYbIngu2Navz0GRbGhI3vOw6g+mghPYKTXDVxVKtCUfd6HnlA
-	 esvxTdr/LIV8CgtrMKoO1G06lkoiG219A5rSj/X4ANaVS4+88ztpFtFYreSY6Hnvra5cy
-	 5WMfEY4TCDaGgXhDrIzqw3/CZt7Lz8ADyKHurbdZICxP1CDw7jYAAK30eBIA+X8/sC0pM
-	 fjyycj0iOCYegFx6dDMpzQTKKJec5fL1SW2lKvgIifHrDSQrRj2oAPmxKRU+2SVGGPA==
+	t=1795025919;
+	b=aBM9Arm75ZtIbiGjRXwSy5k7x8Q+H+wA8ivjxEDXTNLa0n4IdaAfY3OaEEQsFVuq19vr
+	 nxwPboWiQjtX3D8LtuDFhvbUufJIEeKdj6WBxMNn1WtV63QjnWOmBsgt+Yw3lD2iqvSF5
+	 U6fdm3hhPA55EwrFVjObIg+OQ5t8QJnir+1ruwZy1gYcA7sRYIXWva+u59N01rKOjtSPA
+	 NFWLqO5/ULyTm5hs03KJxz9ba0kmyU5QrvTBr6Zp/t/tXEukAdLltwUqPBxp+QAun61Ht
+	 nl21rByxNRbv35uaT7mB3jaLsEIj2ykHHdlIfPIr8SFu3g4iZlNHP+ejYGpz3vaybuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025916;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025919;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tbCEG+PWUgeXT/QwXBsTqcxkrRF6qGqlH3mr4Hm7V/c=;
-	b=psYkkygC+B9ZtehzMHzn8EBKne6AGzImRh7WilqB/3swhzkk5n7shRAwQpyfGxoeXVqC
-	 TKS0oQVWyZccAtpUSwOpMAPq+aF52KWzAapU5X3JCqmvdbGJhBrBycyQ/TV/m0cvJLDYD
-	 hvY6nH1kekHw1NuEYcKdA/kN42GivRVbZPqm//cI7JCHTooi43Nt2yyoRq1IFMLiGwSEd
-	 QwieyIspxfOnD1yuPz4g+9eQjO4PTcpicy3FVcpP5wjA8UJViQGrROWQ69NJxBf2QLhtU
-	 8k43Y4nsowZ/rOcXoNuldZCnVlf/PzvPmAjQbsHuZvJLw1jObLG2MNdznjexel97Nig==
+	bh=43smH14GZR14YkpyxvQYawoBbfKjmP1T4VTGSxAsYnY=;
+	b=H1YSP17OEm/YZlLzjNUErUD+ucW7AiAFMT4PaWnraMmKQPwW3xRMdpZyVoDroWeDX7Tw
+	 jq052yB0mxSf3NXVgbk45LACTZ4WRzDaPCGaNbSNyX6iRU3c2kaBBXvwlN8E1k06cFXEh
+	 SHcS5l87XqFkWbWVKkUfC2cH8BnyIvDlZalxHTTjFCge5p9aOy4y4M3ezpQlmRASgDrJC
+	 AiiCfpHi12LizC8Q8iDxRZFJDiHahfycXVo1yGRvcfgQ6AX4BbSUlcuVe3385ZnkI4UMW
+	 yfLt3HeEbtLBvyDOpXcbwrXHW+UkE1doIysqSlOpFycaiIy0SJpwynXAY3BjfuUFceA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pb1UZn7C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2q7htz2O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DBA606A31C;
-	Wed, 18 Nov 2026 18:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABAB606A320;
+	Wed, 18 Nov 2026 18:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pb1UZn7C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA141F000C4;
-	Wed, 18 Nov 2026 18:18:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2q7htz2O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF241F000C4;
+	Wed, 18 Nov 2026 18:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025916;
-	bh=tbCEG+PWUgeXT/QwXBsTqcxkrRF6qGqlH3mr4Hm7V/c=;
+	s=korg; t=1795025919;
+	bh=43smH14GZR14YkpyxvQYawoBbfKjmP1T4VTGSxAsYnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pb1UZn7CsBLrIjbJKyV7UwT31VjwOBptkreFE+B3Lb1ez4+aksecb/mVgCwxbJCWo
-	 /Pl0de9hKauA4akEIC0Wt5GqF6d8DaZo+HQk5k0rGtTUgVeWZ73zfbyU/xdxc+chzU
-	 zchmN/7SdRRc9Yyl2wvZyqScAVTqn8yX0AYEa4kU=
+	b=2q7htz2O+gAvwlWHiW3aU1M6Lc5A0x1GEbWeR5mHoojydPqSFn5sEQNn4c8rMHiJ2
+	 UhRQ6DQ4zHZ5jDBbOt/vYjk0cmqToNZjY9jUiuOQiJ2TcuPNxOKAMsqgBRUistECEs
+	 4jSGSlgpQVD1Q2JePplX5BIn7A/ltgfst9226rIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Caleb James DeLisle <cjd@cjdns.fr>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1242/2151] clocksource/drivers/timer-econet-en751221: Fix clock reference leak
-Date: Wed, 18 Nov 2026 15:49:37 +0100
-Message-ID: <20261118150207.414251454@linuxfoundation.org>
+Subject: [PATCH 6.18 1251/2151] ASoC: mediatek: mt8188: Handle constraint return value in FE startup
+Date: Wed, 18 Nov 2026 15:49:46 +0100
+Message-ID: <20261118150207.736720460@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,41 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 36790ef57803400339d8ea4081d85483264dbd6c ]
+[ Upstream commit 71253751586b8ce37570b8e15cfbc74f0dd06c3d ]
 
-timer_init() obtains the timer clock with of_clk_get() and only reads
-its frequency with clk_get_rate(); the clock is never prepared nor
-enabled. All four return paths after the acquisition (of_iomap()
-failure, clocksource_mmio_init() failure, cevt_init() failure and
-success) return without clk_put(), leaking the consumer reference.
+snd_pcm_hw_constraint_minmax() may return 1, which is then returned
+from mt8188_afe_fe_startup(). ASoC only treats 0 as success when marking
+the DAI as started, so .shutdown() can be skipped on rollback.
 
-Drop the reference with clk_put() right after the frequency has been
-read. The clock enable state is untouched.
+Return 0 explicitly on success.
 
-Fixes: 3b4c33ac87d0 ("clocksource/drivers: Add EcoNet Timer HPT driver")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Tested-by: Caleb James DeLisle <cjd@cjdns.fr>
-Link: https://patch.msgid.link/20260915054552.1729612-1-vulab@iscas.ac.cn
+Fixes: bf106bf09376 ("ASoC: mediatek: mt8188: add platform driver")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20261007110858.509341-3-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-econet-en751221.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/mediatek/mt8188/mt8188-afe-pcm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/clocksource/timer-econet-en751221.c b/drivers/clocksource/timer-econet-en751221.c
-index 4008076b1a210..1859335345b59 100644
---- a/drivers/clocksource/timer-econet-en751221.c
-+++ b/drivers/clocksource/timer-econet-en751221.c
-@@ -181,6 +181,7 @@ static int __init timer_init(struct device_node *np)
- 	}
- 
- 	econet_timer.freq_hz = clk_get_rate(clk);
-+	clk_put(clk);
- 
- 	for (int i = 0; i < num_blocks; i++) {
- 		econet_timer.membase[i] = of_iomap(np, i);
+diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
+index 4a7baa53f709a..682f5cd9b92e9 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
++++ b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
+@@ -320,6 +320,9 @@ static int mt8188_afe_fe_startup(struct snd_pcm_substream *substream,
+ 					   MT8188_MEMIF_DL7_MAX_PERIOD_SIZE);
+ 	if (ret < 0)
+ 		dev_dbg(afe->dev, "hw_constraint_minmax failed\n");
++	else
++		ret = 0;
++
+ out:
+ 	return ret;
+ }
 -- 
 2.53.0
 
