@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032148;
-	b=ciPX0Jq+aNEQTXVw+182nOt8KLv/7up3p56J982nTuDR6JdN8CzBAZfnSKJR7Qv/SHLI
-	 8ABmv+MQGiLQpAszU747zo7MiG4Ba9GDA+znAtt5LdxiTXKj53Fmy/WS3y3i9zDmCLt9Z
-	 WyKAtW50Dpa6SWsvTpH2sVvs+kmwf7cC+/OzRrtU2EmfqcPwQAUugB2UPj928T44PnvWo
-	 M5nKBLXPxbR1St8oBtWKCHiOc8GCSFtRcoQP40PV2hYMggSTvTR5K7Etb4Q31PVe2SYmK
-	 f/eFkPUdS4fTsy8eVfmsyUS7ivVMIf4laaIR1mAqKvlSBr/AV+P0Py6VcfSQ2YvMB9w==
+	t=1795032151;
+	b=rZFMJZuBgoCvPgmdCcS3w6uywcLAYFEP6OywQ+RK0cp5zHvBNlZLDTX+GO/6SYpZx/dn
+	 /5Vlh40NFpc6e5LOcWNpGs+mW+6q/L+enw8Uhybcyue/kHZ0S2PUHTulxP9PrVn+Ee881
+	 qesK53ra11AuM6idYM8Hz83Od5vvIFxos2xEu85eFxIWTnRd2g7Tv0kKTCpaY1Wa1vj+w
+	 XR3ZWMgbq5cGpinYN62wl1DQFwEVPBPPlB/BNW5x8cVQZg/OBLrZF0n+T5NFzigt5sLYv
+	 mPtzDDX5dfmWO4sfIaZpqkYyorgTnXMkD2rgK66Wr5e3EOPumnsHhftj7icU4yhFQgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032148;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032151;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xf4ExapDHG78IZ7tDznqeja/xAQOMdk/aN3S9tXOXRs=;
-	b=e2zbC5WK4/0HIWwLnfYmeaCAgEfwJEb/t4zD3DqeMV3bUCdQYH+NS9JptDBCruIthb4a
-	 WABuYLTm541ywHUfNawsX4i1oExmVhUqfCLOMBqt4431Lyh3i1ZrEDyetdE9xIQCSjxAy
-	 zMZrTzqHEyz1FCWbIiFqzIhbEfBtO3LDnFMGEJSq11r/OPYK5mRPd1EfrT1AW6Bohn9h+
-	 NL8x5AXvd85pofMWv2xJ5oq7WYVFd187g1o6svqC2yToMyW61i47yF4uYt6/asKcGCj3e
-	 AF/DOKXI4rLojxU3QAV/QBtmVd0Z+Q5T6o7pw6lTyLCtREiSSKhHt35p7+GHuNZBsGQ==
+	bh=MPIq8Q9B8ESFOaQ/scTlETd33feUJJuAlQ3I1dqcGoM=;
+	b=1tntzXnLfq3Lzdw/96pGRXZJyiIlpAqR1lJfpzgYHjrwg3nkxI5BMNGRhc+k0xjWQZ52
+	 40UVOu6s+jOZVfx1ZTfNt+NbgqtXkwvmyNvKofbiQ7r4x61/gpmSbZF4paJ9CQUzYth3u
+	 DP66GKmy8SN2dLToXO/Z+rgsFgOhP8pTXp6UL7eluv/3klPXoibC2ZcRDN8ji2delQNBg
+	 kMU1hMAqRdbJe9cJ68zD/zeszPD0mw0NlUkCp+1xSIx4TZpdZT6LCtoRVQ5/r4lZbPIOw
+	 klOJEjpag3wCa80vgtQd7BnSa6gyLOzGwLxkvOc2RsaEuMdcaAWKcpfAylYjyL7yOrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cJLh1Ce9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ts/kSueW";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65A1606A31C;
-	Wed, 18 Nov 2026 20:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A393606A31C;
+	Wed, 18 Nov 2026 20:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cJLh1Ce9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C321F000C4;
-	Wed, 18 Nov 2026 20:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ts/kSueW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE251F000C4;
+	Wed, 18 Nov 2026 20:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032148;
-	bh=xf4ExapDHG78IZ7tDznqeja/xAQOMdk/aN3S9tXOXRs=;
+	s=korg; t=1795032151;
+	bh=MPIq8Q9B8ESFOaQ/scTlETd33feUJJuAlQ3I1dqcGoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cJLh1Ce9pk0Jmd8gO+IWhYN002BEC8lBGFLe6/f6ih+C0TWBMDi0s+lpTx56GwDl8
-	 7f3dGQKacDrPMV08fJ+nuObKVVevzqTQVSSjxToo5ep13RQ7+fX0qdesrCwy2nN8rw
-	 PGGH2lQ5P5hZ994vcm2QZ2iCT0H3Kkfu3j7DS5WE=
+	b=ts/kSueWt43JQVlttYI/lEvWpRjkxJVLas1cByC9NLHb1M/5BwSzU9OYhtrVFZTmc
+	 PLYTBV0RryBsN3Z22tlT5miwgNzuTLV4KNQvohqnUeIlhcb7WOYgtHyQpWUe1Ccjum
+	 q0tIwrp371lZ4osI9r8hIVCEUDvTrEHKkIwmRfwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Serhat Kumral <serhatkumral1@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1309/1756] ASoC: mediatek: mt8195: Fix runtime resume error handling
-Date: Wed, 18 Nov 2026 15:57:16 +0100
-Message-ID: <20261118150101.594343170@linuxfoundation.org>
+Subject: [PATCH 6.12 1283/1756] IB/rdmavt: Fix error unwind path for qp_priv_init() in rvt_create_qp()
+Date: Wed, 18 Nov 2026 15:56:50 +0100
+Message-ID: <20261118150100.639652940@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,66 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Serhat Kumral <serhatkumral1@gmail.com>
 
-[ Upstream commit 933fbfb6648850e003a1fc47b7bcc08fe3687961 ]
+[ Upstream commit dd36137b218ad6f18ed15e6279412d7fc160980c ]
 
-Check and propagate errors when enabling the register access and main
-clocks during runtime resume.
+If driver_f.qp_priv_init() fails, execution jumps to bail_rq_wq, which
+bypasses bail_qpn. Because alloc_qpn() has already succeeded at this point,
+the allocated QP number is left unreleased.
 
-If regcache_sync() or main clock enable fails, restore regmap cache-only
-mode and disable the register access clocks before returning the error.
+Jump to bail_qpn instead to ensure the QPN is properly freed via
+rvt_free_qpn().
 
-Fixes: 6746cc858259 ("ASoC: mediatek: mt8195: add platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261014112752.683032-10-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 5190f052a3654 ("IB/hfi1: Allow the driver to initialize QP priv struct")
+Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
+Link: https://patch.msgid.link/20261015102518.15780-1-serhatkumral1@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8195/mt8195-afe-pcm.c | 23 +++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ drivers/infiniband/sw/rdmavt/qp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-index 7f771aaf04c18..592b5956342ca 100644
---- a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-@@ -2967,18 +2967,31 @@ static int mt8195_afe_runtime_resume(struct device *dev)
- {
- 	struct mtk_base_afe *afe = dev_get_drvdata(dev);
- 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
-+	int ret;
+diff --git a/drivers/infiniband/sw/rdmavt/qp.c b/drivers/infiniband/sw/rdmavt/qp.c
+index 9cf139f0d0a18..320060b1c90b3 100644
+--- a/drivers/infiniband/sw/rdmavt/qp.c
++++ b/drivers/infiniband/sw/rdmavt/qp.c
+@@ -1175,7 +1175,7 @@ int rvt_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
+ 		if (rdi->driver_f.qp_priv_init) {
+ 			ret = rdi->driver_f.qp_priv_init(rdi, qp, init_attr);
+ 			if (ret)
+-				goto bail_rq_wq;
++				goto bail_qpn;
+ 		}
+ 		break;
  
--	mt8195_afe_enable_reg_rw_clk(afe);
-+	ret = mt8195_afe_enable_reg_rw_clk(afe);
-+	if (ret)
-+		return ret;
- 
- 	if (!afe->regmap || afe_priv->pm_runtime_bypass_reg_ctl)
--		goto skip_regmap;
-+		return 0;
- 
- 	regcache_cache_only(afe->regmap, false);
--	regcache_sync(afe->regmap);
-+	ret = regcache_sync(afe->regmap);
-+	if (ret)
-+		goto err_restore_cache;
-+
-+	ret = mt8195_afe_enable_main_clock(afe);
-+	if (ret)
-+		goto err_restore_cache;
- 
--	mt8195_afe_enable_main_clock(afe);
--skip_regmap:
- 	return 0;
-+
-+err_restore_cache:
-+	regcache_cache_only(afe->regmap, true);
-+	mt8195_afe_disable_reg_rw_clk(afe);
-+
-+	return ret;
- }
- 
- static int init_memif_priv_data(struct mtk_base_afe *afe)
 -- 
 2.53.0
 
