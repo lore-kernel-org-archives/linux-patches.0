@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044203;
-	b=eoP/kAvcCzmhdht69r15WWSeh505GY9GJcvpJ9t1T85AgSilxtUANIQAn332+90um0/y
-	 FpjH6bVXF6xMgjPEX/47D+h58+7XHKdQlIF9CXRq0pIeH+b+2FGs8hMWDxjXRlQwgxqbx
-	 mw5bTwDzC/S5YpSoQuqFlqKFgLoc7Xc8qM4OHSUL0Fa4Y/q93NfB+QmfeEN+cfR97qz1h
-	 7wj70Pwv7ttrK9cyYRYTWfEBHL/0Q0F5GGw5mrxboPZfqjkez76e/MOwJfrqx7MhW+z4H
-	 dCdibqdYd9sO0xF8xwArD7l8yuJE9DHL+M/ZidsmLQ64+Ltt3JAi+m1FiOnG2SvO+Mw==
+	t=1795044206;
+	b=Wa7+troAJrqi/vkyxq+2rz7wfpO0gwyT8qKqtBXBmf8qVe5RhJ40jrMdbCh/X5G3T3Ha
+	 QdNMND/gkhl7VxCoM96116X9HlJBb3EzQfPUnu0Og7vo/53oUiLIK3ME6i81zPi2IiHB7
+	 fyo9UEQ6tYqS1Y5VbtcIUHVcVDSA/Kl56gnRXUGO6SgRtXPTiXfGfSRn+Y/JvKP5R2eD0
+	 ti9LdCqo3fGtyEmLSx7A4M/4WiMvsdVOjvOaUrBWcRM7BpsSxyRRarE2FcV1EO02pLUcX
+	 QsUoJ4d4c3DESpTmuhJGq5QFPzU2hS8roumCC6Ul0vi7d0Tbdptwcln0lSd+xJXa0CQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044203;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044206;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Vzc4X4XqJQscV4xFyP8my5rGLnlwWEnBtXB/zpQG7Pg=;
-	b=jl/FxdxUTRuX7wYZC/bZbc7A2DrMWw4jWeySBjk1QVA8hiAyKVyZEGhK2lNCrD7SEoQI
-	 ccH1HjZNay82gFh91zQC5RlaAi3fII7a5FBTkepy5UUCLVXy0KYpsXdmP6vNRJZFI9QqM
-	 C9u2fWMsR3uRsNauz+wuoF8c/Jq5t637+w305jArbXKcyLlk29TJxtdoz0+aEnoHJZzgS
-	 /IVMKSP1J81GTwhoLNp4plqEIqhYOMANIfK3KNbbmb4+LDyoI2ypX+I4+TT/GzNyR9LyE
-	 wfoB//Ug2P7+A3CPHD+Vz/xfSgpln4lHjv0CkOqq6zmbv8FqKN51LINUDqfrIdV68Pg==
+	bh=jncQoly2h2r3VgnYMjP+M8MbZT7zERbB36KyCU/suoU=;
+	b=JclDTNwVVhzfPoeSMyroxw718Wd5c34HBa6t5v1PYHiiG2J+DhkZ45b66cGPi3dWgqOU
+	 KKp7AG10c3Liwh8nbY1f8JtcPiC54dhh81+WItRStedw0GzRytQE/3XQaMIOF4eXsDY6q
+	 tqgd8HlOK5PNs1+AotntA5ZCp+V8r5C/xfWoROfTTebaBEZWO+yUlsAMnC2F1qXF4P3g8
+	 6lDG7NzPiN12Lijor5e9cuQYqWByLaNK7ikPgfkzR6m4sZreGImo7vKmFMxH/aGX2bh9J
+	 sLxCOaP6CANWhW3rovg4i6MWdeF4K6zdfHBfQua7WBQBbzTYi+PJbxjk1IUec/NDKZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UIFpQbuC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cbtnuM8V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E8B606A31C;
-	Wed, 18 Nov 2026 23:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662EA606A320;
+	Wed, 18 Nov 2026 23:23:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UIFpQbuC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B861F000C4;
-	Wed, 18 Nov 2026 23:23:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cbtnuM8V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F7B1F000C4;
+	Wed, 18 Nov 2026 23:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044203;
-	bh=Vzc4X4XqJQscV4xFyP8my5rGLnlwWEnBtXB/zpQG7Pg=;
+	s=korg; t=1795044206;
+	bh=jncQoly2h2r3VgnYMjP+M8MbZT7zERbB36KyCU/suoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UIFpQbuCh9oynF8mgrjmIO7xGvnXa0Zjy2uQS0V0eX+flO032K8rChzhyfK+x+V0c
-	 bypbhfbq4/u8RgZSLDHDoW910yqMQjT2cy65BVEkcUmPqzplw349YOFrGlJh4U+wus
-	 23va8plv9/gDhzbqfoAxT54Y8hFLrcWehWSYcGpA=
+	b=cbtnuM8VByM9LvZ1n9x4rhQk7lohlIE5H/MdQs/Lk51Y/o2kPbow79BCk0rAHP8PQ
+	 rPPjLwl8o15Lc69Srr4Oo2Ko28uJUNQ1WJCXpXr6XUbbgxnkdGihWB2LoNKa45aHR0
+	 eXQHNouMXYAJvQBX/WuUYKHwNlLqMT2EYd5ORJ+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Leo Li <sunpeng.li@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0484/2857] net: team: free skb when broadcast has no txable port
-Date: Wed, 18 Nov 2026 15:25:18 +0100
-Message-ID: <20261118150218.864474251@linuxfoundation.org>
+Subject: [PATCH 6.1 0485/2857] drm/amd/display: Fix direct scanout alpha on some DRM_FORMATs
+Date: Wed, 18 Nov 2026 15:25:19 +0100
+Message-ID: <20261118150218.896464022@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,45 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Leo Li <sunpeng.li@amd.com>
 
-[ Upstream commit 489114c9ecae44e523361a4b3e610ee5ebd9189c ]
+[ Upstream commit 7744262f5d63f9faa4d59dec127ae1c8b2d56495 ]
 
-bc_transmit() sends the original skb through the last txable port.
-When no port is txable, it returns false without consuming the skb, but
-team_xmit() still returns NETDEV_TX_OK. AF_PACKET sends then retain the
-skb and its socket write-memory charge.
+[Why]
 
-A TX-enabled, link-down port keeps the broadcast transmit op installed.
-Carrier can stay up through a second link-up, TX-disabled port or be
-forced on by userspace. Free the original skb on the no-port path while
-leaving the existing drop accounting intact.
+DM was declaring it's own list of has_alpha DRM formats to check against
+for enabling alpha blending, when the format->has_alpha already does
+that for us.
 
-Discovered by Sashiko during review of previous commit.
+The self-declared list missed some has_alpha formats, causing
+direct-scanout planes with such formats to appear opaque.
 
+[How]
+
+Drop the self-declared list, instead use the format->has_alpha field
+directly.
+
+Signed-off-by: Leo Li <sunpeng.li@amd.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 9ecdac91ed43d836683d5daa467f4907405420e2)
 Cc: stable@vger.kernel.org
-Fixes: 5fc889911a99 ("team: add broadcast mode")
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20261001182326.572045-3-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Dropped the 3-entry alpha_formats list (instead of upstream's 8-entry list) in fill_blending_from_plane_state(), replacing it with the has_alpha assignment. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team_mode_broadcast.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c   | 15 +--------------
+ 1 file changed, 1 insertion(+), 14 deletions(-)
 
-diff --git a/drivers/net/team/team_mode_broadcast.c b/drivers/net/team/team_mode_broadcast.c
-index 313a3e2d68bf6..1c5006cfc191d 100644
---- a/drivers/net/team/team_mode_broadcast.c
-+++ b/drivers/net/team/team_mode_broadcast.c
-@@ -38,6 +38,8 @@ static bool bc_transmit(struct team *team, struct sk_buff *skb)
- 		ret = !team_dev_queue_xmit(team, last, skb);
- 		if (!sum_ret)
- 			sum_ret = ret;
-+	} else {
-+		dev_kfree_skb_any(skb);
- 	}
- 	return sum_ret;
- }
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
+index bf80846192641..6191a005d03b8 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
+@@ -101,20 +101,7 @@ void fill_blending_from_plane_state(const struct drm_plane_state *plane_state,
+ 
+ 	if (plane_state->pixel_blend_mode == DRM_MODE_BLEND_PREMULTI ||
+ 		plane_state->pixel_blend_mode == DRM_MODE_BLEND_COVERAGE) {
+-		static const uint32_t alpha_formats[] = {
+-			DRM_FORMAT_ARGB8888,
+-			DRM_FORMAT_RGBA8888,
+-			DRM_FORMAT_ABGR8888,
+-		};
+-		uint32_t format = plane_state->fb->format->format;
+-		unsigned int i;
+-
+-		for (i = 0; i < ARRAY_SIZE(alpha_formats); ++i) {
+-			if (format == alpha_formats[i]) {
+-				*per_pixel_alpha = true;
+-				break;
+-			}
+-		}
++		*per_pixel_alpha = plane_state->fb->format->has_alpha;
+ 
+ 		if (*per_pixel_alpha && plane_state->pixel_blend_mode == DRM_MODE_BLEND_COVERAGE)
+ 			*pre_multiplied_alpha = false;
 -- 
 2.53.0
 
