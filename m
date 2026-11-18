@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025905;
-	b=CIXitAStasuTgRTYLdT7O2JZNwbe5F7eUfs1coa/5mHGl0/cpBkZY9S2he+uhQQUe+ez
-	 R3Zfiq2O6i+PADZCos7aJqPVBxAfdtiyB0BHlMJU9mOO2VfNQfVAgCKbykr9t42u5PxlG
-	 21Ig6ZOSM1z6tKmT6rB8HSiMekkp+ZD2u4YvteRELv9Z3Jx+0pxQyQe9uW+c6Io0kFP+T
-	 rqkPIjbmN++VMHyhKR0IzqGutu/Om1MYOd5yby+bKSs5tA3k+o+39DL84xLls7/PTQ/yP
-	 jknHLez636kV6u0+ZW2f+ROapKtRPcRoUE8f59aRD4b35enDJjfUxaeQCiPK5q9IVjA==
+	t=1795025908;
+	b=lkw+WT5ch0JefdkoapYnsDeIq8fALSbVtf0r3Yg/ASQ5+I7/tU8eU0B2wHL5Zi297knv
+	 5Cwjl1BfkPcfDUx9YVf3da/NQ3sEaWdRehHVB7HbQDdOmasEmgAJz4Ixzp62O+/a4rbxx
+	 MWYjofY6VrmqKYrB7wmo+R7GGXJ8pTGkPuEnMxP7dZdMZqcFoRu2WFJhzjUkOlHvWIBzE
+	 XxCS1ceDCg5LfyLernvFaRUJDIXTkDabJuTNeBuz2eQAi6utDxOdczs7uZ0nk6x2AOQnu
+	 NOWiqrm7m8DFElbP+1wYHZur1IAP/Imgz1YsG6bY5tkwAkQaeqyAxhbB9xiHydo2jNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025905;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025908;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A5T4v5WFB3vEMDBjPYfhBTFPNbXNEDTiaoUfbJst9as=;
-	b=PSLpTs0L9SqBbtueUh2Tw7bfIHXkd1TJ/qf/mwBilxg7U6ix60KBeimd5XT96JgpfKi2
-	 zNiQz3zPoWSBMGSga3xMSI4urS0P2QUPMf4PHbbwG3YwldT7tn8tCaivNaqXtVg1pNQP/
-	 tMmT5WLQRg0LBFwudXknaGjhe5HWo2461Z98MLzcff9PdUXnJpmvpfPw9fl6XlFIr2HBo
-	 VSp5ZT4T2aaKBzNduSSWNeDKbFdDcyBnVZDC5PZA9T/TY4DYR82oKKDT47np27a5pjeDM
-	 r/y792DkjQ6wMnSuD7JqBoAGFYOoI4W/Lwk6plKR958c7mqT4l1bO32ORF+j7mEtkqg==
+	bh=q0YljxBKsJuBE8syuVy82q4iQGlQLMum4NXCS4Zwmus=;
+	b=M+6DBf8odMFzujpbzahtNyV7cXPSzSsK14CvZHpwh2DTptdtT5bzeErHa6QjO7tubP3p
+	 hlFWLy8h+2zaziO1SAomEFg2V0WqPTA/iouaF/Pf3u5fwU5qVNyR6sWLrGuarOMQf5f3a
+	 9YCdd4kbdIubdl0dY8y/Mb703bKT8qNbZylTAN+8gb4ixRXG7JGmfF88QNzZmKzjgYsFf
+	 /dB0pU16wnurcmqyh2Yob3oAKiwtY657umrNO8cuU1WGp/3HHZaA717cmtk0DN0tPDN7i
+	 NQXJE0Vciytdo1HMtZZEltYSZ2T/WnMQreFWWZYXE9UHZTUDXg3xzenUI428yUEHK3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aA0MwZ9Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N1aAmlAk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75925606A32A;
-	Wed, 18 Nov 2026 18:18:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067AE606A31C;
+	Wed, 18 Nov 2026 18:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aA0MwZ9Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F8F1F000C5;
-	Wed, 18 Nov 2026 18:18:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N1aAmlAk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54EB31F000C4;
+	Wed, 18 Nov 2026 18:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025905;
-	bh=A5T4v5WFB3vEMDBjPYfhBTFPNbXNEDTiaoUfbJst9as=;
+	s=korg; t=1795025907;
+	bh=q0YljxBKsJuBE8syuVy82q4iQGlQLMum4NXCS4Zwmus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aA0MwZ9QhqqJvCkBfifxdKNFrIUrBmthmtv//f+3KdVXHLOdZJAC8vDrsdOaNl1EP
-	 YD0NjoL7FR3wtmCGokTqz/20+3mr9M3/4DGUW47qA5F4MH1dW+pWkqCajZim+fHUPZ
-	 uKkM8pQKH4V29b14TcSFNgCrgNdRtmgnDqaDdwf4=
+	b=N1aAmlAk5eHbxrBlXvyvxJkCZt16JrjHDtdcsgEFutUhmoPhM9g+3icC4k2xp/FJB
+	 GWD1MCfpcN4A7hJyFdFvYXioJCC/hVOyujNUpwgLbE2E2v83zd1LnqpT/WLNE3h/WJ
+	 lhIfJRdtcXRur9l+MXXZV5TWfesFcXu5f7c/o8sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1203/2151] wifi: mt76: mt7925: check drv_pmctrl return in the PCIe reset path
-Date: Wed, 18 Nov 2026 15:48:58 +0100
-Message-ID: <20261118150206.028223947@linuxfoundation.org>
+Subject: [PATCH 6.18 1204/2151] wifi: mt76: mt7925: restore the reset state when fw_pmctrl fails
+Date: Wed, 18 Nov 2026 15:48:59 +0100
+Message-ID: <20261118150206.062562936@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,46 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit d12a54be2604ecd23a1e9ac863583e34034aadde ]
+[ Upstream commit 8d2f5990cd429a2fe5fff05f7acf84d6799d4324 ]
 
-mt7925e_mac_reset() ignores the return value of
-mt792xe_mcu_drv_pmctrl(), unlike the two pmctrl calls later in the same
-function. When the driver-own handshake fails,
-__mt792xe_mcu_drv_pmctrl() returns -EIO without reinitialising WPDMA or
-clearing MT76_STATE_PM, and the reset carries on: it writes the
-interrupt enable registers, cycles NAPI, resets WPDMA and calls
-mt7925_run_firmware() on a chip the driver does not own.
+mt7925e_mac_reset() returns directly when mt792xe_mcu_fw_pmctrl()
+fails, leaving MT76_RESET set and the TX worker parked. Every other
+error path jumps to out, which clears both. mt7925_mac_reset_work()
+clears neither, so once every reset attempt fails there, TX stays
+blocked until another reset succeeds.
 
-Return the error instead. The call is the first statement in the
-function, before MT76_RESET is set and before the TX worker and NAPI
-are disabled, so nothing needs unwinding.
+Jump to out instead.
 
 Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260809205559.32116-1-lucid_duck@justthetip.ca
+Link: https://patch.msgid.link/20260827162115.1449757-1-nbd@nbd.name
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/pci_mac.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/pci_mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/pci_mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/pci_mac.c
-index 4578d16bf456a..0ad733e4b8902 100644
+index 0ad733e4b8902..3266542b1711c 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7925/pci_mac.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7925/pci_mac.c
-@@ -72,7 +72,9 @@ int mt7925e_mac_reset(struct mt792x_dev *dev)
- 	const struct mt792x_irq_map *irq_map = dev->irq_map;
- 	int i, err;
+@@ -125,7 +125,7 @@ int mt7925e_mac_reset(struct mt792x_dev *dev)
  
--	mt792xe_mcu_drv_pmctrl(dev);
-+	err = mt792xe_mcu_drv_pmctrl(dev);
-+	if (err)
-+		return err;
+ 	err = mt792xe_mcu_fw_pmctrl(dev);
+ 	if (err)
+-		return err;
++		goto out;
  
- 	mt76_connac_free_pending_tx_skbs(&dev->pm, NULL);
- 
+ 	err = __mt792xe_mcu_drv_pmctrl(dev);
+ 	if (err)
 -- 
 2.53.0
 
