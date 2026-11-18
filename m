@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023330;
-	b=tYPX64NqiTVTz2CwNTAxRTFVcdj1q8Q3LmD/g/zLOHj85YUDnLh7RpbYFS5AaLU2ofi/
-	 A5OYtKtUIPUpe9quRSjr7TuciZ09WxpOQ/PDkXOtiqHJ8yqpTfFh+Y2qNGiCcznXGQmKo
-	 MD+TM2GbN0RFiveyzvPoob1hCfGDsKWXs32Q5UYBncXJDYP+8ScLTaK6qgTSfWr+8tKPq
-	 67/LKVNNiLtuaTK8mE/i1WYW37zpkdiiR3O+/6iecAXGyhOyzo4v9aYrG1H91GkMhpxnX
-	 kyheSD/JGjQXLTDyngg8f+M4bp9zwcnl28yjC+Po6gNvn67RKhxoiBuNlYvoAxvsxhg==
+	t=1795023333;
+	b=ym+7Co3Qye4MYheGCIV/mUpb4fG9/zDiURTjI22opBqu0LTcsQ3U3j/u5eCdWxPsgd2u
+	 y+B+mbn8zH7rUBpDtQ56qH77DG60XrmwCHRqMP/TGVAfAsSSt2QP3B2OXJ3nYOBVSPC4D
+	 fW3VioJ7HDZZS9UFkmW7CGtmp5WWvq6gdQg6VqYHkk2j9n9BzjvvelyPP0XQ4kpZaup5R
+	 GI00VEEDCUx1hBwwm2C2EQUWNxVCsvwJOk20Bd9gogcXF0RrxdbIkV9Z5dbpWEYUN14yC
+	 a9fMxePk/fLbZPWEfjxaKSgmPFoQW+HO+0qp2pf5Ntgm2D0wZAzCBNFYpMfftT8rZnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023330;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023333;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V/Lj79joCa4mh0ryHQMtm4cStkXTU3vqQBHU+TSjbTE=;
-	b=yrYQ/tkqpo736f7BisKPESqUOQO9HY3d7CNDkCFX2Jxbw8q1SzL0+776y/llQqHi5+Nu
-	 gIZYh7N3Yqj7N78/Auvlx7vJRoB6G2vWHzvpdC2IJtl3ZoSMJA/9dgMHOAGYUlA9BwsL/
-	 x0TkaJm5HPHzGJToTM8Gm2/K2Y/nmyv9JGTDcJGbgbq3fKjx2O6AabYubylORdJJmbWfu
-	 pU0sszg4d3YxIg0B746P6Q/ZPFH5jpFPnDU0xOTEa2v52m+ga4WF2N49R00UfrQ5tQtTT
-	 cGwxA16fkcJ0DMjfGBkwVLWXP1bhj1wvmMXrRvtOZec6okLmd5Gx11JCuXBPxNH9f6w==
+	bh=mp83WCIBoLAmDjr1hZIGrgk4mv7bhub/M6tZX4YRVUo=;
+	b=dkAkQYntp6yYd1i14h2+4VFdFfSXI/Eyw2IRvobeapwkKObTIktbVgld2bxyKzjz8yaM
+	 t5BJAGsQ2n5M6M69i+hm6lvutU9NAHUgtYErHJoo1I9OcFrA9zPIHdmDr8jsuOmU4Sk4H
+	 nq0VMOYpDUIC36HsqROrBFId8Ew+DNSaNiQkz0Bc2OG7+/D9hAnRuD/UFkxKoOvmtwMPT
+	 eYDL+GDqgwx5NIsVkF7YRKjbOGK3fg6Bng4V/59cJ03SL7A+RjSDOvJeWKCwW3gzUqISm
+	 kvHbqUVeF0RlXCvChAHdCvpVt4abqt9xgvasHv7kV2OZ0f5x0/O3RuyLJ4qmy2dAysQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tm9Pf+o1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="MIiG/op5";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9CA7606A325;
-	Wed, 18 Nov 2026 17:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98185606A320;
+	Wed, 18 Nov 2026 17:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tm9Pf+o1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B40C1F000C6;
-	Wed, 18 Nov 2026 17:35:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MIiG/op5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9601F000C6;
+	Wed, 18 Nov 2026 17:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023330;
-	bh=V/Lj79joCa4mh0ryHQMtm4cStkXTU3vqQBHU+TSjbTE=;
+	s=korg; t=1795023333;
+	bh=mp83WCIBoLAmDjr1hZIGrgk4mv7bhub/M6tZX4YRVUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tm9Pf+o1H9kU2WB+H1ieNWRs/GgyQB0gKckD598C3ArYwjHZW+xStsbVc0kuWhQMv
-	 gzp7K7OwRp5DmRYeGvH67nhpaEd5NlVSl5S2TqvNJ454IWeq8Kq2oJqq525tKdBn0M
-	 +plIMyRdIUTxj+Shc8o4nAr+o1WThxvC7AK4vXuA=
+	b=MIiG/op5qC+bCeOOlMBJxiaMmISQzffNtn47epAj7FtpQ0mH83Xanofnn28TUJCrI
+	 K8hFXsR5X8ER9TNwdVvMvUKMUpE1UEOExol/vTIy8tfFFZ4cdbfF5DWza5nam+9tst
+	 pQBnZ04x8Iq7ts7gdHxxrFkSmVnwX0+FhKmFtQzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0330/2151] scsi: mpi3mr: Fix buffer overflow when caching log data
-Date: Wed, 18 Nov 2026 15:34:25 +0100
-Message-ID: <20261118150134.014759797@linuxfoundation.org>
+Subject: [PATCH 6.18 0331/2151] scsi: mpi3mr: Fix out-of-bounds reply frame access
+Date: Wed, 18 Nov 2026 15:34:26 +0100
+Message-ID: <20261118150134.051720517@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,53 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit 9ff1af19c488efad66f2b803eefa0abd5fdac8f4 ]
+[ Upstream commit bcf0a5bed59acd5ae19d80e1f617c1a5b355af0b ]
 
-Each log data slot holds a header followed by the payload, but the copy was
-sized against the whole slot and so wrote one header length past the end of
-it. Subtracting the header on its own is not enough either, because the
-entry size is derived from the controller reply size and can be smaller
-than the header.
+The reply frame address reported on completion is only checked against the
+start and the end of the pool. An address near the top can pass the check
+while leaving less than a full frame, and an unaligned one resolves into
+the middle of a frame instead of the start of one.
 
-Work out the payload room first and clamp the copy to it.
+Require a whole frame to fit and the address to be frame aligned.
 
-Fixes: 43ca11005098 ("scsi: mpi3mr: Add support for PEL commands")
+Fixes: 824a156633df ("scsi: mpi3mr: Base driver code")
 Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-6-chandrakanth.patil@broadcom.com
+Link: https://patch.msgid.link/20260825210411.301535-7-chandrakanth.patil@broadcom.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_app.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
-index 653844ab2aac4..552db18da1219 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_app.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
-@@ -2947,7 +2947,8 @@ static long mpi3mr_bsg_process_mpt_cmds(struct bsg_job *job)
- void mpi3mr_app_save_logdata(struct mpi3mr_ioc *mrioc, char *event_data,
- 	u16 event_data_size)
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index 4c8d78b840fc9..b83bb6027d578 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -119,11 +119,16 @@ void mpi3mr_build_zero_len_sge(void *paddr)
+ void *mpi3mr_get_reply_virt_addr(struct mpi3mr_ioc *mrioc,
+ 	dma_addr_t phys_addr)
  {
--	u32 index = mrioc->logdata_buf_idx, sz;
-+	u32 index = mrioc->logdata_buf_idx;
-+	size_t entry_payload_len, sz;
- 	struct mpi3mr_logdata_entry *entry;
++	u64 offset;
++
+ 	if (!phys_addr)
+ 		return NULL;
  
- 	if (!(mrioc->logdata_buf))
-@@ -2956,7 +2957,12 @@ void mpi3mr_app_save_logdata(struct mpi3mr_ioc *mrioc, char *event_data,
- 	entry = (struct mpi3mr_logdata_entry *)
- 		(mrioc->logdata_buf + (index * mrioc->logdata_entry_sz));
- 	entry->valid_entry = 1;
--	sz = min(mrioc->logdata_entry_sz, event_data_size);
-+	if (mrioc->logdata_entry_sz > MPI3MR_BSG_LOGDATA_ENTRY_HEADER_SZ)
-+		entry_payload_len = (size_t)mrioc->logdata_entry_sz -
-+		    MPI3MR_BSG_LOGDATA_ENTRY_HEADER_SZ;
-+	else
-+		entry_payload_len = 0;
-+	sz = min_t(size_t, entry_payload_len, event_data_size);
- 	memcpy(entry->data, event_data, sz);
- 	mrioc->logdata_buf_idx =
- 		((++index) % MPI3MR_BSG_LOGDATA_MAX_ENTRIES);
++	offset = phys_addr - mrioc->reply_buf_dma;
++
+ 	if ((phys_addr < mrioc->reply_buf_dma) ||
+-	    (phys_addr > mrioc->reply_buf_dma_max_address))
++	    (phys_addr > mrioc->reply_buf_dma_max_address - mrioc->reply_sz) ||
++	    do_div(offset, mrioc->reply_sz))
+ 		return NULL;
+ 
+ 	return mrioc->reply_buf + (phys_addr - mrioc->reply_buf_dma);
 -- 
 2.53.0
 
