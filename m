@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046328;
-	b=NBMvAhJUqxofhfHRlgIidXOHDSbH3yMjLE9XfF2per7/iJLJ2LXEKm6kBaC1WDdcKfKb
-	 zRgkKRcZS8WNiiK20qkwFegwdICIDIOZTnUXt/fkTY33c96d70JWqnYpBXVpg3n6NYtsp
-	 oTyMMoN0muY4LvYGmTtkvZNEsu98bE5GWbVP8kVlBLtieCsriqETwdVlyIF6VO6M9ME/m
-	 7aN33Qu4JwxkyMUDjEtWqnmUlLBXgzbYAp6aP9PQd6NCziZ8GVXDzeYB8maV4+611HktJ
-	 A1Tj/LWyRkA2htFnMks/+Rx6gC6dzLLvLqQ4v617e6Lt4d/bGEfkufOqheSEGRvpZyg==
+	t=1795046331;
+	b=a43j6autVLEFC/XBzXQSkJe/EALy9GDmy7xqy0TYuD3FM6vxdmOPFKE7RE33xrLkxzIn
+	 1NIsobnl4TQK6R3ffpVKaJ4jRDd7PzwHHmwubKSt6qZaxmU4hBlTjmp7QPWZxpdIwC7Pi
+	 DlxGQUiVV2a5R1YWEjUnMkHwRzBnheJDw5YApgELpDL5UGxGmLlOtJ0+ezTp8+PJXa8jd
+	 UU5JgkG6N38AwhfWJBduUyAqcN4+OZVhJyv5vjljdHUFGRqn0Lamnkn/l7r9+TON3mu28
+	 WOoUs3tOCps6ZPOBtBeS3Y8/WuUrWw6yQpcT4U66MesPfuFhkItXvRTKU88Sl7MRphA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046328;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046331;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IuGT4hDmlb9axaUUAItXF2WBGawsVoXyiTRSBAu1PPI=;
-	b=4r39kHhxQ4G5Qoqqkx0prcdinzaVPwNQJTGx8WaR0b9ECBFNsIfPee604UvgO3YqY3rz
-	 szmXF5n0wiXpjS7VwcmeZtL2OYwtjnxD4kNs8xx0C73VcAjYj74fpBb+UXXr/KcJaFiSG
-	 NDNJAiBYt7ncqkZWIAkS6JYlf95jvuIGKCDMNFy3+K5RLfo2q1j1LAa3cF/bTx2zG5krs
-	 F0S1UjObNcJg3txrh8NWDFvRmlgglHbh32iHfRrVdxZvqpSwxH929wu0fUlZBZVTI1C8v
-	 NU3OGOeKT9Q2ZchMxup82/ZCM1/MmejNGuyO5NLAkAhFB+6cMZD+9F+daP2MYu/Ispw==
+	bh=DwGhWB3pg9waRAfTBnvSNzlAW6OscIXLzzCPYoHj/Ic=;
+	b=TqYFasyDcBtcwXCZcuUJer7P+CtrXrHuNYo70lvgOi/YR88BteZz13cLXJ7c2O642Mvl
+	 KGIPuLS3m7Wt72Q+EWVq67IHQsE4FfE4zoag1a5OGQlCoeUfRxIsV2bRheYyA1cTKmHEV
+	 FkNumLOunA0ys83T2jEDJNIiZA21DZ2bIVKyljrYBGcojUnt50XjYksxPFGoNYmSBuhll
+	 qU7koV/N6IdwCEyyWkrx4WOvqNPWThinTcts/jr9Dd61N9lXTGyVBF1/j8dgQ+iBeCtcV
+	 chBkz+zVvdbP7mMtBuEG/dtjZYr6eExAuw0wKMdh/mz5UfbbDrFWspN/RIgMv+dwxdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kBwP/aGU";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TVrG46I7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937B4606A31C;
-	Wed, 18 Nov 2026 23:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5347F606A31C;
+	Wed, 18 Nov 2026 23:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kBwP/aGU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E49A21F000C4;
-	Wed, 18 Nov 2026 23:58:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TVrG46I7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96CE1F000C4;
+	Wed, 18 Nov 2026 23:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046328;
-	bh=IuGT4hDmlb9axaUUAItXF2WBGawsVoXyiTRSBAu1PPI=;
+	s=korg; t=1795046331;
+	bh=DwGhWB3pg9waRAfTBnvSNzlAW6OscIXLzzCPYoHj/Ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kBwP/aGUt4UUJCPL2ndm/uL3Ee4upbzbDGEEBM3TfM3huSgsd8H/cVClf1JNdezTY
-	 WYwpgjI8tnBUkf1QeUKZJAHZHw4DvdDwtD9OPLG8VZ8tTPScJviAVKumd3tyqt6Wm8
-	 1uPGdTdtDwGLij8a+MaboA69tP1l8cpM2brzKHQw=
+	b=TVrG46I7Qff0jsPl4vgInq64NBQjFtVE+ViKJZn6ayMw/akPhVD3WZ8uD031Qlja8
+	 EH2WGTl+Q7XWtCHMESbboGgKt9Z/yfsNVOrj2OgOef4xDf5btKWACow/YEPnRzpFw2
+	 MIFnwbF14wjsxQrmGr9haarnCAKgo77Y5fzZZ44w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iwona Winiarska <iwona.winiarska@intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Franck Baur <franck.baur.67@gmail.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1241/2857] hwmon: (peci/dimmtemp) Fix devres leak and UAF on concurrent unbind
-Date: Wed, 18 Nov 2026 15:37:55 +0100
-Message-ID: <20261118150246.232851550@linuxfoundation.org>
+Subject: [PATCH 6.1 1206/2857] net: jme: keep RX MAC clock enabled for WoL
+Date: Wed, 18 Nov 2026 15:37:20 +0100
+Message-ID: <20261118150245.022954512@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,111 +68,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Franck Baur <franck.baur.67@gmail.com>
 
-[ Upstream commit 61bc4514b8e99e9733c04de028885f6fc906d628 ]
+[ Upstream commit ed9179fc7228315fb745dc3b111bae446e6894d2 ]
 
-When a peci_dimmtemp device is unbound concurrently with its delayed
-initialization work (detect_work), newly allocated devm resources and
-the hwmon device are leaked, leading to a use-after-free when reading
-the lingering hwmon sysfs attributes.
+On the JMicron JMC250 revision 03, the MAC reset performed during
+suspend leaves GPREG1_RXCLKOFF set. Although the driver enables Magic
+Packet detection, the gated RX MAC clock prevents wake-up from ACPI S3.
 
-In peci_dimmtemp_probe(), detect_work is registered for cancellation via
-devm_delayed_work_autocancel(). During driver detach, devres_release_all()
-first moves all existing entries from dev->devres_head onto a local todo
-list before invoking their release callbacks in reverse order. If
-create_dimm_temp_info_delayed() is already running when
-devm_delayed_work_drop() calls cancel_delayed_work_sync(),
-create_dimm_temp_info() can allocate dimmtemp_label strings via
-devm_kzalloc()/devm_kasprintf() and register the hwmon device via
-devm_hwmon_device_register_with_info(), appending new devres entries to
-the now-empty dev->devres_head. Once the work finishes,
-devres_release_all() frees priv and priv->name from the local todo list
-without re-evaluating dev->devres_head, leaving the late devres
-allocations and registered hwmon device behind with a dangling priv
-pointer.
+Keep the RX MAC clock enabled while WoL is armed. Restore the gated
+clock state immediately after disabling WoL during resume, preserving
+the RX engine initialization ordering.
 
-Cancel detect_work synchronously in a driver .remove() callback instead
-of relying on devm_delayed_work_autocancel() so that the work is fully
-drained before devres_release_all() detaches dev->devres_head, allowing
-any devm resources registered by the delayed work to be released in
-proper reverse order. Also only schedule detect_work when
-check_populated_dimms() returns -EAGAIN so that probe failure paths do
-not leave delayed work pending.
+Prevent concurrent link-change work from gating the clock again after
+WoL has been armed. Quiesce interrupt-driven link-change scheduling,
+synchronize pending interrupts, and cancel outstanding link-change
+work before programming WoL in suspend and shutdown paths.
 
-Fixes: 73bc1b885dae ("hwmon: peci: Add dimmtemp driver")
+Restore the deferred processing state before requesting link
+reinitialization on resume.
+
+Tested on an ASUS K42JE with JMC250 [197b:0250] rev 03 using a
+Debian 6.12.111 kernel and an externally built module. ACPI S3 wake
+with a Magic Packet completed in 19 seconds, while a control without
+a Magic Packet resumed through the RTC alarm after 123 seconds.
+Ethernet and SSH recovered after resume.
+
+S4 and S5 wake behaviour has not been validated with this revision.
+
+Fixes: 854a2e7c331a ("jme: Safer MAC processor reset sequence")
 Cc: stable@vger.kernel.org
-Cc: Iwona Winiarska <iwona.winiarska@intel.com>
-Reviewed-by: Iwona Winiarska <iwona.winiarska@intel.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Assisted-by: LLM
+Signed-off-by: Franck Baur <franck.baur.67@gmail.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/peci/dimmtemp.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/jme.c | 37 ++++++++++++++++++++++++++++++++-----
+ drivers/net/ethernet/jme.h |  1 +
+ 2 files changed, 33 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hwmon/peci/dimmtemp.c b/drivers/hwmon/peci/dimmtemp.c
-index 0a633bda36689..a05273d19ce59 100644
---- a/drivers/hwmon/peci/dimmtemp.c
-+++ b/drivers/hwmon/peci/dimmtemp.c
-@@ -4,7 +4,6 @@
- #include <linux/auxiliary_bus.h>
- #include <linux/bitfield.h>
- #include <linux/bitops.h>
--#include <linux/devm-helpers.h>
- #include <linux/hwmon.h>
- #include <linux/jiffies.h>
- #include <linux/module.h>
-@@ -327,11 +326,13 @@ static int create_dimm_temp_info(struct peci_dimmtemp *priv)
- 	if (ret == -ENODEV) {
- 		dev_dbg(priv->dev, "No DIMMs found\n");
- 		return 0;
--	} else if (ret) {
-+	}
-+	if (ret == -EAGAIN) {
- 		schedule_delayed_work(&priv->detect_work, DIMM_MASK_CHECK_DELAY_JIFFIES);
- 		dev_dbg(priv->dev, "Deferred populating DIMM temp info\n");
--		return ret;
+diff --git a/drivers/net/ethernet/jme.c b/drivers/net/ethernet/jme.c
+index a718207988f2c..2fd74ae243add 100644
+--- a/drivers/net/ethernet/jme.c
++++ b/drivers/net/ethernet/jme.c
+@@ -1502,7 +1502,8 @@ jme_intr_msi(struct jme_adapter *jme, u32 intrstat)
+ 		 * all other events are ignored
+ 		 */
+ 		jwrite32(jme, JME_IEVE, intrstat);
+-		schedule_work(&jme->linkch_task);
++		if (!test_bit(JME_FLAG_WOL_QUIESCE, &jme->flags))
++			schedule_work(&jme->linkch_task);
+ 		goto out_reenable;
  	}
-+	if (ret)
-+		return ret;
  
- 	channels = priv->gen_info->chan_rank_max * priv->gen_info->dimm_idx_max;
- 
-@@ -401,10 +402,8 @@ static int peci_dimmtemp_probe(struct auxiliary_device *adev, const struct auxil
- 			 "Unexpected PECI revision %#x, some features may be unavailable\n",
- 			 peci_dev->info.peci_revision);
- 
--	ret = devm_delayed_work_autocancel(priv->dev, &priv->detect_work,
--					   create_dimm_temp_info_delayed);
--	if (ret)
--		return ret;
-+	auxiliary_set_drvdata(adev, priv);
-+	INIT_DELAYED_WORK(&priv->detect_work, create_dimm_temp_info_delayed);
- 
- 	ret = create_dimm_temp_info(priv);
- 	if (ret && ret != -EAGAIN) {
-@@ -415,6 +414,13 @@ static int peci_dimmtemp_probe(struct auxiliary_device *adev, const struct auxil
- 	return 0;
+@@ -1546,7 +1547,8 @@ jme_intr_msi(struct jme_adapter *jme, u32 intrstat)
+ 	/*
+ 	 * Re-enable interrupt
+ 	 */
+-	jwrite32f(jme, JME_IENS, INTR_ENABLE);
++	if (!test_bit(JME_FLAG_WOL_QUIESCE, &jme->flags))
++		jwrite32f(jme, JME_IENS, INTR_ENABLE);
  }
  
-+static void peci_dimmtemp_remove(struct auxiliary_device *adev)
-+{
-+	struct peci_dimmtemp *priv = auxiliary_get_drvdata(adev);
-+
-+	cancel_delayed_work_sync(&priv->detect_work);
-+}
-+
- static int
- read_thresholds_hsx(struct peci_dimmtemp *priv, int dimm_order, int chan_rank, u32 *data)
- {
-@@ -603,6 +609,7 @@ MODULE_DEVICE_TABLE(auxiliary, peci_dimmtemp_ids);
+ static irqreturn_t
+@@ -1892,6 +1894,7 @@ jme_powersave_phy(struct jme_adapter *jme)
+ 		jme_set_100m_half(jme);
+ 		if (jme->reg_pmcs & (PMCS_LFEN | PMCS_LREN))
+ 			jme_wait_link(jme);
++		jme_mac_rxclk_on(jme);
+ 		jme_clear_pm_enable_wol(jme);
+ 	} else {
+ 		jme_phy_off(jme);
+@@ -3158,6 +3161,21 @@ jme_shutdown(struct pci_dev *pdev)
+ 	struct net_device *netdev = pci_get_drvdata(pdev);
+ 	struct jme_adapter *jme = netdev_priv(netdev);
  
- static struct auxiliary_driver peci_dimmtemp_driver = {
- 	.probe		= peci_dimmtemp_probe,
-+	.remove		= peci_dimmtemp_remove,
- 	.id_table	= peci_dimmtemp_ids,
++	if (netif_running(netdev)) {
++		set_bit(JME_FLAG_WOL_QUIESCE, &jme->flags);
++		netif_device_detach(netdev);
++		netif_stop_queue(netdev);
++		jme_stop_irq(jme);
++		synchronize_irq(pdev->irq);
++		jme_stop_irq(jme);
++		cancel_work_sync(&jme->linkch_task);
++		tasklet_disable(&jme->pcc_task);
++		napi_disable(&jme->napi);
++		tasklet_disable(&jme->txclean_task);
++		tasklet_disable(&jme->rxclean_task);
++		tasklet_disable(&jme->rxempty_task);
++	}
++
+ 	jme_powersave_phy(jme);
+ 	pci_pme_active(pdev, true);
+ }
+@@ -3172,11 +3190,16 @@ jme_suspend(struct device *dev)
+ 	if (!netif_running(netdev))
+ 		return 0;
+ 
+-	atomic_dec(&jme->link_changing);
+-
++	set_bit(JME_FLAG_WOL_QUIESCE, &jme->flags);
+ 	netif_device_detach(netdev);
+ 	netif_stop_queue(netdev);
+ 	jme_stop_irq(jme);
++	synchronize_irq(jme->pdev->irq);
++	jme_stop_irq(jme);
++	cancel_work_sync(&jme->linkch_task);
++	tasklet_disable(&jme->pcc_task);
++	napi_disable(&jme->napi);
++	atomic_dec(&jme->link_changing);
+ 
+ 	tasklet_disable(&jme->txclean_task);
+ 	tasklet_disable(&jme->rxclean_task);
+@@ -3215,6 +3238,7 @@ jme_resume(struct device *dev)
+ 		return 0;
+ 
+ 	jme_clear_pm_disable_wol(jme);
++	jme_mac_rxclk_off(jme);
+ 	jme_phy_on(jme);
+ 	if (test_bit(JME_FLAG_SSET, &jme->flags))
+ 		jme_set_link_ksettings(netdev, &jme->old_cmd);
+@@ -3226,8 +3250,11 @@ jme_resume(struct device *dev)
+ 
+ 	atomic_inc(&jme->link_changing);
+ 
+-	jme_reset_link(jme);
++	napi_enable(&jme->napi);
++	tasklet_enable(&jme->pcc_task);
++	clear_bit(JME_FLAG_WOL_QUIESCE, &jme->flags);
+ 
++	jme_reset_link(jme);
+ 	jme_start_irq(jme);
+ 
+ 	return 0;
+diff --git a/drivers/net/ethernet/jme.h b/drivers/net/ethernet/jme.h
+index 860494ff37144..ec5dfddf73227 100644
+--- a/drivers/net/ethernet/jme.h
++++ b/drivers/net/ethernet/jme.h
+@@ -450,6 +450,7 @@ enum jme_flags_bits {
+ 	JME_FLAG_SSET		= 2,
+ 	JME_FLAG_POLL		= 5,
+ 	JME_FLAG_SHUTDOWN	= 6,
++	JME_FLAG_WOL_QUIESCE	= 7,
  };
  
+ #define TX_TIMEOUT		(5 * HZ)
 -- 
 2.53.0
 
