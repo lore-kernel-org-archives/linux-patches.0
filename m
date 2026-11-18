@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016929;
-	b=FCRGigLKq4PPz7MKOr/7IDXGCNg/ucpBG1dKadF2gugssc0egfqyU/UP4dwFOtHlMQPs
-	 xUh1EpQZlRQTwY0DX992K7rHyjvR7DpCLkk3Ot+1W3TgV1SSmn2atnKfMjtQc5rdXzpUx
-	 pu6H76B0DRByDE+8MthO+I5Cnf1Cc5Ryq/2DlbVBWEr2OyWVGOz6Za7dI/xPg2limmBAZ
-	 sCZRRoWfW/esb4CvhmKjNI0KfPb6lJ0cNqQamUUIUB4lKfVg/V89jyxU8Ah7ig7mmS3HT
-	 /dV0uLxyDfomFDf1Mmz6NaOn8cfkBXnPtOl1+u+l94Lp7oFxQj6bjRbq2UFkJIWi2cA==
+	t=1795016932;
+	b=q+kf/VYJgJjTd6SYy/JZLHxYu1GD39yy94IdSL+q42u5zNwqT1VSuePT3WpP1p+x15Wa
+	 NO5kFlM9IfoAH8HvglwylIwFTmR077ReHX5TZ/dIchZkImnne7rMjtMc44sIXAbGBI+/O
+	 /27rQh6azpTwTaTdyuqtxsoEV4efwRheDCyXyomWuzL/0eBbGUixzTBltWdjKPeW77ehC
+	 Cw7dUwvUnQr0GcNskska7XaqcSa423pvM5VCXcAvRc75qrdcH9TRQaRN4Le3E0BEOGmlt
+	 hNF6bk3XwxGG2fSyk4Y4ayZd9VqgE4UPnG0TIpyWHNvrkFlm1zpsyNDlqatooRnIf9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016929;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016932;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QFVejcbKCx2M2BnsOPmLdgUfY0lv1bCB4NHkIeFUGYI=;
-	b=JWm7c4oWRztZCI9efnFanrv9bsx6i36zU3xx0gLwQCbgn3etJrNnbQE2H3HVpsYpheRx
-	 Ir02Nhn8Nddx+E768dIu95jl4/2kPApQHlKxjr5uD6YIKkHyB0z76V7MgJQ9OG+RPryGq
-	 NqT2IZ8KEY6kYEU6kHuDAo8ejyn8WX9Ev/GpGur/2s6y+BCbTOtIvmxDoVJSsbUDf9SI1
-	 uRiYH36JuFwPsdQHjV6crkW+AI0VI6mLQHXz4T2lXgT9Uq4KODkcCB8dyaNALchpjXpwo
-	 n049ny/dIFzdmt7D3SIuAaPPEjhW2/YxtZDEJK7ODGtt+Mlrd3x3X3wWGFLrIWEIQFQ==
+	bh=2/+AWNBTw+l4nG6HgWcLE7GISSyGEO4SGKVy/wQAO2I=;
+	b=x8VGPoQHwxmUwaEGQnPOqzqzg55DnFcC0+fOQMQxkXe8pQbD995hq3v+KFmp814Bq6p7
+	 nX7/kzNgFmwcuVABIODRDyfGZg0o1+UR0vGi2hkE7zQegvc9ZzZjsAXErITr08d8h+v8/
+	 fN2a8gxEoj4tE0ivGrZXlgf1EFBx1rknoTDrg5x/Aa+NeXku3upLr1kVIB0gd6F23jBRw
+	 CPxQsOmYh6d5sdhDxjDB88/vLZYDfS1DJR/+iNQRnQpR1176SZI4swsBsDgxG/73AA/xW
+	 jKpTa3N3F057ppWUbAzc4ySn9BbAz+9qa7me48Jdq/eWARLQBduJBn45WiocJ5MdzEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XLkMxCXi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mfNtixbZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D413606A31C;
-	Wed, 18 Nov 2026 15:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54423606A31C;
+	Wed, 18 Nov 2026 15:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XLkMxCXi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFD771F000C5;
-	Wed, 18 Nov 2026 15:48:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mfNtixbZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50E41F000C4;
+	Wed, 18 Nov 2026 15:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016929;
-	bh=QFVejcbKCx2M2BnsOPmLdgUfY0lv1bCB4NHkIeFUGYI=;
+	s=korg; t=1795016932;
+	bh=2/+AWNBTw+l4nG6HgWcLE7GISSyGEO4SGKVy/wQAO2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XLkMxCXiCdl656FuUeTIbrJJWMEagu+ZtTNJiWdEdQt5+pRxU3QEVOWBnf8PWPI6m
-	 iBMSMMgS7PUAxIlzdcrrr/Siy/jNzTTWblVZTU9ARTfkLVgOGhKpvsee1D1/SdldYC
-	 PpruQ3Ni0PtQf3ipwqEPvgopZKEd3vMtetMiRl6U=
+	b=mfNtixbZF0RphTJ/MlJxbAatEFrcL2CfZctazEQQNeDqFD1ZnhYVaI+iyyzf6YYGB
+	 Jg72AjshpkBPjAzJX6baUBZozp2ZLw1VKwSaSRdDz+mgT7i90y1LEyL+dyoE9GdXmw
+	 Dsr/H0saesu0VKRblmcfqOx5XF0VbbV+rFwkDKKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stan Johnson <userm57@yahoo.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0704/2651] swim: Perform ISM/IWM mode switching according to specs
-Date: Wed, 18 Nov 2026 15:32:24 +0100
-Message-ID: <20261118150313.174232770@linuxfoundation.org>
+Subject: [PATCH 7.3 0705/2651] swim: Configure parameter memory
+Date: Wed, 18 Nov 2026 15:32:25 +0100
+Message-ID: <20261118150313.208873395@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,65 +72,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 52981bb358d1b5c38040b00f81e2cf973f9148ad ]
+[ Upstream commit 994a778d966592d0e211deaf6e436fcb21413935 ]
 
-The SWIM spec says, "MOTOREN must be low to switch modes" and "after
-switching from ISM to IWM, the very first command must be a clear L7".
+The original SWIM chip has a 16 byte memory to store parameters which
+control read/write timing. The SWIM 2 chip retains the last 4 parameters
+which control write pre-compensation, but omits the first 12. Hence
+SWIM 2 can perform reads without any parameter memory setup but SWIM 1
+cannot.
 
-The ISM spec says, MOTOREN "must not be cleared until after the Action
-bit is cleared". Perform those operations in the correct sequence.
-
-When switching to ISM mode, the Mode register has to be selected with a
-particular sequence of bit flips. Set q7 low then q6 low then mtrOff.
+Configure the SWIM parameter memory with the appropriate values so that
+SWIM 1 can read too. The parameters used here were observed in SWIM chip
+memory, using Macsbug, while MacOS was reading from an MFM floppy disk.
 
 Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
 Signed-off-by: Finn Thain <fthain@linux-m68k.org>
 Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/75714ecc9a12d59511967dc9e24163dc8f3bbdd8.1788513996.git.fthain@linux-m68k.org
+Link: https://patch.msgid.link/eccb76911fd255330b05eb3174ac15c29bb41a23.1788513996.git.fthain@linux-m68k.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/block/swim.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index 3f92677ad127a..190b2e1b5b0e1 100644
+index 190b2e1b5b0e1..c2d7ad3f065cf 100644
 --- a/drivers/block/swim.c
 +++ b/drivers/block/swim.c
-@@ -149,6 +149,7 @@ struct iwm {
- #define ACTION		0x08
- #define WRITE_MODE	0x10
- #define HEDSEL		0x20
-+#define ISM_SELECT	0x40
- #define MOTON		0x80
+@@ -796,6 +796,17 @@ static void swim_cleanup_floppy_disk(struct floppy_state *fs)
+ 	blk_mq_free_tag_set(&fs->tag_set);
+ }
  
- /*----------------------------------------------------------------------------*/
-@@ -223,18 +224,21 @@ extern int swim_read_sector_data(struct swim __iomem *base,
- static DEFINE_MUTEX(swim_mutex);
- static inline void set_swim_mode(struct swim __iomem *base, int enable)
++static void swim_set_parameters(struct swim __iomem *base)
++{
++	unsigned int i;
++	static const u8 mem[] = { 0x18, 0x41, 0x2e, 0x2e, 0x18, 0x18, 0x1b, 0x1b,
++				  0x2f, 0x2f, 0x19, 0x19, 0x97, 0x1b, 0x57, 0x3b, };
++
++	swim_write(base, mode0, 0); /* reset parameter memory index */
++	for (i = 0; i < 16; ++i)
++		swim_write(base, parameter, mem[i]);
++}
++
+ static int swim_floppy_init(struct swim_priv *swd)
  {
--	struct iwm __iomem *iwm_base;
-+	struct iwm __iomem *iwm_base = (struct iwm __iomem *)base;
- 	unsigned long flags;
+ 	struct queue_limits lim = {
+@@ -805,6 +816,8 @@ static int swim_floppy_init(struct swim_priv *swd)
+ 	int drive;
+ 	struct swim __iomem *base = swd->base;
  
- 	if (!enable) {
--		swim_write(base, mode0, 0xf8);
-+		swim_write(base, mode0, ACTION);
-+		swim_write(base, mode0, ENBL1 | ENBL2 | MOTON);
-+		swim_write(base, mode0, ISM_SELECT);
-+		iwm_read(iwm_base, q7L);
- 		return;
- 	}
++	swim_set_parameters(base);
++
+ 	/* scan floppy drives */
  
--	iwm_base = (struct iwm __iomem *)base;
- 	local_irq_save(flags);
- 
- 	iwm_read(iwm_base, q7L);
-+	iwm_read(iwm_base, q6L);
- 	iwm_read(iwm_base, mtrOff);
- 	iwm_read(iwm_base, q6H);
- 
+ 	swim_drive(base, INTERNAL_DRIVE);
 -- 
 2.53.0
 
