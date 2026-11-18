@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017441;
-	b=INjECw9bArr2x2S25yvixDlo110imbKNUMVd2DuFaO5Hfqfo2h+AomGX7XloWzqGsX2e
-	 WUJW4syMg2CnrnORnO2PQRJJCQ9IfW0hQCaRXecdvH9CeIuLzztEBXFJa9/YpD2zfk6m7
-	 rNJUdA/2dVlLnIv0JrmF9smEA6irytNlVgz1o4IEmP5Hk4NEm/qznDJCTRXYRphSnN0uH
-	 TVKU4H83ge4UtQ93AQ5ETZ3XlI3nhiUleICqNHd9nw8H8swR2jFKsjMAWt4LIrNnfE4JI
-	 XmBG+AoaY1mPQYZidEq9uKKizM+5gPXGpgNwfe/ABwnm0x2XzvSpF+l3FrwSl8kCr8w==
+	t=1795017443;
+	b=JgDOB2XS0yPGRgXi83dq05giTQ5rgCJNgiPhvJZEzRBBoIKEtAnFm80sURYNvOpOS4rc
+	 fvMfJ0R8zLjOarBA0f8Wk9dCjPD9vWAoreIQabWN+KJvxESihF6BQ88K0sXfPWQPNafZW
+	 PWGqHxp0eNjuIn9NtodgBoXwWOyI5LHftWBdFDm0OSp2HFLewRXW83wPLXN4/bM5F6rYP
+	 Zi7xGZo99H85tM0l3Pc2GzX7Kpqb6WPNZ2qsQaE9J4/KUv9rbKfpj8suMk2WfXZl4E7GI
+	 GCoxgUQEz3N3V8aFbiUxdrv/BdsdTAqIlqnIy1ewI6D4FAZOh0Qnw4ZhC9SsuSDTbjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017441;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017443;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4r1iWbF6YJV17tw5D1GXRpKHh9duMtOuaBcb8qBZszY=;
-	b=etji2QLyEckqrmuqRPua8pS2Qb1swfIiOJp7gLrI//8guhjgzt1CFDT61tFX4IBWNMCV
-	 sEUD9VUeWR7xPjYyClgJAz3mQGzAq8uyIhw9mz0FHpsn5WxWFIwNpa+iCks280uKUK6Gg
-	 SDKaPN2A23DD1AUXms/lvkZzf6Ms6M75JfgVh2sD75ywLSfBK9UP+vwZ4UYMnVjmYvDrr
-	 I4LdTgg8sqfSXtmS/MwIRFz0jkyTAv5usZic9D7gmcsYqRTwT1AdxikPZaJDq6uQF2luM
-	 cJLZqI3JL/KHeS64g+gRysVGNiokRq2o0Fy3ZkvIV6JEuTAR7QdqtZgPHdw1Ouhf+gQ==
+	bh=5sB1jURkuHjGwzLQ6oycB+QfH4N3OE3z43+DQ3un/Nk=;
+	b=AFHeybGHH2eueyXW3GVaaUujApxe+dNRKnqNbkstOjgh65npNfnWtVU4hzCAa5gHlUtF
+	 p1RWaemZU54fh6BlRwIJW39c47RuCwotHS2nVXUK2CS5VujSHl73Xn/kMDeVRv6U0WnxO
+	 hutOrnhdPG8+ovtuR20Je1HBfniIPg9oXF+qxgkbIMOEz5aYsa/TYp/glHSLK0k2ahDme
+	 DJ7i6roCkIfMRslnUgyIX+M4BnEZS4SJPuDQX/yv9fqk5yeBhlHDCyoaOzMZiOlEyq+PC
+	 dkmlwe7rQtOFO+lzPn+iOl9iAWYA1sWH17YhL/lqz39tn0cgxKiOepFP8ArnbsOOYcg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mPqobHuR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qe5T0mLp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275BF606A31C;
-	Wed, 18 Nov 2026 15:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D9D606A32A;
+	Wed, 18 Nov 2026 15:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mPqobHuR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F41B1F000C4;
-	Wed, 18 Nov 2026 15:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qe5T0mLp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19B491F000C8;
+	Wed, 18 Nov 2026 15:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017440;
-	bh=4r1iWbF6YJV17tw5D1GXRpKHh9duMtOuaBcb8qBZszY=;
+	s=korg; t=1795017443;
+	bh=5sB1jURkuHjGwzLQ6oycB+QfH4N3OE3z43+DQ3un/Nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mPqobHuR+GhpSPiZxBb0g0TXev8XEm2ZkPfy8fd7FzjB/+Q0xkfzuUZPvjAwgK48/
-	 8JXlpd+EN2u9HTwO8XO2e6C0b7y0kMAEYowSHAOhIHRO+9atQqgn3icTksMX6YHF7Q
-	 +rPX35RmpX0cA30CfKvGTlsniAeFSw/bnwTKy9Kg=
+	b=Qe5T0mLpvEShaEkj6nOmisaCn7E7zbblHizU6g2B8rLqJBg9Zl7H8/7Iz9pqpTRVg
+	 b3LLcjsOSYSeNdNS1KQ27+F+OwlpBCM3kAPmpzZg8+7AeyCPW2L6bVeB/Wvg6xbfsI
+	 5e7Eilnl9OE4+aEOszGsRJfODN9YryJHXS7b61ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0868/2651] ASoC: mediatek: mt8183: Fix wrong clock cleanup on clk_set_parent() failure
-Date: Wed, 18 Nov 2026 15:35:08 +0100
-Message-ID: <20261118150319.105399425@linuxfoundation.org>
+Subject: [PATCH 7.3 0886/2651] bpf: Leave out the hidden exit edge of a subprogram without an exit
+Date: Wed, 18 Nov 2026 15:35:26 +0100
+Message-ID: <20261118150319.755037732@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,49 +68,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 7f05596bd4047e4623eeb1f3c6921d6f71481c3b ]
+[ Upstream commit 939bb6270ee32cfef0631b30ff07a9e0b8806e64 ]
 
-In mt8183_afe_enable_clock(), when clk_set_parent() fails, the current
-error path incorrectly cleans up the previously enabled clock instead of
-the clock used by clk_set_parent().
+visit_abnormal_return_insn() gives tail_call and ld_{abs,ind} insns a
+second successor, the exit_idx of their subprogram, so that the hidden
+exit from the subprogram is part of the CFG. check_subprogs() only
+assigns exit_idx when it walks over a BPF_EXIT, and a subprogram whose
+last insn jumps back into itself never has one, so exit_idx stays zero
+and the edge points at insn 0 of the program:
 
-Fix the error path to clean up the correct clock when clk_set_parent()
-fails.
+  0: r0 = 0
+  1: r0 = *(u8 *)skb[0]
+  2: goto -2
 
-Fixes: a94aec035a12 ("ASoC: mediatek: mt8183: add platform driver")
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260903045203.175337-2-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+For a subprogram other than main, update_insn() then reads the liveness
+masks at a negative relative index. Such a subprogram can still load
+when it leaves through a bpf_throw(), so mark exit_idx as unset in that
+case and leave the hidden edge out, as there is no exit for it to reach.
+
+Fixes: e40f5a6bf88a ("bpf: correct stack liveness for tail calls")
+Fixes: ee861486e377 ("bpf: Fix ld_{abs,ind} failure path analysis in subprogs")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20260925175244.1136329-5-daniel@iogearbox.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8183/mt8183-afe-clk.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/bpf_verifier.h |  6 +++++-
+ kernel/bpf/cfg.c             | 10 +++++++---
+ kernel/bpf/verifier.c        |  1 +
+ 3 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
-index cc4f8f4d3dab9..6ab0734ad1365 100644
---- a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
-+++ b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
-@@ -137,7 +137,7 @@ int mt8183_afe_enable_clock(struct mtk_base_afe *afe)
- 		dev_err(afe->dev, "%s(), clk_set_parent %s-%s fail %d\n",
- 			__func__, aud_clks[CLK_MUX_AUDIO],
- 			aud_clks[CLK_CLK26M], ret);
--		goto CLK_MUX_AUDIO_ERR;
-+		goto CLK_MUX_AUDIO_INTBUS_ERR;
- 	}
+diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
+index 18d809f5aa3d1..d7a297527f49b 100644
+--- a/include/linux/bpf_verifier.h
++++ b/include/linux/bpf_verifier.h
+@@ -825,7 +825,11 @@ struct bpf_subprog_info {
+ 	u32 start; /* insn idx of function entry point */
+ 	u32 linfo_idx; /* The idx to the main_prog->aux->linfo */
+ 	u32 postorder_start; /* The idx to the env->cfg.insn_postorder */
+-	u32 exit_idx; /* Index of one of the BPF_EXIT instructions in this subprogram */
++	/*
++	 * Index of one of the BPF_EXIT instructions in this subprogram, or
++	 * U32_MAX when it has none.
++	 */
++	u32 exit_idx;
+ 	u16 stack_depth; /* max. stack depth used by this function */
+ 	u16 stack_extra;
+ 	u32 insns_total;
+diff --git a/kernel/bpf/cfg.c b/kernel/bpf/cfg.c
+index 6404f70252916..a11ff94e77ac8 100644
+--- a/kernel/bpf/cfg.c
++++ b/kernel/bpf/cfg.c
+@@ -445,17 +445,21 @@ static int visit_abnormal_return_insn(struct bpf_verifier_env *env, int t)
+ {
+ 	struct bpf_subprog_info *subprog;
+ 	struct bpf_iarray *jt;
++	u32 n;
  
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_MUX_AUDIOINTBUS]);
-@@ -153,7 +153,7 @@ int mt8183_afe_enable_clock(struct mtk_base_afe *afe)
- 		dev_err(afe->dev, "%s(), clk_set_parent %s-%s fail %d\n",
- 			__func__, aud_clks[CLK_MUX_AUDIOINTBUS],
- 			aud_clks[CLK_TOP_SYSPLL_D2_D4], ret);
--		goto CLK_MUX_AUDIO_INTBUS_ERR;
-+		goto CLK_AFE_ERR;
- 	}
+ 	if (env->insn_aux_data[t].jt)
+ 		return 0;
  
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_AFE]);
+-	jt = bpf_iarray_realloc(NULL, 2);
++	/* A subprogram without an exit has no hidden exit edge to take. */
++	subprog = bpf_find_containing_subprog(env, t);
++	n = subprog->exit_idx == U32_MAX ? 1 : 2;
++	jt = bpf_iarray_realloc(NULL, n);
+ 	if (!jt)
+ 		return -ENOMEM;
+ 
+-	subprog = bpf_find_containing_subprog(env, t);
+ 	jt->items[0] = t + 1;
+-	jt->items[1] = subprog->exit_idx;
++	if (n == 2)
++		jt->items[1] = subprog->exit_idx;
+ 	env->insn_aux_data[t].jt = jt;
+ 	return 0;
+ }
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 0c7562f007a80..6e76a9712d0b2 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -2412,6 +2412,7 @@ static int add_subprog(struct bpf_verifier_env *env, int off)
+ 		return -E2BIG;
+ 	}
+ 	/* determine subprog starts. The end is one before the next starts */
++	env->subprog_info[env->subprog_cnt].exit_idx = U32_MAX;
+ 	env->subprog_info[env->subprog_cnt++].start = off;
+ 	sort(env->subprog_info, env->subprog_cnt,
+ 	     sizeof(env->subprog_info[0]), cmp_subprogs, NULL);
 -- 
 2.53.0
 
