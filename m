@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029274;
-	b=Ixa2UOhTY0cyphNWcwF0A/a4JRUjxEP80nw5JmdIkjGJ3E3Iql2gaScVXZQl8DHnPI6m
-	 GxkE7NZ+pMgDlHEFl642jywUgY0rGMe6v8KX6n+OR8t+rXRGENyaHHX5lB77j+HHfqOZM
-	 uOAESwnvu6nH0t2IChx+6zvmN70oAEt5ot6aHk/v6fUpC/423x4L82Kq2RpfepAu7LnTj
-	 1DYE9M8kMA9/rVP7KItX38sdvAg1Il5aXu07n7JBM7c7cPbC4msvUYDAeAjeloX0LKnqa
-	 iscmdpGrPQSZFEVwrfI4YMq7UJEBks3nX/apyqUIWSdhCdjZIczRxPljAGJn2APuNMw==
+	t=1795029277;
+	b=pHEXiATqPn9w3HXyuj9ZAWetRl256lkL/fy4U7yBoJ8TA1wtuswIdVLmPknBmRVmPP/r
+	 lf/q+7EX+2WxTC3gvIJLXaxEnJzNS2fPsbWQJzW+xTkvSzSsJ53/D+88tZDqwhOGM4K7R
+	 vGqUW819LBiBufjvgeDaBaXB8i68akIyJKxGXKtPLfilC1krZ2uCqqkwei1Cg0VHfz8Zm
+	 cpEq6UwCwgwM9ul5UVIsijMLAldNTZ+vXhWjZkgzvrSblmdy6qNIlMLq0MVRaty7p95H8
+	 TsAWHunPbZ9UI1rAvUNA9d5dbHUVJWs6uUBfl+boheWseO8QieU+VeYhf7JRaKyl3Hw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029274;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029277;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zB0jQZzUrjz7t1Jd4k6PZsQUcd04iozps09JA1L4Qro=;
-	b=cY58XwziEDdYgn5tTYPDn5zPSV280Z/1PFazpJ2HXwrKF8Q62JZtWuBwDwiX+pv5DoYO
-	 6Ur7xeURLJqc5FbMYbtJR45y5BCurMKtMvrX8ZGlwAFt5nSyeMxubssPWAQy4gsqjj9a2
-	 iv8wPQKNIw2cmfc+AEYxEe82eHDgI7n6mCBokFuUkclJjOTGMBtOEtrDIglz1xdOp6ECR
-	 Q9PnSK5hgY6tZ43qpDV1V2aH8yc6+SBYTJzjfaVJFtcaZ/opOOjuNPG1nyR5DL/Ftj2gs
-	 U8BdOM5JW26T5tqVH9sxcEDIpJdOoUlhohf8KsGKyvtLEdPygw4yk1gHDxdSzD/1C9A==
+	bh=NfyTCtieF5/3fNhka9BYKiF7i5MaPsiTEYtY+nKBKcA=;
+	b=luMitWLR5AX30KpBqF9VF472VwCWayO5w5nPJCz6e8TbiMFAXlCZ/3eGtnxFOVgD5wRV
+	 fXNN84GOMiEZbJuTnBeNjIfE7K1G+9PIYVm4ogl6X7f3P1ZPyURZ5PC1qBH3HfL3nhdwi
+	 /AmrnBEccvUYHNEVakLaP0StPE+dDsvaQ8ExVTpcX5NJY42ebCVR3GAWSFby1rZXkQN6/
+	 0qHpF8UDrvESU8qdffigHkP3Hg4R0ZHNCvR3t03f3Sxhmf+G4Ro2UwoVqobywMjjZFQDd
+	 V7FiaNWVctQFDAP9lTgvm5eMJS33ggWMlgyMCHphves7wmODCSwSjmoBx0oRRkMX/1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Za+83V1d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xbLse2mC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF19606A325;
-	Wed, 18 Nov 2026 19:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D55606A325;
+	Wed, 18 Nov 2026 19:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Za+83V1d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA241F000C4;
-	Wed, 18 Nov 2026 19:14:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xbLse2mC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAABA1F000C4;
+	Wed, 18 Nov 2026 19:14:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029274;
-	bh=zB0jQZzUrjz7t1Jd4k6PZsQUcd04iozps09JA1L4Qro=;
+	s=korg; t=1795029277;
+	bh=NfyTCtieF5/3fNhka9BYKiF7i5MaPsiTEYtY+nKBKcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Za+83V1d9G0YwPUOmoUslhkDQTpsOJq9lHqRiGln2Ryy6qo37GRDzzQ65zgPJYfEo
-	 FXj/uheANSxoquS9bCwaAb2yV0zqJc+GQrds+3iAZy96T8BDisOmBaQEyHZA+L1SsI
-	 UDFjoq1HslEi7/Svlaspx/4ghjuQHcgAQ6+I5aY8=
+	b=xbLse2mC/QLH2+mwc4P4HBTQOdHV9n/rNf42Y1jTpHfEiAlKtKY5ehAmvQKjiz+CS
+	 dWsm3CLjtAKi7snLh9gBnii7vsJBeR86XBtStra0igQXgTwexVe4o4oxxQ6OlgHicV
+	 STPlmkasVAduCEVC3UInObdNnDPNNhuuEzYjT1YY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	"hpp.iscas" <hppiscas@163.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0292/1756] power: supply: mp2629: Use the full batt_impedance_compensation name in the ABI document
-Date: Wed, 18 Nov 2026 15:40:19 +0100
-Message-ID: <20261118150020.001978180@linuxfoundation.org>
+Subject: [PATCH 6.12 0293/1756] power: supply: mm8013: Publish the OF module alias
+Date: Wed, 18 Nov 2026 15:40:20 +0100
+Message-ID: <20261118150020.037943329@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,37 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: hpp.iscas <hppiscas@163.com>
 
-[ Upstream commit 1101833121a447999309a01f03d5b35bc1652e09 ]
+[ Upstream commit f265940e54d749c77507da083a3c16a481f5f5c5 ]
 
-drivers/power/supply/mp2629_charger.c creates the attribute with
-DEVICE_ATTR_RW(batt_impedance_compensation). The ABI file documents it
-under the truncated name batt_impedance_compen, which does not exist in
-sysfs.
+The MM8013 driver matches mitsumi,mm8013 Device Tree clients, but
+exports only its legacy I2C ID table. The I2C core emits an OF modalias
+for these clients rather than i2c:mm8013.
 
-Use the full name.
+Publish the existing OF match table without changing gauge operations.
 
-Fixes: fe27f04e0cdc ("power: supply: mp2629: Add impedance compensation config")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260905101849.42830-1-kmehltretter@gmail.com
+Fixes: c75f4bf6800b ("power: supply: Introduce MM8013 fuel gauge driver")
+Signed-off-by: hpp.iscas <hppiscas@163.com>
+Link: https://patch.msgid.link/20260905134500.67832-1-hppiscas@163.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-class-power-mp2629 | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/mm8013.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/ABI/testing/sysfs-class-power-mp2629 b/Documentation/ABI/testing/sysfs-class-power-mp2629
-index 914d67caac0d7..a85f926ce9c26 100644
---- a/Documentation/ABI/testing/sysfs-class-power-mp2629
-+++ b/Documentation/ABI/testing/sysfs-class-power-mp2629
-@@ -1,4 +1,4 @@
--What:		/sys/class/power_supply/mp2629_battery/batt_impedance_compen
-+What:		/sys/class/power_supply/mp2629_battery/batt_impedance_compensation
- Date:		April 2020
- KernelVersion:	5.7
- Description:
+diff --git a/drivers/power/supply/mm8013.c b/drivers/power/supply/mm8013.c
+index 5bcfaeeda3db7..9fead1cebfc74 100644
+--- a/drivers/power/supply/mm8013.c
++++ b/drivers/power/supply/mm8013.c
+@@ -293,6 +293,7 @@ static const struct of_device_id mm8013_match_table[] = {
+ 	{ .compatible = "mitsumi,mm8013" },
+ 	{}
+ };
++MODULE_DEVICE_TABLE(of, mm8013_match_table);
+ 
+ static struct i2c_driver mm8013_i2c_driver = {
+ 	.probe = mm8013_probe,
 -- 
 2.53.0
 
