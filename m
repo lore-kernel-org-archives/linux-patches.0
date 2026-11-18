@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038860;
-	b=vIFRPMukBWLzqks3+y0v8RmjKg2hT1x8xOGAjZm6F0i9KQcbnkYw5scHRIelgfqkO5VG
-	 nAdLN3rDW/YiCrmoWFi/NYKRKH5Mb3n3K88ubHInZUWzY2VZ7HOMuYak/k/LUvhUS4yaq
-	 xwLr+WLz0i23cCBDGFbq7vyn36ALX+xMy9HSvhAgNZk6GTSpNqWNURKdPGRWDC/zzf5/G
-	 suzEolQAz/c6uFlt6t11MTuEfFOcklTwWDjnwjP5yU/w7VNVZR3/Y1PwPLKTi/tHTr+06
-	 YOTqNBBoBrjFiGj9bV2cr0JUp4MZufv4BxLQHQGJbp60C3W+tDza5vK7xOEvTfJecHQ==
+	t=1795038863;
+	b=e4j2Ygq84phs60X4VyNI67sGDmOv0+D7lm59UQgG5aPuwXG2IGgdaKIlJgfW3psFGMdP
+	 dVIJyahm3PJWvaZw2nQd0gRy4Sli4nZ35R6o4qCd/91U4QriDlRXrQHhW/QeJp8Ipy2Ye
+	 eRwiohiHrk6u3Nv8erQcNzqd5eonIOPX475CKjN6hYWRw6i/up3OsB3O0B+KHjT715XKK
+	 v8VzeLt0Cp3ix3K1ltmd51q3OFJhv4Dtybo3TacZWdsh5AeMzWYk6gv79QeScdp8PAqKe
+	 twTma+cLCv85OcSZ+2E0cfkQGrnMINNRd6iDvUOVzmiglUI+2I1bHlsaFT7xLTrlCpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038860;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038863;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f3mH+PNPBD3qo29R8Fn3lj1+sF0kSEerwIjXlYa5EnA=;
-	b=KSRq0erNz/Q8ZqMgtnJisGw8ryTCOXp298R9LwjqMhsZmlwjJPU8yUUSft0HfIH5rF7x
-	 g1pdvz+AShKehYa9GtD7GXjnOiRIhRdrW9krgI2qAIkYWFxGIUZtvXuEMr2KK3OrN7weE
-	 KQxTr8J3x5YpMmpWdDuP1Evkbubd0xyFXSfy1/lf11HEinpxW6sYdLmfE8Cm9svZlhDI/
-	 5KbfREKIgK8rGSa/jz3GgwC97IMvxEqS0vUaKnUersqcNCddfGYt2vfJZXFHXCmo91we4
-	 aCupOmWvzUWrEUvLJ3i3lJlRHxfCpfcxlxCkpcYghbOOLZdvIB6YBrP1SQyjUS0o8jw==
+	bh=LzYUh62Qj6zWqf35aJdd7BJR/odabu1Dp+tlJysI9Zg=;
+	b=jFPp/mDO/Sh7FKv+X3AwSolLh2MAnuIGTwxetQrIJNxnAptYPpVxL6uhPeasBXEveGBr
+	 SEvWTo2bfRTLmPuVbszgeZHZXFTeE6dne6kRL0aGpt1JP2u9C4qQ/wIr2Olbt/r2gJNmy
+	 n0DBGudmJYQB7wn1BnHS7Z0JK5NX7+CZdXDI7xGoqFH/M5nChTXBNlNJboIapMqZuYFMf
+	 6uXKc0zR64KzGMwFN0uoFvBbVMceubx2SsKTGbGNlsDn0skx+Ccb31hrBmxsjIrGXLpdA
+	 LPcai+z4YSXzT3Frfgi35iQ6ZtUcqb39pYSQjqWnl2x0qQpahmcIE1OtbvqOjC/6MBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=teUEDNyb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PvZ+mtL1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1FB606A32A;
-	Wed, 18 Nov 2026 21:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053B6606A31C;
+	Wed, 18 Nov 2026 21:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=teUEDNyb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D10E1F000C4;
-	Wed, 18 Nov 2026 21:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PvZ+mtL1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146961F000C4;
+	Wed, 18 Nov 2026 21:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038859;
-	bh=f3mH+PNPBD3qo29R8Fn3lj1+sF0kSEerwIjXlYa5EnA=;
+	s=korg; t=1795038862;
+	bh=LzYUh62Qj6zWqf35aJdd7BJR/odabu1Dp+tlJysI9Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=teUEDNybPeC+fXLXVL26o6omeuqlFsPzyt/ez0am8knsEQt2is1K+hC6in/GyXIci
-	 k4R+fnguCE2nHp6q92q9xahDKFbTrdmA+k8q+9SEWy1Vnp8Hthwt5C+a9YYXkjLzj/
-	 JyGjG49rCU1OaJEUqQuLcjiLh25Y6M/0N1+Fwsd0=
+	b=PvZ+mtL1l6IGz4MJ0RVFefYZtehy8ea/XUIffY5TsiV/6LmHslbYYZh69vYnkbDP1
+	 +2TWTZhfctLOI2bPefYkpFNwrOAdO9CFSonmK7Z3hRsgJ6j9BwKTBRBFwus4AgYLZ/
+	 iUCx4t4GqzkVQGbHJb2BRH9otgjMUlWlW8x9m7wU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Turner <mattst88@gmail.com>,
-	Magnus Lindholm <linmag7@gmail.com>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1893/3318] alpha: select SYSCTL_EXCEPTION_TRACE
-Date: Wed, 18 Nov 2026 15:41:55 +0100
-Message-ID: <20261118150418.795245110@linuxfoundation.org>
+Subject: [PATCH 6.6 1894/3318] can: dev: can_dropped_invalid_skb: drop CAN XL frames on non-CAN XL devices
+Date: Wed, 18 Nov 2026 15:41:56 +0100
+Message-ID: <20261118150418.829228228@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,95 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Turner <mattst88@gmail.com>
+From: Vincent Mailhol <mailhol@kernel.org>
 
-[ Upstream commit e517a172b77601839e1c52ac4303602e285804bb ]
+[ Upstream commit 0fce44e29fce4b07642491b098afb41bd571e4f2 ]
 
-Report unhandled user faults the way other architectures do, and hook up
-the debug.exception-trace sysctl that controls the reporting.
+Sending a PF_PACKET bypasses the CAN framework logic and can directly
+reach a CAN driver's xmit() function. The PF_PACKET framework only
+checks that skb->len does not exceed the net_device MTU.
 
-The message gives the faulting address, the PC and the user stack
-pointer, and is rate limited.
+For a CAN device that is not CAN XL capable, anything above CANFD_MTU
+(72 bytes) is therefore dropped before it reaches the driver. However,
+CAN XL frames are variable length. can_is_canxl_skb() accepts lengths in
+the range CANXL_HDR_SIZE + CANXL_MIN_DLEN up to CANXL_MTU, i.e. 13 to
+2060 bytes.
 
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20260905-arch-kconfig-options-v2-v2-17-83e8245761a2@gmail.com
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+As a result, an ETH_P_CANXL skb with a length between 13 and 72 bytes
+can pass both the MTU and the can_dropped_invalid_skb() checks.
+
+A driver that does not support CAN XL will interpret canxl_frame->flags
+as a length because of the overlap with can_frame->len. And because
+CANXL_XLF is set, the resulting length is between 128 and 255. For
+drivers that do not check can_frame->len before copying can_frame->data,
+as most drivers do, this results in a buffer overflow of up to 247
+bytes.
+
+Drop ETH_P_CANXL skbs if the device does not have the CAN_CAP_XL
+capability. Keep can_is_canxl_skb() for the validation of CAN XL skbs.
+
+Closes: https://sashiko.dev/#/patchset/20260731-master-v5-0-5b27029dee20@qq.com?part=1
+Fixes: fb08cba12b52 ("can: canxl: update CAN infrastructure for CAN XL frames")
+Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
+Link: https://patch.msgid.link/20260731-drop_canxl_frames-v1-1-7387b70353b3@kernel.org
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+[ sashal: Replaced unavailable can_cap_enabled(dev, CAN_CAP_XL) with can_is_canxl_dev_mtu(dev->mtu). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/Kconfig    |  1 +
- arch/alpha/mm/fault.c | 29 +++++++++++++++++++++++++++++
- 2 files changed, 30 insertions(+)
+ drivers/net/can/dev/skb.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/alpha/Kconfig b/arch/alpha/Kconfig
-index d6968d090d49a..f4b12c6e9ddbb 100644
---- a/arch/alpha/Kconfig
-+++ b/arch/alpha/Kconfig
-@@ -37,6 +37,7 @@ config ALPHA
- 	select CPU_NO_EFFICIENT_FFS if !ALPHA_EV67
- 	select MMU_GATHER_NO_RANGE
- 	select SPARSEMEM_EXTREME if SPARSEMEM
-+	select SYSCTL_EXCEPTION_TRACE
- 	select ZONE_DMA
- 	help
- 	  The Alpha is a 64-bit general-purpose processor designed and
-diff --git a/arch/alpha/mm/fault.c b/arch/alpha/mm/fault.c
-index 53e170e965915..63a24afa7a155 100644
---- a/arch/alpha/mm/fault.c
-+++ b/arch/alpha/mm/fault.c
-@@ -28,8 +28,32 @@
- #include <linux/uaccess.h>
- #include <linux/perf_event.h>
+diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
+index 6fb1f9b2a9e20..4f5eec05db220 100644
+--- a/drivers/net/can/dev/skb.c
++++ b/drivers/net/can/dev/skb.c
+@@ -354,7 +354,8 @@ bool can_dropped_invalid_skb(struct net_device *dev, struct sk_buff *skb)
+ 		break;
  
-+#include <asm/pal.h>
-+
- extern void die_if_kernel(char *,struct pt_regs *,long, unsigned long *);
- 
-+int show_unhandled_signals = 1;
-+
-+static void
-+show_signal_msg(struct pt_regs *regs, unsigned long address, int signo,
-+		const char *desc)
-+{
-+	const char *level;
-+
-+	if (!show_unhandled_signals || !unhandled_signal(current, signo))
-+		return;
-+	if (!printk_ratelimit())
-+		return;
-+
-+	/* Losing init is fatal, so shout about it.  */
-+	level = task_pid_nr(current) > 1 ? KERN_INFO : KERN_EMERG;
-+
-+	printk("%s%s[%d]: %s at %016lx pc %016lx sp %016lx\n",
-+	       level, current->comm, task_pid_nr(current), desc,
-+	       address, regs->pc, rdusp());
-+	print_vma_addr(KERN_CONT "  in ", regs->pc);
-+	printk(KERN_CONT "\n");
-+}
- 
- /*
-  * Force a new ASN for a task.
-@@ -223,6 +247,8 @@ do_page_fault(unsigned long address, unsigned long mmcsr,
- 	mmap_read_unlock(mm);
- 	/* Send a sigbus, regardless of whether we were in kernel
- 	   or user mode.  */
-+	if (user_mode(regs))
-+		show_signal_msg(regs, address, SIGBUS, "bus error");
- 	force_sig_fault(SIGBUS, BUS_ADRERR, (void __user *) address);
- 	if (!user_mode(regs))
- 		goto no_context;
-@@ -244,6 +270,9 @@ do_page_fault(unsigned long address, unsigned long mmcsr,
- 	return;
- 
-  do_sigsegv:
-+	show_signal_msg(regs, address, SIGSEGV,
-+			si_code == SEGV_MAPERR ? "unmapped access"
-+					       : "access violation");
- 	force_sig_fault(SIGSEGV, si_code, (void __user *) address);
- 	return;
+ 	case ETH_P_CANXL:
+-		if (!can_is_canxl_skb(skb))
++		if (!can_is_canxl_dev_mtu(dev->mtu) ||
++		    !can_is_canxl_skb(skb))
+ 			goto inval_skb;
+ 		break;
  
 -- 
 2.53.0
