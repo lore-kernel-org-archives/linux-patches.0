@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041705;
-	b=Zdn1OoAx98ma5Rjm/uZHX9ANyn+8o2Jvpx1jMZY05HhWBY04q5gC0Ic+aI7mruJ9eRuc
-	 ySIKyes4lhpWiQ6OqTqvdNwSAJZEZHoOCDspB5xOw5SJrpFEstha0+f/GGuYyfcMR4nCv
-	 NLDtBkDSaXNGN2REfFm5NdKVFF68kxpZt0Tl3c2QZmdvakvu++E3vDHQunZLCM8KzRUYt
-	 NY/BYnSJodg23EfdhLIpaKKZDRq0WTIEGwua00NCxUqZzb4eiYTPbH41mrZgk22BW4mWp
-	 PKynt4HyVAc4wBL497O1s1ImfYxZfkaL7KubxuP2JYZxJefRXIQ7ZKYUEZ4shQ/ieBA==
+	t=1795041708;
+	b=ewhXJkpCUB3MW3wqiQjrhjJatOUurj6f/0EkdJnQSEhDDs8jAnDYYCDLaPSBa0aoP4A+
+	 gZaLd/7kjXB8F3Fvm2QwuGjI5R+A1Etj0W+yW7uF1a/5tRWETb8i1zPJekyVgRuD2Aomd
+	 7nc8RiOnTaZFMtCv7ecZQKMx37u1bi+d0lSLClj4iUBntI5uP9Z293sOTtZEOyl7u7UcH
+	 9oUZWo6Gd7j9HAMHJxtn8q03S/mMW46yOTRrYrtO/42d7s+bYoEyYGRBklSK5jyetRlIE
+	 rmrPcl4JYnOlQgv3JY6hLwxEwlvG+6Fs78WC2j8sHnwUptDYHfx2ZmLhTOC7mDFSZqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041705;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041708;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4bDblgYaCmxSFfNM1gg45kIetTnnSZc9RaI6u3GSml8=;
-	b=JxaTGSbDUwTjOyqKRAkZ2FZty023HrggZksPzXazKe4uAFcf4uBCU1DnGj+jzd9M1LmR
-	 oOzDrS6MnNuDGwtyX15+dvXA3fS2cWeDl5GRyC3wuYQCuSB0kXpgySbsRS3btEVOcl2jp
-	 jyY/VmeEQtw4lT5OKaGy19vbyQVnYC/00TQoouq8EL8idTXVkRadmJmHaYaWKHZ3aFj7q
-	 yn2/gBlGw/1QSskD+Nk3uQaGx0RutP6ADSE79plx4PiRHCPc0it4Dh8d5eVVvqjHZQAOO
-	 q6OZBZk59xJutq5PVqV0uM/cgGsMMLZK5hVzZlUqLTnHw/+WKIo4r06y4RmFjyUzOyg==
+	bh=cTPXwaB5t4+EG4jO/BSIP8PqZf0asnqFJn0PhXAHILU=;
+	b=GuIgzV56JHDSpin6ebkQxwNlHpQaAu6keRr/x7HKv7SetjIaQg+vmrNzrzCVnMS7h3i0
+	 Cuwb5GtfI22lFN5FHQQXj8iDt91c+s2yIXWVCPdWrj2spxr6kYxDjqn1o1g5xTulA9fAw
+	 OlWp9SPtSD7K42dobDv/2Zi06KBSf6Spw1+hs0Iw4mPo5BWMALx20p5qOmPFo2X6wxZfV
+	 M+flEVwkKfDzjqFf06keKqu0zdN6RkY9ZVc0GyrnLgMnxpK/chVo/OnRX9J02bL1W6NJu
+	 unFgEb4RyDHWi63Q8/V7QFY3Y7EVgfcmL6k7B3rGvH8mbMfyrMtkBciaTNsLH4z3zww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M5W8H0Gh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QQRqKTI2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B75606A31C;
-	Wed, 18 Nov 2026 22:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E157F606A331;
+	Wed, 18 Nov 2026 22:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M5W8H0Gh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 916041F000C4;
-	Wed, 18 Nov 2026 22:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QQRqKTI2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7811F000C4;
+	Wed, 18 Nov 2026 22:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041705;
-	bh=4bDblgYaCmxSFfNM1gg45kIetTnnSZc9RaI6u3GSml8=;
+	s=korg; t=1795041707;
+	bh=cTPXwaB5t4+EG4jO/BSIP8PqZf0asnqFJn0PhXAHILU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M5W8H0GhraJrYqSD77BeFUQ3ezfloA3MvfgxMGBI+UUvOANK39Be/SZYxh6y6LA9G
-	 559cAn+ju+3m+Lxy64yqOvtyO3hC1v7luyBGAuzejrP0fHefc4HNcAUfmTqSnKL/0Z
-	 /LOo0+lUub6MmCcsUsRJCMcYA4V2lwaasgEJA8zY=
+	b=QQRqKTI2gKth4OXEawheuuDGtnATT2Jlx2Ef4/pMNgNCIGS1Lkmq6Bjs9aJmdz3g7
+	 VDYViN+uloTaVlHghoB7DbgSrs/VOt9pZ6de+KP/eQCADAkzdPiaf+g+0A7lbu6F7H
+	 BXmAzKqswLY3R5UyyG0AzVIlEG066Uq7fygyaL7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Kiran K <kiran.k@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Zhu Ling <zhuling2709@phytium.com.cn>,
+	Thomas Gleixner <tglx@kernel.org>,
+	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
+	Radu Rendec <radu@rendec.net>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2892/3318] Bluetooth: btintel: propagate version TLV parsing errors
-Date: Wed, 18 Nov 2026 15:58:34 +0100
-Message-ID: <20261118150447.264560753@linuxfoundation.org>
+Subject: [PATCH 6.6 2910/3318] irqchip/gic: Fix UBSAN shift-out-of-bounds in GIC helpers
+Date: Wed, 18 Nov 2026 15:58:52 +0100
+Message-ID: <20261118150447.756640377@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,54 +71,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Zhu Ling <zhuling2709@phytium.com.cn>
 
-[ Upstream commit 3a74624b5deae7f5e2b98e638687fbf9594a9781 ]
+[ Upstream commit 13ce14ca41a35f5ee90b77ffa57da91ce6048a2d ]
 
-btintel_read_version_tlv() ignores the parser return value, so setup
-continues with partially initialized version data after a malformed TLV
-causes parsing to stop.
+When running with UBSAN enabled, enabling a GPIO controller that uses a
+GIC interrupt as its parent triggers several shift-out-of-bounds warnings:
 
-Return the parser error to the caller so an invalid response fails setup
-instead of being treated as successful. Keep this behavioral change
-separate from the bounds checks so it can be reverted independently if
-an existing controller sends malformed data.
+  shift-out-of-bounds in drivers/irqchip/irq-gic-common.c:50:21
+  left shift of 2 by 30 places cannot be represented in type 'int'
 
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Reviewed-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Tested-by: Kiran K <kiran.k@intel.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: cf87709d7ff8 ("Bluetooth: btintel: Zero version data before parsing TLVs")
+Similar reports are emitted from gic_poke_irq() and gic_peek_irq() in
+drivers/irqchip/irq-gic-v3.c. The corresponding GICv2 helpers use the
+same signed-shift pattern. These masks are generated by shifting signed
+integer constants, which invokes undefined behavior when bit 31 is
+selected.
+
+Use BIT() to generate the masks with an unsigned type and make their
+intent explicit.
+
+Fixes: f27ecacc54cc ("[ARM] Add support for ARM GIC")
+Fixes: 5c0c1f08abf0 ("ARM: 6150/1: gic: implement set_type")
+Fixes: 021f653791ad ("irqchip: gic-v3: Initial support for GICv3")
+Signed-off-by: Zhu Ling <zhuling2709@phytium.com.cn>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+Reviewed-by: Radu Rendec <radu@rendec.net>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/2fJDwUUYdEf2_eaRa041L9xkT8RkSWFeo7euOnqMbbPhUatLlEaAvGfB6sOspDmXaxO87Eh7bQLV9UolyjbMtZBT1wB2UGypjPOo0Z-RC0Q=@proton.me
+Link: https://patch.msgid.link/20260929031050.16988-1-zhuling2709@phytium.com.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-gic-common.c | 2 +-
+ drivers/irqchip/irq-gic-v3.c     | 4 ++--
+ drivers/irqchip/irq-gic.c        | 4 ++--
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index 8541bfaddd06a..0438bb3f1132c 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -693,6 +693,7 @@ static int btintel_read_version_tlv(struct hci_dev *hdev,
+diff --git a/drivers/irqchip/irq-gic-common.c b/drivers/irqchip/irq-gic-common.c
+index afd6a1841715a..2efbb880bbc46 100644
+--- a/drivers/irqchip/irq-gic-common.c
++++ b/drivers/irqchip/irq-gic-common.c
+@@ -47,7 +47,7 @@ void gic_enable_quirks(u32 iidr, const struct gic_quirk *quirks,
+ int gic_configure_irq(unsigned int irq, unsigned int type,
+ 		       void __iomem *base, void (*sync_access)(void))
  {
- 	struct sk_buff *skb;
- 	const u8 param[1] = { 0xFF };
-+	int err;
+-	u32 confmask = 0x2 << ((irq % 16) * 2);
++	u32 confmask = BIT(((irq % 16) * 2) + 1);
+ 	u32 confoff = (irq / 16) * 4;
+ 	u32 val, oldval;
+ 	int ret = 0;
+diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
+index 90e72f95609cc..c1bd054daab9f 100644
+--- a/drivers/irqchip/irq-gic-v3.c
++++ b/drivers/irqchip/irq-gic-v3.c
+@@ -372,7 +372,7 @@ static int gic_peek_irq(struct irq_data *d, u32 offset)
+ 	u32 index, mask;
  
- 	if (!version)
- 		return -EINVAL;
-@@ -711,10 +712,10 @@ static int btintel_read_version_tlv(struct hci_dev *hdev,
- 		return -EIO;
- 	}
+ 	offset = convert_offset_index(d, offset, &index);
+-	mask = 1 << (index % 32);
++	mask = BIT(index % 32);
  
--	btintel_parse_version_tlv(hdev, version, skb);
-+	err = btintel_parse_version_tlv(hdev, version, skb);
+ 	if (gic_irq_in_rdist(d))
+ 		base = gic_data_rdist_sgi_base();
+@@ -388,7 +388,7 @@ static void gic_poke_irq(struct irq_data *d, u32 offset)
+ 	u32 index, mask;
  
- 	kfree_skb(skb);
--	return 0;
-+	return err;
+ 	offset = convert_offset_index(d, offset, &index);
+-	mask = 1 << (index % 32);
++	mask = BIT(index % 32);
+ 
+ 	if (gic_irq_in_rdist(d))
+ 		base = gic_data_rdist_sgi_base();
+diff --git a/drivers/irqchip/irq-gic.c b/drivers/irqchip/irq-gic.c
+index 95cc1416407e5..6fbc64a065b87 100644
+--- a/drivers/irqchip/irq-gic.c
++++ b/drivers/irqchip/irq-gic.c
+@@ -178,14 +178,14 @@ static inline bool cascading_gic_irq(struct irq_data *d)
+  */
+ static void gic_poke_irq(struct irq_data *d, u32 offset)
+ {
+-	u32 mask = 1 << (irqd_to_hwirq(d) % 32);
++	u32 mask = BIT(irqd_to_hwirq(d) % 32);
+ 
+ 	writel_relaxed(mask, gic_dist_base(d) + offset + (irqd_to_hwirq(d) / 32) * 4);
  }
  
- /* ------- REGMAP IBT SUPPORT ------- */
+ static int gic_peek_irq(struct irq_data *d, u32 offset)
+ {
+-	u32 mask = 1 << (irqd_to_hwirq(d) % 32);
++	u32 mask = BIT(irqd_to_hwirq(d) % 32);
+ 
+ 	return !!(readl_relaxed(gic_dist_base(d) + offset + (irqd_to_hwirq(d) / 32) * 4) & mask);
+ }
 -- 
 2.53.0
 
