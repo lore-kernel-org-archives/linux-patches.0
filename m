@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045153;
-	b=rqRLuL2XJpDo4LgCBmh62OnCJae7dY5igpzBBO4MZ9SvlOxqeLSSgUtuvkcV8Kzx5b2X
-	 nvttWUD56teXA6/dUgvLpXYueP6A3Cnoqz9v3LW1jLnwuwzXm3Ny5qmp/sWhqfvxYd635
-	 1sC/cT8JlcOtYH/MLkYhvXky04wTykD11JaTeD4bRa7pIZ5t1rCRVfCqzbGMBj3EKmyfR
-	 iouOYweWpGubvMcVen6OU4yhGtH2TeZ7ghTKHvdVRLGxPl++M/E0W8aqzOe4XZxDBHQ4k
-	 iFHIt/wQefXGKTKMHPVhQ7vsJnK0QM96angFXGQOi34kzTm/lZN5uvFCjx1r/gHgYsg==
+	t=1795045156;
+	b=3m7yQeZowCv6JYSD33+ctklcgLCdyvcrs9a2v+LLPuX58BBtxXQ/FbSlFrxtm+TPCNzz
+	 pOp56InOSpz0AM6DEhAJpTP1TokgCCmiJigmq/M6hzf3H7D8sX5SiGzSQfYg51AzgHmJJ
+	 spFNyADFDHdLqS4SHketecrG72Ng1B70lYheOK0rFFAmUPMtJygmTm3dTu3Lhvy/lzS2L
+	 r/L5iDzWfPj07JqjBUCXN9KRW1OZaPQM9r7Q9k9RgGP6aqRwTDokV6zgbpgi/g4O8UqCb
+	 coJuKUMpgPsyqMUCwyJfCTSKPRLi8Xd8uSYeCtgPBxq+Ga0hyilsEYRPsi3lLtcKbkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045153;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045156;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D1KPO1EaShRSCJwvBSlPhMbeUxrcVBcYP87tb1ENInA=;
-	b=y236pIQgwkciAMRaV/ybVjrD0n6O9E0uiQgA4E6Y9kWC5oXbbt13aUU1QKMiPUNMdM4/
-	 +6DrM9ANeYIJqVfWRn9sQLWCrn+sqH9mabHyAvVIrpKmZ1yY+LGjkBdtLFtAXXGicGH1R
-	 A8RikxxlabgrGMaMUVPloDBu0mOzAqmZLaCfDM7neu+0HbmP4qre5syd1BSwsWWn2RwFC
-	 EmeUvKyJyaJXn7K6GPnFzE4CChjRjaxZBALqeZClnmEDtErjgwrCqriHysVOrPgTBKXEU
-	 ehdKt4pm5qJG5oBSixTT0/WqyHw1jNRNDVOrtI6pHUNpssUt+2T/kZBeaNe9Rj4+PQQ==
+	bh=XJjnhXp7n8fQzNkIQZorh4uPAdqH/FNqzCU1I+EQi+8=;
+	b=iFc6nqdFVSGZG3VUhXd7Sv0dnSDh246znA9sa8nCFZu4QBkYdpTJtUCSJVnSlUHdlFbV
+	 li4/Ggj0pg/MwhMwFec/w0TLe9kKZR9DCRVgH8XWVvx71wqfk81wpyVyHsmj/c/KxOKjK
+	 EwNfnELC8t0TSEBHPXr6a3kYXfz8j29/SzEExIOk3oPKwyGQffi8mcAg1upGmwyStFz6d
+	 Xxpnt+6oNFjgLjwticUVpvFoMmOTrYWBwoEKsriD9Qfj3AvUMmNVAdGaur1XrdyZmF08N
+	 NI0mKp+0mqCiN9P61FDQ9KySRVEnbzb3/D0r7Blr1r3sYy01wyfbe3QNyFaxTIy9fhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rPxVHKfM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xUkA2q6X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4476606A32A;
-	Wed, 18 Nov 2026 23:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A98F606A31C;
+	Wed, 18 Nov 2026 23:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rPxVHKfM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464561F000C4;
-	Wed, 18 Nov 2026 23:39:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xUkA2q6X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A701F000C4;
+	Wed, 18 Nov 2026 23:39:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045152;
-	bh=D1KPO1EaShRSCJwvBSlPhMbeUxrcVBcYP87tb1ENInA=;
+	s=korg; t=1795045156;
+	bh=XJjnhXp7n8fQzNkIQZorh4uPAdqH/FNqzCU1I+EQi+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rPxVHKfMqw6ge+2860jxScsPtQBeXjPeBhJr1rSsMw19OaIanVBLNN3fHoknU+6cm
-	 zF1K64EfiT8A/2IO4HR0rP5AAvxeB0/10zOVjQD/CfdwS7vbcOMJX6WYW3+1MArIlt
-	 IRrmrMR7SfSf9YjreJ9Wtd+5n/3KI/V96bqN7u7E=
+	b=xUkA2q6XqOZADJGqQjFb/GeskpBtkEypccoVo7pZLqxhlJ5NVvSyQhEaza35XFLYD
+	 RBVVeo6WwsgWoPxGSoP3LOa2gP/WbT3pdACFUS5eD2T+UT4/xw4jc/9Wzi6bpUnmwM
+	 HJ7bgoO5LjEZdxXER25yzS8FlVCqloyZqSL68N1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wentao Liang <vulab@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0821/2857] mtd: rawnand: atmel: Fix MCK clock leak in atmel_nand_controller_init()
-Date: Wed, 18 Nov 2026 15:30:55 +0100
-Message-ID: <20261118150231.135358938@linuxfoundation.org>
+Subject: [PATCH 6.1 0786/2857] ASoC: codecs: wm8994: Fix runtime PM leak in wm8994_mic_detect()
+Date: Wed, 18 Nov 2026 15:30:20 +0100
+Message-ID: <20261118150229.868342495@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,57 +71,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 94edcda45d888c3bb1310de11e10e4537c166f00 ]
+[ Upstream commit b2c0e5bf750e33b0e1dcdfbb2df8103a06c7caab ]
 
-atmel_nand_controller_init() takes a reference to the MCK clock with
-of_clk_get() and keeps it in nc->mck for the lifetime of the
-controller.  If the "atmel,smc" phandle is missing or the SMC regmap
-cannot be obtained afterwards, the error path jumps to out_release_dma
-which only releases the DMA channel, so the clock reference is leaked.
-The callers return the error directly and never run
-atmel_nand_controller_cleanup(), where the clock is normally put.
+wm8994_mic_detect() resumes the component before configuring the MICBIAS
+pins, but the default case of the micbias switch returns -EINVAL right
+after taking that reference, skipping the pm_runtime_put() on the
+success path. This leaks a runtime PM reference on every call with an
+invalid micbias.
 
-Release the reference on those error paths.  The path on which
-of_clk_get() itself fails keeps jumping to out_release_dma, as nc->mck
-only holds an error pointer there.
+Release the reference before returning -EINVAL.
 
-Fixes: f9ce2eddf176 ("mtd: nand: atmel: Add ->setup_data_interface() hooks")
+Fixes: f5a2cda4f1db ("ASoC: wm8994: Ensure the device is resumed in wm89xx_mic_detect functions")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260917165130.2163278-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/atmel/nand-controller.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/codecs/wm8994.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mtd/nand/raw/atmel/nand-controller.c b/drivers/mtd/nand/raw/atmel/nand-controller.c
-index 56fd897721ad5..bac452bfb6e94 100644
---- a/drivers/mtd/nand/raw/atmel/nand-controller.c
-+++ b/drivers/mtd/nand/raw/atmel/nand-controller.c
-@@ -2079,7 +2079,7 @@ static int atmel_nand_controller_init(struct atmel_nand_controller *nc,
- 	if (!np) {
- 		dev_err(dev, "Missing or invalid atmel,smc property\n");
- 		ret = -EINVAL;
--		goto out_release_dma;
-+		goto out_put_mck;
+diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
+index 09e6a2ad506f2..bb8e311f33d2f 100644
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -3533,6 +3533,7 @@ int wm8994_mic_detect(struct snd_soc_component *component, struct snd_soc_jack *
+ 		break;
+ 	default:
+ 		dev_warn(component->dev, "Invalid MICBIAS %d\n", micbias);
++		pm_runtime_put(component->dev);
+ 		return -EINVAL;
  	}
  
- 	nc->smc = syscon_node_to_regmap(np);
-@@ -2087,11 +2087,13 @@ static int atmel_nand_controller_init(struct atmel_nand_controller *nc,
- 	if (IS_ERR(nc->smc)) {
- 		ret = PTR_ERR(nc->smc);
- 		dev_err(dev, "Could not get SMC regmap (err = %d)\n", ret);
--		goto out_release_dma;
-+		goto out_put_mck;
- 	}
- 
- 	return 0;
- 
-+out_put_mck:
-+	clk_put(nc->mck);
- out_release_dma:
- 	if (nc->dmac)
- 		dma_release_channel(nc->dmac);
 -- 
 2.53.0
 
