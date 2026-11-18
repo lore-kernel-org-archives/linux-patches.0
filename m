@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025638;
-	b=Lit1E1yuOUJQHA/V8crjRNe/5/FWHkmRMWZAEWSXlJFULR/f8Y6G/q/hXufpAUjv0Ntm
-	 KqUo+HhGUltLcXzYGSFIOTdwoObGviOdTFzDTW1+2zju4ypAlV0pKGB0F8pcsw5nfDBXr
-	 9y7I9fEF/62MF63N1g4UF8cbdDx+v/cOP+AjTzIOXu4LyJjyh7Z5ubIm0WGg0Y5qTaYal
-	 oBCUcoNmd/hNDb8nzyfi87NZBOUjKJrinTyzJiko9N0E6fo3usL3DpWq9M0MXOGJDh6Q7
-	 6TqbXD6VmRFROEApz73s0zUYEgsE8KA9tA5z5qmsWTnOfEV05seJjekqUudcKxxOmTA==
+	t=1795025641;
+	b=ctts+lU99WUZ99v5pnXyG2rIsXrRxaZDNCL4keNDaYUYfBkEILBJvyRTEeZbyobOzL0O
+	 IACJ8IowBP6wtv52tLhA11ZyJtbEJO3ZickbijfdNxxxilJ7IT9OArujFklmuPA2qrt0D
+	 fJvFINwB1Gul+j8vnG9GBU4zFMyWMWzqA2D2mkHI2HyJAYDzFGYQs5xBlkIpecVpZGqts
+	 /0up6WuPS8a9J28NiUX4btWFu+upfvL6LYVvVIo/xjYt7zlS1aUM5SSSrpbYt5pkAX3ck
+	 Zbpg7oN4OqZjgwuDU06wFKUIlWUR15cGLsKpV4R0JzuUYvyHuHCkDXAKhWXEWC/JcSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025638;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025641;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M5mdi/4WVuSOwWfWQzZ2xJuGzFJmDtb1ISE4ArTIDMs=;
-	b=WYCEx99xR/XmnZFZMznPSL6FQdps6ZNS+2isTW7ybBmewR9RzECfk//8ixSdHjxm4j4S
-	 tMU4yUvalHilVEbo/D4bd47DeClLz0CSXHrX5HfycxdvRqfsJLWGELi/sIcqVQurl0gAD
-	 A1Y2eyyjHJHFKc1/OXnbCCqEjKoVxkXYVIArJ2aZDun7coNBgMOFTz5bHoCCuQaGJ5W5L
-	 IljHCIwpFndA6pmuA0CsYQVeGbhpQwry5r/EtWeZlIlPZRkyWdvu0X43dKHNroB7FGNhM
-	 XLd3QONEazKcTM6jw85pSZiliaJ15St6++rpGnFGx436KibJIpznKWGSTuBC5YBL0Kw==
+	bh=jMeg4IWrNiFTIOzHgMZuuWsR6C2ZloI5MzRP2T2vrYU=;
+	b=dRDSX33UZES1nh3nHWBdcl6iWpiuSZjxswIBdLuRA4/Nw8wzCIlriDoU3Z0camYEmm4u
+	 P+jKOZUwk2weWNoN8hqztgUgKtGwM0AMmXpsaKaZSFhBrsUWs11i5u0pIQOU150dHqwE9
+	 wOHB93nTA9oZ59PIpTNshENNTg6b7cmipAcU068O4HWp9DWufFt5HUUfnb49JE92Gquly
+	 yzDHbMWS/titqwco0FOtMQDVDxHHt1bq7X6pbe019B1HRkORAC8kNFAjawJKCxQZT6O7P
+	 ftHE2GAXHFrFoeKG4FuzT34wPLJL3ZA3cw/2BVZ4tK828VC3o8inqjk8JPqeYD5XObg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XS7jl3Fw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nFXhPx9z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D15606A31C;
-	Wed, 18 Nov 2026 18:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50412606A325;
+	Wed, 18 Nov 2026 18:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XS7jl3Fw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6201F000C4;
-	Wed, 18 Nov 2026 18:13:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nFXhPx9z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C1B1F000C4;
+	Wed, 18 Nov 2026 18:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025638;
-	bh=M5mdi/4WVuSOwWfWQzZ2xJuGzFJmDtb1ISE4ArTIDMs=;
+	s=korg; t=1795025641;
+	bh=jMeg4IWrNiFTIOzHgMZuuWsR6C2ZloI5MzRP2T2vrYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XS7jl3FwpiFaQkTgUXPC8ih2DKwfR/8nrYhkjU8TdHSqNMAu17CsdFwXqnOC3xMfJ
-	 lWNPowyJVWaaiTvU2vJUjl4clztSWhl/5T/iUwvY74lb25B88gI7zUwz3gvNps0K6r
-	 ytWVxrRH5mzZsUzOJc2jIhO8yjWZhDZ8GDTyvLh0=
+	b=nFXhPx9zM9zMm8KtpbztIw7kl+bExHjtRSgrZT6dN4mRzxM7bYG6gkjgtnLFtG13/
+	 yLH3SotUMWnqVMos7xQ7nM5PUzvR1kHti9fgx/HVTub2Jdr1aBhKIsVGPQwkZwt+Sn
+	 btC+qXWCbx7q5on8Bv8VXJ2bCtHF+lC7FG877zzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Zahka <daniel.zahka@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1148/2151] selftests: drv-net: psp: test that rx-assoc fails on closed and listen socks
-Date: Wed, 18 Nov 2026 15:48:03 +0100
-Message-ID: <20261118150204.001835687@linuxfoundation.org>
+Subject: [PATCH 6.18 1149/2151] riscv: fix RVG_SYSTEM_CSR_MASK width mask
+Date: Wed, 18 Nov 2026 15:48:04 +0100
+Message-ID: <20261118150204.037196287@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,62 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Zahka <daniel.zahka@gmail.com>
+From: Aurelien Jarno <aurelien@aurel32.net>
 
-[ Upstream commit ab1f1ed8e0bbd7721240fce0150194b232121f19 ]
+[ Upstream commit f89e5ee4d8c6cd56499cd87e550d4d4e19cf7e17 ]
 
-Cover two of the basic psp assoc states that have been defeatured. Do
-not include tests with shutdown(), connect(..., AF_UNSPEC), etc. I don't
-think the coverage is worth the complexity. That should be done with
-packetdrill.
+RVG_SYSTEM_CSR_MASK should be 12 bits [31:20], shifted down by 20 bits.
+Replace GENMASK(12, 0) by GENMASK(11, 0).
 
-Signed-off-by: Daniel Zahka <daniel.zahka@gmail.com>
-Fixes: 6b46ca260e22 ("net: psp: add socket security association code")
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260930-psp-defeat-v2-4-f266e7447129@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: cd054837243b ("riscv: Allocate user's vector context in the first-use trap")
+Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+Reviewed-by: Jisheng Zhang <jszhang@kernel.org>
+Link: https://patch.msgid.link/20260911194233.3379532-1-aurelien@aurel32.net
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/drivers/net/psp.py | 26 ++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ arch/riscv/include/asm/insn.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/drivers/net/psp.py b/tools/testing/selftests/drivers/net/psp.py
-index 793fc772d72b7..f2c4578408755 100755
---- a/tools/testing/selftests/drivers/net/psp.py
-+++ b/tools/testing/selftests/drivers/net/psp.py
-@@ -299,6 +299,32 @@ def assoc_sk_only_unconn(cfg):
-         ksft_eq(the_exception.nl_msg.error, -errno.EINVAL)
+diff --git a/arch/riscv/include/asm/insn.h b/arch/riscv/include/asm/insn.h
+index c3005573e8c99..ad348d8b88574 100644
+--- a/arch/riscv/include/asm/insn.h
++++ b/arch/riscv/include/asm/insn.h
+@@ -142,7 +142,7 @@
+ #define RVG_OPCODE_JAL		0x6f
+ #define RVG_OPCODE_SYSTEM	0x73
+ #define RVG_SYSTEM_CSR_OFF	20
+-#define RVG_SYSTEM_CSR_MASK	GENMASK(12, 0)
++#define RVG_SYSTEM_CSR_MASK	GENMASK(11, 0)
  
- 
-+def assoc_rx_unconnected(cfg):
-+    """ Test that an Rx assoc is rejected on an unconnected socket """
-+    _init_psp_dev(cfg)
-+
-+    with socket.socket(socket.AF_INET6, socket.SOCK_STREAM) as s:
-+        with ksft_raises(NlError) as cm:
-+            cfg.pspnl.rx_assoc({"version": 0,
-+                                "dev-id": cfg.psp_dev_id,
-+                                "sock-fd": s.fileno()})
-+        ksft_eq(cm.exception.nl_msg.error, -errno.ENOTCONN)
-+        ksft_eq(cm.exception.nl_msg.extack['bad-attr'], ".sock-fd")
-+
-+
-+def assoc_rx_listener(cfg):
-+    """ Test that an Rx assoc is rejected on a listening socket """
-+    _init_psp_dev(cfg)
-+
-+    with socket.create_server(("localhost", 0)) as s:
-+        with ksft_raises(NlError) as cm:
-+            cfg.pspnl.rx_assoc({"version": 0,
-+                                "dev-id": cfg.psp_dev_id,
-+                                "sock-fd": s.fileno()})
-+        ksft_eq(cm.exception.nl_msg.error, -errno.ENOTCONN)
-+        ksft_eq(cm.exception.nl_msg.extack['bad-attr'], ".sock-fd")
-+
-+
- def assoc_version_mismatch(cfg):
-     """ Test creating associations where Rx and Tx PSP versions do not match """
-     _init_psp_dev(cfg)
+ /* parts of opcode for RVF, RVD and RVQ */
+ #define RVFDQ_FL_FS_WIDTH_OFF	12
 -- 
 2.53.0
 
