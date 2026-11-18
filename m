@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025983;
-	b=IsJi+SfZspS3WThqSY4D12VI3rt1EUgpQ4xCC59T0UC5EbnM//S74gJgIHjYYjE0lhNO
-	 dELxbeAKH0jGpBUvWi64b6rO1y+3Umy3RVcAM7Crf6dcC98xkoBb6vWGlSHnFRgV1Teb7
-	 ZANWRF0qkAJ+U+fM/RI8fN3IPFCcp3D/hkyUn0khUkbVF282qHxCjXZ6ygOEnQ9pVOik9
-	 9BwgDt1K2AFfd9Gycvs21GGecz6uSIALwRE4bWsB0qfWLUs5QqKbpRrwhaH3Pz9ax12i+
-	 DXQfmrhDa0RqQNFfI/cs6vJqvPMC4xO9yrxPwgceO4rhtK0A0FE/KhOHmDef1mKECfQ==
+	t=1795025985;
+	b=37ZVC5ql3I/jnkQHlHB0tKpBr4UAmwVGJxIpATNIH7+HNH+1tz2uMCmsj0h+rAW/8OUJ
+	 rIp6Ew5XrLEGjuEJpIhW+qzYoUxGe1ywb6UJH/3E0UnpF680IonTOdf9rS1lkzTs0GAp/
+	 xI7p7Tgn8nUrj3NaO3HBixVybljSHJgg3dA2yI41Hea/1F+0h37L0zgSvzR20+7XbZN1L
+	 JElRqFDr1OmPcne5h9V46atGy/941B65RDh62FVQ/XpNdYPxxOqc5psSvVtM31pm2c0+5
+	 P3A6FKGMB8coGCFD+VI8fd+iszm6ROMF0Li3bl097bItIP/Gd0LT9ypoxCOhDNQNvzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025983;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025985;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=QOgdojPC3GkaQBKamfIr0o4AbJ7BY0khv2FK1LANG+g=;
-	b=NaRMzeSSXJP39BEkgaJVkYNOBiWL2CWasIfXF4dnIL/JJOs6dNyTKFIn9XfIdnb2cQaK
-	 SYJFeGFl2qDRSZdOHJk4h0zW2DCJhN6dZbBacj0UizFiYtQYMiZwJ9iua+v6FOXZEkWW6
-	 aZ4rhfL612nXkM4nalhKSjaG5Z2KMQtdAF0eLpeaMJicPQ+dyzEvH/GynhGou1SqijuM9
-	 z9CSyorJnnnETh9iWrqjOZeAUJGH/aQ+bhmHF3fFkqTgpRqCtthf0Ou2N241z7RYXGjQR
-	 Lhswh3C2yLFoY3+afjRaeAj8zf6jCuRQQ5DH8jMsu/ress+rF0umjRPhQRwK+GwwWhw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=QZpjer5qkCrKvRvoOckybWdfy6r6hD2qyb6lUDXWYKk=;
+	b=rxPNk211CKjetKY79GAOub/IjrjaR45no5Y/Y0E6WhTXlw7DwTPl7lrd95S4N5O2pgYY
+	 f6u958OhPGoQRjk3lW8VbLmH/9tvCrHY4C6gJtbJBuNKHL12J5zML4lePxQF2MEBiFI+H
+	 R0B1NszFHjxT7dyAWoA3EfZbSBwRPeoDYe33pHAU3IIVokD6QbbpK5XKz9/xeGelSORtO
+	 bs0iDezZUx2s2jn3a9Cz2NoVkpO2vGO0dw9vbXD5+4jQXZBo0rBb34vNH6/Nk1/DjQogx
+	 xhIihrP7xzonndUUufAa1tdwJ5dt0e2WYVkD5tcV+hyxQhbm8lzFBuQYAwJLvOE/m6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DmVoSLfH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gr2Xf1rT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD40606A338;
-	Wed, 18 Nov 2026 18:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA553606A32F;
+	Wed, 18 Nov 2026 18:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DmVoSLfH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D40B1F000C4;
-	Wed, 18 Nov 2026 18:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gr2Xf1rT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA841F000C4;
+	Wed, 18 Nov 2026 18:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025983;
-	bh=QOgdojPC3GkaQBKamfIr0o4AbJ7BY0khv2FK1LANG+g=;
+	s=korg; t=1795025985;
+	bh=QZpjer5qkCrKvRvoOckybWdfy6r6hD2qyb6lUDXWYKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DmVoSLfHmOF2CLebEzooAhL4wb3d8d5AhnfpegbztKtFBZSXwCEfsyQYiTqbgwYBT
-	 SKm/OMIJl0RDe0aH3zDgnBlPAp+7zdJLHbrFWUzc005s8qXo9HN+ArXwEQouAyaBy1
-	 iytjnFAt5Jjz0HfDtUeJoZvC2fs+d7FGXKZGrIGQ=
+	b=Gr2Xf1rTED5zd2JylzRt/7oJVygkSDxzj/3cAvC7l0313ZIcdTJKkjPojpzS2AdrN
+	 xIHn0hKbzF0CzOFcvtbghxMN2v/EVDKXT8Ksr2jIKk0O/Eb3xvi1huQjPawfGqY0qq
+	 gnSVIiPItJ2nrLWTngqe782d+l7is4uLI3TAUqeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1272/2151] crypto: talitos - init tasklets before requesting IRQs
-Date: Wed, 18 Nov 2026 15:50:07 +0100
-Message-ID: <20261118150208.467646842@linuxfoundation.org>
+Subject: [PATCH 6.18 1273/2151] ASoC: mediatek: common: Keep codec references until the card is bound
+Date: Wed, 18 Nov 2026 15:50:08 +0100
+Message-ID: <20261118150208.501815050@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,187 +62,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Michał Kopeć <michal@nozomi.space>
 
-[ Upstream commit 666d66df25253070cb297cb920b0bcfcfe5eb871 ]
+[ Upstream commit 6cb1f09e1f699d0c7f748057bc50d84a1e9e77fc ]
 
-The talitos interrupt handlers schedule priv->done_task[] via
-tasklet_schedule(). Since the second IRQ support, probe has requested
-the IRQs before calling tasklet_init(), so an interrupt already pending
-when a line is requested, e.g. engine state left by the bootloader or
-a kexec'd kernel, would schedule a tasklet with a NULL callback.
+mtk_soundcard_common_probe() drops the codec references parsed from the
+devicetree right after devm_snd_soc_register_card() returns. When a
+component is still missing, snd_soc_bind_card() queues the card for a
+later rebind and registration still returns success, so the card is not
+instantiated yet. The rebind reuses the same dai_link array, but with the
+codec references released both the codec name and of_node are unset, so
+it fails the dai link sanity check and the sound card never appears.
 
-Look up the IRQ numbers and map the registers up front, so that
--EPROBE_DEFER returns before anything is allocated and the done_task[]
-selection and reset_device() can see the secondary IRQ. Only request
-the IRQs once the channel fifos are allocated and init_device() has
-reset the engine. This matches remove(), which frees the IRQs before
-killing the tasklets.
+Release the references right away only when the card was instantiated
+or registration failed. Otherwise keep them for the rebind and release
+them when the device is unbound.
 
-remove() frees every IRQ number that is > 0, so make sure that only
-requested lines are set when it runs from the probe error path: clear
-both numbers when probe fails before the request, and clear any line
-talitos_probe_irq() did not request. Previously a failed primary
-request in the two-IRQ case freed the never-requested secondary line.
-
-Fixes: c3e337f88a5b ("crypto: talitos - support for channel remap and 2nd IRQ")
-Assisted-by: LLM
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: bce93a162505 ("ASoC: mediatek: Add common machine soundcard driver probe mechanism")
+Signed-off-by: Michał Kopeć <michal@nozomi.space>
+Link: https://patch.msgid.link/20261003194501.832558-2-michal@nozomi.space
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/talitos.c | 54 ++++++++++++++++++++++++----------------
- 1 file changed, 33 insertions(+), 21 deletions(-)
+ .../mediatek/common/mtk-soundcard-driver.c    | 23 +++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/talitos.c b/drivers/crypto/talitos.c
-index eca4d7f46f11f..815787c1c4ea4 100644
---- a/drivers/crypto/talitos.c
-+++ b/drivers/crypto/talitos.c
-@@ -3356,21 +3356,13 @@ static int talitos_probe_irq(struct platform_device *ofdev)
- 	int err;
- 	bool is_sec1 = has_ftr_sec1(priv);
+diff --git a/sound/soc/mediatek/common/mtk-soundcard-driver.c b/sound/soc/mediatek/common/mtk-soundcard-driver.c
+index a2a30a87a359f..102499bfffe18 100644
+--- a/sound/soc/mediatek/common/mtk-soundcard-driver.c
++++ b/sound/soc/mediatek/common/mtk-soundcard-driver.c
+@@ -131,6 +131,11 @@ void clean_card_reference(struct snd_soc_card *card)
+ }
+ EXPORT_SYMBOL_GPL(clean_card_reference);
  
--	priv->irq[0] = platform_get_irq(ofdev, 0);
--	if (priv->irq[0] < 0)
--		return priv->irq[0];
--
- 	if (is_sec1) {
- 		err = request_irq(priv->irq[0], talitos1_interrupt_4ch, 0,
- 				  dev_driver_string(dev), dev);
- 		goto primary_out;
- 	}
- 
--	priv->irq[1] = platform_get_irq_optional(ofdev, 1);
--	if (priv->irq[1] == -EPROBE_DEFER)
--		return priv->irq[1];
--
--	/* get the primary irq line */
-+	/* single (or primary) irq line */
- 	if (priv->irq[1] < 0) {
- 		err = request_irq(priv->irq[0], talitos2_interrupt_4ch, 0,
- 				  dev_driver_string(dev), dev);
-@@ -3382,7 +3374,7 @@ static int talitos_probe_irq(struct platform_device *ofdev)
- 	if (err)
- 		goto primary_out;
- 
--	/* get the secondary irq line */
-+	/* secondary irq line */
- 	err = request_irq(priv->irq[1], talitos2_interrupt_ch1_3, 0,
- 			  dev_driver_string(dev), dev);
- 	if (err) {
-@@ -3395,7 +3387,9 @@ static int talitos_probe_irq(struct platform_device *ofdev)
- primary_out:
- 	if (err) {
- 		dev_err(dev, "failed to request primary irq\n");
-+		/* neither line is requested, keep remove() from freeing them */
- 		priv->irq[0] = 0;
-+		priv->irq[1] = 0;
- 	}
- 
- 	return err;
-@@ -3407,12 +3401,27 @@ static int talitos_probe(struct platform_device *ofdev)
- 	struct device_node *np = ofdev->dev.of_node;
- 	struct talitos_private *priv;
- 	unsigned int num_channels;
-+	void __iomem *reg;
- 	int i, err;
- 	int stride;
-+	int irq0;
-+	int irq1;
- 
- 	if (of_property_read_u32(np, "fsl,num-channels", &num_channels))
- 		return -EINVAL;
- 
-+	irq0 = platform_get_irq(ofdev, 0);
-+	if (irq0 < 0)
-+		return irq0;
++static void mtk_soundcard_put_card_reference(void *data)
++{
++	clean_card_reference(data);
++}
 +
-+	irq1 = platform_get_irq_optional(ofdev, 1);
-+	if (irq1 == -EPROBE_DEFER)
-+		return irq1;
-+
-+	reg = devm_platform_ioremap_resource(ofdev, 0);
-+	if (IS_ERR(reg))
-+		return PTR_ERR(reg);
-+
- 	priv = devm_kzalloc(dev, struct_size(priv, chan, num_channels), GFP_KERNEL);
- 	if (!priv)
- 		return -ENOMEM;
-@@ -3427,12 +3436,7 @@ static int talitos_probe(struct platform_device *ofdev)
+ int mtk_soundcard_startup(struct snd_pcm_substream *substream,
+ 			  enum mtk_pcm_constraint_type ctype)
+ {
+@@ -331,8 +336,22 @@ int mtk_soundcard_common_probe(struct platform_device *pdev)
  
- 	spin_lock_init(&priv->reg_lock);
+ 	ret = devm_snd_soc_register_card(&pdev->dev, card);
  
--	priv->reg = devm_platform_ioremap_resource(ofdev, 0);
--	if (IS_ERR(priv->reg)) {
--		dev_err(dev, "failed to of_iomap\n");
--		err = PTR_ERR(priv->reg);
--		goto err_out;
--	}
-+	priv->reg = reg;
+-	if (!needs_legacy_probe)
+-		clean_card_reference(card);
++	/*
++	 * When a component is still missing, snd_soc_bind_card() queues the
++	 * card for a later rebind and returns success, so the card is not
++	 * instantiated yet. That rebind reuses this same dai_link array, so
++	 * the codec references parsed from the devicetree must be kept until
++	 * the device is unbound: dropping them leaves both name and of_node
++	 * unset and the rebind fails the dai link sanity check instead.
++	 */
++	if (!needs_legacy_probe) {
++		if (ret || snd_soc_card_is_instantiated(card))
++			clean_card_reference(card);
++		else
++			ret = devm_add_action_or_reset(&pdev->dev,
++						       mtk_soundcard_put_card_reference,
++						       card);
++	}
  
- 	/* get SEC version capabilities from device tree */
- 	of_property_read_u32(np, "fsl,channel-fifo-len", &priv->chfifo_len);
-@@ -3483,9 +3487,7 @@ static int talitos_probe(struct platform_device *ofdev)
- 		stride = TALITOS2_CH_STRIDE;
- 	}
- 
--	err = talitos_probe_irq(ofdev);
--	if (err)
--		goto err_out;
-+	priv->irq[0] = irq0;
- 
- 	if (has_ftr_sec1(priv)) {
- 		if (priv->num_channels == 1)
-@@ -3495,6 +3497,7 @@ static int talitos_probe(struct platform_device *ofdev)
- 			tasklet_init(&priv->done_task[0], talitos1_done_4ch,
- 				     (unsigned long)dev);
- 	} else {
-+		priv->irq[1] = irq1;
- 		if (priv->irq[1] > 0) {
- 			tasklet_init(&priv->done_task[0], talitos2_done_ch0_2,
- 				     (unsigned long)dev);
-@@ -3526,7 +3529,7 @@ static int talitos_probe(struct platform_device *ofdev)
- 		if (!priv->chan[i].fifo) {
- 			dev_err(dev, "failed to allocate request fifo %d\n", i);
- 			err = -ENOMEM;
--			goto err_out;
-+			goto err_noirq;
- 		}
- 
- 		atomic_set(&priv->chan[i].submit_count,
-@@ -3539,9 +3542,14 @@ static int talitos_probe(struct platform_device *ofdev)
- 	err = init_device(dev);
- 	if (err) {
- 		dev_err(dev, "failed to initialize device\n");
--		goto err_out;
-+		goto err_noirq;
- 	}
- 
-+	/* enable interrupts once the channel fifos and tasklets are set up */
-+	err = talitos_probe_irq(ofdev);
-+	if (err)
-+		goto err_out;
-+
- 	/* register the RNG, if available */
- 	if (hw_supports(dev, DESC_HDR_SEL0_RNG)) {
- 		err = talitos_register_rng(dev);
-@@ -3599,6 +3607,10 @@ static int talitos_probe(struct platform_device *ofdev)
- 
- 	return 0;
- 
-+err_noirq:
-+	/* the irq numbers are known, but the lines are not requested yet */
-+	priv->irq[0] = 0;
-+	priv->irq[1] = 0;
- err_out:
- 	talitos_remove(ofdev);
- 
+ 	if (ret) {
+ 		dev_err_probe(&pdev->dev, ret, "Cannot register card\n");
 -- 
 2.53.0
 
