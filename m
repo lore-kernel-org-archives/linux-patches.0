@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022261;
-	b=g6Qhff0rsau9gV++rHWMawHZQFUfRyqa8IabWCSrfXUkIBOdZp1jmB2O2StouHBUpNmx
-	 kAnZ6V0OVDqPkl62OuSu66DIzPJqhUpWBhFDqS4JkTt+MMFEiF57VtR/NncjW8V0S3ov5
-	 7cesWPeD1Fs1NjuTP5WPkN3j23F+tu+ygPbdBmP6uRjURQpCIZOQ/p8IHmGC10N7Fhexm
-	 JMRmggCKumnNSFVVO8gERu6woCEvGlCXl9sgrL54EiAIQY5EcnbqIIH7qYaRy5/wf53bJ
-	 Xsd8zEchlrQ+dXx+jYBTIb8DollKNURXj5mlKMspqProvu5pIHaCOgtF0LotJKRf1ng==
+	t=1795022264;
+	b=AriwRfq1zSMcoQGW1KVzLfCGknVu5JGHiu5qbDuuSRiYd1VEi5kEq7W8T3aTyimcewgU
+	 4XzOtFO4dRWOY1RllLRwQ3TQpIiBKwP8kJn1AGn8OhKDIBdWLBhntkL0EXzRjpKWhCSfi
+	 tTqASPt8BHNpnYLpPih+BKkAdhJZyNWLNqOlBqWaEQv8uRncZV4+mz5SdgHyDSGkxjsb8
+	 MYqswsM8j7HSP8ok41ZqVzl1ansQNCH/nRpEGbvHB+vlttMfq0Rpp62s6AlfrEDNQhSpd
+	 CdXcg+ocK3dzUkDHbERo4HVePvepfYOOZtgZx3i3Ps6Q3keukTfmrhyMtzGckHXlQ/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022261;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022264;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HqzGmmusXBP9WQWmq46c7iDaIT/rOJSJBJm8HhcFIGk=;
-	b=lVOet/93bcmsJ0kSqYwcWJ6sGwDI5DHVgHpm15hs3j7FgCIep4broEOaIFJxyhuIkWpY
-	 NQdalm5pM+ms7C0Q1JpKiWQ6xc+H4ipOnvlYc6F+9V25uDnCviloCEfmBjCl/PhimkuEI
-	 dncmnrax2e4LQ95p3XfkG9YLTSLfhRv9zhsMnaegVGCTgOWQIqSMViTF1uNeyz5wUwmmB
-	 8w6J0L4kKk0FWg/oUdlp5D70fhf6Ync02dO7ofiS7Gjqjy+IX4g/uurbFjUoWybhJpTdm
-	 ZfJh3S/dTVDUw9tH5rva9EFe9bpzhFghY2J/h/MElgXBd1IT6Yy0J51qD2/4+mE0VXw==
+	bh=GHLFQOLM2QrknZ4A5Td4nn1LQ+erUZKw20+tgK6zSxI=;
+	b=kCNCgFVCaVENXSK4FS6RUcEbJHooNfOb4lWEuHlbgz8ptvWmGei1AAoAswRJYwMiZfNf
+	 r53ZWVEKMPznf6vSEkLzyBlJrHvOVN5SFjzg0aQW7ZsI1GIQIrrj5xGViRdQc0ZovCFzH
+	 JlrDEd0tftZk6Jr1QCNRl4qf0y4dXBvzo/fqMYYCaB/s1Jhqr+R06JvNhmeT69V+l7mdH
+	 Dlj2s4qFlDgRr26t3bcJTNB77XlFulu33xqUu8cZwydeAsv/RtYEbewFaxKh8bmZz3w8I
+	 hDWT/V2rfZw6pvrxuUdKVlnBiup8u+1pK/CugdWVP4I2D2xujQ5YoWeo24+6DsWy46A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fA5bSpha;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bBNAo6X1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5658B606A320;
-	Wed, 18 Nov 2026 17:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A59F606A32C;
+	Wed, 18 Nov 2026 17:17:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fA5bSpha
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08EB1F000C4;
-	Wed, 18 Nov 2026 17:17:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bBNAo6X1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8731F000C4;
+	Wed, 18 Nov 2026 17:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022261;
-	bh=HqzGmmusXBP9WQWmq46c7iDaIT/rOJSJBJm8HhcFIGk=;
+	s=korg; t=1795022264;
+	bh=GHLFQOLM2QrknZ4A5Td4nn1LQ+erUZKw20+tgK6zSxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fA5bSphaqEdrdLUta+ZMYlgZMRTdgHgx8LMJWY71OHWpQWh6M9bgPI0iO45c8GZpB
-	 7/WqEjtVcjJtFFLJxZRpb2ak0ztJV+9auYmzVt9yP3FViPAtEJaiefkAyAIb5Ey7ZT
-	 iBFHd2a6oNCr56sMNnLVvO3088blZcLvunxbSMnw=
+	b=bBNAo6X1jcvLdlZSolNCzfIoIchQHSNkO6RrMub1buxFrDKTxJ1+18bbTPtGJ4IPQ
+	 FnYd7wqNMKMSIAxRKm8Yv9CFFyqq32oLu/K+XZ7kkA8HF24EPx//1a4l7eAqoX53i+
+	 /fMdGyWLCFwPEsgq+R6QP239EAzZCeUtjMX6Ie2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamie Nguyen <jamien@nvidia.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	shaos <shawnq1@163.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2599/2651] selftests: net: txtimestamp: fix out-of-bounds read in raw UDP checksum
-Date: Wed, 18 Nov 2026 16:03:59 +0100
-Message-ID: <20261118150417.837938552@linuxfoundation.org>
+Subject: [PATCH 7.3 2600/2651] apparmor: mediate AF_UNSPEC socket disconnects
+Date: Wed, 18 Nov 2026 16:04:00 +0100
+Message-ID: <20261118150417.868615643@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,89 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamie Nguyen <jamien@nvidia.com>
+From: shaos <shawnq1@163.com>
 
-[ Upstream commit 8daacee78b3d2798fcf92398b6dff364eab64466 ]
+[ Upstream commit 049760746597cfd054c181fe850531be3c1e7358 ]
 
-With -r (SOCK_RAW, IPPROTO_UDP) the test writes only the UDP header and
-payload, and the kernel adds the IP header. get_udp_csum() still expects
-the IP source and destination addresses to directly precede the UDP
-header, and reads 2 * alen bytes before the start of the buffer: 8 bytes
-for IPv4, 32 bytes for IPv6.
+aa_inet_connect_perm() returns success immediately for AF_UNSPEC
+before checking the active AppArmor profile.  AF_UNSPEC is the socket
+disconnect operation for TCP and UDP.  A process confined by a profile
+containing deny network can therefore disconnect inherited sockets
+even though ordinary socket creation and connect calls are denied.
 
-ASan reports a heap-buffer-overflow for both -4 -r and -6 -r. Without
-ASan the read usually goes unnoticed, but it faults when the buffer is
-the first chunk in the heap. That happens on Ubuntu 26.04, where the
-kselftest runner wraps the test in uutils stdbuf, and txtimestamp.sh
-fails with SIGSEGV on every run.
+console output:
+https://gist.githubusercontent.com/shaos26/73b057c77b9ea22d5e6813c259dbf43c/raw/fab5c58d6f184f5fab88a3a31a80c2b919efecf0/console-output.txt
+reproduction kernel config:
+https://gist.githubusercontent.com/shaos26/73b057c77b9ea22d5e6813c259dbf43c/raw/b9192c97c92fdd3b59089704bad6fbd0a33ccf06/kernel-config.txt
+reproducer:
+https://gist.githubusercontent.com/shaos26/73b057c77b9ea22d5e6813c259dbf43c/raw/92c7dd098a227276fe3daeea45996e2848e66439/poc.c
 
-Even without a crash, -r packets were sent with a checksum computed
-over unrelated heap memory, so their UDP checksum was invalid.
+Build the kernel from HEAD with the attached reproduction config, then
+make a one-file initramfs.  The PoC mounts sysfs and securityfs
+itself; DEVTMPFS_MOUNT supplies /dev/console.
 
-Build the pseudo-header from the destination address and checksum only
-the UDP header and payload. -R and -P already write daddr as both the
-source and destination address, so their checksums are unchanged. With
--r the kernel selects the source address, which equals daddr for the
-loopback addresses used by txtimestamp.sh.
+    mkdir -p build rootfs
+    cp kernel-config.txt build/.config
+    make O=build olddefconfig
+    make O=build -j"$(nproc)" bzImage
+    cc -O2 -static -Wall -Wextra -o poc poc.c
+    cp poc rootfs/poc
+    (cd rootfs && find poc | cpio -o -H newc --owner=0:0) | gzip -9 > initramfs.cpio.gz
+    timeout 900 qemu-system-x86_64 -kernel build/arch/x86/boot/bzImage \
+        -initrd initramfs.cpio.gz -append "console=ttyS0 rdinit=/poc panic=-1 loglevel=7 lsm=apparmor security=apparmor apparmor=1" \
+        -nographic -m 1024 -smp 1 -no-reboot 2>&1 | tee console.log
 
-Fixes: b52354aa068e ("selftests: expand txtimestamp with ipv6 dgram + raw and pf_packet")
-Signed-off-by: Jamie Nguyen <jamien@nvidia.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20261027162945.2122306-1-jamien@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Under the deny-network profile, socket() and connect(AF_INET) returned
+EACCES, but connect(fd, AF_UNSPEC) returned success and tore down the
+inherited connection and listener.  Two fresh boots matched.  A
+one-line control that routed AF_UNSPEC through aa_sk_perm returned
+EACCES and kept both sockets alive.
+
+Impact and prerequisites: A confined process that inherits a TCP/UDP
+socket can bypass the profile's network mediation for disconnect and
+disrupt that socket.  The finding does not permit socket creation,
+bind, or arbitrary peer connections; no privilege escalation is
+demonstrated.
+
+Fixes: 89ac6aa752ec8 ("apparmor: push inet mediation into profile callbacks, and improve auditing")
+Signed-off-by: shaos <shawnq1@163.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/txtimestamp.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ security/apparmor/af_inet.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/txtimestamp.c b/tools/testing/selftests/net/txtimestamp.c
-index 170be192f5c7c..f7bdf30b78d9f 100644
---- a/tools/testing/selftests/net/txtimestamp.c
-+++ b/tools/testing/selftests/net/txtimestamp.c
-@@ -418,19 +418,25 @@ static uint16_t get_ip_csum(const uint16_t *start, int num_words,
- 	return ~sum;
- }
+diff --git a/security/apparmor/af_inet.c b/security/apparmor/af_inet.c
+index 516c9016537c6..42994e84cccaa 100644
+--- a/security/apparmor/af_inet.c
++++ b/security/apparmor/af_inet.c
+@@ -425,7 +425,7 @@ int aa_inet_connect_perm(struct socket *sock, struct sockaddr *addr,
+ 	if (addrlen < offsetofend(struct sockaddr, sa_family))
+ 		return -EINVAL;
+ 	if (addr->sa_family == AF_UNSPEC)
+-		return 0;
++		return aa_sk_perm(OP_CONNECT, AA_MAY_CONNECT, sock->sk);
  
--static uint16_t get_udp_csum(const struct udphdr *udph, int alen)
-+static uint16_t get_udp_csum(const struct udphdr *udph, bool is_ipv4)
- {
--	unsigned long pseudo_sum, csum_len;
--	const void *csum_start = udph;
-+	const void *addr = is_ipv4 ? (void *)&daddr.sin_addr : &daddr6.sin6_addr;
-+	int alen = is_ipv4 ? sizeof(struct in_addr) : sizeof(struct in6_addr);
-+	uint16_t addr16[sizeof(struct in6_addr) / sizeof(uint16_t)];
-+	unsigned long pseudo_sum;
-+	int i;
- 
- 	pseudo_sum = htons(IPPROTO_UDP);
- 	pseudo_sum += udph->len;
- 
--	/* checksum ip(v6) addresses + udp header + payload */
--	csum_start -= alen * 2;
--	csum_len = ntohs(udph->len) + alen * 2;
-+	/* pseudo-header source and destination: both are daddr */
-+	memcpy(addr16, addr, alen);
-+	for (i = 0; i < alen / 2; i++)
-+		pseudo_sum += 2 * addr16[i];
- 
--	return get_ip_csum(csum_start, csum_len >> 1, pseudo_sum);
-+	/* checksum udp header + payload */
-+	return get_ip_csum((const uint16_t *)udph, ntohs(udph->len) >> 1,
-+			   pseudo_sum);
- }
- 
- static int fill_header_ipv4(void *p)
-@@ -479,8 +485,7 @@ static void fill_header_udp(void *p, bool is_ipv4)
- 	udph->len    = ntohs(sizeof(*udph) + cfg_payload_len);
- 	udph->check  = 0;
- 
--	udph->check  = get_udp_csum(udph, is_ipv4 ? sizeof(struct in_addr) :
--						    sizeof(struct in6_addr));
-+	udph->check  = get_udp_csum(udph, is_ipv4);
- }
- 
- static void do_test(int family, unsigned int report_opt)
+ 	/* do we need early bailout for !family ... */
+ 	return sk_has_perm2(sock->sk, OP_CONNECT, AA_MAY_CONNECT, profile, ad,
 -- 
 2.53.0
 
