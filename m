@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035104;
-	b=oGzJXB3PZs5e63OJScf0ZmlxlNhR7vbjVuR8U2VVXXT0ANKfSqSyQfFiu0zstiwdaWfi
-	 sXOpuJ39ls4YZyrEl9Ii1mZuxufvbIL1vwHMKO4mBxhE5ANhXluRxJNIewmCGUe9rwKXG
-	 AG4SGZ8Pzm4iNe7p5RBvJhj/VMdWu9wlZf5WAfG+mA4S3EXNRmJL4HjDScGarROTXaSSY
-	 0zn3S2I9J6EkEPiOHvPDqFL3gk4iJhwsCvUs2xg6A69oZaiuCzXf0Vs8JwMSOj+IIhq9S
-	 hLrQ98Jfv9S+nJDf5LXkdLXHD+XuStZKAHOPjsZKV8vgnSMAzGub4z0YawweCEL8DqA==
+	t=1795035107;
+	b=SuuFDW/0J/Zb9yfSEDfu796OzM6LN3U476WRbawiP3BuToPXQw9wPR0p0UEgdSID8rc1
+	 hEFcuz/5pNdAPdB62itefYCcEibsXfNT/hf7ZTS6HrxyPFyfMK1L23L8q7jtk1EkdYxHN
+	 Y7Pamci52xwX5aeNwHDMz+ovRYRusNOyl0sWEeNCDxH261gq7QFP9/HDro6wzkiG7lhgH
+	 Vh3H9DLKvGr/sgvJQ3RLW8dcUsWd8qNB4/2GRJTmWhxD7ALJMxNjb5mDDcgLrIOvxKyGQ
+	 W6XqXrOSRdU4CkSrpzG9CxcZs6CNS405wuYen/UIWy2+yeR1w90HvX0XdKWguu/FrAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035104;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035107;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QYTepfVdQuFr3QdFxep91IMDGi7eQ1OgVdsIqR+htTg=;
-	b=E6I63Vl2hX2JzZMjTA0w0L+DRmmwa6McQVAm28u4I793RZdd4f1auxIFHEGl3gcsdoRG
-	 EFlHWerXaeCVHg02/0NZU0zyJ+I41iHj3s8a7vVivZfMo3arF1gJ7bNBvGv8pY8Cd2OIK
-	 vlQTHYp1MKrVuFuBEgVdd42bKFzRcKcZ94V2JTDq69FcTnin/98LyciZVhAy23S7ptDz3
-	 +Nq1IZ01ArmKn2n5bxL3OTBGAWgmwlurudLSOh3Ua8UWntPC8J0SoLZyzK1s7mqW+tNBi
-	 paNySI0QuBynxtK61AnAoEis5V9OD4BMCqjNrCmwuKYm3/HT7YxTJwBeoAgBda75prw==
+	bh=86ru2VeW+A/wLB40YeG31Xi40ZwWGne3FJfuLronCfw=;
+	b=UR2g4MzzI7LSj9CBetMSgPvPwoNfkyn/cOH8wlVRy5O6ry7AxkMWaC/yXSbT+IgdsCdU
+	 /Rc3eovce+P6NFF7wlsMvLobO21GfEzvjeARM5S6DaVNjgqwo9RNLtsQHHCSBqgCpev8N
+	 OOzl8bOAzr0fep5rymgN8AnxcjTbIH1WMwazFbWQrL2b4ntdnF0PHhoGm1gffLaPUOeCP
+	 T/Puu31Au3DNmGlwS5AiHEsaxCfvhuFTlV6khLt3ueRI1DHly1yjTsVfv8fgh3VXN3Xps
+	 M9Ky8Qr3+Wfc56FcqNRu+DsESeNGz40MVJUcFRpDflHj0A8ky8kPMLIAjrwWtFrj0zQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="d/9Hkr0x";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uDzRSGDg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB33B606A320;
-	Wed, 18 Nov 2026 20:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC52606A31C;
+	Wed, 18 Nov 2026 20:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d/9Hkr0x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BFAD1F000C4;
-	Wed, 18 Nov 2026 20:51:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uDzRSGDg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD731F000C4;
+	Wed, 18 Nov 2026 20:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035104;
-	bh=QYTepfVdQuFr3QdFxep91IMDGi7eQ1OgVdsIqR+htTg=;
+	s=korg; t=1795035107;
+	bh=86ru2VeW+A/wLB40YeG31Xi40ZwWGne3FJfuLronCfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d/9Hkr0xLMomi3g2RbEx+9HHfduil+XLobfIom0v07xYhVVfwMlJfC7id/8RaAAO9
-	 /m8PjRl6ev7v2It70RSEocuiK23cjVrV9T4P0Tn3F5Lh5lmTeWMFcq2TiONK5i4QZi
-	 BF81Zi202NVe/LizK4CNyaysKKj3YFUdXGGjQ7dQ=
+	b=uDzRSGDgMUFvhi3s/dGwjT1tXQFG3L74YNqJI+tRx5wdBr5x0XdVUAGSYki8xng7b
+	 ObutaIk6DzSeaRH+VNv+B71I6wA+WYGEPGotY96f4Hcq+e0qttjdV96Nv590onYnN0
+	 /5/1iSWM0jlpn4YTEc8DvJWo9iG1LY89oqelCoqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>
-Subject: [PATCH 6.6 0608/3318] klist: avoid accesses after waking klist_remove()
-Date: Wed, 18 Nov 2026 15:20:30 +0100
-Message-ID: <20261118150335.973427487@linuxfoundation.org>
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 0591/3318] media: cx23885: Fix use-after-free in cx23885_finidev due to race condition
+Date: Wed, 18 Nov 2026 15:20:13 +0100
+Message-ID: <20261118150335.333324305@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,92 +67,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-commit 732e3e10234cbe302d0dcbaa98c91c66628209cb upstream.
+commit 75016a992d9b03f5cc6df1414d1da35840d4feeb upstream.
 
-klist_remove() waits until a node is unreferenced so that its caller can
-free the containing object.  klist_release() currently publishes
-waiter->woken and wakes the waiter before its final accesses to the waiter
-and node.  klist_remove() can then return, allowing its stack waiter and
-the containing object to be freed or reused while klist_release() is still
-running.  In particular, bus_remove_driver() can free drv->p while
-__device_attach() walks the same bus klist with bus_for_each_drv().
+In cx23885_v4l2_dev_notify_init, &dev->cx25840_work is bound with
+cx23885_av_work_handler, and &dev->ir_rx_work and &dev->ir_tx_work
+are bound with cx23885_ir_rx_work_handler and
+cx23885_ir_tx_work_handler. cx23885_irq can schedule these works on
+system_wq when an AV_CORE interrupt is received, and the IR subdevice
+can also schedule the IR works from its interrupt service routine via
+the v4l2_device notify callback.
 
-On an arm64 Cortex-A72 system, an unpatched 7.2.0-rc3 kernel with
-CONFIG_PREEMPT_RT=y and CONFIG_KASAN=y reproduced the bug through the
-in-tree I2C/at24 path.  KASAN reported a use-after-free in
-klist_dec_and_del() reached from klist_next()/bus_for_each_drv() while
-at24 was being unregistered.
+If we remove the device, cx23885_finidev makes cleanup and the memory
+allocated for dev is released by kfree(dev), while the works mentioned
+above may still be pending or running. The sequence of operations that
+may lead to a UAF bug is as follows:
 
-Clear n_klist and take a task reference before publishing woken.  Use
-release/acquire accesses for that publication and wake the referenced
-task.  The task reference keeps the waiter task alive if it returns and
-exits before wake_up_process().
+CPU0                                      CPU1
 
-Link: https://lore.kernel.org/20260827041708.31682-1-kmehltretter@gmail.com
-Fixes: 8b0c250be489 ("[PATCH] add klist_node_attached() to determine if a node is on a list or not.")
-Fixes: 210272a28465 ("driver core: Remove completion from struct klist_node")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Assisted-by: LLM
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: <stable@vger.kernel.org>
+                                          | cx23885_irq
+                                          | schedule_work(&dev->cx25840_work)
+cx23885_finidev                           |
+cx23885_input_fini(dev)                   |
+cx23885_ir_fini(dev)                      |
+cx23885_shutdown(dev)                     |
+free_irq(pci_dev->irq, dev)               |
+pci_disable_device(pci_dev)               |
+cx23885_dev_unregister(dev)               |
+v4l2_device_unregister(v4l2_dev)          |
+kfree(dev)                                |
+// dev is freed                           |
+                                          | cx23885_av_work_handler
+                                          | // use dev (use-after-free)
+
+Fix it by canceling the works after the IRQ handler that can schedule
+them has been stopped, and before proceeding with the remaining
+cleanup in cx23885_finidev.
+
+Note that the flush_work() calls in cx23885_input_ir_stop() do not
+close this race: they only wait for works that are already queued or
+running at that moment, they do not prevent the IRQ handler, which is
+still registered at that point, from scheduling the works again
+afterwards, and they are skipped entirely when dev->sd_ir is NULL.
+The cancel_work_sync() calls are therefore placed after free_irq(),
+the only point at which no new work can be scheduled.
+
+Fixes: e5514f104d87 ("V4L/DVB: cx23885: Move AV Core irq handling to a work handler")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:deepseek-v4-flash
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/klist.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/media/pci/cx23885/cx23885-core.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/lib/klist.c
-+++ b/lib/klist.c
-@@ -36,6 +36,7 @@
- #include <linux/klist.h>
- #include <linux/export.h>
- #include <linux/sched.h>
-+#include <linux/sched/task.h>
+--- a/drivers/media/pci/cx23885/cx23885-core.c
++++ b/drivers/media/pci/cx23885/cx23885-core.c
+@@ -2233,6 +2233,10 @@ static void cx23885_finidev(struct pci_d
+ 	/* unregister stuff */
+ 	free_irq(pci_dev->irq, dev);
  
- /*
-  * Use the lowest bit of n_klist to mark deleted nodes and exclude
-@@ -187,18 +188,24 @@ static void klist_release(struct kref *k
- 
- 	WARN_ON(!knode_dead(n));
- 	list_del(&n->n_node);
-+	knode_set_klist(n, NULL);
- 	spin_lock(&klist_remove_lock);
- 	list_for_each_entry_safe(waiter, tmp, &klist_remove_waiters, list) {
-+		struct task_struct *p;
++	cancel_work_sync(&dev->cx25840_work);
++	cancel_work_sync(&dev->ir_rx_work);
++	cancel_work_sync(&dev->ir_tx_work);
 +
- 		if (waiter->node != n)
- 			continue;
+ 	pci_disable_device(pci_dev);
  
-+		p = waiter->process;
-+		get_task_struct(p);
- 		list_del(&waiter->list);
--		waiter->woken = 1;
-+		/* Publish only after the final waiter and n accesses */
-+		smp_store_release(&waiter->woken, 1);
- 		mb();
--		wake_up_process(waiter->process);
-+		wake_up_process(p);
-+		put_task_struct(p);
- 	}
- 	spin_unlock(&klist_remove_lock);
--	knode_set_klist(n, NULL);
- }
- 
- static int klist_dec_and_del(struct klist_node *n)
-@@ -250,7 +257,8 @@ void klist_remove(struct klist_node *n)
- 
- 	for (;;) {
- 		set_current_state(TASK_UNINTERRUPTIBLE);
--		if (waiter.woken)
-+		/* Pairs with the release store in klist_release() */
-+		if (smp_load_acquire(&waiter.woken))
- 			break;
- 		schedule();
- 	}
+ 	cx23885_dev_unregister(dev);
 
 
