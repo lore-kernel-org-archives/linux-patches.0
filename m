@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052280;
-	b=B48ZQIMptqand1d5e+ewAdC1H1/Du8Iv5ps3XDwQOA3ocRZKebJewMhfFu7KG37YByvl
-	 bwHKOvvybF0BPSfPtRRM5zVjWd37SysGRTquUq2i5zQoeSeuY7TBoKgdTEP0niU05gYio
-	 ZJvfeHkDaoq5LYFhEIkLSvCgHgwfv39RKh+zODl8w9G/EF4YUEwIv8LJx9ANsmlORqapG
-	 PCm54A96TmHV5IngXS2kv60t/AMO/pxGHUxNUkFXjbi7HTb5QRQo7zLfNGqp4U7p4pVjv
-	 Qr3XmLIWOdC/YzBIU0/9abLwOY0tpsCx779K1DO5k4kgWqoyJOVjyPCb6cUMX5E07Kg==
+	t=1795052283;
+	b=fnFMAs5rrV+MgiBlW6PZcYLnx+hfopEWTZV/D/lbB3XExlAceDGRkh9YGYkneMap8THv
+	 Lr0bJaHzrPEWMC2Ib8U2On0AyOc0rH6Xi4pX5M0lhlQc2aJCmKPEuqEQuVVgfw+81X4h7
+	 3cAEAQ4subwpQFM8vZMJB4ghTvLhmjBcrlUUBm/eKMt0lqxN/Zf3m3SZ5arpC1OPqRavE
+	 F8FS3fLJOzwnNcFBvlHBvdOCBD5MrR0k1q3yFbBw6SRTZRzL+6/VAEzUs/cK3aDN0A2+o
+	 osBUWZMhF/fmNF99GAPsOMSc4foCdrWW3Ec0fNi3K48kv2saGCfV6Fe6nyLTYnHNaLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052283;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=63Bu2bEar7GgR8/C0MIUkXj/SbrATId7FVapkhQec+M=;
-	b=dVzsz+MeG3sKZveDc1PgT8EIn8iJO5Zd8nEnWjRhy2y+oG/zVzY87PZeaj7LhjqUbaGS
-	 +Dj3lBsJ8Mgt6yqxeiD4wfSCzMP7ET0KPpv3I8miOz1Vbc5vYO6YHMZEcWYgNoQ/9ORDw
-	 LdxbVI9DjxFIyvRGHaHBcMSGtEekkHd3XTSAhgDTLuDIJAYxgVHnu+R3C4IRzQ+REGYLA
-	 B0V2qcgvju8TGtl7eYkUIwJheeIv6CyI9gOMRDDTL8a2EXU64/hReQnze+3F7AuUlZjZJ
-	 rFxdsTX1gbFkSW9KUExNhvAXSFltha6vjZEWCwUMgegD+l4q9fDgl2oul0RS0y44QHg==
+	bh=kdXEeyS/VBJ1LB8QyT2WRkYk40wpj0jnWztYeOXB9jw=;
+	b=LsEo+rGxgc+N0LPdmW59bbHsWvR5Y1/FVc/9YyO0szRD49aVAXzNM8PV5gXMGbf0JZ00
+	 itKyR3FDpCEwH8WQ3r7V1sk1AVlJYhbrq/4CVIPdziNTVP5LkXGjgprbMmlU1DAgYQeFR
+	 o1UFa4LfuRua+yRcIuRh1x4gsqdzdS5jsKq4tNwmVvTYliZP3k7l80MmPcXX1nqQ2aUKQ
+	 udtECkUJixGmuQUP6Qhlf4nm7blRmKUbGw7JLGnwNa5zRXAOKJA2YvfdJ/62+fWBsQp2N
+	 EliaXcvoegtiPhyGHKrQX1AfNfqpmH+CXUbejvFBNYUBlHOwzhSTT1eESyPFiCsR7/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fMqaG2rR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2KMU+4HO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1A2606A31C;
-	Thu, 19 Nov 2026 01:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711E6606A32F;
+	Thu, 19 Nov 2026 01:38:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fMqaG2rR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C1E1F000C4;
-	Thu, 19 Nov 2026 01:37:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2KMU+4HO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758081F000C5;
+	Thu, 19 Nov 2026 01:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052280;
-	bh=63Bu2bEar7GgR8/C0MIUkXj/SbrATId7FVapkhQec+M=;
+	s=korg; t=1795052283;
+	bh=kdXEeyS/VBJ1LB8QyT2WRkYk40wpj0jnWztYeOXB9jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fMqaG2rR1bnARtjOtRLIweFxYlMvQR6gI1rIW3oE1DaO6l+1yivZyxfL7sXZT7Ng2
-	 JJeGN/UqV0K0GqVb2Oxo4sfDQyBaw79uot8Z6SUpfJgINchHXaEWu2k2/HyI88R86T
-	 0zA1yk9loNcA6QOfDBflaBascxzrr2P6QcFH+vj8=
+	b=2KMU+4HOdcjJNou6hkc1tEL8E0nrl51tKCBaXpAMWUHsjhDEvt8oB5lRedvu0IjMn
+	 LwN8cjfO+STNBDedfZPsAXig4qKsopz0ZVYFsNB/ZFHBwa/UnUkZAfYnKRNVNjhJz5
+	 8GHBn20hKJsKblhA/Po8LVcmT4cJa5JmQQ3mtADc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0506/2214] ASoC: codecs: wm8994: Fix runtime PM leak in wm8994_mic_detect()
-Date: Wed, 18 Nov 2026 15:36:22 +0100
-Message-ID: <20261118150031.381750102@linuxfoundation.org>
+Subject: [PATCH 5.15 0507/2214] fpga: Fix of_fpga_mgr_get() reference in fpga_mgr_lock() docs
+Date: Wed, 18 Nov 2026 15:36:23 +0100
+Message-ID: <20261118150031.414819995@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,41 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit b2c0e5bf750e33b0e1dcdfbb2df8103a06c7caab ]
+[ Upstream commit ac02245b0ca28388ba16273f2fa683c90da2e5dc ]
 
-wm8994_mic_detect() resumes the component before configuring the MICBIAS
-pins, but the default case of the micbias switch returns -EINVAL right
-after taking that reference, skipping the pm_runtime_put() on the
-success path. This leaks a runtime PM reference on every call with an
-invalid micbias.
+The fpga_mgr_lock() comment lists of_fpga_mgr_put() as a source of a
+manager pointer. The helper which obtains that pointer is
+of_fpga_mgr_get(). Correct the reference.
 
-Release the reference before returning -EINVAL.
-
-Fixes: f5a2cda4f1db ("ASoC: wm8994: Ensure the device is resumed in wm89xx_mic_detect functions")
+Fixes: ebf877a51ad7 ("fpga: mgr: separate getting/locking FPGA manager")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260917165130.2163278-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20260912100937.86316-1-kmehltretter@gmail.com
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/fpga/fpga-mgr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index e9037cf0f2c0f..8cd00e7d59b79 100644
---- a/sound/soc/codecs/wm8994.c
-+++ b/sound/soc/codecs/wm8994.c
-@@ -3533,6 +3533,7 @@ int wm8994_mic_detect(struct snd_soc_component *component, struct snd_soc_jack *
- 		break;
- 	default:
- 		dev_warn(component->dev, "Invalid MICBIAS %d\n", micbias);
-+		pm_runtime_put(component->dev);
- 		return -EINVAL;
- 	}
- 
+diff --git a/drivers/fpga/fpga-mgr.c b/drivers/fpga/fpga-mgr.c
+index aa30889e23208..579cc84e44dc3 100644
+--- a/drivers/fpga/fpga-mgr.c
++++ b/drivers/fpga/fpga-mgr.c
+@@ -563,7 +563,7 @@ EXPORT_SYMBOL_GPL(fpga_mgr_put);
+  * @mgr:	fpga manager
+  *
+  * Given a pointer to FPGA Manager (from fpga_mgr_get() or
+- * of_fpga_mgr_put()) attempt to get the mutex. The user should call
++ * of_fpga_mgr_get()) attempt to get the mutex. The user should call
+  * fpga_mgr_lock() and verify that it returns 0 before attempting to
+  * program the FPGA.  Likewise, the user should call fpga_mgr_unlock
+  * when done programming the FPGA.
 -- 
 2.53.0
 
