@@ -1,64 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025220;
-	b=um3aj0Ea7wZGyrC/G/7ocE/TN1oc9XFDfcuj47MyVDVSVVttp9r/1BPVBhfHOP0wIBE7
-	 8WpwYSpLRwKlO9htNN7FQBj3aq0QBGjPHHgUUmE1B/B5/Jk8fEn4kPee0OXESkm52mr6P
-	 4Eb4D24a0/dX+ZrY7GNm0hl88NaiDyn41nahRj0Lp7RgF3jr2th6CimqxcsLhGiAH0Qoi
-	 VrVpMg6CC9As654NMmQjKBRe0kz0Pfxi6ADba55qVx0umcb/RfgzyZy+8PjUEXEqcQluq
-	 BcD6zfoPFXCDA3VtwtS/s+THmjO9flQjAR9cwbOpTrzJPQPvTO9fLI+A6Df4pOmXtWA==
+	t=1795025222;
+	b=joDp1tEKMjYsdel651rfvNvZF77sk3vxvKwuuvqGC5SIxXyVYWgH9qk/vwC0BnWROg4O
+	 Av3RN0ccNo7W53FrQ2bsTUrpgXpQU7Bm2GwpVB41t4sKJuWMU6vngbenbZpaadRt3Tvvt
+	 nWaKaXfwWtDvD/6SWbTSCmKT55roNtHw/CUASZTccMm4tx5IS43DPQLapfdlncM46ntKO
+	 VgH87WFTrJbAX3JsShW0UvokW7inZgXL8mY5WfrTAcFSW7XZpttjrv8TJ8xOT8TEfLNLB
+	 JVBlxeSr/wNfSOz+jf+hP1Da5BVAxNhsEEVeGPvsGL8Uaigclf9gf6s9Ez3LgPLBQvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025220;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025222;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ckDc9Kk97eI7Ega2ntviEBIEHYKZJfLK99n7RjFWAsQ=;
-	b=nbvQWe4UoJDu6RLwaYlHxi/gICO1KTQuQmalNYjmpPkt4oiyd6KwsoGU6KszSnpYrGwV
-	 V+BX57XvxRAiJbBzFpBDPwXre2y0vZVpZT4/lWd5BowTN+KR/w4DI1mROGqvF2wvRZ7fx
-	 Xg5gKgkNESbjrfnsQ2a0v5ShVmWKYdVW7JsJY63goqoBv2/DZ1Bp9CLizrS41d6oWXTCD
-	 oHPhaUp3W/r+pvUolxzPKaAMLy5pjYyUVkeCddpAZgTK6u5EZxM8BjpqlXqFWFucgjZ/j
-	 UKldy0fesxuU8Zw/vbAsBQAZFwrGHUi3UHn+7KqB5nsQMr7Lx/nhGtPiARGtkXtCu2g==
+	bh=1vKg8oiB1uYsWprYAJ65f+HCk0p4OtwKpHlrvN2GQ34=;
+	b=MqNzkoJzT8H+/oI9pRHZe4ntX0YIFolTVBm+iopuFU+EBRElyZhVa57GJXF/QOhGdmgy
+	 vdtbaQqIEfZj8LASM9d6ZBR29sNCOXNGId9eAg7WaUGFGS0n9HZTFIES8AeM3ymxPL7Ww
+	 pL1QMsdCgsFfMzwf8CZIWFN7QkAyNO1qOj+xsX4f0+eQc9ccgEK3I+D09Pl6cSAVx69Je
+	 SFGqMlBiGv6uTE90N8DTf7D2HwnWxr2avYGl3BFYRQoKQXjFv6DNjgLvNSlMWZTwzkMNo
+	 FoT8KtT9v2UAfsYuKKsyxfW3Kv/Y0H7i7x+HIXEe7ePrDh5cjcjsh25H5PTCnpoNv+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XTTrGgvK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=idTfMUCN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01255606A331;
-	Wed, 18 Nov 2026 18:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D642E606A31C;
+	Wed, 18 Nov 2026 18:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XTTrGgvK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C9DA1F000C4;
-	Wed, 18 Nov 2026 18:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=idTfMUCN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C891F000C4;
+	Wed, 18 Nov 2026 18:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025219;
-	bh=ckDc9Kk97eI7Ega2ntviEBIEHYKZJfLK99n7RjFWAsQ=;
+	s=korg; t=1795025222;
+	bh=1vKg8oiB1uYsWprYAJ65f+HCk0p4OtwKpHlrvN2GQ34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XTTrGgvKdECharqfwUZ0UtW+Ku5ZOI6LhenQSfOfRTMKMKRIv0Oy0+3gHgbyBxUTY
-	 KboPbwoDlNVIqNTalt1azcbSYzQyLCfhsKuaVdrge3UIeE1MKWLYAQsFL3Fo11Av1p
-	 4vRWTHSplbOfRNMuiHpYOs7km8pqHgkEjfDI14DU=
+	b=idTfMUCN1xWCDF1x5ZDWu2Oq2H+A8fJYgxHgQdhIk7dYKGwASJWH4epqguFEnHyud
+	 jduWjfh1Q0oP3jSPwUuir90VrSdl+tm9UNJA5ITIFUTjWIchY8zKClzP4kp8iWpz+f
+	 PgkxsEgW0yoQxyvk1LkGmKylM3XNQYy4yolN3AZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Jens Remus <jremus@linux.ibm.com>,
-	Jan Polensky <japo@linux.ibm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0975/2151] perf build: Respect V=1 for Python extension builds
-Date: Wed, 18 Nov 2026 15:45:10 +0100
-Message-ID: <20261118150158.012630759@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Igor Paunovic <royalnet026@gmail.com>
+Subject: [PATCH 6.18 1002/2151] phy: rockchip: usbdp: Properly handle TYPEC_STATE_SAFE and TYPEC_STATE_USB
+Date: Wed, 18 Nov 2026 15:45:37 +0100
+Message-ID: <20261118150158.939647579@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -80,69 +71,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Remus <jremus@linux.ibm.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 41c1ce28bbc1d4f7a1b1b711b86448480d2838d2 ]
+[ Upstream commit b1ca8de219ae6e4d9eec22acfbe4357d8addd94c ]
 
-Make util/setup.py respect the verbose build flag (V=1) by conditionally
-passing --quiet only when not in verbose mode.
+Handle TYPEC_STATE_SAFE and TYPEC_STATE_USB Type-C state events,
+so that the muxing is properly updated when exiting DP AltMode.
 
-This eases debugging of Python extension compilation issues and aligns
-with the existing perf build system behavior.
-
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Jens Remus <jremus@linux.ibm.com>
-Tested-by: Jan Polensky <japo@linux.ibm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Thomas Richter <tmricht@linux.ibm.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 2ed38aa8a52d ("perf python: Track linked libraries as extension dependencies")
+Fixes: 2f70bbddeb45 ("phy: rockchip: add usbdp combo phy driver")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/message/20260619155020.CC7361F000E9%40smtp.kernel.org
+Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-part2-v15-5-8d507cb1174f@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Makefile.perf | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/phy/rockchip/phy-rockchip-usbdp.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
-index 841c00c847b0a..5e87527c3d13a 100644
---- a/tools/perf/Makefile.perf
-+++ b/tools/perf/Makefile.perf
-@@ -396,6 +396,10 @@ export PYTHON_EXTBUILD_LIB PYTHON_EXTBUILD_TMP
+diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+index cde90d0c44430..d1d78d9f7b096 100644
+--- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
++++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+@@ -1274,18 +1274,27 @@ static const struct phy_ops rk_udphy_usb3_phy_ops = {
+ 	.owner		= THIS_MODULE,
+ };
  
- python-clean := $(call QUIET_CLEAN, python) $(RM) -r $(PYTHON_EXTBUILD) $(OUTPUT)python/perf*.so
- 
-+ifneq ($(quiet),)
-+python_setup_quiet=--quiet
-+endif
++static bool rk_udphy_is_supported_mode(struct typec_mux_state *state)
++{
++	/* Handle Safe State and USB State */
++	if (state->mode < TYPEC_STATE_MODAL)
++		return true;
 +
- # Use the detected configuration
- -include $(OUTPUT).config-detected
++	/* Handle DP AltMode */
++	if (state->alt && state->alt->svid == USB_TYPEC_DP_SID)
++		return true;
++
++	return false;
++}
++
+ static int rk_udphy_typec_mux_set(struct typec_mux_dev *mux,
+ 				  struct typec_mux_state *state)
+ {
+ 	struct rk_udphy *udphy = typec_mux_get_drvdata(mux);
+ 	u8 mode;
  
-@@ -741,7 +745,7 @@ $(OUTPUT)python/perf$(PYTHON_EXTENSION_SUFFIX): util/python.c util/setup.py $(PE
- 	$(QUIET_GEN)LDSHARED="$(CC) -pthread -shared" \
-         CFLAGS='$(CFLAGS)' LDFLAGS='$(LDFLAGS) $(LIBS_PY)' \
- 	  $(PYTHON_WORD) util/setup.py \
--	  --quiet build_ext; \
-+	  $(python_setup_quiet) build_ext; \
- 	cp $(PYTHON_EXTBUILD_LIB)perf*.so $(OUTPUT)python/
+-	/*
+-	 * Ignore mux events not involving DP AltMode, because
+-	 * the mode field is being reused, e.g. state->mode == 4
+-	 * could be either TYPEC_MODE_USB4 or TYPEC_DP_STATE_C.
+-	 */
+-	if (!state->alt || state->alt->svid != USB_TYPEC_DP_SID)
++	/* Ignore mux events not involving USB or DP */
++	if (!rk_udphy_is_supported_mode(state))
+ 		return 0;
  
- python_perf_target:
-@@ -1166,7 +1170,7 @@ install-bin: install-tools install-tests
- install: install-bin try-install-man
- 
- install-python_ext:
--	$(PYTHON_WORD) util/setup.py --quiet install --root='/$(DESTDIR_SQ)'
-+	$(PYTHON_WORD) util/setup.py $(python_setup_quiet) install --root='/$(DESTDIR_SQ)'
- 
- # 'make install-doc' should call 'make -C Documentation install'
- $(INSTALL_DOC_TARGETS):
+ 	mutex_lock(&udphy->mutex);
 -- 
 2.53.0
 
