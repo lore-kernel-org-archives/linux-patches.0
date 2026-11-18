@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055965;
-	b=lX0HzR1WDy3GFlKQzHg3Nba9sx3yLteNRv3kwvaE1w+q0dSuSvqA9rQiWgQRGBBqA1Ed
-	 /ePjODLSrOmzJltCv/lNDLW038TLRu8IBMWVDX8X42hCY/pB8JpF71wq5w3p4zZcgCgB6
-	 ZiajUtGgEx27JENTtF/rclM1x8/O/iUDEeDf+dawwIGwMLGZ2YhBLzouP1y0A5yuxFJ7x
-	 IbiGxD410wZVWgad6vfXEKU12MIt+QdewbG+Y4qKG365NILbgUX2foFVgp3umIkXYzcUZ
-	 4NLlkZQewSh2Rvkz/wN6/H8UYGu8PfFbhJpBWiIiycb/dnU4XNi05QPEET8al7kJ/LA==
+	t=1795055968;
+	b=3NCh6DdqUVU0Zgs89LPOJZLwo7sgjZmzwkmL8+oNldYoiPqW2NB5Q5rVjgF/Wj+gYNQR
+	 vVqAr1R86/aTpUmgYnsU+gcnioIP3PxlQwyMcHCm8WORR4XXWoDRSJc5rnw9aWqTPp6JY
+	 abCDCtHTyX0kdkBRqoDZQLlAhQ3W0KvYxYkr/XXq3XKDlr99J47Lc4yC6pF23MSQH37qk
+	 2/6tG2NDRLR0R44ibCWqogc/K5CThdN93B0lW4xy3eefEkgDXYB5PfXE8nQd/b+fz0bae
+	 bvWFIZCJ2bP0mEYt+Fi1gxgekpnHdw26ngT1mh/zPGG/Ce2uArowdKxRYiP4Mwib/WA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055965;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055968;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1vwf74y+vakg4rfK0p1lpdBcRA72PvU4nvpZlcxXezE=;
-	b=ViSrz/dz/VkUGwCN+h43f8tRcKO6u/kImqKenHM0U786thWk7car/ODxgZLpwgHFUg3L
-	 cl+gKaROSXKu21CMrw8yAfpcancdXNJe1qs5qDctAoFgmyb+5D1zbNfrvrymDLEy3i66E
-	 tmvhh2iJ3zRBVHm+GLKC56LaN3nUBA34GzDC5nt7dVI7iqUiRtAUGpdHHQpgBRuPfS/+m
-	 Y9mWA0bOAZSWH12IoQN9AFhMVsWFLjkfSTJH7wLmapTp3lEHyx9Fj71WbjcJIwEPdP5o9
-	 M/pyE1wFGIFimzD5lGCPt9+hS9it9ylwmdV06qFv+T2Nj13N9eKlZ2PywepCAnQvxhA==
+	bh=lwNcgAwKnFta8J54Gluv2iDsA4uHO/ZgEVmtzkFZi9k=;
+	b=w8ZihdrL94yXvNK697sD/JN03KWJvK3qumiKCNp8yUn4Nmo7OgpdI10FgT6NXAPre9sI
+	 mY5diYQDBjsNNAUAlDE+YM9XusBbBYVz/PqO0pG8FWN4g6OxJVNPCAr6M0q1bDTUs0MdB
+	 Q2qbVyxG/bUaAy9AVjScSAUC6FOAADOM72tiXKCzNhIvXUSbnEKy/GjcyZIL+DK54mtOM
+	 IJUq3VAQVoN8EPZiiikmA3m+TQfhoA+zTcTYGbPNvVWuTmG6OPy2foyQZ6qifAyxGK8sX
+	 GBtCaK+JZkHXH973yoqUYsjf0X9bgtm6CdLtI+53tiEsbnrBGndvkUFqTK6AHjU0vJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KpjEPimu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NdSZ2V6z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B49606A320;
-	Thu, 19 Nov 2026 02:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7978606A325;
+	Thu, 19 Nov 2026 02:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KpjEPimu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8521F000C4;
-	Thu, 19 Nov 2026 02:39:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NdSZ2V6z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7D31F000C4;
+	Thu, 19 Nov 2026 02:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055965;
-	bh=1vwf74y+vakg4rfK0p1lpdBcRA72PvU4nvpZlcxXezE=;
+	s=korg; t=1795055967;
+	bh=lwNcgAwKnFta8J54Gluv2iDsA4uHO/ZgEVmtzkFZi9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KpjEPimuUujVChBksDkMOYiJC2wNa+ru7VM/uEmqzuiaYAvgSrxkvrzhUvrBWwu7g
-	 Trdgg4UN/Ny6GnRhIoqv/TGGpa+X6XmAWnJmgGXs6E0RQNwhoV0cr6addvKl9u3APT
-	 ij1maoEsiWGjZ4oZaDYO3l2Q0qn7f2hXZmD2EQjk=
+	b=NdSZ2V6zTV7BPE9TRv/xjue5TKtEjdJQLHZHNZT4dH4+uH+Z5D0FiCASTpcQr1maF
+	 ix9pfi2zQJ5FCut3HWCJx44PY+WC5nE0XIae9jrWJq5ebump75pPf2y6IptBrhcXTV
+	 5F1ST+4lhF+ofbm0kZFZzNKO/dYsNcAAn4UBd8cI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Linus Walleij <linusw@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1769/2214] dmaengine: ste_dma40: Fix logical channel bounds check
-Date: Wed, 18 Nov 2026 15:57:25 +0100
-Message-ID: <20261118150122.291307966@linuxfoundation.org>
+Subject: [PATCH 5.15 1813/2214] ALSA: core: Add missing barriers for power_ref vs card->shutdown
+Date: Wed, 18 Nov 2026 15:58:09 +0100
+Message-ID: <20261118150124.003087165@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,64 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 57938e0c2a24f9f792fe9f611391ef6b58d1aa21 ]
+[ Upstream commit a6913835735469751f56473f5212eb291a4805e7 ]
 
-d40_validate_conf() checks the raw dev_type against num_log_chans,
-but d40_allocate_channel() derives the lookup_log_chans index as either
-2 * dev_type or 2 * dev_type + 1.
+snd_power_ref_and_wait() increments card->power_ref and then reads
+card->shutdown (and the power state) locklessly, while
+snd_card_disconnect() sets card->shutdown and then waits for
+power_ref to drop to zero via snd_power_sync_ref().  Due to the
+missing barrier on both sides, the caller proceeds with shutdown still
+seen as false, while the disconnect side sees a zero refcount and
+continues tearing down incorrectly.
 
-Validate the dev_type against the derived logical channel index limit so
-channel allocation cannot write past lookup_log_chans.
+For addressing the potential race, add smp_mb__after_atomic() after
+the refcount increment and smp_mb() before snd_power_sync_ref() in
+snd_card_disconnect().
 
-Fixes: 26955c07dcf3 ("dmaengine: ste_dma40: Amalgamate DMA source and destination channel numbers")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
+Fixes: e94fdbd7b25d ("ALSA: control: Track in-flight control read/write/tlv accesses")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
 Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-19-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261007172051.13240-9-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ sound/core/init.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index fe674afa05286..4e3fba774358e 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -1739,15 +1739,26 @@ static int d40_validate_conf(struct d40_chan *d40c,
+diff --git a/sound/core/init.c b/sound/core/init.c
+index a1976a0c60ef1..8fb8f3b64d5a2 100644
+--- a/sound/core/init.c
++++ b/sound/core/init.c
+@@ -542,6 +542,8 @@ void snd_card_disconnect(struct snd_card *card)
+ 	clear_bit(card->number, snd_cards_lock);
+ 	mutex_unlock(&snd_card_mutex);
+ 
++	/* order card->shutdown store against power_ref read */
++	smp_mb();
+ 	snd_power_sync_ref(card);
+ }
+ EXPORT_SYMBOL(snd_card_disconnect);
+@@ -1145,6 +1147,8 @@ EXPORT_SYMBOL(snd_card_file_remove);
+ int snd_power_ref_and_wait(struct snd_card *card)
  {
- 	int res = 0;
- 	bool is_log = conf->mode == STEDMA40_MODE_LOGICAL;
-+	bool invalid_dev_type = conf->dev_type < 0;
- 
- 	if (!conf->dir) {
- 		chan_err(d40c, "Invalid direction.\n");
- 		res = -EINVAL;
- 	}
- 
--	if ((is_log && conf->dev_type > d40c->base->num_log_chans)  ||
--	    (!is_log && conf->dev_type > d40c->base->num_phy_chans) ||
--	    (conf->dev_type < 0)) {
-+	if (!invalid_dev_type && is_log) {
-+		int max_dev_type;
-+
-+		if (conf->dir == DMA_DEV_TO_MEM)
-+			max_dev_type = DIV_ROUND_UP(d40c->base->num_log_chans, 2);
-+		else
-+			max_dev_type = d40c->base->num_log_chans / 2;
-+
-+		invalid_dev_type = conf->dev_type >= max_dev_type;
-+	}
-+
-+	if (invalid_dev_type ||
-+	    (!is_log && conf->dev_type > d40c->base->num_phy_chans)) {
- 		chan_err(d40c, "Invalid device type (%d)\n", conf->dev_type);
- 		res = -EINVAL;
- 	}
+ 	snd_power_ref(card);
++	/* order power_ref increment against card->shutdown read */
++	smp_mb__after_atomic();
+ 	if (snd_power_get_state(card) != SNDRV_CTL_POWER_D0) {
+ 		wait_event_cmd(card->power_sleep,
+ 			       card->shutdown ||
 -- 
 2.53.0
 
