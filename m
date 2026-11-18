@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047478;
-	b=O/Q0t5PLbgqi8TaDJcHJy65YD3SuDpEM4dXDNiyAhDi78p7DeR1z2ZdBaet+C/vBMkOd
-	 /Y9MStYAydJljwN5nv8bIDGvX4e0sF62n8oFoRbgVxFam2Uw6/LgKxfFqVyia9Y3ufGIR
-	 rr4GrXT4tqUujz653iC+HwwApN6hVIoSvR5Mj9H07vMmWYMSn8vFAlKF2bGNZT2rQmlLe
-	 QtUMXrZkUm3EAQN1Un4RmnPPi+gqu4k+cO93j+J6tCRHhqTi5g6h6mF9B5LYX4gWwxu2i
-	 JyFZoTEfW55juAVkD6KQxOjy2Tzz3738mtpSvasSFTdfipcnoPMeaRGvB2EoYUdU1Qw==
+	t=1795047481;
+	b=u5bJQXqHv7hBMaR54qtsBQ+9Iq081GnCWlpe4TVS2nNji4jTD6TrKkxSSIDU5cdsnIBa
+	 gINYFJ1b4Utmc49UlpRt+YpQhvqDRD3Vz1LrfkSKuN6chnRcHKOk34UK+36YUPm1mIirt
+	 sWFjWHzb0cbFvRRigOay2DSmvNT0cgs2iXBpxBV7d5wGcQ3h6VlOzsn8ZQcmsempy1PFK
+	 twlhmIu8WDb/kVIJ6JDh1BOodV/k7OvcDtl191ojm6SCXmVnw9CYzqqQPrpIbt3J4NAnn
+	 +2Nx96rwp4QjVERVrWLI7tuTPgCJllW5a1oMzm5YFYEvB8foVDTWXtD7msaGPijN03w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047478;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047481;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=UCzhOo5Ixi60VijM01i7mRYyQ+OCzbBtO9Igr20Pxcg=;
-	b=gnpsld7gmYTLQ7jzbygnoxJcfuLKBfxCIJEAheZT3ZszHpFWldxo7hGBLbCggBgM+9DW
-	 aU/ru4ZH8PAfCIZOzjiWOHM/vuACtIX6CJPa6UhR6V9H/cNEeZ4WDfRi7nAosldXX4i8j
-	 YDKOELmmbrXHAv+A8hmcKhqIKw4mAhLeLGuWP8LtKwLFFMQV6XZ6ZZN6DYZE736Cqvbau
-	 0rqLf1Ci3KB0l2QC/9xFmr8tISCYTjy8X1QsvcIq02rRfJdEbkCbh6qmSP0M2A/YBnVu5
-	 7BsQV1pApNE1dLCiEvzd+O9ufQaj4HaV797p0cU89wF+DxKM6XgmUHTthXyuhI4O+RQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=QX/n+TYsm1se4O9WN4kFs9Xh0qrGXV9Ki4cSY1VvNL4=;
+	b=47W3yVM2/7QxDy5e4F6EACj+JhugCfV0C3KljERG9LuIhLJu08csVhlrCxPc61aTwFdv
+	 Ji8wWZSY5dal0+2U0I78DvZdNaj2k6thidQENBIWDF11VOu9Lozt/Rvo4kjVw/ZAmBMIy
+	 TLOd1oYIdHu7OL4puhw8WqGhsSi6MoEzS5UCMdtq/TvaG8IM5bWhUPquLPTtWpEPRl/LE
+	 DL8++wixN9IkoqvUP8WXD1sAQpzMLuVsTY8FAeWrBguS37uGsxe6B8BMlGTOCoa8NdCPm
+	 t9HM6PwFtEtoQe32Mnfis9fUWQbMhASJyVEnQuEfRUjdLtlQa5gDBDIBeb/7XOndk0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="m6/OUAfb";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bL8VY9Kp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94FD9606A32A;
-	Thu, 19 Nov 2026 00:17:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5926D606A325;
+	Thu, 19 Nov 2026 00:18:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m6/OUAfb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54BC1F000C4;
-	Thu, 19 Nov 2026 00:17:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bL8VY9Kp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF42E1F000C4;
+	Thu, 19 Nov 2026 00:18:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047478;
-	bh=UCzhOo5Ixi60VijM01i7mRYyQ+OCzbBtO9Igr20Pxcg=;
+	s=korg; t=1795047481;
+	bh=QX/n+TYsm1se4O9WN4kFs9Xh0qrGXV9Ki4cSY1VvNL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m6/OUAfbRDj0WRpCcOSCT51oFwXYv+IvMItfhBv4voyvx6uh6w+NPvoOoKtU3JWot
-	 FEOPCKHMoFNF05is8zv6iNYczEfMJ2dlg8D0DvilonRDP+kubUg5mFSvDLKNNUZpJZ
-	 OhPs4/c/U5o2/lnydJ5sR3kNG1OfqQssxzqtB6us=
+	b=bL8VY9KpGnNPknXgJtoNSsNo46x52eyzROITPNVKAmHYM4IVKa/jWRz7G0kR44ZWR
+	 5L0/Bl+yqzxsiHoBaKEbpv1O5UOyXFxX20EFh7cnf9otU/j1/gNW6YBT2aS3L04Gum
+	 GqUV7pT2D7JnVeqOlZ48RfZ7syxU3E/oth6fxbV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Wang <kevin.wang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1654/2857] drm/amd/pm: populate unique ID for smu 13.0.7
-Date: Wed, 18 Nov 2026 15:44:48 +0100
-Message-ID: <20261118150300.890513677@linuxfoundation.org>
+Subject: [PATCH 6.1 1655/2857] drm/amdgpu: keep the CS user fence BO in GTT
+Date: Wed, 18 Nov 2026 15:44:49 +0100
+Message-ID: <20261118150300.924027533@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,73 +63,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kevin Wang <kevin.wang@amd.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 079f9103d9cde68fb2ccc414e94520f43ee102de ]
+[ Upstream commit 7a56d929dc2304edaa6231e1eb5eb82b7e8b74a9 ]
 
-The smu 13.0.7 backend does not register get_unique_id, leaving
-adev->unique_id at zero and KFD topology without the stable GPU
-identifier consumed by HIP.
+The CS ioctl hands the GPU the GART address of the user fence BO, but
+since the BO keeps its own preferred and allowed domains, it no longer
+makes sure the BO is in GTT. A user fence in a VRAM BO, which only needs
+to be a page in size, gets its address from amdgpu_bo_gpu_offset(), which
+warns about non-contiguous VRAM. On navi31, a CS with a user fence in a
+4K VRAM BO, or in one created with AMDGPU_GEM_CREATE_VM_ALWAYS_VALID:
 
-The failure is observed at:
-    auto ierr = hipDeviceGetUuid(&uuid, 0);
+  WARNING: amdgpu_object.c:1531 at amdgpu_bo_gpu_offset+0x86/0xb0 [amdgpu], CPU#11: cs_gem_checks/18393
+  RIP: 0010:amdgpu_bo_gpu_offset+0x86/0xb0 [amdgpu]
+  Call Trace:
+   <TASK>
+   amdgpu_cs_parser_bos.isra.0+0x4eb/0x850 [amdgpu]
+   amdgpu_cs_ioctl+0x97e/0x2510 [amdgpu]
+   drm_ioctl_kernel+0xac/0x110 [drm]
+   drm_ioctl+0x2c6/0x5b0 [drm]
+   __x64_sys_ioctl+0xa0/0xf0
+   do_syscall_64+0xa3/0x4d0
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fixes: 113cc31dde66 ("drm/amd/pm: add SMU_13_0_7 ppt_funcs for SMU_13_0_7")
-Signed-off-by: Kevin Wang <kevin.wang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+and BOs which can't be in GTT at all, like GWS or OA ones of a page in
+size, pass the checks as well.
+
+Only take BOs which can't be anywhere else than in GTT as user fence,
+which the CS then validates there along with its other BOs. While at it,
+detect userptrs with amdgpu_ttm_tt_is_userptr(); amdgpu_ttm_tt_get_usermm()
+returns NULL once the task which created the userptr is gone.
+
+v2: only take BOs which can only be in GTT instead of special casing the
+    user fence BO in the validation, use amdgpu_ttm_tt_is_userptr()
+    (Christian)
+
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5e2585daaf8336d9ce1bf52e55a9b7a8cdbf625b)
+(cherry picked from commit f16989def9561d04d0f2e77216f5319112d29bf1)
 Cc: stable@vger.kernel.org
-[ sashal: Adjusted context to insert smu_v13_0_7_get_unique_id() immediately before the pptable_funcs table. ]
+[ sashal: Replaced p->uf_bo references with the existing local bo pointer. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c  | 20 +++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-index f5e340c2c5984..50d4f7990dfb2 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-@@ -1695,6 +1695,25 @@ static int smu_v13_0_7_set_df_cstate(struct smu_context *smu,
- 					       NULL);
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+index 894989f453fff..cac55781798cd 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -153,7 +153,12 @@ static int amdgpu_cs_p1_user_fence(struct amdgpu_cs_parser *p,
+ 	if (size != PAGE_SIZE || data->offset > (size - 8))
+ 		return -EINVAL;
  
-+static void smu_v13_0_7_get_unique_id(struct smu_context *smu)
-+{
-+	SmuMetricsExternal_t metrics_external;
-+	SmuMetrics_t *metrics = &metrics_external.SmuMetrics;
-+	struct amdgpu_device *adev = smu->adev;
-+	u32 upper32 = 0, lower32 = 0;
-+	int ret;
+-	if (amdgpu_ttm_tt_get_usermm(bo->tbo.ttm))
++	if (amdgpu_ttm_tt_is_userptr(bo->tbo.ttm))
++		return -EINVAL;
 +
-+	ret = smu_cmn_get_metrics_table(smu, &metrics_external, false);
-+	if (ret)
-+		goto out;
-+
-+	upper32 = metrics->PublicSerialNumberUpper;
-+	lower32 = metrics->PublicSerialNumberLower;
-+
-+out:
-+	adev->unique_id = ((u64)upper32 << 32) | lower32;
-+}
-+
- static const struct pptable_funcs smu_v13_0_7_ppt_funcs = {
- 	.get_allowed_feature_mask = smu_v13_0_7_get_allowed_feature_mask,
- 	.set_default_dpm_table = smu_v13_0_7_set_default_dpm_table,
-@@ -1760,6 +1779,7 @@ static const struct pptable_funcs smu_v13_0_7_ppt_funcs = {
- 	.set_mp1_state = smu_v13_0_7_set_mp1_state,
- 	.set_df_cstate = smu_v13_0_7_set_df_cstate,
- 	.gpo_control = smu_v13_0_gpo_control,
-+	.get_unique_id = smu_v13_0_7_get_unique_id,
- };
++	/* The GPU writes the user fence through the GART */
++	if (bo->preferred_domains != AMDGPU_GEM_DOMAIN_GTT &&
++	    bo->allowed_domains != AMDGPU_GEM_DOMAIN_GTT)
+ 		return -EINVAL;
  
- void smu_v13_0_7_set_ppt_funcs(struct smu_context *smu)
+ 	*offset = data->offset;
 -- 
 2.53.0
 
