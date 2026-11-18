@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023465;
-	b=xZJ4QrESWjWWAMdXZTnVSAvFi/R0UpA5dZLXnSWoeYsP010s3qDee57z+yisIMK6MDcR
-	 3ez753M8HXUREn070NRf2grh2GbszLMX/JxY2pL7vOnewIHogcc4k+tIFqDSGgUoIKSKe
-	 hIuWWch4YflxlfBW3aHKjp1M1pE9qabotQ/q0zmyIVKvoeNczRWFlzMZmgmDBuaZZFyfU
-	 sTiRqsptX7vginAxO60Ie6apq1Du7RIciCsW/nRSneYo2yBnccxPM0QoC7el5sYF+aSG6
-	 unK3g/kDvR4FNF8DshyPtuHKCBwexF3CxdYd3W9dim7PGz/yx2YlZLVOI5nrHkJGKrg==
+	t=1795023468;
+	b=Ej6PEYCsE874srWEQ8wj/BVJlK5UHjyVlV07rYHazGaGXzDSEqCBAfBMUqOhrj1M1vkh
+	 +SN0z3l7pIgJDZsEdELIweuNGrb7Xr8KcOR11W2j/c3KFmgKHddTyhgL97jioSvaJoBpE
+	 ve5/BsTMdO9dUFrnTD0h2DMTWq5ptLKp2HmJDmchqSuZZ1XIOdgyRBm3Hbw1ZUVw3+P3Y
+	 fEwTSIAvjKB6AS91Ew1TVtDbqEPbvjdDk9j6TOu1t459f0rlsDkBUgCO1YMLvP8imTKTw
+	 2CBwxTmopjbWLwUnv2/zlFgVrMWPU6iCxpT8vEUTpWGuNmJRpAu+tZ1C83+DB+pVdVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023465;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023468;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7ENB93WajVG6PWUx9ZX5ngMPA6uprOoKB08TltHAff4=;
-	b=Hdj5eYs26CaaC23ZmHfrM4T+/iH/wndPEmeLWyFtyMMWQh7BZGkLRDCvmMpYAcdlqdJl
-	 dQSnHM9rm8oA3Na0/3Z9i+yqjdDA3X9WJcipY8xcRTx2MWOtGrEXyFshufc0k/EelHEO2
-	 KGrLWjTRp7PmyEyMbJqxyoM71TvBokgM4MlKrZkPaeAt0k05KM4GNSDST2jjnzj6fE24c
-	 yc9dCp06SZJQTZNXjVMRjrRbuRerGfRfZ11IRJ10HxHqYXvQo2o53AO9tX2ZH9v1gucLQ
-	 yVR8l7yuyfSGKZhZGkxHkoaSyrpzgcCzClvwqMP1s8PnmKCCA3Nf7ljJcicTfkKZ6Gg==
+	bh=EPPxjhkFBg1rwKPZ1h5bY5N+wr+ynYfZhW2hs1u3bog=;
+	b=5XxP1IYypCPceEBtgWlGx48FXrbYttaBH238ydeDjczh/cafyGexypaNdxoM7tSQAATw
+	 dL3ECrHgRGs5WGUJKKunF+hOgDfqxZGdp3L1t+LowAx3vCJJeegdaNDEOhNbp+9Nf18iI
+	 f7EiCZ2g0X3gm3h9dJD+25nCjt/aDVE01OpsKHY8k3nJvCcKTzo4442ZhjO0jjA9JoPEl
+	 oJ7lda0HkmjsG0Tah6xixFlVCioDN8HtPxQ3yKnWboGo+QFL2ebBypVhTJutx8WBKYxcr
+	 6QrP9dXZ7PB2TipB+9qxGzhjmzZavNhfBJ7YgfYB8BazMgrbiesEspjVCWHgEYVb9tw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cY0CbsaY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0sA1bz4U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D053A60A2600;
-	Wed, 18 Nov 2026 17:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58755606A325;
+	Wed, 18 Nov 2026 17:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cY0CbsaY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C401F000C4;
-	Wed, 18 Nov 2026 17:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0sA1bz4U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3C51F000C4;
+	Wed, 18 Nov 2026 17:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023465;
-	bh=7ENB93WajVG6PWUx9ZX5ngMPA6uprOoKB08TltHAff4=;
+	s=korg; t=1795023468;
+	bh=EPPxjhkFBg1rwKPZ1h5bY5N+wr+ynYfZhW2hs1u3bog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cY0CbsaYQAuvUjmGJHaq8AcDzSc1TaepvUqRkug7rtVP0PNdENdkPXhvSgci4KDbO
-	 WzInK0COOGTVVk5iVo6f7XalYgHYU1Okg7HM50hojsRR5or6ZjRalnoLwgXMXXkpzA
-	 EOF5b5G2NSG5nTn8fd1VVuvaWN/Cok4CI2eYR8DQ=
+	b=0sA1bz4UqkbNscZmirGSjNdEg2D+yvwXKyFYBSmgFCczLZjgILFGab6ZMPGY/U0YD
+	 c7gDI2juduFD1Gk0MF9Ha+7L6YtjBpQpptMtcRlSoFuc4/lmEkSgXuXEgCvn2vPT/+
+	 rhgiFc3/guASi7VWxOfXhe2sgEiTretVfFfXN+cY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0342/2151] scsi: mpi3mr: Fix use-after-free of the firmware event workqueue
-Date: Wed, 18 Nov 2026 15:34:37 +0100
-Message-ID: <20261118150134.563008987@linuxfoundation.org>
+Subject: [PATCH 6.18 0378/2151] arm64: dts: qcom: sm7225-fairphone-fp4: Disable PMK8350 PON
+Date: Wed, 18 Nov 2026 15:35:13 +0100
+Message-ID: <20261118150135.856888550@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,45 +70,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit c94c746e6c80439a4a9a0e1e20f2dae62a4d57ef ]
+[ Upstream commit 5c088a33e3a9bb236c475b7230df275fc1e51eda ]
 
-The enqueue path reads the workqueue pointer before taking the event lock,
-while the remove path clears that pointer and destroys the workqueue while
-holding it. The enqueue can therefore reach queue_work() after the
-workqueue is gone.
+Two PMICs on this phone have a PON block, the PM6350 and PMK8350. Only
+one should be enabled at one time, so disable PMK8350 PON and keep the
+PM6350 PON.
 
-Move the check inside the lock.
-
-Fixes: 13ef29ea4aa0 ("scsi: mpi3mr: Add support for device add/remove event handling")
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-17-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: 582e7c1026fa ("arm64: dts: qcom: sm7225-fairphone-fp4: Add pmk8350 PMIC")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260901-fp4-pmk8350-pon-v1-1-e05937e9c860@fairphone.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index cb105c8fdbb18..d0f9eb45750df 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -233,10 +233,11 @@ static void mpi3mr_fwevt_add_to_list(struct mpi3mr_ioc *mrioc,
- {
- 	unsigned long flags;
+diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+index b6d2a5d0c1c88..b3a0db3c83af8 100644
+--- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
++++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+@@ -925,6 +925,10 @@ xo-therm@0 {
+ 	};
+ };
  
--	if (!mrioc->fwevt_worker_thread)
--		return;
--
- 	spin_lock_irqsave(&mrioc->fwevt_lock, flags);
-+	if (!mrioc->fwevt_worker_thread) {
-+		spin_unlock_irqrestore(&mrioc->fwevt_lock, flags);
-+		return;
-+	}
- 	/* get fwevt reference count while adding it to fwevt_list */
- 	mpi3mr_fwevt_get(fwevt);
- 	INIT_LIST_HEAD(&fwevt->list);
++&pmk8350_pon {
++	status = "disabled";
++};
++
+ &pmk8350_rtc {
+ 	status = "okay";
+ };
 -- 
 2.53.0
 
