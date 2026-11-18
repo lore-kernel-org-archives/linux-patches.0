@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044793;
-	b=LR67ITU287G+c5RdImr8URb3UiBlSH96ecMYeEMlay5fRwhV2oQ21OyCTawxqIsQcbQz
-	 rzHQFN7I6S8a7jDaLOEdGJxoWPrgwqthe/pg40x/Wc7J56/RnN51NeogyvsYxjzNNkOVe
-	 ONrfq9y53H1WF4pMCMbZoQ2gwyj1kvIYY5nX9w8DzUN5U95zl29IwhRxzEkWI1wSZzEgi
-	 uXNfvNESYTtbhDBhZVGYL7A0FdnFrBxMjPeorFWlY9tTpIyt4QUf+MFoPdFAL6XIDwbWj
-	 +IqNqOtBE/Asl+/XwC2skzudmnhsr5kqOeTZcLyFvzLNzX9CFazPxdmqbLh1eI9FmHQ==
+	t=1795044796;
+	b=w+jOeinzsEovWBYF6fiQpcIx5KsvwVt1ZPjH4S6TQHTmYTH8CGLoVxOKA2Wt9QuqjBIC
+	 DPITL/XyX+7PhHeLpMeeT3TrV0CZQdwa1XjSXpkjBrYLxYhHOs4qQWufQWaCViV0+93tj
+	 bWvktIbgvClEYjwgjd5Cin1wDQj6L9rQLsvuMiH9YC0jtfB0IhO9Jq1n8+gUNQpZgALbY
+	 uaKer77fbKJ1XKaSMm+howCEw8xRjHT69OjmYaKNt4ZgvKAGcbh1hFmnWZzKDrc5SnwJC
+	 Gef3wUxWSD+M6QOaCb93j4gpVne3u9uWv9RXUk/sOqXVfumyPTFqzWwgyBPEMQRShoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044793;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044796;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BPtZkoRBjUuS7zv2DKPHf87yfHQc1p+6rCOJ1+gaPBk=;
-	b=GdSoON9f6rStE1BDUjVFAOhCaGhAxHeSxZTIyLhyKIm2E0CgifGyRFTWwUqimVGvloib
-	 yVeZLyMIuq3/TifWhj+WyjOWLusKj0akdVU157uFFrYhKXA2ljtdADMDxK/NovMSEIiWT
-	 sML7Zs0BOCwt/B8HZHzhbsVk/n2pcEociYV0FJsiJEtIZ9ciDst70x+ptXcr9Lavrk/ML
-	 UC8dHSA2E7weiMA/obbplj/KtxowBHbgrL1dGHyZY1R8Bprr6El2u7V3ccB07rqPdwoHi
-	 zun0SVGNJllD1mdouE8MID9kYQ3OGBcqN0sxYQBBaygKjxeD2iAcq2oHKLwZQ4DxHCQ==
+	bh=//FBhDqcJQrfOnCGt2k2fuOYj69zqkyl9j1+rIScAnI=;
+	b=J769Nnf4qAM3f4h3RZJKp3hUuHWr9WTYoxOSNHvCPEpFT8kJgjY6JAIM6+7J309xwbmL
+	 1r0c+grNX+GqfPFYUAbjpY155Fp06M3LVotdY3btHThJISjGot8XwdZgvhQGFBuE3ve5l
+	 3WZHR1rx0N+UqIqO3Hap0HSw+cBw/SeB+ad2nYS3hE/IKC4VF7c9y32ittmxku8Q9g6Mj
+	 Rd03He1GL+TJLBTP4AD8AwNMz2E1gvHfBMDSVQQY1jLADHupzpmWJO5s/wdplkErYf+/R
+	 nyHDl3CNWZ7rLf/CvvyJSptD4EVaMvyK3K1hJgMELRN1BCwwEU44Ivwpm4o81f6M9Nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1P7Z6qQ8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Fh/NWBMv";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF9A606D67F;
-	Wed, 18 Nov 2026 23:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8490060A381F;
+	Wed, 18 Nov 2026 23:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1P7Z6qQ8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76C51F000C4;
-	Wed, 18 Nov 2026 23:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fh/NWBMv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FAE1F000C5;
+	Wed, 18 Nov 2026 23:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044793;
-	bh=BPtZkoRBjUuS7zv2DKPHf87yfHQc1p+6rCOJ1+gaPBk=;
+	s=korg; t=1795044796;
+	bh=//FBhDqcJQrfOnCGt2k2fuOYj69zqkyl9j1+rIScAnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1P7Z6qQ8ljgQqw8GqGQF7Ia9N1Avn7WppEyOkS7jswu/PGVoHjLdfdoKjbbU3pH0G
-	 976cYXdhHTlZqJV8ZkxdJNWS6JfX9b1qK120X+temKLXRtJIcnB+iu3uyV3mJOLgqh
-	 t+yJdXMsuclCusAQEcf4NOzgOK/C/nC6aHtb/zww=
+	b=Fh/NWBMvQG/2nEPAf0HcDzYAaiE3K76xDPIFgnvLrtUmZyQALPBDZ/JTHd8pakCWI
+	 l5My2XkO5mLOVcirBvcQeUgSk1/Q6LaocChODTUTcsh9pNNPxMlxDhxYLf+wdflvGC
+	 jwbi9Tiw2sqUAj74t0zdyGTGSTMeXSS/NVVuVrBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Khasar Munkh-Erdene <02khasar@gmail.com>,
+	sashiko-bot@kernel.org,
+	Xiaoyao Li <xiaoyao.li@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0695/2857] staging: rtl8723bs: fix spacing around operators in rtw_recv.c
-Date: Wed, 18 Nov 2026 15:28:49 +0100
-Message-ID: <20261118150226.584984820@linuxfoundation.org>
+Subject: [PATCH 6.1 0678/2857] KVM: VMX: Preserve negative return value in vmx_handle_exit() with bus lock detected
+Date: Wed, 18 Nov 2026 15:28:32 +0100
+Message-ID: <20261118150225.974230671@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,305 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Khasar Munkh-Erdene <02khasar@gmail.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-[ Upstream commit 393b267e6f04a11d4b18b7dc1423fa59f173f72b ]
+[ Upstream commit cef48693da1e964e9f192bfc16cd0ed287c48337 ]
 
-Fix coding style issues by adding missing spaces around binary and
-ternary operators, as reported by checkpatch.pl.
+Preserve the negative return value from __vmx_handle_exit() when a bus
+lock is detected, instead of always overwriting it with 0.
 
-Signed-off-by: Khasar Munkh-Erdene <02khasar@gmail.com>
-Link: https://patch.msgid.link/20260225032909.72799-1-02khasar@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The purpose of bus_lock_detected handling is to force a userspace exit to
+inform userspace that a bus lock happened. The negative return value can
+achieve this purpose, and changing the negative value to 0 fails to return
+an error to userspace. So, preserve the negative return value.
 
-Omit the operator-spacing hunk for rtw_handle_tkip_mic_err(), which is
-implemented separately here. Retain the receive-path spacing changes
-needed by the protected-frame validation fix. Use the existing
-is_multicast_ether_addr() helper at the adjacent management-frame test
-so the subsequent NULL-check removal applies without a conflict.
-
-Stable-dep-of: 495cb31c791b ("staging: rtl8723bs: fix protected RX frame validation in decrypt path")
+Fixes: fe6b6bc802b4 ("KVM: VMX: Enable bus lock VM exit")
+Cc: stable@vger.kernel.org
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260805034602.5B2BB1F000E9@smtp.kernel.org/
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://patch.msgid.link/20260819094903.3060020-7-xiaoyao.li@intel.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_recv.c | 84 +++++++++++------------
- 1 file changed, 42 insertions(+), 42 deletions(-)
+ arch/x86/kvm/vmx/vmx.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_recv.c b/drivers/staging/rtl8723bs/core/rtw_recv.c
-index 7c7b6495965f5..ebec2cff6a2b6 100644
---- a/drivers/staging/rtl8723bs/core/rtw_recv.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_recv.c
-@@ -333,13 +333,13 @@ static signed int recvframe_chkmic(struct adapter *adapter,  union recv_frame *p
- 				mickey = &stainfo->dot11tkiprxmickey.skey[0];
- 			}
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index cc10bde20d451..16b95732ba9e6 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -6539,11 +6539,12 @@ static int vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
+ 	 * a bus lock in guest.
+ 	 */
+ 	if (to_vmx(vcpu)->exit_reason.bus_lock_detected) {
+-		if (ret > 0)
++		if (ret > 0) {
+ 			vcpu->run->exit_reason = KVM_EXIT_X86_BUS_LOCK;
++			ret = 0;
++		}
  
--			datalen = precvframe->u.hdr.len-prxattrib->hdrlen-prxattrib->iv_len-prxattrib->icv_len-8;/* icv_len included the mic code */
-+			datalen = precvframe->u.hdr.len - prxattrib->hdrlen - prxattrib->iv_len - prxattrib->icv_len - 8;/* icv_len included the mic code */
- 			pframe = precvframe->u.hdr.rx_data;
--			payload = pframe+prxattrib->hdrlen+prxattrib->iv_len;
-+			payload = pframe + prxattrib->hdrlen + prxattrib->iv_len;
- 
- 			rtw_seccalctkipmic(mickey, pframe, payload, datalen, &miccode[0], (unsigned char)prxattrib->priority); /* care the length of the data */
- 
--			pframemic = payload+datalen;
-+			pframemic = payload + datalen;
- 
- 			bmic_err = false;
- 
-@@ -387,9 +387,9 @@ static union recv_frame *decryptor(struct adapter *padapter, union recv_frame *p
- 	u32  res = _SUCCESS;
- 
- 	if (prxattrib->encrypt > 0) {
--		u8 *iv = precv_frame->u.hdr.rx_data+prxattrib->hdrlen;
-+		u8 *iv = precv_frame->u.hdr.rx_data + prxattrib->hdrlen;
- 
--		prxattrib->key_index = (((iv[3])>>6)&0x3);
-+		prxattrib->key_index = (((iv[3]) >> 6) & 0x3);
- 
- 		if (prxattrib->key_index > WEP_KEYS) {
- 			switch (prxattrib->encrypt) {
-@@ -511,7 +511,7 @@ static signed int recv_decache(union recv_frame *precv_frame, u8 bretry, struct
- {
- 	signed int tid = precv_frame->u.hdr.attrib.priority;
- 
--	u16 seq_ctrl = ((precv_frame->u.hdr.attrib.seq_num&0xffff) << 4) |
-+	u16 seq_ctrl = ((precv_frame->u.hdr.attrib.seq_num & 0xffff) << 4) |
- 		(precv_frame->u.hdr.attrib.frag_num & 0xf);
- 
- 	if (tid > 15)
-@@ -575,29 +575,29 @@ static void process_wmmps_data(struct adapter *padapter, union recv_frame *precv
- 	if (!psta->qos_option)
- 		return;
- 
--	if (!(psta->qos_info&0xf))
-+	if (!(psta->qos_info & 0xf))
- 		return;
- 
--	if (psta->state&WIFI_SLEEP_STATE) {
-+	if (psta->state & WIFI_SLEEP_STATE) {
- 		u8 wmmps_ac = 0;
- 
- 		switch (pattrib->priority) {
- 		case 1:
- 		case 2:
--			wmmps_ac = psta->uapsd_bk&BIT(1);
-+			wmmps_ac = psta->uapsd_bk & BIT(1);
- 			break;
- 		case 4:
- 		case 5:
--			wmmps_ac = psta->uapsd_vi&BIT(1);
-+			wmmps_ac = psta->uapsd_vi & BIT(1);
- 			break;
- 		case 6:
- 		case 7:
--			wmmps_ac = psta->uapsd_vo&BIT(1);
-+			wmmps_ac = psta->uapsd_vo & BIT(1);
- 			break;
- 		case 0:
- 		case 3:
- 		default:
--			wmmps_ac = psta->uapsd_be&BIT(1);
-+			wmmps_ac = psta->uapsd_be & BIT(1);
- 			break;
- 		}
- 
-@@ -922,20 +922,20 @@ static signed int validate_recv_ctrl_frame(struct adapter *padapter, union recv_
- 		switch (pattrib->priority) {
- 		case 1:
- 		case 2:
--			wmmps_ac = psta->uapsd_bk&BIT(0);
-+			wmmps_ac = psta->uapsd_bk & BIT(0);
- 			break;
- 		case 4:
- 		case 5:
--			wmmps_ac = psta->uapsd_vi&BIT(0);
-+			wmmps_ac = psta->uapsd_vi & BIT(0);
- 			break;
- 		case 6:
- 		case 7:
--			wmmps_ac = psta->uapsd_vo&BIT(0);
-+			wmmps_ac = psta->uapsd_vo & BIT(0);
- 			break;
- 		case 0:
- 		case 3:
- 		default:
--			wmmps_ac = psta->uapsd_be&BIT(0);
-+			wmmps_ac = psta->uapsd_be & BIT(0);
- 			break;
- 		}
- 
-@@ -947,7 +947,7 @@ static signed int validate_recv_ctrl_frame(struct adapter *padapter, union recv_
- 			psta->state ^= WIFI_STA_ALIVE_CHK_STATE;
- 		}
- 
--		if ((psta->state&WIFI_SLEEP_STATE) && (pstapriv->sta_dz_bitmap&BIT(psta->aid))) {
-+		if ((psta->state & WIFI_SLEEP_STATE) && (pstapriv->sta_dz_bitmap & BIT(psta->aid))) {
- 			struct list_head	*xmitframe_plist, *xmitframe_phead;
- 			struct xmit_frame *pxmitframe = NULL;
- 			struct xmit_priv *pxmitpriv = &padapter->xmitpriv;
-@@ -991,7 +991,7 @@ static signed int validate_recv_ctrl_frame(struct adapter *padapter, union recv_
- 				/* spin_unlock_bh(&psta->sleep_q.lock); */
- 				spin_unlock_bh(&pxmitpriv->lock);
- 
--				if (pstapriv->tim_bitmap&BIT(psta->aid)) {
-+				if (pstapriv->tim_bitmap & BIT(psta->aid)) {
- 					if (psta->sleepq_len == 0) {
- 						/* issue nulldata with More data bit = 0 to indicate we have no buffered packets */
- 						issue_nulldata_in_interrupt(padapter, psta->hwaddr);
-@@ -1373,15 +1373,15 @@ static signed int validate_80211w_mgmt(struct adapter *adapter, union recv_frame
- 				goto validate_80211w_fail;
- 			precv_frame = decryptor(adapter, precv_frame);
- 			/* save actual management data frame body */
--			memcpy(mgmt_DATA, ptr+pattrib->hdrlen+pattrib->iv_len, data_len);
-+			memcpy(mgmt_DATA, ptr + pattrib->hdrlen + pattrib->iv_len, data_len);
- 			/* overwrite the iv field */
--			memcpy(ptr+pattrib->hdrlen, mgmt_DATA, data_len);
-+			memcpy(ptr + pattrib->hdrlen, mgmt_DATA, data_len);
- 			/* remove the iv and icv length */
- 			pattrib->pkt_len = pattrib->pkt_len - pattrib->iv_len - pattrib->icv_len;
- 			kfree(mgmt_DATA);
- 			if (!precv_frame)
- 				goto validate_80211w_fail;
--		} else if (IS_MCAST(GetAddr1Ptr(ptr)) &&
-+		} else if (is_multicast_ether_addr(GetAddr1Ptr(ptr)) &&
- 			(subtype == WIFI_DEAUTH || subtype == WIFI_DISASSOC)) {
- 			signed int BIP_ret = _SUCCESS;
- 			/* verify BIP MME IE of broadcast/multicast de-auth/disassoc packet */
-@@ -1431,7 +1431,7 @@ static signed int validate_recv_frame(struct adapter *adapter, union recv_frame
- 	struct rx_pkt_attrib *pattrib = &precv_frame->u.hdr.attrib;
- 
- 	u8 *ptr = precv_frame->u.hdr.rx_data;
--	u8  ver = (unsigned char) (*ptr)&0x3;
-+	u8  ver = (unsigned char) (*ptr) & 0x3;
- 
- 	/* add version chk */
- 	if (ver != 0) {
-@@ -1469,7 +1469,7 @@ static signed int validate_recv_frame(struct adapter *adapter, union recv_frame
- 		retval = _FAIL; /*  only data frame return _SUCCESS */
- 		break;
- 	case WIFI_DATA_TYPE: /* data */
--		pattrib->qos = (subtype & BIT(7)) ? 1:0;
-+		pattrib->qos = (subtype & BIT(7)) ? 1 : 0;
- 		retval = validate_recv_data_frame(adapter, precv_frame);
- 		if (retval == _FAIL) {
- 			struct recv_priv *precvpriv = &adapter->recvpriv;
-@@ -1514,8 +1514,8 @@ static signed int wlanhdr_to_ethhdr(union recv_frame *precvframe)
- 	if (pattrib->encrypt)
- 		recvframe_pull_tail(precvframe, pattrib->icv_len);
- 
--	psnap = (struct ieee80211_snap_hdr	*)(ptr+pattrib->hdrlen + pattrib->iv_len);
--	psnap_type = ptr+pattrib->hdrlen + pattrib->iv_len+SNAP_SIZE;
-+	psnap = (struct ieee80211_snap_hdr	*)(ptr + pattrib->hdrlen + pattrib->iv_len);
-+	psnap_type = ptr + pattrib->hdrlen + pattrib->iv_len + SNAP_SIZE;
- 	/* convert hdr + possible LLC headers into Ethernet header */
- 	/* eth_type = (psnap_type[0] << 8) | psnap_type[1]; */
- 	if ((!memcmp(psnap, rfc1042_header, SNAP_SIZE) &&
-@@ -1529,37 +1529,37 @@ static signed int wlanhdr_to_ethhdr(union recv_frame *precvframe)
- 		/* Leave Ethernet header part of hdr and full payload */
- 		bsnaphdr = false;
- 
--	rmv_len = pattrib->hdrlen + pattrib->iv_len + (bsnaphdr?SNAP_SIZE:0);
-+	rmv_len = pattrib->hdrlen + pattrib->iv_len + (bsnaphdr ? SNAP_SIZE : 0);
- 	len = precvframe->u.hdr.len - rmv_len;
- 
--	memcpy(&be_tmp, ptr+rmv_len, 2);
-+	memcpy(&be_tmp, ptr + rmv_len, 2);
- 	eth_type = ntohs(be_tmp); /* pattrib->ether_type */
- 	pattrib->eth_type = eth_type;
- 
- 	if ((check_fwstate(pmlmepriv, WIFI_MP_STATE) == true)) {
- 		ptr += rmv_len;
- 		*ptr = 0x87;
--		*(ptr+1) = 0x12;
-+		*(ptr + 1) = 0x12;
- 
- 		eth_type = 0x8712;
- 		/*  append rx status for mp test packets */
--		ptr = recvframe_pull(precvframe, (rmv_len-sizeof(struct ethhdr)+2)-24);
-+		ptr = recvframe_pull(precvframe, (rmv_len - sizeof(struct ethhdr) + 2) - 24);
- 		if (!ptr)
- 			return _FAIL;
- 		memcpy(ptr, get_rxmem(precvframe), 24);
- 		ptr += 24;
- 	} else {
--		ptr = recvframe_pull(precvframe, (rmv_len-sizeof(struct ethhdr) + (bsnaphdr?2:0)));
-+		ptr = recvframe_pull(precvframe, (rmv_len - sizeof(struct ethhdr) + (bsnaphdr ? 2 : 0)));
- 		if (!ptr)
- 			return _FAIL;
+ 		vcpu->run->flags |= KVM_RUN_X86_BUS_LOCK;
+-		return 0;
  	}
- 
- 	memcpy(ptr, pattrib->dst, ETH_ALEN);
--	memcpy(ptr+ETH_ALEN, pattrib->src, ETH_ALEN);
-+	memcpy(ptr + ETH_ALEN, pattrib->src, ETH_ALEN);
- 
- 	if (!bsnaphdr) {
- 		be_tmp = htons(len);
--		memcpy(ptr+12, &be_tmp, 2);
-+		memcpy(ptr + 12, &be_tmp, 2);
- 	}
- 
- 	return _SUCCESS;
-@@ -1610,7 +1610,7 @@ static int amsdu_to_msdu(struct adapter *padapter, union recv_frame *prframe)
- 		pdata += nSubframe_Length;
- 		a_len -= nSubframe_Length;
- 		if (a_len != 0) {
--			padding_len = 4 - ((nSubframe_Length + ETH_HLEN) & (4-1));
-+			padding_len = 4 - ((nSubframe_Length + ETH_HLEN) & (4 - 1));
- 			if (padding_len == 4)
- 				padding_len = 0;
- 
-@@ -1842,7 +1842,7 @@ static int recv_indicatepkt_reorder(struct adapter *padapter, union recv_frame *
- 
- 			rtw_recv_indicatepkt(padapter, prframe);
- 
--			preorder_ctrl->indicate_seq = (preorder_ctrl->indicate_seq + 1)%4096;
-+			preorder_ctrl->indicate_seq = (preorder_ctrl->indicate_seq + 1) % 4096;
- 
- 			return _SUCCESS;
- 		}
-@@ -1852,7 +1852,7 @@ static int recv_indicatepkt_reorder(struct adapter *padapter, union recv_frame *
- 
- 			retval = amsdu_to_msdu(padapter, prframe);
- 
--			preorder_ctrl->indicate_seq = (preorder_ctrl->indicate_seq + 1)%4096;
-+			preorder_ctrl->indicate_seq = (preorder_ctrl->indicate_seq + 1) % 4096;
- 
- 			if (retval != _SUCCESS) {
- 			}
-@@ -2047,7 +2047,7 @@ static int recv_func(struct adapter *padapter, union recv_frame *rframe)
- 			!psecuritypriv->busetkipkey) {
- 			rtw_enqueue_recvframe(rframe, &padapter->recvpriv.uc_swdec_pending_queue);
- 
--			if (recvpriv->free_recvframe_cnt < NR_RECVFRAME/4) {
-+			if (recvpriv->free_recvframe_cnt < NR_RECVFRAME / 4) {
- 				/* to prevent from recvframe starvation, get recvframe from uc_swdec_pending_queue to free_recvframe_cnt  */
- 				rframe = rtw_alloc_recvframe(&padapter->recvpriv.uc_swdec_pending_queue);
- 				if (rframe)
-@@ -2136,19 +2136,19 @@ static void rtw_signal_stat_timer_hdl(struct timer_list *t)
- 		}
- 
- 		/* update value of signal_strength, rssi, signal_qual */
--		tmp_s = (avg_signal_strength+(_alpha-1)*recvpriv->signal_strength);
-+		tmp_s = (avg_signal_strength + (_alpha - 1) * recvpriv->signal_strength);
- 		if (tmp_s % _alpha)
--			tmp_s = tmp_s/_alpha + 1;
-+			tmp_s = tmp_s / _alpha + 1;
- 		else
--			tmp_s = tmp_s/_alpha;
-+			tmp_s = tmp_s / _alpha;
- 		if (tmp_s > 100)
- 			tmp_s = 100;
- 
--		tmp_q = (avg_signal_qual+(_alpha-1)*recvpriv->signal_qual);
-+		tmp_q = (avg_signal_qual + (_alpha - 1) * recvpriv->signal_qual);
- 		if (tmp_q % _alpha)
--			tmp_q = tmp_q/_alpha + 1;
-+			tmp_q = tmp_q / _alpha + 1;
- 		else
--			tmp_q = tmp_q/_alpha;
-+			tmp_q = tmp_q / _alpha;
- 		if (tmp_q > 100)
- 			tmp_q = 100;
- 
+ 	return ret;
+ }
 -- 
 2.53.0
 
