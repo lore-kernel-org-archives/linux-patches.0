@@ -1,52 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041869;
-	b=xQZ4rmQTIpsGgpMI/amPwYpcXEntCH6Ty5v7V2kBkC8lqnwigfEtfU2M65CTLYLt+Hka
-	 ImevdnT3cDTlqywO9y53GdfZ43QDaOyCUDwA9C0dwih+i5tnOE0YcdEW9CRmXLSdZ67Vs
-	 /JNilyNNVaxSZICv3hABUjUrBFxkpHYAhX1SgQLQPUfXTQWaSkjAvZMp93+rHm8dmfz23
-	 PYqwUeXw5k3+iChab7JYsj6RERNNSbwLgVZ3vps/7FvGPtTAptcmZnWMLt8UrlEmWhYwJ
-	 08D+YWWi+tbRjBMT6Qlm3oxVSIhpFP0q21H54TJctDBBbEqqumGw88ZlhdRfizenbWA==
+	t=1795041871;
+	b=FAiU7z5gt/YX7ekBQYOKbFzAgkUj/58JIgGMQ8BcbY6C5WWZyOdwzKKalHEfns0o7bkf
+	 PtLgk+5tfWz5LkqMk1Ms2GvzVSBr0chuMUPusWqbs4bgvfKlrr6mFk7Auf0zld97nYiTu
+	 oLJ6iNMqaRWeZrBxe2GGUCwvY/irRS8XUzxdhVDbBMkWEhh4fKDRJ9ho78jXe0cvyDX2q
+	 +SBV0SbnLtEocY906ZxzE5+r/RQnz0yJzI+tVP9lZBw2CMsmvvbtkRhaEUn4V5Qf7TaXd
+	 6KwN9iS+eYM20Ny4SW3IKL3Pqe9k1HkwL72JIINJ+Vzz5DzNMWAw9o6lfn4sTWzvxyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041869;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041871;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bhq+w0ihkX7JyVP5XEUaArh/jg+bGX2Au3NjwV8kYTQ=;
-	b=DuxKSUq0sn8KtWd0fT9s1UrK7NCvBru0bODNmtGW4qgWDKzuWBWMTKD+0Fe2WMSeggL0
-	 Ap92KK2oZVNq83ozGNtZlE1I2r/OlGC4LZyHjChNxbiRSjRhMbwv+HOo4HkWaYV76KdgV
-	 jdOpHwpSzoIAgkO/6oqEfr4hic8vNhby8htf69wvQlXVOsYpACxdJfC4FOJjRiZvd6aPq
-	 ExTaV4yF6kmdlSjDRnIsSib6ajBMlyyTqbApbnA6uY5ht5F5MysC0mbLUzurplm3jAmpf
-	 FZLY9Wreci7wgRHSZyKnOjifiHXOPeZrTdmYDwXeAoTBySDhA8NSnbbtdHM/hH47+mg==
+	bh=lB80gSEuuQvBJeuq2kcdzcgLb+l1FRAr8QPBye+mdPQ=;
+	b=ITH86DaiRRjoj9AoRYW0bhdKOlH/mF3zNXfHON7PeG3QSnhD4peTijCtiaouqY8vi0H9
+	 5Zwe3zFVdXgh2Jo/Hq8DBVc0fzXGGApAWssYxfVtog+0JfCMZzST2laaQnmTM6FBvtZFF
+	 WXgEu7drYm8WjX/PMLSnDAs898i6FYGyI/CL+jKxQZ/3Tir7kABY8fQ0Hvu51TJPi3I9q
+	 OFNgMb0fhk2lGaTCVp3CNPBhWpFjHXvptwtFd2BTJ6mlzLSQCN3ML3ZtcKuztBxRQW6se
+	 7WmaaJroNTCxYrSnNr6QqjIYQikbkwn1P75oOwceZBrU5XTYtqId9Ti++njE7X1BYag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wuNmvRMn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WNv9Zhs6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFA0606A32A;
-	Wed, 18 Nov 2026 22:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1347606A31C;
+	Wed, 18 Nov 2026 22:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wuNmvRMn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515161F000C5;
-	Wed, 18 Nov 2026 22:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WNv9Zhs6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1DE91F000C4;
+	Wed, 18 Nov 2026 22:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041868;
-	bh=bhq+w0ihkX7JyVP5XEUaArh/jg+bGX2Au3NjwV8kYTQ=;
+	s=korg; t=1795041871;
+	bh=lB80gSEuuQvBJeuq2kcdzcgLb+l1FRAr8QPBye+mdPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wuNmvRMn+LbXCLcnp9A5U6KVlfdLJFZsqFBWsbYrILbkZiJ5C+1p+4DoxvWjcylMr
-	 TaNuAy9oPamFTk2CiRuJleuFf6L10cCCPrHT2U/g8/nwMv6XrSbJYn2htTORXN74cV
-	 ZS7DkTFSjXniSq8FvtfjlylKYuFBhNO5JpWPYJHI=
+	b=WNv9Zhs6F5WPqxCmlajJgaPR0rtpqQ9Jc92DmikIptCmFwpsc1Sa+3BgQoXDBrQ+p
+	 fEkaKOlE0Ym8auCmD7+UyDcZ8rS3P6JGPPCJUkxQiUfRTvMUAOXv+w4JbO6dzpgkEQ
+	 zJGCeMdXYMDT/QbliVmdAk0AxE2VFAWjRk26bVmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	pengdonglin <pengdonglin@xiaomi.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	Wen Gu <guwen@linux.alibaba.com>,
+	Willy Tarreau <w@1wt.eu>,
+	Atharva Vartak <atharva.a.vartak@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2966/3318] tracing: Avoid BTF lookup in atomic context
-Date: Wed, 18 Nov 2026 15:59:48 +0100
-Message-ID: <20261118150449.270312688@linuxfoundation.org>
+Subject: [PATCH 6.6 2967/3318] net/smc: hold a reference on net_device returned by pnet_find_base_ndev()
+Date: Wed, 18 Nov 2026 15:59:49 +0100
+Message-ID: <20261118150449.300598233@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,43 +75,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: pengdonglin <pengdonglin@xiaomi.com>
+From: Atharva Vartak <atharva.a.vartak@gmail.com>
 
-[ Upstream commit 42643ba35deb8ad1821acfc0577b445ee7ad7548 ]
+[ Upstream commit e6435b2cc5fdf008cdb67ad9a811a266e8ac9c1e ]
 
-The function graph trace formatter can be called from ftrace_dump_one()
-with interrupts disabled. When ftrace_dump_on_oops is enabled, the trace
-panic notifier can reach ftrace_dump() from the panic path, including the
-nmi_panic() path used by the hard lockup detector.
+pnet_find_base_ndev() resolves the base net_device for stacked devices
+under RTNL, then drops the lock and returns the raw pointer without
+taking a reference.  All three callers dereference the pointer after
+RTNL has been released, creating a use-after-free window if the device
+is concurrently unregistered.
 
-btf_find_func_proto() calls bpf_find_btf_id(), which may initialize vmlinux
-BTF under a mutex. Skip the BTF lookup when running in an atomic context
-or with interrupts disabled, and fall back to the existing return value
-formatting.
+Take a reference with netdev_hold() before dropping RTNL and add the
+matching netdev_put() in every return path of the three callers:
 
-Link: https://patch.msgid.link/20260916133218.1282590-2-dolinux.peng@gmail.com
-Fixes: ebeed8d4a555 ("tracing/probes: Move finding func-proto API and getting func-param API to trace_btf")
-Signed-off-by: pengdonglin <pengdonglin@xiaomi.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+  - smc_pnet_add_eth()
+  - smc_pnet_find_roce_by_pnetid()
+  - smc_pnet_find_ism_by_pnetid()
+
+Found by code analysis, confirmed with a proof-of-concept that triggers
+a KASAN slab-use-after-free report.
+
+Fixes: 0afff91c6f5e ("net/smc: add pnetid support")
+Fixes: 1619f770589a ("net/smc: add pnetid support for SMC-D and ISM")
+Cc: "D. Wythe" <alibuda@linux.alibaba.com>
+Cc: Dust Li <dust.li@linux.alibaba.com>
+Cc: Sidraya Jayagond <sidraya@linux.ibm.com>
+Cc: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Cc: Tony Lu <tonylu@linux.alibaba.com>
+Cc: Wen Gu <guwen@linux.alibaba.com>
+Cc: Willy Tarreau <w@1wt.eu>
+Signed-off-by: Atharva Vartak <atharva.a.vartak@gmail.com>
+Link: https://patch.msgid.link/20261007040009.137568-1-atharva.a.vartak@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_btf.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/smc/smc_pnet.c | 29 ++++++++++++++++++++++-------
+ 1 file changed, 22 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/trace/trace_btf.c b/kernel/trace/trace_btf.c
-index 43e3798011776..2fcb1efe49abf 100644
---- a/kernel/trace/trace_btf.c
-+++ b/kernel/trace/trace_btf.c
-@@ -15,6 +15,9 @@ const struct btf_type *btf_find_func_proto(const char *func_name, struct btf **b
- 	const struct btf_type *t;
- 	s32 id;
+diff --git a/net/smc/smc_pnet.c b/net/smc/smc_pnet.c
+index 0081d1c6ce466..68d6654a445b2 100644
+--- a/net/smc/smc_pnet.c
++++ b/net/smc/smc_pnet.c
+@@ -30,7 +30,8 @@
+ #include "smc_core.h"
  
-+	if (unlikely(in_atomic() || irqs_disabled()))
-+		return NULL;
-+
- 	id = bpf_find_btf_id(func_name, BTF_KIND_FUNC, btf_p);
- 	if (id < 0)
- 		return NULL;
+ static struct net_device *__pnet_find_base_ndev(struct net_device *ndev);
+-static struct net_device *pnet_find_base_ndev(struct net_device *ndev);
++static struct net_device *pnet_find_base_ndev(struct net_device *ndev,
++					      netdevice_tracker *tracker);
+ 
+ static const struct nla_policy smc_pnet_policy[SMC_PNETID_MAX + 1] = {
+ 	[SMC_PNETID_NAME] = {
+@@ -348,6 +349,7 @@ static int smc_pnet_add_eth(struct smc_pnettable *pnettable, struct net *net,
+ 	struct smc_pnetentry *tmp_pe, *new_pe;
+ 	struct net_device *ndev, *base_ndev;
+ 	u8 ndev_pnetid[SMC_MAX_PNETID_LEN];
++	netdevice_tracker base_tracker;
+ 	bool new_netdev;
+ 	int rc;
+ 
+@@ -357,10 +359,13 @@ static int smc_pnet_add_eth(struct smc_pnettable *pnettable, struct net *net,
+ 	rc = -EEXIST;
+ 	ndev = dev_get_by_name(net, eth_name);	/* dev_hold() */
+ 	if (ndev) {
+-		base_ndev = pnet_find_base_ndev(ndev);
++		base_ndev = pnet_find_base_ndev(ndev, &base_tracker);
+ 		if (!smc_pnetid_by_dev_port(base_ndev->dev.parent,
+-					    base_ndev->dev_port, ndev_pnetid))
++					    base_ndev->dev_port, ndev_pnetid)) {
++			netdev_put(base_ndev, &base_tracker);
+ 			goto out_put;
++		}
++		netdev_put(base_ndev, &base_tracker);
+ 	}
+ 
+ 	/* add a new netdev entry to the pnet table if there isn't one */
+@@ -943,10 +948,13 @@ static struct net_device *__pnet_find_base_ndev(struct net_device *ndev)
+  * (for instance with bonding slaves), just the first device
+  * is used to reach a base device.
+  */
+-static struct net_device *pnet_find_base_ndev(struct net_device *ndev)
++static struct net_device *pnet_find_base_ndev(struct net_device *ndev,
++					      netdevice_tracker *tracker)
+ {
+ 	rtnl_lock();
+ 	ndev = __pnet_find_base_ndev(ndev);
++	/* keep ndev alive after dropping RTNL, callers must netdev_put() */
++	netdev_hold(ndev, tracker, GFP_KERNEL);
+ 	rtnl_unlock();
+ 	return ndev;
+ }
+@@ -1085,17 +1093,20 @@ static void smc_pnet_find_roce_by_pnetid(struct net_device *ndev,
+ {
+ 	u8 ndev_pnetid[SMC_MAX_PNETID_LEN];
+ 	struct net_device *base_ndev;
++	netdevice_tracker base_tracker;
+ 	struct net *net;
+ 
+-	base_ndev = pnet_find_base_ndev(ndev);
++	base_ndev = pnet_find_base_ndev(ndev, &base_tracker);
+ 	net = dev_net(ndev);
+ 	if (smc_pnetid_by_dev_port(base_ndev->dev.parent, base_ndev->dev_port,
+ 				   ndev_pnetid) &&
+ 	    smc_pnet_find_ndev_pnetid_by_table(base_ndev, ndev_pnetid) &&
+ 	    smc_pnet_find_ndev_pnetid_by_table(ndev, ndev_pnetid)) {
+ 		smc_pnet_find_rdma_dev(base_ndev, ini);
++		netdev_put(base_ndev, &base_tracker);
+ 		return; /* pnetid could not be determined */
+ 	}
++	netdev_put(base_ndev, &base_tracker);
+ 	_smc_pnet_find_roce_by_pnetid(ndev_pnetid, ini, NULL, net);
+ }
+ 
+@@ -1103,13 +1114,16 @@ static void smc_pnet_find_ism_by_pnetid(struct net_device *ndev,
+ 					struct smc_init_info *ini)
+ {
+ 	u8 ndev_pnetid[SMC_MAX_PNETID_LEN];
++	netdevice_tracker base_tracker;
+ 	struct smcd_dev *ismdev;
+ 
+-	ndev = pnet_find_base_ndev(ndev);
++	ndev = pnet_find_base_ndev(ndev, &base_tracker);
+ 	if (smc_pnetid_by_dev_port(ndev->dev.parent, ndev->dev_port,
+ 				   ndev_pnetid) &&
+-	    smc_pnet_find_ndev_pnetid_by_table(ndev, ndev_pnetid))
++	    smc_pnet_find_ndev_pnetid_by_table(ndev, ndev_pnetid)) {
++		netdev_put(ndev, &base_tracker);
+ 		return; /* pnetid could not be determined */
++	}
+ 
+ 	mutex_lock(&smcd_dev_list.mutex);
+ 	list_for_each_entry(ismdev, &smcd_dev_list.list, list) {
+@@ -1123,6 +1137,7 @@ static void smc_pnet_find_ism_by_pnetid(struct net_device *ndev,
+ 		}
+ 	}
+ 	mutex_unlock(&smcd_dev_list.mutex);
++	netdev_put(ndev, &base_tracker);
+ }
+ 
+ /* PNET table analysis for a given sock:
 -- 
 2.53.0
 
