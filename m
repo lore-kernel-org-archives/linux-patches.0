@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039348;
-	b=HMl4l0JXXixi+raHYAGiodQ2iEvopoX4BpVRQWvQRYZClgqamqGX8eweqmvq+qqnyORB
-	 fN2lsNl1f0bGwdYZaVF8+O3hfQI2kVzERyaNLzKmwzqlMfp6fskVAJ9s8F/paVl95bXa0
-	 DY2yTUiOs7WwU/bLo6MJcMEM7WTNMi9ccaBl2PpG23puShzsF2VaZbLhGjlglQWOIk7NZ
-	 R/x1XIxFtCK3tqwMeB92RTuwVj97ctZ9Y2sh0M6e93klekPZbUH0xfYvgCU0VpuKGvaQQ
-	 A4AbKJtHiei0BtiErz44yK0bdvac84DrCPH3kGwbTIkUdtuORbGY9V5j4vHSF5gZtwQ==
+	t=1795039351;
+	b=hwyJxpvxEyrWYNu8TH8EQblHCjezzGviJ2iAFpi20rL7bnhB5iFf3BdfK0bM4Yp6XKkV
+	 OIaf5HG3WFs0Up7/d7SC4gdCNUEHsgX848JV551FMQXlbbkcpUxXA3Az4U1J0SRAVwbO9
+	 BT+coDLG9VTBQ4cocbZqKyAmzEyolhsEPKfY85jXjptXPabx/3v0xekepMyXuXZGCXzVt
+	 v6ZD/xQdX3A2OCtCArjHxmu0WtXHl4LnRMd53QLE7FaF9j2T96Tf9YvsMDDV9mudPGen3
+	 gj9jxX48vQOwW38Ge50v0yMB4iQSeH/3gNLSqRAaP1cZrOxpeUn/5Hc4D6TWaWA/wYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039348;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039351;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=6hII8QD2n2OVDQ2kJfgri8xenGahrrq9mXQb79P1p/s=;
-	b=OOX2kfSQYtVICcddSC0XJV/9HSPw1/aC92Pl67cJZyxf5tHDl29jrRDHgOKZgNiYbflL
-	 /F4glzMf0jR6SWI0Hf6S19MKm5/SkGwn0S+qEF48SvTCkyrwQwjlrIw0wcaUDnilZXwoN
-	 /62hPbx73h5NPYZKBCZhucFPkxo7XKEnCHRuFK0LR8F0Wb28PsWIEGolSuXNW5AJemjnV
-	 +oNWO0CCAm6XH3Oz3g5VY1quKSngiXCGh9fo4hin7J+8yglNefNwcr18OYmT8qzvgGdpH
-	 TV5ptwpAwzCWoqDD19w8yeZGXIaitq7nH1XoXCRa1TmezY/Degb1r8L93wndkPJUR3A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=BBTJ6+NwFv6umgl52y3mxrINLpO2/SKy/HG2oHaMldI=;
+	b=JvvqXRIjbYhz7ksMRgY77eikAKz7CTog1e07Y8FwFnAOdpal4PYpMxYHrBXQLpFFuz+X
+	 0qKzIBqlc3HfTJCucK6OnvQK1s2uJj7ggugrS+TUr/ooQvy8SE1yNBT7UGvMOAmN6yB5B
+	 9Nn3BhoAh7qKVr5Mvm8HhdPkf1CbGHegWSR+KJXar1MlxDEvppJtvL6gE7QtjCzBv/WWd
+	 4OTl3U+5gNcvpTiFTPLQyxzczJtvoaUb6le2q+OEaCQ9zDzYkZ+XbbnLeu9fwXcAaIe5i
+	 eQBtREgM/Fxzz655Sk466yQFa5ogyweANjTonLkNRnpJ8hFNcpkhWch61/804n+Bvcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tr1RdAhp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XakVv4A6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73873606A332;
-	Wed, 18 Nov 2026 22:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61CF3606A325;
+	Wed, 18 Nov 2026 22:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tr1RdAhp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990D01F000C4;
-	Wed, 18 Nov 2026 22:02:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XakVv4A6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BD41F000C5;
+	Wed, 18 Nov 2026 22:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039348;
-	bh=6hII8QD2n2OVDQ2kJfgri8xenGahrrq9mXQb79P1p/s=;
+	s=korg; t=1795039350;
+	bh=BBTJ6+NwFv6umgl52y3mxrINLpO2/SKy/HG2oHaMldI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tr1RdAhpmQzQTnSLGecuS1AVGJ5/3KRTzBxCIF8XbXfRcW+fc7kcCxsqljdgPnDlU
-	 ooBjRgnR2RJeVQvBenclxBepQ5QtLen/7kBrJDKJzaxy3xL5yexjOSLT7vfFl7hb4G
-	 xv9oXJ0uvUCGKYMfIVZYeARiBCTnXCahFLAUHarY=
+	b=XakVv4A6KXMU9daZhxSLTVE+RkbBxOpOrz3TTfOgiO3ecQYSZl/S2D+PebhDb2KXx
+	 qqrdFwnUMBUEm9yfnCpNxusc9kYXha+ZelrtY9oEOmvDP/juNCSqoQyD8eh1J7aZW/
+	 0/1veYsvLtfdg+/CoCepNAom0Qa/FBDbjkvtIpQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerard Salvatella <gerard.salvatella@siemens.com>,
-	Lukas Stockmann <lukas.stockmann@siemens.com>,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20Pouiller?= <jerome.pouiller@silabs.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Zhu Ning <zhuning0077@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2051/3318] wifi: wfx: fix possible device hang during init
-Date: Wed, 18 Nov 2026 15:44:33 +0100
-Message-ID: <20261118150423.585402574@linuxfoundation.org>
+Subject: [PATCH 6.6 2069/3318] ASoC: codecs: ES8326: Changing initialisation and broadcasting
+Date: Wed, 18 Nov 2026 15:44:51 +0100
+Message-ID: <20261118150424.151819555@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -65,191 +62,175 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérôme Pouiller <jerome.pouiller@silabs.com>
+From: Zhu Ning <zhuning0077@gmail.com>
 
-[ Upstream commit 102f54dc47be198e9310b18d41305a78d70a0796 ]
+[ Upstream commit fc702b2c04d778d7e3a4091ebe54a86c5d0a0d96 ]
 
-The WFxxx device provides an SDIO interface. In addition to the usual
-in-band SDIO IRQ, the device also supports out-of-band IRQ line. OOB IRQ
-requires a specific initialization described in commit f00dc1d789e1c
-("staging: wfx: poll IRQ during init"):
+New chip versions require new initialisation and playback processes.
+Changing the initialisation and playback process for better results.
+The old chip versions are going to work well with the new sequences.
+We've tested this with version_v0 and version_v3 chips
+under the new sequence and they both pass.
 
-    When the chip starts in SDIO mode, the external IRQ (aka Out-Of-Band
-    IRQ) cannot be used before to configure it. Therefore, the first
-    exchanges with the chip have to be done without the OOB IRQ.
-
-    This patch allow to poll the data until the OOB IRQ is correctly
-    setup. In order to keep the code simpler, this patch also poll data
-    even if OOB IRQ is not used.
-
-Commit 57aa557f110d9 ("staging: wfx: introduce a way to poll IRQ")
-announce some limitation about the data polling mechanism:
-
-    This function [wfx_bh_poll_irq()] must used with care: if an IRQ
-    fires while the host reads control register, the IRQ can be lost.
-
-However, with last analysis, it seems it does not only impact the IRQ.
-When this condition happen the hardware is lost and won't reply the next
-commands. The only way to recover the error is to pull the reset pin and
-bind the device again.
-
-Currently wfx_bh_poll_irq() is only used during the two first exchanges
-with the hardware. Therefore, it has been reported to only happen after
-a few hours of bind/rebind in a loop. This explain why it has not been
-reported before.
-
-Fortunately, wfx_bh_poll_irq() is only required for OOB IRQ, which is
-probably very marginal. The In-Band IRQ case also uses this function,
-but only to simplify the code.
-
-This patch limits the use of wfx_bh_poll_irq() to the OOB IRQ. The bus
-driver now tells wfx_probe() whether polling is necessary. When it is
-not (in-band SDIO IRQ and SPI), the IRQ is subscribed before the first
-exchange with the device and wfx_bh_poll_irq() is never called. When it
-is (SDIO with OOB IRQ), the behavior is unchanged: the control register
-is polled until the PDS file has configured the IRQ line.
-
-To conclude, In-Band users are now safe. Users of OOB IRQ will be still
-impacted by the bug, but there is nothing we can do (and nobody
-complained during the last 6 years).
-
-Fixes: f00dc1d789e1c ("staging: wfx: poll IRQ during init")
-Reported-by: Gerard Salvatella <gerard.salvatella@siemens.com>
-Reported-by: Lukas Stockmann <lukas.stockmann@siemens.com>
-Signed-off-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Tested-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://patch.msgid.link/20260901083548.113131-2-jerome.pouiller@silabs.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Zhu Ning <zhuning0077@gmail.com>
+Link: https://lore.kernel.org/r/20231101072702.91316-3-zhuning0077@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 349e94679968 ("ASoC: es8326: report resume restore errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/silabs/wfx/bh.c       |  6 ++--
- drivers/net/wireless/silabs/wfx/bus_sdio.c |  1 +
- drivers/net/wireless/silabs/wfx/main.c     | 34 ++++++++++++++--------
- 3 files changed, 26 insertions(+), 15 deletions(-)
+ sound/soc/codecs/es8326.c | 50 +++++++++++++++++++++++----------------
+ 1 file changed, 29 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/net/wireless/silabs/wfx/bh.c b/drivers/net/wireless/silabs/wfx/bh.c
-index 21dfdcf9cc273..0071659bc9c98 100644
---- a/drivers/net/wireless/silabs/wfx/bh.c
-+++ b/drivers/net/wireless/silabs/wfx/bh.c
-@@ -284,10 +284,10 @@ void wfx_bh_request_tx(struct wfx_dev *wdev)
- }
+diff --git a/sound/soc/codecs/es8326.c b/sound/soc/codecs/es8326.c
+index 32a9b26ee2c89..5cdd0974e4ae3 100644
+--- a/sound/soc/codecs/es8326.c
++++ b/sound/soc/codecs/es8326.c
+@@ -132,6 +132,11 @@ static const struct snd_soc_dapm_widget es8326_dapm_widgets[] = {
+ 	SND_SOC_DAPM_PGA("LHPMIX", ES8326_DAC2HPMIX, 7, 0, NULL, 0),
+ 	SND_SOC_DAPM_PGA("RHPMIX", ES8326_DAC2HPMIX, 3, 0, NULL, 0),
  
- /* If IRQ is not available, this function allow to manually poll the control register and simulate
-- * an IRQ ahen an event happened.
-+ * an IRQ when an event happened.
-  *
-- * Note that the device has a bug: If an IRQ raise while host read control register, the IRQ is
-- * lost. So, use this function carefully (only duing device initialisation).
-+ * Note that the device has a bug: If an IRQ raise while host read control register, the device is
-+ * lost. Unfortunately, this is the only way to initialize the SDIO with out-of-band IRQ.
-  */
- void wfx_bh_poll_irq(struct wfx_dev *wdev)
- {
-diff --git a/drivers/net/wireless/silabs/wfx/bus_sdio.c b/drivers/net/wireless/silabs/wfx/bus_sdio.c
-index 909d5f346a01b..a146f26054ec1 100644
---- a/drivers/net/wireless/silabs/wfx/bus_sdio.c
-+++ b/drivers/net/wireless/silabs/wfx/bus_sdio.c
-@@ -231,6 +231,7 @@ static int wfx_sdio_probe(struct sdio_func *func, const struct sdio_device_id *i
- 		goto sdio_release;
- 	}
- 
-+	bus->core->poll_irq = !!bus->of_irq;
- 	ret = wfx_probe(bus->core);
- 	if (ret)
- 		goto sdio_release;
-diff --git a/drivers/net/wireless/silabs/wfx/main.c b/drivers/net/wireless/silabs/wfx/main.c
-index f2409830d87e3..e8b8b71c1d3ad 100644
---- a/drivers/net/wireless/silabs/wfx/main.c
-+++ b/drivers/net/wireless/silabs/wfx/main.c
-@@ -343,7 +343,6 @@ int wfx_probe(struct wfx_dev *wdev)
- 	 */
- 	gpio_saved = wdev->pdata.gpio_wakeup;
- 	wdev->pdata.gpio_wakeup = NULL;
--	wdev->poll_irq = true;
- 
- 	wdev->bh_wq = alloc_workqueue("wfx_bh_wq", WQ_HIGHPRI, 0);
- 	if (!wdev->bh_wq)
-@@ -351,16 +350,24 @@ int wfx_probe(struct wfx_dev *wdev)
- 
- 	wfx_bh_register(wdev);
- 
-+	if (!wdev->poll_irq) {
-+		err = wdev->hwbus_ops->irq_subscribe(wdev->hwbus_priv);
-+		if (err)
-+			goto bh_unregister;
-+	}
++	SND_SOC_DAPM_REG(snd_soc_dapm_supply, "HPOR Supply", ES8326_HP_CAL,
++			 4, 7, 0, 0),
++	SND_SOC_DAPM_REG(snd_soc_dapm_supply, "HPOL Supply", ES8326_HP_CAL,
++			 0, 7, 0, 0),
 +
- 	err = wfx_init_device(wdev);
- 	if (err)
--		goto bh_unregister;
-+		goto irq_unsubscribe;
+ 	SND_SOC_DAPM_OUTPUT("HPOL"),
+ 	SND_SOC_DAPM_OUTPUT("HPOR"),
+ };
+@@ -156,6 +161,9 @@ static const struct snd_soc_dapm_route es8326_dapm_routes[] = {
+ 	{"LHPMIX", NULL, "Left DAC"},
+ 	{"RHPMIX", NULL, "Right DAC"},
+ 
++	{"HPOR", NULL, "HPOR Supply"},
++	{"HPOL", NULL, "HPOL Supply"},
 +
-+	if (wdev->poll_irq)
-+		wfx_bh_poll_irq(wdev);
+ 	{"HPOL", NULL, "LHPMIX"},
+ 	{"HPOR", NULL, "RHPMIX"},
+ };
+@@ -409,8 +417,8 @@ static int es8326_mute(struct snd_soc_dai *dai, int mute, int direction)
+ 			regmap_write(es8326->regmap, ES8326_HPR_OFFSET_INI, offset_r);
+ 			es8326->calibrated = true;
+ 		}
+-		regmap_write(es8326->regmap, ES8326_HP_DRIVER, 0xa0);
+-		regmap_write(es8326->regmap, ES8326_HP_VOL, 0x80);
++		regmap_write(es8326->regmap, ES8326_HP_DRIVER, 0xa1);
++		regmap_write(es8326->regmap, ES8326_HP_VOL, 0x91);
+ 		regmap_write(es8326->regmap, ES8326_HP_CAL, ES8326_HP_ON);
+ 		regmap_update_bits(es8326->regmap, ES8326_DAC_MUTE,
+ 				ES8326_MUTE_MASK, ~(ES8326_MUTE));
+@@ -430,8 +438,6 @@ static int es8326_set_bias_level(struct snd_soc_component *codec,
+ 		if (ret)
+ 			return ret;
  
--	wfx_bh_poll_irq(wdev);
- 	err = wait_for_completion_timeout(&wdev->firmware_ready, 1 * HZ);
- 	if (err == 0) {
- 		dev_err(wdev->dev, "timeout while waiting for startup indication\n");
- 		err = -ETIMEDOUT;
--		goto bh_unregister;
-+		goto irq_unsubscribe;
+-		regmap_write(es8326->regmap, ES8326_RESET, 0x9f);
+-		msleep(20);
+ 		regmap_update_bits(es8326->regmap, ES8326_DAC_DSM, 0x01, 0x00);
+ 		regmap_write(es8326->regmap, ES8326_INTOUT_IO, es8326->interrupt_clk);
+ 		regmap_write(es8326->regmap, ES8326_SDINOUT1_IO,
+@@ -440,19 +446,21 @@ static int es8326_set_bias_level(struct snd_soc_component *codec,
+ 		regmap_write(es8326->regmap, ES8326_PGA_PDN, 0x40);
+ 		regmap_write(es8326->regmap, ES8326_ANA_PDN, 0x00);
+ 		regmap_update_bits(es8326->regmap,  ES8326_CLK_CTL, 0x20, 0x20);
+-		regmap_write(es8326->regmap, ES8326_RESET, ES8326_CSM_ON);
++
++		regmap_update_bits(es8326->regmap, ES8326_RESET,
++				ES8326_CSM_ON, ES8326_CSM_ON);
+ 		break;
+ 	case SND_SOC_BIAS_PREPARE:
+ 		break;
+ 	case SND_SOC_BIAS_STANDBY:
+-		break;
+-	case SND_SOC_BIAS_OFF:
+-		clk_disable_unprepare(es8326->mclk);
+ 		regmap_write(es8326->regmap, ES8326_ANA_PDN, 0x3b);
+ 		regmap_write(es8326->regmap, ES8326_VMIDSEL, 0x00);
+ 		regmap_update_bits(es8326->regmap, ES8326_CLK_CTL, 0x20, 0x00);
+ 		regmap_write(es8326->regmap, ES8326_SDINOUT1_IO, ES8326_IO_INPUT);
+ 		break;
++	case SND_SOC_BIAS_OFF:
++		clk_disable_unprepare(es8326->mclk);
++		break;
  	}
  
- 	/* FIXME: fill wiphy::hw_version */
-@@ -380,12 +387,12 @@ int wfx_probe(struct wfx_dev *wdev)
- 		dev_err(wdev->dev, "unsupported firmware API version (expect 1 while firmware returns %d)\n",
- 			wdev->hw_caps.api_version_major);
- 		err = -EOPNOTSUPP;
--		goto bh_unregister;
-+		goto irq_unsubscribe;
- 	}
+ 	return 0;
+@@ -724,13 +732,15 @@ static int es8326_calibrate(struct snd_soc_component *component)
+ 		regmap_write(es8326->regmap, ES8326_CLK_DIV1, 0x01);
+ 		regmap_write(es8326->regmap, ES8326_CLK_DLL, 0x30);
+ 		regmap_write(es8326->regmap, ES8326_CLK_MUX, 0xed);
++		regmap_write(es8326->regmap, ES8326_CLK_DAC_SEL, 0x08);
+ 		regmap_write(es8326->regmap, ES8326_CLK_TRI, 0xc1);
+ 		regmap_write(es8326->regmap, ES8326_DAC_MUTE, 0x03);
+ 		regmap_write(es8326->regmap, ES8326_ANA_VSEL, 0x7f);
+-		regmap_write(es8326->regmap, ES8326_VMIDLOW, 0x33);
++		regmap_write(es8326->regmap, ES8326_VMIDLOW, 0x03);
+ 		regmap_write(es8326->regmap, ES8326_DAC2HPMIX, 0x88);
+-		regmap_write(es8326->regmap, ES8326_HP_VOL, 0x80);
++		usleep_range(15000, 20000);
+ 		regmap_write(es8326->regmap, ES8326_HP_OFFSET_CAL, 0x8c);
++		usleep_range(15000, 20000);
+ 		regmap_write(es8326->regmap, ES8326_RESET, 0xc0);
+ 		usleep_range(15000, 20000);
  
- 	if (wdev->hw_caps.link_mode == SEC_LINK_ENFORCED) {
- 		dev_err(wdev->dev, "chip require secure_link, but can't negotiate it\n");
--		goto bh_unregister;
-+		goto irq_unsubscribe;
- 	}
+@@ -768,27 +778,27 @@ static int es8326_resume(struct snd_soc_component *component)
+ 	regmap_write(es8326->regmap, ES8326_RESET, 0x1f);
+ 	regmap_write(es8326->regmap, ES8326_VMIDSEL, 0x0E);
+ 	usleep_range(10000, 15000);
+-	regmap_write(es8326->regmap, ES8326_HPJACK_TIMER, 0x88);
++	regmap_write(es8326->regmap, ES8326_HPJACK_TIMER, 0xe9);
++	regmap_write(es8326->regmap, ES8326_ANA_MICBIAS, 0x4b);
+ 	/* set headphone default type and detect pin */
+-	regmap_write(es8326->regmap, ES8326_HPDET_TYPE, 0x81);
++	regmap_write(es8326->regmap, ES8326_HPDET_TYPE, 0x83);
+ 	regmap_write(es8326->regmap, ES8326_CLK_RESAMPLE, 0x05);
++	regmap_write(es8326->regmap, ES8326_HP_MISC, 0x30);
  
- 	if (wdev->hw_caps.region_sel_mode) {
-@@ -401,12 +408,14 @@ int wfx_probe(struct wfx_dev *wdev)
- 	dev_dbg(wdev->dev, "sending configuration file %s\n", wdev->pdata.file_pds);
- 	err = wfx_send_pdata_pds(wdev);
- 	if (err < 0 && err != -ENOENT)
--		goto bh_unregister;
-+		goto irq_unsubscribe;
+ 	/* set internal oscillator as clock source of headpone cp */
+-	regmap_write(es8326->regmap, ES8326_CLK_DIV_CPC, 0x84);
++	regmap_write(es8326->regmap, ES8326_CLK_DIV_CPC, 0x89);
+ 	regmap_write(es8326->regmap, ES8326_CLK_CTL, ES8326_CLK_ON);
+ 	/* clock manager reset release */
+ 	regmap_write(es8326->regmap, ES8326_RESET, 0x17);
+ 	/* set headphone detection as half scan mode */
+-	regmap_write(es8326->regmap, ES8326_HP_MISC, 0x08);
++	regmap_write(es8326->regmap, ES8326_HP_MISC, 0x30);
+ 	regmap_write(es8326->regmap, ES8326_PULLUP_CTL, 0x00);
  
--	wdev->poll_irq = false;
--	err = wdev->hwbus_ops->irq_subscribe(wdev->hwbus_priv);
--	if (err)
--		goto bh_unregister;
-+	if (wdev->poll_irq) {
-+		err = wdev->hwbus_ops->irq_subscribe(wdev->hwbus_priv);
-+		if (err)
-+			goto bh_unregister;
-+		wdev->poll_irq = false;
-+	}
+ 	/* enable headphone driver */
+ 	regmap_write(es8326->regmap, ES8326_HP_DRIVER, 0xa7);
+ 	usleep_range(2000, 5000);
+-	regmap_write(es8326->regmap, ES8326_HP_DRIVER_REF, 0xab);
+-	usleep_range(2000, 5000);
+-	regmap_write(es8326->regmap, ES8326_HP_DRIVER_REF, 0xbb);
+-	usleep_range(2000, 5000);
++	regmap_write(es8326->regmap, ES8326_HP_DRIVER_REF, 0xa3);
++	regmap_write(es8326->regmap, ES8326_HP_DRIVER_REF, 0xb3);
+ 	regmap_write(es8326->regmap, ES8326_HP_DRIVER, 0xa1);
  
- 	err = wfx_hif_use_multi_tx_conf(wdev, true);
- 	if (err)
-@@ -455,7 +464,8 @@ int wfx_probe(struct wfx_dev *wdev)
- ieee80211_unregister:
- 	ieee80211_unregister_hw(wdev->hw);
- irq_unsubscribe:
--	wdev->hwbus_ops->irq_unsubscribe(wdev->hwbus_priv);
-+	if (!wdev->poll_irq)
-+		wdev->hwbus_ops->irq_unsubscribe(wdev->hwbus_priv);
- bh_unregister:
- 	wfx_bh_unregister(wdev);
- 	destroy_workqueue(wdev->bh_wq);
+ 	regmap_write(es8326->regmap, ES8326_CLK_INV, 0x00);
+@@ -802,9 +812,6 @@ static int es8326_resume(struct snd_soc_component *component)
+ 	/* set ADC and DAC in low power mode */
+ 	regmap_write(es8326->regmap, ES8326_ANA_LP, 0xf0);
+ 
+-	/* force micbias on */
+-	regmap_write(es8326->regmap, ES8326_ANA_MICBIAS, 0x4f);
+-	regmap_write(es8326->regmap, ES8326_SYS_BIAS, 0x08);
+ 	regmap_write(es8326->regmap, ES8326_ANA_VSEL, 0x7F);
+ 	/* select vdda as micbias source */
+ 	regmap_write(es8326->regmap, ES8326_VMIDLOW, 0x23);
+@@ -832,6 +839,7 @@ static int es8326_resume(struct snd_soc_component *component)
+ 			((es8326->version == ES8326_VERSION_B) ?
+ 			(ES8326_HP_DET_SRC_PIN9 | es8326->jack_pol) :
+ 			(ES8326_HP_DET_SRC_PIN9 | es8326->jack_pol | 0x04)));
++	regmap_write(es8326->regmap, ES8326_HP_VOL, 0x11);
+ 
+ 	es8326->jack_remove_retry = 0;
+ 	es8326->hp = 0;
 -- 
 2.53.0
 
