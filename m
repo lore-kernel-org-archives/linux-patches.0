@@ -1,51 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057813;
-	b=qIfO61gSpOfyg0sasHYr+KWEYhWGud/QFHFjI5In7EiEXFBfgFlMZc358+RFx6ub1qop
-	 xncDL6/xDp4qzEZJWH2QeRD2iBWN0IV2/s8NkFoNH1yBvbb4cFsv2DGI4pquSIo6PAlOX
-	 GtaorZth22WrZhtuJaMYG8Ly9MQPNzYNhcEx4FlBzVUmGirm2d44Vg+njKRl15OXwXC7J
-	 SvuKR1z6Y4uleao7tCdPJM1CFCXCDWlFXYc+C1C66ZnjL9MI47eqN/0lQvoc3WeUcoe4v
-	 U/1KIodVOAs9/kzZ4C8mUJLCasL0hu7zJrS0bH9v8CwQRuB4Fvl9WkRme9w+EEeO4oA==
+	t=1795057816;
+	b=gdUdr9bguhPpmmIBdDnOHZ5lZYQAOJfv9qzuBr8I3Oq+eQMUGGNZkN6CiNGA/FR5d9eF
+	 DEYf2S2bfW0FlRObLgbKfBb2UNKFLS+CuX3j9LZL30pKHqCxd2cScF/0Br+FvzenH4Hme
+	 MNmgeSvM/J/xo3WJLy56BtCy5P3jlcufaQpQ0a6nEbM4NjAkaP6uaTomZY50rtvEJ+0XS
+	 pgZGPYKCcheLz+1vvVZH2ACaEncdqDdzRGnKpsDAxuUv9aaC7FmLLFaBRLGn4RWHogXSw
+	 OieS7VYWaEnVeB5O73O+4dmCzhtE3d2nH1yulkhuptjhXDVukoPgDIN+L6KyEnF3/9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057813;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057816;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LeyRI1AHWr7GGu/2Q5xHcMlUwnIwW/z3iCdpEOWQgh8=;
-	b=TD5Mpv/gqd8j03KlssoisjH5tYcEX17gJGM3FNlAP0SrW0iAAA9zpnC0O8ceg3XqGUsl
-	 p2378FW/eitaUSOEo4+z737IHwZUmhwEklyefjwq1HrI68NGb7qC2nTJyiVhJVOZPgmlo
-	 xheHgP7wXAJOVyP7jXaea1VxzXGI+pTuFfKdmlppgVhAaR8jNTh+pkc1/+hF5LjidRqlY
-	 XUkD4VChSRPDupfbe/mAcETv67RPlymjEAUnBg0BtxciIJRQBvoqWaJcVLaE5HJlVseiF
-	 miZLHB5YfRHkXQz7dZCcubuQpVqN8ecurQXEgPqtfQf21aWNd3ZN3tQngZIdXL7hRQA==
+	bh=XsMSjpUXRA1AYoGFLjYTvWZKD1bcSfkRSK6sGIK0KE8=;
+	b=mW3rvSMFHxrGzZGcQufGhQz0pA+D6OsAlakdPhc7eT6gyZ9gNEltuGli4xWGTtDFcS/n
+	 bgaTjTFhLu0s0Cxr7iyCtc7qsv+ZNSTVu8opoD72LCzZioihaRdje5VN0NGF6h7+ps3ey
+	 oai7PhSrt5x4G7fsrYoI1cZkBOFPK1cs+qtmGzO8Ft0/AnIvIytqzMqes6vwFVZgouj8p
+	 8kpWfsz0uMa/fh6i4gLm/LEwUwzYU+GDWN6btR+Npa1adLGi2nqaXCdSidbFh9J83Ehcy
+	 3cCs3d7MIsDF0Fuuf91qIfCJRRVGnMAGfiRAlWkrGMs5F9yoERPVPLNEWOJ/GGTpXqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y2TzFSR1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h26J7t3l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAAD7606A320;
-	Thu, 19 Nov 2026 03:10:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD59606A31C;
+	Thu, 19 Nov 2026 03:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y2TzFSR1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5FB1F000C4;
-	Thu, 19 Nov 2026 03:10:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h26J7t3l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E894D1F000C5;
+	Thu, 19 Nov 2026 03:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057813;
-	bh=LeyRI1AHWr7GGu/2Q5xHcMlUwnIwW/z3iCdpEOWQgh8=;
+	s=korg; t=1795057816;
+	bh=XsMSjpUXRA1AYoGFLjYTvWZKD1bcSfkRSK6sGIK0KE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y2TzFSR1Wxq37ws2uj9Co8i5Lbiue+1gG83PkvacReZbT73Q5zHxXLs07zg6b5wTR
-	 iynpLzadIc11Ecuo0BuTQROGsmHG5ylcY3ObOphc9nhXEQTL+vxoZ5c6BDd04AJcf7
-	 3CKB9QvUN+Mw132qtlrUw5/hMt6mMlokaAPHRpFg=
+	b=h26J7t3llcxVO4JK7A80QwQa6rLx1IcbDHyF/dhwBU21PnjQmhkupGd9WzhE9r4Hw
+	 C8vaHocgu4ubWOkuD//DDADjTlEMUyHZ56hLbydFEBK0ICCbrsRRWfq9KiE+OKqgym
+	 wlQvS4BGMrLV/iH0Dj5XWQrso/OJx+OiX6dQkxhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.10 0261/1848] media: rc: mce_kbd: Fix inconsistent locking of keylock
-Date: Wed, 18 Nov 2026 15:38:19 +0100
-Message-ID: <20261118145923.202941549@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Praveen Kumar Kannoju <praveen.kannoju@oracle.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 0223/1848] ipv4: start using dst_dev_rcu()
+Date: Wed, 18 Nov 2026 15:37:41 +0100
+Message-ID: <20261118145921.299052566@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,58 +71,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 29ee25fa9beb3232808e6d0b3e8ebfb0427cb820 upstream.
+[ Upstream commit 6ad8de3cefdb6ffa6708b21c567df0dbf82c43a8 ]
 
-data->keylock is taken with spin_lock() in ir_mce_kbd_decode(), which
-runs in the raw IR decode kthread with local interrupts enabled, but
-with spin_lock_irqsave() in mce_kbd_rx_timeout(), the rx_timeout timer
-callback, which runs in softirq context.
+Change icmpv4_xrlim_allow(), ip_defrag() to prevent possible UAF.
 
-If the decode kthread is holding keylock via spin_lock() when a timer
-interrupt fires on the same CPU and the softirq runs
-mce_kbd_rx_timeout(), the softirq spins forever waiting for a lock
-that only the now-preempted kthread can release, while the kthread
-cannot run again until the softirq gives up the CPU. This deadlocks
-the CPU.
+Change ipmr_prepare_xmit(), ipmr_queue_fwd_xmit(), ip_mr_output(),
+ipv4_neigh_lookup() to use lockdep enabled dst_dev_rcu().
 
-Fixes: 53a62800efb2 ("media: rc: mce_kbd decoder: fix race condition")
-Signed-off-by: Sean Young <sean@mess.org>
+Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250828195823.3958522-9-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Cc: stable@vger.kernel.org
-Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/media/rc/ir-mce_kbd-decoder.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/media/rc/ir-mce_kbd-decoder.c
-+++ b/drivers/media/rc/ir-mce_kbd-decoder.c
-@@ -218,6 +218,7 @@ static int ir_mce_kbd_decode(struct rc_d
- 	struct mce_kbd_dec *data = &dev->raw->mce_kbd;
- 	u32 scancode;
- 	unsigned long delay;
-+	unsigned long flags;
- 	struct lirc_scancode lsc = {};
+Conflicts:
+	net/ipv4/icmp.c
+	net/ipv4/ip_fragment.c
+	net/ipv4/ipmr.c
+	net/ipv4/route.c
+
+ - Supply dst_dev_rcu() and skb_dst_dev_rcu() in include/net/dst.h; this
+   baseline has neither helper. Use the checked READ_ONCE() definitions
+   present in 5.15.y, without changing struct dst_entry or importing the
+   broader dst->dev_rcu conversion. The patch is self-contained.
+ - Preserve the four-argument inet_getpeer_v4() and inet_putpeer() calls.
+   Return before taking RCU for ICMP types exempt from rate limiting;
+   release RCU on both the loopback and rate-limited paths.
+ - Keep ip_frag_queue(qp, skb) and ipq_put(qp). Add RCU protection before
+   selecting the device and release it on both queue lookup outcomes.
+ - Use dst_dev_rcu() in the older ipmr_queue_xmit() implementation. Add
+   the IPv4 cache-replay RCU wrapper from b07a9b26e2b1 ("ipmr: Always call
+   ip{,6}_mr_forward() from RCU read-side critical section"), which this
+   baseline lacks. RTNL alone does not satisfy the checked accessor.
+ - Nest ordinary RCU inside the existing RCU-BH section in neighbour
+   lookup. dst_dev_rcu() checks ordinary RCU, while the older neighbour
+   hash walkers still require BH protection via rcu_dereference_bh().
+
+Signed-off-by: Praveen Kumar Kannoju <praveen.kannoju@oracle.com>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ include/net/dst.h      | 12 ++++++++++++
+ net/ipv4/icmp.c        | 10 +++++++---
+ net/ipv4/ip_fragment.c |  9 +++++++--
+ net/ipv4/ipmr.c        |  4 +++-
+ net/ipv4/route.c       |  5 ++++-
+ 5 files changed, 33 insertions(+), 7 deletions(-)
+
+diff --git a/include/net/dst.h b/include/net/dst.h
+index 9114272f81009..b3522d3de8c8f 100644
+--- a/include/net/dst.h
++++ b/include/net/dst.h
+@@ -547,6 +547,18 @@ static inline void skb_dst_update_pmtu_no_confirm(struct sk_buff *skb, u32 mtu)
+ 		dst->ops->update_pmtu(dst, NULL, skb, mtu, false);
+ }
  
- 	if (!is_timing_event(ev)) {
-@@ -318,7 +319,7 @@ again:
- 			scancode = data->body & 0xffffff;
- 			dev_dbg(&dev->dev, "keyboard data 0x%08x\n",
- 				data->body);
--			spin_lock(&data->keylock);
-+			spin_lock_irqsave(&data->keylock, flags);
- 			if (scancode) {
- 				delay = usecs_to_jiffies(dev->timeout) +
- 					msecs_to_jiffies(100);
-@@ -328,7 +329,7 @@ again:
- 			}
- 			/* Pass data to keyboard buffer parser */
- 			ir_mce_kbd_process_keyboard_data(dev, scancode);
--			spin_unlock(&data->keylock);
-+			spin_unlock_irqrestore(&data->keylock, flags);
- 			lsc.rc_proto = RC_PROTO_MCIR2_KBD;
- 			break;
- 		case MCIR2_MOUSE_NBITS:
++static inline struct net_device *dst_dev_rcu(const struct dst_entry *dst)
++{
++	/* In the future, use rcu_dereference(dst->dev) */
++	WARN_ON_ONCE(!rcu_read_lock_held());
++	return READ_ONCE(dst->dev);
++}
++
++static inline struct net_device *skb_dst_dev_rcu(const struct sk_buff *skb)
++{
++	return dst_dev_rcu(skb_dst(skb));
++}
++
+ struct dst_entry *dst_blackhole_check(struct dst_entry *dst, u32 cookie);
+ void dst_blackhole_update_pmtu(struct dst_entry *dst, struct sock *sk,
+ 			       struct sk_buff *skb, u32 mtu, bool confirm_neigh);
+diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
+index e919d2a5169e7..dab78347f7ce6 100644
+--- a/net/ipv4/icmp.c
++++ b/net/ipv4/icmp.c
+@@ -315,24 +315,28 @@ static bool icmpv4_xrlim_allow(struct net *net, struct rtable *rt,
+ 			       struct flowi4 *fl4, int type, int code)
+ {
+ 	struct dst_entry *dst = &rt->dst;
++	struct net_device *dev;
+ 	struct inet_peer *peer;
+ 	bool rc = true;
+ 	int vif;
+ 
+ 	if (icmpv4_mask_allow(net, type, code))
+-		goto out;
++		return true;
+ 
+ 	/* No rate limit on loopback */
+-	if (dst->dev && (dst->dev->flags&IFF_LOOPBACK))
++	rcu_read_lock();
++	dev = dst_dev_rcu(dst);
++	if (dev && (dev->flags & IFF_LOOPBACK))
+ 		goto out;
+ 
+-	vif = l3mdev_master_ifindex(dst->dev);
++	vif = l3mdev_master_ifindex_rcu(dev);
+ 	peer = inet_getpeer_v4(net->ipv4.peers, fl4->daddr, vif, 1);
+ 	rc = inet_peer_xrlim_allow(peer,
+ 				   READ_ONCE(net->ipv4.sysctl_icmp_ratelimit));
+ 	if (peer)
+ 		inet_putpeer(peer);
+ out:
++	rcu_read_unlock();
+ 	return rc;
+ }
+ 
+diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
+index ec2264adf2a6a..5cdc65a5c010b 100644
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -475,13 +475,16 @@ static int ip_frag_reasm(struct ipq *qp, struct sk_buff *skb,
+ /* Process an incoming IP datagram fragment. */
+ int ip_defrag(struct net *net, struct sk_buff *skb, u32 user)
+ {
+-	struct net_device *dev = skb->dev ? : skb_dst(skb)->dev;
+-	int vif = l3mdev_master_ifindex_rcu(dev);
++	struct net_device *dev;
+ 	struct ipq *qp;
++	int vif;
+ 
+ 	__IP_INC_STATS(net, IPSTATS_MIB_REASMREQDS);
+ 
+ 	/* Lookup (or create) queue header */
++	rcu_read_lock();
++	dev = skb->dev ? : skb_dst_dev_rcu(skb);
++	vif = l3mdev_master_ifindex_rcu(dev);
+ 	qp = ip_find(net, ip_hdr(skb), user, vif);
+ 	if (qp) {
+ 		int ret;
+@@ -491,9 +494,11 @@ int ip_defrag(struct net *net, struct sk_buff *skb, u32 user)
+ 		ret = ip_frag_queue(qp, skb);
+ 
+ 		spin_unlock(&qp->q.lock);
++		rcu_read_unlock();
+ 		ipq_put(qp);
+ 		return ret;
+ 	}
++	rcu_read_unlock();
+ 
+ 	__IP_INC_STATS(net, IPSTATS_MIB_REASMFAILS);
+ 	kfree_skb(skb);
+diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
+index f17b36a978486..ee5860cf76503 100644
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -1012,7 +1012,9 @@ static void ipmr_cache_resolve(struct net *net, struct mr_table *mrt,
+ 
+ 			rtnl_unicast(skb, net, NETLINK_CB(skb).portid);
+ 		} else {
++			rcu_read_lock();
+ 			ip_mr_forward(net, mrt, skb->dev, skb, c, 0);
++			rcu_read_unlock();
+ 		}
+ 	}
+ }
+@@ -1870,7 +1872,7 @@ static void ipmr_queue_xmit(struct net *net, struct mr_table *mrt,
+ 			goto out_free;
+ 	}
+ 
+-	dev = rt->dst.dev;
++	dev = dst_dev_rcu(&rt->dst);
+ 
+ 	if (skb->len+encap > dst_mtu(&rt->dst) && (ntohs(iph->frag_off) & IP_DF)) {
+ 		/* Do not fragment multicasts. Alas, IPv4 does not
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index b7db0255af6e1..088c207c10fa3 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -446,10 +446,12 @@ static struct neighbour *ipv4_neigh_lookup(const struct dst_entry *dst,
+ 					   const void *daddr)
+ {
+ 	const struct rtable *rt = container_of(dst, struct rtable, dst);
+-	struct net_device *dev = dst->dev;
++	struct net_device *dev;
+ 	struct neighbour *n;
+ 
+ 	rcu_read_lock_bh();
++	rcu_read_lock();
++	dev = dst_dev_rcu(dst);
+ 
+ 	if (likely(rt->rt_gw_family == AF_INET)) {
+ 		n = ip_neigh_gw4(dev, rt->rt_gw4);
+@@ -465,6 +467,7 @@ static struct neighbour *ipv4_neigh_lookup(const struct dst_entry *dst,
+ 	if (!IS_ERR(n) && !refcount_inc_not_zero(&n->refcnt))
+ 		n = NULL;
+ 
++	rcu_read_unlock();
+ 	rcu_read_unlock_bh();
+ 
+ 	return n;
+-- 
+2.53.0
+
 
 
