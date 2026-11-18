@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018597;
-	b=MR3uoZsbVzS1DxUrpFo1kvtnJLwi9nuiHTrqRKVrUgsKY7cGWuIMGhiqUPClpjmSdt4o
-	 0W29LHfrNL+FlPPHNyR0Gv/P3MkWVTuNsWnBoH7hB5WUcgpr9GE0zyrzeszALbaNf0yza
-	 SJ1EU6XCCEQiS18Jqzu92QnmuOoyqGVRmw4umyvYkq3qjakL/X7U3oMAewkRHbqejKN2E
-	 xdrQes5kvCUhTctV5ASgBnu3N4DQp4ytwuzMuO1hAdu9v7eZNeOM5SWmzl/hM/guabrnx
-	 D7oveFBUvnkGffCzKt8jxOAjwdLzEdbL1Whj91WXgcWL9aNwlQXPZtNx5Y9+pLipfGg==
+	t=1795018600;
+	b=AHSoULNh0VYstsdJUeq7nf0EjiAnTMmVk2HXPNFgKniXOsLJN1ohwfa9WZpoBDlBj/fQ
+	 qBsvbLW5KGCgGbuSO3HQ3DCFYfaTBL75Vl16/Rr/nU8hPvKvyJY3Ogzymqrda4jZ+E1pG
+	 JxwsvqpdiMVU8iSqgX870DgOIZGd/5GX9jQcmeyvMl00Tl3UujQBMAzZxWuWCTqFjvqcH
+	 D0PZnqrHAjRuuHRNYrjhIBFPZv9MRcUTbKrD2RzyjWlt6bAVgw5eJF4MXSzWDrTDTFSNh
+	 xFoZsrMUX2MFocr7f16e3NSroglSKcg17VGgq6MnxmODIoJLETA4p2+26zoMD7CpwUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018597;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018600;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AwElLLWrgKTIcc+AwUJyp+ZDV1SsvNpJYquS3ykPDwA=;
-	b=5n+6TGFRrkVtNPtuobw45B+x/xCOriE2KhvHEeLh5yMpLUX7AQvbRfI9QPTcFupzFMCb
-	 ygJV1fRo1rRzSgDanNCFQyien1V6mpFMRKKBPpUH5NgSHNl+y9/iRpJIOI8CO19oHFetQ
-	 jzuUXdsWVYkfJUegRqQVuLVlqihbE4RI9araPVexQrQ+aesyhtkSSplXh4w/Fgyet4+lt
-	 6cG0/Waz7BWStxgPtba8y68KPzPbV/2mQ6I22/Slfoahe1b/pxwXuKVtu1H/wgdaL3ZOl
-	 rD6X0JFH5Bl+bzhOsepuoKMzSlF/VvdUBtjy2Xg8aiNJHwShdAYThQerVKUhcm7aMbQ==
+	bh=U6J0J0hTb3QEGmdeFNQtLdWb91vD/DPBeYy0FqJSs6Y=;
+	b=4AaEszmxAmed01b5DBx6oIxw4KeIytbHEgcaCzB1nLGHMcwHi8X2+UmrJHRDSO9oAmSc
+	 u9DKMEQMCdV0ONbxMQkDL/OEpLzCFP+nYIJvTKnrtEhMKfSV6tIdMlypd7fVh1QqHAlnc
+	 PZHadU24KOuzQ2g9o+2J3rPBo99K5uEOW6jyqSjIqE2wKw9v0JwF9SNFDIKXQBkPuY7Ul
+	 z7hHumscB4VKMTz6s7Txhw5Fzxv4WDDalZZGu/bpHX6Oza1XQIN4igD54XwNUy6XqnvFk
+	 ey8cuU5A67BYwvqf866H/wPKV1q7PZKGwAtMpcjZlsrbmP52p0jHX19BqFS0TS3dM0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dUaUWyeG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vnc6KsNh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88228606A31C;
-	Wed, 18 Nov 2026 16:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607E6606A31C;
+	Wed, 18 Nov 2026 16:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dUaUWyeG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA91F1F000C4;
-	Wed, 18 Nov 2026 16:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vnc6KsNh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14071F000C5;
+	Wed, 18 Nov 2026 16:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018597;
-	bh=AwElLLWrgKTIcc+AwUJyp+ZDV1SsvNpJYquS3ykPDwA=;
+	s=korg; t=1795018600;
+	bh=U6J0J0hTb3QEGmdeFNQtLdWb91vD/DPBeYy0FqJSs6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dUaUWyeGKILPg+vOgwdNhD24BByYLpxeLYM1azcWwMmv0FuYRNS+0rfTWlb+iTg6f
-	 TGKU/sdefazELg+I0hYvAZAWWLYmIzAHUb/KQerrEcwg3oaGwseEikJam6ryB7ZXvy
-	 +sLBIHBmeEdyPEYBuqnHzHdSokmN0Vs4NqpusJAs=
+	b=Vnc6KsNh1IByPJsc2PDp8tO+1FLuvOGIrMiNKwCoW4XndiW8oonodkinaEn5qveTs
+	 H3JfP+h/aXjYZPC7IXhM1OzUe0hEjDjnXnAtfgdtNSbsR/52vVLQkImmEJDTAdBoRk
+	 nn9lj7uc26XdfzqB3M/8mIYI/ABTbqJ9yOLq8TLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Chuck Lever <cel@kernel.org>,
+	Xueqin Luo <luoxueqin@kylinos.cn>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1296/2651] svcrdma: Fix svc_rdma_recv_cid_init() kernel-doc
-Date: Wed, 18 Nov 2026 15:42:16 +0100
-Message-ID: <20261118150334.617277171@linuxfoundation.org>
+Subject: [PATCH 7.3 1297/2651] cpufreq: sparc-us2e: fix frequency table index copy-paste error
+Date: Wed, 18 Nov 2026 15:42:17 +0100
+Message-ID: <20261118150334.654596755@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,40 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Xueqin Luo <luoxueqin@kylinos.cn>
 
-[ Upstream commit d1caedce2d015573b4c26b127c488059f25aabc4 ]
+[ Upstream commit e5b33fa47792375ca7fc49ccadee87d8e4b72929 ]
 
-svc_rdma_recv_cid_init() initializes a Receive Queue completion ID,
-but its kernel-doc heading names svc_rdma_send_cid_init(). The latter is
-a separate helper immediately below it, so kernel-doc cannot match this
-comment to the receive helper.
+In us2e_freq_cpu_init(), the last two frequency writes both use
+index [2] instead of [3] and [4] respectively, and the terminator
+uses [3] instead of [5].  This is a copy-paste error where the index
+was not incremented, causing the divider-6 and divider-8 entries to
+overwrite the already-written divider-4 entry.
 
-Fix the copied function name.
+As a result, only three frequency steps (div 1, 2, and 4) are actually
+available to the cpufreq core, while the intended dividers 6 and 8 are
+silently lost.  The struct us2e_freq_percpu_info::table[6] has room for
+5 entries plus a terminator, matching the 5 hardware dividers.
 
-Fixes: 28ee0ec8948a ("svcrdma: De-duplicate completion ID initialization helpers")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260909064343.90437-1-kmehltretter@gmail.com
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Fix the indices so all five frequency steps are correctly populated:
+table[0]=div1, table[1]=div2, table[2]=div4, table[3]=div6,
+table[4]=div8, table[5]=TABLE_END.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sunrpc/svc_rdma.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/sparc-us2e-cpufreq.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/sunrpc/svc_rdma.h b/include/linux/sunrpc/svc_rdma.h
-index 76aa5ec4ab402..5ccb13bf906f0 100644
---- a/include/linux/sunrpc/svc_rdma.h
-+++ b/include/linux/sunrpc/svc_rdma.h
-@@ -142,7 +142,7 @@ enum {
- #define RPCSVC_MAXPAYLOAD_RDMA	RPCSVC_MAXPAYLOAD
+diff --git a/drivers/cpufreq/sparc-us2e-cpufreq.c b/drivers/cpufreq/sparc-us2e-cpufreq.c
+index a68706406b880..5cda391ad03bb 100644
+--- a/drivers/cpufreq/sparc-us2e-cpufreq.c
++++ b/drivers/cpufreq/sparc-us2e-cpufreq.c
+@@ -282,12 +282,11 @@ static int us2e_freq_cpu_init(struct cpufreq_policy *policy)
+ 	table[1].frequency = clock_tick / 2;
+ 	table[2].driver_data = 2;
+ 	table[2].frequency = clock_tick / 4;
+-	table[2].driver_data = 3;
+-	table[2].frequency = clock_tick / 6;
+-	table[2].driver_data = 4;
+-	table[2].frequency = clock_tick / 8;
+-	table[2].driver_data = 5;
+-	table[3].frequency = CPUFREQ_TABLE_END;
++	table[3].driver_data = 3;
++	table[3].frequency = clock_tick / 6;
++	table[4].driver_data = 4;
++	table[4].frequency = clock_tick / 8;
++	table[5].frequency = CPUFREQ_TABLE_END;
  
- /**
-- * svc_rdma_send_cid_init - Initialize a Receive Queue completion ID
-+ * svc_rdma_recv_cid_init - Initialize a Receive Queue completion ID
-  * @rdma: controlling transport
-  * @cid: completion ID to initialize
-  */
+ 	policy->cpuinfo.transition_latency = 0;
+ 	policy->cur = clock_tick;
 -- 
 2.53.0
 
