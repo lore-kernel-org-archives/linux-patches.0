@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023115;
-	b=2HXgYALmjcyf20IYUBwwuBxY/lrFnEOGzaqTX2Ejk7p4RA62jVMYn6X2lOKxK3Xe/n6R
-	 WFWPHLBy4mimbLE0es5LENvy8dOvBH0ZF6NqYencaKHNfAxsn1wUBZH76XGy4VW7bkWTW
-	 feSO0XtbjYBWub52EVuDaCxy6WZeXu9pPHIjEptaacbESJnjGWQ+ntSu+K6hAAH56WahG
-	 ja0WlcpRoJyojyLYvcrtsY8FV2eKSeYMmCNnEtsff9oCFHzb8ke1EfPZsmznjzbl7jT0t
-	 8rc8LJpL1F0bjsREgStijFeQdpItDo3tdkBwIYWiQFJO9/p/4AKCd0iH7loM/hlcriw==
+	t=1795023118;
+	b=yf1xyOos0GyCAhJREvCste+TXvGR3CsjWQWWC2tJrUd6K09IT8/WnMJtD29ev9yKoUyv
+	 uFAQeoNkaK3CiZ4fH6CCpBSy2R/ZHLmqHXowH/o41nvhiSF+qjzdQ9r8M64k4UY7EVvFN
+	 mGCES1b2BhUhYxZMa4oHBfXuL3wVrJNBBOtHAFDX2gFmTEasc0zFOl+KhsyMsFkM8C031
+	 taGvP98vknanKF9+kM2N+ks53ntyh5VVgZLOR6j7JbTrxzN0szLouju5PKWKN20gCRRog
+	 kqi3RmAXQPWdbZZW7VkoUhDXxb7QyEEIGsclu8s7I4vQZ0M2sc2VrwWir0cFIowtlDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023115;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023118;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CarKo6DMZgbhCb9DkeXbiE/uxNuRUF3O1L9IzcDdNrM=;
-	b=0TVGk35uKBcFBd9LM7vgYgzcDfjNfI06ogvj1BVveoujCuwPUiczS5V1vYV3zlHoAGoY
-	 Evx4DO19yd+x0QibG0bomYygYu+Er82PZgK8fS4XXLr+3WKyiA3KFT3OuzfiliIu6ETzI
-	 TSuCK2QcGL8oyl/Ott/7o1p4t1Xx8ycg3mpUlUR3CsQRM2BLrbGetygKQv/zxRBC8NUBU
-	 Nw6Nhh2hje5CBHybZ3u7ho0Ln67JxwnT4F1m2xkmbJB8fGcnSBolPCUJ9wHJt4CtkjfpR
-	 SyyQoXAz9KuyYjldvN2kCFA4D/xL8W98D9rzR0cB9hJhpd8L6XAgWsARzu9T9mG1Jfg==
+	bh=m2gp/s376UCvXnqfH7KtzyEFaG6mybNPwwvGX/B7t1s=;
+	b=HHsmyhv07R7DO+fiRa6xC9acMXkEtpk4usJafjr/SqtX39+dY3WclD3pxg0SL9B++uJc
+	 t1opoxxPkQFSxSGbRoThDCfUQgQuLUR6g8tck8NJDhxnnKFIB5B6tX2P4n8WdWL+R+T8I
+	 dcCXJSPURzYXjutj+ejo9hNaXDA0VIessI1x8+Z+eAape1Lh9EUc3+rx2r9CG+WN2Zm1d
+	 xhx2Ia6wyIzNZBtkT8voH0Zy/LwXkdcQPDJCWZm7px4+NCkaC/FA1O/a61xSAQBn1zIsQ
+	 Oc4GumicEfcfmAtusMf8cwpWJ8itUgSQgrYIdFZ/jYKAYKJ5r5dHMTUR1Ey+tLt/o8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PZPSr93d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g4oMdNY5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F63C606A31C;
-	Wed, 18 Nov 2026 17:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC27606A325;
+	Wed, 18 Nov 2026 17:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PZPSr93d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7C91F000C5;
-	Wed, 18 Nov 2026 17:31:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g4oMdNY5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B9AA1F000C4;
+	Wed, 18 Nov 2026 17:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023115;
-	bh=CarKo6DMZgbhCb9DkeXbiE/uxNuRUF3O1L9IzcDdNrM=;
+	s=korg; t=1795023118;
+	bh=m2gp/s376UCvXnqfH7KtzyEFaG6mybNPwwvGX/B7t1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PZPSr93dJpxK7hSSxD4y63Ye/yNa2CzomVb56BjYvBpHxaYFJEkfVkm4uUhx+ET+l
-	 AwqOzw3RCULBfD30P3vDBT1zbUCXRwZsAZYD8+GRdqemYxNk+BthSYhC8vWmIFnDBU
-	 3I67jWssjQFjMDhq5emusUQREpxk9HLCymgseYSQ=
+	b=g4oMdNY595ksZk+zD1HVSxaGWT1yBBznlpaCEZL7qpKzgz3zokNFs1sX7N2/js0Kd
+	 O3EC7jaKO9q1WVSgJu1Gd1LYxrQUuXNiBOUAdRPu2XHwA1CyUSxAd9gDe09809NPV3
+	 VGPWDFqQXWqoOoSQfNGMZf2ujU+myZg88pGHZtG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Alison Schofield <alison.schofield@intel.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0255/2151] ACPI: APEI: GHES: Bound AER info copy and sanitize software metadata
-Date: Wed, 18 Nov 2026 15:33:10 +0100
-Message-ID: <20261118150131.074417546@linuxfoundation.org>
+Subject: [PATCH 6.18 0256/2151] spi: mtk-nor: fix runtime PM usage count leak in probe error path
+Date: Wed, 18 Nov 2026 15:33:11 +0100
+Message-ID: <20261118150131.112602228@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,87 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 9c3ad3bfff20d2d7a0c9614db2a58e78123bf0ce ]
+[ Upstream commit 4cee1ed13e2687f1a9fec7dd50e31eb179506d75 ]
 
-ghes_handle_aer() copies sizeof(struct aer_capability_regs) out of the
-fixed 96-byte pcie_err->aer_info. The struct is larger, so the copy reads
-past the section, and it fills the software-only header_len and flit fields
-of the embedded struct pcie_tlp_log from firmware bytes.
-pcie_print_tlp_log() uses both to bound a loop over dw[], so a large value
-walks past the array. Nothing checks the section can hold a struct
-cper_sec_pcie either.
+mtk_nor_probe() takes a runtime PM reference with
+pm_runtime_get_noresume() before registering the controller, but the
+error path never drops it.
 
-Validate error_data_length, zero the destination, and map aer_info onto the
-struct as extlog_print_pcie() does: copy up to the four Header Log DWORDs,
-then place the TLP Prefix Log from its own offset. The rest stays zero,
-covering header_len and flit.
+Balance the get with pm_runtime_put_noidle() in the error path.
 
-Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260714231835.303081-1-dave.jiang@intel.com?part=3
-Fixes: 7e077e6707b3 ("PCI/ERR: Handle TLP Log in Flit mode")
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260904172337.1409775-13-dave.jiang@intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 3bfd9103c7af ("spi: spi-mtk-nor: Add power management support")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260904-mtk-nor-v1-1-cefdca098f83@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ drivers/spi/spi-mtk-nor.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 58c7caa6d3d3a..b81d5ed50d439 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -647,11 +647,14 @@ static void ghes_handle_aer(struct acpi_hest_generic_data *gdata)
- #ifdef CONFIG_ACPI_APEI_PCIEAER
- 	struct cper_sec_pcie *pcie_err = acpi_hest_get_payload(gdata);
+diff --git a/drivers/spi/spi-mtk-nor.c b/drivers/spi/spi-mtk-nor.c
+index ba41ff42f0dde..6a1ca66dd7293 100644
+--- a/drivers/spi/spi-mtk-nor.c
++++ b/drivers/spi/spi-mtk-nor.c
+@@ -925,6 +925,7 @@ static int mtk_nor_probe(struct platform_device *pdev)
+ 	return 0;
  
-+	if (gdata->error_data_length < sizeof(*pcie_err))
-+		return;
-+
- 	if (pcie_err->validation_bits & CPER_PCIE_VALID_DEVICE_ID &&
- 	    pcie_err->validation_bits & CPER_PCIE_VALID_AER_INFO) {
-+		struct aer_capability_regs *aer_info;
- 		unsigned int devfn;
- 		int aer_severity;
--		u8 *aer_info;
- 
- 		devfn = PCI_DEVFN(pcie_err->device_id.device,
- 				  pcie_err->device_id.function);
-@@ -669,13 +672,25 @@ static void ghes_handle_aer(struct acpi_hest_generic_data *gdata)
- 						  sizeof(struct aer_capability_regs));
- 		if (!aer_info)
- 			return;
--		memcpy(aer_info, pcie_err->aer_info, sizeof(struct aer_capability_regs));
-+
-+		/*
-+		 * Map aer_info onto the struct as extlog_print_pcie() does:
-+		 * copy up to the four Header Log DWORDs, then place the TLP
-+		 * Prefix Log from where the hardware keeps it. The rest stays
-+		 * zero, so firmware cannot drive the pcie_print_tlp_log() loop
-+		 * over dw[] out of bounds.
-+		 */
-+		memset(aer_info, 0, sizeof(struct aer_capability_regs));
-+		memcpy(aer_info, pcie_err->aer_info,
-+		       offsetof(struct aer_capability_regs, header_log) +
-+		       PCIE_STD_NUM_TLP_HEADERLOG * sizeof(u32));
-+		memcpy(aer_info->header_log.prefix,
-+		       pcie_err->aer_info + PCI_ERR_PREFIX_LOG,
-+		       sizeof(aer_info->header_log.prefix));
- 
- 		aer_recover_queue(pcie_err->device_id.segment,
- 				  pcie_err->device_id.bus,
--				  devfn, aer_severity,
--				  (struct aer_capability_regs *)
--				  aer_info);
-+				  devfn, aer_severity, aer_info);
- 	}
- #endif
- }
+ err_probe:
++	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
 -- 
 2.53.0
 
