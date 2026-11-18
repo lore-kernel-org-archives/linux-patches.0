@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029900;
-	b=g54U9QnwGx9o7BEOK9qhOUCNJ+65TLZC1Pm3ysifC7FwivQ+uiV1dQTtNBfV2ccSmvQj
-	 J0HaWlq+q3cu68gEA5g4PeS5FJx34T2XWJz9C0uFD0g5m7o0xdjgswv8zwUot3ndIYbaC
-	 lLP1TeyAZNFITsTc+s9cSgPDJMxWE1jiV8O/z+xMgwtV+pZUDbn8Uwu8h3kPH2CX8g4sY
-	 iX9oSefxEwtKphRkJLXw/l8aTBUx/i0k4HNdoiG2SILnvp8U4aof9yzFhZ1GFL9lAyqe/
-	 mbW2NEosm5DtkxZ/pvPzawA+DgW9IqfWgolhPrrbWX8P7EcQd0DqcnSvGf04Jvb9OBw==
+	t=1795029903;
+	b=hVLZCgPgpW09I41fx0CYDGO78FWecxyBV0DVcAD2hWa0Kjytuq7oxMg1f371NJ+1+G/c
+	 Ohw/ntf85qferrEGsHFvZiYCV05Y8/kstVc/xZEqNmQtpzp2I7QnIl4+boIO3owMTpIWq
+	 e5sDs4dzS1MXlc2CXvNn3HnPceBSdVqOH6zLwsJfnj40JufjDTMM+CDar4TmqN/WVIZsZ
+	 bLZbyH8DqAj6GbUM2N+wPE07s+LJovd5LN8NxZ9iGOP2MjXQVP0HpPckaTiAbfvvEbTie
+	 n4p2MJy/Zz/ymFXAbgNjCUrgCCrkRmvt74ZQnjq3MIARnVlatvOQDPmx4RToBgEmXCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029900;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029903;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LW4FkyO68aKFRb9cXJRR8xGPkldBZyhttZ3lTiVl7LQ=;
-	b=K+cC3+bOVGo1ateKSo1rUwwIs16fJfflJa/UzHlKIR/IwVvbLsPyF2V3GPH0Ill+j1sR
-	 wAg3oqZfVhlwgQPVmyGutbCs9a29SwYFSHU9iaqlxXm8PxBKWohDdA8k2thtJLNSRQxH7
-	 +x18CUjYkX4Z1+PZFcIB9Se8i0C4XPLVScJ42KyVJHRs7yFGaaBD8sgsfVG2KWbXSz4wS
-	 YYeSeBTqaIN+p7HA4iQu8nyzf8WpydNvHrEmoadmmYI+zDRz/8aeYROdNvwxiAN8UtJ1O
-	 VnxNapXKpFn3WeunBDWe4iCat+LviInsjennluB/rI078L6r/b/fFspGs5YkVOMr0fQ==
+	bh=KEd83sWKawCW5qV3cDe/BTQM9u4CQRx10cYNjILJqqk=;
+	b=ORuDpX4JNC8g6191qBxPi5UedlCEZfYV/JuW3vvlTOtlKKWqtskucYUaJvO8N9Vj1jCm
+	 UiDfQxS0rH4PlD3aofs2VYYixR5FPpqWYjLbVrc4Q68sceiyQJOyz+4RFcZ/2daL61li2
+	 TkVZWov2VoKT38P2w4afWbzqshmNGr5n5cmRYDCxaWS5M0CazsO34fcTRJgEsocDlMXk3
+	 i54BA7LPHGI776rd80pSjQhAnOHPpQatn2D4W7G3lKTQ9vDN2Qg15rC5Ic8lRpMTEVWWK
+	 DZyaBhd3Dgw3OzAoUL25OkVJUrCtCRcAs4aMehZQbQ5dWx25hxaH1LVWegGb7oIYypQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M53ow9GK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FHdRaNPZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3FA606A332;
-	Wed, 18 Nov 2026 19:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1537606A33B;
+	Wed, 18 Nov 2026 19:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M53ow9GK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B5F01F000C4;
-	Wed, 18 Nov 2026 19:25:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FHdRaNPZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F6AF1F000C5;
+	Wed, 18 Nov 2026 19:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029900;
-	bh=LW4FkyO68aKFRb9cXJRR8xGPkldBZyhttZ3lTiVl7LQ=;
+	s=korg; t=1795029903;
+	bh=KEd83sWKawCW5qV3cDe/BTQM9u4CQRx10cYNjILJqqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M53ow9GKHIjCMkcIFAphCSVavWMX//JzwpIyk8u8di5DEzXZaOh5+oDprLUGAGZpj
-	 owl8P1jGimp+gnYPSQduSt9xIzxYihH6bX9OCw+Lb+rLN3np4v9R/RjD3q2/FXPusl
-	 bsZqmF7Na254SzTYXwMgL3S0jSO8nqqOVyz/ILf8=
+	b=FHdRaNPZTroOpcD1xr4nPVmhuTBGtkrzvwsoTxjI0f9DTydmUbGrHgzFH+THb0Sk5
+	 6p0ZKKXa9rJ7s3IG5kQL2xlY/Lt4gNbOwMjaWlej8Q25kUEZ0doZ0ccmnduIowove2
+	 LnOccQDyege1HA8WIME6bw+PNkhGd994JUPXj86o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slavin Liu <bolin.liu@seu.edu.cn>,
-	Brian Masney <bmasney@redhat.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0472/1756] clk: starfive: jh7110: reject oscillator lookup errors
-Date: Wed, 18 Nov 2026 15:43:19 +0100
-Message-ID: <20261118150027.668231726@linuxfoundation.org>
+Subject: [PATCH 6.12 0473/1756] bpf, lsm: Reject writes into the BPF LSM program context
+Date: Wed, 18 Nov 2026 15:43:20 +0100
+Message-ID: <20261118150027.703992730@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,38 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slavin Liu <bolin.liu@seu.edu.cn>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 54d0b6903921d121fa750546f2b38cc3f5c7e64f ]
+[ Upstream commit c42da1d3ba9d5067cf3f0676b98bcb3f5f9e3ce1 ]
 
-Clock lookup may fail while allocating a consumer reference. Return
-a notifier error rather than passing ERR_PTR as the new clock parent.
+The verifier types a load from a tracing-style context by its offset
+alone: btf_ctx_access() looks the offset up in the attach hook's
+prototype, and check_mem_access() stamps the resulting type onto the
+destination register. Nothing tracks what the slot actually holds.
+That is sound only as long as the context is read-only, and for BPF LSM
+it is not. lsm_verifier_ops wires ->is_valid_access() straight to
+btf_ctx_access(), which never looks at enum bpf_access_type, so a store
+into the context passes verification. Every other user of the helper
+either goes through bpf_tracing_btf_ctx_access() or open-codes the same
+type != BPF_READ test first; BPF LSM is the only one that does neither.
 
-Detected by static analysis and reviewed with AI-assisted source auditing.
+A program can therefore store a scalar of its choosing into a context
+slot, read the slot back, and get a register the verifier believes is a
+trusted pointer of the hook's argument type. Handing that to a kfunc or
+helper which dereferences a trusted argument turns it into an arbitrary
+kernel access. Route BPF LSM through bpf_tracing_btf_ctx_access() like
+everyone else.
 
-Fixes: 538d5477b252 ("clk: starfive: jh7110-sys: Add notifier for PLL0 clock")
-Assisted-by: LLM
-Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Fixes: fc611f47f218 ("bpf: Introduce BPF_PROG_TYPE_LSM")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20260915150739.284189-3-daniel@iogearbox.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/starfive/clk-starfive-jh7110-sys.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/bpf/bpf_lsm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/starfive/clk-starfive-jh7110-sys.c b/drivers/clk/starfive/clk-starfive-jh7110-sys.c
-index 17325f17696f6..f8bff03db80d3 100644
---- a/drivers/clk/starfive/clk-starfive-jh7110-sys.c
-+++ b/drivers/clk/starfive/clk-starfive-jh7110-sys.c
-@@ -401,6 +401,9 @@ static int jh7110_pll0_clk_notifier_cb(struct notifier_block *nb,
- 	if (action == PRE_RATE_CHANGE) {
- 		struct clk *osc = clk_get(priv->dev, "osc");
+diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
+index 140c63a816d09..64d1769fd1584 100644
+--- a/kernel/bpf/bpf_lsm.c
++++ b/kernel/bpf/bpf_lsm.c
+@@ -408,8 +408,8 @@ const struct bpf_prog_ops lsm_prog_ops = {
+ };
  
-+		if (IS_ERR(osc))
-+			return notifier_from_errno(PTR_ERR(osc));
-+
- 		priv->original_clk = clk_get_parent(cpu_root);
- 		ret = clk_set_parent(cpu_root, osc);
- 		clk_put(osc);
+ const struct bpf_verifier_ops lsm_verifier_ops = {
+-	.get_func_proto = bpf_lsm_func_proto,
+-	.is_valid_access = btf_ctx_access,
++	.get_func_proto		= bpf_lsm_func_proto,
++	.is_valid_access	= bpf_tracing_btf_ctx_access,
+ };
+ 
+ /* hooks return 0 or 1 */
 -- 
 2.53.0
 
