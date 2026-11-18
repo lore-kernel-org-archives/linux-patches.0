@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015758;
-	b=qcGRM67mikF3WVpSrMq/70V8W2kUMT9UF9QQPYNk64kbCedjl0cd/WeUWsVIrwwwd+hR
-	 +iuG23yPPM7ZjBLGh1bentSgkATwBFEhObj1JziAFCLZjdbiiQE6pA8ucBkP+cMzl+vjo
-	 rxpgYeMtrbOi1aZ9go0aXDd7tDX0EEap+kgCTnbjljDl4ZXeUbJ4YW/pqEMKR32Y1zGA5
-	 zP+iA9kUOjI0eumbX82DrLQVYbH2fcex/Lav9Mgot16Yro+jnv7QKyc4UGveMua0V6Nn6
-	 17RUQ+JrXxGj1/UIEPwIOrigWY6NRdIQL1zAb5V1AjQhAtVD1gpDPGNflf+E8lYSnag==
+	t=1795015760;
+	b=u5to+1fTeoHLEbYhcPFSyvClaBqw6sGbCDUD/VSMjGqf+nQhLj8W531KXF3gkn4BXzqh
+	 rIcME5Z+eZ5nLQy3xybQnEUCrTKsZamEX1VkDHmnCpU75HqjpGDWXOlCu2lzMr51UwR+6
+	 +4rfnc8TKak7++vVy7zsrymIfs+/qyPeumS695ik62WzfqhL4k5kT5RDDeWWH+EFh32mk
+	 JzDwa42OM8G2IahYtpALf+UvQivl6Vkt+IWefTK+yGBnIFti7xIzgyiBoXgXkuVxI7f89
+	 btnbaEFN1vPPN7YKg/icDqBwGysrz1grd3KzCq0/kB1lqyzWmCwzzoIM6Ar2eN04zmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015758;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015760;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BccCgjpMkHzsjbr8/lAgJXy1lWql0kgt5zuM2kXL1xU=;
-	b=uesPzsH8plToJTqg6Tl92+pvd9vGCAsjpD7QPrM50C9LCfma8FbuRcrL2abk1nPyjSGc
-	 ++2RUHyqbT958QBT7zhu32RSU9LZ7+d5uadHLfVGAeAEpPL1doDM/I/vncJCTj20VnPlz
-	 Be7gbkUJHM8PndkAckiYkZpPjVQB22GmxgeYOrQ3mD4niDrWYF9tdNHzOybrIjVjPzuPH
-	 nyrcBtnBLmzq0I4w+gCP9eB9IUxVmyVsoSFNNctrc1Ym5f2JIYJiVNv9/1n7CqJqJUL/i
-	 sWRViJe0K+vGgkCP/RQbEFxDKG51r4vXpu1KDxcTO/rXg3qUIptOQ/TW2p5IpUXssbA==
+	bh=j1OzPTWcEng+1CatnEcs381HqaKr6/KLGg7G3Wkz2kI=;
+	b=dxjWmsSCCdHEj+wab09KB2H+sWDgu+NV8B+CuXfVw+s9jS2jCPQ2a/1F18A7I4J7Iah6
+	 U6+a+AR9O8BzynFc3DSVCDYpqwku/uzrG4MK/5H4my+Ny4enXpm5ZfbtXSubqzuvyELuO
+	 tzLXvmdIqviyZ5stSvcv//KBbB4NDAQh5kpoLArwUW1ZLzcikdTJe4P1I8QpEj53SbB2P
+	 DYmVRkhxi6r0x43pG2MfCIvkNzJEj08KOTDPwRGhFZ+5h/HC1a6P3OtCEc96bFk+kRBRD
+	 j9CKr0HcYrX8yG7gYZ4inMPWaOcihnmkXRs16kICf8FJjsEN1lFMgRU4vwcAjV2P6eA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxu9IM26;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pQBFUpha;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F96B606A320;
-	Wed, 18 Nov 2026 15:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B67606A31C;
+	Wed, 18 Nov 2026 15:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxu9IM26
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 478411F000C4;
-	Wed, 18 Nov 2026 15:29:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pQBFUpha
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E6B1F000C5;
+	Wed, 18 Nov 2026 15:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015757;
-	bh=BccCgjpMkHzsjbr8/lAgJXy1lWql0kgt5zuM2kXL1xU=;
+	s=korg; t=1795015760;
+	bh=j1OzPTWcEng+1CatnEcs381HqaKr6/KLGg7G3Wkz2kI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hxu9IM26KKcB2qLk/N7gOemAxoYDSEeDEq/ayZ5ProS2/R1YeezELsPA8e+W7A3QK
-	 NwEWPRBr5OTUhwYt2WB1rXwF3RduUvxuOm9HVDUJqtNfw8n8mzHWf32sI0mjrJeB9y
-	 6sDvZPkpacz5sl3z38hTCKqB/cYT9TARx0VyN9sQ=
+	b=pQBFUphay386Z70yASueBD/8XdfeMtAbQ2vcIlTBP7VqcJI/drZ62NTRJ05dKZ9Z3
+	 LMbeQtcPfzsJyn95IzvaL2MEHaUQ8ALvPEEbwJUgvYqzx67aX0nd3zMqI9a25xNNVe
+	 uiDOsLSYGSEzqPNymBUP3VObON41OlLCHeNNovPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0286/2651] perf trace: Enhance BTF type formatting to symbolise kernel function pointers
-Date: Wed, 18 Nov 2026 15:25:26 +0100
-Message-ID: <20261118150258.204483253@linuxfoundation.org>
+Subject: [PATCH 7.3 0251/2651] ABI: sysfs-class-infiniband: Drop the entries of the removed qib driver
+Date: Wed, 18 Nov 2026 15:24:51 +0100
+Message-ID: <20261118150256.896095988@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,252 +68,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Tomlin <atomlin@atomlin.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit c6dd6161815d0c10ed24ad13fdad847bec63d961 ]
+[ Upstream commit 63367df6e7255067ad6a83abe0d2799dfa491876 ]
 
-When BTF (BPF Type Format) metadata is loaded from vmlinux, 'perf trace'
-can inspect the precise C types of tracepoint and system call parameters.
-However, function pointer arguments are currently not recognised during
-BTF pretty-printing and default to hexadecimal output.
+Commit 24baad32b710 ("RDMA/qib: Remove outdated driver") removed the qib
+driver but left its /sys/class/infiniband/qibX/* entries in the stable
+ABI file. Nothing creates those files any more.
 
-Introduce btf_is_func_ptr() to inspect BTF type hierarchies
-(i.e., traversing pointers, typedefs, and type modifiers) to determine
-whether a parameter resolves to a function prototype
-(BTF_KIND_FUNC_PROTO).
+Remove the block.
 
-Generalise BTF type caching via syscall_arg_fmt__cache_btf_type() to
-handle structs, unions, enums, and function pointers alike. When a field
-is identified as a kernel function pointer, trace__btf_scnprintf()
-routes its value to syscall_arg__scnprintf_ksym(), enabling automatic
-zero-config symbolisation of kernel function pointers whenever BTF is
-available.
-
-Signed-off-by: Aaron Tomlin <atomlin@atomlin.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 024b219744a9 ("perf trace: Add upper bound checks for augmented BTF struct printing")
+Fixes: 24baad32b710 ("RDMA/qib: Remove outdated driver")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260905092057.41306-1-kmehltretter@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 106 +++++++++++++++++++++++++++++--------
- 1 file changed, 85 insertions(+), 21 deletions(-)
+ .../ABI/stable/sysfs-class-infiniband         | 118 ------------------
+ 1 file changed, 118 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 4c8f91f0f854b..66d931688aa3d 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -122,6 +122,7 @@ struct syscall_arg_fmt {
- #ifdef HAVE_LIBBPF_SUPPORT
- 	const struct btf_type *type;
- 	int	   type_id; /* used in btf_dump */
-+	bool	   btf_type_cached;
- #endif
- };
+diff --git a/Documentation/ABI/stable/sysfs-class-infiniband b/Documentation/ABI/stable/sysfs-class-infiniband
+index 7ba1161034291..726a38470e585 100644
+--- a/Documentation/ABI/stable/sysfs-class-infiniband
++++ b/Documentation/ABI/stable/sysfs-class-infiniband
+@@ -422,124 +422,6 @@ Description:
+ 				information)
+ 		=============== =============================================
  
-@@ -950,21 +951,68 @@ static size_t syscall_arg__scnprintf_getrandom_flags(char *bf, size_t size,
- #define SCA_GETRANDOM_FLAGS syscall_arg__scnprintf_getrandom_flags
+-
+-sysfs interface for Intel IB driver qib
+----------------------------------------
+-
+-What:		/sys/class/infiniband/qibX/version
+-What:		/sys/class/infiniband/qibX/hw_rev
+-What:		/sys/class/infiniband/qibX/hca_type
+-What:		/sys/class/infiniband/qibX/board_id
+-What:		/sys/class/infiniband/qibX/boardversion
+-What:		/sys/class/infiniband/qibX/nctxts
+-What:		/sys/class/infiniband/qibX/localbus_info
+-What:		/sys/class/infiniband/qibX/tempsense
+-What:		/sys/class/infiniband/qibX/serial
+-What:		/sys/class/infiniband/qibX/nfreectxts
+-What:		/sys/class/infiniband/qibX/chip_reset
+-Date:		May, 2010
+-KernelVersion:	v2.6.35
+-Contact:	linux-rdma@vger.kernel.org
+-Description:
+-		=============== ======================================================
+-		version:	(RO) Display version information of installed software
+-				and drivers.
+-
+-		hw_rev:		(RO) Hardware revision number
+-
+-		hca_type:	(RO) Host channel adapter type
+-
+-		board_id:	(RO) Manufacturing board id
+-
+-		boardversion:	(RO) Current version of the chip architecture
+-
+-		nctxts:		(RO) Return the number of user ports (contexts)
+-				available
+-
+-		localbus_info:	(RO) Human readable localbus info
+-
+-		tempsense:	(RO) Display temp sense registers in decimal
+-
+-		serial:		(RO) Serial number of the HCA
+-
+-		nfreectxts:	(RO) The number of free user ports (contexts)
+-				available.
+-
+-		chip_reset:	(WO) Reset the chip if possible by writing
+-				"reset" to this file. Only allowed if no user
+-				contexts are open that use chip resources.
+-		=============== ======================================================
+-
+-
+-What:		/sys/class/infiniband/qibX/ports/<N>/sl2vl/[0-15]
+-Date:		May, 2010
+-KernelVersion:	v2.6.35
+-Contact:	linux-rdma@vger.kernel.org
+-Description:
+-		(RO) The directory contains 16 files numbered 0-15 that specify
+-		the Service Level (SL). Listing the SL files returns the Virtual
+-		Lane (VL) as programmed by the SL.
+-
+-What:		/sys/class/infiniband/qibX/ports/<N>/CCMgtA/cc_settings_bin
+-What:		/sys/class/infiniband/qibX/ports/<N>/CCMgtA/cc_table_bin
+-Date:		May, 2010
+-KernelVersion:	v2.6.35
+-Contact:	linux-rdma@vger.kernel.org
+-Description:
+-		Per-port congestion control. Both are binary attributes.
+-
+-		=============== ================================================
+-		cc_table_bin	(RO) Congestion control table size followed by
+-				table entries.
+-
+-		cc_settings_bin (RO) Congestion settings: port control, control
+-				map and an array of 16 entries for the
+-				congestion entries - increase, timer, event log
+-				trigger threshold and the minimum injection rate
+-				delay.
+-		=============== ================================================
+-
+-What:		/sys/class/infiniband/qibX/ports/<N>/linkstate/loopback
+-What:		/sys/class/infiniband/qibX/ports/<N>/linkstate/led_override
+-What:		/sys/class/infiniband/qibX/ports/<N>/linkstate/hrtbt_enable
+-What:		/sys/class/infiniband/qibX/ports/<N>/linkstate/status
+-What:		/sys/class/infiniband/qibX/ports/<N>/linkstate/status_str
+-Date:		May, 2010
+-KernelVersion:	v2.6.35
+-Contact:	linux-rdma@vger.kernel.org
+-Description:
+-		[to be documented]
+-
+-		=============== ===============================================
+-		loopback:	(WO)
+-		led_override:	(WO)
+-		hrtbt_enable:	(RW)
+-		status:		(RO)
+-
+-		status_str:	(RO) Displays information about the link state,
+-				possible cable/switch problems, and hardware
+-				errors. Possible states are- "Initted",
+-				"Present", "IB_link_up", "IB_configured" or
+-				"Fatal_Hardware_Error".
+-		=============== ===============================================
+-
+-What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/rc_resends
+-What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/seq_naks
+-What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/rdma_seq
+-What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/rnr_naks
+-What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/other_naks
+-What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/rc_timeouts
+-What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/look_pkts
+-What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/pkt_drops
+-What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/dma_wait
+-What:		/sys/class/infiniband/qibX/ports/<N>/diag_counters/unaligned
+-Date:		May, 2010
+-KernelVersion:	v2.6.35
+-Contact:	linux-rdma@vger.kernel.org
+-Description:
+-		[to be documented]
+-
+-
+ sysfs interface for Mellanox Connect-IB HCA driver mlx5
+ -------------------------------------------------------
  
- #ifdef HAVE_LIBBPF_SUPPORT
--static void syscall_arg_fmt__cache_btf_enum(struct syscall_arg_fmt *arg_fmt, struct btf *btf, char *type)
-+static bool btf_is_func_ptr(const struct btf *btf, const struct btf_type *type)
- {
-+	int nr_ptrs = 0;
-+
-+	while (type) {
-+		if (btf_is_ptr(type)) {
-+			if (++nr_ptrs > 1)
-+				return false;
-+			type = btf__type_by_id(btf, type->type);
-+		} else if (btf_is_typedef(type) || btf_is_mod(type)) {
-+			type = btf__type_by_id(btf, type->type);
-+		} else {
-+			break;
-+		}
-+	}
-+	return nr_ptrs == 1 && type && btf_is_func_proto(type);
-+}
-+
-+static void syscall_arg_fmt__cache_btf_type(struct syscall_arg_fmt *arg_fmt,
-+					    struct btf *btf, const char *type)
-+{
-+	char name[128];
-+	const char *pos;
-+	size_t len = 0;
- 	int id;
- 
--	type = strstr(type, "enum ");
-+	arg_fmt->btf_type_cached = true;
-+
- 	if (type == NULL)
- 		return;
- 
--	type += 5; // skip "enum " to get the enumeration name
-+	/* Pointers to enums are memory addresses, not scalar enums */
-+	if (strstr(type, "enum ") && strchr(type, '*'))
-+		return;
-+
-+	if ((pos = strstr(type, "enum ")) != NULL)
-+		pos += 5;
-+	else if ((pos = strstr(type, "struct ")) != NULL)
-+		pos += 7;
-+	else if ((pos = strstr(type, "union ")) != NULL)
-+		pos += 6;
-+	else
-+		pos = type;
-+
-+	while (isspace(*pos))
-+		pos++;
-+
-+	while ((isalnum(pos[len]) || pos[len] == '_') && len < sizeof(name) - 1) {
-+		name[len] = pos[len];
-+		len++;
-+	}
-+	name[len] = '\0';
-+
-+	if (len == 0)
-+		return;
- 
--	id = btf__find_by_name(btf, type);
-+	id = btf__find_by_name(btf, name);
- 	if (id < 0)
- 		return;
- 
- 	arg_fmt->type = btf__type_by_id(btf, id);
-+	arg_fmt->type_id = id;
- }
- 
- static bool syscall_arg__strtoul_btf_enum(char *bf, size_t size, struct syscall_arg *arg, u64 *val)
-@@ -998,10 +1046,8 @@ static bool syscall_arg__strtoul_btf_type(char *bf, size_t size, struct syscall_
- 	if (btf == NULL)
- 		return false;
- 
--	if (arg->fmt->type == NULL) {
--		// See if this is an enum
--		syscall_arg_fmt__cache_btf_enum(arg->fmt, btf, type);
--	}
-+	if (!arg->fmt->btf_type_cached)
-+		syscall_arg_fmt__cache_btf_type(arg->fmt, btf, type);
- 
- 	// Now let's see if we have a BTF type resolved
- 	bt = arg->fmt->type;
-@@ -1009,19 +1055,22 @@ static bool syscall_arg__strtoul_btf_type(char *bf, size_t size, struct syscall_
- 		return false;
- 
- 	// If it is an enum:
--	if (btf_is_enum(arg->fmt->type))
-+	if (btf_is_enum(arg->fmt->type)) {
-+		if (type && strchr(type, '*'))
-+			return false;
- 		return syscall_arg__strtoul_btf_enum(bf, size, arg, val);
-+	}
- 
- 	return false;
- }
- 
--static size_t btf_enum_scnprintf(const struct btf_type *type, struct btf *btf, char *bf, size_t size, int val)
-+static size_t btf_enum_scnprintf(const struct btf_type *type, struct btf *btf, char *bf, size_t size, unsigned long val)
- {
- 	struct btf_enum *be = btf_enum(type);
- 	const unsigned int nr_entries = btf_vlen(type);
- 
- 	for (unsigned int i = 0; i < nr_entries; ++i, ++be) {
--		if (be->val == val) {
-+		if ((unsigned long)(__u32)be->val == val || (unsigned long)be->val == val) {
- 			return scnprintf(bf, size, "%s",
- 					 btf__name_by_offset(btf, be->name_off));
- 		}
-@@ -1048,14 +1097,19 @@ static size_t btf_struct_scnprintf(const struct btf_type *type, struct btf *btf,
- 		.bf   = bf,
- 		.size = size,
- 	};
--	struct augmented_arg *augmented_arg = arg->augmented.args;
-+	struct augmented_arg *augmented_arg;
- 	int type_id = arg->fmt->type_id, consumed;
- 	struct btf_dump *btf_dump;
- 
- 	LIBBPF_OPTS(btf_dump_opts, dump_opts);
- 	LIBBPF_OPTS(btf_dump_type_data_opts, dump_data_opts);
- 
--	if (arg == NULL || arg->augmented.args == NULL)
-+	if (arg == NULL || arg->augmented.args == NULL || arg->augmented.size <= 0 ||
-+	    arg->fmt == NULL || !arg->fmt->from_user)
-+		return 0;
-+
-+	augmented_arg = arg->augmented.args;
-+	if (augmented_arg->size <= 0)
- 		return 0;
- 
- 	dump_data_opts.compact	  = true;
-@@ -1066,8 +1120,10 @@ static size_t btf_struct_scnprintf(const struct btf_type *type, struct btf *btf,
- 		return 0;
- 
- 	/* pretty print the struct data here */
--	if (btf_dump__dump_type_data(btf_dump, type_id, arg->augmented.args->value, type->size, &dump_data_opts) <= 0)
-+	if (btf_dump__dump_type_data(btf_dump, type_id, arg->augmented.args->value, type->size, &dump_data_opts) <= 0) {
-+		btf_dump__free(btf_dump);
- 		return 0;
-+	}
- 
- 	consumed = sizeof(*augmented_arg) + augmented_arg->size;
- 	arg->augmented.args = ((void *)arg->augmented.args) + consumed;
-@@ -1079,33 +1135,40 @@ static size_t btf_struct_scnprintf(const struct btf_type *type, struct btf *btf,
- }
- 
- static size_t trace__btf_scnprintf(struct trace *trace, struct syscall_arg *arg, char *bf,
--				   size_t size, int val, char *type)
-+				   size_t size, unsigned long val, char *type)
- {
- 	struct syscall_arg_fmt *arg_fmt = arg->fmt;
- 
- 	if (trace->btf == NULL)
- 		return 0;
- 
--	if (arg_fmt->type == NULL) {
--		// Check if this is an enum and if we have the BTF type for it.
--		syscall_arg_fmt__cache_btf_enum(arg_fmt, trace->btf, type);
--	}
-+	if (!arg_fmt->btf_type_cached)
-+		syscall_arg_fmt__cache_btf_type(arg_fmt, trace->btf, type);
- 
- 	// Did we manage to find a BTF type for the syscall/tracepoint argument?
- 	if (arg_fmt->type == NULL)
- 		return 0;
- 
-+	if (type && strchr(type, '*')) {
-+		if (btf_is_enum(arg_fmt->type) || btf_is_func_ptr(trace->btf, arg_fmt->type))
-+			return 0;
-+	}
-+
- 	if (btf_is_enum(arg_fmt->type))
- 		return btf_enum_scnprintf(arg_fmt->type, trace->btf, bf, size, val);
- 	else if (btf_is_struct(arg_fmt->type) || btf_is_union(arg_fmt->type))
- 		return btf_struct_scnprintf(arg_fmt->type, trace->btf, bf, size, arg);
-+	else if (btf_is_func_ptr(trace->btf, arg_fmt->type)) {
-+		arg->val = val;
-+		return syscall_arg__scnprintf_ksym(bf, size, arg);
-+	}
- 
- 	return 0;
- }
- 
- #else // HAVE_LIBBPF_SUPPORT
- static size_t trace__btf_scnprintf(struct trace *trace __maybe_unused, struct syscall_arg *arg __maybe_unused,
--				   char *bf __maybe_unused, size_t size __maybe_unused, int val __maybe_unused,
-+				   char *bf __maybe_unused, size_t size __maybe_unused, unsigned long val __maybe_unused,
- 				   char *type __maybe_unused)
- {
- 	return 0;
-@@ -2529,7 +2592,8 @@ static size_t syscall__scnprintf_args(struct syscall *sc, char *bf, size_t size,
- 
- 			default_scnprintf = sc->arg_fmt[arg.idx].scnprintf;
- 
--			if (trace->force_btf || default_scnprintf == NULL || default_scnprintf == SCA_PTR) {
-+			if (trace->force_btf || default_scnprintf == NULL ||
-+			    default_scnprintf == SCA_PTR || default_scnprintf == SCA_KSYM) {
- 				btf_printed = trace__btf_scnprintf(trace, &arg, bf + printed,
- 								   size - printed, val, field->type);
- 				if (btf_printed) {
 -- 
 2.53.0
 
