@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015372;
-	b=HINR0hF4lB5rUw9HpGoF/m2iUm/N+IZJ8ch37n2ObElVK7SkPU86jZ/QK0hTdZKtg0kH
-	 VSHtCV66u1HLOflyAgsP5FVnWl2X0UuY4HydNh1Ubte9pHohbe6wSdfmxm3TYEziH6roo
-	 nAxlDrGrLb4HEQdZBkawfbPT8z/QU42aOl8tZsT4mQq5pD9AUVfMYBePhzCjexRp1SJr1
-	 zKgNvRKebgrA5rg3Xq3K7YRqvo3UxklgR/eQm0cr7Nj2wm7P+8/39ySntNT4+MFTaJon2
-	 /H3PZfDH5vXmgC0tjzZVcChMtBYUxoTnRg5fjGW2FOOYPFYZZiKLPu+kHJQh6TQ8A2A==
+	t=1795015376;
+	b=EegxTmfkdXVsQAm5ufbgty9ueEtHpzzjJm+cV7+VKDLBnJ+jUIUumgiREDEvrCCUXVkv
+	 yh/QaL2F2zl8ckWdfjIRrsJMUZzwJVUcHYS+hWypB3J2EBa39F8VUvNoLMgqXNRNPv3K5
+	 XlL4oA/s1AxmZPfSHg2dBDLX0n37PpFsfNcg2McyNCYFD5mzwZc95WHxj2rYsUvkSPHkd
+	 sL41L2RmvPT7u4DKopHmk4qJca4ccgN/PK9nub36kQITcfJAamgCJAjj4eIGsXdLdidLX
+	 YBiBqhaPmo8ChD+v66+Yn6GiIyHrGdGJloOrL/VhKVlwxbveE3RIYr1rJRSWqBGT9Tw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015372;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015376;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N7Kmr3YQD04pNlWBcUiOTnra+pzfXapBMh4/M/WR+vs=;
-	b=qcTBylwBQABz65tVJxA5hXPJMoE1oY/x0ZfM2wo8Z9VgOGFO1nclb3N4LpAOO919Fdbu
-	 FA6bwozc1Qw7WJn5Rmn0x5YwXSgO6xgBmiaXm3iAUSAaGmCd2duFhBK8gY/h4MRQNXvpl
-	 SZs9M+Ub7eQJdJCXwMQMqnWCC0X6kEdVPBbzEqni2BuSJm9E1pR2ioGlnImk1RVGTQ8FW
-	 CXsOYwYzE9NyNPEQgPFpli5oEmkMifeg3H8/pK50sU7OxrlNlNJNtoQ+H+Wxd63UFH5ce
-	 VeI9EBNgZZAxi+p06vxdzGd90y0hZ4bij33rhocHb+/Dv0jhvn0Yf2tww1H+x0rkUxA==
+	bh=yRcJRoMaHTxxtUDW5WK4Frrl3TxJ5Kh56ipQmL/Udz4=;
+	b=F0wK97PtnLbn0tQcqUtfQI7jf4Z4rKo6O4BkmDJ0eAz/GsGiiQnfeB8tQz24TykGk/5/
+	 j5zg3KYUGSVeLncXvYcWoYTUaoLMsQbuOO9Hjg+hyWxkUvTXUkir8gwFVOM0fzpRjDxDJ
+	 1+VY4V9P0uofnRozDa3ZBYqcbQoottAJOukEMP+ALs9NHajSHUSs72v7f4+gyu1BU7XGt
+	 YuA7ij/geH0ZBpEaFh3tTnrCUTmP3guCbQpj3xrpDSFHzRhs/LVS7XhClTEUWUmJeGIcS
+	 SvmA8IuncfGAVU/a8Cerb0xRLtZjqZR5CBpvzw3e910nXuelWxt1byevkLGtQbDxd+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M2IhPBme;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PnFGUjHn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEDB606A32F;
-	Wed, 18 Nov 2026 15:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0626F606A334;
+	Wed, 18 Nov 2026 15:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M2IhPBme
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B011F000C4;
-	Wed, 18 Nov 2026 15:22:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PnFGUjHn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107471F000C4;
+	Wed, 18 Nov 2026 15:22:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015372;
-	bh=N7Kmr3YQD04pNlWBcUiOTnra+pzfXapBMh4/M/WR+vs=;
+	s=korg; t=1795015375;
+	bh=yRcJRoMaHTxxtUDW5WK4Frrl3TxJ5Kh56ipQmL/Udz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M2IhPBmekHvlsLGYF116uBDdK1Pqj2Sdu3JbMG4agvlA+zDJMl0EYM23hvNLOGm8o
-	 VJiuxSIzAht5tak81ZKEO0cdNAO/a5SmD8Fi1bpnyWhXWVxzM+bw9jqJQh730p+tOi
-	 1PFADyCgV89yEso+Q6oxisY2UZX6lZIGhOYx1BkE=
+	b=PnFGUjHnIEK8bTMt9QgU0iFcO2a8gwEAioFhvyzJYR5uqDu9JzLexiWymtd7T3JOE
+	 1pGzX96+exipJRudv761rITKag3H5WxxFKbZpHCmHIDL1XSXkSrPZ1m3dw+527eJvr
+	 jcJFyX+Ckwf+DSsBNCmNj7Gx/kisuBo7sHRJv0Fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Faure <boris@fau.re>,
-	Vinod Koul <vkoul@kernel.org>,
+	Max Zhen <max.zhen@amd.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0149/2651] soundwire: intel: initialise quirk_mask before reading it
-Date: Wed, 18 Nov 2026 15:23:09 +0100
-Message-ID: <20261118150253.221965282@linuxfoundation.org>
+Subject: [PATCH 7.3 0150/2651] accel/amdxdna: Fix unexpected wait when flushing notifier_wq
+Date: Wed, 18 Nov 2026 15:23:10 +0100
+Message-ID: <20261118150253.255774043@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,43 +68,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Faure <boris@fau.re>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit ee8a8cfe4e8d3c67456e554c988017c252710a25 ]
+[ Upstream commit 445d20910429b41e88768624b914344658991a5b ]
 
-sdw_master_read_intel_prop() declares quirk_mask without an initialiser
-and ignores the return value of fwnode_property_read_u32(). When a BIOS
-does not describe "intel-quirk-mask" for a link, the property read leaves
-the variable untouched and stack garbage decides whether
-SDW_INTEL_QUIRK_MASK_BUS_DISABLE is honoured, so the link may be marked
-hw_disabled at random.
+In amdxdna_gem_obj_free(), flush_workqueue(xdna->notifier_wq) waits for
+all pending work items on the device-global notifier workqueue, rather
+than only the work items associated with the BO being freed.
 
-Initialise it to 0, matching is_link_enabled() in
-sound/hda/core/intel-sdw-acpi.c.
-Found by code inspection, not observed at run time.
+If another BO has a pending hmm_unreg_work, freeing an unrelated BO can
+be unnecessarily blocked until that work completes.
 
-Fixes: 395713d8ca43 ("soundwire: intel: handle disabled links")
-Signed-off-by: Boris Faure <boris@fau.re>
-Link: https://patch.msgid.link/20260820212220.226912-1-boris@fau.re
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+mmu_interval_notifier_remove() is deferred to a workqueue because it
+cannot be called from the MMU notifier callback itself. The BO free path
+is not a notifier callback, so call mmu_interval_notifier_remove()
+directly there and avoid the workqueue.
+
+Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
+Reviewed-by: Max Zhen <max.zhen@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260813205016.941743-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/intel_auxdevice.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/accel/amdxdna/amdxdna_gem.c | 69 +++++++++++++++++++----------
+ drivers/accel/amdxdna/amdxdna_gem.h |  1 +
+ 2 files changed, 47 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/soundwire/intel_auxdevice.c b/drivers/soundwire/intel_auxdevice.c
-index a8407560bf4fd..9b1465af26458 100644
---- a/drivers/soundwire/intel_auxdevice.c
-+++ b/drivers/soundwire/intel_auxdevice.c
-@@ -159,7 +159,7 @@ static int sdw_master_read_intel_prop(struct sdw_bus *bus)
- 	struct sdw_intel_prop *intel_prop;
- 	struct fwnode_handle *link;
- 	char name[32];
--	u32 quirk_mask;
-+	u32 quirk_mask = 0;
+diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
+index 4b0d58d0329b7..d305c58244fd0 100644
+--- a/drivers/accel/amdxdna/amdxdna_gem.c
++++ b/drivers/accel/amdxdna/amdxdna_gem.c
+@@ -253,13 +253,16 @@ static bool amdxdna_hmm_invalidate(struct mmu_interval_notifier *mni,
+ 	struct amdxdna_gem_obj *abo = mapp->abo;
+ 	struct amdxdna_dev *xdna;
  
- 	/* Find master handle */
- 	snprintf(name, sizeof(name),
++	if (!mmu_notifier_range_blockable(range))
++		return false;
++
++	if (mapp->unmapped)
++		return true;
++
+ 	xdna = to_xdna_dev(to_gobj(abo)->dev);
+ 	XDNA_DBG(xdna, "Invalidating range 0x%lx, 0x%lx, type %d",
+ 		 mapp->range.start, mapp->range.end, abo->type);
+ 
+-	if (!mmu_notifier_range_blockable(range))
+-		return false;
+-
+ 	down_write(&xdna->notifier_lock);
+ 	abo->mem.map_invalid = true;
+ 	mapp->invalid = true;
+@@ -301,33 +304,40 @@ static void amdxdna_hmm_unregister(struct amdxdna_gem_obj *abo,
+ 
+ 	down_write(&xdna->notifier_lock);
+ 	list_for_each_entry(mapp, &abo->mem.umap_list, node) {
+-		if (!vma || compare_range(mapp, vma->vm_mm, vma->vm_start, vma->vm_end)) {
+-			if (!mapp->unmapped) {
+-				queue_work(xdna->notifier_wq, &mapp->hmm_unreg_work);
+-				mapp->unmapped = true;
+-			}
+-			if (vma)
+-				break;
+-		}
++		if (!compare_range(mapp, vma->vm_mm, vma->vm_start, vma->vm_end))
++			continue;
++
++		queue_work(xdna->notifier_wq, &mapp->hmm_unreg_work);
++		mapp->unmapped = true;
+ 	}
+ 	up_write(&xdna->notifier_lock);
+ }
+ 
+-static void amdxdna_umap_release(struct kref *ref)
++static void amdxdna_hmm_unregister_all(struct amdxdna_gem_obj *abo)
+ {
+-	struct amdxdna_umap *mapp = container_of(ref, struct amdxdna_umap, refcnt);
+-	struct amdxdna_gem_obj *abo = mapp->abo;
+-	struct amdxdna_dev *xdna;
+-
+-	mmu_interval_notifier_remove(&mapp->notifier);
++	struct amdxdna_dev *xdna = to_xdna_dev(to_gobj(abo)->dev);
++	struct amdxdna_umap *mapp, *tmp;
++	LIST_HEAD(dead);
+ 
+-	xdna = to_xdna_dev(to_gobj(mapp->abo)->dev);
+ 	down_write(&xdna->notifier_lock);
+-	list_del(&mapp->node);
+-	if (list_empty(&abo->mem.umap_list))
+-		abo->mem.uva = AMDXDNA_INVALID_ADDR;
++	list_for_each_entry_safe(mapp, tmp, &abo->mem.umap_list, node) {
++		mapp->unmapped = true;
++		mapp->cleanup = true;
++		list_move(&mapp->node, &dead);
++	}
+ 	up_write(&xdna->notifier_lock);
+ 
++	list_for_each_entry_safe(mapp, tmp, &dead, node) {
++		cancel_work_sync(&mapp->hmm_unreg_work);
++		amdxdna_umap_put(mapp);
++	}
++}
++
++static void amdxdna_umap_release(struct kref *ref)
++{
++	struct amdxdna_umap *mapp = container_of(ref, struct amdxdna_umap, refcnt);
++
++	mmu_interval_notifier_remove(&mapp->notifier);
+ 	kvfree(mapp->range.hmm_pfns);
+ 	kfree(mapp);
+ }
+@@ -341,6 +351,20 @@ static void amdxdna_hmm_unreg_work(struct work_struct *work)
+ {
+ 	struct amdxdna_umap *mapp = container_of(work, struct amdxdna_umap,
+ 						 hmm_unreg_work);
++	struct amdxdna_gem_obj *abo = mapp->abo;
++	struct amdxdna_dev *xdna;
++
++	xdna = to_xdna_dev(to_gobj(mapp->abo)->dev);
++	down_write(&xdna->notifier_lock);
++	if (mapp->cleanup) {
++		up_write(&xdna->notifier_lock);
++		return;
++	}
++
++	list_del(&mapp->node);
++	if (list_empty(&abo->mem.umap_list))
++		abo->mem.uva = AMDXDNA_INVALID_ADDR;
++	up_write(&xdna->notifier_lock);
+ 
+ 	amdxdna_umap_put(mapp);
+ }
+@@ -643,8 +667,7 @@ static void amdxdna_gem_obj_free(struct drm_gem_object *gobj)
+ 	struct amdxdna_dev *xdna = to_xdna_dev(gobj->dev);
+ 	struct amdxdna_gem_obj *abo = to_xdna_obj(gobj);
+ 
+-	amdxdna_hmm_unregister(abo, NULL);
+-	flush_workqueue(xdna->notifier_wq);
++	amdxdna_hmm_unregister_all(abo);
+ 
+ 	if (abo->pinned)
+ 		amdxdna_gem_unpin(abo);
+diff --git a/drivers/accel/amdxdna/amdxdna_gem.h b/drivers/accel/amdxdna/amdxdna_gem.h
+index 1e90e32bf3cd7..fb033ced1045f 100644
+--- a/drivers/accel/amdxdna/amdxdna_gem.h
++++ b/drivers/accel/amdxdna/amdxdna_gem.h
+@@ -20,6 +20,7 @@ struct amdxdna_umap {
+ 	struct kref			refcnt;
+ 	bool				invalid;
+ 	bool				unmapped;
++	bool				cleanup;
+ };
+ 
+ struct amdxdna_mem {
 -- 
 2.53.0
 
