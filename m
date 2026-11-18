@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020272;
-	b=rCrJpJhnhyUQwkd2smbI5r+R4HIQgTTebV4p2vSaibehgxJysRO2ppxYCXbxPq1HH6dr
-	 5usCKfnB7I4/3K4XHaoOh2bsGIzoHz8mvf3UIiZBroGkQ7jvGshnJ7FL82PYZz2M/yX6S
-	 S1SjcykLkJrhNzYB+VUDtgbj+83enUwDGFVRbglZET9RP2Thgjh3C1RD1/EIU7N/VOakp
-	 fHVCjYPCFcUxnN7ypc2c5QvkjhhLSjJTZ5qqS497mBQ0Mh4y2BizOMw0DMjdWqvwumDwU
-	 rWpA43boALVslskBT83JVLxH6bYBXgMHeHJMir0+cud1hlGU9UZgR4dISqubEGa0UFA==
+	t=1795020275;
+	b=n7/3oiygeKDo1c5iSqnpEa/9TpCCR9NNww7k/El4ayLbyG/7kcPrqyt5heWfpzBWSUt4
+	 GhPqL14Z6bGh7oUV/UcyntblqbkDwEoyVtDV0RuDB9pBk+7pDBgEM0b9BVrFqpVtl8m3b
+	 XIXhQznIfzf8sfyrVPHOYKBWN8AYfC4BfKbnzM7snLRDytULC0oYyUyVYb3SSblD6CRga
+	 gbktcTQF95M3A7+VbdIsYZCtHMhPsmH7lh9BprnG776l0ccHu7u0I039dYJPbrqdYODIr
+	 H0WKnXkTNH5LfN3vBBAYkvtaMr9YHsDwVjiNFJAgScwGO+YWeVh/NNuVGCLUjYngR4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020272;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020275;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HLLoiJCiaMTGa33v+BmX7dbiBoTPOu2KMGqECvn38ck=;
-	b=bdulzhFATgDQ659KxeS/eNisb9kLTfCsAPpwDXfzH7IgAW3Af1vUQtv7muPrpFmhmlRJ
-	 +laM8QY+Q/IWyv/Ta1Kqa7yY4uZ1yEBRtRAzorRTkeFmdpUi4xy3d9sK1cxfuxKetNBSv
-	 Tb5ESSGoHQnlAFpCiMg3+OvVFhUwqpavrqHlkj8r2aV6O3K8XzpM21jQvAbwQ97dCWP7y
-	 45ArSnst2ddK2pARwoxsDEEcx5PQBKPrVfI93EjFnBN3PQ59SGp/O3pQpzNvJMgcvZZG2
-	 izwbGD9WMdhDboVw/I+4fKy6c8Md9ntdc1TN7bynDLRQoPQXF1UVz7RRI6lUfq/d9eQ==
+	bh=mHb436+uSxsVseCL0P7WQRCLoYo4jUf+8rs9wZbtEX0=;
+	b=okPrn1g3G5nCbWbh9hB7h7H51bObRLolgLF2nswp4QRNwjlkV7NbsJb21iaJ5D9mOLl5
+	 Mwnq/LqizgGBkRAlqTL9Ve7VajWPaZ991I3e1TOmZSGjMp32fd6cSWHwxx2GVeSCL2En/
+	 d+UeFce8Hpm83JEuBfus46ybnzo7Lu5UbJXemW9Il+3tGxZboWO9LfADG1WI2LaHhReC7
+	 PAHG+o8l3HEf+HOhNkvRY20OJL6TOs1dWe4pCPaDzNBhhUTQmdOqGgyrU7HOPMrEMNIvG
+	 JOqTeLPoFh+LwT6Ax2u3DmahthM2WUPMIL3heOTNnaCTn987S/E1edQa0EHRMWqOkpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eIdeUM+w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HUMLY6OL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3457F606A32C;
-	Wed, 18 Nov 2026 16:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFB3606A325;
+	Wed, 18 Nov 2026 16:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eIdeUM+w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8855B1F000C8;
-	Wed, 18 Nov 2026 16:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HUMLY6OL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 617BA1F000C4;
+	Wed, 18 Nov 2026 16:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020272;
-	bh=HLLoiJCiaMTGa33v+BmX7dbiBoTPOu2KMGqECvn38ck=;
+	s=korg; t=1795020274;
+	bh=mHb436+uSxsVseCL0P7WQRCLoYo4jUf+8rs9wZbtEX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eIdeUM+wLP905dYEcl6NlEEJ8e4PDqpRKGtzZy3M63WbocKATvJFUp7vffvsPDNa1
-	 RbVig1Wa16TDdnZ6AQLOwC1UzcFFE9VYZidSN2DU89gnMdBMnuxtHEOJJEQn5mGs6Q
-	 u/8AWbzcNNiqI7+DQpehWnMO8OEfvsttQdEHGuuQ=
+	b=HUMLY6OLvmCfhD/6J1O5djK7hD6mde2bIAIPyKXBwEDVYwp5QDedPWR+WfYB1ZIZb
+	 DxxwoPH2Z608MicsNwefJzJfMde4FDVVEZySaRRywHbyT8GpSuKiUT2kFiAmrWYXha
+	 VE/L0LeRLCqRjdl4K5iDyCjdacHmijja+heYpR7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Hitalo Souza <enghitalo@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1893/2651] Bluetooth: 6LoWPAN: Use RCU-safe device list removal
-Date: Wed, 18 Nov 2026 15:52:13 +0100
-Message-ID: <20261118150355.020587832@linuxfoundation.org>
+Subject: [PATCH 7.3 1894/2651] Bluetooth: Add missing newline to bt_dev_{err,warn}_ratelimited()
+Date: Wed, 18 Nov 2026 15:52:14 +0100
+Message-ID: <20261118150355.054332472@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,137 +68,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Hitalo Souza <enghitalo@gmail.com>
 
-[ Upstream commit 8c27d7d06e21ba9455ddae4e14f364c57f095cba ]
+[ Upstream commit f51ee3bb5fbe9c2019c31befe330bddd3aee39c2 ]
 
-RCU readers of bt_6lowpan_devices must be able to follow an adapter's
-forward link until their read-side critical section ends. The entries
-are published with list_add_rcu(), but device_event() removes an entry
-on NETDEV_UNREGISTER with list_del(), poisoning that link.
+bt_dev_err_ratelimited() and bt_dev_warn_ratelimited() pass the format
+string to bt_err_ratelimited()/bt_warn_ratelimited() without appending
+a newline, unlike bt_dev_err() and bt_dev_warn(), which go through
+BT_ERR()/BT_WARN() and add one. Only 2 of the 22 in-tree callers (both
+in virtio_bt) put the newline in their own format string.
 
-When an adapter is being unregistered and 6LoWPAN is enabled, a
-6lowpan_control debugfs write with an existing LE L2CAP connection can
-enter lookup_peer() after unregister's first synchronize_net(). If the
-connection has no peer on that adapter, the reader must advance to the
-next list entry. Neither RTNL nor devices_lock excludes this RCU reader.
+A printk record without a trailing newline is stored with prb_commit()
+instead of prb_final_commit(), and readers of the log buffer (/dev/kmsg,
+syslog) do not see it until it is finalized, which only happens when the
+next record is reserved. These messages therefore stay invisible until
+some unrelated message is printed, and journald, which timestamps a
+record when it reads it, logs them with the time of that later message.
 
-The last peer's chan_close_cb() schedules delete_netdev(), which reaches
-unregister_netdevice_many_notify() through unregister_dev() and
-lowpan_unregister_netdev(). The following ordering is possible:
+This was observed with a MediaTek MT7921 controller (USB 04ca:3802):
+when an eSCO link is closed, the host still receives a few SCO packets
+for the handle after Disconnection Complete, so hci_scodata_packet()
+logs "SCO packet for unknown connection handle". Comparing the record's
+kernel timestamp (_SOURCE_MONOTONIC_TIMESTAMP) with the time journald
+received it, over one capture:
 
-  Unregister worker                 Control writer
-  -----------------                 --------------
-  synchronize_net() returns
-                                    lowpan_control_write()
-                                    lookup_peer(): rcu_read_lock()
-                                    reach adapter; no matching peer
-  device_event(): devices_lock
-  list_del(&entry->list)
-  spin_unlock(&devices_lock)
-                                    follow poisoned next link
-                                    read invalid adapter address
-  post-notifier synchronize_net()
-    waits for the reader
+  emitted       logged        delay
+  15:36:52.896  15:37:00.214    7.3 s
+  15:37:03.410  15:39:05.574  122.2 s
+  15:39:05.574  15:39:12.506    6.9 s
+  15:39:19.791  15:40:54.109   94.3 s
+  15:41:22.021  15:41:24.647    2.6 s
 
-This invalid pointer access can fault in lookup_peer(). The first grace
-period drains existing readers but permits new ones to start, and the
-later grace period cannot prevent the intervening poisoned-link access.
+Each message showed up together with the next kernel message; the 94 s
+one looked as if it had been logged in the middle of a later, healthy
+eSCO connection.
 
-Use list_del_rcu() under the existing devices_lock to preserve the
-forward link for readers that already reached the adapter. The existing
-post-notifier synchronize_net() waits for those readers before netdevice
-teardown frees the private storage containing lowpan_btle_dev.
+bt_dev_err_ratelimited() lost its newline in commit 657cc646475b
+("Bluetooth: Remove usage of BT_ERR_RATELIMITED macro"), which replaced
+BT_ERR_RATELIMITED(), the variant that appended "\n", with a direct call
+to bt_err_ratelimited(). bt_dev_warn_ratelimited() never had one.
 
-KASAN report as below:
+Append the newline in both macros, as BT_ERR() and BT_WARN() do, and
+drop it from the two virtio_bt format strings so that their messages do
+not gain an empty line.
 
-    [...]
-    [   45.867526] Oops: general protection fault, probably for non-canonical address 0xfbd59c0000000023: 0000 [#1] SMP KASAN NOPTI
-    [   45.869489] KASAN: maybe wild-memory-access in range [0xdead000000000118-0xdead00000000011f]
-    [   45.870981] CPU: 1 UID: 0 PID: 646 Comm: sh Not tainted 7.2.0-rc6-pmb-bt-functional-v1+ #4 PREEMPT(lazy)
-    [   45.872609] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    [   45.874380] RIP: 0010:lookup_peer+0x1ba/0x320
-    [   45.875067] Code: 48 89 d9 ba 04 00 00 00 4c 89 fe bf a0 06 00 00 e8 2b e8 ad fb e9 56 ff ff ff e8 01 1e c3 fb 49 8d 7f 18 48 89 f8 48 c1 e8 03 <80> 3c 28 00 0f 85 4a 01 00 00 4d 8b 47 18 4c 89 f1 ba 04 00 00 00
-    [   45.878206] RSP: 0018:ffff888114d67b90 EFLAGS: 00010212
-    [   45.879106] RAX: 1bd5a00000000023 RBX: 0000000000000000 RCX: ffffffff85c1d19f
-    [   45.880334] RDX: ffff88810dc35700 RSI: 0000000000000000 RDI: dead000000000118
-    [   45.881455] RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000001
-    [   45.882546] R10: ffffffff893d3057 R11: ffff88810dc35700 R12: ffff88810a690000
-    [   45.883839] R13: ffff888115451038 R14: ffff88810a690000 R15: dead000000000100
-    [   45.885186] FS:  00007fa889bac780(0000) GS:ffff8881fd852000(0000) knlGS:0000000000000000
-    [   45.886539] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    [   45.887527] CR2: 00007ffe304f2f80 CR3: 0000000104f64005 CR4: 0000000000770ef0
-    [   45.888687] PKRU: 55555554
-    [   45.889183] Call Trace:
-    [   45.889666]  <TASK>
-    [   45.890061]  lowpan_control_write+0x445/0x9e0
-    [   45.890854]  ? __pfx_lowpan_control_write+0x10/0x10
-    [   45.891738]  ? srso_alias_return_thunk+0x5/0xfbef5
-    [   45.892603]  ? srso_alias_return_thunk+0x5/0xfbef5
-    [   45.893383]  ? __debugfs_file_get+0x1bd/0x7f0
-    [   45.894057]  ? srso_alias_return_thunk+0x5/0xfbef5
-    [   45.894902]  ? lock_acquire+0x17b/0x2f0
-    [   45.895593]  ? ksys_write+0x111/0x200
-    [   45.896290]  full_proxy_write+0x11f/0x180
-    [   45.896991]  vfs_write+0x25a/0x1010
-    [   45.897642]  ? __pfx_full_proxy_write+0x10/0x10
-    [   45.898440]  ? __pfx_vfs_write+0x10/0x10
-    [   45.899178]  ? lock_release+0x11f/0x280
-    [   45.899855]  ksys_write+0x111/0x200
-    [   45.900435]  ? __pfx_ksys_write+0x10/0x10
-    [   45.901074]  ? irqentry_exit+0xbe/0x820
-    [   45.901722]  ? srso_alias_return_thunk+0x5/0xfbef5
-    [   45.902489]  do_syscall_64+0x115/0x6a0
-    [   45.903064]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    [   45.903813] RIP: 0033:0x7fa889c3e687
-    [   45.904359] Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
-    [   45.906981] RSP: 002b:00007ffd7651b960 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
-    [   45.908070] RAX: ffffffffffffffda RBX: 00007fa889bac780 RCX: 00007fa889c3e687
-    [   45.909102] RDX: 000000000000001c RSI: 00005570f25e8d10 RDI: 0000000000000001
-    [   45.910133] RBP: 00005570f25e8d10 R08: 0000000000000000 R09: 0000000000000000
-    [   45.911162] R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000001
-    [   45.912190] R13: 000000000000001c R14: 0000000000000000 R15: 00005570f25e8a78
-    [   45.913208]  </TASK>
-    [   45.913530] Modules linked in:
-    [   45.914022] ---[ end trace 0000000000000000 ]---
-    [   45.914709] RIP: 0010:lookup_peer+0x1ba/0x320
-    [   45.915436] Code: 48 89 d9 ba 04 00 00 00 4c 89 fe bf a0 06 00 00 e8 2b e8 ad fb e9 56 ff ff ff e8 01 1e c3 fb 49 8d 7f 18 48 89 f8 48 c1 e8 03 <80> 3c 28 00 0f 85 4a 01 00 00 4d 8b 47 18 4c 89 f1 ba 04 00 00 00
-    [   45.919191] RSP: 0018:ffff888114d67b90 EFLAGS: 00010212
-    [   45.920046] RAX: 1bd5a00000000023 RBX: 0000000000000000 RCX: ffffffff85c1d19f
-    [   45.921129] RDX: ffff88810dc35700 RSI: 0000000000000000 RDI: dead000000000118
-    [   45.922553] RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000001
-    [   45.923653] R10: ffffffff893d3057 R11: ffff88810dc35700 R12: ffff88810a690000
-    [   45.925119] R13: ffff888115451038 R14: ffff88810a690000 R15: dead000000000100
-    [   45.926180] FS:  00007fa889bac780(0000) GS:ffff8881fd852000(0000) knlGS:0000000000000000
-    [   45.927817] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    [   45.928726] CR2: 00007ffe304f2f80 CR3: 0000000104f64005 CR4: 0000000000770ef0
-    [   45.930069] PKRU: 55555554
-    [   45.930456] Kernel panic - not syncing: Fatal exception
-    [   45.931542] Kernel Offset: disabled
-    [   45.932040] Rebooting in 1 seconds..
-
-Fixes: 90305829635d ("Bluetooth: 6lowpan: Converting rwlocks to use RCU")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Fixes: 36278a5d4d35 ("Bluetooth: Adding a bt_dev_warn_ratelimited macro.")
+Fixes: 657cc646475b ("Bluetooth: Remove usage of BT_ERR_RATELIMITED macro")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Hitalo Souza <enghitalo@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/virtio_bt.c     | 4 ++--
+ include/net/bluetooth/bluetooth.h | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index 500211793528f..9a3e3ced9fd6c 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -1273,7 +1273,7 @@ static int device_event(struct notifier_block *unused,
- 			if (entry->netdev == netdev) {
- 				BT_DBG("Unregistered netdev %s %p",
- 				       netdev->name, netdev);
--				list_del(&entry->list);
-+				list_del_rcu(&entry->list);
- 				break;
- 			}
- 		}
+diff --git a/drivers/bluetooth/virtio_bt.c b/drivers/bluetooth/virtio_bt.c
+index c20d54088c8c4..c67f329b67529 100644
+--- a/drivers/bluetooth/virtio_bt.c
++++ b/drivers/bluetooth/virtio_bt.c
+@@ -228,7 +228,7 @@ static void virtbt_rx_handle(struct virtio_bluetooth *vbt, struct sk_buff *skb)
+ 
+ 	if (skb->len < min_hdr) {
+ 		bt_dev_err_ratelimited(vbt->hdev,
+-				       "rx pkt_type 0x%02x payload %u < hdr %zu\n",
++				       "rx pkt_type 0x%02x payload %u < hdr %zu",
+ 				       pkt_type, skb->len, min_hdr);
+ 		kfree_skb(skb);
+ 		return;
+@@ -251,7 +251,7 @@ static void virtbt_rx_work(struct work_struct *work)
+ 
+ 	if (!len || len > VIRTBT_RX_BUF_SIZE) {
+ 		bt_dev_err_ratelimited(vbt->hdev,
+-				       "rx reply len %u outside [1, %u]\n",
++				       "rx reply len %u outside [1, %u]",
+ 				       len, VIRTBT_RX_BUF_SIZE);
+ 		kfree_skb(skb);
+ 	} else {
+diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
+index b624da5026f50..cd91892445666 100644
+--- a/include/net/bluetooth/bluetooth.h
++++ b/include/net/bluetooth/bluetooth.h
+@@ -296,9 +296,9 @@ void bt_err_ratelimited(const char *fmt, ...);
+ 	BT_DBG("%s: " fmt, bt_dev_name(hdev), ##__VA_ARGS__)
+ 
+ #define bt_dev_warn_ratelimited(hdev, fmt, ...)			\
+-	bt_warn_ratelimited("%s: " fmt, bt_dev_name(hdev), ##__VA_ARGS__)
++	bt_warn_ratelimited("%s: " fmt "\n", bt_dev_name(hdev), ##__VA_ARGS__)
+ #define bt_dev_err_ratelimited(hdev, fmt, ...)			\
+-	bt_err_ratelimited("%s: " fmt, bt_dev_name(hdev), ##__VA_ARGS__)
++	bt_err_ratelimited("%s: " fmt "\n", bt_dev_name(hdev), ##__VA_ARGS__)
+ 
+ /* Connection and socket states */
+ enum bt_sock_state {
 -- 
 2.53.0
 
