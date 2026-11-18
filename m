@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021981;
-	b=dyjZOr3B9h1wJOYjsmxnG4gKwHeFxiwstnbkZ4rE19e4bfuj5B+LLPLT5za2x0I06AjD
-	 D0yl3lRbhc6r6N6bRYro2N29AxFzrZWAef/t1woJNdDdDLFxOSd1q4Oiq5lJ1ptBb0f9s
-	 ja/7S1JC//jl119wb/dQGHFvdojfM76o5DBegXK6HFceSO5B7Fm7/qRDiSrKJBaNs4A6N
-	 NDjU+k0opDpfleB5YQe6nJSUVmU+bsooYG2usp3JyS0jEul6hPm/Bk1uYLeauCjnAvH9A
-	 Q/BMgzvvVLIqMd9JGfvVK/YAAjYojSKKPKCVZipnk1zBWpzWsuZsp1m3NLqlbez7a5A==
+	t=1795021983;
+	b=RvuQVCOBkfJDm4OLMoiVe2ynhDPCsfyI6hlweMhohYz2MA/UdeH/uRuAX2bTOlc9QkP3
+	 iDdwGuF8qO29M36AZvm6sylXu6qmICZvW4gqpTUBHEawUy0g19og/ptw99GLszwCEh3nF
+	 dvVAjrMRASceFOprluePfHW6vSWiY+3xnutGHWY8ulRpRqY1QGUZjmA1SR1CdgAJik1QO
+	 kG3Af4rG6NnPR1CLpZdqQ35DNcAwe9UWrpJgLcFhKSatAOvi23D5Be4ze1D7SUhW2xB3w
+	 jyXJkxybPhIvEd9O4GqwSluE+Tjy/cqPsf0eW5UqeivUPBNbLE7XW4MDwdiRgxqsimA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021981;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021983;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jm8ysn7ETsC1yr3MHi7YKV6YmGtsCKSE0bc6Py9+oYE=;
-	b=B5qISDVritbSQuBfTi6czE7UbQC0/X45A1nryMFqg7lJdli1qTnhofFUixYhF5w0U19E
-	 BPDDSan9TUfOo0hF/24soS5U5NypPA5PP0jqA8D4VlQnB/I1puXsjFrVS8fGtqmBJd+iE
-	 x+g3JZS+6jlskzEaYetGbC0AccPUSeoUoRHepHe7ttJ/kAQeIfEQVQikdfphJYDpBo9RH
-	 ZWYAyA+TeRlXkBPUsEulWDHevkkivgpDwjJiQB6aLeSZn4nuPH1fpKOD1GBiet4e8CBI3
-	 du18dZYH6F4aqZxOGdam/ckMl6Wj48TJFenzhQ2npr3FgQ6tugzR92l3a+88eoaAPkA==
+	bh=EIQ8CYvz9yNLftnJtYGgdNg3igzcFxH0TquIWmneMnc=;
+	b=ZQF8wdQgr4vM0q1YSpxljCcMBxvAlOkzWOApCO+TKu4S9vkwgCXya7hcI9Eq26gzmS5/
+	 6HYW7ZvFT2/9G/n02XhGS6IdJDjAnJhEd+VA0HyRjglCPO5KBbGybl1/f5ie1pDZpLyj0
+	 w7KcYKvPoo51KqKL3gSVqFJywznqP+DyEs92EuyafY43W7GFLTYbDgWfFTMJt/7KOkTvY
+	 HfHyWMmzK4JpGKeqiYjI94Vlq1F0zQkjcmuyMaRYv2IabFrEW+JsDKlHUwA2vkn0wAYI/
+	 XpYaAfpOJ0sFXIti0wjDWBSDukFv+6Xh9+nVzwUlU324bBJeNf4/kncRzC/KCbbiH2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dsdqwpzy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RogsxSdB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F353606A32C;
-	Wed, 18 Nov 2026 17:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD603606A320;
+	Wed, 18 Nov 2026 17:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dsdqwpzy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9521F000C4;
-	Wed, 18 Nov 2026 17:13:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RogsxSdB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B4711F000C4;
+	Wed, 18 Nov 2026 17:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021980;
-	bh=jm8ysn7ETsC1yr3MHi7YKV6YmGtsCKSE0bc6Py9+oYE=;
+	s=korg; t=1795021983;
+	bh=EIQ8CYvz9yNLftnJtYGgdNg3igzcFxH0TquIWmneMnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DsdqwpzyKrMylplapWxsFGAo/1wmfFer6jIhLT9BMO/wsem+ezpSKxPWHLP4XgR0M
-	 jWjz0xBaE2N4Uo63EdmQVwqxWbYB7yswm1gsTrzOACDQ64xrj5C4jmECmjAXsTaa8+
-	 YEZ0L/EHyYMCmWnqVQAOE7c93FyROQu1F3P6KxHY=
+	b=RogsxSdBv2zjWctkZsnQsqPGaNX/Rx5dcuExMOhE6Jv9RF0hkCXHaCSaJWxYj594b
+	 qRsFOJvwWcFIT8zIvZTsn9UygholSwgH8JN7G7W6OexvQXBpYyPY5deRqFoeND/gx4
+	 TqEaPQZTfgIjIFpwaLCfN8nE4M5oVIen3CnHVNUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Daniel Machon <daniel.machon@microchip.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2501/2651] net: lan966x: release the in-flight slot of a stale TX skb
-Date: Wed, 18 Nov 2026 16:02:21 +0100
-Message-ID: <20261118150414.836861964@linuxfoundation.org>
+Subject: [PATCH 7.3 2502/2651] net: microchip: fdma: use little-endian types for descriptor fields
+Date: Wed, 18 Nov 2026 16:02:22 +0100
+Message-ID: <20261118150414.868054755@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,86 +71,173 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit 074caa30a62726c0ee959e8b8ccb64cda0b26ae5 ]
+[ Upstream commit 9786c387b299bda5277eed98284a6f6fa7331fb9 ]
 
-lan966x_ptp_txtstamp_request() counts every two step TX skb waiting for
-its timestamp in lan966x->ptp_skbs, and refuses new ones once
-LAN966X_MAX_PTP_ID are in flight. lan966x_ptp_txtstamp_old_release()
-frees the skbs that have waited longer than LAN966X_PTP_TIMEOUT.
+The FDMA engine reads and writes the DCB and DB descriptors in
+little-endian byte order. So far the descriptors have only been produced
+by the little-endian SoC itself, so plain u64 fields were fine. With the
+PCIe FDMA path, the descriptors live in host memory and are written by
+the host CPU, which may be big-endian.
 
-Before this patch, old_release() does not decrement ptp_skbs, so every
-skb whose timestamp never arrives, for example because the switch
-discarded the frame, keeps its slot forever. Once LAN966X_MAX_PTP_ID
-slots are lost, two step frames fail to transmit on every port of the
-switch.
+Change the descriptor fields to __le64 and convert at the library
+boundary: in __fdma_db_add() and __fdma_dcb_add() on write, and in the
+fdma_db_*() accessors on read. The dataptr and nextptr callbacks keep
+their u64 signatures, so their implementations are unchanged. Add
+fdma_db_dataptr_get(), and convert the lan966x sites that read the
+descriptor fields directly to use the accessors.
 
-Return the number of released skbs from old_release() and subtract it
-from ptp_skbs in txtstamp_request(), under the ptp_ts_id_lock it already
-takes.
+No functional change on little-endian hosts.
 
-This fixes the accounting only. A port's stale skbs are still aged out
-only when that port sends a two step frame, so a port that stops sending
-them keeps its stale skbs, and their slots, until it sends one again.
-That behaviour is unchanged by this patch.
-
-Found by an AI code review agent. Reproduced on a lan9668 board.
-
-Fixes: 77eecf25bd9d ("net: lan966x: Update extraction/injection for timestamping")
 Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261026-lan966x-ptp-stale-tx-slot-v1-1-9f7c895eb1ff@microchip.com
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260928-lan966x-pci-fdma-v9-4-a17caf60f89a@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 573a6d4c7a21 ("net: microchip: fdma: fix DCB corruption under sustained load")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ .../net/ethernet/microchip/fdma/fdma_api.c    | 21 ++++++++++++++-----
+ .../net/ethernet/microchip/fdma/fdma_api.h    | 20 +++++++++++-------
+ .../ethernet/microchip/lan966x/lan966x_fdma.c |  9 ++++----
+ 3 files changed, 34 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-index 8c40db90ee8f6..9be2cfe6feeb7 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-@@ -376,9 +376,10 @@ static void lan966x_ptp_classify(struct lan966x_port *port, struct sk_buff *skb,
- 	*rew_op = IFH_REW_OP_TWO_STEP_PTP;
- }
- 
--static void lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
-+static unsigned int lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
+diff --git a/drivers/net/ethernet/microchip/fdma/fdma_api.c b/drivers/net/ethernet/microchip/fdma/fdma_api.c
+index e78c3590da9e6..6dfe36f58d67a 100644
+--- a/drivers/net/ethernet/microchip/fdma/fdma_api.c
++++ b/drivers/net/ethernet/microchip/fdma/fdma_api.c
+@@ -12,10 +12,18 @@ static int __fdma_db_add(struct fdma *fdma, int dcb_idx, int db_idx, u64 status,
+ 				   int db_idx, u64 *dataptr))
  {
- 	struct sk_buff *skb, *skb_tmp;
-+	unsigned int purged = 0;
- 	unsigned long flags;
+ 	struct fdma_db *db = fdma_db_get(fdma, dcb_idx, db_idx);
++	u64 dataptr;
++	int err;
  
- 	spin_lock_irqsave(&port->tx_skbs.lock, flags);
-@@ -389,14 +390,18 @@ static void lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
+-	db->status = status;
++	db->status = cpu_to_le64(status);
  
- 		__skb_unlink(skb, &port->tx_skbs);
- 		dev_kfree_skb_any(skb);
-+		purged++;
- 	}
- 	spin_unlock_irqrestore(&port->tx_skbs.lock, flags);
+-	return cb(fdma, dcb_idx, db_idx, &db->dataptr);
++	err = cb(fdma, dcb_idx, db_idx, &dataptr);
++	if (unlikely(err))
++		return err;
 +
-+	return purged;
++	db->dataptr = cpu_to_le64(dataptr);
++
++	return 0;
  }
  
- int lan966x_ptp_txtstamp_request(struct lan966x_port *port,
- 				 struct sk_buff *skb)
+ /* Add a DB to a DCB, using the callback set in the fdma_ops struct. */
+@@ -35,6 +43,7 @@ int __fdma_dcb_add(struct fdma *fdma, int dcb_idx, u64 info, u64 status,
+ 				u64 *dataptr))
  {
- 	struct lan966x *lan966x = port->lan966x;
-+	unsigned int purged;
- 	unsigned long flags;
- 	u8 pdu_type;
- 	u8 rew_op;
-@@ -408,9 +413,10 @@ int lan966x_ptp_txtstamp_request(struct lan966x_port *port,
- 	if (rew_op != IFH_REW_OP_TWO_STEP_PTP)
- 		return 0;
+ 	struct fdma_dcb *dcb = fdma_dcb_get(fdma, dcb_idx);
++	u64 nextptr;
+ 	int i, err;
  
--	lan966x_ptp_txtstamp_old_release(port);
-+	purged = lan966x_ptp_txtstamp_old_release(port);
+ 	for (i = 0; i < fdma->n_dbs; i++) {
+@@ -43,14 +52,16 @@ int __fdma_dcb_add(struct fdma *fdma, int dcb_idx, u64 info, u64 status,
+ 			return err;
+ 	}
  
- 	spin_lock_irqsave(&lan966x->ptp_ts_id_lock, flags);
-+	lan966x->ptp_skbs -= purged;
- 	if (lan966x->ptp_skbs == LAN966X_MAX_PTP_ID) {
- 		spin_unlock_irqrestore(&lan966x->ptp_ts_id_lock, flags);
- 		return -EBUSY;
+-	err = dcb_cb(fdma, dcb_idx, &fdma->last_dcb->nextptr);
++	err = dcb_cb(fdma, dcb_idx, &nextptr);
+ 	if (unlikely(err))
+ 		return err;
+ 
++	fdma->last_dcb->nextptr = cpu_to_le64(nextptr);
++
+ 	fdma->last_dcb = dcb;
+ 
+-	dcb->nextptr = FDMA_DCB_INVALID_DATA;
+-	dcb->info = info;
++	dcb->nextptr = cpu_to_le64(FDMA_DCB_INVALID_DATA);
++	dcb->info = cpu_to_le64(info);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/net/ethernet/microchip/fdma/fdma_api.h b/drivers/net/ethernet/microchip/fdma/fdma_api.h
+index d91affe8bd988..a1bd7b8a75c16 100644
+--- a/drivers/net/ethernet/microchip/fdma/fdma_api.h
++++ b/drivers/net/ethernet/microchip/fdma/fdma_api.h
+@@ -64,13 +64,13 @@
+ struct fdma;
+ 
+ struct fdma_db {
+-	u64 dataptr;
+-	u64 status;
++	__le64 dataptr;
++	__le64 status;
+ };
+ 
+ struct fdma_dcb {
+-	u64 nextptr;
+-	u64 info;
++	__le64 nextptr;
++	__le64 info;
+ 	struct fdma_db db[FDMA_DB_MAX];
+ };
+ 
+@@ -140,19 +140,25 @@ static inline bool fdma_dcb_is_reusable(struct fdma *fdma)
+ /* Check if the FDMA has marked this DB as done. */
+ static inline bool fdma_db_is_done(struct fdma_db *db)
+ {
+-	return db->status & FDMA_DCB_STATUS_DONE;
++	return le64_to_cpu(db->status) & FDMA_DCB_STATUS_DONE;
+ }
+ 
+ /* Get the length of a DB. */
+ static inline int fdma_db_len_get(struct fdma_db *db)
+ {
+-	return FDMA_DCB_STATUS_BLOCKL(db->status);
++	return FDMA_DCB_STATUS_BLOCKL(le64_to_cpu(db->status));
++}
++
++/* Get the dataptr of a DB. */
++static inline u64 fdma_db_dataptr_get(struct fdma_db *db)
++{
++	return le64_to_cpu(db->dataptr);
+ }
+ 
+ /* Set the length of a DB. */
+ static inline void fdma_dcb_len_set(struct fdma_dcb *dcb, u32 len)
+ {
+-	dcb->info = FDMA_DCB_INFO_DATAL(len);
++	dcb->info = cpu_to_le64(FDMA_DCB_INFO_DATAL(len));
+ }
+ 
+ /* Get a DB by index. */
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
+index 5c89f99286251..b66bd1cfea10d 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
+@@ -406,8 +406,9 @@ static int lan966x_fdma_rx_check_frame(struct lan966x_rx *rx, u64 *src_port)
+ 		return FDMA_ERROR;
+ 
+ 	dma_sync_single_for_cpu(lan966x->dev,
+-				(dma_addr_t)db->dataptr + XDP_PACKET_HEADROOM,
+-				FDMA_DCB_STATUS_BLOCKL(db->status),
++				(dma_addr_t)fdma_db_dataptr_get(db) +
++				XDP_PACKET_HEADROOM,
++				fdma_db_len_get(db),
+ 				DMA_FROM_DEVICE);
+ 
+ 	lan966x_ifh_get_src_port(page_address(page) + XDP_PACKET_HEADROOM,
+@@ -419,7 +420,7 @@ static int lan966x_fdma_rx_check_frame(struct lan966x_rx *rx, u64 *src_port)
+ 	if (!lan966x_xdp_port_present(port))
+ 		return FDMA_PASS;
+ 
+-	return lan966x_xdp_run(port, page, FDMA_DCB_STATUS_BLOCKL(db->status));
++	return lan966x_xdp_run(port, page, fdma_db_len_get(db));
+ }
+ 
+ static struct sk_buff *lan966x_fdma_rx_get_frame(struct lan966x_rx *rx,
+@@ -443,7 +444,7 @@ static struct sk_buff *lan966x_fdma_rx_get_frame(struct lan966x_rx *rx,
+ 	skb_mark_for_recycle(skb);
+ 
+ 	skb_reserve(skb, XDP_PACKET_HEADROOM);
+-	skb_put(skb, FDMA_DCB_STATUS_BLOCKL(db->status));
++	skb_put(skb, fdma_db_len_get(db));
+ 
+ 	lan966x_ifh_get_timestamp(skb->data, &timestamp);
+ 
 -- 
 2.53.0
 
