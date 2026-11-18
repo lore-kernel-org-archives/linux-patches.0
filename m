@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020664;
-	b=xhcoTsUzhmmTplfUexDuAAi9YBGB4+MHAt0O+k08sxF7tQ7SN8ftZgDdIYred+X702bQ
-	 4Cw4Tps2/aJpKs+E3EkRORVp/tqJwPjYkBnY46g3oq6SWES9EN6YXHJCZ6cEBxaJX8elg
-	 I9gBvIuC7WGALtxqMLHH0NlFyQ1ejU8yrXjNmupQ0NMz0hCbM7afH1RbZZnc9+75YpUpM
-	 5p/EKIc4enPrzDopiiHCgb+vTM5rcKp9v9MmdAu105uLZ+pHHtKy1O9YBkkDutEADrkEo
-	 YLX1h85Z2zC5fQq94qRn/QRx8hpv08oJVofDMlDCfKWVSPQM62QIrYQ9pO9XEVDe+Dw==
+	t=1795020667;
+	b=G69Y90iT7x/yf7KDW8RYunZhIVImjoNW4ZMcWG8iLFZKA8a/LX2RTFOfkZg4DUDGZQud
+	 7qedLRQsXB2KHIa9jFbvH7qy8nb2WA+54sG/840EKyNbjQlgT7J/OWf83pU/eQojQlyXJ
+	 ftUPtfE7IFXEGXbkfRoM4qYNLWe8vw2pykJFOFerX6GZEP0yVnhQRDgUrzWat6nRlbyaS
+	 Zr87VwVAur2RONT1M3r696aAsS8TN0KouAMJDC/a94b97vu88ytjTTTbo9PQeYFDi9J7q
+	 dch5pEyzbWjQXcKAG1Q1wOQAvn1TRT/SUp04tmYhmNUcrodqDCy5ABPj2teB/mfw0hQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020664;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020667;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=soKMfF/5FJ7K5xitd5f4Fhk0XsaPodiNFRYpLTYjbGI=;
-	b=n/agy0CnYw9P/rfoz6AuU4kuyRJRZZ4PQ1eCg+JOQhOiMtmIWX6kqGMUDlftoTYNtku2
-	 ge3V0fRC6aafPDk79+4CPMMpMA8cbPIAz1EFKdZGFw7OPP/nrRBle5TAUZWBrNOhaOY3O
-	 pGbi8++SbG6eFauqscfuCgatFEqFeoIclxCqFK1AC8fM3UoG87kSaYlcuW33+FyYvVCT6
-	 ECt8fOKwTeVC1PJC2k8jZLvGFiWt52iFF2VG5Kfm1BLnV8S7Yv+WNwOIepzRKeh/FCHOW
-	 w4wP6etduA6zi8tIkhSDt17E15zphcK3u8LdW+HE9r/T7V+Q4xywjobj1+AvOj/fscg==
+	bh=uvvNlQBwGJV5GIrUToGm8QmALSpy9BfKvVEMPs+wEXs=;
+	b=AslUKJDUhVTp5vTcYPoCGv6bCBbzYAdnrUg80RbbTAM2seXfSLH5Qgey3G+HsAuPU7Up
+	 JtNR+93YlO9HGZ6z7eyc0xK+Rg32Wg+C1FTFjqwbpcQNH4L4T/Q0a6G7n7RTMSLTPp03C
+	 Dza8CxEM2OzvxgtuBO9uCTtBFPGHJ+v6q/9BCGJoGtqIVAVzXDp859R5Fx6IlVXhGurmw
+	 dbosnNjkIj9MTMJsz+djupnqD4c++IYn4fxJMYNJqgGs/fsizJo23R+kfoq5LyIz+A3jl
+	 9zPeMZYPEAgUP00qjSgPLbxlSDWDyhJrmrZ1iFAkBx/ssJZvnCc0RxyaRrCC7sQYmVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="LB/dDXfg";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dCcpsjLK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73BF560A2613;
-	Wed, 18 Nov 2026 16:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7514960A263F;
+	Wed, 18 Nov 2026 16:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LB/dDXfg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54981F000C7;
-	Wed, 18 Nov 2026 16:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dCcpsjLK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEAC1F000C4;
+	Wed, 18 Nov 2026 16:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020664;
-	bh=soKMfF/5FJ7K5xitd5f4Fhk0XsaPodiNFRYpLTYjbGI=;
+	s=korg; t=1795020667;
+	bh=uvvNlQBwGJV5GIrUToGm8QmALSpy9BfKvVEMPs+wEXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LB/dDXfgFbdmbyjThixuVpt4ExxHW5h+SmrtNgmRfIK/r26kUWhc/nib+A4iwgqfs
-	 kFIVfqRak3mLJYaCzIY5tddOhOLvS9ElRBTPd4uYS7QokV4f/TcAHC3UrnOsVTY5G1
-	 gxt663cAUAFcj7UFSgcWnMp6l2NaBiZQymyaSRwo=
+	b=dCcpsjLKCvpXoP0kz22k9rhHjMQJa9Rb02SuZhQNd1IwRBDxXVzBhJ1EHSO9lZ4eB
+	 e7IiRgJ2Em4bR5PnazOLOuxDvC650NUhxoG9v5Y3onmjIt+HSV5ZjpcOsJceUnHJMJ
+	 bDHGflg2wWz+8rOuca4VHz+izudVpKSboDvmf5Og=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiliang Yuan <odys.yuan@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Denis Benato <denis.benato@linux.dev>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2032/2651] selftests/bpf: Record only the test ICMP echo in tc8 of tc_netkit_scrub
-Date: Wed, 18 Nov 2026 15:54:32 +0100
-Message-ID: <20261118150359.294477768@linuxfoundation.org>
+Subject: [PATCH 7.3 2033/2651] HID: asus: document and harden the worker teardown
+Date: Wed, 18 Nov 2026 15:54:33 +0100
+Message-ID: <20261118150359.325374523@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,69 +68,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiliang Yuan <odys.yuan@gmail.com>
+From: Denis Benato <denis.benato@linux.dev>
 
-[ Upstream commit 17f6fc3ad257b0ad7a11f276a5c0f57e0bdf3f4a ]
+[ Upstream commit 6f2204e35a164cb593929918112bb3f217f7ae84 ]
 
-tc_netkit_scrub attaches tc8 to the primary netkit device, sends an ICMP
-echo with a mark and a priority through it, and checks the mark and the
-priority that tc8 saw against what the scrub mode lets through.
+asus_work() executes actions against the device: they send feature
+reports with hid_hw_raw_request() and, for the Fn+F5 fan key fallback,
+re-inject the raw report into the HID core with hid_report_raw_event().
 
-tc8 records the mark and priority of every packet it sees, and the
-device also carries what the system sends on its own once the device
-is up, like IPv6 neighbor discovery or the mDNS of avahi-daemon. When
-such a packet goes out after the echo, it overwrites what tc8 recorded,
-and the test finds a mark and a priority of 0. Record only IPv4 ICMP
-packets in tc8.
+For this reason the worker must be quiesced before hid_hw_stop(): after
+the low level driver has stopped, the transport is gone (usbhid_stop()
+frees the URBs and the I/O buffers) and re-injected reports would race
+against the input devices being unregistered by hid_disconnect().
 
-tc_netkit_scrub run 100 times on a bpf-next kernel with KASAN enabled,
-x86_64 VM with 32 vCPUs and avahi-daemon running, before and after this
-patch:
-            before                                  after
-  outcome   2 of 100 failed (mark and priority 0)   0 of 100 failed
+Make so that the teardown cannot race to a use-after-free: every site
+queueing an action holds worker->lock across the .removed check, the
+list insertion and schedule_work(), and asus_worker_stop() sets .removed
+and drains the queue under that same lock before calling
+cancel_work_sync(). An action that passed the check is caught by the
+latter while any later attempt is discarded by asus_worker_schedule().
 
-Fixes: 716fa7dadf11 ("selftests/bpf: Extend netkit tests to validate skb meta data")
-Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20261016-selftests-bpf-tc-netkit-scrub-v2-1-b484a7ce2a63@gmail.com
+Closes: https://lore.kernel.org/all/20260908180032.34C2D1F00A3A@smtp.kernel.org/
+Fixes: 47669bec44fe ("HID: asus: refactor the two workqueues and init sequence")
+Assisted-by: zcode:glm-5.3-flash
+Signed-off-by: Denis Benato <denis.benato@linux.dev>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/test_tc_link.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/hid/hid-asus.c | 28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/test_tc_link.c b/tools/testing/selftests/bpf/progs/test_tc_link.c
-index 630f12e51b075..2a91793674dd5 100644
---- a/tools/testing/selftests/bpf/progs/test_tc_link.c
-+++ b/tools/testing/selftests/bpf/progs/test_tc_link.c
-@@ -4,6 +4,8 @@
+diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+index 7dc6417fe2622..baa8589d45ae2 100644
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -765,9 +765,14 @@ static void asus_work(struct work_struct *work)
+ 	struct asus_work_action *action = NULL;
+ 	unsigned long flags;
  
- #include <linux/bpf.h>
- #include <linux/if_ether.h>
-+#include <linux/in.h>
-+#include <linux/ip.h>
- #include <linux/stddef.h>
- #include <linux/if_packet.h>
- #include <bpf/bpf_endian.h>
-@@ -119,11 +121,19 @@ SEC("tc/egress")
- int tc8(struct __sk_buff *skb)
- {
- 	struct net_device *dev = BPF_CORE_READ((struct sk_buff *)skb, dev);
-+	struct iphdr iph = {};
- 
-+	if (skb->protocol != __bpf_constant_htons(ETH_P_IP))
-+		goto out;
-+	if (bpf_skb_load_bytes(skb, sizeof(struct ethhdr), &iph, sizeof(iph)))
-+		goto out;
-+	if (iph.protocol != IPPROTO_ICMP)
-+		goto out;
- 	seen_tc8 = true;
- 	mark = skb->mark;
- 	prio = skb->priority;
- 	headroom = BPF_CORE_READ(dev, needed_headroom);
- 	tailroom = BPF_CORE_READ(dev, needed_tailroom);
-+out:
- 	return TCX_PASS;
+-	/* Save the action to be performed and clear the flag */
++	/*
++	 * Dequeue the next action, if any. Once teardown has begun .removed
++	 * is set and asus_worker_stop() drains the queue: leave the queued
++	 * actions alone, they are dropped instead of being executed against
++	 * a device that is being removed.
++	 */
+ 	spin_lock_irqsave(&worker->lock, flags);
+-	if (!list_empty(&worker->actions)) {
++	if (!worker->removed && !list_empty(&worker->actions)) {
+ 		action = list_first_entry(&worker->actions,
+ 					  struct asus_work_action, node);
+ 		list_del(&action->node);
+@@ -817,6 +822,25 @@ static int asus_worker_create(struct hid_device *hdev, struct asus_drvdata *drvd
+ 	return 0;
  }
+ 
++/**
++ * asus_worker_stop - quiesce the worker
++ * @worker: the worker to quiesce
++ *
++ * Once this function returns no more actions can be queued and no instance
++ * of asus_work() is running or pending.
++ *
++ * Callers must do this before hid_hw_stop(): actions are executed while the
++ * device is fully operational, since they send raw requests to it and, in
++ * the fan-key fallback path, re-inject raw reports into the HID core. After
++ * hid_hw_stop() the transport is gone (usbhid_stop() frees the URBs and the
++ * I/O buffers) and the input devices have been unregistered.
++ *
++ * The quiescing is race free because every site that queues an action holds
++ * worker->lock across the .removed check, the list insertion and
++ * schedule_work(): anything scheduled before .removed is set here is caught
++ * by the cancel_work_sync() below, anything after it is discarded by
++ * asus_worker_schedule().
++ */
+ static void asus_worker_stop(struct asus_worker *worker)
+ {
+ 	struct asus_work_action *action, *tmp;
 -- 
 2.53.0
 
