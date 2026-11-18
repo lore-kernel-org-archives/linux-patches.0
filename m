@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033608;
-	b=j5R5NYtYkK2+cC9hIipC29Al78TphFUR4k14BaHylLULu662EW0FYnoCRZuxUQ51/TGE
-	 h7/Y8iW7yPvyaBSgQ6SNmCcDsRiELRIdRDqt1hd8LnPziW1idEU3u3yx3RmuO7KivwEpL
-	 kuHeYxZD5ALf8+WberE8ebiIYCqRnYi612WahRW3FY/exNwCAKzvfuhWvM5u+j3BmAq8s
-	 O3DNF6+Y6qzd0e/T4otzGS6txXa14IAY/hYfSlX2D6OztV+hAqzY31pJKagbqh59XFmLu
-	 qoUCwVlVM7jRjOjJCHmhcFbQpU29LCO+LOyRVEFmTWEH+GxSbQ9CFlEeamGM7hzd04A==
+	t=1795033610;
+	b=gmxUcgXeRXv126MUksmpEyHt2nWxTLWENWLBschXKP1xucoddkkyWub5VysI5qmOHFC0
+	 GTFV4iVsnCebsokxM6iGjVAvjjupZQxoMDpEOCJQPHgPBuWKp15Ex4mt1imkpfq8ps0l9
+	 Xnt/6dzCSyO61NtGBgiUGQP7kGMBJ1FYHAkRW3rnGXoe7y+8eU4ZdJUf+wIRPLVxDGW/3
+	 AySszeAx6RQYFrPNLzdVMhQeJPw/7B7PXnPIOoELDrNbdnSWkmtk5+zDbfYUzXoRaz9+d
+	 cp1CGG+JuNvuRwtJC8syl0hmuUz05jAeXMJXX4NzmOtKBf5p81z2x2p4dvXdej4jZBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033608;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033610;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=TNFHDFM4K1AW3GlNgioZ3tgqwl3n1roSw4ANYa5yNjw=;
-	b=fahkud7xA/JvIEgqO/RBKoBP2p0dOtz5QqkXq0MZIqFXZKxfCgc/g3umUdfDtxOHeL9H
-	 97sWUI1fHmehthWOpaTfipVk/l+PcYNMQeBFjUF9kcGvFXp+eW1GQ8iRslUqFO6miLewS
-	 f2cuZW112lRz16vAF7w130l9KHu0dqFKUkp0TJh9YwfybN6zF2g7Dyiq+SjJHQ+kGzyPe
-	 fGk354J92x1ApZCXdylOx7IzwWqEZFyjuCP1Yexr/nfXu0ATi+nYuhwaQhVh1nD7rkNsg
-	 IzIkGeJCjQhYT7oJdXq7+kOUiWSjGJcbyXwjuwFQLSJF2dscq4WbzOtnBZAVP5ARYzw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=odvc8/6MMHeYaq86pGXu6m8Na2TWcBMZUsyLnUmg7fs=;
+	b=FhjdrScmfoX6VOwxc5140rWR1KBkdAgf7JGZJXMdinhRGUBTe7Ir7Te3eBvyxIF2J1nJ
+	 J1dcIdSPFgRyD6yfXdjHhHd+swiABaXuGv8GLoTJ7ItuuKtWt0M7nVz7Qq2WLARLxRmEr
+	 vVpmZUVSkQ7fbx6UO/VU6q+rqUzDrq07o71tl0I8Z/8II1BWQuya80rRlpRYDu8NOnwGa
+	 n0lAf+J04zPfxozy0RKQtXPNjTjp0BROkUWd2pil7KN2MiErRusrpUOrYMVkMkWfxwwac
+	 ij84/v7og/2Nv6BppF/4dcVSJcKQkN+BC2c41NU+WJWZYzVwpFJ1pqZ55NnayiT/+kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uz65gtmk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y0zuUfH8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27909606A320;
-	Wed, 18 Nov 2026 20:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D559F606A32F;
+	Wed, 18 Nov 2026 20:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uz65gtmk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1A01F000C4;
-	Wed, 18 Nov 2026 20:26:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y0zuUfH8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381891F000C6;
+	Wed, 18 Nov 2026 20:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033608;
-	bh=TNFHDFM4K1AW3GlNgioZ3tgqwl3n1roSw4ANYa5yNjw=;
+	s=korg; t=1795033610;
+	bh=odvc8/6MMHeYaq86pGXu6m8Na2TWcBMZUsyLnUmg7fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uz65gtmkswn0MJvOsuAnBXPezzADOZWefcMFVzT2zCAknaRSVsAYbPZMAVuhD5D3X
-	 oK/mSkiTtzjRVKByS6FkFMGhSmF9WV2aBxbhu6y5qLeVIbJEaO83WF6P3EFD5SMm2W
-	 9R8jiCQVXRt29E+IPAtpeKhZZ0pGsPKWda2mAKYE=
+	b=Y0zuUfH8p2eolG3sEYTje3UTcdkBYqHFkHeIF6WAwzY4j88q0wj5TLOzalJCqVKYb
+	 A3iiD0IHOF6rOUvweHOHBsrSbBPYroALtqtKJ0k9Hc8KNfECvyEaIyqxKGCQGhSZME
+	 SsAcXD7qlLoqb6vEmwELt8D9eHrtD0lZKCKHnP3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20 ?= <u.kleine-koenig@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	YiPeng Chai <YiPeng.Chai@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0033/3318] regmap: maple: Workaround for another false-positive compiler warning
-Date: Wed, 18 Nov 2026 15:10:55 +0100
-Message-ID: <20261118150314.803688585@linuxfoundation.org>
+Subject: [PATCH 6.6 0024/3318] drm/amdgpu: add bounds check to prevent array overflow
+Date: Wed, 18 Nov 2026 15:10:46 +0100
+Message-ID: <20261118150314.471083033@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,45 +63,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
+From: YiPeng Chai <YiPeng.Chai@amd.com>
 
-[ Upstream commit dffd32eb2b0e714a8ae23f98518ad7152cb06369 ]
+[ Upstream commit db15c49a17b8fab9ada38f3a548e5353d7d6b1a8 ]
 
-Similar to the issue fixed in commit 542440fd7b30 ("regmap: maple: work
-around gcc-14.1 false-positive warning"), I see an uninitialized warning
-for upper_index and upper_last.
+Add bounds check to prevent array overflow.
 
-Happens with arc-linux-gnu-gcc (Debian 15.3.0-1) 15.3.0 on an
-allmodconfig for ARCH=arc.
+v2:
+  Add warning messages.
 
-Signed-off-by: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/20260626060427.2548578-2-u.kleine-koenig@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: YiPeng Chai <YiPeng.Chai@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regcache-maple.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
-index 86de71ce2c191..a2450b38b8b3b 100644
---- a/drivers/base/regmap/regcache-maple.c
-+++ b/drivers/base/regmap/regcache-maple.c
-@@ -113,7 +113,7 @@ static int regcache_maple_drop(struct regmap *map, unsigned int min,
- 	unsigned long *entry, *lower, *upper;
- 	/* initialized to work around false-positive -Wuninitialized warning */
- 	unsigned long lower_index = 0, lower_last = 0;
--	unsigned long upper_index, upper_last;
-+	unsigned long upper_index = 0, upper_last = 0;
- 	int ret = 0;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+index 65a5edcb12ba4..bcf7f8ded7006 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+@@ -3134,6 +3134,13 @@ static void amdgpu_register_bad_pages_mca_notifier(struct amdgpu_device *adev)
+ 	 * Use this list instead of mgpu_info to find the amdgpu
+ 	 * device on which the UMC error was reported.
+ 	 */
++	if (mce_adev_list.num_gpu >= MAX_GPU_INSTANCE) {
++		dev_warn_ratelimited(adev->dev,
++			"mce_adev_list full, skip notifier registration (max=%d)\n",
++			MAX_GPU_INSTANCE);
++		return;
++	}
++
+ 	mce_adev_list.devs[mce_adev_list.num_gpu++] = adev;
  
- 	lower = NULL;
+ 	/*
 -- 
 2.53.0
 
