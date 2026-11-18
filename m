@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049510;
-	b=q7V0FWy5n/gklnCYVggDnNNwbmlTxX6P8acMBtp0UObJ4xJ2xqbXR+bLpBmBRDmiAIw+
-	 fJvnzmGsyXPw9/AfsoLqp47rQLQ+ykZ7aO/EgqE7bIrgHv0tD/nBqpzVWv66rgXIh+7OG
-	 to/jxjuYwPQQ02YSaIhcdTdULsknI4mHStOx9BwF0T1K0EZHpsGmbB2ffC/OG0JL/m7cZ
-	 uCzflGmfFUp4ZHvX7deogv7Uve4E+6+GPSKLwno1DhkqA6/UXGVhcMODCIdvlo+yKXr9p
-	 gWgJSk4MELB9nXIvg3nLLlptJ1A+mHDhsIttLoLNxFx5INbJ8nxf+3wCsWLwcTqRCsQ==
+	t=1795049513;
+	b=LfzkWnSv3BNyYgF8KYP00wvM2ZwIqe2+FLhAcePmVy3ifmr4leWHU1rZwTRdh6mYrWJn
+	 QLpC+dUNWcfbxSpOHcH7oi1isiXwRvA2pBjkJzPXGAHuc3+XevLZuiUEROsYmhiF3KorI
+	 /PjBzP3NuOZ8rwI1DFYgZkkpjOxgSur5W3taQN8VlLwJydKAjVZZbUVDtBk0vGqHjOf4Q
+	 3amlf7rupEmI1FqGoHXLxX5TDbwMlhLYn7B9gaC4jlr7Aem7h9rjpEwiXk5PLcvd4tmhf
+	 ndUWi/GXD/vSvCHjx4pYFBm9ZyDBJ+hH2fpFdIXA2SDRw1hXDZ2ERGegoNorh9iPTJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049510;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049513;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cuzlfTvhjPwp4E9YbjUNC7GBKcglEZFxMTO+iagd1ao=;
-	b=bQ3krIJudi/CsYVhK0k6jo3GY9Emj6AnLAvvMU8gBCcGx4wSvHs59UIkb1azrOi9qnZx
-	 rFZ1ZaxBRdcQaMSz93/OWgKVGIf3ExXrHfLct+yaw9xMiIbEDSFStrDZzDiE5vznyQB0x
-	 utXgpI9t3WnXxdvWV1/SKAToQnmEirIwZozCG+j8eUhZx0/u4gSXVYi5OyH0m5+9aMsJD
-	 IVFmHAmMmr9PwELbcDO8UAEmLInCWAYWJ8oNFdftEuy9u6b3hzGxISydQKJLU33XHi6jW
-	 7eExANsvkPnFSOmA9uHiuyAPWEa7suzVolqp1iIJNigO7vFf3L3cyKr2J+iVYr78ZrQ==
+	bh=Wgh5qZqg1lkJ63qpHoKesJTDN+cMQvcMJtJVk+RwKDM=;
+	b=XceeoeTlWX27yQkf9GeFGnBeRNkz92uUYsGcP7Dy/Yn7Sno0RuSUkoD3qMMkJEQSL9wh
+	 Qf3vYIJLmL/MEL6WvXthjZ90WHx0zfjGSLAG1ns2s6GcbU+gVuUWnUZoBoM9Pcr+ZkOMw
+	 d8TJQOFiakPJ1Z7axsC10Hpr1S7mUPvkZaMFOcIDxDW3T8AZmNu9iZPT3b3MiWCq64U4g
+	 XcDbHpEPf1XkxDRrTGa7BFXYe91chWOLYYeeFnDKylVDZEFeYTGgLN/pclDpxxlfjO9uN
+	 ln0PWH0nEgvcHviM7oPRkPeESKVnkGz+N4Ewjw12MU60kMU04sJa6b4d+hXfvMBps5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hsOu7R8k;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trF5OxUW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E89606A320;
-	Thu, 19 Nov 2026 00:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81B4606A31C;
+	Thu, 19 Nov 2026 00:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hsOu7R8k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D50C1F000C4;
-	Thu, 19 Nov 2026 00:51:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trF5OxUW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A6D1F000C4;
+	Thu, 19 Nov 2026 00:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049510;
-	bh=cuzlfTvhjPwp4E9YbjUNC7GBKcglEZFxMTO+iagd1ao=;
+	s=korg; t=1795049513;
+	bh=Wgh5qZqg1lkJ63qpHoKesJTDN+cMQvcMJtJVk+RwKDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hsOu7R8k51qICUvpN6NiVZNeVDSDprjpdTKn3PBN8D8GY7XXfcJcyQ1Xx1jg+6aoR
-	 7h8XQ3XAuOEFP4NRhEtYYVth5rvJH81DDyVpTl5fnyVoFEVCbVOAT/H95ZOEZs3M4F
-	 8gITlcRWJ2i5jSkRWLuF42pcLljRI/cj/4ZwGCsg=
+	b=trF5OxUWigm3Nk9WINknpQjuvArw/PtzMrcMZLWOPxtOPnaW6XscagdYxd1eyEuLD
+	 m1i9R0OqSIxAd5M6hV22uSH/3Ow/9+5ZBOxUPYMQljx72gmZDfSRVEFODm7w4vKjym
+	 fM4zIR78RPmoXzI79hDFbvVCf++/HQNUqQgaHTKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
+	Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2378/2857] power: supply: generic-adc-battery: Propagate charged GPIO errors
-Date: Wed, 18 Nov 2026 15:56:52 +0100
-Message-ID: <20261118150327.149906950@linuxfoundation.org>
+Subject: [PATCH 6.1 2361/2857] RDMA/mlx5: Cancel deferred page-fault EQ work before teardown
+Date: Wed, 18 Nov 2026 15:56:35 +0100
+Message-ID: <20261118150326.532089978@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,40 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
 
-[ Upstream commit 36b0abe904ac9cbdce6161d9c7c0bcac963bb3fe ]
+[ Upstream commit aea64024ac37d29e99b82b315a56a9145dc0bc23 ]
 
-devm_gpiod_get_optional() may return an error pointer such as
--EPROBE_DEFER, but gab_probe() only checks for NULL. The error
-pointer is then passed to gpiod_to_irq() and the original error,
-including -EPROBE_DEFER, is lost.
+Page-fault EQ work can remain queued after the notifier is disabled.
+Destroying the EQ before cancelling that work can let the worker access
+freed EQ memory.
 
-Check the return value and propagate errors from the charged GPIO lookup.
+Cancel the deferred work before destroying the EQ.
 
-Fixes: b0327ffb133f ("power: supply: generic-adc-battery: Use GPIO descriptors")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20261009112429.33318-1-phucduc.bui@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: d5d284b829a6 ("{net,IB}/mlx5: Move Page fault EQ and ODP logic to RDMA")
+Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+Link: https://patch.msgid.link/20261007234216.2765-1-prathameshdeshpande7@gmail.com
+Reviewed-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/generic-adc-battery.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/hw/mlx5/odp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/generic-adc-battery.c b/drivers/power/supply/generic-adc-battery.c
-index 6cb697e24db0f..5dc3211731578 100644
---- a/drivers/power/supply/generic-adc-battery.c
-+++ b/drivers/power/supply/generic-adc-battery.c
-@@ -327,6 +327,9 @@ static int gab_probe(struct platform_device *pdev)
- 		return dev_err_probe(&pdev->dev, ret, "Failed to register delayed work\n");
- 
- 	adc_bat->charge_finished = devm_gpiod_get_optional(&pdev->dev, "charged", GPIOD_IN);
-+	if (IS_ERR(adc_bat->charge_finished))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(adc_bat->charge_finished),
-+				     "failed to get charged GPIO\n");
- 	if (adc_bat->charge_finished) {
- 		int irq;
+diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
+index d2ef2ff88ccdf..b396050f165e5 100644
+--- a/drivers/infiniband/hw/mlx5/odp.c
++++ b/drivers/infiniband/hw/mlx5/odp.c
+@@ -1602,8 +1602,8 @@ mlx5_ib_odp_destroy_eq(struct mlx5_ib_dev *dev, struct mlx5_ib_pf_eq *eq)
+ 	if (!eq->core)
+ 		return 0;
+ 	mlx5_eq_disable(dev->mdev, eq->core, &eq->irq_nb);
+-	err = mlx5_eq_destroy_generic(dev->mdev, eq->core);
+ 	cancel_work_sync(&eq->work);
++	err = mlx5_eq_destroy_generic(dev->mdev, eq->core);
+ 	destroy_workqueue(eq->wq);
+ 	mempool_destroy(eq->pool);
  
 -- 
 2.53.0
