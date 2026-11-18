@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029976;
-	b=A42/2SJhL25sWuKxqw94IoAq2Lv0kdgn4E1s7Dr+jWj+/dyoEDooUZjlCVW1r32sjbDJ
-	 J0X907qJ5sF6u2akw5ZLCMKKoPbzqvLq86trOdlTRw+kwRj5FwXO6KtdcBTqWY+y5IDDY
-	 J6NMM3Is+RKxKBwl3/Y2QQFyNSRxO4w8edAPMIx/FbkBxvUpo0T5dPbuu5RBvbJQ3lnYk
-	 TVebv48b8lvBES4ySQcUpWei7ni/wjAFuTkkNHlazfKpfMNpLaq5/vvjIVUXgXtvnhy2Z
-	 F33IvXIcpSRUATgkAh7MHPOusyk4radZn5qyTCZYDInzUAg/bT9TXHQnHv0220AiSkg==
+	t=1795029979;
+	b=XbWao9jViPvj1wVGnG+MDG9xhE8184j55XwSRfTVJLDVykx4om81jxu1BKZXcvDpiwJ8
+	 15AkOwEsHa46cblxljprWPKdeBrjgOh5yrbw+XC/dVec0XQg8tn06j7S5iP98TyDgSIip
+	 UZXb7A+osxYrUUt/M5pKWIpVF9K6DyqS3uAMibLumr6iWepkOw2279q7C04aAK2lF7l2C
+	 KrNWiD6yWgotgk+gF1pTnaovQ6jxs8CX+vOZfCj/LpOD1nrXbQokPLJ6F3isxmwbPS6gs
+	 2sC7gSjxedO6Xr8Ofy5hjbnyoOhttWZhuE/XSw3pvWWwtrXqHReD/qPzl5VeH3ZwXdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029976;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029979;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YhtJi7syA7OEuqFGHOaju3lhRbwvYR5SYeXUVFSvcq0=;
-	b=oyJtQNUtJcZ3xvLx3yz2jH2Xha5aJXFHuFlG+EXdwkBUc+OYfFx8RHUmkdNeYYGl7N9W
-	 f22m80dYV67Dvi8jOQs5gDuQEdq1ld47DyARvlsrFTiYLE++lMKPColhUROI9WVm2SUtQ
-	 9PRK+q+jZAjJM2Ld3pjhMn7YfAzcG5RIwuq/IbnfcXCQQ6Hm7OYCzgBSrc3H3qSvCItiy
-	 0peTzXPHDbPVIt7LMIqdiDaeDBUID7bB6DjqCFJoPU4t5jnqxoKXABuNDQpDfbi8P6Tpl
-	 S7CzMvlP0Rx3b8ba3TOnhSkhcULA71994KgZY5B9PHyMCCX8nV1mMaUmlGxK0zyUYQA==
+	bh=I1u8gr1e5VCSUEm2ZOoHs5bplpDtMns1iqASF/MoIys=;
+	b=lPNWY5ii0YbSWtmKml+p6vPXIqrAqVemUufNdoY0natQAFAfQN7SghbtMvKy8eLP6R2S
+	 4FChqYb8Nkm6W249g2AOWMm8ZNNNkrK8h1o1C98n0LnRCFGAUOYqIUEhe/kbzfjmmyZPR
+	 cIt1DTMXrAxx7bb8lwZJegkm7lVU+FPE/ORBCvsdReGRXQGM6RpOJhfjb9tcEJOS0zc5F
+	 KsdBnZSenxQ6mz1wJVC+d3Nf95+x0vjcpiseb0RxCxBYS9pQv1BBBRpz19LAJsrK9Ehuu
+	 P2D4OsrVdFx7/bIXGEpccC92qCcjQbFYEBjeahH/kv549gzRm/iyRcrzyYajg6/a1mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BkDu1OeN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dbEl0cLt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425D7606A320;
-	Wed, 18 Nov 2026 19:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A28F606A320;
+	Wed, 18 Nov 2026 19:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BkDu1OeN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97EC71F000C4;
-	Wed, 18 Nov 2026 19:26:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dbEl0cLt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2111F000C4;
+	Wed, 18 Nov 2026 19:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029976;
-	bh=YhtJi7syA7OEuqFGHOaju3lhRbwvYR5SYeXUVFSvcq0=;
+	s=korg; t=1795029978;
+	bh=I1u8gr1e5VCSUEm2ZOoHs5bplpDtMns1iqASF/MoIys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BkDu1OeNUV7tAGz4BFtryjuxIkYBQEDU+fiegz4EjUsTQjVKwFcRzHICBGK1o/QRk
-	 kltC6kaeZMI2tGtM1sceSdAAqtR8ZfV34MK3JLe46X5Mukt0pdpUdnRETXuGpOO1Xm
-	 CElZhoIAp7PktkkUlh/scfFnujxLJBOKdVltRxxY=
+	b=dbEl0cLtLVueIUBnbuvTMU16VrpkAKAf7bXF6rsRL5gq4W/soReN6ebi0pf/fKd3R
+	 XViW7eiKy4rivB8O/xRdtsxCKRcO6KXVQLt/WEhIk+UQEczxm2A8A8fZ2LB1u7MsFH
+	 bb/kGaJV5nsOUFruYakoLxd9cQRXuuzxEddZGkM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ginger Li <ginger.jzllee@gmail.com>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0514/1756] crypto: ccp - kill v3 IRQ tasklet during teardown
-Date: Wed, 18 Nov 2026 15:44:01 +0100
-Message-ID: <20261118150029.636015434@linuxfoundation.org>
+Subject: [PATCH 6.12 0541/1756] media: i2c: ov5648: Fix a data race on state->streaming
+Date: Wed, 18 Nov 2026 15:44:28 +0100
+Message-ID: <20261118150030.681177211@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,49 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Ginger Li <ginger.jzllee@gmail.com>
 
-[ Upstream commit b72a639bdee6e07d8091718ac3e451d9c5cba1b5 ]
+[ Upstream commit 76c8ffbe1b9bc0ee4c977180e3f498352de0d01e ]
 
-On PCI devices using MSI-X, ccp_irq_handler() schedules irq_tasklet. The
-teardown paths release the IRQ but do not drain a tasklet that was
-already queued, so it can access ccp after the device-managed allocation
-has been released.
+ov5648_s_stream() updates state->streaming after it has released
+sensor->mutex, while ov5648_resume() reads that field with sensor->mutex
+held. A concurrent resume can therefore observe a stale streaming state
+and leave the sensor in standby while the software believes that it is
+streaming, or the other way around.
 
-Kill the tasklet after releasing the IRQ in both the initialization
-error path and ccp_destroy().
+Keep the update inside the sensor->mutex protected section that already
+programs the standby mode.
 
-Fixes: 7b537b24e76a ("crypto: ccp - Change ISR handler method for a v3 CCP")
-
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: e43ccb0a045f ("media: i2c: Add support for the OV5648 image sensor")
+Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
+Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/ccp-dev-v3.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/i2c/ov5648.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/ccp/ccp-dev-v3.c b/drivers/crypto/ccp/ccp-dev-v3.c
-index fe69053b2394d..e85b4ded417aa 100644
---- a/drivers/crypto/ccp/ccp-dev-v3.c
-+++ b/drivers/crypto/ccp/ccp-dev-v3.c
-@@ -506,6 +506,8 @@ static int ccp_init(struct ccp_device *ccp)
- 			kthread_stop(ccp->cmd_q[i].kthread);
+diff --git a/drivers/media/i2c/ov5648.c b/drivers/media/i2c/ov5648.c
+index 4b86d2631bd1c..9e67ce2ee11f3 100644
+--- a/drivers/media/i2c/ov5648.c
++++ b/drivers/media/i2c/ov5648.c
+@@ -2145,13 +2145,13 @@ static int ov5648_s_stream(struct v4l2_subdev *subdev, int enable)
  
- 	sp_free_ccp_irq(ccp->sp, ccp);
-+	if (ccp->use_tasklet)
-+		tasklet_kill(&ccp->irq_tasklet);
+ 	mutex_lock(&sensor->mutex);
+ 	ret = ov5648_sw_standby(sensor, !enable);
++	if (!ret)
++		state->streaming = !!enable;
+ 	mutex_unlock(&sensor->mutex);
  
- e_pool:
- 	for (i = 0; i < ccp->cmd_q_count; i++)
-@@ -545,6 +547,8 @@ static void ccp_destroy(struct ccp_device *ccp)
- 			kthread_stop(ccp->cmd_q[i].kthread);
+ 	if (ret)
+ 		return ret;
  
- 	sp_free_ccp_irq(ccp->sp, ccp);
-+	if (ccp->use_tasklet)
-+		tasklet_kill(&ccp->irq_tasklet);
+-	state->streaming = !!enable;
+-
+ 	if (!enable)
+ 		pm_runtime_put(sensor->dev);
  
- 	for (i = 0; i < ccp->cmd_q_count; i++)
- 		dma_pool_destroy(ccp->cmd_q[i].dma_pool);
 -- 
 2.53.0
 
