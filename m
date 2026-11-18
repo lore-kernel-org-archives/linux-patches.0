@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015392;
-	b=ab7Oi4aJcLVeEPm+vHTTDybmrhf1s/Siw9/bofbG/I0U0cjVYkt6w0rIVCXQleinQXAB
-	 274QFXjpX4oDMSu1mvsNByeajZaanL6W93UBQ3xbOndQ52aO6PT9/pdaJpouCN99hJV+S
-	 glaxdxKATSiabDGTfkHYThroaFbeFuk6dYNrbZk4G1tu6E1NqrxnkuFDBPRniwwvgBomU
-	 8p/T+oS9L+TNvjJbCQMLpPjKwENZxGjpttYAKwD9hItadw1BCQ6pjtvLcD8wK8DoPLcrE
-	 jsc7l2rhNh7oFQzNGbebf2xwdKhtv+7bZkZH/UUtWEATQ9q2iX23+qP6QvL6gyQ3ZcA==
+	t=1795015395;
+	b=NXxLHTatdrTzc+kcj4P0/y2O+LT6KEq+D7QYs7apCFlwRc6DuCzr/z2xV9GZFWYf8gV7
+	 pH6EH+8m+Qk21Ge5BlvfBQ6f+HgyWIuC1OTQCTTqFAsw+BafEjI771SgcYDAtqjNHhl2D
+	 XxZ5XcE6moBipw+fAf2l/+BfURnCE6tlP5z6E1ldFjpvKrxi4ZhARkQFCBkxMPe/9VGCP
+	 9ebv3Ja1NVvB3Qpa1c1eCd6biVEISa0CicSAHpxZFuB9Ujz8uLlncX5V79iK4X1R8GqkO
+	 HI+R6UCL14jDoY3nivsNEJRHuDWW9AfNRhCBDwu6ZMrGMSFmyUx+ptohfJoPoA0N3ww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015392;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015395;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bHvpJBzqKxevo/gaZp1k7mRr+LHqEOHS1PTiWeM6r7w=;
-	b=onJ+HI5Ef3l7LwnQ/mg1K8iX1AYJC60aRwuSNORb9u7/xYyVKbR8SHADtv1Hp3RtBpmm
-	 orfhI0xtVs4f27rSboJVu6SpMEH8kyCSYvDZYnYVMG2yNAxiPeTcHsn8lWp9nelMYcAfW
-	 MvOuo93uf76JmoJ8I29I4jCu+NmPH3Vk/v93kn/En0rIqguTnSzPKozggCGThS8goJOC1
-	 t90x5M8TJ0VxhUI4NBwETOOkcY/5bFhkdXFawX6DWJhlPA82X9THo3J1z3QfTDpBrbyJm
-	 1Vu6NBicsTj8OsrwKHbaMSGKue0SJta5T4r8mlsizQuDdSeKaV4c6lP8vcoBOuL35LQ==
+	bh=M0MTN3mBTG29P+HJ9ADYNBaP81ADcqYmDeAZqMxWaII=;
+	b=0qYJRa0DwbzseAS0U8gJ6aREJ1Ojr5BVmA7Vd/lMEOpRGuIaaRbVruv+ocyhKcKR+Y7I
+	 YdVaL8Td8jAuhfL6yn1ZIz5+9HOOj+m2SStiQz9Y7y/IMz1OWXY1w0JBpOgUcjiEyWmd8
+	 WPH3W5/3yOhbQT0CtisIy/DXFxjBZDW2surrkYRMMTYL30Fx3JQyBcZvEm3K2kzg1SnWM
+	 SFHgqo/d5HoGrUGvfFuTWTmqdgEAnU+agLHuprUxcjrRT3bOfyX4GbOzVa0EfeACSQ7bu
+	 K7IW7AzGjZHJptBa61pwdp7PvGzNVqSX3jXU9ws5XeWg5lDoY8ssrJ2PoGrSU5cKNUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cm4Xufcv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lz4ltD9k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A286606A31C;
-	Wed, 18 Nov 2026 15:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687EA606A31C;
+	Wed, 18 Nov 2026 15:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cm4Xufcv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD17A1F000C4;
-	Wed, 18 Nov 2026 15:23:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lz4ltD9k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87551F000C4;
+	Wed, 18 Nov 2026 15:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015392;
-	bh=bHvpJBzqKxevo/gaZp1k7mRr+LHqEOHS1PTiWeM6r7w=;
+	s=korg; t=1795015395;
+	bh=M0MTN3mBTG29P+HJ9ADYNBaP81ADcqYmDeAZqMxWaII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cm4XufcvM5kWnwj9BXwgv7bVFitWk2lMPV16T4/uVWSF1j7syanDgQ8On8Q7uM0A3
-	 VPOYbdxC/Ksi/VSVq+7BUlWS+wrLKkl7JPpe0cfcVx9r0/QVF00moYn0DDO7eKnXqi
-	 a6HOClCmY/mcHjEetTExz6l9s75D9aVjJhiAdlwQ=
+	b=Lz4ltD9kZDISQbZNEjwwM0rwCKXeiMJowfsma2ZIX2goZ73wUVgz1gxCNqK7d+Ukr
+	 wB0m8o7FSjvYejSUwShScSyX8XByu+qdZITJ/X2aIepsMutey9SI3B/dszyAEHnj6+
+	 w9xf8d3jH4IPIZdnuA8SeZarFCVRFPqUdfBsof8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
+	Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0155/2651] wifi: mm81x: fix type bugs handling sdio_readl/writel()
-Date: Wed, 18 Nov 2026 15:23:15 +0100
-Message-ID: <20261118150253.434869654@linuxfoundation.org>
+Subject: [PATCH 7.3 0156/2651] wifi: rtw88: debugfs: dont vzalloc(0) when rsvd_page is read unconfigured
+Date: Wed, 18 Nov 2026 15:23:16 +0100
+Message-ID: <20261118150253.469153779@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,75 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>
 
-[ Upstream commit 37f018809909dfc99646b1b1f79c2b3968e7890a ]
+[ Upstream commit 81510c3d6f2199889a4a936d8cf8b9e05911b10e ]
 
-The sdio_readl() and sdio_writel() functions, instead of returning kernel
-error codes, instead stores the error codes in a parameter.  These caller
-functions pass should pass an int pointer to store the error code but
-instead pass a signed long.
+Reading the rsvd_page debugfs entry before writing a page offset and
+count to it calls vzalloc() with a size of zero, because
+rsvd_page.page_num defaults to 0.  vmalloc warns about this:
 
-This will not work on big endian systems.  On little endian systems
-passing a ssize_t means negative error codes are converted to positive
-values near UINT_MAX.  This doesn't cause a problem at runtime because
-in mm81x_sdio_reg32_write() the error codes are discarded and we always
-return -EIO.  In mm81x_sdio_reg32_read() the high bits are truncated
-away so the positive value is re-converted back to negative and the
-code works as intended.
+  WARNING: mm/vmalloc.c:4019 at __vmalloc_node_range_noprof+0x9ac/0xa30
+  ...
+  Call Trace:
+   __vmalloc_node_noprof+0x4c/0x70
+   rtw_debugfs_get_rsvd_page+0x4c/0x110 [rtw88_core]
+   seq_read_iter+0x132/0x4b0
+   seq_read+0x12e/0x1c0
+   full_proxy_read+0x6f/0xc0
+   vfs_read+0xdd/0x490
 
-Either way, passing an int is the correct thing and is a cleanup.
+rtw_fw_dump_fifo() would reject the zero size anyway, but only after
+the allocation.  Check for a zero buffer size first and print a short
+usage hint instead of allocating.
 
-Fixes: b1906cea00b0 ("wifi: mm81x: add mm81x Wi-Fi HaLow driver")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Link: https://patch.msgid.link/aoa7Hj1W7ETOrOzO@stanley.mountain
-Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Signed-off-by: Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260827131244.35623-1-abdurrahmankaradag19@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/morsemicro/mm81x/sdio.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/wireless/realtek/rtw88/debug.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/morsemicro/mm81x/sdio.c b/drivers/net/wireless/morsemicro/mm81x/sdio.c
-index 96fce187dd352..65277399bf189 100644
---- a/drivers/net/wireless/morsemicro/mm81x/sdio.c
-+++ b/drivers/net/wireless/morsemicro/mm81x/sdio.c
-@@ -381,7 +381,7 @@ static int mm81x_sdio_dm_read(struct mm81x *mors, u32 address, u8 *data,
+diff --git a/drivers/net/wireless/realtek/rtw88/debug.c b/drivers/net/wireless/realtek/rtw88/debug.c
+index b67d69b01f879..84e45af26f525 100644
+--- a/drivers/net/wireless/realtek/rtw88/debug.c
++++ b/drivers/net/wireless/realtek/rtw88/debug.c
+@@ -315,6 +315,11 @@ static int rtw_debugfs_get_rsvd_page(struct seq_file *m, void *v)
+ 	int i;
+ 	int ret;
  
- static int mm81x_sdio_reg32_write(struct mm81x *mors, u32 address, u32 val)
- {
--	ssize_t ret = 0;
-+	int ret = 0;
- 	u32 original_address = address;
- 	struct mm81x_sdio *sdio = (struct mm81x_sdio *)mors->drv_priv;
- 	struct sdio_func *func1 = sdio->func->card->sdio_func[0];
-@@ -391,7 +391,7 @@ static int mm81x_sdio_reg32_write(struct mm81x *mors, u32 address, u32 val)
- 
- 	address &= 0x0000FFFF;
- 	sdio_writel(func1, (__force u32)cpu_to_le32(val),
--		    (__force u32)cpu_to_le32(address), (int *)&ret);
-+		    (__force u32)cpu_to_le32(address), &ret);
- 	if (ret)
- 		goto error;
- 
-@@ -411,7 +411,7 @@ static int mm81x_sdio_reg32_write(struct mm81x *mors, u32 address, u32 val)
- static int mm81x_sdio_reg32_read(struct mm81x *mors, u32 address, u32 *val)
- {
- 	u32 value;
--	ssize_t ret = 0;
-+	int ret = 0;
- 	struct mm81x_sdio *sdio = (struct mm81x_sdio *)mors->drv_priv;
- 	struct sdio_func *func1 = sdio->func->card->sdio_func[0];
- 
-@@ -419,8 +419,7 @@ static int mm81x_sdio_reg32_read(struct mm81x *mors, u32 address, u32 *val)
- 					 MM81X_CONFIG_ACCESS_4BYTE);
- 
- 	address &= 0x0000FFFF;
--	value = sdio_readl(func1, (__force u32)cpu_to_le32(address),
--			   (int *)&ret);
-+	value = sdio_readl(func1, (__force u32)cpu_to_le32(address), &ret);
- 	if (ret)
- 		return ret;
- 
++	if (!buf_size) {
++		seq_puts(m, "usage: echo <page_offset> <page_num> > rsvd_page\n");
++		return 0;
++	}
++
+ 	buf = vzalloc(buf_size);
+ 	if (!buf)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
