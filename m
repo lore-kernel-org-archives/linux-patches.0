@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018138;
-	b=vRw4CNCKeusGi5oR7HNvXEI7iFebE7zq/sRIWIYHyiUEiLtP2ZCoRzPKtk/5O0N7yuo8
-	 HYPeMC6Ry+cvxsu7rChVqk9OYqKL2fVuaLXKObro2rbEVfzaRVCatyO+fL4evZW3SZfox
-	 lOI/ZAsXrL9KEBSn/TLgasTfEk2E6xMUWszu4haxcJX5m7cOQN1Z/H0qNLUd60GlwAq/N
-	 0lcgBR/+majtn1ZK6SEt2d5IKOgfaenWCXD3pUmyDBqD1ac+GEq8tOZG9LypBqoc4s5xj
-	 dR+7wkUgyZuGrBcPjktJ7I4nyKSSXMGJ6Y06Bu7wUDNwtDW6gn9K5GUobmQM+x4H2Jg==
+	t=1795018140;
+	b=YmOtMyjmCsSzs0ISwvw0doKHfdZSltAqgvfMNi+d9usxGJEMgzNI+SU6mpgsB792vSmv
+	 caQfKTJcfu00FmT/IDavpmykrCvWIl02ASGbS0GOoeptgmpMF8e2bUwLMyVWcA77zE+LR
+	 aJkxW63Onr1r3rtwikqG/roe8iYoCHXWLu+E+ydipAuFtqINWrBu2lfddP94O3a7IR97O
+	 akY7wHiADkwhY84pmurE2AWocPmt9L7Pkh3lCbV5q+3XEjGL6fYr/RIFnYNW21XqTU0dK
+	 XqC3IVv9nuS3hAbcLNh2O/ScLvCqGLST8eQsO+coxwf0nZeMZgPknrzgTu8SbXraSFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018138;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018140;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BJFMNO679uWuiav4lXtLJroMgCejosyC0eZ0ec9u9ck=;
-	b=lOpv5+/DUlQBVJ72nv62YPxrfHvEmElqbW4cMW0BrIIxKPDgEZuDohQV1ObAWW+cCbgz
-	 yGeMvUg09BNhbQNAdvYxL0bp8DFLsojb0ErSEO3//7t3w//z4oQNBz4+chhQmIdIn/5Wk
-	 9D4BIm+eoyFFkLoJMyhBbCGkl83Oq8dwS8CPboc/byR+rURPNW1kLpRRXbEuJKKryPpSz
-	 BNyx+5iK6ZfDyAiTBKD9gWG+5tLIrcxJac+yNDdKBTkDLSWin8Zoib8XuR5uZnuHO9zPB
-	 Ber8J10bBThpMgsQOYnxPyBILBtREg4HtZuCUgf2y84F5zwtUrzW0ii2WekXgiAOgRQ==
+	bh=SJHqJqoRObLxNJpZeYFonIrk4zX50ojpx/nXLH+bDEk=;
+	b=gj6EgvGnfGn6YQ8o365nNUNo99Qot1Nd9KJkjfJyDq8NIYpUe7zI2pj1ci7cz64UnaQh
+	 pL+oy+9uSMORZJbZ0ldGa95z0nxZ3qsFFprWCY7hv0a0Fpmat/zlHySEtjdXvq6+19RWI
+	 NbsfadRr9Aikb9FXMMFAXPDzydj48OGxLBTzLfhWroVrQLW6KtbtWMXQ16Z7s2C+SX5Fz
+	 VkFa0ASww8jkP81zJ/5g59t3joA38EVb7TVvplAzZf3HcqiEevR+nm/mgvMmRTiK7AOfo
+	 HDtsw8oxgdmQL6VOq3MCzMw/KKrH838P5baMTdkixueiFnc0HSHIcKA2zhJtQo/igzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ssvi55NH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=idZ+TsWw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CF460A2609;
-	Wed, 18 Nov 2026 16:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EB5606A320;
+	Wed, 18 Nov 2026 16:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ssvi55NH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA7B1F000C5;
-	Wed, 18 Nov 2026 16:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=idZ+TsWw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90C41F000C5;
+	Wed, 18 Nov 2026 16:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018137;
-	bh=BJFMNO679uWuiav4lXtLJroMgCejosyC0eZ0ec9u9ck=;
+	s=korg; t=1795018140;
+	bh=SJHqJqoRObLxNJpZeYFonIrk4zX50ojpx/nXLH+bDEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ssvi55NHvuK2DoiKg0DXr+zCWawmLQFwneJ7rQPe59olCcoh4LzCy8XY7sbDs2/WG
-	 MFQx3AEth4GISLsPqw1Ypi2maG49QLtPKtJomXlDudTCAPDlOX4yNyYs+VC/+/ErrX
-	 ur203Dlgy5tI7XudhARK+M0zEgVVmgO+X6C+AjF0=
+	b=idZ+TsWwC/gAsGADH8kwt7si88RkBha2hq5FBmugxNfs0QZzvGW+cncGKSgQHCq91
+	 +fglMNQ43svFFIEECnppEPsYsG3gjGXHGno2dmnvlj8I+LWp3fmzw02kYW8fjzlaTj
+	 wI43lF8UeXOTtHNYpA4havVvc7C7EXANlTDKWTBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Yichong Chen <chenyichong@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1119/2651] mei: vsc-tp: initialize IRQ state before requesting interrupt
-Date: Wed, 18 Nov 2026 15:39:19 +0100
-Message-ID: <20261118150328.293977691@linuxfoundation.org>
+Subject: [PATCH 7.3 1120/2651] debugfs: make debugfs_create_str() read-only
+Date: Wed, 18 Nov 2026 15:39:20 +0100
+Message-ID: <20261118150328.331334494@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,79 +67,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-[ Upstream commit 7754a2924604ea442ef03ed8fc12ccc9221a2e98 ]
+[ Upstream commit 5ec78be9552035e1e71de218f968c03c44181bf0 ]
 
-request_threaded_irq() enables the interrupt before returning, so the
-threaded handler may schedule work while the probe is still initializing
-its mutexes and work item. Initialize that state first and only free the
-IRQ on paths where the request succeeded.
+debugfs_create_str() supports replacing the backing string from userspace.
+Concurrent writers can race and free the same old string twice.
 
-Fixes: 566f5ca97680 ("mei: Add transport driver for IVSC device")
-Assisted-by: LLM
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260929132245.2152433-1-runyu.xiao@seu.edu.cn
+All writable in-tree users have been converted to local file operations.
+Remove the generic write support from debugfs_create_str(), and refuse to
+create a file when the caller passes write permission bits.
+
+This makes unsupported writable use visible instead of silently creating a
+file with different permissions.
+
+Fixes: 86b5488121db ("debugfs: Add write support to debugfs_create_str()")
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Link: https://patch.msgid.link/20260807100053.1089834-4-chenyichong@uniontech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/vsc-tp.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ fs/debugfs/file.c | 81 ++++++-----------------------------------------
+ 1 file changed, 10 insertions(+), 71 deletions(-)
 
-diff --git a/drivers/misc/mei/vsc-tp.c b/drivers/misc/mei/vsc-tp.c
-index ce877cb957574..5410ec1c93286 100644
---- a/drivers/misc/mei/vsc-tp.c
-+++ b/drivers/misc/mei/vsc-tp.c
-@@ -496,30 +496,30 @@ static int vsc_tp_probe(struct spi_device *spi)
- 	init_waitqueue_head(&tp->xfer_wait);
- 	tp->spi = spi;
+diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
+index 08de6652a4f31..170feb75317ff 100644
+--- a/fs/debugfs/file.c
++++ b/fs/debugfs/file.c
+@@ -1049,98 +1049,37 @@ ssize_t debugfs_read_file_str(struct file *file, char __user *user_buf,
+ 	return ret;
+ }
  
-+	mutex_init(&tp->mutex);
-+	mutex_init(&tp->event_notify_mutex);
-+	INIT_WORK(&tp->event_work, vsc_tp_event_work);
-+
- 	irq_set_status_flags(spi->irq, IRQ_DISABLE_UNLAZY);
- 	ret = request_threaded_irq(spi->irq, NULL, vsc_tp_isr,
- 				   IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
- 				   dev_name(dev), tp);
- 	if (ret)
--		return ret;
+-static ssize_t debugfs_write_file_str(struct file *file, const char __user *user_buf,
+-				      size_t count, loff_t *ppos)
+-{
+-	struct dentry *dentry = F_DENTRY(file);
+-	char *old, *new = NULL;
+-	int pos = *ppos;
+-	int r;
 -
--	mutex_init(&tp->mutex);
--	mutex_init(&tp->event_notify_mutex);
--	INIT_WORK(&tp->event_work, vsc_tp_event_work);
-+		goto err_destroy_lock;
+-	r = debugfs_file_get(dentry);
+-	if (unlikely(r))
+-		return r;
+-
+-	old = *(char **)file->private_data;
+-
+-	/* only allow strict concatenation */
+-	r = -EINVAL;
+-	if (pos && pos != strlen(old))
+-		goto error;
+-
+-	r = -E2BIG;
+-	if (pos + count + 1 > PAGE_SIZE)
+-		goto error;
+-
+-	r = -ENOMEM;
+-	new = kmalloc(pos + count + 1, GFP_KERNEL);
+-	if (!new)
+-		goto error;
+-
+-	if (pos)
+-		memcpy(new, old, pos);
+-
+-	r = -EFAULT;
+-	if (copy_from_user(new + pos, user_buf, count))
+-		goto error;
+-
+-	new[pos + count] = '\0';
+-	strim(new);
+-
+-	rcu_assign_pointer(*(char __rcu **)file->private_data, new);
+-	synchronize_rcu();
+-	kfree(old);
+-
+-	debugfs_file_put(dentry);
+-	return count;
+-
+-error:
+-	kfree(new);
+-	debugfs_file_put(dentry);
+-	return r;
+-}
+-
+ static const struct file_operations fops_str = {
+ 	.read =		debugfs_read_file_str,
+-	.write =	debugfs_write_file_str,
+-	.open =		simple_open,
+-	.llseek =	default_llseek,
+-};
+-
+-static const struct file_operations fops_str_ro = {
+-	.read =		debugfs_read_file_str,
+-	.open =		simple_open,
+-	.llseek =	default_llseek,
+-};
+-
+-static const struct file_operations fops_str_wo = {
+-	.write =	debugfs_write_file_str,
+ 	.open =		simple_open,
+ 	.llseek =	default_llseek,
+ };
  
- 	/* only one child acpi device */
- 	ret = acpi_dev_for_each_child(ACPI_COMPANION(dev),
- 				      vsc_tp_match_any, &adev);
- 	if (!ret) {
- 		ret = -ENODEV;
--		goto err_destroy_lock;
-+		goto err_free_irq;
- 	}
+ /**
+- * debugfs_create_str - create a debugfs file that is used to read and write a string value
++ * debugfs_create_str - create a debugfs file that is used to read a string value
+  * @name: a pointer to a string containing the name of the file to create.
+  * @mode: the permission that the file should have
+  * @parent: a pointer to the parent dentry for this file.  This should be a
+  *          directory dentry if set.  If this parameter is %NULL, then the
+  *          file will be created in the root of the debugfs filesystem.
+- * @value: a pointer to the variable that the file should read to and write
+- *         from. This pointer and the string it points to must not be %NULL.
++ * @value: a pointer to the variable that the file should read from. This
++ *         pointer and the string it points to must not be %NULL.
+  *
+  * This function creates a file in debugfs with the given name that
+- * contains the value of the variable @value.  If the @mode variable is so
+- * set, it can be read from, and written to.
++ * contains the value of the variable @value.  The file can be read from.
++ * Writable files are not supported; if @mode contains write permission bits,
++ * no file is created.
+  */
+ void debugfs_create_str(const char *name, umode_t mode,
+ 			struct dentry *parent, char **value)
+ {
+ 	if (WARN_ON(!value || !*value))
+ 		return;
++	if (WARN(mode & 0222,
++		 "%s() does not support writable files\n", __func__))
++		return;
  
- 	pinfo.fwnode = acpi_fwnode_handle(adev);
- 	pdev = platform_device_register_full(&pinfo);
- 	if (IS_ERR(pdev)) {
- 		ret = PTR_ERR(pdev);
--		goto err_destroy_lock;
-+		goto err_free_irq;
- 	}
+-	debugfs_create_mode_unsafe(name, mode, parent, value, &fops_str,
+-				   &fops_str_ro, &fops_str_wo);
++	debugfs_create_file_unsafe(name, mode, parent, value, &fops_str);
+ }
+ EXPORT_SYMBOL_GPL(debugfs_create_str);
  
- 	tp->pdev = pdev;
-@@ -527,9 +527,10 @@ static int vsc_tp_probe(struct spi_device *spi)
- 
- 	return 0;
- 
--err_destroy_lock:
-+err_free_irq:
- 	free_irq(spi->irq, tp);
- 
-+err_destroy_lock:
- 	cancel_work_sync(&tp->event_work);
- 	mutex_destroy(&tp->event_notify_mutex);
- 	mutex_destroy(&tp->mutex);
 -- 
 2.53.0
 
