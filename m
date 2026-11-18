@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016384;
-	b=wVjCxXzI9LsrG9JeEXaMn4DMDCyYDtqNrRpC6FHib6jt8dGmxLamQ/l+P3e3Y6abAghB
-	 PF0JsspAksWfVEqOmH8NJrCKbXy3VJk1cn/+gCyue7F3JdJcevfIqqjFzkGIgl9jkkB94
-	 zU31tVlwxuYNpxX6Aqyf/qImhqa/YVxY0w5nEboIig3CmtU0pK8/CzkINhT/4OkhX4rr3
-	 RDgYE5e1/Rs4hMMxF1LWmm6P1ocMPPgTqmG2EaK8zuS3I0WBu3uHvWdN99S5pHC+o01a8
-	 GFtZb6sjpUC8k1WZ+ypyylNciM9qk/hWKbJ4myKO/247hT9hfKtLCaj8iw8W0m+ucVw==
+	t=1795016387;
+	b=bc/BLlSKgGBBPfkZvZhLUy8vpZYGayAhzpOFUuBsj9EX5jP6f8WBEpDyzCT4rAARBu/X
+	 fJRvZqBJjuWHkdH22DTfYPNcHKi44GdVKQ8I+T8Ha6ZIg760jAXGdk7uvlGf4brXMIKrc
+	 mPfAq07Da2Llz9arMA7oD+59FKwjSAviVdlHY/R4eK4hbz5wb24A56fh04JjjI3UL+GCh
+	 2CrUjlBYoT1BuIvL5GadwO/M+q8gtO4Kfb7rtonCmnvmxOWdz/4lTtWB0mIHG/P4NbY/r
+	 T0AV4dlmql264VgnYh+fb4+M6hGvpb4X3OcL+BqsEP5jbS1A67ZyGleh7u7fICXuC1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016384;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016387;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xQp0UNOBRIt1/+W+gw09xqdBs2FHMJ5L5aVE1YWd+/k=;
-	b=XCRCjwhtpwU0eZuxIVchazYEqICYb9LHwU0t9vty5aGVoK3kt1VwgfQREzM9ERtro1iW
-	 gwt6p89FV3OSHl9fdDkeJkRWZW68yRiPgAW1LVEjXJswJjjcKFrP9dGC6A688RjPa6M08
-	 ktJZaMC6F9U7Gj+bEoLHLtVqINvtIC2t1FsDIk5u0wgkfOCuztj9hIzUNdvthPsFlqNMQ
-	 GmU8cHYnwCmeyPWKS8i/4GMAVPy5IiON9GbRCxSQWlmTr4rB2Yc1fRQAoeyC+9GthYzJL
-	 /1YbaFtbE6g1Yh4q3AJknsd4JZpSuuAcfir3qtAEmBzYifYCZHkpppuM34RDGMRUszA==
+	bh=KTu63+rOXRurwutddhY6lOSuz2dpQb1u96239F5UilU=;
+	b=4H22snnng8gyyamR2HqAwKShdx/K2EIXXeOfgpOW7v/LZOWJNawYtyc+PapdvP5TBnxU
+	 AGR0s/hZwpcqKwsMEZmUjLQWFN0x3apJx8xF9sdjayDHnL4KdRiDrBTSXZbD0Jd1PWLFC
+	 yw/ZEpowBRKB9cqcgKMK9hC2hzwnEO7SoThe3a1D7EmlDlLL+6aX9kFdxkcPerkIO+21c
+	 w+Gvwc6lsOki7HPUs+Qvrt6Szhwe2Yc6g6/SNoVVQsowO824UKMQlIXYg2Jjta5jmrNDc
+	 kQC0jIXKYhMZjYOnpmVx2aXlSGN6IvIWhqsHmWAJhfpXFueZlTWZCgp88VSOKsUMMKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sdwqkWPJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eKwrFRQJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE96660A263F;
-	Wed, 18 Nov 2026 15:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98F960A381B;
+	Wed, 18 Nov 2026 15:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sdwqkWPJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E941F000CC;
-	Wed, 18 Nov 2026 15:39:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eKwrFRQJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CFF1F000C7;
+	Wed, 18 Nov 2026 15:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016384;
-	bh=xQp0UNOBRIt1/+W+gw09xqdBs2FHMJ5L5aVE1YWd+/k=;
+	s=korg; t=1795016387;
+	bh=KTu63+rOXRurwutddhY6lOSuz2dpQb1u96239F5UilU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sdwqkWPJyh1rL4JMAcEqPrIkyfJnY+g+YMPEa4kj79J4pehJzkleaPgXXge9nHqYt
-	 5YYK3u3WRjbxmWiVNbXjMu9C4TTqaa1aPV2MoaFUjfHgX3+1gFll28nevys0/9AAlD
-	 baPRWHfrPrNX2DnnmX/DJYOvGRFPiRrNS7cLM36s=
+	b=eKwrFRQJpLdhu6+CXBKLBxn+chk46UqnkzJbojnChfItfqwUCteZZ+HE9APktrm9V
+	 R16zf5+uOkgf6sDzEemeM6lJUpnDlB6S4G7d5gunjXcm2lZDRHlLN+H9l4wm6NPQlj
+	 RAlXPUc95tjNE7YEtPKG7+3Zi97brhojkWteiQJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Nicolas Morey <nmorey@suse.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0473/2651] RDMA/rxe: Use validated num_sge in local buffer
-Date: Wed, 18 Nov 2026 15:28:33 +0100
-Message-ID: <20261118150304.815828696@linuxfoundation.org>
+Subject: [PATCH 7.3 0509/2651] scsi: pm8001: Fix SATA FIS offset in struct hw_event_resp
+Date: Wed, 18 Nov 2026 15:29:09 +0100
+Message-ID: <20261118150306.078651280@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,66 +68,335 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Morey <nmorey@suse.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit a4368022a3ac5324356ae8d88e3a42d115956fd6 ]
+[ Upstream commit cdc97921de02a0c1a8324afa03e8b3e30a72bbe6 ]
 
-For both SRQ and non-SRQ receive paths, the WQE is copied into a local
-buffer to provide a kernel-owned, validated copy. While calculating the
-memcpy size from the validated num_sge prevents overflow during the
-copy, memcpy() itself still copies num_sge from shared memory.
+In struct hw_event_resp, sas_identify was defined using struct
+sas_identify_frame, which is 32 bytes long because it includes a 4-byte CRC
+field. However, PM8001 and PM80xx hardware does not send the CRC in the
+event response frame, providing only the 28-byte identify payload.
 
-A concurrent userspace modification before or during memcpy() leaves
-an unvalidated num_sge in the local buffer, leading to potential
-out-of-bounds reads in rxe_resp_check_length() and copy_data() causing:
+Because sas_identify had a size of 32 bytes, the following sata_fis member
+was located at byte offset 44 instead of the actual hardware offset 40. In
+hw_event_sata_phy_up(), this discrepancy was worked around with negative
+pointer arithmetic: ((u8 *)&pPayload->sata_fis - 4).  This triggers a
+compiler error under Clang with -Wstringop-overread:
 
-  BUG: KASAN: slab-out-of-bounds in rxe_receiver+0x8109/0x9ec0 [rdma_rxe]
-  Read of size 4 at addr ffff88812c4867f8 by task kworker/u9:6/361
-  Workqueue: rxe_wq do_work [rdma_rxe]
-  Call Trace:
-   rxe_receiver+0x8109/0x9ec0 [rdma_rxe]
-   do_work+0x149/0x610 [rdma_rxe]
-   process_one_work+0x726/0x10a0
+  error: 'memcpy' reading 20 bytes from a region of size 0
+  [-Werror,-Wstringop-overread]
+          memcpy(phy->frame_rcvd, ((u8 *)&pPayload->sata_fis - 4),
 
-  The buggy address belongs to the object at ffff88812c486000
-   which belongs to the cache kmalloc-part-13-2k of size 2048
-  The buggy address is located 0 bytes to the right of
-   allocated 2040-byte region [ffff88812c486000, ffff88812c4867f8)
+Move struct sas_identify_frame_local (28 bytes) into pm8001_defs.h, and
+update struct hw_event_resp in both pm8001_hwi.h and pm80xx_hwi.h to use
+struct sas_identify_frame_local followed by sata_fis and a 4-byte padding
+word. This correctly aligns sata_fis at byte offset 40 while maintaining
+the 64-byte total payload size.
 
-Explicitly assign the validated num_sge to the local buffer after the
-copy to prevent this race.
+Update hw_event_sata_phy_up() in pm8001_hwi.c and pm80xx_hwi.c to copy
+directly from &pPayload->sata_fis.
 
-Fixes: 22b8fbded65b ("RDMA/rxe: Fix TOCTOU heap overflow in get_srq_wqe")
-Fixes: d6ab440240a0 ("RDMA/rxe: Copy WQE to local buffer in non-SRQ receive path")
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Nicolas Morey <nmorey@suse.com>
-Link: https://patch.msgid.link/20260909160132.1491248-1-nmorey@suse.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Compile-tested only. Both the patch and its description have been generated
+by Gemini.
+
+Fixes: dbf9bfe61571 ("[SCSI] pm8001: add SAS/SATA HBA driver")
+Fixes: f5860992db55 ("[SCSI] pm80xx: Added SPCv/ve specific hardware functionalities and relevant changes in common files")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/31963d53810f42970447e78ef46030ab13d2e91f.1788198434.git.bvanassche@acm.org
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_resp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/pm8001/pm8001_defs.h |  98 +++++++++++++++++++++++++++++
+ drivers/scsi/pm8001/pm8001_hwi.c  |   2 +-
+ drivers/scsi/pm8001/pm8001_hwi.h  |   4 +-
+ drivers/scsi/pm8001/pm80xx_hwi.c  |   2 +-
+ drivers/scsi/pm8001/pm80xx_hwi.h  | 100 +-----------------------------
+ 5 files changed, 106 insertions(+), 100 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
-index 02b16e2b49b8f..cd51042857d62 100644
---- a/drivers/infiniband/sw/rxe/rxe_resp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_resp.c
-@@ -288,6 +288,7 @@ static enum resp_states get_srq_wqe(struct rxe_qp *qp)
- 	}
- 	size = sizeof(*wqe) + num_sge * sizeof(struct rxe_sge);
- 	memcpy(&qp->resp.srq_wqe, wqe, size);
-+	qp->resp.srq_wqe.wqe.dma.num_sge = num_sge;
+diff --git a/drivers/scsi/pm8001/pm8001_defs.h b/drivers/scsi/pm8001/pm8001_defs.h
+index 4e19d61dffbbb..a9605ca317f34 100644
+--- a/drivers/scsi/pm8001/pm8001_defs.h
++++ b/drivers/scsi/pm8001/pm8001_defs.h
+@@ -41,6 +41,104 @@
+ #ifndef _PM8001_DEFS_H_
+ #define _PM8001_DEFS_H_
  
- 	qp->resp.wqe = &qp->resp.srq_wqe.wqe;
- 	queue_advance_consumer(q, QUEUE_TYPE_FROM_CLIENT);
-@@ -328,6 +329,7 @@ static enum resp_states rxe_get_recv_wqe(struct rxe_qp *qp)
- 	}
- 	size = sizeof(*wqe) + num_sge * sizeof(struct rxe_sge);
- 	memcpy(&qp->resp.srq_wqe, wqe, size);
-+	qp->resp.srq_wqe.wqe.dma.num_sge = num_sge;
++#include <scsi/sas.h>
++
++#ifdef __LITTLE_ENDIAN_BITFIELD
++struct sas_identify_frame_local {
++	/* Byte 0 */
++	u8  frame_type:4;
++	u8  dev_type:3;
++	u8  _un0:1;
++
++	/* Byte 1 */
++	u8  _un1;
++
++	/* Byte 2 */
++	union {
++		struct {
++			u8  _un20:1;
++			u8  smp_iport:1;
++			u8  stp_iport:1;
++			u8  ssp_iport:1;
++			u8  _un247:4;
++		};
++		u8 initiator_bits;
++	};
++
++	/* Byte 3 */
++	union {
++		struct {
++			u8  _un30:1;
++			u8 smp_tport:1;
++			u8 stp_tport:1;
++			u8 ssp_tport:1;
++			u8 _un347:4;
++		};
++		u8 target_bits;
++	};
++
++	/* Byte 4 - 11 */
++	u8 _un4_11[8];
++
++	/* Byte 12 - 19 */
++	u8 sas_addr[SAS_ADDR_SIZE];
++
++	/* Byte 20 */
++	u8 phy_id;
++
++	u8 _un21_27[7];
++
++} __packed;
++
++#elif defined(__BIG_ENDIAN_BITFIELD)
++struct sas_identify_frame_local {
++	/* Byte 0 */
++	u8  _un0:1;
++	u8  dev_type:3;
++	u8  frame_type:4;
++
++	/* Byte 1 */
++	u8  _un1;
++
++	/* Byte 2 */
++	union {
++		struct {
++			u8  _un247:4;
++			u8  ssp_iport:1;
++			u8  stp_iport:1;
++			u8  smp_iport:1;
++			u8  _un20:1;
++		};
++		u8 initiator_bits;
++	};
++
++	/* Byte 3 */
++	union {
++		struct {
++			u8 _un347:4;
++			u8 ssp_tport:1;
++			u8 stp_tport:1;
++			u8 smp_tport:1;
++			u8 _un30:1;
++		};
++		u8 target_bits;
++	};
++
++	/* Byte 4 - 11 */
++	u8 _un4_11[8];
++
++	/* Byte 12 - 19 */
++	u8 sas_addr[SAS_ADDR_SIZE];
++
++	/* Byte 20 */
++	u8 phy_id;
++
++	u8 _un21_27[7];
++} __packed;
++#else
++#error "Bitfield order not defined!"
++#endif
++
+ enum chip_flavors {
+ 	chip_8001,
+ 	chip_8008,
+diff --git a/drivers/scsi/pm8001/pm8001_hwi.c b/drivers/scsi/pm8001/pm8001_hwi.c
+index fff8d877abb9e..55a01e533fd19 100644
+--- a/drivers/scsi/pm8001/pm8001_hwi.c
++++ b/drivers/scsi/pm8001/pm8001_hwi.c
+@@ -3208,7 +3208,7 @@ hw_event_sata_phy_up(struct pm8001_hba_info *pm8001_ha, void *piomb)
+ 	phy->sas_phy.oob_mode = SATA_OOB_MODE;
+ 	sas_notify_phy_event(&phy->sas_phy, PHYE_OOB_DONE, GFP_ATOMIC);
+ 	spin_lock_irqsave(&phy->sas_phy.frame_rcvd_lock, flags);
+-	memcpy(phy->frame_rcvd, ((u8 *)&pPayload->sata_fis - 4),
++	memcpy(phy->frame_rcvd, &pPayload->sata_fis,
+ 		sizeof(struct dev_to_host_fis));
+ 	phy->frame_rcvd_size = sizeof(struct dev_to_host_fis);
+ 	phy->identify.target_port_protocols = SAS_PROTOCOL_SATA;
+diff --git a/drivers/scsi/pm8001/pm8001_hwi.h b/drivers/scsi/pm8001/pm8001_hwi.h
+index f1ce8df082b0c..a21b1b37a8ea5 100644
+--- a/drivers/scsi/pm8001/pm8001_hwi.h
++++ b/drivers/scsi/pm8001/pm8001_hwi.h
+@@ -42,6 +42,7 @@
  
- 	qp->resp.wqe = &qp->resp.srq_wqe.wqe;
- 	return RESPST_CHK_LENGTH;
+ #include <linux/types.h>
+ #include <scsi/libsas.h>
++#include "pm8001_defs.h"
+ 
+ 
+ /* for Request Opcode of IOMB */
+@@ -229,8 +230,9 @@ struct hw_event_resp {
+ 	__le32	lr_evt_status_phyid_portid;
+ 	__le32	evt_param;
+ 	__le32	npip_portstate;
+-	struct sas_identify_frame	sas_identify;
++	struct sas_identify_frame_local	sas_identify;
+ 	struct dev_to_host_fis	sata_fis;
++	u32	_r_a;
+ } __attribute__((packed, aligned(4)));
+ 
+ 
+diff --git a/drivers/scsi/pm8001/pm80xx_hwi.c b/drivers/scsi/pm8001/pm80xx_hwi.c
+index 2c0fa7ab33d22..659dbd603a033 100644
+--- a/drivers/scsi/pm8001/pm80xx_hwi.c
++++ b/drivers/scsi/pm8001/pm80xx_hwi.c
+@@ -3296,7 +3296,7 @@ hw_event_sata_phy_up(struct pm8001_hba_info *pm8001_ha, void *piomb)
+ 	phy->sas_phy.oob_mode = SATA_OOB_MODE;
+ 	sas_notify_phy_event(&phy->sas_phy, PHYE_OOB_DONE, GFP_ATOMIC);
+ 	spin_lock_irqsave(&phy->sas_phy.frame_rcvd_lock, flags);
+-	memcpy(phy->frame_rcvd, ((u8 *)&pPayload->sata_fis - 4),
++	memcpy(phy->frame_rcvd, &pPayload->sata_fis,
+ 		sizeof(struct dev_to_host_fis));
+ 	phy->frame_rcvd_size = sizeof(struct dev_to_host_fis);
+ 	phy->identify.target_port_protocols = SAS_PROTOCOL_SATA;
+diff --git a/drivers/scsi/pm8001/pm80xx_hwi.h b/drivers/scsi/pm8001/pm80xx_hwi.h
+index d8a63b7fed6a0..d6796ba40df96 100644
+--- a/drivers/scsi/pm8001/pm80xx_hwi.h
++++ b/drivers/scsi/pm8001/pm80xx_hwi.h
+@@ -43,6 +43,7 @@
+ 
+ #include <linux/types.h>
+ #include <scsi/libsas.h>
++#include "pm8001_defs.h"
+ 
+ /* for Request Opcode of IOMB */
+ #define OPC_INB_ECHO				1	/* 0x000 */
+@@ -236,102 +237,6 @@
+ /* Port recovery timeout, 10000 ms for PM8006 controller */
+ #define CHIP_8006_PORT_RECOVERY_TIMEOUT 0x640000
+ 
+-#ifdef __LITTLE_ENDIAN_BITFIELD
+-struct sas_identify_frame_local {
+-	/* Byte 0 */
+-	u8  frame_type:4;
+-	u8  dev_type:3;
+-	u8  _un0:1;
+-
+-	/* Byte 1 */
+-	u8  _un1;
+-
+-	/* Byte 2 */
+-	union {
+-		struct {
+-			u8  _un20:1;
+-			u8  smp_iport:1;
+-			u8  stp_iport:1;
+-			u8  ssp_iport:1;
+-			u8  _un247:4;
+-		};
+-		u8 initiator_bits;
+-	};
+-
+-	/* Byte 3 */
+-	union {
+-		struct {
+-			u8  _un30:1;
+-			u8 smp_tport:1;
+-			u8 stp_tport:1;
+-			u8 ssp_tport:1;
+-			u8 _un347:4;
+-		};
+-		u8 target_bits;
+-	};
+-
+-	/* Byte 4 - 11 */
+-	u8 _un4_11[8];
+-
+-	/* Byte 12 - 19 */
+-	u8 sas_addr[SAS_ADDR_SIZE];
+-
+-	/* Byte 20 */
+-	u8 phy_id;
+-
+-	u8 _un21_27[7];
+-
+-} __packed;
+-
+-#elif defined(__BIG_ENDIAN_BITFIELD)
+-struct sas_identify_frame_local {
+-	/* Byte 0 */
+-	u8  _un0:1;
+-	u8  dev_type:3;
+-	u8  frame_type:4;
+-
+-	/* Byte 1 */
+-	u8  _un1;
+-
+-	/* Byte 2 */
+-	union {
+-		struct {
+-			u8  _un247:4;
+-			u8  ssp_iport:1;
+-			u8  stp_iport:1;
+-			u8  smp_iport:1;
+-			u8  _un20:1;
+-		};
+-		u8 initiator_bits;
+-	};
+-
+-	/* Byte 3 */
+-	union {
+-		struct {
+-			u8 _un347:4;
+-			u8 ssp_tport:1;
+-			u8 stp_tport:1;
+-			u8 smp_tport:1;
+-			u8 _un30:1;
+-		};
+-		u8 target_bits;
+-	};
+-
+-	/* Byte 4 - 11 */
+-	u8 _un4_11[8];
+-
+-	/* Byte 12 - 19 */
+-	u8 sas_addr[SAS_ADDR_SIZE];
+-
+-	/* Byte 20 */
+-	u8 phy_id;
+-
+-	u8 _un21_27[7];
+-} __packed;
+-#else
+-#error "Bitfield order not defined!"
+-#endif
+-
+ struct mpi_msg_hdr {
+ 	__le32	header;	/* Bits [11:0] - Message operation code */
+ 	/* Bits [15:12] - Message Category */
+@@ -427,8 +332,9 @@ struct hw_event_resp {
+ 	__le32	lr_status_evt_portid;
+ 	__le32	evt_param;
+ 	__le32	phyid_npip_portstate;
+-	struct sas_identify_frame	sas_identify;
++	struct sas_identify_frame_local	sas_identify;
+ 	struct dev_to_host_fis	sata_fis;
++	u32	_r_a;
+ } __attribute__((packed, aligned(4)));
+ 
+ /*
 -- 
 2.53.0
 
