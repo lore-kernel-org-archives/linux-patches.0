@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053184;
-	b=IxngACsaAYgZCuuiWh3wKHJ6kRj3MBbav4cn3Z0D6LUz5lbyfeQVBMV5XtVbUGpBEQI1
-	 nf7qXMRXd5KEWD8VmAzQJ+8G7Sg6DgY9in5SbW9qSYyVZecbDvl8EbVqqdKlIDqfvEuSK
-	 9nhq+Q2Qiptux5avzBdlQJEN8CSboGc1UyM0BxOEQsplVQ4wmxBO97XrZWXiTJrCRGni3
-	 ckZKqnPAwbsZGD/BJu0bjSEI8FAZnDPEHGi+H/YremZZZ+Og1IZL8+vxzjfxgU9PFpxZO
-	 EVgXA67jLgJwNqCUso8I43Ny08RXm15mYbxSGyXe6n7Lb8Zp8AeUGv+9pZKXCh8wjzQ==
+	t=1795053187;
+	b=sG7GKO7a+QGzFQm6PKNGdmiSEuLiqwbpJUofxrfWi6CVUTNTQ542k2TfJPVCk2P4SK3M
+	 wQRRv1EL6fRxFgE13DEeYNLlCNbk1lww/MRagwLpcx7MCiLls3pMaGEyuZkcIotMSS0Nt
+	 eMbrJKVh+1tLSom4waxRzk7SwzCYdquLnG8cOEx7XEH+hPpJce3TNS6rZtTGLkEzdEGkv
+	 5MufV+YgUMvX9IaCB92HP/kV+P0y57PguCkFkhhZQNCzKKI2m98RddydpLntgEzuLLKk3
+	 UudR/Jf+gf4l9x4PY8PjDijQkU31pIzadDj61/MZ24pG7+lqgPWpqAAm9AiLVJzYyMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053184;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053187;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YDm/2X7qnwu2UsshpSuA931lRvQgJYllAQP2OZsqi7w=;
-	b=2MORAxlafgYKDzAjFCZGl4IGywkKYAdNt7suDELBp0zgHDWGlu3enuRD275pUK9ymSXg
-	 8yOCSeFSJjrcLgnJCbFcxf1Y4po5KqKyqo0JhdP91G3mwr98U5CZI8O3MIrtAOz0Bd29j
-	 HftvFhC9DjnTHnvsxsPUYKNbqgTPeoXxebAD+o7P3ZmmOo6Xl1TM0jZR4+K/B269Frw8L
-	 5wlVPqxToSnEdIxF6xRAMiozDNu0JI1R/9AD8TOLUFgUGLXoy3gQKtwF5mT7LBaMQugoo
-	 tnOcv9X/+9vbcitwIYPnBqpwSgAa5dUGyhzFon8dtUdyCNG4xzbkAAfQZtjGeaNCNqw==
+	bh=1e+U5v10YhvOknVFSOy7eKUr1t4LObrxlTDmOVFQm/s=;
+	b=ctBUhU3o00ptPNnrv6TxQcxbPkQKq7zhTpul2TalEW5DgGEw2kjZMd2PHThDaQ5eWl18
+	 ZFc2Q5V0T1/AwztBpEGajCe6aY9YIsfBnN4nGTWe3yPNsxw/UTu4xXUGOvyrCH5Ft7lWn
+	 7DIZUdbvX3DgGYDRjrxE0hNUa6MXCGrI3sNekBolp5nRckgTv1IL9jLVoK4gpOGhpTWhL
+	 30SULXI+v8jWYyo+5lL9Lv/gzabTx1+exjMkhr60+XrM3t4hBbVqJshcja6CNhWnBJIUM
+	 W0XD/i4yrcRk8E/amoMRfB5ZU+8mse3rBAZon8hUe7plkR1OtHfkG/85a0ELjrEKuDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B62BHXAB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JfXrRfKr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4AE606A320;
-	Thu, 19 Nov 2026 01:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719A4606A320;
+	Thu, 19 Nov 2026 01:53:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B62BHXAB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA491F000C4;
-	Thu, 19 Nov 2026 01:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JfXrRfKr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E791F000C4;
+	Thu, 19 Nov 2026 01:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053184;
-	bh=YDm/2X7qnwu2UsshpSuA931lRvQgJYllAQP2OZsqi7w=;
+	s=korg; t=1795053187;
+	bh=1e+U5v10YhvOknVFSOy7eKUr1t4LObrxlTDmOVFQm/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B62BHXABEi+/FxDV/YD+jzR6Sio8MxfqSAhW+dp9smA0AtPkzNd6+wVm/BGDYJiel
-	 BtBpMrKe3q+QRjpNY3Qq0l0VnQxP6k0aJ8mMXotOJrSb4vQ1B0bwEXiYvCgOrHTOVA
-	 1C1GXbwxHzGU1M8lLLUt1ZW0VFq3s67d0nZ7t8ZI=
+	b=JfXrRfKrshCO/9kzSwt9S638VDjlWIKLAB9yFw7s6FMozs7QM7w/XvKmNY+mdYzsU
+	 nG1IAe2OLNnEPnbK0MMj4npNM2deaNv3mh96pY/b9FDws4DgLE5CDLwaMLF3hI44Ta
+	 i53MNvMzD0xUarDF2zO3Zn/Vbu+I4IhQLlFx5ShI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Patel <ripatel@wii.dev>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0827/2214] genirq: Move interrupt thread exit_work object to irqaction
-Date: Wed, 18 Nov 2026 15:41:43 +0100
-Message-ID: <20261118150044.984003957@linuxfoundation.org>
+Subject: [PATCH 5.15 0828/2214] rds: fix out-of-bounds conn_path walks via handshake exthdrs
+Date: Wed, 18 Nov 2026 15:41:44 +0100
+Message-ID: <20261118150045.035447895@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,117 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Patel <ripatel@wii.dev>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 89a9e003a2ef73f67dff03dfd59e0a5474b56b0b ]
+[ Upstream commit 50f2103fce43922b6e562937b2d2fc62089ff7ec ]
 
-irq_thread() registers irq_thread_dtor() as exit task_work using a
-stack-allocated callback_head.  On normal interrupt thread exit, this work
-gets cancelled and never runs.
+Both the lane and the connection-generation negotiation are driven by
+extension headers in handshake packets, and both are processed
+unconditionally, even on transports that are not multipath capable.
+A non-MP connection (t_mp_capable unset) owns exactly one
+rds_conn_path slot, so a peer claiming up to RDS_MPATH_WORKERS lanes
+makes every subsequent fan-out walk conn->c_path[0..7] at 504-byte
+strides past the single allocated slot (KASAN: "Read of size 8 in
+rds_conn_path_connect_if_down"); the generation negotiation opens a
+similar out-of-bounds walk on the same array.
 
-On x86, an abnormal interrupt thread exit (e.g. handler oops) discards the
-stack, including the callback_head, while that callback_head is still
-pending. By the time exit_task_work() runs, the stack memory formerly
-backing callback_head is already clobbered.
+Only process handshake extension headers when the connection's
+transport is multipath capable, so a peer can never make us walk
+lanes that do not exist.  Both call sites in rds_recv_incoming() are
+gated.
 
-  irq_thread()                      <-- on_exit_work allocated
-    ** IRQ handler faults **
-    oops_end()
-      rewind_stack_and_make_dead()  <-- on_exit_work freed
-  make_task_dead()
-    do_exit(SIGSEGV)
-      ...
-      exit_shm()                    <-- on_exit_work clobbered
-      ...
-      exit_task_work()              <-- stack use-after-free
-        exit_shm()+0x30             <-- wild jump to return addr
+This is a port of the Oracle UEK fix for the same issue, picked up
+where Paula's series of the same change left off.
 
-Thus, a benign threaded IRQ oops (e.g. a NULL pointer deref) is
-turned into a wild jump. This is caught by kernel IBT:
+This issue was discovered by Tencent CodeBuddy Security.
 
-  ** first fault **
-  Oops: general protection fault, kernel NULL pointer dereference 0x3c0: 0000 [#1] SMP NOPTI
-  ...
-  ** second fault **
-  Missing ENDBR: exit_shm+0x30/0x1c0
-  kernel BUG at arch/x86/kernel/cet.c:133!
-  ...
-   ? task_work_run+0x5c/0x90
-   ? do_exit+0x209/0x460
-   ? rewind_stack_and_make_dead+0x16/0x20
-  ...
-  note: irq/165-AudioDS[1427] exited with irqs disabled
-  Fixing recursive fault but reboot is needed!
-
-Fix this by storing the callback_head in struct irqaction.  The irqaction
-is only freed once irq_thread_dtor() finishes.
-
-Fixes: 2deb4be28077 ("x86/dumpstack: When OOPSing, rewind the stack before do_exit()")
-Signed-off-by: Richard Patel <ripatel@wii.dev>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009145842.1616117-3-ripatel@wii.dev
+Link: https://lore.kernel.org/netdev/20260825120132.51636-1-pamoutafpro@gmail.com/
+Link: https://github.com/oracle/linux-uek/commit/2fdeb0513f18
+Fixes: 840df162b3eb ("rds: reduce memory footprint for RDS when transport is RDMA")
+Fixes: 905dd4184e07 ("RDS: TCP: Track peer's connection generation number")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20261012025336.54756-1-bsdhenrymartin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/interrupt.h | 2 ++
- kernel/irq/manage.c       | 9 ++++-----
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ net/rds/recv.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
-index 5c4ba2ee582a9..920dc7693e5ce 100644
---- a/include/linux/interrupt.h
-+++ b/include/linux/interrupt.h
-@@ -114,6 +114,7 @@ typedef irqreturn_t (*irq_handler_t)(int, void *);
-  * @thread_flags:	flags related to @thread
-  * @thread_mask:	bitmask for keeping track of @thread activity
-  * @dir:	pointer to the proc/irq/NN/name entry
-+ * @thread_dtor:	task_work for @thread irregular exit cleanup
-  */
- struct irqaction {
- 	irq_handler_t		handler;
-@@ -129,6 +130,7 @@ struct irqaction {
- 	unsigned long		thread_mask;
- 	const char		*name;
- 	struct proc_dir_entry	*dir;
-+	struct callback_head	thread_dtor;
- } ____cacheline_internodealigned_in_smp;
+diff --git a/net/rds/recv.c b/net/rds/recv.c
+index 7fd77e1b4fe71..a55a53fb35024 100644
+--- a/net/rds/recv.c
++++ b/net/rds/recv.c
+@@ -342,7 +342,8 @@ void rds_recv_incoming(struct rds_connection *conn, struct in6_addr *saddr,
+ 		rds_stats_inc(s_recv_ping);
+ 		rds_send_pong(cp, inc->i_hdr.h_sport);
+ 		/* if this is a handshake ping, start multipath if necessary */
+-		if (RDS_HS_PROBE(be16_to_cpu(inc->i_hdr.h_sport),
++		if (conn->c_trans->t_mp_capable &&
++		    RDS_HS_PROBE(be16_to_cpu(inc->i_hdr.h_sport),
+ 				 be16_to_cpu(inc->i_hdr.h_dport))) {
+ 			rds_recv_hs_exthdrs(&inc->i_hdr, cp->cp_conn);
+ 			rds_start_mprds(cp->cp_conn);
+@@ -350,7 +351,8 @@ void rds_recv_incoming(struct rds_connection *conn, struct in6_addr *saddr,
+ 		goto out;
+ 	}
  
- extern irqreturn_t no_action(int cpl, void *dev_id);
-diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
-index 87f8ed44ca870..a9401080cf519 100644
---- a/kernel/irq/manage.c
-+++ b/kernel/irq/manage.c
-@@ -1249,9 +1249,9 @@ static void __irq_thread_dtor(struct irqaction *action)
- 	irq_finalize_oneshot(desc, action);
- }
- 
--static void irq_thread_dtor(struct callback_head *unused)
-+static void irq_thread_dtor(struct callback_head *work)
- {
--	struct irqaction *action = kthread_data(current);
-+	struct irqaction *action = container_of(work, struct irqaction, thread_dtor);
- 
- 	__irq_thread_dtor(action);
- 	clear_and_wake_up_bit(IRQTF_EXIT_WORK, &action->thread_flags);
-@@ -1299,7 +1299,6 @@ static void wake_up_and_wait_for_irq_thread_ready(struct irq_desc *desc,
-  */
- static int irq_thread(void *data)
- {
--	struct callback_head on_exit_work;
- 	struct irqaction *action = data;
- 	struct irq_desc *desc = irq_to_desc(action->irq);
- 	irqreturn_t (*handler_fn)(struct irq_desc *desc,
-@@ -1314,8 +1313,8 @@ static int irq_thread(void *data)
- 		handler_fn = irq_thread_fn;
- 
- 	set_bit(IRQTF_EXIT_WORK, &action->thread_flags);
--	init_task_work(&on_exit_work, irq_thread_dtor);
--	task_work_add(current, &on_exit_work, TWA_NONE);
-+	init_task_work(&action->thread_dtor, irq_thread_dtor);
-+	task_work_add(current, &action->thread_dtor, TWA_NONE);
- 
- 	irq_thread_check_affinity(desc, action);
- 
+-	if (be16_to_cpu(inc->i_hdr.h_dport) ==  RDS_FLAG_PROBE_PORT &&
++	if (conn->c_trans->t_mp_capable &&
++	    be16_to_cpu(inc->i_hdr.h_dport) ==  RDS_FLAG_PROBE_PORT &&
+ 	    inc->i_hdr.h_sport == 0) {
+ 		rds_recv_hs_exthdrs(&inc->i_hdr, cp->cp_conn);
+ 		/* if this is a handshake pong, start multipath if necessary */
 -- 
 2.53.0
 
