@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039704;
-	b=A8AQV2Zp6aXby3YxjvhdrSWmSjw4zhFgOYq0ns7+t17EGasL1as8OI+q4O97PgCpzf3u
-	 VKQW5iGjDvEBlx6ErWUHNq5MJCk6eQS1X/2OW2MQs8gzjol9okA8XIL+qYWNCtuygnoIP
-	 C/3TcdQtC1rSOFIZRJxGiZWefLg8dcUjImfcpstkNhQF5IUGajJtQwKQ0CrDijZr/lb64
-	 /GA3J2g4o/Yeq4+xMnOs3vylWg2uvAj7FgjZI89PK8jsf99sY47h6tv4bKZ29VICEZ7sQ
-	 yoOqSFEUNQCj9gce0NJ+kAhi4gQWkhCYq3ZvRgP0bT2m2CMMsRya4qdCwWH06BE4nGQ==
+	t=1795039706;
+	b=mbPXVSYsw+ihbRKz8E0w4+n/sVt1bpyXbjw4nFYv0iXHjs28GDdDIckatiwjPE9SJEN9
+	 TJTdlvyK5vZuf7xFkKTNU/adIv8A5RqXvBhBND0mzx0Axaz8lsfTflEv57PSYPjSOYBo5
+	 IRBPjA7BOGBNbwPQBdgsyZpuF/T8USI+bDb2lg+j8a6zBrFwXk9b4PVh6cIG12fzeta6u
+	 mPyzyV5+3M2Kbi0pugdhstdbP/2Qdvf3D1mWqGQPfBPJyZ0/23BXvjdkjmYquLplalNTN
+	 n+8AxYLxb5q+GfrP2yBd2NiXwp1Ou+6tVsadh4TivEVf5/0qJ7EABZ/Eyla7VOd9g0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039704;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039706;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+UYWMKMgDBKg9nTqCLeE59LevM60s/lkJQMlnN4lNj4=;
-	b=w86uHdKxaP9NTB0vwC2T54LUNJvIM677pAg9dQ3xL6ncy9BZ33vc3ogEPUt+WRs17UFi
-	 TFV15ZcL0SbNY9oZZtUYFl99CF+zucyWt5WfQz7u9F9j2Pn8QFih1d/W+rCLZCg2Fz2Qv
-	 i0z+AZp2it9LIvg2qnwKdUNGMzOzMCkP3R5IMxSnv/QKh52N6Vj/wl4NzZdMZgPWCvXmP
-	 E5du1mdYRNttYlAuTuKdlWmkt4r3HjvlRG8OqGKQjYtIaFX3ciTbkD7oDGL/5k/+sAWEL
-	 p6bVHqBM0M7t2wGx2aaSwrBU+INT/WpRf3wtIrpI/MAKsXfNO8oiPYBKU5cm7ypT6Gw==
+	bh=zMwzdIGDL0QaByPh+OAY/w/1BRYSSHo16K8BwzQ6oL4=;
+	b=R2XZJDjErdUHf/H6VM0t7+1b3hHyEzF6ZKWgAHAbQJSHZd3FW8sCT9hHjAdtQ+2oeUCi
+	 hPxLCTRY7xvhUgX43lgJbpoVbFCvj24N+QwWxsklrgMkv9wzhfPNRB5TuFPAjUaGi2N6r
+	 iRKOWyRim6q+7W6JKEWmCcFp5gxd8BTztqAnaYrtKcI+RPKR57iIAKH54tu9bJiXvFqMT
+	 tVsT1nUB1MSP9xL0EUaZA+U8r2SBVFknz7Ka4wtQ1RCPf/twPa40f3nB0Nwkcw+BkNImY
+	 ZCHOluAA6V7gKRD6gimXg/w8DRm9+7Wh8p5VjISBK2Om4yPrvrvYRohCEih/pkFO1jw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J25gQCy3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f+XhfaVr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3918F606A31C;
-	Wed, 18 Nov 2026 22:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A89606A320;
+	Wed, 18 Nov 2026 22:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J25gQCy3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C3B1F000C4;
-	Wed, 18 Nov 2026 22:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f+XhfaVr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E68F1F000C4;
+	Wed, 18 Nov 2026 22:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039704;
-	bh=+UYWMKMgDBKg9nTqCLeE59LevM60s/lkJQMlnN4lNj4=;
+	s=korg; t=1795039706;
+	bh=zMwzdIGDL0QaByPh+OAY/w/1BRYSSHo16K8BwzQ6oL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J25gQCy3KY+TSV3WhTFPmOXDSfse0xG/WaQYSLa9CWshCPSBcFY5qX8fnAw7LdwPT
-	 bd09zZnAb5muPnI6GW8aUL/yyfW/3sBZ2qx804SzM3rtXJIRMvQTcAeGIePdpKaaMV
-	 PN2LCzeYbdRXm1eUB6xEMpoK+wki3c8NpGhigaig=
+	b=f+XhfaVrrxJL+PwFwake2kti6aoFP7tNUtpMRgC7wWGFheZKIVBB8RW8qrECoVntN
+	 L3WrV6UvEVj1JawFJLT81BXrT2XiD8FxVB/pwm6PwLKMKMijyyaDHiotFuJbhOrCVG
+	 II4EK0bGR/uhHZagFl7lBkjCmxuLVscmrMTBrsp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Armin Wolf <W_Armin@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2196/3318] ALSA: control: Fix virtual master creation reference in kernel-doc
-Date: Wed, 18 Nov 2026 15:46:58 +0100
-Message-ID: <20261118150427.822265168@linuxfoundation.org>
+Subject: [PATCH 6.6 2197/3318] ACPI: video: Fix backlight unregistration ordering
+Date: Wed, 18 Nov 2026 15:46:59 +0100
+Message-ID: <20261118150427.849793789@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,37 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit a347cc458d97ecd8adb5462b91559682a70aced6 ]
+[ Upstream commit 46577d36611953d1b99e86493289cfc824116ad2 ]
 
-The snd_ctl_add_follower() comment refers to
-snd_ctl_create_virtual_master(), but virtual master controls are created
-with snd_ctl_make_virtual_master(). Correct the helper name.
+In acpi_video_dev_unregister_backlight(), the sysfs interface of the
+cooling class device may access the brightness object under the
+backlight device's ACPI companion, so that object cannot be freed
+before unregistering the cooling class device.
 
-Fixes: 79c7cdd5441f ("ALSA: Add kernel-doc comments to vmaster stuff")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260912100548.86134-1-kmehltretter@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Adjust the code to take that into account.
+
+Fixes: 67b662e189f4 ("ACPI / video: seperate backlight control and event interface")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Armin Wolf <W_Armin@gmx.de>
+[ rjw: Fixed the Fixes: tag ]
+Link: https://patch.msgid.link/3429468.aeNJFYEL58@rafael.j.wysocki
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/control.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpi_video.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/sound/control.h b/include/sound/control.h
-index 9a4f4f7138da8..f4e230a5dbd4b 100644
---- a/include/sound/control.h
-+++ b/include/sound/control.h
-@@ -243,7 +243,7 @@ int _snd_ctl_add_follower(struct snd_kcontrol *master,
-  * @follower: follower element to add
-  *
-  * Add a virtual follower control to the given master element created via
-- * snd_ctl_create_virtual_master() beforehand.
-+ * snd_ctl_make_virtual_master() beforehand.
-  *
-  * All followers must be the same type (returning the same information
-  * via info callback).  The function doesn't check it, so it's your
+diff --git a/drivers/acpi/acpi_video.c b/drivers/acpi/acpi_video.c
+index 841db33e94756..72588e65be053 100644
+--- a/drivers/acpi/acpi_video.c
++++ b/drivers/acpi/acpi_video.c
+@@ -1834,6 +1834,12 @@ static int acpi_video_bus_register_backlight(struct acpi_video_bus *video)
+ 
+ static void acpi_video_dev_unregister_backlight(struct acpi_video_device *device)
+ {
++	if (device->cooling_dev) {
++		sysfs_remove_link(&device->dev->dev.kobj, "thermal_cooling");
++		sysfs_remove_link(&device->cooling_dev->device.kobj, "device");
++		thermal_cooling_device_unregister(device->cooling_dev);
++		device->cooling_dev = NULL;
++	}
+ 	if (device->backlight) {
+ 		backlight_device_unregister(device->backlight);
+ 		device->backlight = NULL;
+@@ -1843,12 +1849,6 @@ static void acpi_video_dev_unregister_backlight(struct acpi_video_device *device
+ 		kfree(device->brightness);
+ 		device->brightness = NULL;
+ 	}
+-	if (device->cooling_dev) {
+-		sysfs_remove_link(&device->dev->dev.kobj, "thermal_cooling");
+-		sysfs_remove_link(&device->cooling_dev->device.kobj, "device");
+-		thermal_cooling_device_unregister(device->cooling_dev);
+-		device->cooling_dev = NULL;
+-	}
+ }
+ 
+ static int acpi_video_bus_unregister_backlight(struct acpi_video_bus *video)
 -- 
 2.53.0
 
