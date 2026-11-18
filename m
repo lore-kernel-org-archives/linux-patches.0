@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045417;
-	b=n+8y6bs4jCBiy5ukuCHOUu66SKz3yxYQu+an0GbeKWI5AIINFr2GGsdfDqPMx3a7qIFb
-	 VvgxGYjxehB7dvQRzFAcuD0OXSyBAHN76282eqjNbDAugxMQpT0UVKncicImimksZcCFG
-	 1ac7yxRuCIVmyp6KugR6DLfVMWyaoTZsWOyi9b+IlcrAicxPAdu+nLR/4vajdK3VBiOpL
-	 s90pWYrTK9UG6uY34R7gtzd7jlI9CkcC1c3bQVD4INgeilpjZVUGhkbs4B9VdL4te7n+S
-	 7CJdHG+g/UPenoOMm748CxZf1QkVYKNQ4c6btbtwWxFW6E5r/Qww4xZ5QqHd0utCfiA==
+	t=1795045421;
+	b=yDyTbQOZP4Qmfm40N5V+y/XnSoPkf11R5zFuO5DfS+YV9Az/ctwMQOmFXYJjEoNm/LjJ
+	 qOmiM6RBvDSjxlWI+b2M4b33qIKZsD0WCfEga7DYrBlm0TcxFA3mvmSqgYY1WaLcfTZqR
+	 8ZJi4XF0ort7OVCtOCoqefFDJS65l9roP3I1t0Gi4eSWnHjLEED3Ng9iDx98rf0klbu8y
+	 b+tmeKlX+mn56CeOT7RTebrnpSACADbhmaxS1FcaLYs0E4N7PwbZvy9+oJ3/UQ7DoPe4L
+	 /FC7NtSxcMjslyDUGxSKfCcY7QsHJVox1tmh0CteLL+rSx+DJWFYmdXw1nYEFwn4q6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045417;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045421;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NKgNz1/5TKS1siwUQQeqE30C4amcXFnZALSyEebGIPc=;
-	b=aUSYu4uKdg0KVGzKN3JU2Rw44zhhkemfN9MYMmxTEbqW3qidQSH+X/+DxZ4FFFn8jG3E
-	 os1rbd+v0PvxM25nSW66Tyq7kM07K9nNK48RPQGwvnro0G1r97dmLwItZ3OOcYqKzu8ld
-	 SlJGysublGhMJNhPwkhq4QNPdb+rUABv/ls/EY9h3vfsv2MNOqff/IzK/HQm7A619rYYh
-	 WrnRuhNI8yQtV/dZBu4f6aDjKwJNtpPLysp2EvDQQVHwU0M3hgBzeMFP5jybW/7YVHwRa
-	 uPSBnYx8A/9Pz0LWzjU1J1FYKlU2Qrx0XMf1+CtPCGrrUgB/85YkjSdzW27dro9ytog==
+	bh=dqu9CO4RbATdvr40PvIHQtiHzYZOnQNHSPXnk6Y/ckA=;
+	b=u7Q0bPBA82Ew2RNHIwssjcwEOwtIDUixByPc7dcfi8ppRqC3ZIefWdCuQCVd5SCrouf8
+	 MaLTgA4TVS3r23jY9xqyIrCvDuZc2lZzSZvjefqofwSQ1lUw894yNX3sRNcYWfwiN1biZ
+	 POz4QbPiKAWULoHw4VHpCKXsjsvRSYwmHx+wV45z3/+FWjWNM6ALllKTHMdamiOpGtAER
+	 jSEEy9fIdWsEpkUiN/iIL1Ux+5ZmTCqUR9ALPso4WGbePfYYoqZ2SuYD4E+J2utpYj0DF
+	 8ih/oNKkUJfKnUgVVjBuoK+ekB1vDQR+3WiZwp0y5Q28fmdIRSGbfMXoDRWdSntXtJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cnt8DBBE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=on9dDJi7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0375606A32A;
-	Wed, 18 Nov 2026 23:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E831A606A320;
+	Wed, 18 Nov 2026 23:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cnt8DBBE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 291D81F000C4;
-	Wed, 18 Nov 2026 23:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=on9dDJi7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC611F000C4;
+	Wed, 18 Nov 2026 23:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045417;
-	bh=NKgNz1/5TKS1siwUQQeqE30C4amcXFnZALSyEebGIPc=;
+	s=korg; t=1795045420;
+	bh=dqu9CO4RbATdvr40PvIHQtiHzYZOnQNHSPXnk6Y/ckA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cnt8DBBEZZ8woKRZqOmWrp+klG263VxRIVcskaQ88UcbiExUfjkgvEm1K7y9DGCi9
-	 pbUA1DqXGIjwMEBKiPKysSnXB3dYOzhNfmQjoulZGbu0UqhPu7fMURq4olsW1iT0yy
-	 mBFnzFHnQTnrv5BUo/9s+v5UddXMNLOUl1aTIelo=
+	b=on9dDJi7PuWDFk9+1fINHwVCkGSy5Ov0RYPpRYWO+E+YTDFoEZaR+ULwnN1u+bL7+
+	 gOAQO+ujv+sKY+/kxqtetsGaX62WYMHOwz+pw46LKgJQeH1R1IxbDgi1FTTE2/jVIv
+	 QKWvw49xkIvUacrHRNxMrgMHxhIuBi6zHzFRkOWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zongmin Zhou <zhouzongmin@kylinos.cn>,
-	Srinivas Kandagatla <srini@kernel.org>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Seongjun Hong <hsj0512@snu.ac.kr>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0916/2857] slimbus: messaging: fix leaked PM vote on tid allocation failure
-Date: Wed, 18 Nov 2026 15:32:30 +0100
-Message-ID: <20261118150234.563763849@linuxfoundation.org>
+Subject: [PATCH 6.1 0917/2857] vfio/mlx5: Fix boundary check in set_report_output()
+Date: Wed, 18 Nov 2026 15:32:31 +0100
+Message-ID: <20261118150234.599421817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,43 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zongmin Zhou <zhouzongmin@kylinos.cn>
+From: Seongjun Hong <hsj0512@snu.ac.kr>
 
-[ Upstream commit c26cc979e28f5193310e4379e14aa6417375c565 ]
+[ Upstream commit 37b2ee6747b7857920ebc71eabc25208a39164a4 ]
 
-In slim_do_transfer(), when a transaction needs a tid and
-slim_alloc_txn_tid() fails, the function returns directly instead of
-jumping to slim_xfer_err. The runtime PM vote taken earlier with
-pm_runtime_get_sync() is then never released, leaving the controller
-permanently powered up.
+Use > instead of >= on boundary check of recv_buf to avoid the bug which
+the full message in the last slot of recv_buf is ignored even though the
+received data size does not overflow the recv_buf.
 
-As txn->tid is still 0 at that point, jumping to slim_xfer_err drops
-the vote exactly like it is done for other failed transactions.
-
-Fixes: d3062a2109309 ("slimbus: messaging: add slim_alloc/free_txn_tid()")
+Fixes: 9c7c5430bca3 ("vfio/mlx5: Align the page tracking max message size with the device capability")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20261002101448.1084691-2-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Yishai Hadas <yishaih@nvidia.com>
+Signed-off-by: Seongjun Hong <hsj0512@snu.ac.kr>
+Link: https://lore.kernel.org/r/20261005-vfio-mlx5-fix-boundary-check-v2-1-75599d2f4497@snu.ac.kr
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/slimbus/messaging.c | 2 +-
+ drivers/vfio/pci/mlx5/cmd.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/slimbus/messaging.c b/drivers/slimbus/messaging.c
-index 245e9c7f92cdc..e9bb49bbbd082 100644
---- a/drivers/slimbus/messaging.c
-+++ b/drivers/slimbus/messaging.c
-@@ -138,7 +138,7 @@ int slim_do_transfer(struct slim_controller *ctrl, struct slim_msg_txn *txn)
- 	if (need_tid) {
- 		ret = slim_alloc_txn_tid(ctrl, txn);
- 		if (ret)
--			return ret;
-+			goto slim_xfer_err;
+diff --git a/drivers/vfio/pci/mlx5/cmd.c b/drivers/vfio/pci/mlx5/cmd.c
+index 06794c48170c0..87eeea68592e2 100644
+--- a/drivers/vfio/pci/mlx5/cmd.c
++++ b/drivers/vfio/pci/mlx5/cmd.c
+@@ -1231,7 +1231,7 @@ set_report_output(u32 size, int index, struct mlx5_vhca_qp *qp,
+ 	int i;
  
- 		if (!txn->msg->comp)
- 			txn->comp = &done;
+ 	buf_offset = index * qp->max_msg_size;
+-	if (WARN_ON(buf_offset + size >= qp->recv_buf.npages * PAGE_SIZE ||
++	if (WARN_ON(buf_offset + size > qp->recv_buf.npages * PAGE_SIZE ||
+ 		    (nent > qp->max_msg_size / entry_size)))
+ 		return;
+ 
 -- 
 2.53.0
 
