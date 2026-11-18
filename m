@@ -1,67 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034434;
-	b=Yy0rkTluHDxxUq09Zqom6eNiIedrwtoSsrKUtl/lTixx2amx6PzuO//28k8cYQlCbd+c
-	 06hAP3T85k/DQvZw+cI5T1N1q1BtVq1PlnurNfJMjn+6/3q4DKZzrqDqgTfseW5LtX5X2
-	 q3B3rO4Ss3puPsy73zkjwTYybK19xEgt3m7ykuTtVyQtUt1GqByJxy5X/pDYs6NvrecPK
-	 ihfvnpRMGaxVMPhGPDfZ7EcAYzshdbf6lHGb50dO3GidN1gSMSyhSGoJBYxP/dQZmznQS
-	 1mzX2f1D7sMH1lHHAXzP6nAgzKz3AOmU5XPY41Us0P56dKVLsUPvm55OSPqMZSfDT9Q==
+	t=1795034437;
+	b=0s8CwBbkiCB3JAX8gTqPavTAPq/2wk+k/K9bjXm/w0luxuUinTgdaenpFTlnnFpPPSbk
+	 x6FJ3uP97oVsGnRyNGRqPMJ6FHN/IVIjCgrjgMX6uHmUv91a/O2wxberhspL89o7W083X
+	 cg2sJOYZXTeWazgqdGrwcLX6uaDwkI2/ysDDaLIQYe8T+iocLKwYB8wCRQFfrn3B6qiPF
+	 nvsXDkhdcrZooEoFC7v0gGz6XNDkmeeaBSU3c3AS8nVdRlJIKQ8qb8Y0AzAP+XbhViYEO
+	 zzdJWvuu7X1R0aJvj1ywNIAgoDiLhMQg8ly4UATkWLX9OeLuT7bbi7CeV8nrNLAVNvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034434;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034437;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B4FRHrVm8Qr+rjgbfyDiBfGUG3dYMRu4MHvPGU3XbIE=;
-	b=L3hxV12LG0YZ1LrBKapz0YmB5sPSdwbkkSGeZV1GrD8t63UaiGOOHTvCYQJuXIV0TzPx
-	 6BGJVMIOt9sddtEM2LI5IYNkopGgPQh0li8wTK8g5lXRZ3SRO3yVjphIVASjIKrFk4Ndp
-	 WXRWDd86W3Cb/t3BJfpwT2wd2OU2DUIjSYJWkRnS2NMBeKL6+AjYX42+HET3SKr5adsJg
-	 U1WBwQcl1mNvnX/O6yOQkAX/ito1iQv5nsWyT7Fa7AtRICRimS+PddGAgNUGRbXpWdMtb
-	 GauJigjjuKYV4g9Bo4Hk82NbOF4ITayqCZnY0zvF/S70OdqXvMlK0XxzWX6CBBo63tA==
+	bh=IEkK4Iy2YUj0GGGRurdubCSgh1/b0QphRHgAuXDQq4s=;
+	b=tV1X07+MkvYKS9FvwiRy0K/wWyMDir4SLPKsr2NE2XZHE4zGVGfizqCiszlLYhLf/VeW
+	 jelDZFcM00vM/0t9EdHrol6aH7hYdf9R+P5cqCXCPc58CzzVOfPwDFU1nhG/qiLIAMJ7p
+	 iraD24l7llmtMAvfRhXKl3uqFCsqgxAkXgGZP3cBMX0V3C4S1oIh6MUxcYBIWVEOl+LYs
+	 f9l7a2Qs3QJUlOQkKOpbpAMrZcnFn8mXsEsVPihuSVmdmI5Tl98PbKFCKHfzOvWgyxLr5
+	 qCDhL8XMOTkLKft76RKM8XGE1PgI+rst28NGC1o53oucFvjBWhforlWlpFXMPpvNZgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jxAgEB4j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UZF7CGU7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5E5606A31C;
-	Wed, 18 Nov 2026 20:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF9F606A31C;
+	Wed, 18 Nov 2026 20:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jxAgEB4j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C321F000C4;
-	Wed, 18 Nov 2026 20:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UZF7CGU7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05801F000C4;
+	Wed, 18 Nov 2026 20:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034434;
-	bh=B4FRHrVm8Qr+rjgbfyDiBfGUG3dYMRu4MHvPGU3XbIE=;
+	s=korg; t=1795034437;
+	bh=IEkK4Iy2YUj0GGGRurdubCSgh1/b0QphRHgAuXDQq4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jxAgEB4jG9I2iGaEigIvSAAQQxJfhIzkcZeWpkDAyLPBknTY9m75plb/bs5EBX+7E
-	 KBepBMGvysJdg/2p/gyzRX0lvERSH21IPdlewD02FcNj03QcEGK2jqr3mPZdTZDAqi
-	 /3PUy7VZb16ObBAmyQq1bUa1ZKmm66k/hPLGt5S0=
+	b=UZF7CGU7b9OIBRL95XVP3vW5QfRBm30FsBpIrmFOkOHxtG12+d2M3P1kWkGhrx45K
+	 7PRVqD0b9sJht8PAwVGL/dOMKgenWJORFUj/BR7/+4aWgUJyju+L1Y755eI+J8vMjb
+	 X7uf60S823Z+qOB4IcbNXHQ//bJP1TtEfmyRIUAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Kees Cook <kees@kernel.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Yufan Chen <ericterminal@gmail.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Sunil Mushran <sunil.mushran@oracle.com>,
-	Kurt Hackel <kurt.hackel@oracle.com>,
-	Jan Kara <jack@suse.cz>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com
-Subject: [PATCH 6.6 0367/3318] ocfs2: pin owning modules for open debugfs files
-Date: Wed, 18 Nov 2026 15:16:29 +0100
-Message-ID: <20261118150327.190732337@linuxfoundation.org>
+	Xiubo Li <xiubo.li@clyso.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0332/3318] ceph: fix use-after-dereference of NULL ci in __ceph_remove_cap()
+Date: Wed, 18 Nov 2026 15:15:54 +0100
+Message-ID: <20261118150325.891751611@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -83,199 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Xiubo Li <xiubo.li@clyso.com>
 
-commit 26d7e34b4226709084461a07bf28d9066fa96d8c upstream.
+[ Upstream commit a354d7eaa1a57f1532c8072a424cc2d339a73cc0 ]
 
-The OCFS2 debugfs file operation tables do not set owner. The
-full debugfs proxy obtains real_fops with fops_get() at open and
-keeps it until final release. Without an owner, this does not acquire
-a reference to the module containing the table and its callbacks.
-Removing the debugfs entries does not drain retained open files.
+The NULL check for "ci" in __ceph_remove_cap() was dead code because
+ci was dereferenced via &ci->netfs.inode before the check, and
+cap->session was dereferenced via session->s_mdsc->fsc->client even
+earlier.  On a double-remove, both cap->ci and cap->session are set
+to NULL by the first call, so the second call would crash before
+ever reaching the guard.
 
-An open connected_nodes file can therefore outlive ocfs2_nodemanager
-and make full_proxy_release() read real_fops->release from freed
-module memory. Heming also reproduced the issue with fs_state and
-asked for the other OCFS2 debugfs operation tables to be checked.
+Move ci, session, cl, and inode initializations after the NULL check
+so that the early-return actually works.
 
-Set owner to THIS_MODULE in all eleven explicit debugfs operation
-tables: five in ocfs2_nodemanager, four in ocfs2_dlm, and two in
-ocfs2. The existing debugfs get/put pair then holds the appropriate
-module until final release. Leave the open, read and release callbacks
-unchanged. The blockcheck table already sets owner through
-DEFINE_DEBUGFS_ATTRIBUTE(), so it needs no change.
-
-The original controlled test used an unloadable OCFS2 module and
-case-local probe filters without changing the candidate open, unload
-or release logic. Closing a retained connected_nodes file after
-normal unload produced:
-
-  BUG: unable to handle page fault for address: fffffbfff804cfef
-  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:full_proxy_release+0xbf/0x190
-  Call Trace:
-   <TASK>
-   __fput+0x39a/0xa60
-   fput_close_sync+0xff/0x200
-   __x64_sys_close+0x8c/0xf0
-   do_syscall_64+0x114/0x620
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-  Modules linked in: [last unloaded: ocfs2_nodemanager]
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0089-v6-f7fda843f80887488145@gmail.com
-Fixes: 2309e9e040fe ("ocfs2/net: Add debug interface to o2net")
-Fixes: 87d3d3f3931f ("ocfs2/hb: Expose the list of heartbeating nodes via debugfs")
-Fixes: 3ba169ccec1c ("ocfs2/cluster: Add new function o2net_fill_node_map()")
-Fixes: 50397507e856 ("ocfs2: Expose the file system state via debugfs")
-Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Fixes: 7209300a9b98 ("ocfs2/dlm: Dumps the purgelist into a debugfs file")
-Fixes: d0129aceaecc ("ocfs2/dlm: Dumps the mles into a debugfs file")
-Fixes: 4e3d24ed1a12 ("ocfs2/dlm: Dumps the lockres' into a debugfs file")
-Fixes: 007dce53a29c ("ocfs2/dlm: Dump the dlm state in a debugfs file")
-Fixes: db02754c8a12 ("ocfs2/cluster: Show o2net timing statistics")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Heming Zhao <heming.zhao@suse.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Karl Mehltretter <kmehltretter@gmail.com>
-Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: Yufan Chen <ericterminal@gmail.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Zhang Cen <rollkingzzc@gmail.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Sunil Mushran <sunil.mushran@oracle.com>
-Cc: Kurt Hackel <kurt.hackel@oracle.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/heartbeat.c |    1 +
- fs/ocfs2/cluster/netdebug.c  |    4 ++++
- fs/ocfs2/dlm/dlmdebug.c      |    5 +++++
- fs/ocfs2/dlmglue.c           |    2 ++
- fs/ocfs2/super.c             |    1 +
- 5 files changed, 13 insertions(+)
+ fs/ceph/caps.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
---- a/fs/ocfs2/cluster/heartbeat.c
-+++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -1420,6 +1420,7 @@ static ssize_t o2hb_debug_read(struct fi
- #endif  /* CONFIG_DEBUG_FS */
- 
- static const struct file_operations o2hb_debug_fops = {
-+	.owner =	THIS_MODULE,
- 	.open =		o2hb_debug_open,
- 	.release =	o2hb_debug_release,
- 	.read =		o2hb_debug_read,
---- a/fs/ocfs2/cluster/netdebug.c
-+++ b/fs/ocfs2/cluster/netdebug.c
-@@ -183,6 +183,7 @@ static int nst_fop_release(struct inode
- }
- 
- static const struct file_operations nst_seq_fops = {
-+	.owner = THIS_MODULE,
- 	.open = nst_fop_open,
- 	.read = seq_read,
- 	.llseek = seq_lseek,
-@@ -415,6 +416,7 @@ static int stats_fop_open(struct inode *
- }
- 
- static const struct file_operations stats_seq_fops = {
-+	.owner = THIS_MODULE,
- 	.open = stats_fop_open,
- 	.read = seq_read,
- 	.llseek = seq_lseek,
-@@ -427,6 +429,7 @@ static int sc_fop_open(struct inode *ino
- }
- 
- static const struct file_operations sc_seq_fops = {
-+	.owner = THIS_MODULE,
- 	.open = sc_fop_open,
- 	.read = seq_read,
- 	.llseek = seq_lseek,
-@@ -476,6 +479,7 @@ static ssize_t o2net_debug_read(struct f
- }
- 
- static const struct file_operations nodes_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= nodes_fop_open,
- 	.release	= o2net_debug_release,
- 	.read		= o2net_debug_read,
---- a/fs/ocfs2/dlm/dlmdebug.c
-+++ b/fs/ocfs2/dlm/dlmdebug.c
-@@ -7,6 +7,7 @@
-  * Copyright (C) 2004, 2008 Oracle.  All rights reserved.
+diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
+index 4688ae99c8ef6..ee80fe4c0266a 100644
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -1133,18 +1133,21 @@ int ceph_is_any_caps(struct inode *inode)
   */
+ void __ceph_remove_cap(struct ceph_cap *cap, bool queue_release)
+ {
+-	struct ceph_mds_session *session = cap->session;
+-	struct ceph_client *cl = session->s_mdsc->fsc->client;
+-	struct ceph_inode_info *ci = cap->ci;
+-	struct inode *inode = &ci->netfs.inode;
++	struct ceph_mds_session *session;
++	struct ceph_client *cl;
++	struct ceph_inode_info *ci;
++	struct inode *inode;
+ 	struct ceph_mds_client *mdsc;
+ 	int removed = 0;
  
-+#include <linux/module.h>
- #include <linux/types.h>
- #include <linux/slab.h>
- #include <linux/highmem.h>
-@@ -393,6 +394,7 @@ bail:
- }
+ 	/* 'ci' being NULL means the remove have already occurred */
+-	if (!ci) {
+-		doutc(cl, "inode is NULL\n");
++	ci = cap->ci;
++	if (!ci)
+ 		return;
+-	}
++
++	session = cap->session;
++	cl = session->s_mdsc->fsc->client;
++	inode = &ci->netfs.inode;
  
- static const struct file_operations debug_purgelist_fops = {
-+	.owner =	THIS_MODULE,
- 	.open =		debug_purgelist_open,
- 	.release =	debug_release,
- 	.read =		debug_read,
-@@ -450,6 +452,7 @@ bail:
- }
+ 	lockdep_assert_held(&ci->i_ceph_lock);
  
- static const struct file_operations debug_mle_fops = {
-+	.owner =	THIS_MODULE,
- 	.open =		debug_mle_open,
- 	.release =	debug_release,
- 	.read =		debug_read,
-@@ -657,6 +660,7 @@ static int debug_lockres_release(struct
- }
- 
- static const struct file_operations debug_lockres_fops = {
-+	.owner =	THIS_MODULE,
- 	.open =		debug_lockres_open,
- 	.release =	debug_lockres_release,
- 	.read =		seq_read,
-@@ -852,6 +856,7 @@ bail:
- }
- 
- static const struct file_operations debug_state_fops = {
-+	.owner =	THIS_MODULE,
- 	.open =		debug_state_open,
- 	.release =	debug_release,
- 	.read =		debug_read,
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -7,6 +7,7 @@
-  * Copyright (C) 2003, 2004 Oracle.  All rights reserved.
-  */
- 
-+#include <linux/module.h>
- #include <linux/types.h>
- #include <linux/slab.h>
- #include <linux/highmem.h>
-@@ -3315,6 +3316,7 @@ static int ocfs2_dlm_debug_open(struct i
- }
- 
- static const struct file_operations ocfs2_dlm_debug_fops = {
-+	.owner =	THIS_MODULE,
- 	.open =		ocfs2_dlm_debug_open,
- 	.release =	ocfs2_dlm_debug_release,
- 	.read =		seq_read,
---- a/fs/ocfs2/super.c
-+++ b/fs/ocfs2/super.c
-@@ -383,6 +383,7 @@ static ssize_t ocfs2_debug_read(struct f
- #endif	/* CONFIG_DEBUG_FS */
- 
- static const struct file_operations ocfs2_osb_debug_fops = {
-+	.owner =	THIS_MODULE,
- 	.open =		ocfs2_osb_debug_open,
- 	.release =	ocfs2_debug_release,
- 	.read =		ocfs2_debug_read,
+-- 
+2.53.0
+
 
 
