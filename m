@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016790;
-	b=ULOnOtDz1VFa1VGF8scrOMDLVnUj0PmHSbHAuy5h5HOnCYhjrrT1B34cQD77pQyTCOCl
-	 57ndxkYFt9EKjH2F6Oz4izeroVqkpRd0SZM9KIiplxej8gxnslq1DG8GqdAaQC3qtHZog
-	 WNqNLleiOrywhgNkI5ELqNSmpexapDWaOsz5xsHr3oAESkU4sT5PUg3SUwowuIFwMFTJn
-	 EKu1ITuU5iUSFHhgrjTrXmEuFkUIWqN9YdY8tOXOVmqRUVk0jJy2P6U9QOQTiQtEo1gMA
-	 yHO4dsB9E+78TiN1ORSRHTMjDAWlNpnQGNisCWipP4/ql/N4kSUk3pLoxixDX9GrDRg==
+	t=1795016793;
+	b=fVhEcRRnKRf9f4qYAqbMNkdDuSw1hiAzJQxfdpjA603gPORCqtftsTX9jXfobkTo6PwM
+	 tPkD4EHNRgDKXchYehAuhiayAH85DWJSaTLmWJ+vZi+3rG/SHrZcQMQoOEeVtlXdHcPg9
+	 JkUpJbO2GmMBBInXFIOPaaf3Nqe0mk5E7K70fWbI94+6mEeO9GxbizwVsdOH6d78wDjdh
+	 8/pyBUD4RvvpK65ehwpgr9rCdlhpjxUchGgfFunQafyPg/2kIj8gOg2x+737JxlphMZ8m
+	 2wljZhIVqLs1sC7yd2Hzl9HToCaZM0cFI+ly47U+QziFkBDPq58tQcY8hFagtcz9bqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016793;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zKlmA0TV9A/Fp2uVQct8MU2esIXQX02fK16eEEGbBlE=;
-	b=3LdDnSqc1FOeoncb6tDk6sPOzBMXeGDqpjrV1gkdfM8uL1/NZk/moUZHOvuOqxz4xQqV
-	 hPTgWzPg3SV/M/TUCwUdUvIE//acvgu8yTbsDAf2IO8eJcHRamKySMvLZqY//rcNMx9Tw
-	 k8dJPgrdpm2vN7Cf+yq03Gv+7PJ8jsa8JT0PsiFEvn4HXaaNEQjWBA15L/pjYn42qnTun
-	 FBSlM8i27t5taNW2+EUuDEMzdOUPB6AizGK25NCnxUb2gAyFZvSdmzrjF50lG03oNWeku
-	 FBGGVnKCHYeYqtOYCZqk1D40T/xYxqd10BvMLzg5/bGwqXtaXhzCUngg6E5+S3SgNBQ==
+	bh=7ZJRRm84oA6SUDIpE8iLp+ZqgMsNrUeHJdCMXTW0U4I=;
+	b=QC4/h0rtbpOvKewZVKq/eIFH/J/qywr19Gc41jkJqMPc+7CfVUcq3lzQLwzOyd9EMk36
+	 8oBBobBpQJjlGW//Ma1aHeiCYDJwHD0YVWrMBh0NMdPYUzQ2BxRYLBMhM2eut/fA8dNZz
+	 kQrBf32RdWjmAE6lJn3D9jm3OmoGM5l9BAgKvRO2AnKEXDm27HG9x6bYKvF6MKetKY6yg
+	 Isa+zCSYzXtJPdEE5KY1p7/JHwXUWj5TDt/OA8DefoSg4E9RqgEe/rjtDhm7ZQ2pOLg+W
+	 yoeaBJbUDbs5+e0Qx0bxRuFXM0oi3w6fC6xOSRDja290xMrEuf2yBJvs2HAKnHDclCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SuqXohpy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CLVlfzl9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE4A606A331;
-	Wed, 18 Nov 2026 15:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E76606A31C;
+	Wed, 18 Nov 2026 15:46:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SuqXohpy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46711F000C4;
-	Wed, 18 Nov 2026 15:46:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CLVlfzl9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A01921F000C4;
+	Wed, 18 Nov 2026 15:46:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016790;
-	bh=zKlmA0TV9A/Fp2uVQct8MU2esIXQX02fK16eEEGbBlE=;
+	s=korg; t=1795016793;
+	bh=7ZJRRm84oA6SUDIpE8iLp+ZqgMsNrUeHJdCMXTW0U4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SuqXohpyLqtEcA8FyZ8RuLelpW15lEh8GvvFeSfftplauFveopOX/HbsRbtf532hw
-	 ylHX9+kzTIwLXn3LEH32c2CgRxHZUOfNmN7OGRrBahkqFAQD7BKWnuXGvRs+mg4Ke8
-	 KvHPv6zvgLTRB757QeKOK9i/TtrffYVzCBOj6eic=
+	b=CLVlfzl9vzsVeatUWrq7fcP2cBh4xrn14Npt8MlYvPtl8ThQU+hhN1UfGNGB7i8vX
+	 Hc0BUAHTa92M4wDZkMtHtUIFcsQzX5uiYsdSrd02H4yT7Woc7ekAQ7ohvf+813f1fV
+	 HyDsy7tOb/Nx5JLDMBSE/oJ7ycegdPnczEyGRtuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Gaylard <ag@ffroot.co.za>,
-	Linus Walleij <linusw@kernel.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0603/2651] pinctrl: fix PINCTRL_SPPCTL=m
-Date: Wed, 18 Nov 2026 15:30:43 +0100
-Message-ID: <20261118150309.431480659@linuxfoundation.org>
+Subject: [PATCH 7.3 0648/2651] RDMA/core: Fix partial copy of IPv6 flow_lbl in LAG hash skb
+Date: Wed, 18 Nov 2026 15:31:28 +0100
+Message-ID: <20261118150311.015931409@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,56 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Gaylard <ag@ffroot.co.za>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 7dcf87d2dbbe8c9c1efb69fe9be728a3dfd51d3d ]
+[ Upstream commit b63d21631f836528ef660d7b5a0d84890ff6dbd5 ]
 
-The PINCTRL_SPPCTL option is defined as a tristate in Kconfig, and the
-help text suggests that the user can build it as a module by setting to
-'m'.
+rdma_build_skb() constructs a synthetic IPv6 header for LAG slave
+selection and copies the flow label from the AH attribute:
 
-However, it cannot currently be set to 'm', because SOC_SP7021, the only
-platform that supports it, is a bool option that uses 'select' on it.
-Also, the SP7021 requires this driver to be built in, in order to boot.
+	memcpy(&ip6h->flow_lbl, &ah_attr->grh.flow_label,
+	       sizeof(*ip6h->flow_lbl));
 
-Change the tristate to bool and fix the help text.
+ipv6hdr.flow_lbl is __u8[3], so sizeof(*ip6h->flow_lbl) dereferences the
+array to a single __u8 and yields 1.  The memcpy therefore copies only
+the first byte of the flow label, leaving flow_lbl[1] and flow_lbl[2]
+uninitialised in the skb buffer (alloc_skb() does not zero the data).
+The resulting LAG hash is computed over one byte of real flow-label
+data and two bytes of kmalloc residue, so IPv6 RoCEv2 traffic on a
+bonded interface can be steered to the wrong slave.
 
-Tested on linux-next-2026-09-14 on a LTPP3G2 board.
+Use sizeof(ip6h->flow_lbl) (the array, 3 bytes) so the whole flow label
+is copied.
 
-This impossible tristate was detected by kconfirm, a static analysis tool
-for Kconfig, by Julian Braha <julianbraha@gmail.com>.
-
-Fixes: aa74c44be19c ("pinctrl: Add driver for Sunplus SP7021")
-Signed-off-by: Andrew Gaylard <ag@ffroot.co.za>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: bd3920eac1331 ("RDMA/core: Add LAG functionality")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260916120926.1761-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/sunplus/Kconfig | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/infiniband/core/lag.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/sunplus/Kconfig b/drivers/pinctrl/sunplus/Kconfig
-index 69f82590f6d24..aa9435d023d84 100644
---- a/drivers/pinctrl/sunplus/Kconfig
-+++ b/drivers/pinctrl/sunplus/Kconfig
-@@ -4,8 +4,8 @@
- #
- 
- config PINCTRL_SPPCTL
--	tristate "Sunplus SP7021 PinMux and GPIO driver"
--	depends on SOC_SP7021
-+	bool "Sunplus SP7021 PinMux and GPIO driver"
-+	depends on SOC_SP7021 || COMPILE_TEST
- 	depends on OF && HAS_IOMEM
- 	select GENERIC_PINCTRL_GROUPS
- 	select GENERIC_PINMUX_FUNCTIONS
-@@ -16,6 +16,4 @@ config PINCTRL_SPPCTL
- 	help
- 	  Say Y here to support Sunplus SP7021 pinmux controller.
- 	  This driver requires the pinctrl framework.
--	  GPIO is provided by the same driver.
--	  To compile this driver as a module, choose M here.
--	  The module will be called sppinctrl.
-+	  This driver also provides GPIO.
+diff --git a/drivers/infiniband/core/lag.c b/drivers/infiniband/core/lag.c
+index 00fe241737ffe..88aac911e8ee1 100644
+--- a/drivers/infiniband/core/lag.c
++++ b/drivers/infiniband/core/lag.c
+@@ -59,7 +59,7 @@ static struct sk_buff *rdma_build_skb(struct net_device *netdev,
+ 		ip6h->version = 6;
+ 		ip6h->nexthdr = IPPROTO_UDP;
+ 		memcpy(&ip6h->flow_lbl, &ah_attr->grh.flow_label,
+-		       sizeof(*ip6h->flow_lbl));
++		       sizeof(ip6h->flow_lbl));
+ 		memcpy(&ip6h->saddr, ah_attr->grh.sgid_attr->gid.raw,
+ 		       sizeof(struct in6_addr));
+ 		memcpy(&ip6h->daddr, ah_attr->grh.dgid.raw,
 -- 
 2.53.0
 
