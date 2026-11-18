@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023017;
-	b=sB7H6TFTcVQU/dyeNlQyf64J30SE0AeXfnkjGRj92ZYPOMJSXuAV5LfYu3PHPGtccEju
-	 anzE23nCuOUUguPmMWX6pkzzFv/yGTMTu45yLa84Da76IDVmm+83nKRSJ5eQa6fY31wd8
-	 eEYLxZjVYvw0Z9pz8V2t139z55TIEc09u8QGGfXtNJG9Vw2wVzO0gOEo9LdBs6gO0/30/
-	 53rdvp7PPieN55ecsSAkkb7LjFDVemd8wlTOwMzsZ2TIPFSH1pFNgRyhoeXDz+cPkorLb
-	 B8u6QOIuTGI1Kujw208aH3ARq9yxCtNl//VJ3tRp+CtzHdeoBe8Getzys68Q3bM7YTA==
+	t=1795023020;
+	b=mAqR98OfaKrIy94Fh3NA7xJ+//nUA1wRy4CmKwahWySU/nC7lRGn7MeBsbtJH9mR5yZ9
+	 ZafkEUZ4E4KlHRVb9Qwbi9ndudCf4v9YJopIntotcI/k70Zjbyh1vkiI4jnjFcJxvEuxp
+	 LwYGMX0kBAafHO0NoN4JnOfckQio2g+MEtlZ9l1DbJKX9lyAg141uutnvoOcaxUb5EKOZ
+	 myFlvKFvHoiOcu1zrZas8kYIEVGUFwhL2OWunxd8DZeUhYHP5l+MYGvdFQ9PZ9H495aUP
+	 7IztBiiIJvoV1Cl1CM2S1pE359TqHBTokQ2gPjbrVbwOCzrPTr2i5YkB6qNRR/gBBag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023017;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023020;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=alueTs9ffTLW1W+Cx3TkpiXfToc18Lck/uOa2vArjnk=;
-	b=3/otLPJDhi4Bwy54sKNoi7t15XWjDH8BKR+mxsny9CXe8HJl5l5Hx15haCZCM5oayEJn
-	 Z1UknqkSw8yJ8nZKC3P0TIkwDBy3Ni7GbUgg750hu8Cct9ucU2HOfWUMfVUhiMH8gQtP0
-	 3OrhhyvQtt2QU79Y1PEkx1EjDRg9VDRP1ACLUjnoJQQzNnmCvWqkX9MhvLwfeFmvzjT73
-	 +jGMTU38ADM5C+FaRUZBPbHH5RkV51n1zcZfJy72mYI/aBhNXiBtmnwlVEFBmOzFP7Bd7
-	 2JRrDdLIgoKntLBfpSSTAPS2+KVd4RxXT+b/ZTGI2XV4IUizhlDWT5ujpNJiPIRxFxQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=CWo/OKIEfDPtm8rpUMbZeyLrPVKYGQLJr45OzKsChqk=;
+	b=J24yNYP1QszlMKFqwexzAztW4Y5rv3MS/PI7Nk7ZMIj3Tc4slcBx1hnSbXZBkP8rL8bf
+	 vWyMsiuO5UmRxpUcyfYWxV8VMhRJ46UPcB6E63nsxjiTaTv5MS/21cXp2jxveajLNkeqs
+	 KYuyUAm61sUt7schU0eQi+U59d0sTVwgoWKPqqu6kFXUGiGJlL9Z5rZHWx2FwcEfygVyj
+	 7pCrbUgoAmGMJ7NqkAw2Te2r37D9lxWe1n4oNB+jqMi+fMiCCrOv84TlyrlYxyOs/XGNp
+	 /G64bxdZyJwLtbDGA0uaUuEt5wNS9ekMXWDF95ZmLHSYGFeRCLKJpQzGkyUDUfM8JYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BHMUA6Zf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZVU51K1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B72606A31C;
-	Wed, 18 Nov 2026 17:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76592606A31C;
+	Wed, 18 Nov 2026 17:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BHMUA6Zf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0707C1F000C5;
-	Wed, 18 Nov 2026 17:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZVU51K1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2A51F000C4;
+	Wed, 18 Nov 2026 17:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023017;
-	bh=alueTs9ffTLW1W+Cx3TkpiXfToc18Lck/uOa2vArjnk=;
+	s=korg; t=1795023020;
+	bh=CWo/OKIEfDPtm8rpUMbZeyLrPVKYGQLJr45OzKsChqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BHMUA6ZfgwtqADBHhz8Hr2O4bmdxNoco+72kudDuWc9WIZlpUP1Ac6HPRudTZgeHp
-	 MOz5GAcpy6LAyRiolMT4wsHM4A9ha33X+BLJdqLmdWQEmg1wnyEFcJwEZLKJUiLFAs
-	 nCz74SqxMQ45Nx/Ycry6O6D/jJdjHpgKfLCroA8w=
+	b=hZVU51K1kSdrOlpIZC1AneISpFYR+P2GzJRB11V9U7lLw7P67O0eYKJguYKYTEHDr
+	 mKB/Gir9o7Wc0pYVRs7TFzaHc+mhcm37vcNPYe9IDDO7YR9XmYViA2eEQ+bkC4xmJq
+	 /8lKGyrgsZMA9U39x7cyFZAYrnXb11IVqoWnWX8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Stefan Wahren <wahrenst@gmx.net>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0218/2151] arm64: dts: broadcom: bcm2712: Add V3D device node
-Date: Wed, 18 Nov 2026 15:32:33 +0100
-Message-ID: <20261118150129.726744414@linuxfoundation.org>
+Subject: [PATCH 6.18 0219/2151] arm64: dts: broadcom: bcm2712: Move non simple-bus nodes to root level
+Date: Wed, 18 Nov 2026 15:32:34 +0100
+Message-ID: <20261118150129.767334420@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,78 +62,124 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-[ Upstream commit 80ebada3dbcc811f3f64fc65e49d87857fe9272b ]
+[ Upstream commit 0acb1de2b4df426a62dba33bcd80f3939636f97b ]
 
-Commits 0ad5bc1ce463 ("drm/v3d: fix up register addresses for V3D 7.x")
-and 6fd9487147c4 ("drm/v3d: add brcm,2712-v3d as a compatible V3D device")
-added driver support for V3D on BCM2712, but the corresponding device
-tree node is still missing.
+The 'gpu' and 'firmware' nodes are not MMIO devices, so they should not
+be under a 'simple-bus', but at the root level.
 
-Add the V3D device tree node to the BCM2712 DTS.
-
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/20260114120610.82531-1-mcanal@igalia.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://lore.kernel.org/r/20260320154809.1246064-2-robh@kernel.org
 Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Stable-dep-of: 1cda59c6790b ("arm64: dts: broadcom: bcm2712: adjust display status")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/broadcom/bcm2712-rpi-5-b-ovl-rp1.dts  |  4 ++++
- arch/arm64/boot/dts/broadcom/bcm2712.dtsi          | 14 ++++++++++++++
- 2 files changed, 18 insertions(+)
+ .../dts/broadcom/bcm2712-rpi-5-b-ovl-rp1.dts  | 51 +++++++++----------
+ arch/arm64/boot/dts/broadcom/bcm2712.dtsi     |  8 +--
+ 2 files changed, 28 insertions(+), 31 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/broadcom/bcm2712-rpi-5-b-ovl-rp1.dts b/arch/arm64/boot/dts/broadcom/bcm2712-rpi-5-b-ovl-rp1.dts
-index 04738bf281ebd..dbfba51ebe915 100644
+index dbfba51ebe915..b7a6bc34ae1ab 100644
 --- a/arch/arm64/boot/dts/broadcom/bcm2712-rpi-5-b-ovl-rp1.dts
 +++ b/arch/arm64/boot/dts/broadcom/bcm2712-rpi-5-b-ovl-rp1.dts
-@@ -252,3 +252,7 @@ &pcie1 {
- &pcie2 {
- 	status = "okay";
- };
-+
-+&v3d {
-+	clocks = <&firmware_clocks 5>;
-+};
-diff --git a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
-index 45a382f75b5ec..8eeaf7ffd2046 100644
---- a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
-+++ b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: (GPL-2.0 OR MIT)
- #include <dt-bindings/interrupt-controller/arm-gic.h>
-+#include <dt-bindings/soc/bcm2835-pm.h>
- 
- / {
- 	compatible = "brcm,bcm2712";
-@@ -640,6 +641,19 @@ mip1: msi-controller@1000131000 {
- 			msi-ranges = <&gicv2 GIC_SPI 247 IRQ_TYPE_EDGE_RISING 8>;
- 			brcm,msi-offset = <8>;
+@@ -44,6 +44,30 @@ power_button: power-button {
  		};
-+
-+		v3d: gpu@1002000000 {
-+			compatible = "brcm,2712-v3d";
-+			reg = <0x10 0x02000000 0x00 0x4000>,
-+			      <0x10 0x02008000 0x00 0x6000>,
-+			      <0x10 0x02030800 0x00 0x0700>;
-+			reg-names = "hub", "core0", "sms";
-+
-+			power-domains = <&pm BCM2835_POWER_DOMAIN_GRAFX_V3D>;
-+			resets = <&pm BCM2835_RESET_V3D>;
-+			interrupts = <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>;
-+		};
  	};
  
++	firmware {
++		firmware: rpi-firmware {
++			compatible = "raspberrypi,bcm2835-firmware", "simple-mfd";
++
++			mboxes = <&mailbox>;
++
++			firmware_clocks: clocks {
++				compatible = "raspberrypi,firmware-clocks";
++				#clock-cells = <1>;
++			};
++
++			reset: reset {
++				compatible = "raspberrypi,firmware-reset";
++				#reset-cells = <1>;
++			};
++
++			power: power {
++				compatible = "raspberrypi,bcm2835-power";
++				firmware = <&firmware>;
++				#power-domain-cells = <1>;
++			};
++		};
++	};
++
+ 	sd_io_1v8_reg: sd-io-1v8-reg {
+ 		compatible = "regulator-gpio";
+ 		regulator-name = "vdd-sd-io";
+@@ -189,33 +213,6 @@ wifi: wifi@1 {
+ 	};
+ };
+ 
+-&soc {
+-	firmware: firmware {
+-		compatible = "raspberrypi,bcm2835-firmware", "simple-mfd";
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-
+-		mboxes = <&mailbox>;
+-		dma-ranges;
+-
+-		firmware_clocks: clocks {
+-			compatible = "raspberrypi,firmware-clocks";
+-			#clock-cells = <1>;
+-		};
+-
+-		reset: reset {
+-			compatible = "raspberrypi,firmware-reset";
+-			#reset-cells = <1>;
+-		};
+-	};
+-
+-	power: power {
+-		compatible = "raspberrypi,bcm2835-power";
+-		firmware = <&firmware>;
+-		#power-domain-cells = <1>;
+-	};
+-};
+-
+ /* uarta communicates with the BT module */
+ &uarta {
+ 	uart-has-rtscts;
+diff --git a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
+index 8eeaf7ffd2046..9add69f1726fd 100644
+--- a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
++++ b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
+@@ -503,10 +503,6 @@ axi: axi {
+ 			     <0x18 0x00000000  0x18 0x00000000  0x04 0x00000000>,
+ 			     <0x1c 0x00000000  0x1c 0x00000000  0x04 0x00000000>;
+ 
+-		vc4: gpu {
+-			compatible = "brcm,bcm2712-vc6";
+-		};
+-
+ 		pcie0: pcie@1000100000 {
+ 			compatible = "brcm,bcm2712-pcie";
+ 			reg = <0x10 0x00100000 0x00 0x9310>;
+@@ -656,6 +652,10 @@ v3d: gpu@1002000000 {
+ 		};
+ 	};
+ 
++	vc4: gpu {
++		compatible = "brcm,bcm2712-vc6";
++	};
++
  	timer {
+ 		compatible = "arm,armv8-timer";
+ 		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(4) |
 -- 
 2.53.0
 
