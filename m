@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029252;
-	b=qsTtFA5J23VUt581OnV6wMXZFk6tSv5n90rMTrtxBVAnyVxgZ5lWE079RTSL9lGZ1Q74
-	 Z/uIhufafK8kzcPaWfvK4dPPk0A4QJv2ISQuRXLGqNm07deoOHSuGZCBBmerjspcmAw+Z
-	 crJHXEQrHK3NCcMHm4I7q1j4swcBAinDTmJiNkjljHRdAKMxoco/LDGphSiEbaYeo/rx7
-	 mcQzZfOvzb4n0qimIAZ10Jv7H9EHhZYYkhZrcJI8CpG5YMvxUgSBGJxvL17jmiism7He/
-	 TxYoKp/L/+c6GNIWZU+DqMjXyMJ3Y3O3oJvi9POmDzCdU1kxjThg0VUSPrFh76SwzLQ==
+	t=1795029254;
+	b=u/6K4TbI0g1S0evO8GkO1ELHlexIEti4MH4fkJrTwdMT6z4ipQ7SlGLYEoy4Yem16eXk
+	 kplB/FGVJU6/HA9CKBZp+KdSsPPtrn6dubyPJlVWqf9oNUgB6mQCYxaS/6qfPiMM4lb0A
+	 28kricBtjK8QgAePxJhX9iTznkr/s2fA6attvN5yVwP535mHV4jasgVnKhsS80BKYei5z
+	 iWKkR7Dm8PqJ0aV4DDC794r0dbiAJAUdas1pEOwFdPvhBjMKhhvGCcuomP1qY7nqZf2Ll
+	 we96XKmYLWYWL0PhcBph7X2sRKbsv5KKnW2tKs+Z0PBG8l4cJb7y6mey7vBZfMhjGKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029252;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029254;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y3sKb3M53LE+XXBjMe+XOGHUWvSH4HI80Jkyo0LEXEU=;
-	b=0TL/SW/e9UWOURgx73+EHGUryhvld0ctyuXTkjn7hyKqd54ApwIpRzQm4KYYFCipw01O
-	 2SJj+VEzL4SgN7Vko5ttl/B9qGBoeCE6Yx+iQIQ9k+tbDBy6zlitIQTMednzV7CT7ZZ4n
-	 Ugrv3LWrf+oeK7Ija3tLJvMabjFbuFpIvOFlvG98T/ZWC0uLu9n4TzvXycwTkKCS43BDJ
-	 Ts0c+8OYBdKwZ5reITc7epzJcI6HNJNU7dISAjvtY5OEQYCLjJzvx+jm4wLtXVVCHUYVk
-	 6Z36crEnfMgOkbhpC+wBNXpQybWVJYmjxaF6onu8v4HB+klo94fna6plLV9VDo5/dRA==
+	bh=NdcGtK49c70z1O8WUEMo8vYL4W0cXVp8X/ScbLx7Ge8=;
+	b=xM/WwZ1/nGftT/poX6ePRDtqr199mun0svAisrshN01Yq3do2UyCYcPIVxD+oTR+pVG6
+	 grsoqXLvU/ud9SjN2WGdYC56Cs5cSkLw+SdjgZRM+ZJTmp3romWj1PaixHDMG3VMg8pG9
+	 aaA4F1DEhok2PLMeFwMleDFjlQ5ctYihF+kbMMXmUmPNWp6AukQOYi/UfeCl//pi77wPU
+	 P/+yYm0r5vNqQS+uqSnNqLbBl8wLUvO0T4wvmGi1+Q95zzUVLYdPQ9GfmuUjbOfeHI+h8
+	 FEKfKATLb4pTAhDDJzWgaoJFBx1qRGlzuEZlY5SXfmSeo9SwghgfglJu56fSPrKuxEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i4hLCzC2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bAXmxCvB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C63606A330;
-	Wed, 18 Nov 2026 19:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB87C606A320;
+	Wed, 18 Nov 2026 19:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i4hLCzC2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6854A1F000C4;
-	Wed, 18 Nov 2026 19:14:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bAXmxCvB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FFD1F000C5;
+	Wed, 18 Nov 2026 19:14:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029251;
-	bh=y3sKb3M53LE+XXBjMe+XOGHUWvSH4HI80Jkyo0LEXEU=;
+	s=korg; t=1795029254;
+	bh=NdcGtK49c70z1O8WUEMo8vYL4W0cXVp8X/ScbLx7Ge8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i4hLCzC2aCt5ntFJBSLWVJV/9gyk7VZS75QLvoWkzV9IRo5/PoXfd5hz8TJ2Wepbu
-	 Iqr7PIIoJuwXy2c//Ud6hMhve92HpPn2aVweFEr3X+kg1MLKZS7/2aA8LRcsxXEPqp
-	 GNpt0Nx4roi7hTrRaMQWrPvWTiNTxe/5Mv9102Qo=
+	b=bAXmxCvBZsmgbsLlNDgrE45Gngo6H0qM6/K2Qarsymn1T/keeV6hjaK/ZDsvnr+xp
+	 SB28oAHJy30czOw/EyJAguaf3QYkvjGH3b9BngcqJW2rmoFSimp3yguxZCogkxYuYK
+	 DHG/cwo1xssq6DVM4VPUKWteL+29jsuQetoGUkcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Alan Maguire <alan.maguire@oracle.com>,
+	Mark Brown <broonie@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0285/1756] ACPI: utils: Adjust message printing macros for ACPI objects
-Date: Wed, 18 Nov 2026 15:40:12 +0100
-Message-ID: <20261118150019.754563055@linuxfoundation.org>
+Subject: [PATCH 6.12 0268/1756] perf bpf: Fix up build failure due to change of btf_vlen() return type
+Date: Wed, 18 Nov 2026 15:39:55 +0100
+Message-ID: <20261118150019.042464094@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,83 +71,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 78ddbfaa72d68acc98cd5ba12eca071d452702c4 ]
+[ Upstream commit 3287a1881ca528b89b964d9fa6d28880d277d9e2 ]
 
-The majority of acpi_handle_<level>() macros use neither pr_fmt() nor
-dev_fmt() and acpi_handle_debug() uses pr_fmt() like dev_fmt(), but
-only if dynamic debug is compiled in.
+Fix:
 
-For more consistency, redefine all of the macros in question to use
-dev_fmt() because they are more similar to the analogous dev_*()
-family of macros than to the pr_*() ones and make all of them use it
-in the same way.
+util/btf.c: In function '__btf_type__find_member_by_name':
+util/btf.c:19:43: error: comparison of integer expressions of different signedness: 'int' and '__u32' {aka 'unsigned int'} [-Werror=sign-compare]
+   19 |         for (i = 0, m = btf_members(t); i < btf_vlen(t); i++, m++) {
+      |                                           ^
 
-While at it, rephrase the comment documenting those macros for more
-clarity.
+builtin-trace.c: In function 'syscall_arg__strtoul_btf_enum':
+builtin-trace.c:967:27: error: comparison of integer expressions of different signedness: 'int' and '__u32' {aka 'unsigned int'} [-Werror=sign-compare]
+  967 |         for (int i = 0; i < btf_vlen(bt); ++i, ++be) {
+      |                           ^
 
-Fixes: 45fef5b88d1f ("ACPI: add dynamic_debug support")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/2300525.irdbgypaU6@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+by making the variable the same type as the function.
+
+Committer note:
+
+Add an extra hunk from Alan Maguire, fixing btf_enum_scnprintf().
+
+Reviewed-by: Alan Maguire <alan.maguire@oracle.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 024b219744a9 ("perf trace: Add upper bound checks for augmented BTF struct printing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/acpi.h | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ tools/perf/builtin-trace.c | 6 +++---
+ tools/perf/util/btf.c      | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/acpi.h b/include/linux/acpi.h
-index 0e8d684ad9f43..82d913a0f20d8 100644
---- a/include/linux/acpi.h
-+++ b/include/linux/acpi.h
-@@ -1208,34 +1208,34 @@ void __acpi_handle_debug(struct _ddebug *descriptor, acpi_handle handle, const c
- #endif
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index 385686a93ab8f..f0d7d9b53f9b2 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -951,7 +951,7 @@ static bool syscall_arg__strtoul_btf_enum(char *bf, size_t size, struct syscall_
+ 	struct btf *btf = arg->trace->btf;
+ 	struct btf_enum *be = btf_enum(bt);
  
- /*
-- * acpi_handle_<level>: Print message with ACPI prefix and object path
-+ * acpi_handle_<level> - Print a message with ACPI prefix and object path
-  *
-- * These interfaces acquire the global namespace mutex to obtain an object
-- * path.  In interrupt context, it shows the object path as <n/a>.
-+ * In thread context, the global namespace mutex is acquired to obtain the
-+ * object path.  In interrupt context, the object path is shown as <n/a>.
-  */
- #define acpi_handle_emerg(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_EMERG, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_EMERG, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_alert(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_ALERT, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_ALERT, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_crit(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_CRIT, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_CRIT, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_err(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_ERR, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_ERR, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_warn(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_WARNING, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_WARNING, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_notice(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_NOTICE, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_NOTICE, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_info(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_INFO, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_INFO, handle, dev_fmt(fmt), ##__VA_ARGS__)
+-	for (int i = 0; i < btf_vlen(bt); ++i, ++be) {
++	for (u32 i = 0; i < btf_vlen(bt); ++i, ++be) {
+ 		const char *name = btf__name_by_offset(btf, be->name_off);
+ 		int max_len = max(size, strlen(name));
  
- #if defined(DEBUG)
- #define acpi_handle_debug(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_DEBUG, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_DEBUG, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #else
- #if defined(CONFIG_DYNAMIC_DEBUG)
- #define acpi_handle_debug(handle, fmt, ...)				\
- 	_dynamic_func_call(fmt, __acpi_handle_debug,			\
--			   handle, pr_fmt(fmt), ##__VA_ARGS__)
-+			   handle, dev_fmt(fmt), ##__VA_ARGS__)
- #else
- #define acpi_handle_debug(handle, fmt, ...)				\
- ({									\
+@@ -996,9 +996,9 @@ static bool syscall_arg__strtoul_btf_type(char *bf, size_t size, struct syscall_
+ static size_t btf_enum_scnprintf(const struct btf_type *type, struct btf *btf, char *bf, size_t size, int val)
+ {
+ 	struct btf_enum *be = btf_enum(type);
+-	const int nr_entries = btf_vlen(type);
++	const unsigned int nr_entries = btf_vlen(type);
+ 
+-	for (int i = 0; i < nr_entries; ++i, ++be) {
++	for (unsigned int i = 0; i < nr_entries; ++i, ++be) {
+ 		if (be->val == val) {
+ 			return scnprintf(bf, size, "%s",
+ 					 btf__name_by_offset(btf, be->name_off));
+diff --git a/tools/perf/util/btf.c b/tools/perf/util/btf.c
+index bb163fe87767c..50d98f3e83bf0 100644
+--- a/tools/perf/util/btf.c
++++ b/tools/perf/util/btf.c
+@@ -14,7 +14,7 @@ const struct btf_member *__btf_type__find_member_by_name(struct btf *btf,
+ {
+ 	const struct btf_type *t = btf__type_by_id(btf, type_id);
+ 	const struct btf_member *m;
+-	int i;
++	u32 i;
+ 
+ 	for (i = 0, m = btf_members(t); i < btf_vlen(t); i++, m++) {
+ 		const char *current_member_name = btf__name_by_offset(btf, m->name_off);
 -- 
 2.53.0
 
