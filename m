@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058827;
-	b=OQoCDmk3JKTsPKq5E4t5RzrYpza+JxykrLaetsAjNp2K3zJL/fBiADh25tg7mG0jqQ0H
-	 nVxQ4MF8KEn9Z7vuJyYiCrBfwzb423Q1A33SoXVOZtqlCg2NqLDtnI5pt6x9ms/+5Zj3Z
-	 7Erx+ugDqNrCT46IPKPn7Mtd9e3nfoDJ0ecrJaiojFQxjZhmkdZYDZLO9OLMsGmWLSlp0
-	 DkqebQG4W8MWUQAiOFvMvdtn8Ic40lvFzSrNC4owk6pq03aUybF+ztgfgS9sc03duxSKS
-	 41DTvqIOUZ3pVx5cu2i8oSW0xlot534vLUn3QAPF1jMhM3wlRpHPyjogMNST0LYNYtQ==
+	t=1795058830;
+	b=QWZToiRBs6sXOlpMNYS6kA3h+wys+LdOGjw6Jq09CQZDamceUlnRE5oJyKbCuSuTU/By
+	 Cam6OGfp7KSqTksDaaqBZVu/7M1RAjQ8qHkr7ha2f6HyVe2vKtMoHVaY5aPpUO0fpc3It
+	 R/vIQbLZLpcq5FbYwwwP6Wxa30iS2eHctZ67Urrxsr8fQKQLxO5U0k9z1HLFCSdEeG5qw
+	 8QEIwiPVS0S+Vi/mAUDn54lqSFtuZ36OONar3Jb88W8dhnqGOQabW6HGa0BwCkPQ0ZVcn
+	 8lH+fbOiz3CU/ykZwMVMtF+kTNfb8wJ3RXYwOiDQtvemrlYaYhYJXH01lpm2uqXYyFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058827;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058830;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jh0yKujBVueMHbPsZKcpU8pIwCZ16ckEY2RMZWyvhEQ=;
-	b=1sO5h7D+L+19GJq6I48jc4RjS0DMFBF0vobKRv6pRj8RwhYJYJdGxgqKjYD81pGZ1k1W
-	 93oHh9aBxzUQat+oyRO9VxbF+aqzdH0ZiwF0q0vEYBlEfKgoCpO5C2IVeO2Iik96zCPCl
-	 HhtzGmX6MHMDhsT3IJO1T/gUCyCkCCjxZk1iNbmroCn39qb1Gg69AINZou7M8T2to3vGK
-	 uIca8aOTxa6+DbaC99/OzJgtMDE34PjoCOHBzYZtslVGosATe20k1t+a0LEnBIJX5znVs
-	 Hen1gCHKmEnFOmpMRlrJdjFOWLuJkyk38wkwZ0E4lx3r4BabJ0lz+bUlyoBT1vKNacA==
+	bh=b69MHbB/ZCAMJPT0cYQ+c2K/Wgd3PrPGT8uNFpcXRo4=;
+	b=4HTC3t1W8txIUMrvzKQnPG7sOmSxp/moR8Q3HQe5oHtHj6/T7jMBrQByZmjjVt85xO4U
+	 /yOGlwhVry+V7htLkKvpHuvA0cAzbCZdGYNY6urhP7SjJLtwDn+a89T39xgWkM9i1HKUf
+	 kkdwUQy6d8Dcnol17cU8a5svWETRrejV+UssROuF0slbZqMYITcgsXH8mah10V2vt98WT
+	 npiR9JesppMMsR0us9keMCGJtnPX6Obyl3FkkdOieImh35dnbtGXOCLovDwM6ckw5y+vN
+	 XRsX4gASWgGDcp/e1fwePslqLsK0YXYM/xDmVagM47gD6j3Kpp661PZP7+GSX3QMiLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cb03deln;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sSo6jzxF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A217A606A31C;
-	Thu, 19 Nov 2026 03:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73313606A326;
+	Thu, 19 Nov 2026 03:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cb03deln
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07ED81F000C4;
-	Thu, 19 Nov 2026 03:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sSo6jzxF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C401C1F000C4;
+	Thu, 19 Nov 2026 03:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058827;
-	bh=jh0yKujBVueMHbPsZKcpU8pIwCZ16ckEY2RMZWyvhEQ=;
+	s=korg; t=1795058830;
+	bh=b69MHbB/ZCAMJPT0cYQ+c2K/Wgd3PrPGT8uNFpcXRo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cb03delnHhW4ScroIEjgWrDLnFuO7bic3NzrZE5V1KTx2vM/mGenhnL0U53XPlLxk
-	 NvGonzzqjeKKnFVhOc8usQsNbnhSuc+Q87MjDWtMHC6sxkprdgenfeezGZUvz+YcCJ
-	 C9u2PQ+g9lGRwZnDrAdPtpOSFwBf6ogXx/2FaixY=
+	b=sSo6jzxFaYBsYhqgYv3nO+TBBkkpQWCx41/vKWuCCkPsAYvbu6bPIV4KFY3vdGit7
+	 0oOGKKFRmuuUBKQ3tNI39QgMdarIX3wn4UgA+9nLaKRmvg5ebblJ3Z0g8xRyO4WPfO
+	 ZHdd3KiHTFULymSq+ByK1DdQzty4Xx4OPv7fYDzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fahad Alharbi <fahad@codepure.com>,
-	Chris Mason <mason@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0618/1848] ovl: do not copy up an xattr value that was never read
-Date: Wed, 18 Nov 2026 15:44:16 +0100
-Message-ID: <20261118145941.141271371@linuxfoundation.org>
+Subject: [PATCH 5.10 0627/1848] NFSv4/pnfs: bound the CB_NOTIFY_DEVICEID array count before allocating
+Date: Wed, 18 Nov 2026 15:44:25 +0100
+Message-ID: <20261118145941.783012532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,58 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Benjamin Coddington <ben.coddington@hammerspace.com>
 
-[ Upstream commit 755b5c5c9277be251a51623d6065abab948c61bc ]
+[ Upstream commit 32f0967ea296d447925465c98e7eec71d4e2f755 ]
 
-Copy-up stores uninitialized kernel memory in an xattr of the upper
-file, where the user can read it.
+decode_devicenotify_args() hands the server's notification count
+straight to kmalloc_objs() as the array length, without checking it
+against the message that carried it.  Bound it the way nfs4xdr.c bounds
+an attribute length, against xdr_stream_remaining().
 
-ovl_copy_xattr() may only pass bytes to ovl_do_setxattr() that
-ovl_do_getxattr() has read. When the read fails with -ERANGE the
-function asks for the size again, and if the new size fits the buffer
-it stores the buffer although nothing was read into it. The buffer
-comes from kvmalloc(), or it still holds the value of the previous
-xattr.
-
-A FUSE lower layer that answers every sized GETXATTR with -ERANGE made
-copy-up store 4096 bytes that the server never sent, with a kernel
-pointer in them, as an xattr of the upper file.
-
-Fix this by failing the copy-up with -EIO when the size that follows
--ERANGE fits the buffer.
-
-Reported-by: Fahad Alharbi <fahad@codepure.com>
-Closes: https://lore.kernel.org/linux-fsdevel/CAOQ4uxjhfpNVvoVrTayj46H2CViTOc3oxzM6xdb8+E7ikE2CSA@mail.gmail.com/
-Fixes: e4ad29fa0d22 ("ovl: use a minimal buffer in ovl_copy_xattr")
+Fixes: 1be5683b03a7 ("pnfs: CB_NOTIFY_DEVICEID")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[ sashal: Adjusted context to retain vfs_getxattr(old, ...) calls instead of upstream ovl_do_getxattr(oldpath, ...). ]
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+[ sashal: adjusted allocation context to use kmalloc_array() instead of kmalloc_objs() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/copy_up.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/nfs/callback_xdr.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/overlayfs/copy_up.c b/fs/overlayfs/copy_up.c
-index 01baaa941b5f1..d1a1b86262798 100644
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -94,8 +94,12 @@ int ovl_copy_xattr(struct super_block *sb, struct dentry *old,
- 		}
- retry:
- 		size = vfs_getxattr(old, name, value, value_size);
--		if (size == -ERANGE)
-+		if (size == -ERANGE) {
- 			size = vfs_getxattr(old, name, NULL, 0);
-+			/* Nothing was read into value, so it must not be used */
-+			if (size >= 0 && size <= value_size)
-+				size = -EIO;
-+		}
+diff --git a/fs/nfs/callback_xdr.c b/fs/nfs/callback_xdr.c
+index 505d195ed61dd..ff73aee4f72f1 100644
+--- a/fs/nfs/callback_xdr.c
++++ b/fs/nfs/callback_xdr.c
+@@ -272,6 +272,13 @@ __be32 decode_devicenotify_args(struct svc_rqst *rqstp,
+ 	if (n == 0)
+ 		goto out;
  
- 		if (size < 0) {
- 			error = size;
++	/* sanity check the count against the remaining stream */
++	if (n > xdr_stream_remaining(xdr) /
++		((4 * sizeof(uint32_t)) + NFS4_DEVICEID4_SIZE)) {
++		status = htonl(NFS4ERR_BADXDR);
++		goto out;
++	}
++
+ 	args->devs = kmalloc_array(n, sizeof(*args->devs), GFP_KERNEL);
+ 	if (!args->devs) {
+ 		status = htonl(NFS4ERR_DELAY);
 -- 
 2.53.0
 
