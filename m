@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037373;
-	b=PWTt86bp2TD9wXcm9Lp+7EyfOkyecpo/F4zzxqIPDMQyiOZxgmZvHcF/CkFQ+RCUmSzp
-	 9AW5JqNuYmrrx9B/RgBiSOFvRvfSu1M+RYqkqJoiLCL7dX7eEcM4axSmBkrood5kJfINW
-	 ZJPsKdkrx9SC4RXmav44yLnVUJxYH7nHmhq/4oDKT7SsmMbz52i51Et/sMwpfn31FlDtW
-	 HF1cYUspprCusmLi2wTEp4grtFuP/TU3w1TPdCIl2pppCGhNo/4omnG9ioOJQ7aJ5PCEh
-	 A6LP+ASCvqPv9JCvfxCsCP1Nw1wIrtN14Z2oIBmo8aAViNyC8jn410I1/WylTgwQ0pA==
+	t=1795037376;
+	b=XHDxQgElGFWEklSXa5GV5l+sWA2i+Tj1c3WHnvCnXoyEjXtjkB/kX30rIDGbPuPr8IZO
+	 rqYN7gYeLlDx/6ixXM/BdGMxd4lyBK+YhtrdDbMEY3iD05AsvW5x4Cna1q5XmQLOgQ0b7
+	 b38JcDO+W895akrrAgdKgvmeOPJJEMwwAwv8doODZf1Pr5Y5+H2HyjHPqW4Hbyt9rNU0k
+	 H3Q1/RlG0LS80Y4+vMNC6i1Kj7bfJmtU30kUcNe1SSmcq3l/ruXn43e370/ACzMqD1+qS
+	 i58+qXWkc9TqQ8rX8jWCPFYq/0tEcMi4z7d2ruNyqZbeFJX7Ko/7V/6EMYEooqh2Hgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037373;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037376;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=443P3sobtBYxmNxAcpeovwLUm1Upc1B4u8k/cu9IN8E=;
-	b=3gSCPkuXrgqKWjyi5G56og6euivAjvwn29J/8kkPgpKbZY/3LlWYOoUEkNIBKjRmNJ7+
-	 KVvta6cloY6Xd9+43RTgV4csLCvuJnAxamuqp7vLGLMdSWAhSo6RROJxAUIjXjmXSS1Fa
-	 fR7Ny6Vy1plPA16Vqz4R+LdHlwj0bgz0D3EWejviGQ/1lrXaOdR1nLdR/neG7oc4RunoN
-	 FDT4+2Jb2UwIlrZq5j7gMnJIB1xp+3yev568KlLcadpAk5PsqtXBbeYC84qESUvxVTrEy
-	 UX4lDhK3xIoqWcrJ9psCVOKIzuU6q6Uv4gXOeH/vWJvQRf9oZi64vjK846iYNVWs7sA==
+	bh=XckfIIoI8Th0CgYJKzuBeyq0IXstaHIbAlyD4q2p9Ww=;
+	b=xzLhQH/nyMr7xM1tdq1/sBXxSVjdzsa3c/hQuK0aw5Bd/q2R8bCsVgSDCIv4OnsxZJgN
+	 aifv+oySZz6l3OgJcFyFPYHCrkoaYZMssbxaHlHasK4EO+LoQGJrHZjhyaLnyFFbepm6q
+	 t/brcN3gpSO+AART/iLNkDZkx9+Oa3NymGF00TbrS9637bb8RNqjKVnMyK+MURrtp0UkL
+	 DnOkh7FirJXLZXCkBrSfQF24S2fmDXDZD2R5tRjHV/2GjduFJcuuXNkR4fL0Z44mqKNfH
+	 9pF3OP2dNzW/UDLtG5m+GO7arfr7xMA6FAYbfQsYoXOwDmXmhIRRl5yHh5oPQ2x+QsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZTcaUafR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nLWEr0FV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E410606A32C;
-	Wed, 18 Nov 2026 21:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2B1606A32A;
+	Wed, 18 Nov 2026 21:29:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZTcaUafR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982E11F000C5;
-	Wed, 18 Nov 2026 21:29:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nLWEr0FV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19411F000C4;
+	Wed, 18 Nov 2026 21:29:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037373;
-	bh=443P3sobtBYxmNxAcpeovwLUm1Upc1B4u8k/cu9IN8E=;
+	s=korg; t=1795037376;
+	bh=XckfIIoI8Th0CgYJKzuBeyq0IXstaHIbAlyD4q2p9Ww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZTcaUafRMaibU62edK3ntMCqqORZ5C2tcsgSK+FQhVuLGY6SN/vaqHZ+uQK65lFcS
-	 T2BkLMcGyaKTYdZ5w619QPy0/aV9/tvqG26sN2aOXpniYgKQB1LBVFdM61XMqXh+hw
-	 XcAbeMiRLhV7GSERCfALJ/ZZzx08/lB/KVLhaAd8=
+	b=nLWEr0FVffyX9yYLAEI8mP0pXO5aLfRg+tLmz+q0mwMF/ZlqKdLVRL5PxICsbU4pH
+	 b1xKoOGrfnCefINcCoJtmUt0wBUuD0V+fd++KYF/Y1wzHcP9f9olqbyllN7EApl2Zu
+	 l2Wn3qpKvSABAWuGtZuE6OBGJMHEqirwSYLA8OCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+675af112519ca34f5502@syzkaller.appspotmail.com,
-	Shuai Liu <847807867@qq.com>,
+	Shang En Sim <sim@shangen.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1339/3318] io_uring/sqpoll: dont set IO_SQ_THREAD_SHOULD_STOP on thread exit
-Date: Wed, 18 Nov 2026 15:32:41 +0100
-Message-ID: <20261118150400.532254263@linuxfoundation.org>
+Subject: [PATCH 6.6 1340/3318] io_uring/poll: cancel all matching requests in one pass
+Date: Wed, 18 Nov 2026 15:32:42 +0100
+Message-ID: <20261118150400.564558755@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,87 +68,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Liu <847807867@qq.com>
+From: Shang En Sim <sim@shangen.org>
 
-Commit fca3ff9e2eee7d285585daf51942e0b5e2be354a upstream.
+Commit 9eff9c07e927dcd9c57150cd6fb3d4ec76f00480 upstream.
 
-io_sq_thread_stop() carries a WARN_ON_ONCE() asserting that
-IO_SQ_THREAD_SHOULD_STOP isn't set yet, i.e. that stopping the SQPOLL
-thread is never attempted twice. Since commit 22d9db9fd64a
-("io_uring/sqpoll: don't attach to a thread that is canceling"), the
-SQPOLL thread itself sets that bit on its way out, so that
-io_sq_offload_create() won't attach a new ring to a thread that is
-canceling.
+With IORING_ASYNC_CANCEL_ALL, __io_async_cancel() calls io_try_cancel()
+until nothing is found, and io_poll_cancel() cancels one request per
+call, starting each lookup at the beginning of the hash. A cancelled
+request stays hashed until its task work runs, so every lookup walks
+past the ones already cancelled. Cancelling K of N pending polls visits
+about K*N/2 requests in one io_uring_enter(), with uring_lock held.
 
-When the thread exits on a fatal signal, the bit is thus set before the
-ring teardown gets to io_sq_thread_stop(), which now triggers the
-warning on every such exit:
+A single CANCEL_FD|ALL on 80000 polls on one eventfd takes 17.06s,
+0.02s with this change. With voluntary preemption the soft lockup
+watchdog fires:
 
-  WARNING: io_uring/sqpoll.c:88 at io_sq_thread_stop
-  Workqueue: iou_exit io_ring_exit_work
-  Call Trace:
-   io_put_sq_data
-   io_sq_thread_finish
-   io_ring_ctx_free
-   io_ring_exit_work
+  watchdog: BUG: soft lockup - CPU#1 stuck for 26s! [repro:100]
+  RIP: 0010:io_cancel_req_match+0x19/0xa0
+   io_poll_cancel+0x73/0x170
+   io_try_cancel+0x7b/0xf0
+   __io_async_cancel+0x41/0x110
 
-Introduce a separate IO_SQ_THREAD_EXITING bit for the thread marking
-itself as on its way out, and check it in io_sq_offload_create() along
-with IO_SQ_THREAD_SHOULD_STOP. IO_SQ_THREAD_SHOULD_STOP regains its
-original meaning, "a stop has been requested", and the WARN_ON_ONCE()
-holds again.
+Walk the hash once and cancel every match, as io_cancel_remove() does
+for futex and waitid. Cancel by user_data only needs its own bucket.
+__io_async_cancel() still loops until nothing is found, so a request
+that io-wq parks in the poll hash meanwhile is still cancelled.
 
-Reproduced with an SQPOLL ring and an immediate fatal signal: the
-warning fires on v7.3.0+ (22d9db9fd64a present) and is gone with this
-change.
+A cancel that matches one request now walks the whole hash twice instead
+of stopping at the match.
 
-Reported-by: syzbot+675af112519ca34f5502@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=675af112519ca34f5502
-Fixes: 22d9db9fd64a ("io_uring/sqpoll: don't attach to a thread that is canceling")
-Signed-off-by: Shuai Liu <847807867@qq.com>
-Link: https://patch.msgid.link/tencent_BB08960D79E0261B5C1EB1E589787734E907@qq.com
-[axboe: trim excessive comment]
+Cc: stable@vger.kernel.org
+Fixes: 8e29da69fead ("io_uring: add support for IORING_ASYNC_CANCEL_ALL")
+Signed-off-by: Shang En Sim <sim@shangen.org>
+Link: https://patch.msgid.link/20261030050319.1448530-3-sim@shangen.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[axboe: 6.6 has bucket locks and two poll hash tables, take each bucket
+lock while walking it, and sum what both tables cancelled. 6.6 has no
+futex or waitid, so have __io_async_cancel() add up what poll returns]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/sqpoll.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ io_uring/cancel.c |  3 ++-
+ io_uring/poll.c   | 54 ++++++++++++++++++++++++++++++++++++++++++-----
+ 2 files changed, 51 insertions(+), 6 deletions(-)
 
-diff --git a/io_uring/sqpoll.c b/io_uring/sqpoll.c
-index d0f4f05397b13..75065de8d7d3c 100644
---- a/io_uring/sqpoll.c
-+++ b/io_uring/sqpoll.c
-@@ -23,6 +23,7 @@
- enum {
- 	IO_SQ_THREAD_SHOULD_STOP = 0,
- 	IO_SQ_THREAD_SHOULD_PARK,
-+	IO_SQ_THREAD_EXITING,
- };
+diff --git a/io_uring/cancel.c b/io_uring/cancel.c
+index 5663b8bf4ccb7..cadf3fb349eac 100644
+--- a/io_uring/cancel.c
++++ b/io_uring/cancel.c
+@@ -179,7 +179,8 @@ static int __io_async_cancel(struct io_cancel_data *cd,
+ 			break;
+ 		if (!all)
+ 			return ret;
+-		nr++;
++		/* poll returns how many it cancelled */
++		nr += max(ret, 1);
+ 	} while (1);
  
- void io_sq_thread_unpark(struct io_sq_data *sqd)
-@@ -348,9 +349,10 @@ static int io_sq_thread(void *data)
- 	/*
- 	 * Cancelation drops sqd->lock while it waits, and a ring could attach
- 	 * to a thread that is on its way out. A fatal signal doesn't set the
--	 * bit, so set it here for io_sq_offload_create() to see.
-+	 * stop bit, so mark the thread as exiting here for
-+	 * io_sq_offload_create() to see.
- 	 */
--	set_bit(IO_SQ_THREAD_SHOULD_STOP, &sqd->state);
-+	set_bit(IO_SQ_THREAD_EXITING, &sqd->state);
- 	io_uring_cancel_generic(true, sqd);
- 	sqd->thread = NULL;
- 	list_for_each_entry(ctx, &sqd->ctx_list, sqd_list)
-@@ -426,7 +428,8 @@ __cold int io_sq_offload_create(struct io_ring_ctx *ctx,
- 		/* don't attach to a dying SQPOLL thread, would be racy */
- 		ret = 0;
- 		if (attached && (!sqd->thread ||
--		    test_bit(IO_SQ_THREAD_SHOULD_STOP, &sqd->state)))
-+		    test_bit(IO_SQ_THREAD_SHOULD_STOP, &sqd->state) ||
-+		    test_bit(IO_SQ_THREAD_EXITING, &sqd->state)))
- 			ret = -ENXIO;
- 		io_sq_thread_unpark(sqd);
+ 	/* slow path, try all io-wq's */
+diff --git a/io_uring/poll.c b/io_uring/poll.c
+index 8050261ffba00..08d65792f3cbe 100644
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -879,14 +879,52 @@ static int io_poll_disarm(struct io_kiocb *req)
+ 	return 0;
+ }
  
++/*
++ * Cancel every request matching @cd in one pass. Cancelled requests stay
++ * hashed until their task work runs, so finding them one at a time would
++ * walk past all the earlier ones on each lookup.
++ */
++static int io_poll_cancel_all(struct io_ring_ctx *ctx, struct io_cancel_data *cd,
++			      struct io_hash_table *table)
++{
++	unsigned int nr_buckets = 1U << table->hash_bits;
++	unsigned int i = 0;
++	struct hlist_node *tmp;
++	struct io_kiocb *req;
++	int nr = 0;
++
++	if (!(cd->flags & (IORING_ASYNC_CANCEL_FD | IORING_ASYNC_CANCEL_OP |
++			   IORING_ASYNC_CANCEL_ANY))) {
++		/* keyed by user_data, so only one bucket can match */
++		i = hash_long(cd->data, table->hash_bits);
++		nr_buckets = i + 1;
++	}
++
++	for (; i < nr_buckets; i++) {
++		struct io_hash_bucket *hb = &table->hbs[i];
++
++		spin_lock(&hb->lock);
++		hlist_for_each_entry_safe(req, tmp, &hb->list, hash_node) {
++			if (!io_cancel_req_match(req, cd))
++				continue;
++			io_poll_cancel_req(req);
++			nr++;
++		}
++		spin_unlock(&hb->lock);
++	}
++	return nr;
++}
++
+ static int __io_poll_cancel(struct io_ring_ctx *ctx, struct io_cancel_data *cd,
+ 			    struct io_hash_table *table)
+ {
+ 	struct io_hash_bucket *bucket;
+ 	struct io_kiocb *req;
+ 
+-	if (cd->flags & (IORING_ASYNC_CANCEL_FD | IORING_ASYNC_CANCEL_OP |
+-			 IORING_ASYNC_CANCEL_ANY))
++	if (cd->flags & (IORING_ASYNC_CANCEL_ALL | IORING_ASYNC_CANCEL_ANY))
++		return io_poll_cancel_all(ctx, cd, table) ?: -ENOENT;
++
++	if (cd->flags & (IORING_ASYNC_CANCEL_FD | IORING_ASYNC_CANCEL_OP))
+ 		req = io_poll_file_find(ctx, cd, table, &bucket);
+ 	else
+ 		req = io_poll_find(ctx, false, cd, table, &bucket);
+@@ -901,16 +939,22 @@ static int __io_poll_cancel(struct io_ring_ctx *ctx, struct io_cancel_data *cd,
+ int io_poll_cancel(struct io_ring_ctx *ctx, struct io_cancel_data *cd,
+ 		   unsigned issue_flags)
+ {
+-	int ret;
++	bool all = cd->flags & (IORING_ASYNC_CANCEL_ALL | IORING_ASYNC_CANCEL_ANY);
++	int ret, nr;
+ 
+ 	ret = __io_poll_cancel(ctx, cd, &ctx->cancel_table);
+-	if (ret != -ENOENT)
++	if (ret != -ENOENT && !all)
+ 		return ret;
++	nr = max(ret, 0);
+ 
+ 	io_ring_submit_lock(ctx, issue_flags);
+ 	ret = __io_poll_cancel(ctx, cd, &ctx->cancel_table_locked);
+ 	io_ring_submit_unlock(ctx, issue_flags);
+-	return ret;
++	if (!all)
++		return ret;
++	/* with ALL or ANY, both tables return how many they cancelled */
++	nr += max(ret, 0);
++	return nr ?: -ENOENT;
+ }
+ 
+ static __poll_t io_poll_parse_events(const struct io_uring_sqe *sqe,
 -- 
 2.53.0
 
