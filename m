@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027655;
-	b=IfMW3yfE2i8NEAs6q5ttfx7Qs6P6KengxAV9zjU8iXDzSvzL3kvd4B9bqbtkcctJNqC+
-	 9AZjJCTXlAOfChKtvBOGcN69ijXWeSeGS2JBsGVyWLLLj/ICsZOdBSk/884boKm4TPHKm
-	 PdUF/C2TFgyxuGF2bToFLuhN90ai3d6z3eq15onlR+kZgVBBOF/7i3vl+1RcMDh2I5agw
-	 Nc1hbLMUAiNYN8eRrR4ERkfp1FWloenRpgtFRCtihAsWA5ORs+VjgjpKKhzZ7AK4xPNCU
-	 p6A5qaD7l2s0ev1DaeY6MUqWkXniLdY0CQwUGJ9U4bvyeROjLZzjTQ4+u5SgqOypRmA==
+	t=1795027657;
+	b=VZpfKOktn/oG+HYAYJ+5vViKexSjPBDUJ/kcJ6b1Zu6+z2Jd+z7r6REbXOqCfXnZ/Tgd
+	 gkn7XRIWCx6zDqfzdrQpngeOP0EZGnygVEVj+7IiZpeXjGPMsHkCMOYaK/adihwdIytAB
+	 p17aIqOTEgvX44CS5qdGzTzuyvVUrfqmlbDe5L+3+HD9zzYTUf66mh8oZlyZGv8XtOtXt
+	 7nPuAp3qJaZZLelvgwSBgVenRwMqgwVdND6cvdyYKUKz6clxsS/DWgBcUcIW2LsD73UNE
+	 lWpSYB62+Ceuu5wZikStTndghAhCicp5uDbKOCry9Ec2QU9K/3vAMZQju7uQuO2aLOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027655;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027657;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cgXe4cSHLM8moBElbPQZTAmoFlYvVYhVrcXjnKBwnEY=;
-	b=plQpSQsaxSeXAO49d/lA6P8jozcvo5pGCtKP7s09TuOdlFWy1Nel9AAc/bONxxuAdQ+U
-	 Yrl+qx164ZdU7FtSdTnXnk4lTQfumYa/YuacdYUJbbQSwej56XWqH7WlLhGkEB7DpJk6e
-	 JMFQXVLp5axdv0aKz+yDvXDXqJjQMaNQra+MtmnHLcSGF4EH1D0QYKytnuQw5WruLTMvx
-	 +WdE0D7801z8QnEdsxwryubV7nVYOuO3H/eXM+olqXZk8fXlg+L7m1IYXCRar6FAo9yC5
-	 QnXwayBRsd4Cn0BAdlMPTkX6OKw2DvgEoUuNrII59olLGriGPVGwIggWkzK5zxFOrtw==
+	bh=rSMnBteWWYixXzDr2THRcZ18CBi8dIHVJE1cT/Iubqs=;
+	b=nL1PX20Wp9lTGordZ3YALBamInAU2mUoUe8W0zBiZpOgBT8pIR/nQL9nG5xBb8dVxHdX
+	 xV2zXBU8D4o4t7H/XraKoJ9xBQ3Ih6lvZ2vrirD/DE2AUeGfDqGDjjR9PFyRJ5c05T8UK
+	 lCvAUIA+DrH8AOPa8mMoMOscgHcc5X/tnbijEmUl87xldkPootU2FZt/Tc/UbPnrrZUKN
+	 bBNYs3pLIkB8lGIqRhIStFOsHOM9tdogfrwMmGdY2eNs3dB3Qs7M41w3ZYyJ1/vObF9bw
+	 v3dZKHjj86xpLlg4FCMVgVlreNNe9FAzh7lYAidCYJrRuueXcRIfGNI1weptusqkQhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UaQkz9pa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EKLuMQtH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1477B606A337;
-	Wed, 18 Nov 2026 18:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07A1606A33D;
+	Wed, 18 Nov 2026 18:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UaQkz9pa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D7F1F000C4;
-	Wed, 18 Nov 2026 18:47:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EKLuMQtH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325D91F000C4;
+	Wed, 18 Nov 2026 18:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027654;
-	bh=cgXe4cSHLM8moBElbPQZTAmoFlYvVYhVrcXjnKBwnEY=;
+	s=korg; t=1795027657;
+	bh=rSMnBteWWYixXzDr2THRcZ18CBi8dIHVJE1cT/Iubqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UaQkz9paJy8xmw1HqZ0B8PTWYOLVhHYc0UUzakmXZ+N3VbKGxy89ESxWqu9dNto2n
-	 tqqMMmik7X+a18pTXIvLbzt+4bb0B30x7mt9T8bQp8Yt1S5exmz19MoNJNYs3/NhlS
-	 eBHjsP56IFoNNvh93BUaldYjyzTO9Hc3hu2j0SEQ=
+	b=EKLuMQtH7uAgRexpfni2vaOmf6zCOJKC1X+K7rGeGH/B/OTcbQgJchO2qXUIG4cma
+	 xklZ6jcqoxO/37OUGSUq7vTGPKVUX4PUxII+t+B8PahZDya7rOuqkrhdZysiC9QMy8
+	 DAxy23Uz7Dymt95ZCLahcWsym4Zyh1gPTr3Wh3T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shradha Gupta <shradhagupta@linux.microsoft.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Bradley Morgan <brads@mainlining.org>,
-	Naman Jain <namjain@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	Igor Velkov <iav@iav.lv>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1864/2151] kexec: Add helper to report an active kexec reboot
-Date: Wed, 18 Nov 2026 15:59:59 +0100
-Message-ID: <20261118150229.703520628@linuxfoundation.org>
+Subject: [PATCH 6.18 1826/2151] net: phy: marvell: keep WOL_EIE across interrupt reconfiguration
+Date: Wed, 18 Nov 2026 15:59:21 +0100
+Message-ID: <20261118150228.325106587@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,80 +69,226 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shradha Gupta <shradhagupta@linux.microsoft.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 14c73a2b061e494ab6da346ab075b14f2a4b2d06 ]
+[ Upstream commit f434191f93884c9de58c38f18ac7fc7f1fdf9e42 ]
 
-A shutdown callback in a loadable module may need to distinguish a
-kexec reboot from a normal restart, halt, or poweroff. The Hyper-V
-VMBus driver needs this distinction when moving its kexec cleanup into
-a common syscore shutdown callback.
+marvell_config_intr() rewrites the whole interrupt enable register, so
+the config_intr call from phy_init_hw() on resume silently cleared
+WOL_EIE on the 88E1318S and 88E1510: m88e1318_get_wol() still reported
+WAKE_MAGIC, but a matched magic packet was no longer routed to INTn and
+the board did not wake.
 
-Add kexec_is_in_progress() and export it to GPL modules so the callback
-can remain guarded when VMBus is built as a module. Provide a false
-inline implementation when CONFIG_KEXEC_CORE is disabled.
+Bit 7 of that register is WOL_EIE only on these two PHYs; on others,
+such as the 88E1111, it enables a FIFO error interrupt. So give the
+88E1318S and 88E1510 their own config_intr and handle_interrupt, and
+leave the shared callbacks unchanged.
 
-The helper reports only the normal kexec reboot path. Crash kexec and
-preserve-context kexec do not set this state.
+m88e1318_set_wol() now records whether WoL is enabled, and both it and
+the new config_intr derive WOL_EIE from that state under the MDIO bus
+lock. WOL_EIE stays set across config_intr while WoL is enabled, except
+when the PHY has an interrupt line and interrupts are being disabled,
+as in phy_free_interrupt(): INTn is then the PHY IRQ, and nothing would
+read IEVENT after free_irq() to release it. The bit is set again once
+interrupts are re-enabled. phy_probe() still clears a WOL_EIE left by a
+previous boot, since WoL starts out disabled. The new handler also
+claims WoL events, so they do not go unacknowledged when the PHY IRQ is
+in use.
 
-Signed-off-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Reviewed-by: Naman Jain <namjain@linux.microsoft.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Stable-dep-of: 228e21764b38 ("Drivers: hv: Run VMBus kexec cleanup from syscore shutdown")
+Helios4 (Armada 388, 88E1512), 7.2.9. With this patch WOL_EIE stays set
+over 3 link down/up cycles, "wol d" clears it, and a magic packet on a
+running board is a handled interrupt. Without it, WOL_EIE is lost on the
+first down/up, survives "wol d", and the magic packet is an unhandled
+interrupt.
+
+Fixes: 3871c3876f80 ("mv643xx_eth with 88E1318S: support Wake on LAN")
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Tested-by: Igor Velkov <iav@iav.lv>
+Link: https://patch.msgid.link/20261014194818.11640-2-rosenp@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/kexec.h | 2 ++
- kernel/kexec_core.c   | 7 +++++++
- 2 files changed, 9 insertions(+)
+ drivers/net/phy/marvell.c | 97 ++++++++++++++++++++++++++++++---------
+ 1 file changed, 75 insertions(+), 22 deletions(-)
 
-diff --git a/include/linux/kexec.h b/include/linux/kexec.h
-index 8a22bc9b8c6c8..827a5311d97a3 100644
---- a/include/linux/kexec.h
-+++ b/include/linux/kexec.h
-@@ -468,6 +468,7 @@ bool kexec_load_permitted(int kexec_image_type);
+diff --git a/drivers/net/phy/marvell.c b/drivers/net/phy/marvell.c
+index f191b8c432188..1b98a2e9c0f79 100644
+--- a/drivers/net/phy/marvell.c
++++ b/drivers/net/phy/marvell.c
+@@ -55,6 +55,8 @@
+ #define MII_M1011_IMASK			0x12
+ #define MII_M1011_IMASK_INIT		0x6400
+ #define MII_M1011_IMASK_CLEAR		0x0000
++/* WOL Event Interrupt Enable, 88E1318S and 88E1510 only */
++#define MII_M1011_IMASK_WOL		BIT(7)
  
- /* flag to track if kexec reboot is in progress */
- extern bool kexec_in_progress;
-+bool kexec_is_in_progress(void);
+ #define MII_M1011_PHY_SCR			0x10
+ #define MII_M1011_PHY_SCR_DOWNSHIFT_EN		BIT(11)
+@@ -139,11 +141,6 @@
+ #define MII_88E1318S_PHY_MSCR1_REG	16
+ #define MII_88E1318S_PHY_MSCR1_PAD_ODD	BIT(6)
  
- #ifndef page_to_boot_pfn
- static inline unsigned long page_to_boot_pfn(struct page *page)
-@@ -544,6 +545,7 @@ static inline void *kimage_map_segment(struct kimage *image, int idx)
- { return NULL; }
- static inline void kimage_unmap_segment(void *buffer) { }
- #define kexec_in_progress false
-+static inline bool kexec_is_in_progress(void) { return false; }
- #endif /* CONFIG_KEXEC_CORE */
+-/* Copper Specific Interrupt Enable Register */
+-#define MII_88E1318S_PHY_CSIER				0x12
+-/* WOL Event Interrupt Enable */
+-#define MII_88E1318S_PHY_CSIER_WOL_EIE			BIT(7)
+-
+ #define MII_88E1318S_PHY_LED_FUNC		0x10
+ #define MII_88E1318S_PHY_LED_FUNC_OFF		(0x8)
+ #define MII_88E1318S_PHY_LED_FUNC_ON		(0x9)
+@@ -354,6 +351,7 @@ struct marvell_priv {
+ 	u32 step;
+ 	s8 pair;
+ 	u8 vct_phase;
++	bool wol_enabled;
+ };
  
- #ifdef CONFIG_KEXEC_SIG
-diff --git a/kernel/kexec_core.c b/kernel/kexec_core.c
-index 08ae3c64caca5..08ed4e14cf39e 100644
---- a/kernel/kexec_core.c
-+++ b/kernel/kexec_core.c
-@@ -22,6 +22,7 @@
- #include <linux/hardirq.h>
- #include <linux/elf.h>
- #include <linux/elfcore.h>
-+#include <linux/export.h>
- #include <linux/utsname.h>
- #include <linux/numa.h>
- #include <linux/suspend.h>
-@@ -53,6 +54,12 @@ atomic_t __kexec_lock = ATOMIC_INIT(0);
- /* Flag to indicate we are going to kexec a new kernel */
- bool kexec_in_progress = false;
+ static int marvell_read_page(struct phy_device *phydev)
+@@ -407,7 +405,8 @@ static int marvell_config_intr(struct phy_device *phydev)
+ 	return err;
+ }
  
-+bool kexec_is_in_progress(void)
+-static irqreturn_t marvell_handle_interrupt(struct phy_device *phydev)
++static irqreturn_t __marvell_handle_interrupt(struct phy_device *phydev,
++					      u16 mask)
+ {
+ 	int irq_status;
+ 
+@@ -417,7 +416,7 @@ static irqreturn_t marvell_handle_interrupt(struct phy_device *phydev)
+ 		return IRQ_NONE;
+ 	}
+ 
+-	if (!(irq_status & MII_M1011_IMASK_INIT))
++	if (!(irq_status & mask))
+ 		return IRQ_NONE;
+ 
+ 	phy_trigger_machine(phydev);
+@@ -425,6 +424,57 @@ static irqreturn_t marvell_handle_interrupt(struct phy_device *phydev)
+ 	return IRQ_HANDLED;
+ }
+ 
++static irqreturn_t marvell_handle_interrupt(struct phy_device *phydev)
 +{
-+	return kexec_in_progress;
++	return __marvell_handle_interrupt(phydev, MII_M1011_IMASK_INIT);
 +}
-+EXPORT_SYMBOL_GPL(kexec_is_in_progress);
 +
- bool kexec_file_dbg_print;
++/* WOL_EIE also routes WoL events to INTn. Keep it set while WoL is enabled,
++ * unless INTn is the PHY interrupt and that interrupt is being disabled:
++ * nothing would read IEVENT after free_irq() to release the line.
++ */
++static u16 m88e1318_wol_imask(struct phy_device *phydev)
++{
++	struct marvell_priv *priv = phydev->priv;
++
++	if (priv->wol_enabled &&
++	    (phydev->interrupts == PHY_INTERRUPT_ENABLED ||
++	     !phy_interrupt_is_valid(phydev)))
++		return MII_M1011_IMASK_WOL;
++
++	return 0;
++}
++
++static int m88e1318_config_intr(struct phy_device *phydev)
++{
++	bool enable = phydev->interrupts == PHY_INTERRUPT_ENABLED;
++	u16 imask;
++	int err;
++
++	if (enable) {
++		err = marvell_ack_interrupt(phydev);
++		if (err)
++			return err;
++	}
++
++	/* Serialise against m88e1318_set_wol() updating wol_enabled */
++	phy_lock_mdio_bus(phydev);
++	imask = enable ? MII_M1011_IMASK_INIT : MII_M1011_IMASK_CLEAR;
++	imask |= m88e1318_wol_imask(phydev);
++	err = __phy_write(phydev, MII_M1011_IMASK, imask);
++	phy_unlock_mdio_bus(phydev);
++	if (err || enable)
++		return err;
++
++	return marvell_ack_interrupt(phydev);
++}
++
++static irqreturn_t m88e1318_handle_interrupt(struct phy_device *phydev)
++{
++	return __marvell_handle_interrupt(phydev, MII_M1011_IMASK_INIT |
++					  MII_M1011_IMASK_WOL);
++}
++
+ static int marvell_set_polarity(struct phy_device *phydev, int polarity)
+ {
+ 	u16 val;
+@@ -1969,18 +2019,27 @@ static void m88e1318_get_wol(struct phy_device *phydev,
+ static int m88e1318_set_wol(struct phy_device *phydev,
+ 			    struct ethtool_wolinfo *wol)
+ {
++	struct marvell_priv *priv = phydev->priv;
+ 	int err = 0, oldpage;
  
- /*
+ 	oldpage = phy_save_page(phydev);
+ 	if (oldpage < 0)
+ 		goto error;
+ 
+-	if (wol->wolopts & (WAKE_MAGIC | WAKE_PHY)) {
+-		/* Explicitly switch to page 0x00, just to be sure */
+-		err = marvell_write_page(phydev, MII_MARVELL_COPPER_PAGE);
+-		if (err < 0)
+-			goto error;
++	priv->wol_enabled = !!(wol->wolopts & (WAKE_MAGIC | WAKE_PHY));
++
++	/* Explicitly switch to page 0x00, just to be sure */
++	err = marvell_write_page(phydev, MII_MARVELL_COPPER_PAGE);
++	if (err < 0)
++		goto error;
++
++	/* Update the WOL interrupt enable */
++	err = __phy_modify(phydev, MII_M1011_IMASK, MII_M1011_IMASK_WOL,
++			   m88e1318_wol_imask(phydev));
++	if (err < 0)
++		goto error;
+ 
++	if (priv->wol_enabled) {
+ 		/* If WOL event happened once, the LED[2] interrupt pin
+ 		 * will not be cleared unless we reading the interrupt status
+ 		 * register. If interrupts are in use, the normal interrupt
+@@ -1990,12 +2049,6 @@ static int m88e1318_set_wol(struct phy_device *phydev,
+ 		if (!phy_interrupt_is_valid(phydev))
+ 			__phy_read(phydev, MII_M1011_IEVENT);
+ 
+-		/* Enable the WOL interrupt */
+-		err = __phy_set_bits(phydev, MII_88E1318S_PHY_CSIER,
+-				     MII_88E1318S_PHY_CSIER_WOL_EIE);
+-		if (err < 0)
+-			goto error;
+-
+ 		err = marvell_write_page(phydev, MII_MARVELL_LED_PAGE);
+ 		if (err < 0)
+ 			goto error;
+@@ -3846,8 +3899,8 @@ static struct phy_driver marvell_drivers[] = {
+ 		.config_init = m88e1318_config_init,
+ 		.config_aneg = m88e1318_config_aneg,
+ 		.read_status = marvell_read_status,
+-		.config_intr = marvell_config_intr,
+-		.handle_interrupt = marvell_handle_interrupt,
++		.config_intr = m88e1318_config_intr,
++		.handle_interrupt = m88e1318_handle_interrupt,
+ 		.get_wol = m88e1318_get_wol,
+ 		.set_wol = m88e1318_set_wol,
+ 		.resume = genphy_resume,
+@@ -3954,8 +4007,8 @@ static struct phy_driver marvell_drivers[] = {
+ 		.config_init = m88e1510_config_init,
+ 		.config_aneg = m88e1510_config_aneg,
+ 		.read_status = marvell_read_status,
+-		.config_intr = marvell_config_intr,
+-		.handle_interrupt = marvell_handle_interrupt,
++		.config_intr = m88e1318_config_intr,
++		.handle_interrupt = m88e1318_handle_interrupt,
+ 		.get_wol = m88e1318_get_wol,
+ 		.set_wol = m88e1318_set_wol,
+ 		.resume = m88e1510_resume,
 -- 
 2.53.0
 
