@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034796;
-	b=DtYxiDzPPlv+qnNHJXPWd/DcedJUmX6NncSGhYPoY57UoVhYY5jbd5a57uaJbEuUa4XU
-	 WInEDxwzT/m0duqQMjycpbf0ACzP8oXwUzCui36A7ExoUjWDApygzW9ucnzBe32SklDCw
-	 Mr1d2flx4A4Pnjjzd06YX7lYmTP6mO8kcMeO5Guf1P+cPy8OwISHSnjnY6sRgbgdTsHYV
-	 059HmuDCW/gB6SrDSy5EHr7W7XfsaKwcdXJeHu6RpOwLK7BO5y4MlSgQbZc2/yMk8CWH7
-	 bJ4SsfwunqytbBFRHHxjlBrgtVC4TgEg7HAwOFrErTCB9hnA40hbKvgZyKfXNxfb8kA==
+	t=1795034799;
+	b=1+OkWj6K1B+XKZ3gCUeP4mkzDLE/owz02Cugr43gJPhtfIXeOrik2N5sOpTYbXWpy1XK
+	 ErVGC/wsviXpFArwStV36jvDh2JaHYGrKkyHH5M2uirwTfL4G/CZvGs/LO+Edkx9LY0Br
+	 GJeaDiV3gFNB9PCtYon9+iM+Ur6pRKP2kFb2c1TCATumoNRkLj0LxJSW322SdvNhrle8/
+	 eQq3aXMm1VcUMLDR6nUNVwyQCFUmI3Ync6hCI1TYUq8zjA656OSQ0Zl1SqDQqCcJ5YOZ9
+	 EXpHM96TNdONM7MetOMnhmFZn0vv5NHlbqFpa/uB58klv/O9WnIetzsxy1ZgxjRYcMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034796;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034799;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BO+KnkELaj/+quPClK/2eK1kDMSoLlI37p4FFr2CpcM=;
-	b=dIHqUauJku9G18wB4dufqJiNoLXtNTZQ4LxyTeT1BQR9mB9aKEY0qGWh+5MxMH/CY/7/
-	 YXrhlHo2aOFok6DIRKxwYE4qTFX1sahrzwRhydaXtu5IGjo2gZVaBLLeUWsAu+kNh86ib
-	 8APYOkSST00SPu3Js3UTd9s4AL+orKN1IfZTXzvPLzZxpiL5ns0IfGCHkbRqSOlhbvfys
-	 +nbslka5KWdHxsm1LwvL5Q8hTo9ItpUMtSvBFh1551v9MuTUMspQMQWe5hrq1BOJGNNLE
-	 u0pQVQKZKFurjxeclvDy24a7uPOGyFuYSS5bWQDDmrvGZIY2drFazDfq6UV5YLWOBdA==
+	bh=pZaWIxAqLHEfs23Zxdmk4UAfFFAFigRFO1nZnyeMo2o=;
+	b=3kzfSdpvz7SCc6Wbfo66/+DNbmjyHmE+HWWIUOjpoXwnRhgHyRSyBItHigGx5ROX5FFK
+	 EL5z+1d0paAgIrHLrqtFsruzgOKujclEzjNYaaOHJERGTLxRSsNgEQ3128DUzKpWeCN2l
+	 F7NbcAJY0jl7cdGQL8HZNpebR37b3MgVmX/sl4FbXSyTcy96Qkk/scT74qyzAChw1PnIz
+	 6emPUSrn+o+e+be+D6osunKHgGhkCkmPaFmp3JNHIYilhJ/QzLF7yqx5RlC5pVjGwobCE
+	 PuV2c9hRQg6ZCQDxM2B3i24SHW4lI74kbTTNL+cd/obdCRLRrz3BOMR4DCp/PKQIJZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCMApQfO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yONZFKx2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E1B606A31C;
-	Wed, 18 Nov 2026 20:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40496606A32A;
+	Wed, 18 Nov 2026 20:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCMApQfO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E591F000C5;
-	Wed, 18 Nov 2026 20:46:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yONZFKx2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970391F000C4;
+	Wed, 18 Nov 2026 20:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034796;
-	bh=BO+KnkELaj/+quPClK/2eK1kDMSoLlI37p4FFr2CpcM=;
+	s=korg; t=1795034799;
+	bh=pZaWIxAqLHEfs23Zxdmk4UAfFFAFigRFO1nZnyeMo2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aCMApQfOfCv/ZpLz3bXz1Yu9oxr5NhJj0TpBT2N2PO0KpchUejwSOuiHAT9XqV+Si
-	 owcz0IMfuVwUm5mg4GQq8MWzR2nT+Vc6D4Y9OYuTEmb0xF+zTHJVCgo9DSmZ8zu9tk
-	 061pjderjEp4ECy7nRoUthADmQhPWEFVgpVSOflg=
+	b=yONZFKx2rKNRzs0Ng8GBESlRH8RpAWlscjmcO+MbO1VJHPu1YVr4OT0eYZtlRofFA
+	 ScC+6T+QblGL7MjSC8LZDTzGR5E6uO0ZRQLXQLifQDTztF7uZ/YzRWA7QjSgZgfSqf
+	 3E6L6oATo4bGbd7N4Y6RJvead21IzK46oisv0lJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Luxing Yin <root@tr0jan.top>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Frank Sorenson <sorenson@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Jinwoo Lee <rkskek9254@gmail.com>,
+	Stefan Teodorescu <fane@google.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0498/3318] smb: client: clean up failed cached directory opens
-Date: Wed, 18 Nov 2026 15:18:40 +0100
-Message-ID: <20261118150331.981792538@linuxfoundation.org>
+Subject: [PATCH 6.6 0499/3318] KVM: x86: Re-pend GET_NESTED_STATE_PAGES if getting said pages fails
+Date: Wed, 18 Nov 2026 15:18:41 +0100
+Message-ID: <20261118150332.015313717@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,104 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit d2ff5fb93ea83034025850266b5eed391f96b825 ]
+[ Upstream commit 10180a277549339020b08000206092c07e0bff5a ]
 
-open_cached_dir() sends CREATE and QUERY_INFO as a compound request. If
-the CREATE succeeds but a later command returns an error, the function
-must retain the CREATE FID so common cleanup can issue SMB2_close(). It
-also must not treat a response error as a valid CREATE.
+Re-pend GET_NESTED_STATE_PAGES before exiting to userspace if getting the
+nested pages fails in the KVM_RUN path.  If userspace re-runs the vCPU, and
+vmcs02 holds valid PFNs from the *previous* run of L2, then KVM could
+re-enter L2 with stale, unpinned PFNs mapped into e.g. the vAPIC page.
 
-Validate the CREATE response before using its fields, record the FIDs, and
-mark the handle open before handling errors from later compound commands.
-Move the -EREMCHG reconnect handling before response validation so a
-missing response does not hide the reconnect request. Count the handle
-when it is marked open; confirmed close responses decrement the counter,
-while existing close retry behavior remains best effort on transport
-failures.
+Note, both SVM and VMX (as of commit 11722439fb20 ("KVM: nVMX: Ensure
+KVM_REQ_GET_NESTED_STATE_PAGES is cleared on VM-Exit") ensure the request
+is cleared on VM-Exit (including the "forced" case), i.e. there is no risk
+of double-mapping due to emulated VMLAUNCH/VMRESUME/VMRUN *and* the request
+trying to map the nested pages.
 
-Fixes: b0f6df737a1c ("cifs: cache FILE_ALL_INFO for the shared root handle")
+Fixes: 671ddc700fd0 ("KVM: nVMX: Don't leak L1 MMIO regions to L2")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: LLM
-Co-developed-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Tested-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Reported-by: Jinwoo Lee <rkskek9254@gmail.com>
+Closes: https://lore.kernel.org/all/20260813043932.3214460-1-rkskek9254@gmail.com
+Reported-by: Stefan Teodorescu <fane@google.com>
+Link: https://patch.msgid.link/20260921211608.1030158-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[ sashal: Adapted the context line to call kvm_x86_ops.nested_ops->get_nested_state_pages(vcpu) directly, since kvm_nested_call() doesn't exist here; the added kvm_make_request() line is unchanged. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cached_dir.c | 32 ++++++++++++++++++++++----------
- 1 file changed, 22 insertions(+), 10 deletions(-)
+ arch/x86/kvm/x86.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/client/cached_dir.c b/fs/smb/client/cached_dir.c
-index fbc746813a6f2..bb1358d649499 100644
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -8,6 +8,7 @@
- #include <linux/namei.h>
- #include "cifsglob.h"
- #include "cifsproto.h"
-+#include "../common/smb2status.h"
- #include "cifs_debug.h"
- #include "smb2proto.h"
- #include "cached_dir.h"
-@@ -294,25 +295,37 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
- 	rc = compound_send_recv(xid, ses, server,
- 				flags, 2, rqst,
- 				resp_buftype, rsp_iov);
--	if (rc) {
--		if (rc == -EREMCHG) {
--			tcon->need_reconnect = true;
--			pr_warn_once("server share %s deleted\n",
--				     tcon->tree_name);
--		}
--		goto oshr_free;
-+	if (rc == -EREMCHG) {
-+		tcon->need_reconnect = true;
-+		pr_warn_once("server share %s deleted\n",
-+			     tcon->tree_name);
- 	}
--	cfid->is_open = true;
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index ad9a54302c313..6f04a955c9ae3 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -10614,6 +10614,7 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
  
--	spin_lock(&cfids->cfid_list_lock);
-+	if (!rsp_iov[0].iov_base || rsp_iov[0].iov_len < sizeof(*o_rsp)) {
-+		if (!rc)
-+			rc = -EIO;
-+		goto oshr_free;
-+	}
- 
- 	o_rsp = (struct smb2_create_rsp *)rsp_iov[0].iov_base;
-+	if (o_rsp->hdr.Status != STATUS_SUCCESS) {
-+		if (!rc)
-+			rc = -EIO;
-+		goto oshr_free;
-+	}
-+
- 	oparms.fid->persistent_fid = o_rsp->PersistentFileId;
- 	oparms.fid->volatile_fid = o_rsp->VolatileFileId;
- #ifdef CONFIG_CIFS_DEBUG2
- 	oparms.fid->mid = le64_to_cpu(o_rsp->hdr.MessageId);
- #endif /* CIFS_DEBUG2 */
-+	cfid->is_open = true;
-+	atomic_inc(&tcon->num_remote_opens);
- 
-+	if (rc)
-+		goto oshr_free;
-+
-+	spin_lock(&cfids->cfid_list_lock);
- 
- 	if (o_rsp->OplockLevel != SMB2_OPLOCK_LEVEL_LEASE) {
- 		spin_unlock(&cfids->cfid_list_lock);
-@@ -378,7 +391,6 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
- 		close_cached_dir(cfid);
- 	} else {
- 		*ret_cfid = cfid;
--		atomic_inc(&tcon->num_remote_opens);
- 	}
- 	kfree(utf16_path);
- 
+ 		if (kvm_check_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu)) {
+ 			if (unlikely(!kvm_x86_ops.nested_ops->get_nested_state_pages(vcpu))) {
++				kvm_make_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu);
+ 				r = 0;
+ 				goto out;
+ 			}
 -- 
 2.53.0
 
