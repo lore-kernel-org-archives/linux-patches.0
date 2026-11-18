@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040001;
-	b=WlM1n5vwzArGr+ax5dsIHRRsiY12Vw80XuIIORaqwe8LO9j3ZfeDvMAQqA7FbJKCNGkv
-	 bo6fZXgDJ+kq7ZQkQu8pUZMQZqHN6/T5aiONQEcAfSUm6ObCG5An9NhatR4QXOLQ1xDzB
-	 mBjrLy3wP8W7DoUqA3NLdZKWaptPhQBy+Inhdohq1dj1UuKxsvI1vvR9dyUobu1p30dEB
-	 0FsGbx2uVXqU+5zHYW7k9bOoQAlk5VXjEZXwiCs4mj67Hm3jDrIhx32PVV/2qCE3+g8o1
-	 gxO3YwFn5rm/p3CnDlBqaMt19VAJs55v7keLWPSORbb+QDeDQ0fuDof1GmcESEPaLHw==
+	t=1795040003;
+	b=xUap+Ap2DUDh+/kjfcQ/uhrnpzsWjjvj6y9/OBFRc0fV5h2sdnQilLFAxJpUenfRvGkr
+	 9hFEIK/Eldh+byncDZFMJxZcVihybEZinVjzkX0Y3C+zqfEAXZhRe97cIOEg5mD9V9d09
+	 b9JpXWt3hFqN7FeE+kUQE8aC36hfqpMFbWm06Fok4xdkmxQZvt40MpW9I8pV8SSxJU73B
+	 arO0WWnh+QJq7rJooJlMsolmNUD0ycgXsfNJcIH3zqC31J4Y17t/U5VCIYr3jHcbzOMvW
+	 2NxITxhY65s+YI/ZdaH6n9Pf/c4pKahypEwdnPGzLLWwIVxAV1htWRffGoECOmzyXSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040001;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040003;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wSXssna0hWtdoGPQI0Vzxq4iLS52jEIik4n0P9SEK0Y=;
-	b=pWsgNOU72wjV6NbSRvnavgngGMFrjvrYNebepZkZP6cy4yJJSw5aemryzbHsRvbZpOTW
-	 Z8nTtZv9UxrkCSi5V45SYuZNaiYcAlkov7I5jbSn2a2RUZ0jv67FiWLg71U0WuaJoTIJ0
-	 Dv1aF/6xZdh7qWWcC1AgNKnrGJF5sgo/OMaquhEHo3SsP8EJBYeeNP6j60aAy4pZlRmIN
-	 iHHPtNiECM+5LBHd/mTz0TYaBGLHrhTs/Yu2Mxm7su/4Eae/bHnEJLHNAy1XdLO5N4F/v
-	 hpDb9nn73Oyn3PEM/9vWY9g+cB7hkYfoRERfoCx+dxmu4X04FuF6XqS22JCfHEowflw==
+	bh=F/dDtAQAAz8gIW5ucxbUC+0sLIB0ZEGHUrY+PG4VJsI=;
+	b=WdjFkhc9MTuuYjWNvLI9v/1hshSgIJQ364d477daKTACi9xx/LhZvMIYkHnkZSCtbIoJ
+	 wibLd8sAjj1T6c7SUC5lU5Q+WabHkhYzlqz8PM7aCyNI3IIETMTA8ZhqSOkHursvZXgb3
+	 totedAnQE9e/a416tPwIPxTgKbCU5g7gesZP/0c4SfJIq3r4mV0JABuiRUt9CSv3qUK2t
+	 rhr4EjqYnjYiBg+4Zw6tn7P/nOp3gjzX4yclPGneuLLCOG4CD9c9P7bhzhzM8uZ2cUAjP
+	 6VqS4e7immOGzzALTioODXLo7FsoF1RPzyD4BmMOr1P0FyTPKMQ8EPYcRQq8ZPvF/2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XYzR31gT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nj7aaWr6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBEC9606A31C;
-	Wed, 18 Nov 2026 22:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD23D606A320;
+	Wed, 18 Nov 2026 22:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XYzR31gT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B9C01F000C4;
-	Wed, 18 Nov 2026 22:13:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nj7aaWr6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3379F1F000C4;
+	Wed, 18 Nov 2026 22:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040000;
-	bh=wSXssna0hWtdoGPQI0Vzxq4iLS52jEIik4n0P9SEK0Y=;
+	s=korg; t=1795040003;
+	bh=F/dDtAQAAz8gIW5ucxbUC+0sLIB0ZEGHUrY+PG4VJsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XYzR31gTX27ryr345yTAfskDprznzUFtLueqVhGEPluywh1ntCyRzWdCQAOSegnZS
-	 9d8ZbBSXdXEgqHlNtCBk1Q4DwjKTx3YXLHR1wWMsM+g1vw8u4nBuLxjLFVoi0gHLeI
-	 BIG1nHxXJsR+ee2hd/JXNXEWq7U7K6m5A2KxkTEY=
+	b=Nj7aaWr6/ZhOq9QIh8CZjJm7uaG+rLR8hFW12ElRJa1SsAyu23tDzp3ObJCClyDAc
+	 tPNanafVcIMqEznl+BkwmEHfkbjCxJmIzreZmXiY3ILczpMhbmwzQlMHphlAZ527ns
+	 3AqwRleY8kTeQ4SSQHlzgaBgN1k5DNsiRgifJXR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2274/3318] fs/ntfs3: check INDEX_ROOT resident size before use in ntfs_read_mft()
-Date: Wed, 18 Nov 2026 15:48:16 +0100
-Message-ID: <20261118150430.004664508@linuxfoundation.org>
+Subject: [PATCH 6.6 2301/3318] RDMA/siw: Fix qp use-after-free in siw_get_base_qp()
+Date: Wed, 18 Nov 2026 15:48:43 +0100
+Message-ID: <20261118150430.743790214@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,72 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit d0ac69ce3af4dbae01d4f064b7482f0c5440dbde ]
+[ Upstream commit ef15197f81ffedf29560edf2221199d92fd83dc2 ]
 
-When ntfs_read_mft() parses an ATTR_ROOT attribute it computes
+The reference taken by siw_qp_id2obj() is dropped before the address
+of the embedded ib_qp is taken from the QP.  If that reference was
+the last one the QP is freed and the pointer returned to the iwarp
+core is dangling; the core only pins the QP with iw_add_ref() after
+the call has returned.
 
-	root = Add2Ptr(attr, roff);
+Copy the pointer while the reference is still held.
 
-using the on-disk resident data offset (roff = attr->res.data_off) and
-then dereferences root->type and root->rule, and later passes root on to
-indx_init(). Unlike the ATTR_STD and ATTR_NAME cases, which validate that
-the resident data is large enough (asize >= sizeof(struct X) + roff and
-rsize >= sizeof(struct X)) before accessing it, the ATTR_ROOT case has no
-such check.
-
-mi_enum_attr() only guarantees data_off + data_size <= attribute size, so
-a crafted image can set data_off such that root lands at (or past) the end
-of the MFT record's slab allocation while still passing that check (e.g.
-data_size == 0). The subsequent read of root->type is then a
-slab-out-of-bounds read, reported by KASAN when mounting the image:
-
-  BUG: KASAN: slab-out-of-bounds in ntfs_iget5 (fs/ntfs3/inode.c:283)
-  Read of size 4 at addr ffff88800c06a400 by task exploit/142
-  Call Trace:
-   ...  [KASAN report internals]
-   ntfs_iget5 (fs/ntfs3/inode.c:283 fs/ntfs3/inode.c:542)
-   ntfs_fill_super (fs/ntfs3/super.c:1690)
-   get_tree_bdev_flags (fs/super.c:1634)
-   vfs_get_tree (fs/super.c:1694)
-   fc_mount (fs/namespace.c:1198)
-   path_mount (fs/namespace.c:3765 ...)
-   __x64_sys_mount (fs/namespace.c:4174 ...)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:63)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  The buggy address is located 0 bytes to the right of
-   allocated 1024-byte region [ffff88800c06a000, ffff88800c06a400)
-   which belongs to the cache kmalloc-1k of size 1024
-
-Validate the resident data size in the ATTR_ROOT case the same way the
-neighbouring cases do, so that a truncated or mis-offset INDEX_ROOT is
-rejected before root is dereferenced.
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 6c52fdc244b5 ("rdma/siw: connection management")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260916184400.2093106-1-vulab@iscas.ac.cn
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/inode.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/sw/siw/siw_main.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index dedc5937cd86a..2a98d92361fb8 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -281,7 +281,9 @@ static struct inode *ntfs_read_mft(struct inode *inode,
- 		break;
- 
- 	case ATTR_ROOT:
--		if (attr->non_res)
-+		if (attr->non_res ||
-+		    asize < sizeof(struct INDEX_ROOT) + roff ||
-+		    rsize < sizeof(struct INDEX_ROOT))
- 			goto out;
- 
- 		root = Add2Ptr(attr, roff);
+diff --git a/drivers/infiniband/sw/siw/siw_main.c b/drivers/infiniband/sw/siw/siw_main.c
+index c82f0af046afa..a082985ef537d 100644
+--- a/drivers/infiniband/sw/siw/siw_main.c
++++ b/drivers/infiniband/sw/siw/siw_main.c
+@@ -220,8 +220,11 @@ static struct ib_qp *siw_get_base_qp(struct ib_device *base_dev, int id)
+ 		/*
+ 		 * siw_qp_id2obj() increments object reference count
+ 		 */
++		struct ib_qp *base_qp = &qp->base_qp;
++
+ 		siw_qp_put(qp);
+-		return &qp->base_qp;
++
++		return base_qp;
+ 	}
+ 	return NULL;
+ }
 -- 
 2.53.0
 
