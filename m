@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054998;
-	b=sFb5T7pDz1dcFPrqnWXF9iolF6IQAHJz+A012dR7DdYZT7oJHVGXiPbs7f+gMVijVX7z
-	 fpfGo8q89rWMO+bV8WSvaU1gGQhmw12EhZ/Uisx78QuNb/PpwJUmzcRxr7yL9wnemM2dJ
-	 haL+IWyPVPtYEirhDwbtqo4DQlgJ3c7FaSU3mv0b1mVgbKyHR2dNRLN4TItqEpjIh4NVj
-	 GbBseYrfskKATuR7F6tbkDqtr6/ipMeXyvas5EDD1Qw3NsDufgCLzk/6fquw/GKyewR6o
-	 vtS7VyIxf7/9LMTxUXU5ojSg9jM2buOIf8rn6JX4uCH1Z4xV+35MVvSDUtNHGhdL2Bg==
+	t=1795055001;
+	b=GjG9HUIlGnWiZh1/I4UktBtrk3+kcrMmrvW8TLHg1c4NQBgiFaIaBUGznHZDQpBTBkuh
+	 bO61lqqXGsOcz3Vs7UJsZP8cdy53SAVqmf7x6pyoEMzmsuTJ4eL7f8y8qWUGIR1lyF5ad
+	 2BFIyoP/UP7oUXD7nzkle/3xstTSGpNjAwIJQe41R43Nx4x6waCXslqnW+iaqUTY4R7p3
+	 8E4obD0RWCWgLtwZ0yG7qxqw9IV6/93RrfLWAVtrWERXMI77miVQX/JnN4FsIVt4hwzg7
+	 um44ot0Hy00xC6nhWcwm0L06Fb6/Ot9RO8sCPQtC+6dWtYzUeOLLIy+TGN/OuW8MJVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054998;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055001;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d57UgFI5+rYISxa2Ldsh7pxTVixDTU80MYXhneW+hrI=;
-	b=A5+/c43o1hKk9Gh12nx0Oz4QDCc4lepGjh/xTsfmrzy/sX66U5AWhKUWfoNh8Dtq8RnK
-	 Zq1YNonfF/uvI3XDOMlw2241we1aISUTZu6lHWh1eed/quAjaX6LWzWRjAKOR+IT5HG6Z
-	 Yk8dJ3zcTvpqouEhXcYKb55of/gyaYzrbxpOZpR7AcSqc7bi3FPn4LxlbYvXPVPoMJQCM
-	 Z+ECB+jpPk1yD3CRl2EKufem1NMZV9/jXGmYntmKuNHxoWaoemUig/hYqz0woycuUixNj
-	 OEcBrCK8sWzOmnPcKXHIBJqowiorFEs5jfpzqRl7Cd5QXkOy22ENYHyZdIqJsEWuC0w==
+	bh=DgsqgvJJ76gabp0r9ffpLKxya0H25pX6yWHI4sS3XkA=;
+	b=RfZyC0F05DrhDI6qvDWFB/W0jCMOJ6qXt381i1RGy8wzRyFkWg+lezJF8T9yguuKUQKR
+	 g2eAzod6TQEsWB/UCrlPB2OSTzjOzr5ee55pPnAHm3XlTB7jQyomWvvWgbXk0ncUsFi78
+	 6xkq5TrhugAyCpRMw1NIdSIuSVoduSHBtig9b5hy1c/0Q6mwf0yREqafqXL7kSvZHJnzO
+	 qEEwENWKt90VrWHo3JQGtl8yOZIkiSM6ORVaFEMOhdM3wIls/G6Ep4xw0L9EIiRCvfNWW
+	 sI6fXYyFUw+fqqg6KmpAm+qO51voSr3ilBQ4r+HBgziYoCFAojaF8DbLJMNooWfHD3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=azohoyUR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qcy8uVd8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA82606A31C;
-	Thu, 19 Nov 2026 02:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06FC606A32C;
+	Thu, 19 Nov 2026 02:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=azohoyUR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84EF31F000C4;
-	Thu, 19 Nov 2026 02:23:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qcy8uVd8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4379C1F000C7;
+	Thu, 19 Nov 2026 02:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054998;
-	bh=d57UgFI5+rYISxa2Ldsh7pxTVixDTU80MYXhneW+hrI=;
+	s=korg; t=1795055000;
+	bh=DgsqgvJJ76gabp0r9ffpLKxya0H25pX6yWHI4sS3XkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=azohoyURr59ZkBAvIFJTNJmxzd8CFikO+rRyNyGeeaVXgQHVkoiBy0Ixl551+BzA7
-	 MKrd07KXsCjAcsxvZv7j8yUROgZH2/bUzIs8nu4EdTu81wDSx+jM/8byyXS5xqKdXq
-	 RVd9BkzL1cYtKQYuAFKKIsC2xmzaFeCM0DFaK5nQ=
+	b=Qcy8uVd8Vk4a/d9/wwGlSBXuKp+xfHL4mCtpSJBNdFYgl49uMYjyjO6geAfAE2jJZ
+	 E4CBZRPQr4Mq1dFiqfOvbzQ54b0dSyw0DXuclmuXMtWIUDwMLweUOjDKIuwtrnsegE
+	 82yQbuPg4Oypkn9QxYvLjF0LwRPoYkIzWh929c2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jiawen Liu <1298662399@qq.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1475/2214] crypto: qat - avoid OOB read when stripping RSA leading zeros
-Date: Wed, 18 Nov 2026 15:52:31 +0100
-Message-ID: <20261118150110.178052256@linuxfoundation.org>
+Subject: [PATCH 5.15 1476/2214] memory: exynos5422-dmc: handle clock enable failures
+Date: Wed, 18 Nov 2026 15:52:32 +0100
+Message-ID: <20261118150110.212599197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,67 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahsan Atta <ahsan.atta@intel.com>
+From: Jiawen Liu <1298662399@qq.com>
 
-[ Upstream commit ac508238898058f0b09b18a7891fb31279617781 ]
+[ Upstream commit cce46902ea9fcd585cd200fffa3166f63bc571f1 ]
 
-The logical AND operator uses short-circuit evaluation: the first
-operand is always evaluated, while the second is evaluated only if
-the first is true. Because the first operand dereferences a pointer,
-it may cause an out-of-bounds access before the bounds check in the
-second operand is evaluated.
+Check the return values of clk_prepare_enable() for fout_bpll and
+mout_bpll.
 
-Resolve this by checking the vlen prior to the pointer being dereferenced.
+If enabling fout_bpll fails, propagate the error. If enabling mout_bpll
+fails, disable fout_bpll before returning. This keeps the clock enable
+count balanced on probe error paths.
 
-Fixes: a990532023b9 ("crypto: qat - Add support for RSA algorithm")
-Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 6e7674c3c6df ("memory: Add DMC driver for Exynos5422")
+Signed-off-by: Jiawen Liu <1298662399@qq.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/tencent_B0189529F550458590E3BA614EAB800FBF08@qq.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/qat/qat_common/qat_asym_algs.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/memory/samsung/exynos5422-dmc.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/qat/qat_common/qat_asym_algs.c b/drivers/crypto/qat/qat_common/qat_asym_algs.c
-index 4437c3a5c6dd7..fc0613f37b7e1 100644
---- a/drivers/crypto/qat/qat_common/qat_asym_algs.c
-+++ b/drivers/crypto/qat/qat_common/qat_asym_algs.c
-@@ -934,7 +934,7 @@ static int qat_rsa_set_n(struct qat_rsa_ctx *ctx, const char *value,
- 	const char *ptr = value;
- 	int ret;
+diff --git a/drivers/memory/samsung/exynos5422-dmc.c b/drivers/memory/samsung/exynos5422-dmc.c
+index c491cd549644f..85c05c9c75332 100644
+--- a/drivers/memory/samsung/exynos5422-dmc.c
++++ b/drivers/memory/samsung/exynos5422-dmc.c
+@@ -1304,8 +1304,15 @@ static int exynos5_dmc_init_clks(struct exynos5_dmc *dmc)
+ 	if (ret)
+ 		return ret;
  
--	while (!*ptr && vlen) {
-+	while (vlen && !*ptr) {
- 		ptr++;
- 		vlen--;
- 	}
-@@ -965,7 +965,7 @@ static int qat_rsa_set_e(struct qat_rsa_ctx *ctx, const char *value,
- 	struct device *dev = &GET_DEV(inst->accel_dev);
- 	const char *ptr = value;
+-	clk_prepare_enable(dmc->fout_bpll);
+-	clk_prepare_enable(dmc->mout_bpll);
++	ret = clk_prepare_enable(dmc->fout_bpll);
++	if (ret)
++		return ret;
++
++	ret = clk_prepare_enable(dmc->mout_bpll);
++	if (ret) {
++		clk_disable_unprepare(dmc->fout_bpll);
++		return ret;
++	}
  
--	while (!*ptr && vlen) {
-+	while (vlen && !*ptr) {
- 		ptr++;
- 		vlen--;
- 	}
-@@ -991,7 +991,7 @@ static int qat_rsa_set_d(struct qat_rsa_ctx *ctx, const char *value,
- 	const char *ptr = value;
- 	int ret;
- 
--	while (!*ptr && vlen) {
-+	while (vlen && !*ptr) {
- 		ptr++;
- 		vlen--;
- 	}
-@@ -1014,7 +1014,7 @@ static int qat_rsa_set_d(struct qat_rsa_ctx *ctx, const char *value,
- 
- static void qat_rsa_drop_leading_zeros(const char **ptr, unsigned int *len)
- {
--	while (!**ptr && *len) {
-+	while (*len && !**ptr) {
- 		(*ptr)++;
- 		(*len)--;
- 	}
+ 	/*
+ 	 * Some bootloaders do not set clock routes correctly.
 -- 
 2.53.0
 
