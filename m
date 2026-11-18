@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057028;
-	b=RV93hT+Hi+4hpGx9vAum3AaruRcThacAo9i93Hv+s4Yq7A1s/cQzzpr0PsYwYlU2zHmL
-	 ORd8zHDXlQcT3gDYKhg47F7J2DwjiGEamcdVaR9Ezr+pW0dBe8RQLEMsAi0pvzG11mmIC
-	 /S1O8udL2NILuCJ86S8XI/2bwJzaGgMtHLGhnAs9bJdxMwBRd3F2XaYmQaCClKKKBkxt0
-	 uXuSKyraUTa8Vqdmg6/Qlq5OJV45XFRZlOO8fNL4HE9d/Vi1OmvsOpUEHDv47HPJO/NQr
-	 teE91KfMaRxkvM4s8zFnZFPDG6FIEa2IWyx5k/OQCwzlcXx25gnUCby9oHjb/ybSqlQ==
+	t=1795057030;
+	b=sFf8J0VBI/bYnh+pwqpvAI5eY5WAdKgLJ6pylCqhhTJQFwJur1j/gZfbvpkF1U2aZViC
+	 KSuwjI8SHF1R96V9XVq8/ZJuWjW4XR0dOQAhv9BVhYvoRkvvd1XjFwtTfTrn9vPVGVk69
+	 ln8vQFx1r1uCB8DhZXuWVd4/LLkmtjeRdfgQixBeGWFToUhgAe+V9aEtdcBvN9ObkAgrU
+	 tRdh/KOxBe0U3LRrFIxscMVu9XBRUyYNEql27MIgN915s9veaMkK7ZlEgnR7p2aFf0YX8
+	 j5V86HaOJtRmUrXI2RH6Uwdh5NIk8YD5gRyL6jFUgirzZRnZtNmZ7BEoGFw9Tfh+Diw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057028;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057030;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=K+N3ECCiXSqB024sSpwWnKUDysYGOcTjUs7LIHtJhEk=;
-	b=fLWgONInmZGIcT8YaU/NlUcJpWPYojV0i34cfkV/f+Er5qjiyxs5DRnUptWp6BIfUUC6
-	 GDYc4SKo+lNUNVT9U7iHW32Hk0JtJ+h3OnHbmW62Pl4J7fDZ0QrHoiXt2roH/Tm1aqswt
-	 ZCfKEooDoN/tDGBgDWgCQdSfVMWyc6wlWZM4XZW8VQZVc8laualbX6SkrA9CYSPWVoD46
-	 9Nv35PBx+mLe/vkRgRTuQGm7iz+tp0YTXPpEf7F6bPqebFAtMBIRcjg8o/ZZ3V0EgYrKq
-	 Sr8BmS1enzQMK871WXF4mlHdh8g3pNIEC050bwm6dXBqK5KVYtw8M0KaVOcJZxbAdUA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=nymIuwX15qE0wz+hE/DYFhvl++SOs/gWNItByddNyPE=;
+	b=rKlv0+nhnaBFSMcCBlf9rZgiF+5rHBrCIocz1jc/4mtJgcqHmGsNoGtxTN3XJ31PFFjO
+	 eYBkcG0ddhopqfX2CQmEORkizyjYFGialCUuvyX/o0B1WX4l+poo/hqyG447xXZqRfheQ
+	 lrRVxDbEdlop6LUgyvPtJRs7djmiRhaFAVUa837hLl73gL27AMG11BWAZPy02knx+BzEf
+	 pxn8GVqpppJAShXLU0McPIhSLhpJEE2EBeekMwCWuyWmcwg41As3XTI39kKyndaQIk21u
+	 38qHheEn/WklCsN8mOjdxDc/vDhKb5L/PNNlOujiYw+wig0E778+xXKbMXhh+H39j+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fNvG/FE6";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iiST9kKn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E56606A32A;
-	Thu, 19 Nov 2026 02:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF561606A330;
+	Thu, 19 Nov 2026 02:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fNvG/FE6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4181E1F000C4;
-	Thu, 19 Nov 2026 02:57:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iiST9kKn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA131F000C4;
+	Thu, 19 Nov 2026 02:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057027;
-	bh=K+N3ECCiXSqB024sSpwWnKUDysYGOcTjUs7LIHtJhEk=;
+	s=korg; t=1795057030;
+	bh=nymIuwX15qE0wz+hE/DYFhvl++SOs/gWNItByddNyPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fNvG/FE6QlFwa6dAs9FYuh0Zhz3lKtBOFC7zWa6mgrxVQRy9nAK2zgmbslKHCG8yi
-	 LW15b/FYh/X6tvpZgq10wxA5FJLvKJhCM+CBq6UYK/fKGFd7Z1wqb8YDz6XXL6So8v
-	 M/ByzBa4Nk/wrKSQD6FvlDhwdOh/EiTzyIs0HCRE=
+	b=iiST9kKnx8tpreliTBy70cW4J48CcATsWimJvp07gqZxEVMeG+47Q5zvOOBh6dXqX
+	 4IOt7s4zpAncKaTJaX4uzkg/RHJFTWO18KXlabMTx45iB4jiHnY1Glxi2rbVaia5dk
+	 m+R2STxyIi/t38VW+Tuq2cRIvI3I3dmkKsQ0BIe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2197/2214] PCI/sysfs: Decouple acpi_index from the optional device name element
-Date: Wed, 18 Nov 2026 16:04:33 +0100
-Message-ID: <20261118150138.189863547@linuxfoundation.org>
+	Shanker Donthineni <sdonthineni@nvidia.com>,
+	Steven Price <steven.price@arm.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.15 2198/2214] irqchip/gic-v3-its: Fix over allocation in itt_alloc_pool()
+Date: Wed, 18 Nov 2026 16:04:34 +0100
+Message-ID: <20261118150138.223886642@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,126 +62,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Steven Price <steven.price@arm.com>
 
-[ Upstream commit 337bdf853101a0ee66eadf668f0fef21f8276b52 ]
+commit bc88d44bd7e45b992cf8c2c2ffbc7bb3e24db4a7 upstream.
 
-The "_DSM for Naming a PCI or PCI Express Device Under Operating Systems"
-(PCI Firmware r3.3, sec 4.6.7) returns a package of two elements:
+itt_alloc_pool() calls its_alloc_pages_node() to allocate an individual
+page to add to the pool (for allocations <PAGE_SIZE). However the final
+argument of its_alloc_pages_node() is the page order not the number of
+pages. Currently it allocates two pages and leaks the second page.
+Fix it by passing 0 instead (1 << 0 = 1 page).
 
-  1) Instance number (mandatory Integer)
-  2) String name (optional String, null string if not populated)
-
-These are exposed as sysfs 'acpi_index' and 'label'. Previously, if
-the name was malformed, reads of 'acpi_index' failed unnecessarily.
-
-Validate each element only for the attribute that exports it.  So
-"acpi_index" now depends on the instance number alone, and "label" reads
-fail with -EIO when the name element is neither a string nor a buffer.  The
-package elements pointer is read only after the object type has been
-checked.
-
-On platforms with a valid instance number and a malformed name element the
-"acpi_index" attribute starts returning data.  Because udev derives the
-onboard interface name from "acpi_index", an interface on such a platform
-may be renamed once, on the first boot after this change.  That is the
-attribute assuming the value the firmware always provided.
-
-Link: https://github.com/pciutils/pciutils/issues/175
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260814070522.2327975-3-kwilczynski@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b08e2f42e86b ("irqchip/gic-v3-its: Share ITS tables with a non-trusted hypervisor")
+Reported-by: Shanker Donthineni <sdonthineni@nvidia.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/1f6e19c4-1fb9-43ab-a8a2-a465c9cff84b@arm.com
+Closes: https://lore.kernel.org/r/ed65312a-245c-4fa5-91ad-5d620cab7c6b%40nvidia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-label.c | 53 +++++++++++++++++++++++++----------------
- 1 file changed, 33 insertions(+), 20 deletions(-)
+ drivers/irqchip/irq-gic-v3-its.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pci-label.c b/drivers/pci/pci-label.c
-index f81248a11a18e..08c461f1142d7 100644
---- a/drivers/pci/pci-label.c
-+++ b/drivers/pci/pci-label.c
-@@ -157,7 +157,7 @@ static int dsm_get_label(struct device *dev, char *buf,
- {
- 	acpi_handle handle = ACPI_HANDLE(dev);
- 	union acpi_object *obj, *tmp;
--	int len = 0;
-+	int len;
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -264,7 +264,7 @@ static void *itt_alloc_pool(int node, in
+ 		if (addr)
+ 			break;
  
- 	if (!handle)
- 		return -ENODEV;
-@@ -167,30 +167,43 @@ static int dsm_get_label(struct device *dev, char *buf,
- 	if (!obj)
- 		return -EIO;
+-		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, 1);
++		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, 0);
+ 		if (!page)
+ 			break;
  
-+	if (obj->type != ACPI_TYPE_PACKAGE || obj->package.count != 2) {
-+		len = -EIO;
-+		goto out;
-+	}
-+
- 	tmp = obj->package.elements;
--	if (obj->type == ACPI_TYPE_PACKAGE && obj->package.count == 2 &&
--	    tmp[0].type == ACPI_TYPE_INTEGER &&
--	    (tmp[1].type == ACPI_TYPE_STRING ||
--	     tmp[1].type == ACPI_TYPE_BUFFER)) {
--		/*
--		 * The second string element is optional even when
--		 * this _DSM is implemented; when not implemented,
--		 * this entry must return a null string.
--		 */
--		if (attr == ACPI_ATTR_INDEX_SHOW) {
--			len = sysfs_emit(buf, "%llu\n", tmp->integer.value);
--		} else if (attr == ACPI_ATTR_LABEL_SHOW) {
--			if (tmp[1].type == ACPI_TYPE_STRING)
--				len = sysfs_emit(buf, "%s\n",
--						 tmp[1].string.pointer);
--			else if (tmp[1].type == ACPI_TYPE_BUFFER)
--				len = dsm_label_utf16s_to_utf8s(tmp + 1, buf);
--		}
-+	if (tmp[0].type != ACPI_TYPE_INTEGER) {
-+		len = -EIO;
-+		goto out;
- 	}
- 
-+	if (attr == ACPI_ATTR_INDEX_SHOW) {
-+		len = sysfs_emit(buf, "%llu\n", tmp[0].integer.value);
-+		goto out;
-+	}
-+
-+	/*
-+	 * Per PCI Firmware r3.3, sec 4.6.7, the device name is optional
-+	 * even when this _DSM is implemented. When not implemented, this
-+	 * entry must return a NULL string.
-+	 */
-+	switch (tmp[1].type) {
-+	case ACPI_TYPE_STRING:
-+		len = sysfs_emit(buf, "%s\n", tmp[1].string.pointer);
-+		break;
-+	case ACPI_TYPE_BUFFER:
-+		len = dsm_label_utf16s_to_utf8s(&tmp[1], buf);
-+		break;
-+	default:
-+		len = -EIO;
-+		break;
-+	}
-+
-+out:
- 	ACPI_FREE(obj);
- 
--	return len > 0 ? len : -EIO;
-+	return len;
- }
- 
- static ssize_t label_show(struct device *dev, struct device_attribute *attr,
--- 
-2.53.0
-
 
 
