@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032495;
-	b=lVmDh5NRPJjcsMqK41/yqTDdct0WBp+XNicyBG2MGm/bGyOVHiQ49cyRYBwCcgG7H8dE
-	 TUX3//LktHSnSPSV6fFEqUUDI2rS+cPsxYXYvMBSBDNCiv/znC87g1DmQWA8AhFYx+Psp
-	 Ypq/6BaaWGrD7nbqjdfIdJt0Ub91QLDOKp0ZWlOJbXLE4Y0w3tZMzY1ny4rOhjIkvsOjX
-	 HLCnxWW2B+zInvetny7XeRpcplkP8sa/xo8A2XablddtQgIvDPqJUZizF4JRS8HWivT7q
-	 iVP7U/X0sNJu3/NNR0+D/X79IBOTopzSQFS8OFT5oczyCZtaANsRVIA/5JvzT3KSCAQ==
+	t=1795032498;
+	b=aG3+SQPSfW1ZyFD6EfxeiwZN8umipOEiEXOU5piaHBSwYzhdxwwCLYUoW483KGM3T0HU
+	 aKYsVS6HILMFxzy3P9MNqiwqnycMsXSBMRv65Qea3AR9SLoLS8PWsse6SsxMoriYHaE2X
+	 MNPBIZlpFuwsO1y1ETOXqIA/h12g1iJg+NnMnPbSzcHgP5oVgxjmkk3K511nL19q9/aum
+	 3PDLsj29WAkX02jok3gd4E2J+4s1+fHwYTkwNm3kRInD/4rKrZMgrUY5yDt3cgMgd803X
+	 ulvI49yMJBWSYM0gLywtteHA0zIYXcU1LwtTFECHUn+p1r1zVGXqwu0O3NYUcDABWSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032495;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032498;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5HjHlRmh09WJOWaLmykhcMPp1n+7uP06GOY9FLebHas=;
-	b=jn/Z/or+jIxLFnVGEQwoBr2oJHetPHXcP/FyGwk6mhAAF27l56E9oNEwDXr41PUK4y0q
-	 NTH9DJ+FQcQqrD+cePLdLLmQa0tfZ7KVq6cA4H9a7MxsX4Y6wKb/LAaDA9wOVBY3MvCE8
-	 CbcXt3qqGHYcwV0VnxwJfbu9JLSCXY2wd/mEq1g6eIbemWOmAm6j1R6xuKKK9Qo3HEXnJ
-	 L30JDC//iEZT1Lwz0Hm93YxjPZlHxvIW8lVris+mFhuN5DesVPrAsR7t1bZJMm8DGPzzX
-	 JdQKUeiDGsarl1Z6ABTKAn40y8o7vlE4TLXWZ9uWEAp3foKdqpwatmkTF5wU+QJ7GGg==
+	bh=fQHsMSQduUjmK3ik3bhpJftgymTDy80DUA/WOZK8/7s=;
+	b=OcLwoNco+7B4mnhwlZrBLxF2PKShaqiO7N20fPcErCUK/BRYxWVmYVu2DaLOHKbMSHyw
+	 jmG03xksu+RZptsHgv+dCJ33ghOt0KqK2aatbitmk+z6+A0NoLOPCgu5KqctnZe4XOrpk
+	 uOBi9WbRc9V2xszHIDYlufimkpI2QZKOSWF9dOyTpB1XIN+gnQyCAFFR7Ylp5IZMlbBdH
+	 auLgr/uTI8raSNfvxw1E+eHVMNwhWy1xTlpgPnG6kpc7A/NgPLgLRlZHhgn54/BuD8HW+
+	 y9B5Fmpz181Mh6ABtokleuPjJRFYAmEnB8PLCsQGjEYDZYMfNQOaUxmiZ5mi1A9Jqtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PnY2Fzvi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="W/LBop9+";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9998C606A85A;
-	Wed, 18 Nov 2026 20:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20531606A86D;
+	Wed, 18 Nov 2026 20:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PnY2Fzvi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA96F1F000C5;
-	Wed, 18 Nov 2026 20:08:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W/LBop9+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75BF01F000C4;
+	Wed, 18 Nov 2026 20:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032495;
-	bh=5HjHlRmh09WJOWaLmykhcMPp1n+7uP06GOY9FLebHas=;
+	s=korg; t=1795032498;
+	bh=fQHsMSQduUjmK3ik3bhpJftgymTDy80DUA/WOZK8/7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PnY2FzviaUvvxdmm6ZO1Z/ZoICRRLfUTGUXWZF0wUyn7oMcHW3Zwhidvda4OqeEyP
-	 WDAJKRjxLJj/SJNImCfCVW/HRHpM5SGUbwNP+N71LzHoBBkjiKKlQHLfGOatill8Ny
-	 /aTLSShU+KL4KVpJUUOU7JCwIt/vy/1Mkl6yvLUU=
+	b=W/LBop9+8DfHNmxc1VSBS+gjnGbq8/HVM5qmeT41Zol0bC3Awsjtn6bqwRbKazkVh
+	 JCunGTYtfGZPqlIYZNw4VMYGl/ZzdC7XyFgLDgpEufmqO5BCeLuf1C3dr8SQeylNET
+	 dBqFtQujYuagrTDRsYQbjiuPOVSD3rRp8FVnFoE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1433/1756] ASoC: cs42l56: Remove the ADC Mute Switch control
-Date: Wed, 18 Nov 2026 15:59:20 +0100
-Message-ID: <20261118150106.233557394@linuxfoundation.org>
+Subject: [PATCH 6.12 1416/1756] nfsv4/pnfs: use the MDS authflavor for data server connections
+Date: Wed, 18 Nov 2026 15:59:03 +0100
+Message-ID: <20261118150105.557393706@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,44 +68,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
 
-[ Upstream commit ff404ef11b975baf38c4472c51a6674c239e8021 ]
+[ Upstream commit 4b27670ea25b955b710021151471cb252240b1e0 ]
 
-The ADC Mute Switch control writes bits 2 and 3 of the Misc ADC Control
-register. These are the ADCA Invert and ADCB Invert bits, which have
-their own controls. The ADC mute bits are bits 0 and 1, and the DAI mute
-callback already sets them.
+When a pNFS client connects to an NFSv4.1 data server, the EXCHANGE_ID
+is always attempted with RPCSEC_GSS krb5i first, even if the auth flavor
+with the MDS is AUTH_SYS. On a host that runs rpc.gssd but has no usable
+machine credential, every first contact with a data server therefore
+upcalls to rpc.gssd before falling back to AUTH_SYS.
 
-So the control has never muted the ADCs, and nobody can be relying on
-it. Remove it rather than point it at the mute bits, so the ADCs are
-muted in one place only.
+As nfs4_discover_server_trunking is serialized by nfs_clid_init_mutex
+such an extra upcall creates a backlog of DS connections when many files
+accessed in parallel.
 
-Fixes: 272b5edd3b8f ("ASoC: Add support for CS42L56 CODEC")
-Suggested-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/all/atXh3Br+fuH83S0q@opensource.cirrus.com/
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20261019124022.3410793-1-sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Pass the authflavor of the MDS lease to nfs4_alloc_client() and skip
+the krb5i attempt if the MDS already ended up with AUTH_SYS. Nothing
+changes for the MDS itself, or for data servers of an MDS whose lease
+was established with krb5i.
+
+Fixes: 4edaa308888b ("NFS: Use "krb5i" to establish NFSv4 state whenever possible")
+Signed-off-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs42l56.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/nfs/internal.h   | 1 +
+ fs/nfs/nfs4client.c | 7 ++++++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/cs42l56.c b/sound/soc/codecs/cs42l56.c
-index 0058ce2d55e83..f7e9c0fb23b71 100644
---- a/sound/soc/codecs/cs42l56.c
-+++ b/sound/soc/codecs/cs42l56.c
-@@ -387,7 +387,6 @@ static const struct snd_kcontrol_new cs42l56_snd_controls[] = {
- 			      CS42L56_PGAB_MUX_VOLUME, 0, 0x34, 0x24, pga_tlv),
- 	SOC_DOUBLE_R_TLV("ADC Volume", CS42L56_ADCA_ATTENUATOR,
- 			      CS42L56_ADCB_ATTENUATOR, 0, 0x00, 1, adc_tlv),
--	SOC_DOUBLE("ADC Mute Switch", CS42L56_MISC_ADC_CTL, 2, 3, 1, 1),
- 	SOC_DOUBLE("ADC Boost Switch", CS42L56_GAIN_BIAS_CTL, 3, 2, 1, 1),
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index ea0524be7c743..55479eb6c5299 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -86,6 +86,7 @@ struct nfs_client_initdata {
+ 	struct xprtsec_parms xprtsec;
+ 	unsigned long connect_timeout;
+ 	unsigned long reconnect_timeout;
++	rpc_authflavor_t authflavor;		/* Auth flavor to use for DS connection */
+ };
  
- 	SOC_DOUBLE_R_SX_TLV("Headphone Volume", CS42L56_HPA_VOLUME,
+ /*
+diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
+index 9311944a47f58..ab0659a808135 100644
+--- a/fs/nfs/nfs4client.c
++++ b/fs/nfs/nfs4client.c
+@@ -238,8 +238,12 @@ struct nfs_client *nfs4_alloc_client(const struct nfs_client_initdata *cl_init)
+ 	/*
+ 	 * Set up the connection to the server before we add add to the
+ 	 * global list.
++	 *
++	 * Prefer krb5i unless the caller already knows AUTH_UNIX is required.
+ 	 */
+-	err = nfs_create_rpc_client(clp, cl_init, RPC_AUTH_GSS_KRB5I);
++	err = -EINVAL;
++	if (cl_init->authflavor != RPC_AUTH_UNIX)
++		err = nfs_create_rpc_client(clp, cl_init, RPC_AUTH_GSS_KRB5I);
+ 	if (err == -EINVAL)
+ 		err = nfs_create_rpc_client(clp, cl_init, RPC_AUTH_UNIX);
+ 	if (err < 0)
+@@ -999,6 +1003,7 @@ struct nfs_client *nfs4_set_ds_client(struct nfs_server *mds_srv,
+ 			.cert_serial = TLS_NO_CERT,
+ 			.privkey_serial = TLS_NO_PRIVKEY,
+ 		},
++		.authflavor = mds_clp->cl_rpcclient->cl_auth->au_flavor,
+ 	};
+ 	char buf[INET6_ADDRSTRLEN + 1];
+ 
 -- 
 2.53.0
 
