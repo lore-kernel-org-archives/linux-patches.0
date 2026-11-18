@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041225;
-	b=1r+shCHkpbUDUfzA+YD5EOYwo6ICPimFGHbG+44/cByPHGBXIVhfMlNTw+OIdhh1SOfs
-	 iaBjUAJFNpY2WC1cNJ3sCKEkqSpgPtT7MA/A+aA7FvJba2xZgKi6x5LW4XsNflgabNvNo
-	 gDlsYhgA6qeA3VKIDM+D+g0PoyDTy3JlP7Xk1h1MTg9HCQeDKjUiB93jsVgnuQ+kgjkcs
-	 jp31ISqzy4HxwQqH0fl/2s+KJFDeUsxTvmnUroHWiR+ZliIApLTdJpLqZokSnXopBFAf+
-	 pu0asT5dWZyV6qgg2VVRtvcuFKFl+FfMCfiOzHRuEkiqm3L3afZGWWYlxGNnvkp3YDA==
+	t=1795041228;
+	b=M0ONnTm65RDKhq/pSoTGnEUezKW72i8+isMdpYwrpqDxqp3E0uA6YBjFdwktKNpNkT6U
+	 VphZ1pwqeYrRXmulWiKsF4pTyQuQ44FMS/6Xb2KFoRx/86AvNDjo3aBiI8Sb/EICyNPwe
+	 QRfvVwoQctyjaV/3GUUhGINryO4ky82JDXy7g0xKwTGrQcYrDS8KisdqEoYKpHHTm7FlT
+	 zhXt1QEdu7KPAx/MWMmf9HCqE69Luduc5XRmyY1Z7LLqPMDENskzI8/ETqQwRNtvZsNTt
+	 JTK1J1sLTCOcYwKU17HgYXSVGUsIsPeEQqoaM+0g27o3+ngTqW64RsFmlpbVnlZ3J5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041225;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041228;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bwqjzpXmaCehaVmeteMbNptfTQ7dzbXUKKR1ecRWINo=;
-	b=YJYofyoWNqqBiF+nE/KZdwq25G8hdZChIisxJs+wqVvfcHYtgQGLdHWicHnD0lv1ZxaE
-	 00Ql0OGTkwqzPXoBBycoyUvy4wSLcIoOoiSMKtLX/bxIQqxeuA3H4lCifs15Zy7sNfuMw
-	 ia4UZ3OheyFwryrc48QQxKZPxTiK/xV6HS2o7jiqT7pJGzQlF8abCISQ0hY19YiR8sCfx
-	 v/AAvMTm9LNeGxJXeKBipCpW1QLie95Ykyth9Oe+Sxj7RiMfPPV5ZpjTJ3JDpm8J21ZV0
-	 8YUtkHNcxgbKEgBBiuqkhFOskqEW5c2yqvvNuIBESBaUULfrsJmMc5f8p+M2OkKEaWA==
+	bh=kkET5gHZkCmjeVC2QjxkMOHvuIakzKlRzE0gKtlAe1I=;
+	b=Nfnr+TuVS0TQ7i2Q+MM1ogZaUqluaudaiuoQipkMkR37E9QCytSKQgaIXq4y5nrozbwe
+	 oLzLO9J5rMjCUJ51asPb9xLWIuBMQ8SIiw1ld6y9j4J5DrmGmahVw1GSfx31Sv6LEDw9c
+	 F27zN0aBR1mFx9i3nwM5sxYyaiqvUzFu9Io7qqh/y9kQN4Sz9b187y6pB782xmczd9tjv
+	 rCpRNlU6Nad+LEkjDj+Vg/LRi+fA2znSTKOrat73X1j6uMrOpCvDD4iUVAhBjjw17zPIz
+	 ATPAdCvsC0HU/MCVL+Un4RWLeUsiT1PQb0bcvyqSZxkZNr2qsN4I+Rj6msLYR4vKIXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vyrGuxNQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S38h66cC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FDD9606A31C;
-	Wed, 18 Nov 2026 22:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B63606A325;
+	Wed, 18 Nov 2026 22:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vyrGuxNQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03311F000C4;
-	Wed, 18 Nov 2026 22:33:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S38h66cC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9939C1F000C4;
+	Wed, 18 Nov 2026 22:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041225;
-	bh=bwqjzpXmaCehaVmeteMbNptfTQ7dzbXUKKR1ecRWINo=;
+	s=korg; t=1795041228;
+	bh=kkET5gHZkCmjeVC2QjxkMOHvuIakzKlRzE0gKtlAe1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vyrGuxNQLanc5xnDlZZyag8ppuGHlp5Z6OXbvwSDzSFjSUpEEzKm7grFH43ohu4f6
-	 i/epcLUv5dZnCOjVTyiRNwKsqBl+Vfa8VMxmn6Ogp8Ao8DZtAwVV8oMpHBKXyEUT0D
-	 c1mc9PmJdAB5jyPQWURD3QeKlCHz/HU//N6MIjf0=
+	b=S38h66cC+5kTpxaFrr4Az+qO4DUOBLOdCkAmGTP2Rjl2eHESE6Ba+9EL81fOxDMjd
+	 F4fhpg1IbKmv7tBjJRFG2SejL7WIwAS+i5ZR7NWlLdmWHMcN/Ya6FRgYrsBm5gMkiy
+	 RLBF8k1jmyKrtb49RqicVQqHxGE1GqSZZUBIlP2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Zhang <markzhang@nvidia.com>,
+	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2737/3318] RDMA/mlx5: Support driver APIs pre_destroy_cq and post_destroy_cq
-Date: Wed, 18 Nov 2026 15:55:59 +0100
-Message-ID: <20261118150442.908054985@linuxfoundation.org>
+Subject: [PATCH 6.6 2738/3318] RDMA/mlx5: Cancel software CQ notifications before teardown
+Date: Wed, 18 Nov 2026 15:56:00 +0100
+Message-ID: <20261118150442.933857166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,146 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Zhang <markzhang@nvidia.com>
+From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
 
-[ Upstream commit b5eeb8365d196c95dbb0fd0a5b5a69a44832f16f ]
+[ Upstream commit a0ab2bb269e7fd8523f87950b91a42a36c7f8f2a ]
 
-- pre_destroy_cq: Destroy FW CQ object so that no new CQ event would
-                  be generated;
-- post_destroy_cq: Release all resources.
+GSI completions queue notify_work to invoke the CQ completion handler.
+CQ destruction drains hardware events and core polling, but does not
+cancel this software notifier.
 
-This patch, along with last one, fixes the crash below.
-
- Unable to handle kernel paging request at virtual address ffff8000114b1180
- Mem abort info:
-   ESR = 0x96000047
-   EC = 0x25: DABT (current EL), IL = 32 bits
-   SET = 0, FnV = 0
-   EA = 0, S1PTW = 0
- Data abort info:
-   ISV = 0, ISS = 0x00000047
-   CM = 0, WnR = 1
- swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000f4582000
- [ffff8000114b1180] pgd=00000447fffff003, p4d=00000447fffff003, pud=00000447ffffe003, pmd=00000447ffffb003, pte=0000000000000000
- Internal error: Oops: 96000047 [#1] SMP
- Modules linked in: udp_diag uio_pci_generic uio tcp_diag inet_diag binfmt_misc sn_core_odd(OE) rpcrdma(OE) xprtrdma(OE) ib_isert(OE) ib_iser(OE) ib_srpt(OE) ib_srp(OE) ib_ipoib(OE) kpatch_9658536(OK) kpatch_9322385(OK) kpatch_8843421(OK) kpatch_8636216(OK) vfat fat aes_ce_blk crypto_simd cryptd aes_ce_cipher crct10dif_ce ghash_ce sm4_ce sha2_ce sha256_arm64 sha1_ce sbsa_gwdt sg acpi_ipmi ipmi_si ipmi_msghandler m1_uncore_ddrss_pmu m1_uncore_cmn_pmu team_yosemite9rc6(OE) vnic(OE) ip_tables mlx5_ib(OE) sd_mod ast mlx5_core(OE) i2c_algo_bit drm_vram_helper psample drm_kms_helper mlxdevm(OE) auxiliary(OE) mlxfw(OE) syscopyarea sysfillrect tls sysimgblt fb_sys_fops drm_ttm_helper nvme ttm nvme_core drm t10_pi i2c_designware_platform i2c_designware_core i2c_core ahci libahci libata rdma_ucm(OE) ib_uverbs(OE) rdma_cm(OE) iw_cm(OE) ib_cm(OE) ib_umad(OE) ib_core(OE) ib_ucm(OE) mlx_compat(OE) [last unloaded: ipmi_devintf]
- CPU: 83 PID: 59375 Comm: kworker/u253:1 Kdump: loaded Tainted: G           OE K   5.10.84-004.ali5000.alios7.aarch64 #1
- Hardware name: Inspur AliServer-Xuanwu2.0AM-02-2UM1P-5B/AS1221MG1, BIOS 1.2.M1.AL.P.158.00 08/31/2023
- Workqueue: ib-comp-unb-wq ib_cq_poll_work [ib_core]
- pstate: 82c00089 (Nzcv daIf +PAN +UAO +TCO BTYPE=--)
- pc : native_queued_spin_lock_slowpath+0x1c4/0x31c
- lr : mlx5_ib_poll_cq+0x18c/0x2f8 [mlx5_ib]
- sp : ffff80002be1bc80
- x29: ffff80002be1bc80 x28: ffff000810e69000
- x27: ffff000810e69000 x26: ffff000810e69200
- x25: 0000000000000000 x24: ffff8000117db000
- x23: ffff04000156b780 x22: 0000000000000000
- x21: ffff04000ce6c160 x20: ffff0008196a4000
- x19: 0000000000000010 x18: 0000000000000020
- x17: 0000000000000000 x16: 0000000000000000
- x15: ffff040055a364e8 x14: ffffffffffffffff
- x13: ffff80002318bda8 x12: ffff0400358836e8
- x11: 0000000000000040 x10: 0000000000000eb0
- x9 : 0000000000000000 x8 : 0000000000000000
- x7 : ffff04477fa20140 x6 : ffff8000114b1140
- x5 : ffff04477fa20140 x4 : ffff8000114b1180
- x3 : ffff000810e69200 x2 : ffff8000114b1180
- x1 : 0000000001500000 x0 : ffff04477fa20148
- Call trace:
-  native_queued_spin_lock_slowpath+0x1c4/0x31c
-  __ib_process_cq+0x74/0x1b8 [ib_core]
-  ib_cq_poll_work+0x34/0xa0 [ib_core]
-  process_one_work+0x1d8/0x4b0
-  worker_thread+0x180/0x440
-  kthread+0x114/0x120
- Code: 910020e0 8b0400c4 f862d929 aa0403e2 (f8296847)
- ---[ end trace 387be2290557729c ]---
- Kernel panic - not syncing: Oops: Fatal exception
- SMP: stopping secondary CPUs
- Kernel Offset: disabled
- CPU features: 0x9850817,7a60aa38
- Memory Limit: none
- Starting crashdump kernel...
- Bye!
-
-Signed-off-by: Mark Zhang <markzhang@nvidia.com>
-Link: https://patch.msgid.link/aaf0072f350d1c7e8731f43b79e11a560bafb9e0.1750070205.git.leon@kernel.org
+Fixes: 25361e02c448 ("IB/mlx5: Generate completions in software")
+Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+Link: https://patch.msgid.link/20261008141209.6923-1-prathameshdeshpande7@gmail.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: a0ab2bb269e7 ("RDMA/mlx5: Cancel software CQ notifications before teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/cq.c      | 19 +++++++++++++++----
- drivers/infiniband/hw/mlx5/main.c    |  2 ++
- drivers/infiniband/hw/mlx5/mlx5_ib.h |  2 ++
- 3 files changed, 19 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/mlx5/cq.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
-index 219c010846cc5..d26a9b30ebb34 100644
+index d26a9b30ebb34..6b14832173d4d 100644
 --- a/drivers/infiniband/hw/mlx5/cq.c
 +++ b/drivers/infiniband/hw/mlx5/cq.c
-@@ -1050,20 +1050,31 @@ int mlx5_ib_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
- 	return err;
- }
- 
--int mlx5_ib_destroy_cq(struct ib_cq *cq, struct ib_udata *udata)
-+int mlx5_ib_pre_destroy_cq(struct ib_cq *cq)
- {
+@@ -1055,6 +1055,9 @@ int mlx5_ib_pre_destroy_cq(struct ib_cq *cq)
  	struct mlx5_ib_dev *dev = to_mdev(cq->device);
  	struct mlx5_ib_cq *mcq = to_mcq(cq);
-+
-+	return mlx5_core_destroy_cq(dev->mdev, &mcq->mcq);
-+}
-+
-+void mlx5_ib_post_destroy_cq(struct ib_cq *cq)
-+{
-+	destroy_cq_kernel(to_mdev(cq->device), to_mcq(cq));
-+}
-+
-+int mlx5_ib_destroy_cq(struct ib_cq *cq, struct ib_udata *udata)
-+{
- 	int ret;
  
--	ret = mlx5_core_destroy_cq(dev->mdev, &mcq->mcq);
-+	ret = mlx5_ib_pre_destroy_cq(cq);
- 	if (ret)
- 		return ret;
- 
- 	if (udata)
--		destroy_cq_user(mcq, udata);
-+		destroy_cq_user(to_mcq(cq), udata);
- 	else
--		destroy_cq_kernel(dev, mcq);
-+		mlx5_ib_post_destroy_cq(cq);
- 	return 0;
++	if (!cq->uobject)
++		cancel_work_sync(&mcq->notify_work);
++
+ 	return mlx5_core_destroy_cq(dev->mdev, &mcq->mcq);
  }
  
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index b4875b639da55..2b7c1746a2836 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -3956,7 +3956,9 @@ static const struct ib_device_ops mlx5_ib_dev_ops = {
- 	.modify_port = mlx5_ib_modify_port,
- 	.modify_qp = mlx5_ib_modify_qp,
- 	.modify_srq = mlx5_ib_modify_srq,
-+	.pre_destroy_cq = mlx5_ib_pre_destroy_cq,
- 	.poll_cq = mlx5_ib_poll_cq,
-+	.post_destroy_cq = mlx5_ib_post_destroy_cq,
- 	.post_recv = mlx5_ib_post_recv_nodrain,
- 	.post_send = mlx5_ib_post_send_nodrain,
- 	.post_srq_recv = mlx5_ib_post_srq_recv,
-diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-index e9257178454a4..1f50f8b1369fb 100644
---- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
-+++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-@@ -1319,6 +1319,8 @@ int mlx5_ib_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
- 		      struct ib_udata *udata);
- int mlx5_ib_destroy_cq(struct ib_cq *cq, struct ib_udata *udata);
- int mlx5_ib_poll_cq(struct ib_cq *ibcq, int num_entries, struct ib_wc *wc);
-+int mlx5_ib_pre_destroy_cq(struct ib_cq *cq);
-+void mlx5_ib_post_destroy_cq(struct ib_cq *cq);
- int mlx5_ib_arm_cq(struct ib_cq *ibcq, enum ib_cq_notify_flags flags);
- int mlx5_ib_modify_cq(struct ib_cq *cq, u16 cq_count, u16 cq_period);
- int mlx5_ib_resize_cq(struct ib_cq *ibcq, int entries, struct ib_udata *udata);
 -- 
 2.53.0
 
