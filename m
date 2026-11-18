@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035818;
-	b=IqvdyaggB/4xBD/5qEMAsOk/rgS1e7Tq1dPSIjlN8fxGBlZmLh+TWIRCxAuzwq3x1s26
-	 p9oJdOqBQrOowgI/74VfPY5zx+H5c5hjWsoM5k6jlNFqt8h5vn1z2VquV5LlClMMcH33Q
-	 xpouQYDwOPNpk1GH0Qn6J7fNX3YhSowxrOU/A0+hR038qwA/jRPsNgT8QSu9Qp4am0B37
-	 oWDSpJDvO77egClFp4FsF8RcyHjFfNjnx1aTbHmgwLu7CWYbkk7LFithgAHt5z0kSjGpM
-	 2dsSp4hqMttJUm0irVsbVXiLvK9AVHzMD0DX9/UQmGV4EC456bJUOkZMWbIA0+k80gg==
+	t=1795035821;
+	b=S2cxmTFRvMSk8Qd8ylksd3hXCffX6aqGiVMzVl7WfJhZXdZvA3ZrR4l7yKRuu4mOIoMb
+	 IJyIPDUBTFiq2B5xPtB+L0eZi9L1GAbReCKBa2D/xM6aVv/ozl6BOT7slypv8VYr35phQ
+	 ULzXJFO1OxXIed7qzxzohSIIEV40MZYd3crmsGv9MEwFtJVAajnfl4wvsTEEYJBWT7dgd
+	 5lXIXZU7Vmpd9rmSUTDU55+BHat3U/gCjcihlcjAw81J/W6/1Uu5EHephPstwKh5ejiPt
+	 oj+7S58vKnZn90UJTQ4/YA62AmlFmy1t8hf+Bgb95HMuBui21j5tcSMkeS13tV++AnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035818;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035821;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Pp8z/2eWaaQhzt7Lg815L8BJep8BZ7ONXqZ7ry9ma4s=;
-	b=2Xp23AwvnWoae44boLoEUfrZGr1FBo5h8cWPjYK38o/JPf+mMv0Km51DTcAnkIThmuW0
-	 /KFTsmwKMecEHjWeaBJRJlwCnafVCP6UtXh0PsgTov6nBfypf900hSEYvHYEj3rFoNodl
-	 ucxHG6eVaMTXdnJEvIwfRz8Lw5jY1coK6n8hueURpPVchFDd4iFe54u+NG4qO376C5Ozt
-	 YdTSL6XxpoA5szQS2xsacz7sTQY9QiOq+o998rG2vZ4GZz55/7lfQ2OtcoH26+t8VyCbV
-	 YnuHIS2uwbpY+YqohnTUI5vUN2G/vxtiIDx/PHiLkNRM737ZtJeDtBNUY9Qgbf81MKQ==
+	bh=/agb8ji9zuHhLNADyfw8pOctEg6e75SJIevDqAsgarU=;
+	b=VPO7xlcwV0/bk/UcbhWkc4lTBMxnoc0KTdiz4ycZJOqxYk3oDsv30HQZAtZ1fc+mLnlj
+	 SAH05Wo26/eTXxK5cdDQXiFgjozYZWbHJb4FIATJngidceuiKHRhybCKVRUdJxFz2rjCQ
+	 4CYQXPIPRepZ6i9A45vYsIl/9ZZRl4xakMaWh7joMXLqtAZjQqhQkpqkl0kJy5sl9P8cq
+	 2OM4xqHc8l49C4M+Za6DbjOPZ+5PxCX7Bub3OyjnPsZpnE5IJ1Zwssc56AW9uIP33q0+p
+	 /FbiS8vNPx1DIFkHTGEMTJwVPezKXuMXSRbv71zP0f9OdVRNN5F9Sq7+q4f61PPwzyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vJOccRht;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dz6RSOOs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61575606A331;
-	Wed, 18 Nov 2026 21:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9D7606A31C;
+	Wed, 18 Nov 2026 21:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vJOccRht
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E051F000C4;
-	Wed, 18 Nov 2026 21:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dz6RSOOs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB601F000C4;
+	Wed, 18 Nov 2026 21:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035818;
-	bh=Pp8z/2eWaaQhzt7Lg815L8BJep8BZ7ONXqZ7ry9ma4s=;
+	s=korg; t=1795035821;
+	bh=/agb8ji9zuHhLNADyfw8pOctEg6e75SJIevDqAsgarU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vJOccRht7P5COVilqoV4zk8/KRm3xJok356SeQT3G3sJz0Krp0R+qs4wqwt9r9jcK
-	 mk0zeSsE3D/dKOOlyZhTotj9dlOh1nXkwzw1WxviFISNFkQMTOwHt9tCRCM1NK2vbP
-	 mL4CFwryPUsFlRM4at3Yh6M6bdpdD45027oZhq90=
+	b=dz6RSOOs3W8Gy1mr8Ywpp/HFEEwNYH/03eI9fsx7qeaZGlRQYzzIISIfO9MADUvVo
+	 PoSA7O9jc2PhDB3E5/bTox35AVtl9C8hoI+XABMwdY7kILFIQebT3hFDcXbMQfryq0
+	 TDXD6mR9YcJM8ZzLQCT/icTQy/nMw2V8Vh/vgkUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
-	Eugen Hristev <ehristev@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0786/3318] media: microchip-isc: take a reference on the parsed endpoints
-Date: Wed, 18 Nov 2026 15:23:28 +0100
-Message-ID: <20261118150342.438231430@linuxfoundation.org>
+Subject: [PATCH 6.6 0832/3318] media: au0828: Free URBs when starting DVB streaming fails
+Date: Wed, 18 Nov 2026 15:24:14 +0100
+Message-ID: <20261118150344.087153672@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,157 +68,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit f2eb2fd388bf3f1959556a326e797cacca341c86 ]
+[ Upstream commit b8dd133d96a40012f4b67fd48d8ddd7306a3e024 ]
 
-for_each_endpoint_of_node() drops the reference on the current node as
-it advances. xisc_parse_dt() and isc_parse_dt() store the node in
-subdev_entity->epn and release it later with of_node_put(), but never
-took their own reference, so the stored pointer refers to an
-already-released node. This underflows the refcount and can
-use-after-free, reachable through the camera device tree overlay.
+start_urb_transfer() stores each allocated URB in dev->urbs[], but sets
+urb_streaming only after all URBs have been submitted. If a later URB or
+transfer buffer allocation fails, earlier entries are left allocated. A
+submission failure calls stop_urb_transfer(), but that function returns
+immediately while urb_streaming is false, leaving both submitted and
+unsubmitted URBs behind.
 
-Take a reference with of_node_get() when storing the node, and drop it
-in microchip_isc_subdev_cleanup() so the entities the bind loop never
-reaches on an early exit do not leak it.
+Make stop_urb_transfer() release every populated slot regardless of the
+streaming flag and clear each slot after release. Route all start errors
+through this cleanup. usb_kill_urb() safely handles both submitted and
+unsubmitted URBs, while the existing preallocation check preserves the
+lifetime of shared transfer buffers.
 
-Fixes: c9aa973884a1 ("media: atmel: atmel-isc: add microchip-xisc driver")
-Fixes: d6701f13bd07 ("media: atmel: Use v4l2_async_notifier_add_fwnode_remote_subdev")
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: 265a6510629a ("V4L/DVB (7621): Add support for Hauppauge HVR950Q/HVR850/FusioHDTV7-USB")
 Cc: stable@vger.kernel.org
-Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/microchip/microchip-isc-base.c     |  6 ++++++
- .../platform/microchip/microchip-sama5d2-isc.c  | 17 ++++++++++++-----
- .../platform/microchip/microchip-sama7g5-isc.c  | 17 ++++++++++++-----
- 3 files changed, 30 insertions(+), 10 deletions(-)
+ drivers/media/usb/au0828/au0828-dvb.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/platform/microchip/microchip-isc-base.c b/drivers/media/platform/microchip/microchip-isc-base.c
-index 8dbf7bc1e863b..78a26babf3894 100644
---- a/drivers/media/platform/microchip/microchip-isc-base.c
-+++ b/drivers/media/platform/microchip/microchip-isc-base.c
-@@ -1902,6 +1902,12 @@ void microchip_isc_subdev_cleanup(struct isc_device *isc)
- 	list_for_each_entry(subdev_entity, &isc->subdev_entities, list) {
- 		v4l2_async_nf_unregister(&subdev_entity->notifier);
- 		v4l2_async_nf_cleanup(&subdev_entity->notifier);
-+		/*
-+		 * Release the endpoint reference taken while parsing. It is
-+		 * NULL for entities the bind loop already consumed, so this
-+		 * only drops the ones left over on an early exit.
-+		 */
-+		of_node_put(subdev_entity->epn);
+diff --git a/drivers/media/usb/au0828/au0828-dvb.c b/drivers/media/usb/au0828/au0828-dvb.c
+index 425d73fc2233f..f2e8e79314bb7 100644
+--- a/drivers/media/usb/au0828/au0828-dvb.c
++++ b/drivers/media/usb/au0828/au0828-dvb.c
+@@ -163,9 +163,6 @@ static int stop_urb_transfer(struct au0828_dev *dev)
+ 
+ 	dprintk(2, "%s()\n", __func__);
+ 
+-	if (!dev->urb_streaming)
+-		return 0;
+-
+ 	if (dev->bulk_timeout_running == 1) {
+ 		dev->bulk_timeout_running = 0;
+ 		del_timer(&dev->bulk_timeout);
+@@ -179,6 +176,7 @@ static int stop_urb_transfer(struct au0828_dev *dev)
+ 				kfree(dev->urbs[i]->transfer_buffer);
+ 
+ 			usb_free_urb(dev->urbs[i]);
++			dev->urbs[i] = NULL;
+ 		}
  	}
  
- 	INIT_LIST_HEAD(&isc->subdev_entities);
-diff --git a/drivers/media/platform/microchip/microchip-sama5d2-isc.c b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-index 60b6d922d764e..4033bfc96bb77 100644
---- a/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-+++ b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-@@ -356,28 +356,30 @@ static int isc_parse_dt(struct device *dev, struct isc_device *isc)
- 	struct device_node *epn;
- 	struct isc_subdev_entity *subdev_entity;
- 	unsigned int flags;
-+	int ret;
+@@ -200,8 +198,10 @@ static int start_urb_transfer(struct au0828_dev *dev)
+ 	for (i = 0; i < URB_COUNT; i++) {
  
- 	INIT_LIST_HEAD(&isc->subdev_entities);
- 
- 	for_each_endpoint_of_node(np, epn) {
- 		struct v4l2_fwnode_endpoint v4l2_epn = { .bus_type = 0 };
--		int ret;
- 
- 		ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(epn),
- 						 &v4l2_epn);
- 		if (ret) {
--			of_node_put(epn);
- 			dev_err(dev, "Could not parse the endpoint\n");
--			return -EINVAL;
-+			of_node_put(epn);
-+			ret = -EINVAL;
-+			goto err_cleanup;
- 		}
- 
- 		subdev_entity = devm_kzalloc(dev, sizeof(*subdev_entity),
- 					     GFP_KERNEL);
- 		if (!subdev_entity) {
- 			of_node_put(epn);
+ 		dev->urbs[i] = usb_alloc_urb(0, GFP_KERNEL);
+-		if (!dev->urbs[i])
 -			return -ENOMEM;
++		if (!dev->urbs[i]) {
 +			ret = -ENOMEM;
-+			goto err_cleanup;
++			goto err;
++		}
+ 
+ 		purb = dev->urbs[i];
+ 
+@@ -217,7 +217,7 @@ static int start_urb_transfer(struct au0828_dev *dev)
+ 			ret = -ENOMEM;
+ 			pr_err("%s: failed big buffer allocation, err = %d\n",
+ 			       __func__, ret);
+-			return ret;
++			goto err;
  		}
--		subdev_entity->epn = epn;
-+		subdev_entity->epn = of_node_get(epn);
  
- 		flags = v4l2_epn.bus.parallel.flags;
- 
-@@ -398,6 +400,11 @@ static int isc_parse_dt(struct device *dev, struct isc_device *isc)
+ 		purb->status = -EINPROGRESS;
+@@ -235,10 +235,9 @@ static int start_urb_transfer(struct au0828_dev *dev)
+ 	for (i = 0; i < URB_COUNT; i++) {
+ 		ret = usb_submit_urb(dev->urbs[i], GFP_ATOMIC);
+ 		if (ret != 0) {
+-			stop_urb_transfer(dev);
+ 			pr_err("%s: failed urb submission, err = %d\n",
+ 			       __func__, ret);
+-			return ret;
++			goto err;
+ 		}
  	}
+ 
+@@ -249,6 +248,10 @@ static int start_urb_transfer(struct au0828_dev *dev)
+ 	dev->bulk_timeout_running = 1;
  
  	return 0;
 +
-+err_cleanup:
-+	list_for_each_entry(subdev_entity, &isc->subdev_entities, list)
-+		of_node_put(subdev_entity->epn);
++err:
++	stop_urb_transfer(dev);
 +	return ret;
  }
  
- static int microchip_isc_probe(struct platform_device *pdev)
-diff --git a/drivers/media/platform/microchip/microchip-sama7g5-isc.c b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-index e97abe3e35af0..58cfbf6fcd668 100644
---- a/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-+++ b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-@@ -340,6 +340,7 @@ static int xisc_parse_dt(struct device *dev, struct isc_device *isc)
- 	struct isc_subdev_entity *subdev_entity;
- 	unsigned int flags;
- 	bool mipi_mode;
-+	int ret;
- 
- 	INIT_LIST_HEAD(&isc->subdev_entities);
- 
-@@ -347,23 +348,24 @@ static int xisc_parse_dt(struct device *dev, struct isc_device *isc)
- 
- 	for_each_endpoint_of_node(np, epn) {
- 		struct v4l2_fwnode_endpoint v4l2_epn = { .bus_type = 0 };
--		int ret;
- 
- 		ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(epn),
- 						 &v4l2_epn);
- 		if (ret) {
--			of_node_put(epn);
- 			dev_err(dev, "Could not parse the endpoint\n");
--			return -EINVAL;
-+			of_node_put(epn);
-+			ret = -EINVAL;
-+			goto err_cleanup;
- 		}
- 
- 		subdev_entity = devm_kzalloc(dev, sizeof(*subdev_entity),
- 					     GFP_KERNEL);
- 		if (!subdev_entity) {
- 			of_node_put(epn);
--			return -ENOMEM;
-+			ret = -ENOMEM;
-+			goto err_cleanup;
- 		}
--		subdev_entity->epn = epn;
-+		subdev_entity->epn = of_node_get(epn);
- 
- 		flags = v4l2_epn.bus.parallel.flags;
- 
-@@ -387,6 +389,11 @@ static int xisc_parse_dt(struct device *dev, struct isc_device *isc)
- 	}
- 
- 	return 0;
-+
-+err_cleanup:
-+	list_for_each_entry(subdev_entity, &isc->subdev_entities, list)
-+		of_node_put(subdev_entity->epn);
-+	return ret;
- }
- 
- static int microchip_xisc_probe(struct platform_device *pdev)
+ static void au0828_start_transport(struct au0828_dev *dev)
 -- 
 2.53.0
 
