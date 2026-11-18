@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050487;
-	b=xeHj3qyvdwE26U2nos5EhM/6WrdXQj/UzbuBcJChexB6SJ9W5UnMObgQML8KLE3cn9HS
-	 OgoAhIbpt4DDlTBcM6SbHBF8KHly3LprGxZ+CTFUMgL09I1/5E6AuFIWanqfyr87qRZ5V
-	 Y48bNfLpWgA1k65cbGDpOICGh7TjDrQOQJ8wQEHZzRx00y90acGJi/duRpsVNR4WMvlSl
-	 3wDQ+HplS/s8KfRqcLvKlL2VK4IBc560h5obsWTBvrX6jTCftJfDDyWDzgww54UkLd8fh
-	 bBcbxTEpJcrUN/WmBMV0wZ6eIdBQ4SkiweGTXg3SvlSH3z/y37n/VopmtAuENf7jd4A==
+	t=1795050490;
+	b=Ze1puyLEGQxSVFMlPaMPh9QiyMnNZk/SluLGXFMT6XTJAxvCCrUZsZkH2BPGyo50HJF5
+	 K5KYNlFx1kbFICKnGIinB/Uw5ByShgQVmf8IRA4nQcllJ+HJXTrdFqKZzSEaavCKapask
+	 thYZzKue6lujG7cNqibu1Ggb1JTY+hPb4m/GadLIAy35gQIa9A9RZZCeg0gp84Et4XYrJ
+	 ItorE9ImZ4cjMPMY+PdtyINP+BT8SW3RTlwXOlTI7LROQHyToXTZgokCAZbbY7TI6YbGJ
+	 eEuuS+KyRHI57/m9qomsVmNoG5+uzjSgn/hQYUoWoUO3uHiMv22CiuuBpds0GFXlTgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050487;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050490;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cxh9ibQn0nz4iOGWE76Tanhu+EewYkYMlFJjcvvuUnM=;
-	b=mzA/rQhFDOXS+ooDfdC0v3KMkGSg+da/Wn/GLglgHRaRQ+9LmzIFAeMxKT9RhowNquDL
-	 +O0o7pugkR5kTKDh4Po/nRqUcYt6OjzJslH13BoIOW2Mk6nA16ysuoeTRouQ3Qr+rtwkx
-	 y4QYNzxwHTeAvAVTsPbJSGEy/wupeKwq35JZG2x2nM0zpchnMhp9dQHMrg1LsSLrRq19o
-	 D5J185qi+AS15JrTKJ4IBXiku5c6xYPRq+Sm8l1fPxCLhzmc+irWw9RO5HUXenjLHRa7a
-	 By17cTRpyhB2IZql+HNSwDl5C8HFb3dRWAyO4ioJy4U6aBHzMTpRXj+izWNeaGTiytQ==
+	bh=FaZe5dCG6VwU2pd1ZCGIwz7+/VNZ/COPYY15ssEV7wY=;
+	b=TrS62vojLPdDhwGBIYlxW3kxfR1uG/Ae5vgJ427ahbSFApzHiSy18G6bmzjNhlOiniQD
+	 LKdmxuBspykv1gH/rOr1SAe7biag8mKsf9qpJf5KjxnrZJSq443Ok0wIa6M93ZmMsY6uW
+	 smYGpGdLyJGr0hbUZv94UH3uyup/ezG7ZEhGWIkBBlj4GjepYGekapfj80BWHFFaFfScr
+	 KBHjZ70cJaxwalP9aGM92/b28QiiYsGno2PW4Sr/DFNAv5zLi/JQ6K1pHnsbcNvDrjNLy
+	 wl85Q5UA15P3tVKBanbh6yNhFmqUxmLEY5F7UzYzCnnjpbIj2NKMHRH1S25RltGRmhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I3dvMbDi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NiX5eSvT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC56606A325;
-	Thu, 19 Nov 2026 01:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03AE4606A31C;
+	Thu, 19 Nov 2026 01:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I3dvMbDi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7721E1F000C4;
-	Thu, 19 Nov 2026 01:08:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NiX5eSvT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 542111F000C4;
+	Thu, 19 Nov 2026 01:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050487;
-	bh=Cxh9ibQn0nz4iOGWE76Tanhu+EewYkYMlFJjcvvuUnM=;
+	s=korg; t=1795050489;
+	bh=FaZe5dCG6VwU2pd1ZCGIwz7+/VNZ/COPYY15ssEV7wY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I3dvMbDiKiJMuTydVkl6CLdMHIiahTEouiaHp+JevHsgzIg9QERVCnaQHX6kyg/t8
-	 WDdFks3fupa7tEEmwrWF6j4djkGRwBG+5i5h9Y9UFK4TtpnXMLzM1W6p9UNMFd6plN
-	 L8VtuUj1LNeir6AsBua+Q2QHsTTP1/vIXdx3Ol1o=
+	b=NiX5eSvTvVJSG92a34xcIL7HeH+DmNKRfZOUcCmzM1dIyC7GwYqTmJKMOaEfYZ/Fz
+	 4EIYLCt5yPwV1C21GdYEsi8ThlaPQ5f1/E92pazI4wPNYGPZxFLrSGpR66SD/k/quN
+	 CXN0gAB3iFCfKeuMhlPHQqMygSSTqDwnltMSseYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ren Tamura <ren.tamura.oss@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2726/2857] tools/cgroup: sum shrinker object counts across NUMA nodes
-Date: Wed, 18 Nov 2026 16:02:40 +0100
-Message-ID: <20261118150339.774008726@linuxfoundation.org>
+Subject: [PATCH 6.1 2727/2857] netlink: fix out-of-bounds bitmap access clearing stale mc groups
+Date: Wed, 18 Nov 2026 16:02:41 +0100
+Message-ID: <20261118150339.810815836@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,46 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ren Tamura <ren.tamura.oss@gmail.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit ae2514c95518b39b36fa463d855c74f29c91d064 ]
+[ Upstream commit 6430fb7f1cc4e329e386521b7b208df443de92f2 ]
 
-Each row of a memcg-aware shrinker's debugfs count file contains the
-cgroup ID followed by one object count per NUMA node.  memcg_shrinker.py
-uses only the first count when sorting and displaying entries.
+netlink_realloc_groups() sizes nlk->groups to the number of groups
+that exist at bind/ADD_MEMBERSHIP time.  When more multicast groups
+are registered later (e.g. a new genl family), existing sockets keep
+their smaller bitmap.
 
-This undercounts objects on NUMA systems.  An entry with counts of 0 and
-23 is treated as zero and omitted from the output, even though its total
-is 23.
+When clearing a multicast group of a departing family,
+__netlink_clear_multicast_users() runs netlink_update_socket_mc() on
+each socket on mc_list, which does test_bit()/__assign_bit() on
+group - 1 with no regard to nlk->ngroups.  Skip sockets whose bitmap
+predates the group: such a socket can never have joined it.
 
-Sum all count fields after the cgroup ID so that the displayed totals and
-sort order account for every node.  Single-node input retains the same
-result.
+The overflow windows differ per architecture, both needing privileged
+module (un)loading.  On 32-bit kernels the ~54 dynamically allocated
+genl groups already exceed the initial 32-bit bitmap, so the table
+can grow there directly.  On 64-bit kernels the same in-tree set fits
+the initial 64-bit bitmap only while allocation stays contiguous:
+genl_allocate_reserve_groups() takes the first free contiguous range
+and unregister does not compact, so an unload/reload sequence can
+fragment the ~59 free IDs until no fitting range remains, forcing
+the table past 64 bits and reaching the same stale-bitmap overflow on
+the next family teardown.
 
-Link: https://lore.kernel.org/179074810112.139422.9274126921568167859@gmail.com
-Fixes: d261ea23533b ("tools: add memcg_shrinker.py")
-Signed-off-by: Ren Tamura <ren.tamura.oss@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Assisted-by: LLM
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
+This issue was discovered by Tencent CodeBuddy Security.
+
+Fixes: 84659eb529b3 ("[NETLIKN]: Allow removing multicast groups.")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/cgroup/memcg_shrinker.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netlink/af_netlink.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/cgroup/memcg_shrinker.py b/tools/cgroup/memcg_shrinker.py
-index 706ab27666a43..1d634a35e0959 100644
---- a/tools/cgroup/memcg_shrinker.py
-+++ b/tools/cgroup/memcg_shrinker.py
-@@ -32,7 +32,7 @@ def scan_shrinkers(shrinker_debugfs):
-                     items = line.split(' ')
-                     ino = int(items[0])
-                     # (count, shrinker, memcg ino)
--                    shrinkers.append((int(items[1]), shrinker, ino))
-+                    shrinkers.append((sum(map(int, items[1:])), shrinker, ino))
-     return shrinkers
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 81f4494ed67e2..b755faefdfec6 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -2117,8 +2117,12 @@ void __netlink_clear_multicast_users(struct sock *ksk, unsigned int group)
+ 	struct netlink_table *tbl = &nl_table[ksk->sk_protocol];
+ 	struct hlist_node *tmp;
  
+-	sk_for_each_bound_safe(sk, tmp, &tbl->mc_list)
++	sk_for_each_bound_safe(sk, tmp, &tbl->mc_list) {
++		/* bitmap predates the group, can't be a member */
++		if (group - 1 >= nlk_sk(sk)->ngroups)
++			continue;
+ 		netlink_update_socket_mc(nlk_sk(sk), group, 0);
++	}
+ }
  
+ struct nlmsghdr *
 -- 
 2.53.0
 
