@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058856;
-	b=nobKzxqcVzLaHSEox9gjUbdCIpnkLicAsmcOi1lXYMYcYQ51f3vKuJgPtUM8BpiPnGHN
-	 L82/i8DBDhVVRRtTF6FQft5eNBaA2vwBTPJhg9pF7xOCCbA3dmfz/52l2bdwyTnc3sF0x
-	 oN9+rRU0Ur8KotaYwnV9T+ZN9An3gWPcxTCRfmaEc2QIs5XcMbmtkx7/62WQBjQtLw4iC
-	 kDk0fD7Ob+pVG/yd77a50olTcqw82957mm0dwdG/BhsSWTZnlZ5pJdzycW0eaIwTFzh+E
-	 LcqGoZ/tIBn5irgVm+AGREnTDu2Ft3QWsc8B3Hp5gDICyplYM4X6KXcw++L6s77TFGg==
+	t=1795058858;
+	b=wAymP389+5883aV4C7kg1+OyuXeu/w6fzK6JRKnHxYmGZRgWt3vua/B/IewPbQwKgVt6
+	 lIT6sitg7/81/JKoVQDuK84BcpweWSjXo5h0kntpc5c0eRSBJy0HoHi2qGhEvZwIAnP84
+	 OJxlkUlVBboYQp2GpFu9dVvgZv3CZA87ol/U9hzZ/7rUiDgSBlyX8Uka0uiX/JrPdFWMt
+	 iYWF5fqEXDCJq7y3AmhCdsRM/gnMCO9YKZHABT5C/JzU7TTjOcpKtan5BQjluoNs9CU4I
+	 HVEoe+LgS34w7DA9kck6oWVftVacCqEEEdM+gl51oKyBLViqRbcnYp0JOAK/8MQmupw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058856;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058858;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y10gqLsPFszQ/mghrmSRH/HcKxDkPsBQxEIP/WWo8Kc=;
-	b=eFA+N7Z+Cxn9xUyuQaP7eOIhjgeEA09bR7RSCSwdyRhQ7W4G8hTRkc3EmQNnbpE10K5h
-	 g+KiUDt2AGUKVtm/taXUiael092QCD5VKQ94kp+Qr32Pf4YwFISPQ7iOcoFVEGbkPoWuP
-	 Rh1dunbweZ9utgyacwHFwEyjAGIr7aGJkhEYr6xDFtqpEv3uYDB6BlspZfkGNcKOH/Glu
-	 PfDKrgXoUpESGogDJlFu2MqOB6pPdiTWno13NQ0NKwb1tH3THJxAt/Yipmy+ccOCcaY3z
-	 i82DQkxvoId+IrhWKkvitcIDbWScqVmDzmASYTT03v8OaHSvttYqdOrbvkZuz7RGhiw==
+	bh=7Lj6GuCdarBU0jna2HEwvyEY3vchUwPvV0NqeSR4bF4=;
+	b=zbf6Ja4wTXdsoqGqysPV1vkU5PKx9hJGFZzrtWkvoHGRb58xFdpesQW/DCUxAcdAk+pH
+	 L8OC67FY0A442uU2DcMtE7NAa9lhie8/Ed/s1X7M53Rn4FD1BG09sbxmCBDaFJBB/R2rL
+	 IKljnmvNLvHBN4Ze23L/i/7LmOTM5xzr1DiDEBtWpcoQ+d+vC19oi2RI800G8588BQaDt
+	 8iG7EsXKdew+Z/BDaFtyIWgIMM/fCEHwSpqxLqU8NtnNG8gYdUNhKp1W6xSPkXzhb7Ky2
+	 aYL1vSbwRAik6HDuvOb6Abpfq7qMK8LxyGJwdMurT5iGFtq6PKWVWMxS5xD1qHFAbPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Skgzxux;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X0+sqGTC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22EE606A320;
-	Thu, 19 Nov 2026 03:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0D8606A320;
+	Thu, 19 Nov 2026 03:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Skgzxux
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F5D1F000C4;
-	Thu, 19 Nov 2026 03:27:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X0+sqGTC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C031F000C4;
+	Thu, 19 Nov 2026 03:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058855;
-	bh=Y10gqLsPFszQ/mghrmSRH/HcKxDkPsBQxEIP/WWo8Kc=;
+	s=korg; t=1795058858;
+	bh=7Lj6GuCdarBU0jna2HEwvyEY3vchUwPvV0NqeSR4bF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2SkgzxuxAcrRVnCLKMFt3DuI8CAcMv5PQaA5nIgJWBejVODXssYNu91UsXjy4Ua7h
-	 LzJkct3BQ5raiXbHYkg4eyI+nbABPvkyAcB5bGY2VUP2Jggiiek3D0dWRAH/09c00n
-	 Eu3KHIsApD7TDtndpidCtn9qZ2KvxC9lF2V78YII=
+	b=X0+sqGTC3idlzv8FTkM5KUE7k6CzS95kPvdvaUscZOBN1pW5EB7pHLjacAhkEGZu4
+	 O6fVai7zKwv6mgDPc6mG0MCBikb2YMPEXNWK1SSUsWsbX7zrioCNZy1365SSThfst9
+	 RZoKIwIXlgYLNqDfubVosJjs8/1rLoN3mVmlRf9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
+	Chris Mason <mason@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Amir Goldstein <amir73il@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0636/1848] afs: Fix afs to abort the rxrpc call on send error
-Date: Wed, 18 Nov 2026 15:44:34 +0100
-Message-ID: <20261118145942.382974108@linuxfoundation.org>
+Subject: [PATCH 5.10 0619/1848] ovl: hold a reference on the parent in readdir
+Date: Wed, 18 Nov 2026 15:44:17 +0100
+Message-ID: <20261118145941.180371997@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -74,103 +69,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 3e6af08a571fe2943a006acf3e890f36322602bc ]
+[ Upstream commit 16d319e12328acafeafd3eecdf09c46d7fb43452 ]
 
-Fix afs_send_empty_reply() and afs_send_simple_reply() to always try to
-abort the rxrpc call rather than just aborting on -ENOMEM and otherwise
-abandoning it.  If the call is already complete due to network failure or a
-received abort, this will do nothing.
+Listing a directory on an overlay uses a freed dentry and crashes the
+kernel when a lookup moves the directory at the same time.
 
-Also make afs_make_call() always abort on send error; again, it does
-nothing if the rxrpc call is already dead.
+Code that can sleep may only use d_parent without a reference while
+something stops a move of the dentry. ovl_iterate_real(),
+ovl_need_adjust_d_ino() and ovl_cache_update() use the d_parent of the
+listed directory and hold only the lock of that directory. When a
+lookup finds the directory under another parent after a change to a
+layer, d_splice_alias() moves it without that lock and drops its
+reference on the old parent.
 
-Fixes: 08e0e7c82eea ("[AF_RXRPC]: Make the in-kernel AFS filesystem use AF_RXRPC.")
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260824091645.415423-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Eric Dumazet <edumazet@google.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261006133011.531806-6-dhowells@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: replaced afs_abort_send_error with "KSE" to match the older string-based abort tracing interface ]
+With a delay in ovl_iterate_real(), getdents64 on an overlay directory
+raced a rename in the lower layer and a lookup that moved its dentry,
+and after an rmdir of the old parent KASAN reported a use-after-free in
+security_inode_getattr().
+
+Fix this by using dget_parent() in the three functions.
+
+Fixes: b5efccbe0a12 ("ovl: constant d_ino across copy up")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[amir: fix comments in ovl_need_adjust_d_ino()]
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+[ sashal: adapted ovl_need_adjust_d_ino() changes to the inline logic in ovl_iterate() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/rxrpc.c | 34 ++++++++++++----------------------
- 1 file changed, 12 insertions(+), 22 deletions(-)
+ fs/overlayfs/readdir.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/fs/afs/rxrpc.c b/fs/afs/rxrpc.c
-index 2e68abf627f5d..f75e8b361e294 100644
---- a/fs/afs/rxrpc.c
-+++ b/fs/afs/rxrpc.c
-@@ -469,10 +469,9 @@ void afs_make_call(struct afs_addr_cursor *ac, struct afs_call *call, gfp_t gfp)
- 	return;
- 
- error_do_abort:
--	if (ret != -ECONNABORTED) {
--		rxrpc_kernel_abort_call(call->net->socket, rxcall,
--					RX_USER_ABORT, ret, "KSD");
--	} else {
-+	rxrpc_kernel_abort_call(call->net->socket, rxcall,
-+				RX_USER_ABORT, ret, "KSD");
-+	if (ret == -ECONNABORTED) {
- 		iov_iter_kvec(&msg.msg_iter, ITER_DEST, NULL, 0, 0);
- 		rxrpc_kernel_recv_data(call->net->socket, rxcall,
- 				       &msg.msg_iter, false,
-@@ -854,6 +853,7 @@ void afs_send_empty_reply(struct afs_call *call)
- {
- 	struct afs_net *net = call->net;
- 	struct msghdr msg;
-+	int ret;
- 
- 	_enter("");
- 
-@@ -866,20 +866,12 @@ void afs_send_empty_reply(struct afs_call *call)
- 	msg.msg_controllen	= 0;
- 	msg.msg_flags		= 0;
- 
--	switch (rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, 0,
--				       afs_notify_end_reply_tx)) {
--	case 0:
--		_leave(" [replied]");
--		return;
--
--	case -ENOMEM:
--		_debug("oom");
-+	ret = rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, 0,
-+				     afs_notify_end_reply_tx);
-+	if (ret < 0) {
- 		rxrpc_kernel_abort_call(net->socket, call->rxcall,
--					RXGEN_SS_MARSHAL, -ENOMEM, "KOO");
--		fallthrough;
--	default:
--		_leave(" [error]");
--		return;
-+					RXGEN_SS_MARSHAL, ret, "KSE");
-+		afs_set_call_complete(call, ret, RXGEN_SS_MARSHAL);
+diff --git a/fs/overlayfs/readdir.c b/fs/overlayfs/readdir.c
+index 6e13cad49ce54..abfe17068b7d6 100644
+--- a/fs/overlayfs/readdir.c
++++ b/fs/overlayfs/readdir.c
+@@ -474,8 +474,8 @@ static int ovl_cache_update_ino(struct path *path, struct ovl_cache_entry *p)
+ 			goto get;
+ 		}
+ 		if (p->len == 2 && p->name[1] == '.') {
+-			/* we shall not be moved */
+-			this = dget(dir->d_parent);
++			/* d_splice_alias() can move even a locked dir */
++			this = dget_parent(dir);
+ 			goto get;
+ 		}
  	}
- }
+@@ -691,6 +691,7 @@ static int ovl_iterate_real(struct file *file, struct dir_context *ctx)
+ 	struct ovl_dir_file *od = file->private_data;
+ 	struct dentry *dir = file->f_path.dentry;
+ 	const struct ovl_layer *lower_layer = ovl_layer_lower(dir);
++	struct dentry *parent;
+ 	struct ovl_readdir_translate rdt = {
+ 		.ctx.actor = ovl_fill_real,
+ 		.orig_ctx = ctx,
+@@ -701,18 +702,26 @@ static int ovl_iterate_real(struct file *file, struct dir_context *ctx)
+ 	if (rdt.xinobits && lower_layer)
+ 		rdt.fsid = lower_layer->fsid;
  
-@@ -914,11 +906,9 @@ void afs_send_simple_reply(struct afs_call *call, const void *buf, size_t len)
- 		return;
+-	if (OVL_TYPE_MERGE(ovl_path_type(dir->d_parent))) {
++	/*
++	 * The lock on dir does not stop d_splice_alias() from moving it to
++	 * another parent, which drops the reference dir holds on this one.
++	 */
++	parent = dget_parent(dir);
++	if (OVL_TYPE_MERGE(ovl_path_type(parent))) {
+ 		struct kstat stat;
+ 		struct path statpath = file->f_path;
+ 
+-		statpath.dentry = dir->d_parent;
++		statpath.dentry = parent;
+ 		err = vfs_getattr(&statpath, &stat, STATX_INO, 0);
+-		if (err)
++		if (err) {
++			dput(parent);
+ 			return err;
++		}
+ 
+ 		WARN_ON_ONCE(dir->d_sb->s_dev != stat.dev);
+ 		rdt.parent_ino = stat.ino;
  	}
++	dput(parent);
  
--	if (n == -ENOMEM) {
--		_debug("oom");
--		rxrpc_kernel_abort_call(net->socket, call->rxcall,
--					RXGEN_SS_MARSHAL, -ENOMEM, "KOO");
--	}
-+	rxrpc_kernel_abort_call(net->socket, call->rxcall,
-+				RXGEN_SS_MARSHAL, n, "KSE");
-+	afs_set_call_complete(call, n, RXGEN_SS_MARSHAL);
- 	_leave(" [error]");
- }
+ 	if (ovl_is_impure_dir(file)) {
+ 		rdt.cache = ovl_cache_get_impure(&file->f_path);
+@@ -740,6 +749,8 @@ static int ovl_iterate(struct file *file, struct dir_context *ctx)
+ 		ovl_dir_reset(file);
+ 
+ 	if (od->is_real) {
++		struct dentry *parent = dget_parent(dentry);
++
+ 		/*
+ 		 * If parent is merge, then need to adjust d_ino for '..', if
+ 		 * dir is impure then need to adjust d_ino for copied up
+@@ -748,11 +759,12 @@ static int ovl_iterate(struct file *file, struct dir_context *ctx)
+ 		if (ovl_xino_bits(dentry->d_sb) ||
+ 		    (ovl_same_fs(dentry->d_sb) &&
+ 		     (ovl_is_impure_dir(file) ||
+-		      OVL_TYPE_MERGE(ovl_path_type(dentry->d_parent))))) {
++		      OVL_TYPE_MERGE(ovl_path_type(parent))))) {
+ 			err = ovl_iterate_real(file, ctx);
+ 		} else {
+ 			err = iterate_dir(od->realfile, ctx);
+ 		}
++		dput(parent);
+ 		goto out;
+ 	}
  
 -- 
 2.53.0
