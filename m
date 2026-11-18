@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044451;
-	b=bsv3fYniphM2+97jI30dQ3A3yRv6rC9nQ6OVhLLsxGaev6yniDwm6WGrgyDMkFqSP9Gw
-	 3Q3twgWG6AhxanOUfkfpnfidkDKNjnvfEWZ7jZul3WcLvAOIKbsdrMVsQM5KkfTLGYeby
-	 FdL+ewQ4fKJr+rBPOVo2UfPif2GLR2QK5Ax3Y4clLDTZGvKxlV4KHY9wIuQSesYl4GyGz
-	 uN5PufVWnXmEZ1R88hQR1b8RsIRsdW4FGDfCHItKz6k6uwfO8ymvIgign9XXvQntDCpYI
-	 0Z7tACVS5DEQL1IwmtTptGRDULaQcFOnuwrQWadPxhvTz2dyYkDWisTzRrkeRFlzc2g==
+	t=1795044454;
+	b=n6nBnc6/mge/Zvf6PmKtrcND+lcjzZY3QCI1TsY7pIN5pdYrfIPQkB5pQdkfaiVaqQHl
+	 Xb9Vja5u2D9DVT+YCzFkopo18z7LNd2AyDdPU4IjSooWByDTadS2pdzdWRWnv3qju8uc6
+	 ryQKfdWkrQ4MCdz849Pxxmk2sQOC5LXzmOzG8lEiyoqkk8wlviwBE6SFOnGcwyK/jZRYb
+	 9o2XElh6okdIGc+7zhzH9gAOtAwRgLoOmkVEiMAu2YSjMb5SxbStBJU8Qbp+Jo5UeMwOJ
+	 V/kA+P5LQZNAzoO96tvJkiiiKCrg3ExtVtHBjen1G+EgdUTXqKaldWbuT37D6MEwh7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044451;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044454;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d5BjAWMNaX18tquonqtDCW2LCXHNR9ZnSaaxU2kSCxU=;
-	b=wdzRERtH4wk5K1S3lFVRBq7M0jPb7BZtsEJl7zAnOleb79PydVoGCnHQxyP7FAIiuvh3
-	 70hpkY+W0Na4J5Lk8O4Sq1owsRRjio4vJwWnqUo/v6IAXg/t8f/K3z1tDSS46Fh2bxL68
-	 w+ceI1aaAAQYZb9pYhYf8mhw5bzFW1aytsAg/pnZbjBZkzCu9nW8f1Xd2Gx4me0kXlnI9
-	 CbZAdvGv67XqAaIlnOq+qNT0kIuAG9c8YgJbW0rKDCmXfOzFQivj5AymaNb7CEpyqwP9Y
-	 Qmd+8fH7KOCwfi252svoeTMq8oiQY+iPCnj4YIn8b0tNuOU+AuL6BRsUS+FZodlVRmw==
+	bh=SxBvZSh2Gex2mRm1tX0iM9K/m/fvZutw14jIcvIelMY=;
+	b=cnJBCCktqPl7APKYoYTPiNghSShf/C8jLpHIx1RWATBkqkwKLN80uFql7b+qbQojVGGV
+	 nQk+IyIE07rGa4D4nTEnwy7lTDJwIiidz1Uy/54B7LmiOKm98sAPmp2B0ta+MqZni4QO0
+	 JPNzKsmvARZH7t+jW0IOkHowV1xi2zlw4MfRpfuD4F919wV1/2wKrxVtMBnU8T/7oMk1Q
+	 xKd0VwoyDGpa7FMjEpuFmbyMbnNG/cwmDxYIfY8EmsHK412iq7K7UXcZUduEjKebNxWmG
+	 Zsa7eAMCJ6RAxpSj+QgQEhmlaNZswMsZbJh54vNMJTQNx7kXwDLJBO8XEgM91gbqe3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qM5f+RyH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bj6CJyk8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7319D606A31C;
-	Wed, 18 Nov 2026 23:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA36606A32A;
+	Wed, 18 Nov 2026 23:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qM5f+RyH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA6D1F000C4;
-	Wed, 18 Nov 2026 23:27:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bj6CJyk8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7F21F000C4;
+	Wed, 18 Nov 2026 23:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044451;
-	bh=d5BjAWMNaX18tquonqtDCW2LCXHNR9ZnSaaxU2kSCxU=;
+	s=korg; t=1795044454;
+	bh=SxBvZSh2Gex2mRm1tX0iM9K/m/fvZutw14jIcvIelMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qM5f+RyHQwJYM3rjk5A3sbndnmTvvwORlPm2SET267acRRWctKW+Zs/tTn5D6+EXL
-	 eseg2WqtFhZ0BkytD9dIo/fXK7SMW13+zqQCXDsm2/nDtwMOqikmIrwPc+25kIaXLp
-	 +cPHDrKRsNxHh3cpeUD7bgpPBCW+/NxVum6BuLzY=
+	b=bj6CJyk8vVUZE8HQN5CewLsizqH9Fm5ndg8UXD9xSLrHYJtEMaRtwQTx2Z7dyHStA
+	 qI+x7w88kglolu12qQNNNW/NmNXQu1H1Hhr3qr7J7WSegRTnTb/2qed12aSdTCYTQF
+	 3nzpsscLKVDa3mGMw0Wq0N7X/nlyi3bPUEnJOByo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0523/2857] Revert "interconnect: Dont access req_list while its being manipulated"
-Date: Wed, 18 Nov 2026 15:25:57 +0100
-Message-ID: <20261118150220.301261172@linuxfoundation.org>
+Subject: [PATCH 6.1 0524/2857] Revert "interconnect: Fix locking for runpm vs reclaim"
+Date: Wed, 18 Nov 2026 15:25:58 +0100
+Message-ID: <20261118150220.335722622@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -66,52 +66,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 8401bc2c188030fb14d1cb43c402a1cf42d86dd2.
+This reverts commit ffb8917c70a4c88725ee40f9eeee9240ad1c1869.
 
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/core.c | 8 --------
- 1 file changed, 8 deletions(-)
+ drivers/interconnect/core.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-index 180015512aa40..40e2f110c5339 100644
+index 40e2f110c5339..09143aae680ef 100644
 --- a/drivers/interconnect/core.c
 +++ b/drivers/interconnect/core.c
-@@ -162,8 +162,6 @@ static struct icc_path *path_init(struct device *dev, struct icc_node *dst,
+@@ -29,7 +29,6 @@ static LIST_HEAD(icc_providers);
+ static int providers_count;
+ static bool synced_state;
+ static DEFINE_MUTEX(icc_lock);
+-static DEFINE_MUTEX(icc_bw_lock);
+ static struct dentry *icc_debugfs_dir;
  
- 	path->num_nodes = num_nodes;
+ static void icc_summary_show_one(struct seq_file *s, struct icc_node *n)
+@@ -636,7 +635,7 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
+ 	if (WARN_ON(IS_ERR(path) || !path->num_nodes))
+ 		return -EINVAL;
  
 -	mutex_lock(&icc_bw_lock);
--
- 	for (i = num_nodes - 1; i >= 0; i--) {
- 		node->provider->users++;
- 		hlist_add_head(&path->reqs[i].req_node, &node->req_list);
-@@ -174,8 +172,6 @@ static struct icc_path *path_init(struct device *dev, struct icc_node *dst,
- 		node = node->reverse;
++	mutex_lock(&icc_lock);
+ 
+ 	old_avg = path->reqs[0].avg_bw;
+ 	old_peak = path->reqs[0].peak_bw;
+@@ -668,7 +667,7 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
+ 		apply_constraints(path);
  	}
  
 -	mutex_unlock(&icc_bw_lock);
--
- 	return path;
- }
++	mutex_unlock(&icc_lock);
  
-@@ -783,16 +779,12 @@ void icc_put(struct icc_path *path)
- 		pr_err("%s: error (%d)\n", __func__, ret);
+ 	trace_icc_set_bw_end(path, ret);
+ 
+@@ -972,7 +971,6 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
+ 		return;
  
  	mutex_lock(&icc_lock);
 -	mutex_lock(&icc_bw_lock);
--
- 	for (i = 0; i < path->num_nodes; i++) {
- 		node = path->reqs[i].node;
- 		hlist_del(&path->reqs[i].req_node);
- 		if (!WARN_ON(!node->provider->users))
- 			node->provider->users--;
- 	}
--
+ 
+ 	node->provider = provider;
+ 	list_add_tail(&node->node_list, &provider->nodes);
+@@ -998,7 +996,6 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
+ 	node->avg_bw = 0;
+ 	node->peak_bw = 0;
+ 
 -	mutex_unlock(&icc_bw_lock);
  	mutex_unlock(&icc_lock);
+ }
+ EXPORT_SYMBOL_GPL(icc_node_add);
+@@ -1138,7 +1135,6 @@ void icc_sync_state(struct device *dev)
+ 		return;
  
- 	kfree_const(path->name);
+ 	mutex_lock(&icc_lock);
+-	mutex_lock(&icc_bw_lock);
+ 	synced_state = true;
+ 	list_for_each_entry(p, &icc_providers, provider_list) {
+ 		dev_dbg(p->dev, "interconnect provider is in synced state\n");
 -- 
 2.53.0
 
