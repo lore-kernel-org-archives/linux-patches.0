@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042462;
-	b=U4zuceRp/1FxQAxCxlN6d8XykYxiSXzVqBc7jT6/aF6GN4HpP1KHBPnQh2ypne7cnWoK
-	 S2RetAnD2a/r3au6I7LQd8iWAigkut9SCqXw5VL+sBxkF3mpq9bucoqIx9fDbowS5Pg6/
-	 OqM8YFr5yiGu+Ho/dEA+zCtx+TE5RG69OTnF6TD2+v9CV0q5Ec26ODOti52bmYoLRZ5to
-	 fkmycvBbDSuaq9dVDSsddcqHwlMHJ3T8RLoX0cXlKqqDxvlwx6AWR133MEVTYjFPtvJrP
-	 8LTOUbjxFYrskC2xiWj/NuQjzxD69aQJYSpDOYVj7WzhhLGpswjAcj5MpiKwV4mBVRA==
+	t=1795042465;
+	b=3UwcmNRYxQQXzcYsF6jhSW359mrWWCbQ2VY1/rudznev2EXH5Uy3hRGS6xxRYI1FF2Lp
+	 9h81wqnWqNq4ExxcjkzA+eHJvnBEIjeMTkb3K+wPsRlX2aa7HFDEkUcpYSmaOlgdHwp4J
+	 oN+f+3cruoDB2c8+jp+1IXUL39ref+cWgbvf54cU3UK3/64Uor4Kd8LfKbHEPhymh93YZ
+	 DiRdS2Nrb2bzPOVxJohZ5caVnEssjvAjDR2I0wq/kX0hXE9gR/D0DezBXREH3w/0HR2kA
+	 wE93OqbXo0cSsKi/lfYwY6QrJ0nejIZ04GsWtuENS/YIpw0LXhO6Xhl7M93WFVZ0gaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042462;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042465;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JXoO23OgfHzAeYVBI4AK0D2vuPorOhR6WQeKIY7znr0=;
-	b=kycSkQAZqWYz8IPaFtfzvugl29ZtO656Zt0/m3GMsp/04xB0iAnLTPYhSo5e4ZJ4WTh7
-	 pEelloAZ1qCFi2gN+lNogtY8mbEKmhcnH3RZtw0JQHbRTxTwG4eKJLgC3ikn/E+iy39GD
-	 PngXmjjZWqSQoUcBKHzk483fsm9VlYlXjvlJk1R/JRMl6I2n1Atb4LYxB5ibKr5aFz1Qs
-	 3AUhCUrT/8VkPhAa73m2qWL1gkkoavsDoiDDdO5rbPOtqArEMljuMNarmiaFMRaeNJ/W7
-	 2uBdGNimJ4tVTWyIMZlxsF2g4Zm94KSIwJsdZJkZz/QkkAP6ZKI+HIMQU/RRNHSF6rw==
+	bh=j+DUPEI3R8xbfe5X1JMzi8KEmGhjySl5xKmKH9cd+zE=;
+	b=tQ0/5e3nECy2gbWP5nXknovdNAHmlsY28oz0QO9OMfjDdizzc104c9x3fowrCiSjfuEh
+	 p8vwOFgP5vV+XlJ4R1XQc+xCXLjzUcs+WElG02F9xB2zX6oy+suP3qcmXwJ58MjVLFHwN
+	 kR7GeTJl5+45LshPUpQE9Ro23I9jfYQpFmz5B8yVAcbN3TJPCGhfktnPCRNGbxi/W+RXk
+	 2La2ej+9bES7vEIoG5IkB4fFZs7Pdxnbb4UYG2qsIe799jKP/sl28OYtUiyPGGXW+bBbE
+	 ticZPQWm8pRjs8Rjr7AljpkuTvk5HbSfg9uz9EnP42AZ2NoftORZ4Ko6Rdxi//mBiQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k8MTOJWk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ztvVBA1q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE0A606A325;
-	Wed, 18 Nov 2026 22:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80C5606A31C;
+	Wed, 18 Nov 2026 22:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k8MTOJWk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8521F000C4;
-	Wed, 18 Nov 2026 22:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ztvVBA1q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4181F000C4;
+	Wed, 18 Nov 2026 22:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042462;
-	bh=JXoO23OgfHzAeYVBI4AK0D2vuPorOhR6WQeKIY7znr0=;
+	s=korg; t=1795042465;
+	bh=j+DUPEI3R8xbfe5X1JMzi8KEmGhjySl5xKmKH9cd+zE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k8MTOJWkTNEWCHsqUGGszKiKVEjF51i9yyR5S0V+Luk3MjucdBT1BM4X+g0eRUmd5
-	 xkZGPOMGOKwq5juMRpsdbHtIz8nmp+2Yfxul0KY/2UYrAJPbjtwf9pV4UcCWQztWiN
-	 GdhnVy+9l7CJG7FrCs96JnFg0aZYLE6YoqoDSTL8=
+	b=ztvVBA1qunBQyCDRaOzizl/HyQtM8K0dwWJYP0h9kFc5Dm8zJdtVLPZqhJUMHurKC
+	 8Dl1twdVoBBGST6+hv3eKe5F3TWQrHLvcTKlP1ATQxMI1JXmQ8Dd/EsUOQE/tHPuNX
+	 G+1qQw8nXmyxK7HHuYyXB0OlsyENHAuhjWM9K43M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3179/3318] ipmr: clear skb->cb[] in reg_vif_xmit()
-Date: Wed, 18 Nov 2026 16:03:21 +0100
-Message-ID: <20261118150455.189923787@linuxfoundation.org>
+Subject: [PATCH 6.6 3180/3318] clk: lmk04832: Handle reset GPIO lookup errors
+Date: Wed, 18 Nov 2026 16:03:22 +0100
+Message-ID: <20261118150455.217990985@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,58 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 389952e8776a4663044df2ae3e8987a9e81964cf ]
+[ Upstream commit 5c7c0cbf81bba69695efa12e451f0f2ecd4b92a5 ]
 
-reg_vif_xmit() hands the skb to ipmr_cache_report() as an
-IGMPMSG_WHOLEPKT report. When the mroute socket has IP_PKTINFO
-enabled, ipmr_cache_report() calls ipv4_pktinfo_prepare() on the
-original skb, which reads skb->cb[] as IPCB.
+devm_gpiod_get_optional() may return -EPROBE_DEFER or other errors,
+but lmk04832_probe() currently ignores them.
 
-By the time the pimreg device transmits the packet, skb->cb[] is not
-IPCB anymore: qdisc_pkt_len_init() overwrites IPCB(skb)->iif with
-qdisc_skb_cb(skb)->pkt_len, and any qdisc installed on the device or a
-tc BPF program writing skb->cb[] fills the area holding the IP options
-and IPCB(skb)->flags.
+Check the return value and propagate errors from the reset GPIO lookup.
 
-For locally generated packets routed out pimreg (they carry an rtable
-dst), the mroute socket can therefore receive a bogus ipi_ifindex
-(the packet length), and the l3mdev slave test in
-ipv4_pktinfo_prepare() is driven by stale qdisc data.
-
-Clear IPCB before building the report, as done for IPv6 in
-commit 238164201431 ("ip6mr: clear skb->cb[] in reg_vif_xmit()").
-The skb is freed right after, so nothing else depends on its control
-block.
-
-Fixes: bb7403655b3c ("ipmr: support IP_PKTINFO on cache report IGMP msg")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20261025111337.142787-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3bc61cfd6f4a ("clk: add support for the lmk04832")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20261006110501.57051-1-phucduc.bui@gmail.com
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/clk/clk-lmk04832.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index 3e9c821ba5c5c..f73ff36c6bed1 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -529,6 +529,11 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb, struct net_device *dev)
- 	DEV_STATS_ADD(dev, tx_bytes, skb->len);
- 	DEV_STATS_INC(dev, tx_packets);
+diff --git a/drivers/clk/clk-lmk04832.c b/drivers/clk/clk-lmk04832.c
+index 99b271c1278a9..fe7618563ae5d 100644
+--- a/drivers/clk/clk-lmk04832.c
++++ b/drivers/clk/clk-lmk04832.c
+@@ -1417,6 +1417,9 @@ static int lmk04832_probe(struct spi_device *spi)
  
-+	/* skb->cb[] holds qdisc/tc state at this point, not IPCB.
-+	 * ipmr_cache_report() reads it as IPCB to build IP_PKTINFO.
-+	 */
-+	memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
-+
- 	/* Pairs with WRITE_ONCE() in vif_add() and vif_delete() */
- 	ipmr_cache_report(mrt, skb, READ_ONCE(mrt->mroute_reg_vif_num),
- 			  IGMPMSG_WHOLEPKT);
+ 	lmk->reset_gpio = devm_gpiod_get_optional(&spi->dev, "reset",
+ 						  GPIOD_OUT_LOW);
++	if (IS_ERR(lmk->reset_gpio))
++		return dev_err_probe(lmk->dev, PTR_ERR(lmk->reset_gpio),
++				     "failed to get reset GPIO\n");
+ 
+ 	lmk->dclk = devm_kcalloc(lmk->dev, info->num_channels >> 1,
+ 				 sizeof(struct lmk_dclk), GFP_KERNEL);
 -- 
 2.53.0
 
