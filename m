@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045873;
-	b=lKGJE0n2DNgW+59ERUmXq7B2YOkpgirl2qn6w6+d0zyx6pyePqVD4GfzXl42+a4lFe0d
-	 7CAL2gs1PG0YruNQI0oNLhCDoxWIQGXwUoO24JcnlTGjRdulZorP8yWARGekBsAoi8EDL
-	 jXJJkaHT21cSO7RveRJ6fYQ9MXJllo2XWNPkXSBkp6qRzApcQMgos8lkvRCEYq2A+YL0S
-	 0xvJda33XZ3UbLK0KQcaBTelRl0/1fzlOMvhT9sroM1eyJ2cnVIOD/Jcift8nsLQ8GLWx
-	 a4U69Bas1Xl1lvBcKUQEBsrgh2huTN1pB06Buujh7SQq2nA3Mk1WltWRjSF6e1rXu2Q==
+	t=1795045876;
+	b=WxD2sgMYgpMwK9POPe1ANAT1GR0ivbH5AOE0PwYd4hppdYvrJengP3L+97+E0guN96KU
+	 GcN111vsX8AVO/zG4gbIbfOKXR2x9gbqVSjUHlfeIrQQd9HT87mlkPC40C1tpy1tlIrMC
+	 UIdQp37o9dgJDz+TYyRcwxa0RDBT+SIXtD7iEq0x6hvno2MV3BwlnMHQT5arrazL4om4d
+	 djKPF1LGKiChrSzxKJVQppXYYRf4Z7qK81tt2CTEU2h0tavIoU6fPOsU/ehyVIuW8GOuk
+	 SdtcOnXIq0LDwfc4Pb/IsIqTkB/yjBSGRYPR4CHkutQzYv7EIZBTVZ3j1EC0UGHniWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045873;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045876;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wu+ZJr12nG0DXwqF5vhpRXVwIn3Yr7csxlotopvpu0I=;
-	b=knH3bsJcbTSaGdbk4iYiZbEzNRab0P2pkV8NBbwcwiVBr8kBSTxv1M4X4Es2RYagvFUN
-	 0T6Nh19sOec+7YIkKl7JDxRla8OoDXSRy7kGICqylRKT8F+IMCPJU1NxwUaoPVVRqSWNF
-	 n8YGMq9GBKrJMGRITlOJL5MSQ6Zt7ufrOwH6pVViChubbce3As75PWuGCijyZG66cyKlQ
-	 msE2W8QnDbp5lYcq75z+y6r1yDh2iNoQ9yL44pGriOFt0kBM7JzGr8hU7Km9ysnZxBJfR
-	 oPRUboEqY0EjQop8T520GaaY11/QPMa+LfvUv0M0lis5N7qAkt++QSUg8IS2NqX8fZQ==
+	bh=Qx1fzNZyl9Euim4m6heINcPdUbQa9IzFN28Wfu78zko=;
+	b=k/VEHrXp9ESYMNCG3LfcguhDt30gysH3Bf7Ft5mr3Hwi7dNuwyALs3AQ2P5M8RfK1W1U
+	 qk73lBIGQLjWRnpwGoZtRoQRRJL5XHSY+AOCrGPQiISBCF67e+e5IMiV3f0QM/awkosb7
+	 wILjlp/vHnct1mxh4ib/wBpCCEX7XC5aPY+NTOzh5NcxAkhXZY0sA/v1idWEIDQ1yrFoc
+	 THcZABJhKwZeEqh4Evdeqfma1iEOEySe627LeByjAAqIhOWc/aXjVhzrO7nT7L4FkClBP
+	 Orgr+6+MjEDosYfbZqY0tABHxP74jNZ/Lk9yKIQCOuoPI8E2Wy+nr1/k9SROaFEuOnA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="sI8KjUD/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XPqYWROJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7874606A320;
-	Wed, 18 Nov 2026 23:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77AF4606A337;
+	Wed, 18 Nov 2026 23:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sI8KjUD/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1895F1F000C4;
-	Wed, 18 Nov 2026 23:51:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XPqYWROJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD3F91F000C4;
+	Wed, 18 Nov 2026 23:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045873;
-	bh=wu+ZJr12nG0DXwqF5vhpRXVwIn3Yr7csxlotopvpu0I=;
+	s=korg; t=1795045876;
+	bh=Qx1fzNZyl9Euim4m6heINcPdUbQa9IzFN28Wfu78zko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sI8KjUD/SatFrBfDkxOJsRjZl3o0X3RYLgKUH5bpHd3jWHs21bsfUicFLEYIMuGg1
-	 wu5RbeeS+hqcfpXkdp5Fj01nVeEjr6jDCh3NWD1eaE3tscDC11TiTUJqklbYmxitkv
-	 irSVss31WXptI4XkApmAXu64uuWbjIMmrUok4DkE=
+	b=XPqYWROJwe8jmbg4ayjzdwr7D7fqXEf/iNe9R2iKI8kMAshepadEqfcJ2jkvewzm8
+	 KLtSLDUxiLwBeXpkSFLleCRFTXJLPbjNZjJDdI57v7B2YNbQkOi5wdo1PZf4gdHlOg
+	 5xPKJ9Q0Ri9v54u6VqGOT6S2MBNifJ6iybwZTygQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jiale Yao <yaojiale02@163.com>,
+	co+e015e82956da641b@bugs.sh,
+	Christoph Hellwig <hch@lst.de>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1072/2857] drm/amdkfd: validate SRAT subtables before parsing
-Date: Wed, 18 Nov 2026 15:35:06 +0100
-Message-ID: <20261118150240.206212005@linuxfoundation.org>
+Subject: [PATCH 6.1 1081/2857] nvmet-rdma: reject short connection requests
+Date: Wed, 18 Nov 2026 15:35:15 +0100
+Message-ID: <20261118150240.542618818@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,102 +70,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 9866cb13ba4d39aa8fed34b765d4aecabe04f02e ]
+[ Upstream commit 635e760169a87abf03874cd4636cd91b580cb427 ]
 
-The KFD SRAT walker reads the first subtable length without checking
-that a header is present and trusts subsequent lengths when accessing
-CPU and generic affinity records. Invalid firmware lengths can therefore
-cause out-of-bounds reads.
+nvmet_rdma_parse_cm_connect_req() treats RDMA-CM private data as a
+struct nvme_rdma_cm_req but accepts any nonzero private_data_len.  The
+iWARP path allocates exactly the peer-provided length, so a six-byte MPA
+request reaches the parser and the hsqsize load reads two bytes past the
+allocation.
 
-Validate the table header, every generic subtable range, and each
-supported typed record before reading its fields.
+Require the complete request structure before reading any of its fields.
+The decoded KASAN report is:
 
-Fixes: ddec8d3be0f8 ("drm/amdkfd: add ACPI SRAT parsing for topology")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d76b655c98e8cc9e791b31502ad274f47dee2aae)
+  BUG: KASAN: slab-out-of-bounds in nvmet_rdma_cm_handler
+    (drivers/nvme/target/rdma.c:1427 drivers/nvme/target/rdma.c:1475
+     drivers/nvme/target/rdma.c:1614 drivers/nvme/target/rdma.c:1814)
+  Read of size 2 at addr ff1100010459d366 by task kworker/u16:1/41
+  Workqueue: iw_cm_wq cm_work_handler
+  Call Trace:
+   <TASK>
+   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+   kasan_report (mm/kasan/report.c:595)
+   nvmet_rdma_cm_handler
+    (drivers/nvme/target/rdma.c:1427 drivers/nvme/target/rdma.c:1475
+     drivers/nvme/target/rdma.c:1614 drivers/nvme/target/rdma.c:1814)
+   cma_cm_event_handler (drivers/infiniband/core/cma.c:2181)
+   iw_conn_req_handler (drivers/infiniband/core/cma.c:2640)
+   cm_work_handler
+    (drivers/infiniband/core/cm.c:2502
+     drivers/infiniband/core/cm.c:3858)
+   process_one_work (kernel/workqueue.c:3396)
+   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+   </TASK>
+
+  Allocated by task 12:
+   __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+   __kmalloc_node_track_caller_noprof
+    (mm/slub.c:5414 mm/slub.c:5545)
+   kmemdup_noprof (mm/util.c:138)
+   cm_event_handler
+    (drivers/infiniband/core/iwcm.c:194
+     drivers/infiniband/core/iwcm.c:1076)
+   siw_cm_upcall (drivers/infiniband/sw/siw/siw_cm.c:408)
+   siw_proc_mpareq (drivers/infiniband/sw/siw/siw_cm.c:750)
+   siw_cm_work_handler (drivers/infiniband/sw/siw/siw_cm.c:1086)
+
+  The buggy address is located 0 bytes to the right of
+  allocated 6-byte region [ff1100010459d360, ff1100010459d366)
+
 Cc: stable@vger.kernel.org
+Fixes: 8f000cac6e7a ("nvmet-rdma: add a NVMe over Fabrics RDMA target driver")
+Reported-by: <co+e015e82956da641b@bugs.sh>
+Assisted-by: LLM
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_crat.c | 35 ++++++++++++++++++---------
- 1 file changed, 24 insertions(+), 11 deletions(-)
+ drivers/nvme/target/rdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-index 78a5119c86eca..3dde92eecd8ce 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-@@ -1930,27 +1930,33 @@ static void kfd_find_numa_node_in_srat(struct kfd_dev *kdev)
- 		return;
- 	}
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index 380c0aea840df..77439a3d5244b 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -1412,7 +1412,7 @@ nvmet_rdma_parse_cm_connect_req(struct rdma_conn_param *conn,
+ 	struct nvme_rdma_cm_req *req;
  
-+	if (table_header->length < sizeof(struct acpi_table_srat))
-+		goto invalid_srat;
-+
- 	table_end = (unsigned long)table_header + table_header->length;
+ 	req = (struct nvme_rdma_cm_req *)conn->private_data;
+-	if (!req || conn->private_data_len == 0)
++	if (!req || conn->private_data_len < sizeof(*req))
+ 		return NVME_RDMA_CM_INVALID_LEN;
  
- 	/* Parse all entries looking for a match. */
- 	sub_header = (struct acpi_subtable_header *)
- 			((unsigned long)table_header +
- 			sizeof(struct acpi_table_srat));
--	subtable_len = sub_header->length;
- 
--	while (((unsigned long)sub_header) + subtable_len  < table_end) {
--		/*
--		 * If length is 0, break from this loop to avoid
--		 * infinite loop.
--		 */
--		if (subtable_len == 0) {
--			pr_err("SRAT invalid zero length\n");
--			break;
--		}
-+	while ((unsigned long)sub_header < table_end) {
-+		unsigned long start = (unsigned long)sub_header;
-+
-+		if (table_end - start < sizeof(*sub_header))
-+			goto invalid_srat;
-+
-+		subtable_len = sub_header->length;
-+		if (subtable_len < sizeof(*sub_header) ||
-+		    subtable_len > table_end - start)
-+			goto invalid_srat;
- 
- 		switch (sub_header->type) {
- 		case ACPI_SRAT_TYPE_CPU_AFFINITY:
- 			cpu = (struct acpi_srat_cpu_affinity *)sub_header;
-+			if (subtable_len < sizeof(*cpu))
-+				goto invalid_srat;
-+
- 			pxm = *((u32 *)cpu->proximity_domain_hi) << 8 |
- 					cpu->proximity_domain_lo;
- 			if (pxm > max_pxm)
-@@ -1958,6 +1964,9 @@ static void kfd_find_numa_node_in_srat(struct kfd_dev *kdev)
- 			break;
- 		case ACPI_SRAT_TYPE_GENERIC_AFFINITY:
- 			gpu = (struct acpi_srat_generic_affinity *)sub_header;
-+			if (subtable_len < sizeof(*gpu))
-+				goto invalid_srat;
-+
- 			bdf = *((u16 *)(&gpu->device_handle[0])) << 16 |
- 					*((u16 *)(&gpu->device_handle[2]));
- 			if (bdf == pci_id) {
-@@ -1974,9 +1983,13 @@ static void kfd_find_numa_node_in_srat(struct kfd_dev *kdev)
- 
- 		sub_header = (struct acpi_subtable_header *)
- 				((unsigned long)sub_header + subtable_len);
--		subtable_len = sub_header->length;
- 	}
- 
-+	goto out;
-+
-+invalid_srat:
-+	pr_err("SRAT contains an invalid subtable\n");
-+out:
- 	acpi_put_table(table_header);
- 
- 	/* Workaround bad cpu-gpu binding case */
+ 	if (le16_to_cpu(req->recfmt) != NVME_RDMA_CM_FMT_1_0)
 -- 
 2.53.0
 
