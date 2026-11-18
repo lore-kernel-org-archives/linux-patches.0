@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030512;
-	b=5bLSftPFao11bKNSE6v3e+U8nWuYAIEyfyF8V2wLKfOP41fFehsH1bJ1Z/vbqmtY+gIG
-	 nAr7tr9wcvPswwO3V7AAHX8iV3Fa9BpYgJBQ+1Sc1qIkeI3D17JiueP3GZRPT8VyqlXBm
-	 Iqq9457sZniNzsIUjKYkY+1FAvX4wyS/4bH+9YDK6Pkvkxiyr24vGZxmy+/XPbcDhmWyK
-	 p/pHfzumumkuv5mQZC0H3vglPCPmOda47RA40jEW+IlljPc59OACqy8nB0e6X2fW9MeAp
-	 EWESNaF4uxTQ+JChGmmroM/+x8CQhSlBSDHOCW/AL7y024M2xX6wyHeem2n4Xfm81Lg==
+	t=1795030515;
+	b=aX7zJOxEdNb/7VembRO589eKzIwrhhMfjINGvqGQK1NqtDEbl97jp4vnmphqLmoRdPbj
+	 SOruIKX4KvdcXO+W2cWsaz7gu6UiW5EhJZ/B8QKgiRKUZ2gLMtDyG/gBvHV5Gzd9ptEAh
+	 UmpDcN94+vsjV6bdHdXNgE3VAotEZBlslKmE7OO7CScwvQapHCHFw23gsVNpa49/lkwoV
+	 sLWt8qTDd6n/6wtHS5ac8SfFbgMnsNcY5fcQlEH8VXjSIF1osMU8x48mztmfahhn11HYP
+	 TiR43E/glXnClDZfyL2b8agumNmY7Nhhsv8wYOMNRfx5EMgARdty4rfmMWi0LFhsWrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030512;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030515;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=XLrx4ElEexT9bpVJR/F9AFgcIGwKBhwlm3x9Sd9DhaM=;
-	b=pE4oIizfMrVGvkpkE4tSx4j+bV0CYaRWbtwgt9mde+pLteK2s1uH9chYWa15VPRpZeYJ
-	 eRIAxBiVrD9/xxTTEVcQYQ2sAGPNJrE7YYMsovUPMvmhPnoaE8pQT/V/U6s7N14D5REor
-	 8b/s09SrZNmhSyfCzlfqh/U9wBrWtNZ9YNdgpKG4WlzyyDc1vhQq0DzqVv0jBvaYGbSuu
-	 jU4MCDAZC2dIaBX9r88s4qIfRZERsobAD79AvNvIsHq4hJIXQo5QwKcv35/7/9zkT/ZYI
-	 XM2StRvL9AB6UQgGRTklkp7+0vdGirpKwKl5Zs8CJ0uIDe/0N+lxtWh5Ygat25Kwb3A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=cHQvXEwfF7Zk/gJbqfAeKkDJuCYzXq0xdJ7qNFIp7y4=;
+	b=odnEvzgNlsN+HeE5ksky5bCd3E+UkbP6Y4GpPjP4s2OJD50LH8yXF2PPjULhy/G54m6C
+	 X/h9swCt66yNrAba8YUmW+L3FPN7VOMwt5D6JN+RyQIPlxl1/YBhU2yNN8ix7RS47p2Vy
+	 ysLSXWqLFpBHuOz8FDyhvg0Y5lC3kDAXcq8+zYOJJz57Z0xU/9GJc8YclV+2Qkp/x/Kql
+	 vV0d4IT+mn+PMKo+vyce0ic14Vq40YX9VX1BNgIm3yh1/umr+zf+8hQBfSyK23cade6z4
+	 Gtbwy0pqxDrsXUHO/WiujZ11SGHvUSkunVnDNYqB7Y31GF5mZsldRNZ956jmHT54shA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XhNax249;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ruSyMbur;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E985606BB50;
-	Wed, 18 Nov 2026 19:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50560606BB50;
+	Wed, 18 Nov 2026 19:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XhNax249
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27931F000C6;
-	Wed, 18 Nov 2026 19:35:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ruSyMbur
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B071F000C4;
+	Wed, 18 Nov 2026 19:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030512;
-	bh=XLrx4ElEexT9bpVJR/F9AFgcIGwKBhwlm3x9Sd9DhaM=;
+	s=korg; t=1795030515;
+	bh=cHQvXEwfF7Zk/gJbqfAeKkDJuCYzXq0xdJ7qNFIp7y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XhNax249Kqu62HO9zKZw23JIiHSRdAcpK785P2fta2F5acXFmfOVc9QCzPG7mZokc
-	 dYSK7n3kVXUx/J1SI+5XkjKYayFXYjD3fxrk86XLmM4UQYx+5Niix4qPZw1Wv4Hif9
-	 qmjTUmoK7UD5zAFWn3ZUMcfsZWoXqUPgwnVA1ClU=
+	b=ruSyMbur/vaoMNS3qZH+x5vDfb7+BKsqWXw67Al7wCg/DJM/EgT2utaJr5lTm1UD2
+	 3uVfUZwVPfoY5I0FoPMmc2GFDCiQve8lKyydo56AAKmvrdOHXhGuIQGs9gSdgueicB
+	 Mfk9n+D1bPEN2OLmfPPHdyAskof/6OIPV5cs7kVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Liu Dalin <liudalin@kylinsec.com.cn>,
+	Linus Walleij <linusw@kernel.org>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0729/1756] rtc: ftrtc010: drop needless struct ftrtc010_rtc::rtc_dev member
-Date: Wed, 18 Nov 2026 15:47:36 +0100
-Message-ID: <20261118150038.695189613@linuxfoundation.org>
+Subject: [PATCH 6.12 0730/1756] rtc: ftrtc010: fix clock resource leak on probe failure
+Date: Wed, 18 Nov 2026 15:47:37 +0100
+Message-ID: <20261118150038.730659770@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -63,87 +63,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Liu Dalin <liudalin@kylinsec.com.cn>
 
-[ Upstream commit a55d44807b63f171f8079d770c9d82fa87046cdd ]
+[ Upstream commit c60478875a445dee1206aad6285c18cd8c91f7f2 ]
 
-The memory pointed to by the ::rtc_dev member is managed via devres,
-and no code in this driver uses it past _probe().
+When devm_rtc_register_device() fails, ftrtc010_rtc_probe() returns
+the error directly without releasing clocks obtained via
+clk_prepare_enable(). This leaks both extclk and pclk resources,
+which may prevent subsequent probe attempts or module removal.
 
-We can drop it from the structure and just use a local temporary
-variable, reducing runtime memory consumption by a few bytes.
+Capture the return value and jump to the error handling path to
+properly release clocks via clk_disable_unprepare().
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Link: https://lore.kernel.org/r/20250304-rtc-cleanups-v2-6-d4689a71668c@linaro.org
+Fixes smatch warnings:
+- drivers/rtc/rtc-ftrtc010.c:189 ftrtc010_rtc_probe() warn:
+  'rtc->extclk' from clk_prepare_enable() not released on lines: 183.
+- drivers/rtc/rtc-ftrtc010.c:189 ftrtc010_rtc_probe() warn:
+  'rtc->pclk' from clk_prepare_enable() not released on lines: 183.
+
+Fixes: fdcfd854333b ("rtc: rework rtc_register_device() resource management")
+Assisted-by: smatch:2.0 [static analysis]
+Signed-off-by: Liu Dalin <liudalin@kylinsec.com.cn>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Tested-by: Liu Dalin <liudalin@kylinsec.com.cn>
+Link: https://patch.msgid.link/AC51B5F2C5FFEBB0+20260827080320.3351155-2-liudalin@kylinsec.com.cn
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Stable-dep-of: c60478875a44 ("rtc: ftrtc010: fix clock resource leak on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ftrtc010.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/rtc/rtc-ftrtc010.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/rtc/rtc-ftrtc010.c b/drivers/rtc/rtc-ftrtc010.c
-index cb4a5d101f537..02608d3784958 100644
+index 02608d3784958..f398d6dc85ae4 100644
 --- a/drivers/rtc/rtc-ftrtc010.c
 +++ b/drivers/rtc/rtc-ftrtc010.c
-@@ -28,7 +28,6 @@ MODULE_LICENSE("GPL");
- MODULE_ALIAS("platform:" DRV_NAME);
- 
- struct ftrtc010_rtc {
--	struct rtc_device	*rtc_dev;
- 	void __iomem		*rtc_base;
- 	int			rtc_irq;
- 	struct clk		*pclk;
-@@ -113,6 +112,7 @@ static int ftrtc010_rtc_probe(struct platform_device *pdev)
- 	struct ftrtc010_rtc *rtc;
- 	struct device *dev = &pdev->dev;
- 	struct resource *res;
-+	struct rtc_device *rtc_dev;
- 	int ret;
- 
- 	rtc = devm_kzalloc(&pdev->dev, sizeof(*rtc), GFP_KERNEL);
-@@ -160,29 +160,28 @@ static int ftrtc010_rtc_probe(struct platform_device *pdev)
- 		goto err_disable_extclk;
- 	}
- 
--	rtc->rtc_dev = devm_rtc_allocate_device(dev);
--	if (IS_ERR(rtc->rtc_dev)) {
--		ret = PTR_ERR(rtc->rtc_dev);
-+	rtc_dev = devm_rtc_allocate_device(dev);
-+	if (IS_ERR(rtc_dev)) {
-+		ret = PTR_ERR(rtc_dev);
- 		goto err_disable_extclk;
- 	}
- 
--	rtc->rtc_dev->ops = &ftrtc010_rtc_ops;
-+	rtc_dev->ops = &ftrtc010_rtc_ops;
- 
- 	sec  = readl(rtc->rtc_base + FTRTC010_RTC_SECOND);
- 	min  = readl(rtc->rtc_base + FTRTC010_RTC_MINUTE);
- 	hour = readl(rtc->rtc_base + FTRTC010_RTC_HOUR);
- 	days = readl(rtc->rtc_base + FTRTC010_RTC_DAYS);
- 
--	rtc->rtc_dev->range_min = (u64)days * 86400 + hour * 3600 +
--				  min * 60 + sec;
--	rtc->rtc_dev->range_max = U32_MAX + rtc->rtc_dev->range_min;
-+	rtc_dev->range_min = (u64)days * 86400 + hour * 3600 + min * 60 + sec;
-+	rtc_dev->range_max = U32_MAX + rtc_dev->range_min;
- 
- 	ret = devm_request_irq(dev, rtc->rtc_irq, ftrtc010_rtc_interrupt,
- 			       IRQF_SHARED, pdev->name, dev);
+@@ -181,7 +181,11 @@ static int ftrtc010_rtc_probe(struct platform_device *pdev)
  	if (unlikely(ret))
  		goto err_disable_extclk;
  
--	return devm_rtc_register_device(rtc->rtc_dev);
-+	return devm_rtc_register_device(rtc_dev);
+-	return devm_rtc_register_device(rtc_dev);
++	ret = devm_rtc_register_device(rtc_dev);
++	if (ret)
++		goto err_disable_extclk;
++
++	return 0;
  
  err_disable_extclk:
  	clk_disable_unprepare(rtc->extclk);
