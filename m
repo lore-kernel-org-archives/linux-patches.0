@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032319;
-	b=XWQAmIgRls1JgXXny+tBqQxxWnCc/ywYzlUQgbReACxJwajYYDz5TMH3xeFjLkd6ro3N
-	 g/o0rI5JCJL1RY9mQ+godLBJy+6OENZLcL1lO6jLKAsyI0sV9KiZCHrJu4PprZFJ7JJxv
-	 17vO3yyc5Vb5u54+1t6N2ONuVrMicpxBvE6etO5OtNRbO3S+b088UzqlePbmKPLtawtO5
-	 yRr18PhxUK359iyZf1MglUCypg2A7CHrZWTtGVdAthgPqQMyqw/9z8Gh6BjiyN0igdJiJ
-	 gTS0oTKsdickTnXFsBXRTpK6XLwNQDG59TeT9tW/a8BbR3Ol+rHYJfg0e4KZtdA4saQ==
+	t=1795032322;
+	b=MwcWcOc2KLUw7ZokyFlbGMSGGFT0Xlpd3mSxNICQRhVl984WfsvEWBg+TZGHJjjFc21O
+	 5KjpZtsCbmgFod3dKENk1cAUjMyolInytG4T9DFEvnptJB3EbCIXoCK3f89isAvPtN/P4
+	 3lMFGqlZV74bqE6ZaSDFmAQ21OYjEZQjPvq8iUjyWG844jHlFBOTUVV3UOebQs1rvICFV
+	 R7GuPx9JAioYACrBhLx5exu+LoSfYQ5P27ALf7CqHvXzTF78uPUltAu/fUh9fSSxB56/n
+	 oSQjqXAXoVAa/wQhclL8GzWxW/dbBbX2n1t4DwmB/UPpLw8f9d4Qz9I2fKbOFQd3hUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032319;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032322;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jv4+rI7tSD5SV2V2YAQi2sahGSDV0LKC0NAVM+YXqEw=;
-	b=HCKmYHBYO6LpcOP8PfM0Pd7fguUkC87ouaQGveifOAIHJ0eevjgAqQsT+D7FBS1t3OyV
-	 FmsoDJdhG9dXCSVrcZIawKw1tnxLz2OxaBOn5QkI40VHBD+SpNDUNXJdu+VMpbupxXDZm
-	 8A5p425Xzb8X6a8R9++9SVjQ8SMXU2l6kFRMargA75vvwTlwuwen+M/qnSoguT56R0c5r
-	 yRx/HRoIxsp75i/ahM5nRoX8RfJBVIq2NGpJdLGPIFocULxTxXKuUHX1rbhLmtxzxBf0H
-	 vIAqWMVvir83abq6phm4oPFJvJxG562XWutp359R+2q6FJ+b2ztNg6ggL1bMULNfk2A==
+	bh=cHJ4cY3KFVYNmLkPgv3dcEi91zfnd4kqZidhNwKo76c=;
+	b=JhBys1x6MZ1XzQTATdjT3B0u0R5DpkF6lPwaZE8xerdCJBb+EiT9w+cjLk86hN77IHy2
+	 Qd7HRQ/2RjJKMAL0FTU+BUwefWvVYDbPWY9crWKoQmJ/TZjASLykWUTfz51RKbXxJgSez
+	 A3ams4gPl1CX8h810NyfheIqmz0R7oH7lW6fid2TV+8XYvJB1Sl/RWVYl2GEnqjpDrwIB
+	 SNh+Atg76Fcj3V8kaApjHaIl42eJpfcRzM1IqSnLkvLoIFmt3hIIli1kKyHzFn2EM0uFo
+	 IVgYazmSvOreQlhA40ZCUPFGPou1dET7Y8TUaV7aBvLOfn4sBHbq9TgyjmACPYxyQHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="xK/agryS";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VEWt9vrG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97619606A335;
-	Wed, 18 Nov 2026 20:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B200606A337;
+	Wed, 18 Nov 2026 20:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xK/agryS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE1C1F000C5;
-	Wed, 18 Nov 2026 20:05:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VEWt9vrG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7031F000CC;
+	Wed, 18 Nov 2026 20:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032319;
-	bh=Jv4+rI7tSD5SV2V2YAQi2sahGSDV0LKC0NAVM+YXqEw=;
+	s=korg; t=1795032322;
+	bh=cHJ4cY3KFVYNmLkPgv3dcEi91zfnd4kqZidhNwKo76c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xK/agryShej5oHs2pBBmyZL+2nGGLf8nuKOgiI90VKZO7QD7iQsX7JFKuPwvRxeUy
-	 LYy1gbugCqoOXBvoASYzaofqMw29yzTP+idylyDg3PzTpBK+VzOKl4lPq7Vpr20xNR
-	 ZjyqMLqk4XhH6dLdIaHbR8f1LJS0BIWRI5jHZkdw=
+	b=VEWt9vrG9073uuAqIQ4FPsSZZUfVp3MA+byLBQ4zyZfGOqjsON1KH3AHj9mZgQwqP
+	 jQ7+v0+w3SXaFbGI6C13t5l8pUggZG5PgyZoe7LkmBX3ar1Gr7RaiyX7qpcEDES/NK
+	 pr87C7pOHaFeqnvVPlbaVTDy2LaJ9d3E93IR4YYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
+	Qiliang Yuan <odys.yuan@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1368/1756] bpf: Clear sk_refcnt of a clone before its storage is linked
-Date: Wed, 18 Nov 2026 15:58:15 +0100
-Message-ID: <20261118150103.701716675@linuxfoundation.org>
+Subject: [PATCH 6.12 1329/1756] selftests/bpf: Keep the bpffs of cgroup_hierarchical_stats private
+Date: Wed, 18 Nov 2026 15:57:36 +0100
+Message-ID: <20261118150102.308183706@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,62 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Qiliang Yuan <odys.yuan@gmail.com>
 
-[ Upstream commit 22f100bd013458836c3d0eaf8050b854d7534a66 ]
+[ Upstream commit 3c824dfd17e6e918e45a6a96bda0d020ddec8287 ]
 
-sk_clone() sets sk_refcnt of the new socket some lines behind
-bpf_sk_storage_clone(). But the elements which that function copies are
-linked to their maps at once, and an element leads to its owner: the
-iterator over a sk_storage map hands the owner to its program.
-bpf_sk_storage_get() with BPF_SK_STORAGE_GET_F_CREATE and
-bpf_sk_storage_delete() rely on refcount_inc_not_zero() to tell whether
-they may touch the socket.
+setup_hierarchy() mounts a bpffs on /sys/fs/bpf with setup_bpffs(), and
+then sets up the cgroups with setup_cgroups(), which moves the test into
+a private mount namespace.
 
-sk_refcnt is in the part of struct sock which sock_copy() leaves out, and
-sk_prot_alloc() does not clear a clone unless init_on_alloc is on. It is
-zero in an object which has been a socket before, and anything in one
-which has not. If it is not zero, a helper gets a reference which
-refcount_set() wipes out, and the helper's sock_put() then drops one of
-the two references of the new socket, which is freed too early:
+The bpffs thus lands in the mount namespace that test_progs shares with
+the tests running in parallel, on top of the bpffs already there, and
+hides what they pin. cleanup_bpffs() later runs in the private mount
+namespace and can't unmount it, so it stays there for good.
+bpftool_maps_access then fails to pin an iterator because
+/sys/fs/bpf/test_bpftool_map doesn't exist anymore, and bpftool_metadata
+can't find the program it pinned in /sys/fs/bpf/test_metadata.
 
-  IPv4: Attempt to release TCP socket in state 1
-  BUG: KASAN: slab-use-after-free in __raw_spin_lock_init+0x47/0x90
+Set up the cgroups first, so that the bpffs is mounted in the private
+mount namespace.
 
-In the meantime the helper changes a storage which bpf_sk_storage_clone()
-fills without taking its lock.
-
-Nothing else can find the clone at this point. Say that it is not alive
-yet, before the first element is linked. Sockets whose parent has no
-storage are left alone.
-
-Fixes: a50a85e40c59 ("bpf: Expose bpf_sk_storage_* to iterator programs")
-Suggested-by: Josef Bacik <josef@toxicpanda.com>
+Fixes: 88886309d2e8 ("selftests/bpf: add a selftest for cgroup hierarchical stats collection")
+Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-15-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261009-selftests-bpf-cgroup-stats-bpffs-v2-1-f93a111da992@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/bpf_sk_storage.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ .../selftests/bpf/prog_tests/cgroup_hierarchical_stats.c        | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/bpf_sk_storage.c b/net/core/bpf_sk_storage.c
-index a09bc55ebd75a..aa6022ed1ed0d 100644
---- a/net/core/bpf_sk_storage.c
-+++ b/net/core/bpf_sk_storage.c
-@@ -163,6 +163,13 @@ int bpf_sk_storage_clone(const struct sock *sk, struct sock *newsk)
- 	if (!sk_storage || hlist_empty(&sk_storage->list))
- 		goto out;
+diff --git a/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c b/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c
+index 3bd27d2ea668c..ad19d6d41918a 100644
+--- a/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c
++++ b/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c
+@@ -151,7 +151,7 @@ static void cleanup_cgroups(void)
+ /* Sets up cgroup hiearchary, returns 0 on success. */
+ static int setup_hierarchy(void)
+ {
+-	return setup_bpffs() || setup_cgroups();
++	return setup_cgroups() || setup_bpffs();
+ }
  
-+	/*
-+	 * The maps lead to newsk as soon as an element is linked, but
-+	 * sk_clone() sets sk_refcnt only later.  Until then it holds whatever
-+	 * the slab object held before: no reference can be had yet.
-+	 */
-+	refcount_set(&newsk->sk_refcnt, 0);
-+
- 	hlist_for_each_entry_rcu(selem, &sk_storage->list, snode) {
- 		struct bpf_local_storage_elem *copy_selem;
- 		struct bpf_local_storage_map *smap;
+ static void destroy_hierarchy(void)
 -- 
 2.53.0
 
