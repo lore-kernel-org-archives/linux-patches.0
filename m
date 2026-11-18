@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046298;
-	b=THClCAOgiGtMcgHIZZYyPLks3CrqrdUhWGwWJJp1XPrrEUHmT4k1Hskl+O1GDKg7CZlD
-	 WVl9W1FJw+vXb35c6sz7VW62w5HnO52GCkQAJ7/zP9JU9mZWzURBxwI4GX5eUxrdRY2fw
-	 QSqGTZlEpz4wM0vPhS9d7KwrND3Ch0mvItnDslqYW4OYnnyj0GHW/nTNAVeZrd6ZabwCz
-	 IcBkHuEtomtikjQo7nHdRRO2mMM5Xui1q/YFmbpZ6VqRqCZbyq9tiSilF1FoLZXyNPrHG
-	 5jFEhufTzDMT1dw88ZieLSUZs5tUYQhl36QmkMt6aP75I2XrRPTQkKW5e9LgpQmLgSg==
+	t=1795046301;
+	b=mO/bhhrFFGpBIFTLwcbuHXFwWSneU3c/U2FOB2bzthy3Zp4gf63OAcO/yHZ3z7au60ZA
+	 5aRHFowJFk11iu5PES6c9Fx8Dx167eQyA6zzphJl2Ek7CJ409NKrBO7cORot1po/ctRhf
+	 CJMYWnzllx2YzcZGRlzPRxQ2ctuKR3iGUvfJQwgnEe05Eohs23NOZwc5cEN5zmepYAERq
+	 DfYn9lh0k/ToKM0orhu2BkE68rdtm2UEu7G0oTwiYvEfONNosovs5vw1qHE35HQQtePWv
+	 J/kdjhBmTBPC1w1Zt5rT1Zt6S7swwdFNkOKF7N31Z3h3iE2MpElEeLpbj9qLZRZmJcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046298;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046301;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4cgyZa6vfIbZOo6/lW8grVcp65q7JfRmsRdcDpiGNX8=;
-	b=SZ9ehgRNID+aBRO6NjNxLYt9ociyueIOUnCUW2dWcRcdBQHKTsBh7oA7NINzjov3XQbl
-	 cE5liQiMw9IBDl6e1R16polvscoi9ki2hsWc4ciNTagQQRlGLmjKfs6ewJfRcb9vZW64w
-	 HaXzHyD8tu+Jn78iq/c8k/i4YzIe5fWt5Hjw2QPnfiSNsd5tE2VO2yGyI9HXNxoGIOX4/
-	 aKvoCkgD/1SI3+LhtGD6c1wvH5iLDfRf6j4vtva1P16mIMWgte1U+vLJFZLGT7ddweTSZ
-	 bhsx1cSUKrtEOHLsQa7cvY/hjpqqSH+ltod2ZSEgxv1lwNDoQVL4oo2+9u9P/CjPEOQ==
+	bh=3mebds7zVqX322RVA0AwMk7GIjqm1mDkXe2iCZBWoQc=;
+	b=Mh9W3YNYFmyswPspxotf016wuDgmsKw9kwa78eOIomJy7BPuz85nXx2p8YJxaOCbuuHc
+	 D4glY00N3bey/vfE+jucZQ1GxXpHbdluGjVM/QSrRx98jeVpjNM7YRE4nPBwo8xbtEpsp
+	 blqH8HS2T36dBfRl7rVKv7K+ICiXy8+5Gpdg0qS/fRL2FAT5HXfjybUYXrWdcQsl3//nf
+	 0rxiRH2T3gE2GG3ccS3WFkV8Wo9xyqfaP8ngNvGHnFBFWCqGE/gajKlViBZ/nfPnYGLPU
+	 k9d2iDGGapeFdTvzSLR4YOpsiNLXzLNvJxDDz4KOEWeIBDYAxHIJmxOJgVKxQG/7MdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Cw5DtO/X";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z6Qg22UR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E77606A320;
-	Wed, 18 Nov 2026 23:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CCC606A31C;
+	Wed, 18 Nov 2026 23:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cw5DtO/X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B305E1F000C4;
-	Wed, 18 Nov 2026 23:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z6Qg22UR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D061F000C4;
+	Wed, 18 Nov 2026 23:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046298;
-	bh=4cgyZa6vfIbZOo6/lW8grVcp65q7JfRmsRdcDpiGNX8=;
+	s=korg; t=1795046301;
+	bh=3mebds7zVqX322RVA0AwMk7GIjqm1mDkXe2iCZBWoQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cw5DtO/Xv2g+TUyMrwzQJ02WyzmyOCwdz/ZswqNzG+V0WWEW0zwcJjV2LCzl3TyNP
-	 rDXAcy8pNps+oRiA0OBBmEFedrnOAUBOqOvarOGNefV4A/fE9knR3wDBejWTUR+csc
-	 R/45AZxTm2ZNPfXLN9iJwj2/GTjHaSq3VsjXIh5g=
+	b=z6Qg22URYNDKEKhzUeakPYKMZynF1Lsh18P6/IUvRkGRsAQ4qthoDKzXnVD3kB4vx
+	 F8TVnlxx7OC38umG9Rc1bjnyL0suh5uWwyTm7L5UeE5tVLiVAwvMxnfFX6w+wEPCkU
+	 2wA/emOGfG3c/sR/mg2a1/pZPvAUZcA741Py8PWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Rik van Riel <riel@surriel.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1231/2857] mm/filemap: dont lose a folio lock wakeup to a signal
-Date: Wed, 18 Nov 2026 15:37:45 +0100
-Message-ID: <20261118150245.884443807@linuxfoundation.org>
+Subject: [PATCH 6.1 1205/2857] batman-adv: fix skb leak when hard_iface is being released
+Date: Wed, 18 Nov 2026 15:37:19 +0100
+Message-ID: <20261118150244.988471614@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,70 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 8ccb6ded6a47b59b4907ed4f8c293cf8122de889 ]
+[ Upstream commit 522e4aece2e96cacbb8a6ae1eec0d4c0dd6f4fed ]
 
-An exclusive waiter in folio_wait_bit_common() can leave the wait loop
-because of a fatal signal, then be woken by folio_unlock() before
-finish_wait(). If the waker did not hand over the lock, the waiter returns
--EINTR without trying to acquire it.
+batadv_batman_skb_recv() owns the skb it is given. When the hard_iface
+refcount already dropped to zero, the function jumped to err_out, which
+only returned NET_RX_DROP and skipped the kfree_skb() under err_free.
 
-folio_wake_bit() stops after waking the first exclusive waiter, so this
-loses the wakeup and can leave other waiters asleep indefinitely on an
-unlocked folio.
+To avoid a leak, free the skb before returning in this case.
 
-After finish_wait(), let a waiter woken without a lock handoff try once
-more to acquire the lock. If successful, return success so the caller's
-eventual unlock wakes the next waiter. Otherwise, the current lock owner
-will do so.
-
-Fix generated by an LLM and sent by Josef Bacik in private.
-
-Fixes: 5ef64cc8987a ("mm: allow a controlled amount of unfairness in the page lock")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-[ david: clarify and simplify comment + description ]
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Acked-by: Pedro Falcato <pfalcato@suse.de>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-7-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Fixes: 4fe56e60ac1b ("batman-adv: Check hard_iface refcnt when receiving skb")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/filemap.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ net/batman-adv/main.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/mm/filemap.c b/mm/filemap.c
-index 62bad5bb57764..e26b58aa3c6e4 100644
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -1370,10 +1370,22 @@ static inline int folio_wait_bit_common(struct folio *folio, int bit_nr,
- 	 * return value based on that state without races.
- 	 *
- 	 * Also note that WQ_FLAG_WOKEN is sufficient for a non-exclusive
--	 * waiter, but an exclusive one requires WQ_FLAG_DONE.
-+	 * waiter, but an exclusive one must also acquire the bit.
+diff --git a/net/batman-adv/main.c b/net/batman-adv/main.c
+index 650e9bacbb79d..48065fd09e1a8 100644
+--- a/net/batman-adv/main.c
++++ b/net/batman-adv/main.c
+@@ -448,8 +448,10 @@ int batadv_batman_skb_recv(struct sk_buff *skb, struct net_device *dev,
+ 	 * shut down otherwise the packet may trigger de-reference errors
+ 	 * further down in the receive path.
  	 */
--	if (behavior == EXCLUSIVE)
--		return wait->flags & WQ_FLAG_DONE ? 0 : -EINTR;
-+	if (behavior == EXCLUSIVE) {
-+		if (wait->flags & WQ_FLAG_DONE)
-+			return 0;
-+		/*
-+		 * We might have just been woken up and the waker will not
-+		 * wake up anybody else. If we ignore that now, the remaining
-+		 * waiters may not get woken up: take the bit now if it is
-+		 * still free.
-+		 */
-+		if ((wait->flags & WQ_FLAG_WOKEN) &&
-+		    !test_and_set_bit(bit_nr, folio_flags(folio, 0)))
-+			return 0;
-+		return -EINTR;
+-	if (!kref_get_unless_zero(&hard_iface->refcount))
+-		goto err_out;
++	if (!kref_get_unless_zero(&hard_iface->refcount)) {
++		kfree_skb(skb);
++		return NET_RX_DROP;
 +	}
  
- 	return wait->flags & WQ_FLAG_WOKEN ? 0 : -EINTR;
+ 	skb = skb_share_check(skb, GFP_ATOMIC);
+ 
+@@ -508,7 +510,6 @@ int batadv_batman_skb_recv(struct sk_buff *skb, struct net_device *dev,
+ 	kfree_skb(skb);
+ err_put:
+ 	batadv_hardif_put(hard_iface);
+-err_out:
+ 	return NET_RX_DROP;
  }
+ 
 -- 
 2.53.0
 
