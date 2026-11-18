@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015794;
-	b=SrOkMBgK5nz8559x9FCdKBqYRTOd2g6meDGQu/T62Fqz0qtbPZXMdderzdSeDJg7KUQT
-	 Y79M99e8JpZKvBD5qOeDUOnQ8TWLGkeLtxlKgQ1GNQxM9MLPD58jaqElLI3xkOkcBA40z
-	 KB3elyZqbcnWgPIEHOmXD6Xl6/fr179MKCKOotNP5jebOol/T7Jd97b3kRmrk5jTl1FHp
-	 BTpXV9qyMSle2YTrUy9smxmJ+CSyVcYb+1Hddkds61eO+hqrKP044rbD8wR5hKd4r8fH+
-	 d5Xt3bunIh83+SN/WVv5mLyNBOYvNIB3Qh5bsHHmE5XYwIBej11NFyfI9x/QX585PRA==
+	t=1795015797;
+	b=Qiu02sepVy76IFpoHuhO/iD08UDeHu65h15/Y/nIYy5nLE9WLWr92NcJ0GlddS/yXSNE
+	 Acr6Jcp6ObVYJkIluNGPPhlk4y+oaHdbyjxdz4wmb/fJvjlFvy9WMutri0qGvxAwp6AjE
+	 2c+o+zrxhmt1zrTC/qSP+gTmJpoLxqldD7w1HVvYunEtgLczwyWB/VXuBJf1E7qx6HUR4
+	 aKD6lK6sJszaPltAMfHOw0zY9xHFjfZH/x8M2XDp1jtOJacAY5ERUUqeF/+8zDxa5ydHG
+	 SS3mQhMXRjXFH5ULygHx2PlsZzOu66oSgmpPnXCjxKqSHm4WEwQyIpkyMQLAmGdeOyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015794;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015797;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=reCAWairWX8eGrlaKOKPf1GDD5bWjmfEPfp78LWa78I=;
-	b=Zn2ikMI2pWQqpOSGaECWtnMfV4fevuUubFJzyNheuywIJUSSfQDahNuTo2zHvr+3xUQC
-	 z+qaFT7MZE0EvjUjbS1Q4/J7qi1pIWGRdjNNdVBRSUcIui3fECXJePkNiL3hTZJHrslLJ
-	 bh9/Yih8nd798ZWTa/ZrOmNY9rdT8Hl6BUWGmWKnLwZLf+2mcdTHYs+wpQhp08Ykv0U2E
-	 PGZXM0utBHMb6t/mMdXRw4LU1/TJSqatsCjOtjC51FJBfvRRJhzWPiOxw/dV+AMUAosqE
-	 kqYDIsXz5ksNnepVugHzVyG3nMD1YVsUJlxv8ZO3/1ry0tK4UR0DNl4hEjfy9wcoZAA==
+	bh=rljAJsKll/GfwuAnLK75osrjMlLau15sG4VmvKBYZy8=;
+	b=WFLkvzB+ISnCPCgnaUM54/BmAdlA943wATmROBzb5Xi7oTpkNJ/fwbX8QmlGfwXq02cb
+	 XJn+6be7oG/LsrvEoUx1EJnnNl548TtPfSCm+Nqb4dbk1+9ulAfh6iTwmJQKJUXgmsafz
+	 kfw5J30R7vTPp38jGr04n4q4iTXZImJmkRIWHNCzyZgouySOTy5I8bbKFSAocZgmt7Lc9
+	 PARUEIZ5EAYzIsCfrGXGtyqHOWdrv+yF6AaBcViTtgpjfawvHwL4ELHBk/A+D4YpWR9JV
+	 6F9GPXqhxAeNFfAxKkzFbnF9G1doYJzTizeA1h6Bn3tTTBp2qL7UohBme0RzJ9YbTlw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UV7Y+kvI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=12XzcLpU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F73606A320;
-	Wed, 18 Nov 2026 15:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AABA606A32A;
+	Wed, 18 Nov 2026 15:29:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UV7Y+kvI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90751F000C5;
-	Wed, 18 Nov 2026 15:29:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=12XzcLpU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9C11F000C6;
+	Wed, 18 Nov 2026 15:29:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015794;
-	bh=reCAWairWX8eGrlaKOKPf1GDD5bWjmfEPfp78LWa78I=;
+	s=korg; t=1795015797;
+	bh=rljAJsKll/GfwuAnLK75osrjMlLau15sG4VmvKBYZy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UV7Y+kvIYk7AX/9Qiuq9TjroadkC7vybYWkLQhf7g0MIL5cFFNTNKYxz6VNFZXpNQ
-	 L66N9nJpb4bVHC6BXvC7mXPapWAF5dxBRMiUKhFhOl28hB53QY3rb3b5D5q9qDxWLZ
-	 XnS5+f1WIGELm4BbErpuEbZs5HvhoPM6yzK0P99g=
+	b=12XzcLpUNPqDxOOUBAOq/kIFnu2QymyOhBDBQNjmDlv08iRECiOlE3fvQazxCEiQa
+	 UT5QHIdrUpuM1huoDJILrHqnq4YW6sc2I1lYSiFXK6J/OIPxQZCcqzKmu+sqYvGg+L
+	 hkxI0xAI6evL+7LmWEqoUxRnMwy+87wrFiuCtZMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Youhong <liyouhong@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Srinivas Neeli <srinivas.neeli@amd.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0293/2651] spi: amlogic-spisg: check clk_prepare_enable() return value
-Date: Wed, 18 Nov 2026 15:25:33 +0100
-Message-ID: <20261118150258.453266729@linuxfoundation.org>
+Subject: [PATCH 7.3 0302/2651] dmaengine: xilinx_dma: Fix MCDMA descriptor fields based on DMA direction
+Date: Wed, 18 Nov 2026 15:25:42 +0100
+Message-ID: <20261118150258.774536265@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,60 +70,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Youhong <liyouhong@kylinos.cn>
+From: Srinivas Neeli <srinivas.neeli@amd.com>
 
-[ Upstream commit c595dcbce20f55c98cd9b0003c26db3787e0ddee ]
+[ Upstream commit b70ab341088b2114dcbc7be868588f3e97893e6a ]
 
-The driver ignored clk_prepare_enable() failures for sclk during
-probe and for core/sclk during runtime resume. Propagate the errors
-and, on resume, disable core if enabling sclk fails, so probe/resume
-do not continue with clocks disabled or report success falsely.
+The MCDMA BD format differs between memory-to-device (MM2S) and
+device-to-memory (S2MM) directions, but the driver was using generic
+'status' and 'sideband_status' fields for both. This led to incorrect
+residue calculations when the hardware updates direction-specific fields.
 
-Fixes: cef9991e04ae ("spi: Add Amlogic SPISG driver")
-Signed-off-by: Li Youhong <liyouhong@kylinos.cn>
-Link: https://patch.msgid.link/20260831094553.2247003-1-dayou5941@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Refactor the descriptor structure to use unions with direction-specific
+field mappings, and update the residue calculation logic to select the
+correct status field based on DMA direction.
+
+This matches the hardware descriptor layout and fixes incorrect
+residue reporting.
+
+Fixes: 6ccd692bfb7f ("dmaengine: xilinx_dma: Add Xilinx AXI MCDMA Engine driver support")
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Signed-off-by: Srinivas Neeli <srinivas.neeli@amd.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260818174151.1608971-2-srinivas.neeli@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-amlogic-spisg.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/dma/xilinx/xilinx_dma.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/spi/spi-amlogic-spisg.c b/drivers/spi/spi-amlogic-spisg.c
-index 6bca2379e4ee3..6243b47b6e68a 100644
---- a/drivers/spi/spi-amlogic-spisg.c
-+++ b/drivers/spi/spi-amlogic-spisg.c
-@@ -714,7 +714,9 @@ static int aml_spisg_clk_init(struct spisg_device *spisg, void __iomem *base)
- 		return PTR_ERR(spisg->sclk);
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index cffe7c6fa6405..b826216ddaca6 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -223,6 +223,7 @@
+ #define XILINX_MCDMA_IRQ_ERR_MASK		BIT(7)
+ #define XILINX_MCDMA_BD_EOP			BIT(30)
+ #define XILINX_MCDMA_BD_SOP			BIT(31)
++#define XILINX_MCDMA_BD_HW_SIZE			64
+ 
+ /**
+  * struct xilinx_vdma_desc_hw - Hardware Descriptor
+@@ -277,8 +278,10 @@ struct xilinx_axidma_desc_hw {
+  * @buf_addr_msb: MSB of Buffer address @0x0C
+  * @rsvd: Reserved field @0x10
+  * @control: Control Information field @0x14
+- * @status: Status field @0x18
+- * @sideband_status: Status of sideband signals @0x1C
++ * @mm2s_ctrl_sideband: Sideband control info for mm2s @0x18
++ * @s2mm_status: Status field for s2mm @0x18
++ * @mm2s_status: Status field for mm2s @0x1C
++ * @s2mm_sideband_status: Sideband status for s2mm @0x1C
+  * @app: APP Fields @0x20 - 0x30
+  */
+ struct xilinx_aximcdma_desc_hw {
+@@ -288,10 +291,17 @@ struct xilinx_aximcdma_desc_hw {
+ 	u32 buf_addr_msb;
+ 	u32 rsvd;
+ 	u32 control;
+-	u32 status;
+-	u32 sideband_status;
++	union {
++		u32 mm2s_ctrl_sideband;
++		u32 s2mm_status;
++	};
++	union {
++		u32 mm2s_status;
++		u32 s2mm_sideband_status;
++	};
+ 	u32 app[XILINX_DMA_NUM_APP_WORDS];
+ } __aligned(64);
++static_assert(sizeof(struct xilinx_aximcdma_desc_hw) == XILINX_MCDMA_BD_HW_SIZE);
+ 
+ /**
+  * struct xilinx_cdma_desc_hw - Hardware Descriptor
+@@ -1025,9 +1035,11 @@ static u32 xilinx_dma_get_residue(struct xilinx_dma_chan *chan,
+ 					   struct xilinx_aximcdma_tx_segment,
+ 					   node);
+ 			aximcdma_hw = &aximcdma_seg->hw;
+-			residue +=
+-				(aximcdma_hw->control & chan->xdev->max_buffer_len) -
+-				(aximcdma_hw->status & chan->xdev->max_buffer_len);
++			residue += aximcdma_hw->control & chan->xdev->max_buffer_len;
++			if (chan->direction == DMA_DEV_TO_MEM)
++				residue -= aximcdma_hw->s2mm_status & chan->xdev->max_buffer_len;
++			else
++				residue -= aximcdma_hw->mm2s_status & chan->xdev->max_buffer_len;
+ 		}
  	}
  
--	clk_prepare_enable(spisg->sclk);
-+	ret = clk_prepare_enable(spisg->sclk);
-+	if (ret)
-+		return ret;
- 
- 	return 0;
- }
-@@ -851,9 +853,18 @@ static int spisg_suspend_runtime(struct device *dev)
- static int spisg_resume_runtime(struct device *dev)
- {
- 	struct spisg_device *spisg = dev_get_drvdata(dev);
-+	int ret;
-+
-+	ret = clk_prepare_enable(spisg->core);
-+	if (ret)
-+		return ret;
-+
-+	ret = clk_prepare_enable(spisg->sclk);
-+	if (ret) {
-+		clk_disable_unprepare(spisg->core);
-+		return ret;
-+	}
- 
--	clk_prepare_enable(spisg->core);
--	clk_prepare_enable(spisg->sclk);
- 	pinctrl_pm_select_default_state(&spisg->pdev->dev);
- 
- 	return 0;
 -- 
 2.53.0
 
