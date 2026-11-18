@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059085;
-	b=icbCLh8qpWCrlPCC1vkkY1ZA3lYM3AXicD46mKG6sHpYcg98cpsuV1Cf+m5DlxB6lB9z
-	 ZQo8Mxul3leyYO9g4XmIWaWs7j4U9kHelGxleQrDxqwJ7grHmKbuR+5MDuwLCgOhCVJqg
-	 m2QWSsMnp8VPQqUagCrWb4MnvPoztW15cxCnKB+ey8vXmrh7yjGPjF/gEvDYH2Awb14Ik
-	 F/DcszC+1Hhb0WC46rqtSrKTnQtvlmmDg9wUaiTPm6xu1pz90Dxsv3Wa8mlf1PPWQfyKY
-	 j80deDpBpNdAvIV2aenEqfyEw2WEvLxgJxO79koYTERy7h6nu6cDYgHGoS8hn3/u1kQ==
+	t=1795059088;
+	b=shG0l85jrR52xduBYZ1t6g4pdme3uYwBC6hn/sSEopVI7bT4sAHVtONjxwCJ4jn1iPYk
+	 HOxKtX2iJWjE8xy05t9XL+6f2HEzeUj1O7K3Ng7J2m1I322KvfYbblXAmn+Y79tEjdYkB
+	 NHC/AUaKj7NMcXRbsqOPhBUGj4OsDbmzEWJ4o+OqaE04pCyk+rQtBdud2i7mvwrVSPnik
+	 UK60p+qC034DEbBH9/NSQPjuRcTVGYE3D0BsadJb+D4Ydf4ApGDxfrvaIcATDkMvq97rc
+	 YsT02/VUzjUSUHWrH8r2+FJHgN3Sb9rcj7gmikz5HlQJcVBikOLiV97eWIe4EVR7RUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059085;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059088;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yGk+bey16N05Qhb9gyvx4nNlE2CT+UwjSLKyFO+XlV4=;
-	b=amoS3zlkP1anCjG/4/OS58On5uBVSeOJROwz69BpGsOJu58+pSzBl2aJK6NdxSY835P6
-	 hUJez8xNYkTgAF7jDK31bw8h3cGRoRzYoso0SzuT3hbXFl65JsfgETqpev9sh6KZH2Z+B
-	 jVBxInrHC1jQGqpIEYTXxWWsUrAzsxnnI0eoDL/ZZk9teeCGuolbBp9yDf+Neq/0anjwQ
-	 q7wz8FKlHWpRmmIon3A8kelX7FXU/54oWoMI3Y3UJa0NaaAMkYehiOyj+jMnZv0THuh6D
-	 RuB4tl6JTucPMstJb9IEwdjUE8nUpeLeN6oX7uPSsgOYQk9ghaLrPgO+4k0dfncBCBQ==
+	bh=mtNHCx6EjdjeRVK2gBiX2r9iQL+weEmaE0ZmVOyIdZQ=;
+	b=GlcDvKC6pIsnmeFP1gHVrU4SD38MOqz0BkpO0ynBi/mwX6eQcSZ7VnYyRv6P4X1xMa7n
+	 EUyczsXYdSrtKx9HYgzIXohmQZOkFBZJcmBKe6agwsFzrFYl0IVeqONHkO5dqiMV6tL6D
+	 jtQGlXmZc0iuzLjxI/B2IFF5HauY/Sp5pA4ZFGQqK4+6M1HnNn0Ex5iUK4arScAjDYa4r
+	 a5FcGPWTJrk3D/tq6AxrkgL3YFlhMNdi0Y0O/+wAP8cgJWz/gGPr5c9EasHrX+YYfF5ks
+	 +CMSMUzIJFxMz6QwtqEAHMTQh6Q+R41Tec1Er0zf0vSbjFw2jpzwQUKLv3YWl8wKU5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISEqOCcQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="PKr3Zj/F";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6233A606A320;
-	Thu, 19 Nov 2026 03:31:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE39606A320;
+	Thu, 19 Nov 2026 03:31:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISEqOCcQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2FA71F000C4;
-	Thu, 19 Nov 2026 03:31:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PKr3Zj/F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76EC11F000C4;
+	Thu, 19 Nov 2026 03:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059085;
-	bh=yGk+bey16N05Qhb9gyvx4nNlE2CT+UwjSLKyFO+XlV4=;
+	s=korg; t=1795059088;
+	bh=mtNHCx6EjdjeRVK2gBiX2r9iQL+weEmaE0ZmVOyIdZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ISEqOCcQt51Z91rSh1x4aHxfL1dEMuyLEKxkG0C94mcBpNHOirhW3v8cxv7gsoN7i
-	 HUyPY6raLquR3Q98zkEoRY8s1Rr+wgs1Psb3eP3imZWFEmnEe8C9479GUdZNPJuYit
-	 4nnUQ/EW7Or59CN2tsYot+40ZOg1ifqOu1cWRWFU=
+	b=PKr3Zj/FJeQt2a4sDM/TS2o92qK7Fn1gdb/BIq3eDQ0B6rcf54qPgEt2Zs+FaB93E
+	 ONpLUgvAhpm6eheC+jHHAe8Muxtkk1KqgCm8SMxfhfep8L/gF1Peyi0gw8rkvwikMC
+	 MWZcqSLbFUzf+NEIRKnaPlPu+83KQT6aZKbrPHBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Esben Haabendal <esben@geanix.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0717/1848] net/sched: sch_qfq: prevent aggregate self-replacement
-Date: Wed, 18 Nov 2026 15:45:55 +0100
-Message-ID: <20261118145945.856366808@linuxfoundation.org>
+Subject: [PATCH 5.10 0718/1848] drm/bridge: nwl-dsi: Cleanup endpoint mux control selection
+Date: Wed, 18 Nov 2026 15:45:56 +0100
+Message-ID: <20261118145945.889987818@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,55 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Esben Haabendal <esben@geanix.com>
 
-[ Upstream commit 2e54b3e187300893688c2c7517894f5d96732e05 ]
+[ Upstream commit 8dad0ebd822f54102aadc6ca4f0f8777112d175d ]
 
-qfq_change_class() snapshots the current aggregate settings while
-holding the qdisc tree lock, but drops the lock before selecting the
-destination aggregate. During that gap, qfq_enqueue() can move the
-class to an aggregate matching the requested settings.
+Using the endpoint define values makes it more clear that the argument to
+mux_control_try_select() must be valid state integers, and not something
+that looks like a boolean.
 
-When qfq_change_class() resumes, qfq_find_agg() then returns cl->agg.
-If it is a singleton, qfq_deact_rm_from_agg() frees the aggregate
-before qfq_add_to_agg() immediately accesses the same pointer, causing
-a use-after-free.
+The endpoint value is kept, as it will be used in a following patch that
+changes behavior slightly based on which endpoint is selected.
 
-While holding the tree lock, skip the replacement when the destination
-is already the current aggregate. Any estimator replacement has already
-completed, so the class change can finish normally.
-
-Fixes: 462dbc9101ac ("pkt_sched: QFQ Plus: fair-queueing service at DRR cost")
-Link: https://lore.kernel.org/netdev/20260731140533.566493-1-david.lee@trailofbits.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Co-developed-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Link: https://patch.msgid.link/20261029180957.43015-1-david.lee@trailofbits.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Esben Haabendal <esben@geanix.com>
+Link: https://patch.msgid.link/20261027-nwl-dsi-fixes-v5-1-b6d1d3d2d356@geanix.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_qfq.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/bridge/nwl-dsi.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
-index 1c38447b456a7..7092082b4a326 100644
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -520,11 +520,14 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
- 		sch_tree_lock(sch);
- 		qfq_init_agg(q, new_agg, lmax, weight);
+diff --git a/drivers/gpu/drm/bridge/nwl-dsi.c b/drivers/gpu/drm/bridge/nwl-dsi.c
+index b68d335981588..0b2dfdd5d3233 100644
+--- a/drivers/gpu/drm/bridge/nwl-dsi.c
++++ b/drivers/gpu/drm/bridge/nwl-dsi.c
+@@ -116,6 +116,8 @@ struct nwl_dsi {
+ 	int error;
+ 
+ 	struct nwl_dsi_transfer *xfer;
++
++	unsigned int endpoint;
+ };
+ 
+ static const struct regmap_config nwl_dsi_regmap_config = {
+@@ -1087,13 +1089,12 @@ static int nwl_dsi_parse_dt(struct nwl_dsi *dsi)
+ static int nwl_dsi_select_input(struct nwl_dsi *dsi)
+ {
+ 	struct device_node *remote;
+-	u32 use_dcss = 1;
+ 	int ret;
+ 
+ 	remote = of_graph_get_remote_node(dsi->dev->of_node, 0,
+ 					  NWL_DSI_ENDPOINT_LCDIF);
+ 	if (remote) {
+-		use_dcss = 0;
++		dsi->endpoint = NWL_DSI_ENDPOINT_LCDIF;
+ 	} else {
+ 		remote = of_graph_get_remote_node(dsi->dev->of_node, 0,
+ 						  NWL_DSI_ENDPOINT_DCSS);
+@@ -1102,11 +1103,12 @@ static int nwl_dsi_select_input(struct nwl_dsi *dsi)
+ 				      "No valid input endpoint found\n");
+ 			return -EINVAL;
+ 		}
++		dsi->endpoint = NWL_DSI_ENDPOINT_DCSS;
  	}
-+	if (existing && new_agg == cl->agg)
-+		goto unlock;
- 	if (existing)
- 		qfq_deact_rm_from_agg(q, cl);
- 	else
- 		qdisc_class_hash_insert(&q->clhash, &cl->common);
- 	qfq_add_to_agg(q, new_agg, cl);
-+unlock:
- 	sch_tree_unlock(sch);
- 	qdisc_class_hash_grow(sch, &q->clhash);
+ 
+ 	DRM_DEV_INFO(dsi->dev, "Using %s as input source\n",
+-		     (use_dcss) ? "DCSS" : "LCDIF");
+-	ret = mux_control_try_select(dsi->mux, use_dcss);
++		     (dsi->endpoint == NWL_DSI_ENDPOINT_DCSS) ? "DCSS" : "LCDIF");
++	ret = mux_control_try_select(dsi->mux, dsi->endpoint);
+ 	if (ret < 0)
+ 		DRM_DEV_ERROR(dsi->dev, "Failed to select input: %d\n", ret);
  
 -- 
 2.53.0
