@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026202;
-	b=nUPvm5kzhbdokpR3H2erNdRVqwYjROoyi2wg3fyHwR+UNTjFp2IMWr6kvdBoAMwW3yxY
-	 hlJ5QlQvZJhY+lKznaWARm5bAUD+QOKvgEaR3PN9QhrqrgMQvMwleeDzGbl7hZUZMzoW6
-	 iwrIB7tXtSlh74lbvZTaiU4vIfzc+QetPOznpFSNutfMcyLsBmXBXyayMCzlV9Djs4PJ/
-	 fUpXG32j0B7ncJlNn4XEIl1fzg0Ymsod3DbXFwbqoPij7117xMEoVtm4fh2JUGJu58yVm
-	 BimPoYzV4Qe9EoZm28qf8SSiVmhxDuBb4DKWUw40qfZdfIGjwJ7LVk6Tz+sTuM+QLEQ==
+	t=1795026205;
+	b=ukplZ7V2ZHy/Nsqqyyxh7LnZslWuqqYY5/TbQDVCRXZxge6ZWh/799eku2MtdsiqxaoC
+	 om1DERidfgY6Gv5tdyA+NnOaC9S7Ze6LXKpaEk7rF91f89Wu2LojuQvrXbBS8vZ/SEwTW
+	 KQl1S82goHKVNA8T8BPom4oJpHQAvhgyH0pEx9SqruZoVuBDyEEe4zB5qWl7zELM84Cnh
+	 l1UfefloBbZMEE+zaQtrTjaimrHFyQ55iFGSm3k1ZPAole+hN+o4yx4zkOEcNrLwImt1I
+	 cP2eLEHa6te1wkFGDUYSLifGoDSkgr4fB7jQdvt36pCVuWlnqB4z6YrqgzUeqPnkq6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026202;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026205;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3ie19DcjZhXDS1KR2St7plNfqlnZaPLr8wYb0oc2Zz4=;
-	b=KvFHhl7BS3VtyOnwMB4KID6c4+IEyOpDZyoKBb7jZiD5Xwmrlt8NYcxcGMvzYnZeb14v
-	 zZVdbDaQTiryDT563v6PMrUc4CvQzIFaFz0ODVNwggwhhLL9eVmmld7AxCWd1P6NPa+Et
-	 cNV1fF9SpVqLdP8/ikSPp7V8fJUpa5aeWZ88NlJsCfABTKKyImdlKSKueLXRk8CTax8zb
-	 5fI7pQ7f6b+hcl5MjO9Dp6l0UhP1JQXXYF3Uj9b24fz187p9gcbBGgvrsJ+wsrtCcrCX7
-	 he0qtYp2aoGF18wIzjRs6PCL/X4U2q3mwBEe641UreaRROROGoRlZnO5JFoKYq9CrCw==
+	bh=Xkk8ZMJrkfIdF8w5qFDRuPCT99RDqQoNODgNqJSvpQI=;
+	b=YdVcelqsRq6uwImAFD15jT6bQ9r4glJlHKfGCP+oMKcn/9Zu0LBdOqOVVnaYE0B9Y06G
+	 +Lp8g1qvPGVY9j3/vv7/fntmkuCn8SykrinxRU7Bh0XBvM5drQM/u4BhdmXNQOws6Z4ou
+	 eigA9t3BXlardIBG6H89+WJx1TmMQfgl3zjnA5hIjTAwljlPlWzYKDvy0yNkeu6wgoHrp
+	 dbV89cj3UWYdJHy5Pxoa0/P+a1A361sy2/78AJXCHqZAWuHq0qFKn10aKhtVx0W3lX2+I
+	 1lVaW1lL2Uw6e0Q1sZcxHyIt8LlqYt+mcT7wkZdfRWqgJYHsvKzkg8xMCodJn8mdWkw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FGCxqjWL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wfAgM31J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A126C606A33D;
-	Wed, 18 Nov 2026 18:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223D760A381B;
+	Wed, 18 Nov 2026 18:23:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FGCxqjWL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93241F000C4;
-	Wed, 18 Nov 2026 18:23:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wfAgM31J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 787A11F000C4;
+	Wed, 18 Nov 2026 18:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026202;
-	bh=3ie19DcjZhXDS1KR2St7plNfqlnZaPLr8wYb0oc2Zz4=;
+	s=korg; t=1795026205;
+	bh=Xkk8ZMJrkfIdF8w5qFDRuPCT99RDqQoNODgNqJSvpQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FGCxqjWLHbjXXcpbGuxJBNXrV09w7ZX5igwhCSFg3hFQTHb8zWDT1hG+CRQSTw1K7
-	 gA6DAUhnVLO9c9PIcpLbFsPFmkNAWij2oY2Jr7xdMqALXajcImO+OWHsvoI0r3bGO3
-	 ATa56vfPpIVWBDizlgJnS1xWD/80KN+wO+RazD6Y=
+	b=wfAgM31JKAxvwrxr2rDovAZIUEwjJOCYrrw8ePrl2xvR/s2iAOJxbOsmf2XD9IRFf
+	 vC6L/0+2ChMeHlKe3wcvEDBGm10K4ElAAkVqj773k9C8xfBdsIFdy7eH2+0oyCes8D
+	 ATUnzuTE4E76erqBYYiQkkeZEuQfndOsX+jTJNjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Filipe Manana <fdmanana@suse.com>,
 	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1351/2151] btrfs: add extra device item checks at mount
-Date: Wed, 18 Nov 2026 15:51:26 +0100
-Message-ID: <20261118150211.250942502@linuxfoundation.org>
+Subject: [PATCH 6.18 1352/2151] btrfs: introduce the device layout aware per-profile available space
+Date: Wed, 18 Nov 2026 15:51:27 +0100
+Message-ID: <20261118150211.285338478@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,225 +71,383 @@ Content-Transfer-Encoding: 8bit
 
 From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 34308187395ff01f2d54007eb8b222f843bdf445 ]
+[ Upstream commit 52fead5eb8a743384bab24ca8c3695257c755f0f ]
 
 [BUG]
-There is a bug report where after a dev-replace, the replace source
-device with devid 4 is properly erased (dump tree shows it's the old
-devid 4), but the target device is still using devid 0.
-
-When the user tries to mount the fs degraded, the mount failed with the
-following errors:
-
-  BTRFS: device fsid 84a1ed4a-365c-45c3-a9ee-a7df525dc3c9 devid 5 transid 1394395 /dev/sda (8:0) scanned by btrfs (261)
-  BTRFS: device fsid 84a1ed4a-365c-45c3-a9ee-a7df525dc3c9 devid 6 transid 1394395 /dev/sde (8:64) scanned by btrfs (261)
-  BTRFS: device fsid 84a1ed4a-365c-45c3-a9ee-a7df525dc3c9 devid 0 transid 1394395 /dev/sdd (8:48) scanned by btrfs (261)
-  BTRFS: device fsid 84a1ed4a-365c-45c3-a9ee-a7df525dc3c9 devid 3 transid 1394395 /dev/sdf (8:80) scanned by btrfs (261)
-  BTRFS info (device sdd): first mount of filesystem 84a1ed4a-365c-45c3-a9ee-a7df525dc3c9
-  BTRFS info (device sdd): using crc32c (crc32c-intel) checksum algorithm
-  BTRFS warning (device sdd): devid 4 uuid 01e2081c-9c2a-4071-b9f4-e1b27e571ff5 is missing
-  BTRFS info (device sdd): bdev <missing disk> errs: wr 84994544, rd 15567, flush 65872, corrupt 0, gen 0
-  BTRFS info (device sdd): bdev /dev/sdd errs: wr 71489901, rd 0, flush 30001, corrupt 0, gen 0
-  BTRFS error (device sdd): replace without active item, run 'device scan --forget' on the target device
-  BTRFS error (device sdd): failed to init dev_replace: -117
-  BTRFS error (device sdd): open_ctree failed: -117
+There is a long known bug that if metadata is using RAID1 on two disks
+with unbalanced sizes, there is a very high chance to hit ENOSPC related
+transaction abort.
 
 [CAUSE]
-The devid 0 didn't get its devid updated is its own problem, here I'm
-only focusing on the mount failure itself.
+The root cause is in the available space estimation code:
 
-The mount is not caused by the missing device, as the fs has RAID1C3 for
-metadata and RAID10 for data, thus is completely able to tolerate one
-missing device.
+- Factor based calculation
+  Just use all unallocated space, divide by the profile factor
+  One obvious user is can_overcommit().
 
-The device tree shows the dev-replace has properly finished:
+This can not handle the following example:
 
-        item 7 key (0 DEV_REPLACE 0) itemoff 15931 itemsize 72
-                src devid -1 cursor left 11091821199360 cursor right 11091821199360 mode ALWAYS
-                state FINISHED write errors 0 uncorrectable read errors 0
-		      ^^^^^^^^
+  devid 1 unallocated:	1GiB
+  devid 2 unallocated:	50GiB
+  metadata type:	RAID1
 
-And the chunk tree shows there is no devid 0:
+If using factor based estimation, we can use (1GiB + 50GiB) / 2 = 25.5GiB
+free space for metadata.
+Thus we can continue allocating metadata (over-commit) way beyond the
+1GiB limit.
 
-  leaf 37980736602112 items 23 free space 12548 generation 1394388 owner CHUNK_TREE
-  leaf 37980736602112 flags 0x1(WRITTEN) backref revision 1
-  fs uuid 84a1ed4a-365c-45c3-a9ee-a7df525dc3c9
-  chunk uuid d074c661-6311-4570-b59f-a5c83fd37f8e
-         item 0 key (DEV_ITEMS DEV_ITEM 3) itemoff 16185 itemsize 98
-                 devid 3 total_bytes 20000588955648 bytes_used 8282877984768
-                 io_align 4096 io_width 4096 sector_size 4096 type 0
-                 generation 0 start_offset 0 dev_group 0
-                 seek_speed 0 bandwidth 0
-                 uuid 0d596b69-fb0d-4031-b4af-a301d0868b8b
-                 fsid 84a1ed4a-365c-45c3-a9ee-a7df525dc3c9
-         ...
+But this estimation is completely wrong, in reality we can only allocate
+one single 1GiB RAID1 block group, thus if we continue over-commit, at
+one time we will hit ENOSPC at some critical path and flips the fs
+read-only.
 
-Which shows the first device is devid 3.
+[SOLUTION]
+This patch will introduce per-profile available space estimation,
+which can provide chunk-allocator like behavior to give a (mostly)
+accurate result, with under-estimate corner cases.
 
-But there is indeed /dev/sdd with devid 0:
+There are some differences between the estimation and real chunk
+allocator:
 
-  superblock: bytenr=65536, device=/dev/sdd
-  ---------------------------------------------------------
-  csum_type               0 (crc32c)
-  csum_size               4
-  csum                    0xd4bed87e [match]
-  bytenr                  65536
-  flags                   0x1
-                          ( WRITTEN )
-  magic                   _BHRfS_M [match]
-  fsid                    84a1ed4a-365c-45c3-a9ee-a7df525dc3c9
-  ...
-  uuid_tree_generation    1394388
-  dev_item.uuid           ee6532ad-5442-45f7-87fb-7703e29ed934
-  dev_item.fsid           84a1ed4a-365c-45c3-a9ee-a7df525dc3c9 [match]
-  dev_item.type           0
-  dev_item.total_bytes    20000588955648
-  dev_item.bytes_used     8292541661184
-  dev_item.io_align       0
-  dev_item.io_width       0
-  dev_item.sector_size    0
-  dev_item.devid          0 <<<
+- No consideration on hole size
+  It's fine for most cases, as all data/metadata strips are in 1GiB size
+  thus there should not be any hole wasting much space.
 
-So this means device scan will register sdd as devid 0 into the fs, then
-during btrfs_init_dev_replace(), we located the replace progress item,
-found the previous replace is finished, but we still need to check if
-the dev-replace target device (devid 0) exists.
+  And chunk allocator is able to use smaller stripes when there is
+  really no other choice.
 
-If that device exists, we error out showing that error message.
+  Although in theory this means it can lead to some over-estimation, it
+  should not cause too much hassle in the real world.
 
-But to be honest the end user may not really remember which device is
-the replace target device, thus not sure what to do in the next step.
+  The other benefit of such behavior is, we avoid dev-extent tree search
+  completely, thus the overhead is very small.
 
-[ENHANCEMENT]
-To make the error more obvious, and tell the end user which devices
-should be unregistered:
+- No true balance for certain cases
+  If we have 3 disks RAID1, and each device has 2GiB unallocated space,
+  we can load balance the chunk allocation so that we can allocate 3GiB
+  RAID1 chunks, and that's what chunk allocator will do.
 
-- Introduce BTRFS_DEV_STATE_ITEM_FOUND flag
-  During device item read from the chunk tree, set the flag for each
-  found device item.
+  But this current estimation code is using the largest available space
+  to do a single allocation. Meaning the estimation will be 2GiB, thus
+  under estimate.
 
-- Verify there is no device without the above flag during mount
-  Even missing device should have that flag set.
-  If we found a device without that flag set, it means it's an
-  unexpected one and should be rejected.
+  Such under estimation is fine and after the first chunk allocation, the
+  estimation will be updated and still give a correct 2GiB
+  estimation.
+  So this only means the estimation will be a little conservative, which
+  is safer for call sites like metadata over-commit check.
 
-- More detailed error message on what to do next
-  This will show all unexpected devices and tell the end user to use
-  'btrfs dev scan --forget' to forget them or remove them before mount.
+With that facility, for above 1GiB + 50GiB case, it will give a RAID1
+estimation of 1GiB, instead of the incorrect 25.5GiB.
 
-There is an example dmesg where a device of a valid filesystem is modified to
-have devid 0, then try degraded mount:
+Or for a more complex example:
+  devid 1 unallocated:	1T
+  devid 2 unallocated:  1T
+  devid 3 unallocated:	10T
 
-  BTRFS info (device dm-6): first mount of filesystem 7c873869-844c-4b39-bd75-a96148bf4656
-  BTRFS info (device dm-6): using crc32c checksum algorithm
-  BTRFS warning (device dm-6): devid 3 uuid b4a9f35b-db42-4ac4-b55a-cbf81d3b9683 is missing
-  BTRFS error (device dm-6): devid 0 path /dev/mapper/test-scratch3 is registered but not found in chunk tree
-  BTRFS error (device dm-6): please remove above devices or use 'btrfs device scan --forget <dev>' to unregister them before mount
-  BTRFS error (device dm-6): open_ctree failed: -117
+We will get an array of:
+  RAID10:	2T
+  RAID1:	2T
+  RAID1C3:	1T
+  RAID1C4:	0  (not enough devices)
+  DUP:		6T
+  RAID0:	3T
+  SINGLE:	12T
+  RAID5:	2T
+  RAID6:	1T
 
+[IMPLEMENTATION]
+And for the each profile , we go chunk allocator level calculation:
+The pseudo code looks like:
+
+  clear_virtual_used_space_of_all_rw_devices();
+  do {
+  	/*
+  	 * The same as chunk allocator, despite used space,
+  	 * we also take virtual used space into consideration.
+  	 */
+  	sort_device_with_virtual_free_space();
+
+  	/*
+  	 * Unlike chunk allocator, we don't need to bother hole/stripe
+  	 * size, so we use the smallest device to make sure we can
+  	 * allocated as many stripes as regular chunk allocator
+  	 */
+  	stripe_size = device_with_smallest_free->avail_space;
+	stripe_size = min(stripe_size, to_alloc / ndevs);
+
+  	/*
+  	 * Allocate a virtual chunk, allocated virtual chunk will
+  	 * increase virtual used space, allow next iteration to
+  	 * properly emulate chunk allocator behavior.
+  	 */
+  	ret = alloc_virtual_chunk(stripe_size, &allocated_size);
+  	if (ret == 0)
+  		avail += allocated_size;
+  } while (ret == 0)
+
+This minimal available space based calculation is not perfect, but the
+important part is, the estimation is never exceeding the real available
+space.
+
+This patch just introduces the infrastructure, no hooks are executed
+yet.
+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Stable-dep-of: f5166f53b60b ("btrfs: roll back sprout setup after device add failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c |  4 ++++
- fs/btrfs/volumes.c | 40 ++++++++++++++++++++++++++++++++++++++++
- fs/btrfs/volumes.h |  4 ++++
- 3 files changed, 48 insertions(+)
+ fs/btrfs/volumes.c | 164 +++++++++++++++++++++++++++++++++++++++++++++
+ fs/btrfs/volumes.h |  34 ++++++++++
+ 2 files changed, 198 insertions(+)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 083be891fc99f..2af30d1009783 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3566,6 +3566,10 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
- 	    fs_info->generation == btrfs_super_uuid_tree_generation(disk_super))
- 		set_bit(BTRFS_FS_UPDATE_UUID_TREE_GEN, &fs_info->flags);
- 
-+	if (unlikely(btrfs_verify_dev_items(fs_info))) {
-+		ret = -EUCLEAN;
-+		goto fail_block_groups;
-+	}
- 	ret = btrfs_verify_dev_extents(fs_info);
- 	if (ret) {
- 		btrfs_err(fs_info,
 diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index a07b5a4d6e4df..0f5c3d1606a48 100644
+index 0f5c3d1606a48..ebf9132a295b6 100644
 --- a/fs/btrfs/volumes.c
 +++ b/fs/btrfs/volumes.c
-@@ -7401,6 +7401,7 @@ static int read_one_dev(struct extent_buffer *leaf,
- 			return -EINVAL;
- 		}
- 	}
-+	set_bit(BTRFS_DEV_STATE_ITEM_FOUND, &device->dev_state);
- 	set_bit(BTRFS_DEV_STATE_IN_FS_METADATA, &device->dev_state);
- 	if (test_bit(BTRFS_DEV_STATE_WRITEABLE, &device->dev_state) &&
- 	   !test_bit(BTRFS_DEV_STATE_REPLACE_TGT, &device->dev_state)) {
-@@ -8227,6 +8228,45 @@ int btrfs_verify_dev_extents(struct btrfs_fs_info *fs_info)
- 	return verify_chunk_dev_extent_mapping(fs_info);
+@@ -388,6 +388,7 @@ static struct btrfs_fs_devices *alloc_fs_devices(const u8 *fsid)
+ 	INIT_LIST_HEAD(&fs_devs->alloc_list);
+ 	INIT_LIST_HEAD(&fs_devs->fs_list);
+ 	INIT_LIST_HEAD(&fs_devs->seed_list);
++	spin_lock_init(&fs_devs->per_profile_lock);
+ 
+ 	if (fsid) {
+ 		memcpy(fs_devs->fsid, fsid, BTRFS_FSID_SIZE);
+@@ -5209,6 +5210,169 @@ static int btrfs_cmp_device_info(const void *a, const void *b)
+ 	return 0;
  }
  
 +/*
-+ * Ensure that all devices registered in the fs have their device items in the
-+ * chunk tree.
++ * Return 0 if we allocated any virtual(*) chunk, and restore the size to
++ * @allocated.
++ * Return -ENOSPC if we have no more space to allocate virtual chunk
 + *
-+ * Return true if unexpected device is found.
-+ * Return false otherwise.
++ * *: A virtual chunk is a chunk that only exists during per-profile available
++ *    estimation.
++ *    Those numbers won't really take on-disk space, but only to emulate
++ *    chunk allocator behavior to get accurate estimation on available space.
++ *
++ *    Another difference is, a virtual chunk has no size limit and doesn't care
++ *    about holes in the device tree, allowing us to exhaust device space
++ *    much faster.
 + */
-+bool btrfs_verify_dev_items(const struct btrfs_fs_info *fs_info)
++static int alloc_virtual_chunk(struct btrfs_fs_info *fs_info,
++			       struct btrfs_device_info *devices_info,
++			       enum btrfs_raid_types type,
++			       u64 *allocated)
 +{
-+	struct btrfs_fs_devices *seed_devs;
-+	struct btrfs_device *dev;
-+	bool ret = false;
++	const struct btrfs_raid_attr *raid_attr = &btrfs_raid_array[type];
++	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices;
++	struct btrfs_device *device;
++	u64 stripe_size;
++	int ndevs = 0;
 +
-+	mutex_lock(&uuid_mutex);
-+	list_for_each_entry(dev, &fs_info->fs_devices->devices, dev_list) {
-+		if (!test_bit(BTRFS_DEV_STATE_ITEM_FOUND, &dev->dev_state)) {
-+			btrfs_err(fs_info,
-+			"devid %llu path %s is registered but not found in chunk tree",
-+				  dev->devid, btrfs_dev_name(dev));
-+			ret = true;
-+		}
++	lockdep_assert_held(&fs_info->chunk_mutex);
++
++	/* Go through devices to collect their unallocated space. */
++	list_for_each_entry(device, &fs_devices->alloc_list, dev_alloc_list) {
++		u64 avail;
++
++		if (!test_bit(BTRFS_DEV_STATE_IN_FS_METADATA,
++					&device->dev_state) ||
++		    test_bit(BTRFS_DEV_STATE_REPLACE_TGT, &device->dev_state))
++			continue;
++
++		if (device->total_bytes > device->bytes_used +
++				device->per_profile_allocated)
++			avail = device->total_bytes - device->bytes_used -
++				device->per_profile_allocated;
++		else
++			avail = 0;
++
++		avail = round_down(avail, fs_info->sectorsize);
++
++		/* And exclude the [0, 1M) reserved space. */
++		if (avail > BTRFS_DEVICE_RANGE_RESERVED)
++			avail -= BTRFS_DEVICE_RANGE_RESERVED;
++		else
++			avail = 0;
++
++		/*
++		 * Not enough to support a single stripe, this device
++		 * can not be utilized for chunk allocation.
++		 */
++		if (avail < BTRFS_STRIPE_LEN)
++			continue;
++
++		/*
++		 * Unlike chunk allocator, we don't care about stripe or hole
++		 * size, so here we use @avail directly.
++		 */
++		devices_info[ndevs].dev_offset = 0;
++		devices_info[ndevs].total_avail = avail;
++		devices_info[ndevs].max_avail = avail;
++		devices_info[ndevs].dev = device;
++		++ndevs;
 +	}
-+	list_for_each_entry(seed_devs, &fs_info->fs_devices->seed_list, seed_list) {
-+		list_for_each_entry(dev, &seed_devs->devices, dev_list) {
-+			if (!test_bit(BTRFS_DEV_STATE_ITEM_FOUND, &dev->dev_state)) {
-+				btrfs_err(fs_info,
-+			"devid %llu path %s is registered but not found in chunk tree",
-+					  dev->devid, btrfs_dev_name(dev));
-+				ret = true;
-+			}
-+		}
-+	}
-+	mutex_unlock(&uuid_mutex);
-+	if (ret)
-+		btrfs_err(fs_info,
-+"remove the above devices or use 'btrfs device scan --forget <dev>' to unregister them before mount");
-+	return ret;
++	sort(devices_info, ndevs, sizeof(struct btrfs_device_info),
++	     btrfs_cmp_device_info, NULL);
++	ndevs = rounddown(ndevs, raid_attr->devs_increment);
++	if (ndevs < raid_attr->devs_min)
++		return -ENOSPC;
++	if (raid_attr->devs_max)
++		ndevs = min(ndevs, (int)raid_attr->devs_max);
++	else
++		ndevs = min(ndevs, (int)BTRFS_MAX_DEVS(fs_info));
++
++	/*
++	 * Stripe size will be determined by the device with the least
++	 * unallocated space.
++	 */
++	stripe_size = devices_info[ndevs - 1].total_avail;
++
++	for (int i = 0; i < ndevs; i++)
++		devices_info[i].dev->per_profile_allocated += stripe_size;
++	*allocated = div_u64(stripe_size * (ndevs - raid_attr->nparity),
++			     raid_attr->ncopies);
++	return 0;
 +}
 +
- /*
-  * Check whether the given block group or device is pinned by any inode being
-  * used as a swapfile.
++static int calc_one_profile_avail(struct btrfs_fs_info *fs_info,
++				  enum btrfs_raid_types type,
++				  u64 *result_ret)
++{
++	struct btrfs_device_info *devices_info = NULL;
++	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices;
++	struct btrfs_device *device;
++	u64 allocated;
++	u64 result = 0;
++	int ret = 0;
++
++	lockdep_assert_held(&fs_info->chunk_mutex);
++	ASSERT(type >= 0 && type < BTRFS_NR_RAID_TYPES);
++
++	/* Not enough devices, quick exit, just update the result. */
++	if (fs_devices->rw_devices < btrfs_raid_array[type].devs_min) {
++		ret = -ENOSPC;
++		goto out;
++	}
++
++	devices_info = kcalloc(fs_devices->rw_devices, sizeof(*devices_info),
++			       GFP_NOFS);
++	if (!devices_info) {
++		ret = -ENOMEM;
++		goto out;
++	}
++	/* Clear virtual chunk used space for each device. */
++	list_for_each_entry(device, &fs_devices->alloc_list, dev_alloc_list)
++		device->per_profile_allocated = 0;
++
++	while (!alloc_virtual_chunk(fs_info, devices_info, type, &allocated))
++		result += allocated;
++
++out:
++	kfree(devices_info);
++	if (ret < 0 && ret != -ENOSPC)
++		return ret;
++	*result_ret = result;
++	return 0;
++}
++
++/* Update the per-profile available space array. */
++void btrfs_update_per_profile_avail(struct btrfs_fs_info *fs_info)
++{
++	u64 results[BTRFS_NR_RAID_TYPES];
++	int ret;
++
++	/*
++	 * Zoned is more complex as we can not simply get the amount of
++	 * available space for each device.
++	 */
++	if (btrfs_is_zoned(fs_info))
++		goto error;
++
++	for (int i = 0; i < BTRFS_NR_RAID_TYPES; i++) {
++		ret = calc_one_profile_avail(fs_info, i, &results[i]);
++		if (ret < 0)
++			goto error;
++	}
++
++	spin_lock(&fs_info->fs_devices->per_profile_lock);
++	for (int i = 0; i < BTRFS_NR_RAID_TYPES; i++)
++		fs_info->fs_devices->per_profile_avail[i] = results[i];
++	spin_unlock(&fs_info->fs_devices->per_profile_lock);
++	return;
++error:
++	spin_lock(&fs_info->fs_devices->per_profile_lock);
++	for (int i = 0; i < BTRFS_NR_RAID_TYPES; i++)
++		fs_info->fs_devices->per_profile_avail[i] = U64_MAX;
++	spin_unlock(&fs_info->fs_devices->per_profile_lock);
++}
++
+ static void check_raid56_incompat_flag(struct btrfs_fs_info *info, u64 type)
+ {
+ 	if (!(type & BTRFS_BLOCK_GROUP_RAID56_MASK))
 diff --git a/fs/btrfs/volumes.h b/fs/btrfs/volumes.h
-index 2cbf8080eade0..ed900ce46e1fd 100644
+index ed900ce46e1fd..b3b9329f4cf9a 100644
 --- a/fs/btrfs/volumes.h
 +++ b/fs/btrfs/volumes.h
-@@ -101,6 +101,9 @@ enum btrfs_raid_types {
- #define BTRFS_DEV_STATE_FLUSH_SENT	(4)
- #define BTRFS_DEV_STATE_NO_READA	(5)
+@@ -22,6 +22,7 @@
+ #include <uapi/linux/btrfs_tree.h>
+ #include "messages.h"
+ #include "extent-io-tree.h"
++#include "fs.h"
  
-+/* Set when the device item is found in chunk tree, used to catch unexpected registered device. */
-+#define BTRFS_DEV_STATE_ITEM_FOUND	(7)
+ struct block_device;
+ struct bdev_handle;
+@@ -204,6 +205,12 @@ struct btrfs_device {
+ 
+ 	/* Bandwidth limit for scrub, in bytes */
+ 	u64 scrub_speed_max;
 +
- /* Special value encoding failure to write primary super block. */
- #define BTRFS_SUPER_PRIMARY_WRITE_ERROR		(INT_MAX / 2)
++	/*
++	 * A temporary number of allocated space during per-profile
++	 * available space calculation.
++	 */
++	u64 per_profile_allocated;
+ };
  
-@@ -889,6 +892,7 @@ enum btrfs_raid_types __attribute_const__ btrfs_bg_flags_to_raid_index(u64 flags
- int btrfs_bg_type_to_factor(u64 flags);
+ /*
+@@ -471,6 +478,15 @@ struct btrfs_fs_devices {
+ 	/* Checksum mode - offload it or do it synchronously. */
+ 	enum btrfs_offload_csum_mode offload_csum_mode;
+ #endif
++
++	/*
++	 * Each value indicates the available space for that profile.
++	 * U64_MAX means the estimation is unavailable.
++	 *
++	 * Protected by per_profile_lock;
++	 */
++	u64 per_profile_avail[BTRFS_NR_RAID_TYPES];
++	spinlock_t per_profile_lock;
+ };
+ 
+ #define BTRFS_MAX_DEVS(info) ((BTRFS_MAX_ITEM_SIZE(info)	\
+@@ -893,6 +909,24 @@ int btrfs_bg_type_to_factor(u64 flags);
  const char *btrfs_bg_type_to_raid_name(u64 flags);
  int btrfs_verify_dev_extents(struct btrfs_fs_info *fs_info);
-+bool btrfs_verify_dev_items(const struct btrfs_fs_info *fs_info);
+ bool btrfs_verify_dev_items(const struct btrfs_fs_info *fs_info);
++void btrfs_update_per_profile_avail(struct btrfs_fs_info *fs_info);
++
++static inline bool btrfs_get_per_profile_avail(struct btrfs_fs_info *fs_info,
++					       u64 profile, u64 *avail_ret)
++{
++	enum btrfs_raid_types index = btrfs_bg_flags_to_raid_index(profile);
++	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices;
++	bool uptodate = false;
++
++	spin_lock(&fs_devices->per_profile_lock);
++	if (fs_devices->per_profile_avail[index] != U64_MAX) {
++		uptodate = true;
++		*avail_ret = fs_devices->per_profile_avail[index];
++	}
++	spin_unlock(&fs_info->fs_devices->per_profile_lock);
++	return uptodate;
++}
++
  bool btrfs_repair_one_zone(struct btrfs_fs_info *fs_info, u64 logical);
  
  bool btrfs_pinned_by_swapfile(struct btrfs_fs_info *fs_info, void *ptr);
