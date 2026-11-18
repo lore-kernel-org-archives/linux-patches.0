@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049538;
-	b=uDuvMwAkGunPP10S03fkTY9qvvCbTN532EekGL79VSnEuM+FC04Xq8y1cXP1IL1GkHCY
-	 kG0LK3eufY2wIVpSchbIZnreMRz5eIp81HLIPfK9VVwa9km/axlsQ17XHy70ACGFsH5k5
-	 SiaEHDLkbelYYSrGc08TTcB+2ebAxqDuf5a+VRYlq5H6ZvDpTCQYsQijHvZ1VZNR/8UMF
-	 f7ulUj1xxxaB95QdIcwm6AxmcHDSz5WldsPjkBDW8WGG88iQl/va/SBHCMXJAEheVyT6s
-	 6M2I2BR+jWKHSOrdRn0lR0CLAOqqYqrQQwwQQMNHwR05HtKTOVQ5u2kbQZgJxttnLhQ==
+	t=1795049541;
+	b=wBM+59KJRe5yM9nnRVye6uGFbO00Pn1w+f9vxVuu+6YRrvv+HSwgpqPx1omtt6W6FRa8
+	 EqrwkSX3JD6sq6NCecZjndP/Mk4CvTd/mz5aUDdfs8n2BUXuwS3GUC90hc2wZHmHlGo1l
+	 y40HH327wH02tN3/k9iH7XaFEGZ8CgQUKo5gD8cQJPfPvSHxwLacDKg3UVPTrJYtoFKuY
+	 7rw9LtBFiRuW0nZPgUyauLsNKfwWtefkKR2NeuZZ3SeHsd3oWVR3CCG7vRB26lmx1429p
+	 r6hjQsgE8c1NzJxB8Rjj74anq36UT6O38RJ7P45a+Gp54jTqksjh5mpiYz6Yof+WO9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049541;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iYz570iBahStLe5RSdfqrDUf1tSmCEBADoKqOtdclRE=;
-	b=aoFdls46FIy8eJrJOaEMqKD2lqSXvfjZJ7HSxO/lbjs/H9mzG7nZCJS7AhG/COqr5hjv
-	 HB6QIkGA3DvRt6cUxPuhdpSynTfbpVHEmwCdfAkZEbK1C1JmHkLYoOAKjQu15r2miX8IO
-	 JGgZip5+rMpFaWlT43XARE9sk1K4RJItKuZkCI20CeCWFOL8jg6B41tap7/T0VpAnf0uB
-	 eRzzqxZso5SijQ7ggNMb1s9VKWVyh4e3yrl5nuiwNowCXn7A0cd/KQMKIoRm4OPUp3Fj/
-	 S1r2Bk83MC4N+AXsElFQlf6l2VNAStX3nvoSJV/FCWcGEH+Q0QuLYk/RG/RhurFVEGA==
+	bh=AzMzAAo2yDk0tsf5QMcX2WVoLjQibaW+P+99c/WQAfc=;
+	b=NKEsemPa7DoBQziF8N0IpW6C4zx8wKwmd2AS1iPCfPi8PhsYkR4ZwMzuLIyxGVhvcyli
+	 nruRRks6TAU6zNRQmrKXEZQmT/6u/Z4QvLG9vWyx0rJJ8uHeGe834Od+UIBeFOhd60SF9
+	 qs9vpdNcIVIH4YS/LqVHZd+rcdEbPatv6/RnwHhk0GJ1Kbb7BrZ2y2veDg3DQ0QaIumGW
+	 qcYA5lgFyZTiacm+fA7rV8L1OsgdgUqXTGJq7g93/UsOiq4jcZs+cQaqIF8oeqmC3MKp5
+	 Uccxwym7f2Rl7TOjt+8RgSNRVyvAVSW7Z8UhRS8FIAItyWmfXCyji5qNMjj/YWtwecw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7EpgeJF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2sKCPlms;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99468606A325;
-	Thu, 19 Nov 2026 00:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52884606A31C;
+	Thu, 19 Nov 2026 00:52:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7EpgeJF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82BD1F000C4;
-	Thu, 19 Nov 2026 00:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2sKCPlms
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81491F000C4;
+	Thu, 19 Nov 2026 00:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049538;
-	bh=iYz570iBahStLe5RSdfqrDUf1tSmCEBADoKqOtdclRE=;
+	s=korg; t=1795049541;
+	bh=AzMzAAo2yDk0tsf5QMcX2WVoLjQibaW+P+99c/WQAfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x7EpgeJFhyDqATOfkJCJkPE6c8km6jVP6/kLYQfHokudc60Uao8KW1jIhtRxXxJ8u
-	 KbMHo73+9JlXb3x+619feELbc2CLpnVvjKKA8FSH7x9jB850ho80CgdGp3HVpwIPiK
-	 CZc+wjoaylrUXp6hki/npYF6ORjxl444LUtJ3dfQ=
+	b=2sKCPlms9ARinoP2MWWI4/VngQxhTSQDm6TB3JZh5G+aiRGD9bp2YDhBrKadAjYe6
+	 P3S32lwIo/g9u1viIoydKKegr5V1nwWkYfhQt0qY91oPcpMcWjSyN6TgwzfJ1UaXPM
+	 r6KY2h/FsjbFz7Iai6EgTJXsvFrubYjIh7XOhsuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2387/2857] ALSA: control: Take controls_rwsem lock in snd_ctl_remove()
-Date: Wed, 18 Nov 2026 15:57:01 +0100
-Message-ID: <20261118150327.473462582@linuxfoundation.org>
+Subject: [PATCH 6.1 2388/2857] ALSA: jack: Remove debugfs before freeing unregistered jacks
+Date: Wed, 18 Nov 2026 15:57:02 +0100
+Message-ID: <20261118150327.507556530@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,242 +68,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 192c4cccd015f52c94d0420eb5d7305a1ca28998 ]
+[ Upstream commit d3b59d50e1ff206aa519ed5c13bf6907f97dd6a6 ]
 
-So far, snd_ctl_remove() requires its caller to take
-card->controls_rwsem manually before the call for avoiding possible
-races.  However, many callers don't care and miss the locking.
+Jack debugfs files store a raw snd_jack_kctl pointer, so their
+callbacks must be drained before the attachment is freed.
+snd_jack_dev_free() unlinks and frees the attachments before calling
+snd_jack_dev_disconnect(). Its late snd_jack_remove_debugfs() call
+then has no entries left to traverse.
 
-Basically it's cumbersome and error-prone to enforce it to each
-caller.  Moreover, card->controls_rwsem is a field that should be used
-only by internal or proper helpers, and it's not to be touched at
-random external places.
+With CONFIG_SND_JACK_INJECTION_DEBUG and input support enabled, an
+HDA codec rebind on a live card can publish a non-phantom jack's type
+file while its component is still in SNDRV_DEV_BUILD. A later
+jack-control allocation failure permits the following order:
 
-This patch is an attempt to make those calls more consistent: now
-snd_ctl_remove() takes the card->controls_rwsem internally, just like
-other API functions for kctls.  Since a few callers already take the
-controls_rwsem locks, the patch removes those locks at the same time,
-too.
+  1. hda_codec_driver_probe() creates a jack and publishes its debugfs
+     files before reaching snd_card_register().
+  2. A later control-build failure calls
+     snd_hda_codec_cleanup_for_unbind(), then snd_hda_jack_tbl_clear()
+     and snd_device_free(). __snd_device_disconnect() skips BUILD
+     components. snd_jack_dev_free() frees the attachment before its
+     late disconnect, leaving the debugfs files published.
+  3. After cleanup, a reader opens the surviving type file and
+     jack_type_read() dereferences the freed attachment's jack pointer.
 
-Link: https://lore.kernel.org/r/20230718141304.1032-5-tiwai@suse.de
+The card's debugfs root remains live throughout this sequence. The
+result is a use-after-free even without an overlapping read. An
+already admitted callback is also not drained by this cleanup.
+
+Call snd_jack_remove_debugfs() before unlinking any controls in the
+free callback. The existing debugfs_remove() rundown blocks new
+accesses and waits for active callbacks while the attachment, control
+and jack remain valid. Roots cleared by an earlier disconnect are
+NULL, so repeating the removal is harmless.
+
+KASAN report as below:
+
+    ==================================================================
+    BUG: KASAN: slab-use-after-free in jack_type_read+0x1da/0x1f0
+    Read of size 8 at addr ffff8881085f9da0 by task python3/429
+
+    CPU: 2 UID: 0 PID: 429 Comm: python3 Not tainted 7.2.0-rc6-pmb-alsa-functional-v2+ #1 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? jack_type_read+0x1da/0x1f0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20d/0x410
+     ? jack_type_read+0x1da/0x1f0
+     kasan_report+0xe0/0x110
+     ? jack_type_read+0x1da/0x1f0
+     jack_type_read+0x1da/0x1f0
+     ? __pfx_jack_type_read+0x10/0x10
+     ? __pfx___debugfs_file_get+0x10/0x10
+     ? __pfx_cp_new_stat+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? selinux_file_permission+0x122/0x570
+     full_proxy_read+0x11f/0x180
+     ? __pfx_full_proxy_read+0x10/0x10
+     vfs_read+0x1a0/0xc20
+     ? __pfx_vfs_read+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __do_sys_newfstat+0xa6/0x100
+     ? find_held_lock+0x2b/0x80
+     ? __pfx___do_sys_newfstat+0x10/0x10
+     ksys_read+0x111/0x200
+     ? __pfx_ksys_read+0x10/0x10
+     ? full_proxy_llseek+0x11e/0x170
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    RIP: 0033:0x7f7e392e7687
+    Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
+    RSP: 002b:00007fff5f7b9180 EFLAGS: 00000202 ORIG_RAX: 0000000000000000
+    RAX: ffffffffffffffda RBX: 00007f7e39253780 RCX: 00007f7e392e7687
+    RDX: 0000000000002000 RSI: 000000003d2e9b00 RDI: 0000000000000003
+    RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+    R10: 0000000000000000 R11: 0000000000000202 R12: 00007f7e39253700
+    R13: 0000000000002000 R14: 00007f7e38d7e2c0 R15: 0000000000a55b98
+     </TASK>
+
+    Allocated by task 425:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_cache_noprof+0x251/0x610
+     snd_jack_kctl_new+0x80/0x180
+     snd_jack_new+0x4b/0x490
+     snd_hda_jack_add_kctl_mst+0x19b/0x610
+     add_jack_kctl+0x204/0x320
+     snd_hda_jack_add_kctls+0x212/0x910
+     snd_hda_gen_build_controls+0x233/0x600
+     snd_hda_codec_build_controls+0x2e4/0x9f0
+     hda_codec_driver_probe+0x26e/0x590
+     really_probe+0x21f/0xa90
+     __driver_probe_device+0x1ec/0x490
+     device_driver_attach+0xdc/0x210
+     bind_store+0xec/0x180
+     drv_attr_store+0x79/0xb0
+     sysfs_kf_write+0xed/0x140
+     kernfs_fop_write_iter+0x34b/0x500
+     vfs_write+0x637/0x1010
+     ksys_write+0x111/0x200
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    Freed by task 425:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kfree+0x307/0x580
+     snd_jack_kctl_private_free+0x153/0x200
+     __snd_ctl_remove+0x29f/0x3b0
+     snd_ctl_remove+0x46/0x70
+     snd_jack_dev_free+0x1b1/0x370
+     __snd_device_free+0x193/0x3f0
+     snd_device_free+0xcf/0x190
+     snd_hda_jack_tbl_clear+0x159/0x2e0
+     snd_hda_codec_cleanup_for_unbind+0x37e/0x9c0
+     hda_codec_driver_probe+0x3ae/0x590
+     really_probe+0x21f/0xa90
+     __driver_probe_device+0x1ec/0x490
+     device_driver_attach+0xdc/0x210
+     bind_store+0xec/0x180
+     drv_attr_store+0x79/0xb0
+     sysfs_kf_write+0xed/0x140
+     kernfs_fop_write_iter+0x34b/0x500
+     vfs_write+0x637/0x1010
+     ksys_write+0x111/0x200
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    The buggy address belongs to the object at ffff8881085f9d80
+     which belongs to the cache kmalloc-64 of size 64
+    The buggy address is located 32 bytes inside of
+     freed 64-byte region [ffff8881085f9d80, ffff8881085f9dc0)
+
+    The buggy address belongs to the physical page:
+    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1085f9
+    flags: 0x200000000000000(node=0|zone=2)
+    page_type: f5(slab)
+    raw: 0200000000000000 ffff8881000428c0 dead000000000100 dead000000000122
+    raw: 0000000000000000 0000000000200020 00000000f5000000 0000000000000000
+    page dumped because: kasan: bad access detected
+
+    Memory state around the buggy address:
+     ffff8881085f9c80: 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc
+     ffff8881085f9d00: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+    >ffff8881085f9d80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+                                   ^
+     ffff8881085f9e00: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+     ffff8881085f9e80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+    ==================================================================
+
+Fixes: 495000a38634 ("ALSA: core: Remove debugfs at disconnection")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-pmb-e1e7490bbe7ba1b3c44a-v2-3e3b6315a18c02ced60d@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: d3b59d50e1ff ("ALSA: jack: Remove debugfs before freeing unregistered jacks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/control.c      | 27 +++++++++++++++++++++------
- sound/core/jack.c         |  2 --
- sound/core/pcm.c          |  2 --
- sound/isa/sb/emu8000.c    |  2 --
- sound/isa/sb/sb16_csp.c   |  2 --
- sound/pci/emu10k1/emufx.c |  2 --
- sound/pci/hda/hda_codec.c |  2 --
- sound/soc/soc-topology.c  |  3 ---
- 8 files changed, 21 insertions(+), 21 deletions(-)
+ sound/core/jack.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/core/control.c b/sound/core/control.c
-index 6eece0d0afda2..00008005ad9de 100644
---- a/sound/core/control.c
-+++ b/sound/core/control.c
-@@ -39,6 +39,9 @@ static LIST_HEAD(snd_control_compat_ioctls);
- #endif
- static struct snd_ctl_layer_ops *snd_ctl_layer;
- 
-+static int snd_ctl_remove_locked(struct snd_card *card,
-+				 struct snd_kcontrol *kcontrol);
-+
- static int snd_ctl_open(struct inode *inode, struct file *file)
- {
- 	unsigned long flags;
-@@ -483,7 +486,7 @@ static int __snd_ctl_add_replace(struct snd_card *card,
- 			return -EBUSY;
- 		}
- 
--		err = snd_ctl_remove(card, old);
-+		err = snd_ctl_remove_locked(card, old);
- 		if (err < 0)
- 			return err;
- 	}
-@@ -589,20 +592,32 @@ static int __snd_ctl_remove(struct snd_card *card,
- 	return 0;
- }
- 
-+static inline int snd_ctl_remove_locked(struct snd_card *card,
-+					struct snd_kcontrol *kcontrol)
-+{
-+	return __snd_ctl_remove(card, kcontrol, true);
-+}
-+
- /**
-  * snd_ctl_remove - remove the control from the card and release it
-  * @card: the card instance
-  * @kcontrol: the control instance to remove
-  *
-  * Removes the control from the card and then releases the instance.
-- * You don't need to call snd_ctl_free_one(). You must be in
-- * the write lock - down_write(&card->controls_rwsem).
-+ * You don't need to call snd_ctl_free_one().
-  *
-  * Return: 0 if successful, or a negative error code on failure.
-+ *
-+ * Note that this function takes card->controls_rwsem lock internally.
-  */
- int snd_ctl_remove(struct snd_card *card, struct snd_kcontrol *kcontrol)
- {
--	return __snd_ctl_remove(card, kcontrol, true);
-+	int ret;
-+
-+	down_write(&card->controls_rwsem);
-+	ret = snd_ctl_remove_locked(card, kcontrol);
-+	up_write(&card->controls_rwsem);
-+	return ret;
- }
- EXPORT_SYMBOL(snd_ctl_remove);
- 
-@@ -627,7 +642,7 @@ int snd_ctl_remove_id(struct snd_card *card, struct snd_ctl_elem_id *id)
- 		up_write(&card->controls_rwsem);
- 		return -ENOENT;
- 	}
--	ret = snd_ctl_remove(card, kctl);
-+	ret = snd_ctl_remove_locked(card, kctl);
- 	up_write(&card->controls_rwsem);
- 	return ret;
- }
-@@ -665,7 +680,7 @@ static int snd_ctl_remove_user_ctl(struct snd_ctl_file * file,
- 			ret = -EBUSY;
- 			goto error;
- 		}
--	ret = snd_ctl_remove(card, kctl);
-+	ret = snd_ctl_remove_locked(card, kctl);
- error:
- 	up_write(&card->controls_rwsem);
- 	return ret;
 diff --git a/sound/core/jack.c b/sound/core/jack.c
-index bd795452e57bf..e4bcecdf89b7e 100644
+index e4bcecdf89b7e..174571e130823 100644
 --- a/sound/core/jack.c
 +++ b/sound/core/jack.c
-@@ -67,12 +67,10 @@ static int snd_jack_dev_free(struct snd_device *device)
+@@ -67,6 +67,9 @@ static int snd_jack_dev_free(struct snd_device *device)
  	struct snd_card *card = device->card;
  	struct snd_jack_kctl *jack_kctl, *tmp_jack_kctl;
  
--	down_write(&card->controls_rwsem);
++	/* Remove debugfs while the controls are still linked. */
++	snd_jack_remove_debugfs(jack);
++
  	list_for_each_entry_safe(jack_kctl, tmp_jack_kctl, &jack->kctl_list, list) {
  		list_del_init(&jack_kctl->list);
  		snd_ctl_remove(card, jack_kctl->kctl);
- 	}
--	up_write(&card->controls_rwsem);
- 
- 	if (jack->private_free)
- 		jack->private_free(jack);
-diff --git a/sound/core/pcm.c b/sound/core/pcm.c
-index a8d10a844e51e..958e5837b00a0 100644
---- a/sound/core/pcm.c
-+++ b/sound/core/pcm.c
-@@ -815,9 +815,7 @@ static void free_chmap(struct snd_pcm_str *pstr)
- 	if (pstr->chmap_kctl) {
- 		struct snd_card *card = pstr->pcm->card;
- 
--		down_write(&card->controls_rwsem);
- 		snd_ctl_remove(card, pstr->chmap_kctl);
--		up_write(&card->controls_rwsem);
- 		pstr->chmap_kctl = NULL;
- 	}
- }
-diff --git a/sound/isa/sb/emu8000.c b/sound/isa/sb/emu8000.c
-index e020296777436..a6405772d5370 100644
---- a/sound/isa/sb/emu8000.c
-+++ b/sound/isa/sb/emu8000.c
-@@ -1040,10 +1040,8 @@ snd_emu8000_create_mixer(struct snd_card *card, struct snd_emu8000 *emu)
- 
- __error:
- 	for (i = 0; i < EMU8000_NUM_CONTROLS; i++) {
--		down_write(&card->controls_rwsem);
- 		if (emu->controls[i])
- 			snd_ctl_remove(card, emu->controls[i]);
--		up_write(&card->controls_rwsem);
- 	}
- 	return err;
- }
-diff --git a/sound/isa/sb/sb16_csp.c b/sound/isa/sb/sb16_csp.c
-index 7ad8c5f7b664b..8d83570197199 100644
---- a/sound/isa/sb/sb16_csp.c
-+++ b/sound/isa/sb/sb16_csp.c
-@@ -1080,7 +1080,6 @@ static void snd_sb_qsound_destroy(struct snd_sb_csp * p)
- 
- 	card = p->chip->card;	
- 	
--	down_write(&card->controls_rwsem);
- 	if (p->qsound_switch) {
- 		snd_ctl_remove(card, p->qsound_switch);
- 		p->qsound_switch = NULL;
-@@ -1089,7 +1088,6 @@ static void snd_sb_qsound_destroy(struct snd_sb_csp * p)
- 		snd_ctl_remove(card, p->qsound_space);
- 		p->qsound_space = NULL;
- 	}
--	up_write(&card->controls_rwsem);
- 
- 	/* cancel pending transfer of QSound parameters */
- 	spin_lock_irqsave (&p->q_lock, flags);
-diff --git a/sound/pci/emu10k1/emufx.c b/sound/pci/emu10k1/emufx.c
-index 413da7cc4c188..7c9c8961193f7 100644
---- a/sound/pci/emu10k1/emufx.c
-+++ b/sound/pci/emu10k1/emufx.c
-@@ -914,11 +914,9 @@ static int snd_emu10k1_del_controls(struct snd_emu10k1 *emu,
- 				       in_kernel);
- 		if (err < 0)
- 			return err;
--		down_write(&card->controls_rwsem);
- 		ctl = snd_emu10k1_look_for_ctl(emu, &id);
- 		if (ctl)
- 			snd_ctl_remove(card, ctl->kcontrol);
--		up_write(&card->controls_rwsem);
- 	}
- 	return 0;
- }
-diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
-index 1a448981545d5..70bbcdcf0f5c5 100644
---- a/sound/pci/hda/hda_codec.c
-+++ b/sound/pci/hda/hda_codec.c
-@@ -1774,10 +1774,8 @@ void snd_hda_ctls_clear(struct hda_codec *codec)
- 	int i;
- 	struct hda_nid_item *items = codec->mixers.list;
- 
--	down_write(&codec->card->controls_rwsem);
- 	for (i = 0; i < codec->mixers.used; i++)
- 		snd_ctl_remove(codec->card, items[i].kctl);
--	up_write(&codec->card->controls_rwsem);
- 	snd_array_free(&codec->mixers);
- 	snd_array_free(&codec->nids);
- }
-diff --git a/sound/soc/soc-topology.c b/sound/soc/soc-topology.c
-index 369435b926467..4bbb754528105 100644
---- a/sound/soc/soc-topology.c
-+++ b/sound/soc/soc-topology.c
-@@ -2648,7 +2648,6 @@ EXPORT_SYMBOL_GPL(snd_soc_tplg_component_load);
- /* remove dynamic controls from the component driver */
- int snd_soc_tplg_component_remove(struct snd_soc_component *comp)
- {
--	struct snd_card *card = comp->card->snd_card;
- 	struct snd_soc_dobj *dobj, *next_dobj;
- 	int pass;
- 
-@@ -2656,7 +2655,6 @@ int snd_soc_tplg_component_remove(struct snd_soc_component *comp)
- 	for (pass = SOC_TPLG_PASS_END; pass >= SOC_TPLG_PASS_START; pass--) {
- 
- 		/* remove mixer controls */
--		down_write(&card->controls_rwsem);
- 		list_for_each_entry_safe(dobj, next_dobj, &comp->dobj_list,
- 			list) {
- 
-@@ -2695,7 +2693,6 @@ int snd_soc_tplg_component_remove(struct snd_soc_component *comp)
- 				break;
- 			}
- 		}
--		up_write(&card->controls_rwsem);
- 	}
- 
- 	/* let caller know if FW can be freed when no objects are left */
 -- 
 2.53.0
 
