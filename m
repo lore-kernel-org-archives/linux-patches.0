@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036863;
-	b=SMcntNU+3FKW8LM6wT+gWCboaX+QJdtQ1rlziO4PadObf4KbQn1NknUT40LmrcfBapPm
-	 JHHUPDoXiAASAARr+LDeZzTeLymTmiar6DoX/uuahuqhx172lF3GTC1QMviH5m8Y7Rxo6
-	 u/wo8N0T8KeoQBIaEB4RWrf6uBAvepek6fXzJ3x/ozkhblrAINDTcICwOEZF4vC0ngiv2
-	 Kc2hgFY430zXVu/1vyDenH4l5LPWq621ARP8bfQRAp6cBMly9myfJKfnxx+5xxhIlMI04
-	 EdcBtUHpoQFD+iWsJeEQfYD8Vubq4Ki8cbPTqQ18i//fWYr21Bz/ybdJJJ384y9P/SQ==
+	t=1795036865;
+	b=ExSKYebMfdCVr10laMw1gGQN9cmnDVsm9c9Mw0rdIAGR+4Jm3jFqDKwIPfvz2xtYjzFV
+	 avDLszDXOKAcD1J4VSc79An2ooxCONl3xcH6hoeAO0ibQbFH5At1uzyjBb3X161jrawfO
+	 7PYBy6rtP4GcBCMsK5TYzCq2aJwX1eA7Ro9O011LEujiidxgu+7ena7GhUtXsUaSiSXrG
+	 9lLnCSKR+U7STnmsBr7geWx3NLwe60zaBId63cnTgrD8a3rBpUnT+adMjsToAnD5g2p/M
+	 wHPqLRC2nGMSaRiN2Bbci6cYt/6EcvvtDLrhJBrZR7589XF7uts3R2EH1NiAEldKp1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036863;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036865;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YeMBGc2UTXkZszvLXlo4rWBPCDz6WCey6TVr3pAE8kk=;
-	b=RJZMRsbpLoDbylNK/lyDAvGaTD8oMVaLHqKqHDkKTC+TFL55kHoc/j5n/lbATRiLxUiA
-	 RFDNpz2cjsEt5Bw1u6/ue3szIH2yIudX2xtNn5zWHKpDbHxRAhJIghTlcsqsPeMPzL47O
-	 iF6xjRiYfAXdBcjdr0VCLp19uTajbN/bFZf3I+wzYDM2Z89D/Z1cM2713q7f0kbo2fq5I
-	 +C0uvZuFYbXd3nIFBgRaXETb24QaH51g1ArxAu0eCHd2Y9G+KH7ZM7p+KRmHsWvYgq43e
-	 ce8kB0791se7O8amHVWioj8bRsMEu9cMEYvFnkjoQrKVrweZqzwKdS2kNCMUHYuuTEg==
+	bh=MVOkUe52d3+02uS9OeXGMMUC6nbJxK1CU9hCptI2lYs=;
+	b=iUby1fEEoW0NYC2K6sMuJCGgihuSqhu9KfB2YcfwvkDoTP4CFzU8O69xZz+wcv9zvr/0
+	 mmCY4ep3eZdHzBfYBWcsWYyTNYvpCxQpQVVStCU5opkKX19hCB7v7KVTAL6ht2lm8lh9I
+	 ojvy7mycQU9vsH0jRMUevjXeABQCzoC4RMUe/X+oVlOH7KHVeSg0P7EUA658GflqSpSir
+	 apzQhcrmOF+QyN44ZIcDtr7uGtxdJ5mmLChoLsxPgGkS0f1Bh58m8YicTlttbAPTMLme/
+	 tGgEeMG5vPHvj/DOkJCUpq/l1zcA+rt8lVXy73WTUnX0hqSSeobab8Yw0fE348L2xVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LLn9ILXQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yAtQEpFs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BB0606A31C;
-	Wed, 18 Nov 2026 21:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D0D606A331;
+	Wed, 18 Nov 2026 21:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LLn9ILXQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC641F000C4;
-	Wed, 18 Nov 2026 21:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yAtQEpFs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218451F000C4;
+	Wed, 18 Nov 2026 21:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036862;
-	bh=YeMBGc2UTXkZszvLXlo4rWBPCDz6WCey6TVr3pAE8kk=;
+	s=korg; t=1795036865;
+	bh=MVOkUe52d3+02uS9OeXGMMUC6nbJxK1CU9hCptI2lYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LLn9ILXQ6giJgJg5KSqGJBvHR/KrjSWiZdktR05CGQrUaFAb/OeO19qHlgN7DyUFR
-	 E3+Q/q9K+LO/BKCQSgRvgq6MlMtgtzaUqEeTl2wPN/QYOME4BGMfWp5YaZ8y+laeS+
-	 HZpIaXEJwGruLEZi2dLuoBOWdLUAx24pynyK+MM8=
+	b=yAtQEpFsf61i1UbbXvDzk3k+1WUO2y8+30t2nhcNMjbTXfWBWuafs30vtkzpf96x5
+	 bv+m+Rsx+3WcI1CJZ4kFsWDfBgyIoapo+9O1ywsx/Gj6gxtkaEljdba3PEslNbjrdt
+	 C9XY0pVYr1JdRp5ZJEy0iA/n0yPoJILyy7HLFlm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yanxia <yanxia@cmss.chinamobile.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Stanley Jhu <stanleyjhu@google.com>,
+	Bean Huo <beanhuo@micron.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1211/3318] veth: fix stale peer max_mtu on XDP program replacement
-Date: Wed, 18 Nov 2026 15:30:33 +0100
-Message-ID: <20261118150356.501217127@linuxfoundation.org>
+Subject: [PATCH 6.6 1212/3318] scsi: ufs: bsg: Complete the job on error
+Date: Wed, 18 Nov 2026 15:30:34 +0100
+Message-ID: <20261118150356.529719058@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,62 +71,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: yanxia <yanxia@cmss.chinamobile.com>
+From: Stanley Jhu <stanleyjhu@google.com>
 
-[ Upstream commit c955325db639e9503941227e14e1f1ccc99442a1 ]
+[ Upstream commit cc0ce3fe8fac073ecded4f32c8ee5b89da1397e8 ]
 
-veth_xdp_set() calculates the peer MTU limit from the incoming program's
-XDP fragment capability, but only stores it when no program was attached.
-Replacing a program with one having a different fragment capability
-therefore leaves the peer's max_mtu stale.
+When ufs_bsg_request() fails, it returns a non-zero status without calling
+bsg_job_done(). bsg_queue_rq() then ends the request with BLK_STS_IOERR
+without running bsg_complete(), leaking the job's device reference and
+mapped scatterlists.
 
-Replacing a regular program with an xdp.frags program keeps rejecting
-otherwise valid jumbo MTUs. The opposite replacement leaves a larger
-limit in place and permits MTUs which a fresh attachment of the regular
-program would reject.
+Always complete the job via bsg_job_done() and return 0, matching other BSG
+transports. Requests failing with a negative errno now return it from SG_IO
+with the 4-byte result in the reply, while positive status codes still
+return 0 from SG_IO with the reply header.
 
-Update peer->max_mtu after every successful attachment or replacement.
-Keep the GSO feature update conditional on the first attachment.
-
-Found during review of the XDP replacement path and confirmed with
-native XDP on an isolated veth pair. Before the fix, direct replacement
-rejects MTU 9000 after switching to xdp.frags, and accepts it after
-switching back to a regular program. Detaching and attaching instead
-produces the expected results in both directions.
-
-UML tests on net reproduce the problem before this change and match the
-detach/attach controls afterwards, with both devices up or down and
-with either endpoint receiving XDP. Failed replacements preserve the
-previous state; same-type replacements and detach also behave as
-expected. Small-frame traffic passes in the devices-up cases.
-
-Fixes: 7cda76d858a4 ("veth: Allow jumbo frames in xdp mode")
+Fixes: b13a3539eb2a ("scsi: ufs-bsg: complete ufs-bsg job only if no error")
 Cc: stable@vger.kernel.org
-Signed-off-by: yanxia <yanxia@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20261020020147.790274-1-yanxia@cmss.chinamobile.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20261015001855.3450573-2-stanleyjhu@google.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/ufs/core/ufs_bsg.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 334783a022194..06171a3deb9fe 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -1643,10 +1643,9 @@ static int veth_xdp_set(struct net_device *dev, struct bpf_prog *prog,
- 			}
- 		}
+diff --git a/drivers/ufs/core/ufs_bsg.c b/drivers/ufs/core/ufs_bsg.c
+index df31f89b9666f..e2f03243643e0 100644
+--- a/drivers/ufs/core/ufs_bsg.c
++++ b/drivers/ufs/core/ufs_bsg.c
+@@ -194,14 +194,12 @@ static int ufs_bsg_request(struct bsg_job *job)
+ 	ufshcd_rpm_put_sync(hba);
+ 	kfree(buff);
+ 	bsg_reply->result = ret;
+-	/* complete the job here only if no error */
+-	if (ret == 0) {
++	if (ret == 0)
+ 		job->reply_len = rpmb ? sizeof(struct ufs_rpmb_reply) :
+ 					sizeof(struct ufs_bsg_reply);
+-		bsg_job_done(job, ret, bsg_reply->reply_payload_rcv_len);
+-	}
++	bsg_job_done(job, ret, bsg_reply->reply_payload_rcv_len);
  
--		if (!old_prog) {
-+		if (!old_prog)
- 			peer->hw_features &= ~NETIF_F_GSO_SOFTWARE;
--			peer->max_mtu = max_mtu;
--		}
-+		peer->max_mtu = max_mtu;
+-	return ret;
++	return 0;
+ }
  
- 		xdp_features_set_redirect_target(peer, true);
- 	}
+ /**
 -- 
 2.53.0
 
