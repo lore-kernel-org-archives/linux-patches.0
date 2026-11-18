@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035246;
-	b=ILsRwVK8Qpwxv/CMyf1Sj49X/MNWe7eXnEfi8NRGVbHBomP9rJ9fQIoaCnOrQI9UHHwv
-	 r2VeQHZI8a7y9xC+kvSz6BIJsJWx98WI158NgUZWkmFVaqoenPUATDzj056MHcGpQ9Bda
-	 uiXvlKmsG9txkpWUjGvaNoKRZ8RvHHtgLIRa9YUhk3DbonwN8AmeQExJ9aS/SSL8RYoLl
-	 y86F7SzKAMLcG2SjsKgllU6MpKAgRMEsaTM+7zRohLuPpkgVDkV/3L2klteNAVZyj5U47
-	 tBXf2yLjveIFzgzFTAfZqr00EJ7ycZHKlwHJwBZ04M9R+HjPi0xnVlu5nCV9mKycQTQ==
+	t=1795035249;
+	b=QfF5+aoKGSKh96DX+dWF/ZsJtlDhq9xThZUk/OspSovcNdN8iVOEneBTAxPcVTmpE+Hr
+	 g2WLi0jbIIkLhDOUU7cKkz+4po0D0Ed5JJhC0VaQSWs7QByF04HfttpmiYKzDDhpfA7Xq
+	 +18KvyInoIZdbD56zBGw37J8BEOu/e2822TelrsZqwVLCw3ueWk417OExc2GOd7+5HU2N
+	 SJ2zCkF7rKxj7MT6l6rHgLa6ZC/M9E1CpPxk1Az3rltOdrK6YFx+Pp2Y3M4Nt3gTZ6giF
+	 2SOw95kAl0mDMVkHvh67YdSZ8e1h7qLvn18rlGLNLQdKO9qu1X1+FGCpveoejuMTNDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035246;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035249;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qUyJNc/keVLRXRY0fnAyY+IF8wyLD2WJIDbcq08Dmac=;
-	b=w/3cum0KEIxOCd32rbYnB3u3+RWyllfxzHgTvNqMSCWlABe3xCSeh9ukYo+/PA7VMCRe
-	 4kdXG57vUHAALvqfDY7PIMhlwpO3SfG5KuPWHP90pcWzoOgeSeySp9mlDA2b/miqaD0cd
-	 PAVK/RuWjpiANFm4Een+pWUX+2KdpmyVP1omjujbDz/nDp9oxyGAc+Ev5eRvmf1GHJPj9
-	 a08n+v/5gMo/9qL3m7OAtH8s+zcFNyvGHmHDDyu5EXYgSzWa8sMuAHN8pYbtNAQGoBy1F
-	 fd+R3pKciau5WfSX3p3TGGJMeEdDfAoyHQkkY6E8CrDpe8nkuF+VTR5eaHiZ46HDHrA==
+	bh=TYYqcUCRp9M0w9RlJCbTGPjCL+BvCSx/ZkZ9JpowBlI=;
+	b=v1IlCq3SqnMFL4A2Sve4nNIRawqbsRv/7lW49MSUtPhaHHqIRRo0Pj470wycW1v4CIBc
+	 zcl7vrzawQ4hL2qOik63yn95LNToMuyMQcRKZBlPrS7OXY4Cszh367fy4RACSLIbjTX9B
+	 sHMwk5vv/VN8kWN4VuJKvkpNPANIa8afgDZCVbnDERKOBjFbpEhBdZH6dYIqXo3mrZ8LR
+	 5S4/9E/B+VOvL525i1GC4GXCmYVbTWcl/c7Rs5sofPzSZ1Wx4Ns+lUhTymLkeQWWIob2v
+	 dWx0xs3ejQAez557oPlgn81ryBCI9kIvAaudUpfYhoqHMhmbuaKCDWF8o4M0DPUwmAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fb56s+PT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aj5oCQfc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EEB8606A320;
-	Wed, 18 Nov 2026 20:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC016606A320;
+	Wed, 18 Nov 2026 20:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fb56s+PT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12C71F000C4;
-	Wed, 18 Nov 2026 20:54:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aj5oCQfc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 505D71F000C4;
+	Wed, 18 Nov 2026 20:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035246;
-	bh=qUyJNc/keVLRXRY0fnAyY+IF8wyLD2WJIDbcq08Dmac=;
+	s=korg; t=1795035248;
+	bh=TYYqcUCRp9M0w9RlJCbTGPjCL+BvCSx/ZkZ9JpowBlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fb56s+PTJvJRq4tukSkjMASZdC6SiCATJuXqEnT65ABcpm9IjYrNvFEFO0sCI4y3r
-	 Vb+a5WiPpyjUVvfbo0rdZ8Pl7HD5iBWdQ8coo5BjGM4AmR5gh7Q6UHLFIR3ouQGcvK
-	 6u6OV+HX6XWRll5vYUU/CIsZxvYwBWHOzzwp9cP4=
+	b=aj5oCQfc36Wj9bHAQI+xhkBgCkVlMmFE8/OB+2U1WC9hZeV1YxYDJmY83+eww4lVJ
+	 3RZyCMZz7rtqxsJvyIxEKqmRksVbR7jgspVgLMj5/KZW5y5VZVhrWfV+vkbiZsuBAC
+	 E9c/mjymGOU8T6a9n/RSFZhVP0Nz398P7rYc4EM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.6 0658/3318] xfs: jump out of xchk_bmap_check_rmap if fatal signals
-Date: Wed, 18 Nov 2026 15:21:20 +0100
-Message-ID: <20261118150337.791779423@linuxfoundation.org>
+Subject: [PATCH 6.6 0659/3318] xfs: fix xchk_stats_estimate_bufsize to allow for the trailing null
+Date: Wed, 18 Nov 2026 15:21:21 +0100
+Message-ID: <20261118150337.825474791@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,45 +70,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 49d300a51442bd64b627645b7b0b1cd66e492905 upstream.
+commit 6b8d60784b61a17bd591cb4c6e8aa9ed29c24f5c upstream.
 
-LOLLM observes that we never check for fatal signals inside the loop
-that checks file fork mappings against the rmapbt.  This can lead to
-lengthy delays in responding to a ^C, so add some bailout checks.
+LOLLM complains that xchk_stats_estimate_bufsize underestimates the
+buffer size by 1 byte because scnprintf wants to store a null byte after
+the newline in each line.  Each call to scnprintf overwrites the null
+left by the previous call, but we still need the null byte for the last
+line in the file.
 
-Cc: stable@vger.kernel.org # v4.17
-Fixes: 5e777b62b0bcb6 ("xfs: bmap scrubber should do rmap xref with bmap for sparse files")
+Cc: stable@vger.kernel.org # v6.6
+Fixes: d7a74cad8f4513 ("xfs: track usage statistics of online fsck")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/bmap.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/xfs/scrub/stats.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/bmap.c
-+++ b/fs/xfs/scrub/bmap.c
-@@ -542,6 +542,10 @@ xchk_bmap_check_rmap(
- 	struct xfs_ifork		*ifp;
- 	struct xfs_scrub		*sc = sbcri->sc;
- 	bool				have_map;
-+	int				error = 0;
-+
-+	if (xchk_should_terminate(sc, &error))
-+		return error;
+--- a/fs/xfs/scrub/stats.c
++++ b/fs/xfs/scrub/stats.c
+@@ -158,7 +158,8 @@ xchk_stats_estimate_bufsize(
+ 		ret += field_width + 1;
+ 	}
  
- 	/* Is this even the right fork? */
- 	if (rec->rm_owner != sc->ip->i_ino)
-@@ -573,6 +577,9 @@ xchk_bmap_check_rmap(
- 	 */
- 	check_rec = *rec;
- 	while (have_map) {
-+		if (xchk_should_terminate(sc, &error))
-+			return error;
-+
- 		if (irec.br_startoff != check_rec.rm_offset)
- 			xchk_fblock_set_corrupt(sc, sbcri->whichfork,
- 					check_rec.rm_offset);
+-	return ret;
++	/* null byte for scnprintf */
++	return ret + 1;
+ }
+ 
+ /* Clear all counters. */
 
 
