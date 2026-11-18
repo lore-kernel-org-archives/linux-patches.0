@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035688;
-	b=Y3vwglcEFVrEanVllTXeBj02jpsykkrzbhe1gdL6sXINhV2ji2TupYwq/bciUnA0YXdg
-	 Jfun3IWUaXG8nYTvLIsQ1y81UvCNPFlh7GWBYcFjaPIJrPm/XZWib+2j2OpWQByJzoBpl
-	 GFqLbAgI5q+WC+cQnsBFgBah+Xt5ZsSixZAogTluc4+oGhsokSyIgySPV6aKWrkJRCJ3H
-	 46ArSDr1wLtkptxJ6+onmlFZnjUCn3SjeBvEiE/+N0qbWUVHjyCkHge4biRttA5+SZQbK
-	 WTSNfsMUUOoHufsap3St9GeI+FbCmp76fKMfi/IisgeXFg/7wEicBb8Wa7rBjC+sgeA==
+	t=1795035691;
+	b=Vnk/mX4cL5HZMprRhRLUOYIaxZzNEyRdkvpm9o0Mx7bnDq8h/3krlN53eqauBt5aYfpo
+	 1MAE+mFxvjtDyMbBN7ntjwgtY3BjN2dAl00WvF+R14BSE4kiJ6XidhF2P0oJsSBico0Mw
+	 XkjhQrzGNgB3eYobohW2Uh01GlQxG/beMBRhB4w7+j/BWMmFVMn9OU1CkyDIsCBbXYAx7
+	 s63sDWmdl2BvBfzYwwGAwtuGxb1jGrTFGulb0ZMT4FPoHL89A7p60zd0JsKi/BHys5CpE
+	 TVBYDTgq4obtI4hGxS5YMtorXvhSPSnqY7QeFnvAlY36OY6cKCONIIxDweiDG3o7Bww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035688;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035691;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YP8oTMyxF0ILgDGeWnMJKL3wu3h4LTW/Fye/7OTTQPY=;
-	b=AHIv2KjNWgI61PwKMmhD649pJ1/hD/q5LmvudAMHSluQfNiFMoeNlmoJek1daYppulEU
-	 MITM1ARhLJ4peGknaNwF2fL/Pdp7ykBoPGV2OmA9BC6NG8nWMJlLFBqj4lC04x1br1sni
-	 wsLV0LOyUY4TjSBhpb+p05QEjd9DFVgMv3vQDKWr90QMM+eq3MWTG5BkoOeurALuK+iE1
-	 RaJvZTjfxwXnh71SB6mpdW/cVVir6i1weaEk3MnW/4LGsljurMHcUImcbGxsDh9THdo6g
-	 RiKUAXbBKHqWgJsqtGyhb5h9YlOKIsaHd+pSIlbkbWpsLHC5FpkH98Ruc19cpOU9hqw==
+	bh=8f5i/aAr3lH18T6FObPbg6GE81s6V2OfdcjPSSE2QW0=;
+	b=quN4MsRdWyAazs/2hA6fGCaJbt8ggpmhAqQ9WR1oyEYq/ABVpRYqypoNpeihXXdbXNkG
+	 sjTEUE25Ug1cTInaGt/1wSHPFGaaqy0uqN2SHWb3Kzwt/35pCT2sfrtcOMf9hjg5RnFgY
+	 1o/XY1E9/TggseXP/IIdZjr/aVc7WJFVegJC2e0i3CM/lLUPxJ3hrJDKkw/BRwA6E3U1e
+	 iDGXtyvy95pnwiWD36MvvZNTVTk+4JgE8BiOsNwWcOQzclidxJnvYfwV7Tlo6nMY+dsJG
+	 JXNjh35v4mAfBAKBq5gb5FEmIv+IHrku1+pVpdpL0+xamunLyrOH/pjx8BSLBZk8Elw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="y1NNNAI/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OdpaYEPH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F3860A2602;
-	Wed, 18 Nov 2026 21:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD87260A2603;
+	Wed, 18 Nov 2026 21:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y1NNNAI/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370F81F000C6;
-	Wed, 18 Nov 2026 21:01:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OdpaYEPH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A0F1F000C5;
+	Wed, 18 Nov 2026 21:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035688;
-	bh=YP8oTMyxF0ILgDGeWnMJKL3wu3h4LTW/Fye/7OTTQPY=;
+	s=korg; t=1795035691;
+	bh=8f5i/aAr3lH18T6FObPbg6GE81s6V2OfdcjPSSE2QW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y1NNNAI/9o+MWEPh1R6uWeLU3ohWXZPzHBAIHru8OttyZ2vU/X4aI6JSie4Gn9e5E
-	 /5qEtISZOsk5QtCleLNV2pRKFqUDw/8H03ePXthUzOpDoYshvGAA6dr0LMDIEboMdj
-	 lyzPUuv6bIGrTBLOA+mHWFn6+y8r/IE8ql12T9dw=
+	b=OdpaYEPHso1yiZiaJ2Kac1gL9FyagofjMzCkb3kFZm631+hf/7pyanEcOLtMnn+eU
+	 LN81wCDL955ixd1v3lsbmAcY+ZD7kj/yDyoyE5Lat059sVfdm3neYCREOWWdxMPjP9
+	 qIfBgRDyykLHINO6WItwuI1AO6WIINUsbuLycPBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Yongkang <teel4res@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 0752/3318] io_uring/timeout: count cancelled timeouts in cq_timeouts
-Date: Wed, 18 Nov 2026 15:22:54 +0100
-Message-ID: <20261118150341.211747787@linuxfoundation.org>
+	Chris Mason <mason@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 6.6 0743/3318] ovl: use the pinned upper dir in ovl_fix_origin()
+Date: Wed, 18 Nov 2026 15:22:45 +0100
+Message-ID: <20261118150340.897197713@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,57 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Yongkang <teel4res@gmail.com>
+From: Chris Mason <mason@kernel.org>
 
-Commit 1c8b49851543f41fc8bb18bcd1f15cc93d14b530 upstream.
+commit 4f61ff2ebfb3d2967b83b6a4d456242244d5a61f upstream.
 
-io_timeout_cancel() posts the cancelled timeout's -ECANCELED CQE without
-advancing ctx->cq_timeouts.  io_timeout_fn() and io_kill_timeout()
-advance it for every timeout CQE they post, and io_flush_timeouts()
-computes the number of non-timeout completions as
+Renames made directly on the upper filesystem during a lookup crash the
+kernel.
 
-    seq = cached_cq_tail - cq_timeouts
+A dentry that is passed to vfs_setxattr() must be pinned.
+ovl_fix_origin() passes upper->d_parent to ovl_set_impure() without a
+reference, and the lookup holds no lock of the upper directory. A
+rename on the upper filesystem changes d_parent, and only the child
+pins the new parent, so a second rename and an rmdir free it.
 
-to compare against each off timeout's target_seq.  The cancelled
-timeout's CQE is therefore counted as a regular completion, so every
-cancellation makes an already armed off timeout fire one completion
-early.
+With delays in ovl_fix_origin() and ovl_set_impure(), renaming the upper
+directory twice and removing the intermediate parent during the lookup
+of a merge directory without an origin xattr gave a KASAN
+use-after-free in vfs_setxattr().
 
-A ring with a keep-alive timeout of off=4 completes it after two NOPs
-when one off=100 victim is cancelled through IORING_OP_ASYNC_CANCEL, and
-before any NOP when two victims are cancelled.  The cancel CQE should
-count, but the cancelled timeouts' -ECANCELED CQEs must not: the
-expected counts are three and two NOPs respectively.
+Fix this by passing the upper dentry that the overlay parent holds.
 
-Advance cq_timeouts when io_timeout_extract() succeeds, under
-timeout_lock and before the -ECANCELED completion is queued, matching
-io_timeout_fn() and io_kill_timeout().  The -ENOENT and -EALREADY paths
-post no new timeout CQE and keep their accounting.  Both the
-ASYNC_CANCEL and the TIMEOUT_REMOVE path go through io_timeout_cancel().
-
-Fixes: bfe68a221905 ("io_uring: off timeouts based only on completions")
+Fixes: 9678e6303057 ("ovl: fix inconsistent d_ino for legacy merge dir")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
-Link: https://patch.msgid.link/179328314078.648427.13761781546953594668@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[axboe: 6.6 uses a regular spinlock for ->timeout_lock]
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[amir: add helper ovl_set_impure_dir()]
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/timeout.c |    3 +++
- 1 file changed, 3 insertions(+)
+[ backport: context: ovl_fix_origin() calls ovl_set_origin() ]
 
---- a/io_uring/timeout.c
-+++ b/io_uring/timeout.c
-@@ -306,6 +306,9 @@ int io_timeout_cancel(struct io_ring_ctx
+ fs/overlayfs/namei.c     |    6 ++++--
+ fs/overlayfs/overlayfs.h |    6 ++++++
+ 2 files changed, 10 insertions(+), 2 deletions(-)
+
+--- a/fs/overlayfs/namei.c
++++ b/fs/overlayfs/namei.c
+@@ -883,8 +883,10 @@ static int ovl_fix_origin(struct ovl_fs
+ 		return err;
  
- 	spin_lock_irq(&ctx->timeout_lock);
- 	req = io_timeout_extract(ctx, cd);
-+	if (!IS_ERR(req))
-+		atomic_set(&ctx->cq_timeouts,
-+			   atomic_read(&ctx->cq_timeouts) + 1);
- 	spin_unlock_irq(&ctx->timeout_lock);
+ 	err = ovl_set_origin(ofs, lower, upper);
+-	if (!err)
+-		err = ovl_set_impure(dentry->d_parent, upper->d_parent);
++	if (!err) {
++		/* upper->d_parent is not stable, use the overlay parent */
++		err = ovl_set_impure_dir(dentry->d_parent);
++	}
  
- 	if (IS_ERR(req))
+ 	ovl_drop_write(dentry);
+ 	return err;
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -492,6 +492,12 @@ int ovl_check_setxattr(struct ovl_fs *of
+ 		       enum ovl_xattr ox, const void *value, size_t size,
+ 		       int xerr);
+ int ovl_set_impure(struct dentry *dentry, struct dentry *upperdentry);
++
++static inline int ovl_set_impure_dir(struct dentry *dentry)
++{
++	return ovl_set_impure(dentry, ovl_dentry_upper(dentry));
++}
++
+ bool ovl_inuse_trylock(struct dentry *dentry);
+ void ovl_inuse_unlock(struct dentry *dentry);
+ bool ovl_is_inuse(struct dentry *dentry);
 
 
