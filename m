@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025338;
-	b=eRJtSd73NijMoKNvHa0u1Kxnxfdayq42TfKNDhASOLQDfpMvbWz+nklAI6qRX5LQW347
-	 vrQ4sAnqb/GRc3RX+Us3ouM6XmaKwZ09YWD+uYc31HG0cHw9cfqUcPvtdn0xpkROmYSOA
-	 8sAGA8HCbaWC9zPYaxjzACPNBOuDb+vqZxwybXbf0cAcHNXKDl6m3MYiwuMV+gCJh1OXX
-	 HP6QrpwgsKzFw9FKZ5XSL2Q4Qid+LVYxn0o/KHYOtZ/Z/slDE945g9xrEZncXHHfRpdn8
-	 TnytMjAYR/32MqrXDXCon1RQYFL9+EbN1NuolHEaYXKo8xeNACaHyWw6zj4L1UU4+RQ==
+	t=1795025340;
+	b=ENcq7phfIDkP62OkrKye4McLN4kNrdCm12c0tPAlqOC8frZqcCAPgcv4eZTsRTEMtDlD
+	 8tNIki66OU+fPZIIyowHxvi4fwN55+SCZlTsWrIJDeV9HZkx/B1mY4enXUhTf+KOKi4JC
+	 HO346B5wFvVCFmDwpTaPdJ7+1b1OLgM+vMfkIMdKV1zVhYjgZb5If1XT2fUMeyFufBOwl
+	 H5BxGM2ngL0EKl8qVCQ6rLf3+/atPOUHneS2rBkv9Bka1CB5cly1c19o9PXrVTla8sYhy
+	 nb1LtX2ywDIQnUa3No5exSlD6fb86jWMBZ5Vx7jgST6FylRT+Ti3KTpFjQIeVgtAvqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025338;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025340;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Zf0hnL55+0/17/f009gnB0rSM760MWS7l5tjO+t/sZE=;
-	b=UxXOcn3BpnAuis1DlILMdC5PPtnXiGFmC/leWqpNRYvaWT6eAWdvKhp3w4DLAP4j2XiW
-	 nfMmUh94XEn5e5Ye5aAM8qqRrncPUol/nkEnQQAFMVWYpgo4HNj4t36VtUHBTI3uOPr1R
-	 Kwk1fNZM2B0mKt5/W5mOIrKxiBmDePl2uLSOYYGgv0Lw1UiT67xQ2c8mKxyF+jlDaL+Jp
-	 jXM+sAV+LElgXn+jSvQu5YBMpqY+R8dYqomQ+lnmqW2sLohBf3aavb0JwB3xK0s/k1OJ/
-	 uZQgywDsP0ViZG03u5e4U3pqvgHLw+CTdObPun8gLmmEyKpEf9c5ioHcQfgFtAd00uQ==
+	bh=7vadaLejF+hZNXJb31VT3aguS3DuuxEKjuAkK0KA6Y8=;
+	b=zbg+do9RXfKOHoDd0hZ4vkRiN8oiA2cqLzSykJnL8CzxNjZqjOX681r7uyqC7MrG7u1F
+	 GF24zHMI7xJWRW/Vu6TMzlAr+46oNkZ/LojwqYfT0NPrSiJay8DJTOx4vov6TKfRvEdt1
+	 YujS+TLIHNXKISV1gElnwfbK0R/NaHt0n3YTH7eM2ox9Kfa4YvSSf/zCEqD16021Bi39N
+	 TYWwaaVoAWtwVFFpaLy9XJCa9TBoJr3dnzUia0DCMN2mB/39oltgDGiDVmdxE9Dimqzey
+	 V2WfMvjXwnQRXSHzTf+BF+h0XwAWqXwkHEmTSKT1O9oBJED+EqLLyaF4pz1IKrALe3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qD1umf0h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qP3tNYlG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A305606A32C;
-	Wed, 18 Nov 2026 18:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CEF606A32A;
+	Wed, 18 Nov 2026 18:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qD1umf0h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8351F000C4;
-	Wed, 18 Nov 2026 18:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qP3tNYlG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5051F000C4;
+	Wed, 18 Nov 2026 18:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025337;
-	bh=Zf0hnL55+0/17/f009gnB0rSM760MWS7l5tjO+t/sZE=;
+	s=korg; t=1795025340;
+	bh=7vadaLejF+hZNXJb31VT3aguS3DuuxEKjuAkK0KA6Y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qD1umf0hveRA7Sw1u1B4zZtShDL2a/fhyd5RP2s8JTO0kV4yRBO+FnLRCN1cW8CCq
-	 S8K/G+zABPzcy50Rdsm4DOAt+E5DEP+5UFjP1xPanjt3z2LiPUD7UG9ZrzDpWMyGIJ
-	 kBixnZ3dLVWB60TltRiYiAIrFHRcLCzK25nw3ldk=
+	b=qP3tNYlGrMxLd22wHe5n7K/d3FKwCINPMl/xHmR5M9W4tUiL0YH1+rOVBwit8pyXU
+	 58JglwZ8DZc3Xv0e6albWnkXyYbD4llS4oZ+CsmjgZ8kAaoZVJu0RNZ7HRKXxRrPlK
+	 nKTqzVqfy6PGhkJuTTXvaxJVn/rQo4U2y2AOtnqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1044/2151] perf/cxl: Validate the hardware-reported counter width
-Date: Wed, 18 Nov 2026 15:46:19 +0100
-Message-ID: <20261118150200.361285678@linuxfoundation.org>
+Subject: [PATCH 6.18 1045/2151] perf/cxl: Dont log through pmu.dev in the overflow interrupt handler
+Date: Wed, 18 Nov 2026 15:46:20 +0100
+Message-ID: <20261118150200.396504723@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,48 +72,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 1c5499e67303a9393388197fb14b39ed06a3dc55 ]
+[ Upstream commit 984920c893f0e6832351bc03deeb5ef9a42fbdbb ]
 
-cxl_pmu_parse_caps() takes the Counter Width straight from the CPMU
-Capability register without a bounds check. The Counter Data register is 64
-bits wide, so a device reporting 0 or more than 64 is reporting nonsense,
-and GENMASK_ULL(width - 1, 0) in the read path then shifts out of range.
-That is undefined behaviour, and a UBSAN splat where it is enabled.
+perf_pmu_unregister() frees pmu->dev without clearing the pointer, and
+cxl_pmu_probe() orders its devm actions so that teardown runs it before
+free_irq(). Nothing in between masks the interrupt, and
+cxl_pmu_event_stop() leaves the overflow status bit set, so an overflow
+taken just before teardown is still delivered and still reaches the
+dev_dbg() in the !event branch - by which point info->pmu.dev is freed.
 
-Reject a counter width outside 1..64 at probe.
+Log through info->pmu.parent instead, which is devm-managed and outlives
+every teardown action.
 
 Fixes: 5d7107c72796 ("perf: CXL Performance Monitoring Unit driver")
 Reported-by: sashiko-bot@kernel.org
 Closes: https://sashiko.dev/#/patchset/20260715191454.459673-1-dave@stgolabs.net?part=1
 Assisted-by: Claude:claude-opus-4-8
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Acked-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/cxl_pmu.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/perf/cxl_pmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
-index 1d2bc25155929..2164b3b2d1ffd 100644
+index 2164b3b2d1ffd..44fb4a4692c8e 100644
 --- a/drivers/perf/cxl_pmu.c
 +++ b/drivers/perf/cxl_pmu.c
-@@ -141,6 +141,15 @@ static int cxl_pmu_parse_caps(struct device *dev, struct cxl_pmu_info *info)
+@@ -804,7 +804,7 @@ static irqreturn_t cxl_pmu_irq(int irq, void *data)
+ 		struct perf_event *event = info->hw_events[i];
  
- 	info->num_counters = FIELD_GET(CXL_PMU_CAP_NUM_COUNTERS_MSK, val) + 1;
- 	info->counter_width = FIELD_GET(CXL_PMU_CAP_COUNTER_WIDTH_MSK, val);
-+	/*
-+	 * The Counter Data register is 64 bits wide, so a Counter Width of 0 or
-+	 * >64 is invalid. Reject it rather than let GENMASK_ULL(width - 1, 0) in
-+	 * the read path shift out of range.
-+	 */
-+	if (info->counter_width == 0 || info->counter_width > 64) {
-+		dev_err(dev, "Invalid counter width %d\n", info->counter_width);
-+		return -ENODEV;
-+	}
- 	info->num_event_capabilities = FIELD_GET(CXL_PMU_CAP_NUM_EVN_CAP_REG_SUP_MSK, val) + 1;
- 
- 	info->filter_hdm = FIELD_GET(CXL_PMU_CAP_FILTERS_SUP_MSK, val) & CXL_PMU_FILTER_HDM;
+ 		if (!event) {
+-			dev_dbg(info->pmu.dev,
++			dev_dbg(info->pmu.parent,
+ 				"overflow but on non enabled counter %d\n", i);
+ 			continue;
+ 		}
 -- 
 2.53.0
 
