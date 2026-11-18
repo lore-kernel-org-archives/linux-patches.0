@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057349;
-	b=oFi8qSpSlxkLMRjnoqEjixDeBadsuqlZewgSODpm6pgEHAs0ZIvxNQCBtXxg53E05j3z
-	 3dt/79aatXGh1Tyb4RWOYWwdqYiWIuuYoMwKEDtgUmJOAto+Qq9Lb4MTGaP672yu5H4Be
-	 dICy+lg1p0ytSemvyYL0OigIF5Oc9D3hyxItCmW7J8//z8hSBtW7F8tpqVl4hcunICMpR
-	 d3UsrX+Fuq4KzH0y/i362CmLMSuf5Gt0r5bQt+WB0PvipV4nIo3QauCMpY9ot3D9UZ1/i
-	 xVEzypwJ0yqFyQidSpIJaewC/3Nxy9BISouCctpCRUyAvfbRQYOBAO7owFlRaVygQCQ==
+	t=1795057352;
+	b=MnlBU+WPpOJ5TTZwnrPNkXH86HJklbV3ViqjmV/6ljpyemHfnZcAv5oCyadC+3q2/YV/
+	 fWES9a6LKpvvbo7xnd6JDa+6UINEbX+AxzCg/y98zv8mc5eAzTK/xMLp2/1nSjBYGBuGa
+	 Q+YNVH/9SEc92xF0FqxcodrINOexsgJJN2skiKRBW1IQ2r1zyXPyfaDebCPmTOvVjdBWX
+	 Y1bypnjUTfKnwz5UylEUvggxw1eEUUjPod+YPP+YMmoef69V/8jtVvFfBPe1dfyQ2eqcm
+	 Kf4hQc7Qf28ZM2aBZg78pvaaHtK1/qWzO3+5BfaHrMrOPR5muv2nv9Y/KNsekERm/xA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057349;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057352;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Kln0AsK0RxzQx2hUnXrenYQgZk3WhM05swT1AZtys4M=;
-	b=s1oGzwF/LgccCkAi2HRuU/qB3+mMdafoU8oErAh4crFnYbW7XJnuWTV+GFC5XByuVIyG
-	 +3sZpLs1yASkvmz64qlcaQcBRvaDDwZIegH+ivLEwwrVWzDuBcNzhqUYPrWw6iSQmts3b
-	 jLTgf43cUDWtrGtlUO2AqTfYNfZ2xc6d2Qa1y0RsrsqMjt5W1SQZfgET/MBrpM7SI8lUR
-	 zuL38IDfCQV73PKZhiuIfr6FAACWKUI6BdymMmsYi9KlDXXGVDbhtyitL9cgRkeUzadMX
-	 hLDBa8ZgWpUET3GkMQSYvcxVW3OXO0gvkRQGoR46DatYt2EFUjcF8IFQG6aXgGhy9TA==
+	bh=TnkKpoLnp1ysg017AkosefkYYoxKqUISDpQNNBeOt+k=;
+	b=FQxhS6jYaWc47r4BtcPiq3FdWLoghqiWpBrkfd9XBA7bOok607z/P5VrFAosYCYAWBIV
+	 U/yaahLjvIKKFC3/MaR7dbQm0ZA+7k0CucwEGWSOgfE8FzXuWgc3dZF+WmLE06MCMbMM0
+	 MWNKC9ZqzdXn7alBsSkl2cAJCvnT2mwRxNjXFGKtNnx7oRf7p9NeACeVGAWQdtRB1ZAFt
+	 44gWBBDmulJNhbkAgdCwaDmcLohFlk4oGXm201rAaIFhjXZO4zur2uhXFVq4Go1fMKWZ5
+	 fz5IuGo6uP/aVKsQDPpAQfGWhTnxMhM5d5zfEDvt6hEOsEymsQDUyUDbFUhjUdX1djQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ef0E+S1m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="rxx/AFqS";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABD1606A325;
-	Thu, 19 Nov 2026 03:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9545060A260C;
+	Thu, 19 Nov 2026 03:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ef0E+S1m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3051F000C4;
-	Thu, 19 Nov 2026 03:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rxx/AFqS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99B41F000C4;
+	Thu, 19 Nov 2026 03:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057349;
-	bh=Kln0AsK0RxzQx2hUnXrenYQgZk3WhM05swT1AZtys4M=;
+	s=korg; t=1795057352;
+	bh=TnkKpoLnp1ysg017AkosefkYYoxKqUISDpQNNBeOt+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ef0E+S1m/kOew4aU9fM+SLagdWVmrnWG5u+TvS+wC2NWMq1i+7+dyuVfLvq/erUfu
-	 iFK/zNGqmypuOG9Ad69yRmN3K6vbeW1OAmTraudD41qt9k+5gI21PHaNv3pAOA4EpA
-	 n6oLW4VXdVO/2IvurHVU/W8Yt+TWTs4iGLEBg0i4=
+	b=rxx/AFqSX1LVFP9iCevykB/sb1lFvdnzadsTGRPaUGcEmKZorrjZskouMaD5ZMjlq
+	 cuEXRuzA1bVTTs2WkJuti9pATYiUno3cMW/Luaf2StU6e1QRNLLEeem8NwvYR/q6E1
+	 l445Of+Wh3UbYRvwmhzZNnDzrMP0hcpEzCVk7gjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+	William Hansen-Baird <william.hansen.baird@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0058/1848] mmc: block: reject invalid perdev_minors before division
-Date: Wed, 18 Nov 2026 15:34:56 +0100
-Message-ID: <20261118145913.539837974@linuxfoundation.org>
+Subject: [PATCH 5.10 0049/1848] wifi: rtlwifi: rtl8723be: Remove unnecessary irq save/restore in hw_init()
+Date: Wed, 18 Nov 2026 15:34:47 +0100
+Message-ID: <20261118145913.137515249@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,44 +68,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: William Hansen-Baird <william.hansen.baird@gmail.com>
 
-[ Upstream commit 5253aee00a4383cb0482d5e99bde48b8054ae2c0 ]
+[ Upstream commit 1b4cd55626b6ffa93d18848412afb912a4add585 ]
 
-The mmcblk.perdev_minors module parameter is parsed as a signed int and
-is used during mmc_blk_init() to compute the number of supported block
-devices.
+rtl8723be hw_init() calls local_save_flags(flags) followed by
+local_irq_enable(). Later, local_irq_restore(flags) is called.
 
-Passing perdev_minors=0 makes the init path divide by zero when it
-computes max_devices. Negative values are invalid as well and would make
-max_devices negative before it is later used as an IDA limit.
+This causes warnings from Lockdep on boot and modprobe,
+as local_irq_restore(flags) should only be called while irqs are disabled.
+The warning was introduced to detect this class of bug in [1].
 
-Reject non-positive perdev_minors values before registering any mmcblk
-resources.
+With testing I found that all paths which call hw_init() have irqs
+already enabled for rtl8723be.
 
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Furthermore, the calls were originally added for the rtl8192ce
+in commit f78bccd79ba3 ("rtlwifi: rtl8192ce: Fix too long disable of IRQs")
+before later being added to most other rtlwifi drivers.
+
+Commit d3feae41a347 ("rtlwifi: Update power-save routines for 062814 driver")
+then replaces the call to spin_lock_irqsave() before hw_init(),
+and thus the codepath which caused irqs to be disabled in hw_init and
+prompted the original commit has been removed.
+
+The same irq save/restore pattern is also present in the hw_init() of
+rtl8192ce, rtl8723ae, rtl8188ee, rtl8192se and rtl8192cu,
+however I don't have the hardware to test them,
+so I did not include them in my changes.
+
+Tested on a Razer Blade 14 2017.
+
+Example of output from Lockdep prior to fix:
+
+raw_local_irq_restore() called with IRQs enabled
+
+...
+
+Call Trace:
+<TASK>
+rtl8723be_hw_init+0x5992/0x7220 [rtl8723be]
+? static_obj+0x61/0xa0
+rtl_pci_start+0x222/0x5c0 [rtl_pci]
+rtl_op_start+0x128/0x1a0 [rtlwifi]
+? __kasan_check_read+0x11/0x20
+drv_start+0x16c/0x550 [mac80211]
+
+...
+
+irq event stamp: 887679
+hardirqs last  enabled at (887689): [<ffffffff96511170>] __up_console_sem+0x90/0xa0
+hardirqs last disabled at (887698): [<ffffffff96511155>] __up_console_sem+0x75/0xa0
+softirqs last  enabled at (887670): [<ffffffff962f4675>] __irq_exit_rcu+0x175/0x2f0
+softirqs last disabled at (887649): [<ffffffff962f4675>] __irq_exit_rcu+0x175/0x2f0
+---[ end trace 0000000000000000 ]---
+
+[1] https://lore.kernel.org/all/20210111153707.10071-1-mark.rutland@arm.com/
+
+Signed-off-by: William Hansen-Baird <william.hansen.baird@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260609095359.2964193-1-william.hansen.baird@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/core/block.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
-index e5506c793b6bd..d013aefb664c1 100644
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -3106,6 +3106,11 @@ static int __init mmc_blk_init(void)
- {
- 	int res;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c
+index ccbb082d5e928..8d18dfe774034 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c
+@@ -1339,11 +1339,6 @@ int rtl8723be_hw_init(struct ieee80211_hw *hw)
+ 	bool rtstatus = true;
+ 	int err;
+ 	u8 tmp_u1b;
+-	unsigned long flags;
+-
+-	/* reenable interrupts to not interfere with other devices */
+-	local_save_flags(flags);
+-	local_irq_enable();
  
-+	if (perdev_minors <= 0) {
-+		pr_err("mmcblk: invalid minors per device: %d\n", perdev_minors);
-+		return -EINVAL;
-+	}
-+
- 	res  = bus_register(&mmc_rpmb_bus_type);
- 	if (res < 0) {
- 		pr_err("mmcblk: could not register RPMB bus type\n");
+ 	rtlhal->fw_ready = false;
+ 	rtlpriv->rtlhal.being_init_adapter = true;
+@@ -1449,7 +1444,6 @@ int rtl8723be_hw_init(struct ieee80211_hw *hw)
+ 
+ 	rtl8723be_dm_init(hw);
+ exit:
+-	local_irq_restore(flags);
+ 	rtlpriv->rtlhal.being_init_adapter = false;
+ 	return err;
+ }
 -- 
 2.53.0
 
