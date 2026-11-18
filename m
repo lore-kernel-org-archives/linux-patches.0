@@ -1,65 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015071;
-	b=VSEWf2K9DiERsXV3I9ByfS2R8AUx5C1gtyVyk+9oMsd0ZS/ajjdiVKzUioNCYwJGVPW5
-	 1S5Bc2gAihf1rl24IBB/BvkIwNw2Kw/JlA26WNRu2YKP4qCoK408UyicFT9Xv2c6pXYLU
-	 cCk/5AODhy8sANaFLeFrkCe7lHOa+5jiISiqjY6P9gv1/RPPoIT2nfAKbIZEhf9LunaYX
-	 ua22naxyaSo2UYZGQy0PaLH2DlP+dcLJzqB6vZFi01Vpkjt8Z/3USEFY5mBONSVeojhHq
-	 h786e5ffSH0OXO5UiEQ/b2yJr4R0SI36MbKclWkb1YRAxjReNmPupcy4sCxZY2ner7Q==
+	t=1795015075;
+	b=Led9fpJBBYH1+aQ4XT3CsZrN49Rbbp5MrlzVE3lOSw6gPUzz5lKGdDJ7VDglnbCvVQ6l
+	 KTC411jHzM+ZPrq88Z0WlE15d0ACoPVur1Z3HJyuf5cQk8AhPBsRQMWJEeLRT4fr7MV6X
+	 DV3B36Gd9Bwg+FWTW9tBTzDKGmwb2WlsonT1iTwus2pxBFs9j3lYb5qxoXbr47epfW2q4
+	 FyiCjYcX2sTbUJ38vPOzsfLOituN0hADSVFMWyB+cESqX7YYNljW4sxzlvUwyr2mP+J3M
+	 sB+CSPzf9pRoSHeqktJwpzZg5zObdSET1JrHbc2Z9aY38bfN1jK2iKzwTcask2ZfZeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015071;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015075;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F4ln2Dp3v8tlUuKVOfAkYSlNoy512F2QkHHCv5C30Y8=;
-	b=Pr85c5V57eBnQVAGufhegn7IJ+jNmHaCiv+7SI7qFi34hXCJLW/EPGn5pWgWzQ/jfh9S
-	 HrC4valevcQK31vQcOce+kC29lA/9OKpvOpgC6iiOblwKC6K0PlUTVniybYu/Q5xwtE0Z
-	 foxJ2Ya630HS9eatjlNfKUqcJIIXmpCptYZVlaHm1PCrKOgHEhYwON0mW6h7MlDN17O2+
-	 Qx9HZTVlKEG5RPHIh+EuPNbvrkEvPKdh9fMh1vHCUBP/H8eTRat2vknasNrJMrvPUaJAQ
-	 2nzl4eoRH22MoKK/FvIRJD+61sQ+Sp9Q5NLdgg7E5a1H39IvMzQMUUrR3YV1XTrXxnA==
+	bh=VroIZTXJixbRckHVcBsTSnEw3TWfEKU99hJDLYbrDS4=;
+	b=ERSxkylPfn4MVwqLkIqjBLmK2s1yfGNrU3mvn+vKes84bPAdgXJZndZyY2pdg6KfzriB
+	 ZRicN0+QGxt33+qsqU/jzdcwp/L3TFUn9ilUisSlVCsy5wxWySRQEk4/5f1W16DUxnLUU
+	 qubb6jkc8nTSpOy2H/xSlRWJJaxVSBCnloEyolXbDfRuNX8AA/DQTVMJDBxb9FEczxEgl
+	 2iLje0Bv1UKb4E+3olXHfhdquLlyl5VLFz92lRWkrII1wPscXsBY82zj647N+9lp9poyH
+	 F5IxG+fUCMkYSUaBVJ9hjEtr7HMfnj0H1y7ci7Gz3m4OycfxiiAZXRh/MlnOdvnwC2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bfxWHmk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NXcjM6bg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8819606A335;
-	Wed, 18 Nov 2026 15:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED24B606A31C;
+	Wed, 18 Nov 2026 15:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bfxWHmk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6B71F000C4;
-	Wed, 18 Nov 2026 15:17:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NXcjM6bg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2EDA1F000C4;
+	Wed, 18 Nov 2026 15:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015071;
-	bh=F4ln2Dp3v8tlUuKVOfAkYSlNoy512F2QkHHCv5C30Y8=;
+	s=korg; t=1795015074;
+	bh=VroIZTXJixbRckHVcBsTSnEw3TWfEKU99hJDLYbrDS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0bfxWHmkan0pwJwlb+rdr3eFXLkqKJziUJNJrCMMppK0xDHr8u3ZL0zxB/T/+Dw9C
-	 BAfknB3f07hUVQjhCp6HRjeDAxfJJ+5VjZnADmNeQpVLl0EUtMTvHMi/ygPuovxMDx
-	 BAZENcQAC5/Dw40RrS0DUliwTNZxo0v/NOje4odI=
+	b=NXcjM6bgCxgPPN5iORrJRQd7auPnjgqMiod3ZfTtGt4WICixoIyTnX/6dyWxvFKl9
+	 wESOj6nRTds9WZFytDYM3ZBrpar07mm+V6V5XpoTBS+faH1mnOflmUnT8BmkMUzDBZ
+	 u+YUKA/40Ab5nV//Lmbvx6oeHF7QpA4RhTFwl3Qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Jann Horn <jannh@google.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	SJ Park <sj@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Colin Cross <ccross@google.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0043/2651] mm/madvise: preserve VMA_SOFTDIRTY_BIT when changing anonymous names
-Date: Wed, 18 Nov 2026 15:21:23 +0100
-Message-ID: <20261118150249.516470138@linuxfoundation.org>
+Subject: [PATCH 7.3 0044/2651] ASoC: SDCA: export PM helpers keyed on sdca_class_drv
+Date: Wed, 18 Nov 2026 15:21:24 +0100
+Message-ID: <20261118150249.550865292@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -81,71 +69,236 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit 652f15be3c11415725694ccea317c51e35c0b582 ]
+[ Upstream commit 0985313a2a9d2e84d6a6b1041c88b5c57ee46dfa ]
 
-When changing the anonymous VMA name, madvise_update_vma() calls
-vma_modify_name() to possibly merge with adjacent VMAs. We don't call
-vma_modify_flags() and consequently don't obtain the new VMA flags.
+The class PM callbacks pull sdca_class_drv out of drvdata, so the
+built-in class_sdw_driver owns the drvdata slot. That works for the
+generic case but blocks codec drivers that want to embed
+sdca_class_drv in their own private struct -- they need drvdata for
+their codec priv.
 
-Later in the function we update the VMA flags to the stale new_vma_flags
-we obtained before. This can result in us losing the VMA_SOFTDIRTY_BIT
-flag set on a VMA we just merged with.
+Split the four callbacks into exported helpers that take a
+struct sdca_class_drv * directly:
 
-There is no need to update the VMA flags at all, so just exit early. This
-skips calling khugepaged_enter_vma(), but since the flags didn't change
-this is fine.
+  sdca_class_system_suspend()
+  sdca_class_system_resume()
+  sdca_class_runtime_suspend()
+  sdca_class_runtime_resume()
 
-[ljs@kernel.org: minor edit of commit message, rebased]
-Link: https://lore.kernel.org/20261023-fix-vma-atomic-v1-3-8ff4fae1fc85@kernel.org
-Fixes: 9a10064f5625 ("mm: add a field to store names for private anonymous memory")
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: SJ Park <sj@kernel.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Colin Cross <ccross@google.com>
-Cc: <stable@vger.kernel.org>
+Codec drivers can now compose these into their own dev_pm_ops without
+going through drvdata.
+
+For the built-in class_sdw_driver, add small dev_pm_ops wrappers that
+fetch drv from drvdata and wire them into sdca_class_pm_ops. The ops
+struct itself stays private to this file; codec drivers build their
+own dev_pm_ops from the four exported helpers above.
+
+No functional change: the built-in class_sdw_driver keeps the same PM
+semantics; only the internal plumbing shifts to operate on
+sdca_class_drv instead of struct device *dev.
+
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260925161049.758913-3-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: d34a818a331f ("ASoC: SDCA: re-enable IRQ on pm_runtime_force_suspend failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/madvise.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .../soc/sdca => include/sound}/sdca_class.h   | 14 ++++
+ sound/soc/sdca/sdca_class.c                   | 81 ++++++++++++++-----
+ sound/soc/sdca/sdca_class_function.c          |  2 +-
+ 3 files changed, 78 insertions(+), 19 deletions(-)
+ rename {sound/soc/sdca => include/sound}/sdca_class.h (58%)
 
-diff --git a/mm/madvise.c b/mm/madvise.c
-index 9d64e15dfdb48..7291d03d66928 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -177,6 +177,9 @@ static int madvise_update_vma(vm_flags_t new_flags,
+diff --git a/sound/soc/sdca/sdca_class.h b/include/sound/sdca_class.h
+similarity index 58%
+rename from sound/soc/sdca/sdca_class.h
+rename to include/sound/sdca_class.h
+index 57f7f8d08f497..8a6a34a8dd4c3 100644
+--- a/sound/soc/sdca/sdca_class.h
++++ b/include/sound/sdca_class.h
+@@ -32,4 +32,18 @@ struct sdca_class_drv {
+ 	struct work_struct boot_work;
+ };
  
- 	/* vm_flags is protected by the mmap_lock held in write mode. */
- 	vma_start_write(vma);
-+	if (set_new_anon_name)
-+		return replace_anon_vma_name(vma, anon_name);
++/*
++ * PM helpers.  Codec drivers embed sdca_class_drv in their own priv,
++ * own dev_set_drvdata(), and compose these into their own dev_pm_ops:
++ *
++ *	static int wcd_runtime_suspend(struct device *dev) {
++ *		struct wcd_priv *priv = dev_get_drvdata(dev);
++ *		return sdca_class_runtime_suspend(&priv->class);
++ *	}
++ */
++int sdca_class_runtime_suspend(struct sdca_class_drv *drv);
++int sdca_class_runtime_resume(struct sdca_class_drv *drv);
++int sdca_class_system_suspend(struct sdca_class_drv *drv);
++int sdca_class_system_resume(struct sdca_class_drv *drv);
 +
- 	vma_overwrite_flags(vma, new_vma_flags);
- 	/*
- 	 * If the vma become good for khugepaged to scan,
-@@ -186,9 +189,6 @@ static int madvise_update_vma(vm_flags_t new_flags,
- 	if (vma_flags_test(&new_vma_flags, VMA_HUGEPAGE_BIT))
- 		khugepaged_enter_vma(vma, vma_flags_to_legacy(new_vma_flags));
+ #endif /* __SDCA_CLASS_H__ */
+diff --git a/sound/soc/sdca/sdca_class.c b/sound/soc/sdca/sdca_class.c
+index e0e7aff70f93d..c5d6cf9896545 100644
+--- a/sound/soc/sdca/sdca_class.c
++++ b/sound/soc/sdca/sdca_class.c
+@@ -20,7 +20,7 @@
+ #include <sound/sdca_function.h>
+ #include <sound/sdca_interrupts.h>
+ #include <sound/sdca_regmap.h>
+-#include "sdca_class.h"
++#include <sound/sdca_class.h>
  
--	if (set_new_anon_name)
--		return replace_anon_vma_name(vma, anon_name);
--
- 	return 0;
+ #define CLASS_SDW_ATTACH_TIMEOUT_MS	5000
+ 
+@@ -199,30 +199,41 @@ static void class_sdw_remove(struct sdw_slave *sdw)
+ 	cancel_work_sync(&drv->boot_work);
  }
  
+-static int class_suspend(struct device *dev)
++/**
++ * sdca_class_system_suspend - SDCA class system suspend helper
++ * @drv: caller-owned sdca_class_drv.
++ *
++ * Codec drivers compose this into their own dev_pm_ops.  Disables the
++ * SoundWire interrupt and forces runtime suspend of the underlying
++ * class regmap.
++ */
++int sdca_class_system_suspend(struct sdca_class_drv *drv)
+ {
+-	struct sdca_class_drv *drv = dev_get_drvdata(dev);
+ 	int ret;
+ 
+ 	disable_irq(drv->sdw->irq);
+ 
+-	ret = pm_runtime_force_suspend(dev);
++	ret = pm_runtime_force_suspend(drv->dev);
+ 	if (ret) {
+-		dev_err(dev, "failed to force suspend: %d\n", ret);
++		dev_err(drv->dev, "failed to force suspend: %d\n", ret);
+ 		return ret;
+ 	}
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_NS_GPL(sdca_class_system_suspend, "SND_SOC_SDCA_CLASS");
+ 
+-static int class_resume(struct device *dev)
++/**
++ * sdca_class_system_resume - SDCA class system resume helper
++ * @drv: caller-owned sdca_class_drv.
++ */
++int sdca_class_system_resume(struct sdca_class_drv *drv)
+ {
+-	struct sdca_class_drv *drv = dev_get_drvdata(dev);
+ 	int ret;
+ 
+-	ret = pm_runtime_force_resume(dev);
++	ret = pm_runtime_force_resume(drv->dev);
+ 	if (ret) {
+-		dev_err(dev, "failed to force resume: %d\n", ret);
++		dev_err(drv->dev, "failed to force resume: %d\n", ret);
+ 		return ret;
+ 	}
+ 
+@@ -230,11 +241,14 @@ static int class_resume(struct device *dev)
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_NS_GPL(sdca_class_system_resume, "SND_SOC_SDCA_CLASS");
+ 
+-static int class_runtime_suspend(struct device *dev)
++/**
++ * sdca_class_runtime_suspend - SDCA class runtime suspend helper
++ * @drv: caller-owned sdca_class_drv.
++ */
++int sdca_class_runtime_suspend(struct sdca_class_drv *drv)
+ {
+-	struct sdca_class_drv *drv = dev_get_drvdata(dev);
+-
+ 	/*
+ 	 * Whilst the driver doesn't power the chip down here, going into runtime
+ 	 * suspend lets the SoundWire bus power down, which means the driver
+@@ -244,10 +258,14 @@ static int class_runtime_suspend(struct device *dev)
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_NS_GPL(sdca_class_runtime_suspend, "SND_SOC_SDCA_CLASS");
+ 
+-static int class_runtime_resume(struct device *dev)
++/**
++ * sdca_class_runtime_resume - SDCA class runtime resume helper
++ * @drv: caller-owned sdca_class_drv.
++ */
++int sdca_class_runtime_resume(struct sdca_class_drv *drv)
+ {
+-	struct sdca_class_drv *drv = dev_get_drvdata(dev);
+ 	int ret;
+ 
+ 	ret = sdw_slave_wait_for_init(drv->sdw, CLASS_SDW_ATTACH_TIMEOUT_MS);
+@@ -270,10 +288,37 @@ static int class_runtime_resume(struct device *dev)
+ 
+ 	return ret;
+ }
++EXPORT_SYMBOL_NS_GPL(sdca_class_runtime_resume, "SND_SOC_SDCA_CLASS");
++
++/*
++ * Convenience dev_pm_ops used by the built-in class_sdw_driver, which
++ * stashes its sdca_class_drv in drvdata directly.  Codec drivers that
++ * embed sdca_class_drv in their own priv compose their own dev_pm_ops
++ * using the sdca_class_*_suspend/resume helpers above.
++ */
++static int class_pm_system_suspend(struct device *dev)
++{
++	return sdca_class_system_suspend(dev_get_drvdata(dev));
++}
++
++static int class_pm_system_resume(struct device *dev)
++{
++	return sdca_class_system_resume(dev_get_drvdata(dev));
++}
++
++static int class_pm_runtime_suspend(struct device *dev)
++{
++	return sdca_class_runtime_suspend(dev_get_drvdata(dev));
++}
++
++static int class_pm_runtime_resume(struct device *dev)
++{
++	return sdca_class_runtime_resume(dev_get_drvdata(dev));
++}
+ 
+-static const struct dev_pm_ops class_pm_ops = {
+-	SYSTEM_SLEEP_PM_OPS(class_suspend, class_resume)
+-	RUNTIME_PM_OPS(class_runtime_suspend, class_runtime_resume, NULL)
++static const struct dev_pm_ops sdca_class_pm_ops = {
++	SYSTEM_SLEEP_PM_OPS(class_pm_system_suspend, class_pm_system_resume)
++	RUNTIME_PM_OPS(class_pm_runtime_suspend, class_pm_runtime_resume, NULL)
+ };
+ 
+ static const struct sdw_device_id class_sdw_id[] = {
+@@ -287,7 +332,7 @@ MODULE_DEVICE_TABLE(sdw, class_sdw_id);
+ static struct sdw_driver class_sdw_driver = {
+ 	.driver = {
+ 		.name		= "sdca_class",
+-		.pm		= pm_ptr(&class_pm_ops),
++		.pm		= pm_ptr(&sdca_class_pm_ops),
+ 	},
+ 
+ 	.probe		= class_sdw_probe,
+diff --git a/sound/soc/sdca/sdca_class_function.c b/sound/soc/sdca/sdca_class_function.c
+index 610931ae5531f..616d5f9736716 100644
+--- a/sound/soc/sdca/sdca_class_function.c
++++ b/sound/soc/sdca/sdca_class_function.c
+@@ -26,7 +26,7 @@
+ #include <sound/soc-component.h>
+ #include <sound/soc-dai.h>
+ #include <sound/soc.h>
+-#include "sdca_class.h"
++#include <sound/sdca_class.h>
+ #include "sdca_function_device.h"
+ 
+ struct class_function_drv {
 -- 
 2.53.0
 
