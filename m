@@ -1,49 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021732;
-	b=yxQj9LWUiHQYCWVC2zQ2WKXCUtA6Kh8H3NRpPETk8JSNzSOqjMI1bMPu+MP9mKXPOJMd
-	 4jYyf7DmwN8mvZpA8Xfnnn6RUZqnfU6WzzLhnWEED8IdT4vatFAFCvntKsf1q53F55TFl
-	 kJO1FEQOZdqF/AbSWIEWT2lHChA6AVagN8BjH2yFm3Si1Iu6k4RHHX0Gk83X1f0rl6P+N
-	 0vSRLxOLW6WBWeXy2Ri5Ckz59n6N12p9NxyOjLYX57j0JJ8gQoH/tlb/fUmwxkgN/0M6n
-	 EoyfxgfnpYvDXw0VWFpsZA2v93vx2ZvXBRxZSzRCi6Q/07F1ogrZyjFdxhCjo2fmKUQ==
+	t=1795021734;
+	b=Oa9hJ55E0R6G/aFUFkgZQSBVBs9NvA8HUWV/2qEPqjum/xakov8DiF3zxQcHgvemG5Ij
+	 bSuRpQO+J/HO+v5FxXAT8eJY4ljttGk/aHDdUWncJAPz83fpUvP01A3FwFKXLXAFrsY9u
+	 19fyJ2YqgvWaWdvn7i5swEnaP5arNkAPMW9WTEafeBD1y6i0yNP19IswUXmbBhAvlUwdw
+	 RbatSMazprihFM85703LBDgqr1ZNcG9F20vx/Myou3yN9Ha9hwb4bYKaFC7TS2lIGzSt7
+	 +CGlv27e9ZgS+agAWrKouMxrq2GY99j9Q21HwDOP7k0VOaNhhMpk7u1VfJ8ws1sk0fQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021732;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=bx+7bUQnz6I2D7Oz7SpSebRvvPf2hSBNvXrgjF2Tezo=;
-	b=1QFgJ9aVFKJNOl3ezz++GYR3ygnclJMysWM/pMvWVV+J89VZ8of6cKQRx5kSvelwP12z
-	 2PWGe6QPwPLTzKRhSwUxHQJj8HoyLLUgrNDMyOwke5yChYcKfrqlnrlLABcPq+6M7Tef3
-	 Dms7eH0rEG0ILCUh+eVjW0zl8xnwVB1pQwy5Yzzd++1CyduOXEZlAE6bMsavZv87BUi5c
-	 LzLBPo7NnC0bxzdrnnBYwgFNyEJDzPUF0xWopJxh1SdtEB5YBpc3348YbAgssxWu7UFD/
-	 cSKMLwVEndKHVe/kiqiP1hmfMEWcPvLDBzoJ1gaM1UKp5+Zu08c+QNA2s0iITo/ShdA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021734;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=I0N9r7L7oDU5D1bzVh3igTzDanE7q5iMGB/bfNl8288=;
+	b=KZpTS9asY/mbb3jqdpeeK4+yUrTzCigOr8C2v0o+hbTZsXKZ5mG/ZLM2HxzHeFBV0vgo
+	 4Fom/Kxcr+FMhqifAibCOTag6jy9k8ghJe8sQ8Vv87fSmqelm4LqwsWN/82xlmKELIwWK
+	 /vAbl6DyS7CxEo7oHDyFUP0CRlkexYCZlrk41X6bNOZDHmGfO5khHYZ6ZRWaEsV8c3lSq
+	 Z0aLHQKEe5lslY73UJDNn2lK0U+Nt9A+HmR3WcZPk95DOTR6VbEMYsnnH+Wts7MJ0T9Ly
+	 3FwwlZ4lK73JIOh9nSszrhPrIP8kzSwAb+Qx37Icp3MwNaS3svYtFVp34TND1IGm93Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=iEQsK1xR;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7126660A2603
-	for <patches@lists.linux.dev>; Wed, 18 Nov 2026 17:08:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7126660A2603
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ruz0MPab;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FC160A261A;
+	Wed, 18 Nov 2026 17:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=iEQsK1xR
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BF4E91477;
-	Wed, 18 Nov 2026 09:08:48 -0800 (PST)
-Received: from [10.2.212.8] (e134344.arm.com [10.2.212.8])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E55293F632;
-	Wed, 18 Nov 2026 09:08:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1795021731; bh=yLwLKFyJIs3jWgTDF+dUIQs6dCjE/lLvFSox/OcEPFw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iEQsK1xRMyJvG0cJx5aLiW6PSSUsAAvaqlVOYeoXMaKt2v0sRi6/Dey2cmSiBrfeb
-	 ib4zWPVS1HS+VEvRQkfXFXoWJHm66qW0c2gcRIA/hVTJ++4yiQVTe6i9HZg1shtYQS
-	 RUd+S808Y5+XqbgXFx1vrSLw5i5MV75L2b3NjoJY=
-Message-ID: <4245d7c1-1607-41d4-98f8-2dceaf33593f@arm.com>
-Date: Wed, 18 Nov 2026 17:08:48 +0000
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ruz0MPab
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7531F000C8;
+	Wed, 18 Nov 2026 17:08:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1795021734;
+	bh=I0N9r7L7oDU5D1bzVh3igTzDanE7q5iMGB/bfNl8288=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Ruz0MPab7eZPMFIEQa/qiEDwrByD/l1ZudEHubehq5UXY44JahFPZEmZF6pf1fE4+
+	 VQoZwbPQ+4pPgIh/gJpRlhFijavukf6Dv1hPz8/ShOgSy08Tn6olwCFbC6eCRhwax2
+	 0TASZKzhh53WCS/bMJlSulQFAgs+56cAhj1yG6qI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 2413/2651] ceph: mark the superblock active after mounting
+Date: Wed, 18 Nov 2026 16:00:53 +0100
+Message-ID: <20261118150412.161759951@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
+References: <20261118150247.972732815@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -53,210 +63,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/8] arm_mpam: resctrl: Split control and monitoring
- domain setup into helpers
-To: Reinette Chatre <reinette.chatre@intel.com>, james.morse@arm.com,
- Dave.Martin@arm.com, fenghuay@nvidia.com, ruanjinjie@huawei.com
-Cc: tony.luck@intel.com, yu.c.chen@intel.com, babu.moger@amd.com,
- fustini@kernel.org, tan.shaopeng@fujitsu.com,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <cover.1794283825.git.reinette.chatre@intel.com>
- <3d67a3dddd76cdb9981d4d7e78d657c930eb2cb6.1794283825.git.reinette.chatre@intel.com>
-Content-Language: en-US
-From: Ben Horgan <ben.horgan@arm.com>
-In-Reply-To: <3d67a3dddd76cdb9981d4d7e78d657c930eb2cb6.1794283825.git.reinette.chatre@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Reinette,
+7.3-stable review patch.  If anyone has any objections, please let me know.
 
-On 10/11/2026 04:19, Reinette Chatre wrote:
-> mpam_resctrl_alloc_domain() allocates one structure that holds both the
-> control domain and the monitoring domain of a resource. It sets up
-> whichever of the two domains the resource supports, with the setup of
-> both open coded in the function, and undoes the control domain if
-> setting up the monitoring domain fails.
-> 
-> Apart from the code that manages domains, every user of the structure
-> accesses only one of its two domains, so the monitoring domain can be
-> given a structure of its own. Doing so starts with separating its setup
-> from that of the control domain.
-> 
-> Move the setup of each domain into its own helper in preparation for
-> giving the monitoring domain its own structure as part of supporting
-> multiple controls per resource. Keep the allocation and the error
-> handling in mpam_resctrl_alloc_domain() so that a failure to set up the
-> monitoring domain still undoes the control domain.
-> 
-> No functional change intended.
-> 
-> Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-> Tested-by: Jinjie Ruan <ruanjinjie@huawei.com>
-> Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
+------------------
 
-Looks good to me.
+From: Xiubo Li <xiubo.li@clyso.com>
 
-Reviewed-by: Ben Horgan <ben.horgan@arm.com>
+[ Upstream commit 32eacfae3b16f6a9c0c20f946115abf5a091c922 ]
 
-> ---
-> Changes since RFC v2:
-> - Add Jinjie's Reviewed-by tag.
-> - Add Jinjie's Tested-by tag.
-> ---
->  drivers/resctrl/mpam_resctrl.c | 112 ++++++++++++++++++++-------------
->  1 file changed, 68 insertions(+), 44 deletions(-)
-> 
-> diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
-> index ec39f3909388..db1df6e8d8c0 100644
-> --- a/drivers/resctrl/mpam_resctrl.c
-> +++ b/drivers/resctrl/mpam_resctrl.c
-> @@ -1640,13 +1640,75 @@ static struct mpam_component *find_component(struct mpam_class *class, int cpu)
->  	return NULL;
->  }
->  
-> +static int mpam_resctrl_setup_ctrl_domain(unsigned int cpu,
-> +					  struct rdt_resource *r,
-> +					  struct mpam_component *comp,
-> +					  struct mpam_resctrl_dom *dom)
-> +{
-> +	struct rdt_ctrl_domain *ctrl_d = &dom->resctrl_ctrl_dom;
-> +	int err;
-> +
-> +	dom->ctrl_comp = comp;
-> +
-> +	mpam_resctrl_domain_hdr_init(cpu, comp, r->rid, &ctrl_d->hdr);
-> +	ctrl_d->hdr.type = RESCTRL_CTRL_DOMAIN;
-> +	err = resctrl_online_ctrl_domain(r, ctrl_d);
-> +	if (err)
-> +		return err;
-> +
-> +	mpam_resctrl_domain_insert(&r->ctrl_domains, &ctrl_d->hdr);
-> +
-> +	return 0;
-> +}
-> +
-> +static int mpam_resctrl_setup_mon_domain(unsigned int cpu,
-> +					 struct rdt_resource *r,
-> +					 struct mpam_resctrl_dom *dom)
-> +{
-> +	struct rdt_l3_mon_domain *mon_d = &dom->resctrl_mon_dom;
-> +	struct mpam_component *any_mon_comp = NULL;
-> +	enum resctrl_event_id eventid;
-> +	struct mpam_resctrl_mon *mon;
-> +	int err;
-> +
-> +	/*
-> +	 * Even if the monitor domain is backed by a different
-> +	 * component, the L3 component IDs need to be used... only
-> +	 * there may be no ctrl_comp for the L3.
-> +	 * Search each event's class list for a component with
-> +	 * overlapping CPUs and set up the dom->mon_comp array.
-> +	 */
-> +
-> +	for_each_mpam_resctrl_mon(mon, eventid) {
-> +		struct mpam_component *mon_comp;
-> +
-> +		if (!mon->class)
-> +			continue;       // dummy resource
-> +
-> +		mon_comp = find_component(mon->class, cpu);
-> +		dom->mon_comp[eventid] = mon_comp;
-> +		if (mon_comp)
-> +			any_mon_comp = mon_comp;
-> +	}
-> +	if (WARN_ON_ONCE(!any_mon_comp))
-> +		return -EFAULT;
-> +
-> +	mpam_resctrl_domain_hdr_init(cpu, any_mon_comp, r->rid, &mon_d->hdr);
-> +	mon_d->hdr.type = RESCTRL_MON_DOMAIN;
-> +	err = resctrl_online_mon_domain(r, &mon_d->hdr);
-> +	if (err)
-> +		return err;
-> +
-> +	mpam_resctrl_domain_insert(&r->mon_domains, &mon_d->hdr);
-> +
-> +	return 0;
-> +}
-> +
->  static void mpam_resctrl_alloc_domain(unsigned int cpu,
->  				      struct mpam_resctrl_res *res)
->  {
->  	int err;
->  	struct mpam_resctrl_dom *dom;
-> -	struct rdt_l3_mon_domain *mon_d;
-> -	struct rdt_ctrl_domain *ctrl_d;
->  	struct mpam_class *class = res->class;
->  	struct mpam_component *comp;
->  	struct rdt_resource *r = &res->resctrl_res;
-> @@ -1663,55 +1725,17 @@ static void mpam_resctrl_alloc_domain(unsigned int cpu,
->  		return;
->  
->  	if (r->alloc_capable) {
-> -		dom->ctrl_comp = comp;
-> -
-> -		ctrl_d = &dom->resctrl_ctrl_dom;
-> -		mpam_resctrl_domain_hdr_init(cpu, comp, r->rid, &ctrl_d->hdr);
-> -		ctrl_d->hdr.type = RESCTRL_CTRL_DOMAIN;
-> -		err = resctrl_online_ctrl_domain(r, ctrl_d);
-> +		err = mpam_resctrl_setup_ctrl_domain(cpu, r, comp, dom);
->  		if (err)
->  			goto free_domain;
-> -
-> -		mpam_resctrl_domain_insert(&r->ctrl_domains, &ctrl_d->hdr);
->  	} else {
->  		pr_debug("Skipped control domain online - no controls\n");
->  	}
->  
->  	if (r->mon_capable) {
-> -		struct mpam_component *any_mon_comp = NULL;
-> -		struct mpam_resctrl_mon *mon;
-> -		enum resctrl_event_id eventid;
-> -
-> -		/*
-> -		 * Even if the monitor domain is backed by a different
-> -		 * component, the L3 component IDs need to be used... only
-> -		 * there may be no ctrl_comp for the L3.
-> -		 * Search each event's class list for a component with
-> -		 * overlapping CPUs and set up the dom->mon_comp array.
-> -		 */
-> -
-> -		for_each_mpam_resctrl_mon(mon, eventid) {
-> -			struct mpam_component *mon_comp;
-> -
-> -			if (!mon->class)
-> -				continue;       // dummy resource
-> -
-> -			mon_comp = find_component(mon->class, cpu);
-> -			dom->mon_comp[eventid] = mon_comp;
-> -			if (mon_comp)
-> -				any_mon_comp = mon_comp;
-> -		}
-> -		if (WARN_ON_ONCE(!any_mon_comp))
-> -			goto offline_ctrl_domain;
-> -
-> -		mon_d = &dom->resctrl_mon_dom;
-> -		mpam_resctrl_domain_hdr_init(cpu, any_mon_comp, r->rid, &mon_d->hdr);
-> -		mon_d->hdr.type = RESCTRL_MON_DOMAIN;
-> -		err = resctrl_online_mon_domain(r, &mon_d->hdr);
-> +		err = mpam_resctrl_setup_mon_domain(cpu, r, dom);
->  		if (err)
->  			goto offline_ctrl_domain;
-> -
-> -		mpam_resctrl_domain_insert(&r->mon_domains, &mon_d->hdr);
->  	} else {
->  		pr_debug("Skipped monitor domain online - no monitors\n");
->  	}
-> @@ -1720,8 +1744,8 @@ static void mpam_resctrl_alloc_domain(unsigned int cpu,
->  
->  offline_ctrl_domain:
->  	if (r->alloc_capable) {
-> -		mpam_resctrl_offline_domain_hdr(cpu, &ctrl_d->hdr);
-> -		resctrl_offline_ctrl_domain(r, ctrl_d);
-> +		mpam_resctrl_offline_domain_hdr(cpu, &dom->resctrl_ctrl_dom.hdr);
-> +		resctrl_offline_ctrl_domain(r, &dom->resctrl_ctrl_dom);
->  	}
->  free_domain:
->  	kfree(dom);
+ceph_get_tree() calls sget_fc() directly and so never goes through
+vfs_get_super(), which is what sets SB_ACTIVE after fill_super for
+filesystems that use it.  Before commit 82995cc6c5ae ("libceph, rbd,
+ceph: convert to use the new mount API") the flag used to be set by
+get_sb_nodev(), which did this for ceph, but the conversion dropped it.
+
+SB_ACTIVE is required for iput_final() to retain an inode on the
+inode LRU instead of evicting it once its last reference goes away.
+This has gone unnoticed because ceph sets inode_just_drop() for
+->drop_inode, which always asks for eviction, so the retain branch in
+iput_final() was never reachable.  The next patch makes ->drop_inode()
+able to retain inodes, and that needs the flag to actually work.
+
+Set it once the mount is up, like nfs_get_tree() does.
+
+Fixes: 82995cc6c5ae ("libceph, rbd, ceph: convert to use the new mount API")
+Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/ceph/super.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/fs/ceph/super.c b/fs/ceph/super.c
+index 72935f665f11c..4306d6b3b995f 100644
+--- a/fs/ceph/super.c
++++ b/fs/ceph/super.c
+@@ -1368,6 +1368,15 @@ static int ceph_get_tree(struct fs_context *fc)
+ 	doutc(fsc->client, "root %p inode %p ino %llx.%llx\n", res,
+ 		    d_inode(res), ceph_vinop(d_inode(res)));
+ 	fc->root = fsc->sb->s_root;
++
++	/*
++	 * The mount is up.  sget_fc() leaves SB_ACTIVE unset, and, unlike
++	 * filesystems that go through vfs_get_super(), nothing else sets
++	 * it here, so iput_final() would always evict an inode whose
++	 * ->drop_inode() asks to retain it.  Set it like nfs_get_tree()
++	 * does.
++	 */
++	sb->s_flags |= SB_ACTIVE;
+ 	return 0;
+ 
+ out_splat:
+-- 
+2.53.0
+
+
 
