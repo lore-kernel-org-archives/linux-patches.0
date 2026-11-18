@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046159;
-	b=1i0pRl9vZPEVnN9sJPEoIdexHjxQ27PYOv5kU8W3vxRZxwfwXx/r0cyKWJGJPm1j91xB
-	 UKiGEbLUo07smQSRxJV+HNH65JWAMi1Pv5FHWhLMzY4NAPNfKFLZy6iFTIwFLdWyysJcu
-	 rH4KkdQChZKqiIY/X2pVejo4vcjPWVwZdizS+9mwSav5ImOVgK3bWg8mZsD+RmrE9a5Nu
-	 rabTbXXNZ+tFdRU3LOQ7INtxqIOYP/Z2P+FIQGlMFEYOJMt5+RVzOgToTHCVfXj3jI6GT
-	 oab/oFSD/LJSM90uEHanqTPvbCi9YpNQdQSIt06JJs5TpcR7lmuD+Ttw7lAp/wMUsCw==
+	t=1795046161;
+	b=j+/qWVxu1QwLALSCER7QSx3aXwLThNAW7ZBIjcGba4ySbS4BNVNORAJ0nrloxUELV4ol
+	 pcWJEffeymB/WcAuawljJE+Krie2EBNAbrBqfyCuy6P6oC2JDNBzVcfuWnoIiQGISkIjh
+	 kalzt7tdTCXxbDqqnrcTEGE7z2ZdV40wDY69UJ+vD9jfyeHezLRfhewrMx7tKyR9Ao5nL
+	 JilidNXNWzObgdDsKxhwbc/bIoXwzTRGy+4bYJfluTBloc3ohhOPExMLt3yJkJFQYQGB4
+	 Aeyr0KL57TG6aWZBLrsv1wpC6NI+6BW1joN2AH6kMnypOqa9w+L6q1TcxJLJIq2b9ZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046159;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046161;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w1ekFPg0LfrOj3/LdeqghNBKUmkhV+tofYnvdojPPh4=;
-	b=bgPlK4VJtmF1u4rUuKdebZ/B08JveWR6K9urotZD/Lf9oJyEpKwFPyQDjdhiDLuV0/4e
-	 qIcBMhDqzEvzhaZ3qtqi0nHO3U7gJBLErUndvpAHGIN5HkCIvOBxpTNuox1hpfvTAtNV5
-	 1fVSKeOt6VLvfdYcgVbH1mRuHyU6HBK8/hk5PipgWIyPuH/vIXEgGORmcQHouQQri5VUH
-	 9cMCnw1o0lbr1ZVJMht3OpjIO4CrQWWYaMRlWGpppn8v0T1rQ8Nv1jPHO5o6tRur9WBaT
-	 CWr4VbagkFJU1nM5uqJA9mwieVems5lx2ERzb/EtKrTrKLqfQmLR2NSKMbnsRt2ZH+Q==
+	bh=eadEPHCEr1MItRpiWtxqEZaU+Inc40S968Ptl/qScCk=;
+	b=CeLlxVqtXwxYRdapkY43sQkIuNMOACBygLJe0/HGnBdqdq5Gv94PCmX+jW6NUliFUQwI
+	 Azv8Yutp6ldKCoACuKJSM8QXIor+clxLO/nYv0VWO8AVGncyfKWNxGQS3aOM7s5Vcj1M1
+	 1zYCts2gDhjhqi5ACFosmdazk7FHSJPEdLfa2BZ01FRJ94wKXHJfKGJQkAhJ1zdL8GApv
+	 Gtq3Pf/X8ImhlClTyB8R6q5/VWUXfuFqQvR8hvqGkcl7Zjd+WcbSUnFCv1IPudhFTHMb5
+	 KlRaBbSY5UvYFXOa4aIu/fX8mL2r6GQgXFELUqcDbcr7yvZf8B1XOCisAmwliLu8+Fg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZ+iWR2B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rSV6w9nX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F4A606A31C;
-	Wed, 18 Nov 2026 23:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6296606A32A;
+	Wed, 18 Nov 2026 23:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZ+iWR2B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583DA1F000C5;
-	Wed, 18 Nov 2026 23:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rSV6w9nX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0F71F000C4;
+	Wed, 18 Nov 2026 23:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046158;
-	bh=w1ekFPg0LfrOj3/LdeqghNBKUmkhV+tofYnvdojPPh4=;
+	s=korg; t=1795046161;
+	bh=eadEPHCEr1MItRpiWtxqEZaU+Inc40S968Ptl/qScCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kZ+iWR2ByrPZQ//Z6QY+2nafsCtW0YPI6PEm74MGy0VEZi1blirhZPx7owLhTXvbI
-	 1bO7MTGGCgexKehweg8OHr/SkFsqpLwt8bwaFHvVTT4nCk+3Q53TbLsjORUKXLtzTZ
-	 /j0ZERk1ZknMnBuyMjWW+xBintsdT8BRpmD5p9pU=
+	b=rSV6w9nXjyseuhevJqkGLYNgTH11VrhLKaaOko8QIAZStWIT8h5hQtBxvhxiJU6ts
+	 gFwuR85fvZDelPXR0nW+EfrkhX/PNak8p13rrr9ohIJwDg2HcuIjlMsiFYy2+KwRrO
+	 eMMVXeFjc0X3ZuL0r39hfpdjNmvpmHvhIMZDKOK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Bui Viet Dung <dungvn2345@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1181/2857] mfd: ab8500: Fix child device leaks on probe failure
-Date: Wed, 18 Nov 2026 15:36:55 +0100
-Message-ID: <20261118150244.126043393@linuxfoundation.org>
+Subject: [PATCH 6.1 1182/2857] Bluetooth: selftest: Pin module for selftest debugfs file operations
+Date: Wed, 18 Nov 2026 15:36:56 +0100
+Message-ID: <20261118150244.162451253@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,99 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Bui Viet Dung <dungvn2345@gmail.com>
 
-[ Upstream commit 5bf2ae8b131d4ae9c0ed5f7aa02532645f512022 ]
+[ Upstream commit 64aabf94ecccb1120a63b4ee5a6761871a181a41 ]
 
-ab8500_probe() registers MFD child devices before completing the
-remaining device initialization. If a later MFD registration or sysfs
-group creation fails, previously registered child devices are not
-removed.
+An open debugfs file retains its file_operations pointer in the
+debugfs proxy state. However, test_smp_fops in net/bluetooth/smp.c and
+test_ecdh_fops in net/bluetooth/selftest.c have no .owner set to
+THIS_MODULE.
 
-Use devm_mfd_add_devices() so registered MFD child devices are removed
-when probe fails.
+As a result, full_proxy_open_regular() calls fops_get() which succeeds
+without taking a reference to the bluetooth module. When CONFIG_BT=m
+and selftests are enabled, a userspace process can open either
+/sys/kernel/debug/bluetooth/selftest_smp or
+/sys/kernel/debug/bluetooth/selftest_ecdh and keep the file descriptor
+open while the module is unloaded (rmmod bluetooth).
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
+When the userspace process subsequently closes the descriptor,
+full_proxy_release() accesses the already unmapped file_operations
+structure, triggering a kernel oops in full_proxy_release():
 
-Fixes: cca69b67b3ba ("mfd: Export ab8500 chip id to sysfs")
-Fixes: 9c717cf3fa16 ("mfd: ab8500-core: Add device for new RTC version for AB8540 cut2")
+  BUG: unable to handle page fault for address: fffffbfff8056f03
+  #PF: supervisor read access in kernel mode
+  Oops: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:full_proxy_release+0x8e/0x140
+  Call Trace:
+   <TASK>
+   __fput+0x39f/0xa60
+   fput_close_sync+0xff/0x200
+   __x64_sys_close+0x8c/0xf0
+   do_syscall_64+0x115/0x6a0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+
+The issue was discovered via manual code audit of net/bluetooth/smp.c
+and net/bluetooth/selftest.c.
+
+Set .owner = THIS_MODULE on test_smp_fops and test_ecdh_fops so that
+debugfs keeps the module pinned until the file descriptors are closed.
+
+Fixes: 64dd374eac15 ("Bluetooth: Export SMP selftest result in debugfs")
+Fixes: 6de50f9fdb60 ("Bluetooth: Export ECDH selftest result in debugfs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260924144355.1604369-1-lgs201920130244@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Bui Viet Dung <dungvn2345@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/ab8500-core.c | 44 ++++++++++++++++++++-------------------
- 1 file changed, 23 insertions(+), 21 deletions(-)
+ net/bluetooth/selftest.c | 1 +
+ net/bluetooth/smp.c      | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/mfd/ab8500-core.c b/drivers/mfd/ab8500-core.c
-index 3052142d91953..fd3f855ba9b22 100644
---- a/drivers/mfd/ab8500-core.c
-+++ b/drivers/mfd/ab8500-core.c
-@@ -1196,39 +1196,41 @@ static int ab8500_probe(struct platform_device *pdev)
- 		return ret;
+diff --git a/net/bluetooth/selftest.c b/net/bluetooth/selftest.c
+index f49604d44b877..6abf70c14f598 100644
+--- a/net/bluetooth/selftest.c
++++ b/net/bluetooth/selftest.c
+@@ -191,6 +191,7 @@ static ssize_t test_ecdh_read(struct file *file, char __user *user_buf,
+ }
  
- 	if (is_ab9540(ab8500))
--		ret = mfd_add_devices(ab8500->dev, 0, ab9540_devs,
--				ARRAY_SIZE(ab9540_devs), NULL,
--				0, ab8500->domain);
-+		ret = devm_mfd_add_devices(ab8500->dev, 0, ab9540_devs,
-+					   ARRAY_SIZE(ab9540_devs), NULL,
-+					   0, ab8500->domain);
- 	else if (is_ab8540(ab8500)) {
--		ret = mfd_add_devices(ab8500->dev, 0, ab8540_devs,
--			      ARRAY_SIZE(ab8540_devs), NULL,
--			      0, ab8500->domain);
-+		ret = devm_mfd_add_devices(ab8500->dev, 0, ab8540_devs,
-+					   ARRAY_SIZE(ab8540_devs), NULL,
-+					   0, ab8500->domain);
- 		if (ret)
- 			return ret;
+ static const struct file_operations test_ecdh_fops = {
++	.owner		= THIS_MODULE,
+ 	.open		= simple_open,
+ 	.read		= test_ecdh_read,
+ 	.llseek		= default_llseek,
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index 6ccfef2d380ad..d5c183855ae50 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -3729,6 +3729,7 @@ static ssize_t test_smp_read(struct file *file, char __user *user_buf,
+ }
  
- 		if (is_ab8540_1p2_or_earlier(ab8500))
--			ret = mfd_add_devices(ab8500->dev, 0, ab8540_cut1_devs,
--			      ARRAY_SIZE(ab8540_cut1_devs), NULL,
--			      0, ab8500->domain);
-+			ret = devm_mfd_add_devices(ab8500->dev, 0,
-+						   ab8540_cut1_devs,
-+						   ARRAY_SIZE(ab8540_cut1_devs),
-+						   NULL, 0, ab8500->domain);
- 		else /* ab8540 >= cut2 */
--			ret = mfd_add_devices(ab8500->dev, 0, ab8540_cut2_devs,
--			      ARRAY_SIZE(ab8540_cut2_devs), NULL,
--			      0, ab8500->domain);
-+			ret = devm_mfd_add_devices(ab8500->dev, 0,
-+						   ab8540_cut2_devs,
-+						   ARRAY_SIZE(ab8540_cut2_devs),
-+						   NULL, 0, ab8500->domain);
- 	} else if (is_ab8505(ab8500))
--		ret = mfd_add_devices(ab8500->dev, 0, ab8505_devs,
--			      ARRAY_SIZE(ab8505_devs), NULL,
--			      0, ab8500->domain);
-+		ret = devm_mfd_add_devices(ab8500->dev, 0, ab8505_devs,
-+					   ARRAY_SIZE(ab8505_devs), NULL,
-+					   0, ab8500->domain);
- 	else
--		ret = mfd_add_devices(ab8500->dev, 0, ab8500_devs,
--				ARRAY_SIZE(ab8500_devs), NULL,
--				0, ab8500->domain);
-+		ret = devm_mfd_add_devices(ab8500->dev, 0, ab8500_devs,
-+					   ARRAY_SIZE(ab8500_devs), NULL,
-+					   0, ab8500->domain);
- 	if (ret)
- 		return ret;
- 
- 	/* Add battery management devices */
--	ret = mfd_add_devices(ab8500->dev, 0, ab8500_bm_devs,
--			      ARRAY_SIZE(ab8500_bm_devs), NULL,
--			      0, ab8500->domain);
-+	ret = devm_mfd_add_devices(ab8500->dev, 0, ab8500_bm_devs,
-+				   ARRAY_SIZE(ab8500_bm_devs), NULL,
-+				   0, ab8500->domain);
- 	if (ret)
- 		dev_err(ab8500->dev, "error adding bm devices\n");
- 
+ static const struct file_operations test_smp_fops = {
++	.owner		= THIS_MODULE,
+ 	.open		= simple_open,
+ 	.read		= test_smp_read,
+ 	.llseek		= default_llseek,
 -- 
 2.53.0
 
