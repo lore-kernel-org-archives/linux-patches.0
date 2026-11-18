@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028134;
-	b=46NgZy/vfqvHeEki3CLIK5NTEemUwXJEb0NLdeOXt+M2d7qCuxg2tYItUL0JnE3ZOzdB
-	 a4kWrpyvhv3+HK1+NmZMO3EyneXmnLNrNzoPXBVKrKH+ueMZd3aNrN+3sYb7R/5jaiPB/
-	 oluQ9vCWCjtTLu16X//eA0V1e1LHjW8wg1AuaHCLWysYg5LgB0qtI8FO1nvcT0LXJmQwd
-	 IsSTTyrxI74H0hcRnbR5kXQh73g+fSJYthrnt1OyFB1bzeIP3paz4CTbmkguW7LkyfMnU
-	 FmLJLSQnk6uBU2LjX1U5DhR9ytBbCEeuH99TKPur16BvNN0TDlKezgpJta+DkFqOKog==
+	t=1795028136;
+	b=rMsIjbxbgxcsTFxebi6pWm+jLm3xs/0YHVpRV+rkQpM/97cLlh34vfSNrkBB4HSttx9K
+	 npIIAueq55WfpgcXY3gArRy378yBSJlo9BIRCPQoVQTrGPzBT8Jl0GOXsHmxOPXgE5Vu2
+	 PsRfHAtJinbQlc9QZl30c33JXEmq6RODkmstjaedzEyTZuwoRo7Vp2YwU3IOV7CIWZwBm
+	 6vv+pFnhCLT6c0Gs1o53/PEY6Gxbs19x8iGmV7YXm+dKxt+KhWkaJZhaYdhxrDHRupIJ/
+	 xMtzQfyctxT0Jw9Fxp4zwnCj6KAD26O/6Gy5CC49ge+0QMwcyS071/btNTaBBxoUTwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028134;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028136;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q35FdxzYNWUFgCCQO+/TYDkwc+WC2DY2P2NhUwVGFzs=;
-	b=gpWP0vyJdiuI0VTMrvN/iWyC374gn1crU9m7W3mNGnHWuxMxaISyK47lRc+xoaYpjaDe
-	 w9cR3V335sD0ThMU7Uev1mzZu8df8vd+c28O4TD869jUX762QldYiHyMTHeXi0eTI4lBj
-	 5/ZZDlX2R99DBxY5OKyLHsZe6GtpJ8tvaOG6lfzS8okeMAoI2rgRBwA2BYTstYJnrIZ3o
-	 CMbKHcM80yvgQfjaUawGaU6CJM5ImvtLaNhz9VnXNbrXokK9Jt1AOGefHBhJkvb0K0upV
-	 DoSKYvSeV+N0dGbc3ab6uvg/r1tQCJ1H1/j5F7E+rSuYiV+HkawkL9UjYP5Jd7jE0Tw==
+	bh=ixfRd5zvXgHqMftRWoncI7n3TC80vBYQDXovjwY/2C4=;
+	b=zpyn8QdFGIBObP0CxSnSd476awTQsU8NNSWYXD2AONsoX8rUlmNsLI8XBXtk3D0++Ywh
+	 5C7R3aDV5Bu9m4/KYAmROnoFoZGPhUVCkF0GpfcaKy6aYQlhQQL6mqt2XLjliRPp6kM/Z
+	 SerQNFW+tdqivAjHNB/zkNYCslLvjSl02UT9msCdDSYoDkoT9TqU83vulsF+1od+c9lrn
+	 EGeIe00djUKlwid1pTjrmfZ04IFlNWX8spNsZNivzIuXSmjR49pzBrI8VMUhBLJJRQyI+
+	 Ki8dl/d31KsV6YhVqkIxd5OnrDAfx3D2PPqJn2XMVBlMMN5C/Kn+hpKpWo2NiJQ8kYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yn+LwKYt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bzriNkE1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCF0606A320;
-	Wed, 18 Nov 2026 18:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF09606A320;
+	Wed, 18 Nov 2026 18:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yn+LwKYt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE411F000C4;
-	Wed, 18 Nov 2026 18:55:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bzriNkE1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3501D1F000C4;
+	Wed, 18 Nov 2026 18:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028133;
-	bh=Q35FdxzYNWUFgCCQO+/TYDkwc+WC2DY2P2NhUwVGFzs=;
+	s=korg; t=1795028136;
+	bh=ixfRd5zvXgHqMftRWoncI7n3TC80vBYQDXovjwY/2C4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yn+LwKYtXkIRhdddhksCvdytCJof3y47hjTpOwEbmKcjfte1pemnV5DEZOOx1Kphv
-	 RlJrwVD2Bxi1dPpwkZ+ag7Jv5Ipj6hnL7sUpgEKaXdRzvE59PoYuXrZ8Fec8ExjAtr
-	 eUhL4RzpyfZV+x4Z6gdiBjhlpULvnwlea+39lUFE=
+	b=bzriNkE1s9dQSkkMtRrhoWsmGoXzIV8rrv4FdE/bcE0jEDxanQ5Nyfuq1rZz1/Ruu
+	 GPk0Vpd6E9fPMNVrk/jnPDJRoxqA8IoyNiIeEnALc0ybGMnYIbY0PF4E1PrOcctm77
+	 x0oAkxmC+0Z16mK0VVHZjCrwUi/tmeu/NDkSNp3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -48,9 +48,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2036/2151] nvmet-rdma: fix double puts after a failed RDMA WRITE
-Date: Wed, 18 Nov 2026 16:02:51 +0100
-Message-ID: <20261118150235.901988074@linuxfoundation.org>
+Subject: [PATCH 6.18 2037/2151] nvmet: dont clear sq->ctrl for a Connect with sqsize 0
+Date: Wed, 18 Nov 2026 16:02:52 +0100
+Message-ID: <20261118150235.935679565@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -74,27 +74,24 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit f1dac2a2e75260d1466d9f03ccf0944d6d0449a4 ]
+[ Upstream commit 89480d137bf0d943a82c64f86ae2407a15276b5e ]
 
-For a read with T10-PI the RDMA WRITE is posted alone and
-nvmet_rdma_write_data_done() posts the SEND once the metadata check
-result is known. By then the request has been completed and its
-references put: __nvmet_req_complete() put ns->ref and the pc_ref, and
-nvmet_req_complete() sq->ref, right after queuing the response. The
-error branch of nvmet_rdma_write_data_done() copies the one from
-nvmet_rdma_read_data_done() and calls nvmet_req_uninit(), which puts
-all three again. A WRITE fails whenever the connection ends with reads
-in flight, which is up to the host. Depending on timing the sq->ref
-count goes to zero early and the queue is freed under the remaining
-completions, or never reaches zero and nvmet_sq_destroy() sleeps
-forever, or percpu_ref_put() dereferences NULL after percpu_ref_exit().
-ns->ref stays too low for good, so disabling the namespace hangs too.
-Reproduced with KASAN over rxe with a test patch forcing the PI path.
+nvmet_install_queue() checks sqsize first and jumps to err on zero,
+where sq->ctrl is set to NULL. Since commit b71df12605ca the cmpxchg()
+that sets sq->ctrl comes after the checks, so err now undoes a bind
+that this call never made. Over RDMA a host can send two Connects
+together and the second is parsed before the first executes, so a
+second Connect with sqsize 0 clears the sq->ctrl the first one set.
+The reference it held is never dropped and the controller leaks, with
+its cntlid, until reboot. The discovery subsystem lets any host do
+that, 20 connections leak around 10 controllers. A pending AER on such
+a queue hangs nvmet_sq_destroy() forever, and a queue can keep its
+"authenticated" mark across a rebind.
 
-Drop the nvmet_req_uninit(). The branch still releases the RDMA context
-and the response, which is all the request owns at that point.
+Return the status directly, as the two checks after it do, so err is
+only reached after this call's cmpxchg() succeeded.
 
-Fixes: b09160c3996c ("nvmet-rdma: add metadata/T10-PI support")
+Fixes: b71df12605ca ("nvmet: avoid duplicate qid in connect cmd")
 Cc: Christoph Hellwig <hch@lst.de>
 Cc: Sagi Grimberg <sagi@grimberg.me>
 Cc: Chaitanya Kulkarni <kch@nvidia.com>
@@ -103,25 +100,23 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/nvme/target/fabrics-cmd.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index d1b47e6287581..20e574a4eac64 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -803,7 +803,10 @@ static void nvmet_rdma_write_data_done(struct ib_cq *cq, struct ib_wc *wc)
+diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
+index 9aedab2603bdd..8930c872b5c09 100644
+--- a/drivers/nvme/target/fabrics-cmd.c
++++ b/drivers/nvme/target/fabrics-cmd.c
+@@ -186,8 +186,7 @@ static u16 nvmet_install_queue(struct nvmet_ctrl *ctrl, struct nvmet_req *req)
+ 		pr_warn("queue size zero!\n");
+ 		req->error_loc = offsetof(struct nvmf_connect_command, sqsize);
+ 		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(sqsize);
+-		ret = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+-		goto err;
++		return NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+ 	}
  
- 	if (unlikely(wc->status != IB_WC_SUCCESS)) {
- 		nvmet_rdma_rw_ctx_destroy(rsp);
--		nvmet_req_uninit(&rsp->req);
-+		/*
-+		 * Unlike in nvmet_rdma_read_data_done(), the request has been
-+		 * completed and its references are put: no nvmet_req_uninit().
-+		 */
- 		nvmet_rdma_release_rsp(rsp);
- 		if (wc->status != IB_WC_WR_FLUSH_ERR) {
- 			pr_info("RDMA WRITE for CQE failed with status %s (%d).\n",
+ 	if (ctrl->sqs[qid] != NULL) {
 -- 
 2.53.0
 
