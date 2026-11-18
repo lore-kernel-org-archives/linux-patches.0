@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041424;
-	b=3yJ/luyNJ3gCckImAFTL+5tQY1jLhk584M4AtIDDa15oeRelp138SJPzi/tIfMLBXwF1
-	 gnpnrFqAxscZDHViIZd2y64WWF724keBcf07iv5QEPOVufM7+c9J8EICp5FJ0Vyn5GnP7
-	 eb2XWwW9GmKvYo38mvLDRS+zhgS5Bzk+74oOpSJ2SXEk1AnqKoBq3uMq7dkrv3pvTtp1N
-	 Az72M6jZAPovr+T3ZVsH/wP0hURkHPrNZ8uKYXJnoT6HuRfv3G1wu5RB08fyc83GAHWDh
-	 zTHufIhe3zWHandW706ul/WoDZ2StYGjaIUeAN7dNnBW3FgfgjFksQUngHInracyCdg==
+	t=1795041427;
+	b=c2WitacmDLdE6ySFLZfbSO/h9LRGOPxS3EemAghRjFE5eAfjXclwJkBNhdczdhdMkTTA
+	 dKpQP/KJk27y6oByY/rwdPboSum+u5vINaRkzZ6GuQCd57ujsiLXFD53o6By3OltbDXsf
+	 KswnClmzudcZTCNmh+eGpg8wQzRX0MKqnKatVvjoTZI/zmhTwBvK71C2csmpRg3i3Bzcv
+	 wOGhktGdWbrVDdP2xMsqi7JrhOx30URp1BadktX2074x9SgiU+uiRVfWG7peGK5L1oR5/
+	 ejvJeHTugEo3jZDonGUxHCeXDk2haKpV2GouUGkuMn1MTJpYMi9fAe1aWzBHh+58R5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041424;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041427;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dv9JPYbNkMeuQdIPAAlX1vUHgMUqSHjjQfyGfBffFaw=;
-	b=qmkM/YgjBOIU1JJ9SyA5MWM1hPsT/Q59HTDEjmYjfSMjhth4VoX1ARItjjiniiWBOzwt
-	 73/M2RCSHtDlI35ObuyTSR+ZyWS4GpLbOUBB6ZwkxdQ4PMSJWBFxlb2DBPwwZ3jRlc8rH
-	 2N16WxH9TI2S43Uq2Mpasp3xfKR39AryUuylPym3Mbl9n4zcptekcTHMAGkmkTzyPu7BO
-	 AzXgKewmzj4F11Czdk0eruBp9iUsOnZovRSoNtD66KuafEl7OIIpspuqNRuFZrSs380fU
-	 l0My3DQZJ/1YrMbu7ZgRw6Bx5S3sVoikVdHH25up1rskQX4sZLhlEQZ6eiVP6KR+czw==
+	bh=koXWCCSVx3f/Cl55qBPWiw6WVM6TTjNR7fHGFNnKSTc=;
+	b=C8CUtPah0BX43k5JfbqfgqY8mL5H71VdXyd+5iyoM0/2mVHhuidSaHszdQXFYknGNblK
+	 0FYQBNkgtn8PeIAMQggQlbhchIroA0wTuf4bOsAWzlx7OEP9Vby4Epxj6JBNwDKGV/dbb
+	 BkFMTSYRZ1vgMGGoAX3dOSaoeJefnrzhC5utjrh9D/6bH0qSO/ULkYKQC8agLYpjQrsk/
+	 kCw2wW/TMHPO3iHC4YjUo/z5VgxI8boZ5Hh1DpAhGIbyi3l0L8YZkPWg0FcI9uaqbvx9w
+	 iNJ2w/MTcg+qNhiYkRUTfkHkFONhyvJjVwA/M+9msCf8eZP/t7dJH89uPe8BkcpSqMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y7dUk7kX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gaePpHqD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14D6606A31C;
-	Wed, 18 Nov 2026 22:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDFC606A31C;
+	Wed, 18 Nov 2026 22:37:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y7dUk7kX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F0D91F000C4;
-	Wed, 18 Nov 2026 22:37:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gaePpHqD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A1A1F000C4;
+	Wed, 18 Nov 2026 22:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041424;
-	bh=dv9JPYbNkMeuQdIPAAlX1vUHgMUqSHjjQfyGfBffFaw=;
+	s=korg; t=1795041427;
+	bh=koXWCCSVx3f/Cl55qBPWiw6WVM6TTjNR7fHGFNnKSTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y7dUk7kXlr1AOo7P8GoqDfo5Bd3KA8R/HI9Y6qrugL2j66SZiZ+4CSXntT3Jin+F1
-	 CWNxD++fKZBPVIoQ5G2oKkP2kE/vbIRW3K+FGu1MmbZ4VhrdtAzELUFRg6EnisrhdG
-	 1Jy3W+sNJymWNpWtLonoch3icW5EBvvrVdNuweXE=
+	b=gaePpHqD9PMV8Dyh9pUaZhhVROk5eymiPHKoWZYT1D3NxgMCPShd1rDyMbh3HyPep
+	 AtLqZpzLGF/DrZp+x7JAMVvfZ9rGbiMI1n0zhudF+PZg+3giuPNyxIIosm6CriSvKg
+	 nN7cZOrRoWh8L9kesgBSr5G1X3ZvVYpOi9k5whXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <oss.patchbox@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2802/3318] bus: arm-cci: Drop cci-control-port node reference in __cci_ace_get_port()
-Date: Wed, 18 Nov 2026 15:57:04 +0100
-Message-ID: <20261118150444.735111759@linuxfoundation.org>
+Subject: [PATCH 6.6 2811/3318] nvme: tcp: split controller bringup handling
+Date: Wed, 18 Nov 2026 15:57:13 +0100
+Message-ID: <20261118150444.992868890@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,44 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <oss.patchbox@gmail.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 810ccc792193909ba9bbb4246e0eb0de14dad724 ]
+[ Upstream commit 10fd7fb676d71482b64bc61f5058b1011133f984 ]
 
-__cci_ace_get_port() looks up the device's "cci-control-port" node with
-of_parse_phandle(), which returns the node with its reference count
-raised, and only compares the pointer against the probed ports.  Neither
-the match nor the no-match return releases it.
+Drivers must call nvme_uninit_ctrl after a successful nvme_init_ctrl.
+Split the allocation side out to make the error handling boundary easier
+to navigate. The nvme tcp driver's error handling had different returns
+in the error goto label's, which harm readability.
 
-Drop the reference on both paths once the comparison is done.
-
-Fixes: ed69bdd8fd9b ("drivers: bus: add ARM CCI support")
-Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
-Link: https://lore.kernel.org/r/20260923164122.596910-1-oss.patchbox@gmail.com
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 87a1ac965502 ("nvme-tcp: store and use the caller's network namespace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/arm-cci.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/nvme/host/tcp.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/bus/arm-cci.c b/drivers/bus/arm-cci.c
-index ab9b49451f8f2..25a741e48573f 100644
---- a/drivers/bus/arm-cci.c
-+++ b/drivers/bus/arm-cci.c
-@@ -167,9 +167,12 @@ static int __cci_ace_get_port(struct device_node *dn, int type)
- 	cci_portn = of_parse_phandle(dn, "cci-control-port", 0);
- 	for (i = 0; i < nb_cci_ports; i++) {
- 		ace_match = ports[i].type == type;
--		if (ace_match && cci_portn == ports[i].dn)
-+		if (ace_match && cci_portn == ports[i].dn) {
-+			of_node_put(cci_portn);
- 			return i;
-+		}
- 	}
-+	of_node_put(cci_portn);
- 	return -ENODEV;
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index fd27e6a35bbcc..ad55b9e3e1050 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -2670,7 +2670,7 @@ nvme_tcp_existing_controller(struct nvmf_ctrl_options *opts)
+ 	return found;
  }
  
+-static struct nvme_ctrl *nvme_tcp_create_ctrl(struct device *dev,
++static struct nvme_tcp_ctrl *nvme_tcp_alloc_ctrl(struct device *dev,
+ 		struct nvmf_ctrl_options *opts)
+ {
+ 	struct nvme_tcp_ctrl *ctrl;
+@@ -2746,6 +2746,24 @@ static struct nvme_ctrl *nvme_tcp_create_ctrl(struct device *dev,
+ 	if (ret)
+ 		goto out_kfree_queues;
+ 
++	return ctrl;
++out_kfree_queues:
++	kfree(ctrl->queues);
++out_free_ctrl:
++	kfree(ctrl);
++	return ERR_PTR(ret);
++}
++
++static struct nvme_ctrl *nvme_tcp_create_ctrl(struct device *dev,
++		struct nvmf_ctrl_options *opts)
++{
++	struct nvme_tcp_ctrl *ctrl;
++	int ret;
++
++	ctrl = nvme_tcp_alloc_ctrl(dev, opts);
++	if (IS_ERR(ctrl))
++		return ERR_CAST(ctrl);
++
+ 	if (!nvme_change_ctrl_state(&ctrl->ctrl, NVME_CTRL_CONNECTING)) {
+ 		WARN_ON_ONCE(1);
+ 		ret = -EINTR;
+@@ -2771,11 +2789,6 @@ static struct nvme_ctrl *nvme_tcp_create_ctrl(struct device *dev,
+ 	if (ret > 0)
+ 		ret = -EIO;
+ 	return ERR_PTR(ret);
+-out_kfree_queues:
+-	kfree(ctrl->queues);
+-out_free_ctrl:
+-	kfree(ctrl);
+-	return ERR_PTR(ret);
+ }
+ 
+ static struct nvmf_transport_ops nvme_tcp_transport = {
 -- 
 2.53.0
 
