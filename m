@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015726;
-	b=hgGmqEIzHOi3psSEtV+UkPzuwXp3D/ZRjUYdBkdAxeWuAdp38sfvc0D7l0OLQUJB9TKf
-	 iHv6Q4SizMyfsdnvIHzLJxLqKLh698+Y9bcyqhloNw9zcQzU0H/U1RHIPnRoJhvtibHxK
-	 OzBbCmjEeQrT4XpxthQ8s59sD0lPCMM09JvJQ8qocogVWm+/auAIFPzjOVS/h5rM1GBVi
-	 4sQUJgwctB7OC2DFHeSyn0heh+uOZK9JR6SwI7NR9dWACzQo9QCpGvDhoOuzI9es8aeK5
-	 7czuEdVpPQXJa+lSDc2A7exjefwX6nXgyOA+IxzZgonQ5NtPKcr0P1XeMYth+OUFMQw==
+	t=1795015729;
+	b=OxlQzVkL1V5y3o8yVZiZDGNakxWt+yqI1w/fdrObTpVYOqNQI9qyTnMU7BD/CmDw+FHN
+	 8usrd6735h/iWmri303ybRhVtPs0x7Wn2LHLD5bDy1RdvKF0mFbLfNsfiatCX/Ckye67I
+	 4xY1HVlcziqIsXTrKCt103wMBCxqD/SF3lbtc+rGw2WxNxIwwMJZh+FiQ8Fh8hI9jp7cl
+	 pw2EAENXhxtjPeRTbsnzmLfdqbNBRGB8r3wCxU4RATQCjAmxGeQTnS0soaSg5gOTeMCRf
+	 uE9Xdy3pnOAtXpAC6ZdtGPDMllnJGPewOXy3RVNWEw0pEdCafLm707hQvBrkkSUClIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015726;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015729;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=9Z5ydIeW7uLjCKVpAJS1M3U9QnrfnjON4sUqJQevHQg=;
-	b=K7AOBtf4NPsAB/TeTgDMhY3CTzM1xONuzFsIXmUYd1bAIzcbpGsSnMhnPqpblvTk2wRJ
-	 aki2ZDePOpKXOuVxKWqpj9BkswwrBhu+UaKudZC5fxcU/cQVcGs06qdZjIsoJSOFR44ew
-	 hmypPzjZ8rAblYPFNQK+IfWNuYrCoNAXeKSVhAeDyXH8pwVyJlk5I0LY/LVEI+l/U04+x
-	 uHhhcqwL6k/Wm1Xs6+67gn0qfc9wJvTYsqbzEMZph3NSEeqeH32s+P4UCvyazBShsqYjj
-	 qMGcQtSeOteart5XYw9f4OVJ5DeAoqVt5yAN/yIduB/dVoeGf4ZNNEBP03cuMiw5bWg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=yEi26uZNNEZNhX+Ah1N45aaVqD1t4H9VFtRvod0jCxk=;
+	b=CF+YTwCRQCIcgfHnt/m+ni4/ZTJbn1cDTNiy9JASvV1m2eDzUfr+bCIZ0WWYMBzEb1tp
+	 QQCRkrHykmXzE4TXOGPWeRo5vdN89vcAaE8hXbovbAWgtJy2rMUqeHp6HMVToBrDcVy8y
+	 XTrWyVgotW8JzfEZmy88V2DhQyvSgc4/qGO9O6QEWTiaCjVTtLI+NdiOK3y9dsA2inwTC
+	 sqIuY9hsXFuowpYa+IhtfMMD4HEj2TJbN1cRfwEfgYI2keUAjLqXyXY7c5xvTJL6P0Zos
+	 9/q6wPR3re0U/+g+mIZr+od7yb9v/pn+6Wk/ONZa0GtCSVmX0Ga6SGqRSl5ngPOhO+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RfZToTjU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nlf4on0D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD57606A339;
-	Wed, 18 Nov 2026 15:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20C5606A33A;
+	Wed, 18 Nov 2026 15:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RfZToTjU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0931F000C4;
-	Wed, 18 Nov 2026 15:28:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nlf4on0D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E3B41F000C4;
+	Wed, 18 Nov 2026 15:28:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015726;
-	bh=9Z5ydIeW7uLjCKVpAJS1M3U9QnrfnjON4sUqJQevHQg=;
+	s=korg; t=1795015729;
+	bh=yEi26uZNNEZNhX+Ah1N45aaVqD1t4H9VFtRvod0jCxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RfZToTjUTD8WfKwTC5OYD1kKz8PIvxq+DhBEkwJjvh6TzySst8gCnV0rPGJvxQ33A
-	 EVnhcq3b5LM2A/NPv7envAnjt2afUpB6pdQ7q77xdEYRNs4KK9EJzJnmrg+uCrzL2A
-	 4ZxTPjJfr9vX2csjctqQ5yLAc75Pb1mRL02PjdbU=
+	b=Nlf4on0D36ViG3p/JZhZTYHthFwhZFvXZ6mgRUI7NADDzx/2dpH4FQIZD9NRTj8+l
+	 q6p/p8Wy7BGcuNNtNSoSKpM3OVV9oT5DbXrjFOP8KuLRqqYv0WJ399F+8E78BRV82l
+	 FN5m3FCiuzwKeAE7HY7oEQrCQpk+Rz+Db0+cVqlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI review <sashiko-bot@kernel.org>,
-	Manush Prajwal <manushprajwal555@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0276/2651] pwm: lp3943: fix NULL pointer dereference for an unconfigured channel
-Date: Wed, 18 Nov 2026 15:25:16 +0100
-Message-ID: <20261118150257.847273178@linuxfoundation.org>
+Subject: [PATCH 7.3 0250/2651] gpio: crystalcove: add missing MODULE_ALIAS()
+Date: Wed, 18 Nov 2026 15:24:50 +0100
+Message-ID: <20261118150256.861734988@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,66 +63,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manush Prajwal <manushprajwal555@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 17dbb6938d3ab444cd6be1c95506450595a8800d ]
+[ Upstream commit 32c7f7f80e5f7f2764682fd456054478fc11c8d9 ]
 
-lp3943_pwm_probe() unconditionally registers a pwmchip with
-LP3943_NUM_PWMS(2) hwpwm channels, but lp3943_pwm_parse_dt() only
-populates pdata->pwms[i] for the channels whose ti,pwm0/ti,pwm1
-property is actually present in the devicetree (the binding
-explicitly allows each PWM generator to drive zero or more outputs,
-and lp3943_pwm_parse_dt() only fails outright with -ENODATA if
-*neither* property is present). A devicetree that configures only one
-of the two channels leaves pdata->pwms[] NULL for the other.
+The crystalcove GPIO driver lacks a MODULE_ALIAS() to allow it to be
+auto-loaded.
 
-lp3943_pwm_request_map() dereferences pdata->pwms[hwpwm] with no NULL
-check:
+Fix this by adding the missing platform alias.
 
-	pwm_map->output = pdata->pwms[hwpwm]->output;
-	pwm_map->num_outputs = pdata->pwms[hwpwm]->num_outputs;
-
-so requesting the unconfigured channel (e.g. exporting it from
-sysfs) crashes with a NULL pointer dereference instead of failing
-cleanly.
-
-Return -ENODEV from lp3943_pwm_request_map() when the channel was
-never configured, before the pointer is dereferenced. The caller,
-lp3943_pwm_request(), already propagates an ERR_PTR return correctly
-(it does so today for the existing -EBUSY case).
-
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/6a9d4c6b.79b5ea6e.147aa1.5883@mx.google.com?part=1
-Signed-off-by: Manush Prajwal <manushprajwal555@gmail.com>
-Link: https://patch.msgid.link/6a9d5187.d63de05c.175391.a17c@mx.google.com
-Fixes: af66b3c0934e ("pwm: Add LP3943 PWM driver")
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: 104fb1d5153c ("gpio: Add support for Intel Crystal Cove PMIC")
+Assisted-by: LLM
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-lp3943.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpio/gpio-crystalcove.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pwm/pwm-lp3943.c b/drivers/pwm/pwm-lp3943.c
-index 10537e74be288..e42af9007546e 100644
---- a/drivers/pwm/pwm-lp3943.c
-+++ b/drivers/pwm/pwm-lp3943.c
-@@ -38,6 +38,9 @@ lp3943_pwm_request_map(struct lp3943_pwm *lp3943_pwm, int hwpwm)
- 	struct lp3943_pwm_map *pwm_map = &lp3943_pwm->pwm_map[hwpwm];
- 	int i, offset;
- 
-+	if (!pdata->pwms[hwpwm])
-+		return ERR_PTR(-ENODEV);
-+
- 	pwm_map->output = pdata->pwms[hwpwm]->output;
- 	pwm_map->num_outputs = pdata->pwms[hwpwm]->num_outputs;
- 
+diff --git a/drivers/gpio/gpio-crystalcove.c b/drivers/gpio/gpio-crystalcove.c
+index 0fb5c06d08863..ab7fab5b97545 100644
+--- a/drivers/gpio/gpio-crystalcove.c
++++ b/drivers/gpio/gpio-crystalcove.c
+@@ -396,3 +396,4 @@ module_platform_driver(crystalcove_gpio_driver);
+ MODULE_AUTHOR("Yang, Bin <bin.yang@intel.com>");
+ MODULE_DESCRIPTION("Intel Crystal Cove GPIO Driver");
+ MODULE_LICENSE("GPL v2");
++MODULE_ALIAS("platform:crystal_cove_gpio");
 -- 
 2.53.0
 
