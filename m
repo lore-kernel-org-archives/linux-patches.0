@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048541;
-	b=MkLUmMLAekZz3BeRnjeSDSIjlnzFCV/l6sCfJIYrMjZc7bW0Gqu4WDDZDLBndTr97e5l
-	 BNe6VRuqFZYeawH0zJUGxiM7WO93c5YfpR78bxmy+zPj9F1iOc7dfJ/iqOylV/2k9kpUG
-	 DT2iJdOwNntRD+KNIdvbn3q2bu+Gs/b6okiOvvb46OQUyao5xTOWjDBFV0AxcZ31JhsXq
-	 wPWmNpiAZPSmNlQKytJkS8obmLJZRLScV645N7p6hD03wZ8z/7UQ33N90IBEO2rJjFY6G
-	 K3vQi5Q6pa370OgntPUX9wQZIpei5L19yKSjFpHXjQ5V4MUWhwzFAFH32YeYav/yTkQ==
+	t=1795048544;
+	b=Yop8arhepq9vNsteBr48/Y75HfMp0tOKTH8yGfE0yUPKKbahJpvDX2H7ecM5Hc9AoOL8
+	 lXFs10CjTx6oTnHw/YmEQaipS4A6VnkpXQtRNr/X39c3kjLkLJSmMr6eun2mxz9RvXgTN
+	 biawrMaDO4ixJeFx15dMKjjlp5DveMuH67cFajdV4Wk6beaEkIa+M/q75CLEttZ5bHSon
+	 KE9mFEm9WCfRKjRKH/fCwX8wthcXxIiW5lSItZXdHCTq2KM7eLajzAaiDgbtEhbH93soZ
+	 l/Hpw8N7nxUvEHhgdmXp2TeqgOFd+HSWIJMZoF8bRi5zaIzQjkkhu8hm3zgiSZewKJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048541;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048544;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XBtEYKfkzcWag/lnCx7IW7pFU6n0PGLnq4NzU+R+zks=;
-	b=FdHfdI+mneyV1fdl1VIxEOJNTguiIR5UISyDiGBXcNG3PU/Ou2STNascZmbQr2bQAf4e
-	 ufsqFVLvpnWjz5C9/pzvZ/18FFtouTjucHn1tToMsmFWs49YWzW8jItC9Pzjy8VZcbV8Q
-	 Xf2md+e5ilKvlc/zW0E1I3Q/RTgcGMXiMj2DYMUe1D1NLBfYQxNQPzw6Lt57WlI4zu/7Z
-	 MsJjS9kV+myrII9uUjFTUh7vc8FVroQ7qgkz9Lb9XAP1PDvqsnM2TLnD51mfG77bWOoRL
-	 lgHsx7e7q8f9JwOqoe01i3JwThBpSqNpktEeaI0vcV2YpmVtos0e+mwD8h4giMCHJ1w==
+	bh=uEshg2PH8zt7Csr0gJGZgiR5Jc1BNLZuiVNxrwEZIfY=;
+	b=gJmxntfgGwN8GGk5uznr+9zeXSa92pkuxn5vn6DvnVwsg0nvmRpu//vZ9eW4lEFwyca8
+	 ZIZHrKtu+gXXXTHEbwQVw6pQKwG8YwXdbmOmRF6Zs/PmHOv3pxIG4Apo8xM98OBDbOHyN
+	 2m6Uz53XKNUj/X8VReehDEeQxvPzhaqMBIhtTHo9D6BksnODaSnvijsJ6aC5lvrPPuWQp
+	 q2FGOcZ63MhCD+PCiWDV19BWfs5TYbn3Bx8ClOT4Mw9lCbMHMY7MWs8yEcJb0VCKm3DBU
+	 LSaoQ8jK5N4Y/tAOPAGCh+7jGJ8Pvv7D/0TXBv6BNokJ/LL/SxaJF57cZotd8gCKuMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yLnuTL0m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BElV4ezP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1938606A31C;
-	Thu, 19 Nov 2026 00:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AABB606A320;
+	Thu, 19 Nov 2026 00:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yLnuTL0m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1588B1F000C4;
-	Thu, 19 Nov 2026 00:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BElV4ezP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65D61F000C4;
+	Thu, 19 Nov 2026 00:35:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048541;
-	bh=XBtEYKfkzcWag/lnCx7IW7pFU6n0PGLnq4NzU+R+zks=;
+	s=korg; t=1795048544;
+	bh=uEshg2PH8zt7Csr0gJGZgiR5Jc1BNLZuiVNxrwEZIfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yLnuTL0mXzcANt8QAVl6nOMNh+FxsJbmYb+yu9cFhpcXB00reNsfllah4D3e/Dcrk
-	 1R1/TnUYoO0fJyU6xzR/IrU6/oLDM0rTXTdLG/agV1bHa4C5L+7GrB/9Bty6auBlYM
-	 3o8Oq5Z+weJ4Fdi3pLOOX6ZN3bGD5Caj96J44DwU=
+	b=BElV4ezPQpqI2WI29cF5wD5vsUWi74SK6KtiSxfAXl5vVxaI1wqqtHsQbkwl8IbIY
+	 AzwF9oUPBN2NFhnl6ho/sSGFIxzzkk6DO4QmhPw878eWbuNSFIM7cBucBaPKS10wPI
+	 C4TEMOk0+8hvx4CJ9RItZIqJZd5EhJuD0+pZMxYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Finn Thain <fthain@linux-m68k.org>,
-	Stan Johnson <userm57@yahoo.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Ginger Li <ginger.jzllee@gmail.com>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2029/2857] swim: Dont search beyond the first data mark
-Date: Wed, 18 Nov 2026 15:51:03 +0100
-Message-ID: <20261118150314.462410494@linuxfoundation.org>
+Subject: [PATCH 6.1 2030/2857] media: i2c: ov5648: Fix a data race on state->streaming
+Date: Wed, 18 Nov 2026 15:51:04 +0100
+Message-ID: <20261118150314.498233232@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,170 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Ginger Li <ginger.jzllee@gmail.com>
 
-[ Upstream commit 79eafa4ccb74be023fd2cae87d75425d6eb903bb ]
+[ Upstream commit 76c8ffbe1b9bc0ee4c977180e3f498352de0d01e ]
 
-The ISM chip does an automatic MFM gap/sync search when the Action bit
-is first set. That search may stop at any of a) post-index gap, b) address
-field gap or c) data field gap. To find the next sector header, the
-driver need not search at all. It only has to validate the mark bytes.
+ov5648_s_stream() updates state->streaming after it has released
+sensor->mutex, while ov5648_resume() reads that field with sensor->mutex
+held. A concurrent resume can therefore observe a stale streaming state
+and leave the sensor in standby while the software believes that it is
+streaming, or the other way around.
 
-Once the sector address mark has been validated, swim_read_sector_data()
-is called to read the sector contents. Between the sector address and
-data fields lies an intra-sector gap followed by a data field mark.
-After this mark is validated, the 512-byte data area is read into the
-IO request buffer.
+Keep the update inside the sensor->mutex protected section that already
+programs the standby mode.
 
-Problem is, if any byte in the data field mark is mis-read, the driver
-searches the whole sector and then reaches the data field mark in the
-following sector. The wrong sector is then read into the buffer, and
-swim_read_sector_data() returns success. The request is silently
-corrupted.
-
-The existing limit on polling loop iterations does constrain the search
-distance but is inherently tied to CPU speed. This is probably the reason
-why corruption was only observed on a 68030 system.
-
-Discontinue the mark search when the mark bytes fail validation.
-
-Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/f6c97153faa0aceceffd3a61d85c0a82903a6b3e.1788513997.git.fthain@linux-m68k.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: e43ccb0a045f ("media: i2c: Add support for the OV5648 image sensor")
+Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
+Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim_asm.S | 73 ++++++++++++++++++++++------------------
- 1 file changed, 40 insertions(+), 33 deletions(-)
+ drivers/media/i2c/ov5648.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/swim_asm.S b/drivers/block/swim_asm.S
-index e06aadb411a14..4d6404234bf09 100644
---- a/drivers/block/swim_asm.S
-+++ b/drivers/block/swim_asm.S
-@@ -41,18 +41,45 @@
- 	.equ	seek_time, 30000
- 	.equ	max_retry, 40
- 	.equ	sector_size, 512
-+	.equ	.Lmark_sequence_len,	4
+diff --git a/drivers/media/i2c/ov5648.c b/drivers/media/i2c/ov5648.c
+index 17465fcf28e33..efdebb1bbe134 100644
+--- a/drivers/media/i2c/ov5648.c
++++ b/drivers/media/i2c/ov5648.c
+@@ -2145,13 +2145,13 @@ static int ov5648_s_stream(struct v4l2_subdev *subdev, int enable)
  
- 	.equ	.Lhr_crc_error,		0x02
- 	.equ	.Lhr_fifo_2bytes,	0x40
- 	.equ	.Lhr_fifo_1byte,	0x80
+ 	mutex_lock(&sensor->mutex);
+ 	ret = ov5648_sw_standby(sensor, !enable);
++	if (!ret)
++		state->streaming = !!enable;
+ 	mutex_unlock(&sensor->mutex);
  
-+.Lmfm_mark_check:
-+	/*
-+	 * This subroutine reads and validates a mark byte sequence.
-+	 * On entry, %a1 and %d4 shall hold the location and length (resp.)
-+	 * of the mark byte array.
-+	 * %a2 and %a3 shall hold the locations of the handshake and mark
-+	 * registers.
-+	 * Returns zero in %d1 for success.
-+	 */
-+
-+	moveq	#-1, %d1
-+	subq	#1, %d4
-+	movew	#seek_time, %d2
-+
-+5:	tstb	%a2@
-+	dbmi	%d2, 5b
-+	bpl	6f
-+
-+	moveb	%a3@, %d3
-+	cmpb	%a1@+, %d3
-+	dbne	%d4, 5b
-+	bne	6f
-+
-+	moveq	#0, %d1
-+6:	rts
-+
- 	.global swim_read_sector_header
- swim_read_sector_header:
- 	link	%a6, #0
- 	moveml	%d1-%d5/%a0-%a5,%sp@-
- 	movel	%a6@(0x0c), %a4
- 	moveq	#-1, %d0
--	bsr	mfm_read_addrmark
-+	bsr	.Lmfm_read_header
- 	moveml	%sp@+, %d1-%d5/%a0-%a5
- 	unlk	%a6
- 	rts
-@@ -62,33 +89,25 @@ sector_address_mark:
- sector_data_mark:
- 	.byte	0xa1, 0xa1, 0xa1, 0xfb
+ 	if (ret)
+ 		return ret;
  
--mfm_read_addrmark:
-+.Lmfm_read_header:
- 	movel	%a6@(0x08), %a3
- 	lea	%a3@(read_handshake), %a2
- 	lea	%a3@(read_data), %a5
- 	lea	%a3@(read_mark), %a3
--	movew	#seek_time, %d2
- 
--wait_header_init:
- 	moveb	#0x18, %a3@(write_mode0 - read_mark)
- 	moveb	#0x01, %a3@(write_mode1 - read_mark)
- 	moveb	#0x01, %a3@(write_mode0 - read_mark)
- 	tstb	%a3@(read_error - read_mark)
- 	moveb	#0x08, %a3@(write_mode1 - read_mark)
- 
--	lea	sector_address_mark, %a0
--	moveq	#3, %d1
+-	state->streaming = !!enable;
 -
--wait_addr_mark_byte:
--
--	tstb	%a2@
--	dbmi	%d2, wait_addr_mark_byte
--	bpl	signal_nonyb
-+	lea	sector_address_mark, %a1
-+	moveq	#.Lmark_sequence_len, %d4
-+	bsr	.Lmfm_mark_check
-+	tstl	%d1
-+	bne	signal_nonyb
- 
--	moveb	%a3@, %d3
--	cmpb	%a0@+, %d3
--	dbne	%d1, wait_addr_mark_byte
--	bne	wait_header_init
-+	/* read header */
- 
- 	moveq	#max_retry, %d2
- 
-@@ -163,30 +182,18 @@ mfm_read_data:
- 	lea	%a3@(read_handshake), %a2
- 	lea	%a3@(read_data), %a5
- 	lea	%a3@(read_mark), %a3
--	movew	#seek_time, %d2
- 
--wait_data_init:
- 	moveb	#0x18, %a3@(write_mode0 - read_mark)
- 	moveb	#0x01, %a3@(write_mode1 - read_mark)
- 	moveb	#0x01, %a3@(write_mode0 - read_mark)
- 	tstb	%a3@(read_error - read_mark)
- 	moveb	#0x08, %a3@(write_mode1 - read_mark)
- 
--	lea	sector_data_mark, %a0
--	moveq	#3, %d1
--
--	/* wait data address mark */
--
--wait_data_mark_byte:
--
--	tstb	%a2@
--	dbmi	%d2, wait_data_mark_byte
--	bpl	data_exit
--
--	moveb	%a3@, %d3
--	cmpb	%a0@+, %d3
--	dbne	%d1, wait_data_mark_byte
--	bne	wait_data_init
-+	lea	sector_data_mark, %a1
-+	moveq	#.Lmark_sequence_len, %d4
-+	bsr	.Lmfm_mark_check
-+	tstl	%d1
-+	bne	data_exit
- 
- 	/* read data */
+ 	if (!enable)
+ 		pm_runtime_put(sensor->dev);
  
 -- 
 2.53.0
