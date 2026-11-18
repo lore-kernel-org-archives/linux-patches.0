@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024963;
-	b=emcjdZ0FThf2tXqENDnXa+uazqrWANNcwepoxnAajvedATr3nS/wtDWXYsf9RFLi86zT
-	 wJ/QUc3oZkwwNdna/7tnxP54nyfEYoThVpRZ1AZ54w2UdnU25vUZiqgr1eVhcxbV163hh
-	 UrFACCe+8aW5ce2oZmf1Z1WN+gmkPDCtw/fJgFeWpAPiwQUwXqZdwvqkU8KHRKl9iUwPj
-	 WKY3d26g9A8EI1PMils8ON6adoM7n5Xh2rxW/JQrq2NRFUH6tXQ2bXkM2D/Lkwyu0fwdI
-	 TegQLWhAqmyBcyR8JKH3AJIzX0mlBslbB/OQmOO1oL6ULvKw5TCCv/BAWWz4eZD2/Gg==
+	t=1795024966;
+	b=WMa6f0Cvlln22hkN3jNXsuk522BH3iJ+NIGrrVil9B0Ny0uLno0lpLxn1x6pJpvLYLD0
+	 OrxgTN7bKUZWZ1p6O33BNj/yWuEqYtp6w2kvmJv4CHtP0nazMxup3VCAi70uqPP2OWwS+
+	 SKELyIJ5FB91ZrwEdxgGfsI3LSdoB4V1Z4Xi9WUq7ek8VI90tl+z7n8lRIq8sg0dFjB8X
+	 XCZa0X0xN2xF+a7kpEG/DowXQiS8hGWSXccaEKFK8DamrxEHOT4W1R7t6xzIL78e6u7qD
+	 IiikLwIeX4U+ioRZ+ULh95TYp4tfTCxxsV53hXyEo5PmDPCPbH0cwAmfzwNv6s1NcHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024963;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024966;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+l0+P/sr8zj7D0kPq0SXouFw1/chwmZErpAiTn83tfk=;
-	b=DxDowEHSzI3+TD4eTX+f0kMXEKqWOxBcz3vYTlm9XdQisK+tc+JF3zqzQ7Cz445e48Fr
-	 +oTSiExT9rMZb84Z4dCdZPjpx1Pw5C1nd6VRE9ASs7h5DmEkYl22rwkHMrRgb4d3uvvbx
-	 65MgGZRKCd5nQZZ3M3EcBGEoObunfAxQZZAL7ULmaXe5ZeL1alJsIbPQ0VUVolgUEOc/b
-	 bkvoRfb6QYDNW3LJevfKahqe/foFrF+UlkCUoDFxu0eiki9nx/cKP0CPTPkSqrLQHmB2N
-	 Nt0fasg/6enG/x/l+8j7NNIMnP5oj9h06aKWxpES11LkdlVSZOCBQooRH60GTVtoxdA==
+	bh=Ot+5VaIsEGHo7DP8NRWeOFH/QIiL+EgW/+mUYP+7pWs=;
+	b=CoG9F9BsNqGl3zCy6783XOJGngfXWea6wcNuWBb1qBVj1/hslQFj6wqOnIiDKbju2rgK
+	 PeMufQu1v+LT7fjPEPW+rHTU0D4EfeUNkYmttHY6U83s7/o1tkbP/D09euhZNBScSnJZ9
+	 kvH7LKiX4yNXCfzD6GDJA/CRp7GNehwu0qVR4EJcGkd+5PLub4/q9Cban1/IZTwolqFMr
+	 y1nBG8kbaaTcaNisQzF6VebkoKhmKRIWssE0yNF7EVVa/zRZ5Ys3yS9d9mQ1hD2qzVRY1
+	 fgUNreyqwCVI3S66vZBXsHZRvLkNcdxrCFeei590n0xrMgPqR/DKmntPgdS3ubJBJCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKEIJiIH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h9JcV72K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8638A606A32A;
-	Wed, 18 Nov 2026 18:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B7F606A336;
+	Wed, 18 Nov 2026 18:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKEIJiIH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69B51F000C4;
-	Wed, 18 Nov 2026 18:02:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h9JcV72K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5BD31F000C4;
+	Wed, 18 Nov 2026 18:02:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024963;
-	bh=+l0+P/sr8zj7D0kPq0SXouFw1/chwmZErpAiTn83tfk=;
+	s=korg; t=1795024966;
+	bh=Ot+5VaIsEGHo7DP8NRWeOFH/QIiL+EgW/+mUYP+7pWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lKEIJiIHhgP9sxXsMsNrwbYIOEu9uSH6UcIOCN7I5YK5qwOpYmH4Og3dogAr11NNG
-	 Cwl96poBEUyFqnVUxVDGqBg5cewVNcK11XEi2cpdYIqdvwFTEbE07UFJSr2FXds4p0
-	 6k7vQhhnIkSqXmyGxiMaLAKSNnQ4DIbQtVgDfxhY=
+	b=h9JcV72KLHS/zH7yVUdxkeH7x0sltsKcXyT+Oiq9bwF1WiONg7YvSABkJ00rydNrP
+	 hZfDODUzdhQO4medkPHzbWl+TqzF2vJMkNPqQVbOvh2OToM2kGDfNCFl0OJ8ZHY3b6
+	 ZYJItaa8BtV7jHauEzpF2DCdEO7zjFFqJhnIKhpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Ricci <io@r-ricci.it>,
-	Matthias Goergens <matthias.goergens@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Dairui Zhang <zhangdairui@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0909/2151] x86/hibernate: Ignore page-zero RAM in E820 checksum
-Date: Wed, 18 Nov 2026 15:44:04 +0100
-Message-ID: <20261118150155.459279398@linuxfoundation.org>
+Subject: [PATCH 6.18 0871/2151] IB/mad: fix UAF and double-free in RMPP receive reassembly
+Date: Wed, 18 Nov 2026 15:43:26 +0100
+Message-ID: <20261118150153.930456279@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,141 +68,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Dairui Zhang <zhangdairui@gmail.com>
 
-[ Upstream commit 29671cabfc09afb1ee2426b21173cdde276a95ac ]
+[ Upstream commit 90e9b6357bec75f627cde1a85b5887215c80aad8 ]
 
-The legacy kexec_load path reconstructs the E820 map exported through
-sysfs.  kexec-tools leaves the first 1 KiB unavailable for the real-mode
-transition, so a kernel entered through kexec_load can see conventional
-RAM starting at 0x400.  A subsequent firmware boot reports the same RAM
-range starting at zero.
+mad_rmpp_recv.state is protected by two locks that do not exclude
+each other: recv_timeout_handler() (port workqueue) uses agent->lock,
+continue_rmpp() (CQ softirq) uses rmpp_recv->lock. Nothing serializes
+the check-then-set sequence on the state word:
 
-The hibernation E820 checksum compares those byte representations and
-rejects the image, even though the maps agree from page one onwards.
-A QEMU guest showed this transition:
+  T1 (CQ softirq)              T2 (port workqueue)
+  continue_rmpp()
+    lock(rmpp_recv->lock)
+    state == ACTIVE  [passes]
+                               recv_timeout_handler()
+                                 lock(agent->lock)
+                                 state = TIMEOUT
+                                 list_del(&rmpp_recv->list)
+                                 unlock(agent->lock)
+                                 destroy_rmpp_recv()
+                                   wait_for_completion()
+                                   [blocks on T1's ref]
+    state = COMPLETE
+    unlock(rmpp_recv->lock)
+    complete_rmpp()
+      queue cleanup_work (+10s)
+    deref()
+                               [unblocks]
+                               kfree(rmpp_recv)
+                               ib_free_recv_mad(done_wc)
 
-  firmware:     RAM [0-0x9fbff]
-  kexec_load:   gap [0-0x3ff], RAM [0x400-0x9fbff]
-  firmware:     RAM [0-0x9fbff]
+  +10s: recv_cleanup_handler() runs lock/list_del/destroy on the
+        freed rmpp_recv -> UAF write and double free; nothing can
+        cancel that cleanup_work anymore, the entry is already off
+        agent->rmpp_list. done_wc is also returned to
+        ib_mad_complete_recv() and freed again -> UAF read and
+        double free.
 
-The checksum covers e820_table_firmware, which trim_bios_range() leaves
-alone.  The nosave regions come from e820_table instead, where
-trim_bios_range() has already turned conventional RAM in page zero into
-reserved memory, so page zero never occurs in the image, whatever the
-firmware map says about it.
+Reaching this requires sending MADs to a kernel RMPP agent from the
+InfiniBand/RoCE fabric: the per-port sa_query agent accepts subnet
+manager responses whose SLID/GID/TID are not authenticated on the
+fabric, and legacy user_mad agents registered without
+IB_USER_MAD_USER_RMPP start reassembly on any incoming RMPP DATA
+MAD with an attacker-chosen TID, no in-flight send required. The
+attacker controls segment timing and can run many transactions in
+parallel (agent->rmpp_list has no cap), so landing the
+microseconds-wide receive critical section on the 40-second timeout
+boundary is a matter of patience, not luck.
 
-Canonicalise only the conventional-RAM portion below PAGE_SIZE before
-calculating the checksum.  Preserve RESERVED, ACPI, NVS, UNUSABLE, PMEM
-and all other E820 types so that changes to exceptional mappings remain
-detectable.
+Unify state transitions under rmpp_recv->lock in
+recv_timeout_handler(), keeping list manipulation under agent->lock
+(which preserves the agent->lock -> rmpp_recv->lock ordering used
+by continue_rmpp()). State check/set in both paths is then
+serialized, so the loser of the race always observes the final
+state and bails out. recv_cleanup_handler() needs no change: with
+transitions serialized, a cleanup_work can only be pending after
+COMPLETE, in which case the timeout handler exits early.
 
-This is deliberately narrower than Marco Scardovi's June proposal to
-checksum only RAM and its opt-in relaxed_memmap successor.  Rafael
-noted that ignoring non-RAM changes could hide moved ACPI or UEFI
-regions still used by the resumed kernel.  This patch preserves every
-non-RAM entry and ignores only RAM within page zero, which common setup
-already reserves and excludes from the image.
+The race is as old as the RMPP implementation itself.
 
-Bump RESTORE_MAGIC, since the checksum semantics change, so that an
-image written by a kernel without this change is refused by the magic
-check instead of being compared under different rules.
-
-In the same guest, with the page-zero difference kept, hibernation and
-resume now work after both a direct boot and a kexec_load boot.  An
-image written by an unpatched kernel is refused at resume with
-"Unrecognized hibernate image header format!", and the firmware-booted
-kernel carries on.
-
-Fixes: 62a03defeabd ("PM / hibernate: Verify the consistent of e820 memory map by md5 digest")
-Reported-by: Roberto Ricci <io@r-ricci.it>
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
-Link: https://lore.kernel.org/all/Z-hYWc9LtBU1Yhtg@desktop0a/
-Link: https://lists.openwall.net/linux-kernel/2025/04/04/1372
-Link: https://lore.kernel.org/all/CAJZ5v0jmOj0WBtMTvbnaD+2b0bTFowA=JWrqRzaaCYpHpai1Nw@mail.gmail.com/
-Link: https://lore.kernel.org/all/20260623165724.10753-1-scardracs@disroot.org/
-Link: https://patch.msgid.link/20260926052117.3613637-1-matthias.goergens@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: fa619a77046b ("[PATCH] IB: Add RMPP implementation")
+Assisted-by: LLM
+Signed-off-by: Dairui Zhang <zhangdairui@gmail.com>
+Link: https://patch.msgid.link/20260922152342.1474845-1-zhangdairui@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/power/hibernate.c | 51 +++++++++++++++++++++++++++++++++-----
- 1 file changed, 45 insertions(+), 6 deletions(-)
+ drivers/infiniband/core/mad_rmpp.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/power/hibernate.c b/arch/x86/power/hibernate.c
-index a2294c1649f65..dbb340fb24ada 100644
---- a/arch/x86/power/hibernate.c
-+++ b/arch/x86/power/hibernate.c
-@@ -63,6 +63,25 @@ struct restore_data_record {
- 	unsigned long e820_checksum;
- };
+diff --git a/drivers/infiniband/core/mad_rmpp.c b/drivers/infiniband/core/mad_rmpp.c
+index 1c5e0eaf1c942..28d51b4844856 100644
+--- a/drivers/infiniband/core/mad_rmpp.c
++++ b/drivers/infiniband/core/mad_rmpp.c
+@@ -245,12 +245,15 @@ static void recv_timeout_handler(struct work_struct *work)
+ 	struct ib_mad_recv_wc *rmpp_wc;
+ 	unsigned long flags;
  
-+static bool trim_e820_page_zero_ram(struct e820_entry *entry)
-+{
-+	u64 lowmem_size;
+-	spin_lock_irqsave(&rmpp_recv->agent->lock, flags);
++	spin_lock_irqsave(&rmpp_recv->lock, flags);
+ 	if (rmpp_recv->state != RMPP_STATE_ACTIVE) {
+-		spin_unlock_irqrestore(&rmpp_recv->agent->lock, flags);
++		spin_unlock_irqrestore(&rmpp_recv->lock, flags);
+ 		return;
+ 	}
+ 	rmpp_recv->state = RMPP_STATE_TIMEOUT;
++	spin_unlock_irqrestore(&rmpp_recv->lock, flags);
 +
-+	/*
-+	 * Page zero is BIOS-owned and registered as nosave.  Boot loaders may
-+	 * therefore omit part of its conventional RAM entry without changing
-+	 * any memory available to the image.  Preserve all other E820 types.
-+	 */
-+	if (entry->type != E820_TYPE_RAM || entry->addr >= PAGE_SIZE)
-+		return true;
-+
-+	lowmem_size = min_t(u64, entry->size, PAGE_SIZE - entry->addr);
-+	entry->addr += lowmem_size;
-+	entry->size -= lowmem_size;
-+
-+	return entry->size;
-+}
-+
- /**
-  * compute_e820_crc32 - calculate crc32 of a given e820 table
-  *
-@@ -70,18 +89,38 @@ struct restore_data_record {
-  *
-  * Return: the resulting checksum
-  */
--static inline u32 compute_e820_crc32(struct e820_table *table)
-+static u32 compute_e820_crc32(struct e820_table *table)
- {
--	int size = offsetof(struct e820_table, entries) +
--		sizeof(struct e820_entry) * table->nr_entries;
-+	struct e820_entry entry;
-+	u32 crc = ~0;
-+	u32 nr_entries = 0;
-+	u32 i;
-+
-+	for (i = 0; i < table->nr_entries; i++) {
-+		entry = table->entries[i];
-+		if (trim_e820_page_zero_ram(&entry))
-+			nr_entries++;
-+	}
-+
-+	crc = crc32_le(crc, (unsigned char const *)&nr_entries,
-+		       sizeof(nr_entries));
-+
-+	for (i = 0; i < table->nr_entries; i++) {
-+		entry = table->entries[i];
-+		if (!trim_e820_page_zero_ram(&entry))
-+			continue;
-+
-+		crc = crc32_le(crc, (unsigned char const *)&entry,
-+			       sizeof(entry));
-+	}
++	spin_lock_irqsave(&rmpp_recv->agent->lock, flags);
+ 	list_del(&rmpp_recv->list);
+ 	spin_unlock_irqrestore(&rmpp_recv->agent->lock, flags);
  
--	return ~crc32_le(~0, (unsigned char const *)table, size);
-+	return ~crc;
- }
- 
- #ifdef CONFIG_X86_64
--#define RESTORE_MAGIC	0x23456789ABCDEF02UL
-+#define RESTORE_MAGIC	0x23456789ABCDEF03UL
- #else
--#define RESTORE_MAGIC	0x12345679UL
-+#define RESTORE_MAGIC	0x1234567AUL
- #endif
- 
- /**
 -- 
 2.53.0
 
