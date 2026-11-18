@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055093;
-	b=Jcl5/BDavnOjiTNajBlmRCcC5tesarpwEu4PC5mHkZu0125JdHDJRvpQh5NmiADwW52Q
-	 aBjq4heO7xrgPInAre2kUFjFiiaKalOkBEw/AgdnZstFCmD4IrzjLbr/OGLXBo/KsRkTe
-	 BEMtwXQZZeSeNUhVdGYV66wrFAuULgZ8+oqAqpvEs5OxF7ls6tsIyrlxk9j4uaZS7P8Qq
-	 bNu84k4wrxCekedjz1lV9ZRve8kTOF4wK4mlUAfRuuvlozhQtjKMdtiT3IaPnp4ejsQjy
-	 j84O+f0kW7hxGkT8dnbvZzC9fy1WZP/rT5EBKGDBwU8bpxH8vMj5q3gxDU59RryLudw==
+	t=1795055096;
+	b=xCXeSFRVjRMQO2KDnzhNMO2rRWt7VZWhb/SIVOC0XQjjHx3BcAM6qkRXfDQHOO3e1Nj7
+	 4mtRIVrKrEGT95L24DaavSCTTjAgYPyGdTuZeld0TCo3qrCl25BLAQ5tY00047gZYfAvS
+	 zuQvw8xAwkkVhHwsin5HEaIr9y/6jUVpCP62SU2u4g7Aymi9p8bjWS7eweeaU9oaEzG83
+	 Ph9Os13Lz5ATOY/MLWb+XdhBCAF5er3x25LuY8i9hskjM6WAZ+njULZZPjJ8JVmZhjhpJ
+	 /icgns8eOi8oxtjAQpp2/xSbUYqXyZ9RvMf4D5BztXeIxvls7CEm1wsQpRYHAkfDivw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055093;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055096;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=keDOlHn799GHUa3m2RvJQPXT8TSUv8PsCGQaeUv3zdU=;
-	b=FD0DCpdLX3Q+4JpjFWipuBr+NwNA0zrfTqmwprBDvmsQeS544UIQ8iCLZwzMbo9TY9Tc
-	 iKc5JqQiIGygY8ndBumSpUJlvqsvqg/rjBWgZMbU3TdNOY/1nDsLL9swjgsryTm6Ba1A2
-	 r88YIg4lfr/vTWZFqQGiCZNLjtFoVukjd0mE8rzhOdXX5haQ54HblTkiiblpqWqut0Jvh
-	 ySKAVA1uGVI9y1XX/6TESF1zUIGF3QOhZd0dsQvmOonu78qzIqHiXb+1bb1uQdUDzO0WZ
-	 zKqHyA648ytBhxzH6Lcf8dbNthBASp1FPOhe5XYE0Y4hcPGMQOk2vxQ03JZVJ6T/7vw==
+	bh=rtNRmK/i47TfD6HwmT+E+6te9VDqvvKGh7Q3Av0x4W0=;
+	b=UNb1shLSXFOdh7RgbexxuIwXomTwPln8hjisEVjDrIMVV28r78j2bPXn2tP8UXyQv0Nx
+	 z3MLMJST8IxK2N8zPy4t5U76CPi1G1zhre5spo48/Yxj6AZDsceonNMOOBYcZ3eXA9LYi
+	 BB8xmQc3s87nKvJKCHIqNrzyIIoLnv6UMrF1y1XJvVKZOvibeHbJxBO9ymL4Tp1t5XmhH
+	 YSBRZ6jgEpBn2jRKmLnMdRNaHH1+gLdn22kJKaI2TKUQMMnVHNDQq6xLrcaHUcBhY/RnT
+	 Dt0uF/soLNS9t1L56DfFjbpdbzak9/b8uKIvqTNCu1mLQrKjbA7yCuBH1CgOPQ/8mZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DS+sX1sV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zm5fs0dQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C6A606A31C;
-	Thu, 19 Nov 2026 02:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E00606A325;
+	Thu, 19 Nov 2026 02:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DS+sX1sV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00CD71F000C4;
-	Thu, 19 Nov 2026 02:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zm5fs0dQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE78A1F000C4;
+	Thu, 19 Nov 2026 02:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055093;
-	bh=keDOlHn799GHUa3m2RvJQPXT8TSUv8PsCGQaeUv3zdU=;
+	s=korg; t=1795055096;
+	bh=rtNRmK/i47TfD6HwmT+E+6te9VDqvvKGh7Q3Av0x4W0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DS+sX1sV/1oqxKTkpYIo/G3TddXUJTIpN2zaYPJN2RYCkHoP4m/6+mM3LR+k19Kcm
-	 GzzoCfKJozgBiXYzDJ4NYzKhsvg/Ubua6tYS4FMFo0FL3UzhreoFwm0HNRVVdCxjUf
-	 tXyxVpnSE2fNVfVzHQLjE34wl6edB9rstqF1n1A0=
+	b=zm5fs0dQEumj7BOFkJO/8eTiV1eceCdWRGu2m5ZITAEJPMs0ZE4rW4DmZICazwjnh
+	 STEp4TAF/qjp8FwQSVT2ZG6iSyW1OTkuBzxfQrqOzp4L0fpUHZRTDFsbelu4C5zbn4
+	 u4NWARAzJMj1ZxbyVg/CibhG56+9UEFxNZpWdGyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1467/2214] regulator: ab8500: Handle AB8505 VINTCORE selector 7
-Date: Wed, 18 Nov 2026 15:52:23 +0100
-Message-ID: <20261118150109.880909866@linuxfoundation.org>
+Subject: [PATCH 5.15 1468/2214] regulator: ab8500: Treat cut 1.0 VAUX3 as fixed
+Date: Wed, 18 Nov 2026 15:52:24 +0100
+Message-ID: <20261118150109.931524946@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,61 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 4ec4df7e54182edb6955caace37684e535e462dc ]
+[ Upstream commit b9fc8a8d31b914b09329240f532ff0e9c00cd727 ]
 
-The AB8505 VINTCORE table exposes only selectors 0 through 6. The
-hardware also accepts selector 7 and maps it to 1.35 V, just like
-selector 6. Omitting it can make an OTP-programmed selector 7 appear
-invalid to the regulator core.
+The early-cut workaround currently gives AB8500 cut 1.0 the 16
+programmable VAUX3 settings introduced with cut 1.1. On cut 1.0 the
+selector is not programmable and VAUX3 is fixed at 1.2 V.
 
-Give AB8505 its own eight-entry selector table while leaving the
-AB8500 table unchanged.
+Register VAUX3 as a fixed-voltage regulator on cut 1.0 and retain the
+16-value workaround only for cut 1.1.
 
-Reference: AB8505 User Manual, DM00046744 Rev 3, p. 223
+Reference: AB8500 User Manual, UM0836 Rev 3, p. 240
 
-Fixes: 547f384f33db ("regulator: ab8500: add support for ab8505")
+Fixes: 2b75151a1041 ("regulators: Added ab8500 v2 support")
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260901-ux500-dts-snowball-regulator-v2-3-fe88b01829bf@kernel.org
+Link: https://patch.msgid.link/20260901-ux500-dts-snowball-regulator-v2-4-fe88b01829bf@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/ab8500.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/regulator/ab8500.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/regulator/ab8500.c b/drivers/regulator/ab8500.c
-index 51a4ccb710b1a..662434cccd217 100644
+index 662434cccd217..110c660e899d7 100644
 --- a/drivers/regulator/ab8500.c
 +++ b/drivers/regulator/ab8500.c
-@@ -266,6 +266,17 @@ static const unsigned int ldo_vintcore_voltages[] = {
- 	1350000,
- };
+@@ -1783,9 +1783,14 @@ static int ab8500_regulator_register(struct platform_device *pdev,
+ 	config.driver_data = info;
+ 	config.of_node = np;
  
-+static const unsigned int ldo_vintcore_ab8505_voltages[] = {
-+	1200000,
-+	1225000,
-+	1250000,
-+	1275000,
-+	1300000,
-+	1325000,
-+	1350000,
-+	1350000,
-+};
-+
- static const unsigned int fixed_1200000_voltage[] = {
- 	1200000,
- };
-@@ -1095,8 +1106,8 @@ static struct ab8500_regulator_info
- 			.type		= REGULATOR_VOLTAGE,
- 			.id		= AB8505_LDO_INTCORE,
- 			.owner		= THIS_MODULE,
--			.n_voltages	= ARRAY_SIZE(ldo_vintcore_voltages),
--			.volt_table	= ldo_vintcore_voltages,
-+			.n_voltages	= ARRAY_SIZE(ldo_vintcore_ab8505_voltages),
-+			.volt_table	= ldo_vintcore_ab8505_voltages,
- 		},
- 		.load_lp_uA		= 5000,
- 		.update_bank		= 0x03,
+-	/* fix for hardware before ab8500v2.0 */
+-	if (is_ab8500_1p1_or_earlier(ab8500)) {
+-		if (info->desc.id == AB8500_LDO_AUX3) {
++	/* Handle the different VAUX3 implementations in early AB8500 cuts. */
++	if (info->desc.id == AB8500_LDO_AUX3) {
++		if (is_ab8500_1p0_or_earlier(ab8500)) {
++			info->desc.ops = &ab8500_regulator_mode_ops;
++			info->desc.n_voltages = 1;
++			info->desc.volt_table = fixed_1200000_voltage;
++			info->voltage_mask = 0;
++		} else if (is_ab8500_1p1_or_earlier(ab8500)) {
+ 			info->desc.n_voltages =
+ 				ARRAY_SIZE(ldo_vauxn_voltages);
+ 			info->desc.volt_table = ldo_vauxn_voltages;
 -- 
 2.53.0
 
