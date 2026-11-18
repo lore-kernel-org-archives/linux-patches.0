@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025096;
-	b=Lq1hUJSSV5TBpZZWH502HQ/cfK52MXvLUk5mFt7nX7t3jk8Mru11qpUHQNqSplmuL3P+
-	 E2hHrjObDwsEIIqpgo9bk5/neIvoLzgGPM4UtYwf0/UXGSLEMQuJVdT1pk2Y0zJsjVf58
-	 36NDSt3o2TGhElqZJT1eX/HRbpB0FVNiXKXb1H2ArpihoaadfUVY3M9mpGGUYHhQicUx0
-	 LaGB41Qnxe0XHldrAqVV8kMsI3owuF3b7yVpvX3dh8/aVOx+CysleTSVgJO/MuIN7ltXX
-	 7FnIEkEQ8lztug/3UCyKmNntoQxqFwXXHRUPdTH4zrkMMP7052SCFGik5Ppn4lEb8pg==
+	t=1795025099;
+	b=IMG1Ukj94ysHV8HEanYYCzAnKkB5XBAKxxF1DK1fgSL3p0+wbwyCOj9vWL8VXIDLw702
+	 9I1s5BMM2yL90ZZVqTuuxrLyueXdAaJbDPfDi24VeSfAIyDGFmuXYHyzhBcdxHmXAopBy
+	 rMVEq6/G0nVH04fmOG9NAUgl1eSHxCxVdE0+3Oed8TYaCAHIQC6/OydFqhvduER7CrA5J
+	 pufUpZAFnnuAIHrGTe3kEIVH5dje18Wl7fodO/Pbq9lRZgWNJawDKXXiWnakv7JKNCUyV
+	 HlNjzeQPCdroe8a2MsF2dE8IX71fq/f89OEfaUUwSnbFqU+xteD7FiprkrNH9F8K0gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025096;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025099;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SFrRHshpC9nJFtkfSEY7mgQZwv3nRuycaNVFkdbtTTg=;
-	b=wyr/wdtEs99gag7DhikS4nNDsG3ToaQ6nS01joGIy73q4V0Jx06MPdPsAcioimcYbW5t
-	 +y4UlluQ26iSRgliU5X5IixBVWU1vAi/vRQjx7hjpqkCZOw2dRV7j5SJ3pm9K4lljNEoE
-	 42i5LYYl6Gxe80LPmcSXt6nnPmg/5um6SEg0FpB23iZaOWYxWjaF6ZXPzvJ+0Lhf7tggB
-	 APcXzPk6eCSQ+JMEGbIpfg7HFzJzSJDxtjOqQRcMnh1G0vkxojz6WuA18cicFMXJHE9fN
-	 GurWv+SkwoKUqSXA0LI7Wp2RIAKkmxdtjaXGQNi5SiclMUAuAf88QZ7YVfYOsdE/ctg==
+	bh=3emBemrPlRNKSoWmkHkHpDfjp3WCMKz1VOi56kBRb7s=;
+	b=lNobXxYErxvjk0JzClWUBhaW9LMhchVZGID4mc4iNh5Tn85kU04BbB5jv9BC/R6CBxeB
+	 D83Pzqc41JZAP0J0y3CIndiN0GWKLSIMff26O0jeHDao+Cpx2bTFOufYWYSoaVB+DpiWz
+	 DDVuXx0T8G5gZz2hXtgRJ/T6kdEFDTUabmBNlnJ4burzWy9d5Gx5+NxJbEwKrazNlV9A+
+	 Zt38AejgSw7JDXjLrdLcJWOBziYjaH5QsGyncu1eUKaQIzFEtYTVsjpOZEb0QXP1barTy
+	 eU22oGUmWQwtTfSQsteHBDHY6kTJ+OEZtpp7b48B9J6CfeENfgbGRn9FvQmHXWM0cWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xknhw6mA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f9qCNwNc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450BD606A31C;
-	Wed, 18 Nov 2026 18:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A66606A31C;
+	Wed, 18 Nov 2026 18:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xknhw6mA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C0E1F000C5;
-	Wed, 18 Nov 2026 18:04:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f9qCNwNc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0151F000C4;
+	Wed, 18 Nov 2026 18:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025096;
-	bh=SFrRHshpC9nJFtkfSEY7mgQZwv3nRuycaNVFkdbtTTg=;
+	s=korg; t=1795025099;
+	bh=3emBemrPlRNKSoWmkHkHpDfjp3WCMKz1VOi56kBRb7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xknhw6mAcLo4xy1a8R5wHHw2FvWxCq7wmE4MMsjuMp8ZFczqBh0nIT7NQMHwHgLkv
-	 vU5ShxnuXRDuaZvRnzKzeketbZXPAs3+5ilM6GTPvDwOj4qpNtZO6nGKd7KdTA8Oy4
-	 98CS1LjJAmMlGboH24OFIKgGhMpjmiOetb+LbFys=
+	b=f9qCNwNcpejkQ68zJdvIawZzLz8QdjHWWG3P84PO2CC6z3BC+GLUvybsHznM4q5Az
+	 nWj2nEysHjSzdl7fvhbwZNgLbNlL7sEE3mMs6IYiigznwYGZLBcRk8BWY7DHKWJrq9
+	 hs5cHifGtNlBJF7+uhYI3tC7u41HwhX6DFp/UCeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jasper Wise <jaspwise@amazon.co.uk>,
+	Daniel Zahka <daniel.zahka@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0931/2151] misc: nsm: mark device ready before registering the hwrng and misc device
-Date: Wed, 18 Nov 2026 15:44:26 +0100
-Message-ID: <20261118150156.409542086@linuxfoundation.org>
+Subject: [PATCH 6.18 0958/2151] eth: fbnic: take netif_addr_lock_bh() around rx mode address programming
+Date: Wed, 18 Nov 2026 15:44:53 +0100
+Message-ID: <20261118150157.360582785@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -67,64 +69,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jasper Wise <jaspwise@amazon.co.uk>
+From: Daniel Zahka <daniel.zahka@gmail.com>
 
-[ Upstream commit e15596e84c818a2b727d2a7cf742a29331e44c43 ]
+[ Upstream commit 96e7f9122aae0ed000ee321f324b812a447906d9 ]
 
-nsm_device_probe() registers an hwrng provider and /dev/nsm.
-hwrng_register() can make this the current RNG, and the hwrng fill kthread
-finds it through the RCU-protected get_current_rng() rather than under the
-rng_mutex that hwrng_register() holds, so it can be in nsm_rng_read()
-offering buffers and kicking the queue before probe has returned.
+When __fbnic_set_rx_mode() is called from contexts other than
+.ndo_set_rx_mode_async(), the uc and mc addr lists are accessed
+without the addr lock that __hw_addr_sync_dev() and
+__hw_addr_unsync_dev() require. Wrap these unprotected accesses with
+netif_addr_lock_bh(). fbnic_clear_rx_mode() has similar issues.
 
-The driver never calls virtio_device_ready(), so DRIVER_OK is set on its
-behalf by virtio_dev_probe(), only once probe has returned. The virtio
-spec is explicit about that ordering in 3.1 Device Initialization:
-  |  The driver MUST NOT send any buffer available notifications to the
-  |  device before setting DRIVER_OK.
-
-A device that waits for DRIVER_OK before servicing the queue therefore
-leaves that read unanswered.
-
-Set DRIVER_OK once the virtqueue exists and before either interface is
-registered, so that the queue is usable by the time anything that can reach
-it is published; commit f5866db64f34 ("virtio_console: enable VQs early")
-and commit 1d774589f924 ("i2c: virtio: mark device ready before registering
-the adapter") do the same for the same reason. The err_hwrng and err_misc
-paths then unwind a device that is live, so reset it before deleting the
-virtqueue - the core only adds VIRTIO_CONFIG_S_FAILED to the status when
-probe fails, it does not reset.
-
-Fixes: b9873755a6c8 ("misc: Add Nitro Secure Module driver")
-Signed-off-by: Jasper Wise <jaspwise@amazon.co.uk>
-Link: https://patch.msgid.link/20260813083752.581981-1-jaspwise@amazon.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: eb690ef8d1c2 ("eth: fbnic: Add L2 address programming")
+Signed-off-by: Daniel Zahka <daniel.zahka@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260617-linux-fbnic-hwaddr-v1-1-3f9f5dee7f99@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: d261a371e3b7 ("fbnic: Rework the BMC state pulled from the capabilities message")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/nsm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/meta/fbnic/fbnic_netdev.c | 7 ++++++-
+ drivers/net/ethernet/meta/fbnic/fbnic_pci.c    | 4 ++++
+ drivers/net/ethernet/meta/fbnic/fbnic_rpc.c    | 2 ++
+ 3 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/misc/nsm.c b/drivers/misc/nsm.c
-index c3b474450d159..ba43946b9e39a 100644
---- a/drivers/misc/nsm.c
-+++ b/drivers/misc/nsm.c
-@@ -440,6 +440,8 @@ static int nsm_device_probe(struct virtio_device *vdev)
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
+index d6100ce2bdc1c..fe995632a42c6 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
+@@ -262,8 +262,11 @@ static int fbnic_set_mac(struct net_device *netdev, void *p)
  
- 	mutex_init(&nsm->lock);
+ 	eth_hw_addr_set(netdev, addr->sa_data);
  
-+	virtio_device_ready(vdev);
-+
- 	/* Register as hwrng provider */
- 	nsm->hwrng = (struct hwrng) {
- 		.read = nsm_rng_read,
-@@ -472,6 +474,7 @@ static int nsm_device_probe(struct virtio_device *vdev)
- err_misc:
- 	hwrng_unregister(&nsm->hwrng);
- err_hwrng:
-+	virtio_reset_device(vdev);
- 	vdev->config->del_vqs(vdev);
- err_init_vq:
- 	return rc;
+-	if (netif_running(netdev))
++	if (netif_running(netdev)) {
++		netif_addr_lock_bh(netdev);
+ 		__fbnic_set_rx_mode(fbn->fbd, &netdev->uc, &netdev->mc);
++		netif_addr_unlock_bh(netdev);
++	}
+ 
+ 	return 0;
+ }
+@@ -308,8 +311,10 @@ void fbnic_clear_rx_mode(struct fbnic_dev *fbd)
+ 	/* Write updates to hardware */
+ 	fbnic_write_macda(fbd);
+ 
++	netif_addr_lock_bh(netdev);
+ 	__dev_uc_unsync(netdev, NULL);
+ 	__dev_mc_unsync(netdev, NULL);
++	netif_addr_unlock_bh(netdev);
+ }
+ 
+ static int fbnic_hwtstamp_get(struct net_device *netdev,
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
+index 74bd390026e4c..0ae0f0cf24ad0 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
+@@ -135,7 +135,9 @@ void fbnic_up(struct fbnic_net *fbn)
+ 
+ 	fbnic_rss_reinit_hw(fbn->fbd, fbn);
+ 
++	netif_addr_lock_bh(fbn->netdev);
+ 	__fbnic_set_rx_mode(fbn->fbd, &fbn->netdev->uc, &fbn->netdev->mc);
++	netif_addr_unlock_bh(fbn->netdev);
+ 
+ 	/* Enable Tx/Rx processing */
+ 	fbnic_napi_enable(fbn);
+@@ -176,7 +178,9 @@ static int fbnic_fw_config_after_crash(struct fbnic_dev *fbd)
+ 	}
+ 
+ 	fbnic_rpc_reset_valid_entries(fbd);
++	netif_addr_lock_bh(fbd->netdev);
+ 	__fbnic_set_rx_mode(fbd, &fbd->netdev->uc, &fbd->netdev->mc);
++	netif_addr_unlock_bh(fbd->netdev);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_rpc.c b/drivers/net/ethernet/meta/fbnic/fbnic_rpc.c
+index fe95b6f696463..bc0f38b6a2b2b 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_rpc.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_rpc.c
+@@ -244,7 +244,9 @@ void fbnic_bmc_rpc_check(struct fbnic_dev *fbd)
+ 
+ 	if (fbd->fw_cap.need_bmc_tcam_reinit) {
+ 		fbnic_bmc_rpc_init(fbd);
++		netif_addr_lock_bh(fbd->netdev);
+ 		__fbnic_set_rx_mode(fbd, &fbd->netdev->uc, &fbd->netdev->mc);
++		netif_addr_unlock_bh(fbd->netdev);
+ 		fbd->fw_cap.need_bmc_tcam_reinit = false;
+ 	}
+ 
 -- 
 2.53.0
 
