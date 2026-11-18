@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041006;
-	b=lbV7T4k3cEGwPqtyxPKlxNPyczsvKQATyZJHn0w81cGxlp7VM/gENNDtih8G7ZcjzOR3
-	 VN8znfwqFaAEs5MVPqg59+sMfkd2I6Q9NjANWMa7dcAVQPxKpHsvhG7+1uLC/At2qHSo7
-	 arWBG/SOoJqp3zpqrZlmtQ6Zngqa8e4O5Rfv1Bt53F36sVbNPn+cElb1zDsz6799MhjS5
-	 CCUjSUWjuHkqz3ap2gdobU2dHbQt9u4SoHcAsM1QHa+rRYrG2h0bMK/w79xzxAuZhYGio
-	 bm3wLSomCe6niKSi03mkVZ0LhV7JX5glKZPOTNidIPz4GW3CE4OsD5tj0NI9YIUOJeQ==
+	t=1795041009;
+	b=DsR553V7kc8+Yv4nwtaxhBNqWtACHLoUvGwjxDaexsbV88e/l/6jc5Ow0qgpawl75nqi
+	 kdDDz3WoJ7gR9lt8t1dc0+mv1eAPGmbnAftwo5jabCxaDPCsBoeUfkoKiMqDC5dBBlb51
+	 SRAe1co5eYLWkib9i3hJBB8MM7WyAPFVgpGNGT9ql5jbzPE3lEVdPgEwWENAA1o/CiekA
+	 u60/dNJas5qNVwgU/6x8iwRX6iei0Tjif2wiryMzde1viXVw9FwkgA3OgagXSKzDL4pnF
+	 WnjpG8tVbnCFRTvdFlY4A/6cacMREmqO/LjDE66cpFWcHUT8btHJTAVftOcdlYeha1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041006;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041009;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DyIxE3ueySWFEAroKplSC74z3chQouiHPutIfd4ANo8=;
-	b=iKw6tDD4jdpPMTp5/7hJg+gqdghVegZiIdPBHqe/0ACHOGQanwILKQhMQevAt1W7m7Lp
-	 D6h/94hh/sqXbQXAc8PHVNQUQRb53nS39T5mVbB0mU97WKl33VtUdDmUl4t1nOBRgsqLY
-	 Fr6wYHHWC3qMVt2+IYJ2bdpXEaAlyog6zf1RDNuENBbGfxEOD23p241Pc7C+e6tqmPse3
-	 17sOmiRworUCKlwS+z90709YbYz8zmN5MeAPuW/v+JfEfkyIw8cJRIHHqoEVsfHWFNvh9
-	 1vgZ7JvZfEuigxT+uau5He2Sq0ow99nY1VaBJUWAe9W6S2GzZkFy2gJqbug7BoFSYRg==
+	bh=H++sO0d0m0QtxPo38Ax+6lanGFN+OAp3v39PH7OHMbo=;
+	b=o1ruuPE33C7soqi4p450TuHWHPotOoO4QryGkY9PHt2EiFZjHYJUBbAbRois/wWyv68E
+	 gDQX5iIBb87L7d6aqljyQaxykjvYVBiqriQttqcbmVDRWVAKUyZRhBWRage3hcEwv8OC9
+	 2L3+tgjznJkzdyDJ2gDK9j+Lpv9YOrtbUTpqT6k6Nbh/3p+Q6QYYqnmtzbUghn3yQq1VP
+	 jorp85MXLqVOjPqXFbWhN7HJRrzRlP5XsT8ecMlsR0GybRhTpQTkU6U2j8TcFpKv2m2lc
+	 2+AGR/AkSm6BWIvwE6IrOai7gBAxr3zkV3sBV/gTl6FjVzjHYJuakAkU5xL8JR598NA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1K+8a+ER;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhKE7Tg2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D46606A31C;
-	Wed, 18 Nov 2026 22:30:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75990606A31C;
+	Wed, 18 Nov 2026 22:30:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1K+8a+ER
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97AE81F000C4;
-	Wed, 18 Nov 2026 22:30:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhKE7Tg2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 715B21F000C4;
+	Wed, 18 Nov 2026 22:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041006;
-	bh=DyIxE3ueySWFEAroKplSC74z3chQouiHPutIfd4ANo8=;
+	s=korg; t=1795041009;
+	bh=H++sO0d0m0QtxPo38Ax+6lanGFN+OAp3v39PH7OHMbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1K+8a+ERzWRtMB43Um5nTmoo1YeUw1pyTZwAzJrjyumubKoaHEHik8NCcsdaBZ6eH
-	 t3qMWhGQeEsY4BsJ0R2EhdZK0CG0pq/qxAGgmCWk60dao7nC1EEr3UKo9pJDWaKP3V
-	 uSxtMxH9KfgeSR5ks3RPnlk8FUivBvGr3ls0FCSk=
+	b=MhKE7Tg2O1iGnIVUyLhVyKxNi+9x3pPj0guv8hjXa68G0DQJ3BTGn6VaD2NOFrB/M
+	 3GqRfXQDs7AQn+YThlUiVffa52c/ucQWttKNCR8PpN0ndn/h0WeBA9yh90+0GgFJHH
+	 z3zo7EK9PuZXgvQrPRKz9PuU/8q8aZBzGW0fEVoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2658/3318] wifi: mt76: mt7996: validate firmware event lengths before parsing
-Date: Wed, 18 Nov 2026 15:54:40 +0100
-Message-ID: <20261118150440.773871164@linuxfoundation.org>
+Subject: [PATCH 6.6 2659/3318] wifi: mt76: Use PTR_ERR_OR_ZERO() to simplify code
+Date: Wed, 18 Nov 2026 15:54:41 +0100
+Message-ID: <20261118150440.801503585@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,106 +68,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit c88f880c6430948492a4eee00d90e48fa800febf ]
+[ Upstream commit ed160b600ffc1a23fe04c6e8c1b0210f70c45d39 ]
 
-Two unsolicited event handlers trusted firmware-provided lengths:
-mt7996_mcu_rx_all_sta_info_event() looped over res->sta_num without
-checking it against skb->len, reading the flex array out of bounds; and
-mt7996_mcu_rx_log_message() could compute a negative or oversized length
-from tlv->len and feed it to %.*s and the debugfs log path. Bound both
-against the actual skb length.
+Return PTR_ERR_OR_ZERO() instead of return 0 or PTR_ERR() to
+simplify code.
 
-Fixes: adde3eed4a75 ("wifi: mt76: mt7996: Add mcu commands for getting sta tx statistic")
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: b8286bc7fe52 ("wifi: mt76: mt7915: unregister thermal cooling device on hwmon failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7996/mcu.c   | 46 +++++++++++++++++--
- 1 file changed, 41 insertions(+), 5 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7615/init.c | 5 +----
+ drivers/net/wireless/mediatek/mt76/mt7915/init.c | 5 +----
+ drivers/net/wireless/mediatek/mt76/mt7915/soc.c  | 5 +----
+ drivers/net/wireless/mediatek/mt76/mt7921/init.c | 5 +----
+ 4 files changed, 4 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index 4806a7916c1ef..276264c950a09 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -364,21 +364,32 @@ mt7996_mcu_rx_log_message(struct mt7996_dev *dev, struct sk_buff *skb)
- {
- #define UNI_EVENT_FW_LOG_FORMAT 0
- 	struct mt7996_mcu_rxd *rxd = (struct mt7996_mcu_rxd *)skb->data;
--	const char *data = (char *)&rxd[1] + 4, *type;
--	struct tlv *tlv = (struct tlv *)data;
-+	const char *data, *type;
-+	struct tlv *tlv;
- 	int len;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/init.c b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
+index e50dcfc8bcf2e..b4ab52a64fa49 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
+@@ -61,10 +61,7 @@ int mt7615_thermal_init(struct mt7615_dev *dev)
  
-+	if (skb->len < sizeof(*rxd))
-+		return;
-+
- 	if (!(rxd->option & MCU_UNI_CMD_EVENT)) {
--		len = skb->len - sizeof(*rxd);
- 		data = (char *)&rxd[1];
-+		len = skb->len - sizeof(*rxd);
- 		goto out;
- 	}
+ 	hwmon = devm_hwmon_device_register_with_groups(&wiphy->dev, name, dev,
+ 						       mt7615_hwmon_groups);
+-	if (IS_ERR(hwmon))
+-		return PTR_ERR(hwmon);
+-
+-	return 0;
++	return PTR_ERR_OR_ZERO(hwmon);
+ }
+ EXPORT_SYMBOL_GPL(mt7615_thermal_init);
  
-+	if (skb->len < sizeof(*rxd) + 4 + sizeof(*tlv))
-+		return;
-+
-+	tlv = (struct tlv *)((char *)&rxd[1] + 4);
- 	if (le16_to_cpu(tlv->tag) != UNI_EVENT_FW_LOG_FORMAT)
- 		return;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+index 711de6b1ce5bd..8d7d828e28206 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+@@ -215,10 +215,7 @@ static int mt7915_thermal_init(struct mt7915_phy *phy)
  
--	data += sizeof(*tlv) + 4;
-+	if (le16_to_cpu(tlv->len) < sizeof(*tlv) + 4)
-+		return;
-+
-+	data = (char *)tlv + sizeof(*tlv) + 4;
- 	len = le16_to_cpu(tlv->len) - sizeof(*tlv) - 4;
-+	len = min_t(int, len, skb->len - (int)(data - (char *)skb->data));
+ 	hwmon = devm_hwmon_device_register_with_groups(&wiphy->dev, name, phy,
+ 						       mt7915_hwmon_groups);
+-	if (IS_ERR(hwmon))
+-		return PTR_ERR(hwmon);
+-
+-	return 0;
++	return PTR_ERR_OR_ZERO(hwmon);
+ }
  
- out:
- 	switch (rxd->s2d_index) {
-@@ -491,13 +502,38 @@ static void
- mt7996_mcu_rx_all_sta_info_event(struct mt7996_dev *dev, struct sk_buff *skb)
- {
- 	struct mt7996_mcu_all_sta_info_event *res;
-+	u32 elem_size;
-+	u16 sta_num;
- 	u16 i;
+ static void mt7915_led_set_config(struct led_classdev *led_cdev,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/soc.c b/drivers/net/wireless/mediatek/mt76/mt7915/soc.c
+index f182ea7c5f1b8..40d825ce0a7e0 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/soc.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/soc.c
+@@ -1219,10 +1219,7 @@ static int mt798x_wmac_init(struct mt7915_dev *dev)
+ 		return PTR_ERR(dev->sku);
  
-+	if (skb->len < sizeof(struct mt7996_mcu_rxd))
-+		return;
-+
- 	skb_pull(skb, sizeof(struct mt7996_mcu_rxd));
+ 	dev->rstc = devm_reset_control_get(pdev, "consys");
+-	if (IS_ERR(dev->rstc))
+-		return PTR_ERR(dev->rstc);
+-
+-	return 0;
++	return PTR_ERR_OR_ZERO(dev->rstc);
+ }
  
- 	res = (struct mt7996_mcu_all_sta_info_event *)skb->data;
-+	if (skb->len < sizeof(*res))
-+		return;
-+
-+	sta_num = le16_to_cpu(res->sta_num);
-+	switch (le16_to_cpu(res->tag)) {
-+	case UNI_ALL_STA_TXRX_RATE:
-+		elem_size = sizeof(res->rate[0]);
-+		break;
-+	case UNI_ALL_STA_TXRX_ADM_STAT:
-+		elem_size = sizeof(res->adm_stat[0]);
-+		break;
-+	case UNI_ALL_STA_TXRX_MSDU_COUNT:
-+		elem_size = sizeof(res->msdu_cnt[0]);
-+		break;
-+	default:
-+		return;
-+	}
-+
-+	if (sta_num > (skb->len - sizeof(*res)) / elem_size)
-+		sta_num = (skb->len - sizeof(*res)) / elem_size;
+ static int mt798x_wmac_probe(struct platform_device *pdev)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/init.c b/drivers/net/wireless/mediatek/mt76/mt7921/init.c
+index 61de6b03fa0be..1748625243c14 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/init.c
+@@ -57,10 +57,7 @@ static int mt7921_thermal_init(struct mt792x_phy *phy)
  
--	for (i = 0; i < le16_to_cpu(res->sta_num); i++) {
-+	for (i = 0; i < sta_num; i++) {
- 		u8 ac;
- 		u16 wlan_idx;
- 		struct mt76_wcid *wcid;
+ 	hwmon = devm_hwmon_device_register_with_groups(&wiphy->dev, name, phy,
+ 						       mt7921_hwmon_groups);
+-	if (IS_ERR(hwmon))
+-		return PTR_ERR(hwmon);
+-
+-	return 0;
++	return PTR_ERR_OR_ZERO(hwmon);
+ }
+ 
+ static void
 -- 
 2.53.0
 
