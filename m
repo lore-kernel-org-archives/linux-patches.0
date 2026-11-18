@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052246;
-	b=YnWNXTP8uPX2NBujivpfIMsLxuY1GmUVvaOkwcyG+k1ESG/dAnMXjYTV/yMNz02w98M+
-	 j6a4drV97brp7pWIS1WfP+Gf7ciCLklsiEGqZfi+f8LNkzJpl+ariPKfmCLMA8ljplmjh
-	 D1PTDE2nytJW1XNGHYJ/svtyBOQIcvY1a15HnOvqnk6yuj3u6t9F+ozoCyhIqbOy7j6V6
-	 PGCU9U6wjciVLYXuAq7WIrDMrvywRTx5Nt8lUUrWNX0SRk8FJhbWrOaRKpy7Fcl+yn7ke
-	 uJ0Lgjg2oEGUJwJr1e6JxlcL5eWSXW09C50JHmqDoEa4G9gMlP4opBcmZqUtg8Hof8Q==
+	t=1795052249;
+	b=SlTBkiu5pC3nBmXm1gilA9DLgNu2X0ju+GIrAT8uKXgQs/d9QRFxxBbHSHjWcXUmcp0G
+	 CnUUQU+bj9YjgKW4qF2ZINpCka05pO+T7VHfYHWagkLFyn0i6fPCpE0nbrQDx5Uv8Hs0i
+	 LFigRjKFcn1yzuubtKVROrhVj5LPspjhqo2BurMHTlMeT2ulX966gPVO1fei7SVfkMqgj
+	 e2e2GDl1uQnJG3qi0s2mvgCCGh2+tRSe53oHZjmsstVtD4+uuzenVDXrensR0A+ADCa14
+	 r3LAuSj8XoXkEG4+53iCTDGyJY1BvrPKFv1tEU+sZpnrLq5SNBvM29Hqat7dZjXflaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052246;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052249;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UbOIK+jO5OPc9O/9/ZxOLDCSAOqHXacpEgKCiuFr6E4=;
-	b=IgkaUJR48wBncOKVeBkBHgg+BzWxJGvCFx6398aOik2O7ZABz5L4T38zkh8tV4Qj+Lwe
-	 asIN/dUeg8B/KUIlaTFRzDAIzcIe8UR1v7RSDuWmSViNfeT5AqKz+qg2IWXMvaBjN9i4x
-	 zHrF7lXMokftsWTGepi4j2Z9GvM+PQaBrrHPXrTL+byi4z1t4loQ3dZY50L585/VbrCgt
-	 xnYuvBBgP6FtqMVWVJukgwR1hJQpZWpST/BaB2Y8aXduSROYs6LpvvqUIJLywE3N9HSUY
-	 Qh7jwZ7/zfFW9yFrqrHuHXfwZbjQIuo50Oxht6V5005+Hv0F+3e5cVBxCNNIjdJIPKQ==
+	bh=uvhmgE1IVzIdRWZc5Np9FYsyUZMBOj7gttdww3IO2l4=;
+	b=gdsBS/6ucK7BBmhI54cCOyIGPSHb9LgrrUOuBeVMC20jB2i1o4nsKmaGYlPUtH4QmbP7
+	 tOD/QPhh4LB1nW7qayd6KysVTgtBhKDlPj/6PUnoSJEXR0DHUL7xGKvnHGj2WD7lf3ap1
+	 NkmCz/d4Jnabfrt3W6u/d4pE3mf7lO/7sOjD+FSGxj3ht8Yc+prellDL+1owxnTtyg209
+	 NVUYoW/WwW6v3GL1sNCXk3ylYwzALtB3dXUd9X1IA9KiZVjWqgkYHhLLAJLWGWkr+Z8j/
+	 6XUP/QGVEMQWR0ScK2kMnPdn9+bTwxzBUT23D60fF9yO2quObzt/nn4eMtKdKrsZSlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BXgdPdS3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cSMyfgtt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 829C6606A32A;
-	Thu, 19 Nov 2026 01:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965D0606A32A;
+	Thu, 19 Nov 2026 01:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BXgdPdS3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67EA1F000C4;
-	Thu, 19 Nov 2026 01:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cSMyfgtt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B031F000C4;
+	Thu, 19 Nov 2026 01:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052246;
-	bh=UbOIK+jO5OPc9O/9/ZxOLDCSAOqHXacpEgKCiuFr6E4=;
+	s=korg; t=1795052249;
+	bh=uvhmgE1IVzIdRWZc5Np9FYsyUZMBOj7gttdww3IO2l4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BXgdPdS3NUvk6l9TP48L8Z9XthCbwwiORsgdL8nkLGf7ZGaU/9wksHQaRLZ+Faiwf
-	 2zIW0gFLI7u6oVnZr9U0hucziFldGr/l/4oUMLdvtxOm3QsB79goNCW/7t/xzb7cQ5
-	 p7qawiT30XCsDAJvsF3+CpjsqaL2evh0nOk/TKjY=
+	b=cSMyfgtteNuoVeH98qSPDJtiBzALXf6md9fMzTwoImYYinr4yaCPxi/a6IW9Lv7AI
+	 4d2UJgCoagdaWVolPuC/iEXXDZsJ4bzfujnwD90VKGNNy6aMoJk6WOcJLA9tv8cg+B
+	 tNbYzSKVlQ3ltGVsUa/Ur+etXMfZvlwQpLBqWfxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0495/2214] ASoC: wm8994: Fix runtime PM imbalance in wm8994_component_probe()
-Date: Wed, 18 Nov 2026 15:36:11 +0100
-Message-ID: <20261118150030.972468582@linuxfoundation.org>
+Subject: [PATCH 5.15 0496/2214] ASoC: arizona-jack: Fix runtime PM imbalance in arizona_start_hpdet_acc_id()
+Date: Wed, 18 Nov 2026 15:36:12 +0100
+Message-ID: <20261118150031.009325918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,47 +71,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 480a5528cb6268d626632d45d4a1f29b4c0c11df ]
+[ Upstream commit e04dcb895b4622d67164e218a1179785e2c75999 ]
 
-In wm8994_component_probe(), pm_runtime_get_sync() is invoked before
-reading the GPIO configuration registers. If either regmap_read() fails,
-the function jumps to err_irq without calling pm_runtime_put(), leaving
-the runtime PM usage count incremented and causing a leak.
+In arizona_start_hpdet_acc_id(), pm_runtime_get_sync() is called to keep
+the device powered during headphone detection. If setting the HPDET mode
+or starting the measurement fails and the function jumps to err,
+pm_runtime_put_autosuspend() was not called while info->hpdet_active was
+set to false, resulting in a runtime PM usage count leak.
 
-Add pm_runtime_put() on both GPIO read failure paths before jumping to
-err_irq.
+Add pm_runtime_put_autosuspend() in the err error path to keep runtime PM
+balanced.
 
-Fixes: f5a2cda4f1db ("ASoC: wm8994: Ensure the device is resumed in wm89xx_mic_detect functions")
+Fixes: 9dd5e53d9d2f ("extcon: arizona: Retry HPDET identification for high impedance")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260916072737.1970990-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/20260916072900.1971595-1-vulab@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/codecs/arizona-jack.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index 6759db92f6c46..e9037cf0f2c0f 100644
---- a/sound/soc/codecs/wm8994.c
-+++ b/sound/soc/codecs/wm8994.c
-@@ -4352,6 +4352,7 @@ static int wm8994_component_probe(struct snd_soc_component *component)
- 	ret = regmap_read(control->regmap, WM8994_GPIO_1, &reg);
- 	if (ret < 0) {
- 		dev_err(component->dev, "Failed to read GPIO1 state: %d\n", ret);
-+		pm_runtime_put(component->dev);
- 		goto err_irq;
- 	}
- 	if ((reg & WM8994_GPN_FN_MASK) != WM8994_GP_FN_PIN_SPECIFIC) {
-@@ -4364,6 +4365,7 @@ static int wm8994_component_probe(struct snd_soc_component *component)
- 	ret = regmap_read(control->regmap, WM8994_GPIO_6, &reg);
- 	if (ret < 0) {
- 		dev_err(component->dev, "Failed to read GPIO6 state: %d\n", ret);
-+		pm_runtime_put(component->dev);
- 		goto err_irq;
- 	}
- 	if ((reg & WM8994_GPN_FN_MASK) != WM8994_GP_FN_PIN_SPECIFIC) {
+diff --git a/sound/soc/codecs/arizona-jack.c b/sound/soc/codecs/arizona-jack.c
+index 9c15ddba6008c..62e695bb69c42 100644
+--- a/sound/soc/codecs/arizona-jack.c
++++ b/sound/soc/codecs/arizona-jack.c
+@@ -704,6 +704,7 @@ static void arizona_start_hpdet_acc_id(struct arizona_priv *info)
+ 	snd_soc_jack_report(info->jack, SND_JACK_HEADPHONE,
+ 			    SND_JACK_LINEOUT | SND_JACK_HEADPHONE);
+ 
++	pm_runtime_put_autosuspend(arizona->dev);
+ 	info->hpdet_active = false;
+ }
+ 
 -- 
 2.53.0
 
