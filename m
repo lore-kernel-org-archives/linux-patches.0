@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045628;
-	b=mFGpthq2r8XKAEWU2I/vSRLJr1u8MfNkSHEW2ypJkkpl6el+4DAw9SBfChM4spOy7aDs
-	 ukxIqL0BRYCnMd6idxfiRrF6D3vzjkuwshFyx5jbTLlYkR5TH9r0JQADyYRUAU7xUqMsq
-	 KCnAH3COT2oCxoj8ZztzdVlyHmJ8J/a8LXh5HxFSGc6xubZPudayhVL231/ADWzPsgWZW
-	 8UKHIe3WuBkIRD4GQldfDQctY0MFPtFvWQmxE8lZqnjhjYS7g5OolcbyubwQsgVocAto9
-	 GqnS0TFsblyUmOmR7916eG3XCdeSoCcA2HZTYhzKqib8Tyow7EA7bWmTEjAXkJgFA2A==
+	t=1795045630;
+	b=pu+jiFRL0eMtCHP6zmj0uOnpEDdgcns6IgmHP09Y/LUBLizmGED06yTyTGIJ8DqPuBjR
+	 k8ZYmuMNGAV4cuFaU11B3rdOCSyE10qiXMTMOtCBgWeLSA/Tktx0Y8Z5+QVyxJi2oIFpR
+	 jOewR+B7TQwmnvkL6oz9wDOGgeU1QGi6pbAA99+oq3ua1bmXxLxOZqZEhh6AQwNEauLje
+	 lJF+8gkJyPV2mLeTnW4mamZHG1fnS4YvPhxW+ceCbkN6VicqUcczDR+BWHH0G1Z2BTVA5
+	 wl5shrV0dXdNXL5QAC5XoWwOXiC3hFDTefslU+F9SbCo4y6e1iiIcC0TlY40EpaoIog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045628;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045630;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K7WwgQwaFjpUYlp+pa5CKrN3LKEb4ExIpZoMeC/tN0M=;
-	b=42wmz3tpfedlryTlsYP1pwXKRQReBdFFf77vQ8LQPzZLqqLYXIZcEOvRYPwdS484lcH4
-	 b4vAGJf45/nusibS+Iabex7LAboldY79NdEw3fK/3rxH5hYOi1MMDSIUvuJGMMTLXiDZI
-	 J1OOK163KGj7FyIKONYudOoHBPwiQhJlN3M7MaXduc1Q3x0p7Ap+zyy67hwlXehGP2v36
-	 awxMBwG88qIFTXz8qm/6ZiKgMVTuV62M425lK9nDDyFmU9uK+3zn9AExGlMtcV3wB+Kb3
-	 3v2Q1uEm8CRlzBwR8AYuXa0i6oCXbyLZA5NwMfsbCATzV4tQZT5yYc3UBM747n5BJJA==
+	bh=hWDtk7muw5Zkz+YJDZamsEJOwvVSFPaVov6piR/sde8=;
+	b=iyxV5PRE38CaVR0MEdxoUZogHKc04+eINgAMWvyVswY5IMNlIWxQit1mR2xosDn+Obas
+	 Q3cIzOFV7M0RnT1WiTU3WJpNVI0K9iDsnwSJSYloUbbU0MrTYmng0AkG2oDmoi502HFKj
+	 hab1UYl/rFjecdQW3ceRnTU1EKDM2jwWaXwfUF+0oD+K8CoX/CI5ZocISCqfk/aiOsjpK
+	 LgadA2Zro/yHR52HOoxGx7IeDlSBKqFJftYU4u33ar8bNx7PWkcZuEbCZ6mt4CYL41D0m
+	 qptf75KuX/GS3RQ8fLiFZJ2f7JNKdQ8AvVDPxXg0T10Uso/nmby/FcWyXVXwb6lvM2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kuR1iR5a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cvXjHJNn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E300B606A31C;
-	Wed, 18 Nov 2026 23:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C249B606A31C;
+	Wed, 18 Nov 2026 23:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kuR1iR5a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B95A1F000C4;
-	Wed, 18 Nov 2026 23:47:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cvXjHJNn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC9D1F000C4;
+	Wed, 18 Nov 2026 23:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045627;
-	bh=K7WwgQwaFjpUYlp+pa5CKrN3LKEb4ExIpZoMeC/tN0M=;
+	s=korg; t=1795045630;
+	bh=hWDtk7muw5Zkz+YJDZamsEJOwvVSFPaVov6piR/sde8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kuR1iR5aYklzCNfem/iGuUdbh5gKQaQjdIruEeuY4J3YttvuzOE/ASbPpaX4b+KEX
-	 MIT6Z23zHs0v11A72O4RZjlFmfTUwKTEJsWDk81Bp8LmF7yqO+OIG5xGWkI248x11/
-	 R0nLZV3WMQZi7SdwNCcGQ4jAQG9jxMHujQbsFKtg=
+	b=cvXjHJNnNHTQonWmfmd0IFbwvhpLDYYMlbvehwsXpG8PsjiK9qmfV1+kog7vonETq
+	 CgwrtTe8CAWspQMpG0lASaz88kPrqxgE5QFKrCoY5kHyPWhxro0GJA8vL1eKJ+MR6+
+	 QnnMcmxDtHF3lmgnn2PBf5azDKl8VEatHgfck70k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragan Simic <dsimic@manjaro.org>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Geraldo Nascimento <geraldogabriel@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	syzbot+0f98b0c0bdeaab2dc2fd@syzkaller.appspotmail.com,
+	Sanan Hasanov <sanan.hasanov@ucf.edu>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0941/2857] PCI: rockchip-host: Do not attempt 5.0 GT/s retraining
-Date: Wed, 18 Nov 2026 15:32:55 +0100
-Message-ID: <20261118150235.485256940@linuxfoundation.org>
+Subject: [PATCH 6.1 0985/2857] hwmon: (corsair-cpro) Make wait_input_report_lock IRQ safe
+Date: Wed, 18 Nov 2026 15:33:39 +0100
+Message-ID: <20261118150237.070806501@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,71 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geraldo Nascimento <geraldogabriel@gmail.com>
+From: Sanan Hasanov <sanan.hasanov@ucf.edu>
 
-[ Upstream commit 2a1e6c382fb7567679c07bd6a7060fefc7a5edc9 ]
+[ Upstream commit e4fdc82f55cf0e3d5df5c88278da5baa76a109d1 ]
 
-Drop the 5.0 GT/s Link Speed retraining from Rockchip PCIe Root Complex
-Mode Operation, so-called host driver.
+ccp_raw_event() is the HID ->raw_event() callback and takes
+wait_input_report_lock with a plain spin_lock(). This callback can run
+in very different contexts depending on the transport: from process
+context (e.g. uhid, via a write() to /dev/uhid) with softirqs and
+interrupts enabled, and from URB completion, which is softirq context
+for HCDs using HCD_BH and hard interrupt context for HCDs that do not
+(e.g. OHCI, UHCI).
 
-The reason is that Shawn Lin from Rockchip has reiterated that there may be
-danger of "catastrophic failure" in using their PCIe with 5.0GT/s speeds.
+Taking the lock from process context with softirqs enabled while the
+same lock is also taken from softirq context can deadlock if the
+softirq interrupts the lock holder on the same CPU. Lockdep reports:
 
-While Rockchip has done so informally without issuing a proper errata, and
-the particulars are thus unknown, this may cause data loss or worse.
+  WARNING: inconsistent lock state
+  inconsistent {SOFTIRQ-ON-W} -> {IN-SOFTIRQ-W} usage.
+  ...
+   spin_lock include/linux/spinlock.h:347 [inline]
+   ccp_raw_event+0x51/0x110 drivers/hwmon/corsair-cpro.c:161
+   __hid_input_report+0x41c/0x580 drivers/hid/hid-core.c:2175
+   hid_irq_in+0x492/0x710 drivers/hid/usbhid/hid-core.c:287
+   __usb_hcd_giveback_urb+0x378/0x540 drivers/usb/core/hcd.c:1657
+   dummy_timer+0xa91/0x4cc0 drivers/usb/gadget/udc/dummy_hcd.c:2023
 
-This change is corroborated by RK3399 official datasheet [1], which states
-maximum link speed for this platform is 2.5 GT/s.
+For the same reason, the spin_lock_bh() in send_usb_cmd() is not
+sufficient when ccp_raw_event() is called from hard interrupt context.
 
-[1] https://opensource.rock-chips.com/images/d/d7/Rockchip_RK3399_Datasheet_V2.1-20200323.pdf
+Use spin_lock_irqsave() in ccp_raw_event(), since it may be called with
+interrupts already disabled, and spin_lock_irq() in send_usb_cmd(),
+which always runs in process context.
 
-Fixes: e77f847df54c ("PCI: rockchip: Add Rockchip PCIe controller support")
-Reported-by: Dragan Simic <dsimic@manjaro.org>
-Reported-by: Shawn Lin <shawn.lin@rock-chips.com>
-Link: https://lore.kernel.org/all/ffd05070-9879-4468-94e3-b88968b4c21b@rock-chips.com/
-Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
+Fixes: d02abd57e794 ("hwmon: (corsair-cpro) Protect ccp->wait_input_report with a spinlock")
+Reported-by: syzbot+0f98b0c0bdeaab2dc2fd@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0f98b0c0bdeaab2dc2fd
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/68f6353e3a2ea4914de36c42b6906e41282adad3.1781622998.git.geraldogabriel@gmail.com
+Signed-off-by: Sanan Hasanov <sanan.hasanov@ucf.edu>
+Link: https://patch.msgid.link/20261008205310.30832-1-sanan.hasanou@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rockchip-host.c | 20 --------------------
- 1 file changed, 20 deletions(-)
+ drivers/hwmon/corsair-cpro.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-rockchip-host.c b/drivers/pci/controller/pcie-rockchip-host.c
-index de521ad927c40..cf591101625dd 100644
---- a/drivers/pci/controller/pcie-rockchip-host.c
-+++ b/drivers/pci/controller/pcie-rockchip-host.c
-@@ -337,26 +337,6 @@ static int rockchip_pcie_host_init_port(struct rockchip_pcie *rockchip)
- 		goto err_power_off_phy;
- 	}
+diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
+index 62f9372f2d355..e0cf92896bc66 100644
+--- a/drivers/hwmon/corsair-cpro.c
++++ b/drivers/hwmon/corsair-cpro.c
+@@ -128,9 +128,9 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
+ 	 * the raw event parsing and marked the ccp->wait_input_report
+ 	 * completion as done.
+ 	 */
+-	spin_lock_bh(&ccp->wait_input_report_lock);
++	spin_lock_irq(&ccp->wait_input_report_lock);
+ 	reinit_completion(&ccp->wait_input_report);
+-	spin_unlock_bh(&ccp->wait_input_report_lock);
++	spin_unlock_irq(&ccp->wait_input_report_lock);
  
--	if (rockchip->link_gen == 2) {
--		/*
--		 * Enable retrain for gen2. This should be configured only after
--		 * gen1 finished.
--		 */
--		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL2);
--		status &= ~PCI_EXP_LNKCTL2_TLS;
--		status |= PCI_EXP_LNKCTL2_TLS_5_0GT;
--		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL2);
--		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
--		status |= PCI_EXP_LNKCTL_RL;
--		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
--
--		err = readl_poll_timeout(rockchip->apb_base + PCIE_CORE_CTRL,
--					 status, PCIE_LINK_IS_GEN2(status), 20,
--					 500 * USEC_PER_MSEC);
--		if (err)
--			dev_dbg(dev, "PCIe link training gen2 timeout, fall back to gen1!\n");
--	}
--
- 	/* Check the final link width from negotiated lane counter from MGMT */
- 	status = rockchip_pcie_read(rockchip, PCIE_CORE_CTRL);
- 	status = 0x1 << ((status & PCIE_CORE_PL_CONF_LANE_MASK) >>
+ 	ret = hid_hw_output_report(ccp->hdev, ccp->cmd_buffer, OUT_BUFFER_SIZE);
+ 	if (ret < 0)
+@@ -149,15 +149,16 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
+ static int ccp_raw_event(struct hid_device *hdev, struct hid_report *report, u8 *data, int size)
+ {
+ 	struct ccp_device *ccp = hid_get_drvdata(hdev);
++	unsigned long flags;
+ 
+ 	/* only copy buffer when requested */
+-	spin_lock(&ccp->wait_input_report_lock);
++	spin_lock_irqsave(&ccp->wait_input_report_lock, flags);
+ 	if (!completion_done(&ccp->wait_input_report)) {
+ 		memcpy(ccp->buffer, data, min(IN_BUFFER_SIZE, size));
+ 		ccp->buffer_recv_size = size;
+ 		complete_all(&ccp->wait_input_report);
+ 	}
+-	spin_unlock(&ccp->wait_input_report_lock);
++	spin_unlock_irqrestore(&ccp->wait_input_report_lock, flags);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
