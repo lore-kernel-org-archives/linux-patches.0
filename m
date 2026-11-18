@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060094;
-	b=w46UOwpygmmyFJ6OiDODtXi30SQOBYhAGjCvf5x8m+XSGR1tOzpcmiy4ngT9de/uUOZx
-	 b2FeyXOGmJHltv5g29nHu5f+akXNITBa+gZ5T3x6cZWA7kyPPPFzmTTAZJhnYpuZCtQXI
-	 AQ/kqEfgG58qHKgYJTe8epW5sAhGjnbtg5MaX99YnddvCVhiHUavDKPzDSr924H9ajsm3
-	 q+MgrQEdXIxIsRVXLLp0gjvSbKXb6UKZYcz3uxgtrGPsZGSUQW3FOpU5nh4rxbTbNxjxd
-	 eTfeZBRDQBIVNSyZlmbdo9R9N+Jf334iWxkDgw4lqN0SapeRqbAQaVt0I8e8SyIOOTg==
+	t=1795060097;
+	b=0Id3Ppo7d7/9YBO4J58U2vxFSzzyXJiVlBc5GU9564UgZvZ7tR43zBukocy4lQpRREQa
+	 NMiKrq3AQdY4+MAdJLkDdNEq84lE/2apM3nty3Fdgs/iAI5wSrRwVJpKDuQ7vWFDM16T8
+	 IfoTtOA9g0rx2RXfABzWXurf5GvvtPDJxN/57AJlOrbH3VMKQllEe4nx8LAWHiD1hmvdW
+	 5C6vq7eaJYwBx7qFoGTaUFGDjzC5U7UBBwefPTme0I8CPfma0J2upU7UdBx4xQi76G9ds
+	 KfjguPJ0e+aYBC99b4yj7ZAK3esKJEhh3koH/ojxW1AVFgwtnDEABGkg/lckOV90iCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060094;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060097;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VsrOjJ1IuheNdarLTse3UWmxStJj/bkdgU9ZkzvMHFI=;
-	b=jCXnUfcfPZrdEmOox+9eQOBYvGX26ShuuGHZR5+si5d2ZtkM0rr/WFFyK+vPr46xH9FH
-	 nWEaggBQ+hc41yXTNqKI0fJbEa5e/MXwzFg9nKYDgMTiGXdOwDBJUifTT3uCx6B3+EiYw
-	 LHiganWMzyQDdjjoco+xwT2cbFq5uzfZhfcPtjIYaHuWWf4uBp1qL3svwazZ6shzZeu0P
-	 k1I9tPG1q9qx8JRaSW3v+XmDfhq8riYdRjdy5G3Emq5HF+0zAJOUL8PaKELwQXYE1GJch
-	 yOMrWTE17CrUDEuV3fvcJeamAgbqBHhgpWXgBBhvpnuxZpEIntwL3gAD/8cun5mN0gw==
+	bh=xrCu1CAI19aN2+RoCmyK006jlPCeeife61FAykB46tc=;
+	b=eKDWpQpIigD+H/d0HrUYUX5UvdRi0/DO7lZoH8XeMtqfVFOmZYtlrtioO+KUC9RB/Gr6
+	 JcdFCqawOerNaOFVOJTHIhBD4MarZO2hpPe5L0kqARYw65RbLzF4kZfuODbHCIpRbHaF1
+	 DT2lRfOZIiVLYOJMY82T5FM1pf5WBQX3jXBdF9X/2Wtzu0Av6ELaQNEGVo6C1KLjrzYr0
+	 pE5YwqyVj64MiIIA2cldXPuLK8EG831s0qLc7/22kZ8Xmqgc3ovvIAihwElNg8at3UVKC
+	 qOYCMRRKQpAfDyLELv15xkDcdlQ2dhvGDfu478dwfEJuW6i41J4YxUrk7BeKUYWPPrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=da0tGDeI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Jk0KDp/U";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A45606A32A;
-	Thu, 19 Nov 2026 03:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C57606A326;
+	Thu, 19 Nov 2026 03:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=da0tGDeI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1299E1F000C6;
-	Thu, 19 Nov 2026 03:48:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jk0KDp/U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEEB81F000C4;
+	Thu, 19 Nov 2026 03:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060094;
-	bh=VsrOjJ1IuheNdarLTse3UWmxStJj/bkdgU9ZkzvMHFI=;
+	s=korg; t=1795060097;
+	bh=xrCu1CAI19aN2+RoCmyK006jlPCeeife61FAykB46tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=da0tGDeIIw+vzJbFR+bpvAxsBkotSZYhpXthXZ49KtQEzYKJ2axq5FbYpVRY8uO3q
-	 fY/GMgjkZ+JG3x1zZqiJmYIhekl39V4WRxemTi92aa1TAGerxAYvwLREZRNCA6Jq8W
-	 w9OWF1t4zzxustdUjFgRLOBMRUr87kXJGNk45uok=
+	b=Jk0KDp/U3FW0EJmG/sjQm4LcH41G3VI9rQdFmt5NZ5hedAe5U+GX46gAqRKzIIxNU
+	 4bFSf78qFcstLpM1l4EjRhs6Q9I3JxJogY+nhv2ZABGwszdI++BuMPp3gqNOrQPiiT
+	 Y9G7vwLzxrNH1jyB/ancS/EKCqo1CjYYUZSE3tGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francis Perron <francis@akrites.dev>,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Jason Wang <jasowangio@gmail.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Cong Zhang <cong.zhang@oss.qualcomm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1077/1848] apparmor: fix query_data() output overlapping the lookup key
-Date: Wed, 18 Nov 2026 15:51:55 +0100
-Message-ID: <20261118150003.254628680@linuxfoundation.org>
+Subject: [PATCH 5.10 1078/1848] virtio_blk: use synchronous quiesce in virtblk_freeze_priv()
+Date: Wed, 18 Nov 2026 15:51:56 +0100
+Message-ID: <20261118150003.332106030@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,110 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+From: Cong Zhang <cong.zhang@oss.qualcomm.com>
 
-[ Upstream commit d30844001360a403a511cf24fc75ecaa6a7a7544 ]
+[ Upstream commit 6c6dec7883f8eb10b326bc9d109a4990c885d949 ]
 
-In query_data(), buf and query point into the same multi_transaction
-buffer: buf at the start, query a few bytes in, and the lookup key
-right after the label string that query points to. Reusing the buffer
-is by design and is safe as long as the query is fully parsed before
-buf is written to, but the key is not: it is dereferenced on every
-iteration of label_for_each_confined(), after output has already been
-written. So when the label has more than one profile with a data
-table, the data of the first matching profile is written to buf while
-the key is still needed, and overwrites it if the data is large enough.
-The later lookups then run on a corrupted key. Besides, if the data has
-no NUL byte from the key's position to the end of the allocation,
-strhash() -> strlen() -> jhash() reads past the 4096-byte slab object,
-triggering an out-of-bound read:
+blk_mq_run_work_fn() can call blk_mq_sched_dispatch_requests() through
+blk_mq_run_dispatch_ops(). The dispatcher checks QUEUE_FLAG_QUIESCED
+while the flag is clear. It can then be preempted before it gets a
+request. At that time, it has no queue usage reference, so
+blk_mq_freeze_queue() does not wait for it.
 
-  BUG: KASAN: slab-out-of-bounds in jhash+0x595/0x5e0
-  Read of size 1 at addr ff1100001159d000 by task exploit/155
-  CPU: 0 UID: 1000 PID: 155 Comm: exploit Not tainted 7.3.0-rc7 #1
-  Call Trace:
-   jhash+0x595/0x5e0
-   aa_write_access+0x880/0x1400
-   vfs_write+0x26f/0xd20
-   ksys_write+0x115/0x210
+virtblk_freeze_priv() then calls blk_mq_quiesce_queue_nowait() and
+blk_mq_unfreeze_queue(). A new request can enter the queue. The old
+dispatcher can run again, use its old flag check, get the new request,
+and call virtio_queue_rq(). At the same time, virtblk_freeze_priv() can
+reset the device, delete the virtqueues, and free vblk->vqs. The old
+dispatcher can then use a deleted virtqueue or a NULL vblk->vqs, and the
+kernel can crash.
 
-Writing to the .access file is unprivileged (0666), but triggering this
-requires loaded profiles that carry a data table, which needs
-CAP_MAC_ADMIN and is not the case on default distribution policies.
+Fix this by using blk_mq_quiesce_queue(), which waits for dispatch code
+that was already running. Keep the existing freeze and unfreeze order.
+The queue remains quiesced until virtblk_restore_priv() calls
+blk_mq_unquiesce_queue().
 
-Fix by copying the key with kstrdup() before writing any output to buf,
-so the key stays valid across all loop iterations regardless of what
-gets written to the overlapping buffer.
-
-Fixes: 317d9a054e1c ("apparmor: update query interface to support label queries")
-Cc: stable@vger.kernel.org # v4.13+
-Cc: Francis Perron <francis@akrites.dev>
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
-[ sashal: adjusted context for label critical-section helpers that do not take needput arguments ]
+Fixes: 7678abee0867 ("virtio-blk: don't keep queue frozen during system suspend")
+Cc: stable@vger.kernel.org
+Acked-by: Jason Wang <jasowangio@gmail.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
+Link: https://lore.kernel.org/20260911-virtblk_sync_quiesce-v1-1-a883f8f31258@oss.qualcomm.com
+Link: https://patch.msgid.link/20261103-virtblk_sync_quiesce-v3-1-f40233f9bdd9@oss.qualcomm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ sashal: adjusted context to virtblk_freeze(), which uses queue freeze and unfreeze calls without memflags ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/apparmorfs.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/block/virtio_blk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
-index c957cd6188084..81580a2db2d12 100644
---- a/security/apparmor/apparmorfs.c
-+++ b/security/apparmor/apparmorfs.c
-@@ -739,7 +739,7 @@ static void profile_query_cb(struct aa_profile *profile, struct aa_perms *perms,
- static ssize_t query_data(char *buf, size_t buf_len,
- 			  char *query, size_t query_len)
- {
--	char *out;
-+	char *out, *keydup;
- 	const char *key;
- 	struct label_it i;
- 	struct aa_label *label, *curr;
-@@ -760,11 +760,18 @@ static ssize_t query_data(char *buf, size_t buf_len,
- 	if (buf_len < sizeof(bytes) + sizeof(blocks))
- 		return -EINVAL; /* not enough space */
+diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
+index c87c6a4eb3b33..8a492dd94fa11 100644
+--- a/drivers/block/virtio_blk.c
++++ b/drivers/block/virtio_blk.c
+@@ -955,7 +955,7 @@ static int virtblk_freeze(struct virtio_device *vdev)
  
-+	/* buf overlaps query, keep a copy of the key for the later lookups */
-+	keydup = kstrdup(key, GFP_KERNEL);
-+	if (!keydup)
-+		return -ENOMEM;
-+
- 	curr = begin_current_label_crit_section();
- 	label = aa_label_parse(curr, query, GFP_KERNEL, false, false);
- 	end_current_label_crit_section(curr);
--	if (IS_ERR(label))
-+	if (IS_ERR(label)) {
-+		kfree(keydup);
- 		return PTR_ERR(label);
-+	}
+ 	/* Ensure no requests in virtqueues before deleting vqs. */
+ 	blk_mq_freeze_queue(q);
+-	blk_mq_quiesce_queue_nowait(q);
++	blk_mq_quiesce_queue(q);
+ 	blk_mq_unfreeze_queue(q);
  
- 	/* We are going to leave space for two numbers. The first is the total
- 	 * number of bytes we are writing after the first number. This is so
-@@ -782,13 +789,14 @@ static ssize_t query_data(char *buf, size_t buf_len,
- 		if (!profile->data)
- 			continue;
- 
--		data = rhashtable_lookup_fast(profile->data, &key,
-+		data = rhashtable_lookup_fast(profile->data, &keydup,
- 					      profile->data->p);
- 
- 		if (data) {
- 			if (out + sizeof(outle32) + data->size > buf +
- 			    buf_len) {
- 				aa_put_label(label);
-+				kfree(keydup);
- 				return -EINVAL; /* not enough space */
- 			}
- 			outle32 = __cpu_to_le32(data->size);
-@@ -800,6 +808,7 @@ static ssize_t query_data(char *buf, size_t buf_len,
- 		}
- 	}
- 	aa_put_label(label);
-+	kfree(keydup);
- 
- 	outle32 = __cpu_to_le32(out - buf - sizeof(bytes));
- 	memcpy(buf, &outle32, sizeof(outle32));
+ 	/* Ensure we don't receive any more interrupts */
 -- 
 2.53.0
 
