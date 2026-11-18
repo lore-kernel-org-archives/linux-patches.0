@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020867;
-	b=cH77yJ44T/VZcQIUmXdIcHAo+3cF3vX2JBKyOvMSda4TRf2heG9nmM62xGrIy00inc6z
-	 43YThgyP0KLWoYgUnea1aTteiquz/pVTvDgjTcZhqy2WKuOK2g/DANb0omC/qblkLAEFw
-	 P3V7imgUKuN/QdW6ulZiED4GcXRqAwI6zEEhYEvUbfwvIj6eNHaXLG1GrOzXtwlU8cdUf
-	 BsFSQgvo4BGR13cuLUSjlw2pXEGfYyDiBaf7UZfsSLXfdn1h0q0EPMAow4JGR9PJrIAAL
-	 iJt00Daj56e7m5gFdLrbITLOYrVZQuT37WAlyHfJjTPJ7g4IkWwu3v2gkiljF907ROQ==
+	t=1795020870;
+	b=mtUkQdJvxlJXKVbt6ifAInmrD/2MyP0pIpQ6ECvxTihy2c5NMji9Ij28SvDzxTff0mEe
+	 3xkNsO1SeaYrMQOdQm4e+ris8lKqvkYU7r+r8fd4cUDF7VOfMQbUdpcAYq12A/PTPVOWP
+	 5jBs2c8q6zZM2RbmTbGIegltCJhC4fu86M70z5FUoNdWolSFeVYH9AxoQgsCQX7hTzePC
+	 3V82FqlmjOVMcUqMVeV3Nhc4Rk7ew92dvnok7jjRhUORk/Tu1qi3ZD3ocgKtYt4y9+pVX
+	 INKJmqkQieVQ98NgU7qlp2HDE6OVRMIJRpu9OJh3HmvqZjn0nJ1P6en7kvk7u5ixXNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020867;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020870;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zSzbHWl8eR8Dz7fpe4e9WfrAMltHuELfJXpdYjQtQKo=;
-	b=iNQzKRSpUZKJGB68Q2cbYhEedxWXwnMmReHay8ESEunytw04E2vJyx6OYKqRBK485cdB
-	 pd4v75LU+8q/0ajQjzAiC+XwJNKLaRyxaNZ5K8NNEtTA6Pcb/BpVTDiPMHF/06qaGqOEt
-	 d7Vph2knVgtH5i5Ry9ezxHVD5lpi+BxIbiVWS6hQF3JUhocW7O0/QervWCcBj9AREjZTR
-	 LwRBJKnUO4AVU/RApJFERpslzO9HhwXqUWJHvyhkp+pKAReUXpcpNrDqjy/E9HRT8Znwc
-	 rjhdP+rHqtTEkats/2HjHsieiByvichQzlAjoBEqv5QDofObHOtXoziOFQ3Hm9asAgQ==
+	bh=R//2/xZZY8hddp3r1UaIitP2uzuivyfZyhYzrfD88fw=;
+	b=HxVEMDIq+RPsqCCeFEcWbdaA9TNgNNvHqWGJEDRKWQvedWdhWy8RZ43mikntQimLeD17
+	 bEpFt8NetS6f9PZarmq3YvGr3jq276zBZGAqiqQc2QSmULrOsiXi4JQlHIOjYA9fbRSNf
+	 MeALdfNaHQg55Ar32BK2jWZxzYzzMuD/pLX6SIo3n6m08AXwYmbahjojWnkofjf8+3+rK
+	 WoOY4UCL2FLm5e3GBN6JP+kMLDIGsmVEvqCQaUcoPcdxg7japHS4GGokQMuQrN+CBah8S
+	 QyGqY7qc4wDYmf1RGCfIWlFoRolOOS1TS/CoZPCzqVNnpw19OlzM0jy0zdmcuaWX2Uw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W+qV6s9G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XZ9Of7+E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79BC606A320;
-	Wed, 18 Nov 2026 16:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5EF606A320;
+	Wed, 18 Nov 2026 16:54:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W+qV6s9G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE5C1F000C4;
-	Wed, 18 Nov 2026 16:54:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XZ9Of7+E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876E81F000C4;
+	Wed, 18 Nov 2026 16:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020867;
-	bh=zSzbHWl8eR8Dz7fpe4e9WfrAMltHuELfJXpdYjQtQKo=;
+	s=korg; t=1795020870;
+	bh=R//2/xZZY8hddp3r1UaIitP2uzuivyfZyhYzrfD88fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W+qV6s9G6FXqE3ivuHLqqM43p+2Qjnt/FFwi3SizivWVaNaPgLtGqCTidTsOR9z0U
-	 qLpjpqM2FT9A58QATE930ojHBHNaerZZfSe86vGfWi4Vh9Ve9Awl5nTIJksRWaghwA
-	 G2XWX72CVJ3isNQc+q3Lyt+5mgB0g6lrzeVMEMPc=
+	b=XZ9Of7+EmrRe2Pp+e6taQP6iG/jc94Q4sP1dJipaVuyU3ftPhSDvaXtcQdpTfqZwc
+	 4P0WddRe10wJtQDp2kdK9pBOtsQ2H2AXL4e1AGUEAe+FzRwy63lUp8rCBS9U8WCuri
+	 ID6J7s1ATvKscvjNG+QJzC0wXG8kmF3OZzAW8l3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2097/2651] bpf: Read the probe of a perf event under event_mutex
-Date: Wed, 18 Nov 2026 15:55:37 +0100
-Message-ID: <20261118150401.495701453@linuxfoundation.org>
+Subject: [PATCH 7.3 2106/2651] bpf: Bound the nesting that the BTF show code follows
+Date: Wed, 18 Nov 2026 15:55:46 +0100
+Message-ID: <20261118150401.786168426@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,144 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 3ccd700543f16a2b2ab656f35dcaeb6bd7c45e22 ]
+[ Upstream commit 13ac7c05bc45d3445b580da186548dd3487fae4e ]
 
-For a perf event on a kprobe or uprobe event which was made in tracefs,
-bpf_get_kprobe_info() and bpf_get_uprobe_info() look the probe up by
-name in the list of dynamic events, and hand a pointer to its symbol or
-file name back to the caller. None of the callers holds event_mutex.
+btf_struct_show() and btf_array_show() recurse for every nested struct
+and array.  MAX_RESOLVE_DEPTH bounds one resolve walk when BTF is loaded,
+not the nesting: a member whose type is resolved already is not walked
+again, so BTF that defines its types from the inside out can nest them as
+deep as it has types.
 
-The perf event keeps its trace event alive, nothing else. Other dynamic
-events are removed from the list and freed during the walk. And a probe
-which shares its event with other probes can be deleted while the event
-is in use, so even the probe which is found can be freed, together with
-the string, before the caller has measured and copied it. The result is
-a use-after-free in the walk, in strlen() and in the copy to user space,
-or a NULL pointer dereference.
+Whoever may load BTF, with CAP_BPF or a BPF token, can give such a type
+to the value of a map.  Reading the file of that map in bpffs then
+overruns the kernel stack: with a few hundred levels the stack guard page
+is hit and the kernel panics.
 
-The readers are BPF_OBJ_GET_INFO_BY_FD and fdinfo of a perf link, for
-whoever holds a descriptor of the link, and BPF_TASK_FD_QUERY. The other
-side is anybody who may write to dynamic_events, kprobe_events or
-uprobe_events.
+Stop at 32 levels.  That is MAX_RESOLVE_DEPTH, and __btf_show_indent()
+has as many columns.  Nothing is shown for a member that lies deeper, and
+the status becomes -E2BIG, which bpf_snprintf_btf() and
+bpf_seq_printf_btf() return.  The types of an x86_64 defconfig kernel nest
+14 deep.
 
-Take event_mutex in bpf_get_perf_event_info() and give the caller a copy
-of the name, which it has to free.
-
-Fixes: 41bdc4b40ed6 ("bpf: introduce bpf subcommand BPF_TASK_FD_QUERY")
+Fixes: b00b8daec828 ("bpf: btf: Add pretty print capability for data with BTF type info")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-10-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-19-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c     | 17 +++++++++++------
- kernel/trace/bpf_trace.c | 13 +++++++++++++
- 2 files changed, 24 insertions(+), 6 deletions(-)
+ kernel/bpf/btf.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index e7b461f33b588..83648077c9673 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -4000,19 +4000,19 @@ static int bpf_perf_link_fill_common(const struct perf_event *event,
- 		*ulenp = 1;
- 	}
- 	if (!uname)
--		return 0;
-+		goto out;
- 
- 	if (buf) {
- 		err = bpf_copy_to_user(uname, buf, ulen, len);
--		if (err)
--			return err;
- 	} else {
- 		char zero = '\0';
- 
- 		if (put_user(zero, uname))
--			return -EFAULT;
-+			err = -EFAULT;
- 	}
--	return 0;
-+out:
-+	kfree_const(buf);
-+	return err;
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index d870bc5e50bc8..b1adb52e2f310 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -1065,6 +1065,8 @@ static const struct btf_type *btf_type_skip_qualifiers(const struct btf *btf,
  }
  
- #ifdef CONFIG_KPROBE_EVENTS
-@@ -4069,6 +4069,7 @@ static void bpf_perf_link_fdinfo_kprobe(const struct perf_event *event,
- 		   name, offset, missed, addr,
- 		   type == BPF_FD_TYPE_KRETPROBE ?  "kretprobe" : "kprobe",
- 		   event->bpf_cookie);
-+	kfree_const(name);
- }
- #endif
+ #define BTF_SHOW_MAX_ITER	10
++/* nested structs and arrays shown; __btf_show_indent() has as many columns */
++#define BTF_SHOW_MAX_DEPTH	32
  
-@@ -4122,6 +4123,7 @@ static void bpf_perf_link_fdinfo_uprobe(const struct perf_event *event,
- 		   name, offset, ref_ctr_offset,
- 		   type == BPF_FD_TYPE_URETPROBE ?  "uretprobe" : "uprobe",
- 		   event->bpf_cookie);
-+	kfree_const(name);
- }
- #endif
+ #define BTF_KIND_BIT(kind)	(1ULL << kind)
  
-@@ -4220,6 +4222,7 @@ static void bpf_tracepoint_link_show_fdinfo(const struct perf_event *event,
- 		   "event_type:\t%s\n"
- 		   "cookie:\t%llu\n",
- 		   name, "tracepoint", event->bpf_cookie);
-+	kfree_const(name);
- }
- 
- static void bpf_probe_link_show_fdinfo(const struct perf_event *event,
-@@ -5746,11 +5749,13 @@ static int bpf_task_fd_query(const union bpf_attr *attr,
- 		err = bpf_get_perf_event_info(event, &prog_id, &fd_type,
- 					      &buf, &probe_offset,
- 					      &probe_addr, NULL);
--		if (!err)
-+		if (!err) {
- 			err = bpf_task_fd_query_copy(attr, uattr, prog_id,
- 						     fd_type, buf,
- 						     probe_offset,
- 						     probe_addr);
-+			kfree_const(buf);
-+		}
- 		goto put_file;
- 	}
- 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index 568b9ada61daf..d649aaf13553e 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2209,6 +2209,7 @@ int bpf_probe_unregister(struct bpf_raw_event_map *btp, struct bpf_raw_tp_link *
- 	return tracepoint_probe_unregister(btp->tp, (void *)btp->bpf_func, link);
- }
- 
-+/* On success the caller releases *buf with kfree_const() */
- int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
- 			    u32 *fd_type, const char **buf,
- 			    u64 *probe_offset, u64 *probe_addr,
-@@ -2218,6 +2219,12 @@ int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
- 	struct bpf_prog *prog;
- 	int flags, err = 0;
+@@ -1458,8 +1460,18 @@ static void *btf_show_start_aggr_type(struct btf_show *show,
+ 				      const struct btf_type *t,
+ 				      u32 type_id, void *data)
+ {
+-	void *safe_data = btf_show_start_type(show, t, type_id, data);
++	void *safe_data;
  
 +	/*
-+	 * The list of dynamic events is walked, and a probe which has siblings
-+	 * can be deleted, with its strings, while its event is in use.
++	 * Structs and arrays are shown by recursion.  BTF loading bounds the
++	 * depth of one resolve walk, not how deep resolved types may nest.
 +	 */
-+	guard(mutex)(&event_mutex);
-+
- 	prog = event->prog;
- 	if (!prog)
- 		return -ENOENT;
-@@ -2258,6 +2265,12 @@ int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
- #endif
- 	}
- 
-+	if (!err && *buf) {
-+		*buf = kstrdup_const(*buf, GFP_KERNEL);
-+		if (!*buf)
-+			err = -ENOMEM;
++	if (show->state.depth >= BTF_SHOW_MAX_DEPTH) {
++		show->state.status = -E2BIG;
++		return NULL;
 +	}
 +
- 	return err;
- }
++	safe_data = btf_show_start_type(show, t, type_id, data);
+ 	if (!safe_data)
+ 		return safe_data;
  
 -- 
 2.53.0
