@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020929;
-	b=fRRACVehCB9IzY2HE9oVYf8TvW5RCV59TghYcNET/y4dnce3CvzWZ8nQboc+1IcdzYRl
-	 h56v6vCf07oywCY/JRQHpCSGI77YdLu38YBIQmCk1ubZ0bIJxM/rKUCBIMvbs8zzaO7/G
-	 Y1recrpPrR5tny5k4j2g1UdFa2/GAWsi0nahrhyaprO2o+Y6Ewtpy4sjyTn1LQWEHBjEL
-	 TaYVT1WCLNfQNpkxVZYrdVQrClrOYhiRxUWRjtnSYain4P1XIDwuF8WMbc46VBepkk6bg
-	 WD72yF7xUbeEEFRtxYahb4+fcg6WBHcNu52VaSfcU5YpbklxJpnnizZCvlb5c+7BUDw==
+	t=1795020931;
+	b=sDWaXe7oaHRw9xKNgnc/mkgnmII8cy2EGsHhJThI2uYEG1B+a2ZPqhWrsQyHY9Fr1Kmw
+	 vjd1h9fNGpyImIqvn3EKP7QSA/wXaNfeMIS1UlAFntlrxiVgkD2vnvceiimPb0rgRzIPR
+	 aJufcXV06b5OFCoCK7WKovT9g36bBbkM9OSXGz0NudAmAjyJhqPgzBB23h/rtMH5m2mrb
+	 YwGxpIo+8TiQdn69de1kNAXPVhxYqPnsfjG3euzGNOYugytoZZESXy2nCJeYY/TFSB7np
+	 JUUJaaRqjJhebpjsJAgzE8GwQ+Lun8b/W7fCzDa//88QOKoNplEyy/lLAwp9qC4HLew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020929;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020931;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Fkqn5N/30s5v6g+vE7e2Zm83qxyLQoLK2q64ZrZGgCQ=;
-	b=c8exQRt9KKZAOFl90r6yq1IEuNwm4cgv2Bv4A457/iOQuINAwMwsWRtGx4ftrPVij4sn
-	 erkvn8o5x2+F4CYDD/UPB36sle9Y2HWZPtiGzJSRd72xtyI7N9ukpN32AxLoEgeT89yVi
-	 GUJDBHgDtDsLPwXb4jCt42BHTINoz5fbNAatgbbyvcW/V1TKJUKaokSU8Edgzaewyi/Qs
-	 fsRNkzWzWRtss09pkAzPN+hEijyt11GV6VWaJJjsI6fl0WSLU0kBtiPgesg4E1klaVDP3
-	 bl4UMkzdt/yGCdODQD5ewebbg9zMddB7pwVuv3vuPa+XT0bQ6yjfy4xOyKUFwtmTKcQ==
+	bh=NgAvmyI55Ld9NXF1uldw+Bge/MKO27MQnXJ9hvD6mIk=;
+	b=sMRdo2sfKWgrzcv9RJy/W0eIt57ZxPnsUqQI53K8s/mKYF2gBoMZyqS7GaJcvwBbjuIP
+	 6zsFmUYzKal7GM1EKJa1ZFBtcONiTlEFPAbwnF++sa4vzd6b/5CQEg4qdtbyq/JslE8BL
+	 JWwvjyscPLuLdYipSz2cbePOhY+xFOvCRNDN6Qcy/W8f0FtRYfj+hFyAB1WaxLKHfDd7F
+	 GEmxzSOG29w/Voi9SW9k5x7HsQRu5vwnKCpVWNsg9eJXVvvNldmTuKqEQrt0FbjRygJjg
+	 tMhVJFe9oIgSToOuFRw/GBPGUORenY+nKJSRzIntiYlURMfzlhoLW9+sZuMiE3z59Iw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TRVHyIs3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IhKGeSQC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14CC5606A320;
-	Wed, 18 Nov 2026 16:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7C8606A32F;
+	Wed, 18 Nov 2026 16:55:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TRVHyIs3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179881F000C4;
-	Wed, 18 Nov 2026 16:55:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IhKGeSQC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB1211F000C4;
+	Wed, 18 Nov 2026 16:55:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020928;
-	bh=Fkqn5N/30s5v6g+vE7e2Zm83qxyLQoLK2q64ZrZGgCQ=;
+	s=korg; t=1795020931;
+	bh=NgAvmyI55Ld9NXF1uldw+Bge/MKO27MQnXJ9hvD6mIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TRVHyIs3RQTIU0RIRzN5mMQ3HOAmUkdzynGM4deEeHcpjb+bkRLQOvfVv7lLRYRxz
-	 +Lb8nZRSsf9cUBQLkdq9BXu3qdfTcdQcI7alvaG3I4uommsnnwOzI9oCpaQlAFuHUT
-	 5TKGa6Vxjm103TtOnFUpHYHDlr/mBjNuxScuCrbc=
+	b=IhKGeSQCKPCFutp1692/FR+qW7HVrncaQYY+zZAhRwUJdPMU/egbub6yrbdPMpDC2
+	 z8bbp9sXeDJL82lNOoKwpbszLQ3u/FPOwr4UADE96YNRDj5NyvgIIUcGhOBZL8breD
+	 sSIS7mpqYIKvbgn5lsG7VGCaTb3+Edo/2N936jk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2099/2651] bpf: Validate the SRH which End.DT6 uncovers in End.BPF
-Date: Wed, 18 Nov 2026 15:55:39 +0100
-Message-ID: <20261118150401.563116514@linuxfoundation.org>
+Subject: [PATCH 7.3 2126/2651] bpf, cpumap: Hold the device of frames in the queue
+Date: Wed, 18 Nov 2026 15:56:06 +0100
+Message-ID: <20261118150402.441064594@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,69 +70,150 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit e8b084646b946cc6f7976365588035947a296184 ]
+[ Upstream commit f99351272933ba2e1221484a5e53b7a5d2c035f0 ]
 
-input_action_end_bpf() validates the SRH of a packet and pulls it into the
-head before the program runs. If the program decapsulates the packet with
-bpf_lwt_seg6_action(SEG6_LOCAL_ACTION_END_DT6), bpf_update_srh_state()
-looks for a routing header in the inner packet and takes it for the new
-SRH as it is.
+A frame that is redirected to another CPU waits in the queue of the cpumap
+entry with a plain pointer to the device it came from, and an skb from
+generic XDP with skb->dev.  Nothing keeps that device.  Closing and
+unregistering it waits for its NAPI and for RCU, but not for the kthread
+of the entry.  If the kthread is late by more than that, since its CPU is
+busy with something of a higher priority, it builds skbs for a device that
+has been freed and hands them to the stack:
 
-Nobody has looked at that header, and whoever has sent the packet has
-written it. ipv6_find_hdr() finds it in a fragment of the skb as well, but
-hdrlen is then read at that offset from skb->data, past the end of the
-head. The header need not be an SRH, and its hdrlen need not fit into the
-packet, but it is marked as valid, and bpf_lwt_seg6_adjust_srh() and
-bpf_lwt_seg6_store_bytes() check their offsets against it.
+  BUG: KASAN: use-after-free in dev_gro_receive+0x1f51/0x2b30
+  Read of size 8 at addr ffff88800a7340b0 by task cpumap/1/map:1/54
 
-A program which then adds a TLV at the end of the SRH, where hdrlen has it,
-makes bpf_lwt_seg6_adjust_srh() move and write memory behind the head of
-the skb, as far as the sender likes within the 2 KB that hdrlen can say:
+Take a reference to the device for each entry of the queue.  The kthread
+cannot drop it at the end of the batch, since its GRO node may keep the skb
+for longer.  Let it note the devices and drop the references behind a full
+GRO flush, which it does whenever the queue is empty, and from now on also
+when it has noted about 2048 of them.
 
-  BUG: KASAN: slab-out-of-bounds in bpf_skb_net_hdr_push+0x185/0x240
-  Read of size 2088 at addr ffff888107d6f09e by task srh/102
-  BUG: KASAN: slab-out-of-bounds in bpf_skb_net_hdr_push+0x1b5/0x240
-  Write of size 8 at addr ffff888107d6f8be by task srh/102
+A device whose frames are stuck in a queue is now unregistered only when
+the kthread has got to them.  RTNL is not held meanwhile, but if the device
+goes with its network namespace, the cleanup of all namespaces waits.
 
-Use seg6_get_srh(), which pulls and validates the header. Without a valid
-SRH the state says that there is none, and the packet goes its way as
-before. The pull can move the head, so compute the data pointers behind
-it.
-
-Fixes: 486cdf21583e ("bpf: add End.DT6 action to bpf_lwt_seg6_action helper")
+Fixes: 1c601d829ab0 ("bpf: cpumap xdp_buff to skb conversion and allocation")
+Fixes: 11941f8a8536 ("bpf: cpumap: Implement generic cpumap")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-12-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017230950.802052-8-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ kernel/bpf/cpumap.c | 35 ++++++++++++++++++++++++++++-------
+ 1 file changed, 28 insertions(+), 7 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 845c1427a8e0b..ef09652b8b160 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -7032,15 +7032,15 @@ static void bpf_update_srh_state(struct sk_buff *skb)
- {
- 	struct seg6_bpf_srh_state *srh_state =
- 		this_cpu_ptr(&seg6_bpf_srh_states);
--	int srhoff = 0;
+diff --git a/kernel/bpf/cpumap.c b/kernel/bpf/cpumap.c
+index 5e59ab896f058..eb87131b1bef5 100644
+--- a/kernel/bpf/cpumap.c
++++ b/kernel/bpf/cpumap.c
+@@ -45,6 +45,7 @@
+  */
  
--	if (ipv6_find_hdr(skb, &srhoff, IPPROTO_ROUTING, NULL, NULL) < 0) {
--		srh_state->srh = NULL;
--	} else {
--		srh_state->srh = (struct ipv6_sr_hdr *)(skb->data + srhoff);
-+	/* Behind a decapsulation this is a header that nobody has looked at */
-+	srh_state->srh = seg6_get_srh(skb, 0);
-+	if (srh_state->srh) {
- 		srh_state->hdrlen = srh_state->srh->hdrlen << 3;
- 		srh_state->valid = true;
+ #define CPU_MAP_BULK_SIZE 8  /* 8 == one cacheline on 64-bit archs */
++#define CPU_MAP_HELD_DEVS 2048
+ struct bpf_cpu_map_entry;
+ struct bpf_cpu_map;
+ 
+@@ -74,6 +75,13 @@ struct bpf_cpu_map_entry {
+ 
+ 	struct completion kthread_running;
+ 	struct rcu_work free_work;
++
++	/*
++	 * Every frame and skb in the queue holds a reference to its device.
++	 * The kthread keeps it until nothing is left in GRO.
++	 */
++	struct net_device *held[CPU_MAP_HELD_DEVS];
++	u32 nr_held;
+ };
+ 
+ struct bpf_cpu_map {
+@@ -129,9 +137,11 @@ static void __cpu_map_ring_cleanup(struct ptr_ring *ring)
+ 		WARN_ON_ONCE(1);
+ 		if (unlikely(__ptr_test_bit(0, &ptr))) {
+ 			__ptr_clear_bit(0, &ptr);
++			dev_put(((struct sk_buff *)ptr)->dev);
+ 			kfree_skb(ptr);
+ 			continue;
+ 		}
++		dev_put(((struct xdp_frame *)ptr)->dev_rx);
+ 		xdp_return_frame(ptr);
  	}
-+	/* it may have been pulled into the head */
-+	bpf_compute_data_pointers(skb);
  }
+@@ -311,7 +321,7 @@ static int cpu_map_kthread_run(void *data)
+ 		void *frames[CPUMAP_BATCH];
+ 		void *skbs[CPUMAP_BATCH];
+ 		u32 i, n, m;
+-		bool empty;
++		bool empty, full;
  
- BPF_CALL_4(bpf_lwt_seg6_action, struct sk_buff *, skb,
+ 		/* Release CPU reschedule checks */
+ 		if (__ptr_ring_empty(rcpu->queue)) {
+@@ -344,10 +354,12 @@ static int cpu_map_kthread_run(void *data)
+ 				struct sk_buff *skb = f;
+ 
+ 				__ptr_clear_bit(0, &skb);
++				rcpu->held[rcpu->nr_held++] = skb->dev;
+ 				skbs[ret.skb_n++] = skb;
+ 				continue;
+ 			}
+ 
++			rcpu->held[rcpu->nr_held++] = ((struct xdp_frame *)f)->dev_rx;
+ 			frames[ret.xdp_n++] = f;
+ 			page = virt_to_page(f);
+ 
+@@ -398,10 +410,13 @@ static int cpu_map_kthread_run(void *data)
+ 		/* Flush either every 64 packets or in case of empty ring */
+ 		packets += n;
+ 		empty = __ptr_ring_empty(rcpu->queue);
+-		if (packets >= NAPI_POLL_WEIGHT || empty) {
+-			cpu_map_gro_flush(rcpu, empty);
++		full = empty || rcpu->nr_held > CPU_MAP_HELD_DEVS - CPUMAP_BATCH;
++		if (packets >= NAPI_POLL_WEIGHT || full) {
++			cpu_map_gro_flush(rcpu, full);
+ 			packets = 0;
+ 		}
++		while (full && rcpu->nr_held)
++			dev_put(rcpu->held[--rcpu->nr_held]);
+ 
+ 		local_bh_enable(); /* resched point, may call do_softirq() */
+ 	}
+@@ -738,12 +753,14 @@ static void bq_flush_to_queue(struct xdp_bulk_queue *bq)
+ 
+ 	for (i = 0; i < bq->count; i++) {
+ 		struct xdp_frame *xdpf = bq->q[i];
+-		int err;
+ 
+-		err = __ptr_ring_produce(q, xdpf);
+-		if (err) {
++		if (__ptr_ring_full(q)) {
+ 			drops++;
+ 			xdp_return_frame_rx_napi(xdpf);
++		} else {
++			/* The device cannot go before the flush, from now on it can */
++			dev_hold(xdpf->dev_rx);
++			__ptr_ring_produce(q, xdpf);
+ 		}
+ 		processed++;
+ 	}
+@@ -807,11 +824,15 @@ int cpu_map_generic_redirect(struct bpf_cpu_map_entry *rcpu,
+ 
+ 	__skb_pull(skb, skb->mac_len);
+ 	skb_set_redirected(skb, false);
++	dev_hold(skb->dev);
+ 	__ptr_set_bit(0, &skb);
+ 
+ 	ret = ptr_ring_produce(rcpu->queue, skb);
+-	if (ret < 0)
++	if (ret < 0) {
++		__ptr_clear_bit(0, &skb);
++		dev_put(skb->dev);
+ 		goto trace;
++	}
+ 
+ 	wake_up_process(rcpu->kthread);
+ trace:
 -- 
 2.53.0
 
