@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020725;
-	b=AEKY2hlMt1eHqL8Ug59zLZe8hF6Xr84uR8I01LUKdebWmBafQ2ZHxyPTO0PRIRwkUMkO
-	 o6u3TA8s9/8VFKhEf2cwpwhJ48KQWjNpDMz4x8xgp6TCxEdKY9hoVvar73mnJWJmHxXWl
-	 6vTZ+BRWUDccmUsLNjONW2GgSUILVyx2Fa7+NiWBNillCW68DFT6Yyiknco3qzxygmTn0
-	 KU4DgtL1Pnlklzeegmm5IcFzQ2wmCOtfupiOppgJe0KA/SEeihJQZf1pr71rEmeXkdPN2
-	 O25LQL3JgLgsof7dDHhcUublM/nvU4+epJsT41a4kNYjWaA1TAg+2QDINexQdI6RoTA==
+	t=1795020728;
+	b=3oDy591hlD1CeCAZ0xbBgMer+bTnAw/rtTwujKQt+0cVz3aSPDSHVePnOOEz3/hvzPPS
+	 btNPi6/EFFn/0Mlvm9EIQl5MSg/f4SAtZbnYW4Anb+ZDi2JZgDcylE6Y4uVok1nfHtehQ
+	 dz1DdOEb+LcAgbWKrL03ms4j7RwQMWwmZZc0h2QvZCnXldxPgR5IN88Sa6UbO6P3sUUJy
+	 RYznxrb4zneJv9UmXDMR8Y0KH2SJn37TpEfCC2S/pPtRONQOrf6ud3qFn47ZqC9QQ/Q0f
+	 /mbpH/kr/iujfdGFwjK4FH4fL6+Gm1kfmTKg+76F97tiism2+QBsVB5UeOuza6w4RMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020725;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020728;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sNa4kaP2pfmu6V1otGqMWFG//U8+Jgo3RF3hXZ08flE=;
-	b=KJMRi6nXKksOfGoQrOxwH7ER/kqKaUWTDs4EcFIsNUD9Ll8wW7oqKq5hGcGd69mURQoV
-	 BXww/OhE6sC8xA/LV0QUxDJ9w0n3PTxCi0zU9y01Tsn8yeoO9iJDu34UK9TnZNGoKg9md
-	 0eceIGBlMFRqVwmy/9jj9s4dccNPXTn3kHIG3J/6dL2dgCPQhDfeetgZvFmyRW4Uq+G4t
-	 fq7pL+v+qPg+7SfkezrG8HHBmGKtEcU+TxwfyTMbNFnkJMO+qXc164JA8u0EPKpN0tvN1
-	 jbQZLdzkSDrM1FtX2FTzr2wtYQXRD4BvoXnulYtbYvzse06s/6k1tZoB334KuNZVndQ==
+	bh=9TzY6/FEuOjQPByux21ub2UYCEG5defgrhNxJDPpRew=;
+	b=zg0cHvIiOXc9TPigkQTjcl1EmBtULbW9YTF2e85zz5qHV1mSatqK6z6xLCaIs3TrnNiX
+	 P7Dn8u52JNeS5GcriVdTeVNN75G3xvUquMO86Fv0pmhoA4kAICq1EZuG1Fo4t5hXMPhWq
+	 dyE2uu+QPMny1F1lrql9Wj+3WaiJWvGKod515UoAYqF4/GasEurDracK6f+sUMkyo2sTv
+	 gi4eRjPfYXQhGcOiOJ6ApFyiYo1CkyDXqj71E5cUQGh05jqlO+HDfo45VsJQyhw0ryZbj
+	 io1bSenOCoHIpLgp19/rZ+wLhDhzMDnjzpydxnYhtKa5i0qGnL1HW1w7fnvwSKHHt1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ujF8PjrV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ytr/jCfX";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F4E60A2629;
-	Wed, 18 Nov 2026 16:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67869606A33A;
+	Wed, 18 Nov 2026 16:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ujF8PjrV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3AE1F000C6;
-	Wed, 18 Nov 2026 16:52:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ytr/jCfX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4931F000C5;
+	Wed, 18 Nov 2026 16:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020725;
-	bh=sNa4kaP2pfmu6V1otGqMWFG//U8+Jgo3RF3hXZ08flE=;
+	s=korg; t=1795020728;
+	bh=9TzY6/FEuOjQPByux21ub2UYCEG5defgrhNxJDPpRew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ujF8PjrVFwaGUrtAZIYLHhIlLGp5uwbWUF86t0rwTe2r1MHGyTrRiU1GJ9hujTOMy
-	 voOtzs58DO72+ITK/ncLWrK8dFnp3uxYr51LgQceIxqV4LqUg1Kf0Sd7uHGTo/uxOS
-	 BCjUKZXjW0uFMWiBNWfn4VP1b+555WGxNYCckqos=
+	b=Ytr/jCfXupbrWxWPfEBHr94NsJRHbhdCDB5FsYARyvt71p1GFFL+o1iQmTzQNlMGM
+	 8T64a5bjnffi/5tkK2TtcFqSB+uz16ApOLjffmN3fzgn8hxM/7uzz+JVktKu9p00Fz
+	 N/JBWSkm6NwqCveQ67R/1JtqWF8wDzsDLPMBmQ5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Ming Lei <tom.leiming@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	KaFai Wan <kafai.wan@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2014/2651] ublk: use global index for reported zones
-Date: Wed, 18 Nov 2026 15:54:14 +0100
-Message-ID: <20261118150358.751822831@linuxfoundation.org>
+Subject: [PATCH 7.3 2015/2651] selftests/bpf: Fix prog_tests framework subtest count checks
+Date: Wed, 18 Nov 2026 15:54:15 +0100
+Message-ID: <20261118150358.784237670@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,49 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: KaFai Wan <kafai.wan@linux.dev>
 
-[ Upstream commit 80897c7e5ae5c56f37a2eb004328edcb4da7cdd1 ]
+[ Upstream commit c87652656a55e5e8cf994364314a75fa95fb2d69 ]
 
-ublk_report_zones() may split a zone report into multiple requests when
-the number of zones exceeds the temporary buffer capacity. The index
-passed to disk_report_zone() must refer to the zone position in the
-whole report, rather than the position within the current request.
+The hardcoded expected skip_cnt/error_cnt in test_prog_tests_framework()
+mismatch the real count when the binary is run with -t or -n filters,
+since some subtests are not selected. Count the executed subtests and
+compare against that value instead.
 
-Currently, the per-request loop index is used as the callback index,
-causing each chunk after the first one to restart from zero. This can
-make userspace callbacks receive duplicate zone indices and may result
-in blk_revalidate_disk_zones() updating incorrect entries in its zone
-state array.
-
-Use the number of zones already reported as the base index for each
-request so that zone indices remain continuous across all chunks.
-
-Fixes: 29802d7ca33b ("ublk: enable zoned storage support")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Ming Lei <tom.leiming@gmail.com>
-Tested-by: Ming Lei <tom.leiming@gmail.com>
-Signed-off-by: Ming Lei <tom.leiming@gmail.com>
-Link: https://patch.msgid.link/20261011063555.1142277-13-tom.leiming@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 2324257dbd68 ("selftests/bpf: Refactor prog_tests logging and test execution")
+Signed-off-by: KaFai Wan <kafai.wan@linux.dev>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261012140202.2754552-2-kafai.wan@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../selftests/bpf/prog_tests/prog_tests_framework.c    | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index d806c6104c74d..cc4e72fd5d4df 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -696,7 +696,7 @@ static int ublk_report_zones(struct gendisk *disk, sector_t sector,
- 			if (!zone->len)
- 				break;
+diff --git a/tools/testing/selftests/bpf/prog_tests/prog_tests_framework.c b/tools/testing/selftests/bpf/prog_tests/prog_tests_framework.c
+index 7607cfc2408c2..1dc112e5b9719 100644
+--- a/tools/testing/selftests/bpf/prog_tests/prog_tests_framework.c
++++ b/tools/testing/selftests/bpf/prog_tests/prog_tests_framework.c
+@@ -13,6 +13,7 @@ static void clear_test_state(struct test_state *state)
+ void test_prog_tests_framework(void)
+ {
+ 	struct test_state *state = env.test_state;
++	int subtest_cnt;
  
--			ret = disk_report_zone(disk, zone, i, args);
-+			ret = disk_report_zone(disk, zone, done_zones, args);
- 			if (ret)
- 				goto out;
+ 	/* in all the ASSERT calls below we need to return on the first
+ 	 * error due to the fact that we are cleaning the test state after
+@@ -30,25 +31,30 @@ void test_prog_tests_framework(void)
+ 		return;
+ 	clear_test_state(state);
  
++	subtest_cnt = 0;
+ 	if (test__start_subtest("test_skip_subtest")) {
+ 		test__skip();
+ 		test__end_subtest();
++		subtest_cnt++;
+ 	}
+ 	if (test__start_subtest("test_skip_subtest")) {
+ 		test__skip();
+ 		test__end_subtest();
++		subtest_cnt++;
+ 	}
+-	if (!ASSERT_EQ(state->skip_cnt, 2, "skip_cnt_check"))
++	if (!ASSERT_EQ(state->skip_cnt, subtest_cnt, "skip_cnt_check"))
+ 		return;
+ 	if (!ASSERT_EQ(state->subtest_num, 3, "subtest_num_check"))
+ 		return;
+ 	clear_test_state(state);
+ 
++	subtest_cnt = 0;
+ 	if (test__start_subtest("test_fail_subtest")) {
+ 		test__fail();
+ 		test__end_subtest();
++		subtest_cnt++;
+ 	}
+-	if (!ASSERT_EQ(state->error_cnt, 1, "error_cnt_check"))
++	if (!ASSERT_EQ(state->error_cnt, subtest_cnt, "error_cnt_check"))
+ 		return;
+ 	if (!ASSERT_EQ(state->subtest_num, 4, "subtest_num_check"))
+ 		return;
 -- 
 2.53.0
 
