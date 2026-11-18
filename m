@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043912;
-	b=2pRdH/QOOLZxJM6IxHQ+9V1u9yfmwLOlkx6kVtJ7VwFW6DDR1x5ugslSa/jXMdF/S/TR
-	 +G9omBZZM9cimYBewqrCtvitOMHYGcidq/+yWrDagYZamYlSmbLVD29xzACwMZHlsWtdH
-	 MpBEjtAOuGiIWPbzEnBr/DIGk8vHw5fhpdbWgF2BmoIIhCLc6P6UVMtkFZUZcFFkh+6aj
-	 lA3gbZGBGhOyEvxupxjuV6oi7Xb+Ur+u7Ojos4ZHklyDqjAKeOZnhBqkDR5RchgdBuZYN
-	 YGxBV2GRVRBWcx4NYuASGCw3izHYe3mrEKq7Y/+VDosPJMKVlIhG/qOfxKKa1/hZ0sw==
+	t=1795043915;
+	b=VCIJJNmRgAXqyJKSzE6eOWHPaBRtjQVYwo3MzrfWhfP2hoQseM/pEcvEqdOLKyzi1QAH
+	 vJRk91cwZbrlbA2hrhP/IN+KwTSgHSrEjfBEKtrXfRuAAEZkZhPjU3AhfSwSe9nZg4opQ
+	 oGr39JNAaCuyiqvN7AloPOFCS11i7V9hBsX5Jy08HcXdKrhXmC9gFdGdGMnfPGUPpl7W0
+	 Ra9hX3psvgpxfuqfK8Lmp51+4/GoJ1FtpV4ZxmoY2HH+8YsfnHsRnHd4rhd1AefpNwtl5
+	 eWaVgtzk4yy8T7GH5D4OjYYi2dZGvCMkEI6qg10SVH+7kgqS8A68yW8hh7UhdfNbngw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043912;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043915;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ke9Y/+QNnnqfexqf6kuvaQMoTIgG542QPbkwEhIvq0k=;
-	b=N/UtsnFpD161F+I9W6IHcsX/HvUvwRyElnQxMFz2g1CigNKNR9ILQw2XO8mbsL5aSxyD
-	 Nh+hR9ebCtgLpoOG5mUVaUEPIeTXV8nqXJ4c+JNFOedynS0WdmjXs/lsgOt//u3m+ShZz
-	 qIXphmuCIYS6LdTAtUYOsiLQ9OC2hmL8QBUnA7DWuDMIhWRq+0GkEP4IMwQ7SK2RrUvqG
-	 JBDJ73PHmxtRkg85TeHJzchSCjLA4oS+L0FaQATCoGMWoyXrTArR8Cb28vvx5qNg5Pwl6
-	 9SOGncWe5IwSpdAvXQOcJcyCN25zDqEYdTBmrnfKWZxRHQ9gZ3nSccPA/HMJmDxcPww==
+	bh=1IP6oYefBkzeVEqzlA2yzy8TZRjjryj1SQAXpGZ9hVc=;
+	b=Lt4QH8b4vNc50hxDc2urjPCa1agorYoQ3OMVqCE3/AplBJvShRROeikKSJcXA5kO0IHo
+	 0/DVLVr9EENsTScG/qQhVeVSFAmUgGBcDHwe14qLluCXxTGKPPDif8vjLCJmtQJ1ostAs
+	 VyvvFdJeSNekChtR+P5syS3XISeBElXeYoN/kBPxzDADZG5+Mp7ek/fhJPC2KCHfqjxW5
+	 n8s56fsGpqHoVJOu3TLTFTlxPmAmJDJCSLdYjSsqM1V3B0yAf/mTA0K8Q5qWyJ5trDEjk
+	 yUVIJl+L5O4jgMQW3dVrZqBnhnDVv1MHSsj7kFY0dQ242bFkyT6agfnT1rvyD5HLXrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zjy0+c4a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U0NZ4ZJx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E523606A325;
-	Wed, 18 Nov 2026 23:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6070A606A32C;
+	Wed, 18 Nov 2026 23:18:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zjy0+c4a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04EF1F000C4;
-	Wed, 18 Nov 2026 23:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U0NZ4ZJx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A997D1F000C4;
+	Wed, 18 Nov 2026 23:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043912;
-	bh=ke9Y/+QNnnqfexqf6kuvaQMoTIgG542QPbkwEhIvq0k=;
+	s=korg; t=1795043915;
+	bh=1IP6oYefBkzeVEqzlA2yzy8TZRjjryj1SQAXpGZ9hVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zjy0+c4atH3Fcge4TtGeCi8mEV7aDaV4+8XGcdNdZr79kPh0/K1dL+D8P7mRlBRjX
-	 lX2pPsm7Q6ay/CzSv3iLmekJ3XZI+864kVSTo4iiNw1h8kXnUxODhxswT2d5Mu1YDE
-	 qYeonGXspLz9Sqm2VTE+JrkdjMq0d2sAx7/UmdGw=
+	b=U0NZ4ZJxecnthcBFmhlbwZvJDtAqP3zOOxaion6huRb2JOC0s7gUUxbS+uxBJb7SG
+	 bwt+1qHD9gg1ifAanrvKs/meKAowAkZ+yFh1AaHyeOK1P+xdT0Jrcqvib8CxeFSCiT
+	 pC75mDSS5spYQKC4Ce7Qw/lSQwLfE40XwThhHnoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Marco Chen <marcochen.dev@gmail.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0381/2857] iio: health: max30102: fix NULL dereference in interrupt handler
-Date: Wed, 18 Nov 2026 15:23:35 +0100
-Message-ID: <20261118150215.122971835@linuxfoundation.org>
+Subject: [PATCH 6.1 0382/2857] iio: admv1013: initialize callback mutex before registering notifier
+Date: Wed, 18 Nov 2026 15:23:36 +0100
+Message-ID: <20261118150215.161733391@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,61 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Chen <marcochen.dev@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit f0ea4824deebf21dacfbe397c4b0a5fd3e745a8d ]
+[ Upstream commit baf7e43b7fb5afb777353bf265ddf9d909f72b9f ]
 
-The interrupt is requested in max30102_probe() and stays enabled
-for the lifetime of the device, but indio_dev->active_scan_mask is only
-valid while a buffer is enabled. When an interrupt arrives while no
-buffer is enabled, the handler dereferences the NULL active_scan_mask:
+admv1013_probe() registers a clock notifier whose callback takes st->lock
+on POST_RATE_CHANGE. Initialize the mutex before
+devm_clk_notifier_register() so the callback cannot observe an
+uninitialized lock during probe.
 
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-  Call trace:
-   __bitmap_weight+0x64/0x98 (P)
-   max30102_interrupt_handler+0x48/0x160 [max30102]
+Use devm_mutex_init() so the lock lifetime is tied to the device and
+cleanup stays paired with the rest of the managed probe resources.
 
-Call max30102_fifo_count() at the top of the handler and return early
-unless it reports a FIFO sample is ready. Because FIFO_RDY is the only
-interrupt source enabled in max30102_chip_init(), an invocation of
-max30102_interrupt_handler() without the FIFO_RDY interrupt status bit
-set carries no data to read and can return before touching
-active_scan_mask. A negative return from max30102_fifo_count()
-indicates a failed interrupt status read and is treated the same way.
-
-Fixes: 90579b69e94b ("iio: health: max30102: Add MAX30105 support")
-Suggested-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Marco Chen <marcochen.dev@gmail.com>
-Cc: <stable@vger.kernel.org>
+Fixes: da35a7b526d9 ("iio: frequency: admv1013: add support for ADMV1013")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+[ sashal: Replaced dev with &spi->dev in the devm_mutex_init() and notifier calls, since this probe function has no local dev variable. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/health/max30102.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/iio/frequency/admv1013.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/health/max30102.c b/drivers/iio/health/max30102.c
-index 9a076973acd19..0e613dd746944 100644
---- a/drivers/iio/health/max30102.c
-+++ b/drivers/iio/health/max30102.c
-@@ -292,9 +292,15 @@ static irqreturn_t max30102_interrupt_handler(int irq, void *private)
- {
- 	struct iio_dev *indio_dev = private;
- 	struct max30102_data *data = iio_priv(indio_dev);
--	unsigned int measurements = bitmap_weight(indio_dev->active_scan_mask,
--						  iio_get_masklength(indio_dev));
--	int ret, cnt = 0;
-+	unsigned int measurements;
-+	int ret, cnt;
-+
-+	cnt = max30102_fifo_count(data);
-+	if (cnt <= 0)
-+		return IRQ_HANDLED;
-+
-+	measurements = bitmap_weight(indio_dev->active_scan_mask,
-+				     iio_get_masklength(indio_dev));
+diff --git a/drivers/iio/frequency/admv1013.c b/drivers/iio/frequency/admv1013.c
+index 9c147b9e89826..5238dfdb1de5d 100644
+--- a/drivers/iio/frequency/admv1013.c
++++ b/drivers/iio/frequency/admv1013.c
+@@ -613,11 +613,14 @@ static int admv1013_probe(struct spi_device *spi)
+ 		return ret;
  
- 	mutex_lock(&data->lock);
+ 	st->nb.notifier_call = admv1013_freq_change;
+-	ret = devm_clk_notifier_register(&spi->dev, st->clkin, &st->nb);
++
++	ret = devm_mutex_init(&spi->dev, &st->lock);
+ 	if (ret)
+ 		return ret;
  
+-	mutex_init(&st->lock);
++	ret = devm_clk_notifier_register(&spi->dev, st->clkin, &st->nb);
++	if (ret)
++		return ret;
+ 
+ 	ret = admv1013_init(st);
+ 	if (ret) {
 -- 
 2.53.0
 
