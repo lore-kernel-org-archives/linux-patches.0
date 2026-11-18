@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055174;
-	b=azbQhzX65M0nbgChdVNGFyQboT/Yak1UOninqFRPvrK0fmVgbXzE5wid21pavpDrfcMA
-	 W5IFFdn6KkLE5s4HTAeBxxxMOy9SWN6FbVrjPF442I8hBM7ZVRNO+dFHN/mKZMu/ZeP09
-	 rM07mKXli5yzf28J+ux0KNmeuTe9Y1EY9HsgjYCX+RuQHst8oRRXYcdoRlf0QrXFZmCgv
-	 fqCvi9M+TkjGau/xtaUzhf4oyP6YjZPjsjy7cjb7g4CydmwQ3Ajo1NXez9jgVXqoaWQi3
-	 FkUQOY6FweO+of7mx/+B76N1iuFD+9rdGonHVeq1ySxVaCgHXp06fhZ8kAumFELYXaQ==
+	t=1795055177;
+	b=D7hsBJ30ZnnnRicjYjr4s8hkJAhW+VQTT/nwAP2c/aKcQfGTnm1epNKS8SoB8+/RPrFi
+	 RCjHQ4cV/Q7VMnOOT9tiRTMRVFSu5brTYOmgzcpiZChSGxvvl32L6zIC/NFye7WoyY3c4
+	 HtgsXm/sPfkoAhjLJcsiXjo2GSr2Xp3hbUDORWd9YSQKj168OrNZhPcfUs8wBV/G9jdYB
+	 QPJ8/JZGPUs6xk7wpoenu+hfkAQwSu3sheG2Z6NRpcD9wFk9PBjt15ZXWapBMZsXq4QFS
+	 F3zJhOjK+JPcGZlZg6wBAe/kWxNY391xTHvENZ2onez8lHxrXMl9TgGt8GsxDMu6iqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055174;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055177;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bA5JgC2ZLkXvlded3VDapK1MLlufKQdhN+HydR/pZ/E=;
-	b=oZ9+BGzcZzk0YxS20vxHhGAW94s347i0NK59wSdUd0yqlckTZ1LJHfGcjbMqMzyeq04T
-	 Mok93q+1zLhQ75pWQLte29wEQD4PnLojeSqaZEralH5pL01kJulWBc25secMdVhd9efrK
-	 r6xdgu7NWYqDbolZ8Y03AdjnZwzHp2/gj32MQWUNfthzbFPSJ5Lf+5r4JR/cuMsXDV6gM
-	 8bUKDphtU6D/KWKDrnJlTDvwIMAUCSlSBpNG5yla0nSjG0aXUqlA0GateaXBvSgSBaV7j
-	 7MNBVtrIpR468NHjjMRkagvjDaESXWRQU8IVJgSOWXLGB9H4/dGFanlG/lk0JfGYPXQ==
+	bh=KBlFds4zEWydXezLaJuroGa32K5MPpbWxXuuzWZANzA=;
+	b=ywJMEvwv5dSS9dH89C0lDIzo2/FtuKKCgV88s1+ZXDyP1m3TAU4Y4M40X2e9k22sZ7w2
+	 +nhEpww4gmUPUUOl/hs3O4wOKAWmEH5IkhLKp7y4m0a6bE65ce53FQTPg63IPrQcApl9S
+	 VsXdoehT7H0Fxwr96YysGoCnGScN3V5bOpxsTLaFbmyfc3OoKoePf24IcwWKbKUR+L/6Q
+	 /v4gBsTD0K22RgektFenDqQ6u56N/Y0VF5RzjlbmYgL9wcn88dJyncUJYkF2KaKPQx6rA
+	 RQBoCOxLX15tDY/CCB5ugtGXJ8J3ttYAaYKqsrt8fiBh4mbY4i28eWS+TOl5GUJBndQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BCCJf+tP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=00FI6gC5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3389F606A31C;
-	Thu, 19 Nov 2026 02:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFBF606A31C;
+	Thu, 19 Nov 2026 02:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BCCJf+tP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F211F000C4;
-	Thu, 19 Nov 2026 02:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=00FI6gC5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 685401F000C4;
+	Thu, 19 Nov 2026 02:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055174;
-	bh=bA5JgC2ZLkXvlded3VDapK1MLlufKQdhN+HydR/pZ/E=;
+	s=korg; t=1795055177;
+	bh=KBlFds4zEWydXezLaJuroGa32K5MPpbWxXuuzWZANzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BCCJf+tPgfEOsF4ZD0vQzgWokgP5rgQXfaHNcCelQCwDrHVJUuabvjOz6A35b9JV+
-	 Rc2f+GOsLmOKQFEsTjSWfCIrwgnuqcXWEZPkQ6UrYUNgAK3Wf2cpociTyhp7n5NVTo
-	 R2Mww3jIFQ+ymqPStNSLeGF37aiFAat3ozbe5PUI=
+	b=00FI6gC5VgF38ebk8WfNxYDSKFnwEHZ2EayV8eT1On+Sp5m2PQa5UlbWVFzKpwu3G
+	 2jFoRXRPyzDkd8+wTtYtyVrL1voffPcZYBCs39+Hco/6XvzLDztLzsUCKYYheaYg7X
+	 2SUdA6oCMw1z67nhfLUa8u9DM2dQV8FIiLdMYpXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Alexei Starovoitov <ast@kernel.org>,
-	Martin KaFai Lau <kafai@fb.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1536/2214] bpf: Factor out helpers for ctx access checking
-Date: Wed, 18 Nov 2026 15:53:32 +0100
-Message-ID: <20261118150113.610653473@linuxfoundation.org>
+Subject: [PATCH 5.15 1537/2214] bpf, lsm: Reject writes into the BPF LSM program context
+Date: Wed, 18 Nov 2026 15:53:33 +0100
+Message-ID: <20261118150113.648170289@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,117 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 35346ab64132d0f5919b06932d708c0d10360553 ]
+[ Upstream commit c42da1d3ba9d5067cf3f0676b98bcb3f5f9e3ce1 ]
 
-Factor out two helpers to check the read access of ctx for raw tp
-and BTF function. bpf_tracing_ctx_access() is used to check
-the read access to argument is valid, and bpf_tracing_btf_ctx_access()
-checks whether the btf type of argument is valid besides the checking
-of argument read. bpf_tracing_btf_ctx_access() will be used by the
-following patch.
+The verifier types a load from a tracing-style context by its offset
+alone: btf_ctx_access() looks the offset up in the attach hook's
+prototype, and check_mem_access() stamps the resulting type onto the
+destination register. Nothing tracks what the slot actually holds.
+That is sound only as long as the context is read-only, and for BPF LSM
+it is not. lsm_verifier_ops wires ->is_valid_access() straight to
+btf_ctx_access(), which never looks at enum bpf_access_type, so a store
+into the context passes verification. Every other user of the helper
+either goes through bpf_tracing_btf_ctx_access() or open-codes the same
+type != BPF_READ test first; BPF LSM is the only one that does neither.
 
-Signed-off-by: Hou Tao <houtao1@huawei.com>
+A program can therefore store a scalar of its choosing into a context
+slot, read the slot back, and get a register the verifier believes is a
+trusted pointer of the hook's argument type. Handing that to a kfunc or
+helper which dereferences a trusted argument turns it into an arbitrary
+kernel access. Route BPF LSM through bpf_tracing_btf_ctx_access() like
+everyone else.
+
+Fixes: fc611f47f218 ("bpf: Introduce BPF_PROG_TYPE_LSM")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Martin KaFai Lau <kafai@fb.com>
-Link: https://lore.kernel.org/bpf/20211025064025.2567443-3-houtao1@huawei.com
-Stable-dep-of: c42da1d3ba9d ("bpf, lsm: Reject writes into the BPF LSM program context")
+Link: https://patch.msgid.link/20260915150739.284189-3-daniel@iogearbox.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h      | 23 +++++++++++++++++++++++
- kernel/trace/bpf_trace.c | 16 ++--------------
- net/ipv4/bpf_tcp_ca.c    |  9 +--------
- 3 files changed, 26 insertions(+), 22 deletions(-)
+ kernel/bpf/bpf_lsm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index e9081b1ec4367..5f26d4cd2272e 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -1808,6 +1808,29 @@ bool bpf_prog_test_check_kfunc_call(u32 kfunc_id);
- bool btf_ctx_access(int off, int size, enum bpf_access_type type,
- 		    const struct bpf_prog *prog,
- 		    struct bpf_insn_access_aux *info);
-+
-+static inline bool bpf_tracing_ctx_access(int off, int size,
-+					  enum bpf_access_type type)
-+{
-+	if (off < 0 || off >= sizeof(__u64) * MAX_BPF_FUNC_ARGS)
-+		return false;
-+	if (type != BPF_READ)
-+		return false;
-+	if (off % size != 0)
-+		return false;
-+	return true;
-+}
-+
-+static inline bool bpf_tracing_btf_ctx_access(int off, int size,
-+					      enum bpf_access_type type,
-+					      const struct bpf_prog *prog,
-+					      struct bpf_insn_access_aux *info)
-+{
-+	if (!bpf_tracing_ctx_access(off, size, type))
-+		return false;
-+	return btf_ctx_access(off, size, type, prog, info);
-+}
-+
- int btf_struct_access(struct bpf_verifier_log *log, const struct btf *btf,
- 		      const struct btf_type *t, int off, int size,
- 		      enum bpf_access_type atype,
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index e08928f4a862f..e4e6f91aa3c94 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -1575,13 +1575,7 @@ static bool raw_tp_prog_is_valid_access(int off, int size,
- 					const struct bpf_prog *prog,
- 					struct bpf_insn_access_aux *info)
- {
--	if (off < 0 || off >= sizeof(__u64) * MAX_BPF_FUNC_ARGS)
--		return false;
--	if (type != BPF_READ)
--		return false;
--	if (off % size != 0)
--		return false;
--	return true;
-+	return bpf_tracing_ctx_access(off, size, type);
- }
+diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
+index 02913d8610414..07be0ecfd020d 100644
+--- a/kernel/bpf/bpf_lsm.c
++++ b/kernel/bpf/bpf_lsm.c
+@@ -223,6 +223,6 @@ const struct bpf_prog_ops lsm_prog_ops = {
+ };
  
- static bool tracing_prog_is_valid_access(int off, int size,
-@@ -1589,13 +1583,7 @@ static bool tracing_prog_is_valid_access(int off, int size,
- 					 const struct bpf_prog *prog,
- 					 struct bpf_insn_access_aux *info)
- {
--	if (off < 0 || off >= sizeof(__u64) * MAX_BPF_FUNC_ARGS)
--		return false;
--	if (type != BPF_READ)
--		return false;
--	if (off % size != 0)
--		return false;
--	return btf_ctx_access(off, size, type, prog, info);
-+	return bpf_tracing_btf_ctx_access(off, size, type, prog, info);
- }
- 
- int __weak bpf_prog_test_run_tracing(struct bpf_prog *prog,
-diff --git a/net/ipv4/bpf_tcp_ca.c b/net/ipv4/bpf_tcp_ca.c
-index d3a2dbd13ea6b..0675f87a68a51 100644
---- a/net/ipv4/bpf_tcp_ca.c
-+++ b/net/ipv4/bpf_tcp_ca.c
-@@ -81,14 +81,7 @@ static bool bpf_tcp_ca_is_valid_access(int off, int size,
- 				       const struct bpf_prog *prog,
- 				       struct bpf_insn_access_aux *info)
- {
--	if (off < 0 || off >= sizeof(__u64) * MAX_BPF_FUNC_ARGS)
--		return false;
--	if (type != BPF_READ)
--		return false;
--	if (off % size != 0)
--		return false;
--
--	if (!btf_ctx_access(off, size, type, prog, info))
-+	if (!bpf_tracing_btf_ctx_access(off, size, type, prog, info))
- 		return false;
- 
- 	if (info->reg_type == PTR_TO_BTF_ID && info->btf_id == sock_id)
+ const struct bpf_verifier_ops lsm_verifier_ops = {
+-	.get_func_proto = bpf_lsm_func_proto,
+-	.is_valid_access = btf_ctx_access,
++	.get_func_proto		= bpf_lsm_func_proto,
++	.is_valid_access	= bpf_tracing_btf_ctx_access,
+ };
 -- 
 2.53.0
 
