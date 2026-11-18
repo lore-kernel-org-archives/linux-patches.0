@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028342;
-	b=HMY8FDdAnIxfEefKia3W/9D/Wnq+hJqa80aDOPDTbiC2+sYrX3fxo0q13Q59yPhZNxU2
-	 XM4+hRTcWBLp9oJ69ecF3QrSIhEmFhjuFn7VrFGJ8FOZfKE/jzVvaXTbeyvaMNpWEto9q
-	 dKIm+KUYKPwpyyjsC0WWL2ThbE5L23BCvpHXhKc9h4DmlMqgzXQy5rMiqStPrie/PLT6c
-	 c76fEAuRDL1qKKluqWX43kSE35oPEdTVDkwIF5zne3QnobIdcVOwc8xkVX3K/lvAbqids
-	 CNqkM5wqfFYdIlmyPE/DLjqvFNHQcI/xuUpMNbw8l7sVrxXmy0Xt9Nc8l9W4hNqnIbA==
+	t=1795028345;
+	b=Gm93kI5qe8w8RbnWEgI3bZZAIalXrUVHSh8PuqmpAWR/H4nN0PNnASvAJDj77yCJkWjL
+	 XJgfBLfNtxYUspWKmZ3fnvlilAuK13bKDTVI3t6fNoXf8VEYaxldHSjqfN1YJITCaLt1z
+	 j8a6TlrpT8KITGy8TSUbyoWmmUkD1hgzlx3dLK7cT32eVA9OaSY30hji5S3eSyjqwNz+l
+	 KMAa8nxgHrWcCM+4smBunsbXZf740mHHnvfPpx7/n+VeZeXcLtN8WxxMZco8UgXEL5zrM
+	 rdzc7A8c7UaVMDmId3vnjTARns7tPiF3JQU2eZgF38JUkVUteuAV3RPKBbBG7JC8wkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028342;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028345;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RTYV66DNto46o6/hCay9fZPn7IjXCSnMSbw0090g7GE=;
-	b=ahp2uSy7Ej3hrxM30HpbbFNcAHHdlFL6yelrLpmfjdSJ7MqI2ac7+wrD9BsTdwClRDhc
-	 WpoSZeZGWD1uVWxRB84VHv48npwGEHRuQzoAILVTmip911/sfndxRsCB4Hw+J9u57Uazx
-	 RpNrhHDSZDWOfD9JqftS0rwtoKt4MI4yy5HVwqoI1MToONf3qk0GnNRoblL7G0ggD3+3m
-	 MTmFvVY/STn0wjQPZpTgra50O7SYjaK24bda6GJ5ME/fZ3rIrxunfQlm1FHtwpNgiIiqa
-	 JHu8epXXT0tHzgs0V0ZuQbo8VCFC6x2V8syS2ym4DgoqCVwSit4WyWqoMa7KsdpglEA==
+	bh=745QfQs7bkbv/uFqg5Awa7leFdcjKuhXKiq6DOSCqNk=;
+	b=0JkqGk3zFaxs1LKFcLAGwFW0XbQ5puFjuvcfMwRiDlkC3bIJugakJTTT2hBnfQQXIzsg
+	 Q7mAaO89BCRSkZfGUgZx6ZY8l8ULs2Ud7t49ZgSkmRJQB3q6sDwMcmcx1C5+40vYCCwei
+	 M6XKf92L/LXwOB3kqCTF+6byO00iiSVCoKzpzul+U4f1afLx1THH/0ZTm7BT7PzmX97U4
+	 STj3XmujZj9YbBoDbVmpTTupW2hE8PFGzk9IDzQBEnH/1M03jUA+pRp4Y1aLWINgZW0mv
+	 0WbRXRPcM6T5dZkzJ/7S4PXVFTQf/Tw9wH4vMLqZSXLFldN9i+h6Nk5ME/2FGsRPNIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wZzvOjGn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hGlnDxgG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C42606A320;
-	Wed, 18 Nov 2026 18:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC5A606A325;
+	Wed, 18 Nov 2026 18:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wZzvOjGn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A371F000C4;
-	Wed, 18 Nov 2026 18:59:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hGlnDxgG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627EE1F000C4;
+	Wed, 18 Nov 2026 18:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028342;
-	bh=RTYV66DNto46o6/hCay9fZPn7IjXCSnMSbw0090g7GE=;
+	s=korg; t=1795028344;
+	bh=745QfQs7bkbv/uFqg5Awa7leFdcjKuhXKiq6DOSCqNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wZzvOjGnoonWAKKUPwmUWxGUrro+XQi61pG3vRwy5ysYq4jIB9qiCeQaiDPD6W8bX
-	 /z1ZaBzop4hbFlK/AyrNT99ud2aSX1bDaShNoeonuwXWHpZRbXl+gWvIvkK6Rky3cT
-	 VMTOPnTXoonfVv76X1mUungnDB5mVamspF7Uu1VE=
+	b=hGlnDxgGR/4pIYwTelIPChxvBfM6a83CVzr3kDws9LLEVBoPLxcIxoESxvTH/f3t+
+	 6YfZW+tgELiOLrSOH5xwwnAo/cpQeTw9OYBW5tHfbF0BmuGaI4P0giO6EhLiwr31QF
+	 6mG6LGBdCGu1JIQeGqyxaWiamcspV7/2t+vxfSC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
 	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Aaron Conole <aconole@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2111/2151] tcp: initialize mapped children before route lookup
-Date: Wed, 18 Nov 2026 16:04:06 +0100
-Message-ID: <20261118150238.594722822@linuxfoundation.org>
+Subject: [PATCH 6.18 2112/2151] net: add eth_type_trans_careful()
+Date: Wed, 18 Nov 2026 16:04:07 +0100
+Message-ID: <20261118150238.631050421@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,67 +72,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit b7ff0e7a9ae3df2f123807a7e670bc348b1e1b9d ]
+[ Upstream commit 2519a6fe7a8bba57a961eb804e43e7df35ac40fe ]
 
-IPv4 passive opens on a dual-stack listener go through
-tcp_v4_syn_recv_sock() with tcp_v6_mapped_child_init() as the optional
-initializer. The callback currently runs after the output route lookup.
-If that lookup fails, tcp_done() destroys a clone whose pinet6 and
-ipv6_fl_list still refer to the listener's state.
+eth_type_trans() assumes ETH_HLEN bytes are present in skb->head.
+NIC drivers always provide this, and they should keep using the fast
+version.
 
-With the flowlabel list head in inet_sock, fl6_free_socklist() walks
-the clone's list and RCU-frees its nodes without unlinking them from the
-live listener. Subsequent flowlabel operations can use or free the nodes
-again. Commit 858d2a4f67ff ("tcp: fix potential race in
-tcp_v6_syn_recv_sock()") moved the initializer before ehash insertion,
-but did not cover this error path.
+Devices looping skbs from their transmit path back to their receive
+path get skbs built by the stack instead. Their link-layer header
+might have been popped by tc actions (act_vlan pop_eth, act_ife decode)
+or OVS actions (pop_eth + pop_mpls / pop_nsh), leaving fewer than
+ETH_HLEN bytes in the linear part. eth_type_trans() then hits
+the BUG() in __skb_pull().
 
-Invoke the existing initializer after the IPv4 fields it consumes have
-been set, but before route lookup can fail. It needs neither the
-destination nor sk_setup_caps(), and all later disposal paths remain
-covered.
+Add eth_type_trans_careful(), which first pulls the Ethernet header,
+and returns a drop reason on failure, so that the few devices exposed
+to this can drop such packets.
 
-Fixes: 1c17f4373d4d ("ipv6: Move ipv6_fl_list from ipv6_pinfo to inet_sock.")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
 Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261028154101.2153360-1-edumazet@kernel.org
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Tested-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Acked-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261028122703.2093730-2-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 093a28998374 ("loopback: use eth_type_trans_careful()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ include/linux/etherdevice.h | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 5b145ee0d0bb3..b5517f9af5465 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -1804,6 +1804,12 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
- 	if (READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_reflect_tos))
- 		newinet->tos = tcp_rsk(req)->syn_tos & ~INET_ECN_MASK;
+diff --git a/include/linux/etherdevice.h b/include/linux/etherdevice.h
+index df8f88f63a706..1f833ebd71ed9 100644
+--- a/include/linux/etherdevice.h
++++ b/include/linux/etherdevice.h
+@@ -38,6 +38,34 @@ int fwnode_get_mac_address(struct fwnode_handle *fwnode, char *addr);
  
-+#if IS_ENABLED(CONFIG_IPV6)
-+	/* Detach IPv6 state before a route lookup can fail. */
-+	if (opt_child_init)
-+		opt_child_init(newsk, sk);
-+#endif
+ u32 eth_get_headlen(const struct net_device *dev, const void *data, u32 len);
+ __be16 eth_type_trans(struct sk_buff *skb, struct net_device *dev);
 +
- 	if (!dst) {
- 		dst = inet_csk_route_child_sock(sk, newsk, req);
- 		if (!dst)
-@@ -1813,10 +1819,6 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
- 	}
- 	sk_setup_caps(newsk, dst);
++/**
++ * eth_type_trans_careful - eth_type_trans() for skbs coming from the stack
++ * @skb: buffer, possibly with less than ETH_HLEN bytes in its linear area
++ * @dev: receiving network device
++ *
++ * eth_type_trans() expects ETH_HLEN bytes in skb->head, which NIC drivers
++ * provide. Devices looping skbs from their transmit path back to the
++ * receive path (loopback, OVS internal ports) get skbs built by the stack,
++ * whose link-layer header might have been popped by tc or OVS actions.
++ *
++ * Sets skb->protocol on success.
++ *
++ * Return: SKB_NOT_DROPPED_YET on success, or a drop reason. In the latter
++ * case, the caller must free @skb.
++ */
++static inline enum skb_drop_reason
++eth_type_trans_careful(struct sk_buff *skb, struct net_device *dev)
++{
++	enum skb_drop_reason reason = pskb_may_pull_reason(skb, ETH_HLEN);
++
++	if (unlikely(reason))
++		return reason;
++
++	skb->protocol = eth_type_trans(skb, dev);
++	return SKB_NOT_DROPPED_YET;
++}
++
+ extern const struct header_ops eth_header_ops;
  
--#if IS_ENABLED(CONFIG_IPV6)
--	if (opt_child_init)
--		opt_child_init(newsk, sk);
--#endif
- 	tcp_ca_openreq_child(newsk, dst);
- 
- 	tcp_sync_mss(newsk, dst4_mtu(dst));
+ int eth_header(struct sk_buff *skb, struct net_device *dev, unsigned short type,
 -- 
 2.53.0
 
