@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044347;
-	b=lSnaYs8oyW+eJ4wwROHLFP6pQ0z5bDR95jLCFIZMEVwUwkYInym/Lq+A8ALQJ3JmXOyC
-	 z/80fbtf62j4vPTTLMMhkta3t9LGvSHqhVx0n53DKwLrXUcKZJFtDp15P4eKbAOl3wVv8
-	 MOIqI0KK5mUDP0zkFusM+BEQmvFMB3tQpNaEjRGxB16n4AHHxKvWnszpbVOqt/M9BMna4
-	 CGf/yoJ1raGdB3UaTpdBvjFZb6J9yqkWo5y20U9n1zRA+d5ozPEZI0jn0jAcJAMnWLHmf
-	 GuSgzJvf/52RkVLIAYgsUFNS64ks7kBt0T0mVUVe8r0pj47lL+lIe6Nlwz4FKT8rfyw==
+	t=1795044350;
+	b=pUTAJ2IXAbb0rbVKSHlDdIsNkKCI1z24j9Xoo80hyeR5v89rtYiMeghb26hPKWCeMsCC
+	 lC4ua3CS9C4eUHw2NDkWQQJR2SsWryaKHAzlQBzphle0LKXpmt80WQmwZ0845ACin1jv7
+	 LdvFe9OqeXWRzDPxqadSneKvtbwlrIoaClOeH1nfc4fjxhaAB/JbM0B3QGqffqQxdoJ4K
+	 OGXWyFSP8eIK/CBQGAl2gyKyM3uQhNoE8L0h26B0qX+guwMA2jkki46f4FBUFjybQFsDu
+	 1YGtyhu7vDyzRUHXACfZk6j9/SjTRkRI+tTGt+lR7jpxUSHskwOkRXYdISwpXLDPX2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044347;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044350;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+Dzx0g8ANRldSqcL+6M1SQRf5QKiDNPpJ38t5cKXVtU=;
-	b=YQWd/CnHHVKhBJc7AkAYP9oKXXfbnNT/FRKBxEsxKTe6A4IGu1/wjsg6U9cfSUkKuvFW
-	 /vQnh2adGL1a+2z8PpHQHOJ7FL1IpIqdwGcppV3GCZWCvbt0qnVKOmq0J1LmJGW8vxu93
-	 qVv1XTnKNm6VTLQdCzdIY78zO7KkKJx7thA5/ZQuDUUsTwLZ0d5ix0TY6YBRf2m72Fzm8
-	 jux7jV94dVeqC/0H4NstTQvbGBs+VI+3EW87eaYMdn4wAwAKSttMJL/IbDx3/6shFLgZ3
-	 VGi/jm4zopw3sWGPmZO2ofINpm4VFHrPWDz5mQyHlvqrIbgt9D1vzbzXhfr6cco+fZg==
+	bh=9DujwoBLUnYIaqrL5V1qvNDWNcSkMe4vXfNv5gT2uiY=;
+	b=ZeyM3f1Pw/0KPDYSdACAWLOQGAquL7bTDP4z0XVNP7bWJ9AE0O7P0GVC3IwSVFOYDRCJ
+	 FGZv8i8wMG2Q4C4yoyGoxb0n42uSQTsK5+5VJVOX+go/t0xm7Itnd0ugjb0BcUDESMfKd
+	 4kOtwCMvlDTduvxX7Rp5t1ueW5bEEswou+BhXY43WpWJcX35+POAWcGbQ/cUVyW5cp/JK
+	 XdZDvgi0y3Pea7igSbRXCkvIFus4YvYN6U9raKkdU19iSkEq9m6qXIFSxyno3Aj2fmyQz
+	 qVCJ+PLCZeyG03zuCB/TSTfXILmfVk0stL2Vh3B8uWKiLrpXO9zXh9PnzSVRhVCqRFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ALmZOrVl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uJmSs34B;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56FB606A320;
-	Wed, 18 Nov 2026 23:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E60606A31C;
+	Wed, 18 Nov 2026 23:25:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ALmZOrVl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34DA21F000C4;
-	Wed, 18 Nov 2026 23:25:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uJmSs34B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0624C1F000C4;
+	Wed, 18 Nov 2026 23:25:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044347;
-	bh=+Dzx0g8ANRldSqcL+6M1SQRf5QKiDNPpJ38t5cKXVtU=;
+	s=korg; t=1795044350;
+	bh=9DujwoBLUnYIaqrL5V1qvNDWNcSkMe4vXfNv5gT2uiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ALmZOrVlpXGyIZq46PvrbVwME/hwYxCr2gzvp3COLJ7zB+gmTYWTtN5oIBHj5/83f
-	 mx7VlkRp029HNrQxf7NNtqCRLnciNvFJehS7dAo8VSWIwEVKxkGk7fHr+Mp/1XiFgF
-	 tjMNaJILVmsbxiqyOovD113HTggXsoZQrVWBVP4s=
+	b=uJmSs34BPQ5p/vCD4zWDYbVW95Bx5yinP07UnKd0nAowe5xbH7ocag92kyJ3K0J8M
+	 Ew0Cxh0cHDxymo8eKcBlGz/q165V4aNyQ8WxtuPy/LvgqO/ln4TcgTI33Az0vFZ63O
+	 8yL9560o8d41cn13EGOX1UdOlNuQ2T/bXm6jmM0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 0536/2857] media: cx23885: Fix use-after-free in cx23885_finidev due to race condition
-Date: Wed, 18 Nov 2026 15:26:10 +0100
-Message-ID: <20261118150220.783445321@linuxfoundation.org>
+	Damiano Melotti <melotti@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 0519/2857] tcp: Fix potential UAF in reqsk_timer_handler().
+Date: Wed, 18 Nov 2026 15:25:53 +0100
+Message-ID: <20261118150220.156626839@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,74 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit 75016a992d9b03f5cc6df1414d1da35840d4feeb upstream.
+commit 97c8a3c1f73d828de43a5a88e8a9a143efb2b661 upstream.
 
-In cx23885_v4l2_dev_notify_init, &dev->cx25840_work is bound with
-cx23885_av_work_handler, and &dev->ir_rx_work and &dev->ir_tx_work
-are bound with cx23885_ir_rx_work_handler and
-cx23885_ir_tx_work_handler. cx23885_irq can schedule these works on
-system_wq when an AV_CORE interrupt is received, and the IR subdevice
-can also schedule the IR works from its interrupt service routine via
-the v4l2_device notify callback.
+When TCP socket migration fails at inet_ehash_insert() in
+reqsk_timer_handler(), we jump to the no_ownership: label
+and free the new reqsk immediately with __reqsk_free().
 
-If we remove the device, cx23885_finidev makes cleanup and the memory
-allocated for dev is released by kfree(dev), while the works mentioned
-above may still be pending or running. The sequence of operations that
-may lead to a UAF bug is as follows:
+Thus, we must stop the new reqsk's timer before jumping to the
+label, but the timer might be missed since the cited commit,
+resulting in UAF.
 
-CPU0                                      CPU1
+As we are in the original reqsk's timer context, we can safely
+call timer_delete_sync() for the new reqsk.
 
-                                          | cx23885_irq
-                                          | schedule_work(&dev->cx25840_work)
-cx23885_finidev                           |
-cx23885_input_fini(dev)                   |
-cx23885_ir_fini(dev)                      |
-cx23885_shutdown(dev)                     |
-free_irq(pci_dev->irq, dev)               |
-pci_disable_device(pci_dev)               |
-cx23885_dev_unregister(dev)               |
-v4l2_device_unregister(v4l2_dev)          |
-kfree(dev)                                |
-// dev is freed                           |
-                                          | cx23885_av_work_handler
-                                          | // use dev (use-after-free)
+Let's pass false to __inet_csk_reqsk_queue_drop() to stop
+the new reqsk's timer.
 
-Fix it by canceling the works after the IRQ handler that can schedule
-them has been stopped, and before proceeding with the remaining
-cleanup in cx23885_finidev.
-
-Note that the flush_work() calls in cx23885_input_ir_stop() do not
-close this race: they only wait for works that are already queued or
-running at that moment, they do not prevent the IRQ handler, which is
-still registered at that point, from scheduling the works again
-afterwards, and they are skipped entirely when dev->sd_ir is NULL.
-The cancel_work_sync() calls are therefore placed after free_irq(),
-the only point at which no new work can be scheduled.
-
-Fixes: e5514f104d87 ("V4L/DVB: cx23885: Move AV Core irq handling to a work handler")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:deepseek-v4-flash
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 83fccfc3940c ("inet: fix potential deadlock in reqsk_queue_unlink()")
+Reported-by: Damiano Melotti <melotti@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260506035954.1563147-2-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/cx23885/cx23885-core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv4/inet_connection_sock.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/pci/cx23885/cx23885-core.c
-+++ b/drivers/media/pci/cx23885/cx23885-core.c
-@@ -2233,6 +2233,10 @@ static void cx23885_finidev(struct pci_d
- 	/* unregister stuff */
- 	free_irq(pci_dev->irq, dev);
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1098,7 +1098,7 @@ static void reqsk_timer_handler(struct t
  
-+	cancel_work_sync(&dev->cx25840_work);
-+	cancel_work_sync(&dev->ir_rx_work);
-+	cancel_work_sync(&dev->ir_tx_work);
-+
- 	pci_disable_device(pci_dev);
+ 		if (!inet_ehash_insert(req_to_sk(nreq), req_to_sk(oreq), NULL)) {
+ 			/* delete timer */
+-			__inet_csk_reqsk_queue_drop(sk_listener, nreq, true);
++			__inet_csk_reqsk_queue_drop(sk_listener, nreq, false);
+ 			goto no_ownership;
+ 		}
  
- 	cx23885_dev_unregister(dev);
 
 
