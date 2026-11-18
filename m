@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042849;
-	b=2ijQQ5IGxKU3kp3WkntiEC5Jiq5RskDnhlEE/Pr6RNw6+yrWIGwLyyHYhbdF75P2e3Lc
-	 GG4OL5fD5He9GrQWvpY54dEBqr8cxcTvOM2W8enMl8bQgGfo5VxK45I8HE9krBdZmRF9R
-	 NseyJd28FTakZzJEpWB+mBpCq6Ln+uhNuR1eboRMyaFGdPLJnAIQtBrG9n+p1FvcshsPV
-	 HJ9GIbk/5rYFa53QlyM8k3rFMAKyMp7ocVkt3l2mdJaoHY0cP/85LMJ7ZAqfIMOc2lP5M
-	 Zawz6fze9YWsnjuFbS6AupWBATEsfIs9Ax5p8bdGfZl8pHQqPs+CWDEQpO2Uxyit0Dw==
+	t=1795042852;
+	b=fOUJoqUVW5HMDQ/yiD5P9DneeIHYP+A/0m6Gk5zjgQ3AJ0kW7OPMwtoUECzD/iCun4ig
+	 fPhbbNdDUOBMc0M+J8/2yNCsqHljSiBRJS1AUzUkd17IyzgzWgM4kAMDEanv2J4rHKWx8
+	 AfvUheLM/bX4NnJmtC7L8qjJIu2pOSsk9G4+eY9DIOuegEvllfsiqA/RDgMFryFNSjsxA
+	 As6CdvJugpAx76ACpBK52wKtWmsBDEVCUiWdVTbWGcWbDBTgo9l0nNcgwXXpG6Km+0fO1
+	 +6cGlsYuxLV4h8Lt7bMgqqpBHJ2HHi2U+3hcQ5vwNy+l1gicoA4BL6nYZb5oa8ihy+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042849;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042852;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v+3natxy8gh4p3BMsYcMCG4ndykVTzX5jTYABFdVc3M=;
-	b=emMCn01pNuGipgZwMWn4bPIZ0Bnf5tvHHr8KeC3gA0pbmd0DQDZodf8dVjQssuSKLAlD
-	 xL3sRCr5PETL6eZX1uO1Tl5xQd+bo3/hvPVIKThjwzdQ4VZmMFBfMVIMvIFIPY0ddCPyU
-	 UmPKk5AjT25mWOYC3fcFGamw3+xWdp+KXZSl2aRsi65yE3dHOMHILgf09Leggw5f0N2a1
-	 n4tv6I/k/fsZNoi7g5hr7eoFXFk3+3Khq2etEq8ckD0585i0bDsO1rX+rrjbiqlhDM9qs
-	 35YwfamiANUsqBOnXJGZDL7UkdCD8fhq0awLQUyDaGOH47uLNLmlhu+SxLH0mLdD+Vg==
+	bh=JS2gDG3IDRpwSSV5U/e9XnioTvwlVWAsjmDY7Bm76X4=;
+	b=nG51HaZt4zLZ3hOtJt2kUXD3OK9p/gFrhpnlUz1SB7CoYOe4Y528sauNbpwYTyq4FCbX
+	 fM83GHPjl3vebDkfZi6KspB+4U8V2pqghzhgblwZPM8jdDl9j77jnfdE8sUXJXI2VYCAT
+	 vwXyS5CM7TjqNHakuyk/XzwyTM8Ko2ZZkk8kzckwOOEtlBRm0KDoG3c8AwS2eDqnW4E1g
+	 XG9hqcBpyXjqNr9ymhHnEnAdQWfWu21GKcb9CPaK8T/BDJ3hYjB8Jqtyiytrtl0p68Cf8
+	 sw594hdg50Xm1wqjldZzdZYi67DkSLC0oA2tTCIOfv4Rrq++8QuqWySSRf9jM2vd5TQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SNRhf+Go;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="k/T4ZbTo";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DE9606A31C;
-	Wed, 18 Nov 2026 23:00:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B07D606A325;
+	Wed, 18 Nov 2026 23:00:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SNRhf+Go
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E19D1F000C4;
-	Wed, 18 Nov 2026 23:00:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k/T4ZbTo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C001F000C4;
+	Wed, 18 Nov 2026 23:00:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042849;
-	bh=v+3natxy8gh4p3BMsYcMCG4ndykVTzX5jTYABFdVc3M=;
+	s=korg; t=1795042852;
+	bh=JS2gDG3IDRpwSSV5U/e9XnioTvwlVWAsjmDY7Bm76X4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SNRhf+GoOinir9K56yhiKMnzQcy7ElZ7Hn6h99N9+gHRV4uyPCsp1Ea3VKfcyjIpF
-	 jKXbaTLOMNWDpwGPDaRib1Wvz4HLsaSZxTz5tR1DiPzUtOmB9ddH0QyWk4SqCR9Hmz
-	 xv5BhnNs3AZ9lqwGWtxgYpXkkct9/9Ok0vBOdMMw=
+	b=k/T4ZbTo+S/A/59o7WqmyodvfWUrJ+CTKl0qs6dIsy0u3YH4bmlq1KaudsD0GBuHf
+	 8Su9mxx0fLWaaAwHmzVjw5IL4VBK1m2K0NxfL9lSYwO1pKxmrC0neaxfvF5v2e/LNG
+	 fW8rv5QJZJeugvybtKtRmXqxT/fjYe5tWx6kR63E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 6.6 3316/3318] clk: samsung: Revert "clk: Use device_get_match_data()"
-Date: Wed, 18 Nov 2026 16:05:38 +0100
-Message-ID: <20261118150459.049878585@linuxfoundation.org>
+	syzbot+8425ccfb599521edb153@syzkaller.appspotmail.com,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.6 3317/3318] RDMA/rxe: Flush delayed SKBs while releasing RXE resources
+Date: Wed, 18 Nov 2026 16:05:39 +0100
+Message-ID: <20261118150459.076229959@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,74 +68,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-commit aacb99de1099346244d488bdf7df489a44278574 upstream.
+commit 3c3e9a9f2972b364e8c2cfbfdeb23c6d6be4f87f upstream.
 
-device_get_match_data() function should not be used on the device other
-than the one matched to the given driver, because it always returns the
-match_data of the matched driver. In case of exynos-clkout driver, the
-original code matches the OF IDs on the PARENT device, so replacing it
-with of_device_get_match_data() broke the driver.
+When skb packets are sent out, these skb packets still depends on
+the rxe resources, for example, QP, sk, when these packets are
+destroyed.
 
-This has been already pointed once in commit 2bc5febd05ab ("clk: samsung:
-Revert "clk: samsung: exynos-clkout: Use of_device_get_match_data()"").
-To avoid further confusion, add a comment about this special case, which
-requires direct of_match_device() call to pass custom IDs array.
+If these rxe resources are released when the skb packets are destroyed,
+the call traces will appear.
 
-This partially reverts commit 409c39ec92a35e3708f5b5798c78eae78512cd71.
+To avoid skb packets hang too long time in some network devices,
+a timestamp is added when these skb packets are created. If these
+skb packets hang too long time in network devices, these network
+devices can free these skb packets to release rxe resources.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 409c39ec92a3 ("clk: Use device_get_match_data()")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20240425075628.838497-1-m.szyprowski@samsung.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240430184656.357805-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Reported-by: syzbot+8425ccfb599521edb153@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=8425ccfb599521edb153
+Tested-by: syzbot+8425ccfb599521edb153@syzkaller.appspotmail.com
+Fixes: 1a633bdc8fd9 ("RDMA/rxe: Let destroy qp succeed with stuck packet")
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Link: https://patch.msgid.link/20250726013104.463570-1-yanjun.zhu@linux.dev
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/samsung/clk-exynos-clkout.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_net.c |   29 ++++++++---------------------
+ drivers/infiniband/sw/rxe/rxe_qp.c  |    2 +-
+ 2 files changed, 9 insertions(+), 22 deletions(-)
 
---- a/drivers/clk/samsung/clk-exynos-clkout.c
-+++ b/drivers/clk/samsung/clk-exynos-clkout.c
-@@ -13,9 +13,9 @@
- #include <linux/io.h>
- #include <linux/of.h>
- #include <linux/of_address.h>
-+#include <linux/of_device.h>
- #include <linux/platform_device.h>
- #include <linux/pm.h>
--#include <linux/property.h>
+--- a/drivers/infiniband/sw/rxe/rxe_net.c
++++ b/drivers/infiniband/sw/rxe/rxe_net.c
+@@ -368,33 +368,15 @@ static void rxe_skb_put_held_ndev(struct
  
- #define EXYNOS_CLKOUT_NR_CLKS		1
- #define EXYNOS_CLKOUT_PARENTS		32
-@@ -84,17 +84,24 @@ MODULE_DEVICE_TABLE(of, exynos_clkout_id
- static int exynos_clkout_match_parent_dev(struct device *dev, u32 *mux_mask)
+ static void rxe_skb_tx_dtor(struct sk_buff *skb)
  {
- 	const struct exynos_clkout_variant *variant;
-+	const struct of_device_id *match;
+-	struct net_device *ndev = skb->dev;
+-	struct rxe_dev *rxe;
+-	unsigned int qp_index;
+-	struct rxe_qp *qp;
++	struct rxe_qp *qp = skb->sk->sk_user_data;
+ 	int skb_out;
  
- 	if (!dev->parent) {
- 		dev_err(dev, "not instantiated from MFD\n");
- 		return -EINVAL;
+-	rxe = rxe_get_dev_from_net(ndev);
+-	if (!rxe && is_vlan_dev(ndev))
+-		rxe = rxe_get_dev_from_net(vlan_dev_real_dev(ndev));
+-	if (WARN_ON(!rxe))
+-		return;
+-
+-	qp_index = (int)(uintptr_t)skb->sk->sk_user_data;
+-	if (!qp_index)
+-		return;
+-
+-	qp = rxe_pool_get_index(&rxe->qp_pool, qp_index);
+-	if (!qp)
+-		goto put_dev;
+-
+ 	skb_out = atomic_dec_return(&qp->skb_out);
+-	if (qp->need_req_skb && skb_out < RXE_INFLIGHT_SKBS_PER_QP_LOW)
++	if (unlikely(qp->need_req_skb &&
++		skb_out < RXE_INFLIGHT_SKBS_PER_QP_LOW))
+ 		rxe_sched_task(&qp->send_task);
+ 
+ 	rxe_put(qp);
+-put_dev:
+-	ib_device_put(&rxe->ib_dev);
+ 	sock_put(skb->sk);
+ 	rxe_skb_put_held_ndev(skb);
+ }
+@@ -418,6 +400,7 @@ static int rxe_send(struct sk_buff *skb,
+ 	sock_hold(sk);
+ 	skb->sk = sk;
+ 	skb->destructor = rxe_skb_tx_dtor;
++	rxe_get(pkt->qp);
+ 	atomic_inc(&pkt->qp->skb_out);
+ 
+ 	if (skb->protocol == htons(ETH_P_IP))
+@@ -445,6 +428,7 @@ static int rxe_loopback(struct sk_buff *
+ 	sock_hold(sk);
+ 	skb->sk = sk;
+ 	skb->destructor = rxe_skb_tx_dtor;
++	rxe_get(pkt->qp);
+ 	atomic_inc(&pkt->qp->skb_out);
+ 
+ 	if (skb->protocol == htons(ETH_P_IP))
+@@ -543,6 +527,9 @@ struct sk_buff *rxe_init_packet(struct r
+ 		goto out;
  	}
  
--	variant = device_get_match_data(dev->parent);
--	if (!variant) {
-+	/*
-+	 * 'exynos_clkout_ids' arrays is not the ids array matched by
-+	 * the dev->parent driver, so of_device_get_match_data() or
-+	 * device_get_match_data() cannot be used here.
-+	 */
-+	match = of_match_device(exynos_clkout_ids, dev->parent);
-+	if (!match) {
- 		dev_err(dev, "cannot match parent device\n");
- 		return -EINVAL;
- 	}
-+	variant = match->data;
++	/* Add time stamp to skb. */
++	skb->tstamp = ktime_get();
++
+ 	skb_reserve(skb, hdr_len + LL_RESERVED_SPACE(ndev));
  
- 	*mux_mask = variant->mux_mask;
+ 	rxe_skb_set_held_ndev(skb, ndev);
+--- a/drivers/infiniband/sw/rxe/rxe_qp.c
++++ b/drivers/infiniband/sw/rxe/rxe_qp.c
+@@ -245,7 +245,7 @@ static int rxe_qp_init_req(struct rxe_de
+ 	err = sock_create_kern(&init_net, AF_INET, SOCK_DGRAM, 0, &qp->sk);
+ 	if (err < 0)
+ 		return err;
+-	qp->sk->sk->sk_user_data = (void *)(uintptr_t)qp->elem.index;
++	qp->sk->sk->sk_user_data = qp;
  
+ 	/* pick a source UDP port number for this QP based on
+ 	 * the source QPN. this spreads traffic for different QPs
 
 
