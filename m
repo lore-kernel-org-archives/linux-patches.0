@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016609;
-	b=JgmeFXGpdqJdfX6dHILHAO4ihXihNxXr7mJmrfrl/NGbVcsE1inTOx5ZiuwNm5iWeUv/
-	 0wje7pfvjcmbAl+2SZ8+5GVXXFre9rhk3hWm+NCIyamlEasf7mmeBsbJVSTokffSMqOii
-	 Xcu8xg0caGI5BT/q4ijm/0SQ/QXuKVHGlA/WiH6YK8C7auOppjiRJNDSD6k0Sg38EqkMs
-	 iZmDTX+PTRUVWUui72kDodO6ePdmLndxhJfVew/8ogQyvlINezoD/KnXqltHYBLSDmvQn
-	 kPbnVWyK8nvQDfzN4DtLnga52pArClbE0ni+VPWe5atZBGvRFxHBBN2aqptem2qZ67g==
+	t=1795016612;
+	b=qucVfUh+srXw2DPExR4ozMEpwQ/FMQx/BzRh5TiYt4dltkOt7WJsuamz3wEDEgEWk9z0
+	 4IBLEZvSBAM+QNaXwmo7PuFQ0LTE6/H3SJju9o/eo2Oq+D1tlXDeKRxW2ZL7bW7+zvdrs
+	 k5fWrvNlSKHblCFCy6WI4FcvX/5qDvZOAWgssYjyoXWWf1bfOwoAdw1kivlUna6G8E4Up
+	 67Us9LQ2Psv4rDHzzb5kcyPkq/6z5GW5+ouxYF1EPQRu4Vrl9WIJr2Zf53pWUNBXmhmtv
+	 ah/1/+8JJOL8DlrVUyU/TyvTz/h6xScABnhCbAvfK6M1yLjQeI+1Z2xS2hIcsTGbZVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016609;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016612;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lMSOrXzB86BcBEafpQuUM/yvYtjDH9xTTVe1u0LbGFs=;
-	b=QQb/ZBNF+31XFYUcBLzPqUn/JeIbDdy/EOsAQU0B6cVprtwH4tHuBseac0TPd1tn8glQ
-	 BcLySeopOFycfOjkF3FV8ERdlEEQ1Weqb3mMJjwr91Ttw/EoRdf8bejlRrpUw3zfD407L
-	 riCuGExLejFT+O3mvG9rDSyuH0/qv3++VSh5k9pEAvt31bLjHLrRDG7s7cSuzQibGDWQ/
-	 fQ0nR0iWaPERmvaEPmuW8ZyIlRfx9xkIU7XepHWwMzDaYQNJor7uM7c4j7CfeDEylLyIp
-	 iOqwPfwKtsznDAbZfaxdOw0z4ipiXSg7PSAsY9FeDaWa97i3H8blwdkkmIJXkdTGQfw==
+	bh=zZSZVHuyNxkl+Sf7ODrH1JxP4NAxZNDdvrNaAfW3P7k=;
+	b=qWEqOIUhxudqlGaMa9Es3ci0r34NdaACg7x/fx4FhjXeS4fqQ3GxcnJQ7AfPxVwfMmez
+	 h6rT8vH6lNZnoH+dhE5JirHAM3om0wJAWYQngY7tZD8yP1VXLIm2YdJ/7qTsmfZLoitW3
+	 +pspcuszN6JmW0jzdY03eNZQWmOu2N18ZHTvnwBqPCy2Xh7/nOvqcKGK1AXaShEX0aqW4
+	 jJ5sXWi2srSsblJ1K5Rl//+GpNy9WPm+8ioUFIxu47TmTZiolocZJEvwG/kBhJghSqXaO
+	 KtjSYocLNnVNV91eMCSlR8WuqSo/E10RVZcF9SKLdG3aygKkC8mkVlGrAqd4h9VqTJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T0qw88p2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MogkBYtH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66EE9606A31C;
-	Wed, 18 Nov 2026 15:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDE1606A320;
+	Wed, 18 Nov 2026 15:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T0qw88p2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81811F000C4;
-	Wed, 18 Nov 2026 15:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MogkBYtH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906871F000C4;
+	Wed, 18 Nov 2026 15:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016609;
-	bh=lMSOrXzB86BcBEafpQuUM/yvYtjDH9xTTVe1u0LbGFs=;
+	s=korg; t=1795016612;
+	bh=zZSZVHuyNxkl+Sf7ODrH1JxP4NAxZNDdvrNaAfW3P7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T0qw88p2wfUM19UaLFhOylSXN1qR6m2EyUDxMs5rYXmKaObPq7zBv/3hQWL9LFGtV
-	 nB4Xj4USgGo6WY862p8iz+iBCNX0duCUdPFM7Mg84stxwthMBPNoB+4z7lD6xG7psa
-	 GsIDEFORPuKcvcWdvaI084qE/KAx9FXe/QFke8mo=
+	b=MogkBYtHwKHd4dJr2NPPSwp4tLl36GlWYhzwYc3eJmjE+fBLKXGrBB3gZ3/egzNei
+	 FGQW1DxGRiu1ppAUBKWCsVsCyYe3v5JBvy0+dnAueWTr94uALxacBHwebih0Ovv7Rr
+	 RyocnyNLVWpu1fV5VZ53Ja7ViUhgh4SEIwFMafXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0562/2651] netlink: specs: devlink: describe the netns id in the parent-dev nest
-Date: Wed, 18 Nov 2026 15:30:02 +0100
-Message-ID: <20261118150307.973996203@linuxfoundation.org>
+Subject: [PATCH 7.3 0589/2651] spi: mxic: fix ps_clk leak in runtime resume
+Date: Wed, 18 Nov 2026 15:30:29 +0100
+Message-ID: <20261118150308.926484496@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,106 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 150079380e4b13c7ed0e738913937e375259172c ]
+[ Upstream commit 648e3c436032b675b339662ea9c0edd9221add76 ]
 
-devlink_nl_rate_parent_fill() emits DEVLINK_ATTR_PARENT_DEV via
-devlink_nl_put_nested_handle(), which adds DEVLINK_ATTR_NETNS_ID
-whenever the parent rate node lives on a devlink instance in another
-netns. Now that we defined dl-nested-devlink subset, which unlike
-dl-parent-dev includes netns-id, let's switch to it. The rate APIs
-input genuinely does not accept the netns-id, so we need to subset
-them to stick with dl-parent-dev.
+mxic_spi_runtime_resume() enables ps_clk before calling
+mxic_spi_clk_enable(). If the latter fails, ps_clk was not
+disabled.
 
-Fixes: b5f90fd4580ce7 ("devlink: Add parent dev to devlink API")
-Link: https://patch.msgid.link/20260915161341.1053476-8-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Unwind ps_clk with clk_disable_unprepare() before returning
+the error.
+
+Fixes: b942d80b0a39 ("spi: Add MXIC controller driver")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260902-mxic-v1-1-76806325826d@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/netlink/specs/devlink.yaml | 41 ++++++++++++++++++++++--
- 1 file changed, 38 insertions(+), 3 deletions(-)
+ drivers/spi/spi-mxic.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/netlink/specs/devlink.yaml b/Documentation/netlink/specs/devlink.yaml
-index c4dfc814873f5..31667f43b8488 100644
---- a/Documentation/netlink/specs/devlink.yaml
-+++ b/Documentation/netlink/specs/devlink.yaml
-@@ -899,7 +899,7 @@ attribute-sets:
-       -
-         name: parent-dev
-         type: nest
--        nested-attributes: dl-parent-dev
-+        nested-attributes: dl-nested-devlink
-         doc: |
-           Identifies the devlink instance which owns the parent rate node.
-           Used with rate-set and rate-new to parent a rate object to a node on
-@@ -1331,6 +1331,10 @@ attribute-sets:
-   -
-     name: dl-parent-dev
-     subset-of: devlink
-+    doc: |
-+      Devlink handle accepted as the parent-dev input; the netns id the
-+      kernel reports back is not accepted, the parent is always resolved
-+      in the caller's netns.
-     attributes:
-       -
-         name: bus-name
-@@ -1339,6 +1343,37 @@ attribute-sets:
-       -
-         name: index
+diff --git a/drivers/spi/spi-mxic.c b/drivers/spi/spi-mxic.c
+index e3c85e5191e36..481edd4b35cbf 100644
+--- a/drivers/spi/spi-mxic.c
++++ b/drivers/spi/spi-mxic.c
+@@ -744,7 +744,13 @@ static int mxic_spi_runtime_resume(struct device *dev)
+ 		return ret;
+ 	}
  
-+  -
-+    name: dl-rate-set
-+    subset-of: devlink
-+    doc: Attributes accepted by the rate-set and rate-new requests.
-+    attributes:
-+      -
-+        name: bus-name
-+      -
-+        name: dev-name
-+      -
-+        name: index
-+      -
-+        name: port-index
-+      -
-+        name: rate-node-name
-+      -
-+        name: rate-tx-share
-+      -
-+        name: rate-tx-max
-+      -
-+        name: rate-tx-priority
-+      -
-+        name: rate-tx-weight
-+      -
-+        name: rate-parent-node-name
-+      -
-+        name: rate-tc-bws
-+      -
-+        name: parent-dev
-+        nested-attributes: dl-parent-dev
+-	return mxic_spi_clk_enable(mxic);
++	ret = mxic_spi_clk_enable(mxic);
++	if (ret) {
++		clk_disable_unprepare(mxic->ps_clk);
++		return ret;
++	}
 +
-   -
-     name: dl-nested-devlink
-     subset-of: devlink
-@@ -2320,7 +2355,7 @@ operations:
-     -
-       name: rate-set
-       doc: Set rate instances.
--      attribute-set: devlink
-+      attribute-set: dl-rate-set
-       dont-validate: [strict]
-       flags: [admin-perm]
-       do:
-@@ -2343,7 +2378,7 @@ operations:
-     -
-       name: rate-new
-       doc: Create rate instances.
--      attribute-set: devlink
-+      attribute-set: dl-rate-set
-       dont-validate: [strict]
-       flags: [admin-perm]
-       do:
++	return 0;
+ }
+ 
+ static const struct dev_pm_ops mxic_spi_dev_pm_ops = {
 -- 
 2.53.0
 
