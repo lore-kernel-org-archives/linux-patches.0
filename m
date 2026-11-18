@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019694;
-	b=arn3al2nuG6TKX5o2g5ublm8nlZA6Yk/Mm3T6WJzgDTN6vrjXX7xkAYM3mRd6UjznSq2
-	 faQS1r3C0onuaXAufLDdKPfzVj01U43HL1VThEEEFtvpd73QynV/BolT9f8ncfwDmtO2K
-	 GVNa36pKqO4nh0qImgC34BsPsL+xxnzgX6Wm5rR+v0tZ+dchyQwc2XYpaeBRKWQ1ZwIXT
-	 pJ5GuZQKfWyzo3ObCbhclnTgMsRl7Fe5o9vnvfOYgzwZ48i6CQmxPwH/JZqXl1/UpzDhu
-	 s+NYy8cybQLMJFL6cpVlKzVbXOfoXD4qVKqI318D+Y2YC6UayZ3r8nDSmq4nucZ7wTg==
+	t=1795019697;
+	b=LbN5ITSFPbFEdGlZ3dqvu1Y2bxWhmPNf3fTQNCS22MzAmd5qtZL9uDOURXog4+6TGkZg
+	 /uFKDXwmgonw575zqVreoImb9q5lXujbgko6LYNLqpMumkMoYbeNZaxfPXsL9rhrIqMHV
+	 +rl1ORMQOTeD4X/np4umcSbxH8edsTuNAOoE8Qie5IcctdyPhsfbWAQPrAdfI0odn+6ad
+	 ey841wWytRh71c+nSHiz80rV8n2y3/ri8GUW1FJI+NQshJbHMM0FsAzcmHlhjnHUHQ2Pu
+	 36OaF+iXp7MOG5U7t4ZpUivoa/0AL5sEZY68vlBN31zo9THbEHd4oYU+Mqh7vEf83XA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019694;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019697;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=q5nK+63w8OYpIgw0JZkqb/PwBaDP1VDBdS8zipMqVug=;
-	b=2UA+khb5Q0JqFlx0tQVvg6fyhZj8GzU2Fg6u77Xb7yJDoaNk0yWvVSIZuDGvp+sNz+an
-	 m1DzvobKrbodbJeetI+VIiJ0C0ngLibkQkD7wW7WOYCq54ARIDZ1T30wg65083DALD6AQ
-	 RZEi+mPJ7bP+S3SMMUhfZ+29kpDA5cfKza29kj4T+OagIrH32UpUPqR/L9Hnr+/PFFIBF
-	 73ljiF5efZaKfnjDgcJ9JZhkN78ybqrjipfqd76dnIq4cQZD0NUm8O3jLqtBKrD+AtlqZ
-	 dAvRKNC6VY/VUSU8M4YchMWpJ676t9klr6IevYsoVms44P8Wlaopgp31QjoOKOfL8Pw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=LQgir0b4Vl/WbtH6lDsCdTNRhwTXP2Xd4P/ax154Kgc=;
+	b=chF8fl/5aG5IR9xwSIzC2yG7wC5//iMyOwUIKnTl0RScM2PD4PiVzJPoc7qqaRiorjWL
+	 SKSw62CVeeJxFnsqQi5c/wY/ZX5dA8/WnoLUWPtKVicVhXWxcLMKMCzbwBH0MtVkhW8is
+	 zGtv1HdjQiNGpHKi3wyHapHbNy6WCstzkyPk17bIjSYOa4gQMB+sSEKI/IaiZXxvWAXNQ
+	 265nsDKO447ZDTz4DJBKFQUZp5LH8GWi5Alo8RzQGRThjNA9pwcuOocPkmSijChqyic55
+	 JKZNGJrQyxyHwPsOHL61h0RayIoecSSXkZmWz8cEm+2vlRssvKkegcuESi1JqWBtK8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQC6cRhU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yVpwOc9b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA67E606A332;
-	Wed, 18 Nov 2026 16:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F55F606A335;
+	Wed, 18 Nov 2026 16:34:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQC6cRhU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A336D1F000C5;
-	Wed, 18 Nov 2026 16:34:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yVpwOc9b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6851E1F000C4;
+	Wed, 18 Nov 2026 16:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019694;
-	bh=q5nK+63w8OYpIgw0JZkqb/PwBaDP1VDBdS8zipMqVug=;
+	s=korg; t=1795019696;
+	bh=LQgir0b4Vl/WbtH6lDsCdTNRhwTXP2Xd4P/ax154Kgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eQC6cRhU/uxti703V6EdbteBfIm631eSAYfrwco/dfWCKfygctmqDIIMeEeuIxTHP
-	 GJC2yugT17lJwT+hpXXXnBPIQhTyBnvKXP4W2ElQ+hpwfJyCCiL+seb20REkvD//Vm
-	 IseDXqvbmwWPHDqoe3xXHAEQnVKsTEAkpbktbCSM=
+	b=yVpwOc9bCYexjsh0Lob+xV/79R9/hIPlItGbxjsDY50Dii+as83MO/ytCmOj+lE/I
+	 zb87okw858ZXMrxWLJCaVc07P9Nk7eLVdeFCrW6fFq2Em3k28uJGb320gH2+Fi7+F+
+	 xruY6NRKRe/sjh5XWYJncEurFH6hLkejPSnRJCsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Nir Yehoshua <nir@ciphersecuritylabs.com>,
+	Ahmed Yaseen <yaseen@ghoul.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1660/2651] btrfs: qgroup: fix swapped blocks existence check when tracing after COW
-Date: Wed, 18 Nov 2026 15:48:20 +0100
-Message-ID: <20261118150347.502716466@linuxfoundation.org>
+Subject: [PATCH 7.3 1687/2651] platform/x86: asus-wmi: validate custom fan curves on enable
+Date: Wed, 18 Nov 2026 15:48:47 +0100
+Message-ID: <20261118150348.412827846@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,65 +63,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Ahmed Yaseen <yaseen@ghoul.dev>
 
-[ Upstream commit 0388b5bd3a6eb8bcb20208c3b6dbee96fd30bbe0 ]
+[ Upstream commit bcbdfe03566ad0d01c6af3b5476e8cadffe4d3df ]
 
-In btrfs_qgroup_trace_subtree_after_cow(), after we erase the swapped
-block, iterate over all possible tree levels to check if we sill have
-other swapped blocks. However the check is wrong, it considers that there
-are other swapped blocks if any rbtree for any level is empty, instead of
-not empty. As a consequence we set blocks->swapped to true basically every
-time since we always find an empty rbtree at least at level 7, since in
-practice it's nearly impossible to find such a huge btree. This makes
-every future call to btrfs_qgroup_trace_subtree_after_cow() do an
-unnecessary rbtree search instead of returning immediately.
+Custom fan curves reach firmware unchecked, so a curve whose temperature
+or PWM decreases from one point to the next is accepted. The firmware
+does not respect such a curve: a first point of 100% followed by 50%
+leaves every point running at 100%. The kernel keeps reporting the
+points that were written, so sysfs stops describing what the fans are
+actually doing.
 
-Fix this by updating the condition to set swapped to true if we find an
-rbtree that is not empty.
+Check the curve when enabling and reject it if it is invalid. Validation
+is done on enable rather than on write because fan curves are written
+one point at a time and are inconsistent mid-write.
 
-Fixes: f616f5cd9da7 ("btrfs: qgroup: Use delayed subtree rescan for balance")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 0f0ac158d28f ("platform/x86: asus-wmi: Add support for custom fan curves")
+Reported-by: Nir Yehoshua <nir@ciphersecuritylabs.com>
+Signed-off-by: Ahmed Yaseen <yaseen@ghoul.dev>
+Link: https://patch.msgid.link/20260831-fan-curve-validation-v2-1-7274ca16c8fe@ghoul.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.h  | 2 +-
- fs/btrfs/qgroup.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/x86/asus-wmi.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
-index 22ba2b4505b35..00d4c4184e76a 100644
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -160,7 +160,7 @@ enum {
-  */
- struct btrfs_qgroup_swapped_blocks {
- 	spinlock_t lock;
--	/* RM_EMPTY_ROOT() of above blocks[] */
-+	/* True if any of the rbtrees in the blocks array below is not empty. */
- 	bool swapped;
- 	struct rb_root blocks[BTRFS_MAX_LEVEL];
- };
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index df8a0aa662478..5fd0292765082 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -4887,7 +4887,7 @@ int btrfs_qgroup_trace_subtree_after_cow(struct btrfs_trans_handle *trans,
- 	/* Found one, remove it from @blocks first and update blocks->swapped */
- 	rb_erase(&block->node, &blocks->blocks[level]);
- 	for (i = 0; i < BTRFS_MAX_LEVEL; i++) {
--		if (RB_EMPTY_ROOT(&blocks->blocks[i])) {
-+		if (!RB_EMPTY_ROOT(&blocks->blocks[i])) {
- 			swapped = true;
- 			break;
- 		}
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index e4f8636f64623..53d694bffc618 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -3739,6 +3739,33 @@ static int fan_curve_write(struct asus_wmi *asus,
+ 					 arg1, arg2, arg3, arg4, &ret);
+ }
+ 
++/*
++ * A fan curve is a set of points the firmware interpolates between, so it
++ * only makes sense if neither temperature nor PWM ever decreases along it.
++ */
++static int fan_curve_validate(struct device *dev, struct fan_curve_data *data)
++{
++	u8 *percents = data->percents;
++	u8 *temps = data->temps;
++	int i;
++
++	for (i = 1; i < FAN_CURVE_POINTS; i++) {
++		if (temps[i] < temps[i - 1]) {
++			dev_warn(dev, "fan curve: temperature decreases at point %d (%u < %u)\n",
++				 i, temps[i], temps[i - 1]);
++			return -EINVAL;
++		}
++
++		if (percents[i] < percents[i - 1]) {
++			dev_warn(dev, "fan curve: pwm decreases at point %d (%u < %u)\n",
++				 i, percents[i], percents[i - 1]);
++			return -EINVAL;
++		}
++	}
++
++	return 0;
++}
++
+ static ssize_t fan_curve_store(struct device *dev,
+ 			       struct device_attribute *attr, const char *buf,
+ 			       size_t count)
+@@ -3823,6 +3850,11 @@ static ssize_t fan_curve_enable_store(struct device *dev,
+ 	}
+ 
+ 	if (data->enabled) {
++		err = fan_curve_validate(dev, data);
++		if (err) {
++			data->enabled = false;
++			return err;
++		}
+ 		err = fan_curve_write(asus, data);
+ 		if (err)
+ 			return err;
 -- 
 2.53.0
 
