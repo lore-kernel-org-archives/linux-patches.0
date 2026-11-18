@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016754;
-	b=vQPWyLbNEotqhQdbHZ43AuQvuuZ8QdmxjLpv1YmurkqU38luBd6lfmU5b7F4HH7J4gXG
-	 Gt0+F4tofkpF67kLdLO0SJuxR2zGVQRRRMeMabODetOrGa5LQ9n6/INAWvkA4PmFH0vL5
-	 GOCY4uExLI56VfO4kxotAmRP14IuXSj5+BunRuyURx5riO0o2ODF8fuErfRxpVsHTcMHp
-	 Fk+8qunHj26CVuSHoZlfNtg834pIXzCA4z7aHnUs+eGtOFEOp8LivwnekPSsPuU66QcFb
-	 o7/cRTyhKqE/I2+YNO3mp9CJeDe0SqGdnz42x54yfDKOQUeTCIlqG66vuV0APIkH6Dw==
+	t=1795016757;
+	b=4i7/24nNvZZzN8NjNHmdhdAGmVLth4J1qeAzUiWv8norG0b/McWv4YqauXs+tm4zbKBf
+	 /t9hhzko3z6B6vgQYIajbioSVCYc101iCDdw1lG5BEplFFCVrBowarL1BhGQfyWpZlT44
+	 sHyRqTWz9VBbi7Sy0gMSeguEzdyuP/TJBruB/8BM2UEXU8o6msB3ugl4TRdNJ4CoaASPZ
+	 Bj21KtXMymnsZ5uhRm5ecQkoceSlDsKV3qvjzeJ+HqH/qZudze2dq/aPPTuuMCBGWNnfk
+	 petkI30pdhNClkAz8qXqMxbNNwNr0oRNwIBOuRXpmOAbL36N4e8Yp+dlTE4dyEyYceA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016754;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016757;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gPf7lVc+h/xv5Y+5ZnAf1saHUj8h7W6WJ3qYdwNQlVo=;
-	b=oOTbljBVgtSQHdjgNelTB7cYgl23pDalN7JjWWURV8hcvl/Y3gKv/qI3KuB07DPf5qf/
-	 /SNhQS9QC/7SBuXtxwBc4nGeQSbNNY0xBHsVnzWWYVtLvFNm6F3qgTU2Ch6dsXc7p+Nr0
-	 CbErU60HHV/zMSAbkCXPkcD2NVjHbE9ty6C9LSDP2NIP+psCrz3jgSr7uPQuvOKhWJd6Y
-	 vbk/rE5AFyOjQPLYuOZql471z1o8aqtjxyUC6E3raeNL68Fhla7wZHpMf7Ff8ldcoORUk
-	 VEUM84tYiHOxUlXvXeKRIcpOqHMpxY5ykSPoMIgHpYG9/TV+XYhpvShfmIVRDY2Duaw==
+	bh=ar155YT+KDNJxXC411nVvugk3rCwsg065UJgJIr63H0=;
+	b=axeMKaLllOCTbTXy08tVIdZRuYuJjxmn7t8L6a6mYBneQquRKUELzl5T6OmDhCX3d//w
+	 /+WIPPI2wQ1+FiNF41zVwEGs/eqMVoXgGksw4Fbl1okcrs3itJcQMEI/WjwcfSb4M676K
+	 gm0M96Js6WrOdDg66ucvNBWdGV2RC2o1pkLhaJ8q4U60fmbUcGGzTktg8/zMcdufra79z
+	 dnEwwJ/ufhKF3UkKY+eQMcDy/vQkq7JksVKPaMeeSl/HhPti4H2bfnOsyQXRGcH4e+9XU
+	 eqdcV8C0nrlMwT9I/jKzC4NtTlqgx6sTFo0MLmpUo70l11ncKTBu4N17jZ4YT4/oePw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d3L7Q5iv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="160/DoLl";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889B2606A325;
-	Wed, 18 Nov 2026 15:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373D8606A32F;
+	Wed, 18 Nov 2026 15:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d3L7Q5iv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BD71F000C5;
-	Wed, 18 Nov 2026 15:45:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=160/DoLl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90CFB1F000C4;
+	Wed, 18 Nov 2026 15:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016754;
-	bh=gPf7lVc+h/xv5Y+5ZnAf1saHUj8h7W6WJ3qYdwNQlVo=;
+	s=korg; t=1795016757;
+	bh=ar155YT+KDNJxXC411nVvugk3rCwsg065UJgJIr63H0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d3L7Q5ivV/Z9cD/b2zLR1hK0rcUkilJsmjYrvLdIWNkJP0QIbcJxFH7zD04jQIgQd
-	 wHLvXVIRXcxuVJz9gVfR2NQaLoFl7bDAe35pigta6bBjOmX4GAnsM6Tfz+5H4IDBdz
-	 7oe3QVGHP0EBNsM64aKIAxN17fNlYXtWhocspr7o=
+	b=160/DoLliWAWswFk94N/Tk/hd7C8lj4LfZEZy74ykXV/lHYhoa5uiJKOUytznAg0G
+	 p/udPgXcYBBiOof4Ru9tmwRtgEXW1SWiw1LsdGBFs6PRAZL7t3Uu05rfbOI009Mecj
+	 /2/gA+Vz4c3cgx/edbJWkC+LSn2oXhd12afAU1/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0640/2651] perf libbfd: Fix the clang -Wthread-safety build failure
-Date: Wed, 18 Nov 2026 15:31:20 +0100
-Message-ID: <20261118150310.723684877@linuxfoundation.org>
+Subject: [PATCH 7.3 0641/2651] perf symbol: Fix the build when demangling with libbfd
+Date: Wed, 18 Nov 2026 15:31:21 +0100
+Message-ID: <20261118150310.758536810@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,50 +71,135 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit c4c43343501bd9fc24ec501ecaf43b7ef2da44d2 ]
+[ Upstream commit ecbc5aac7d9218320f2c734d75798f34c15a9d85 ]
 
-perf_bfd_lock() and perf_bfd_unlock() are the callbacks given to
-bfd_thread_init(), so by design they acquire and release the lock on
-libbfd's behalf and the lock state differs between entry and exit.
-clang's thread safety analysis, which perf builds with as an error,
-flags both:
+cxx_demangle_sym() calls bfd_demangle() with the DMGL_PARAMS and
+DMGL_ANSI flags, but nothing declares them. The
+"#define PACKAGE 'perf'", "#include <bfd.h>" and the DMGL_ definitions
+were left behind in symbol-elf.c when the demangling code moved to
+symbol.c, and libiberty's demangle.h that defines the flags isn't
+installed by every binutils package. The cplus_demangle() variant is
+missing a declaration for the same reason.
 
-  util/libbfd.c:56:1: error: mutex 'bfd_mutex' is still held at the end of function [-Werror,-Wthread-safety-analysis]
-  util/libbfd.c:60:2: error: releasing mutex 'bfd_mutex' that was not held [-Werror,-Wthread-safety-analysis]
+The code is only built when the C++ ABI's __cxa_demangle() is
+unavailable, so most builds never compile it:
 
-Mark both functions NO_THREAD_SAFETY_ANALYSIS so that libbfd.c compiles
-with "make CC=clang BUILD_NONDISTRO=1".
+  $ make BUILD_NONDISTRO=1 NO_DEMANGLE=1
+  util/symbol.c:2714: error: 'DMGL_PARAMS' undeclared
+  util/symbol.c:2714: error: 'DMGL_ANSI' undeclared
+  util/symbol.c:2716: error: implicit declaration of 'bfd_demangle'
 
-Fixes: b72b8132d8fd2d6b ("perf libbfd: Ensure libbfd is initialized prior to use")
+Move the libbfd demangling into libbfd.c, which already includes bfd.h,
+and declare in symbol.c the libiberty interfaces the cplus_demangle()
+variant needs.
+
+Fixes: 4d9b5146f0d91472 ("perf symbol: Move demangling code out of symbol-elf.c")
 Signed-off-by: Ian Rogers <irogers@google.com>
 Assisted-by: Antigravity:gemini-3.1-pro
 Acked-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/libbfd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/libbfd.c | 17 +++++++++++++++++
+ tools/perf/util/libbfd.h |  9 +++++++++
+ tools/perf/util/symbol.c | 18 +++++++++++++++---
+ 3 files changed, 41 insertions(+), 3 deletions(-)
 
 diff --git a/tools/perf/util/libbfd.c b/tools/perf/util/libbfd.c
-index 936555217e81a..d1d1c9b2ef223 100644
+index d1d1c9b2ef223..59f4ab252bb16 100644
 --- a/tools/perf/util/libbfd.c
 +++ b/tools/perf/util/libbfd.c
-@@ -39,13 +39,13 @@ struct a2l_data {
- 	asymbol **syms;
- };
- 
--static bool perf_bfd_lock(void *bfd_mutex)
-+static bool perf_bfd_lock(void *bfd_mutex) NO_THREAD_SAFETY_ANALYSIS
- {
- 	mutex_lock(bfd_mutex);
- 	return true;
+@@ -72,6 +72,23 @@ static void ensure_bfd_init(void)
+ 	pthread_once(&bfd_init_once, perf_bfd_init);
  }
  
--static bool perf_bfd_unlock(void *bfd_mutex)
-+static bool perf_bfd_unlock(void *bfd_mutex) NO_THREAD_SAFETY_ANALYSIS
++/*
++ * Flags from libiberty's demangle.h. bfd.h declares bfd_demangle but not the
++ * flags to pass to it, and demangle.h isn't installed by every binutils
++ * package.
++ */
++#ifndef DMGL_PARAMS
++#define DMGL_PARAMS	(1 << 0)	/* Include function arguments. */
++#define DMGL_ANSI	(1 << 1)	/* Include const, volatile, etc. */
++#endif
++
++char *libbfd__demangle_sym(const char *str, bool params, bool modifiers)
++{
++	int flags = (params ? DMGL_PARAMS : 0) | (modifiers ? DMGL_ANSI : 0);
++
++	return bfd_demangle(/*abfd=*/NULL, str, flags);
++}
++
+ static int bfd_error(const char *string)
  {
- 	mutex_unlock(bfd_mutex);
- 	return true;
+ 	const char *errmsg;
+diff --git a/tools/perf/util/libbfd.h b/tools/perf/util/libbfd.h
+index 953886f3d62f3..14171db8b1120 100644
+--- a/tools/perf/util/libbfd.h
++++ b/tools/perf/util/libbfd.h
+@@ -31,6 +31,8 @@ int libbfd_filename__read_debuglink(const char *filename, char *debuglink, size_
+ 
+ int symbol__disassemble_bpf_libbfd(struct symbol *sym, struct annotate_args *args);
+ 
++char *libbfd__demangle_sym(const char *str, bool params, bool modifiers);
++
+ #else // !defined(HAVE_LIBBFD_SUPPORT)
+ #include "annotate.h"
+ 
+@@ -77,6 +79,13 @@ static inline int symbol__disassemble_bpf_libbfd(struct symbol *sym __always_unu
+ 	return SYMBOL_ANNOTATE_ERRNO__NO_LIBOPCODES_FOR_BPF;
+ }
+ 
++static inline char *libbfd__demangle_sym(const char *str __always_unused,
++					 bool params __always_unused,
++					 bool modifiers __always_unused)
++{
++	return NULL;
++}
++
+ #endif // defined(HAVE_LIBBFD_SUPPORT)
+ 
+ #endif /* __PERF_LIBBFD_H */
+diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
+index 3587ad2431590..3206929473a2d 100644
+--- a/tools/perf/util/symbol.c
++++ b/tools/perf/util/symbol.c
+@@ -27,6 +27,7 @@
+ #include "dso.h"
+ #include "util.h" // lsdir()
+ #include "event.h"
++#include "libbfd.h"
+ #include "machine.h"
+ #include "map.h"
+ #include "symbol.h"
+@@ -2707,13 +2708,24 @@ static bool want_demangle(bool is_kernel_sym)
+  * version.
+  */
+ #ifndef HAVE_CXA_DEMANGLE_SUPPORT
++#ifdef HAVE_CPLUS_DEMANGLE_SUPPORT
++/*
++ * Declarations from libiberty's demangle.h, the header isn't installed by
++ * every binutils package.
++ */
++#ifndef DMGL_PARAMS
++#define DMGL_PARAMS	(1 << 0)	/* Include function arguments. */
++#define DMGL_ANSI	(1 << 1)	/* Include const, volatile, etc. */
++#endif
++
++char *cplus_demangle(const char *mangled, int options);
++#endif
++
+ char *cxx_demangle_sym(const char *str __maybe_unused, bool params __maybe_unused,
+ 		       bool modifiers __maybe_unused)
+ {
+ #ifdef HAVE_LIBBFD_SUPPORT
+-	int flags = (params ? DMGL_PARAMS : 0) | (modifiers ? DMGL_ANSI : 0);
+-
+-	return bfd_demangle(NULL, str, flags);
++	return libbfd__demangle_sym(str, params, modifiers);
+ #elif defined(HAVE_CPLUS_DEMANGLE_SUPPORT)
+ 	int flags = (params ? DMGL_PARAMS : 0) | (modifiers ? DMGL_ANSI : 0);
+ 
 -- 
 2.53.0
 
