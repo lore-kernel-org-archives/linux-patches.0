@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018224;
-	b=esRjQOeDg6iaz0i7B5Ce+jntZY1M3vpgE3Z+svPr7zvPHZ/wwrlYYz+Xm0fvt5FWIpA6
-	 TfRmhMewt1ruHClh0JHH/MO6LpqnZLq1rLOyIEv0XrR0ooLz+mCHLv5liaIxmbkUhyZ2y
-	 uEnP7N2iVl7kzFGMCNs/pyIkfe7qogrwD6bP6fUpoK/YXnf37WgAL5ioo37/40q9ufifv
-	 kpk9UGwWogjw0yTVTvbg0WIlE0sDQ5l4fzYKb9tCN8+W9NKLez0DN7B9ZCAZt346QJ1Ri
-	 KJG7mD1KSC8uJ+Ip5ziJuQaPMCcTOsVarNbj3rrALTQu04/1POJuWg0fAuHB7+i7U3Q==
+	t=1795018227;
+	b=isrJkNxYF4ZJKj1qMCnFFvEu313+pQli95itO37VaHWM6DJTxWtHJ6IEUwRf/wAPdfyd
+	 oala9QIeWB2ryYG4jhdj4/wY6CgPzBNjhvBRlSph54go3nYE4Airnsa7XYBKuxQGdr04X
+	 BaPCYhxlGu3Jk9Rz719qhcPrz9CahJWQKzvFfADD/RZW1rx1mt8oq2kWQ5U031wYKXZbL
+	 glMA4Uw4myWA9HyzeGxkxsp9Zghd0hTOyeSSFBC6i0xWkzXfIj3p2wteL/uzqlyqtZpNa
+	 YWODeHtBXVZUlzgdp+JsGrOa1foSDcc8lhgvwnNcnXbS6stgrMZFQ3HhV9YNrfrL2uw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018224;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018227;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CxNv3+L6HIhyIu9Qik0yRbOgrrxQ8WkDKBL63rUOE3I=;
-	b=E4pgHwEl13wWjIGju5VdgTK5HpTpA94HJ/ub4IfG8pnnpl9ceCvYHpQKyi8n99YLgJl9
-	 ltNtWWO3Jq6s8kLzfvnOKE0JSx9MeKQkmduJN5IV76V7PN7zEQ4Z2IlssXFh0cAH7sJZB
-	 9WgurT89VIJBD8aJIUuMvM91YA/8JbqkePgML/ha5Yuq2yR/cBLdTW3SPCCB1szFcWipP
-	 afrGTmJHpBpv3OF75sp4KfqDCIgIFjVzRJvQ9wXL38SdhxlzaPhrLwm+wfYhxuRGYi7G/
-	 olr16/imtjjcJPys9+FZzLRDWb7ytEmvQnm9A/39wLAFv6DJBQAq5OQ+shyKih9UMlw==
+	bh=AheosJinlzLv+JtDPKqeaqWcqTeWlMCMAPfx6einJxY=;
+	b=XQ5b+beeGp96xPPOpBqyL8m1O5gLhyIo32f6UKN6/vocO95zBCePbaFAzXN0b1GtgbOA
+	 QQO+5dUi2h71U+hheuTVSMJzX8Pm+v6Hzjpcq2ixXQOg8+ls6MQi1sP5wlC9EpejuoD0y
+	 IyFvWFTTj/Na+/z7HVYMQwNOr67AHK5bvpOugeVdQTunxgUUyDAYKX1XBi1LldXRZwq/e
+	 dr1bT2OqyPnOLGszx3l5x/M+KMy1BsL/oZvYcq6hGaGVCHBc+HeFiXJ2zIU9dP1dUbtaS
+	 yj/Nc2tOCYYlUXQ/vk0pdIOf4WF4YWzkWo8sm4R6vnYXUruceaT6SuROzDP1CTpODVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KHH0Cqfm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sKibfbL8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72509606A32A;
-	Wed, 18 Nov 2026 16:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA50606A334;
+	Wed, 18 Nov 2026 16:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KHH0Cqfm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C699A1F000C5;
-	Wed, 18 Nov 2026 16:10:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sKibfbL8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C3A1F000C4;
+	Wed, 18 Nov 2026 16:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018224;
-	bh=CxNv3+L6HIhyIu9Qik0yRbOgrrxQ8WkDKBL63rUOE3I=;
+	s=korg; t=1795018227;
+	bh=AheosJinlzLv+JtDPKqeaqWcqTeWlMCMAPfx6einJxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KHH0CqfmB8qj0vrozfh56rXS2Vx99oHSmuj2IUfcslT1hWhdlBqRaHdGOlGskG24T
-	 oZ5YjtDqCLjz4bMLycUXi/xT1ieKQO/kELvSEmrpyoT1k+xFl4JOKYjNXB/F8E0+eB
-	 D0h558qvmLaQfNTvyywCzd4WKc4lwdkuzbaLLTiU=
+	b=sKibfbL83X3315Yopu71nUQhP5VWEl9wEwevSmkoIVsq5zZmZ+w59LGV2qo+idWeF
+	 A1wX1sMd3amkJ2LlDul6e1czBvcVBBS5m3OIz1wSPQ20QiTa/ySl2QJpw3hltbHmnn
+	 jUcqgPdGVrziv7h5gpuWjF6BwdTqKoaY6UistUN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Goergens <matthias.goergens@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Yixun Lan <dlan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1163/2651] isofs: return long Joliet names whole
-Date: Wed, 18 Nov 2026 15:40:03 +0100
-Message-ID: <20261118150329.882989230@linuxfoundation.org>
+Subject: [PATCH 7.3 1164/2651] riscv: dts: spacemit: k3: move USB3 phy to board level
+Date: Wed, 18 Nov 2026 15:40:04 +0100
+Message-ID: <20261118150329.918220646@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,197 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Aurelien Jarno <aurelien@aurel32.net>
 
-[ Upstream commit b8253bcf92d6365b20eea6465f5a93c9fc4aa029 ]
+[ Upstream commit a87ca1e5b5d28dee5af42f59f3c6f833c5ad1da0 ]
 
-get_joliet_filename() writes into a buffer allocated by its caller but
-is not told how big that buffer is.  It hardcodes PAGE_SIZE as the
-output limit for utf16s_to_utf8s() and gives uni16_to_x8() no limit at
-all.  PAGE_SIZE was never the right bound.  Before commit b2eb2e288604
-("isofs: Drop support of directory entries straddling blocks") both
-callers allocated a page, but only its first 1024 bytes were for the
-name, the rest holding a copy of a directory record that straddled a
-block.  It could not overflow only because a directory record holds at
-most 222 bytes of name (255 bytes, 33 of them fixed), which no converter
-expands beyond 1024 bytes.
+On the SpacemiT K3 SoC, the combo phy provides 8 lines that can
+either be used for PCIe or USB3, depending on its configuration
+(spacemit,apmu). This configuration is defined at the board level, and
+assigning a phy line to a USB3 controller while it is configured as PCIe
+results in an "Invalid PHY mode" error.
 
-It also keeps the converted length in an unsigned char.  222 bytes of
-name are 111 UTF-16 units, and the UTF-8 converter, used for
-iocharset=utf8 and when CONFIG_NLS_DEFAULT is "utf8", needs three bytes
-for each CJK, Thai or Devanagari character, so such a name can take up
-to 333 bytes.  Past 255 the length wraps.  readdir then reports a short
-name that usually ends in the middle of a UTF-8 sequence, and lookup
-finds the file only under that name, never under its real one; a name
-that wraps to exactly 0 bytes is not listed at all.
+Move the USB phy definitions at the board level, as it is done for the
+submitted PCIe controller [1]. As a consequence, boards that do not
+enable a USB3 controller node will not match the DT schema due to
+missing PHY entries. This is not an issue as dtbs_check only validates
+enabled nodes.
 
-Such names are out of spec, since Joliet allows 64 units, but common
-tools write them: PowerISO 9.5 and UltraISO 9.76 both keep up to 110
-units by default.  Windows, for which Joliet was made, returns them
-whole, including 111-unit names in records that leave out the padding
-byte.
+[1] https://lore.kernel.org/spacemit/20260923015016.64069-1-inochiama@gmail.com
 
-Return them whole here too.  Pass the buffer size down and have both
-converters respect it.  utf16s_to_utf8s() stops before a character that
-does not fit, and uni16_to_x8() now hands uni2char() the space that
-actually remains and stops on -ENAMETOOLONG, as fs/hfsplus/unicode.c
-does.  Both callers pass JOLIET_NAME_MAX + 1, room for 111 units at
-three bytes each plus the terminator; no character set needs more than
-three bytes for a UTF-16 unit, and isofs_dir_record_valid() already
-rejects a record whose name_len claims more than the record holds, so no
-name is cut.  Make the length an int, which is what both converters
-return.
-
-These names are longer than NAME_MAX.  POSIX lets the limit vary by
-filesystem, reported by pathconf(_PC_NAME_MAX), and the VFS limits a
-name only by PATH_MAX (verify_dirent_name() in fs/readdir.c).
-
-vfat, exfat, hfsplus and ntfs3 already return names of up to 255 UTF-16
-units, 765 bytes of UTF-8, and such names break the same things there:
-copying the file to a filesystem with a 255-byte limit, such as ext4 or
-tmpfs, fails with ENAMETOOLONG, and cp, tar, rsync and Python's shutil
-report that file and carry on with the rest, so the copy is incomplete
-but says so.  glibc's readdir() returns the names, but the deprecated
-readdir_r() skips them and fails with ENAMETOOLONG, and an inotify
-reader with the buffer size inotify(7) suggests gets EINVAL.  In the
-kernel, fanotify reports events on such a file without its name and
-warns once in fanotify_info_copy_name(), and a directory with such a
-name cannot be reconnected from a file handle, because the generic
-get_name() in fs/exportfs, which isofs uses, skips names longer than
-NAME_MAX.  Cutting at NAME_MAX would avoid these, but would list names
-that Windows does not show and that can coincide within a directory.
-
-Every name of at most 255 bytes is returned exactly as before.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
-Link: https://patch.msgid.link/20260926042916.3277409-2-matthias.goergens@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: 46380e4b1534 ("riscv: dts: spacemit: k3: add USB controller and USB phy support")
+Cc: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+Reviewed-by: Yixun Lan <dlan@kernel.org>
+Link: https://patch.msgid.link/20260928205012.3689405-2-aurelien@aurel32.net
+Signed-off-by: Yixun Lan <dlan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/isofs/dir.c    |  4 +++-
- fs/isofs/isofs.h  | 11 ++++++++++-
- fs/isofs/joliet.c | 27 ++++++++++++++++++++-------
- fs/isofs/namei.c  |  3 ++-
- 4 files changed, 35 insertions(+), 10 deletions(-)
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 2 ++
+ arch/riscv/boot/dts/spacemit/k3.dtsi         | 3 ---
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/isofs/dir.c b/fs/isofs/dir.c
-index 28741251d56e3..7a2b5e95c0a5c 100644
---- a/fs/isofs/dir.c
-+++ b/fs/isofs/dir.c
-@@ -195,7 +195,9 @@ static int do_isofs_readdir(struct inode *inode, struct file *file,
- 		if (map) {
- #ifdef CONFIG_JOLIET
- 			if (sbi->s_joliet_level) {
--				len = get_joliet_filename(de, tmpname, inode);
-+				len = get_joliet_filename(de, tmpname,
-+							  JOLIET_NAME_MAX + 1,
-+							  inode);
- 				p = tmpname;
- 			} else
- #endif
-diff --git a/fs/isofs/isofs.h b/fs/isofs/isofs.h
-index 79ca0256843aa..47c43a3c6a614 100644
---- a/fs/isofs/isofs.h
-+++ b/fs/isofs/isofs.h
-@@ -121,7 +121,16 @@ bool isofs_dir_record_valid(struct iso_directory_record *de,
- 			    unsigned long offset,
- 			    unsigned long bufsize);
+diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+index b084a35aa00e3..0a6f669d509a9 100644
+--- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
++++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+@@ -328,5 +328,7 @@ &usb3d_u2phy {
+ };
  
--int get_joliet_filename(struct iso_directory_record *, unsigned char *, struct inode *);
-+/*
-+ * The longest name the Joliet converter returns, in bytes.  A directory
-+ * record is at most 255 bytes long, which leaves room for 111 UTF-16 units
-+ * of name, and no character set needs more than three bytes for one unit.
-+ */
-+#define JOLIET_NAME_MAX \
-+	((255 - sizeof(struct iso_directory_record)) / 2 * 3)
-+
-+int get_joliet_filename(struct iso_directory_record *de, unsigned char *outname,
-+			int outsize, struct inode *inode);
- int get_acorn_filename(struct iso_directory_record *, char *, struct inode *);
- 
- extern struct dentry *isofs_lookup(struct inode *, struct dentry *, unsigned int flags);
-diff --git a/fs/isofs/joliet.c b/fs/isofs/joliet.c
-index c0f04a1e7f695..d37e67c5e36f4 100644
---- a/fs/isofs/joliet.c
-+++ b/fs/isofs/joliet.c
-@@ -15,19 +15,26 @@
-  * Convert Unicode 16 to UTF-8 or ASCII.
-  */
- static int
--uni16_to_x8(unsigned char *ascii, __be16 *uni, int len, struct nls_table *nls)
-+uni16_to_x8(unsigned char *ascii, __be16 *uni, int len, struct nls_table *nls,
-+	    int outsize)
- {
- 	__be16 *ip, ch;
--	unsigned char *op;
-+	unsigned char *op, *end;
- 
- 	ip = uni;
- 	op = ascii;
-+	end = ascii + outsize - 1;	/* leave room for the terminator */
- 
- 	while ((ch = get_unaligned(ip)) && len) {
- 		int llen;
--		llen = nls->uni2char(be16_to_cpu(ch), op, NLS_MAX_CHARSET_SIZE);
-+
-+		if (op >= end)
-+			break;
-+		llen = nls->uni2char(be16_to_cpu(ch), op, end - op);
- 		if (llen > 0)
- 			op += llen;
-+		else if (llen == -ENAMETOOLONG)
-+			break;
- 		else
- 			*op++ = '?';
- 		ip++;
-@@ -38,21 +45,27 @@ uni16_to_x8(unsigned char *ascii, __be16 *uni, int len, struct nls_table *nls)
- 	return (op - ascii);
- }
- 
-+/*
-+ * Convert the Joliet name of @de into @outname, a buffer of @outsize bytes.
-+ * The result is at most @outsize - 1 bytes long; a longer name is cut at a
-+ * character boundary.
-+ */
- int
--get_joliet_filename(struct iso_directory_record * de, unsigned char *outname, struct inode * inode)
-+get_joliet_filename(struct iso_directory_record *de, unsigned char *outname,
-+		    int outsize, struct inode *inode)
- {
- 	struct nls_table *nls;
--	unsigned char len = 0;
-+	int len = 0;
- 
- 	nls = ISOFS_SB(inode->i_sb)->s_nls_iocharset;
- 
- 	if (!nls) {
- 		len = utf16s_to_utf8s((const wchar_t *) de->name,
- 				de->name_len[0] >> 1, UTF16_BIG_ENDIAN,
--				outname, PAGE_SIZE);
-+				outname, outsize - 1);
- 	} else {
- 		len = uni16_to_x8(outname, (__be16 *) de->name,
--				de->name_len[0] >> 1, nls);
-+				de->name_len[0] >> 1, nls, outsize);
- 	}
- 	if ((len > 2) && (outname[len-2] == ';') && (outname[len-1] == '1'))
- 		len -= 2;
-diff --git a/fs/isofs/namei.c b/fs/isofs/namei.c
-index 4fba1bf7f0167..7e4636df968ec 100644
---- a/fs/isofs/namei.c
-+++ b/fs/isofs/namei.c
-@@ -109,7 +109,8 @@ isofs_find_entry(struct inode *dir, struct dentry *dentry,
- 			dpnt = tmpname;
- #ifdef CONFIG_JOLIET
- 		} else if (sbi->s_joliet_level) {
--			dlen = get_joliet_filename(de, tmpname, dir);
-+			dlen = get_joliet_filename(de, tmpname,
-+						   JOLIET_NAME_MAX + 1, dir);
- 			dpnt = tmpname;
- #endif
- 		} else if (sbi->s_mapping == 'a') {
+ &usb3d {
++	phys = <&usb3d_u2phy>, <&combophy 4 PHY_TYPE_USB3>;
++	phy-names = "usb2-phy", "usb3-phy";
+ 	status = "okay";
+ };
+diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
+index 86ccfb82e295c..b8c3fe5dbaa80 100644
+--- a/arch/riscv/boot/dts/spacemit/k3.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
+@@ -452,9 +452,6 @@ usb3d: usb@81a00000 {
+ 				 <&syscon_apmu RESET_APMU_USB3_D_VCC>,
+ 				 <&syscon_apmu RESET_APMU_USB3_D_PHY>;
+ 			reset-names = "ahb", "vcc", "phy";
+-			phys = <&usb3d_u2phy>,
+-			       <&combophy 4 PHY_TYPE_USB3>;
+-			phy-names = "usb2-phy", "usb3-phy";
+ 			phy_type = "utmi";
+ 			snps,dis_enblslpm_quirk;
+ 			snps,dis_u2_susphy_quirk;
 -- 
 2.53.0
 
