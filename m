@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053352;
-	b=J4M6+mRBoTlaDW3/CZBEly5W1v3yacXzt1f7eUMY0yC/LYOIAJ/NNjG6jWFe26GjdnMy
-	 0Sjje2+D3YU9C9vOvgq6Bzh7UDo6L0wVWp8hZCYTicramddXocDtgOGX4MrzkuFZuL8DW
-	 4ayiHFKlc/vZMZXUWZ3wuv0TBYzgHO2ciCM95f+VFCCQoUZkJgO4jTRIELURa4FWslm4+
-	 IEuWJK+8wcftGjiB0ebye8EoULWst65nbr+Ytu9kaDOM3n/BICnjA4F2chYz1cKwxeuCv
-	 D9JfCCVJIrWGK6AUoxfYjnfVJKJsMWgeA1FZyLmlUgpLs13EyoRq8ZgIuWFwOrmZc+g==
+	t=1795053355;
+	b=5b2y0DYZCh2ukmrlgDz4/UpFDF2mdU/OLIARuvCRgESuEJuHNrZ8lfhkVcs7cF8hW7NO
+	 2WCUXapF+d7Z2sSjHjg7T/fCS8D2CeEfjhcBt8oa4f9nw4rCgdkqB7pnQRCYy51fFJmAh
+	 jU6vN31mChw/Q+Pc9rcn9zoe2Lm0mohcJfFl8TuRu7NFfmt8Di9PF+0TMpTPw6Nn5AyO4
+	 +h4v5bfcYL7Vw8n+MQPt4gBAsGY0glnDOXJkHXDlETl07Hs3ljDqnOMS63V+BuW0A/FUx
+	 Y7474/qoGkj3BtfzoJfssHoxaDnLG3amjw3UPIbJW5KQrN4KQCRPB4wFd6bOSAGJ7kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053352;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053355;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=DRyZwoUS77OmR9maFnWiR9u7DiMNr1pPvrhadSFyXuA=;
-	b=UoDihF4yRcgD1I3v1q37QLd1poQlNy4zHh0XFQFpcK3N/+Sq1pxv6GehfI5+GIUw0yn1
-	 nxfZEfONUwur3egbmXC1viD5bQBsUsL6/NCDaFY2dTRsgPFCbVgZUuxWg6nz2kYTXio0Z
-	 BySDnvcGfvErTaRHCoqVO6lL782tDPuuh9EZPdybFu0uwcRH9cZkURvnuHM91iXN5r6i2
-	 Mut6bCU4JVW787DFxqTZjQ008OO5icptVpCzMbNSghYYO1qG6MylcUHp4LjzS9Tlim+3c
-	 kSJLMAHOqrBL95Nb0UYJA99YoRB2HY8vJ9CnlYewrVIXEtqfxatVo9taJZor3H5TCgw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=4bS6ZZ6nIQrfqrw1wa8DN7u+B6qleqohEcixRepi0IU=;
+	b=qoka86xiWULzabgBVQQZl1YLg2In2fTryD6FqnQq/vNoa/k7NeMc35IgZQ3VGHvjAcL7
+	 LkXKAQb1RMd7CGqQKYLexfzOsiYTw4uszyPBLwj4axbYwDIZAvohUTYJs1KxB6S9MFM8O
+	 i/+3C78tPqVroZwF48QEW6VgQhhBsBAt3VwkuDSRpZjNw+wgTJKA1GcJFY66jmeBAYOKj
+	 l7dIVTZMjbkFhKvj2SUwT2pAU+LJPa7/EODzLZlBp1IAJWrmIZ7YByzFxAFaUbGSCxEVZ
+	 3P+STAwWsmNLZLAp4LtgT85Wp5bIBk5QDZ7CBRaWP5T82Sd7ZZF1v1TPriL0zeJu0ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XOeMxy6Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C0nxJf6I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F80606A338;
-	Thu, 19 Nov 2026 01:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387F5606A338;
+	Thu, 19 Nov 2026 01:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XOeMxy6Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78CC1F000C4;
-	Thu, 19 Nov 2026 01:55:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C0nxJf6I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 862A91F000C5;
+	Thu, 19 Nov 2026 01:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053352;
-	bh=DRyZwoUS77OmR9maFnWiR9u7DiMNr1pPvrhadSFyXuA=;
+	s=korg; t=1795053355;
+	bh=4bS6ZZ6nIQrfqrw1wa8DN7u+B6qleqohEcixRepi0IU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XOeMxy6Q30QVaG+UuQElrCgpwEfeULamaeSWFkSTAicAyXCjN7JadyD/ZHG917gJk
-	 Hf1lpASWATafHpsp3hGmEH7PYWJU54VZY00sHrBvsN8dHpD1dWB0TvpJGMse0vYdXb
-	 69bQYWHKYYCSGAf1oELIjCpb5+PwJuuCMAHSywts=
+	b=C0nxJf6IMd716at7oqHGW0W3PUMIZr9+6z9rSI+ZvzVRic4g7AgnnmRDy1A2dEBj7
+	 wiAucHdyhvWFhMYw/KPbnD9zS9qt8RClARqPaM8XHk+rqlAYg/cgUAqnGSFXjGBC7h
+	 Xt3pCn28rQ/DgFc1NqMHv9XHug1XpP5y0Hyk5beQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Jianyun Gao <jianyungao89@gmail.com>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0842/2214] drm/vc4: Publish the output fence outside of job_lock
-Date: Wed, 18 Nov 2026 15:41:58 +0100
-Message-ID: <20261118150045.877793178@linuxfoundation.org>
+Subject: [PATCH 5.15 0887/2214] xfs: fix temporary cursor leak in btree shift corruption paths
+Date: Wed, 18 Nov 2026 15:42:43 +0100
+Message-ID: <20261118150047.745170584@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,90 +63,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Jianyun Gao <jianyungao89@gmail.com>
 
-[ Upstream commit 9ee552a42c3905b4547e83173d46413137ec329a ]
+[ Upstream commit 2bbca049deeb1699cafd966cb2793fee576ee409 ]
 
-job_lock is taken by the V3D interrupt handler, so nesting an IRQ-unsafe
-lock under it creates an inversion. drm_syncobj_replace_fence() takes
-drm_syncobj::lock, which other paths acquire with interrupts enabled. For
-example, a thread interrupted while holding it blocks the handler on
-job_lock, and the handler can only make progress once the submit path
-releases job_lock, which it cannot do while waiting for drm_syncobj::lock.
-
-This is reported by lockdep:
-
-[  188.139076] ========================================================
-[  188.139086] WARNING: possible irq lock inversion dependency detected
-[  188.139096] 7.3.0-rc3-00067-gc4f3feeaf60f #67 Tainted: G         C
-[  188.139108] --------------------------------------------------------
-[  188.139116] swapper/0/0 just changed the state of lock:
-[  188.139125] ffff0000054f8ff8 (&vc4->job_lock){-...}-{3:3}, at: vc4_irq+0xa8/0x28c [vc4]
-[  188.139234] but this lock took another, HARDIRQ-unsafe lock in the past:
-[  188.139242]  (&syncobj->lock){+.+.}-{3:3}
-[  188.139256] and interrupts could create inverse lock ordering between them.
-[  188.139267] other info that might help us debug this:
-[  188.139275]  Possible interrupt unsafe locking scenario:
-[  188.139284]        CPU0                    CPU1
-[  188.139291]        ----                    ----
-[  188.139299]   lock(&syncobj->lock);
-[  188.139312]                                local_irq_disable();
-[  188.139320]                                lock(&vc4->job_lock);
-[  188.139335]                                lock(&syncobj->lock);
-[  188.139350]   <Interrupt>
-[  188.139358]     lock(&vc4->job_lock);
-[  188.139372] *** DEADLOCK ***
-
-Hand the fence over after job_lock is dropped. The job can complete and
-drop exec->fence in that window, so take a reference first and publish
-through the local pointer, as exec may already be gone.
+In xfs_btree_lshift and xfs_btree_rshift, when XFS_IS_CORRUPT detects
+an invalid firstrec/lastrec result after xfs_btree_dup_cursor has
+successfully allocated a temporary cursor, the error path jumps to
+error0 which returns without freeing tcur.  This leaks the cursor
+memory, the xfs_group reference, and the per-level buffer references
+held by the duplicated cursor.  Jump to error1 instead, which calls
+xfs_btree_del_cursor(tcur, XFS_BTREE_ERROR) to properly release all
+resources.
 
 Cc: stable@vger.kernel.org
-Fixes: e84fcb95e074 ("drm/vc4: Export fence through syncobj")
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20261004-vc4-misc-fixes-v1-1-b763df9e33e1@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Fixes: 9eaead51bed95 ("[XFS] implement generic xfs_btree_rshift")
+Signed-off-by: Jianyun Gao <jianyungao89@gmail.com>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_gem.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/xfs/libxfs/xfs_btree.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_gem.c b/drivers/gpu/drm/vc4/vc4_gem.c
-index ff77aee389776..6d4a085d46f0b 100644
---- a/drivers/gpu/drm/vc4/vc4_gem.c
-+++ b/drivers/gpu/drm/vc4/vc4_gem.c
-@@ -689,8 +689,11 @@ vc4_queue_submit(struct drm_device *dev, struct vc4_exec_info *exec,
- 	fence->seqno = exec->seqno;
- 	exec->fence = &fence->base;
+diff --git a/fs/xfs/libxfs/xfs_btree.c b/fs/xfs/libxfs/xfs_btree.c
+index 13032aec47ee8..503db9741cad0 100644
+--- a/fs/xfs/libxfs/xfs_btree.c
++++ b/fs/xfs/libxfs/xfs_btree.c
+@@ -2471,7 +2471,7 @@ xfs_btree_lshift(
+ 		i = xfs_btree_firstrec(tcur, level);
+ 		if (XFS_IS_CORRUPT(tcur->bc_mp, i != 1)) {
+ 			error = -EFSCORRUPTED;
+-			goto error0;
++			goto error1;
+ 		}
  
-+	/* The job can complete and drop exec->fence as soon as job_lock is
-+	 * released, so hold our own reference.
-+	 */
- 	if (out_sync)
--		drm_syncobj_replace_fence(out_sync, exec->fence);
-+		dma_fence_get(&fence->base);
+ 		error = xfs_btree_decrement(tcur, level, &i);
+@@ -2641,7 +2641,7 @@ xfs_btree_rshift(
+ 	i = xfs_btree_lastrec(tcur, level);
+ 	if (XFS_IS_CORRUPT(tcur->bc_mp, i != 1)) {
+ 		error = -EFSCORRUPTED;
+-		goto error0;
++		goto error1;
+ 	}
  
- 	vc4_update_bo_seqnos(exec, seqno);
- 
-@@ -712,6 +715,11 @@ vc4_queue_submit(struct drm_device *dev, struct vc4_exec_info *exec,
- 
- 	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
- 
-+	if (out_sync) {
-+		drm_syncobj_replace_fence(out_sync, &fence->base);
-+		dma_fence_put(&fence->base);
-+	}
-+
- 	return 0;
- }
- 
+ 	error = xfs_btree_increment(tcur, level, &i);
 -- 
 2.53.0
 
