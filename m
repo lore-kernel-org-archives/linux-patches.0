@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035157;
-	b=QBrmbsF/U+oC91EUNTcf+ka2qe1i+W9MPRHXchDK7l2dkK5sK6iVAXK4uRwoY48gfqXo
-	 JQWZ5Ne0kKvu/101YwQyOZG3tA8yvJvtMMQbtQyll8B0jOgfxeW6cuyhzKLo8wl5uusv8
-	 sTeLb8XCRI0koMEzDJLuUgPLarcHnckWkw5rVu0EPFupCD11t2kb1uzKq5wXyJHSduB8z
-	 h22qHQX7VfwYaJRqLhDYE0GUUIibw+5Df3HIgU8cRR/RkvXA7m8PRMznUywj7Wv8cOvW2
-	 9VB1V06Om1/NKKq/b7ZscsFgEzvl+xcLYtgCD+KiNvDBOZk+dZm5Ycnmck9h8/NhcMw==
+	t=1795035160;
+	b=dqrSBA9fFlseJMvCptt8Mp9E09wSpH2tVne39vdh1WY0dawQEsv5RGnMcCs23OEH0OIi
+	 6BIEh7kWA+juZp3H+hwSmbhhCdIvyiVQaj1vygjw/JjdyAh3CwRm544J+FuUx8jcjB683
+	 Fip16etzGyE7+7bfKmgdJQU1lHhPweWtNl4U6hRCHqWhAjAl9N3OxroGRxcPIz9pWhK/I
+	 pMXUbwEQu7aYE3tuGyHEERZbRfs5UYpV9HU1qnBh8YuK/60JoH49JmpVndEmHxzMzd4un
+	 kQxIzmcusV4sVBPzx5aQH8wGUxYeQpk2EEjAORSZ4i4kFZD2HEGV15YJRRLQWDRvqgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035157;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035160;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=lIyDAhgp6l3W1LxLX1Ul4sfAyTFoMxKyjgkQ2jSll54=;
-	b=4Zh/3jzEEKgP8Kj1iDZ2W3xQU7jSyDQ+MpWZNN3aC+TeCaOcyz/JGm3kBXVQPoC/irdC
-	 0/RhGTjHvTYi3aysue2eIzfT8Vc5EwsY+ZIzaR9VNelLHxtvgMOYxwCHtKpvqAdkJiiB8
-	 VsRFBFmpNAnAK12wP+gkmy3iKmW3Zaj0s3FkgsaacJR+7iLULv7LeL7F4eTguM4AzzU83
-	 gUsaS9WlO9IBjihWDjE77vvAA9Apf4vVpUNDzcXWjFT6sw1juhYAqjVM8j6bTebf2egCh
-	 +zLL1EvDzo4tBaiYDJRQ8vVCFWtpTxS6OYadcR+WVhoxpzkJT/Fw7mcmMz5pr5NY8zA==
+	bh=1YgttW2XqdvF1a9Hz9ldO1uyI/TIr3Y2gxZoko63AsQ=;
+	b=ioZBjT/RQSkQJUlHvEEfe+dhKnI6QLEw0Sy40UVn7HkSWRAQnzBpW7LpDF+nbQy0/xFS
+	 VmkNRwqt2N5Q5FEzv8TtVfFzeLMAbgTSJ09WP83DCRA47WmnkbFTlF9v1eINqb6K1cYH1
+	 Kj/ITVbfABl2XtzpKEyHYZT/iC2T8C72umn/yX34ZXWipwKdObvSfGyuXjwY3hiEsbzHg
+	 sa3XBxTokB3wqctBfICtw8lm1gPtQiWtT4+DiMD0tczKwOhcqVvmbNWfiI1dABkZYgi79
+	 xrGSfe56X1fEhHKDp1rUcP85fuBpZhkDSBnBuzCw3FF3j5h4+Fkm3dcBIK7/NZCJOug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="AUEv0V7/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M1jamIcO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B44606A31C;
-	Wed, 18 Nov 2026 20:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51AE7606A320;
+	Wed, 18 Nov 2026 20:52:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AUEv0V7/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3651F000C4;
-	Wed, 18 Nov 2026 20:52:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M1jamIcO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B37E1F000C4;
+	Wed, 18 Nov 2026 20:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035157;
-	bh=lIyDAhgp6l3W1LxLX1Ul4sfAyTFoMxKyjgkQ2jSll54=;
+	s=korg; t=1795035160;
+	bh=1YgttW2XqdvF1a9Hz9ldO1uyI/TIr3Y2gxZoko63AsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AUEv0V7/XyNmiu3VwiFmczk7GEyqNASA3NyItQ2XTTq6xw9380EKE3E6VyuPA+9YK
-	 F3kYSEzVpvql/WoyHO48ocyjaLhsXqywaO15lXZp7fQ3MdqrCZx6YsOF27APBxok1K
-	 Bmh6T+RGcb8yWGQwWSJypELoySgK7ZK71RWGsKbk=
+	b=M1jamIcOmu3MUaDSwD0GmPkbrTQMjlxgohsDXRk81YIdTzPJJ67B3o/8XF6AiFJB+
+	 a5A8S06RdCMqxDhtjOw/8atroTlo7ygLDRnzZbs6LWNCtIguZk4pvOhgrll0AGyCP/
+	 yx9ho78CNsBU1bQLAVzxy9yVnkk36Z2Xvhtv7+AI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuchao Zhang <ndaugoing@gmail.com>,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger@xenproject.org>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.6 0625/3318] xen-blkfront: unbind irq before tearing down ring and shadow requests
-Date: Wed, 18 Nov 2026 15:20:47 +0100
-Message-ID: <20261118150336.602908394@linuxfoundation.org>
+	Rosen Penev <rosenp@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.6 0626/3318] wifi: ath9k: delete channel-context timers on deinit
+Date: Wed, 18 Nov 2026 15:20:48 +0100
+Message-ID: <20261118150336.638197729@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,68 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuchao Zhang <ndaugoing@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-commit f3e27b7955727a4d7c0e9264a2a209fbba788bdc upstream.
+commit 81394dfb9a7905472957628b560ae894eae3a30f upstream.
 
-In blkif_free_ring(), the driver tears down the ring's persistent grants,
-shadow request arrays, and shared ring structure (xenbus_teardown_ring),
-and only calls unbind_from_irqhandler() at the very end.
+ath9k_deinit_channel_context() cancels chanctx_work but does not delete
+the offchannel and sched timers set up by ath9k_init_channel_context().
+If either timer fires after deinit (e.g. during driver unload or
+suspend), it accesses sc->sc_ah which may already be freed by
+ath9k_hw_deinit(), causing a use-after-free.
 
-While blkif_free_ring() is freeing persistent grants and clearing the
-shadow array, the event channel interrupt (blkif_interrupt) is still
-registered and active.  If an interrupt arrives from the backend during
-this teardown window, blkif_interrupt() reads rinfo->ring.sring and,
-via blkif_completion(), accesses rinfo->shadow[id].grants_used and
-rinfo->shadow[id].sg.  blkif_free_ring() tears these structures down
-without holding rinfo->ring_lock, and the handler only checks
-info->connected at entry, so this is a real race resulting in a
-use-after-free or NULL pointer dereference.
+Delete both timers with timer_shutdown_sync() before cancelling the work
+item.
 
-Fix this by moving unbind_from_irqhandler() to the beginning of
-blkif_free_ring().  Calling unbind_from_irqhandler() first frees the
-IRQ and synchronizes with any in-flight interrupt handlers on other CPUs
-before ring memory and shadow request structures are deallocated,
-matching the teardown order in drivers/net/xen-netfront.c.
-
-Fixes: 11659569f720 ("xen/blkfront: split per device io_lock")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yuchao Zhang <ndaugoing@gmail.com>
-Acked-by: Roger Pau Monné <roger@xenproject.org>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260922072155.34625-1-ndaugoing@gmail.com>
+Assisted-by: LLM
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Cc: stable@vger.kernel.org # v6.2+
+Fixes: 705d0bf83dbe ("ath9k: Add a routine for initializing channel contexts")
+Link: https://patch.msgid.link/20260911213144.130192-1-rosenp@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/xen-blkfront.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath9k/channel.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/block/xen-blkfront.c
-+++ b/drivers/block/xen-blkfront.c
-@@ -1211,6 +1211,14 @@ static void blkif_free_ring(struct blkfr
- 	int i, j, segs;
+--- a/drivers/net/wireless/ath/ath9k/channel.c
++++ b/drivers/net/wireless/ath/ath9k/channel.c
+@@ -1368,6 +1368,8 @@ void ath9k_init_channel_context(struct a
  
- 	/*
-+	 * Interrupt teardown must be done ahead of freeing queue-related
-+	 * data, otherwise the interrupt handler can race with the cleanup.
-+	 */
-+	if (rinfo->irq)
-+		unbind_from_irqhandler(rinfo->irq, rinfo);
-+	rinfo->evtchn = rinfo->irq = 0;
-+
-+	/*
- 	 * Remove indirect pages, this only happens when using indirect
- 	 * descriptors but not persistent grants
- 	 */
-@@ -1292,10 +1300,6 @@ free_shadow:
- 	/* Free resources associated with old device channel. */
- 	xenbus_teardown_ring((void **)&rinfo->ring.sring, info->nr_ring_pages,
- 			     rinfo->ring_ref);
--
--	if (rinfo->irq)
--		unbind_from_irqhandler(rinfo->irq, rinfo);
--	rinfo->evtchn = rinfo->irq = 0;
+ void ath9k_deinit_channel_context(struct ath_softc *sc)
+ {
++	timer_shutdown_sync(&sc->sched.timer);
++	timer_shutdown_sync(&sc->offchannel.timer);
+ 	cancel_work_sync(&sc->chanctx_work);
  }
  
- static void blkif_free(struct blkfront_info *info, int suspend)
 
 
