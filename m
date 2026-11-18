@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020439;
-	b=TLlu8apwXZPAr/tFjHP8cP1a8TO/9eORCCqFoRMAAcc4AeGIzJlWHgFHuxQwi6qL4M+z
-	 GmMdtk/TKXSHa+T3mMlmogewrOkpe7/q36xvIo9ePR70ukfNy1sU3668ty0NpYRbbA+cg
-	 reu46Wj1xhO2oQcpJme2kq+gpdjxe1hofeLHwzbjw1FAPJrWAOv6wXTsa0Fp8sNH+hNdw
-	 wmkMSDRHwpaueFgzl1KL6ZrFZjs+UMC50YpRHGGM9jzxITXkA9AUvy0seDVT0MmZ4A+nG
-	 XkVgWierV8HEGNjVr5sEte+c/cUwJVGbrITrUGvaZIMdXGGXBRFJeLUvnxFnUNVDYZQ==
+	t=1795020441;
+	b=fUbgQDQ+d8VSbsTWIQI9dnQbldPDbzAP14qdpPUiPuETM4+LsXMBXj+vMFYMMgdsz6gQ
+	 PULFEo+RZC8n83Nl4L0CKN+F1GGklTXKI/pmhhoPDhB6P7w/y/z67a0zkts+ai2L77MEW
+	 mFi5hGDZjHymWMQt94Nek5ZczoaZGgHHA+wsZs+WdU5cRivHQ4/SGDxt0fCWWgUtZhuHZ
+	 +7BeRsZTiGPwCXlR6HB3c6bjsiQkxbETXO3rOc6TMFSGJuVKW09HUHIzwG3f1J3VfpvCY
+	 SK86EKtUA/vWdaVRHvWeY++xNH728cKFeLlE319ABo16wJpEoWmES/hYIcBkeFWeHkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020439;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020441;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=jiUd/b83nLlMCwJPVSnVTU+rV7Y3O/XNnawgLkecrX4=;
-	b=wuydZ6L9qYYIIcbDg8uEiJsTI2/EqyEg3wD/Xlv+2rrCFNwo+04dMB5hcCsGYDNLRLSN
-	 A+nsZmzKjS/8IY4/pMy8vmOxODS/Tlk18mG2YPz0+bzAIbQ60qxelGyumAhys2kxAePKs
-	 0M/yiS35bQOGHVmEwQHvX0HHBAedHBJBd2+/fw9NwznGQyTZXzDjoOEdtAKQ8o/qEGw5M
-	 rAr51KLZCgiSYlGpGvCV+MMAFmoAH1Te4nT4ZpVoDWFVK3wGsQE0r/mVVLsSE6UFvJ5+Q
-	 iatIvcSAfJbl4NqcAF5UQmf7/ns1s/mSsNcvoDjgC+7aqQBZnhwLEzCdlQV11tAuBRA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=0Y2WI5W+Fw77B4hgyDleulrHHWT0+7Z348rju8Ati7k=;
+	b=Gf+jTSqqZVlBc6sic9rRO6RnHwYdipqiLtYAkN0OGg2LHq3WnnWB4WxeK96y2ww9YqNw
+	 C9vfymUAvcGCLphdBVWhXVR+CtAZoWG5qF/c5z6oEXcgW7sbWGZD5nz/nc/+4jnqjATnj
+	 KAogJz18rS+FHg2TbHGtjlD8kK8YWcOldmg+JhxQZ9B0033Xb4EHzx2PrYB+kkv1Ld+Ly
+	 bLWJKBfsqR0bVogxE/PURHmthAgXz4ZCRfNLhIiYMcw/zFYxx3j87b7udfO2Yv6Rn+YYq
+	 BoWS1ziLwMThPV5XgpbTtzKYb+LcG9a0aFIcHDzZMBs7nNvuE4dV1o0RBa41qF/LihQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HAMBtGP3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TeBka4rW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17531606A330;
-	Wed, 18 Nov 2026 16:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14A1606A332;
+	Wed, 18 Nov 2026 16:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HAMBtGP3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682EA1F000C4;
-	Wed, 18 Nov 2026 16:47:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TeBka4rW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32FE41F000C7;
+	Wed, 18 Nov 2026 16:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020439;
-	bh=jiUd/b83nLlMCwJPVSnVTU+rV7Y3O/XNnawgLkecrX4=;
+	s=korg; t=1795020441;
+	bh=0Y2WI5W+Fw77B4hgyDleulrHHWT0+7Z348rju8Ati7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HAMBtGP3t4cNJ9P8BWvtJM4TFm5FVXsKPcKngrvPPOmBZVPfuxxPJs0USWrRAVCYD
-	 T3zbC6tp0dw/od7avfnXVpyMxc2C3BYe56fy1TzMo/UqUcCUeKQRcgtIv+hkRmk7I4
-	 t+Wf7QQEv7AArnY5dVSdfqy0LJ0HyJkdc/B0Xtd4=
+	b=TeBka4rWL9EzisCQaRqf3JQqYnWQcfZJpC7f69MjCtEb+9CNPZVTwD852iKyGdWX+
+	 J/keuFZrUe53MwEBk3PIHxttY2QYZrYz060L3SZlhRXuW5vPnkG366vJ5EvhcWUGhN
+	 6Tui3oHO0K26W1XGp/Vje0PraoHZ2fXMVejezhPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@bootlin.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1951/2651] irqchip/mips-gic: Transfer interrupt mask state across clusters
-Date: Wed, 18 Nov 2026 15:53:11 +0100
-Message-ID: <20261118150356.810013760@linuxfoundation.org>
+Subject: [PATCH 7.3 1952/2651] ALSA: pcm: Add refcount for races between drain and unlink
+Date: Wed, 18 Nov 2026 15:53:12 +0100
+Message-ID: <20261118150356.840016294@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,98 +61,174 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benoît Monin <benoit.monin@bootlin.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit a5f0dc656e89d0eb140547823a36212902cdf673 ]
+[ Upstream commit 91d0048a97e0fdc0a071caa0ba59e659bc6f84df ]
 
-When an interrupt's affinity is moved to a CPU in another cluster,
-gic_set_affinity() updates the routing (GIC_SH_MAP_VP) and trigger type
-in the destination cluster, but never touched the interrupt's mask state.
+We added a workaround for the case where a linked substream gets
+unlinked during the drain operation by another substream of the same
+linked group in the commit 9b1dbd69ba6f ("ALSA: pcm: fix
+use-after-free on linked stream runtime in snd_pcm_drain()").
+There, we just cached the parameters of the draining substream for
+avoiding UAF.
 
-The interrupt mask is per-cluster. After such a move the interrupt may
-be left disabled in the destination cluster, so it never fires despite
-being correctly routed to its new VP.
+Then, we check the draining substream (to_check) again in the loop and
+remove it from the queue only when it's still present.  It means,
+however, that the wait queue entry won't be removed if the substream
+went out of the link beforehand, hence a stale wq entry remains.
+Later on, this can be woken up, and this may hit a UAF, too.
+The problem surfaced more due to the recent change to call
+snd_pcm_unlink() earlier.
 
-Move the mask state along with the interrupt: disable it in the old
-cluster while clearing the route so it is no longer delivered, then
-configure the trigger type in the new cluster and re-enable it there
-if it was enabled in the old cluster.
+For properly handling both cases above, in this patch, we introduce a
+refcount to the snd_pcm_runtime that indicates the substream is being
+accessed / used, then at snd_pcm_release_substream(), it's synced
+before the actual resource release via snd_refcount_sync().  This
+guarantees that the accessors are finished, and safe to release
+memories.  Along with the introduction of a refcount, the comments and
+the code changes by the former fix were partially reverted as they
+don't fit with the updated code flow any longer.
 
-Fixes: 322a90638768 ("irqchip/mips-gic: Multi-cluster support")
-Signed-off-by: Benoît Monin <benoit.monin@bootlin.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Link: https://patch.msgid.link/20260929-sync-gic-counters-v4-3-ec70c4b60434@bootlin.com
+Last but not least, the setup of wait queue entry and
+prepare_to_wait() call are moved before the group unref.  With this
+change, we can avoid the race between the enqueue and the wakeup, too.
+
+Fixes: 9b1dbd69ba6f ("ALSA: pcm: fix use-after-free on linked stream runtime in snd_pcm_drain()")
+Link: https://patch.msgid.link/20261015071838.31082-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-mips-gic.c | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ include/sound/pcm.h     |  2 ++
+ sound/core/pcm.c        |  1 +
+ sound/core/pcm_native.c | 54 ++++++++++++++++-------------------------
+ 3 files changed, 24 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/irqchip/irq-mips-gic.c b/drivers/irqchip/irq-mips-gic.c
-index f2ae60d39d66d..be38989d8e73e 100644
---- a/drivers/irqchip/irq-mips-gic.c
-+++ b/drivers/irqchip/irq-mips-gic.c
-@@ -368,6 +368,7 @@ static int gic_set_affinity(struct irq_data *d, const struct cpumask *cpumask,
- 	unsigned int irq = GIC_HWIRQ_TO_SHARED(d->hwirq);
- 	unsigned int cpu, cl, old_cpu, old_cl;
- 	unsigned long flags;
-+	bool enabled;
+diff --git a/include/sound/pcm.h b/include/sound/pcm.h
+index 02d8689354c4a..1cf511f8d880e 100644
+--- a/include/sound/pcm.h
++++ b/include/sound/pcm.h
+@@ -8,6 +8,7 @@
+  *                   Abramo Bagnara <abramo@alsa-project.org>
+  */
  
- 	/*
- 	 * The GIC specifies that we can only route an interrupt to one VP(E),
-@@ -389,15 +390,20 @@ static int gic_set_affinity(struct irq_data *d, const struct cpumask *cpumask,
- 	raw_spin_lock_irqsave(&gic_lock, flags);
++#include <sound/core.h>
+ #include <sound/asound.h>
+ #include <sound/memalloc.h>
+ #include <sound/minors.h>
+@@ -414,6 +415,7 @@ struct snd_pcm_runtime {
+ 	snd_pcm_uframes_t twake; 	/* do transfer (!poll) wakeup if non-zero */
+ 	wait_queue_head_t sleep;	/* poll sleep */
+ 	wait_queue_head_t tsleep;	/* transfer sleep */
++	struct snd_refcount refcnt;	/* refcount for draining, etc */
+ 	struct snd_fasync *fasync;
+ 	bool stop_operating;		/* sync_stop will be called */
+ 	struct mutex buffer_mutex;	/* protect for buffer changes */
+diff --git a/sound/core/pcm.c b/sound/core/pcm.c
+index 6aad7a1fbf1a9..423a183e395eb 100644
+--- a/sound/core/pcm.c
++++ b/sound/core/pcm.c
+@@ -959,6 +959,7 @@ int snd_pcm_attach_substream(struct snd_pcm *pcm, int stream,
  
- 	/*
--	 * If we're moving affinity between clusters, stop routing the
--	 * interrupt to any VP(E) in the old cluster.
-+	 * If we're moving affinity between clusters, save the interrupt's
-+	 * mask state, stop routing it to any VP(E) in the old cluster and
-+	 * disable it there so it is no longer delivered.
- 	 */
- 	if (cl != old_cl) {
- 		if (gic_irq_lock_cluster(d)) {
-+			enabled = read_gic_redir_mask(irq);
- 			write_gic_redir_map_vp(irq, 0);
-+			write_gic_redir_rmask(irq);
- 			mips_cm_unlock_other();
- 		} else {
-+			enabled = read_gic_mask(irq);
- 			write_gic_map_vp(irq, 0);
-+			write_gic_rmask(irq);
+ 	init_waitqueue_head(&runtime->sleep);
+ 	init_waitqueue_head(&runtime->tsleep);
++	snd_refcount_init(&runtime->refcnt);
+ 
+ 	__snd_pcm_set_state(runtime, SNDRV_PCM_STATE_OPEN);
+ 	mutex_init(&runtime->buffer_mutex);
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index 62034c4c297ea..f64ff3add229a 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -2189,9 +2189,6 @@ static int snd_pcm_drain(struct snd_pcm_substream *substream,
+ 	for (;;) {
+ 		long tout;
+ 		struct snd_pcm_runtime *to_check;
+-		unsigned int drain_rate;
+-		snd_pcm_uframes_t drain_bufsz;
+-		bool drain_no_period_wakeup;
+ 
+ 		if (signal_pending(current)) {
+ 			result = -ERESTARTSYS;
+@@ -2206,45 +2203,35 @@ static int snd_pcm_drain(struct snd_pcm_substream *substream,
+ 			runtime = s->runtime;
+ 			if (runtime->state == SNDRV_PCM_STATE_DRAINING) {
+ 				to_check = runtime;
++				/* pin the draining substream */
++				snd_refcount_get(&to_check->refcnt);
++
++				init_wait_entry(&wait, 0);
++				prepare_to_wait(&to_check->sleep, &wait,
++						TASK_INTERRUPTIBLE);
++				if (to_check->no_period_wakeup) {
++					tout = MAX_SCHEDULE_TIMEOUT;
++				} else {
++					tout = 100;
++					if (to_check->rate) {
++						long t = to_check->buffer_size *
++							1100 / to_check->rate;
++						tout = max(t, tout);
++					}
++					tout = msecs_to_jiffies(tout);
++				}
+ 				break;
+ 			}
  		}
- 	}
+ 		snd_pcm_group_unref(group, substream);
+ 		if (!to_check)
+ 			break; /* all drained */
+-		/*
+-		 * Cache the runtime fields needed after unlock.
+-		 * A concurrent close() on the linked stream may free
+-		 * its runtime via snd_pcm_detach_substream() once we
+-		 * release the stream lock below.
+-		 */
+-		drain_no_period_wakeup = to_check->no_period_wakeup;
+-		drain_rate = to_check->rate;
+-		drain_bufsz = to_check->buffer_size;
+-		init_wait_entry(&wait, 0);
+-		prepare_to_wait(&to_check->sleep, &wait, TASK_INTERRUPTIBLE);
+ 		snd_pcm_stream_unlock_irq(substream);
+-		if (drain_no_period_wakeup)
+-			tout = MAX_SCHEDULE_TIMEOUT;
+-		else {
+-			tout = 100;
+-			if (drain_rate) {
+-				long t = drain_bufsz * 1100 / drain_rate;
+-				tout = max(t, tout);
+-			}
+-			tout = msecs_to_jiffies(tout);
+-		}
+ 		tout = schedule_timeout(tout);
+-
+ 		snd_pcm_stream_lock_irq(substream);
+-		group = snd_pcm_stream_group_ref(substream);
+-		snd_pcm_group_for_each_entry(s, substream) {
+-			if (s->runtime == to_check) {
+-				finish_wait(&to_check->sleep, &wait);
+-				break;
+-			}
+-		}
+-		snd_pcm_group_unref(group, substream);
++		finish_wait(&to_check->sleep, &wait);
++		/* unpin the draining substream again now */
++		snd_refcount_put(&to_check->refcnt);
  
-@@ -409,10 +415,20 @@ static int gic_set_affinity(struct irq_data *d, const struct cpumask *cpumask,
+ 		if (card->shutdown) {
+ 			result = -ENODEV;
+@@ -2796,6 +2783,7 @@ void snd_pcm_release_substream(struct snd_pcm_substream *substream)
  
- 	/*
- 	 * If we're moving affinity between clusters, configure the interrupt
--	 * trigger type in the new cluster.
-+	 * trigger type and, if it was enabled in the old cluster, enable it
-+	 * in the new one.
- 	 */
--	if (cl != old_cl)
-+	if (cl != old_cl) {
- 		gic_set_type_locked(d, irqd_get_trigger_type(d));
-+		if (enabled) {
-+			if (gic_irq_lock_cluster(d)) {
-+				write_gic_redir_smask(irq);
-+				mips_cm_unlock_other();
-+			} else {
-+				write_gic_smask(irq);
-+			}
-+		}
-+	}
- 
- 	/* Route the interrupt to its new VP(E) */
- 	if (gic_irq_lock_cluster(d)) {
+ 	snd_pcm_drop(substream);
+ 	if (substream->hw_opened) {
++		snd_refcount_sync(&substream->runtime->refcnt);
+ 		if (substream->runtime->state != SNDRV_PCM_STATE_OPEN)
+ 			do_hw_free(substream);
+ 		substream->ops->close(substream);
 -- 
 2.53.0
 
