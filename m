@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058761;
-	b=OF5FIyaSo0mzCe930BvtdRFPU/n+BrEsr1nsLq71JMzx9z1MwHmmo3QdhA5O0kW5PSfe
-	 XmTIjFuc+2RvnIpdPdgMgNDE5KXTy9tPfzNcQoMgdFk/oqo6nlOSS2wPbUrogWCTEYfRo
-	 VzFBsAvHcRXoCj1azQNiCHVkflH5+Uye+94N5uzD4U7RKqgE38n6vc5+u6Iib4EbwGdz4
-	 wk7vqayBgXTk8L34kFfEKII/Lqkv6Je5/wft8cjch4IvXZwa775wBtFOTtUdeBUD53SyN
-	 C3P76fmTYJh+hlyEOdrOKSGGFURhhZ8gE4VYFo1GFuyigH7ksT9NoPihMlarxRz7wWg==
+	t=1795058764;
+	b=kzZrw2g8DdtzPpOCh7lcO61IxTzb7wjxQjYqEl0K44DiP9vrlLN+KyiNIyAR1FKfsC0u
+	 Tb7i10YUlzY+1kY3E36N842BjXaN54T8z/p/jd33DvHiD5+IJGtjrmivk2RIeYClJhghg
+	 mx29QI7/T/7ElumctJELoM310TJgtN0qdr1JZ3oBxJE+SLwkW6D/+gqk6RHqeFZ3utSPM
+	 hy0tJqHGfgTrCNQRb+kcFzJxhOQEm7deSt3BebP8YDSiKt+boEulKcX33zulwOHQF14ed
+	 eAwEFtH/NPan2QV/tGxbRuGfrmKKlBO7zufwmkRCy7iCm94naHSQ5XjxZPPbmnRsYQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058761;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058764;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y4D34WtsdnylGDNiAFDVZELFzW1VitVQEhR67gLsZ9c=;
-	b=BYL+OpGujntQRPLNzzHqAMuc4JCDnuFtpU/5Ud0N+PJGApxzAQlJgqeppageF6M7L/V5
-	 odGa/BbojUc0/8h85//0baaZwlLiIFdSssiLDIoByYGUOf+NNFCMUhdovsgw2qNMtXQIM
-	 bNAICN1C1dMaWkdA15o4cowSKfeAR8VmDNNGU1m+eUKVykQk6S04bvTVsNqWnTN1FWpAM
-	 2KWu8mU35oMK/VVCL9h/nTWyp1DqDllRt8k/lHzeNKqpGY1DznEfzYOsntTtTkz5qnl7u
-	 WNKR9h4D8cSsRa0MfIQtnm5RtLp12jEIhRuVowEigEOaYjeU4Wg4tqtep4mL+84IQlw==
+	bh=8t3WfXLjyl1C/UzzWviK+l0BzncPob3ByDO0cqlLtVQ=;
+	b=mRquL8TcN8PpLsoZ3HhWuc/Na6mR93PL5ydMNP0Sq4ZW674M0Cl4yNXVZQpYmlRpOwlf
+	 dz/xgVhbJCGRKEgV9NmGuxOq6CTpVa7mW2iN1guVS4YP6zJEnlmEfuidclHwBqiqJH68X
+	 2camG2bQxs0HpbYb6raJ+rpywcivbbscULgi2eCw8Ip8hcFYlX9D258nkJAm3QqL/B7yV
+	 eJ5gKD+ARa/+mGH36vy/UFFktZPFEPKpsNoj0F+ADJWz7tI7mPQJzjBP3mfwNoDmoujSo
+	 6XPznscjtgFnTWn8nty5QyvpIqsPFALgeWynw61YU8R0tkg6OBrKVxsFG/nobDWGP9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jDl/Qc7X";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cVxqnnTo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B48606A325;
-	Thu, 19 Nov 2026 03:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314E4606A31C;
+	Thu, 19 Nov 2026 03:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jDl/Qc7X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D07461F000C4;
-	Thu, 19 Nov 2026 03:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cVxqnnTo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0AF1F000C4;
+	Thu, 19 Nov 2026 03:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058761;
-	bh=Y4D34WtsdnylGDNiAFDVZELFzW1VitVQEhR67gLsZ9c=;
+	s=korg; t=1795058764;
+	bh=8t3WfXLjyl1C/UzzWviK+l0BzncPob3ByDO0cqlLtVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jDl/Qc7XtbFFKamBoVtoG4Y+9WXz8ZPE7r/B0LTg/+8BkXilegosy35CzHj01zUHT
-	 KJa8wf43BuXnWur++SpA/3Epq2XxOZkGVC2BAMLI/lAp3HlljeAB/vDVeryvzaeXmh
-	 aReMcfIe7pMqSJmWfHnM3+pRe4Zuxm7MI+CTH6Vg=
+	b=cVxqnnToIn3T6GgGNzywHIsnHGVKHTpWJzqmv7O33GAnfZjTcZdxuAkO35akPxQK8
+	 rVobsAlZDii6x2zvdmw46lAXFo0y4cNDUwN+ldUpjHomOFAEiHYMaKqMXrjO7OeZK4
+	 Kt32OKYxzI9pdW3KY/095AHg/Gcs5HTH+O8ulE/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fang Xieyan <fangxy@xiaopeng.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Daniel Thompson <daniel@riscstar.com>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0601/1848] kgdb: Fix buffer overflow in the m packet handler
-Date: Wed, 18 Nov 2026 15:43:59 +0100
-Message-ID: <20261118145940.489975271@linuxfoundation.org>
+Subject: [PATCH 5.10 0575/1848] time/namespace: Fix overflow when converting absolute deadlines
+Date: Wed, 18 Nov 2026 15:43:33 +0100
+Message-ID: <20261118145939.195652913@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,71 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fang Xieyan <fangxy@xiaopeng.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit ac0159129e2cb99a70c4b80cfbf58d03e092dc7b ]
+[ Upstream commit d69cfd33b5a8d176124c564513b9ceb933595d93 ]
 
-gdb_cmd_memread() passes the length of the 'm' packet straight to
-kgdb_mem2hex(), which hex-encodes the reply into
-remcom_out_buffer[BUFMAX] without checking that the reply fits. A
-client on the KGDB I/O console can ask for a read of any size, and
-the hex encoding runs off the end of the buffer. kgdb_mem2hex() takes
-that length as an int count, so 2^31 truncates to a negative value
-and copy_from_kernel_nofault() is handed buf + count as its
-destination.
+do_timens_ktime_to_host() subtracts the namespace offset from an absolute
+deadline and clamps the result to [0, KTIME_MAX]. A negative offset can
+make a large deadline overflow to a negative value. Since ktime_t is
+signed and KTIME_MAX is its maximum value, the subsequent comparison
+against KTIME_MAX can never detect this overflow.
 
-On x86 BUFMAX is 1024, so a read of 512 bytes overruns by the single
-byte that terminates the hex string:
+For example, with a -1 second boottime offset, an absolute CLOCK_BOOTTIME
+timerfd deadline of KTIME_MAX can expire immediately. An absolute
+clock_nanosleep() using the same clock and deadline can also return
+immediately instead of waiting.
 
-  BUG: KASAN: global-out-of-bounds in kgdb_mem2hex+0x1dd/0x230
-  Write of size 1 at addr ffffffff87651780 by task sh/1
-  ...
-  The buggy address belongs to the variable:
-   remcom_out_buffer+0x400/0x420
+The earlier tim < offset check already handles the lower bound. A
+negative subtraction result in the remaining branch therefore indicates
+overflow. Detect that result and clamp it to KTIME_MAX.
 
-Bounds check the length before the hex encoding:
-
-		if (length > (BUFMAX - 1) / 2) {
-			error_packet(remcom_out_buffer, -EINVAL);
-			return;
-		}
-
-gdbstub_msg_write() already bounds the count it hex-encodes
-against BUFMAX. Reads over the limit never returned valid data,
-so an error reply loses nothing.
-
-Fixes: dc7d55270521 ("kgdb: core")
+Fixes: 89dd8eecfe961 ("time: Add do_timens_ktime_to_host() helper")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Assisted-by: Hawkeye:GLM-5.3-flash
-Assisted-by: Qoder:Qwen3.8-Max
-Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20260914180344.15485-1-fangxy@xiaopeng.com
-Signed-off-by: Daniel Thompson <daniel@riscstar.com>
+Link: https://patch.msgid.link/20261020233433.20997-1-dennylin0707@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/debug/gdbstub.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/time/namespace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/debug/gdbstub.c b/kernel/debug/gdbstub.c
-index a77df59d9ca53..044f7566c341a 100644
---- a/kernel/debug/gdbstub.c
-+++ b/kernel/debug/gdbstub.c
-@@ -564,6 +564,14 @@ static void gdb_cmd_memread(struct kgdb_state *ks)
+diff --git a/kernel/time/namespace.c b/kernel/time/namespace.c
+index afc65e6be33e4..82abbeb96f204 100644
+--- a/kernel/time/namespace.c
++++ b/kernel/time/namespace.c
+@@ -49,7 +49,7 @@ ktime_t do_timens_ktime_to_host(clockid_t clockid, ktime_t tim,
+ 		tim = 0;
+ 	} else {
+ 		tim = ktime_sub(tim, offset);
+-		if (unlikely(tim > KTIME_MAX))
++		if (unlikely(tim < 0))
+ 			tim = KTIME_MAX;
+ 	}
  
- 	if (kgdb_hex2long(&ptr, &addr) > 0 && *ptr++ == ',' &&
- 					kgdb_hex2long(&ptr, &length) > 0) {
-+		/*
-+		 * The hex-encoded reply needs 2 * length + 1 bytes
-+		 * in remcom_out_buffer[BUFMAX].
-+		 */
-+		if (length > (BUFMAX - 1) / 2) {
-+			error_packet(remcom_out_buffer, -EINVAL);
-+			return;
-+		}
- 		err = kgdb_mem2hex((char *)addr, remcom_out_buffer, length);
- 		if (!err)
- 			error_packet(remcom_out_buffer, -EINVAL);
 -- 
 2.53.0
 
