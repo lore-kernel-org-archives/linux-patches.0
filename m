@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027632;
-	b=jqCxo+o9bXaklC/GEy12VopGosQ9BXulgoMw5apkbFG4/+kUMQyi+VZuEZSPtEO1o8ws
-	 vvkvGf6IulomsNhc+7JZmiLwbV71ycke3SlJQ7fNgb2UV+Zm7Y49AJoRxk23z5aDNyFSl
-	 IUki3lRAa3AK9xhMPlFGESXzfBo9cl5Ck3X797vLX6YhVc6Qx23z8YVlpvVh7AIsPuMAW
-	 Cj67sC51PM69xV/xrLD2hAep8TcuqvTX69WmO+grfcJh8zRVvNVuenAL5V4g8j/yTRYim
-	 9IY5WPXnB0hbAYJdr5KP4GgnO2mYJiY83GMlOLk8mdYOi8E1BoKNchBkO0swe5HUYbg==
+	t=1795027635;
+	b=3OakncR0kYyhztJQHozdou5AVWx/YFQES79r/er0msoSXZdNTpV6G/Jg9QmB0kfLShRt
+	 kwRdUqD6h8IZoWA7emQPq3wf0Nll0C0dgwKFT0gHPwhYDeiDXFxNDSLnIegoWO0qu0zXa
+	 oHec4waLT2jXN+uSgY91x5NH5Y290cuuATdCf4eEgQkgzoKtCxAnXOuGGlVA0oEZbwNaX
+	 zpodHb0GXzIhuX2VxucsKLonWsSgnsSgRGXipxtCIe3czIbgGaRNLHWCxV4lpBRLUtARB
+	 pP1Bj0wv3qEIGdLk2ei6hwNo0nGVok/HdLTJ8oM2ql89od4Kocs7YzRp8wjAup+YR0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027632;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027635;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kdr+dLkspABzD7QrDEShOPA3ebdHjbVGSnznNf/MGLY=;
-	b=aNtxZzqP4DwNd4Te+5NXhkbkjFUu71zIcMR0POdL8ANX20Gu5J6TxDx1w/70vUfNtBO+
-	 or/DkPKg33ASZpwMNIJrKBmt2sGshvB817951yWdKkM/CwC/DTY0RS6gyNOx4PmgeNLKO
-	 a/qCXXuSwMs0HfLU4lQBsN6lmWOlb+EKf/jTN9/Ql6OOiMjSXcYYEh0NXCUgX5fjec4eW
-	 tqeMNFnZzsYIEOunf0+nMfk67EVWVr4Bn1KwjDYBbxUY6ZuFf+EWZPF42gXqS1c/Y1mkq
-	 5vvP3GM3thsXwNYYbUNOrkNEGxANSCwIb/ywem/kjDrBDebSsbFisv7w5ApW7LAHLhQ==
+	bh=LRyHxAzF9JwT1g3A8y9vJ6nBKw+a30jGSYDQsIM31ds=;
+	b=M3l5YyNM1nrN08j4F3qZi07znzMmDE6SwmwWQLb591H9mtklpqTUMNQborNVgyEk3b6K
+	 PJvh96XH2BToWKcv/KAIT+dlkpJCnl3dJc4mYOp6SzSLsSfxMqjIu0nXyu6QB6QAWAaJu
+	 zfYndZOX1oSGpOtrfDy1ytsbk9ULv/io8bgxs2Ss6lJxVws8NrYKybEy7Gyw+BFjlYdI8
+	 gvB/8S91TRiu5a7WpUWkJYU+DIxcNzTdMk9pdar332nhWhCA3XyLH0/ayMKkU4wyMori3
+	 XQgbCWpCcB1b7BqDaPBoTtMxe256vYM2vUZDgtxygCFyfKaKqilA+JFPKyH6BsQ1hTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uv4dLeyU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=riu6BkD2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A228606A33B;
-	Wed, 18 Nov 2026 18:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7662606A31C;
+	Wed, 18 Nov 2026 18:47:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uv4dLeyU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 643101F000C4;
-	Wed, 18 Nov 2026 18:47:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=riu6BkD2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4762A1F000C4;
+	Wed, 18 Nov 2026 18:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027631;
-	bh=kdr+dLkspABzD7QrDEShOPA3ebdHjbVGSnznNf/MGLY=;
+	s=korg; t=1795027634;
+	bh=LRyHxAzF9JwT1g3A8y9vJ6nBKw+a30jGSYDQsIM31ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uv4dLeyU8AzSYrHmmDWC+FV8MFhp7m3EjY1Q02B3hINnjwfny7OHLZcvyXl7ahWTI
-	 4J8/0gpGxYRYPlPprzrEAQwiST191GTDpvGetTKC/UBmYehV70Sbol+OLpficA0wl8
-	 MuD0l8YNBRW6UqEOiddl3TtdMkIG7csUe3AtmowI=
+	b=riu6BkD2L8vdTsSaYN2AYGPDhqJ/NDVHyo+sVx/8Ew+jhGWPsVeVkdhHIpJ/PjyUN
+	 Qoj0YrVQPWTjRnsvPdJfq8NnEUxo/HAgIUfns6i+IHmMrCan/Xv+tPw62aCmGrEcWw
+	 CzBLJjjYyF/XxFl65p78yT0+CXbiG3MgDWV3vs7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <shodan.ai@mcst.ru>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1857/2151] tcp_bpf: propagate error code in tcp_bpf_sendmsg()
-Date: Wed, 18 Nov 2026 15:59:52 +0100
-Message-ID: <20261118150229.439708766@linuxfoundation.org>
+Subject: [PATCH 6.18 1858/2151] ocfs2: reserve xattr value tree metadata only once
+Date: Wed, 18 Nov 2026 15:59:53 +0100
+Message-ID: <20261118150229.474161319@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,40 +71,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 82e31923c0553fdbfcddcd910ca07952880ca9b9 ]
+[ Upstream commit 5365f1f417b36627f825aacf9844ae24b671b525 ]
 
-In tcp_bpf_sendmsg(), the value returned by sk_msg_memcopy_from_iter()
-is checked for error but not propagated to 'out_err' label, so error
-handling may not work as expected. Fix this by assigning error value
-to 'err', thus making sure that error won't be silently ignored.
+ocfs2_calc_xattr_set_need() asks for the new value's extent tree twice
+when it replaces an inline value smaller than a value root with one large
+enough to be stored outside.  The "stored outside" branch reserves the
+tree and then falls through to meta_guess instead of going out:
 
-Reported-by: Sashiko <shodan.ai@mcst.ru>
-Fixes: 5153a75ef34b ("tcp_bpf: Fix copied value in tcp_bpf_sendmsg")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261019082214.102398-1-dmantipov@yandex.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+        if (!ocfs2_xattr_is_local(xe)) {
+                ...
+                xv = (struct ocfs2_xattr_value_root *)
+                     (base + name_offset + name_len);
+                value_size = OCFS2_XATTR_ROOT_SIZE;
+        } else
+                xv = &def_xv.xv;
+
+        if (old_clusters >= new_clusters) {
+                ...
+                goto out;
+        } else {
+                meta_add += ocfs2_extend_meta_needed(&xv->xr_list);
+                ...
+                if (value_size >= OCFS2_XATTR_ROOT_SIZE)
+                        goto out;
+        }
+
+On the fall-through xv is def_xv, so what gets added here is the two
+blocks ocfs2_extend_meta_needed() wants for an empty value root -- and
+both sides of meta_guess reserve that same tree again.  The create side
+has done so since commit 3ed2be719eb9 ("ocfs2: allow for more than one
+data extent when creating xattr"), which ported this reservation to the
+create case without noticing it was already on the way in, and the
+existing-block side since commit 0cdc7dde00ec ("ocfs2: fix missing
+metadata reservation for large xattrs").  Both were chasing the same
+RESTART_META failure in ocfs2_xattr_extend_allocation(), for xattr create
+and then for xattr update.
+
+ocfs2_init_xattr_set_ctxt() hands the total straight to
+ocfs2_reserve_new_metadata_blocks(), so the surplus is two blocks held for
+the whole transaction.  A setxattr that would otherwise fit can come back
+-ENOSPC on a filesystem whose metadata allocator is nearly exhausted.
+
+Move the reservation into the branch that stops there, leaving meta_guess
+as the only place that reserves for a value tree the fall through is about
+to create.  The paths that do go out keep reserving against the value root
+they already have, which for an external old value is the on-disk one and
+so can legitimately ask for more than two blocks.
+
+Both sides of meta_guess have to come out even on their own now that the
+copy covering for them is gone.  The existing-block side only started
+reserving the value tree in the commit this one is tagged against.  The
+create side has reserved the tree since 3ed2be719eb9, but only the tree:
+the block ocfs2_create_xattr_block() claims came out of the same two, and
+on the fall-through it was the duplicate removed here that made up the
+difference.  So "ocfs2: reserve metadata for a new xattr block and its
+value tree" has to land first -- without it the create side reserves 2
+where 3 are needed and the value tree is back to RESTART_META.  That one
+fixes a shortfall of its own on the path that reaches meta_guess directly,
+where there was never a duplicate to cover it, so it is worth taking
+alone; this patch is not.
+
+Link: https://lore.kernel.org/20261010113454.1420939-4-joseph.qi@linux.alibaba.com
+Fixes: 0cdc7dde00ec ("ocfs2: fix missing metadata reservation for large xattrs")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_bpf.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ocfs2/xattr.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index 6027cd33a9fdc..ae0b3a84115af 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -581,6 +581,7 @@ static int tcp_bpf_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
- 					       copy);
- 		if (ret < 0) {
- 			sk_msg_trim(sk, msg_tx, osize);
-+			err = ret;
- 			goto out_err;
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index 6aac7a88ff74f..b8bb6faf99ebc 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -3217,12 +3217,21 @@ static int ocfs2_calc_xattr_set_need(struct inode *inode,
+ 			credits += ocfs2_remove_extent_credits(inode->i_sb);
+ 			goto out;
+ 		} else {
+-			meta_add += ocfs2_extend_meta_needed(&xv->xr_list);
+ 			clusters_add += new_clusters - old_clusters;
+ 			credits += ocfs2_calc_extend_credits(inode->i_sb,
+ 							     &xv->xr_list);
+-			if (value_size >= OCFS2_XATTR_ROOT_SIZE)
++			/*
++			 * The old value occupies at least as much room as a
++			 * value root, whether it sat outside or inline, so the
++			 * new root fits where it was and no new xattr block or
++			 * bucket is needed -- only the metadata to extend the
++			 * tree hanging off it.  A smaller one is replaced
++			 * outright, which meta_guess below reserves for.
++			 */
++			if (value_size >= OCFS2_XATTR_ROOT_SIZE) {
++				meta_add += ocfs2_extend_meta_needed(&xv->xr_list);
+ 				goto out;
++			}
  		}
- 
+ 	} else {
+ 		/*
+@@ -3274,6 +3283,10 @@ static int ocfs2_calc_xattr_set_need(struct inode *inode,
+ 		 * Reserve metadata for the new xattr's value extent tree.
+ 		 * The not_found path above adds credits for this tree but
+ 		 * omits meta_add, leaving meta_ac NULL for large values.
++		 *
++		 * This is all of meta_ac on this side beyond the xattr tree
++		 * above: no xattr block is allocated here, and a new bucket or
++		 * index block is paid for out of data_ac.
+ 		 */
+ 		if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE)
+ 			meta_add += ocfs2_extend_meta_needed(&def_xv.xv.xr_list);
 -- 
 2.53.0
 
