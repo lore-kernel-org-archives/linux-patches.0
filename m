@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057666;
-	b=rUQo/PZGNnhKEPF6xir/R/6Uy36G0YrVzjNzE5ppZp3Mw6SpKss75Mq04uYKecY1KFa/
-	 yL/tCurNreYR/i6pRA1eM/qLzpy6XMmms2j5sCIWDyhXqk0aVWr8T9ICC+geZhrHzy88q
-	 QnRz6/qOUzV0i4s6ur7izMR0zchP665C5nNaTU8JybkiqZiXJEoKMR49EGJxermcf2JUC
-	 Np22qlRZOHu1R2WuYVI0zhGb8D4KKPg4TodMU/5BBsX/qwnqCPfqHPIce97mAbQ+7kQtx
-	 JiatTkfaieukvA0TMlyrOr62r5rpfJYzit95owALZrdqLxqX66pjwnuzzOqIcDFc+6A==
+	t=1795057668;
+	b=DDbNoFUhsSBO+KWP/x17i2R/aDYeoShHBkMiXb44v0mK+hOP2xc0brpqCfNm9BphvEVX
+	 V1e9j8wgWyXLJBHShY0YEhc50D/T8WI9sjzHhYHpxGLqNGkcUideOIOOdvi+6k7eBqnjA
+	 f9fdEBktuTc/WRjQNYLxOcO+6P0lS1+oDIueTiDSzZTqF9wovNOBhPX/nVAoftALXtBc9
+	 1VHzT9SWMbR1a6ZDmnbReKYbza0cli/BKBe/j/S4CClLfUphNoCdcFm42sHbcbxF+luCO
+	 /PsBe0itUugyOGz7p20IWRvoQnU4dHSG91WAxtc8h3378EVkqUsk8UnnWskg1/3DHnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057666;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057668;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bbPsLc2oQxkSkb8JrhfMFibJQa0h8mAEv/HMUBGkwNI=;
-	b=HnRGsL6w75GyGN5IMYpXZEdGCjzGETBsnGUq5bymECytujNFg8kur/0WzUpyWRRnZKqy
-	 Jf6Fo08zOAXJvTBod5i40gpr/vo0K2NdquZi8PLhbpG88F00SyPND28KxEqphD+pWNvBn
-	 sv8t/Hnnim6tctbuxM66h+fRC6V0hjyOYrOcL7iOfIoxD+5OhaIpi66icm5p1t3FosnCe
-	 J3cPQiHgRH6kD0bcrSssVryL/LUwm5GPkW0mz+jTQgEvALqur6uOtumPg58VGKgWRS2PI
-	 vYK2eTENzyzhq5BtVfwAZGa8Ltyf0Zfsqh0yuDafQCxmh5scf6Gw9Sw6Np6kfd8o1yg==
+	bh=PfjNgt9EsS6aeAxqlECrDRKmIc5sJTc4Hg2ptWpibJo=;
+	b=3EVVW5LsFUTyzNKYsbJm5i9C0GqbRahGRF3kKLk05gTP4kiogqjBLZk1WjcCFiLZgdCR
+	 OlkizDhcYJXVH+XYGWHEJlLJqEROTDaW/7RsF7MPDtIRuZqvYScEjvvMI7s25ZqjWpU7U
+	 IzBbXwzzY5FUq5L3QqPsH3ADM7ZBmR77PdjG+fHxNFG/vEU3dO0u4pCmqMKY8PDwifYcD
+	 0FkQBD0lkbgEewbyRcOSRqTnQcuKKqY4X/BG1GgR2u4VlADsVoHPapNA2254X5R8PKytm
+	 Rq5n9h5/iBPO9xqgCYHxfR7xbkwrTHv7nDhA3nP6j8hnXOqyJ6zk5hsL3vcA+aYMAVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1QPkY87D;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0UmxUxlk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3258460A2606;
-	Thu, 19 Nov 2026 03:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D544B606A31C;
+	Thu, 19 Nov 2026 03:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1QPkY87D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F5101F000C4;
-	Thu, 19 Nov 2026 03:07:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0UmxUxlk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1251F000C4;
+	Thu, 19 Nov 2026 03:07:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057666;
-	bh=bbPsLc2oQxkSkb8JrhfMFibJQa0h8mAEv/HMUBGkwNI=;
+	s=korg; t=1795057668;
+	bh=PfjNgt9EsS6aeAxqlECrDRKmIc5sJTc4Hg2ptWpibJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1QPkY87DElbnAgFFZniz1N003ygdsLfZmPE68JGl0uJ0iFNsLIit1DNzqoqxKEuMK
-	 4gKPBpDLlTfxbaOqCDuOHWSQzTIN+Cs02LLulrsyUhpJv4AEVyht4spmPSSJv4dUQz
-	 AskF0FRprNGC+SMO5RE9mNGyO2jTm7oVaO0pCpsw=
+	b=0UmxUxlkondvLoPwGbbzVPFYF0Y9l7LHWP+OJzOfXRYKRfToCYvn3B8hp/7nERp0f
+	 ef3tSV5YNYx5pneVOJXrB4ZfkKDNhP+teW1eUKjbb5xpxyU5exUJ5Sfgy4GiUc0szv
+	 TpeCC5P8hHpQ1IkJM9f23U1h8RTS6781vOszph9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	Andrea Parri <parri.andrea@gmail.com>
-Subject: [PATCH 5.10 0210/1848] kcsan: Avoid division by zero in kcsan_prandom_u32_max()
-Date: Wed, 18 Nov 2026 15:37:28 +0100
-Message-ID: <20261118145920.819402524@linuxfoundation.org>
+	co+25860fb17af97289@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 5.10 0211/1848] libceph: bound mon_command ack decode to front len
+Date: Wed, 18 Nov 2026 15:37:29 +0100
+Message-ID: <20261118145920.864607631@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,80 +69,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 99b6fcce87037cfb6b5e177848342e97f5141205 upstream.
+commit 62b41a16d8603d4d809fda212f15c3e9c783a82b upstream.
 
-KCSAN's skip_watch, udelay_task and udelay_interrupt parameters can be
-changed at runtime through /sys/module/kcsan/parameters/, where 0 means
-watching every access or not delaying at all. With the default
-CONFIG_KCSAN_SKIP_WATCH_RANDOMIZE=y and CONFIG_KCSAN_DELAY_RANDOMIZE=y,
-writing 0 to any of them makes the next watchpoint setup divide by zero:
+handle_command_ack() bounds the decode with msg->front_alloc_len, the size
+of the reply buffer, instead of msg->front.iov_len, the number of bytes the
+monitor sent.  mon_alloc_msg() routes every CEPH_MSG_MON_COMMAND_ACK to
+get_generic_reply(), which returns the preallocated ->reply of whichever
+generic request carries the same tid, so the buffer keeps its fixed size
+however short the reply is.  An ack with hdr.front_len below sizeof(struct
+ceph_mon_request_header) + sizeof(u32), including 0, still passes
+ceph_decode_need(), and ceph_decode_32() returns four bytes that were never
+received: uninitialized slab memory, stale bytes of an earlier message, or
+bytes the peer planted by sending a reply that lands in the same buffer and
+is then rejected.  The read stays within the allocation, so KASAN does not
+flag it.
 
-  # echo 0 > /sys/module/kcsan/parameters/udelay_task
-  Oops: divide error: 0000 [#1] SMP NOPTI
-  CPU: 0 UID: 0 PID: 93 Comm: sh Not tainted 7.3.0-rc5 #3 PREEMPT(lazy)
-  RIP: 0010:kcsan_setup_watchpoint+0x1b5/0x410
-  Code: ... 65 89 05 ad 8d 98 02 d3 ee <f7> f6 29 d7 e8 22 0e 0f 01 ...
-  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-  ...
-   __show_trace_log_lvl+0x1bd/0x315
-   __die_body.cold+0x19/0x2b
-   die+0x34/0x50
-  ...
-  BUG: TASK stack guard page was hit at ffffd3ab001fbfe8 (...)
+req->result reaches userspace through ceph_monc_do_statfs(),
+ceph_monc_get_version() and ceph_monc_blocklist_add(); rbd hands it back
+from write() on /sys/bus/rbd/add_single_major, and rbd_get_client() passes
+it to ERR_PTR() unchecked, which faults:
 
-reset_kcsan_skip() and delay_access() pass these values unchecked to
-kcsan_prandom_u32_max(), which returns "state % ep_ro". delay_access()
-halves the delay for compound and assert accesses, so
-udelay_interrupt=1 is enough there.
+  rbd: failed to get latest osdmap: -186318427
+  BUG: unable to handle page fault for address: fffffbfffe9ca034
+  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:do_rbd_add (drivers/block/rbd.c:7105)
+  Call Trace:
+   ...
+   kernfs_fop_write_iter (fs/kernfs/file.c:345)
+   vfs_write (fs/read_write.c:595 fs/read_write.c:687)
+   ksys_write (fs/read_write.c:739)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  Kernel panic - not syncing: Fatal exception
 
-The oops path runs instrumented code, which faults again until the stack
-overflows. With skip_watch=0 the guest hangs without printing anything.
+Use msg->front.iov_len, matching handle_subscribe_ack(),
+handle_statfs_reply(), handle_get_version_reply() and handle_auth_reply().
+A well-formed ack has front.iov_len >= 22 and is unaffected; a short one
+takes the existing bad: path.  This applies commit d3c32939fa0e ("libceph:
+bound get_version reply decode to front len") to the last decode-side
+use of front_alloc_len in this file.
 
-The division came in with commit 71a076f4a61a ("kcsan: Rewrite
-kcsan_prandom_u32_max() without prandom_u32_state()"). Before it, the
-helper scaled the random value with a multiply-shift, which yields 0 for
-ep_ro == 0. Go back to that via reciprocal_scale().
-
-Tested in an x86-64 KCSAN guest with virtme-ng: after this patch,
-writing 0 to each parameter, or 1 to udelay_interrupt, no longer
-oopses. skip_watch=0 now watches every access, which is very slow with
-the default delays but completes when they are set to 0.
-
-Fixes: 71a076f4a61a ("kcsan: Rewrite kcsan_prandom_u32_max() without prandom_u32_state()")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Reviewed-by: Marco Elver <elver@google.com>
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Signed-off-by: Marco Elver <elver@google.com>
+Fixes: 6305a3b41515 ("libceph: support for blacklisting clients")
+Reported-by: co+25860fb17af97289@bugs.sh
+Assisted-by: Cursor
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kcsan/core.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/ceph/mon_client.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/kcsan/core.c
-+++ b/kernel/kcsan/core.c
-@@ -276,8 +276,9 @@ should_watch(const volatile void *ptr, s
- }
- 
- /*
-- * Returns a pseudo-random number in interval [0, ep_ro). Simple linear
-- * congruential generator, using constants from "Numerical Recipes".
-+ * Returns a pseudo-random number in interval [0, ep_ro), or 0 if ep_ro is 0,
-+ * which the runtime-tunable callers may pass. Simple linear congruential
-+ * generator, using constants from "Numerical Recipes".
-  */
- static u32 kcsan_prandom_u32_max(u32 ep_ro)
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -870,7 +870,7 @@ static void handle_command_ack(struct ce
  {
-@@ -286,7 +287,7 @@ static u32 kcsan_prandom_u32_max(u32 ep_
- 	state = 1664525 * state + 1013904223;
- 	this_cpu_write(kcsan_rand_state, state);
+ 	struct ceph_mon_generic_request *req;
+ 	void *p = msg->front.iov_base;
+-	void *const end = p + msg->front_alloc_len;
++	void *const end = p + msg->front.iov_len;
+ 	u64 tid = le64_to_cpu(msg->hdr.tid);
  
--	return state % ep_ro;
-+	return reciprocal_scale(state, ep_ro);
- }
- 
- static inline void reset_kcsan_skip(void)
+ 	dout("%s msg %p tid %llu\n", __func__, msg, tid);
 
 
