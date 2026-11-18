@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016452;
-	b=3xkAgWHucNo3UO28KBtdM4Kam+4UwtN19jYIyV5VspEU1G3+9G91ZplDP3vF9RoPOjCM
-	 V3lMPVSU28CnZ7o0ZR37zeblz7ogdRQwsFq58/v68rVfii8/u7RJl07GoP8/yKEYds085
-	 2Ac1eEyv78+kHZlIq+HKZUAJ89zcdkk8zzhAQBTvkAx6YVkuQ+pPYlQoWm4lWNd4FuKqi
-	 UTUfKf3876HMfmeezWWrlW8Vsxx46BJIBJQ9rHMePPiV5SI2iGUwa1OPcah0k+i2Je9V9
-	 SIPUyv9pun3ZL+C1uRlTwjvdc6tri3F6WR1hhP8LBxVbDyrr3H/UgRm0ZrDjgUJXQCg==
+	t=1795016455;
+	b=4S+dWcMos0EwxrtlR+3DKc53mRrIYbqms5AuScR8HQ17r+g/REwZSfieel1Lw9x7woaw
+	 xSVuA1+J6TBAzva3paIgr21HIQlKdtwvPmR917mNzOMqs/Psqxe53TQu3geXbWB6yTgJF
+	 fM/vU4i3rSxiVTS7kPJqFok0LKqNiRmtspWJokzTA9ZSA3XS6HVje2ePXZY1MhQFWj2xV
+	 Rw3Az1DWABV10g2fW9j4au6drFCFKwPcfZGcw3qvRvwzlYXk2897EZ0C4jFfSY5rSz4Aa
+	 fCfUTR+zzGgYuV5NWCtBtW1171Zx+VvGBj5UFlJOnHUcG+4cHT2jl9IkOT7zd44e9XQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016452;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016455;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tn6AGaWQQhpmXzYXdtn6AWxjqvnJe+LqWsOG6pddehI=;
-	b=tghrOs6DMqu7EqI+5J4gCZsWnRRAJ89b3ot+tUm+XX3aYkXvnatrn4HWiu5Xg4p7VFPs
-	 yTru9l0WHwsxwopZVnTcX25xxfv1y1wat0F9aZjEnX6CwC5fy7QXCdOxZOwLasy3M0yAX
-	 GcyuxopST4RJy+64VxtAuR8JxCe5q2WFVop7A1BqSqIz6mizmq18V1VB3J9SHty1L4UST
-	 bJ46iESYPpZwG+1ecC7ptZAOrvl8skud2OIhdddLmnKcdXvdHZZXvORapyj5lqJT6NcKx
-	 sAa27CLw+Abh1fwmWo5Rl9yfAnu/t5wNDDiGxqtGAi1IqqS9cpVhRa5q206x5FRv7+w==
+	bh=yMgvpw03cs2ouN/HJZcIKTydOzhni5F0MGru2EaqFkE=;
+	b=cKCwZAUcsX+JfnfCZrRiriMBe0dqb80y6Pyhu+g/8BsrtYwpvFwG5IwYyyFh6czY1C+w
+	 FzUUVyuiRw6BVDpss11JBvjsuPHC/bJ0ftH8kCm7P7P7e7L4vNZOBDmUoUZ6LgKZmgDJD
+	 EWxVl1EbxksJrgNy9VfVOtesC9MG9zlBw3xlA6ackW+KpUaFiaFLpQXlDMfqAPw5KG9F9
+	 suE7FfBrJ2DiHWDHVo8U5Qca0XhUhm8xzM5K7F7kRY24S41pLXUvhYP83vHxgd7vieLpS
+	 Npwkel4PUzkacX58M+C9fy4Dw9BX8SDACvZQ3wE1n66r9Ybi2dNpgfbDzY/FOhau+ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1jsJtQ82;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LcoxFAT2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53300606A33B;
-	Wed, 18 Nov 2026 15:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDF1606A31C;
+	Wed, 18 Nov 2026 15:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1jsJtQ82
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3CCD1F000C4;
-	Wed, 18 Nov 2026 15:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LcoxFAT2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 786E51F000C4;
+	Wed, 18 Nov 2026 15:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016452;
-	bh=tn6AGaWQQhpmXzYXdtn6AWxjqvnJe+LqWsOG6pddehI=;
+	s=korg; t=1795016455;
+	bh=yMgvpw03cs2ouN/HJZcIKTydOzhni5F0MGru2EaqFkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1jsJtQ82f0l8/eQcckzo1rQH9YwXTuO+W9sJZrKeOun8nSkUSsIWAB5Mjql3LpY0y
-	 f/kHuy6zVT0Bunex/srW+2D/Z6X22gJZ7r8mf1Qa9q27+vGYZkQAYjks2hIG6vBXf5
-	 r1ZXOe6aR1jxPTrJP69VjvvqvzBg72P6gZJkl6RM=
+	b=LcoxFAT2TYoN6+f80CWJixH2qZ5AZtw71Z9R3PJjhcDxM8NGKxFG7SMP4a/gGF0bY
+	 JrLTFc1Dj3l3oLwCYfMx8LNS1z9jUHe3dBK217Fa9zUe1Ue5sqq0Wn+YWh6gAqCn1u
+	 kAbFF63MWS6b3ILdfWoSWPdRhP9Im9KnsMZz/tls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	bui duc phuc <phucduc.bui@gmail.com>,
+	Francesco Valla <francesco@valla.it>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0534/2651] ASoC: mediatek: mt8189: Validate TDM MCLK frequency
-Date: Wed, 18 Nov 2026 15:29:34 +0100
-Message-ID: <20261118150306.987673310@linuxfoundation.org>
+Subject: [PATCH 7.3 0535/2651] spi: virtio: fix max frequency setting
+Date: Wed, 18 Nov 2026 15:29:35 +0100
+Message-ID: <20261118150307.021243693@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,37 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Francesco Valla <francesco@valla.it>
 
-[ Upstream commit 197ec30e1b608ade5d2eb9271d01c59480a6f9a1 ]
+[ Upstream commit 26f42ca8becd01877e762916865a168c1b6c4ff4 ]
 
-mtk_dai_tdm_cal_mclk() accepts zero or negative frequencies.
-Reject invalid frequencies before configuring the TDM clock.
+The maximum transfer frequency is read from the virtio config space but
+never propagated to the SPI framework logic. Fix this behavior and drop
+the useless setting copy from the driver's private data.
 
-Fixes: 9f202872ba04 ("ASoC: mediatek: mt8189: support TDM in platform driver")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260916050020.14575-13-phucduc.bui@gmail.com
+Fixes: f98cabe3f6cf ("SPI: Add virtio SPI driver")
+Signed-off-by: Francesco Valla <francesco@valla.it>
+Link: https://patch.msgid.link/20260915-virtio-spi-fix2-v1-1-7a474cb1b13b@valla.it
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8189/mt8189-dai-tdm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spi-virtio.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8189/mt8189-dai-tdm.c b/sound/soc/mediatek/mt8189/mt8189-dai-tdm.c
-index 9aebd0320614e..e113c52fe06a9 100644
---- a/sound/soc/mediatek/mt8189/mt8189-dai-tdm.c
-+++ b/sound/soc/mediatek/mt8189/mt8189-dai-tdm.c
-@@ -383,6 +383,9 @@ static int mtk_dai_tdm_cal_mclk(struct mtk_base_afe *afe,
- 	int apll;
- 	int apll_rate;
+diff --git a/drivers/spi/spi-virtio.c b/drivers/spi/spi-virtio.c
+index 3e181bd8bc94b..96cdaf1b3697b 100644
+--- a/drivers/spi/spi-virtio.c
++++ b/drivers/spi/spi-virtio.c
+@@ -33,8 +33,6 @@ struct virtio_spi_priv {
+ 	struct virtqueue *vq;
+ 	/* Copy of config space mode_func_supported */
+ 	u32 mode_func_supported;
+-	/* Copy of config space max_freq_hz */
+-	u32 max_freq_hz;
+ };
  
-+	if (freq <= 0)
-+		return -EINVAL;
-+
- 	apll = mt8189_get_apll_by_rate(afe, freq);
- 	apll_rate = mt8189_get_apll_rate(afe, apll);
+ static void virtio_spi_msg_done(struct virtqueue *vq)
+@@ -304,7 +302,7 @@ static void virtio_spi_read_config(struct virtio_device *vdev)
+ 		virtio_cread32(vdev, offsetof(struct virtio_spi_config,
+ 					      bits_per_word_mask));
  
+-	priv->max_freq_hz =
++	ctrl->max_speed_hz =
+ 		virtio_cread32(vdev, offsetof(struct virtio_spi_config,
+ 					      max_freq_hz));
+ }
 -- 
 2.53.0
 
