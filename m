@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055906;
-	b=NLpXLUIsKw2vUZdrPNHaFAH2TbntyG4H/ejwY/wtAjzOjwSUJGH8stxEMYFFNIPUXNrt
-	 LDMbot2/MQU2CwkX360YFgp1/imEi5sP6LY5+1XtGXqs5hI11jORfhi8BiylKN+NrXzqe
-	 wHAVhh3CV7jduUQWq0wIIJSZUtsDwCEjJwn1m4EqygYK9uu9IDGhZlWzkfrDiwDA/ni6S
-	 BHFGkMeSNBnjTgYQRj496DJ9VfhLXUJoKu/0JPh/PBP7mhe2DeBrQKGC6LnJCNF/hyw7P
-	 ZJsIZveFFKvYnwOPSEHEeolopMm2JIKUTfy2gJmdYao3m00nJuLTLEP6ehwDJxz1FmA==
+	t=1795055909;
+	b=OHI6txvWuw3uyNXE1xHM+OO5EOjjbHOE6RDuyTaF+/kA+HOLuZT5EHFxp6UyKZ63Woye
+	 oP4ag9IJdTT0pxQGt4TBxLjCBUIiwSW0x+uvTUqpO7sdyNs6BPHlfKo26JILzyyR7b8Nu
+	 iz3ymtiE3ew97ea3pmgSL+jKDqsNlVnUyouCxUxQNBcIT2YaJLYSBkUfPPH8mZK2Vkhrf
+	 TKUSF2dDcfFmSpp8+GLBRq8qK3FMGjeJUkvVR4aJHNt0wheG+QEmLIs6/L7/9lihhQplI
+	 PNHtMMT5EZivOaHh8e4XdaB0agtbK2eWQhzbHmBppTJKkOu6H66xBPwlY4GLekqYikQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055906;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055909;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ed7N/qW8PMFIueRbwh4Qa2vmnbgRvCbLYIWCoD8Mhuo=;
-	b=cYJhX92Ln2cpHARmL2HjezeFOhJSGpxOjYduKyPamUr/68MKREXPXHGWwHeMT8+K9oMG
-	 NwCd1Lw4Sjq6t2FRjf3EPU95HCblSwX7ljdu1ZWupn7abLPMDyefqzofmE9pNvIjlM8GK
-	 gnim3LUmQJAB7DSCIfN5ydJxQbjUpD9RQ9LG1xLyet5gVoqOoOwIt9geooEUlZFlDm8xL
-	 wUUMsbPF6Trl1RorLZFCEc0DsvdW0e28etkJtOkFk1tNned1bYUH8mFEGXkEO+bHEUJPA
-	 5YhGdAKuTSXfoHHTOF7WuAljuq38YyL5k0lPE/5px1ElLhOJRKtwPqMAGfvqpKnu/9Q==
+	bh=fxoR8DBe6+OaFW489dB+gJvfJn9viP6u4CsknIFsOWA=;
+	b=NLnqzdQuZM3hLstJjHTsSyGvAcxQunEFBKtnrvXMcbffTd/Or4scY74lpKpGxkTI0DXH
+	 HWSQYtfczD8aB5IwLSDYCqRzauBh4KuzmNylWgFtX3v9ZduK6M0GoyK5l6K0EMAjXvcq/
+	 QSXCQ3AWN5IZ8JiCZhiRqyhKX5RXRdXoAmnxRc3d9T4RJOaeYQ8JwfFg2yri0+m56gW62
+	 PrqbY9mdli5f3fEvWOSRmP2nvsEkz5cWNh2IUy+F1Mx2XHaMCNwn6o8ykolP86iPVHsx7
+	 vmvQTlgYcNkTsauHPHCur5+Eku/W6PYr78v/YlyzhCxDCd38xc3j/uub2HCGFhETyBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GXLq7vH3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rtoxEXhO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D02606A32A;
-	Thu, 19 Nov 2026 02:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B14606A31C;
+	Thu, 19 Nov 2026 02:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GXLq7vH3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E841F000C4;
-	Thu, 19 Nov 2026 02:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rtoxEXhO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892271F000C4;
+	Thu, 19 Nov 2026 02:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055906;
-	bh=Ed7N/qW8PMFIueRbwh4Qa2vmnbgRvCbLYIWCoD8Mhuo=;
+	s=korg; t=1795055909;
+	bh=fxoR8DBe6+OaFW489dB+gJvfJn9viP6u4CsknIFsOWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GXLq7vH3FCnGucyNiaGYyg8ms6B+PczgHJl9cT9vRqleJe73RneU3eGg1YdjeNQqQ
-	 +2fOWSQs5CyClBQb/7MexYLGcph9+gu/bEQQq3pPHaUIZ8kq91yj1yOq/33xzpFq71
-	 Qfugoz2K+iQZJLzN1Owl1xCPb0n+vtOy+R3TGJwo=
+	b=rtoxEXhO+m1+0s2BRq1ySQ4UbOkaJvXH+WVJw1cFvThOeZdkVFojarJKeSWw8gequ
+	 ndc3Hq4qTeT+v9V3qMwy9yYouapIAWRpgMX0U1dcWOAs+VrlnvCGw/qcnQt481lxtl
+	 nCIcQ3MxURJTyEo5QWcOti+7aPr0edATJrUjSIok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ting-Han Hou <ue081723@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	sashiko-bot@kernel.org,
+	Frank Li <Frank.Li@nxp.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1798/2214] checkkconfigsymbols.py: Parse Git status output line by line
-Date: Wed, 18 Nov 2026 15:57:54 +0100
-Message-ID: <20261118150123.427665721@linuxfoundation.org>
+Subject: [PATCH 5.15 1772/2214] dmaengine: ste_dma40: Validate fixed physical channel indexes
+Date: Wed, 18 Nov 2026 15:57:28 +0100
+Message-ID: <20261118150122.398874671@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,45 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ting-Han Hou <ue081723@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 72a61a7fef954152abd9df9def4f94816eb344ca ]
+[ Upstream commit 884e01160bc727509b4fdf04e763a86b936df464 ]
 
-tree_is_dirty() iterates over the string returned by execute() one
-character at a time. Its status check therefore examines filenames as
-well as the two status columns.
+Fixed physical memcpy allocation uses dma_cfg.phy_channel directly as an
+index into phy_res when use_fixed_channel is set. d40_validate_conf()
+validates dev_type but not the fixed physical channel, allowing an invalid
+configuration to access memory outside the array.
 
-An otherwise clean tree containing an untracked README is reported as
-dirty because its name contains letters matched by [URMADC]. This
-prevents --commit and --diff from running, whereas an untracked
-notes.txt does not trigger the check.
+Validate the fixed physical channel centrally before accepting the channel
+configuration.
 
-Split the output into lines before examining the two status columns so
-that filenames do not affect the dirty-tree check.
-
-Fixes: b1a3f243485f ("checkkconfigsymbols.py: make it Git aware")
+Fixes: f000df8c5a0e ("dmaengine: ste_dma40: support fixed physical channel allocation")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
 Assisted-by: LLM
-Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
-Link: https://patch.msgid.link/CA+NtrhQqXgjT+4eg6W4P94Hc=DqdV3gQXz3EKKCxWvdWzfND6A@mail.gmail.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-23-89f595e8851d@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/checkkconfigsymbols.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/ste_dma40.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/scripts/checkkconfigsymbols.py b/scripts/checkkconfigsymbols.py
-index 36c920e713137..9f7aed98d91c0 100755
---- a/scripts/checkkconfigsymbols.py
-+++ b/scripts/checkkconfigsymbols.py
-@@ -245,7 +245,7 @@ def tree_is_dirty():
-     """Return true if the current working tree is dirty (i.e., if any file has
-     been added, deleted, modified, renamed or copied but not committed)."""
-     stdout = execute(["git", "status", "--porcelain"])
--    for line in stdout:
-+    for line in stdout.splitlines():
-         if re.findall(r"[URMADC]{1}", line[:2]):
-             return True
-     return False
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index 86265890f10be..923a0a1b01666 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -1774,6 +1774,14 @@ static int d40_validate_conf(struct d40_chan *d40c,
+ 		res = -EINVAL;
+ 	}
+ 
++	if (conf->use_fixed_channel &&
++	    (conf->phy_channel < 0 ||
++	     conf->phy_channel >= d40c->base->num_phy_chans)) {
++		chan_err(d40c, "Invalid physical channel (%d)\n",
++			 conf->phy_channel);
++		res = -EINVAL;
++	}
++
+ 	if (conf->dir == DMA_DEV_TO_DEV) {
+ 		/*
+ 		 * DMAC HW supports it. Will be added to this driver,
 -- 
 2.53.0
 
