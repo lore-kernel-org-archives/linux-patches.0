@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057783;
-	b=u2diONFN1jP/dHhH151igb95rTq/GzgcXoJTj9runiVhGctvNllHV2JCcv4qhRTBzVZB
-	 BPFWNa/7XakV1rvE+RrZhZlv1FbL5O58oXgHxwgOHwabqfqfWY5XEi172HV1EPaxoOvjU
-	 Vg5/pup/G4QxNR3s8ctXXdpgJfpnOtU/gpnwXH6wISaqoJS1YQd5leFxKzf1Vnw68YpRP
-	 IntRe2deNuUgGLhYkFRDNb6okTSKwqIa/IRkdZfCOKWjI/ZtYxzcpMFOcWdYQyPRPNbtn
-	 w9ssKYvYxQjuUi7Om3nZlibXAE83U9MkwUj0F/jpl8xw6LgK9d/PO5K1FX4QezZn4YQ==
+	t=1795057785;
+	b=yJP2XlUQJO9F2zTS9gvLuejhwtoklN0VsDqPLiOI89yt8yEADoI5fTDnZpeXIFfTDBEt
+	 OWCjDA86lVosRQ6J+xYX8d6w/8W4/lH7dOdmlCJmKTGK1hvzDxllICeao9AfKs8s2Mh/p
+	 Aw3nqrZIowJuXZ1E8/xbCSMynzUE/r2BRpZn1MRcVREfARw/q1JvJaOCx6TS2OTpsYESs
+	 alDEiN2UVA9tIkhxOoMu9K38nZhR980rPuo677nHdteT8hI1OCp0PrJbRIh+EhYj1Zs7b
+	 e4F4M1PmbLBPMJsHfe6iA112tptuw7oMjL7pswDp6q3h6kPpCcyb85xhFYpqpUqtbZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057783;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057785;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eeADiqY/BG0CJPO8RK5dcdOe0a2fT2DswgPz1N71xBE=;
-	b=a5wEXtvcnY4unKgaoOnBlHIjiFFHa85W6MgFb1BCgcNnmpzX/XK3iMAm97viJKjpw3Vt
-	 ZjLv1CIE2RsX4ZKqGs+McPdIj0736gKZwBUda2cQ5ohoy0PZNiIzatYgC5KpoILOJ1kqX
-	 j2bTQ6AYm0PoZCkb7hV4kb2eaEeY+EmwDpQZIsT5Sq0Avv3+kUmk30Wkx2BXkL77GxcoA
-	 s0YhxCFTwpf7c288aOVTEPynidbg5x9BQo3y6tpIKEDslRTj/NQ+eTRnP4YGwGwqDMMKv
-	 vCqXny9FeC+2bvykjkPyKYsPFXEZxOksCunwi+Rm9KafeAVVXtn3YJkjUlj1EpQ/jDg==
+	bh=TAW3wxQa52Gsgz5IhGbhCBo9Gnnf1DQlirPBNb4+Ig4=;
+	b=bMVYGM4Lf6DwhzzmXo+jPZIrPJKpVMsyws6k0NL4lvOdbeVXtCsF3Fdorn07p16vyuPA
+	 0rAVsFkiTPc1BvCCRIT0BKiyf3lD/sixn1HZ6W2AtYCI+P2juY/QLjBl7Aq0eIWXkwXD+
+	 d4pVt4Ot9UhYJkWdVsSmt2AC4+JH+YJE8+LBbOCe8XQNWYYg8rumFofEHrEjzM1Zi6yo4
+	 SZNH0lBQwEhGErk2vVkzc7KgwcUpHizxA0zyxT/dm+cVLMUa4pjoQ3NMsJJpkwLgk2Ez+
+	 f0IaMWqy3H7LcPR7nNPC0PKD+f09REi7vYpHXZTHsn8x9JI6fB6nP4QbN881V+ZvyVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0gVzbAR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kXW4FhAI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F56606A325;
-	Thu, 19 Nov 2026 03:09:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31AB606A31C;
+	Thu, 19 Nov 2026 03:09:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0gVzbAR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F731F000C4;
-	Thu, 19 Nov 2026 03:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kXW4FhAI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F381F000C4;
+	Thu, 19 Nov 2026 03:09:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057782;
-	bh=eeADiqY/BG0CJPO8RK5dcdOe0a2fT2DswgPz1N71xBE=;
+	s=korg; t=1795057785;
+	bh=TAW3wxQa52Gsgz5IhGbhCBo9Gnnf1DQlirPBNb4+Ig4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B0gVzbARvGeCQB+byc58P1klIzFQFZRDAAsMFqKjjGKNmapa9IRm7JwhPOGpbqWWd
-	 w/Gdgmu7gHGSULfLNtOWWcgjJvX0hzeAThEsZrBdzFkA77DUxCn1QEcByyG+Dsfueu
-	 NsltsftOQvt2DN7xf4k1L0FGNR3jhKKv4lKuWWIw=
+	b=kXW4FhAIj58Rzju9qV53CdBzX2mTyRZ4wYQHi4v9lp/A+jQU87Dio0tPDwJBNTGsI
+	 7mf+BXxS0Da0Gp/+SHRHN52EKCJ00nHAyTFUf3I7zsl/oEqGRLdNpyd4Tn20FirrXg
+	 kShB23BOFzL/EL/NOitQHCZCazKo/BfL+3QmYVsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+ed9902f2e44184d9@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 0251/1848] fbdev: udlfb: dont rebuild the mode list while the framebuffer is in use
-Date: Wed, 18 Nov 2026 15:38:09 +0100
-Message-ID: <20261118145922.521075892@linuxfoundation.org>
+	syzbot+563191a4939ddbfe73d4@syzkaller.appspotmail.com,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 5.10 0252/1848] HID: hiddev: keep state alive through disconnect unlock
+Date: Wed, 18 Nov 2026 15:38:10 +0100
+Message-ID: <20261118145922.608131276@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,71 +68,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-commit ac9cfa552102b8e80e88c2872e80dc9cb5f07dda upstream.
+commit 03f449b5de36a25fc5eba7dabf2b4494389bdb91 upstream.
 
-dlfb_setup_modes() frees info->modelist with fb_destroy_modelist() and
-rebuilds it, but fbcon holds raw pointers into that list in
-fb_display[i].mode and nothing un-publishes them the way
-do_unregister_framebuffer() and store_modes() do with
-fbcon_delete_modelist(). The function does refuse to install a new mode
-while the framebuffer has users (dlfb->fb_count != 0), but only after the
-list is already destroyed. Reached from the 0666 "edid" sysfs attribute,
-an unprivileged write to /sys/class/graphics/fb0/edid therefore fails with
--EINVAL and still leaves every fb_display[i].mode dangling; the next
-console switch reads the freed fb_videomode in fb_videomode_to_var().
+mutex_unlock() clears the mutex owner before taking its wait lock. A
+thread spinning in the final hiddev file release can acquire
+existancelock after hiddev_disconnect() clears the owner, then free
+hiddev before the disconnecting thread reaches the mutex wait lock. This
+causes a use-after-free in the mutex slow unlock path.
 
-Test fb_count before touching the list. fbcon takes a reference through
-fbcon_open(), so that condition covers exactly the states in which
-fb_display[] points into the list, and the errno returned to userspace is
-unchanged.
+Give the connection and each open file an explicit reference. Drop each
+reference only after its existancelock critical section has completed,
+so neither unlock path can free the mutex while the other is still using
+it.
 
-  BUG: KASAN: slab-use-after-free in fb_videomode_to_var (drivers/video/fbdev/core/modedb.c:905)
-  Read of size 4 at addr ffff8880107b449c by task kworker/1:1/47
-  Workqueue: events console_callback
-  Call Trace:
-   fb_videomode_to_var (drivers/video/fbdev/core/modedb.c:905)
-   display_to_var (drivers/video/fbdev/core/fbcon.c:998)
-   fbcon_switch (drivers/video/fbdev/core/fbcon.c:2182)
-   redraw_screen (drivers/tty/vt/vt.c:994)
-   complete_change_console (drivers/tty/vt/vt_ioctl.c:1141)
-   console_callback (drivers/tty/vt/vt.c:3358)
-   process_one_work (kernel/workqueue.c:3396)
-   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-  ...
-  The buggy address is located 28 bytes inside of
-   freed 96-byte region [ffff8880107b4480, ffff8880107b44e0)
-
+Fixes: 079034073faf ("HID: hiddev cleanup -- handle all error conditions properly")
+Reported-by: syzbot+563191a4939ddbfe73d4@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=563191a4939ddbfe73d4
 Cc: stable@vger.kernel.org
-Fixes: 7d9485e2c53c ("Staging: udlfb: Add functions to expose sysfs metrics and controls")
-Reported-by: co+ed9902f2e44184d9@bugs.sh
-Closes: https://lore.kernel.org/all/1jSCSNaDKmuUG7h40rTsSl1rMaSwdlJef4rp%40bugs.sh/
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://lore.kernel.org/all/1jSCSNaDKmuUG7h40rTsSl1rMaSwdlJef4rp%40bugs.sh/
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Link: https://syzkaller.appspot.com/bug?extid=563191a4939ddbfe73d4
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/udlfb.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/hid/usbhid/hiddev.c |   37 +++++++++++++++++++------------------
+ include/linux/hiddev.h      |    2 ++
+ 2 files changed, 21 insertions(+), 18 deletions(-)
 
---- a/drivers/video/fbdev/udlfb.c
-+++ b/drivers/video/fbdev/udlfb.c
-@@ -1335,6 +1335,11 @@ static int dlfb_setup_modes(struct dlfb_
- 		goto error;
+--- a/drivers/hid/usbhid/hiddev.c
++++ b/drivers/hid/usbhid/hiddev.c
+@@ -46,6 +46,12 @@ struct hiddev_list {
+ 	struct mutex thread_lock;
+ };
+ 
++static void hiddev_put(struct hiddev *hiddev)
++{
++	if (refcount_dec_and_test(&hiddev->refcount))
++		kfree(hiddev);
++}
++
+ /*
+  * Find a report, given the report's type and ID.  The ID can be specified
+  * indirectly by REPORT_ID_FIRST (which returns the first report of the given
+@@ -216,26 +222,21 @@ static int hiddev_fasync(int fd, struct
+ static int hiddev_release(struct inode * inode, struct file * file)
+ {
+ 	struct hiddev_list *list = file->private_data;
++	struct hiddev *hiddev = list->hiddev;
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&list->hiddev->list_lock, flags);
++	spin_lock_irqsave(&hiddev->list_lock, flags);
+ 	list_del(&list->node);
+-	spin_unlock_irqrestore(&list->hiddev->list_lock, flags);
++	spin_unlock_irqrestore(&hiddev->list_lock, flags);
+ 
+-	mutex_lock(&list->hiddev->existancelock);
+-	if (!--list->hiddev->open) {
+-		if (list->hiddev->exist) {
+-			hid_hw_close(list->hiddev->hid);
+-			hid_hw_power(list->hiddev->hid, PM_HINT_NORMAL);
+-		} else {
+-			mutex_unlock(&list->hiddev->existancelock);
+-			kfree(list->hiddev);
+-			vfree(list);
+-			return 0;
+-		}
++	mutex_lock(&hiddev->existancelock);
++	if (!--hiddev->open && hiddev->exist) {
++		hid_hw_close(hiddev->hid);
++		hid_hw_power(hiddev->hid, PM_HINT_NORMAL);
  	}
  
-+	if (dlfb->fb_count) {
-+		result = -EINVAL;
-+		goto error;
-+	}
-+
- 	fb_destroy_modelist(&info->modelist);
- 	memset(&info->monspecs, 0, sizeof(info->monspecs));
+-	mutex_unlock(&list->hiddev->existancelock);
++	mutex_unlock(&hiddev->existancelock);
++	hiddev_put(hiddev);
+ 	vfree(list);
  
+ 	return 0;
+@@ -270,6 +271,7 @@ static int __hiddev_open(struct hiddev *
+ 	spin_unlock_irq(&hiddev->list_lock);
+ 
+ 	file->private_data = list;
++	refcount_inc(&hiddev->refcount);
+ 
+ 	return 0;
+ 
+@@ -897,6 +899,7 @@ int hiddev_connect(struct hid_device *hi
+ 	INIT_LIST_HEAD(&hiddev->list);
+ 	spin_lock_init(&hiddev->list_lock);
+ 	mutex_init(&hiddev->existancelock);
++	refcount_set(&hiddev->refcount, 1);
+ 	hid->hiddev = hiddev;
+ 	hiddev->hid = hid;
+ 	hiddev->exist = 1;
+@@ -937,9 +940,7 @@ void hiddev_disconnect(struct hid_device
+ 	if (hiddev->open) {
+ 		hid_hw_close(hiddev->hid);
+ 		wake_up_interruptible(&hiddev->wait);
+-		mutex_unlock(&hiddev->existancelock);
+-	} else {
+-		mutex_unlock(&hiddev->existancelock);
+-		kfree(hiddev);
+ 	}
++	mutex_unlock(&hiddev->existancelock);
++	hiddev_put(hiddev);
+ }
+--- a/include/linux/hiddev.h
++++ b/include/linux/hiddev.h
+@@ -13,6 +13,7 @@
+ #ifndef _HIDDEV_H
+ #define _HIDDEV_H
+ 
++#include <linux/refcount.h>
+ #include <uapi/linux/hiddev.h>
+ 
+ 
+@@ -24,6 +25,7 @@ struct hiddev {
+ 	int minor;
+ 	int exist;
+ 	int open;
++	refcount_t refcount;
+ 	struct mutex existancelock;
+ 	wait_queue_head_t wait;
+ 	struct hid_device *hid;
 
 
