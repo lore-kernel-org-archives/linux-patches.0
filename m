@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054921;
-	b=PReTJMkFT7TDK7HTi6UTbotdo1JIhCoKi1amGkK68X0yRFXoWKU3NIjnhdoPcQyDGWfm
-	 oFHZ4kCQe8tGQc6Nah3ko7GPWW3ALPVIz+1yi8/+Db8yjEUAtbysWBsFxo4QDpq1h/BS0
-	 QjuZ20U6KsP24hlgL9ndURIq31fiL9thZiiG+k1wLBhjEqQtLAtDx2a1YgNh9mI+Cj9+Q
-	 FX/im0hiGFO7Hpp81/QsIQZqqNFpZEJOMFsNNYpGi5Q7IR7SSkQ8OsASxN0Gf/bdO61bg
-	 1VxfNzltijhQd86OFve7vfwY9cgIpA9EAy8f8/xb7pGEGLMpWr0fEBmQFIE0+G4/pbw==
+	t=1795054924;
+	b=1F2X7rfwSgE2nMugJi3NkngzorVivRily4U5Riyv78pA36kRfL+m7bT+CN1G7ao1vFL+
+	 OmwJzdWloyUB73nEoivbwQmXt/h5Jn4HWzEsmn7uv0T12V1f7nOYdlCrdG7K5xzGZIBEM
+	 I1dWSNnJ+ZtzKCLP7siL9zDsJ25nsODqTPbjKRRfeGUwMxVAu0RdryrweEn5FaBB1j42R
+	 2a7Aoir0Q7t2R9XRrupLaoVEOnSYyl3Y/fFFe2NYpkI6jOgK3q7l9YzlzethhIl+60qhR
+	 a1qsxy2ZBTu/yn5I14MLKfRv3zZRTGL276AUtJhL51l3kjFKfDcsi+XPh8XjTkIycPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054921;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054924;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=767mfmFBc/1YbHhoEYfPOMPHTtRtqiRuui2Ey3dzFys=;
-	b=r1aKOH1SkAexkMgYLIqgKdjol9orfT60GRG2sbJVxokCvGOLNUXv01PvLb7TP73BrRDC
-	 hXOBUhSduj5YPqZWkoly9/3jL1WaK3rCEmtOjVsrOSwMZBuKEos4Yn7pku8yYlYsWWLiC
-	 E/BePn6psL4NHPivkX2EByRFqpTmG0UGUZtpmnSDGUwm3EvJR/PpZ/hAN5Jk6Uh0+Lioc
-	 VpVlBNZuth+++TbwOl3bEFvy2Lj+RL3yHWPhNcUwYT8ewd43ZteiVlz+pnz1FMa2lSUjG
-	 o7j2T8IwNLU8Tg1S7QsDbL1yMhuARxfgErU38Lizme6enBT9/SWiz0pftEFG26xAN0Q==
+	bh=oolTqO3mg7pSp14u9YTKEf73Pnq9ajJQdpNsjMjN8/M=;
+	b=CIkR0p5ye4wqW+aEDxZaxIx3IPvac/er8+rVI4Ro3Jo/O5YTHH6ujEYh9+BAVfhMaDKh
+	 onbYBFSi95GadaG599/L6QlxGNlnW0KywVL9s2vZIy4l8uUUpdAMaVyp+nrP6bzPrdIqp
+	 420ZIw2RyP6vh3U/lco5w8TPzgYuujhbOwYNDxpNComQpu4awWG0/qfeJAtIxbk/VrJ9c
+	 alRegbbbo3aucwMOSOfXEUh67GDYFBS+yU/agj4VG1OuDs0hbhdsEhgiKNnmrHVOcycZ6
+	 FOd+V3w2ouRzNm2QFKAknMim+XOWPXOA+kqzhsRobxOA1dXIpANaznXyKlsj0TNTH2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cb5ERn8b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w1jLchme;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CCA606A320;
-	Thu, 19 Nov 2026 02:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED3C606A32A;
+	Thu, 19 Nov 2026 02:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cb5ERn8b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C347C1F000C4;
-	Thu, 19 Nov 2026 02:22:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w1jLchme
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851071F000C4;
+	Thu, 19 Nov 2026 02:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054921;
-	bh=767mfmFBc/1YbHhoEYfPOMPHTtRtqiRuui2Ey3dzFys=;
+	s=korg; t=1795054924;
+	bh=oolTqO3mg7pSp14u9YTKEf73Pnq9ajJQdpNsjMjN8/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cb5ERn8bD8MXOxYn1O9Q8SvPqcaiSaANuRL7yRWEvyVaVl8hs7dC4a2FQrJy+8QbZ
-	 yp0zN19bvGegLaw0eY08cdNu/QsynzthcJag34ODo8omVYiEjGe1NfmWN992hHSiWk
-	 pXkhn7JejzL7lyBDtWwiX2RNaqusIrJ7KhifwnQo=
+	b=w1jLchmeMhHAmMSuGpQ+E1nE/Sy2NdnlZBods9cs3M0DhGIh2yBCthRFUqS9GyLRZ
+	 0vHAgmnDU4dakmyxapg120IaFE4CwWYN+k6SdobhmF6fQN4kbAW1ldqNiHuRGipLyx
+	 tS4bWO1AcMPg71zohZYDGKXsLukff0j/Nqp8I+lU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5f4b29d9fe710a964482@syzkaller.appspotmail.com,
-	"Jiangong.Han" <jiangong.han@windriver.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1447/2214] USB: usbmon: fix null-ptr-deref in mon_bus_remove() when mon_bus_init() fails
-Date: Wed, 18 Nov 2026 15:52:03 +0100
-Message-ID: <20261118150108.992739539@linuxfoundation.org>
+Subject: [PATCH 5.15 1421/2214] wifi: ath11k: fix locking problem in ath11k_dp_rx_tid_del_func()
+Date: Wed, 18 Nov 2026 15:51:37 +0100
+Message-ID: <20261118150108.058287111@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,48 +70,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangong.Han <jiangong.han@windriver.com>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-[ Upstream commit 0c6cae0f56239e3274b30dbe5b362cd297ccacc7 ]
+[ Upstream commit c7555d47b1d051e0406474349deccf74b491ae01 ]
 
-When mon_bus_init() fails to allocate the mon_bus struct, it returns
-without setting ubus->mon_bus, so mbus->mon_bus remains NULL.
-mon_bus_add() intentionally ignores this failure because the USB core
-does not require monitoring to be established for normal operation.
-However, when the HCD is later removed, usb_remove_hcd() fires the
-USB_BUS_REMOVE notifier which calls mon_bus_remove(), it dereferences
-ubus->mon_bus without checking for NULL, causing a null-ptr deference.
+In this function, we iterate over dp->reo_cmd_cache_flush_list using
+list_for_each_entry_safe(), under dp->reo_cmd_lock for concurrent access,
+and for each expired entries we :
+  - drop the lock
+  - call ath11k_dp_reo_cache_flush()
+  - kfree() the entry
+  - retake the lock to keep on iterating
 
-Fix this by adding a NULL check for mbus at the top of mon_bus_remove().
-If mon_bus_init() failed, ubus->mon_bus is NULL, meaning the bus was
-never tracked by the monitor, so there is nothing to clean up and
-returning early is correct.
+list_for_each_entry_safe() protects us from deleting the entry during
+iteration but doesn't protect for concurrent access. So another thread can
+take the lock and modify the list in between and crash like below.
 
-Reported-by: syzbot+5f4b29d9fe710a964482@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5f4b29d9fe710a964482
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jiangong.Han <jiangong.han@windriver.com>
-Link: https://patch.msgid.link/20260801095128.46322-1-jiangong.han@windriver.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To fix the issue, move all entries that needs to be freed to a local list
+while under the lock and then iterate over the list to free the entries
+without holding the lock.
+
+	BUG: Unable to handle kernel paging request at virtual address 00000010ddbeef8c
+	Call trace:
+	ath11k_dp_rx_tid_del_func+0x164/0x3c8
+	ath11k_dp_process_reo_status+0x1d4/0x2fc
+	ath11k_dp_service_srng+0x334/0x338
+	ath11k_pcic_ext_grp_napi_poll+0x30/0xc0
+	__napi_poll+0x34/0x184
+	napi_threaded_poll+0xb4/0x1d8
+	kthread+0xdc/0xe0
+	ret_from_fork+0x10/0x20
+
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.9.0.1-01977-QCAHKSWPL_SILICONZ-1
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Suggested-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260813-ath11k-locking-v2-1-f4113a0bd0f4@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/mon/mon_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/ath/ath11k/dp_rx.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/usb/mon/mon_main.c b/drivers/usb/mon/mon_main.c
-index 9812d102a005f..6882d8938a546 100644
---- a/drivers/usb/mon/mon_main.c
-+++ b/drivers/usb/mon/mon_main.c
-@@ -210,6 +210,9 @@ static void mon_bus_remove(struct usb_bus *ubus)
- {
- 	struct mon_bus *mbus = ubus->mon_bus;
- 
-+	if (mbus == NULL)
-+		return;
+diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
+index 193d63559b057..b37144193b441 100644
+--- a/drivers/net/wireless/ath/ath11k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
+@@ -737,6 +737,9 @@ static void ath11k_dp_rx_tid_del_func(struct ath11k_dp *dp, void *ctx,
+ 	struct ath11k_base *ab = dp->ab;
+ 	struct dp_rx_tid *rx_tid = ctx;
+ 	struct dp_reo_cache_flush_elem *elem, *tmp;
++	struct list_head flush_list;
 +
- 	mutex_lock(&mon_lock);
- 	list_del(&mbus->bus_link);
- 	if (mbus->text_inited)
++	INIT_LIST_HEAD(&flush_list);
+ 
+ 	if (status == HAL_REO_CMD_DRAIN) {
+ 		goto free_desc;
+@@ -758,23 +761,25 @@ static void ath11k_dp_rx_tid_del_func(struct ath11k_dp *dp, void *ctx,
+ 	list_add_tail(&elem->list, &dp->reo_cmd_cache_flush_list);
+ 	dp->reo_cmd_cache_flush_count++;
+ 
+-	/* Flush and invalidate aged REO desc from HW cache */
++	/* identify aged REO desc that needs removal */
+ 	list_for_each_entry_safe(elem, tmp, &dp->reo_cmd_cache_flush_list,
+ 				 list) {
+ 		if (dp->reo_cmd_cache_flush_count > DP_REO_DESC_FREE_THRESHOLD ||
+ 		    time_after(jiffies, elem->ts +
+ 			       msecs_to_jiffies(DP_REO_DESC_FREE_TIMEOUT_MS))) {
+-			list_del(&elem->list);
++			list_move_tail(&elem->list, &flush_list);
+ 			dp->reo_cmd_cache_flush_count--;
+-			spin_unlock_bh(&dp->reo_cmd_lock);
+-
+-			ath11k_dp_reo_cache_flush(ab, &elem->data);
+-			kfree(elem);
+-			spin_lock_bh(&dp->reo_cmd_lock);
+ 		}
+ 	}
+ 	spin_unlock_bh(&dp->reo_cmd_lock);
+ 
++	/* remove aged REO desc from HW */
++	list_for_each_entry_safe(elem, tmp, &flush_list, list) {
++		ath11k_dp_reo_cache_flush(ab, &elem->data);
++		list_del(&elem->list);
++		kfree(elem);
++	}
++
+ 	return;
+ free_desc:
+ 	dma_unmap_single(ab->dev, rx_tid->paddr, rx_tid->size,
 -- 
 2.53.0
 
