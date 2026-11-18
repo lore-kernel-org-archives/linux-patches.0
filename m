@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023364;
-	b=GaNe5I6hoseeEbwum4UVnCySFwyCd3pigaLXcP0JnTjjBc3BadVDly4kFRu7MpEVwbil
-	 iX9HStVen2j/V5Ms08JCpt6eYTpS1jM7b4tyvTKRSq+02GqiAqH+bXSuHO7thXp2WEl+9
-	 m2UR51JEFUwN9IhLysW/gB2kvzQoUXkfj7lHCMWmEMZ95dKJoFbO5npDIN8mJOxcLhMT0
-	 F7lfND0z2EXuytz/7LzQceFrlAXYRlpdq46ykL/kcQeR2wtg7Rqkkg2bA3A184THgMz92
-	 GtC+sZ3Q+zZagB0VemOWnZAEShHE6DWwfkNU8mDFTq8Y/K61NZkE18zEnBE2xPqF0CA==
+	t=1795023367;
+	b=1v5iRZzGdAqZ9WjADJH59qoAEzm0PvIqTpUovA+OweltFfmyfwNsdngYMXC0rtSFlnzw
+	 dSoXAx+hFyYWWDb+LLZvYiHvq0g80RgUH6Tclg6hfVsRHz1xonOAOe02LbLv9LrWL1LwT
+	 P7sLW/TJVCRuNNpxs22rc+Dc7lUfHRKKaWS0BUqs4vOebF/MypBhmOL1V0W4s3CK4GixQ
+	 xPqiBb+DakfYbysQiIumuFe2SdJxU4ZgP84RGMawBxPpmNSW5+Pj7AI/ZoTtZCwjldmOu
+	 J/lcoKHHHxyCly+uU9TWm5eFllaNBkLrWM9BXQYCkaGEwx+qBOlogA3O4GEdlbtG3tg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023364;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023367;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m6md5C1S5dzno0a7DxaradSwQJLZ2FwGa5nGLEMI310=;
-	b=RJc3UyEg7pXzbd7+HVoSh0ezFllWPYBqa/N09bcnMz+wD1pVdXdMBpjaNxa1VJHpHGAG
-	 C8oyN1T0c/VEo5l+aN+hCsT/a4UxHcACUU9xTRcdrKcp2qafiIzN6RjpehcJOA6Pbh/vE
-	 DequKyjiVGmd8ZfNbp4H7S2QqUgqxXJXMPyGYaAmvjnrUW2ep522X+++5YyRtX6rLLe8K
-	 i5CiMPnEB6z22qbFOSw6/gW9gZLfU2vk3iaIpYN73pSYU1DzOroNkG84nH5o51rQhrHmd
-	 CJQo2noKBfDq5xg2z631TDwniByKSCDOyhWOYCTNcy1YGdo/cFca75LcDy78hK4qTcw==
+	bh=Qx9Qi6H58voiZKUgQdNwF9Br0WFLohaasYPZkCdUlJ8=;
+	b=b/1fZERKwsbQOX3XDXaCaRE4FHDqovwRinnqNLOXlAnxCgr/Qmog5nwAUh/z0ScBBUBa
+	 8NrKE6TQKLARrZtVo5Q8QIQ6x58p6ARlBxa9+szECk7g1VrGbCIrEBPBhERe0gc1F1nMQ
+	 RYHFK/kSsWSNq+w7jVSTb2m7CK4xljur9D3KbEQnmibVmY5SQJztiLMUlBIToskqFzyqe
+	 0IMB003ZyrFflRYMx/2fEnh+VaVMyTB0ucP1WkMaEIyJbTgMsThlmQXrYWT1VjojzfQ9y
+	 rsqGFULN6p93YT/4V5MaGi4kSI2wmPfQsdNrKDVaSFyOrpo/h95wYIKcKQbnn+ZE1Sw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WOgYTXCp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wIjpB7+W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B012606CA47;
-	Wed, 18 Nov 2026 17:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647A3606CA58;
+	Wed, 18 Nov 2026 17:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WOgYTXCp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB46B1F000C4;
-	Wed, 18 Nov 2026 17:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wIjpB7+W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B59D71F000C6;
+	Wed, 18 Nov 2026 17:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023364;
-	bh=m6md5C1S5dzno0a7DxaradSwQJLZ2FwGa5nGLEMI310=;
+	s=korg; t=1795023367;
+	bh=Qx9Qi6H58voiZKUgQdNwF9Br0WFLohaasYPZkCdUlJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WOgYTXCpFxWrhT3znClVDkaoBTZTZgGk8Qyxtfy+a9r0dedQlvnwRbJKb3vKi3l0Q
-	 AvsZhB1grAyonvpwh1ecloxVS7NidyrgPXz6ZNjjel6XbOssnG4RiRkgFUbcl5IVh3
-	 i7QSiWyArUbzmhzZTfsovE4aDn1ygIA8iCQFD97E=
+	b=wIjpB7+W+p6QPZesbgVVOvImrXcgiYtzEhLNPK5C81HWSlsNnQxnnsudEDyUcfph8
+	 fsV6MuP1RO6FSItUE/ugHjX2KVEXJ/oRjqrZlVftxtzvG1fBrq/GHSrmthV2ys1e5H
+	 VefT9wU6p7ln3lFMijay802/vPO37MI9ZgJbqxiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Golla Nagendra <nagendra.golla@amd.com>,
+	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0300/2151] dmaengine: zynqmp_dma: Fix chan probe/remove error handling
-Date: Wed, 18 Nov 2026 15:33:55 +0100
-Message-ID: <20261118150132.845990070@linuxfoundation.org>
+Subject: [PATCH 6.18 0301/2151] dmaengine: dw-axi-dmac: convert clock handling to clk_bulk API
+Date: Wed, 18 Nov 2026 15:33:56 +0100
+Message-ID: <20261118150132.881094368@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,117 +69,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Golla Nagendra <nagendra.golla@amd.com>
+From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
 
-[ Upstream commit 0266dac57019201a14a81245d22750ab221d6c66 ]
+[ Upstream commit c843417e6d6b55e24318e2edf405566e70786d3b ]
 
-Keep the real platform_get_irq() error by returning ret directly, stage
-IRQ setup via a local ret variable, and assign chan->irq only after
-devm_request_irq() succeeds.
+The driver managed its two mandatory clocks (core-clk and cfgr-clk)
+individually. This was error prone: axi_dma_resume() enabled cfgr_clk
+and then core_clk, and if enabling core_clk failed it returned the
+error without disabling cfgr_clk, leaving the clock refcount
+unbalanced.
 
-Initialize chan->irq to -1 and initialize chan->common.device_node
-before it may be touched by teardown. In channel remove, free IRQ only
-for valid IRQ numbers and delete the channel node only when it is linked.
+Convert the driver to the clk_bulk API. The two clocks are always
+acquired, enabled and disabled together, so a clk_bulk_data array
+expresses this naturally and shrinks the get/enable/disable paths.
+clk_bulk_prepare_enable() also unwinds any clock it already enabled
+when a later one fails, which fixes the resume imbalance.
 
-Register the channel node only after successful IRQ setup. On channel
-probe failure in zynqmp_dma_probe(), route cleanup through the existing
-free_chan_resources teardown path.
-
-Fixes: b0cc417c1637 ("dmaengine: Add Xilinx zynqmp dma engine driver support")
-Signed-off-by: Golla Nagendra <nagendra.golla@amd.com>
+Fixes: 1fe20f1b8454 ("dmaengine: Introduce DW AXI DMAC driver")
+Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+Link: https://lore.kernel.org/all/20260813105432.2577322-1-nagachaithanya9911@gmail.com/
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260814045616.1661199-4-nagendra.golla@amd.com
+Link: https://patch.msgid.link/20260816054858.2667380-1-nagachaithanya9911@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/zynqmp_dma.c | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 28 ++++++++-----------
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  3 +-
+ 2 files changed, 13 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
-index 23e07d72a5225..59b5199a58a48 100644
---- a/drivers/dma/xilinx/zynqmp_dma.c
-+++ b/drivers/dma/xilinx/zynqmp_dma.c
-@@ -205,7 +205,7 @@ struct zynqmp_dma_desc_sw {
-  * @desc_pool_p: Physical allocated descriptor base
-  * @desc_free_cnt: Descriptor available count
-  * @dev: The dma device
-- * @irq: Channel IRQ
-+ * @irq: Linux IRQ number, or -1 when not registered
-  * @is_dmacoherent: Tells whether dma operations are coherent or not
-  * @tasklet: Cleanup work after irq
-  * @idle : Channel status;
-@@ -887,10 +887,11 @@ static void zynqmp_dma_chan_remove(struct zynqmp_dma_chan *chan)
- 	if (!chan)
- 		return;
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index 343d32eeaa29a..9772a4fdd85e8 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -1322,8 +1322,7 @@ static int axi_dma_suspend(struct axi_dma_chip *chip)
+ 	axi_dma_irq_disable(chip);
+ 	axi_dma_disable(chip);
  
--	if (chan->irq)
-+	if (chan->irq >= 0)
- 		devm_free_irq(chan->zdev->dev, chan->irq, chan);
- 	tasklet_kill(&chan->tasklet);
--	list_del(&chan->common.device_node);
-+	if (!list_empty(&chan->common.device_node))
-+		list_del(&chan->common.device_node);
- }
+-	clk_disable_unprepare(chip->core_clk);
+-	clk_disable_unprepare(chip->cfgr_clk);
++	clk_bulk_disable_unprepare(ARRAY_SIZE(chip->clks), chip->clks);
  
- /**
-@@ -906,13 +907,14 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
- 	struct zynqmp_dma_chan *chan;
- 	struct device_node *node = pdev->dev.of_node;
- 	const struct zynqmp_dma_config *match_data;
--	int err;
-+	int err, ret;
- 
- 	chan = devm_kzalloc(zdev->dev, sizeof(*chan), GFP_KERNEL);
- 	if (!chan)
- 		return -ENOMEM;
- 	chan->dev = zdev->dev;
- 	chan->zdev = zdev;
-+	chan->irq = -1;
- 
- 	chan->regs = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(chan->regs))
-@@ -945,22 +947,26 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
- 	INIT_LIST_HEAD(&chan->pending_list);
- 	INIT_LIST_HEAD(&chan->done_list);
- 	INIT_LIST_HEAD(&chan->free_list);
-+	INIT_LIST_HEAD(&chan->common.device_node);
- 
- 	dma_cookie_init(&chan->common);
- 	chan->common.device = &zdev->common;
--	list_add_tail(&chan->common.device_node, &zdev->common.channels);
--
- 	zynqmp_dma_init(chan);
--	chan->irq = platform_get_irq(pdev, 0);
--	if (chan->irq < 0)
--		return -ENXIO;
--	err = devm_request_irq(&pdev->dev, chan->irq, zynqmp_dma_irq_handler, 0,
-+	ret = platform_get_irq(pdev, 0);
-+	if (ret < 0)
-+		return ret;
-+
-+	err = devm_request_irq(&pdev->dev, ret, zynqmp_dma_irq_handler, 0,
- 			       "zynqmp-dma", chan);
- 	if (err)
- 		return err;
- 
-+	chan->irq = ret;
-+
- 	chan->desc_size = sizeof(struct zynqmp_dma_desc_ll);
- 	chan->idle = true;
-+	list_add_tail(&chan->common.device_node, &zdev->common.channels);
-+
  	return 0;
  }
+@@ -1332,11 +1331,7 @@ static int axi_dma_resume(struct axi_dma_chip *chip)
+ {
+ 	int ret;
  
-@@ -1125,7 +1131,7 @@ static int zynqmp_dma_probe(struct platform_device *pdev)
- 	ret = zynqmp_dma_chan_probe(zdev, pdev);
- 	if (ret) {
- 		dev_err_probe(&pdev->dev, ret, "Probing channel failed\n");
--		goto err_disable_pm;
-+		goto free_chan_resources;
- 	}
+-	ret = clk_prepare_enable(chip->cfgr_clk);
+-	if (ret < 0)
+-		return ret;
+-
+-	ret = clk_prepare_enable(chip->core_clk);
++	ret = clk_bulk_prepare_enable(ARRAY_SIZE(chip->clks), chip->clks);
+ 	if (ret < 0)
+ 		return ret;
  
- 	p->dst_addr_widths = BIT(zdev->chan->bus_width / 8);
+@@ -1513,13 +1508,11 @@ static int dw_probe(struct platform_device *pdev)
+ 
+ 	chip->dw->hdata->use_cfg2 = !!(flags & AXI_DMA_FLAG_USE_CFG2);
+ 
+-	chip->core_clk = devm_clk_get(chip->dev, "core-clk");
+-	if (IS_ERR(chip->core_clk))
+-		return PTR_ERR(chip->core_clk);
+-
+-	chip->cfgr_clk = devm_clk_get(chip->dev, "cfgr-clk");
+-	if (IS_ERR(chip->cfgr_clk))
+-		return PTR_ERR(chip->cfgr_clk);
++	chip->clks[0].id = "core-clk";
++	chip->clks[1].id = "cfgr-clk";
++	ret = devm_clk_bulk_get(chip->dev, ARRAY_SIZE(chip->clks), chip->clks);
++	if (ret)
++		return dev_err_probe(chip->dev, ret, "failed to get clocks\n");
+ 
+ 	ret = parse_device_properties(chip);
+ 	if (ret)
+@@ -1629,10 +1622,13 @@ static void dw_remove(struct platform_device *pdev)
+ 	struct dw_axi_dma *dw = chip->dw;
+ 	struct axi_dma_chan *chan, *_chan;
+ 	u32 i;
++	int ret;
+ 
+ 	/* Enable clk before accessing to registers */
+-	clk_prepare_enable(chip->cfgr_clk);
+-	clk_prepare_enable(chip->core_clk);
++	ret = clk_bulk_prepare_enable(ARRAY_SIZE(chip->clks), chip->clks);
++	if (ret)
++		dev_warn(chip->dev, "failed to enable clocks before remove: %d\n",
++			 ret);
+ 	axi_dma_irq_disable(chip);
+ 	for (i = 0; i < dw->hdata->nr_channels; i++) {
+ 		axi_chan_disable(&chip->dw->chan[i]);
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+index b842e6a8d90d3..d6e53f400af25 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+@@ -68,8 +68,7 @@ struct axi_dma_chip {
+ 	int			irq[DMAC_MAX_CHANNELS];
+ 	void __iomem		*regs;
+ 	void __iomem		*apb_regs;
+-	struct clk		*core_clk;
+-	struct clk		*cfgr_clk;
++	struct clk_bulk_data	clks[2];
+ 	struct dw_axi_dma	*dw;
+ };
+ 
 -- 
 2.53.0
 
