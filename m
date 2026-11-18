@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016117;
-	b=QJtG3y8X3uSHxpGLA8VEoPLkz4jV7pszeoUwT9GusVppARbHDhF8/mqfp+x40NftYc3d
-	 SbdBkgVUVyzjv+oMqndpT2CHir6ueoCCa1H8AXfyrnZ232rcJb2hG8BzTuWo3JBaSpTLE
-	 twfbTSwbA0qsArcfds3oUv0vCooqeqq9ImZMoRxaqjOa8wnWmKnHWysSmziuESoXnxMwF
-	 5/MFnbx7mTqNcgd1evH/mBbNPtN+CoGHHl5dm0chRGt4ICxF1KenpBWIHGz0I9S49uIWe
-	 4WxQ2qdFOOUgUiOBBoKR4iuPSc7TOpSYpK4sDeCfoE1yGQ3z67WKn1ReFN1GvZMk+Tg==
+	t=1795016120;
+	b=Wt6YN+e3UwxX+eetlizrIiWz729lyfL7ALIQkusG0VkU6Xvgm2GYPA9ky7tHNBizDVBh
+	 uNrLLR2z+xddvGy1FQgIjAr1VxEghbr6tgFPdRWQn7JBL3CUVC6HqtBKJ+9MfEzjrRmMn
+	 ZC/OpIJ2nLnPf1rJeAtfS5sp8oV+kvuCjPaiy+ZIClSbhH95cQh6LazEpn1kxX1d1/Jyl
+	 QuxWO9RBpiVKEhTDVsjctbAab5hmnDqD1ddqmgx3LZffAF5mgxm4smDJsOQZO7H6EBS8S
+	 a5m587oQ+2ejoceahaQusmaI6Fd/d/jm9iH+PuIMX0F9g/ctIUN0yhBodrla3VC2qiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016117;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016120;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mEwCm13hz80sbyef3kheXG300PSsdHHUwuctAsEQnmM=;
-	b=oYnf576Y49OYOnd+7j/CJibCIxmKwRJdI+j76wL0vn5tut2LAETu5cP7Jpvnhf5khmCz
-	 w9OEsq/X4XGNP3E8yIrDDmrtSk2B6SvrWfTdFrYIXFFA+8IgDomNJkyurV1g5QqJ5KrdB
-	 LNZorbpvuhE8JOT7mEMqf6ehIufdDmcN4XsBFFHbj3gCwtVAeHSlvTtV7gO27xwULrQDS
-	 WcCPHAy9AN72aey6gR1MABKIlDFBytD10lDRRjMXYYUclk6nyOvGDkbwj3bkxTD4Yi5Jj
-	 WnGxgDnUSBOtvw2W18jSY87GqonACeyBgGTXGDg7DnsJOPgKxJcElVqc9xxn4FDbjwQ==
+	bh=B6JZ2OxkoPubCpgXZLBvHOu0xpu/YybeaF7wLziuWx0=;
+	b=C7bbFoxGXKF4sMfy+F81iDeDI7dp4KRjsiYWdh4H2jnZNQRnp/ZdOlesCLj+fxQ1hLTJ
+	 5ooBcOnFivHwKYBQ7g4c9y/hJQNBsrBNK2D//jv4qIvj0ibg/bbw8gOD+pR+FhpBu++9g
+	 P27QkP0M++Z52Dlo7HqZSbq0cqnSq+7IeZQtVazZgUcWRcSXbyhDIYarSil9Hbtt9CmRc
+	 n9a26RCuet9Msi1Pjdya0e/8SLQzxFzLnCDOdSAgEO+NHLmPkeFz6QXizdgL6eq+lBRg/
+	 gyx+jpFJY/vQI5scMA9Lk3hKjA5MqHhsPs7oloh58QU9fn//NXaWqe3/Y1NGL0LYiWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ycw7RxfE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SvJAfqmY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD88060A2620;
-	Wed, 18 Nov 2026 15:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4EA606A31C;
+	Wed, 18 Nov 2026 15:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ycw7RxfE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281181F000C6;
-	Wed, 18 Nov 2026 15:35:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SvJAfqmY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 003B51F000C4;
+	Wed, 18 Nov 2026 15:35:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016117;
-	bh=mEwCm13hz80sbyef3kheXG300PSsdHHUwuctAsEQnmM=;
+	s=korg; t=1795016120;
+	bh=B6JZ2OxkoPubCpgXZLBvHOu0xpu/YybeaF7wLziuWx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ycw7RxfE22Oyvn/15VdrfIutN5MuMGmNwqza2AvpFBt/4aorT9JpjPoXQcdxUOYBC
-	 geJimtj4Eh9LLLrObYjFYOu1LTVxBnIHpLegakC2LTPueusB2cr82E2HVz9ehalTq5
-	 srVtS4mnhUvlt9ijubWGOSJCLM7r9uywyq0tUCoA=
+	b=SvJAfqmYUZPsQI/3PdCp3AHJ6WKlZwIpUyZtyZXv6LIdC69E71Drb8YQ209Kr7IwJ
+	 qS04O9JWW26yS7Mqjaqu9Urf1wU2JWKj2S0UD5LQyVpTO3C2BNcadBGSdLa0D2czpl
+	 wXO9rG8KDbPqCi9vsvzCz3+kV8yhn5NxL2wrYjUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aiman Najjar <aiman.najjar@hurranet.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Xueqin Luo <luoxueqin@kylinos.cn>,
+	Christian Loehle <christian.loehle@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0414/2651] HID: nintendo: add support for PDP Afterglow controller
-Date: Wed, 18 Nov 2026 15:27:34 +0100
-Message-ID: <20261118150302.740334089@linuxfoundation.org>
+Subject: [PATCH 7.3 0415/2651] cpuidle: teo: Do not return a disabled idle state
+Date: Wed, 18 Nov 2026 15:27:35 +0100
+Message-ID: <20261118150302.774880647@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,86 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aiman Najjar <aiman.najjar@hurranet.com>
+From: Xueqin Luo <luoxueqin@kylinos.cn>
 
-[ Upstream commit 3774b1dd8cbce8dd75dd677fd68c5a2dc70860c6 ]
+[ Upstream commit 60d5fca628f94f8f23398ad62d80aa284dae6571 ]
 
-Add support for the PDP Afterglow (0e6f:018c), a licensed pro controller.
+If idle state 0 is disabled and none of the enabled idle states satisfies
+the PM QoS latency constraint, constraint_idx in teo_select() stays at its
+initial value of 0, because the loop that updates it starts at state 1,
+and so the candidate state index is capped at state 0, which is disabled,
+and that state is returned to the caller.
 
-Commit 9146038120a6 ("HID: nintendo: add support for HORI Wireless Switch
-Pad") applied X/Y button swap to all Licensed Pro controllers which caused
-the North/West buttons to come up swapped for PDP Afterflow. The swapped
-layout seems to be specific to HORI, so restrict the quirk to HORI devices
-and use the standard mapping for all other licensed pro controllers.
+The cpuidle core does not validate the returned state index against the
+per-state disable flags, so the CPU ends up entering the disabled state 0.
 
-Fixes: 9146038120a6 ("HID: nintendo: add support for HORI Wireless Switch Pad")
-Link: https://lore.kernel.org/all/20260527-hori-support-v2-1-195c2f832112@hectorzelaya.dev/
-Signed-off-by: Aiman Najjar <aiman.najjar@hurranet.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+To address this, ensure that constraint_idx is at least equal to the index
+of the first enabled idle state (idx0), so that the candidate state is
+never capped to a disabled one.
+
+Fixes: c410a9a142f1 ("cpuidle: teo: Change the main idle state selection logic")
+Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/20260828032457.2317326-1-luoxueqin@kylinos.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h      |  1 +
- drivers/hid/hid-nintendo.c | 14 ++++++++------
- 2 files changed, 9 insertions(+), 6 deletions(-)
+ drivers/cpuidle/governors/teo.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 3b19b742d4dd1..042421c8399b6 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -1170,6 +1170,7 @@
- #define USB_DEVICE_ID_PDP_PS4_JAGUAR	0x0173
- #define USB_DEVICE_ID_PDP_PS4_RIFFMASTER	0x024a
- #define USB_DEVICE_ID_PDP_PS5_RIFFMASTER	0x0249
-+#define USB_DEVICE_ID_PDP_SWITCH_AFTERGLOW	0x018c
+diff --git a/drivers/cpuidle/governors/teo.c b/drivers/cpuidle/governors/teo.c
+index ac43b9b013b3f..906f4f89e3659 100644
+--- a/drivers/cpuidle/governors/teo.c
++++ b/drivers/cpuidle/governors/teo.c
+@@ -426,6 +426,17 @@ static int teo_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 		}
+ 	}
  
- #define USB_VENDOR_ID_PLANTRONICS	0x047f
- #define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3210_SERIES	0xc055
-diff --git a/drivers/hid/hid-nintendo.c b/drivers/hid/hid-nintendo.c
-index 43e0f2aaea3b5..b1fcf3e5767ba 100644
---- a/drivers/hid/hid-nintendo.c
-+++ b/drivers/hid/hid-nintendo.c
-@@ -434,8 +434,8 @@ static const struct joycon_ctlr_button_mapping procon_button_mappings[] = {
- 	{ /* sentinel */ },
- };
- 
--/* Licensed Pro Controllers (e.g. HORI) swap X/Y bits in the report */
--static const struct joycon_ctlr_button_mapping lic_procon_button_mappings[] = {
-+/* HORI Licensed Pro Controllers swap X/Y bits in the report */
-+static const struct joycon_ctlr_button_mapping lic_hori_procon_button_mappings[] = {
- 	{ BTN_EAST,	JC_BTN_A,	},
- 	{ BTN_SOUTH,	JC_BTN_B,	},
- 	{ BTN_NORTH,	JC_BTN_Y,	},
-@@ -1767,8 +1767,8 @@ static void joycon_parse_report(struct joycon_ctlr *ctlr,
- 		joycon_report_left_stick(ctlr, rep);
- 		joycon_report_right_stick(ctlr, rep);
- 		joycon_report_dpad(ctlr, rep);
--		if (ctlr->ctlr_type == JOYCON_CTLR_TYPE_LIC_PRO)
--			joycon_report_buttons(ctlr, rep, lic_procon_button_mappings);
-+		if (ctlr->hdev->vendor == USB_VENDOR_ID_HORI)
-+			joycon_report_buttons(ctlr, rep, lic_hori_procon_button_mappings);
- 		else
- 			joycon_report_buttons(ctlr, rep, procon_button_mappings);
- 	} else if (joycon_type_is_any_nescon(ctlr)) {
-@@ -2212,8 +2212,8 @@ static int joycon_input_create(struct joycon_ctlr *ctlr)
- 		joycon_config_left_stick(ctlr->input);
- 		joycon_config_right_stick(ctlr->input);
- 		joycon_config_dpad(ctlr->input);
--		if (ctlr->ctlr_type == JOYCON_CTLR_TYPE_LIC_PRO)
--			joycon_config_buttons(ctlr->input, lic_procon_button_mappings);
-+		if (ctlr->hdev->vendor == USB_VENDOR_ID_HORI)
-+			joycon_config_buttons(ctlr->input, lic_hori_procon_button_mappings);
- 		else
- 			joycon_config_buttons(ctlr->input, procon_button_mappings);
- 	} else if (joycon_type_is_any_nescon(ctlr)) {
-@@ -2905,6 +2905,8 @@ static const struct hid_device_id nintendo_hid_devices[] = {
- 			 USB_DEVICE_ID_NINTENDO_N64CON) },
- 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_HORI,
- 			 USB_DEVICE_ID_HORI_WIRELESS_SWITCH_PAD) },
-+	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_PDP,
-+			 USB_DEVICE_ID_PDP_SWITCH_AFTERGLOW) },
- 	{ }
- };
- MODULE_DEVICE_TABLE(hid, nintendo_hid_devices);
++	/*
++	 * If the latency constraint does not allow any of the enabled idle
++	 * states to be used, the candidate state index will be capped to 0
++	 * by the check below, but state 0 may be disabled.  To prevent the
++	 * selection of a disabled state in that case, ensure that
++	 * constraint_idx is at least equal to the index of the first
++	 * enabled idle state.
++	 */
++	if (constraint_idx < idx0)
++		constraint_idx = idx0;
++
+ 	/*
+ 	 * If there is a latency constraint, it may be necessary to select an
+ 	 * idle state shallower than the current candidate one.
 -- 
 2.53.0
 
