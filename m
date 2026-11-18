@@ -1,57 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034923;
-	b=JTsKUXmiP6gmIT/Nop1zQ3p95E0KSQwQp1IrJij8TJ96gsml6O55TCyh5bbCJgWnvXOf
-	 YtWsGHb2LoK9fckOirOf4K2Q0KWsrMr8GrrEasKMYdmdDjgcgYgbWCBw8v/9n3HN6hZum
-	 Pb4vuQUl6ZvxWl0WJm1lsulkOuZ2oULbixnQwGCeaZf/A5lKZojjN/qwxzA4sgfV56WDf
-	 KgXNrLOULC88E5Abt48VHAYe9y8V7sCSIsCF2ohh8HZHQzNuAMOYSJYqUP+S62ohuzUCk
-	 Fh+A+GTewyIHYwCQRl5mnS/rdZBPBkOUYp4/X469PnJNJc2xSVLx4pD6E1ahWdNVLKA==
+	t=1795034926;
+	b=1E74pNYJvBCamh26ixtAeDGbs1HG1T3d2XcB7oOvOjAKp4TAPiYiEVLR9oKdhS7sUkcU
+	 xSLsjzvy87STE8yy18177Dk3Y3oFE0m+CcuGGDkk4QbcTwJFwvrm48epKa7Kk065ByILC
+	 +EttzvscsGq/u0CVnwveyioKhhSE2PmgQKO3JRrGjOjpo2PcKyX9qBxf8NGPl8m7R4tKo
+	 +h9EdcofE/2Ol7pYIK62ANPHA5mjWgvrcCVDC+B9TogMeTKqYXianmSFxTSo9qQ8t1ynm
+	 oDAt83YPtDiqPvWAzRGic3ec0Wg/UXWAY4FPz/4tzGBJ7R9HtfLSK28pFncasjXL/Fw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034923;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034926;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MFDByEdy464XeMBvrRLWKee9WgjSmMTsl1KYzn2pf5I=;
-	b=CbEPE4U7It1BeaWQzIW2/LvFmH93MEGgqvMxYDABpcBm9Q+fJMT3wG1ECFl2by0WNsJ1
-	 XJ5WVNXqct++/HbNC1DC2OB9MKalV6ih6v5kSfgDuyCyWfeE1BOWNU96krYTpwKz2hcOo
-	 +nebJsxcQhsJPtLmlj214q/079A4Ok6dVfO2kOa2UcEy+OFomYudSyKz/OXBMtDaFMsFS
-	 DodnBn9okYUwvEhX+//BmyrDc563y3GB4dWV9y26DOW8a4qbG/gQuUfp1X7G0ZExdD54h
-	 a3wLFsDWb0hfmEpS48HVwG4ZeOApMp1AhzRsjX6BAE2J3Oc2imX6r4nBSIc3j5J4Hog==
+	bh=IQA3rcd5MfoqyFyRBBvSKUe6EyurfZRPhAp7NtFNAS8=;
+	b=uCOxO/XgF2zQI+LinRk195jylGWrssPwIQruvfC72Je/pOwBW/0Nw/5IbcSVgnlumeCJ
+	 In7476CtxBYCr6xV7VRCCtkyjvwVri1qAXjFOeyuXpJJ8+jbIGvUlzVkvixQzAn0SYL80
+	 PPbQGOyPZaLdnW04zmMaypBjCWUBRQjd/WBpVNJdes/SaPkOX+LcjOqgeW3kRDilE161S
+	 HOZU+xA6xvLsWX9nJlL1JX5lpjZkD2176iJY2kG1ifFiGKAbb2MCRRkUPW0tb/7iMVdYd
+	 Y+O3oLvhd8mfgMnx3PWq51R4Z4C/l48FQEa4VpB339GV8NO6CV4Jh1YWAcLZLEQ/Z6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0omfopjo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IZDl4V3d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCAC606A31C;
-	Wed, 18 Nov 2026 20:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA3F606A31C;
+	Wed, 18 Nov 2026 20:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0omfopjo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75DA1F000C4;
-	Wed, 18 Nov 2026 20:48:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IZDl4V3d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762E31F000C4;
+	Wed, 18 Nov 2026 20:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034923;
-	bh=MFDByEdy464XeMBvrRLWKee9WgjSmMTsl1KYzn2pf5I=;
+	s=korg; t=1795034926;
+	bh=IQA3rcd5MfoqyFyRBBvSKUe6EyurfZRPhAp7NtFNAS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0omfopjotdmO15Mxc7//amg3bETE+/HPfpRtrsxynF9MwYgMSyn2pnHdMljEB1+yn
-	 1HJk94H6LbfZyftRv5S7l57dab+/hA9oJ4s3y392txcNMu4/SNrwR2PeCMp9UgG3z/
-	 cuv+RkcJK1jHD09lFA+fToc1yzwQconNzaG8/eaQ=
+	b=IZDl4V3dknDJCq2I9Ivana7OLIlCrtXy8CZoJqhvpCAZA5k8bei2V11QdZGFGjRv6
+	 s64tc1eS/bmYxYQvfNUgRPyH0YViXochdTZoOpJIkefF+SD6A6jDE5fJINSedEs8Dg
+	 LVa2IR/huGhBCE9knfPJ/aiuYrnYQXyl/QY10D+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longlong Xia <xialonglong@kylinos.cn>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Oscar Salvador <osalvador@suse.de>,
+	Zhang Zekun <zhangzekun11@huawei.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0492/3318] mm/hugetlb: do not dissolve gigantic pages without runtime support
-Date: Wed, 18 Nov 2026 15:18:34 +0100
-Message-ID: <20261118150331.763033447@linuxfoundation.org>
+Subject: [PATCH 6.6 0483/3318] ata: libahci_platform: Simplify code with for_each_child_of_node_scoped()
+Date: Wed, 18 Nov 2026 15:18:25 +0100
+Message-ID: <20261118150331.453689793@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -73,54 +68,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longlong Xia <xialonglong@kylinos.cn>
+From: Zhang Zekun <zhangzekun11@huawei.com>
 
-[ Upstream commit a363c62a653cc8b3e21da9545fa4e028ef50f9c3 ]
+[ Upstream commit aa3ca1faf3222af7aaa194a910995820135fc54e ]
 
-dissolve_free_hugetlb_folio() doesn't check
-hstate_is_gigantic_no_runtime(h) though remove_hugetlb_folio()/
-update_and_free_hugetlb_folio() silently bail for such folios, so it frees
-a still-listed folio and, on vmemmap restore failure, the
-add_hugetlb_folio() rollback corrupts the free list.
+for_each_child_of_node_scoped() can put the device_node automatically.
+So let's use it to make the code simpler by avoiding the need to
+explicitly call of_node_put().
 
-Link: https://lore.kernel.org/20260823044118.1097121-2-xialonglong2025@163.com
-Fixes: 6eb4e88a6d27 ("hugetlb: create remove_hugetlb_page() to separate functionality")
-Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Assisted-by: Codex:gpt-5.6-sol
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-[ sashal: Replaced the missing hstate_is_gigantic_no_runtime() helper with the open-coded hstate_is_gigantic(h) && !gigantic_page_runtime_supported() check, and adjusted context for the older function name and missing local. ]
+Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
+Link: https://lore.kernel.org/r/20240810023426.110624-1-zhangzekun11@huawei.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Stable-dep-of: 0d1cb83337f1 ("ata: libahci_platform: Fix device reference leak in ahci_platform_get_resources()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/ata/libahci_platform.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 8bfaaa84bb3f7..bd5fceaea788e 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -2298,6 +2298,16 @@ int dissolve_free_huge_page(struct page *page)
+diff --git a/drivers/ata/libahci_platform.c b/drivers/ata/libahci_platform.c
+index 1153b9f7ff12a..91d44302eac92 100644
+--- a/drivers/ata/libahci_platform.c
++++ b/drivers/ata/libahci_platform.c
+@@ -419,7 +419,6 @@ static int ahci_platform_get_regulator(struct ahci_host_priv *hpriv, u32 port,
+ static int ahci_platform_get_firmware(struct ahci_host_priv *hpriv,
+ 				      struct device *dev)
+ {
+-	struct device_node *child;
+ 	u32 port;
  
- 	if (!folio_ref_count(folio)) {
- 		struct hstate *h = folio_hstate(folio);
-+
-+		/*
-+		 * remove_hugetlb_folio()/update_and_free_hugetlb_folio() bail
-+		 * for gigantic hstates without runtime support, so dissolving one
-+		 * here would leave it on the free list and, on vmemmap restore
-+		 * failure, the add_hugetlb_folio() rollback corrupts that list.
-+		 */
-+		if (hstate_is_gigantic(h) && !gigantic_page_runtime_supported())
-+			goto out;
-+
- 		if (!available_huge_pages(h))
- 			goto out;
+ 	if (!of_property_read_u32(dev->of_node, "hba-cap", &hpriv->saved_cap))
+@@ -428,14 +427,12 @@ static int ahci_platform_get_firmware(struct ahci_host_priv *hpriv,
+ 	of_property_read_u32(dev->of_node,
+ 			     "ports-implemented", &hpriv->saved_port_map);
  
+-	for_each_child_of_node(dev->of_node, child) {
++	for_each_child_of_node_scoped(dev->of_node, child) {
+ 		if (!of_device_is_available(child))
+ 			continue;
+ 
+-		if (of_property_read_u32(child, "reg", &port)) {
+-			of_node_put(child);
++		if (of_property_read_u32(child, "reg", &port))
+ 			return -EINVAL;
+-		}
+ 
+ 		if (!of_property_read_u32(child, "hba-port-cap", &hpriv->saved_port_cap[port]))
+ 			hpriv->saved_port_cap[port] &= PORT_CMD_CAP;
+@@ -483,7 +480,6 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
+ 	int child_nodes, rc = -ENOMEM, enabled_ports = 0;
+ 	struct device *dev = &pdev->dev;
+ 	struct ahci_host_priv *hpriv;
+-	struct device_node *child;
+ 	u32 mask_port_map = 0;
+ 	u32 max_port;
+ 
+@@ -605,7 +601,7 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
+ 	}
+ 
+ 	if (child_nodes) {
+-		for_each_child_of_node(dev->of_node, child) {
++		for_each_child_of_node_scoped(dev->of_node, child) {
+ 			u32 port;
+ 			struct platform_device *port_dev __maybe_unused;
+ 
+@@ -614,7 +610,6 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
+ 
+ 			if (of_property_read_u32(child, "reg", &port)) {
+ 				rc = -EINVAL;
+-				of_node_put(child);
+ 				goto err_out;
+ 			}
+ 
+@@ -632,18 +627,14 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
+ 			if (port_dev) {
+ 				rc = ahci_platform_get_regulator(hpriv, port,
+ 								&port_dev->dev);
+-				if (rc == -EPROBE_DEFER) {
+-					of_node_put(child);
++				if (rc == -EPROBE_DEFER)
+ 					goto err_out;
+-				}
+ 			}
+ #endif
+ 
+ 			rc = ahci_platform_get_phy(hpriv, port, dev, child);
+-			if (rc) {
+-				of_node_put(child);
++			if (rc)
+ 				goto err_out;
+-			}
+ 
+ 			enabled_ports++;
+ 		}
 -- 
 2.53.0
 
