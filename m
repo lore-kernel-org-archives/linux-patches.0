@@ -1,59 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035694;
-	b=baokUlmalrxbL1f/8vtM1xhjG7oXpqAqizm1FNKJ7rDQ/0BHxMQpjkb8AM8XU4wSiz4O
-	 cEUfFYdMINXvEEbyoexRccypvn+Ko3AIiIREFbpqCrdd3wy6DdkiQtKifAX3PFiQIMtJx
-	 eTAH3JeHUxrZMIGjicszPmR93cKFCFiG2jDX0E6xOfV8SVvW/Nnfm1iGzPGYQ3YjmjDXG
-	 EJBk3HdOyZKskFObdwWaIRv+cmdAZkrulRNMvo308ClaHYbGW6yErhpU36Kruhu3klfVz
-	 r3N9Rt/xIb2wic6OY5awrf4n+kBmaQv+fiS6g36kCk/Uu17IiXrewaWFXvirWjvziXA==
+	t=1795035697;
+	b=yAFwpO+wv0TQQOLfWIWZTSvQg5C5LbAJv0l3HmKG22i49FIa15Y8HEcu6Tbybj8fqJIn
+	 VQXSw84vqfN6W2l5DbQNEBMNRmplAUIADr7XczPZa3vm2wh0DW9zRkwxc7YeuapiNnlKy
+	 ykHcQT8qL1iHNmUrNsXgqEEAqdYRp9gM9PurumslXFZC0bqvnaO/Cy1lBohEPGDmJIAQv
+	 aqbeW1/ChenK1uNRI+itMI8jMo+4RzduYR3B3mgpOPMM0tUpKhhy1itOcHKwXGCborjLM
+	 Z6pvV4+pl2D3nrqgEDe1dHwyce0ol165EmfXrdIav+dtirS6GiYqOCyBlBjFOwpZ4lA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035694;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035697;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=wmXVwt/zIlslJA9F1XTK/jmny1hji5H69lJMHiy8WQ0=;
-	b=jUBT5EyMo+9B9Q6pRUdnJZKqwhKmh3rSkPfSMacVRelBdZ43mY5gAc+KRVfrABq6514l
-	 rpj1ZeZS55RRuGnovZdR22uO408yiEKSh5grCoJ/mIFs2pbL/G0D2uUyQNnxVAgI6UHB6
-	 z2yr5N48dQBoyklukCNieLFjOirwBpPBQ86qwvGfUsW+3b0qpr2nl8v1AYSq5uhXt54/A
-	 Ne4Cchw2x/kQWunWCMmzxXqT+qMFMywX7hlUg6J/Lj81OTht+ZzyeU2d7S2HbngHnw6Ae
-	 SvuDOJB7Vu7A29G3I6PAIXGS0I0tTvoQBx2cizaam11NL5nmKZZhUfPM+i0C4j+YWWQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=5A3by3k/RLt04YRIfrYOFnW3LZF0e+9mMelA9CChSn8=;
+	b=Q7fzah8isDEVu+F5Q5j1x0/nDWqdVQedQuZ72eHJm1IH7cTJz3X0UAnG6phW6nEKzgVB
+	 pZmUlixdpMXjy7lD92twz5BCzce1VrxuEiphKvjJMZ+DSK+hKpsQciyYiiW6taShkwNb1
+	 XUp3SYZxbnAIZau/9KSFW0iFz//melMOiqQOPTIsN3rzoCdRqQ7GbJYHqlDqImq4N4D+G
+	 HY8BiJkNk5i8AE/nL1Ha4yQcU2QCMuxr4N7tpSiXzAShvQ0ilIZb7iCj9EgW7SR+hT/xa
+	 9P2/Z3w1thbVFwHW165z8w/G2CYMteUmBpqAxa98AcJwYcFV3qwL+HeGRGkvAImPh+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DErRCiOq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kmArP5s6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5887560A2612;
-	Wed, 18 Nov 2026 21:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5419D60A2601;
+	Wed, 18 Nov 2026 21:01:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DErRCiOq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C511F000C5;
-	Wed, 18 Nov 2026 21:01:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kmArP5s6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB941F000C4;
+	Wed, 18 Nov 2026 21:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035694;
-	bh=wmXVwt/zIlslJA9F1XTK/jmny1hji5H69lJMHiy8WQ0=;
+	s=korg; t=1795035697;
+	bh=5A3by3k/RLt04YRIfrYOFnW3LZF0e+9mMelA9CChSn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DErRCiOqCMfelUbpRxDFO00zHttgqdU06q8yYeGZ0e94ISY7jdkZeK1v0ztMqsnc8
-	 EA34aYhvgbljPHZnrRD+hTR1g8VKZHxk/k5HTEE8cMJLsD1sgld2P/27o64ByD0snt
-	 ppmfD/BPkDurrowPz1zWmCgsm/zBBzjZUIZgP0qU=
+	b=kmArP5s6lwMz09R570u3f5L+cer+b5aplfvedb2F/QvsFPrPGD0ws0bX+zrG6gDiF
+	 bdqOD5edGb3omiNDZE45GWOehe06o6/YBNniYYDtLOgd3Gm7iIHNUvGUIJdGKiQJRq
+	 554ho9a9lt2PagHykTK3w7O9xFX8Pu18Dna1vQz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vernon Yang <yanglincheng@kylinos.cn>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Zach OKeefe <zokeefe@google.com>,
+	YuBiao Wang <YuBiao.Wang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0787/3318] mm: khugepaged: fix swap entry value to folio_pfn()
-Date: Wed, 18 Nov 2026 15:23:29 +0100
-Message-ID: <20261118150342.475372638@linuxfoundation.org>
+Subject: [PATCH 6.6 0796/3318] drm/amdgpu: recompute the dw estimate after allocating a new VM update job
+Date: Wed, 18 Nov 2026 15:23:38 +0100
+Message-ID: <20261118150342.780872342@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,148 +63,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vernon Yang <yanglincheng@kylinos.cn>
+From: YuBiao Wang <YuBiao.Wang@amd.com>
 
-[ Upstream commit 942c8ec27aa4ffc587511650718349964e1696e6 ]
+[ Upstream commit a74c7832b11827907de560169c7d4ac94505fd87 ]
 
-Patch series "mm: khugepaged: fix tracepoint UAF", v5.
+amdgpu_vm_sdma_update() keeps the number of free dwords of the current
+job in a local variable. When the job runs out of room it is committed
+and a new one is allocated, but that local variable is not refreshed and
+still describes the job which was just submitted.
 
-The khugepaged tracepoints take a folio pointer and call folio_pfn(), but
-by then the folio may no longer be valid: freed after folio_put(),
-folio_unlock() or pte_unmap_unlock(), or not a folio at all but an
-xarray-encoded swap entry.  On classic SPARSEMEM, dereferencing it oopses
-khugepaged as soon as the trace event is enabled; on other memory models
-it merely prints a bogus pfn.
+The stale value is then used to decide how many PTEs fit into the new
+job. If it happens to be copy_pte_num_dw + 7, or one more than that, the
+result is zero. copy_pte() encodes the transfer size as count * 8 - 1,
+so a count of zero asks the engine for a 1GB copy starting inside the IB
+pool. That runs off the end of the pool, faults on the first unmapped
+GART page above it and hangs the ring.
 
-Pass the pfn to the tracepoints directly, captured while the folio is
-still pinned, closing the use-after-free windows in
-mm_khugepaged_scan_file(), mm_khugepaged_scan_pmd() and
-mm_khugepaged_collapse_file().
+Re-initialize the estimate from the newly allocated job, which is empty
+and therefore has its full budget available.
 
-This patch (of 3):
-
-When the swap entries found exceed max_ptes_swap, the loop is left via
-break with folio still holding the xarray value that encodes the swap
-entry, not valid folio pointer.
-
-That value is passed to trace_mm_khugepaged_scan_file(), which feeds it to
-folio_pfn().  On FLATMEM and SPARSEMEM_VMEMMAP, the page_to_pfn() is plain
-pointer arithmetic, so the trace event merely prints bogus scan_pfn.  On
-classic SPARSEMEM, the page_to_pfn() reads page->flags, dereferencing the
-tiny encoded integer and oopsing khugepaged whenever the trace event is
-enabled.
-
-So when folio is the swap entry value, simply set pfn to -1, just like
-exhausted scan naturally.
-
-And the folio_put() has maybe dropped the last reference of folio.  The
-trace_mm_khugepaged_scan_file() is left with a dangling folio pointer.  so
-using the folio_pfn() before dropping the reference, closing
-use-after-free window.
-
-Link: https://lore.kernel.org/20260909025804.3233645-1-vernon2gm@gmail.com
-Link: https://lore.kernel.org/20260909025804.3233645-2-vernon2gm@gmail.com
-Fixes: d41fd2016ed0 ("mm/khugepaged: add tracepoint to hpage_collapse_scan_file()")
-Signed-off-by: Vernon Yang <yanglincheng@kylinos.cn>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Zach O'Keefe <zokeefe@google.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: adapted folio APIs to the page-based scanner while preserving two-argument __assign_str() ]
+Cc: stable@vger.kernel.org
+Signed-off-by: YuBiao Wang <YuBiao.Wang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/huge_memory.h | 6 +++---
- mm/khugepaged.c                    | 7 ++++++-
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/trace/events/huge_memory.h b/include/trace/events/huge_memory.h
-index 37f2443b3cdb0..0c57ef317e311 100644
---- a/include/trace/events/huge_memory.h
-+++ b/include/trace/events/huge_memory.h
-@@ -174,10 +174,10 @@ TRACE_EVENT(mm_collapse_huge_page_swapin,
- 
- TRACE_EVENT(mm_khugepaged_scan_file,
- 
--	TP_PROTO(struct mm_struct *mm, struct page *page, struct file *file,
-+	TP_PROTO(struct mm_struct *mm, unsigned long pfn, struct file *file,
- 		 int present, int swap, int result),
- 
--	TP_ARGS(mm, page, file, present, swap, result),
-+	TP_ARGS(mm, pfn, file, present, swap, result),
- 
- 	TP_STRUCT__entry(
- 		__field(struct mm_struct *, mm)
-@@ -190,7 +190,7 @@ TRACE_EVENT(mm_khugepaged_scan_file,
- 
- 	TP_fast_assign(
- 		__entry->mm = mm;
--		__entry->pfn = page ? page_to_pfn(page) : -1;
-+		__entry->pfn = pfn;
- 		__assign_str(filename, file->f_path.dentry->d_iname);
- 		__entry->present = present;
- 		__entry->swap = swap;
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index 42330aeb76386..84a64e2033d22 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -2221,6 +2221,7 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
- 	int present, swap;
- 	int node = NUMA_NO_NODE;
- 	int result = SCAN_SUCCEED;
-+	unsigned long failed_pfn = -1;
- 
- 	present = 0;
- 	swap = 0;
-@@ -2254,6 +2255,7 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
- 					/* Maybe PMD-mapped */
- 					? SCAN_PTE_MAPPED_HUGEPAGE
- 					: SCAN_PAGE_COMPOUND;
-+			failed_pfn = page_to_pfn(page);
- 			/*
- 			 * For SCAN_PTE_MAPPED_HUGEPAGE, further processing
- 			 * by the caller won't touch the page cache, and so
-@@ -2266,18 +2268,21 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
- 		node = page_to_nid(page);
- 		if (hpage_collapse_scan_abort(node, cc)) {
- 			result = SCAN_SCAN_ABORT;
-+			failed_pfn = page_to_pfn(page);
- 			break;
- 		}
- 		cc->node_load[node]++;
- 
- 		if (!PageLRU(page)) {
- 			result = SCAN_PAGE_LRU;
-+			failed_pfn = page_to_pfn(page);
- 			break;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
+index 1cf1498204678..be7d91574ec56 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
+@@ -265,6 +265,11 @@ static int amdgpu_vm_sdma_update(struct amdgpu_vm_update_params *p,
+ 			r = amdgpu_vm_sdma_alloc_job(p, count);
+ 			if (r)
+ 				return r;
++
++			/* The estimate above describes the job which was just
++			 * submitted, take the budget of the newly allocated one.
++			 */
++			ndw = p->num_dw_left;
  		}
  
- 		if (page_count(page) !=
- 		    1 + page_mapcount(page) + page_has_private(page)) {
- 			result = SCAN_PAGE_COUNT;
-+			failed_pfn = page_to_pfn(page);
- 			break;
- 		}
- 
-@@ -2306,7 +2311,7 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
- 		}
- 	}
- 
--	trace_mm_khugepaged_scan_file(mm, page, file, present, swap, result);
-+	trace_mm_khugepaged_scan_file(mm, failed_pfn, file, present, swap, result);
- 	return result;
- }
- #else
+ 		if (!p->pages_addr) {
 -- 
 2.53.0
 
