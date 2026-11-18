@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045990;
-	b=QH2hgvck/thSBs+vWqIpqixu5mnDH/59mfC0JGs0mWYyEdpTn+H1F1uyPFtSO/7k0B+U
-	 9XrEZMTLtwePvuHsCyVIujB/GMhVPiZs3grTdO1l6G6gLXU7EUx+Ti+tqkQ0ZG17buU7X
-	 ftgLBPMJL5EhJz3BsOukNGnq++Z+UT1tAMdMgPOU4yoNKAV2culUp4dl9M5vcWsmOCcyJ
-	 M+FHcjQP7mKMFI5Tv8rATmjBB3i2/OJjKSAiShlGbLBvrvPN+U1CRJhibrZtWMuXh7l7q
-	 m/timlqNYFHJdRqAYAgxCuylpcpUVAfkY0pnBMrHrbn3HjIWVP13ttnW4ypxce8k5+A==
+	t=1795045992;
+	b=d8BLiWm+SYZ8fn362n0tELbZrgf6AcjZZYanLcCla8QIbSXYgodR1ALh/Ukpu0Nr7Z7V
+	 Rxw0mZJG/QJQuX+7see1DraCX8dqKM7Ah4gO+KJ9Yz8e7f+N2mkoLw/sY5+9dBzB26W32
+	 nX3WG3VCrPuVU1bP7RnOtXibwjx+qMIap14bOzeLWMdmRVJv9IzT9ULq0WSXLyAbMT0Rp
+	 7+ui+k3o6IbC5DPKzNywsJqGjhYIXivXZTlNXk/0Hy48eTcqf+UdCJBrD0iFpa+0FVNAQ
+	 F2O5tWtvnydOaoJQdu+6BwrTDJwfqPq6ABgtpKysR72mLP+jzPI2xHMDoeM5KEigf1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045990;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045992;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VikyNn86Fnu7Z6/66whcu8imVFb76eiQu2c3cgYDNT8=;
-	b=Y0T2NhxtNsdNeHOyB5tYnt9b8k9prrbHCygXcB9NlV8OxY3yYgFKMCCc68j2R0Q1byeQ
-	 ITbfM4wZgOFbHAu25uc25Pj1+BUXav7NBgzdcZO03vcu7LjnblKqRgyf1Z14P5qPMGDeJ
-	 TCjsdzhVt68K9r0ZS85rzbJzqkzhy605jd79nnH5TisK/0mmHwLOISzoDU62QZ4EkRCRY
-	 YSWbiDQSckN2uKTd+zHYsG20JscwJiMidMxoOazoNLCOj/vhl0NqQT/5fdpHmkSBIKF/t
-	 IUr+FzivRO4+Sd8ZN5Hu25pUxj2rJBu0SmwOASpMlbR3Gi4nFKEVmNMmqVEsILjKMEQ==
+	bh=T4CO5Cydnkm+x7sAeBwgq5Hr+NgvA6/dMRPU/xOorbM=;
+	b=ULighQVp6Jy/b0zqkMRMUX2zkMRcVoxEVM8Pd9Pn1JeF6XfmpeEzhVjXrMoawtP0w6Iy
+	 ysPWpqxRsMK28+HjCmw36lg6kMr9vJ//WO62OjYYA9cM01aZDfcgCoD6Y6o1p4DqjtF/a
+	 h12tPA6r84LDko8ULdMKCkKMXCWBhlwpubr5c/eFBxr45aegKFXThHYExORdIIDYn0iIy
+	 ncVicBC7B41kvqK0SR7EqYZX0mBFRQoLrXad6e3wdDooKpjoZJ93JkBmTYIgJQT1QJd3b
+	 e0mahCS9mPSAi91r52eI2aB9vR2a4ItUyJexG5FHGEWeIllk9FRzNsD4c6yXDIdXXyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dU9O9FEu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g2AMfkf0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A3A606A31C;
-	Wed, 18 Nov 2026 23:53:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D7B606A320;
+	Wed, 18 Nov 2026 23:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dU9O9FEu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5960C1F000C4;
-	Wed, 18 Nov 2026 23:53:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g2AMfkf0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 266861F000C4;
+	Wed, 18 Nov 2026 23:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045989;
-	bh=VikyNn86Fnu7Z6/66whcu8imVFb76eiQu2c3cgYDNT8=;
+	s=korg; t=1795045992;
+	bh=T4CO5Cydnkm+x7sAeBwgq5Hr+NgvA6/dMRPU/xOorbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dU9O9FEuuDzgScZORf5rU1JPmQLEL1q1l3r2vw2mpf/EQklu/a0HvaZXXlmMPz04r
-	 fLwIBWhSBUuAFX0++Z6oDeUUq5Ftj6iqH1APfanYjO+0lvcsFRMVdf0xi17d4Ac0ei
-	 X5vgU8ayPZ/Bqlfsd/+CMCA1bRdaS3rzRJbCcylA=
+	b=g2AMfkf0dP5sJf4Au2odcU99d4oY/LHEohiW/YnI+y5Wy+E4YppSGVdcK3bHqQCvt
+	 cWFuRqgJOESO/gNkI7PoWaBpKpSx2GyVR7hgRPtzqXl+4WluA5LUyLsiFWYk8IPAWS
+	 azQ6nF7cyYLAr62uZ8SJeU6kdzQIb7dZRq5OxvJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Luigi Lauro <luigi.lauro@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1080/2857] ppp: fix stale pointer access after pskb_may_pull in ppp_ccp_peek
-Date: Wed, 18 Nov 2026 15:35:14 +0100
-Message-ID: <20261118150240.506382982@linuxfoundation.org>
+Subject: [PATCH 6.1 1071/2857] drm/amd/display: take a runtime PM reference only when a CRTC turns on
+Date: Wed, 18 Nov 2026 15:35:05 +0100
+Message-ID: <20261118150240.171564566@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,42 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Luigi Lauro <luigi.lauro@gmail.com>
 
-[ Upstream commit 1e860f42f41c6fbf3304f6a52be38245b9394982 ]
+[ Upstream commit b456f591f925fbd6b33770d0eec1b51c2f9d41c1 ]
 
-ppp_ccp_peek() caches a pointer to skb->data in dp after the first
-pskb_may_pull(), then uses dp after a second pskb_may_pull(skb, len + 2)
-in the CCP_CONFACK handler. If the second pull triggers
-pskb_expand_head() due to a cloned skb or frag linearization,
-skb->head is freed and reallocated, leaving dp stale.
+amdgpu_dm_commit_streams() takes a runtime PM reference for every
+active CRTC that needs a modeset and has a new stream, but
+amdgpu_dm_atomic_commit_tail() drops one only for each CRTC that goes
+from active to inactive. A modeset of a CRTC that is already active (a
+mode change, or anything else that needs a full modeset) therefore
+leaks one reference. Once that has happened, the usage count no longer
+returns to zero with every CRTC off, and the device cannot runtime
+suspend again until reboot. The two also disagree the other way when a
+CRTC turns on without a stream ("Failed to create new stream"): no
+reference is taken, but one is dropped when it turns off.
 
-The stale dp is subsequently used in CCP_OPT_LENGTH() and passed to
-decomp_init()/comp_init() which read from the freed memory.
+Take the reference in the loop that counts the disabled CRTCs, on the
+mirror condition: when the CRTC goes from inactive to active, which is
+what the commit that added it intended ("every time we enable a
+previously disabled CRTC"). Each active CRTC then holds exactly one
+reference.
 
-Re-derive dp from skb->data after the second pskb_may_pull.
+Tested on an RX 9070 XT (Navi 48) over OCuLink, with the change
+backported to 7.2.9: an unplugged connector forced on, then mode A on a
+CRTC, mode B on the same active CRTC, and the CRTC off, three rounds in
+a row. The usage count rose by 3 with the stock module, by 0 with this
+patch, and by 3 again after reloading the stock module.
 
-Fixes: 1da177e4c3f41 ("Linux-2.6.12-rc2")
+Fixes: 97028037a38a ("drm/amdgpu: Grab/put runtime PM references in atomic_commit_tail()")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5951
+Assisted-by: Claude:claude-opus-5-5
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Luigi Lauro <luigi.lauro@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 59ef9a435499777b8e1c4e0eff52f813c64fb920)
 Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index 51e5c87255280..464a966a91e66 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -3158,6 +3158,7 @@ ppp_ccp_peek(struct ppp *ppp, struct sk_buff *skb, int inbound)
- 		len = CCP_LENGTH(dp);
- 		if (!pskb_may_pull(skb, len + 2))
- 			return;		/* too short */
-+		dp = skb->data + 2;
- 		dp += CCP_HDRLEN;
- 		len -= CCP_HDRLEN;
- 		if (len < CCP_OPT_MINLEN || len < CCP_OPT_LENGTH(dp))
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 561cfbc591f93..28c164bfb7a50 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -8463,8 +8463,6 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
+ 			if (dm_old_crtc_state->stream)
+ 				remove_stream(adev, acrtc, dm_old_crtc_state->stream);
+ 
+-			pm_runtime_get_noresume(dev->dev);
+-
+ 			acrtc->enabled = true;
+ 			acrtc->hw_mode = new_crtc_state->mode;
+ 			crtc->hwmode = new_crtc_state->mode;
+@@ -8733,8 +8731,13 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
+ 		struct crc_rd_work *crc_rd_wrk;
+ #endif
+ #endif
+-		/* Count number of newly disabled CRTCs for dropping PM refs later. */
+-		if (old_crtc_state->active && !new_crtc_state->active)
++		/*
++		 * One runtime PM reference per active CRTC: take it when the
++		 * CRTC turns on, count it when it turns off for dropping later.
++		 */
++		if (!old_crtc_state->active && new_crtc_state->active)
++			pm_runtime_get_noresume(dev->dev);
++		else if (old_crtc_state->active && !new_crtc_state->active)
+ 			crtc_disable_count++;
+ 
+ 		dm_new_crtc_state = to_dm_crtc_state(new_crtc_state);
 -- 
 2.53.0
 
