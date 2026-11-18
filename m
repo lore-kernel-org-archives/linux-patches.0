@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048825;
-	b=eyMH1pz4lJelT/3L3MVkhWmQybzaFhNP+Ky83Ab4Sd35ZzEI+nvfMkBpv0intu7b+cSO
-	 4LRG4Ofs06ZNxFqjrc+yXnDBQb5v6Yiy2CXeheqSenzWiJjWkDkGpN8nMVdQGY8114KQ2
-	 oj72jowPTIfajX6rgRasRfZOB1wAEhvPkyItqP4Y/jqzjcskGF3y1hWjfqJ+8NOWYcipF
-	 SPnD/fxeF3RH9RfX/GQiZNZCy1DTYb4q9+8qAhzEVHfDETvsL3hbudXb8hqYE/bhLy0/q
-	 x2n31M3n/60iW1YDlJ3sxRPD6pfjbzrj9rvOv+8sMFJbS/9if4JPhc78id/bSAhWyXg==
+	t=1795048827;
+	b=hkaGsT9yEXbs25MorGiuhIXBKmrq9DV29ud9dZI8Y9ggERHp2/L1q54exN2mv75JxJ1h
+	 /fAhS5H22dkbosEwnt4nl8eHHLn02fKQAIZ/CR+XAPeZwwLYbd+D2JY0ESU7NrIgCJhk5
+	 1YRwzFyRo/+quVY+zSI+ols2XE3EwqM8TjGU7VW9AkF+HbCvDqO0yM2whyOL65vp3klBS
+	 VFC03z7gQiVYEeiarZc4zHad8EykR9ho6O5ZKZ9YVB7vMVm91ugD2Sby6x98h7rGGs81s
+	 zdmBo8WrR3GKApGB0G84Lz4KsjGY7cbJVR/iBqHDRyXdrqDL3a+Ai6NRqi+plQNXG8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048825;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048827;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=umc23dYxeZLHC3xyBNYW2z/v+MScXFnNILA5/66RkX8=;
-	b=2P1ayxmgc4eePkemjGYLmZDoaerrpiJXkT7wtadm/B9bihU67smvWa3OrNqbLNrT5HrV
-	 nU/IhF4M6yrOMaltqIyLzmf8gObvBD2hjSQG+yy7NgUFLi7ssRrd+P2GHe/WNaDPjXPYy
-	 Pj2vYSKPPmnG4BA+MKq4fr/sF9/gjs5mMU7KAxt6BS6dn0DHT1jDRXl+N6s848MXvOoGh
-	 ApM4Srn0oGijiIFt4SJN8SmF33DL5hhdrzITrH0lT+63/fsuyZ7OldA21XdBwrTD6lsp4
-	 ebLh4Fu4wtMyLbPn1m75Ptn5COlfybWIXD+fbat1kIBIAc4UO13Bz7Aba/asgUTIEoQ==
+	bh=12O1LzUjjwAjZEuprUDMiZQDcEQt7VkNjdNIXcGQ6vg=;
+	b=u6YwdQfnQ6Sb2ztdBAaTkS2M+dvlcp7tbfBIP/aoll0nqrg5z2xAZlkc7XJKQE+iOhTz
+	 cGjip1BKp4ROPZUci7cYwQmqNMwu3TXDMCVT0WvTfZfAgJxnXVqylBGpdCdcRU5nZ2mOe
+	 DOLkYPY9o6dZAzzW01jNyurVfUuYQL8B/3cbRImHbz4uSpOY/+wreSvk79w5E6bbb9fEG
+	 U1KmBJoK0tJC/VHGSRjYtsqV0XkA82GZ+e4FNfuurqnB0GNT6qOBsT+m2mymL2BgFOxqO
+	 FQ/x/uZIFcDKW4o0nYWZqpOg0/DD/PFcyKUSyHAXaoBsfQh6aQH1e5asajcFo1cun0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O2R9ui4m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lf6Qxmty;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157E0606A31C;
-	Thu, 19 Nov 2026 00:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD7A606A32A;
+	Thu, 19 Nov 2026 00:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O2R9ui4m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 644501F000C4;
-	Thu, 19 Nov 2026 00:40:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lf6Qxmty
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D291F000C4;
+	Thu, 19 Nov 2026 00:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048824;
-	bh=umc23dYxeZLHC3xyBNYW2z/v+MScXFnNILA5/66RkX8=;
+	s=korg; t=1795048827;
+	bh=12O1LzUjjwAjZEuprUDMiZQDcEQt7VkNjdNIXcGQ6vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O2R9ui4mHxSWtWxAAKwHDZaQxHGQYNJ4dOzMKV3nleyg9GNTA3h74bHaSpM7NIA/V
-	 qPzWySJMhgkgGv2L0RienOCifN2TyfbbcUoY9TLItNPHUGnXewbr39W9i0/yBolV/O
-	 CKknaY8LDcANBWXlIE9A7XHSRGWSpkcsRZSd3R7k=
+	b=lf6QxmtyWIbukiqCDP79eLR282f/nzdwpDT8SHckHHjWvGcWg4wLpPCDH94efTBER
+	 mpicdz3zc5gmCDALTwE+3ag816+10pBkuvZJpEkEBVbdEfr00XwHlTGQ0jdWEkvceo
+	 AXgxhto7tOpk2j/pGd/Kr9+gsxEwSpAajT5b1Mls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhad Alemi <farhad.alemi@berkeley.edu>,
-	Quanye Yang <quanyeyang@proton.me>,
-	Jack Wang <jinpu.wang@cloud.ionos.com>,
+	Jiale Yao <yaojiale02@163.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2134/2857] RDMA/rtrs-clt: Reject invalid queue_depth from the peer
-Date: Wed, 18 Nov 2026 15:52:48 +0100
-Message-ID: <20261118150318.239477192@linuxfoundation.org>
+Subject: [PATCH 6.1 2135/2857] RDMA/mad: Reject receive completions shorter than GRH
+Date: Wed, 18 Nov 2026 15:52:49 +0100
+Message-ID: <20261118150318.275419435@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,45 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quanye Yang <quanyeyang@proton.me>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 724cd362162ca7ca5a250bec65efd74f7dad9f5c ]
+[ Upstream commit 2dc2126e690203d6adbddc7675927a242d810e43 ]
 
-queue_depth is taken from the server's CM private_data and later
-used as a session invariant.  A peer can send 0, which the client
-stores and then trips WARN_ON() in create_con_cq_qp() when the
-next connection is set up.
+ib_mad_recv_done() derives the OPA MAD length by subtracting the GRH
+size from wc->byte_len without ensuring the receive completion covers
+the GRH. If it is shorter, the subtraction wraps before the result is
+stored in mad_len and an invalid length can be passed downstream.
 
-Reject a zero queue_depth on ESTABLISHED, same as a bad
-magic or version, and fail the handshake with -ECONNRESET.
+Reject receive completions shorter than the GRH before inspecting the
+MAD header or deriving the MAD length.
 
-Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
-Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
-Closes: https://lore.kernel.org/linux-rdma/CA+0ovCg_sG8gaZXXj9zmOrpxRt=8+-x9wvycVNUKwWmMbr6-Yg@mail.gmail.com
-Signed-off-by: Quanye Yang <quanyeyang@proton.me>
-Link: https://patch.msgid.link/20260922-rtrs-fix-warning-rtrs-clt-rdma-cm-handler-v1-1-2076c0ee1455@proton.me
-Acked-by: Jack Wang <jinpu.wang@cloud.ionos.com>
+Fixes: 8e4349d13f33 ("IB/mad: Add final OPA MAD processing")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260926105927.3183294-1-yaojiale02@163.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-clt.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/infiniband/core/mad.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-index 6dadf9f20e8e9..1e8317690488e 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-@@ -1859,6 +1859,10 @@ static int rtrs_rdma_conn_established(struct rtrs_clt_con *con,
- 	}
- 	if (con->c.cid == 0) {
- 		queue_depth = le16_to_cpu(msg->queue_depth);
-+		if (!queue_depth) {
-+			rtrs_err(clt, "Invalid queue depth %u\n", queue_depth);
-+			return -ECONNRESET;
-+		}
+diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
+index 4347b3af13119..d5a6bdf9b9d9c 100644
+--- a/drivers/infiniband/core/mad.c
++++ b/drivers/infiniband/core/mad.c
+@@ -2084,6 +2084,8 @@ static void ib_mad_recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 			    recv->header.mapping,
+ 			    mad_priv_dma_size(recv),
+ 			    DMA_FROM_DEVICE);
++	if (unlikely(wc->byte_len < sizeof(struct ib_grh)))
++		goto out;
  
- 		if (clt_path->queue_depth > 0 && queue_depth != clt_path->queue_depth) {
- 			rtrs_err(clt, "Error: queue depth changed\n");
+ 	/* Setup MAD receive work completion from "normal" work completion */
+ 	recv->header.wc = *wc;
 -- 
 2.53.0
 
