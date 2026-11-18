@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035435;
-	b=IsXjreJt14F2D1lAfkkCMYk/4VLQklGTXgUhEXED99w6R9TcKVn8mrm7jA2sUyT/QMTt
-	 TSP9dQbubYmsi+ddLmjASeH9V6WfbCIXlK8ml76S7ueX9HT+ZR0LlWoypkHY1XqC2hPzM
-	 IlNfwi+BFhVMmHEEFn2X3Kn6cIi6L2lJWPdx+BKwg5tX0je/aWzGH9K8D5p3zC0lPvVjB
-	 gRvqCD7nzFLoy4H1tCqLNgv0QxAEusU7Xvvnhpuh1xy/mx9dp8hP0DRWfGD00UmbWIr0r
-	 kRDPXgihsZIO0GhB/hxuoSsmz9e4PFGV4WJmJXqkOlhWoXbkhT0bKMH9cXyvKoCNJjg==
+	t=1795035437;
+	b=k9gfwJ2ZP8tZDjGZXouOnyMhRkWrK3/W96FJdYHqB7BR/xkOn1vU1DvUYnu5ELYJgq2m
+	 07eD6JVv7suQ9Dn5E6gndw0TmoU9w3xxlREGz0HZdi6nrzUqM4Lx6nCF+VLZ7mYseNa++
+	 XoswU6bNNQ5iEEaFEFqV86IC8Foa3i0GI+zJuIcQyq/a/cIeHBf2UhwAQr7F7kzp3KYui
+	 95smpUt60JgIXZx/3jormSTUdDdImk4QOyQLT2YoiDTpV93vNegTdAeTN9GIZDrXhoWWB
+	 55qca8kLmHqZflHykrVE4yJ0dpMbx77YEh2cgc60n8hEdlpQyN8Ct/AKOmhQqcpWFZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035435;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035437;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pKRXsMGIRwUMvCzyNN18fz9wU0V0NhYXNwooGxRJpbA=;
-	b=lgsEZQEDSnofoT5s8qxrbE5/d60rwDkAFfy84xnPz5Z4UxA/oN8KTfKmIIJG1RSiI/xk
-	 nqG1Aw11OnsK86sRtGEPlaipy5+yAm4ExqTOHuAqj2zXTNe6SCxEuhsXqWcnRcNFqqqUU
-	 SleDwLmSqmosa6vTmXvBET1nWclSnBaXEscrY9nD7JQryVexygoFLZbjbPECSCbzcT8qN
-	 jglBHlh4WrTXS2T7zdh5kS3aEZs47a4jz1YHjVixnqXhINchkVJs7vmdCHfpL0/aKlCSt
-	 nKQ+Ajb71Ip2hGceHPgyVw2r5Fpc25z/21FTF8FP8blPRvfiJJOi1oN5fJdsdmrjJKA==
+	bh=RuSc/AhaIhOKIRY4onAf/hkMUkm+nGMAsdwPcdfvLys=;
+	b=IV1QmZ+bp6uA4j4ZkgGfYDYpQZ5xw1mnnghjFBEGrrau0uIjIuun8ydhDTGW6vJg4oN8
+	 gR6rsoWRslQ3jN89YQAJiHaP1wfFl85TphiTIg7QcNWjOXV/dhBjMmnsZX4JfPgSEx1bs
+	 SW7llOOHTmi+wJLms4qO/qL+wYAG/JaYAQLcFOadpE3gXarv5V18hXugF+Q/tph4sC1kW
+	 1n5hebYNVh2umakEo5ga/ykdxluyw4rA6wQmb6hFxmW8c/F3wa5vFL6onTUN24pMN5fpU
+	 JN/cUuhBPGygMvBrwbpjJ5ydHdNPaW8oo+EefirhqodEqMoDFMlRx0hyZx1WG9FyS6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FwUIB49a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Llcn7c84;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B064606A320;
-	Wed, 18 Nov 2026 20:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4979606A325;
+	Wed, 18 Nov 2026 20:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FwUIB49a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611D81F000C5;
-	Wed, 18 Nov 2026 20:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Llcn7c84
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23CB71F000C5;
+	Wed, 18 Nov 2026 20:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035434;
-	bh=pKRXsMGIRwUMvCzyNN18fz9wU0V0NhYXNwooGxRJpbA=;
+	s=korg; t=1795035437;
+	bh=RuSc/AhaIhOKIRY4onAf/hkMUkm+nGMAsdwPcdfvLys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FwUIB49atyDwje/1/cS/9iN+LUsGyVBl/lZygiUaG2obxoCP4iw+aDoN16GFZyH4a
-	 wOqnEn0ek7N7z9OGAZS16Q+j7wZutZHmVb0F5klS91qNdXvp0Qd7AftJ2JybfVieBa
-	 J9ihQJRPk05wuYcN47akHKFpIHLCucJO9MTXzWEg=
+	b=Llcn7c843/86lI2uRk0vYhzSHcIVaMNGmZu0+r8vu2IGaq5w9onZV/ibQCTXR3ISp
+	 RJIloeqUHTEwddEJ7d1KqQGitHBPLQsZyDxbJzoPUeAP7sFmUDbU774qmoiyFDxSRE
+	 T022lGC2DAzWHtgYG/O8MbuyyYTbQmr6wfD5CfqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+54cdc566f64abf51b7f1@syzkaller.appspotmail.com,
-	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.6 0704/3318] SUNRPC: Reject a socket that already has an svc_sock attached
-Date: Wed, 18 Nov 2026 15:22:06 +0100
-Message-ID: <20261118150339.497720607@linuxfoundation.org>
+Subject: [PATCH 6.6 0705/3318] SUNRPC: Reject a TLS alert record that is not two octets
+Date: Wed, 18 Nov 2026 15:22:07 +0100
+Message-ID: <20261118150339.536000967@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,62 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <cel@kernel.org>
 
-commit 0995447b8059c4d23853cdcddbe789c4a2b6bb88 upstream.
+commit d16bebe45272ced4f962d27b9efd8b32a3876bd9 upstream.
 
-Writing the same socket descriptor to /proc/fs/nfsd/portlist twice
-attaches a second svc_sock to one socket. svc_setup_socket() saves
-the socket's callbacks before installing its own, so the second
-attach records svc_write_space() as the old write_space callback.
-svc_udp_init() invokes that callback by way of svc_sock_setbufsize(),
-and svc_write_space() then calls itself until the kernel stack is
-exhausted:
+tls_alert_recv() reads two octets from the kvec it is handed and does
+not check the length (net/handshake/alert.c). svc_tcp_sock_recv_cmsg()
+calls it for any positive receive, and the alert[] buffer it supplies
+carries no initializer. A one-octet alert body leaves the description
+read from uninitialized stack and reported through
+trace_tls_alert_recv().
 
-  BUG: TASK stack guard page was hit at ffffc900037d7ff8
-   svc_write_space+0x90/0x2b0 net/sunrpc/svcsock.c:429
-   svc_write_space+0xe6/0x2b0 net/sunrpc/svcsock.c:430
-   ... 700 more ...
-   svc_sock_setbufsize+0x18d/0x220 net/sunrpc/svcsock.c:386
-   svc_udp_init net/sunrpc/svcsock.c:854 [inline]
-   svc_setup_socket+0xb2f/0x1090 net/sunrpc/svcsock.c:1498
-   svc_addsock+0x2fd/0x760 net/sunrpc/svcsock.c:1547
-   __write_ports_addfd fs/nfsd/nfsctl.c:742 [inline]
-   write_ports+0xa5b/0xcc0 fs/nfsd/nfsctl.c:861
-   nfsctl_transaction_write+0x106/0x1a0 fs/nfsd/nfsctl.c:112
+The peer controls that length. Neither tls_rx_msg_size() nor
+tls_rx_one_record() enforces the two-octet Alert payload. A TLS 1.3
+record carrying only the inner content-type octet decrypts to a
+zero-length payload. RFC 8446 Section 5.1 requires a record with an
+Alert type to carry exactly one message, so any other length is
+malformed.
 
-svc_data_ready() and svc_tcp_state_change() chain through their saved
-callbacks the same way, so a TCP descriptor added twice recurses on
-the next incoming segment instead. Reaching any of this takes a
-writer on portlist, and the nfsd filesystem sets no FS_USERNS_MOUNT,
-so the reproducer needs CAP_SYS_ADMIN in the initial user namespace.
+Require exactly two octets before parsing and return -EBADMSG
+otherwise. That closes the transport rather than acting on a partly
+uninitialized alert. Gate the path on a control message rather than a
+positive count so that a zero-length record reaches the check.
 
-Reject a socket that already carries sk_user_data. svc_setup_socket()
-overwrites that field unconditionally, so a socket some other
-consumer has claimed is one NFSD would corrupt whether or not the
-callbacks recurse.
-
-Fixes: b41b66d63c73 ("[PATCH] knfsd: allow sockets to be passed to nfsd via 'portlist'")
+Fixes: bee47cb026e7 ("sunrpc: fix handling of server side tls alerts")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+54cdc566f64abf51b7f1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=54cdc566f64abf51b7f1
-Link: https://patch.msgid.link/20260815162844.8219-1-cel@kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260808-svcsock-cmsg-fixes-v3-2-62d9a631c880@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svcsock.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/sunrpc/svcsock.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
+diff --git a/net/sunrpc/svcsock.c b/net/sunrpc/svcsock.c
+index 8e1009302e3b..2e5107a1fb89 100644
 --- a/net/sunrpc/svcsock.c
 +++ b/net/sunrpc/svcsock.c
-@@ -1540,6 +1540,9 @@ int svc_addsock(struct svc_serv *serv, s
- 	err = -EISCONN;
- 	if (so->state > SS_UNCONNECTED)
- 		goto out;
-+	err = -EBUSY;
-+	if (so->sk->sk_user_data)
-+		goto out;
- 	err = -ENOENT;
- 	if (!try_module_get(THIS_MODULE))
- 		goto out;
+@@ -289,13 +289,23 @@ svc_tcp_sock_recv_cmsg(struct socket *sock, unsigned int *msg_flags)
+ 	iov_iter_kvec(&msg.msg_iter, ITER_DEST, &alert_kvec, 1,
+ 		      alert_kvec.iov_len);
+ 	ret = sock_recvmsg(sock, &msg, MSG_DONTWAIT);
+-	if (ret > 0) {
++	/* put_cmsg() shrinks msg_controllen, so a short one means
++	 * kTLS filled in u.cmsg.
++	 */
++	if (ret >= 0 && msg.msg_controllen < sizeof(u)) {
+ 		/* Returning the count would credit the RPC stream with
+ 		 * octets that never reached the caller's buffer.
+ 		 */
+ 		if (tls_get_record_type(sock->sk, &u.cmsg) !=
+ 		    TLS_RECORD_TYPE_ALERT)
+ 			return -EAGAIN;
++		/* An Alert record carries exactly one two-octet message
++		 * (RFC 8446 Section 5.1). alert_kvec caps the receive at two,
++		 * so a longer record produces the same count. MSG_EOR appears
++		 * only once kTLS has drained the whole record.
++		 */
++		if (ret != sizeof(alert) || !(msg.msg_flags & MSG_EOR))
++			return -EBADMSG;
+ 		iov_iter_revert(&msg.msg_iter, ret);
+ 		ret = svc_tcp_sock_process_cmsg(sock, &msg, &u.cmsg, -EAGAIN);
+ 	}
+-- 
+2.56.0
+
 
 
