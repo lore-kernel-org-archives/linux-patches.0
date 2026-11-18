@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021978;
-	b=elHkEwWQ3jyx4nYTk3tmVmsw10RAlO9JNjHkPuxgwcIpXGhWa6QcQQdwl1mBIjDzftOe
-	 tOBFWVNi1znBULsaCWp/+R8JUpOw8b4nzgD54I7zVbVk7DsW59f5dIXCVTK85BZf8/4mz
-	 mHZOvAhQDqGvuzBVwrVb2kTGXiPfdintIVw5XuVdNajwZeRmQXWl+Ha9eUL1aPIkzvtg/
-	 CH+3IpDnKS/bkIWtpJAmwXdJXR/zOAXV/MRMMRdUud3M3oKGtY+YBlsqDuUzoG0hhPOwG
-	 B/qZtTxxaFsJUFI7Pouv6Zpv8T7zXf5UlJWJo4nHkNDE/f4qbpDD4pIOj/WF0+7jYLQ==
+	t=1795021981;
+	b=dyjZOr3B9h1wJOYjsmxnG4gKwHeFxiwstnbkZ4rE19e4bfuj5B+LLPLT5za2x0I06AjD
+	 D0yl3lRbhc6r6N6bRYro2N29AxFzrZWAef/t1woJNdDdDLFxOSd1q4Oiq5lJ1ptBb0f9s
+	 ja/7S1JC//jl119wb/dQGHFvdojfM76o5DBegXK6HFceSO5B7Fm7/qRDiSrKJBaNs4A6N
+	 NDjU+k0opDpfleB5YQe6nJSUVmU+bsooYG2usp3JyS0jEul6hPm/Bk1uYLeauCjnAvH9A
+	 Q/BMgzvvVLIqMd9JGfvVK/YAAjYojSKKPKCVZipnk1zBWpzWsuZsp1m3NLqlbez7a5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021978;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021981;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YawsY+GP6rTHBc3s3+E8uVAexdpXoyBugsD8lmKjjHU=;
-	b=1FZmduqMFEtwBw62rtX9gjMrR74NlsesepET6ZLW+ll4luSkvcQ00KRC/o/c79G3hs6V
-	 VvVwat80xkrFUEFVtgBspAo3CMDU1Gd+U6AoYoMj4txbipOkbDvjZZT4x+eEnTCNFalYS
-	 f6zS3qmASPus8pmtU1gTV2s5S2YLxM4K0mEAN6wTcvTioSZd4y2yFMr/p0igd1ZcZ9e02
-	 9IIFueaONfVwmWm/5tlLQ1LXsNM23c7rYIXGZ5UdlFs210/jVSN5DEoS8F/kEWaCJCnnW
-	 r9XWtqMjEBSMv5TlDj6umD5DvyHyN4QlGjQooyLbKDwVGksVorDpoE2bcg8xrWmDh3g==
+	bh=jm8ysn7ETsC1yr3MHi7YKV6YmGtsCKSE0bc6Py9+oYE=;
+	b=B5qISDVritbSQuBfTi6czE7UbQC0/X45A1nryMFqg7lJdli1qTnhofFUixYhF5w0U19E
+	 BPDDSan9TUfOo0hF/24soS5U5NypPA5PP0jqA8D4VlQnB/I1puXsjFrVS8fGtqmBJd+iE
+	 x+g3JZS+6jlskzEaYetGbC0AccPUSeoUoRHepHe7ttJ/kAQeIfEQVQikdfphJYDpBo9RH
+	 ZWYAyA+TeRlXkBPUsEulWDHevkkivgpDwjJiQB6aLeSZn4nuPH1fpKOD1GBiet4e8CBI3
+	 du18dZYH6F4aqZxOGdam/ckMl6Wj48TJFenzhQ2npr3FgQ6tugzR92l3a+88eoaAPkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T2Uuv+jw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dsdqwpzy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B500606A320;
-	Wed, 18 Nov 2026 17:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F353606A32C;
+	Wed, 18 Nov 2026 17:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T2Uuv+jw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A5511F000C5;
-	Wed, 18 Nov 2026 17:12:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dsdqwpzy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9521F000C4;
+	Wed, 18 Nov 2026 17:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021978;
-	bh=YawsY+GP6rTHBc3s3+E8uVAexdpXoyBugsD8lmKjjHU=;
+	s=korg; t=1795021980;
+	bh=jm8ysn7ETsC1yr3MHi7YKV6YmGtsCKSE0bc6Py9+oYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T2Uuv+jw6OAbaFMfwmAx73YyAQaCts7gXKKfDNjx1ZKmsz4RDIlfA/38ydczTpkem
-	 58QFYciIfMKEt36pCvLwsMgbS6U759GSG5ACEncLMdl6VuIATBEU8Y+6riS2ntr6z7
-	 LhoA6QSe7Qd68LZwnDfx2enr/IeW10ZkjnKxRC4I=
+	b=DsdqwpzyKrMylplapWxsFGAo/1wmfFer6jIhLT9BMO/wsem+ezpSKxPWHLP4XgR0M
+	 jWjz0xBaE2N4Uo63EdmQVwqxWbYB7yswm1gsTrzOACDQ64xrj5C4jmECmjAXsTaa8+
+	 YEZ0L/EHyYMCmWnqVQAOE7c93FyROQu1F3P6KxHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2492/2651] sched_ext: Fix a lone IMMED task waiting behind a kept prev
-Date: Wed, 18 Nov 2026 16:02:12 +0100
-Message-ID: <20261118150414.566523606@linuxfoundation.org>
+Subject: [PATCH 7.3 2501/2651] net: lan966x: release the in-flight slot of a stale TX skb
+Date: Wed, 18 Nov 2026 16:02:21 +0100
+Message-ID: <20261118150414.836861964@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,55 +68,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit 5173b2965834ad71d8c9035048354dce7c391125 ]
+[ Upstream commit 074caa30a62726c0ee959e8b8ccb64cda0b26ae5 ]
 
-While dispatch is in progress, rq_is_open() returns true and dsq_inc_nr()
-schedules no reenqueue for an IMMED task inserted on an empty local DSQ. The
-check at the end of dispatch_one() schedules the reenqueue only when more
-than one task is queued, so a dispatch that keeps prev leaves a lone IMMED
-task behind:
+lan966x_ptp_txtstamp_request() counts every two step TX skb waiting for
+its timestamp in lan966x->ptp_skbs, and refuses new ones once
+LAN966X_MAX_PTP_ID are in flight. lan966x_ptp_txtstamp_old_release()
+frees the skbs that have waited longer than LAN966X_PTP_TIMEOUT.
 
- 1. a parent's ops.dispatch() sub-dispatches into a child, which consumes a
-    task with SCX_ENQ_IMMED onto the empty local DSQ
- 2. the parent extends prev's slice and dispatch keeps prev
- 3. the local DSQ holds one task, so no reenqueue is scheduled
+Before this patch, old_release() does not decrement ptp_skbs, so every
+skb whose timestamp never arrives, for example because the switch
+discarded the frame, keeps its slot forever. Once LAN966X_MAX_PTP_ID
+slots are lost, two step frames fail to transmit on every port of the
+switch.
 
-The IMMED task waits on the local DSQ behind prev.
+Return the number of released skbs from old_release() and subtract it
+from ptp_skbs in txtstamp_request(), under the ptp_ts_id_lock it already
+takes.
 
-Schedule the reenqueue when dispatch keeps prev and an IMMED task is queued,
-as even a lone IMMED task can't run right away behind prev.
+This fixes the accounting only. A port's stale skbs are still aged out
+only when that port sends a two step frame, so a port that stops sending
+them keeps its stale skbs, and their slots, until it sends one again.
+That behaviour is unchanged by this patch.
 
-v2: The description and dispatch_one()'s comment are reworded.
+Found by an AI code review agent. Reproduced on a lan9668 board.
 
-Fixes: 98d709cba319 ("sched_ext: Implement SCX_ENQ_IMMED")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Fixes: 77eecf25bd9d ("net: lan966x: Update extraction/injection for timestamping")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261026-lan966x-ptp-stale-tx-slot-v1-1-9f7c895eb1ff@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext/ext.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 14088c64b9962..d1a4603a66f13 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -3059,8 +3059,12 @@ static enum scx_dsp_verdict dispatch_one(struct rq *rq, struct task_struct *prev
- 	 *
- 	 * - A non-IMMED HEAD task can get queued in front of an IMMED task
- 	 *   between the IMMED queueing and the subsequent scheduling event.
-+	 *
-+	 * - When dispatch keeps @prev, even a lone IMMED task queued during the
-+	 *   dispatch can't run right away.
- 	 */
--	if (unlikely(rq->scx.local_dsq.nr > 1 && rq->scx.nr_immed))
-+	if (unlikely((rq->scx.local_dsq.nr > 1 || verdict == SCX_DSP_PREV) &&
-+		     rq->scx.nr_immed))
- 		scx_schedule_reenq_local(rq, 0);
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
+index 8c40db90ee8f6..9be2cfe6feeb7 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
+@@ -376,9 +376,10 @@ static void lan966x_ptp_classify(struct lan966x_port *port, struct sk_buff *skb,
+ 	*rew_op = IFH_REW_OP_TWO_STEP_PTP;
+ }
  
- 	rq->scx.flags &= ~SCX_RQ_IN_DISPATCH;
+-static void lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
++static unsigned int lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
+ {
+ 	struct sk_buff *skb, *skb_tmp;
++	unsigned int purged = 0;
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&port->tx_skbs.lock, flags);
+@@ -389,14 +390,18 @@ static void lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
+ 
+ 		__skb_unlink(skb, &port->tx_skbs);
+ 		dev_kfree_skb_any(skb);
++		purged++;
+ 	}
+ 	spin_unlock_irqrestore(&port->tx_skbs.lock, flags);
++
++	return purged;
+ }
+ 
+ int lan966x_ptp_txtstamp_request(struct lan966x_port *port,
+ 				 struct sk_buff *skb)
+ {
+ 	struct lan966x *lan966x = port->lan966x;
++	unsigned int purged;
+ 	unsigned long flags;
+ 	u8 pdu_type;
+ 	u8 rew_op;
+@@ -408,9 +413,10 @@ int lan966x_ptp_txtstamp_request(struct lan966x_port *port,
+ 	if (rew_op != IFH_REW_OP_TWO_STEP_PTP)
+ 		return 0;
+ 
+-	lan966x_ptp_txtstamp_old_release(port);
++	purged = lan966x_ptp_txtstamp_old_release(port);
+ 
+ 	spin_lock_irqsave(&lan966x->ptp_ts_id_lock, flags);
++	lan966x->ptp_skbs -= purged;
+ 	if (lan966x->ptp_skbs == LAN966X_MAX_PTP_ID) {
+ 		spin_unlock_irqrestore(&lan966x->ptp_ts_id_lock, flags);
+ 		return -EBUSY;
 -- 
 2.53.0
 
