@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035052;
-	b=ktddz1dK2q6eQQ3TQ8WO8dcPl8CKrlWJZElkwlJfGBmqY66yCIWT9I4fGH1dNkxqKXU9
-	 0Q+RuhVR3bXBmm9Uj508HaAyCxTZIkko9VMSqTKGJmKU0rxEvkcwTZ58plsLH7SzA2t4b
-	 LNMvMuBLsKJwfSpq+ngni5LFAKvbdQBTVXocgULkG8xXaVu++qF+C4FowcoCsFqwCNc4H
-	 u8b9oqZ+p+IERRBFbrFsQPN/j9xuwa3i8wLf4n9QbE9x2+iAwurkm1C+NjTul829l0cSh
-	 u9ggQuSFVSUrmTUZcTbi5xP0S8FohHmhWtwm0ci3+STCMx0z9sWbZf7ENCe8sQo1/Pw==
+	t=1795035054;
+	b=sZ9CI323wVbzXj1CctQv7fo8oJ69+G9M2GZHrwInf2pKoaS6HYqH8PuVd8TamSGVJDum
+	 KsHYe9Tt/6B8tNQAknYBuJBr3ABJg70s1O5ZypptJNSaf9D9P+EH3wfp97LAZtP9I5AOS
+	 qzNyRxPQ0/h42f2I8ETNNrRPQQcIFvJQTNtfq8R+1wmnmcY6Enii/xY4Cq/h1FR6rlkA/
+	 5SXVFc47qy8TgaDEwkrpojNham5hXk2Uw8QPND4IFJde+tLx2SACck75bLj1n1NFaj35Z
+	 aQF57YjBcSrfbNxivjRYiraXQdWId3cVr2YqyAPiZnthJDzC5fNLN6gppLjCQcXdqUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035052;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035054;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+ks8P+FOyBZkUJsexUTyNs1/UDDrRjJ5V7D33oE62hw=;
-	b=2ZJOrjb52t14pKcW1PkfjOZqxjOaMnbplj4HP0eFQVm4HXMzpti5vSE3ANMe5HBgDWND
-	 CS2o9kwN1jZc2OsJBsdzyBPctTAfN6nDbNF2bWIdrDZSS1lAivjsdCy8CJcu3AZu7S5H/
-	 b9FPduMT6M5WjzC0wPCWAaY7iUqSP78CE/Rkv56ihRabvNsA5Y0TlLwiUlN/a6WR5j3Ni
-	 pDh3uVnOsKNG5OJisdW57cPVM51VYkFF6nVy2wlLRaUn+RLKRnpKRdoOWZevMV+5SMrMb
-	 ESBVQGv9QeuZDRnqXodSFc1JnHLUx4HcdP446OBBMS+iCQC+uWficoNf4iqc7AzsgyA==
+	bh=OmiExuQ+yHP1pvhJ3rP6G3YyHsDVJCzNsszh6mZ2TaM=;
+	b=CxhK08LR/P8XHFZWZlVA6VRCfPnY9Eyebo4KoDonHz2IJ2/YxqRrtjWs7j+fLqEx1+yL
+	 5WQHf+IPmLz2nRIW+7fZxuLsLQt2y5XPjQjdSPmxKAlUj3j/JdoCWSy0RsSA9aLEXk+sM
+	 yKh585GjCy5Q5XMo4YyEDtB11pgolIUEQIMe4cACVufr6qreyYPLBJ6c9ASJ49yO0xpHA
+	 bQKyPwxFfzFAw0Z8wvffwpH3mWINFe0GH49D0kfnHdaktXh1QM45cPW8xkwMLFlzC2hzy
+	 0e3TLrfRZhSqweDhoAuhPjQw6kV4F96qIifPDt7uJr7roKvT/XccGfhiLCZH7Fma7uQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Tn3xm+/m";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ZAV49sS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B88606A31C;
-	Wed, 18 Nov 2026 20:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CDE606A31C;
+	Wed, 18 Nov 2026 20:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tn3xm+/m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9F11F000C4;
-	Wed, 18 Nov 2026 20:50:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ZAV49sS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E511F000C4;
+	Wed, 18 Nov 2026 20:50:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035051;
-	bh=+ks8P+FOyBZkUJsexUTyNs1/UDDrRjJ5V7D33oE62hw=;
+	s=korg; t=1795035054;
+	bh=OmiExuQ+yHP1pvhJ3rP6G3YyHsDVJCzNsszh6mZ2TaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tn3xm+/m7wcBu5wR94c9Oq4p/2AUDcYd3PdBk+M9U764BP1EzLr0woK/ToT+u7nTK
-	 TRzLOSqX29Pc6cOA5dkIYPy+D9/PDMjQBpN76CIqFsfNDYXC8+b/SxdD/1CPyA87Zp
-	 BqrbM9Mawq/P/F27qsDGJ4IssocPKcWh5UAU6nSk=
+	b=0ZAV49sSRjVpDOU4gG5XGoG/kYgzI3TaATv88cq1QqzW5b8Z/3goXqCOAAORcwA2f
+	 yjoSejULXoxi7ULwwyxIgJSrSk8RCAqQycYB8NnGyBNptxbYKbtE7fsxHwt9VqmSp/
+	 kHNZtSfqurK+05BCC5olJdPXl/1vhpF7OnVpFAP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0541/3318] ipc: drop the mqueue mount with kern_unmount() on setup failure
-Date: Wed, 18 Nov 2026 15:19:23 +0100
-Message-ID: <20261118150333.499142859@linuxfoundation.org>
+	James Kim <james010kim@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Matt Porter <mporter@kernel.crashing.org>
+Subject: [PATCH 6.6 0586/3318] rapidio: mport_cdev: fix use-after-free in mport_mm_close()
+Date: Wed, 18 Nov 2026 15:20:08 +0100
+Message-ID: <20261118150335.137501529@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,51 +70,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: James Kim <james010kim@gmail.com>
 
-[ Upstream commit f0e48172a59e517e613b73f73cc35f24fd123aeb ]
+commit 0f2cd84858e67cf8e02438bf28243bcdc67aa49a upstream.
 
-mq_init_ns() creates the mqueue mount with fc_mount_longterm(), so its
-->mnt_ns is MNT_NS_INTERNAL. When setting up the mqueue or ipc sysctls
-or msg_init_ns() fails afterwards, create_ipc_ns() drops it with a plain
-mntput(). With ->mnt_ns set that takes the fast path of
-mntput_no_expire(). The count drops to zero and nothing ever kills the
-mount, so the mount and the mqueue superblock are leaked.
+A use-after-free vulnerability was identified in mport_mm_close() in
+drivers/rapidio/devices/rio_mport_cdev.c, identical to the pattern
+previously addressed in dma_req_free().
 
-Commit dc55e35f9e81 ("ipc: Store mqueue sysctls in the ipc namespace")
-added the first failure path after mq_init_ns() and never dropped the
-mount. Commit 7229d74e5e8c ("ipc: create_ipc_ns: drop mqueue mount on
-sysctl setup failure") tried to fix that with a mntput() but that
-doesn't help for a long-term mount.
+This is observable from userspace when an application creates an mmap
+mapping via the RapidIO character device and subsequently unmaps it (or
+terminates, triggering exit_mmap()).  During munmap, mport_mm_close() is
+invoked and drops the mapping reference via kref_put().
 
-Use kern_unmount(). free_ipc() open-codes the same thing for a namespace
-that made it.
+If kref_put() drops the last reference, mport_release_mapping() is called,
+which frees the underlying rio_mport_mapping structure.  The subsequent
+mutex_unlock() then dereferences map->md to unlock buf_mutex, leading to a
+use-after-free:
 
-Fixes: dc55e35f9e81 ("ipc: Store mqueue sysctls in the ipc namespace")
-Fixes: 7229d74e5e8c ("ipc: create_ipc_ns: drop mqueue mount on sysctl setup failure")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-5-7446d2d335e6@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+   mport_mm_close()
+     -> mutex_lock(&map->md->buf_mutex);
+     ...
+     -> kref_put(&map->ref, mport_release_mapping); /* map is freed */
+     -> mutex_unlock(&map->md->buf_mutex);          /* UAF: map used */
+
+Fix this by caching map->md before kref_put() and using the cached pointer
+for mutex unlocking, ensuring that freed memory is not accessed.
+
+Link: https://lore.kernel.org/20260914042327.49798-1-james010kim@gmail.com
+Fixes: e8de370188d0 ("rapidio: add mport char device driver")
+Signed-off-by: James Kim <james010kim@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Matt Porter <mporter@kernel.crashing.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- ipc/namespace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rapidio/devices/rio_mport_cdev.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/ipc/namespace.c b/ipc/namespace.c
-index b93280de1dc5c..e703b23127916 100644
---- a/ipc/namespace.c
-+++ b/ipc/namespace.c
-@@ -95,7 +95,7 @@ static struct ipc_namespace *create_ipc_ns(struct user_namespace *user_ns,
- fail_mq_sysctls:
- 	retire_mq_sysctls(ns);
- fail_mq_mount:
--	mntput(ns->mq_mnt);
-+	kern_unmount(ns->mq_mnt);
- fail_put:
- 	put_user_ns(ns->user_ns);
- 	ns_free_inum(&ns->ns);
--- 
-2.53.0
-
+--- a/drivers/rapidio/devices/rio_mport_cdev.c
++++ b/drivers/rapidio/devices/rio_mport_cdev.c
+@@ -2186,11 +2186,12 @@ static void mport_mm_open(struct vm_area
+ static void mport_mm_close(struct vm_area_struct *vma)
+ {
+ 	struct rio_mport_mapping *map = vma->vm_private_data;
++	struct mport_dev *md = map->md;
+ 
+ 	rmcd_debug(MMAP, "%pad", &map->phys_addr);
+-	mutex_lock(&map->md->buf_mutex);
++	mutex_lock(&md->buf_mutex);
+ 	kref_put(&map->ref, mport_release_mapping);
+-	mutex_unlock(&map->md->buf_mutex);
++	mutex_unlock(&md->buf_mutex);
+ }
+ 
+ static const struct vm_operations_struct vm_ops = {
 
 
