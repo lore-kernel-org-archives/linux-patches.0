@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057579;
-	b=D3WALn+rGK4L+l5RLorpurh3uLSb3Ztnai0HItJD+08RqjNzyu0AaEfb/6eZa9DaU3pr
-	 rWKwOZKU0bE8N82vLhjfZ+F0ls7GyHfK9AyYo03qxfNRl7YWvV2hrPK/dDJ4mqTfPTTCh
-	 gqzix2MOkIJrhWqDFf0bhmCcN0E9hcH4oQRp7usEOgVbw8bNe0IQ7XQ+UV9ecBlYs+7uj
-	 7W7ee0joDOTwmN7tww5jHtXCaU/niSFMdSVSpQKt2pIJyJh8PMY/UcqvcC3AU+BVieYcA
-	 zi93HL4SRv9rDtAdWNTCaT9fgC74K8UhB3D6LSwzBU9VXpVy3xngocR1rixNC9VVICQ==
+	t=1795057582;
+	b=KT9KIMFwN6MUHx3vLbIlgjVjCtc3W/CTHn0Ub6t5l8uikl4Uo6mUtbZFedZhoDMWWf6b
+	 Wk0e2uYkHNJNaowW1BxBuJDIr16ImNLlXsGktb0WPyUzVPqk987xKzHFidYL29gaH15q/
+	 wdqfRVJ/+QKPJ6WgjO3Zu8kHCZGZPlZRdQfJoyNt5PnRYXilbvETO3GMI02cllc8qSAim
+	 dDG0GGlKOA1xDY2uReVlzDIkQUTN8LHr+hQw0acRpAGYJVkuLnDdwBgj+VXmw01wx1SDJ
+	 k3/THvJc3d0HvY/G1Xm88XArfZQ9e/eKTBtyee0Vz/zjOW2Hl4z35Lxa1iNBVi3hDTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057579;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057582;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QafXqsAfdx+9p0D97bbIDUh2ddC0U8pefGxWu67pry8=;
-	b=UPldnx/UzlAoPlN1WB/nZ+NwdEU7Pqx9/cpll34NhjYcVZ0hKISaXik8L1CDABkHuec0
-	 KaOVV7mGwWbLtpFgd3yjwF7L9MS291JllC+qvBxpwqT/UpuvByee/bF8uz4OW5AZoljPz
-	 lIOZ61jNVwBBwYJAQbl5Vj30mt4SDZJMNtw4gkOajrw6vubWW6BCSs09c7Pp6RBe+O0sa
-	 gRuCs3/MZudFoXHS5c8ooewyKCTn//WBqRGUbnPbLelgdgi40+4Xx/N7xBIcAX6Woy1pG
-	 HkHVhC26hXQBaDqgQtEahGvKrTzN3ABKh0fKSUhpXuq3Ta7BRxew/WlAeRsZdfeyCoA==
+	bh=WDUyZjlQNgvoTQKjdLUjFpt3IYBpOGV8ZDfsy7c02/k=;
+	b=ah7QS8QXwpiLjhsh2rnR0jHL6+P+JmZo3Nd3UGHy1icc7i3X8uCNXsCAoMR8nWKEyngi
+	 C+K3Uj6/sTQtVDd92S+VFzSoo+fnqan68oLqbxDy7CRRAYhJylMsIRGcAozQ3XkqI0X0T
+	 f8eIxaynK4XZGkIMzuHoTkt3PIb3maBmF9fRckD1w/rsceZZWWu/dRxFrKVLl3jykmwg/
+	 j3tefKiZR0wbOAArnIdqJyKD0qtL5Do9F/2tlWL3klfac8lJroek1729sHD4gp8zk+ENl
+	 UEC/AwCDWwn7OBSxweQ0a3YBm6KAvjsmR+ULfJB3YboFCCCwWpCLF3Smzd2R1RpILjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VRB5BGNg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IJihT2Ly;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5782560A2604;
-	Thu, 19 Nov 2026 03:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184BA606A337;
+	Thu, 19 Nov 2026 03:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VRB5BGNg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD14C1F000C4;
-	Thu, 19 Nov 2026 03:06:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IJihT2Ly
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719171F000C4;
+	Thu, 19 Nov 2026 03:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057579;
-	bh=QafXqsAfdx+9p0D97bbIDUh2ddC0U8pefGxWu67pry8=;
+	s=korg; t=1795057582;
+	bh=WDUyZjlQNgvoTQKjdLUjFpt3IYBpOGV8ZDfsy7c02/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VRB5BGNg1p7l4uXlED8R50GHyMCnSK9k4YNG02b9ticLVZwQI54sLGOiCrKRU1cTq
-	 VPkpJBGI8BI04Uq/u5gGdnKUdQN7qeoOAbelGp8FSrLNbw+n77QU+Hd+fIL9x7p+Hb
-	 Gy2rNFOsPGPawRYRS4qIw6Y2CLKzr+hYq4rzGnyg=
+	b=IJihT2Ly/7I7avAHPRnmOX4Jpb2Xft4oks/j7dhtyjwV/0W+mjVlsEKKbvGPeXA6z
+	 JaAGlgnQCHGF7uza+V7ZwozvEWe9gg3ShKUUxVYABchgMfgMHSqFK1TklBAtTDuJ6C
+	 JJRDjuOwa3/XGkf+iR/rMua03SJJvA6zrzHiCk/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Rausch <gerd.rausch@oracle.com>,
-	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
 	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0145/1848] net/rds: fix rds_message leak in the rds_send_xmit() drop path
-Date: Wed, 18 Nov 2026 15:36:23 +0100
-Message-ID: <20261118145917.369155910@linuxfoundation.org>
+Subject: [PATCH 5.10 0146/1848] net/rds: unpin MR pages with unpin_user_pages_dirty_lock()
+Date: Wed, 18 Nov 2026 15:36:24 +0100
+Message-ID: <20261118145917.399795373@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,76 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit eb8a59a17f4a8b6f2afb4a8063e99dd96cc3fab0 ]
+[ Upstream commit a507023e6ff1d0b4e7aac49b2f547fed0c21ea4e ]
 
-When rds_send_xmit() picks the next message off cp_send_queue it takes
-its own reference with rds_message_addref().  If the message then hits
-the never-retransmit check (RDS_MSG_FLUSH, or an RDMA op that was
-already retransmitted), it is moved to the local to_be_dropped list and
-that reference is dropped after the batch.
+The pages backing an RDS memory region are pinned in __rds_rdma_map()
+with rds_pin_pages(), which uses pin_user_pages_fast(): each page's
+refcount is biased by GUP_PIN_COUNTING_BIAS to account the pin.  The
+scatterlist is then handed to the IB transport, and the transport
+releases the pages in __rds_ib_teardown_mr() with
 
-However, if RDS_MSG_ON_CONN has already been cleared, the message is
-not added to to_be_dropped and the reference taken above is never
-dropped: cp_xmit_rm has not been set at this point, so the loop simply
-abandons rm and the rds_message (and everything it pins: pages, MRs,
-notifiers) leaks after an RDMA error.
+	set_page_dirty(page);
+	put_page(page);
 
-The only other places that clear RDS_MSG_ON_CONN are
-rds_send_path_drop_acked() and rds_send_drop_to(), and both can run
-while rds_send_xmit() has dropped cp_lock between moving the message
-to cp_retrans and re-taking the lock in the never-retransmit check:
-rds_send_path_drop_acked() can ack away a message that already sat on
-cp_retrans - the RDS_MSG_RETRANSMITTED case above - and
-rds_send_drop_to() runs on socket close.  Both unlink the message
-under cp_lock and put their own reference, leaving the xmit-path
-reference stranded.
+put_page() drops a single reference instead of removing the pin bias,
+so every MR teardown permanently strands the remaining references and
+the pages are never freed - a userspace-triggerable memory leak of up
+to RDS_MAX_MSG_SIZE per RDS_GET_MR/RDS_GET_MR_FOR_DEST call.
 
-Drop the reference directly in that case.
+The conversion to the pin API updated the unpin sites in rdma.c but
+missed this one on the transport side.  Release the pages with
+unpin_user_pages_dirty_lock(), which removes the pin bias and also
+dirties the page under the folio lock, closing the truncation race
+that a bare set_page_dirty() leaves open.
 
-This mirrors Oracle UEK commit "net/rds: fix rds_message memleak in
-rds_send_xmit".
+Dirtying under the folio lock can sleep, which is safe in every path
+that reaches __rds_ib_teardown_mr(): the registration-reuse path
+(rds_ib_map_frmr()) runs in syscall context, and the pool flush
+(rds_ib_unreg_frmr()) runs under pool->flush_lock, a mutex, and
+already sleeps in rds_ib_post_inv().  The WARN_ON that guarded the
+old irq-context set_page_dirty() case is dropped along with it.
 
-Signed-off-by: Gerd Rausch <gerd.rausch@oracle.com>
-Signed-off-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
-[achender: port to net-next; update commit message, checkpatch nits]
 Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260730041629.3512480-4-achender@kernel.org
+Link: https://patch.msgid.link/20260730041629.3512480-5-achender@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/send.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ net/rds/ib_rdma.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/net/rds/send.c b/net/rds/send.c
-index 48132826ba00c..bd27e73e30849 100644
---- a/net/rds/send.c
-+++ b/net/rds/send.c
-@@ -288,9 +288,21 @@ int rds_send_xmit(struct rds_conn_path *cp)
- 			    (rm->rdma.op_active &&
- 			    test_bit(RDS_MSG_RETRANSMITTED, &rm->m_flags))) {
- 				spin_lock_irqsave(&cp->cp_lock, flags);
--				if (test_and_clear_bit(RDS_MSG_ON_CONN, &rm->m_flags))
--					list_move(&rm->m_conn_item, &to_be_dropped);
--				spin_unlock_irqrestore(&cp->cp_lock, flags);
-+				if (test_and_clear_bit(RDS_MSG_ON_CONN,
-+						       &rm->m_flags)) {
-+					/* our ref is put after the batch */
-+					list_move(&rm->m_conn_item,
-+						  &to_be_dropped);
-+					spin_unlock_irqrestore(&cp->cp_lock,
-+							       flags);
-+				} else {
-+					/* already off the conn list; drop
-+					 * the ref taken above ourselves
-+					 */
-+					spin_unlock_irqrestore(&cp->cp_lock,
-+							       flags);
-+					rds_message_put(rm);
-+				}
- 				continue;
- 			}
+diff --git a/net/rds/ib_rdma.c b/net/rds/ib_rdma.c
+index 468fd60d818ff..feff3e9190c46 100644
+--- a/net/rds/ib_rdma.c
++++ b/net/rds/ib_rdma.c
+@@ -255,9 +255,7 @@ void __rds_ib_teardown_mr(struct rds_ib_mr *ibmr)
+ 
+ 			/* FIXME we need a way to tell a r/w MR
+ 			 * from a r/o MR */
+-			WARN_ON(!page->mapping && irqs_disabled());
+-			set_page_dirty(page);
+-			put_page(page);
++			unpin_user_pages_dirty_lock(&page, 1, true);
+ 		}
+ 		kfree(ibmr->sg);
  
 -- 
 2.53.0
