@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061278;
-	b=dusXZftOWC8flu8r80spnpaHXLsDEeu3XMgU+ePR7BxS2xHWKv1ci/N6hNLj7ROTEYjR
-	 nBT7hpSRw+grr6VMo0BVxn6SX6lgOXGC/z8A8kz8SK7CCEJqfwWbqEm/uqMszYlf+guZu
-	 wezP0KymBDw4DuUzdPFRboaxylBgiXfIppRHVnHFBKbBr11+kYzrrSnIE+zwmuAIcKHEx
-	 LISe6syaXsMONVZb5XzdxjtA7YMqKdF0w/5E54rdYsoGO2RXAlCZZrlOEjh2QIK0o5mTl
-	 UHkOxU4tnx8l0argEFLeZrhWr5JJILJl5aOUJQt2Ztfs1wSDevIBbKymRHaNZnZmuKg==
+	t=1795061281;
+	b=E4MqwyoMLQtL8m4o5tqej/viiA67DAWnPjVjhg92UVcqMlvnpGOhjSNkiE+I72/wgAX0
+	 0kRcUMan4XCUWfRHoJ0dOrl4Kheuqst23kLiIVM0u3/VI/Fyq3HOt6toWOU5wySFclSzx
+	 vZ9ahTKRfFSLQCT3PhWdddSsAMthmrXRgj6+ZwZMl33lDi8l9Me1ib5WhCh3QsGkz1qjD
+	 tt8scc/QJqGLH62p7plo8cjUYWxFl9V+eBqcDFsKzyTUVgMeAUVuDZAo+iPoo0IkGBjAJ
+	 PzKdkRfzWRVePK6qog0BCFZyqZCpaSuz9jsekZIXq3XQHWBjer44ePVY2dYD4G2J9ng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061278;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061281;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NMB6a61udFKeTqOsZwI8hCJr++t51P1txWsWETySoiM=;
-	b=Wq3CHRG44gbNkSakuiLog9fLPjJZQRGjivq/FAU1t2tZXhZnPeIXnxhBOA7k380ul9rs
-	 iRTICNAaa4ktPQLf7wP0p73uPUNUpIHW7p2T9k/0aAapOoMnHJAmyn9KEsjTWysB6EqPn
-	 yFWXWj2cPly1GbARl6zVWilze9J4M1LgfCzJH5bgU5Byep5DMcDgFU80Y2a3+YKcHHrMl
-	 92qNUI5pebMdo2ShGGsY6PUDIgvanW/H11HXVHwBVgbaH5lYhsq1m7BxNMX0F0NB6Q8wM
-	 ru1EC5jrFV5Kl3/I1uwlLDn40blCaKVfac8/uf8G9KkPoT0F8dQCnUwUbnweNAEqvew==
+	bh=RMXAMrAkWYc054BC0WHxtPBF6Whx802uvnuTtFqozQk=;
+	b=HsaL9r19k/j0AQZgjGechMcbnkSz2dYEDZVue6fmqCaJncrKaCydZO7DRd5HMBHhkBkj
+	 5RgLc2qXQWOf/sGl/D2AoRqJZ7u+riLbwJHagG66USvW8Bb+hOkHekr5Qv0BsVpvzSfhl
+	 dl4U42a229J/gmXe9Hfbib5NER8oVDtui9HhWLaBy/9hNgJYkEpOc940+9FcB8wB/bdA/
+	 PsvAE0T/CbvkAn1w9AJ4Tgie+RskoALwUh956iE8S6+rBhB7CSNqU4WpMcqaNejHz7ESv
+	 FswBSnGb9whapkAEknsdstwUiPqaEch7cNyZlUzLnBV/6WVzmh2liz40FGcJzvRT/kA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JyCzMdHj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QqWh3M6W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FEB606A337;
-	Thu, 19 Nov 2026 04:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EB9606A325;
+	Thu, 19 Nov 2026 04:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JyCzMdHj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43FE31F000C4;
-	Thu, 19 Nov 2026 04:07:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QqWh3M6W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A1381F000C4;
+	Thu, 19 Nov 2026 04:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061277;
-	bh=NMB6a61udFKeTqOsZwI8hCJr++t51P1txWsWETySoiM=;
+	s=korg; t=1795061280;
+	bh=RMXAMrAkWYc054BC0WHxtPBF6Whx802uvnuTtFqozQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JyCzMdHjHvmbYeUS7bxb6gKQQptMrKz1xyctRI1uQA/WWuFNXcOt0f0P5lAhmL1YQ
-	 0tc81ngieyCziuaDr3LOZNHqMH69Po4m7L3SQdBnxj1dLWfe7o0+G9xru51jUbhGFe
-	 r1JK3//A5hF8YufL/w/hsCoAhZZ3OUPLRcD/NvbM=
+	b=QqWh3M6WRo52c0TH3KrH6HvMP/MwziA9x+oQpG1EHsJYyRGiHjBpUpFRIY4q/S5sf
+	 DmbTuw4+2xyelg5yqaByOLAlZunFhoRnqlibkqXuoFytHEJhi0eKh/bxzLwI5i/yro
+	 XHzZrgh49Red40WDVlNjCHj7PJw/VuwOZJz+36Bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1494/1848] dmaengine: ste_dma40: Put the LCPA SRAM node
-Date: Wed, 18 Nov 2026 15:58:52 +0100
-Message-ID: <20261118150021.768986994@linuxfoundation.org>
+Subject: [PATCH 5.10 1495/1848] dmaengine: stedma40: fix physical typo
+Date: Wed, 18 Nov 2026 15:58:53 +0100
+Message-ID: <20261118150021.823286713@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,40 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit 9a3762b470421658214baeb6cce3eed7344bb435 ]
+[ Upstream commit c281cde7a456aa9a56ced9175a4dead94048d3ba ]
 
-of_parse_phandle() takes a reference to the LCPA SRAM node, but d40_probe()
-does not release it after translating the node into a resource. This leaks
-the node reference for the lifetime of the system.
+Fix misspelling of "physical".
 
-Put the node immediately after of_address_to_resource() so both the success
-and error paths release the reference.
-
-Fixes: 5a1a3b9c19dd ("dmaengine: ste_dma40: Get LCPA SRAM from SRAM node")
-Assisted-by: LLM
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-14-89f595e8851d@kernel.org
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://lore.kernel.org/r/20210126205906.2918099-1-helgaas@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: f2baf04a695d ("dmaengine: ste_dma40: Fix memcpy channel parsing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/ste_dma40.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 9783841ad1db2..b790c3c9285aa 100644
+index b790c3c9285aa..e8a5574d1df00 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -3579,6 +3579,7 @@ static int __init d40_probe(struct platform_device *pdev)
- 	}
- 	/* This is no device so read the address directly from the node */
- 	ret = of_address_to_resource(np_lcpa, 0, &res_lcpa);
-+	of_node_put(np_lcpa);
- 	if (ret) {
- 		dev_err(dev, "no LCPA SRAM resource\n");
- 		goto report_failure;
+@@ -107,7 +107,7 @@ static int dma40_memcpy_channels[] = {
+ 	DB8500_DMA_MEMCPY_EV_5,
+ };
+ 
+-/* Default configuration for physcial memcpy */
++/* Default configuration for physical memcpy */
+ static const struct stedma40_chan_cfg dma40_memcpy_conf_phy = {
+ 	.mode = STEDMA40_MODE_PHYSICAL,
+ 	.dir = DMA_MEM_TO_MEM,
 -- 
 2.53.0
 
