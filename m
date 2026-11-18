@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023653;
-	b=3d/EC3UFGvYY63EhTEL7p7TP3MU+jJCyHvS+BZNYNhs/DxELxlnf5q9HWJaPhX8awDx1
-	 qayWg1/5dD2L/aLAMeTwNkbrAhDVqVxduvRum+lusLkVVA/5Ns8aTrsZ+gVgTm8fAi9/e
-	 1xeV/+MgieYWhhRR1GwBXIBl6uCD7EkPUYNS9Mbz12CS3htyLTayk/uuEoiUMv5IGB/fI
-	 CY7IQBbRciWFVp60657I02U6D8HBbV05ijPuFM7LhIwcWmgXkCpNQRjzZT2sZenq3DEDk
-	 xq4JAbRJlzIXXCYs2Iyi1Q2koZwByDdA5CNkJEfr83MM5vIgGpVQ9jxdyMmi/ouLC0Q==
+	t=1795023656;
+	b=PesVE2eDEI2QOfQ90QS2TBpA0M8182Zx8nK+RvbxxIXmxqPnN2RDAtmCsYB37ObvjS06
+	 DRzKEZNbfqHBf91CG68k3ccP2Ibp4u04b/293c0drymQPg+EJV9j7TCY+ISGWe4GqLMjE
+	 OrHxoxfy2G0O7nQ/Es5RahawjQTDldReXpBbnqcA6BBuI8rfBgA/fP2dNf5avJsUBb3R7
+	 3yFsExxnNjqinP45tXAiyBrH/migQA8qwwlbNj9uUhbaxMJ2oFnET48VWx1pdp3ARZlpj
+	 rduiMWMV7oyZdhSIFjkxlnqyVllBf2OniMbI8ZrNAJS8cdozji7QdKnU5yZw2laXKiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023653;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023656;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qWJJfas5FkHkZ56T5AM9h2OyJO1JE2ZHjKlpAEqLl+4=;
-	b=dBDT+Xnbpk5+zCN1FND2WeWAcsLh/gH8kUXLy2WUrmyYC0gWWGMGiRUu6PUtbESFqP/p
-	 sMq6NxdsG9uwNY8kVo94c5eG2XJ3GJll25rZHhi1Zkf2dv0xaDPtXE3hoHiVlyLzTNJ7I
-	 Tho4AiUsE5nG1+VjmyDduuDHTrlJgQ3XgLIFU/Rm6f92FxYdpjo0g8hXplq9SWXbG7oX2
-	 t+KrzjKobNKeswLM2r+tu66I6Xxcu7Mqelzdl0Gs+GxMfkAaAuQtDZ1dSiEQtnBQXNIrH
-	 JQueo8vUckZotT6su4MdFAfZMsM20zvD+fXF1BltJwm1ur0xxOncIh2wBWYOKcnls+w==
+	bh=71SpKyEvUMrzeYJwusB4mwd0VNaqnu78HwaKbUfB36I=;
+	b=OXHMAJBQqcikcYbctSlv7C06WFQ6WYu3cRDz9Rx5iYAQC5aosOW1fD7w1EWcOrQjl8Cj
+	 0BMMzFBtXGZtVXoPWRGCyyJF5XJsBSCK2j5by013QHZLcDvHuqIOwLRdWVJEmoFplMoTt
+	 W8QrAEt5RK3UeUrrpAgtQJeqmK3nGUDdMoNV0h8qkdSz3NcjM463DQrozhKg+8O2Rs1DS
+	 vHvFAIqUR2+rWA6J9TXDQC2A3of4g6cfanlLTsV0CJVABOtVG8TiuM/7azr+6v1GaOI+5
+	 kSyjfVDt8CrlevJHxswsTSci91Vw/8HSQHsE8hBFRDjNn4qRriGDxTEXNIBP1OcL0YA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NhuK5cRF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NPRbsH8k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDF3606A31C;
-	Wed, 18 Nov 2026 17:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA20606A320;
+	Wed, 18 Nov 2026 17:40:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NhuK5cRF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 280791F000C4;
-	Wed, 18 Nov 2026 17:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NPRbsH8k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081861F000C4;
+	Wed, 18 Nov 2026 17:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023653;
-	bh=qWJJfas5FkHkZ56T5AM9h2OyJO1JE2ZHjKlpAEqLl+4=;
+	s=korg; t=1795023656;
+	bh=71SpKyEvUMrzeYJwusB4mwd0VNaqnu78HwaKbUfB36I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NhuK5cRFjk8tb5PrSFmntUajLe95Ob9hh5nTx0bVmTFGd+W3P8Sz6fElNNgza4rJD
-	 1GNLVJMA0weoN3ZRWrDaKPF6VSFAtALSWFkiEWQb4hfUyhPPvwRVE7jvK52i3isVDK
-	 dto7Ix5+hydbtK1y6c95eROs1hvpC1ov/76pTRaE=
+	b=NPRbsH8kQ5dlVgJGAR5536C+3ZuvKtOPF+zWrh1bhVSswcH4ByciyEmYO1QHOw8yi
+	 /2CI47YEjW1RKkp2ZiU+c8jRUZLG6h15QGW2Be8rdRS8jJz+lEAxlmFrBnpNXRCEwu
+	 IxMIcOKhhsSLTcfernEGNuDMdDsj8chFGWM4svbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sang-Heon Jeon <ekffu200098@gmail.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0446/2151] memblock: reject non-page-aligned reserve_mem regions
-Date: Wed, 18 Nov 2026 15:36:21 +0100
-Message-ID: <20261118150138.281980165@linuxfoundation.org>
+Subject: [PATCH 6.18 0447/2151] phy: hisilicon: hi3670: Fix OF node and device reference leaks
+Date: Wed, 18 Nov 2026 15:36:22 +0100
+Message-ID: <20261118150138.317461303@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,70 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Heon Jeon <ekffu200098@gmail.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 5728d3523f12826a2b180c1c5738f74e33197e14 ]
+[ Upstream commit 1499f3d3407f5310731bcdf324387c321258fd75 ]
 
-When map->start or map->size is not page aligned,
-reserved_mem_preserve() does not preserve the last one or two pages of
-the region from map->start to map->start + map->size.
+hi3670_pcie_get_resources_from_pcie() leaks two references:
+1) The OF node returned by of_get_child_by_name() is never released.
+2) The device returned by bus_find_device_by_of_node() is never put.
 
-After kexec the new kernel reserves only the preserved pages, so those
-pages are released to the buddy allocator. But
-reserve_mem_find_by_name() still returns the whole region including
-them, so they can be allocated while the subsystem is still using them.
+Fix both leaks by calling of_node_put() right after
+bus_find_device_by_of_node(), and put_device() after dev_get_regmap()
+when the temporary pcie_dev reference is no longer needed.
 
-So reject a reserve_mem= size or alignment that is not a multiple of
-PAGE_SIZE to keep both map->start and map->size page aligned.
-
-Fixes: 8375b76517cb ("kho: replace kho_preserve_phys() with kho_preserve_pages()")
-Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
-Link: https://patch.msgid.link/20260905141526.1546478-1-ekffu200098@gmail.com
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Fixes: 73075011ffff ("phy: HiSilicon: Add driver for Kirin 970 PCIe PHY")
+Suggested-by: Vladimir Oltean <olteanv@gmail.com>
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260219163843.1571-1-vulab@iscas.ac.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt | 3 +++
- mm/memblock.c                                   | 9 +++++++--
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ drivers/phy/hisilicon/phy-hi3670-pcie.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index e9ffe9c877b1a..1746b47d45368 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -6473,6 +6473,9 @@ Kernel parameters
+diff --git a/drivers/phy/hisilicon/phy-hi3670-pcie.c b/drivers/phy/hisilicon/phy-hi3670-pcie.c
+index dbc7dcce682b7..35e6342797947 100644
+--- a/drivers/phy/hisilicon/phy-hi3670-pcie.c
++++ b/drivers/phy/hisilicon/phy-hi3670-pcie.c
+@@ -570,6 +570,7 @@ static int hi3670_pcie_get_resources_from_pcie(struct hi3670_pcie_phy *phy)
+ 	}
  
- 			reserve_mem=12M:4096:oops ramoops.mem_name=oops
- 
-+			Both the size and the alignment must be multiples of
-+			the page size.
-+
- 	reservetop=	[X86-32,EARLY]
- 			Format: nn[KMG]
- 			Reserves a hole at the top of the kernel virtual
-diff --git a/mm/memblock.c b/mm/memblock.c
-index e2f15bbc274b5..c0612f48b2e91 100644
---- a/mm/memblock.c
-+++ b/mm/memblock.c
-@@ -2655,12 +2655,17 @@ static int __init reserve_mem(char *p)
- 	if (*p != ':')
- 		return -EINVAL;
- 
-+	if (!IS_ALIGNED(size, PAGE_SIZE) || !IS_ALIGNED(align, PAGE_SIZE)) {
-+		pr_err("reserve_mem: size and align must be multiples of the page size\n");
-+		return -EINVAL;
-+	}
-+
- 	/*
- 	 * memblock_phys_alloc() doesn't like a zero size align,
- 	 * but it is OK for this command to have it.
+ 	pcie_dev = bus_find_device_by_of_node(&platform_bus_type, pcie_port);
++	of_node_put(pcie_port);
+ 	if (!pcie_dev) {
+ 		dev_err(dev, "Didn't find pcie device\n");
+ 		return -ENODEV;
+@@ -584,6 +585,7 @@ static int hi3670_pcie_get_resources_from_pcie(struct hi3670_pcie_phy *phy)
+ 	 * right regmap. So, let's use the named version.
  	 */
--	if (align < SMP_CACHE_BYTES)
--		align = SMP_CACHE_BYTES;
-+	if (!align)
-+		align = PAGE_SIZE;
- 
- 	name = p + 1;
- 	len = strlen(name);
+ 	phy->apb = dev_get_regmap(pcie_dev, "kirin_pcie_apb");
++	put_device(pcie_dev);
+ 	if (!phy->apb) {
+ 		dev_err(dev, "Failed to get APB regmap\n");
+ 		return -ENODEV;
 -- 
 2.53.0
 
