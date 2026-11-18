@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055840;
-	b=LDP+hCCquhim3fliWh8xG8Ok6d1tmX9E4jiokST2AbLeJ6yHMLl+1gZOrIUdPvYpcMma
-	 7a4uUkxJLvMjx202Y8QmYEJElnL9sDcEosK3VMFaVGwtrxLJoN48IhGBEqekbxyqEBnd1
-	 IQSlszx9KlVKbCQGCzPMgIGxkdw79aB3jERC7WQ+3BhqvkDih5wpOPLOxcr1OStIG0dI5
-	 M516ZsvjR+5aiCStBz+G+icJwkxitLI83rJgrnwwxgBEB+JCVBe+g4Sp8nmr2s0QwI/SZ
-	 8dP1oYX/XlEh3I0mS8Z4RVCz+u8ALxTvHDoYdtoOOUNQ2SfTwsUNi6FYE8e2JfCFWCQ==
+	t=1795055843;
+	b=eJGBjdqQei6GQL3GjleGzIbu1ODu4PADTyovnW2MenFcVefuC36d9GBHCxP8jh68rlmw
+	 We4D1XuUyxdfG+thE7VKF6P7I+rQTH0C7Dhm/eNg5C7SC5kcCHUzcXfj4U0crjATx0T6k
+	 qxfPmGd96Pov+JpOEqANP0Tl6rO10lxmQ8baDH3XWMp5NDwI6wPX0HK7Wfghi4gjaBIGK
+	 HKiezaRJDMEX8gEmeIz0XmoROkTk/TWggcD9XJLiY4EKKh03S71FE+RagVSNExnD2kyOS
+	 pKQbC4gKa75SbKUCNb3mKj/UOmvwVbA1Zy50OBoTNWbAz4hpeXUf6ipVslXFxdm+CnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055840;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055843;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5g33Sco1BNVE/f1JIj/gQlIgo5G5i7J+4uEdtrC1Y9s=;
-	b=33RM5uPaz5ha7UqukHir46Q7mBAfCifKkCtC7l7c0OIzArZjA+AaMG9hHDL8XGszn9PT
-	 PPBdzn+eCQbofaHDlWfWwLx/6DfuMG4ZYVcJQSTX5c9ejH1jsh+diwO+Vk5PGFIW2LQ5z
-	 KNylXXZaaUYE4rc6hhU/u0mCKyOhr4XAJ21acNH2kKa0/3/91S/bVa2VddlYrk2Wo40fW
-	 vQBpHj3dFh2iWTqxkOQwP2po8+0/1W4dA6wx02v6MldRSfC6xgkENzXA4oCIRToCKR7A6
-	 wL1VB8HweN9Stt/NBy5KUPVCAgEA0WQaYYwCj7VKZxM6po2nO6F4005iVnFsb8U4tFA==
+	bh=oMShWSyV645xPBLADv0e9pD/jZ7z6Bjsm4hPKQZnr2I=;
+	b=XYUsdhWNo785+n2aSTq+nVWmM/Jy6+2AjyjXux8MaP6UqDdXtAGhxEr33UJUhRF24LkT
+	 5ivja27DjADLUwyiZetj5Cf8czLB/pSMuA4t7EdoOJcBijfxvk9fDQ3YIKTMaHl3T2arn
+	 tDUaXJsnrcjzDmdmVxNCyqHruMlenVV5IeNRDMND72/lppgAND+rFWuEHrSXRurLb8xNf
+	 F6jBp1T+JiuG7ukifR4xUrPvTFugcyLhr2mPIGm1W5/ccWYGxjoyXnHwphy4Ctyb2G2zU
+	 +sBRkxLMi6e93kcKmc7kM1ArgvzEfAZFL4G3UtBtJRBzRPVYYBCLGuL4LulyBrztWLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCLhdBBX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qt5g2ucd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2822606A32A;
-	Thu, 19 Nov 2026 02:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A727606A320;
+	Thu, 19 Nov 2026 02:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCLhdBBX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000811F000C4;
-	Thu, 19 Nov 2026 02:37:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qt5g2ucd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70961F000C4;
+	Thu, 19 Nov 2026 02:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055840;
-	bh=5g33Sco1BNVE/f1JIj/gQlIgo5G5i7J+4uEdtrC1Y9s=;
+	s=korg; t=1795055843;
+	bh=oMShWSyV645xPBLADv0e9pD/jZ7z6Bjsm4hPKQZnr2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CCLhdBBXCKraUQb+gecf0E7FLphtZeIKKPulW49LF5qp1TIod4Kbq+ue/XT5g5EMC
-	 f9/116uUqxytmG91GsTOe3EK/EbBGB8mW1RgnP86lkDiNSYjMQ6YROl79qpK/QhHW8
-	 DE8kKxS3CKlapRsGl57PcdhwR6JShU13Sx9vs8lQ=
+	b=qt5g2ucd9QaE6CD73soK1cGBe9Sgp73mKTluXOcUVKpGSlkLYITUpoLtF14n8WhUh
+	 Q3hgW74ubWB0GpmBvD+Io1hHC5Ry4xPsejcURkZ0J2N2nSENb+fCvIU+zw2+sAaDBa
+	 JbY9tiS24zmZdkzQBKlYaGn4j73QHWck/9p2N0UM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Mark Brown <broonie@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1733/2214] ASoC: rt711-sdw: always cancel jack work on remove
-Date: Wed, 18 Nov 2026 15:56:49 +0100
-Message-ID: <20261118150121.005909257@linuxfoundation.org>
+Subject: [PATCH 5.15 1724/2214] dt-bindings: power: supply: ab8500: Add AB8505 charger
+Date: Wed, 18 Nov 2026 15:56:40 +0100
+Message-ID: <20261118150120.682364804@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,49 +69,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 4bf78e3d9e324f9f2e39feecedd4f70b05baeb16 ]
+[ Upstream commit 80d28539c1f9baab72210501729d67e3d9daa4b8 ]
 
-rt711_sdw_remove() cancels the jack and calibration work only when
-hw_init is true. rt711_update_status() clears hw_init when the SoundWire
-slave becomes unattached, but work may already have been queued by
-rt711_interrupt_callback() or the jack initialization path.
+AB8500 and AB8505 expose different charger interrupt sets. Add a unique
+AB8505 charger compatible with the AB8500 compatible as its fallback.
+Use the variant-specific string to require the fourteen main and USB
+charger interrupts on AB8500 and the nine USB charger interrupts on
+AB8505.
 
-A remove after that status update can therefore skip the cancellation and
-leave work pending after the codec private data has been freed.
+Also clarify that autopower_cfg describes the AB8500 facility, since the
+corresponding AB8505 register bit is reserved.
 
-The work objects are initialized during probe, so cancel them
-unconditionally instead of relying on the mutable hw_init state.
-
-Fixes: ac63716da307 ("ASoC: Realtek/Maxim SoundWire codecs: disable pm_runtime on remove")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260925145019.2290367-3-yaojiale02@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: eb917497734c ("dt-bindings: power: supply: ab8500: Convert to DT schema format")
+Assisted-by: LLM
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260925-ab8500-charger-dt-v3-1-f80b8d295e2d@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt711-sdw.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ .../supply/stericsson,ab8500-charger.yaml     | 76 ++++++++++++++-----
+ 1 file changed, 56 insertions(+), 20 deletions(-)
 
-diff --git a/sound/soc/codecs/rt711-sdw.c b/sound/soc/codecs/rt711-sdw.c
-index af7a0ab5669f4..104749f6dc5a5 100644
---- a/sound/soc/codecs/rt711-sdw.c
-+++ b/sound/soc/codecs/rt711-sdw.c
-@@ -465,11 +465,9 @@ static int rt711_sdw_remove(struct sdw_slave *slave)
- {
- 	struct rt711_priv *rt711 = dev_get_drvdata(&slave->dev);
+diff --git a/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml b/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml
+index e13305afea693..1578b7a559dac 100644
+--- a/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml
++++ b/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml
+@@ -10,12 +10,13 @@ title: AB8500 Charger
+ maintainers:
+   - Sebastian Reichel <sre@kernel.org>
  
--	if (rt711->hw_init) {
--		cancel_delayed_work_sync(&rt711->jack_detect_work);
--		cancel_delayed_work_sync(&rt711->jack_btn_check_work);
--		cancel_work_sync(&rt711->calibration_work);
--	}
-+	cancel_delayed_work_sync(&rt711->jack_detect_work);
-+	cancel_delayed_work_sync(&rt711->jack_btn_check_work);
-+	cancel_work_sync(&rt711->calibration_work);
+-allOf:
+-  - $ref: power-supply.yaml#
+-
+ properties:
+   compatible:
+-    const: stericsson,ab8500-charger
++    oneOf:
++      - const: stericsson,ab8500-charger
++      - items:
++          - const: stericsson,ab8505-charger
++          - const: stericsson,ab8500-charger
  
- 	if (rt711->first_hw_init)
- 		pm_runtime_disable(&slave->dev);
+   battery:
+     $ref: /schemas/types.yaml#/definitions/phandle
+@@ -26,27 +27,15 @@ properties:
+ 
+   autopower_cfg:
+     type: boolean
+-    description: automatic poweron after powerloss
++    description: AB8500 automatic poweron after powerloss
+ 
+   interrupts:
++    minItems: 9
+     maxItems: 14
+ 
+   interrupt-names:
+-    items:
+-      - const: MAIN_CH_UNPLUG_DET
+-      - const: MAIN_CHARGE_PLUG_DET
+-      - const: MAIN_EXT_CH_NOT_OK
+-      - const: MAIN_CH_TH_PROT_R
+-      - const: MAIN_CH_TH_PROT_F
+-      - const: VBUS_DET_F
+-      - const: VBUS_DET_R
+-      - const: USB_LINK_STATUS
+-      - const: USB_CH_TH_PROT_R
+-      - const: USB_CH_TH_PROT_F
+-      - const: USB_CHARGER_NOT_OKR
+-      - const: VBUS_OVV
+-      - const: CH_WD_EXP
+-      - const: VBUS_CH_DROP_END
++    minItems: 9
++    maxItems: 14
+ 
+   io-channels:
+     minItems: 2
+@@ -73,6 +62,53 @@ required:
+   - io-channels
+   - io-channel-names
+ 
++allOf:
++  - $ref: power-supply.yaml#
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: stericsson,ab8505-charger
++    then:
++      properties:
++        interrupts:
++          minItems: 9
++          maxItems: 9
++
++        interrupt-names:
++          items:
++            - const: VBUS_DET_F
++            - const: VBUS_DET_R
++            - const: USB_LINK_STATUS
++            - const: USB_CH_TH_PROT_R
++            - const: USB_CH_TH_PROT_F
++            - const: USB_CHARGER_NOT_OKR
++            - const: VBUS_OVV
++            - const: CH_WD_EXP
++            - const: VBUS_CH_DROP_END
++    else:
++      properties:
++        interrupts:
++          minItems: 14
++          maxItems: 14
++
++        interrupt-names:
++          items:
++            - const: MAIN_CH_UNPLUG_DET
++            - const: MAIN_CHARGE_PLUG_DET
++            - const: MAIN_EXT_CH_NOT_OK
++            - const: MAIN_CH_TH_PROT_R
++            - const: MAIN_CH_TH_PROT_F
++            - const: VBUS_DET_F
++            - const: VBUS_DET_R
++            - const: USB_LINK_STATUS
++            - const: USB_CH_TH_PROT_R
++            - const: USB_CH_TH_PROT_F
++            - const: USB_CHARGER_NOT_OKR
++            - const: VBUS_OVV
++            - const: CH_WD_EXP
++            - const: VBUS_CH_DROP_END
++
+ additionalProperties: false
+ 
+ examples:
 -- 
 2.53.0
 
