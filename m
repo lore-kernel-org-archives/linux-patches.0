@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019144;
-	b=xkXK3Q2AcpOvv2Fp3T/xCdfvjGD5r6nmLq2qqhPb93pQrHzhp569NdZQ1vHmCEIHX+Pt
-	 TB7yAd+NVyuJoHahnHCSTQR+SK/P4w0A329l7w0bv5mvvxIExrUyaC66XYp/cw0ddaCGp
-	 OO8x1vmpPMozjfbuNaCfd5QJEl7RHef86AMxGghDDGxSuxWEs0EzvuUcqH7EUovFrQ/+R
-	 c3uQs+eJwW4oX/j9l9Fxlf8fEyZOu+iPrSAc1soIGcmi69nkS9L6c53vedBtcXVyFZEMn
-	 u+7O7FppSm8PzGiXokr/5gAVNTc1tJp4UdTQ/kuRRiGsuc4t83zYdq2tvE5ZSo1LpxA==
+	t=1795019147;
+	b=nhH2BSQpWXd+9tPKAFCYMGGjN6AV10yYMAhxKCjO0YAJWnHJ4pIyBrqbd38dWPCzfE+U
+	 r80U9+huXlEW1LiO998W0ujlDnq5obmXDuHSgCc7kRpnvUfS/z+Rk6rzlLxSzsT3iJszj
+	 P3363Z6+oits+H+1+ACRCS9scna9/7HwRABD8KvKCP12FMBV9e+TUxD5ml9M0XlIcXBbL
+	 8VOBKH7wzEt26S0DM/Q2O35ECyeUTBbVeBuZ3sp1jUzitS0Ym+hGiD2VL68mSNW5RT98L
+	 +plveCjhnQ66WYOGqkHBS19vnPnnb1BRLLq3KeBMo23DVUgRLzOsH1xCPdA6M1X1XiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019144;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019147;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EPiuItMP0QxLRVVrOQEGXZl3QVhd3OXlwIq074PMk+Q=;
-	b=FZV0LrAjAu+BQzteoJou51ImBqBdRh3JD83pAc1qhsBbIY8w/xKiaMUdi2D8sgPcR4Tt
-	 /PN6sEGyidebUvc+ZeXj+WlIcGVWkkf5qHy0ly9tIKWUdfYjFFw6vtDnaarkU5SkWNK8K
-	 1Xz3Wa5T9JF8FC3rP77tcjxHizgjh3A4D69eblCi2BDf4ZWxBS6D8UkrEX6Xgy9RValAG
-	 Qzo90hA0pft/I2ZLZ3yjM8yea1oeagquaSLv9UJskxx9JU6zIcRWV4F0mz7cGa37BnDpA
-	 dceifk52l/bKozXj48Vp4Mgv7KVk9Vjbf/CaI25aRUS9AY3/X8DtnbhdkGk6vjMpfQA==
+	bh=h7PKTIZK8hkUIpOP456OB8W4m77IrHfFRQ1wLRGIpEA=;
+	b=L3+RsGVNtiVVNSNHKHLJ5vrnpbdSNLKKFtYTsUtugMfEQru8LCFTBJV6biRiNMctD4YG
+	 PRK9kr6r8lr//gCtpb3TsQwrZq5PF6c/SSFJFCJoDY2W1Si49f5nxC9Y2bCyDIL3LZD0C
+	 TH4Ejj/K4wlENV/Vw5UNfFqzB3BCENBCr7u2YWSlsTPCpnskExeXjVmU8MCJlZGvOfKDo
+	 wCF6PgiUEXjwYw5scn8PoeV10iZPOjXmdKq6xJB9jbUBBVRKMwkvnlV7cij+5oYx4erW5
+	 6/pMJfEOBCa51ITPsymHsdTovnjOyJXfSvVZEybUnEuX+6GjjXLKtsXoBtRtLfpilRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HGdo+2JS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HhGqW83A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A239606A31C;
-	Wed, 18 Nov 2026 16:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CEA606A31C;
+	Wed, 18 Nov 2026 16:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HGdo+2JS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63FBD1F000C4;
-	Wed, 18 Nov 2026 16:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HhGqW83A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 225FB1F000C4;
+	Wed, 18 Nov 2026 16:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019143;
-	bh=EPiuItMP0QxLRVVrOQEGXZl3QVhd3OXlwIq074PMk+Q=;
+	s=korg; t=1795019146;
+	bh=h7PKTIZK8hkUIpOP456OB8W4m77IrHfFRQ1wLRGIpEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HGdo+2JSTw6Waa/V6lj38rO7RNqi/BgCkXPEz6nlUE2DHzgbqMORW6/nGmLVkJ0TE
-	 HNm/6y2U6vWeSolssRcG6JlImbXLVn8WZQDcQFSSCOAt0UZzDsKNzay4awPrfVhgiD
-	 4U8URBUuL25rWhi0EzIfpiydfITrA9w1gi4Iu5Kw=
+	b=HhGqW83AryJY18JJDUoFVrc5sTgP3Da3r5yxehlj57sU+8IYXljCI3jHogEbp/nr4
+	 dG5xs+2oRluV2mpLa6VullkBnVwYdS4Uvt+zZ8d7vxUkzy91I+OT6r9HMNWxKgsr3S
+	 bUEMmAvCViOCl1UgG4KGieyASizvjRdlV8UWmfTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	John Crispin <john@phrozen.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1492/2651] wifi: mt76: mt792x: compute the assoc RSSI from the chain signals
-Date: Wed, 18 Nov 2026 15:45:32 +0100
-Message-ID: <20261118150341.732579887@linuxfoundation.org>
+Subject: [PATCH 7.3 1493/2651] wifi: mt76: scan all radios of a request at the same time
+Date: Wed, 18 Nov 2026 15:45:33 +0100
+Message-ID: <20261118150341.770294263@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,52 +68,529 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: John Crispin <john@phrozen.org>
 
-[ Upstream commit 2d12f56631ef307e58651b560ccda1f324a059f9 ]
+[ Upstream commit 3049a7f210adaa633e834a7e9e0fd3c6cf8600b4 ]
 
-mt792x_mac_rssi_iter() adds status->signal of auth and assoc response
-frames to the BSS RSSI average, which mt7921_mcu_sta_update() and
-mt7925_mcu_sta_update() send to the firmware as the station RCPI.
-mt7925 never sets status->signal, since mt76_rx_convert() computes it
-from the chain values later. The average is thus fed 0 dBm on mt7925.
+A device with several radios on one wiphy has one scan state for the
+whole device, and mt76_hw_scan() picks the radio from the band of the
+first channel. A scan therefore covers one radio, and mac80211 visits
+the bands one after another.
 
-Compute the signal from the chain values, as mt76_rx_convert() and
-mt76_check_sta() do, and skip a frame without a valid chain signal. On
-mt7921, the average now follows the combined value instead of the
-strongest chain.
+Run the scan on every radio that has a channel in the request, and let
+each radio visit only its own channels. Report the scan as complete
+once all radios are done, and as aborted if any of them aborted.
 
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Link: https://patch.msgid.link/20261007112419.1277594-4-nbd@nbd.name
+Build the probe request from the IEs of the band of the channel and the
+common IEs, because a request can now hold the IEs of several bands.
+
+A driver can now set SINGLE_SCAN_ON_ALL_BANDS to scan all of its radios
+in parallel with one request.
+
+Signed-off-by: John Crispin <john@phrozen.org>
+Link: https://patch.msgid.link/20261007112419.1277594-7-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: 49701802948a ("wifi: mt76: keep beacons from queueing the scan work during an abort")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt792x_mac.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/channel.c  |  12 +-
+ drivers/net/wireless/mediatek/mt76/mac80211.c |   4 +-
+ drivers/net/wireless/mediatek/mt76/mt76.h     |  27 ++-
+ drivers/net/wireless/mediatek/mt76/scan.c     | 207 ++++++++++++------
+ 4 files changed, 169 insertions(+), 81 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
-index 1e20b333cc612..ebf4c32924c45 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
-@@ -165,14 +165,16 @@ mt792x_mac_rssi_iter(void *priv, u8 *mac, struct ieee80211_vif *vif)
- 	struct mt76_rx_status *status = (struct mt76_rx_status *)skb->cb;
- 	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
- 	struct ieee80211_hdr *hdr = mt76_skb_get_hdr(skb);
-+	int signal;
+diff --git a/drivers/net/wireless/mediatek/mt76/channel.c b/drivers/net/wireless/mediatek/mt76/channel.c
+index 243d252e76440..cf964aa5c6443 100644
+--- a/drivers/net/wireless/mediatek/mt76/channel.c
++++ b/drivers/net/wireless/mediatek/mt76/channel.c
+@@ -41,7 +41,7 @@ int mt76_add_chanctx(struct ieee80211_hw *hw,
+ 	if (WARN_ON_ONCE(!phy))
+ 		return ret;
  
--	if (status->signal > 0)
-+	signal = mt76_rx_signal(status->chains, status->chain_signal);
-+	if (signal > 0 || signal <= -128)
+-	if (dev->scan.phy == phy)
++	if (mt76_phy_scanning(phy))
+ 		mt76_abort_scan(dev);
+ 
+ 	mutex_lock(&dev->mutex);
+@@ -66,7 +66,7 @@ void mt76_remove_chanctx(struct ieee80211_hw *hw,
+ 	if (WARN_ON_ONCE(!phy))
  		return;
  
- 	if (!ether_addr_equal(vif->addr, hdr->addr1))
- 		return;
+-	if (dev->scan.phy == phy)
++	if (mt76_phy_scanning(phy))
+ 		mt76_abort_scan(dev);
  
--	ewma_rssi_add(&mvif->bss_conf.rssi, -status->signal);
-+	ewma_rssi_add(&mvif->bss_conf.rssi, -signal);
+ 	mutex_lock(&dev->mutex);
+@@ -114,7 +114,7 @@ int mt76_assign_vif_chanctx(struct ieee80211_hw *hw,
+ 	bool mlink_alloc = false;
+ 	int ret = 0;
+ 
+-	if (dev->scan.vif == vif && dev->scan.phy == phy)
++	if (dev->scan.vif == vif && mt76_phy_scanning(phy))
+ 		mt76_abort_scan(dev);
+ 
+ 	mutex_lock(&dev->mutex);
+@@ -161,7 +161,7 @@ void mt76_unassign_vif_chanctx(struct ieee80211_hw *hw,
+ 	struct mt76_phy *phy = ctx->phy;
+ 	struct mt76_dev *dev = phy->dev;
+ 
+-	if (dev->scan.vif == vif && dev->scan.phy == phy)
++	if (dev->scan.vif == vif && mt76_phy_scanning(phy))
+ 		mt76_abort_scan(dev);
+ 
+ 	mutex_lock(&dev->mutex);
+@@ -209,7 +209,7 @@ int mt76_switch_vif_chanctx(struct ieee80211_hw *hw,
+ 			continue;
+ 
+ 		if (phy->chanctx != new_ctx) {
+-			if (dev->scan.phy == phy)
++			if (mt76_phy_scanning(phy))
+ 				mt76_abort_scan(dev);
+ 
+ 			cancel_delayed_work_sync(&phy->mac_work);
+@@ -381,7 +381,7 @@ int mt76_remain_on_channel(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 
+ 	mutex_lock(&dev->mutex);
+ 
+-	if (phy->roc_vif || dev->scan.phy == phy ||
++	if (phy->roc_vif || mt76_phy_scanning(phy) ||
+ 	    test_bit(MT76_MCU_RESET, &dev->phy.state) ||
+ 	    test_bit(MT76_RESTART, &dev->phy.state)) {
+ 		ret = -EBUSY;
+diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
+index a4d7f191ae07c..d36466b2173e2 100644
+--- a/drivers/net/wireless/mediatek/mt76/mac80211.c
++++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
+@@ -432,6 +432,7 @@ mt76_phy_init(struct mt76_phy *phy, struct ieee80211_hw *hw)
+ 	INIT_LIST_HEAD(&phy->tx_list);
+ 	spin_lock_init(&phy->tx_lock);
+ 	INIT_DELAYED_WORK(&phy->roc_work, mt76_roc_complete_work);
++	INIT_DELAYED_WORK(&phy->scan_work, mt76_scan_work);
+ 
+ 	if ((void *)phy != hw->priv)
+ 		return 0;
+@@ -729,7 +730,6 @@ mt76_alloc_device(struct device *pdev, unsigned int size,
+ 	INIT_LIST_HEAD(&dev->txwi_cache);
+ 	INIT_LIST_HEAD(&dev->rxwi_cache);
+ 	dev->token_size = dev->drv->token_size;
+-	INIT_DELAYED_WORK(&dev->scan_work, mt76_scan_work);
+ 	spin_lock_init(&dev->scan_lock);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(dev->q_rx); i++)
+@@ -2336,7 +2336,7 @@ void mt76_rx_beacon(struct mt76_phy *phy, struct sk_buff *skb)
+ 		.bssid = hdr->addr3,
+ 	};
+ 
+-	mt76_scan_rx_beacon(phy->dev, phy->chandef.chan);
++	mt76_scan_rx_beacon(phy, phy->chandef.chan);
+ 
+ 	if (!phy->num_sta)
+ 		return;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
+index e9bbec1269fac..c5776e2b07a2f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76.h
+@@ -879,6 +879,15 @@ struct mt76_phy {
+ 	struct ieee80211_vif *roc_vif;
+ 	struct mt76_vif_link *roc_link;
+ 
++	struct delayed_work scan_work;
++	struct {
++		struct ieee80211_channel *chan;
++		struct mt76_vif_link *mlink;
++		int chan_idx;
++		bool beacon_wait;
++		bool beacon_received;
++	} scan;
++
+ 	struct mt76_chanctx *chanctx;
+ 
+ 	struct mt76_channel_state *chan_state;
+@@ -1015,17 +1024,12 @@ struct mt76_dev {
+ 
+ 	u32 rxfilter;
+ 
+-	struct delayed_work scan_work;
+ 	spinlock_t scan_lock;
+ 	struct {
+-		struct cfg80211_scan_request *req;
+-		struct ieee80211_channel *chan;
++		struct ieee80211_scan_request *req;
+ 		struct ieee80211_vif *vif;
+-		struct mt76_vif_link *mlink;
+-		struct mt76_phy *phy;
+-		int chan_idx;
+-		bool beacon_wait;
+-		bool beacon_received;
++		unsigned long phy_mask;
++		bool aborted;
+ 	} scan;
+ 
+ #ifdef CONFIG_NL80211_TESTMODE
+@@ -1398,6 +1402,11 @@ mt76_phy_hw(struct mt76_dev *dev, u8 phy_idx)
+ 	return mt76_dev_phy(dev, phy_idx)->hw;
  }
  
- void mt792x_mac_assoc_rssi(struct mt792x_dev *dev, struct sk_buff *skb)
++static inline bool mt76_phy_scanning(struct mt76_phy *phy)
++{
++	return test_bit(phy->band_idx, &phy->dev->scan.phy_mask);
++}
++
+ static inline u8 *
+ mt76_get_txwi_ptr(struct mt76_dev *dev, struct mt76_txwi_cache *t)
+ {
+@@ -1625,7 +1634,7 @@ int mt76_get_rate(struct mt76_dev *dev,
+ int mt76_hw_scan(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 		 struct ieee80211_scan_request *hw_req);
+ void mt76_cancel_hw_scan(struct ieee80211_hw *hw, struct ieee80211_vif *vif);
+-void mt76_scan_rx_beacon(struct mt76_dev *dev, struct ieee80211_channel *chan);
++void mt76_scan_rx_beacon(struct mt76_phy *phy, struct ieee80211_channel *chan);
+ void mt76_rx_beacon(struct mt76_phy *phy, struct sk_buff *skb);
+ void mt76_beacon_mon_check(struct mt76_phy *phy);
+ void mt76_sw_scan(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+diff --git a/drivers/net/wireless/mediatek/mt76/scan.c b/drivers/net/wireless/mediatek/mt76/scan.c
+index 4a5cdb4efc61e..ada7a8984971a 100644
+--- a/drivers/net/wireless/mediatek/mt76/scan.c
++++ b/drivers/net/wireless/mediatek/mt76/scan.c
+@@ -4,16 +4,26 @@
+  */
+ #include "mt76.h"
+ 
+-static void mt76_scan_complete(struct mt76_dev *dev, bool abort)
++static struct mt76_phy *
++mt76_scan_chan_phy(struct ieee80211_hw *hw, struct ieee80211_channel *chan)
+ {
+-	struct mt76_phy *phy = dev->scan.phy;
+-	struct cfg80211_scan_info info = {
+-		.aborted = abort,
+-	};
++	struct mt76_phy *phy = hw->priv;
++
++	if (hw->wiphy->n_radio > 1)
++		return phy->dev->band_phys[chan->band];
++
++	return phy;
++}
++
++static void mt76_scan_phy_complete(struct mt76_phy *phy, bool abort)
++{
++	struct mt76_dev *dev = phy->dev;
++	struct cfg80211_scan_info info = {};
++	struct ieee80211_hw *hw = phy->hw;
+ 
+ 	lockdep_assert_held(&dev->mutex);
+ 
+-	if (!phy)
++	if (!mt76_phy_scanning(phy))
+ 		return;
+ 
+ 	clear_bit(MT76_SCANNING, &phy->state);
+@@ -37,39 +47,64 @@ static void mt76_scan_complete(struct mt76_dev *dev, bool abort)
+ 		 */
+ 		phy->offchannel = false;
+ 	}
+-	mt76_put_vif_phy_link(phy, dev->scan.vif, dev->scan.mlink);
++	mt76_put_vif_phy_link(phy, dev->scan.vif, phy->scan.mlink);
++	memset(&phy->scan, 0, sizeof(phy->scan));
++
++	clear_bit(phy->band_idx, &dev->scan.phy_mask);
++	if (abort)
++		dev->scan.aborted = true;
++
++	if (dev->scan.phy_mask)
++		return;
++
++	info.aborted = dev->scan.aborted;
+ 	memset(&dev->scan, 0, sizeof(dev->scan));
+-	ieee80211_scan_completed(phy->hw, &info);
++	ieee80211_scan_completed(hw, &info);
+ }
+ 
+ void mt76_abort_scan(struct mt76_dev *dev)
+ {
+-	spin_lock_bh(&dev->scan_lock);
+-	dev->scan.beacon_wait = false;
+-	spin_unlock_bh(&dev->scan_lock);
++	struct mt76_phy *phy;
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(dev->phys); i++) {
++		phy = dev->phys[i];
++		if (!phy)
++			continue;
++
++		spin_lock_bh(&dev->scan_lock);
++		phy->scan.beacon_wait = false;
++		spin_unlock_bh(&dev->scan_lock);
+ 
+-	cancel_delayed_work_sync(&dev->scan_work);
++		cancel_delayed_work_sync(&phy->scan_work);
++	}
+ 
+ 	mutex_lock(&dev->mutex);
+-	mt76_scan_complete(dev, true);
++	for (i = 0; i < ARRAY_SIZE(dev->phys); i++) {
++		phy = dev->phys[i];
++		if (phy)
++			mt76_scan_phy_complete(phy, true);
++	}
+ 	mutex_unlock(&dev->mutex);
+ }
+ EXPORT_SYMBOL_GPL(mt76_abort_scan);
+ 
+ static void
+-mt76_scan_send_probe(struct mt76_dev *dev, struct cfg80211_ssid *ssid)
++mt76_scan_send_probe(struct mt76_phy *phy, struct cfg80211_ssid *ssid)
+ {
+-	struct cfg80211_scan_request *req = dev->scan.req;
++	struct mt76_dev *dev = phy->dev;
++	struct cfg80211_scan_request *req = &dev->scan.req->req;
++	struct ieee80211_scan_ies *ies = &dev->scan.req->ies;
+ 	struct ieee80211_vif *vif = dev->scan.vif;
+-	struct mt76_vif_link *mvif = dev->scan.mlink;
+-	enum nl80211_band band = dev->scan.chan->band;
+-	struct mt76_phy *phy = dev->scan.phy;
++	struct mt76_vif_link *mvif = phy->scan.mlink;
++	enum nl80211_band band = phy->scan.chan->band;
+ 	struct ieee80211_tx_info *info;
+ 	struct sk_buff *skb;
+ 	u8 link_id;
+ 
+ 	skb = ieee80211_probereq_get(phy->hw, vif->addr, ssid->ssid,
+-				     ssid->ssid_len, req->ie_len);
++				     ssid->ssid_len,
++				     ies->len[band] + ies->common_ie_len);
+ 	if (!skb)
+ 		return;
+ 
+@@ -80,8 +115,10 @@ mt76_scan_send_probe(struct mt76_dev *dev, struct cfg80211_ssid *ssid)
+ 		ether_addr_copy(hdr->addr3, req->bssid);
+ 	}
+ 
+-	if (req->ie_len)
+-		skb_put_data(skb, req->ie, req->ie_len);
++	if (ies->len[band])
++		skb_put_data(skb, ies->ies[band], ies->len[band]);
++	if (ies->common_ie_len)
++		skb_put_data(skb, ies->common_ies, ies->common_ie_len);
+ 
+ 	skb->priority = 7;
+ 	skb_set_queue_mapping(skb, IEEE80211_AC_VO);
+@@ -106,65 +143,77 @@ mt76_scan_send_probe(struct mt76_dev *dev, struct cfg80211_ssid *ssid)
+ 	rcu_read_unlock();
+ }
+ 
+-void mt76_scan_rx_beacon(struct mt76_dev *dev, struct ieee80211_channel *chan)
++void mt76_scan_rx_beacon(struct mt76_phy *phy, struct ieee80211_channel *chan)
+ {
+-	struct mt76_phy *phy;
++	struct mt76_dev *dev = phy->dev;
+ 
+ 	spin_lock(&dev->scan_lock);
+ 
+-	if (!dev->scan.beacon_wait || dev->scan.beacon_received ||
+-	    dev->scan.chan != chan)
+-		goto out;
+-
+-	phy = dev->scan.phy;
+-	if (!phy)
++	if (!phy->scan.beacon_wait || phy->scan.beacon_received ||
++	    phy->scan.chan != chan)
+ 		goto out;
+ 
+-	dev->scan.beacon_received = true;
+-	ieee80211_queue_delayed_work(phy->hw, &dev->scan_work, 0);
++	phy->scan.beacon_received = true;
++	ieee80211_queue_delayed_work(phy->hw, &phy->scan_work, 0);
+ 
+ out:
+ 	spin_unlock(&dev->scan_lock);
+ }
+ 
++static int mt76_scan_next_chan_idx(struct mt76_phy *phy)
++{
++	struct cfg80211_scan_request *req = &phy->dev->scan.req->req;
++	int i;
++
++	for (i = phy->scan.chan_idx; i < req->n_channels; i++)
++		if (mt76_scan_chan_phy(phy->hw, req->channels[i]) == phy)
++			return i;
++
++	return -1;
++}
++
+ void mt76_scan_work(struct work_struct *work)
+ {
+-	struct mt76_dev *dev = container_of(work, struct mt76_dev,
++	struct mt76_phy *phy = container_of(work, struct mt76_phy,
+ 					    scan_work.work);
+-	struct cfg80211_scan_request *req = dev->scan.req;
++	struct mt76_dev *dev = phy->dev;
++	struct cfg80211_scan_request *req;
+ 	struct cfg80211_chan_def chandef = {};
+-	struct mt76_phy *phy = dev->scan.phy;
+ 	int duration = HZ / 9; /* ~110 ms */
+ 	bool beacon_rx, offchannel = true;
+-	int i;
++	int i, idx;
+ 
+-	if (!phy || !req)
++	if (!dev->scan.req || !mt76_phy_scanning(phy))
+ 		return;
+ 
++	req = &dev->scan.req->req;
++
+ 	spin_lock_bh(&dev->scan_lock);
+-	beacon_rx = dev->scan.beacon_wait && dev->scan.beacon_received;
+-	dev->scan.beacon_wait = false;
++	beacon_rx = phy->scan.beacon_wait && phy->scan.beacon_received;
++	phy->scan.beacon_wait = false;
+ 	spin_unlock_bh(&dev->scan_lock);
+ 
+ 	if (beacon_rx)
+ 		goto probe;
+ 
+-	if (dev->scan.chan_idx >= req->n_channels) {
++	idx = mt76_scan_next_chan_idx(phy);
++	if (idx < 0) {
+ 		mutex_lock(&dev->mutex);
+-		mt76_scan_complete(dev, false);
++		mt76_scan_phy_complete(phy, false);
+ 		mutex_unlock(&dev->mutex);
+ 		return;
+ 	}
+ 
+-	if (dev->scan.chan && phy->num_sta && phy->offchannel) {
+-		dev->scan.chan = NULL;
++	if (phy->scan.chan && phy->num_sta && phy->offchannel) {
++		phy->scan.chan = NULL;
+ 		mt76_set_channel(phy, &phy->main_chandef, false);
+ 		mt76_offchannel_notify(phy, false);
+ 		goto out;
+ 	}
+ 
+-	dev->scan.chan = req->channels[dev->scan.chan_idx++];
+-	offchannel = mt76_offchannel_chandef(phy, dev->scan.chan, &chandef);
++	phy->scan.chan = req->channels[idx];
++	phy->scan.chan_idx = idx + 1;
++	offchannel = mt76_offchannel_chandef(phy, phy->scan.chan, &chandef);
+ 
+ 	if (offchannel)
+ 		mt76_offchannel_notify(phy, true);
+@@ -175,8 +224,8 @@ void mt76_scan_work(struct work_struct *work)
+ 
+ 	if (chandef.chan->flags & (IEEE80211_CHAN_NO_IR | IEEE80211_CHAN_RADAR)) {
+ 		spin_lock_bh(&dev->scan_lock);
+-		dev->scan.beacon_received = false;
+-		dev->scan.beacon_wait = true;
++		phy->scan.beacon_received = false;
++		phy->scan.beacon_wait = true;
+ 		spin_unlock_bh(&dev->scan_lock);
+ 		goto out;
+ 	}
+@@ -186,16 +235,16 @@ void mt76_scan_work(struct work_struct *work)
+ 		duration = HZ / 16; /* ~60 ms */
+ 	local_bh_disable();
+ 	for (i = 0; i < req->n_ssids; i++)
+-		mt76_scan_send_probe(dev, &req->ssids[i]);
++		mt76_scan_send_probe(phy, &req->ssids[i]);
+ 	local_bh_enable();
+ 
+ out:
+-	if (dev->scan.chan && phy->offchannel)
++	if (phy->scan.chan && phy->offchannel)
+ 		duration = max_t(int, duration,
+ 			         msecs_to_jiffies(req->duration +
+ 						  (req->duration >> 5)));
+ 
+-	ieee80211_queue_delayed_work(dev->phy.hw, &dev->scan_work, duration);
++	ieee80211_queue_delayed_work(phy->hw, &phy->scan_work, duration);
+ }
+ 
+ int mt76_hw_scan(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+@@ -203,37 +252,67 @@ int mt76_hw_scan(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ {
+ 	struct mt76_phy *phy = hw->priv;
+ 	struct mt76_dev *dev = phy->dev;
++	unsigned long phy_mask = 0;
+ 	struct mt76_vif_link *mlink;
+-	int ret = 0;
++	int i, ret = 0;
+ 
+-	if (hw->wiphy->n_radio > 1) {
+-		phy = dev->band_phys[req->req.channels[0]->band];
++	for (i = 0; i < req->req.n_channels; i++) {
++		phy = mt76_scan_chan_phy(hw, req->req.channels[i]);
+ 		if (!phy)
+ 			return -EINVAL;
++
++		phy_mask |= BIT(phy->band_idx);
+ 	}
+ 
+ 	mutex_lock(&dev->mutex);
+ 
+-	if (dev->scan.req || phy->roc_vif ||
+-	    test_bit(MT76_MCU_RESET, &dev->phy.state) ||
++	if (dev->scan.req || test_bit(MT76_MCU_RESET, &dev->phy.state) ||
+ 	    test_bit(MT76_RESTART, &dev->phy.state)) {
+ 		ret = -EBUSY;
+ 		goto out;
+ 	}
+ 
+-	mlink = mt76_get_vif_phy_link(phy, vif);
+-	if (IS_ERR(mlink)) {
+-		ret = PTR_ERR(mlink);
+-		goto out;
++	for_each_set_bit(i, &phy_mask, ARRAY_SIZE(dev->phys)) {
++		if (dev->phys[i]->roc_vif) {
++			ret = -EBUSY;
++			goto out;
++		}
+ 	}
+ 
+-	memset(&dev->scan, 0, sizeof(dev->scan));
+-	dev->scan.req = &req->req;
++	for_each_set_bit(i, &phy_mask, ARRAY_SIZE(dev->phys)) {
++		phy = dev->phys[i];
++		mlink = mt76_get_vif_phy_link(phy, vif);
++		if (IS_ERR(mlink)) {
++			ret = PTR_ERR(mlink);
++			goto put_links;
++		}
++
++		memset(&phy->scan, 0, sizeof(phy->scan));
++		phy->scan.mlink = mlink;
++	}
++
++	dev->scan.req = req;
+ 	dev->scan.vif = vif;
+-	dev->scan.phy = phy;
+-	dev->scan.mlink = mlink;
+-	set_bit(MT76_SCANNING, &phy->state);
+-	ieee80211_queue_delayed_work(dev->phy.hw, &dev->scan_work, 0);
++	dev->scan.phy_mask = phy_mask;
++	dev->scan.aborted = false;
++
++	for_each_set_bit(i, &phy_mask, ARRAY_SIZE(dev->phys)) {
++		phy = dev->phys[i];
++		set_bit(MT76_SCANNING, &phy->state);
++		ieee80211_queue_delayed_work(phy->hw, &phy->scan_work, 0);
++	}
++
++	goto out;
++
++put_links:
++	for_each_set_bit(i, &phy_mask, ARRAY_SIZE(dev->phys)) {
++		phy = dev->phys[i];
++		if (!phy->scan.mlink)
++			break;
++
++		mt76_put_vif_phy_link(phy, vif, phy->scan.mlink);
++		phy->scan.mlink = NULL;
++	}
+ 
+ out:
+ 	mutex_unlock(&dev->mutex);
 -- 
 2.53.0
 
