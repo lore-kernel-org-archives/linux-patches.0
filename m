@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050216;
-	b=kgTnSmBdYkVFFVQfmag+xXZK5Q1y1eIKFggRG2fh2bJ3twr09vSiKt0QlMJ1W1sXbnOS
-	 iQ93tCXEIAWXui6CprWOC8HyQR6zy1jb8zhedjjWa6fXXRtmV3v7OoVU/woEfaSEA+H/Q
-	 ylY42/pwSXkIuWV6554+1XHmdIcbHdgfNnCuC3OK4l87ZOEv8/0tQrmuYWig8V7B1uXql
-	 SYwFNnkS1+bPGdpNUltAcnITdondgq+Q0GJ79nvQ6DVkrj8l7ceydLBXfhy1//7DOTc45
-	 Zn6rP+Z1ciVKAPtVBPTEBhgsGxZwk1A1JEZHcuJfYnw6mseHDwfmDADbfC+qMWh48fA==
+	t=1795050219;
+	b=3cP0t/CK2cFR8wD6q2S2l9YcLIWzx/P2WmztgoiV0lVQpLHytotvbNz82Laoq39KNcIW
+	 2EbSAqeEBBepa8YdoDZcsKeBi3Zq6O5C/BvaFUuXQtC9PO0erDk5I26wzmSVW093+KUKG
+	 xYQlY8HwYCRN6J/PRwINjNtzM/TljsE7SM5Fdw302MisZdc02cBn41YqJcpY8T1Imr+rM
+	 DD7y3w/j3pmBwYFb8gXIUTMEHMyUfEVvaBpokqbRU5wKBBL9+/xJjaUp2WmuGrwwQqd9P
+	 yv242VKUNJHC+F2ZRx84umdx7bLVsSdNBnoGssShfvtBGt4mwGvMmY3utpTVydWqdKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050216;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050219;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=w95ZoHIDVjAGqT6Q/qjkHSFdkI2ZhHxmw8nGQCAoj4Q=;
-	b=qDrtcRf2ghOCNBL4vkfomJk0vNdPLJBE4HtGD7g340dH61TCYN36S7ek4eArm8wK/ee3
-	 BRLqAlp+OcWJ6SsfPxNotXlX3a9pXjnmxneyHWXbh1ZJF8ONTxu/hrZgE5bw+9+cIYrh2
-	 hWMDgNE/8AHxLWY0Tf0E3i2sQM2M+qBCBcDMo935WQBpIfocDF1tQV6Enue0BU5JZCAew
-	 AEfah5GH/8SVA41wRsG3xAz2eCV8MJ3AKvKMUz0BISeqMVSTVLTqijzlDy6xbmHQzc1gg
-	 F+bSZQk1M3dy8Q8qesf0RhpSg/3iYUmJir7Qj7ioBx5FbreYRFzcftKHYq1h0XTXovw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Bkkp/I9xV6CUbg02VarAslS8nl4/fBZVUHtLbG4dWE8=;
+	b=uFDGONiq2L7/f3V3fJy38O40dz4DJQaRLf5JPRHtElcEiMD+sxPc9+rOY19FpdPMs0pB
+	 bH/hh+H4FMgv/MtFw1b/UALYvbFRqfS6CzARU5L7EITSFnbG6iI9lgsbT5m3BIqgJTBvq
+	 PJL0QLRBJlzaKTJFpNPhMXKMW8ujDCJ+LtWTBjggbswpG9832/9UPTqlizCmkkpWjUDij
+	 +crd0MAutdmOw3K8GitwqrllSuxDPuhpi+h25Wlpz2KTZa3f8wGk99Pds298/2SxxnFxR
+	 q70IG7oE2H6gvTARvkI88mcO467YzIOvI8C9aa6i9GwSlh/mXbfRhCH6Rrx2pJKyDZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zK7VpX9v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JtrEFYja;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6D4606A320;
-	Thu, 19 Nov 2026 01:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA4E606A32C;
+	Thu, 19 Nov 2026 01:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zK7VpX9v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C740F1F000C4;
-	Thu, 19 Nov 2026 01:03:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JtrEFYja
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D741F000C5;
+	Thu, 19 Nov 2026 01:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050216;
-	bh=w95ZoHIDVjAGqT6Q/qjkHSFdkI2ZhHxmw8nGQCAoj4Q=;
+	s=korg; t=1795050219;
+	bh=Bkkp/I9xV6CUbg02VarAslS8nl4/fBZVUHtLbG4dWE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zK7VpX9voPVfW6Qi1KRXFlOoHOezTPcEDHFwi4jUN4ax0nR+1vgjBzp5TckUaBVAO
-	 0IHtV2pNMkqxiO2P2+u458EKhFsSyUYJANEc3xqIFCEoWtp1VIyLw1y6qgEew8KY1X
-	 v0qquOwknEX6UEZHTJqBhohgWCRMJCyldnB9WP1A=
+	b=JtrEFYjaPC0wYZi0aKFRLpNxFtb52iT3oBJyu5iJBmyU3rqUnYlEv/RZdCUGMADAk
+	 8SVcDrji128/kP7md60HLcPBoMnUKYSSzpW4oiCK65udmOsWTEhqfq+IIwGVvQubWZ
+	 y8uHVDR1k3DZZNyugEGHIU05sVYwkW4EQi6Xczn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2578/2857] ASoC: codecs: da732x: Fix definition of ADC2 EQ Overall Volume control
-Date: Wed, 18 Nov 2026 16:00:12 +0100
-Message-ID: <20261118150334.321613013@linuxfoundation.org>
+Subject: [PATCH 6.1 2623/2857] netfilter: nf_conntrack: avoid truncating IPv6 nexthdr offset
+Date: Wed, 18 Nov 2026 16:00:57 +0100
+Message-ID: <20261118150336.013125935@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,42 +62,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit ebef9212cb469706e28002a20f9d48307d1fd867 ]
+[ Upstream commit 48d522b65fb0ce2bd54f8f5838d77b48afcf1f3e ]
 
-The ADC2 EQ overall volume is in DA732X_REG_ADC2_EQ5 (0x9F), not in
-DA732X_REG_ADC1_EQ5 (0x97), which holds the ADC1 one.
+find_prev_fhdr() returns the offset of the Next Header field before an
+IPv6 Fragment header through an int pointer, but stores the offset in a
+u8 local.  An extension header chain can put this field beyond byte 255,
+causing the offset to wrap before it is saved in the fragment queue.
 
-Fixes: 48e278746070 ("ASoC: codecs: Add DA732x codec driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/35bae3f84cdc3ceb6ca412153f44dee3647fdbd6.1792135144.git.sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reassembly later uses the wrapped value to update the preceding Next
+Header field.  This overwrites another byte in the IPv6 header chain and
+can make conntrack parse a different transport tuple from the one used
+by IPv6 local delivery.  A two-fragment packet can, for example, be
+recorded as UDP destination port 53 while its payload is delivered to
+UDP port 9999.
+
+Use int for the working offset, matching the output argument and the
+other offset variables in this path.
+
+Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/da732x.c | 2 +-
+ net/ipv6/netfilter/nf_conntrack_reasm.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/da732x.c b/sound/soc/codecs/da732x.c
-index 2c5b0b74201c7..9b167e6cb8388 100644
---- a/sound/soc/codecs/da732x.c
-+++ b/sound/soc/codecs/da732x.c
-@@ -511,7 +511,7 @@ static const struct snd_kcontrol_new da732x_snd_controls[] = {
- 	SOC_SINGLE_TLV("ACD2 EQ Band 5 Volume", DA732X_REG_ADC2_EQ5,
- 		       DA732X_EQ_BAND5_SHIFT, DA732X_EQ_VOL_VAL_MAX,
- 		       DA732X_INVERT, eq_band_pga_tlv),
--	SOC_SINGLE_TLV("ADC2 EQ Overall Volume", DA732X_REG_ADC1_EQ5,
-+	SOC_SINGLE_TLV("ADC2 EQ Overall Volume", DA732X_REG_ADC2_EQ5,
- 		       DA732X_EQ_OVERALL_SHIFT, DA732X_EQ_OVERALL_VOL_VAL_MAX,
- 		       DA732X_INVERT, eq_overall_tlv),
- 
+diff --git a/net/ipv6/netfilter/nf_conntrack_reasm.c b/net/ipv6/netfilter/nf_conntrack_reasm.c
+index 6642f06d1b1dc..357e7b3768633 100644
+--- a/net/ipv6/netfilter/nf_conntrack_reasm.c
++++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
+@@ -395,7 +395,7 @@ find_prev_fhdr(struct sk_buff *skb, u8 *prevhdrp, int *prevhoff, int *fhoff)
+ {
+ 	u8 nexthdr = ipv6_hdr(skb)->nexthdr;
+ 	const int netoff = skb_network_offset(skb);
+-	u8 prev_nhoff = netoff + offsetof(struct ipv6hdr, nexthdr);
++	int prev_nhoff = netoff + offsetof(struct ipv6hdr, nexthdr);
+ 	int start = netoff + sizeof(struct ipv6hdr);
+ 	int len = skb->len - start;
+ 	u8 prevhdr = NEXTHDR_IPV6;
 -- 
 2.53.0
 
