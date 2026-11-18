@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058047;
-	b=X6WRGjl62U1fCLbGeHl2iXQ//gAzn5+P7ep0ayvEX72n9VLjC3gUkM6B8HS+9fFzPM2g
-	 Hy+HIt8kGF8DPuCdkSblj6Vv+gpqBJW4ive6ng23eKMtZU2DaUht0H2j6emQF3UYxCzry
-	 niXm09flsU8fbjy15NJBhLDtPKSzWJsNvisBjHR9HJmice9PPGNi08PJD83vcxz5uMQww
-	 CsVyuiRuJIi+6DRGBpNt84/KP9BidzqeByAXI3Wma4ATjOZxOwSQ8evP54XeTGtQY+s4g
-	 I+uB8U7QwAjSFYC1fT0d3JHcwIj8zkUaoMi4pL8IJOPCXX4GPVNYN2AgtP9Dy7Yitzw==
+	t=1795058050;
+	b=mDzXXlrEz+eVSo7ip7xLRcJ1BUotsVcvi/uqVb2maKZWRvfagyppTMwkwg4lf6ysuxng
+	 pkna/Lz0KklYMQLtZTf444EOlqqCaN/J7CeVawEo3ypPUiYOW619XVPS5X4/VCGTPZOiW
+	 +nOhbkloYp8+XBPp/KOOKrVXxyXzH5ZdXJgPUT7U7dOIbPzTBaHuMboWGI+jrBVLVx45v
+	 53cHpTSmMYRmUodctt+yYsKdt4F7lzjFEKfkD5tXKIIA5Bj2aGk3dJxQbZxaD7mphRpIi
+	 +ByHUApCxG1EkxFNX81MhF8ARooiZ9QmCqMH3BbZscXi+9Bqw8BSdicPC8c7tbCMimw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058050;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XNnSAt5U3jiRdRp5cLUhMuoidVTq66Y8HGngKYhHMTQ=;
-	b=t33kdwkJDw9B/UcU3/EAfhW3R0ciJE9VjHCP8PbzbHCiE4VgnmqIfrnGhlWxjQv4Ma6I
-	 Gy+WMMSRUikpKZ+Nikxi4s3rCoCWBpNj7msxkuruHuVk5dkvMOU1XOb9ElMr0LZFI6RYC
-	 ctvJ4sb4zGKEfFJXTgW9AWDRjrmiJR338iHnpDulwv9Hk0H0MDJVAmbk4NTiDIF/+OYOo
-	 TdqgH1atvybjLk0rOm2uNebRU88Zgt1K9wq3fZy5wX140LojWMLbBCyU3fmNuXtD0zhHv
-	 9JVeyfP3rJ+3COq1v9J4uhN2aqbeladB/J2T33RdJFTlbInFz7Ac5jNxU25ie0DPiNA==
+	bh=PbSvlFJRD5r8Ppj660LYWU3PakgCcg8Eljb+vh/h3nw=;
+	b=moZ8kVThlWAgzhOUTB3s93eAiTuyRQEEXSdbP8yqU5QPa9Q2c5YsBmMYSz4w9duD38pb
+	 EuGVJx7/2sv7yj9/PYf3bRmaqhLQrFM8kisVQpEMHmZULrSWCgzcY1HccZfOynsJIwR4c
+	 8EZrsmGNkgAL5Dfye6BMptjM5rhN7wwMhDiLUBTsppdj7lDfVf8YEZ9vjQ5ppUHDnigiN
+	 jYK5/hQvPBvhLLylJdV1LS73LAwCJILVh2VGO4AC5wxC41RoxnzPPWLL3iX8nOhEGMGHw
+	 XaUSoRn6YxWKqQ3S27vnWutcH67q8l0TSQ5DUDM0QoUlhZAkL1lrXuHYL+Ikh8g+vCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vMwrwBlL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jkd//hRT";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B26606A31C;
-	Thu, 19 Nov 2026 03:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21352606A320;
+	Thu, 19 Nov 2026 03:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vMwrwBlL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F401F000C4;
-	Thu, 19 Nov 2026 03:14:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jkd//hRT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7342E1F000C4;
+	Thu, 19 Nov 2026 03:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058047;
-	bh=XNnSAt5U3jiRdRp5cLUhMuoidVTq66Y8HGngKYhHMTQ=;
+	s=korg; t=1795058050;
+	bh=PbSvlFJRD5r8Ppj660LYWU3PakgCcg8Eljb+vh/h3nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vMwrwBlLIph4YOOtAwGNPvenG92a2gLY96CYUB4wROtfNlzdlx4O89UA7HFuqs8Gw
-	 h9vkW44GkypsLTtDAWuWUdvZiQnbPpsN4Uxx6Yx1N88xRtTMJWF+ByvJlEManvgKWf
-	 jm1OqmV18hzFmcsfp0uEhSqzuAdqmXtR1IFYA7Yo=
+	b=jkd//hRTa9CTSwc85YlxBz5YM0kCeDgLN8URhOUww1c9XUfrTS2yL0IuiwTtgqWzN
+	 7SidFDrIMYpfsDD2FmOrn9Lp09sweT4M64oIwGkaJFgqo/7zyRZ9VIDyT+eMSx2Rw0
+	 XTMQVL1cMahs/n/kNcvdZXSQH19CwsSJkWTt7jVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0345/1848] media: rc: Fix ABBA deadlock by making locks more fine grained
-Date: Wed, 18 Nov 2026 15:39:43 +0100
-Message-ID: <20261118145927.085978758@linuxfoundation.org>
+	Jiale Yao <yaojiale02@163.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 5.10 0310/1848] HID: elo: reject short touchscreen reports
+Date: Wed, 18 Nov 2026 15:39:08 +0100
+Message-ID: <20261118145925.226255180@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,133 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit c6d68866ad8aa1e957a3e5a6ede971148f1e3d59 ]
+commit 1cb92fcb2ac344d78737e3c5cb7b061dfb2850b1 upstream.
 
-The ir_raw_event_unregister() function takes the ir_raw_handler_lock
-first and then the rc_dev->lock. Other functions like change_protocol
-do this in the reverse order.
+The HID core invokes raw_event callbacks before validating the report
+length.  elo_raw_event() only checks the first-byte packet marker before
+elo_process_data() reads coordinates, flags, and pressure through offset
+seven.  A truncated packet beginning with the expected marker can therefore
+cause an out-of-bounds read.
 
-This means that an ir decoder module unload and writing to the protocol
-sysfs file can cause a deadlock.
+Require the complete eight-byte SmartSet packet before parsing it.
 
-ir_raw_handler_lock protects the client list, amongst other things.
-Split this out into a separate lock so we can ensure the locking
-order is always the same.
+Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
+sequence") added the same kind of raw_event length validation to hid-asus.
 
-Fixes: 93cffffc18f6 ("[media] media: rc: fix decoder module unloading")
-Signed-off-by: Sean Young <sean@mess.org>
+Fixes: d23efc19478a ("HID: add driver for ELO 4000/4500")
 Cc: stable@vger.kernel.org
-Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ sashal: replaced unavailable lockdep_assert_not_held() with a CONFIG_LOCKDEP-guarded WARN_ON(debug_locks && lockdep_is_held(&dev->lock)) check ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/rc-ir-raw.c | 40 +++++++++++++++++++++++-------------
- 1 file changed, 26 insertions(+), 14 deletions(-)
+ drivers/hid/hid-elo.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/rc/rc-ir-raw.c b/drivers/media/rc/rc-ir-raw.c
-index c65bba4ec4739..d5f960b3d1a47 100644
---- a/drivers/media/rc/rc-ir-raw.c
-+++ b/drivers/media/rc/rc-ir-raw.c
-@@ -10,7 +10,8 @@
- #include <linux/sched.h>
- #include "rc-core-priv.h"
+--- a/drivers/hid/hid-elo.c
++++ b/drivers/hid/hid-elo.c
+@@ -85,6 +85,9 @@ static int elo_raw_event(struct hid_devi
+ 	if (!(hdev->claimed & HID_CLAIMED_INPUT) || list_empty(&hdev->inputs))
+ 		return 0;
  
--/* Used to keep track of IR raw clients, protected by ir_raw_handler_lock */
-+/* Used to keep track of IR raw clients, protected by ir_raw_client_lock */
-+static DEFINE_MUTEX(ir_raw_client_lock);
- static LIST_HEAD(ir_raw_client_list);
- 
- /* Used to handle IR raw handler extensions */
-@@ -290,13 +291,6 @@ static int change_protocol(struct rc_dev *dev, u64 *rc_proto)
- 	return 0;
- }
- 
--static void ir_raw_disable_protocols(struct rc_dev *dev, u64 protocols)
--{
--	mutex_lock(&dev->lock);
--	dev->enabled_protocols &= ~protocols;
--	mutex_unlock(&dev->lock);
--}
--
- /**
-  * ir_raw_gen_manchester() - Encode data with Manchester (bi-phase) modulation.
-  * @ev:		Pointer to pointer to next free event. *@ev is incremented for
-@@ -634,15 +628,20 @@ int ir_raw_event_register(struct rc_dev *dev)
- {
- 	struct task_struct *thread;
- 
-+	/* Holding dev->lock could result in a dead-lock */
-+#ifdef CONFIG_LOCKDEP
-+	WARN_ON(debug_locks && lockdep_is_held(&dev->lock));
-+#endif
++	if (size < ELO_SMARTSET_PACKET_SIZE)
++		return 0;
 +
- 	thread = kthread_run(ir_raw_event_thread, dev->raw, "rc%u", dev->minor);
- 	if (IS_ERR(thread))
- 		return PTR_ERR(thread);
+ 	hidinput = list_first_entry(&hdev->inputs, struct hid_input, list);
  
- 	dev->raw->thread = thread;
- 
--	mutex_lock(&ir_raw_handler_lock);
-+	mutex_lock(&ir_raw_client_lock);
- 	list_add_tail(&dev->raw->list, &ir_raw_client_list);
--	mutex_unlock(&ir_raw_handler_lock);
-+	mutex_unlock(&ir_raw_client_lock);
- 
- 	return 0;
- }
-@@ -666,8 +665,10 @@ void ir_raw_event_unregister(struct rc_dev *dev)
- 	kthread_stop(dev->raw->thread);
- 	del_timer_sync(&dev->raw->edge_handle);
- 
--	mutex_lock(&ir_raw_handler_lock);
-+	mutex_lock(&ir_raw_client_lock);
- 	list_del(&dev->raw->list);
-+
-+	mutex_lock(&ir_raw_handler_lock);
- 	list_for_each_entry(handler, &ir_raw_handler_list, list)
- 		if (handler->raw_unregister &&
- 		    (handler->protocols & dev->enabled_protocols))
-@@ -683,6 +684,8 @@ void ir_raw_event_unregister(struct rc_dev *dev)
- 	 * "device gone" is checked.
- 	 */
- 	mutex_unlock(&ir_raw_handler_lock);
-+
-+	mutex_unlock(&ir_raw_client_lock);
- }
- 
- /*
-@@ -705,15 +708,24 @@ void ir_raw_handler_unregister(struct ir_raw_handler *ir_raw_handler)
- 	struct ir_raw_event_ctrl *raw;
- 	u64 protocols = ir_raw_handler->protocols;
- 
-+	mutex_lock(&ir_raw_client_lock);
-+
- 	mutex_lock(&ir_raw_handler_lock);
- 	list_del(&ir_raw_handler->list);
-+	atomic64_andnot(protocols, &available_protocols);
-+	mutex_unlock(&ir_raw_handler_lock);
-+
- 	list_for_each_entry(raw, &ir_raw_client_list, list) {
-+		mutex_lock(&raw->dev->lock);
-+		mutex_lock(&ir_raw_handler_lock);
- 		if (ir_raw_handler->raw_unregister &&
- 		    (raw->dev->enabled_protocols & protocols))
- 			ir_raw_handler->raw_unregister(raw->dev);
--		ir_raw_disable_protocols(raw->dev, protocols);
-+		raw->dev->enabled_protocols &= ~protocols;
-+		mutex_unlock(&ir_raw_handler_lock);
-+		mutex_unlock(&raw->dev->lock);
- 	}
--	atomic64_andnot(protocols, &available_protocols);
--	mutex_unlock(&ir_raw_handler_lock);
-+
-+	mutex_unlock(&ir_raw_client_lock);
- }
- EXPORT_SYMBOL(ir_raw_handler_unregister);
--- 
-2.53.0
-
+ 	switch (report->id) {
 
 
