@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038074;
-	b=1rtByQNR0m/DhhdN8EXqpdEpXmBv/y+fp6wIUE+2+SnCHP/hDmFigu6exMS9d3ZbjQ1R
-	 ukFSedwrXSJDBAtkEyF7jzvhCjrqufU7F4SJuVMF+VWJPeAhXTs/0ZYHF/FrFvBa1WqOs
-	 GpEhwSzlJpoDeLGCoMlVK5F1nFxO5o9q4/CCJtmn7ZwrHZpC9gJpU/0t9M7g87Faiv6JZ
-	 pFU4twnIgW0kyNfEDNRrXOJ2ia4HhEBdm0axZTuidz0RObH5VlQlL44yfAg4GsEm5SYtQ
-	 hkgbffOrFdbs36sVVz69yytvlXE7poe4bSUBMWnN1vrkIJzEtl2mfftE7fp9yu5k0EA==
+	t=1795038077;
+	b=enPgp8Ye83PBFeset8YK0NymqP+OIkcBT3PrFxCeOO3slGV3UEHqhDXVAnufsDDGf7iR
+	 Z+K7Zv6OHg/USNB8xELtTW8R9h5junPYeS+YOm37GulIBu9BWDI28dIDXXHmZJWAtgx8n
+	 JUqwcgInpdjwXa/r60XVAAljvXKqUWmdIhcroONokR8ETmu3WnWwJqc33ND/FZOuCW9TD
+	 zZ3bK7xXmiU4c0xnCatqpH1NYYxtCpaZ6YomvbErM6izLeTAll3I4O1GvPS5vha9Ytc3T
+	 5BDbBKyTJVaD4Vv4/ODINVYYG82GSCXgTiSORmUdjzA100+ABGl8VLmVvKT8mo222JQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038074;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038077;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uiREoQSbn9s1/Pl2yQATCvt8FJ9+azQh6IbrZCyNg3Y=;
-	b=XhUpEy6MSZ17RvB4lZhfcAtIoTmAC5jMeCZE9JCV50vXSTB+NMZxnTDEjVqZ3oRPw274
-	 32a5j4zz8gn7HdOT4+qovTmgKHbJSiCiNLkiJYMucBE8nAm2BY0kvQpHR45z3F/Gf9Kl0
-	 LHqb84tau/RidxDteZ66Kqn+RP+L6CoO1Xhkr1B3twhFiWasemH/PeD8IOEeOogaoSVXK
-	 TIVqKW/+Q6CQIyDjEXfnFJyVOr887qmRr5GNINkNhxVSWgojzeUZZ9Sd5A0T2ePSQ3J+M
-	 +I0Doc+C3jV7nl7WFOMWUqSilkckokiBywViX1wsINXfjEzOE6I5IKPBUs836u2ae7w==
+	bh=+68L5xKwk2f0K63Tlfq2z38xbUS7kct8298P5WJY0Z0=;
+	b=wBJtZye8qoDsGTBklpFbD4wU8DcC42e0c86FOJO594SMRmexgdDcqA0dHNBF3cgWj9xE
+	 IAwaT7Z7M0D4a7whrgrtiu1khxXtMrPi1G6ydmQVr6Y9tufDnpPWx4mn4RXNkFnvpPOdH
+	 X/82pF3mDOYChFy2INUylgfwgCoLBAbJZ/GF/TLtyf7Qqt4UIH5CwSLHS1EwGhkXTmj2M
+	 K43YeHLurHP1Xh3Ga33D+tQafvt5LfL9sdXu9DpImOpjKRTPCvSnyq7iNkN3T6fu4KV2r
+	 RWxYLqBRjMV9dVhotg9rfMqjeK3MhgYWqYpw+aq4z7Qjm2b+zuY07C7uDw3He1JRUZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GxvRB29a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gaDja7XP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3653606A330;
-	Wed, 18 Nov 2026 21:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CDF606A32A;
+	Wed, 18 Nov 2026 21:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GxvRB29a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03A21F000C4;
-	Wed, 18 Nov 2026 21:41:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gaDja7XP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BBEA1F000C4;
+	Wed, 18 Nov 2026 21:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038074;
-	bh=uiREoQSbn9s1/Pl2yQATCvt8FJ9+azQh6IbrZCyNg3Y=;
+	s=korg; t=1795038077;
+	bh=+68L5xKwk2f0K63Tlfq2z38xbUS7kct8298P5WJY0Z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GxvRB29aTT8IS8CCDMHxIZ4uDELK0MsIeHc0IATZhFLFW4kB2VnywOPB7rHCRQHxA
-	 3dX4PUADqMc8yyywWMWiByFbu0fxENNQq06uEb1E634INCQKDkkG7D+3hqE2DvIuaF
-	 jjuPWeVhLorKsupnSaazaYLZqGXjDmwRcRK0DukQ=
+	b=gaDja7XPWFTq2YI2pPX4UI4IBgdmNpmHg7aDH/1JpYfSfVgE8Ijt/NFpC7fvY8Yut
+	 kt6roki3dBtP50Bdi3bMaiuTYQ/2l8ieqlAECZaakocyBbAuhp/cACF3xtNcS6vbRf
+	 kwW7epP6sJRPQfSdZhc1bz2+16kGjVEcLI+Sv5sI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1618/3318] arm64: dts: qcom: ipq9574: Wire up USB3 PHY PIPE clock to GCC
-Date: Wed, 18 Nov 2026 15:37:20 +0100
-Message-ID: <20261118150409.732839045@linuxfoundation.org>
+Subject: [PATCH 6.6 1619/3318] iio: adc: ad7192: Revert "properly check spi_get_device_match_data()"
+Date: Wed, 18 Nov 2026 15:37:21 +0100
+Message-ID: <20261118150409.763309879@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,39 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 117d8d40be1ded4f35f3252efa83607a7134d5e0 ]
+[ Upstream commit 0309e66abea141f3ec339b064b8f8b8003d2a634 ]
 
-Connect the QMP PHY USB3 output to GCC so the USB3 PHY pipe clock can
-propagate to the USB controller.
+This reverts commit b7f99fa1b64af2f696b13cec581cb4cd7d3982b8.
 
-Cc: stable@vger.kernel.org
-Fixes: a98bfb31f676 ("arm64: dts: qcom: ipq9574: Add USB related nodes")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260921-ipq_clk_changes-v1-4-d242e3d49648@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-[ sashal: adjusted GCC node context for placeholder PCIe clock inputs and power-domain cells ]
+The added code is currently a dead code. Moreover, the driver is not
+designed to have any defaults effectively making driver data a mandatory
+information to work with. Taking all together, revert unneeded change.
+
+Discussion at #1 concluded in agreeing a new policy on this for IIO.
+
+Link: https://lore.kernel.org/linux-iio/20260217080514.1288115-1-andriy.shevchenko@linux.intel.com/ #1
+Reported-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 7f7a119a370e ("iio: adc: ad7192: reject devices without match data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/adc/ad7192.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index 82e4fd5eb388f..8a5df358d459d 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -285,7 +285,7 @@ gcc: clock-controller@1800000 {
- 				 <0>,
- 				 <0>,
- 				 <0>,
--				 <0>;
-+				 <&usb_0_qmpphy>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
+diff --git a/drivers/iio/adc/ad7192.c b/drivers/iio/adc/ad7192.c
+index fa6810aa6a4a7..ecaf87af539b0 100644
+--- a/drivers/iio/adc/ad7192.c
++++ b/drivers/iio/adc/ad7192.c
+@@ -1039,9 +1039,6 @@ static int ad7192_probe(struct spi_device *spi)
+ 	st->int_vref_mv = ret / 1000;
+ 
+ 	st->chip_info = spi_get_device_match_data(spi);
+-	if (!st->chip_info)
+-		return -ENODEV;
+-
+ 	indio_dev->name = st->chip_info->name;
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
+ 
 -- 
 2.53.0
 
