@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060833;
-	b=GLoohfPceYgdJqn+/zmVuYsa3fvWd45pJzB8U7nLfKqddVDvOMkSXYVs74DEEIB/8ogO
-	 UOnHLTNMU5SmBcTIr46Xo9Btz6VYgzz5/udI6VhkqYKvjDkTEIDrKbCPSmaCVOjHd1raV
-	 Q06iwrt3KMuNx/n8hWJtsYU3rR6NH/c+8M+5GoIGx90WlAGv86F2uWlFN5c8BzInq6MAJ
-	 2UW7XORzV/QHu3EtOnMVAF5w+JKqNc3pDGahnhzStsXqSqS68808H8jfl5m5Rte9DbTE0
-	 ktUcaMXhDp5hdHUKvNKNsQM5NbKZnMwfgD9J4Im4g9Z0WtVuZLVvfHMB10PbiJujVQg==
+	t=1795060835;
+	b=BfKIa/r2KYE6iBcyasXJEQqDQ8vbB5rsfUVHW86ZUVCbZhREerptuyK+QvW6uHiefza7
+	 IpXRXOuOi6al+SYC8XpDyoEomvBa9ok6s+hspg0H0YeOblhUrl8k0NGAOfbKhRy7NmRCN
+	 OLfRrVze5HzmC3iyT4iIRrvionVEJTxbkO3iqq4weAYyshqeeg8BsiZJpr/jx/vmI93jM
+	 wAPb8sm5i3y2MkMR9EVvOXUK3ne4ywzwvdBqvRpdOuL7SMBOC8wmRb67tCQTeThgKQ8da
+	 sIY7weXi213e4Cwy2JakgPdawQUGNU4csop0iHZwdaOrU4HB9soYrHHb29DSRAA9zEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ODIPvrDNZYoXW28yJJC9hK9ZV+W644TBn+Akcpuk4Wo=;
-	b=Gkgrzaf8cHyEhsgYGn6wPUPM9usygOxL7t6xxKF1VKFewwCsCFQTJqdR4h98CnB2toWy
-	 SkLtArV57hMOy19cblNrKOkPbXSkmP1B/Q+U0JH9anmJNdTY80hz9V7O4lHbPx0zWv7CU
-	 XDmJ/iEWYgllPZghOj96JS4kyZoC948J5j6cswQUri7zIGY0Mf565gSaQnVPLfQBB2Ed1
-	 WjijFH/WlS6V6sMblIIIOJ18vSAj68RYGrlWikQ+bmrQMSe1/Q2pDVED0xsrphos3R2SM
-	 f0FgKbNA4fRThNTcHolZPC8CIOEwGpujDCIcGAFt6kPNUqchRnq90z41tggI2zqGUpA==
+	bh=78QVOaRpFLYmpGf9sjxJWZvwFi+UA06/M5TctUPDuiQ=;
+	b=RHEpe975tHSCjy/BYVbDKsOz+Ul3OwBDKXmf+NrBJoMnpRhrRzukui8F15HMZmyRqR0x
+	 wT8Uqsf433q1IZFZaOHb4tEEFIdmaEinRCm/8CbsVrnMTYwh57UMqcHoggRUpy+kvImHF
+	 T5GwByUHdI7r+kGxQJH0t8vbSZpK8QT4jeOVWoLQMjDnDESzUHVHu0VdJ89drMQc2fP2L
+	 8dkbgKIijNciw2LFidyqUo9IKViTzT8Cjd6oemWMPM3p9koWk/F75m16ENRNRTbJkpcrr
+	 ZN54gpdxabW7efeufT0jeSbE5FcLvr0sDpzD9s74kdcx2s0r+T45YyclHYqEY6aF9Tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wwYJia0U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="m/KbuyXY";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F16606A326;
-	Thu, 19 Nov 2026 04:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9B2606A320;
+	Thu, 19 Nov 2026 04:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wwYJia0U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E0A1F000C4;
-	Thu, 19 Nov 2026 04:00:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m/KbuyXY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293DD1F000C4;
+	Thu, 19 Nov 2026 04:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060832;
-	bh=ODIPvrDNZYoXW28yJJC9hK9ZV+W644TBn+Akcpuk4Wo=;
+	s=korg; t=1795060835;
+	bh=78QVOaRpFLYmpGf9sjxJWZvwFi+UA06/M5TctUPDuiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wwYJia0Uwv9MpeR645U2/4UAFuzmuFcKPAdSMlQ4bVTP53V1J4mzEzZlViKnHRODr
-	 FeBQcmNm743nWHP67q8a9VYVPOealqUlj6nmz9jom95vy8AeVl29R6YUVWu+SaKl1d
-	 YGRDS7/pPXa7ElDHbOXosaCTfMVUFCMGNV0ajDA0=
+	b=m/KbuyXYOfkoe9jZuVNp83tx+p0V1XUYdeOiKKlfUE1fF/56T+sQ718RyGspgdu/C
+	 Y6RAUlQIq7jVL5D1D2zHAbFBCY/b+ZkTNuphjUkjhnqmClzMe8bfE20lxfo6ErVEUv
+	 ojCLCOTz+uape29VUbrrVPrqg8Uld2d35CtfvAiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slavin Liu <bolin.liu@seu.edu.cn>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1341/1848] ASoC: fsl_asrc: check the second front-end DMA channel
-Date: Wed, 18 Nov 2026 15:56:19 +0100
-Message-ID: <20261118150015.834703293@linuxfoundation.org>
+Subject: [PATCH 5.10 1342/1848] ASoC: adau17x1: return cache sync errors from resume
+Date: Wed, 18 Nov 2026 15:56:20 +0100
+Message-ID: <20261118150015.868008529@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,48 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slavin Liu <bolin.liu@seu.edu.cn>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit b4136c0d69ead737197af741e20edd1c3574f6b4 ]
+[ Upstream commit 8ca84987c11d11e0ba60f202e3199b3b80c87721 ]
 
-The temporary Front-End DMA request can fail independently of the
-persistent channel acquired earlier in fsl_asrc_dma_hw_params(). The
-returned NULL pointer is immediately used to read its private data.
+adau17x1_resume() restores cached registers during component resume but
+discards the regcache_sync() result and returns success. A failed replay
+can therefore leave the hardware register state stale without reaching
+the component error reporting path.
 
-Check the temporary channel and release the previously acquired
-persistent Front-End channel on failure. Clear its slot so a later
-hw_free cannot release it twice. ASoC marks a component's hw_params
-only after success and skips unmarked components during rollback, so
-returning an error alone would leak the earlier channel.
+Return the cache synchronization result. The ASoC component wrapper
+reports a negative callback result and retains the established
+best-effort resume state, so this adds observability without introducing
+rollback or retry semantics.
 
-Detected by static analysis and reviewed with AI-assisted source auditing.
+The optional switch-mode callback remains ordered before the cache
+replay.
 
-Fixes: 3117bb3109dc ("ASoC: fsl_asrc: Add ASRC ASoC CPU DAI and platform drivers")
-Assisted-by: LLM
-Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
-Link: https://patch.msgid.link/20260913125147.109920-1-bolin.liu@seu.edu.cn
+The issue was found by a tool we developed.
+
+Fixes: 4101866c743a ("ASoC: Add ADAU1X61 and ADAU1X81 CODECs common code")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260902013256.93072-2-pengpeng@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_asrc_dma.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/codecs/adau17x1.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_asrc_dma.c b/sound/soc/fsl/fsl_asrc_dma.c
-index 9b2a986ce4152..e88d2936c2073 100644
---- a/sound/soc/fsl/fsl_asrc_dma.c
-+++ b/sound/soc/fsl/fsl_asrc_dma.c
-@@ -230,6 +230,11 @@ static int fsl_asrc_dma_hw_params(struct snd_soc_component *component,
+diff --git a/sound/soc/codecs/adau17x1.c b/sound/soc/codecs/adau17x1.c
+index 30e072c80ac17..c4d4835f09664 100644
+--- a/sound/soc/codecs/adau17x1.c
++++ b/sound/soc/codecs/adau17x1.c
+@@ -969,9 +969,7 @@ int adau17x1_resume(struct snd_soc_component *component)
+ 	if (adau->switch_mode)
+ 		adau->switch_mode(component->dev);
  
- 		/* Get DMA request of Front-End */
- 		tmp_chan = asrc->get_dma_channel(pair, dir);
-+		if (!tmp_chan) {
-+			dma_release_channel(pair->dma_chan[!dir]);
-+			pair->dma_chan[!dir] = NULL;
-+			return -EINVAL;
-+		}
- 		tmp_data = tmp_chan->private;
- 		pair->dma_data.dma_request2 = tmp_data->dma_request;
- 		pair->dma_data.peripheral_type = tmp_data->peripheral_type;
+-	regcache_sync(adau->regmap);
+-
+-	return 0;
++	return regcache_sync(adau->regmap);
+ }
+ EXPORT_SYMBOL_GPL(adau17x1_resume);
+ 
 -- 
 2.53.0
 
