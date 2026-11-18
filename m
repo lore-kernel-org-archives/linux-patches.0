@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033375;
-	b=MHP1+j8Cq3Jw86e+V3m6QbVbu0MYC1L02IO5+Sm1AmOcCxRc/TKMj8WXxPS630A/NNn+
-	 AdGxPRB+h95OVGuqmFfDwXR8zO8IihJYHVmUHeOEFxvYcw1HdCYv6ENjun+kzfGzcEHbX
-	 nAsDBNDnC1uTNlhJROHgOO9Dfm5wAY0sdHKgSCDv+f+njXwWsjQ/OJXi1gPrj7CX74FAH
-	 w0N876kk9gkeG5xuIL5MOZJ6AJHDQXI4Gzc8u3YAEDGd/yG6A7xcvUqcneSxVIvUkOH6T
-	 Jjdr1ru/hdUKtBhIa0Www/biKscU9DZG5hpa6cedcIXcFpTTwPBIuoyZDXP6Umh9knw==
+	t=1795033378;
+	b=g9XUzJyDjwZH+Nb/AaqFpNiuboopxnOrJQL0IX6TzeuILBzKhKRqkOCjrUB1ugyIdXR2
+	 AJ+aGNc3zS1nvoxogA3RzqBLeJZ0hHJXWFt7PeBWMPkiMWSuq3bL7q6Np8TxkLYZ/Z/HL
+	 8L0V0LDiUdH3kijUy0dybnp4mxPzglF+fr1KgVwio7dgB8agvT4eJ91yKocih2EHGo3Ko
+	 yAhSkDnzodd6Hd38JULe1CahTLIHzbmmaeGOFF8LSrOVmOxlPcok3+iKghdnkYQ4/Mdqp
+	 JqLJNNFMK5AZDvGcjil58PbZUbiHftuMBz/Mzd829ZrfKdjwcQuj/2HSFgIyDY66ang==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033375;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033378;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ppa+gIpgqmCQ4TJ13z+0sjUnHnx/X8nOxlKk0ib99Io=;
-	b=qobVcvyJVJT/tGb/Wf1JLfO2lgEYJ4O/JmjDH1L3vKrfeplRWcfkWg0IAvwQ4tAWY8/3
-	 mtRRD6UminNmqcbY7PY8X9+hbpO9qY74jajV7IrRtQSLIjw1MpsTtFSuCnVxg7HIuKTLI
-	 0bB8gA0qlDFDsHpJQfGpGTzOL17f9s2mnXqjC9j7g1rbDhpYsfRLU03BiyE/0pAmAOhBi
-	 xZfrHlgh9hjiCl25fcjQfjLW3vQ9EIRSD81ISWE17/FMcZqNNhRwRuNhxy0bDpc2/Fi37
-	 NbWYIBXTRV+xosyXAoc6wFNC7SYD4iT/ayKsuRqjgHaojQBK/3rkfEpamQ8ULqKAA4A==
+	bh=OQCmIrn3tLp2Qgh9wt594vSzGxYCcHB/+4W/AOSjgbQ=;
+	b=xCf+UXFwX6oK5TctlwfNgKwM4SFkb6ASRL5mS6rWPvAABQs9FTpiOLW6RyqmiLIqRHhA
+	 APU0ImagdcqtoUrI+ML+VhkjppjxY3IOtcGLxBQWVsmiinO1pVd0VfNBYnww5g525i02l
+	 2Th8vKcXf7iQIYyk6SnhWxTP6R1aNqfO4e7pBcNV9xLiTFg/7jJaAtgyp4I/wj5SeiNPB
+	 +Ag//vrIi/opK00L4objKwsQ/gecgcRNaa+4wsDANl8NYFi+Y3ZMptToKVTWCqQFem8PP
+	 nNh3P3aRgkiUO/3hoLY3ZK5ihBbLsb1vokRati4vWPagXMLkEJEoR9ah34Wy8OkFSgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DflEHaxw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DTKzGvUf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98DB1606A334;
-	Wed, 18 Nov 2026 20:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED33606A332;
+	Wed, 18 Nov 2026 20:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DflEHaxw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA3951F000C6;
-	Wed, 18 Nov 2026 20:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DTKzGvUf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41621F000C9;
+	Wed, 18 Nov 2026 20:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033375;
-	bh=ppa+gIpgqmCQ4TJ13z+0sjUnHnx/X8nOxlKk0ib99Io=;
+	s=korg; t=1795033378;
+	bh=OQCmIrn3tLp2Qgh9wt594vSzGxYCcHB/+4W/AOSjgbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DflEHaxwzCa4nIghCtm8eDmU1l/OEs41lffP35+eE3YNKHttusiWjcFIF+cx/qeKm
-	 JxLD8yoQUxmuAeTvCa4clxbo22zixCRh2fdRcGC/kiUeqd470Dz8ERqtYkjIrEpUM7
-	 CDMbxG68AlB73iHU5GnUzPBij9cLQiUUSl6DurXA=
+	b=DTKzGvUfCQglPr1lDN4+V5sf5BrAarpnhzg0IXqWOrHNfLX63ym1HqeeFq5JfFwZK
+	 K7KY51ZVxcp9F51CsZYPUfSeX1HzdoFjIRWN8MLYvavBft4zj2Rf5wKXZrl+0b3tuV
+	 EYaHoJNAzCC2q09kalfqD3thtnr/+Se1sXfLPMKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 1747/1756] drm/amdgpu: Fix vbios build number parsing logic
-Date: Wed, 18 Nov 2026 16:04:34 +0100
-Message-ID: <20261118150119.078666275@linuxfoundation.org>
+	Bharath SM <bharathsm@microsoft.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 1748/1756] smb: align durable reconnect v2 context to 8 byte boundary
+Date: Wed, 18 Nov 2026 16:04:35 +0100
+Message-ID: <20261118150119.116456966@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,45 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Bharath SM <bharathsm@microsoft.com>
 
-commit b29c22b8dafd951664a491bf629e615d81513197 upstream.
+commit 05f5e355cf783b30bd6eb3dec17ed1a8b3cfa95c upstream.
 
-It's not necessary that the build string and atom header section has a
-difference of 32 bytes. Use the remaining bytes in the section as copy
-limit.
+Add a 4-byte Pad to create_durable_handle_reconnect_v2 so the DH2C
+create context is 8 byte aligned.
+This avoids malformed CREATE contexts on reconnect.
+Recent change removed this Padding, adding it back.
 
-Fixes: d6fa80266178 ("drm/amdgpu: Add vbios build number interface")
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 81a45de432c6 ("smb: move create_durable_handle_reconnect_v2 to common/smb2pdu.h")
+
+Signed-off-by: Bharath SM <bharathsm@microsoft.com>
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/atom.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/smb/common/smb2pdu.h |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/atom.c
-+++ b/drivers/gpu/drm/amd/amdgpu/atom.c
-@@ -1526,7 +1526,7 @@ static void atom_get_vbios_build(struct
- {
- 	unsigned char *atom_rom_hdr;
- 	unsigned char *str;
--	uint16_t base;
-+	uint16_t base, len;
+--- a/fs/smb/common/smb2pdu.h
++++ b/fs/smb/common/smb2pdu.h
+@@ -1320,6 +1320,7 @@ struct create_durable_handle_reconnect_v
+ 	struct create_context_hdr ccontext;
+ 	__u8   Name[8];
+ 	struct durable_reconnect_context_v2 dcontext;
++	__u8 Pad[4];
+ } __packed;
  
- 	base = CU16(ATOM_ROM_TABLE_PTR);
- 	atom_rom_hdr = CSTR(base);
-@@ -1545,8 +1545,9 @@ static void atom_get_vbios_build(struct
- 	while (str < atom_rom_hdr && *str++)
- 		;
- 
--	if ((str + STRLEN_NORMAL) < atom_rom_hdr)
--		strscpy(ctx->build_num, str, STRLEN_NORMAL);
-+	len = min(atom_rom_hdr - str, STRLEN_NORMAL);
-+	if (len)
-+		strscpy(ctx->build_num, str, len);
- }
- 
- static inline void atom_print_vbios_info(struct atom_context *ctx)
+ /* See MS-SMB2 2.2.14.2.12 */
 
 
