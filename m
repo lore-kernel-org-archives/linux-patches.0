@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057075;
-	b=mt5oujhsTABCqP62DwSEjBEepReZPDfBOr57Jhmch3NK/Q2z/LH/KEMnN1LYb+mmm1HR
-	 CDNUJqB9Ddvgbi1QPY4xLn2ykYa9iYy6hBZ4KZEZQOiSr5gNm1Wk/9tlWfDE1lmYTPC7y
-	 or5uyyddicc4o0QhKpEUwxgI4Hy8SC4vbk6txO6gUqBjKxuh/j0Mj7rBAAIPj6eeZnArr
-	 0RTMJMHkLODS2YfbHL+SpOD9PB2BrV3eUQhvo74lBezYHMqdXUzEpgYWBkiOpNBTWBe8e
-	 5jI8j80BLdftf8GRQx+zdqE31X0m4c7aOcCSvYy3hKOn/Sliz3ZLg3C9k49lfkAioXw==
+	t=1795057078;
+	b=LB5dgYKiW97Q0VFpx0hbdiFiBePOOrRloV0BkK3/SeGZdHDlv6WNFSpCPDfomLJZHsi0
+	 305i0vV4u0vGycLOFzwoldXvEISutMEPW4h3/EOL28FTV3LZ4HqPKiA3SNJZigh46SBQO
+	 I+YiFUlhUYs+Ot+B5++SGkKKNtTXGqCm8xDeORS85sKMLmDxKgVNzPb3DUP16j4l3/gjB
+	 Q5WmshJA/v7WxY8qYQzHdamOiaucnfyS6XBNQ7a1MtMLilon9u2jUe1PU1q8MksW+aQea
+	 H0NAY58Gct2XJ59MYqtJNw3nV6fdXCDmnR/BnFL7h8mpFs8trULoUwUZ5qBd0HH4QEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057075;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057078;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vBszGzDm+W4z3FCfIuzIOBsWdy1zTlxWgnppOXit1pI=;
-	b=qmb+q35Dlky/duRA+c4QEd53UMJk2in0GuIWA1+s1fpXRjyJ6X+u/+0UtykrtX+AgqVM
-	 bU1HSOrAQHldQtuFEyobgovdxe+nUoDI3P40RZpazZ2KdYvDtUTKb8JcO952hAsoFXKE0
-	 UzjNkd1neTwq0C2GrrZSs7c6KO2kpF6xBroqtCPFg1zWcPh4muYIyAYCh9P79AteGxcEY
-	 ESdWez/ncuTzHaBtwIpDi5OXYerEWl4OTT39GKUKEr2OTrpF3x3BKMKdwE5FGcVd5hw5H
-	 BTgx5edl+AqbNAM4oTi9aH7z7X6fODQGYZgZmx5Mt22d7+2jd0W305EJQd33/fKDE0A==
+	bh=CykDHtTWHmHFlUOhNwmZiE2P/EKuBOodaX1hEMRbOqA=;
+	b=pzCNTxfmW0HJO3YGUMEAha/dslgVlY+CmHNwbJvCGRWnL5Bx9jNpVtOenc22+SLxAOCC
+	 v8sxlxnI0WMhpKvIqlWATr9EKu2VNPqCpw4EIUWlqind3s0cPQrMJpEdf3gXiO0mJ12F3
+	 1zYQLt3f9u/Rt+A0JXF5nHsRbiPDlcnGkKJQIevbfmVHXDceudDKrOVeI8J9nh6PfO/YY
+	 b2CRIJbET9nlIj42R3CCYx+ZLuUhKwjYxzT8e2FUoRV8Kf9yViGmeVt8j3D4Qnke2mvTN
+	 H3Epnt3QGNRDmW+/YYdJcRqzyhmXyZ/ATBL70MeKJ3ZJHGfUS4CIdSerk0Il4xrsHNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rsyKxdSI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nqknx2Yz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC02E606A325;
-	Thu, 19 Nov 2026 02:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D74606A325;
+	Thu, 19 Nov 2026 02:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rsyKxdSI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 319411F000C6;
-	Thu, 19 Nov 2026 02:57:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nqknx2Yz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25C81F000CF;
+	Thu, 19 Nov 2026 02:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057075;
-	bh=vBszGzDm+W4z3FCfIuzIOBsWdy1zTlxWgnppOXit1pI=;
+	s=korg; t=1795057078;
+	bh=CykDHtTWHmHFlUOhNwmZiE2P/EKuBOodaX1hEMRbOqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rsyKxdSI81BjKSSYZkHIbw5O4ulVTsoJ4pRjKk42eQK23dO69XrkmkDe5Ef5WsojL
-	 z8+PKXSGopscDsXlg0LC7+jsRQ5S3NI4h7uca8x3lRj9opbyv5tUNeu/1wbCIKUdH1
-	 HgOS8OYEMSDmpQsz+gpTQs3gq5wjaarLBGFqs8Fk=
+	b=nqknx2Yzk6h3Oeasv5RIfMESTuS+6zu2ePlV1S7jEiabyGeXdPgH2JZPYKFfkNiHY
+	 EslMdRaKCIJga7Y40XQb9tX14mAo+uxhr0cRt2eqMKHD9Bxlehv1cf4XDfaenyQJtA
+	 4vMr44FCdwDFWPgpBZuu9b9lnr3jeruKZhHz+zzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Markus Probst <markus.probst@posteo.de>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2174/2214] block: fix use-after-free of the disk in sync_bdevs()
-Date: Wed, 18 Nov 2026 16:04:10 +0100
-Message-ID: <20261118150137.364955973@linuxfoundation.org>
+Subject: [PATCH 5.15 2165/2214] rtc: s35390a: Add missing newline to dev_err
+Date: Wed, 18 Nov 2026 16:04:01 +0100
+Message-ID: <20261118150137.037140590@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,58 +68,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Markus Probst <markus.probst@posteo.de>
 
-[ Upstream commit cebb1c2331c2af1b7f1c822ac672a7f77b54bd90 ]
+[ Upstream commit a27b25bb9b422c8468cb6965b2d72b7b64187fd2 ]
 
-sync_bdevs() holds a reference to the bdev inode while it takes
-bd_disk->open_mutex. For a partition the inode doesn't keep the gendisk
-alive, the device reference does: part_release() drops the disk as soon
-as the last reference to the partition device is gone. A sync(2) racing
-with the last close of a partition of an already deleted disk locks a
-freed open_mutex.
-
-Take a device reference before touching the disk, like
-blkdev_get_no_open() does, and skip the bdev if it's on its way out.
-
-Fixes: a8698707a183 ("block: move bd_mutex to struct gendisk")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261028164415.1262013-5-axboe@kernel.dk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 3bd32722c827d ("rtc: s35390a: improve irq handling")
+Signed-off-by: Markus Probst <markus.probst@posteo.de>
+Link: https://patch.msgid.link/20260930-rtc_s35390a_int1-v10-2-e7b1cbc50a7b@posteo.de
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bdev.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/rtc/rtc-s35390a.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/bdev.c b/block/bdev.c
-index 8f64f3ce27711..96ceb1fb326ac 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -1058,6 +1058,15 @@ void sync_bdevs(bool wait)
- 		old_inode = inode;
- 		bdev = I_BDEV(inode);
- 
-+		/*
-+		 * The inode does not keep the gendisk of a partition alive, the
-+		 * device does.
-+		 */
-+		if (!kobject_get_unless_zero(&bdev->bd_device.kobj)) {
-+			spin_lock(&blockdev_superblock->s_inode_list_lock);
-+			continue;
-+		}
-+
- 		mutex_lock(&bdev->bd_disk->open_mutex);
- 		if (!bdev->bd_openers) {
- 			; /* skip */
-@@ -1073,6 +1082,7 @@ void sync_bdevs(bool wait)
- 			filemap_fdatawrite(inode->i_mapping);
+diff --git a/drivers/rtc/rtc-s35390a.c b/drivers/rtc/rtc-s35390a.c
+index b5bdeda7d7678..5e669b75b408a 100644
+--- a/drivers/rtc/rtc-s35390a.c
++++ b/drivers/rtc/rtc-s35390a.c
+@@ -474,7 +474,7 @@ static int s35390a_probe(struct i2c_client *client,
+ 		buf = 0;
+ 		err = s35390a_set_reg(s35390a, S35390A_CMD_STATUS2, &buf, 1);
+ 		if (err < 0) {
+-			dev_err(dev, "error disabling alarm");
++			dev_err(dev, "error disabling alarm\n");
+ 			return err;
  		}
- 		mutex_unlock(&bdev->bd_disk->open_mutex);
-+		put_device(&bdev->bd_device);
- 
- 		spin_lock(&blockdev_superblock->s_inode_list_lock);
- 	}
+ 	} else {
 -- 
 2.53.0
 
