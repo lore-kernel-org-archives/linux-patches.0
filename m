@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022174;
-	b=Y6Gd/OSBuwQtXY3UNeCnCMRBtrVENobpRI7iCelOIUqWzaFFHeL9/lRuEIUBzGYX15qq
-	 LWfZccF0OVxupYuDQsgyxlHen4LWkY83I+wwel0FchEcrbCQVoG5Gkw1SSPThEX5QkcLM
-	 wTKkssZdvcESU++0g4gLgRPD2+A61zIVqQVEeRs3Pcf69w9bUzUskepj6bV9+4Hx5PsnY
-	 zwAUHL49nK+78uHflAikmZ2dws7mwgTJkdCCUBWGAYoQlbMyN2DHuvcWuA0SkQh69QBlC
-	 zwi4n1ESxCy9RmWYx3tOovZ20qRqj9BbS+WOy1RXiBff/1Ft5OiPHILfSdbUccYGQ2A==
+	t=1795022176;
+	b=eBkMC9+6suMGJ1ymJCACjyOWYzXRFj6yNxLglveY1kIQ1Uv4twpRQ9mwmW/I8sr9TVNN
+	 LmTnXbnqWgDzNJ3N4KfqikttCnHYiOvoWlUwRUKFC94ShzKiilSNbTyrSgRUAMKd2yPHw
+	 JtFsxLA2t3UUSbwgf96bD0q5FavII4sIKAKBWlcgKWMmHqQGjN82hGGDfkd+FB8xy4OLQ
+	 eLtd5z8dzNBaeO1lpoVDmMNVDSSxnXBu5R2Wc5nGtv0c2s1n8PlMws3lRQqhUhT/gKhXk
+	 hEkwjvlfgW5VttaBGR8LYYlJzZynHer7fxxwUrXloPRths4aBIcjnwO2aRVbQ5bGhRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022174;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022176;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5cNyYGx+VR+gMeOR14L56LR2gwiurZI2uwCtqP1BGLs=;
-	b=1pTwaOIkvbKqplJXpHaNuDLRiWhZV+IzQ5IUjyJ4A4CiWii6xKr314an84gUN0HiJAcE
-	 1uGImyDdcmVTnGNYGfab1fiOvl6CDjvpkY9rKBCouXRuIY2ilqSvAh2Jv98W2uRriuRnf
-	 p3ZH7PDStJg6KJbe5jBNLSOaH0/uvVSwBeS5/NShCT5DNyho5a7UBFH5oqIESyAQTATCd
-	 0YufwTYi31Rrj8LMcPC/leO/qNUVs9BYG2poXC36ChWOeGGZE3e37mykIGTClPe7Q7/rf
-	 +13YSp/5/wFRPl5pi29K5/2lez4qfEkBfnEa2secge6k+HzL+LKRLTH4AxwK6NS8jdw==
+	bh=MGM2dJfS/dx3LmdbbQKpbnbPgua4faxEUH5xFa4Cmjk=;
+	b=sF5NJfeZtYLfO86TcKhWSyv7hWPm2JtDdfx6Kj3NyADsd8eFNzJ4cYwYhGi+nPrEjj0u
+	 7YJAwhq5WoU8X5v3XVnBtbKH4zXg8zYEtbcpmJrkWlpKtOgCWdwTBrCOyH/HduMjmJb1S
+	 uztdfOOgvks99DM3lGHonV+llu1gfh6DHcR/aKtghCVIQ4PdYm3FO69ThuOcIGY5WA7ne
+	 rUJe2FNtdTL+NxNzn3s+pZZsPG8Fi98ZnXmUs332DedSiPbvWEFcQzxoClOvH1iV77nOu
+	 gQP88+tKl/NIo1pEWpTZNKcXt2/+wNwe/ldXOQ7hBHtR9M6L5dvPk06UHy/aVbrKI+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rhs4KK2B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CNvPt6rv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67C8606A32C;
-	Wed, 18 Nov 2026 17:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA783606A335;
+	Wed, 18 Nov 2026 17:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rhs4KK2B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D3E1F000C6;
-	Wed, 18 Nov 2026 17:16:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CNvPt6rv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9211F000C5;
+	Wed, 18 Nov 2026 17:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022173;
-	bh=5cNyYGx+VR+gMeOR14L56LR2gwiurZI2uwCtqP1BGLs=;
+	s=korg; t=1795022176;
+	bh=MGM2dJfS/dx3LmdbbQKpbnbPgua4faxEUH5xFa4Cmjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rhs4KK2Bge40olqueSeSoCHyTxm4h4xCVGzUXDNx1erdmAX8Pa/6QnLwnsjUC6GuU
-	 rPQg75Tm4fUbd+s6q1cjaH2bT+NyMDWFmeAqAPc+bn3NrTwO1ZvDb4JTfwc3QSle9v
-	 Lo/nyk1+wC/aYfQdQg5WL9FYWZVu76loRMeq7hE4=
+	b=CNvPt6rvHWlacyA1Bp3UM32FspipAVum7+6yoSl17eDJVzNksWTB5DwaDdK0FZAoP
+	 EQQ/UJNLe9QiuT68XkrM1hsY5yqI3r24uOcgIu5YK+agWJ+nQmKJffqto8dEFAQCg0
+	 EANb2YT4RJ5m9gChG9MhI50ub3VQoB4P12iRt4ZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Guikun Yang <yangguikun19@qq.com>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2567/2651] writeback: dont kick a missing wb for dontcache writes
-Date: Wed, 18 Nov 2026 16:03:27 +0100
-Message-ID: <20261118150416.820023113@linuxfoundation.org>
+Subject: [PATCH 7.3 2568/2651] net: mctp: free reassembly head skb when key_add fails on SOM
+Date: Wed, 18 Nov 2026 16:03:28 +0100
+Message-ID: <20261118150416.850827593@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,55 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-[ Upstream commit aa6439028dc39230e62917ba0a7dafdc103564cf ]
+[ Upstream commit d2bfe74a8fe219a86b86c1f126e1d722a5001790 ]
 
-With CONFIG_CGROUP_WRITEBACK, inode->i_wb stays NULL until the inode is
-dirtied for the first time (folio_account_dirtied(), __mark_inode_dirty()
-or wbc_attach_fdatawrite_inode() attach it).  generic_write_sync() calls
-filemap_dontcache_kick_writeback() for every IOCB_DONTCACHE write,
-including O_DIRECT ones, which never dirty the page cache.  The function
-then passes the NULL returned by unlocked_inode_to_wb_begin() to
-wb_has_dirty_io():
+When a start-of-message fragment creates a new reassembly key on the
+broadcast/bind path, mctp_frag_queue() stores the skb as
+key->reasm_head before the key is made observable with mctp_key_add().
 
-  fd = open("/dev/ram0", O_WRONLY | O_DIRECT);
-  pwritev2(fd, &iov, 1, 0, RWF_DONTCACHE);
+If mctp_key_add() fails (a race with another SOM packet for the same
+source/dest/tag, or the receiving socket going away), the error path
+only drops the key reference via mctp_key_unref().  The final key
+destructor frees the key itself but not key->reasm_head, and since the
+key was never added to any list, neither the expiry worker nor socket
+teardown can reach it to release the queued fragment.  The skb is
+leaked.
 
-  BUG: KASAN: null-ptr-deref in filemap_dontcache_kick_writeback+0xec
-  Oops: general protection fault, probably for non-canonical address
-  RIP: 0010:filemap_dontcache_kick_writeback+0xfd/0x7a0
+Free key->reasm_head on the key_add failure path before releasing the
+key.  Other teardown paths (__mctp_key_done_in(), EOM delivery) already
+clear reasm_head before the final unref, so this only affects the
+failure path.
 
-The task dies inside rcu_read_lock().  blkdev_write_iter() gets there for
-any block device whose page cache has not been dirtied yet.
-nfs_file_direct_write() calls generic_write_sync() the same way.
-
-An inode without a wb has never had dirty pages, so there is nothing to
-flush: skip the kick.
-
-Fixes: e1bf79628453 ("mm: kick writeback flusher for IOCB_DONTCACHE with targeted dirty tracking")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 4a992bbd3650 ("mctp: Implement message fragmentation & reassembly")
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Reported-by: Guikun Yang <yangguikun19@qq.com>
+Closes: https://lore.kernel.org/all/tencent_43A65D51143E18518EA968DF9323694EFD08@qq.com/
+Acked-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Link: https://patch.msgid.link/179287946888.17431.11219154409333681184@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mctp/route.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index 0a8839a8863ec..c75c6d8b6714a 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -2579,8 +2579,9 @@ void filemap_dontcache_kick_writeback(struct address_space *mapping)
- 	struct wb_lock_cookie cookie = {};
- 	bool need_wakeup = false;
+diff --git a/net/mctp/route.c b/net/mctp/route.c
+index e7c95eeacb486..3d79c2031eba9 100644
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -552,8 +552,16 @@ static int mctp_dst_input(struct mctp_dst *dst, struct sk_buff *skb)
+ 			 * can do is drop.
+ 			 */
+ 			rc = mctp_key_add(key, msk);
+-			if (!rc)
++			if (!rc) {
+ 				trace_mctp_key_acquire(key);
++			} else {
++				/* key_add failed: the key is not observable by
++				 * any cleanup path, so free the fragment we
++				 * just queued on it to avoid leaking the skb.
++				 */
++				kfree_skb(key->reasm_head);
++				key->reasm_head = NULL;
++			}
  
-+	/* An inode which was never dirtied has no wb and nothing to flush. */
- 	wb = unlocked_inode_to_wb_begin(inode, &cookie);
--	if (wb_has_dirty_io(wb) &&
-+	if (wb && wb_has_dirty_io(wb) &&
- 	    !test_bit(WB_start_dontcache, &wb->state) &&
- 	    !test_and_set_bit(WB_start_dontcache, &wb->state)) {
- 		wb_get(wb);
+ 			/* we don't need to release key->lock on exit, so
+ 			 * clean up here and suppress the unlock via
 -- 
 2.53.0
 
