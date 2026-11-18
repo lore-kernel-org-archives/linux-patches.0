@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032204;
-	b=U/hOjWMzHpc6DQdnCKGcxO5JTXyAEKi6fMCKEPDcuapiY86bGtDxeN9usTt+xQSRr8vd
-	 DaMilfSpsBXU7V9HxW+xwZ456cq4YgTaZj97ZGW7LTsIVb3JMA96d4GEDvraaUzfEEqIv
-	 1c6kTPYg4LVOWU42fSaGb0iR4f/PVJsCYpGmLuUZ4UZN5wFrds9uD25CTAKrt0dFJ4VpI
-	 sjIDZanSCR/yGtjZi7EuoLIH+C1qVLfS5tOBoTMrPzrGi63HX/lpoqEJX+8Bt02mBfn/F
-	 CEEw4jtXT3DR9vbsdkFoGNPjbkZMqjhCA3SBS4Tf35XLiT2e45u7N/8HXtlskqWIG1g==
+	t=1795032207;
+	b=4Kt59iLEKbnZnPoAX//L/wGipoulNpBJyARXF4MQISpqEAsjNagZlab97bc1/v1Ly6h9
+	 5MMvieXZGQ/EuFfog5erUnr1VPVCHKOsUC1OUckFat+Yf4nN+qxmg+CjYqazQvy6Di2ca
+	 dajCrkT/asaAuoyD0HlROjChftMf+ed2X8Ifop1SFmR5xaRWttvpC75yNGHnsisX8K5Rb
+	 fBElnDw/+b+BEEv2E6V9gO2tb1oNuIK96fA7Xo1qTw/DIZfg7JolRyJ9OrTM9VSleShW7
+	 mLCzQslxcjAMBg762DG9RTtH1pl3AEVhoq5Qo9Ck/HTKG8yB/yTbRwjYIWjIwtozZ1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032204;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032207;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wet0RUPoRaQaawdUBjlSivj1L9pEDM4fl5bzA5xf4/A=;
-	b=M6RZSc9ZDJb3whSRNmozse+CMRgKCEtwU2DFXT8tYanF+Y8vqY43XXx5WFLom+eeKBJU
-	 +V0UsRP+1AJYcCR2MlveJ88VNI1mYR4v6O7ca3BzFAiOeXF8PVbfnjCfI/o00pOUvCqfP
-	 kWyIkKCvXGmp3dqY847+0QoE0RFou/Lv/NteQ5QmR8golXRz8pNoEVp6B9vKhWzPVaOr5
-	 X53n6QA1vJDlsFe9Q08FZtkh9Oqu7nHJEdrGTchU6oLRUX7aMY6dEoYyTXDB4Fys+y1tE
-	 Lvq6pGRq6+U7Hyb5yFodC+1riypu1LunqAjh7ppfcy22lRLa4ZIdWJSk+owJAf2votA==
+	bh=UYt037bZBXi8gK7lpu1+x72Tzm4rgUgPWaDXwisIhKk=;
+	b=Jjk4tZlF1e4MozYPDEJ6PJ2pr9nde4UaekRY4/FKyXziJZJartVE+BOACQFDGgSdSbaP
+	 sxMLKWPhjv5c/zk9OpJuSPIj2jhfqhyU969fkYZUeXwXDC3fXDHzV/s0t1yYI4sk0Oe3Z
+	 hd6NTVfnDtaKP1T+4XnUFUp7F3g4wtzz+Vzo0GtOFCm/oILADUVE33GspPhsanAa4HdSo
+	 HLqtLGLlZafUtpgFfyWkIT6nULEo096TvpL++wJKkXbEWQdRNE66V1fRwLVgvwaDai6Vq
+	 wkAVjNOP5aabsjhhsMpANkCfcylyrLMxrjKA6ah0IAmzHzKRbklhf1oXxupX7AxYZug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ihx2h9P1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZxcdsuBU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EB7606A320;
-	Wed, 18 Nov 2026 20:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B392606A31C;
+	Wed, 18 Nov 2026 20:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ihx2h9P1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB981F000C4;
-	Wed, 18 Nov 2026 20:03:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZxcdsuBU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB811F000C4;
+	Wed, 18 Nov 2026 20:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032204;
-	bh=Wet0RUPoRaQaawdUBjlSivj1L9pEDM4fl5bzA5xf4/A=;
+	s=korg; t=1795032207;
+	bh=UYt037bZBXi8gK7lpu1+x72Tzm4rgUgPWaDXwisIhKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ihx2h9P1X+qs1QgvzABO8T3JiufhNPe2JNh2qMmppqN/bUGfQiF8Xhz1OJmBiadvK
-	 vSETB2G9I5WJZtyxR+G5LQFZ4tCDnx/LiYxSi5t05zBXyuz04r+pWNo9F2hoPGRmzN
-	 zxCMQACmj4Cw4Q3qqQLGc0Sz33vGD0HT7n/Gi7mk=
+	b=ZxcdsuBUA3j7S3sGFRPkXqZRNXUyJx3dhanuL79QMXBcW8gbR/RB+9ezeQ8EdSR3S
+	 lQ2qQ68yFjvEqM6cwjEAOJ95PF1DFYJkFdu+UQuVnFjC1shx3mgRBCiF9NLPDgbgB1
+	 2K1qO1/gL95kyeIA0Bxnm/04xP2yQtuKzZLxke4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Oscilowski <drgitx@gmail.com>,
-	Casey Connolly <casey.connolly@linaro.org>,
-	David Heidelberg <david@ixit.cz>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Michael Auer <mick@yoxcu.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1288/1756] ASoC: qcom: sdm845: set quaternary MI2S codec DAI to I2S format
-Date: Wed, 18 Nov 2026 15:56:55 +0100
-Message-ID: <20261118150100.827776455@linuxfoundation.org>
+Subject: [PATCH 6.12 1289/1756] ASoC: qcom: sdm845: Disable the quaternary MI2S bit clock on shutdown
+Date: Wed, 18 Nov 2026 15:56:56 +0100
+Message-ID: <20261118150100.870857435@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,44 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Oscilowski <drgitx@gmail.com>
+From: Michael Auer <mick@yoxcu.de>
 
-[ Upstream commit 20c734cb678332883d317b17bf8fe7361648e170 ]
+[ Upstream commit cef5d087d6813d4c15847d0b71ecbd6c47c5f1d4 ]
 
-We configure the codec DAI format for primary and secondary but not the
-quaternery MI2S path. Add the missing configuration to enable speaker
-codecs on the quaternary MI2S like the MAX9827 found on the OnePlus 6.
+sdm845_snd_startup() enables the quaternary MI2S bit clock in the ADSP,
+but sdm845_snd_shutdown() never disables it. After the first stream on
+this port the clock stays on.
 
-Signed-off-by: Robert Oscilowski <drgitx@gmail.com>
-Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Reviewed-by: Alexey Klimov <alexey.klimov@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251115-sdm845-quaternary-v3-1-c16bf19128ac@ixit.cz
+On the OnePlus 6 the speaker amplifier is on this port. After the first
+playback the ADSP no longer power collapses: it slept under 9 s in 5
+hours. With this change it sleeps again when audio is idle (about 40 s
+of 45 s).
+
+Refcount the clock like the other MI2S and TDM ports and disable it
+when the last user is gone.
+
+Fixes: 5caf64c633a3 ("ASoC: qcom: sdm845: add support to DB845c and Lenovo Yoga")
+Assisted-by: LLM
+Signed-off-by: Michael Auer <mick@yoxcu.de>
+Link: https://patch.msgid.link/20261013204549.3115830-1-mick@yoxcu.de
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: cef5d087d681 ("ASoC: qcom: sdm845: Disable the quaternary MI2S bit clock on shutdown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/sdm845.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/qcom/sdm845.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
 diff --git a/sound/soc/qcom/sdm845.c b/sound/soc/qcom/sdm845.c
-index a233b80049ee7..0450be84ceef9 100644
+index 0450be84ceef9..77229d9048ee5 100644
 --- a/sound/soc/qcom/sdm845.c
 +++ b/sound/soc/qcom/sdm845.c
-@@ -373,10 +373,12 @@ static int sdm845_snd_startup(struct snd_pcm_substream *substream)
- 		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+@@ -39,6 +39,7 @@ struct sdm845_snd_data {
+ 	struct snd_soc_card *card;
+ 	uint32_t pri_mi2s_clk_count;
+ 	uint32_t sec_mi2s_clk_count;
++	uint32_t quat_mi2s_clk_count;
+ 	uint32_t quat_tdm_clk_count;
+ 	struct sdw_stream_runtime *sruntime[AFE_PORT_MAX];
+ };
+@@ -374,9 +375,11 @@ static int sdm845_snd_startup(struct snd_pcm_substream *substream)
  		break;
  	case QUATERNARY_MI2S_RX:
-+		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
- 		snd_soc_dai_set_sysclk(cpu_dai,
- 			Q6AFE_LPASS_CLK_ID_QUAD_MI2S_IBIT,
- 			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+ 		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
+-		snd_soc_dai_set_sysclk(cpu_dai,
+-			Q6AFE_LPASS_CLK_ID_QUAD_MI2S_IBIT,
+-			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
++		if (++(data->quat_mi2s_clk_count) == 1) {
++			snd_soc_dai_set_sysclk(cpu_dai,
++				Q6AFE_LPASS_CLK_ID_QUAD_MI2S_IBIT,
++				MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
++		}
  		snd_soc_dai_set_fmt(cpu_dai, fmt);
-+		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+ 		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+ 		break;
+@@ -464,8 +467,16 @@ static void  sdm845_snd_shutdown(struct snd_pcm_substream *substream)
+ 				0, SNDRV_PCM_STREAM_PLAYBACK);
+ 		}
+ 		break;
+-	case SLIMBUS_0_RX...SLIMBUS_6_TX:
++
+ 	case QUATERNARY_MI2S_RX:
++		if (--(data->quat_mi2s_clk_count) == 0) {
++			snd_soc_dai_set_sysclk(cpu_dai,
++				Q6AFE_LPASS_CLK_ID_QUAD_MI2S_IBIT,
++				0, SNDRV_PCM_STREAM_PLAYBACK);
++		}
++		break;
++
++	case SLIMBUS_0_RX...SLIMBUS_6_TX:
  		break;
  
- 	case QUATERNARY_TDM_RX_0:
+ 	default:
 -- 
 2.53.0
 
