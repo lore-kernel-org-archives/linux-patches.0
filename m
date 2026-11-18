@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016002;
-	b=akaqfzSJgJbdWO81FfSKhpzVEOuPxznrH/2IFbgg9HVl1U8QOvhRTO+MK6/Sbk64+Iro
-	 5gVD7q0s6pLIWDWSNWRJB0wix2x8jYhdziL/GCNJHrOqHK4PA5/WrOHimRIhzlXBacZox
-	 vSYkgJY/ZjNbhQvBs7NEZ9crDhUv/KiwWXEkgrvTAST9S30sd5BXAJDzNHW4JUBqW+zj9
-	 /vYMoQpdoid7vc5RpQVFr0pnvUs3KV6XpmsJbFkIQz7ichK5dg1h5O/u61ZplgbV9rOxV
-	 xORsc5Du5ykUQAknBE5Gq34blqK5Yq1aPaJMxHqixDbmc/P69jzEu0spE+MonZ2sRZA==
+	t=1795016005;
+	b=M2IH3/f4K5DHpIgHnzL/U81RFZPbVZrxvnGOGLhN3WDRFcz6mvYXAfSCjebnfS39Y6PH
+	 7nr81RCG+/UQkhRb2ueqB/bL4UFm5UcCA02VUQHlIJ4ucsVE/uMQmbShHJVuLwUGWJEj8
+	 f4Zh9DDZZHPMBC1qvbMfb9jn2qualN7u2wLjxRwRfJ+B3U6am/ysDyRc5foObErOPJM2D
+	 XUAB6QtlDg0wzR56mRZCcSSA83we5f5kfnolC2Q4cxNWpoH5r1yP/aiu9BBeTaxHKIUZD
+	 iAIWO/HfHWHq2mGae3XQc63q126OirlzOchp4L4eG+q0JNM2sGDoBItQIStuwS3AU6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016002;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016005;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2E7SN7By022BkTHWYWKFYwnNN5DIvaF3LZdJIactWfw=;
-	b=evG0GmCjd2prks40P/2BAI7ZF5uD4GYXtuAcq4e6d/YJxy3B/wE96Kuykl5MguHbItX6
-	 8tdNdGbb1c9RRLel0jMh+k5uDYXA1nZmqo+3p6zWrD+z8zikYKf8MlAjNRAAOUAfxyr8o
-	 kS5rtskB4hlrrZpNrWhH4qj4AlSRNFT41CBM5i8gfGZ7E37kmev5LrmTtqqcFVivLoLKA
-	 HynuR6Tmes6HgGVnPhrFfpXfTnEH0Uq6oii8zfvZ175IzRX4LXgXpDaCGhflNVV1gBOi6
-	 86vsZhLrb1jV2kLXeL7f/MoTKDiUDXGqzeeCZNh7CMwmV3wFNyka7s5VYVqMTSYotjA==
+	bh=McbFvpeJKUb0Zyq82RnH82h7OarMbpGD5GheIkI6Lx8=;
+	b=knp036Dfi+Q337RgsJ6AS/JhP1ZlX2CZT3LZoaKYhk/q8Tj1ljbOXSNwPWqXAjjOT/4n
+	 XZuTkiQzuDgqD/HzhhJ8SQMHB0NjQhU08ydtIxi4QMCPmttd9WLuJOM7Pm544ZD34rro1
+	 xsDrWy02bCayGagntjSoQLhr1RbgOzZmnZSIh0X8jRmdjLYMiw3DVAuPwWmtz0C74T6wq
+	 6YnGghDqVRobBL43idrWbnZiBrWIOb39EFQ9IkTOX50dfnQT4dlObuI6vK9yUP8e9xakG
+	 5W4RfRduZvBWUSatJV46SYy9ahY48+am0/nlfUyp+5+Bzl+tZVKXryqOVWsq+dM+1fg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X0X38Ntb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fdSYxieQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3D2606A31C;
-	Wed, 18 Nov 2026 15:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B911606A31C;
+	Wed, 18 Nov 2026 15:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X0X38Ntb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB071F000C4;
-	Wed, 18 Nov 2026 15:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fdSYxieQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28201F000C4;
+	Wed, 18 Nov 2026 15:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016002;
-	bh=2E7SN7By022BkTHWYWKFYwnNN5DIvaF3LZdJIactWfw=;
+	s=korg; t=1795016005;
+	bh=McbFvpeJKUb0Zyq82RnH82h7OarMbpGD5GheIkI6Lx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X0X38NtbeCVEsWjUXT3hS8XE02asxAVw9zNR3TfrKwCPPjd8Cuw+6GhFA4c/6YxMf
-	 Gwnh4lA90YrXPb/eKEuVWCivDmv505ob5qdEfSXbxUXBniDV8nSw8fjsz1eo52cHiV
-	 H0056wu5X8pL6JRLBBkGOyztatzza0e3og9oQko4=
+	b=fdSYxieQE7QUMBWTJOD148PjJLpxsCZGS+aM5N79me82f/f3mNqq6Y94PiwSQPOvh
+	 52jvrILD8KoeowTilvodSCOCWb1AaILbS1QYP5nRqw0wKJr/sPeggoG+dYuBnwoUEP
+	 qvK+Jx45baUfZvf5F/Hfv9t63+8+E7pVptdEy/bU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Wang <wangjia@ultrarisc.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0373/2651] dmaengine: dw-axi-dmac: Fix CH_CFG2 channel priority position
-Date: Wed, 18 Nov 2026 15:26:53 +0100
-Message-ID: <20261118150301.262694907@linuxfoundation.org>
+Subject: [PATCH 7.3 0374/2651] arm64: dts: qcom: glymur-asus-zenbook-a16: Fix up the mic sample rate
+Date: Wed, 18 Nov 2026 15:26:54 +0100
+Message-ID: <20261118150301.299042343@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,39 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Wang <wangjia@ultrarisc.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 2a9013c20c46216b92ff09e2283b5244a91c59da ]
+[ Upstream commit 73f0a1026210c008ba4414b3181fa679096ef968 ]
 
-The CH_CFG2 channel priority field occupies bits 51:47 of the 64-bit
-channel configuration register, corresponding to bits 19:15 of CH_CFG2_H.
+Set the correct value for the hardware, matching the readout from
+Windows during audio recording.
 
-The driver currently shifts the priority value by 20, programming the
-wrong bits. Use bit 15 as the field position.
+The microphone seems to work fine either way.
 
-Fixes: 824351668a41 ("dmaengine: dw-axi-dmac: support DMAX_NUM_CHANNELS > 8")
-Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260902-dma-fix-v3-3-414c6449fbcc@ultrarisc.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: e8fbbca94db7 ("arm64: dts: qcom: glymur: Add Asus Zenbook A16 (UX3607OA)")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260910-topic-zenbook_mic_sampling-v1-1-2532136d5a9b@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h | 2 +-
+ arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a16-ux3607oa.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index 039316c42f059..da706bff3f124 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -326,7 +326,7 @@ enum {
- #define CH_CFG2_H_TT_FC_POS		0
- #define CH_CFG2_H_HS_SEL_SRC_POS	3
- #define CH_CFG2_H_HS_SEL_DST_POS	4
--#define CH_CFG2_H_PRIORITY_POS		20
-+#define CH_CFG2_H_PRIORITY_POS		15
+diff --git a/arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a16-ux3607oa.dts b/arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a16-ux3607oa.dts
+index 939e1a927a793..40433dc2d6cf9 100644
+--- a/arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a16-ux3607oa.dts
++++ b/arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a16-ux3607oa.dts
+@@ -737,7 +737,7 @@ &lpass_vamacro {
+ 	pinctrl-0 = <&dmic01_default>;
+ 	pinctrl-names = "default";
  
- /**
-  * DW AXI DMA channel interrupts
+-	qcom,dmic-sample-rate = <4800000>;
++	qcom,dmic-sample-rate = <2400000>;
+ };
+ 
+ &mdss {
 -- 
 2.53.0
 
