@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027518;
-	b=1KQpLkla8CJJCNQUPzZUfw3KFUK/YDi0Xp65Q68fPMuE0mBznbx51m+NuSd+bjVvd8q3
-	 K/IYgJQcc5C0WtOmBE2PXGKlHB6+b+kgNQsGt/Ak5sqB8mS7b6gjUAlQYlHLIioTMeQV8
-	 bbN6yhiG3SZZSvpOrWsL8MA/YTAASf8Z6zeJMBRYHLRxMh7G9u/jT5y0FvlM1xcW2ujZx
-	 ma0gf+QygSsrIWvYEwREw4+IoPK0PO9NzITFRTYpcnSuM+JW6FmI1DFQPnm22ZPlXW51u
-	 lWJpMOcoIHTRayIm5X5GTZ3CGLmalflD0HT71edA9HAievLAnJpVRHP4D2Ve29onrFA==
+	t=1795027521;
+	b=jn4N85lo3XNKKoreh89hO/qD8W2XlAFPsy5zYjC2fOvUnxjgQZHOhqynY2rZ1enKWqJb
+	 VvwXUc6F89G0M9hNrvBSocK9A13f1Otnt7U1xvvikugANdIRqvCDQGsGNQkIHtGzyGeik
+	 DnpYs7bvxkDlnpCdCcsC3A+Bh9+3Guzaz6hfjwpJAmVvzAnniDsHibJKr5QK71mHXESjw
+	 AKC/VeW938akr/2AFoEoEf7GtFShXMPT/GxsD50Vg+FMmXyIvkGUQ+rxt9rNq2UB6pUDW
+	 fHSNZpIrLKYw70YJ4ZDB07MdUKhndpoUwsbXkVm7YnAWVKL0agit/QW/eBb1mJ4FTLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027518;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027521;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=56WfsFQAX/gf8vlVwC5FM31uT/rERzx2wkl8fOltNxw=;
-	b=fRwTiW/7CsathOf4VUCVEcWaStMlJGWcIy3St3JiZ+RysXXXTIN90ExX/eQCObuy1pLL
-	 VDMPJV49oBdKnTIL/dJiRO5uGNoYVKI0s9H+ttyunoHouZ63SQoLVYgrA/p+Zi/SwVC7B
-	 9NfeKotYM8wrmFvaXh1bTrVqjmMMYy+E6S2pv2qiIBlPU6jNyRd+snKNJ3Ib9mmh0VheM
-	 T4q7VPb2BeJliss11elgA7R605UbaTA2+f2O5rTCKf1LePEmhN/++lsp6U7RphC/7eU6y
-	 UcvR0fM5aKC+/ndH6e7NkGe6GBnhw19iDdP3JLC1nc0KdCiYmDNaPtelwckLkvGxsPA==
+	bh=ZxGWqKeLzVBB7FBVcZSvEq1LJjIBwS61eDuFHufLRr4=;
+	b=qb9t65hW6WLqwYiflI4mh7LUMbWkaJ26FeGwEsrQRLrp86I+lAuTocN6eed6qFuJB5Po
+	 zqf8/F3W+l/krRYfWt5g/5JDbGXVtcH9z0iROFhDt5+3Ef4u6LF0Gx8224w2FwDYtKV3T
+	 AMWyZVp1qNiK6+/ddXaMAtwWltdSYyjTR5qV6tx2tsQxA3yyFXQNVgahQCPORQGUMcS4+
+	 vq+7NK36AJ86wZYiZPMPCF/pivNqqLdw9QWkSH4yxTi56al9e+yfI2uGCbz5en3g7Kh6D
+	 wbEcQC8sBCbIHAg3gzryap57vVlfCQ2stgLjZzlAykcy+NcFAMNQhnwKRBIGLeBorGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wd8KdL53;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxwLByuk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B35C60A2614;
-	Wed, 18 Nov 2026 18:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8F260A2611;
+	Wed, 18 Nov 2026 18:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wd8KdL53
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A92821F000C6;
-	Wed, 18 Nov 2026 18:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxwLByuk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973CF1F000C4;
+	Wed, 18 Nov 2026 18:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027518;
-	bh=56WfsFQAX/gf8vlVwC5FM31uT/rERzx2wkl8fOltNxw=;
+	s=korg; t=1795027521;
+	bh=ZxGWqKeLzVBB7FBVcZSvEq1LJjIBwS61eDuFHufLRr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wd8KdL53es6XHLsTn2pNSCSV2gJbd1Wf78x4IkMhSfBMzCVNUdeMsutcDQc/EK5+B
-	 GzbWSqqXSIcA+bYPAR8jlV+/WqYOXuXYGWOAryyn8FT4Yq4BwLKn8x4fBwMNP24nKf
-	 oREoiHffBNm/LMG4O4y2CP4tOFmNTYTkLd9H/6KE=
+	b=hxwLByukRl9K3pLOv4ChRmImXAE5ZkJuZI10cmyW/97ELurVCj+qRBs5mKwKu5L29
+	 FL95WoCitnKZh5ByC3wkX8r+3PQtk7SgfMwr0IKBVHZ8Q7UCJMZq9tfBdjUu/AhzdQ
+	 6W0xHoqa1NoIdnjyOuKX0FDz2lpNA3BLTmy0SxuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1781/2151] nfsv4/pnfs: use the MDS authflavor for data server connections
-Date: Wed, 18 Nov 2026 15:58:36 +0100
-Message-ID: <20261118150226.703959437@linuxfoundation.org>
+Subject: [PATCH 6.18 1817/2151] net: bcmasp: unmap previous DMA mappings on TX map failure
+Date: Wed, 18 Nov 2026 15:59:12 +0100
+Message-ID: <20261118150227.998230817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,72 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit 4b27670ea25b955b710021151471cb252240b1e0 ]
+[ Upstream commit a3cf9877558ab2c51182af558815dde64fc17cb9 ]
 
-When a pNFS client connects to an NFSv4.1 data server, the EXCHANGE_ID
-is always attempted with RPCSEC_GSS krb5i first, even if the auth flavor
-with the MDS is AUTH_SYS. On a host that runs rpc.gssd but has no usable
-machine credential, every first contact with a data server therefore
-upcalls to rpc.gssd before falling back to AUTH_SYS.
+When mapping an skb with fragments for transmission in bcmasp_xmit(),
+if mapping fails on fragment i > 0, the error handler calls
+bcmasp_clean_txcb() for previous iterations j < i. However,
+bcmasp_clean_txcb() only zeroes the control block fields without
+unmapping the DMA buffers, leaking the DMA mappings allocated for the
+head and earlier fragments.
 
-As nfs4_discover_server_trunking is serialized by nfs_clid_init_mutex
-such an extra upcall creates a backlog of DS connections when many files
-accessed in parallel.
+Call dma_unmap_single() before calling bcmasp_clean_txcb() in the error
+cleanup loop.
 
-Pass the authflavor of the MDS lease to nfs4_alloc_client() and skip
-the krb5i attempt if the MDS already ended up with AUTH_SYS. Nothing
-changes for the MDS itself, or for data servers of an MDS whose lease
-was established with krb5i.
-
-Fixes: 4edaa308888b ("NFS: Use "krb5i" to establish NFSv4 state whenever possible")
-Signed-off-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Justin Chen <justin.chen@broadcom.com>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20261013204439.3494046-3-florian.fainelli@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/internal.h   | 1 +
- fs/nfs/nfs4client.c | 7 ++++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
-index 3214533b73c2c..b31824b1596cf 100644
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -86,6 +86,7 @@ struct nfs_client_initdata {
- 	struct xprtsec_parms xprtsec;
- 	unsigned long connect_timeout;
- 	unsigned long reconnect_timeout;
-+	rpc_authflavor_t authflavor;		/* Auth flavor to use for DS connection */
- };
- 
- /*
-diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
-index c0880a966b334..3f7eac321536a 100644
---- a/fs/nfs/nfs4client.c
-+++ b/fs/nfs/nfs4client.c
-@@ -240,8 +240,12 @@ struct nfs_client *nfs4_alloc_client(const struct nfs_client_initdata *cl_init)
- 	/*
- 	 * Set up the connection to the server before we add add to the
- 	 * global list.
-+	 *
-+	 * Prefer krb5i unless the caller already knows AUTH_UNIX is required.
- 	 */
--	err = nfs_create_rpc_client(clp, cl_init, RPC_AUTH_GSS_KRB5I);
-+	err = -EINVAL;
-+	if (cl_init->authflavor != RPC_AUTH_UNIX)
-+		err = nfs_create_rpc_client(clp, cl_init, RPC_AUTH_GSS_KRB5I);
- 	if (err == -EINVAL)
- 		err = nfs_create_rpc_client(clp, cl_init, RPC_AUTH_UNIX);
- 	if (err < 0)
-@@ -990,6 +994,7 @@ struct nfs_client *nfs4_set_ds_client(struct nfs_server *mds_srv,
- 			.cert_serial = TLS_NO_CERT,
- 			.privkey_serial = TLS_NO_PRIVKEY,
- 		},
-+		.authflavor = mds_clp->cl_rpcclient->cl_auth->au_flavor,
- 	};
- 	char buf[INET6_ADDRSTRLEN + 1];
- 
+diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
+index d4de48c3132a3..515404f94eabb 100644
+--- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
++++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
+@@ -317,6 +317,11 @@ static netdev_tx_t bcmasp_xmit(struct sk_buff *skb, struct net_device *dev)
+ 			intf->mib.tx_dma_failed++;
+ 			spb_index = intf->tx_spb_index;
+ 			for (j = 0; j < i; j++) {
++				txcb = &intf->tx_cbs[spb_index];
++				dma_unmap_single(kdev,
++						 dma_unmap_addr(txcb, dma_addr),
++						 dma_unmap_len(txcb, dma_len),
++						 DMA_TO_DEVICE);
+ 				bcmasp_clean_txcb(intf, spb_index);
+ 				spb_index = incr_ring(spb_index,
+ 						      DESC_RING_COUNT);
 -- 
 2.53.0
 
