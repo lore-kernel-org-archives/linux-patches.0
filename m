@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059345;
-	b=MJhVJF5EBxXJ2pSdj9gIF3PG+lfUPNNGxZYA5u0q5EZRzI78ZWSyfcY1YULkMj+wyPsT
-	 EXiX3aqeHBQlnlfxN4FFbyjGG5h/n3J4zMJCq7KW3U93Q+KVBhl7QTJGH5LmdelqdS55i
-	 qxPJT8M+G+i+gz6HR8+OLAwdKTMkouhGAgK4KjUpdyCYIAWhyicDSzUk6osnNQDQVoxLA
-	 xynlq78/c9N1szfLGWao4E9TJnuAVWzHKfL6LD0CpLIqGBt7RK0AV2Km254b5Mu+udQoK
-	 hYmqkLzJUwcwbtF0MSf2bTtk093hWWWgSGFUT0IlOArUs2Fj6qasaDNfhXN4kLdysUg==
+	t=1795059348;
+	b=0GQjR/NH/0H28p77EK5Pb2jkVSRDoa2yYcT665OUBTDvdLpMBVdjS24PVKZfHD8ZUMx+
+	 K6TfzjeWItTD3UbA6ntaB8U+MTqgw8Ty3WB5dkg+1+9aE9n2WsFCTS8Cz2qsL2ub3xCIy
+	 RsnVNnPhKk+2rs4QANzewQKT66Pzwex3aFWaKLSyVkRnPOT/j2qdwFD52oiGIY4iqrZNZ
+	 NZdioiXS3foufEBYPGiKapfDmwWCTKtgO4kLGqVmQyqzwpH4pJq1tAV757gHDhHiCxtfQ
+	 ph3dTMDPHsFa6wBQVBfAAXnMqKK7+ZZC+Wv1Vrtk3ogcegA/1vxHyVQPcEZhEQ66Mcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059345;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059348;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tys/Tbjej0PXIbabandivLqGLqWNrbbvsercIV8AA8o=;
-	b=scx1QzST5R8RI0uWYiPOayF+Iw40UoG1Yh9lXdqWkyfBqdHzxssAjUCjwPThCP0HBf6C
-	 ZPOFEfEM8FN27Ycrsu98LAWq9EluDnyhRZ62u1vL5uTLqHYKVe7gfkmbAYpdkM6mJI7dj
-	 tiX24I1Q+u5dd/9anuKRnkX/RvWbgoZkeIV7RmccKNHHzHkEyHjF6XQAOPbqG0PrgepoX
-	 0t3kbyVMFc1MkraIV/pSmNtMWu89x8s8r9C/IMU2O17d0NS5IjNptxdB4aeO0GGhh8FkQ
-	 3+z7TCIlw5YTEDjuh70/AD3NY23uoTLfb8jVd+nx0BnK9P2Bu+nzMrVRrD0t9YHtXoQ==
+	bh=XkOV8GkQQVLBxFJ48R6LbTr/ORS/IXH2Vlt4zrYQ/QM=;
+	b=tjvnzErb3tZyDrvvdYkbFWhtmga9OLca4fCUSujl1mkoSmmGVUSuQXedZhEkZ+6NXjGy
+	 juLqOHiTLGfFxN5wd2sFwg4aoOONQV8zL2MxgJqn4/ExkcJI8KFYnfFJhme3C02GeNGYL
+	 YOsw9uEEkyUugfAAH6anZ+p9aBnzBF54kInOEpgkQapF+y6HlURWtswqhBRmM1bZv7M4x
+	 EFFwudQp3UdF9Nlim8YAEGT1U0gBrgkN9QA1cW3c8s0nmiZ3GYguZ/FusrqblTXZTP6tk
+	 FLVJT4ME+ZvBrXNwZMfLdaVC8odMwXFQEoid6bFgVeK4X2VbpA7qF+xDXn3QJKRBF6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QxSvw1gi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nXK3z1Lk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D876606A31C;
-	Thu, 19 Nov 2026 03:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2EE606A320;
+	Thu, 19 Nov 2026 03:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QxSvw1gi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7141F000C4;
-	Thu, 19 Nov 2026 03:35:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nXK3z1Lk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70BC31F000C4;
+	Thu, 19 Nov 2026 03:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059345;
-	bh=tys/Tbjej0PXIbabandivLqGLqWNrbbvsercIV8AA8o=;
+	s=korg; t=1795059348;
+	bh=XkOV8GkQQVLBxFJ48R6LbTr/ORS/IXH2Vlt4zrYQ/QM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QxSvw1gim0xgKvPRE51vNOuzw78+lv1HYMTYTgoyPb06TfajtuC3GViF9C03LxwwE
-	 0pdTA2OBom9dmEBjRLsz25vcqq2Mgn5I3Q8Jz8r1UV9c6lZ0yVeWW4rMu99w2OXYq/
-	 8azDCfBVAXmqRq0fK5ZiIcne6l0vXSaq2njNuquA=
+	b=nXK3z1LkGCyToIUuGLMDJ+53iAuHUN+lMehbK3fS1Ig1J9r0DXTAkvHQrRvazLEF3
+	 o55YO+X2gk4dGXmoS2PmGB0mF4l+xC194o0R5EUnUALVujxeojDS54C/gEthNrkkYO
+	 ECozF9Y/SKO3B23fQGNmbGvQIv3t4HlCVTOtOL5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weili Qian <qianweili@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Eugen Hristev <ehristev@kernel.org>,
+	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0809/1848] crypto: hisilicon/hpre - fix GFP flags for dma_alloc_coherent
-Date: Wed, 18 Nov 2026 15:47:27 +0100
-Message-ID: <20261118145950.181404202@linuxfoundation.org>
+Subject: [PATCH 5.10 0810/1848] media: microchip-isc: fix WB offset and gain register field masking
+Date: Wed, 18 Nov 2026 15:47:28 +0100
+Message-ID: <20261118145950.219100126@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,75 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weili Qian <qianweili@huawei.com>
+From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
 
-[ Upstream commit 40ec9605cb195e065470f8f23ef94b1b541411a3 ]
+[ Upstream commit 6e9eaa3b93870e4edac1bd2539fe113c24663eaf ]
 
-The HPRE driver hard-codes GFP_ATOMIC for RSA/DH and GFP_KERNEL for
-ECDH. This may cause "scheduling while atomic" in atomic context or
-unnecessary allocation failures under memory pressure.
+ISC_WB_O_* and ISC_WB_G_* each pack two 13-bit fields. A negative offset
+sign-extends and corrupts the adjacent field. Add masks for the two
+fields and write them with FIELD_PREP(), which masks each value into its
+field, so sign extension can no longer bleed across.
 
-Select GFP flags dynamically based on CRYPTO_TFM_REQ_MAY_SLEEP and
-store them in hpre_asym_request::flags. The areq field is a union of
-rsa/dh/ecdh request pointers; reading base.flags through any union
-member other than the one that was written would be type-punning, so
-a dedicated flags field avoids that.
-
-Fixes: 98dfa9343f37 ("crypto: hisilicon/hpre - don't use GFP_KERNEL to alloc mem during softirq")
+Fixes: 73c1a577b839 ("media: atmel: atmel-isc: reworked white balance feature")
 Cc: stable@vger.kernel.org
-Signed-off-by: Weili Qian <qianweili@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-[ sashal: Omitted ECDH changes because the driver lacks ECDH support. ]
+Reviewed-by: Eugen Hristev <ehristev@kernel.org>
+Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ sashal: Adapted to the older Atmel ISC driver naming and added the missing bitfield header include for FIELD_PREP(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/hpre/hpre_crypto.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/media/platform/atmel/atmel-isc-base.c | 17 +++++++++--------
+ drivers/media/platform/atmel/atmel-isc-regs.h |  6 ++++++
+ 2 files changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-index 4477a781bc3f9..742bca5d6a146 100644
---- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-+++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-@@ -96,6 +96,7 @@ struct hpre_asym_request {
- 	int req_id;
- 	hpre_cb cb;
- 	struct timespec64 req_time;
-+	u32 flags;
- };
+diff --git a/drivers/media/platform/atmel/atmel-isc-base.c b/drivers/media/platform/atmel/atmel-isc-base.c
+index fe3ec8d0eaee3..a05716e0e6c2c 100644
+--- a/drivers/media/platform/atmel/atmel-isc-base.c
++++ b/drivers/media/platform/atmel/atmel-isc-base.c
+@@ -9,6 +9,7 @@
+  *
+  */
  
- static int hpre_alloc_req_id(struct hpre_ctx *ctx)
-@@ -201,6 +202,7 @@ static int hpre_prepare_dma_buf(struct hpre_asym_request *hpre_req,
- 				struct scatterlist *data, unsigned int len,
- 				int is_src, dma_addr_t *tmp)
- {
-+	gfp_t gfp = hpre_req->flags & CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL : GFP_ATOMIC;
- 	struct hpre_ctx *ctx = hpre_req->ctx;
- 	struct device *dev = HPRE_DEV(ctx);
- 	void *ptr;
-@@ -210,7 +212,7 @@ static int hpre_prepare_dma_buf(struct hpre_asym_request *hpre_req,
- 	if (unlikely(shift < 0))
- 		return -EINVAL;
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/clkdev.h>
+ #include <linux/clk-provider.h>
+@@ -248,17 +249,17 @@ static inline void isc_update_awb_ctrls(struct isc_device *isc)
+ 	/* In here we set our actual hw pipeline config */
  
--	ptr = dma_alloc_coherent(dev, ctx->key_sz, tmp, GFP_ATOMIC);
-+	ptr = dma_alloc_coherent(dev, ctx->key_sz, tmp, gfp);
- 	if (unlikely(!ptr))
- 		return -ENOMEM;
+ 	regmap_write(isc->regmap, ISC_WB_O_RGR,
+-		     ((ctrls->offset[ISC_HIS_CFG_MODE_R])) |
+-		     ((ctrls->offset[ISC_HIS_CFG_MODE_GR]) << 16));
++		     FIELD_PREP(ISC_WB_O_LO, ctrls->offset[ISC_HIS_CFG_MODE_R]) |
++		     FIELD_PREP(ISC_WB_O_HI, ctrls->offset[ISC_HIS_CFG_MODE_GR]));
+ 	regmap_write(isc->regmap, ISC_WB_O_BGB,
+-		     ((ctrls->offset[ISC_HIS_CFG_MODE_B])) |
+-		     ((ctrls->offset[ISC_HIS_CFG_MODE_GB]) << 16));
++		     FIELD_PREP(ISC_WB_O_LO, ctrls->offset[ISC_HIS_CFG_MODE_B]) |
++		     FIELD_PREP(ISC_WB_O_HI, ctrls->offset[ISC_HIS_CFG_MODE_GB]));
+ 	regmap_write(isc->regmap, ISC_WB_G_RGR,
+-		     ctrls->gain[ISC_HIS_CFG_MODE_R] |
+-		     (ctrls->gain[ISC_HIS_CFG_MODE_GR] << 16));
++		     FIELD_PREP(ISC_WB_G_LO, ctrls->gain[ISC_HIS_CFG_MODE_R]) |
++		     FIELD_PREP(ISC_WB_G_HI, ctrls->gain[ISC_HIS_CFG_MODE_GR]));
+ 	regmap_write(isc->regmap, ISC_WB_G_BGB,
+-		     ctrls->gain[ISC_HIS_CFG_MODE_B] |
+-		     (ctrls->gain[ISC_HIS_CFG_MODE_GB] << 16));
++		     FIELD_PREP(ISC_WB_G_LO, ctrls->gain[ISC_HIS_CFG_MODE_B]) |
++		     FIELD_PREP(ISC_WB_G_HI, ctrls->gain[ISC_HIS_CFG_MODE_GB]));
+ }
  
-@@ -455,6 +457,7 @@ static int hpre_msg_request_set(struct hpre_ctx *ctx, void *req, bool is_rsa)
- 		h_req = PTR_ALIGN(tmp, HPRE_ALIGN_SZ);
- 		h_req->cb = hpre_rsa_cb;
- 		h_req->areq.rsa = akreq;
-+		h_req->flags = akreq->base.flags;
- 		msg = &h_req->req;
- 		memset(msg, 0, sizeof(*msg));
- 	} else {
-@@ -469,6 +472,7 @@ static int hpre_msg_request_set(struct hpre_ctx *ctx, void *req, bool is_rsa)
- 		h_req = PTR_ALIGN(tmp, HPRE_ALIGN_SZ);
- 		h_req->cb = hpre_dh_cb;
- 		h_req->areq.dh = kreq;
-+		h_req->flags = kreq->base.flags;
- 		msg = &h_req->req;
- 		memset(msg, 0, sizeof(*msg));
- 		msg->key = cpu_to_le64(ctx->dh.dma_xa_p);
+ static inline void isc_reset_awb_ctrls(struct isc_device *isc)
+diff --git a/drivers/media/platform/atmel/atmel-isc-regs.h b/drivers/media/platform/atmel/atmel-isc-regs.h
+index f1e160ed43512..f9d3dea3fd50f 100644
+--- a/drivers/media/platform/atmel/atmel-isc-regs.h
++++ b/drivers/media/platform/atmel/atmel-isc-regs.h
+@@ -108,6 +108,12 @@
+ /* ISC White Balance Gain for B, GB Register */
+ #define ISC_WB_G_BGB	0x0000006c
+ 
++/* Each WB offset/gain register packs two 13-bit fields, low and high */
++#define ISC_WB_O_LO	GENMASK(12, 0)	/* R or B  offset [12:0]  */
++#define ISC_WB_O_HI	GENMASK(28, 16)	/* GR or GB offset [28:16] */
++#define ISC_WB_G_LO	GENMASK(12, 0)	/* R or B  gain [12:0]  */
++#define ISC_WB_G_HI	GENMASK(28, 16)	/* GR or GB gain [28:16] */
++
+ /* ISC Color Filter Array Control Register */
+ #define ISC_CFA_CTRL    0x00000070
+ 
 -- 
 2.53.0
 
