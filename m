@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022658;
-	b=vwjyO1pSPHKNyZv3kifepYSW624fmB+dywtm8uQYBQubmzB8VNTmRn/XM6y/qFtOk7vc
-	 dNWrCv/DbQ8duM8/IL4wH8np7qjPGdcp+P+iHAAamjBnXNIwcbmh26wDLwtwr/aGfvO4y
-	 nHCntICzp4LPOWc6aA3zr/u8w5mmUOKRlXCbdFVeMtcCUCnTBwkEneBHwFMXFKQcRkz0l
-	 98Viaa5fBOxDGCigANGL1g73vb/h2B0GauXltgHtwXzKvNS1fflT9oNucRdGisvbpe4ue
-	 bkt/c5qmYkfjpr7DrkdLAAFL7Y1qrkkaagBOVvICe9S4VbGe/wwXqyKYTcrfX9pdo5A==
+	t=1795022661;
+	b=aq5PhoUil1iOcIdBljcoaFSk3HQNSXauumaH6HnCt3FTnktHe/YmCN4rh3EFmNMlnUOD
+	 wt11aAodXXVCQ3FQVSILFICoJfx5QeBi3G8NrjEQ46XEbeiMe+rUcOhjglez8tC1kE4LR
+	 rp9bix5XyqLTwjpq8s7tyzZX4A4nM1e0fGNN9m37WWhp49YSFxlSj3eV+ewnxHedZC2aa
+	 knPg58k9E8gO/2CVJhkxyRD6DOmCaELRJCe+dTZ9DvI6so6tOhDexwG1I8+rxAxTojimM
+	 KT+NVOBLagzZENb7i0IFAke/JKtWm9I8/Osnx+wi5wkbBbXAOLoouG9HmqWoQQV84Yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022658;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022661;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uQOwyvQqa8gjDYLZcZ9dRAnoMue/4BMC5vUztGUtpdo=;
-	b=MqeaGaxIm3HcbTZheytoK9Wz7hx43qtkqcFs0S1XZIUtRN2uGcEROt8f9jL2jN46ldGC
-	 oHeSTJHGf7DPyeTbzkgsvchVz5HyGi4WlvU68MWoyGXlY8ZHL//WuKC82NtlfUClWdyuF
-	 fJFAi2SVuKoI1nq7kHc1pUIp3YUBA6IYKG/3J0B6+z4T2+HsLgJyygRpSXdGB8j2Cv+dX
-	 b68BKB+dV/UN+U9+G3pC24Rt4y+FqtTdk8rYz2Fm7EsGn/s3mk5Ho+oQBoKEI7g2jjwgB
-	 6sW/reiZNLLsUYq6zlHmkIeO4UM2ZnuPIIf8uUZPcO5rLllowXMJ3EGg1GRwmTUHaXg==
+	bh=J5wGdQcUspDRhpNEQkai5GI5CgMNwO2RiExYoMyOi5E=;
+	b=W3ADL+b/qfNc6CkxiSAcFqfOpwcKK5HZ5glFJXGsEhKWxh0zern4wqDV8bZjUPq7O2TG
+	 GfX0szcbGVKKi8ZIEEp67Q+SorhZLcg3YOnUpjBhVIOJFULTekBNPqPRUbZCrL1FJHyTU
+	 S9mqhSvujc8ADlxVAlbPPWyIqQ7Yg9Y7EMMEXWn4PCs3pzeqaYsqNUlH7H3r0RssrlKDU
+	 JLzbsGvoiobp56ZUDrlGUxRcm9E2bNWAfQOyeFgpCsLTVXURvyEjVkJ61CNLBMdvP9uVL
+	 KXOSD0OLVqkIsEaN+JMHjTma56xz8VDHIDN/HdGg+vl3s86iCNswffbyUaFFwsNl7yA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YNKZPSKe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JDqXQkFD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF49606A32F;
-	Wed, 18 Nov 2026 17:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787EA606A333;
+	Wed, 18 Nov 2026 17:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YNKZPSKe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD9C71F000C4;
-	Wed, 18 Nov 2026 17:24:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JDqXQkFD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2B11F000C4;
+	Wed, 18 Nov 2026 17:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022658;
-	bh=uQOwyvQqa8gjDYLZcZ9dRAnoMue/4BMC5vUztGUtpdo=;
+	s=korg; t=1795022661;
+	bh=J5wGdQcUspDRhpNEQkai5GI5CgMNwO2RiExYoMyOi5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YNKZPSKelP7M7rbpL6KWh/I6J3hpwKDnO8Pj5oiU6mbgIY25b8ZjPCkp4f6x1eMgW
-	 8PCuV6j9WMbZtNTij/FFW2ivM6ynWhTbmjX9+brftChg2cyY5m0ZI6ol/oOXwplpNx
-	 XLmitebEWKeb7IAIhoNdxFZpscqLvMWxDnYlCsn4=
+	b=JDqXQkFDlOYrHQJL5LWiG5HwP9ttKeXFlEOWMWF/LYdhCKlqtJhz+o8nBNEDeT5Rz
+	 n+DA4hGdeIbeHUVTKgqV+y0I9O1EE3FbD9U6GiJ2dmSpDVvv3foWElUwkrIzAD8JAm
+	 g2gli6qXcnjyMdIMfZdESWNHpgSGXlpaKY57U5Zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Daehyeon Ko <4ncienth@gmail.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Aaron Lu <ziqianlu@bytedance.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0089/2151] sched: Fold sched_class::switch{ing,ed}_{to,from}() into the change pattern
-Date: Wed, 18 Nov 2026 15:30:24 +0100
-Message-ID: <20261118150125.041396075@linuxfoundation.org>
+Subject: [PATCH 6.18 0090/2151] sched/fair: Clear throttle state when leaving the fair class
+Date: Wed, 18 Nov 2026 15:30:25 +0100
+Message-ID: <20261118150125.079001427@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,372 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 637b0682821b144d5993211cf0a768b322138a69 ]
+[ Upstream commit c282051fc2cae2ea54770ebe435dbea090272c25 ]
 
-Add {DE,EN}QUEUE_CLASS and fold the sched_class::switch* methods into
-the change pattern. This completes and makes the pattern more
-symmetric.
+Task-based CFS bandwidth throttling removes a task's fair sched_entity
+while the scheduler core still considers the task queued. p->throttled
+carries the fair-specific state across dequeue/enqueue operations.
 
-This changes the order of callbacks slightly:
+DEQUEUE_CLASS removes the task from cfs_rq->throttled_limbo_list
+but retains the bit. If the last finite CFS quota is disabled while
+the task runs in another class, it is absent from the unthrottle walk and
+the bit survives.
+Returning to fair while cfs_bandwidth_used() is false then performs a real
+fair enqueue with p->throttled still set.
 
-  OLD                              NEW
-				|
-				|  switching_from()
-  dequeue_task();		|  dequeue_task()
-  put_prev_task();		|  put_prev_task()
-				|  switched_from()
-				|
-  ... change task ...		|  ... change task ...
-				|
-  switching_to();		|  switching_to()
-  enqueue_task();		|  enqueue_task()
-  set_next_task();		|  set_next_task()
-  prev_class->switched_from()	|
-  switched_to()			|  switched_to()
-				|
+After bandwidth is re-enabled, a class-change dequeue treats the
+stale bit as limbo state and skips __dequeue_task(). p->se.on_rq therefore
+remains set, and put_prev_task_fair() places the entity in the EEVDF tree
+while the task moves to RT. On exit, the fair picker can select the
+TASK_DEAD task. __schedule() then returns to do_task_dead(),
+which hits BUG().
 
-Notably, it moves the switched_from() callback right after the
-dequeue/put. Existing implementations don't appear to be affected by
-this change in location -- specifically the task isn't enqueued on the
-class in question in either location.
+Keep p->throttled across migrations and group moves, but clear it on
+DEQUEUE_CLASS because fair-specific state must not outlive fair-class
+membership. A later return to fair uses the normal enqueue path. That path
+still respects a throttled cfs_rq.
 
-Make (CLASS)^(SAVE|MOVE), because there is nothing to save-restore
-when changing scheduling classes.
+A KASAN, LOCKDEP and DEBUG_LIST v7.3 kernel reproduced the do_task_dead()
+BUG in 3/3 root and 3/3 delegated uid-1000 runs with CapPrm=CapEff=0 and
+RLIMIT_RTPRIO=1. The fix passed both matrices plus a 3/3 class-switch
+control with bandwidth continuously enabled, without a scheduler warning,
+KASAN report, lockdep splat or crash.
 
+An AI coding assistant analyzed the state mismatch and drafted the initial
+reproducer, fix candidate and this changelog. The source paths, trigger,
+controls and results were rechecked against the cited revisions.
+
+Fixes: e1fad12dcb66 ("sched/fair: Switch to task based throttle model")
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Acked-by: Vincent Guittot <vincent.guittot@linaro.org>
-Stable-dep-of: c282051fc2ca ("sched/fair: Clear throttle state when leaving the fair class")
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Aaron Lu <ziqianlu@bytedance.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261022235234.150957-1-4ncienth@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c      | 51 +++++++++++++++++-----------------------
- kernel/sched/ext.c       | 22 ++++++++++++-----
- kernel/sched/idle.c      |  4 ++--
- kernel/sched/rt.c        |  2 +-
- kernel/sched/sched.h     | 22 +++++++----------
- kernel/sched/stop_task.c |  4 ++--
- kernel/sched/syscalls.c  |  7 ++++--
- 7 files changed, 55 insertions(+), 57 deletions(-)
+ kernel/sched/fair.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index dbd871c6235f4..57ba5fcff1339 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -2185,34 +2185,9 @@ inline int task_curr(const struct task_struct *p)
- 	return cpu_curr(task_cpu(p)) == p;
- }
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index fbc277c6963c5..a063e302fbf8e 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -5988,8 +5988,8 @@ static void dequeue_throttled_task(struct task_struct *p, int flags)
+ 	WARN_ON_ONCE(p->se.on_rq);
+ 	list_del_init(&p->throttle_node);
  
--/*
-- * ->switching_to() is called with the pi_lock and rq_lock held and must not
-- * mess with locking.
-- */
--void check_class_changing(struct rq *rq, struct task_struct *p,
--			  const struct sched_class *prev_class)
--{
--	if (prev_class != p->sched_class && p->sched_class->switching_to)
--		p->sched_class->switching_to(rq, p);
--}
--
--/*
-- * switched_from, switched_to and prio_changed must _NOT_ drop rq->lock,
-- * use the balance_callback list if you want balancing.
-- *
-- * this means any call to check_class_changed() must be followed by a call to
-- * balance_callback().
-- */
--void check_class_changed(struct rq *rq, struct task_struct *p,
--			 const struct sched_class *prev_class,
--			 int oldprio)
-+void check_prio_changed(struct rq *rq, struct task_struct *p, int oldprio)
- {
--	if (prev_class != p->sched_class) {
--		if (prev_class->switched_from)
--			prev_class->switched_from(rq, p);
--
--		p->sched_class->switched_to(rq, p);
--	} else if (oldprio != p->prio || dl_task(p))
-+	if (oldprio != p->prio || dl_task(p))
- 		p->sched_class->prio_changed(rq, p, oldprio);
- }
- 
-@@ -7413,6 +7388,9 @@ void rt_mutex_setprio(struct task_struct *p, struct task_struct *pi_task)
- 	prev_class = p->sched_class;
- 	next_class = __setscheduler_class(p->policy, prio);
- 
-+	if (prev_class != next_class)
-+		queue_flag |= DEQUEUE_CLASS;
-+
- 	if (prev_class != next_class && p->se.sched_delayed)
- 		dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
- 
-@@ -7449,11 +7427,10 @@ void rt_mutex_setprio(struct task_struct *p, struct task_struct *pi_task)
- 
- 		p->sched_class = next_class;
- 		p->prio = prio;
--
--		check_class_changing(rq, p, prev_class);
+-	/* task blocked after throttled */
+-	if (flags & DEQUEUE_SLEEP) {
++	/* Task blocked after throttling or is leaving the fair class: */
++	if (flags & (DEQUEUE_SLEEP | DEQUEUE_CLASS)) {
+ 		p->throttled = false;
+ 		return;
  	}
- 
--	check_class_changed(rq, p, prev_class, oldprio);
-+	if (!(queue_flag & DEQUEUE_CLASS))
-+		check_prio_changed(rq, p, oldprio);
- out_unlock:
- 	/* Avoid rq from going away on us: */
- 	preempt_disable();
-@@ -10892,6 +10869,11 @@ struct sched_change_ctx *sched_change_begin(struct task_struct *p, unsigned int
- 
- 	lockdep_assert_rq_held(rq);
- 
-+	if (flags & DEQUEUE_CLASS) {
-+		if (p->sched_class->switching_from)
-+			p->sched_class->switching_from(rq, p);
-+	}
-+
- 	*ctx = (struct sched_change_ctx){
- 		.p = p,
- 		.flags = flags,
-@@ -10904,6 +10886,9 @@ struct sched_change_ctx *sched_change_begin(struct task_struct *p, unsigned int
- 	if (ctx->running)
- 		put_prev_task(rq, p);
- 
-+	if ((flags & DEQUEUE_CLASS) && p->sched_class->switched_from)
-+		p->sched_class->switched_from(rq, p);
-+
- 	return ctx;
- }
- 
-@@ -10914,8 +10899,14 @@ void sched_change_end(struct sched_change_ctx *ctx)
- 
- 	lockdep_assert_rq_held(rq);
- 
-+	if ((ctx->flags & ENQUEUE_CLASS) && p->sched_class->switching_to)
-+		p->sched_class->switching_to(rq, p);
-+
- 	if (ctx->queued)
- 		enqueue_task(rq, p, ctx->flags | ENQUEUE_NOCLOCK);
- 	if (ctx->running)
- 		set_next_task(rq, p);
-+
-+	if ((ctx->flags & ENQUEUE_CLASS) && p->sched_class->switched_to)
-+		p->sched_class->switched_to(rq, p);
- }
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 3117d1ef869c5..48b8fb873b852 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4079,20 +4079,25 @@ static void scx_root_disable(struct scx_sched *sch)
- 
- 	scx_task_iter_start(&sti);
- 	while ((p = scx_task_iter_next_locked(&sti))) {
-+		unsigned int queue_flags = DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK;
- 		const struct sched_class *old_class = p->sched_class;
- 		const struct sched_class *new_class = scx_setscheduler_class(p);
- 
- 		update_rq_clock(task_rq(p));
- 
-+		if (old_class != new_class)
-+			queue_flags |= DEQUEUE_CLASS;
-+
- 		if (old_class != new_class && p->se.sched_delayed)
- 			dequeue_task(task_rq(p), p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
- 
--		scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK) {
-+		scoped_guard (sched_change, p, queue_flags) {
- 			p->sched_class = new_class;
--			check_class_changing(task_rq(p), p, old_class);
- 		}
- 
--		check_class_changed(task_rq(p), p, old_class, p->prio);
-+		if (!(queue_flags & DEQUEUE_CLASS))
-+			check_prio_changed(task_rq(p), p, p->prio);
-+
- 		scx_exit_task(p);
- 	}
- 	scx_task_iter_stop(&sti);
-@@ -4932,6 +4937,7 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 	percpu_down_write(&scx_fork_rwsem);
- 	scx_task_iter_start(&sti);
- 	while ((p = scx_task_iter_next_locked(&sti))) {
-+		unsigned int queue_flags = DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK;
- 		const struct sched_class *old_class = p->sched_class;
- 		const struct sched_class *new_class = scx_setscheduler_class(p);
- 
-@@ -4940,16 +4946,20 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 
- 		update_rq_clock(task_rq(p));
- 
-+		if (old_class != new_class)
-+			queue_flags |= DEQUEUE_CLASS;
-+
- 		if (old_class != new_class && p->se.sched_delayed)
- 			dequeue_task(task_rq(p), p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
- 
--		scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK) {
-+		scoped_guard (sched_change, p, queue_flags) {
- 			p->scx.slice = SCX_SLICE_DFL;
- 			p->sched_class = new_class;
--			check_class_changing(task_rq(p), p, old_class);
- 		}
- 
--		check_class_changed(task_rq(p), p, old_class, p->prio);
-+		if (!(queue_flags & DEQUEUE_CLASS))
-+			check_prio_changed(task_rq(p), p, p->prio);
-+
- 		put_task_struct(p);
- 	}
- 	scx_task_iter_stop(&sti);
-diff --git a/kernel/sched/idle.c b/kernel/sched/idle.c
-index 220fc9e7c22db..d5607b2150ba4 100644
---- a/kernel/sched/idle.c
-+++ b/kernel/sched/idle.c
-@@ -525,7 +525,7 @@ static void task_tick_idle(struct rq *rq, struct task_struct *curr, int queued)
- {
- }
- 
--static void switched_to_idle(struct rq *rq, struct task_struct *p)
-+static void switching_to_idle(struct rq *rq, struct task_struct *p)
- {
- 	BUG();
- }
-@@ -563,6 +563,6 @@ DEFINE_SCHED_CLASS(idle) = {
- 	.task_tick		= task_tick_idle,
- 
- 	.prio_changed		= prio_changed_idle,
--	.switched_to		= switched_to_idle,
-+	.switching_to		= switching_to_idle,
- 	.update_curr		= update_curr_idle,
- };
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index fc9737decfb73..6274bda1d5706 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -2609,8 +2609,8 @@ DEFINE_SCHED_CLASS(rt) = {
- 
- 	.get_rr_interval	= get_rr_interval_rt,
- 
--	.prio_changed		= prio_changed_rt,
- 	.switched_to		= switched_to_rt,
-+	.prio_changed		= prio_changed_rt,
- 
- 	.update_curr		= update_curr_rt,
- 
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 2e0604b3a337f..81ccbfbb81521 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -21,7 +21,6 @@
- #include <linux/sched/task_flags.h>
- #include <linux/sched/task.h>
- #include <linux/sched/topology.h>
--
- #include <linux/atomic.h>
- #include <linux/bitmap.h>
- #include <linux/bug.h>
-@@ -2384,6 +2383,7 @@ extern const u32		sched_prio_to_wmult[40];
- 
- #define DEQUEUE_MIGRATING	0x0010 /* Matches ENQUEUE_MIGRATING */
- #define DEQUEUE_DELAYED		0x0020 /* Matches ENQUEUE_DELAYED */
-+#define DEQUEUE_CLASS		0x0040 /* Matches ENQUEUE_CLASS */
- 
- #define DEQUEUE_SPECIAL		0x00010000
- #define DEQUEUE_THROTTLE	0x00020000
-@@ -2395,6 +2395,7 @@ extern const u32		sched_prio_to_wmult[40];
- 
- #define ENQUEUE_MIGRATING	0x0010
- #define ENQUEUE_DELAYED		0x0020
-+#define ENQUEUE_CLASS		0x0040
- 
- #define ENQUEUE_HEAD		0x00010000
- #define ENQUEUE_REPLENISH	0x00020000
-@@ -2458,14 +2459,11 @@ struct sched_class {
- 	void (*task_fork)(struct task_struct *p);
- 	void (*task_dead)(struct task_struct *p);
- 
--	/*
--	 * The switched_from() call is allowed to drop rq->lock, therefore we
--	 * cannot assume the switched_from/switched_to pair is serialized by
--	 * rq->lock. They are however serialized by p->pi_lock.
--	 */
--	void (*switching_to) (struct rq *this_rq, struct task_struct *task);
--	void (*switched_from)(struct rq *this_rq, struct task_struct *task);
--	void (*switched_to)  (struct rq *this_rq, struct task_struct *task);
-+	void (*switching_from)(struct rq *this_rq, struct task_struct *task);
-+	void (*switched_from) (struct rq *this_rq, struct task_struct *task);
-+	void (*switching_to)  (struct rq *this_rq, struct task_struct *task);
-+	void (*switched_to)   (struct rq *this_rq, struct task_struct *task);
-+
- 	void (*reweight_task)(struct rq *this_rq, struct task_struct *task,
- 			      const struct load_weight *lw);
- 	void (*prio_changed) (struct rq *this_rq, struct task_struct *task,
-@@ -3892,11 +3890,7 @@ extern void set_load_weight(struct task_struct *p, bool update_load);
- extern void enqueue_task(struct rq *rq, struct task_struct *p, int flags);
- extern bool dequeue_task(struct rq *rq, struct task_struct *p, int flags);
- 
--extern void check_class_changing(struct rq *rq, struct task_struct *p,
--				 const struct sched_class *prev_class);
--extern void check_class_changed(struct rq *rq, struct task_struct *p,
--				const struct sched_class *prev_class,
--				int oldprio);
-+extern void check_prio_changed(struct rq *rq, struct task_struct *p, int oldprio);
- 
- extern struct balance_callback *splice_balance_callbacks(struct rq *rq);
- extern void balance_callbacks(struct rq *rq, struct balance_callback *head);
-diff --git a/kernel/sched/stop_task.c b/kernel/sched/stop_task.c
-index 73aeb0743aa2e..a781f4b44abf9 100644
---- a/kernel/sched/stop_task.c
-+++ b/kernel/sched/stop_task.c
-@@ -75,7 +75,7 @@ static void task_tick_stop(struct rq *rq, struct task_struct *curr, int queued)
- {
- }
- 
--static void switched_to_stop(struct rq *rq, struct task_struct *p)
-+static void switching_to_stop(struct rq *rq, struct task_struct *p)
- {
- 	BUG(); /* its impossible to change to this class */
- }
-@@ -112,6 +112,6 @@ DEFINE_SCHED_CLASS(stop) = {
- 	.task_tick		= task_tick_stop,
- 
- 	.prio_changed		= prio_changed_stop,
--	.switched_to		= switched_to_stop,
-+	.switching_to		= switching_to_stop,
- 	.update_curr		= update_curr_stop,
- };
-diff --git a/kernel/sched/syscalls.c b/kernel/sched/syscalls.c
-index 77b663a5dfb2b..b044a3aa4a0ad 100644
---- a/kernel/sched/syscalls.c
-+++ b/kernel/sched/syscalls.c
-@@ -713,6 +713,9 @@ int __sched_setscheduler(struct task_struct *p,
- 	prev_class = p->sched_class;
- 	next_class = __setscheduler_class(policy, newprio);
- 
-+	if (prev_class != next_class)
-+		queue_flags |= DEQUEUE_CLASS;
-+
- 	if (prev_class != next_class && p->se.sched_delayed)
- 		dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
- 
-@@ -725,7 +728,6 @@ int __sched_setscheduler(struct task_struct *p,
- 			__setscheduler_dl_pi(newprio, policy, p, scope);
- 		}
- 		__setscheduler_uclamp(p, attr);
--		check_class_changing(rq, p, prev_class);
- 
- 		if (scope->queued) {
- 			/*
-@@ -737,7 +739,8 @@ int __sched_setscheduler(struct task_struct *p,
- 		}
- 	}
- 
--	check_class_changed(rq, p, prev_class, oldprio);
-+	if (!(queue_flags & DEQUEUE_CLASS))
-+		check_prio_changed(rq, p, oldprio);
- 
- 	/* Avoid rq from going away on us: */
- 	preempt_disable();
 -- 
 2.53.0
 
