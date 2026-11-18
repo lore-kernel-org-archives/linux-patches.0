@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023276;
-	b=dRL/4fBwFn361ZhTINEJuZA5FKOW18OYXyveynmPxv0j3DqSE61qDhh/3T0O8FhR68F6
-	 r9bbBsc44anXYZJcT7rvPdMFmpyzf6lP9PQyA08QQGpQSewtbgDnYqwVnzDw11EGi3Dgo
-	 H5FvXoEkmxO4cypfnZfOL3PJY3zM4SGdVk/KiWXy7Ot4KWU1fjzcLJwSXpIoa6gMR2q8z
-	 eqMX8WY39Yub+NTF3ThnMh2YGbZHFnJ/ijhYYroMojLjNg5+Jzc0WccNadP3hGjmgma36
-	 rEwlzBo3VGZrPiJE6WVOMMQewAlAot0qZ7W6k8sfD2j81KSGSBqpgJXLcV+sYY9N+FQ==
+	t=1795023278;
+	b=MLIw2YMANZsJ19G30rQeKDjdPXNUF6w+8Tbq/p9NLkz7KNYmkXH3MQKkB039A00ExVmM
+	 wLBjRe4zWe1m/L+n9VLxaJD3zrO8d8xgTecXPrAipNwyHlpEe7Z+VuI8ZjsDMEcWaF7+L
+	 DRoJE6TzCnivKgr0pEkgylv9l2Nfvsg0AiEM90Ja9kgRm/Z1LbXWZ0kf28ahr8HuvHUc5
+	 s8BUqTI0wW7vaOJzTT7lzXlhbkDGaeTbRdzoEfs6r5JY+RX1yo0H2L2immJ3u7Zb21lYg
+	 tD42jtf1Osz55raw1osm4UyTzF/BAzPVnFe18Y2vb0iwOx1QL9iWE7xueseQnY4W+AQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023276;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023278;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=55bGGDT5k0Ro6GMhsqtggF5Wf1aZ4sR7wOXUp3rewGk=;
-	b=EecuLCADqQ54l13iHRwfkTLTxcHrIOnPIr6SXXeEmzfH4dydLy8jvbhDmFyok5E9k4aC
-	 uHuWh4LrcknNtN3B8lYKsODKCjnIYgB0NHN+8U3URBE/GY3blKikolM7XvdNsGU6ricXm
-	 RHPaWPJbcEXl+WzPm0KO4pAsrs53q/Ytu/zeLve4wqzU0ztcLBQ479JQnR4it+dRwEL0a
-	 5KG2T2pYJ3R+SHahvhpVHHWBZSlwk5V2JpoSv+orMqr1InMKdW9OnLacDokAhE8dcCaSg
-	 qyh5Mxwe6uRivvaRyVrs2NKU/6IRnbq0VflhHMvW2byitSPA41hfhDwAyFx73Y+KgHA==
+	bh=bubfI6Qc8ji3R0bRjnZZN6auFWfUKnB1HJexoFX5ejE=;
+	b=OT/5NxCiA9dAUnjQov+C1Bk5ZrvVjA2RLalhhv8FrBWab4R8KcUqwaJjWNas67E/7QsF
+	 nPwqahDF+3XFQVPgEspVG/N7ZDuhsz1qKkynvMJnGJDB+xfwPFo97K6EXrXHi4m22Eg9u
+	 g24gB+9ao5M4ojXwLA6nO8zQflsDxDX2x/dNfg9mqVst81xCc30akocEZphRddkJUiNUz
+	 0+rVj36aigaYP90Zy0OYaLK227acZBOWjp+fYQjzZGACwwr2qC8CsOgioH4fSsO7tjO1P
+	 Jv1aTvzpiKjwhQ/TNESYr0ZffLd8rDM9rA2R0xb8u3mtHgrccz+zzcI9qtxqiJo+zJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LKCB0p59;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mplYJYK3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067B1606A31C;
-	Wed, 18 Nov 2026 17:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17A3606A31C;
+	Wed, 18 Nov 2026 17:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LKCB0p59
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392031F000C4;
-	Wed, 18 Nov 2026 17:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mplYJYK3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D2B11F000C4;
+	Wed, 18 Nov 2026 17:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023275;
-	bh=55bGGDT5k0Ro6GMhsqtggF5Wf1aZ4sR7wOXUp3rewGk=;
+	s=korg; t=1795023278;
+	bh=bubfI6Qc8ji3R0bRjnZZN6auFWfUKnB1HJexoFX5ejE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LKCB0p59QbNbHWUrieGKkWznn+LTiF3MIZv9uVIDwOkOZIowa2RqkiiKEPNpBVJPL
-	 Xqd5yyxbj+9FRXIa87U3xIkeLGAXddOGc1VQEjM1nyoTeDYd3NPRPZ8uF9SAnIQOjC
-	 TbPt0/m4GwhMdz36tKHpnsIJCzcqoS7I7xsqmRy0=
+	b=mplYJYK323qZC9nk+p6dpRaEA7mtTVm1d0VT3sqNl21ChDlrFxKoB4MUQTtmr3DJT
+	 J99tyz/azrkChvKigqstpTKFLCWbetCURhWBpzg7ZPuh7qWLjGrYzYsahwfgnwmHTJ
+	 qiR9cOaMOxvHVL/VNtKM5H3MmEEO+1j7TKF8J3N4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0294/2151] ASoC: sta32x: make power restoration transactional
-Date: Wed, 18 Nov 2026 15:33:49 +0100
-Message-ID: <20261118150132.618591064@linuxfoundation.org>
+Subject: [PATCH 6.18 0312/2151] ACPI: glue: Reduce debug noise from acpi_device_notify()
+Date: Wed, 18 Nov 2026 15:34:07 +0100
+Message-ID: <20261118150133.315927995@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,190 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 3e71dc4508bc84862dc3644e3b6a5b966bff22ad ]
+[ Upstream commit 5bc1e72f80da4c20ce8b57851be4fad67e855ebd ]
 
-sta32x_set_bias_level() enables the codec supplies, restores the
-coefficient and register state, and then starts the watchdog. Register
-access errors in the mute and coefficient helpers and the cache replay
-are discarded, allowing DAPM to publish STANDBY for a partially restored
-codec.
+When debug is enabled in the ACPI glue code that handles binding
+devices to ACPI companions, acpi_device_notify() produces a lot of
+message noise related to devices that have no ACPI companions.
 
-Propagate every operation in the local restore transaction, including
-the final standby-state write. Start the watchdog only after that write
-succeeds. On failure, hold reset, mark the cache dirty, disable the
-supplies and report a cleanup failure while preserving the primary
-error. The DAPM bias callback consumes the returned error independently
-of component resume handling.
+Reduce that noise by checking the most obvious case, ACPI device
+objects, directly and returning from acpi_device_notify() in that
+case without printing any debug messages.  Also avoid printing a
+debug message when there is no matching ACPI bus type definition for
+the given device, which is the case for the vast majority of devices.
 
-Fixes: 54dc6cabe684 ("ASoC: sta32x: preserve coefficient RAM")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260830141521.33246-1-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Additionally, make the debug messages that get printed more informative.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/6325978.lOV4Wx5bFT@rafael.j.wysocki
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: aef7792cddca ("ACPI: glue: Rework the success message in acpi_device_notify()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/sta32x.c | 101 +++++++++++++++++++++++++++++---------
- 1 file changed, 77 insertions(+), 24 deletions(-)
+ drivers/acpi/glue.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/sound/soc/codecs/sta32x.c b/sound/soc/codecs/sta32x.c
-index bba45c813d4cb..32c818ed587aa 100644
---- a/sound/soc/codecs/sta32x.c
-+++ b/sound/soc/codecs/sta32x.c
-@@ -345,27 +345,48 @@ static int sta32x_sync_coef_shadow(struct snd_soc_component *component)
- {
- 	struct sta32x_priv *sta32x = snd_soc_component_get_drvdata(component);
- 	unsigned int cfud;
--	int i;
-+	int i, ret;
+diff --git a/drivers/acpi/glue.c b/drivers/acpi/glue.c
+index a194f30876c59..2a782ba508f7b 100644
+--- a/drivers/acpi/glue.c
++++ b/drivers/acpi/glue.c
+@@ -354,22 +354,27 @@ void acpi_device_notify(struct device *dev)
+ 	struct acpi_device *adev;
+ 	int ret;
  
- 	/* preserve reserved bits in STA32X_CFUD */
--	regmap_read(sta32x->regmap, STA32X_CFUD, &cfud);
-+	ret = regmap_read(sta32x->regmap, STA32X_CFUD, &cfud);
-+	if (ret)
-+		return ret;
++	/* ACPI devices have no ACPI companions. */
++	if (dev->bus == &acpi_bus_type)
++		return;
 +
- 	cfud &= 0xf0;
+ 	ret = acpi_bind_one(dev, NULL);
+ 	if (ret) {
+ 		struct acpi_bus_type *type = acpi_get_bus_type(dev);
  
- 	for (i = 0; i < STA32X_COEF_COUNT; i++) {
--		regmap_write(sta32x->regmap, STA32X_CFADDR2, i);
--		regmap_write(sta32x->regmap, STA32X_B1CF1,
--			     (sta32x->coef_shadow[i] >> 16) & 0xff);
--		regmap_write(sta32x->regmap, STA32X_B1CF2,
--			     (sta32x->coef_shadow[i] >> 8) & 0xff);
--		regmap_write(sta32x->regmap, STA32X_B1CF3,
--			     (sta32x->coef_shadow[i]) & 0xff);
-+		ret = regmap_write(sta32x->regmap, STA32X_CFADDR2, i);
-+		if (ret)
-+			return ret;
-+
-+		ret = regmap_write(sta32x->regmap, STA32X_B1CF1,
-+				   (sta32x->coef_shadow[i] >> 16) & 0xff);
-+		if (ret)
-+			return ret;
-+
-+		ret = regmap_write(sta32x->regmap, STA32X_B1CF2,
-+				   (sta32x->coef_shadow[i] >> 8) & 0xff);
-+		if (ret)
-+			return ret;
-+
-+		ret = regmap_write(sta32x->regmap, STA32X_B1CF3,
-+				   sta32x->coef_shadow[i] & 0xff);
-+		if (ret)
-+			return ret;
-+
- 		/*
- 		 * chip documentation does not say if the bits are
- 		 * self-clearing, so do it explicitly
- 		 */
--		regmap_write(sta32x->regmap, STA32X_CFUD, cfud);
--		regmap_write(sta32x->regmap, STA32X_CFUD, cfud | 0x01);
-+		ret = regmap_write(sta32x->regmap, STA32X_CFUD, cfud);
-+		if (ret)
-+			return ret;
-+
-+		ret = regmap_write(sta32x->regmap, STA32X_CFUD, cfud | 0x01);
-+		if (ret)
-+			return ret;
- 	}
-+
- 	return 0;
- }
+ 		if (!type)
+-			goto err;
++			return;
  
-@@ -373,15 +394,24 @@ static int sta32x_cache_sync(struct snd_soc_component *component)
- {
- 	struct sta32x_priv *sta32x = snd_soc_component_get_drvdata(component);
- 	unsigned int mute;
--	int rc;
-+	int restore_ret, ret;
- 
- 	/* mute during register sync */
--	regmap_read(sta32x->regmap, STA32X_MMUTE, &mute);
--	regmap_write(sta32x->regmap, STA32X_MMUTE, mute | STA32X_MMUTE_MMUTE);
--	sta32x_sync_coef_shadow(component);
--	rc = regcache_sync(sta32x->regmap);
--	regmap_write(sta32x->regmap, STA32X_MMUTE, mute);
--	return rc;
-+	ret = regmap_read(sta32x->regmap, STA32X_MMUTE, &mute);
-+	if (ret)
-+		return ret;
-+
-+	ret = regmap_write(sta32x->regmap, STA32X_MMUTE,
-+			   mute | STA32X_MMUTE_MMUTE);
-+	if (ret)
-+		return ret;
-+
-+	ret = sta32x_sync_coef_shadow(component);
-+	if (!ret)
-+		ret = regcache_sync(sta32x->regmap);
-+
-+	restore_ret = regmap_write(sta32x->regmap, STA32X_MMUTE, mute);
-+	return ret ?: restore_ret;
- }
- 
- /* work around ESD issue where sta32x resets and loses all configuration */
-@@ -797,9 +827,9 @@ static int sta32x_startup_sequence(struct sta32x_priv *sta32x)
- static int sta32x_set_bias_level(struct snd_soc_component *component,
- 				 enum snd_soc_bias_level level)
- {
--	int ret;
- 	struct sta32x_priv *sta32x = snd_soc_component_get_drvdata(component);
- 	struct snd_soc_dapm_context *dapm = snd_soc_component_to_dapm(component);
-+	int cleanup_ret, ret;
- 
- 	dev_dbg(component->dev, "level = %d\n", level);
- 	switch (level) {
-@@ -823,15 +853,28 @@ static int sta32x_set_bias_level(struct snd_soc_component *component,
- 				return ret;
- 			}
- 
--			sta32x_startup_sequence(sta32x);
--			sta32x_cache_sync(component);
-+			ret = sta32x_startup_sequence(sta32x);
-+			if (!ret)
-+				ret = sta32x_cache_sync(component);
-+			if (ret)
-+				goto restore_failed;
-+
-+			ret = regmap_update_bits(sta32x->regmap, STA32X_CONFF,
-+						 STA32X_CONFF_PWDN | STA32X_CONFF_EAPD,
-+						 0);
-+			if (ret)
-+				goto restore_failed;
-+
- 			sta32x_watchdog_start(sta32x);
-+			break;
+ 		adev = type->find_companion(dev);
+ 		if (!adev) {
+ 			dev_dbg(dev, "ACPI companion not found\n");
+-			goto err;
++			return;
  		}
- 
- 		/* Power down */
--		regmap_update_bits(sta32x->regmap, STA32X_CONFF,
--				   STA32X_CONFF_PWDN | STA32X_CONFF_EAPD,
--				   0);
-+		ret = regmap_update_bits(sta32x->regmap, STA32X_CONFF,
-+					 STA32X_CONFF_PWDN | STA32X_CONFF_EAPD,
-+					 0);
-+		if (ret)
-+			return ret;
- 
- 		break;
- 
-@@ -849,6 +892,16 @@ static int sta32x_set_bias_level(struct snd_soc_component *component,
- 		break;
- 	}
- 	return 0;
-+
-+restore_failed:
-+	gpiod_set_value(sta32x->gpiod_nreset, 0);
-+	regcache_mark_dirty(sta32x->regmap);
-+	cleanup_ret = regulator_bulk_disable(ARRAY_SIZE(sta32x->supplies),
-+					     sta32x->supplies);
-+	if (cleanup_ret)
-+		dev_warn(component->dev, "Failed to disable supplies: %d\n",
-+			 cleanup_ret);
-+	return ret;
+ 		ret = acpi_bind_one(dev, adev);
+-		if (ret)
+-			goto err;
+-
++		if (ret) {
++			dev_dbg(dev, "Binding to ACPI companion failed\n");
++			return;
++		}
+ 		if (type->setup) {
+ 			type->setup(dev);
+ 			goto done;
+@@ -391,11 +396,6 @@ void acpi_device_notify(struct device *dev)
+ done:
+ 	acpi_handle_debug(ACPI_HANDLE(dev), "Bound to device %s\n",
+ 			  dev_name(dev));
+-
+-	return;
+-
+-err:
+-	dev_dbg(dev, "No ACPI support\n");
  }
  
- static const struct snd_soc_dai_ops sta32x_dai_ops = {
+ void acpi_device_notify_remove(struct device *dev)
 -- 
 2.53.0
 
