@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028787;
-	b=pnuQtM7QHWbNRev/B8qG45yp/hT+7WoGfJsZsQ47jPHVhapYXX16dLd8OHKvZ7Pvq/JE
-	 5j3lx+qxiPxLP6L0CA46KMarSjzbiKHzFQdkEZR1HA2/QOy/sXXCQfMUxF1Qsaq2giFeV
-	 MoBkU/hDMPK0S/xRbcGlivfA1sOHxDVqK1533knE71qxXz6VG5hjvfDzmANW1oKL4CQYx
-	 WLmk6W86T9z+wbqr14UZYpawOAwdYIsvcxXmZykUXL3yeg/ytdPABfnwZoZ7ChL3/gzOt
-	 hSw0QONpNi9ET1C+0iApXjg18UscQzpFY9pvmuMn9ZMoNVtkFgUTpiA8usrlCBKzYJA==
+	t=1795028790;
+	b=V6lnFHIqRjd11RLvydBhfFF2iRNe8bkE61AexYZW4+0NLXHyO2uUgsX380lesULKVlqx
+	 jhN9LKPPCbNXMJ7OoNEnx3Q4RNnw6MthENFsX1/JXnK4roaoblbrVMHJd3zehvm41Ss1C
+	 JDlcWIPAQJ5TsiU6J9sJvVD8T50P8gtG7nA7NaO631E/kXFn1mE7Vdc9/+K0d1Mrdbtqn
+	 yvhyo+bmEola3xSGzeP1TLkBM+MfRxlr+amNMo4jcUCsfXH7k/LikODruj9dEyJ1iopLa
+	 6Zmt1ddJtmtxb3Z4Te85fQUom03X1F0P5IZQZat9vszoWlYAAsUhxhQ1OEnoXuCUyCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028787;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028790;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FYmsxJXjynFO8loQWILBjwyKwlZUeMRkPmPmWm4BFeo=;
-	b=MwbLvz3pBDc8+YssOTPUP+IXLxQofPTMxR+HNevv9eq3XOLE997OgARfIuq8ztBhcn1Z
-	 82OoYdq+QsEH2HHeg5rKESJJ/t/5ACjCV4ArDMdIZqlqN426AGPrTp9cpTsVEFwI0bQnC
-	 D751Gg1e0IzcuBzLKIHI938qu4fQmxr3hYJLdM56lXjhhsuuDuMha3U61/LA0Nbq9qiAz
-	 ANsymx36lLeDDzjY+HbVQXUjkoccnbM5LSA20XCHz50XmIFbx31Snq+sV2ms6oF6ErP4O
-	 pK1njKBDNi50n6QVg+FrBH7feYYRZ7rnB/kG99pT7N4B7gJKhp3eXs05eWg2mwq9IkA==
+	bh=4rz24bfSJG459M1yCwrU280bSaxLdFtGfMnVKDlvEiQ=;
+	b=Dh65qAi5VYNz/YRj4MNcMfkmBIlMZcZxiaVaA/VqlUMkaK7SuNSJGLbv0Wzt8yHqFrGe
+	 YxzU6Hyj08M4Y/7+BwIDqDT72cZYJZDdZKworiky+i9aVuuwZRkspPUcC/wSaK1Zv4OOo
+	 KKOmGw5y20s4/mEzYS1xpNI+U5dDGSAxlFbiK41UFEQUAKWxS939BMZ+9IEektM/VNHN9
+	 vX3mLZA6yjItUBfacg7iRhjJfX0o+JXJ70g9mRNhiR2QohQPPqdiTWl6qUw5vlb3sixnU
+	 AKeazldYexrSY0wrcxzBBwoQsqs+lmRqzCM3l8KVZlXgt+f7lTpjqInbsePkbeKkDlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HF5Guzcd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vgd0KRdf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0AB606A32A;
-	Wed, 18 Nov 2026 19:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7151E606A339;
+	Wed, 18 Nov 2026 19:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HF5Guzcd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46261F000C4;
-	Wed, 18 Nov 2026 19:06:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vgd0KRdf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD9B1F000C4;
+	Wed, 18 Nov 2026 19:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028787;
-	bh=FYmsxJXjynFO8loQWILBjwyKwlZUeMRkPmPmWm4BFeo=;
+	s=korg; t=1795028790;
+	bh=4rz24bfSJG459M1yCwrU280bSaxLdFtGfMnVKDlvEiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HF5Guzcdw15yQrOx0dAkw0ZfBxM6YX6gWQe5MU6hdeRmGAjihWLo0m7jZf/BnLbfk
-	 fnCPBGzQcUhtsq0rFNLifzA6AEi+eNJF3mLu8bq+K3Jwj0eYkZA4LrUP3bb/4C9S5i
-	 PiBw7q5nDrU4BVeIRGICjYkEQ5VhFUz3RLwEOf1g=
+	b=Vgd0KRdfghB1gCogbH6A0gDODWbMRxH2kqVDwu3t9bGoX8N9gIEoVwR6BghHbNsXh
+	 OOM9NRJgX5yvqAjceZU/6X6JqoU3T8y2EBFunQP6/hcDHqyLfhip1ASwk2trVAjJfH
+	 wdoAQukgdlxzWKu30Ql30eggXGd7BJFQaXL959kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dillon Varone <dillon.varone@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Roman Li <Roman.Li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Leo Li <sunpeng.li@amd.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0120/1756] drm/amd/display: Reset DET of HUBPs without a plane before outstanding updates
-Date: Wed, 18 Nov 2026 15:37:27 +0100
-Message-ID: <20261118150012.959707930@linuxfoundation.org>
+Subject: [PATCH 6.12 0121/1756] mm/shmem: fix accounting of swapin-error markers
+Date: Wed, 18 Nov 2026 15:37:28 +0100
+Message-ID: <20261118150012.997761386@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -73,142 +69,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Li <Roman.Li@amd.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit f3afbf7d832ab138655afc96bd42226775d03ce7 ]
+[ Upstream commit 66ce68a249f4ac56cd6968aa6d8ded20fb4b7d09 ]
 
-[WHY]
-DC asserts with:
-WARNING: dc/hubbub/dcn401/dcn401_hubbub.c at dcn401_program_compbuf_segments
-Call Trace:
-<TASK>
-dcn401_program_outstanding_updates+0x36/0x60 [amdgpu]
-hwss_process_outstanding_hw_updates+0x33/0x40 [amdgpu]
-commit_planes_for_stream+0x171f/0x1ff0 [amdgpu]
-dc_update_state_execute+0xaa/0x170 [amdgpu]
-dc_update_planes_and_stream+0x42/0x70 [amdgpu]
-amdgpu_dm_atomic_commit_tail+0x16a9/0x4020 [amdgpu]
-commit_tail+0xc3/0x1b0 [drm_kms_helper]
+A failed swap read replaces the swap entry with a swapin-error marker in
+the page-cache and subtracts its pages from "alloced" and "swapped";
+however, it leaves their block charge in place.
 
-The DET left by the VBIOS on a HUBP without a plane can be larger than
-the DET planned for the new state. The compbuf is sized for the planned
-DET, so DET + compbuf can exceed the CRB size. Programming the compbuf
-then triggers the ASSERT and sets CONFIG_ERROR in hardware.
+Removing the marker during truncate then subtracts from "swapped" again.
+This can underflow the counters or make swapped reach zero while other
+pages remain swapped out, causing swapoff to loop without finding them.
 
-[HOW]
-Release the DET of HUBPs without a plane before the compbuf is
-programmed.
+When installing the marker, subtract only from "swapped" and let
+shmem_recalc_inode() reduce "alloced" and release the block charge.
 
-Add hwss_reset_unused_det() and call it in the commit and flip paths,
-to cover both seamless and non-seamless boots.
+Make shmem_free_swap() report successful removal separately from the
+number of swap pages freed, so removing a swapin-error marker does not
+subtract from "swapped" again.
 
-Fixes: 7a1eb6680939 ("drm/amd/display: Perform outstanding programming on full updates")
-Cc: Dillon Varone <dillon.varone@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Roman Li <Roman.Li@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Leo Li <sunpeng.li@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c93f6fc7175b445ba3b7c85a1fc31e4e4951bbc9)
+It's a bit confusing, but replacing a swapped out page by a swapin-error
+marker in shmem_set_folio_swapin_error() behaves as follows:
+
+Initially:
+	alloced=1, swapped=1, nrpages=0
+Calling shmem_recalc_inode(inode, 0, -1)
+	-> swapped = 0
+	-> freed =  1 - 0 - 0 = 1
+	-> alloced -= freed
+	-> alloced=0, swapped=0, block charge released
+
+Fixes: 6cec2b95dadf ("mm/shmem: fix infinite loop when swap in shmem error at swapoff time")
 Cc: stable@vger.kernel.org
-[ sashal: added a missing header include to provide the complete struct hubbub definition ]
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Link: https://patch.msgid.link/20261029-fixes_shmem-v4-14-392fc715d8f6@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: adapted newer swap APIs to the existing swp_entry_t-based interfaces ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c      |  6 +++-
- .../drm/amd/display/dc/core/dc_hw_sequencer.c | 32 +++++++++++++++++++
- .../drm/amd/display/dc/hwss/hw_sequencer.h    |  3 ++
- 3 files changed, 40 insertions(+), 1 deletion(-)
+ mm/shmem.c | 35 +++++++++++++++++------------------
+ 1 file changed, 17 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 0975616b53004..282de24961710 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -2062,6 +2062,8 @@ static enum dc_status dc_commit_state_no_check(struct dc *dc, struct dc_state *c
- 		 * update pending complete before optimizing bandwidth.
- 		 */
- 		hwss_wait_for_odm_update_pending_complete(dc, context);
-+		/* No DET may stay allocated to a HUBP without a plane (e.g. left over from VBIOS) */
-+		hwss_reset_unused_det(dc, context);
- 		/* pplib is notified if disp_num changed */
- 		dc->hwss.optimize_bandwidth(dc, context);
- 		/* Need to do otg sync again as otg could be out of sync due to otg
-@@ -3802,8 +3804,10 @@ static void commit_planes_for_stream(struct dc *dc,
- 	dc_exit_ips_for_hw_access(dc);
- 
- 	dc_z10_restore(dc);
--	if (update_type == UPDATE_TYPE_FULL && dc->optimized_required)
-+	if (update_type == UPDATE_TYPE_FULL && dc->optimized_required) {
-+		hwss_reset_unused_det(dc, dc->current_state);
- 		hwss_process_outstanding_hw_updates(dc, dc->current_state);
-+	}
- 
- 	for (i = 0; i < dc->res_pool->pipe_count; i++) {
- 		struct pipe_ctx *pipe = &context->res_ctx.pipe_ctx[i];
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
-index 5dcb0fb2f66a5..f7dd6e9114c20 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
-@@ -32,6 +32,7 @@
- #include "resource.h"
- #include "dc_dmub_srv.h"
- #include "dc_state_priv.h"
-+#include "dchubbub.h"
- 
- #define NUM_ELEMENTS(a) (sizeof(a) / sizeof((a)[0]))
- 
-@@ -1056,6 +1057,37 @@ void hwss_wait_for_odm_update_pending_complete(struct dc *dc, struct dc_state *c
- 	hwss_wait_for_all_blank_complete(dc, context);
+diff --git a/mm/shmem.c b/mm/shmem.c
+index df6a57f227865..1693aa906227a 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -873,14 +873,14 @@ static void shmem_delete_from_page_cache(struct folio *folio, void *radswap)
  }
  
-+void hwss_reset_unused_det(struct dc *dc, struct dc_state *context)
-+{
-+	struct hubbub *hubbub = dc->res_pool->hubbub;
-+	unsigned int i, j;
-+
-+	if (!hubbub || !hubbub->funcs->program_det_segments)
-+		return;
-+
-+	for (i = 0; i < dc->res_pool->pipe_count; i++) {
-+		struct hubp *hubp = dc->res_pool->hubps[i];
-+		bool hubp_in_use = false;
-+
-+		if (!hubp)
-+			continue;
-+
-+		for (j = 0; j < dc->res_pool->pipe_count; j++) {
-+			const struct pipe_ctx *pipe = &context->res_ctx.pipe_ctx[j];
-+
-+			/* A plane-less pipe renders from the DPG, its HUBP (assigned with the stream) needs no DET */
-+			if (pipe->plane_state && pipe->plane_res.hubp &&
-+					pipe->plane_res.hubp->inst == hubp->inst) {
-+				hubp_in_use = true;
-+				break;
-+			}
-+		}
-+
-+		if (!hubp_in_use)
-+			hubbub->funcs->program_det_segments(hubbub, hubp->inst, 0);
-+	}
-+}
-+
- void hwss_wait_for_no_pipes_pending(struct dc *dc, struct dc_state *context)
+ /*
+- * Remove swap entry from page cache, free the swap and its page cache. Returns
+- * the number of pages being freed. 0 means entry not found in XArray (0 pages
+- * being freed).
++ * Remove a swap entry or swapin-error marker wholly within [index, end].
++ * Return whether it was removed, counting freed swap pages in nr_swaps_freed.
+  */
+-static long shmem_free_swap(struct address_space *mapping,
+-			    pgoff_t index, pgoff_t end, void *radswap)
++static bool shmem_free_swap(struct address_space *mapping,
++		pgoff_t index, pgoff_t end, void *radswap, long *nr_swaps_freed)
  {
- 	int i;
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h b/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h
-index 9ae6259f2db17..44df0067d8ccc 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h
-@@ -537,6 +537,9 @@ void hwss_wait_for_odm_update_pending_complete(struct dc *dc,
- void hwss_wait_for_no_pipes_pending(struct dc *dc,
- 		struct dc_state *context);
+ 	XA_STATE(xas, &mapping->i_pages, index);
++	const swp_entry_t swp = radix_to_swp_entry(radswap);
+ 	unsigned int nr_pages = 0;
+ 	pgoff_t base;
+ 	void *entry;
+@@ -897,8 +897,11 @@ static long shmem_free_swap(struct address_space *mapping,
+ 	}
+ 	xas_unlock_irq(&xas);
  
-+void hwss_reset_unused_det(struct dc *dc,
-+		struct dc_state *context);
-+
- void hwss_wait_for_outstanding_hw_updates(struct dc *dc,
- 		struct dc_state *dc_context);
+-	if (nr_pages)
+-		free_swap_and_cache_nr(radix_to_swp_entry(radswap), nr_pages);
++	/* A swapin-error marker holds no swap slot, so just drop it. */
++	if (nr_pages && !non_swap_entry(swp)) {
++		free_swap_and_cache_nr(swp, nr_pages);
++		*nr_swaps_freed += nr_pages;
++	}
+ 
+ 	return nr_pages;
+ }
+@@ -1051,8 +1054,8 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
+ 			if (xa_is_value(folio)) {
+ 				if (unfalloc)
+ 					continue;
+-				nr_swaps_freed += shmem_free_swap(mapping, indices[i],
+-								  end - 1, folio);
++				shmem_free_swap(mapping, indices[i], end - 1,
++						folio, &nr_swaps_freed);
+ 				continue;
+ 			}
+ 
+@@ -1119,13 +1122,11 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
+ 
+ 			if (xa_is_value(folio)) {
+ 				int order;
+-				long swaps_freed;
+ 
+ 				if (unfalloc)
+ 					continue;
+-				swaps_freed = shmem_free_swap(mapping, indices[i],
+-							      end - 1, folio);
+-				if (!swaps_freed) {
++				if (!shmem_free_swap(mapping, indices[i], end - 1,
++						     folio, &nr_swaps_freed)) {
+ 					pgoff_t base = indices[i];
+ 
+ 					order = shmem_confirm_swap(mapping, indices[i],
+@@ -1146,7 +1147,6 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
+ 					index = base;
+ 					break;
+ 				}
+-				nr_swaps_freed += swaps_freed;
+ 				continue;
+ 			}
+ 
+@@ -2071,11 +2071,10 @@ static void shmem_set_folio_swapin_error(struct inode *inode, pgoff_t index,
+ 	folio_wait_writeback(folio);
+ 	delete_from_swap_cache(folio);
+ 	/*
+-	 * Don't treat swapin error folio as alloced. Otherwise inode->i_blocks
+-	 * won't be 0 when inode is released and thus trigger WARN_ON(i_blocks)
+-	 * in shmem_evict_inode().
++	 * Let shmem_recalc_inode() reduce alloced and release the block charge
++	 * for the freed swap pages.
+ 	 */
+-	shmem_recalc_inode(inode, -nr_pages, -nr_pages);
++	shmem_recalc_inode(inode, 0, -nr_pages);
+ 	swap_free_nr(swap, nr_pages);
+ }
  
 -- 
 2.53.0
