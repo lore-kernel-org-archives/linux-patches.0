@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031516;
-	b=lIydBrgoWP7AFKiGtCpn2atRj+8IEKirIfsVaObbkd6nCbNjttRgkDhsJN8YBJO1AuuA
-	 ofWeOFNGUYMC+HQoz40VjU1mYEBMYU1VWZTiC1FDu1q9UCSD9Cav/iDEhybqiqD2zX2/9
-	 okumMgmfwvVFvnM3LJOFIWqe4c7/BqDMIGZEb3Ml4/qadloToJSRoAHIydOv4YbP6Fdz6
-	 gYANlrVEYKaQYw8MD7f9Li2nTbmFBMkuZZ6F6ygcjbQ3SD1yuBCyiaQ4Nk376YeeyHl5T
-	 ojue+ylaMda3rzV+FWDyLreieJDl0IOFPkj1CLBs+USWp4E9N5YeHvV34p02w3GVB6A==
+	t=1795031518;
+	b=S6AoedW/IQzSoy7cQs9KKp+rYMytQ4yU6jXV4Iq+bdKGXC9fcz6f6RWm45o2S4OjVI1g
+	 m341HrC77hSlMYpT+6vD2sJ8xJPlvMstz8xMHoac2FszEKGRFkZckUhA1R9xXE2SlGUJ5
+	 cKfr06UIIfB3EfEoeSvoL609zZn2uguU01ZNEXPAwCklbWWLKCgC5A6i9dlvBsdo22RJI
+	 7ydeCrFOpywE3L3LAbsABCyCFrg1wAiYHzz6k/EZtK7VNJNfHbTWqQXLVKxyb//Ib/fTS
+	 qjgC2nw8EUbNQY37ZyukEQOF0vLsPfomUSWvhpJReFjPAN4AFXYGHdEV7b8YY6OEEKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031516;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031518;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=9B4GLfvWXMTyZohALw39atpI8Q/qrJ7NxfzviegkJZA=;
-	b=aJO//nWKSzeF4zXw7M0ZGDmjWCx3/L1AaPlK4eyCI5GVAnwTmhKn5aB2m9chcCMhoOnh
-	 4h/hPDIbfmwaNvqvq20SzUPpRGijPjFThEx2wRLBpQZ/IM/465UZD/DOrvD9Qjl8gU84p
-	 iGmVqPyqs0VTkds3uGMQz+Zc4yEXCYviiw1A4qL7FTmoWkvJGyygP+0ONwsgq0iXFCIoX
-	 wkIdzZP8ZmNBTXp87JvstPbknGkZllFn9ZuCyZkN4ScVK0HmOI+d9moltO5JzJa4vRiX1
-	 CnQ14z8st/LI5hNWhzEeJPbRNd82X2iFAnZDCvt3yqnL/h6vZqKzvrIPuzZWi9NgaIw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=K0CjM/CMT4jNZmm3sPI0HmaxRNYR+AI6BhU4+7Uu4Nw=;
+	b=VASDNsHZJTEMz8bXfBCWJVumyy3ehrVa9Q/WTxrpia99FFDpJL33H5scZ4FbMDzomLQT
+	 Wf9E3ZwdjhVATy8vDlapOUVCvWy5cL0jGjdoy+3OdYJWVQqPhoykXQATcZmj0H0fjhfB+
+	 G2H98RMjo/Hftwpv9CghlwAg7IJXkVXGmhmXgfSpB3nX1JmiP9cZdC4VDiwzCcnI2p8xq
+	 96QmzLQlLPIGGzHrDnLL8MRtCHCSltPBjZEhqsngdnMyCV25+cP1Hq5XLLIPNsPMs/l2S
+	 hHCAKu+T4jEV+nROPBPU6/EvIvTHvsBlW6Jb6gCWxlYY2etQWoZlGv4Lzmpw6Qo+hvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aNYUTk1R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RO4vrB2d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D73060A2601;
-	Wed, 18 Nov 2026 19:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF561606A320;
+	Wed, 18 Nov 2026 19:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aNYUTk1R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521441F000C4;
-	Wed, 18 Nov 2026 19:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RO4vrB2d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315D71F000C4;
+	Wed, 18 Nov 2026 19:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031515;
-	bh=9B4GLfvWXMTyZohALw39atpI8Q/qrJ7NxfzviegkJZA=;
+	s=korg; t=1795031518;
+	bh=K0CjM/CMT4jNZmm3sPI0HmaxRNYR+AI6BhU4+7Uu4Nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aNYUTk1REVXWFuPcENAW1BuzA1hEYEeHPuv15FQofbvbtv3os1uTlKA/KpNVla9yB
-	 jzgKhvbB+QfXjURUAaMYOr/CS2p4aFCFYfrpF4h/KbLg696LLZX5bczlXpHKnMVvvt
-	 nEcXOhR3o7YRs+gq65OHvpSyqtpifEEpC9xHm/0U=
+	b=RO4vrB2drQwQw4pv7l5IQXk6noUCe6w5J8N5SkAQUllOGuTKyfNZMatNfo1Q5CaE0
+	 51TN8x//OrYuJJ8lUvyCoCPYTCOL17tm1nBmYg8G9YBiixqjUIzPnXXEkFh2YV3JnJ
+	 TkyzRUS4dD01CZc7hQiwqdXVDHRxTjbti9nGGF48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
+	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1086/1756] wifi: ath11k: avoid IDR mutation during pending mgmt TX cleanup
-Date: Wed, 18 Nov 2026 15:53:33 +0100
-Message-ID: <20261118150053.424555983@linuxfoundation.org>
+Subject: [PATCH 6.12 1060/1756] drm/panfrost: Explicitly enable MMU interrupts at device init
+Date: Wed, 18 Nov 2026 15:53:07 +0100
+Message-ID: <20261118150052.457835354@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -64,96 +63,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Adrián Larumbe <adrian.larumbe@collabora.com>
 
-[ Upstream commit 3e7f5d362b2b3a21b3adb4b860aad14b69a896ad ]
+[ Upstream commit 8a597d099b8b2f25df655cbe8e30765013784fed ]
 
-The pending management TX cleanup walks txmgmt_idr with idr_for_each(),
-and its callback removes the current entry. This can invalidate the
-radix-tree iterator retained by idr_for_each().
+Because the device must be in a position to accept jobs between the time
+drm_dev_register() is called and autosuspend first kicks in, there's a very
+narrow window inbetween during which jobs targeting the tiler buffer
+object would time out, since the device's PM status is 'Active', but no MMU
+interrupts were enabled at device initialisation time.
 
-Use idr_for_each_entry() so every iteration starts with a fresh lookup.
-Continue to remove each entry under txmgmt_idr_lock before freeing its skb,
-preventing concurrent TX completion from finding a stale skb pointer.
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261003092104.520135-3-yaojiale02@163.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Fixes: 73e467f60acd ("drm/panfrost: Consolidate reset handling")
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20261012-claude-fixes-v15-7-bc0a6c498553@collabora.com
+Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/core.c |  3 +--
- drivers/net/wireless/ath/ath11k/mac.c  | 12 ++++++------
- drivers/net/wireless/ath/ath11k/mac.h  |  2 +-
- 3 files changed, 8 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/panfrost/panfrost_mmu.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
-index bdadde90df9d2..11744dd3c71d4 100644
---- a/drivers/net/wireless/ath/ath11k/core.c
-+++ b/drivers/net/wireless/ath/ath11k/core.c
-@@ -2122,8 +2122,7 @@ void ath11k_core_pre_reconfigure_recovery(struct ath11k_base *ab)
- 		complete(&ar->thermal.wmi_sync);
- 
- 		wake_up(&ar->dp.tx_empty_waitq);
--		idr_for_each(&ar->txmgmt_idr,
--			     ath11k_mac_tx_mgmt_pending_free, ar);
-+		ath11k_mac_tx_mgmt_pending_free(ar);
- 		idr_destroy(&ar->txmgmt_idr);
- 		wake_up(&ar->txmgmt_empty_waitq);
- 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 2d0c6f9f3f763..706fab4b54262 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -6026,13 +6026,13 @@ static void ath11k_mac_tx_mgmt_free(struct ath11k *ar, int buf_id)
- 	ath11k_mgmt_over_wmi_tx_drop(ar, msdu);
+diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+index b91019cd5acb1..1f37991c43896 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
++++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+@@ -227,6 +227,12 @@ void panfrost_mmu_as_put(struct panfrost_device *pfdev, struct panfrost_mmu *mmu
+ 	WARN_ON(atomic_read(&mmu->as_count) < 0);
  }
  
--int ath11k_mac_tx_mgmt_pending_free(int buf_id, void *skb, void *ctx)
-+void ath11k_mac_tx_mgmt_pending_free(struct ath11k *ar)
++static void panfrost_mmu_enable_interrupts(struct panfrost_device *pfdev)
++{
++	mmu_write(pfdev, MMU_INT_CLEAR, ~0);
++	mmu_write(pfdev, MMU_INT_MASK, ~0);
++}
++
+ void panfrost_mmu_reset(struct panfrost_device *pfdev)
  {
--	struct ath11k *ar = ctx;
--
--	ath11k_mac_tx_mgmt_free(ar, buf_id);
-+	struct sk_buff *msdu;
-+	int buf_id;
+ 	struct panfrost_mmu *mmu, *mmu_tmp;
+@@ -246,8 +252,7 @@ void panfrost_mmu_reset(struct panfrost_device *pfdev)
  
--	return 0;
-+	idr_for_each_entry(&ar->txmgmt_idr, msdu, buf_id)
-+		ath11k_mac_tx_mgmt_free(ar, buf_id);
+ 	spin_unlock(&pfdev->as_lock);
+ 
+-	mmu_write(pfdev, MMU_INT_CLEAR, ~0);
+-	mmu_write(pfdev, MMU_INT_MASK, ~0);
++	panfrost_mmu_enable_interrupts(pfdev);
  }
  
- static int ath11k_mac_vif_txmgmt_idr_remove(int buf_id, void *skb, void *ctx)
-@@ -10277,7 +10277,7 @@ static void __ath11k_mac_unregister(struct ath11k *ar)
+ static size_t get_pgsize(u64 addr, size_t size, size_t *count)
+@@ -783,6 +788,8 @@ int panfrost_mmu_init(struct panfrost_device *pfdev)
+ 		return err;
+ 	}
  
- 	ieee80211_unregister_hw(ar->hw);
++	panfrost_mmu_enable_interrupts(pfdev);
++
+ 	return 0;
+ }
  
--	idr_for_each(&ar->txmgmt_idr, ath11k_mac_tx_mgmt_pending_free, ar);
-+	ath11k_mac_tx_mgmt_pending_free(ar);
- 	idr_destroy(&ar->txmgmt_idr);
- 
- 	kfree(ar->mac.sbands[NL80211_BAND_2GHZ].channels);
-diff --git a/drivers/net/wireless/ath/ath11k/mac.h b/drivers/net/wireless/ath/ath11k/mac.h
-index 5e61eea1bb037..6dc769489c5c4 100644
---- a/drivers/net/wireless/ath/ath11k/mac.h
-+++ b/drivers/net/wireless/ath/ath11k/mac.h
-@@ -162,7 +162,7 @@ struct ath11k *ath11k_mac_get_ar_by_pdev_id(struct ath11k_base *ab, u32 pdev_id)
- 
- void ath11k_mac_drain_tx(struct ath11k *ar);
- void ath11k_mac_peer_cleanup_all(struct ath11k *ar);
--int ath11k_mac_tx_mgmt_pending_free(int buf_id, void *skb, void *ctx);
-+void ath11k_mac_tx_mgmt_pending_free(struct ath11k *ar);
- u8 ath11k_mac_bw_to_mac80211_bw(u8 bw);
- enum nl80211_he_gi ath11k_mac_he_gi_to_nl80211_he_gi(u8 sgi);
- enum nl80211_he_ru_alloc ath11k_mac_phy_he_ru_to_nl80211_he_ru_alloc(u16 ru_phy);
 -- 
 2.53.0
 
