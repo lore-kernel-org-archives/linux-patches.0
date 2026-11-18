@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017272;
-	b=uwtebqZCy9IoeOjVmpHZdUpViRVcTkMzumv9vUCLK8qK1wdn9PGXycmvcJePRdSDzD+B
-	 K15EUV5J1JWL3KY5WSJ41Wpo0oEeQffJbGMb/7fgu3nWs92tbvMGvA3zHm4/ndkafI9wj
-	 ohq6/lO4Bf9qLEHwjuv/d8NCd0SQU10NUL9ibhpYSBika05/ATNNqBEyFYUH6/NwHo2mt
-	 /mMYqIZxs92PbgHKq87M58yvCUTaSM7et58ycpDtS9QJa9h/cJeec9frVitN5wDrw3wZ1
-	 1Pv0dtK35J3agdomsRPoP40GTDkrr46Fj0YJI0JzuYvhBen8n0s58AdBRqHtfAYX4ZA==
+	t=1795017275;
+	b=NxHWZEOB6dfnIr7o4AebQU5TYjGpyWEtQxUVFZhFxNfcOTZCgdgF3sSCmuBwFDbR2qJE
+	 tIeQ72bEtx0GIWCQZlZWGElbWdyVk+zNkHMf44etPQ17zKASiKqhX8fdafE4vktiMnaQ3
+	 V11qt7HQgZ4uxzVklTHm5Gik9w44lTabC5AeO6lmXnH+fDnhR/Tuj0SMovJWGTevVjmDg
+	 WePa7N7zUw9zV+e3oAjco0iMg7k0pxQKvwsKeT6iwVrRncrp6+hh0pqzQa/jlMyeAXyNa
+	 o9axWMZgleY9VGm6kk1CY47HNpYrivSQjdLkNrBnJ1mQBsMU/a2vF1ElxgJkbaRAnvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017272;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017275;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=4QDGeTp4KTn/BOASeE3mPxawZETA0CeVXObxeyXPdjI=;
-	b=mwRbHtrjmzqzF1lifkIEMaTx62Kfx+3XTJ2qp2plgP7a0eEgyboi1VMAW3PcrbckFi3S
-	 WWqfvyj36+z5UmdDIEJqIxzjrLIl9PcVMyNnmwybezWvfII5Bd/ueKqiXXMXdT9pxIJmS
-	 aZfkE61eLeEY3kmfADRJzSr5UjnCOXk+IIKIWlYkmgaKYuOTM0b9tA7LNg6eJTWQV98Tj
-	 KK0N1EpJMZ3q1n3WgPZ5o7nwyVlOuyItc3DgWaL12vOC0NAYtC7BCsf55sLcYBdL30QU3
-	 JAoQ0zfyRcgb6XCOJiKYuH7PYTxw4yPrM33Hp/oALbqayuYPoH5dFvPHFI4IKCKHuFA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=eHP7FQB8Jon+NJLK2m1twR0el/Els8JX2+WFmZ3RbV8=;
+	b=VoZ6CkIJDfrf8Krdm3G/Cwd6+iVqzA0jL/d2bp8aFYiRWrPbspuDnAnZ0352yaob4LIc
+	 jrD1K59bNzGWO65o1OFncLY2gPw8XAKsYzcRQbSXpetzvVWJa3qLishcMSbz4s3f67iS9
+	 E36lYSpmWuDn08HdJTqRmMbG2E3NOD3U68QOjUjbA/eigQqM/lsag3AQlK/A/hX9hVkRc
+	 QyPxVO5bwS6Pfz/HZ7OxggvLPtmXcKtCtBfMpaDQmdjtZZIlgnkbeSAuXPIPI3LzsvBih
+	 3kez5hq96t6J5uupDoHr+jakPm3llwuP44ee6bbtMHFInAk1qy9qfJgWlOiMmaT+HwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n+C5UnZ6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RBy2sLXE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6850B606A32C;
-	Wed, 18 Nov 2026 15:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F825606A31C;
+	Wed, 18 Nov 2026 15:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n+C5UnZ6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E0C1F000C4;
-	Wed, 18 Nov 2026 15:54:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RBy2sLXE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A614B1F000C4;
+	Wed, 18 Nov 2026 15:54:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017272;
-	bh=4QDGeTp4KTn/BOASeE3mPxawZETA0CeVXObxeyXPdjI=;
+	s=korg; t=1795017275;
+	bh=eHP7FQB8Jon+NJLK2m1twR0el/Els8JX2+WFmZ3RbV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n+C5UnZ6kd49IbEcB1bPqzVc+Bld+W6pYpMMskqFkPQV7eTpX5H5PsUYEGVYEjDXU
-	 MQZvrCqdIipTE2qUcqxYSyH7hGYVNIdmbf6mi7o2kZPrZ0igvekLfnpyzIcvXMMVHm
-	 R6viCQPSlMhstpSRP1mMLAjfkg9QkyJYyZfHH4Rs=
+	b=RBy2sLXEdbpZx4tWlUA7oRcRSM5sOvMxU/kme7aVqzvwrD1AJvgOCdFhzchmFOXU/
+	 HHfmUc/hfpWcf7Tvd0GMXzuuxorODymu36vwmovU1fvIEqGGU4jltUrxyrvOwmyT8l
+	 U27fBYlGW43/jSo7lkmNIfmp+wRuqxcdn7X1lnrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danish Khateeb <danishkhateeb03@gmail.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Chuck Lever <cel@kernel.org>,
+	Prabhakar Pujeri <prabhakar.pujeri@dell.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0784/2651] tools/nolibc: fix verrx() and errx() message formatting
-Date: Wed, 18 Nov 2026 15:33:44 +0100
-Message-ID: <20261118150316.112806980@linuxfoundation.org>
+Subject: [PATCH 7.3 0785/2651] NFS: use TCP for MOUNT when xprtsec= selects TLS
+Date: Wed, 18 Nov 2026 15:33:45 +0100
+Message-ID: <20261118150316.150267939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,60 +63,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danish Khateeb <danishkhateeb03@gmail.com>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 6f114ae7b6006ca7cf72e3e3348d263bbfec4525 ]
+[ Upstream commit 72233aabc78cd0415c850641bc2a6e4fea23173f ]
 
-verrx() passes its va_list to warnx() instead of vwarnx(). warnx() is
-variadic, so it takes the va_list as its first and only argument, and
-the conversions in the format string print the va_list itself and then
-whatever is left in the following argument slots. On x86_64, for
-instance,
+An NFSv2 or NFSv3 text mount that specifies xprtsec= but no
+mountproto= crashes in nfs_init_timeout_values():
 
-	errx(1, "int args: %d %d %d", 1, 2, 3);
+  RIP: 0010:nfs_init_timeout_values+0x10a/0x110 [nfs]
+  Call Trace:
+   nfs_mount+0x1c3/0x330 [nfs]
+   nfs_try_get_tree+0x1e5/0x460 [nfs]
+   nfs_get_tree+0x64d/0x6d0 [nfs]
+   vfs_get_tree+0x2b/0xe0
+   vfs_cmd_create+0x5f/0xd0
+   vfs_fsconfig_locked+0x50/0x130
+   __se_sys_fsconfig+0x2f9/0x3a0
 
-prints something like "int args: -1699009032 1 2", where the first
-number comes from the address of the va_list and changes from run to
-run, and
+nfs_validate_transport_protocol() sets nfs_server.protocol to
+XPRT_TRANSPORT_TCP_TLS when xprtsec= is present, but the switch in
+nfs_set_mount_transport_protocol() has no case for that value.
+mount_server.protocol stays zero, and nfs_init_timeout_values()
+calls BUG() on a transport it does not recognize.
 
-	errx(1, "%d %s", 1234, "foo");
+mount.nfs always appends mountproto= after probing the server's
+rpcbind, so only a caller that bypasses it, such as "mount -i" or a
+program that drives fsconfig() directly, reaches the crash.
 
-crashes with SIGSEGV, as "%s" takes a leftover argument slot for the
-string. errx() goes through verrx(), so every message with arguments
-printed by either of them is wrong.
+Select TCP for MOUNT when the NFS transport is XPRT_TRANSPORT_TCP_TLS.
+nfs_mount() requests no transport security, so MOUNT already runs
+over plain TCP whenever mount.nfs supplies mountproto=tcp.
 
-Call vwarnx() from verrx(), as verr() calls vwarn().
-
-Fixes: 9da0f529c089 ("tools/nolibc: add err.h")
-Assisted-by: LLM
-Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
-Link: https://patch.msgid.link/20260924120958.23698-2-danishkhateeb03@gmail.com
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Fixes: c8407f2e560c ("NFS: Add an "xprtsec=" NFS mount option")
+Signed-off-by: Chuck Lever <cel@kernel.org>
+Reviewed-by: Prabhakar Pujeri <prabhakar.pujeri@dell.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/err.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/fs_context.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/include/nolibc/err.h b/tools/include/nolibc/err.h
-index e22ae87a72892..61978d537ed8f 100644
---- a/tools/include/nolibc/err.h
-+++ b/tools/include/nolibc/err.h
-@@ -60,7 +60,7 @@ void verr(int eval, const char *fmt, va_list args)
- static __attribute__((noreturn, unused))
- void verrx(int eval, const char *fmt, va_list args)
- {
--	warnx(fmt, args);
-+	vwarnx(fmt, args);
- 	exit(eval);
- }
- 
+diff --git a/fs/nfs/fs_context.c b/fs/nfs/fs_context.c
+index 1967de7d1dff9..a7393ff05494c 100644
+--- a/fs/nfs/fs_context.c
++++ b/fs/nfs/fs_context.c
+@@ -402,6 +402,7 @@ static void nfs_set_mount_transport_protocol(struct nfs_fs_context *ctx)
+ 		ctx->mount_server.protocol = XPRT_TRANSPORT_UDP;
+ 		break;
+ 	case XPRT_TRANSPORT_TCP:
++	case XPRT_TRANSPORT_TCP_TLS:
+ 	case XPRT_TRANSPORT_RDMA:
+ 		ctx->mount_server.protocol = XPRT_TRANSPORT_TCP;
+ 	}
 -- 
 2.53.0
 
