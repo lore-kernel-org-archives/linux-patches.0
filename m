@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047907;
-	b=ZnGeThD42lTbSrnBZvq6t1zJgq1kIN5ud+zvFkELohcBpUw1yQu2DJj9HL9LwgAx8VTh
-	 78iJM1Oq2iHY2iBJYVpL219tP1DotDoTo7vCSTYO3OdCaUgZrHxbUw6A2at23UGjDW9jb
-	 BihLyCfmvjoue7dTsmCvGjAZy6Qi3uhvUtw+m85i+CwccV/Imiw2LbjDl/h1iPznl4FUo
-	 sL8pvVZPILi1k0A6jPfYDnACWZ5Mjxcq9y64/kty4AA2SihjywMbQEqfNrFvkS3P7CCjC
-	 aX+xeV7yMjfaB+y20CGgK5PllATGDP3Qo9h55aeq1Avf5KUt9eZyk7W+lQ5cmnEKtAQ==
+	t=1795047910;
+	b=ETCC8koXYR5RcWQ1XHPt1NmH8a2KOvGKN5gJDO8WHF1zKUUovxs8tJCFf/duSjT/eciw
+	 HE+FwwgIY7tQXlw7fPH+arf8q6toe76wYYFPMRv8L9AF/Hdtmutji87ZamZ+3OxBjduhV
+	 4h0UXHSFff+VNRB2sltcx6jg/5kuYLVi9WRI8d6seFcrf6ZS8Dw6/BxKqyi/9coencu7u
+	 GQX6CmQM9DlOCNauwPTRIKSfqEOR5JAYxJKPAPivi6dUVuc4VHlS+taNIV0qFsvXtCUg5
+	 KFXStwUwuOYj3k8ugaksHoFmMTRU4WMGpRdGFZWUxUiGzn/CcLr2WlNbn1ngDZLsskQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047907;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047910;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gIcBA2CTa1nzyEFTI+I3pJFPQg2J0DtMFmlNXqkr4Mw=;
-	b=b1n2FepaWlHvPEnOEQW6Zrzayz118wSqOBcLkhgq6xCVqUKx+YigP1DHHCVzDmRoZgHU
-	 wmHac+kzHE9VElJXaO+ifLoWU9xVHDAkZ6hI1i/HqpcmhgVjm4qRmyjSyBjyyJ99yo1EE
-	 dCGt48nv5JHfkPOtJ3w7mN1d2kwbmw9dMBMZK0i6pcsb7nsR3hIHGeS9EPVABlGb1qFx4
-	 FwtoF9u5YfvqaVXefUvn9oJz/m/n0RgBSHVpygULDIl9dwsnQvpE1uv8Kz20zUovBwDmt
-	 5rjXvlnmI2VXyME49AUPuHPZ6qqxG1FW4hBuZpPiPDn11Q2XhId2wKxs7MUOWFcNyew==
+	bh=CkrHAWwhNxzupnA1tCETIyr+Y7Tj/uTfTGFwNlfHvEk=;
+	b=rS+wxPMXwuODDTQeLxTc2zeXx+NtHEsCjeBQv78aobR7n1azR2lQi7gdpS4pvZTn63Ic
+	 n/48I1kQ4VVTilYXV2OY/82FdxISlTDKWS7+MAe1RPFB7OzHT/lFMtLrPL/8cjTIZ3bXz
+	 RRR/iu2Cdaic/RP3eTA3KiTh21QS7lOlFwnCyTeip9hDam1qyJgSH1QyKW4uZfV0+17tY
+	 B4R8wCWDWX3Tvhcz2enMUH2s7+rCA+NMCJ19p5ZwrD58Fgj0aaNXaEbghzDcrx2XbduW6
+	 16w/GO2Pvs/U0fQb+j60BStdke2/HKUNOeJ/3kUh4zw7bynlwWN75a1HV+34piv1ehw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uRjv1Dre;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aaRDvNNd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A243606A31C;
-	Thu, 19 Nov 2026 00:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F063A606A325;
+	Thu, 19 Nov 2026 00:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uRjv1Dre
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7D51F000C4;
-	Thu, 19 Nov 2026 00:25:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aaRDvNNd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E01E1F000C4;
+	Thu, 19 Nov 2026 00:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047907;
-	bh=gIcBA2CTa1nzyEFTI+I3pJFPQg2J0DtMFmlNXqkr4Mw=;
+	s=korg; t=1795047909;
+	bh=CkrHAWwhNxzupnA1tCETIyr+Y7Tj/uTfTGFwNlfHvEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uRjv1Drewi0u6MUYATsAZeV4dk+IkBAS4Pbz+y2H5cpZDwZAG/qiT9kn9+4JuUB0x
-	 ky9ebcDfgtiZ3rtmOhiXKrSXZe/npRp+fDXtvosZrp54Cx7AFZ9blJVlT873/1Y3NA
-	 x78XGIIdGVvFE5NL8BMPrR58GW+7+ZnAJ7UXZFE0=
+	b=aaRDvNNd7QkzmW7K0BfoEogAJ45NFzygIza+ktwcVitmgH1dzO5ME/yBTerdeMWZe
+	 022mUfSDdLomI9BXEAglmrrng5Xa8kTtQjMuLKh23sHCEUoCGe+WET3TlXUGnaH2nt
+	 0hjN1gD/T4cr0KjUdxUuxgXJnMRDb/uPdn7WE8CI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Mark Amirkan <markdamirkan@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1805/2857] spi: mtk-nor: fix runtime PM usage count leak in probe error path
-Date: Wed, 18 Nov 2026 15:47:19 +0100
-Message-ID: <20261118150306.241720570@linuxfoundation.org>
+Subject: [PATCH 6.1 1806/2857] perf evsel: Validate branch stack before byte swapping
+Date: Wed, 18 Nov 2026 15:47:20 +0100
+Message-ID: <20261118150306.276296444@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,37 +70,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Mark Amirkan <markdamirkan@gmail.com>
 
-[ Upstream commit 4cee1ed13e2687f1a9fec7dd50e31eb179506d75 ]
+[ Upstream commit 2148e094671b0f6a44f033787b7da4ed14e96c27 ]
 
-mtk_nor_probe() takes a runtime PM reference with
-pm_runtime_get_noresume() before registering the controller, but the
-error path never drops it.
+When perf reads an opposite-endian branch stack, __evsel__parse_sample()
+swaps each entry before checking whether all entries fit in the event. A
+truncated sample can therefore make the swap loop read and write past the
+event boundary.
 
-Balance the get with pm_runtime_put_noidle() in the error path.
+A truncated perf.data file makes perf report crash with SIGSEGV. ASan
+reports an out-of-bounds read. A regression test puts an entry just past
+the declared end and shows that its flags are changed before the parser
+returns -EFAULT.
 
-Fixes: 3bfd9103c7af ("spi: spi-mtk-nor: Add power management support")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260904-mtk-nor-v1-1-cefdca098f83@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Move the bounds check before the byte-swap loop. Valid samples are handled
+as before.
+
+Fixes: 63c12ae2f246dcdc ("perf evsel: Add bitfield_swap() to handle branch_stack endian issue")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Assisted-by: Symbolic
+Signed-off-by: Mark Amirkan <markdamirkan@gmail.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-mtk-nor.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/tests/sample-parsing.c | 48 +++++++++++++++++++++++++++++++
+ tools/perf/util/evsel.c           |  3 +-
+ 2 files changed, 50 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-mtk-nor.c b/drivers/spi/spi-mtk-nor.c
-index ee4e9c9dc3c83..bc91292db3ea3 100644
---- a/drivers/spi/spi-mtk-nor.c
-+++ b/drivers/spi/spi-mtk-nor.c
-@@ -912,6 +912,7 @@ static int mtk_nor_probe(struct platform_device *pdev)
- 	return 0;
+diff --git a/tools/perf/tests/sample-parsing.c b/tools/perf/tests/sample-parsing.c
+index 20930dd48ee03..f2b59a3808e6c 100644
+--- a/tools/perf/tests/sample-parsing.c
++++ b/tools/perf/tests/sample-parsing.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <stdbool.h>
++#include <errno.h>
+ #include <inttypes.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -366,6 +367,49 @@ static int do_test(u64 sample_type, u64 sample_regs, u64 read_format)
+ 	return ret;
+ }
  
- err_probe:
-+	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_set_suspended(&pdev->dev);
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
++static int test_truncated_branch_stack(void)
++{
++	struct perf_event_attr attr = {
++		.sample_type = PERF_SAMPLE_BRANCH_STACK,
++	};
++	struct {
++		struct perf_event_header header;
++		u64 nr;
++		struct branch_entry entry;
++	} input = {
++		.header = {
++			.type = PERF_RECORD_SAMPLE,
++			.size = sizeof(input.header) + sizeof(input.nr),
++		},
++		.nr = 1,
++	};
++	struct perf_sample sample;
++	struct evsel *evsel;
++	u64 flags = 1;
++	int err;
++
++	input.entry.flags.value = flags;
++	evsel = evsel__new(&attr);
++	if (!evsel)
++		return -1;
++
++	evsel->sample_size = __evsel__sample_size(attr.sample_type);
++	err = __evsel__parse_sample(evsel, (union perf_event *)&input,
++				    &sample, /*needs_swap=*/true);
++	perf_sample__exit(&sample);
++	evsel__put(evsel);
++
++	if (err != -EFAULT) {
++		pr_debug("truncated branch stack returned %d, expected -EFAULT\n", err);
++		return -1;
++	}
++	if (input.entry.flags.value != flags) {
++		pr_debug("truncated branch stack modified data past the event\n");
++		return -1;
++	}
++	return 0;
++}
++
+ /**
+  * test__sample_parsing - test sample parsing.
+  *
+@@ -382,6 +426,10 @@ static int test__sample_parsing(struct test_suite *test __maybe_unused, int subt
+ 	size_t i;
+ 	int err;
+ 
++	err = test_truncated_branch_stack();
++	if (err)
++		return err;
++
+ 	/*
+ 	 * Fail the test if it has not been updated when new sample format bits
+ 	 * were added.  Please actually update the test rather than just change
+diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
+index 755da242f2670..332afd353d7d8 100644
+--- a/tools/perf/util/evsel.c
++++ b/tools/perf/util/evsel.c
+@@ -2579,6 +2579,8 @@ int evsel__parse_sample(struct evsel *evsel, union perf_event *event,
+ 			e = (struct branch_entry *)&data->branch_stack->hw_idx;
+ 		}
+ 
++		OVERFLOW_CHECK(array, sz, max_size);
++
+ 		if (swapped) {
+ 			/*
+ 			 * struct branch_flag does not have endian
+@@ -2594,7 +2596,6 @@ int evsel__parse_sample(struct evsel *evsel, union perf_event *event,
+ 				e->flags.value = evsel__bitfield_swap_branch_flags(e->flags.value);
+ 		}
+ 
+-		OVERFLOW_CHECK(array, sz, max_size);
+ 		array = (void *)array + sz;
+ 	}
+ 
 -- 
 2.53.0
 
