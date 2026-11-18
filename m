@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036014;
-	b=2my5kDlL9qPh5rIsFn2hCnDNbqtv48gKk8yB+IT4LfrYnMLZyhM/GXHU7Og8lImX8lbu
-	 dgv5eHb9+tU8vZTPj5OmwprU00ZC7e3MVFeU5/KsGqRhYVU/0v2wt/sWUD7BuuGcl/6XH
-	 8jcDyc/CMx0qQz9cQKsdbPSn2eu1r9RlYIa56xxxz/G1nsqyNd8viEBjUuJcd/bMBU7WV
-	 QVqCR1iYj1a++73IyKd73IHMtS339x2v2zfrNCRHxZ0kdxVi83U0ksXvDuwm9Cykz7mN+
-	 Xs6HM4OXE7r/s34ixVg5cfJDgNJ78BXZSSuWq/J5eGuXM1iUkFX6UmZ4z5RCWCaRs9g==
+	t=1795036017;
+	b=zz0jhxN5BNbO9FdtrI3FCH+NrBZN95GcPZsKGyX7th2OAxIkh+NH7ezziDv0CWYM75tB
+	 IRwyB8qPCWe6s/ijFfzNC+ORwicoySy0ZUZE/hwc/XMdAkzpPqCfWV9WJfKTIAtaRyjln
+	 dFXN8EVFAfz27OsJT7/8Vk4MBWLkgc/SHOilniIet+ZjLfNKlOOojp8ueZ7wRp6gxm1Ym
+	 xqkkQMP5ObnTvytXU+1outop+CtRoZn9/wauMWyi6LracCvnaNr7IL4voISb5j+MKQu0k
+	 ksaKEEVj+tjWnCYy1dTP9cx2JC4f5dX//rkWyAaCx7KLA3Kmk73fl2IYkqme8aSFEEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036014;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036017;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=92cJgbiUQiV+mN9ikuBsx6i5XSFCxG2jAjDMcYeybnU=;
-	b=Ha8LB/HB/UTzMM3DoRNioCQCYGYeIESp6g/W9uF2PeEDSVRtPshW5Pt84+x3I+lYhWcA
-	 mxD2xKZ1T21I+S0wgdQsl19Wg4/dURGrWlcKr5sqBRjEV8Df9bh0+wq3mipwgMmukY1lS
-	 eXfmNgtxxguZOM+0yudef1PUf6KyizGhF+9TZ7H3c4Kg/L/Lmhsdxr1lNcanJIYNI3sYk
-	 Kcj/vZ99uXopEZXj4kiwKasecgUnw9qeqBji5UaJ+e69c0L1nke5SCqBI8FWQ8zAewi7g
-	 f3G2HFZ7CYT9a2tJqESt8eK0DzkFWflqOk0cFD6IJV5o6GNCoPL0FCGq9oLMKxwd3cA==
+	bh=Hksa0LrEo/MaPyFeIr126ns2ilVGQJlKbdwdAcWmjM8=;
+	b=1pV08rENd+pcBEeFp9eN4AKPwZNwVOINZ1b0kFgM7rC8vSb53v5PlRSr+UxcGh713umF
+	 T8MMF98j9zu1uEMfoTMeMOMGrCFPmI5oWZfcKoc8NKXloXJBO05GosaxqN9La+8Y07W8V
+	 iNZbRQQzq9aUtsAsHJIl0VnoN0RXRrkW0Ja+coZ0Y/8kpiaoGqsA+ecJ0OhcnqHktVdvn
+	 kx0DA+COeR6mqucxPIcCu4QkT0yyXj3A/cUW6/AhMrvGDhZFpv2sbKO+PdAjxr6xr4qwV
+	 XAVNQTMbDSnSugtbVAcfj0JicR4yI4rprEN2+POqxA30TI0brsMVYa/bTyuwoMcGn6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IKXYY3WN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XehT5s7g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB13A606A31C;
-	Wed, 18 Nov 2026 21:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D729606A31C;
+	Wed, 18 Nov 2026 21:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IKXYY3WN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE781F000C4;
-	Wed, 18 Nov 2026 21:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XehT5s7g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33211F000C4;
+	Wed, 18 Nov 2026 21:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036014;
-	bh=92cJgbiUQiV+mN9ikuBsx6i5XSFCxG2jAjDMcYeybnU=;
+	s=korg; t=1795036017;
+	bh=Hksa0LrEo/MaPyFeIr126ns2ilVGQJlKbdwdAcWmjM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IKXYY3WNl2NQXUuqMUnzYNybE+NoOW5/Dtq+H+EPYcKhPn1de2DPjezZWmTRioVo+
-	 4k3/bZ7Iglfih7XGEjW8urVZpHrp5pQ/xArN9pcj0AO03K8ScWNK3K5CK38BYfDnTu
-	 D3oWYf691HgRsHSTYh4jD2V4i3htF97uoUWnGJ6w=
+	b=XehT5s7gmDKUnKzvVErlgxxP24q0d56pRVuNc4lZdeB03Xt0AJAMNNPdRD/cHlsSR
+	 8OXu/6MByeacYQHCNaNf9XrCufsQNuV+OmPRfpdFoYc9usfwu/VhrHW3IG4H8/0L9q
+	 GzBLNQTOq22bHEfIQF4H6M1HNHOaeVvy1hQZ6Yf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0907/3318] drm/mali-dp: Fix runtime PM leak in malidp_crtc_atomic_enable()
-Date: Wed, 18 Nov 2026 15:25:29 +0100
-Message-ID: <20261118150346.714889355@linuxfoundation.org>
+Subject: [PATCH 6.6 0908/3318] nilfs2: fix checkpoint root lifetime on sysfs errors
+Date: Wed, 18 Nov 2026 15:25:30 +0100
+Message-ID: <20261118150346.746458193@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,42 +69,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-[ Upstream commit 73ef663c75688168e31dbe9c585b939be410a945 ]
+[ Upstream commit 2cb947450e0e5a88bb6bb5fca6dbfda1910e74b0 ]
 
-malidp_crtc_atomic_enable() resumes the device with
-pm_runtime_get_sync() and returns early when the resume fails.  The
-runtime PM usage count is incremented by pm_runtime_get_sync() even
-when the resume fails, so returning without dropping the reference
-leaks it and, once the error has been hit, prevents the device from
-ever suspending again.
+nilfs_find_or_create_root() links a new checkpoint root into the
+checkpoint tree and drops ns_cptree_lock before creating the root's
+sysfs group.  If nilfs_sysfs_create_snapshot_group() then fails, the
+root is freed while it is still reachable from ns_cptree, so a
+concurrent nilfs_lookup_root() can dereference freed memory.
 
-Drop the runtime PM reference with pm_runtime_put_noidle() on the
-resume failure path before returning.
+nilfs_sysfs_create_snapshot_group() allocates memory and creates sysfs
+nodes and may sleep, so it cannot run under the ns_cptree_lock spinlock.
+Reorder the creation path so that the sysfs group is set up before the
+root is published: initialize the root, create its sysfs group outside
+the lock, and only then take ns_cptree_lock to link it into the tree.
+On sysfs failure the root was never visible and is freed directly; in
+the unlikely case a root with the same checkpoint number is already
+present, the sysfs group of the new root is removed before it is freed.
+Concurrent insertions are already serialized by ns_snapshot_mount_mutex,
+so only the race against nilfs_lookup_root() needs to be closed.
 
-Fixes: 85f6421889ec ("drm: mali-dp: Enable power management for the device.")
+Because kobject_put() does not guarantee that the embedded kobject's
+release callback has run by the time it returns
+(CONFIG_DEBUG_KOBJECT_RELEASE defers it), the container must not be
+freed until the release completes.  Keep that wait_for_completion() of
+snapshot_kobj_unregister inside the sysfs helpers, so both the creation
+error path and nilfs_sysfs_delete_snapshot_group() wait for the release
+before their callers free the root.
+
+Fixes: dd70edbde262 ("nilfs2: integrate sysfs support into driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Acked-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260916102112.2018372-1-vulab@iscas.ac.cn
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/arm/malidp_crtc.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/nilfs2/sysfs.c     |  5 ++++-
+ fs/nilfs2/the_nilfs.c | 34 +++++++++++++++++++++-------------
+ 2 files changed, 25 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/arm/malidp_crtc.c b/drivers/gpu/drm/arm/malidp_crtc.c
-index dc01c43f61930..0b3a296413767 100644
---- a/drivers/gpu/drm/arm/malidp_crtc.c
-+++ b/drivers/gpu/drm/arm/malidp_crtc.c
-@@ -56,6 +56,7 @@ static void malidp_crtc_atomic_enable(struct drm_crtc *crtc,
- 
- 	if (err < 0) {
- 		DRM_DEBUG_DRIVER("Failed to enable runtime power management: %d\n", err);
-+		pm_runtime_put_noidle(crtc->dev->dev);
- 		return;
+diff --git a/fs/nilfs2/sysfs.c b/fs/nilfs2/sysfs.c
+index 59fda8ce0790b..e0f860aef81ff 100644
+--- a/fs/nilfs2/sysfs.c
++++ b/fs/nilfs2/sysfs.c
+@@ -195,8 +195,10 @@ int nilfs_sysfs_create_snapshot_group(struct nilfs_root *root)
+ 					    "%llu", root->cno);
  	}
+ 
+-	if (err)
++	if (err) {
+ 		kobject_put(&root->snapshot_kobj);
++		wait_for_completion(&root->snapshot_kobj_unregister);
++	}
+ 
+ 	return err;
+ }
+@@ -204,6 +206,7 @@ int nilfs_sysfs_create_snapshot_group(struct nilfs_root *root)
+ void nilfs_sysfs_delete_snapshot_group(struct nilfs_root *root)
+ {
+ 	kobject_put(&root->snapshot_kobj);
++	wait_for_completion(&root->snapshot_kobj_unregister);
+ }
+ 
+ /************************************************************************
+diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
+index d1891dd4a5109..f9b10b4e22c01 100644
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -865,6 +865,26 @@ nilfs_find_or_create_root(struct the_nilfs *nilfs, __u64 cno)
+ 	if (!new)
+ 		return NULL;
+ 
++	new->cno = cno;
++	new->ifile = NULL;
++	new->nilfs = nilfs;
++	refcount_set(&new->count, 1);
++	atomic64_set(&new->inodes_count, 0);
++	atomic64_set(&new->blocks_count, 0);
++
++	/*
++	 * Register the sysfs group before publishing the root in the
++	 * checkpoint tree.  nilfs_sysfs_create_snapshot_group() can sleep,
++	 * so it must run outside ns_cptree_lock; creating it first also
++	 * ensures a concurrent nilfs_lookup_root() can never observe a root
++	 * whose sysfs registration later fails and gets freed.
++	 */
++	err = nilfs_sysfs_create_snapshot_group(new);
++	if (err) {
++		kfree(new);
++		return NULL;
++	}
++
+ 	spin_lock(&nilfs->ns_cptree_lock);
+ 
+ 	p = &nilfs->ns_cptree.rb_node;
+@@ -881,29 +901,17 @@ nilfs_find_or_create_root(struct the_nilfs *nilfs, __u64 cno)
+ 		} else {
+ 			refcount_inc(&root->count);
+ 			spin_unlock(&nilfs->ns_cptree_lock);
++			nilfs_sysfs_delete_snapshot_group(new);
+ 			kfree(new);
+ 			return root;
+ 		}
+ 	}
+ 
+-	new->cno = cno;
+-	new->ifile = NULL;
+-	new->nilfs = nilfs;
+-	refcount_set(&new->count, 1);
+-	atomic64_set(&new->inodes_count, 0);
+-	atomic64_set(&new->blocks_count, 0);
+-
+ 	rb_link_node(&new->rb_node, parent, p);
+ 	rb_insert_color(&new->rb_node, &nilfs->ns_cptree);
+ 
+ 	spin_unlock(&nilfs->ns_cptree_lock);
+ 
+-	err = nilfs_sysfs_create_snapshot_group(new);
+-	if (err) {
+-		kfree(new);
+-		new = NULL;
+-	}
+-
+ 	return new;
+ }
  
 -- 
 2.53.0
