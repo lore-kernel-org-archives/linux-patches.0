@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041947;
-	b=RwKCkkc9ed5cnrjNQ+ICLhClQJP8ymrOQq/00N762yoq+XOQrppMx0qqs63g/A2TXLKz
-	 cc24m557VrZebOQpcLkVBwmSbeKrVxO9CjI+wJU7qppOHw4Q77jcMeZRhaEtUItbj3nF2
-	 IWz6mreCnUb8XbrgU0hbuh7r02cA2Qn8+pqVNPq++26aRXWOtXJoklu8lpPkszh/kSGU2
-	 bU8ksKcod+2LZVmw1B8Cuf3C6pCj21abU/69oyzv1hMextusPTDJcr/OvVHaODwZXmzpX
-	 SjQWMMsoprerqidDzXMZCYQWVsohIXkSOaStJMObHBcFDx5qzFJ7V5Z4IeJxdEj73uQ==
+	t=1795041949;
+	b=RQjdY7TBZqs5A1r7Kp3Id4eUkt9ONqocSgb29SgUlLZ+onsRYPuuNtjKNR/TblLmzijY
+	 vO2RZUUAFDuyQ2tpnvD0iUmYJR0iFBaU200DjNX0QmH8l8Cyl/FJwDxSfLR1qv8hEXLxW
+	 9zwP2Wd4Ijp+uvLFnkIGxXYpqchMvj4ZpfvUMKuGNaCWTljqH3y8azJG8iY+4liW2QKMS
+	 0rLnFxqEEr/RW7ZwSHp8VHcLGqsMQMC0tuolnOp8GNpjIN3PHBNm9+O9CzECBtyzYXe0B
+	 yTpJw8KjeKQYcv4MH4eAz6V2WpOV9uJX1kZgQ03fQnms6uHapnhrjuYjqxglVoTbfFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041947;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041949;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=47tT/wiabEt1TSZW4XZpBzxkxBVMDj+HfiYMmG3PrZw=;
-	b=Z/UwnPgayh/8puIE70+LaOXrsacRPUzBvOjZ80u57kdg5Pkxzd2li9gQd7eWZYHlXLan
-	 d8c2aMQg9r7HHeIUdvgOd799PFnfLNIRywCEziye4RzPoBgYHwwdDp6KIqzMR91dbgQJJ
-	 IX/KaqBnGrAd+zCIvKsD94pth8fUnVXuaU6LvSZHtWBeL3rKkRZp7NQ7Q7OjH3AzumA0x
-	 df1xKL9SfNHVxdB1Q5aPYCgMqDABXG74mKNQgfWI1nJygWsPabrugghhZXG9+EO16Q6NE
-	 Cflel7mhj5z8DkKqsP3g0DTFwtnlaowSEWS3/bYcf1o/u85daDqf2sKWLHnvxeCSBQg==
+	bh=+98r+sBPaL9aPW/UcZh8niQTLwvPJZslZ8HAxHr1b4I=;
+	b=Hq2DVg+iVJ6Pk9BOA8RYtDmrPSNM6y5MqslaAGFv2U5lHvOceyNKrbiPBoDsM3mbZHO4
+	 UY3g+BLQLz8CMpmma6E8dtiyIGwBYJlmWXW3ePpuzdyxQTQjzonNDC5oBFD3Rl4ep/Thp
+	 Ii33Hx85ak+bbpPSYrfb7rX9nnN2kHAK16U1HVHUyAP5zcHsmOgds8dmWKIRI5USTUsbd
+	 nQgAxrejwaxAfAJ/x0Y9HxhJRvSnbr2UQmfMF/L+w3K8gZ/8+mAIrNCjh4AOAu6Z9AH7+
+	 +uqQjhStEVDk5O4p9n8Hei9Nzg1ypblyJWhXt6TFVhSjNvxwvm7l9USDaVT0/KaW7sQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I2x6Y7Gi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fRHHxFBG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0718B606A31C;
-	Wed, 18 Nov 2026 22:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1850606A325;
+	Wed, 18 Nov 2026 22:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I2x6Y7Gi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5884E1F000C4;
-	Wed, 18 Nov 2026 22:45:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fRHHxFBG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8FE1F000C4;
+	Wed, 18 Nov 2026 22:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041946;
-	bh=47tT/wiabEt1TSZW4XZpBzxkxBVMDj+HfiYMmG3PrZw=;
+	s=korg; t=1795041949;
+	bh=+98r+sBPaL9aPW/UcZh8niQTLwvPJZslZ8HAxHr1b4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I2x6Y7GiyQ99GR76iSvm6NDeI720l5Xp6rTkW959bL6u3vD1HsG8chiZq3+HAeC2m
-	 +uDXRinKVAHHjBSVfab2RC5cgtAHgYrzYliRcgrRIeaHAwowaulqVVBvQ/PHPjaBnk
-	 d/bnIOEB4kdgApE9dfm3fxcuXtV2IRDxzx3/EPv4=
+	b=fRHHxFBGPPvnC5GGqUo9P83s8pVlQSC7jEC2qRDnTI4OBRzsVTibRtLhZRVA70OQc
+	 Mfd+HUgM4qzizsAKgQML9vqOxqetyMRkJzPT4zKrnf+A2t1g3KoztbYsjIo2I3cP7G
+	 JW84NCtbRO6rRJlvUiFrOSLlFefehOVv9BIEqGSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Chen <chen.dylane@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2996/3318] bpf: Add show_fdinfo for perf_event
-Date: Wed, 18 Nov 2026 16:00:18 +0100
-Message-ID: <20261118150450.144947009@linuxfoundation.org>
+Subject: [PATCH 6.6 2997/3318] bpf: Read the probe of a perf event under event_mutex
+Date: Wed, 18 Nov 2026 16:00:19 +0100
+Message-ID: <20261118150450.174170058@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,213 +68,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Chen <chen.dylane@linux.dev>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 97ebac58865dec1bca31140252386daefef1654f ]
+[ Upstream commit 3ccd700543f16a2b2ab656f35dcaeb6bd7c45e22 ]
 
-After commit 1b715e1b0ec5 ("bpf: Support ->fill_link_info for perf_event") add
-perf_event info, we can also show the info with the method of cat /proc/[fd]/fdinfo.
+For a perf event on a kprobe or uprobe event which was made in tracefs,
+bpf_get_kprobe_info() and bpf_get_uprobe_info() look the probe up by
+name in the list of dynamic events, and hand a pointer to its symbol or
+file name back to the caller. None of the callers holds event_mutex.
 
-kprobe fdinfo:
-link_type:	perf
-link_id:	10
-prog_tag:	bcf7977d3b93787c
-prog_id:	20
-name:	bpf_fentry_test1
-offset:	0x0
-missed:	0
-addr:	0xffffffffa28a2904
-event_type:	kprobe
-cookie:	3735928559
+The perf event keeps its trace event alive, nothing else. Other dynamic
+events are removed from the list and freed during the walk. And a probe
+which shares its event with other probes can be deleted while the event
+is in use, so even the probe which is found can be freed, together with
+the string, before the caller has measured and copied it. The result is
+a use-after-free in the walk, in strlen() and in the copy to user space,
+or a NULL pointer dereference.
 
-uprobe fdinfo:
-link_type:	perf
-link_id:	13
-prog_tag:	bcf7977d3b93787c
-prog_id:	21
-name:	/proc/self/exe
-offset:	0x63dce4
-ref_ctr_offset:	0x33eee2a
-event_type:	uprobe
-cookie:	3735928559
+The readers are BPF_OBJ_GET_INFO_BY_FD and fdinfo of a perf link, for
+whoever holds a descriptor of the link, and BPF_TASK_FD_QUERY. The other
+side is anybody who may write to dynamic_events, kprobe_events or
+uprobe_events.
 
-tracepoint fdinfo:
-link_type:	perf
-link_id:	11
-prog_tag:	bcf7977d3b93787c
-prog_id:	22
-tp_name:	sched_switch
-event_type:	tracepoint
-cookie:	3735928559
+Take event_mutex in bpf_get_perf_event_info() and give the caller a copy
+of the name, which it has to free.
 
-perf_event fdinfo:
-link_type:	perf
-link_id:	12
-prog_tag:	bcf7977d3b93787c
-prog_id:	23
-type:	1
-config:	2
-event_type:	event
-cookie:	3735928559
-
-Signed-off-by: Tao Chen <chen.dylane@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250606150258.3385166-1-chen.dylane@linux.dev
-Stable-dep-of: 3ccd700543f1 ("bpf: Read the probe of a perf event under event_mutex")
+Fixes: 41bdc4b40ed6 ("bpf: introduce bpf subcommand BPF_TASK_FD_QUERY")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261017163745.3341787-10-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 120 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 120 insertions(+)
+ kernel/bpf/syscall.c     | 17 +++++++++++------
+ kernel/trace/bpf_trace.c | 13 +++++++++++++
+ 2 files changed, 24 insertions(+), 6 deletions(-)
 
 diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index c92ee2b5c315e..e65c98222c31b 100644
+index e65c98222c31b..bc331d8ac5968 100644
 --- a/kernel/bpf/syscall.c
 +++ b/kernel/bpf/syscall.c
-@@ -3546,6 +3546,32 @@ static int bpf_perf_link_fill_kprobe(const struct perf_event *event,
- 	info->perf_event.kprobe.cookie = event->bpf_cookie;
- 	return 0;
- }
-+
-+static void bpf_perf_link_fdinfo_kprobe(const struct perf_event *event,
-+					struct seq_file *seq)
-+{
-+	const char *name;
-+	int err;
-+	u32 prog_id, type;
-+	u64 offset, addr;
-+	unsigned long missed;
-+
-+	err = bpf_get_perf_event_info(event, &prog_id, &type, &name,
-+				      &offset, &addr, &missed);
-+	if (err)
-+		return;
-+
-+	seq_printf(seq,
-+		   "name:\t%s\n"
-+		   "offset:\t%#llx\n"
-+		   "missed:\t%lu\n"
-+		   "addr:\t%#llx\n"
-+		   "event_type:\t%s\n"
-+		   "cookie:\t%llu\n",
-+		   name, offset, missed, addr,
-+		   type == BPF_FD_TYPE_KRETPROBE ?  "kretprobe" : "kprobe",
-+		   event->bpf_cookie);
-+}
- #endif
- 
- #ifdef CONFIG_UPROBE_EVENTS
-@@ -3573,6 +3599,31 @@ static int bpf_perf_link_fill_uprobe(const struct perf_event *event,
- 	info->perf_event.uprobe.cookie = event->bpf_cookie;
- 	return 0;
- }
-+
-+static void bpf_perf_link_fdinfo_uprobe(const struct perf_event *event,
-+					struct seq_file *seq)
-+{
-+	const char *name;
-+	int err;
-+	u32 prog_id, type;
-+	u64 offset, ref_ctr_offset;
-+	unsigned long missed;
-+
-+	err = bpf_get_perf_event_info(event, &prog_id, &type, &name,
-+				      &offset, &ref_ctr_offset, &missed);
-+	if (err)
-+		return;
-+
-+	seq_printf(seq,
-+		   "name:\t%s\n"
-+		   "offset:\t%#llx\n"
-+		   "ref_ctr_offset:\t%#llx\n"
-+		   "event_type:\t%s\n"
-+		   "cookie:\t%llu\n",
-+		   name, offset, ref_ctr_offset,
-+		   type == BPF_FD_TYPE_URETPROBE ?  "uretprobe" : "uprobe",
-+		   event->bpf_cookie);
-+}
- #endif
- 
- static int bpf_perf_link_fill_probe(const struct perf_event *event,
-@@ -3641,10 +3692,79 @@ static int bpf_perf_link_fill_link_info(const struct bpf_link *link,
+@@ -3502,19 +3502,19 @@ static int bpf_perf_link_fill_common(const struct perf_event *event,
+ 		*ulenp = 1;
  	}
+ 	if (!uname)
+-		return 0;
++		goto out;
+ 
+ 	if (buf) {
+ 		err = bpf_copy_to_user(uname, buf, ulen, len);
+-		if (err)
+-			return err;
+ 	} else {
+ 		char zero = '\0';
+ 
+ 		if (put_user(zero, uname))
+-			return -EFAULT;
++			err = -EFAULT;
+ 	}
+-	return 0;
++out:
++	kfree_const(buf);
++	return err;
  }
  
-+static void bpf_perf_event_link_show_fdinfo(const struct perf_event *event,
-+					    struct seq_file *seq)
-+{
-+	seq_printf(seq,
-+		   "type:\t%u\n"
-+		   "config:\t%llu\n"
-+		   "event_type:\t%s\n"
-+		   "cookie:\t%llu\n",
-+		   event->attr.type, event->attr.config,
-+		   "event", event->bpf_cookie);
-+}
-+
-+static void bpf_tracepoint_link_show_fdinfo(const struct perf_event *event,
-+					    struct seq_file *seq)
-+{
-+	int err;
-+	const char *name;
-+	u32 prog_id;
-+
-+	err = bpf_get_perf_event_info(event, &prog_id, NULL, &name, NULL,
-+				      NULL, NULL);
-+	if (err)
-+		return;
-+
-+	seq_printf(seq,
-+		   "tp_name:\t%s\n"
-+		   "event_type:\t%s\n"
-+		   "cookie:\t%llu\n",
-+		   name, "tracepoint", event->bpf_cookie);
-+}
-+
-+static void bpf_probe_link_show_fdinfo(const struct perf_event *event,
-+				       struct seq_file *seq)
-+{
-+#ifdef CONFIG_KPROBE_EVENTS
-+	if (event->tp_event->flags & TRACE_EVENT_FL_KPROBE)
-+		return bpf_perf_link_fdinfo_kprobe(event, seq);
-+#endif
-+
-+#ifdef CONFIG_UPROBE_EVENTS
-+	if (event->tp_event->flags & TRACE_EVENT_FL_UPROBE)
-+		return bpf_perf_link_fdinfo_uprobe(event, seq);
-+#endif
-+}
-+
-+static void bpf_perf_link_show_fdinfo(const struct bpf_link *link,
-+				      struct seq_file *seq)
-+{
-+	struct bpf_perf_link *perf_link;
-+	const struct perf_event *event;
-+
-+	perf_link = container_of(link, struct bpf_perf_link, link);
-+	event = perf_get_event(perf_link->perf_file);
-+	if (IS_ERR(event))
-+		return;
-+
-+	switch (event->prog->type) {
-+	case BPF_PROG_TYPE_PERF_EVENT:
-+		return bpf_perf_event_link_show_fdinfo(event, seq);
-+	case BPF_PROG_TYPE_TRACEPOINT:
-+		return bpf_tracepoint_link_show_fdinfo(event, seq);
-+	case BPF_PROG_TYPE_KPROBE:
-+		return bpf_probe_link_show_fdinfo(event, seq);
-+	default:
-+		return;
-+	}
-+}
-+
- static const struct bpf_link_ops bpf_perf_link_lops = {
- 	.release = bpf_perf_link_release,
- 	.dealloc = bpf_perf_link_dealloc,
- 	.fill_link_info = bpf_perf_link_fill_link_info,
-+	.show_fdinfo = bpf_perf_link_show_fdinfo,
- };
+ #ifdef CONFIG_KPROBE_EVENTS
+@@ -3571,6 +3571,7 @@ static void bpf_perf_link_fdinfo_kprobe(const struct perf_event *event,
+ 		   name, offset, missed, addr,
+ 		   type == BPF_FD_TYPE_KRETPROBE ?  "kretprobe" : "kprobe",
+ 		   event->bpf_cookie);
++	kfree_const(name);
+ }
+ #endif
  
- static int bpf_perf_link_attach(const union bpf_attr *attr, struct bpf_prog *prog)
+@@ -3623,6 +3624,7 @@ static void bpf_perf_link_fdinfo_uprobe(const struct perf_event *event,
+ 		   name, offset, ref_ctr_offset,
+ 		   type == BPF_FD_TYPE_URETPROBE ?  "uretprobe" : "uprobe",
+ 		   event->bpf_cookie);
++	kfree_const(name);
+ }
+ #endif
+ 
+@@ -3721,6 +3723,7 @@ static void bpf_tracepoint_link_show_fdinfo(const struct perf_event *event,
+ 		   "event_type:\t%s\n"
+ 		   "cookie:\t%llu\n",
+ 		   name, "tracepoint", event->bpf_cookie);
++	kfree_const(name);
+ }
+ 
+ static void bpf_probe_link_show_fdinfo(const struct perf_event *event,
+@@ -5083,11 +5086,13 @@ static int bpf_task_fd_query(const union bpf_attr *attr,
+ 		err = bpf_get_perf_event_info(event, &prog_id, &fd_type,
+ 					      &buf, &probe_offset,
+ 					      &probe_addr, NULL);
+-		if (!err)
++		if (!err) {
+ 			err = bpf_task_fd_query_copy(attr, uattr, prog_id,
+ 						     fd_type, buf,
+ 						     probe_offset,
+ 						     probe_addr);
++			kfree_const(buf);
++		}
+ 		goto put_file;
+ 	}
+ 
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 847f94443a0a6..25476caab954f 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -2398,6 +2398,7 @@ int bpf_probe_unregister(struct bpf_raw_event_map *btp, struct bpf_prog *prog)
+ 	return tracepoint_probe_unregister(btp->tp, (void *)btp->bpf_func, prog);
+ }
+ 
++/* On success the caller releases *buf with kfree_const() */
+ int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
+ 			    u32 *fd_type, const char **buf,
+ 			    u64 *probe_offset, u64 *probe_addr,
+@@ -2407,6 +2408,12 @@ int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
+ 	struct bpf_prog *prog;
+ 	int flags, err = 0;
+ 
++	/*
++	 * The list of dynamic events is walked, and a probe which has siblings
++	 * can be deleted, with its strings, while its event is in use.
++	 */
++	guard(mutex)(&event_mutex);
++
+ 	prog = event->prog;
+ 	if (!prog)
+ 		return -ENOENT;
+@@ -2447,6 +2454,12 @@ int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
+ #endif
+ 	}
+ 
++	if (!err && *buf) {
++		*buf = kstrdup_const(*buf, GFP_KERNEL);
++		if (!*buf)
++			err = -ENOMEM;
++	}
++
+ 	return err;
+ }
+ 
 -- 
 2.53.0
 
