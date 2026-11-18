@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021631;
-	b=Xln/bmGJKZP7w6XMb5BWVoDTRgJcesjhizrXRR84yol9d8dyausKkLhJIq7HB46DRsbc
-	 5d1lMMVs8QvmhJ9St9gROvuAFJnWwK0VCsCNk4wFK3kwCYjFusRamaY1VoUbwi5fdiqbz
-	 2yTC6+0J6YDtkFxU0nvxkWEt1VVCxyLgyJUpJ06qHtIGKEAeh7YaMF0u1GvIT1ChWMJNq
-	 +X29K1H1/gHYynzhYVs53MlSHQE+b0BEgu8fa4+mRRhtls6ZrHqfbbdidLh+ss6jPLCHF
-	 70mCl7YRwer1rqKIieb+3YSwLX3IzQ83lhOamr4w9xU73T0UzmQ/zjZMQ0AAdykid8Q==
+	t=1795021634;
+	b=3aJSyvReikpU6itJD1Inh5q1G0yaiLwGxhXBTaWoFOF5VRWSe5RsjEoKyb3SMQfY8weE
+	 KEAJsMI962Pn6EB5INOTAQySJS2yhmZTkHPmw1NzAP1HSZeJEDHyMvoYDTQtLrB31uZ90
+	 vDLgDOZROKpfs7sweuHmneRBoStNvtrgZ4D1vgbgTvk9fFp6l5cgivVB7IOVsmx3ifdjS
+	 a51sInQHcpZb6e2+MirRsZaCzVJd9JcT3nwyEWQlQkn8csfw2EyJ1NGFYK/BA8s7vorDo
+	 9gnpdxthDwVsDMsA7wPlfM3yPZPFBdb2MPft2hV0gGoHq6+pFQ2u3+yteQyHXJ/rirw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021631;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021634;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yz+KQdXZpUBTZ4aDwixfpyxtAMtr1lpxYDAHfHmWN0Q=;
-	b=SjUwpynf6swXeccRhOVpTfe7WQSijpCsI3J1Y7HGyA0gdOnzwjp8GGV/74HftAMG6SVy
-	 S5C8nFCsTozglJASYwdLR9a/z7PVH8fKkZoz4lhxZZ5J03rd0bz7U1kywmaFvl0ZThFq4
-	 4BMv819WxBTkx9VUHlORZIxcEGeUJHuuKIBpxP7gKfPhc82fnAcYmKcmoJVOmiyQIYIVd
-	 7fUdx2u6ZuP2WoiqIdRfOgj2UG5pZ5XdCHM8VoEM9xjcLQdPhb698MJCQJe/IpPMtqNGT
-	 JBG/9I7KTFjne9dZekUb4SsT45GnOaJR+xvyVn2PvQHKZz7SUkL+uxR7b2KYknoW6gA==
+	bh=EwB7ApRbqlih5z8U31rUxKKArG0V2/KBRWkSacwFdmA=;
+	b=QnsezppO4wVt3bNXgfOgdwyztIFZ3OaerErHF0j8w7/vI7We28ztmuGqgn20SwUf4XtD
+	 tuj+uYSK6UHuPHeVKy01Hpff2/WvyzS2n8ht1sroS8q1YKAOQ77WL82FQJoWr0tXacy3K
+	 0tLcbCEpVvt1inoQqltfDao91Ry1Na1gFuPi1AH6Li0fyFEqtgU7v3RBAVeHtlSB+vKGz
+	 MLvqWsfTiIMtmZmLozzQ5ytl/YeXDBmA9vfBrmLyKgSS8hk6t5QRc0qWJztF9Z6U78GDa
+	 2xkz0Aat/3bPRcptie5Vmip1mfm16hIfte21STc/iADKUahJgsz7YXPYf9ZRLHBmmOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MUhhIQG9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sKqDKkXx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9C1606A32A;
-	Wed, 18 Nov 2026 17:07:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE8E606A339;
+	Wed, 18 Nov 2026 17:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MUhhIQG9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA591F000C4;
-	Wed, 18 Nov 2026 17:07:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sKqDKkXx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C049E1F000C4;
+	Wed, 18 Nov 2026 17:07:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021631;
-	bh=yz+KQdXZpUBTZ4aDwixfpyxtAMtr1lpxYDAHfHmWN0Q=;
+	s=korg; t=1795021634;
+	bh=EwB7ApRbqlih5z8U31rUxKKArG0V2/KBRWkSacwFdmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MUhhIQG9JUbNtz5cx4AOex6V0t2pIhRDkve51iPlhEBE/f0IwllHp3yTZkshVzOO8
-	 ou32JAYwdnAXqxB6NfDsO6q8cHxiO8oxjK07BtbtXTEJABCwOniyVZU+nEFz0oRpRn
-	 Uzo7tCAlaqfNi/FvQc9EEF+0HMzwG4THcZ2pRAxE=
+	b=sKqDKkXxErOyGrjN1K+BRdd7ZypqBMZ4DutCSUPxDuSkLp2ulU/8Lgm+aocrA5skU
+	 cu0SRTupblby6LxdFARCSesfWYabvRv7H+1C1IZ6E0ktWBA3xltmczFBoc1l9YFt6c
+	 fLFffJggqsQdbQsRicBLpQokgFIHOZ1day6LN/hI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Antoine Tenart <atenart@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2377/2651] selftests: gro: remove unused variable total_data
-Date: Wed, 18 Nov 2026 16:00:17 +0100
-Message-ID: <20261118150411.051359704@linuxfoundation.org>
+Subject: [PATCH 7.3 2378/2651] tls: fix the open record check in the max payload size setsockopt
+Date: Wed, 18 Nov 2026 16:00:18 +0100
+Message-ID: <20261118150411.079808345@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,49 +68,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@kylinos.cn>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 86537a8fb24750fc25a96a27ff29400054d052b5 ]
+[ Upstream commit ed642349d87dd7067a44c30319f0cffd22780376 ]
 
-I hit a build warning when building the net selftests.
+do_tls_setsockopt_tx_payload_len() refuses to resize records while one is
+open, but the check is broken in two ways.
 
-  gro.c: In function 'check_capacity_pkts':                                                                                                                                                                                     gro.c:1249:13: warning: variable 'total_data' set but not used [-Wunused-but-set-variable=]
-   1249 |         int total_data = 0;
-        |             ^~~~~~~~~~
+It reaches for the open record through tls_sw_ctx_tx(), an unchecked cast
+of ctx->priv_ctx_tx.  Under device offload that pointer is a
+tls_offload_context_tx, so the check reads a field of the wrong struct: it
+returns EBUSY on whatever happens to be there, and never sees the record
+that really is open.  Dispatch on tx_conf.
 
-Remove the total_data variable, as it is no longer used.
+The socket lock alone is also not enough to tell no sender is in flight.
+The device tx path drops it in sk_stream_wait_memory() after
+tls_push_record() cleared open_record, so setsockopt can slip in
+mid-sendmsg and shrink the limit.  tls_push_data() latches the limit once
+per call, and a record left open by MSG_MORE can then be bigger than the
+new limit, making the u32 subtraction in the copy clamp wrap around and
+build an oversized record.  Take tx_lock like the sendmsg paths do so
+setsockopt waits for in-flight senders.  Re-reading the limit inside the
+tls_push_data() loop could close the wrap too, but a parked sender would
+still finish with the old limit, so serializing on tx_lock is simpler.
 
-Fixes: d97348474708 ("selftests: drv-net: gro: always wait for FIN in the capacity test")
-Signed-off-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Reviewed-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261022-self_unused_var-v1-1-8ab10a6b7f44@kylinos.cn
+Take tx_lock interruptible, as tls_sw_sendmsg() does.  Both sendmsg paths
+keep it across sk_stream_wait_memory(), which sleeps until the peer reads,
+so a plain mutex_lock() could park setsockopt in D state for as long as
+the sender waits.  The lock_sock() after it is fine uninterruptible: a
+sender sleeping for memory has released the socket lock, so that wait only
+covers short critical sections, like every other setsockopt.
+
+Fixes: 82cb5be6ad64 ("net/tls: support setting the maximum payload size")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20261020121240.29082-1-jiayuan.chen@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/lib/gro.c | 2 --
- 1 file changed, 2 deletions(-)
+ net/tls/tls_main.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/lib/gro.c b/tools/testing/selftests/net/lib/gro.c
-index 7a333155de1ab..1bc92e7a625f3 100644
---- a/tools/testing/selftests/net/lib/gro.c
-+++ b/tools/testing/selftests/net/lib/gro.c
-@@ -1246,7 +1246,6 @@ static void check_capacity_pkts(int fd)
- 	int coalesced[num_flows];
- 	struct tcphdr *tcph;
- 	int ip_ext_len = 0;
--	int total_data = 0;
- 	int pkt_size = -1;
- 	int data_len = 0;
- 	int flow_id;
-@@ -1309,7 +1308,6 @@ static void check_capacity_pkts(int fd)
- 		}
+diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
+index fbb274287aa5f..2d1cde3f61886 100644
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -833,15 +833,26 @@ static int do_tls_setsockopt_no_pad(struct sock *sk, sockptr_t optval,
+ 	return rc;
+ }
  
- 		num_pkt++;
--		total_data += data_len;
- 	}
++static bool tls_tx_record_is_open(struct tls_context *ctx)
++{
++	switch (ctx->tx_conf) {
++	case TLS_SW:
++		return !!tls_sw_ctx_tx(ctx)->open_rec;
++	case TLS_HW:
++		return !!tls_offload_ctx_tx(ctx)->open_record;
++	default:
++		return false;
++	}
++}
++
+ static int do_tls_setsockopt_tx_payload_len(struct sock *sk, sockptr_t optval,
+ 					    unsigned int optlen)
+ {
+ 	struct tls_context *ctx = tls_get_ctx(sk);
+-	struct tls_sw_context_tx *sw_ctx = tls_sw_ctx_tx(ctx);
+ 	u16 value;
+ 	bool tls_13 = ctx->prot_info.version == TLS_1_3_VERSION;
  
- 	/* Check flow ordering. We expect to see all non-coalesced first segs
+-	if (sw_ctx && sw_ctx->open_rec)
++	if (tls_tx_record_is_open(ctx))
+ 		return -EBUSY;
+ 
+ 	if (sockptr_is_null(optval) || optlen != sizeof(value))
+@@ -862,6 +873,7 @@ static int do_tls_setsockopt_tx_payload_len(struct sock *sk, sockptr_t optval,
+ static int do_tls_setsockopt(struct sock *sk, int optname, sockptr_t optval,
+ 			     unsigned int optlen)
+ {
++	struct tls_context *ctx;
+ 	int rc = 0;
+ 
+ 	switch (optname) {
+@@ -881,9 +893,15 @@ static int do_tls_setsockopt(struct sock *sk, int optname, sockptr_t optval,
+ 		rc = do_tls_setsockopt_no_pad(sk, optval, optlen);
+ 		break;
+ 	case TLS_TX_MAX_PAYLOAD_LEN:
++		ctx = tls_get_ctx(sk);
++		/* Senders sleep with tx_lock held, so take it interruptible */
++		rc = mutex_lock_interruptible(&ctx->tx_lock);
++		if (rc)
++			break;
+ 		lock_sock(sk);
+ 		rc = do_tls_setsockopt_tx_payload_len(sk, optval, optlen);
+ 		release_sock(sk);
++		mutex_unlock(&ctx->tx_lock);
+ 		break;
+ 	default:
+ 		rc = -ENOPROTOOPT;
 -- 
 2.53.0
 
