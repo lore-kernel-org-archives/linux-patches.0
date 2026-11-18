@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026085;
-	b=pwNRSxatDR78eT66ShShPAsNoDM6AzxGA2/rF3hv9uFvJkf1I6Es6Kg/qW5+RFSlupg7
-	 zgSLRXDXlqB7EDCbMhOcuL4nl+bkWrbklPkm7155Dq7hYMB1PO35e/PHJieq8CUV+mEvR
-	 F/NDOpDyvPfbPT/NQq9KQJ+Bsd+xTaiaZAB04DWszyHDM8Ke7nVjtNf03Chkvs2hk0pPS
-	 WTBJqOOGM9ztloBsq0q57WAW/KHvPjIWHgpxPx9Tr7ClxzV75une/0RV+zQ09Y50Pmrhj
-	 MVEa6HVV0eXW0dTi0QwfmhgM9Wd5IHijMBgx7oRN+31gZn+qdE8U6oAIhQweO3czDlQ==
+	t=1795026088;
+	b=VU5LavFbvMcQWbi1cDOLz1GtCbr/KQiOSWzP8cGLwkmOdPNI6/R1aDYi0I9edx9cu9ui
+	 tuuTPAQsOca9IdJrNd7RZ2hni1+6HXyaN9J4P/olJkNeSqWFGaJFZhXFcu1nMex9yum+I
+	 4neOk90nc61AFhzmVC0JnKOUcwUE5MOaljmeojvzw1IDxe2peWvUGfNHCRQ99tesYlOCR
+	 OgN3EHnzc9t1oHUo2qLcmRCCK3/EwN/IlES8eI7FbbGh2MlVpAeBcU+/1Nbnfn1NF4oz8
+	 ggh4eJc2xHjWzTRBbFgY4aFeY9vQAlg/JBsvHh+fgRjRrjWvD9QFdUNlY+9Y3A79AfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026085;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026088;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EtScv+aX9LmX8dNoZoAwMTrXL1XUHzFwD852M0F5WdY=;
-	b=bIndBF2hskh75WYkXQJP2JbPkW0c3tF4xvQcZtnssy+MyTfiAubuewcy+iMrG/M9XOK/
-	 jkowmneTHY5RGmPvI0jtQVzQvLu6Cn6sHHURtIz1xz3YwWxfOFlih4DoXG7B/nAfeRZCz
-	 6MiMkiX31ssERHUuL6Ul0vQYVqFtYjNQZrGfzhqoql+xD6Vbn6Sdw66556IvXRxRm6J2K
-	 Tv20MB6RGaYtkTqThd89ItynIjVEk+ZtGuSHS+0cby6vgqQWrZEL1ZaLZTC0I3ks0BIbo
-	 Mjl9MFvEfCW7OVbweQpGDAveke/X3U+irNglSlUIfdbcfOCgJV91QS+NbppvXwET6iA==
+	bh=aBR0WldBqEy8NmVY2CYtbyv4EeuxzoXsZL4GrkhJxZM=;
+	b=tDRnzxx1h+UpVWTGXaOcZTaKUJyJGj4E8eLJ34eclDTv3Eun4hC3gNcai/FjMEiNeW6z
+	 DLdC9glpxjgJ5jTs2I3trngTp7Mv87e83BlwxZItsxzA3zcoQbfJ3csj1IhGEaI2b2o2U
+	 t/f3vVROlzNDHbHG81GuPkGAYmvzwg/DvJwNmvkHcKQ2Nk4CGNAegF8xuQaXKH3ymK4kX
+	 v8tfQ4i95Op/XhahaASmgN2cyRov2iCR44pmIs6f+NkOsBLDLwfWXhs4qFPAem0SinVK5
+	 WF9jb5hrw60VoWPYaF2+l8ImUlwC21X/ivdShGFxpNNcA9jRUliVUwcZGifD4HrenWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FNPp173X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ptxfVNEx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC85606A320;
-	Wed, 18 Nov 2026 18:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF79606A31C;
+	Wed, 18 Nov 2026 18:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FNPp173X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D563A1F000C4;
-	Wed, 18 Nov 2026 18:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ptxfVNEx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 967961F000C4;
+	Wed, 18 Nov 2026 18:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026085;
-	bh=EtScv+aX9LmX8dNoZoAwMTrXL1XUHzFwD852M0F5WdY=;
+	s=korg; t=1795026088;
+	bh=aBR0WldBqEy8NmVY2CYtbyv4EeuxzoXsZL4GrkhJxZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FNPp173Xa4FQiVJrTDJv5tAZD62j0Ajg3Ez3sD5PDSvA6XDfzgvYlvJO7XkXXS8j/
-	 8AhvuU8tsfzcIBZ2zBd2Bu4V0pqYgdM9W6T6lqpa8sQdWJ6ZrPnDmOFq8OeW6tCDIF
-	 QG9Urj/HbfxLK/OKy7qUpdWZhhBhWTHo/fEHeo/8=
+	b=ptxfVNExh+TpHOCQBGgCN41UeccFnG2JjR7XlkyVLqC3smqgefv2ISiBI1sCuQuto
+	 WTXZ/6epG5CQN2h2WhVGZ+RAxP9QXYnZkncGIPX6FU/ZYMyCHXokx8ZkRBzclPULyC
+	 WqMWcv71D62PrS9dn3CbjdaOouVg/1oRLwXfdIyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ting-Han Hou <ue081723@gmail.com>,
-	Simon Glass <sjg@chromium.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1309/2151] scripts/make_fit: Ignore schema checks when decomposing DTBs
-Date: Wed, 18 Nov 2026 15:50:44 +0100
-Message-ID: <20261118150209.785347460@linuxfoundation.org>
+Subject: [PATCH 6.18 1310/2151] cxl/pci: Update only the Port GPF timeout fields
+Date: Wed, 18 Nov 2026 15:50:45 +0100
+Message-ID: <20261118150209.822489260@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,46 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ting-Han Hou <ue081723@gmail.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 3bf2237f59af842e546fa4b2c146198db95d1519 ]
+[ Upstream commit b5d14009bdb1973d54a6ea111a660b3dae115be5 ]
 
-With CHECK_DTBS enabled, Kbuild appends a schema validation command to
-the fdtoverlay command saved in a composite DTB's .cmd file. When DTB
-decomposition is requested, process_dtb() treats every word after -i as
-an input file, including the semicolon and the validator arguments.
-FIT generation then fails with FileNotFoundError while opening or
-checking the size of those words as files.
+update_gpf_port_dvsec() rebuilds the phase control register from just
+the timeout base and scale, so the rest of the register is cleared by
+the write. The other bits are reserved today and nothing is lost, but
+the full-register rewrite would clobber any field the spec defines
+there later.
 
-Limit the input list to the fdtoverlay command before extracting its
-arguments. This preserves the base DTB and overlay order and ignores
-the subsequent schema validation command.
+Read-modify-write the register and change only the two timeout
+fields.
 
-Fixes: 17c31aded9a1 ("scripts/make_fit: Support decomposing DTBs")
+Fixes: a52b6a2c1c99 ("cxl/pci: Support Global Persistent Flush (GPF)")
 Assisted-by: LLM
-Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
-Reviewed-by: Simon Glass <sjg@chromium.org>
-Link: https://patch.msgid.link/CA+NtrhQBK8uW32qO3dXxVxO1GSN-0EJfyJ16tnyx0o52T17WtQ@mail.gmail.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20261008034619.28059-4-kanie@linux.alibaba.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/make_fit.py | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/cxl/core/pci.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/make_fit.py b/scripts/make_fit.py
-index 1683e5ec6e675..34528e4a40e35 100755
---- a/scripts/make_fit.py
-+++ b/scripts/make_fit.py
-@@ -240,7 +240,8 @@ def process_dtb(fname, args):
+diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
+index e54991c74e6b3..cb28b33c03eae 100644
+--- a/drivers/cxl/core/pci.c
++++ b/drivers/cxl/core/pci.c
+@@ -870,8 +870,8 @@ static int update_gpf_port_dvsec(struct pci_dev *pdev, int dvsec, int phase)
+ 	    FIELD_GET(scale, ctrl) == GPF_TIMEOUT_SCALE_MAX)
+ 		return 0;
  
-         if 'scripts/dtc/fdtoverlay' in cmd:
-             # This depends on the structure of the composite DTB command
--            files = cmd.split()
-+            # Ignore any subsequent commands, such as schema validation
-+            files = cmd.split(';', 1)[0].split()
-             files = files[files.index('-i') + 1:]
-         else:
-             files = [fname]
+-	ctrl = FIELD_PREP(base, GPF_TIMEOUT_BASE_MAX);
+-	ctrl |= FIELD_PREP(scale, GPF_TIMEOUT_SCALE_MAX);
++	FIELD_MODIFY(base, &ctrl, GPF_TIMEOUT_BASE_MAX);
++	FIELD_MODIFY(scale, &ctrl, GPF_TIMEOUT_SCALE_MAX);
+ 
+ 	rc = pci_write_config_word(pdev, dvsec + offset, ctrl);
+ 	if (rc) {
 -- 
 2.53.0
 
