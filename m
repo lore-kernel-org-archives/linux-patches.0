@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049555;
-	b=PW87DqSpNutmMDVsN78g4XNPk6UNg86m+TLAeTY8NgknOeRD9B/Vbbbf4H2okv9MK6D2
-	 Csd60zN/NmgcLv1xd/je/0sf3MpGYc/zgVvBiXqqGaae9MfTMzozKScDhKkSCJWcMLPY9
-	 76sowQCNS+fVZv0tT5B8dU6bThmkpWhtmYmKAsJvqtTjYDrxRbIdz11xuDx1MKd5/sjVz
-	 QzLkxRTJx66TfoT0XKQeY4OvlsW5WxdmAY4JNg0UYFuq1UOQIGr5cblQ5hfEfHz6tbWrg
-	 Xq0P4vONH8D/07D85v6zh7dfNk2e28DP9kSJWM1JqguzpVh4u5K5YWOfsBnEqwkFuqw==
+	t=1795049558;
+	b=V/2ZZzuTRza69cNklRAJTC1PY+St26Q8zBFpmBLWqOEJ3ghuXRW4afBcqqo3e7ER9JHM
+	 Nnzdnm6BUf/zAu2MXUNqWCqFtBKcTg0qfNZvWEr+EIXqqEGky4YqtRLxkUWp7zZsgYrBI
+	 Lk9dFAvV+Xdo9dsf+Ld0WSxFLPmjWamjFIpq9MCzSQt/0zeQj3IUqElh4q6R5vXAIOp7i
+	 jnYLRAHWVkqCWwt/7UkdRy1JCvAsg1Xn7JgEpXbGf7xO8L/hQmvXqx+nmUEmn3m95Jbqo
+	 Nf66NmjeDKAg1Dj30l/Gm7jy6BOKK9njRiaxr+QSN1ZdPMcRtGziW5zfys+PgPRQm8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049555;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049558;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xrO5us0v6c+zfPqX8KbbqpJ55HGBnQEI042LamyKnDk=;
-	b=DImxa32LkhPSRhKJBccdNXAr0K8bN+VdncyVPSPaxbQuOYsLcEcX9v4AgcUWSbfyWgEo
-	 G7FYVUrp02P7+6n//F4QmLtpa39pAYw/3Kwt8zixn2UP3cobJpUnH3y/UtDHfI/ypvN3K
-	 k8b88WVjDN9DDWYWjQB4dZARO8hBl/vtsTc7bgKYJKnGnS9dYPEALMDOfta6ungklWyBR
-	 5OJoXhUKfrFfLijIn1+TPkyL1iC2cPFBDvOZebsQIwuT+wp1JrJ+1QOEfurNyiRiY5RNW
-	 bglJDEKfrHiTz1udmB7yXZHok/5F6BgiOPhK6/CssK5IpWPWIvVTqP5y69RKKWoUnQw==
+	bh=nl3MnWlau7jd07tgNLnNa7FxH7NBsY475Z90ytkgxN8=;
+	b=Ku3s+gAYpGvcVez91qR29AheN4o67tl/yXLhvg3yiWqV3Rgg4zOobcwrhsSDiD1JzvlR
+	 mTbOTN+kFn1T1gxVrs/LfNG4Bh7tGPQ2lXC0L7mV0PSo30yNhF6lObNEdhC1foOV8kUDM
+	 Jwlcakko48RNFaBQPnqtc5brJzj8SWCGqBO3g+E1HFGjPsfN1sos/U7IXap4jvHcOOPyk
+	 0LCi7jd0pBVqZxetLCw2Y4jggBVso2Gjz/QvN0NT1pgtm28gsuzEQcq6Qjj/YABB9eMds
+	 KXuukgRNqRIsGBzNDdqpoAt5A4dayT5Mo9zp7ZFvnbh4E2Qy3JwJIItA0vQBhHDRGww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xm94SjGy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WeweQ42W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC67606A325;
-	Thu, 19 Nov 2026 00:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557EB606A31C;
+	Thu, 19 Nov 2026 00:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xm94SjGy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A6D1F000C4;
-	Thu, 19 Nov 2026 00:52:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WeweQ42W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF3B1F000C4;
+	Thu, 19 Nov 2026 00:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049555;
-	bh=xrO5us0v6c+zfPqX8KbbqpJ55HGBnQEI042LamyKnDk=;
+	s=korg; t=1795049557;
+	bh=nl3MnWlau7jd07tgNLnNa7FxH7NBsY475Z90ytkgxN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xm94SjGyg+JJdE23cUFwcbDeCp8Z8fF6MvPPlLuVjo++6gedeq17HPI9neUxiUZPy
-	 +IrDPAo2X+vMFm4khjTlqRBRfZOgEaISpYxs+vAozDqBVjKliREtmP82aGcyHx6cW+
-	 GpeOkYWjLSzT//s6NPYdwlpp4hO1tViAKae3+uAM=
+	b=WeweQ42WNYTts94207l+cpvcC8WDrVqtuh0Cpz5Ya8BE37TmNR77zRUdqBjU2RHO1
+	 La8A3GGU2RGXN2MBDUib09zha7xOuMmCRxgtyvBONTQM7qHbdxMj3e7b8wFFcLxAgq
+	 hkV10xHizsdSUcJkf6K2izOjCdCUuPuF+a4XVGC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Helge Deller <deller@gmx.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2392/2857] fbdev: gxt4500: Release WC setup on probe failure
-Date: Wed, 18 Nov 2026 15:57:06 +0100
-Message-ID: <20261118150327.649021460@linuxfoundation.org>
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.1 2393/2857] PCI: qcom: Honor IOMMU providers #iommu-cells in qcom_pcie_config_sid_1_9_0()
+Date: Wed, 18 Nov 2026 15:57:07 +0100
+Message-ID: <20261118150327.684127962@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,41 +69,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit b71e0bb7ad40c005b167e9b48be3af5a3fa51974 ]
+[ Upstream commit 5121d76cb9dde74662962cd5678a64abeaf3b3e4 ]
 
-gxt4500_probe() adds a write-combining range before allocating the cmap
-and registering the framebuffer. If a later step fails, the range is
-not released. Add the missing cleanup before unmapping the framebuffer,
-matching the successful remove path.
+qcom_pcie_config_sid_1_9_0() reads the "iommu-map" property as an array
+of fixed four-word {rid-base, phandle, sid, rid-len} entries to program
+the BDF to SID translation table. But that layout only holds for an
+IOMMU with '#iommu-cells = <1>'. The PCIe SMMUs on these SoCs use
+'#iommu-cells = <2>' (SID and mask), so per the pci-iommu binding each
+entry is really five cells long.
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
+This used to work only because the DTs were themselves broken. They
+described iommu-map with four-cell entries that omitted the SID mask,
+which of_map_id() tolerated via its of_check_bad_map() fallback, and the
+four-word parsing coincidentally matched that malformed shape.
 
-Fixes: 38fc4d45fae5 ("gxt4500: Use arch_phys_wc_* for framebuffer")
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Since commit ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps") the
+OF core parses such maps correctly, so the device trees were converted
+to proper five-cell entries, e.g. commit c41749e9554d ("arm64: dts:
+qcom: sm8250: Fix the PCIe iommu-map entries"). With five-cell entries
+the fixed four-word stride slips by one cell for each entry after the
+first, so qcom_pcie_config_sid_1_9_0() reads the endpoint mapping's RID
+from the preceding entry's length cell and its SID from the phandle cell.
+As the RID is the hash key, the endpoint's real RID is never programmed
+into the BDF to SID table. Its DMA then hashes to an unprogrammed slot,
+gets tagged with SID 0 and the SMMU faults like below on QCS8300:
+
+  arm-smmu 15200000.iommu: Unhandled context fault: fsr=0x402, iova=0xffa00000, cbfrsynra=0x0, cb=1
+
+To fix this, walk the map with a stride of 3 + '#iommu-cells' of the
+referenced IOMMU and take the SID from the first specifier cell, which is
+all the BDF to SID table needs. Validate the layout instead of trusting
+the array size. Also, preserve the legacy behavior of the old DTs by
+detecting the same pattern that of_check_bad_map() recognizes and
+falling back to a stride of four.
+
+Fixes: 4c9398822106 ("PCI: qcom: Add support for configuring BDF to SID mapping for SM8250")
+Reported-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Tested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
+Link: https://patch.msgid.link/20260907143349.317495-1-mani@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/gxt4500.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/controller/dwc/pcie-qcom.c | 90 ++++++++++++++++++--------
+ 1 file changed, 64 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/video/fbdev/gxt4500.c b/drivers/video/fbdev/gxt4500.c
-index 0dcef4bec8d7c..fc7e7562d38f7 100644
---- a/drivers/video/fbdev/gxt4500.c
-+++ b/drivers/video/fbdev/gxt4500.c
-@@ -722,6 +722,7 @@ static int gxt4500_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
-  err_free_cmap:
- 	fb_dealloc_cmap(&info->cmap);
-  err_unmap_all:
-+	arch_phys_wc_del(par->wc_cookie);
- 	iounmap(info->screen_base);
-  err_unmap_regs:
- 	iounmap(par->regs);
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 0bad23ec53ee8..a977dde33747a 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1318,50 +1318,90 @@ static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
+ 
+ static int qcom_pcie_config_sid_1_9_0(struct qcom_pcie *pcie)
+ {
+-	/* iommu map structure */
+-	struct {
+-		u32 bdf;
+-		u32 phandle;
+-		u32 smmu_sid;
+-		u32 smmu_sid_len;
+-	} *map;
+ 	void __iomem *bdf_to_sid_base = pcie->parf + PARF_BDF_TO_SID_TABLE_N;
+ 	struct device *dev = pcie->pci->dev;
++	struct device_node *iommu_np;
+ 	u8 qcom_pcie_crc8_table[CRC8_TABLE_SIZE];
+-	int i, nr_map, size = 0;
+-	u32 smmu_sid_base;
++	const __be32 *map;
++	u32 iommu_cells, entry_cells, phandle, smmu_sid_base;
++	int i, nr_cells, nr_map, size = 0;
+ 	u32 val;
+ 
+-	of_get_property(dev->of_node, "iommu-map", &size);
+-	if (!size)
++	map = of_get_property(dev->of_node, "iommu-map", &size);
++	if (!map || !size)
+ 		return 0;
+ 
++	if (size % sizeof(*map)) {
++		dev_err(dev, "Malformed iommu-map property\n");
++		return -EINVAL;
++	}
++	nr_cells = size / sizeof(*map);
++
++	/*
++	 * Each iommu-map entry is: rid-base (1 cell), phandle (1 cell),
++	 * IOMMU specifier (#iommu-cells cells), length (1 cell). Read
++	 * #iommu-cells from the IOMMU provider referenced by the first
++	 * entry to compute the per-entry stride.
++	 */
++	phandle = be32_to_cpu(map[1]);
++	iommu_np = of_find_node_by_phandle(phandle);
++	if (!iommu_np) {
++		dev_err(dev, "Failed to find IOMMU node in iommu-map\n");
++		return -ENODEV;
++	}
++
++	if (of_property_read_u32(iommu_np, "#iommu-cells", &iommu_cells))
++		iommu_cells = 1;
++	of_node_put(iommu_np);
++
++	entry_cells = 3 + iommu_cells;
++
++	/*
++	 * Retain backward compatibility with DTs that describe iommu-map
++	 * with 4-cell entries against an IOMMU declaring #iommu-cells = 2,
++	 * matching the fallback in drivers/of/base.c::of_check_bad_map().
++	 */
++	if (iommu_cells == 2 && !(nr_cells % 4)) {
++		bool legacy = true;
++
++		for (i = 0; i < nr_cells; i += 4) {
++			if (be32_to_cpu(map[i + 1]) != phandle ||
++			    be32_to_cpu(map[i + 3]) != 1) {
++				legacy = false;
++				break;
++			}
++		}
++
++		if (legacy) {
++			dev_warn_once(dev, "iommu-map has 1-cell entries with #iommu-cells=2, using 1-cell\n");
++			entry_cells = 4;
++		}
++	}
++
++	if (nr_cells % entry_cells) {
++		dev_err(dev, "Malformed iommu-map property\n");
++		return -EINVAL;
++	}
++	nr_map = nr_cells / entry_cells;
++
+ 	/* Enable BDF to SID translation by disabling bypass mode (default) */
+ 	val = readl(pcie->parf + PARF_BDF_TO_SID_CFG);
+ 	val &= ~BDF_TO_SID_BYPASS;
+ 	writel(val, pcie->parf + PARF_BDF_TO_SID_CFG);
+ 
+-	map = kzalloc(size, GFP_KERNEL);
+-	if (!map)
+-		return -ENOMEM;
+-
+-	of_property_read_u32_array(dev->of_node, "iommu-map", (u32 *)map,
+-				   size / sizeof(u32));
+-
+-	nr_map = size / (sizeof(*map));
+-
+ 	crc8_populate_msb(qcom_pcie_crc8_table, QCOM_PCIE_CRC8_POLYNOMIAL);
+ 
+ 	/* Registers need to be zero out first */
+ 	memset_io(bdf_to_sid_base, 0, CRC8_TABLE_SIZE * sizeof(u32));
+ 
+ 	/* Extract the SMMU SID base from the first entry of iommu-map */
+-	smmu_sid_base = map[0].smmu_sid;
++	smmu_sid_base = be32_to_cpu(map[2]);
+ 
+ 	/* Look for an available entry to hold the mapping */
+ 	for (i = 0; i < nr_map; i++) {
+-		__be16 bdf_be = cpu_to_be16(map[i].bdf);
+-		u32 val;
++		u32 bdf = be32_to_cpu(map[i * entry_cells]);
++		u32 sid = be32_to_cpu(map[i * entry_cells + 2]);
++		__be16 bdf_be = cpu_to_be16(bdf);
+ 		u8 hash;
+ 
+ 		hash = crc8(qcom_pcie_crc8_table, (u8 *)&bdf_be, sizeof(bdf_be), 0);
+@@ -1383,12 +1423,10 @@ static int qcom_pcie_config_sid_1_9_0(struct qcom_pcie *pcie)
+ 		}
+ 
+ 		/* BDF [31:16] | SID [15:8] | NEXT [7:0] */
+-		val = map[i].bdf << 16 | (map[i].smmu_sid - smmu_sid_base) << 8 | 0;
++		val = bdf << 16 | (sid - smmu_sid_base) << 8 | 0;
+ 		writel(val, bdf_to_sid_base + hash * sizeof(u32));
+ 	}
+ 
+-	kfree(map);
+-
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
