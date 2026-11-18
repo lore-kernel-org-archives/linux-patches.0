@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043361;
-	b=X8kpw+6MhHI7SO/s9vN/N38oGiyWk1oNLaxoftWsiZuglaMdIQNVr2HELiAJ0S4ZNcUw
-	 Bey1IonaoYUPm28ZzqWPG6UXFFW53RlmqcjbWJwA2l0SvpS8lB46uiB3kx1pf4LuUjw9p
-	 yGOmwbwngCS0oesG96D5f1KtGDoCfzaZ/7A4UtmlV/1g1yeXAdtymcd5t+KDDarfTvxND
-	 zxcc2eD4tgFCDp4381VA76KrsNyEzVh2bLEVvUZ2+cV4yvv9y33x6qkfLr7fHcjWxjzlz
-	 BPv1M/45cXLcinpSqTRgqqkCW0plPKt8rWV+WEKM0DG9xkklBuPec3h7nQdpsphIEEg==
+	t=1795043363;
+	b=fySjf39H1Q4h/OIuPv13L/Xa7yGvuCm0WjmevSwLoj6T84TSwc6vBaBG/LVexbzGbV4b
+	 2Jgf7k5z+sUlqBfDv0JduoW17i1d0pWBd3YNDLincF288gUcpd6krThy3D6wi59OtNt9Y
+	 BD8wj3jQx+CpRWg/z3WiOQOlarnZq/tK7sMZyO/JYrZBHwDwO9MLljoYcKbZTj8jpD3Wh
+	 lqzfhqWhSkRSV2tYRkKVqpEy/7dke0Gcr+dywnskZ959dP72rA0tlNZ1m5Ib3PV1dTcnP
+	 wUb0SAG91GbNmAQnczUosrARFxiwje1/G8IOipJkYl0bmQROud699wB3OQv2TTo8kWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043361;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043363;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vB/VoKoEKGmehKdU8RAqIbzGOFRbKu9KPD4Etzx5ybk=;
-	b=pffN6sB6JiFoMk/QIl8HnN+jFHOEGKlgnxfTkuJl5aD31KJB8DiZW4rUk1VkpAi8kkYq
-	 fJpCzTswc1U4ei33sq8r4FAs89OzJwdlR7qn2TU8KpErMdlRIM0Y8qgyLto/U+M0wT6wQ
-	 jlRgjq+FRBlW6tk215bnwFMdQnSPI7FcS/stqX7euk2mNcxX3WI57oQqiJTb7VZRstUw1
-	 FIepqr806gSXKJdJBIi3Z2zVRGWOlz35FNv6BmkITOsO9rxTkInvdcBzuB1gJ7lCm2Jpf
-	 Po8F4HSidRsqclVpFq8zMscm2rv4y7Ui+5xmKD5D1BnGE3dEABUk6LRQ4BToy4omxmQ==
+	bh=dKeC99o5A5oFY+oRSlzNvLPsjLFy6lxxcm7S6L30pbc=;
+	b=GC+iWWDzZJiQJRY9s7NhiEo1a1DIBPjf4y0/bCXtDwtSf0VZtTjK+nPUmzWJ8WhNVi8n
+	 ntG2UsJ0wFUF987aCAFuNMYwc2v/h2wj6OsS13eAgbR8rfk7vuqNHTuPmBNXLofl/wO0I
+	 41XepKqG9bCWOMPMwil3spz4pwyl7T7Tv9Vz7ua4fT0qe8evabE70rC2iz/dEODcCbQz1
+	 lGMi8LHxKhrl4lEtWWGw5tOu1E/ls6kDQ1X9Qi4KLD8I6aLeFhUnK999Xaahu1wGg+OqW
+	 +cTQIU+203HB77N5Te2DTFHY/GltxGYX6h0ROpall2ghX6KdMrtt+LlrChMh/HfF6cw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CrIrzfcZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sZ6SEkqB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13536606A31C;
-	Wed, 18 Nov 2026 23:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA141606A31C;
+	Wed, 18 Nov 2026 23:09:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CrIrzfcZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666971F000C4;
-	Wed, 18 Nov 2026 23:09:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sZ6SEkqB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7CA1F000C4;
+	Wed, 18 Nov 2026 23:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043360;
-	bh=vB/VoKoEKGmehKdU8RAqIbzGOFRbKu9KPD4Etzx5ybk=;
+	s=korg; t=1795043363;
+	bh=dKeC99o5A5oFY+oRSlzNvLPsjLFy6lxxcm7S6L30pbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CrIrzfcZJxppNJ4UIwhP6uVhTxgrh8CvYyaTjRLP/f0xARFQALb0uEYFTIqk6bLbp
-	 PbIwVEZ+GXGPuztdLk5OM7BLLoMsn9GtOpQD8mas+yToPXd7pEc8Y7GT606WiW/oU1
-	 gidCzc8KGfsVpm6XYaXjJK8ClC2f+zvor3//G3Qk=
+	b=sZ6SEkqBLcfukQKybBdEGfXvrcdzpGv3W6NtyI4fLrP8+oOwREGfd4dUD6uV/d0jt
+	 mML14+Ou5ZbMMsWmGp79VQ6aaRGNZo7lr8bva/c7lPqiYrHfVTUzEVHbxYBhm6BWPZ
+	 pkoQMI2e/mFV6ekHVbrShY/mrP2pc76dAMr7o4Yc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chad Monroe <chad@monroe.io>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0182/2857] wifi: mt76: mt7615: fix NULL deref in mt7615_mac_set_rates
-Date: Wed, 18 Nov 2026 15:20:16 +0100
-Message-ID: <20261118150207.906034326@linuxfoundation.org>
+Subject: [PATCH 6.1 0183/2857] wifi: mt76: set the EOSP bit in the QoS header of the last released frame
+Date: Wed, 18 Nov 2026 15:20:17 +0100
+Message-ID: <20261118150207.938548884@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,71 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 98aff74779da9f417386c589c36848e9c568f0f9 ]
+[ Upstream commit 0b8d2524716099ea4743fa65bc364f94b3106a31 ]
 
-mt7615_tx() falls back to the vif BSS wcid when mac80211 hands a frame
-over without a station, e.g. while a station is being torn down, and to
-the global wcid when there is no vif either. Both tx_prepare_skb
-implementations derive a mt7615_sta from that wcid unconditionally and,
-if the rate control probe flag is set, pass it to mt7615_mac_set_rates(),
-which dereferences the NULL vif backpointer of the per-vif embedded sta:
+When the driver implements .release_buffered_frames, mac80211 leaves the
+U-APSD signalling entirely to the driver: "In this case it is also
+responsible for setting the EOSP flag in the QoS header of the frames"
+(include/net/mac80211.h). Only IEEE80211_TX_STATUS_EOSP was being set,
+which merely ends the service period inside mac80211, so on air the
+service period was never terminated. Clients that wait for EOSP before
+going back to doze keep the SP open and stop triggering, which stalls all
+downlink traffic for that station.
 
-  Unable to handle kernel read from unreadable memory at virtual
-  address 0000000000000002
-  ...
-  pc : mt7615_mac_set_rates
-  lr : mt7615_tx_prepare_skb
+Set the wire EOSP bit on the last frame of a U-APSD service period.
+EOSP has no meaning for a PS-Poll response, so pass the release reason
+down and leave those frames alone.
 
-Neither entry is rate controlled by mac80211: the embedded sta has an
-empty rate set, and for the global wcid the container_of does not yield a
-valid mt7615_sta at all. Only resolve the sta for wcids that belong to a
-station.
-
-Reported-by: Chad Monroe <chad@monroe.io>
-Link: https://patch.msgid.link/20260724124813.3961474-23-nbd@nbd.name
+Link: https://patch.msgid.link/20260801145334.1166751-4-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/pci_mac.c  | 5 +++--
- drivers/net/wireless/mediatek/mt76/mt7615/usb_sdio.c | 5 +++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/tx.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/pci_mac.c b/drivers/net/wireless/mediatek/mt76/mt7615/pci_mac.c
-index 0019890fdb784..24d900d2fa66b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/pci_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/pci_mac.c
-@@ -68,10 +68,11 @@ int mt7615_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
- 	int pid, id;
- 	u8 *txwi = (u8 *)txwi_ptr;
- 	struct mt76_txwi_cache *t;
--	struct mt7615_sta *msta;
-+	struct mt7615_sta *msta = NULL;
- 	void *txp;
+diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
+index 3551a013208d3..49886cdfa31bc 100644
+--- a/drivers/net/wireless/mediatek/mt76/tx.c
++++ b/drivers/net/wireless/mediatek/mt76/tx.c
+@@ -370,16 +370,23 @@ mt76_txq_dequeue(struct mt76_phy *phy, struct mt76_txq *mtxq)
  
--	msta = wcid ? container_of(wcid, struct mt7615_sta, wcid) : NULL;
-+	if (wcid && wcid->sta)
-+		msta = container_of(wcid, struct mt7615_sta, wcid);
- 	if (!wcid)
- 		wcid = &dev->mt76.global_wcid;
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/usb_sdio.c b/drivers/net/wireless/mediatek/mt76/mt7615/usb_sdio.c
-index 0052d103e276a..a830c80d5aa3a 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/usb_sdio.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/usb_sdio.c
-@@ -187,10 +187,11 @@ int mt7663_usb_sdio_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
- 	struct sk_buff *skb = tx_info->skb;
+ static void
+ mt76_queue_ps_skb(struct mt76_phy *phy, struct ieee80211_sta *sta,
+-		  struct sk_buff *skb, bool last)
++		  struct sk_buff *skb, bool last,
++		  enum ieee80211_frame_release_type reason)
+ {
+ 	struct mt76_wcid *wcid = (struct mt76_wcid *)sta->drv_priv;
  	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
- 	struct ieee80211_key_conf *key = info->control.hw_key;
--	struct mt7615_sta *msta;
-+	struct mt7615_sta *msta = NULL;
- 	int pad, err, pktid;
++	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
  
--	msta = wcid ? container_of(wcid, struct mt7615_sta, wcid) : NULL;
-+	if (wcid && wcid->sta)
-+		msta = container_of(wcid, struct mt7615_sta, wcid);
- 	if (!wcid)
- 		wcid = &dev->mt76.global_wcid;
+ 	info->control.flags |= IEEE80211_TX_CTRL_PS_RESPONSE;
+-	if (last)
++	if (last) {
+ 		info->flags |= IEEE80211_TX_STATUS_EOSP |
+ 			       IEEE80211_TX_CTL_REQ_TX_STATUS;
  
++		if (reason == IEEE80211_FRAME_RELEASE_UAPSD &&
++		    ieee80211_is_data_qos(hdr->frame_control))
++			*ieee80211_get_qos_ctl(hdr) |= IEEE80211_QOS_CTL_EOSP;
++	}
++
+ 	mt76_skb_set_moredata(skb, !last);
+ 	__mt76_tx_queue_skb(phy, MT_TXQ_PSD, skb, wcid, sta, NULL);
+ }
+@@ -412,14 +419,15 @@ mt76_release_buffered_frames(struct ieee80211_hw *hw, struct ieee80211_sta *sta,
+ 
+ 			nframes--;
+ 			if (last_skb)
+-				mt76_queue_ps_skb(phy, sta, last_skb, false);
++				mt76_queue_ps_skb(phy, sta, last_skb, false,
++						  reason);
+ 
+ 			last_skb = skb;
+ 		} while (nframes);
+ 	}
+ 
+ 	if (last_skb) {
+-		mt76_queue_ps_skb(phy, sta, last_skb, true);
++		mt76_queue_ps_skb(phy, sta, last_skb, true, reason);
+ 		dev->queue_ops->kick(dev, hwq);
+ 	} else {
+ 		ieee80211_sta_eosp(sta);
 -- 
 2.53.0
 
