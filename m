@@ -1,53 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059459;
-	b=fIkpJz34AOZhywk3uAFm9i7dsCczLx0gyiD/Ry3gSEdgYEtDh9C5p2+Iy7rqKIe2rZ4h
-	 cootAzCaFHljR3RIwpNWYkGa7xvepPu6q01qvd+U/xQwlUw6ifX4oEdHM44NkvUur4+kz
-	 fPC2YOCTHGuOzp/CDBiWufZONTjmZMJmZ8otM9vCgrrHLasn4WFv8mGvN/bKbOq/7bo61
-	 9jIHriWLUBHHMBuIUioIsetGuV8clvjBIyaYntvJqIiPA4lYH5DGGuKZhk7izSY/FWeCU
-	 dxwrlOKcGIk8P+ZcYtOIhNco3A3OOH3oiMPk4w/LD77zAEGfPNzVewveFjpoPy6pbIw==
+	t=1795059461;
+	b=jpOu0hKU+5+mzAetQUjdPz5GFJvEoi4805/90bp64EbQLLI5pKF+nnPfFxwSOOAOxhxL
+	 8YMQ5f7R42SZxlixVFSAjSKvP3WVQDfr+EYMPhw8iuwzzevVqaByS6JevP516GA5gdtEO
+	 tnNKR4Nk9KMH85ExuWzjrjCY+1CWCzEHFdZnPANCYCupIf0tJM3oUhRwXX3ZMcT9/Ixs+
+	 NgOaCRloXl6QPxCuNW3RwPWqrUq8CNhHhNAwk/IHJIx4R6vYlBpcSkl1jk3S5OMK/1lZw
+	 efdS/0q5lVuP+lqqc50dbfpcLr+D8Lh1cHf2GFX+/ZDxwx42xftoaMjBdajj87gnaRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059459;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059461;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Aebjq3mR9nLzoI3XVmBRdfyrxaKsvxApCvYKYlnIuLY=;
-	b=Fr+XpiOly6HO4flR9p6CNgu3ASNK0/XJWrT4vIZITCVYw2SfMjM6bC4+YG1w4G4X9KVU
-	 uFlQAE00A6zDkoq5X9DSnMEaq0bNasQF2sFHBDbr7U/mqzTGGfoMza9C8zUOXoOTEgY47
-	 fqoTR77/h/4ytOvM5ZuplEOah2HebwNNy4kfDC+2ilSJ5/34MHuad+E31swRgVwGpvWhX
-	 6AYQvRCs1MnjoTLk7741Nqw+rZIqxlhNSCjk2TuowkG2OqI7VRyb6WBh86kp800jsyaiB
-	 VvqeVa3dfAq8zyGzLoTXcANxXCV5jLUbQU1CYiOL9NOo7z5E5uzWbGicPzpphhDCmMg==
+	bh=J7BEZOT9tK+4Qv1bTA0WWc68MRWWmg/mVY34XP0AZBs=;
+	b=gmLoYMVQ8UR2CGLLXVHU+ZdHWl+Fa+6Fg6Pwc/L9B5UKyVkNAVAZ1dRXw6nA+rMFNU/K
+	 zTnoSiX5E85b3loo8SwZxzZBp0CFmaKa7Ijkrmx1ml6JswgH3Hn3LFwTZJDSckRsDIpki
+	 KROaUdSGQbws6b1ZEZaSss2jTsMAXLBMop24cIw2e0Nk5KUNyoiSs9XPj+4HfP4TC1JUp
+	 MN+NhT2iT6RB/TCmBjlbSDpylNKN9Zaj0dASPZ/Xt0guI03puSwoEPx7QK6Y0IgRL0ZJt
+	 cf26QS91S+0Q8CY4t2mMKSsOZCZKKkv3Tm1jdJBvQtxu0Sh5azy2Z2UvhFSzJYgM+Ig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FslHDYuB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mFwieeq7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07639606A31C;
-	Thu, 19 Nov 2026 03:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94756606A320;
+	Thu, 19 Nov 2026 03:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FslHDYuB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F1B21F000C4;
-	Thu, 19 Nov 2026 03:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mFwieeq7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC071F000C4;
+	Thu, 19 Nov 2026 03:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059458;
-	bh=Aebjq3mR9nLzoI3XVmBRdfyrxaKsvxApCvYKYlnIuLY=;
+	s=korg; t=1795059461;
+	bh=J7BEZOT9tK+4Qv1bTA0WWc68MRWWmg/mVY34XP0AZBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FslHDYuB1ZX+CCXD6oEuby3Gv+n8tM8gtMoDaGjLwRZJvVRX683QdCTjHzGsqqX2Z
-	 mJa5w9VEzRq7IAuDja8Ge4eJUokX3b7W7HYGRes/eCNuCkFVzKdgCo+cGMN3a9dCtl
-	 2GLeIlzFnV25TI3n5ksZ0QU7gd+6RCuGUjTXNnTQ=
+	b=mFwieeq7JwLTeKsMl3BcmhsasWuR1OmorycQkllHDHlVQf71aac4y5BmR04jQLO8E
+	 HPyz4z+v1Pg2/92eXVVY42La3bIlinXkIcUPGhby6d8cU3YK7SDBzP68knsg5ZKDsv
+	 eCHOJ/fSizdXK5Dzu9QLYvXbiALZifzIcWmHnx78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+fd80bc5967eb22c3@bugs.sh,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Rik van Riel <riel@surriel.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Harry Yoo <harry@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Lance Yang <lance.yang@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0842/1848] usb: xhci: Fix bounce buffer overflow
-Date: Wed, 18 Nov 2026 15:48:00 +0100
-Message-ID: <20261118145951.880013829@linuxfoundation.org>
+Subject: [PATCH 5.10 0851/1848] mm/page_vma_mapped: continue past nonmatching huge PMDs
+Date: Wed, 18 Nov 2026 15:48:09 +0100
+Message-ID: <20261118145952.197827724@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,72 +76,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 68c5cb7574c567e83ba95258cb146db95e069a87 ]
+[ Upstream commit 1a2993227e8a27fc4cdea305bbdae82d290bc885 ]
 
-High-speed devices with out of spec 1024 byte bulk endpoints exist and
-are allowed by USB core, but xhci-hcd always sets packet size to 512.
-The exact nature of these devices isn't documented, commit fb5ee84ea72c
-("USB: Accept bulk endpoints with 1024-byte maxpacket") only states
-that they "don't work with xHCI host controllers", whatever it means.
+A PTE-mapped large folio can straddle PMD boundaries after an unaligned
+mremap().  If the first part is discarded and replaced with an unrelated
+huge PMD, page_vma_mapped_walk() stops instead of looking for the rest of
+the folio in subsequent PMDs.
 
-But somebody (or a malicious device) can try, and then the driver will
-allocate a 512 byte bounce buffer for this endpoint and may write up to
-1024 bytes into it if particular scatter-gather URBs are used, because
-xhci_align_td() obtains packet size from the descriptor. Fix this.
+This also affects migration entries.  A walk that stops at an unrelated
+huge PMD can leave migration PTEs behind when migration or an anonymous
+folio split restores the mappings.  Those entries do not hold mapping
+references and can outlive the source folio.
 
-As a side effect, TRBs will be aligned to the packet size chosen by the
-driver on all endpoints of all speeds. Alignment serves the xHC, not
-device, so this is fine. Only out of spec devices are affected anyway.
+This issue can lead to memory corruption and I have a reproducer for
+it.
 
-Reported-by: co+fd80bc5967eb22c3@bugs.sh
-Link: https://lore.kernel.org/linux-usb/D4tcSGerkYkIV1DmaUo1t8TaR5qQElDLkidn@bugs.sh/
-Fixes: f9c589e142d0 ("xhci: TD-fragment, align the unsplittable case with a bounce buffer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20261009151624.618967-11-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: adjusted context for usb_endpoint_maxp() in place of xhci_usb_endpoint_maxp() ]
+Skip the current PMD rather than ending the walk on a flag or PFN
+mismatch.  Do the same if the PMD became nonpresent before the locked
+recheck.  Release the PMD lock, clear the per-PMD state and advance with
+step_forward(), so the existing range limit controls termination.  This
+covers present, migration and device-private huge PMDs while preserving
+the matching-PMD and split-to-PTE paths.
+
+Link: https://lore.kernel.org/20261016011549.61146-1-kylebot@openai.com
+Fixes: ace71a19cec5 ("mm: introduce page_vma_mapped_walk()")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Assisted-by: LLM
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Harry Yoo <harry@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: <stable@vger.kernel.org>
+[ sashal: Adapted the changes to the page-based PMD walker with combined nonpresent and migration checks. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ mm/page_vma_mapped.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 0e0045a81f92e..51b614c0c9357 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -3389,15 +3389,13 @@ static u32 xhci_td_remainder(struct xhci_hcd *xhci, int transferred,
+diff --git a/mm/page_vma_mapped.c b/mm/page_vma_mapped.c
+index 610ebbee787cc..5130e2ae2f576 100644
+--- a/mm/page_vma_mapped.c
++++ b/mm/page_vma_mapped.c
+@@ -219,9 +219,9 @@ bool page_vma_mapped_walk(struct page_vma_mapped_walk *pvmw)
+ 			pmde = *pvmw->pmd;
+ 			if (likely(pmd_trans_huge(pmde))) {
+ 				if (pvmw->flags & PVMW_MIGRATION)
+-					return not_found(pvmw);
++					goto next_pmd;
+ 				if (pmd_page(pmde) != page)
+-					return not_found(pvmw);
++					goto next_pmd;
+ 				return true;
+ 			}
+ 			if (!pmd_present(pmde)) {
+@@ -229,11 +229,11 @@ bool page_vma_mapped_walk(struct page_vma_mapped_walk *pvmw)
  
+ 				if (!thp_migration_supported() ||
+ 				    !(pvmw->flags & PVMW_MIGRATION))
+-					return not_found(pvmw);
++					goto next_pmd;
+ 				entry = pmd_to_swp_entry(pmde);
+ 				if (!is_migration_entry(entry) ||
+ 				    migration_entry_to_page(entry) != page)
+-					return not_found(pvmw);
++					goto next_pmd;
+ 				return true;
+ 			}
+ 			/* THP pmd was split under us: handle on pte level */
+@@ -251,8 +251,7 @@ bool page_vma_mapped_walk(struct page_vma_mapped_walk *pvmw)
  
- static int xhci_align_td(struct xhci_hcd *xhci, struct urb *urb, u32 enqd_len,
--			 u32 *trb_buff_len, struct xhci_segment *seg)
-+			 u32 *trb_buff_len, struct xhci_segment *seg, u32 max_pkt)
- {
- 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
- 	unsigned int unalign;
--	unsigned int max_pkt;
- 	u32 new_buff_len;
- 	size_t len;
+ 				spin_unlock(ptl);
+ 			}
+-			step_forward(pvmw, PMD_SIZE);
+-			continue;
++			goto next_pmd;
+ 		}
+ 		if (!map_pte(pvmw))
+ 			goto next_pte;
+@@ -286,6 +285,17 @@ bool page_vma_mapped_walk(struct page_vma_mapped_walk *pvmw)
+ 			spin_lock(pvmw->ptl);
+ 		}
+ 		goto this_pte;
++next_pmd:
++		/*
++		 * A large folio can be PTE-mapped across PMDs, so a
++		 * nonmatching PMD does not end the walk.
++		 */
++		if (pvmw->ptl) {
++			spin_unlock(pvmw->ptl);
++			pvmw->ptl = NULL;
++		}
++		pvmw->pmd = NULL;
++		step_forward(pvmw, PMD_SIZE);
+ 	} while (pvmw->address < end);
  
--	max_pkt = usb_endpoint_maxp(&urb->ep->desc);
- 	unalign = (enqd_len + *trb_buff_len) % max_pkt;
- 
- 	/* we got lucky, last normal TRB data on segment is packet aligned */
-@@ -3542,9 +3540,8 @@ int xhci_queue_bulk_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
- 		if (enqd_len + trb_buff_len < full_len) {
- 			field |= TRB_CHAIN;
- 			if (trb_is_link(ring->enqueue + 1)) {
--				if (xhci_align_td(xhci, urb, enqd_len,
--						  &trb_buff_len,
--						  ring->enq_seg)) {
-+				if (xhci_align_td(xhci, urb, enqd_len, &trb_buff_len,
-+						ring->enq_seg, ring->bounce_buf_len)) {
- 					send_addr = ring->enq_seg->bounce_dma;
- 					/* TD bounced at least, and last on this seg */
- 					td->bounce_seg = ring->enq_seg;
+ 	return false;
 -- 
 2.53.0
 
