@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060205;
-	b=suSW7oHdhVsUUX0L+Drcc6cexyYjpDQLVlOmhY1T5BEiLGvGuXBSPUBchQPuC+IEM7ln
-	 VscKn0R0TIaeqayMmT9+2Xttc5CxUveMXEi+vIU4WB7yIoRPQH2mUF6HfnnM5bJmZPBJc
-	 zEGa4ZL++To3JN6WeiFVPDKgYen7X26aoQ70aj+uRw+BdzOhqB8pAyJeYTdq6ClqSd56W
-	 hqkG1qqkQQWiCEGtqPiYmq+niQhgeEFH+dV9uQu5F5BypHdbwkZMhyb9HDQMYtC2j7Fdc
-	 iM8vJcV24qrxaSdvPEh67b3w+AV7+r1VB4LxnN4ERthU23AselghJDjioMyWnVF5B7A==
+	t=1795060207;
+	b=gZpdeXiS566FrfYxU/dobPwhMGDbTq9jfFgagvSTcMx0zRvh6NYH0upuehqwVp6rT3la
+	 Egrqj0cCdmUH7AAFYVQf674i4fwfZpJ2fgL1thyWx3gF7rVEJmr+ScCbnmrHM3YyRaBDI
+	 EiLu3IXrb3DMw2JQBg5zei6tycWy3+aKVBvE47uO4E59ad7CHG4havNvb7/JGFJBOceco
+	 AxBv6g8VCN8G2FeNaLGLZEMaQhxeTjjVjRZvM1yKoeIzEl2pRcYS0aYHt9XtH/1p5zyBE
+	 kWYTVBuO6LrMTvko2n4R0f5dNYk/fbs1BZ2Bctb27JhPR2E7fifJDLC86osVFJ7dPCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060205;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060207;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hbsOyLXuvqTqR4E1k2M5K1n7DIitJ0QoRKW7Lo8lnGU=;
-	b=numnCP5mLdgfpU7mq6s5PRhSQD+v51L6knQ7LaIMouAjQPJUcbHlh9NlQO3OA+RkKApk
-	 FXwrIsWsga+YaWnq8hDOTr/wcBhsd4LDXgzoA76SIaDfFswwDJX9937Cl2sJ9jDJTHL2Y
-	 NH4lGfqWEJBz55rXcUCpv3FAot9MKliSHlhXDNxDvmC8Vu+zzKyb2K0aAgfl8Hqq+yQH+
-	 4WpBQDHK9QKAIvK3RZm3t1TU/8dUkZIp4dKU7cLzQ/39RZyiKwo2XL3uKnu+JUAWT1JPD
-	 AhXyRm3xkGwruH4J8f4TYNa97BD6dAn00inJTN0WIV0wFV0dCZC2oxBg4Jt9iTDod4A==
+	bh=piHWxKEMQPiDEZmunb59WBjcZSTLs08ojleLseMaQ+A=;
+	b=u++GD/nQYIFRmmBhROc+K5Od49oHF4sSroNydtrwui4VaFDyOW+OOnkf7J2sDrSC2gyI
+	 RFCAXH5PddkBeduDbpbbLaTml5WhPbFoa3DfBGnqqjfA2sTPqKrqM0Bd3tbPSC+wqjWb6
+	 FfXnMh1SfWWZAtGGbjAAyVlTA9QLpYlvNp+W2zMerorSZpyKvIwb4+jAwTe8zkvBhOosc
+	 vVF95wVYdLSgIrrhqHGZ4nAM1sGrBoXkDAy0d1vHCxrESZHb5YkL7PyY7OuLzhciCn43c
+	 6Dgx15ozrzNMoCYGT4BhTbZQzz/iNk0WgJ8NlT6aOvS38tRG61+I2Gz2yjadG189vqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1tyAk9rN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n2aa6Exz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8BC606A320;
-	Thu, 19 Nov 2026 03:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2FA7606A320;
+	Thu, 19 Nov 2026 03:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1tyAk9rN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588911F000C4;
-	Thu, 19 Nov 2026 03:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n2aa6Exz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F7A71F000C4;
+	Thu, 19 Nov 2026 03:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060204;
-	bh=hbsOyLXuvqTqR4E1k2M5K1n7DIitJ0QoRKW7Lo8lnGU=;
+	s=korg; t=1795060207;
+	bh=piHWxKEMQPiDEZmunb59WBjcZSTLs08ojleLseMaQ+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1tyAk9rN4H6I/Xz857rZYO2OsC9q8F4gSxst4iOa8COcbNBVejGW/ECjq4XRA/aZb
-	 qebncBBINciNSU6bwRkquxZz9ejqiMc5+EZDXyCwgKyMTWDmdIn4Pi2Kyc/fX+TV+Y
-	 Bct3Vs03b67vg85JOe7gVjTTuygxZj1EeRRnZLcI=
+	b=n2aa6ExztqgdBkvUZr4A6C4lRqFT3bl4OvM7D3EWYHq0nFixgoeHhEWIA7rc66R5c
+	 OTiHlBFMrSIfUZpEaO8PZ8n2lfsLGYt4WlI1dMdMa5T/aLWxtSzYgsAqvqBpTmVkxX
+	 GvNoDXabJnEj9ulfhv7NfxRATO+zzWG5xdnwxlj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Stancek <jstancek@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	R Nageswara Sastry <rnsastry@linux.ibm.com>,
-	Neal Gompa <neal@gompa.dev>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 5.10 1116/1848] sign-file,extract-cert: use pkcs11 provider for OPENSSL MAJOR >= 3
-Date: Wed, 18 Nov 2026 15:52:34 +0100
-Message-ID: <20261118150006.047584605@linuxfoundation.org>
+Subject: [PATCH 5.10 1117/1848] extract-cert: Wrap key_pass with #ifdef USE_PKCS11_ENGINE
+Date: Wed, 18 Nov 2026 15:52:35 +0100
+Message-ID: <20261118150006.085507655@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,289 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Stancek <jstancek@redhat.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 558bdc45dfb2669e1741384a0c80be9c82fa052c upstream.
+commit 4f96b7c68a9904e01049ef610d701b382dca9574 upstream.
 
-ENGINE API has been deprecated since OpenSSL version 3.0 [1].
-Distros have started dropping support from headers and in future
-it will likely disappear also from library.
+A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
+in clang under a new subwarning, -Wunused-but-set-global, points out an
+unused static global variable in certs/extract-cert.c:
 
-It has been superseded by the PROVIDER API, so use it instead
-for OPENSSL MAJOR >= 3.
+  certs/extract-cert.c:46:20: error: variable 'key_pass' set but not used [-Werror,-Wunused-but-set-global]
+     46 | static const char *key_pass;
+        |                    ^
 
-[1] https://github.com/openssl/openssl/blob/master/README-ENGINES.md
+After commit 558bdc45dfb2 ("sign-file,extract-cert: use pkcs11 provider
+for OPENSSL MAJOR >= 3"), key_pass is only used with the OpenSSL engine
+API, not the new provider API. Wrap key_pass's declaration and
+assignment with '#ifdef USE_PKCS11_ENGINE' so that it is only included
+with its use to clear up the warning. While this is a little uglier than
+just marking key_pass with the unused attribute, this will make it
+easier to clean up all code associated with the use of the engine API if
+it were ever removed in the future. While in the area, use a tab for
+the key_pass assignment line to match the rest of the file.
 
-[jarkko: fixed up alignment issues reported by checkpatch.pl --strict]
-
-Signed-off-by: Jan Stancek <jstancek@redhat.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Cc: stable@vger.kernel.org
+Fixes: 558bdc45dfb2 ("sign-file,extract-cert: use pkcs11 provider for OPENSSL MAJOR >= 3")
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://patch.msgid.link/20260325-certs-extract-cert-key_pass-unused-but-set-global-v1-1-ecf94326d532@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/extract-cert.c |  103 ++++++++++++++++++++++++++++++++++---------------
- scripts/sign-file.c    |   95 +++++++++++++++++++++++++++++++--------------
- 2 files changed, 139 insertions(+), 59 deletions(-)
+ scripts/extract-cert.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 --- a/scripts/extract-cert.c
 +++ b/scripts/extract-cert.c
-@@ -21,17 +21,18 @@
- #include <openssl/bio.h>
- #include <openssl/pem.h>
- #include <openssl/err.h>
--#include <openssl/engine.h>
--
-+#if OPENSSL_VERSION_MAJOR >= 3
-+# define USE_PKCS11_PROVIDER
-+# include <openssl/provider.h>
-+# include <openssl/store.h>
-+#else
-+# if !defined(OPENSSL_NO_ENGINE) && !defined(OPENSSL_NO_DEPRECATED_3_0)
-+#  define USE_PKCS11_ENGINE
-+#  include <openssl/engine.h>
-+# endif
-+#endif
- #include "ssl-common.h"
- 
--/*
-- * OpenSSL 3.0 deprecates the OpenSSL's ENGINE API.
-- *
-- * Remove this if/when that API is no longer used
-- */
--#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
--
- #define PKEY_ID_PKCS7 2
- 
- static __attribute__((noreturn))
-@@ -61,6 +62,66 @@ static void write_cert(X509 *x509)
- 		fprintf(stderr, "Extracted cert: %s\n", buf);
+@@ -43,7 +43,9 @@ void format(void)
+ 	exit(2);
  }
  
-+static X509 *load_cert_pkcs11(const char *cert_src)
-+{
-+	X509 *cert = NULL;
-+#ifdef USE_PKCS11_PROVIDER
-+	OSSL_STORE_CTX *store;
-+
-+	if (!OSSL_PROVIDER_try_load(NULL, "pkcs11", true))
-+		ERR(1, "OSSL_PROVIDER_try_load(pkcs11)");
-+	if (!OSSL_PROVIDER_try_load(NULL, "default", true))
-+		ERR(1, "OSSL_PROVIDER_try_load(default)");
-+
-+	store = OSSL_STORE_open(cert_src, NULL, NULL, NULL, NULL);
-+	ERR(!store, "OSSL_STORE_open");
-+
-+	while (!OSSL_STORE_eof(store)) {
-+		OSSL_STORE_INFO *info = OSSL_STORE_load(store);
-+
-+		if (!info) {
-+			drain_openssl_errors(__LINE__, 0);
-+			continue;
-+		}
-+		if (OSSL_STORE_INFO_get_type(info) == OSSL_STORE_INFO_CERT) {
-+			cert = OSSL_STORE_INFO_get1_CERT(info);
-+			ERR(!cert, "OSSL_STORE_INFO_get1_CERT");
-+		}
-+		OSSL_STORE_INFO_free(info);
-+		if (cert)
-+			break;
-+	}
-+	OSSL_STORE_close(store);
-+#elif defined(USE_PKCS11_ENGINE)
-+		ENGINE *e;
-+		struct {
-+			const char *cert_id;
-+			X509 *cert;
-+		} parms;
-+
-+		parms.cert_id = cert_src;
-+		parms.cert = NULL;
-+
-+		ENGINE_load_builtin_engines();
-+		drain_openssl_errors(__LINE__, 1);
-+		e = ENGINE_by_id("pkcs11");
-+		ERR(!e, "Load PKCS#11 ENGINE");
-+		if (ENGINE_init(e))
-+			drain_openssl_errors(__LINE__, 1);
-+		else
-+			ERR(1, "ENGINE_init");
-+		if (key_pass)
-+			ERR(!ENGINE_ctrl_cmd_string(e, "PIN", key_pass, 0), "Set PKCS#11 PIN");
-+		ENGINE_ctrl_cmd(e, "LOAD_CERT_CTRL", 0, &parms, NULL, 1);
-+		ERR(!parms.cert, "Get X.509 from PKCS#11");
-+		cert = parms.cert;
-+#else
-+		fprintf(stderr, "no pkcs11 engine/provider available\n");
-+		exit(1);
++#ifdef USE_PKCS11_ENGINE
+ static const char *key_pass;
 +#endif
-+	return cert;
-+}
-+
- int main(int argc, char **argv)
- {
- 	char *cert_src;
-@@ -86,28 +147,10 @@ int main(int argc, char **argv)
- 		fclose(f);
- 		exit(0);
- 	} else if (!strncmp(cert_src, "pkcs11:", 7)) {
--		ENGINE *e;
--		struct {
--			const char *cert_id;
--			X509 *cert;
--		} parms;
--
--		parms.cert_id = cert_src;
--		parms.cert = NULL;
-+		X509 *cert = load_cert_pkcs11(cert_src);
+ static BIO *wb;
+ static char *cert_dst;
+ static int kbuild_verbose;
+@@ -132,7 +134,9 @@ int main(int argc, char **argv)
  
--		ENGINE_load_builtin_engines();
--		drain_openssl_errors(__LINE__, 1);
--		e = ENGINE_by_id("pkcs11");
--		ERR(!e, "Load PKCS#11 ENGINE");
--		if (ENGINE_init(e))
--			drain_openssl_errors(__LINE__, 1);
--		else
--			ERR(1, "ENGINE_init");
--		if (key_pass)
--			ERR(!ENGINE_ctrl_cmd_string(e, "PIN", key_pass, 0), "Set PKCS#11 PIN");
--		ENGINE_ctrl_cmd(e, "LOAD_CERT_CTRL", 0, &parms, NULL, 1);
--		ERR(!parms.cert, "Get X.509 from PKCS#11");
--		write_cert(parms.cert);
-+		ERR(!cert, "load_cert_pkcs11 failed");
-+		write_cert(cert);
- 	} else {
- 		BIO *b;
- 		X509 *x509;
---- a/scripts/sign-file.c
-+++ b/scripts/sign-file.c
-@@ -27,18 +27,19 @@
- #include <openssl/evp.h>
- #include <openssl/pem.h>
- #include <openssl/err.h>
--#include <openssl/engine.h>
--
-+#if OPENSSL_VERSION_MAJOR >= 3
-+# define USE_PKCS11_PROVIDER
-+# include <openssl/provider.h>
-+# include <openssl/store.h>
-+#else
-+# if !defined(OPENSSL_NO_ENGINE) && !defined(OPENSSL_NO_DEPRECATED_3_0)
-+#  define USE_PKCS11_ENGINE
-+#  include <openssl/engine.h>
-+# endif
+ 	kbuild_verbose = atoi(getenv("KBUILD_VERBOSE")?:"0");
+ 
+-        key_pass = getenv("KBUILD_SIGN_PIN");
++#ifdef USE_PKCS11_ENGINE
++	key_pass = getenv("KBUILD_SIGN_PIN");
 +#endif
- #include "ssl-common.h"
  
- /*
-- * OpenSSL 3.0 deprecates the OpenSSL's ENGINE API.
-- *
-- * Remove this if/when that API is no longer used
-- */
--#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
--
--/*
-  * Use CMS if we have openssl-1.0.0 or newer available - otherwise we have to
-  * assume that it's not available and its header file is missing and that we
-  * should use PKCS#7 instead.  Switching to the older PKCS#7 format restricts
-@@ -106,28 +107,64 @@ static int pem_pw_cb(char *buf, int len,
- 	return pwlen;
- }
- 
--static EVP_PKEY *read_private_key(const char *private_key_name)
-+static EVP_PKEY *read_private_key_pkcs11(const char *private_key_name)
- {
--	EVP_PKEY *private_key;
-+	EVP_PKEY *private_key = NULL;
-+#ifdef USE_PKCS11_PROVIDER
-+	OSSL_STORE_CTX *store;
-+
-+	if (!OSSL_PROVIDER_try_load(NULL, "pkcs11", true))
-+		ERR(1, "OSSL_PROVIDER_try_load(pkcs11)");
-+	if (!OSSL_PROVIDER_try_load(NULL, "default", true))
-+		ERR(1, "OSSL_PROVIDER_try_load(default)");
-+
-+	store = OSSL_STORE_open(private_key_name, NULL, NULL, NULL, NULL);
-+	ERR(!store, "OSSL_STORE_open");
-+
-+	while (!OSSL_STORE_eof(store)) {
-+		OSSL_STORE_INFO *info = OSSL_STORE_load(store);
-+
-+		if (!info) {
-+			drain_openssl_errors(__LINE__, 0);
-+			continue;
-+		}
-+		if (OSSL_STORE_INFO_get_type(info) == OSSL_STORE_INFO_PKEY) {
-+			private_key = OSSL_STORE_INFO_get1_PKEY(info);
-+			ERR(!private_key, "OSSL_STORE_INFO_get1_PKEY");
-+		}
-+		OSSL_STORE_INFO_free(info);
-+		if (private_key)
-+			break;
-+	}
-+	OSSL_STORE_close(store);
-+#elif defined(USE_PKCS11_ENGINE)
-+	ENGINE *e;
-+
-+	ENGINE_load_builtin_engines();
-+	drain_openssl_errors(__LINE__, 1);
-+	e = ENGINE_by_id("pkcs11");
-+	ERR(!e, "Load PKCS#11 ENGINE");
-+	if (ENGINE_init(e))
-+		drain_openssl_errors(__LINE__, 1);
-+	else
-+		ERR(1, "ENGINE_init");
-+	if (key_pass)
-+		ERR(!ENGINE_ctrl_cmd_string(e, "PIN", key_pass, 0), "Set PKCS#11 PIN");
-+	private_key = ENGINE_load_private_key(e, private_key_name, NULL, NULL);
-+	ERR(!private_key, "%s", private_key_name);
-+#else
-+	fprintf(stderr, "no pkcs11 engine/provider available\n");
-+	exit(1);
-+#endif
-+	return private_key;
-+}
- 
-+static EVP_PKEY *read_private_key(const char *private_key_name)
-+{
- 	if (!strncmp(private_key_name, "pkcs11:", 7)) {
--		ENGINE *e;
--
--		ENGINE_load_builtin_engines();
--		drain_openssl_errors(__LINE__, 1);
--		e = ENGINE_by_id("pkcs11");
--		ERR(!e, "Load PKCS#11 ENGINE");
--		if (ENGINE_init(e))
--			drain_openssl_errors(__LINE__, 1);
--		else
--			ERR(1, "ENGINE_init");
--		if (key_pass)
--			ERR(!ENGINE_ctrl_cmd_string(e, "PIN", key_pass, 0),
--			    "Set PKCS#11 PIN");
--		private_key = ENGINE_load_private_key(e, private_key_name,
--						      NULL, NULL);
--		ERR(!private_key, "%s", private_key_name);
-+		return read_private_key_pkcs11(private_key_name);
- 	} else {
-+		EVP_PKEY *private_key;
- 		BIO *b;
- 
- 		b = BIO_new_file(private_key_name, "rb");
-@@ -136,9 +173,9 @@ static EVP_PKEY *read_private_key(const
- 						      NULL);
- 		ERR(!private_key, "%s", private_key_name);
- 		BIO_free(b);
--	}
- 
--	return private_key;
-+		return private_key;
-+	}
- }
- 
- static X509 *read_x509(const char *x509_name)
+ 	if (argc != 3)
+ 		format();
 
 
