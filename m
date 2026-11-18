@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017558;
-	b=OqZeDjZfhuKE/DVkrVdbR8AGKrJ4YIH29iX2WhVxfUh2l+SFUO4/hJt0n6+EIFzPIsL5
-	 elSwvXWxXpBbxQwlC8V50si6OqzukFI5hd3vFXFo1OnXchtRxraLqyIY2ImPcTyNO2lGq
-	 yZq6GUd0P4eHAXUQ84VY29aTidh1u4HwJshoIwydGOBAZrqn3H9r4GFob3GZQn/mTmYqg
-	 iCXihcV4d7t6+nidMWY3W1kFUH2albOj9+/tYD69TLPQYv1xnEuoPs5cb0BtXU9juytcR
-	 PJSunvahsKHIrYQJQusaS2g8VtO2zpG0q2uBQOdx/0GbXmKt6CXfs1u06tM/rif4Hvw==
+	t=1795017560;
+	b=CKqOSlROy/3Sk5wknBOgAYRkFdrOj3srcHSX2WVt70Ira5pE6kA4LcVHRTqSjWTv/mvI
+	 +Z3dfucKqucvCR8ubcjMsf5Y556DIeJ6/xQzXoMjfZ5yNlMAWkwJjnCj8A6PhC4RxM1TR
+	 8Ql82p7zfqPGHqfYmK5fuZswkoJxadfeA5oE285L9YfDwubM6CREjBbR++Zgo+Xjk9QTG
+	 NpVqZP/ybkOdogK4lVoSVzKocgsgvGDjPVdr8YG0unGkhNQehZS4IGTVmAtQrb35Vpqpw
+	 0XbSE8RMRAgPSRNQyvaPYOIeHYTwFuFrQQh9WP9SaSxnmIwGHKQqY15kzLcWy7N6KSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017558;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017560;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=YYIkhll7f7YwVqMkGE++lOaXEybXDKCEcg/itMW82uU=;
-	b=Hhj+dt60rT996jF+tIsxxc8cbfs5wZPQnE9Ho/76zK+JlfVIQeM7k+LzIyDuvcUYKIkA
-	 6zNei06d1L3/JHk8Tsgd3Gq1jHSjXWea77LwhaN18QeGSe2a4qVkkVxNWM7k+L8wF8B7H
-	 cPLLdwTNShCuIOU5m1T+vtHKRo+E/KmhGWedXgoEdkBZ/gX/3BA6TnnMt8nvkfVBl1CPH
-	 8cJWY2IAAVwpSK1V01h69XXFek9Ja6nlsu1Jz+/6VkcjAMNni8XBBLGvgjrSXXWhBOtjD
-	 bzgiBSqyzttsbhv6L55VaRprFOv0Mv7ROHY+o79JwVnAaXFbl9bMyPjJTUOzL16Tz5Q==
+	bh=ADNoFmR3f2z8POBgFhHcqJPBujmb3W5f4MveEi4aJXc=;
+	b=QNzEa9DFeThjTzdPQ2rjy6zmJYnHStE4mKvxXTCCN7OpBreTBPFd/7gR/Hnw9X58GrEr
+	 Z7ss+YSvavfyoipI7NtbjDALSKps3k/PNOwHglINL1i/3oD2g9T4v7FRluVquHVxi/obW
+	 t3UfjoqY8/cpEE15zi0tZXvdcDgeMBk2stHalmNQbZs7puheTflSFPStWVEVnu5G7e74D
+	 0OlYPGuHuj7TqE/xWzsoc9KJACo6k8mpjgr2yzL8u+Bh7s7CuSvjj4j8EfZcr213ol/jV
+	 FYarsxnTOlUC6Ru5thOVbGgsiq2HlJxfHExSnLrj92h+uyiHQ4i3IyI15G442MuQXjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=boi1pmO0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tUyn38RH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1ED606A320;
-	Wed, 18 Nov 2026 15:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB2D606A338;
+	Wed, 18 Nov 2026 15:59:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=boi1pmO0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D33E1F000C4;
-	Wed, 18 Nov 2026 15:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tUyn38RH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2350B1F000C4;
+	Wed, 18 Nov 2026 15:59:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017557;
-	bh=YYIkhll7f7YwVqMkGE++lOaXEybXDKCEcg/itMW82uU=;
+	s=korg; t=1795017560;
+	bh=ADNoFmR3f2z8POBgFhHcqJPBujmb3W5f4MveEi4aJXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=boi1pmO0Tz327SZpKC5va2ZLKIzhnS0fIKpLIoGtUEW4iejVFp2wng9mQbshoB52p
-	 ucuUkWFxR5RiWV2KBQRazJ0/52+pj5LmC/UAK0JFJypzX59FT6Dr2jxgNvO+eGeyPD
-	 PFyjA6eQOmjG6mGO04z2zCLJBfj5gZnddvpKWP28=
+	b=tUyn38RHTqOXDLNSUvV0wQDSSShrsFAQUJubWTrNFJ+4N4aJBXeXvRQl8omLPh1rI
+	 1KlaTxsVgKj+2nwQv6I5qTTZA4/4WgXTdAuUPD/hKO3YK1oyTBDQIdDVFhcAKctotm
+	 4xlbXm56hZDXObuI2gxyV2k6x2wvsotj1bCAHHlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
 	Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
 	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0928/2651] iommu/vt-d: Drop old iopf ref only after attach succeeds
-Date: Wed, 18 Nov 2026 15:36:08 +0100
-Message-ID: <20261118150321.291054573@linuxfoundation.org>
+Subject: [PATCH 7.3 0929/2651] iommu/vt-d: Fix IQE handling to cover all descriptors in submission range
+Date: Wed, 18 Nov 2026 15:36:09 +0100
+Message-ID: <20261118150321.326796088@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,68 +70,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
 
-[ Upstream commit 5fbb0fa7327667ade8fa61921425bd4f8803e272 ]
+[ Upstream commit 754d07b940c4ce025fab022b548fb5c3d11bf766 ]
 
-identity_domain_attach_dev() currently removes the old domain’s iopf
-reference before programming pass-through. If pass-through setup fails,
-attach fails but the old domain is still effectively attached — now
-with its IOPF ref already dropped.
+When an Invalidation Queue Error (IQE) occurs, hardware halts fetching
+and IQH points at the faulting descriptor. The previous code only
+checked whether IQH matched the first descriptor index of the current
+submission, missing faults on any other descriptor within the batch.
 
-This can undercount info->iopf_refcount and may disable iopf queue
-handling while the old domain can still issue page requests.
+Expand the check to cover the entire submission range [index, wait_index],
+accounting for circular wrap-around.
 
-Fix it by removing the old domain’s iopf reference only after
-pass-through setup succeeds, matching other attach paths.
+Furthermore, after detecting IQE, the old recovery only replaced the
+single faulting slot with a copy of the wait descriptor and immediately
+returned -EINVAL. This left two problems:
 
-Fixes: 236dd58fabd2 ("iommu/vt-d: Fix iopf_refcount leak on RID domain replacement")
+  a) Hardware resumed fetching and could hit another invalid descriptor
+     in the same abandoned batch, raising a second IQE that no submitter
+     would claim — permanently deadlocking the queue.
+
+  b) The caller reclaimed all batch slots (QI_FREE) while hardware might
+     still be asynchronously processing descriptors from that batch,
+     allowing concurrent overwrite and descriptor corruption.
+
+Fix both by introducing qi_drain_remaining_descs(): upon IQE detection,
+overwrite the stranded slots in [IQH, wait_index) with fenced no-op wait
+descriptors, resubmit the wait descriptor at wait_index, clear IQE, and
+spin until hardware signals QI_DONE (with DMAR_OPERATION_TIMEOUT). This
+guarantees hardware has fully drained the batch before the caller
+reclaims slots.
+
+Fixes: 8a1d82462540 ("iommu/vt-d: Multiple descriptors per qi_submit_sync()")
+Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
 Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/iommu/intel/dmar.c | 72 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 61 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index c9e246e8f8e23..fddb624af7c17 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -3987,6 +3987,14 @@ static int identity_domain_attach_dev(struct iommu_domain *domain,
- 	if (dev_is_real_dma_subdevice(dev))
- 		return 0;
- 
-+	if (sm_supported(iommu))
-+		ret = intel_pasid_setup_pass_through(iommu, dev, IOMMU_NO_PASID);
-+	else
-+		ret = device_setup_pass_through(dev);
-+
-+	if (ret)
-+		return ret;
-+
- 	/*
- 	 * The identity domain has no iopf_handler, so no IOPF reference is
- 	 * taken for it.  The reference held by the old domain must still be
-@@ -3994,16 +4002,9 @@ static int identity_domain_attach_dev(struct iommu_domain *domain,
- 	 * not affect the IOPF reference count.
- 	 */
- 	iopf_for_domain_remove(old, dev);
-+	info->domain_attached = true;
- 
--	if (sm_supported(iommu))
--		ret = intel_pasid_setup_pass_through(iommu, dev, IOMMU_NO_PASID);
--	else
--		ret = device_setup_pass_through(dev);
--
--	if (!ret)
--		info->domain_attached = true;
--
--	return ret;
-+	return 0;
+diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
+index ba675b08cd208..6377ba97a9ea6 100644
+--- a/drivers/iommu/intel/dmar.c
++++ b/drivers/iommu/intel/dmar.c
+@@ -1344,6 +1344,49 @@ static void qi_dump_fault(struct intel_iommu *iommu, u32 fault)
+ 	       (unsigned long long)desc->qw1);
  }
  
- static int identity_domain_set_dev_pasid(struct iommu_domain *domain,
++static int qi_drain_remaining_descs(struct intel_iommu *iommu, int head,
++				    int wait_index)
++{
++	struct q_inval *qi = iommu->qi;
++	int shift = qi_shift(iommu);
++	struct qi_desc wait_desc = {};
++	struct qi_desc nop_desc = {};
++	cycles_t start;
++
++	nop_desc.qw0 = QI_IWD_FENCE | QI_IWD_TYPE;
++
++	wait_desc.qw0 = QI_IWD_STATUS_DATA(QI_DONE) | QI_IWD_PRQ_DRAIN |
++			QI_IWD_STATUS_WRITE | QI_IWD_FENCE | QI_IWD_TYPE;
++	wait_desc.qw1 = virt_to_phys(&qi->desc_status[wait_index]);
++
++	while (head != wait_index) {
++		memcpy(qi->desc + (head << shift), &nop_desc, 1 << shift);
++		head = (head + 1) % QI_LENGTH;
++	}
++
++	WRITE_ONCE(qi->desc_status[wait_index], QI_IN_USE);
++	memcpy(qi->desc + (wait_index << shift), &wait_desc, 1 << shift);
++
++	/*
++	 * Order the descriptor rewrites before the writel() that restarts
++	 * the fetch engine.
++	 */
++	wmb();
++
++	writel(DMA_FSTS_IQE, iommu->reg + DMAR_FSTS_REG);
++
++	start = get_cycles();
++	while (READ_ONCE(qi->desc_status[wait_index]) != QI_DONE) {
++		if (DMAR_OPERATION_TIMEOUT < (get_cycles() - start)) {
++			pr_err("Timeout draining invalidation queue after IQE\n");
++			return -ETIMEDOUT;
++		}
++		cpu_relax();
++	}
++
++	return 0;
++}
++
+ static int qi_check_fault(struct intel_iommu *iommu, int index, int wait_index)
+ {
+ 	u32 fault;
+@@ -1366,18 +1409,25 @@ static int qi_check_fault(struct intel_iommu *iommu, int index, int wait_index)
+ 	 * is cleared.
+ 	 */
+ 	if (fault & DMA_FSTS_IQE) {
++		int head_idx, ret;
++
+ 		head = readl(iommu->reg + DMAR_IQH_REG);
+-		if ((head >> shift) == index) {
+-			struct qi_desc *desc = qi->desc + head;
+-
+-			/*
+-			 * desc->qw2 and desc->qw3 are either reserved or
+-			 * used by software as private data. We won't print
+-			 * out these two qw's for security consideration.
+-			 */
+-			memcpy(desc, qi->desc + (wait_index << shift),
+-			       1 << shift);
+-			writel(DMA_FSTS_IQE, iommu->reg + DMAR_FSTS_REG);
++		head_idx = (head >> shift) % QI_LENGTH;
++
++		/*
++		 * The faulting descriptor can be anywhere within the current
++		 * submission's range [index, wait_index]. Since the queue is
++		 * circular, this submission may wrap around QI_LENGTH
++		 * (index > wait_index in that case), so check both the
++		 * non-wrapped and wrapped cases of the range.
++		 */
++		if (index <= wait_index ?
++		    (head_idx >= index && head_idx <= wait_index) :
++		    (head_idx >= index || head_idx <= wait_index)) {
++			ret = qi_drain_remaining_descs(iommu, head_idx, wait_index);
++			if (ret)
++				return ret;
++
+ 			pr_info("Invalidation Queue Error (IQE) cleared\n");
+ 			return -EINVAL;
+ 		}
 -- 
 2.53.0
 
