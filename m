@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060905;
-	b=wnxdqZ9U7obh9cj4c2TiyeChozToJDh85koRiVeeP3mWFernnRmEu04TdIgopgAIwvEl
-	 4nVOl7oMUDCxukr1fCNYkORSzspCtqIazGmQwgv4mlGetkodZ09UHsjDL2rUxPMA/lmux
-	 ZuD9D0hrK5TQ4M3gtL1Z2lFlVdslDdPcwOI5foj9LLXSlvYpQnp8SoWX0Rf4aQO0ruxAr
-	 5vteBM6vEwmhuTbkiPwHj5VDuRh0FBZncZPatCwdO8d84r10tJ3nz0rntRXnXLUOtbjIi
-	 BdcJ9jkVDGkPee+BsYT/B2xQWLXGDrik7aT7tcM2wyOQpPAp3EUMzWCzyXTmmcT5f0Q==
+	t=1795060908;
+	b=2+EzhD+StF9pD9AN6M6JBxyomqq7T+vWL+IfkyMYwF3HjfkcdC3z+BoTWKPZfLWZ974/
+	 /6WTEZF3EfE6xWLJZiy8/uOFVFHhZYXLsPUumAVY8rc9MFCTsAt/IaFGIOsDoC2kDmqrU
+	 g1y+qHOlpUDO0a7NVwf6KR5tp8tAslnyRgV7m+nrJdTZv2F9tD1myu5OgMpmn50R+XFWa
+	 zCE7+SlgQdANGlMhV3v+A7+tb/2+OWbMOL7NtaW3AlGbybXZZoSEF/AC1ElJgcPZxxm2u
+	 i49pAczszT7s/1eQAHvoT3AEu5m6MPZ33HbCDmwrd/+8f07Gr/PooNJ0lNKRG578nPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060905;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060908;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u1DUA6LtAakgks5YvZjx6rNNknP2aH/O4rRcKeSPRYQ=;
-	b=y6UE7Tj/wVV/NW00msWgtC2I0T6igxDleOBP4qLjRW59Y7Ig/uviIhaFOvJuKF6ZBSD/
-	 x4VwcGuZPfzuHJqcqpeilanLnSzwoZjlGlmkqJhF541pQyG/WLEtycClfY84bgJ19INhG
-	 PssmA1HcUBfVUcpiwS9yjiB7r8m9q0Z9sBwGT6T0YBckZTsBOvWH42zdC986DS0rsnrSw
-	 VWQsdee+UlZ9MFXRmCbOGIAWCiCyC+YTCeg7hLQxqBteCfIO2SN1wMVDUJ0dmi2dIzFbL
-	 nsUTskuatZI0nna7L3dglANbGBMKOYSAD3Hb3PoYaMvP0B3G7fp2UtjNGwqCDY1XRyg==
+	bh=AT+EyrU5ucZvKjM8Kuy/hTHnEZKG+e4m7Sj7Rb3gU8s=;
+	b=A1qxhXU0ncregnjv2olZE5ZXxYbIwJwCBbMAQJnEvX68we4006jIzh7gqkMUFrk0lNnG
+	 Pq0sGIQEtsQ4M8nIWaORhD/UHFezhO0MsHrW/RVFLyRbeTQxS9DRGftD+c+4PhH/+aKgJ
+	 SJmkYWJ+ACZy9JzTseHcxLMTDAX6T1fGQv7w9SIjH3BzjvTdHi7+gpj5sH/ejAWilVa4Q
+	 7WMFsoGErhBOt4tQxoYWwNOhufnTh07vzc57zZUHaEIKDsA5JiIX/zRP+EecAYt/p1k8A
+	 golJCa9VD7El3BV5Qq5erOKk0mhLbzRHM58dTczaOdm8I+ZiqudvQZS3ajk2qAD41wg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S1DxI6Hv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wa8pxVq9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32ABA606A320;
-	Thu, 19 Nov 2026 04:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0980E606A320;
+	Thu, 19 Nov 2026 04:01:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S1DxI6Hv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812921F000C4;
-	Thu, 19 Nov 2026 04:01:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wa8pxVq9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597991F000C4;
+	Thu, 19 Nov 2026 04:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060905;
-	bh=u1DUA6LtAakgks5YvZjx6rNNknP2aH/O4rRcKeSPRYQ=;
+	s=korg; t=1795060907;
+	bh=AT+EyrU5ucZvKjM8Kuy/hTHnEZKG+e4m7Sj7Rb3gU8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S1DxI6HvgOImqg+zImTfqFxEoMoKMSlJyUd5OmuTGB1pGOKDTLj3gMIJmMsbyCC8a
-	 S1LHGtYSzit2YWssGPOddodhgoWF7zALDjnncfEzzPBAQp7JQAD9pWb9+R4pCNlFni
-	 8PqcjPvhRbhOcPgmJ9gFf052zXC0rKGo+OoRKIr8=
+	b=wa8pxVq9i4Ixi6C0h6Ru+k/RIwDeWdUbfnYr9wihFDB1fS0FDEYDf71vICm0vKAMq
+	 ly9Ok6WjH2Usxjs0LyjDxnRW1PUAPvaGesxdPo8riJNJhFLfs9fWMVeIhF+LWJWUIu
+	 DYR+/F9cqOuopxFdT/BE5VEQ1p+9ddhSHFg4idcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Skladowski <a39.skl@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1365/1848] dt-bindings: vendor-prefixes: Add LeEco
-Date: Wed, 18 Nov 2026 15:56:43 +0100
-Message-ID: <20261118150016.718545747@linuxfoundation.org>
+Subject: [PATCH 5.10 1366/1848] dt-bindings: vendor-prefixes: add Revotics
+Date: Wed, 18 Nov 2026 15:56:44 +0100
+Message-ID: <20261118150016.757443901@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,34 +69,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Skladowski <a39.skl@gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 
-[ Upstream commit 1658af4d25bd3133d1b3403ccdda6214d40c0ebb ]
+[ Upstream commit 1acb40298366b8350d34db47dd9aae72ff18691e ]
 
-Add vendor prefix for now dead ecosystem company LeEco
+Document vendor prefix for Revotics (Revolution Robotics, Inc.).
 
-Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260821-next-patches-v5-1-ec81cee63e09@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Stable-dep-of: ea55bba4c68a ("dt-bindings: vendor-prefixes: Add Retroid Pocket")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 762398cf70290..03a5843661b70 100644
+index 03a5843661b70..7898b9c23ec8b 100644
 --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
 +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -601,6 +601,8 @@ patternProperties:
-     description: Lattice Semiconductor
-   "^leadtek,.*":
-     description: Shenzhen Leadtek Technology Co., Ltd.
-+  "^leeco,.*":
-+    description: Leshi Holding Beijing.
-   "^leez,.*":
-     description: Leez
-   "^lego,.*":
+@@ -928,6 +928,8 @@ patternProperties:
+     description: iMX6 Rex Project
+   "^rervision,.*":
+     description: Shenzhen Rervision Technology Co., Ltd.
++  "^revotics,.*":
++    description: Revolution Robotics, Inc. (Revotics)
+   "^richtek,.*":
+     description: Richtek Technology Corporation
+   "^ricoh,.*":
 -- 
 2.53.0
 
