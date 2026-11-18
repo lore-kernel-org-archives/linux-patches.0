@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032412;
-	b=P0vn+JRSXpnS3uhszt7Bg9i66gb5cRDzhO3Ni3IRnv6yGqHqnCzBvE/mz1Z42XMfPe0h
-	 WXwzNCi+zt0eus+saqY1b0fucjlfwZjNtp/aSiGZfzxCNfxKttv4c2DX98l+KMHeReg/A
-	 O5s4/kHmAcfnOX+BZBeKTctprDcNsmoYk8wibMd+exoKTdYTWi4z6f+Wc6Rs3VhgqHLAS
-	 724Ror1LMhn1EDaNfnO87ZEcEptZfE5N8dMryYxAVJq2rnSBHz1s5k6mLXBjUCwwAchUI
-	 o5xp0eEsRxPKHlS+EXW1dCcoMyfsGJYwHhtif6NY9f72X2Lltz3wEX9cRxyWEmIKVuw==
+	t=1795032417;
+	b=jOCy44bAH6xNPknXBtpjq6dO+zSWEfofLUjN6V6m+OTgXkBRp+r8YW/5ZfCHiUQRxDgs
+	 +fonh4ivRl9poqqTmQGTXJ8783qvcmn3hdpY/KreCm3QHEdcDkAjHpZ69vfYXRdVxqtdO
+	 ERZeBGBfqNwNoe4OPJQEbDJ6v10dhqmEsLrrKoGljz1CZCDQ5f6np2jT4IQAKUcxTFLjt
+	 9Nq7QwWev3HWjlmnnmUAZnobNqMl6XZhfBmiW0KghWeC/YNWmBr80Z1iw7LVfbhoqeYKD
+	 co80Fu6PiaqLa7mArFsXW6flDHX66S9+xbrIzFl+LXSZlHbuSfSpFSk3FBFZwIQqDZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032412;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032417;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tLn4qbfBIla++o7LyVdcDN8Z6deXUl8FUoX+mgS/lsQ=;
-	b=pw5rhlKomDmzHISz5kDKojOl4driwYIoS1UzMLUr4FumTk8UDw4EoU1zn47FSAk58qQO
-	 rhDi6eA2ojte2uqCQyqLVYQWt8SF3Gh8XpDTbjq9WhEn3RCDOqD12HvwdutBXn1ycwNsu
-	 A7Yr4zv9Vx5k7aXmMeBlkBIJvEOFddR7zYWmiJ7eOjuCk9vsY4JNm2j6m6rVAONdjB6eo
-	 Bc8V1j2Wn9yfM26WfNsCrZ5VOvkekjBo/pPuQUQU0XeGSgMJG/Cnyg8PFnNFrJzW6Bgxr
-	 S4dbn8vSO3DuURhF+0zb4rCLiXjDOwAW20sd8ywsTxW8NssZ8yAoV1e3MnK0bE+c5iQ==
+	bh=SvK98TS5uJwt51JZhunCBV+kvNjPt6M9TPLP9A+xVBE=;
+	b=jvZ+pUtb4G7lfgis1Ha3NPcVB62ctPw8GAskB/I0Q9kv2gORRBHnEjQwV+433U6mSLwM
+	 ohWb9nGO1EUod4Z1ezDUXIdvQmh+ZNL/I/P1eh/796KRyTVe4QYXER0OSXc917ED+c2mC
+	 aFRJvhiSjh/RUoizJPxOME0y7RePOuvzrt9LMMf2DT8FrGTzxbaKSDswxo8U4tegY5WsP
+	 nEwHVKpE482IS9DSIQtdAyT7qo/VczQsI3zHhMKSxoVL/Jb2klvSyJhhzesl7CYb8uFpw
+	 nDeXLS23OPaMGiusshs0Kk4yRxsQs4mmocoaYvC5g8cf+p1akUEmgzz8vZEwrJ5F9Gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P7vCITCS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+UtEZ14;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D4B60A261F;
-	Wed, 18 Nov 2026 20:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98EB606A85C;
+	Wed, 18 Nov 2026 20:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P7vCITCS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785461F000C4;
-	Wed, 18 Nov 2026 20:06:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+UtEZ14
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37EE61F000CB;
+	Wed, 18 Nov 2026 20:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032412;
-	bh=tLn4qbfBIla++o7LyVdcDN8Z6deXUl8FUoX+mgS/lsQ=;
+	s=korg; t=1795032417;
+	bh=SvK98TS5uJwt51JZhunCBV+kvNjPt6M9TPLP9A+xVBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P7vCITCS66USHW4gsE/1IHhMXNi3QgEPxdUItakf0mqa1tbhZoMUN3gTCoBOlPCVy
-	 agcIy6pgpVU4RmjJRNX3gUAb58PVanwuxJtQC2Dy18JmpAFoKAD+ySeMewdj+8dYvr
-	 embTxpLuI8ShmreQjOrq94ICq4vwJusVYvB9qyz4=
+	b=J+UtEZ14pURx/PM71QWGSqYCzh67gENwucu5VteWWfCLRyofEgWns9RXFvnIPu+/T
+	 1GpsPCGx3yFiRKhmnAVckwMHWO/c0iC3yWOYIqjeM/+SQnc5LylZ2fEDQAk1JU80fa
+	 Rx2uASh6ZxL5i/fwGxuoJeuuhcdgzPzXul7UG/1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	KaFai Wan <kafai.wan@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1402/1756] selftests/bpf: Use _exit() in uprobe_multi_test clone-ed child
-Date: Wed, 18 Nov 2026 15:58:49 +0100
-Message-ID: <20261118150105.003537817@linuxfoundation.org>
+Subject: [PATCH 6.12 1404/1756] ALSA: pcm: Protect the unregister notifier traversal
+Date: Wed, 18 Nov 2026 15:58:51 +0100
+Message-ID: <20261118150105.074186101@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,65 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: KaFai Wan <kafai.wan@linux.dev>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit ce42271dc517baa880352d76548d301850e7385b ]
+[ Upstream commit 680be9f82d4977d3410c513d3bfe912d100f64fc ]
 
-child_func() terminates with exit(), but spawn_child_flag() also starts
-it via clone(CLONE_VM), which shares the parent's address space. That
-exit() then runs atexit handlers and static destructors against globals
-the parent is still using.
+snd_pcm_free() traverses snd_pcm_notify_list and calls n_unregister
+without register_mutex, although snd_pcm_notify() takes that mutex to
+add and remove notifiers. PCM disconnect releases the mutex before the
+free callback runs, so it does not protect this later traversal.
 
-LLVM commit `3c3ed59c6a2a ("[llvm] Add format check for
-MCSubtargetFeatures")` [1], included in the LLVM 23.1 releases, added
-Target::isValidFeatureListFormat() with a function-local static holding
-the compiled regex:
+With no open OSS file, normal snd-pcm-oss removal can overlap PCM card
+teardown, for example when unbinding snd-dummy:
 
-	static const llvm::Regex pattern("^([+-][^,]+)(,[+-][^,]+)*,?$");
-	return pattern.match(Features);
+  PCM card teardown                     snd-pcm-oss unload
+  -----------------                     ------------------
+  snd_pcm_dev_disconnect()
+    remove PCM under register_mutex
+    unlock register_mutex
+  snd_pcm_free()
+    fetch notifier
+                                        snd_pcm_notify(..., 1)
+                                          unlink notifier under mutex
+                                        free module storage
+    read notifier->n_unregister
+    invoke callback
 
-The child exit destroys that static while its guard variable still marks
-it as initialized, so the regex is never rebuilt in the parent. From that
-point on, get_jited_program_text() gets NULL from
-LLVMCreateDisasmCPUFeatures(), so every jited program text check in the
-tests running after filter_clone_vm fails, e.g. "verifier_jit_convergence",
-"verifier_private_stack", "verifier_tailcall_jit" and "verifier_jit_inline".
+The free path can then read the notifier from released module storage
+or call its unloaded code.
 
-Use _exit(), which runs neither atexit handlers nor static destructors, as
-uprobe_syscall.c already does for its own CLONE_VM child.
+Hold register_mutex across the unregister traversal and its callbacks.
+Notifier removal must wait until both have finished. This also protects
+the traversal if a callback releases the last module reference: module
+exit cannot unlink its notifier until the free path releases the mutex.
+Drop the mutex before private_free and the remaining stream cleanup.
 
-[1] https://github.com/llvm/llvm-project/pull/180943
-
-Fixes: d2520bdb1932f ("selftests/bpf: Add uprobe multi pid filter test for clone-ed processes")
-Signed-off-by: KaFai Wan <kafai.wan@linux.dev>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261018005348.2195130-5-kafai.wan@linux.dev
+Fixes: c461482c8072 ("[ALSA] Unregister device files at disconnection")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/pm-pmb-26d66390a25fec9fad6c-v6-5be251a3ac8832955a31-1@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/core/pcm.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c b/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
-index 02a484b22aa69..6dbf9816fa3c1 100644
---- a/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
-+++ b/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
-@@ -80,14 +80,14 @@ static int child_func(void *arg)
- 	/* wait for parent's kick */
- 	err = read(child->go[0], &c, 1);
- 	if (err != 1)
--		exit(err);
-+		_exit(err);
- 
- 	uprobe_multi_func_1();
- 	uprobe_multi_func_2();
- 	uprobe_multi_func_3();
- 	usdt_trigger();
- 
--	exit(errno);
-+	_exit(errno);
- }
- 
- static int spawn_child_flag(struct child *child, bool clone_vm)
+diff --git a/sound/core/pcm.c b/sound/core/pcm.c
+index bc4f90874ce3a..fbaac30ab32e3 100644
+--- a/sound/core/pcm.c
++++ b/sound/core/pcm.c
+@@ -857,8 +857,10 @@ static int snd_pcm_free(struct snd_pcm *pcm)
+ {
+ 	if (!pcm)
+ 		return 0;
+-	if (!pcm->internal)
+-		pcm_call_notify(pcm, n_unregister);
++	if (!pcm->internal) {
++		scoped_guard(mutex, &register_mutex)
++			pcm_call_notify(pcm, n_unregister);
++	}
+ 	if (pcm->private_free)
+ 		pcm->private_free(pcm);
+ 	snd_pcm_lib_preallocate_free_for_all(pcm);
 -- 
 2.53.0
 
