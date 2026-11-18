@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057737;
-	b=MFcMniOe+VM4EHU3/WQLNUjOaykoLdW7+V9UsbIhqQ3KNV3R0XEa4sMzpaHo7tzYWFfI
-	 q+qf708G0Hr6CoaMxvfwZAjKm4lx+M9JQBUlOGDufI5S3IgCfQ+kZF8b2cdSXSbYF5nOY
-	 cb1K3loSbohSosBehwmryVE/NZfOwyECgJSrY0oWID75lXTgGwzayEY9fPG62tFBo46IS
-	 3AjJLme/+5rPhnAKwoa9EjADS/IY0Z1blQGeTXCy19kKNknNKVHdDxl0Nrh1Pti0WNbtQ
-	 5IWu/ysrAsJaXpDe9ssF6gydfVCzNGYGICf7Fh97zDg7hAkgF1B9Vjj7VkFBVkFcbeQ==
+	t=1795057740;
+	b=Qu6+UvVP6wYtCTDwuVtG7H/UjUKlH9zfVJp2/F7dezNBCJQ+Ficq+kpOzHs5k3sa/aQW
+	 TAGoP9SuafBqpITcIsvU/3aPU6YOZznWfiE2YZtaiFOa3y8hs/n/wh2SRmE06Oi4zzm6r
+	 IGol1gqMYrMoPHFuodUzc7t947q9FnBh6JoLIdoSOnMy+a9VAJtteM0HScwlxAt/oaKd+
+	 D4tlJHwIdUSQ8mq0lrtAgbrhBnI5/deceVGEpEwzgJIxsFeYGur77cCGOiBsyo4hozLyr
+	 rqboWez0S0slKyBeZjTi1Hh6/naEAWs0jpw+aHxrHKY8xPA3jyQRCnldIAuHQpS4UZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057737;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057740;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FM/+wf82G9L1tQJ2d1cwEeZnYQBEZKkKRIlD4byMc/I=;
-	b=r1+jVSJibUbDXj6ySzSpKo7NTbw5hsY7jhk6VXuByX6Gk0xmPiztKBOnyvOuzXYuHVoK
-	 8BkPc9Q4ckSSnut2VQQOWTPgh07WDrQtBf+J7ljpYzBoqbylldz1JCaRke3f1r74tZ72X
-	 pHyAYCNZrssKMllVQz7MXeRFZluRDmyGHZjQ0z/4f1NcKr81YDWCs70LOyOzSNxqR+G39
-	 rm93kJWhHFok/+GqLJRO+d8yybjLQS+BZU5BxkW/Q8qNz5O21He2karcRHnwDTqgjd2CA
-	 7hg1LGisOHrOX/MaPaJfUQAr0CnsL+sOjAUI+aohc2E2ZaGHAC5O2kCfpCNfoZq32eQ==
+	bh=wsfNM12YX554qjkt9o32CAeHyftoigyeKI2LKuqGIY4=;
+	b=Fj0zCDpHCw2PV+HZy7gtXRZ3YiUkYAfwJhd0zqDFw4HUz2lCJiP5ulsMPdSK/WxyOYD8
+	 Zod+quaFfXxJa0F/4UJqPvIEMuX7+N6NESybNZm1Imi6itH781++LJ03erP+hTdFwfZb3
+	 ha2RQWgRuSLSvD6WBd54qQ77Y0yHg1AiyxmxmG5D9tyLWqBqRSmiN4qE6w6ke3ekze+/S
+	 wY5Qwlgtmovc4ZAHmm0NxzOeQOnji2U63GSyN+2xzVcJYZTR9Uk/CeRDv9K4wNyW5A83R
+	 G4Zdl/heSMGjjm3g5WQY76Zcj4LQQ6xAWoCCrl2JPLtGjHaXK2/R355Ny8rH5HxVmVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XLhXtL0j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQsaQ86u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41598606A320;
-	Thu, 19 Nov 2026 03:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2956A606A31C;
+	Thu, 19 Nov 2026 03:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XLhXtL0j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943B31F000C4;
-	Thu, 19 Nov 2026 03:08:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQsaQ86u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F501F000C4;
+	Thu, 19 Nov 2026 03:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057737;
-	bh=FM/+wf82G9L1tQJ2d1cwEeZnYQBEZKkKRIlD4byMc/I=;
+	s=korg; t=1795057740;
+	bh=wsfNM12YX554qjkt9o32CAeHyftoigyeKI2LKuqGIY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XLhXtL0jqWx2StHXDgcZ/ITLna+cnrO1Tb4gs6FaZ5Da/a9u2U4SpBRQNWCcck9rS
-	 K18sqMp+juEg/gI2ER7myA1Opw6hwJdy2yWrQsiz7du+7SYQi+uvx6XLURZGv26jUU
-	 t14g6IuhgXv4xG0nHJma7rQFokchlr6wXmz9NjZo=
+	b=DQsaQ86uisZ4HiIgDU81uABoOAm4s4F7/jysoNa5KBxzBtAV1GYmnj9igXN3UmRix
+	 0ilGDEUvbogGyrckrbukfBIE5xovJcU5n8GCgV/OfoxHIAuKccgj8evwWBauWQj1P8
+	 bjWcZX410hQdk2TbCjNGKqE3NkR6tjSZ389LzM+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Wendleder <gonsolo@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 0237/1848] wifi: b43: fix use-after-free in b43_bcma_remove()
-Date: Wed, 18 Nov 2026 15:37:55 +0100
-Message-ID: <20261118145921.856941632@linuxfoundation.org>
+	Jonathan Gopel <jgopel@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 5.10 0220/1848] thunderbolt: Do not RPM complete unrelated subtrees on unplug
+Date: Wed, 18 Nov 2026 15:37:38 +0100
+Message-ID: <20261118145921.197025987@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,53 +67,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Wendleder <gonsolo@gmail.com>
+From: Jonathan Gopel <jgopel@gmail.com>
 
-commit c6c8bc355657115664131b38c53c5ddf7d93b072 upstream.
+commit 96a8479804e3f7af43e639e9df39f562f1a75fd5 upstream.
 
-b43_one_core_detach() frees the struct b43_wldev it is given the bus
-device of. b43_bcma_remove() then reads wldev->dev again to free the bus
-device, which is a read of freed memory.
+When a Thunderbolt device is unplugged, that switch and every switch
+subsequent to it on the bus device list is `complete()`d, not just its
+child devices. In the case of multiple domains, it may cause, eg, an
+attempt to `complete()` the uninitialized domain 1 root switch RPM
+completion on unplug of a switch from domain 0 (though ordering is not
+guaranteed numerically sorted).
 
-b43_ssb_remove() does not have the problem: it takes a copy of wldev->dev
-at the start. Do the same here.
+I initially noticed this issue on a Dell XPS9720 when the system would
+seem to sporadically not wake after unplugging a Thunderbolt dock. I
+tried multiple kernel versions including v7.2.7 and v7.3-rc4 to see if
+that resolved the issue, but the issue persisted. Eventually I found
+that I could consistently generate a kernel Oops reporting a page fault
+at 0xffff_ffff_ffff_fff8 on unplug from one side of the laptop and went
+bug hunting. I became suspicious of the `bus_for_each_dev()` walk that I
+ultimately ended up changing. To confirm this issue, I did an eBPF trace
+of `bus_for_each_dev()`, `complete_rpm()`, and `complete()` while
+unplugging in a variety of situations and found that an unplug from
+domain 0 tries to `complete_rpm()` domain 1's switch, whose RPM
+completion is not initialized and thus is holding a null wait-list
+pointer, triggering the page fault.
 
-Fixes: 96838d61102a ("b43: Fix memory leaks in b43_bus_dev_ssb_init and b43_bus_dev_bcma_init")
+Here are the key sections of that eBPF trace. Note that HEAD denotes the
+completion's own wait-list HEAD:
+
+```
+RESCAN_ENTER domain=0
+
+COMPLETE rescan_domain=0 target=0-1 target_domain=0
+         route=0x1 parent=0-0 unplugged=1
+COMPLETION done=0 head=HEAD next=HEAD prev=HEAD
+
+BUS_WALK domain=0 start=0-1 callback=complete_rpm
+CALLBACK_ENTER rescan_domain=0 dev=1-0 parent=domain1 is_switch=1
+
+COMPLETE rescan_domain=0 target=1-0 target_domain=1
+         route=0x0 parent=domain1 unplugged=0
+COMPLETION done=0 head=HEAD next=0 prev=0
+
+        complete+5
+        complete_rpm+43
+        bus_for_each_dev+133
+        icm_free_unplugged_children+250
+        icm_rescan_work+42
+```
+
+This patch gates the `complete()` on an additional condition - that the
+Thunderbolt domain matches the domain of the device that was unplugged.
+
+I only have a single system with multiple Thunderbolt domains - the Dell
+XPS9720. I am consistently able to reproduce the Oops on that system.
+Since running with this patch, I have not seen the Oops reoccur. I have
+also tested it on a Thinkpad X1-Gen12, and that system boots and runs
+well with it, but it only has a single Thunderbolt domain, so it does
+not exercise the multi-domain failure case.
+
+Fixes: 4f7c2e0d8765 ("thunderbolt: Make sure device runtime resume completes before taking domain lock")
 Cc: stable@vger.kernel.org
-Signed-off-by: Andreas Wendleder <gonsolo@gmail.com>
-Link: https://patch.msgid.link/20261013000124.48605-1-gonsolo@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Jonathan Gopel <jgopel@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/b43/main.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/thunderbolt/icm.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/broadcom/b43/main.c
-+++ b/drivers/net/wireless/broadcom/b43/main.c
-@@ -5661,6 +5661,7 @@ static void b43_bcma_remove(struct bcma_
+--- a/drivers/thunderbolt/icm.c
++++ b/drivers/thunderbolt/icm.c
+@@ -1972,7 +1972,7 @@ static int complete_rpm(struct device *d
  {
- 	struct b43_wldev *wldev = bcma_get_drvdata(core);
- 	struct b43_wl *wl = wldev->wl;
-+	struct b43_bus_dev *dev = wldev->dev;
+ 	struct tb_switch *sw = tb_to_switch(dev);
  
- 	/* We must cancel any work here before unregistering from ieee80211,
- 	 * as the ieee80211 unreg will destroy the workqueue. */
-@@ -5675,14 +5676,14 @@ static void b43_bcma_remove(struct bcma_
- 		ieee80211_unregister_hw(wl->hw);
- 	}
- 
--	b43_one_core_detach(wldev->dev);
-+	b43_one_core_detach(dev);
- 
- 	/* Unregister HW RNG driver */
- 	b43_rng_exit(wl);
- 
- 	b43_leds_unregister(wl);
- 	ieee80211_free_hw(wl->hw);
--	kfree(wldev->dev);
-+	kfree(dev);
+-	if (sw)
++	if (sw && sw->tb == data)
+ 		complete(&sw->rpm_complete);
+ 	return 0;
  }
+@@ -1988,8 +1988,8 @@ static void remove_unplugged_switch(stru
+ 	 * tb_switch_remove() calls pm_runtime_get_sync() that then waits
+ 	 * for it.
+ 	 */
+-	complete_rpm(&sw->dev, NULL);
+-	bus_for_each_dev(&tb_bus_type, &sw->dev, NULL, complete_rpm);
++	complete_rpm(&sw->dev, sw->tb);
++	bus_for_each_dev(&tb_bus_type, &sw->dev, sw->tb, complete_rpm);
+ 	tb_switch_remove(sw);
  
- static struct bcma_driver b43_bcma_driver = {
+ 	pm_runtime_mark_last_busy(parent);
 
 
