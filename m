@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058599;
-	b=Kh6QNUTtlLaZGMZTstXlTIZNRrKjYDcpp0qKwXsZQ59KDFaZLBNAyhpmCVnW0CJxTwpw
-	 rz53bS59gcXpMXDVV0k+CWcnGC7kyXaoZI1/4MsumDIyOK/MWeocYg3mp7dc8Esg001Z6
-	 +Qi43CtvhWpEIxC09AFw2+YZxF4xVH68UQ2uZVXcZ9+EV/V5pFI+loy1gQlKJKQ8IJSNC
-	 i26ImzAOWLWbyoa/fOjiRWRZuS48Fwdav9Uotnez9CTbeYoxq7+rECE0Ire//1SKFo5K3
-	 3dA/Wg/wp5uUFOGUGxnFCDoP/Os+MSpu6PsJ0n7yJKKgOPOy1ekW5mQZ0tHeFTSTR7g==
+	t=1795058601;
+	b=NMDub8I+5+Uu6+hIBDeWWmRy5xXnxLcblzys1VtDxSX5VZzSFZ4rxayoEhJQ2KGpqaIT
+	 WLWZcmDBE4AX+3FKNsO51+vDA2Vcj4wPw+RBjSvlESO/gGbQK7vivUJ41ydb3G5FyOfJp
+	 wdsI7si0yiIENwjB2dW6AQopn3gDR4cRnvPxS6JLikeqJtdgVZTz9NXJUnYDeroX21yDh
+	 AscyUA8/50zYCIrR6mqBtfiTpp7YeRDPNu84BezRLR9asyar75qD5Bid5rzgUNLxVrD68
+	 1oafK5RyqC3RDD0nGI67osP8BZlfS8GSI5U9ivSsWiw+B8Avwg/dxbCfqorllP73slw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058599;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058601;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Dd94rpNDcrPzibebQrDq+q+NM4VbCp5UrZGg/110+lI=;
-	b=usqYuKD8G2eY3TwIQM/oCKAW0k6nxOMXqYafZL15auTAe4+rMvmdgdeQuyOSITJI2kOl
-	 0C+Y9yqLcYS0Tei4XXR6InjPdRQVzijrn4M0WBkhuNtS1e/wzqgWkl25EfUhjqVFlYbhg
-	 7Ftjlc0xKS+4kb80R6f5A/lH8/tvxvp2WpD4ltqiPxB2fE0b9izJXHHU+1vYL6xYhOsyZ
-	 11ChC2osGdyndNefoHDWk24Bf2dgyKgqas7nDF/FiSaJ1Bi8QR1nfL43RFoRzchbUqxDP
-	 IoSBWkrqaMhqNDfyo6eNF6qTZBxy4frGWBsHJu3742Ls7Ck8hT7EvD7XlyWbLXoHEAw==
+	bh=z0F0qABmGVGxokFcyXpDdwOzqL7+/caoYeXkFPC9/GU=;
+	b=ytoWiuWWuCyAC/BJ2PtsnCd3OyGDJAG34RVxv1HAVipfqfm1UU8GC2oDUVOBrKpHikR9
+	 79X8QHHgSMqVC1lhGGq0nWYXMSvjhkuQrufGGrZ2kRrfiA/87YvarErDEJu/4YRozIDSK
+	 /MUJ2dInGe1u6kd5Orj90SEbuJykQk2JU2J5TCOW0GxJZIb+KfRr6Fbb5BeJyWqlPdwEN
+	 qOXQWmZ9AXSA4c1wD50mLCYNweJ+ZlWtQMn+mmznhMx7TsXxhaIBH93wknR/3CgdrmXqz
+	 tNjIzmKxOJbYpgyyouojB+4KYP1scGcORK5Yr2nSgwuD3hx8NGJjPeXpcSfyUxwXm6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VIgVqN0B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NvI9kH90;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16BBC606A31C;
-	Thu, 19 Nov 2026 03:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A28606A325;
+	Thu, 19 Nov 2026 03:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VIgVqN0B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FFAE1F000C4;
-	Thu, 19 Nov 2026 03:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NvI9kH90
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5071F000C4;
+	Thu, 19 Nov 2026 03:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058598;
-	bh=Dd94rpNDcrPzibebQrDq+q+NM4VbCp5UrZGg/110+lI=;
+	s=korg; t=1795058601;
+	bh=z0F0qABmGVGxokFcyXpDdwOzqL7+/caoYeXkFPC9/GU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VIgVqN0BAuQmM1YRg1NfRb4qrO1THvzR6/DorfBPG1J38bEPe+52PXvbtlqZKkhAM
-	 oXn9co12/2GJJaPcbggiDQu5LdCos1dDJwDMxQb4Lm35U3x19uN3R9HAX7PZD89QJ6
-	 o83drtI4JL5fQwmGYz02PTnpY5MQfalqJ5VA1mnE=
+	b=NvI9kH90SJPABR2Ce7CVD1wHPN+HKG/w0MWXQqVpy8Ln+XeKr+Rd00/hdF1p8zejX
+	 ssHplebOOY+pRPGNtYwPsCUF43s/yUB4LJGVTBWW6C71eRoBYiAuabe3UCh4Sr/JLu
+	 o1W1RfqHLB/WESIBRyO3oTW031Rt+RVsX0tkCrX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0544/1848] hwmon: (sht3x) Return the consumed count for heater writes
-Date: Wed, 18 Nov 2026 15:43:02 +0100
-Message-ID: <20261118145937.753678186@linuxfoundation.org>
+Subject: [PATCH 5.10 0545/1848] netdevsim: reject cls_bpf programs bound to another device
+Date: Wed, 18 Nov 2026 15:43:03 +0100
+Message-ID: <20261118145937.784029768@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,49 +71,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 817ac527100c8e20684211eb919ffd6d875adc7a ]
+[ Upstream commit 5820ca58b409402505b9e904d1ded4908e0b6b81 ]
 
-heater_enable_store() returns the result of i2c_master_send(), which is
-the two-byte command length on success rather than the sysfs input
-count. This can report more bytes than were supplied, or a partial write
-for a fully processed input. For example, writing "on\n" returns two
-instead of three, so a caller retrying the remaining newline gets
--EINVAL even though the heater command succeeded. Retrying the remainder
-of "off\n" can also send the heater-off command twice.
+The issue:
+nsim_bpf_setup_tc_block_cb() installs any device-bound SCHED_CLS program
+without checking that its offload device matches the target netdev.  The
+core cls_bpf attach path rejects a mismatching program, but a netdev that
+joins a shared block later is replayed the stored filter by
+cls_bpf_reoffload() before it is inserted into block->ports, so the
+attach-time check cannot see it.  The driver callback is the
+authoritative per-device acceptance boundary and must enforce the match
+itself, as nfp already does in nfp_net_bpf_offload().
 
-Return count after a complete command transfer. Preserve negative I2C
-errors and return -EIO for nonnegative incomplete transfers, so a
-zero-message transfer is not reported as a successful zero-byte write.
-Keep the existing boolean parsing, command selection and locking.
+Without the check, replaying a device-bound program onto a different
+bpf_offload_dev installs it into that device's netdevsim state, which
+trips the WARN in nsim_bpf_uninit() (ns->bpf_offloaded set on a foreign
+device) and can dereference a NULL prog->aux->offload in
+nsim_prog_set_loaded().
 
-Fixes: 50c22cd154e5 ("hwmon: (sht3x) add humidity heater element control")
+The Fix:
+Reject a device-bound program whose offload device does not match the
+target netdev, with -EINVAL and an extack so the rejected replay is not
+silent.  The check is intentionally narrower than nfp's: it fires only
+for a dev-bound program, so nsim's bpf_tc_non_bound_accept mode (which
+admits an unbound program onto the device) is unaffected.  Teardown is
+never blocked: the guard is on the program being installed and an unbind
+passes cls_bpf.prog = NULL.
+
+Conditions to recreate the bug:
+  - CONFIG_NETDEVSIM=y, CONFIG_NET_CLS_BPF=y
+  - load and pin a dev-bound SCHED_CLS program for netdevsim device B
+  - install the program on a shared block owned by B
+  - add an independently backed netdevsim device C to that block; the
+    bind replays the filter to C's callback, and C's
+    ports/0/bpf_offloaded_id takes the B-bound program id.
+
+The reported Sashiko review is at
+https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260809094418.901607-1-jhs@mojatatu.com
+
+Fixes: 31d3ad832948 ("netdevsim: add bpf offload support")
+Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/netdev/20260809094418.901607-1-jhs@mojatatu.com/
+Link: https://lore.kernel.org/netdev/QDISC-PYC7.v1.20261003103747@mojatatu.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
-Link: https://patch.msgid.link/20261019154718.2328055-1-pocj8ur4in@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/QDISC-PYC7.v2.20261010165947-2@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sht3x.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/netdevsim/bpf.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/hwmon/sht3x.c b/drivers/hwmon/sht3x.c
-index 3f279aa1cee5e..7176d63a42151 100644
---- a/drivers/hwmon/sht3x.c
-+++ b/drivers/hwmon/sht3x.c
-@@ -541,7 +541,10 @@ static ssize_t heater_enable_store(struct device *dev,
+diff --git a/drivers/net/netdevsim/bpf.c b/drivers/net/netdevsim/bpf.c
+index 50854265864d1..879ac48027af3 100644
+--- a/drivers/net/netdevsim/bpf.c
++++ b/drivers/net/netdevsim/bpf.c
+@@ -150,6 +150,17 @@ int nsim_bpf_setup_tc_block_cb(enum tc_setup_type type,
+ 		return -EOPNOTSUPP;
+ 	}
  
- 	mutex_unlock(&data->i2c_lock);
- 
--	return ret;
-+	if (ret != SHT3X_CMD_LENGTH)
-+		return ret < 0 ? ret : -EIO;
++	/* A dev-bound program can be replayed here when a netdev joins
++	 * a shared block, after the core attach-time check has run;
++	 * enforce the device match as nfp does.
++	 */
++	if (prog && bpf_prog_is_dev_bound(prog->aux) &&
++	    !bpf_offload_dev_match(prog, ns->netdev)) {
++		NSIM_EA(cls_bpf->common.extack,
++			"program bound to a different device");
++		return -EINVAL;
++	}
 +
-+	return count;
- }
+ 	if (cls_bpf->command != TC_CLSBPF_OFFLOAD)
+ 		return -EOPNOTSUPP;
  
- static ssize_t update_interval_show(struct device *dev,
 -- 
 2.53.0
 
