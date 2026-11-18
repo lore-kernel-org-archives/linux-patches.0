@@ -1,63 +1,61 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=178.251.229.89
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021691;
-	b=ksWrngGe+NLN0WzjuEXbKSLAfA6dYpNd3IPuW+hCDS8aRVZzUsmRoZM6MjP9vcMgHmcB
-	 lOhxMVju/WY8rGW1WpTZQXCosCBUfER8gI2ni11jRpkX74sECd1eNneenp3WMOaA8GXd3
-	 kbmRJVIn7xCOkrMwj+SfibC5sf9SXYWrH+NrAWz/1O+uEYPfjvR/WNxxJaKdCX653o6kE
-	 Lx8FQcbc9AZ43JGLZzOB9BhgWeI/UO5cO8BNiKKmWqCVkO/kiir2dssPmDQv+qa5IcbSe
-	 HP2fhDN/lKRofSKIfw25qJCp69rrQBdxIRIpiSp0LtEzX4eQjDSCNxz++O98f9UTJEA==
+	t=1795021693;
+	b=t+r3fHGspqdrmvqJWPq49gExu/5Vm62v9Vp6t5KeCmgjQoHWq7a8zxwcyHWckS+/4Qni
+	 XCVos+alyxwAfsmzt4DJIb2OX0MwCPskr/lLCagQ0qwzKgWPbswqKJY+z4EAO+rcI997p
+	 57S2AXj4CTJYkLE1jhrtALtOYyngm1ZUdWRBFIjBW9ZsECcfY/pSuNjIzY6BXWMWByP/N
+	 R9n9KhT7faF7SNirbnc7DJHGdX1CIfYkK6yCxQjIpax7AgZIcpxWKT7gIMj3agGSNN6KZ
+	 f3Ifmo8bl4EcCwcZvnLd9HSRoY6bJWuYSMeI7L32gBl4PkJ6p2gdncVofWejnfK5iUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021691;
-	h=DMARC-Filter:Received:DKIM-Signature:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To:X-Last-TLS-Session-Version;
-	bh=aseNCq+n+5bjQaW0Vanm4zTvexhRPXNbk5ZXU5gkWPg=;
-	b=3uQMTbNIt+indj2sSLJDjBZuZbelMVMIw2fdJ5dbsKl4cUTi8WWUwNMsRqcdmBa5OBt+
-	 A9+gfzn94VQ+SkWTMn/autQebcV2l4GtV4proap66BJYkok336A0gIVo84FQ1M1qliFsw
-	 wGcuWxy57LaCE4HPSBG/MsgJ32otHTojF18uw7n8P5BKjVkwk4RgmcEI/TB97cbWamE4f
-	 RPY1PeTiWfilPaSXqTUgNoplBIa2y2DatVyhttF/p5T3OWDn6b6mF6GS7o0t0kQQcHFTG
-	 vh6OT7BOeSqqpoeI8beyd3eLH2gvOwvc8sHne/ni193D0e1DYlTd4nJbwy7AIrEJyxg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021693;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=19f0qG+Ttgwlz3Ebp8i/BAQKpWUQkMGCKGaMUc8Jto8=;
+	b=iYI39jQbTxvBDid/BTClplt1WyOByeq/bxXwAN8cXWosLtBbWRbw9CRkG0I3XuUbwZnd
+	 93F5dlaH4bniqYY/zvAC6bwgQqYOGb7HFH26oXxilQhMPddsOMYnAGnTfn5w9TZsGZmVK
+	 xKE8+4v6GODJNfbMofLzYL/oIN0GZiZy00Xy3slkV3/feZavwu1YbvZMLUDBCjMc5XHFK
+	 INKR5OztIyYGuslJePI3dj+BqS/BcAZNmpVQbeTtwpOW6k/ZJlrnX6AYkB+PIEEZiRTYX
+	 jfSQoevYA4QXwvHaFA9vNCMEYzS+CdgtnvtLo90oEdjhgMxEo4Wt4nPh6ckXrbBUi5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nabladev.com;
-	spf=pass smtp.mailfrom=nabladev.com;
-	dkim=pass header.d=nabladev.com header.i=@nabladev.com header.a=rsa-sha256 header.s=dkim header.b="Xye/kTc9";
-	arc=none smtp.remote-ip=178.251.229.89
-Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F0JB48gx;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F49606A32F
-	for <patches@lists.linux.dev>; Wed, 18 Nov 2026 17:08:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E8F49606A32F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E91606A33D;
+	Wed, 18 Nov 2026 17:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.a=rsa-sha256 header.s=dkim header.b=Xye/kTc9
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id C6D7310E048;
-	Wed, 18 Nov 2026 18:08:03 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
-	s=dkim; t=1795021684;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=aseNCq+n+5bjQaW0Vanm4zTvexhRPXNbk5ZXU5gkWPg=;
-	b=Xye/kTc9O2lTy9sT0HMZ6Hacufu66cq+QObbWSfDMP3YKMYVLhNsEYW5sGb1oXGLv9fL4f
-	bFk0MqOOOGtcbQghKUpV3YLxH1rxhXAC0rKwCLg3aaSDA1Iq3bZR+pAtoDshMTOiU0VVOs
-	T3lZG0l4S2XNtuOtzTZhjq3Zn+b8SZzS2nj7m/QBA2Ru/WovNsWNWySHVSSLJlOBiEsPHB
-	IvrRdr4TMaFYVSCsnx0Wp8uInHVNzDO8EFyym0v4f8ZRoP/X1q8+2KbF44ZUk8gyvOlcTl
-	ZuozZIm/FPX/UURubRRH259GzGzw+zHJ0ur8Jxvo1vOF3cEaEtuI92aUBxtZow==
-Date: Wed, 18 Nov 2026 18:08:02 +0100
-From: Pavel Machek <pavel@nabladev.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.1 0000/2857] 6.1.193-rc1 review
-Message-ID: <av3bctJT9Ubq2j8q@duo.ucw.cz>
-References: <20261118150201.293410965@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F0JB48gx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A601F000C4;
+	Wed, 18 Nov 2026 17:08:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1795021693;
+	bh=19f0qG+Ttgwlz3Ebp8i/BAQKpWUQkMGCKGaMUc8Jto8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=F0JB48gxSsJ5aKcqBzBjP9OTvZ3Hzg6zqxcR/4YKaQu7pp+LbATIQkZjf1WDIbzJl
+	 42kodqnPfNSRZrgnzUfqxAvqy7x3bo21C/iUOniIQqrqSnjpWNWiXWDcu68+3Jn0Kq
+	 /OozpA2l5Yd6/DM++KgjPWViHUUI9kQ7FxxtdvX8=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Ting-Han Hou <ue081723@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Kieran Bingham <kbingham@kernel.org>,
+	Kuan-Ying Lee <kuan-ying.lee@canonical.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 2397/2651] scripts/gdb: fix stack depot out-of-bounds diagnostic
+Date: Wed, 18 Nov 2026 16:00:37 +0100
+Message-ID: <20261118150411.663084283@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
+References: <20261118150247.972732815@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -67,69 +65,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="H/qvEaJ/bP24KPwm"
-Content-Disposition: inline
-In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
+
+7.3-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Ting-Han Hou <ue081723@gmail.com>
+
+[ Upstream commit b6232ca8d194c60ee603586e42b5ea584d4b7be9 ]
+
+The pool_index field was renamed to pool_index_plus_1, but the
+out-of-bounds diagnostic in stack_depot_fetch() still accesses the old
+field.  Looking up a handle whose pool index is outside stack_pools
+therefore raises "There is no member named pool_index" instead of printing
+the diagnostic and returning an empty result.
+
+Use the already decoded pool_index variable in the diagnostic.
+
+Link: https://lore.kernel.org/20261011023044.1722-3-ue081723@gmail.com
+Fixes: 9d938f40b228 ("scripts/gdb: rename pool_index to pool_index_plus_1")
+Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Assisted-by: LLM
+Cc: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: Kieran Bingham <kbingham@kernel.org>
+Cc: Kuan-Ying Lee <kuan-ying.lee@canonical.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ scripts/gdb/linux/stackdepot.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/gdb/linux/stackdepot.py b/scripts/gdb/linux/stackdepot.py
+index 37313a5a51a0d..aaa18af25cd12 100644
+--- a/scripts/gdb/linux/stackdepot.py
++++ b/scripts/gdb/linux/stackdepot.py
+@@ -39,7 +39,7 @@ def stack_depot_fetch(handle):
+ 
+     pool_index = parts['pool_index_plus_1'] - 1
+     if pool_index >= pools_num:
+-        gdb.write("pool index %d out of bounds (%d) for stack id 0x%08x\n" % (parts['pool_index'], pools_num, handle))
++        gdb.write("pool index %d out of bounds (%d) for stack id 0x%08x\n" % (pool_index, pools_num, handle))
+         return gdb.Value(0), 0
+ 
+     stack_pools = gdb.parse_and_eval('stack_pools')
+-- 
+2.53.0
 
 
---H/qvEaJ/bP24KPwm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-HI!
-
-> This is the start of the stable review cycle for the 6.1.193 release.
-> There are 2857 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-We get build failures here:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/3084767168
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/18149480104
-
-mm/mremap.c: In function 'move_huge_pud':
-1175
-15:43:14
-mm/mremap.c:395:19: error: implicit declaration of function '__pud_trans_huge_lock'; did you mean 'pud_trans_huge_lock'? [-Werror=implicit-function-declaration]
-1176
-15:43:14
-  395 |         old_ptl = __pud_trans_huge_lock(old_pud, vma);
-1177
-15:43:14
-      |                   ^~~~~~~~~~~~~~~~~~~~~
-1178
-15:43:14
-      |                   pud_trans_huge_lock
-1179
-15:43:14
-mm/mremap.c:395:17: warning: assignment to 'spinlock_t *' {aka 'struct spinlock *'} from 'int' makes pointer from integer without a cast [-Wint-conversion]
-1180
-15:43:14
-  395 |         old_ptl = __pud_trans_huge_lock(old_pud, vma);
-1181
-15:43:14
-      |                 ^
-1182
-15:43:15
-  CC      fs/ext4/migrate.o
-1183
-15:43:15
-cc1: some warnings being treated as errors
-
-Best regards,
-							Pavel
-
---H/qvEaJ/bP24KPwm
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCav3bcgAKCRAw5/Bqldv6
-8vjWAJ9X09ClZ7hI+kH6TC0PWf9aMBdgMgCgu6mIxCPLwtFrdxWFgv1+zfBzrPU=
-=uBS5
------END PGP SIGNATURE-----
-
---H/qvEaJ/bP24KPwm--
