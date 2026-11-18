@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054247;
-	b=BW6cZxD/rwo2iqH4tcB39rDmKSAOfQ96d89fBUpLWKT6273I18Dxq0P80F5Y003m1Vdj
-	 RROxH4HJoYOl4u/ItuGUKOsaGgRd77KTg4zztpeDicMGLDGe7UrC3GlBDUIXUpg9/Xt4p
-	 cgjVYTbaosYE4i1ByzeJcRqL3ldJ8zfXVVB6ACk6Q2+rQDAVPT8ls+3T+W/F+ts7cEM3o
-	 vkg4UlqZzsERdx9ndTL4w2jbJ5hkf7TNiSNhvShkyRZDanPNceQFMAPFsjszPfmkz9TwM
-	 5ghGO1VKRWfJs2igszMboWhtHXbxjfE9NeUy5+48a+7b/UBcFttTLwKfty5bOZAd4BA==
+	t=1795054250;
+	b=PyfEKaNmaUSKYGTd0rn84MKMwMJneZeKUV5RKlAhOH1NMnUhwjheoAKDBtPYGWA2Dev6
+	 epA04bngAZ8owNsUfAnBFAO//hcAy0l4d4KdHs4Zz28fViSGYdTNirQ9RxZTc1y90ngXd
+	 0TULFmt3reXKS7nrPNU4TMMF+c/MHCAsHgghkJL2/jJuRbJrHUCxQ9JDKJqMmeCKF87ve
+	 I55xXDUXDueUxqWVmvoZD0vRBm1Ci9fLCQPIOsaUp9kmpoBidyE61UmLSlUt0CHdZ/6Gv
+	 QmMNBdVdLNNgRQFWBllacI2mYbevRUCLvynZljIutyhNbjPP7qJj7MRKsr1CgCsViYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054247;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054250;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xbd/nnUHWBZPLa2XH7rPyvye30e8w0rALzjmuTDaXIY=;
-	b=31EYavv4++Vd7m1l7wR10J2dZKFu6uMRRUSVHFhGfixnmbE91AmNCcKZXppJkSS+xyZo
-	 XJpR6ToMPBfVbtRSljmDlKSS59Cv6DAILuUiS/zGCR7Rn4fvPzC9wrFYnRUb27CsnMMBN
-	 6hN+iPsoJ6azbj7WmFHDZB8ElVawqmpL5/ogzP5gHEq20O5cm9DVseDEW7tQE+yTE8nqr
-	 Mcw5d7g4JYY6TVX8jrE13FIST12FcpGY9Bl2x4jUz+o+SDi+BvMK577BkIsMwS4zhU55l
-	 HvCgrZDs8PMuUIQNJ/U+lRWEUPKRZZyL1QeEdx6X76FJqFJY7VmImi5pqmzh387kWKQ==
+	bh=5C5EjjkJZO305YI7Sj0B9T77d78lNlY7zA+Lj9YNSEk=;
+	b=TPwLt9AMSAyhoqMowVyvs/I+cleybPIXM3+n0+yaBWWatUPwe9/RP2ZVugQCLJ3RsoSa
+	 5dGHEA4gw7yVc/s7ilhymPfZW2e1c9o2F7mPmEHgUXndJ/ZyzJvmmb+quHWzCqR5HgMtO
+	 /ti3dcYtapUYjNhgfqS4R3hN/WpYXE76/MfeWgOL/zktAZ0RoE8Sf1NXI1ic72HzPasz/
+	 eFltTMqCf9gLpNC5B/XOwWicxhbtgmu5/X3u23lu16pj+4REoiW5GbKQYJlD0dfHetYFu
+	 H3Jir/p9y/jBUAMY3/QmDPyZNFhkyI5Pw8ErdYHz9VZpHHIYFBPexRPiX3Gr4yYPliQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z6TgnFg2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x1nC20Bx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F80606A31C;
-	Thu, 19 Nov 2026 02:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD60606A32C;
+	Thu, 19 Nov 2026 02:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z6TgnFg2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA461F000C4;
-	Thu, 19 Nov 2026 02:10:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x1nC20Bx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C2A51F000C4;
+	Thu, 19 Nov 2026 02:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054247;
-	bh=xbd/nnUHWBZPLa2XH7rPyvye30e8w0rALzjmuTDaXIY=;
+	s=korg; t=1795054249;
+	bh=5C5EjjkJZO305YI7Sj0B9T77d78lNlY7zA+Lj9YNSEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z6TgnFg2XetPeLx6A4wcxLXIMnZyvQ6jvA8egrtTbQbmc6DC1IbGACfGPunLcahVq
-	 pWtIQDb6LBelkArjXDhn/orWKqDEs4kTz6UQzVBkTvJYnKfJmNrnB5fv0zr2hhbZca
-	 2JMvt87esSu/BHHivJU3C+L35LTpBMZclCVx9ANQ=
+	b=x1nC20Bxm53yO3FDTibYFrl3+S953jiFkKZ7T1Ud56v1ErhC1Jawf0afE34jQ7Wfm
+	 1petUXkfOn7L18cldhbVz64hD5GLgACL9seiPRckhTiBd72Rln4iib6v6DKwoDrdzc
+	 h02SygEAGQ70BoBSSk0TovYuy5Eyutdy1yBPtslQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Nicolai Buchwitz <nb@tipi-net.de>,
+	Len Baker <len.baker@gmx.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1155/2214] serial: amba-pl011: keep transmitter enabled when disabling RS485
-Date: Wed, 18 Nov 2026 15:47:11 +0100
-Message-ID: <20261118150058.183641084@linuxfoundation.org>
+Subject: [PATCH 5.15 1201/2214] assoc_array: Avoid open coded arithmetic in allocator arguments
+Date: Wed, 18 Nov 2026 15:47:57 +0100
+Message-ID: <20261118150059.906084192@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,62 +68,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Len Baker <len.baker@gmx.com>
 
-[ Upstream commit 97f85204275ae4d7fb530e451f3acc65c1ec1155 ]
+[ Upstream commit 2a12e0003580505b8e7d82f9a8fef95f4a1031a8 ]
 
-Disabling RS485 on an open port calls pl011_rs485_tx_stop(), which
-turns off the transmitter. Only the RS485 TX path turns it back on, so
-any later output stays queued and tcdrain() hangs until the port is
-closed.
+As noted in the "Deprecated Interfaces, Language Features, Attributes,
+and Conventions" documentation [1], size calculations (especially
+multiplication) should not be performed in memory allocator (or similar)
+function arguments due to the risk of them overflowing. This could lead
+to values wrapping around and a smaller allocation being made than the
+caller was expecting. Using those allocations could lead to linear
+overflows of heap memory and other misbehaviors.
 
-pl011_rs485_tx_stop() also checks only the hardware FIFO. If a DMA
-transfer has started but has not filled the FIFO yet, the transmitter
-is turned off under the transfer and the DMA channel never recovers.
+So, use the struct_size() helper to do the arithmetic instead of the
+argument "size + count * size" in the kmalloc() and kzalloc() functions.
 
-When leaving RS485 mode, cancel pending deferred starts and stops, leave
-the transmitter enabled and start any TX that was still waiting for
-delay_rts_before_send.
+Also, take the opportunity to refactor the memcpy() calls to use the
+struct_size() and flex_array_size() helpers.
 
-Fixes: 8d479237727c ("serial: amba-pl011: add RS485 support")
-Cc: stable@kernel.org
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20261012-fix-pl011-rs485-txe-v2-1-e9bf7d218389@tipi-net.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: Adapted RS485 handling to the existing rs485_tx_started boolean and synchronous delays, omitting unavailable timer and deferred-start logic. ]
+[1] https://www.kernel.org/doc/html/latest/process/deprecated.html#open-coded-arithmetic-in-allocator-arguments
+
+Signed-off-by: Len Baker <len.baker@gmx.com>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Stable-dep-of: 48691075b0ad ("assoc_array: don't chain a new shortcut onto an existing one")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/amba-pl011.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ lib/assoc_array.c | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
-index 7b21907cd14dd..3f74b96e7745c 100644
---- a/drivers/tty/serial/amba-pl011.c
-+++ b/drivers/tty/serial/amba-pl011.c
-@@ -2241,8 +2241,22 @@ static int pl011_rs485_config(struct uart_port *port,
- 	struct uart_amba_port *uap =
- 		container_of(port, struct uart_amba_port, port);
+diff --git a/lib/assoc_array.c b/lib/assoc_array.c
+index 861965af48b9c..65409f0d2e0e5 100644
+--- a/lib/assoc_array.c
++++ b/lib/assoc_array.c
+@@ -742,8 +742,7 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
+ 	keylen = round_up(diff, ASSOC_ARRAY_KEY_CHUNK_SIZE);
+ 	keylen >>= ASSOC_ARRAY_KEY_CHUNK_SHIFT;
  
--	if (port->rs485.flags & SER_RS485_ENABLED)
-+	if ((port->rs485.flags & SER_RS485_ENABLED) &&
-+	    !(rs485->flags & SER_RS485_ENABLED)) {
-+		u32 cr = pl011_read(uap, REG_CR);
-+
-+		/*
-+		 * Leaving RS485 mode, which only enables the transmitter while
-+		 * sending. Don't stop it, as that stalls a DMA transfer still
-+		 * in flight. Keep it enabled.
-+		 */
-+		uap->rs485_tx_started = false;
-+
-+		cr |= UART011_CR_TXE | UART011_CR_RXE;
-+		pl011_write(cr, uap, REG_CR);
-+	} else if (port->rs485.flags & SER_RS485_ENABLED) {
- 		pl011_rs485_tx_stop(uap);
-+	}
+-	new_s0 = kzalloc(sizeof(struct assoc_array_shortcut) +
+-			 keylen * sizeof(unsigned long), GFP_KERNEL);
++	new_s0 = kzalloc(struct_size(new_s0, index_key, keylen), GFP_KERNEL);
+ 	if (!new_s0)
+ 		return false;
+ 	edit->new_meta[2] = assoc_array_shortcut_to_ptr(new_s0);
+@@ -850,8 +849,8 @@ static bool assoc_array_insert_mid_shortcut(struct assoc_array_edit *edit,
+ 		keylen = round_up(diff, ASSOC_ARRAY_KEY_CHUNK_SIZE);
+ 		keylen >>= ASSOC_ARRAY_KEY_CHUNK_SHIFT;
  
- 	/* Make sure auto RTS is disabled */
- 	if (rs485->flags & SER_RS485_ENABLED) {
+-		new_s0 = kzalloc(sizeof(struct assoc_array_shortcut) +
+-				 keylen * sizeof(unsigned long), GFP_KERNEL);
++		new_s0 = kzalloc(struct_size(new_s0, index_key, keylen),
++				 GFP_KERNEL);
+ 		if (!new_s0)
+ 			return false;
+ 		edit->new_meta[1] = assoc_array_shortcut_to_ptr(new_s0);
+@@ -865,7 +864,7 @@ static bool assoc_array_insert_mid_shortcut(struct assoc_array_edit *edit,
+ 		new_n0->parent_slot = 0;
+ 
+ 		memcpy(new_s0->index_key, shortcut->index_key,
+-		       keylen * sizeof(unsigned long));
++		       flex_array_size(new_s0, index_key, keylen));
+ 
+ 		blank = ULONG_MAX << (diff & ASSOC_ARRAY_KEY_CHUNK_MASK);
+ 		pr_devel("blank off [%zu] %d: %lx\n", keylen - 1, diff, blank);
+@@ -900,8 +899,8 @@ static bool assoc_array_insert_mid_shortcut(struct assoc_array_edit *edit,
+ 		keylen = round_up(shortcut->skip_to_level, ASSOC_ARRAY_KEY_CHUNK_SIZE);
+ 		keylen >>= ASSOC_ARRAY_KEY_CHUNK_SHIFT;
+ 
+-		new_s1 = kzalloc(sizeof(struct assoc_array_shortcut) +
+-				 keylen * sizeof(unsigned long), GFP_KERNEL);
++		new_s1 = kzalloc(struct_size(new_s1, index_key, keylen),
++				 GFP_KERNEL);
+ 		if (!new_s1)
+ 			return false;
+ 		edit->new_meta[2] = assoc_array_shortcut_to_ptr(new_s1);
+@@ -914,7 +913,7 @@ static bool assoc_array_insert_mid_shortcut(struct assoc_array_edit *edit,
+ 		new_n0->slots[sc_slot] = assoc_array_shortcut_to_ptr(new_s1);
+ 
+ 		memcpy(new_s1->index_key, shortcut->index_key,
+-		       keylen * sizeof(unsigned long));
++		       flex_array_size(new_s1, index_key, keylen));
+ 
+ 		edit->set[1].ptr = &side->back_pointer;
+ 		edit->set[1].to = assoc_array_shortcut_to_ptr(new_s1);
+@@ -1492,13 +1491,12 @@ int assoc_array_gc(struct assoc_array *array,
+ 		shortcut = assoc_array_ptr_to_shortcut(cursor);
+ 		keylen = round_up(shortcut->skip_to_level, ASSOC_ARRAY_KEY_CHUNK_SIZE);
+ 		keylen >>= ASSOC_ARRAY_KEY_CHUNK_SHIFT;
+-		new_s = kmalloc(sizeof(struct assoc_array_shortcut) +
+-				keylen * sizeof(unsigned long), GFP_KERNEL);
++		new_s = kmalloc(struct_size(new_s, index_key, keylen),
++				GFP_KERNEL);
+ 		if (!new_s)
+ 			goto enomem;
+ 		pr_devel("dup shortcut %p -> %p\n", shortcut, new_s);
+-		memcpy(new_s, shortcut, (sizeof(struct assoc_array_shortcut) +
+-					 keylen * sizeof(unsigned long)));
++		memcpy(new_s, shortcut, struct_size(new_s, index_key, keylen));
+ 		new_s->back_pointer = new_parent;
+ 		new_s->parent_slot = shortcut->parent_slot;
+ 		*new_ptr_pp = new_parent = assoc_array_shortcut_to_ptr(new_s);
 -- 
 2.53.0
 
