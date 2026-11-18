@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051360;
-	b=qBn3/jWyCoHtUqoL2WyNALGHHoF3MzgiSVg214GYGOYJVEui6k/MwME0wu6jHAoxO9uK
-	 7hh4kL+UWfoLFL3elLxyfvoSaWfyBbylX74vEy7TpgZpdIHlsn3m0DYf7FKVaWeXPccAM
-	 QrJ9OpPV7fhzRl4xBBANkQFYAX4z5qGItNzWdhIXInYqXZ8Rkq6H1aKtdaX7BRgQIbw4V
-	 kh2eQyDAwhpAKIEBIFWa+gGLPS7cSDRrQNDbDbal92i3jUD5y48yaAVtMibLK6WILV0Lv
-	 IiSVrxk5i47v4j6wkzVeLmDulKVzDKWAX+tpre5oobiinnO/Psi6WXZdd/EqR9snTdg==
+	t=1795051363;
+	b=krYeztUB9UGKUNG80D/1JMCY2kHZF/yuZMiONiEcGSUXAEh2CEeEHVbvp4F8gSrXoTtL
+	 UNEhcQzk8aNzY6isw80f5MKiQWRpuVmhLFLtYxFcqt5oUd48jhJB+id5Si3yTK6x/2wHJ
+	 HjxufAQpokFwfASr3fVzOddgEp1BFFJSHi0IwAjNRAuKdzwgIM/ajhTNDOe6oJEcWqLsS
+	 at1lxNuKH0Nae3BJs819jrGUFLXcigELDpOmq+AAFqowTcX2kkVKKDUYmN3TIc2Ecx6zm
+	 xzrBaW5oa6HbVSmwE91Pb6nMmPV/gxcM8TpolYdUl5KtoxN/2uDGXrpcRp7GMX5xMOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051360;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051363;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NpWW7nTNQQ78Q2RLeTM1Y8h3FZ52E4tn4+XS5Jgkhqk=;
-	b=qx7ynB3810jBzKNdACO+1VCnyeECqjNoRUVMLQNn8j1Vx2noqMnHriqbFzWywGBtJkRe
-	 nBZlEtOPB0VrtxSExBZfJvqXWmA1Taw/CJ3LGnqjBga6C612ROrluUdCjykRW5dMP32x9
-	 HHY+ncNzLZbiZwKvwse+0s9aPmNALlHvr0jRB/aAG+nb4MBeVWkTjSZWMiXXhJv2OcbXB
-	 hFmwoFUpSskyw9l0HG1BaMgHoDRm67/evQDgYfjCCYtISZ75EZbVLQv+NIwR4J/gqnRUv
-	 DN98ln0M4zeSjgMKYb3vnjHbkQKH4fqvsfRDyEQkWk277aDC07ykhl6yogJWULyiX+A==
+	bh=9b35SnAiVEyglckUUCcQOfp7hZah/YyHOryVGVM5sYs=;
+	b=faUq0lKEixeqnGQfgmsvGjQYpuX5Eyli0ifQYbelgOxhqnmhJ7jEoK26t7S8YLzw2wOm
+	 g+5Kp+4c1NW5RekYYIURPXGOgIkDaPX6zEA54Vbtqq88tyEUxG6/v/KFxLhwQnyXnGwly
+	 z6cTYmrcWjKs+Y8T9+Vz5ZijyWg4maaMWTuWQByWnoEQ8J5HjlMh8AB6YfNWyW17hsyJK
+	 sWhpY+teXLZgUHQWU470w3QieIIemC7f2Wo/uBneXpiZjkCTTpyuDds+PqlNGiyBbs5eA
+	 FK5iJ64CM3Z4LiqLINMLNwe7dWfdoHohgfX8Y4BEb6zPb5Jd/kWig1/rr1oxrtX+C+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fa7DAYFC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="A8d5v/Lk";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECCA606A320;
-	Thu, 19 Nov 2026 01:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2295606A31C;
+	Thu, 19 Nov 2026 01:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fa7DAYFC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FAF01F000C4;
-	Thu, 19 Nov 2026 01:22:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A8d5v/Lk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3031F000CA;
+	Thu, 19 Nov 2026 01:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051360;
-	bh=NpWW7nTNQQ78Q2RLeTM1Y8h3FZ52E4tn4+XS5Jgkhqk=;
+	s=korg; t=1795051363;
+	bh=9b35SnAiVEyglckUUCcQOfp7hZah/YyHOryVGVM5sYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fa7DAYFCyK9gZdyDzvMVkIfquOuoHdVxvXENF+2L58XQKDIrNwvoAI2w06efl5GRK
-	 FBeYh2wOkmv7aZsE4p1/OdKXDQuJF6oOrHJ+n1t2aWa78hNJPvzBiJenBh2vHu/NkM
-	 5IrwDb97ylj0A7WxTPbo3bQk5myYFM8+i0rF5tTM=
+	b=A8d5v/LkOY/GqErpCCNe4RVgTQgZHwx7XLJqRpJVSEDv0uCj3nq7PUbGRhK1/lwz3
+	 OHvK0ee2maq/sMzU2laKcDdaYSb7VpSKXmaL7NqsRwc+yfX6qxknbAiJpDGYW+oJag
+	 /1t68GdzvrrsX2Jb8EE631rfP3pxhAj1rZBqyMbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunye Zhao <yunye.zhao@linux.alibaba.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Rui Qi <qirui.001@bytedance.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0182/2214] md: add cond_resched() to md_do_sync()s skip path
-Date: Wed, 18 Nov 2026 15:30:58 +0100
-Message-ID: <20261118150017.319352294@linuxfoundation.org>
+Subject: [PATCH 5.15 0183/2214] selftests/ftrace: Force C locale in ftracetest
+Date: Wed, 18 Nov 2026 15:30:59 +0100
+Message-ID: <20261118150017.353423341@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,58 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunye Zhao <yunye.zhao@linux.alibaba.com>
+From: Rui Qi <qirui.001@bytedance.com>
 
-[ Upstream commit 162eb5ba791f6260fdaabae75fa2df20134f67d8 ]
+[ Upstream commit c13fcd3951dcc19524ce0b3e852844b16cd32b22 ]
 
-When sync_request() reports a skipped region (*skipped == 1),
-md_do_sync()'s main loop advances the cursor and takes an early
-continue:
+Some ftracetest test cases parse command output by matching English
+field names. Tools such as readelf may localize their output via
+gettext, while ftracetest currently inherits the user locale from
+the environment.
 
-	j += sectors;
-	...
-	if (last_check + window > io_sectors || j == max_sectors)
-		continue;
+If a translated field name is printed, parsing can fail even though
+the tested kernel behavior is unchanged. For example, add_remove_uprobe
+can fail to find the ELF entry point and then write a uprobe event with
+a missing offset.
 
-If the personality returns a small span per call (raid10 recovery
-returns only 128 sectors), syncing a large, mostly clean array iterates
-this branch an enormous number of times without ever yielding the CPU.
-On a non-preemptive kernel the resync thread then trips the soft-lockup
-watchdog:
+Export LC_ALL=C in the top-level ftracetest runner so every test case
+gets stable command output by default.
 
-  watchdog: BUG: soft lockup - CPU#149 stuck for 313s! [mdX_resync]
-   md_bitmap_start_sync+0x6f/0xe0
-   raid10_sync_request+0x2c9/0x1530 [raid10]
-   md_do_sync+0x810/0x1030
-   md_thread+0xa7/0x150
+Link: https://lore.kernel.org/all/20260807081512.2974757-2-qirui.001@bytedance.com/
 
-Add a cond_resched().  This does not reduce the wasted iterations; the
-excessive iteration count is a raid10 problem addressed separately.
-
-Signed-off-by: Yunye Zhao <yunye.zhao@linux.alibaba.com>
-Link: https://patch.msgid.link/20260723135535.101995-3-yunye.zhao@linux.alibaba.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Signed-off-by: Rui Qi <qirui.001@bytedance.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/testing/selftests/ftrace/ftracetest | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index ab95d77ce8831..059816d04edc8 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -9038,8 +9038,10 @@ void md_do_sync(struct md_thread *thread)
- 			 */
- 			md_new_event(mddev);
+diff --git a/tools/testing/selftests/ftrace/ftracetest b/tools/testing/selftests/ftrace/ftracetest
+index 55314cd197ab9..73b14345b695f 100755
+--- a/tools/testing/selftests/ftrace/ftracetest
++++ b/tools/testing/selftests/ftrace/ftracetest
+@@ -7,6 +7,9 @@
+ #  Written by Masami Hiramatsu <masami.hiramatsu.pt@hitachi.com>
+ #
  
--		if (last_check + window > io_sectors || j == max_sectors)
-+		if (last_check + window > io_sectors || j == max_sectors) {
-+			cond_resched();
- 			continue;
-+		}
- 
- 		last_check = io_sectors;
- 	repeat:
++# Keep command output parsing stable regardless of the user's locale.
++export LC_ALL=C
++
+ usage() { # errno [message]
+ [ ! -z "$2" ] && echo $2
+ echo "Usage: ftracetest [options] [testcase(s)] [testcase-directory(s)]"
 -- 
 2.53.0
 
