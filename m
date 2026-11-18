@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061238;
-	b=WXtX/Ng893dmxGg8GEcDXDoriGr5kWhM7lyhh+K5YLp6GiOATxxMpwfko3Frq9aNZkwB
-	 vGhC2/fUEibvxUAql9kjS99CEyYkJ6WKQo0u9v/wNGSJtBbH/LxTcG6HJC6ZhEa4ENCps
-	 KoMdyjV0xfuGc+M73nn9vKwmekIk5Af0XXDtrLaMvzEb5pNz70yErqZdSlt5fbT9zUNGr
-	 hepovh/BSS/hOzcEb/Xb8ennw2lz3XU9NUdh4nQYoafELjnKjw/37+S0+t4yrScVcfbD+
-	 Y02GmahFBhqrPotcfJiqg4JZTtd4ONGcQUlU4rjkiLBOhJxrAp2W7t3r7kYGOiNS7+A==
+	t=1795061241;
+	b=WA3GmQuYioVYxgw8XhswtWfaluLW9yECGgzVJAm9ntTvKQyGWHm/FD10elbRB4VLWYo4
+	 gDBQoFPVPPN44a9c6BeOHBNu98wS3aa0DtfavImqAJ5c5W+99LVBvMVt3pBzazblw7fDO
+	 f3Y3kf8AJd2sAYdVz0pfwMjQBUvwlpbwcynzYzoGwvFJ5HoCVV/kPve4wkXT4gCwbvjFV
+	 KgGs0521pt49QR1UBNrYRNe1Sgo3NR2yeZ82XdTDPFhi+FUIL6mNrXSobI8LIL8xkyWaY
+	 lsSMiKr6lC4m8fygJBXZUnB3WxrXtBSxQ/vGE4fHhL7RCw4cJvORgi5apu1qp2qULMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061238;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061241;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HMLgIhpnGtZynKRCtKUnwvcADPYNMcOLroot7WGYKAg=;
-	b=sjXshyzOW1lksGyywIBgRcLtXum39ch6oHDGQX7t/GJnycfmRT8IL//oMiUq5cWeQQg3
-	 VCXhnHHP3GRx1dQ/Bzuax9iSt8GQAjheFqXL7lZvraDB5pgPZ9ZgvThIgsO4VW2j+v3SG
-	 HW7M6Gn4yXJn2tkVRdq+dzSuZNVokQ1u1K0SVyFjcL8H5FH1MCuZ7qaT6efiO+YUQYZEl
-	 HdkbLNkvo/dhYqnr+mtWq/ExR+ff8DUHcFqwZy52V9oViWyPl7HSssPigqI9/QUUqq/2R
-	 oK62RB+SQsKB3IcK8oe7jP7uEcRJFtdtZCv9MXtBiKl6ZyNynFOV3KuHOug8aAB2BFg==
+	bh=4NT2CmFDOIFyILwaMJYH4lQ8NsXVigxD9M5NiXTe+I8=;
+	b=Rgf41SpDrmm5XOwZxeK9+yIchAh2/t2qfT6OQ9jzYe3mimsurK1FtiAQ1cLYjEO8Bkex
+	 dv5WW80lon3q6WKpqB9j3v9ivldn/5X6fG6pRZbmp7xe/gH9OsYwoaXjgINTayWQnG9MQ
+	 p0l7efU04T5BLTCNucc12yQ1evsYTctjeeJlMV7GvuaWyztalcdDRdnvaizuMuO2AA+55
+	 LrupSSqR6gYCZVCZTukQIzoqZVSNr5S6I3Bh+MLzKEq9NclnJzl2xVidcE3ugpYpP4M7S
+	 qSHzVqElWT4rDmSkohJM5+Nd+ux1JwYLeSbBQDqO3a/azzuH4BtFTu3AdaucadL7hag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xTbyfjgQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mGLaaFyn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9399606A325;
-	Thu, 19 Nov 2026 04:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B0E606A331;
+	Thu, 19 Nov 2026 04:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xTbyfjgQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 141151F000C4;
-	Thu, 19 Nov 2026 04:07:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mGLaaFyn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF46E1F000C5;
+	Thu, 19 Nov 2026 04:07:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061238;
-	bh=HMLgIhpnGtZynKRCtKUnwvcADPYNMcOLroot7WGYKAg=;
+	s=korg; t=1795061241;
+	bh=4NT2CmFDOIFyILwaMJYH4lQ8NsXVigxD9M5NiXTe+I8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xTbyfjgQyA7UnIhyP4qUeQNYuEd6S6BOpvu+d9o9kFG2DUL0kFAv8Gnq74bXwkdFI
-	 QRbvlR68JH97tsDjEd+3ndwlOqKxRo1wl5RskN2zZdp5NhN+gJjGb34OW9Vo+TYmlP
-	 KMIdSXuC7aNmUHA6+zWOzftRlkTN+weOLIc3wsGM=
+	b=mGLaaFyn9+Iz+MzusfVaPd07QpM5ohu8WWeGDgVZaCGjF8bKsyVKxN66vWwC7Vlkc
+	 1SLtETJjx4yynuy2O+2PncJkWdAB3DHQhCCXhPanTYO9HNGU2OA2Zv2Kq2RnHphkgH
+	 eB70kL5U/MGqmV602CF4ycCIdeuusnBvkt/5p/iE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Frank Li <Frank.Li@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1481/1848] dmaengine: ste_dma40: Fix failed start cleanup
-Date: Wed, 18 Nov 2026 15:58:39 +0100
-Message-ID: <20261118150021.273459743@linuxfoundation.org>
+Subject: [PATCH 5.10 1482/1848] dmaengine: ste_dma40: Get LCPA SRAM from SRAM node
+Date: Wed, 18 Nov 2026 15:58:40 +0100
+Message-ID: <20261118150021.308911676@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,119 +68,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 8175ead5727173d4b96d1e830e696765d75ade71 ]
+[ Upstream commit 5a1a3b9c19ddeddc6b0c2ea1da7fbe6624c04c7e ]
 
-If d40_start() fails after a queued descriptor has been moved to the
-active list, d40_queue_start() currently returns NULL without unwinding
-the transfer state or clearing the channel busy flag.
+Instead of passing the reserved SRAM as a "reg" field
+look for a phandle to the LCPA SRAM memory so we can
+use the proper SRAM device tree bindings for the SRAM.
 
-Fix this pre-existing error path by completing the descriptor through the
-normal tasklet path, clearing the busy flag, balancing the runtime PM
-reference and returning an error pointer to distinguish the failure from
-the no-work case. Do not free the descriptor directly, since it has
-already been submitted and has a DMA cookie.
-
-When starting the next queued transfer from the completion handler, put
-the completed descriptor on the done list first. This preserves FIFO
-completion order if the new transfer fails to start and prevents the
-completed cookie from moving backwards.
-
-Use done-list membership rather than the cyclic flag to identify terminal
-descriptors in the tasklet. A cyclic descriptor that failed to start is
-then completed and removed instead of remaining permanently at the head
-of the done list.
-
-Fixes: 7d83a854a1a4 ("dma40: remove "hardware link with previous jobs" code")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Assisted-by: LLM
-Link: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-4-89f595e8851d@kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20230417-ux500-dma40-cleanup-v3-2-60bfa6785968@linaro.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: c6809b381e34 ("dmaengine: ste_dma40: Fix probe runtime PM disable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/dma/Kconfig     |  1 +
+ drivers/dma/ste_dma40.c | 47 +++++++++++++++++++++--------------------
+ 2 files changed, 25 insertions(+), 23 deletions(-)
 
+diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
+index 02b98f979479a..d53b64005564a 100644
+--- a/drivers/dma/Kconfig
++++ b/drivers/dma/Kconfig
+@@ -523,6 +523,7 @@ config STE_DMA40
+ 	bool "ST-Ericsson DMA40 support"
+ 	depends on ARCH_U8500
+ 	select DMA_ENGINE
++	select SRAM
+ 	help
+ 	  Support for ST-Ericsson DMA40 controller
+ 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 5efc4ee2f242f..4513cfdd66aca 100644
+index 4513cfdd66aca..f1e675e018017 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -1510,8 +1510,15 @@ static struct d40_desc *d40_queue_start(struct d40_chan *d40c)
- 		/* Start dma job */
- 		err = d40_start(d40c);
+@@ -19,6 +19,7 @@
+ #include <linux/pm_runtime.h>
+ #include <linux/err.h>
+ #include <linux/of.h>
++#include <linux/of_address.h>
+ #include <linux/of_dma.h>
+ #include <linux/amba/bus.h>
+ #include <linux/regulator/consumer.h>
+@@ -3516,9 +3517,11 @@ static int __init d40_probe(struct platform_device *pdev)
+ {
+ 	struct stedma40_platform_data *plat_data = dev_get_platdata(&pdev->dev);
+ 	struct device_node *np = pdev->dev.of_node;
++	struct device_node *np_lcpa;
+ 	int ret = -ENOENT;
+ 	struct d40_base *base;
+ 	struct resource *res;
++	struct resource res_lcpa;
+ 	int num_reserved_chans;
+ 	u32 val;
  
--		if (err)
--			return NULL;
-+		if (err) {
-+			d40_desc_remove(d40d);
-+			d40_desc_done(d40c, d40d);
-+			d40c->pending_tx++;
-+			d40c->busy = false;
-+			pm_runtime_put_autosuspend(d40c->base->dev);
-+			tasklet_schedule(&d40c->tasklet);
-+			return ERR_PTR(err);
-+		}
+@@ -3545,37 +3548,37 @@ static int __init d40_probe(struct platform_device *pdev)
+ 	spin_lock_init(&base->interrupt_lock);
+ 	spin_lock_init(&base->execmd_lock);
+ 
+-	/* Get IO for logical channel parameter address */
+-	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "lcpa");
+-	if (!res) {
+-		ret = -ENOENT;
+-		d40_err(&pdev->dev, "No \"lcpa\" memory resource\n");
+-		goto destroy_cache;
++	/* Get IO for logical channel parameter address (LCPA) */
++	np_lcpa = of_parse_phandle(np, "sram", 0);
++	if (!np_lcpa) {
++		dev_err(&pdev->dev, "no LCPA SRAM node\n");
++		goto report_failure;
  	}
- 
- 	return d40d;
-@@ -1555,15 +1562,15 @@ static void dma_tc_handle(struct d40_chan *d40c)
- 			return;
- 		}
- 
-+		d40_desc_remove(d40d);
-+		d40_desc_done(d40c, d40d);
-+
- 		if (d40_queue_start(d40c) == NULL) {
- 			d40c->busy = false;
- 
- 			pm_runtime_mark_last_busy(d40c->base->dev);
- 			pm_runtime_put_autosuspend(d40c->base->dev);
- 		}
+-	base->lcpa_size = resource_size(res);
+-	base->phy_lcpa = res->start;
 -
--		d40_desc_remove(d40d);
--		d40_desc_done(d40c, d40d);
+-	if (request_mem_region(res->start, resource_size(res),
+-			       D40_NAME " I/O lcpa") == NULL) {
+-		ret = -EBUSY;
+-		d40_err(&pdev->dev, "Failed to request LCPA region %pR\n", res);
+-		goto destroy_cache;
++	/* This is no device so read the address directly from the node */
++	ret = of_address_to_resource(np_lcpa, 0, &res_lcpa);
++	if (ret) {
++		dev_err(&pdev->dev, "no LCPA SRAM resource\n");
++		goto report_failure;
  	}
++	base->lcpa_size = resource_size(&res_lcpa);
++	base->phy_lcpa = res_lcpa.start;
++	dev_info(&pdev->dev, "found LCPA SRAM at 0x%08x, size 0x%08x\n",
++		 (u32)base->phy_lcpa, base->lcpa_size);
  
- 	d40c->pending_tx++;
-@@ -1577,20 +1584,22 @@ static void dma_tasklet(struct tasklet_struct *t)
- 	struct d40_desc *d40d;
- 	unsigned long flags;
- 	bool callback_active;
-+	bool from_done;
- 	struct dmaengine_desc_callback cb;
+ 	/* We make use of ESRAM memory for this. */
+ 	val = readl(base->virtbase + D40_DREG_LCPA);
+-	if (res->start != val && val != 0) {
++	if (base->phy_lcpa != val && val != 0) {
+ 		dev_warn(&pdev->dev,
+-			 "[%s] Mismatch LCPA dma 0x%x, def %pa\n",
+-			 __func__, val, &res->start);
++			 "[%s] Mismatch LCPA dma 0x%x, def %08x\n",
++			 __func__, val, (u32)base->phy_lcpa);
+ 	} else
+-		writel(res->start, base->virtbase + D40_DREG_LCPA);
++		writel(base->phy_lcpa, base->virtbase + D40_DREG_LCPA);
  
- 	spin_lock_irqsave(&d40c->lock, flags);
- 
- 	/* Get first entry from the done list */
- 	d40d = d40_first_done(d40c);
--	if (d40d == NULL) {
-+	from_done = !!d40d;
-+	if (!from_done) {
- 		/* Check if we have reached here for cyclic job */
- 		d40d = d40_first_active_get(d40c);
- 		if (d40d == NULL || !d40d->cyclic)
- 			goto check_pending_tx;
+-	base->lcpa_base = ioremap(res->start, resource_size(res));
++	base->lcpa_base = ioremap(base->phy_lcpa, base->lcpa_size);
+ 	if (!base->lcpa_base) {
+ 		ret = -ENOMEM;
+ 		d40_err(&pdev->dev, "Failed to ioremap LCPA region\n");
+-		goto destroy_cache;
++		goto release_base;
  	}
+ 	/* If lcla has to be located in ESRAM we don't need to allocate */
+ 	if (base->plat_data->use_esram_lcla) {
+@@ -3692,9 +3695,7 @@ static int __init d40_probe(struct platform_device *pdev)
+ 	if (base->lcpa_base)
+ 		iounmap(base->lcpa_base);
  
--	if (!d40d->cyclic)
-+	if (from_done)
- 		dma_cookie_complete(&d40d->txd);
- 
- 	/*
-@@ -1606,7 +1615,7 @@ static void dma_tasklet(struct tasklet_struct *t)
- 	callback_active = !!(d40d->txd.flags & DMA_PREP_INTERRUPT);
- 	dmaengine_desc_get_callback(&d40d->txd, &cb);
- 
--	if (!d40d->cyclic) {
-+	if (from_done) {
- 		if (async_tx_test_ack(&d40d->txd)) {
- 			d40_desc_remove(d40d);
- 			d40_desc_free(d40c, d40d);
+-	if (base->phy_lcpa)
+-		release_mem_region(base->phy_lcpa,
+-				   base->lcpa_size);
++release_base:
+ 	if (base->phy_start)
+ 		release_mem_region(base->phy_start,
+ 				   base->phy_size);
 -- 
 2.53.0
 
