@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030591;
-	b=lDpSr3lb77dPVdCgb3JjyxrIl8RQCG35LxFA3ed+adUI7hb1XgviqopsPSBCG7nMyQNY
-	 etQ7xFmiMc2PggoeKYg9AXY7UzyrD4F0gzP5F2hza+QJQFte3aCVOZ5OxK4pFvdjjZixL
-	 T8+Q+Bw1Ftcf3sA6XnsNBK2JIU0j/oJb09XEN/InsbHTmpj0rVDDH7zXubW1xQOXg/UR1
-	 0tIeiKkUB78mQF99XNZhBgtUthAh+b/PJkqbiXVLpaWrT17NPo3GLp+J/U9dOdlFehg8X
-	 R7DidziJMo9LksIF7ol+0tEU1Ru8lT3P6enFNp/0Mzhswy9u+TvkQebgtO8UckvHXDA==
+	t=1795030593;
+	b=GXjKLKgUpkR00Polpkepvg6HirXCsO2ieIEFZI3MdKBO+IYyqFgmm7KX7YMo9ZAeQNVP
+	 Uofrx2c7G8uQypF0QgR7vgRDQxBPJfrWBXKDl01QcQOXDqOLdtc0kK0eUBpWL8kGoSAO6
+	 vY5RTf18Sf4QkC9J32QtqQnHoNAVVn7xMxGCjVy18W9sovpfeHabAgw02cWz0srRyxSN8
+	 H18iy7sfxpj0hXeVYvq9G2OHcGlfvwKLtwyD1ue7VtJik44m3N2TrFLNSE4fAnGnTGEGB
+	 4vRcIUmShz/l/cL2KNZZDz7nz4t1jj3wH9z0AQjifdIDaCu996i1+ZDwANK1bChrzqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030591;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030593;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8NZny8nt9Uwm9uLwdEUoRlKXHyJuj90cFgGryiok4Sc=;
-	b=Z9F3bhaXTRkYLXwVkyUqblTVbPFhwCIqP6neEWWI0aFfCz6M+9Wuw7lOIzGPGLuje576
-	 JImd/wVnGOmGEu1WcwGyFuStzs95jQBQQBMgpTRz5H8NAm7hO/C1dY4eIwwyI8ednuLJy
-	 eKs9uTrm08TIsDyRB0Njg2xOZGVcu3wSkUtzt0QF1j7btzNoaq23TOe+TecPzyz0A/Gpq
-	 Nwyl/PcyXQLNRKgjU3qsVncdocumD0F12a+rV26YKBKv+8dDIb7DHusn+lhUgTD8rBm+a
-	 3lSjXoIC/nx6nyLLL4SvNwIxOWRrSC/69mDw0CtDGkWcPVlqxnp9X5C9VH9vlIdEM8Q==
+	bh=XQfhNkangLb4rW59s91MO79XLaU0dscs6y4AA985/pY=;
+	b=TGk2CaKa6gDUxWwi373AA+qENTP415i6e9k6nLiSOxMn5hnSu8Wb35K58+uh0qEXcTZb
+	 yN6SP14Z2btBFr4FzKQG3vS5MgehGkEj5guOR2ym/TLWsJxDp8s52RX+2bHlTVKP6XUY5
+	 Ux0jScn4C5eIy6C4z1dzhR5dMOB3cIZcWk6OfKna0hfzJYFBnK4lhcRQJW+glE4gQiVQZ
+	 O3gEtbm1x8DZIf0U4A5nUgDeevxAniVrfcf2R89tEAo5qftErSBzO78QrjVmnhvOiz1/A
+	 FzysEvbOm+vhk1HxhpUGTAdsWrZlHEkpXVUYmWXLQJq+lJGi797SmDoBxawNkVeG/kQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iYgPU8Oq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AQc4fOmp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54EBC606F255;
-	Wed, 18 Nov 2026 19:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF60606F269;
+	Wed, 18 Nov 2026 19:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iYgPU8Oq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 518601F000CF;
-	Wed, 18 Nov 2026 19:36:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AQc4fOmp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F6121F000C4;
+	Wed, 18 Nov 2026 19:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030590;
-	bh=8NZny8nt9Uwm9uLwdEUoRlKXHyJuj90cFgGryiok4Sc=;
+	s=korg; t=1795030593;
+	bh=XQfhNkangLb4rW59s91MO79XLaU0dscs6y4AA985/pY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iYgPU8OqbjZSUQFQqNEA9inlV0LPOirqJoG5J2BoQrss87mmn/z+TkfrrZm+LqCWB
-	 WrKmH2+FsTuGkUA6I+nVIY+S4K9ZnKLKTrD4DiqpZHzYI9+4WkTyXMzcxu+hYp/MjV
-	 vQoj9UEjp6q1V7vutYibtkBK9N9teGBT63L8LFlU=
+	b=AQc4fOmpi1Y5OF1MT8RK9FzpMRIcjh4pd/k/ZzqakJocZBxuYfHhwKIlrSDy1Dgod
+	 78JqTS9sILy4X1ba5uAXCal8agEcOSQJrNQG5tFjmOr+bCRSAISOoiCVmMdVW605QR
+	 PqcQWAAklKyWUByKNnQ/S0t5z6pUPjCihy5AXV30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slavin Liu <bolin.liu@seu.edu.cn>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
+	Matthias Goergens <matthias.goergens@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0760/1756] clocksource/drivers/dbx500-prcmu: Check timer register mapping
-Date: Wed, 18 Nov 2026 15:48:07 +0100
-Message-ID: <20261118150039.882202630@linuxfoundation.org>
+Subject: [PATCH 6.12 0761/1756] isofs: return long Joliet names whole
+Date: Wed, 18 Nov 2026 15:48:08 +0100
+Message-ID: <20261118150039.933363266@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,39 +68,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slavin Liu <bolin.liu@seu.edu.cn>
+From: Matthias Goergens <matthias.goergens@gmail.com>
 
-[ Upstream commit 8f30b035a6676e292ee8e54334711d9905dd0495 ]
+[ Upstream commit b8253bcf92d6365b20eea6465f5a93c9fc4aa029 ]
 
-Return -ENOMEM if of_iomap() fails, before reading or configuring
-the timer register block.
+get_joliet_filename() writes into a buffer allocated by its caller but
+is not told how big that buffer is.  It hardcodes PAGE_SIZE as the
+output limit for utf16s_to_utf8s() and gives uni16_to_x8() no limit at
+all.  PAGE_SIZE was never the right bound.  Before commit b2eb2e288604
+("isofs: Drop support of directory entries straddling blocks") both
+callers allocated a page, but only its first 1024 bytes were for the
+name, the rest holding a copy of a directory record that straddled a
+block.  It could not overflow only because a directory record holds at
+most 222 bytes of name (255 bytes, 33 of them fixed), which no converter
+expands beyond 1024 bytes.
 
-Detected by static analysis and reviewed with AI-assisted source auditing.
+It also keeps the converted length in an unsigned char.  222 bytes of
+name are 111 UTF-16 units, and the UTF-8 converter, used for
+iocharset=utf8 and when CONFIG_NLS_DEFAULT is "utf8", needs three bytes
+for each CJK, Thai or Devanagari character, so such a name can take up
+to 333 bytes.  Past 255 the length wraps.  readdir then reports a short
+name that usually ends in the middle of a UTF-8 sequence, and lookup
+finds the file only under that name, never under its real one; a name
+that wraps to exactly 0 bytes is not listed at all.
 
-Fixes: 9d2aa8c7961a ("ARM/clocksource: use automatic DT probing for ux500 PRCMU")
-Assisted-by: LLM
-Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260911060917.94310-1-bolin.liu@seu.edu.cn
+Such names are out of spec, since Joliet allows 64 units, but common
+tools write them: PowerISO 9.5 and UltraISO 9.76 both keep up to 110
+units by default.  Windows, for which Joliet was made, returns them
+whole, including 111-unit names in records that leave out the padding
+byte.
+
+Return them whole here too.  Pass the buffer size down and have both
+converters respect it.  utf16s_to_utf8s() stops before a character that
+does not fit, and uni16_to_x8() now hands uni2char() the space that
+actually remains and stops on -ENAMETOOLONG, as fs/hfsplus/unicode.c
+does.  Both callers pass JOLIET_NAME_MAX + 1, room for 111 units at
+three bytes each plus the terminator; no character set needs more than
+three bytes for a UTF-16 unit, and isofs_dir_record_valid() already
+rejects a record whose name_len claims more than the record holds, so no
+name is cut.  Make the length an int, which is what both converters
+return.
+
+These names are longer than NAME_MAX.  POSIX lets the limit vary by
+filesystem, reported by pathconf(_PC_NAME_MAX), and the VFS limits a
+name only by PATH_MAX (verify_dirent_name() in fs/readdir.c).
+
+vfat, exfat, hfsplus and ntfs3 already return names of up to 255 UTF-16
+units, 765 bytes of UTF-8, and such names break the same things there:
+copying the file to a filesystem with a 255-byte limit, such as ext4 or
+tmpfs, fails with ENAMETOOLONG, and cp, tar, rsync and Python's shutil
+report that file and carry on with the rest, so the copy is incomplete
+but says so.  glibc's readdir() returns the names, but the deprecated
+readdir_r() skips them and fails with ENAMETOOLONG, and an inotify
+reader with the buffer size inotify(7) suggests gets EINVAL.  In the
+kernel, fanotify reports events on such a file without its name and
+warns once in fanotify_info_copy_name(), and a directory with such a
+name cannot be reconnected from a file handle, because the generic
+get_name() in fs/exportfs, which isofs uses, skips names longer than
+NAME_MAX.  Cutting at NAME_MAX would avoid these, but would list names
+that Windows does not show and that can coincide within a directory.
+
+Every name of at most 255 bytes is returned exactly as before.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
+Link: https://patch.msgid.link/20260926042916.3277409-2-matthias.goergens@gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/clksrc-dbx500-prcmu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/isofs/dir.c    |  4 +++-
+ fs/isofs/isofs.h  | 11 ++++++++++-
+ fs/isofs/joliet.c | 27 ++++++++++++++++++++-------
+ fs/isofs/namei.c  |  3 ++-
+ 4 files changed, 35 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/clocksource/clksrc-dbx500-prcmu.c b/drivers/clocksource/clksrc-dbx500-prcmu.c
-index 2fc93e46cea38..1af223b0e8963 100644
---- a/drivers/clocksource/clksrc-dbx500-prcmu.c
-+++ b/drivers/clocksource/clksrc-dbx500-prcmu.c
-@@ -52,6 +52,8 @@ static struct clocksource clocksource_dbx500_prcmu = {
- static int __init clksrc_dbx500_prcmu_init(struct device_node *node)
- {
- 	clksrc_dbx500_timer_base = of_iomap(node, 0);
-+	if (!clksrc_dbx500_timer_base)
-+		return -ENOMEM;
+diff --git a/fs/isofs/dir.c b/fs/isofs/dir.c
+index 09df40b612fbf..f55528bb376af 100644
+--- a/fs/isofs/dir.c
++++ b/fs/isofs/dir.c
+@@ -215,7 +215,9 @@ static int do_isofs_readdir(struct inode *inode, struct file *file,
+ 		if (map) {
+ #ifdef CONFIG_JOLIET
+ 			if (sbi->s_joliet_level) {
+-				len = get_joliet_filename(de, tmpname, inode);
++				len = get_joliet_filename(de, tmpname,
++							  JOLIET_NAME_MAX + 1,
++							  inode);
+ 				p = tmpname;
+ 			} else
+ #endif
+diff --git a/fs/isofs/isofs.h b/fs/isofs/isofs.h
+index a36a634797435..0070c163b7250 100644
+--- a/fs/isofs/isofs.h
++++ b/fs/isofs/isofs.h
+@@ -118,7 +118,16 @@ extern int parse_rock_ridge_inode(struct iso_directory_record *, struct inode *,
+ extern int get_rock_ridge_filename(struct iso_directory_record *, char *, struct inode *);
+ extern int isofs_name_translate(struct iso_directory_record *, char *, struct inode *);
  
- 	/*
- 	 * The A9 sub system expects the timer to be configured as
+-int get_joliet_filename(struct iso_directory_record *, unsigned char *, struct inode *);
++/*
++ * The longest name the Joliet converter returns, in bytes.  A directory
++ * record is at most 255 bytes long, which leaves room for 111 UTF-16 units
++ * of name, and no character set needs more than three bytes for one unit.
++ */
++#define JOLIET_NAME_MAX \
++	((255 - sizeof(struct iso_directory_record)) / 2 * 3)
++
++int get_joliet_filename(struct iso_directory_record *de, unsigned char *outname,
++			int outsize, struct inode *inode);
+ int get_acorn_filename(struct iso_directory_record *, char *, struct inode *);
+ 
+ extern struct dentry *isofs_lookup(struct inode *, struct dentry *, unsigned int flags);
+diff --git a/fs/isofs/joliet.c b/fs/isofs/joliet.c
+index c0f04a1e7f695..d37e67c5e36f4 100644
+--- a/fs/isofs/joliet.c
++++ b/fs/isofs/joliet.c
+@@ -15,19 +15,26 @@
+  * Convert Unicode 16 to UTF-8 or ASCII.
+  */
+ static int
+-uni16_to_x8(unsigned char *ascii, __be16 *uni, int len, struct nls_table *nls)
++uni16_to_x8(unsigned char *ascii, __be16 *uni, int len, struct nls_table *nls,
++	    int outsize)
+ {
+ 	__be16 *ip, ch;
+-	unsigned char *op;
++	unsigned char *op, *end;
+ 
+ 	ip = uni;
+ 	op = ascii;
++	end = ascii + outsize - 1;	/* leave room for the terminator */
+ 
+ 	while ((ch = get_unaligned(ip)) && len) {
+ 		int llen;
+-		llen = nls->uni2char(be16_to_cpu(ch), op, NLS_MAX_CHARSET_SIZE);
++
++		if (op >= end)
++			break;
++		llen = nls->uni2char(be16_to_cpu(ch), op, end - op);
+ 		if (llen > 0)
+ 			op += llen;
++		else if (llen == -ENAMETOOLONG)
++			break;
+ 		else
+ 			*op++ = '?';
+ 		ip++;
+@@ -38,21 +45,27 @@ uni16_to_x8(unsigned char *ascii, __be16 *uni, int len, struct nls_table *nls)
+ 	return (op - ascii);
+ }
+ 
++/*
++ * Convert the Joliet name of @de into @outname, a buffer of @outsize bytes.
++ * The result is at most @outsize - 1 bytes long; a longer name is cut at a
++ * character boundary.
++ */
+ int
+-get_joliet_filename(struct iso_directory_record * de, unsigned char *outname, struct inode * inode)
++get_joliet_filename(struct iso_directory_record *de, unsigned char *outname,
++		    int outsize, struct inode *inode)
+ {
+ 	struct nls_table *nls;
+-	unsigned char len = 0;
++	int len = 0;
+ 
+ 	nls = ISOFS_SB(inode->i_sb)->s_nls_iocharset;
+ 
+ 	if (!nls) {
+ 		len = utf16s_to_utf8s((const wchar_t *) de->name,
+ 				de->name_len[0] >> 1, UTF16_BIG_ENDIAN,
+-				outname, PAGE_SIZE);
++				outname, outsize - 1);
+ 	} else {
+ 		len = uni16_to_x8(outname, (__be16 *) de->name,
+-				de->name_len[0] >> 1, nls);
++				de->name_len[0] >> 1, nls, outsize);
+ 	}
+ 	if ((len > 2) && (outname[len-2] == ';') && (outname[len-1] == '1'))
+ 		len -= 2;
+diff --git a/fs/isofs/namei.c b/fs/isofs/namei.c
+index 58f80e1b3ac0d..62c2f15fc6004 100644
+--- a/fs/isofs/namei.c
++++ b/fs/isofs/namei.c
+@@ -112,7 +112,8 @@ isofs_find_entry(struct inode *dir, struct dentry *dentry,
+ 			dpnt = tmpname;
+ #ifdef CONFIG_JOLIET
+ 		} else if (sbi->s_joliet_level) {
+-			dlen = get_joliet_filename(de, tmpname, dir);
++			dlen = get_joliet_filename(de, tmpname,
++						   JOLIET_NAME_MAX + 1, dir);
+ 			dpnt = tmpname;
+ #endif
+ 		} else if (sbi->s_mapping == 'a') {
 -- 
 2.53.0
 
