@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058822;
-	b=1vO4fRzT9fPlA7rbGTToUxZy+yhm6ojRMPQ+v50MtFNy+HLUVwhKyodylgYn4JNUGVsG
-	 eUxTvYsV0tQvqXfmq/cFzarw7Kw7MFxehGz7r2N8AhDeA0BMXFFZOoJ8KA5t5UtvrtrS8
-	 k9p5wxFS2WghkP2avrz1YO6mfs449waJ4c3+toSlBn+Zu6GiOZdGza9K0lRHtLNVmVk9A
-	 yJEEwvRpIAR4jPdBJbwPwDhsCd2dfkJt0icHs+B8vALEtUJmJ+nOBclkde31TkdmDGbzU
-	 MjbSTAGVYuuznFLkRAz3NjQcD9c0QCmAdNWAthIavOoPruZf4bHlVgEmYvxjCM7XiwQ==
+	t=1795058825;
+	b=oFJ2BZnesaCkHyOysHE4HdqOBR1C5CfIE6esKOkXWVRUfrhn1mT68KnUvrMsd+U7VH1P
+	 we4DxSA7N/XAS6z+t8H7l/ZdUi29COp/Tsma5faN6owRdZ80cY1K4dWW/pfOPyXJZ6RHA
+	 qkL3B7OfLt4uR0xuncnoKzZktdlLz8Umj7pJ2cjSrmHNnOqR/DF3VH2kLUg10JjjxlBmP
+	 n33wRKuWPJfhjot7AWXR4K06ZFbPhJuPTKMbHbi2tebDMTIpdEB7iTPAeFvguMbwDLTIj
+	 BxwI3H3GrWA3xVntVHX+OLWLToFjSV0wzltAG+bM1Mu/TfhyXNbYN55wraXiWgtRHWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058822;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058825;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BUVtMjZoa4zpKOQEIewQ6c/GmGNSXvdLIvOOji/Dp9E=;
-	b=gHf8iurS3oefX4S1iku5Oe49TG3mgNX+g8NCx4sicyqwYkJFa+Oq8G5zvO+bNXuXWWUz
-	 B+s+AvKbPSFy+CIKoFpqSGmLf8F8i6fd/N6XEcJmXp+ydu1yT8aYSBnu0T3ii/6bnxpiD
-	 QwJKln4ZT/POqjPZquMxHikIMjbAd2gyEJCSBch9p1Ji5Hy3obbXS7w0K90LrUt+mt94a
-	 Z59CgpJ1H6N6rJbWGtr8x1u1v5dNJqL0ASofoCUtNpXtBTN9AeUPtTGkfq75ytlF81/yV
-	 gX73g6Ks3EiUcPZhsolHKwSLdN1jhUfESTmS4P1ugZYotmx9ZbulZ6e4RCJ8ckmiIWA==
+	bh=ICGNUzJKG+O8FfHF8FsQFABid+3p+JlgvDR/sVcMhsM=;
+	b=2gs38T7au0jNsH8YxKqxKg+TgSpTWzszeWwXtEfCX87Y0gAFRWhPK0q2XXLMyX/FGA9E
+	 FyytrhVVy6y5uRJdZRHDAp8VkgcvlQSpQV8SjSqr7JHQq+YQ4SnAXoyhnB+2ihdZIWTHQ
+	 6DCfOXMN1EB/PO0oPe589nSnfxjyvFescXiYTV6RFBCMDpJHzXwDQ3R/jr/vs9/Gn4QOD
+	 lLnPQYi/KJuLOubG+zVl7QGaT4U7QlQyiaLLx9ub5luzWOC8QWRhOPBs+w1tAWVLuXjGM
+	 C1Tg87rZQLoD5LJwlQUQdsvFVpWetefWfU4C0scuNWLQpOhoJa69QfW26aTIPUR3TTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wkz7zGKn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kLn6id0I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F93A606A32C;
-	Thu, 19 Nov 2026 03:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED479606A31C;
+	Thu, 19 Nov 2026 03:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wkz7zGKn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 862F81F000C4;
-	Thu, 19 Nov 2026 03:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kLn6id0I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E791F000C4;
+	Thu, 19 Nov 2026 03:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058822;
-	bh=BUVtMjZoa4zpKOQEIewQ6c/GmGNSXvdLIvOOji/Dp9E=;
+	s=korg; t=1795058824;
+	bh=ICGNUzJKG+O8FfHF8FsQFABid+3p+JlgvDR/sVcMhsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wkz7zGKn1wLJxstimZ4PkDa7e7TzjePdEvBcOlJsENGjMtuCSJ9iDZzUlsDgAW/LI
-	 tE84p6L4h8ki+qCWPE8JcmtBWPYRDkwJ+qTMpnzPtkyW75mG7swN3/2zBmTDSaZ716
-	 TIe8BVWuVdpkhJbdVD98I3huLcLRJVtZZ+ICQi/w=
+	b=kLn6id0IgBk5UBPFHabvIqs+ALm0S97b2KLtW/sOFGsWUGOY6mCNAyiyoBtsaZ21n
+	 jlT9XBh8FuU0Dzn0kLk7LBoZ76wiku9bUmilDCh0djt23nLzuatoHCP/SjgDp9q3Sr
+	 hfNt8lC7buBTQ3L6oBTTExqCppOVRU0cl458r7D4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0581/1848] ceph: Fix mds session leak in __open_export_target_session()
-Date: Wed, 18 Nov 2026 15:43:39 +0100
-Message-ID: <20261118145939.648799617@linuxfoundation.org>
+Subject: [PATCH 5.10 0572/1848] ocfs2/cluster: remove zero-address nodes from IP tree on teardown
+Date: Wed, 18 Nov 2026 15:43:30 +0100
+Message-ID: <20261118145939.045681334@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,44 +74,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 6c80207392fdb86107d7acbdbf4c86cac38da1af ]
+[ Upstream commit 5dd57e77eff4ba3e85b3df126a55417c88245708 ]
 
-__open_export_target_session() holds a reference on the target session,
-either from __ceph_lookup_mds_session() or from register_session(),
-which the caller is expected to drop. When __open_session() fails, the
-helper returns ERR_PTR(ret) without dropping that reference, leaking
-one session reference on every open failure.
+o2nm_node_ipv4_address_store() accepts 0.0.0.0. It sets
+O2NM_NODE_ATTR_ADDRESS and links nd_ip_node into cl_node_ip_tree under
+cl_nodes_lock, but o2nm_node_group_drop_item() uses nd_ipv4_address as a
+membership test. A zero address therefore leaves the rbtree node linked
+when config_item_put() releases and frees struct o2nm_node. A later
+address store or IP lookup can then walk the stale node and dereference
+freed memory.
 
-Drop the session reference before returning the error.
+During teardown, drop_item takes cl_nodes_lock, skips rb_erase()
+for the zero key, and then calls config_item_put(). A later
+o2nm_node_ipv4_address_store() duplicate check or o2nm_get_node_by_ip()
+lookup takes the same lock and walks the stale cl_node_ip_tree entry. Use
+O2NM_NODE_ATTR_ADDRESS for teardown so every published nd_ip_node is
+erased before configfs can release the node, without rejecting 0.0.0.0
+or changing lookup semantics.
 
-Cc: stable@vger.kernel.org
-Fixes: b682c6d41bc2 ("ceph: switch to WARN_ON_ONCE in encode_supported_features()")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Link: https://lore.kernel.org/pm-ocfs2-node-ip-rbtree-zero-address-uaf-v5-e7f64be16b7c3b0988d1@gmail.com
+Fixes: 0c83ed8eeb28 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mds_client.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ocfs2/cluster/nodemanager.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
-index 165a0ec892acc..75ce0a52ace27 100644
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -1433,8 +1433,10 @@ __open_export_target_session(struct ceph_mds_client *mdsc, int target)
- 	if (session->s_state == CEPH_MDS_SESSION_NEW ||
- 	    session->s_state == CEPH_MDS_SESSION_CLOSING) {
- 		ret = __open_session(mdsc, session);
--		if (ret)
-+		if (ret) {
-+			ceph_put_mds_session(session);
- 			return ERR_PTR(ret);
-+		}
- 	}
+diff --git a/fs/ocfs2/cluster/nodemanager.c b/fs/ocfs2/cluster/nodemanager.c
+index ca4dc8aa0e5b1..651b43033f4f6 100644
+--- a/fs/ocfs2/cluster/nodemanager.c
++++ b/fs/ocfs2/cluster/nodemanager.c
+@@ -627,8 +627,11 @@ static void o2nm_node_group_drop_item(struct config_group *group,
  
- 	return session;
+ 	write_lock(&cluster->cl_nodes_lock);
+ 
+-	/* XXX sloppy */
+-	if (node->nd_ipv4_address)
++	/*
++	 * 0.0.0.0 is a valid configured address, so nd_ipv4_address does
++	 * not tell us whether nd_ip_node was published in the IP tree.
++	 */
++	if (test_bit(O2NM_NODE_ATTR_ADDRESS, &node->nd_set_attributes))
+ 		rb_erase(&node->nd_ip_node, &cluster->cl_node_ip_tree);
+ 
+ 	/* nd_num might be 0 if the node number hasn't been set.. */
 -- 
 2.53.0
 
