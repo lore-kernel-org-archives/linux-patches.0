@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041014;
-	b=BAn+dcEffRDwvIBgblreaDmvuFIYjgk2FbwxHdgM8l9M1bvOnm4gWydmPSfTCecGelH7
-	 dVUbvVN+j3OtKH+LbcJ0nCrW99U/zBGWGtNceiF2jH+goxwJiGNweCo8csMSIhlqXb07T
-	 fs8+46o1b8KT3TnL1ct8uso4UFPxb+bic/NgMCXAilUcqDHPeX6QDkPubnAVlkXzQLAXr
-	 rIwURruZ5bBAjNmm4g8kJiHPIQw9sEXowoVM65wVl7q21AbQnN2Flyan5D0+TfBY0cYaX
-	 1/eME8pNvm6m8hTqYvFalDZtznUIWPI8BIT67Vu1LA0aYQ1T9D6kDtguWvQdfWk6wcg==
+	t=1795041017;
+	b=JOVt0Sj8fIgxS/2cFSWqQrO2la2APIj9+wBbl2QNTxTS2bi+QGrzvf9w8waYnHwrxSsS
+	 2yrq0jCJJC7BcUFXrej9zeDNY59ZDOWwddOvFYnCYpbBZwhRgM8b6SWg5zYPOQUxIFADg
+	 +BNGnU8vWcNuYLr/c0UY5epEFrIHj3LuBC4hGhxFm4w++nCXWLQv/dGW101le7HJn7MJ7
+	 W3P+VEEjA6WQltAaQKk0Q8GYVlGE3HMakJIwKxq0je/fs06T6Jtquu2ZCuHsDbPSM764y
+	 eDMLft5YlFslh0O5atbvfiT5fSVYyF8lpJuQKe/TQtSvlXPfF8DkM+H+PNnHZR6/NDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041014;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041017;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oWIydfdAds1+G46tG0OQ4D3zZ/pWSDBT/XuMLKyluTg=;
-	b=N2kwcSDf0a5Q+go12Pfx5Hm4si26jSBPQ1BQhfl9r1dWt9v+sVOFuSWwWftT6Ue5JKf+
-	 VWE1Blj7bs9JXzpZ2oF5noVn6KOK3C/r0PqEUNLup2P6VDcYAPrA0kCWCAMlWAzugCBTV
-	 BfCfkHleeIZYiUxa4d9N7HRGIrrLx9UszzS6t4/tsTKUkGEZLJ1IBK8VDVXmXxesO7o+/
-	 YqZfMqZ2t+vaAmIcAZkEH7yQQwghv9EOqbkvvgYZ8C6+zrcmZwuHOZzMHyLY+RUsQA+YS
-	 R7Qq7qapGpeZP6GllagwHdWEj2B27pbcIrtQAcmedkZHm4f4qlBGW1X//q+5Yb+TQVw==
+	bh=z2fuiOCFkUFh2unQ+mdn6HeU8sOjHd5p0X6qLSXsdDk=;
+	b=TuMappBt0j7qGxJCmKUC5c4PFxJ7VLxrdkgYLi/ILK26I+OFnZ9kblJVwx5xNg/tnMwv
+	 dSZeHvZXn2Vv1h0WQFoA2HDH+Zk69uiVqvomYKUSZ/UgsrqK7Yseu9QX5Ib5tjHBljvCO
+	 fKz0VigIfwrFMAMw6dScZ9zg2Hrr/MwijIi3Ns0LCv4r1b/INvdV/OCSVytPac6f+SOGx
+	 tUUTHNjObQubyFNVaGI6oQoSM3RpYXgHaB4aPacxw2zrbQ0+UmBLZZX8dbi6fzIJs3XcO
+	 5Qdrf3HhMuLDKzH3nKV+ilROsV4S9NZ1YzS7zVDVvbRmjZ6+x5zB9Qu/fRZj6AaaHfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LOiX8Ccb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o5oPewaz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E99606A32F;
-	Wed, 18 Nov 2026 22:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EAC2606A335;
+	Wed, 18 Nov 2026 22:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LOiX8Ccb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D80F21F000C4;
-	Wed, 18 Nov 2026 22:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o5oPewaz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E8A1F000C4;
+	Wed, 18 Nov 2026 22:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041014;
-	bh=oWIydfdAds1+G46tG0OQ4D3zZ/pWSDBT/XuMLKyluTg=;
+	s=korg; t=1795041017;
+	bh=z2fuiOCFkUFh2unQ+mdn6HeU8sOjHd5p0X6qLSXsdDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LOiX8CcbbRvrjduJ4Snv0bZ6VX/VsCOkGhHVxzuT5ZuzM0uYotNHO6L0GRH30fS0y
-	 oFEartk19GlIvF7Q5lL1oJuNHoozAh3luDQwkyhUoXDxkHE90JRlzUwlNp7cmUkuMm
-	 1GdepsBQJZ4rfY0cqSerVuavrunNcmrTMssq29PM=
+	b=o5oPewazH/3SNZy1NRlYg5SducXD8ItDJweYTYFFAaq2+yXf1bV7Sz5BAegpjAVY1
+	 Ng5ikO61tSKI6Q2vAYGHMFIS+pVCQsigMQJ/pG5P2YSTEBGP/FL1F3l+sUweE2saDy
+	 Lv69OuDgA/Z4Ed2wYITMYJ0R6R6zB2L1Ni8krPRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2661/3318] wifi: mt76: mt7915: guard firmware memory dump write on disabled memdump
-Date: Wed, 18 Nov 2026 15:54:43 +0100
-Message-ID: <20261118150440.857791400@linuxfoundation.org>
+Subject: [PATCH 6.6 2662/3318] wifi: mt76: mt7921: fix lock inversion between dev->mutex and iflist_mtx
+Date: Wed, 18 Nov 2026 15:54:44 +0100
+Message-ID: <20261118150440.884720037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,66 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit decf5142c2d4c295684da8644d4cb93dcf956c5d ]
+[ Upstream commit 3dcb98c5cb51a70750ae8dc006d6d787ca09f425 ]
 
-mt7915_coredump_build()/mt7996_coredump_build() wrote dump_mem->len
-unconditionally, but the allocation only reserves room for the memory
-dump header when coredump_memdump is enabled and memdump_buf_len is
-non-zero. In the default configuration the allocation ends right after
-the fixed header, so the write landed one struct past the buffer. Only
-populate the memory-dump section when it was actually allocated.
+mt7921_config() holds dev->mutex across
+ieee80211_iterate_active_interfaces(), which takes local->iflist_mtx.
+mac80211 uses the opposite order: ieee80211_del_virtual_monitor() holds
+iflist_mtx while calling drv_unassign_vif_chanctx(), and
+mt792x_unassign_vif_chanctx() takes dev->mutex.
 
-Fixes: 4dbcb9125cc3 ("wifi: mt76: mt7915: enable coredump support")
-Fixes: 878161d5d4a4 ("wifi: mt76: mt7996: enable coredump support")
+Deleting a monitor interface that has a channel assigned reaches the
+second order and lockdep reports the cycle. The driver side of it:
+
+  -> #1 (&local->iflist_mtx){+.+.}-{4:4}:
+         __mutex_lock+0xda/0x1070
+         ieee80211_iterate_interfaces+0x34/0x70 [mac80211]
+         mt7921_config+0xb8/0xe0 [mt7921_common]
+         drv_config+0x63/0x1d0 [mac80211]
+
+.config is only reached through drv_config(), which asserts the wiphy
+mutex, so ieee80211_iterate_active_interfaces_mtx() can be used. It walks
+the same list under the wiphy mutex and never takes iflist_mtx, which
+drops the driver's dev->mutex -> iflist_mtx edge.
+
+Fixes: cbaa0a404f8d ("mt76: mt7921: fix up the monitor mode")
+Link: https://lore.kernel.org/linux-wireless/20260730053916.109426-1-lucid_duck@justthetip.ca/
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260810045338.118923-2-lucid_duck@justthetip.ca
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/coredump.c | 7 ++++---
- drivers/net/wireless/mediatek/mt76/mt7996/coredump.c | 7 ++++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/coredump.c b/drivers/net/wireless/mediatek/mt76/mt7915/coredump.c
-index 5daf2258dfe6f..56d9b64ec6b06 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/coredump.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/coredump.c
-@@ -345,11 +345,12 @@ static struct mt7915_coredump *mt7915_coredump_build(struct mt7915_dev *dev)
- 	mt7915_coredump_fw_stack(dev, dump, exception);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+index acf54f27332f6..e75f7230cf21f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -631,9 +631,9 @@ static int mt7921_config(struct ieee80211_hw *hw, u32 changed)
+ 	}
  
- 	/* gather memory content */
--	dump_mem = (struct mt7915_coredump_mem *)(buf + sofar);
--	dump_mem->len = crash_data->memdump_buf_len;
--	if (coredump_memdump && crash_data->memdump_buf_len)
-+	if (coredump_memdump && crash_data->memdump_buf_len) {
-+		dump_mem = (struct mt7915_coredump_mem *)(buf + sofar);
-+		dump_mem->len = crash_data->memdump_buf_len;
- 		memcpy(dump_mem->data, crash_data->memdump_buf,
- 		       crash_data->memdump_buf_len);
-+	}
+ 	if (changed & IEEE80211_CONF_CHANGE_MONITOR) {
+-		ieee80211_iterate_active_interfaces(hw,
+-						    IEEE80211_IFACE_ITER_RESUME_ALL,
+-						    mt7921_sniffer_interface_iter, dev);
++		ieee80211_iterate_active_interfaces_mtx(hw,
++							IEEE80211_IFACE_ITER_RESUME_ALL,
++							mt7921_sniffer_interface_iter, dev);
+ 	}
  
- 	mutex_unlock(&dev->dump_mutex);
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/coredump.c b/drivers/net/wireless/mediatek/mt76/mt7996/coredump.c
-index ccab0d7b9be47..d5ecac6b742a0 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/coredump.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/coredump.c
-@@ -202,11 +202,12 @@ static struct mt7996_coredump *mt7996_coredump_build(struct mt7996_dev *dev)
- 	mt7996_coredump_fw_stack(dev, dump, exception);
- 
- 	/* gather memory content */
--	dump_mem = (struct mt7996_coredump_mem *)(buf + sofar);
--	dump_mem->len = crash_data->memdump_buf_len;
--	if (coredump_memdump && crash_data->memdump_buf_len)
-+	if (coredump_memdump && crash_data->memdump_buf_len) {
-+		dump_mem = (struct mt7996_coredump_mem *)(buf + sofar);
-+		dump_mem->len = crash_data->memdump_buf_len;
- 		memcpy(dump_mem->data, crash_data->memdump_buf,
- 		       crash_data->memdump_buf_len);
-+	}
- 
- 	mutex_unlock(&dev->dump_mutex);
- 
+ out:
 -- 
 2.53.0
 
