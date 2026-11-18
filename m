@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059761;
-	b=dhCUHs03KM+TOvuVO3hxwegvtCxB5virihB2ysicHvYgzUoGIJZ1LsIQlypEBN/tNHj/
-	 zy1eN8K2rUMnIPC13pokrvfaRaTjfGI+yGN3sMuYqfLvdX+yDgH1/kxDfs6p+CyvGIY2E
-	 2VeLrlvlru4dixoavpuXLR1Sd7N26IWB2fiBVjYK/GTuXXqRlXSdvPNkSuRwgRqb57Jwf
-	 IrjBw0M5mgY/TcJ6kMrJtREppGUGhMrUAgrZCBy/11XJWeGKa/QBkIEZ8Ps46sGJP+kOJ
-	 V7qW64I/CYXY83rs8BQS8vCAzEHfqQd/jHK4Z6iqbFDaU5MuuMVIASqafwhmIok6JyA==
+	t=1795059763;
+	b=XY5iofkNk5eSlNROhGCNVtfx7mDkDmOAwLSDUVOgkrw6gpqje1a+ieHdgiohMBSQOvkx
+	 SKqcrAmM65P9FSNruLyO6LF/Iylhpg/Y3uNHXJ3neGP7Kpz4fkeXXGt0DUD4LP6Ny9Ar7
+	 FA+mmLO9Q7iK4HEum85UTUH1lOkXI6vJEpJhDujtAFDIEdUDsbHJw+blKJSvr/ckF6fFa
+	 cQT0U8Tkmn07itV8cYiTIFvNuK8HEF/HhelR3Vs3pXDGnJe+z/Na/MYGrT0OjRwL95Yh1
+	 BCA6YKlXObQkFsLRFOmIVHU82ipFbXTMyQ/TZQRM8L/Cw9EPuQXb6Ud/gBUZYbyhUPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059761;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059763;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W0fq9hL/fdnQtrMNlbrPMyjHjX35QqHeIeiO+ma47mI=;
-	b=tBz/sHmC976JDE6eLpSfN/OO2ncpySQyuwSpv/ZqPeUOMVALxZKjuae5vAFLzWSRcwi9
-	 8iLlFcyGHX0BcR8gNQMDaDuqr3REzcTc83czwDsr0euBpTWgjxGUOx02lFlT7dVlYAkp8
-	 gNQZWadZHOGNQKSa7T0ST/VntagekHgRPookVUMNKPD/O/Azqa7dsy1HoCceiKpZI/z1W
-	 ybevMyUjKJQAb2uQLhJkvgnObotaqwX42PM72ThRUQFDBLBUhEHDIMrfvypNbjVCzg0aq
-	 qY7ghVoNV6czGteG/w+L8KoPAwtJzV1cv3sSeQXsRw20dtDtYU/UL0zBxWM8HMB+XfQ==
+	bh=pKywkGODzJh2VPyYzkCM+4Z827ds6aaW5UBSci+belM=;
+	b=Z6dgUHmQ543UrPP4tcQpMGm1MLKd7WHpKQlnMMOrP+3678exMI8xgJlbs6irSZLz5Pxf
+	 LzghRW/StlJUDq8pG+lZiFNKZ3tNcuKJoM+ybWgaot7XRok+0+svj5XXt3jnaH96lb46N
+	 dPXMxRRJYF2mxsbcCq4f/9EGZbuC5yWvPWx9aypFyYCKo+8twq+ivXnX6bdJd6oEYpxHO
+	 kxlUKkyzGGXozVBKpxZJfRkO3g7tT9y8KCfsSkgzgzkIN0Mf01yptWWWaGszNW56ysS1K
+	 Uq+hnw1e17O2qIfGz8klvLaB1Pnp28dpXDoHrkcniMhLllCoROnhcyMgB+Ycq0V4VtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McAEUQ7j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SGh2vvrF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A755606A320;
-	Thu, 19 Nov 2026 03:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE0E606A325;
+	Thu, 19 Nov 2026 03:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McAEUQ7j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2714E1F000C4;
-	Thu, 19 Nov 2026 03:42:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SGh2vvrF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CDD1F000C4;
+	Thu, 19 Nov 2026 03:42:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059760;
-	bh=W0fq9hL/fdnQtrMNlbrPMyjHjX35QqHeIeiO+ma47mI=;
+	s=korg; t=1795059763;
+	bh=pKywkGODzJh2VPyYzkCM+4Z827ds6aaW5UBSci+belM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=McAEUQ7jZP0XrEFT0sygIaBaUj88HmrLYN0E/kCOXwPwvWWIuGJUEmqYzw9f/2uDc
-	 3p8b38CeyBNa9B+RnPm1+Ok2NkyaHuKHWSam6jM9oCWPgIZqstSeU0jn8rrdqVyTaA
-	 9TELqu7cPN/CX/Mk3otNmgtpmCpjn6zRJo1BFA/0=
+	b=SGh2vvrF+rN0xO+RTqIjfiFjjmgXujHgKxm0dXuRjBKXNUUu+Ue2kMNQ8eK55UST9
+	 cSjSAJkQH745w+fXGUi7MvNj9hEjyW8jCSOMv6Yw9Fv4mMrf0PEtl/SxfbawJ2L1LQ
+	 tocDrYBnKHIcGuLe2KiAlikkMI0Hm0nEVtMdUDPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	SJ Park <sj@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Hugh Dickins <hughd@google.com>,
-	"Paul E . McKenney" <paulmck@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0957/1848] mm/shmem: report RCU-tasks quiescent states while undoing a range
-Date: Wed, 18 Nov 2026 15:49:55 +0100
-Message-ID: <20261118145957.070068841@linuxfoundation.org>
+Subject: [PATCH 5.10 0958/1848] iomap: dont mark unwritten parts of a folio uptodate
+Date: Wed, 18 Nov 2026 15:49:56 +0100
+Message-ID: <20261118145957.107577131@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -72,71 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit ebd1a08c192109c83a87ddf42793ed6283180faf ]
+[ Upstream commit a4193b4af359db84b2cdf3a040752861984c636b ]
 
-This shows up in the Meta fleet on ftruncate() of large tmpfs files:
+For a buffered write into a hole, an unwritten or new extent, or past
+EOF __iomap_write_begin() zeroes the parts of the blocks outside of the
+write and then marks the blocks uptodate. That includes the range of the
+write itself which still holds whatever was in the folio before. It only
+becomes valid once the copy from userspace has filled it in.
 
-  INFO: rcu_tasks detected stalls on tasks:
-  00000000752fd185: .. nvcsw: 59455/59455 holdout: 1 idle_cpu: -1/0
-  task:rocksdb:bottom  state:R  running task
-    __folio_split
-    find_get_entry
-    find_get_entries
-    truncate_inode_partial_folio
-    shmem_undo_range
-    shmem_setattr
-    notify_change
-    do_ftruncate
-    __x64_sys_ftruncate
-    do_syscall_64
+But the copy can come up short and __iomap_write_end() only rejects a
+short copy if the folio isn't uptodate. If the zeroed blocks were all
+that was missing the folio is uptodate by then, the short copy is
+accepted, and the rest of the range is exposed to readers and can end up
+on disk. A source buffer that ends in an unmapped page is enough:
 
-shmem_undo_range() walks the whole of the requested range in folio_batch
-sized steps, twice, and its two cond_resched() calls are the only
-reschedule points in that walk.
+        ftruncate(fd, 4096);
+        pwrite(fd, p, 3000, 100);    /* 16 bytes at p, then PROT_NONE */
+        pread(fd, buf, 4096, 0);
 
-cond_resched() is not an RCU-tasks quiescent state.  Use
-cond_resched_tasks_rcu_qs() at both points so the walk reports an
-RCU-tasks quiescent state as it proceeds.
+The write returns 16 and the read returns 2984 bytes of whatever was in
+that page before. If other blocks of the folio aren't uptodate the short
+copy is rejected but the zeroed blocks keep their uptodate bits and the
+retry with the copied length leaves the same bytes behind.
 
-Link: https://lore.kernel.org/20260918-shmem-tasks-rcu-v1-1-79acf91a2569@debian.org
-Fixes: 8315f42295d2 ("rcu: Add call_rcu_tasks()")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: "Paul E . McKenney" <paulmck@kernel.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: adjusted loop context from folio batches to existing page vectors with explicit index advancement ]
+Only mark blocks uptodate in __iomap_write_begin() after reading them.
+__iomap_write_end() marks the zeroed blocks uptodate once the copy has
+succeeded and rejects a short copy.
+
+Willy reported this back in 2024 (cf. [1]) and Zhang Yi posted the same
+fix (cf. [2]) but it never got merged.
+
+[1]: https://lore.kernel.org/all/ZqsN5ouQTEc1KAzV@casper.infradead.org
+[2]: https://lore.kernel.org/all/20240812121159.3775074-6-yi.zhang@huaweicloud.com
+
+Fixes: 9dc55f1389f9 ("iomap: add support for sub-pagesize buffered I/O without buffer heads")
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261029-work-iomap-ai-fixes-v1-1-7eda63bc1b13@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: adapted iomap_set_range_uptodate() to use page instead of folio in the older __iomap_write_begin() context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/iomap/buffered-io.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 5f8d8899bd0e7..6f2e267aa092f 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -957,7 +957,7 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index d0a141816f125..8756797f224d0 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -582,14 +582,15 @@ __iomap_write_begin(struct inode *inode, loff_t pos, unsigned len, int flags,
+ 		if (iomap_block_needs_zeroing(inode, srcmap, block_start)) {
+ 			if (WARN_ON_ONCE(flags & IOMAP_WRITE_F_UNSHARE))
+ 				return -EIO;
++			/* uptodate once copied, see __iomap_write_end() */
+ 			zero_user_segments(page, poff, from, to, poff + plen);
+ 		} else {
+ 			int status = iomap_read_page_sync(block_start, page,
+ 					poff, plen, srcmap);
+ 			if (status)
+ 				return status;
++			iomap_set_range_uptodate(page, poff, plen);
  		}
- 		pagevec_remove_exceptionals(&pvec);
- 		pagevec_release(&pvec);
--		cond_resched();
-+		cond_resched_tasks_rcu_qs();
- 		index++;
- 	}
+-		iomap_set_range_uptodate(page, poff, plen);
+ 	} while ((block_start += plen) < block_end);
  
-@@ -991,7 +991,7 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 
- 	index = start;
- 	while (index < end) {
--		cond_resched();
-+		cond_resched_tasks_rcu_qs();
- 
- 		pvec.nr = find_get_entries(mapping, index,
- 				min(end - index, (pgoff_t)PAGEVEC_SIZE),
+ 	return 0;
 -- 
 2.53.0
 
