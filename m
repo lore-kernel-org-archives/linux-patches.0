@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055379;
-	b=Yx7BikWk6M2z+VWF1e2UVZDYdlcI3uYAUvOjEIB4LKmAcG7NzLtBGe3N66MbaDXVdqNE
-	 u3iHuZPDgJm8ay9gi07wr2s20DRBtaJLbsiEQfOtnwkDQs254VHnUn/5V4j3VQ6IY0SPL
-	 xoB4QtWW2T3S8GGY21HmIBUfVW3dN/JVWK/c6tielI8mTNbfVV1ivsxbamiOgKEB0YXak
-	 OvDgYB2u0x9PBWphdRe03ieb79ERUejqZCs5h17qEpdgHIQl7Q+/9jt/P4yKWPBrlKpc4
-	 2qXOcMj66Q6+Q/8VAy1h0V3v9Rcn5x8FexIe1B9ociWUie3MCiexsCJ/2qayCOMV2FA==
+	t=1795055382;
+	b=j0MAxHieYktFtW5sqKuhCOuz3pvS1vtAI3qeH9jTISHuENfLyb/smLkRjEutNoi+JC2m
+	 6FNVwCt3ad4fzDJ8woPftUlCwTy5RaR1YsKvxZJopPApBp1i6FkC/gRiXR9h5LojIZIcu
+	 xolG1xix6THrJFJzkZ6R2o6YeuE2nyxax+4bH2JuNXo+0PNouVWaGIEJYJE3JpXWzGk9u
+	 Gjl1nfq3IuuXkRJdJUxY3RjelW6wTQnGnuW7oyRQ3WTft/XpbbSXx/Y59vaDl4eON+qWL
+	 Rkyy8yz2o/RAYZ18HcSsH3Vac9v7PiT2gi+8l006dRqmqvEr+wuu5clizM+CD2jv7mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055379;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055382;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l0kZrZodXrAic3Kl+6xRUA5G7wo/Dfcj+oGsyB5RkA4=;
-	b=2W0heDJwrqFUs4xJD+JLN6jQEpBaeP6+UEuWRXST5LOEIyWHClUar9/Grfx8esQpssAI
-	 TkAArz/6GTFoP4G4TgNQQJzuO43wXJGI2SUW5SaLIL1ZBeSr7hdobRGWPFuunQoRNUmrB
-	 nkPoPbOkYqRBs+nu5guwQZMARlwSKef4osRkFU2zjWeiaTWfmysKejkqFfSn5aVjWdxMs
-	 56dVdxXCZoH5DIuRF1Lrqp0fuInZf7OdnXh7eEwbI5dURmc7XNHN+vHVW26Ze4bhEPqDQ
-	 m84xWOKrv7BvUGfVYb0c2jfam6+vf7pDj2CL4o8pTZD+3jhpLmOAkoTsihsRf/pGPyw==
+	bh=zsuOjXu65lmZOtZVPMsPVHlwe1Omy1C+qZdzmUgSZjc=;
+	b=qCR8qy685/WEsZMm78xsuqRzNFjIh8zTsYlhbGO9weldTxsYphK3OHU4HcqmJfAU/ogs
+	 ZlzCYfP6X+bq4LrrMJ3WQPeuf0QlYZ0F2hpPqbciI6/YRX7yq/qJcIIMjisFNuamS9Xs4
+	 RUQXV/DsS31eFHUNXAEbQvVK2aLXfFExed72HyFfJwWbNvtQ54k169ftSQOXCQH22X29J
+	 NpMiRnYDOU6+VbTYNJZvhj/gWxiiBmGoLcCuWMuN3/7OUtnJNB44nHCVa/PnW3GG55ZYw
+	 JHHSVXbe15s2LQceK6t1ccw3bEziMtMqD6jdqy/asaMOApN528LDvchu+Aau4BFlCUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N3XP8ZV3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mIVG/8Mf";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE6560A260E;
-	Thu, 19 Nov 2026 02:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF72606A332;
+	Thu, 19 Nov 2026 02:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N3XP8ZV3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080721F000C8;
-	Thu, 19 Nov 2026 02:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mIVG/8Mf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C503C1F000C9;
+	Thu, 19 Nov 2026 02:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055379;
-	bh=l0kZrZodXrAic3Kl+6xRUA5G7wo/Dfcj+oGsyB5RkA4=;
+	s=korg; t=1795055382;
+	bh=zsuOjXu65lmZOtZVPMsPVHlwe1Omy1C+qZdzmUgSZjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N3XP8ZV32uH7RcKJ8mf0euq9KcQ3D0JzNoIU4uYZMy1yl4e+lLFjmZRCQub9W/uWy
-	 GhUNzTTDNdUqSCrbyyxMe6dJR2cBsE+cCL1Mwte4gBx33Uxd5NBJaNswuvPI2aiRUt
-	 Busoio3C6bwlee8UARdn3sDGLUKFgPJ2429NCDEs=
+	b=mIVG/8Mf1DDimbUGT/iMfpSUDjcchincsqTKA5U+OhkHSf9iToHj7dLs2ZDUO0uJp
+	 KZF2OBTC0aF1jpQ8fKdg0AY+q+uSLycXgyny9PyrkUGgaIM/XzrcxOyZiVVqOGSJnK
+	 GpjP+U4opVTd84e7ClySq4o5plxRdG25jwjE8h4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Slavin Liu <bolin.liu@seu.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1611/2214] ACPICA: Fix memory leak in acpi_ds_create_field()
-Date: Wed, 18 Nov 2026 15:54:47 +0100
-Message-ID: <20261118150116.376749695@linuxfoundation.org>
+Subject: [PATCH 5.15 1594/2214] ASoC: fsl_asrc: check the second front-end DMA channel
+Date: Wed, 18 Nov 2026 15:54:30 +0100
+Message-ID: <20261118150115.744345266@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,63 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Slavin Liu <bolin.liu@seu.edu.cn>
 
-[ Upstream commit dbb3d99ee95c32711950850ddd33eb22a6042eb2 ]
+[ Upstream commit b4136c0d69ead737197af741e20edd1c3574f6b4 ]
 
-acpi_ds_create_field() allocates internal_pcc_buffer for operation
-regions in the PCC address space.
+The temporary Front-End DMA request can fail independently of the
+persistent channel acquired earlier in fsl_asrc_dma_hw_params(). The
+returned NULL pointer is immediately used to read its private data.
 
-The function runs once per field, so a second field on the
-same region overwrites the pointer and orphans the previous buffer.
+Check the temporary channel and release the previously acquired
+persistent Front-End channel on failure. Clear its slot so a later
+hw_free cannot release it twice. ASoC marks a component's hw_params
+only after success and skips unmarked components during rollback, so
+returning an error alone would leak the earlier channel.
 
-The matching ACPI_FREE() in acpi_ut_delete_internal_obj() only ever sees
-the last one.
+Detected by static analysis and reviewed with AI-assisted source auditing.
 
-An arm64 platform whose SSDT declares regions with multiple fields each
-leaks two buffers at boot, as detected by kmemleak:
-
-  unreferenced object 0xffff000051e65400 (size 192):
-    comm "swapper/0", pid 1, jiffies 4294668436
-    backtrace (crc 0):
-      __kmalloc_noprof
-      acpi_ds_create_field
-      acpi_ds_load2_end_op
-      acpi_ds_exec_end_op
-      acpi_ps_parse_loop
-      acpi_ps_parse_aml
-      acpi_ns_load_table
-      acpi_load_tables
-      acpi_init
-
-Do not allocate a region if it was previously allocated before,
-preserving the current design, but, not leaking memory.
-
-Fixes: aa6ec56b574d ("ACPICA: ACPI 6.3: add PCC operation region support for AML interpreter")
-Link: https://github.com/open-acpica/acpica/commit/c71849d476bb5f97ca1867849e893368e12a69e6
-Signed-off-by: Breno Leitao <leitao@debian.org>
-[ rjw: Subject tweak, fixed the Fixes: tag ]
-Link: https://patch.msgid.link/20260925-acpica-pcc-field-leak-v2-1-e37008e715af@debian.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 3117bb3109dc ("ASoC: fsl_asrc: Add ASRC ASoC CPU DAI and platform drivers")
+Assisted-by: LLM
+Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
+Link: https://patch.msgid.link/20260913125147.109920-1-bolin.liu@seu.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/dsfield.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/fsl/fsl_asrc_dma.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/acpi/acpica/dsfield.c b/drivers/acpi/acpica/dsfield.c
-index a168177679691..d53368871e537 100644
---- a/drivers/acpi/acpica/dsfield.c
-+++ b/drivers/acpi/acpica/dsfield.c
-@@ -522,7 +522,8 @@ acpi_ds_create_field(union acpi_parse_object *op,
- 	}
+diff --git a/sound/soc/fsl/fsl_asrc_dma.c b/sound/soc/fsl/fsl_asrc_dma.c
+index 79dd5a9b8f481..e547e2e10cab2 100644
+--- a/sound/soc/fsl/fsl_asrc_dma.c
++++ b/sound/soc/fsl/fsl_asrc_dma.c
+@@ -231,6 +231,11 @@ static int fsl_asrc_dma_hw_params(struct snd_soc_component *component,
  
- 	if (info.region_node->object->region.space_id ==
--	    ACPI_ADR_SPACE_PLATFORM_COMM) {
-+	    ACPI_ADR_SPACE_PLATFORM_COMM &&
-+	    !region_node->object->field.internal_pcc_buffer) {
- 		region_node->object->field.internal_pcc_buffer =
- 		    ACPI_ALLOCATE_ZEROED(info.region_node->object->region.
- 					 length);
+ 		/* Get DMA request of Front-End */
+ 		tmp_chan = asrc->get_dma_channel(pair, dir);
++		if (!tmp_chan) {
++			dma_release_channel(pair->dma_chan[!dir]);
++			pair->dma_chan[!dir] = NULL;
++			return -EINVAL;
++		}
+ 		tmp_data = tmp_chan->private;
+ 		pair->dma_data.dma_request2 = tmp_data->dma_request;
+ 		pair->dma_data.peripheral_type = tmp_data->peripheral_type;
 -- 
 2.53.0
 
