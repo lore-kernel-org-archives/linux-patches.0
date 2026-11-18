@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042950;
-	b=SvNDk1JVVZlfMgJH+Itb/4dhw0JiS/P4eSWtf4kbagVIfzd+Uwn+6H4l1qi91mamiw+n
-	 qVp3iNQAvj/7PatKQgBwpTRsABc+2PRiyogZeaTIwd8yjry4hIS59mn0sI5Lt4GxBdncQ
-	 IIKqa2c0ITeP8vq5eECOjvsz4UlpnzNPkdyu0P+ODm/oIQdohOfQIz6cwj6QJhg1YacOS
-	 T9hvqpkIfjF7dk30PHYzPf0zJkgdR5guDbge6FwaC2jxCKKOTSHfT9VIUvBGGeiHUBGT0
-	 AY75nXyR8HTlxW512OWHlmabJ6DquWdbAg9BXpJXMQtmNIDhC2CkOEhQPlsXk+F79bA==
+	t=1795042953;
+	b=cSF0H/U34C7k7GrHwvTIzZ7TWQZMgQVvSs+NmhE4czj8pNGHYKBpJiHVPcPtTDIfH5/D
+	 ch0Ydkbb5R2T5rZRg0Poe1PWpA8jQen0/UqMF888l1OPz4DdIYBU/b1Y3Gg5nEulIEaF6
+	 V6oaa5LGdFUyyHuYIAwust80EwTn91q5TgvAVfWWAGAMkV17SHCD0QgU4w6DTQWf9sBr/
+	 1e22rgqrgJGr2DNpVidz3bTLZGoyozmzKtFE32uG0k6MOrJDr0qp3dcWP+sYUZuQ4Zp+0
+	 oc93vcR88Az/0S1xg+v/QZPQfz7K1IN6o/BtPRaxdSMArwIRYhx5lTePuAA4fkPs8qw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042950;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042953;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J6A+QDYh7uYtd9qX0jfoW4/MdtGcJrtyJ9BnV9D9GPU=;
-	b=g0g9dygT1tqcYwtobk6E7QGXETjHt+772H7th9pEBwMQJ6j+Jc+lb70m30f2H1k3qqha
-	 tj8UxGbGWVuWM0g2Kjj8ONO7RoQmq7TJbM51R+oFIW9ISadA7f9A6fmaIP7WBXm491yZx
-	 8x02QapTrHIHt1hiE6rdI5bgym0fASR/QmMGbskgp1eWvonvonUZaZVDEbyK/ElxV7pix
-	 OnkpJjhbKvcOprzG98Q4913V0xQesLvCC2ygWJ3oYalF8KZXNZ9BBrL4WuVquwxri3cNu
-	 6q6Kr65eYncZSx57+vNyAAzVwOBHGtNfgTwe1Q/xzgPCH4w69TH64wcFzl2NL57Wdng==
+	bh=JyHzLmIQB3pgh1U1YNyzeF0tJcfkh/PRVx/mQmVYaxk=;
+	b=3bKq8CEomDZYLY9KE3AKvoF6O6z9fkH8T7O9MIRiBdYXI6aB54iyDcGoOzWfUbcLE8By
+	 16wZz1717V2e1GcDsyjSmPaEREgf4L29tCN7sGGstFlajj2xYvOFUwJapoUBZzHcgclhJ
+	 BJQsPC2vdaZw2I6LwiInGJ4s9U6u5EuubnNtUDbZqGha61eldx7ZPUD5JSMC/+y9mEAKz
+	 RFbxulBQ4ELUebg5htvoz7pxH3S44UMHqA3vwIF2ni9HPPNSFvn5ZvNKSwyzQU7XCBHvR
+	 BdfULPMjRwimuf9vEVL1bwwm/or5FWm5Gdcu54bugz7eJHCaLOsY3V3e496iX0cTNvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RQ6scWGa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VFm4WC1Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE75606A320;
-	Wed, 18 Nov 2026 23:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352F3606A320;
+	Wed, 18 Nov 2026 23:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RQ6scWGa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5C11F000C4;
-	Wed, 18 Nov 2026 23:02:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VFm4WC1Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1321F000C4;
+	Wed, 18 Nov 2026 23:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042950;
-	bh=J6A+QDYh7uYtd9qX0jfoW4/MdtGcJrtyJ9BnV9D9GPU=;
+	s=korg; t=1795042952;
+	bh=JyHzLmIQB3pgh1U1YNyzeF0tJcfkh/PRVx/mQmVYaxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RQ6scWGa7uETNOmzkQlfblFLUUZAZDvIcoJJNHpBZw2c/68fzQy3OSC3W7+Xb4Zio
-	 C7Sn3I90zpBne1OoTpo4fSd9jR51KvJ5a0s9v/gZByH7VrYO1IIejisFBmgzxXv0N3
-	 TaRqRreliLKrOYUPFTLqYWwoE/fL0HMWL9K9Mt8o=
+	b=VFm4WC1Qla0IZCWQsak37XjmQpkJtfZtHW3YSV31bq6jaGBKMRyfM4n45nxNRfKse
+	 3CoCQfpCgl1AXaGt7TKwfDTng9dVFAhaFfrxSIrC/EM/8bItF2Po+OiULuhTGbvcQe
+	 Jb4ApWctWfWYq2Y+WAeQ+URxI4h2a6P+iF6uqL54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Jacob <mjacob@feralsw.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0037/2857] drm/amdgpu: Support some Barco AMD based graphics adapters
-Date: Wed, 18 Nov 2026 15:17:51 +0100
-Message-ID: <20261118150202.669428549@linuxfoundation.org>
+Subject: [PATCH 6.1 0038/2857] drm/amd/pm: Validate Vega hwmgr PowerPlay table bounds
+Date: Wed, 18 Nov 2026 15:17:52 +0100
+Message-ID: <20261118150202.706538258@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,57 +69,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Jacob <mjacob@feralsw.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit 3dc4d68ee26a7ac12069ff0562ad8935106c79b6 ]
+[ Upstream commit 3a8d8e0b7f61cd759d5d4870b6220161f8a5b114 ]
 
-These adapters typically are only supported by Barco on the
-Windows platform. However, with these changes in the linux
-driver, multiple monitor support should work correctly.
+The Vega hwmgr PowerPlay table parsers read fixed table fields,
+state array entries, or SMC PPT fields before validating that the
+VBIOS table buffer covers those structures. A truncated table can
+therefore lead to out-of-bounds reads during hwmgr initialization.
 
-Signed-off-by: Matthew Jacob <mjacob@feralsw.com>
+Reject tables smaller than the fixed PowerPlay table. For Vega10, also
+validate the state array offset and entry range before dereferencing
+the state array.
+
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../powerplay/hwmgr/vega10_processpptables.c  | 59 ++++++++++++-------
+ .../powerplay/hwmgr/vega12_processpptables.c  |  7 +++
+ .../powerplay/hwmgr/vega20_processpptables.c  |  7 +++
+ 3 files changed, 52 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-index 7a19c3e73209e..67b5d0017fd04 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -1763,6 +1763,7 @@ static const struct pci_device_id pciidlist[] = {
- 	{0x1002, 0x6646, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE|AMD_IS_MOBILITY},
- 	{0x1002, 0x6647, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE|AMD_IS_MOBILITY},
- 	{0x1002, 0x6649, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
-+	{0x1002, 0x664D, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
- 	{0x1002, 0x6650, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
- 	{0x1002, 0x6651, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
- 	{0x1002, 0x6658, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
-@@ -1832,6 +1833,7 @@ static const struct pci_device_id pciidlist[] = {
- 	{0x1002, 0x6930, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
- 	{0x1002, 0x6938, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
- 	{0x1002, 0x6939, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
-+	{0x1002, 0x693B, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
- 	/* fiji */
- 	{0x1002, 0x7300, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_FIJI},
- 	{0x1002, 0x730F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_FIJI},
-@@ -1860,6 +1862,7 @@ static const struct pci_device_id pciidlist[] = {
- 	{0x1002, 0x67C4, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
- 	{0x1002, 0x67C7, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
- 	{0x1002, 0x67D0, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
-+	{0x1002, 0x67D4, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
- 	{0x1002, 0x67DF, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
- 	{0x1002, 0x67C8, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
- 	{0x1002, 0x67C9, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
-@@ -1873,6 +1876,7 @@ static const struct pci_device_id pciidlist[] = {
- 	{0x1002, 0x6985, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
- 	{0x1002, 0x6986, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
- 	{0x1002, 0x6987, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
-+	{0x1002, 0x698F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
- 	{0x1002, 0x6995, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
- 	{0x1002, 0x6997, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
- 	{0x1002, 0x699F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c
+index 95b988823f50f..bc75f09112cda 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c
+@@ -64,14 +64,17 @@ static const void *get_powerplay_table(struct pp_hwmgr *hwmgr)
+ 	return table_address;
+ }
+ 
+-static int check_powerplay_tables(
+-		struct pp_hwmgr *hwmgr,
+-		const ATOM_Vega10_POWERPLAYTABLE *powerplay_table)
++static int get_vega10_state_array(struct pp_hwmgr *hwmgr,
++	const ATOM_Vega10_POWERPLAYTABLE *powerplay_table,
++	const ATOM_Vega10_State_Array **state_array)
+ {
+ 	const ATOM_Vega10_State_Array *state_arrays;
++	u16 state_array_offset;
++	size_t state_array_size;
++	size_t table_size = hwmgr->soft_pp_table_size;
+ 
+-	state_arrays = (ATOM_Vega10_State_Array *)(((unsigned long)powerplay_table) +
+-		le16_to_cpu(powerplay_table->usStateArrayOffset));
++	PP_ASSERT_WITH_CODE((table_size >= sizeof(*powerplay_table)),
++			    "Invalid PowerPlay Table!", return -1);
+ 
+ 	PP_ASSERT_WITH_CODE((powerplay_table->sHeader.format_revision >=
+ 			ATOM_Vega10_TABLE_REVISION_VEGA10),
+@@ -80,12 +83,34 @@ static int check_powerplay_tables(
+ 		"State table is not set!", return -1);
+ 	PP_ASSERT_WITH_CODE(powerplay_table->sHeader.structuresize > 0,
+ 		"Invalid PowerPlay Table!", return -1);
++
++	state_array_offset = le16_to_cpu(powerplay_table->usStateArrayOffset);
++	PP_ASSERT_WITH_CODE((state_array_offset <=
++			     table_size - sizeof(*state_arrays)),
++			    "Invalid PowerPlay Table!", return -1);
++
++	state_arrays = (ATOM_Vega10_State_Array *)(((unsigned long)powerplay_table) +
++		state_array_offset);
+ 	PP_ASSERT_WITH_CODE(state_arrays->ucNumEntries > 0,
+ 		"Invalid PowerPlay Table!", return -1);
+ 
++	state_array_size = struct_size(state_arrays, states, state_arrays->ucNumEntries);
++	PP_ASSERT_WITH_CODE((state_array_size <= table_size - state_array_offset),
++			    "Invalid PowerPlay Table!", return -1);
++
++	*state_array = state_arrays;
++
+ 	return 0;
+ }
+ 
++static int check_powerplay_tables(struct pp_hwmgr *hwmgr,
++	const ATOM_Vega10_POWERPLAYTABLE *powerplay_table)
++{
++	const ATOM_Vega10_State_Array *state_arrays;
++
++	return get_vega10_state_array(hwmgr, powerplay_table, &state_arrays);
++}
++
+ static int set_platform_caps(struct pp_hwmgr *hwmgr, uint32_t powerplay_caps)
+ {
+ 	set_hw_cap(
+@@ -1250,15 +1275,14 @@ int vega10_get_number_of_powerplay_table_entries(struct pp_hwmgr *hwmgr)
+ {
+ 	const ATOM_Vega10_State_Array *state_arrays;
+ 	const ATOM_Vega10_POWERPLAYTABLE *pp_table = get_powerplay_table(hwmgr);
++	int result;
+ 
+ 	PP_ASSERT_WITH_CODE((pp_table != NULL),
+ 			"Missing PowerPlay Table!", return -1);
+-	PP_ASSERT_WITH_CODE((pp_table->sHeader.format_revision >=
+-			ATOM_Vega10_TABLE_REVISION_VEGA10),
+-			"Incorrect PowerPlay table revision!", return -1);
+ 
+-	state_arrays = (ATOM_Vega10_State_Array *)(((unsigned long)pp_table) +
+-			le16_to_cpu(pp_table->usStateArrayOffset));
++	result = get_vega10_state_array(hwmgr, pp_table, &state_arrays);
++	PP_ASSERT_WITH_CODE((result == 0),
++			    "Invalid PowerPlay Table State Array.", return result);
+ 
+ 	return (uint32_t)(state_arrays->ucNumEntries);
+ }
+@@ -1309,17 +1333,11 @@ int vega10_get_powerplay_table_entry(struct pp_hwmgr *hwmgr,
+ 
+ 	if (pp_table->sHeader.format_revision >=
+ 			ATOM_Vega10_TABLE_REVISION_VEGA10) {
+-		state_arrays = (ATOM_Vega10_State_Array *)
+-				(((unsigned long)pp_table) +
+-				le16_to_cpu(pp_table->usStateArrayOffset));
+-
+-		PP_ASSERT_WITH_CODE(pp_table->usStateArrayOffset > 0,
+-				"Invalid PowerPlay Table State Array Offset.",
+-				return -1);
+-		PP_ASSERT_WITH_CODE(state_arrays->ucNumEntries > 0,
++		result = get_vega10_state_array(hwmgr, pp_table, &state_arrays);
++		PP_ASSERT_WITH_CODE((result == 0),
+ 				"Invalid PowerPlay Table State Array.",
+-				return -1);
+-		PP_ASSERT_WITH_CODE((entry_index <= state_arrays->ucNumEntries),
++				return result);
++		PP_ASSERT_WITH_CODE((entry_index < state_arrays->ucNumEntries),
+ 				"Invalid PowerPlay Table State Array Entry.",
+ 				return -1);
+ 
+@@ -1361,4 +1379,3 @@ int vega10_baco_set_cap(struct pp_hwmgr *hwmgr)
+ 			PHM_PlatformCaps_BACO);
+ 	return result;
+ }
+-
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_processpptables.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_processpptables.c
+index bd54fbd393b97..464ae9eed73a8 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_processpptables.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_processpptables.c
+@@ -65,6 +65,13 @@ static int check_powerplay_tables(
+ 		struct pp_hwmgr *hwmgr,
+ 		const ATOM_Vega12_POWERPLAYTABLE *powerplay_table)
+ {
++	size_t smc_pptable_size =
++		offsetofend(ATOM_Vega12_POWERPLAYTABLE, smcPPTable);
++	size_t table_size = hwmgr->soft_pp_table_size;
++
++	PP_ASSERT_WITH_CODE((table_size >= smc_pptable_size),
++			    "Invalid PowerPlay Table!", return -1);
++
+ 	PP_ASSERT_WITH_CODE((powerplay_table->sHeader.format_revision >=
+ 		ATOM_VEGA12_TABLE_REVISION_VEGA12),
+ 		"Unsupported PPTable format!", return -1);
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_processpptables.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_processpptables.c
+index 1f90825394575..20af10dda2e81 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_processpptables.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_processpptables.c
+@@ -639,6 +639,13 @@ static int check_powerplay_tables(
+ 		struct pp_hwmgr *hwmgr,
+ 		const ATOM_Vega20_POWERPLAYTABLE *powerplay_table)
+ {
++	size_t smc_pptable_size =
++		offsetofend(ATOM_Vega20_POWERPLAYTABLE, smcPPTable);
++	size_t table_size = hwmgr->soft_pp_table_size;
++
++	PP_ASSERT_WITH_CODE((table_size >= smc_pptable_size),
++			    "Invalid PowerPlay Table!", return -1);
++
+ 	PP_ASSERT_WITH_CODE((powerplay_table->sHeader.format_revision >=
+ 		ATOM_VEGA20_TABLE_REVISION_VEGA20),
+ 		"Unsupported PPTable format!", return -1);
 -- 
 2.53.0
 
