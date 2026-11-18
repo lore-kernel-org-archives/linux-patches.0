@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037244;
-	b=slJKN2Kayrpq58aCandQpgZVzoPcXKE4cigXyk/vpiTgUAsh69pdFcyrjIWSYGJSaEEV
-	 yQ2arKLAJ314huU/bvvTUXFecc9u/YMUS4vzEg07BR4RIgRjflKezsZYSfgLd/CaSQwvV
-	 vwSWR6fcIzMv7LmyzKzNRHKZgkaDkVUj0JrL6boHTOpBXE9U9w1hZV68N8yZyGJTPBzhV
-	 VsrkJaRdloUpgEIZcKnk3Gd4mKT9IIENbnRH8L58eW9oTUZ/O01zGiMpz/er8Ni6quG7Z
-	 R6KKon20bKE1kR0VJm6BaJXSfmjfMCf9T2RmGZPjW+ns8w3EA74ze6LmPdc2VbijXTw==
+	t=1795037248;
+	b=xmSXM2NStjBAarKhhfja39zPKSX59oNR33msdHFdVit44tzyd58Vr0cjrdMBH9r0neUf
+	 Vv71N9eQvw2cEYxetb94gi1CwB5ev+umeRa2mnX/kOujr/8Wrdlc208L9DYt0eQd6qtUC
+	 Qj5um6LoUPuT+FJcLTPXewBPI7RqrtlIEXm8bco8siJQZVJyCQ3BHotUYTfAmkYO5pdfZ
+	 5U+vDLxGRgKEsquyM/YCk1bUJne+6mKDoC1Y/TGTA9AEkbDjeQqdEaUlZGFumZR6APmY5
+	 lSEd6R6Y3Yf+cB6l4UKa9eu8BZEz/X2xgi5mwiJLzEk/TNDBhHGBX9zQSWmaXRKSs6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037244;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037248;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NiKDK2gkx02qltArUzkITP1FGJcmHHu3NmJox0Fvwps=;
-	b=GtgLhK1zkTbjgiOkP+NhwoM3lP6m0I1cI3ci/Rp0mYn9sJNyUjlOLxHaOXKP9zySYNLn
-	 J305ntmIIiPxO28zx5J/+1+fC7FwvqLmtSvmke36loSAfNm/kc4MuKVMj69NvIwNjN2hk
-	 ovRXoAgR+FbF9hZxwDor6h/GOCO5rGYP+7EZSPudaohsavtw1eY3GyNYzigwrnwZwzeYu
-	 ZrZ8vdxB+SA3aWD7dbkt7w3cMA4TFRzPZi3lhEeMGAtubhYGHizJgqtly9VnB5MAlWvdB
-	 bL8giP5/ivjnY1yXFKa9Kz6H3pxrUoDxtSX+F/wfMlIlJt4egSDI/7FOR0NTOUiI9yg==
+	bh=IgocDty+xOEovQ+BjcJnbDQ23ewQt7WEnwLCe/ILHnE=;
+	b=t5dA9+7VnnWC9e8QsaX2CP6bYXl+aiW/kfQYPz1soLOK8Dv1TbCkG9jU9Zp+4xb/PL/A
+	 axWGmOpZ3GmvAtEVekexQX1BfSb/l/zpX0J+m63PFiVh3GB38pgiS70C74ekClAcVe/jt
+	 Lycw0gAvxOlKReAKs9fzuvldV6BN0OHjTdrQbQ2ML3yDax6/Gu21ZJ65toTZRPQ1qY4K3
+	 E/g0XVqhWdOhOal0GKH3ua0oHPK4KqFUp6zsA1RiMPxTr5DGz/qk2kNsGaQvqxHFompOi
+	 P/adWyUhrWmbMOmFm+t+DKmPdxcRji8kKdmBzDP8bDGK+D2a8JttIdva0v9u5nHWY9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qoRLY/JK";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="WJClj38/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A638D606A32F;
-	Wed, 18 Nov 2026 21:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E074606A31C;
+	Wed, 18 Nov 2026 21:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qoRLY/JK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E07221F000C4;
-	Wed, 18 Nov 2026 21:27:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WJClj38/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378A91F000C7;
+	Wed, 18 Nov 2026 21:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037244;
-	bh=NiKDK2gkx02qltArUzkITP1FGJcmHHu3NmJox0Fvwps=;
+	s=korg; t=1795037247;
+	bh=IgocDty+xOEovQ+BjcJnbDQ23ewQt7WEnwLCe/ILHnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qoRLY/JKsg6uK+wpkbjY3UA4XCNsTqINewtOF7Z3qQOFA0CJ9ntisfI2MR+yV1QVE
-	 KLNnssCzAlhOgMoGwMgEDhI5/I58c5yG+PFjehT4Xk4HfSHMs5WpjuHfNOaNrkWTIV
-	 bUblcCv8n0UPjkNzXgiNRK7Sd8z1kt1PeBeRMFLw=
+	b=WJClj38/Vpk2JRcdpNMsqVzCh4j4ZID1LkRiS6F4xNJHohhZNU2ZHKzGSUCYtXgGY
+	 Rw6PP9E5gQm2kgxHYbZThNYOFZj1KdIve2X+eYITROPQU+574gN+5fvm/2M90ICkHc
+	 7VOMNdK83VoOQF6RjkNkK7IG3aQjC9GkcCZPJ4FQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Kyle Zeng <kylebot@openai.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Neal Cardwell <ncardwell@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Til Kaiser <mail@tk154.de>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1288/3318] tcp: fix reordering addition overflow in MTU probing
-Date: Wed, 18 Nov 2026 15:31:50 +0100
-Message-ID: <20261118150358.901171937@linuxfoundation.org>
+Subject: [PATCH 6.6 1335/3318] mlxsw: Initialize register query payloads
+Date: Wed, 18 Nov 2026 15:32:37 +0100
+Message-ID: <20261118150400.401557234@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -74,58 +69,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Til Kaiser <mail@tk154.de>
 
-[ Upstream commit c1df9c0c0536393de43310f84ca4f8b217271a00 ]
+[ Upstream commit 15b7a86a8888dc6a8fd19e181757e32389de9064 ]
 
-Commit efb8763d7bbb ("net: ipv4: bound TCP reordering sysctl writes and
-MTU probe sizes") widened size_needed and the MSS multiplication, but
-tp->reordering + 1 is still evaluated as u32. RTAX_REORDERING accepts
-an unrestricted u32, and tcp_init_metrics() can install U32_MAX.
+MFGD register queries can exhaust EMAD retries and leave Mellanox
+Spectrum switches stuck during boot or shutdown when running OpenWrt
+built with GCC 15.
 
-In that case the extra-data requirement becomes zero. A write queue
-with probe_size - 1 data bytes and a FIN satisfies the sequence-space
-check. The coalescing walk can pass the queue head to
-tcp_skb_can_collapse(), and tcp_clone_payload() can produce an skb
-whose advertised payload exceeds the data in its fragments. Local
-delivery followed by TCP_ZEROCOPY_RECEIVE can then walk beyond the
-fragment array. KASAN reports a slab-out-of-bounds read in
-can_map_frag().
+An example failure is shown below with the second line wrapped:
 
-Cast reordering before incrementing it so the arithmetic handles the
-entire u32 metric range. For U32_MAX, the required size exceeds the
-32-bit queue and window limits, so the existing checks skip the probe.
-The calculation is unchanged for all other reordering values.
+  EMAD retries (5/5) (tid=9b544fc100001f35)
+  EMAD reg access failed (tid=9b544fc100001f35,reg_id=90f0(mfgd),
+                          type=query,status=0(operation performed))
 
-Fixes: efb8763d7bbb ("net: ipv4: bound TCP reordering sysctl writes and MTU probe sizes")
+On an SN2100, the failure occurs during driver teardown on reboot.
+On an SN3420, it occurs while probing mlxsw_spectrum during boot.
+
+The register query API transmits the supplied payload to the device
+before replacing it with the response. Both MFGD callers pass an
+uninitialized stack buffer, so the request contains arbitrary register
+field values and reserved bits. This makes the request depend on stack
+contents and compiler code generation.
+
+Initialize both MFGD query buffers in the firmware fatal event
+configuration and reporter test paths. The initialization has been
+confirmed to eliminate the boot and shutdown hangs on both switches.
+The subsequent read-modify-write still preserves the other fields
+returned by the device.
+
+Also initialize the FORE fan fault query and the MOGCR mirroring policer
+base query, which pass entirely uninitialized payloads. Restore the MTMP
+query initialization in the temperature history reset path, where only
+the slot and sensor index fields are set before querying the register.
+
+This follows commit 5b0907407e7f ("mlxsw: core: Zero payload buffers for
+couple of registers"), which initialized other query payloads after a
+firmware field length bug caused firmware to consume uninitialized data.
+
+Tested with firmware 2020.1148 and with 2016.3900 from linux-firmware.
+
+Fixes: 7d83ee111008 ("mlxsw: core: Introduce fw_fatal health reporter")
+Fixes: 2c6a33cd334b ("mlxsw: core: Extend hwmon interface with fan fault attribute")
+Fixes: 4039504e6a0c ("mlxsw: spectrum_span: Allow setting policer on a SPAN agent")
+Fixes: b890ad418e1f ("mlxsw: core_hwmon: Extend internal structures to support multi hwmon objects")
 Cc: stable@vger.kernel.org
-Cc: Wyatt Feng <bronzed_45_vested@icloud.com>
-Cc: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Neal Cardwell <ncardwell@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20261028160226.2170244-1-edumazet@kernel.org
+Signed-off-by: Til Kaiser <mail@tk154.de>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261014173117.26305-1-mail@tk154.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+(cherry picked from commit 15b7a86a8888dc6a8fd19e181757e32389de9064)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_output.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlxsw/core.c          | 4 ++--
+ drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c    | 4 ++--
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 327e38c81fef2..5e805d05856f4 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -2436,7 +2436,7 @@ static int tcp_mtu_probe(struct sock *sk)
- 	mss_now = tcp_current_mss(sk);
- 	probe_size = tcp_mtu_to_mss(sk, (icsk->icsk_mtup.search_high +
- 				    icsk->icsk_mtup.search_low) >> 1);
--	size_needed = probe_size + (tp->reordering + 1) * (u64)tp->mss_cache;
-+	size_needed = probe_size + ((u64)tp->reordering + 1) * tp->mss_cache;
- 	interval = icsk->icsk_mtup.search_high - icsk->icsk_mtup.search_low;
- 	/* When misfortune happens, we are reprobing actively,
- 	 * and then reprobe timer has expired. We stick with current
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/core.c b/drivers/net/ethernet/mellanox/mlxsw/core.c
+index 85507d01fd457..68cc3278ef262 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/core.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/core.c
+@@ -2065,7 +2065,7 @@ mlxsw_core_health_fw_fatal_test(struct devlink_health_reporter *reporter,
+ 				struct netlink_ext_ack *extack)
+ {
+ 	struct mlxsw_core *mlxsw_core = devlink_health_reporter_priv(reporter);
+-	char mfgd_pl[MLXSW_REG_MFGD_LEN];
++	char mfgd_pl[MLXSW_REG_MFGD_LEN] = {0};
+ 	int err;
+ 
+ 	/* Read the register first to make sure no other bits are changed. */
+@@ -2086,7 +2086,7 @@ mlxsw_core_health_fw_fatal_ops = {
+ static int mlxsw_core_health_fw_fatal_config(struct mlxsw_core *mlxsw_core,
+ 					     bool enable)
+ {
+-	char mfgd_pl[MLXSW_REG_MFGD_LEN];
++	char mfgd_pl[MLXSW_REG_MFGD_LEN] = {0};
+ 	int err;
+ 
+ 	/* Read the register first to make sure no other bits are changed. */
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c b/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c
+index 0fd290d776ffe..2881271d529bf 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c
+@@ -120,7 +120,7 @@ static ssize_t mlxsw_hwmon_temp_rst_store(struct device *dev,
+ 			container_of(attr, struct mlxsw_hwmon_attr, dev_attr);
+ 	struct mlxsw_hwmon_dev *mlxsw_hwmon_dev = mlxsw_hwmon_attr->mlxsw_hwmon_dev;
+ 	struct mlxsw_hwmon *mlxsw_hwmon = mlxsw_hwmon_dev->hwmon;
+-	char mtmp_pl[MLXSW_REG_MTMP_LEN];
++	char mtmp_pl[MLXSW_REG_MTMP_LEN] = {0};
+ 	unsigned long val;
+ 	int index;
+ 	int err;
+@@ -177,7 +177,7 @@ static ssize_t mlxsw_hwmon_fan_fault_show(struct device *dev,
+ 			container_of(attr, struct mlxsw_hwmon_attr, dev_attr);
+ 	struct mlxsw_hwmon_dev *mlxsw_hwmon_dev = mlxsw_hwmon_attr->mlxsw_hwmon_dev;
+ 	struct mlxsw_hwmon *mlxsw_hwmon = mlxsw_hwmon_dev->hwmon;
+-	char fore_pl[MLXSW_REG_FORE_LEN];
++	char fore_pl[MLXSW_REG_FORE_LEN] = {0};
+ 	bool fault;
+ 	int err;
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
+index fa3fef2b74db0..04aecdee69a30 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
+@@ -1718,7 +1718,7 @@ static int mlxsw_sp2_span_init(struct mlxsw_sp *mlxsw_sp)
+ static int mlxsw_sp2_span_policer_id_base_set(struct mlxsw_sp *mlxsw_sp,
+ 					      u16 policer_id_base)
+ {
+-	char mogcr_pl[MLXSW_REG_MOGCR_LEN];
++	char mogcr_pl[MLXSW_REG_MOGCR_LEN] = {0};
+ 	int err;
+ 
+ 	err = mlxsw_reg_query(mlxsw_sp->core, MLXSW_REG(mogcr), mogcr_pl);
 -- 
 2.53.0
 
