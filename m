@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025380;
-	b=zhRQctiUcCz6Q2SE2FeIGJjqnaxL0aS2pyVgh2K2GzO0GP2HybHYRPeN4nZtJVD/w5A+
-	 GJSQT62SfS3Jvl9CudgTUF1RT1tjnyIWTMD7Mbb31HfKDM7tiUoPeSehYiJ3alBfJn6k2
-	 s8wiNvODqnUfoicShQjyWyf5nGNqC/UjVKABBZyAA8xzUb6t5L7l7rswKVatcbvd+6haw
-	 idor/ZlpZxKDgwzGCjPZn1IcUdJaGl8Z1nvgnsKfWm2XTMP0fNp8kRc3Iz650e1RBrxwZ
-	 ZxcCK+fTcE6VLgkKYyA789qVGEnpvpo26UcOe9FWC5neOppqlkxIblBn0Z08PkE5xCw==
+	t=1795025382;
+	b=DqSYkyuMzzcRwRtBf5RD6S4fZjcJN2Qemtx5aOHASvz9cboXW06vDBqzqBFvcjZwCA+y
+	 5RIMVQ2q2G+k6VCFN8/HaGgzxrzVpNBvcH9eKK1IMXhg3cBNcYHUBYCGVsyP2K7/eVOXW
+	 TmQaVWkt4JhOtOxxs0nXwvUtJmuYHgZxH9aietAuwgTGB1EV5bVEn/AFiumLqAll3VkK4
+	 7ZXHqPPlgxvUPdFgDOqZgbhM3sBu8qouEDA5zoPkxna5+AFD9Fhcoe22+dlzpZ2YIJHI4
+	 Zvp2HPHyNUDGKI1y+HdUrtNCqmabikVP4sce9njhZxyN+6k0uNb9oEyKJdXdJfpfocA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025380;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025382;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pDvNnWTn8eytYqVIXheLvTtiqF7oLfwtLc5w+pI6+dQ=;
-	b=AkkvTy1x/E81mubba/YKo6HzB5S97cZDp6aQuBnA77pqVkc3VFpkem1i0lXGaGLzt6nD
-	 XGnosF1wgoBB011Cr+ahPVKE44w2AupfttAzCcLIMiQIwzQoeqj4qLz02CL/Mgzrcf0o6
-	 8zMMUINwSc9LCHslmu2cFLCcyqkgPNOmNGqJeu/t4ydCFILXB9CcoYA6O8bZjYpioGVoW
-	 dq5a0LPpQTUKpXif7Tjlu3Qf0U+Y+3Wx3zMh3UBi/qwSYAWaHnBEMYECWQfbUEIaQvUEB
-	 RN+rWIncDYyeN57DCZJjIAqGaliyuHnTEwtBY2zi9anyqGlqtzGQS9fLW1j7irNAqhA==
+	bh=OMXPrHfqRbq9aJ0gCsV99pbz6GLoS1rovC9xq2wPRhQ=;
+	b=PyVcD6VPXkuUdVPOzfryKDVi4hl8afzjbsNF+7ZrRUofA4Nh1397LCOH/5FkycMIB6zO
+	 IAEo39F8/eHBdXpJkNywwMU9YjZz5gGBQoM+qnXIiS9lgnVw0BgjPEDeHSd+Y5g2H2Gvl
+	 a0jqITjtLWSu/knEUPbBzeOM/fzrR1zDku2J+Vmk7pkCo5BuSzK0j8DSGT9kAu5hKhpyW
+	 hAoptp3ROPYH6jIlxkqZv7S9sAdWyR8M6vqsTS05/Opwym7BNnB0A26OgE5QQxbtMjEg/
+	 R7TMH3X82wwsqHerBQoE8ajFOoCTPk14pQRrUGc4Gj/vpx1EoCmwH6SjTzqb5doBBKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XvaM5KY4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueqUNJs3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D2A606A31C;
-	Wed, 18 Nov 2026 18:09:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA02F606A320;
+	Wed, 18 Nov 2026 18:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XvaM5KY4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0131F000C5;
-	Wed, 18 Nov 2026 18:09:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueqUNJs3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DC31F000C4;
+	Wed, 18 Nov 2026 18:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025379;
-	bh=pDvNnWTn8eytYqVIXheLvTtiqF7oLfwtLc5w+pI6+dQ=;
+	s=korg; t=1795025382;
+	bh=OMXPrHfqRbq9aJ0gCsV99pbz6GLoS1rovC9xq2wPRhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XvaM5KY4vz9vd7pdjRPufvGgVSAnWKf5TntoT5tbofI4pAIpejIj32YFIP/oUBJQa
-	 u7OIeNWbhoQStQFEirAPu9tar3JjB6V8uIP6icdfVmED+RsYkpZ16EiFRfEYL78Zzn
-	 UT0q4WvRt/eh3N0MGEI83VSQCfUDgzBJOJpGtQf0=
+	b=ueqUNJs3/GHdVZ0ctwbPt6P5qGjBSRzQHcvmMVa3Q8BYWp9A+6FmKKlgt9Fudyur4
+	 3WtFAuq0qVtsDVwR1BNTySlOxYFmCcjdfGbjXtlXQwIBfNIeY5WROO9atsE25YfJn+
+	 13Rzws1OKR/7OmZxebkC5syhLUK9gJNg8ZAdC45o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1057/2151] power: supply: ab8500_charger: Handle detection errors
-Date: Wed, 18 Nov 2026 15:46:32 +0100
-Message-ID: <20261118150200.813179165@linuxfoundation.org>
+Subject: [PATCH 6.18 1058/2151] power: supply: ab8500_charger: Skip absent AB8505 main charger
+Date: Wed, 18 Nov 2026 15:46:33 +0100
+Message-ID: <20261118150200.849294214@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,53 +70,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 1098c619ce7595a77a8c2e366a703e9fc5f29bf7 ]
+[ Upstream commit 52c8cdcc1146d86fae524a589d4512c8d59ea8b4 ]
 
-ab8500_charger_detect_chargers() returns either a charger bitmask or
-a negative register-access error. The probe and component-bind paths
-use a negative return value as a bitmask, making failed reads appear
-as both AC and USB connections.
+AB8505 contains only the USB charger. It has no integrated main
+charger, main-charger status register, or main-charger interrupts.
 
-Propagate detection errors and release the bind-time workqueue on
-failure.
+Avoid reading the missing status register, requesting the five missing
+interrupts, or disabling an AC charger which was never enabled. This
+lets the driver bind using only the AB8505 USB charger resources.
 
-Fixes: 84edbeeab67c ("ab8500-charger: AB8500 charger driver")
-Fixes: 1c1f13a006ed ("power: supply: ab8500: Move to componentized binding")
+Fixes: d4337660d069 ("ab8500-charger: Add AB8505_USB_LINK_STATUS")
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-10-e986ed321cc6@kernel.org
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-11-e986ed321cc6@kernel.org
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_charger.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/power/supply/ab8500_charger.c | 32 ++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index b0aca9441ed51..8358f8c8d3612 100644
+index 8358f8c8d3612..9856ff09bfedf 100644
 --- a/drivers/power/supply/ab8500_charger.c
 +++ b/drivers/power/supply/ab8500_charger.c
-@@ -3462,6 +3462,10 @@ static int ab8500_charger_bind(struct device *dev)
+@@ -692,16 +692,19 @@ static int ab8500_charger_detect_chargers(struct ab8500_charger *di, bool probe)
+ 	int ret;
+ 	u8 val;
+ 
+-	/* Check for AC charger */
+-	ret = abx500_get_register_interruptible(di->dev, AB8500_CHARGER,
+-		AB8500_CH_STATUS1_REG, &val);
+-	if (ret < 0) {
+-		dev_err(di->dev, "%s ab8500 read failed\n", __func__);
+-		return ret;
+-	}
++	/* AB8505 has no integrated main charger. */
++	if (!is_ab8505(di->parent)) {
++		ret = abx500_get_register_interruptible(di->dev,
++							AB8500_CHARGER,
++							AB8500_CH_STATUS1_REG, &val);
++		if (ret < 0) {
++			dev_err(di->dev, "%s ab8500 read failed\n", __func__);
++			return ret;
++		}
+ 
+-	if (val & MAIN_CH_DET)
+-		result = AC_PW_CONN;
++		if (val & MAIN_CH_DET)
++			result = AC_PW_CONN;
++	}
+ 
+ 	/* Check for USB charger */
+ 
+@@ -3500,7 +3503,8 @@ static void ab8500_charger_unbind(struct device *dev)
+ 	int ret;
+ 
+ 	/* Disable AC charging */
+-	ab8500_charger_ac_en(&di->ac_chg, false, 0, 0);
++	if (di->ac_chg.enabled)
++		ab8500_charger_ac_en(&di->ac_chg, false, 0, 0);
+ 
+ 	/* Disable USB charging */
+ 	ab8500_charger_usb_en(&di->usb_chg, false, 0, 0);
+@@ -3724,7 +3728,13 @@ static int ab8500_charger_probe(struct platform_device *pdev)
  	}
  
- 	ch_stat = ab8500_charger_detect_chargers(di, false);
-+	if (ch_stat < 0) {
-+		destroy_workqueue(di->charger_wq);
-+		return ch_stat;
-+	}
- 
- 	if (ch_stat & AC_PW_CONN) {
- 		if (is_ab8500(di->parent))
-@@ -3750,6 +3754,10 @@ static int ab8500_charger_probe(struct platform_device *pdev)
- 
- 	/* Identify the connected charger types during startup */
- 	charger_status = ab8500_charger_detect_chargers(di, true);
-+	if (charger_status < 0) {
-+		ret = charger_status;
-+		goto remove_ab8500_bm;
-+	}
- 	if (charger_status & AC_PW_CONN) {
- 		di->ac.charger_connected = 1;
- 		di->ac_conn = true;
+ 	/* Request interrupts */
+-	for (i = 0; i < ARRAY_SIZE(ab8500_charger_irq); i++) {
++	/* The first five interrupts belong to the AB8500 main charger. */
++	if (is_ab8505(di->parent))
++		i = 5;
++	else
++		i = 0;
++
++	for (; i < ARRAY_SIZE(ab8500_charger_irq); i++) {
+ 		irq = platform_get_irq_byname(pdev, ab8500_charger_irq[i].name);
+ 		if (irq < 0)
+ 			return irq;
 -- 
 2.53.0
 
