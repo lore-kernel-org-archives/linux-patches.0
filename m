@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057223;
-	b=RP98qhdwDAeiDbkwlm08+Ak5F2zh7kG9qTP36cj/q/wEHST0j0Gxb+pwQ1DkA5TSN5up
-	 lIZYoCKJ1kKBNSHPU7yHEqac4AJb5d8mi+0HJs4V0gbUBcW+1/H+hohbuLaZguRQqCfsd
-	 ntNF1gO39KeQW8FDeAOivJFsJ/MWnBXzcUInPhudHGQe3jMiCR6Yr1HfH3Xq42yfjXalY
-	 tEs2iPmXWdbr9RMWJqvsqK8APJIDiTtL9TYqd+9UnCpen9wKnQIFap0t+3DulZFSm3LgS
-	 LkeRDCz+K8gIH/+hzV6YBS/0DrhCcnDvq5f98OOTe+9DLA50gVJKeiPUGT4nIhoCegA==
+	t=1795057226;
+	b=jfKvsFIByE3IOzFSNPRKPMb3lpv3Nl9oYyBByLzoD9gVaVeRgopVXXRUjz6nMWUtbHtb
+	 UTzBwG2VdtnaIrKp2nt/2qzORHcyxEM2OG4ZvN/sVK2OsSoDCIo9nCEtYKcnBgHohElnF
+	 /Haro2z0ZyX55nuTQZYaW6aHW3S9XY/QJVfxwmXMVuFrCK1gX7WMRQOpQGO/ZWlvijREn
+	 Xs7dT33Z78N56ihao3ZLDAmrwUNHWm8KJqjtvD4OxUVhV7Ua4KQ14aMpEcM6QP8A8oWZL
+	 XzoGAekK+yFQPl+Q6gNBx6419ujAvC07CtkIsph+pGjyFR/MbZMOvd87Zu/R1FdwMlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057223;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057226;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7abzzM2RUSBtPUqqsOiGzk6t8jMfGoqHOh2WHoeWCUw=;
-	b=jhwElY/YFhJoiiUAy7FgbXDNmiPpiTz677OtAsq6CUZ3QfdTCXRwncRGV73t3slATuWF
-	 1uq36HKga6zFSjtCCQKquap9M9W7s4PDqB/u7V7hhpOMCZucnu3KJjkmCmLGfrgRl7jwZ
-	 Bd35QKLv2LLrrySkvK09vZjkDSq/HlhCREAuexIITnki2S7/SGuNfz6mq6tOZfUklexGr
-	 6rzHge0KTWhGXnLtOGmgi3veNdPy98PvhHzlEPNxmido9KmnvhhxxvvYroOoK8DlVwy2r
-	 dWIPIVPG6pl84qUr0Ny+1Rxmd4PjSgsjGUHFtTs2kaCFO2RU/QKxfKcgpQi1b6TOejg==
+	bh=zD5mdU/P+cBnWWoBtUAFb6vYroaPk8I/t0GCSguvolM=;
+	b=RSq/bA366OtBRNsZv+ePVnHyx0vrUNdYxO+r7jVPQDxtLQolaB8pHNXqFpXe/Emwli7B
+	 vFyMDKpDijbirfGAzBPDYAtU7eGhU8FOK0qa6UZ3I0zK4fGAZ2j3oWNFxEBzb6Y63Px2i
+	 xkqOp0XvUsUHY60MZ9iq6v0R3jVcPQXQuk7dBDrDtRENY6dJbCIMa/PGDhi6li5AxDS9F
+	 hSIMT1KQtR0u1Bg3clEqVnmzO/kIqK4sFEpWfpEGV+gKSJiWuhPQ7EaMkry7T4qJAiwtj
+	 FkNUqQDO2oulUocazmPea4QWaCVYz0m4ZjaKK6Xc3XANX09JD5HiE1xwHuXSN4om5sw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ccDALAcO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="005J/1VV";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F05060A2611;
-	Thu, 19 Nov 2026 03:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F7B60A261B;
+	Thu, 19 Nov 2026 03:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ccDALAcO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BCD91F000C8;
-	Thu, 19 Nov 2026 03:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=005J/1VV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51AB91F000C9;
+	Thu, 19 Nov 2026 03:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057223;
-	bh=7abzzM2RUSBtPUqqsOiGzk6t8jMfGoqHOh2WHoeWCUw=;
+	s=korg; t=1795057225;
+	bh=zD5mdU/P+cBnWWoBtUAFb6vYroaPk8I/t0GCSguvolM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ccDALAcOfmi20nL2ZZRnTbHWHUXgwTt3d4WJZu79hKoX3gw8VmNAYyLGHA2Und26U
-	 Rnr4SjDsTzgR8v0bX2uJc2yb8xR70K2KojaBVnybzuihKdkDicwKJCz+1IURBS8quc
-	 xU9CQ6mMA4KKbQC4NqklfKG53N5T4Oz0GpzU3XOw=
+	b=005J/1VVfP3PINZsZFsL9ZFrhfFunQ8riaJE1c6UIylMS3uVptBV3pg4JPewIt+d0
+	 UmO3jFZ4G7uq3/JPXADCGKwru/k2pHFsv4IdbP83ATdhPPkBJSAKSI6ljqYiQKx9G0
+	 2REQwl3SuOcYH8fnpBTkiN4GV1ctL5qc81V7mJIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 5.10 0012/1848] mm: move mmap_min_addr logic from callers into vm_unmapped_area()
-Date: Wed, 18 Nov 2026 15:34:10 +0100
-Message-ID: <20261118145911.691988257@linuxfoundation.org>
+	Bin Yu <byu@xidian.edu.cn>,
+	Cheng Wen <wencheng@xidian.edu.cn>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 0013/1848] ALSA: line6: Clear prev_fbuf on capture buffer release
+Date: Wed, 18 Nov 2026 15:34:11 +0100
+Message-ID: <20261118145911.723254639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,154 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-commit 6b008640db7355d8de6ac18f74cedd7ccc92684f upstream.
+commit aa118c8f61d59387961d58ffae831c5259a9f222 upstream.
 
-Instead of having callers care about the mmap_min_addr logic for the
-lowest valid mapping address (and some of them getting it wrong), just
-move the logic into vm_unmapped_area() itself.  One less thing for various
-architecture cases (and generic helpers) to worry about.
+A KASAN slab-use-after-free read was reported in submit_audio_out_urb()
+when generating an impulse test signal:
 
-We should really try to make much more of this be common code, but baby
-steps..
+  BUG: KASAN: slab-use-after-free in create_impulse_test_signal sound/usb/line6/playback.c:76 [inline]
+  BUG: KASAN: slab-use-after-free in submit_audio_out_urb+0x1848/0x1b20 sound/usb/line6/playback.c:249
+  Read of size 2 at addr ffff888008d74870 by task syz.2.3214/7785
 
-Without this, vm_unmapped_area() could return an address below
-mmap_min_addr (because some caller forgot about that).  That then causes
-the mmap machinery to think it has found a workable address, but then
-later security_mmap_addr(addr) is unhappy about it and the mmap() returns
-with a nonsensical error (EPERM).
+  Allocated by task 11:
+   kmem_cache_alloc_noprof+0x2f0/0x390 mm/slub.c:4144
+   line6_buffer_acquire+0x1a1/0x220 sound/usb/line6/pcm.c:158
+   line6_pcm_acquire+0xb6/0x230 sound/usb/line6/pcm.c:329
+   line6_startup_work+0x3c/0x50 sound/usb/line6/driver.c:728
 
-The proper action is to either return ENOMEM (if the virtual address space
-is exhausted), or try to find another address (ie do a bottom-up search
-for free addresses after the top-down one failed).
+  Freed by task 7785:
+   kfree+0xf8/0x390 mm/slub.c:6566
+   line6_buffer_release sound/usb/line6/pcm.c:176 [inline]
+   line6_buffer_release+0xa5/0xf0 sound/usb/line6/pcm.c:170
+   __line6_pcm_release sound/usb/line6/pcm.c:305 [inline]
+   line6_pcm_release+0x5a/0x80 sound/usb/line6/pcm.c:313
+   snd_toneport_monitor_put+0x11b/0x190 sound/usb/line6/toneport.c:183
 
-See commit 2afc745f3e30 ("mm: ensure get_unmapped_area() returns higher
-address than mmap_min_addr"), which fixed this for one call site (the
-generic arch_get_unmapped_area_topdown() fallback) but left other cases
-alone.
+line6pcm->prev_fbuf points into the capture PCM stream buffer
+(line6pcm->in.buffer), which is updated during audio_in_callback() to
+feed rate synchronization, software monitoring, and impulse test signal
+generation on playback side.
 
-Link: https://lkml.kernel.org/r/20230418214009.1142926-1-Liam.Howlett@oracle.com
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ Adapted to the rbtree based unmapped_area() and unmapped_area_topdown()
-  used before the maple tree conversion: clamp the lower search bound to
-  mmap_min_addr there instead of in the maple tree search. ]
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+When all capture streams are closed, line6_buffer_release() frees
+pstr->buffer with kfree().  However, it does not clear line6pcm->prev_fbuf.
+If playback is subsequently started (e.g. via impulse test signal
+volume control snd_line6_impulse_volume_put()), submit_audio_out_urb()
+dereferences the stale pointer line6pcm->prev_fbuf under in.lock,
+resulting in a slab-use-after-free read.
+
+Clear prev_fbuf and prev_fsize in line6_buffer_release() when releasing
+the capture stream buffer under in.lock, ensuring that no stale buffer
+pointer can be accessed by submit_audio_out_urb().
+
+Fixes: 63e20df1e5b2 ("ALSA: line6: Reorganize PCM stream handling")
+Cc: stable@vger.kernel.org
+Co-developed-by: Bin Yu <byu@xidian.edu.cn>
+Signed-off-by: Bin Yu <byu@xidian.edu.cn>
+Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20261013063554.571-1-25031212351@stu.xidian.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/mm/hugetlbpage.c |    2 +-
- arch/s390/mm/mmap.c        |    2 +-
- fs/hugetlbfs/inode.c       |    2 +-
- mm/mmap.c                  |   18 ++++++++++--------
- 4 files changed, 13 insertions(+), 11 deletions(-)
+ sound/usb/line6/pcm.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/arch/s390/mm/hugetlbpage.c
-+++ b/arch/s390/mm/hugetlbpage.c
-@@ -290,7 +290,7 @@ static unsigned long hugetlb_get_unmappe
- 
- 	info.flags = VM_UNMAPPED_AREA_TOPDOWN;
- 	info.length = len;
--	info.low_limit = max(PAGE_SIZE, mmap_min_addr);
-+	info.low_limit = PAGE_SIZE;
- 	info.high_limit = current->mm->mmap_base;
- 	info.align_mask = PAGE_MASK & ~huge_page_mask(h);
- 	info.align_offset = 0;
---- a/arch/s390/mm/mmap.c
-+++ b/arch/s390/mm/mmap.c
-@@ -136,7 +136,7 @@ unsigned long arch_get_unmapped_area_top
- 
- 	info.flags = VM_UNMAPPED_AREA_TOPDOWN;
- 	info.length = len;
--	info.low_limit = max(PAGE_SIZE, mmap_min_addr);
-+	info.low_limit = PAGE_SIZE;
- 	info.high_limit = mm->mmap_base;
- 	if (filp || (flags & MAP_SHARED))
- 		info.align_mask = MMAP_ALIGN_MASK << PAGE_SHIFT;
---- a/fs/hugetlbfs/inode.c
-+++ b/fs/hugetlbfs/inode.c
-@@ -232,7 +232,7 @@ hugetlb_get_unmapped_area_topdown(struct
- 
- 	info.flags = VM_UNMAPPED_AREA_TOPDOWN;
- 	info.length = len;
--	info.low_limit = max(PAGE_SIZE, mmap_min_addr);
-+	info.low_limit = PAGE_SIZE;
- 	info.high_limit = arch_get_mmap_base(addr, current->mm->mmap_base);
- 	info.align_mask = PAGE_MASK & ~huge_page_mask(h);
- 	info.align_offset = 0;
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -1944,6 +1944,7 @@ static unsigned long unmapped_area(struc
- 	struct mm_struct *mm = current->mm;
- 	struct vm_area_struct *vma;
- 	unsigned long length, low_limit, high_limit, gap_start, gap_end;
-+	unsigned long min_addr = max(info->low_limit, mmap_min_addr);
- 
- 	/* Adjust search length to account for worst case alignment overhead */
- 	length = info->length + info->align_mask;
-@@ -1955,9 +1956,9 @@ static unsigned long unmapped_area(struc
- 		return -ENOMEM;
- 	high_limit = info->high_limit - length;
- 
--	if (info->low_limit > high_limit)
-+	if (min_addr > high_limit)
- 		return -ENOMEM;
--	low_limit = info->low_limit + length;
-+	low_limit = min_addr + length;
- 
- 	/* Check if rbtree root looks promising */
- 	if (RB_EMPTY_ROOT(&mm->mm_rb))
-@@ -2023,8 +2024,8 @@ check_highest:
- 
- found:
- 	/* We found a suitable gap. Clip it with the original low_limit. */
--	if (gap_start < info->low_limit)
--		gap_start = info->low_limit;
-+	if (gap_start < min_addr)
-+		gap_start = min_addr;
- 
- 	/* Adjust gap address to the desired alignment */
- 	gap_start += (info->align_offset - gap_start) & info->align_mask;
-@@ -2039,6 +2040,7 @@ static unsigned long unmapped_area_topdo
- 	struct mm_struct *mm = current->mm;
- 	struct vm_area_struct *vma;
- 	unsigned long length, low_limit, high_limit, gap_start, gap_end;
-+	unsigned long min_addr = max(info->low_limit, mmap_min_addr);
- 
- 	/* Adjust search length to account for worst case alignment overhead */
- 	length = info->length + info->align_mask;
-@@ -2054,9 +2056,9 @@ static unsigned long unmapped_area_topdo
- 		return -ENOMEM;
- 	high_limit = gap_end - length;
- 
--	if (info->low_limit > high_limit)
-+	if (min_addr > high_limit)
- 		return -ENOMEM;
--	low_limit = info->low_limit + length;
-+	low_limit = min_addr + length;
- 
- 	/* Check highest gap, which does not precede any rbtree node */
- 	gap_start = mm->highest_vm_end;
-@@ -2128,7 +2130,7 @@ found_highest:
- 	gap_end -= info->length;
- 	gap_end -= (gap_end - info->align_offset) & info->align_mask;
- 
--	VM_BUG_ON(gap_end < info->low_limit);
-+	VM_BUG_ON(gap_end < min_addr);
- 	VM_BUG_ON(gap_end < gap_start);
- 	return gap_end;
- }
-@@ -2235,7 +2237,7 @@ arch_get_unmapped_area_topdown(struct fi
- 
- 	info.flags = VM_UNMAPPED_AREA_TOPDOWN;
- 	info.length = len;
--	info.low_limit = max(PAGE_SIZE, mmap_min_addr);
-+	info.low_limit = PAGE_SIZE;
- 	info.high_limit = arch_get_mmap_base(addr, mm->mmap_base);
- 	info.align_mask = 0;
- 	info.align_offset = 0;
+--- a/sound/usb/line6/pcm.c
++++ b/sound/usb/line6/pcm.c
+@@ -173,6 +173,14 @@ static void line6_buffer_release(struct
+ 	clear_bit(type, &pstr->opened);
+ 	if (!pstr->opened) {
+ 		line6_wait_clear_audio_urbs(line6pcm, pstr);
++		if (pstr == &line6pcm->in) {
++			/* prev_fbuf points into the capture buffer we are about
++			 * to free; drop it while no capture URB is in flight.
++			 */
++			guard(spinlock_irqsave)(&line6pcm->in.lock);
++			line6pcm->prev_fbuf = NULL;
++			line6pcm->prev_fsize = 0;
++		}
+ 		kfree(pstr->buffer);
+ 		pstr->buffer = NULL;
+ 	}
 
 
