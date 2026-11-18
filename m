@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047840;
-	b=jQAMejYM7Ih+/mW6z4eRoh4kl7eWIWd3OQf4RakxjnDZQ/H5AEIfvQcYZp8f3xySo7eP
-	 hUiic30OANdzlgTQubAYoQjP/To4EyGRd9nr4khrp1Ssqoz9orNpuUm58pHE7jxYWUC3e
-	 5R9C958iKFhbvPQQLh1siUwoeRhDG0fe2593XBDxc31n4AHYqm1Mm8ICZ+8S4msdQAlLE
-	 bM3m4QjO344wZEGVOQX/QUmvOZiT/O4rSVT1bgk23Pmk/8DFWFOwdejwzNvj2cp3I4PtL
-	 rzmOjoHdSctXJZaeQtIrTeg/WEhjNXaR4UzNY0I00bQ0V8STBeY8fDsLOSdLqS4Gx4g==
+	t=1795047842;
+	b=XQIGjp57AJrtWNVKBTQ+qF1r3TK2n732BQiGjFBO0L36dc/aQgmP3DQlgMmGcf1VHXVU
+	 fGZjZvUIH0J0QkdBTENoAT3UpXOWq8UfOz458pBjW8urGOOA1qoqwiW2kTAs4xKIj96W7
+	 kHf5hfkC/8f8j5zZ7PA655yhVA4qPHkVqD9MCiAZ6cs+s3vWK4vuiCPdcNBnlN0q8kShw
+	 KVkFboSchEgshoPialVfE1PHVF+LuomefxBvA8a3mQB+1tI0DoYjUFs0iFEIRsBteNHgZ
+	 WKsXZCa1OnbMkpx/3T9qkZcbkd25gLi6YUvo2DhqRP/nWv5cY3zW80LHn4EaG6cOX1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047840;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047842;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0u7b6dLB5PJAGNefcPfZddkZLOsa4qBdKQlfP23mN68=;
-	b=J7q3lw8rsCggzSD6jI2BZfIQ/j6SpYZtpf0mZKubyDBEsNt09syHssvYCvWObVgR3C6a
-	 ebXqam5bXZqjtANgLtxwbv6eRg5s6+rQYWD4IfPAx1RI8x45PRtnGynQ9mGqF8otZxKoL
-	 xa44wlh23vzTnNkqe7bNJqtLSUrfkN4AcaG4lOwLghIJGpmd9Smlfa98qQCO74dOzzgt+
-	 k9+6AQLjtBKjKF07ztlPIK3LKD+weST8By5py9GkZT6sc6723xewliw0gds9rT6KWIoMx
-	 IDbDJHum6wJGqkG1CAxDVBA0MLE/iIYdbhEFy0wy2QtZg9aFdDnP1JZWQwx1+li8vKw==
+	bh=Sz0szCBlP6MwwRM4g/j7/+LV/WGFKuANf8Evmz1Fh7c=;
+	b=1qCT11t0xVovvHcm6zlkKwuQ3Mf8CWrUeZyNB+9KlNHY6Y5nL7zCttEU8kGyPfUnKXeH
+	 uuo9pofPZYaMd8rlbKrQKuLlmBYBa+Xffku1TpZjV6EIk2uAKQCSVL6+3GeekigUOAUiG
+	 tnQd8W5d4uJhoZuy4QcKlmgqYkcvhxSQqwI7ajjiF6eLPiBiLDxx4tHu0YcxNQ/XvKJoC
+	 unhGM2qezWwS0oU6WikFHdAtrxE0yhQovje7JdzKLoeUWM8dsCRKopOmTogrzYlyh6gXk
+	 TsZwfV4kctVJjRCb3uB2OZpTOa6zUteMGssHJWwpdPnyt2/LRpe+15W0e2X8JgxPMmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a6kKmkwn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1h5al7W1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212FE606A32A;
-	Thu, 19 Nov 2026 00:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD414606A320;
+	Thu, 19 Nov 2026 00:24:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a6kKmkwn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ACDB1F000C4;
-	Thu, 19 Nov 2026 00:23:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1h5al7W1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C621F000C4;
+	Thu, 19 Nov 2026 00:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047840;
-	bh=0u7b6dLB5PJAGNefcPfZddkZLOsa4qBdKQlfP23mN68=;
+	s=korg; t=1795047842;
+	bh=Sz0szCBlP6MwwRM4g/j7/+LV/WGFKuANf8Evmz1Fh7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a6kKmkwn6aBaoHfqF9dbtP7rTb67XLWsh8e3PaddKQKNJH1OfJIrM2WLogEuwQi/5
-	 x96ytj/dx/gWAIDNRxgFNjleTEAblguxAxEVaWtuDl6+iBWmbHcEa/AdpLvW38vEtB
-	 MSci7Cu6QKKRiOfMVI3K3VEB0Q6EPM8/vn0UFWfk=
+	b=1h5al7W13WXJb/khDb0Zg7MPb6hbV+GG6kYaR5Uoo+mgIj91SZPQCC7j3ugJTSLb+
+	 Q/r3UZxiZ6iEUQDztUgLvkNChFm00kZk9vxZzrtOtUqGcRsHcvT3FdtgetzSCqhlrW
+	 tlySVeBeg73zMR6BpPRZN2bBRMleIpjYJ3jvmVb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Danila Chernetsov <listdansp@mail.ru>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1783/2857] wifi: rtw88: debugfs: dont vzalloc(0) when rsvd_page is read unconfigured
-Date: Wed, 18 Nov 2026 15:46:57 +0100
-Message-ID: <20261118150305.475470038@linuxfoundation.org>
+Subject: [PATCH 6.1 1784/2857] dlm: validate lock modes in recovery messages
+Date: Wed, 18 Nov 2026 15:46:58 +0100
+Message-ID: <20261118150305.510176227@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,54 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>
+From: Danila Chernetsov <listdansp@mail.ru>
 
-[ Upstream commit 81510c3d6f2199889a4a936d8cf8b9e05911b10e ]
+[ Upstream commit 7bf1aca6d626944091a5cb218b4e487547edff0a ]
 
-Reading the rsvd_page debugfs entry before writing a page offset and
-count to it calls vzalloc() with a size of zero, because
-rsvd_page.page_num defaults to 0.  vmalloc warns about this:
+The DLM recovery path restores lock state from rcom_lock messages
+received from remote nodes. The lock modes in these messages are
+copied directly into the local lkb state without validating that they
+are within the valid DLM lock mode range.
 
-  WARNING: mm/vmalloc.c:4019 at __vmalloc_node_range_noprof+0x9ac/0xa30
-  ...
-  Call Trace:
-   __vmalloc_node_noprof+0x4c/0x70
-   rtw_debugfs_get_rsvd_page+0x4c/0x110 [rtw88_core]
-   seq_read_iter+0x132/0x4b0
-   seq_read+0x12e/0x1c0
-   full_proxy_read+0x6f/0xc0
-   vfs_read+0xdd/0x490
+The rest of the DLM code assumes that lkb_rqmode and lkb_grmode
+contain valid lock modes. In particular, LVB callback handling in
+dlm_may_skip_callback() uses lock modes as indexes into the
+dlm_lvb_operations array:
 
-rtw_fw_dump_fifo() would reject the zero size anyway, but only after
-the allocation.  Check for a zero buffer size first and print a short
-usage hint instead of allocating.
+    dlm_lvb_operations[prev_mode + 1][mode + 1]
 
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
-Signed-off-by: Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260827131244.35623-1-abdurrahmankaradag19@gmail.com
+An invalid lock mode received during recovery could therefore result in
+an out-of-bounds read during subsequent LVB callback processing.
+
+Validate rl_rqmode and rl_grmode before storing them into the local LKB
+state. This preserves the lock mode invariant required by the rest of
+the DLM code.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: e7fd41792fc0 ("[DLM] The core of the DLM for GFS2/CLVM")
+Acked-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/debug.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/dlm/lock.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/debug.c b/drivers/net/wireless/realtek/rtw88/debug.c
-index 017783a1c2d9a..3a514aa8b211f 100644
---- a/drivers/net/wireless/realtek/rtw88/debug.c
-+++ b/drivers/net/wireless/realtek/rtw88/debug.c
-@@ -310,6 +310,11 @@ static int rtw_debugfs_get_rsvd_page(struct seq_file *m, void *v)
- 	int i;
- 	int ret;
+diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
+index 8c2d4bc290177..b63b59babfbb5 100644
+--- a/fs/dlm/lock.c
++++ b/fs/dlm/lock.c
+@@ -5557,6 +5557,10 @@ static int receive_rcom_lock_args(struct dlm_ls *ls, struct dlm_lkb *lkb,
+ {
+ 	struct rcom_lock *rl = (struct rcom_lock *) rc->rc_buf;
  
-+	if (!buf_size) {
-+		seq_puts(m, "usage: echo <page_offset> <page_num> > rsvd_page\n");
-+		return 0;
-+	}
++	if (rl->rl_rqmode < DLM_LOCK_IV || rl->rl_rqmode > DLM_LOCK_EX ||
++	    rl->rl_grmode < DLM_LOCK_IV || rl->rl_grmode > DLM_LOCK_EX)
++		return -EINVAL;
 +
- 	buf = vzalloc(buf_size);
- 	if (!buf)
- 		return -ENOMEM;
+ 	lkb->lkb_nodeid = le32_to_cpu(rc->rc_header.h_nodeid);
+ 	lkb->lkb_ownpid = le32_to_cpu(rl->rl_ownpid);
+ 	lkb->lkb_remid = le32_to_cpu(rl->rl_lkid);
 -- 
 2.53.0
 
