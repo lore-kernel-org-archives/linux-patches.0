@@ -1,55 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057095;
-	b=b2ey9+MT3R66301f8f/KYg8XoNzhyfgQkLt/x/MvuwiX1bHH/7OBvs5wWznvh/wnCIVb
-	 l9umBv42+vzail8Rr0mrdqk+JyIJZGMrblZsj9IZCvplco8XK0BhuHQn1j6K42Dk33PO9
-	 hPL9WKez1fTBp/K9JgFrhT1exenzLOuNfYr8AMenaWdotQNhvFn/twqw1rXuiYce1FDfu
-	 L7LQtWq+EmM2x9mfQyhepqyY9mEkkT3dAGKuezOKjuwEyJzYqlLRrEmJy1Z4giNasilzP
-	 70sh04hD1Yq9AnIgGdBtRB6IYRp5H3cG1CR+79qJyJKd3DHdDMAi5QVHD6yDj5NtegQ==
+	t=1795057098;
+	b=jVGiP5loQ0h1Xfo309+M1rUg2brMeYAEPd7RoI51jycLwKOjMkKVTwtTwjG09dh4S7PX
+	 +hqSgGqcgAl744zDVy/vHLePSWroUAFK56NRcR3jHIUqgMxkB/PyJS0ArWbuE8FVaNDLR
+	 88LDgRJ60W97Egl0jMsvP28jmuviMhDJOnIBeHz0735Szl2Lk1EnbEysy0+5Kug/pAH1P
+	 IeHGC0TbieLQGi0oSpd9C4eNM6D+JVNQAdLDJeyBs9mLS1mgWNE9zYRjix2x08TEi80u1
+	 nNt8gXoKGfCTTw0tgey4ZacNJRVsaQN+N370JgrthD1vGikgoffTdAkXLgZVURESIjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057095;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057098;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/ti4jl4n7RejlS/pkC16/WC78m2m+kpHvVTvp0sFvYA=;
-	b=5BboJTO4q8EbvkqRrBJvEUfCohbs+ca37/X8Yc9UHwgzQ79WHGqXn9BVn2eMr4YGjS32
-	 ibs9rbtuA7P47xXqMQRAsXLkovwfWJmMnmjs9qI/nJEYXO7ePkW3KRzkRj3GHNQheUoyj
-	 ilCk9q0xpv5woXkyLz0i4oQbZk700Y7icLTvKnn3eXc1d0FcvYyVgP946kuaIbVyIIOQZ
-	 3mJCn0ALxPnbN5w7FuGMS7amKgrZpAEvyxvB080Ku39MODSAwwEm7XS1G4k7HshQrBj7r
-	 i9qEM5loMqol5xGv7rOcl595FN9ZBJGCZnjrEr7Q4lCR6ir68p/cbsdNZxqZtiikMJg==
+	bh=f6RqrT0FQ70dLFC+EFqz8GoRIdAxIhdurRYtcj3Rdcw=;
+	b=MG4wajCY1ImfbLL2FBQ8OI6l5lyvITCaCwvLLSCgQ2/p1eKGiI4Ae70czOfasXOlAnpk
+	 en4fzKAWSZQunX8+wXqKu8ozOg9boPxMnYM/NpSWZn4SVZMRlmNpzMFDZQ/HMfCO0HcSw
+	 JYm1GY8mS+RIcUVYd3q0gF2S6n+5/DBCb3KI1LxpV73RuWrYJX3MG+d4TxWustD7FN7TT
+	 6HNEEHl4FXhsA6qb3S1RJE2nkLXt4pb1Yi3aLXpDgdwEUHruTHobEMj07PJRwT8LFuCUD
+	 t+YPXNImGrznyvUC64FaqSEZFeBkLt4C6lEenDPI3UpBuabXiIkYxAKIQDiXVXu+PfQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UNreOr/j";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vwZV0oud;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F8C606A31C;
-	Thu, 19 Nov 2026 02:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B28C606A320;
+	Thu, 19 Nov 2026 02:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UNreOr/j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131781F000C4;
-	Thu, 19 Nov 2026 02:58:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vwZV0oud
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D077D1F000C4;
+	Thu, 19 Nov 2026 02:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057095;
-	bh=/ti4jl4n7RejlS/pkC16/WC78m2m+kpHvVTvp0sFvYA=;
+	s=korg; t=1795057098;
+	bh=f6RqrT0FQ70dLFC+EFqz8GoRIdAxIhdurRYtcj3Rdcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UNreOr/jwuUs3MPa92C4YHbGQonkSSmQ1n1+i1SUwL7qHiDKkboy+iRGhHbCXGFID
-	 fxbIjSfkW+jxUKNpmERsthm+V8sgjFcw0wHt3/EbrwsScnhfWWvIYiUT0A5JYbgZTi
-	 mnHz/rYksoP5BXqeddxJA63oBCE2spHVWORyNq88=
+	b=vwZV0oudkzvrrp/scnpq/7agH4TlBh5mzXGNNmbd8IvWrae9yqkc0dlw9gj3EtHFQ
+	 IjgXwQ815qJwRq6IvLocDrJAIA+cc0py9XihItDtyoYv85906zzhHu/e6VB2dY6w72
+	 Mf1OEHN3lr1SfYRK3VrZn3FtWNqZKyAopEn8SfDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Kalesh Singh <kaleshsingh@google.com>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 2209/2214] tracing/histogram: Fix documentation inline emphasis warning
-Date: Wed, 18 Nov 2026 16:04:45 +0100
-Message-ID: <20261118150138.623814262@linuxfoundation.org>
+	Aswin Karuvally <aswin@linux.ibm.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 0003/1848] net/iucv: fix the recvmsg window update
+Date: Wed, 18 Nov 2026 15:34:01 +0100
+Message-ID: <20261118145911.390912025@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
-References: <20261118150009.797899913@linuxfoundation.org>
+In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
+References: <20261118145911.150052362@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -64,43 +66,135 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kalesh Singh <kaleshsingh@google.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 93d76e4a0e0112b320c4f0e2a3930ad634628c58 upstream.
+commit fa5acd038ea657ad5033713d6916214cbd349151 upstream.
 
-This fixes the warning:
+iucv_sock_recvmsg() sends the HiperSockets-only AF_IUCV_FLAG_WIN without
+testing the transport, so on a classic z/VM socket iucv_send_ctrl() sizes
+the skb through a NULL iucv->hs_dev. SO_MSGLIMIT accepts 1, so msglimit / 2
+is zero and one recvmsg() on its own socket is enough for an unprivileged
+process to take a spurious disconnect.
 
-Documentation/trace/histogram.rst:1766: WARNING: Inline emphasis
-start-string without end-string
+It also calls iucv_send_ctrl() under spin_lock_bh(&message_q.lock), which
+allocates GFP_KERNEL inside a section the code treats as atomic. Sending
+outside that lock lets two recvmsg() reach afiucv_hs_send() at once, where
+msg_recv is sampled for the advertised window and subtracted after
+dev_queue_xmit() -- and sendmsg reaches that counter under lock_sock()
+while recvmsg holds no socket lock, so both can subtract the same value,
+the counter goes negative and the credit reaches the peer twice.
 
-The issue was caused by an unescaped '*' character.
+Test the transport, claim the credit with atomic_xchg() after the last
+error exit and hand it back if the transmit fails, and send once the lock
+is dropped.
 
-Link: https://lore.kernel.org/all/20211028170548.2597449-1-kaleshsingh@google.com/T/#m77da47432f5cc6521d4294ffdb9621949cc35d04
-Link: https://lkml.kernel.org/r/20211028170548.2597449-1-kaleshsingh@google.com
-
-Fixes: 2d2f6d4b8ce7 ("tracing/histogram: Document expression arithmetic and constants")
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Signed-off-by: Kalesh Singh <kaleshsingh@google.com>
-Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
+Fixes: 238965b71b96 ("net/af_iucv: build proper skbs for HiperTransport")
+Cc: stable@vger.kernel.org
+Tested-by: Aswin Karuvally <aswin@linux.ibm.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://patch.msgid.link/20260828-b4-disp-33fac0ed-v3-1-e6d061880ee0@proton.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/trace/histogram.rst |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/iucv/af_iucv.c | 41 ++++++++++++++++++++++++-----------------
+ 1 file changed, 24 insertions(+), 17 deletions(-)
 
---- a/Documentation/trace/histogram.rst
-+++ b/Documentation/trace/histogram.rst
-@@ -1773,7 +1773,7 @@ using the same key and variable from yet
-   # echo 'hist:key=pid:wakeupswitch_lat=$wakeup_lat+$switchtime_lat ...' >> event3/trigger
+diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
+index d37e8f4ad4727..034c4c79b898d 100644
+--- a/net/iucv/af_iucv.c
++++ b/net/iucv/af_iucv.c
+@@ -223,12 +223,6 @@ static int afiucv_hs_send(struct iucv_message *imsg, struct sock *sock,
+ 	phs_hdr->flags = flags;
+ 	if (flags == AF_IUCV_FLAG_SYN)
+ 		phs_hdr->window = iucv->msglimit;
+-	else if ((flags == AF_IUCV_FLAG_WIN) || !flags) {
+-		confirm_recv = atomic_read(&iucv->msg_recv);
+-		phs_hdr->window = confirm_recv;
+-		if (confirm_recv)
+-			phs_hdr->flags = phs_hdr->flags | AF_IUCV_FLAG_WIN;
+-	}
+ 	memcpy(phs_hdr->destUserID, iucv->dst_user_id, 8);
+ 	memcpy(phs_hdr->destAppName, iucv->dst_name, 8);
+ 	memcpy(phs_hdr->srcUserID, iucv->src_user_id, 8);
+@@ -261,21 +255,29 @@ static int afiucv_hs_send(struct iucv_message *imsg, struct sock *sock,
+ 	}
+ 	skb->protocol = cpu_to_be16(ETH_P_AF_IUCV);
  
- Expressions support the use of addition, subtraction, multiplication and
--division operators (+-*/).
-+division operators (+-\*/).
++	/* Claim the receive credit here, not while building the header:
++	 * to minimize the time the window is zeroed.
++	 */
++	if (flags == AF_IUCV_FLAG_WIN || !flags) {
++		confirm_recv = atomic_xchg(&iucv->msg_recv, 0);
++		phs_hdr->window = confirm_recv;
++		if (confirm_recv)
++			phs_hdr->flags = phs_hdr->flags | AF_IUCV_FLAG_WIN;
++	}
+ 	__skb_header_release(skb);
+ 	nskb = skb_clone(skb, GFP_ATOMIC);
+ 	if (!nskb) {
+ 		err = -ENOMEM;
++		atomic_add(confirm_recv, &iucv->msg_recv);
+ 		goto err_free;
+ 	}
  
- Note that division by zero always returns -1.
+ 	skb_queue_tail(&iucv->send_skb_q, nskb);
+ 	err = dev_queue_xmit(skb);
+ 	if (net_xmit_eval(err)) {
++		atomic_add(confirm_recv, &iucv->msg_recv);
+ 		skb_unlink(nskb, &iucv->send_skb_q);
+ 		kfree_skb(nskb);
+-	} else {
+-		atomic_sub(confirm_recv, &iucv->msg_recv);
+-		WARN_ON(atomic_read(&iucv->msg_recv) < 0);
+ 	}
+ 	return net_xmit_eval(err);
  
+@@ -1258,6 +1260,7 @@ static int iucv_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+ 	struct iucv_sock *iucv = iucv_sk(sk);
+ 	unsigned int copied, rlen;
+ 	struct sk_buff *skb, *rskb, *cskb;
++	bool send_win = false;
+ 	int err = 0;
+ 	u32 offset;
+ 
+@@ -1350,16 +1353,20 @@ static int iucv_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+ 		if (skb_queue_empty(&iucv->backlog_skb_q)) {
+ 			if (!list_empty(&iucv->message_q.list))
+ 				iucv_process_message_q(sk);
+-			if (atomic_read(&iucv->msg_recv) >=
+-							iucv->msglimit / 2) {
+-				err = iucv_send_ctrl(sk, AF_IUCV_FLAG_WIN);
+-				if (err) {
+-					sk->sk_state = IUCV_DISCONN;
+-					sk->sk_state_change(sk);
+-				}
+-			}
++			if (iucv->transport == AF_IUCV_TRANS_HIPER &&
++			    atomic_read(&iucv->msg_recv) >=
++							iucv->msglimit / 2)
++				send_win = true;
+ 		}
+ 		spin_unlock_bh(&iucv->message_q.lock);
++
++		if (send_win) {
++			err = iucv_send_ctrl(sk, AF_IUCV_FLAG_WIN);
++			if (err) {
++				sk->sk_state = IUCV_DISCONN;
++				sk->sk_state_change(sk);
++			}
++		}
+ 	}
+ 
+ done:
+-- 
+2.53.0
+
 
 
