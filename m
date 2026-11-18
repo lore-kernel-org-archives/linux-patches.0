@@ -1,61 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058498;
-	b=2nur4shVwvPq13ipGhs85ltWmR+EtGvFnTQg+8B1efoHJ5hDSz+wSTiXKgJ+G2s3Rjt1
-	 uSJTktlRAzv7VbDqebZK5fzFIognklF9yhdihA491ONHZhfcHFHSLNErJwyLyi+w4hhlj
-	 hJ1cauzvULzzekrOkPjgjJCRvss8emfjkAqWuSyVk5pIWjnICLRujGLONoOxh6Ht7Mail
-	 0MT4QD3NsGDmqo54DMi9eDLzmvwwlcxiDM96MpZ9/My+IlnZMbdI8NdHhMJNWyqogDwZG
-	 iZaAf0n7sE9hpBS8QABKxqjVz1Y/S/8Yj9IYuZ7XaTxF4GmYlXcstw1GFZ2rcIrn0oQ==
+	t=1795058501;
+	b=bRfTqkUXZz4zU3vDG9KwOh3j2juGqK75X3IfoJItDU2rh1aQlmyMQSRcuPW6OB9Z+Bu6
+	 yKuiyypxO0uphgibpquUSQeE8QG+VFsw8+nV8d002n/zgCmjE2zoYje4gdxYFPC2eHOF7
+	 C5GoOEKj1q4yF5LLKzftbLxhMoBsSaB9Z3toCJzncMFUM397lL6YQQE/s8DcR1StoFAJg
+	 Yip7uK+zD8lu9FBc9JqmIxlPD6lW8EdNuSwMpxUKOcDDQM52TFWKWHjPN5wVQphmQyYix
+	 cvsoR/mESDFYnC5PrHYj9UIEFR1Ti1Nvlln0B6H4IyiB59t46jv6CUZp0+4kn5u7Z2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058498;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058501;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dDh3zIP16O5P49OFLU74i8lC+IPC6Q9FkpQ7MTH8Z8U=;
-	b=OAAYWlQuclhMGjSCIL3+SXlHoqQVFBLy6jbwQ94pKi9RXGWaHCsvs132ztFzbSyCkjeW
-	 2sJbOl0yZ0a7EB9r7TPFGp6LdQxPWPR1fxOKVp8CSteNB4Agxv+sVuLjLklO6HPKx7A+l
-	 zJWMQoTM/1X/5gm/ThPqyJyBpo45wmCCR4sCXgaUB+D7GK7dA4ZcgCZ/bwMrwZ/HlMKCl
-	 rPpydeE5TlGDDiqKnwVHX+icUUbb2euaSDSYOOUTzOy2Kbc/xAjsSlmtKZE87mYpvZRQe
-	 L0ZYZj9I8CiFc5Gm/kce0ZHPsau6v/jaIIkyAi9L+zfDO00OQjkcp2pA9WwpGy4EA9A==
+	bh=5arJD4BiZ+jODZ+OiNr4rv57jQGIW2OEqc2fpDMfmpc=;
+	b=vxRkjm+jEdrHvyJ8WFCtJkvylZSv8fmECW2DdaPh6x+D/gvAEOIBQvVuTaF72T6mQRcd
+	 SP0ThVPez4YPXJhoS0JY2bnWbTmbPEvvk7Bmc16eU3LJF3FAb1bQaE3NqtpDvTBDEMDWk
+	 Go7D8sqCvLVojNCvhSIWJe5k0XbZ1xgCh2FQAUw9lneoJPGBHLLdmT6MQ9jmtqULMoxxI
+	 0vFPBf0CMLud8B9c38+qUyDDw+3k5AaD9cwJRdrIyhc1d8QlWtzbwaZPdvDLhv7SZGuV7
+	 v7e+wkgQBVHSGPnZucW9YMNQhxLWm2mq7lomLDBLTDrTbWlS3sa4K2YFS5YjzVGaskg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KqaLVSdO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=npVBERbn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85BAF606A32A;
-	Thu, 19 Nov 2026 03:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DDC606A320;
+	Thu, 19 Nov 2026 03:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KqaLVSdO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31A91F000C4;
-	Thu, 19 Nov 2026 03:21:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=npVBERbn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1851F000C4;
+	Thu, 19 Nov 2026 03:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058498;
-	bh=dDh3zIP16O5P49OFLU74i8lC+IPC6Q9FkpQ7MTH8Z8U=;
+	s=korg; t=1795058501;
+	bh=5arJD4BiZ+jODZ+OiNr4rv57jQGIW2OEqc2fpDMfmpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KqaLVSdOi0aXh9dFa+QWcT1iDagsO3HUVxnYVqI3zLiSdOqC8ZHVbFZxAQaPoSpFM
-	 11K0saEZOCcz7p5lXRAFxAwBjbNdarfj1hM6n6TesyrjCL5KyUDF7e2mbpNt8+3L6/
-	 EDzCNff6CON25Ct0/r8qt3PGIEdskiCPMncYmzgM=
+	b=npVBERbneSvhaCn4j1/VT4Zt3Inj5ulQKwBME4Riejz1IrtwZgPsckToP1UKnBXZt
+	 vIGkqHBM8pTpn+/8tOZAXBwGPmU/M5ZDQ3kwwV/gkPFoSTJst53Le7+1hjSNc/OYLd
+	 ZIWQhxBoUo9B1++mMmMu7RzZEehFMZ6xlpP4fX1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanhe Shu <xiangzao@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Henry Willard <henry.willard@oracle.com>,
-	Brendan Jackman <brendan.jackman@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Michal Hocko <mhocko@suse.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Zi Yan <ziy@nvidia.com>,
+	co+e5693071d903b832@bugs.sh,
+	Samuel Thibault <samuel.thibault@ens-lyon.org>,
+	stable@kernel.org,
+	Weiming Shi <bestswngs@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0507/1848] mm/page_alloc: do not boost watermarks in kdump capture kernels
-Date: Wed, 18 Nov 2026 15:42:25 +0100
-Message-ID: <20261118145935.996222600@linuxfoundation.org>
+Subject: [PATCH 5.10 0508/1848] speakup: Fix NULL pointer dereference on VT switch + selection
+Date: Wed, 18 Nov 2026 15:42:26 +0100
+Message-ID: <20261118145936.027807391@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -77,104 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuanhe Shu <xiangzao@linux.alibaba.com>
+From: Samuel Thibault <samuel.thibault@ens-lyon.org>
 
-[ Upstream commit 331f94007d79b3c02d3098eea469a92aea3efc2c ]
+[ Upstream commit e1301ab8a8411fccc7effe0711fc09939a94953c ]
 
-A watermark boost is not confined to one watermark: wmark_pages() adds it
-to min, low and high alike, so every watermark check sees it, including
-should_reclaim_retry() and the last ditch ALLOC_WMARK_HIGH attempt in
-__alloc_pages_may_oom().  Once the boost exceeds the memory still free the
-allocator gives up and invokes the OOM killer, and a capture kernel that
-is still booting has nothing to kill: the boot panics and the vmcore is
-lost.
+When selecting/pasting very quickly after VT switch, the tty is not set
+yet, leading to a NULL dereference. We can just abort the operation.
 
-Seen on an arm64 machine with 64K pages, CONFIG_PAGE_BLOCK_MAX_ORDER=10
-(pageblock = 64M) and crashkernel=512M, running a distribution kernel
-based on 7.0.14.  A high order UNMOVABLE allocation fell back to a MOVABLE
-pageblock while the capture kernel was still in do_initcalls():
-
-  Node 0 DMA free:68096kB boost:65536kB min:68160kB
-  low:68800kB high:69440kB managed:479168kB
-  Out of memory and no killable processes...
-  Kernel panic - not syncing: System is deadlocked on memory
-
-The zone was not short of memory.  Subtracting the boost gives min:2624kB
-low:3264kB high:3904kB, so the 68096kB still free sat 17 times above the
-high watermark and the allocator would not even have entered its slow
-path.  The boost supplied 65536kB of the 68160kB min and by itself put the
-zone 64kB under water.  It is that large because boost_watermark() clamps
-it with max(pageblock_nr_pages, max_boost); watermark_boost_factor alone
-would have allowed 5824kB.
-
-Commit 14f69140ff9c ("mm: limit boost_watermark on small zones") already
-tried to protect capture kernels, but it infers them from the zone size
-and skips the boost only below four pageblocks.  arm64 64K pageblocks were
-512M then, so the guard reached zones up to 2G;
-CONFIG_PAGE_BLOCK_MAX_ORDER can cap them at 64M, which shrinks the guard
-to zones under 256M and lets this 468M zone through.
-
-kdump is a property of the kernel, not of the zone, so test for it
-directly.  A capture kernel exits within seconds and never uses the
-fragmentation avoidance the boost buys.  Normal kernels are unaffected:
-the size based check still covers their genuinely tiny zones.
-
-Passing sysctl.vm.watermark_boost_factor=0 to the capture kernel does not
-cover this window: sysctl.* parameters are written through procfs by
-do_sysctl_args(), which runs after do_initcalls() where the panic above
-happened, and watermark_boost_factor has no early_param of its own.
-
-Link: https://lore.kernel.org/20260916112545.3707893-1-xiangzao@linux.alibaba.com
-Fixes: 1c30844d2dfe ("mm: reclaim small amounts of memory when an external fragmentation event occurs")
-Signed-off-by: Yuanhe Shu <xiangzao@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Henry Willard <henry.willard@oracle.com>
-Cc: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org> # v5.0
+Reported-by: co+e5693071d903b832@bugs.sh
+Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Cc: stable@kernel.org
+Tested-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260829164945.2691317-3-samuel.thibault@ens-lyon.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_alloc.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/accessibility/speakup/selection.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index f5190e927d8e7..a278962af4d53 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -53,6 +53,7 @@
- #include <linux/debugobjects.h>
- #include <linux/kmemleak.h>
- #include <linux/compaction.h>
-+#include <linux/crash_dump.h>
- #include <trace/events/kmem.h>
- #include <trace/events/oom.h>
- #include <linux/prefetch.h>
-@@ -2478,10 +2479,17 @@ static inline bool boost_watermark(struct zone *zone)
+diff --git a/drivers/accessibility/speakup/selection.c b/drivers/accessibility/speakup/selection.c
+index 7df7afad5ab42..463a7ef19315e 100644
+--- a/drivers/accessibility/speakup/selection.c
++++ b/drivers/accessibility/speakup/selection.c
+@@ -61,6 +61,9 @@ static struct speakup_selection_work speakup_sel_work = {
  
- 	if (!watermark_boost_factor)
- 		return false;
+ int speakup_set_selection(struct tty_struct *tty)
+ {
++	if (!tty)
++		return -ENODEV;
 +
-+	/*
-+	 * A kdump capture kernel exits before a boost can pay off, while
-+	 * the raised watermark can exceed the memory left for the dump.
-+	 */
-+	if (is_kdump_kernel())
-+		return false;
+ 	/* we get kref here first in order to avoid a subtle race when
+ 	 * cancelling selection work. getting kref first establishes the
+ 	 * invariant that if speakup_sel_work.tty is not NULL when
+@@ -120,6 +123,9 @@ static struct speakup_selection_work speakup_paste_work = {
+ 
+ int speakup_paste_selection(struct tty_struct *tty)
+ {
++	if (!tty)
++		return -ENODEV;
 +
- 	/*
- 	 * Don't bother in zones that are unlikely to produce results.
--	 * On small machines, including kdump capture kernels running
--	 * in a small area, boosting the watermark can cause an out of
-+	 * On small machines, boosting the watermark can cause an out of
- 	 * memory situation immediately.
- 	 */
- 	if ((pageblock_nr_pages * 4) > zone_managed_pages(zone))
+ 	tty_kref_get(tty);
+ 	if (cmpxchg(&speakup_paste_work.tty, NULL, tty)) {
+ 		tty_kref_put(tty);
 -- 
 2.53.0
 
