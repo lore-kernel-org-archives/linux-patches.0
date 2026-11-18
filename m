@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035180;
-	b=I89Rpz0oL+yiWcvnnMLEfyJjpnUyeux3tMU7bwItnsoeiEVS95fR5Vcw05gS8sb18Bxx
-	 ydKsDTx6mbezcLGBZuliGzMLWlPTqAqqCnkprBBAGsb0anyI77t0BGwE4oEkY2kVwkUwN
-	 NRbCvZefYm9BPR4kQkndF/UwOSeYAMD2lUAwsyw5leG2oBmkOR1mXgC7tq6Ia6O6bkQgU
-	 IRtDuLBPQdaBxnVGF/ta17BNwt+yLZAE7JNiRZe5zuTyDkToG7TBYweH3SUk8zgpL65aj
-	 F9FynVHkIrq5Lq3LysKeI1qzFWLG+fgnaTKdey2h0yQ0gWNq9zOydKEovlCdacIEjHA==
+	t=1795035182;
+	b=ofWBnTyr03A9Iu5LfwWhXSxHorQa5G67IQRDOKM5xuscib9vWM7Pb0S8EDWSmr2D1qAO
+	 5SY8RE1LydUfYTW2l2xtRE1z79DNOjw6n3/NPYrnasxP46WpHWo89cMwLA8BNkx45iDJP
+	 1yfszl6hqHxrdqQiZAOOZV1wr9tWnXLcwrncw4dHYXMl+pvmxXI42iwC7IrnDWePnV7Bw
+	 ARjQjJV4zlGLVlsR8g9ZqTG4GqT0ewQVf2/EPtNAica771ro33oBGOqh4sV1yomZfRMeo
+	 5OCVVZb5ijSxY6tzUBZWxtYdI87yzE+Z6RS4+kIahWdBPFcZO2laA7N/DsWVlYdeyKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035180;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035182;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pgbPupLkn/FIUIYwp0NvZ4hPRersy3rLnC5qx3ztUj0=;
-	b=rJKPBJaH9iz7GG7M9LCX/etKWXlMrRGvuwI4bbo5vuQLHzGO5PvlTNoFWEYR1WwDL9DZ
-	 520KzD344ZLyEDnNvzfiZSIEjA5vu55mIZ0/Gqlm3yH4sVBFE/b4uAUFLLHrWsup3z8gQ
-	 Qx1/6HzEdUogWkr6/+zCtncFBc/F528xgV5rdpNEGnIyCB5e1Bff0XcyLSDol/PMLjGjn
-	 Fd2WTFGQ5s4UdiaVUFaHJl+KzOKZD7J+ivutXy5xbzPNYHThnGVryHkGTWmK+ZIlhpBCJ
-	 pKi154t8jbhBuybqaVe0wxB0kXo8Hr+4PBnP/5yHQ8xf/7pZy7BMugww0/ej4czIvWQ==
+	bh=kQ6Psmx1rF0U7tgSsgFwmFgxfo38Jqvto2lw+rIgz80=;
+	b=29JCsjNy9TMHurhwzjlyvbol7hN6tv117pLf4b00mv73GiGcE8M13Rno/LHtWiqfekMC
+	 DajCD8iEEBt7J7hxVQTTzoO3F6cE+XtS65lvRW7AcjiV/xnWR563/CR+OLgxp4QXJFSuG
+	 od7Ab+dVMEpMCU/Lq72ajua1RgJ/FLOEo0womL5J4RPN2FcLCoJZzWk1vVHVAXdM9Z7cr
+	 TNotM19YJzb6tOrU36NJbopAt76dr1UmbSbnDiXhUIOJ+H9FjcHMWzpOMJf+og5LTZLs9
+	 n/X6H8EWrRlk/C6F8eXnmGF1LsexpapjF160LwQp0yU/2zbzAhowjuxifMDmbqNCjkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2wKH33Mn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kUhfs40L;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC7C606A31C;
-	Wed, 18 Nov 2026 20:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF67606A31C;
+	Wed, 18 Nov 2026 20:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2wKH33Mn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6331F000C4;
-	Wed, 18 Nov 2026 20:52:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kUhfs40L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D391F000CD;
+	Wed, 18 Nov 2026 20:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035179;
-	bh=pgbPupLkn/FIUIYwp0NvZ4hPRersy3rLnC5qx3ztUj0=;
+	s=korg; t=1795035182;
+	bh=kQ6Psmx1rF0U7tgSsgFwmFgxfo38Jqvto2lw+rIgz80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2wKH33MnBVY+sDwI7UYzbJdNJV9CjRYksRxRzw0FUofb8eufAmTBZtOvhYxJ/zrJc
-	 HZTpTE7Pm3HKXrbNz7l1BL//+e7FB2/je7k9joyjFrwMAqTXnWlHbNJVpCCGVXY6Ao
-	 lJsuMlWUtQs3doI9vINgXdyiKSvBWZL9lxcH0F4Q=
+	b=kUhfs40LGPivhcU2FF1FbXbRwCJnidCHGh0MXXushubN+PbWQSghAnxof7SvjZZTr
+	 lg1WzT0O7SGHNKxbsMT1AkHoX+rbncdUZahz/gkkKn1s8P/9eMIJ+wJEDnYo869GHb
+	 FxyTBts4/q+JKa1T14S0C2Hou9havEx8CUgk8KjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 0632/3318] media: rc: Ensure registered is cleared in error path
-Date: Wed, 18 Nov 2026 15:20:54 +0100
-Message-ID: <20261118150336.848234035@linuxfoundation.org>
+	Weigang He <geoffreyhe2@gmail.com>,
+	Sean Young <sean@mess.org>
+Subject: [PATCH 6.6 0633/3318] media: rc: fintek-cir: process a full RX buffer instead of overflowing it
+Date: Wed, 18 Nov 2026 15:20:55 +0100
+Message-ID: <20261118150336.887107020@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,71 +67,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-commit 37efd09ba2c62e46e3a3a793025c186f8cd1a417 upstream.
+commit d1febef1bcfa7bbc401729f994c375b91a833911 upstream.
 
-If rc_register_device() fails, ensure that registered is not set to true.
-If lirc_register() succeeded, then userspace could have an open file
-descriptor open. This leads to a use-after-free.
+fintek_get_rx_ir_data() drains the CIR RX FIFO into fintek->buf[], which
+holds RX_BUF_LEN (32) bytes, for as long as CIR_STATUS reports pending
+RX data:
 
-lirc_unregister() must be called with registered = false, else there is a
-possibility that an fd is open and polling, which would never return
-POLLERR unless registered is false.
+	do {
+		sample = fintek_cir_reg_read(fintek, CIR_RX_DATA);
+		...
+		fintek->buf[fintek->pkts] = sample;
+		fintek->pkts++;
+		...
+	} while (status & rx_irqs);
 
-Note that registered must be changed under dev->lock, many functions
-read registered under lock (e.g. lirc_ioctl).
+Nothing bounds fintek->pkts. If the hardware reports data for more than
+RX_BUF_LEN reads in one interrupt, the loop writes past the end of
+buf[], starting with the pkts counter that follows it in struct
+fintek_dev.
 
-Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
-Signed-off-by: Sean Young <sean@mess.org>
+Hand a full buffer to fintek_process_rx_ir_data(), which parses the
+samples and resets fintek->pkts, before storing the next sample. This
+keeps the parser state consistent and drops no samples. The loop still
+relies on the status register to terminate.
+
+The driver does not document the hardware FIFO depth, so it is not
+known whether a working device can trigger this.
+
+Found by static analysis tool CodeQL.
+
+Fixes: 9bdc79ea07d9 ("[media] fintek-cir: new driver for Fintek LPC SuperIO CIR function")
 Cc: stable@vger.kernel.org
-Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Assisted-by: LLM codeql
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/rc-main.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/media/rc/fintek-cir.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/rc/rc-main.c
-+++ b/drivers/media/rc/rc-main.c
-@@ -1929,7 +1929,8 @@ int rc_register_device(struct rc_dev *de
- 			goto out_raw;
- 	}
+--- a/drivers/media/rc/fintek-cir.c
++++ b/drivers/media/rc/fintek-cir.c
+@@ -340,6 +340,10 @@ static void fintek_get_rx_ir_data(struct
+ 		sample = fintek_cir_reg_read(fintek, CIR_RX_DATA);
+ 		fit_dbg("%s: sample: 0x%02x", __func__, sample);
  
--	dev->registered = true;
-+	scoped_guard(mutex, &dev->lock)
-+		dev->registered = true;
- 
- 	rc = device_add(&dev->dev);
- 	if (rc)
-@@ -1949,7 +1950,7 @@ int rc_register_device(struct rc_dev *de
- 	if (dev->allowed_protocols != RC_PROTO_BIT_CEC) {
- 		rc = lirc_register(dev);
- 		if (rc < 0)
--			goto out_dev;
-+			goto out_lirc;
- 	}
- 
- 	if (dev->driver_type != RC_DRIVER_IR_RAW_TX) {
-@@ -1972,11 +1973,18 @@ int rc_register_device(struct rc_dev *de
- out_rx:
- 	rc_free_rx_device(dev);
- out_lirc:
--	if (dev->allowed_protocols != RC_PROTO_BIT_CEC)
-+	scoped_guard(mutex, &dev->lock)
-+		dev->registered = false;
++		/* Process a full buffer before storing the next sample. */
++		if (fintek->pkts >= RX_BUF_LEN)
++			fintek_process_rx_ir_data(fintek);
 +
-+	if (device_is_registered(&dev->lirc_dev))
- 		lirc_unregister(dev);
--out_dev:
- 	device_del(&dev->dev);
-+	/* registered already cleared above */
-+	goto out_free_table;
- out_rx_free:
-+	scoped_guard(mutex, &dev->lock)
-+		dev->registered = false;
-+out_free_table:
- 	ir_free_table(&dev->rc_map);
- out_raw:
- 	ir_raw_event_free(dev);
+ 		fintek->buf[fintek->pkts] = sample;
+ 		fintek->pkts++;
+ 
 
 
