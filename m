@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029796;
-	b=xzbc/1xUqJVOMtuUHFzPuSGcjS45n6yn1WERUPiBfn4p0UnRSlKCEakMkIUGiqcQaPOi
-	 EX15gYqEqQKU5ZAj15MCdozkhDb3i0np9hD/0DBtY/2GJ6KtodqVUWJRuheq8OVo0+cmz
-	 xhNrFB03gCxzGPrRg27WfUW5GX3koWZfuqlfHTv76F5DZEXsKJgxuTZ0DmzLD5twHUu5t
-	 D4iaGjumNitiHuzTaj/s7HgKcG1uDh3BYHqlrQCYWKtwr82OS6stwt3tkunPkgATkYmKX
-	 5wWPDW7tzDNOVr67KEqjOZ8aG5EEBfBhDP7XrP5HpNcLwk9/hVZfpRq3C9g2PRn0Yeg==
+	t=1795029799;
+	b=gKUHfYwNmFCZGzrx27s+6MjqqEvyMF1g7we7gL8rWky/1nAW3KJscfLfSQAe3pphkWZZ
+	 v+wPb+YY8fjRL1IVSeCB4DF2TgF+0A4efbj8TogCJ1ySrjQz/cqEEcqoAuXRd6PQ6s+LM
+	 ESiQpdqfB9nEXdDMxMI7212Xy421x3JcwFlqeJG8H12sIvafb9TMjwpPksrxwjDHGOhrt
+	 QEoznyQudJfZPzP8kIQqSjJxo5JSkMNT9TVj2g+RfjLihWs+kAYS+fLwM8we8k9n1AAxK
+	 yjDR5tF/wuFGltbXRGbYuJHA9yeecMPMjpQPrf6MLzp2VI5Ui+BKeb038a979dbI6xA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029796;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029799;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C6duCfcQyovRWswnahzNlchhOM/lImknPOmqfzmfbRQ=;
-	b=Yi52cWSnZr8LQwVffPE2ywMeeGA2avMFMxVnIx2yRxgDJlhOHDuQWH1CsJJffX2zmD2Y
-	 iqd5egEN+JBRH1mwzw1pFMcz5B2GRVc4dudUAs6bqtNPw79aYBmvQ8VOi4FdxBIDJK6rc
-	 fx96S3FoKioH8+jQw4ErkMcQBLd+RkxavQDkjdHOXEydA8Ps2PshQt1auv4Dm5VRDPYs1
-	 dYaKJt0TwrYCY6c0kF/Jz360jn2TVBmXbXOJHxsdz+M5Nyr6KnxWZJeeKMmEDXBP4lXqY
-	 FPkBC4DLipgX6lAExLzDMiPXEkXWKOM/jiUaPXf+fjLsFtS9/ntCJ2kDoBrEAnaXzuQ==
+	bh=/rVM7152VBVUhDLc46Oo/6pr1ykCWAVSHLxaHPSf6dc=;
+	b=e3NZj+RIHITw8iXSpNXM/7V3yzUUo8mJw+8KxLnhqwE1isaGJOLwb2fwWtjD5fuLeFBd
+	 g44gECSxzq46qD/hl9O+vtkb4CTK7Z+qqdb26+y0C7eQ88L2VpD19Fydo2QXSPqI3gFFh
+	 QzT1BeM620wrcLpzVtk9wEX9wdfabHVr8oDFkrtmh+w9B+UrD3GmrxIc0CA71koyvJzr/
+	 Df0g3Cokjx39BisqXdZDLSvKQNYGggAe6KFKQJ9Y/Dcgx/3nHkwRxrGtJQDn+v7JkqnYL
+	 +4bqdoJw9Zq9JMgI6yREcZt4tHvvjfjVh9h4rRbCayATydVFNAD4M7aWDhfjL+XE9Tw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KVP6lb1O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GRIVyLoy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D26E606A325;
-	Wed, 18 Nov 2026 19:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C0A606A31C;
+	Wed, 18 Nov 2026 19:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KVP6lb1O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3CD1F000C4;
-	Wed, 18 Nov 2026 19:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GRIVyLoy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6690A1F000C4;
+	Wed, 18 Nov 2026 19:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029796;
-	bh=C6duCfcQyovRWswnahzNlchhOM/lImknPOmqfzmfbRQ=;
+	s=korg; t=1795029798;
+	bh=/rVM7152VBVUhDLc46Oo/6pr1ykCWAVSHLxaHPSf6dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KVP6lb1OSmJRsaTb8OPJisjmUcyKlZGeTLbFJJWgBsGXo0vkKIgLNhdtArjqcVchv
-	 UgwCROokVx/OaT22d7GoiNnDK+p1HzvKoOSGfLsoIA5yJD/i3P092Waiq24wZQeFCw
-	 d9QxH6fpSOOZhu+9aGxLy7tys8jAlfzZtms4oDC0=
+	b=GRIVyLoylShcQykBT7BmB6jS6DsAuMDkU0j0AggC96r0VM163Tv2EoTK0s+7KiyTd
+	 b7ZsE0ZIr0tpAFaCjwialj3wM7okt5nQAtJwBVqdMcj5rQAeG2XsfPcrXmqW6u89N6
+	 x1HusXUxvCw5SKygpK7i/1NwNzeLhvbGt+meqyx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0478/1756] fs/ntfs3: validate $SDH entry size in ntfs_insert_security
-Date: Wed, 18 Nov 2026 15:43:25 +0100
-Message-ID: <20261118150027.934843512@linuxfoundation.org>
+Subject: [PATCH 6.12 0479/1756] pmdomain: imx: Propagate SCU provider registration failures
+Date: Wed, 18 Nov 2026 15:43:26 +0100
+Message-ID: <20261118150027.969594538@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,56 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit 5b76487f94dacc2884135ce9a7bda61ce7ffa209 ]
+[ Upstream commit d3efba7921f3ebebd91fc481910a428c78414fd8 ]
 
-ntfs_insert_security() walks the $Secure::$SDH index and reads
-e->sec_hdr.size for every entry returned by indx_find()/indx_find_sort().
-Those only guarantee the NTFS_DE envelope (e->size), so a crafted $SDH
-entry shorter than a full NTFS_DE_SDH at the tail of an index buffer makes
-the read of e->sec_hdr.size run past the allocation. Triggerable by an
-unprivileged setxattr(2) on a crafted NTFS image.
+imx_scu_init_pm_domains() ignores of_genpd_add_provider_onecell() and
+returns success even when none of the initialized domains are published to
+DT consumers.
 
-  BUG: KASAN: slab-out-of-bounds in ntfs_insert_security (fs/ntfs3/fsntfs.c:2148)
-  Read of size 4 at addr ffff88800fa1de00 by task exploit/142
-   ntfs_insert_security (fs/ntfs3/fsntfs.c:2148)
-   ntfs_setxattr (fs/ntfs3/xattr.c:947)
-   __vfs_setxattr (fs/xattr.c:223)
-   __vfs_setxattr_noperm (fs/xattr.c:257)
-   vfs_setxattr (fs/xattr.c:344)
-   filename_setxattr (fs/xattr.c:690)
-   path_setxattrat (fs/xattr.c:734)
-   __x64_sys_setxattr (fs/xattr.c:764)
-   [...]
-  The buggy address is located 0 bytes to the right of
-   allocated 512-byte region [ffff88800fa1dc00, ffff88800fa1de00)
+Return the provider error and remove the initialized domains in reverse
+order before devm releases their backing storage on probe failure.
 
-Stop the scan when an entry is too small to hold a SECURITY_HDR.
+The issue was found by our static-analysis tool and manually reviewed.
 
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: c800cd7824bd ("firmware: imx: add SCU power domain driver")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fsntfs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pmdomain/imx/scu-pd.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
-index c9ff8293fea73..1510f2c4ced9c 100644
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -2160,6 +2160,9 @@ int ntfs_insert_security(struct ntfs_sb_info *sbi,
- 		goto out;
+diff --git a/drivers/pmdomain/imx/scu-pd.c b/drivers/pmdomain/imx/scu-pd.c
+index 3ec33667a308c..41dd45b48a762 100644
+--- a/drivers/pmdomain/imx/scu-pd.c
++++ b/drivers/pmdomain/imx/scu-pd.c
+@@ -474,7 +474,7 @@ static int imx_scu_init_pm_domains(struct device *dev,
+ 	struct genpd_onecell_data *pd_data;
+ 	struct imx_sc_pm_domain *sc_pd;
+ 	u32 count = 0;
+-	int i, j;
++	int i, j, ret;
  
- 	while (e) {
-+		if (le16_to_cpu(e->de.size) < SIZEOF_SDH_DIRENTRY)
-+			break;
+ 	for (i = 0; i < pd_soc->num_ranges; i++)
+ 		count += pd_ranges[i].num;
+@@ -503,7 +503,13 @@ static int imx_scu_init_pm_domains(struct device *dev,
+ 	pd_data->num_domains = count;
+ 	pd_data->xlate = imx_scu_pd_xlate;
+ 
+-	of_genpd_add_provider_onecell(dev->of_node, pd_data);
++	ret = of_genpd_add_provider_onecell(dev->of_node, pd_data);
++	if (ret) {
++		while (count)
++			pm_genpd_remove(domains[--count]);
 +
- 		if (le32_to_cpu(e->sec_hdr.size) == new_sec_size) {
- 			err = ntfs_read_run_nb(sbi, &ni->file.run,
- 					       le64_to_cpu(e->sec_hdr.off),
++		return ret;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
