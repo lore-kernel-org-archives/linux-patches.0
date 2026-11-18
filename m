@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057716;
-	b=YAcuNhKw70PMJ7voI/j+G+WqU+wF/gF+DZpcqFWnmARISHfgrEa+uaL/6KsU/W8lPwHH
-	 Gbs9Wn/a11R+fCxSAllouL8DdP7qDgypjiWya0IxiKXLV/x5OFc4bOQCoU2f1OjplRRGS
-	 ndRt9d7bOc8pBVkdftB/J/Eo5k4actuuvrvmrjWoa2mjCEVCzTYMfWo4zFRFxLFdUZ36U
-	 IM6zHl2Pt60E2tfvQ5KPnnRYXSG40b8LAkyqIkPYGaiPYSZ40UmjKDdlASrrwfDKsDj0E
-	 hrpZQaBJvPica5OCm/fTyTjvGuwXV4OpUZNGzmrq6LV2JX1a0nE/aZ9FGPwrR9mydhQ==
+	t=1795057719;
+	b=uayPWrdtHD0SQ7k63mN6y4ZPVe27e78tmKkKZRGDo8F4vZD6+NoQNQQKJ+FO1hr20fgl
+	 A/ccZggI3AjFVK9gIHzls8xYXRTZJYEpRrkUYH3gNBGM0qTnR5Nl9fslD1lhsomVCDLvt
+	 UDpkAxW4tcLNg6EORXlnQsb/se9C+zTAo1tcwgL6pq3ZGB3RNlEOjhK4S2Pa37TujzHy/
+	 /U213zpuVvhCo7op8GbheLcUj/rSo8tYrQ+szbPGckXkEiwJHxGdFQ/vXrM46XHxw0raz
+	 7GF5i9uEUdXbRojV2i3h4B9NKn2DsbE+n48lBaC6U8zAGLmz9qa/EuG8ZOFp7g6aFdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057716;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057719;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bVbLj9px5Nb+O3Y3JK5P3tdQDwinenaQkY2X8EpId4g=;
-	b=4VMPjsNhA4I0qpRI/IvA6NVaGdLbx/JtYrBC+wDwXeZsg/LI13TTK7UyZzdETdkTzsEt
-	 X9zm478cyMVqyY2mZpLW9D3f+SwZr/KBFFI6UXm5N6rggFRgFD9peHELMhR/NK2Qw3IqC
-	 iO25KgIc1LtHT0Pqri5vc+wwTv90Eav0nk7fmL77Qx1ghj5S1mKxXQiJcsNGU20oK9dMu
-	 XS0DVcGCjbtGinHGYmTG9R0QqPBASzR4DMKKgwavcnmvl9SwoNzbJ/SXZGDAHBevboHub
-	 2As45aOtSSnlhMj+b1zdQ9aoeJK2yv8Qq6qr/ufb04rkhxdDR6mA3jLLAInCHayZRmg==
+	bh=q4PGRVbl5uLG/t2nSizDy6s+IcmvJuKG1ST2zPjzpP4=;
+	b=O/zbLBMkuLGxdldofK5ohwTbzej3jnrMZTX9meUqvNiIZTtasftk+BfIJ5InVXnVKIZE
+	 nIM7R1BHKadSNapCaYIkTscpgaf8iDSrEq1h8TGQQxsWa1DWPWAcLKzytDF6b3hh801Pw
+	 fmPN9fW761XLIb8VEbGqQ2viLw8ZE8pB++ri2KupJ73W8gTicpC4psdVo1Mbpily3M6qS
+	 tZdgGACzRqjOc6vEpc8Xt6REadCNfR+lS05nrgwjesA3a6TSvXGJ6tYE264TXV370HJyY
+	 LANow6/oB6KxWI+Gh5ILN+jp5D4B1/zGJO2Xjjjb1ltlyKWHzOQUtXRLfjPR0hx+Rbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MpNvG5ZQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cGw4+0Wh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD33606A31C;
-	Thu, 19 Nov 2026 03:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16DC606A31C;
+	Thu, 19 Nov 2026 03:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MpNvG5ZQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F821F000C4;
-	Thu, 19 Nov 2026 03:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cGw4+0Wh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AFE1F000C4;
+	Thu, 19 Nov 2026 03:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057716;
-	bh=bVbLj9px5Nb+O3Y3JK5P3tdQDwinenaQkY2X8EpId4g=;
+	s=korg; t=1795057718;
+	bh=q4PGRVbl5uLG/t2nSizDy6s+IcmvJuKG1ST2zPjzpP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MpNvG5ZQNRbutNZcfJ5eEHBBd2BNrIfZ9k3UAAPv66uOnchZNr9jh6ZCIZNDBjFGz
-	 CWhl3IKHwGv+cBeMfGk0mhCOGxpefWBTAxyjIF533UJYZMmz7DiWBUU1e26KUBSg1l
-	 ci8HRQyN2EVidc97z3KkJ2PnZj/IC1KThVVR9eAU=
+	b=cGw4+0Wh4KxFDVXVpXQTPFWrSY4LIQejdZ1QP8L8YwZt5lZOBEobyYKZJX2IHHg9E
+	 8n31VCT5sknHQvxphK+tVFaCNq4UTCWnBDpMkkg9fN6YvGSsdkcl7rn7011Bf4oZqb
+	 r0vNe/1DaSuGtlHPtWHbStyaqqTNLSM6pXkYykGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 0230/1848] net/sched: act_ife: do not consume the inner header on egress
-Date: Wed, 18 Nov 2026 15:37:48 +0100
-Message-ID: <20261118145921.612270853@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	Kameron Carr <kameroncarr@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 5.10 0231/1848] Drivers: hv: vmbus: Bounds check the shared ring buffer indices
+Date: Wed, 18 Nov 2026 15:37:49 +0100
+Message-ID: <20261118145921.644641742@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,63 +68,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Kameron Carr <kameroncarr@linux.microsoft.com>
 
-commit 498c631f9c6d74aad4bf43039fa3ce70ae9a8bb7 upstream.
+commit 1d287c17cc5bfd6386fe0770999be410b248d021 upstream.
 
-The issue:
-tcf_ife_decode() unconditionally calls eth_type_trans(), which pulls
-ETH_HLEN.  On egress this consumes the inner Ethernet header, and the
-device receives an skb whose data points to the L3 header:
+In a CoCo VM the host is untrusted. Since the VMBus ring buffer read and
+write indices live in shared memory, the guest has to treat both as
+potentially malicious.
 
-- loopback_xmit() parses L3 data as Ethernet: the "ethertype" comes
-  from the inner IPv4 source address, and the decapsulated packet is
-  dropped or misparsed.
-- a real NIC transmits the frame without its Ethernet header.
+hv_ringbuffer_write() copies into the ring at write_index with no bounds
+checking, so the host can make the guest write packet data at any offset
+up to 4 GiB past the start of the ring buffer. read_index matters too:
+the available space derived from both indices is the only bound on how
+much is copied, and an out-of-range index can make it far larger than
+the ring.
 
-(The __skb_pull() BUG this used to trigger in loopback_xmit() when the
-remaining linear area was short is handled by "loopback: use
-eth_type_trans_careful()".)
+The fix is to validate both indices before use and to use the validated
+snapshot instead of re-accessing. For invalid indices,
+hv_ringbuffer_write() logs and returns -EIO.
 
-The Fix:
-Parse the inner Ethernet header with eth_type_trans() in both directions,
-then restore the egress data position and MAC length.  On ingress the
-existing behavior is unchanged.  On egress, push the inner Ethernet header
-back after parsing so the xmit path sees the original frame and later
-actions see a consistent network header.
+One re-read of write_index is left unchecked in this patch:
+hv_get_ring_bufferindices() fetches it again for the prev_indices
+trailer. The value is only returned to the host and is not used as an
+offset or length for indexing. Since this is not a security issue, it is
+addressed later in the series.
 
-Conditions to recreate the bug:
-- egress tc filter on lo: action ife decode pipe;
-- AF_PACKET SOCK_RAW frame: outer Ethernet with ETH_P_IFE, IFE metadata,
-  inner Ethernet + a valid IPv4 ICMP echo request to a local address;
-- before this patch, no echo is received; after it, the echo is
-  delivered and answered.
+Open-coding the bytes available arithmetic keeps the fix free of
+prerequisites; a later patch refactors it into a helper function.
 
-Fixes: ef6980b6becb ("introduce IFE action")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-[edumazet: reworded changelog, the crash is now handled in loopback]
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Acked-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261028122703.2093730-6-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3e7ee4902fe6 ("Staging: hv: add the Hyper-V virtual bus")
+Cc: stable@vger.kernel.org # 5.15.x
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Kameron Carr <kameroncarr@linux.microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_ife.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hv/ring_buffer.c |   29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
---- a/net/sched/act_ife.c
-+++ b/net/sched/act_ife.c
-@@ -761,6 +761,10 @@ static int tcf_ife_decode(struct sk_buff
- 
- 	skb->protocol = eth_type_trans(skb, skb->dev);
- 	skb_reset_network_header(skb);
-+	if (!skb_at_tc_ingress(skb)) {
-+		skb_push(skb, ETH_HLEN);
-+		skb_reset_mac_len(skb);
-+	}
- 
- 	return action;
+--- a/drivers/hv/ring_buffer.c
++++ b/drivers/hv/ring_buffer.c
+@@ -67,15 +67,6 @@ static void hv_signal_on_write(u32 old_w
+ 	}
  }
+ 
+-/* Get the next write location for the specified ring buffer. */
+-static inline u32
+-hv_get_next_write_location(struct hv_ring_buffer_info *ring_info)
+-{
+-	u32 next = ring_info->ring_buffer->write_index;
+-
+-	return next;
+-}
+-
+ /* Set the next write location for the specified ring buffer. */
+ static inline void
+ hv_set_next_write_location(struct hv_ring_buffer_info *ring_info,
+@@ -269,6 +260,7 @@ int hv_ringbuffer_write(struct vmbus_cha
+ 	u32 totalbytes_towrite = sizeof(u64);
+ 	u32 next_write_location;
+ 	u32 old_write;
++	u32 read_index;
+ 	u64 prev_indices;
+ 	unsigned long flags;
+ 	struct hv_ring_buffer_info *outring_info = &channel->outbound;
+@@ -283,7 +275,20 @@ int hv_ringbuffer_write(struct vmbus_cha
+ 
+ 	spin_lock_irqsave(&outring_info->ring_lock, flags);
+ 
+-	bytes_avail_towrite = hv_get_bytes_to_write(outring_info);
++	read_index = READ_ONCE(outring_info->ring_buffer->read_index);
++	old_write = READ_ONCE(outring_info->ring_buffer->write_index);
++	if (unlikely(read_index >= outring_info->ring_datasize ||
++		     old_write >= outring_info->ring_datasize)) {
++		spin_unlock_irqrestore(&outring_info->ring_lock, flags);
++		pr_err_ratelimited("outbound ring indices out of range: relid %u read %u write %u size %u\n",
++				   channel->offermsg.child_relid, read_index,
++				   old_write, outring_info->ring_datasize);
++		return -EIO;
++	}
++
++	bytes_avail_towrite = old_write >= read_index ?
++		outring_info->ring_datasize - (old_write - read_index) :
++		read_index - old_write;
+ 
+ 	/*
+ 	 * If there is only room for the packet, assume it is full.
+@@ -305,9 +310,7 @@ int hv_ringbuffer_write(struct vmbus_cha
+ 	channel->out_full_flag = false;
+ 
+ 	/* Write to the ring buffer */
+-	next_write_location = hv_get_next_write_location(outring_info);
+-
+-	old_write = next_write_location;
++	next_write_location = old_write;
+ 
+ 	for (i = 0; i < kv_count; i++) {
+ 		next_write_location = hv_copyto_ringbuffer(outring_info,
 
 
