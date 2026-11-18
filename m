@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016862;
-	b=ph+rzwt4e+x2ap0kCNB/LIxxYtcUJiOnDxPJtF/ECPyhLP3Nq3Z3FFqiMDCjcosCrMeB
-	 jU53yOHlgG3y66S+nVc20yVHTtppf2l90kM4h15VUOmPyKnWar9LJtKIXDPgB9ed7EUms
-	 Uaj2XQlRQUjt/FmE9sAYzKGe103Mn6WXiY8rUdGceVUhbJgPsNvpzgq9hGq3Afgwl+uVm
-	 6JbHXmDbb7gLM4wAmmLswpwCbwa/lZxg6jUsED4/k4Tudys+oGRF18fHusGjORY7mRT8r
-	 lfhnBwx1Yecvoumn7JhizGLs/MuPsOA+bIz6ovg2RVTrDBqxasxH2RavI+doY0xHFcA==
+	t=1795016864;
+	b=CkCXqJxmK0M+RP+w4/ck2WXsi1yY0GQiiE5/iNteJ6eO9/e5h8Je4Bg3dsIAqPqQAM1E
+	 zRTejjrYLgVJ39/JKYNxOeY0LQ8WNBnDFWfdGXgleafXtEIErIZvc04/YyTJrNsCrAQNP
+	 Iv4B4Dz4FzooaC4oH9RgutzdraKXtStjEwlide+Sjfu6zK5PbApvlj1Xf1Gx0bKrI5rh3
+	 6z2apYZlac/IYnSUU9HkAFob1PDq8o2uRjiNNoFBXce3PQWBOopt/nz0XFaFMHPnUPpQw
+	 pB5PrvFI3Obg/1nF3dWtjs4ydutLoS/6uF30OujxyN5zfG9P8eLLd6cUrawRnk3Hfzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016862;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016864;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/LSRx2v9N76BJjWOYQrPYWzPGcSnHvx/IS+3bv18RjE=;
-	b=NAZDwOyNTtFrXac3jIqlrrrahRNiG7GWPe6T+uC+k8OvJCCe3mRQN9fc9kFTJr6bwBLq
-	 /TIajFyx+QNc0BF0X51yRpFK0eYWzeafBSFg0mB58+19an6RdZG2P1O1hOfGD36tm0AmO
-	 zHr51Shd53UyEd84ond5AOlpnL2kG5Y0ECmbBRjF2ia/47nsGRWFdRq2PC80fsDcTCEYw
-	 fZEdHFG8DxiGBHgRLFhJRJfKnkLkyNZnW8INC8yliqbr4hr1rA/UD22maLHcA0pT/ovLO
-	 MG+2PRRYG4gw7Q6dmzgHwSH0KrO9dEZG9m2KD7mXwM8XbXcUSCJQgy6Q3mjFZbQsksA==
+	bh=f0dlI5e7S29kn6jOEGQkrZ71RI8MvbviMRzySyJq0Go=;
+	b=A2PDkDFS0ZTnkp4tRMtCbfkj44Wizn90fTfr+ePiXztviDg9Moh4Uej0j7KFuoIoZCc2
+	 cUUtLejpd7bfe9FYUP6aI6+3rYmme/Lg4X7kprvyta1XEVRlhaicJDfqXPEFLigAPSFZN
+	 chpY3o1CHcwoABPwaHUH2DUNaPwO2uXaXdi+J+G9sVP8GZAicEmu+V4uySTPF1tAJAvuW
+	 v0cvGv/JHpPl0zk1Rir18gyFEMZaCu3L/oVGo4N/2wdqayPY7ZgPaXaywsDvqxjBZxNN1
+	 oeVSbVh+zLBy04roBrEuebnm18umB05z78qLUjPtzbbBsSoOu4+ew04vJ7ZH8ChiQXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z2UbE8bd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vFx+kCrU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD68606A337;
-	Wed, 18 Nov 2026 15:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF0360A2603;
+	Wed, 18 Nov 2026 15:47:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z2UbE8bd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 518641F000C4;
-	Wed, 18 Nov 2026 15:47:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vFx+kCrU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17DC51F000C7;
+	Wed, 18 Nov 2026 15:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016861;
-	bh=/LSRx2v9N76BJjWOYQrPYWzPGcSnHvx/IS+3bv18RjE=;
+	s=korg; t=1795016864;
+	bh=f0dlI5e7S29kn6jOEGQkrZ71RI8MvbviMRzySyJq0Go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z2UbE8bdm+aL8dt1REjFMZn3n+J+IBoc2Ag/z5vOU8OEv0zInHgupvAMet0QAQVH3
-	 ESFfGKDyUx0R7MQDFdHwH53EGOiZbygkVBFBPSI/JLCo5iBD8Rj6DGnN5YNBjAU3yj
-	 /llYSRlE/0JKmQuxOJ+96Qa8fwQw7ga6ByJg0ha4=
+	b=vFx+kCrUMDT5FLsGFBpgfJsS3k2bBMjG8T3p3U7V5T8qZTmw+He3cCFya2YhI7QNN
+	 Kfvba5fJLj6m90gG7P+1T+s1I7uxB/WPFzQ+oEsWUwjsWybgQYaEAKo26ion6t2MsS
+	 MC3f9kFaGicT+pDAVk/H9Cj3UrjuycjBdUd2zMSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauricio Faria de Oliveira <mfo@igalia.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Juergen Gross <jgross@suse.com>,
+	kernel test robot <lkp@intel.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0678/2651] x86/pvh: Really inline memcmp() and memset() to fix unbootable VMs
-Date: Wed, 18 Nov 2026 15:31:58 +0100
-Message-ID: <20261118150312.277935641@linuxfoundation.org>
+Subject: [PATCH 7.3 0679/2651] wifi: rtw89: correct dependency of the multicolor LED
+Date: Wed, 18 Nov 2026 15:31:59 +0100
+Message-ID: <20261118150312.311210839@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,72 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauricio Faria de Oliveira <mfo@igalia.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit b24bc9dec9c89d01ccb675a55cda6831dc048ce9 ]
+[ Upstream commit 398660e43ed9f85e008f967df401ed70f3c41665 ]
 
-Even with __builtin the compiler may decide to use the out of line function
-instead of the inline implementation.
+The rtw89 depends on multicolor LED module, but for the case multicolor
+LED is module and rtw89 is built-in driver, like
 
-The existing code is broken with gcc-14/15 but not gcc-12/13 (Ubuntu 25.10)
-and vmlinux no longer boots with CONFIG_PVH if CONFIG_KASAN_GENERIC is set.
-The instrumented out of line function performs a memory access to a region not
-yet initialized by KASAN, as it is still in the PVH kernel entry point.
+  CONFIG_LEDS_CLASS_MULTICOLOR=m
+  CONFIG_RTW89=y
+  CONFIG_RTW89_LEDS_MC=y
 
-For testing purposes, if the size argument in cpuid_base_hypervisor() is
-reduced from 12 to 8 the compiler decides to use the inline implementation.
-In xen_prepare_pvh(), it (still) decides to use the inline implementation
-(at least in these compiler versions), but it is not guaranteed to remain.
+The linker reports error:
 
-Switch the builtin to the inline implementation to address this.
+  ld.lld: error: undefined symbol: led_classdev_multicolor_register_ext
 
-  [ bp: Massage commit message. ]
+Avoid this case, and summerize the supported combination as below
 
-Fixes: 416a33c9afce ("x86/cpu: fix unbootable VMs by inlining memcmp() in hypervisor_cpuid_base()")
-Fixes: fbe5a6dfe492 ("xen, pvh: fix unbootable VMs by inlining memset() in xen_prepare_pvh()")
-Signed-off-by: Mauricio Faria de Oliveira <mfo@igalia.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://patch.msgid.link/20260921-pvh-kasan-inline-v10-4-08da47943d8e@igalia.com
+  CONFIG_LEDS_CLASS_MULTICOLOR  y      m    m
+  CONFIG_RTW89                  y/m    m    y
+  support                       O      O    X
+
+Fixes: 721d90c8509a ("wifi: rtw89: add multicolor LED support for RTL8852CU valve board")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202609172315.ZYoKvKBS-lkp@intel.com/
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260918021113.25481-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/cpuid/api.h  | 2 +-
- arch/x86/platform/pvh/enlighten.c | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw89/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/cpuid/api.h b/arch/x86/include/asm/cpuid/api.h
-index 25b22b173f2a7..759b12d94bbfe 100644
---- a/arch/x86/include/asm/cpuid/api.h
-+++ b/arch/x86/include/asm/cpuid/api.h
-@@ -205,7 +205,7 @@ static inline u32 cpuid_base_hypervisor(const char *sig, u32 leaves)
- 		 * from PVH early boot code before instrumentation is set up
- 		 * and memcmp() itself may be instrumented.
- 		 */
--		if (!__builtin_memcmp(sig, signature, 12) &&
-+		if (!__inline_memcmp(sig, signature, 12) &&
- 		    (leaves == 0 || ((eax - base) >= leaves)))
- 			return base;
- 	}
-diff --git a/arch/x86/platform/pvh/enlighten.c b/arch/x86/platform/pvh/enlighten.c
-index f2053cbe9b0ce..cb442cbd9d828 100644
---- a/arch/x86/platform/pvh/enlighten.c
-+++ b/arch/x86/platform/pvh/enlighten.c
-@@ -8,6 +8,7 @@
- #include <asm/hypervisor.h>
- #include <asm/e820/api.h>
- #include <asm/x86_init.h>
-+#include <asm/string.h>
- 
- #include <asm/xen/interface.h>
- 
-@@ -129,7 +130,7 @@ void __init xen_prepare_pvh(void)
- 	 * This must not compile to "call memset" because memset() may be
- 	 * instrumented.
- 	 */
--	__builtin_memset(&pvh_bootparams, 0, sizeof(pvh_bootparams));
-+	__inline_memset(&pvh_bootparams, 0, sizeof(pvh_bootparams));
- 
- 	hypervisor_specific_init(xen_guest);
+diff --git a/drivers/net/wireless/realtek/rtw89/Kconfig b/drivers/net/wireless/realtek/rtw89/Kconfig
+index 7c678dd1f6b33..9c6c16af7f353 100644
+--- a/drivers/net/wireless/realtek/rtw89/Kconfig
++++ b/drivers/net/wireless/realtek/rtw89/Kconfig
+@@ -215,7 +215,7 @@ config RTW89_LEDS
+ config RTW89_LEDS_MC
+ 	bool
+ 	depends on RTW89_LEDS
+-	depends on LEDS_CLASS_MULTICOLOR
++	depends on LEDS_CLASS_MULTICOLOR=y || LEDS_CLASS_MULTICOLOR=RTW89_CORE
+ 	imply LEDS_TRIGGER_TIMER
+ 	default y
  
 -- 
 2.53.0
