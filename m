@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050750;
-	b=oEGLK0MvZKHl92SFFfcTHsxVI6oHzQqIKOJGUmeLqplpYkO12M9fq1MR2T7aoTnTjCl6
-	 X5SjbIA1UAgnba3QT0XYfatWbSpK7MDyTRzfhSSww8vHrvki85xqNOSO38bB2h6kQ69VQ
-	 uqvkOU3UHayzru+I6k+Od13pQlcLduLYl4gjAAIy3Ohg0bnq1Pw4WaaEvBAO7BgQgcRT5
-	 33W+KfE3JfktG5QBqblB7cH1DIGNHRoPyLOHAP9d6xRlJlumU2gqNaTkNgww8ChSANVMu
-	 SpfjULR/l5sDHCl8RVUYbeG0DmXWj48nEvibRcO4AYMCPIriZp7VhafbT3YG6t3ccMQ==
+	t=1795050753;
+	b=fgO1wUWY5OGfHw/ZvxnZsE2AzD1aO3of9dJp/eWAmJ3QI3sNCQS1/LEU6uhyEAmqXVjW
+	 WE7o5/X3E6xzYrzFmT3RJiRWMkV7sLj7ju9YyTR5X2vPgP08m7+xZIV+PPfIvgbyHb7CP
+	 yo7AEjS7xicvVC6UTI1JdukYCvokQXXyg39uTO4c0itObXlERP/xtWl7sf8nfP3D4WsmI
+	 CiF5dBwHrCovwl7eJBi96XwyD7AKzCXHa2mSc/SiZ3sTMQBGXT+FGAKHeWsDYAb43Co/8
+	 IFK+WVvT9MXq5TOEXFjByuijYytfG2uv9Dab3EzWZmaXBWPUpyxpKqqvgOStAZ5kFDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050750;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050753;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7xOZmCuEFgjS4rBLQg13n++eBJ4p9mRaAvRnJHVB56A=;
-	b=rNBt9DPSPh2rk5QS6ruRar22+xfqqei708IUoD2VCxQRHBGhb9H+XrNqR3eubw37A5U3
-	 hfav0PRrxHnn6tfeUfvwBybVrY3U5EDY49/ykWV3MmEK2wNMhOtcaGL04qJaAiaAR8LCD
-	 wyl0Fyo1EJ2t3q3FzUDZmekTRtKAEOFTzXVUzhPJ2weHQGjf3AEvXWB5AagAtbZyZ8uc0
-	 cHq/QWG55Ejc1lPndcTGMMrURIkDCXpMU4pGln5VBUGTF4wYoC5X8NOH451PNb22mSQX9
-	 J+XvZZU9IsjySpKHz4ytANA6MncQ9Hj//fkMtNnB6RYjzHGhL+WNgyfqYlm7TjgqSpQ==
+	bh=VmNHel0x49J3rZBMetOhVWbB5QYEfBz5fJSsrBbo7Fs=;
+	b=ArmegS2u0rIUSqkCpA04uEjo8PQxydyi4GgURifmHWcdAvZRLgv6BGjXjBYjs5pY9+GU
+	 i97wNEWquB8b9ZMnGFlG/vhmajma+jNHA9SdPr3E2D7eC2qvcSihH4FdA9hrk8QJi1zbV
+	 9VP3sUE8FyVrqzl8/SI5BbQGu9jSfcWrQEReRFluyZibiQJJKaHUXwCf6qQx6nE2xjhOr
+	 ihWqD51aXGmBu2PqzdRquYmVAjQRsrGMUkn+Vtu7hthSHOL90MYzamvHzAuU+TLWLDlS5
+	 u8uveUPZsRdECrZbrVvqcpCofjb/wULR6Fv0RpA4Zzq1yvqCl64eDGvciYf+pKTrsTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Jmbwoto;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Piv2GH+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309D9606A32A;
-	Thu, 19 Nov 2026 01:12:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EE8606A32F;
+	Thu, 19 Nov 2026 01:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Jmbwoto
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818DB1F000C4;
-	Thu, 19 Nov 2026 01:12:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Piv2GH+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F531F000C4;
+	Thu, 19 Nov 2026 01:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050750;
-	bh=7xOZmCuEFgjS4rBLQg13n++eBJ4p9mRaAvRnJHVB56A=;
+	s=korg; t=1795050752;
+	bh=VmNHel0x49J3rZBMetOhVWbB5QYEfBz5fJSsrBbo7Fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2JmbwotoeXSURaBPE1vM9iFGoNBJQ90ofW69w4Y64wwO1ThaHBkmOUMDerbINeY00
-	 BC9ETqMtsaYuEjxYHtIhpZDcPnFK6pQor3zclo2GYNJ6knpINXWuvf4Sw/552XXtru
-	 XnMSWjEzs5xP5ZUtpqI2wyNL7zE4dqODomRJw6AI=
+	b=2Piv2GH+WjyZYKcOJY46l28rmmf6Joi4fY5Mi9ai6GuU7CM3UbCNbg2KGE7Ztvo09
+	 C+6g9pXziAL4ZQEnmvcigUFmWMaXW/5c/DA45Ax6hNHTQFYswf81Ybd9vvf+UnM0dw
+	 ENmMwAHEjnsOcATDZHmIYMR0NiE2K2dB9QyYkUes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2819/2857] net: bgmac: fix TX DMA unmapping and slot cleanup
-Date: Wed, 18 Nov 2026 16:04:13 +0100
-Message-ID: <20261118150343.099190503@linuxfoundation.org>
+Subject: [PATCH 6.1 2820/2857] net: add eth_type_trans_careful()
+Date: Wed, 18 Nov 2026 16:04:14 +0100
+Message-ID: <20261118150343.132510244@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,124 +72,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 4f45e97b3aac2282f2b436d97338c9c2c484d093 ]
+[ Upstream commit 2519a6fe7a8bba57a961eb804e43e7df35ac40fe ]
 
-When mapping a fragment fails, bgmac_dma_tx_add() unwinds with the
-wrong slots. It passes the failed fragment's slot->dma_addr, which
-holds the mapping error, to dma_unmap_single() for the head. The
-fragment loop indexes from ring->end instead of ring->end + 1, so it
-unmaps the head a second time as a page and leaves the last mapped
-fragment mapped. None of the affected slots get their dma_addr cleared
-either, which includes the head slot when mapping the head fails.
+eth_type_trans() assumes ETH_HLEN bytes are present in skb->head.
+NIC drivers always provide this, and they should keep using the fast
+version.
 
-bgmac_dma_tx_ring_free() unmaps every slot with a non-zero dma_addr,
-so tearing down the ring unmaps these addresses again. It also frees
-the skbs of pending TX slots but leaves slot->skb and slot->dma_addr
-set. The slots survive a down/up cycle, and bgmac_dma_tx_add() only
-sets slot->skb on the last slot of a packet. If a slot with a stale
-pointer is later used for the head or a fragment of a scatter/gather
-packet, bgmac_dma_tx_free() frees the old skb a second time when that
-slot completes.
+Devices looping skbs from their transmit path back to their receive
+path get skbs built by the stack instead. Their link-layer header
+might have been popped by tc actions (act_vlan pop_eth, act_ife decode)
+or OVS actions (pop_eth + pop_mpls / pop_nsh), leaving fewer than
+ETH_HLEN bytes in the linear part. eth_type_trans() then hits
+the BUG() in __skb_pull().
 
-bgmac_dma_tx_ring_free() also picks dma_unmap_single() or
-dma_unmap_page() by looking at slot->skb, which is set on the last slot
-of a packet, while the head was mapped with dma_map_single() and the
-fragments with skb_frag_dma_map().
+Add eth_type_trans_careful(), which first pulls the Ethernet header,
+and returns a drop reason on failure, so that the few devices exposed
+to this can drop such packets.
 
-In the error path, unmap the head and each mapped fragment from their
-own slots, and clear dma_addr on every slot the failed packet touched.
-In bgmac_dma_tx_ring_free(), choose the unmap function by the SOF flag
-of the descriptor like bgmac_dma_tx_free() does, unmap every slot
-before freeing any skb, since a packet can wrap around the end of the
-ring with its skb on the last slot, and clear both fields.
-
-This was found through code inspection by an LLM while hitting other
-bugs on an Asus RT-N16. It did not hit these ones specifically.
-
-Fixes: 9cde94506eac ("bgmac: implement scatter/gather support")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20261028164839.28605-1-rosenp@gmail.com
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Tested-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Acked-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261028122703.2093730-2-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 093a28998374 ("loopback: use eth_type_trans_careful()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bgmac.c | 47 +++++++++++++++++----------
- 1 file changed, 30 insertions(+), 17 deletions(-)
+ include/linux/etherdevice.h | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
-index 37debd7abf267..6141f9ddc8370 100644
---- a/drivers/net/ethernet/broadcom/bgmac.c
-+++ b/drivers/net/ethernet/broadcom/bgmac.c
-@@ -208,19 +208,24 @@ static netdev_tx_t bgmac_dma_tx_add(struct bgmac *bgmac,
- 	return NETDEV_TX_OK;
+diff --git a/include/linux/etherdevice.h b/include/linux/etherdevice.h
+index d7eef2158667d..83806b3be348a 100644
+--- a/include/linux/etherdevice.h
++++ b/include/linux/etherdevice.h
+@@ -38,6 +38,34 @@ int fwnode_get_mac_address(struct fwnode_handle *fwnode, char *addr);
  
- err_dma:
--	dma_unmap_single(dma_dev, slot->dma_addr, skb_headlen(skb),
--			 DMA_TO_DEVICE);
-+	slot->dma_addr = 0;
- 
- 	while (i-- > 0) {
--		int index = (ring->end + i) % BGMAC_TX_RING_SLOTS;
--		struct bgmac_slot_info *slot = &ring->slots[index];
--		u32 ctl1 = le32_to_cpu(ring->cpu_base[index].ctl1);
--		int len = ctl1 & BGMAC_DESC_CTL1_LEN;
--
--		dma_unmap_page(dma_dev, slot->dma_addr, len, DMA_TO_DEVICE);
-+		index = (ring->end + 1 + i) % BGMAC_TX_RING_SLOTS;
-+		slot = &ring->slots[index];
-+		dma_unmap_page(dma_dev, slot->dma_addr,
-+			       skb_frag_size(&skb_shinfo(skb)->frags[i]),
-+			       DMA_TO_DEVICE);
-+		slot->dma_addr = 0;
- 	}
- 
-+	slot = &ring->slots[ring->end % BGMAC_TX_RING_SLOTS];
-+	dma_unmap_single(dma_dev, slot->dma_addr, skb_headlen(skb),
-+			 DMA_TO_DEVICE);
+ u32 eth_get_headlen(const struct net_device *dev, const void *data, u32 len);
+ __be16 eth_type_trans(struct sk_buff *skb, struct net_device *dev);
 +
- err_dma_head:
-+	slot->dma_addr = 0;
++/**
++ * eth_type_trans_careful - eth_type_trans() for skbs coming from the stack
++ * @skb: buffer, possibly with less than ETH_HLEN bytes in its linear area
++ * @dev: receiving network device
++ *
++ * eth_type_trans() expects ETH_HLEN bytes in skb->head, which NIC drivers
++ * provide. Devices looping skbs from their transmit path back to the
++ * receive path (loopback, OVS internal ports) get skbs built by the stack,
++ * whose link-layer header might have been popped by tc or OVS actions.
++ *
++ * Sets skb->protocol on success.
++ *
++ * Return: SKB_NOT_DROPPED_YET on success, or a drop reason. In the latter
++ * case, the caller must free @skb.
++ */
++static inline enum skb_drop_reason
++eth_type_trans_careful(struct sk_buff *skb, struct net_device *dev)
++{
++	enum skb_drop_reason reason = pskb_may_pull_reason(skb, ETH_HLEN);
 +
- 	netdev_err(bgmac->net_dev, "Mapping error of skb on ring 0x%X\n",
- 		   ring->mmio_base);
++	if (unlikely(reason))
++		return reason;
++
++	skb->protocol = eth_type_trans(skb, dev);
++	return SKB_NOT_DROPPED_YET;
++}
++
+ extern const struct header_ops eth_header_ops;
  
-@@ -535,17 +540,25 @@ static void bgmac_dma_tx_ring_free(struct bgmac *bgmac,
- 		unsigned int len = ctl1 & BGMAC_DESC_CTL1_LEN;
- 
- 		slot = &ring->slots[i];
--		dev_kfree_skb(slot->skb);
- 
--		if (!slot->dma_addr)
--			continue;
-+		if (slot->dma_addr) {
-+			if (le32_to_cpu(dma_desc[i].ctl0) & BGMAC_DESC_CTL0_SOF)
-+				dma_unmap_single(dma_dev, slot->dma_addr,
-+						 len, DMA_TO_DEVICE);
-+			else
-+				dma_unmap_page(dma_dev, slot->dma_addr,
-+					       len, DMA_TO_DEVICE);
-+			slot->dma_addr = 0;
-+		}
-+	}
- 
--		if (slot->skb)
--			dma_unmap_single(dma_dev, slot->dma_addr,
--					 len, DMA_TO_DEVICE);
--		else
--			dma_unmap_page(dma_dev, slot->dma_addr,
--				       len, DMA_TO_DEVICE);
-+	/* A packet can wrap around the end of the ring with its skb on the
-+	 * last slot, so free the skbs only once every slot is unmapped.
-+	 */
-+	for (i = 0; i < BGMAC_TX_RING_SLOTS; i++) {
-+		slot = &ring->slots[i];
-+		dev_kfree_skb(slot->skb);
-+		slot->skb = NULL;
- 	}
- }
- 
+ int eth_header(struct sk_buff *skb, struct net_device *dev, unsigned short type,
 -- 
 2.53.0
 
