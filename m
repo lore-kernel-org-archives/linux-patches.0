@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048303;
-	b=1YtyzJ8isNWMlcyfLikSUiUFj2QfMIW9hgeHPLgjhNlIW8qyM423YutEmWXk3sZs05RY
-	 FRzO1vAV/GJjCpz8+bv5V6BJGxHrzCnfEghed+rF7/TtXye6YlK0UM1X0lW1z2e5X2lX/
-	 vUDlMBfULCMS9LvUIiCCkxBdn/kFQHJh+c/0IsJL1G3BDwESaFpgc4LgO4I6uoLpO2zpy
-	 2MBSxvfXClXnxth3NMs1Pk8LeeaeUwtRo7NnzIVub2ffYBf1yaMbTed18D6ovSTN6Qmt6
-	 M9ViLeIaTfrr/5IyyhFvTUZ8ph2AfYizblC3iGn8uQEY+qViDBFx39w3ys4vq96Z3gg==
+	t=1795048305;
+	b=Ci5FjEHHVgT28RrPkj1tBDFpyzob0nxPUXGlmCDdZtRTem/jmaPNwlBFnm2AGsqHvKZ7
+	 wpx6GT5W5wZsQQh0a0NdGwsGMFAJf/Mg/AB+T2JclYV9n1sx9ashSfOAwNzk0Jf1UaG9e
+	 i+bwNsmhudmNbPJ/sN8jpqK5Du5o7H1kpxYCjj+ZLPSk6F4diXIiuPZ/0gudKEtdBF0x0
+	 BgNf+smUvT3hiYQuTuMyz6iTrX5w2qeZnRaCaIOwgHJNpdDo2Fe91s63YxxYJCAdaZMDO
+	 /Iem4uyii3jr/zVsTCgWGBSywyYiYBW7sliv1VlkcARFTQWPiwMfxl7LnWxNHE/9QzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048303;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048305;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C4AeTWvS3XrxD1XZgsAjMOU8LFKJQqyYCyafQbx1rvs=;
-	b=pFQ/flkSUPPma33gCo0lC1FXAWUGIEF9aBW55DUIleyBiE4V0zpWg3uIFYBnseAcmPrc
-	 0yYf9a6KYumR4dO5wVq5RrpRNkhMJxKiwT82ZlXkcpv55VokF7aKOG2+piyMPopIx2prV
-	 t5mIJbCudyERaxMByem5wPXp6L/iEROfCTYQCsoxE1M6kd8qXUfUe5z2C+Ov8SKEnwE7k
-	 cbS3wzaawcLL9DTjvUs1HtZSdkDRmgnrmUL+xPLKtsgdBNslx43D2jvKOvzVua5ptdDqV
-	 i0cXkgeUsTngxN/QGEYJITwjltAFKm41uSVByHO2+kP+ZDAtvt4ufyYmAyYQgHJakMA==
+	bh=4mt3zmW2ti2zZEya/v4O/FPfbhVwNjJf/wdwo76SJqs=;
+	b=fZIVIeLL+VGQmUQEUh1ajgAw0SjwNqx6fje075cYS2JJy1IGKc06D/FJXYxJCISLoagd
+	 q6nJCAjk5HBOemiMlfMm3fjqNEfYP1ldXPCdHdIEluvV+molp93U1qmpyD2BCvWSMEUJ2
+	 cpNIQNXocXpHSabh7/G4snCTPG58XBNRdF7TlDJ19bYuPPMDVVCELIyFgtzhFc1ddlJTZ
+	 uR2Y2rWn6B3VXPujimUC/UvIzhb33aQuj21/3TX2Lbnmjm5OzLgW8Z7sJdHPAWGaxJO2R
+	 koCyb2OV/dKNz4XFiDr8ObgwQGl80Q0CPcgIP/T52QQqZSmPfldmF+7ifvp0X/Xgbkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1mrAEnm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zzbd1Xcv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089C5606A33B;
-	Thu, 19 Nov 2026 00:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2310606A32A;
+	Thu, 19 Nov 2026 00:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1mrAEnm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189B71F000C4;
-	Thu, 19 Nov 2026 00:31:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zzbd1Xcv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A2E1F000C9;
+	Thu, 19 Nov 2026 00:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048302;
-	bh=C4AeTWvS3XrxD1XZgsAjMOU8LFKJQqyYCyafQbx1rvs=;
+	s=korg; t=1795048305;
+	bh=4mt3zmW2ti2zZEya/v4O/FPfbhVwNjJf/wdwo76SJqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I1mrAEnmE4tguVQsBm9tCg1PjuQDsvIXcSnd3g3sgXyf4ZdiEWfn7XD9BOkR+88PF
-	 HVertgZGH3Wsi1jqOLgW/uU5gVVBZcm6oqLq4ydm8irZcVjin5c7ynS+Eae4n4+XMs
-	 szlsrY9jT4kqK9UD5MuOQuumMjwT60Mx8wo6iqVE=
+	b=zzbd1XcvOOKWiCsbIum/AKgFz7W/6OR3gmyxdbs/mvhoCA7vImEVP1h3CIa8HkHp1
+	 vLrfgk8o2DUJR193rGzWa0TXw23L4037/3HW8KQ4uwBznqga6W0Cp3TGsAyZTExPTg
+	 dQctH9SdnSg+kbYPSDyeO3lHNHYUaqEmrKSpu5wU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xueqin Luo <luoxueqin@kylinos.cn>,
-	Christian Loehle <christian.loehle@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Marek Vasut <marex@nabladev.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1905/2857] cpuidle: teo: Do not return a disabled idle state
-Date: Wed, 18 Nov 2026 15:48:59 +0100
-Message-ID: <20261118150309.814966819@linuxfoundation.org>
+Subject: [PATCH 6.1 1906/2857] ARM: dts: stm32: Drop bias-disable from STM32MP15xx DHCOM SoM sdmmc1_b4_pins_a
+Date: Wed, 18 Nov 2026 15:49:00 +0100
+Message-ID: <20261118150309.850546851@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,55 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xueqin Luo <luoxueqin@kylinos.cn>
+From: Marek Vasut <marex@nabladev.com>
 
-[ Upstream commit 60d5fca628f94f8f23398ad62d80aa284dae6571 ]
+[ Upstream commit 3572825773791f4258b553391f4e2187df321731 ]
 
-If idle state 0 is disabled and none of the enabled idle states satisfies
-the PM QoS latency constraint, constraint_idx in teo_select() stays at its
-initial value of 0, because the loop that updates it starts at state 1,
-and so the candidate state index is capped at state 0, which is disabled,
-and that state is returned to the caller.
+Drop bias-disable property from STM32MP15xx DHCOM SoM sdmmc1_b4_pins_a
+to fix the following DT checker warning. The bias-pull-up property is
+the only bias-related property that has to be present in those pinctrl
+node subnodes.
 
-The cpuidle core does not validate the returned state index against the
-per-state disable flags, so the CPU ends up entering the disabled state 0.
+"
+arch/arm/boot/dts/st/stm32mp153c-dhcom-drc02.dtb: pinctrl@50002000 (st,stm32mp157-pinctrl): sdmmc1-b4-0:pins1: {'pinmux': [10253, 10509, 10765, 11021, 12813], 'slew-rate': 1, 'drive-push-pull': True, 'bias-disable': True, 'bias-pull-up': True} is valid under each of {'required': ['bias-pull-up']}, {'required': ['bias-disable']}
+"
 
-To address this, ensure that constraint_idx is at least equal to the index
-of the first enabled idle state (idx0), so that the candidate state is
-never capped to a disabled one.
-
-Fixes: c410a9a142f1 ("cpuidle: teo: Change the main idle state selection logic")
-Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/20260828032457.2317326-1-luoxueqin@kylinos.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 7cd8567d988a ("ARM: dts: stm32: Enable internal pull-ups for SDMMC1 on DHCOM SoM")
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Link: https://lore.kernel.org/r/20260828150111.173089-1-marex@nabladev.com
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/governors/teo.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/arm/boot/dts/stm32mp15xx-dhcom-som.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/cpuidle/governors/teo.c b/drivers/cpuidle/governors/teo.c
-index d9262db79cae5..8de499ca89ea7 100644
---- a/drivers/cpuidle/governors/teo.c
-+++ b/drivers/cpuidle/governors/teo.c
-@@ -445,6 +445,17 @@ static int teo_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
- 		}
- 	}
- 
-+	/*
-+	 * If the latency constraint does not allow any of the enabled idle
-+	 * states to be used, the candidate state index will be capped to 0
-+	 * by the check below, but state 0 may be disabled.  To prevent the
-+	 * selection of a disabled state in that case, ensure that
-+	 * constraint_idx is at least equal to the index of the first
-+	 * enabled idle state.
-+	 */
-+	if (constraint_idx < idx0)
-+		constraint_idx = idx0;
-+
- 	/*
- 	 * If there is a latency constraint, it may be necessary to select an
- 	 * idle state shallower than the current candidate one.
+diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcom-som.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcom-som.dtsi
+index 74a11ccc5333f..ec1b47f29aaf5 100644
+--- a/arch/arm/boot/dts/stm32mp15xx-dhcom-som.dtsi
++++ b/arch/arm/boot/dts/stm32mp15xx-dhcom-som.dtsi
+@@ -500,9 +500,11 @@ &sdmmc1_b4_pins_a {
+ 	 * - mandatory on SoMs without SD voltage translator
+ 	 */
+ 	pins1 {
++		/delete-property/ bias-disable;
+ 		bias-pull-up;
+ 	};
+ 	pins2 {
++		/delete-property/ bias-disable;
+ 		bias-pull-up;
+ 	};
+ };
 -- 
 2.53.0
 
