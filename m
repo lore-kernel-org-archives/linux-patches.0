@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062066;
-	b=TdJB2HfaaFKvn0xTIk+1Q9lAPOtGIJnO28J7PX5B4T3AWOaallSR3rGuGq6Gy+m5X/ZO
-	 JvTRq4xgAL7JLf7cUijtRHYaWuuUbZipyFIRZodIK1RdMjyeNlsJsLpZf4kyIDiUCcojg
-	 jny1Atg2g9RZlZk4eMjRzhUMI190PsE32tO6iT9y95yYHZWRYjMzcTxflLhWIRhRxJGsK
-	 GppZ2ZRExHzBdGaYV3GPtJgtr8uqBqKVeRwEn/G5Pyho6t2GT9Vjos5yBDtNq1rcdLV6p
-	 u3uzQGUKRdCR5xLhxBlQorUTpxT5eJzQ+1zOaXb7rALeGiKqiVW1G2byE3Z6LuLg2kg==
+	t=1795062069;
+	b=2v9wwqsMrZQfV5AmKI/Rix6FomFMANm0Ok8MLur252izLHYy8HwUvPnJLU3AmgotBIY8
+	 ZR1puL1SG+BVrTseeeOuaWcDUHDxH2pb/pLndNR8m4QwDFuaL6HmroUc4XWNyjyTszos8
+	 sjaUHgibM7L0mg3BTB46mxtDk83X9NOR85/lAjMK4tLwF9pFvt6ROGoQ6NEC+lCNjwOvy
+	 216rAJvIBXLpflWgz+I5h2pnXt6XSR25dWI+2bdsVxbUzs+xfTY9UheAUuD71NfjPbQ74
+	 sEVihzN2kf9R3r82XpOZZHydvOO2IEEJytxsh7d2m2vr1E2mNDLMCO9Cx7kXZxRrBrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062066;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062069;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L9RfZh/Mz1SMkSQPeRoWjHjsLdm9Ggl9ksg2YzwNPls=;
-	b=wujrpKVEFfLwD1+qezh+202wmj71IdzEpt3P55g40CWj/xqnXlMQhldhv/PdDl9Io7J6
-	 y6E3lBOdm0v7GHqm+nCDuhZopNbGqXAqo1stn2pX61uRKcsI8NLWh/st16TZRt6pu5BmS
-	 J+f+Xc3gNwMU8obygGBRrP+kGGki8KXAy+gpag2X+r0FcncVR0Chw1LxTkI+6ux7jYmHT
-	 YOnzmQGidIdtI5OcUjekJJhZ2KmmcBL9BGbGNkKFq2LJ4OxSQW5izW+BFV2wYY8F5y/xn
-	 lnNJ2T8T0WWdP5x/nOX4d6cyWI7IkixOhwIspLhJ2rlczP0zW+itWzdrEbhb5pVgZLw==
+	bh=5aF5A9OQAzSZfR1ltnEv/PrpwCqSvelLZJGxswRSAS8=;
+	b=aq/fYq5aFNUZnpc69+T9SDd1n45H+j/Do9xdK34FrrA4dLBm6ElMWG2lMHKwC/sHTZsD
+	 GNa7HUSRrSffkS5Z0yjML3C2Oa9L+LPU6G4+xoxmT6VpPqxqLt8jVxR8pPLJIibE5TvP7
+	 bQOqJaB4rVlr4IdN9xtTUneUB7VYggISyb2fNUYN2sTZNJbHnVpaPyOt+0nalbWveR6fL
+	 lhpgnGJynyZ11FDiwt4TGtFRbUfzkBfZgWNKbf43dqmY0cdna3dcEb8L2Sb45X5Czu4VL
+	 ORVouccsw76Px8XeBZV8l3iUMg0J4MUvYHrKf0Kaktjf2CrhvULwIXvVL4EmpFwRwRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BfEaDGyS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JvjVdEol;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FD1606A325;
-	Thu, 19 Nov 2026 04:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED01C606A330;
+	Thu, 19 Nov 2026 04:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BfEaDGyS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9EE1F000C4;
-	Thu, 19 Nov 2026 04:21:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JvjVdEol
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 505761F000C4;
+	Thu, 19 Nov 2026 04:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062066;
-	bh=L9RfZh/Mz1SMkSQPeRoWjHjsLdm9Ggl9ksg2YzwNPls=;
+	s=korg; t=1795062068;
+	bh=5aF5A9OQAzSZfR1ltnEv/PrpwCqSvelLZJGxswRSAS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BfEaDGyS0VbcDG/8YuCO/s0exPX1ISytM85oqreZU/t8NbrP9kzEpH/jAuWu+8/us
-	 pITi9pI+JqCHfcYby3MP9OLdGIP/9h639p9woyr9kS4UCxqDLp7HPjpRSs+idBR7qk
-	 0jcifaIlkqSHAtP7UrU8Q9vhca5c+V9vFOmMJgio=
+	b=JvjVdEolAc9Dfm1iOsqCOXEgDgJvdbtwOKEVS+fikRPx6VgSWSZj15MTw1xcjuu8H
+	 5r7IHiVzpEMxYh5eqCncWrFofa65PgBaZvsxIRqFRzwf2qvOXYy/cUcPQdi/IU9aGS
+	 nC501yoqsQYSQcV0q5PWBgf13EJoRb+Q4WAjry2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Ilya Maximets <i.maximets@ovn.org>,
+	Rishikesh Jethwani <rjethwani@purestorage.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1735/1848] net: openvswitch: drop IP fragments on SCTP set action
-Date: Wed, 18 Nov 2026 16:02:53 +0100
-Message-ID: <20261118150032.198458464@linuxfoundation.org>
+Subject: [PATCH 5.10 1736/1848] tls: device: protect async RX resync state during device-down
+Date: Wed, 18 Nov 2026 16:02:54 +0100
+Message-ID: <20261118150032.233985148@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,51 +68,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Rishikesh Jethwani <rjethwani@purestorage.com>
 
-[ Upstream commit 4d0d8f491307f22aea34b22f73351e1cd2ede735 ]
+[ Upstream commit f89a228125238f8d4c7e2b8161e2a85fe35307b6 ]
 
-The SCTP checksum is a CRC32c over the whole SCTP packet. set_sctp()
-updates it as old_csum ^ old_correct_csum ^ new_csum, with the two CRCs
-computed over the bytes of the current skb only. That is correct only
-when the skb holds the whole SCTP packet. For a first fragment, and for
-a later fragment, it holds just a part of it, and the CRC delta of a
-change at the start of the packet depends on how many bytes follow, so
-the checksum written is wrong. The receiver drops the reassembled
-packet.
+tls_device_rx_resync_new_rec() can run in process context with the
+socket lock held, but without an RCU read lock: from the strparser work
+item (tls_strp_work()) and from the receive paths (tls_rx_rec_wait(),
+tls_rx_rec_done()). The resync_async pointer belongs to the driver RX
+context, which tls_device_down() tears down from the netdev notifier
+without taking the socket lock; only the softirq entry to the parser is
+implicitly inside an RCU section.
 
-validate_set() accepts SCTP set action for any flow with ip.proto set to
-SCTP, regardless of the fragmentation bits, as it only receives the
-masked key. As the checksum cannot be fixed up without the whole
-datagram, fail the action for packets that are IP fragments of either
-family, so the packet is dropped with OVS_DROP_ACTION_ERROR instead of
-being forwarded with modified ports and an invalid checksum.
+If the parser passes the TLS_RX_DEV_DEGRADED check before device-down
+sets it, tls_device_down() can complete synchronize_net() and delete the
+driver context before the parser accesses resync_async->req or its
+record log. In the asynchronous stage the parser also writes the record
+log, so this is a write to freed memory, not only a stale read. The RCU
+section in tls_device_resync_rx() starts after those accesses and
+therefore does not prevent the use-after-free.
 
-Link: https://lore.kernel.org/netdev/d4fc14f3-4308-4560-9012-43c09c1b3845@ovn.org/
-Fixes: a175a723301a ("openvswitch: Add SCTP support")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/20261015124749.4694-2-fmancera@suse.de
+Found by code inspection; not reproduced. Hitting the window requires
+the parser to be preempted between the DEGRADED check and the
+resync_async access across the device-down grace period and the
+driver's teardown.
+
+Fixes: ed9b7646b06a ("net/tls: Add asynchronous resync")
+Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
+Link: https://patch.msgid.link/20261013213517.2219663-1-rjethwani@purestorage.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/actions.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/tls/tls_device.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
-index f5c91d11c503a..337d0f9ffeca4 100644
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -695,6 +695,9 @@ static int set_sctp(struct sk_buff *skb, struct sw_flow_key *flow_key,
- 	__le32 old_correct_csum, new_csum, old_csum;
- 	int err;
+diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
+index 943378e075cfb..de9f63bb76f0b 100644
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -767,8 +767,15 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
  
-+	if (flow_key->ip.frag != OVS_FRAG_TYPE_NONE)
-+		return -EINVAL;
+ 	if (tls_ctx->rx_conf != TLS_HW)
+ 		return;
 +
- 	err = skb_ensure_writable(skb, sctphoff + sizeof(struct sctphdr));
- 	if (unlikely(err))
- 		return err;
++	/* The parser also runs in process context, without an RCU read lock.
++	 * Protect the driver's resync_async state before checking the flags:
++	 * device-down sets DEGRADED and waits for synchronize_net() before
++	 * freeing it, without taking the socket lock.
++	 */
++	rcu_read_lock();
+ 	if (unlikely(test_bit(TLS_RX_DEV_DEGRADED, &tls_ctx->flags)))
+-		return;
++		goto out;
+ 
+ 	prot = &tls_ctx->prot_info;
+ 	rx_ctx = tls_offload_ctx_rx(tls_ctx);
+@@ -783,11 +790,11 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
+ 
+ 		if (likely(!is_req_pending) || req_seq != seq ||
+ 		    !atomic64_try_cmpxchg(&rx_ctx->resync_req, &resync_req, 0))
+-			return;
++			goto out;
+ 		break;
+ 	case TLS_OFFLOAD_SYNC_TYPE_CORE_NEXT_HINT:
+ 		if (likely(!rx_ctx->resync_nh_do_now))
+-			return;
++			goto out;
+ 
+ 		/* head of next rec is already in, note that the sock_inq will
+ 		 * include the currently parsed message when called from parser
+@@ -796,7 +803,7 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
+ 		if (sock_data > rcd_len) {
+ 			trace_tls_device_rx_resync_nh_delay(sk, sock_data,
+ 							    rcd_len);
+-			return;
++			goto out;
+ 		}
+ 
+ 		rx_ctx->resync_nh_do_now = 0;
+@@ -807,16 +814,18 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
+ 		resync_req = atomic64_read(&rx_ctx->resync_async->req);
+ 		is_req_pending = resync_req;
+ 		if (likely(!is_req_pending))
+-			return;
++			goto out;
+ 
+ 		if (!tls_device_rx_resync_async(rx_ctx->resync_async,
+ 						resync_req, &seq, &rcd_delta))
+-			return;
++			goto out;
+ 		tls_bigint_subtract(rcd_sn, rcd_delta);
+ 		break;
+ 	}
+ 
+ 	tls_device_resync_rx(tls_ctx, sk, seq, rcd_sn);
++out:
++	rcu_read_unlock();
+ }
+ 
+ static void tls_device_core_ctrl_rx_resync(struct tls_context *tls_ctx,
 -- 
 2.53.0
 
