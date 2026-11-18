@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016524;
-	b=ipe3l7smIKUF7LR0lWHRfFJIQUNa8MJHBS+rqAJcCfzog0ocFfay2V4IAh31JFKN0zdF
-	 ASAvyZVIcqI88bfU1uYfTOmLYKjj2kbm10Z2mcLaJ8ivKRmuEgUNE5WSAMCiN2S/+PwRk
-	 A59i01ip/EdZSmastuLRHCBzhtbmyn2LziEf4buMUKf8e8/h1jX+NPHWKY8QSZN+gkMh1
-	 Hw4tCZMLYK+PDHHj5Zj4qtW2GMtVyI3S2aDvIjs4CzUQHV/GAuuXagQffuJ9YfMABDIyE
-	 GYxkGbaiNiFLaIieNa16iRotgCYDQL9V8PD7SVSO/jt1SzCvEPEYEY+qs6sT+Q/mT1w==
+	t=1795016527;
+	b=Fac9gTow9KJlNwI7c2bLbv+dyZ/79se7yFoxT8+eIDwQ/Wfbr1VJToXUoC1Qic/roZTn
+	 V3TWjmdeMUa6RV0byjyoYwvrfFwCrLMP6YgoebcvQcE1m7tukavoSmO0n+z+gWjG5g78A
+	 5h62Gt40n+NDhxQCAO9AFWbX/10YMIeFzjcwQa/mvsvuNUANmu3Ez+SjEKQ+v4YyoBmec
+	 rkTSOSF591WKXu6Fh8JD3NGm0i90AYiiBvZvI3RODE6X3nYunFSrgRu+khdspoRf4GciL
+	 oNOwmJWebctKfTIcV7JzqYpEUN79RUQjf1fzCaGuHOevnGpysRU3/M4s45YD+9TEqOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016524;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016527;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pF7tDTbiY8gq/wgTFyfxsd9xs/kI/NWyXTPiLB43ewM=;
-	b=g1ChyZEHiYXDo+NhhB2DR8s4XM17FXlJVG6DmHYFib19n8z63Ie34IXwpqx0bYS4imr0
-	 YeqF3kAUV+LHYs0f7AzH1ePXRZiwMpuh9CzuRvHgvWIl3NzEzuLNRvf65J1t/URUMkFQ2
-	 bGubR+DK4Fv2/yQhYtfhryWQZMrjgiwh1gU9nAlaGNG/K5gezlOcHXZQ2RsURMUkRc8eQ
-	 tDRRDw+eP73USQ87tsF+fo4EA8NTTO52Ti7fWZKqKuODnnFzxqryRqLEpj7FBzljwi/tI
-	 mFH3RxahAg97DC3Q+cXlwlDvXUrfQqkZ511AiRHDqjKngiSqUXqrzJe/XiIL24fNc0Q==
+	bh=HC6TyYZsgqO5V9FzzrLx+q9lphpPm/mhhzE8cBvapgk=;
+	b=Xs+FgGweWd+VJtImzx1hEb94++0/Vc+NsqelJH3UmBr6U+ehfFNaAV9bRM/6ibWx5Ram
+	 9YkEy6vRcUfMn+ATbWXMQUVWC/58NxvQL/twB2VxVi1goiD/KhQ3tE4jLfJ+UMDZgvgVR
+	 NYjrqLO55WM2KXJBEBssmjKBmWzgwVVC3E2URfpeCEJxiNE76idpvEJmpq9SicY7usWQ6
+	 wcuuw0LWRzfTcoUgDrj+y5nLUVNCXAWF/gc80wc4w1hb/AcbHNoDC6e/HkQY8gMn0RUnV
+	 ITdFiaAFB70xOIFp9p/VVuuQnfXY8WGTnzy6XzAWG7XXBFPTeN/2O6x81dDxSJDuSRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JTdHqIcn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZLwy5Aiz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1C6606A31C;
-	Wed, 18 Nov 2026 15:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FCE606A320;
+	Wed, 18 Nov 2026 15:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JTdHqIcn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE511F000C4;
-	Wed, 18 Nov 2026 15:42:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZLwy5Aiz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40AA1F000C4;
+	Wed, 18 Nov 2026 15:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016524;
-	bh=pF7tDTbiY8gq/wgTFyfxsd9xs/kI/NWyXTPiLB43ewM=;
+	s=korg; t=1795016527;
+	bh=HC6TyYZsgqO5V9FzzrLx+q9lphpPm/mhhzE8cBvapgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JTdHqIcn5GgHalzWNcM63ucVouobDWfocj1h1qGEhMQar8ISAS6QaArhbJBUaUk3n
-	 u+yd79enHjmUM33RqpIoTvMBpTIj40sQB9LJBvTmhpf34WKs+FGcJCqNMTF76roH8T
-	 tWRixLysEtI42f1MdA5eQHlPePJ/tRcTdM+a9txQ=
+	b=ZLwy5AiztMUGjpNxqMwwT+y3mJ8yIP7sBiM/uZAT2/WmwVQRpiGem79IHkMWmj2zH
+	 /NfyYncZIjwRdXsEo7MLwkBFdm0mKbD+gLiU7eeMc9HOYjjrcZtv6pRmLio++2d4+B
+	 NVPv/6VmwIobHCY2KDwF/Mj9aFpY8HKeobc+7PdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longlong Xia <xialonglong@kylinos.cn>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Aksh Garg <a-garg7@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0557/2651] rcu: fix shrink budget underflow in lazy_rcu_shrink_scan
-Date: Wed, 18 Nov 2026 15:29:57 +0100
-Message-ID: <20261118150307.796226356@linuxfoundation.org>
+Subject: [PATCH 7.3 0558/2651] PCI: dra7xx: Remove device links to PHY
+Date: Wed, 18 Nov 2026 15:29:58 +0100
+Message-ID: <20261118150307.831424360@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,43 +69,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longlong Xia <xialonglong@kylinos.cn>
+From: vladimir.oltean@nxp.com <vladimir.oltean@nxp.com>
 
-[ Upstream commit 4c714f015d9ecc37d7a330b31822ccbcaff5ddc9 ]
+[ Upstream commit 52cd9bb3772e82d792cb0def3c2a5a9b6bd24ffb ]
 
-The lazy RCU shrinker decremented sc->nr_to_scan (unsigned long)
-and then tested the result with <= 0.  When a single CPU's lazy
-callback count exceeds the remaining budget, the subtraction wraps
-to a large positive value and the <= 0 comparison, which is
-equivalent to == 0 for an unsigned type, never fires again.  The
-scan loop then iterates through every nocb CPU instead of honouring
-the reclaim budget.
+This is a full revert of commit 7a4db656a635 ("PCI: dra7xx: Create
+functional dependency between PCIe and PHY").
 
-Accumulate into count and stop once count >= nr_to_scan.
+The trouble with this is that a PHY consumer driver dereferences fields
+from struct phy, which will become no longer possible.
 
-Fixes: c945b4da7a448 ("rcu: Shrinker for lazy rcu")
-Assisted-by: Zcode:GLM-5.2
-Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Since commit 987351e1ea77 ("phy: core: Add consumer device link support")
+from 2019, the PHY core also adds a device link to order PHY provider and
+consumer suspend/resume operations. The reverted functionality is from 2017
+and is redundant with the PHY core now.
+
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Aksh Garg <a-garg7@ti.com>
+Link: https://patch.msgid.link/20260912161440.1032188-3-vladimir.oltean@nxp.com
+Stable-dep-of: 768e5d0936d0 ("PCI: dra7xx: Fix clock enable leak on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree_nocb.h | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pci-dra7xx.c | 16 ----------------
+ 1 file changed, 16 deletions(-)
 
-diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
-index 19bb42672baf8..b6cfee4e50399 100644
---- a/kernel/rcu/tree_nocb.h
-+++ b/kernel/rcu/tree_nocb.h
-@@ -1332,9 +1332,8 @@ lazy_rcu_shrink_scan(struct shrinker *shrink, struct shrink_control *sc)
- 		rcu_nocb_try_flush_bypass(rdp, jiffies);
- 		rcu_nocb_unlock_irqrestore(rdp, flags);
- 		wake_nocb_gp(rdp);
--		sc->nr_to_scan -= _count;
- 		count += _count;
--		if (sc->nr_to_scan <= 0)
-+		if (count >= sc->nr_to_scan)
- 			break;
+diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
+index 6ae5b27e27b32..6c9e881776002 100644
+--- a/drivers/pci/controller/dwc/pci-dra7xx.c
++++ b/drivers/pci/controller/dwc/pci-dra7xx.c
+@@ -9,7 +9,6 @@
+ 
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+-#include <linux/device.h>
+ #include <linux/err.h>
+ #include <linux/interrupt.h>
+ #include <linux/irq.h>
+@@ -680,7 +679,6 @@ static int dra7xx_pcie_probe(struct platform_device *pdev)
+ 	int i;
+ 	int phy_count;
+ 	struct phy **phy;
+-	struct device_link **link;
+ 	void __iomem *base;
+ 	struct dw_pcie *pci;
+ 	struct dra7xx_pcie *dra7xx;
+@@ -728,10 +726,6 @@ static int dra7xx_pcie_probe(struct platform_device *pdev)
+ 	if (!phy)
+ 		return -ENOMEM;
+ 
+-	link = devm_kcalloc(dev, phy_count, sizeof(*link), GFP_KERNEL);
+-	if (!link)
+-		return -ENOMEM;
+-
+ 	dra7xx->clk = devm_clk_get_optional(dev, NULL);
+ 	if (IS_ERR(dra7xx->clk))
+ 		return dev_err_probe(dev, PTR_ERR(dra7xx->clk),
+@@ -746,12 +740,6 @@ static int dra7xx_pcie_probe(struct platform_device *pdev)
+ 		phy[i] = devm_phy_get(dev, name);
+ 		if (IS_ERR(phy[i]))
+ 			return PTR_ERR(phy[i]);
+-
+-		link[i] = device_link_add(dev, &phy[i]->dev, DL_FLAG_STATELESS);
+-		if (!link[i]) {
+-			ret = -EINVAL;
+-			goto err_link;
+-		}
  	}
+ 
+ 	dra7xx->base = base;
+@@ -853,10 +841,6 @@ static int dra7xx_pcie_probe(struct platform_device *pdev)
+ 	pm_runtime_disable(dev);
+ 	dra7xx_pcie_disable_phy(dra7xx);
+ 
+-err_link:
+-	while (--i >= 0)
+-		device_link_del(link[i]);
+-
+ 	return ret;
+ }
  
 -- 
 2.53.0
