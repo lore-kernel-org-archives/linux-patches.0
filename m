@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056396;
-	b=ESqNgajnJzvAN/G/dWWX3kqEKJw4/lZWs6jYGkTojQyJiUgfJcHYaaKMFzlD3DVRYDNc
-	 tpKD6QDSYc4vWnlMYTBi14N1jnBVAmLJBcDq4jjQ+h/dBhS2bwHcWQfw9qlurBHlgtzFF
-	 kyXbDhToVP+PI88M8TYa6E8a4fwnSBvRe33Wi37GpjSXe3xRhko5pT+9Eaz5BbJSIhA4Z
-	 zWDTlvXP3S/p+PflPa5PoVK6yG9DftApY2BK56lLqMgDEu3jjKFMh22ItTxqkasW3KDdC
-	 fUhHyLsAcqkNlBAPr/F0fM6DP6h4vJdNWHlIE57sLlVfAHo6rlmHzo6D9zAuaxqASag==
+	t=1795056399;
+	b=vJNWi6AxG+zCqGU4ogsQuyv12IJ/wmXt1D6N3dMR5VFZARdrmW2vhIps13AR4hYq/lu3
+	 ZNBjsHYRID+RXxYaDkpw0SulfW2gcO+C8bGcICAbbgNKZwUNypq5Cfl6TRBT6ookAele2
+	 3ogF/fTx5CSn69coynwv5KkdcfMKZkVrpVy17wVVRfpTl1iOJNwNbf9dEbtqpk/Hz6OjH
+	 jVN1xzgCM0/PXHuLHzyE7qIFICCyvhOhLdRQhunEFZekc2fLomoiSIg7fnfWKBAGdk+iq
+	 nFVajhVhQLEHGQFYolMd7AMElmJxg/VIwJYLAXK9gs47Mo+nWjTSSycATK0fyA6zE8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056396;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056399;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mjQbU6tOxbhaq0u7r379maecS1eChj+gwVPMxFkLRdI=;
-	b=24Pg6sPSNoisHA7O6znvUvNbGXDKYdkGqg8E3YVT5+1YdR0jYCmJfUtFY3XEWsUcZakg
-	 HgiwVQZR9n5zTjeAr5OOY/QqdLnOjg2yqaxSKWb5zkgVU5OgnU3AEEMiktoGEou6h8yAW
-	 OqaOzIYiq2mnJot8IvGj489Du3TLj7Tw1qswaKmRLt3ddFq7jWJvyrskmwjiQP9H4L0ul
-	 TGHBugNsfmg48Frplbu2PSzqCaAGNsNgrpx0rnmUVrfTMjjiPOlxWg4voBDfq9dSCtJjf
-	 ZxXAkFohoyaRoITMewaCYtibBtLWzkz+1DrguJ38GdDamDWg1MpuL4ZB+e+JtNb85ZQ==
+	bh=HVk2xoehmMmUgEocmWnzaVRmwfiEboCKZ3CvLjCbSIQ=;
+	b=A7gwINqA16alN/fs8jPG8jR/00HagueK/BpncC+S72aftKet++VxZiu5hIjuUQnrcMz/
+	 BQ3MuReGAVe5a5oit55SuIjjQhHgdxJFhkQdeAYVOhS4Az1rv7OgZ2FHosVDQrMWMwlfI
+	 5B1cWEfVFxdsQgjrIAQEtfOO9wJX8frPATRlGWfcZun6nNb9I/BzJTAf0j/HvNUyBtoNT
+	 CKEZO7o7znD9zGzlh3m+CJ9ydUwAqtsZ0sCrW6qcsPhzUbLUJLIT2YayxdtPo+Id+2DJN
+	 inM+SMevXFmdx5BxmZMZtZxGS8M/bxUmnLsQyUgQ4zON5nlKxJ1n4UrsUPYR1TiF5cA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l08YnMIu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jZNmPFoG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7639606A31C;
-	Thu, 19 Nov 2026 02:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2ED606A32A;
+	Thu, 19 Nov 2026 02:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l08YnMIu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056A81F000C5;
-	Thu, 19 Nov 2026 02:46:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jZNmPFoG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1971F000C4;
+	Thu, 19 Nov 2026 02:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056396;
-	bh=mjQbU6tOxbhaq0u7r379maecS1eChj+gwVPMxFkLRdI=;
+	s=korg; t=1795056399;
+	bh=HVk2xoehmMmUgEocmWnzaVRmwfiEboCKZ3CvLjCbSIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l08YnMIusxFK7QEdLfbIA8n6aPOQMH9fIw1O/P6XRzdYe1/LNw50tKRCuFX9W4WPJ
-	 ERRrP4zJcDCxdEA0FfwvbhjvWvcu6sm8LDyWwZdYTE+tNgH6+at4SwKVo+0wCqHdyt
-	 jCgIiM7twD15A1VzqefMK3uLXWkWe2YBkyTZZx00=
+	b=jZNmPFoGMgNoPNk9jHBJKz5oE5QdDmmRXCugMkip2KcEYdcW/8i87gNbNLWbxbUSi
+	 7DpVHVtNAnxK2tMHbrM8/GoGJU1Hdq/yzzMKq4K/CoawtO+OiQJxUvN/5TpTzMhUXD
+	 XoWGQ8pE4oYlmpXWfF2F6qlLnGzrFiI8+hXhTYGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 5.15 1973/2214] kselftest/arm64: signal: copy each test binary only once
-Date: Wed, 18 Nov 2026 16:00:49 +0100
-Message-ID: <20261118150129.835100624@linuxfoundation.org>
+	Serhat Kumral <serhatkumral1@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 1974/2214] IB/rdmavt: Fix error unwind path for qp_priv_init() in rvt_create_qp()
+Date: Wed, 18 Nov 2026 16:00:50 +0100
+Message-ID: <20261118150129.867666098@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,47 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit 7b3b147c4104f8211ad356a78cff9a2dcd966312 ]
+From: Serhat Kumral <serhatkumral1@gmail.com>
 
-The signal tests are built in testcases/ and then copied to the output
-directory. The copy rule lists every generated program as a target and
-copies all of them in each recipe:
+[ Upstream commit dd36137b218ad6f18ed15e6279412d7fc160980c ]
 
-  $(TEST_GEN_PROGS): $(PROGS)
-          cp $(PROGS) $(OUTPUT)/
+If driver_f.qp_priv_init() fails, execution jumps to bail_rq_wq, which
+bypasses bail_qpn. Because alloc_qpn() has already succeeded at this point,
+the allocated QP number is left unreleased.
 
-In a parallel build make runs that recipe once for each program, so
-several cp processes write the same destination files at the same time.
-cp then fails with "cannot create regular file ...: File exists", which
-fails the arm64 build even though every test compiled. A cross build of
-the arm64 signal tests at -j8 hit this in all of 8 runs.
+Jump to bail_qpn instead to ensure the QPN is properly freed via
+rvt_free_qpn().
 
-Use a static pattern rule so that each output depends on, and copies,
-only its own binary.
-
-Fixes: f96bf4340316 ("kselftest: arm64: mangle_pstate_invalid_compat_toggle and common utils")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 5190f052a3654 ("IB/hfi1: Allow the driver to initialize QP priv struct")
+Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
+Link: https://patch.msgid.link/20261015102518.15780-1-serhatkumral1@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/arm64/signal/Makefile | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/sw/rdmavt/qp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/arm64/signal/Makefile b/tools/testing/selftests/arm64/signal/Makefile
-index ac4ad0005715b..05e015bda58a2 100644
---- a/tools/testing/selftests/arm64/signal/Makefile
-+++ b/tools/testing/selftests/arm64/signal/Makefile
-@@ -18,8 +18,8 @@ KSFT_KHDR_INSTALL := 1
- # the toplevel makefile
- include ../../lib.mk
+diff --git a/drivers/infiniband/sw/rdmavt/qp.c b/drivers/infiniband/sw/rdmavt/qp.c
+index 2bdc4486c3daa..a40d3ca339aa7 100644
+--- a/drivers/infiniband/sw/rdmavt/qp.c
++++ b/drivers/infiniband/sw/rdmavt/qp.c
+@@ -1177,7 +1177,7 @@ int rvt_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
+ 		if (rdi->driver_f.qp_priv_init) {
+ 			ret = rdi->driver_f.qp_priv_init(rdi, qp, init_attr);
+ 			if (ret)
+-				goto bail_rq_wq;
++				goto bail_qpn;
+ 		}
+ 		break;
  
--$(TEST_GEN_PROGS): $(PROGS)
--	cp $(PROGS) $(OUTPUT)/
-+$(TEST_GEN_PROGS): $(OUTPUT)/%: testcases/%
-+	cp $< $@
- 
- # Common test-unit targets to build common-layout test-cases executables
- # Needs secondary expansion to properly include the testcase c-file in pre-reqs
 -- 
 2.53.0
 
