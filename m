@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016848;
-	b=kY1cBVpBRNXnzYaL9JI7D++zx3XJ6PZ3KydcrNDJygkFhG22cNtJS6WrFTDyPx+gLzKE
-	 VWrnH9nXCdIQ6FYD33oD/LU6K01VXTlSMYMvZkOGWTj4CNZEuW6T5JWVZl2EAwyHpqiWT
-	 Y7nPe+G9hlFdcpykC8GYE9xjLgr3V5hJp67agqja50VAXbDO+UB6UGjw+d4jUV9KDF+te
-	 qf1YfRFGqFqMJ7HUiH+A0dauXKzXfrDLzRvC7bV5eGiIlhjitQQRCRWah1jcbmyxxfqmA
-	 eYuA9c1iZEfanI5YZU6zSMLLFAH2EeWa+2PbhClCOeg4ta/QKzOEw9TKy3Pz2+AxIIA==
+	t=1795016851;
+	b=p0TkMsdz3Ud0ITriJF0dnhvIPhz+d/2GwBt0Zhgx9Z62OcGfBFoglq/mZhJzV5u0d5ji
+	 qyQfObJeGkEZbxVhiBa47CXvy23MUR70rsCYGutuRt73ug6myCNpDFKZ6H2TfFcb0NuIy
+	 aGwTLOfi24NfjD9v3g9VWhY1IBQEWmvPd/MaJuULXM+IU7nC5XUMsmlmgnFL6PIi3Qn6S
+	 DJWorY5sv1Ot3nMCDOETKvIpkmK2v7si+3m/UbE4SQMZsWKcpy/gFAyeKGwZftYY3kWHV
+	 UYmzWxF7fV8glVqdCe/dIwIOkO1VKGSmLAhvd/aEGeqLb8jgqav3ywFhgNT4rc9z7sg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016848;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016851;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qV8QvziTnHooQCI4dl70f5cWoAHFMzQyhHfGQh9S48Y=;
-	b=PE7CoUWfItR1hgzLZ3EwcJkEwpj6nZzZlneGUrLTPd6LDoIKlDd5rasQoGMPP2GZ9+ay
-	 fwv03MYs6v8P0q4ufGs3sFmHLcPsbIH0pmK511yqSinAVSrV0E1sbglG2O6JMpb7i67Vt
-	 p7hjNVV3kcd5n6lZ7Zn1EWeBEgeTuL1LRl3aiyP2eVb38RHUT8phU1F019lMN9309kFPt
-	 U24vXTf9McBRjVevAnBNe57caOBoJbtM5Xx576ITq3ZOeEPMLLmQWKc42ASyLrp2I5jug
-	 My1UHNx4lIhLX2dk0cIBRaSCKN1Jv/e6mss2pSVvo2L1/wvdu23eZ5kjWEyoZkeLnVQ==
+	bh=KwM64uKEnAIKF/cro5+DBSnq4ujyL2oHUVJHpyNbCG8=;
+	b=vA/K2Z3JACCCyz5spT91mgqvXmviDnLoPiXN5hjrOcgB6cJOhC+VSz8HAYLB/tPXovvA
+	 AIqj6gyDYJAe1suiUt3Yx+8Um2Fhoe7KRTGLjnSUDFFbeZ8wF8SojOssQxZ9QuI0EBgNa
+	 P2hPJGwz4puuzj8xPWtvlHOCzr5/icRDa3bt0fq+zzPx6jztGVTvUnURNZB8vdSbfzma7
+	 Apka1V2r7ASkbjicLK+RhS0IDd2pmQGZJdUt+zD/0ogkfpI+5dDytoKw5sfhVAqYwGWgp
+	 w4VH7UpoE3rDOMH7TLrnZ94q8hs20JiYSuURTtU8SvzJqY3Y1xjnc1JwxpZBIekZdJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FxdrQs5O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sgL0fqAl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C1B606A325;
-	Wed, 18 Nov 2026 15:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7F3606A31C;
+	Wed, 18 Nov 2026 15:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FxdrQs5O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70EC11F000C5;
-	Wed, 18 Nov 2026 15:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sgL0fqAl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B3A1F000C4;
+	Wed, 18 Nov 2026 15:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016848;
-	bh=qV8QvziTnHooQCI4dl70f5cWoAHFMzQyhHfGQh9S48Y=;
+	s=korg; t=1795016850;
+	bh=KwM64uKEnAIKF/cro5+DBSnq4ujyL2oHUVJHpyNbCG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FxdrQs5O3JbGHBoikYiQ99sz2RAzKJxwdeJwA/UyNnV5171DGcdzOIRJev8p+3gjZ
-	 RRKiAmPDDK76Ut9BqJHAD1rnkVYp/N8hN8oe1RDjuj0YtNRpfr5yOSuiJ0CTxPs+vz
-	 w0foIIz8H4q/HfZ1vm0CysZJu1Y98tkFFoNfNs/c=
+	b=sgL0fqAl5xeSsbsj8XbEJykmSl/63JvclSsbAUcuPRaGYti+MhSDOcqeaYAIM/nm3
+	 MMIX8U9JNzTn+ueSM7Y6djIcSxAweDQy5sjoY022hVrOD1VU99BDPQZW4XetSokzBE
+	 uxw98/Eznq9aDWlK6WQguZtQYd7D5Dd9BDJrwg3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Matlack <dmatlack@google.com>,
-	Hisam Mehboob <hisamshar@gmail.com>,
-	Alex Williamson <alex@shazbot.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Mauricio Faria de Oliveira <mfo@igalia.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0674/2651] vfio: selftests: Include <libgen.h> for basename() on non-glibc builds
-Date: Wed, 18 Nov 2026 15:31:54 +0100
-Message-ID: <20261118150312.136562323@linuxfoundation.org>
+Subject: [PATCH 7.3 0675/2651] x86/boot: Remove redundant "cc" clobber in memcmp() and document it
+Date: Wed, 18 Nov 2026 15:31:55 +0100
+Message-ID: <20261118150312.172892766@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,43 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hisam Mehboob <hisamshar@gmail.com>
+From: Mauricio Faria de Oliveira <mfo@igalia.com>
 
-[ Upstream commit e11a07856ba06867a4c0c8aa91770e1b209dea98 ]
+[ Upstream commit 94509668fccfa098e0a3d57e7093a9afd88aea9f ]
 
-sysfs.c calls basename() but does not include its declaration.
-Glibc exposes basename() through <string.h> with _GNU_SOURCE, while
-musl declares it in <libgen.h>.
+The "cc" clobber remains recognized for source compatibility, but it has
+no meaning anymore; it is automatically generated without condition-code
+constraints:
 
-With musl, this results in an implicit-function-declaration error and
-subsequent type-mismatch errors at the callers.
+  https://lore.kernel.org/all/57b0d188-b256-bde4-43e6-99dae4f59d60@suse.de
 
-Include <libgen.h> so the declaration is available on both glibc and
-musl. This is safe at both call sites: the arguments are local writable
-char[PATH_MAX] buffers filled by readlink_safe().
+Comment out the redundant "cc" clobber for documentation purposes.
 
-Link: https://lore.kernel.org/kvm/CALzav=fs4bqMM7BXNPXqhtbqGzA+LW5fgx2-1Q5=sTN5+krYhw@mail.gmail.com/
-Fixes: a262fc49e0aa ("KVM: selftests: Build and link selftests/vfio/lib into KVM selftests")
-Reviewed-by: David Matlack <dmatlack@google.com>
-Signed-off-by: Hisam Mehboob <hisamshar@gmail.com>
-Link: https://lore.kernel.org/r/20260824222845.459181-3-hisamshar@gmail.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+  [ bp: Massage commit message. ]
+
+Fixes: a8c171c107c0 ("x86/boot: Add volatile, clobbers and zero-length test in memcmp()")
+Reported-by: "H. Peter Anvin" <hpa@zytor.com>
+Signed-off-by: Mauricio Faria de Oliveira <mfo@igalia.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://patch.msgid.link/20260921-pvh-kasan-inline-v10-1-08da47943d8e@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/vfio/lib/sysfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/boot/string.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/vfio/lib/sysfs.c b/tools/testing/selftests/vfio/lib/sysfs.c
-index 98a46a2543cd9..d88e348a1e0d4 100644
---- a/tools/testing/selftests/vfio/lib/sysfs.c
-+++ b/tools/testing/selftests/vfio/lib/sysfs.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- #include <fcntl.h>
-+#include <libgen.h>
- #include <unistd.h>
- #include <stdlib.h>
- #include <string.h>
+diff --git a/arch/x86/boot/string.c b/arch/x86/boot/string.c
+index 1632d40e1f545..e10260ed58b69 100644
+--- a/arch/x86/boot/string.c
++++ b/arch/x86/boot/string.c
+@@ -36,11 +36,15 @@ int memcmp(const void *s1, const void *s2, size_t len)
+ 	/*
+ 	 * Make sure ZF is properly set in the len==0 case because in it,
+ 	 * RCX==0 and the REPE; CMPSB won't get executed.
++	 *
++	 * The "cc" clobber has no meaning anymore, just source compatibility.
++	 * On x86 the flag status bits are automatically added to the clobber
++	 * set when there are no =@ccXY constraints. Keep it as documentation.
+ 	 */
+ 	asm volatile("test %3, %3\n\t"
+ 		     "repe cmpsb"
+ 		     : "=@ccnz" (diff), "+D" (s1), "+S" (s2), "+c" (len)
+-		     : : "cc", "memory");
++		     : : /* "cc", */ "memory");
+ 	return diff;
+ }
+ 
 -- 
 2.53.0
 
