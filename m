@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032370;
-	b=iF4d9ZATjaWNsQvwu//H74YIT/NR5KOp+S7kiI0xWYwJ3TuPPXbORc6K18oRb4qAWKkE
-	 KB4Ske6VZk3qrLoCggSupo3TfibM3ABZ6XJvuUejhOAKmWa3N2DHNFkx7iHMgiIi7wpW6
-	 FoDglhVIuuwiy8YKqd8oONWzXHrlVpMZJFR0Z8QPm9Yh5ZfUTWy4RnY+3isRmIhEOguUz
-	 rC9AbK/TEmee7BZIGbCl2Rk9mU5nkAVwlw3pE8XcRCI+diLgg0DbGlnYInbnBfn1ZiYA/
-	 daWNNS4KRKHDNJqNCL/a+YpYJw60NPwQFrfKOpaamua7oBzHILpknkDdUbJLX7iGdUw==
+	t=1795032373;
+	b=m09WGBEHYcSVlPaAkfMvZtfWnw7yh/zURojyU/pbEcEipZDmAuvmLHGU1l4OXO/bQE2P
+	 EH2vvK6ZrjK9ssMW0gRi1upU75hOP0mqrnjMn8U4zVkxj5GPTDGnUu9api5BSVTsgdxwC
+	 MCZOQAZcBf3gOuMAKbVtAHiNAkRyMGxQyKzcnbXTcHnx6xoP2Oeyutd5BpAvd1nR6nNre
+	 cjzWSu+9Npn9b8U8bCzRkCFcACbQYdYmGXrT3WUMg4D0JCeJmu+qgaAwhC5sYcGW/2HtE
+	 VxCpe/LZcn472/ZBh+bzISW8jK3ksOYOpuxqS0zZb5UJKPr1F3Rlzd2u2eZuk4jOhxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032370;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032373;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EGAAhFeShdL29n2+EsmSK9o8hnxkxfZG/AVXlTT9Hsk=;
-	b=UYi5cs43xGSL+/zTMNJp1+FdLszRdsUt/cvEW0YSXE+Blif8jAOMP3SfbZvZkmERle9R
-	 ZV6YOVlil28CIpz0K9pRa3j+8v5qT5CqZO5YBLgmjI4QjWPT/Vmkyaaj18bozjF58JsTX
-	 3HrUDF4lu4/u3Gw3pI7EwdY9X0gYc/Z1e4+Wk2jDr6CxW7NlBCmRRqViLAemWUSHnHGAR
-	 DhmqKfngEM+Mnaxz4EWddQbgoSXCvaulyT8J5G9ishT4Gr74MmyKeDtAhUNIgJoNBjq8Y
-	 S6hYlRELMaOOqoO8EZG9TK8zEqWAl2+EMjvWoyyXWPOZh/h+W7kbDJ4BEYx+MSR216g==
+	bh=W4y82VMtZgq3vQg7O78tpr6opGTjIFF+C8g3gIjHSJE=;
+	b=4vUq/DHifpBvnAMaTR8QmrZNifJO8yXAeBGMv+2CQU3ocSq/7Sl+sqtUqDzEq+q4gapP
+	 XelDGNRZnNrT+d3TOa2ZWzqaXu8pO6Io4b2o47JZPp+O2r/zb/FrcJxKOPY1+p7PCpcEA
+	 naq5UOhPEyBLc/mxgs6nE60wSHgcbAl3Gp+UcqZGkVU5G8n5mFwp/CRuyef2yaIgD5Mo0
+	 fgJWN5R22aX603Yw3YEiozjaJkiqqzqN0HOkRVONCXnfr2UYCBo/I85lnL3KoRS8iAN7i
+	 fX5zacqzkT2A1721HEPVRK8vtQlRtmDxjlyw1c5VGNBnQUxdGEsoQNuPINJHB+u2FMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q7nbHWDQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=egAe48tX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416D0606A320;
-	Wed, 18 Nov 2026 20:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F8B606A31C;
+	Wed, 18 Nov 2026 20:06:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q7nbHWDQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F8051F000C4;
-	Wed, 18 Nov 2026 20:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=egAe48tX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EBF51F000C4;
+	Wed, 18 Nov 2026 20:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032369;
-	bh=EGAAhFeShdL29n2+EsmSK9o8hnxkxfZG/AVXlTT9Hsk=;
+	s=korg; t=1795032372;
+	bh=W4y82VMtZgq3vQg7O78tpr6opGTjIFF+C8g3gIjHSJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q7nbHWDQpNEgqZAvR3yaag4PezZ5ogo8a5igkhT/Ao4aWlBAs72wDiqfUAZQNOlVA
-	 pwhEi6pOKYL5GWoZTz3y9zt6EzwqM1jXEixQtQDVY62HCXcauVAeNqm4OJbtbEaqQn
-	 HX2XhgHnO04NLMUKAND6t+qc/E5fC0W9sKGfpjjs=
+	b=egAe48tXRXhwY+G7gWPfINIgI2IB9hrcupdD4MY6KXNEzKKCuag6RqPi6YYf7Uxs5
+	 bSDgYlT5cKqVI3jqj7BMdjqayu86ugLx5aM8UxoC44YUBxynSJu9fKTrdMIh3jZ6mQ
+	 gD5ktjoRHOuQUOYKySobUF6plDBG6C+rn7BokbPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Igor Velkov <iav@iav.lv>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1371/1756] bpf: Dont bind a program to a netdev that goes away
-Date: Wed, 18 Nov 2026 15:58:18 +0100
-Message-ID: <20261118150103.808852410@linuxfoundation.org>
+Subject: [PATCH 6.12 1389/1756] power: supply: gpio-charger: Report discharging without input power
+Date: Wed, 18 Nov 2026 15:58:36 +0100
+Message-ID: <20261118150104.459595060@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,53 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Igor Velkov <iav@iav.lv>
 
-[ Upstream commit af929bc938e0d0ecd839e6fed9a2ce5eb5185e5c ]
+[ Upstream commit f0f400459bf6a037e70768de623fff3f8920b8bb ]
 
-bpf_prog_dev_bound_init() looks the device up, takes bpf_devs_lock and
-registers the device for the program.  The reference it holds does not
-keep the device registered.  If bpf_dev_bound_netdev_unregister() has run
-by the time the lock is taken, nobody takes the program off the device any
-more: the bpf_offload_netdev and offload->netdev point to a net_device
-that is freed as soon as the reference is dropped.
-bpf_dev_bound_resolve_kfunc() dereferences it while the program is
-verified, and a new device at the same address finds the old entry.
+The status property follows only the charge-status GPIO. Without input
+power a charger such as the BQ24133 releases its open-drain STAT pin,
+and depending on the board the GPIO then reads as charging.
 
-unregister_netdevice_many_notify() leaves NETREG_REGISTERED before it
-calls bpf_dev_bound_netdev_unregister(), which takes bpf_devs_lock.  Look
-at reg_state under that lock, and treat a device that goes like one that
-is not there.
+On Kobol Helios64 the board runs from its battery after a mains loss,
+and the charger reports online 0 with status "Charging".
 
-Fixes: 2b3486bc2d23 ("bpf: Introduce device-bound XDP programs")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-22-alexei.starovoitov@gmail.com
+Report "Discharging" whenever the online GPIO is present and inactive.
+
+Fixes: df68c44c720a ("power: supply: gpio-charger: Add support for charger status.")
+Assisted-by: LLM
+Signed-off-by: Igor Velkov <iav@iav.lv>
+Link: https://patch.msgid.link/20261018-gpio-charger-offline-v2-1-482795f9e27c@iav.lv
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/offload.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/power/supply/gpio-charger.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/offload.c b/kernel/bpf/offload.c
-index 791da915112fb..01a7ea343a3db 100644
---- a/kernel/bpf/offload.c
-+++ b/kernel/bpf/offload.c
-@@ -275,7 +275,14 @@ int bpf_prog_dev_bound_init(struct bpf_prog *prog, union bpf_attr *attr)
- 	prog->aux->offload_requested = !(attr->prog_flags & BPF_F_XDP_DEV_BOUND_ONLY);
- 
- 	down_write(&bpf_devs_lock);
--	err = __bpf_prog_dev_bound_init(prog, netdev);
-+	/*
-+	 * Behind bpf_dev_bound_netdev_unregister() nobody would take the
-+	 * program off the device, which goes once the reference is dropped.
-+	 */
-+	if (READ_ONCE(netdev->reg_state) == NETREG_REGISTERED)
-+		err = __bpf_prog_dev_bound_init(prog, netdev);
-+	else
-+		err = -EINVAL;
- 	up_write(&bpf_devs_lock);
- 
- out:
+diff --git a/drivers/power/supply/gpio-charger.c b/drivers/power/supply/gpio-charger.c
+index 6139f736ecbe4..fba7b0616059c 100644
+--- a/drivers/power/supply/gpio-charger.c
++++ b/drivers/power/supply/gpio-charger.c
+@@ -100,7 +100,10 @@ static int gpio_charger_get_property(struct power_supply *psy,
+ 		val->intval = gpiod_get_value_cansleep(gpio_charger->gpiod);
+ 		break;
+ 	case POWER_SUPPLY_PROP_STATUS:
+-		if (gpiod_get_value_cansleep(gpio_charger->charge_status))
++		/* Without input power the battery discharges, whatever the status pin says */
++		if (gpio_charger->gpiod && !gpiod_get_value_cansleep(gpio_charger->gpiod))
++			val->intval = POWER_SUPPLY_STATUS_DISCHARGING;
++		else if (gpiod_get_value_cansleep(gpio_charger->charge_status))
+ 			val->intval = POWER_SUPPLY_STATUS_CHARGING;
+ 		else
+ 			val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
 -- 
 2.53.0
 
