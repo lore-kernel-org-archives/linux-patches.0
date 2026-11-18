@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016629;
-	b=ec+uPSxrnc2QJR+wis2fHgBtuancrevpjcVAfNmxSpu9L1WbMN5jWjRPZyUb7gtk5UbL
-	 uEUFIqcy/8EQLe4iD4j2vUeEbEFoztxkjqzTo8IHJtTt4xJ+Od4O+IGHt4hbfC1yWmAC9
-	 +NOXDQgMq3JF6lHOVFU3Qm66IW45saYi/QLh0wrntt5tGgXmED59Hl6OXJeOuy+cTnIbJ
-	 B7HHT9MmJhBN1NK5fY9+gk+pltueJDJJJTpFLMJ5UPy/Sd8cwbMgKFa4/Uo2GvxCIkB3u
-	 zWhuIEiwDNruThYgFqIrs5I0TmZ9wBo0OJYVbPoDlo5N4hGY6ClZXSI0YvPol3SlKiA==
+	t=1795016631;
+	b=KiofWpZsvfVNyvKT9vjKk6G1R26jyZaHr7Y6lVdZvcK9cTSaZZnRjQ/sfmcccmWEIdiv
+	 gK8JkEvHVcymcGZtMbWoiMQyV0niVzIEZxZO4WgGVufzSGc7SMP7GB6lqvhNBXPdfb0ne
+	 tBEU907feQzJiSiF1DNmMSL7hUZ/CZBUTJ99c949r+VqolpBj5CiDNO9ehMBgNK3LlYFb
+	 3sZDCRZYAasaB+Hi98FkCnTHuiLgPDU3sx1raw4h9QvneR4ZA0BNOn1cBN6P95tSolyir
+	 fAPeRW8f78zyNjBa249zIagtBx5MpZBqgjYIkpqFDfo5ofKQNtjlwWktcFQPEWgZpXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016631;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xKzXyNCfI8UK6G6TDltkAPqmXDd2oB4fxaVjLUsEOL8=;
-	b=ux6cIQhX34rr2Sy3hG0g/DYUYB8euJAF9qj10mYCFnibZUCFbL96uPp4H/LVhaWYlR2R
-	 +e6hHaZOaq25nvxtw8qHd8h9PTrtoHzlnL+FQ1D/CMQOyXssYdKk1IQYrMMNnxKeYfMZK
-	 gaqo9OT5ToGreiEFMhwycVf35F9+XLLDX/dOwt9t6mymh5IXIs/XOy2nNstnDa9m+nXKH
-	 vDJqpaD61MIqMzQOWhUZANr8hrnYrEKBSgqjsilx4fVS6hp2XG3fbCxLUs8DcQ1ru2SDz
-	 bgYmd4PqYhR4f+dhZEY5JgZFwD1SpBbAtLIe3pRsGlaCBwY03qZzP+Ge0RZbPlaGAyQ==
+	bh=JZB/h32wtFFGd983U6OTX/F1Ts9cElG3nxNV1rjpNBU=;
+	b=VBd2zCZQe4xed+dnD1LRh9IrWHyt3oapQEoAjL6xlf+5CAsi04CCoFWghyW6t+0BLlp+
+	 3mP8nStJDUba4JlV+EMyR384Vv9CJ5DhBu85LV6pSclR/EIebtPfcWh4LtTl1Mlqnxxhi
+	 KZgyxRTI2+dfWOGyGQukd9LmY70oZ1PSrVeRA4TiQQKjnDu0NUU0o4lCBxL4bUMO4xHNA
+	 7NJwnly8P3ep6xd1DTmEx7T1/f8HIvEsxWiSHXeSK0lBmQoaK71c4hgRQtQOEN560K1ld
+	 ZMKRRL1c7rX22Mwb4zEYa6Q53R8dnZqQybIX4CMH57GfZquXkackZQwwAAFNIrJnJPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rY2kDoFG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tAGq8mXV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9B3606A333;
-	Wed, 18 Nov 2026 15:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D299C606A320;
+	Wed, 18 Nov 2026 15:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rY2kDoFG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AFC51F000C4;
-	Wed, 18 Nov 2026 15:43:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tAGq8mXV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37DCC1F000C4;
+	Wed, 18 Nov 2026 15:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016629;
-	bh=xKzXyNCfI8UK6G6TDltkAPqmXDd2oB4fxaVjLUsEOL8=;
+	s=korg; t=1795016631;
+	bh=JZB/h32wtFFGd983U6OTX/F1Ts9cElG3nxNV1rjpNBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rY2kDoFGpUysh5wSE4ki3angCoQhT3iWPQKJRfYaC/D1eUtIevLixvFag1pp2XCL6
-	 scf1zUfND10a9lq7TcimcIyVLjLbBxFMiwgovkSH1DKZw2x+930NxNSPxJ+Xwn4dGJ
-	 Q1Y5bFUe+WvtRMzaMNk4Bw0aWnnY/IywhlLZEAsE=
+	b=tAGq8mXV8dedEesXp5bfvwcJPrjKIBToGKhJER5VzcWSJkAwWolJb1jttWHcOC3Aa
+	 EUmkOoiZ74rhD0sKt1UnKgQOZWfgzUnmDKCCwRV2S8H2yRDeOhT2UTyFJFj165F+xL
+	 6akiqAF/XZyD2UWxjuwpGdU1AcMTO6J66hZOVubI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0595/2651] perf dso: Separate libbfd and cmd addr2line caches to fix confusion
-Date: Wed, 18 Nov 2026 15:30:35 +0100
-Message-ID: <20261118150309.136056731@linuxfoundation.org>
+Subject: [PATCH 7.3 0596/2651] perf libbfd: Report success when an address is found
+Date: Wed, 18 Nov 2026 15:30:36 +0100
+Message-ID: <20261118150309.173583374@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,225 +70,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit f651c02755af85324ad029cd948a8e570d0769fb ]
+[ Upstream commit 3d8fb5a4a1d793f6afdfe6df6868f82e610e447e ]
 
-When a dso executes addr2line via libbfd it instantiates an a2l_data
-pointer. If the DSO later executes via the command-line fallback due
-to an inlined bug, the a2l pointer is unconditionally populated with a
-child_process process wrapper.
+libbfd__addr2line() only reports success when the caller asked for a file
+name. addr2inlines() passes a NULL file as it just wants the inline_node
+populating, so libbfd__addr2line() returns 0 for it unless
+bfd_find_inliner_info() happened to find an inline frame.
 
-If libbfd is queried again, the offline reader attempts to cast struct
-a2l_data into child_process, coercing random arbitrary instruction
-addresses and causing silent aborts. This cleanly splits the caches.
+addr2line() in srcline.c treats 0 as a failure and tries the next
+addr2line implementation, which appends its own frames to the
+inline_node libbfd already appended to.
+
+Every frame that isn't inlined is then reported twice, which happens by
+default when perf is built with libbfd but without libdw as the fallback
+order is then libbfd followed by the addr2line command:
+
+  $ perf record --call-graph dwarf -- perf test -w inlineloop 1
+  $ perf script --fields +srcline
+  ...
+	    56051a994f8e parent+0x2e (perf)
+    inlineloop.c:32
+	    56051a99503a inlineloop+0x8a (perf)
+    inlineloop.c:47
+	    56051a99503a inlineloop+0x8a (perf)
+    inlineloop.c:47
+	    56051a95841a cmd_test+0xb7a (perf)
+    ??:0
+	    56051a95841a cmd_test+0xb7a (perf)
+    ??:0
+  ...
+
+Report success whenever the address is found, like libdw__addr2line()
+does, and clear the frames appended so far when appending fails so that a
+following implementation starts from an empty node.
 
 Fixes: 257046a36750a6db ("perf srcline: Fallback between addr2line implementations")
 Signed-off-by: Ian Rogers <irogers@google.com>
 Assisted-by: Antigravity:gemini-3.1-pro
+Cc: Ian Rogers <irogers@google.com>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dso.c     | 48 +++++++++++++++++++++++----------------
- tools/perf/util/dso.h     | 21 +++++++++++++++--
- tools/perf/util/libbfd.c  | 10 ++++----
- tools/perf/util/srcline.c |  2 ++
- 4 files changed, 54 insertions(+), 27 deletions(-)
+ tools/perf/util/libbfd.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
-index df39e6ca88e6a..9e90de92fcfa2 100644
---- a/tools/perf/util/dso.c
-+++ b/tools/perf/util/dso.c
-@@ -1,38 +1,44 @@
- // SPDX-License-Identifier: GPL-2.0
-+#include "dso.h"
-+
-+#include <errno.h>
-+#include <stdlib.h>
-+
- #include <asm/bug.h>
-+#include <fcntl.h>
- #include <linux/kernel.h>
- #include <linux/string.h>
- #include <linux/zalloc.h>
--#include <sys/time.h>
- #include <sys/resource.h>
--#include <sys/types.h>
- #include <sys/stat.h>
-+#include <sys/time.h>
-+#include <sys/types.h>
- #include <unistd.h>
--#include <errno.h>
--#include <fcntl.h>
--#include <stdlib.h>
--#ifdef HAVE_LIBBPF_SUPPORT
--#include <bpf/libbpf.h>
--#include "bpf-event.h"
--#include "bpf-utils.h"
--#endif
-+
-+#include "annotate-data.h"
-+#include "auxtrace.h"
- #include "compress.h"
-+#include "debug.h"
-+#include "dsos.h"
- #include "env.h"
-+#include "libbfd.h"
-+#include "libdw.h"
-+#include "machine.h"
-+#include "map.h"
- #include "namespaces.h"
- #include "path.h"
--#include "map.h"
--#include "symbol.h"
- #include "srcline.h"
--#include "dso.h"
--#include "dsos.h"
--#include "machine.h"
--#include "auxtrace.h"
--#include "util.h" /* O_CLOEXEC for older systems */
--#include "debug.h"
- #include "string2.h"
-+#include "symbol.h"
-+#include "util.h" /* O_CLOEXEC for older systems */
- #include "vdso.h"
--#include "annotate-data.h"
--#include "libdw.h"
-+
-+#ifdef HAVE_LIBBPF_SUPPORT
-+#include <bpf/libbpf.h>
-+
-+#include "bpf-event.h"
-+#include "bpf-utils.h"
-+#endif
- 
- static const char * const debuglink_paths[] = {
- 	"%.0s%s",
-@@ -1757,6 +1763,7 @@ void dso__delete(struct dso *dso)
- 	auxtrace_cache__free(RC_CHK_ACCESS(dso)->auxtrace_cache);
- 	dso_cache__free(dso);
- 	dso__free_a2l(dso);
-+	dso__free_a2l_libbfd(dso);
- 	dso__free_libdw(dso);
- 	dso__free_symsrc_filename(dso);
- 	nsinfo__zput(RC_CHK_ACCESS(dso)->nsinfo);
-@@ -2081,6 +2088,7 @@ void dso__set_symsrc_filename(struct dso *dso, char *val)
- 	RC_CHK_ACCESS(dso)->symsrc_filename = val;
- 	dso__free_libdw(dso);
- 	dso__free_a2l(dso);
-+	dso__free_a2l_libbfd(dso);
- 	dso__set_has_srcline(dso, true);
- 	dso__set_a2l_fails(dso, 0);
- }
-diff --git a/tools/perf/util/dso.h b/tools/perf/util/dso.h
-index 7966c7048c85a..e7d5f4bbf8949 100644
---- a/tools/perf/util/dso.h
-+++ b/tools/perf/util/dso.h
-@@ -304,7 +304,12 @@ DECLARE_RC_STRUCT(dso) {
- 	const char	 *short_name;
- 	const char	 *long_name;
- 	void		 *a2l;
-+#ifdef HAVE_LIBBFD_SUPPORT
-+	void		 *a2l_libbfd;
-+#endif
-+#ifdef HAVE_LIBDW_SUPPORT
- 	void		 *libdw;
-+#endif
- 	char		 *symsrc_filename;
- 	struct nsinfo	*nsinfo;
- 	struct auxtrace_cache *auxtrace_cache;
-@@ -368,6 +373,20 @@ static inline void dso__set_a2l(struct dso *dso, void *val)
- 	RC_CHK_ACCESS(dso)->a2l = val;
- }
- 
-+#ifdef HAVE_LIBBFD_SUPPORT
-+static inline void *dso__a2l_libbfd(const struct dso *dso)
-+{
-+	return RC_CHK_ACCESS(dso)->a2l_libbfd;
-+}
-+
-+static inline void dso__set_a2l_libbfd(struct dso *dso, void *val)
-+{
-+	RC_CHK_ACCESS(dso)->a2l_libbfd = val;
-+}
-+#endif
-+
-+struct Dwfl;
-+#ifdef HAVE_LIBDW_SUPPORT
- static inline void *dso__libdw(const struct dso *dso)
- {
- 	return RC_CHK_ACCESS(dso)->libdw;
-@@ -378,8 +397,6 @@ static inline void dso__set_libdw(struct dso *dso, void *val)
- 	RC_CHK_ACCESS(dso)->libdw = val;
- }
- 
--struct Dwfl;
--#ifdef HAVE_LIBDW_SUPPORT
- struct Dwfl *dso__libdw_dwfl(struct dso *dso);
- #else
- static inline struct Dwfl *dso__libdw_dwfl(struct dso *dso __maybe_unused)
 diff --git a/tools/perf/util/libbfd.c b/tools/perf/util/libbfd.c
-index 35aa9d98f2f86..2a73124b76b85 100644
+index 2a73124b76b85..936555217e81a 100644
 --- a/tools/perf/util/libbfd.c
 +++ b/tools/perf/util/libbfd.c
-@@ -210,7 +210,7 @@ static int inline_list__append_dso_a2l(struct dso *dso,
- 				       struct inline_node *node,
- 				       struct symbol *sym)
- {
--	struct a2l_data *a2l = dso__a2l(dso);
-+	struct a2l_data *a2l = dso__a2l_libbfd(dso);
- 	struct symbol *inline_sym = new_inline_sym(dso, sym, a2l->funcname);
- 	char *srcline = NULL;
+@@ -258,6 +258,7 @@ int libbfd__addr2line(const char *dso_name, u64 addr,
+ 		int cnt = 0;
  
-@@ -230,11 +230,11 @@ int libbfd__addr2line(const char *dso_name, u64 addr,
+ 		if (node && inline_list__append_dso_a2l(dso, node, sym)) {
++			inline_node__clear_frames(node);
+ 			ret = 0;
+ 			goto out;
+ 		}
+@@ -271,23 +272,32 @@ int libbfd__addr2line(const char *dso_name, u64 addr,
  
- 	mutex_lock(dso__lock(dso));
- 	dso_name = dso__symsrc_filename(dso) ?: dso_name;
--	a2l = dso__a2l(dso);
-+	a2l = dso__a2l_libbfd(dso);
- 
- 	if (!a2l) {
- 		a2l = addr2line_init(dso_name);
--		dso__set_a2l(dso, a2l);
-+		dso__set_a2l_libbfd(dso, a2l);
+ 			if (node != NULL) {
+ 				if (inline_list__append_dso_a2l(dso, node, sym)) {
++					inline_node__clear_frames(node);
+ 					ret = 0;
+ 					goto out;
+ 				}
+-				// found at least one inline frame
+-				ret = 1;
+ 			}
+ 		}
  	}
  
- 	if (a2l == NULL) {
-@@ -295,14 +295,14 @@ int libbfd__addr2line(const char *dso_name, u64 addr,
- 
- void dso__free_a2l_libbfd(struct dso *dso)
- {
--	struct a2l_data *a2l = dso__a2l(dso);
-+	struct a2l_data *a2l = dso__a2l_libbfd(dso);
- 
- 	if (!a2l)
- 		return;
- 
- 	addr2line_cleanup(a2l);
- 
--	dso__set_a2l(dso, NULL);
-+	dso__set_a2l_libbfd(dso, NULL);
- }
- 
- static int bfd_symbols__cmpvalue(const void *a, const void *b)
-diff --git a/tools/perf/util/srcline.c b/tools/perf/util/srcline.c
-index 5ed89f97ff112..a8d16106f6194 100644
---- a/tools/perf/util/srcline.c
-+++ b/tools/perf/util/srcline.c
-@@ -301,6 +301,7 @@ char *__get_srcline(struct dso *dso, u64 addr, struct symbol *sym,
- 	if (dso__a2l_fails(dso) > A2L_FAIL_LIMIT) {
- 		dso__set_has_srcline(dso, false);
- 		dso__free_a2l(dso);
-+		dso__free_a2l_libbfd(dso);
+ 	if (file) {
+ 		*file = a2l->filename ? strdup(a2l->filename) : NULL;
+-		ret = *file ? 1 : 0;
++		if (!*file) {
++			/* Leave ret as 0 so that another addr2line is tried. */
++			goto out;
++		}
  	}
- 	mutex_unlock(dso__lock(dso));
+ 
+ 	if (line)
+ 		*line = a2l->line;
+ 
++	/*
++	 * The address was found, report success so that the caller doesn't try
++	 * another addr2line implementation that would append the inline frames
++	 * above a second time.
++	 */
++	ret = 1;
++
  out:
-@@ -348,6 +349,7 @@ char *get_srcline_split(struct dso *dso, u64 addr, unsigned *line)
- 	if (dso__a2l_fails(dso) > A2L_FAIL_LIMIT) {
- 		dso__set_has_srcline(dso, false);
- 		dso__free_a2l(dso);
-+		dso__free_a2l_libbfd(dso);
- 	}
  	mutex_unlock(dso__lock(dso));
- 
+ 	return ret;
 -- 
 2.53.0
 
