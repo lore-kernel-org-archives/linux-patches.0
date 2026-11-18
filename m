@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055258;
-	b=p/dBJG2Qz98far9NFwV5S87Y/CFqC2k9f1IpSKrSYiUYGeISWPilF0Tg5CdxKSCi1hGH
-	 IJFC15w4h1DgqVzPfIO/qkH3YRp6UbQIFxbnxG6Lu57nQl7WimYQxzrWC88G16YixqBeQ
-	 Rmdc34JQrubtKTdq0O7j35PbrNdgv1WtG4ZvuEk8aoSH9PBk9mBlG+bY0F9k6Ih+ptw0A
-	 xcFq6vOrFK22K7qn1KpW5twLH8rUci9gow8ZyXqmR5tkJqSev3TCxST/1wYxp5ZJFXrK2
-	 o5wzwHlRujqseCkF5V7dkHNN9g5mYvwhx7Xgi2iJNvcC45OcwhDwpdJ+AK1bOEyhMRQ==
+	t=1795055261;
+	b=RJ4hL4wsDd/NSoKp7NdeM84DlnyJ4hn2lie8VEfP+TSJ1awM8oUwLoY11aOxqnmhoQzT
+	 h8HdqP8Wkzip3MrJo671EmBud7zldG6XFwbSdeyzci7Lb4GSh5ibk/mIXlGcwdb7WhUAE
+	 KJCgiS0qeiebMKhk81CSxRv5hxISYUtfQWUB4fqIdJ6C6A3kW7WpFQ4mqKJWsJMuUvunj
+	 Vr+HAw0ZQPAZ0F3mlKEOuIr8RlSexdm6nzAjfhBvcrX7VkSAMZL7MzHB6pm/Atag0Khtk
+	 2GHc2Bz+j8SecF0DhDsQjet0dUPfa8zeXvHBM5W943aE9mwIssnXWqWav4z6zd4Ce1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055258;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055261;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nGlvK2Qm6UV+gD/DGgyd380h3l2Q0OUA/oLwOVR/jNI=;
-	b=wxLA+wrm4Jrwj2HNodwGZpH+9u7NeHSVn+szcb4ouX6HEHwbt1lRXSfRqAf+n4VjD9G9
-	 Jd6HyvAcHhrRIXA7SPl89pPbxYueuidsjdntngKLYJEKgya5uD0uk6zjF0PsTaVjhqLAC
-	 8UBEyqRUKPf/F91R93Ar5VZNs01ucjn33JljbaXZV4kGHZITxgRZfYzAQRBnpLJfij0Ti
-	 2N0b3Mne0bZmznfDEc0Zh9XOgEMSTzKei4C+fT2AbrFpmLoP7xVoeEeTAZoWBhTVX6tm9
-	 T5U6rMQdlXFXbgC2ms/cBYTT8gRh4xHZMjmNj1YX64MzSknX8eqWSZ/CTPKgH7uWTrQ==
+	bh=AkyEUx7XCp2btAfKEedrYkxjIVITraNXYp4jn+4KMWE=;
+	b=01KDn23Phdr1rdQ3Sea6lsAPfGOI2xg+lG+hZGNiuwr5PprjzHKevPRaS/MheKPs4JmB
+	 SHwop8i3fOJq/bA2uMJl28OzGtx8ZUwZwenbyard0iBp4ISX+e6XlaUAGcqEISManR/3z
+	 52mbownaT1J/cg4lk1k1U7yV932YBBrcxKiLtDrSQz1BqRayfZkthvqOHgHLzHPD1TtbE
+	 mYVckHukrmje7OAo9X0X0/3BMJn8YX5hhECaDCQkHa+r3yesdlTojpz2rbxOG6TLt7Noj
+	 arwVruwXFVVdpNdbcWbBwCR0k5IZBsflxY0asjSWcsrzfwe9pjI/uctINgHp0TAYrhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nmRLg6CI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kmBe97b8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7DA60A2605;
-	Thu, 19 Nov 2026 02:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3934160A260B;
+	Thu, 19 Nov 2026 02:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nmRLg6CI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 633F11F000C9;
-	Thu, 19 Nov 2026 02:27:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kmBe97b8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4000F1F000C4;
+	Thu, 19 Nov 2026 02:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055257;
-	bh=nGlvK2Qm6UV+gD/DGgyd380h3l2Q0OUA/oLwOVR/jNI=;
+	s=korg; t=1795055260;
+	bh=AkyEUx7XCp2btAfKEedrYkxjIVITraNXYp4jn+4KMWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nmRLg6CIQWjB4Nk9dFsWO1u01ZVgKaybqFomH9POJNKySe5M3EGfHEaXubfXZEGpj
-	 BvFM/5uQ42jMwnus6q3DbWbCEdE5Ned+zerLayE4uPiw+B+LYElJxectlqE0KM5cnR
-	 +PobDXglN51n3oX2bIhKVpODYDQKmCrlZp9psCPY=
+	b=kmBe97b8I3fsYC7r/xcklaZFKg4fupzf9CZ62h91sf2TLgIGH2AYW8W/0cOtB2U5k
+	 PZSV9nnywjWUlu0tNHJrCR6mX+Eoevq/Kk6tz/vUJ6JlF6a+Z/UuHjpTC5MQQdArxR
+	 n74UG7Vo+g4nyocSQdAMblE24STusPqZyS1g3+qA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1568/2214] swim: add helper for disk cleanup
-Date: Wed, 18 Nov 2026 15:54:04 +0100
-Message-ID: <20261118150114.777772864@linuxfoundation.org>
+Subject: [PATCH 5.15 1551/2214] regulator: mp886x: fix pontential division by zero
+Date: Wed, 18 Nov 2026 15:53:47 +0100
+Message-ID: <20261118150114.158011871@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,73 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luis Chamberlain <mcgrof@kernel.org>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit 4e9abe72530a2baf5f80d60e8d0bcdb84964d2e4 ]
+[ Upstream commit d16ef5debccc4289c1f25309a2cccfbbe879601a ]
 
-Disk cleanup can be shared between exit and bringup. Use a
-helper to do the work required. The only functional change at
-this point is we're being overly paraoid on exit to check for
-a null disk as well now, and this should be safe.
+If the "mps,fb-voltage-divider" 2nd var is 0, there will be division
+by zero bug.
 
-We'll later expand on this, this change just makes subsequent
-changes easier to read.
-
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-Link: https://lore.kernel.org/r/20210927220302.1073499-9-mcgrof@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 994a778d9665 ("swim: Configure parameter memory")
+Fixes: 97be82880b61 ("regulator: add support for MP8869 regulator")
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260901043123.5401-1-jszhang@kernel.org?part=1
+Link: https://patch.msgid.link/20260909143957.9284-3-jszhang@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ drivers/regulator/mp886x.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index 2934b7dc02bb2..f32fb9b388c13 100644
---- a/drivers/block/swim.c
-+++ b/drivers/block/swim.c
-@@ -783,6 +783,17 @@ static const struct blk_mq_ops swim_mq_ops = {
- 	.queue_rq = swim_queue_rq,
- };
+diff --git a/drivers/regulator/mp886x.c b/drivers/regulator/mp886x.c
+index f42572d0f94e5..ae45a8dbdb27b 100644
+--- a/drivers/regulator/mp886x.c
++++ b/drivers/regulator/mp886x.c
+@@ -317,6 +317,9 @@ static int mp886x_i2c_probe(struct i2c_client *client)
+ 	if (ret)
+ 		return ret;
  
-+static void swim_cleanup_floppy_disk(struct floppy_state *fs)
-+{
-+	struct gendisk *disk = fs->disk;
++	if (di->r[1] == 0)
++		return -EINVAL;
 +
-+	if (!disk)
-+		return;
-+
-+	blk_cleanup_disk(disk);
-+	blk_mq_free_tag_set(&fs->tag_set);
-+}
-+
- static int swim_floppy_init(struct swim_priv *swd)
- {
- 	int err;
-@@ -848,12 +859,7 @@ static int swim_floppy_init(struct swim_priv *swd)
- exit_put_disks:
- 	unregister_blkdev(FLOPPY_MAJOR, "fd");
- 	do {
--		struct gendisk *disk = swd->unit[drive].disk;
--
--		if (!disk)
--			continue;
--		blk_cleanup_disk(disk);
--		blk_mq_free_tag_set(&swd->unit[drive].tag_set);
-+		swim_cleanup_floppy_disk(&swd->unit[drive]);
- 	} while (drive--);
- 	return err;
- }
-@@ -924,8 +930,7 @@ static int swim_remove(struct platform_device *dev)
- 
- 	for (drive = 0; drive < swd->floppy_count; drive++) {
- 		del_gendisk(swd->unit[drive].disk);
--		blk_cleanup_disk(swd->unit[drive].disk);
--		blk_mq_free_tag_set(&swd->unit[drive].tag_set);
-+		swim_cleanup_floppy_disk(&swd->unit[drive]);
- 	}
- 
- 	unregister_blkdev(FLOPPY_MAJOR, "fd");
+ 	di->en_gpio = devm_gpiod_get(dev, "enable", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(di->en_gpio))
+ 		return PTR_ERR(di->en_gpio);
 -- 
 2.53.0
 
