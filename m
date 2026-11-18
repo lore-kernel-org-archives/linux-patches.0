@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027956;
-	b=Ma4N+S6Zw8PAWIBqTtLz1QnOlYRiGjJt8ulac/pma59/ZoNL6z1m5Yqbv0ObznHLuw5c
-	 Ujln/1DgFVVTPOUCDIbV5mN5SA+fwLlfYloz9t6aR3JW6Wclm7NW1I8L2aegxY1XmGwbD
-	 TZKUOda9psJTCHdbY+ddIdRBUnTZFXU3PmkLILfXuw0s8pGC+k795JmEj8eJlUglYw/SU
-	 /EYITVkCDvcJmjfap9xx63nnXJ/gCbuK4ejYNxKfUmBAKUhA99eAkEiD77WPy6TEjdxQv
-	 UEj2yab5UcDmwA2zMoYgr6H/KQsQmR881fLkqMfV/EaUWmw3Z8k5MKZi1pl2+72rcfg==
+	t=1795027959;
+	b=uH1Qe0p3wIyCQ4PeM23vNrNb8L3pOeDmQUzxCtvQwvdwneuwu5yvFFxnnT3k1phG7gdu
+	 IbvuOihDlUakO5O7cqxTpe5aJqO9itz8JT4CGfYBwo5JBdAuG8Q/gRBQgBjZGF00xgdDc
+	 IhTbvsc00vt9oUkdEGz2y5+LFCBJNLYB2ynKVa7/1ZsO/cBRSQe0F9jcCKnqbl1bjeCi9
+	 vdx6+rspficvTQo+gAPuhu+s4qwWvT7nQCv1pFRIAt4D30DVbOZII6vSjmBe+kDVvXVDn
+	 1eSiDjgjJNdZUr2iFOg/5czTZ0XSDKsB/vsXnQsbpPAZZZPkwD8syasg5C1GRwGM+vw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027956;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027959;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FEkXMsY8aKdCOtqEXQgWHi4DW6acgXpcpU5Tqlc1sTM=;
-	b=y8aq8vUCpSvaBHfQFh8nbHCg1YMhHaJGw8bH/nktcnD7BHmbJbVFG2WtfGK0SIwARuh1
-	 renK0SW1fGcrPYNU1d/9bSt8Up+bb4B+My3B8fSv5GZsYyxoisF7YxCvM3EJKvyREg6tK
-	 6LEjqvqfe/doJfoZM1qZDwSbpK6BpCkQ8B/PdQp1OXY+qXjQhafaiOFhrBtVLGNiHCgjV
-	 3Fjcjlq89SpNXCNfYaDctT4gFZpN+CSxzRpHWZ9hDvjh0o8RnKE2jIYVmLsiLMEUG/3nY
-	 Gimz42+xq8EDkeLttrJlrJIt2gDWLIRpUKAgXb5exGU9f5R02YHq6eGHEmgBivN2Tww==
+	bh=gTjQSRU8bSOQ0KLqO/fSJNZHHIlNEs+MCcvCSKzwRCs=;
+	b=jXW1VdkjSF60p6r3kKfmwJXmPfiIj0BRBq8J35JJxT9we0YVdNAp5XCmRPnAR+YpRCAJ
+	 MRKCHSoE+0srwkzY9yrEah6AwbeHQS4ANtYB1hG3MxWiv8yyltBPYqErF4/uDRaVbWBYZ
+	 BSKP+BZ8FNIwfoWrAZPMwlOfMMn+/g1MFyRoIFdSI9ICqPBOIsZQ0CyTjkFjKVV6yBgCC
+	 r1KwHMg/UCnx+3qq3oivU7ht9+q1BOWm8oQu5DsoK2mACKZskm5SeLwsHoYml+6tI7yAa
+	 yB3lDc7VxDowrxBy5axHr8oYoojBMQFsIFau4FGFW5+Atvn0Ez9N9RL/9sovWXlYwRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0VZoTzEG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iYaqah/a";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F67606A31C;
-	Wed, 18 Nov 2026 18:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0C8606A31C;
+	Wed, 18 Nov 2026 18:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0VZoTzEG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8798C1F000C4;
-	Wed, 18 Nov 2026 18:52:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iYaqah/a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4F51F000C4;
+	Wed, 18 Nov 2026 18:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027956;
-	bh=FEkXMsY8aKdCOtqEXQgWHi4DW6acgXpcpU5Tqlc1sTM=;
+	s=korg; t=1795027959;
+	bh=gTjQSRU8bSOQ0KLqO/fSJNZHHIlNEs+MCcvCSKzwRCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0VZoTzEGN7NjgcRgN08SUP/Pcz1raGCtsSF+22KskDcSD9tR4NVzJAN4QXteOnBJY
-	 3bbA3Yysw2DSq40LdSxyra7W0irQiYMlW0XVeghAENt+PV1eVwu9o0dmiwV9UxwBMM
-	 9wyl0uqkd52m4RPn7s40nvlj8DbjXDL3hK8CpTEk=
+	b=iYaqah/al946Qqg1jbdHlNKInKVY6vr4RhC9FM47MdFrs8reOuy2qzOXkoKliHqr9
+	 w99K3lV9sd1Q18PMrJeVqeoF47sQggM7CZaSKrJughWqA6wA2tcgIE7rKvFS+UQoue
+	 iNn2y+30eBMrsIOGCYr1ltFy9ExTpsCx/4O2HRzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tal Zussman <tz2294@columbia.edu>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Alexandre Cassen <acassen@corp.free.fr>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1956/2151] ceph: dont clear write_congested when collecting folios
-Date: Wed, 18 Nov 2026 16:01:31 +0100
-Message-ID: <20261118150233.015208529@linuxfoundation.org>
+Subject: [PATCH 6.18 1974/2151] net/sched: act_api: inherit filter offload flags only on new actions
+Date: Wed, 18 Nov 2026 16:01:49 +0100
+Message-ID: <20261118150233.650515712@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,45 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tal Zussman <tz2294@columbia.edu>
+From: Alexandre Cassen <acassen@corp.free.fr>
 
-[ Upstream commit 77ff2ba4630b9e9e9f73bbaaeb675638b2c20dd0 ]
+[ Upstream commit 9463e8d8c6922a5aa87f7e4fe6deb4f16925d498 ]
 
-ceph_process_folio_batch() assigns the result of
-is_write_congestion_happened() to fsc->write_congested for every folio
-it collects. The code it replaced only ever set write_congested to true
-here, leaving the decrement paths to clear it once writeback_count
-drops below CONGESTION_OFF_THRESH. The unconditional assignment means
-that a sync writeback that runs while the count sits between the off and
-on thresholds clears the flag on its first folio, and background
-writeback resumes early.
+tcf_action_init() gives the skip_sw and skip_hw flags of a filter to the
+actions it binds. An action that another filter created gets them too,
+they then apply to every filter that uses this action. When a
+skip_sw filter reuses the action of a software filter, the software
+filter silently stops running it. This happens even when the filter add
+fails on a later action. A skip_hw filter likewise prevents a later
+filter without flags from reusing the action.
 
-Only set the flag here, as before.
+Give the flags only to the actions that the filter creates. The mismatch
+check still rejects a filter that reuses an action with a flag that the
+filter does not have.
 
-Fixes: ce80b76dd327 ("ceph: introduce ceph_process_folio_batch() method")
-Assisted-by: Claude:fable-5.1
-Signed-off-by: Tal Zussman <tz2294@columbia.edu>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Discovered by manual code inspection after the Sashiko AI review [1] of
+a tunnel_key patch questioned how actions get the filter flags.
+Reproduced on netdevsim without kernel changes. The egress filter below
+runs in software only, since netdevsim offloads only ingress filters.
+Once the skip_sw filter reuses its drop action, the last command shows
+skip_sw on this action and the egress filter stops dropping packets:
+
+  ethtool -K eth0 hw-tc-offload on
+  tc qdisc add dev eth0 clsact
+  tc filter add dev eth0 egress protocol ip flower dst_ip 192.0.2.1 \
+     action gact drop index 1
+  tc filter add dev eth0 ingress protocol ip flower skip_sw \
+     dst_ip 192.0.2.2 action gact drop index 1
+  tc actions get action gact index 1
+
+Tested with the reproducer and the tc-testing action, matchall and
+flower tests.
+
+Fixes: 34d35b4edbbe ("net/sched: act_api: deny mismatched skip_sw/skip_hw flags for actions created by classifiers")
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261009051930.3619697-1-acassen%40corp.free.fr [1]
+Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261021193222.1318333-2-acassen@corp.free.fr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/act_api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index 9e123f8e72720..ae34998bf16fc 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -1421,7 +1421,8 @@ int ceph_process_folio_batch(struct address_space *mapping,
- 			break;
- 		}
- 
--		fsc->write_congested = is_write_congestion_happened(fsc);
-+		if (is_write_congestion_happened(fsc))
-+			fsc->write_congested = true;
- 
- 		ceph_wbc->fbatch.folios[i] = NULL;
- 		ceph_wbc->len += folio_size(folio);
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index 0494b31bfcabe..6f9ad397050fa 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -1544,6 +1544,9 @@ int tcf_action_init(struct net *net, struct tcf_proto *tp, struct nlattr *nla,
+ 					err = -EINVAL;
+ 					goto err;
+ 				}
++				/* Other filters share an existing action */
++				if (init_res[i - 1] != ACT_P_CREATED)
++					continue;
+ 				if (skip_sw)
+ 					act->tcfa_flags |= TCA_ACT_FLAGS_SKIP_SW;
+ 				if (skip_hw)
 -- 
 2.53.0
 
