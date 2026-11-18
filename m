@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051221;
-	b=uZE1ejlHhVeUo7ky1FASFNYDZxCZv10hTFZO0SV3WwnlpTP/j2lYFgO3LnJw33klMoxW
-	 3YTTVskoAVfqiYS8mn03JlVsuSJIfKxU1m0Gbo0WS3fyU/TVo1NfehsErIvJgmAWmxmSN
-	 nvEbJEG4uMeYGxJ5YgnWy/qZ8Fal7NhDIQSsxXtaAYSaI4vPj8KwW/vIexJSHMohQdH7Y
-	 P0TfXZso0EzFDhG7UJeTZZKrwrJxGrWXOZxRfEi8HlnxXMiukHz/9Rd+3IqX3dEnaEnDu
-	 HQUclisFz6dYp04LRXlbR5BZvdCJXkj5/reHUS03btR6UA4qhVTNK0CK0HQ3MOTGlvA==
+	t=1795051224;
+	b=sivvRNzPVT6ysR/Pnue4KADqegj3FqOYmIuOP2nUeSH4xp5EYqIAfHKLAuZxcTmFJI1Q
+	 Duy6iJ30F0+c8K+mc2fWAm3Zy2YKLsJ/F2BTwG4kc0jieqFK2FjAF73TVGouzNYO8Ag3Z
+	 GVt5513PdOy0YKcB8zGlpoEGpSaOklaiCYe6AaYbqUAXlNYPpDrOqkVxo2IAcOXa9o8NH
+	 5ILAWWUCVseOfjTTPrhpmwqXSz09w36Lt4FxNH+J6ffaaMpLOCChKgrSHsGDTuEIHJl11
+	 7R25lHzkTD/cql/vDxgFIDoqMLKyNKJp96Od+eJrH4Omv+MPeI8U2c8dZsT/RrHHQoQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051221;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051224;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Kyzqdt1W93Af5bn79gtL803IqAo7IOMSHTsWXwpbGvM=;
-	b=YVm6P+YlDssTruPj4b0EI/01dG+U6r8xA9/QakMERZwgYqh0SHBvehuGZfRF7ZXgLSnB
-	 QIZZ5ghO6pLBkv5MYatn/R4b3L14WHBvirfkZUgkeIPr4LBQ03deM3RTyupsOx2rMi9/U
-	 AsayXAZ9efmkveucIWnvb4F53P1sZa5tifiHu3+3qPxjG4JxVhW9FkgC+imCMVlmhi1E5
-	 NPcFo98S8dUyscG4YfPZ9mbbKIa5pveHpgO7hZw2ImffaSwQjkYRzpKlyhLlxil9e2H/N
-	 XRuD73lKvJ/obIKgYL1y2uR4MlWSJscnFIeRVjrpekm/LDjD2h3BCRei4/FOZoPFwLA==
+	bh=wrQ5KkbwwvhhMOYL/dgY7Ia/wG5xDLawjzVnXmwivdQ=;
+	b=4QgPuxri8dQ5LyouQxMSBmJwJDOiJCzIyRoHMC5Ch5Bs61vvSzHOc3m8WfIt+GVyZX/1
+	 b4lqtn4xmUL4hz7Nm8t6Gl1PbAOK202uAnmy36aj+pWfY2t9y8EEWV5P5/5aSjjs8Dhib
+	 Loq0bdN0GXmJ2AlZb41Ot4qIRJ6Y36xOyoq5FfFRpQjekeniIGH1CDy7bgWVDepWOYWG0
+	 f3QTrG1nnkNVCUDbR1Ok2ZtoTQnu7ijrRddEmbomZEv+yJp+3MJkKcAh+lF4YlpFbloyx
+	 vg4nRkDJrion4S5Y9fcccuZc3aDIN+rHEgY3kkVwVyOQ3oCT5MrDXfW8JW8hW9HEDwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZU5mA6C6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e08ZilXZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB467606A320;
-	Thu, 19 Nov 2026 01:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED68606A325;
+	Thu, 19 Nov 2026 01:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZU5mA6C6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB8D1F000C4;
-	Thu, 19 Nov 2026 01:20:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e08ZilXZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8A81F000C4;
+	Thu, 19 Nov 2026 01:20:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051221;
-	bh=Kyzqdt1W93Af5bn79gtL803IqAo7IOMSHTsWXwpbGvM=;
+	s=korg; t=1795051224;
+	bh=wrQ5KkbwwvhhMOYL/dgY7Ia/wG5xDLawjzVnXmwivdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZU5mA6C6DuqcebiqU0tkLecmfYeUvmqZXW+W2fUjFDM0j5gzJ+8sZGKnN2wNxBTwY
-	 9ed+yihK+XvB5EWIVQ/8Y7yAcs8JoRH9tLIs2F6QfMlDSSYkzpitcBifhQ4g8TAsdv
-	 erFOtFmZ0KIlap3KZ1/pv+LTeQE7dVH72IBzWa+0=
+	b=e08ZilXZ94mmPuSYeSF1BfJWvIsTukJqICdxz7h/z+A20+hZ9/r33jLftVj31N2sj
+	 PSMWS4iGh6Q2bhtFlZWFjv5piMWvdz55J2aeSjkx81n+5Z47O5aVEI5zw4biqtpC1F
+	 2DAS9JxNa/aAARm+ieevXAwpygQAHEAip+v8J54I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0091/2214] usb: misc: cypress_cy7c63: check result of IO
-Date: Wed, 18 Nov 2026 15:29:27 +0100
-Message-ID: <20261118150013.612121213@linuxfoundation.org>
+Subject: [PATCH 5.15 0082/2214] media: go7007: avoid undefined shifts in MPEG-4 headers
+Date: Wed, 18 Nov 2026 15:29:18 +0100
+Message-ID: <20261118150013.282462965@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,49 +68,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit 0673b919e0933541ae56bb3f0253853f696d3773 ]
+[ Upstream commit 41f82777e547732460290ceb28fcc7c1b95ef192 ]
 
-If the device returns a bogus short read, treat it as EIO.
-Actually check for IO errors.
+The byte-alignment paths can call CODE_ADD() with a zero bit
+length.  The macro then shifts an int by name.b, which can be 32
+after the preceding bit was flushed.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20260710095523.1646308-1-oneukum@suse.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+vti_bitlen() can likewise shift a signed int into its sign bit while
+searching for the bit length, and the package mask construction can
+shift by the full type width.
+
+Make zero-length additions a no-op, derive the bit length with fls(),
+and build the mask with GENMASK().
+
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/cypress_cy7c63.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/media/usb/go7007/go7007-fw.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/usb/misc/cypress_cy7c63.c b/drivers/usb/misc/cypress_cy7c63.c
-index 3be5551a98678..3def90646fdcd 100644
---- a/drivers/usb/misc/cypress_cy7c63.c
-+++ b/drivers/usb/misc/cypress_cy7c63.c
-@@ -89,8 +89,11 @@ static int vendor_command(struct cypress *dev, unsigned char request,
- 				 address, data, iobuf, CYPRESS_MAX_REQSIZE,
- 				 USB_CTRL_GET_TIMEOUT);
- 	/* we must not process garbage */
--	if (retval < 2)
-+	if (retval < 2) {
-+		if (retval >= 0)
-+			retval = -EIO;
- 		goto err_buf;
-+	}
+diff --git a/drivers/media/usb/go7007/go7007-fw.c b/drivers/media/usb/go7007/go7007-fw.c
+index 018019ba47d46..d50304301eeae 100644
+--- a/drivers/media/usb/go7007/go7007-fw.c
++++ b/drivers/media/usb/go7007/go7007-fw.c
+@@ -13,6 +13,7 @@
+  */
  
- 	/* store returned data (more READs to be added) */
- 	switch (request) {
-@@ -175,8 +178,9 @@ static ssize_t read_port(struct device *dev, struct device_attribute *attr,
- 	dev_dbg(&cyp->udev->dev, "READ_PORT%d called\n", port_num);
+ #include <linux/module.h>
++#include <linux/bitops.h>
+ #include <linux/time.h>
+ #include <linux/mm.h>
+ #include <linux/device.h>
+@@ -58,14 +59,16 @@ struct code_gen {
+ #define CODE_GEN(name, dest) struct code_gen name = { dest, 0, 32, 0 }
  
- 	result = vendor_command(cyp, CYPRESS_READ_PORT, read_id, 0);
--
- 	dev_dbg(&cyp->udev->dev, "Result of vendor_command: %d\n\n", result);
-+	if (result < 0)
-+		return result;
+ #define CODE_ADD(name, val, length) do { \
+-	name.b -= (length); \
+-	name.a |= (val) << name.b; \
+-	while (name.b <= 24) { \
+-		*name.p = name.a >> 24; \
+-		++name.p; \
+-		name.a <<= 8; \
+-		name.b += 8; \
+-		name.len += 8; \
++	if (length) { \
++		name.b -= (length); \
++		name.a |= (val) << name.b; \
++		while (name.b <= 24) { \
++			*name.p = name.a >> 24; \
++			++name.p; \
++			name.a <<= 8; \
++			name.b += 8; \
++			name.len += 8; \
++		} \
+ 	} \
+ } while (0)
  
- 	return sprintf(buf, "%d", cyp->port[port_num]);
+@@ -707,11 +710,10 @@ static int gen_mpeg1hdr_to_package(struct go7007 *go,
+ 
+ static int vti_bitlen(struct go7007 *go)
+ {
+-	unsigned int i, max_time_incr = go->sensor_framerate / go->fps_scale;
++	unsigned int max_time_incr = go->sensor_framerate / go->fps_scale;
++	int bitlen = fls(max_time_incr);
+ 
+-	for (i = 31; (max_time_incr & ((1 << i) - 1)) == max_time_incr; --i)
+-		;
+-	return i + 1;
++	return bitlen ?: 1;
  }
+ 
+ static int mpeg4_frame_header(struct go7007 *go, unsigned char *buf,
+@@ -1209,7 +1211,7 @@ static int seqhead_to_package(struct go7007 *go, __le16 *code, int space,
+ 		0xbf08,		fps,
+ 		0xbf09,		0,
+ 		0xbff2,		vop_time_increment_bitlength,
+-		0xbff3,		(1 << vop_time_increment_bitlength) - 1,
++		0xbff3,		GENMASK(vop_time_increment_bitlength - 1, 0),
+ 		0xbfe6,		0,
+ 		0xbfe7,		(fps / 1000) << 8,
+ 		0,		0,
 -- 
 2.53.0
 
