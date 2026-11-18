@@ -1,54 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046913;
-	b=mCtv+xOL79gCyYggyXXww0+7Ob/bQwlNO2Qbq2I/ocKgZrpp1rAP5ce2KkmbWhLnVlIU
-	 02i8QsLl9gaab4ZFytrer7UOUksehoVgUNTRg+QhUJO9mbRJUTmzFV1aQlleLLCx1vSOC
-	 kTr7Kx9aF3wnX6+YnuCSYOTFlo1foEfDo77E8vixfPSLDs5CH6l44gylYxPPa0Xhefmqh
-	 Mued1yj1HAQh0UrmQHEJCGazmqL2FRls0ebxUSnVNuIxXcyIbl8Lo7/SMJTTvo0u5JoG7
-	 qtfhlNiB10u1530QFMN0mgbO9D5tbPiAOXx64F/dWTSVyALw/YoFQPb9Ot7kFLzarCA==
+	t=1795046915;
+	b=Ku8eZ5Zc8wJJd8Q7puuOOsOohXI3LnVYy4JdAU8BdOL2pWWbetZjlLKabaoFwg7bGpX2
+	 sFK5T1BHW0quZR2wkZRNagGDCtxLcHZSpSfNIXM5X+wEzGZwplI3eBjJbWf6TneT4q6mf
+	 JBCU8FUyVqNgHufxWzD2cj2Vas3Nev2QiFjJKKjIqZ+4BBmwT8PMp5VSurJRqqFNh+WBA
+	 1KHbJh+9YqeN73jKyz2DlY/lAXS7E9S/QoxqAzp3tHEs/fY2Z+5IlzdOMPsEztFqRLtHr
+	 gwGUjhWgy4lH9sPGvj6q/dRIIDuYawewBL1OSu271FdtbIrOpqPUfGlUeP+xOV8Sp8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046913;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046915;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=3/jCRoCVxOr3QcNXi4Wz92Cdkm1lzyaV5Wroj+u80KE=;
-	b=LYChObk0jMWrngivxS9i0jpmp3EfLYT1Krg0O7xMaiCRX8Z66hMQUulGm+3c2y4uj9kl
-	 oBWtRkaJ3VXA0EejyL+VOyyXvLX+XCTCaBtbuHahcfwfTBRNTCDR6CBnG0uJtWbBGIIBD
-	 k47Xx3jAWnJ66uJSheLFdg03AB/1nQU2OwY4akvuNH1nDkCR0YLiC0Jg5/wZdRTaqlXli
-	 rahre7xx8OSbHe3I4XTFRfigN9dHrHNrf9MGrsBVqXEfTyE4A5N1gcw3txuKpAOFts/T9
-	 xC0wC+u3NrZMNosg4MUDBKrVWXSqWMW8E1q4Ym6mKBn12Qa+MUPwIAYBZlSwWdfVRzA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=rTjN62GPBjjZVr5sgoS94llepTLi/TXPDTmmenNoLK0=;
+	b=oMVuZ1IfHElIX/djSrIyaSLJnecYJ+RVCp1caue9iNjbk+RVhJ32VQdLy+M2lpQbOTzg
+	 xi91OoQvXeDa6vXY3erZLDy1V+dE7O7cvX4290tmT3Xb5431HA3p4/CSN1WarGEfOACmD
+	 y8oC6ix7JiESvOHnbvKzbY1IZHPSBWDcabqA/ekxM1MNS+qnpygh/cg+PLtf2DXXkfrM7
+	 zXebRvGI/oZEJ2WWtcAqgI5xbxysftQK8k03CblAB8LEprV8upVSAe44zaWi3SJGja2pF
+	 nJ41ywslvsuJ1zet+GN+gx6bywB44vI693Dk6Y90U2FhfgvNFBZr0l9EGrFo+NX9XJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wBjRMxbx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=buS90L03;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2506A606A31C;
-	Thu, 19 Nov 2026 00:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3162606A325;
+	Thu, 19 Nov 2026 00:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wBjRMxbx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448251F000C4;
-	Thu, 19 Nov 2026 00:08:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=buS90L03
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E29BB1F000C4;
+	Thu, 19 Nov 2026 00:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046912;
-	bh=3/jCRoCVxOr3QcNXi4Wz92Cdkm1lzyaV5Wroj+u80KE=;
+	s=korg; t=1795046915;
+	bh=rTjN62GPBjjZVr5sgoS94llepTLi/TXPDTmmenNoLK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wBjRMxbxrHLTTXE8s8uawPFKT7ZR2UqXinaNdJK1CUzjYsuDQ4HNj4fOZ5dGtVvD3
-	 7NH7PKnbd+vuzlvbg1DgF9GwMb2ZLwgzPOLynLF3jH8TOd9YEw8H65wX6ulAn6NEI3
-	 XBSMBimvwsE+KEs8uHut9x5meJO9GfbgAE+AtiI4=
+	b=buS90L03wdprf1klIUSFI70BduW6xNd3BWHccsIef+GKM2bh65eA/Iy6hId7WIozT
+	 mON2eZNTxbQlw2+hCjjqMWPXLL4GCFXz4OCEv54sCTIFXHN0f9B3mNr0OXAsqDkolL
+	 kgmV2Qgg+oR6Vo9sgnFIJ+6Gmzl4GILdAyVIkarI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Scardovi <scardracs@disroot.org>,
-	Denis Benato <denis.benato@linux.dev>,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+49b1021becba70c1f3f6@syzkaller.appspotmail.com,
+	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+	Peter Zijlstra <a.p.zijlstra@chello.nl>,
+	Rik van Riel <riel@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1450/2857] platform/x86: asus-wmi: Serialize WMI method evaluations with a mutex
-Date: Wed, 18 Nov 2026 15:41:24 +0100
-Message-ID: <20261118150253.520273616@linuxfoundation.org>
+Subject: [PATCH 6.1 1451/2857] mm: disallow ioremaping ordinary RAM in generic_access_phys()
+Date: Wed, 18 Nov 2026 15:41:25 +0100
+Message-ID: <20261118150253.559308906@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -64,139 +74,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marco Scardovi <scardracs@disroot.org>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit b9428edaf4109e86a97254228d831767d0acc1f8 ]
+[ Upstream commit 4590752e20aa393cc0d4fe538c0747d14a98c97a ]
 
-Concurrent evaluations of ASUS WMI management methods (from ACPI notify,
-HID, userspace daemons, and debugfs) enter the BIOS ACPI/SMM interface
-simultaneously, triggering re-entrant SMIs or EC mailbox buffer corruption.
+generic_access_phys() can end up getting called on CoW PFNMAP mappings,
+resulting in it trying to ioremap anonymous folios, which especially
+the x86 code doesn't enjoy, and which is in general just odd/wrong.
 
-Fix this at the root by introducing a centralized evaluation helper
-(asus_wmi_evaluate_method_locked()) protected by a global mutex
-(asus_wmi_eval_lock) using guard(mutex). Route all evaluations of
-ASUS_WMI_MGMT_GUID (method3, method5, method_buf, and show_call) through
-this helper.
+E.g., with a CoW mapping of a PCI BAR:
 
-A static mutex is required because asus_wmi_evaluate_method() is an
-exported symbol used by external modules (such as hid-asus and
-asus-armoury) that lack access to struct asus_wmi drvdata, and the
-underlying ASUS ACPI/EC management method is a single physical platform
-resource.
+ioremap on RAM at 0x0000000045623000 - 0x0000000045623fff
+  WARNING: arch/x86/mm/ioremap.c:216 at __ioremap_caller.isra.0+0x4c2/0x5f0
+  Call Trace:
+   generic_access_phys+0x130/0x4d0 mm/memory.c:7178
+   kernfs_vma_access+0x1ce/0x280 fs/kernfs/file.c:437
+   __access_remote_vm+0x58f/0x890 mm/memory.c:7256
+   mem_rw+0x2a1/0x670 fs/proc/base.c:912
 
-The mutex is non-recursive: nested ACPI/WMI notify handlers must not call
-back into evaluate on the same task (defer via workqueue, as
-asus_rfkill_notify already does).
+But more generically, we should disallow access to anything that looks
+like ordinary RAM in the system: including allocating memory (e.g.,
+alloc_pages) and mapping them in a VM_PFNMAP.
 
-The sysfs-versus-notify race predates the later export of
-asus_wmi_evaluate_method(), so Fixes points at the original shared
-evaluate helper rather than that export.
+For pages with an online memmap, allow only pages marked as reserved
+(PageReserved). This also includes memblock allocations, however,
+distinguishing them from other MMIO is tricky, and nobody should really
+be mapping them in a PFNMAP (except someone abusing /dev/mem, which we
+do not care about).
 
-Link: https://github.com/OpenGamingCollective/asusctl/issues/328
-Fixes: d33da3b68669 ("asus-wmi: factorise wmi_evaluate_method call")
-Cc: stable@vger.kernel.org
-Signed-off-by: Marco Scardovi <scardracs@disroot.org>
-Reviewed-by: Denis Benato <denis.benato@linux.dev>
-Reviewed-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/b6a1981777e63f0c28bd719d8203ebbda57d6957.1789722252.git.scardracs@disroot.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-[ sashal: adjusted context for differing includes and WMI evaluation helpers without debug logging ]
+So only allow access if there is no online memmap, or if the pages are
+marked reserved. Reject other pages with -EINVAL.
+
+Note that, just like other pfn_to_online_page() users, we won't care about
+concurrent memory offlining; mapping memory that can concurrently get
+offlined is highly dubious.
+
+Link: https://lore.kernel.org/20261013-generic_access_phys-v1-1-b3963ef76e37@kernel.org
+Fixes: 28b2ee20c7cb ("access_process_vm device memory infrastructure")
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: <syzbot+49b1021becba70c1f3f6@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=49b1021becba70c1f3f6
+Reported-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Closes: https://lore.kernel.org/r/20261001152524.171115-1-ngocthang2710.1999@gmail.com/
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Cc: Peter Zijlstra <a.p.zijlstra@chello.nl>
+Cc: Rik van Riel <riel@redhat.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: adapted PFN access and cleanup from follow_pfnmap helpers to the existing follow_pte() API ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-wmi.c | 30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ mm/memory.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
-index 8814b258caa55..e1ea260046c3c 100644
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -15,6 +15,7 @@
- 
- #include <linux/acpi.h>
- #include <linux/backlight.h>
-+#include <linux/cleanup.h>
- #include <linux/debugfs.h>
- #include <linux/dmi.h>
- #include <linux/fb.h>
-@@ -26,6 +27,7 @@
- #include <linux/kernel.h>
- #include <linux/leds.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/pci.h>
- #include <linux/pci_hotplug.h>
- #include <linux/platform_data/x86/asus-wmi.h>
-@@ -274,6 +276,20 @@ struct asus_wmi {
- 
- /* WMI ************************************************************************/
- 
-+/*
-+ * Concurrent evaluations of ASUS WMI methods can re-enter firmware
-+ * SMI/EC mailbox handling and corrupt the mailbox.
-+ */
-+static DEFINE_MUTEX(asus_wmi_eval_lock);
+diff --git a/mm/memory.c b/mm/memory.c
+index 53334915fd4ad..2fafde251077c 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -5644,6 +5644,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
+ 	resource_size_t phys_addr;
+ 	unsigned long prot = 0;
+ 	void __iomem *maddr;
++	struct page *page;
+ 	pte_t *ptep, pte;
+ 	spinlock_t *ptl;
+ 	int offset = offset_in_page(addr);
+@@ -5656,6 +5657,19 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
+ 	if (follow_pte(vma->vm_mm, addr, &ptep, &ptl))
+ 		return -EINVAL;
+ 	pte = *ptep;
 +
-+static acpi_status asus_wmi_evaluate_method_locked(u32 method_id,
-+						   struct acpi_buffer *input,
-+						   struct acpi_buffer *output)
-+{
-+	guard(mutex)(&asus_wmi_eval_lock);
-+	return wmi_evaluate_method(ASUS_WMI_MGMT_GUID, 0, method_id, input, output);
-+}
++	/*
++	 * Reject anything that looks like ordinary RAM, including anonymous
++	 * folios in CoW mappings or allocated kernel memory. Note that we
++	 * cannot distinguish memblock allocations from non-RAM reliably, so
++	 * we cannot easily reject them here.
++	 */
++	page = pfn_to_online_page(pte_pfn(pte));
++	if (page && !PageReserved(page)) {
++		pte_unmap_unlock(ptep, ptl);
++		return -EINVAL;
++	}
 +
- static int asus_wmi_evaluate_method3(u32 method_id,
- 		u32 arg0, u32 arg1, u32 arg2, u32 *retval)
- {
-@@ -288,8 +304,7 @@ static int asus_wmi_evaluate_method3(u32 method_id,
- 	union acpi_object *obj;
- 	u32 tmp = 0;
+ 	pte_unmap_unlock(ptep, ptl);
  
--	status = wmi_evaluate_method(ASUS_WMI_MGMT_GUID, 0, method_id,
--				     &input, &output);
-+	status = asus_wmi_evaluate_method_locked(method_id, &input, &output);
- 
- 	if (ACPI_FAILURE(status))
- 		return -EIO;
-@@ -331,8 +346,7 @@ static int asus_wmi_evaluate_method5(u32 method_id,
- 	union acpi_object *obj;
- 	u32 tmp = 0;
- 
--	status = wmi_evaluate_method(ASUS_WMI_MGMT_GUID, 0, method_id,
--				     &input, &output);
-+	status = asus_wmi_evaluate_method_locked(method_id, &input, &output);
- 
- 	if (ACPI_FAILURE(status))
- 		return -EIO;
-@@ -370,8 +384,7 @@ static int asus_wmi_evaluate_method_buf(u32 method_id,
- 	union acpi_object *obj;
- 	int err = 0;
- 
--	status = wmi_evaluate_method(ASUS_WMI_MGMT_GUID, 0, method_id,
--				     &input, &output);
-+	status = asus_wmi_evaluate_method_locked(method_id, &input, &output);
- 
- 	if (ACPI_FAILURE(status))
- 		return -EIO;
-@@ -3660,9 +3673,8 @@ static int show_call(struct seq_file *m, void *data)
- 	union acpi_object *obj;
- 	acpi_status status;
- 
--	status = wmi_evaluate_method(ASUS_WMI_MGMT_GUID,
--				     0, asus->debug.method_id,
--				     &input, &output);
-+	status = asus_wmi_evaluate_method_locked(asus->debug.method_id,
-+						 &input, &output);
- 
- 	if (ACPI_FAILURE(status))
- 		return -EIO;
+ 	prot = pgprot_val(pte_pgprot(pte));
 -- 
 2.53.0
 
