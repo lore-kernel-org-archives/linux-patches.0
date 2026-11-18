@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030121;
-	b=T3yYWIxs0vmOR5t12XOZPqPKZRv4qCtvGjH2z0L3lN4iCoNNQS/ddJWqW8vCHFAdg3CH
-	 rwc2/ohGi2SqDkPGvYZlV9NryVhcCFB+yd5gNVoBBdBV+VS+UUS9G7xrCozseeHSn99AQ
-	 I0DEHp7Vjdr5qjwv+TQFfDMgyVAiB7ryhkb1Tt1gjgd0z7+kTMvxLTG3dm+LolB5ECuKE
-	 /U1fv/upZmE8OlCDahZOXTQ7yH1sXHjXmERQGgWiUG5usQ04QAylYMvx54WEO/Kr443GY
-	 FlKOKhM11PCYi5u1OP7oYI9pq7SGvdm9lFg2GGEqKxgXmn8rdvNJRfO1zpgRvsQzeoA==
+	t=1795030124;
+	b=PCJHP39SK4Ludzh0wPqhBO4yoYWhFMx9olIXKVRonw0LFSOlR9oFKuP+TJ/Ng7ty/UID
+	 HhJG9YglnA6MCVyASkiEQtDXSdY95uJt73e7sWZS+8eIbCKs3CYFZhZowucCiHHA+MxaF
+	 K9eugwa8FsPRguObpc8c/stCv/L2O9Npxe+l3vm/CX4eip0K7FIDh69ZTSCYtStF11Prf
+	 PHtDwuR6BMT4zUIdmIWrKGxVEgKVk3F9UNQ330CayeQhmoTP8W6OWaw4gNuIpIiuwlxl3
+	 YQAkLNr0Supg/KpNbmdIqRaoRzCLBaLcPD8KhayL7q3QaJtHbKiS6GZe+KEUfSqFjYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030121;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030124;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Yd41dDpjCOkeKfWj1lfsuZDVivfdHn8Ll7Gp55JUirM=;
-	b=tDqoWnyuOMwl6HrhlCn83tIwpZSisi11Qwv12z1q/o2/TSy/VoP86fyN7CxsLL/hTZbR
-	 Pb7cZbkTZxHgbnZQlFeOq4JKXxa7BPjeyV3iKmg9GbGCb2d18P3EtsXwZEhCHtgd+qmx5
-	 msKI4Tn6wBc3SXDYxblVg6FCjCK+Uu/mA1hdB1CcVnt+l2NhTzhtnfxXMrFzyWP3hSccY
-	 axP7JJemI0PpHbkaEPzNa94rslLVQ6/i6eHFTn8JDCDbAOliNPV1zLdpyKZ1/f5iyFWkT
-	 CCLpCkTdMRPocTUsFPYPgraOfB9CL+8K6v/X6T5YcT7BlqX1ufI85NOk35TA5qe7d9A==
+	bh=c19qTNW0HxxkrjNxgj0JcEIO9bYnSUlgi7cr85i1+XQ=;
+	b=mvrJaKqoK1ci+dsW5QuL1vx46SGYtqxGFJxSnAg/JNGb9k03syajP1RC6YDOpLyR2/Kg
+	 8AwE2c7ZL/4dY9DXkJxeHkJiqZPPXGceyN/LcTFnq/9U0WvVsnAl4sjVznH8WQ/5q55S4
+	 upQ0daeZvlYnHyMrtfw5mWN1qXIlqIOO7QGyMTm2xIu+Tbx59/z3khZ3JhgVS8pDCKUyG
+	 +Boponk6th7Rczpfa/kO1GfNlSkigQSMCzi9ic8CoYp0fQ8kIFTlQKIvHvVcbsZRUfo/r
+	 WTm9PpfVMo5SDof8oFTJ/hIBux1rPvWMU2anZrLp3225H+f9aUDC56l0akkbRSkia3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XhXybUa+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Enb2Cp0c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20043607216F;
-	Wed, 18 Nov 2026 19:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17964606B100;
+	Wed, 18 Nov 2026 19:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XhXybUa+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718931F000C4;
-	Wed, 18 Nov 2026 19:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Enb2Cp0c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F211F000CE;
+	Wed, 18 Nov 2026 19:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030121;
-	bh=Yd41dDpjCOkeKfWj1lfsuZDVivfdHn8Ll7Gp55JUirM=;
+	s=korg; t=1795030123;
+	bh=c19qTNW0HxxkrjNxgj0JcEIO9bYnSUlgi7cr85i1+XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XhXybUa+WOLueSy//AjwGN/057dcJdY0jgw1N235A0R2lPw1FmA5CpRTndWiZJMoz
-	 ztmb68wNi3tI4iM05L9ZZK2o75QZ7MRM3c1DYAKI6GCv/O7Rp01JgIh3bvNOd7wzJx
-	 BLE166fhpaCoXmruqGflH5ZbYpXcWP/S7Cb0AI1s=
+	b=Enb2Cp0ccODBW2nx+xXtKtuJBjlzbRobaomUPA9eEgkyzx8xclt7UqCS5H0VcKofI
+	 WydJ+K9+7Oe6XPQtL/RWm3gcenifucpnYIh9uOmgNEsdEeHJWh0/T2h7GH4DjsVn60
+	 qle1MNYfNnELlWxfJRUXRnn8X2+bRW3a9PUxivew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0591/1756] ACPICA: Fix memory leak in acpi_ds_create_field()
-Date: Wed, 18 Nov 2026 15:45:18 +0100
-Message-ID: <20261118150032.533251848@linuxfoundation.org>
+Subject: [PATCH 6.12 0592/1756] ACPICA: Fix PCC OperationRegion command offsets
+Date: Wed, 18 Nov 2026 15:45:19 +0100
+Message-ID: <20261118150032.565537226@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,63 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit dbb3d99ee95c32711950850ddd33eb22a6042eb2 ]
+[ Upstream commit 888dab4b04ea8725168c6d50d0bfb8057fccca18 ]
 
-acpi_ds_create_field() allocates internal_pcc_buffer for operation
-regions in the PCC address space.
+ACPI 6.3, section 5.5.2.4.7.3, states that the PCC Operation
+Region is associated with the region of shared memory that follows the
+PCC signature.
 
-The function runs once per field, so a second field on the
-same region overwrites the pointer and orphans the previous buffer.
+The generic and extended PCC shared memory layouts include the 4-byte
+signature at offset 0, so their raw shared memory COMMAND fields are at
+offsets 4 and 12 respectively. Since AML field offsets for the PCC
+OperationRegion are relative to the region after that signature, ACPICA
+must look for those COMMAND fields at OperationRegion offsets 0 and 8.
 
-The matching ACPI_FREE() in acpi_ut_delete_internal_obj() only ever sees
-the last one.
+Adjust the generic and master subspace command checks to use those
+OperationRegion-relative offsets. Otherwise writes to the COMMAND field
+can fail to invoke the PCC address space handler at the offset described
+by the PCC OperationRegion definition.
 
-An arm64 platform whose SSDT declares regions with multiple fields each
-leaks two buffers at boot, as detected by kmemleak:
-
-  unreferenced object 0xffff000051e65400 (size 192):
-    comm "swapper/0", pid 1, jiffies 4294668436
-    backtrace (crc 0):
-      __kmalloc_noprof
-      acpi_ds_create_field
-      acpi_ds_load2_end_op
-      acpi_ds_exec_end_op
-      acpi_ps_parse_loop
-      acpi_ps_parse_aml
-      acpi_ns_load_table
-      acpi_load_tables
-      acpi_init
-
-Do not allocate a region if it was previously allocated before,
-preserving the current design, but, not leaking memory.
-
+Link: https://github.com/open-acpica/acpica/pull/1205
 Fixes: aa6ec56b574d ("ACPICA: ACPI 6.3: add PCC operation region support for AML interpreter")
-Link: https://github.com/open-acpica/acpica/commit/c71849d476bb5f97ca1867849e893368e12a69e6
-Signed-off-by: Breno Leitao <leitao@debian.org>
-[ rjw: Subject tweak, fixed the Fixes: tag ]
-Link: https://patch.msgid.link/20260925-acpica-pcc-field-leak-v2-1-e37008e715af@debian.org
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+[ rjw: Fixed the Fixes: tag ]
+Link: https://patch.msgid.link/20260922144302.3847593-2-sudeep.holla@kernel.org
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/dsfield.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/acpica/exfield.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/acpi/acpica/dsfield.c b/drivers/acpi/acpica/dsfield.c
-index 532401ecdab0c..9009f4a3022e0 100644
---- a/drivers/acpi/acpica/dsfield.c
-+++ b/drivers/acpi/acpica/dsfield.c
-@@ -522,7 +522,8 @@ acpi_ds_create_field(union acpi_parse_object *op,
- 	}
+diff --git a/drivers/acpi/acpica/exfield.c b/drivers/acpi/acpica/exfield.c
+index 61ff36189acea..eb44d06134b6e 100644
+--- a/drivers/acpi/acpica/exfield.c
++++ b/drivers/acpi/acpica/exfield.c
+@@ -45,12 +45,13 @@ static const u8 acpi_protocol_lengths[] = {
  
- 	if (info.region_node->object->region.space_id ==
--	    ACPI_ADR_SPACE_PLATFORM_COMM) {
-+	    ACPI_ADR_SPACE_PLATFORM_COMM &&
-+	    !region_node->object->field.internal_pcc_buffer) {
- 		region_node->object->field.internal_pcc_buffer =
- 		    ACPI_ALLOCATE_ZEROED(info.region_node->object->region.
- 					 length);
+ /*
+  * The following macros determine a given offset is a COMD field.
+- * According to the specification, generic subspaces (types 0-2) contains a
+- * 2-byte COMD field at offset 4 and master subspaces (type 3) contains a 4-byte
+- * COMD field starting at offset 12.
++ * According to the specification, the PCC OperationRegion begins after
++ * the PCC signature. The raw shared memory COMD offsets of 4 for generic
++ * subspaces (types 0-2) and 12 for master subspaces (type 3) therefore
++ * appear at OperationRegion offsets 0 and 8.
+  */
+-#define GENERIC_SUBSPACE_COMMAND(a)     (4 == a || a == 5)
+-#define MASTER_SUBSPACE_COMMAND(a)      (12 <= a && a <= 15)
++#define GENERIC_SUBSPACE_COMMAND(a)     (0 == a || a == 1)
++#define MASTER_SUBSPACE_COMMAND(a)      (8 <= a && a <= 11)
+ 
+ /*******************************************************************************
+  *
 -- 
 2.53.0
 
