@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044145;
-	b=lia+xw9YIQgXniCKxYbTZfT+VmZEnV5R8WSbTDev2NYSnOxCo0p6x8cwcRyQnQyjCrl1
-	 +FlOuIGjjm97QRFz9CaacXDXaA8aZ+7Qv+Y0oydOTH+e+jc9t871l2mg4whYOOVvHOJ03
-	 2HoTCis+syh6gI6sRFtjghwtuZsmSYCY/SZf33S7sfojD7Nnoh9ZNAf3iJSU5kNV1+gET
-	 yxKeluS6XbZM7J6bmPAJCQTmxhmGESzYnvsSxZjpbZypLlA0SvXTTPRytqlN4cuXGGKoP
-	 kKj9kzmKnPgnHmBPyayNUcQ3+EY4mTmtducVkEb32Scu1qnQkxoy0ZrqDJxzjSEittQ==
+	t=1795044148;
+	b=KVSwD4T8tmyc+1cnXHbtGp04sGdwe/avMN3xpyLcs9q4NUdgF0HdZun7NCevl9Rv5aZ6
+	 DAYwSTETZazS6WyevjngzYiHarWI7wLpp+Xmrpz8J/UhZRMKifFU44GwlsGuJfpN/1vfk
+	 I7Em84uvmcFT9iiMUN56D/Xqugjs0S9fizh+jxKuAuCqulEy2mhR6OYG19Z/VIvRybsSj
+	 oxtKcQ3Qe/tlEIblUj0xn3jFZczlZOY/+nbf4LrdyEkfZGPXmerNyYjBgpFrPUcLfSQ96
+	 qUeQIrioeqd7hgIDKq6bKbbZQ1D83ZjiM/XsJJQy4Yr3uVfpWwyiybElQ5yM7CQ8J6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044145;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044148;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bkNzp5xgPMwZkzDRuOjAvNMUeMwEZbgfhlLxj/RuX4Y=;
-	b=0C/BwsdRfcBCwmYGSbn67a3pftSmxB3rO/96bMHnxAal+yojvjepg9eLMnJ9CyLtD3jG
-	 CRmOB40l9W0fqgIJYkN6Co+FxmARqAuzq63M8TBSEkQjoIBrsE+Wb7xhNdSs2TfHMoyyX
-	 TrUb/UMeQ5/cykasovpYUVrs2gm6SfZEPPdpVwuYwOAqInPhbe0gwxyHaif2tAyAFsC/j
-	 qDbpvbfBnCtd+mt67URMfGc6H9Dp9kthS92zAUholCm85StWczq+XT2K+c/NtQcI21VFA
-	 /y+AC1hRO0e1d1Gt3klXcFxnjMLts95aZCj3jjDLq1NWEbBAv4OPYhDHghGHDFxU0gA==
+	bh=IfpLbLYZ/iogM8EBxk3mY13mSEsuoHckpIgyEq/7mCw=;
+	b=f3XKqBYifthHsIXfs7RW+2jQKw341fjO5Mt0bshw1bjPmOjW5VcumNz5Zw+mcBMJkTox
+	 VvPSJSmljXWDZRro0EVIJEN95D3feHKtpox7yNsrCzVPjIeUahNa54yImJBTghL9p9F81
+	 t4ym8SVWfCi5AWBJcmq8uCp73KqDnDswz2DwK50t3vIFtgxl1lVq1hAxfdLG6n/6BPS17
+	 AhTbvuuDfiDmRAZImpHVx4f+IyV/1qL8zAZbxcBqPzdMobnf6cpWZoLLlxVFtcs27N7ed
+	 5XijM7ORWOFh5CEjChuq1/rVhfSPZBxWXmpiSi4GTXhgeSmVsRauQ4ZJn9YKzUy6ACA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ehtnAOfF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zr/WV5XP";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA08E606A320;
-	Wed, 18 Nov 2026 23:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04787606A325;
+	Wed, 18 Nov 2026 23:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ehtnAOfF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4EB1F000C4;
-	Wed, 18 Nov 2026 23:22:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zr/WV5XP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF431F000C4;
+	Wed, 18 Nov 2026 23:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044144;
-	bh=bkNzp5xgPMwZkzDRuOjAvNMUeMwEZbgfhlLxj/RuX4Y=;
+	s=korg; t=1795044147;
+	bh=IfpLbLYZ/iogM8EBxk3mY13mSEsuoHckpIgyEq/7mCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ehtnAOfFGfM/OemjbPNGXnYnS/uAnqdp7wMkcne+Y++l4DOhyHwSOK/aYyfHJE7aB
-	 8KgxWSirlKhGERdnrXUtuH2iTh8E0aNMPguUZ1QiKOryIm+oe3MwtM5RJG7tNw1g4W
-	 dC3NJWvdhCWE4LurAWY/K3DFWGENNJ97wlGke7ok=
+	b=zr/WV5XP5Hzw2Tv12XqgDWoScQERCR7e++rq0x90hEt6dedqu2BPAs4YRZd/D9P1U
+	 bfItrfkWIefop+thouu9aZupzzgesDb9dVhWzlHheInyc6Gs32X7NBllNbAwRpGSVk
+	 2DQmj6b1a89/qrbqLD2V9E1dMR8/JrRKAobFE3hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0416/2857] drm/amdgpu/pm: add workload profile pause helper
-Date: Wed, 18 Nov 2026 15:24:10 +0100
-Message-ID: <20261118150216.361571181@linuxfoundation.org>
+Subject: [PATCH 6.1 0461/2857] net: mctp: avoid confusion over local/peer dest/source addresses
+Date: Wed, 18 Nov 2026 15:24:55 +0100
+Message-ID: <20261118150218.022113113@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,79 +68,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-[ Upstream commit 7f991dd3641ef52e0a25b43f27cc61440c4bdcb4 ]
+[ Upstream commit ee076b73e576b0a052d5686d873346b285ae50ea ]
 
-To be used for display idle optimizations when
-we want to pause non-default profiles.
+We have a double-swap of local and peer addresses in
+mctp_alloc_local_tag; the arguments in both call sites are swapped, but
+there is also a swap in the implementation of alloc_local_tag. This is
+opaque because we're using source/dest address references, which don't
+match the local/peer semantics.
 
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6dafb5d4c7cdfc8f994e789d050e29e0d5ca6efd)
-Stable-dep-of: 1f1d43418d61 ("drm/amdgpu: skip gfx switch_power_profile during GPU reset")
+Avoid this confusion by naming the arguments as 'local' and 'peer', and
+remove the double swap. The calling order now matches mctp_key_alloc.
+
+Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 26cc0e69cce0 ("mctp: route: iterate socket tag list in mctp_lookup_prealloc_tag()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/include/kgd_pp_interface.h    |  1 +
- drivers/gpu/drm/amd/pm/amdgpu_dpm.c           | 19 +++++++++++++++++++
- drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h       |  2 ++
- 3 files changed, 22 insertions(+)
+ include/net/mctp.h |  4 ++--
+ net/mctp/af_mctp.c |  2 +-
+ net/mctp/route.c   | 16 ++++++++--------
+ 3 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/include/kgd_pp_interface.h b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-index f3d64c78feaa8..fa57a383df4c9 100644
---- a/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-+++ b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-@@ -340,6 +340,7 @@ struct amd_pm_funcs {
- 	int (*set_pp_table)(void *handle, const char *buf, size_t size);
- 	void (*debugfs_print_current_performance_level)(void *handle, struct seq_file *m);
- 	int (*switch_power_profile)(void *handle, enum PP_SMC_POWER_PROFILE type, bool en);
-+	int (*pause_power_profile)(void *handle, bool pause);
- /* export to amdgpu */
- 	struct amd_vce_state *(*get_vce_clock_state)(void *handle, u32 idx);
- 	int (*dispatch_tasks)(void *handle, enum amd_pp_task task_id,
-diff --git a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-index 19faee31f6c89..52c179e2fb702 100644
---- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-@@ -301,6 +301,25 @@ int amdgpu_dpm_switch_power_profile(struct amdgpu_device *adev,
- 	return ret;
+diff --git a/include/net/mctp.h b/include/net/mctp.h
+index 2da82878155bb..357f1cda11e45 100644
+--- a/include/net/mctp.h
++++ b/include/net/mctp.h
+@@ -90,7 +90,7 @@ struct mctp_sock {
+ };
+ 
+ /* Key for matching incoming packets to sockets or reassembly contexts.
+- * Packets are matched on (src,dest,tag).
++ * Packets are matched on (peer EID, local EID, tag).
+  *
+  * Lifetime / locking requirements:
+  *
+@@ -258,7 +258,7 @@ int mctp_local_output(struct sock *sk, struct mctp_route *rt,
+ 
+ void mctp_key_unref(struct mctp_sk_key *key);
+ struct mctp_sk_key *mctp_alloc_local_tag(struct mctp_sock *msk,
+-					 mctp_eid_t daddr, mctp_eid_t saddr,
++					 mctp_eid_t local, mctp_eid_t peer,
+ 					 bool manual, u8 *tagp);
+ 
+ /* routing <--> device interface */
+diff --git a/net/mctp/af_mctp.c b/net/mctp/af_mctp.c
+index 8f241c92e03d8..609e67210e454 100644
+--- a/net/mctp/af_mctp.c
++++ b/net/mctp/af_mctp.c
+@@ -366,7 +366,7 @@ static int mctp_ioctl_alloctag(struct mctp_sock *msk, unsigned long arg)
+ 	if (ctl.flags)
+ 		return -EINVAL;
+ 
+-	key = mctp_alloc_local_tag(msk, ctl.peer_addr, MCTP_ADDR_ANY,
++	key = mctp_alloc_local_tag(msk, MCTP_ADDR_ANY, ctl.peer_addr,
+ 				   true, &tag);
+ 	if (IS_ERR(key))
+ 		return PTR_ERR(key);
+diff --git a/net/mctp/route.c b/net/mctp/route.c
+index 00fc79c05b4ac..cbcf5ecec93bb 100644
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -634,11 +634,11 @@ static void mctp_reserve_tag(struct net *net, struct mctp_sk_key *key,
+ 	refcount_inc(&key->refs);
  }
  
-+int amdgpu_dpm_pause_power_profile(struct amdgpu_device *adev,
-+				   bool pause)
-+{
-+	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
-+	int ret = 0;
-+
-+	if (amdgpu_sriov_vf(adev))
-+		return 0;
-+
-+	if (pp_funcs && pp_funcs->pause_power_profile) {
-+		mutex_lock(&adev->pm.mutex);
-+		ret = pp_funcs->pause_power_profile(
-+			adev->powerplay.pp_handle, pause);
-+		mutex_unlock(&adev->pm.mutex);
-+	}
-+
-+	return ret;
-+}
-+
- int amdgpu_dpm_set_xgmi_pstate(struct amdgpu_device *adev,
- 			       uint32_t pstate)
+-/* Allocate a locally-owned tag value for (saddr, daddr), and reserve
++/* Allocate a locally-owned tag value for (local, peer), and reserve
+  * it for the socket msk
+  */
+ struct mctp_sk_key *mctp_alloc_local_tag(struct mctp_sock *msk,
+-					 mctp_eid_t daddr, mctp_eid_t saddr,
++					 mctp_eid_t local, mctp_eid_t peer,
+ 					 bool manual, u8 *tagp)
  {
-diff --git a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
-index 0a4c829ae7e37..eaeac97636253 100644
---- a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
-+++ b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
-@@ -384,6 +384,8 @@ int amdgpu_dpm_set_xgmi_pstate(struct amdgpu_device *adev,
- int amdgpu_dpm_switch_power_profile(struct amdgpu_device *adev,
- 				    enum PP_SMC_POWER_PROFILE type,
- 				    bool en);
-+int amdgpu_dpm_pause_power_profile(struct amdgpu_device *adev,
-+				   bool pause);
+ 	struct net *net = sock_net(&msk->sk);
+@@ -648,11 +648,11 @@ struct mctp_sk_key *mctp_alloc_local_tag(struct mctp_sock *msk,
+ 	u8 tagbits;
  
- int amdgpu_dpm_baco_reset(struct amdgpu_device *adev);
+ 	/* for NULL destination EIDs, we may get a response from any peer */
+-	if (daddr == MCTP_ADDR_NULL)
+-		daddr = MCTP_ADDR_ANY;
++	if (peer == MCTP_ADDR_NULL)
++		peer = MCTP_ADDR_ANY;
  
+ 	/* be optimistic, alloc now */
+-	key = mctp_key_alloc(msk, saddr, daddr, 0, GFP_KERNEL);
++	key = mctp_key_alloc(msk, local, peer, 0, GFP_KERNEL);
+ 	if (!key)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -673,8 +673,8 @@ struct mctp_sk_key *mctp_alloc_local_tag(struct mctp_sock *msk,
+ 		if (tmp->tag & MCTP_HDR_FLAG_TO)
+ 			continue;
+ 
+-		if (!(mctp_address_matches(tmp->peer_addr, daddr) &&
+-		      mctp_address_matches(tmp->local_addr, saddr)))
++		if (!(mctp_address_matches(tmp->peer_addr, peer) &&
++		      mctp_address_matches(tmp->local_addr, local)))
+ 			continue;
+ 
+ 		spin_lock(&tmp->lock);
+@@ -966,7 +966,7 @@ int mctp_local_output(struct sock *sk, struct mctp_route *rt,
+ 			key = mctp_lookup_prealloc_tag(msk, daddr,
+ 						       req_tag, &tag);
+ 		else
+-			key = mctp_alloc_local_tag(msk, daddr, saddr,
++			key = mctp_alloc_local_tag(msk, saddr, daddr,
+ 						   false, &tag);
+ 
+ 		if (IS_ERR(key)) {
 -- 
 2.53.0
 
