@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031204;
-	b=EmZpuiUN9Hg7Oko45+BQRqktBAcDtRKIFdttf1TQxhStpvibW3+/QJxv1YwhMrtGdNOv
-	 Shq3gWz0THwv7IBbFTjxKyCYQ289+Gdc9mUsX3QPvg6xoLHyDtXce7xP+vJl5KSvKAZs2
-	 dVomPozP7PiOJQT6gj3o1e/5tSHyfQxkyl34awcw0ZM0ZycsdqaeLQWWfNCzWyZpbTNdj
-	 FvkptS45abIWuT4a+e3JJllF1E9whCOehWZpw+EbxmjLkUSXQBcglUXFXKrK1sYQlaMt0
-	 ZcO5FjwtSgVd3bUqw1bhwF1P1PYWTu998mXo69SeEAfVk+xPHEeflQ5NWMpMPWBm/5Q==
+	t=1795031207;
+	b=S5TbKpnkMKQA2BvtJmhLEbzm/MjyFsexv2wOOmuEOBwe9qTMbuPPgZMlmwyU1Q23Le2u
+	 BLYtcCLK9yKN6FhLhV/NDclX92dU391Vu7PNAsMjk2YnVEXr+jS0f6qOjiNROnXM321h5
+	 4pZf68ULWRHg6BSc8P11eA14YQ22J3CdxI1RAwSlG0+C63rpn2PUqidRmPGV6lN7dEpHY
+	 RND/64m0oQ4jPy2r+AD/h5VyqDjtybWliACAI7JrYSkN5yM8kaxWu/scpTTP3tnQ/vi5s
+	 lY5s1pj1oddTTCfk/w8CS2JCP6gIWFbmQWCr9LaYo+BnIZt4a1AROVzJI/UVzD4/W8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031204;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031207;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tV/dZ6OJqb0LFQVgLgpgnkmd81v0rERwOhz6FJka9cg=;
-	b=Fws9xWzkAdDst88YO0Qx9fynov9rFWnV0+JWqTzrUOe864daf73qNyaBUcBMOn9U5wOL
-	 zmCUOR5aBqyvqg/VyBvSJqGcwnrfe7Rlu7cC7kyQ9sRqTpngfSgHRBmdWgrdPA6TBZhtQ
-	 eEpC5kMqH5HwhMUNNaH1VTIMP6GMBZ4ARz/pNNv8LPkJ0+Wx/QR++l8lHkABdzkFIWimc
-	 cemReGfo0INVGtnKpesQI+Y9B2ClNaUEadQ4/pi3wF5gedMypKaATf0Ag9JurMm+dotM0
-	 lxEZZBKbtwhR0Gyl76pdRm1NP2d70IIHHoISElZEGH3QZRXlQOTYz3sWxe/kVG0QWXw==
+	bh=nxoPtc0P+mVj3o/8CxeH6izQZ3rSWbIKlBgN3o6GyxU=;
+	b=nl5G1V5JgpH1VAScwiQsjRQ1C4qFASliTEYv7r5RW1yVBOjEZZJI0jfkXt2n0AjzZ25f
+	 ksXs2BtpkUc239xypnGIvZqZquJ2KLpEJ5TUtpAbyq/ubR/72987TWvaPH85nhl/YhhTb
+	 OamZ7zK0nvMFV3sIDcZdyj05gR5KGYLwYC4iInp54wG7Tn1lj6/tW6d/QqtIntnGTrr7q
+	 ocfl9RxvgheRiFnz0X2sFbEFhZoso027IWbwW+WDyxrKcva/GN9cOTgHSZbjr9KBSI41h
+	 +4eKzcQIl+p1pZBg2TsTH22hj8SFAIRM6/qtgfvdGi7Mb0964T0L+I/dD9igC7UheKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D4b8wbaM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ThKTeEBO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4703606A33D;
-	Wed, 18 Nov 2026 19:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B0F606A32A;
+	Wed, 18 Nov 2026 19:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D4b8wbaM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13E21F000CD;
-	Wed, 18 Nov 2026 19:46:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ThKTeEBO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BBA1F000C5;
+	Wed, 18 Nov 2026 19:46:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031204;
-	bh=tV/dZ6OJqb0LFQVgLgpgnkmd81v0rERwOhz6FJka9cg=;
+	s=korg; t=1795031207;
+	bh=nxoPtc0P+mVj3o/8CxeH6izQZ3rSWbIKlBgN3o6GyxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D4b8wbaMuT12ULPnIm2SOb0kESS++5r7VsFDf5u9835FRV+S0qe6mRIPtK9uZVOor
-	 SlYDnLOktprKYNmcFi99uKiAK6X5v+Qv6ZYloqBr3qeTLFabnj+/aoAzYuKjaTF1Gu
-	 Wn2+nP5ZQN8sSdkA1Xf6QQxLnxLQbrnMr4Ryikqk=
+	b=ThKTeEBOYurP+ISKck53maVM5thnjAtciHoj31hyve2sepBaJDtHjClqs45SoolYj
+	 wkTbVaXQucZHZ/7eFijoN9JFnh66pS98hA23QJljtlqzWYgU8qMnSXpLMADZ/HXW6X
+	 5V8jztD7GQF9AJXz25EygnKr6/Cl6f9yA7zxAnUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0977/1756] kobject: Fix the kobj_set_name reference in kset_register() kernel-doc
-Date: Wed, 18 Nov 2026 15:51:44 +0100
-Message-ID: <20261118150049.035984231@linuxfoundation.org>
+Subject: [PATCH 6.12 0978/1756] wifi: mt76: mt792x: compute the assoc RSSI from the chain signals
+Date: Wed, 18 Nov 2026 15:51:45 +0100
+Message-ID: <20261118150049.089994696@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,38 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 3aac49b236c137fa77b97968d25338a28c49f0f8 ]
+[ Upstream commit 2d12f56631ef307e58651b560ccda1f324a059f9 ]
 
-The kernel-doc comment of kset_register() refers to kobj_set_name, which
-does not exist. The name is kobject_set_name. Say kobject_set_name.
+mt792x_mac_rssi_iter() adds status->signal of auth and assoc response
+frames to the BSS RSSI average, which mt7921_mcu_sta_update() and
+mt7925_mcu_sta_update() send to the firmware as the station RCPI.
+mt7925 never sets status->signal, since mt76_rx_convert() computes it
+from the chain values later. The average is thus fed 0 dBm on mt7925.
 
-Fixes: 1662cea4623f ("kset: fix memory leak when kset_register() returns error")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://patch.msgid.link/20260911222029.7267-1-kmehltretter@gmail.com
-[ Also drop the misplaced braces in "allocated by()". - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Compute the signal from the chain values, as mt76_rx_convert() and
+mt76_check_sta() do, and skip a frame without a valid chain signal. On
+mt7921, the average now follows the combined value instead of the
+strongest chain.
+
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+Link: https://patch.msgid.link/20261007112419.1277594-4-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/kobject.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt792x_mac.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/lib/kobject.c b/lib/kobject.c
-index 72fa20f405f15..1d930092a3f44 100644
---- a/lib/kobject.c
-+++ b/lib/kobject.c
-@@ -851,7 +851,7 @@ EXPORT_SYMBOL_GPL(kobj_sysfs_ops);
-  * kset_register() - Initialize and add a kset.
-  * @k: kset.
-  *
-- * NOTE: On error, the kset.kobj.name allocated by() kobj_set_name()
-+ * NOTE: On error, the kset.kobj.name allocated by kobject_set_name()
-  * is freed, it can not be used any more.
-  */
- int kset_register(struct kset *k)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
+index 05978d9c7b916..d559b8a008c0f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
+@@ -168,14 +168,16 @@ mt792x_mac_rssi_iter(void *priv, u8 *mac, struct ieee80211_vif *vif)
+ 	struct mt76_rx_status *status = (struct mt76_rx_status *)skb->cb;
+ 	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
+ 	struct ieee80211_hdr *hdr = mt76_skb_get_hdr(skb);
++	int signal;
+ 
+-	if (status->signal > 0)
++	signal = mt76_rx_signal(status->chains, status->chain_signal);
++	if (signal > 0 || signal <= -128)
+ 		return;
+ 
+ 	if (!ether_addr_equal(vif->addr, hdr->addr1))
+ 		return;
+ 
+-	ewma_rssi_add(&mvif->bss_conf.rssi, -status->signal);
++	ewma_rssi_add(&mvif->bss_conf.rssi, -signal);
+ }
+ 
+ void mt792x_mac_assoc_rssi(struct mt792x_dev *dev, struct sk_buff *skb)
 -- 
 2.53.0
 
