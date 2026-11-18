@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052935;
-	b=qcMA2lMZccS1D2v8S4YeQywHHv9lGq2Csd+RXJwNSKz945ifgpwtaYqv2HdKHjbtLfiU
-	 Or6YFj5cVkS+aoFbW8WDyfCASQSf6tHTLNGw9hJrB5Po2atAlrqT2jPRtjA+wWjt8g/17
-	 +m5ITNEUQnZtCWSnBvLpdZ8RTgbw1+HjmN4e5MLmd9wBBSGHS4rn1C2DcVWuN5+YJcwzm
-	 5yJR5KbG+YHbs4TmFuKM3yB+3fesWNdTKtnxRjnTZZ1bLYWK07tuHPk5bOOqZJshN/n5c
-	 uZ/MfNxP94rzk7RSAzBoThAKI5W6emmtG/wiiSa/Y6ky4/H0BlzJYGh/16D3q0CtfuQ==
+	t=1795052937;
+	b=B4NGa7upKlthEblQ8tNY9mFf/21gXjHvTUZcpthi8DITGFJGMju3/9eoIASVE9YSEuYj
+	 dRR75+UVCM20wk5Ma6HVDEPGpewFUL1XSxvqSDamIrv0/wYzsiMSw4ORu64UeZYNabWnF
+	 AE0T5aNqCasd4HHWXA4BbDbiaVTnYWtv5+VuunFnSkShZbleEUTfRY+NTcfWYHfepxNWt
+	 +lGhxJhRl9UR+BQ4RWfNPoljAPuTzeGVE2EVUGihsLDp3LvzEofHbA9X2xtHxgcpY2wB9
+	 ukJY5yYxORhnotg8EbR6Q6fMtpno0Q1u8dZQjXvmaBQqvjMaZZaQC/uagcfkIuQOU+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052935;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052937;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fX5yGolRBEjSoXBtq8ATxKUiqVlPLc3fjW/5REhS2kE=;
-	b=aRP6k/SnSAgj9iQ90m2RhEoMTJ9u/iHwiJmBNfGdafQVXw/iPvvDJTxyqP69x1pyBJf7
-	 L1XzmzapAV4GSZwnWm5GRT1DthjEzvMDyTabCcLzQZLFygUmo7d6kpaFevWWZlme2b0y1
-	 fmCgDKnkDnCr0vwEoRJX52BDNOrvHp0Vr6z4IEVg1l6P0ibdi01Vf5ytbfnYGJ59/M69K
-	 PFUJIcMaRP+e59ei5iUrON5VSKLQEG3WFR5Vjr1i3qXovssLHTG6HadPTBjyysnCOfnnw
-	 9mjs9dMhCH02QCXI5+VCaXsVM3+sfatSk9QNDEBJ3HKgUmVOCmCm1M9w7G4AZGF4xmw==
+	bh=k5JrACZXqoUOAiNu4qTcMhxUXtYd2wZpyPh0SoPDSgw=;
+	b=gsMtvVklsKK7CEw7rEhG2HTvjiazR65sIfn9WQFPfkdWpit4O/dmb4rHPm7YDuZ61Azz
+	 Ycjy8vnq2ln7LboxKpyl2gehJh/2dbXhcD5bel1XysuQpHsj7aZoQ12GpX6ZbSo0+ZIRx
+	 m8niUbuq85DV+4PVyOkGU1Ib8vTQ3Bi81tXcvF0IV/6gWypueroykWnRmH+mPLadkQvit
+	 LOUOoiUmn0eP2PpJOB98foWKaJhgU/CSfPUWuERkTWR/pWnuPa4gv+81hGohq1CRxhzPd
+	 ZvrYdMUmpingsdIwIabJmlEU/iVv1xfGC7NTnxVu9U98SVfFGNBevZWdOlgSiZaxdWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V2x+j+8t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KcJLNvny;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1E3606A32C;
-	Thu, 19 Nov 2026 01:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C577E606A32C;
+	Thu, 19 Nov 2026 01:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V2x+j+8t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 594B61F000C4;
-	Thu, 19 Nov 2026 01:48:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KcJLNvny
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2808B1F000C4;
+	Thu, 19 Nov 2026 01:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052934;
-	bh=fX5yGolRBEjSoXBtq8ATxKUiqVlPLc3fjW/5REhS2kE=;
+	s=korg; t=1795052937;
+	bh=k5JrACZXqoUOAiNu4qTcMhxUXtYd2wZpyPh0SoPDSgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V2x+j+8tsLson894F8rcd2XwxThuiNiD2uVAxO+UYoAcM3fLqfZdP3oitBDI0lM3/
-	 RDDxXW+BcPZ4XhXQLms15AovFpmco/T022i2VdKoraVWclmehcM8RdSGHL0na+ZAJT
-	 0X8ngVyvdEWBuNi2DJqJmkKD49b8oVbjp0Th5pkI=
+	b=KcJLNvnyqTCNY31mA+tqPri5zOuEDOL//4uTC9zM+Ybzf/KZqHiRtOEBFRe2zYq2Z
+	 G0ld4Q7CHTo2moIZQaBIopjUC4pKUsJvaHDsfTJph/rkDbXKU/V77E12VwWPJYvKa+
+	 eTKs/tJR2lsdIP3hj0k0d98IXnCc4CLJ+Dy2zyi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Yang <mmyangfl@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0733/2214] net: hisilicon: hisi_femac: Stop the receiver before releasing the RX ring
-Date: Wed, 18 Nov 2026 15:40:09 +0100
-Message-ID: <20261118150041.154420218@linuxfoundation.org>
+Subject: [PATCH 5.15 0742/2214] nvmet: Finish the blk plug when integrity allocation fails
+Date: Wed, 18 Nov 2026 15:40:18 +0100
+Message-ID: <20261118150041.499210772@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,43 +71,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Yang <mmyangfl@gmail.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit d54b21d824302af52d06574870817fbe14774dab ]
+[ Upstream commit 18fc5f6f1ca945630dae5404265de55d65194e22 ]
 
-hisi_femac_net_close() frees the receive ring while the RX address queue
-still holds every address that was pushed to IQ_ADDR.
+nvmet_bdev_execute_rw() starts a plug before building the bios, but
+the two error exits taken when nvmet_bdev_alloc_bip() fails return
+without calling blk_finish_plug().  current->plug is left pointing
+at the stack frame of the returned function, so the next
+blk_flush_plug() walks a stale list.
 
-A port that keeps receiving then DMAs arrived frames into buffers that
-other slab caches have already taken back; on an EC6108V9C (hi3798mv100)
-the queue still held all 52 armed addresses right after the interface
-was closed, and had dropped to 43 after 15 s of broadcast traffic.
+Route both failures through a common exit that finishes the plug.
 
-Reset the port before the buffers are released, so that the receiver no
-longer holds any of their addresses.
-
-Fixes: 542ae60af24f ("net: hisilicon: Add Fast Ethernet MAC driver")
+Fixes: c6e3f13398123 ("nvmet: add metadata support for block devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Yang <mmyangfl@gmail.com>
-Link: https://patch.msgid.link/20261025182022.2959333-1-mmyangfl@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hisi_femac.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/target/io-cmd-bdev.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hisi_femac.c b/drivers/net/ethernet/hisilicon/hisi_femac.c
-index d881f8de74fc3..f89faa435c10f 100644
---- a/drivers/net/ethernet/hisilicon/hisi_femac.c
-+++ b/drivers/net/ethernet/hisilicon/hisi_femac.c
-@@ -491,6 +491,7 @@ static int hisi_femac_net_close(struct net_device *dev)
- 	netif_stop_queue(dev);
- 	napi_disable(&priv->napi);
+diff --git a/drivers/nvme/target/io-cmd-bdev.c b/drivers/nvme/target/io-cmd-bdev.c
+index 46752d5d526cb..4b5b3e53cf25f 100644
+--- a/drivers/nvme/target/io-cmd-bdev.c
++++ b/drivers/nvme/target/io-cmd-bdev.c
+@@ -291,7 +291,7 @@ static void nvmet_bdev_execute_rw(struct nvmet_req *req)
+ 							  &prot_miter);
+ 				if (unlikely(rc)) {
+ 					bio_io_error(bio);
+-					return;
++					goto out_plug;
+ 				}
+ 			}
  
-+	hisi_femac_port_reset(priv);
- 	hisi_femac_free_skb_rings(priv);
+@@ -312,11 +312,12 @@ static void nvmet_bdev_execute_rw(struct nvmet_req *req)
+ 		rc = nvmet_bdev_alloc_bip(req, bio, &prot_miter);
+ 		if (unlikely(rc)) {
+ 			bio_io_error(bio);
+-			return;
++			goto out_plug;
+ 		}
+ 	}
  
- 	return 0;
+ 	submit_bio(bio);
++out_plug:
+ 	blk_finish_plug(&plug);
+ }
+ 
 -- 
 2.53.0
 
