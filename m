@@ -1,67 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056010;
-	b=oCV+6ReJGg5gziphFKF4oEB/Qu0EKIrDhdPX2Pg46AGlEfqCCAtoKbnmZDjW1UZuBPpl
-	 0qI68qmULnbCKdvtWZnRUxJVkyHPh3WwNwSJLbvX6jnsvYVh7t3b6CjGz4b/wOcM8Ew3j
-	 GSz1beAuEGLbJwJdg/c8flCcFyyyLp8qYkqTisP2U7kFXXpw6h/P5ahx75TLnmCxrKV1c
-	 w+JvAqiJ3WTbcRXKp6MnwZSP71PubBIsdogexPM9o0Ybw7vGo/rYma6KHmIQQPN0nH3GR
-	 ybeTKqGehaAm0fYfke/lERR9zyaiCXOmqqODr3Jr3N/InVvMsnAOo1XBTcxlUP4dT8A==
+	t=1795056013;
+	b=IjlN0y3HazGmE1338yJvMMRdo+ISjQJrIF3kVIbEYpKVqd53hGTp46oaN1PGXYJAsrfR
+	 ZR/xWDx1x7kHBoTb12K0VDIuW1OjISI4BJdqhIYH6EwWqVWJ4bhmfa94SKjrFv/MrqGWc
+	 mHoZg+5N6ah8+nrEToL0e7zL3C7hHQIdTq9qbBB9kksh/T/FNpj7G0kXL4fLy+lV5Gssd
+	 q+ljqgHx8ZGZgR+JyD/7UDzLlln0xAQ8Fvx56XNjvmh3wrCw3xVA0PNan6jaAR/W9JSW0
+	 q+F7mipYJ7ST7PNFecmHwZxQudA8x8LJwJktb3NNVAqzxtpVXupNkg1phtG1stM7sdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056010;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056013;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Lz0UMRo5eUQwDWmgPitH0ayldRbSh5/5Pi0WMhKYUXE=;
-	b=hZQt9CRFpdtZS/jTs+l4tC17zWY/7FsJCnUHrTBUBbFBUzFgE4CTSHBnWx5NiwqYdI1L
-	 VNhs6Oi/ZJwKtO8lXVFLQOb8F1Ezxp/DFz5O1i5Wrua72cyJAXy1c+INuAIDI+YXglvmk
-	 UZJwmAH1TiYF/SgD4efqWtfklnP3QPFFWlIqYUbSNtZZpeqbY+zGlejB/q1dUiGzZjenv
-	 dIvy/1pB6AkcziLgvJgS/abllUP+p5rYtOHmU+fHpkGloleEDb9aIX9YczPFcRDX7bpEz
-	 I3zTrdBfjrGL2IOrQnpMfm3PcLdtlclh7oa5UtRSwQ0/GZPe3VyjWZItsrXEdVVVTvg==
+	bh=kDAGYVHSzuqJwDkb9kHMMcf8wwrG7Ok9G3UNFHkYv+Y=;
+	b=mW3uxefDQdEdZC0/laouTRfd1NhfU6nV73LRERaVmnggbQM0p1lt239XTj7Gi3MeFqeC
+	 W36WZKS0pgeDZxYj6+dHPdy0h+1XYXmT1HDlyDlhGJQPR33dXx2ynBHHlIKM2kbyUNTBV
+	 oDKxky0Epz522rLl0uXzgfYHCcvOsTkVYFZXFwyN0Sb7G7TzBLE2vGL0E/QopwaSqtzJa
+	 oA5H/wemWAD3+NI/1TyHjrJ4RXiYMt1pQa1cuU5M5WUQIxYyRk9YJiakNyJNumwoYabdR
+	 wXKedmNoZCkw/GadXoOw10tbWbUFhT1rGQS3xNgOZlRG8FQ5x1iNwRbOO72LUtYvrQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wRKOsViT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QpuoWOjm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62312606A31C;
-	Thu, 19 Nov 2026 02:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE151606A32F;
+	Thu, 19 Nov 2026 02:40:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wRKOsViT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 478E21F000C4;
-	Thu, 19 Nov 2026 02:40:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QpuoWOjm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B831F000C4;
+	Thu, 19 Nov 2026 02:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056010;
-	bh=Lz0UMRo5eUQwDWmgPitH0ayldRbSh5/5Pi0WMhKYUXE=;
+	s=korg; t=1795056012;
+	bh=kDAGYVHSzuqJwDkb9kHMMcf8wwrG7Ok9G3UNFHkYv+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wRKOsViTaeJdq2rUD/J2VcIqntSEmLkkcLdN6/X4etNf1DMhe6oQT5WDEGpgzgxOR
-	 TxkY6NH48UTdeF3m+oObSzMgQmHPWqlg4AX3M46Te++cRKUEfgi/6I9A955s/NxFPk
-	 VH113yIdcDuWt7mcVahDljfXu7PHAeGgG85S2uK0=
+	b=QpuoWOjmk9n0lABw8q70H/Gcl8+qXWA7qQZX+vWbEWRwyTAPAsYWT9lmZYNzU5IIV
+	 F+mjl0uanwSgeeDBM+4CLXaM084TqMBYZ+O6Yzgdf+8bgc/ClwAsS5oBjxneUz3EPb
+	 0TAcYcS4RGKwo4MeH/QZsNYTyAhFiSwT7KXERdKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosryahmed@google.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Justin Stitt <justinstitt@google.com>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Petr Mladek <pmladek@suse.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Zhen Lei <thunder.leizhen@huawei.com>,
-	Kees Cook <keescook@chromium.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Tushar Dave <tdave@nvidia.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1835/2214] seq_buf: Introduce DECLARE_SEQ_BUF and seq_buf_str()
-Date: Wed, 18 Nov 2026 15:58:31 +0100
-Message-ID: <20261118150124.840704105@linuxfoundation.org>
+Subject: [PATCH 5.15 1836/2214] PCI/P2PDMA: Safely terminate ACS redirect lists
+Date: Wed, 18 Nov 2026 15:58:32 +0100
+Message-ID: <20261118150124.880841158@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -83,165 +71,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit dcc4e5728eeaeda84878ca0018758cff1abfca21 ]
+[ Upstream commit fa291d6429ebc1efb7fab011f643b842ae5f23f1 ]
 
-Solve two ergonomic issues with struct seq_buf;
+seq_buf marks an overflow by setting len to size + 1. The ACS diagnostic
+path unconditionally writes a terminator to buffer[len - 1], so a path with
+enough ACS ports to fill the 128-byte buffer writes one byte beyond the
+buffer when verbose diagnostics are requested.
 
-1) Too much boilerplate is required to initialize:
+Use seq_buf_str() to terminate truncated output safely and remove the final
+semicolon only when the buffer did not overflow.
 
-	struct seq_buf s;
-	char buf[32];
-
-	seq_buf_init(s, buf, sizeof(buf));
-
-Instead, we can build this directly on the stack. Provide
-DECLARE_SEQ_BUF() macro to do this:
-
-	DECLARE_SEQ_BUF(s, 32);
-
-2) %NUL termination is fragile and requires 2 steps to get a valid
-   C String (and is a layering violation exposing the "internals" of
-   seq_buf):
-
-	seq_buf_terminate(s);
-	do_something(s->buffer);
-
-Instead, we can just return s->buffer directly after terminating it in
-the refactored seq_buf_terminate(), now known as seq_buf_str():
-
-	do_something(seq_buf_str(s));
-
-Link: https://lore.kernel.org/linux-trace-kernel/20231027155634.make.260-kees@kernel.org
-Link: https://lore.kernel.org/linux-trace-kernel/20231026194033.it.702-kees@kernel.org/
-
-Cc: Yosry Ahmed <yosryahmed@google.com>
-Cc: "Matthew Wilcox (Oracle)" <willy@infradead.org>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Yun Zhou <yun.zhou@windriver.com>
-Cc: Jacob Keller <jacob.e.keller@intel.com>
-Cc: Zhen Lei <thunder.leizhen@huawei.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: fa291d6429eb ("PCI/P2PDMA: Safely terminate ACS redirect lists")
+Fixes: 52916982af48 ("PCI/P2PDMA: Support peer-to-peer memory")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Tushar Dave <tdave@nvidia.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://patch.msgid.link/20260830-batch-p2p-fixes-v1-4-5044e8dfbe2e@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/seq_buf.h | 21 +++++++++++++++++----
- kernel/trace/trace.c    | 11 +----------
- lib/seq_buf.c           |  4 +---
- 3 files changed, 19 insertions(+), 17 deletions(-)
+ drivers/pci/p2pdma.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/seq_buf.h b/include/linux/seq_buf.h
-index a0fb013cebdf2..d9db59f420a49 100644
---- a/include/linux/seq_buf.h
-+++ b/include/linux/seq_buf.h
-@@ -21,9 +21,18 @@ struct seq_buf {
- 	size_t			len;
- };
+diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
+index e70993730728b..1663a8e2c4174 100644
+--- a/drivers/pci/p2pdma.c
++++ b/drivers/pci/p2pdma.c
+@@ -515,11 +515,13 @@ calc_map_type_and_dist(struct pci_dev *provider, struct pci_dev *client,
+ 	}
  
-+#define DECLARE_SEQ_BUF(NAME, SIZE)			\
-+	char __ ## NAME ## _buffer[SIZE] = "";		\
-+	struct seq_buf NAME = {				\
-+		.buffer = &__ ## NAME ## _buffer,	\
-+		.size = SIZE,				\
-+	}
-+
- static inline void seq_buf_clear(struct seq_buf *s)
- {
- 	s->len = 0;
-+	if (s->size)
-+		s->buffer[0] = '\0';
- }
- 
- static inline void
-@@ -69,8 +78,8 @@ static inline unsigned int seq_buf_used(struct seq_buf *s)
- }
- 
- /**
-- * seq_buf_terminate - Make sure buffer is nul terminated
-- * @s: the seq_buf descriptor to terminate.
-+ * seq_buf_str - get %NUL-terminated C string from seq_buf
-+ * @s: the seq_buf handle
-  *
-  * This makes sure that the buffer in @s is nul terminated and
-  * safe to read as a string.
-@@ -81,16 +90,20 @@ static inline unsigned int seq_buf_used(struct seq_buf *s)
-  *
-  * After this function is called, s->buffer is safe to use
-  * in string operations.
-+ *
-+ * Returns @s->buf after making sure it is terminated.
-  */
--static inline void seq_buf_terminate(struct seq_buf *s)
-+static inline const char *seq_buf_str(struct seq_buf *s)
- {
- 	if (WARN_ON(s->size == 0))
--		return;
-+		return "";
- 
- 	if (seq_buf_buffer_left(s))
- 		s->buffer[s->len] = 0;
- 	else
- 		s->buffer[s->size - 1] = 0;
-+
-+	return s->buffer;
- }
- 
- /**
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 73c0a0c9ff977..6d296ed08d6d3 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -3716,15 +3716,6 @@ static bool trace_safe_str(struct trace_iterator *iter, const char *str,
- 	return false;
- }
- 
--static const char *show_buffer(struct trace_seq *s)
--{
--	struct seq_buf *seq = &s->seq;
--
--	seq_buf_terminate(seq);
--
--	return seq->buffer;
--}
--
- static DEFINE_STATIC_KEY_FALSE(trace_no_verify);
- 
- static int test_can_verify_check(const char *fmt, ...)
-@@ -3864,7 +3855,7 @@ void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
- 		 */
- 		if (WARN_ONCE(!trace_safe_str(iter, str, star, len),
- 			      "fmt: '%s' current_buffer: '%s'",
--			      fmt, show_buffer(&iter->seq))) {
-+			      fmt, seq_buf_str(&iter->seq.seq))) {
- 			int ret;
- 
- 			/* Try to safely read the string */
-diff --git a/lib/seq_buf.c b/lib/seq_buf.c
-index b7477aefff537..23518f77ea9c5 100644
---- a/lib/seq_buf.c
-+++ b/lib/seq_buf.c
-@@ -109,9 +109,7 @@ void seq_buf_do_printk(struct seq_buf *s, const char *lvl)
- 	if (s->size == 0 || s->len == 0)
- 		return;
- 
--	seq_buf_terminate(s);
--
--	start = s->buffer;
-+	start = seq_buf_str(s);
- 	while ((lf = strchr(start, '\n'))) {
- 		int len = lf - start + 1;
+ 	if (verbose) {
+-		acs_list.buffer[acs_list.len-1] = 0; /* drop final semicolon */
++		/* Drop the final semicolon; the list is not empty here */
++		if (!seq_buf_has_overflowed(&acs_list))
++			acs_list.buffer[acs_list.len - 1] = '\0';
+ 		pci_warn(client, "ACS redirect is set between the client and provider (%s)\n",
+ 			 pci_name(provider));
+ 		pci_warn(client, "to disable ACS redirect for this path, add the kernel parameter: pci=disable_acs_redir=%s\n",
+-			 acs_list.buffer);
++			 seq_buf_str(&acs_list));
+ 	}
+ 	acs_redirects = true;
  
 -- 
 2.53.0
