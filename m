@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025260;
-	b=CcCBOu5wu35J5m+LEsOlEnzoal6aSZwvcZmS8cCUIiNv5zeRi152x6npH4hG7K/JGtN6
-	 c2mVYcKRjzqane5ryt4Frxkcq5arnl4B2A/cN9qs8vzawgOMDpnEqqvC8qeeV9Jp3d7Jt
-	 xErJrJ3V3przDfmJ/shQpkmqSsTpZp1boXsUVxUq8hPkq1nGyWoCemJ3SfDatzLPfpBXs
-	 S4wfscJuqsLBSqVzVoOf52bl6HUMUtJ8OClIh7GyWtu3atw4t2lTBdwmcqRDCHcF49seg
-	 6t2gIru8Ta0CKmPNTAKgoM7lrqPoMZewTJYFIZEai2Ph6jZpTpUCZJFTVCfEYxJbkPw==
+	t=1795025263;
+	b=dbtNqpOBDYAGdKPEqJuwcrXYs56fdmkt2xq029FdrwwaHhb1hjRZot7Ui3TKAPcLfdWS
+	 e8j1ERgg49MGz/7hBbg9XrW38CArKlxjhUeT4JDQWxKVAhgKW40TQyutdzsXzPRsZ3y/4
+	 Dz8D/CKo8DFCEXpD2bwp5pwTuBGqMbb8ExHvHfKopQffotAxOd74//wQ9zdCEEqm3aj4s
+	 qwHoCsB2UIjOpcbc0DckQmaMxq+LSuTL+ADj/oY7rNCe4bmjVBAeIm1LB39mc903cLEnk
+	 ivfW1uAO7/W0KYORUBHOzA+utmj9SKOg5CiyP9oI7U+aTyQFWYh6Gv3TOTEtRlFYYXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025260;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025263;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x2Clim1/Yd44115fYPm79NMtPAK2g4lfHvIKgAdfcgo=;
-	b=b5a7cNNt1qeGZBGKVY9HrPBfw1wgSN9Y1lUKlq1uDM506s654KEIAA8YywjECye7B3ku
-	 Yeefln/SsLUcSHrHhthlAy3z+LM6tNtnOR0MzaZAYdQmvDXfmSdBKkj2pkSLGI30k1hND
-	 uwW/w5p+7iuxlTy/z1yAoEIZlnEBm6A8VNkhJTi4Mrpp6DyllSCIpJBIEY8KTYiCgOWJ5
-	 ibr46WtZEgAygBEdZetrGEfOoURLfOPu/Vt/a9OZQwGQt4RZKS7EB0oY3h08EcKppxDpS
-	 2DcljJ5w5HQujF9EnBb4+IEKm/ZFo+mNe0MWypvka0qYujDFe3UfNsGEqfiAi8Sv0pA==
+	bh=UpIUf1GJc7tVP5dw6pgyEhBDdZx/L7K1+slPvb8FhU0=;
+	b=PsLw+ntInlno2R3237oRPI3XLtiJ5900QRItny+OjzEFFihRbkw1m0ROEdrKE8S+fJRL
+	 HFZrpWDumXXfM+o5V8souBOE6R8YyhfOfRPa7LD1V/BPTrI5JcdJK2OXPqFCmLVwtKcHu
+	 ce6cR1EsDxf/vNpZGr0YxgYR6yadHNh/ltWuG16JEuwzObuAQCc5ne5DzIi05AmhPY71F
+	 +FZ/5y1SIBM+Y//YsKT1xnzvDZWIalN6xko1ALB0Y5tylLZFqqaxtPEjohf9mbsTf74t+
+	 Be7QNgRGa+7q4tUWMWnFlV6ufHmeIIde1X19f8H9Y02Q/hUrYlNZHnqekHU0v+JSy2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=egMhGzYj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="DQ6MxRI/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57FA606A33D;
-	Wed, 18 Nov 2026 18:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E110F606A33F;
+	Wed, 18 Nov 2026 18:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=egMhGzYj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068C61F000C4;
-	Wed, 18 Nov 2026 18:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQ6MxRI/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18F51F000C9;
+	Wed, 18 Nov 2026 18:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025259;
-	bh=x2Clim1/Yd44115fYPm79NMtPAK2g4lfHvIKgAdfcgo=;
+	s=korg; t=1795025262;
+	bh=UpIUf1GJc7tVP5dw6pgyEhBDdZx/L7K1+slPvb8FhU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=egMhGzYjEWMdyPxjyNjimLIBlqo4V3VhwSyCFXaIqJ6MUo39NSHA5ibwBaZOE65qD
-	 7VuxGcovvdSBritsvWyYYvR22YBIQWc3pNin9yugwNbULjyds606pLwF1RJdBilZI8
-	 iRESM08mOfJa9sojnI3lb7a2e4lOBz/S4SzfpZ0k=
+	b=DQ6MxRI/5AwDsBEE3gW0roAa75o+9U4aMNsXsEv18No9rmkxNgNdrg40da0rEGCjm
+	 hHrthVpDI2t9L0g9YvDbak/5rYu38qCsoWfjs323B0s920Izn6Ngebwre4askdIAcD
+	 p0pThUGRJ4Vu/uU7bmsb65H2WA8jDKt3WxJOO8j8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	John Garry <john.g.garry@oracle.com>,
-	Hannes Reinecke <hare@suse.de>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1014/2151] scsi: core: Add scsi_{get,put}_internal_cmd() helpers
-Date: Wed, 18 Nov 2026 15:45:49 +0100
-Message-ID: <20261118150159.356531725@linuxfoundation.org>
+Subject: [PATCH 6.18 1015/2151] scsi: scsi_debug: Abort SCSI commands via an internal command
+Date: Wed, 18 Nov 2026 15:45:50 +0100
+Message-ID: <20261118150159.387538758@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,91 +69,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Reinecke <hare@suse.de>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit a2ab4e33286de37f3fe8f28f86f5f71d6b0ae3b0 ]
+[ Upstream commit 581ca490353ca5f4bee0d662595af27c06e603d4 ]
 
-Add helper functions to allow LLDDs to allocate and free internal commands.
+Add a .queue_reserved_command() implementation and call it from the code
+path that aborts SCSI commands. This ensures that the code for
+allocating a pseudo SCSI device and also the code for allocating and
+processing reserved commands gets triggered while running blktests.
 
-[ bvanassche: changed the 'nowait' argument into a 'flags' argument. See also
-  https://lore.kernel.org/linux-scsi/20211125151048.103910-3-hare@suse.de/ ]
+Most of the code in this patch is a modified version of code from John
+Garry. See also
+https://lore.kernel.org/linux-scsi/75018e17-4dea-4e1b-8c92-7a224a1e13b9@oracle.com/
 
 Reviewed-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Hannes Reinecke <hare@suse.de>
+Suggested-by: John Garry <john.g.garry@oracle.com>
 Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20251031204029.2883185-7-bvanassche@acm.org
+Link: https://patch.msgid.link/20251031204029.2883185-8-bvanassche@acm.org
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: 92feb036a2d3 ("scsi: scsi_debug: Avoid 32-bit overflow in WRITE SCATTERED offsets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_lib.c    | 38 ++++++++++++++++++++++++++++++++++++++
- include/scsi/scsi_device.h |  4 ++++
- 2 files changed, 42 insertions(+)
+ drivers/scsi/scsi_debug.c | 116 ++++++++++++++++++++++++++++++++++----
+ 1 file changed, 105 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index 496cbff59c0ab..8ed392efe5fc0 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -2162,6 +2162,44 @@ void scsi_mq_free_tags(struct kref *kref)
- 	complete(&shost->tagset_freed);
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 60ed10fa1f7fd..47206da6f4161 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -6756,20 +6756,59 @@ static bool scsi_debug_stop_cmnd(struct scsi_cmnd *cmnd)
+ 	return false;
  }
  
-+/**
-+ * scsi_get_internal_cmd() - Allocate an internal SCSI command.
-+ * @sdev: SCSI device from which to allocate the command
-+ * @data_direction: Data direction for the allocated command
-+ * @flags: request allocation flags, e.g. BLK_MQ_REQ_RESERVED or
-+ *	BLK_MQ_REQ_NOWAIT.
-+ *
-+ * Allocates a SCSI command for internal LLDD use.
-+ */
-+struct scsi_cmnd *scsi_get_internal_cmd(struct scsi_device *sdev,
-+					enum dma_data_direction data_direction,
-+					blk_mq_req_flags_t flags)
-+{
-+	enum req_op op = data_direction == DMA_TO_DEVICE ? REQ_OP_DRV_OUT :
-+							   REQ_OP_DRV_IN;
-+	struct scsi_cmnd *scmd;
-+	struct request *rq;
++struct sdebug_abort_cmd {
++	u32 unique_tag;
++};
 +
-+	rq = scsi_alloc_request(sdev->request_queue, op, flags);
-+	if (IS_ERR(rq))
-+		return NULL;
-+	scmd = blk_mq_rq_to_pdu(rq);
-+	scmd->device = sdev;
++enum sdebug_internal_cmd_type {
++	SCSI_DEBUG_ABORT_CMD,
++};
 +
-+	return scmd;
-+}
-+EXPORT_SYMBOL_GPL(scsi_get_internal_cmd);
++struct sdebug_internal_cmd {
++	enum sdebug_internal_cmd_type type;
 +
-+/**
-+ * scsi_put_internal_cmd() - Free an internal SCSI command.
-+ * @scmd: SCSI command to be freed
-+ */
-+void scsi_put_internal_cmd(struct scsi_cmnd *scmd)
-+{
-+	blk_mq_free_request(blk_mq_rq_from_pdu(scmd));
-+}
-+EXPORT_SYMBOL_GPL(scsi_put_internal_cmd);
++	union {
++		struct sdebug_abort_cmd abort_cmd;
++	};
++};
 +
- /**
-  * scsi_device_from_queue - return sdev associated with a request_queue
-  * @q: The request queue to return the sdev from
-diff --git a/include/scsi/scsi_device.h b/include/scsi/scsi_device.h
-index 21549c6dc5a0f..c2915bf170660 100644
---- a/include/scsi/scsi_device.h
-+++ b/include/scsi/scsi_device.h
-@@ -558,6 +558,10 @@ int scsi_execute_cmd(struct scsi_device *sdev, const unsigned char *cmd,
- 		     const struct scsi_exec_args *args);
- void scsi_failures_reset_retries(struct scsi_failures *failures);
++union sdebug_priv {
++	struct sdebug_scsi_cmd cmd;
++	struct sdebug_internal_cmd internal_cmd;
++};
++
+ /*
+- * Called from scsi_debug_abort() only, which is for timed-out cmd.
++ * Abort SCSI command @cmnd. Only called from scsi_debug_abort(). Although
++ * it would be possible to call scsi_debug_stop_cmnd() directly, an internal
++ * command is allocated and submitted to trigger the reserved command
++ * infrastructure.
+  */
+ static bool scsi_debug_abort_cmnd(struct scsi_cmnd *cmnd)
+ {
+-	struct sdebug_scsi_cmd *sdsc = scsi_cmd_priv(cmnd);
+-	unsigned long flags;
+-	bool res;
+-
+-	spin_lock_irqsave(&sdsc->lock, flags);
+-	res = scsi_debug_stop_cmnd(cmnd);
+-	spin_unlock_irqrestore(&sdsc->lock, flags);
+-
+-	return res;
++	struct Scsi_Host *shost = cmnd->device->host;
++	struct request *rq = scsi_cmd_to_rq(cmnd);
++	u32 unique_tag = blk_mq_unique_tag(rq);
++	struct sdebug_internal_cmd *internal_cmd;
++	struct scsi_cmnd *abort_cmd;
++	struct request *abort_rq;
++	blk_status_t res;
++
++	abort_cmd = scsi_get_internal_cmd(shost->pseudo_sdev, DMA_NONE,
++					  BLK_MQ_REQ_RESERVED);
++	if (!abort_cmd)
++		return false;
++	internal_cmd = scsi_cmd_priv(abort_cmd);
++	*internal_cmd = (struct sdebug_internal_cmd) {
++		.type = SCSI_DEBUG_ABORT_CMD,
++		.abort_cmd = {
++			.unique_tag = unique_tag,
++		},
++	};
++	abort_rq = scsi_cmd_to_rq(abort_cmd);
++	abort_rq->timeout = secs_to_jiffies(3);
++	res = blk_execute_rq(abort_rq, true);
++	scsi_put_internal_cmd(abort_cmd);
++	return res == BLK_STS_OK;
+ }
  
-+struct scsi_cmnd *scsi_get_internal_cmd(struct scsi_device *sdev,
-+					enum dma_data_direction data_direction,
-+					blk_mq_req_flags_t flags);
-+void scsi_put_internal_cmd(struct scsi_cmnd *scmd);
- extern void sdev_disable_disk_events(struct scsi_device *sdev);
- extern void sdev_enable_disk_events(struct scsi_device *sdev);
- extern int scsi_vpd_lun_id(struct scsi_device *, char *, size_t);
+ /*
+@@ -9224,6 +9263,56 @@ static int sdebug_fail_cmd(struct scsi_cmnd *cmnd, int *retval,
+ 	return ret;
+ }
+ 
++/* Process @scp, a request to abort a SCSI command by tag. */
++static void scsi_debug_abort_cmd(struct Scsi_Host *shost, struct scsi_cmnd *scp)
++{
++	struct sdebug_internal_cmd *internal_cmd = scsi_cmd_priv(scp);
++	struct sdebug_abort_cmd *abort_cmd = &internal_cmd->abort_cmd;
++	const u32 unique_tag = abort_cmd->unique_tag;
++	struct scsi_cmnd *to_be_aborted_scmd =
++		scsi_host_find_tag(shost, unique_tag);
++	struct sdebug_scsi_cmd *to_be_aborted_sdsc =
++		scsi_cmd_priv(to_be_aborted_scmd);
++	bool res = false;
++
++	if (!to_be_aborted_scmd) {
++		pr_err("%s: command with tag %#x not found\n", __func__,
++		       unique_tag);
++		return;
++	}
++
++	scoped_guard(spinlock_irqsave, &to_be_aborted_sdsc->lock)
++		res = scsi_debug_stop_cmnd(to_be_aborted_scmd);
++
++	if (res)
++		pr_info("%s: aborted command with tag %#x\n",
++			__func__, unique_tag);
++	else
++		pr_err("%s: failed to abort command with tag %#x\n",
++		       __func__, unique_tag);
++
++	set_host_byte(scp, res ? DID_OK : DID_ERROR);
++}
++
++static int scsi_debug_process_reserved_command(struct Scsi_Host *shost,
++					       struct scsi_cmnd *scp)
++{
++	struct sdebug_internal_cmd *internal_cmd = scsi_cmd_priv(scp);
++
++	switch (internal_cmd->type) {
++	case SCSI_DEBUG_ABORT_CMD:
++		scsi_debug_abort_cmd(shost, scp);
++		break;
++	default:
++		WARN_ON_ONCE(true);
++		set_host_byte(scp, DID_ERROR);
++		break;
++	}
++
++	scsi_done(scp);
++	return 0;
++}
++
+ static int scsi_debug_queuecommand(struct Scsi_Host *shost,
+ 				   struct scsi_cmnd *scp)
+ {
+@@ -9424,6 +9513,9 @@ static int sdebug_init_cmd_priv(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
+ 	struct sdebug_scsi_cmd *sdsc = scsi_cmd_priv(cmd);
+ 	struct sdebug_defer *sd_dp = &sdsc->sd_dp;
+ 
++	if (blk_mq_is_reserved_rq(scsi_cmd_to_rq(cmd)))
++		return 0;
++
+ 	spin_lock_init(&sdsc->lock);
+ 	hrtimer_setup(&sd_dp->hrt, sdebug_q_cmd_hrt_complete, CLOCK_MONOTONIC,
+ 		      HRTIMER_MODE_REL_PINNED);
+@@ -9443,6 +9535,7 @@ static const struct scsi_host_template sdebug_driver_template = {
+ 	.sdev_destroy =		scsi_debug_sdev_destroy,
+ 	.ioctl =		scsi_debug_ioctl,
+ 	.queuecommand =		scsi_debug_queuecommand,
++	.queue_reserved_command = scsi_debug_process_reserved_command,
+ 	.change_queue_depth =	sdebug_change_qdepth,
+ 	.map_queues =		sdebug_map_queues,
+ 	.mq_poll =		sdebug_blk_mq_poll,
+@@ -9452,6 +9545,7 @@ static const struct scsi_host_template sdebug_driver_template = {
+ 	.eh_bus_reset_handler = scsi_debug_bus_reset,
+ 	.eh_host_reset_handler = scsi_debug_host_reset,
+ 	.can_queue =		SDEBUG_CANQUEUE,
++	.nr_reserved_cmds =	1,
+ 	.this_id =		7,
+ 	.sg_tablesize =		SG_MAX_SEGMENTS,
+ 	.cmd_per_lun =		DEF_CMD_PER_LUN,
+@@ -9460,7 +9554,7 @@ static const struct scsi_host_template sdebug_driver_template = {
+ 	.module =		THIS_MODULE,
+ 	.skip_settle_delay =	1,
+ 	.track_queue_depth =	1,
+-	.cmd_size = sizeof(struct sdebug_scsi_cmd),
++	.cmd_size = sizeof(union sdebug_priv),
+ 	.init_cmd_priv = sdebug_init_cmd_priv,
+ 	.target_alloc =		sdebug_target_alloc,
+ 	.target_destroy =	sdebug_target_destroy,
 -- 
 2.53.0
 
