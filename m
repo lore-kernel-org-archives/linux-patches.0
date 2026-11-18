@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035146;
-	b=ax1vdHLBJbmlMLNY8Vu+y4Nf+s4ZYLxMyZsqbbvw3VZRQnBjm1zxMSEduR7lo3LCpoBp
-	 r3p48E68JU/kXiBR/RNewUGHAs8TsJw6h+NIg98X2eaFNxosDJzMqtihqZxEQ+wENy+kU
-	 0vxU4v06hR6R8Wdni63TP8SlXG2x/VnnMTyNVoRKR30U/bfaGzsF4LMRXy9iZkcpis0pQ
-	 JXwKNaNa9cJIvKeDJv/xKxdqjKfj/8nDVvFkduojvbgPvBhoCYl8HLd2qxpKoOzpiRQXi
-	 nJflEAEjJSiwTu3P73J4TXjqHMVS1K3GraNU/7DLdRRFimxmZOIt9/yTNpj83lAdQjw==
+	t=1795035149;
+	b=BZclCkZlAAmi9XIqeyioILi4zP0fBk3fSEoj3297f4emYMd0GIr9nVg+TQp/ZKdkD3g2
+	 bIhKqxLqyO6ZXdj9OsjIUWj45/J+RPPN+cTymoZy+FbcXrfHdPVGlrVvsbDoPvaK3oEoI
+	 QqMvfvl75J2roE2I29YXHiW7Xsi0OCDbE62HTvlS3Pr4AFKNIfaS12QaEqGAWcz5chDDG
+	 YeI1frNXA+Wo10uKyBmO9aoiwa1ORRKq5VqDB07q5hBdje4VXk18puUZhf9OnP5gA5ma1
+	 QQK8BYTkbripD2xbWHX51MffYYdZEKoYSCPOZp+cCSJS36zhnrIrNEiaJ0f0D0xcziA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035146;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035149;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lzMvfQ/28KGfw2hK1DEmbmPHSoi+4DIGoQySXMCWuU8=;
-	b=Rk4lDW5pRI7U3CCpfRJWaCC/vQMGVoG26Hws/itCTclCAbKugoq5IlTlU6cQzbSD0pA9
-	 yCl522HTMbCoNzOTLn7D88egtTHF7fgiAB4bkBlyLNVHDEalKFFt4rks4chuQyB84hw9u
-	 qG/RQdtNXwCPMPgiQPpjCq+JYE1u3xXuuA1dU73xn2Z/nczgLfvrvG5bggFp08t+A7xCO
-	 U8GYhff76llDBTZ1e9OtmQUtIoA3i4gfXLL4vxRd1vc46TYObNN7UH0WmQtFgkkD2nFMz
-	 QoQ3FaEUZjVcvqL3IBZo8EwULAdVrp+kgD+wsyfxRSA2DMQ1AV5MVr0eLxzxI121W9A==
+	bh=VOaXSeIRxkLGBfetR8eZ7fmEOdVKSIr2N3v+gTHbtKQ=;
+	b=l7bfkX363aV0YkrgBURf6wxlqsr7v4RYNAATs3Q41ICgANEJaL7syUOAkMdWsKN2G9SC
+	 nqRJh9MFkJy2+Kop6UVerA5qZCa0tDt/LzXmBN2HLAOs0AlrV0mfyxv2XHyGeiXavOsXB
+	 h0f4J+vmVvQYeCmP+uvJ9c8SxByLL3IYcv1KKt//mfHZF3AMAa8/KQodXx6AEubpTmY50
+	 DPbCmoPgM13gRn6wuZ1K6kpCeRE4U41iOMuM3JgWg+/J88c+n4dTz8YMzARPF+BkZ1sUi
+	 RPo9Y8RoPtfGRseibleHL8BWkmUYqrNbKQLh6S0eI7DP7Y8ZxVUElFDR1jjmXy8d+6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yeL7Xb29;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Al3S6oBX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42349606A32A;
-	Wed, 18 Nov 2026 20:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50661606A320;
+	Wed, 18 Nov 2026 20:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yeL7Xb29
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945591F000C7;
-	Wed, 18 Nov 2026 20:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Al3S6oBX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6881A1F000C7;
+	Wed, 18 Nov 2026 20:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035146;
-	bh=lzMvfQ/28KGfw2hK1DEmbmPHSoi+4DIGoQySXMCWuU8=;
+	s=korg; t=1795035148;
+	bh=VOaXSeIRxkLGBfetR8eZ7fmEOdVKSIr2N3v+gTHbtKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yeL7Xb29LlWBX75IS/jgyMBd281HMnTlMnrmeBAnHMA7uKW9Q5OGcqK6T/I/3GZh4
-	 J+IQLFKO6L6SQ3jHnM4TjOm9ngesOTCV2UX0UnSQ2PCsVkb3/L0Z/+mU4wMa0N2DUm
-	 v1DFVPmEWpko+Y+vgccTVFGqJ/EvXaWuL0WrQR/8=
+	b=Al3S6oBXGtiRrWjbU1zjT/RmDtSGwkOdaUwByU3r7mXTz7KyoI5pd4xgBsixJkblB
+	 X9h+l43uVy8z0uD62frfkacrjDUnOEwRbFgo5X7a2+zEdb/JWE8SBMlMPqBbrgrDLS
+	 xiqu2qzJ3kuDEaMkla7WNu/GWyymC+NSA9rY0uck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Cong Nguyen <congnt264@gmail.com>,
+	Eugen Hristev <ehristev@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 0621/3318] media: imx-jpeg: cancel timeout worker when streaming stops
-Date: Wed, 18 Nov 2026 15:20:43 +0100
-Message-ID: <20261118150336.462848777@linuxfoundation.org>
+Subject: [PATCH 6.6 0622/3318] media: microchip-csi2dc: fix async notifier leak on probe error path
+Date: Wed, 18 Nov 2026 15:20:44 +0100
+Message-ID: <20261118150336.500028888@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,68 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Cong Nguyen <congnt264@gmail.com>
 
-commit 78fdfbf117c409273eecbfa7a528ef42358a0e38 upstream.
+commit c7528789244ce7329ca883170fb9315d739ae985 upstream.
 
-Each per-fd context ctx owns a delayed_work (ctx->task_timer, callback
-mxc_jpeg_device_run_timeout) armed via schedule_delayed_work() at the end
-of mxc_jpeg_device_run() to recover a stalled encode/decode job. The only
-existing cancellation is cancel_delayed_work() in the frame-done IRQ
-handler, which de-queues a pending work item but does not wait for a
-callback that has already started, and it only runs when a frame completes.
+csi2dc_of_parse() ends up calling csi2dc_prepare_notifier(), which
+registers the V4L2 async notifier with v4l2_async_nf_register(). The
+probe error label csi2dc_probe_cleanup_notifier is reached after
+csi2dc_of_parse() has already succeeded (e.g. when media entity init,
+csi2dc_power() or v4l2_async_register_subdev() fail), but it calls only
+v4l2_async_nf_cleanup() and never v4l2_async_nf_unregister().
 
-When the fd is closed while a job is in flight (the frame-done IRQ has not
-fired yet), nothing syncs the worker before mxc_jpeg_release() frees ctx
-with kfree() after v4l2_m2m_ctx_release(). A queued or executing
-mxc_jpeg_device_run_timeout() can then recover ctx through
-container_of(&ctx->task_timer) and dereference it (ctx->mxc_jpeg,
-slot_data, dev_warn) after ctx has been freed.
+The notifier therefore stays chained in the global notifier_list while
+the enclosing struct csi2dc_device is freed, leading to list corruption
+and a use-after-free when the list is next walked.
 
-Cancel the worker from mxc_jpeg_stop_streaming(). The cancel cannot live
-in mxc_jpeg_release(): mxc_jpeg_device_run() arms the timer while holding
-only hw_lock, not the mxc_jpeg->lock mutex that release holds, so a cancel
-in release could still race a concurrent mxc_jpeg_device_run() that
-re-arms the timer afterwards. mxc_jpeg_stop_streaming() instead runs inside
-v4l2_m2m_ctx_release() -> vb2_queue_release(), i.e. after
-v4l2_m2m_cancel_job() has set TRANS_ABORT and waited for any in-flight job
-to finish (so __v4l2_m2m_try_queue() will not queue and v4l2_m2m_try_run()
-will not run any further job for this context, which prevents
-mxc_jpeg_device_run() from re-arming the timer) and before the m2m context
-is freed. cancel_delayed_work_sync() removes a pending work item and waits
-for a running callback, so the worker can no longer race with the
-subsequent kfree(). The cancel is placed before the buffer-release loop so
-a concurrently running timeout callback cannot race with it over the same
-buffers. If the frame-done IRQ canceled a still-pending timer, this cancel
-is a no-op; if the timeout callback has already started, it waits for the
-callback to finish. The same mxc_jpeg_stop_streaming() call is also
-reached from VIDIOC_STREAMOFF, which drains the worker early, although
-STREAMOFF itself does not free ctx -- the use-after-free arises only
-when the fd is later closed.
+Unregister the notifier before cleaning it up on the error path,
+matching the teardown already done in csi2dc_remove().
 
-This bug was found by static analysis.
-
-Fixes: cfed9632ca8e ("media: imx-jpeg: Add a timeout mechanism for each frame")
+Fixes: 2de0b3c0f678 ("media: atmel: introduce microchip csi2dc driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Reviewed-by: Eugen Hristev <ehristev@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/microchip/microchip-csi2dc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-+++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-@@ -1658,6 +1658,8 @@ static void mxc_jpeg_stop_streaming(stru
+--- a/drivers/media/platform/microchip/microchip-csi2dc.c
++++ b/drivers/media/platform/microchip/microchip-csi2dc.c
+@@ -733,6 +733,7 @@ static int csi2dc_probe(struct platform_
+ 	return 0;
  
- 	dev_dbg(ctx->mxc_jpeg->dev, "Stop streaming ctx=%p", ctx);
- 
-+	cancel_delayed_work_sync(&ctx->task_timer);
-+
- 	/* Release all active buffers */
- 	for (;;) {
- 		if (V4L2_TYPE_IS_OUTPUT(q->type))
+ csi2dc_probe_cleanup_notifier:
++	v4l2_async_nf_unregister(&csi2dc->notifier);
+ 	v4l2_async_nf_cleanup(&csi2dc->notifier);
+ csi2dc_probe_cleanup_entity:
+ 	media_entity_cleanup(&csi2dc->csi2dc_sd.entity);
 
 
