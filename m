@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038660;
-	b=yc6HQg6LLH9ES9OGI+5sR3NMq3GtCqTEYJIixnL6jUoLgN+t1f9PamG46c2L+E+xZwV9
-	 b0ogvvhGCaHjg6AJNfXX3R75levxyXb7JHOI1u4Z1enhIscnEYkp70sNeWkYPMlV5q9k+
-	 Dhw7OuQagszIo4XxmmioUtUFXW4o9rf3uULt0B9069ImWU7UiBSrDmlO+tRmvZpnsEsoA
-	 tZo1SN3aKOMwJi3H01ibcgtTFJqsXkgXNpinfvpf/efr3EjMvB0REXC+M3GHPdwaBGgzn
-	 609Lqk9G564k9nrRE04l+uz4EzZtaoXhE49+zMU3qhZsxvEc6KzoySLfZoH5iD79dkQ==
+	t=1795038663;
+	b=Od/RvPtT0uN8vcE0+w+ydrJZ+NzoPuBfSCLUqk8E8XB3sMtSmU9R9fvHXp6dysopB9Ea
+	 hgCHyXPrAEPS3d/z+u5vKb91gYPIYzwGWnQ782io+qeBtDkOJ5IYiJQJzqu1NKVHI0xtV
+	 wIcGLot3Xqe6Bq8ogUydxRRuBwXDuTOg70JVm+yeWVDNsNfDgazoh8nYiaqnf6kA79iGM
+	 t5Plj5RmW07ZWJuBLA0Rn6wHl6v/G3N+X6Ms9FDRuLdAjstT4O1MF65hNYfOYUjQm/I/V
+	 qTKJTnxfIYh1iayILAANOMkUYP04dDD49r5hwV/PsjTHBoB3NtMz9aZ2alFtCXIN0XQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038660;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038663;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z/7+MT5bkzJwGugg4sQqBU9AmB4tH6CkqU2iw/dGrLg=;
-	b=YdnjXLnq4rYLg9iSLYsVf3z2pRfch2nwt0z08FAmUHjeL6YxSu8UUgi9WYq5au7cutXh
-	 FAOF1qOBzt/i+9YTM5BkIAwggRumAJKLYf3uF1QLUyjTM8iQL0vSx7w0p3YXJ+vvyoRak
-	 k2lGbBjO9btWjj7y90Zvz76ck74JqGrf+KDtcwj+7U4HpN9StlOHgS2KYwaewpEVRMkj3
-	 jY40Nzz5J8FLQCm90aqeTLEQ0Y1OEVIBz2oiJNA70R+W5tQQ2IHpA9pYqC6G1fePWhLRu
-	 adM7msGp+A7I9xyCiaPyDUJsR7LrdXmsfkhuTwbini6NA/UqfmA1SnmQ7SNLf0DA2Pw==
+	bh=sd7B7m6w6ujWSQRBBrgk77FcJpVx/8NZMtWh3QdZq/0=;
+	b=qCLk+pjIe5ilWuEXupBAohurFkKtup9eLd2kl3aT+jl13pVCYYbglmaA9+YfnjORXQjt
+	 EoB4tH8kni4wXrGgT2aHnuoo3w5aPI2/K7wrl02w4oGOGSCJYNLka84I68Xm5CJd5RN6V
+	 3Km+Uz/RISjGgmEJkFSkAgrHCMddiv/AK8EM07DpG0AFNYx0B03StJyOWwjuITqu1NsxN
+	 5UmSqFgv/EX4l1TuojPn6fDjCWKhIINMyaPSw7P2leDPmVIz6pZm+EHWYzI62vHa9s7+f
+	 uqJcw9HgwTfA085XKKCd9NgmhudXAApMLSzBm10X7d7e8S2lYwIoFrw3cdn9Yoa5X7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s7V5gqx8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pcQWQrCZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E4A606A31C;
-	Wed, 18 Nov 2026 21:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBB9606A31C;
+	Wed, 18 Nov 2026 21:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s7V5gqx8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4B81F000C4;
-	Wed, 18 Nov 2026 21:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pcQWQrCZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14851F000C4;
+	Wed, 18 Nov 2026 21:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038660;
-	bh=z/7+MT5bkzJwGugg4sQqBU9AmB4tH6CkqU2iw/dGrLg=;
+	s=korg; t=1795038663;
+	bh=sd7B7m6w6ujWSQRBBrgk77FcJpVx/8NZMtWh3QdZq/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s7V5gqx8qPQVdGMc+KvERFhXQPEKFd9RhnU8buPIiiMM1ypQDk2zGct2VJXOFyH3k
-	 NCggxXgKNaRh7BEGvoUPXwVhpeUbAUUD6HcHtNBLHq7hgzIaAWCrkmqyazeNofoyUy
-	 /d8wyp4rn6Ealz7zXhkaS5tVgwgKRzVzP2hA+zD0=
+	b=pcQWQrCZT1WsXg10WLEoiOZ14mwDLorQjtoaBIVDvRXHdQDuq9NBkoI5fsgR2DarB
+	 9LLfZEzNHc2dKTKtRRNjgdLtL7OiOfN+x2S3ORjRn6yMdrwE4acExSj9HtX4vOgGnC
+	 M29UhiNPv/WI2mhPMT4/zt7ueA8HPhApgVsu1lrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Phillips <daniel.phillips@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1785/3318] amdkfd: Fix memory availability double accounting of kfd pinned objects
-Date: Wed, 18 Nov 2026 15:40:07 +0100
-Message-ID: <20261118150415.407029760@linuxfoundation.org>
+Subject: [PATCH 6.6 1821/3318] iommufd/iova_bitmap: Ensure that iova_bitmap_set() handles the full IOVA
+Date: Wed, 18 Nov 2026 15:40:43 +0100
+Message-ID: <20261118150416.493667990@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,77 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Phillips <daniel.phillips@amd.com>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 16df12d7158fb55f20d6e985abd1996cbabab9f8 ]
+[ Upstream commit e21952d72b4740f08a272d694cca223b6b0099ca ]
 
-Pinned objects that are not kfd objects reduce the total vram available
-to kfd, so we subtract the total size of pinned objects from kdf vram
-availability. However this double counts objects pinned by kfd itself,
-because they are counted both as used and pinned. So track the total
-size of objects pinned by kfd and add it back to kfd availability to
-remove the double accounting.
+Generally userspace is going to step the dirty bitmap through the IOVA
+space. However if the bitmap ends in the middle of a large PTE this is
+problematic. The first step will clear the dirty bit and report dirty to
+the end of its bitmap while the second step will see the clear'd dirty and
+report clean for the start of the bitmap. If it happens this ends up
+losing dirties.
 
-Signed-off-by: Daniel Phillips <daniel.phillips@amd.com>
-Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b8257bdb26ca5d9a75f4b81f629422f17afa221b)
+Further this function is missing bounds checking so if this does happen
+ther is a good chance it will write memory beyond what the userspace was
+expecting.
+
+Return an error code if this illegal condition happens.
+
+Fixes: 58ccf0190d19 ("vfio: Add an IOVA bitmap support")
 Cc: stable@vger.kernel.org
-[ sashal: Adjusted context for the missing out label and the simpler VRAM calculation without APU branching or RAS accounting. ]
+Assisted-by: LLM
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://patch.msgid.link/20260925161142.189813-2-parri.andrea@gmail.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+[ sashal: Adapted the VFIO bitmap implementation by adding the missing error field and propagating it through the existing iterator. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h       |  1 +
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 11 +++++++++++
- 2 files changed, 12 insertions(+)
+ drivers/vfio/iova_bitmap.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-index 8fc55a6671841..1be8c4a676096 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-@@ -100,6 +100,7 @@ struct amdgpu_kfd_dev {
- 	struct kfd_dev *dev;
- 	int64_t vram_used[MAX_XCP];
- 	uint64_t vram_used_aligned[MAX_XCP];
-+	atomic64_t vram_pinned;
- 	bool init_complete;
- 	struct work_struct reset_work;
+diff --git a/drivers/vfio/iova_bitmap.c b/drivers/vfio/iova_bitmap.c
+index 3f48125e2b9f0..e78cb1b4e7364 100644
+--- a/drivers/vfio/iova_bitmap.c
++++ b/drivers/vfio/iova_bitmap.c
+@@ -113,6 +113,8 @@ struct iova_bitmap {
  
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-index b2c5f99b2e57a..8237772ca9426 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -1432,6 +1432,11 @@ static int amdgpu_amdkfd_gpuvm_pin_bo(struct amdgpu_bo *bo, u32 domain)
- 		pr_err("Error in Pinning BO to domain: %d\n", domain);
+ 	/* length of the IOVA range for the whole bitmap */
+ 	size_t length;
++
++	int err;
+ };
  
- 	amdgpu_bo_sync_wait(bo, AMDGPU_FENCE_OWNER_KFD, false);
-+
-+	if (!ret && bo->tbo.resource->mem_type == TTM_PL_VRAM)
-+		atomic64_add(amdgpu_bo_size(bo),
-+			&amdgpu_ttm_adev(bo->tbo.bdev)->kfd.vram_pinned);
-+
- 	amdgpu_bo_unreserve(bo);
+ /*
+@@ -381,11 +383,11 @@ int iova_bitmap_for_each(struct iova_bitmap *bitmap, void *opaque,
+ 	     ret = iova_bitmap_advance(bitmap)) {
+ 		ret = fn(bitmap, iova_bitmap_mapped_iova(bitmap),
+ 			 iova_bitmap_mapped_length(bitmap), opaque);
+-		if (ret)
++		if (ret || bitmap->err)
+ 			break;
+ 	}
  
- 	return ret;
-@@ -1454,6 +1459,11 @@ static void amdgpu_amdkfd_gpuvm_unpin_bo(struct amdgpu_bo *bo)
- 		return;
- 
- 	amdgpu_bo_unpin(bo);
-+
-+	if (bo->tbo.resource->mem_type == TTM_PL_VRAM)
-+		atomic64_sub(amdgpu_bo_size(bo),
-+			&amdgpu_ttm_adev(bo->tbo.bdev)->kfd.vram_pinned);
-+
- 	amdgpu_bo_unreserve(bo);
+-	return ret;
++	return ret ? ret : bitmap->err;
  }
  
-@@ -1610,6 +1620,7 @@ size_t amdgpu_amdkfd_get_available_memory(struct amdgpu_device *adev,
- 	vram_available = KFD_XCP_MEMORY_SIZE(adev, xcp_id)
- 		- adev->kfd.vram_used_aligned[xcp_id]
- 		- atomic64_read(&adev->vram_pin_size)
-+		+ atomic64_read(&adev->kfd.vram_pinned)
- 		- reserved_for_pt;
+ /**
+@@ -408,6 +410,18 @@ void iova_bitmap_set(struct iova_bitmap *bitmap,
+ 			mapped->pgshift) + mapped->pgoff * BITS_PER_BYTE;
+ 	unsigned long last_page_idx = mapped->npages - 1;
  
- 	if (adev->gmc.is_app_apu) {
++	/*
++	 * If the range cannot be recorded then the system call returns failure.
++	 * This is to prevent loosing dirties if userspace is expecting to step
++	 * the bitmap through the IOVA space.
++	 */
++	if (!length || length > bitmap->length || iova < bitmap->iova ||
++	    iova - bitmap->iova > bitmap->length - length) {
++		if (!bitmap->err)
++			bitmap->err = -EPROTO;
++		return;
++	}
++
+ 	do {
+ 		unsigned int page_idx = cur_bit / BITS_PER_PAGE;
+ 		unsigned int offset = cur_bit % BITS_PER_PAGE;
 -- 
 2.53.0
 
