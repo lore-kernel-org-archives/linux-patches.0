@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053706;
-	b=pGACjBuTjsZZ4BqpLI8fv5rfh57ctTm8w80bdsBVCVORrlSwOIK7fi05+uhv8qBgaBfg
-	 1A0domqSiraKYspicCbi4+FxNrtzJF/zvr0HDk/DfbNtjrVNhad6q3hOLxOfiEgpQ0twQ
-	 gZhSN9eDPHX0sOlfa9WPbPgZYxg8HwKxeWCXLNxen+WtFDXxoasdG1EAeDDO4Z2Zoh7yd
-	 j2NbddgM3HILzysBzhYGUtvwX1Tr9p/bvlVzcFuOZI85YLHs33f0y12Z5MhkCkVI7qVH8
-	 YqtvfAmASOt5Oo9AhnWZ1LFGHqW2IDI+0ysW64I1gmK7tByv1aSe7Guo7bLn2hvOP6w==
+	t=1795053710;
+	b=1N58nCjz7ogF0PCjXZhXRsk/zdZLYcgdHFC4PG/yAcypHoNEw+M/c9Ke6rTKqMMH1oAr
+	 y2wbUbXCOU962E4ekNh0f+bNZDMLtYu1zr/JuDEUjuvjKlksJNmtKZQRwYaO+Gn54YlrK
+	 nAESShf1lORidSyT5mkn6krDw5bTic5pr8ENI4cyyvzYJ5osNm16U1qCHFSZjEsSuinB3
+	 Er1tMi//X2wtc27PjnOI6+GEFkukJzKfDs2dCsG0N2wX/3ti4nmxm3xyx5EF90BjmAyNv
+	 J5lHacaS98DQdGTPNTJDr76CTNYBNcjlLPCJX3CAHMW6Qjrohf9PK1D+SHKffyxVo6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053706;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053710;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GhSJ406RrP7E3vowuFn25941hpB0FSMpw4Tx6W4jOEs=;
-	b=2ESztc5HTJgHFFz4GR8UD+IwT0G1ch9/o4BPlSwKCSDZ8RVJuRh5ob6O471bjNgoQdE5
-	 u8BiM/i1192wEtKfV2rfIu6JdZN4cLRD1s+iMOZ9dtY97ToIKnhBFBRp0vSggootAE1NU
-	 cTP6XUSIdXETLsPgY08S0IoFYGY3KefMqmRmSDKrLIKdFz/uGg8+1bcv+aOgcb8PEml9q
-	 qKjn0m57EZH57/T1abOwCF3mCcou4S6samfeHzG+Xb54o5J9bp0KCECiEvdXeHHUJyTV/
-	 IbpY8z1bwvvQmQtW7a6SjPsO8++1Tm87+/jsUXUFghVSkdeKcgyy290zAgt+esrI4cw==
+	bh=jxe8kTi/u+T3uYQaCId8EhD/ozHmxwaQKCcUhg/fv1I=;
+	b=O210aqyqyr+AhIGAU1DojccoOde2C1Zg9WwUlT38SUl2O2hlikWcozQrTfaTzp7ABsgj
+	 Rkrw1L/3boievFwHq9rUBlACYepHpKH252360Y7LWwZO/8qkC3aMJPqJ/jHy4aD7p+AHW
+	 gqTg3vj7AdwIVwbbXCjy40HD1hJjAQmjruco1w5tpC9NtRmnK2MtWogiUlKIvNUdOB1s8
+	 wb9qHEvQz4G30/NVFpqgzVboNWtpbI3ZPakFKAAKgqO2AczQEDefuCWuda6z3494e8LOv
+	 uiWDww/leGXZoUbr6IZfUiq59UYwCe/nSSsUs4HN9Uc3E1AifOps5MG3CfmqXz2E2+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="WmVYa/0a";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MCfLaVxm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD507606A320;
-	Thu, 19 Nov 2026 02:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22EB606A31C;
+	Thu, 19 Nov 2026 02:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WmVYa/0a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4091F000C4;
-	Thu, 19 Nov 2026 02:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MCfLaVxm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE1C1F000C4;
+	Thu, 19 Nov 2026 02:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053706;
-	bh=GhSJ406RrP7E3vowuFn25941hpB0FSMpw4Tx6W4jOEs=;
+	s=korg; t=1795053709;
+	bh=jxe8kTi/u+T3uYQaCId8EhD/ozHmxwaQKCcUhg/fv1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WmVYa/0afpDFGFVL2sls/XANGDXIYRBva2Q0AMyF+kp8w4Sb8FWuIRF3f78WhZM7M
-	 OkjIega9U+p57nEsfAk0Z+kNLOt03ixX4AMkAQ+rBIWpV42HPjbQuM+huT94v2Ug+D
-	 9ce3cH8PNHR3s5AmKp//JmcnyRByJFcE+ZS3lb0w=
+	b=MCfLaVxm7HjARLgzN1d6/opphDLUc97a1Ds9U+0lhxj+YRtHNcHkory+uDqRbDxXs
+	 +tuop5DzR5aSDDO95JYXKL2AjbZDltBWkHWxzhvjtdpNeB7+41MAsdJVnaJ1khEROJ
+	 anRGkWpcHrMVCxNM3jLcGN6+qv+cC2BZdSlIlM2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+ecaada42f806f629@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Yuejie Shi <syjcnss@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1013/2214] ceph: fix integer overflow in the snap trace bounds check
-Date: Wed, 18 Nov 2026 15:44:49 +0100
-Message-ID: <20261118150052.904666991@linuxfoundation.org>
+Subject: [PATCH 5.15 1014/2214] fs/ntfs3: validate the EA value length in ntfs_read_ea()
+Date: Wed, 18 Nov 2026 15:44:50 +0100
+Message-ID: <20261118150052.941578499@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,88 +68,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Yuejie Shi <syjcnss@gmail.com>
 
-[ Upstream commit b3bf89767e3ca9506f1c7167cac97c41ec254d42 ]
+[ Upstream commit 351817226fbf0031c4c63d1f5d7f15c3172312eb ]
 
-ceph_update_snap_trace() bounds the two encoded snapid arrays that follow a
-struct ceph_mds_snap_realm with sizeof(u64) * (num_snaps +
-num_prior_parent_snaps).  Both counts come straight off the wire as __le32,
-so the addition is evaluated in unsigned int and wraps before sizeof(u64)
-promotes it to size_t: an MDS sending num_snaps = 1 and
-num_prior_parent_snaps = 0xffffffff makes the sum zero and the check
-degenerates to ceph_decode_need(&p, e, 0, bad), which always passes.
-dup_array() then reads num_snaps * 8 bytes past the end of the message
-front, which ceph_msg_new2() allocates at exactly front_len bytes.  An
-unsolicited CEPH_MSG_CLIENT_SNAP reaches this from a malicious or
-compromised MDS with no client-side action, as do the snaptraces carried in
-an MDS reply and in a cap import.
+ntfs_read_ea() checks the $EA list for consistency, but it only
+recomputes the packed size of an entry when the entry's own size field is
+zero:
 
-Compute the length with size_add()/size_mul() so it saturates at SIZE_MAX
-instead of wrapping, in the style fs/ceph/mdsmap.c already uses for
-num_export_targets.
+	for (off = 0; off < size; off += ea_size) {
+		const struct EA_FULL *ef = Add2Ptr(ea_p, off);
+		u32 bytes = size - off;
+		...
+		if (ef->size) {
+			ea_size = le32_to_cpu(ef->size);
+			if (ea_size > bytes)
+				goto out1;
+			continue;              /* <- elength never checked */
+		}
+		...
+		ea_size = ALIGN(struct_size(ef, name,
+					    1 + ef->name_len +
+						    le16_to_cpu(ef->elength)),
+				4);
+		if (ea_size > bytes)
+			goto out1;
+	}
 
-  BUG: KASAN: slab-out-of-bounds in dup_array (include/linux/unaligned.h:28 fs/ceph/snap.c:500)
-  Read of size 8 at addr ffff8880102a16c8 by task kworker/1:2/129
-  Workqueue: ceph-msgr ceph_con_workfn
-  Call Trace:
-   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
-   kasan_report (mm/kasan/report.c:595)
-   dup_array (include/linux/unaligned.h:28 fs/ceph/snap.c:500)
-   ceph_update_snap_trace (fs/ceph/snap.c:836)
-   ceph_handle_snap (fs/ceph/snap.c:1155)
-   mds_dispatch (fs/ceph/mds_client.c:7234)
-   ceph_con_process_message (net/ceph/messenger.c:1424)
-   ceph_con_v1_try_read (net/ceph/messenger_v1.c:1430)
-   ceph_con_workfn (net/ceph/messenger.c:1576)
-   process_one_work (kernel/workqueue.c:3396)
-   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-  ...
-  The buggy address is located 0 bytes to the right of
-   allocated 72-byte region [ffff8880102a1680, ffff8880102a16c8)
+ef->size is non-zero for every entry except the last one, and it is what
+ntfs3 itself writes (ntfs_set_ea() stores exactly that aligned packed
+size), so in practice elength is not validated at all.  find_ea() then
+uses unpacked_ea_size(), which also prefers ea->size when it is set, so
+it agrees and hands the entry back.
 
+ntfs_get_ea() copies elength bytes with no further bound of its own:
+
+	len = le16_to_cpu(ea->elength);
+	...
+	if (len > size) {              /* size is the *caller's* buffer */
+		err = -ERANGE;
+		...
+	}
+	memcpy(buffer, ea->name + ea->name_len + 1, len);
+
+so a caller that supplies a large enough buffer receives up to 64 KiB of
+whatever follows the small $EA allocation -- straight to userspace via
+getxattr(2).
+
+Compute the packed size unconditionally and require it to fit in the
+entry.  Hoist the "bytes < offsetof(struct EA_FULL, name)" test above the
+ef->size branch as well: name_len and elength were being read there
+without it, which is itself a small over-read of the kmalloc'd buffer
+when fewer than 8 bytes are left.  The old "bytes < sizeof(ef->size)"
+test is subsumed by it.
+
+  # mkntfs image; create /mnt/ntfs/poc with user.ntfs6 set, then rewrite
+  # that EA_FULL's elength from 0xf to 0xff00 on the raw device
+  mount -t ntfs3 -o ro /dev/vda /mnt/ntfs
+  getxattr("/mnt/ntfs/poc", "user.ntfs6", buf, 128 * 1024);
+
+  BUG: KASAN: slab-out-of-bounds in ntfs_get_ea+0x294/0x3e0
+  Read of size 65280 at addr ffff0000cca53acf by task xattr_probe/142
+   __asan_memcpy+0x3c/0xa0
+   ntfs_get_ea+0x294/0x3e0
+   ntfs_getxattr+0x284/0x318
+   __vfs_getxattr+0x104/0x160
+   vfs_getxattr+0x1b4/0x1e0
+   do_getxattr+0xcc/0x230
+   path_getxattrat+0x184/0x270
+   __arm64_sys_getxattr+0x64/0x80
+  Allocated by task 142:
+   __kmalloc_noprof+0x294/0x668
+   ntfs_read_ea+0x1e4/0x420
+   ntfs_get_ea+0x2c8/0x3e0
+  The buggy address belongs to the object at ffff0000cca53a80
+   which belongs to the cache kmalloc-96 of size 96
+
+The object being over-read is the one ntfs_read_ea() just allocated, and
+it is 96 bytes.
+
+Entries written by ntfs3 and by Windows set size to the aligned packed
+size, so the new test does not reject anything a working filesystem
+produces.
+
+Fixes: be71b5cba2e6 ("fs/ntfs3: Add attrib operations")
 Cc: stable@vger.kernel.org
-Fixes: 963b61eb041e ("ceph: snapshot management")
-Reported-by: co+ecaada42f806f629@bugs.sh
-Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-[ sashal: Adjusted snaps_len declaration placement to account for missing client and ret declarations. ]
+Signed-off-by: Yuejie Shi <syjcnss@gmail.com>
+[almaz.alexandrovich@paragon-software.com: applied as-is, logic is the same but the code is cleaner]
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+[ sashal: adjusted context on top of c22f91d82cb9, which already validates ef->size ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/snap.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/ntfs3/xattr.c | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/fs/ceph/snap.c b/fs/ceph/snap.c
-index 74a1fc919c6be..ce1f489e00e84 100644
---- a/fs/ceph/snap.c
-+++ b/fs/ceph/snap.c
-@@ -710,6 +710,7 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
- 	struct ceph_snap_realm *realm;
- 	struct ceph_snap_realm *first_realm = NULL;
- 	struct ceph_snap_realm *realm_to_rebuild = NULL;
-+	size_t snaps_len;
- 	int rebuild_snapcs;
- 	int err = -ENOMEM;
- 	LIST_HEAD(dirty_realms);
-@@ -723,8 +724,10 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
- 	ceph_decode_need(&p, e, sizeof(*ri), bad);
- 	ri = p;
- 	p += sizeof(*ri);
--	ceph_decode_need(&p, e, sizeof(u64)*(le32_to_cpu(ri->num_snaps) +
--			    le32_to_cpu(ri->num_prior_parent_snaps)), bad);
-+	snaps_len = size_mul(size_add(le32_to_cpu(ri->num_snaps),
-+				      le32_to_cpu(ri->num_prior_parent_snaps)),
-+			     sizeof(u64));
-+	ceph_decode_need(&p, e, snaps_len, bad);
- 	snaps = p;
- 	p += sizeof(u64) * le32_to_cpu(ri->num_snaps);
- 	prior_parent_snaps = p;
+diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
+index c45133934c3ed..078f4abb42ec2 100644
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -145,29 +145,32 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,
+ 	for (off = 0; off < size; off += ea_size) {
+ 		const struct EA_FULL *ef = Add2Ptr(ea_p, off);
+ 		u32 bytes = size - off;
+-		size_t need;
+-
+-		/* Check if we can use field ea->size. */
+-		if (bytes < sizeof(ef->size))
+-			goto out1;
++		u32 packed_size;
+ 
+ 		/* Check if we can use fields ef->name_len and ef->elength. */
+ 		if (bytes < offsetof(struct EA_FULL, name))
+ 			goto out1;
+ 
+-		/* Size needed to hold this record's name and value. */
+-		need = struct_size(ef, name,
+-				   1 + ef->name_len + le16_to_cpu(ef->elength));
++		/*
++		 * The name and the value have to fit in the entry whether or
++		 * not ef->size is set, because ntfs_get_ea() copies elength
++		 * bytes out of this buffer and checks them only against the
++		 * caller supplied buffer size.
++		 */
++		packed_size =
++			ALIGN(struct_size(ef, name,
++					  1 + ef->name_len +
++						  le16_to_cpu(ef->elength)),
++			      4);
+ 
+ 		if (ef->size) {
+ 			ea_size = le32_to_cpu(ef->size);
+-			/* ef->size must fit the list and cover the record. */
+-			if (ea_size > bytes || ea_size < need)
++			if (ea_size > bytes || packed_size > ea_size)
+ 				goto out1;
+ 			continue;
+ 		}
+ 
+-		ea_size = ALIGN(need, 4);
++		ea_size = packed_size;
+ 		if (ea_size > bytes)
+ 			goto out1;
+ 	}
 -- 
 2.53.0
 
