@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028201;
-	b=Q6wYWF0Ok+qgQihacQbIfVoK4Y0FDO+BKz+C7EUGipukBq2M2UyFZTVkGAHkpndpc8hG
-	 nbrdTDyuwE9v0sM3Doce9b+viRy0KnVAdCwFSWu3js3+OnyJf2DlxnM/KefuLqfoM80CD
-	 vnX12RIVGghumZavL6bCa0ZWiLfzKNeznfuqy0ZPgT4FGvs0xo/AbauJZQPu4zYZf7Eqj
-	 FW72Vvi6BiiInY9I7YZCK1X2QIVfi44il9gJYgWldoVwUL89Q0PqBvOl2MAtZAtTpvsti
-	 gQl+nfeJXvcob7vN3HhPBEy+tDeOTX62Hyuk08VxHkSXQE/KhcqX6JjodMUfHx/doMQ==
+	t=1795028204;
+	b=Ldgz6IHXH6DCT+8FSdq0rkBGdxXOLXOkrb9XQDVKozMcnfGHl117qyBu1D1q1d8bKsYM
+	 s9J4RUajHwEvng+KXBWNA9RIjlANl0DgX3YwLLA0INpo4sewe+WH2xc3PCiAmmXJTzYMV
+	 gerHsXz/CTyKb7ddtca7dmwxCnSBr3zLaWydVpdkhTuTkL1YsBvC8NE7/A5rxnTBZit/x
+	 BwopR0ipQVzalGG3O3R0Y8AX4JCEpus0oZ4U9+Nwv2I2eqOg3GcqGu+pg1gpOZJFQqV3W
+	 3PWOcXVDwIcTj+SPXRmwAhIcRxKUIdfG9qZsuPq7PEMUwAthPO8VTApujENi9HQfC8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028201;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028204;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2blxql7Do+jIuiQQzgIZzic5SOB/dSxCM0NtfLe1dGo=;
-	b=SjEkaM5+5fR+0Oj3NLqMgT3iPJeAk0Xn9p/9RZD2ogRp7ZndtaEiG2hKVY1ndKdMJkRS
-	 4Ryyhyf5lwdTLUjwYXKyDdfXoQlhf4ctcgTMTIrJQSQQy165PpMji1c/DukiiDaKWxxOj
-	 1CQ/dCW5RhQlZIIzh4zMUJbJlG2Jg4kJPeDc70ieESQwE5bQbLBEVsY3Hfp7JPFeNqLjf
-	 3p6tROxl6Iw4N04ThiI4a70shCh95+b+KxemVtR9wkfm1EfgQsKr6rIeMkncvA3l8Hdup
-	 m0YPDBHWoIDt4qLCoCSICrXBI52ZTDx0UEmdrpP4vzZsg07iHEMWiY32kolXSOboOHw==
+	bh=FI1trM9ygCGEhrsIvdODjSdIkri0J9HKE/uaXQwJE+w=;
+	b=moSLxZIqcEDdzHVZzdaiRcb+8A3NqfOV9SjZPmAnPVCNq/96D/JrmkTkGrWiLVPigjTD
+	 KfwfexNRrBwHz9/iSakFZBcz15gyqOKvCw5ARTZWkxzBPQZkJrGDcCme/ZKNgZLznKNIa
+	 MZeKI1BAj0OhGBM/5uW76Eqz0VrxhBl/+AGVsu6Y4R5v4npH5F17cIjzY5n1UE3oPcoyT
+	 BfvAgGRdSnd5YHuFzTCGedtl8lXqZvm8P8kP+vmxoCe1AOj1WA0/1lfGOxqE7a8iITfSl
+	 X9sQczN2FJwhvCWpxM45577lV+s3K3KVL5zJTvES6GmzGxUgCQzxLZUBntU93oEnPHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aUnasPq1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="FPS/Zk0K";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB19D606A31C;
-	Wed, 18 Nov 2026 18:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93916606A31C;
+	Wed, 18 Nov 2026 18:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aUnasPq1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB2A1F000C4;
-	Wed, 18 Nov 2026 18:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FPS/Zk0K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0DB61F000C4;
+	Wed, 18 Nov 2026 18:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028201;
-	bh=2blxql7Do+jIuiQQzgIZzic5SOB/dSxCM0NtfLe1dGo=;
+	s=korg; t=1795028204;
+	bh=FI1trM9ygCGEhrsIvdODjSdIkri0J9HKE/uaXQwJE+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aUnasPq13F3AvEyN8hdxiTxVJLRnLPcyNibVjNr2fdvzUXwenFuj6HsozAabv18Hl
-	 9TwS/FKJnJz1IIC0Jn4u9kk7pcZvJXDFTRaQnDYff4m9ua1Q99Q/KNRMyqJW7yd0/Q
-	 aqktSzufOp1gVzqLrUA0ADe78KFngxqG5Gr1yM4k=
+	b=FPS/Zk0KBEyRloGyUG3JRN8rzPeb2rqb9akXUDZKp6pW2JiAIPWSAeZcxy054y8zO
+	 53O9aYZGDMjAT3SiPW1I2dN5ys1eisJhE0SADB4epGMUPxNFa9/yfP05g48Tkz/Qnr
+	 U/1ik3nmR4kciIdf4jKBp6KlgeWi+65IZNfvYLss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2044/2151] net: bcmgenet: recover from a failed resume
-Date: Wed, 18 Nov 2026 16:02:59 +0100
-Message-ID: <20261118150236.183844540@linuxfoundation.org>
+Subject: [PATCH 6.18 2062/2151] rtc: s35390a: fix typo in comment
+Date: Wed, 18 Nov 2026 16:03:17 +0100
+Message-ID: <20261118150236.834879521@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,231 +67,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
 
-[ Upstream commit 1c1f51c3ee9ccf86462e36548291ed44fecd5355 ]
+[ Upstream commit 50ccdc31010ed623e68e496aebd4b1d3d8430664 ]
 
-A resume that fails in bcmgenet_init_dma() returns with the interface
-still IFF_UP and the datapath gone. The next ifdown runs the teardown
-a second time and napi_disable() waits for a NAPI_STATE_SCHED bit that
-nothing will clear:
+Fix trivial typo
 
-  task:ip  state:D
-    usleep_range_state+0xec/0x158
-    napi_disable_locked+0x254/0x318
-    napi_disable+0x3c/0x68
-    bcmgenet_netif_stop+0x1c8/0x318
-    bcmgenet_close+0x24/0xd0
-    __dev_close_many+0x18c/0x310
-
-RTNL is held across the wait, so everything else blocks behind it.
-
-The same resume gates the clock and detaches the device. Close releases
-the clock a second time and ifup fails with -ENODEV. The hardware filters
-stay armed, so the next WoL suspend wakes on any frame. That suspend sets
-CMD_RX_EN for magic packet detection, so the WoL resume reuses rings that
-are gone.
-
-A failed resume should leave a state the ordinary paths can handle. Clear
-rx_cbs and tx_cbs as they are freed so they answer whether a datapath
-exists, and leave the clock alone so close and suspend release it once.
-The WoL resume rebuilds instead, so stop the PHY first, phy_start() only
-takes PHY_READY or PHY_HALTED.
-
-Flagged in a sashiko review and reproduced on a CM4 by forcing the resume
-allocation to fail.
-
-Fixes: b6e978e50444 ("net: bcmgenet: add suspend/resume callbacks")
-Fixes: 254f3239dd07 ("net: bcmgenet: revise suspend/resume")	# for the WoL parts
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261022-nb-genet-fini-dma-net-v3-1-6e9fc89c0156@tipi-net.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260624204223.1479003-1-alexandre.belloni@bootlin.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 6199051016cd ("rtc: s35390a: Read 24-hour mode on access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/genet/bcmgenet.c    | 92 +++++++++++++------
- 1 file changed, 62 insertions(+), 30 deletions(-)
+ drivers/rtc/rtc-s35390a.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index 75bfd74b391b3..4f2319ce9b6fb 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -3113,7 +3113,9 @@ static void bcmgenet_fini_dma(struct bcmgenet_priv *priv)
- 	bcmgenet_free_rx_buffers(priv);
- 	bcmgenet_destroy_rx_page_pools(priv);
- 	kfree(priv->rx_cbs);
-+	priv->rx_cbs = NULL;
- 	kfree(priv->tx_cbs);
-+	priv->tx_cbs = NULL;
- }
+diff --git a/drivers/rtc/rtc-s35390a.c b/drivers/rtc/rtc-s35390a.c
+index 0713a5afadfa6..94c75cdf0c8a7 100644
+--- a/drivers/rtc/rtc-s35390a.c
++++ b/drivers/rtc/rtc-s35390a.c
+@@ -314,7 +314,7 @@ static int s35390a_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alm)
+ 	else
+ 		sts = S35390A_INT2_MODE_NOINTR;
  
- /* init_edma: Initialize DMA control register */
-@@ -3173,6 +3175,7 @@ static int bcmgenet_init_dma(struct bcmgenet_priv *priv, bool flush_rx)
- 			       GFP_KERNEL);
- 	if (!priv->tx_cbs) {
- 		kfree(priv->rx_cbs);
-+		priv->rx_cbs = NULL;
- 		return -ENOMEM;
- 	}
- 
-@@ -3192,7 +3195,9 @@ static int bcmgenet_init_dma(struct bcmgenet_priv *priv, bool flush_rx)
- 		bcmgenet_free_rx_buffers(priv);
- 		bcmgenet_destroy_rx_page_pools(priv);
- 		kfree(priv->rx_cbs);
-+		priv->rx_cbs = NULL;
- 		kfree(priv->tx_cbs);
-+		priv->tx_cbs = NULL;
- 		return ret;
- 	}
- 
-@@ -3501,7 +3506,9 @@ static int bcmgenet_close(struct net_device *dev)
- 
- 	netif_dbg(priv, ifdown, dev, "bcmgenet_close\n");
- 
--	bcmgenet_netif_stop(dev, false);
-+	/* A failed resume has torn the datapath down already */
-+	if (priv->tx_cbs)
-+		bcmgenet_netif_stop(dev, false);
- 
- 	/* Really kill the PHY state machine and disconnect from it */
- 	phy_disconnect(dev->phydev);
-@@ -3509,6 +3516,9 @@ static int bcmgenet_close(struct net_device *dev)
- 	free_irq(priv->irq0, priv);
- 	free_irq(priv->irq1, priv);
- 
-+	/* A failed resume left the device detached, __dev_open() refuses that */
-+	netif_device_attach(dev);
-+
- 	if (priv->internal_phy)
- 		ret = bcmgenet_power_down(priv, GENET_POWER_PASSIVE);
- 
-@@ -4273,7 +4283,11 @@ static int bcmgenet_resume(struct device *d)
- 
- 	if (device_may_wakeup(d) && priv->wolopts) {
- 		reg = bcmgenet_umac_readl(priv, UMAC_CMD);
--		if (reg & CMD_RX_EN) {
-+
-+		/* The WoL power down sets CMD_RX_EN itself, so the bit
-+		 * alone does not mean the rings survived
-+		 */
-+		if (priv->tx_cbs && (reg & CMD_RX_EN)) {
- 			/* Successfully exited WoL, just resume data flows */
- 			list_for_each_entry(rule, &priv->rxnfc_list, list)
- 				if (rule->state == BCMGENET_RXNFC_STATE_ENABLED)
-@@ -4303,6 +4317,9 @@ static int bcmgenet_resume(struct device *d)
- 		bcmgenet_rdma_disable(priv);
- 		bcmgenet_intr_disable(priv);
- 		bcmgenet_fini_dma(priv);
-+		if (phy_is_started(dev->phydev) ||
-+		    dev->phydev->state == PHY_ERROR)
-+			phy_stop(dev->phydev);
- 		enable_irq(priv->irq1);
- 	}
- 
-@@ -4325,8 +4342,9 @@ static int bcmgenet_resume(struct device *d)
- 	/* Reinitialize TDMA and RDMA and SW housekeeping */
- 	ret = bcmgenet_init_dma(priv, false);
- 	if (ret) {
-+		/* Leave the block clocked, close and suspend tear it down */
- 		netdev_err(dev, "failed to initialize DMA\n");
--		goto out_clk_disable;
-+		return ret;
- 	}
- 
- 	if (!device_may_wakeup(d))
-@@ -4337,24 +4355,57 @@ static int bcmgenet_resume(struct device *d)
- 	netif_device_attach(dev);
- 
- 	return 0;
-+}
- 
--out_clk_disable:
--	if (priv->internal_phy)
--		bcmgenet_power_down(priv, GENET_POWER_PASSIVE);
--	clk_disable_unprepare(priv->clk);
--	return ret;
-+/* Arm the configured wake filters and drop the rest, then clear old
-+ * matches so that only a new one wakes the system
-+ */
-+static void bcmgenet_wol_arm_filters(struct bcmgenet_priv *priv)
-+{
-+	struct bcmgenet_rxnfc_rule *rule;
-+	u32 reg, hfb_enable = 0;
-+
-+	if (priv->wolopts & WAKE_FILTER)
-+		list_for_each_entry(rule, &priv->rxnfc_list, list)
-+			if (rule->fs.ring_cookie == RX_CLS_FLOW_WAKE &&
-+			    rule->state == BCMGENET_RXNFC_STATE_ENABLED)
-+				hfb_enable |= 1 << rule->fs.location;
-+
-+	reg = bcmgenet_hfb_reg_readl(priv, HFB_CTRL);
-+	if (GENET_IS_V1(priv) || GENET_IS_V2(priv)) {
-+		reg &= ~RBUF_HFB_FILTER_EN_MASK;
-+		reg |= hfb_enable << (RBUF_HFB_FILTER_EN_SHIFT + 1);
-+	} else {
-+		bcmgenet_hfb_reg_writel(priv, hfb_enable << 1,
-+					HFB_FLT_ENABLE_V3PLUS + 4);
-+	}
-+	if (!hfb_enable)
-+		reg &= ~RBUF_HFB_EN;
-+	bcmgenet_hfb_reg_writel(priv, reg, HFB_CTRL);
-+
-+	bcmgenet_intrl2_0_writel(priv, 0xFFFFFFFF, INTRL2_CPU_MASK_SET);
-+	bcmgenet_intrl2_0_writel(priv, 0xFFFFFFFF, INTRL2_CPU_CLEAR);
- }
- 
- static int bcmgenet_suspend(struct device *d)
- {
- 	struct net_device *dev = dev_get_drvdata(d);
- 	struct bcmgenet_priv *priv = netdev_priv(dev);
--	struct bcmgenet_rxnfc_rule *rule;
--	u32 reg, hfb_enable = 0;
- 
- 	if (!netif_running(dev))
- 		return 0;
- 
-+	/* A failed resume has torn the datapath down already. Resume still
-+	 * enables irq1 on the WoL path, so it has to be disabled here.
-+	 */
-+	if (!priv->tx_cbs) {
-+		if (device_may_wakeup(d) && priv->wolopts) {
-+			bcmgenet_wol_arm_filters(priv);
-+			disable_irq(priv->irq1);
-+		}
-+		return 0;
-+	}
-+
- 	netif_device_detach(dev);
- 
- 	if (device_may_wakeup(d) && priv->wolopts) {
-@@ -4363,26 +4414,7 @@ static int bcmgenet_suspend(struct device *d)
- 		netif_tx_disable(dev);
- 
- 		/* Suspend non-wake Rx data flows */
--		if (priv->wolopts & WAKE_FILTER)
--			list_for_each_entry(rule, &priv->rxnfc_list, list)
--				if (rule->fs.ring_cookie == RX_CLS_FLOW_WAKE &&
--				    rule->state == BCMGENET_RXNFC_STATE_ENABLED)
--					hfb_enable |= 1 << rule->fs.location;
--		reg = bcmgenet_hfb_reg_readl(priv, HFB_CTRL);
--		if (GENET_IS_V1(priv) || GENET_IS_V2(priv)) {
--			reg &= ~RBUF_HFB_FILTER_EN_MASK;
--			reg |= hfb_enable << (RBUF_HFB_FILTER_EN_SHIFT + 1);
--		} else {
--			bcmgenet_hfb_reg_writel(priv, hfb_enable << 1,
--						HFB_FLT_ENABLE_V3PLUS + 4);
--		}
--		if (!hfb_enable)
--			reg &= ~RBUF_HFB_EN;
--		bcmgenet_hfb_reg_writel(priv, reg, HFB_CTRL);
--
--		/* Clear any old filter matches so only new matches wake */
--		bcmgenet_intrl2_0_writel(priv, 0xFFFFFFFF, INTRL2_CPU_MASK_SET);
--		bcmgenet_intrl2_0_writel(priv, 0xFFFFFFFF, INTRL2_CPU_CLEAR);
-+		bcmgenet_wol_arm_filters(priv);
- 
- 		if (-ETIMEDOUT == bcmgenet_tdma_disable(priv))
- 			netdev_warn(priv->dev,
+-	/* set interupt mode*/
++	/* set interrupt mode*/
+ 	err = s35390a_set_reg(s35390a, S35390A_CMD_STATUS2, &sts, sizeof(sts));
+ 	if (err < 0)
+ 		return err;
 -- 
 2.53.0
 
