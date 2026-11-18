@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022893;
-	b=IgvMLpvgVRf5zlQOovHmGLCPj14IEMehGkP6yN+OIk96psGgKmt3QWc04SlWzS+UkBzo
-	 PC6SDL/eOpKmRZsaBnHOJ8+075m48rF8g6wsks5tWBZ8W/dTfaQV7IHCLLKVF630YXPHJ
-	 r9wWVJ3RiI390Tz5QSSV4pwnl36MX7InzoneSZ4cqbSJBWyTAzlPF0NdKb6A5yfZ+rWna
-	 Uw3jhZ3uaMqxI/wDJ7x2/UGaZ7eB/8PNSRdO62p3J+GYJGsc8C9dVqEmb3G4TFHXp0BGD
-	 +C19gFiHO8M1YgsuwUeYGmQ4n8HxBdtoGf3bQhmj6HBGg6y7tP0BDAJzA7V5EA9c5Tw==
+	t=1795022895;
+	b=xr+DHnbESZEKMI+2zLEyPtLhHAUFMlX+s8Ev8VPW8mF1oLfU/NqaTxBs7tHZXwiAwSIT
+	 dQOrsg2gIF+JA0iLX4e5PdyBN+TbG8uDVXwpuQ7GSnxSEaezqJhMn6y0rX2dymr3rwrpY
+	 7KRnzTkR5GRkcEVcJ+B1QMVWYepZo4iBA6q0jiWFvhi6BnXlL5PrT5juAoUcpLkj4wWII
+	 FWzpZIx3y+YmlzBnIp2mA5xrzTUFNbFSq5NhGDrJJ+ceKgnuN0hliACHsPSgl1sKaEgCK
+	 Zvmrk4x/AFJdYzeuKYn4dJ2xgfBUD8AI+EjB9S0cWwFx0wXFMyXDqrMCIK0ip2MCTsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022893;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022895;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZcAani4qdBpIVXfjMq7q49CojLfZrIbcZxN5on2m4Ws=;
-	b=NRSFweUzhtyWDKryJkY0qV69mP5x/JQiQXFvTqiZGW5lrYPqti7bW9quHcic/P3sk9lw
-	 TpYV1hcHhEK0/7Lvb7DVV8/cXRxpZoBWIUM/x/gVyi/P/ZrU5C7ky1s0RcKwHE9pPxlcR
-	 tWn6p3SlaLwOwFEVjAVSB2x1ZbTvUa3AC502i7GVt+E/7jNgV6U+JcX/1PKqFC8pwRb7d
-	 T3gBof0XG6Sf6uE6GfFL9YdNFsxYrUDgOuODsACMn/hyt4B13WesklguaER4WAHANiUOA
-	 YjCIyM3jUJDMMU3tAeZ+ua8CYE/5gyB2cbK/3X6Og3srNIAW7plb0E3G/RegBz2SQcQ==
+	bh=s484Ko2FX8WDpYqTRyZB1mDlu/5eJqQnN3c1TvOWDME=;
+	b=f8GmiOviJ9NCXOrpgE0g9lZXfjfnypVdfwNAUUEy86b/z4N49WTJgq55atmVcquuptgV
+	 7IQuu9LlHsLfuAt7IKOeHrCv04nlQUH4bhJlATNQDuZOG2rcl01dsjdmQvd13Zjpo2Ad1
+	 xGSLA+HIrWBZeVng9w0D2muysCFIQgO2rNfIMlgZwmJafAvH+lvjiBREhgOtY00xA1AN0
+	 ctgjZAL064hrGX/DYRmDE9rmXpQR+TwNG87gI6i+WelaJlF0VBe3jf9DPO4JSe304gh5g
+	 hDWqiPB9ITaJPgiUmOICDTkPzW0P3vKFm5rfaD1hHdZ0EFW+L8I1j+YmUGLJwYVoSTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i4g32YPc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aSnuSkHt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBEE7606B5F7;
-	Wed, 18 Nov 2026 17:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89E3606A32A;
+	Wed, 18 Nov 2026 17:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i4g32YPc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F2561F000C5;
-	Wed, 18 Nov 2026 17:28:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aSnuSkHt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A28F1F000C5;
+	Wed, 18 Nov 2026 17:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022892;
-	bh=ZcAani4qdBpIVXfjMq7q49CojLfZrIbcZxN5on2m4Ws=;
+	s=korg; t=1795022895;
+	bh=s484Ko2FX8WDpYqTRyZB1mDlu/5eJqQnN3c1TvOWDME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i4g32YPck/t3MdNPKm6M9Al1AJQDFmkFDHXB2PciRUEhEvb+RnyUKN8X5Ag00Tkm/
-	 J6pBEM+1r/qIlNHE0p2S7c6DHt0pvvPG6DWre9+E8mTYqhaZiZOA1N22Tt+i8qBWSA
-	 kihXmulekbBMLa9r7Cbb1v8DTSeAzMZgbfcyw6Jk=
+	b=aSnuSkHtfT2HNF/5beDY4XyopID+jlxskLHIwVV5CfjeITwpODgX3tUhtpj1wmfxv
+	 +gl7JImXxn2NrXwYPjGkbMXPjdP7Ad8LJmgsjJCwVGAQ0s9qTyL2I00TwpvHCTNwyI
+	 44ZAx1MCYpoJolYbRwRCK8QxpjwZh3LdUCgVYGV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shujath Mohd <shujath@outlook.in>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0174/2151] arm64: dts: qcom: sdm845-sony-xperia-tama: Fix Bluetooth UART pinctrl
-Date: Wed, 18 Nov 2026 15:31:49 +0100
-Message-ID: <20261118150128.076745987@linuxfoundation.org>
+Subject: [PATCH 6.18 0139/2151] drm/panthor: Take reqs_lock in soft_reset for clearing pending_reqs
+Date: Wed, 18 Nov 2026 15:31:14 +0100
+Message-ID: <20261118150126.847686273@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,40 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shujath Mohd <shujath@outlook.in>
+From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
 
-[ Upstream commit cd0f33393882e2554d46e8e068ab95d00593f385 ]
+[ Upstream commit 2d354adc5bbabe2e818be09bbe13f6bfde4a30c7 ]
 
-Use the 4-pin UART6 pinctrl configuration for the WCN3990 Bluetooth
-controller on Sony Xperia Tama devices.
+panthor_gpu_soft_reset() sets pending_reqs to 0 without taking the
+requisite reqs_lock.
 
-This enables the UART hardware flow control required for reliable
-Bluetooth communication at higher baud rates.
+Fix this by taking the lock for the duration of the modification.
 
-Fixes: d54331131cde ("arm64: dts: qcom: sdm845-sony-xperia-tama: Add bluetooth")
-Fixes: 30a7f99befc6 ("arm64: dts: qcom: Add support for SONY Xperia XZ2 / XZ2C / XZ3 (Tama platform)")
-
-Signed-off-by: Shujath Mohd <shujath@outlook.in>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/PUZPR01MB51413F6FF89A8FA82A9B2755C3A02@PUZPR01MB5141.apcprd01.prod.exchangelabs.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 5cd894e258c4 ("drm/panthor: Add the GPU logical block")
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260812-panthor-cache-flush-fix-v4-3-751e32901898@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/panthor/panthor_gpu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-index f3f4c0900572a..2306b31edad27 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-@@ -755,6 +755,8 @@ int-pins {
- };
+diff --git a/drivers/gpu/drm/panthor/panthor_gpu.c b/drivers/gpu/drm/panthor/panthor_gpu.c
+index 77d0f4ced1206..7f2dc65386fd4 100644
+--- a/drivers/gpu/drm/panthor/panthor_gpu.c
++++ b/drivers/gpu/drm/panthor/panthor_gpu.c
+@@ -334,7 +334,10 @@ int panthor_gpu_soft_reset(struct panthor_device *ptdev)
+ 		return -ETIMEDOUT;
+ 	}
  
- &uart6 {
-+	pinctrl-0 = <&qup_uart6_4pin>;
+-	ptdev->gpu->pending_reqs = 0;
++	scoped_guard(spinlock, &ptdev->gpu->reqs_lock) {
++		ptdev->gpu->pending_reqs = 0;
++	}
 +
- 	status = "okay";
- };
+ 	return 0;
+ }
  
 -- 
 2.53.0
