@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031318;
-	b=IdDus2R5cW6je1yHnWDPYtX2ytMzjG6yQHbOSY/nsSNfR5KptT6sJ+kcUlfgh9yFI1Kd
-	 STDxouAjT/q5ylQnhmS34g2pLfiEMwVgSkOkx8tRyIUkmAjNPtg2ytE02IzHRMgaLTY8F
-	 bwM5FrUv85WdJPdpewiQ4welQ5QFkaK0g22eDkIbv2CMZEIs7z+acJAxRjscVLzFISZwC
-	 vPEiI2i1Z0s7uknW7n71X91lZI1V8AXMRRhmouLQ7qc5W+s6fBFWo+anY3nJ4PsfogYCQ
-	 +dGhCRx0N/cc7ixgCwLy8N46T2+xaR1skj0I3jeXISFDtSkSI+YA9UU8/BNnIRS9w4g==
+	t=1795031321;
+	b=2k0yzHKGjmz9orp5iWsckWE64fc0JmPI20pPHQHQK13Zd95WJvSuKsfMCyohwL4gVP9a
+	 H6hFC0ahvJeXY2fhFu8kuOzYSKNGzDrB9i16FT/Zz/DCFDnMSPwHPHV1mAMbWhB36/28E
+	 OhsjI/PhLuEUtMjTfDw8Hp4wP+OXt0VCEQK5xEhEmXqOg8r/UcFXJRXPnjVXfmt2i7RYc
+	 gawrINqCwoOp3XuJBA3FjgEwQNU3Tg/c5yF8KRHsMBycx/6QOTNGS6luCKyzU6E4//t+T
+	 Ztmzyf4+C8NNpNLxW36EMVdAcJsNr9FBVPNRVLrVqzJJaS4J+duz0po4aR89lakeFjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031318;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031321;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lmHUdhOvTlOySw/c7idsEPcoPpnTsHyEh6SUXW/1x0I=;
-	b=PBTCHMo0nlzCOG6k28InSreu9sCSvN2rsD7vsa4iXPqEaCEfQZwAdh+LVgx4zRvawuXn
-	 84cSldWf983nZl3aAUBaDQcXvAPfL+dSj5dbmO+enBJvcLf1tRu5EnGdFm58r/fnwaBxC
-	 oWKtEw5qmUJjUS1A9fwUHp0+j32EGWaY6Prxoil6EKZx8lSJZVCt1ZeePATtcf5nesMXf
-	 xUSXN45mv8iPjyA27KWWu3DbcuJaT9mK6Czqan5ZzxK+hkZX5qsnabZ0QEvqiX3B6N4I3
-	 IK47bewUj5O6a+QKBNTsgsKFqOP2cXlSXH2XSNV5k8YXyYMN2bqNQc/O3mzDJxV83Pw==
+	bh=1A9lLRfiD2wYT4mrFMg6F/QlMiae2HurPoi5eJjiCkU=;
+	b=H9QwkylpQCo48wMLiGP7RDNwzV0bPVswmFQT6EeJzg8rVbAsj2nqC4rpoASkWcZaUgUf
+	 bCwG0mekk7i+vKmEdFCdC/1DI5leQmhYnhiEZA/S0LlkGZmur4KJGfEYknX0FAPP5rSO5
+	 H7KhsRDbAxu/81Ay0I9citKrWGGWRlXnkqkO1a0evdIxUnons7MaNb3XFyywLcW+dy70h
+	 k0BA6WrNhotDHsCdlLU2p8mx+SJE6bRb05PJaIf3tWg+/aSHV1WbU1UfrEs6vR2GnM930
+	 muKm95VV1U9QgD+URzQD5FjUHZHkSuLuU0kxtmj5M8apNhGNpDyKp1noTjeI8g/5HxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rBEWdZl1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u/Bmi49E";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4246B606A325;
-	Wed, 18 Nov 2026 19:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3638606A325;
+	Wed, 18 Nov 2026 19:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rBEWdZl1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AAD51F000C4;
-	Wed, 18 Nov 2026 19:48:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u/Bmi49E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565001F000C5;
+	Wed, 18 Nov 2026 19:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031318;
-	bh=lmHUdhOvTlOySw/c7idsEPcoPpnTsHyEh6SUXW/1x0I=;
+	s=korg; t=1795031320;
+	bh=1A9lLRfiD2wYT4mrFMg6F/QlMiae2HurPoi5eJjiCkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rBEWdZl1rSSsOzcJAqL93Nq7XKl10FlsboYAaCKqwGHsTxiilybyaE+RMP1D4pEUO
-	 ZaPW6f6JGTYMimgXd/qT0QLCe1rfeJuFh1BukzmELFLXzt4SOtyyMT6y1/RZzm3l3F
-	 niRVt+RYK2SgvgWfzPiwIjOPM4bjUgQ4zSDCqunE=
+	b=u/Bmi49ELX9IEv1XUSwCvLRU1SpmLGGvQ+k7BlGt3krXA1ZQiQNzSdt+wHHySzhk/
+	 MZz9vojE7mGOAxGYkApVu5UjrxopyFetWwHtmMeDgfzyDsD0on7KQx0AH5XFVTbVbb
+	 Qtl68ChaWTwxRAOtku/B+htNhZf1HZ5banVZESU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	John Crispin <john@phrozen.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0974/1756] wifi: mt76: mt7996: fix PLE free page and AC queue register offsets
-Date: Wed, 18 Nov 2026 15:51:41 +0100
-Message-ID: <20261118150048.918237420@linuxfoundation.org>
+Subject: [PATCH 6.12 0975/1756] wifi: mt76: mt7996: disable the RX NAPIs before the DMA cleanup
+Date: Wed, 18 Nov 2026 15:51:42 +0100
+Message-ID: <20261118150048.956198933@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,50 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: John Crispin <john@phrozen.org>
 
-[ Upstream commit c33af2e4622baafc56c565a13823f6b89d3f50db ]
+[ Upstream commit 7a5a3843178c61d99d939b231318692d08fff79b ]
 
-The PLE register map in the MediaTek vendor driver places the free
-page counter, the free page head and tail, and the HIF group page status
-at 0x3a0, 0x3a4 and 0x3a8. The driver reads them at 0x380, 0x384 and
-0x388, and the vendor map has the band 1 TXCMD queue empty status at
-0x388. The same map has 0x100 bytes per AC for the station queue empty
-bitmaps, with the MT7992 extension register at offset 0x80. The driver
-uses 0x80, which cannot hold the 34 registers per AC of MT7996, so the
-hw-queues file reads AC1 to AC3 of a station from the wrong register.
+mt7996_unregister_device() leaves the RX NAPIs enabled, so
+mt76_dma_cleanup() deletes enabled NAPIs and destroys page pools that
+are still bound to them. On rmmod, the kernel warns in
+__netif_napi_del_locked() for every RX queue and in
+page_pool_disable_direct_recycling(). Until the IRQ tasklet is disabled,
+an interrupt can still schedule a NAPI that was already deleted.
 
-Use the offsets of the vendor register map.
+Disable every RX NAPI that was added before the MCU exit and the DMA
+cleanup. This includes the host RRO queues: mt76_dma_init() skips them,
+but mt7996_dma_rro_start() adds their NAPIs later when WED is not
+active, so a check for mt76_queue_is_wed_rro() would miss them.
 
 Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Link: https://patch.msgid.link/20261006205936.669125-25-nbd@nbd.name
+Signed-off-by: John Crispin <john@phrozen.org>
+Link: https://patch.msgid.link/20261006205936.669125-27-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/regs.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/init.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/regs.h b/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
-index 47b429d8bfbe5..5e0342dce630c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
-@@ -121,12 +121,12 @@ enum offs_rev {
- #define MT_FL_Q2_CTRL				MT_PLE(0x3e8)
- #define MT_FL_Q3_CTRL				MT_PLE(0x3ec)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
+index 6da42d9411656..80b1df96c9ee4 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
+@@ -1403,6 +1403,8 @@ int mt7996_register_device(struct mt7996_dev *dev)
  
--#define MT_PLE_FREEPG_CNT			MT_PLE(0x380)
--#define MT_PLE_FREEPG_HEAD_TAIL			MT_PLE(0x384)
-+#define MT_PLE_FREEPG_CNT			MT_PLE(0x3a0)
-+#define MT_PLE_FREEPG_HEAD_TAIL			MT_PLE(0x3a4)
- #define MT_PLE_PG_HIF_GROUP			MT_PLE(0x00c)
--#define MT_PLE_HIF_PG_INFO			MT_PLE(0x388)
-+#define MT_PLE_HIF_PG_INFO			MT_PLE(0x3a8)
- 
--#define MT_PLE_AC_QEMPTY(ac, n)			MT_PLE(0x600 +	0x80 * (ac) + ((n) << 2))
-+#define MT_PLE_AC_QEMPTY(ac, n)			MT_PLE(0x600 + 0x100 * (ac) + ((n) << 2))
- #define MT_PLE_AMSDU_PACK_MSDU_CNT(n)		MT_PLE(0x10e0 + ((n) << 2))
- 
- /* WF MDP TOP */
+ void mt7996_unregister_device(struct mt7996_dev *dev)
+ {
++	int i;
++
+ 	cancel_work_sync(&dev->dump_work);
+ 	cancel_work_sync(&dev->wed_rro.work);
+ 	cancel_work_sync(&dev->reset_work);
+@@ -1413,6 +1415,10 @@ void mt7996_unregister_device(struct mt7996_dev *dev)
+ 	mt7996_coredump_unregister(dev);
+ 	mt76_unregister_device(&dev->mt76);
+ 	mt7996_wed_rro_free(dev);
++	for (i = 0; i < ARRAY_SIZE(dev->mt76.napi); i++) {
++		if (dev->mt76.napi[i].dev)
++			napi_disable(&dev->mt76.napi[i]);
++	}
+ 	mt7996_mcu_exit(dev);
+ 	mt7996_tx_token_put(dev);
+ 	mt7996_dma_cleanup(dev);
 -- 
 2.53.0
 
