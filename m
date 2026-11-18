@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036906;
-	b=obPmz3/edrp39CM77Rr9XE8qltlACYt/KEtUQMnfECfzkFvSUKCz/BqhMHm/INOHP2Hs
-	 bGIy62MTTd3N/v344RiUux9HC76T+pCj7ej8Iuy9IJdI0u4I0wBxux/eI2cvT1aJzQY2z
-	 PoLg6gJl/jPbQ3y7tVI420Wg/8abYSGKykFNXxAGj3be8R2dCXD1/VapPQon3a/6xZyVZ
-	 l/y9r04ztA7O7YKgOFJss92fGMz+ra1P7Nbhd8houdKEgWYBfQ1L9qx6rUrE0ro7fzuTl
-	 F0vvp+MFSWSHZIs9rWx5WYtSBvkxuI3K+uGpwgim+X8rtHR+De+6NPTYCOoNrJvOIQw==
+	t=1795036909;
+	b=rG4gA81eEBO2BO20mvCEdTeCG2V+0roa1g48jpbtzdQOlOn0RYohTBf5txU0ve8XKH6H
+	 2zHh5tM4BJHsv43Wom96TiKjwbUSdrsN1VvbzptGW1mSKij5dNmZlgv39zGps0+dRZIDI
+	 ou+DqtoFtDtf9ampmCQEeBqZyATa+wGojA5EqcXLb/1K6aLXc1Nbq9Fd+VFmWSrJZWbCm
+	 QaNVPsCCV3+aB7ws1xh+fpfbFE6dlVmhk/VafSzXfGbuLDmKTc34trCs6dNmBHZ4u2F1w
+	 amwtP0iu9TpsFEF1HiTPxNzGch7ipM0YioQZcoNReq6FPq2GnYQd/tCuaODl2LzOC5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036906;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036909;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l8Q2r0VLXgfWrR4CSLe0iHUQeib1CAPiCPTdxiVKk/w=;
-	b=5eX3x7UNwuyhADlN9D5jCVDuTENfbx5f2Th1YhnXQhkICRTuMhWnurnEG5RY0l2ZVFNx
-	 BBYrG3VVoVFriGtRgPw8PnlLmITkz9OwX9bAUeSpk/SYKhEU9GGM5Noxxb8OIZJCM8XxR
-	 aomvCrqIaHduIAghrlSIojji65nDfAb9VxM5CB+3NwQ3O5hS5vAQqriUdnk1CXd8Ps3AX
-	 a3bkEqwhFAym9IsvSoiGco7rrfo22RTnDR1TLUjEnyLdgpTDZNW+xHia4w32M9rymK8tF
-	 mE9JREGFTk+YOhwHhlyKljbqw2Oe1vIhLvc7obOjjqqpbGCYWMm+AhqWB/LH6ErCWNA==
+	bh=s29ec7rqVZiUlUptiwhu5zz/ogidRPRhbrD1wR/poFQ=;
+	b=E258EUd0VdKBVWyiPKwNaLPtfD/uXU047YjWIxl1Oz1NGEI8yevh4Jz02t8XfFW2cGq9
+	 GW+vZsIWTXWuN6mOgURPL2d0R1DZcMDwH0H2tun1MmFpLOaLznK3jdBthovzpgreurGbk
+	 sU1/rS6zcYX7iPDkfJEHGq8QtI/rtfTjIK8Fx+D3Z1jm7NIvMuGmBlfkez+Vt0djM93xO
+	 y4dpKLNeVxTOJ4p0Pu9exVUz9Jzu6SDEkl1TBrlyPoyeUbw3YfSKpu6S0mVk385u6UrUB
+	 tW02mYSDThfeRLQcZdCmPEkGMhzDXEV/RLXs9IuReQs6IWvt0W2HiwSbNiJaTjaSxyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NHhqcOeX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=adqWZ0t4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D66B606A31C;
-	Wed, 18 Nov 2026 21:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24FB606A31C;
+	Wed, 18 Nov 2026 21:21:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NHhqcOeX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 754111F000C4;
-	Wed, 18 Nov 2026 21:21:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=adqWZ0t4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF8B1F000C4;
+	Wed, 18 Nov 2026 21:21:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036906;
-	bh=l8Q2r0VLXgfWrR4CSLe0iHUQeib1CAPiCPTdxiVKk/w=;
+	s=korg; t=1795036908;
+	bh=s29ec7rqVZiUlUptiwhu5zz/ogidRPRhbrD1wR/poFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NHhqcOeXky6yBN1B5aAmGRJne9BkFXgk186QkCG55bw7QGWmo5FYJ/McC1mDiaxW7
-	 eBP7eKC1/rlY0UeDmQZMwB/r7Ygr2yGIZZlU3xG+CHaBa+ee0l1rHQ/YrtmWIbakck
-	 5E+FxNkaUg62R5hJ8iqPwI4Y7UEUPGqCikyqNOqE=
+	b=adqWZ0t40HgWmOI0uIQrpUsED25x9kpkV4QZCC2giXWOupIrQbqj76z/q1u+KSU46
+	 d69y+/BrDB9xji5tvfRajEk02TLwjhXm7RgbzIq9hmT5jSQu4zzSstGmC0jl4EqHla
+	 NFWDhNX6wXzKaEPO1wmwevJL21ZJs/qrc4qCf+7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1225/3318] time/namespace: Fix overflow when converting absolute deadlines
-Date: Wed, 18 Nov 2026 15:30:47 +0100
-Message-ID: <20261118150356.933556005@linuxfoundation.org>
+Subject: [PATCH 6.6 1226/3318] ceph: avoid pending truncate during nonblocking cap acquire
+Date: Wed, 18 Nov 2026 15:30:48 +0100
+Message-ID: <20261118150356.962269834@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,48 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit d69cfd33b5a8d176124c564513b9ceb933595d93 ]
+[ Upstream commit 979b7ed4457a04c5a41c36f86052ecc6b76c67d9 ]
 
-do_timens_ktime_to_host() subtracts the namespace offset from an absolute
-deadline and clamps the result to [0, KTIME_MAX]. A negative offset can
-make a large deadline overflow to a negative value. Since ktime_t is
-signed and KTIME_MAX is its maximum value, the subsequent comparison
-against KTIME_MAX can never detect this overflow.
+Readahead acquires caps while the folios are locked.  This can
+deadlock when processing a pending truncate; truncate_pagecache() can
+then attempt to a folio that is already locked.
 
-For example, with a -1 second boottime offset, an absolute CLOCK_BOOTTIME
-timerfd deadline of KTIME_MAX can expire immediately. An absolute
-clock_nanosleep() using the same clock and deadline can also return
-immediately instead of waiting.
+Return -EAGAIN instead when `NON_BLOCKING` is set, causing the
+readahead to be abandoned.
 
-The earlier tim < offset check already handles the lower bound. A
-negative subtraction result in the remaining branch therefore indicates
-overflow. Detect that result and clamp it to KTIME_MAX.
-
-Fixes: 89dd8eecfe961 ("time: Add do_timens_ktime_to_host() helper")
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261020233433.20997-1-dennylin0707@gmail.com
+Fixes: 49870056005c ("ceph: convert ceph_readpages to ceph_readahead")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/namespace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ceph/caps.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/time/namespace.c b/kernel/time/namespace.c
-index 95a18cae6647b..55a88dc5b7aeb 100644
---- a/kernel/time/namespace.c
-+++ b/kernel/time/namespace.c
-@@ -49,7 +49,7 @@ ktime_t do_timens_ktime_to_host(clockid_t clockid, ktime_t tim,
- 		tim = 0;
- 	} else {
- 		tim = ktime_sub(tim, offset);
--		if (unlikely(tim > KTIME_MAX))
-+		if (unlikely(tim < 0))
- 			tim = KTIME_MAX;
+diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
+index ee80fe4c0266a..1bf14f16055b6 100644
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -2851,6 +2851,10 @@ static int try_get_cap_refs(struct inode *inode, int need, int want,
  	}
  
+ 	/* finish pending truncate */
++	if (ci->i_truncate_pending && (flags & NON_BLOCKING)) {
++		ret = -EAGAIN;
++		goto out_unlock;
++	}
+ 	while (ci->i_truncate_pending) {
+ 		spin_unlock(&ci->i_ceph_lock);
+ 		if (snap_rwsem_locked) {
 -- 
 2.53.0
 
