@@ -1,59 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044816;
-	b=26PUyTicy8deX0lXKjaLsgaBcUZgIDv50bb1SSdClAOGuM+ZdOIEWEvk6fGWuPkL6Jam
-	 XwrCYdSDLBcZl1N1B55JmkLjCIz4zQbjuw3il4Kkkgbghw+E1E8s9SDxh9mZZflj9JUMq
-	 gcSzF1cUaL6fcYnb5SUldIPEQUKsYLg2hCPXI5E7uDQKytSyZOtSntFmh0DeAHpF8s5Vw
-	 SxO5GW+FqJ285F8HqgNNIVPyYPvhyTxObtjYQc9TOjYUpwBAgktrrbW8dgh6PB+zMDBAR
-	 2F0TTLaBDhNyzArwjTspP2Tgup5Re/o+LzLLD8V/P4iIY2TdwY6efL/6LGcfne/53ZA==
+	t=1795044819;
+	b=TJqwkwcdiFQlvS/nZlC7V225cMenqMS3KDisfcJ7SG1cSlw9l7mhCcwbatB8Pc3hG/CW
+	 VQrk/4QQTvJz6VdEUyVZJLHvHDHXatMF9okBrG/4QNX6pt/9UXh/kfjAs1jSQj6QEAlSy
+	 RWDmeRJ7n42x/MOwf+8AJna5TfHg2a3+MAaMYReMWnb97TnR+blnFQey2EjgLEkW3O4n6
+	 brOAxPzhTM6u4svXyp+mppIOf6ZxXk0vAXiK0eZLjO16UpzVn6erXYF8uYANq/EuX0OUA
+	 uV4ClHcqarHgxLFPEsBM1cHV1SKVJJ55F52LicPPdwHlZsH4LBKV980PNlh8TQ5jrvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044816;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044819;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eMPk3T5wqTdGgU+W7xso2o0m3RPgGTsTBKoR5m4jfDw=;
-	b=n0ovjfz4DKauSXW0KCOPql/rF7HW6g0emEwqmQJbUKXUpd1DXfWrFFC3N8KBp2WaSy8d
-	 1EkNM6xowqYooRlNsjQrHTpd0gIXwMIBhYnYturwV2okiK+t8Q9bIgXOIjRr3pEgZe87D
-	 XQrR78xhsLXExv7PrI1/Fe0WNBmeUBs7q9QO46KMkrJ5Uw4GNxkmzy+0nAoR6XpFAzrzb
-	 g55rlw/Wf2zhX0qlJIzdKszdGKPZr6jes2+ad0GX9yuzOn2meHFqgbYKBgzaEY2r5lfzh
-	 TDWcA+vNJvlSp+eAF0PkhTV/2lCu/xo5RdHx5h1qQ4DXWAXRnkVOFlVCklG/0RLrjnw==
+	bh=emH3RfIyH07om7YEmNs6X/OT9d3lLKq7nwHq27d/x8c=;
+	b=pKkP9Aaxzk98XKmzuMHpDXmI3E+pLUqhU8Tdf44+8AaBjeiBbZo2Y/Ijwoj0MprwhWyA
+	 bcaRfpop3CeMhsgOVs1H11DcSEeokwhD7OBRoNK2VY1GeX5VZBTnEHHr/2utrrahdh+RM
+	 yYOclW2BSenyP2gz7ca4wlYRfQC8tBgSEuQTBZ5nRLew9ipdwcUp6B0TnuRg1XrzFERkl
+	 lmhBM+NkxdsNPk4UMQd6ByhF/o/2wPKIYu+FO7MoeQNoATNQ7OXmSoeDDJUIriIhYhSrW
+	 Kq0Z4viUmDRrXDVqButp5nzuL3xuz3fLhKHJnAy67ZDNyYq8TE4R6YHYsU1MvrcNXCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DC1pBOwH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UCtYcspR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620D160A5BD5;
-	Wed, 18 Nov 2026 23:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5036560A263D;
+	Wed, 18 Nov 2026 23:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DC1pBOwH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C411F000C4;
-	Wed, 18 Nov 2026 23:33:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UCtYcspR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63FC81F000C4;
+	Wed, 18 Nov 2026 23:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044816;
-	bh=eMPk3T5wqTdGgU+W7xso2o0m3RPgGTsTBKoR5m4jfDw=;
+	s=korg; t=1795044818;
+	bh=emH3RfIyH07om7YEmNs6X/OT9d3lLKq7nwHq27d/x8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DC1pBOwHZxyMGVOio7wIncNriAVQvENoQreet7jYp7Ux/GGe79zqFnvCLxpPYUggv
-	 GBL71H/rE8Iljcae8wr7g/us5uE3P1z285qfF4Z3BMV0+hGseSvC00v5ckrl/blHvA
-	 b9F/06HFxpTs6Ax5h9exhqti7Jxep/5iD5A2Po8s=
+	b=UCtYcspRD9D6XG5IPgtWa3avGobLZ5OSMM67xRIelexPiluW/0ZfxzY4GNoJmk+D0
+	 WO9cRwcJGcEyfw0Haoj8m7zCKd6NiwmwRU9ugFtW/JFbUqlytXXtrbr0NFG54EImUg
+	 gQK9EhzjNXKS5UfJxTSHRFekMvedmR+hcO9IHN8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vernon Yang <yanglincheng@kylinos.cn>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Zach OKeefe <zokeefe@google.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0702/2857] mm: khugepaged: fix swap entry value to folio_pfn()
-Date: Wed, 18 Nov 2026 15:28:56 +0100
-Message-ID: <20261118150226.831318322@linuxfoundation.org>
+Subject: [PATCH 6.1 0703/2857] media: s5p-mfc: use timer_shutdown_sync() for the self-rearming watchdog
+Date: Wed, 18 Nov 2026 15:28:57 +0100
+Message-ID: <20261118150226.867076429@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -75,142 +71,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vernon Yang <yanglincheng@kylinos.cn>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 942c8ec27aa4ffc587511650718349964e1696e6 ]
+[ Upstream commit 63069b5917cba2e15b1a78b3f4ff99e45102c56f ]
 
-Patch series "mm: khugepaged: fix tracepoint UAF", v5.
+The MFC watchdog timer (s5p_mfc_watchdog) is self-rearming: every
+callback re-arms itself with add_timer() and, on a timeout, schedules
+watchdog_work. s5p_mfc_remove() tears this down with timer_delete_sync()
+followed by flush_work().
 
-The khugepaged tracepoints take a folio pointer and call folio_pfn(), but
-by then the folio may no longer be valid: freed after folio_put(),
-folio_unlock() or pte_unmap_unlock(), or not a folio at all but an
-xarray-encoded swap entry.  On classic SPARSEMEM, dereferencing it oopses
-khugepaged as soon as the trace event is enabled; on other memory models
-it merely prints a bogus pfn.
+timer_delete_sync() dequeues the timer and waits for a callback that is
+already running, but it does not prevent a subsequent re-arm. Because the
+watchdog callback re-arms via add_timer(), this is the wrong shutdown
+primitive: once the wait returns nothing guarantees a just-queued re-arm
+will not fire later, dereferencing dev (clock on/off, deinit_hw,
+load_firmware, init_hw) after video_unregister_device(), DMA teardown and
+s5p_mfc_final_pm() have run, a potential use-after-free.
 
-Pass the pfn to the tracepoints directly, captured while the folio is
-still pinned, closing the use-after-free windows in
-mm_khugepaged_scan_file(), mm_khugepaged_scan_pmd() and
-mm_khugepaged_collapse_file().
+Use timer_shutdown_sync(), which puts the timer into a shutdown state so
+that any add_timer()/mod_timer() from the callback becomes a no-op and no
+later firing is possible. Switch flush_work() to cancel_work_sync() so any
+watchdog_work that was already queued before the timer was stopped is
+cancelled rather than allowed to run to completion against the torn-down
+device.
 
-This patch (of 3):
+This issue was found by an in-house static analysis tool. No runtime
+reproducer is available.
 
-When the swap entries found exceed max_ptes_swap, the loop is left via
-break with folio still holding the xarray value that encodes the swap
-entry, not valid folio pointer.
-
-That value is passed to trace_mm_khugepaged_scan_file(), which feeds it to
-folio_pfn().  On FLATMEM and SPARSEMEM_VMEMMAP, the page_to_pfn() is plain
-pointer arithmetic, so the trace event merely prints bogus scan_pfn.  On
-classic SPARSEMEM, the page_to_pfn() reads page->flags, dereferencing the
-tiny encoded integer and oopsing khugepaged whenever the trace event is
-enabled.
-
-So when folio is the swap entry value, simply set pfn to -1, just like
-exhausted scan naturally.
-
-And the folio_put() has maybe dropped the last reference of folio.  The
-trace_mm_khugepaged_scan_file() is left with a dangling folio pointer.  so
-using the folio_pfn() before dropping the reference, closing
-use-after-free window.
-
-Link: https://lore.kernel.org/20260909025804.3233645-1-vernon2gm@gmail.com
-Link: https://lore.kernel.org/20260909025804.3233645-2-vernon2gm@gmail.com
-Fixes: d41fd2016ed0 ("mm/khugepaged: add tracepoint to hpage_collapse_scan_file()")
-Signed-off-by: Vernon Yang <yanglincheng@kylinos.cn>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Zach O'Keefe <zokeefe@google.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: adapted folio-based code to use struct page and page_to_pfn() in hpage_collapse_scan_file() ]
+Fixes: af9357467810 ("[media] MFC: Add MFC 5.1 V4L2 driver")
+Cc: stable@vger.kernel.org
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ sashal: adapted the timer replacement to the existing del_timer_sync() call instead of timer_delete_sync() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/huge_memory.h | 6 +++---
- mm/khugepaged.c                    | 7 ++++++-
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/trace/events/huge_memory.h b/include/trace/events/huge_memory.h
-index 01591e7995235..23bd4c1f984e8 100644
---- a/include/trace/events/huge_memory.h
-+++ b/include/trace/events/huge_memory.h
-@@ -172,10 +172,10 @@ TRACE_EVENT(mm_collapse_huge_page_swapin,
- 
- TRACE_EVENT(mm_khugepaged_scan_file,
- 
--	TP_PROTO(struct mm_struct *mm, struct page *page, struct file *file,
-+	TP_PROTO(struct mm_struct *mm, unsigned long pfn, struct file *file,
- 		 int present, int swap, int result),
- 
--	TP_ARGS(mm, page, file, present, swap, result),
-+	TP_ARGS(mm, pfn, file, present, swap, result),
- 
- 	TP_STRUCT__entry(
- 		__field(struct mm_struct *, mm)
-@@ -188,7 +188,7 @@ TRACE_EVENT(mm_khugepaged_scan_file,
- 
- 	TP_fast_assign(
- 		__entry->mm = mm;
--		__entry->pfn = page ? page_to_pfn(page) : -1;
-+		__entry->pfn = pfn;
- 		__assign_str(filename, file->f_path.dentry->d_iname);
- 		__entry->present = present;
- 		__entry->swap = swap;
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index 4c3581364cb28..9738b70bbd453 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -2167,6 +2167,7 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
- 	int present, swap;
- 	int node = NUMA_NO_NODE;
- 	int result = SCAN_SUCCEED;
-+	unsigned long failed_pfn = -1;
- 
- 	present = 0;
- 	swap = 0;
-@@ -2200,6 +2201,7 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
- 					/* Maybe PMD-mapped */
- 					? SCAN_PTE_MAPPED_HUGEPAGE
- 					: SCAN_PAGE_COMPOUND;
-+			failed_pfn = page_to_pfn(page);
- 			/*
- 			 * For SCAN_PTE_MAPPED_HUGEPAGE, further processing
- 			 * by the caller won't touch the page cache, and so
-@@ -2212,18 +2214,21 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
- 		node = page_to_nid(page);
- 		if (hpage_collapse_scan_abort(node, cc)) {
- 			result = SCAN_SCAN_ABORT;
-+			failed_pfn = page_to_pfn(page);
- 			break;
- 		}
- 		cc->node_load[node]++;
- 
- 		if (!PageLRU(page)) {
- 			result = SCAN_PAGE_LRU;
-+			failed_pfn = page_to_pfn(page);
- 			break;
- 		}
- 
- 		if (page_count(page) !=
- 		    1 + page_mapcount(page) + page_has_private(page)) {
- 			result = SCAN_PAGE_COUNT;
-+			failed_pfn = page_to_pfn(page);
- 			break;
- 		}
- 
-@@ -2252,7 +2257,7 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
- 		}
+diff --git a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c
+index 007c7dbee0377..58479d2a69fa0 100644
+--- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c
++++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c
+@@ -1440,8 +1440,8 @@ static int s5p_mfc_remove(struct platform_device *pdev)
  	}
+ 	mutex_unlock(&dev->mfc_mutex);
  
--	trace_mm_khugepaged_scan_file(mm, page, file, present, swap, result);
-+	trace_mm_khugepaged_scan_file(mm, failed_pfn, file, present, swap, result);
- 	return result;
- }
- #else
+-	del_timer_sync(&dev->watchdog_timer);
+-	flush_work(&dev->watchdog_work);
++	timer_shutdown_sync(&dev->watchdog_timer);
++	cancel_work_sync(&dev->watchdog_work);
+ 
+ 	video_unregister_device(dev->vfd_enc);
+ 	video_unregister_device(dev->vfd_dec);
 -- 
 2.53.0
 
