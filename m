@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032464;
-	b=XsPXXH3AA3CaUXdOy81GN6QvMTweKtPNnnQiKAHEqP5TWXJ1IujrIT79fkmKOBX4hXLr
-	 luk/7HD5s7LAnR6mYoKORHpOTWQlLFaCOHe7AfM4HZgGDMOBzGtidKtkTm4gNHNvI9iLN
-	 5EV1lnGPT8gFITaE13x0kyd+f+G275r8n7yruXQYWT04uxzZNiM6U/Fa7eYqKgopb86u1
-	 O0SE8UsxjeMr4as+UfaA+1UJsv1/zZIXhCkXRPLr1KWkJ16njzOCnCRvFivuPT/fbVF2m
-	 iJYosKwaYEqVsl9JPrAEhAbVry0dvwvauyq2QGO7wAGQGzEQqwsDuHFfoTNSOpwe42g==
+	t=1795032467;
+	b=3tk/BELNYr/8sLx06LtfJf8WHFHltQJn32ZAS1C93/xq2JcwpJ8+3O45mNCMY2QeGvGE
+	 qQGEE+npuqF4AgQPo5jwzlJhNLbKAJY/I4dALhy2pT5LB+kkbltB61Ka9Tid/0Z4gk1GS
+	 nZBHQh9eJKG4++shzHy4Lb4SdA/mRkaWAaIE6Y+F7nXHZTt/g+Lr59NAg2fWOfHfF1Agc
+	 VR3Vwt2GuHQiDuQ2FDO53wuLudqistw7gtB+4vkD6RqE/5/NVjz13kHD07a+525+VaJb4
+	 AwCjMI05Fi7A4q2mukK7QMR05DJj/ZapG8jI7A2EvA1JfRCyFg/u2MXPrmpq058myjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032464;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032467;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+UPJteh07w7m+BTjiBrDmGjSf9cokF93q2DOmt84vEE=;
-	b=FG5JzGeW6aTnd3fQeklScERn+Ctn+6QcVWkhB0chSO8NJZzBC3HrjPAmqMsg5AJ8vYMK
-	 456gxj2I2E3vm99mz12PR8+prBwNjqU4nFre0fTJsZ23UNU+5P9uOYSwdqTb2p8wa7Q9G
-	 Jnc5uUHgeoyvmGEtjofvn5q++trHTzANIuIYjmcchcO4tcLfr9YmFNqP3ag0YqFH5/c3h
-	 ZZKYk7valYWwbSFW5kJVV1ktTiuAVA3twX4bKwtaQx1IwG3eLXE53T/alXog4fB9lhvbm
-	 AtINWUrT/0aYby/SymBhrmEooVb3+V65RELbP+xFNnS9sdIyyPP/QqD2T5IHA4w02DQ==
+	bh=YHjX4Ly/SY3dIy0wElg3eGoWXO9CPxdRMPl9gaaa9bM=;
+	b=r40CTikglxdAOW8J+p3/Vk+27Ixs0gu235e/rEEa6j6bD8KL56GLLDFdU5EP91DOfev7
+	 P2aHChuONzClmkvvp1IHckiTmgXB3ROL6B340ub6HjoFBMK1Y/Ix1sISB2FVFXevrSNxP
+	 471HlWSUzrSnRYKLxahn3yoNx4hueAnHVhhC4zWdmjEBJLP/J/RbhhruuCPfFaSHTrH6t
+	 EdMCroNSJSahFQIJJGd7G5nYkjfmgj9NvdH1w+BuDkcuM6KMJOIAtzJORZaUv+G9bd+iD
+	 HF+1kdlR9o2GzwFT3fcGaNqvAegNxVMLH7meWEmh+pYGWyljAOhAy+MkwdmkguuGC7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z2Kppkts;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZcZkt0p0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E306073D90;
-	Wed, 18 Nov 2026 20:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F28C606CB2C;
+	Wed, 18 Nov 2026 20:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z2Kppkts
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3FA1F000C4;
-	Wed, 18 Nov 2026 20:07:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZcZkt0p0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D58E1F000C4;
+	Wed, 18 Nov 2026 20:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032464;
-	bh=+UPJteh07w7m+BTjiBrDmGjSf9cokF93q2DOmt84vEE=;
+	s=korg; t=1795032466;
+	bh=YHjX4Ly/SY3dIy0wElg3eGoWXO9CPxdRMPl9gaaa9bM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z2Kppktsgf5jCb7vo5DUKggdItmuuQ1mDRpxahR7qTRT3pJWOTA768DbcDG2Yl7Up
-	 XwIRmkoRZlQjU+ZkKqVfjYAPT00hw7T0s/m9DUHl8I+Zx6u+OkqvQoUgzgfI8xLv4G
-	 84YFZsGVdC2gk+EjXVBlFJHPdjPXa2pqr4bKIIzY=
+	b=ZcZkt0p02oTMmCtz5wkM6h7ukmlKpRkyNp1bsy3MTkhRXbH0w//sR5VgGw9HwBfPl
+	 DkbHqb3VAo42TJbaD2Na5f5ZY6aHSEpPjRq6wY3NUYP+Tsv0A5aJEZlbBhcLTqlqA/
+	 E7PFBLMu8xyraKLzHqDuh38m91yLj9PmppWAoFho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1369/1756] bpf: Bound the nesting that the BTF show code follows
-Date: Wed, 18 Nov 2026 15:58:16 +0100
-Message-ID: <20261118150103.737518907@linuxfoundation.org>
+Subject: [PATCH 6.12 1415/1756] ALSA: pcm: Protect channel-map reads against runtime detach
+Date: Wed, 18 Nov 2026 15:59:02 +0100
+Message-ID: <20261118150105.525034589@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,69 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 13ac7c05bc45d3445b580da186548dd3487fae4e ]
+[ Upstream commit bb4834d5242c4829c0d8467ee68eb25a9bafc38d ]
 
-btf_struct_show() and btf_array_show() recurse for every nested struct
-and array.  MAX_RESOLVE_DEPTH bounds one resolve walk when BTF is loaded,
-not the nesting: a member whose type is resolved already is not walked
-again, so BTF that defines its types from the inside out can nest them as
-deep as it has types.
+Channel-map controls remain accessible between PCM opens. In-tree HDA
+code publishes the generic controls through add_std_chmaps(), so a
+SNDRV_CTL_IOCTL_ELEM_READ can overlap the final close of the same PCM
+substream.
 
-Whoever may load BTF, with CAP_BPF or a BPF token, can give such a type
-to the value of a map.  Reading the file of that map in bpffs then
-overruns the kernel stack: with a few hundred levels the stack guard page
-is hit and the kernel panics.
+pcm_chmap_ctl_get() checks substream->runtime and later reads its channel
+count. Final close clears and frees that runtime under pcm->open_mutex,
+while the control callback holds only controls_rwsem:
 
-Stop at 32 levels.  That is MAX_RESOLVE_DEPTH, and __btf_show_indent()
-has as many columns.  Nothing is shown for a member that lies deeper, and
-the status becomes -E2BIG, which bpf_snprintf_btf() and
-bpf_seq_printf_btf() return.  The types of an x86_64 defconfig kernel nest
-14 deep.
+  Control GET                         Final PCM close
+  -----------                         ---------------
+  snd_ctl_elem_read()
+    down_read(controls_rwsem)
+    pcm_chmap_ctl_get()
+      check substream->runtime
+                                      lock(pcm->open_mutex)
+                                      snd_pcm_release_substream()
+                                        snd_pcm_detach_substream()
+                                          substream->runtime = NULL
+                                          kfree(runtime)
+                                      unlock(pcm->open_mutex)
+      substream->runtime->channels
+        NULL or freed-pointer access
+    up_read(controls_rwsem)
 
-Fixes: b00b8daec828 ("bpf: btf: Add pretty print capability for data with BTF type info")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-19-alexei.starovoitov@gmail.com
+Reloading the cleared field can fault through NULL, while retaining the
+old pointer can access freed storage. controls_rwsem keeps the control
+alive, but does not serialize the matching PCM close.
+
+Copy the channel count under open_mutex and use that scalar for the map
+lookup. Use trylock with -EBUSY because snd_pcm_dev_disconnect() takes
+open_mutex before removing controls under controls_rwsem; blocking in
+the reverse order from GET could deadlock.
+
+Fixes: 2d3391ec0ecc ("ALSA: PCM: channel mapping API implementation")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-pmb-0b5d6bc7124d0b921f2c-v4-b9738bdeab8823999181@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ sound/core/pcm_lib.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index e8a79d92d4afa..eff94cebfedd9 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -934,6 +934,8 @@ static const struct btf_type *btf_type_skip_qualifiers(const struct btf *btf,
- }
+diff --git a/sound/core/pcm_lib.c b/sound/core/pcm_lib.c
+index 932b9337c93ee..fc9cb30f1189b 100644
+--- a/sound/core/pcm_lib.c
++++ b/sound/core/pcm_lib.c
+@@ -2496,6 +2496,7 @@ static int pcm_chmap_ctl_get(struct snd_kcontrol *kcontrol,
+ 	unsigned int idx = snd_ctl_get_ioffidx(kcontrol, &ucontrol->id);
+ 	struct snd_pcm_substream *substream;
+ 	const struct snd_pcm_chmap_elem *map;
++	unsigned int channels;
  
- #define BTF_SHOW_MAX_ITER	10
-+/* nested structs and arrays shown; __btf_show_indent() has as many columns */
-+#define BTF_SHOW_MAX_DEPTH	32
- 
- #define BTF_KIND_BIT(kind)	(1ULL << kind)
- 
-@@ -1327,8 +1329,18 @@ static void *btf_show_start_aggr_type(struct btf_show *show,
- 				      const struct btf_type *t,
- 				      u32 type_id, void *data)
- {
--	void *safe_data = btf_show_start_type(show, t, type_id, data);
-+	void *safe_data;
- 
+ 	if (!info->chmap)
+ 		return -EINVAL;
+@@ -2504,11 +2505,20 @@ static int pcm_chmap_ctl_get(struct snd_kcontrol *kcontrol,
+ 		return -ENODEV;
+ 	memset(ucontrol->value.integer.value, 0,
+ 	       sizeof(long) * info->max_channels);
+-	if (!substream->runtime)
+-		return 0; /* no channels set */
 +	/*
-+	 * Structs and arrays are shown by recursion.  BTF loading bounds the
-+	 * depth of one resolve walk, not how deep resolved types may nest.
++	 * PCM disconnect takes open_mutex before removing controls.
++	 * Use trylock to avoid a deadlock with controls_rwsem.
 +	 */
-+	if (show->state.depth >= BTF_SHOW_MAX_DEPTH) {
-+		show->state.status = -E2BIG;
-+		return NULL;
++	scoped_cond_guard(mutex_try, return -EBUSY,
++			  &info->pcm->open_mutex) {
++		if (!substream->runtime)
++			return 0; /* no channels set */
++		channels = substream->runtime->channels;
 +	}
+ 	for (map = info->chmap; map->channels; map++) {
+ 		int i;
+-		if (map->channels == substream->runtime->channels &&
 +
-+	safe_data = btf_show_start_type(show, t, type_id, data);
- 	if (!safe_data)
- 		return safe_data;
- 
++		if (map->channels == channels &&
+ 		    valid_chmap_channels(info, map->channels)) {
+ 			for (i = 0; i < map->channels; i++)
+ 				ucontrol->value.integer.value[i] = map->map[i];
 -- 
 2.53.0
 
