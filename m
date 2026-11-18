@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024043;
-	b=O/nVgNvmIfpndsmmlixbzBdY1K2Rc6j65JQNwG2XyAOYMBoEZ+lZey1AA6vIY98wojPt
-	 vtDQNh2eAUAaJdmchAeiFHYZMze0QArj8WQ+TGzfzLw1Sv3vBr10dcQkhKXaDSluPyqlD
-	 /q1eXbzMnHbueIgvPROCEQhsv/lQBaozvSOWgOlqRnM8So5MVV6ml2MsC7KWof7vyx0/q
-	 fzQjY/DdhNdfO40IOHcTz5RVY61d6P673RW2NTkzJzf0fBqAntj5Y2pXGCgRLnpy0OlzA
-	 pzalUW9IkZZVUE4CSVMV8fcImYsKRC46eQas26D+G0f1cDdmAfenYkOXgtzIkSvOygw==
+	t=1795024046;
+	b=rR/1efFm+ugOf2wEv2TbqiZf6yUVcfYOkKStwMIAkJhhpWKj7RIoOPyfbqmtvkzL4KFP
+	 ziHxOQP60o3jO6cFSwvxUUs5IviKUprjmPZVHAt8F2YHJZ51mvgCk3Ich889UzBqQx2S/
+	 rD2YU1bec1j/EdmLY1UP5CW5oo42j1XI7DWrfMDKQeyuHDIM3RVOWcH6i4LLZDzI55IVi
+	 VTMEqK2LoW9PRSEK2SOmnejUeDZHT7dsICcnxS+8NAv+JFQ1+v+eghuHbla/ATirDkJBd
+	 DtI5G+BguH+X4jFAnB+DHxqNMmjiGd98QHnYkB7t4cKo2xFSQW4XEY2TRxSqE9sWbOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024043;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024046;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=STBmVfyqPO6RLXLiLFkr6APyvrHZcEgr8x/a4FrArjY=;
-	b=43hj4RkqDS538uv2rxmnIxVm91u09N7YQerlPwAG86sWxTzUm+JdC/vGmZ+BkM5k0Ojz
-	 chqRBTEgXdszayVLMBX/opVVGknxp15R4Af5j3PP7X9KBlTqTOhz3ZBz2O5e+KF+xhn2H
-	 stvrOFenh1bF0fjs5/h2WHMyhNtW72NOm9Y9lmQBAu7hkRN1iFy+RRKvS+kplUn9ceZ+0
-	 sNtOV4/xd+AxGgNgp6QsaoMLUQ/hOzKRTAPiqp4cypsQr1j94edJYSPzPZzTZ9BG+Ym0r
-	 vQ0GVpT99yIMnvA6PX8XKrSCVGcyAjR5aXvitsdjVUqxlaEsW5bsTstIvJ/pYPr6Y9g==
+	bh=WwJlSqW1XESLBrF+qYn6en6HYH7tyjM+w0UUub+fbjk=;
+	b=O0KeLgTpwVBJ7UH0AsCNyg2DVukpQA5eOx/lVm3+DFkza39LDZ7w3lCqzRvmFYVaShwO
+	 24L5ky3mV8IC48U1GGUF1si2mQCffM3/j3wjZySQYLzGap7462tAduwHbUABGSQwiqLNR
+	 3mB0ip+RdR+iG8aF9GYLixXQNJFyp/DZsH5GlasrQwb3Cn+bOSJDCX4Kj+4wrHK/S5Jna
+	 K5NpCWYYyPZGaYfZXv6InF/vBL5xE9xyADZ9zzlngr0KIDAxeRdwM82wd9NGiMnbhnmWS
+	 wOKGYb959XJDcrR3fTw0zsXqxW3jwijHjegWE1gihyf8BAindNUztdwO9UhVQQ57vuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D1qog8tv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AuJH3qI2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F782606A320;
-	Wed, 18 Nov 2026 17:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3751606A325;
+	Wed, 18 Nov 2026 17:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D1qog8tv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020EC1F000C5;
-	Wed, 18 Nov 2026 17:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AuJH3qI2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26311F000C4;
+	Wed, 18 Nov 2026 17:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024043;
-	bh=STBmVfyqPO6RLXLiLFkr6APyvrHZcEgr8x/a4FrArjY=;
+	s=korg; t=1795024046;
+	bh=WwJlSqW1XESLBrF+qYn6en6HYH7tyjM+w0UUub+fbjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D1qog8tv2lRADcvyCnjvfh2LyxVjhqmnIYgpEcRdbpxEKT7h6yFmmmQkVVLvq7P+p
-	 i6ljyN2Bxmj4VNhyKzHgWHowOb507efaviNBqy7lBdr4KRHn9pnnOKt+lbLj/hVwa/
-	 jsjTaNrXG4NxvtAG+/oGpIS/eDBwOUvrvyhI0BMI=
+	b=AuJH3qI2o8xjtO/UvE7uvuUwOLWlLHPKyoEkl4+OsIrwtsAbT1q9RIL1nxbkcAo9P
+	 nZYuMy8hRo0nH2roh67I0eP4PbLxll0ITi5JBWg6xOGqm6S96Z25V/Dj926oGpC45t
+	 Q7qp8WxILXCKSMfbXVriYxoMEWsSEk+fltrHgwBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Cong Nguyen <congnt264@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0585/2151] perf build: Remove leftovers of removed build options
-Date: Wed, 18 Nov 2026 15:38:40 +0100
-Message-ID: <20261118150143.263555712@linuxfoundation.org>
+Subject: [PATCH 6.18 0586/2151] leds: lm3692x: Fix regulator/gpio leak and wrong enabled state on last write failure
+Date: Wed, 18 Nov 2026 15:38:41 +0100
+Message-ID: <20261118150143.299840170@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,76 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-[ Upstream commit a5cac2df8b4af0410dd6339e6491cb1e4fbc6986 ]
+[ Upstream commit 145ca6bca2cc5fd8d9c7af216df58a9c75c0e84c ]
 
-NO_LIBDW_DWARF_UNWIND, NO_SYSCALL_TABLE and the embedded clang/LLVM
-support were all removed, but each removal left the matching entry in
-the build test suite behind:
+Every write in lm3692x_leds_enable() checks its return and jumps to
+out: on failure -- except the last one, which falls through and sets
+led->enabled = true regardless of whether it actually succeeded. Leaks
+the regulator on a failing probe, and short-circuits later
+brightness_set() calls without retrying.
 
-  run += make_no_libdw_dwarf_unwind
-  run += make_no_syscall_tbl
-  run += make_with_clangllvm
+Route it through out: like every other write here, and only set
+enabled = true once it succeeds.
 
-None of these have a make_* variable defining what to build, so $($@)
-expands to nothing and each one silently repeats the plain "make_pure"
-build. The suite therefore spends six builds, as every test is also run
-with O=, appearing to cover options that no longer exist.
-
-Remove them, along with the NO_LIBDW_DWARF_UNWIND comment that is still
-in Makefile.perf.
-
-Fixes: 2e9191573a69ff96 ("perf build: Remove NO_LIBDW_DWARF_UNWIND option")
-Fixes: 3cc550f5bbcf54ab ("perf tools: Remove dependency on libaudit")
-Fixes: 56b11a2126bf2f42 ("perf bpf: Remove support for embedding clang for compiling BPF events (-e foo.c)")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Assisted-by: Antigravity:gemini-3.1-pro
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 260718b3a35d ("leds: lm3692x: Disable chip on brightness 0")
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Link: https://patch.msgid.link/20260915034515.4147981-1-congnt264@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Makefile.perf | 3 ---
- tools/perf/tests/make    | 3 ---
- 2 files changed, 6 deletions(-)
+ drivers/leds/leds-lm3692x.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
-index 4b184859cbd24..3e3e266c5bc1d 100644
---- a/tools/perf/Makefile.perf
-+++ b/tools/perf/Makefile.perf
-@@ -61,9 +61,6 @@ include ../scripts/utilities.mak
- #
- # Define NO_LIBBIONIC if you do not want bionic support
- #
--# Define NO_LIBDW_DWARF_UNWIND if you do not want libdw support
--# for dwarf backtrace post unwind.
--#
- # Define NO_LIBTRACEEVENT=1 if you don't want libtraceevent to be linked,
- # this will remove multiple features and tools, such as 'perf trace',
- # that need it to read tracefs event format files, etc.
-diff --git a/tools/perf/tests/make b/tools/perf/tests/make
-index 1fe1ef45e5c10..e91f46970d8f7 100644
---- a/tools/perf/tests/make
-+++ b/tools/perf/tests/make
-@@ -152,7 +152,6 @@ run += make_no_demangle
- run += make_no_libelf
- run += make_no_libdw
- run += make_libunwind
--run += make_no_libdw_dwarf_unwind
- run += make_no_backtrace
- run += make_no_libcapstone
- run += make_no_libnuma
-@@ -161,10 +160,8 @@ run += make_no_libbpf
- run += make_no_libbpf_DEBUG
- run += make_no_libllvm
- run += make_no_sdt
--run += make_no_syscall_tbl
- run += make_no_babeltrace2
- run += make_with_coresight
--run += make_with_clangllvm
- run += make_no_libpfm4
- run += make_refcnt_check
- run += make_help
+diff --git a/drivers/leds/leds-lm3692x.c b/drivers/leds/leds-lm3692x.c
+index c319ff4d70b2a..03f2196836751 100644
+--- a/drivers/leds/leds-lm3692x.c
++++ b/drivers/leds/leds-lm3692x.c
+@@ -274,9 +274,11 @@ static int lm3692x_leds_enable(struct lm3692x_led *led)
+ 
+ 	ret = regmap_update_bits(led->regmap, LM3692X_EN, LM3692X_ENABLE_MASK,
+ 				 enable_state | LM3692X_DEVICE_EN);
++	if (ret)
++		goto out;
+ 
+ 	led->enabled = true;
+-	return ret;
++	return 0;
+ out:
+ 	dev_err(&led->client->dev, "Fail writing initialization values\n");
+ 
 -- 
 2.53.0
 
