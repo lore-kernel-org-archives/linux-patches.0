@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044734;
-	b=DpgwH7AlDn64C9jEafC0dKIYzxS6qcf8ZfU98mk2UI8Fky3pwYHwmy915vLowxWfPSHe
-	 aFfUoreOoo7RBUX6T66XROeNiBknPKRoGUCWONRvbTA4ZcqKU3WOdcSlXuB8aC6vNrleA
-	 RgGKn56kmebtTeZ7w2mNSeViDqrB+vDt8vVMPaleMQfD7/zotx9lbFpq1/cgkt6beT5HQ
-	 /Y2fMHcRmQn+rYakOnpLtjZDYVeLP88hK9Q0Eg8I4yf8CLdbtZDW4sjtDxzVv6ze2ZDqe
-	 AMXucxEE0Q6dH6YfffPWf5vNVrAMps8MPj6PJ6hM0VzsvVOXxSrPqCYVIwNqd1Aupww==
+	t=1795044738;
+	b=ZZQsfady+X10JOqmKrsHAWFIknfIYTNpBu6N3mcpaz7ioF1CR28sXkzPb8cAS0MhE3Er
+	 koV0zUMakfgre16OUnprnGy9on/uaa9emCBK3R6HIupy0zv6FG0y/wqPNHT9ftrto0qs+
+	 e02vvdrv6Jj4ikInoG7Y1IZX94F1o/QGe06oBHhbCEDVhalzrat1Ld7sXIfivRle9bD3W
+	 xD2wORSBzTXoraPwi5ItY0PHfsnNSb+UvSgyJ8k6EJ7tOSHWQkMefTgY6cUhONCTYu6iq
+	 3APTEtauoCBHeMN0dgd2p115JpjQI1NGMI//fEmiqy/Q9kstgObWtjN7HcR6wB6qOig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044734;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044738;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tRuvkpCqFV1xbTYyyun4JZluH1bSCxwYH60mfsSbiYc=;
-	b=IIz/rIF7bGJPQF5joxv70YPASof9jSMPV+YJYmocv7w9bdoZWFZY53T/AoAaFAI60mU7
-	 9CbjLFfBR8ulg9SsulRGMWvoutkKlSykdeyfAGOiNDBg9+8sJqvQ4fyR+BMNxYlYsHuFg
-	 /sxyy33xa7d9A0ZaqPF358Tc8vrZTgDSypxb1w1+rvUxN6SfYNLMcnwVz2+IF/pKZtpbE
-	 SIU1av4KkzXaYrJtDnUw3XkYoqecI9YaP8GFr18IcFOB4Iq410+Tt8p5nsMEw4/sQQCFJ
-	 IH5wdd7QZHoL1+4v1vcV1IMhLMnE7o/Kb7bXSK3IYK7LZpRbZ9Uer5st43E/XuA5EzA==
+	bh=6vadb7PO25hmz7gZCi7Vag+z/RcLWPOkEcqShRI7iGs=;
+	b=PBSHlkF9ea78+hFs2YSMqdDT1BkIWC1V5Z9W1/UBGcOGftpm83Sr2tjOizBikEiNW3SY
+	 ID/3rq1akXV1rb2yPuykqzXGtwEp/hsU1quay/Vs5mh9cVSeSOV5DimxpRKAUI+Lv8u+z
+	 TEB9KgGupIVMxBCA8IVPUxyEYWJtjhVMJul9lmFxOjClC/d5GSmXT4MDUh3hpI7P9whX5
+	 W+uxw+lQh6hg0PjCXTYz3MuslrMPv05UJw55FkL1YdFfRtPHhvW/GRBE34kbv9aMISSA0
+	 OXIkpKJDxqSDak6lBNdCLp4d3MvASKb8IUENifb/Yf74IEfrDIozmvRDANTXxar8GCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Np2q3mAU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IstYBFRZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89F8606A325;
-	Wed, 18 Nov 2026 23:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2789606A320;
+	Wed, 18 Nov 2026 23:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Np2q3mAU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 319FB1F000C4;
-	Wed, 18 Nov 2026 23:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IstYBFRZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3991F000C4;
+	Wed, 18 Nov 2026 23:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044734;
-	bh=tRuvkpCqFV1xbTYyyun4JZluH1bSCxwYH60mfsSbiYc=;
+	s=korg; t=1795044737;
+	bh=6vadb7PO25hmz7gZCi7Vag+z/RcLWPOkEcqShRI7iGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Np2q3mAU437Wu3xnElKKe4EJHEOkPOH1DLyfDzLZXiuo8iwDpahg6Eg5aZ2ONzeXM
-	 EhVECpMrkNlWnKfaMT6qanDRSPnSQ1oC5DbCtOwmtcgwgAVRZehFmFNT91GbMB+RgP
-	 CdOPszOtnx1LZrJlxLi85HgvSbLwtoN2D6mOgAK8=
+	b=IstYBFRZp3w2Tc4PZoeaS5cumJ6Z//qCFc4IYw5icM7RtFWq4w1/w5GK8DnWzUS1q
+	 skoIr6l2pxNpou/k0l0Glbb7n1saHbLylXJ8yB1YYyo686CpNooPMs27WzLLkx4g6E
+	 L/KTsjNfMkkzGeQH9huo1cJzTgWHnO8Iqig4Fyi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0671/2857] ksmbd: fix parent dentry lifetime in directory enumeration
-Date: Wed, 18 Nov 2026 15:28:25 +0100
-Message-ID: <20261118150225.722044894@linuxfoundation.org>
+	Stefan Teodorescu <fane@google.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.1 0627/2857] KVM: x86: Zero reserved synic flags when delivering message to avoid stack leak
+Date: Wed, 18 Nov 2026 15:27:41 +0100
+Message-ID: <20261118150224.073940354@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,90 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 171df27077fb49b4af2c53ad2cedcd0e39664fe8 ]
+commit 2616f497506a772db53e7bb1024cde50b4c165e0 upstream.
 
-ksmbd_populate_dot_dotdot_entries() builds the ".." entry from
-the open directory's d_parent and passes that pointer to
-ksmbd_vfs_fill_dentry_attrs() without taking a reference. That pointer
-is only valid while the directory stays under this parent. If a
-concurrent rename moves the directory elsewhere, the old parent loses
-its last reference; a following rmdir then turns it into a negative
-dentry with d_inode cleared, and after the RCU grace period the dentry
-itself is freed. The worker still holds the raw pointer and
-dereferences d_inode through vfs_getattr() and vfs_getxattr().
+Ensure all reserved flags are zeroed when setting the msg_pending flag as
+part of SynIC message delivery, as setting only msg_pending can leak seven
+bits of kernel stack data to the guest.  E.g. gcc typically uses a
+bitwise-OR to set the msg_pending flag, without initializing the on-stack
+variable.
 
-A remote SMB client, authenticated or guest, triggers this by listing
-a directory while that directory is moved under a new parent and the
-old parent is deleted. It can be done by the client itself with write
-access or by other concurrent writers, triggering null-ptr-deref and
-slab-use-after-free on a KASAN build.
+Precisely zero the flags, e.g. as opposed to zeroing the entire structure,
+to make it somewhat more obvious that the flags *need* to be zeroed.  E.g.
+it would be quite easy to misread the initial read of guest memory and
+think that zeroing the entire structure is completely superfluous.
 
-  KASAN: null-ptr-deref in range
-      [0x0000000000000000-0x0000000000000007]
-  Workqueue: ksmbd-io handle_ksmbd_work
-  RIP: 0010:xattr_permission+0x9d/0x160
-  Call Trace:
-   vfs_getxattr+0x9c/0x1b0
-   ksmbd_vfs_getxattr+0x82/0x100
-   ksmbd_vfs_get_dos_attrib_xattr+0x7f/0x130
-   ksmbd_vfs_fill_dentry_attrs+0x435/0x650
-   ksmbd_populate_dot_dotdot_entries+0x25e/0x630
-   smb2_query_dir+0xcf9/0x1a20
-   handle_ksmbd_work+0x5f1/0x1c80
-   process_one_work+0x90b/0x19d0
-
-Fix by using the dentry reference counting APIs: take the parent with
-dget_parent(), take a matching dget() on ".", and dput() the dentry
-once ksmbd_vfs_fill_dentry_attrs() has returned or the pattern does
-not match.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Fixes: 3a0e7731724f ("x86: kvm: hyperv: simplify SynIC message delivery")
 Cc: stable@vger.kernel.org
-Cc: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: adjusted context for the existing ksmbd_vfs_fill_dentry_attrs() call using user_ns without a return-value check ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Stefan Teodorescu <fane@google.com>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://patch.msgid.link/20260826184449.814130-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb_common.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/x86/kvm/hyperv.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/smb/server/smb_common.c b/fs/smb/server/smb_common.c
-index 0350697c9093b..d30547f656ccd 100644
---- a/fs/smb/server/smb_common.c
-+++ b/fs/smb/server/smb_common.c
-@@ -447,16 +447,17 @@ int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work, int info_level,
- 			if (i == 0) {
- 				d_info->name = ".";
- 				d_info->name_len = 1;
--				dentry = dir->filp->f_path.dentry;
-+				dentry = dget(dir->filp->f_path.dentry);
- 			} else {
- 				d_info->name = "..";
- 				d_info->name_len = 2;
--				dentry = dir->filp->f_path.dentry->d_parent;
-+				dentry = dget_parent(dir->filp->f_path.dentry);
- 			}
+--- a/arch/x86/kvm/hyperv.c
++++ b/arch/x86/kvm/hyperv.c
+@@ -772,7 +772,9 @@ static int synic_deliver_msg(struct kvm_
+ 		if (no_retry)
+ 			return 0;
  
- 			if (!match_pattern(d_info->name, d_info->name_len,
- 					   search_pattern)) {
- 				dir->dot_dotdot[i] = 1;
-+				dput(dentry);
- 				continue;
- 			}
- 
-@@ -465,6 +466,7 @@ int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work, int info_level,
- 						    user_ns,
- 						    dentry,
- 						    &ksmbd_kstat);
-+			dput(dentry);
- 			rc = fn(conn, info_level, d_info, &ksmbd_kstat);
- 			if (rc)
- 				break;
--- 
-2.53.0
-
++		hv_hdr.message_flags.asu8 = 0;
+ 		hv_hdr.message_flags.msg_pending = 1;
++
+ 		r = kvm_vcpu_write_guest_page(vcpu, msg_page_gfn,
+ 					      &hv_hdr.message_flags,
+ 					      msg_off +
 
 
