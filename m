@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029773;
-	b=x8mPnXb+IXwBpgY9pRb/EOQFk7/UmxmOK2VzrQmAHRdEgLUPQV3HJK3qAcaxeqx7ZDwq
-	 tufQU5Im3F3qAjaUdnKrgx5BZ+j3b986p5ijMpue1SC3XQ43jS9NgPHN4OXh6oBMPmSe+
-	 HdileQEhjR9pVMcZKe1HWAO8WB3KOfWjQT7wYzdxvuuiuDrJRbkrNGyfOFNIajbuwqbzk
-	 aPOPUh7VSsXnOKr/VmnKX52mIOh9JDMz2FyiI7dAXrRbNCFKtRVrYfsSfIbeEFQ3cjn8E
-	 qsFWyM+DxN63f9uQKvUHFieyu7W3HNHvLUnCfHmYbislMjbPF6/LXJBURL5Vqr1IhlQ==
+	t=1795029776;
+	b=B4Gnfj9MMzVtq+cP3e7Dwq0nATveMmAtrdQ6wSMFTX+CcuzzS5Nyh4Kl220pO+E1KvQq
+	 JjX7UlAGMAdVjpygcD8cOu8KtpL7F4HRYusCPQPPMka3ed5SaV+4A4fCHMBvz67Ce4uTr
+	 9+dx74eEzBTJawWdpEOtCo5kMVE2Oz3r+dzORZyBWY+7OhIwvx5TgTH3bjp9tVqRPiQjG
+	 i4C8CACPtPdHWFelcMEUr/3VXYNRAbVMpBoSFN9A5MOGE4Ix9bjipWMlPvJ7gcEJ7wWLW
+	 uwxXaez/rz0JUp3q4+ppA1RwpJrI16zvCgxU064Pu2jpU3qCprMwCqfDKB7g6resHbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029773;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029776;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Soq8IayFBgFmgpVFAbxrz3eGete9ycsacyZFmoEOW6E=;
-	b=YpSYBiiN30nmBE8GA6mJGHey3lnIFXq4VPlUTl+d/WLV3Z1BPXWZaduih0Fcs8rQVuxT
-	 tez3/xfDbvJxezP17bhpEjkmiEX6H5l2JfdCrV+9e1D7a5SiyBJDXTGeAgVvlFG05Lp2c
-	 H1QGQnpTjPJMYi/0oDeZy/5HIoAunRbwg2+6g2sY+2qLB9/Zxm31F8mWbfoPnRbbVkRfd
-	 qDOEge7rbx4TjZTBgCOgGwm3wFMb9ENE6lt30zwvgjDDUcu7bbHn0+cWHfKSNlW1niRbI
-	 sBwtHV/m3AoM5FlaXd8VCKOeY/Wcfp8VV5UdLpUHEEJLtFnmQuIfjeBzrMbLNEhHt7w==
+	bh=fURSXuVnutP7LaG0HMszVxOKuYxk4Q93DieIYrJ/AQ4=;
+	b=whuqXlr+QFwXPu21KTM3by8tKl/0reT7SuCN+qcyraLRFlqvEoboN77M1htuP8j0sUeF
+	 AFAmpm0qaMjbPz2XqSIDXxYOt8wyBP7LAzZDxq0G3AQYD3WN7xKcBykhFh4FzbWTAG3JY
+	 9zIvpL1zAYb5/Jty9Rw7yvtVE4CTglMRoKyEkBE+or4iinndngAxwiNaCWEgSrm94x8Zt
+	 VkFnhtKUxHbzMenpIP1hajY7GNk3d+ZEnoxiJGVWhwi9IMvRHyjHGbeW6AOPEFKtE2Yul
+	 H2dBtQ5H++mpCddmhMv0XT0lL6oOo9Gqk8vUQ407D7Aj2cu7L6aV315tima213yH7Zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HbihOTBY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QKIHAdqT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36DA606A325;
-	Wed, 18 Nov 2026 19:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83008606A31C;
+	Wed, 18 Nov 2026 19:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HbihOTBY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3888B1F000C4;
-	Wed, 18 Nov 2026 19:22:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QKIHAdqT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7781F000C4;
+	Wed, 18 Nov 2026 19:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029773;
-	bh=Soq8IayFBgFmgpVFAbxrz3eGete9ycsacyZFmoEOW6E=;
+	s=korg; t=1795029776;
+	bh=fURSXuVnutP7LaG0HMszVxOKuYxk4Q93DieIYrJ/AQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HbihOTBYmNvgvsUhoomEqKg7RdpNe+Z6k8o6JbT3HKJP2p+3wWN/nEjXVPT7zZiGp
-	 ts5ZldWOTdjmLvd6LWnk/CReWIpEWO8lTtgt6KqYngT80z77VjMYBxzkUqKkbygH4I
-	 TxihA5ZGEmqVKXkeDitqKZrK4RBKqysKUnOOIlFo=
+	b=QKIHAdqTBS8E4o7zzVeCy7deWHF07r7ScH7RfLqMSDdQa8g4MEr82yNq66HokVifB
+	 axA5DXMNhUpXPmEzPdj3QGaNuW+W97qC9SpKe1xqokx1xsaHp/dq1haG5OIOrDCjeA
+	 5sIxbPZmccAEkuGOJNsmZFZgDSpLX7o4u4BNKM7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	Li Ming <ming.li@zohomail.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Antonio Borneo <antonio.borneo@foss.st.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0427/1756] cxl/hdm: Make switch decoder target parsing endian-safe
-Date: Wed, 18 Nov 2026 15:42:34 +0100
-Message-ID: <20261118150025.756576364@linuxfoundation.org>
+Subject: [PATCH 6.12 0428/1756] pinctrl: stm32: Declare stm32_pmx_get_mode() as static
+Date: Wed, 18 Nov 2026 15:42:35 +0100
+Message-ID: <20261118150025.797558347@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,78 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alison Schofield <alison.schofield@intel.com>
+From: Antonio Borneo <antonio.borneo@foss.st.com>
 
-[ Upstream commit 3f846646b3d3b5699139e686e1107d231a725860 ]
+[ Upstream commit 9b71efc450fdd2f70d59917025da34f8b0e81135 ]
 
-Switch decoder target IDs are stored one per byte, starting with
-target 0 in the least significant byte. The current code accesses
-those bytes in memory order, which only matches register order on
-little-endian hosts.
+The commit acaa037970f6 ("pinctrl: stm32: Implement .get_direction
+gpio_chip callback") exported the function stm32_pmx_get_mode()
+and the struct stm32_gpio_bank, but these were never used outside
+the file that defines them.
 
-On big-endian hosts, the target IDs are reversed and the decoder is
-associated with the wrong downstream ports.
+Declare the function as static, drop it from the include file and
+drop also the struct, not anymore visible outside the file.
 
-Place the register values in a byte array in little-endian order and
-index the target IDs from there, so the target mapping is independent
-of host endianness.
-
-Fixes: d17d0540a0db ("cxl/core/hdm: Add CXL standard decoder enumeration to the core")
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Li Ming <ming.li@zohomail.com>
-Link: https://patch.msgid.link/b0526825b3c3ffdb78837563e178d9aa27b6bbb8.1786143520.git.alison.schofield@intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Antonio Borneo <antonio.borneo@foss.st.com>
+Link: https://lore.kernel.org/20250610143042.295376-2-antonio.borneo@foss.st.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Stable-dep-of: 01f20711d044 ("pinctrl: stm32: Drop the nonexistent CONFIG_MACH_STM32MP25 from the STM32MP257 default")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/hdm.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/pinctrl/stm32/pinctrl-stm32.c | 5 +++--
+ drivers/pinctrl/stm32/pinctrl-stm32.h | 4 ----
+ 2 files changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-index a4b81f9ce8ab2..24873dbb900c0 100644
---- a/drivers/cxl/core/hdm.c
-+++ b/drivers/cxl/core/hdm.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /* Copyright(c) 2022 Intel Corporation. All rights reserved. */
- #include <linux/seq_file.h>
-+#include <linux/unaligned.h>
- #include <linux/device.h>
- #include <linux/delay.h>
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
+index 79aff59b54f72..05df641874a92 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.c
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
+@@ -121,6 +121,8 @@ struct stm32_pinctrl {
+ 	spinlock_t irqmux_lock;
+ };
  
-@@ -827,15 +828,12 @@ static int init_hdm_decoder(struct cxl_port *port, struct cxl_decoder *cxld,
- 			    u64 *dpa_base, struct cxl_endpoint_dvsec_info *info)
++static void stm32_pmx_get_mode(struct stm32_gpio_bank *bank, int pin, u32 *mode, u32 *alt);
++
+ static inline int stm32_gpio_pin(int gpio)
  {
- 	struct cxl_endpoint_decoder *cxled = NULL;
-+	u8 target_id[CXL_HDM_DECODER0_TL_TARGETS];
- 	u64 size, base, skip, dpa_size, lo, hi;
- 	bool committed;
- 	u32 remainder;
- 	int i, rc;
- 	u32 ctrl;
--	union {
--		u64 value;
--		unsigned char target_id[8];
--	} target_list;
+ 	return gpio % STM32_GPIO_PINS_PER_BANK;
+@@ -795,8 +797,7 @@ static int stm32_pmx_set_mode(struct stm32_gpio_bank *bank,
+ 	return err;
+ }
  
- 	if (should_emulate_decoders(info))
- 		return cxl_setup_hdm_decoder_from_dvsec(port, cxld, dpa_base,
-@@ -948,11 +946,12 @@ static int init_hdm_decoder(struct cxl_port *port, struct cxl_decoder *cxld,
- 			return -ENXIO;
- 		}
+-void stm32_pmx_get_mode(struct stm32_gpio_bank *bank, int pin, u32 *mode,
+-			u32 *alt)
++static void stm32_pmx_get_mode(struct stm32_gpio_bank *bank, int pin, u32 *mode, u32 *alt)
+ {
+ 	u32 val;
+ 	int alt_shift = (pin % 8) * 4;
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.h b/drivers/pinctrl/stm32/pinctrl-stm32.h
+index 5e5de92ddd58c..8790fef2d58a2 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.h
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.h
+@@ -65,11 +65,7 @@ struct stm32_pinctrl_match_data {
+ 	bool secure_control;
+ };
  
--		lo = readl(hdm + CXL_HDM_DECODER0_TL_LOW(which));
--		hi = readl(hdm + CXL_HDM_DECODER0_TL_HIGH(which));
--		target_list.value = (hi << 32) + lo;
-+		put_unaligned_le32(readl(hdm + CXL_HDM_DECODER0_TL_LOW(which)),
-+				   &target_id[0]);
-+		put_unaligned_le32(readl(hdm + CXL_HDM_DECODER0_TL_HIGH(which)),
-+				   &target_id[4]);
- 		for (i = 0; i < cxld->interleave_ways; i++)
--			cxld->target_map[i] = target_list.target_id[i];
-+			cxld->target_map[i] = target_id[i];
+-struct stm32_gpio_bank;
+-
+ int stm32_pctl_probe(struct platform_device *pdev);
+-void stm32_pmx_get_mode(struct stm32_gpio_bank *bank,
+-			int pin, u32 *mode, u32 *alt);
+ int stm32_pinctrl_suspend(struct device *dev);
+ int stm32_pinctrl_resume(struct device *dev);
  
- 		return 0;
- 	}
 -- 
 2.53.0
 
