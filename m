@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030950;
-	b=qobRqf6atuKgKtBedUi79jLtq25dlu8dxWo2D/oq79PMsT1NKL6azd8NEbgkoiI/ZzNj
-	 ANp4mkpNKvj2RtssCcycfRKrE2vxVz3CRKUQ0ybsxLeXhUXoctn4ZmjZG6G3JKR4nA6G3
-	 UGh19T9auX+mbw3sUr7birWnG5zhg1/GR19YAwdgR1jqIVKfFuysHt96rmSizaFvspZR1
-	 Y08CIw9hNdxh3ylwI2nx0fdiXpY6PP0s31W9jcHPEf3gw63TA2zmRw/ifZBrzSt44owFZ
-	 zUTYL3H5weolzu3Pl3Kn4yzzkaOBBeW2r7TlXLjJlYI06y/6JPY1yozPBmFIRDcIxTw==
+	t=1795030952;
+	b=M0XYctFscAlJr2Burat+MYGFUGEXq+xdS4eqdCn1Qcd020B8a4mETaqJhHde07W+i9ze
+	 zun8j+LmKhPyyVS2SxeHXzrG40OtzeNDMWefOAlwh+l4BJ/FtaazH7eXCV2Z88d4ova6x
+	 onm5QjjRPXadRNAPZ+vYsHniXV+WodqARmHAVGgmGJzq8fXEQQhDIaLAuELqeb1x16xRW
+	 1ZiROQ7rt4AubY0jK5cO7JaS8No4zvSswNWFrHjcp91rFAefJmazMbAcMGTGx5RbwYeqw
+	 wXgcuC57Vr6h3Xlc0VTXVBZLLD0lF3pT0xIQ2+mo79syf1yejb+xJXWjFUNKeYx+29w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030950;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030952;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nJhJEAlA5pdoNLgDfs7o/fHXjCQzhduRKM5yK8IvHdU=;
-	b=5akKw4MUD5UTzwjeu1+pN20QPsrZS2A3yZUlUbSblEV5DiKpGzmX6D8J8zncfJlwylN9
-	 /pAWu5jDkxnl5HNoelVbfCTZ0pjonLrkN2cqLbXr9rvStiYFq5LpOj613WKir8RNuXsYB
-	 nyGTswQeZlSDslME5HsDSbhk/hBWVoD/702SjUaDUUgzTxQy7Y6cxZh/IFywWf05xg5Ap
-	 DSP3FcvRsk5Q9yNnoX7fXcKiPuoEM5iV0FX6NJki7zLmsq89uCI2N8rAmDxZ2toOX2/Ss
-	 fUhAJz0soKxRWjMpMc5zN4gMNtwfMasF7owW02yNIaE5/nZAwHIKNcnHVk4TY0RTZQg==
+	bh=mVtCVh47i2MyMKVyABv0k+SMVT69kMllzsUbZI0wTlU=;
+	b=yuh+WQ22jPaIMPNelQUmw8nklZuiCCHDcBqWWvkS+omam64r0S3rtap3OpGKkkqkmHvc
+	 aprLi8msRXd6laLt2LZksxbZ1lMsn0e6psb5MW/BYs2hi1ucYEFPr6f/NUp4mLu2hPQpx
+	 A8PIiriCYKM/I8Qeqh7YtVoF8r1L4VmFORmU/+wisok10d5PDQhxIT9Du57cGEX8jtsi8
+	 PofvtGvPMCXc0ZQqGVPg8mqGatQAutJiRm35KmkeyLvG2WAh2yGeXoovKWPHudMsEEv24
+	 TXgZFQxEvBj4bShF7KbywGRTW4RLKgxPR5fT7UK4p5Qc5+NCwDdB56LLcw3Xa2IPAIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pR6Dg73M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XkzFB/jf";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50164606A325;
-	Wed, 18 Nov 2026 19:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D178F606A325;
+	Wed, 18 Nov 2026 19:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pR6Dg73M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5847C1F000C4;
-	Wed, 18 Nov 2026 19:42:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XkzFB/jf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C63F1F000C4;
+	Wed, 18 Nov 2026 19:42:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030949;
-	bh=nJhJEAlA5pdoNLgDfs7o/fHXjCQzhduRKM5yK8IvHdU=;
+	s=korg; t=1795030952;
+	bh=mVtCVh47i2MyMKVyABv0k+SMVT69kMllzsUbZI0wTlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pR6Dg73M4/i23W7wgYXO7mTum1iXCI2gcbcG1wk/x6vO63wPURy7imaFK67E9r+hB
-	 s7l04Ok0cMUCDBDdkb5WhkSnIm7W843Zrm9xbyacs9gyyyjr4MQpQ1uWNfGHn3CK4b
-	 VOizZlAi0BbE8wcDwz5XRhAY1aAD5whQEyPx3iXI=
+	b=XkzFB/jfPI4uI9tEoEijc4T2P7gtpD5Vc8zX1EESgDrJQj2u2bWx+6GeL/hZypeVg
+	 jozsZFoF7a7P7Dnjh9dPaCbsW/eFM1R6MnPdVgVc2ykLDer+arCZ8mhktenA9VLyJs
+	 4WC61dMrcx38egrxOUQsAQiW3PaH2Q4MfU+vL5AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0886/1756] dmaengine: ste_dma40: Fix probe IRQ leak
-Date: Wed, 18 Nov 2026 15:50:13 +0100
-Message-ID: <20261118150044.983745120@linuxfoundation.org>
+Subject: [PATCH 6.12 0887/1756] dmaengine: ste_dma40: Fix DMA registration unwind
+Date: Wed, 18 Nov 2026 15:50:14 +0100
+Message-ID: <20261118150045.035347747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,57 +72,145 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 7ca608cf6b842685bbbe131d4f7d638f7cdc2b5d ]
+[ Upstream commit f71ef686f913c8e9771a54466a76d653b83cd3dd ]
 
-d40_probe() registers the hardware interrupt before several later probe
-steps that can fail. Those error paths jump to destroy_cache without
-freeing the IRQ, leaving the handler registered after probe resources have
-been released.
+d40_dmaengine_init() registers DMAengine devices using devres-managed
+unregister actions. If probe fails after one of those registrations, the
+DMAengine devices stay visible until devres unwinds after d40_probe()
+returns.
 
-Route failures after a successful IRQ request through a dedicated cleanup
-label. Keep the request before DMAengine registration because that
-registration publishes channels to clients.
+The channel tasklets are also initialized before each DMAengine device is
+registered. An interrupt can therefore have queued a tasklet by the time a
+later registration step fails, but unregistering the DMAengine devices
+does not drain that tasklet before probe-owned storage is released.
 
-Fixes: 8d318a50b3d7 ("DMAENGINE: Support for ST-Ericssons DMA40 block v3")
+Add tasklet cleanup actions to the DMAengine registration devres group.
+Install each action before publishing its DMAengine device. If action
+registration fails, those tasklets have never been exposed and cannot have
+been scheduled, so use devm_add_action() without immediate reset cleanup.
+
+On later failure, free the IRQ before releasing the group so no new
+tasklets can be scheduled, then unregister the DMAengine devices and drain
+their tasklets before freeing the remaining probe resources. Keep the
+managed registrations and cleanup actions in place on successful probe by
+removing only the temporary group markers.
+
+Fixes: 42ae6f1695be ("dmaengine: ste_dma40: Remove platform data")
 Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
+Closes: https://lore.kernel.org/dmaengine/20260819225215.5EA2F1F000E9@smtp.kernel.org/
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-10-89f595e8851d@kernel.org
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-11-89f595e8851d@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/dma/ste_dma40.c | 45 +++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 43 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index c88de0dc7c6eb..1b833fa77fba9 100644
+index 1b833fa77fba9..c7c727411a275 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -3681,18 +3681,20 @@ static int __init d40_probe(struct platform_device *pdev)
+@@ -2876,6 +2876,18 @@ static void __init d40_chan_init(struct d40_base *base, struct dma_device *dma,
  	}
+ }
+ 
++static void d40_kill_tasklets(void *data)
++{
++	struct dma_device *dma = data;
++	struct d40_chan *d40c;
++	struct dma_chan *chan;
++
++	list_for_each_entry(chan, &dma->channels, device_node) {
++		d40c = container_of(chan, struct d40_chan, chan);
++		tasklet_kill(&d40c->tasklet);
++	}
++}
++
+ static void d40_ops_init(struct d40_base *base, struct dma_device *dev)
+ {
+ 	if (dma_has_cap(DMA_SLAVE, dev->cap_mask)) {
+@@ -2922,6 +2934,11 @@ static int __init d40_dmaengine_init(struct d40_base *base,
+ 
+ 	d40_ops_init(base, &base->dma_slave);
+ 
++	err = devm_add_action(base->dev, d40_kill_tasklets,
++			      &base->dma_slave);
++	if (err)
++		goto exit;
++
+ 	err = dmaenginem_async_device_register(&base->dma_slave);
+ 
+ 	if (err) {
+@@ -2937,6 +2954,11 @@ static int __init d40_dmaengine_init(struct d40_base *base,
+ 
+ 	d40_ops_init(base, &base->dma_memcpy);
+ 
++	err = devm_add_action(base->dev, d40_kill_tasklets,
++			      &base->dma_memcpy);
++	if (err)
++		goto exit;
++
+ 	err = dmaenginem_async_device_register(&base->dma_memcpy);
+ 
+ 	if (err) {
+@@ -2954,6 +2976,12 @@ static int __init d40_dmaengine_init(struct d40_base *base,
+ 	dma_cap_set(DMA_CYCLIC, base->dma_both.cap_mask);
+ 
+ 	d40_ops_init(base, &base->dma_both);
++
++	err = devm_add_action(base->dev, d40_kill_tasklets,
++			      &base->dma_both);
++	if (err)
++		goto exit;
++
+ 	err = dmaenginem_async_device_register(&base->dma_both);
+ 
+ 	if (err) {
+@@ -3549,6 +3577,7 @@ static int __init d40_probe(struct platform_device *pdev)
+ 	struct d40_base *base;
+ 	struct resource *res;
+ 	struct resource res_lcpa;
++	void *dmaenginem_reg_group;
+ 	int num_reserved_chans;
+ 	u32 val;
+ 	int ret;
+@@ -3679,20 +3708,32 @@ static int __init d40_probe(struct platform_device *pdev)
+ 		d40_err(dev, "No IRQ defined\n");
+ 		goto destroy_cache;
+ 	}
++
++	dmaenginem_reg_group = devres_open_group(dev, NULL, GFP_KERNEL);
++	if (!dmaenginem_reg_group) {
++		ret = -ENOMEM;
++		goto release_irq;
++	}
++
  	ret = d40_dmaengine_init(base, num_reserved_chans);
  	if (ret)
--		goto destroy_cache;
-+		goto release_irq;
+-		goto release_irq;
++		goto release_dmaenginem;
  
  	ret = of_dma_controller_register(np, d40_xlate, NULL);
  	if (ret) {
  		dev_err(dev,
  			"could not register of_dma_controller\n");
--		goto destroy_cache;
-+		goto release_irq;
+-		goto release_irq;
++		goto release_dmaenginem;
  	}
++	devres_remove_group(dev, dmaenginem_reg_group);
  
  	dev_info(base->dev, "initialized\n");
  	return 0;
  
-+ release_irq:
++ release_dmaenginem:
 +	free_irq(base->irq, base);
++	devres_release_group(dev, dmaenginem_reg_group);
++	goto destroy_cache;
+  release_irq:
+ 	free_irq(base->irq, base);
   destroy_cache:
- 	if (base->lcla_pool.dma_addr)
- 		dma_unmap_single(base->dev, base->lcla_pool.dma_addr,
 -- 
 2.53.0
 
