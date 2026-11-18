@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038757;
-	b=NkJOZVeqMxW5ZbNzTDvALOWAfDHG4jxzNrGjz0NIUmNjGgeinCchSjGHNbw4ySqToYqK
-	 hRj7QebicRIxvLTZid33mhvJMJXxYb1CxAGNMmRVCBZB7s8FKrmwTaq+HthSpC8pDMPil
-	 0XdnmA9vsTbCGd5m5T9kUARsVPtbjPRqfN9gLfxpZ1BBRw72wDhC2EHUYgd1WoXm7w8WN
-	 foV76bixUWAJNbBNhF0HosliYS9TzYBqPXV+AxkgSTrqA8uP1IQRRJInuOoMZIIkcTJP6
-	 Ro3UjI48Tt8K9Re7CiGxqqf5KHXZOVs2tYkFG5eN0y8fRvUnOGhSzrE1mlWMmE3XYUg==
+	t=1795038759;
+	b=xCvRyGNQ6XVFWxZePSJj/IUBEbnPpsYhN0fykOcZ+JBbSQGm3O6v9yknB8+TGm29xwUE
+	 Gg+/y9NYUD4UCODsI/+K5S1JCEq+DppNQuQpkm6dMBH4I+55vnA7juc1+SReGq1Uc1UTj
+	 EwxTdmXjk0pZKiEdte1F3Gg0iG5A/9YdJ+hIpBrs3f+4+8PeX/S09CQFhNJ/j+xjyTMZF
+	 tgIiJBGc+I05nA3Ysgh7UX1wQIASZULcsjDKZqoxt4oNXQcY00vvoDTUIU9SmfjRxZ7nZ
+	 LzasnOblNVW+DlI4Gu/RSA9OXnhI3CHjfqON15sqiigqHyNHa//xsONGl0nYV/DuYrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038757;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038759;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vuNh3LgoTRlOSNyHb4NTeypgVRsZAVearfarY9zvcbk=;
-	b=FtNquaZ6LNbnqROugYgPWcUM8Gba6s3EqLE9JzwpE5S9CvHgLVx+Fmpl1638qKamKJRL
-	 O2nXQEheNZRwlGZsrux7Xj7TL/ztqXJfSw3x5X8EuuEMF3VRjwApnl1g4Sekq2uhQTbKC
-	 xV3tAuOvsYmXLFERJCkIcpBAahARskAWo2l31i7Ml5acOh252tOOvafeFH+oAnPu2bWsa
-	 vPxGSikznSc29uf6DJ4cXDRa33zsN5dmmWPXB0MrF92qutZp6JQDQ+qqseALLG/CVkxzz
-	 HmD3HXPfoFGgLfgwHcyDnw5WlkllltPoo0OaH+JaTCHQQK2F0HiOAIOJjGBlV2xXVEg==
+	bh=78ONuRRz5NIz6y0izAxIH8jUjUrzVeNbvea7vuTOCw4=;
+	b=Ey2F/nmCUt8OvceYfr8fqO1nkCzRtQ/TseKyBwnd1AsTCrcWNs32zSs8UxyOAilSSsRW
+	 9AWS369alvhIzpYo0DfKf07hw+I/8vQGZRBtVchsQTI1lstB4ZZ6Qvrp5g1sdaQGQ90g3
+	 Xm8QItAA2FSFOLcwcGPI/sgFuUsoFdQrpKgWiXvSRQlIo9L0rKEEothYzuq4stMyp2Q9a
+	 vjr6Si2ruNIw6kwmO7z84dMnFM3Bb3oTFrrq2dIS5109xCh79PB4XJjiRdq+G5iWHlqk8
+	 x19FN7J4zoDBV9xAG1scoi9t1NHM/hNnxvDV1PyZHxeA1ljHYq/lRp7CeP1Shw2CZ8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1gnP43lk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ad385ZX1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCDE606A320;
-	Wed, 18 Nov 2026 21:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B401B606A31C;
+	Wed, 18 Nov 2026 21:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1gnP43lk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE531F000C4;
-	Wed, 18 Nov 2026 21:52:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ad385ZX1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18AE71F000C4;
+	Wed, 18 Nov 2026 21:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038756;
-	bh=vuNh3LgoTRlOSNyHb4NTeypgVRsZAVearfarY9zvcbk=;
+	s=korg; t=1795038759;
+	bh=78ONuRRz5NIz6y0izAxIH8jUjUrzVeNbvea7vuTOCw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1gnP43lknh0avdxFJiu72+gXZqKauNV6MMh06wSb9d+3Y36sLHUgsMNyv13c//aci
-	 m3ysOJv60+uPkcVyDr8CectbPOr9UnQjZi5+HJZaVd+HqA6r7Ri+MN1xP8zLQFvh2q
-	 1K2OzSXMDBoOAyJWVKTYsCiBS1UCjJHyRhGyYnvk=
+	b=Ad385ZX1D/HtofLqhbNDrBDkrNW2tgVOdqxuF/aitDMOTmAdH2Y2vDoK8vwP8grN2
+	 2JocqdW2as5ZgiAQUFejs+UhomYHCcPov7nt4zoOt2j6YtQi+ri9m1DeHPRVzbpZfn
+	 IlvtbdsswDRo6jJa2gPXg+AFo7AAN2qc8C2yipKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	David Howells <dhowells@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1829/3318] ata: ahci: print the lpm policy on boot
-Date: Wed, 18 Nov 2026 15:40:51 +0100
-Message-ID: <20261118150416.732095155@linuxfoundation.org>
+Subject: [PATCH 6.6 1856/3318] assoc_array: choose between splitting a node and a shortcut without gotos
+Date: Wed, 18 Nov 2026 15:41:18 +0100
+Message-ID: <20261118150417.546241677@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,143 +68,207 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <niklas.cassel@wdc.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit affccb16c117d188eb09495cbdea149cecbf00b9 ]
+[ Upstream commit c47aee71e14dd28d39fce95af83166d7a28a5f2b ]
 
-The target LPM policy can be set using either a Kconfig or a kernel module
-parameter.
+With its jobs in functions, assoc_array_insert_into_terminal_node()
+comes down to one decision: replace the node with a shortcut when every
+leaf in it and the new key share one segment, or split it otherwise.
+Write that as an if and an else, in place of the labels split_node,
+do_split_node and all_leaves_cluster_together.
 
-However, if the board type is set to anything but board_ahci_low_power,
-then the LPM policy will overridden and set to ATA_LPM_UNKNOWN.
+Each branch now works out where its replacement goes from that
+replacement's own back pointer and parent slot, with
+assoc_array_parent_link(), rather than both using the node's.  The two
+are the same today.
 
-Additionally, if the default suspend is suspend to idle, depending on the
-hardware capabilities of the HBA, ahci_update_initial_lpm_policy() might
-override the LPM policy to either ATA_LPM_MIN_POWER_WITH_PARTIAL or
-ATA_LPM_MIN_POWER.
+None of the new functions is recursive, and gcc inlines all of them into
+assoc_array_insert(), whose stack frame is 240 bytes after this series
+against 224 before it, on an x86-64 defconfig.
 
-All this means that it is very hard to know which LPM policy a user will
-actually be using on a given system.
+No functional change.
 
-In order to make it easier to debug LPM related issues, print the LPM
-policy on boot.
-
-One common LPM related issue is that the device fails to link up.
-Because of that, we cannot add this print to ata_dev_configure(), as that
-function is only called after a successful link up. Instead, add the info
-using ata_port_desc(), with the help of a new ata_port_desc_misc() helper.
-The port description is printed once per port during boot.
-
-Before changes:
-ata1: SATA max UDMA/133 abar m524288@0xa5780000 port 0xa5780100 irq 170
-ata2: SATA max UDMA/133 abar m524288@0xa5780000 port 0xa5780180 irq 170
-
-After changes:
-ata1: SATA max UDMA/133 abar m524288@0xa5780000 port 0xa5780100 irq 170 lpm-pol 4
-ata2: SATA max UDMA/133 abar m524288@0xa5780000 port 0xa5780180 irq 170 lpm-pol 4
-
-Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Stable-dep-of: 34a4a34431ed ("ata: libahci: Free the IRQs when activating a multi-IRQ host fails")
+Assisted-by: LLM
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Tested-by: David Howells <dhowells@redhat.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Stable-dep-of: 48691075b0ad ("assoc_array: don't chain a new shortcut onto an existing one")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libahci.c     |  2 +-
- drivers/ata/libata-core.c |  2 +-
- drivers/ata/libata-sff.c  | 10 +++++-----
- drivers/ata/pata_cs5520.c |  2 +-
- include/linux/libata.h    |  5 +++++
- 5 files changed, 13 insertions(+), 8 deletions(-)
+ lib/assoc_array.c | 127 ++++++++++++++++++++++------------------------
+ 1 file changed, 61 insertions(+), 66 deletions(-)
 
-diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
-index 52016b6a6d779..1056d536a60cb 100644
---- a/drivers/ata/libahci.c
-+++ b/drivers/ata/libahci.c
-@@ -2736,7 +2736,7 @@ static int ahci_host_activate_multi_irqs(struct ata_host *host,
+diff --git a/lib/assoc_array.c b/lib/assoc_array.c
+index e3924ed4d3e9f..ddab703561875 100644
+--- a/lib/assoc_array.c
++++ b/lib/assoc_array.c
+@@ -469,6 +469,21 @@ static bool assoc_array_insert_in_empty_tree(struct assoc_array_edit *edit)
+ 	return true;
+ }
  
- 		if (rc)
- 			return rc;
--		ata_port_desc(host->ports[i], "irq %d", irq);
-+		ata_port_desc_misc(host->ports[i], irq);
- 	}
- 
- 	return ata_host_register(host, sht);
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index 3992a12b90a2a..97f07d7b3ce76 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -6134,7 +6134,7 @@ int ata_host_activate(struct ata_host *host, int irq,
- 		return rc;
- 
- 	for (i = 0; i < host->n_ports; i++)
--		ata_port_desc(host->ports[i], "irq %d", irq);
-+		ata_port_desc_misc(host->ports[i], irq);
- 
- 	rc = ata_host_register(host, sht);
- 	/* if failed, just free the IRQ and leave ports alone */
-diff --git a/drivers/ata/libata-sff.c b/drivers/ata/libata-sff.c
-index 9b6529f2dfcbd..ab4bd43bd2cbd 100644
---- a/drivers/ata/libata-sff.c
-+++ b/drivers/ata/libata-sff.c
-@@ -2318,7 +2318,7 @@ int ata_pci_sff_activate_host(struct ata_host *host,
- 		for (i = 0; i < 2; i++) {
- 			if (ata_port_is_dummy(host->ports[i]))
- 				continue;
--			ata_port_desc(host->ports[i], "irq %d", pdev->irq);
-+			ata_port_desc_misc(host->ports[i], pdev->irq);
- 		}
- 	} else if (legacy_mode) {
- 		if (!ata_port_is_dummy(host->ports[0])) {
-@@ -2328,8 +2328,8 @@ int ata_pci_sff_activate_host(struct ata_host *host,
- 			if (rc)
- 				goto out;
- 
--			ata_port_desc(host->ports[0], "irq %d",
--				      ATA_PRIMARY_IRQ(pdev));
-+			ata_port_desc_misc(host->ports[0],
-+					   ATA_PRIMARY_IRQ(pdev));
- 		}
- 
- 		if (!ata_port_is_dummy(host->ports[1])) {
-@@ -2339,8 +2339,8 @@ int ata_pci_sff_activate_host(struct ata_host *host,
- 			if (rc)
- 				goto out;
- 
--			ata_port_desc(host->ports[1], "irq %d",
--				      ATA_SECONDARY_IRQ(pdev));
-+			ata_port_desc_misc(host->ports[1],
-+					   ATA_SECONDARY_IRQ(pdev));
- 		}
- 	}
- 
-diff --git a/drivers/ata/pata_cs5520.c b/drivers/ata/pata_cs5520.c
-index 422d42761a1d7..38795508c2e94 100644
---- a/drivers/ata/pata_cs5520.c
-+++ b/drivers/ata/pata_cs5520.c
-@@ -212,7 +212,7 @@ static int cs5520_init_one(struct pci_dev *pdev, const struct pci_device_id *id)
- 		if (rc)
- 			return rc;
- 
--		ata_port_desc(ap, "irq %d", irq[i]);
-+		ata_port_desc_misc(ap, irq[i]);
- 	}
- 
- 	return ata_host_register(host, &cs5520_sht);
-diff --git a/include/linux/libata.h b/include/linux/libata.h
-index ed2dbec700f5e..eb9646b959fbc 100644
---- a/include/linux/libata.h
-+++ b/include/linux/libata.h
-@@ -1562,6 +1562,11 @@ void ata_port_desc(struct ata_port *ap, const char *fmt, ...);
- extern void ata_port_pbar_desc(struct ata_port *ap, int bar, ssize_t offset,
- 			       const char *name);
- #endif
-+static inline void ata_port_desc_misc(struct ata_port *ap, int irq)
++/*
++ * The pointer that leads to a node or shortcut with the given back pointer
++ * and parent slot: the root, a slot in a node, or a shortcut's next node.
++ */
++static struct assoc_array_ptr **assoc_array_parent_link(struct assoc_array *array,
++							struct assoc_array_ptr *back_pointer,
++							int parent_slot)
 +{
-+	ata_port_desc(ap, "irq %d", irq);
-+	ata_port_desc(ap, "lpm-pol %d", ap->target_lpm_policy);
++	if (!back_pointer)
++		return &array->root;
++	if (assoc_array_ptr_is_node(back_pointer))
++		return &assoc_array_ptr_to_node(back_pointer)->slots[parent_slot];
++	return &assoc_array_ptr_to_shortcut(back_pointer)->next_node;
 +}
++
+ /*
+  * Insert into a terminal node without changing its shape, if that can be
+  * done: in place of a leaf with the same index key, or in a free slot.
+@@ -547,6 +562,20 @@ static bool assoc_array_fill_segment_cache(struct assoc_array_edit *edit,
+ 	return have_meta;
+ }
  
- static inline bool ata_tag_internal(unsigned int tag)
++/*
++ * Whether the leaves of a full node and the new key all share one segment,
++ * so that splitting the node cannot make room.
++ */
++static bool assoc_array_all_one_segment(const struct assoc_array_edit *edit)
++{
++	int i;
++
++	for (i = 1; i < ASSOC_ARRAY_FAN_OUT + 1; i++)
++		if (edit->segment_cache[i] != edit->segment_cache[0])
++			return false;
++	return true;
++}
++
+ /*
+  * Split a full node into new_n0, which takes its place, and new_n1, below
+  * new_n0 in the slot of a segment that at least two of the leaves share,
+@@ -735,11 +764,8 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
  {
+ 	struct assoc_array_shortcut *new_s0;
+ 	struct assoc_array_node *node, *new_n0, *new_n1;
+-	struct assoc_array_ptr *ptr;
+-	unsigned long dissimilarity, base_seg;
+ 	bool have_meta;
+ 	int level;
+-	int i;
+ 
+ 	node	= result->terminal_node.node;
+ 	level	= result->terminal_node.level;
+@@ -777,78 +803,47 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
+ 	have_meta = assoc_array_fill_segment_cache(edit, ops, node, level);
+ 	edit->segment_cache[ASSOC_ARRAY_FAN_OUT] = result->terminal_node.slot;
+ 
+-	if (have_meta) {
+-		pr_devel("have meta\n");
+-		goto split_node;
+-	}
+-
+-	/* The node contains only leaves */
+-	dissimilarity = 0;
+-	base_seg = edit->segment_cache[0];
+-	for (i = 1; i < ASSOC_ARRAY_FAN_OUT; i++)
+-		dissimilarity |= edit->segment_cache[i] ^ base_seg;
+-
+-	pr_devel("only leaves; dissimilarity=%lx\n", dissimilarity);
+-
+-	if ((dissimilarity & ASSOC_ARRAY_FAN_MASK) == 0) {
+-		/* The old leaves all cluster in the same slot.  We will need
+-		 * to insert a shortcut if the new node wants to cluster with them.
++	if (!have_meta && assoc_array_all_one_segment(edit)) {
++		/* The node only contains leaves and all the leaves cluster in
++		 * the same slot, so we need to insert a shortcut to skip the
++		 * common portion of the key and split the node at the
++		 * shortcut's far end.
+ 		 */
+-		if ((edit->segment_cache[ASSOC_ARRAY_FAN_OUT] ^ base_seg) == 0)
+-			goto all_leaves_cluster_together;
+-
+-		/* Otherwise all the old leaves cluster in the same slot, but
+-		 * the new leaf wants to go into a different slot - so we
+-		 * create a new node (n0) to hold the new leaf and a pointer to
+-		 * a new node (n1) holding all the old leaves.
++		new_s0 = assoc_array_insert_shortcut(edit, ops, index_key,
++						     node, level, new_n0);
++		if (!new_s0)
++			return false;
++		edit->set[0].ptr = assoc_array_parent_link(edit->array,
++							   new_s0->back_pointer,
++							   new_s0->parent_slot);
++		edit->set[0].to = assoc_array_shortcut_to_ptr(new_s0);
++	} else {
++		/* We need to split the current node.  The node must contain
++		 * anything from a single leaf (in the one leaf case, this leaf
++		 * will cluster with the new leaf) and the rest meta-pointers,
++		 * to all leaves, some of which may cluster.
++		 *
++		 * We need to expel at least two leaves out of a set consisting
++		 * of the leaves in the node and the new leaf.  The current meta
++		 * pointers can just be copied as they shouldn't cluster with
++		 * any of the leaves.  If all the old leaves cluster in one slot
++		 * and the new leaf does not, they all go and the new leaf stays.
+ 		 *
+-		 * This can be done by falling through to the node splitting
+-		 * path.
++		 * We need a new node (n0) to replace the current one and a new
++		 * node to take the expelled nodes (n1).
+ 		 */
+-		pr_devel("present leaves cluster but not new leaf\n");
++		new_n0->back_pointer = node->back_pointer;
++		new_n0->parent_slot = node->parent_slot;
++		edit->set[0].ptr = assoc_array_parent_link(edit->array,
++							   new_n0->back_pointer,
++							   new_n0->parent_slot);
++		edit->set[0].to = assoc_array_node_to_ptr(new_n0);
+ 	}
+ 
+-split_node:
+-	/* We need to split the current node.  The node must contain anything
+-	 * from a single leaf (in the one leaf case, this leaf will cluster
+-	 * with the new leaf) and the rest meta-pointers, to all leaves, some
+-	 * of which may cluster.
+-	 *
+-	 * It won't contain the case in which all the current leaves plus the
+-	 * new leaves want to cluster in the same slot.
+-	 *
+-	 * We need to expel at least two leaves out of a set consisting of the
+-	 * leaves in the node and the new leaf.  The current meta pointers can
+-	 * just be copied as they shouldn't cluster with any of the leaves.
+-	 *
+-	 * We need a new node (n0) to replace the current one and a new node to
+-	 * take the expelled nodes (n1).
+-	 */
+-	edit->set[0].to = assoc_array_node_to_ptr(new_n0);
+-	new_n0->back_pointer = node->back_pointer;
+-	new_n0->parent_slot = node->parent_slot;
+-
+-do_split_node:
+ 	assoc_array_split_node(edit, node, new_n0, new_n1);
+-
+-	ptr = node->back_pointer;
+-	if (!ptr)
+-		edit->set[0].ptr = &edit->array->root;
+-	else if (assoc_array_ptr_is_node(ptr))
+-		edit->set[0].ptr = &assoc_array_ptr_to_node(ptr)->slots[node->parent_slot];
+-	else
+-		edit->set[0].ptr = &assoc_array_ptr_to_shortcut(ptr)->next_node;
+ 	edit->excised_meta[0] = assoc_array_node_to_ptr(node);
+ 	pr_devel("<--%s() = ok [split node]\n", __func__);
+ 	return true;
+-
+-all_leaves_cluster_together:
+-	new_s0 = assoc_array_insert_shortcut(edit, ops, index_key,
+-					     node, level, new_n0);
+-	if (!new_s0)
+-		return false;
+-	edit->set[0].to = assoc_array_shortcut_to_ptr(new_s0);
+-	goto do_split_node;
+ }
+ 
+ /*
 -- 
 2.53.0
 
