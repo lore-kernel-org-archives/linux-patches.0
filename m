@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047887;
-	b=omSmiUtLVCtjXIb8DCGg4JWaJS2GjjyFaKkrJQ2ZiHxSsPiPKWa0QoJJztZU5ospmdoP
-	 iDkRZyRZ3wF0aqcqIVreZoyCuVU2lbNWFtsp0mAklwohFe7RZZQFKbHkYTbZdKKIyNBRg
-	 dLRn6YnOeu/KdJyHXELlcdErinoLl0NkRlLSGns5wLdRG15AsrPOgCkQaowmGR7YjYk7A
-	 VraB//khO29+0ECKdeypamutvFqxshWGRljy9jKHMYCpS3iI79SoAjGaGex9KagzXeInV
-	 3DK6PmMoUG4ZFsiYc7NMkg3x+rgWiFt4wSAJbds4VNbeP/sYjUVXxz90CRjVbfQMzpw==
+	t=1795047890;
+	b=VoNkkVbUrwO2GzGbJu6NbpxI4e4+m1Pz73LV/k5NgA4uFIl/k5JQpxE4NMvn86GKXWbr
+	 suY95mLoIhLhkoZoHKMUckwcWEoQnTXg+MOC82Xw3MvIPkatG0zSrDOeToO6UJEfGq3oe
+	 5VkXBazFX92OqARqjmNtKP7oBRcg42rL9x3LHqSS6XXWAcIGd8A8fuBYA7bvZGYHvJINN
+	 nMzlSIGd9h2weivRrmsEcb4lJZJTiYRw7c6p6pOhe67cWFHD7umSVWrRUE6wx9PKQF8Vr
+	 nPNXHwRxD1HeRIL4zO1v61hOBpAkfxUSTE39G9/RNfu16a50UfwshqljmS11bANlDfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047887;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047890;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LkD9phZiFbxEmjj3N2YW0ycp7bnp7Oaa34aAmBLAuY8=;
-	b=CA+PbGNXiXnWlANzf5AnoDkpS+BLwdfDA6mI01UZJcIdwoey/l9KqNQKnYbCYbQrIlMV
-	 njUV0aSjh7fdmQjmsPMXRQIv07ca9BBMUHZ9Cnl0G+SoDv1mdEi1Ea2qGaFnlhGLa756T
-	 neNifaRwd8sGMyBOyj0+tWLRjhQrhPkNmIMkf51bJFZ65Tv0CRisrj2HwwtMrDR4rBVIN
-	 mSqxq8OhnE6PbnK+NB50XpogVwXufpRSSD4amGAgDOFHDpbR3LmEBVG6TqHjag0EgIvHX
-	 2SVvvBXZiYxVYnMKIrEpLn69PGsK1j2sbojNBEcu1WAoDacKhVXV5mzeXUABtAjXrQw==
+	bh=cWlBiJ3+QRo5LXAVXcn+FGBlKYf2tag2oPqcGzbv3KU=;
+	b=lakVTIZcLJzfy5AL+1IkOTPoJuVivP6hdCFocWXZ0qKkmif5IlKzUXb7YxdmBOb9U+Lx
+	 qX9p6tOKJHW4BeiNqyvdvMwxOTNwhGwJzMj2l2Q8xHjU4PlTNYXZmxuA8YyPbmIMCi02/
+	 FPTTlMEFsywxaBz2Vkjma5eOzIKoFNSJmCYDa4kPK5UG19MRpK1g/4eehLFEDQqrBB+EU
+	 BL7I+KTdxsK9II8YgWDzGGu+Vq/VzymUpxQU33LosBJRXFa3pQK2oOsqw1Y9s8V47f7oI
+	 4w8B6C3Y7YZE9NIrKe79Bb2B6GEJxywfGBaorrA2vB9Ytoy6JufnryF3eLa//kG2iHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=unqSbQaq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B2kJArs7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A805B606A320;
-	Thu, 19 Nov 2026 00:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B51606A31C;
+	Thu, 19 Nov 2026 00:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=unqSbQaq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088481F000C4;
-	Thu, 19 Nov 2026 00:24:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B2kJArs7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF15E1F000C4;
+	Thu, 19 Nov 2026 00:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047887;
-	bh=LkD9phZiFbxEmjj3N2YW0ycp7bnp7Oaa34aAmBLAuY8=;
+	s=korg; t=1795047890;
+	bh=cWlBiJ3+QRo5LXAVXcn+FGBlKYf2tag2oPqcGzbv3KU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=unqSbQaqwVQxyO7P9qaLZrbWYlA7G3tGpvzpjTqHoYO6y3X4KBhTK9D1ZZ6LX4a7t
-	 dd3WCPm3TrqBwzjWwDgv9ZXXEF04XynauUltbGywO+94bj5WnW7a7gMp7124Pdqwoy
-	 yqWlaZEMrLquECjZrMagn8f0ZdutttUkswnIP8WI=
+	b=B2kJArs7/Oi2WYZCKg81YtZ94suTwOQBSjIO7GJxeey6LTrTxdeaooKIHBlrkbCvM
+	 5v07WUngoH1jd2W8Thg/xH3ebzHM2vD7lLCSbK1SWuyvcOaaMvLVWjHfXr54KrU4aD
+	 ZKuw3uuWrN2bRwuchkVbG4BhW7G2SUr2U5SSQYew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1772/2857] clk: fix self-consuming provider module pinning
-Date: Wed, 18 Nov 2026 15:46:46 +0100
-Message-ID: <20261118150305.083879827@linuxfoundation.org>
+Subject: [PATCH 6.1 1799/2857] memory: brcmstb_dpfe: validate firmware section sizes
+Date: Wed, 18 Nov 2026 15:47:13 +0100
+Message-ID: <20261118150306.030621765@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,254 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit a1c8d531c694e193dc48ef2428877d5ea2e35134 ]
+[ Upstream commit e61c1a1103e2617e8f86288368911a8591e35c1e ]
 
-clk_hw_get_clk() lets a provider get a struct clk for one of its own
-struct clk_hw.
+The firmware header is read before the image has been shown to contain a
+complete header. In addition, the final size check adds two
+firmware-provided u32 section lengths before comparing the result with
+fw->size, so the addition can wrap.
 
-When a struct clk is created, the module usage count of the provider
-is unconditionally increased. For a self-consuming provider, this means
-it pins itself and the module can never be unloaded.
+Reject images shorter than the fixed header and checksum before reading
+the header. Then derive the available payload length with subtraction and
+require the two declared sections to fill it exactly.
 
-Increasing the module usage count should only be done when the consumer
-lives in a different module from the provider. Use THIS_MODULE to
-capture caller's module and increase the module usage count accordingly.
-
-It is OK for consumer-only APIs such as clk_get() or of_clk_get() to
-pass a NULL owner. As a result, any provider module will get pinned,
-same as before.
-
-Fixes: 30d6f8c15d2c ("clk: add api to get clk consumer from clk_hw")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Fixes: 2f330caff577 ("memory: brcmstb: Add driver for DPFE")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260815134559.47888-1-pengpeng@iscas.ac.cn
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c            | 46 ++++++++++++++++++++----------------
- drivers/clk/clk.h            |  5 ++--
- drivers/clk/clkdev.c         |  4 ++--
- include/linux/clk-provider.h | 22 ++++++++++++++---
- 4 files changed, 50 insertions(+), 27 deletions(-)
+ drivers/memory/brcmstb_dpfe.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index 5a01ba04e47cf..060777087d7bb 100644
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -108,6 +108,7 @@ struct clk {
- 	unsigned long max_rate;
- 	unsigned int exclusive_count;
- 	struct hlist_node clks_node;
-+	bool pinning;
- };
- 
- /***           runtime pm          ***/
-@@ -4033,13 +4034,15 @@ static void free_clk(struct clk *clk)
-  * @hw: clk_hw associated with the clk being consumed
-  * @dev_id: string describing device name
-  * @con_id: connection ID string on device
-+ * @owner: reference to the module creating the clock
-  *
-  * This is the main function used to create a clk pointer for use by clk
-  * consumers. It connects a consumer to the clk_core and clk_hw structures
-  * used by the framework and clk provider respectively.
-  */
- struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
--			      const char *dev_id, const char *con_id)
-+			      const char *dev_id, const char *con_id,
-+			      struct module *owner)
+diff --git a/drivers/memory/brcmstb_dpfe.c b/drivers/memory/brcmstb_dpfe.c
+index 89854d680cdd3..b7774043e973b 100644
+--- a/drivers/memory/brcmstb_dpfe.c
++++ b/drivers/memory/brcmstb_dpfe.c
+@@ -534,9 +534,15 @@ static int __verify_firmware(struct init_data *init,
+ 			     const struct firmware *fw)
  {
- 	struct clk *clk;
- 	struct clk_core *core;
-@@ -4054,7 +4057,13 @@ struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
- 		return clk;
- 	clk->dev = dev;
- 
--	if (!try_module_get(core->owner)) {
-+	/*
-+	 * Pin the provider module only when the consumer lives in a different
-+	 * module. A provider getting a clk from its own clk_hw would otherwise
-+	 * pin itself and could never be unloaded.
-+	 */
-+	clk->pinning = owner != core->owner;
-+	if (clk->pinning && !try_module_get(core->owner)) {
- 		free_clk(clk);
- 		return ERR_PTR(-ENOENT);
- 	}
-@@ -4065,24 +4074,19 @@ struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
- 	return clk;
- }
- 
--/**
-- * clk_hw_get_clk - get clk consumer given an clk_hw
-- * @hw: clk_hw associated with the clk being consumed
-- * @con_id: connection ID string on device
-- *
-- * Returns: new clk consumer
-- * This is the function to be used by providers which need
-- * to get a consumer clk and act on the clock element
-- * Calls to this function must be balanced with calls clk_put()
-+/*
-+ * Internal helper backing the clk_hw_get_clk() macro, which passes the caller's
-+ * module via THIS_MODULE.
-  */
--struct clk *clk_hw_get_clk(struct clk_hw *hw, const char *con_id)
-+struct clk *__clk_hw_get_clk(struct clk_hw *hw, const char *con_id,
-+			     struct module *owner)
- {
- 	struct device *dev = hw->core->dev;
- 	const char *name = dev ? dev_name(dev) : NULL;
- 
--	return clk_hw_create_clk(dev, hw, name, con_id);
-+	return clk_hw_create_clk(dev, hw, name, con_id, owner);
- }
--EXPORT_SYMBOL(clk_hw_get_clk);
-+EXPORT_SYMBOL(__clk_hw_get_clk);
- 
- static int clk_cpy_name(const char **dst_p, const char *src, bool must_exist)
- {
-@@ -4246,8 +4250,9 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
- 	INIT_HLIST_HEAD(&core->clks);
- 
- 	/*
--	 * Don't call clk_hw_create_clk() here because that would pin the
--	 * provider module to itself and prevent it from ever being removed.
-+	 * Don't call clk_hw_create_clk() here because it would systematically
-+	 * add a consumer to the hw clock and all clocks would appear to have
-+	 * consumer in the clock summary.
- 	 */
- 	hw->clk = alloc_clk(core, NULL, NULL);
- 	if (IS_ERR(hw->clk)) {
-@@ -4589,7 +4594,7 @@ struct clk *devm_clk_hw_get_clk(struct device *dev, struct clk_hw *hw,
- 	if (!clkp)
- 		return ERR_PTR(-ENOMEM);
- 
--	clk = clk_hw_get_clk(hw, con_id);
-+	clk = __clk_hw_get_clk(hw, con_id, dev->driver->owner);
- 	if (!IS_ERR(clk)) {
- 		*clkp = clk;
- 		devres_add(dev, clkp);
-@@ -4636,7 +4641,8 @@ void __clk_put(struct clk *clk)
- 
- 	owner = clk->core->owner;
- 	kref_put(&clk->core->ref, __clk_release);
--	module_put(owner);
-+	if (clk->pinning)
-+		module_put(owner);
- 	free_clk(clk);
- }
- 
-@@ -5157,7 +5163,7 @@ struct clk *of_clk_get_from_provider(struct of_phandle_args *clkspec)
- {
- 	struct clk_hw *hw = of_clk_get_hw_from_clkspec(clkspec);
- 
--	return clk_hw_create_clk(NULL, hw, NULL, __func__);
-+	return clk_hw_create_clk(NULL, hw, NULL, __func__, NULL);
- }
- EXPORT_SYMBOL_GPL(of_clk_get_from_provider);
- 
-@@ -5184,7 +5190,7 @@ static struct clk *__of_clk_get(struct device_node *np,
- {
- 	struct clk_hw *hw = of_clk_get_hw(np, index, con_id);
- 
--	return clk_hw_create_clk(NULL, hw, dev_id, con_id);
-+	return clk_hw_create_clk(NULL, hw, dev_id, con_id, NULL);
- }
- 
- struct clk *of_clk_get(struct device_node *np, int index)
-diff --git a/drivers/clk/clk.h b/drivers/clk/clk.h
-index 2d801900cad59..5009380863a9d 100644
---- a/drivers/clk/clk.h
-+++ b/drivers/clk/clk.h
-@@ -23,13 +23,14 @@ struct clk_hw *clk_find_hw(const char *dev_id, const char *con_id);
- 
- #ifdef CONFIG_COMMON_CLK
- struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
--			      const char *dev_id, const char *con_id);
-+			      const char *dev_id, const char *con_id,
-+			      struct module *owner);
- void __clk_put(struct clk *clk);
- #else
- /* All these casts to avoid ifdefs in clkdev... */
- static inline struct clk *
- clk_hw_create_clk(struct device *dev, struct clk_hw *hw, const char *dev_id,
--		  const char *con_id)
-+		  const char *con_id, struct module *owner)
- {
- 	return (struct clk *)hw;
- }
-diff --git a/drivers/clk/clkdev.c b/drivers/clk/clkdev.c
-index ee37d0be6877d..22e572b0a0805 100644
---- a/drivers/clk/clkdev.c
-+++ b/drivers/clk/clkdev.c
-@@ -88,7 +88,7 @@ static struct clk *__clk_get_sys(struct device *dev, const char *dev_id,
- {
- 	struct clk_hw *hw = clk_find_hw(dev_id, con_id);
- 
--	return clk_hw_create_clk(dev, hw, dev_id, con_id);
-+	return clk_hw_create_clk(dev, hw, dev_id, con_id, NULL);
- }
- 
- struct clk *clk_get_sys(const char *dev_id, const char *con_id)
-@@ -105,7 +105,7 @@ struct clk *clk_get(struct device *dev, const char *con_id)
- 	if (dev && dev->of_node) {
- 		hw = of_clk_get_hw(dev->of_node, 0, con_id);
- 		if (!IS_ERR(hw) || PTR_ERR(hw) == -EPROBE_DEFER)
--			return clk_hw_create_clk(dev, hw, dev_id, con_id);
-+			return clk_hw_create_clk(dev, hw, dev_id, con_id, NULL);
- 	}
- 
- 	return __clk_get_sys(dev, dev_id, con_id);
-diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-index 94fcfefb52f3c..fc3fb1045441d 100644
---- a/include/linux/clk-provider.h
-+++ b/include/linux/clk-provider.h
-@@ -37,6 +37,7 @@ struct clk;
- struct clk_hw;
- struct clk_core;
- struct dentry;
-+struct module;
- 
- /**
-  * struct clk_rate_request - Structure encoding the clk constraints that
-@@ -314,8 +315,9 @@ struct clk_init_data {
-  * @core: pointer to the struct clk_core instance that points back to this
-  * struct clk_hw instance
-  *
-- * @clk: pointer to the per-user struct clk instance that can be used to call
-- * into the clk API
-+ * @clk: pointer to the per-user struct clk instance. This will be removed at
-+ * some point in the future, Please consider the field obsolete and do not use
-+ * it. Use clk_hw_get_clk() to get a per-user struct clk from a struct clk_hw.
-  *
-  * @init: pointer to struct clk_init_data that contains the init data shared
-  * with the common clock framework. This pointer will be set to NULL once
-@@ -1286,10 +1288,24 @@ static inline struct clk_hw *__clk_get_hw(struct clk *clk)
- }
- #endif
- 
--struct clk *clk_hw_get_clk(struct clk_hw *hw, const char *con_id);
-+struct clk *__clk_hw_get_clk(struct clk_hw *hw, const char *con_id,
-+			     struct module *owner);
- struct clk *devm_clk_hw_get_clk(struct device *dev, struct clk_hw *hw,
- 				const char *con_id);
- 
-+/**
-+ * clk_hw_get_clk - get clk consumer given a clk_hw
-+ * @hw: clk_hw associated with the clk being consumed
-+ * @con_id: connection ID string on device
-+ *
-+ * Return: new clk consumer
-+ * This is the function to be used by providers which need
-+ * to get a consumer clk and act on the clock element
-+ * Calls to this function must be balanced with calls to clk_put()
-+ */
-+#define clk_hw_get_clk(hw, con_id) \
-+	__clk_hw_get_clk((hw), (con_id), THIS_MODULE)
+ 	const struct dpfe_firmware_header *header = (void *)fw->data;
+-	unsigned int dmem_size, imem_size, total_size;
++	unsigned int dmem_size, imem_size;
+ 	bool is_big_endian = false;
+ 	const u32 *chksum_ptr;
++	size_t payload_size;
 +
- unsigned int clk_hw_get_num_parents(const struct clk_hw *hw);
- struct clk_hw *clk_hw_get_parent(const struct clk_hw *hw);
- struct clk_hw *clk_hw_get_parent_by_index(const struct clk_hw *hw,
++	if (fw->size < sizeof(*header) + sizeof(*chksum_ptr))
++		return ERR_INVALID_SIZE;
++
++	payload_size = fw->size - sizeof(*header) - sizeof(*chksum_ptr);
+ 
+ 	if (header->magic == DPFE_BE_MAGIC)
+ 		is_big_endian = true;
+@@ -555,13 +561,8 @@ static int __verify_firmware(struct init_data *init,
+ 	if ((dmem_size % sizeof(u32)) != 0 || (imem_size % sizeof(u32)) != 0)
+ 		return ERR_INVALID_SIZE;
+ 
+-	/*
+-	 * The header + the data section + the instruction section + the
+-	 * checksum must be equal to the total firmware size.
+-	 */
+-	total_size = dmem_size + imem_size + sizeof(*header) +
+-		sizeof(*chksum_ptr);
+-	if (total_size != fw->size)
++	/* The data and instruction sections must fill the payload exactly. */
++	if (dmem_size > payload_size || imem_size != payload_size - dmem_size)
+ 		return ERR_INVALID_SIZE;
+ 
+ 	/* The checksum comes at the very end. */
 -- 
 2.53.0
 
