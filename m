@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039918;
-	b=38mMkY04aAjQJ2vI/66RlGGO5gDFdLBJq+gdICDtx/P36UVnknZMkDbRbbR5COHXkBEv
-	 3JkS4Q1iM5yj81f9WgD1HEuQBTB/Wiqe9125bdLNc5oMBJAO/nriz7EHwA1pZiJkTXj9u
-	 nMldeGgyHoKTtqAM/fRsKRG/imkj5Z1kLnakJDALd7OsiUDnWXoVay1mrLxOk0cUSyfQj
-	 VO4o5s22/gTb7oVOzZkD6n0sdQ6WlJvHkanswgGoagyzUILQRtzfV1EzCCZCCHz9QV4Ot
-	 ZWa7ZnC1o/MctW5JMFqVZFHbDqmwFfbROgBwbWxGgDfDboXnMk466akqHEKaUDMTV5Q==
+	t=1795039921;
+	b=mt9sY0TnoMxFDzodcBhLBN92orzyVyJyxQbBkyPuNo1v6wBGoWRGrAjn8a+8pE/ZeyTv
+	 XEcWwwyIdFdKvpbuJyE+X9sgo/Gu+UhMGv2jPXFvruDBctghHmA7A+dExrTvgKnUUZzn3
+	 qnXNYvPv5AUUdsyrUu4EQfmWFC4T5zMaJ+/xMLNFPFVrmqw4B8ukgs7X0u0/hYKI7XFy9
+	 WHHN5teIqmaKFc/pTHrkVGWsrmz/Zg9awd52/fV+a1FeT2cP2uNNSq2lfBSbtIMer92Nx
+	 W1J656ul41J4o1H57YvPrCW3NMHqI5tSMcYsFVgM1+oBqfnCTWIw4N8G1/DpyrEpBSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039918;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039921;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=51CL7L70ABPd4fGlHYcPfxongiQxM2r2ws6q2fCDZtM=;
-	b=Kq9gIy2MjbTzoqXllYBTO4wbkI8vuQmO0y+49dCx+SlnHoNJtswhuH+iGC/W3FKPTA84
-	 c1VFfbOJwmMCcmFDBCdr7IDChNKVeLS/TnGXvNgh+0YejqyRSqAZcCJo/ft4pj01rjTGl
-	 wj6suTD7q3IcgWCuHjVmAlpbPdM/Gs9lkGtsZP6ypyorU28xr0bUjTbhXreqXDqlCdet7
-	 dzUYXK4JrDdJn8XxgsDCgeZuK+btqFU5xRL2nEaltCjBetfI4Ig9RGVThUbU87sd4w8dM
-	 B2+g6cEpX6g/c0QNjhgkUUXadE0LNyteH7kTEdgdmkxJ2PSBLqusuyFI/WXGF4/00CQ==
+	bh=Db+NJFd+MKIBzxT2SFHLrOAFXDbfVOYFLJc/u2d1Twc=;
+	b=CtwQpQIssVZ5wtA6wptabH+6BlrJD4806HZjwfPEOboZLeEkR6S4RGat5K6/83Cp7PCR
+	 kLeoIMS9Xv2DYLmO063iI+3262Hqx7EU4M7z15WyewHgvo85DmRNVa9GfP0btN7lGMIrk
+	 pFpN3pWvT6ewOJ+4NquujchW6Elr2hLJm/vVm+yOXMv9Elnpujr3QYQ7pCoKmNOkCZfYU
+	 wWTYeA5p6YpLiw31Rg8Kzym2XSUb3PshTBK3eiE/9KLq9GBWIfeMhSEz/U164ProWGUvt
+	 st3M3k4JGzhg0Q0utGznGm5lx/Mrq1xwvO2VgPYGZ3OXdHx9Yc9+7BGwLtGS5UG+FAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0iu/5tqf";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JHmsUhUo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E09606A31C;
-	Wed, 18 Nov 2026 22:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325A3606A320;
+	Wed, 18 Nov 2026 22:12:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0iu/5tqf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852DA1F000C4;
-	Wed, 18 Nov 2026 22:11:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JHmsUhUo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD8F1F000C4;
+	Wed, 18 Nov 2026 22:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039918;
-	bh=51CL7L70ABPd4fGlHYcPfxongiQxM2r2ws6q2fCDZtM=;
+	s=korg; t=1795039921;
+	bh=Db+NJFd+MKIBzxT2SFHLrOAFXDbfVOYFLJc/u2d1Twc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0iu/5tqfFrdrdj+06WNkK7bbnuPrR6ccrWkspjvYTCJr/MHQPLaFzeEGlRV6RG7lj
-	 U9MPUzb8MvlTlh084SHA9E05GI+AruS0x5bpU2sbIHYDmcG95Ad4y7dCZt/CpRWGid
-	 L5z9V1mg4PAOWHM9rSNqhZ/dx3W7PvP5I93vrWzg=
+	b=JHmsUhUo5u0grd/eLNQMszO9zHe9IDelL+VeJdz/qdVAhh5HgZ71ejpIB1zUpoDne
+	 YZQpSKAc/qEKOZhsJW451gUzLfbiJNnycRxr6WS5EVk0M46fHJxtcb/JNW5eqUzf5j
+	 lzy4X0vnTX7jne/UjifSiNyfs6xtNRloDdOMtYlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
-	Brian Masney <bmasney@redhat.com>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Sarthak Sharma <sarthak.sharma@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2270/3318] clk: versatile: clk-icst: Fix node reference leak in of_syscon_icst_setup()
-Date: Wed, 18 Nov 2026 15:48:12 +0100
-Message-ID: <20261118150429.896092628@linuxfoundation.org>
+Subject: [PATCH 6.6 2231/3318] mm/gup_test: safely calculate GUP batch size
+Date: Wed, 18 Nov 2026 15:47:33 +0100
+Message-ID: <20261118150428.804829584@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,56 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Sarthak Sharma <sarthak.sharma@arm.com>
 
-[ Upstream commit c90a50d07f0c38c62ce13a60806ab5e3b841f70f ]
+[ Upstream commit 44817a536aaa5bfac0d316242e93e489d0a69d5f ]
 
-of_get_parent() takes a reference on the syscon parent node. The
-reference is intentionally kept on the success path, but the error paths
-return without dropping it, leaking the node reference. Release the
-reference before returning on the error paths.
+__gup_test_ioctl() calculates the end of a GUP batch using:
 
-Fixes: d430819d69a5 ("clk: versatile-icst: add device tree support")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+next = addr + nr * PAGE_SIZE;
+
+If nr is too large, it can cause next to overflow and wrap around.
+If it wraps, the next > end check is bypassed and a large value
+of nr is passed to the GUP call, even though the pages array was
+allocated according to gup->size. This can lead to out of bounds writes.
+
+Also, when fewer than PAGE_SIZE bytes remain, the calculated batch
+contains zero pages. The code still calls GUP functions with pages + i,
+which can point past the allocated array.
+
+Calculate nr by taking the minimum of the number of pages per call and
+the pages remaining in the address range. Reject zero sized and non
+page aligned gup->size values and zero nr_pages_per_call value.
+
+Fixes: 64c349f4ae78 ("mm: add infrastructure for get_user_pages_fast() benchmarking")
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Signed-off-by: Sarthak Sharma <sarthak.sharma@arm.com>
+Link: https://patch.msgid.link/20260915102524.125758-1-sarthak.sharma@arm.com
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/versatile/clk-icst.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ mm/gup_test.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/versatile/clk-icst.c b/drivers/clk/versatile/clk-icst.c
-index d5cb372f0901c..9c1fbfd2c6557 100644
---- a/drivers/clk/versatile/clk-icst.c
-+++ b/drivers/clk/versatile/clk-icst.c
-@@ -498,16 +498,19 @@ static void __init of_syscon_icst_setup(struct device_node *np)
- 	map = syscon_node_to_regmap(parent);
- 	if (IS_ERR(map)) {
- 		pr_err("no regmap for syscon ICST clock parent\n");
-+		of_node_put(parent);
- 		return;
- 	}
+diff --git a/mm/gup_test.c b/mm/gup_test.c
+index c9e7c1cf5b080..6de8064090ea1 100644
+--- a/mm/gup_test.c
++++ b/mm/gup_test.c
+@@ -109,7 +109,8 @@ static int __gup_test_ioctl(unsigned int cmd,
+ 	bool needs_mmap_lock =
+ 		cmd != GUP_FAST_BENCHMARK && cmd != PIN_FAST_BENCHMARK;
  
- 	if (of_property_read_u32(np, "reg", &icst_desc.vco_offset) &&
- 	    of_property_read_u32(np, "vco-offset", &icst_desc.vco_offset)) {
- 		pr_err("no VCO register offset for ICST clock\n");
-+		of_node_put(parent);
- 		return;
- 	}
- 	if (of_property_read_u32(np, "lock-offset", &icst_desc.lock_offset)) {
- 		pr_err("no lock register offset for ICST clock\n");
-+		of_node_put(parent);
- 		return;
- 	}
+-	if (gup->addr > ULONG_MAX || gup->size > ULONG_MAX)
++	if (gup->addr > ULONG_MAX || gup->size > ULONG_MAX || !gup->size ||
++	    !gup->nr_pages_per_call || !PAGE_ALIGNED(gup->size))
+ 		return -EINVAL;
+ 	if (check_add_overflow((unsigned long)gup->addr,
+ 			       (unsigned long)gup->size, &end))
+@@ -132,11 +133,9 @@ static int __gup_test_ioctl(unsigned int cmd,
+ 		if (nr != gup->nr_pages_per_call)
+ 			break;
  
-@@ -534,6 +537,7 @@ static void __init of_syscon_icst_setup(struct device_node *np)
- 		ctype = ICST_INTEGRATOR_CP_CM_MEM;
- 	} else {
- 		pr_err("unknown ICST clock %pOF\n", np);
-+		of_node_put(parent);
- 		return;
- 	}
++		nr = min_t(unsigned long, nr, (end - addr) / PAGE_SIZE);
++
+ 		next = addr + nr * PAGE_SIZE;
+-		if (next > end) {
+-			next = end;
+-			nr = (next - addr) / PAGE_SIZE;
+-		}
  
+ 		switch (cmd) {
+ 		case GUP_FAST_BENCHMARK:
 -- 
 2.53.0
 
