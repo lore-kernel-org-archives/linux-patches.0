@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029520;
-	b=eNOOq7NKDT58yMip4QwnkNEJCpwahFOcsdFB50HPSFNUZOr0T2vDeMkhMXPwNffcurYE
-	 p3yhcJANrGXNf/yVWrEgNE/6kaEBOqLmoPM+ksBgjas/uFhlcMMlvG5chm5WH6YBTjvnE
-	 2AfKajPWhadWJDvJbNHFXb6MRa4Rp0q9Qjm15QOPa3EVIwF8n0OrrOWFkMV3y3KVwKTiB
-	 wcxsWXeudmMbF8zNanJNEQwmmZnBKjrY+5mwvFsBU7fgaemNCHBSSbssrynjmaITWTGnK
-	 WUgyGGceOstTF8gv1d2fW0zLAv4NSB8sMQszpM4yoz1EWzl/R+eMSm29hKM9Aap54jQ==
+	t=1795029523;
+	b=G8Djz3uoN+2mHNMEOVm6ZV870ITpgeMx308aQcq/NgikYlo4QMaykPJdPs3PJaYW5Rtd
+	 CJGeK0ez1pYaLu5nfOnf8+ijqVCXE/NnBW+d2E7ewDttWQgvzUmm878VixU+k0vl+aGMu
+	 mek1QQgutmON8a+VzAgmY8/dx8M42x8LtdRhWw8bjpxiCm/QURMNTcaBNmDAfW7iQdIn8
+	 q6soMXmAyvrD317MJU3IqOj3x3zBlwXXwwCTebhBCmobXwqAEhjN0+2dEOiCO6kTmJ2m3
+	 c07uDCXe7p9nKSuBLV/btZr6rKzJ9cDgd3az/LrWHwUWkBO9aITyfP4Yeg3F4Fjw/LA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029520;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029523;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LigorjuJcw4Ttca51DSm5vcQE2yWvLRq2Y8dH6W6x4g=;
-	b=oX5cHFFNG/WJgUVgBPSVAP/TCNl+o8/Nnec0hx8uBrqxfW7lUy+1rADmJIK3vinZEAQE
-	 RzH6QujNFgq6p/CZeiG5NHe9fsVwFlFDwduA553u5vONZ4/dEyXY7m62xTmh97FwTsRVN
-	 CUxWLGTZiGc2OBx5ZkFA26ocZQR/OoXTMpQ7NDPUWwJQSeQdwjg/vbgIlHEZh8AaY5CHz
-	 wb6G2X0Ibvb4p9nGeVfcIlEVQoJ93WSeyq+sG+RkZFOg1EA4k5TIu1xIcR7APTfnLF9Rh
-	 UlL7Em4/73l5fiG4P8DcFcBb56LC28EzxmA7Z31tbdqr9yWjMXjhuIyYPMGcvMlVq8w==
+	bh=iU2DfWf6bOARQKdE6U+4vdKA7nkTr07bSUQ1zE/5EPs=;
+	b=A2vCy18qQxd86+iyXKp9TOwsSlfZH7dEHVoc8WRxQ5KEtztCRQWuEoMzVnSm8Xyx9M7i
+	 fX69wzliE28N1n2B9ewjh8VVLIw38yK1pIjjrNplXIqzNgLBWE/eBRywXiF9g/8sS6esX
+	 JafrQcMIRw1B0+w1kgP1mXUV6FRinMRWq+1j7G8DQU6h1aWcMYGD+NoMcGSvvW7crYud/
+	 Dc38gBQdyWLmUv/bDIJBYIUzZpozQezHzhP8nmGjSwcB9gex1k7GRvlIl2EuVQxHCP5y1
+	 Li2ANgAYOc9Afz49/aNEz4tSBAwbLw/LC+5zAN/uMz9P+4AkoALONkHxtDml6PYaPQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pWTze3Ht;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NE+zMrzX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB7A606A320;
-	Wed, 18 Nov 2026 19:18:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21AC8606A31C;
+	Wed, 18 Nov 2026 19:18:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pWTze3Ht
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F07B1F000C4;
-	Wed, 18 Nov 2026 19:18:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NE+zMrzX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B221F000C4;
+	Wed, 18 Nov 2026 19:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029520;
-	bh=LigorjuJcw4Ttca51DSm5vcQE2yWvLRq2Y8dH6W6x4g=;
+	s=korg; t=1795029522;
+	bh=iU2DfWf6bOARQKdE6U+4vdKA7nkTr07bSUQ1zE/5EPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pWTze3HtOA4me21Y30VPAaSUo3qtsOA0LbN9P+9d8aPQkS0wCmdrnuinr7/MLaPGz
-	 ZnLY64eLYhEZK0KQ+XHR6qGSK50mXrdgFwzccGZ3ikXu4f+nXKSnUutppAQx8lntwz
-	 BugJn7LvQMJJKkPzugBlLA5YClqMi31BAQlyOPOw=
+	b=NE+zMrzXDnDd49NO96KCzlHSRhVHZSPSJK9jvZTVOZgEX7MJU9W33t3y7yhFXj6jj
+	 Rn4/qTKady8lso/AGdAZFp7uNLPgnb8i55GSJmZmFcBBaZ2aNxkkmfSW7/wv9I3+lz
+	 mb30dTm8T7WHqRIW56CX9kWqmcf1c0MnJL49FPIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arka Mondal <arka@arkamondal.net>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Salah Triki <salah.triki@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0328/1756] usb-storage: alauda: do not do DMA from the stack
-Date: Wed, 18 Nov 2026 15:40:55 +0100
-Message-ID: <20261118150021.326974486@linuxfoundation.org>
+Subject: [PATCH 6.12 0319/1756] iio: imu: adis16400: Check return value of spi_setup()
+Date: Wed, 18 Nov 2026 15:40:46 +0100
+Message-ID: <20261118150021.004952380@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,156 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arka Mondal <arka@arkamondal.net>
+From: Salah Triki <salah.triki@gmail.com>
 
-[ Upstream commit ec67dacb75ebd11fbe6d727e6f37c0ef5e3d3431 ]
+[ Upstream commit a7c07602e00596a45de8a4a700af96392953ed38 ]
 
-alauda_check_status2(), alauda_get_redu_data(), alauda_erase_block(),
-alauda_read_block_raw() and alauda_write_block() build their commands in
-stack arrays and pass them to usb_stor_bulk_transfer_buf().
-alauda_check_status2() and alauda_erase_block() also read the reply back
-into a stack array.
+In adis16400_initial_setup(), the return value of spi_setup() was ignored.
+If SPI configuration fails, the driver would proceed with the
+initialization anyway, leading to undefined behavior or silent failures
+during device setup.
 
-usb_stor_msg_common() sets URB_NO_TRANSFER_DMA_MAP only when the buffer
-is us->iobuf. Every other buffer reaches usb_hcd_map_urb_for_dma(),
-which has warned and returned -EAGAIN for a buffer on the stack since
-commit 4568136620c6 ("usb: core: Check URB setup_packet and
-transfer_buffer sanity"). On a host controller that uses DMA, all of
-these commands fail.
+Check the return value of spi_setup() and return the error code immediately
+if it fails.
 
-Use us->iobuf, as alauda_reset_media() in this driver and the other
-usb-storage subdrivers already do. The command is sent before the reply
-is read, so both can use it; sddr09_read_status() does the same.
-
-Fixes: e80b0fade09e ("[PATCH] USB Storage: add alauda support")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217862
-Signed-off-by: Arka Mondal <arka@arkamondal.net>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260901065831.43567-2-arka@arkamondal.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cd888a17f95f ("staging:iio:adis16400: Use adis library")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/alauda.c | 70 ++++++++++++++++++++++++------------
- 1 file changed, 48 insertions(+), 22 deletions(-)
+ drivers/iio/imu/adis16400.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/storage/alauda.c b/drivers/usb/storage/alauda.c
-index a9d3c58ce7d93..13dabf6a16f82 100644
---- a/drivers/usb/storage/alauda.c
-+++ b/drivers/usb/storage/alauda.c
-@@ -500,11 +500,14 @@ static int alauda_check_media(struct us_data *us)
- static int alauda_check_status2(struct us_data *us)
- {
- 	int rc;
--	unsigned char command[] = {
--		ALAUDA_BULK_CMD, ALAUDA_BULK_GET_STATUS2,
--		0, 0, 0, 0, 3, 0, MEDIA_PORT(us)
--	};
--	unsigned char data[3];
-+	unsigned char *command = us->iobuf;
-+	unsigned char *data = us->iobuf;
+diff --git a/drivers/iio/imu/adis16400.c b/drivers/iio/imu/adis16400.c
+index 2c291f6920f44..7c658122b6305 100644
+--- a/drivers/iio/imu/adis16400.c
++++ b/drivers/iio/imu/adis16400.c
+@@ -433,7 +433,10 @@ static int adis16400_initial_setup(struct iio_dev *indio_dev)
+ 	else
+ 		st->adis.spi->max_speed_hz = ADIS16400_SPI_FAST;
+ 	st->adis.spi->mode = SPI_MODE_3;
+-	spi_setup(st->adis.spi);
 +
-+	memset(command, 0, 9);
-+	command[0] = ALAUDA_BULK_CMD;
-+	command[1] = ALAUDA_BULK_GET_STATUS2;
-+	command[6] = 3;
-+	command[8] = MEDIA_PORT(us);
++	ret = spi_setup(st->adis.spi);
++	if (ret)
++		return ret;
  
- 	rc = usb_stor_bulk_transfer_buf(us, us->send_bulk_pipe,
- 		command, 9, NULL);
-@@ -530,10 +533,15 @@ static int alauda_check_status2(struct us_data *us)
- static int alauda_get_redu_data(struct us_data *us, u16 pba, unsigned char *data)
- {
- 	int rc;
--	unsigned char command[] = {
--		ALAUDA_BULK_CMD, ALAUDA_BULK_GET_REDU_DATA,
--		PBA_HI(pba), PBA_ZONE(pba), 0, PBA_LO(pba), 0, 0, MEDIA_PORT(us)
--	};
-+	unsigned char *command = us->iobuf;
-+
-+	memset(command, 0, 9);
-+	command[0] = ALAUDA_BULK_CMD;
-+	command[1] = ALAUDA_BULK_GET_REDU_DATA;
-+	command[2] = PBA_HI(pba);
-+	command[3] = PBA_ZONE(pba);
-+	command[5] = PBA_LO(pba);
-+	command[8] = MEDIA_PORT(us);
- 
- 	rc = usb_stor_bulk_transfer_buf(us, us->send_bulk_pipe,
- 		command, 9, NULL);
-@@ -702,14 +710,20 @@ static void alauda_ensure_map_for_zone(struct us_data *us, unsigned int zone)
- static int alauda_erase_block(struct us_data *us, u16 pba)
- {
- 	int rc;
--	unsigned char command[] = {
--		ALAUDA_BULK_CMD, ALAUDA_BULK_ERASE_BLOCK, PBA_HI(pba),
--		PBA_ZONE(pba), 0, PBA_LO(pba), 0x02, 0, MEDIA_PORT(us)
--	};
--	unsigned char buf[2];
-+	unsigned char *command = us->iobuf;
-+	unsigned char *buf = us->iobuf;
- 
- 	usb_stor_dbg(us, "Erasing PBA %d\n", pba);
- 
-+	memset(command, 0, 9);
-+	command[0] = ALAUDA_BULK_CMD;
-+	command[1] = ALAUDA_BULK_ERASE_BLOCK;
-+	command[2] = PBA_HI(pba);
-+	command[3] = PBA_ZONE(pba);
-+	command[5] = PBA_LO(pba);
-+	command[6] = 0x02;
-+	command[8] = MEDIA_PORT(us);
-+
- 	rc = usb_stor_bulk_transfer_buf(us, us->send_bulk_pipe,
- 		command, 9, NULL);
- 	if (rc != USB_STOR_XFER_GOOD)
-@@ -732,13 +746,19 @@ static int alauda_read_block_raw(struct us_data *us, u16 pba,
- 		unsigned int page, unsigned int pages, unsigned char *data)
- {
- 	int rc;
--	unsigned char command[] = {
--		ALAUDA_BULK_CMD, ALAUDA_BULK_READ_BLOCK, PBA_HI(pba),
--		PBA_ZONE(pba), 0, PBA_LO(pba) + page, pages, 0, MEDIA_PORT(us)
--	};
-+	unsigned char *command = us->iobuf;
- 
- 	usb_stor_dbg(us, "pba %d page %d count %d\n", pba, page, pages);
- 
-+	memset(command, 0, 9);
-+	command[0] = ALAUDA_BULK_CMD;
-+	command[1] = ALAUDA_BULK_READ_BLOCK;
-+	command[2] = PBA_HI(pba);
-+	command[3] = PBA_ZONE(pba);
-+	command[5] = PBA_LO(pba) + page;
-+	command[6] = pages;
-+	command[8] = MEDIA_PORT(us);
-+
- 	rc = usb_stor_bulk_transfer_buf(us, us->send_bulk_pipe,
- 		command, 9, NULL);
- 	if (rc != USB_STOR_XFER_GOOD)
-@@ -783,13 +803,19 @@ static int alauda_write_block(struct us_data *us, u16 pba, unsigned char *data)
- {
- 	int rc;
- 	struct alauda_info *info = (struct alauda_info *) us->extra;
--	unsigned char command[] = {
--		ALAUDA_BULK_CMD, ALAUDA_BULK_WRITE_BLOCK, PBA_HI(pba),
--		PBA_ZONE(pba), 0, PBA_LO(pba), 32, 0, MEDIA_PORT(us)
--	};
-+	unsigned char *command = us->iobuf;
- 
- 	usb_stor_dbg(us, "pba %d\n", pba);
- 
-+	memset(command, 0, 9);
-+	command[0] = ALAUDA_BULK_CMD;
-+	command[1] = ALAUDA_BULK_WRITE_BLOCK;
-+	command[2] = PBA_HI(pba);
-+	command[3] = PBA_ZONE(pba);
-+	command[5] = PBA_LO(pba);
-+	command[6] = 32;
-+	command[8] = MEDIA_PORT(us);
-+
- 	rc = usb_stor_bulk_transfer_buf(us, us->send_bulk_pipe,
- 		command, 9, NULL);
- 	if (rc != USB_STOR_XFER_GOOD)
+ 	ret = __adis_initial_startup(&st->adis);
+ 	if (ret)
 -- 
 2.53.0
 
