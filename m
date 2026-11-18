@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028651;
-	b=15+6oRJRdR1m+UjErXuFQiolCET5DqhhSgF3rlNOyc4sgbkI74n35ZLvxHorr43BSdh7
-	 VI/T+5YoMcgPFoOWlRb65bQd2X0I382zJ1UuXF/utvrIcDnHNTAzwtQ+ppgT4/uKRoDUF
-	 W79Ayk71mvY2Y3bsKy3fjrk4iAJ379l4+3LvWYnS4/RMSa4Diu48s/TwDabdbGFDIRfsz
-	 inJZksXoV+hXcLEI+9PjsysAbstpymo+xMOsrPOX3FAmjt2Zs83CHiO8WhRs/4XDh1NyG
-	 lRBalKX1pH2stnNYCnIT87StKYp5Uu3GnQQHRtdxgQzcvr2VjpOzAFk+MtXWL/TAz+A==
+	t=1795028654;
+	b=MfkzZ5Jkk8rK5uI6Vg4GEqtIFy9k6ODffX9njGHlihGgrqPmVRLqWCo7k5gsfP8wkN60
+	 nCx5Pr3oQgDRNVANr44r0jnkbKZOFpM9C5PTrfumdFN/LQDsyWK9IGx89Y/OvYV1Xbjk6
+	 b8yFGGTni0sKuXHINXukRl/fKLTXCFldbBJipGnGiHH0yzSlS7LSPtCv5uVnOxCiz0knP
+	 W87z0WY28L9zERYsJQplGjShsAO+Qp0mN3KNwgiyNttHLqQDytWn1uWMoCDd7FGYSj1Te
+	 10Ah+x+P5fr3IV6zYpXeqWmN07rpQspn7h+VOFsggxx35F33rZ68cs6RoRLdGv8GWnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028651;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028654;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c5y5BNd3BWuCe/Eam0bF9SrqwujHVv7C/Wt9UswiUhQ=;
-	b=eSFzMbB8j/FRo3uZqKwjAJ6wB0Z2LHDcGTflyPyhoru2TbEzFzHUTI147q/eR/r23mAm
-	 QHuZj79hnewlrvRWIXrm/sejXfBIfncj3TF8HrQtrCYddf24S3TP1CHvXxSCO9ZxGXqCn
-	 dykDfqkSxbzzihQ1Rf2rtKgPd82V6QrCjxSfiDni9VZOJP5LM5z3iSYUDtCnCAhMSfebb
-	 b9o0wuBMRKRhTkEIHqrlo+Vt4N5iM++wlMnetIP/ybHL1xxIgTxHRLZWDWqb8ID/nrv58
-	 JuKblwrI01C+Tl+cuVEGhxwTad7cO9Bf63mwQtZw/rblQXE63c1c0L7Wtb+2elEzDAg==
+	bh=Xnr25ByqzRCOmFTV4S5nXtd5sZ17CH9mAWzz0wVnFCM=;
+	b=VEajOElHoqEFVsOU0/coRkm4slJOuG/8LxM+TwL4UCv1zRHCD5hMeNgFNHMl7ehnl8iT
+	 Qw8xEF2SVV2xIOTpvKk0Vye7hQPYDxZFoxnm+HzG1NSKQ1mvf8+wZL2CdtQtlxECA6qaf
+	 rQiVJFE3Ua+82sSPHEteegXOlpRyxfUU6s8D9xkQAxXro8EmG5UAQqZypOEHOW6H7vie6
+	 J3HYox+33t5nvM2sn+uL4pwc9U2/VtVim9402rMD9jR/XzkDxXc+UzwGvSQHr7M0dJRkl
+	 Dhpb4FV7W1Hm8SE6GapVSxjrTA00gLYzFl/ztytN96U7qzAKIRK7fn5iRrrPduE1EIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Zlp/YIT6";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oz1BMPTq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7CD606A320;
-	Wed, 18 Nov 2026 19:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E65D606A31C;
+	Wed, 18 Nov 2026 19:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zlp/YIT6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7841F000C5;
-	Wed, 18 Nov 2026 19:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oz1BMPTq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A491F000CB;
+	Wed, 18 Nov 2026 19:04:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028651;
-	bh=c5y5BNd3BWuCe/Eam0bF9SrqwujHVv7C/Wt9UswiUhQ=;
+	s=korg; t=1795028654;
+	bh=Xnr25ByqzRCOmFTV4S5nXtd5sZ17CH9mAWzz0wVnFCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zlp/YIT6z5Tn0XwsVNgQfcB/jnDaDEcFp+J+AgMfWlJtEl39hFBH2e97m55u87eD8
-	 ufWiH6FtOYwvu5BmWDKOmR6a9dxyxaiax/jsvbYQQAcBsCDK8jp2iM3N7MvPuKxLA1
-	 gUc4iaTiZchMXUPPzh69YV6LSEYFJLrxwKSaCAtM=
+	b=Oz1BMPTqPMLKoYyCyqBgNF5kj9CztVYuv8T6NRVnS+jUTm0TCYu5pZKToBul9Ewgh
+	 YJfFBPqhNNPyzjn5EmCGJ9+2ENFhj5ErCHmek4DAwx9/RyTURsTtkk2YhAFx4iN8yO
+	 aCCgjtIBhEzXN5Buc3yeXSSBlR8flPSR2M3BWudU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Linlin Yang <yanglinlin@kylinos.cn>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0028/1756] mm/memory-tiers: unregister empty tiers outside memory_tier_lock
-Date: Wed, 18 Nov 2026 15:35:55 +0100
-Message-ID: <20261118150008.998263831@linuxfoundation.org>
+Subject: [PATCH 6.12 0019/1756] wifi: mt76: mt7996: fix PCI device reference leak in mt7996_pci_init_hif2()
+Date: Wed, 18 Nov 2026 15:35:46 +0100
+Message-ID: <20261118150008.690627840@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,108 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Linlin Yang <yanglinlin@kylinos.cn>
 
-[ Upstream commit 500624f28eca441e35f978979ccfb373202fefd3 ]
+[ Upstream commit d92bac6b6af2602516ee82ae112709c71af27cf6 ]
 
-When offlining a node's last memory empties its tier,
-clear_node_memory_tier() calls device_unregister() while holding
-memory_tier_lock. A concurrent sysfs read can hold a kernfs active
-reference and block in nodelist_show() on that mutex. device_unregister()
-then waits in kernfs_drain() for the read to finish and release its active
-reference, while the reader waits for the offlining task to release the
-mutex.
+pci_get_device() increments the reference count on the returned
+struct pci_dev. In mt7996_pci_init_hif2(), three pci_get_device()
+calls are made but their return values are only checked for NULL
+and then discarded. pci_dev_put() is never called, causing a PCI
+device reference count leak.
 
-Return the node's former tier from clear_node_memory_tier(), making the
-helper more similar to set_node_memory_tier(), which also returns a
-memory_tier pointer. Let the caller unlink an empty tier under
-memory_tier_lock before rebuilding demotion targets, then unregister its
-device after dropping the lock.
+Fix this by storing the return value and calling pci_dev_put()
+before returning, following the same pattern already used in the
+sibling driver mt7915/pci.c.
 
-Fixes: 9832fb87834e ("mm/demotion: expose memory tier details via sysfs")
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
 Cc: stable@vger.kernel.org
-Reported-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-46-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: adapted node notifications to the existing memory-notifier API using arg->status_change_nid instead of nn->nid. ]
+Signed-off-by: Linlin Yang <yanglinlin@kylinos.cn>
+Link: https://patch.msgid.link/20260824092937.683240-1-yanglinlin@kylinos.cn
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+[ sashal: adapted device lookups to use only the two existing numeric IDs instead of named constants for three chipsets ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory-tiers.c | 29 +++++++++++++----------------
- 1 file changed, 13 insertions(+), 16 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/pci.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
-index fc14fe53e9b75..a8733cd8d554b 100644
---- a/mm/memory-tiers.c
-+++ b/mm/memory-tiers.c
-@@ -561,21 +561,14 @@ static struct memory_tier *set_node_memory_tier(int node)
- 	return memtier;
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/pci.c b/drivers/net/wireless/mediatek/mt76/mt7996/pci.c
+index dbd05612f2e4a..3cb5678932427 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/pci.c
+@@ -61,11 +61,16 @@ static void mt7996_put_hif2(struct mt7996_hif *hif)
  
--static void destroy_memory_tier(struct memory_tier *memtier)
-+static struct memory_tier *clear_node_memory_tier(int node)
+ static struct mt7996_hif *mt7996_pci_init_hif2(struct pci_dev *pdev)
  {
--	list_del(&memtier->list);
--	device_unregister(&memtier->dev);
--}
--
--static bool clear_node_memory_tier(int node)
--{
--	bool cleared = false;
- 	pg_data_t *pgdat;
- 	struct memory_tier *memtier;
++	struct pci_dev *tmp_pdev;
++
+ 	hif_idx++;
  
- 	pgdat = NODE_DATA(node);
- 	if (!pgdat)
--		return false;
-+		return NULL;
+-	if (!pci_get_device(PCI_VENDOR_ID_MEDIATEK, 0x7991, NULL) &&
+-	    !pci_get_device(PCI_VENDOR_ID_MEDIATEK, 0x799a, NULL))
++	tmp_pdev = pci_get_device(PCI_VENDOR_ID_MEDIATEK, 0x7991, NULL);
++	if (!tmp_pdev)
++		tmp_pdev = pci_get_device(PCI_VENDOR_ID_MEDIATEK, 0x799a, NULL);
++	if (!tmp_pdev)
+ 		return NULL;
++	pci_dev_put(tmp_pdev);
  
- 	/*
- 	 * Make sure that anybody looking at NODE_DATA who finds
-@@ -593,14 +586,10 @@ static bool clear_node_memory_tier(int node)
- 		synchronize_rcu();
- 		memtype = node_memory_types[node].memtype;
- 		node_clear(node, memtype->nodes);
--		if (nodes_empty(memtype->nodes)) {
-+		if (nodes_empty(memtype->nodes))
- 			list_del_init(&memtype->tier_sibling);
--			if (list_empty(&memtier->memory_types))
--				destroy_memory_tier(memtier);
--		}
--		cleared = true;
- 	}
--	return cleared;
-+	return memtier;
- }
- 
- static void release_memtype(struct kref *kref)
-@@ -873,6 +862,7 @@ static int __meminit memtier_hotplug_callback(struct notifier_block *self,
- {
- 	struct memory_tier *memtier;
- 	struct memory_notify *arg = _arg;
-+	bool empty = false;
- 
- 	/*
- 	 * Only update the node migration order when a node is
-@@ -884,9 +874,16 @@ static int __meminit memtier_hotplug_callback(struct notifier_block *self,
- 	switch (action) {
- 	case MEM_OFFLINE:
- 		mutex_lock(&memory_tier_lock);
--		if (clear_node_memory_tier(arg->status_change_nid))
-+		memtier = clear_node_memory_tier(arg->status_change_nid);
-+		if (memtier) {
-+			empty = list_empty(&memtier->memory_types);
-+			if (empty)
-+				list_del(&memtier->list);
- 			establish_demotion_targets();
-+		}
- 		mutex_unlock(&memory_tier_lock);
-+		if (empty)
-+			device_unregister(&memtier->dev);
- 		break;
- 	case MEM_ONLINE:
- 		mutex_lock(&memory_tier_lock);
+ 	writel(hif_idx | MT_PCIE_RECOG_ID_SEM,
+ 	       pcim_iomap_table(pdev)[0] + MT_PCIE_RECOG_ID);
 -- 
 2.53.0
 
