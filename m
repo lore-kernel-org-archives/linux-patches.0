@@ -1,62 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028139;
-	b=FMWBfGLWt6EDEicXqYKckHnhr0c77smKrm/6CvI6TCbpKuC1uno+cCcSRpxK2hrXZY4g
-	 4PwECDsBjV32s4v5+2rbSvWTnYXKBxVt3rgb65jYkAdJ4K9D+4LZSHRedM6HA/vt6SqJZ
-	 EVWgpYcDmlQfoOP9+4v0AANpbC43/8BgIVTimnQKYc7VyKJGTLWdeIvTPdDutQxddWg2U
-	 m4/zw18lpVZQaq1RcrMeNdIx7NTmXX8OeFb2OS4N5Owd3Pud/eg66Gr24vdwPHm9P3Sz7
-	 eMfEm0d9Omrbk+AbhF8+vZSw8FWd8Ms9vZ9s5hEjwij0+nGopE2rCjj8FbLlbI8vc5g==
+	t=1795028142;
+	b=w2ZgXW5OE2+gquESadg5oZnNhcAeJsd//yLfwQskFscNJgk4LWPJT1tIAlCw87igW4eG
+	 lX18ceg478E9Jkjado5FJfbaoRNqyvE3Xz2UuUAxHmVBJ6kh1xfvMSh+cq3zsItBVByxi
+	 QjO3sgsv6A2+u3kcxngBo/FnFU5y8M8MAfIpnDclEeHfjD5MZa8qbPw7aSRTxddEIn2wC
+	 2hYbo1vDCh0ptQSirYlHH+0w0h6zXflxwwWYVm7VFFuwdxKWPSBgaO1Xy4zWIrmXv0G2m
+	 vEQtEFUYqHt1XY8gzZvmW2ZjJsM0cfhNavURWCfGQJhjWaCyf70G+MpUFkX6vvwIeyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028139;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028142;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SwAUFDj4xNzMbFp7WPDLI8hQ9GiZoBnXz8nb13kcc68=;
-	b=DLo+wHYxx1KQDga/d1ywVAwUV0KQKmk3kewi3HdR60edCH2dww6sOPwZ+URRR31Kzkj3
-	 aTl96b1cJhNMkp93gwH9fKjgi1aiRzj8AD83j/8e+9IUmRNsCDd/kG4NGqm3gy13bCMi/
-	 VFsGWo5pUh2gQKF7qCW2OYE0KVDIu8dTb/cYIhQmfkvmWIIjf1fDRqKaaEYlLnsue1jNm
-	 DdDca7yw+p42nja6GbAiVjasx5W9dPkJrsK7BOq4CLB1Ir0m4laClD0a4egtETNDwtRU6
-	 dstBYHZ/VNOrMvR820o1A2nkryLFmemOs5gjtf2VlWVpg8FxCo10qz3z9IIS2LoIinQ==
+	bh=mX1ZabzSx2A/IgtU0lHK8CwtKrJ/Uy2NiFhvgvD/Oow=;
+	b=gKcOuQmIJW3dDJycrCwVNNE1FnCZnjClDDxD21YvMHW4OYAKuQGkUVu+1QARtz5jcefr
+	 5ljhDreQ5Ots9UPzY3x6KUxCPvltLnoTluaqJ1oDlG5QM/mW3QCs6ThsRT/7tnO5rYXcP
+	 FINaphTApyjxlO8MuhA9iuKTZc0lRBBt1jWzmJXFN+Q3dwNxm9L2n1EIw2LzGZdkq/Nyt
+	 d8V0vJHKzaeAtivcb/KXA39ulEQedBAUHg6JRQEYKvBUJJA2qlhvNAyqRAESMGcHggpH/
+	 GQdSzjGyzD9pasvx/hcaZwH9BSR2XzCnzX9n/k6QuUzxkgcUYlM8rFV6Q9wbog4Yz1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hcUmw8k1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="s9UiShe/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2A6606A31C;
-	Wed, 18 Nov 2026 18:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5B5606A31C;
+	Wed, 18 Nov 2026 18:55:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hcUmw8k1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4AE11F000C4;
-	Wed, 18 Nov 2026 18:55:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s9UiShe/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C66F1F000C4;
+	Wed, 18 Nov 2026 18:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028139;
-	bh=SwAUFDj4xNzMbFp7WPDLI8hQ9GiZoBnXz8nb13kcc68=;
+	s=korg; t=1795028142;
+	bh=mX1ZabzSx2A/IgtU0lHK8CwtKrJ/Uy2NiFhvgvD/Oow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hcUmw8k1Dc1R8jVOJqUWy8iIBpyEkbI9mdnbhTvVrP2NWJF8+f8nuslBt/SSx7QwI
-	 AtEgzryJIkNzUJImbsoDNLWgjEIZ2mYBgRV26XFXKVEWmSAveWqzFPSuK+A7zrLVP2
-	 FdSkaldE1D7XB0tWOASeEYEd+JdMvIzIdLBN5Ba0=
+	b=s9UiShe/MJ+sdZEl7bV7UPyG/PwK5m975aYysOgDaq5znrfEoN9IZAN86zPySZRW0
+	 A5zYNXrCKaJb0EgK3BboO5toZ7wkuwkaC2Or23TBuJAxC5HlDHRxFyugUWRtNvD1qp
+	 GmzCLY2ecGPbm4beZAhcIOBWe7vhaL1CCypJCTxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Moses <p@1g4.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2002/2151] perf mmap: Preserve the consumed cursor in forward mode
-Date: Wed, 18 Nov 2026 16:02:17 +0100
-Message-ID: <20261118150234.652813868@linuxfoundation.org>
+Subject: [PATCH 6.18 2038/2151] blk-throttle: dont truncate the cgroup v1 iops limits
+Date: Wed, 18 Nov 2026 16:02:53 +0100
+Message-ID: <20261118150235.970729581@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -78,57 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Moses <p@1g4.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 1e826983ceef421d7047ed76581840b778294ad4 ]
+[ Upstream commit 7d96874ba80ba7a2ab578ea9139c2af79c353b88 ]
 
-perf_mmap__read_event() updates prev as it consumes forward-buffer
-records. perf_mmap__read_done() then overwrites prev with a fresh
-producer head, even when unread records remain.
+tg_set_conf() parses the limit into a u64 and stores the iops ones
+through an unsigned int, so anything above UINT_MAX is truncated and a
+multiple of 2^32 becomes a limit of 0. The next IO of the group then
+divides by it in tg_within_iops_limit().
 
-perf_kvm__mmap_read_idx() stops after 25 records per mmap and calls
-read_done(). If more records are pending, prev advances past them. The
-next drain starts at that new position and skips the unread remainder.
+Clamp to UINT_MAX, which means no limit, like tg_set_limit() does on the
+default hierarchy.
 
-An event arriving after the last empty read_event() and before
-read_done() can also be skipped. read_done() does not itself update the
-kernel's data_tail.
-
-Only refresh prev for overwrite buffers, which need the current head as
-the end of the next backward read. Leave the forward cursor at the
-consumed position.
-
-Fixes: 53172f9057e92c9b ("perf kvm: Switch to new perf_mmap__read_event() interface")
-Signed-off-by: Paul Moses <p@1g4.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: af133ceb2610 ("blkcg: move blkio_group_conf->iops and ->bps to blk-throttle")
+Cc: Tejun Heo <tj@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20261028164415.1262013-4-axboe@kernel.dk
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/perf/mmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-throttle.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/perf/mmap.c b/tools/lib/perf/mmap.c
-index ec124eb0ec0ab..ab3adf1d8baf9 100644
---- a/tools/lib/perf/mmap.c
-+++ b/tools/lib/perf/mmap.c
-@@ -200,7 +200,7 @@ void perf_mmap__read_done(struct perf_mmap *map)
- 	/*
- 	 * Check if event was unmapped due to a POLLHUP/POLLERR.
- 	 */
--	if (!refcount_read(&map->refcnt))
-+	if (!refcount_read(&map->refcnt) || !map->overwrite)
- 		return;
+diff --git a/block/blk-throttle.c b/block/blk-throttle.c
+index 64e78c79a7b47..03c3bfc165161 100644
+--- a/block/blk-throttle.c
++++ b/block/blk-throttle.c
+@@ -1398,7 +1398,8 @@ static ssize_t tg_set_conf(struct kernfs_open_file *of,
+ 	if (is_u64)
+ 		*(u64 *)((void *)tg + of_cft(of)->private) = v;
+ 	else
+-		*(unsigned int *)((void *)tg + of_cft(of)->private) = v;
++		*(unsigned int *)((void *)tg + of_cft(of)->private) =
++			min_t(u64, v, UINT_MAX);
  
- 	map->prev = perf_mmap__read_head(map);
+ 	tg_conf_updated(tg, false);
+ 	ret = 0;
 -- 
 2.53.0
 
