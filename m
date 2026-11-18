@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039809;
-	b=GaVOZktBKMEH1isToj9Sn8Z88UKRA3F7zZxp5X42LxUdkbJtAdVFcVoCKkHaEJZei3Sn
-	 IDiDdoIA+iB/aPYy9/OnQyba8zIKOKOXBxs3xYYAGxJjWuDZu2SdtaucxMyQEUmQhYAY1
-	 tFBLhQ0Vx8BruVglk7k5OweStBySHXRoh0DEwptkpuMJCPaAHUzrjPhwSq5y+/9FU9u+F
-	 QP1QQ4d5jXzfYOA/kwI6MJ5bLqE4VlW0+cBTjTFO9/zYF9/nVkIJmupKcAXEYSyayrfno
-	 KlocmPw63/hsfZZNiVhq+DcEu+LzSD+uOIonc0hIXUx9NuUCGlqqB2lX8Ok/3iXhDwA==
+	t=1795039812;
+	b=yjRF/M44IoJLV72VxBWK4fqD18USryDqgeVMMBgnSedfdLMcVLUmKl9th9aB4BEoO4yr
+	 6f+FsYaGiJjKrDqWOtPGy9cRmhQU51CeoRxvPkRFMtljMIurWK6HuZM4ee2AMbeU2dFdq
+	 fP4wSHIGIenLfXJEqPp5w1s/yqtRDKFQPdemqh1Ie/hk9GmDx93I5RfFqqU8n0dPosrEB
+	 rJ+lsk3rWcG7ZXF+I4r9mL6xFgq03s1g3xPdfkNkTo3Lpf/9FszOvHF+VFSluEe+gcj/R
+	 8ZSFlsMXlew9Q1DajLwD/ADNZ8kXW02EWI02YnbdkXcnoRXa3Qy+XvuyNgYJiC9F5bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039809;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039812;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QaatxxI4QyMJQbugQe9Izpih+LTj/SqOv3Uu6whIQeU=;
-	b=LYk6jrnn5xjawJS8CWITG8+cJAp5YZGsIHc1EcqFRfUsgcXY7/DVoNeOYJV3a430yQtT
-	 7xl/aSncvwDeZOSGI2Btal+4NNJLkVh/QPhwl1P7nGXz7JwrikSTFtqHzavvB0G2SJG/3
-	 q03P8iNiXaXb14CYbC03626lH8kJC5xMTfUiXmcjUkPjeeeup/j48SQNelrWywYR4QQ5a
-	 yDqcyWhmJjxpCsU9VQ3kMWIBXYBkYLCB6vKyuWmYdKADwdb9nJbMzdEhh9XbefuXSFX2T
-	 WuIaozwEq1eFEavVPby1PV0/bQ54scJg3UFuwiVwTECtmiz68anpnfXo+3793x8VcRg==
+	bh=rvDguSSdGAhqRfkV7dxzfX6U//+IW5dOog2ZysF86j0=;
+	b=iMXlx6SCdefVbmtvPQo8YJlS5CPE36Hap2DBA5UelVNLq/MMTxZh6/ouAffAZyUC/Hrf
+	 yBCtr+5Ee6NrezoF7cMP4DNSnf4nT9fPYz8NIuNhsMFSr6R1x7DN3p2u/kyLjHfRn2OMe
+	 mh7wLy5/YY0rjZcBeQC4MQWsk+EpraGK7vgo7yRAAJedgLw3emfKxq6AOsBBoVqLFBNl8
+	 llFKcCdGiw/DTnYHoqzfjwYKJzgdF9QEilTwu4GOvQX6uUeS+jyrx1mvzXPgS+aGxmZJ2
+	 a9z/NBOJkW8udcIhBDACjXEbOvpEFIsnYVZTv1csCXuz5SIeqFvEI6cymL1IAzpaUSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pLvddLaH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V25NzZm0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97935606A32A;
-	Wed, 18 Nov 2026 22:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558C9606A320;
+	Wed, 18 Nov 2026 22:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pLvddLaH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9311F000C4;
-	Wed, 18 Nov 2026 22:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V25NzZm0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1551F000C4;
+	Wed, 18 Nov 2026 22:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039809;
-	bh=QaatxxI4QyMJQbugQe9Izpih+LTj/SqOv3Uu6whIQeU=;
+	s=korg; t=1795039812;
+	bh=rvDguSSdGAhqRfkV7dxzfX6U//+IW5dOog2ZysF86j0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pLvddLaHOUeY31yStJp+kp1Gf4LQjnoWWC3jG+Pb+ic7WDjagybnQkIAniScPWpul
-	 WDw/3xIetQm8G7Ra35CECIfnWggv1Lm1+GqMxCTINCEzjagAw2Lv8VpviJ+VrGLEJd
-	 IMzllr3CVR2ihaWajPgzfQ+y5QJR8jYJ4baOLmU8=
+	b=V25NzZm0WlSRwQGcLCLkWFyB8yvx/HsYhLaDpURtEofxwFRE6iYDHg9Um7iMz+jFv
+	 kHlyt2kt6/pDh3Z0pbuszPpTZC7oK8IKIgbq1r62bUaIiRHci0lWzIBOPDNu9HEk3D
+	 WYbNY+mHRiiDF071B1El7/LL9AK9TMcrb8riikYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@nabladev.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2182/3318] ARM: dts: stm32: Drop bias-disable from STM32MP15xx DHCOM SoM sdmmc1_b4_pins_a
-Date: Wed, 18 Nov 2026 15:46:44 +0100
-Message-ID: <20261118150427.424459657@linuxfoundation.org>
+Subject: [PATCH 6.6 2227/3318] loadpin: Fix stale KEXEC_VERIFY_SIG reference in documentation
+Date: Wed, 18 Nov 2026 15:47:29 +0100
+Message-ID: <20261118150428.690106818@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,44 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@nabladev.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 3572825773791f4258b553391f4e2187df321731 ]
+[ Upstream commit eb0b0d222a832b6ec851e56d4922a775ac762955 ]
 
-Drop bias-disable property from STM32MP15xx DHCOM SoM sdmmc1_b4_pins_a
-to fix the following DT checker warning. The bias-pull-up property is
-the only bias-related property that has to be present in those pinctrl
-node subnodes.
+Commit 99d5cadfde2b ("kexec_file: split KEXEC_VERIFY_SIG into KEXEC_SIG
+and KEXEC_SIG_FORCE") removed CONFIG_KEXEC_VERIFY_SIG but left the
+LoadPin documentation pointing at it. Refer to CONFIG_KEXEC_SIG instead.
 
-"
-arch/arm/boot/dts/st/stm32mp153c-dhcom-drc02.dtb: pinctrl@50002000 (st,stm32mp157-pinctrl): sdmmc1-b4-0:pins1: {'pinmux': [10253, 10509, 10765, 11021, 12813], 'slew-rate': 1, 'drive-push-pull': True, 'bias-disable': True, 'bias-pull-up': True} is valid under each of {'required': ['bias-pull-up']}, {'required': ['bias-disable']}
-"
+While at it, clean up the grammar of the sentence.
 
-Fixes: 7cd8567d988a ("ARM: dts: stm32: Enable internal pull-ups for SDMMC1 on DHCOM SoM")
-Signed-off-by: Marek Vasut <marex@nabladev.com>
-Link: https://lore.kernel.org/r/20260828150111.173089-1-marex@nabladev.com
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Fixes: 99d5cadfde2b ("kexec_file: split KEXEC_VERIFY_SIG into KEXEC_SIG and KEXEC_SIG_FORCE")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Message-ID: <20260905013655.58665-1-kmehltretter@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/admin-guide/LSM/LoadPin.rst | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi b/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi
-index 142d4a8731f8d..65f81c0c233d2 100644
---- a/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi
-+++ b/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi
-@@ -507,9 +507,11 @@ &sdmmc1_b4_pins_a {
- 	 * - mandatory on SoMs without SD voltage translator
- 	 */
- 	pins1 {
-+		/delete-property/ bias-disable;
- 		bias-pull-up;
- 	};
- 	pins2 {
-+		/delete-property/ bias-disable;
- 		bias-pull-up;
- 	};
- };
+diff --git a/Documentation/admin-guide/LSM/LoadPin.rst b/Documentation/admin-guide/LSM/LoadPin.rst
+index dd3ca68b5df18..a90fd9dac9606 100644
+--- a/Documentation/admin-guide/LSM/LoadPin.rst
++++ b/Documentation/admin-guide/LSM/LoadPin.rst
+@@ -23,9 +23,9 @@ sysctl allows for easy testing on systems with a mutable filesystem.)
+ It's also possible to exclude specific file types from LoadPin using kernel
+ command line option "``loadpin.exclude``". By default, all files are
+ included, but they can be excluded using kernel command line option such
+-as "``loadpin.exclude=kernel-module,kexec-image``". This allows to use
++as "``loadpin.exclude=kernel-module,kexec-image``". This allows using
+ different mechanisms such as ``CONFIG_MODULE_SIG`` and
+-``CONFIG_KEXEC_VERIFY_SIG`` to verify kernel module and kernel image while
+-still use LoadPin to protect the integrity of other files kernel loads. The
+-full list of valid file types can be found in ``kernel_read_file_str``
+-defined in ``include/linux/kernel_read_file.h``.
++``CONFIG_KEXEC_SIG`` to verify kernel modules and kernel images while
++still using LoadPin to protect the integrity of other files the kernel
++loads. The full list of valid file types can be found in
++``kernel_read_file_str`` defined in ``include/linux/kernel_read_file.h``.
 -- 
 2.53.0
 
