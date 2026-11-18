@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060783;
-	b=AMqET0DF4BiglkoJAxSWmrLNv3rGYDX/im7MnyDRJSkgxeuJyztOObzY3qyhEsxiZicB
-	 pDCYGvDq1zf8nvEVQ2N7Dqj3p4qEeuF8JdFosm1trOuwCkwqCn6N3KUGCeC1OnRvr0jbW
-	 WdcZDjpYuPyxf5KbduN7GLSj5X8i1ZSLfhissxkYHgJZxAR4jXsuduMpZeGrNBrVwFrYs
-	 +hsXffJtWoY4DRPnujDqntZvVUUhIRh+1gpcti1QaWWCROZdaAxKD6zi4X4cyUS4ewyuB
-	 CvQa2P56Mx+2JVLQo71wsnF9xdFG6V+I7BOijMN1nC8qGxW5TvzuiQyajyKDqUvZRIw==
+	t=1795060786;
+	b=ypgFgNIPeutg8NHpXze7R8EkVR/v7M+U/zQNrMNJXJH9CGLFY9fB9hc0U2jhAKZV0KMH
+	 YgvMQSNSmmUw6kueZqNHdvUChtRXcib0Suuh1KG5laIgucFFWOhsCBIcmgME6lIPyeZ7k
+	 S+dov+zrT30AuTlVkiFpPGfniVs6aV2ivoYv5lXi6YD893om3deN/sDktlmhJEVXWHmxz
+	 mgkj9SzBquPFo5HOtQbiB5w2Y1lQlc/WVNCaC9mEC9e7adQ2+KNRmaWhVcjGR26dtg1Go
+	 8rjIOCDyK34Y7qiEeIA5S1OHrmBey/1hVfvSRmyiFW89xZ/9jYiNlaFKMpFJXgHHsCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060783;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060786;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f4rMXxQHZwTFT/KXGaNE8qkxMU5K9udoOTNg0XQ3dqs=;
-	b=TNBjOwExWFrcPZyqUw1o+Aa9X3qzCxAxG5KWxhHBP3lEk7D5++jsQ051edlrFgrETycn
-	 3RTf0PmTWUwO9ver5hDc6XWRSS0W6QAjYBAYBuBD1U9Z+MRs10vOspxAhOwkvYMiUTCzs
-	 S9PDkDdmZzGznf4MLtz2rHPy807tOe3mqCgdADhLqrK+UO1/XCvm8/Dge0gykoNLMvHGD
-	 DwYzUUQzISoRTe52mjLaFhgSfp34MCskCFPAfdH5WWoHjcf/FDZC412g0RKZCdRoEpZ5B
-	 S5cCOG2rrdk0RciT+rw6R8QpJxQNW9XWphjnswsWWLadTswBSTRmi7CxGLj44CBC9JQ==
+	bh=q7DMY3IDccI4bXI4JxGkBl7Xa89GzXpYnKql+CkJUB0=;
+	b=3EJ6eakgBNxnWak+wO+ud0YyFByTfT8JdaxZcYe7FtB3FmnzYAlH9/AvrYBUjNhfk4Td
+	 GuNFv6kC1Ei9RZ0urcThDeUdOpuspE7Xc9uO+Oczo3wTOMRibybuP64M2FyU+ti0n1J5i
+	 cEWdV5Ex1dg4qaXLRvhtQ47k0JUM6RGOuzpuS6/zfQVjctqerGUKmd6X1utWf4k/VlHJE
+	 /83M/CMjlkdU2BtbzA59ocmjUY/k6p+DqY7eBB1+P2w5feNXqtsmk1a0vfzyq99lRvBPB
+	 5YXfti2lqXev/ieiHANari8gOZkut8NB6m4D6+xF1a4bthBWVplk9+QpwRQiweUujUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E4xdN3uh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bYzTLFTP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9DF606A325;
-	Thu, 19 Nov 2026 03:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8083F606A32C;
+	Thu, 19 Nov 2026 03:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E4xdN3uh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138A11F000C4;
-	Thu, 19 Nov 2026 03:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bYzTLFTP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D566D1F000C4;
+	Thu, 19 Nov 2026 03:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060783;
-	bh=f4rMXxQHZwTFT/KXGaNE8qkxMU5K9udoOTNg0XQ3dqs=;
+	s=korg; t=1795060786;
+	bh=q7DMY3IDccI4bXI4JxGkBl7Xa89GzXpYnKql+CkJUB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E4xdN3uhO+bQ4ozqRzdTh06Y3HQ3ljHmQm255C+SuC4kKpfFg30iu4ItP9nhZwLCz
-	 WE/IO3Q8Va0SpUGaV3js/cboJ8xyfk6ZqroAwq93Mf7w36QnMfMR+RG4zxWhqvplO1
-	 sC+0N4p4FLAyPIV5pqwZcNX6zsFj1Aeq6ccjxBOI=
+	b=bYzTLFTP12u0XHjDxUvv70mI2SMNRWzFxbqWeCjMOXnk7CORWBFJsQii7DuCef89/
+	 ChoqKV2Y63HbwoNcrg98ABQUtUERcq1M0iHDCQbOxU8Qyk5SrwJAQEL62AODjvDCM1
+	 HIOxIGZ2ox6/mBYNQZOV2hjD4Gj2Eoy3S+rAu1vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1322/1848] dt-bindings: vendor-prefixes: Add GPLUS
-Date: Wed, 18 Nov 2026 15:56:00 +0100
-Message-ID: <20261118150015.019641302@linuxfoundation.org>
+Subject: [PATCH 5.10 1323/1848] dt-bindings: Add vendor prefixes
+Date: Wed, 18 Nov 2026 15:56:01 +0100
+Message-ID: <20261118150015.084509197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,36 +68,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit d7a2d86837b9de8d378f040cfc9184905d82bd78 ]
+[ Upstream commit 714ff69c331c005c9cd05d69d3c6fe9da20ef687 ]
 
-Add vendor prefix for GPLUS.
-https://www.gplus.com.tw
+These vendor prefixes are used by some routers supported
+by e.g. OpenWrt.
 
-Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230107133145.139731-1-linmengbo0689@protonmail.com
+- ADI Engineering is a US telecom equipment company.
+
+- Arcom Controllers is a US manufacturer of repeaters.
+
+- Freecom Gmbh is a german telecom equipment company.
+
+- Gemtek Technology is a Taiwan telecom company.
+
+- Gateway Communications was a telecommunication company,
+  now acquired by HKT Limited/PCCW.
+
+- Goramo Gorecki is a privately owned Polish telecom
+  company.
+
+- U.S. Robotics Corporation, known through their brand name
+  USRobotics is generally referred to as "USR" so use this
+  prefix for the company's device tree bindings.
+
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20231007-ixp4xx-usr8200-v3-1-ec46edd1ff0e@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Stable-dep-of: aa906abf611c ("dt-bindings: vendor-prefixes: add Free Mobile")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ .../devicetree/bindings/vendor-prefixes.yaml       | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index ecc4c3a300565..9d872844d0f26 100644
+index 9d872844d0f26..487b4e9d42542 100644
 --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
 +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -427,6 +427,8 @@ patternProperties:
+@@ -49,6 +49,8 @@ patternProperties:
+     description: AD Holdings Plc.
+   "^adi,.*":
+     description: Analog Devices, Inc.
++  "^adieng,.*":
++    description: ADI Engineering, Inc.
+   "^advantech,.*":
+     description: Advantech Corporation
+   "^aeroflexgaisler,.*":
+@@ -99,6 +101,8 @@ patternProperties:
+     description: Arasan Chip Systems
+   "^archermind,.*":
+     description: ArcherMind Technology (Nanjing) Co., Ltd.
++  "^arcom,.*":
++    description: Arcom Controllers
+   "^arctic,.*":
+     description: Arctic Sand
+   "^arcx,.*":
+@@ -385,6 +389,8 @@ patternProperties:
+     description: FocalTech Systems Co.,Ltd
+   "^forlinx,.*":
+     description: Baoding Forlinx Embedded Technology Co., Ltd.
++  "^freecom,.*":
++    description: Freecom Gmbh
+   "^frida,.*":
+     description: Shenzhen Frida LCD Co., Ltd.
+   "^friendlyarm,.*":
+@@ -395,6 +401,8 @@ patternProperties:
+     description: Fujitsu Ltd.
+   "^gardena,.*":
+     description: GARDENA GmbH
++  "^gateway,.*":
++    description: Gateway Communications
+   "^gateworks,.*":
+     description: Gateworks Corporation
+   "^gcw,.*":
+@@ -409,6 +417,8 @@ patternProperties:
+     description: GE Fanuc Intelligent Platforms Embedded Systems, Inc.
+   "^gemei,.*":
+     description: Gemei Digital Technology Co., Ltd.
++  "^gemtek,.*":
++    description: Gemtek Technology Co., Ltd.
+   "^genesys,.*":
+     description: Genesys Logic, Inc.
+   "^geniatech,.*":
+@@ -427,6 +437,8 @@ patternProperties:
      description: Shenzhen Huiding Technology Co., Ltd.
    "^google,.*":
      description: Google, Inc.
-+  "^gplus,.*":
-+    description: GPLUS
++  "^goramo,.*":
++    description: Goramo Gorecki
+   "^gplus,.*":
+     description: GPLUS
    "^grinn,.*":
-     description: Grinn
-   "^grmn,.*":
+@@ -1142,6 +1154,8 @@ patternProperties:
+     description: United Radiant Technology Corporation
+   "^usi,.*":
+     description: Universal Scientific Industrial Co., Ltd.
++  "^usr,.*":
++    description: U.S. Robotics Corporation
+   "^utoo,.*":
+     description: Aigo Digital Technology Co., Ltd.
+   "^v3,.*":
 -- 
 2.53.0
 
