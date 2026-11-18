@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062230;
-	b=VBNdz9SyjQL5yBN/2ykCmt+8/SogEAcuPlKGPKM143C4LCl3L0xAzoe8Z6+f3ZuO5ec9
-	 qtETugpTnR1SGnqcwlT8lWHT2Yiki8DV01NkRJSnaCN2cXC4s6zhl8pRXByH2U63Pqzmn
-	 pgw+j7KPMNcnYASjUGR/jyxpYTnFO301HiAld+3NUVdNkzZSfmxszFZs0h0XFO9IHWEHa
-	 +FPdKNzhr0JQL7YO9hxG86JyOwW1VqJPcavDENaO2QQy8Lmmlqy4nirVnK0XZRkpTQ+ys
-	 SK7pmVu/kMUtiAdmCvoZ1V2GzDupUeqwvHsxjg9EJ6yNce8A1o6qqOvjjivHE1H5bdg==
+	t=1795062233;
+	b=LKFXtATv49aVd4bEl9WH75/HyLL1CBds6DSp9iu2dy3YSYwV4fcLrwqX1bYgULXKDDy7
+	 3HoD4V3aUH2hoVd4zm309jueYHP231Xz27//2lnWv5ymw5KUaJTrI5ImvYH7v2nRA93tw
+	 fbgvC/N0Ad1Got2eqNg7ckE/d+LnXg5CNBQ4nia5eNw/m+IY4TBRR6S/wRwhwfGsWLvWw
+	 Vq/gB+CDwuQr2zNKf0XqXCxwLFgRwknNe9fND5WUQO9DFGhhrA0uPytLvEaNA7B4N5g1j
+	 7CnP46xa54XZB2chaldZjw8F4XSMBoCGRk63B27pbDYDXQA8KYahkNTQXNGxwQPf1yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062230;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062233;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iKEaCYH3DnzST8GxsS8AWzltzQiHMzaMSJJg8cDdd+w=;
-	b=Yp2OzcsSXoAsj7n15TEtKZSidiaBb3cyFmC5ACDOlmy5H6XDWmrk4ni+qfxAz81NaHvt
-	 88fUBJxA1qPMOSYDZHxgpur/v8PGv4hSlx/tFh4gm85IeGGnHzcveLcOP45sb2Pi02Zha
-	 TCcVNOXQdaQS3HQp7QjsmnqkHepWEMffAtN0sX0KFjIvgKmu0L4yw7fzadW84Et2m0i0k
-	 cTn9zjev1mNSKY1zh7VIo1007Vh1WYx1HG2mv+0qefeLXrEnb1bRMZTH38j1Zv5rR9NNM
-	 fJb4wEyrKZQIyuins4lBneX8AlrZwL1E1J+/hWaSXi9uNt2MVql8vRCU/IjVTiuUwnw==
+	bh=8C67s+JC6QDz1dRRCg9XtcOaiWp1SVoZzCanecd/S6A=;
+	b=fS2oY9/B9+AE3QC+l+lquAxvBT6POzsNfNSqCJXW1Ct/mJV1zMcIteV2AgZUfY40FPEY
+	 W52oz9UMxoCwtTRKx+wEpLk7Od6pRyCx89u80Y4nFkm+PCS5SPk9eDX1rrdnn648SphDe
+	 CgdRmtQ33wbTtyvjpQs7eHycdoozu1LrOsrIdQJwMz8C+e+8kQWU1sIvUub5qFoXyYyNI
+	 nx7lYHimTtDyGOgi5ZLAhxADuKs22Hc3Mh+jUi22OLufy3UTA1Q4Gx+oafBWg3n4X6IR3
+	 QrhpmEPxj3GWCzkfPKnyUMh27o1CDcMtBmprmXjB2ggBpZxSRLFveHxIywHIelJrl5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="sK/EzMGT";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aHvYQnDo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986F5606A320;
-	Thu, 19 Nov 2026 04:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D9A606A320;
+	Thu, 19 Nov 2026 04:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sK/EzMGT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5FF21F000C4;
-	Thu, 19 Nov 2026 04:23:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aHvYQnDo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8A51F000C4;
+	Thu, 19 Nov 2026 04:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062230;
-	bh=iKEaCYH3DnzST8GxsS8AWzltzQiHMzaMSJJg8cDdd+w=;
+	s=korg; t=1795062233;
+	bh=8C67s+JC6QDz1dRRCg9XtcOaiWp1SVoZzCanecd/S6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sK/EzMGTsXTGofRLkkGCP0LVQLgCj7dfZEZ/4YU/1TXNhM/4Vl3kKvTY1PVpHeRKc
-	 3r7Abq/r3SZo8nEBP9G53rvIZVPxtoQMnTadXaDPoWhjKhFNnqnMmRiEe33jNxW0oY
-	 61XsRezuwI01PM7ZR0qO3Rda+/QNr3e+4X5sEyww=
+	b=aHvYQnDoRtraCi6L5q2DksyMgqn22V7jtIQNbMI4WSghPZXn3yYnBAzaYECHmlfa5
+	 X5QweoznC5G9dg+CnxLa8CJAcwIYtXbUqMJNaxfKxmO8y7QwcxQLZgmcDyBG2bSqs0
+	 hqmxigwAOTGP6bgzsc6TqN8BW8ZEWONgqq2iyQho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jhonata Poma-Hansen <jhonata.poma@gmail.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1819/1848] netlink: check sk_rcvbuf before charging the dump skb
-Date: Wed, 18 Nov 2026 16:04:17 +0100
-Message-ID: <20261118150035.707497810@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Lee Jones <lee.jones@linaro.org>
+Subject: [PATCH 5.10 1837/1848] mfd: Remove software node conditionally and locate at right place
+Date: Wed, 18 Nov 2026 16:04:35 +0100
+Message-ID: <20261118150036.505964996@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,70 +67,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jhonata Poma-Hansen <jhonata.poma@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit b45d37740cfb4bdfccef3fbd9fd970fd3224438f ]
+commit 5a23e8b0fd6010e25ae58362292235cc9213ca57 upstream.
 
-Since commit ae8f160e7eb2 ("netlink: Fix wraparounds of
-sk->sk_rmem_alloc."), netlink_dump() charges the dump skb first and
-queues it only if sk_rmem_alloc is still below sk_rcvbuf. Commit
-a215b5723922 ("netlink: make sure we allow at least one dump skb")
-added an exception for an empty socket.
+Currently the software node is removed in error case and at ->remove()
+stage unconditionally, that ruins the symmetry. Besides, in some cases,
+when mfd_add_device() fails, the device_remove_software_node() call
+may lead to NULL pointer dereference:
 
-A dump that starts while something else is still charged to a socket
-with a small receive buffer fails with ENOBUFS and stays running.
-Every recvmsg() retries it, fails again and sets sk_err, so a reader
-that peeks before reading, as libnl does, gets ENOBUFS on the read
-after each peek, never consumes the message at the head of the queue
-and spins forever.
+  BUG: kernel NULL pointer dereference, address: 00000000
+  ...
+  EIP: strlen+0x12/0x20
+  ...
+  kernfs_name_hash+0x13/0x70
+  kernfs_find_ns+0x32/0xc0
+  kernfs_remove_by_name_ns+0x2a/0x90
+  sysfs_remove_link+0x16/0x30
+  software_node_notify.cold+0x34/0x6b
+  device_remove_software_node+0x5a/0x90
+  mfd_add_device.cold+0x30a/0x427
 
-I hit this with "iw dev wlan0 scan" hanging at 100% CPU on an arm64
-board with a 6.6 based kernel (iw 5.19 sets SO_RCVBUF to 8KiB). A
-kprobe trace showed the scan dump starting while the NEW_SCAN_RESULTS
-notification iw had just read was still charged to its socket,
-because iw had preempted the sender before netlink_broadcast()
-returned.
+Fix all these by guarding device_remove_software_node() with a conditional
+and locating it at the right place.
 
-Check the limit before charging, as before ae8f160e7eb2, which also
-covers the empty socket. netlink_recvmsg() continues a dump only at
-or below half of sk_rcvbuf, so the skb is then always queued, and a
-dump goes over the limit by at most one skb. Refuse a skb that would
-take sk_rmem_alloc past INT_MAX, so the wraparound stays fixed.
-
-Reproduced on net in a KVM guest with a userspace reproducer and the
-selftest in the next patch; both pass with this fix.
-
-Fixes: ae8f160e7eb2 ("netlink: Fix wraparounds of sk->sk_rmem_alloc.")
-Signed-off-by: Jhonata Poma-Hansen <jhonata.poma@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261027-netlink-dump-livelock-v2-1-c4bb05352a33@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 42e59982917a ("mfd: core: Add support for software nodes")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netlink/af_netlink.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/mfd/mfd-core.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index eeb0b633a2e5f..d9d8c98440491 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -2264,9 +2264,13 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
- 	if (!skb)
- 		goto errout_skb;
- 
-+	/* Check the limit before charging the skb: netlink_recvmsg() continues
-+	 * the dump at or below half of sk_rcvbuf, and the skb must be queued
-+	 * then. Keep sk_rmem_alloc at or below INT_MAX.
-+	 */
- 	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
- 	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
--	if (rmem != skb->truesize && rmem >= rcvbuf) {
-+	if (rmem - skb->truesize >= rcvbuf || rmem > INT_MAX) {
- 		atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
- 		goto errout_skb;
+--- a/drivers/mfd/mfd-core.c
++++ b/drivers/mfd/mfd-core.c
+@@ -293,18 +293,18 @@ match:
+ 			if (has_acpi_companion(&pdev->dev)) {
+ 				ret = acpi_check_resource_conflict(&res[r]);
+ 				if (ret)
+-					goto fail_of_entry;
++					goto fail_res_conflict;
+ 			}
+ 		}
  	}
--- 
-2.53.0
-
+ 
+ 	ret = platform_device_add_resources(pdev, res, cell->num_resources);
+ 	if (ret)
+-		goto fail_of_entry;
++		goto fail_res_conflict;
+ 
+ 	ret = platform_device_add(pdev);
+ 	if (ret)
+-		goto fail_of_entry;
++		goto fail_res_conflict;
+ 
+ 	if (cell->pm_runtime_no_callbacks)
+ 		pm_runtime_no_callbacks(&pdev->dev);
+@@ -313,13 +313,15 @@ match:
+ 
+ 	return 0;
+ 
++fail_res_conflict:
++	if (cell->swnode)
++		device_remove_software_node(&pdev->dev);
+ fail_of_entry:
+ 	list_for_each_entry_safe(of_entry, tmp, &mfd_of_node_list, list)
+ 		if (of_entry->dev == &pdev->dev) {
+ 			list_del(&of_entry->list);
+ 			kfree(of_entry);
+ 		}
+-	device_remove_software_node(&pdev->dev);
+ fail_alias:
+ 	regulator_bulk_unregister_supply_alias(&pdev->dev,
+ 					       cell->parent_supplies,
+@@ -385,11 +387,12 @@ static int mfd_remove_devices_fn(struct
+ 	if (level && cell->level > *level)
+ 		return 0;
+ 
++	if (cell->swnode)
++		device_remove_software_node(&pdev->dev);
++
+ 	regulator_bulk_unregister_supply_alias(dev, cell->parent_supplies,
+ 					       cell->num_parent_supplies);
+ 
+-	device_remove_software_node(&pdev->dev);
+-
+ 	platform_device_unregister(pdev);
+ 	return 0;
+ }
 
 
