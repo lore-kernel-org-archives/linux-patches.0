@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027361;
-	b=u1IBy1Dxa6WqdYM4MmjpESr9KfJzCo81HMICH9/sxk/dtlJZgZgYaJqL+ixVZfuAYft3
-	 FNaTW33J7SxVA+5ozQ8YP5XeSFP1ao7E3zWh6rLnI7DtiEInZwpmt6vvV9yxbH4vTuIS6
-	 Vhyn9+NB19eBdd4hT2Flba3YyQc+t3d/sy5AFbV6jtqnYVTxb8w19tIONABA8WffuVG45
-	 1wGf0ASsPzeN3OGlxaV7BO8saQNdG6RFAvf4zOLpPa6uOBYVO2urnlilWCH3fgxRy+Qg9
-	 /8v+TY4efI0PHXEyK/oQEtYVM0eE6RINIb9faWC/TrXYdUxwPiD5qXKrBnPjrofQg3w==
+	t=1795027364;
+	b=VYyRKwYlsQyVRVlQ5Osr9is8BFEzgvJ2t/4V7M2/w/wrv0jRjJlRCytL0wzIeU2UUnN2
+	 DdbgJsXFQEnsODXM+JkZaxQ6Jz5MVsGwYmTU8HXGlPqRXLPYU1YDSGTigX2h+41Pm/jF/
+	 /6w0wy6evUmPy8tKc70OFnhFmLY+FXf3hRrkN/R1q3gaz1rDEODvW704dlWrPPvfuJkI1
+	 rhYQ6njwcl5k5us6zBj4qTpLvqIcnH5ndGPpN39nyqVbyCqLuUXJR0t/A12wjWZHiU+vR
+	 0bmG40hP3RA6TJPbHntx1HQeRoVk5YWjnyhxvQqFsIK4EpzuCcJegvKetnIh7G+pOVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027361;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027364;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8dxibONdLNr+ux2MPI06l/FC0aOs2Wx8SDkwHB6fivI=;
-	b=C0MFNMWBv9C0hDunB2WMMP2QsLqlyHKtNmMn9Oyx/LONZx+++CiLrhbwtnPUrsvKw66e
-	 DeXQy5s9Iq6YHGVOQq1baSxSeikGNGw/5FGIYLnb2v32w9jtjMfDMCHhkU7CmkfDUpOXv
-	 KkGEe2F/W4Nc9JP+OUfkPJHhFFhIdLJWX/5xzVq1vkeyFH1xglPyx8mKYH11eyv1FoZZ8
-	 X/HgYdO9SF6pzhGuBuR5OLmPeS300AWfcmRVDOqJIBukQNOR+BUMx2mRi1x5zOcyfHe8c
-	 wMVrj7nZa+e8mkJReyraZlvIU1GlCGBzWfj96bIE1fyS17QPW3jhiTGUlTIy2pemC5g==
+	bh=bQhnP2suCZ+odnW63TmVqHxPdST13bGpHolqDXxDDUY=;
+	b=NY9ZVeAxO92lBSzzgWIqNLkbsiUqB6cxlEBaXvajMs7azbXt+du/ES91kwUrp7zzaqJ2
+	 FxYwqE4S5dN8XXwgK9VlO37DwMFQs6kdqBhlHOrqfTmxa/3h+HnVfVxzaFB2R3wCpGB1n
+	 7DJ47tSSOUsoH8spt219Uivco7BpxRoHDszahyP1UsMADj2vQFEjKw9HFfoM8uC6gYsca
+	 id/pA4blCt9zCvjxA10i5WtUn5/ysyX0F8Ni9UPtpZB/l3NEhUYNfhIKlzxdHHYl7SWjY
+	 XFGykrxiENc1kNd8Vhf1K0RMyjOAxyBJ8hBh/JTCa2edum2jhFQ/ZDfImzABWfhXihw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DEY7B9XA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhFgzFaH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7B260A2604;
-	Wed, 18 Nov 2026 18:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5282A606A33A;
+	Wed, 18 Nov 2026 18:42:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DEY7B9XA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8056C1F000C4;
-	Wed, 18 Nov 2026 18:42:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhFgzFaH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5878B1F000CB;
+	Wed, 18 Nov 2026 18:42:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027361;
-	bh=8dxibONdLNr+ux2MPI06l/FC0aOs2Wx8SDkwHB6fivI=;
+	s=korg; t=1795027363;
+	bh=bQhnP2suCZ+odnW63TmVqHxPdST13bGpHolqDXxDDUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DEY7B9XASghAJJS5iCssSEFWOrXmHU1b4ksnwIAcvWOzRVhEerhGGmZCW3uGHw5ze
-	 MsjAAl+BonGpMu76KZRebkoPbEuJCwpncwMfLvOWKjMdD19NJjXSJHsvvFSkV/Xw5N
-	 9l0NL/vIao6qbXhq/ZuYkGsnU6GenjOoMaoUQ3fc=
+	b=fhFgzFaHtun4qsrhvuSOS1ePM0bqLtzvk89erGIngCSOzAPHp2g5BfU6YAjg7LXyu
+	 EdcJF8jYu94IEhdstAjZ78lK58VvoaTrg42Baw+3njRl3E9NCRZn1Ix1R74yuMdB6A
+	 DsuZCQp+7gUGoHtuLZ0o2pSdL554Pm+EIGUgfmaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Troy Mitchell <troy.mitchell@linux.dev>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1735/2151] netfilter: nft_compat: restrict raw table targets/matches
-Date: Wed, 18 Nov 2026 15:57:50 +0100
-Message-ID: <20261118150225.067373631@linuxfoundation.org>
+Subject: [PATCH 6.18 1762/2151] dt-bindings: vendor-prefixes: Add Sensylink
+Date: Wed, 18 Nov 2026 15:58:17 +0100
+Message-ID: <20261118150226.026536979@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,66 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Troy Mitchell <troy.mitchell@linux.dev>
 
-[ Upstream commit ac364eb4d6d747b15df17e5fc9e442c318afaaac ]
+[ Upstream commit f4ba4f8cc8e8df45e57c1754955b3a6b9b089a97 ]
 
-xt targets and matches declaring .table = "raw" (CT, NOTRACK) rely on
-only ever running in the legacy raw table's prerouting/output chains,
-ahead of conntrack. nft_compat_chain_validate_dependency() already
-enforces this kind of correspondence for "nat" by requiring the chain
-type to actually be NAT, but did nothing for "raw": a rule wrapping
-the CT target could be loaded into any hook and any priority via
-nft_compat, including after the real conntrack hook has already run.
+Add the vendor prefix for Sensylink Microelectronics.
 
-The CT target attaches a conntrack template to the skb when none is
-set yet.
-
-Require that a "raw" table dependency actually matches what xtables
-enforces via the implict/builtin table dependency.
-
-Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
-Assisted-by: LLM
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://en.sensylink.com/
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
+Link: https://patch.msgid.link/20260914-ctl2301-v5-1-b44b81cd2c3c@linux.dev
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_compat.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netfilter/nft_compat.c b/net/netfilter/nft_compat.c
-index ba4d304a30141..2bac958f15266 100644
---- a/net/netfilter/nft_compat.c
-+++ b/net/netfilter/nft_compat.c
-@@ -14,6 +14,7 @@
- #include <linux/netfilter/nf_tables.h>
- #include <linux/netfilter/nf_tables_compat.h>
- #include <linux/netfilter/x_tables.h>
-+#include <linux/netfilter_ipv4.h>
- #include <linux/netfilter_ipv4/ip_tables.h>
- #include <linux/netfilter_ipv6/ip6_tables.h>
- #include <linux/netfilter_bridge/ebtables.h>
-@@ -45,6 +46,20 @@ static int nft_compat_chain_validate_dependency(const struct nft_ctx *ctx,
- 			type = NFT_CHAIN_T_NAT;
- 		if (basechain->type->type != type)
- 			return -EINVAL;
-+	} else if (strcmp(tablename, "raw") == 0) {
-+		/* iptables-nft emulates the legacy raw table, which only
-+		 * ever has prerouting/output chains at this exact priority.
-+		 */
-+		if (ctx->family != NFPROTO_IPV4 &&
-+		    ctx->family != NFPROTO_IPV6)
-+			return -EINVAL;
-+
-+		if (basechain->ops.hooknum != NF_INET_PRE_ROUTING &&
-+		    basechain->ops.hooknum != NF_INET_LOCAL_OUT)
-+			return -EINVAL;
-+
-+		if (basechain->ops.priority != NF_IP_PRI_RAW)
-+			return -EINVAL;
- 	}
- 
- 	return 0;
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index d7e41406f7202..bf594638b0e62 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -1425,6 +1425,8 @@ patternProperties:
+     description: Sensirion AG
+   "^sensortek,.*":
+     description: Sensortek Technology Corporation
++  "^sensylink,.*":
++    description: Sensylink Microelectronics Technology Co., Ltd.
+   "^sercomm,.*":
+     description: Sercomm (Suzhou) Corporation
+   "^sff,.*":
 -- 
 2.53.0
 
