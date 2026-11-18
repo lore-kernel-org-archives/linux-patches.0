@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042707;
-	b=VAp0SFijzKIVkMs8VxibPISuf4NmfdWfYjgE7VT1LlzVySTI1JHk0Jc6QkAb4snu4Dfo
-	 oUEbT3tUTNIJJs0I5MbZdkchAa9p7g0f/n6asyjZ4XAnJKApCIYxmuAeGpdRn1cYPSM1q
-	 YWmGk1g9YfoqBTmegfF26zye4l6Zr+DCXNxGtVyl2naDRGqvFmpQNROSuM/Jw8BNHpui5
-	 GpE5oc87Fxy6UHxpL0bFB1wYPF8tX37Cy6eofXcZf1MgxhXHK+8qJeMjo53ZJGqY1lJpO
-	 bPuWrkp+/mW2IujVEt/sWuEJyEO+REzNQQEjy3dcsnG24FxgOkPmuh9SogX3Zaru0fQ==
+	t=1795042710;
+	b=d92I0LqI7mRKql0xqqmZkJdoMTg5vqPk1a3FKXJs92L80YYFMBQ+luUvWqRnL6RmCn3w
+	 sWwcuvDuOCEePBXHPC16yyLKuouHsi/KFDiHLKeSErseB3bcy672BjYd9ryKe6Udc1JJY
+	 hJazHnGEUyZJfusVTlSxfZSekK9rtCGtBvnDtaXzN5N4JmJ4AYKT4lkYeWht9nIhuoU9z
+	 +2JYG3Gff6XnrqMQdMJ/WseR8o7PD10XIcio0nNUQ1HKs2p4QQuMDTTgI0JNEgtZlR2SE
+	 BM+FcI5xDdACDQVqWwnviS7c1pbuT2AMRhKEgLY+YaSYhaS5TMPrOuI5lVjj6bbltfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042707;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042710;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MVWwydlH2rKFZkxJKHYJt/H7+hndu8k/dREmqNGeVOA=;
-	b=lq8AE3OgySyC2SDRbdTnSCw4fb9uc/eblRwfTiRVBG6p4q/si66O589bcI2wfF66j5S3
-	 V3/Q9UH9Va+2hqc+5eCiOT8c9M2ttSanPqsHQmWaQ2KjCbFuBpzsDCL2FPHHCW8Ivlvbu
-	 JallqxNOsJHxPJKXI5ao0JSXYgYvbxNo2XAijJlwunbmW3Snr/lOiqfpSQ30jkuPzEQos
-	 +A8tcbB9qw+rExVFGBnuLv15/CECwYCqPkCabBHqKLtIzFGahZtEjPKdDZJz3Zx/g8Fxm
-	 b4QZCMBsTyOw44nZgxfEEPz0dnDCvTjJAHUcph6j1YZnMKd0s7OjOWJa7uWDQJlAtWg==
+	bh=+LT0uLfgy6Z522mrG8jHf0v4uKIpsLA84FEk22NaVwg=;
+	b=BbTX8hxYDujFGWiKiXReixnv1qHopX7s4iwU3shSUyetEOEn3o15acO927rQLupJ9y8z
+	 ToCxJRq8Q72Ik0guH2Y3xCxBoS4E9COzEvtSTH6zngXcCrYwSvV0VLGZ5vRTbsCqWclCu
+	 ijQozEBL/Xbpd2mDvWlGf6V7ybS2dWvPusvkJxggarIhzD5/7t1my+DL9ImRhKNKQHqh1
+	 xn4kDzTdaPkkppASKTVhcthSA6TT94F635oPp9J2AXgomCrf3w2/m0KcQsceoviWsTgYb
+	 qxoH/6bmqYNO3WNmoyT/mOAd3crqWgzGMnxZgHqx/azl20JYGBjGNwA761hw822fvVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QrpM4+vI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="PERY/+eF";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A935606A31C;
-	Wed, 18 Nov 2026 22:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01595606A32C;
+	Wed, 18 Nov 2026 22:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QrpM4+vI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58DB11F000C5;
-	Wed, 18 Nov 2026 22:58:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PERY/+eF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52ABE1F000C5;
+	Wed, 18 Nov 2026 22:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042707;
-	bh=MVWwydlH2rKFZkxJKHYJt/H7+hndu8k/dREmqNGeVOA=;
+	s=korg; t=1795042709;
+	bh=+LT0uLfgy6Z522mrG8jHf0v4uKIpsLA84FEk22NaVwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QrpM4+vIOkPs2U4M0EZjFnwj29NfN/Z9FONAyNAGjYyPs+0Mfd3nDuoEc/VodHU8I
-	 4nF9ht1YPPfxh8We4e127g3ftrFuCfIlDvibUvD5BbqEiiKufD+jaEaLNdyXgkkZuj
-	 zHc2mFKHchlba78EwcOYp/Ud+nTkNAvdc/CcIzGg=
+	b=PERY/+eFMvf5QBrgigjPj6VqTVpOSHBVvdWw5qWxIN/m0vEfJKK/idEjYQtJm7miQ
+	 maXFNCkRZyWN6jOS36j077Q7VoLD4nZ7YBg7dMV244KfR2vwpNch594DVJGFRvMFAU
+	 XenDnIvCX8A56bze0aS14dzQOjKIsafgq3KJujIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Md. Haris Iqbal" <haris.iqbal@ionos.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Chris Mason <mason@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jamie Nguyen <jamien@nvidia.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3266/3318] rnbd-srv: publish the sess_dev at the end of OPEN
-Date: Wed, 18 Nov 2026 16:04:48 +0100
-Message-ID: <20261118150457.597625270@linuxfoundation.org>
+Subject: [PATCH 6.6 3267/3318] selftests: net: txtimestamp: fix out-of-bounds read in raw UDP checksum
+Date: Wed, 18 Nov 2026 16:04:49 +0100
+Message-ID: <20261118150457.624891412@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,66 +70,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Jamie Nguyen <jamien@nvidia.com>
 
-[ Upstream commit 08ebf69c78a02afb39b7728f3358c09bc4cf067d ]
+[ Upstream commit 8daacee78b3d2798fcf92398b6dff364eab64466 ]
 
-rnbd_sess_dev_alloc() stores the empty sess_dev in the XArray as its
-first step. An IO message with the new ID from another connection can
-find it before bdev_file is set, or hold a reference while a failing
-OPEN frees it after a mere RCU grace period. Both are reachable from any
-host that can open a device.
+With -r (SOCK_RAW, IPPROTO_UDP) the test writes only the UDP header and
+payload, and the kernel adds the IP header. get_udp_csum() still expects
+the IP source and destination addresses to directly precede the UDP
+header, and reads 2 * alen bytes before the start of the buffer: 8 bytes
+for IPv4, 32 bytes for IPv6.
 
-Reserve the ID with a NULL entry and store the sess_dev once nothing can
-fail anymore. The error path still erases the ID, and no longer needs
-synchronize_rcu().
+ASan reports a heap-buffer-overflow for both -4 -r and -6 -r. Without
+ASan the read usually goes unnoticed, but it faults when the buffer is
+the first chunk in the heap. That happens on Ubuntu 26.04, where the
+kselftest runner wraps the test in uutils stdbuf, and txtimestamp.sh
+fails with SIGSEGV on every run.
 
-Fixes: 2de6c8de192b ("block/rnbd: server: main functionality")
-Cc: "Md. Haris Iqbal" <haris.iqbal@ionos.com>
-Cc: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Chris Mason <mason@kernel.org>
-Link: https://patch.msgid.link/20261028164415.1262013-41-axboe@kernel.dk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Even without a crash, -r packets were sent with a checksum computed
+over unrelated heap memory, so their UDP checksum was invalid.
+
+Build the pseudo-header from the destination address and checksum only
+the UDP header and payload. -R and -P already write daddr as both the
+source and destination address, so their checksums are unchanged. With
+-r the kernel selects the source address, which equals daddr for the
+loopback addresses used by txtimestamp.sh.
+
+Fixes: b52354aa068e ("selftests: expand txtimestamp with ipv6 dgram + raw and pf_packet")
+Signed-off-by: Jamie Nguyen <jamien@nvidia.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20261027162945.2122306-1-jamien@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rnbd/rnbd-srv.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/txtimestamp.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/block/rnbd/rnbd-srv.c b/drivers/block/rnbd/rnbd-srv.c
-index cb475fc425d57..6add67d5929f1 100644
---- a/drivers/block/rnbd/rnbd-srv.c
-+++ b/drivers/block/rnbd/rnbd-srv.c
-@@ -415,7 +415,7 @@ static struct rnbd_srv_sess_dev
- 	if (!sess_dev)
- 		return ERR_PTR(-ENOMEM);
+diff --git a/tools/testing/selftests/net/txtimestamp.c b/tools/testing/selftests/net/txtimestamp.c
+index 10f2fde3686be..d11ef41c30247 100644
+--- a/tools/testing/selftests/net/txtimestamp.c
++++ b/tools/testing/selftests/net/txtimestamp.c
+@@ -412,19 +412,25 @@ static uint16_t get_ip_csum(const uint16_t *start, int num_words,
+ 	return ~sum;
+ }
  
--	error = xa_alloc(&srv_sess->index_idr, &sess_dev->device_id, sess_dev,
-+	error = xa_alloc(&srv_sess->index_idr, &sess_dev->device_id, NULL,
- 			 xa_limit_32b, GFP_NOWAIT);
- 	if (error < 0) {
- 		pr_warn("Allocating idr failed, err: %d\n", error);
-@@ -783,6 +783,13 @@ static int process_msg_open(struct rnbd_srv_session *srv_sess,
- 	list_add(&srv_sess_dev->dev_list, &srv_dev->sess_dev_list);
- 	mutex_unlock(&srv_dev->lock);
+-static uint16_t get_udp_csum(const struct udphdr *udph, int alen)
++static uint16_t get_udp_csum(const struct udphdr *udph, bool is_ipv4)
+ {
+-	unsigned long pseudo_sum, csum_len;
+-	const void *csum_start = udph;
++	const void *addr = is_ipv4 ? (void *)&daddr.sin_addr : &daddr6.sin6_addr;
++	int alen = is_ipv4 ? sizeof(struct in_addr) : sizeof(struct in6_addr);
++	uint16_t addr16[sizeof(struct in6_addr) / sizeof(uint16_t)];
++	unsigned long pseudo_sum;
++	int i;
  
-+	/*
-+	 * Nothing fails from here on, so let I/O messages find the sess_dev.
-+	 * The ID is reserved, so this store allocates nothing.
-+	 */
-+	xa_store(&srv_sess->index_idr, srv_sess_dev->device_id, srv_sess_dev,
-+		 GFP_KERNEL);
-+
- 	rnbd_srv_info(srv_sess_dev, "Opened device '%s'\n", srv_dev->name);
+ 	pseudo_sum = htons(IPPROTO_UDP);
+ 	pseudo_sum += udph->len;
  
- 	kfree(full_path);
-@@ -794,7 +801,6 @@ static int process_msg_open(struct rnbd_srv_session *srv_sess,
+-	/* checksum ip(v6) addresses + udp header + payload */
+-	csum_start -= alen * 2;
+-	csum_len = ntohs(udph->len) + alen * 2;
++	/* pseudo-header source and destination: both are daddr */
++	memcpy(addr16, addr, alen);
++	for (i = 0; i < alen / 2; i++)
++		pseudo_sum += 2 * addr16[i];
  
- free_srv_sess_dev:
- 	xa_erase(&srv_sess->index_idr, srv_sess_dev->device_id);
--	synchronize_rcu();
- 	kfree(srv_sess_dev);
- srv_dev_put:
- 	if (open_msg->access_mode != RNBD_ACCESS_RO) {
+-	return get_ip_csum(csum_start, csum_len >> 1, pseudo_sum);
++	/* checksum udp header + payload */
++	return get_ip_csum((const uint16_t *)udph, ntohs(udph->len) >> 1,
++			   pseudo_sum);
+ }
+ 
+ static int fill_header_ipv4(void *p)
+@@ -473,8 +479,7 @@ static void fill_header_udp(void *p, bool is_ipv4)
+ 	udph->len    = ntohs(sizeof(*udph) + cfg_payload_len);
+ 	udph->check  = 0;
+ 
+-	udph->check  = get_udp_csum(udph, is_ipv4 ? sizeof(struct in_addr) :
+-						    sizeof(struct in6_addr));
++	udph->check  = get_udp_csum(udph, is_ipv4);
+ }
+ 
+ static void do_test(int family, unsigned int report_opt)
 -- 
 2.53.0
 
