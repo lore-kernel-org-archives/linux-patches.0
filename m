@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037277;
-	b=HyKHpv/ipj2XS11Wjps94Zik7iZ58WXUYR4SDoBZa9IyGY0xUNrmuWH9iQULWe+AHBwT
-	 QAlSqfCb2QTZh4ObbI45xp73pmSYjtH6S40v2bd+bXF74y7SnYongtUA4I9EKS3gcef19
-	 S4eFYYoSETk7GRlpCM6oa4y90vJ6ua1UB18tOTQ+SYLGMOZRl/VUjgEdadyen9OIZu247
-	 y9aQxW9hROTAhISiaOj3U8X0l8+ykeQAZ7q0SLohTOWNYjzE/Pt1R3KEypphs/sP7gudW
-	 iUERjbzMTWBN1/2p/mHwuTEHQOQ1sjqQU6hGh9CuYcR2aA5EveWPaqy0W1UtmFOKphA==
+	t=1795037281;
+	b=FSjzLoYfUafvizjw10/RdYflkFmGfj/AjT+meizboyZl2vx1/hi/SCI6tsl21tJBrIUH
+	 2Hs1bdmQaKwBS5xCRtaTh1xf/ySNJi0CbIR4bqKM6ga4xA+O3MPTmdH0tITUaesGgSE69
+	 GrukEAOHtXyVVwT4mQEJ/a6ce5aUDeewvKbL3al7kp7tY4ds1UxRDo4XBTRrSsYVFMBSQ
+	 YRYJZDMCVeaEsC1B0I2Wsy0v/r3vbPNBJD/po+OxzzoeJUeArIr0gwLDI8Kz38Q1iSBW+
+	 KcMCQ+fWjb45IqmqOb77WNDJgPB4GvmvKBaLjokSV/Pp2nnYOmdXffHZWVZ5JRWpdyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037277;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037281;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WJd23hyUKmw8s4Z7+7YZz3ZAofEJv3BFa2vH/oe9Ghg=;
-	b=GFM6OR/xomojMZBtM/3PpEWSZVsdzvF1ffos90UX4H6oBzylMOiNKssihOK5PMuoB7B/
-	 jnkOMTsL9MYjRcSSdrxVQq267ZkTLoNegHQrRh5HsoHHK/tnbO3B2ZHJVPAqmnl1todN4
-	 QcxO6WPRU427PcgXhF5UQ/e3rvkRqrn2YC/VUkX3etJe0UdJCWU5MQAWQaveb1LVILZBs
-	 +8rvVhE+Ig9aIhzS3ywSvdGM0CdHXhLQvmBpBYTzZK71csbN/FCPEGuiR6szotZZhMunn
-	 +1Kk22ksZ2ojz0ZqyRhHkyKEN72Rn9p8tBIjEvTh0jPYxgAtvViXZ4Isi5SNQiZgUrg==
+	bh=OkPMZFOrejSGYJvQvZ9LmAM40As/ppLmaqMXXJsXzY8=;
+	b=p57VvZqAvzmht9Ej6F7YdxBgYK+h+TzoG6vVRiuRKpPDObJTdBvvhyHUDafH1rdVh4UZ
+	 cYWtyBpBrsPt1H/LxAEzeiMhc6twNOxtOiHnNkJMuRkFv7cmQIQ59GHx5s/o7jqCO+wc6
+	 rWDtIL9RBLCo1Sk7G8CtFD7DBs3P+onFk/leQ4Gsotdpw0jDyEuhHAS9sn3A17UdSvv0P
+	 GpNiFyo2eNL/v6wc8TzcWbgMOeSBJk1cTkoXkEGP5bD8jrK3hmP6KNOHwjdIuNt1cWHeq
+	 Dekj5iAmjkUdk7tmgUrPpNXofvOfi6gbnJbdivUPBlPXtObalWXHopO1pW5zfjTZqgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OdIqgvdD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YFB5vijE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EC1606A32A;
-	Wed, 18 Nov 2026 21:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8D9606A331;
+	Wed, 18 Nov 2026 21:28:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OdIqgvdD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E16661F000C4;
-	Wed, 18 Nov 2026 21:27:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YFB5vijE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367521F000C4;
+	Wed, 18 Nov 2026 21:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037277;
-	bh=WJd23hyUKmw8s4Z7+7YZz3ZAofEJv3BFa2vH/oe9Ghg=;
+	s=korg; t=1795037280;
+	bh=OkPMZFOrejSGYJvQvZ9LmAM40As/ppLmaqMXXJsXzY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OdIqgvdDyc40uF/YsuR4HQs7xHQ6JCMMTNEQIbSAUYovfyKMZJvM9ahPiX8s4l4Vj
-	 ArKukMvX55oKmduD/UQ5DS+m5QsR3wWCvosED/i0EMdS5dl2fKX4bAN2OQq4jtvvF5
-	 4cAYqXjArVPe2qdZrsLq5YPmqalPhdw8GpR6iork=
+	b=YFB5vijEyF9S75Gt0Sm0D3vt3L6DMqyu8Kw3Kkc5wQhrMO2wLLaiYuQb5mpBKK5LX
+	 BB5VaPJme+gbkJB1z/B6TpwKSAgHjp/lqyn1OV397xLo1HQq9ZsXe1bhfcEDS7axR7
+	 2JRykoWV58qTdXS99l68tUYM2IOZc1JrKEU/S12M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Christian Schmidbauer <opensource@grische.xyz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1352/3318] pppoe: delete session hash entries by pointer match
-Date: Wed, 18 Nov 2026 15:32:54 +0100
-Message-ID: <20261118150400.975217921@linuxfoundation.org>
+Subject: [PATCH 6.6 1353/3318] net: get stats64 if device if driver is configured
+Date: Wed, 18 Nov 2026 15:32:55 +0100
+Message-ID: <20261118150401.006649762@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,106 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit b5b8c81836e2bec7b444dfa2b14fd14e912e9d63 ]
+[ Upstream commit 3e2f544dd8a33b2f650b32920b9bef103da2a7cd ]
 
-pppoe_connect() copies the requested PPPoE address to a socket before
-attempting to insert the socket into the session hash table. If the
-tuple already exists, __set_item() returns -EALREADY, but the copied
-address and ifindex remain set on the failed socket.
+If the network driver is relying in the net core to do stats allocation,
+then we want to dev_get_tstats64() instead of netdev_stats_to_stats64(),
+since there are per-cpu stats that needs to be taken in consideration.
 
-Closing that socket then deletes the existing socket's hash entry
-through pppoe_release(), preventing it from receiving further session
-traffic. An unprivileged process in the same network namespace can
-trigger this through a duplicate connection attempt.
+This will also simplify the drivers in regard to statistics. Once the
+driver sets NETDEV_PCPU_STAT_TSTATS, it doesn't not need to allocate the
+stacks, neither it needs to set `.ndo_get_stats64 = dev_get_tstats64`
+for the generic stats collection function anymore.
 
-To avoid the accidental delete, pass the pppox_sock to __delete_item(),
-and unlink only an entry whose pointer matches the requested socket.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Link: https://patch.msgid.link/20261020092118.47416-1-qingfang.deng@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Resolve conflict, and remove const qualifier of pppox_sock to match
-  hash_item(). ]
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 94b601bc4f85 ("net: core: Implement dstats-type stats collections")
+Signed-off-by: Christian Schmidbauer <opensource@grische.xyz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/pppoe.c | 22 ++++++++--------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+ net/core/dev.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ppp/pppoe.c b/drivers/net/ppp/pppoe.c
-index 63c94ad88e565..1bdcedb5ce1a6 100644
---- a/drivers/net/ppp/pppoe.c
-+++ b/drivers/net/ppp/pppoe.c
-@@ -194,18 +194,16 @@ static int __set_item(struct pppoe_net *pn, struct pppox_sock *po)
- 	return 0;
- }
- 
--static void __delete_item(struct pppoe_net *pn, __be16 sid,
--					char *addr, int ifindex)
-+static void __delete_item(struct pppoe_net *pn, struct pppox_sock *po)
- {
--	int hash = hash_item(sid, addr);
-+	int hash = hash_item(po->pppoe_pa.sid, po->pppoe_pa.remote);
- 	struct pppox_sock *ret, **src;
- 
- 	ret = pn->hash_table[hash];
- 	src = &pn->hash_table[hash];
- 
- 	while (ret) {
--		if (cmp_addr(&ret->pppoe_pa, sid, addr) &&
--		    ret->pppoe_ifindex == ifindex) {
-+		if (ret == po) {
- 			*src = ret->next;
- 			break;
- 		}
-@@ -255,11 +253,10 @@ static inline struct pppox_sock *get_item_by_addr(struct net *net,
- 	return pppox_sock;
- }
- 
--static inline void delete_item(struct pppoe_net *pn, __be16 sid,
--					char *addr, int ifindex)
-+static void delete_item(struct pppoe_net *pn, struct pppox_sock *po)
- {
- 	write_lock_bh(&pn->hash_lock);
--	__delete_item(pn, sid, addr, ifindex);
-+	__delete_item(pn, po);
- 	write_unlock_bh(&pn->hash_lock);
- }
- 
-@@ -599,8 +596,7 @@ static int pppoe_release(struct socket *sock)
- 	 * protect "po" from concurrent updates
- 	 * on pppoe_flush_dev
- 	 */
--	delete_item(pn, po->pppoe_pa.sid, po->pppoe_pa.remote,
--		    po->pppoe_ifindex);
-+	delete_item(pn, po);
- 
- 	sock_orphan(sk);
- 	sock->sk = NULL;
-@@ -651,8 +647,7 @@ static int pppoe_connect(struct socket *sock, struct sockaddr *uservaddr,
- 	if (stage_session(po->pppoe_pa.sid)) {
- 		pppox_unbind_sock(sk);
- 		pn = pppoe_pernet(sock_net(sk));
--		delete_item(pn, po->pppoe_pa.sid,
--			    po->pppoe_pa.remote, po->pppoe_ifindex);
-+		delete_item(pn, po);
- 		if (po->pppoe_dev) {
- 			dev_put(po->pppoe_dev);
- 			po->pppoe_dev = NULL;
-@@ -703,8 +698,7 @@ static int pppoe_connect(struct socket *sock, struct sockaddr *uservaddr,
- 
- 		error = ppp_register_net_channel(dev_net(dev), &po->chan);
- 		if (error) {
--			delete_item(pn, po->pppoe_pa.sid,
--				    po->pppoe_pa.remote, po->pppoe_ifindex);
-+			delete_item(pn, po);
- 			goto err_put;
- 		}
- 
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 5840a526af08e..a5e9e63b67965 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -10790,6 +10790,8 @@ struct rtnl_link_stats64 *dev_get_stats(struct net_device *dev,
+ 		ops->ndo_get_stats64(dev, storage);
+ 	} else if (ops->ndo_get_stats) {
+ 		netdev_stats_to_stats64(storage, ops->ndo_get_stats(dev));
++	} else if (dev->pcpu_stat_type == NETDEV_PCPU_STAT_TSTATS) {
++		dev_get_tstats64(dev, storage);
+ 	} else {
+ 		netdev_stats_to_stats64(storage, &dev->stats);
+ 	}
 -- 
 2.53.0
 
