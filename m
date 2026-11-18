@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028691;
-	b=mS04clLG20LfeFw1e+SPVF+HQOGbLJq9Mcb/DeI90H6EY1D5TnzI3jcVav3kJqNMiuwP
-	 wP5eQEyXSiD3Z0uvuklK56Kv2GGsfDsFbIAxA3xVhcRfFLeYkSyb5kG1AMy2QwSxU15F5
-	 xV46LkfbttkjDgwnDwzhSzewU8fpGsAfpHmYQn3d6nXOmzcllTVwq7hV1OZyiodR3N1Ou
-	 Ud1xnnNA1sJqcADmfI33f32QccoVZmyW5bd/HwqJqk7ONo27yNYZNljpFGGlCY3mgfZZ3
-	 0iJ19jQhxZ2d6XjeYNUkpHNEMOfoAj52LLvBIXsxo3vjFZiayoQ8VYLtTFmwdnU3iyw==
+	t=1795028694;
+	b=q97AZLudxIaPLOUOj/BUwSzLttr6CWjcKQZeNYI8vcexaz3Oa0of9vVfwDvs+TPrIHLE
+	 tCOVu3fp7kfI3R5YXGpwCaj1raOsZLoB6UD8hYDqhA4Y0XblA66ATeBt/qDeFYzkanN5Q
+	 RG77GBeLAfGEagVQxX0Y2Flm8OtXnW+2KLZdfGwH/KotheuQRYyg1dpZfB2UV4IpeovRw
+	 1EmjBoscNMd++xksP7/6sXz1shZuULN54M1DLX8H0rQzuOiDZamNoJKbDs2LBdDbTbCQY
+	 2Z04jy02HKjt9Sdc69TN2a0nBzbJjB9QU8/WO66WRxZAvnD/Iplgf5WtzELS20vZR9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028691;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028694;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=epW1BRxWEPl8n28av2JDhglAJjeQxyn0ZBAMfFwe2NM=;
-	b=AVB8D93gmfjxeYgaDqyJhJp/Q1Te0f58ltOex4Hui2YeI9mv663mRNUDa+aIl1218PGo
-	 5AaAqDdWbdWL1hmlSVhzxldn1cnW9gEP22kd10eqk17AWMu6iOOzQAGUt8Qp4FiO7JzNJ
-	 cmR6ZiWd9xAcNQZj7h+5NOyP69vTb+kf3L52qoN7PfoS8Znoa68jqiG3clB+9wbu+Oec3
-	 PNMlkROK8U9+j6dtB/RhEFv+1OqTQwop0Fg/LF5gwrSlYEZ44BskUPTEE4wEiq00+Y02y
-	 56kbtc4OTGhOVkLqEZVsu7UYDJCGbETpgrl6hryKM4efQXTxijrvm3LCEiLkUrCkzjg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=ZPAEWXpPyRAPnN6PeFBKmKfEC2lG6i343rccRQ9j/p4=;
+	b=QNec4OZx6M2tLkhXsrft6lL5GXTSHvlkhV5WkhKzRxKwbPHJfnIHZes7EH2EL79qchLh
+	 QLOxjsKpSk9pvQdamCMlsg+eu8Sz9fIb6V1o+FbI6y6JjK2AvWRcbZHHtIm0J8OneI+iu
+	 tFeemLa2bOiULucR+kMESlGpFK6TFdJ9rmbpLiZLTP9P8JWGKRD31ZiXV6xi3/NcXAQS4
+	 XN3rAM1BH0aialE2IJncQPLtMVy1xeNsyfW/S8Z7IRLeFS8sNLG+4sJuPGShUHBLNM27P
+	 XFzsIK2u9iJsI5vfF/H8NsSMgki313cSZUefYju6NH/I3vLzw+nwg44XNpoAbKLpEdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IzMOyygc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MATcreRB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA76606A31C;
-	Wed, 18 Nov 2026 19:04:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CCE606A320;
+	Wed, 18 Nov 2026 19:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IzMOyygc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6345F1F000C4;
-	Wed, 18 Nov 2026 19:04:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MATcreRB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231D51F000C4;
+	Wed, 18 Nov 2026 19:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028690;
-	bh=epW1BRxWEPl8n28av2JDhglAJjeQxyn0ZBAMfFwe2NM=;
+	s=korg; t=1795028693;
+	bh=ZPAEWXpPyRAPnN6PeFBKmKfEC2lG6i343rccRQ9j/p4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IzMOyygcXe8EXcxo+FClDvEozDXLMnQbBs/nT9sHTks44Bt3IHXqbAQNnMADkcbVJ
-	 0/9bY4fxKv0q/zCihHOMwY9NcleAn18qI0JFyQMovONq55eMyOClq2Y0/NQu0ZZUJ/
-	 yJKugBI3dUwoxp8Jg9veodCbtKJmoZyIQifZ1t68=
+	b=MATcreRBYN30zp8vNdAjZGdCyMsuP6Um0wo0ZNjvKQLXaMaoUtbX1jo0ZV7xI+vyT
+	 sFdqIkXx0XSUKw6ZNdOrWxJH8rozWz8irvNpVe0B4L/CtZPbczNFGmv93nJ+fwgRIp
+	 ZSSIJDCZNP1ckEoTcWvE6MMBTdKa5GKAN0S8WOh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0085/1756] drm/amdgpu: dont walk the CS chunks when allocating them failed
-Date: Wed, 18 Nov 2026 15:36:52 +0100
-Message-ID: <20261118150011.650849650@linuxfoundation.org>
+Subject: [PATCH 6.12 0086/1756] nvme: tuning pr code by using defined structs and macros
+Date: Wed, 18 Nov 2026 15:36:53 +0100
+Message-ID: <20261118150011.684651130@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -63,63 +63,217 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit ade92d50aad6799a5a9d7e73cd1604fd0576e656 ]
+[ Upstream commit 029cc98dec2eadb5d0978b5fea9ae6c427f2a020 ]
 
-amdgpu_cs_pass1() sets p->nchunks before allocating p->chunks, and the
-allocation failure path skips resetting it. amdgpu_cs_parser_fini() then
-frees the kdata of nchunks chunks from a NULL array. On navi48 with the
-chunk array allocation failed through failslab:
+All the modifications are simply to make the code more readable,
+and this patch does not include any functional changes.
 
-  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  RIP: 0010:amdgpu_cs_parser_fini+0x35d/0x710 [amdgpu]
-   amdgpu_cs_ioctl+0xcae/0x7a20 [amdgpu]
-   drm_ioctl_kernel+0x180/0x320 [drm]
-
-Set nchunks once the array exists.
-
-Fixes: d38ceaf99ed0 ("drm/amdgpu: add core driver (v4)")
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 0c828445757b86aaa3ed2638832d76f450022bdf)
-Cc: stable@vger.kernel.org
-[ sashal: used kvmalloc_array() with explicit element size and GFP_KERNEL instead of kvmalloc_objs() ]
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: a9d431124fb2 ("nvme: unregister when pr_register() is given a zero new key")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nvme/host/pr.c | 122 +++++++++++++++++++++++++----------------
+ 1 file changed, 75 insertions(+), 47 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index c49aabb343a72..364fbaf4e0fa5 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -215,13 +215,14 @@ static int amdgpu_cs_pass1(struct amdgpu_cs_parser *p,
- 	if (IS_ERR(chunk_array))
- 		return PTR_ERR(chunk_array);
- 
--	p->nchunks = cs->in.num_chunks;
--	p->chunks = kvmalloc_array(p->nchunks, sizeof(struct amdgpu_cs_chunk),
-+	/* parser_fini() walks nchunks chunks, set it once they exist */
-+	p->chunks = kvmalloc_array(cs->in.num_chunks, sizeof(struct amdgpu_cs_chunk),
- 			    GFP_KERNEL);
- 	if (!p->chunks) {
- 		ret = -ENOMEM;
- 		goto free_chunk;
+diff --git a/drivers/nvme/host/pr.c b/drivers/nvme/host/pr.c
+index e1d07f824b13c..fe7dbe2648158 100644
+--- a/drivers/nvme/host/pr.c
++++ b/drivers/nvme/host/pr.c
+@@ -92,109 +92,137 @@ static int nvme_status_to_pr_err(int status)
  	}
-+	p->nchunks = cs->in.num_chunks;
+ }
  
- 	for (i = 0; i < p->nchunks; i++) {
- 		struct drm_amdgpu_cs_chunk __user *chunk_ptr = NULL;
+-static int nvme_send_pr_command(struct block_device *bdev,
+-		struct nvme_command *c, void *data, unsigned int data_len)
++static int __nvme_send_pr_command(struct block_device *bdev, u32 cdw10,
++		u32 cdw11, u8 op, void *data, unsigned int data_len)
+ {
+-	if (nvme_disk_is_ns_head(bdev->bd_disk))
+-		return nvme_send_ns_head_pr_command(bdev, c, data, data_len);
++	struct nvme_command c = { 0 };
+ 
+-	return nvme_send_ns_pr_command(bdev->bd_disk->private_data, c, data,
+-				       data_len);
++	c.common.opcode = op;
++	c.common.cdw10 = cpu_to_le32(cdw10);
++	c.common.cdw11 = cpu_to_le32(cdw11);
++
++	if (nvme_disk_is_ns_head(bdev->bd_disk))
++		return nvme_send_ns_head_pr_command(bdev, &c, data, data_len);
++	return nvme_send_ns_pr_command(bdev->bd_disk->private_data, &c,
++				data, data_len);
+ }
+ 
+-static int nvme_pr_command(struct block_device *bdev, u32 cdw10,
+-				u64 key, u64 sa_key, u8 op)
++static int nvme_send_pr_command(struct block_device *bdev, u32 cdw10, u32 cdw11,
++		u8 op, void *data, unsigned int data_len)
+ {
+-	struct nvme_command c = { };
+-	u8 data[16] = { 0, };
+ 	int ret;
+ 
+-	put_unaligned_le64(key, &data[0]);
+-	put_unaligned_le64(sa_key, &data[8]);
+-
+-	c.common.opcode = op;
+-	c.common.cdw10 = cpu_to_le32(cdw10);
+-
+-	ret = nvme_send_pr_command(bdev, &c, data, sizeof(data));
+-	if (ret < 0)
+-		return ret;
+-
+-	return nvme_status_to_pr_err(ret);
++	ret = __nvme_send_pr_command(bdev, cdw10, cdw11, op, data, data_len);
++	return ret < 0 ? ret : nvme_status_to_pr_err(ret);
+ }
+ 
+-static int nvme_pr_register(struct block_device *bdev, u64 old,
+-		u64 new, unsigned flags)
++static int nvme_pr_register(struct block_device *bdev, u64 old_key, u64 new_key,
++		unsigned int flags)
+ {
++	struct nvmet_pr_register_data data = { 0 };
+ 	u32 cdw10;
+ 
+ 	if (flags & ~PR_FL_IGNORE_KEY)
+ 		return -EOPNOTSUPP;
+ 
+-	cdw10 = old ? 2 : 0;
+-	cdw10 |= (flags & PR_FL_IGNORE_KEY) ? 1 << 3 : 0;
+-	cdw10 |= (1 << 30) | (1 << 31); /* PTPL=1 */
+-	return nvme_pr_command(bdev, cdw10, old, new, nvme_cmd_resv_register);
++	data.crkey = cpu_to_le64(old_key);
++	data.nrkey = cpu_to_le64(new_key);
++
++	cdw10 = old_key ? NVME_PR_REGISTER_ACT_REPLACE :
++		NVME_PR_REGISTER_ACT_REG;
++	cdw10 |= (flags & PR_FL_IGNORE_KEY) ? NVME_PR_IGNORE_KEY : 0;
++	cdw10 |= NVME_PR_CPTPL_PERSIST;
++
++	return nvme_send_pr_command(bdev, cdw10, 0, nvme_cmd_resv_register,
++			&data, sizeof(data));
+ }
+ 
+ static int nvme_pr_reserve(struct block_device *bdev, u64 key,
+ 		enum pr_type type, unsigned flags)
+ {
++	struct nvmet_pr_acquire_data data = { 0 };
+ 	u32 cdw10;
+ 
+ 	if (flags & ~PR_FL_IGNORE_KEY)
+ 		return -EOPNOTSUPP;
+ 
+-	cdw10 = nvme_pr_type_from_blk(type) << 8;
+-	cdw10 |= ((flags & PR_FL_IGNORE_KEY) ? 1 << 3 : 0);
+-	return nvme_pr_command(bdev, cdw10, key, 0, nvme_cmd_resv_acquire);
++	data.crkey = cpu_to_le64(key);
++
++	cdw10 = NVME_PR_ACQUIRE_ACT_ACQUIRE;
++	cdw10 |= nvme_pr_type_from_blk(type) << 8;
++	cdw10 |= (flags & PR_FL_IGNORE_KEY) ? NVME_PR_IGNORE_KEY : 0;
++
++	return nvme_send_pr_command(bdev, cdw10, 0, nvme_cmd_resv_acquire,
++			&data, sizeof(data));
+ }
+ 
+ static int nvme_pr_preempt(struct block_device *bdev, u64 old, u64 new,
+ 		enum pr_type type, bool abort)
+ {
+-	u32 cdw10 = nvme_pr_type_from_blk(type) << 8 | (abort ? 2 : 1);
++	struct nvmet_pr_acquire_data data = { 0 };
++	u32 cdw10;
++
++	data.crkey = cpu_to_le64(old);
++	data.prkey = cpu_to_le64(new);
+ 
+-	return nvme_pr_command(bdev, cdw10, old, new, nvme_cmd_resv_acquire);
++	cdw10 = abort ? NVME_PR_ACQUIRE_ACT_PREEMPT_AND_ABORT :
++			NVME_PR_ACQUIRE_ACT_PREEMPT;
++	cdw10 |= nvme_pr_type_from_blk(type) << 8;
++
++	return nvme_send_pr_command(bdev, cdw10, 0, nvme_cmd_resv_acquire,
++			&data, sizeof(data));
+ }
+ 
+ static int nvme_pr_clear(struct block_device *bdev, u64 key)
+ {
+-	u32 cdw10 = 1 | (key ? 0 : 1 << 3);
++	struct nvmet_pr_release_data data = { 0 };
++	u32 cdw10;
++
++	data.crkey = cpu_to_le64(key);
+ 
+-	return nvme_pr_command(bdev, cdw10, key, 0, nvme_cmd_resv_release);
++	cdw10 = NVME_PR_RELEASE_ACT_CLEAR;
++	cdw10 |= key ? 0 : NVME_PR_IGNORE_KEY;
++
++	return nvme_send_pr_command(bdev, cdw10, 0, nvme_cmd_resv_release,
++			&data, sizeof(data));
+ }
+ 
+ static int nvme_pr_release(struct block_device *bdev, u64 key, enum pr_type type)
+ {
+-	u32 cdw10 = nvme_pr_type_from_blk(type) << 8 | (key ? 0 : 1 << 3);
++	struct nvmet_pr_release_data data = { 0 };
++	u32 cdw10;
++
++	data.crkey = cpu_to_le64(key);
+ 
+-	return nvme_pr_command(bdev, cdw10, key, 0, nvme_cmd_resv_release);
++	cdw10 = NVME_PR_RELEASE_ACT_RELEASE;
++	cdw10 |= nvme_pr_type_from_blk(type) << 8;
++	cdw10 |= key ? 0 : NVME_PR_IGNORE_KEY;
++
++	return nvme_send_pr_command(bdev, cdw10, 0, nvme_cmd_resv_release,
++			&data, sizeof(data));
+ }
+ 
+ static int nvme_pr_resv_report(struct block_device *bdev, void *data,
+ 		u32 data_len, bool *eds)
+ {
+-	struct nvme_command c = { };
++	u32 cdw10, cdw11;
+ 	int ret;
+ 
+-	c.common.opcode = nvme_cmd_resv_report;
+-	c.common.cdw10 = cpu_to_le32(nvme_bytes_to_numd(data_len));
+-	c.common.cdw11 = cpu_to_le32(NVME_EXTENDED_DATA_STRUCT);
++	cdw10 = nvme_bytes_to_numd(data_len);
++	cdw11 = NVME_EXTENDED_DATA_STRUCT;
+ 	*eds = true;
+ 
+ retry:
+-	ret = nvme_send_pr_command(bdev, &c, data, data_len);
++	ret = __nvme_send_pr_command(bdev, cdw10, cdw11, nvme_cmd_resv_report,
++			data, data_len);
+ 	if (ret == NVME_SC_HOST_ID_INCONSIST &&
+-	    c.common.cdw11 == cpu_to_le32(NVME_EXTENDED_DATA_STRUCT)) {
+-		c.common.cdw11 = 0;
++	    cdw11 == NVME_EXTENDED_DATA_STRUCT) {
++		cdw11 = 0;
+ 		*eds = false;
+ 		goto retry;
+ 	}
+ 
+-	if (ret < 0)
+-		return ret;
+-
+-	return nvme_status_to_pr_err(ret);
++	return ret < 0 ? ret : nvme_status_to_pr_err(ret);
+ }
+ 
+ static int nvme_pr_read_keys(struct block_device *bdev,
 -- 
 2.53.0
 
