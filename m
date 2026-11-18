@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054717;
-	b=Og3js3Q1GS8sdTdOmf+cjYsHtJuHoiIkR7lx1JI+NvSQmf93fxG2iBa/690AglALwEOq
-	 kOsRnHGd8Ov78hKI5nTmjElg2nfgFHDogw6oP91vOm3v3BscGrViYny6lqYD2iNmBiYvx
-	 m02RrfH8vocMYawfj4qxWe1NPzf2AHrGGPhxLU2c0RjTMKpA/C1NwByyILZhipaezzU5U
-	 5YhFNMm2TiaXr6NnA7bZEQjkNYAh2nCnwz6+tMdNizA9hDNfwVdo+2Q5LivEpzHgb3gec
-	 12vpDh6Fuqqvfr51QtEHiAD87QOBYo78uLs08TYrUZFbzW9VdZiHL6cJt4LM+cKXVlw==
+	t=1795054720;
+	b=eKbOkkfUD7Lw8Jdb3nsdmCCZ5XP5TGRjJfFG9c5FwHIrTBmlceezjpnR3yJRv6N8Ya2C
+	 wJIGNVKnfN4hXvZKb3vLqaB0Pd9Wz7QDTPUL1TikFRgQdYJsRwykiKEbMytrqFtbWfjFX
+	 A3r0mHVRF4Fo2o9oEITWq/6Er8bNh5YnrXeAztggL8vJJEFiI+40/9viUeqPk1PMNl8hy
+	 y5hIoYMCn/j4/z1A8RJy56Ogjmda7VMmEeu9TQqz/TsziBxo1/FLh7B+vmZLFE4cdXsWc
+	 WI1UUnoRCi6LnKYJ8STvz4/GBV5I8mn1d1VzfHW4SBKUdB/eCBWeAWGR+/MZvJUAx+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054717;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054720;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=fUINW4mPtbvSquwo2et42s2F+b4hKZWUfEca2v5a60Y=;
-	b=BY09tvjpwKxOWsbS/tufNwJGm0u8dVFNVIGYLP3lpR+Id5eD0P5EBurDviMaiKaZCwY8
-	 H1iETX8ZVhgUqgz6ESQI6AXcagnriU1jEii46MHluk7gd57fsOknfat4cl+NUah8hsQh8
-	 eMR8EJMnKo9hU0pTrB+dw258MZX4PAHwdML4cBvmdi5E3eaHQYcZRNIJjkC30O5RYOD2B
-	 0OizsQPTOUEM0jGtuAst2vVtAtb79tD5jyq9NDYZKOR9y43KHuzTnqczy55l/3uJjpx+G
-	 rR1EUSkFuIhL9P2dr2tga2X1mYS7rQgNXbHk76V6XkLUgZ+h4iYQtjXm0OeAEvF5Y3Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=YKW9qZ4PS5guMK8GQq42fdOeRIPMliXuvPyAPn5naNg=;
+	b=DpczEyHw4NUSCrOlH4iMqshBbI2HNfzbe11Cv9Hl+8Wo+OvDC/GcVhi9Blww2HMhZbLP
+	 pgdSkwXigLk9ru+hf7Qyde9TeACIiPUSFxsoM9MzHfKJcIKksJebpU6OznsydoVvXrAAW
+	 0h3XLFWFCXkv++UiD8KqysemCP2LDikGAxVuryFa5J/8cmyo7BvOKaHGI/ZQbkFJk3Xlr
+	 /YGe+uvKi3ki8lbQfxQKuamnwd2zVtfOPvJiF39ykdrXO9xj+ZTZJlvkUXbZgaMfmHcoP
+	 eNuE6RlfCDhEkPkEK2B8HYooasv4oG1iDzAmMAgaV2zEQr6AL+kklWyxASrixZMPkiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nJb6H+ug;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="lubg2dc/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF87A606A31C;
-	Thu, 19 Nov 2026 02:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FE3606A320;
+	Thu, 19 Nov 2026 02:18:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nJb6H+ug
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350C11F000C4;
-	Thu, 19 Nov 2026 02:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lubg2dc/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA1A1F000C5;
+	Thu, 19 Nov 2026 02:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054717;
-	bh=fUINW4mPtbvSquwo2et42s2F+b4hKZWUfEca2v5a60Y=;
+	s=korg; t=1795054720;
+	bh=YKW9qZ4PS5guMK8GQq42fdOeRIPMliXuvPyAPn5naNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nJb6H+ugQbgHO/A51dcJBlddL7G0FHtmHD1WM3YUqasbjbq6sdF2p9InQEXP3S5ZO
-	 pnXpC+D/DEoy5vrRxetB2LQ8oc9OBc3bkSnPDPNspMxXuCIariXkW9q280Txm4ZhD9
-	 4j2GeRMoKsSqioazWIqOAm/YAJxL8Cid5Mg35+Bo=
+	b=lubg2dc/2TosJF5ITlDkkUP+PkcHgZC/AnbIrfifavt06b9enYIDS10zxQzEkIi7Q
+	 F+m6PVuvC/xUTFwc7yJgnlzvt3Ikpx1ZUL+GWNyFCT8oP4kSXQjY1PNcvJZQ3iFQrj
+	 uWKPGeR4b4Z89wOwXRrgkS9dSnj6xsm2wpOxnZdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Michal Simek <michal.simek@amd.com>,
+	Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1372/2214] microblaze: prevent ptrace writes to MSR and pt_mode
-Date: Wed, 18 Nov 2026 15:50:48 +0100
-Message-ID: <20261118150106.299868532@linuxfoundation.org>
+Subject: [PATCH 5.15 1373/2214] wifi: rtw88: debugfs: dont vzalloc(0) when rsvd_page is read unconfigured
+Date: Wed, 18 Nov 2026 15:50:49 +0100
+Message-ID: <20261118150106.334231526@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,53 +62,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>
 
-[ Upstream commit 8518fd17ccef4a7d77877ccb0403b722106ad1a4 ]
+[ Upstream commit 81510c3d6f2199889a4a936d8cf8b9e05911b10e ]
 
-arch_ptrace() accepts PTRACE_POKEUSR for every aligned offset below
-PT_SIZE. This includes the saved machine status register and pt_mode,
-which are kernel-owned execution state rather than general registers.
+Reading the rsvd_page debugfs entry before writing a page offset and
+count to it calls vzalloc() with a size of zero, because
+rsvd_page.page_num defaults to 0.  vmalloc warns about this:
 
-On return from an exception, rtbd copies MSR_UMS to the live MSR_UM bit.
-An unprivileged same-UID tracer can therefore clear MSR_UMS in its
-tracee's saved register frame and make the tracee resume in supervisor
-mode. pt_mode also controls whether later entry paths classify the frame
-as kernel or user state.
+  WARNING: mm/vmalloc.c:4019 at __vmalloc_node_range_noprof+0x9ac/0xa30
+  ...
+  Call Trace:
+   __vmalloc_node_noprof+0x4c/0x70
+   rtw_debugfs_get_rsvd_page+0x4c/0x110 [rtw88_core]
+   seq_read_iter+0x132/0x4b0
+   seq_read+0x12e/0x1c0
+   full_proxy_read+0x6f/0xc0
+   vfs_read+0xdd/0x490
 
-Reject PTRACE_POKEUSR writes to both fields while retaining read access.
+rtw_fw_dump_fifo() would reject the zero size anyway, but only after
+the allocation.  Check for a zero buffer size first and print a short
+usage hint instead of allocating.
 
-Fixes: 2b4384542691 ("microblaze_v8: ptrace support")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Link: https://patch.msgid.link/20260821103026.3627292-2-Jeremy.Jean@oss.cyber.gouv.fr
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Signed-off-by: Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260827131244.35623-1-abdurrahmankaradag19@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/kernel/ptrace.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/realtek/rtw88/debug.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/microblaze/kernel/ptrace.c b/arch/microblaze/kernel/ptrace.c
-index badd286882ae6..e6b6b1983e2d5 100644
---- a/arch/microblaze/kernel/ptrace.c
-+++ b/arch/microblaze/kernel/ptrace.c
-@@ -102,6 +102,9 @@ long arch_ptrace(struct task_struct *child, long request,
- 			} else {
- 				rval = -EIO;
- 			}
-+		} else if (request == PTRACE_POKEUSR &&
-+			   (addr == PT_MSR || addr == PT_MODE)) {
-+			rval = -EIO;
- 		} else if (addr < PT_SIZE && (addr & 0x3) == 0) {
- 			microblaze_reg_t *reg_addr = reg_save_addr(addr, child);
- 			if (request == PTRACE_PEEKUSR)
+diff --git a/drivers/net/wireless/realtek/rtw88/debug.c b/drivers/net/wireless/realtek/rtw88/debug.c
+index 1cc2b7b948044..99a8091fc0dea 100644
+--- a/drivers/net/wireless/realtek/rtw88/debug.c
++++ b/drivers/net/wireless/realtek/rtw88/debug.c
+@@ -237,6 +237,11 @@ static int rtw_debugfs_get_rsvd_page(struct seq_file *m, void *v)
+ 	int i;
+ 	int ret;
+ 
++	if (!buf_size) {
++		seq_puts(m, "usage: echo <page_offset> <page_num> > rsvd_page\n");
++		return 0;
++	}
++
+ 	buf = vzalloc(buf_size);
+ 	if (!buf)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
