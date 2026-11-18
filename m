@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029579;
-	b=UKO+P0F1ipPjaoIYWen1xMNZAzqgfG1sAVbxuoOs9QjljSXvTRNDX3JD/+27oQs2BLUf
-	 ys44VtrywsIazD8BpvEhySxj1slsuWY/hrqrP6dhd98fanwIRIE7Vu5de23pWh0FXVxnR
-	 wtmB81rB09uYVD3qo4Fn5IMDJs7zED+OjapckPgxPaB73Z2S+MDmd/flugeNT+VyvYAtR
-	 cfe+EacSM6sUSwz57dJMsjNMvHC8cWX55RD0nW1NbX/6vTRO6LpvYv02z/SNFUfJucB/n
-	 Qlh0o3RAm3BpLOhGTZCqPbUUNWXyFaBKJPZnB5urzKnzK9o9+X5CEekLH2r6jy1E6WQ==
+	t=1795029582;
+	b=S37TdtMtp3nvcRXn/S9Rn8LVW+lJaEHwo6TROGGvoTYKpz6tDXWHSw3c28PP1icWtiDp
+	 9WqRj3fN+LXSzFmiNr2OS02zjYLOkYtAUcl0N7ZUQuV22EbQIEDfSxlBIYNw2D4pf8DDn
+	 Bhk/M8u4hHjFhAklHKIG5y5FJAu8wo481xJlhLF8UuYtCi2a+JyLJ90v9iFx/d0oKf2+E
+	 iPyxJHsiSaN4PcxDBYq+0TNLCwXy/fGQBPdrHCrF+16DUGl/KBNTKRij5gOJF77ZVxIXb
+	 841cZXdQSFzvkhdK3LZHalOtO1VXH+jvNlePR/nbhvqbYcHTiskhLYfJUcCBPcMCFxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029579;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029582;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=87HTQHWNAlMihKnx9Bn9HPyU5cOSyYnhe1GZidiiP0Q=;
-	b=caTVW35epPLuTQ5GUzC17yTQ3vijAL3wHb9C7uGHfWOAP0xuVN9io/vjaVvfmQHyWbXF
-	 udt485834ftM6evirSfd3MWkMHymdd3GZKK1+NtbPmGgDHigjZbvE07qlQg3XK+3Y46Gf
-	 ThKPoEQG8ZdhVfpFzvw26w3JE7M4wpNyDbBG7T1dWAAXEpQ01+JsgxxKX2thrdpCt8b9z
-	 +uN3b6LcJjaICVeISrzm6fpcPWqfsRwwLsIA7FftmII1/S/P2RAGL1QL1cUt6CVjphvUf
-	 sRA13L3Vz4kOPPTbhiBRZ7PL9MTXLmtDUeHiXSejiyC80n2eaRDywrfLPkjjdJg5idw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=4UvlmhAXVXQlOW5gw56rhLWKRxuPYJq267WUcmQAJVQ=;
+	b=lWHVFucM26LbOTQnkK3ZxzsB1JxeVgF5x19LYi/eOwvf2yIafQBA9YgzSPOBoGqVTP6a
+	 2hRFfZxgtoC7YXn39O2dpK8H7T0SfBULhk5lwugGAZSv9xEToRrsIs/Tcn38hRRz8l9ez
+	 qdBslW4iVCpPb+Yzh9dPh0rCwk8LusyRXHnv32hNw65X2qwmfUqDNLZKOWUPPBMcXzhUy
+	 RuoA4kAcAdU0LmHaOj6LC6bPLxarVpyVT+JlCiqTVtbfx3U8oklg4ZfZ3IRf/SzW2BMSP
+	 eTlvuK8gw/zpR7qk38o2FthS26k22PGPF5dBUvJJhaGJUhb/IXPVzd6Qxw6N7fr5Gtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iq5eiCNJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XEzDy7zx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B36606A32C;
-	Wed, 18 Nov 2026 19:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F31860A2600;
+	Wed, 18 Nov 2026 19:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iq5eiCNJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7AFE1F000C5;
-	Wed, 18 Nov 2026 19:19:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XEzDy7zx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686781F000C7;
+	Wed, 18 Nov 2026 19:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029579;
-	bh=87HTQHWNAlMihKnx9Bn9HPyU5cOSyYnhe1GZidiiP0Q=;
+	s=korg; t=1795029581;
+	bh=4UvlmhAXVXQlOW5gw56rhLWKRxuPYJq267WUcmQAJVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iq5eiCNJZbuaKczj0SlRwjMFbkjJOgFWf4FdWeAcdwE2qZ+julIL8sbs6B3HwNwOM
-	 yPvK1JmWoRCehUAeUlVS5WwhktxUcLXHSEai+fiS5ZY6hScjuZU/EJSYOHyF9J6v3i
-	 Xx/Lm1LA3GrxI2x8w/uNERl6pqRApk3Wp+75p4zg=
+	b=XEzDy7zxFCWcf7e8TxTki+xAzSGj+rIUN8I4ryPC3ZR1RLtvdwWaJ/U9+0bP1pVmG
+	 fRZJ9UZzUuMZSRgI8/DgneKVjZK2+NN02vt5m6JtamfHQMZDOQ9Uayl/k6UgpDJZEc
+	 nYxs5+AbDECR0Y1KGU+2+D77lQyPMzlguOh76xUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Michal Simek <michal.simek@amd.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0400/1756] microblaze: Pass -m{big,little}-endian through KBUILD_CPPFLAGS
-Date: Wed, 18 Nov 2026 15:42:07 +0100
-Message-ID: <20261118150024.686444235@linuxfoundation.org>
+Subject: [PATCH 6.12 0401/1756] arm64: pi: Run the source checker on the libfdt objects under C=2
+Date: Wed, 18 Nov 2026 15:42:08 +0100
+Message-ID: <20261118150024.728694343@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,58 +62,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit b9eababe8c0b9f71ce7f35f903879a7fcb6daebe ]
+[ Upstream commit 44b14ff4aebeae98663d0fd424b4ef88237ee981 ]
 
-These parameters are also necessary for preprocessed files which do not
-contain code. One example is arch/microblaze/kernel/vmlinux.lds.S which
-inspects __MICROBLAZEEL__ for the definition of 'jiffies_64'.
-As currently the endianness is not passed from the build system for this
-file, the preprocessor will instead use the default endianness of the
-toolchain. When a default big-endian toolchain is used to build a
-little-endian kernel, that kernel will hang during delay calibration
-as 'jiffies' never changes.
+The custom lib-%.o rule reuses rule_cc_o_c, which hooks the source
+checker only for C=1, and that only when the object is rebuilt. The
+C=2 hook, cmd_force_checksrc, hangs off the standard %.o rule, so
+"make C=2" silently skips the two libfdt objects. Call
+cmd_force_checksrc after the compile rule, as the standard rule does.
 
-Make sure all preprocessor invocations know about the correct endianness
-by passing it through KBUILD_CPPFLAGS. This will also be inherited by
-CFLAGS and AFLAGS.
-
-Fixes: 02b08045a030 ("microblaze: Add support for little-endian Microblaze")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://patch.msgid.link/20260914-kunit-microblaze-v2-2-7d5756e858f8@weissschuh.net
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Fixes: aacd149b6238 ("arm64: head: avoid relocating the kernel twice for KASLR")
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20260901140326.3812068-7-fuad.tabba@linux.dev
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/Makefile | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ arch/arm64/kernel/pi/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/microblaze/Makefile b/arch/microblaze/Makefile
-index 02e6be9c5b0dc..9087a366ce789 100644
---- a/arch/microblaze/Makefile
-+++ b/arch/microblaze/Makefile
-@@ -34,12 +34,10 @@ CPUFLAGS-$(CONFIG_XILINX_MICROBLAZE0_USE_BARREL) += -mxl-barrel-shift
- CPUFLAGS-$(CONFIG_XILINX_MICROBLAZE0_USE_PCMP_INSTR) += -mxl-pattern-compare
+diff --git a/arch/arm64/kernel/pi/Makefile b/arch/arm64/kernel/pi/Makefile
+index 4d11a8c291816..8a475ef279fa1 100644
+--- a/arch/arm64/kernel/pi/Makefile
++++ b/arch/arm64/kernel/pi/Makefile
+@@ -34,6 +34,7 @@ $(obj)/lib-%.pi.o: OBJCOPYFLAGS += --prefix-alloc-sections=.init
  
- ifdef CONFIG_CPU_BIG_ENDIAN
--KBUILD_CFLAGS += -mbig-endian
--KBUILD_AFLAGS += -mbig-endian
-+KBUILD_CPPFLAGS += -mbig-endian
- KBUILD_LDFLAGS += -EB
- else
--KBUILD_CFLAGS += -mlittle-endian
--KBUILD_AFLAGS += -mlittle-endian
-+KBUILD_CPPFLAGS += -mlittle-endian
- KBUILD_LDFLAGS += -EL
- endif
+ $(obj)/lib-%.o: $(srctree)/lib/%.c FORCE
+ 	$(call if_changed_rule,cc_o_c)
++	$(call cmd,force_checksrc)
  
+ obj-y					:= idreg-override.pi.o \
+ 					   map_kernel.pi.o map_range.pi.o \
 -- 
 2.53.0
 
