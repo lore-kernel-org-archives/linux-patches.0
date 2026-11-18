@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044308;
-	b=bzUyTs4b2HLG06ApwMX+IAf1cseKRbY+uoRd4NEevG7aNGErv+f5IVPVHskRlYUIqWUX
-	 RvGtqTiFJjRdADfONJsb2mezbjqzmS3zBV+jh4R/qQB84Zzy0tzkyJ93VKf7LCwy46ZKV
-	 SdonXbqmpp5fP2UxnM4waasSDoSIOpJAW7llmg7mPGBxQ0jLMihVSDj7JIcROBm1QifHu
-	 e6uKDnzFFBC5Isa+0dpOYj+NKrO0OWgCTZLcYs7QzWuaRtwJwMLCtV6X3khcfC7N+FynN
-	 Qmw9AOQ669Sb/ugz5ZOPbIEnSYdp9Yunw+a2CAtdHIRscMIjMYCo/QnGVyLrrj/LYRg==
+	t=1795044311;
+	b=FPF030XYuTInRrnAUh50NLSG60AF6q1z+5qnYV7VAY29UPff0/6zMSx3M8vDePjR/fG/
+	 8LG3CGiyyHdRYyTpzxnx4/P+V66NvW+jjuzuC+3nemA7rKOXWTH3j02x3vk2Jr8sJdD36
+	 /rFhDsy1kuXuXUvKBMcnbUOeeW0qnOUOwJktTcevtUJOhij1zjX6G5KDxKiC22VJUkgqr
+	 C33eyOzKLq3cjXIA4A4uMDFe4Yh6hS/bHNL5nn15ZaGZYjbE36XhjxpmN9C5DB39/KVJT
+	 q+KwMpiec64hLexSYglQXz8VmdjB0pXFgV+KRxW3Fo1pBG2akXzbL/Kb2yWTBTJeWkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044308;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044311;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JxUsmlMUiRqjJrNlrgrJehUcZsRepTv9Cc2+KGjAVTw=;
-	b=wRxBYM++0RXKPLk0iDMP1uJWRTxm7fYGhFyyeaXEr7jJyT+qrUH4/AOgGVHU/hZnbFKT
-	 w2455WLiZtxvgweCEEA55xk6H+UtA2t67pigsbURrHa2tekYvVA3zlrEK1BFUnI+lQAwa
-	 X12ORF4qWlr/uaW6Bsgoc/fDhL2JMeHKomjd+occFWZIw6qdgEOUQ7gNpMgKcFsTPomhY
-	 SqhUcjSfiadKSAVVGITnjJ7qJ7k3LbiYXQJeCJuX15jWgLUPco0kxy9/q46g93bSXH/n/
-	 qr9OJz/zRHtjwpSrMYG4MkhYzf9a0G1nh7XYP3aq7mHo5LLXVfumV+Sx9iZUGa96kxg==
+	bh=R/MO68E7+nB/GaVMUdlILyuEO7B+oRX+1c3IRX3YDdg=;
+	b=TeGOiV2L9PE0WMc/kDd/oWQ1Ak5L5gTdGMQ4Y5mcnYH2/XX54WMTbrpkr6v2TH7Yw67P
+	 LVExpIxqQ6FH+MdkWFlKcZBCKX8/PkPgiltmMjSpcqoewZ5z9FiJd8/kyUsjmND2AqM/P
+	 0eGl1wPsPypjlQvWhQd3DCvlQ5X77FT7M16xtDmmJxnH5Mc5gnqNBvRfeQ8BP8e/M81TL
+	 Dvfxvzhbsqemy64VVUODSY3dZegKNjzpJyRfpQ7wszYWvmS6f1Ep7EOGGf5QaelyxaKk1
+	 NQwRudDg4L2QeoEDCZneOGa6r9rEzlAV91vKBq/0js0CsWxtNqZ5NbYCxcvgg/fJu1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wfoYPrvZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QQM0xKO8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF01606A31C;
-	Wed, 18 Nov 2026 23:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D942606A320;
+	Wed, 18 Nov 2026 23:25:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wfoYPrvZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301A51F000C4;
-	Wed, 18 Nov 2026 23:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QQM0xKO8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF33B1F000C4;
+	Wed, 18 Nov 2026 23:25:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044308;
-	bh=JxUsmlMUiRqjJrNlrgrJehUcZsRepTv9Cc2+KGjAVTw=;
+	s=korg; t=1795044311;
+	bh=R/MO68E7+nB/GaVMUdlILyuEO7B+oRX+1c3IRX3YDdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wfoYPrvZ/BX30lZritJ81sgwrsyb6LxuY7BkcQtBDjKb+WInU+fB49yU6YwHI0gEM
-	 wbBddJTYKAV0nh1TiaGT36+FCNgdK3cy52QGpDVBSZE42tbuiHBu5ycqzEGT8Q2FI/
-	 UbkpMv9GikCPEmO+C3lKRm43R+MRxVkv2/G/ds88=
+	b=QQM0xKO8KEsw7qT28O/ebYL3VJfN7og3YFD4raVM1AW6XkFMP64vt7ryHE5tTJe6R
+	 cEfBoBLhI8R4fNtXgSGzfTIixO+L6oq0VAjcYOXXk4EeaH9q65P5DIhMyi3KGZr4VQ
+	 AyNWMcGsRSgnA+J1VZFJ9/JPl3WYV+y1wS7VMsYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0470/2857] Bluetooth: hci_core: Serialize SCO and ISO scheduling with teardown
-Date: Wed, 18 Nov 2026 15:25:04 +0100
-Message-ID: <20261118150218.370876637@linuxfoundation.org>
+Subject: [PATCH 6.1 0471/2857] net: extend IPv6 exthdr detection of tunneled packets
+Date: Wed, 18 Nov 2026 15:25:05 +0100
+Message-ID: <20261118150218.406663389@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,158 +68,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 848a7a91c7f03675d3bd8db6f7721cbf9cb50e21 ]
+[ Upstream commit 5f0764cb1c81a9712bce605d38efe6d844a70b29 ]
 
-hci_low_sent() selects a connection under RCU but drops the read lock
-before calculating its quota and returning it to the scheduler. The
-connection is then used without lifetime protection by hci_sched_iso()
-and hci_sched_sco().
+Commit c4336a07eb6b ("net: correctly handle tunneled traffic on IPV6_CSUM
+GSO fallback") split skb_gso_has_extension_hdr() into mutually exclusive
+branches on skb->encapsulation. This did not yet address all paths:
 
-After the TX worker drops the RCU read lock, hci_abort_conn_sync() on
-hdev->req_workqueue can remove the connection from the hash, complete
-synchronize_rcu(), purge its queues and release it. The TX worker on
-hdev->workqueue can then access the freed connection in hci_quote_sent()
-or while dequeuing packets and updating conn->sent.
+1. With skb->encapsulation set, the outer header is not checked. IPv6
+   tunnels such as ip6_gre and ip6_tunnel add an outer Destination
+   Options header by default (encap_limit). Their GSO packets skip
+   software GSO, then skb_csum_hwoffload_help() sees the outer extension
+   header and calls skb_checksum_help() on the GSO skb, which warns and
+   drops it.
 
-KASAN reported:
+2. Tunnels over IPv6 without an outer transport header, such as
+   ip6_tunnel, leave skb->transport_header at the inner transport
+   header. skb_network_header_len() then spans the outer IPv6, tunnel
+   and inner IP headers, a false positive.
 
-  BUG: KASAN: slab-use-after-free in hci_low_sent+0x730/0x840
-  Workqueue: hci0 hci_tx_work
-  Call Trace:
-   hci_low_sent+0x730/0x840
-   hci_sched_iso+0x25e/0x4d0
-   hci_tx_work+0x239/0xcb0
+3. UDP tunnels without an inner network header, such as SCTP-in-UDP or
+   PSP, have no inner IPv6 header to check. Decide on the outer header
+   alone.
 
-  Allocated by task 93:
-   __hci_conn_add+0x16f/0x1b40
-   hci_bind_bis+0x782/0x17b0
-   hci_connect_bis+0xa0/0x510
-   iso_sock_connect+0x589/0x1050
+4. Directly dereferencing inner_ip_hdr(skb)->version without
+   skb_header_pointer() is unsafe.
 
-  Freed by task 88:
-   kfree+0x131/0x3c0
-   device_release+0xc8/0x240
-   kobject_put+0x14d/0x280
-   hci_conn_del+0x55a/0xe80
-   hci_disconnect_sync+0x156/0x180
-   hci_abort_conn_sync+0x3e7/0x940
-   hci_cmd_sync_work+0x13c/0x290
+Instead, check ipv6_ext_hdr(nexthdr) on the outer IPv6 header and, if
+set, on the inner IPv6 header. Read the headers with skb_header_pointer().
+Keep the skb_network_header_len() check when !skb->encapsulation to also
+catch encapsulated packets without skb->encapsulation (e.g., virtio).
 
-Hold hci_dev_lock() across connection selection and transmission in both
-SCO and ISO scheduling, serializing them with connection teardown. This
-also prevents queuing completion timestamps after the connection queues
-have been purged. Extending RCU across transmission would be unsafe
-because the transmit path can sleep. Keep the ISO timeout check outside
-the mutex since hci_link_tx_to() takes it itself.
+Use the same helper in skb_csum_hwoffload_help(). Its open coded test
+has the false positive of (2) and ignores the inner header.
 
-The preceding channel fix already holds this mutex in the ACL and LE
-schedulers, which call the SCO scheduler between packets. Move the SCO
-body to __hci_sched_sco(), assert that its caller holds the mutex, and
-use it directly from these locked paths. Keep a locking hci_sched_sco()
-wrapper for the direct calls from hci_tx_work(). This avoids recursively
-acquiring the device mutex while preserving the scheduling order.
+Background: checksum offload of tunneled packets invariants:
 
-Remove the obsolete claim that connection removal disables TX.
+Non-GSO skb:
+- If the inner packet is CHECKSUM_PARTIAL, Local Checksum Offload computes
+  the outer checksum in software and the device offloads only the inner L4
+  checksum.
+- If the inner packet is CHECKSUM_NONE (e.g., SCTP-in-UDP, ESP-in-UDP,
+  Remote Checksum Offload), the device offloads the outer UDP or GRE
+  checksum instead.
 
-Fixes: bf4c63252490 ("Bluetooth: convert conn hash to RCU")
+GSO skb:
+- A device with NETIF_F_GSO_UDP_TUNNEL_CSUM or NETIF_F_GSO_GRE_CSUM
+  computes both inner and outer checksums per segment.
+  The outer checksum is seeded with only the pseudo-header checksum.
+
+A NETIF_F_IPV6_CSUM device must parse through the outer headers to
+reach the inner ones.
+
+Fixes: c4336a07eb6b ("net: correctly handle tunneled traffic on IPV6_CSUM GSO fallback")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ sashal: Adapted hci_sched_iso() to the older signature without a type argument or __check_timeout(), keeping the existing cnt selection and ISO_LINK call while adding the hdev lock/unlock around the loop. ]
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260926140506.2335137-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Kept the existing !ipv6_has_hopopt_jumbo(skb) guards in both caller conditions while swapping in the new skb_has_ipv6_extension_hdr() helper, since upstream's context lacked those guards. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ net/core/dev.c | 49 ++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 32 insertions(+), 17 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 1cf9bbbff239c..199328612f2ac 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3400,9 +3400,6 @@ static struct hci_conn *hci_low_sent(struct hci_dev *hdev, __u8 type,
- 	struct hci_conn *conn = NULL, *c;
- 	unsigned int num = 0, min = ~0;
- 
--	/* We don't have to lock device here. Connections are always
--	 * added and removed with TX task disabled. */
--
- 	rcu_read_lock();
- 
- 	list_for_each_entry_rcu(c, &h->list, list) {
-@@ -3589,13 +3586,15 @@ static void __check_timeout(struct hci_dev *hdev, unsigned int cnt, u8 type)
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 7c0d0905dd31b..ea6785052e8cf 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3592,20 +3592,36 @@ static netdev_features_t dflt_features_check(struct sk_buff *skb,
+ 	return vlan_features_check(skb, features);
  }
  
- /* Schedule SCO */
--static void hci_sched_sco(struct hci_dev *hdev, __u8 type)
-+static void __hci_sched_sco(struct hci_dev *hdev, __u8 type)
- {
- 	struct hci_conn *conn;
- 	struct sk_buff *skb;
- 	int quote, *cnt;
- 	unsigned int pkts = hdev->sco_pkts;
- 
-+	lockdep_assert_held(&hdev->lock);
-+
- 	bt_dev_dbg(hdev, "type %u", type);
- 
- 	if (!hci_conn_num(hdev, type) || !pkts)
-@@ -3630,6 +3629,13 @@ static void hci_sched_sco(struct hci_dev *hdev, __u8 type)
- 		queue_work(hdev->workqueue, &hdev->tx_work);
- }
- 
-+static void hci_sched_sco(struct hci_dev *hdev, __u8 type)
+-static bool skb_gso_has_extension_hdr(const struct sk_buff *skb)
+-{
+-	if (!skb->encapsulation)
+-		return ((skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
+-			 (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
+-			  vlan_get_protocol(skb) == htons(ETH_P_IPV6))) &&
+-			skb_transport_header_was_set(skb) &&
+-			skb_network_header_len(skb) != sizeof(struct ipv6hdr));
+-	else
+-		return (!skb_inner_network_header_was_set(skb) ||
+-			((skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
+-			  (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
+-			   inner_ip_hdr(skb)->version == 6)) &&
+-			 skb_inner_network_header_len(skb) != sizeof(struct ipv6hdr)));
++static bool __skb_has_ipv6_ext_hdr(const struct sk_buff *skb, int nhoff)
 +{
-+	hci_dev_lock(hdev);
-+	__hci_sched_sco(hdev, type);
-+	hci_dev_unlock(hdev);
++	const struct ipv6hdr *ip6h;
++	struct ipv6hdr _ip6h;
++
++	ip6h = skb_header_pointer(skb, nhoff, sizeof(_ip6h), &_ip6h);
++	return ip6h && ip6h->version == 6 && ipv6_ext_hdr(ip6h->nexthdr);
 +}
 +
- static void hci_sched_acl_pkt(struct hci_dev *hdev)
- {
- 	unsigned int cnt = hdev->acl_cnt;
-@@ -3665,8 +3671,8 @@ static void hci_sched_acl_pkt(struct hci_dev *hdev)
- 			chan->conn->sent++;
- 
- 			/* Send pending SCO packets right away */
--			hci_sched_sco(hdev, SCO_LINK);
--			hci_sched_sco(hdev, ESCO_LINK);
-+			__hci_sched_sco(hdev, SCO_LINK);
-+			__hci_sched_sco(hdev, ESCO_LINK);
- 		}
- 	}
- 
-@@ -3725,8 +3731,8 @@ static void hci_sched_le(struct hci_dev *hdev)
- 			chan->conn->sent++;
- 
- 			/* Send pending SCO packets right away */
--			hci_sched_sco(hdev, SCO_LINK);
--			hci_sched_sco(hdev, ESCO_LINK);
-+			__hci_sched_sco(hdev, SCO_LINK);
-+			__hci_sched_sco(hdev, ESCO_LINK);
- 		}
- 	}
- 
-@@ -3750,6 +3756,9 @@ static void hci_sched_iso(struct hci_dev *hdev)
- 
- 	cnt = hdev->iso_pkts ? &hdev->iso_cnt :
- 		hdev->le_pkts ? &hdev->le_cnt : &hdev->acl_cnt;
++static bool skb_has_ipv6_extension_hdr(const struct sk_buff *skb)
++{
++	if (vlan_get_protocol(skb) == htons(ETH_P_IPV6)) {
++		if (__skb_has_ipv6_ext_hdr(skb, skb_network_offset(skb)))
++			return true;
 +
-+	hci_dev_lock(hdev);
++		/* Catch tunnels without skb->encapsulation (e.g., virtio). */
++		if (!skb->encapsulation &&
++		    skb_transport_header_was_set(skb) &&
++		    skb_network_header_len(skb) != sizeof(struct ipv6hdr))
++			return true;
++	}
 +
- 	while (*cnt && (conn = hci_low_sent(hdev, ISO_LINK, &quote))) {
- 		while (quote-- && (skb = skb_dequeue(&conn->data_q))) {
- 			BT_DBG("skb %p len %d", skb, skb->len);
-@@ -3761,6 +3770,8 @@ static void hci_sched_iso(struct hci_dev *hdev)
- 			(*cnt)--;
- 		}
- 	}
++	/* Tunnels without an inner network header, such as SCTP-in-UDP or
++	 * PSP, have no inner IP header and thus no inner extension header.
++	 */
++	if (skb->encapsulation && skb_inner_network_header_was_set(skb) &&
++	    __skb_has_ipv6_ext_hdr(skb, skb_inner_network_offset(skb)))
++		return true;
 +
-+	hci_dev_unlock(hdev);
++	return false;
  }
  
- static void hci_tx_work(struct work_struct *work)
+ static netdev_features_t gso_features_check(const struct sk_buff *skb,
+@@ -3654,7 +3670,7 @@ static netdev_features_t gso_features_check(const struct sk_buff *skb,
+ 	 * so neither does TSO that depends on it.
+ 	 */
+ 	if (features & NETIF_F_IPV6_CSUM &&
+-	    skb_gso_has_extension_hdr(skb) &&
++	    skb_has_ipv6_extension_hdr(skb) &&
+ 	    !ipv6_has_hopopt_jumbo(skb))
+ 		features &= ~(NETIF_F_IPV6_CSUM | NETIF_F_TSO6 | NETIF_F_GSO_UDP_L4);
+ 
+@@ -3757,8 +3773,7 @@ int skb_csum_hwoffload_help(struct sk_buff *skb,
+ 		return 0;
+ 
+ 	if (features & (NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM)) {
+-		if (vlan_get_protocol(skb) == htons(ETH_P_IPV6) &&
+-		    skb_network_header_len(skb) != sizeof(struct ipv6hdr) &&
++		if (skb_has_ipv6_extension_hdr(skb) &&
+ 		    !ipv6_has_hopopt_jumbo(skb))
+ 			goto sw_checksum;
+ 
 -- 
 2.53.0
 
