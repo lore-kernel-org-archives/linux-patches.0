@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038913;
-	b=wVUNpCyimDPAvtmnLqB7XffYdy+PuHTMA/65AvbnUoIbMMGXF4rZo1/BGgnE73EezD5u
-	 McibW6pSpbCDe3s0CThIhGgNDkNCeHuuVmmShHeOR5xO/n/+1t6wNrE6KI+59SSXnmCMO
-	 RfH2DEXG2tgw+iRwaft9XT6Y20iLTbNatyYQO1J9In5exKf/gJZJLppIv6FxtqlyZFNXv
-	 T+XLCIG0Yh4UQOnTlXTufXFcdaOrrMW8eM7aGBcDaN45+9WHpjs/2nbMRQ4PSX3BO35KK
-	 Z7menZNbajyJY55bf/kZw2Cl0VAHIYN06cXw0t+lgE6TWVxVzPiEs469OuSTbDValbg==
+	t=1795038915;
+	b=1y2MNwF76N7h8qBUYYGFJgHbqyub760h8c9XmNQIlgtWuC5ea6kQlsxdf3gKZh+mSJxw
+	 3TFD852mEOpanZLzZVzF/xhsWOG/+WPM1++3ompkJh7fDMzjqe2OlyIir6TpUytLCmBp1
+	 fKzEjD0ONE5D3zQsEDnryqNodLgKPZ7OOhbEKM6Sle+bDDw1//E/R8m2chBfWVejJaVn4
+	 CuZxHfd1r9w4v0CRPrhFJ9oj66XLIkL49b7HSQW9aMsMZIl3e3Vagig0jVEPcvaQcTDBb
+	 yrAs0bvhd72epnT/7UL3IM1gRK2xdD21vk0XUcBp7Yjn7AX+z18JnZrhWFo4LNS8xIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038913;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038915;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DHB9MvfVG0Y1nQ9eHUNPGAQr0qtjkD1VuTMWUM/Nrac=;
-	b=f3YzS1WuBNx/4td2Dt5j/JgG/LVgnNpoet0t5akiimQK8HpyNn9FgfTtOqYg9lNkZjL9
-	 4FGrR6q+aBuQzLTVMetRTDfnHjnzTUwcJgvq2cWrOhBr7dWreFEd/IMBFaQngBY6mIxIz
-	 mIpXKufZ3xMqyokY/yUTsaTY258FJ7vaoHgFXEJIkgvkWnrXRY3sUrixEL9HdtqvIcbiK
-	 3lwWGL4FDNxTjub2Y+5BP5wTd6PAMik81b37iSNDQzS2941g0TWqhmM5c9N1asUIZq3gg
-	 Y+8qzcL5MIvBD5R/sOr7nSa6EBFBEs6VJAFOFfBYeGZlaygWuCDe80ZD4CeV3S3yP6w==
+	bh=3liqg+M482Qe3oKnED691V946y8UOYaztuL3tr/rFEc=;
+	b=QVJMiOTPi9oJSgYnJ5M20dSJgdNKIKQVGdkq9FT4Z9TJwatRbN0HxcKJDUZGDmhxipvh
+	 BQquOBRH/RdKZ8FfKpOWCNWTBJt9X64axvfk7Hvl0qVD4d6ryR3jUKV6MFEJKBLN/HJme
+	 m/jjWaVU+VybSv9AWlmf7gz6igfwvvohVIoj0QYWapu7s+SBk+Rc7xumcgz1nso5TAcf5
+	 r3FrFDNqeZ1LCK0aA1Xj6xUZ7i4ZJLiSO276meXxpN3WSm2KZbXl+PrAGpKaZkLRBSOQ7
+	 chCYxLNnIGkqC/bsO3NO+bE/OsQSu3ax1/CUTvTE5rCIj2bv7KHWIrJIWdkTuz6meEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XS509i8F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=foblt37i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D26C606A320;
-	Wed, 18 Nov 2026 21:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1ED1606A32A;
+	Wed, 18 Nov 2026 21:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XS509i8F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876591F000C5;
-	Wed, 18 Nov 2026 21:55:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=foblt37i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366781F000C4;
+	Wed, 18 Nov 2026 21:55:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038913;
-	bh=DHB9MvfVG0Y1nQ9eHUNPGAQr0qtjkD1VuTMWUM/Nrac=;
+	s=korg; t=1795038915;
+	bh=3liqg+M482Qe3oKnED691V946y8UOYaztuL3tr/rFEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XS509i8FkE7ske/P2qaGjCFERa5X+aZhcN/iD2LYgqIwGc7xpdubf/37RvpAWzeAl
-	 2f91JjtrELjf0wZ3GUNBd19+hD+ZF8A6kWWiBP+NVWd4n63xbaFHHeGKQYklbk95m7
-	 esM7iB4QUSZ+SElm53C8MelYrKBufVh0T29s47Bc=
+	b=foblt37iewJGYkUwbY3S9B06UM6Uu9Cx4sUN3Wk9mndMeWaTzehgsipCNtxayPZp3
+	 E7Yh0JmTGBQwFngk7mNUHIWv9vZBopOLnPP6bdfu89pyIX9s9BA+b83Yn3v1DOXNVm
+	 g1uFs8PIHdWFij2iVrs6cxRyvMrl4f8RUBOpyuvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jake Labelle <southampton.jake.labelle@gmail.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	"Pierre-Loup A. Griffais" <pgriffais@valvesoftware.com>,
+	Melissa Wen <mwen@igalia.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1875/3318] nilfs2: validate directory position after llseek in readdir
-Date: Wed, 18 Nov 2026 15:41:37 +0100
-Message-ID: <20261118150418.229293132@linuxfoundation.org>
+Subject: [PATCH 6.6 1911/3318] drm/amd/display: Signal PQ EOTF in FreeSync infopacket for DP HDR
+Date: Wed, 18 Nov 2026 15:42:13 +0100
+Message-ID: <20261118150419.336268276@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,94 +70,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jake Labelle <southampton.jake.labelle@gmail.com>
+From: Melissa Wen <mwen@igalia.com>
 
-[ Upstream commit de7f49c12566cc5c7437a2f26c6c754b9d4d5648 ]
+[ Upstream commit 81f923b065801c7d30042bcda31ccb9449b4f58b ]
 
-nilfs_readdir() uses ctx->pos, which userspace can set to an arbitrary
-value via llseek, as an offset into the directory folio and parses
-whatever bytes sit there as a directory entry.  A position pointing
-into the middle of an entry -- or at unused bytes of a corrupted image
-that the page validator never inspected -- makes dir_emit() copy up to
-255 (name_len) bytes from a bogus entry, possibly reading past the end
-of the folio and returning unrelated memory contents to userspace.
+Commit c2791297013e ("drm/amd/display: Add color bit info to freesync
+infoframe") created the app_tf interface for FreeSync HDR and commit
+c21a764a98cb ("drm/amd/display: Send PQ bit in AMD VSIF") used it to set
+PB9 bit 5 (PQ EOTF) in v2/v3 AMD Freesync infopacket. However, Linux
+never made use of this interface: DM ignores what userspace sets
+regarding HDR and always passes TRANSFER_FUNC_UNKNOWN as app_tf, so the
+PQ bit is never set in the infopacket received by the eDP panel.
 
-Snap unaligned positions onto a valid entry boundary by walking the
-rec_len chain from the chunk start before parsing, as ext2 does in
-ext2_validate_entry().
+Check the EOTF in the HDR static metadata and set the PQ bit in Freesync
+infopacket for DP accordingly. This fixes gray-washed HDR on KDE/GNOME
+on Framework 13 Pro AI 9 HX 370 (DCN 3.5) and may fix similar issues on
+other VRR-capable panels that advertise Replay in its AMD VSDB.
 
-[ryusuke: fixed offset wrap-around in nilfs_validate_entry() and
- conformed AI tag to guidelines]
+It doesn't affect color/EOTF bits on infopackets for SDR and native
+HDMI.
 
-Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
-Assisted-by: Claude:claude-mythos-5
-Signed-off-by: Jake Labelle <southampton.jake.labelle@gmail.com>
+Reported-by: Pierre-Loup A. Griffais <pgriffais@valvesoftware.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/3200
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit b318f3e13dd73781404670d3b3c6cf2177e0119c)
 Cc: stable@vger.kernel.org
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-[ sashal: Placed nilfs_validate_entry() after nilfs_set_de_type() to preserve the existing file-type code. ]
+[ sashal: inlined dm_dp_in_hdr_mode() logic in the existing update_freesync_state_on_stream() function ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/dir.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nilfs2/dir.c b/fs/nilfs2/dir.c
-index 49ca762baa8f1..0a8bd8fd91b07 100644
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -265,11 +265,27 @@ static void nilfs_set_de_type(struct nilfs_dir_entry *de, struct inode *inode)
- 	de->file_type = nilfs_type_by_mode[(mode & S_IFMT)>>S_SHIFT];
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 900ded67a55ee..de16398e0ca07 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -7893,6 +7893,8 @@ static void prepare_flip_isr(struct amdgpu_crtc *acrtc)
+ 		      acrtc->crtc_id);
  }
  
-+static inline unsigned int
-+nilfs_validate_entry(char *base, unsigned int offset, unsigned int mask)
-+{
-+	struct nilfs_dir_entry *de = (struct nilfs_dir_entry *)(base + offset);
-+	struct nilfs_dir_entry *p =
-+		(struct nilfs_dir_entry *)(base + (offset & mask));
++#define DP_HDR_SDP_EOTF_IDX 2
 +
-+	while ((char *)p < (char *)de) {
-+		if (p->rec_len == 0)
-+			break;
-+		p = nilfs_next_entry(p);
-+	}
-+	return (char *)p - base;
-+}
+ static void update_freesync_state_on_stream(
+ 	struct amdgpu_display_manager *dm,
+ 	struct dm_crtc_state *new_crtc_state,
+@@ -7908,6 +7910,8 @@ static void update_freesync_state_on_stream(
+ 	bool pack_sdp_v1_3 = false;
+ 	struct amdgpu_dm_connector *aconn;
+ 	enum vrr_packet_type packet_type = PACKET_TYPE_VRR;
++	enum color_transfer_func app_tf;
++	const struct dc_info_packet *hdr;
+ 
+ 	if (!new_stream)
+ 		return;
+@@ -7959,12 +7963,18 @@ static void update_freesync_state_on_stream(
+ 					&new_stream->adaptive_sync_infopacket);
+ 	}
+ 
++	hdr = &new_stream->hdr_static_metadata;
++	app_tf = dc_is_dp_signal(new_stream->signal) && hdr->valid &&
++		 hdr->sb[DP_HDR_SDP_EOTF_IDX] == HDMI_EOTF_SMPTE_ST2084 ?
++		 TRANSFER_FUNC_PQ2084 :
++		 TRANSFER_FUNC_UNKNOWN;
 +
- static int nilfs_readdir(struct file *file, struct dir_context *ctx)
- {
- 	loff_t pos = ctx->pos;
- 	struct inode *inode = file_inode(file);
- 	struct super_block *sb = inode->i_sb;
-+	unsigned int chunk_size = nilfs_chunk_size(inode);
- 	unsigned int offset = pos & ~PAGE_MASK;
- 	unsigned long n = pos >> PAGE_SHIFT;
- 	unsigned long npages = dir_pages(inode);
-@@ -288,6 +304,24 @@ static int nilfs_readdir(struct file *file, struct dir_context *ctx)
- 			ctx->pos += PAGE_SIZE - offset;
- 			return -EIO;
- 		}
-+		/*
-+		 * ctx->pos comes from userspace via llseek and may point
-+		 * into the middle of an entry -- or at unvalidated bytes
-+		 * of a crafted image. offset is only nonzero here on the
-+		 * very first iteration (subsequent pages always start at
-+		 * offset 0, which -- like any chunk boundary -- is always
-+		 * a legitimate entry start, since no rec_len chain crosses
-+		 * a chunk boundary). Snap a non-chunk-aligned offset onto
-+		 * a real entry boundary by walking the chain from the
-+		 * enclosing chunk's start, as ext2 does; otherwise
-+		 * dir_emit() copies name_len bytes from a fake entry,
-+		 * reading past the end of the folio.
-+		 */
-+		if (offset & (chunk_size - 1)) {
-+			offset = nilfs_validate_entry(kaddr, offset,
-+					~(chunk_size - 1));
-+			ctx->pos = ((loff_t)n << PAGE_SHIFT) + offset;
-+		}
- 		de = (struct nilfs_dir_entry *)(kaddr + offset);
- 		limit = kaddr + nilfs_last_byte(inode, n) -
- 			NILFS_DIR_REC_LEN(1);
+ 	mod_freesync_build_vrr_infopacket(
+ 		dm->freesync_module,
+ 		new_stream,
+ 		&vrr_params,
+ 		packet_type,
+-		TRANSFER_FUNC_UNKNOWN,
++		app_tf,
+ 		&vrr_infopacket,
+ 		pack_sdp_v1_3);
+ 
 -- 
 2.53.0
 
