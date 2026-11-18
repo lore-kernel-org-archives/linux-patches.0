@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019967;
-	b=xeMWw2t1naBy4y9/7nr+v1R3E6wVWF6VPEuOXE+fY15ZOJzpcnl/E5VUUa5Un6aEX/Q7
-	 zMvFk0b/AEwUL94XNTKrg66IEn5pRLMUoEtELpq77mqEPT2QBnIrEPwnIkPtnuKcLv+6z
-	 OxkUrriCu9rLMqLnpmEbtyvXaKQsHLlUhgP3pBK8FYmLCVAbxzPK+WTiVwApCDTCwUjRF
-	 yfIBTaEjBdDa776kNM+LeJLeLzaBuHj0y6Z7aY6ASCQWVpmPMa3/Cmy0niMfsVIGsIDX3
-	 xRD9AXE8Ok+f8NW63UxL7+iIH5fr9Hu1txW6SHOhZ4IItWYsocqpziIbVuznpE1nUYg==
+	t=1795019970;
+	b=M0bCScISOS+uQ3LvU0qyUAb0GCxu/x47FCtSn8dkDASrgMQjo1zAeoG/LjSOM8XNqz1h
+	 0RFVO5yx51fVKMM3d/2uncCrlWhvgzReKYtUPZbJt28epTr0ss3GY2vugARDOty/fc5jp
+	 sSgoyKttbFy8i1IWNyhvrK6mKSjYn5uGfABDmBEfSPC8WIqcu3qcwIBUbkIyTwOzg2p7h
+	 /e68g/PRn2OyOBpjbt3+rGS9L/0JbASYYfvpgrO4s2B4SnH6g1Yt5q+O/3z4JlCz6//wN
+	 O7aJVIV31xr1Ui157gWBraB7DSWbxEUOB7F+dApj5vqqNfqiOORDpk2s2+jgmTnDfLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019967;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019970;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=q3VigueMY2vlEdkxyMxGzDiOt1ArP15u/182Ow/3Ay4=;
-	b=TBNLuV47Y7rPOhAlvBMPlz5D4yVPT4NMXxveVaSlzs5AGJIsxtNcLeEFz67K2C4Amngu
-	 Wqb6Tbl7l/zDjsoYxdDbFxhud8H9OMykw5tGSeqp8iEhzVBNUckVJ4rLmg2NzMbUlFq25
-	 KfjSE5qndiCuAd69VCmtl2HwUxf94W9L3PtWWb4AA/l49TI3Ywk003TykIo+ImTXrufa1
-	 /lu/opGsUkd/jkwykYwWgqt2gkpQ6/nwNlxXvxePEQmZNSkmHQpbt/hPuDaN6DW/Y3TH9
-	 fRPtKIzjw8tt0yn+QJmn+umYaPORRiszL+C66dukjleUHiMZLof1XKNysa/KkI7+KbQ==
+	bh=Xc9eTAW3UF+F4XkHEmJjLHlrOWADAuEA8mj9oQ9EVXw=;
+	b=gsargWPZShyJXQX0jiO6thnT1M5fhgppn7tgez4Ek/YAbcxdqYoVBisMh5DreqJSQU/N
+	 YlwHMwlGGi3+Jp/woSmrrm0Et2dyOtH1XmsA0uFA+wnjtA+hDWUqm+2Msz6mrRdIsmpGx
+	 wS8r4ncuCzidDoJGzmWr7vjEPQWmLX5f6IVh5AnneYRCpPROG02VoO7zntzOCFptmubUi
+	 wm1j1F3KXBDZtGetvY+rb03nWN9kLmP61WiJu9i8oytrb9VFEDRj2v6Y6h7MzMntopXaY
+	 +llBnRaMHtxSvPGxOSHwP432bo9dex85ibyelfMTuMhtDcN53+MhA5JL8eFWjAsBT2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U5OSArs5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lnO7cmdx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB47606A31C;
-	Wed, 18 Nov 2026 16:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A288C606A31C;
+	Wed, 18 Nov 2026 16:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U5OSArs5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8A11F000C4;
-	Wed, 18 Nov 2026 16:39:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lnO7cmdx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17961F000C4;
+	Wed, 18 Nov 2026 16:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019967;
-	bh=q3VigueMY2vlEdkxyMxGzDiOt1ArP15u/182Ow/3Ay4=;
+	s=korg; t=1795019970;
+	bh=Xc9eTAW3UF+F4XkHEmJjLHlrOWADAuEA8mj9oQ9EVXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U5OSArs5FO+ndaK0c+7sX8KYpyPEyCYX4arkpizB2h6SpXGPZ/rTTuT6u5U6bTxaT
-	 n8MRBphTQJO5KNCKz34kxBUsPu1DozlKxmZ7oTWIfJYw4FdySDeN8vzZ8gJv0J4Khj
-	 LvAObwqq6ypfCCpEKolhaB1p0sC9dveRok5XH/F4=
+	b=lnO7cmdxuQ9z3MUZxBE3kI2poxX9wyv6g9LBOSV1fWtoKI+wKIgXNz4OFA48HpetL
+	 v9GUvqv3rLm5kFKgvMUhmlkB1fq30CWQqlfiOJiapr8OxYEgZ9xMwFnbttoZsEVTi+
+	 L9RSDwRwKBIY3Po+xWRjpyoqYHIQO5IwyXDrGTlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1783/2651] ASoC: amd: yc: Fix acp6x_pdm_dma_close() being skipped on rollback
-Date: Wed, 18 Nov 2026 15:50:23 +0100
-Message-ID: <20261118150351.543649891@linuxfoundation.org>
+Subject: [PATCH 7.3 1748/2651] clk: qcom: mmcc-sdm660: Fix MDSS AHB clock HWCG register offset
+Date: Wed, 18 Nov 2026 15:49:48 +0100
+Message-ID: <20261118150350.453044255@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,38 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit 06654a3ef5137719be880a6cd12bd453050eafc5 ]
+[ Upstream commit c5f338329a2d0d60f7874aa7a1addaa0e4e75a3b ]
 
-snd_pcm_hw_constraint_integer() may return 1, which is then returned
-from acp6x_pdm_dma_open(). ASoC only marks the component as opened
-when .open() returns 0, so .close() can be skipped on rollback.
+The MDSS AHB clock HWCG bit resides in the same register as the branch
+enable and halt status bits, at offset 0x2308. The current HWCG register
+offset of 0x8a004 exceeds the regmap maximum of 0x40000, so regmap rejects
+the read in clk_branch_in_hwcg_mode(). Since the read error is ignored,
+the helper uses an uninitialized value to decide whether to skip the
+halt status check.
 
-Return 0 explicitly on success.
+Correct the HWCG register offset so the helper reads the actual hardware
+clock gating state.
 
-Fixes: ceb4fcc13ae5 ("ASoC: amd: add acp6x pdm driver dma ops")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261008103831.542533-8-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 5db3ae8b33de ("clk: qcom: Add SDM660 Multimedia Clock Controller (MMCC) driver")
+Assisted-by: LLM
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260916-clk-qcom-mmcc-sdm660-fix-mdss-ahb-hwcg-offset-v1-1-30dcf09d907c@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-pdm-dma.c | 2 +-
+ drivers/clk/qcom/mmcc-sdm660.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-pdm-dma.c b/sound/soc/amd/yc/acp6x-pdm-dma.c
-index 40c4d833f4ed3..afa9f66533e34 100644
---- a/sound/soc/amd/yc/acp6x-pdm-dma.c
-+++ b/sound/soc/amd/yc/acp6x-pdm-dma.c
-@@ -209,7 +209,7 @@ static int acp6x_pdm_dma_open(struct snd_soc_component *component,
- 
- 	pdm_data->acp6x_base = adata->acp6x_base;
- 	runtime->private_data = pdm_data;
--	return ret;
-+	return 0;
- }
- 
- static int acp6x_pdm_dma_hw_params(struct snd_soc_component *component,
+diff --git a/drivers/clk/qcom/mmcc-sdm660.c b/drivers/clk/qcom/mmcc-sdm660.c
+index 200f986de9651..9f8b8e29fa0f3 100644
+--- a/drivers/clk/qcom/mmcc-sdm660.c
++++ b/drivers/clk/qcom/mmcc-sdm660.c
+@@ -2017,7 +2017,7 @@ static struct clk_branch csiphy_ahb2crif_clk = {
+ static struct clk_branch mdss_ahb_clk = {
+ 	.halt_reg = 0x2308,
+ 	.halt_check = BRANCH_HALT,
+-	.hwcg_reg = 0x8a004,
++	.hwcg_reg = 0x2308,
+ 	.hwcg_bit = 1,
+ 	.clkr = {
+ 		.enable_reg = 0x2308,
 -- 
 2.53.0
 
