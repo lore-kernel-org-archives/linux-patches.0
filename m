@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056283;
-	b=iINa0/YCf6+x2ZtwtVXrx4EkR1NxDD4XuxOly87J1wRLv7wowrXeRTObD6zQWJPKdyeu
-	 wM1e6NbIJk1jdgMPgJxvhntGMEAv7/Y5tTQcOsnl0dxAO/rp9Y7LrPxFjlgrT6Eg4KaBJ
-	 Syz8Fk+cy9+PhycPFSc78ncRlnnCjeKbBgIfNUs0v5Idyx1CpYAoJ6tQ7xKF3iQcY7xks
-	 eNACkELCY+kR4owL8EfxcVApTLnjP09ekZT6wfSjLH3EsduZeddVD99l0cJMgEkRRsckt
-	 Did5nc92ipfI8hGuHX1V3ZMf4tSR6K73XN0mim2B41ZNNxcojLu7GcLKJmKb5/aSDBA==
+	t=1795056285;
+	b=t13+YQD1HWnmJhZoGd4ZRWbAx2R0sRRwpmw15SNJVjU/Yzhw6SxofiCxQfLqqF702nrH
+	 ntVnfaMl0roavJz1oILscLIVaER0Ot6RxPxrRKDvEIvp5Ar27gBrz+4n1D2zLQdvZJ/Ym
+	 yn2IfnnNhlznC6/r+MrvLzvjsxTbSU7sB3jpfzfwwdX/xbkQKRJebVkFdUcRzrbph7ZIM
+	 UuXlk9Zb6KorYZdTMRoBGEHCXW1kkm6xlFkJgyGOk27w2IMyHsgacGaDQmQpo/P9dxExl
+	 xHRP4GLpJC07+2IW+gJl7VXcpGqgCraepMS9/I1rSffyENwrsQin5pYGJzqW2f5pTqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056283;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056285;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zYQ4HRO95PGZ9Dck1v/lA394My+7amxPYJzuy0fpcm4=;
-	b=IGzFw+sjOT5gFvGUv3n7jDNxjENEgaTo6D9p7dSWANCYZPPT2oLyjTvzHI7upGffcwEn
-	 jM1IAmpcaCyr5Y4OKct0asPePhW892C7qjoioHGKkjAMs0A6u9OPLKFPw702nQ1CYRFRi
-	 oBpvTBAzITKeSI/m/zzhAnVIYr3UWCO2VjmH0aiz9gAEEBCb383hYhhONAdM1rC7o8743
-	 psaBXzkDBkOd4WIo8nMYKopru/KSEXzO1mkquPpoPU687kztk23bSLjTWRs2s6O34CwCR
-	 RO/2yTFHC57m7X8CwHaU4+4+CsM24j1tgSX7A3bV1ciymz7J9sCAmpfFE84VCtSvdgA==
+	bh=4Q+Fh/ZALEec60lNeGU9ZpZjDbIxjZNU+6fv6CggNGM=;
+	b=4WZ7tMDv7kYxnVs+LTrNPbz2v7AOLFpEfEFaKbCI6tArjcdo4feXM9oKbKDbXh0YIxO4
+	 wYG93pzjBRhlpTz2RSSesCi4ouRfBSfS69p7q0hTgXM9dY/9zIZcDOIHMPEA3RsQhGp0d
+	 vOR215NMrARE+y4CBmEHSu0hjLaaBQ3zy2BUynCsyaO8HP3oAtOK/X0Gdv/Q6e/OK4NFh
+	 HLxNJ3FAKuiAXuAYsVKYROQT69woogHit3ekExZAwXUev4pNyVhPxXzAHv9d6ckme/Uy4
+	 VP7DSyfTiiSjlQosf6VP0dPxCYMtUHoOuKwCKL8AgGHsk8YwtP7075ZLKqMH4IXGHJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Aw1jCKeF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vSIQhhTj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC861606A325;
-	Thu, 19 Nov 2026 02:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5169606A31C;
+	Thu, 19 Nov 2026 02:44:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Aw1jCKeF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5FE1F000C4;
-	Thu, 19 Nov 2026 02:44:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vSIQhhTj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC1B1F000C4;
+	Thu, 19 Nov 2026 02:44:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056282;
-	bh=zYQ4HRO95PGZ9Dck1v/lA394My+7amxPYJzuy0fpcm4=;
+	s=korg; t=1795056285;
+	bh=4Q+Fh/ZALEec60lNeGU9ZpZjDbIxjZNU+6fv6CggNGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Aw1jCKeFi0d2iz6HLSmqotjmMxNVbRSWVYnOlJfvo0MFz0LfFFR8Fr969ndh3GF2U
-	 mcVFxVjYXvBTh+uuZUHbays7spEs4wQtsY5gZ/2lKNQzFVr+tBUMRZ2voxCr29IpJ8
-	 9q4kT2/NrmuwSCa6kZMKiPDTJi3gP/gexWUzjc08=
+	b=vSIQhhTj9n2Seqv9uHd5y3qXFI31untpxuwr8yFD7ZvFxpsB5uixXpiFFvmIvnQST
+	 R7dS+19jLD2PTeabqwdHOkjACot6wewGaO2Svpf6jAmjivd+/dx1n/Qefo9tnB5PKb
+	 Z4ItGmd9ikVfCBj5YzdCAtqiwHnWlHM06veMUogY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Atul Akella <atul.akella@gmail.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Russell King <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1931/2214] rpmsg: virtio: fix error handling in TX buffer wait
-Date: Wed, 18 Nov 2026 16:00:07 +0100
-Message-ID: <20261118150128.258883021@linuxfoundation.org>
+Subject: [PATCH 5.15 1932/2214] ARM: 9492/1: alignment: fix LSR #32 and ASR #32 offset decoding
+Date: Wed, 18 Nov 2026 16:00:08 +0100
+Message-ID: <20261118150128.294402661@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,54 +69,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Atul Akella <atul.akella@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 7dd4cffdf4c2a496ccf783303a03d687a2127baf ]
+[ Upstream commit 9f878a6c2207f0c12f34a715a6a05cfc95f47460 ]
 
-The TX buffer wait loop in rpmsg_send_offchannel_raw() ignores the
-possibility of wait_event_interruptible_timeout() returning a
-negative value, which happens when the wait is interrupted by a
-signal. In that case the loop spins back around and re-arms the
-wait instead of propagating the signal, which can stall a task
-that is trying to be killed.
+The register-offset form of LDR/STR may apply a shift to Rm.  Per
+DecodeImmShift() (ARM ARM DDI0406C section A8.4.3, "Pseudocode details
+of instruction-specified shifts and rotates"), an imm5 of 0 encodes a
+shift of 32 for LSR and ASR; only LSL treats 0 as "no shift", and ROR
+with 0 encodes RRX.
 
-Separately, on a genuine timeout (return value 0) the function
-returns -ERESTARTSYS, which is reserved for signal-interrupted
-syscalls that the kernel may restart. A timeout is not a signal
-and should not be treated as restartable; return -ETIMEDOUT
-instead.
+do_alignment() special-cases RRX but not LSR or ASR, and IS_SHIFT() does
+not filter these encodings out, so the block is entered with
+shiftval == 0 and the offset becomes Rm instead of 0 (LSR #32) or the
+replicated sign of Rm (ASR #32).
 
-Handle both cases explicitly: return err directly when negative,
-and return -ETIMEDOUT on timeout.
+do_alignment_finish_ldst() applies the offset to the base-register
+writeback of the post-indexed form, so the emulated access itself uses
+the correct faulting address but Rn is left holding the wrong value.
 
-Fixes: bcabbccabffe ("rpmsg: add virtio-based remote processor messaging bus")
-Signed-off-by: Atul Akella <atul.akella@gmail.com>
-Link: https://lore.kernel.org/r/20261013160055.1362-1-atul.akella@gmail.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Reproduced on ARM926EJ-S (versatile_defconfig, CONFIG_ALIGNMENT_TRAP=y,
+gcc 13.3.0) with a misaligned base and Rm = 0x1000:
+
+  ldr r0, [r1], r2, lsr #32   Rn advanced by 0x1000, must be unchanged
+  ldr r0, [r1], r2, asr #32   Rn advanced by 0x1000, must be unchanged
+  ldr r0, [r1], r2, asr #32   with Rm negative, Rn must decrease by 1
+
+All three are correct with the patch applied, while a lsr #1 control
+case is emulated correctly both before and after.
+
+Assisted-by: Claude:claude-fable-5
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/virtio_rpmsg_bus.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm/mm/alignment.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rpmsg/virtio_rpmsg_bus.c b/drivers/rpmsg/virtio_rpmsg_bus.c
-index e9bdaf8d6ad8e..8b7a79906d12d 100644
---- a/drivers/rpmsg/virtio_rpmsg_bus.c
-+++ b/drivers/rpmsg/virtio_rpmsg_bus.c
-@@ -537,10 +537,13 @@ static int rpmsg_send_offchannel_raw(struct rpmsg_device *rpdev,
- 					(msg = get_a_tx_buf(vrp)),
- 					msecs_to_jiffies(15000));
+diff --git a/arch/arm/mm/alignment.c b/arch/arm/mm/alignment.c
+index 2f76a04cd29d2..81a0ffedef9b0 100644
+--- a/arch/arm/mm/alignment.c
++++ b/arch/arm/mm/alignment.c
+@@ -915,11 +915,17 @@ do_alignment(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+ 				break;
  
-+		if (err < 0)
-+			return err;
-+
- 		/* timeout ? */
- 		if (!err) {
- 			dev_err(dev, "timeout waiting for a tx buffer\n");
--			return -ERESTARTSYS;
-+			return -ETIMEDOUT;
- 		}
- 	}
+ 			case SHIFT_LSR:
+-				offset.un >>= shiftval;
++				if (shiftval == 0)
++					offset.un = 0;
++				else
++					offset.un >>= shiftval;
+ 				break;
  
+ 			case SHIFT_ASR:
+-				offset.sn >>= shiftval;
++				if (shiftval == 0)
++					offset.sn >>= 31;
++				else
++					offset.sn >>= shiftval;
+ 				break;
+ 
+ 			case SHIFT_RORRRX:
 -- 
 2.53.0
 
