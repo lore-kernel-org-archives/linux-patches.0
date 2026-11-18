@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016373;
-	b=qohz+VweNBafe3neuogF1uiJCqIrIrbr8KoeLS86olhNqE0eRrcEaoqDpFfPpbaqfUBo
-	 5umfZVt2gZ+UAogUHOTXhrTrfX5LExkMZHCpoGyk0yMUrTMdzgH6pnwYY+1eOqo6d1mLu
-	 CQXU8GBNQ3dKy7c0HY1x0GnhyCkDb+2EvFv4odqCtD+VbxZLmKupNp+axHLy56WXtZkLE
-	 BPEn4lk8aPXDZMKz6uIB7ok9XSDRR2ff3L4RHXt9pZv8po9fYSMaHUkIv0sKGlWHxfEV4
-	 2eecdVhC+b1Qp/uEUXKLSOz1P8KXcEIHH0sUHepXWLOGAFaCe4oBmPHHJbCFhJSazqA==
+	t=1795016376;
+	b=HFtEbBPubbFKe+QwGjZ80oKMyJJ7WMMxNL0lv0ciyZM/jLvEMnEzhvg3v6ettrzNwYYj
+	 CNLtMEwPXofDJm17DI+VJohNpdMAqras/C6F25/qHv4YjZqR4RbZ3/+dBQYHzzO/sngPQ
+	 6yLEjcae9kfA4S/QA5XpNGivCZNF+miYaoxGvB0T1ipFEpjC4yJ13GNqfjwJiYrDZasPA
+	 Tex/iVm4s7JHjoNMnJTWvIEtOoLVARPpRFvypr/TaxCn2nq2ZXWBvHuY5Z86HzcZWohdg
+	 TJcRXg/RpkVZladKQZmciZmoKLitGia/mvh+wk9iEXYF+LQ6gVLfLX0sumEPZnV6Z8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016373;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016376;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=/+FqOT3Rbw+TxI8ENLcMzWdxXRTMWZiyoPncPzfK2x0=;
-	b=ybdVMdaK/6u84GQ4JRlBXsKftkxCgeILr5rBORrlgXn09bqpGp6o+nut863qdSWY/oUE
-	 MpzlY/KOEauVAdyPXvXjXckYgSxtiSW5D5IJBg/7KbJOpqLVTs7/dLKMJZlvSa3nJxjWV
-	 q18qaZiogFIxg5fcbEVEAtkKTBGiUr8dR1XOeQ6oVXKTfFj7QtQF+HiO0UeE+2W9RIF1F
-	 5JGqHyL/dc9GBEK9Sxf08aNcpOxPBwNVTDStfojHvMdB07zQ80JsfSRPjmdRpXEZ4iwav
-	 +kKPC3c2WtzHqwQ7KxCrTtK13kjpz6RKdHA3j8CnApLL1gRaBWoi5/C6+K2IcCByh4A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=3rRRL+YupCHof4Vm1f6ZfvXXLDXYgMLIlsl9s9rJLRI=;
+	b=h1NWhqvoFUGta9V/iT8rZbTrTRFg2ETB/6yYo629pzAXljS26ofmIKIip9YQskg7MpDx
+	 F9VNNCrRi1qYzkeuPT0LhR2vZAaFTAHsbhmcgu082eJSB3MAVE5uer5fNdTBSoUFkNGjg
+	 aYtMHFqltwBMuq0a6dftZHuAAkbCrIimf4IQhERaU35NjoL6VaI6bgOP/aB4XebRmGczv
+	 ztNVNDxINBdTToQzGo7MGd8LSHKagg8X+PR/8oRtY7iP82lGipFx8q1bsFPkXHW/1d09V
+	 jd49TVfEhLb8G14n5hRAYeRpTyzrsndg7wT7QcK+wd0F8jMyMmQg3KL16xiTZ7IGNpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="DeDlpbv/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ip6tRGjp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B108560A2606;
-	Wed, 18 Nov 2026 15:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A0860A2602;
+	Wed, 18 Nov 2026 15:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DeDlpbv/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11EA41F000C4;
-	Wed, 18 Nov 2026 15:39:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ip6tRGjp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4521F000C4;
+	Wed, 18 Nov 2026 15:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016373;
-	bh=/+FqOT3Rbw+TxI8ENLcMzWdxXRTMWZiyoPncPzfK2x0=;
+	s=korg; t=1795016376;
+	bh=3rRRL+YupCHof4Vm1f6ZfvXXLDXYgMLIlsl9s9rJLRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DeDlpbv/Yvh1Do7vT129e91WdS2NYlXOlfg6YiM44Uk8BfNkQL7ZSZap1z0RBizE3
-	 FG/ePXffqb9P13EkL079m9FsKqjvxOq43D8nErUqPjGO/T1BbPb7T01KbnkYmTjErv
-	 ofkjsC4T/1BIk4+zVmd0G6i3ynczD/Cp46ONOfmE=
+	b=ip6tRGjpHVxiZW6dOdFWJiZJhnN/YY5uwhPoLYHOZlxNzbfniAUCMM6psJ//Gubc0
+	 ZF7NZdXXQibxRqx9CIOT3Ji2uWXDHGwuk6OHEQS+GAjoUbFLzaY5+LEQLJKO+zM5sd
+	 JcpOQQjbyFrhYzRxN9i2DkfRIiqIT/5STpjEzvoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C8=98tefan=20Ghe=C8=9Bu?= <stefanghetu9@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0505/2651] ASoC: SOF: imx: Prevent stack OOB read in DSP panic dump
-Date: Wed, 18 Nov 2026 15:29:05 +0100
-Message-ID: <20261118150305.943033254@linuxfoundation.org>
+Subject: [PATCH 7.3 0506/2651] x86/cpu: Factor init_cpu_info() out of identify_cpu()
+Date: Wed, 18 Nov 2026 15:29:06 +0100
+Message-ID: <20261118150305.976061508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,51 +62,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ștefan Ghețu <stefanghetu9@gmail.com>
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
 
-[ Upstream commit 48ed992bfbe53537ad1cbc8ad68f7031e7ac0af3 ]
+[ Upstream commit 54a2882ab9f75ab8a77a4f113145d4d709d2387c ]
 
-Commit 58bb5081cba1 ("ASoC: SOF: Xtensa: dump ar registers to restore
-call stack") added a shared Xtensa helper that iterates over a flexible
-array of AR registers (`ar[]`) controlled by `plat_hdr.numaregs`.
+identify_cpu() unconditionally resets the struct cpuinfo_x86 fields to
+their default values and clears the capability arrays with memset()
+before rescanning the CPU to fill it in again.
 
-While Intel IPC4 allocates dynamic storage for the AR block, the i.MX
-IPC3 path reads the oops message into a stack-allocated struct without
-backing storage for `ar[]`, while leaving `numaregs` unvalidated. This
-causes a stack out-of-bounds read when printing a DSP panic.
+However the boot CPU capabilities have already been scanned by
+early_identify_cpu(), with interrupts disabled.
 
-Clear `numaregs` to 0 on i.MX since the AR block is not fetched or
-supported on this platform, preventing unsafe out-of-bounds memory
-accesses in the shared Xtensa helper.
+Introduce init_cpu_info() helper in preparation for letting the
+callers decide whether the reset is needed.
 
-Fixes: 58bb5081cba1 ("ASoC: SOF: Xtensa: dump ar registers to restore call stack")
-Signed-off-by: Ștefan Ghețu <stefanghetu9@gmail.com>
-Link: https://patch.msgid.link/20260908170740.276800-1-stefanghetu9@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+No functional changes.
+
+Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://patch.msgid.link/20260916195203.1099646-2-ihor.solodrai@linux.dev
+Stable-dep-of: 2711d67bc3a7 ("x86/cpu: Don't transiently clear the boot CPU's capabilities")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/imx/imx-common.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kernel/cpu/common.c | 51 ++++++++++++++++++++----------------
+ 1 file changed, 28 insertions(+), 23 deletions(-)
 
-diff --git a/sound/soc/sof/imx/imx-common.c b/sound/soc/sof/imx/imx-common.c
-index 7a03c8cc5dd47..436fe49246ba8 100644
---- a/sound/soc/sof/imx/imx-common.c
-+++ b/sound/soc/sof/imx/imx-common.c
-@@ -34,6 +34,7 @@ void imx8_get_registers(struct snd_sof_dev *sdev,
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index a9b3308f48a86..7ac09bb6881fe 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -1783,6 +1783,32 @@ static void __init cpu_parse_early_param(void)
+ 	}
+ }
  
- 	/* first read registers */
- 	sof_mailbox_read(sdev, offset, xoops, sizeof(*xoops));
-+	xoops->plat_hdr.numaregs = 0;
++static void init_cpu_info(struct cpuinfo_x86 *c)
++{
++	c->x86_cache_size = 0;
++	c->x86_vendor = X86_VENDOR_UNKNOWN;
++	c->x86_model = c->x86_stepping = 0;	/* So far unknown... */
++	c->x86_vendor_id[0] = '\0'; /* Unset */
++	c->x86_model_id[0] = '\0';  /* Unset */
++#ifdef CONFIG_X86_64
++	c->x86_clflush_size = 64;
++	c->x86_phys_bits = 36;
++	c->x86_virt_bits = 48;
++#else
++	c->cpuid_level = -1;	/* CPUID not detected */
++	c->x86_clflush_size = 32;
++	c->x86_phys_bits = 32;
++	c->x86_virt_bits = 32;
++#endif
++	c->x86_cache_alignment = c->x86_clflush_size;
++	memset(&c->x86_capability, 0, sizeof(c->x86_capability));
++	memset(&c->cpuid, 0, sizeof(c->cpuid));
++#ifdef CONFIG_X86_VMX_FEATURE_NAMES
++	memset(&c->vmx_capability, 0, sizeof(c->vmx_capability));
++#endif
++	c->extended_cpuid_level = 0;
++}
++
+ /*
+  * Do minimum CPU detection early.
+  * Fields really needed: vendor, cpuid_level, family, model, mask,
+@@ -1967,8 +1993,6 @@ void check_null_seg_clears_base(struct cpuinfo_x86 *c)
  
- 	/* then get panic info */
- 	if (xoops->arch_hdr.totalsize > EXCEPT_MAX_HDR_SIZE) {
+ static void generic_identify(struct cpuinfo_x86 *c)
+ {
+-	c->extended_cpuid_level = 0;
+-
+ 	if (!cpuid_feature())
+ 		identify_cpu_without_cpuid(c);
+ 
+@@ -2012,27 +2036,8 @@ static void identify_cpu(struct cpuinfo_x86 *c)
+ 	int i;
+ 
+ 	c->loops_per_jiffy = loops_per_jiffy;
+-	c->x86_cache_size = 0;
+-	c->x86_vendor = X86_VENDOR_UNKNOWN;
+-	c->x86_model = c->x86_stepping = 0;	/* So far unknown... */
+-	c->x86_vendor_id[0] = '\0'; /* Unset */
+-	c->x86_model_id[0] = '\0';  /* Unset */
+-#ifdef CONFIG_X86_64
+-	c->x86_clflush_size = 64;
+-	c->x86_phys_bits = 36;
+-	c->x86_virt_bits = 48;
+-#else
+-	c->cpuid_level = -1;	/* CPUID not detected */
+-	c->x86_clflush_size = 32;
+-	c->x86_phys_bits = 32;
+-	c->x86_virt_bits = 32;
+-#endif
+-	c->x86_cache_alignment = c->x86_clflush_size;
+-	memset(&c->x86_capability, 0, sizeof(c->x86_capability));
+-	memset(&c->cpuid, 0, sizeof(c->cpuid));
+-#ifdef CONFIG_X86_VMX_FEATURE_NAMES
+-	memset(&c->vmx_capability, 0, sizeof(c->vmx_capability));
+-#endif
++
++	init_cpu_info(c);
+ 
+ 	generic_identify(c);
+ 
 -- 
 2.53.0
 
