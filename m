@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017683;
-	b=Fi+OcnQb4CFn+1HjZo/gmrNMgUEeNX3zbiy873uJwMDuiibbrHuzhYePP4CGT3ilZLQy
-	 OTuKwX6ZQMnJT/2b76oRk3WTEarJFIWmOLWJahhozUdAyDeggdqk6Hrd8aRbIdUpsc2Tl
-	 xXVBE8Is5gxEqoVkavdlzPktZijPOHHI2J7Kz2ETFGk9jqpwKMWU9CpTcWpu+1fEcVI0a
-	 JRBeRxtX/5De01fBvpBfZ1KmeFdszvEl9j0SO/HxD3N4jutySZE1qzMA9R/hTE+jAMGGF
-	 soU0NYbMdgXbXcBGuTppjqmDQ3wF8o/wBTVQOLdf1CnzxKQv0mJYyH3SsprcuwWEwyw==
+	t=1795017686;
+	b=KkFp4KA+Q4W2T1PsSI7tfw++X5CwFtk6G237KKFNZH79IMGHaONyDgEe5ylHC5aBXIgU
+	 UggWmBKWOxgtEC54z1aHrotexOWeEODSiWwQKWrqTykYp1tmY3DTxncBYKWFTnmQN6E0N
+	 CmFdQj4OFBOPjVG6uWFWIz5oY/AkkLrTwWuFud6R/saAIAZVqaIVD7z9/jogyRk1VMv0o
+	 TRnYSpfLYy5WdN8yWEzN41om4/FEEeHo2dyvgaOTJV2432fGTRniTKs1sre08RQm63JKQ
+	 EiJroCIrdL+TRoTznDIqfWgFDbHXVAnS3Ruo3dN6ujzBYUeyqX0cXZzwXIOheUEmfWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017683;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017686;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=uzYBg9/CZmndBpAqmEAxDyhQhK2qb8KzXnXAc6Mr5ec=;
-	b=g1+LjgQ0/qugrDZ9OlrggLyb9VTCyioEpajj9g1Trxdeox/tVkQCCOXC2A/vtWmiz4NC
-	 YHl2GE3Tek3A0nSUZ81Te6pm2HZvEy8y/EVVmSfx/KDw2WBlh677H5y8bMjGjTD2y+EtC
-	 BA5oHK7P3tZwU6jWtJ5qvo5Tp55PYX3ewY7wGPv8VzYl+u8QN8ReA7AGcb7penv7IE3Vl
-	 Cd/I7ue0/GWv5iDYSOVe/JvtNTrwNQ9AxwdA/RMcSZQe6XNnQ0UE+Mgxt1cjoEP2OMThK
-	 mm2PeT/B+G3odaKriMWlreKVCkR/Pj1I0A94r4X7+8ktI2PrwdhfN8A1ZIP3GDfpfXA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ZiqINcL4f5M1kZL5ESJ8G1pym2+SdDEj8FgInx1Xyno=;
+	b=H4xdegNO0g2dtgwkUu0vcUWDXh2L36D1qVhf86GYodzLTcLRGPpT8jmup1yuSJG2uKmN
+	 Yyvxe3NSprH4eUM8Ej55W2VedPDL/bKL3PRks9UYl3V3c5AdjjT5hy6CiAoEG07IyDLaG
+	 vXMpgCUwOrJ5gziMtcHW29DLwdrxkv1HQGgVoPvN901a28ilkqdkoTUpaEPMVTu+Hq4vF
+	 3SofU88rDQsrrjxD5IEqPK23KIGvYcoAREZeGJ/+ND+e3AS6tj8sGv6R1H1L2kizpm4bU
+	 0/1dGl9fN2I4/suVqGKjPGD49VnbWzqJ0p3LV2MSfGfRjLad6QbhIJ/cEMW+kYJgd8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LUMJ6XVy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Nuo1i0G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879BC606A31C;
-	Wed, 18 Nov 2026 16:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3A9606A31C;
+	Wed, 18 Nov 2026 16:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LUMJ6XVy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A701F000C6;
-	Wed, 18 Nov 2026 16:01:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Nuo1i0G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97711F000C6;
+	Wed, 18 Nov 2026 16:01:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017683;
-	bh=uzYBg9/CZmndBpAqmEAxDyhQhK2qb8KzXnXAc6Mr5ec=;
+	s=korg; t=1795017686;
+	bh=ZiqINcL4f5M1kZL5ESJ8G1pym2+SdDEj8FgInx1Xyno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LUMJ6XVyFqqX/lYzo9R12NOEhe+Ez0to2A64lILQB+b/us3sfqSLgq+L2eLGjLW6X
-	 joAhiJf1lw6l2fTJAHLyhG7dWsC6lQ0i2RP+TsAj3wnQ0dfBza9Jfpa/YX8BuQQJy9
-	 5tP1OYQpKOlhUmBqKCjYICNkjYm57McsL8sfZ2ps=
+	b=0Nuo1i0Gnfu0Z/TNZTXASm+SsrEr2JMlRE5aqtjnZ3QEG4WYDuKOQakTr4h2jwoMB
+	 JTBTkQ2Wj2JaELScnG4OxyRXrJPovrf8FENX0OathVQ1lGhWmkNSrjtwtPR4DwV2t8
+	 Pnfz0WcHByoURoklW4BJz34XMn6TUy7oaUqM0NhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Arka Mondal <arka@arkamondal.net>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0973/2651] ASoC: mediatek: mt8192-mt6359: Fix error handling in MTKAIF calibration
-Date: Wed, 18 Nov 2026 15:36:53 +0100
-Message-ID: <20261118150322.927932803@linuxfoundation.org>
+Subject: [PATCH 7.3 0956/2651] iio: dac: ad5758: Reject out-of-range raw values
+Date: Wed, 18 Nov 2026 15:36:36 +0100
+Message-ID: <20261118150322.318603142@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,103 +63,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Arka Mondal <arka@arkamondal.net>
 
-[ Upstream commit d6c8a0b5bf696d89350e43bf554362de8929f801 ]
+[ Upstream commit ebc026be1b719e47bd7f2f1e72fabc875b590f87 ]
 
-mt8192_mt6359_mtkaif_calibration() ignored the return values of
-pm_runtime_get_sync() and mt8192_afe_gpio_request(), which could
-leave PM runtime references or GPIO state unbalanced on failure.
+ad5758_write_raw() passes the value from userspace straight to
+ad5758_spi_reg_write(), which keeps only the low 16 bits. Writing -1
+to the raw attribute gives full-scale output, and 65536 gives code 0.
 
-Switch to pm_runtime_resume_and_get(), check each GPIO request,
-and unwind on error.
+Return -EINVAL for values outside 0 to U16_MAX, as ad5755 does.
 
-Fixes: 18b13ff23fab ("ASoC: mediatek: mt8192: add machine driver with mt6359, rt1015 and rt5682")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260918133912.133799-16-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 28d1a7ac2a0d ("iio: dac: Add AD5758 support")
+Signed-off-by: Arka Mondal <arka@arkamondal.net>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mt8192/mt8192-mt6359-rt1015-rt5682.c      | 37 +++++++++++++------
- 1 file changed, 25 insertions(+), 12 deletions(-)
+ drivers/iio/dac/ad5758.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c b/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c
-index c863486916414..b010726e9b573 100644
---- a/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c
-@@ -163,12 +163,23 @@ static int mt8192_mt6359_mtkaif_calibration(struct snd_soc_pcm_runtime *rtd)
- 	int chosen_phase_1, chosen_phase_2, chosen_phase_3;
- 	int counter;
- 	int mtkaif_calib_ok;
-+	int ret = 0;
+diff --git a/drivers/iio/dac/ad5758.c b/drivers/iio/dac/ad5758.c
+index ba381bd252d11..2a9e907b5eb8c 100644
+--- a/drivers/iio/dac/ad5758.c
++++ b/drivers/iio/dac/ad5758.c
+@@ -556,6 +556,9 @@ static int ad5758_write_raw(struct iio_dev *indio_dev,
  
--	pm_runtime_get_sync(afe->dev);
--	mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 1);
--	mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 0);
--	mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34, 1);
--	mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34, 0);
-+	ret = pm_runtime_resume_and_get(afe->dev);
-+	if (ret < 0)
-+		return ret;
-+	ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 1);
-+	if (ret)
-+		goto err_pm_put;
-+	ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 0);
-+	if (ret)
-+		goto err_disable_adda_1;
-+	ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34, 1);
-+	if (ret)
-+		goto err_disable_adda_0;
-+	ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34, 0);
-+	if (ret)
-+		goto err_disable_adda_ch34_1;
- 
- 	mt6359_mtkaif_calibration_enable(cmpnt_codec);
- 
-@@ -289,10 +300,14 @@ static int mt8192_mt6359_mtkaif_calibration(struct snd_soc_pcm_runtime *rtd)
- 
- 	mt6359_mtkaif_calibration_disable(cmpnt_codec);
- 
--	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 1);
--	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 0);
--	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34, 1);
- 	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34, 0);
-+err_disable_adda_ch34_1:
-+	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34, 1);
-+err_disable_adda_0:
-+	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 0);
-+err_disable_adda_1:
-+	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 1);
-+err_pm_put:
- 	pm_runtime_put(afe->dev);
- 
- 	dev_dbg(afe->dev, "%s(), mtkaif_chosen_phase[0/1/2]:%d/%d/%d\n",
-@@ -301,7 +316,7 @@ static int mt8192_mt6359_mtkaif_calibration(struct snd_soc_pcm_runtime *rtd)
- 		afe_priv->mtkaif_chosen_phase[1],
- 		afe_priv->mtkaif_chosen_phase[2]);
- 
--	return 0;
-+	return ret;
- }
- 
- static int mt8192_mt6359_init(struct snd_soc_pcm_runtime *rtd)
-@@ -319,9 +334,7 @@ static int mt8192_mt6359_init(struct snd_soc_pcm_runtime *rtd)
- 	afe_priv->mtkaif_protocol = MTKAIF_PROTOCOL_2_CLK_P2;
- 
- 	/* mtkaif calibration */
--	mt8192_mt6359_mtkaif_calibration(rtd);
--
--	return 0;
-+	return mt8192_mt6359_mtkaif_calibration(rtd);
- }
- 
- static int mt8192_rt5682_init(struct snd_soc_pcm_runtime *rtd)
+ 	switch (info) {
+ 	case IIO_CHAN_INFO_RAW:
++		if (val < 0 || val > U16_MAX)
++			return -EINVAL;
++
+ 		mutex_lock(&st->lock);
+ 		ret = ad5758_spi_reg_write(st, AD5758_DAC_INPUT, val);
+ 		mutex_unlock(&st->lock);
 -- 
 2.53.0
 
