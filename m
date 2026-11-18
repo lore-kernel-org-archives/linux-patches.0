@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048591;
-	b=xXbLLqoHQ2sD7ZTTbD8Fvkw0OJoUZSyTqU3LTl0kC2uo1A8835svVbebM1Ce9ARWV3Rr
-	 Y2nFJ2BNl68bPTuGN6prEUxDD8GXH8DZPC0n6iwNqzEehnemDUvZJvXm23IiJmkCdk8wg
-	 +Dk5sienP4OWwXzFcW+OnmqXK86E8VGDEDnkrsQe9/UBGniq12gt+BQzfZt8VurIU50ZK
-	 0byZQ/RSeD2nN/8p7Od1hOhP78hmNqXaM9YIh2jjNIbBbm+2fZpiff/XPQxVtAegX4ZR2
-	 QKCFz0LcRrRyRC3+z5yFsExynBxV+RwgeY8OGORq61IQ/vgF+7Ikk4hiIxCISyp6dKQ==
+	t=1795048594;
+	b=oZQiRgQOvTvIEFGpWUf4ftCmxzv9GwsbLxnCPBe6L6Clay+BLW4aN5hv+3/3IoG0PDTp
+	 aoDB1+tsD1QNAzeP67f4YGQXTifvycSbqnDvRmeShazPzcyZFmcNk8qBV6hJ05QJn7ito
+	 GSno2s5qZw3EyhAcPZqTGCaXB1a2jUzkpXXVmET+yiKXFgsFgA13JAe4NBCzztL8ZjZlf
+	 MOtjmbq+5lqPH3m8c01NBGskVTIoYt7ErqgQ2LzNvuFWrAKtHRqE+B0g+xcM0JeBgL/qG
+	 8eVljWtpbHSBDNJItF+TZ+Mypsrz+Z0InK2fH3Pca1Ta6aDejroZ1QAo861st+YySxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048591;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048594;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ig33yDy9xpJuyqhvctSod2KmHS68bKvLckquYtm8sKI=;
-	b=25kWMQY5+IJnIeAW5kxumI6IqO/31/EhcjHxlrDcLpFUSl1E5y/mW968lYHj+6K1zv8V
-	 G6pApD8dStCnNXBXB/KrEe8LIaAlto7D0aXsV7e8QtYdtSz+BVHtwSSYY9KohpPv4PIK2
-	 zNm5CfJ7PwlxxNsF7czemnZSleoBS8Qr+qMnBtaDqM12Gt/q2mvz5S4VaWn7q0L3KFCew
-	 l4LcXzd2a9QUyOzK19j1hqZUegTdf1h8QnUrMP9Fp7L/qbcB/0CJm0sMYzIYItSKk9XSM
-	 HnxmZNjzy9OxOScX2tdsSiBNIdKCZcR7G+CNLxsrLR6tmNexHY3IZ409Wle4HeGQG4w==
+	bh=+yF9vf4jbp6UOTirfrBrMSl3roW1CGDTuQKKLVdvEoA=;
+	b=k662T2XBJIen1pxvXC4RMXn7ndkFUlZ3dyMVF+haSUfsGCZ13U0xlUWi3iNd+MWYFAvW
+	 EPy3pM1Y/oQ11l8edufg68SCbRef5wKtGIovdnM90h5YdpXX5bieoQJDU6U/D4T1S4S/q
+	 mtBiPg6r5clicnk0EF346Uwj91AmhFGsKF7UqmFkG30wsXUR7edFrRtWCGuaCNXoG2vXZ
+	 Z0MEB8eUHRwQLCOGdfkPU9RaTjueeQypd/uzc71cl0K0kMPlU6+QQUqO/XOn+46mzhdJc
+	 B3SJ/OTu7WiSkK7MRI7GhnM+ZxqeCOjAQEfxe97a/vFu2KL6LrJUgsabURTiS6QGkuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eFf5+Wux;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OnXdK60p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52D8606A320;
-	Thu, 19 Nov 2026 00:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844EF606A31C;
+	Thu, 19 Nov 2026 00:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eFf5+Wux
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D8191F000C4;
-	Thu, 19 Nov 2026 00:36:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OnXdK60p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97521F000C4;
+	Thu, 19 Nov 2026 00:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048591;
-	bh=ig33yDy9xpJuyqhvctSod2KmHS68bKvLckquYtm8sKI=;
+	s=korg; t=1795048594;
+	bh=+yF9vf4jbp6UOTirfrBrMSl3roW1CGDTuQKKLVdvEoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eFf5+Wuxit+mi8vfR4utIdbw7xsmDKb4ylhODqouXSb+Zx5D/iJH2ZOU8T3dV7bxk
-	 QME8+Ei52cx4LKkdh38Cx7kKQlTlZ7ugP65Ts8tDeXa9w7lRVFfncNjICE/3oLvGqB
-	 mEbW4cej3LfwCutlA/JWKewGPerQNOuRn95Z8ccE=
+	b=OnXdK60p+7AIb+PUwd8ZCJfVaNw3DkiqN4XtObvwmqiVe5D8V1eUA6OWVDDIg3iMf
+	 uu+PLEZHtaR1h9EL7r+TpTY3+XQrCxYUgLAcO7s5zcWkqXV4Zljm8nliupyBQGvtd7
+	 lia/d6gx5v74eqHFGZ7ApbNTOZMsqEBWE27IFQvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	"Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2050/2857] ASoC: rt1308: return cache sync errors from resume
-Date: Wed, 18 Nov 2026 15:51:24 +0100
-Message-ID: <20261118150315.233781714@linuxfoundation.org>
+Subject: [PATCH 6.1 2033/2857] dt-bindings: vendor-prefixes: Add GPLUS
+Date: Wed, 18 Nov 2026 15:51:07 +0100
+Message-ID: <20261118150314.607979823@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,49 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Lin, Meng-Bo <linmengbo0689@protonmail.com>
 
-[ Upstream commit 3db3289178b94056753f7a8c6ee4ab4b232ee6a5 ]
+[ Upstream commit d7a2d86837b9de8d378f040cfc9184905d82bd78 ]
 
-rt1308_resume() restores cached registers during component resume but
-discards the regcache_sync() result and returns success. A failed replay
-can therefore leave the hardware register state stale without reaching
-the component error reporting path.
+Add vendor prefix for GPLUS.
+https://www.gplus.com.tw
 
-Return the cache synchronization result. The ASoC component wrapper
-reports a negative callback result and retains the established
-best-effort resume state, so this adds observability without introducing
-rollback or retry semantics.
-
-The successful resume path is unchanged.
-
-The issue was found by a tool we developed.
-
-Fixes: 2b9def8c0d92 ("ASoC: rt1308: Add RT1308 amplifier driver")
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260902013256.93072-10-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230107133145.139731-1-linmengbo0689@protonmail.com
+Stable-dep-of: aa906abf611c ("dt-bindings: vendor-prefixes: add Free Mobile")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt1308.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/rt1308.c b/sound/soc/codecs/rt1308.c
-index d2a8e9fe3e234..bdde21de7835e 100644
---- a/sound/soc/codecs/rt1308.c
-+++ b/sound/soc/codecs/rt1308.c
-@@ -717,9 +717,7 @@ static int rt1308_resume(struct snd_soc_component *component)
- 	struct rt1308_priv *rt1308 = snd_soc_component_get_drvdata(component);
- 
- 	regcache_cache_only(rt1308->regmap, false);
--	regcache_sync(rt1308->regmap);
--
--	return 0;
-+	return regcache_sync(rt1308->regmap);
- }
- #else
- #define rt1308_suspend NULL
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index a806202b80a78..61ced5bf9a74b 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -508,6 +508,8 @@ patternProperties:
+     description: Shenzhen Huiding Technology Co., Ltd.
+   "^google,.*":
+     description: Google, Inc.
++  "^gplus,.*":
++    description: GPLUS
+   "^grinn,.*":
+     description: Grinn
+   "^grmn,.*":
 -- 
 2.53.0
 
