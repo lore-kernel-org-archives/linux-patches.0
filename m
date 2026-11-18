@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032094;
-	b=0cBcF4PlTPOflHHXgLnk6cKyq5IeOXiSBXibOs+jLgKLzuYjIy8oZyBexs/k/i45LyrI
-	 NhGGEM4GR1X0fGFBd5v8dNlb2XneVD2cSdr2mW2UaoptkawfO9+UjljFJEVzFXbLzEwec
-	 666cP6sx352DlXF0AdhCSy+IH5gcqhgrMA3oMiA0ePcEQWF17+k5IXCGzPgOq8PLlB7AF
-	 ND1XXGNJse1rWofmI+9yetEl5R/HS35o6zXjAsiX+WnRWoO9HdArngfHrG1MbX2hRbnnR
-	 16h1PyMCRdhQAmRr10Hcf6jh2/A39riv22BzMuqbwN+WbkJVvfVVjQgWE+rLUKYu2UA==
+	t=1795032096;
+	b=CXvyYe9lQoe5186ijPL+N9go5TF1XyzvtRfFzLOEauZeaWc37q5Yx0y0bknS7j5ndWFr
+	 58TYXtGkncZ9Q0QdqIY96XkPMqaFKfUd1yMs2bzqsJynzm/gDOsANbgOi+j4dKkiKWbvS
+	 MFeDcsHVNvaBcA7xPp+SuPZGEWpEXhKnDH7LgD2NbokxDUiAGMKU5nsqWKK1lxgmnEho3
+	 A5/MmQPyrDnPQNNbhSGU6ME9dCPWW+Lvtbp37mCi6LoWLw+IIlSLpMI3D68ZKXUPk3t4C
+	 5UcjPh7KsexBDLV0faQZkd6jQgbtG9PbAhNkzO8M4UajxkGUsTM33y7LDIuqEB/a6kA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032094;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032096;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YbjpRdL6ApWdn7KwHYc0JTiY1/nv9k1NJpJnqvwqKIw=;
-	b=ARpa9JNceIndqECcExZb97oQ1HhIrgWkgtNiifT+ZN6hI77qpM5sBeieK2viV5rHGG8u
-	 qHhVTUkz3NFP1eb2j10PkEjkla3aTYdbdz6vU5jSVKYSgbgMpbTat5nxPhWI15Tgv1Bgw
-	 vPNndmt7AX1bHmchyxhm2aNI5lLAtqS9YfIVXQ+IhCmM6rW/3ap/67nrS4tR0QK3jHwAa
-	 tQxkpOdF6N0nNCstaiZ1s+ekmtlgjqIq+YNej+QeKgtAkjqiYHpXJfdBUzsP8ns2aVbWN
-	 wrjQV/s6lwCDzURBBUeTGjtbVCxUhp1r1DlMaeGYKiNXwwdM3h+z2UOvMYZypNymKUg==
+	bh=fnvrtaaQXEZ3uHhyEbOwUEuBhX2J4dSbmNSdVs9DhZE=;
+	b=Yu2hHErO1749F4cpug18EDJEv8OEkIOh0v+Gt3SLal6xriK6cqIgHSyBmjeSNfefpKUX
+	 6cueeE/5/XuFpqJwTF/dnFtdHKvXVMO5qNlu10icqX1KO+7FBnJlO3+M84caqMiVLMN1q
+	 vzHEPe84vnRc+SrFw5dsLpY3AEBiNuZmaBGbABM9YyNODptGRp7GNmcph5AUWocDKkxbI
+	 s7kL5+Fg1RwCfgdR1mPH07qDVBu8VszcVPJ7ve7Bk/plM8wAWX7x8vtWgyL1+WVWGR9K9
+	 SEavAZXepFHmbKr4IkuUEMbc/vSbH9SIlexiWa/qj06YWWA8IoNj5eUs4dqmfqd2F4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oYZdDKdz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oL2fT8NA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F8E606A31C;
-	Wed, 18 Nov 2026 20:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB0C606A31C;
+	Wed, 18 Nov 2026 20:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oYZdDKdz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 470111F000C4;
-	Wed, 18 Nov 2026 20:01:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oL2fT8NA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2D81F000C4;
+	Wed, 18 Nov 2026 20:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032093;
-	bh=YbjpRdL6ApWdn7KwHYc0JTiY1/nv9k1NJpJnqvwqKIw=;
+	s=korg; t=1795032096;
+	bh=fnvrtaaQXEZ3uHhyEbOwUEuBhX2J4dSbmNSdVs9DhZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oYZdDKdzJGUSI2ynY4yI9FWrTDYVL3mwPn6T/ckoBmx7N6/eGJha1ZLt9RgqbiBIM
-	 dXDfP9XJtDu4gh8cHVgOZH2TWT+A14BwZhrLhkGak2vHkQi5EYFoF0ejGtrLbiCAP9
-	 mhfNogTG4zfdfFeqany4eqZ7OIt+nwKsBd7DRMuQ=
+	b=oL2fT8NAvBTnS8nhIy968zDjh1Gx190UfZ1+yzj6J77044HRVD9FOugJO3atlHU1P
+	 b7iToYoFnOLf+5Xc3ImZx+Smr0mDS3U73l4Ix/dLTXXO5GO2JwOd67cN+mtw3Q2H6H
+	 7XIJEE+uTFU+Fp09P2Uysze2L3A+gYMLWUTQE8ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1291/1756] ASoC: rockchip: rk3288_hdmi_analog: Drop redundant probe error messages
-Date: Wed, 18 Nov 2026 15:56:58 +0100
-Message-ID: <20261118150100.944878763@linuxfoundation.org>
+Subject: [PATCH 6.12 1292/1756] ASoC: rockchip: rk3288_hdmi_analog: Use dev_err_probe() for error handling
+Date: Wed, 18 Nov 2026 15:56:59 +0100
+Message-ID: <20261118150100.982158814@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,49 +70,38 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 931f4a1223e154fdea63071074cbaa633ebf394b ]
+[ Upstream commit 06f5854050f56775977f9972b78a21806de001f0 ]
 
-Remove the probe error messages to avoid duplicate error reporting,
-since the error is already reported by the called functions.
+Replace dev_err() with dev_err_probe() to prevent log spam when probe
+returns -EPROBE_DEFER.
 
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260806052136.21034-2-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20260806052136.21034-3-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: f15b2df0b940 ("ASoC: rockchip: fix device node reference leak in rk3288_hdmi_analog")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/rockchip/rk3288_hdmi_analog.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ sound/soc/rockchip/rk3288_hdmi_analog.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/sound/soc/rockchip/rk3288_hdmi_analog.c b/sound/soc/rockchip/rk3288_hdmi_analog.c
-index a65d923d94dc4..2b06ca336ec16 100644
+index 2b06ca336ec16..58ee60173153e 100644
 --- a/sound/soc/rockchip/rk3288_hdmi_analog.c
 +++ b/sound/soc/rockchip/rk3288_hdmi_analog.c
-@@ -184,10 +184,8 @@ static int snd_rk_mc_probe(struct platform_device *pdev)
- 	gpiod_set_consumer_name(machine->gpio_hp_en, "hp_en");
+@@ -204,10 +204,9 @@ static int snd_rk_mc_probe(struct platform_device *pdev)
+ 	}
  
- 	ret = snd_soc_of_parse_card_name(card, "rockchip,model");
+ 	ret = snd_soc_get_dai_name(&args, &rk_dailink.codecs[0].dai_name);
 -	if (ret) {
--		dev_err(card->dev, "SoC parse card name failed %d\n", ret);
-+	if (ret)
- 		return ret;
+-		dev_err(&pdev->dev, "Unable to get codec_dai_name\n");
+-		return ret;
 -	}
- 
- 	rk_dailink.codecs[0].of_node = of_parse_phandle(np,
- 							"rockchip,audio-codec",
-@@ -222,11 +220,8 @@ static int snd_rk_mc_probe(struct platform_device *pdev)
- 	rk_dailink.platforms->of_node = rk_dailink.cpus->of_node;
- 
- 	ret = snd_soc_of_parse_audio_routing(card, "rockchip,routing");
--	if (ret) {
--		dev_err(&pdev->dev,
--			"Unable to parse 'rockchip,routing' property\n");
 +	if (ret)
- 		return ret;
--	}
++		return dev_err_probe(&pdev->dev, ret,
++				     "Unable to get codec_dai_name\n");
  
- 	snd_soc_card_set_drvdata(card, machine);
- 
+ 	rk_dailink.cpus->of_node = of_parse_phandle(np, "rockchip,i2s-controller",
+ 						  0);
 -- 
 2.53.0
 
