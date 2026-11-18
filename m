@@ -1,53 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045362;
-	b=xotYiCUgjoL8c9Wxzzb+veKtKFtyELVG+sS4GR8VEyJLanQT5FPgRL70KOspi9Ci67DL
-	 gwlew3T/b+ZYDkq21kBAymzsPRsNbswPdBntfQUBlVZP9V144CaUHxbweqVuJ4G3fh/Xy
-	 sqOITGGXWtM0Ojx88SHXYgy/lgy+fg38QhlB3bl1QceMG8nWUVZbq28HMlNnFQqiZoE7J
-	 jmjn1561BYfK7rO85DfIdYBMHzbXmXQVaGraLcLe2XU34hG67IjYczB0l/b22wIKA4Bx0
-	 jal88ioqhVQkZ5ptP7hiv7ovVRXIN/rNIoPgdztsAFWOE1P2cxMP+lMdHHugZ9oXfMQ==
+	t=1795045364;
+	b=OzixdINfuXezgrhayFppnCrMa9zNba4/tr7UfU//dWRU/eGSS5nUYK1qgNHU//RoMd5T
+	 4VoNPxSPwAiCk1ecQtA8R4/CuxqC8323Xzh413oP/ydjE8v1meZYXOUqMw/rofRTy+fLv
+	 F6nbhKluhP4fZVTh1LfVvC/8P7Mdar7dQtB6Dm2n1FqoofJU39qdexzxcLQ9VkrHAZi27
+	 o3BOlqHzw1IrkZLy+JWGOECu4QGszK9vScRTUO/vfiUelauNQw8sRgnQeirVD+1CX8yYR
+	 IdJS+itb22xhlWOiYQeOWR82984tY7dYz7Ra6Ibgb+8RjR0Uj5KzsLlzBJKycSAzKwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045362;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045364;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HuVh9hMyLItkkTowDd92cU1u6KzWdCRQqMJRca9ugEo=;
-	b=Yl++aWltKACpNwr6/ovWPBw+ZVn3/3fRBMnO7RMDpyFMZadriUmskdDQIz/Mxd6dL7/N
-	 cfJaEGd/A0Ykl+qMIt2tkF2JfYzKDvXnqywkgT9WiHZyccepTRPZvmLP2z21rfjm6K3su
-	 clOnhhJjiaLeffQpi6RnOyPjNn47UqtOdaGH1NoynZuXZ1Wdgg8Y2Rc3n5JOzoNetrUoB
-	 xBZ/5qTdgv6tEMiIpdtNuQDrzPXv0fnVwA514RAr/anTOPlzJk4QdX7ZdhVIHNo5bRzhy
-	 q0fnVi2xUfJzNqoGNG+g75fqW2SjcJrHjXvyqjLjC/aD8znE4DEEguipkaC8PNSlYaQ==
+	bh=HKVQFJBSwHyFwtZAawjZz0EIFE3faj4g35HOEzqmvwk=;
+	b=2uUHP5A9eeZlfGxfCQM2q/yt35tg4cBqLpZmGOO15ySAANAV1xckjIPAVG9O3YFxCatV
+	 V9R3uSYItDXUnMlMs832S8YaGLnbydV+HCY2W3r1lHZDXl2XxUkHV2AKwEP5IYfE31QfF
+	 LFuhuYwisnQX2vcG4MnsexX5PXcAUGzZqoXQt7WtczFiYp++MNXrDqOVUX8MxU3F/743Z
+	 /25wIFyzeODzsbVoOphVqICurvvj07SVPMLh8oaL5hRClWupCEdqxHdnIlxURRLrDWgLX
+	 vGJwYKlyeIgIp7ohUueC8wcNmKTsgYUU2chjQGuNFOH3W02xzQWRjGfdjEGTvb/szUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jT/gQWpF";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NTKNZ/fD";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F421D606A334;
-	Wed, 18 Nov 2026 23:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7D760A2610;
+	Wed, 18 Nov 2026 23:42:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jT/gQWpF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1594D1F000C4;
-	Wed, 18 Nov 2026 23:42:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NTKNZ/fD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C1D1F000C4;
+	Wed, 18 Nov 2026 23:42:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045361;
-	bh=HuVh9hMyLItkkTowDd92cU1u6KzWdCRQqMJRca9ugEo=;
+	s=korg; t=1795045364;
+	bh=HKVQFJBSwHyFwtZAawjZz0EIFE3faj4g35HOEzqmvwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jT/gQWpF51J4oaWT3Ih5QJe1auF4uPxpDx+RrDNBw/ezokQDrSzXTCkDMrtE2Zc3O
-	 oI8D6BXEyLJRNnayvVvUzRdIM9zOCxKjLx/VZCombnpYn/JrIBltGwvXHkZ5PR/cCv
-	 A5IYvdkNl/MlpEqDh5eB6WCieIGoE9sQ14DU5RX4=
+	b=NTKNZ/fDLICoRCc5qDnF7Lak06RsrVJF5mFkL6ynKAKD+MxUABnFBse2uYu3+LDfU
+	 0fSLfpffsiWjwAMY7w1zpHeIHSHfJ8EZHiOYP5TpcCRu6xU236EwVrgzAXalu9QCUX
+	 I0/vdPpwyI9THJJDl3tl8c5PjEG2rLqUZN8vx+d4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	ZW Tang <tangzw515@gmail.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0836/2857] cxl/acpi: Check ACPI companion before use
-Date: Wed, 18 Nov 2026 15:31:10 +0100
-Message-ID: <20261118150231.672143508@linuxfoundation.org>
+Subject: [PATCH 6.1 0890/2857] ocfs2: skip uninitialized lockres in ocfs2_mark_lockres_freeing()
+Date: Wed, 18 Nov 2026 15:32:04 +0100
+Message-ID: <20261118150233.600081344@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,68 +75,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 371c2ad1624283b6c7a62a28199f5161d388a738 ]
+[ Upstream commit 6a3ed6b290513859bd27d9fcb67739347d6315fa ]
 
-Platform drivers can be forced to match devices outside their ID tables
-through driver_override.  cxl_acpi_probe() assumes that every bound device
-has an ACPI companion and dereferences adev->dev.bus without checking the
-result of ACPI_COMPANION().  Force-binding cxl_acpi to a platform device
-without a companion therefore causes a NULL pointer dereference.
+A hard readonly mount skips ocfs2_dlm_init(), so the per-osb lock
+resources are never initialized and osb->cconn stays NULL.  Before commit
+550842cc60987 ("ocfs2: fix freeing uninitialized resource on
+ocfs2_dlm_shutdown") ocfs2_dismount_volume() only called
+ocfs2_dlm_shutdown() when osb->cconn was set.  It now calls it
+unconditionally, so unmounting a hard readonly mount drops the osb locks
+and takes the never initialized l_lock in ocfs2_mark_lockres_freeing().
+With lockdep enabled this triggers:
 
-This was reproduced by setting the driver override for the pcspkr platform
-device to cxl_acpi and binding it through sysfs:
+INFO: trying to register non-static key.  The code is fine but needs
+lockdep annotation, or maybe you didn't initialize this object before use?
+turning off the locking correctness validator.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000280
-  #PF: supervisor read access in kernel mode
-  RIP: cxl_acpi_probe+0xf4/0x220
-  Call Trace:
-   platform_probe+0x4d/0x80
-   really_probe+0x106/0x370
-   device_driver_attach+0x4c/0xa0
-   bind_store+0xd0/0x100
+ocfs2_drop_lock() and ocfs2_lock_res_free() already skip lock resources
+without OCFS2_LOCK_INITIALIZED.  Add the same check to
+ocfs2_mark_lockres_freeing(), which is reachable before them through
+ocfs2_simple_drop_lockres(), so an uninitialized lockres is never touched.
 
-Commit 2b3a5dabe89e ("platform/surface: acpi-notify: Check ACPI
-companion before use") fixed the same force-binding issue in another
-platform driver.  Check the companion before setting up the CXL root and
-return -ENODEV when it is absent.
-
-Fixes: 7d4b5ca2e2cb ("cxl/acpi: Add downstream port data to cxl_port instances")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260926071605.3013893-1-yaojiale02@163.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/20260903104744.2164235-1-joseph.qi@linux.alibaba.com
+Fixes: 550842cc6098 ("ocfs2: fix freeing uninitialized resource on ocfs2_dlm_shutdown")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: ZW Tang <tangzw515@gmail.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/acpi.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/ocfs2/dlmglue.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/cxl/acpi.c b/drivers/cxl/acpi.c
-index d7d789211c173..3c8c54e809d51 100644
---- a/drivers/cxl/acpi.c
-+++ b/drivers/cxl/acpi.c
-@@ -440,12 +440,16 @@ static int pair_cxl_resource(struct device *dev, void *data)
+diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
+index 8e2c43824fb82..a91fdc7a638f8 100644
+--- a/fs/ocfs2/dlmglue.c
++++ b/fs/ocfs2/dlmglue.c
+@@ -3529,6 +3529,10 @@ void ocfs2_mark_lockres_freeing(struct ocfs2_super *osb,
+ 	struct ocfs2_mask_waiter mw;
+ 	unsigned long flags, flags2;
  
- static int cxl_acpi_probe(struct platform_device *pdev)
- {
--	int rc;
-+	struct cxl_cfmws_context ctx;
-+	struct acpi_device *adev;
- 	struct resource *cxl_res;
- 	struct cxl_port *root_port;
- 	struct device *host = &pdev->dev;
--	struct acpi_device *adev = ACPI_COMPANION(host);
--	struct cxl_cfmws_context ctx;
-+	int rc;
++	/* We didn't get anywhere near actually using this lockres. */
++	if (!(lockres->l_flags & OCFS2_LOCK_INITIALIZED))
++		return;
 +
-+	adev = ACPI_COMPANION(host);
-+	if (!adev)
-+		return -ENODEV;
+ 	ocfs2_init_mask_waiter(&mw);
  
- 	device_lock_set_class(&pdev->dev, &cxl_root_key);
- 	rc = devm_add_action_or_reset(&pdev->dev, cxl_acpi_lock_reset_class,
+ 	spin_lock_irqsave(&lockres->l_lock, flags);
 -- 
 2.53.0
 
