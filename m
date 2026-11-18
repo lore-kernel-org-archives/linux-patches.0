@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018441;
-	b=Dy1NQFjU9ea+Oo6dJ9Jk8EII7+Ek4gYKrZ1HDzWsYsJhzVC4fc/pUG51FTe0CgguOuY+
-	 UQCrDX1V0evKCN+1+VAQI5ex5y6g/jDaa5AyBX1HVdFdkAHtYB3b4QH6xXYdXdDp7o1Jx
-	 Kf+3WQ/diuHVIJ9bNl0ue6dkoBvBs2JoCmaz20nNVkqVVPzJzMYt1LT3bCMs2BVJHWqZP
-	 AFzeRKug5C16xEXwFIK6NkkeHVorHjkddbiK1HqBqtLDNuu/UpmTRkUos33Z2zyhMPXqm
-	 /ojPCgWPGa/eEPibdiplz4K3I4SRSaaoKFb5TrSiJI0SNVNWbiI+or5/VDmhg8ctoMg==
+	t=1795018443;
+	b=Z80DfxpG/N7+ZKpEVT26A5U98QLzaHhEvUqi/6HIe0WJm98m5Usom/Gind8mNopd9U66
+	 QyFmNsvazHC0rdCAz0wwhKgHbcHgrI2lcbkzvx0fkuycTHMivNhZf+Nj0o42UfOsa8oiJ
+	 g9d+YdiLCQIG2zuF5IvgKAqTqpv8oszWMERHAvdlCwLka34rbgWj7C+luXOMF59HN+utt
+	 txozPl1eVgcE76JWGucNKJ4JYMlDxaTGtK/VibP5eW1CvGckQBhK2fNayOhjmS7MnhbW+
+	 fDoe6Gi1p1jvPN5nlIduCylHmp1QgxDgUFGyvxKHq6FMOSNrm+7Q6dJ8sibCiW5pIQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018441;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018443;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VTt+ZbUtjGRwcMfkz2sQsOo0Fj0t9EzZoHRqv2C7hm4=;
-	b=hqnlZt4OfiGPCP1aX92+LGHpFBYVk3XtEFSVXsVypR80/Q+HCBsl6KQZez5ZxytCOo0J
-	 KCUlihW6gdE6b4QeSjwB4adTmUNKMT1fwPCaeKTcWzFzsPYVLv1z6mXbIaN+x5MPcvvap
-	 toVFvv5XjRK+unqBYkM93HbtqGbmDA2vZgQIB2I3cUyNmDqMVnBtpvpdW+6U+C6tGEDaU
-	 JauEKMdkcXknHeQj7Xj/3ZuOXQZYPv/MVppsDs0cRkJ/1OJaf/g/qIkomeMtThGOmBcIf
-	 74x4FQToQkt4U6xMho6ByLfKVIKvjJeJocDvODebCmBu1gEoWpdo3YYrjWjgTaOR4YA==
+	bh=odw6Fws0YUOoseq0nE3CdrE/OQAlWozmnlYBEhnHzG0=;
+	b=PNTk2V0neOr9aYBAMJqfXv6eZntozMtuAvmCHonyeH4GgRstGF1vhJXdn2Ur0jLQrw55
+	 0LD6FpxqMEdf+zYod93lorN409JG5JjPh1BVaM8oHmWpr9rr58CMRYYUY7DGLXqV2toR8
+	 GJeZBpIXH6N/EtXRSZ3WO+N4Jz+dQfMDanjwTfX5qIB0UvieF1Ld/ZPGMqjFJ3VG07XnK
+	 pka5P8yJxEqSlB1bzmLJpH//bijfSpHRmNFlT04H35Sc98UN0M6uiVdwMctShN+7UI6Em
+	 rZz61QW9QsSoEDY5bLSiqubZvVqzd52yaBxkHNTkTrybmZrZ6NgOfQyXJU1rsAB09KQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C23j8R1a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="k/xs0ieF";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1A1606A325;
-	Wed, 18 Nov 2026 16:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F69606A320;
+	Wed, 18 Nov 2026 16:14:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C23j8R1a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA851F000C5;
-	Wed, 18 Nov 2026 16:13:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k/xs0ieF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21F61F000C4;
+	Wed, 18 Nov 2026 16:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018440;
-	bh=VTt+ZbUtjGRwcMfkz2sQsOo0Fj0t9EzZoHRqv2C7hm4=;
+	s=korg; t=1795018443;
+	bh=odw6Fws0YUOoseq0nE3CdrE/OQAlWozmnlYBEhnHzG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C23j8R1a7nD2iiomzTKYwZCIc596DmWHYZprjsm/aKjv1fjQYFeWbJtuVWm3BpSbZ
-	 l79dRYWdtnHIOInmI0c02uEk9bPactjs/MdoJnPxBndZ3t4q0jf33hRpxDTzKz0Bsi
-	 sK/+KGUfDLS+dcGzn5Xo/sJmZIDVp4D3nLpu1sak=
+	b=k/xs0ieFDE+XaHDm1S9HN4VfHOWE8Gmc8QCQ4EmeXJXSIYHu77gGD6wI3ZnG4uP70
+	 HwVbnBBPHx6j7a8gDm8aJMKG/iJw0n1D+mpnHVFUl5+J6xLYtVMJzzVAMFprF19yAY
+	 1dVrWxt60SFYqTq4UPzno1XoR/DyqdjtR1CTMk0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1241/2651] clk: imx: composite-93: return timeout from gate enable
-Date: Wed, 18 Nov 2026 15:41:21 +0100
-Message-ID: <20261118150332.677176693@linuxfoundation.org>
+Subject: [PATCH 7.3 1242/2651] phy: rockchip: samsung-hdptx: Handle PHY config after module reload
+Date: Wed, 18 Nov 2026 15:41:22 +0100
+Message-ID: <20261118150332.712465747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,68 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 246d9fa6b83d2d3c524aad28de1ab5db5cecf048 ]
+[ Upstream commit a673b3d18e37e573d52bf41c47e75d46982f2fae ]
 
-imx93_clk_composite_wait_ready() already reports a busy timeout, but
-imx93_clk_composite_gate_enable() ignores that and always returns 0.
-The clk framework then marks the clock enabled and lets consumers run
-while the CCM slice is still busy.
+The pll_config_dirty mechanism introduced in commit aec3e4ce25da ("phy:
+rockchip: samsung-hdptx: Handle uncommitted PHY config changes")
+invalidates the clock rate in determine_rate() by resetting req->rate to
+zero, ensuring CCF will invoke set_rate() to program pending PLL
+configuration changes into hardware.
 
-Propagate the timeout so enable fails instead of looking successful.
+However, after a module reload cycle the PHY PLL clock gets
+re-registered with CCF, which causes the framework's cached rate to also
+be zero.  Setting req->rate to zero then has no effect, since CCF sees
+no difference between the requested and current rates and skips calling
+set_rate(), leaving the PLL unconfigured.
 
-Fixes: 4a3de5aa7743 ("clk: imx: clk-composite-93: check slice busy")
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260907022214.1076402-1-gonglinkai@kylinos.cn
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Address this by first computing the actual target rate from the HDMI
+link configuration, and only then invalidating it when it matches the
+CCF cached rate.
+
+Fixes: aec3e4ce25da ("phy: rockchip: samsung-hdptx: Handle uncommitted PHY config changes")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://patch.msgid.link/20260901-hdptx-ffe-v2-2-3a5922c76fc5@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-composite-93.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-composite-93.c b/drivers/clk/imx/clk-composite-93.c
-index ef20ceb2d2550..953f67d13978c 100644
---- a/drivers/clk/imx/clk-composite-93.c
-+++ b/drivers/clk/imx/clk-composite-93.c
-@@ -43,11 +43,12 @@ static int imx93_clk_composite_wait_ready(struct clk_hw *hw, void __iomem *reg)
- 	return ret;
- }
- 
--static void imx93_clk_composite_gate_endisable(struct clk_hw *hw, int enable)
-+static int imx93_clk_composite_gate_endisable(struct clk_hw *hw, int enable)
- {
- 	struct clk_gate *gate = to_clk_gate(hw);
- 	unsigned long flags;
- 	u32 reg;
-+	int ret;
- 
- 	if (gate->lock)
- 		spin_lock_irqsave(gate->lock, flags);
-@@ -61,17 +62,17 @@ static void imx93_clk_composite_gate_endisable(struct clk_hw *hw, int enable)
- 
- 	writel(reg, gate->reg);
- 
--	imx93_clk_composite_wait_ready(hw, gate->reg);
-+	ret = imx93_clk_composite_wait_ready(hw, gate->reg);
- 
- 	if (gate->lock)
- 		spin_unlock_irqrestore(gate->lock, flags);
+diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
+index 24ed0d7eb6f8d..b03042ec9a847 100644
+--- a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
++++ b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
+@@ -2346,14 +2346,16 @@ static int rk_hdptx_phy_clk_determine_rate(struct clk_hw *hw,
+ 	 * to ensure rk_hdptx_phy_clk_set_rate() will be always invoked.
+ 	 * Otherwise, restrict the rate according to the PHY link setup.
+ 	 */
+-	if (hdptx->pll_config_dirty)
+-		req->rate = 0;
+-	else if (hdptx->hdmi_cfg.mode == PHY_HDMI_MODE_FRL)
 +
-+	return ret;
++	if (hdptx->hdmi_cfg.mode == PHY_HDMI_MODE_FRL)
+ 		req->rate = hdptx->hdmi_cfg.rate;
+ 	else
+ 		req->rate = DIV_ROUND_CLOSEST_ULL(hdptx->hdmi_cfg.rate * 8,
+ 						  hdptx->hdmi_cfg.bpc);
+ 
++	if (hdptx->pll_config_dirty && req->rate == clk_hw_get_rate(hw))
++		req->rate = 0;
++
+ 	return 0;
  }
  
- static int imx93_clk_composite_gate_enable(struct clk_hw *hw)
- {
--	imx93_clk_composite_gate_endisable(hw, 1);
--
--	return 0;
-+	return imx93_clk_composite_gate_endisable(hw, 1);
- }
- 
- static void imx93_clk_composite_gate_disable(struct clk_hw *hw)
 -- 
 2.53.0
 
