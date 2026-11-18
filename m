@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052557;
-	b=icQ5v2QapphAM2jKDGDgWFIIlt3Eu4AZcXgCL2dkgpqWcoGk7f+Rlk1P7+XWBbEU9jEt
-	 7YoSYQ/sWwCejfxKIDwvKJJHzSYT2OgdgPd2bMzv88gIL5pD2NbN1UHmqRBOveqc4jcCo
-	 +YM748gaiG/HJKK8T5/xBl9Ys3WweGYFJ2V0kK3/RZPnEo8UZgFJHt7+oxmuNX/KnyI4L
-	 +71/WxvdhPqKR3YqnBZZ61HMBarrkj+Rf7n+TpPc3xyoF5Rr9SfSzqGCoy1SbjHDCgows
-	 gjMD9i3JdGWSG+mAgvumyZN4UrTnfrcVudX8hh4ghZ3wlwAt8v1wSYmKg8oyqgyLZhg==
+	t=1795052560;
+	b=mQs52fANRYJl0aqYlwUoOkCx/ndM2tO7JLyZM9tr8Nm2WObsFvO/vg6xXNuLEltGGniM
+	 4lTiNhB2Ysw2FrSLfb7//nPBrIp38tf/F11XXQOmiEO2MnksoIKJWHVYq5cBAxdsS+KZm
+	 48n12On6K4eUz/bRfHqMy7/yN5y2DK9P2eIIxOiwQRxqJ0NwrIo6tOJJGUMhy85WS1EoT
+	 Ki9aHtgmSe9pJM7PxFDmL9tmb4B4rC16LuxkZB2tAB/OEK8RQZso05lhW1UnN3S7yMH7L
+	 vOaCqu049vh/9YgfRSt/rXAZeQX4Kp4EjBRiUuhN2x6RKPTxBv9KRXX71bsLd2lSbiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052557;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052560;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WocL6YHS4W0MJSsy7M4SKiRgd5GoFDW2vLj7+MoPlco=;
-	b=a14qKJ05X7gbyB4ugt0PpRgpTnY9+Le3dnWScDfmUnnr1tDH/TMIgQBSQw/yc95SLOKn
-	 6H1yZc99JSDXEoUX7LFnC/8fmEqt3SEO2DzGj6jQ5ApLHFvCpIr5WOlM6Slejal+vpFhO
-	 WKP5Y2gxPaBeIHnCNb3p5xNh2VSm3fLVwsdWXn87OOzYFA71dnSVKpXPBYGoqdlDrnmFv
-	 DBXl+qwfhzMztShUwob/j9WvH1nz+P4NV+hA2GVsy7uzrFl4hv9WMRd+dcQLijeH40YNG
-	 uwRQjDOAAMrdNGoAXwU3iuRLoldouYYWA5mWPDZcShz3F6MuTJnvriLA8Dfqeagaruw==
+	bh=aAJfp0cJW9qqAk0EMGJSB+bkI/a9KFSSGsZj+APQ9bE=;
+	b=RRGHXSPPcjA776LhzgEnPu4ad1VJcK4QkVnmJbDALo+gkChIpbcAF2Uy1izzRk+/O2eC
+	 40Y2tgxr8mg+56zmUa9k6S5JHxIx1Nj5vEpmKMNTvotDvWw5zxnhh61c5olJ+MbaLd3jW
+	 iWpheaHOA/w6qbKNG6jpVP9XmvIQosJL4jcsmhnfA9EpSOMHQYDErkWqOqoRhAfSJkqdl
+	 po+tE9RjmMSgVOM0aDMxqrNtsqRNBGsBibtuovoz3KbOLyHVfOZPZLyvpUOosSHs1xqN8
+	 3AYUOI3RNz3EhpkJ6Hx2+0AFAeQ8RlsDYOmeYFefm7Mdn8PmC1sSP33YduEjjazxsLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JOfk3yVW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mo+xSqeS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD495606A31C;
-	Thu, 19 Nov 2026 01:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73576606A320;
+	Thu, 19 Nov 2026 01:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JOfk3yVW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0455E1F000C4;
-	Thu, 19 Nov 2026 01:42:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mo+xSqeS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB5321F000C4;
+	Thu, 19 Nov 2026 01:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052557;
-	bh=WocL6YHS4W0MJSsy7M4SKiRgd5GoFDW2vLj7+MoPlco=;
+	s=korg; t=1795052560;
+	bh=aAJfp0cJW9qqAk0EMGJSB+bkI/a9KFSSGsZj+APQ9bE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JOfk3yVWkAT+VMOtYZ82fosiY8OnFeHDVkk89KsFcg4x4u6MXMTnMut1ik+9aCpQb
-	 QkM4wBwJ1lQtMALQLu4A2pwcYj/B8zOca/xCxDBJ30sBzqCCumVKV9u4X6nazUXmtY
-	 FQvLXs4BXEXJ03UogsoT41ighKEih2pB159qp+oE=
+	b=Mo+xSqeS+TAaRsnOrjbal7ZE/WXZTU7SmNT617z7C4HqA6fBU5IittoyJiksYTbFm
+	 CjNHmUJav0Mt5v2mvLMDsHr5QSG4G5ANOy5/pVhjmsok4QiBPtL1XfVwAnNSBwVlK7
+	 1F//8KrNmWZA1sie8AOkW1xaYWvvAlAa36m++884=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0605/2214] soc: fsl: dpio: Fix cleanup on IRQ registration failure
-Date: Wed, 18 Nov 2026 15:38:01 +0100
-Message-ID: <20261118150035.273990149@linuxfoundation.org>
+Subject: [PATCH 5.15 0606/2214] USB: cdc-acm: fix urb leak on disconnect
+Date: Wed, 18 Nov 2026 15:38:02 +0100
+Message-ID: <20261118150035.342985335@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,56 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 45ecea8c55521d424513178fb612cefffb09a9f5 ]
+[ Upstream commit 648b08aa37c1b24a61662ad78964f2bca659ca26 ]
 
-IRQ registration happens after dpaa2_io_create(), but its failure path
-only releases the IRQ resources and the MC portal. The I/O object stays
-allocated and published in the service list and per-CPU lookup table,
-while devres unmaps its portal registers after probe fails.
+Make sure to drop the reference taken by usb_anchor_urb() when removing
+URBs from the delayed URB anchor to prevent them from leaking when the
+device is later disconnected.
 
-Call dpaa2_io_down() on IRQ registration failure to remove the object
-from those lookup structures and free it. Reorder the error labels so
-that a failed dpaa2_io_create() still skips this cleanup.
-
-Remove unregister_dpio_irq_handlers() from the probe error path, since
-no IRQ handler or affinity hint has been installed when registration
-fails.
-
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
-
-Fixes: fe8fe7723a3a ("soc: fsl: dpio: register dpio irq handlers after dpio create")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20261002194802.375497-2-mhun512@gmail.com
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Fixes: 140cb81ac8c6 ("USB: cdc-acm: fix broken runtime suspend")
+Reported-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://lore.kernel.org/20260917161217.2161883-1-vulab@iscas.ac.cn/
+Cc: stable@vger.kernel.org	# 3.16
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20261009122934.464142-1-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/dpio/dpio-driver.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/class/cdc-acm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/fsl/dpio/dpio-driver.c b/drivers/soc/fsl/dpio/dpio-driver.c
-index 7f397b4ad878d..e1dd4cc0702da 100644
---- a/drivers/soc/fsl/dpio/dpio-driver.c
-+++ b/drivers/soc/fsl/dpio/dpio-driver.c
-@@ -248,9 +248,9 @@ static int dpaa2_dpio_probe(struct fsl_mc_device *dpio_dev)
+diff --git a/drivers/usb/class/cdc-acm.c b/drivers/usb/class/cdc-acm.c
+index 44820a020e66c..6bb29d679bb1c 100644
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -773,6 +773,7 @@ static void acm_port_shutdown(struct tty_port *port)
+ 		urb = usb_get_from_anchor(&acm->delayed);
+ 		if (!urb)
+ 			break;
++		usb_put_urb(urb);
+ 		wb = urb->context;
+ 		wb->use = false;
+ 		usb_autopm_put_interface_async(acm->control);
+@@ -1658,7 +1659,7 @@ static int acm_resume(struct usb_interface *intf)
+ 			urb = usb_get_from_anchor(&acm->delayed);
+ 			if (!urb)
+ 				break;
+-
++			usb_put_urb(urb);
+ 			acm_start_wb(acm, urb->context);
+ 		}
  
- 	return 0;
- 
--err_dpaa2_io_create:
--	unregister_dpio_irq_handlers(dpio_dev);
- err_register_dpio_irq:
-+	dpaa2_io_down(priv->io);
-+err_dpaa2_io_create:
- 	fsl_mc_free_irqs(dpio_dev);
- err_allocate_irqs:
- 	dpio_disable(dpio_dev->mc_io, 0, dpio_dev->mc_handle);
 -- 
 2.53.0
 
