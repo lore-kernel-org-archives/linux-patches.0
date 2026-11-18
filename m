@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049599;
-	b=cNzjoBVXvinCllgcFqRAnNYyGUpYy+Pivg1WQDIwuZzuD7UJFYwp7F6+dfJ8LKY79yH5
-	 JCKfOekTybWb8N/fDh20tv086VBLHKJJJ+qXBZ3h3nKItxHa09WEV+8qv+dyzV06mlZxf
-	 Bala96F6v4FFRW1m4+isHREBwUUVmWopaUly2w7abVv5TvErUwIJMff9NBkv36BPdeqWn
-	 0VtBjL8mQ6fO5gMKxO0UR1hh3egHLBBYRDcPNdxXKsa49PA9C3uFz7lgYYGpzemeZ0Xtu
-	 P/fH4zWg6zJgy7DTlEdQB5coF5YgMcXONWzYfQ3JfhOE7568A7TynTrEgUFaOPd9b6g==
+	t=1795049602;
+	b=5A5w9alXwhAR4xzOgVzv0Hw9kKkfEfvsF4mi9ZrAyK66EwazBL/HQn4Qvie43uVXL8WU
+	 iujr5acOQWLOUu5JUee0Qpin3GfrCuSiLlR2WIsrdOCqKV56by5F7OQe6a2hDJkNcGGO1
+	 +9NYPtoLN7ifmKfI8/9MOuO1qUwR6lkUb8ABwX2K//Rc7YH/CMdTYgOTE2wujFgb/ruOA
+	 +Kq9Fjf8wZmVFNQqUM9N8r8gbhzme4I1rVtLEjzGKrU47X7kMsIX3yB5Xr5jwGwZSy9/Y
+	 JG8MyxoaDh11rrGtveYBlH3sAK3+LeEPqMsT3SW/73Y1uqz9Z+eawPHhiw+RfERMugg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049599;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049602;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=69wAvyWLGxOWb0b96qhuknlcwWBl6gLdNRp4ognqABQ=;
-	b=1ebC7yH72kDRhEiUR2DYRIz5Kl5wecULZ10MYiMP67JgrKFtBE3OvKTHCvNegars3mpA
-	 flT9h+4HfFsx3yBr7eWD+6OX0zBAy3Oc38wY9pJmKKPaxrT7PEXXuYK8/tin8nPHCKIws
-	 hzzrMlDjAPZfzKoCOczEfds8OCUrVUk2eqo6NDKazPjHyvcjS638HTyNhm7zpLE/dS8mm
-	 4GZRxsO5oSa5pz7fmMprxXyLrIQdwt7TGpKuywzk4aksj7f7k0aVLoUxoeqG/AU09J4ix
-	 nkKehDXnxQWY+0tME/pwQ19OY9eOz+pNDkggMJk9OXNfVVfDiyi4qBNzQtsQgKTuWVA==
+	bh=PbaUXgpiUo/eB6MmmloIKMOuM2QpXnP1nG/N2uMcdPs=;
+	b=E7Pn8eEyHobYlPdJNpR6Hzii1utMvKuLy2uVlYVGcY32lKLSEZ4TLEP5LD7GMPa5+QVu
+	 qFLp09Aj8fnqoEGJFc6lwaDZiHHrefhWpD6rXo5jwGkQBpAWV8sJmwOzKTVsjmlaSfbfV
+	 JwCNsc13FB8Fq4KaLUsw1PmuBMuSirTeL7UnKdALeKesRbkU7JnSVba7m2yemNkwQWE1Y
+	 L55bv4UJIZ7UAawJNXRDQQcO/+wBfa+8eW0yRB2X6ivIuDJ6Hj1HclF56ZvJJfPmX6RR3
+	 v5O/DGlM3ASMJoWfvH8UjshqNsHYTU70zWB4qU6WX7lIh7AD8NcsnImf96X7yCkScqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MITBJKZs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dhqMvhWu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDD3606A320;
-	Thu, 19 Nov 2026 00:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5252C606A31C;
+	Thu, 19 Nov 2026 00:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MITBJKZs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D3B1F000C4;
-	Thu, 19 Nov 2026 00:53:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dhqMvhWu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96461F000C4;
+	Thu, 19 Nov 2026 00:53:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049599;
-	bh=69wAvyWLGxOWb0b96qhuknlcwWBl6gLdNRp4ognqABQ=;
+	s=korg; t=1795049602;
+	bh=PbaUXgpiUo/eB6MmmloIKMOuM2QpXnP1nG/N2uMcdPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MITBJKZs8hXmwDFNgq1jhoiYCON0cjv6O5Y0aBMAKLy7A1et0+IZOIVTSZGiijgi2
-	 ITj49eCy7ZgZzXzZiB0labxedRljPRpxc/ZYw/BWUMtXFiExGfTgVlqVBbdb5XvRNJ
-	 IimpLw5zYIBXzmCCQwmDRGb+rP/SqAuk8mgYTSIQ=
+	b=dhqMvhWu1syeWbfFwbqnMF1raFjMZ6abSICyygDNRcTDCr+PxrIqyGf0GG0calhiZ
+	 H25Ju02+Z66FtgkFWNUwdMbG9BjksRi2hjEu8EuA9nSXDLSi+Ph35cLdRvxKihdqcx
+	 Afx/ttgoXNBV9ZUUv0mndmSAzc1U8njkAKXh7bc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zetao <lizetao1@huawei.com>,
-	David Sterba <dsterba@suse.com>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2368/2857] btrfs: convert read_key_bytes() to take a folio
-Date: Wed, 18 Nov 2026 15:56:42 +0100
-Message-ID: <20261118150326.782519368@linuxfoundation.org>
+Subject: [PATCH 6.1 2359/2857] mailbox: arm_mhuv2: time out if the receiver never comes up
+Date: Wed, 18 Nov 2026 15:56:33 +0100
+Message-ID: <20261118150326.460670626@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,83 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zetao <lizetao1@huawei.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-[ Upstream commit 884937793db595928961397dd3ec2287b40371c6 ]
+[ Upstream commit 86976f7cc324aac254136a352f74ac17f21e574c ]
 
-The old page API is being gradually replaced and converted to use folio
-to improve code readability and avoid repeated conversion between page
-and folio. Moreover, use kmap_local_folio() instead of kmap_local_page(),
-which is more consistent with folio usage.
+mhuv2_tx_init() waits forever for access_ready. Fail probe
+after 1s instead of hanging boot.
 
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: fdf56b9d03d4 ("btrfs: refactor read_key_bytes() to remove the dest_folio parameter")
+Fixes: 5a6338cce9f4 ("mailbox: arm_mhuv2: Add driver")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/verity.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/mailbox/arm_mhuv2.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/verity.c b/fs/btrfs/verity.c
-index abd76905daa00..e2507dbaabbfe 100644
---- a/fs/btrfs/verity.c
-+++ b/fs/btrfs/verity.c
-@@ -279,7 +279,7 @@ static int write_key_bytes(struct btrfs_inode *inode, u8 key_type, u64 offset,
-  *              page and ignore dest, but it must still be non-NULL to avoid the
-  *              counting-only behavior.
-  * @len:        length in bytes to read
-- * @dest_page:  copy into this page instead of the dest buffer
-+ * @dest_folio: copy into this folio instead of the dest buffer
-  *
-  * Helper function to read items from the btree.  This returns the number of
-  * bytes read or < 0 for errors.  We can return short reads if the items don't
-@@ -289,7 +289,7 @@ static int write_key_bytes(struct btrfs_inode *inode, u8 key_type, u64 offset,
-  * Returns number of bytes read or a negative error code on failure.
-  */
- static int read_key_bytes(struct btrfs_inode *inode, u8 key_type, u64 offset,
--			  char *dest, u64 len, struct page *dest_page)
-+			  char *dest, u64 len, struct folio *dest_folio)
+diff --git a/drivers/mailbox/arm_mhuv2.c b/drivers/mailbox/arm_mhuv2.c
+index cff7c343ee082..76c274931e813 100644
+--- a/drivers/mailbox/arm_mhuv2.c
++++ b/drivers/mailbox/arm_mhuv2.c
+@@ -27,6 +27,7 @@
+ 
+ #include <linux/amba/bus.h>
+ #include <linux/interrupt.h>
++#include <linux/iopoll.h>
+ #include <linux/mailbox_controller.h>
+ #include <linux/mailbox/arm_mhuv2_message.h>
+ #include <linux/module.h>
+@@ -968,6 +969,7 @@ static int mhuv2_tx_init(struct amba_device *adev, struct mhuv2 *mhu,
  {
- 	struct btrfs_path *path;
- 	struct btrfs_root *root = inode->root;
-@@ -309,7 +309,7 @@ static int read_key_bytes(struct btrfs_inode *inode, u8 key_type, u64 offset,
- 	if (!path)
- 		return -ENOMEM;
+ 	struct device *dev = mhu->mbox.dev;
+ 	int ret, i;
++	u32 val;
  
--	if (dest_page)
-+	if (dest_folio)
- 		path->reada = READA_FORWARD;
+ 	mhu->frame = SENDER_FRAME;
+ 	mhu->mbox.ops = &mhuv2_sender_ops;
+@@ -1011,8 +1013,11 @@ static int mhuv2_tx_init(struct amba_device *adev, struct mhuv2 *mhu,
+ out:
+ 	/* Wait for receiver to be ready */
+ 	writel_relaxed(0x1, &mhu->send->access_request);
+-	while (!readl_relaxed(&mhu->send->access_ready))
+-		continue;
++	if (readl_relaxed_poll_timeout(&mhu->send->access_ready, val, val,
++				       100, 1000000)) {
++		dev_err(dev, "receiver not ready\n");
++		return -ETIMEDOUT;
++	}
  
- 	key.objectid = btrfs_ino(inode);
-@@ -366,15 +366,15 @@ static int read_key_bytes(struct btrfs_inode *inode, u8 key_type, u64 offset,
- 		copy_offset = offset - key.offset;
- 
- 		if (dest) {
--			if (dest_page)
--				kaddr = kmap_local_page(dest_page);
-+			if (dest_folio)
-+				kaddr = kmap_local_folio(dest_folio, 0);
- 
- 			data = btrfs_item_ptr(leaf, path->slots[0], void);
- 			read_extent_buffer(leaf, kaddr + dest_offset,
- 					   (unsigned long)data + copy_offset,
- 					   copy_bytes);
- 
--			if (dest_page)
-+			if (dest_folio)
- 				kunmap_local(kaddr);
- 		}
- 
-@@ -757,7 +757,7 @@ static struct page *btrfs_read_merkle_tree_page(struct inode *inode,
- 	 * [ inode objectid, BTRFS_MERKLE_ITEM_KEY, offset in bytes ]
- 	 */
- 	ret = read_key_bytes(BTRFS_I(inode), BTRFS_VERITY_MERKLE_ITEM_KEY, off,
--			     folio_address(folio), PAGE_SIZE, &folio->page);
-+			     folio_address(folio), PAGE_SIZE, folio);
- 	if (ret < 0) {
- 		folio_put(folio);
- 		return ERR_PTR(ret);
+ 	return 0;
+ }
 -- 
 2.53.0
 
