@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025290;
-	b=LqLJtOS3ms73p+xQQHxfxOtlHIi82O58pn/B7B5XkVW2eduiiVBDULhc0T54guXnVSXO
-	 4NpKZgM/+Wag7IgdlExqYJx54ZP6IYNAq+nLW9+NGqw154oneDUguHNuHCdZVVg7fxb6O
-	 pVPOaJe6PNarecePsT7UOlkfwiblyaEC5A1PhzgZZPLsYPd//taulZneFPfbsV1U5EMyu
-	 s0S3jx4X6wEeP7cTpPDDhasgb9E7uGxn+Q681SjnU+8IRK/f+U84ZXln1p0N1yugvNDHj
-	 wLfeTS7mYUlVEgUFnPz+s64LQsLrHprz1KqLxYYgmx9Hc+lV1kN44hUwEd9tW67oaAw==
+	t=1795025292;
+	b=Il+oDfrg2rGH/H+n/logoZ3HZ09Ux4QZDd/6BgYogkCs+kYoqj1qLeCSnHFjFkhD240t
+	 Rai92OfBNGuO7xb/E9kRVlPAQnvW2KX4XUTtzt96au/ej7/JoaRj7QE6mi0L9XLAXXTsL
+	 OmtGjGSAv4cg9ErWoOszn1cVn+YQgKugR1DiUdfmbM8/VK1+zoB1SP7UdZDucXkaCBDU4
+	 CdwZPE9OY8WC6JOJ7iGLTay7w/oJhaJtY+qljZ7oca1zhsyIVODWeZaFwLXBsj/C4bqPQ
+	 e+QPzA7m8fvyvAeDtfXDYEDnoQIMAQf3VEZOzpBve2/Y87mOEjry2ULfQFBHaj/jQrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025290;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025292;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jnAMvmEESSAqSISIrkiGuW/0BwpFjfDlBqnU7oC/uJI=;
-	b=HkRAjW1ABGMv1C8rbBFwpWoeKri7VmJblIGbzZJYXGPygjjSZ7zAKdvcf9dQnHtqSabD
-	 kfBJIB4Vcm3I7qXGx9HCq6aXLw5WHiiD3up4bXmr0ParQbZLyuetnOW+tw0+u/q2ET1kG
-	 TafK1zq5ZSLLFTDc1Gb2OaYfglvWjLDww7V8wp1NXP4qEQssVV9g9MvYHkQBbpDkTf+mK
-	 9C+6NV92Y6/lw5ZPUlwrFetRGY/3Gp5IQSsD0LrqZbemkrU5gZR7Ra4a3/MBnUrEURWt7
-	 LKyMKc0zYCKbPyv1/7+f4SBUbaSWyBnJqkYk7f3Nj1CJhkeq1L6XTTgSUbT9lnsl2aQ==
+	bh=kopvyYy8hISqS7ccHIE2/PvtUyTaZgmG/+tgJEMYm5o=;
+	b=Z9vsWKrQ3cRDvAqNBdvSIKSjE3lXsvGBQXX0qVsnO5TqoTNIJX3YDBsNetT5Qv1jaZVl
+	 uyhcuKaFptYlYkqWWJgN48XWUU4RTOWVD3GBBg+xDr5bBcUhT0gwe/55uECye7E0WZa1p
+	 fzg2KUsGva6lFSNqrG/AoikEJwZ2RrxyCaqiSBMsbW351RA3Kj1xuu2MM2FmH05x8gp6z
+	 iZ9e1bBmSF6xAzMRdRebhyerNcbh9Ju52XBYJX7S7s+eha2kVLnCmoBafce0H1+B7EuRl
+	 mksze4pw5pIa4OTJVIWCS2OZwZmbncGScPKc4D24JwBj/tsScRL0Ua5rTla2ZWFRLYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yPTVWFQp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xuZ+VGjo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189DA606A330;
-	Wed, 18 Nov 2026 18:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8DA60A262F;
+	Wed, 18 Nov 2026 18:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yPTVWFQp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638C71F000CA;
-	Wed, 18 Nov 2026 18:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xuZ+VGjo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A47F1F000D2;
+	Wed, 18 Nov 2026 18:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025289;
-	bh=jnAMvmEESSAqSISIrkiGuW/0BwpFjfDlBqnU7oC/uJI=;
+	s=korg; t=1795025292;
+	bh=kopvyYy8hISqS7ccHIE2/PvtUyTaZgmG/+tgJEMYm5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yPTVWFQpL+5LetmdE0BYicQNHl+64r0C+Ul5EpTyQLTPNLIo8ds17wPV21bmNvU30
-	 SCbrb9ed4993yabHR0qUIwT+alecrnSgruPc9OMRGrMInS9YqPVjr0CqweCe3MYiNl
-	 HUYZZo2MfE8kVnEsX3Lx/nc2aMgfEohLzZMvWbo8=
+	b=xuZ+VGjoZtbMjdFNILAYazggV6SHXzaRdqAVoatpqZAGIc4AuuY5zoHIb/f3mouqn
+	 YkVSECEXe+Saz2D+JYeVSGo3Z0BIcu+pSIMlM7Z332oQJMOawAZt22er/ImyWTCONc
+	 gt4LiSVrbvd/YL3s0HN5i0EucRkc3hF5SpAOvvOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6a132745caefcf42cb0d@syzkaller.appspotmail.com,
-	Li Youhong <liyouhong@kylinos.cn>,
-	Yu Kuai <yukuai@fygo.io>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Peng Fan <peng.fan@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1028/2151] md/raid5: drain released_stripes before destroying the cache
-Date: Wed, 18 Nov 2026 15:46:03 +0100
-Message-ID: <20261118150159.828997510@linuxfoundation.org>
+Subject: [PATCH 6.18 1029/2151] clk: imx: composite-93: return timeout from gate enable
+Date: Wed, 18 Nov 2026 15:46:04 +0100
+Message-ID: <20261118150159.862201535@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,76 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Youhong <liyouhong@kylinos.cn>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-[ Upstream commit af560e357a81964544be40c549e241b032ef7565 ]
+[ Upstream commit 246d9fa6b83d2d3c524aad28de1ab5db5cecf048 ]
 
-grow_one_stripe() calls raid5_release_stripe() for each new stripe.
-When mddev->thread is already set, that queues the stripe on
-conf->released_stripes and wakes the thread. Only raid5d moves that
-list onto inactive_list.
+imx93_clk_composite_wait_ready() already reports a busy timeout, but
+imx93_clk_composite_gate_enable() ignores that and always returns 0.
+The clk framework then marks the clock enabled and lets consumers run
+while the CCM slice is still busy.
 
-Takeover calls setup_conf() while mddev->thread still belongs to the
-previous personality, so those stripes stay on released_stripes. If
-setup_conf() then fails, shrink_stripes() only frees inactive_list and
-kmem_cache_destroy() warns that objects remain.
+Propagate the timeout so enable fails instead of looking successful.
 
-Move stripes still queued on released_stripes onto inactive_list
-before shrink_stripes() frees them.
-
-Fixes: 773ca82fa1ee ("raid5: make release_stripe lockless")
-Reported-by: syzbot+6a132745caefcf42cb0d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-raid/6ab6b743.7eec07f4.c25c.0006.GAE@google.com/T/#t
-Signed-off-by: Li Youhong <liyouhong@kylinos.cn>
-Link: https://patch.msgid.link/20260929083916.50620-1-dayou5941@163.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 4a3de5aa7743 ("clk: imx: clk-composite-93: check slice busy")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260907022214.1076402-1-gonglinkai@kylinos.cn
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ drivers/clk/imx/clk-composite-93.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index d427b24314c91..06ae7a3ec49a1 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -2698,6 +2698,37 @@ static int drop_one_stripe(struct r5conf *conf)
+diff --git a/drivers/clk/imx/clk-composite-93.c b/drivers/clk/imx/clk-composite-93.c
+index 513d74a39d3bd..7c89df9327199 100644
+--- a/drivers/clk/imx/clk-composite-93.c
++++ b/drivers/clk/imx/clk-composite-93.c
+@@ -43,11 +43,12 @@ static int imx93_clk_composite_wait_ready(struct clk_hw *hw, void __iomem *reg)
+ 	return ret;
+ }
  
- static void shrink_stripes(struct r5conf *conf)
+-static void imx93_clk_composite_gate_endisable(struct clk_hw *hw, int enable)
++static int imx93_clk_composite_gate_endisable(struct clk_hw *hw, int enable)
  {
-+	struct list_head temp[NR_STRIPE_HASH_LOCKS];
-+	int i;
+ 	struct clk_gate *gate = to_clk_gate(hw);
+ 	unsigned long flags;
+ 	u32 reg;
++	int ret;
+ 
+ 	if (gate->lock)
+ 		spin_lock_irqsave(gate->lock, flags);
+@@ -61,17 +62,17 @@ static void imx93_clk_composite_gate_endisable(struct clk_hw *hw, int enable)
+ 
+ 	writel(reg, gate->reg);
+ 
+-	imx93_clk_composite_wait_ready(hw, gate->reg);
++	ret = imx93_clk_composite_wait_ready(hw, gate->reg);
+ 
+ 	if (gate->lock)
+ 		spin_unlock_irqrestore(gate->lock, flags);
 +
-+	/*
-+	 * grow_one_stripe() parks new stripes on released_stripes when
-+	 * mddev->thread is already set. Takeover leaves the previous
-+	 * personality's thread there, so raid5d never moves them to
-+	 * inactive_list. Drain them before the cache is destroyed.
-+	 * slab_cache is assigned only after device_lock and the hash
-+	 * lists exist; earlier abort paths have nothing to drain.
-+	 */
-+	if (conf->slab_cache) {
-+		for (i = 0; i < NR_STRIPE_HASH_LOCKS; i++)
-+			INIT_LIST_HEAD(&temp[i]);
-+
-+		spin_lock_irq(&conf->device_lock);
-+		release_stripe_list(conf, temp);
-+		spin_unlock_irq(&conf->device_lock);
-+
-+		for (i = 0; i < NR_STRIPE_HASH_LOCKS; i++) {
-+			if (list_empty(&temp[i]))
-+				continue;
-+			spin_lock_irq(conf->hash_locks + i);
-+			if (list_empty(conf->inactive_list + i))
-+				atomic_dec(&conf->empty_inactive_list_nr);
-+			list_splice_tail_init(&temp[i],
-+					      conf->inactive_list + i);
-+			spin_unlock_irq(conf->hash_locks + i);
-+		}
-+	}
-+
- 	while (conf->max_nr_stripes &&
- 	       drop_one_stripe(conf))
- 		;
++	return ret;
+ }
+ 
+ static int imx93_clk_composite_gate_enable(struct clk_hw *hw)
+ {
+-	imx93_clk_composite_gate_endisable(hw, 1);
+-
+-	return 0;
++	return imx93_clk_composite_gate_endisable(hw, 1);
+ }
+ 
+ static void imx93_clk_composite_gate_disable(struct clk_hw *hw)
 -- 
 2.53.0
 
