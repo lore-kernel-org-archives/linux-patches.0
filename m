@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021464;
-	b=OQ/njm9/r+TDM8nepTt2d3oymKdEEjebRUPlgiQCpWXyOZ9+Rav6c8x60Phm4XMM++tE
-	 LbvmGJ6Z2+sFPq8B65aczU174LcLL1riONxz2v3rQKg4n4TOWKqY6SXnLpBuRn1oLhrxL
-	 L7McLCViL6zLLVvqY8fYGWpzxiPWmjQNb5a9P0M5hGH47GhUWxBQ0yNsKyWCvVM2PVFCA
-	 HG5nR7WgxjxsdU2Q8xJXbgDzG4UssqEwCZXwaUtGLwXZc1Ji8NkNNejhUZ6ropZzP2ktk
-	 u65XQkEx8FrpyURAi5qvoukkT3MOM6vXb7xLBg5ZAQhigNgApu4VaJGY9neG9yF3+1Q==
+	t=1795021466;
+	b=T3R1d5z6Pw6hlhi0Lua53WEywcyqklWsw39PD83+MEXsXgBQYaQDHb1Bdn3w7kI8Jwjy
+	 7G2BTK+YV1cZ3RRfI2YXkKg/VNbJk8gGitb0UTGCnofUHwxmoHzNeI4dH8GB9biwaMoIr
+	 Zo5wxIvUuRfkflpx0RK9SyXO0k2fBoweRqSqKm0iK7RTIkQm7S468ru/Yva0VEJWT7z+f
+	 XaQfhovCCHWQ+Ves5FPCrxjN/P2a8OtluzTz0K8hvKNCCNMtPodS3l36YfwhVQf4GL8n/
+	 ySivOxURFO3lUqS4mU58aU2TuZfLHVe+u82T8AMgDagsdcSciMHhPrAdsz3QZDvI7Rw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021464;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021466;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VnqM6INqk9fjFxsdgvlF+1O13vrvaFx6LlQnmQ9RAt4=;
-	b=bEN+MJJIYQDeNJprzofsG+upYW/WxOzmib3DH3HKEJ/8NrlPUa9tAAM2z7RXVlhg+1n8
-	 YFjPX9k2t4IA8ZHLlUOaudAHe8m/T+iLODLoVBpnvaa/hxk/y3ODyr/FM2I2kHvfbAEzm
-	 82AkyoRXTAA7maxxTVBZAl0D0T+1TMBuB75seoObTV/0Y5wpb9/bz5jSbSsF+gYJud5h/
-	 pW5n9gX7gEuT+XP0Pa3IezBa9u1AjDOgWrOVo94UTArDrMTOah2mBuKqc0kWvXwl0nNQX
-	 3lVKZ88igbCH/Y5xhQ+9H/hKOQ5ClJYzR6ZYxgc8x/bKGj6uVMpmq9YahbAqD6rUpWA==
+	bh=t8owJNI4sT/5HWPjAa0uRx7GWlofZX3eVhU3iWq0VWU=;
+	b=1JNqggcjOzhiZnSQ0Oka4ZbpAFT4N0CsmUHkYCVYtkBiw9XO5yzs4ZmxjX7WyZWFnvpC
+	 XRj6JqJm6wT4IL8lUvD0CFdqg52Wml1H0kVwZVqJA1lgAeQq9Igpm5uFdUlO2bncpCN55
+	 S8adS32qMrPfqGFpAAfhdaOL2EkZ7Jm/nYleroGXdHL22aJOFM6rQ0bxgUqfE/xK4hQq3
+	 efTn+9x0memIj82aeltXe40a19Gu/2DhNzYQb6czPBn0HPYOb+yQtIYOF4FLd1qWzfP4j
+	 L/eWyAmoM1C0McNEnC8u29nPbxIRh0tOvzri8hcyxhxSAxZXzd0riSzYrb/STVcTF+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q7q+gKa7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RaA/n06Y";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F1E60A263F;
-	Wed, 18 Nov 2026 17:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A00560A382C;
+	Wed, 18 Nov 2026 17:04:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q7q+gKa7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CCC91F000C7;
-	Wed, 18 Nov 2026 17:04:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RaA/n06Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00F61F000C5;
+	Wed, 18 Nov 2026 17:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021463;
-	bh=VnqM6INqk9fjFxsdgvlF+1O13vrvaFx6LlQnmQ9RAt4=;
+	s=korg; t=1795021466;
+	bh=t8owJNI4sT/5HWPjAa0uRx7GWlofZX3eVhU3iWq0VWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q7q+gKa7fUM1MPgv0nrOu7ERPzj9TWHKyY+PqbkezPGfck7TRwNDnua8m4dPLig70
-	 GugkGriVHjH83AmTdyEBrsxH/xHGQybYX5fxMaKyoD1KGzdD4Cgw/LYEZB5Ur8jaDc
-	 JgXMqCJBrnYjATzsBs5cHqPsNB/mIXRbNATlBN3k=
+	b=RaA/n06YRAPkPOCZZOuPXXgTpUj2jzXL5nGvATVzfEk/RLIXUQmmcJEB+fz843Dhu
+	 E/nRzoOSWy1Gkvk1jdzCY+XoxYvEqf01g/C5JQhJvNx5w4yaqy7riOtNuD19V1juQ+
+	 l5o875yVkgZO4zOTMOKggNcTfzXmITgEC1W3dnxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anil Kaushik <anilkaushikwireless@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mingming Cao <mmc@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2314/2651] gtp: hold RCU for the device lookup when adding a PDP context
-Date: Wed, 18 Nov 2026 15:59:14 +0100
-Message-ID: <20261118150408.513978096@linuxfoundation.org>
+Subject: [PATCH 7.3 2276/2651] ibmveth: wait for the RX poll to return before freeing the RX queue
+Date: Wed, 18 Nov 2026 15:58:36 +0100
+Message-ID: <20261118150407.265482736@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,51 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anil Kaushik <anilkaushikwireless@gmail.com>
+From: Mingming Cao <mmc@linux.ibm.com>
 
-[ Upstream commit fe3e1a42fb7eb18d8c55d714b50a3d51f8cd6ffe ]
+[ Upstream commit 3f872b34368c7c1d2a8900950e0fee4cb4dd9a34 ]
 
-gtp_genl_new_pdp() calls gtp_find_dev(), which looks the device up with
-dev_get_by_index_rcu(). Since commit e2d1baca2b33 ("gtp: remove useless
-rcu_read_lock()"), this only runs under the rtnl lock, and kernels with
-CONFIG_PROVE_RCU_LIST warn:
+napi_disable() returns once ibmveth_poll() has called
+napi_complete_done(), but the poll is not finished: it then re-enables
+the interrupt and calls ibmveth_rxq_pending_buffer(), which reads the
+RX queue. ibmveth_close() can free that queue in the meantime, and the
+late enable can leave the interrupt unmasked after close() masked it.
+The request_irq() failure path in ibmveth_open() frees the same memory
+after napi_disable() too.
 
-  WARNING: suspicious RCU usage
-  net/core/dev.c:1047 RCU-list traversed in non-reader section!!
-  ...
-   dev_get_by_index_rcu
-   gtp_find_dev
-   gtp_genl_new_pdp
+Call synchronize_net() after napi_disable() on both paths. Every
+caller of ibmveth_poll() runs it with bottom halves or interrupts
+disabled, so this waits for the poll to return.
 
-Hold the RCU read lock around the lookup only: gtp_pdp_add() allocates
-with GFP_KERNEL, and the rtnl lock keeps the device alive afterwards.
+Found in review of the ibmveth multi-queue RX series and confirmed by
+code inspection; also raised by the Sashiko review of the first version
+of this series. The race was not reproduced. Tested on a POWER10 LPAR
+under an incoming ping flood with 30 rapid link down/up cycles and 30
+rapid MTU cycles (1500 <-> 9000); ran cleanly with no warnings or
+faults. No kernel selftests cover ibmveth.
 
-Found with the gtp selftest on a debug kernel.
-
-Fixes: e2d1baca2b33 ("gtp: remove useless rcu_read_lock()")
-Signed-off-by: Anil Kaushik <anilkaushikwireless@gmail.com>
-Link: https://patch.msgid.link/20261016093225.1036375-3-anilkaushikwireless@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: bea3348eef27 ("[NET]: Make NAPI polling independent of struct net_device objects.")
+Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
+Link: https://patch.msgid.link/20261013182926.30417-9-mmc@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/ibm/ibmveth.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index 3dd97d75551ce..df182cdd3bd4a 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -2050,7 +2050,10 @@ static int gtp_genl_new_pdp(struct sk_buff *skb, struct genl_info *info)
+diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
+index f2570d637301b..85e176d0ed321 100644
+--- a/drivers/net/ethernet/ibm/ibmveth.c
++++ b/drivers/net/ethernet/ibm/ibmveth.c
+@@ -768,6 +768,7 @@ static int ibmveth_open(struct net_device *netdev)
+ 			 netdev);
+ 	if (rc != 0) {
+ 		napi_disable(&adapter->napi);
++		synchronize_net();
+ 		netdev_err(netdev, "unable to request irq 0x%x, rc %d\n",
+ 			   netdev->irq, rc);
+ 		goto out_free_buffer_pools;
+@@ -834,6 +835,11 @@ static int ibmveth_close(struct net_device *netdev)
+ 	netdev_dbg(netdev, "close starting\n");
  
- 	rtnl_lock();
+ 	napi_disable(&adapter->napi);
++	/* napi_disable() returns once ibmveth_poll() has called
++	 * napi_complete_done(), but the poll still re-enables the
++	 * interrupt and reads the RX queue after that.
++	 */
++	synchronize_net();
  
-+	/* the rtnl lock keeps the device alive once found */
-+	rcu_read_lock();
- 	gtp = gtp_find_dev(sock_net(skb->sk), info->attrs);
-+	rcu_read_unlock();
- 	if (!gtp) {
- 		err = -ENODEV;
- 		goto out_unlock;
+ 	netif_tx_disable(netdev);
+ 
 -- 
 2.53.0
 
