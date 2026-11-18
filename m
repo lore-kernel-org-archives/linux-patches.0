@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036737;
-	b=Bc9Aal5UKvkXKsuoRUhi1dBpZaXAVfiA5XhK/CGLnDo5Se5Unp5H8kbr4krwHfSH22rB
-	 k5Ue+ii8gM2ETmsNO1bkm4KaSmFvpQoHSM2Z1vkkjW/4Vf6XCQrK73YSu3P7mE4hd8aJP
-	 ufAi88zfiVq+4PkYsOaawyqM2YtA8l18S8lKzwOPAr1BpN+UuXVv2lnKbj8sZCj483tf0
-	 1qKoolSxlTKIMZ3qLismiUM0rwe2vsnC8oXcgwgta14/7tosU3bO2Ww5zOeO/OK/TKYwg
-	 w/UJSPAeoguZxkh1vhyVdOfVhIzeduO8i/c8OoRBmridNzRR3KV4FUyq6fT9Okv4u2w==
+	t=1795036740;
+	b=L0T5ZQ/2RnzRJGF7I5/j4qKfJM/xafFsKj8pGsSNuxrXQ9bH41XyY+7HgO9/5QzGmbbp
+	 88/UBrqrwoSzN0yX3yPYGS7kdN/g9zc14ZehNoMRk4pruteDkEJNbIKYaFgAdpX3/qpWA
+	 0URf6w9d8rQz8p9tisqrc5F7X4Y7dnATUWbXoi4JZvjSiC6fwOv54qJm0QPO4Z5Plfim2
+	 bmspXOd0//21fjYKbw5OX4HX7zZZb0AMSmJ4EY7lNf5qQNxZtSbC0nEVtrIgczCzF4g9x
+	 UgQ74Uu0EvmxHkHJdro5NWAHzIbA5swQqNpnQrxe/G5/LZ0PAZAA6BmRfGXFzClNohg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036737;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036740;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kspCzTbFe95NcLDxM400/uPOjfIzuDcIt6ob/wPCPOA=;
-	b=NHfhToU2VgRlwT7NzrkL9WXgrmw2Ap2oZjY2sQoD2eFqoXUi+4frsJ7FcXYiC4flVMTQ
-	 iNddbFZUgj5cAjB75bwClOiem9V8w7PaHrEjVLD17SG11bTt2Gv4/FM3ZMjysePA5sOQ/
-	 FN6xswVMCC3SAeskhf81PtR+o/V1nsgaoDCJQkD8TmCuGwf9P1rNJsDhk18azYXjICVRh
-	 n5JAxfxRQ6T+joQ2AJIa5AhDUeVbz4c9M2GxKkUedTBGKM0oQT4JhXxySrIa9girC+Qkb
-	 PPXDUVlKN9Jl697WcFM0cf8mS4ikw3r+17vYF8wKxpk4DfW2sr/Rk6GM2BlEQWyKqFA==
+	bh=gzE9SuTrb2FB2IQC+sADL0Zy+MhWjDR30x5P7M4nRMA=;
+	b=iwpOHtHCWzi1XZ2Cq/34ysSdGqesQmS1lgeGIOEUy68tKGmkoKNGaifKrdxWRID1j0e9
+	 IgSjQVDhtpaK5H2JDgPuznIugIlf5O8mcbF2kZNkP9JcBxAsWaZlWOrU/A5nHLx+yHn+x
+	 7LogIO0eOM6q9JTqbulz5xwkLwopVo6QGYn6xhrtF+4CxFMVV1Z4MPYoTvfRt1h3kUxq7
+	 6VmTqlkgUO/rmVW5FhrO7ElYJ/eYlGbsVncGiQjpNXRf4KdFuPOUX1sBUz0RZpMHz7hAg
+	 PkC4I89+DoB4AABhafIk3HQSc8peGNmFkazIRgORg8lVEWaQkAcZa0MkpgMIURp/oTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pHs2IhIn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YeXGlRD7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD16A606A31C;
-	Wed, 18 Nov 2026 21:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E5A606A31C;
+	Wed, 18 Nov 2026 21:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pHs2IhIn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BC11F000C4;
-	Wed, 18 Nov 2026 21:18:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YeXGlRD7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A761F000C4;
+	Wed, 18 Nov 2026 21:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036737;
-	bh=kspCzTbFe95NcLDxM400/uPOjfIzuDcIt6ob/wPCPOA=;
+	s=korg; t=1795036740;
+	bh=gzE9SuTrb2FB2IQC+sADL0Zy+MhWjDR30x5P7M4nRMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pHs2IhInG8/PnZ/TT4w/LuKNCJUIxfKNtgZWIsTPRlNtbFbF2TQzOuTNzxd7cfHt6
-	 jLaGKiVEovWDtfb7dAPtUI+YXI3KkocOqQhMwig02aYpG+GVXTypKYtLIJQI0h790S
-	 k7euj85VY5xT3U+Xoj91X9Fkfx4pIpgSATfJDJ9A=
+	b=YeXGlRD7HrLAVOxDCS+VYsV1vy1qij2gDHAzNRfeM9rh3hBwy3tp/GQ7E7Sez8sDh
+	 eYlAUQx2scRtYJiDH7cH7ud1K4QrV6OSo6G82/VJyaepx3WShKnqkmOCgbUlnkFv2H
+	 Fw6GwueryNESzU3Ulzmcqpr2S9Vt/pZ/khC/MwAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sahaj Chaudhari <sahaj123.sc@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Nirmoy Das <nirmoyd@nvidia.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1167/3318] gpio: davinci: Clear interrupt status in every bank on suspend
-Date: Wed, 18 Nov 2026 15:29:49 +0100
-Message-ID: <20261118150355.130898443@linuxfoundation.org>
+Subject: [PATCH 6.6 1168/3318] blk-mq: clear stale inactive flag on hctx reuse
+Date: Wed, 18 Nov 2026 15:29:50 +0100
+Message-ID: <20261118150355.161253117@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,47 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sahaj Chaudhari <sahaj123.sc@gmail.com>
+From: Nirmoy Das <nirmoyd@nvidia.com>
 
-[ Upstream commit 800d7627f552bbf602a1736b638aee0ada3fbf87 ]
+[ Upstream commit afc1de47a7ab607ae6403c4bfda36b0bf3cd342f ]
 
-davinci_gpio_save_context() saves the registers of each 32-GPIO
-register bank, but clears interrupt status only after the loop. At that
-point g refers to the last bank, so pending status in all preceding
-banks is left uncleared.
+When the last CPU mapped to an hctx goes offline,
+blk_mq_hctx_notify_offline() sets BLK_MQ_S_INACTIVE. Updating the
+number of hardware queues exits every hctx and parks it on
+q->unused_hctx_list. A later update can reuse a parked hctx through
+blk_mq_alloc_and_init_hctx(), at any queue index, and nothing clears
+the flag.
 
-Move the interrupt-status write into the per-bank loop so that the
-existing suspend-time clearing covers every register bank. Single-bank
-controllers retain the same behavior.
+If the reused hctx is mapped to an online CPU, blk_mq_get_tag() keeps
+returning BLK_MQ_NO_TAG for it. __blk_mq_alloc_requests() sleeps and
+retries, expecting CPU hotplug to move the task to another CPU, so a
+task that stays on that CPU never gets a tag. Onlining the original CPU
+doesn't recover it either, because blk_mq_hctx_notify_online() only
+clears the flag on the hctx that CPU now maps to.
 
-Fixes: 0651a730924b ("gpio: davinci: Add support for system suspend/resume PM")
+Clear BLK_MQ_S_INACTIVE in blk_mq_init_hctx() so a reused hctx starts
+like a freshly allocated one. A reused hctx has no cpuhp instances at
+that point, so the offline callback can't set the flag again before
+blk_mq_add_hw_queues_cpuhp() registers it. Clearing the flag in
+blk_mq_exit_hctx() is not enough, because a parked hctx keeps its cpuhp
+instances until blk_mq_remove_hw_queues_cpuhp(). Preserve the other
+hctx state flags.
+
+Reproduced with null_blk on v7.3 in a four-vCPU arm64 QEMU/KVM guest:
+
+  modprobe null_blk nr_devices=0
+  mkdir /sys/kernel/config/nullb/nullb0
+  cd /sys/kernel/config/nullb/nullb0
+  echo 4 > submit_queues; echo 1 > memory_backed; echo 16 > size
+  echo 1 > power
+  echo 0 > /sys/devices/system/cpu/cpu3/online
+  echo 2 > submit_queues
+  echo 4 > submit_queues
+
+Offlining CPU3 marks hctx3 inactive. After the two updates it comes back
+as hctx1 and is mapped to CPU0:
+
+  # cat /sys/block/nullb0/mq/1/cpu_list
+  0
+  # cat /sys/kernel/debug/block/nullb0/hctx1/state
+  INACTIVE
+
+A 4K O_DIRECT read pinned to CPU0 hangs in D state, while the same read
+on CPU1 and CPU2 completes. Onlining CPU3 again leaves hctx1 inactive
+and the CPU0 read still hangs. With this change hctx1 state is empty and
+the reads on CPU0, CPU1 and CPU2 complete, before and after onlining
+CPU3.
+
+Fixes: bf0beec0607d ("blk-mq: drain I/O when all CPUs in a hctx are offline")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sahaj Chaudhari <sahaj123.sc@gmail.com>
-Link: https://patch.msgid.link/20261018170622.3406158-1-sahaj123.sc@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Assisted-by: LLM
+Signed-off-by: Nirmoy Das <nirmoyd@nvidia.com>
+Link: https://patch.msgid.link/20261020125129.430600-1-nirmoyd@nvidia.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-davinci.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ block/blk-mq.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpio/gpio-davinci.c b/drivers/gpio/gpio-davinci.c
-index 75107ede3bf8f..da535b0b8fb0a 100644
---- a/drivers/gpio/gpio-davinci.c
-+++ b/drivers/gpio/gpio-davinci.c
-@@ -642,10 +642,10 @@ static void davinci_gpio_save_context(struct davinci_gpio_controller *chips,
- 		context->set_data = readl_relaxed(&g->set_data);
- 		context->set_rising = readl_relaxed(&g->set_rising);
- 		context->set_falling = readl_relaxed(&g->set_falling);
--	}
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index e3fb9222c5ee0..aebcc7fb17865 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -3841,6 +3841,7 @@ static int blk_mq_init_hctx(struct request_queue *q,
+ 		struct blk_mq_hw_ctx *hctx, unsigned hctx_idx)
+ {
+ 	hctx->queue_num = hctx_idx;
++	clear_bit(BLK_MQ_S_INACTIVE, &hctx->state);
  
--	/* Clear all interrupt status registers */
--	writel_relaxed(GENMASK(31, 0), &g->intstat);
-+		/* Clear stale interrupt status for this bank. */
-+		writel_relaxed(GENMASK(31, 0), &g->intstat);
-+	}
- }
+ 	hctx->tags = set->tags[hctx_idx];
  
- static void davinci_gpio_restore_context(struct davinci_gpio_controller *chips,
 -- 
 2.53.0
 
