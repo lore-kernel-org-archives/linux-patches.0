@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026000;
-	b=fy4cPgGDcrmhJdqiMSpBov83+wGULGSJUT07zIQfXEDL96pgOiDr2Vu8WiEBfgNnox5c
-	 n8cTH0RzXfH4riumZ14nWgq8fonKYC83nqn6BdLyzBujWD5hHmqaNSILbYMWMPPxXb2wN
-	 qvg5ShTw27l2yWyz8bV0PErLA8Nh6AmOvULfUx9FVFtOiOsGdF7vg8Hb0rAg2eCOV9yQv
-	 J9u/im5GmW/XNpaxjkatrntOqxnHwjXOpWglbGGhkyST+o31L4BzWigkzPonDoEquFgQq
-	 QBD4vaNF84S9y6n/m8ybbOQwOBk+CkSlUJcWiYjCeJ6FjOG1wnrTFVyDJpWWtlKOkxw==
+	t=1795026002;
+	b=MfH9UVmMNlomPEKGymrprkmcZ0v+weRm3sqSGJXyDKqL7+QQ+GcAqLzCTc0PAlbwgk5/
+	 769XLRGycEAoiMlAV7RbFETda9eqmkgpVnrRGRYoRxuPZ9YAxBAszjYS1YBgjk6eZJ92I
+	 6e7k1NS0PhWq2cd6tkvpCNioo/sXTCk93GlR8iOhlVQM5dHXM1zV0VkXrTYM5yzbYTxJT
+	 zB3q5FWw3nZC59XZUj2rKkLxeVzR96K9fz/27vD5aqbjjx9W8Wcthzmgr7cJKgFnTXDOc
+	 yXQVUWYd+4bccof2r1YP5r/5EZIdQFPSOEeCP1feUKT7VBp6nERjwHTTcb6UHc3HzFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026000;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026002;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=xhu2KUeh8+1bWyGxRA44PerT2SWjGVKMhg4aWVITX3g=;
-	b=YV5ItpDvho4f+Fk9kFtnEAuhKEDaSv2iqtpWBnaG+TbbdBrcGIQaPuzMeJHrWJ5uedQk
-	 bV1bAm+CuNz0Gr7CfEvhs34OoPsTg1Gt89Ipk7lYomOyKl/yEO6WHZAuXb21/eY6bOAI3
-	 arEPYZpHAWDEtd9fYymgRtIpZY9Awe4Rv/zkLnjMwqgEpy6JH9PXYyqShEDk2zqRWjxuR
-	 IBr3/DGzkTntA44spsni1FAfLIKxjYZJwZyPlOVyw8koqxnt416hksP/WYMbDX9B42Bvv
-	 9u8WSLM0Wr+L5tSC3AJ14toD5ET67PQi3vbcoafyqFCnQ05GYraC5gLI6NcswMOcNRg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=f/Q+vcih9E+280g/7SoXOPBGkDcReUn9lsJGY/4zf8g=;
+	b=U4LfFxz9vBZAYeJJZ5IH5ItDXqiotBjYYUmTyaC6NeLnXMo9FE4QlecGrSmdQhoYy6hv
+	 cpV9wod/D313wRHXV79gBARInebXFJLCALXSLxl+Obw+yvr5qMvzZk2YxhV9mNViyhTCh
+	 xwz3u6xie0qFJWiyTfx2MWfnDS/IyBxtREm+S+VSNrD4AanElnSVOXaYUJvZnU7GfL96q
+	 sBPpnrbqdAL1k6yXBJaMWjB1KGMX48cmglJgI4EfVFi0TGCEQg0F6RC22U94S0YPkP7+l
+	 BLPMkWrUrTpN4KdtSyomChQNFn7KFUmgSqdqJBvZ7V8YxaotBkpJzUoaXVLrUPxB3uQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PXxBFRln;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjz2zLtr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B526606A31C;
-	Wed, 18 Nov 2026 18:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD654606A320;
+	Wed, 18 Nov 2026 18:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PXxBFRln
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD321F000C4;
-	Wed, 18 Nov 2026 18:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjz2zLtr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FBEF1F000C4;
+	Wed, 18 Nov 2026 18:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026000;
-	bh=xhu2KUeh8+1bWyGxRA44PerT2SWjGVKMhg4aWVITX3g=;
+	s=korg; t=1795026002;
+	bh=f/Q+vcih9E+280g/7SoXOPBGkDcReUn9lsJGY/4zf8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PXxBFRlnPANQ64ZuY2hu4uBG/UbXRgdScb0UutH5gwXlIw5c+f0NRmHkz1nSkJLdE
-	 Y4cPQs5qiQQ28Os48nSSIVbgT1oP2wA0vrY1CD4OL1Jna0lirwhMJnOwthaO7zF1Fu
-	 f5NHUOScpvi7eTSJZz21s9fOcsF4zbfucInmTRhM=
+	b=kjz2zLtrlR6E8t5MkDMKP5rw4YEVJNwmdHmSuFD6uy+Iza/XVeBDVBr6NlKX6xIDX
+	 0gMXUQbOkcXVL7mVYB9RiUBVDuchzLA2+595d+EZisSYlUOVA/HY9NGso1wo8Ye8RW
+	 mndi1e7ZmfXXmcLIbDESn89aHAw5iMHXlcoi5dAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger@xenproject.org>,
+	Jan Beulich <jbeulich@suse.com>,
+	Jason Andryuk <jason.andryuk@amd.com>,
 	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1278/2151] xen/blkback: Prevent missed completion when draining I/O
-Date: Wed, 18 Nov 2026 15:50:13 +0100
-Message-ID: <20261118150208.677562777@linuxfoundation.org>
+Subject: [PATCH 6.18 1279/2151] x86/PVH: dont truncate initrd address/size
+Date: Wed, 18 Nov 2026 15:50:14 +0100
+Message-ID: <20261118150208.714859668@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,61 +63,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Jan Beulich <jbeulich@suse.com>
 
-[ Upstream commit 9b4df0baa2aa03d22310e59846ca628f7afd4115 ]
+[ Upstream commit fcc43d1d6bf5fbd41e1e308b17187f9b759df56a ]
 
-xen_blk_drain_io() sets drain before checking inflight.
-xen_blkbk_unmap_and_respond_callback() decrements inflight with
-atomic_dec_and_test() before checking drain.
+Consuming merely the lower halves of the provided values isn't very
+useful. (While generally loaders try to place it below 4G, especially
+when it's huge it may not fit there.)
 
-The pre-wait condition check was added to avoid missing a completion, but
-atomic_set() is unordered. With one I/O in flight, the drain path can set
-drain to 1 and read inflight as 1 before the completion decrement. The
-completion path then decrements inflight to 0 but can still read drain as
-0. It skips complete(), so the drain path waits until the timeout despite
-no I/O remaining.
-
-Add a full barrier between setting drain and reading inflight.
-atomic_dec_and_test() already provides full ordering on the completion
-side.
-
-Fixes: 6927d92091df ("xen/blkback: Fix two races in the handling of barrier requests.")
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Acked-by: Roger Pau Monné <roger@xenproject.org>
+Fixes: 7243b93345f7 ("xen/pvh: Bootstrap PVH guest")
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Jason Andryuk <jason.andryuk@amd.com>
 Reviewed-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260730084000.3305702-1-hanguidong02@gmail.com>
+
+Message-ID: <9698d810-6664-4a9d-a847-18ad124261e0@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/xen-blkback/blkback.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/x86/platform/pvh/enlighten.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/block/xen-blkback/blkback.c b/drivers/block/xen-blkback/blkback.c
-index a7c2b04ab943d..f9391b2d47347 100644
---- a/drivers/block/xen-blkback/blkback.c
-+++ b/drivers/block/xen-blkback/blkback.c
-@@ -1022,6 +1022,13 @@ static void xen_blk_drain_io(struct xen_blkif_ring *ring)
- 	struct xen_blkif *blkif = ring->blkif;
+diff --git a/arch/x86/platform/pvh/enlighten.c b/arch/x86/platform/pvh/enlighten.c
+index b7dcc9c992f32..0ee804f88eed7 100644
+--- a/arch/x86/platform/pvh/enlighten.c
++++ b/arch/x86/platform/pvh/enlighten.c
+@@ -84,7 +84,9 @@ static void __init init_pvh_bootparams(bool xen_guest)
+ 		struct hvm_modlist_entry *modaddr =
+ 			__va(pvh_start_info.modlist_paddr);
+ 		pvh_bootparams.hdr.ramdisk_image = modaddr->paddr;
++		pvh_bootparams.ext_ramdisk_image = modaddr->paddr >> 32;
+ 		pvh_bootparams.hdr.ramdisk_size = modaddr->size;
++		pvh_bootparams.ext_ramdisk_size = modaddr->size >> 32;
+ 	}
  
- 	atomic_set(&blkif->drain, 1);
-+	/*
-+	 * Publish drain before checking inflight. Otherwise,
-+	 * xen_blkbk_unmap_and_respond_callback() can decrement inflight with
-+	 * atomic_dec_and_test() and still see drain == 0 after this path saw
-+	 * inflight > 0, missing the completion.
-+	 */
-+	smp_mb();
- 	do {
- 		if (atomic_read(&ring->inflight) == 0)
- 			break;
+ 	/*
 -- 
 2.53.0
 
