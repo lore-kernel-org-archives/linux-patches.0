@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027623;
-	b=0aAh8TJ83I7/VyfXoUols+RzBlIMK6tJ0LGoA32ZMZOVUtPZ1tRqxR2K9+gBTiLicXES
-	 qc6xmuf3U/WaYAsT7hQhfp2lKHRVq1IPox9gPagjD3NtOxuTpx/poVoBHUNCZGMTektwI
-	 WAE+K85/wPyoMwJtDZl4GjXaj3wFWjmg8hDZv0WPKdI3sk8EFemhxzAt4WRXcU7TMf0Er
-	 UAcuSFgSZL+21PsgPyOozVLybkVKxfcd7of34qlXPTy/iUcCOpzD5l2PBgktb3E0PxhcR
-	 Vp/NcVgmu7/ivcT5sRxhKRwfQygxb29WHu6yuTVAJS+MjW22BRKBAX1nYEsBbauztng==
+	t=1795027626;
+	b=n/0CCSyFEccNQ4K9FF276UoyXNccGYBj265IMDPiQop5tYY9szkyv435tpovstE3dFkl
+	 mMSn/ruQ9SlXvboRUu6/Pjwj62e0MFJEm8eJiKZHX/s5aaC3aSoibxqyjE8CxcieKN8D4
+	 +6ogJubligqxVDRkC6JFx5J0t7BzS2Uw4xcYPw28Eo0QEyqZTMfN5HfRw56Q+58WYK+Ep
+	 wQmn/fpi3NdyrS9NOgpeDWY1ZfLIVYJr93ZBsKmOxPTCtSA03x/uWNL7YJK4BYEmJI2l4
+	 FAsMfn7wihtVZOd//AvYLLQZ65E85mExNCw+yDjLj+Umy47FniIH8CPRysE+w83sbZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027623;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027626;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g3F+47X/suPayVcOhHoDceZeU5i/SS6TAiRzQCIFYQM=;
-	b=sUAJtNfQp195K8LyobwpAUYeZhkRS9eBT0tEKZktSX4bmd0tPpA41YW5lt6sHUPXNBSS
-	 BPurDdAbUB+SR8o+uH0Ir98bz3ROCFl+Axpyb9twZTee+BAUIXC+X/zURIz8hCXRacAsO
-	 I+c0qx7rbMDNXu/5AV52oMVwxCKgLWCFt4KOBe9+QPqqS8oGr/5PYETugYRZW6RCeg0jL
-	 Ko5D7v/AUQjCMKJyolZh6qhF75N8YJUdrbd4ExMQn79fby4bNF7AArjDaTJ0oUINWn3+d
-	 SUzkS0Zpzil7FEyw96FXZAsLHLzxuXkLBoIabKAZ0H7riWsl8KWjBqJJY361RcWNxCQ==
+	bh=5yA0MS8wn1mzyBjBg4BqhObAVvVAYyfSV54aKQKbmf8=;
+	b=RrboKZwS8AEoQLb2eG/XQ0LR9IlLD5OXZN9olQTU+DscWiXYsSdhe4NVOg6jHGtvs+zj
+	 8F0jWn2Sc60MiZ6FKicsZnpjiIFJpabfOIOHsfaVD5a5RfXXrOb1Laz+RVN72EwxiBo9j
+	 JuGaCku7L6N7XH0T7UgXXFEo/49pH5YZwbPLawElg0iGmpBvkpxjpriHXxg7wxkJTkTsk
+	 DmMiH+oUKgGhHFiR1jYuaqvk3x5Y2YOMWIIHTq64ItHGJ87b/Kce2OglKuL2jZPskedoD
+	 23eMBq6o1U9xUww60GtUZ/N2od8p+pefXEVFWKR7gvx1JZbRaESKUrgtTMmZcZzq0Aw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nvL1WsEF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LThROFap;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECC860A2602;
-	Wed, 18 Nov 2026 18:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E499606A333;
+	Wed, 18 Nov 2026 18:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nvL1WsEF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE5E1F000C4;
-	Wed, 18 Nov 2026 18:47:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LThROFap
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8581F000C4;
+	Wed, 18 Nov 2026 18:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027623;
-	bh=g3F+47X/suPayVcOhHoDceZeU5i/SS6TAiRzQCIFYQM=;
+	s=korg; t=1795027626;
+	bh=5yA0MS8wn1mzyBjBg4BqhObAVvVAYyfSV54aKQKbmf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nvL1WsEFYvmApdqqih0awtqg3IRVDWfohbYbW5IU1D8KqrcyXDJMx4qMLkq8fttEo
-	 C6xrDuQTHp+pfKsP18LTasyLeSm46f3AQKTQziNjLQhI/nYk1YaO5QVx4wnTbCw/g6
-	 koxMjSZ6tb90Rpa3JKvbpz4mHv+PRrZN8rm8hz/4=
+	b=LThROFap1EJ1FpSisEjh/PjN+zwDMZNYSjdkpjz7bT77SPQdeuDsCI8kLpa9qXlvT
+	 S3Puoq4awRZ7tDkpzYvqhMo41EOK5OWjOglE3SCGQtiFdtoX16mOHRBl+dhVG1o0g9
+	 pY8scFZk5IlK0xvDo7AaexTO09yTd2PPaB8heXQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michail Andreas Michalopoulos <mike.michalo@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Carlo Szelinsky <github@szelinsky.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1854/2151] ksmbd: reject FILE_ATTRIBUTE_TEMPORARY on directories
-Date: Wed, 18 Nov 2026 15:59:49 +0100
-Message-ID: <20261118150229.332761699@linuxfoundation.org>
+Subject: [PATCH 6.18 1855/2151] net: pse-pd: si3474: fix use-after-free in ancillary client error path
+Date: Wed, 18 Nov 2026 15:59:50 +0100
+Message-ID: <20261118150229.368909490@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,50 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
+From: Carlo Szelinsky <github@szelinsky.de>
 
-[ Upstream commit 8323aab48525b83f750e712f66e6e9387b550cf4 ]
+[ Upstream commit 70c29b35fd87f87a7b8dad6eb8d55ce54a0d549a ]
 
-Setting FILE_ATTRIBUTE_TEMPORARY on a directory with SMB2 SET_INFO
-(FileBasicInformation) succeeds: ksmbd keeps the attribute and, with
-"store dos attributes" enabled, also writes it to the DOS attribute
-xattr.
+If devm_add_action_or_reset() fails, it has already unregistered the
+ancillary I2C client, and the error message then reads that client's
+device. It can only fail with -ENOMEM, which is already reported, so
+drop the message.
 
-MS-FSA (FileBasicInformation) says the request must fail with
-STATUS_INVALID_PARAMETER when FILE_ATTRIBUTE_TEMPORARY is set on a
-directory, and Samba rejects it too. smbtorture's
-smb2.create.dosattr_tmp_dir checks this and fails against ksmbd.
+Found by code inspection. Not reproduced.
 
-Return -EINVAL, which is sent as STATUS_INVALID_PARAMETER, when a
-directory is asked to become TEMPORARY. Do the check before any
-timestamp is changed, so a rejected request leaves the open file and
-the inode unchanged.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Assisted-by: LLM
-Signed-off-by: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: a2317231df4b ("net: pse-pd: Add Si3474 PSE controller driver")
+Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
+Signed-off-by: Carlo Szelinsky <github@szelinsky.de>
+Link: https://patch.msgid.link/20261020171134.852878-2-github@szelinsky.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/pse-pd/si3474.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index ea04cb2662246..94a18e0ee9c20 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -6486,6 +6486,11 @@ static int set_file_basic_info(struct ksmbd_file *fp,
- 	inode = file_inode(filp);
- 	idmap = file_mnt_idmap(filp);
+diff --git a/drivers/net/pse-pd/si3474.c b/drivers/net/pse-pd/si3474.c
+index aa07ffbce54d7..77c3e92a154b7 100644
+--- a/drivers/net/pse-pd/si3474.c
++++ b/drivers/net/pse-pd/si3474.c
+@@ -516,10 +516,8 @@ static int si3474_i2c_probe(struct i2c_client *client)
+ 		return PTR_ERR(priv->client[1]);
  
-+	/* MS-FSA FileBasicInformation: a directory can't be marked TEMPORARY */
-+	if (S_ISDIR(inode->i_mode) &&
-+	    (file_info->Attributes & FILE_ATTRIBUTE_TEMPORARY_LE))
-+		return -EINVAL;
-+
- 	if (file_info->CreationTime)
- 		fp->create_time = le64_to_cpu(file_info->CreationTime);
+ 	ret = devm_add_action_or_reset(dev, si3474_ancillary_i2c_remove, priv->client[1]);
+-	if (ret < 0) {
+-		dev_err(&priv->client[1]->dev, "Cannot register remove callback\n");
++	if (ret)
+ 		return ret;
+-	}
  
+ 	ret = i2c_smbus_read_byte_data(priv->client[1], VENDOR_IC_ID_REG);
+ 	if (ret < 0) {
 -- 
 2.53.0
 
